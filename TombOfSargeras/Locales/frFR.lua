@@ -7,8 +7,16 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "frFR")
 if L then
+	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
+
 	L.custom_on_stop_timers = "Toujours afficher les barres de capacité"
 	L.custom_on_stop_timers_desc = "L'Inquisition démoniaque a certains sorts qui sont retardés par les interruptions/les autres incantations. Quand cette option est activée, les barres de ces capacités resteront à l'écran."
+end
+
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "frFR")
+if L then
+	--L.inks_fed_count = "Ink (%d/%d)"
+	--L.inks_fed = "Inks fed: %s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "frFR")
@@ -44,19 +52,29 @@ L = BigWigs:NewBossLocale("Kil'jaeden", "frFR")
 if L then
 	L.singularityImpact = "Impact Singularité"
 	L.obeliskExplosion = "Explosion Obélisque"
+	--L.obeliskExplosion_desc = "Timer for the Obelisk Explosion"
 
 	L.darkness = "Ténèbres" -- Shorter name for Darkness of a Thousand Souls (238999)
 	L.reflectionErupting = "Reflet : éruptif" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "Reflet : gémissant" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "Reflet : désespéré" -- Shorter name for Shadow Reflection: Hopeless (237590)
+
+	--L.rupturingKnock = "Rupturing Singularity Knockback"
+	--L.rupturingKnock_desc = "Show a timer for the knockback"
+
+	--L.meteorImpact_desc = "Show a timer for the Meteors landing"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "frFR")
 if L then
+	L.rune = "Rune orque"
 	L.chaosbringer = "Infernal porte-chaos"
 	L.rez = "Rez le Garde-Tombe"
+	L.erduval = "Erdu'val"
+	L.varah = "Dame des hippogriffes Varah"
 	L.seacaller = "Mande-mers marécaille"
 	L.custodian = "Gardien des fonds marins"
 	L.dresanoth = "Dresanoth"
 	L.sentry = "Factionnaire gardien"
+	L.acolyte = "Acolyte fantomatique"
 end

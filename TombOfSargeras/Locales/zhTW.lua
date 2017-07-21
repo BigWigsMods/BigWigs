@@ -7,8 +7,16 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "zhTW")
 if L then
+	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
+
 	L.custom_on_stop_timers = "總是顯示技能條"
 	L.custom_on_stop_timers_desc = "惡魔審判官的部份技能會被斷法或其他技能的法術詠唱推遲。啟用此選項後，這些技能的計時條會保持顯示。"
+end
+
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "zhTW")
+if L then
+	--L.inks_fed_count = "Ink (%d/%d)"
+	--L.inks_fed = "Inks fed: %s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "zhTW")
@@ -44,19 +52,29 @@ L = BigWigs:NewBossLocale("Kil'jaeden", "zhTW")
 if L then
 	L.singularityImpact = "奇異點衝擊"
 	L.obeliskExplosion = "石碑爆炸"
+	L.obeliskExplosion_desc = "石碑爆炸計時器"
 
 	L.darkness = "千魂之暗" -- Shorter name for Darkness of a Thousand Souls (238999)
 	L.reflectionErupting = "分身：爆發" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "分身：哀號" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "分身：絕望" -- Shorter name for Shadow Reflection: Hopeless (237590)
+
+	L.rupturingKnock = "破裂奇異點擊退"
+	L.rupturingKnock_desc = "顯示擊退計時器"
+
+	L.meteorImpact_desc = "顯示隕石雨降落計時器"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")
 if L then
+	--L.rune = "Orcish Rune" -- wowhead.com/object=269260
 	L.chaosbringer = "煉獄火混亂使者"
 	L.rez = "守墓者瑞茲"
-	--L.seacaller = "Tidescale Seacaller"
+	--L.erduval = "Erdu'val"
+	--L.varah = "Hippogryph Lord Varah"
+	L.seacaller = "潮鱗喚海者"
 	L.custodian = "深海守衛"
-	--L.dresanoth = "Dresanoth"
+	L.dresanoth = "卓薩諾斯"
 	L.sentry = "守護者哨衛"
+	--L.acolyte = "Ghostly Acolyte"
 end

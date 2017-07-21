@@ -27,7 +27,6 @@ local shatteringTimersMythic = {34, 60, 60, 60, 32}
 
 local spikeCounter = 1
 local cometCounter = 1
-local cometWarned = {}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -50,13 +49,15 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	self:RegisterEvent("UNIT_AURA")
 
 	self:Log("SPELL_CAST_SUCCESS", "BurningArmorSuccess", 231363)
 	self:Log("SPELL_AURA_APPLIED", "BurningArmor", 231363)
 	self:Log("SPELL_AURA_REMOVED", "MeltedArmorRemoved", 234264)
 	self:Log("SPELL_AURA_APPLIED", "ShatteringStarDebuff", 233272)
 	self:Log("SPELL_CAST_START", "InfernalBurning", 233062)
+	self:Log("SPELL_CAST_SUCCESS", "CrashingComet", 232249)
+	self:Log("SPELL_AURA_APPLIED", "CrashingCometApplied", 232249)
+	self:Log("SPELL_AURA_REMOVED", "CrashingCometRemoved", 232249)
 
 	-- Fel Pool
 	self:Log("SPELL_AURA_APPLIED", "FelPool", 230348)
@@ -71,7 +72,6 @@ function mod:OnEngage()
 	rainCounter = 1
 	spikeCounter = 1
 	cometCounter = 1
-	wipe(cometWarned)
 
 	self:Bar(233514, 4.8) -- Infernal Spike
 	if not self:LFR() then -- Technically exists but is irrelevant. No debuff, no aoe, just a delayed single target minor damage hit.
@@ -97,10 +97,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		else
 			self:Bar(233514, spikeCounter == 4 and 22 or spikeCounter == 11 and 19.5 or 17)
 		end
-	elseif spellId == 232249 then -- Crashing Comet
-		cometCounter = cometCounter + 1
-		wipe(cometWarned)
-		self:Bar(spellId, cometCounter == 7 and 20 or cometCounter == 10 and 25 or 18.3)
 	elseif spellId == 233285 then -- Rain of Brimstone
 		rainCounter = rainCounter + 1
 		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))
@@ -133,46 +129,6 @@ function mod:MeltedArmorRemoved(args)
 	end
 end
 
-do
-	local list = mod:NewTargetList()
-	function mod:UNIT_AURA(event, unit)
-		-- There are 2 debuffs. The first has no CLEU, the second does.
-		local _, _, _, _, _, _, expires, _, _, _, spellId = UnitDebuff(unit, self:SpellName(232249)) -- Crashing Comet debuff ID
-
-		if spellId == 232249 or spellId == 230345 then
-			local n = self:UnitName(unit)
-
-			local hasBoth = false
-			if spellId == 230345 then
-				for i = 1, 40 do
-					_, _, _, _, _, _, expires, _, _, _, spellId = UnitDebuff(unit, i)
-					if spellId == 232249 and not cometWarned[n] then
-						hasBoth = true
-						break
-					end
-					if not spellId then break end
-				end
-			end
-
-			if hasBoth or (spellId == 232249 and not cometWarned[n]) then
-				cometWarned[n] = true
-				list[#list+1] = n
-				if #list == 1 then
-					self:ScheduleTimer("TargetMessage", 0.3, spellId, list, "Important", "Warning")
-				end
-
-				if unit == "player" then
-					self:Say(spellId)
-					self:Flash(spellId)
-
-					local remaining = expires-GetTime()
-					self:SayCountdown(spellId, remaining)
-				end
-			end
-		end
-	end
-end
-
 function mod:ShatteringStarDebuff(args)
 	self:TargetMessage(233279, args.destName, "Attention", "Alarm", CL.count:format(args.spellName, shatteringCounter))
 	self:CastBar(233279, 6, CL.count:format(args.spellName, shatteringCounter)) -- <cast: Shattering Star>
@@ -190,6 +146,33 @@ function mod:InfernalBurning(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, self:LFR() and 10 or 6)
 	self:Bar(args.spellId, self:LFR() and 64.4 or 60.5)
+end
+
+function mod:CrashingComet(args)
+	cometCounter = cometCounter + 1
+	self:Bar(args.spellId, cometCounter == 7 and 20 or cometCounter == 10 and 25 or 18.3)
+end
+
+do
+	local list = mod:NewTargetList()
+	function mod:CrashingCometApplied(args)
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning")
+		end
+
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:Flash(args.spellId)
+			self:SayCountdown(args.spellId, 5)
+		end
+	end
+end
+
+function mod:CrashingCometRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 do

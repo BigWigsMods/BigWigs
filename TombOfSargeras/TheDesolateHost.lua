@@ -56,12 +56,12 @@ function mod:GetOptions()
 		235907, -- Collapsing Fissure
 		{238570, "SAY", "ICON"}, -- Tormented Cries
 		235927, -- Rupturing Slam
-		{236513, "INFOBOX"}, -- Bonecage Armor
+		236513, -- Bonecage Armor
 		236131, -- Wither
 		236459, -- Soulbind
 		soulBindMarker,
 		236072, -- Wailing Souls
-		236515, -- Shattering Scream
+		{236515, "ME_ONLY"}, -- Shattering Scream
 		236361, -- Spirit Chains
 		236542, -- Sundering Doom
 		236544, -- Doomed Sundering

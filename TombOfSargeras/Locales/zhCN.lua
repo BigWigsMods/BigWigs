@@ -7,8 +7,16 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "zhCN")
 if L then
+	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
+
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "恶魔审判庭一些技能会因为施放或被打断其它技能而延迟。当启用此选项，这些技能条将总是显示在屏幕上。"
+end
+
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "zhCN")
+if L then
+	--L.inks_fed_count = "Ink (%d/%d)"
+	--L.inks_fed = "Inks fed: %s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "zhCN")
@@ -59,10 +67,14 @@ end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhCN")
 if L then
+	--L.rune = "Orcish Rune" -- wowhead.com/object=269260
 	L.chaosbringer = "地狱火混沌使者"
 	L.rez = "守墓人瑞兹"
+	--L.erduval = "Erdu'val"
+	--L.varah = "Hippogryph Lord Varah"
 	L.seacaller = "潮鳞海歌者"
 	L.custodian = "海底监察者"
 	L.dresanoth = "德萨诺斯"
 	L.sentry = "守护者哨兵"
+	--L.acolyte = "Ghostly Acolyte"
 end

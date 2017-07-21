@@ -7,8 +7,16 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "koKR")
 if L then
+	L.infobox_title_prisoners = "%d 죄수"
+
 	L.custom_on_stop_timers = "능력 바 항상 표시"
 	L.custom_on_stop_timers_desc = "악마 심문관은 시전 방해/다른 시전에 의해 시전이 지연되는 주문을 사용합니다. 이 옵션을 사용하면 이 능력들의 바가 화면에 유지됩니다."
+end
+
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "koKR")
+if L then
+	L.inks_fed_count = "먹물 (%d/%d)"
+	L.inks_fed = "먹은 먹물: %s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "koKR")
@@ -50,7 +58,7 @@ if L then
 	L.reflectionErupting = "반영: 분출" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "반영: 통곡" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "반영: 절망" -- Shorter name for Shadow Reflection: Hopeless (237590)
-	
+
 	L.rupturingKnock = "특이점 파열 밀쳐내기"
 	L.rupturingKnock_desc = "밀쳐내기 타이머를 표시합니다"
 
@@ -59,10 +67,14 @@ end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "koKR")
 if L then
+	L.rune = "오크 룬" -- wowhead.com/object=269260
 	L.chaosbringer = "지옥불 혼돈인도자"
 	L.rez = "무덤감시자 레즈"
+	L.erduval = "에르두발"
+	L.varah = "히포그리프 군주 바라"
 	L.seacaller = "물결비늘 바다소환사"
 	L.custodian = "깊은바다 관리인"
 	L.dresanoth = "드레사노스"
 	L.sentry = "수호의 감시자"
+	L.acolyte = "유령 수행사제"
 end

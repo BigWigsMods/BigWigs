@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 64
+local BIGWIGS_VERSION = 65
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -487,6 +487,10 @@ function mod:ADDON_LOADED(addon)
 				end
 			end
 		end
+		if not BigWigs3DB.discord or BigWigs3DB.discord < 15 then
+			BigWigs3DB.discord = (BigWigs3DB.discord or 0) + 1
+			CTimerAfter(11, function() sysprint("We are now on Discord: https://discord.gg/jGveg85") end)
+		end
 	end
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
@@ -618,8 +622,6 @@ do
 	elseif L == "esES" or L == "esMX" then
 		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Spanish (esES)? Check out our GitHub page!"
 	end
-
-	delayedMessages[#delayedMessages+1] = "We are now on Discord: https://discord.gg/jGveg85"
 
 	CTimerAfter(11, function()
 		--local _, _, _, _, month, _, year = GetAchievementInfo(10043) -- Mythic Archimonde

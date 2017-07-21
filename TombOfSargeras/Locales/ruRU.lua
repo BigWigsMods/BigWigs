@@ -7,8 +7,16 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "ruRU")
 if L then
+	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
+
 	L.custom_on_stop_timers = "Всегда показывать полосы для способностей"
 	L.custom_on_stop_timers_desc = "Демоническая инквизиция имеет некоторые способности, которые задерживаются прерываниями/другими заклинаниями. Когда эта опция включена, полосы для этих способностей останутся на вашем экране."
+end
+
+L = BigWigs:NewBossLocale("Mistress Sassz'ine", "ruRU")
+if L then
+	--L.inks_fed_count = "Ink (%d/%d)"
+	--L.inks_fed = "Inks fed: %s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "ruRU")
@@ -44,19 +52,29 @@ L = BigWigs:NewBossLocale("Kil'jaeden", "ruRU")
 if L then
 	L.singularityImpact = "Взрыв сингулярности"
 	L.obeliskExplosion = "Взрыв обелисков"
+	--L.obeliskExplosion_desc = "Timer for the Obelisk Explosion"
 
 	L.darkness = "Тьма" -- Shorter name for Darkness of a Thousand Souls (238999)
 	L.reflectionErupting = "Отражение: взрывное" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "Отражение: жалобное" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "Отражение: обречённое" -- Shorter name for Shadow Reflection: Hopeless (237590)
+
+	--L.rupturingKnock = "Rupturing Singularity Knockback"
+	--L.rupturingKnock_desc = "Show a timer for the knockback"
+
+	--L.meteorImpact_desc = "Show a timer for the Meteors landing"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "ruRU")
 if L then
+	L.rune = "Орочья руна"
 	L.chaosbringer = "Инфернал - вестник хаоса"
 	L.rez = "Смотритель гробницы Рез"
+	L.erduval = "Эрду'вал"
+	L.varah = "Повелительница гиппогрифов Вара"
 	L.seacaller = "Зовущая море из клана Волнистой Чешуи"
 	L.custodian = "Подводный надзиратель"
 	L.dresanoth = "Кресанот"
 	L.sentry = "Страж Хранительницы"
+	L.acolyte = "Призрачная послушница"
 end

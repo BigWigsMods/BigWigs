@@ -95,6 +95,7 @@ function mod:GetOptions()
 		{238430, "SAY", "FLASH"}, -- Bursting Dreadflame
 		{238505, "SAY", "ICON", "PROXIMITY"}, -- Focused Dreadflame
 		{236378, "SAY", "FLASH"}, -- Shadow Reflection: Wailing
+		241564, -- Sorrowful Wail
 		241721, -- Illidan's Sightless Gaze
 		238999, -- Darkness of a Thousand Souls
 		-15543, -- Demonic Obelisk
@@ -207,7 +208,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 		end
 	elseif msg:find("235059") then -- Rupturing Singularity
 		self:Message(235059, "Urgent", "Warning", CL.count:format(self:SpellName(235059), singularityCount))
-		self:Bar(235059, 9.85, CL.count:format(L.singularityImpact, singularityCount))
+		self:Bar("rupturingKnock", 9.85, CL.count:format(L.singularityImpact, singularityCount), 235059)
 		singularityCount = singularityCount + 1
 		local timer = 0
 		if inIntermission then -- Intermission timer
@@ -218,7 +219,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 			end
 		else
 			if stage == 1 then -- Stage 1 cooldown
-				timer = self:Mythic() and mythicPhaseOneTimers[235059][singularityCount] or 56
+				timer = self:Mythic() and stageOneTimersMythic[235059][singularityCount] or 56
 			else -- Stage 2 timers
 				timer = stageTwoTimers[235059][singularityCount]
 			end
@@ -274,7 +275,7 @@ function mod:Armageddon(args)
 		end
 	else
 		if stage == 1 then -- Stage 1 cooldown
-			timer = self:Mythic() and mythicPhaseOneTimers[args.spellId][armageddonCount] or 64
+			timer = self:Mythic() and stageOneTimersMythic[args.spellId][armageddonCount] or 64
 		else -- Stage 2 timers
 			timer = stageTwoTimers[args.spellId][armageddonCount]
 		end

@@ -28,6 +28,7 @@ local sweepCounter = 1
 local nextAltPowerWarning = 20
 local suffocatingDarkCounter = 1
 local jailList = {}
+local jailCount = 0
 local jailTimer = nil
 local fixateList = {}
 
@@ -40,6 +41,8 @@ if L then
 	L.fixate = "{-15307} ({41951})"
 	L.fixate_desc = -15307
 	L.fixate_icon = 41951
+
+	L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
 
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."
@@ -109,12 +112,13 @@ function mod:OnEngage()
 	sweepCounter = 1
 	suffocatingDarkCounter = 1
 	nextAltPowerWarning = 20
+	jailCount = 0
 	jailTimer = nil
 	wipe(jailList)
 	wipe(fixateList)
 
 	-- Jail Infobox
-	self:OpenInfo(236283, self:SpellName(236283))
+	self:OpenInfo(236283, L.infobox_title_prisoners:format(jailCount))
 	self:OpenAltPower("altpower", 233104) -- Torment
 
 	-- Atrigan
@@ -215,7 +219,9 @@ do
 		end
 
 		-- Add person to InfoBox
+		jailCount = jailCount + 1
 		jailList[args.destName] = UnitPower(args.destName, 10) or 1 -- Incase we can't grab unitpower
+		self:SetInfoTitle(args.spellId, L.infobox_title_prisoners:format(jailCount))
 		self:SetInfoByTable(args.spellId, jailList)
 		if not jailTimer then
 			jailTimer = self:ScheduleRepeatingTimer(updatePower, 1, self, args.spellId)
@@ -226,10 +232,12 @@ end
 function mod:BelacsPrisonerRemoved(args)
 	-- Remove from InfoBox
 	jailList[args.destName] = nil
+	jailCount = jailCount - 1
 	if not next(jailList) then
 		self:CancelTimer(jailTimer)
 		jailTimer = nil
 	end
+	self:SetInfoTitle(args.spellId, L.infobox_title_prisoners:format(jailCount))
 	self:SetInfoByTable(args.spellId, jailList)
 end
 

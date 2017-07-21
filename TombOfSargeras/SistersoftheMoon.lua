@@ -223,11 +223,7 @@ do
 		end
 	end
 	function mod:TwilightVolley(args)
-		if stage == 2 then
-			self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		else -- Can only find target in P2
-			self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
-		end
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 	end
 end
 
@@ -296,25 +292,37 @@ do
 end
 
 do
+	local targetFound = nil
+
+	local function printTarget(self, name, guid)
+		if not self:Tank(name) then -- sometimes takes really long, so we might return early
+			targetFound = true
+			self:TargetMessage(236712, name, "Attention", "Alert")
+			if self:Me(guid) then
+				self:Say(236712)
+			end
+		end
+	end
+
 	function mod:LunarBeaconApplied(args)
+		if not targetFound then
+			printTarget(self, args.destName, args.destGUID)
+			targetFound = true
+		end
 		if self:Me(args.destGUID) then
 			self:SayCountdown(args.spellId, 6)
 		end
 	end
+
 	function mod:LunarBeaconRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 		end
 	end
 
-	local function printTarget(self, name, guid)
-		self:TargetMessage(236712, name, "Attention", "Alert")
-		if self:Me(guid) then
-			self:Say(236712)
-		end
-	end
 	function mod:LunarBeacon(args)
-		self:GetBossTarget(printTarget, 1.5, args.sourceGUID) -- Faster than waiting for debuff/cast end, sometimes takes really long
+		targetFound = nil
+		self:GetBossTarget(printTarget, 0.8, args.sourceGUID) -- Faster than waiting for debuff/cast end, but might return with the tank
 		lunarBeaconCounter = lunarBeaconCounter + 1
 		self:Bar(args.spellId, lunarBeaconCounter == 2 and 21.9 or 35) -- XXX Need Data longer than 4 casts
 	end

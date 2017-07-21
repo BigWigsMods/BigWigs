@@ -1244,9 +1244,18 @@ function boss:SetInfoByTable(key, tbl)
 	end
 end
 
+--- Update the title of an already open "Info Box".
+-- @param key the option key to check
+-- @string title the title of the window
+function boss:SetInfoTitle(key, title)
+	if checkFlag(self, key, C.INFOBOX) then
+		self:SendMessage("BigWigs_SetInfoBoxTitle", self, title)
+	end
+end
+
 --- Open the "Info Box" display.
 -- @param key the option key to check
--- @param title the title of the window, either a spell id or string
+-- @string title the title of the window
 function boss:OpenInfo(key, title)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_ShowInfoBox", self, title)
