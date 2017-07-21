@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "koKR")
 if L then
-	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
+	L.infobox_title_prisoners = "%d 죄수"
 
 	L.custom_on_stop_timers = "능력 바 항상 표시"
 	L.custom_on_stop_timers_desc = "악마 심문관은 시전 방해/다른 시전에 의해 시전이 지연되는 주문을 사용합니다. 이 옵션을 사용하면 이 능력들의 바가 화면에 유지됩니다."
@@ -15,8 +15,8 @@ end
 
 L = BigWigs:NewBossLocale("Mistress Sassz'ine", "koKR")
 if L then
-	--L.inks_fed_count = "Ink (%d/%d)"
-	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+	L.inks_fed_count = "먹물 (%d/%d)"
+	L.inks_fed = "먹은 먹물: %s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "koKR")
