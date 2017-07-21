@@ -67,7 +67,7 @@ end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhCN")
 if L then
-	L.rune = "兽人符文" -- wowhead.com/object=269260
+	L.rune = "兽人符文"
 	L.chaosbringer = "地狱火混沌使者"
 	L.rez = "守墓人瑞兹"
 	L.erduval = "艾杜瓦尔"

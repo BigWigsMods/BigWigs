@@ -48,7 +48,7 @@ mod:RegisterEnableMob(
 
 local L = mod:GetLocale()
 if L then
-	L.rune = "Orcish Rune" -- wowhead.com/object=269260
+	L.rune = "Orcish Rune"
 
 	--[[ Pre Goroth ]]--
 	L.chaosbringer = "Infernal Chaosbringer"
