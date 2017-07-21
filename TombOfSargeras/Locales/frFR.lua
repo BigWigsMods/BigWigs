@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "frFR")
 if L then
-	--L.infobox_title_prisoners = "Prisoners"
+	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
 
 	L.custom_on_stop_timers = "Toujours afficher les barres de capacité"
 	L.custom_on_stop_timers_desc = "L'Inquisition démoniaque a certains sorts qui sont retardés par les interruptions/les autres incantations. Quand cette option est activée, les barres de ces capacités resteront à l'écran."

@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "ptBR")
 if L then
-	--L.infobox_title_prisoners = "Prisoners"
+	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
 
 	--L.custom_on_stop_timers = "Always show ability bars"
 	--L.custom_on_stop_timers_desc = "Demonic Inquisition has some spells which are delayed by interupts/other casts. When this option is enabled, the bars for those abilities will stay on your screen."

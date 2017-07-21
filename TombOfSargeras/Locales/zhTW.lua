@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "zhTW")
 if L then
-	--L.infobox_title_prisoners = "Prisoners"
+	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
 
 	L.custom_on_stop_timers = "總是顯示技能條"
 	L.custom_on_stop_timers_desc = "惡魔審判官的部份技能會被斷法或其他技能的法術詠唱推遲。啟用此選項後，這些技能的計時條會保持顯示。"
