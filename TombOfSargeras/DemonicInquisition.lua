@@ -135,7 +135,7 @@ function mod:OnEngage()
 
 	self:Berserk(480, true, nil, 248671, 248671) -- confirmed for nm/hc/my - 248671 has a nice description, 248669 is the aura applied
 
-	if self:Mythic() and (self:CheckOption("fixate", "MESSAGE") or self:CheckOption("fixate", "FLASH")) then
+	if self:Mythic() and self:GetOption("fixate") > 0 then
 		self:RegisterTargetEvents("CheckForFixate")
 	end
 end
