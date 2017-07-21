@@ -86,11 +86,13 @@ do
 		end
 	end)
 	display:SetScript("OnHide", function(self)
+		inTestMode = false
+		opener = nil
+		nameList = {}
 		for i = 1, 10 do
 			self.text[i]:SetText("")
 		end
 		self.title:SetText(L.infoBox)
-		nameList = {}
 	end)
 
 	local bg = display:CreateTexture()
@@ -165,6 +167,7 @@ end
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ShowInfoBox")
 	self:RegisterMessage("BigWigs_HideInfoBox", "Close")
+	self:RegisterMessage("BigWigs_SetInfoBoxTitle")
 	self:RegisterMessage("BigWigs_SetInfoBoxLine")
 	self:RegisterMessage("BigWigs_SetInfoBoxTable")
 	self:RegisterMessage("BigWigs_OnBossDisable")
@@ -196,12 +199,20 @@ function plugin:BigWigs_SetConfigureTarget(_, module)
 end
 
 function plugin:BigWigs_ShowInfoBox(_, module, title)
-	opener = module
+	if opener then
+		display:Hide()
+	end
+
+	opener = module or self
 	for unit in self:IterateGroup() do
 		nameList[#nameList+1] = self:UnitName(unit)
 	end
 	display.title:SetText(title)
 	display:Show()
+end
+
+function plugin:BigWigs_SetInfoBoxTitle(_, _, text)
+	display.title:SetText(text)
 end
 
 function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
@@ -231,7 +242,6 @@ do
 end
 
 function plugin:Close()
-	inTestMode = false
 	display:Hide()
 end
 
