@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "zhTW")
 if L then
-	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
+	L.infobox_title_prisoners = "%d囚犯"
 
 	L.custom_on_stop_timers = "總是顯示技能條"
 	L.custom_on_stop_timers_desc = "惡魔審判官的部份技能會被斷法或其他技能的法術詠唱推遲。啟用此選項後，這些技能的計時條會保持顯示。"
@@ -15,8 +15,8 @@ end
 
 L = BigWigs:NewBossLocale("Mistress Sassz'ine", "zhTW")
 if L then
-	--L.inks_fed_count = "Ink (%d/%d)"
-	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+	L.inks_fed_count = "墨水(%d/%d)"
+	L.inks_fed = "喂食墨水：%s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "zhTW")
@@ -67,14 +67,14 @@ end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")
 if L then
-	--L.rune = "Orcish Rune" -- wowhead.com/object=269260
+	L.rune = "獸人符文" -- wowhead.com/object=269260
 	L.chaosbringer = "煉獄火混亂使者"
 	L.rez = "守墓者瑞茲"
-	--L.erduval = "Erdu'val"
-	--L.varah = "Hippogryph Lord Varah"
+	L.erduval = "厄爾多瓦"
+	L.varah = "角鷹獸之王瓦拉"
 	L.seacaller = "潮鱗喚海者"
 	L.custodian = "深海守衛"
 	L.dresanoth = "卓薩諾斯"
 	L.sentry = "守護者哨衛"
-	--L.acolyte = "Ghostly Acolyte"
+	L.acolyte = "鬼魅侍僧"
 end
