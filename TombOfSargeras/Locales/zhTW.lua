@@ -67,10 +67,14 @@ end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")
 if L then
+	--L.rune = "Orcish Rune" -- wowhead.com/object=269260
 	L.chaosbringer = "煉獄火混亂使者"
 	L.rez = "守墓者瑞茲"
+	--L.erduval = "Erdu'val"
+	--L.varah = "Hippogryph Lord Varah"
 	L.seacaller = "潮鱗喚海者"
 	L.custodian = "深海守衛"
 	L.dresanoth = "卓薩諾斯"
 	L.sentry = "守護者哨衛"
+	--L.acolyte = "Ghostly Acolyte"
 end

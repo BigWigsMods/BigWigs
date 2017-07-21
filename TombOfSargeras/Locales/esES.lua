@@ -67,10 +67,14 @@ end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "esES") or BigWigs:NewBossLocale("Tomb of Sargeras Trash", "esMX")
 if L then
+	L.rune = "Runa orca"
 	L.chaosbringer = "Portador de caos infernal"
 	L.rez = "Rez el Vigilatumbas"
+	L.erduval = "Erdu'val"
+	L.varah = "Señora de hipogrifos Varah"
 	L.seacaller = "Clamamares Marescama"
 	L.custodian = "Custodio submarino"
 	L.dresanoth = "Dresanoth"
 	L.sentry = "Centinela guardián"
+	L.acolyte = "Acólita fantasmal"
 end

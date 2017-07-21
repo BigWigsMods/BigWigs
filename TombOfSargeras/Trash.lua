@@ -16,6 +16,8 @@ mod:RegisterEnableMob(
 	--[[ Goroth -> Harjatan ]]--
 
 	--[[ Goroth -> Sisters of the Moon ]]--
+	120020, --Erdu'val
+	120851, -- Hippogryph Lord Varah
 
 	--[[ Harjatan -> Mistress Sassz'ine ]]--
 	120482, -- Tidescale Seacaller
@@ -23,7 +25,8 @@ mod:RegisterEnableMob(
 	120012, -- Dresanoth
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
-	120777 -- Guardian Sentry
+	120777, -- Guardian Sentry
+	120194 -- Ghostly Acolyte
 
 	--[[ Pre Maiden of Vigilance ]]--
 
@@ -45,6 +48,8 @@ mod:RegisterEnableMob(
 
 local L = mod:GetLocale()
 if L then
+	L.rune = "Orcish Rune" -- wowhead.com/object=269260
+
 	--[[ Pre Goroth ]]--
 	L.chaosbringer = "Infernal Chaosbringer"
 
@@ -54,6 +59,8 @@ if L then
 	--[[ Goroth -> Harjatan ]]--
 
 	--[[ Goroth -> Sisters of the Moon ]]--
+	L.erduval = "Erdu'val"
+	L.varah = "Hippogryph Lord Varah"
 
 	--[[ Harjatan -> Mistress Sassz'ine ]]--
 	L.seacaller = "Tidescale Seacaller"
@@ -62,6 +69,7 @@ if L then
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	L.sentry = "Guardian Sentry"
+	L.acolyte = "Ghostly Acolyte"
 
 	--[[ Pre Maiden of Vigilance ]]--
 
@@ -73,8 +81,11 @@ end
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
 function mod:GetOptions()
 	return {
+		{241742, "FLASH"}, -- Curse of Gul'dan (Orcish Rune)
+
 		--[[ Pre Goroth ]]--
 		242909, -- Massive Eruption (Infernal Chaosbringer)
 
@@ -84,6 +95,9 @@ function mod:GetOptions()
 		--[[ Goroth -> Harjatan ]]--
 
 		--[[ Goroth -> Sisters of the Moon ]]--
+		241301, -- Wall of Doom (Erdu'val)
+		{241171, "SAY", "PROXIMITY"}, -- Lunar Bomb (Hippogryph Lord Varah)
+		241169, -- Umbra Destruction (Hippogryph Lord Varah)
 
 		--[[ Harjatan -> Mistress Sassz'ine ]]--
 		{240599, "SAY", "PROXIMITY"}, -- Embrace of the Tides (Tidescale Seacaller)
@@ -95,6 +109,7 @@ function mod:GetOptions()
 
 		--[[ Sisters of the Moon -> The Desolate Host ]]--
 		{240735, "SAY"}, -- Polymorph Bomb (Guardian Sentry)
+		{239741, "SAY"}, -- Anguish (Ghostly Acolyte)
 
 		--[[ Pre Maiden of Vigilance ]]--
 
@@ -103,21 +118,28 @@ function mod:GetOptions()
 		--[[ Fallen Avatar -> Kil'jaeden ]]--
 
 	}, {
+		[241742] = L.rune,
 		[242909] = L.chaosbringer,
 		[241262] = L.rez,
+		[241301] = L.erduval,
+		[241171] = L.varah,
 		[240599] = L.seacaller,
 		[240169] = L.custodian,
 		[241254] = L.dresanoth,
 		[240735] = L.sentry,
+		[239741] = L.acolyte,
 	}
 end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
-	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 241262, 240176) -- Felburn, Lightning Storm
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 241262, 240176)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 241262, 240176)
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 241262, 241169, 240176) -- Felburn, Umbra Destruction, Lightning Storm
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 241262, 241169, 240176)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 241262, 241169, 240176)
+
+	self:Log("SPELL_AURA_APPLIED", "CurseOfGuldan", 241742)
+	self:Log("SPELL_AURA_REMOVED", "CurseOfGuldanRemoved", 241742)
 
 	--[[ Pre Goroth ]]--
 	self:Log("SPELL_CAST_START", "MassiveEruption", 242909)
@@ -129,7 +151,9 @@ function mod:OnBossEnable()
 
 
 	--[[ Goroth -> Sisters of the Moon ]]--
-
+	self:Log("SPELL_CAST_START", "WallOfDoom", 241301)
+	self:Log("SPELL_AURA_APPLIED", "LunarBomb", 241171)
+	self:Log("SPELL_AURA_REMOVED", "LunarBombRemoved", 241171)
 
 	--[[ Harjatan -> Mistress Sassz'ine ]]--
 	self:Log("SPELL_AURA_APPLIED", "EmbraceOfTheTides", 240599)
@@ -144,6 +168,8 @@ function mod:OnBossEnable()
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	self:Log("SPELL_AURA_APPLIED", "PolymorphBomb", 240735)
 	self:Log("SPELL_AURA_REMOVED", "PolymorphBombRemoved", 240735)
+	self:Log("SPELL_AURA_APPLIED", "Anguish", 239741)
+	self:Log("SPELL_AURA_REMOVED", "AnguishRemoved", 239741)
 
 	--[[ Pre Maiden of Vigilance ]]--
 
@@ -171,6 +197,16 @@ do
 	end
 end
 
+function mod:CurseOfGuldan(args)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, true)
+	self:TargetBar(args.spellId, 180, args.destName)
+	self:Flash(args.spellId)
+end
+
+function mod:CurseOfGuldanRemoved(args)
+	self:StopBar(args.spellName, args.destName)
+end
+
 --[[ Pre Goroth ]]--
 do
 	local prev = 0
@@ -189,7 +225,27 @@ end
 
 
 --[[ Goroth -> Sisters of the Moon ]]--
+function mod:WallOfDoom(args)
+	self:Message(args.spellId, "Attention", "Info")
+	self:CDBar(args.spellId, 6.1)
+end
 
+function mod:LunarBomb(args)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+	self:TargetBar(args.spellId, 10, args.destName)
+
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:OpenProximity(args.spellId, 10)
+	end
+end
+
+function mod:LunarBombRemoved(args)
+	self:StopBar(args.spellName, args.destName)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
+end
 
 --[[ Harjatan -> Mistress Sassz'ine ]]--
 function mod:EmbraceOfTheTides(args)
@@ -237,7 +293,6 @@ end
 --[[ Sisters of the Moon -> The Desolate Host ]]--
 function mod:PolymorphBomb(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-
 	self:TargetBar(args.spellId, 10, args.destName)
 
 	if self:Me(args.destGUID) then
@@ -247,7 +302,24 @@ function mod:PolymorphBomb(args)
 end
 
 function mod:PolymorphBombRemoved(args)
-	self:StopBar(args.spellId, args.destName)
+	self:StopBar(args.spellName, args.destName)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+function mod:Anguish(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:TargetBar(args.spellId, 6, args.destName)
+
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 6)
+	end
+end
+
+function mod:AnguishRemoved(args)
+	self:StopBar(args.spellName, args.destName)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
