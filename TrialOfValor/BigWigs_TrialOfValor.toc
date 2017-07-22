@@ -4,7 +4,7 @@
 ## Title-deDE: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-esES: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-esMX: BigWigs [|cffeda55fTrial of Valor|r]
-## Title-frFR: BigWigs [|cffeda55fTrial of Valor|r]
+## Title-frFR: BigWigs [|cffeda55fLe Jugement des Valeureux|r]
 ## Title-ruRU: BigWigs [|cffeda55fTrial of Valor|r]
 ## Title-zhCN: BigWigs [|cffeda55f勇气试炼|r]
 ## Title-zhTW: BigWigs [|cffeda55f勇氣試煉|r]
@@ -15,7 +15,7 @@
 ## Notes-deDE: Trial of Valor Modules
 ## Notes-esES: Trial of Valor Modules
 ## Notes-esMX: Trial of Valor Modules
-## Notes-frFR: Trial of Valor Modules
+## Notes-frFR: Modules BigWigs concernant le Jugement des Valeureux.
 ## Notes-ruRU: Trial of Valor Modules
 ## Notes-zhCN: 勇气试炼模块。
 ## Notes-zhTW: 勇氣試煉模組。
