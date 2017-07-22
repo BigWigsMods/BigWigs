@@ -48,7 +48,7 @@ local stageOneTimersMythic = {
 	-- Armageddon
 	[240910] = {11.0, 54.0, 38}, -- Incomplete
 }
-local phaseTwoTimersMythic = {
+local stageTwoTimersMythic = {
 	-- Rupturing Singularity
 	[235059] = {21.5, 50, 67, 78, 84},
 	-- Armageddon
@@ -60,7 +60,7 @@ local phaseTwoTimersMythic = {
 }
 local wailingMythicTimers = {49.4, 60.0, 169.1, 60.0}
 
-local stageTwoTimers = mod:Mythic() and phaseTwoTimersMythic or mod:Easy() and stageTwoTimersEasy or stageTwoTimersHeroic
+local stageTwoTimers = mod:Mythic() and stageTwoTimersMythic or mod:Easy() and stageTwoTimersEasy or stageTwoTimersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -188,7 +188,7 @@ function mod:OnEngage()
 	obeliskCount = 1
 	wailingCounter = 1
 	wipe(focusWarned)
-	stageTwoTimers = self:Mythic() and phaseTwoTimersMythic or self:Easy() and stageTwoTimersEasy or stageTwoTimersHeroic
+	stageTwoTimers = self:Mythic() and stageTwoTimersMythic or self:Easy() and stageTwoTimersEasy or stageTwoTimersHeroic
 	wipe(mobCollector)
 
 	self:Bar(240910, 10, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
@@ -229,7 +229,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 		singularityCount = singularityCount + 1
 		local timer = 0
 		if inIntermission then -- Intermission timer
-			if self:Mythic() and phase == 3 then
+			if self:Mythic() and stage == 3 then
 				timer = singularityCount % 2 == 1 and 20 or 10
 			elseif self:Easy() or singularityCount > 2 or self:Mythic() then
 				return -- Only time for 2 during intermission, and only on Heroic +  -- They happen in Mythic but do not all trigger a raid warning
@@ -378,7 +378,7 @@ function mod:FocusedDreadflame()
 	if stage == 1 and focusedDreadflameCount == 2 then
 		self:Bar(238505, self:Mythic() and 39.3 or 13.4)
 	elseif stage == 2 then
-		self:Bar(238505, self:Mythic() and phaseTwoTimersMythic[238505][focusedDreadflameCount] or self:Easy() and 99 or focusedDreadflameCount % 2 == 0 and 46 or 53)
+		self:Bar(238505, self:Mythic() and stageTwoTimersMythic[238505][focusedDreadflameCount] or self:Easy() and 99 or focusedDreadflameCount % 2 == 0 and 46 or 53)
 	elseif stage == 3 then
 		self:Bar(238505, 95)
 	end
@@ -404,7 +404,7 @@ do
 			if stage == 1 and burstingDreadflameCount == 2 then -- Inside Intermission
 				self:Bar(args.spellId, self:Mythic() and 79 or 46)
 			elseif stage == 2 then
-				self:Bar(args.spellId, self:Mythic() and phaseTwoTimersMythic[args.spellId][burstingDreadflameCount] or burstingDreadflameCount == 2 and 48 or burstingDreadflameCount == 3 and 55 or 50)
+				self:Bar(args.spellId, self:Mythic() and stageTwoTimersMythic[args.spellId][burstingDreadflameCount] or burstingDreadflameCount == 2 and 48 or burstingDreadflameCount == 3 and 55 or 50)
 			elseif stage == 3 then
 				self:Bar(args.spellId, burstingDreadflameCount % 2 == 0 and 25 or 70)
 			end
