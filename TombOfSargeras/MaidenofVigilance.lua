@@ -178,10 +178,10 @@ function mod:Infusion(args)
 end
 
 do
-	local function checkSide(self, newSide)
+	local function checkSide(self, newSide, spellName)
 		local sideString = (newSide == 235240 or newSide == 240219) and L.fel or L.light
 		if mySide ~= newSide then
-			self:Message(235271, "Important", "Warning", L.infusionChanged:format(sideString), newSide)
+			self:Message(235271, "Important", "Warning", mySide == 0 and spellName or L.infusionChanged:format(sideString), newSide)
 			self:Flash(235271)
 		else
 			self:Message(235271, "Positive", "Info", L.sameInfusion:format(sideString), newSide)
@@ -196,7 +196,7 @@ do
 		tDeleteItem(lightList, args.destName)
 		if self:Me(args.destGUID) then
 			self:OpenProximity(235271, 5, lightList) -- Avoid people with Light debuff
-			checkSide(self, args.spellId)
+			checkSide(self, args.spellId, args.spellName)
 		end
 	end
 
