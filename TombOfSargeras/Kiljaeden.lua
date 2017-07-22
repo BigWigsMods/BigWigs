@@ -481,8 +481,7 @@ do
 		if self:MobId(guid) == 121193 and not mobCollector[guid] then
 			for i = 1, 5 do
 				if not decieversAddMarks[i] then
-					local markNumber = i == 2 and 7 or i == 3 and 8 or i
-					SetRaidTarget(unit, markNumber)
+					SetRaidTarget(unit, i)
 					decieversAddMarks[i] = guid
 					mobCollector[guid] = true
 					if i == 5 then
