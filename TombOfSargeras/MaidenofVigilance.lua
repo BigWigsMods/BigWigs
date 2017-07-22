@@ -29,6 +29,7 @@ local mySide = 0
 local lightList, felList = {}, {}
 local initialOrbs = nil
 local orbTimers = {8, 8.5, 7.5, 10.5, 11.5, 8.0, 8.0, 10.0}
+local wrathStacks = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -110,6 +111,7 @@ function mod:OnEngage()
 	infusionCounter = 0
 	orbCounter = 1
 	initialOrbs = true
+	wrathStacks = 0
 
 	self:Bar(235271, 2.0) -- Infusion
 	self:Bar(241635, 14.0, L.lightHammer) -- Hammer of Creation
@@ -127,7 +129,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 239153 then -- Spontaneous Fragmentation
 		self:Message(spellId, "Attention", "Alert", self:SpellName(230932))
 		orbCounter = orbCounter + 1
@@ -135,6 +137,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			self:Bar(spellId, 8, CL.count:format(self:SpellName(230932), orbCounter))
 		elseif not initialOrbs then
 			self:Bar(spellId, orbTimers[orbCounter], CL.count:format(self:SpellName(230932), orbCounter))
+		end
+	elseif spellId == 234917 or spellId == 236433 then -- Wrath of the Creators
+		-- Blizzard didn't give us SPELL_AURA_APPLIED_DOSE events for the stacks,
+		-- so we have to count the casts.
+		wrathStacks = wrathStacks + 1
+		if (wrathStacks >= 10 and wrathStacks % 5 == 0) or (wrathStacks >= 25) then -- 10,15,20,25,26,27,28,29,30
+			self:Message(234891, "Urgent", wrathStacks >= 25 and "Alert", CL.count:format(spellName, wrathStacks))
 		end
 	end
 end
@@ -242,6 +251,7 @@ end
 
 function mod:TitanicBulwarkApplied()
 	shieldActive = true
+	wrathStacks = 0
 end
 
 function mod:TitanicBulwarkRemoved(args)
