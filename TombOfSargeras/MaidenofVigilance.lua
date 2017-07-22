@@ -19,7 +19,6 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local shieldActive = false
 local massInstabilityCounter = 0
 local hammerofCreationCounter = 0
 local hammerofObliterationCounter = 0
@@ -94,13 +93,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TitanicBulwarkApplied", 235028) -- Titanic Bulwark
 	self:Log("SPELL_AURA_REMOVED", "TitanicBulwarkRemoved", 235028) -- Titanic Bulwark
 	self:Log("SPELL_CAST_SUCCESS", "WrathoftheCreators", 234891) -- Wrath of the Creators
-	self:Log("SPELL_AURA_APPLIED", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
-	self:Log("SPELL_AURA_APPLIED_DOSE", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
 	self:Log("SPELL_AURA_REMOVED", "WrathoftheCreatorsInterrupted", 234891) -- Wrath of the Creators
 end
 
 function mod:OnEngage()
-	shieldActive = false
 	mySide = 0
 	wipe(lightList)
 	wipe(felList)
@@ -250,23 +246,15 @@ function mod:Blowback(args)
 end
 
 function mod:TitanicBulwarkApplied()
-	shieldActive = true
 	wrathStacks = 0
 end
 
 function mod:TitanicBulwarkRemoved(args)
-	shieldActive = false
 	self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
 end
 
 function mod:WrathoftheCreators(args)
 	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
-end
-
-function mod:WrathoftheCreatorsApplied(args)
-	if self:Interrupter(args.sourceGUID) and not shieldActive then
-		self:Message(234891, "Important", "Warning", args.spellName)
-	end
 end
 
 function mod:WrathoftheCreatorsInterrupted(args)
