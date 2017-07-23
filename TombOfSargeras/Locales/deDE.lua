@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "deDE")
 if L then
-	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
+	L.infobox_title_prisoners = "%d |4Gefangener:Gefangene;"
 
 	L.custom_on_stop_timers = "Fähigkeitsleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Dämonische Inquisition beherrst Zauber, welche von Unterbrechungen und anderen Zauberwirkungen verzögert werden. Wenn diese Option aktiviert ist, bleiben die Leisten dieser Fähigkeiten auf deinem Bildschirm."
@@ -15,8 +15,8 @@ end
 
 L = BigWigs:NewBossLocale("Mistress Sassz'ine", "deDE")
 if L then
-	--L.inks_fed_count = "Ink (%d/%d)"
-	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+	L.inks_fed_count = "Tinte (%d/%d)"
+	L.inks_fed = "Tinte gefüttert: %s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "deDE")
