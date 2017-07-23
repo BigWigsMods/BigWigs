@@ -259,17 +259,9 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 244856 then -- Flaming Orb
-		local orbCounter = flamingOrbCount % 2  == 0 and 2 or (flamingOrbCount % 2)
-		if self:Mythic() then
-			orbCounter = flamingOrbCount % 3  == 0 and 3 or (flamingOrbCount % 3)
-		end
-		self:Message(spellId, "Attention", "Alert", CL.count:format(spellName, orbCounter))
-		flamingOrbCount = flamingOrbCount + 1
-		orbCounter = flamingOrbCount % 2  == 0 and 2 or (flamingOrbCount % 2)
-		if self:Mythic() then
-			orbCounter = flamingOrbCount % 3  == 0 and 3 or (flamingOrbCount % 3)
-		end
-		self:Bar(spellId, self:Mythic() and (flamingOrbCount % 3 == 2 and 15.0 or flamingOrbCount % 3 == 0 and 16.0 or 64) or flamingOrbCount % 2 == 0 and 30 or 64, CL.count:format(spellName, orbCounter))
+		self:Message(spellId, "Attention", "Alert", CL.count:format(spellName, flamingOrbCount))
+		flamingOrbCount = (flamingOrbCount % (self:Mythic() and 3 or 2)) + 1
+		self:Bar(spellId, self:Mythic() and (flamingOrbCount == 2 and 15.0 or flamingOrbCount == 3 and 16.0 or 64) or flamingOrbCount == 2 and 30 or 64, CL.count:format(spellName, flamingOrbCount))
 	end
 end
 
