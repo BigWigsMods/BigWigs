@@ -93,7 +93,7 @@ end
 --
 
 local eruptingMarker = mod:AddMarkerOption(false, "player", 3, 236710, 3, 4, 5) -- Skip marks 1 + 2 for visibility
-local decieverAddMarker = mod:AddMarkerOption(false, "npc", 1, 213867, 1, 2, 3, 4, 5, 6)
+local decieverAddMarker = mod:AddMarkerOption(false, "npc", 1, 213867, 1, 2, 3, 4, 5)
 function mod:GetOptions()
 	return {
 		"stages",
@@ -316,7 +316,7 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:Bar(args.spellId, 8, CL.adds)
+			self:Bar(args.spellId, 8, INLINE_DAMAGER_ICON.." "..CL.adds)
 			if stage == 2 and not self:Mythic() then
 				self:Bar(args.spellId, 112, INLINE_DAMAGER_ICON.." "..L.reflectionErupting)
 			elseif self:Mythic() and stage == 1 then
@@ -440,7 +440,7 @@ end
 do
 	function mod:ShadowReflectionWailing(args)
 		self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert", CL.count:format(L.reflectionWailing, wailingCounter), nil, true)
-		self:TargetBar(args.spellId, 7, args.destName)
+		self:Bar(args.spellId, 7, INLINE_TANK_ICON.." "..CL.add)
 		wailingCounter = wailingCounter + 1
 		local timer = 0
 		if self:Mythic() and stage == 2 then
@@ -586,6 +586,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:Bar(args.spellId, 196.0, INLINE_HEALER_ICON.." "..L.reflectionHopeless)
+			self:Bar(args.spellId, 8, INLINE_HEALER_ICON.." "..CL.adds)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Alert", L.reflectionHopeless)
 		end
 	end
