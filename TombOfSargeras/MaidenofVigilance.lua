@@ -212,7 +212,7 @@ do
 		tDeleteItem(felList, args.destName)
 		if self:Me(args.destGUID) then
 			self:OpenProximity(235271, 5, felList) -- Avoid people with Fel debuff
-			checkSide(self, args.spellId)
+			checkSide(self, args.spellId, args.spellName)
 		end
 	end
 end

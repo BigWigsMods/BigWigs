@@ -257,7 +257,7 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 244856 then -- Flaming Orb
 		self:Message(spellId, "Attention", "Alert", CL.count:format(spellName, flamingOrbCount))
 		flamingOrbCount = (flamingOrbCount % (self:Mythic() and 3 or 2)) + 1
