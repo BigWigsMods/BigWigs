@@ -364,19 +364,19 @@ function mod:NetherGale(args)
 	wailingCounter = 1
 
 	-- First Intermission
-	self:Bar(240910, self:Mythic() and 6.5 or 6.1, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
-	self:Bar(238430, self:Mythic() and 10.1 or 7.7) -- Bursting Dreadflame
+	self:CDBar(240910, self:Mythic() and 6.5 or 6.1, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
+	self:CDBar(238430, self:Mythic() and 10.1 or 7.7) -- Bursting Dreadflame
 	if not self:Easy() then -- During intermission only on Heroic +
-		self:Bar(235059, self:Mythic() and 14 or 13.3, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
+		self:CDBar(235059, self:Mythic() and 14 or 13.3, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	end
-	self:Bar(238505, self:Mythic() and 28.7 or 24.6) -- Focused Dreadflame
-	self:Bar("stages", self:Mythic() and 94.8 or 60.2, CL.intermission, args.spellId) -- Intermission Duration
+	self:CDBar(238505, self:Mythic() and 28.7 or 24.6) -- Focused Dreadflame
+	self:CDBar("stages", self:Mythic() and 94.8 or 60.2, CL.intermission, args.spellId) -- Intermission Duration
 end
 
 function mod:FocusedDreadflame()
 	focusedDreadflameCount = focusedDreadflameCount + 1
 	if stage == 1 and focusedDreadflameCount == 2 then
-		self:Bar(238505, self:Mythic() and 39.3 or 13.4)
+		self:CDBar(238505, self:Mythic() and 39.3 or 13.4)
 	elseif stage == 2 then
 		self:Bar(238505, self:Mythic() and stageTwoTimersMythic[238505][focusedDreadflameCount] or self:Easy() and 99 or focusedDreadflameCount % 2 == 0 and 46 or 53)
 	elseif stage == 3 then
@@ -402,7 +402,7 @@ do
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Warning")
 			burstingDreadflameCount = burstingDreadflameCount + 1
 			if stage == 1 and burstingDreadflameCount == 2 then -- Inside Intermission
-				self:Bar(args.spellId, self:Mythic() and 79 or 46)
+				self:CDBar(args.spellId, self:Mythic() and 79 or 46)
 			elseif stage == 2 then
 				self:Bar(args.spellId, self:Mythic() and stageTwoTimersMythic[args.spellId][burstingDreadflameCount] or burstingDreadflameCount == 2 and 48 or burstingDreadflameCount == 3 and 55 or 50)
 			elseif stage == 3 then
