@@ -193,12 +193,12 @@ function mod:OnEngage()
 
 	self:Bar(240910, 10, CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	if not self:Easy() then
-		self:Bar(236710, self:Mythic() and 18.5 or 20, L.reflectionErupting) -- Shadow Reflection: Erupting
+		self:Bar(236710, self:Mythic() and 18.5 or 20, INLINE_DAMAGER_ICON.." "..L.reflectionErupting) -- Shadow Reflection: Erupting
 	end
 	self:Bar(239932, 25) -- Fel Claws
 	self:Bar(235059, self:Mythic() and 55 or 58, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	if self:Mythic() then
-		self:Bar(236378, 55, CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
+		self:Bar(236378, 55, INLINE_TANK_ICON.." "..CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
 		self:Berserk(840)
 	else
 		self:Berserk(600)
@@ -318,9 +318,9 @@ do
 		if #playerList == 1 then
 			self:Bar(args.spellId, 8, CL.adds)
 			if stage == 2 and not self:Mythic() then
-				self:Bar(args.spellId, 112, L.reflectionErupting)
+				self:Bar(args.spellId, 112, INLINE_DAMAGER_ICON.." "..L.reflectionErupting)
 			elseif self:Mythic() and stage == 1 then
-				self:Bar(args.spellId, 109, L.reflectionErupting)
+				self:Bar(args.spellId, 109, INLINE_DAMAGER_ICON.." "..L.reflectionErupting)
 			end
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Alert", L.reflectionErupting)
 		end
@@ -352,9 +352,9 @@ function mod:NetherGale(args)
 
 	self:StopBar(CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	self:StopBar(CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
-	self:StopBar(L.reflectionErupting) -- Shadow Reflection: Erupting
+	self:StopBar(INLINE_DAMAGER_ICON.." "..L.reflectionErupting) -- Shadow Reflection: Erupting
 	self:StopBar(239932) -- Fel Claws
-	self:StopBar(CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
+	self:StopBar(INLINE_TANK_ICON.." "..CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
 
 	inIntermission = true
 	singularityCount = 1
@@ -423,16 +423,16 @@ function mod:NetherGaleRemoved() -- Stage 2
 	felclawsCount = 0 -- Start at 0 to get timers correct
 
 	self:Bar(239932, 10.4) -- Felclaws
-	self:Bar(236710, self:Mythic() and 164 or 13.9, L.reflectionErupting) -- Shadow Reflection: Erupting
+	self:Bar(236710, self:Mythic() and 164 or 13.9, INLINE_DAMAGER_ICON.." "..L.reflectionErupting) -- Shadow Reflection: Erupting
 	self:Bar(238505, self:Easy() and 76.4 or 30.4) -- Focused Dreadflame
 	if not self:Easy() then
-		self:Bar(236378, self:Mythic() and 49.4 or 48.4, CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
+		self:Bar(236378, self:Mythic() and 49.4 or 48.4, INLINE_TANK_ICON.." "..CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
 	end
 	self:Bar(240910, stageTwoTimers[240910][armageddonCount], CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
 	self:Bar(238430, 52.4) -- Bursting Dreadflame
 	self:Bar(235059, stageTwoTimers[235059][singularityCount], CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 	if self:Mythic() then
-		self:Bar(237590, 27) -- Shadow Reflection: Hopeless
+		self:Bar(237590, 27, INLINE_HEALER_ICON.." "..L.reflectionHopeless) -- Shadow Reflection: Hopeless
 	end
 end
 
@@ -448,7 +448,7 @@ do
 		else
 			timer = 114
 		end
-		self:Bar(args.spellId, timer, CL.count:format(L.reflectionWailing, wailingCounter)) -- Not seen 2nd add in P1
+		self:Bar(args.spellId, timer, INLINE_TANK_ICON.." "..CL.count:format(L.reflectionWailing, wailingCounter)) -- Not seen 2nd add in P1
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
 			self:Say(args.spellId, L.reflectionWailing)
@@ -498,13 +498,13 @@ do
 		inIntermission = true
 		self:Message("stages", "Positive", "Long", CL.intermission, false)
 		self:StopBar(CL.count:format(self:SpellName(240910), armageddonCount)) -- Armageddon
-		self:StopBar(L.reflectionErupting) -- Shadow Reflection: Erupting
-		self:StopBar(CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
+		self:StopBar(INLINE_DAMAGER_ICON.." "..L.reflectionErupting) -- Shadow Reflection: Erupting
+		self:StopBar(INLINE_TANK_ICON.." "..CL.count:format(L.reflectionWailing, wailingCounter)) -- Shadow Reflection: Wailing
 		self:StopBar(239932) -- Fel Claws
 		self:StopBar(238430) -- Bursting Dreadflame
 		self:StopBar(238505) -- Focused Dreadflame
 		self:StopBar(CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
-		self:StopBar(L.reflectionHopeless) -- Shadow Reflection: Hopeless
+		self:StopBar(INLINE_HEALER_ICON.." "..L.reflectionHopeless) -- Shadow Reflection: Hopeless
 
 		singularityCount = 1
 		self:Bar(235059, 19.1, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
@@ -585,7 +585,7 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:Bar(args.spellId, 196.0, L.reflectionHopeless)
+			self:Bar(args.spellId, 196.0, INLINE_HEALER_ICON.." "..L.reflectionHopeless)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Alert", L.reflectionHopeless)
 		end
 	end
