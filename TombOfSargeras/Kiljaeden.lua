@@ -2,7 +2,6 @@
 --------------------------------------------------------------------------------
 -- TODO List:
 -- Rift Activating Timer
--- Count how many adds died in intermission 2?
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -12,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Kil'jaeden", 1147, 1898)
 if not mod then return end
 mod:RegisterEnableMob(117269)
 mod.engageId = 2051
-mod.respawnTime = 30 -- XXX Unconfirmed
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -260,9 +259,17 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 244856 then -- Flaming Orb
-		self:Message(spellId, "Attention", "Alert")
+		local orbCounter = flamingOrbCount % 2  == 0 and 2 or (flamingOrbCount % 2)
+		if self:Mythic() then
+			orbCounter = flamingOrbCount % 3  == 0 and 3 or (flamingOrbCount % 3)
+		end
+		self:Message(spellId, "Attention", "Alert", CL.count:format(spellName, orbCounter))
 		flamingOrbCount = flamingOrbCount + 1
-		self:Bar(spellId, flamingOrbCount % 2 == 0 and 30 or 64)
+		orbCounter = flamingOrbCount % 2  == 0 and 2 or (flamingOrbCount % 2)
+		if self:Mythic() then
+			orbCounter = flamingOrbCount % 3  == 0 and 3 or (flamingOrbCount % 3)
+		end
+		self:Bar(spellId, self:Mythic() and (flamingOrbCount % 3 == 2 and 15.0 or flamingOrbCount % 3 == 0 and 16.0 or 64) or flamingOrbCount % 2 == 0 and 30 or 64, CL.count:format(spellName, orbCounter))
 	end
 end
 
@@ -380,7 +387,7 @@ function mod:FocusedDreadflame()
 	elseif stage == 2 then
 		self:Bar(238505, self:Mythic() and stageTwoTimersMythic[238505][focusedDreadflameCount] or self:Easy() and 99 or focusedDreadflameCount % 2 == 0 and 46 or 53)
 	elseif stage == 3 then
-		self:Bar(238505, 95)
+		self:Bar(238505, self:Mythic() and (focusedDreadflameCount % 2 == 0 and 36 or 59) or 95)
 	end
 end
 
@@ -406,7 +413,7 @@ do
 			elseif stage == 2 then
 				self:Bar(args.spellId, self:Mythic() and stageTwoTimersMythic[args.spellId][burstingDreadflameCount] or burstingDreadflameCount == 2 and 48 or burstingDreadflameCount == 3 and 55 or 50)
 			elseif stage == 3 then
-				self:Bar(args.spellId, burstingDreadflameCount % 2 == 0 and 25 or 70)
+				self:Bar(args.spellId, self:Mythic() and (burstingDreadflameCount % 2 == 0 and 52 or 43) or burstingDreadflameCount % 2 == 0 and 25 or 70)
 			end
 		end
 	end
@@ -528,10 +535,10 @@ do
 		self:Bar(239932, 11) -- Felclaws
 		self:Bar(243982, 15) -- Tear Rift
 		if not self:Easy() then
-			self:Bar(244856, 30) -- Flaming Orb
+			self:Bar(244856, self:Mythic() and 40 or 30, CL.count:format(self:SpellName(244856), flamingOrbCount)) -- Flaming Orb
 		end
-		self:Bar(238430, 42) -- Bursting Dreadflame
-		self:Bar(238505, 80) -- Focused Dreadflame
+		self:Bar(238430, self:Mythic() and 30 or 42) -- Bursting Dreadflame
+		self:Bar(238505, self:Mythic() and 48 or 80) -- Focused Dreadflame
 	end
 end
 
