@@ -362,7 +362,7 @@ do
 
 	function mod:SoulbindRemoved(args)
 		if self:Me(args.destGUID) then
-			self:TargetMessage(args.spellId, args.destName, "Positive", "Long", CL.link_removed)
+			self:Message(args.spellId, "Positive", "Long", CL.link_removed)
 		end
 		if self:GetOption(soulBindMarker) then
 			SetRaidTarget(args.destName, 0)
