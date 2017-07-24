@@ -66,3 +66,9 @@ L.trash = "일반몹"
 L.marker = "%s 징표 표시"
 L.marker_player_desc = "%s에 영향받는 플레이어를 %s|1으로;로; 징표 표시합니다, 부공격대장 이상의 권한이 필요합니다."
 L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 표시합니다, 부공격대장 이상의 권한이 필요합니다."
+
+-- Ability where two players have to move close to each other
+--L.link = "Linked with %s"
+--L.link_short = "Linked: %s"
+--L.link_both = "%s linked with %s"
+--L.link_removed = "Link removed"

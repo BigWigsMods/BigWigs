@@ -56,3 +56,9 @@ L.active = "Aktiv" -- When a boss becomes active, after speech finishes
 L.marker = "%s markieren"
 L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s, benötigt Leiter oder Assistent."
 L.marker_npc_desc = "Markiert %s mit %s, benötigt Leiter oder Assistent."
+
+-- Ability where two players have to move close to each other
+--L.link = "Linked with %s"
+--L.link_short = "Linked: %s"
+--L.link_both = "%s linked with %s"
+--L.link_removed = "Link removed"

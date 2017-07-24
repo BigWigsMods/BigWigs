@@ -56,3 +56,9 @@ L.you = "%s на ТЕБЕ"
 L.marker = "метка %s"
 L.marker_player_desc = "Отмечать игроков, затронутых %s меткой %s, требуется быть помощником или лидером рейда."
 L.marker_npc_desc = "Отмечать %s метрой %s, требуется быть помощником или лидером рейда."
+
+-- Ability where two players have to move close to each other
+--L.link = "Linked with %s"
+--L.link_short = "Linked: %s"
+--L.link_both = "%s linked with %s"
+--L.link_removed = "Link removed"

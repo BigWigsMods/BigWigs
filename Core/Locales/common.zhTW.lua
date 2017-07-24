@@ -56,3 +56,9 @@ L.active = "激活" -- When a boss becomes active, after speech finishes
 L.marker = "%s標記"
 L.marker_player_desc = "標記受到 %s 影響的玩家為 %s，需要權限。"
 L.marker_npc_desc = "標記 %s 為 %s，需要權限。"
+
+-- Ability where two players have to move close to each other
+--L.link = "Linked with %s"
+--L.link_short = "Linked: %s"
+--L.link_both = "%s linked with %s"
+--L.link_removed = "Link removed"
