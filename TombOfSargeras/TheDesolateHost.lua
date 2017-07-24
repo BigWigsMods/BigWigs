@@ -31,6 +31,7 @@ local tormentedCriesCounter = 1
 local wailingSoulsCounter = 1
 local boneArmorCounter = 0
 local updateProximity = nil
+local updateRealms = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -81,6 +82,7 @@ end
 
 function mod:OnBossEnable()
 	-- General
+	updateRealms(self)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
 	self:Log("SPELL_CAST_SUCCESS", "Quietus", 236507)
 	self:Log("SPELL_AURA_APPLIED", "SpiritualBarrier", 235732)
@@ -118,25 +120,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	-- Dissonance Handling
-	wipe(phasedList)
-	wipe(unphasedList)
-	for unit in self:IterateGroup() do
-		local buffCheck = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
-		local guid = UnitGUID(unit)
-		if buffCheck then
-			phasedList[#phasedList+1] = self:UnitName(unit)
-			if self:Me(guid) then
-				myRealm = 1 -- Spirit Realm
-			end
-		else
-			unphasedList[#unphasedList+1] = self:UnitName(unit)
-			if self:Me(guid) then
-				myRealm = 0 -- Corporeal Realm
-			end
-		end
-	end
-
+	updateRealms(self)
+	
 	if not self:Easy() then -- No Dissonance in LFR/Normal
 		updateProximity(self)
 	end
@@ -194,6 +179,27 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 
 		self:CDBar(236542, 17) -- Sundering Doom
 		self:CDBar(236544, 28) -- Doomed Sundering
+	end
+end
+
+function updateRealms(self)
+	-- Dissonance Handling
+	wipe(phasedList)
+	wipe(unphasedList)
+	for unit in self:IterateGroup() do
+		local buffCheck = UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
+		local guid = UnitGUID(unit)
+		if buffCheck then
+			phasedList[#phasedList+1] = self:UnitName(unit)
+			if self:Me(guid) then
+				myRealm = 1 -- Spirit Realm
+			end
+		else
+			unphasedList[#unphasedList+1] = self:UnitName(unit)
+			if self:Me(guid) then
+				myRealm = 0 -- Corporeal Realm
+			end
+		end
 	end
 end
 
@@ -303,19 +309,17 @@ do
 end
 
 function mod:BonecageArmor(args)
-	if not self:GetOption("custom_on_mythic_armor") and not self:MobId(args.destGUID) == 118715 then -- Reanimated Templar
-		boneArmorCounter = boneArmorCounter + 1
-		self:Message(args.spellId, "Important", "Alert", CL.count:format(args.spellName, boneArmorCounter))
-		self:SetInfo("infobox", 2, boneArmorCounter)
-	end
+	if self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end-- Reanimated Templar
+	boneArmorCounter = boneArmorCounter + 1
+	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.spellName, boneArmorCounter))
+	self:SetInfo("infobox", 2, boneArmorCounter)
 end
 
 function mod:BonecageArmorRemoved(args)
-	if not self:GetOption("custom_on_mythic_armor") and not self:MobId(args.destGUID) == 118715 then -- Reanimated Templar
-		boneArmorCounter = boneArmorCounter - 1
-		self:Message(args.spellId, "Positive", "Info", L.armor_remaining:format(args.spellName, boneArmorCounter))
-		self:SetInfo("infobox", 2, boneArmorCounter)
-	end
+	if self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end-- Reanimated Templar
+	boneArmorCounter = boneArmorCounter - 1
+	self:Message(args.spellId, "Positive", "Info", L.armor_remaining:format(args.spellName, boneArmorCounter))
+	self:SetInfo("infobox", 2, boneArmorCounter)
 end
 
 function mod:Wither(args)
