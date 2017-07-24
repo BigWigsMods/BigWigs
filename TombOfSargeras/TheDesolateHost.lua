@@ -5,9 +5,7 @@
 -- TODO List:
 -- - Shattering Scream: Find target before debuffs, without spamming? (current method allows for kicks before warnings)
 -- - Add wave timers (no spell info)
--- - Make sure phase check count works properly on pull XXX
 -- - Stop Bars when initial bosses die (Spear/Bind/Collapsing Fissure)
--- - Add warnings when standing in stuff (Collapsing Fissure, Tormented Cries)
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -309,14 +307,14 @@ do
 end
 
 function mod:BonecageArmor(args)
-	if self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
+	if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
 	boneArmorCounter = boneArmorCounter + 1
 	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.spellName, boneArmorCounter))
 	self:SetInfo("infobox", 2, boneArmorCounter)
 end
 
 function mod:BonecageArmorRemoved(args)
-	if self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
+	if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
 	boneArmorCounter = boneArmorCounter - 1
 	self:Message(args.spellId, "Positive", "Info", L.armor_remaining:format(args.spellName, boneArmorCounter))
 	self:SetInfo("infobox", 2, boneArmorCounter)
