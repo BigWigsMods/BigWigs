@@ -350,9 +350,9 @@ do
 				SetRaidTarget(args.destName, 4)
 			end
 			if self:Me(args.destGUID) then
-				self:Message(args.spellId, "Positive", "Warning", CL.link:format(list[1]))
+				self:Message(args.spellId, "Personal", "Warning", CL.link:format(list[1]))
 			elseif linkOnMe then
-				self:Message(args.spellId, "Positive", "Warning", CL.link:format(list[2]))
+				self:Message(args.spellId, "Personal", "Warning", CL.link:format(list[2]))
 			elseif not self:CheckOption(args.spellId, "ME_ONLY") then
 				self:Message(args.spellId, "Positive", "Info", CL.link_both:format(list[1], list[2]))
 			end
@@ -362,7 +362,7 @@ do
 
 	function mod:SoulbindRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Positive", "Long", CL.link_removed)
+			self:Message(args.spellId, "Personal", "Long", CL.link_removed)
 		end
 		if self:GetOption(soulBindMarker) then
 			SetRaidTarget(args.destName, 0)
