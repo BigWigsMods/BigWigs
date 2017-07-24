@@ -30,6 +30,7 @@ local wailingSoulsCounter = 1
 local boneArmorCounter = 0
 local updateProximity = nil
 local updateRealms = nil
+local soulList = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -128,6 +129,7 @@ function mod:OnEngage()
 	boneArmorCounter = 0
 	tormentedCriesCounter = 1
 	wailingSoulsCounter = 1
+	wipe(soulList)
 
 	self:OpenInfo("infobox")
 	self:SetInfo("infobox", 1, self:SpellName(55336)) -- Bone Armor (Shorter Text)
@@ -327,10 +329,10 @@ function mod:Wither(args)
 end
 
 do
-	local list, linkOnMe = mod:NewTargetList(), nil
+	local linkOnMe = false
 	function mod:Soulbind(args)
-		list[#list+1] = args.destName
-		if #list == 1 then
+		soulList[#soulList+1] = args.destName
+		if #soulList == 1 then
 			local t = stage == 2 and 20 or 25
 			if self:Easy() then
 				t = stage == 2 and 24 or 34
@@ -343,28 +345,28 @@ do
 				SetRaidTarget(args.destName, 3)
 			end
 			linkOnMe = self:Me(args.destGUID)
-		elseif #list == 2 then -- Announce at 2
+		elseif #soulList == 2 then -- Announce at 2
 			if self:GetOption(soulBindMarker) then
 				SetRaidTarget(args.destName, 4)
 			end
 			if self:Me(args.destGUID) then
-				self:Message(args.spellId, "Personal", "Warning", CL.link:format(list[1]))
+				self:Message(args.spellId, "Personal", "Warning", CL.link:format(soulList[1]))
 			elseif linkOnMe then
-				self:Message(args.spellId, "Personal", "Warning", CL.link:format(list[2]))
+				self:Message(args.spellId, "Personal", "Warning", CL.link:format(soulList[2]))
 			elseif not self:CheckOption(args.spellId, "ME_ONLY") then
-				self:Message(args.spellId, "Positive", "Info", CL.link_both:format(list[1], list[2]))
+				self:Message(args.spellId, "Positive", "Info", CL.link_both:format(soulList[1], soulList[2]))
 			end
-			wipe(list)
+			wipe(soulList)
 		end
 	end
+end
 
-	function mod:SoulbindRemoved(args)
-		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Personal", "Long", CL.link_removed)
-		end
-		if self:GetOption(soulBindMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+function mod:SoulbindRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Personal", "Long", CL.link_removed)
+	end
+	if self:GetOption(soulBindMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
