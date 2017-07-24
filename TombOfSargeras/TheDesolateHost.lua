@@ -62,7 +62,7 @@ function mod:GetOptions()
 		236513, -- Bonecage Armor
 		"custom_on_mythic_armor",
 		236131, -- Wither
-		236459, -- Soulbind
+		{236459, "ME_ONLY"}, -- Soulbind
 		soulBindMarker,
 		236072, -- Wailing Souls
 		{236515, "ME_ONLY"}, -- Shattering Scream
@@ -329,22 +329,13 @@ function mod:Wither(args)
 end
 
 do
-	local list, scheduled = mod:NewTargetList(), nil
+	local list, linkOnMe = mod:NewTargetList(), nil
 	function mod:Soulbind(args)
 		list[#list+1] = args.destName
-		if #list == 2 then -- Announce at 2
-			if self:GetOption(soulBindMarker) then
-				SetRaidTarget(args.destName, 4)
-			end
-			self:CancelTimer(scheduled)
-			self:TargetMessage(args.spellId, list, "Positive", "Warning")
-		elseif #list == 1 then
-			scheduled = self:ScheduleTimer("TargetMessage", 0.5, args.spellId, list, "Positive", "Warning")
-			local t = 0
+		if #list == 1 then
+			local t = stage == 2 and 20 or 25
 			if self:Easy() then
 				t = stage == 2 and 24 or 34
-			else
-				t = stage == 2 and 20 or 25
 			end
 			if stage ~= 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
 				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
@@ -353,12 +344,25 @@ do
 			if self:GetOption(soulBindMarker) then
 				SetRaidTarget(args.destName, 3)
 			end
+			linkOnMe = self:Me(args.destGUID)
+		elseif #list == 2 then -- Announce at 2
+			if self:GetOption(soulBindMarker) then
+				SetRaidTarget(args.destName, 4)
+			end
+			if self:Me(args.destGUID) then
+				self:Message(args.spellId, "Positive", "Warning", CL.link:format(list[1]))
+			elseif linkOnMe then
+				self:Message(args.spellId, "Positive", "Warning", CL.link:format(list[2]))
+			elseif not self:CheckOption(args.spellId, "ME_ONLY") then
+				self:Message(args.spellId, "Positive", "Info", CL.link_both:format(list[1], list[2]))
+			end
+			wipe(list)
 		end
 	end
 
 	function mod:SoulbindRemoved(args)
 		if self:Me(args.destGUID) then
-			self:TargetMessage(args.spellId, args.destName, "Positive", "Long", CL.removed:format(args.spellName))
+			self:TargetMessage(args.spellId, args.destName, "Positive", "Long", CL.link_removed)
 		end
 		if self:GetOption(soulBindMarker) then
 			SetRaidTarget(args.destName, 0)
