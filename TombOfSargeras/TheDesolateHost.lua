@@ -40,6 +40,8 @@ local L = mod:GetLocale()
 if L then
 	L.infobox_players = "Players"
 	L.armor_remaining = "%s Remaining (%d)" -- Bonecage Armor Remaining (#)
+	L.custom_on_mythic_armor = "Ignore Bonecage Armor on Reanimated Templars in Mythic Difficulty"
+	L.custom_on_mythic_armor_desc = "Leave this option enabled if you are offtanking Reanimated Templars to ignore warnings and counting the Bonecage Armor on the Ranimated Templars"
 	L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
 end
 --------------------------------------------------------------------------------
@@ -57,6 +59,7 @@ function mod:GetOptions()
 		{238570, "SAY", "ICON"}, -- Tormented Cries
 		235927, -- Rupturing Slam
 		236513, -- Bonecage Armor
+		"custom_on_mythic_armor",
 		236131, -- Wither
 		236459, -- Soulbind
 		soulBindMarker,
@@ -70,7 +73,7 @@ function mod:GetOptions()
 		["infobox"] = "general",
 		[235933] = -14856,-- Corporeal Realm
 		[235927] = CL.adds,-- Adds
-		[236340] = -14857,-- Spirit Realm
+		[236131] = -14857,-- Spirit Realm
 		[236515] = CL.adds,-- Adds
 		[236542] = -14970, -- Tormented Souls
 	}
@@ -300,15 +303,19 @@ do
 end
 
 function mod:BonecageArmor(args)
-	boneArmorCounter = boneArmorCounter + 1
-	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.spellName, boneArmorCounter))
-	self:SetInfo("infobox", 2, boneArmorCounter)
+	if not self:GetOption("custom_on_mythic_armor") and not self:MobId(args.destGUID) == 118715 then -- Reanimated Templar
+		boneArmorCounter = boneArmorCounter + 1
+		self:Message(args.spellId, "Important", "Alert", CL.count:format(args.spellName, boneArmorCounter))
+		self:SetInfo("infobox", 2, boneArmorCounter)
+	end
 end
 
 function mod:BonecageArmorRemoved(args)
-	boneArmorCounter = boneArmorCounter - 1
-	self:Message(args.spellId, "Positive", "Info", L.armor_remaining:format(args.spellName, boneArmorCounter))
-	self:SetInfo("infobox", 2, boneArmorCounter)
+	if not self:GetOption("custom_on_mythic_armor") and not self:MobId(args.destGUID) == 118715 then -- Reanimated Templar
+		boneArmorCounter = boneArmorCounter - 1
+		self:Message(args.spellId, "Positive", "Info", L.armor_remaining:format(args.spellName, boneArmorCounter))
+		self:SetInfo("infobox", 2, boneArmorCounter)
+	end
 end
 
 function mod:Wither(args)
