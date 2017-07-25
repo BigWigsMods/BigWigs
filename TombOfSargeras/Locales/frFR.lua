@@ -7,6 +7,9 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "frFR")
 if L then
+	L.custom_on_fixate_plates = "Icône Fixer sur les barres d'info des ennemis"
+	L.custom_on_fixate_plates_desc = "Affiche une icône sur la barre d'info de la cible qui est fixée sur vous.\nNécessite l'utlisation des barres d'info des ennemis. Cette fonctionnalité est actuellement uniquement supportée par KuiNameplates."
+
 	L.infobox_title_prisoners = "%d |4prisonnier:prisonniers;"
 
 	L.custom_on_stop_timers = "Toujours afficher les barres de capacité"

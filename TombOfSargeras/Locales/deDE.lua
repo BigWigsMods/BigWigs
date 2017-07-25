@@ -7,6 +7,9 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "deDE")
 if L then
+	L.custom_on_fixate_plates = "Fixiert-Symbol auf Gegnerischen Namensplaketten"
+	L.custom_on_fixate_plates_desc = "Zeigt ein Symbol auf der Namensplakette des Gegerns, der sich auf dich fixiert hat.\nErfordert die Verwendung von Gegnerischen Namensplaketten. Diese Funktion wird derzeit nur von KuiNameplates unterstützt."
+
 	L.infobox_title_prisoners = "%d |4Gefangener:Gefangene;"
 
 	L.custom_on_stop_timers = "Fähigkeitsleisten immer anzeigen"

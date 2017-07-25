@@ -7,6 +7,9 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "koKR")
 if L then
+	L.custom_on_fixate_plates = "적 이름표에 시선 고정 아이콘"
+	L.custom_on_fixate_plates_desc = "당신에게 시선을 고정한 대상 이름표에 아이콘을 표시합니다.\n적 이름표를 사용해야 합니다. 이 기능은 현재 KuiNameplates만 지원합니다."
+
 	L.infobox_title_prisoners = "%d 죄수"
 
 	L.custom_on_stop_timers = "능력 바 항상 표시"

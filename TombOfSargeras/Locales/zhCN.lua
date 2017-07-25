@@ -7,6 +7,9 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "zhCN")
 if L then
+	L.custom_on_fixate_plates = "敌对姓名板凝视图标"
+	L.custom_on_fixate_plates_desc = "当你被凝视时在目标姓名板上显示一个图标。\n需要使用敌对姓名板。此功能当前只支持 KuiNameplates。"
+
 	L.infobox_title_prisoners = "%d 囚徒"
 
 	L.custom_on_stop_timers = "总是显示技能条"

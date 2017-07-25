@@ -42,6 +42,10 @@ if L then
 	L.fixate_desc = -15307
 	L.fixate_icon = 41951
 
+	L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
+	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates_icon = L.fixate_icon
+
 	L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
 
 	L.custom_on_stop_timers = "Always show ability bars"
@@ -71,6 +75,7 @@ function mod:GetOptions()
 		235230, -- Fel Squall
 		248713, -- Soul Corruption
 		{"fixate", "FLASH"},
+		"custom_on_fixate_plates",
 	},{
 		[236283] = "general",
 		[233426] = -14645, -- Atrigan
@@ -105,6 +110,10 @@ function mod:OnBossEnable()
 
 	-- Tormented Soul
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SoulCorruption", 248713)
+
+	if self:Mythic() and self:GetOption("custom_on_fixate_plates") then
+		self:ShowPlates()
+	end
 end
 
 function mod:OnEngage()
@@ -135,8 +144,14 @@ function mod:OnEngage()
 
 	self:Berserk(480, true, nil, 248671, 248671) -- confirmed for nm/hc/my - 248671 has a nice description, 248669 is the aura applied
 
-	if self:Mythic() and self:GetOption("fixate") > 0 then
+	if self:Mythic() and (self:GetOption("fixate") > 0 or self:GetOption("custom_on_fixate_plates")) then
 		self:RegisterTargetEvents("CheckForFixate")
+	end
+end
+
+function mod:OnBossDisable()
+	if self:Mythic() and self:GetOption("custom_on_fixate_plates") then
+		self:HidePlates()
 	end
 end
 
@@ -146,10 +161,13 @@ end
 
 function mod:CheckForFixate(_, unit, guid)
 	local mobId = self:MobId(guid)
-	if mobId == 23498 and not fixateList[guid] and self:Me(UnitGUID(unit.."target")) then -- Tormented Fragment
+	if mobId == 121138 and not fixateList[guid] and self:Me(UnitGUID(unit.."target")) then -- Tormented Fragment
 		fixateList[guid] = true
 		self:Flash("fixate", 41951)
 		self:Message("fixate", "Personal", "Long", CL.you:format(self:SpellName(41951)), 41951) -- 41951 = "Fixate"
+		if self:GetOption("custom_on_fixate_plates") then
+			self:AddPlateIcon(41951, guid)
+		end
 	end
 end
 
