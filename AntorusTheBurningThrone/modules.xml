@@ -1,0 +1,16 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="GarothiWorldbreaker.lua"/>
+<Script file="FelhoundsofSargeras.lua"/>
+<Script file="WarCouncil.lua"/>
+<Script file="PortalKeeperHasabel.lua"/>
+<Script file="EonartheLifeBinder.lua"/>
+<Script file="ImonartheSoulhunter.lua"/>
+<Script file="Kingaroth.lua"/>
+<Script file="Varimathras.lua"/>
+<Script file="TheCovenofShivarra.lua"/>
+<Script file="Aggramar.lua"/>
+<Script file="ArgustheUnmaker.lua"/>
+
+</Ui>

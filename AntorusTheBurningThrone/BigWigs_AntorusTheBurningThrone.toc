@@ -1,0 +1,33 @@
+## Interface: 70200
+
+## Title: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-deDE: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-esES: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-esMX: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-frFR: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-ruRU: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-zhCN: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-zhTW: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-itIT: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-ptBR: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-koKR: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Notes: BigWigs Antorus, The Burning Throne Modules
+## Notes-deDE: BigWigs Antorus, The Burning Throne Modules
+## Notes-esES: BigWigs Antorus, The Burning Throne Modules
+## Notes-esMX: BigWigs Antorus, The Burning Throne Modules
+## Notes-frFR: BigWigs Antorus, The Burning Throne Modules
+## Notes-ruRU: BigWigs Antorus, The Burning Throne Modules
+## Notes-zhCN: BigWigs Antorus, The Burning Throne Modules
+## Notes-zhTW: BigWigs Antorus, The Burning Throne Modules
+## Notes-itIT: TBigWigs Antorus, The Burning Throne Modules
+## Notes-ptBR: BigWigs Antorus, The Burning Throne Modules
+## Notes-koKR: BigWigs Antorus, The Burning Throne Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-ZoneId: 1712
+
+modules.xml
+locales.xml
