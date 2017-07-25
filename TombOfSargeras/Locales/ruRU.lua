@@ -7,6 +7,9 @@ end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "ruRU")
 if L then
+	L.custom_on_fixate_plates = "Иконка фиксации на вражеских неймплейтах"
+	L.custom_on_fixate_plates_desc = "Показывать иконку цели, которая на вас навелась.\nТребуется чтобы вражеские неймплейты были включены. Эта функция пока поддерживается только аддоном KuiNameplates."
+
 	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
 
 	L.custom_on_stop_timers = "Всегда показывать полосы для способностей"

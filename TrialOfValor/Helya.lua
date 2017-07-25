@@ -259,7 +259,8 @@ function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 		msg = msg:gsub("|T[^|]+|t", "")
 		self:Message(228730, "Urgent", "Long", CL.count:format(msg:format(npcname), tentacleMsgCount), 228730)
 		tentacleMsgCount = tentacleMsgCount + 1
-		BigWigs:Print("Missing translation for tentacle strike.") -- XXX temp
+		BigWigs:Print("Missing translation for tentacle strike. Please report it on Discord/Curse/GitHub.") -- XXX temp
+		BigWigs:Error(("TELL THE AUTHORS: %s"):format(msg))
 	end
 end
 

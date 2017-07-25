@@ -19,7 +19,6 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local shieldActive = false
 local massInstabilityCounter = 0
 local hammerofCreationCounter = 0
 local hammerofObliterationCounter = 0
@@ -29,6 +28,7 @@ local mySide = 0
 local lightList, felList = {}, {}
 local initialOrbs = nil
 local orbTimers = {8, 8.5, 7.5, 10.5, 11.5, 8.0, 8.0, 10.0}
+local wrathStacks = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -93,13 +93,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TitanicBulwarkApplied", 235028) -- Titanic Bulwark
 	self:Log("SPELL_AURA_REMOVED", "TitanicBulwarkRemoved", 235028) -- Titanic Bulwark
 	self:Log("SPELL_CAST_SUCCESS", "WrathoftheCreators", 234891) -- Wrath of the Creators
-	self:Log("SPELL_AURA_APPLIED", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
-	self:Log("SPELL_AURA_APPLIED_DOSE", "WrathoftheCreatorsApplied", 237339) -- Wrath of the Creators
 	self:Log("SPELL_AURA_REMOVED", "WrathoftheCreatorsInterrupted", 234891) -- Wrath of the Creators
 end
 
 function mod:OnEngage()
-	shieldActive = false
 	mySide = 0
 	wipe(lightList)
 	wipe(felList)
@@ -110,6 +107,7 @@ function mod:OnEngage()
 	infusionCounter = 0
 	orbCounter = 1
 	initialOrbs = true
+	wrathStacks = 0
 
 	self:Bar(235271, 2.0) -- Infusion
 	self:Bar(241635, 14.0, L.lightHammer) -- Hammer of Creation
@@ -127,7 +125,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 239153 then -- Spontaneous Fragmentation
 		self:Message(spellId, "Attention", "Alert", self:SpellName(230932))
 		orbCounter = orbCounter + 1
@@ -135,6 +133,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			self:Bar(spellId, 8, CL.count:format(self:SpellName(230932), orbCounter))
 		elseif not initialOrbs then
 			self:Bar(spellId, orbTimers[orbCounter], CL.count:format(self:SpellName(230932), orbCounter))
+		end
+	elseif spellId == 234917 or spellId == 236433 then -- Wrath of the Creators
+		-- Blizzard didn't give us SPELL_AURA_APPLIED_DOSE events for the stacks,
+		-- so we have to count the casts.
+		wrathStacks = wrathStacks + 1
+		if (wrathStacks >= 10 and wrathStacks % 5 == 0) or (wrathStacks >= 25) then -- 10,15,20,25,26,27,28,29,30
+			self:Message(234891, "Urgent", wrathStacks >= 25 and "Alert", CL.count:format(spellName, wrathStacks))
 		end
 	end
 end
@@ -178,10 +183,10 @@ function mod:Infusion(args)
 end
 
 do
-	local function checkSide(self, newSide)
+	local function checkSide(self, newSide, spellName)
 		local sideString = (newSide == 235240 or newSide == 240219) and L.fel or L.light
 		if mySide ~= newSide then
-			self:Message(235271, "Important", "Warning", L.infusionChanged:format(sideString), newSide)
+			self:Message(235271, "Important", "Warning", mySide == 0 and spellName or L.infusionChanged:format(sideString), newSide)
 			self:Flash(235271)
 		else
 			self:Message(235271, "Positive", "Info", L.sameInfusion:format(sideString), newSide)
@@ -196,7 +201,7 @@ do
 		tDeleteItem(lightList, args.destName)
 		if self:Me(args.destGUID) then
 			self:OpenProximity(235271, 5, lightList) -- Avoid people with Light debuff
-			checkSide(self, args.spellId)
+			checkSide(self, args.spellId, args.spellName)
 		end
 	end
 
@@ -207,7 +212,7 @@ do
 		tDeleteItem(felList, args.destName)
 		if self:Me(args.destGUID) then
 			self:OpenProximity(235271, 5, felList) -- Avoid people with Fel debuff
-			checkSide(self, args.spellId)
+			checkSide(self, args.spellId, args.spellName)
 		end
 	end
 end
@@ -241,22 +246,15 @@ function mod:Blowback(args)
 end
 
 function mod:TitanicBulwarkApplied()
-	shieldActive = true
+	wrathStacks = 0
 end
 
 function mod:TitanicBulwarkRemoved(args)
-	shieldActive = false
 	self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
 end
 
 function mod:WrathoftheCreators(args)
 	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
-end
-
-function mod:WrathoftheCreatorsApplied(args)
-	if self:Interrupter(args.sourceGUID) and not shieldActive then
-		self:Message(234891, "Important", "Warning", args.spellName)
-	end
 end
 
 function mod:WrathoftheCreatorsInterrupted(args)
