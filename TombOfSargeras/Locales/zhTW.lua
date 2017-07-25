@@ -26,6 +26,8 @@ L = BigWigs:NewBossLocale("The Desolate Host", "zhTW")
 if L then
 	L.infobox_players = "玩家"
 	L.armor_remaining = "剩餘%s（%d）" -- Bonecage Armor Remaining (#)
+	L.custom_on_mythic_armor = "在傳奇難度中，忽略再活化的聖殿騎士的骨牢護甲"
+	L.custom_on_mythic_armor_desc = "如果你不是負責坦住「再活化的聖殿騎士」的坦克，請保持此選項啟用，以便忽略骨牢護甲的提示和計數。"
 	L.tormentingCriesSay = "號哭" -- Tormenting Cries (short say)
 end
 
