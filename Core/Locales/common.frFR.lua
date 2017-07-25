@@ -58,7 +58,7 @@ L.marker_player_desc = "Marque les joueurs affectés par %s avec %s. Nécessite 
 L.marker_npc_desc = "Marque %s avec %s. Nécessite d'être assistant ou chef de raid."
 
 -- Ability where two players have to move close to each other
---L.link = "Linked with %s"
---L.link_short = "Linked: %s"
---L.link_both = "%s linked with %s"
---L.link_removed = "Link removed"
+L.link = "Lié(e) avec %s"
+L.link_short = "Lié : %s"
+L.link_both = "%s est lié(e) avec %s"
+L.link_removed = "Lien enlevé"
