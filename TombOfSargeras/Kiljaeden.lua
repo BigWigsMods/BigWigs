@@ -27,6 +27,7 @@ local felclawsCount = 1
 local flamingOrbCount = 1
 local wailingCounter = 1
 local obeliskCount = 1
+local darknessCount = 1
 local focusWarned = {}
 local mobCollector = {}
 local stageTwoTimersHeroic = {
@@ -85,6 +86,8 @@ if L then
 	L.meteorImpact = mod:SpellName(182580)
 	L.meteorImpact_desc = "Show a timer for the Meteors landing"
 	L.meteorImpact_icon = 240910
+
+	L.countx = "%s (%dx)"
 end
 
 --------------------------------------------------------------------------------
@@ -186,6 +189,7 @@ function mod:OnEngage()
 	flamingOrbCount = 1
 	obeliskCount = 1
 	wailingCounter = 1
+	darknessCount = 1
 	wipe(focusWarned)
 	stageTwoTimers = self:Mythic() and stageTwoTimersMythic or self:Easy() and stageTwoTimersEasy or stageTwoTimersHeroic
 	wipe(mobCollector)
@@ -519,6 +523,7 @@ do
 			self:UnregisterTargetEvents()
 		end
 		inIntermission = nil
+		darknessCount = 1
 		focusedDreadflameCount = 1
 		burstingDreadflameCount = 1
 		flamingOrbCount = 1
@@ -542,10 +547,11 @@ end
 
 -- Stage Three: Darkness of A Thousand Souls
 function mod:DarknessofaThousandSouls(args)
-	self:Message(args.spellId, "Urgent", "Long", CL.casting:format(args.spellName))
-	self:Bar(args.spellId, obeliskCount == 1 and 90 or 95, L.darkness)
-	self:CastBar(args.spellId, 9, L.darkness)
-	self:StartObeliskTimer(obeliskCount == 1 and 25 or 28)
+	self:Message(args.spellId, "Urgent", "Long", CL.casting:format(CL.count:format(args.spellName, darknessCount)))
+	self:CastBar(args.spellId, 9, CL.count:format(L.darkness, darknessCount))
+	darknessCount = darknessCount + 1
+	self:Bar(args.spellId, darknessCount == 2 and 90 or 95, CL.count:format(L.darkness, darknessCount))
+	self:StartObeliskTimer(darknessCount == 2 and 25 or 28)
 end
 
 do
@@ -559,7 +565,7 @@ do
 end
 
 function mod:StartObeliskTimer(t)
-	self:Bar(-15543, t)
+	self:Bar(-15543, t, L.countx:format(self:SpellName(-15543), self:Mythic() and (obeliskCount+2) or (darknessCount+2))
 	self:ScheduleTimer("Message", t, -15543, "Attention", "Info", CL.spawned:format(self:SpellName(-15543)))
 	self:ScheduleTimer("CastBar", t, "obeliskExplosion", 13, L.obeliskExplosion, -15543) -- will get readjusted in :DemonicObelisk()
 	obeliskCount = obeliskCount + 1
