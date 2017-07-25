@@ -70,5 +70,5 @@ L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 표시합니다, 부공
 -- Ability where two players have to move close to each other
 L.link = "%s|1과;와; 연결됨"
 L.link_short = "연결됨: %s"
-L.link_both = "%s|1과;와; %s 연결됨"
+L.link_both = "%s|1과;와; %s|1이;가; 연결됨"
 L.link_removed = "연결 사라짐"
