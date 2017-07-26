@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Shar'thos", -1018, 1763)
 if not mod then return end
 mod:RegisterEnableMob(108678)
-mod.otherMenu = 1007
+mod.otherMenu = -1007
 mod.worldBoss = 108678
 
 --------------------------------------------------------------------------------

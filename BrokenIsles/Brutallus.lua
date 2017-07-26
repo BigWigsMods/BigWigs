@@ -6,7 +6,7 @@
 local mod = BigWigs:NewBoss("Brutallus", -1021, 1883)
 if not mod then return end
 mod:RegisterEnableMob(117239)
-mod.otherMenu = 1007
+mod.otherMenu = -1007
 mod.worldBoss = 117239
 
 --------------------------------------------------------------------------------

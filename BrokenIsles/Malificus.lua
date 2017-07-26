@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Malificus", -1021, 1884)
 if not mod then return end
 mod:RegisterEnableMob(117303)
-mod.otherMenu = 1007
+mod.otherMenu = -1007
 mod.worldBoss = 117303
 
 --------------------------------------------------------------------------------

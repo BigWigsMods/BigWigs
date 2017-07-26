@@ -6,7 +6,7 @@
 local mod = BigWigs:NewBoss("Si'vash", -1021, 1885)
 if not mod then return end
 mod:RegisterEnableMob(117470)
-mod.otherMenu = 1007
+mod.otherMenu = -1007
 mod.worldBoss = 117470
 
 --------------------------------------------------------------------------------

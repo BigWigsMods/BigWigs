@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Flotsam", -1024, 1795)
 if not mod then return end
 mod:RegisterEnableMob(99929)
-mod.otherMenu = 1007
+mod.otherMenu = -1007
 mod.worldBoss = 99929
 
 --------------------------------------------------------------------------------
