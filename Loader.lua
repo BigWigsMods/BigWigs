@@ -114,7 +114,7 @@ do
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
 		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [862]=mop,
 		[994]=wod, [988]=wod, [1026]=wod, [962]=wod,
-		[1094]=l, [1088]=l, [1007]=l, [1114]=l, [1147]=l,
+		[1094]=l, [1088]=l, [1007]=l, [1114]=l, [1147]=l, [1712]=l, -- XXX Argus Raid instance id - change to map id
 
 		[756]=lw_c, -- Classic
 		[710]=lw_bc, [722]=lw_bc, [723]=lw_bc, [724]=lw_bc, [725]=lw_bc, [726]=lw_bc, [727]=lw_bc, [728]=lw_bc, [729]=lw_bc, [730]=lw_bc, [731]=lw_bc, [732]=lw_bc, [733]=lw_bc, [734]=lw_bc, [797]=lw_bc, [798]=lw_bc, -- TBC
@@ -138,7 +138,7 @@ do
 		if fakeWorldZones[k] then
 			public.zoneTbl[k] = v
 		else
-			local instanceId = GetAreaMapInfo(k)
+			local instanceId = k == 1712 and 1712 or GetAreaMapInfo(k)  -- XXX Argus Raid instance id
 			if instanceId then -- Protect live client from beta client ids
 				public.zoneTbl[instanceId] = v
 			end
@@ -1116,7 +1116,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		enableZones[module.instanceId or GetAreaMapInfo(module.zoneId)] = true
 	end
 
-	local id = module.otherMenu or module.zoneId
+	local id = module.otherMenu or module.zoneId or module.instanceId  -- XXX Argus Raid instance id
 	if type(menus[id]) ~= "table" then menus[id] = {} end
 	menus[id][#menus[id]+1] = module
 end

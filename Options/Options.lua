@@ -200,6 +200,8 @@ function translateZoneID(id)
 	local name
 	if id < 10 then
 		name = select(id * 2, GetMapContinents())
+	elseif id == 1712 then -- XXX Argus Raid instance id
+		name = "Argus Raid (temp)"
 	else
 		name = GetMapNameByID(id)
 	end
@@ -955,7 +957,7 @@ do
 				for i = 1, #tmpZone do
 					local zone = tmpZone[i]
 					local zoneId = tmp[zone]
-					local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
+					local instanceId = fakeWorldZones[zoneId] and zoneId or zoneId == 1712 and 1712 or GetAreaMapInfo(zoneId) -- XXX Argus Raid instance id
 					local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] -- Get expansion number for this zone
 					local treeParent = treeTbl[parent] -- Grab appropriate expansion name
 					if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled

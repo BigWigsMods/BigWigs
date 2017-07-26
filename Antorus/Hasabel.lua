@@ -4,7 +4,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Portal Keeper Hasabel", 1712) -- XXX Temp Instance ID -- Encounter ID: 1985
+local mod, CL = BigWigs:NewBoss("Portal Keeper Hasabel", nil, 1985, 1712) -- XXX Temp missing map id
 if not mod then return end
 --mod:RegisterEnableMob(000000)
 mod.engageId = 2064
