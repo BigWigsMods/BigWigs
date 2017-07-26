@@ -15,6 +15,8 @@ plugin.displayName = L.infoBox
 
 local opener, display = nil, nil
 local nameList = {}
+local infoboxWidth = 150
+local infoboxHeight = 100
 
 local db = nil
 local inTestMode = false
@@ -68,7 +70,7 @@ end
 
 do
 	display = CreateFrame("Frame", "BigWigsInfoBox", UIParent)
-	display:SetSize(150, 100)
+	display:SetSize(infoboxWidth, infoboxHeight)
 	display:SetClampedToScreen(true)
 	display:EnableMouse(true)
 	display:SetMovable(true)
@@ -117,7 +119,7 @@ do
 	display.text = {}
 	for i = 1, 10 do
 		local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		text:SetSize(75, 20)
+		text:SetSize(infoboxWidth/2, infoboxHeight/5)
 		if i == 1 then
 			text:SetPoint("TOPLEFT", display, "TOPLEFT", 5, 0)
 			text:SetJustifyH("LEFT")
@@ -125,7 +127,7 @@ do
 			text:SetPoint("LEFT", display.text[i-1], "RIGHT", -5, 0)
 			text:SetJustifyH("RIGHT")
 		else
-			text:SetPoint("TOP", display.text[i-2], "BOTTOM")
+			text:SetPoint("TOPLEFT", display.text[i-2], "BOTTOMLEFT")
 			text:SetJustifyH("LEFT")
 		end
 		display.text[i] = text
@@ -217,6 +219,43 @@ end
 
 function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
 	display.text[line]:SetText(text)
+	local row = line
+	if line % 2 == 0 then
+		row = line-1
+	end
+	plugin:BigWigs_ResizeInfoBoxRow(row)
+end
+
+function plugin:BigWigs_ResizeInfoBoxRow(row)
+	local rowWidth = infoboxWidth-5 -- Adjust for margin right
+	-- Get text width [left]
+	display.text[row]:SetSize(rowWidth, infoboxHeight/5)
+	display.text[row+1]:SetSize(0, infoboxHeight/5)
+	local leftTextWidth = display.text[row]:GetStringWidth()
+	-- Get text width [right]
+	display.text[row]:SetSize(0, infoboxHeight/5)
+	display.text[row+1]:SetSize(rowWidth, infoboxHeight/5)
+	local rightTextWidth = display.text[row+1]:GetStringWidth()
+
+	-- Size accordingly
+	if leftTextWidth + rightTextWidth > rowWidth then -- Too much info: Prune something
+		if leftTextWidth > rowWidth and rightTextWidth > rowWidth then -- 50%/50% - Both too big
+			display.text[row]:SetSize((rowWidth/2), infoboxHeight/5)
+			display.text[row+1]:SetSize((rowWidth/2), infoboxHeight/5)
+		elseif leftTextWidth > 0  and rightTextWidth > rowWidth*0.80 then -- Show most of right text
+			display.text[row]:SetSize(rowWidth*0.20, infoboxHeight/5)
+			display.text[row+1]:SetSize((rowWidth*0.80), infoboxHeight/5)
+		elseif leftTextWidth > 0 then -- Show all of right text, partially left
+			display.text[row]:SetSize(rowWidth-rightTextWidth, infoboxHeight/5)
+			display.text[row+1]:SetSize(rightTextWidth, infoboxHeight/5)
+		else-- show all of right text, no left text
+			display.text[row]:SetSize(0, infoboxHeight/5)
+			display.text[row+1]:SetSize(rowWidth, infoboxHeight/5)
+		end
+	elseif leftTextWidth + rightTextWidth <= rowWidth then -- Fits, yay!
+		display.text[row]:SetSize(leftTextWidth, infoboxHeight/5)
+		display.text[row+1]:SetSize(rowWidth-leftTextWidth, infoboxHeight/5)
+	end
 end
 
 do
