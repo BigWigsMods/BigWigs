@@ -927,7 +927,6 @@ do
 
 			do
 				local zoneToId, alphabeticalZoneList = {}, {}
-				-- map ids
 				for k in next, loader:GetZoneMenus() do
 					local zone = k < 0 and GetMapNameByID(-k) or GetRealZoneText(k)
 					if zone then
