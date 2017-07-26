@@ -4,7 +4,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Gorothi Worldbreaker", nil, 1992, 1712) -- XXX Temp missing map id
+local mod, CL = BigWigs:NewBoss("Gorothi Worldbreaker", nil, 1992, 1712)
 if not mod then return end
 mod:RegisterEnableMob(122450) -- Garothi Worldbreaker
 mod.engageId = 2076
