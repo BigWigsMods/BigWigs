@@ -74,6 +74,7 @@ function mod:OnBossEnable()
 
 	-- Adds
 	self:Log("SPELL_AURA_APPLIED", "AqueousBurst", 231729)
+	self:Log("SPELL_AURA_REMOVED", "AqueousBurstRemoved", 231729)
 	self:Log("SPELL_AURA_APPLIED", "DrivenAssault", 234016)
 	self:Log("SPELL_AURA_REMOVED", "DrivenAssaultRemoved", 234016)
 
@@ -194,6 +195,10 @@ do
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
 		end
 	end
+end
+
+function mod:AqueousBurstRemoved()
+	skipDrawIn = false -- Drenching Waters confirmed, no more skipping
 end
 
 function mod:DrivenAssault(args)
