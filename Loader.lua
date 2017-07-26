@@ -84,11 +84,12 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeWorldZones = { -- Fake world zones used for world boss translations and loading
-	[466]=true, -- Outland
-	[862]=true, -- Pandaria
-	[962]=true, -- Draenor
-	[1007]=true, -- Broken Isles
-	[1021]=true, -- Broken Shore
+	[-466]=true, -- Outland
+	[-862]=true, -- Pandaria
+	[-962]=true, -- Draenor
+	[-1007]=true, -- Broken Isles
+	[-1021]=true, -- Broken Shore
+	--1184
 }
 
 do
@@ -109,12 +110,12 @@ do
 
 	local tbl = {
 		[696]=c, [755]=c, [766]=c, [717]=c,
-		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [796]=bc, [799]=bc, [782]=bc, [466]=bc,
+		[775]=bc, [780]=bc, [779]=bc, [776]=bc, [796]=bc, [799]=bc, [782]=bc, [-466]=bc,
 		[604]=wotlk, [543]=wotlk, [535]=wotlk, [529]=wotlk, [527]=wotlk, [532]=wotlk, [531]=wotlk, [609]=wotlk, [718]=wotlk,
 		[752]=cata, [758]=cata, [754]=cata, [824]=cata, [800]=cata, [773]=cata,
-		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [862]=mop,
-		[994]=wod, [988]=wod, [1026]=wod, [962]=wod,
-		[1094]=l, [1088]=l, [1007]=l, [1114]=l, [1147]=l, [1712]=l, -- XXX Argus Raid instance id - change to map id
+		[896]=mop, [897]=mop, [886]=mop, [930]=mop, [953]=mop, [-862]=mop,
+		[994]=wod, [988]=wod, [1026]=wod, [-962]=wod,
+		[1094]=l, [1088]=l, [-1007]=l, [1114]=l, [1147]=l,
 
 		[756]=lw_c, -- Classic
 		[710]=lw_bc, [722]=lw_bc, [723]=lw_bc, [724]=lw_bc, [725]=lw_bc, [726]=lw_bc, [727]=lw_bc, [728]=lw_bc, [729]=lw_bc, [730]=lw_bc, [731]=lw_bc, [732]=lw_bc, [733]=lw_bc, [734]=lw_bc, [797]=lw_bc, [798]=lw_bc, -- TBC
@@ -123,22 +124,22 @@ do
 		[877]=lw_mop, [871]=lw_mop, [874]=lw_mop, [885]=lw_mop, [867]=lw_mop, [919]=lw_mop, -- MoP
 		[964]=lw_wod, [969]=lw_wod, [984]=lw_wod, [987]=lw_wod, [989]=lw_wod, [993]=lw_wod, [995]=lw_wod, [1008]=lw_wod, -- WoD
 		[1041]=lw_l, [1042]=lw_l, [1045]=lw_l, [1046]=lw_l, [1065]=lw_l, [1066]=lw_l, [1067]=lw_l, [1079]=lw_l, [1081]=lw_l, [1087]=lw_l, [1115]=lw_l, [1146]=lw_l, [1178]=lw_l, -- Legion
-		[1021]=lw_l, [1129]=lw_l, -- Legion Scenarios
+		[-1021]=lw_l, [1129]=lw_l, -- Legion Scenarios
 	}
 
 	public.zoneTblWorld = {
-		[-473] = 466, [-465] = 466, -- Outland
-		[-807] = 862, [-809] = 862, [-928] = 862, [-929] = 862, [-951] = 862, -- Pandaria
-		[-948] = 962, [-949] = 962, [-945] = 962, -- Draenor
-		[-1015] = 1007, [-1017] = 1007, [-1018] = 1007, [-1024] = 1007, [-1033] = 1007, -- Broken Isles
+		[-473] = -466, [-465] = -466, -- Outland
+		[-807] = -862, [-809] = -862, [-928] = -862, [-929] = -862, [-951] = -862, -- Pandaria
+		[-948] = -962, [-949] = -962, [-945] = -962, -- Draenor
+		[-1015] = -1007, [-1017] = -1007, [-1018] = -1007, [-1024] = -1007, [-1033] = -1007, -- Broken Isles
 	}
 	public.fakeWorldZones = fakeWorldZones
-	public.zoneTbl = {}
+	public.zoneTbl = {[1712]=l} -- Antorus
 	for k,v in next, tbl do
 		if fakeWorldZones[k] then
 			public.zoneTbl[k] = v
 		else
-			local instanceId = k == 1712 and 1712 or GetAreaMapInfo(k)  -- XXX Argus Raid instance id
+			local instanceId = GetAreaMapInfo(k)
 			if instanceId then -- Protect live client from beta client ids
 				public.zoneTbl[instanceId] = v
 			end
@@ -253,6 +254,7 @@ do
 		BigWigs_Plugins = true,
 	}
 	local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-ZoneId directive
+	local loadOnInstanceAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-InstanceId directive
 	local loadOnWorldBoss = {} -- Packs that should load when targetting a specific mob
 
 	for i = 1, GetNumAddOns() do
@@ -265,6 +267,10 @@ do
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
 			if meta then
 				loadOnZoneAddons[#loadOnZoneAddons + 1] = i
+			end
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
+			if meta then
+				loadOnInstanceAddons[#loadOnInstanceAddons + 1] = i
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-WorldBoss")
 			if meta then
@@ -344,12 +350,38 @@ do
 					if override then
 						loadOnZone[override][#loadOnZone[override] + 1] = addon
 					else
-						if not menus[zone] then menus[zone] = true end
+						if not menus[instanceId] then menus[instanceId] = true end
 					end
 				end
 			else
 				local name = GetAddOnInfo(addon)
 				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), name))
+			end
+		end
+	end
+
+	local function iterateInstanceIds(addon, override, ...)
+		for i = 1, select("#", ...) do
+			local rawId = select(i, ...)
+			local id = tonumber(rawId:trim())
+			if id then
+				local instanceName = GetRealZoneText(id)
+				-- register the instance id for enabling.
+				if instanceName and instanceName ~= "" then -- Protect live client from beta client ids
+					enableZones[id] = true
+
+					if not loadOnZone[id] then loadOnZone[id] = {} end
+					loadOnZone[id][#loadOnZone[id] + 1] = addon
+
+					if override then
+						loadOnZone[override][#loadOnZone[override] + 1] = addon
+					else
+						if not menus[id] then menus[id] = true end
+					end
+				end
+			else
+				local name = GetAddOnInfo(addon)
+				sysprint(("The instance ID %q from the addon %q was not parsable."):format(tostring(rawId), name))
 			end
 		end
 	end
@@ -390,7 +422,7 @@ do
 			local zone = tonumber(rawZone:trim())
 			if zone then
 				-- register the zone for enabling.
-				local instanceId = fakeWorldZones[zone] and zone or zone < 0 and -zone or GetAreaMapInfo(zone)
+				local instanceId = fakeWorldZones[zone] and zone or GetAreaMapInfo(zone)
 				if instanceId then -- Protect live client from beta client ids
 					enableZones[instanceId] = true
 
@@ -398,7 +430,7 @@ do
 					loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
 
 					if not loadOnZone[menu] then loadOnZone[menu] = {} end
-					if not menus[menu] then menus[menu] = true end
+					if not menus[instanceId] then menus[instanceId] = true end
 					loadOnZone[menu][#loadOnZone[menu] + 1] = addon
 				end
 			else
@@ -417,6 +449,19 @@ do
 		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-ZoneId")
 		if zones then
 			iterateZones(index, menu, strsplit(",", zones))
+		end
+	end
+
+	for i = 1, #loadOnInstanceAddons do
+		local index = loadOnInstanceAddons[i]
+		local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
+		if menu then
+			if not loadOnZone[menu] then loadOnZone[menu] = {} end
+			if not menus[menu] then menus[menu] = true end
+		end
+		local instancesIds = GetAddOnMetadata(index, "X-BigWigs-LoadOn-InstanceId")
+		if instancesIds then
+			iterateInstanceIds(index, menu, strsplit(",", instancesIds))
 		end
 	end
 
@@ -1116,7 +1161,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		enableZones[module.instanceId or GetAreaMapInfo(module.zoneId)] = true
 	end
 
-	local id = module.otherMenu or module.zoneId or module.instanceId  -- XXX Argus Raid instance id
+	local id = module.instanceId or module.otherMenu or module.zoneId > 0 and GetAreaMapInfo(module.zoneId) or module.zoneId
 	if type(menus[id]) ~= "table" then menus[id] = {} end
 	menus[id][#menus[id]+1] = module
 end

@@ -32,7 +32,6 @@ options.SendMessage = loader.SendMessage
 
 local colorModule
 local soundModule
-local translateZoneID
 local isOpen
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
@@ -194,19 +193,6 @@ local acOptions = {
 		},
 	},
 }
-
-function translateZoneID(id)
-	if not id or type(id) ~= "number" then return end
-	local name
-	if id < 10 then
-		name = select(id * 2, GetMapContinents())
-	elseif id == 1712 then -- XXX Argus Raid instance id
-		name = "Argus Raid (temp)"
-	else
-		name = GetMapNameByID(id)
-	end
-	return name
-end
 
 do
 	local addonName = ...
@@ -786,14 +772,12 @@ function showToggleOptions(widget, event, group)
 	populateToggleOptions(widget, module)
 end
 
-local function onZoneShow(treeWidget, zoneId)
-	local instanceId = fakeWorldZones[zoneId] and zoneId or GetAreaMapInfo(zoneId)
-
+local function onZoneShow(treeWidget, id)
 	-- Make sure all the bosses for this zone are loaded.
-	loader:LoadZone(instanceId)
+	loader:LoadZone(id)
 
 	-- Grab the module list from this zone
-	local moduleList = loader:GetZoneMenus()[zoneId]
+	local moduleList = loader:GetZoneMenus()[id]
 	if type(moduleList) ~= "table" then return end -- No modules registered
 
 	local zoneList, zoneSort = {}, {}
@@ -813,7 +797,7 @@ local function onZoneShow(treeWidget, zoneId)
 	innerContainer:SetTitle(L.selectEncounter)
 	innerContainer:SetLayout("Flow")
 	innerContainer:SetCallback("OnGroupSelected", showToggleOptions)
-	innerContainer:SetUserData("zone", zoneId)
+	innerContainer:SetUserData("zone", id)
 	innerContainer:SetGroupList(zoneList, zoneSort)
 
 	-- scroll is where we actually put stuff in case things
@@ -942,29 +926,31 @@ do
 			end
 
 			do
-				local tmp, tmpZone = {}, {}
+				local zoneToId, alphabeticalZoneList = {}, {}
+				-- map ids
 				for k in next, loader:GetZoneMenus() do
-					local zone = translateZoneID(k)
+					local zone = k < 0 and GetMapNameByID(k) or GetRealZoneText(k)
 					if zone then
-						if tmp[zone] then
+						if zoneToId[zone] then
 							zone = zone .. "1" -- When instances exist more than once (Karazhan)
 						end
-						tmp[zone] = k
-						tmpZone[#tmpZone+1] = zone
+						zoneToId[zone] = k
+						alphabeticalZoneList[#alphabeticalZoneList+1] = zone
 					end
 				end
-				sort(tmpZone)
-				for i = 1, #tmpZone do
-					local zone = tmpZone[i]
-					local zoneId = tmp[zone]
-					local instanceId = fakeWorldZones[zoneId] and zoneId or zoneId == 1712 and 1712 or GetAreaMapInfo(zoneId) -- XXX Argus Raid instance id
-					local parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]] -- Get expansion number for this zone
+
+				sort(alphabeticalZoneList) -- Make alphabetical
+				for i = 1, #alphabeticalZoneList do
+					local zoneName = alphabeticalZoneList[i]
+					local id = zoneToId[zoneName]
+
+					local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]] -- Get expansion number for this zone
 					local treeParent = treeTbl[parent] -- Grab appropriate expansion name
 					if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
 						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
 						tinsert(treeParent.children, { -- Add new instance/zone sub menu
-							value = zoneId,
-							text = translateZoneID(zoneId),
+							value = id,
+							text = zoneName,
 						})
 					end
 				end
@@ -979,21 +965,20 @@ do
 			tree:SetCallback("OnGroupSelected", onTreeGroupSelected)
 
 			-- Do we have content for the zone we're in? Then open straight to that zone.
-			local mapId, parent
+			local id, parent
 			if not IsInInstance() then
-				local id = -(loader.GetPlayerMapAreaID("player") or 0)
-				mapId = loader.zoneTblWorld[id]
-				parent = loader.zoneTbl[mapId] and addonNameToHeader[loader.zoneTbl[mapId]]
+				local mapId = -(loader.GetPlayerMapAreaID("player") or 0)
+				id = loader.zoneTblWorld[mapId]
+				parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
 			else
 				local _, _, _, _, _, _, _, instanceId = loader.GetInstanceInfo()
-				loader.SetMapToCurrentZone()
-				mapId = loader.GetCurrentMapAreaID()
+				id = instanceId
 				parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]]
 			end
 			if parent then
-				local moduleList = mapId and loader:GetZoneMenus()[mapId]
+				local moduleList = id and loader:GetZoneMenus()[id]
 				local value = treeTbl[parent].value
-				tree:SelectByValue(moduleList and ("%s\001%d"):format(value, mapId) or value)
+				tree:SelectByValue(moduleList and ("%s\001%d"):format(value, id) or value)
 			else
 				tree:SelectByValue(defaultHeader)
 			end
