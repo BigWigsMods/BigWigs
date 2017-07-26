@@ -27,7 +27,7 @@ if L then
 	L.infobox_players = "玩家"
 	L.armor_remaining = "%s 剩余（%d）" -- Bonecage Armor Remaining (#)
 	L.custom_on_mythic_armor = "在史诗难度下忽略复活的圣殿骑士的骨牢护甲"
-	L.custom_on_mythic_armor_desc = "如果你是复活的圣殿骑士的副坦克保持此选项启用来忽略和计数复活的圣殿骑士的骨牢护甲。"
+	L.custom_on_mythic_armor_desc = "如果你不是负责坦住复活的圣殿骑士的副坦克，保持此选项启用来忽略提示和计数复活的圣殿骑士的骨牢护甲。"
 	L.tormentingCriesSay = "哀嚎" -- Tormenting Cries (short say)
 end
 
