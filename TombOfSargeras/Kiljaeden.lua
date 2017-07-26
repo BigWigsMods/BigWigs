@@ -528,7 +528,7 @@ do
 		burstingDreadflameCount = 1
 		flamingOrbCount = 1
 		self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
-		self:Bar(238999, 2, L.darkness) -- Darkness of a Thousand Souls
+		self:Bar(238999, 2, CL.count:format(L.darkness, darknessCount)) -- Darkness of a Thousand Souls
 		self:Bar(239932, 11) -- Felclaws
 		self:Bar(243982, 15) -- Tear Rift
 		if not self:Easy() then
@@ -565,7 +565,7 @@ do
 end
 
 function mod:StartObeliskTimer(t)
-	self:Bar(-15543, t, L.countx:format(self:SpellName(-15543), self:Mythic() and (obeliskCount+2) or (darknessCount+2)))
+	self:Bar(-15543, t, L.countx:format(self:SpellName(-15543), self:Mythic() and (obeliskCount+2) or (darknessCount+1)))
 	self:ScheduleTimer("Message", t, -15543, "Attention", "Info", CL.spawned:format(self:SpellName(-15543)))
 	self:ScheduleTimer("CastBar", t, "obeliskExplosion", 13, L.obeliskExplosion, -15543) -- will get readjusted in :DemonicObelisk()
 	obeliskCount = obeliskCount + 1
