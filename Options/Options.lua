@@ -861,7 +861,7 @@ do
 
 	local function onTreeGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
-		local zoneId = value:match("\001(%d+)$")
+		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
 		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
@@ -929,7 +929,7 @@ do
 				local zoneToId, alphabeticalZoneList = {}, {}
 				-- map ids
 				for k in next, loader:GetZoneMenus() do
-					local zone = k < 0 and GetMapNameByID(k) or GetRealZoneText(k)
+					local zone = k < 0 and GetMapNameByID(-k) or GetRealZoneText(k)
 					if zone then
 						if zoneToId[zone] then
 							zone = zone .. "1" -- When instances exist more than once (Karazhan)
