@@ -428,15 +428,14 @@ do
 	local function addExtraMenus(addon, ...)
 		for i = 1, select("#", ...) do
 			local rawMenu = select(i, ...)
-			local menu = tonumber(rawMenu:trim())
-			if menu then
-				-- register the zone for enabling.
-				local instanceId = fakeWorldZones[menu] and menu or GetAreaMapInfo(menu)
-				if instanceId then -- Protect live client from beta client ids
-					if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
-					loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
+			local id = tonumber(rawMenu:trim())
+			if id then
+				local name = id < 0 and GetMapNameByID(-id) or GetRealZoneText(id)
+				if name and name ~= "" then -- Protect live client from beta client ids
+					if not loadOnZone[id] then loadOnZone[id] = {} end
+					loadOnZone[id][#loadOnZone[id] + 1] = addon
 
-					if not menus[instanceId] then menus[instanceId] = true end
+					if not menus[id] then menus[id] = true end
 				end
 			else
 				local name = GetAddOnInfo(addon)
@@ -448,9 +447,12 @@ do
 	local function blockMenus(addon, ...)
 		for i = 1, select("#", ...) do
 			local rawMenu = select(i, ...)
-			local instanceId = tonumber(rawMenu:trim())
-			if instanceId then
-				blockedMenus[instanceId] = true
+			local id = tonumber(rawMenu:trim())
+			if id then
+				local name = id < 0 and GetMapNameByID(-id) or GetRealZoneText(id)
+				if name and name ~= "" and not blockedMenus[id] then -- Protect live client from beta client ids
+					blockedMenus[id] = true
+				end
 			else
 				local name = GetAddOnInfo(addon)
 				sysprint(("The block menu ID %q from the addon %q was not parsable."):format(tostring(rawMenu), name))
