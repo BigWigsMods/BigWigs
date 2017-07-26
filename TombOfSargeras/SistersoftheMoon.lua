@@ -227,12 +227,12 @@ do
 		end
 	end
 	function mod:TwilightVolley(args)
-		if canCastVolley == false then
-			canCastVolley = true
+		if not canCastVolley and nextUltimateTimer < (GetTime() + 47.7) then -- Also check if more than 7s have passed since last ultimates (57.7s-7s)
 			self:Bar(args.spellId, 7)
-			return
+		else
+			self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 		end
-		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		canCastVolley = true
 	end
 end
 
