@@ -77,7 +77,6 @@ local highestFoundVersion = BIGWIGS_VERSION
 -- Loading
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
-local loadOnSubMenu = {} -- BigWigs modulepack that should load on a specific zone and display inside a specific menu
 local loadOnSlash = {} -- BigWigs modulepacks that can load from a chat command
 local menus = {} -- contains the menus for BigWigs, once the core is loaded they will get injected
 local enableZones = {} -- contains the zones in which BigWigs will enable
@@ -124,7 +123,7 @@ do
 		[877]=lw_mop, [871]=lw_mop, [874]=lw_mop, [885]=lw_mop, [867]=lw_mop, [919]=lw_mop, -- MoP
 		[964]=lw_wod, [969]=lw_wod, [984]=lw_wod, [987]=lw_wod, [989]=lw_wod, [993]=lw_wod, [995]=lw_wod, [1008]=lw_wod, -- WoD
 		[1041]=lw_l, [1042]=lw_l, [1045]=lw_l, [1046]=lw_l, [1065]=lw_l, [1066]=lw_l, [1067]=lw_l, [1079]=lw_l, [1081]=lw_l, [1087]=lw_l, [1115]=lw_l, [1146]=lw_l, [1178]=lw_l, -- Legion
-		[-1021]=lw_l, [1129]=lw_l, -- Legion Scenarios
+		[-1021]=lw_l, -- Legion Scenarios
 	}
 
 	public.zoneTblWorld = {
@@ -255,7 +254,10 @@ do
 	}
 	local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-ZoneId directive
 	local loadOnInstanceAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-InstanceId directive
-	local loadOnWorldBoss = {} -- Packs that should load when targetting a specific mob
+	local loadOnWorldBoss = {} -- Addons that should load when targetting a specific mob
+	local extraMenus = {} -- Addons that contain extra zone menus to appear in the GUI
+	local noMenus = {} -- Addons that contain zones that shouldn't create a menu
+	local blockedMenus = {} -- Zones that shouldn't create a menu
 
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
@@ -272,13 +274,17 @@ do
 			if meta then
 				loadOnInstanceAddons[#loadOnInstanceAddons + 1] = i
 			end
+			meta = GetAddOnMetadata(i, "X-BigWigs-ExtraMenu")
+			if meta then
+				extraMenus[#extraMenus + 1] = i
+			end
+			meta = GetAddOnMetadata(i, "X-BigWigs-NoMenu")
+			if meta then
+				noMenus[#noMenus + 1] = i
+			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-WorldBoss")
 			if meta then
 				loadOnWorldBoss[#loadOnWorldBoss + 1] = i
-			end
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-SubMenu")
-			if meta then
-				loadOnSubMenu[#loadOnSubMenu + 1] = i
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-Slash")
 			if meta then
@@ -320,9 +326,23 @@ do
 					local id = tonumber(rawId:trim())
 					if id and id > 0 then
 						local instanceId = GetAreaMapInfo(id) -- convert map id to instance id
-						if not fakeWorldZones[id] and public.zoneTbl[instanceId] then
+						if public.zoneTbl[instanceId] then
 							if not disabledZones then disabledZones = {} end
 							disabledZones[instanceId] = name
+						end
+					end
+				end
+			end
+
+			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
+			if meta then -- Disabled content
+				for j = 1, select("#", strsplit(",", meta)) do
+					local rawId = select(j, strsplit(",", meta))
+					local id = tonumber(rawId:trim())
+					if id and id > 0 then
+						if public.zoneTbl[id] then
+							if not disabledZones then disabledZones = {} end
+							disabledZones[id] = name
 						end
 					end
 				end
@@ -334,7 +354,8 @@ do
 		end
 	end
 
-	local function iterateZones(addon, override, ...)
+	--[[ DEPRECATED ]]--
+	local function iterateZones(addon, ...)
 		for i = 1, select("#", ...) do
 			local rawZone = select(i, ...)
 			local zone = tonumber(rawZone:trim())
@@ -347,11 +368,7 @@ do
 					if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
 					loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
 
-					if override then
-						loadOnZone[override][#loadOnZone[override] + 1] = addon
-					else
-						if not menus[instanceId] then menus[instanceId] = true end
-					end
+					if not menus[instanceId] and not blockedMenus[instanceId] then menus[instanceId] = true end
 				end
 			else
 				local name = GetAddOnInfo(addon)
@@ -359,8 +376,9 @@ do
 			end
 		end
 	end
+	--
 
-	local function iterateInstanceIds(addon, override, ...)
+	local function iterateInstanceIds(addon, ...)
 		for i = 1, select("#", ...) do
 			local rawId = select(i, ...)
 			local id = tonumber(rawId:trim())
@@ -373,11 +391,7 @@ do
 					if not loadOnZone[id] then loadOnZone[id] = {} end
 					loadOnZone[id][#loadOnZone[id] + 1] = addon
 
-					if override then
-						loadOnZone[override][#loadOnZone[override] + 1] = addon
-					else
-						if not menus[id] then menus[id] = true end
-					end
+					if not menus[id] and not blockedMenus[id] then menus[id] = true end
 				end
 			else
 				local name = GetAddOnInfo(addon)
@@ -387,7 +401,7 @@ do
 	end
 
 	local currentZone = nil
-	local function iterateWorldBosses(addon, override, ...)
+	local function iterateWorldBosses(addon, ...)
 		for i = 1, select("#", ...) do
 			local rawZoneOrBoss = select(i, ...)
 			local zoneOrBoss = tonumber(rawZoneOrBoss:trim())
@@ -400,10 +414,6 @@ do
 
 					if not loadOnZone[currentZone] then loadOnZone[currentZone] = {} end
 					loadOnZone[currentZone][#loadOnZone[currentZone] + 1] = addon
-
-					if override then
-						loadOnZone[override][#loadOnZone[override] + 1] = addon
-					end
 				else
 					worldBosses[zoneOrBoss] = currentZone
 					currentZone = nil
@@ -415,72 +425,77 @@ do
 		end
 	end
 
-	local function iterateSubMenus(addon, override, ...)
+	local function addExtraMenus(addon, ...)
 		for i = 1, select("#", ...) do
-			local rawZone = select(i, ...)
-			local menu = tonumber(override:trim())
-			local zone = tonumber(rawZone:trim())
-			if zone then
+			local rawMenu = select(i, ...)
+			local menu = tonumber(rawMenu:trim())
+			if menu then
 				-- register the zone for enabling.
-				local instanceId = fakeWorldZones[zone] and zone or GetAreaMapInfo(zone)
+				local instanceId = fakeWorldZones[menu] and menu or GetAreaMapInfo(menu)
 				if instanceId then -- Protect live client from beta client ids
-					enableZones[instanceId] = true
-
 					if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
 					loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
 
-					if not loadOnZone[menu] then loadOnZone[menu] = {} end
 					if not menus[instanceId] then menus[instanceId] = true end
-					loadOnZone[menu][#loadOnZone[menu] + 1] = addon
 				end
 			else
 				local name = GetAddOnInfo(addon)
-				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), name))
+				sysprint(("The extra menu ID %q from the addon %q was not parsable."):format(tostring(rawMenu), name))
 			end
 		end
 	end
 
-	for _, index in next, loadOnZoneAddons do
-		local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
-		if menu then
-			if not loadOnZone[menu] then loadOnZone[menu] = {} end
-			if not menus[menu] then menus[menu] = true end
-		end
-		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-ZoneId")
-		if zones then
-			iterateZones(index, menu, strsplit(",", zones))
+	local function blockMenus(addon, ...)
+		for i = 1, select("#", ...) do
+			local rawMenu = select(i, ...)
+			local instanceId = tonumber(rawMenu:trim())
+			if instanceId then
+				blockedMenus[instanceId] = true
+			else
+				local name = GetAddOnInfo(addon)
+				sysprint(("The block menu ID %q from the addon %q was not parsable."):format(tostring(rawMenu), name))
+			end
 		end
 	end
 
+	for i = 1, #extraMenus do
+		local index = extraMenus[i]
+		local data = GetAddOnMetadata(index, "X-BigWigs-ExtraMenu")
+		if data then
+			addExtraMenus(index, strsplit(",", data))
+		end
+	end
+
+	for i = 1, #noMenus do
+		local index = noMenus[i]
+		local data = GetAddOnMetadata(index, "X-BigWigs-NoMenu")
+		if data then
+			blockMenus(index, strsplit(",", data))
+		end
+	end
+
+	--[[ DEPRECATED ]]--
+	for i = 1, #loadOnZoneAddons do
+		local index = loadOnZoneAddons[i]
+		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-ZoneId")
+		if zones then
+			iterateZones(index, strsplit(",", zones))
+		end
+	end
+	--
+
 	for i = 1, #loadOnInstanceAddons do
 		local index = loadOnInstanceAddons[i]
-		local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
-		if menu then
-			if not loadOnZone[menu] then loadOnZone[menu] = {} end
-			if not menus[menu] then menus[menu] = true end
-		end
 		local instancesIds = GetAddOnMetadata(index, "X-BigWigs-LoadOn-InstanceId")
 		if instancesIds then
-			iterateInstanceIds(index, menu, strsplit(",", instancesIds))
+			iterateInstanceIds(index, strsplit(",", instancesIds))
 		end
 	end
 
 	for _, index in next, loadOnWorldBoss do
-		local menu = tonumber(GetAddOnMetadata(index, "X-BigWigs-Menu"))
-		if menu then
-			if not loadOnZone[menu] then loadOnZone[menu] = {} end
-			if not menus[menu] then menus[menu] = true end
-		end
 		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-WorldBoss")
 		if zones then
-			iterateWorldBosses(index, menu, strsplit(",", zones))
-		end
-	end
-
-	for _, index in next, loadOnSubMenu do
-		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-SubMenu")
-		if zones then
-			iterateSubMenus(index, strsplit(",", zones))
+			iterateWorldBosses(index, strsplit(",", zones))
 		end
 	end
 end
@@ -1161,7 +1176,7 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		enableZones[module.instanceId or GetAreaMapInfo(module.zoneId)] = true
 	end
 
-	local id = module.instanceId or module.otherMenu or module.zoneId > 0 and GetAreaMapInfo(module.zoneId) or module.zoneId
+	local id = module.otherMenu or module.instanceId or module.zoneId > 0 and GetAreaMapInfo(module.zoneId) or module.zoneId
 	if type(menus[id]) ~= "table" then menus[id] = {} end
 	menus[id][#menus[id]+1] = module
 end
