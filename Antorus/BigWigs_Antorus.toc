@@ -4,7 +4,7 @@
 ## Title-deDE: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
 ## Title-esES: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
 ## Title-esMX: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
-## Title-frFR: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-frFR: BigWigs [|cffeda55fAntorus, le Trône ardent|r]
 ## Title-ruRU: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
 ## Title-zhCN: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
 ## Title-zhTW: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
@@ -15,7 +15,7 @@
 ## Notes-deDE: BigWigs Antorus, The Burning Throne Modules
 ## Notes-esES: BigWigs Antorus, The Burning Throne Modules
 ## Notes-esMX: BigWigs Antorus, The Burning Throne Modules
-## Notes-frFR: BigWigs Antorus, The Burning Throne Modules
+## Notes-frFR: Modules BigWigs concernant Antorus, le Trône ardent.
 ## Notes-ruRU: BigWigs Antorus, The Burning Throne Modules
 ## Notes-zhCN: BigWigs Antorus, The Burning Throne Modules
 ## Notes-zhTW: BigWigs Antorus, The Burning Throne Modules
