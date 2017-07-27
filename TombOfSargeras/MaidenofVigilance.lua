@@ -154,13 +154,20 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	end
 end
 
-function mod:UnstableSoul(args)
-	if self:Me(args.destGUID) then
-		self:TargetMessage(235117, args.destName, "Personal", "Alarm")
-		-- Duration can be longer if the debuff gets refreshed
-		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
-		local remaining = expires-GetTime()
-		self:TargetBar(235117, remaining, args.destName)
+do
+	local prev = 0
+	function mod:UnstableSoul(args)
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 1.5 then
+				prev = t
+				self:TargetMessage(235117, args.destName, "Personal", "Alarm")
+			end
+			-- Duration can be longer if the debuff gets refreshed
+			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+			local remaining = expires-GetTime()
+			self:TargetBar(235117, remaining, args.destName)
+		end
 	end
 end
 
