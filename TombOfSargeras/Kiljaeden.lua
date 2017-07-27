@@ -559,6 +559,7 @@ do
 	function mod:DemonicObelisk(args)
 		local t = GetTime()
 		if t-prev > 1.5 then
+			prev = t
 			self:CastBar("obeliskExplosion", 5, L.obeliskExplosion, -15543)
 		end
 	end
