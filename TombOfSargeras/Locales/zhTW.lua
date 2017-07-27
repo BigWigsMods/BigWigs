@@ -51,6 +51,8 @@ if L then
 	L.energy_leak = "能量外泄"
 	L.energy_leak_desc = "第一階段的能量外泄至墮落化身身上时發送警報。"
 	L.energy_leak_msg = "能量外泄！（%d）"
+
+	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "zhTW")

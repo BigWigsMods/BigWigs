@@ -49,6 +49,8 @@ if L then
 	L.energy_leak = "마력 누출"
 	L.energy_leak_desc = "1단계에서 우두머리에게 마력이 누출되면 경보를 표시합니다."
 	L.energy_leak_msg = "마력 누출! (%d)"
+
+	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "koKR")

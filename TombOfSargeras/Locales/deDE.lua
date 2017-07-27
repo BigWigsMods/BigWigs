@@ -49,6 +49,8 @@ if L then
 	L.energy_leak = "Energieleck"
 	L.energy_leak_desc = "Zeigt eine Warnung, wenn Energie auf den Boss in Phase 1 zuströmt."
 	L.energy_leak_msg = "Energieleck! (%d)"
+
+	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "deDE")

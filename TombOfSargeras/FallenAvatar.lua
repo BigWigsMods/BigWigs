@@ -62,6 +62,8 @@ if L then
 	L.energy_leak = "Energy Leak"
 	L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in stage 1."
 	L.energy_leak_msg = "Energy Leak! (%d)"
+
+	L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -70,6 +72,7 @@ end
 local darkMarkIcons = mod:AddMarkerOption(false, "player", 6, 239739, 6, 4, 3)
 function mod:GetOptions()
 	return {
+		"warmup",
 		"stages",
 		"energy_leak",
 		"custom_on_stop_timers",
@@ -91,7 +94,7 @@ function mod:GetOptions()
 		240728, -- Tainted Essence
 		234418, -- Rain of the Destroyer
 	},{
-		["stages"] = "general",
+		["warmup"] = "general",
 		[239058] = -14709, -- Stage One: A Slumber Disturbed
 		[233856] = -14713, -- Maiden of Valor
 		[233556] = -15565, -- Containment Pylon
@@ -101,6 +104,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
@@ -177,6 +181,12 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if msg:find(L.warmup_trigger, nil, true) then
+		self:Bar("warmup", 42, CL.active, "achievement_boss_titanconstructshell")
+	end
+end
 
 do
 	local tbl, checks, prev, last = {}, 0, 0, nil
