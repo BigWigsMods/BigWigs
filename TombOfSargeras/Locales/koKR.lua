@@ -26,8 +26,8 @@ L = BigWigs:NewBossLocale("The Desolate Host", "koKR")
 if L then
 	L.infobox_players = "플레이어"
 	L.armor_remaining = "%s 남음 (%d)" -- Bonecage Armor Remaining (#)
-	--L.custom_on_mythic_armor = "Ignore Bonecage Armor on Reanimated Templars in Mythic Difficulty"
-	--L.custom_on_mythic_armor_desc = "Leave this option enabled if you are offtanking Reanimated Templars to ignore warnings and counting the Bonecage Armor on the Ranimated Templars"
+	L.custom_on_mythic_armor = "신화 난이도에서 되살아난 기사단원의 뼈껍질 방어구 무시하기"
+	L.custom_on_mythic_armor_desc = "되살아난 기사단원을 방어 중이지 않을 때 되살아난 기사단원의 뼈껍질 방어구에 대한 경보와 횟수를 무시하려면 이 옵션을 활성화하세요"
 	L.tormentingCriesSay = "외침" -- Tormenting Cries (short say)
 end
 
