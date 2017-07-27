@@ -74,6 +74,7 @@ function mod:OnBossEnable()
 	-- General
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "UnstableSoul", 243276, 240209, 235117) -- Mythic, LFR, Normal/Heroic
+	self:Log("SPELL_AURA_REFRESH", "UnstableSoul", 243276, 240209, 235117) -- Mythic, LFR, Normal/Heroic
 	self:Log("SPELL_AURA_REMOVED", "UnstableSoulRemoved", 243276, 240209, 235117) -- Mythic, LFR, Normal/Heroic
 	self:Log("SPELL_AURA_APPLIED", "AegwynnsWardApplied", 241593, 236420) -- Heroic, Normal/LFR
 	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 238028, 238408) -- Light Remanence, Fel Remanence
@@ -156,7 +157,10 @@ end
 function mod:UnstableSoul(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(235117, args.destName, "Personal", "Alarm")
-		self:TargetBar(235117, 8, args.destName)
+		-- Duration can be longer if the debuff gets refreshed
+		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+		local remaining = expires-GetTime()
+		self:TargetBar(235117, remaining, args.destName)
 	end
 end
 
