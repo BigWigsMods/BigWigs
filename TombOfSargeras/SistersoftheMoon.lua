@@ -227,7 +227,7 @@ do
 		end
 	end
 	function mod:TwilightVolley(args)
-		if not canCastVolley and nextUltimateTimer < (GetTime() + 47.7) then -- Also check if more than 7s have passed since last ultimates (57.7s-7s)
+		if not canCastVolley and nextUltimate < (GetTime() + 47.7) then -- Also check if more than 7s have passed since last ultimates (57.7s-7s)
 			self:Bar(args.spellId, 7)
 		else
 			self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
