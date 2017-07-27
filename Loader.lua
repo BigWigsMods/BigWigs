@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 66
+local BIGWIGS_VERSION = 67
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -648,6 +648,7 @@ do
 		BigWigs_LeiShi_Marker = "BigWigs",
 		BigWigs_NoPluginWarnings = "BigWigs",
 		LFG_ProposalTime = "BigWigs",
+		CourtOfStarsGossipHelper = "LittleWigs",
 		BigWigs_DispelResist = "",
 	}
 	local delayedMessages = {}
