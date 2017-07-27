@@ -412,6 +412,7 @@ do
 	function mod:Torment(args)
 		local t = GetTime()
 		if t-prev > 1 then
+			prev = t
 			local amount = args.amount or 1
 			self:StackMessage(args.spellId, args.destName, amount, "Attention", "Info")
 		end
