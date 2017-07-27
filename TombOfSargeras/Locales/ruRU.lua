@@ -26,6 +26,8 @@ L = BigWigs:NewBossLocale("The Desolate Host", "ruRU")
 if L then
 	L.infobox_players = "Игроки"
 	L.armor_remaining = "%s осталось (%d)" -- Bonecage Armor Remaining (#)
+	--L.custom_on_mythic_armor = "Ignore Bonecage Armor on Reanimated Templars in Mythic Difficulty"
+	--L.custom_on_mythic_armor_desc = "Leave this option enabled if you are offtanking Reanimated Templars to ignore warnings and counting the Bonecage Armor on the Ranimated Templars"
 	L.tormentingCriesSay = "Стон" -- Tormenting Cries (short say)
 end
 
