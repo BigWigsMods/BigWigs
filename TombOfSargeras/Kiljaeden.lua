@@ -471,7 +471,7 @@ do
 		self:Bar(args.spellId, 15.8)
 	end
 
-	function mod:WailingReflectionDeath(args)
+	function mod:WailingReflectionDeath()
 		self:StopBar(241564) -- Sorrowful Wail
 	end
 end
@@ -556,7 +556,7 @@ end
 
 do
 	local prev = 0
-	function mod:DemonicObelisk(args)
+	function mod:DemonicObelisk()
 		local t = GetTime()
 		if t-prev > 1.5 then
 			prev = t

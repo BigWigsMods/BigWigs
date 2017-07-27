@@ -26,8 +26,6 @@ local AceGUI = LibStub("AceGUI-3.0")
 
 local loader = BigWigsLoader
 local API = BigWigsAPI
-local GetAreaMapInfo = loader.GetAreaMapInfo
-local fakeWorldZones = loader.fakeWorldZones
 options.SendMessage = loader.SendMessage
 
 local colorModule
@@ -1046,7 +1044,7 @@ end
 
 do
 	local registered, subPanelRegistry, pluginRegistry = {}, {}, {}
-	function options:Register(message, moduleName, module)
+	function options:Register(_, _, module)
 		if registered[module.name] then return end
 		registered[module.name] = true
 		if module.pluginOptions then

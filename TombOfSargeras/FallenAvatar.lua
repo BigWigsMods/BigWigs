@@ -249,7 +249,7 @@ end
 do
 	local bladeTimer = nil
 
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		if spellId == 234057 then -- Unbound Chaos
 			if self:Tank() then
 				self:Message(234059, "Attention", "Alert")

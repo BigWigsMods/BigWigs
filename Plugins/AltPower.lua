@@ -576,7 +576,7 @@ do
 
 	function plugin:RosterUpdateForHiddenDisplay()
 		-- This is for people that don't show the AltPower display (event isn't registered to the display as it normally would be).
-		-- It will force sending the current power for those that do have the display shown but just had their power list reset by a 
+		-- It will force sending the current power for those that do have the display shown but just had their power list reset by a
 		-- GROUP_ROSTER_UPDATE. Or someone DCd and is logging back on, so send an update.
 		if not IsInGroup() then plugin:Close() return end
 		self:CancelTimer(repeatSync)

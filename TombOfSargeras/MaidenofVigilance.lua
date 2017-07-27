@@ -87,7 +87,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "InfusionLFR", 240219, 240218) -- Fel Infusion (LFR), Light Infusion (LFR)
 	self:Log("SPELL_CAST_START", "HammerofCreation", 241635)
 	self:Log("SPELL_CAST_START", "HammerofObliteration", 241636)
-	self:Log("SPELL_CAST_START", "MassInstability", 235267) 
+	self:Log("SPELL_CAST_START", "MassInstability", 235267)
 
 	-- Stage Two: Watcher's Wrath
 	self:Log("SPELL_CAST_SUCCESS", "Blowback", 248812)

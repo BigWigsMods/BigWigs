@@ -121,7 +121,8 @@ local function targetSeen(unit, targetModule, mobId, noSync)
 	if type(targetModule) == "string" then
 		shouldReallyEnable(unit, targetModule, mobId, noSync)
 	else
-		for i, module in next, targetModule do
+		for i = 1, #targetModule do
+			local module = targetModule[i]
 			shouldReallyEnable(unit, module, mobId, noSync)
 		end
 	end

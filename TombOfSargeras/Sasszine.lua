@@ -14,7 +14,6 @@ mod.respawnTime = 40
 --
 
 local stage = 1
-local consumingHungerCounter = 1
 local slicingTornadoCounter = 1
 local waveCounter = 1
 local dreadSharkCounter = 1
@@ -95,7 +94,6 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	consumingHungerCounter = 1
 	slicingTornadoCounter = 1
 	waveCounter = 1
 	dreadSharkCounter = 1
@@ -137,7 +135,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		self:StopBar(CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 		self:StopBar(CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain
 
-		consumingHungerCounter = 1
 		slicingTornadoCounter = 1
 		waveCounter = 1
 		burdenCounter = 1
@@ -284,7 +281,7 @@ do
 	local debuffs, inkName = {}, mod:SpellName(232913)
 	local fedTable, fedCount, fedsNeeded = {}, 0, 3
 
-	function mod:MawApplied(args)
+	function mod:MawApplied()
 		wipe(debuffs)
 		wipe(fedTable)
 		fedCount = 0

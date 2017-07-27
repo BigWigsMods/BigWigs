@@ -669,7 +669,8 @@ do
 	local function scan(self)
 		for mobId, entry in next, core:GetEnableMobs() do
 			if type(entry) == "table" then
-				for i, module in next, entry do
+				for i = 1, #entry do
+					local module = entry[i]
 					if module == self.moduleName then
 						local unit = findTargetByGUID(mobId)
 						if unit and UnitAffectingCombat(unit) then return unit end
