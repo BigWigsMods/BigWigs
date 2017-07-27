@@ -432,7 +432,9 @@ do
 			self:Bar(args.spellId, self:Mythic() and (darkMarkCounter == 2 and 25.5 or 30.5) or 34, CL.count:format(args.spellName, darkMarkCounter))
 			self:OpenInfo(args.spellId, args.spellName)
 			self:SetInfo(args.spellId, 1, infoBoxText[1]:format(6))
-			self:SetInfo(args.spellId, 3, infoBoxText[3]:format(8))
+			if not self:LFR() then
+				self:SetInfo(args.spellId, 3, infoBoxText[3]:format(8))
+			end
 			if not self:Easy() then
 				self:SetInfo(args.spellId, 5, infoBoxText[5]:format(10))
 			end
