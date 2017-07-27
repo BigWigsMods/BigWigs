@@ -18,12 +18,7 @@ mod.engageId = 2070
 --
 local L = mod:GetLocale()
 if L then
-	L.in_pod_admiral = mod:SpellName(-16099)..": "..mod:SpellName(-16100) -- In Pod: Admiral Svirax
-	L.in_pod_chief = mod:SpellName(-16099)..": "..mod:SpellName(-16116) -- In Pod: Chief Engineer Ishkar
-	L.in_pod_general = mod:SpellName(-16099)..": "..mod:SpellName(-16121) -- In Pod: General Erodus
-	L.out_pod_admiral = mod:SpellName(-16098)..": "..mod:SpellName(-16100) -- Out of Pod: Admiral Svirax
-	L.out_pod_chief = mod:SpellName(-16098)..": "..mod:SpellName(-16116) -- Out of Pod: Chief Engineer Ishkar
-	L.out_pod_general = mod:SpellName(-16098)..": "..mod:SpellName(-16121) -- Out of Pod: General Erodus
+	L.pod_options = "%s: %s"
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -55,12 +50,12 @@ function mod:GetOptions()
 		--[[ Stealing Power ]]--
 		244902, -- Felshield Emitter
 	},{
-		[244625] = L.in_pod_admiral,
-		[245161] = L.in_pod_chief,
-		[245546] = L.in_pod_general,
-		[244737] = L.out_pod_admiral,
-		[244824] = L.out_pod_chief,
-		[244892] = L.out_pod_general,
+		[244625] = L.pod_options:format(mod:SpellName(-16099), mod:SpellName(-16100)), -- In Pod: Admiral Svirax
+		[245161] = L.pod_options:format(mod:SpellName(-16099), mod:SpellName(-16116)), -- In Pod: Chief Engineer Ishkar
+		[245546] = L.pod_options:format(mod:SpellName(-16099), mod:SpellName(-16121)), -- In Pod: General Erodus
+		[244737] = L.pod_options:format(mod:SpellName(-16098), mod:SpellName(-16100)), -- Out of Pod: Admiral Svirax
+		[244824] = L.pod_options:format(mod:SpellName(-16098), mod:SpellName(-16116)), -- Out of Pod: Chief Engineer Ishkar
+		[244892] = L.pod_options:format(mod:SpellName(-16098), mod:SpellName(-16121)), -- Out of Pod: General Erodus
 		[244902] = mod:SpellName(-16125), -- Stealing Power
 	}
 end
