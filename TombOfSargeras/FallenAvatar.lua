@@ -74,6 +74,7 @@ function mod:GetOptions()
 	return {
 		"warmup",
 		"stages",
+		"berserk",
 		"energy_leak",
 		"custom_on_stop_timers",
 		239207, -- Touch of Sargeras
@@ -170,7 +171,10 @@ function mod:OnEngage()
 	self:Bar(236604, timers[236573][shadowyBladesCounter]) -- Shadowy Blades
 	self:Bar(239132, timers[239132][ruptureRealitiesCounter]) -- Rupture Realities (P1)
 
-	if not self:LFR() then
+	if self:LFR() then
+		self:Bar("stages", 186.5, CL.stage:format(2), 235597) -- Annihilation icon
+		self:Berserk(434.5)
+	else
 		self:InitCheckUnitPower()
 		energyLeakCheck = self:ScheduleRepeatingTimer("CheckUnitPower", 1)
 	end
