@@ -1,4 +1,7 @@
 if not IsTestBuild() then return end -- XXX dont load on live
+--------------------------------------------------------------------------------
+-- TODO:
+-- -- Raid Markers for Weigt of Darkness and/or Siphon Corruption?
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -22,7 +25,7 @@ function mod:GetOptions()
 	return {
 		--[[ F'harg ]]--
 		251445, -- Burning Maw
-		249227, -- Molten Touch
+		244072, -- Molten Touch
 		{244768, "SAY"}, -- Desolate Gaze
 		244057, -- Enflame Corruption
 		{248815, "SAY"}, -- Enflamed
@@ -45,18 +48,19 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+
 	--[[ F'harg ]]--
 	self:Log("SPELL_CAST_SUCCESS", "BurningMaw", 251445)
-	self:Log("SPELL_CAST_SUCCESS", "MoltenTouch", 249227)
-	self:Log("SPELL_AURA_APPLIED", "DesolateGaze", 244768)
+	self:Log("SPELL_AURA_APPLIED", "MoltenTouchApplied", 244072)
+	self:Log("SPELL_AURA_APPLIED", "DesolateGazeApplied", 244768)
 	self:Log("SPELL_CAST_SUCCESS", "EnflameCorruption", 244057)
 	self:Log("SPELL_AURA_APPLIED", "Enflamed", 248815)
 	self:Log("SPELL_AURA_REMOVED", "EnflamedRemoved", 248815)
 
 	--[[ Shatug ]]--
 	self:Log("SPELL_CAST_SUCCESS", "CorruptingMaw", 245098)
-	self:Log("SPELL_CAST_SUCCESS", "ConsumingSphere", 244131)
-	self:Log("SPELL_AURA_APPLIED", "WeightofDarkness", 244069)
+	self:Log("SPELL_AURA_APPLIED", "WeightofDarknessApplied", 244069)
 	self:Log("SPELL_AURA_REMOVED", "WeightofDarknessRemoved", 244069)
 	self:Log("SPELL_CAST_SUCCESS", "SiphonCorruption", 244056)
 	self:Log("SPELL_AURA_APPLIED", "Siphoned", 248819)
@@ -68,42 +72,68 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:CDBar(251445, 10.5) -- Burning Maw
+	self:CDBar(245098, 10.5) -- Corrupting Maw
+	self:Bar(244072, 19.5) -- Molten Touch
+	self:Bar(244056, 27.5) -- Siphon Corruption
+	self:Bar(244057, 52) -- Enflame Corruption
+	self:Bar(244131, 52) -- Consuming Sphere
+	self:Bar(244069, 78) -- Weight of Darkness
+	self:Bar(244072, 82.5) -- Desolate Gaze
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+	if spellId == 244159 then -- Consuming Sphere
+		self:Message(244131, "Attention", "Alert")
+		self:Bar(244131, 78.0)
+	end
+end
+
 function mod:BurningMaw(args)
 	self:Message(args.spellId, "Important", "Alarm")
+	self:CDBar(args.spellId, 10.5)
 end
 
-function mod:MoltenTouch(args)
-	self:Message(args.spellId, "Attention", "Alert")
+do
+	local playerList = mod:NewTargetList()
+	function mod:MoltenTouchApplied(args)
+		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			self:Bar(args.spellId, 95.5)
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Attention", "Warning")
+		end
+	end
 end
 
-function mod:DesolateGaze(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
+do
+	local playerList = mod:NewTargetList()
+	function mod:DesolateGazeApplied(args)
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+		end
+		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			self:Bar(args.spellId, 95.5)
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
+		end
 	end
 end
 
 function mod:EnflameCorruption(args)
 	self:Message(args.spellId, "Attention", "Alert")
+	self:Bar(args.spellId, 95.5)
+	self:CastBar(args.spellId, 9)
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:Enflamed(args)
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 4)
-		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Warning")
-		end
+function mod:Enflamed(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 4)
 	end
 end
 
@@ -115,43 +145,35 @@ end
 
 function mod:CorruptingMaw(args)
 	self:Message(args.spellId, "Important", "Alarm")
-end
-
-function mod:ConsumingSphere(args)
-	self:Message(args.spellId, "Attention", "Alert")
-end
-
-function mod:WeightofDarkness(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 5)
-	end
-	self:PrimaryIcon(args.spellId, args.destName)
-end
-
-function mod:WeightofDarknessRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
-	end
-	self:PrimaryIcon(args.spellId)
-end
-
-function mod:SiphonCorruption(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:CDBar(args.spellId, 10.5)
 end
 
 do
 	local playerList = mod:NewTargetList()
-	function mod:Siphoned(args)
+	function mod:WeightofDarknessApplied(args)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 4)
+			self:SayCountdown(args.spellId, 5)
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Warning")
+			self:Bar(args.spellId, 78.0)
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning", nil, nil, true)
 		end
+	end
+end
+
+function mod:SiphonCorruption(args)
+	self:Message(args.spellId, "Attention", "Alert")
+	self:Bar(args.spellId, 78.0)
+	self:CastBar(args.spellId, 9)
+end
+
+function mod:Siphoned(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 4)
 	end
 end
 
@@ -161,10 +183,18 @@ function mod:SiphonedRemoved(args)
 	end
 end
 
-function mod:SargerasBlessing(args)
-	self:Message(244050, "Urgent", "Warning", args.spellName, args.spellId)
+do
+	local prev = 0
+	function mod:SargerasBlessing(args)
+		local t = GetTime()
+		if t-prev > 0.5 then
+			prev = t
+			self:Message(244050, "Urgent", "Warning", args.spellName, args.spellId)
+		end
+	end
 end
 
+-- XXX Only on pull?
 function mod:FocusingPower(args)
 	self:TargetMessage(args.spellId, args.destName, "Neutral", "Info")
 	self:TargetBar(args.spellId, 15, args.destName)
