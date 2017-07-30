@@ -9,115 +9,160 @@ if not IsTestBuild() then return end -- XXX dont load on live
 
 local mod, CL = BigWigs:NewBoss("War Council", nil, 1997, 1712)
 if not mod then return end
-mod:RegisterEnableMob(126258, 125012, 125014) -- Admiral Svirax, Chief Engineer Ishkar, General Erodus
+mod:RegisterEnableMob(122367, 122369, 122333) -- Admiral Svirax, Chief Engineer Ishkar, General Erodus
 mod.engageId = 2070
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
 --
-local L = mod:GetLocale()
-if L then
-	L.pod_options = "%s: %s"
-end
+
+local assumeCommandCount = 1
+local incomingBoss = {
+	[0] = mod:SpellName(-16100), -- Admiral Svirax
+	[1] = mod:SpellName(-16116), -- Chief Engineer Ishkar
+	[2] = mod:SpellName(-16121), -- General Erodus
+}
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
 function mod:GetOptions()
 	return {
+		--[[ General ]] --
+		245227, -- Assume Command
+		{244892, "TANK"}, -- Sundering Claws
+		246505, -- Pyroblast
+
 		--[[ In Pod: Admiral Svirax ]] --
 		244625, -- Fusillade
-		245292, -- Withering Fire
+		--245292, -- Withering Fire
 
 		--[[ In Pod: Chief Engineer Ishkar ]] --
 		245161, -- Entropic Mine
 
 		--[[ In Pod: General Erodus ]] --
-		245546, -- Summon Reinforcements
-		246505, -- Pyroblast
-		253037, -- Demonic Charge
+		--245546, -- Summon Reinforcements
 
 		--[[ Out of Pod: Admiral Svirax ]] --
-		244737, -- Shock Grenade
+		--244737, -- Shock Grenade
 
 		--[[ Out of Pod: Chief Engineer Ishkar ]] --
-		244824, -- Warp Field
+		--244824, -- Warp Field
 
 		--[[ Out of Pod: General Erodus ]] --
-		244892, -- Sundering Claws
 
 		--[[ Stealing Power ]]--
-		244902, -- Felshield Emitter
+		244910, -- Felshield
 	},{
-		[244625] = L.pod_options:format(mod:SpellName(-16099), mod:SpellName(-16100)), -- In Pod: Admiral Svirax
-		[245161] = L.pod_options:format(mod:SpellName(-16099), mod:SpellName(-16116)), -- In Pod: Chief Engineer Ishkar
-		[245546] = L.pod_options:format(mod:SpellName(-16099), mod:SpellName(-16121)), -- In Pod: General Erodus
-		[244737] = L.pod_options:format(mod:SpellName(-16098), mod:SpellName(-16100)), -- Out of Pod: Admiral Svirax
-		[244824] = L.pod_options:format(mod:SpellName(-16098), mod:SpellName(-16116)), -- Out of Pod: Chief Engineer Ishkar
-		[244892] = L.pod_options:format(mod:SpellName(-16098), mod:SpellName(-16121)), -- Out of Pod: General Erodus
+		[245227] = "general",
+		[244625] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16100)), -- In Pod: Admiral Svirax
+		[245161] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16116)), -- In Pod: Chief Engineer Ishkar
+		--[245546] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16121)), -- In Pod: General Erodus
+		--[244737] = CL.other:format(mod:SpellName(-16098), mod:SpellName(-16100)), -- Out of Pod: Admiral Svirax
+		--[244824] = CL.other:format(mod:SpellName(-16098), mod:SpellName(-16116)), -- Out of Pod: Chief Engineer Ishkar
+		--[244892] = CL.other:format(mod:SpellName(-16098), mod:SpellName(-16121)), -- Out of Pod: General Erodus
 		[244902] = mod:SpellName(-16125), -- Stealing Power
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
+
 	--[[ In Pod: Admiral Svirax ]] --
 	self:Log("SPELL_CAST_START", "Fusillade", 244625)
-	self:Log("SPELL_CAST_SUCCESS", "WitheringFire", 245292)
+	--self:Log("SPELL_CAST_SUCCESS", "WitheringFire", 245292) -- XXX Not seen in logs
 
 	--[[ In Pod: Chief Engineer Ishkar ]] --
-	self:Log("SPELL_CAST_SUCCESS", "EntropicMine", 245161)
 
 	--[[ In Pod: General Erodus ]] --
-	self:Log("SPELL_CAST_SUCCESS", "SummonReinforcements", 245546)
+	--self:Log("SPELL_CAST_SUCCESS", "SummonReinforcements", 245546) -- XXX Not seen in logs
 	self:Log("SPELL_CAST_START", "Pyroblast", 246505)
-	self:Log("SPELL_CAST_SUCCESS", "DemonicCharge", 253037)
 
-	--[[ Out of Pod: Admiral Svirax ]] --
-	self:Log("SPELL_AURA_APPLIED", "ShockGrenade", 244737)
-	self:Log("SPELL_AURA_REMOVED", "ShockGrenadeRemoved", 244737)
-
-	--[[ Out of Pod: Chief Engineer Ishkar ]] --
-	self:Log("SPELL_CAST_SUCCESS", "WarpField", 244824)
-
-	--[[ Out of Pod: General Erodus ]] --
+	--[[ General ]] --
+	self:Log("SPELL_CAST_START", "AssumeCommand", 245227)
 	self:Log("SPELL_CAST_SUCCESS", "SunderingClaws", 244892)
 	self:Log("SPELL_AURA_APPLIED", "SunderingClawsApplied", 244892)
 
+	--[[ Out of Pod: Admiral Svirax ]] --
+	--self:Log("SPELL_AURA_APPLIED", "ShockGrenade", 244737) -- XXX Not seen in logs
+	--self:Log("SPELL_AURA_REMOVED", "ShockGrenadeRemoved", 244737) -- XXX Not seen in logs
+
+	--[[ Out of Pod: Chief Engineer Ishkar ]] --
+	--self:Log("SPELL_CAST_SUCCESS", "WarpField", 244824) -- XXX Not seen in logs
+
+	--[[ Out of Pod: General Erodus ]] --
+	-- Entropic Mines (UNIT_SPELLCAST_SUCCEEDED)
+
 	--[[ Stealing Power ]]--
-	self:Log("SPELL_CAST_SUCCESS", "FelshieldEmitter", 244902)
+	self:Log("SPELL_AURA_APPLIED", "Felshield", 244910)
 end
 
 function mod:OnEngage()
+	assumeCommandCount = 1
+
+	self:Bar(244892, 8.4) -- Sundering Claws
+	self:Bar(245227, 93, incomingBoss[assumeCommandCount]) -- Chief Engineer Ishkar (Assume Command Bar)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	if spellId == 245304 then -- Entropic Mines
+		self:Message(245161, "Attention", "Alert")
+		self:Bar(245161, 10)
+	end
+end
+
+function mod:AssumeCommand(args)
+	self:Message(args.spellId, "Neutral", "Long", CL.incoming:format(incomingBoss[assumeCommandCount % 3]))
+
+	if assumeCommandCount % 3 == 1 then -- Chief Engineer Ishkar
+		self:Bar(244625, 18.3) -- Fusillade
+	elseif assumeCommandCount % 3 == 2 then -- General Erodus
+		self:StopBar(244625) -- Fusillade
+
+		self:Bar(245161, 11) -- Entropic Mines
+	else -- Admiral Svirax
+		self:StopBar(245161) -- Entropic Mines
+	end
+	self:CDBar(244892, 13.5) -- Sundering Claws
+
+	assumeCommandCount = assumeCommandCount + 1
+	self:Bar(args.spellId, 93, incomingBoss[assumeCommandCount % 3])
+end
+
+function mod:SunderingClaws(args)
+	self:Bar(args.spellId, 8.5)
+end
+
+function mod:SunderingClawsApplied(args)
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 1 and "Warning") -- Swap on 2
+end
+
+function mod:Pyroblast(args)
+	if self:Interrupter(args.sourceGUID) then
+		self:Message(args.spellId, "Urgent", "Warning")
+	end
+end
 
 function mod:Fusillade(args)
 	self:Message(args.spellId, "Urgent", "Warning")
 	self:CastBar(args.spellId, 5)
+	self:CDBar(args.spellId, 30) -- ~29.8-33.2s
 end
+
+--[[ XXX Remove if Unused on Live
 
 function mod:WitheringFire(args)
 	self:Message(args.spellId, "Attention", "Alert")
 end
 
-function mod:EntropicMine(args)
-	self:Message(args.spellId, "Attention", "Alarm")
-end
-
 function mod:SummonReinforcements(args)
 	self:Message(args.spellId, "Neutral", "Info")
-end
-
-function mod:Pyroblast(args)
-	self:Message(args.spellId, "Urgent", "Warning")
-end
-
-function mod:DemonicCharge(args)
-	self:Message(args.spellId, "Attention", "Alert")
 end
 
 do
@@ -134,7 +179,7 @@ do
 	end
 end
 
-function mod:ShockGrenadeRemoved(args)
+--function mod:ShockGrenadeRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
@@ -142,18 +187,10 @@ end
 
 function mod:WarpField(args)
 	self:Message(args.spellId, "Important", "Long")
-end
+end ]]--
 
-function mod:SunderingClaws(args)
-	self:Message(args.spellId, "Attention", "Alert")
-end
-
-function mod:SunderingClawsApplied(args)
+function mod:Felshield(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:Message(args.spellId, "Positive", "Info")
 	end
-end
-
-function mod:FelshieldEmitter(args)
-	self:Message(args.spellId, "Positive", "Info")
 end
