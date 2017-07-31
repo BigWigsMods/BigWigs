@@ -53,7 +53,7 @@ function mod:GetOptions()
 	return {
 		"infobox",
 		{239006, "PROXIMITY"}, -- Dissonance
-		236507, -- Quietus
+		236678, -- Quietus
 		{235924, "SAY"}, -- Spear of Anguish
 		235907, -- Collapsing Fissure
 		{238570, "SAY", "ICON"}, -- Tormented Cries
@@ -83,7 +83,7 @@ function mod:OnBossEnable()
 	-- General
 	updateRealms(self)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
-	self:Log("SPELL_CAST_SUCCESS", "Quietus", 236507)
+	self:Log("SPELL_AURA_APPLIED", "Quietus", 236678)
 	self:Log("SPELL_AURA_APPLIED", "SpiritualBarrier", 235732)
 	self:Log("SPELL_AURA_REMOVED", "SpiritualBarrierRemoved", 235732)
 
@@ -116,6 +116,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DoomedSundering", 236544)
 	self:Log("SPELL_AURA_APPLIED", "Torment", 236548)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Torment", 236548)
+
+	self:Death("EngineDies", 118460)
 end
 
 function mod:OnEngage()
@@ -170,12 +172,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		self:StopBar(CL.cast:format(self:SpellName(236072))) -- <cast: Wailing Souls>
 		self:StopBar(CL.cast:format(self:SpellName(238570))) -- <cast: Tormented Cries>
 
-		-- Assumed that other timers reset upon p2 start XXX Double Check
-		self:Bar(235907, 5) -- Collapsing Fissure
+		self:CDBar(235907, 2.5) -- Collapsing Fissure
 		if not self:Easy() then
-			self:Bar(235924, 6) -- Spear of Anguish
+			self:CDBar(235924, 8) -- Spear of Anguish
 		end
-		self:Bar(236459, 10) -- Soulbind
+		self:CDBar(236459, 9) -- Soulbind
 
 		self:CDBar(236542, 17) -- Sundering Doom
 		self:CDBar(236544, 28) -- Doomed Sundering
@@ -333,7 +334,7 @@ do
 	function mod:Soulbind(args)
 		soulList[#soulList+1] = args.destName
 		if #soulList == 1 then
-			local t = stage == 2 and 20 or 25
+			local t = stage == 2 and 19.4 or 24.3
 			if self:Easy() then
 				t = stage == 2 and 24 or 34
 			end
@@ -413,8 +414,13 @@ do
 		local t = GetTime()
 		if t-prev > 1 then
 			prev = t
-			local amount = args.amount or 1
-			self:StackMessage(args.spellId, args.destName, amount, "Attention", "Info")
+			self:StackMessage(args.spellId, args.destName, args.amount, "Attention", "Info")
 		end
 	end
+end
+
+function mod:EngineDies()
+	self:StopBar(236459) -- Soulbind
+	self:StopBar(235907) -- Collapsing Fissure
+	self:StopBar(235924) -- Spear of Anguish
 end
