@@ -1,4 +1,11 @@
 if not IsTestBuild() then return end -- XXX dont load on live
+--------------------------------------------------------------------------------
+-- TODO:
+-- -- Apocalypse soon warning - 65% and 25% (warnings 67% & 27%)
+-- -- Schedule Surging Fel bars
+-- -- Annihilation impact bars
+-- -- Double check how weapon systems and their abilities work
+-- -- Do we need a say on Decimation? Many people are targetted, and it has a short duration.
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -14,6 +21,10 @@ mod.engageId = 2076
 -- Locals
 --
 
+local stage = 1
+local annihilatorAlive = true
+local decimatorAlive = true
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -21,11 +32,8 @@ mod.engageId = 2076
 function mod:GetOptions()
 	return {
 		{246220, "TANK", "SAY"}, -- Locked On
-		--244395, -- Searing Barrage XXX Might be too spammy, leave out for now
-		244152, -- Apocalypse Drive
-		246655, -- Surging Fel
+		240277, -- Apocalypse Drive
 		244969, -- Eradication
-		--245237, -- Empowered XXX Do we want to track/announce the stacks?
 		244106, -- Carnage
 		{244410, "SAY"}, -- Decimation
 		244761, -- Annihilation
@@ -37,29 +45,53 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("RAID_BOSS_WHISPER") -- Decimation
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
+
 	self:Log("SPELL_AURA_APPLIED", "LockedOn", 246220) -- Locked On pre-debuff
 	self:Log("SPELL_AURA_REMOVED", "LockedOnRemoved", 246220) -- Locked On pre-debuff
-	--self:Log("SPELL_AURA_SUCCESS", "SearingBarrage", 244395)
-	self:Log("SPELL_AURA_APPLIED", "ApocalypseDrive", 244152)
-	self:Log("SPELL_AURA_REMOVED", "ApocalypseDriveOver", 244152)
-	self:Log("SPELL_CAST_SUCCESS", "SurgingFel", 246655)
+	self:Log("SPELL_CAST_START", "ApocalypseDrive", 240277)
+	self:Log("SPELL_AURA_REMOVED", "ApocalypseDriveOver", 240277)
+	self:Death("WeaponDeath", 122778, 122773) -- Interupts Apocalypse Drive, id: Annihilator, Decimator
 	self:Log("SPELL_CAST_START", "Eradication", 244969)
-	--self:Log("SPELL_AURA_APPLIED", "Empowered", 245237)
 	self:Log("SPELL_CAST_SUCCESS", "Carnage", 244106)
-	self:Log("SPELL_AURA_APPLIED", "Decimation", 244410, 252797, 246687, 245770) -- XXX Check which debuffs are actually used in each difficulty
-	self:Log("SPELL_AURA_REMOVED", "DecimationRemoved", 244410, 252797, 246687, 245770)
-	self:Log("SPELL_CAST_SUCCESS", "Annihilation", 244761)
 end
 
 function mod:OnEngage()
+	stage = 1
+	annihilatorAlive = true
+	decimatorAlive = true
+
+	self:Bar(244761, 8) -- Annihilation
+	self:Bar(246220, 9.5) -- Locked On
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:RAID_BOSS_WHISPER(_, msg)
+	if msg:find("244410", nil, true) then -- Decimation
+		self:Message(244410, "Personal", "Warning", CL.you:format(self:SpellName(244410)))
+		self:Say(244410)
+		self:SayCountdown(244410, 3)
+	end
+end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	if spellId == 245124 then -- Cannon Chooser
+		if stage == 1 or annihilatorAlive then -- In stage 1 it's always Annihilation being cast
+			self:Message(244761, "Attention", "Alert") -- Annihilation
+			self:Bar(244761, 15.8)
+		elseif decimatorAlive then
+			self:Message(244410, "Attention", "Alert") -- Decimation
+			self:Bar(244410, 8.5)
+		end
+	end
+end
 
 function mod:LockedOn(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+	self:Bar(args.spellId, 20.7)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 7)
@@ -74,60 +106,40 @@ function mod:LockedOnRemoved(args)
 	end
 end
 
---function mod:SearingBarrage(args) -- XXX Remove if unused
---	self:Message(args.spellId, "Attention", "Alarm")
---end
-
 function mod:ApocalypseDrive(args)
-	self:Message(args.spellId, "Important", "Warning")
+	self:StopBar(244410) -- Decimation
+	self:StopBar(244761) -- Annihilation
+	self:StopBar(246220) -- Locked On
+
+	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 20)
 end
 
-function mod:ApocalypseDriveOver(args)
-	self:Message(args.spellId, "Positive", "Info")
-	self:StopBar(CL.cast:format(args.spellName))
-end
-
-function mod:SurgingFel(args)
-	self:Message(args.spellId, "Attention", "Alert")
-end
-
-function mod:Eradication(args)
-	self:Message(args.spellId, "Urgent", "Warning")
-end
-
---function mod:Empowered(args) -- XXX Remove if unused
---	self:Message(args.spellId, "Neutral", "Info")
---end
-
-function mod:Carnage(args)
+function mod:ApocalypseDriveSuccess(args)
 	self:Message(args.spellId, "Urgent", "Alarm")
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:Decimation(args)
-		if self:Me(args.destGUID) then
-			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName) -- XXX Unkown duration (3 or 5 seconds on wowhead), set fixed duration once known
-			local remaining = expires-GetTime()
-			self:Say(244410)
-			self:SayCountdown(244410, remaining)
-			self:TargetBar(244410, remaining, args.destName)
-		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 244410, playerList, "Positive", "Alert")
-		end
+function mod:WeaponDeath(args)
+	stage = stage + 1
+	self:Message(240277, "Positive", "Info", CL.interrupted:format(self:SpellName(240277)))
+	self:StopBar(CL.cast:format(self:SpellName(240277)))
+
+	self:Bar(244969, 7.2) -- Eradication
+	self:Bar(246220, 23.1) -- Locked On
+
+	if args.mobId == 122778 then -- Annihilator death
+		annihilatorAlive = false
+		self:Bar(244410, 21.9) -- Decimation
+	elseif args.mobId == 122773 then -- Decimator death
+		decimatorAlive = false
+		self:Bar(244761, 21.9) -- Annihilation
 	end
 end
 
-function mod:DecimationRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(244410)
-		self:StopBar(244410, args.destName)
-	end
+function mod:Eradication(args)
+	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 end
 
-function mod:Annihilation(args)
-	self:Message(args.spellId, "Attention", "Alert")
+function mod:Carnage(args)
+	self:Message(args.spellId, "Urgent", "Alarm")
 end
