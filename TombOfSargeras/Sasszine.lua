@@ -179,10 +179,12 @@ do
 		end
 
 		if count == 1 then
+			self:StopBar(CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Stop previous one if early
 			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, hydraShotCounter))
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning", nil, nil, true)
 			hydraShotCounter = hydraShotCounter + 1
-			self:CDBar(args.spellId, self:Mythic() and 30.5 or stage == 2 and 30 or (self:Normal() and stage == 3 and 51) or 40, CL.count:format(args.spellName, hydraShotCounter))
+			-- Normal stage 3 seems to swing between 41-43 or 51-53
+			self:CDBar(args.spellId, self:Mythic() and 30.5 or stage == 2 and 30 or (self:Normal() and stage == 3 and 41.3) or 40, CL.count:format(args.spellName, hydraShotCounter))
 		end
 		if self:GetOption(hydraShotMarker) then -- Targets: LFR: 0, 1 Normal, 3 Heroic, 4 Mythic
 			SetRaidTarget(args.destName, count)
