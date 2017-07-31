@@ -164,7 +164,7 @@ end
 
 function mod:FrigidBlows(args)
 	local amount = args.amount or 1
-	if amount < 4 then -- Start warnings last 3 stacks
+	if amount < 4 or amount % 5 == 0 then -- Every 5 stacks or when below 5.
 		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount < 2 and "Alert") -- Add sound on last stack
 	end
 end
