@@ -566,8 +566,9 @@ do
 end
 
 function mod:StartObeliskTimer(t)
-	self:Bar(-15543, t, L.countx:format(self:SpellName(-15543), self:Mythic() and (obeliskCount+2) or self:Normal() and (obeliskCount > 2 and 3 or 2) or (darknessCount+1)))
-	self:ScheduleTimer("Message", t, -15543, "Attention", "Info", CL.spawned:format(self:SpellName(-15543)))
+	local obeliskCounter = self:Mythic() and (obeliskCount+2) or self:Heroic() and (darknessCount+1) or darknessCount -- Mythic: 3-4-5-6-7... Heroic: 3-3-4-4-5... Normal: 2-2-3-3-4...
+	self:Bar(-15543, t, L.countx:format(self:SpellName(-15543), obeliskCounter))
+	self:ScheduleTimer("Message", t, -15543, "Attention", "Info", CL.spawned:format(L.countx:format(self:SpellName(-15543), obeliskCounter)))
 	self:ScheduleTimer("CastBar", t, "obeliskExplosion", 13, L.obeliskExplosion, -15543) -- will get readjusted in :DemonicObelisk()
 	obeliskCount = obeliskCount + 1
 	if obeliskCount % 2 == 0 then
