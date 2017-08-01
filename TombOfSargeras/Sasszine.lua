@@ -18,6 +18,7 @@ local slicingTornadoCounter = 1
 local waveCounter = 1
 local dreadSharkCounter = 1
 local burdenCounter = 1
+local crashingWaveStage3Mythic = {32.5, 39, 33, 45, 33}
 local slicingTimersP3 = {0, 39.0, 34.1, 42.6}
 local hydraShotCounter = 1
 local abs = math.abs
@@ -263,8 +264,14 @@ end
 function mod:CrashingWave(args)
 	waveCounter = waveCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
-	self:CastBar(args.spellId, self:Mythic() and 4 or 5)
-	self:Bar(args.spellId, stage == 3 and (waveCounter == 3 and 49) or 42) -- XXX need more data in p3
+	self:CastBar(args.spellId, self:Mythic() and 4 or self:LFR() and 7 or 5)
+	local timer = 42
+	if self:Mythic() and stage == 3 then
+		timer = crashingWaveStage3Mythic[waveCounter] or 32
+	elseif stage == 3 and waveCounter == 3 and (self:Heroic() or self:Normal()) then
+		timer = 49
+	end
+	self:Bar(args.spellId, timer)
 end
 
 function mod:DeliciousBufferfish(args)
