@@ -129,12 +129,7 @@ L.dispeller = "|cFFFF0000Dispeller alerts only.|r "
 
 -- Statistics
 L.statistics = "Statistics"
-L.norm25 = "25"
-L.heroic25 = "25h"
-L.norm10 = "10"
-L.heroic10 = "10h"
 L.lfr = "LFR"
-L.flex = "Flex"
 L.normal = "Normal"
 L.heroic = "Heroic"
 L.mythic = "Mythic"

@@ -130,12 +130,7 @@ L.dispeller = "|cFFFF0000무효화 시전자만 경보합니다.|r "
 
 -- Statistics
 L.statistics = "통계"
-L.norm25 = "25인 일반"
-L.heroic25 = "25인 영웅"
-L.norm10 = "10인 일반"
-L.heroic10 = "10인 영웅"
 L.lfr = "공찾"
-L.flex = "탄공"
 L.normal = "일반"
 L.heroic = "영웅"
 L.mythic = "신화"
