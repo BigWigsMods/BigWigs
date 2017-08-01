@@ -275,6 +275,7 @@ do
 			local result = tbl[n]
 			display.text[line]:SetText(result and colors[n] or "")
 			display.text[line+1]:SetText(result or "")
+			plugin:BigWigs_ResizeInfoBoxRow(line)
 			line = line + 2
 		end
 	end
