@@ -123,6 +123,7 @@ end
 function mod:RAID_BOSS_WHISPER(event, msg)
 	if msg:find("240319", nil, true) then -- Hatching XXX Need a log where it skips it on mythic for timers (if any)
 		self:Message(240319, "Important", "Warning")
+		self:CastBar(240319, 22)
 	end
 end
 
@@ -164,8 +165,8 @@ end
 
 function mod:FrigidBlows(args)
 	local amount = args.amount or 1
-	if amount < 4 or amount % 5 == 0 then -- Every 5 stacks or when below 5.
-		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount < 2 and "Alert") -- Add sound on last stack
+	if amount < 5 or amount % 5 == 0 then -- Every 5 stacks or when below 5.
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount < 4 and "Alarm") -- Add sound on last 3 stacks as pre-warning that the phase is ending
 	end
 end
 
