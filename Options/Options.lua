@@ -243,6 +243,10 @@ function options:Open()
 	end
 end
 
+function options:IsOpen()
+	return isOpen
+end
+
 -------------------------------------------------------------------------------
 -- Plugin options
 --
@@ -448,7 +452,7 @@ local advancedTabs = {
 }
 
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
 	back:SetText(L.back)
 	back:SetFullWidth(true)
@@ -457,6 +461,7 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	end)
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(colorize[name])
+	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 	check:SetTriState(true)
 
 	check:SetFullWidth(true)
