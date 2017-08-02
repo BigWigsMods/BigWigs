@@ -7,11 +7,11 @@ if not IsTestBuild() then return end -- XXX dont load on live
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("War Council", nil, 1997, 1712)
+local mod, CL = BigWigs:NewBoss("Antoran High Command", nil, 1997, 1712)
 if not mod then return end
 mod:RegisterEnableMob(122367, 122369, 122333) -- Admiral Svirax, Chief Engineer Ishkar, General Erodus
 mod.engageId = 2070
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -30,11 +30,6 @@ local incomingBoss = {
 
 function mod:GetOptions()
 	return {
-		--[[ General ]] --
-		245227, -- Assume Command
-		{244892, "TANK"}, -- Sundering Claws
-		246505, -- Pyroblast
-
 		--[[ In Pod: Admiral Svirax ]] --
 		244625, -- Fusillade
 		--245292, -- Withering Fire
@@ -44,26 +39,20 @@ function mod:GetOptions()
 
 		--[[ In Pod: General Erodus ]] --
 		--245546, -- Summon Reinforcements
+		246505, -- Pyroblast
 
-		--[[ Out of Pod: Admiral Svirax ]] --
-		--244737, -- Shock Grenade
-
-		--[[ Out of Pod: Chief Engineer Ishkar ]] --
-		--244824, -- Warp Field
-
-		--[[ Out of Pod: General Erodus ]] --
+		--[[ Out of Pod ]] --
+		245227, -- Assume Command
+		{244892, "TANK"}, -- Sundering Claws
 
 		--[[ Stealing Power ]]--
 		244910, -- Felshield
 	},{
-		[245227] = "general",
 		[244625] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16100)), -- In Pod: Admiral Svirax
 		[245161] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16116)), -- In Pod: Chief Engineer Ishkar
-		--[245546] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16121)), -- In Pod: General Erodus
-		--[244737] = CL.other:format(mod:SpellName(-16098), mod:SpellName(-16100)), -- Out of Pod: Admiral Svirax
-		--[244824] = CL.other:format(mod:SpellName(-16098), mod:SpellName(-16116)), -- Out of Pod: Chief Engineer Ishkar
-		--[244892] = CL.other:format(mod:SpellName(-16098), mod:SpellName(-16121)), -- Out of Pod: General Erodus
-		[244902] = mod:SpellName(-16125), -- Stealing Power
+		[246505] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16121)), -- In Pod: General Erodus
+		[245227] = mod:SpellName(-16098), -- Out of Pod
+		[244910] = mod:SpellName(-16125), -- Stealing Power
 	}
 end
 
@@ -75,25 +64,16 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "WitheringFire", 245292) -- XXX Not seen in logs
 
 	--[[ In Pod: Chief Engineer Ishkar ]] --
+	-- Entropic Mines (UNIT_SPELLCAST_SUCCEEDED)
 
 	--[[ In Pod: General Erodus ]] --
 	--self:Log("SPELL_CAST_SUCCESS", "SummonReinforcements", 245546) -- XXX Not seen in logs
 	self:Log("SPELL_CAST_START", "Pyroblast", 246505)
 
-	--[[ General ]] --
+	--[[ Out of Pod ]] --
 	self:Log("SPELL_CAST_START", "AssumeCommand", 245227)
 	self:Log("SPELL_CAST_SUCCESS", "SunderingClaws", 244892)
 	self:Log("SPELL_AURA_APPLIED", "SunderingClawsApplied", 244892)
-
-	--[[ Out of Pod: Admiral Svirax ]] --
-	--self:Log("SPELL_AURA_APPLIED", "ShockGrenade", 244737) -- XXX Not seen in logs
-	--self:Log("SPELL_AURA_REMOVED", "ShockGrenadeRemoved", 244737) -- XXX Not seen in logs
-
-	--[[ Out of Pod: Chief Engineer Ishkar ]] --
-	--self:Log("SPELL_CAST_SUCCESS", "WarpField", 244824) -- XXX Not seen in logs
-
-	--[[ Out of Pod: General Erodus ]] --
-	-- Entropic Mines (UNIT_SPELLCAST_SUCCEEDED)
 
 	--[[ Stealing Power ]]--
 	self:Log("SPELL_AURA_APPLIED", "Felshield", 244910)
