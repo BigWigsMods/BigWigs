@@ -15,7 +15,7 @@ local mod, CL = BigWigs:NewBoss("Gorothi Worldbreaker", nil, 1992, 1712)
 if not mod then return end
 mod:RegisterEnableMob(122450) -- Garothi Worldbreaker
 mod.engageId = 2076
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
