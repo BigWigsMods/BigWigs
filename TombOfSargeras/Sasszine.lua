@@ -258,13 +258,13 @@ end
 
 function mod:BefoulingInk()
 	self:Message(232913, "Attention", "Info", CL.incoming:format(self:SpellName(232913))) -- Befouling Ink incoming!
-	self:CDBar(232913, stage == 3 and 32 or 41.5) -- XXX 32-34 in P3
+	self:CDBar(232913, stage == 3 and (self:Mythic() and 37 or 32) or 41.5)
 end
 
 function mod:CrashingWave(args)
 	waveCounter = waveCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
-	self:CastBar(args.spellId, self:Mythic() and 4 or self:LFR() and 7 or 5)
+	self:CastBar(args.spellId, self:LFR() and 7 or 5)
 	local timer = 42
 	if self:Mythic() and stage == 3 then
 		timer = crashingWaveStage3Mythic[waveCounter] or 32
