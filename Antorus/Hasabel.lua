@@ -1,4 +1,7 @@
 if not IsTestBuild() then return end -- XXX dont load on live
+--------------------------------------------------------------------------------
+-- TODO List:
+-- -- initial Bars for the Platform mini bosses when engaged
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -6,7 +9,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 
 local mod, CL = BigWigs:NewBoss("Portal Keeper Hasabel", nil, 1985, 1712)
 if not mod then return end
-mod:RegisterEnableMob(124393)
+mod:RegisterEnableMob(122104)
 mod.engageId = 2064
 --mod.respawnTime = 30
 
@@ -14,18 +17,42 @@ mod.engageId = 2064
 -- Locals
 --
 
+local stage = 1
+local realityTearCount = 1
+local collapsingWorldCount = 1
+local felstormBarrageCount = 1
+local playerPlatform = 1 -- 1: Nexus, 2: Xoroth, 3: Rancora, 4: Nathreza
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.custom_on_filter_platforms = "Filter Side Platform Warnings and Bars"
+	L.custom_on_filter_platforms_desc = "Removes unnecessary messages and bars if you are not on a side platform. It will always show bars and warnings from the main Platform: Nexus."
+	L.platform_active = "%s Active!" -- Platform: Xoroth Active!
+	L.open_xoroth_yell = "Xoroth" -- Witness Xoroth, a world of infernal heat and scorched bones!
+	L.open_rancora_yell = "Rancora" -- Gaze upon Rancora, a landscape of festering pools and skittering death!
+	L.open_nathreza_yell = "Nathreza" -- Nathreza... once a world of magic and knowledge, now a twisted landscape from which none escape.
+end
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
 function mod:GetOptions()
 	return {
+		--[[ General ]]--
+		"stages",
+		"custom_on_filter_platforms",
+		"berserk",
+
 		--[[ Platform: Nexus ]]--
 		{244016, "TANK"}, -- Reality Tear
 		243983, -- Collapsing World
 		244000, -- Felstorm Barrage
-		244677, -- Transport Portal
-		244709, -- Fiery Detonation
+		244689, -- Transport Portal
 		245504, -- Howling Shadows
 		246075, -- Catastrophic Implosion
 
@@ -35,7 +62,7 @@ function mod:GetOptions()
 		244613, -- Everburning Flames
 
 		--[[ Platform: Rancora ]]--
-		{244949, "SAY"}, -- Felsilk Wrap
+		{244926, "SAY"}, -- Felsilk Wrap
 		246316, -- Poison Essence
 		244849, -- Caustic Slime
 
@@ -44,6 +71,7 @@ function mod:GetOptions()
 		245040, -- Corrupt
 		245118, -- Cloying Shadows
 	},{
+		["stages"] = "general",
 		[244016] = -15799, -- Platform: Nexus
 		[244607] = -15800, -- Platform: Xoroth
 		[244926] = -15801, -- Platform: Rancora
@@ -52,13 +80,18 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	--[[ General ]]--
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Log("SPELL_CAST_SUCCESS", "PlatformPortal", 244073, 244136, 244146) -- Xoroth, Rancora, Nathreza
+	self:Log("SPELL_CAST_SUCCESS", "ReturnPortal", 244112, 244138, 244145) -- Xoroth, Rancora, Nathreza
+
 	--[[ Platform: Nexus ]]--
 	self:Log("SPELL_AURA_APPLIED", "RealityTear", 244016)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RealityTear", 244016)
-	self:Log("SPELL_CAST_START", "CollapsingWorld", 243983, 243984) -- Could be either - 2s / 8s cast
+	self:Log("SPELL_CAST_SUCCESS", "RealityTearSuccess", 244016)
+	self:Log("SPELL_CAST_SUCCESS", "CollapsingWorld", 243983)
 	self:Log("SPELL_CAST_START", "FelstormBarrage", 244000)
-	self:Log("SPELL_CAST_SUCCESS", "TransportPortal", 244677)
-	self:Log("SPELL_CAST_START", "FieryDetonation", 244709)
+	self:Log("SPELL_CAST_SUCCESS", "TransportPortal", 244689)
 	self:Log("SPELL_CAST_START", "HowlingShadows", 245504)
 	self:Log("SPELL_CAST_START", "CatastrophicImplosion", 246075)
 
@@ -68,7 +101,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EverburningFlames", 244613)
 
 	--[[ Platform: Rancora ]]--
-	self:Log("SPELL_AURA_APPLIED", "FelsilkWrap", 244949)
+	self:Log("SPELL_CAST_SUCCESS", "FelsilkWrap", 244926)
 	self:Log("SPELL_CAST_START", "PoisonEssence", 246316)
 	self:Log("SPELL_AURA_APPLIED", "CausticSlime", 244849)
 
@@ -76,42 +109,85 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Delusions", 245050)
 	self:Log("SPELL_AURA_APPLIED", "Corrupt", 245040)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Corrupt", 245040)
+	self:Log("SPELL_CAST_SUCCESS", "CorruptSuccess", 245040)
 	self:Log("SPELL_AURA_APPLIED", "CloyingShadows", 245040)
 end
 
 function mod:OnEngage()
+	stage = 1
+	realityTearCount = 1
+	collapsingWorldCount = 1
+	felstormBarrageCount = 1
+	playerPlatform = 1
 
+	self:Bar(244016, 7) -- Reality Tear
+	self:Bar(243983, 12.7) -- Collapsing World
+	self:Bar(244689, 21.9) -- Transport Portal
+	self:Bar(244000, 29.0) -- Felstorm Barrage
+	self:Berserk(600) -- Confirmed Heroic
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if msg:find(L.open_xoroth_yell, nil, true) then
+		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(-15800)), false) -- Platform: Xoroth
+	elseif msg:find(L.open_rancora_yell, nil, true) then
+		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(-15801)), false) -- Platform: Rancora
+	elseif msg:find(L.open_nathreza_yell, nil, true) then
+		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(-15802)), false) -- Platform: Nathreza
+	end
+end
+
+function mod:PlatformPortal(args)
+	if self:Me(args.sourceGUID) then
+		if args.spellId == 244073 then -- Xoroth
+			playerPlatform = 2
+		elseif args.spellId == 244136 then -- Rancora
+			playerPlatform = 3
+		elseif args.spellId == 244146 then -- Nathreza
+			playerPlatform = 4
+		end
+	end
+end
+
+function mod:ReturnPortal(args)
+	if self:Me(args.sourceGUID) then
+		playerPlatform = 1
+	end
+end
+
 function mod:RealityTear(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Alarm", nil, nil, amount > 2 and true) -- Assumed swap around 3~
+	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 4 and "Alarm", nil, nil, true) -- Start sound warning at 5+
+end
+
+function mod:RealityTearSuccess(args)
+	realityTearCount = realityTearCount + 1
+	self:Bar(args.spellId, realityTearCounter % 4 == 0 and 14.6 or 12.2)
 end
 
 function mod:CollapsingWorld(args)
 	self:Message(args.spellId, "Important", "Warning")
+	collapsingWorldCount = collapsingWorldCount + 1
+	self:Bar(args.spellId, collapsingWorldCount % 3 == 0 and 36.5 or 32.8)
 end
 
 function mod:FelstormBarrage(args)
 	self:Message(args.spellId, "Urgent", "Alert")
+	felstormBarrageCount = felstormBarrageCount + 1
+	self:Bar(args.spellId, collapsingWorldCount % 3 == 1 and 36.5 or 32.8)
 end
 
 function mod:TransportPortal(args)
 	self:Message(args.spellId, "Neutral", "Info")
-end
-
-function mod:FieryDetonation(args)
-	if self:Interrupter(args.sourceGUID) then
-		self:Message(args.spellId, "Attention", "Alert")
-	end
+	self:Bar(args.spellId, 51.1)
 end
 
 function mod:HowlingShadows(args)
-	if self:Interrupter(args.sourceGUID) then
+	if self:Interrupter(args.sourceGUID) and platform == 1 then -- Can't interupt from other platforms
 		self:Message(args.spellId, "Urgent", "Alarm")
 	end
 end
@@ -121,46 +197,50 @@ function mod:CatastrophicImplosion(args)
 end
 
 function mod:FlamesofXoroth(args)
+	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
 	if self:Interrupter(args.sourceGUID) then
 		self:Message(args.spellId, "Urgent", "Alarm")
 	end
+	self:CDBar(args.spellId, 7.3)
 end
 
 function mod:Supernova(args)
+	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
 	self:Message(args.spellId, "Attention", "Alert")
+	self:CDBar(args.spellId, 6.5)
 end
 
 function mod:EverburningFlames(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Info")
+		self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 	end
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:FelsilkWrap(args)
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Positive", "Warning", nil, nil, true)
-		end
+function mod:FelsilkWrap(args)
+	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 3 then return end
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+	self:CDBar(args.spellId, 17.5)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
 	end
 end
 
 function mod:PoisonEssence(args)
+	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 3 then return end
 	self:Message(args.spellId, "Important", "Alarm")
+	self:CDBar(args.spellId, 9.5)
 end
 
 function mod:CausticSlime(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Info")
+		self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
 	end
 end
 
 function mod:Delusions(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 4 then return end
+	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
+	self:CDBar(args.spellId, 14.5)
 end
 
 function mod:Corrupt(args)
@@ -168,6 +248,11 @@ function mod:Corrupt(args)
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning") -- Sound when stacks are 3 or higher
 	end
+end
+
+function mod:CorruptSuccess(args)
+	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 4 then return end
+	self:CDBar(args.spellId, 8.5)
 end
 
 function mod:CloyingShadows(args)
