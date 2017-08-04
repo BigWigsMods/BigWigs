@@ -98,7 +98,9 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:Bar(240319, 30) -- Hatching
 	end
-	self:Berserk(self:Mythic() and 360 or 480)
+	if not self:LFR() then
+		self:Berserk(self:Mythic() and 360 or 480)
+	end
 end
 
 function mod:OnBossDisable()
