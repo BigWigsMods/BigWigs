@@ -87,7 +87,7 @@ function mod:OnEngage()
 	lifeForceCount = 1
 	timers = self:Heroic() and timersHeroic or timersNormal
 
-	self:Bar(248332, timers[spellId][rainOfFelCount]) -- Rain of Fel
+	self:Bar(248332, timers[248332][rainOfFelCount]) -- Rain of Fel
 	self:Bar("warp_in", timers[246888][warpInCount], CL.count:format(args.spellName, warpInCount), "inv_artifact_dimensionalrift") -- Warp In
 	if self:Heroic() then
 		self:CDBar(248861, 27) -- Spear of Doom
@@ -100,7 +100,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 248332 then -- Rain of Fel
-		self:Message(args.spellId, "Urgent", "Warning")
+		self:Message(spellId, "Urgent", "Warning")
 		rainOfFelCount = rainOfFelCount + 1
 		self:Bar(spellId, timers[spellId][rainOfFelCount])
 	end
