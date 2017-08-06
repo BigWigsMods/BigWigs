@@ -24,8 +24,6 @@ local screechCounter = 0
 local rapidShotCounter = 1
 local lunarFireCounter = 1
 local lunarBeaconCounter = 1
-local canCastVolley = true
-
 local nextUltimate = 0
 
 --------------------------------------------------------------------------------
@@ -108,7 +106,6 @@ function mod:OnEngage()
 	twilightGlaiveCounter = 1
 	rapidShotCounter = 1
 	lunarBeaconCounter = 1
-	canCastVolley = true
 
 	nextUltimate = GetTime() + 48.3
 
@@ -140,8 +137,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 
 			self:Bar(236541, 6) -- Twilight Glaive
 			self:Bar(236694, 7.3) -- Call Moontalon
-			self:Bar(236442, 11) -- Twilight Volley
 			self:Bar(236603, 15.8) -- Rapid Shot
+
+			local volleyTimer = 11
+			if nextUltimateTimer < volleyTimer and (nextUltimateTimer + 11.5) > volleyTimer then -- Check if the cooldown ends at any point for 11.5s after the ultimate incase it gets interupted
+				volleyTimer = volleyTimer + 7
+			end
+			self:CDBar(236442, volleyTimer) -- Twilight Volley
 
 			if self:Easy() and nextUltimateTimer > 0 then
 				self:Bar(233263, nextUltimateTimer) -- Embrace of the Eclipse
@@ -157,8 +159,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 
 			self:Bar(236519, 10) -- Moon Burn
 			self:Bar(239264, 11) -- Lunar Fire
-			self:Bar(236442, 15.8) -- Twilight Volley
 			self:Bar(236712, 18.2) -- Lunar Beacon
+
+			local volleyTimer = 15.8
+			if nextUltimateTimer < volleyTimer and (nextUltimateTimer + 11.5) > volleyTimer then -- Check if the cooldown ends at any point for 11.5s after the ultimate incase it gets interupted
+				volleyTimer = volleyTimer + 7
+			end
+			self:CDBar(236442, volleyTimer) -- Twilight Volley
 
 			if self:Easy() and nextUltimateTimer > 0 then
 				self:Bar(236480, nextUltimateTimer) -- Glaive Storm
@@ -199,7 +206,6 @@ end
 function mod:GlaiveStorm(args)
 	self:Message(236480, "Important", "Warning", CL.incoming:format(args.spellName))
 	self:Bar(236480, 54.7)
-	canCastVolley = false
 	nextUltimate = GetTime() + 54.7
 end
 
@@ -211,7 +217,6 @@ function mod:IncorporealShotApplied(args)
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:Bar(args.spellId, 54.7)
-	canCastVolley = false
 	nextUltimate = GetTime() + 54.7
 end
 
@@ -227,22 +232,22 @@ do
 		end
 	end
 	function mod:TwilightVolley(args)
-		if not canCastVolley and nextUltimate < (GetTime() + 47.7) then -- Also check if more than 7s have passed since last ultimates (57.7s-7s)
-			self:Bar(args.spellId, 7)
+		local nextUltimateTimer = nextUltimate - GetTime()
+		if nextUltimateTimer > 43.2 then -- If less than 11.5 seconds have passed since last Ultimate, the cast will be interupted
+			self:CDBar(args.spellId, 7)
 		else
 			self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 		end
-		canCastVolley = true
 	end
 end
 
-function mod:TwilightVolleySuccess(args) -- Cast can be interupted (fd/vanish), will recast if it happens.
+function mod:TwilightVolleySuccess(args)
 	local nextUltimateTimer = nextUltimate - GetTime()
-	local timer = 19.5 -- Cooldown
-	if nextUltimateTimer < timer then
-		timer = timer + 7 -- Extra cooldown added after a Ultimate combo by cast id:61207
+	local timer = stage == 2 and 15.8 or 19.5 -- XXX Assumed cooldowns
+	if nextUltimateTimer < timer and (nextUltimateTimer + 11.5) > timer then -- Check if the cooldown ends at any point for 11.5s after the ultimate incase it gets interupted
+		timer = timer + 7
 	end
-	self:Bar(args.spellId, timer)
+	self:CDBar(args.spellId, timer)
 end
 
 do
@@ -276,7 +281,6 @@ end
 function mod:EmbraceoftheEclipse(args)
 	self:Message(args.spellId, "Attention", "Alarm", args.spellName)
 	self:Bar(args.spellId, 54.7)
-	canCastVolley = false
 	nextUltimate = GetTime() + 54.7
 end
 
