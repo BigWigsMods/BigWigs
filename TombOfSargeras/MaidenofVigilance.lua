@@ -42,6 +42,11 @@ if L then
 	L.light = "Light"
 	L.felHammer = "Fel Hammer" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
+	L.absorb = "Absorb"
+	L.absorb_text = "%.0fM (|cff%s%.0f%%|r)"
+	L.cast = "Cast"
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
+	L.stacks = "Stacks"
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -59,7 +64,7 @@ function mod:GetOptions()
 		238408, -- Fel Remanence
 		235267, -- Mass Instability
 		248812, -- Blowback
-		235028, -- Titanic Bulwark
+		{235028, "INFOBOX"}, -- Titanic Bulwark
 		234891, -- Wrath of the Creators
 		239153, -- Spontaneous Fragmentation
 	},{
@@ -280,12 +285,42 @@ function mod:Blowback(args)
 	self:Message(args.spellId, "Important", "Warning")
 end
 
-function mod:TitanicBulwarkApplied()
-	wrathStacks = 0
-end
+do
+	local timer, castOver, maxAbsorb = nil, 0, 0
 
-function mod:TitanicBulwarkRemoved(args)
-	self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
+	local function updateInfoBox(self, spellId)
+		local castTimeLeft = castOver - GetTime()
+		local castPercentage = castTimeLeft / 50 * 100
+		local absorb = UnitGetTotalAbsorbs("boss1")
+		local absorbPercentage = absorb / maxAbsorb * 100
+
+		local diff = castPercentage - absorbPercentage
+		local color = diff > 10 and "00ff00" or diff > 0 and "ffff00" or "ff0000"
+
+		self:SetInfo(spellId, 2, L.absorb_text:format(absorb/1000000, color, absorbPercentage))
+		self:SetInfo(spellId, 4, L.cast_text:format(castTimeLeft, color, castPercentage))
+		self:SetInfo(spellId, 6, ("%d/30"):format(wrathStacks))
+	end
+
+	function mod:TitanicBulwarkApplied(args)
+		wrathStacks = 0
+		self:OpenInfo(args.spellId, args.spellName)
+		self:SetInfo(args.spellId, 1, L.absorb)
+		self:SetInfo(args.spellId, 3, L.cast)
+		self:SetInfo(args.spellId, 5, L.stacks)
+		castOver = GetTime() + 50 -- Time to 30 stacks
+		maxAbsorb = UnitGetTotalAbsorbs("boss1")
+		timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self, args.spellId)
+	end
+
+	function mod:TitanicBulwarkRemoved(args)
+		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
+		self:CloseInfo(args.spellId)
+		if timer then
+			self:CancelTimer(timer)
+			timer = nil
+		end
+	end
 end
 
 function mod:WrathoftheCreators(args)
