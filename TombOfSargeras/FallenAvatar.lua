@@ -377,12 +377,14 @@ do
 			self:CDBar(233856, 80) -- Maiden Shield (if no fail)
 		end
 		self:CastBar(233856, 18)
-		self:OpenInfo(233856, args.spellName)
-		self:SetInfo(233856, 1, L.absorb)
-		self:SetInfo(233856, 3, L.cast)
-		castOver = GetTime() + 18
-		maxAbsorb = UnitGetTotalAbsorbs("boss2")
-		timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
+		if self:CheckOption(233856, "INFOBOX") then
+			self:OpenInfo(233856, args.spellName)
+			self:SetInfo(233856, 1, L.absorb)
+			self:SetInfo(233856, 3, L.cast)
+			castOver = GetTime() + 18
+			maxAbsorb = UnitGetTotalAbsorbs("boss2")
+			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
+		end
 	end
 
 	function mod:CleansingProtocolRemoved(args)

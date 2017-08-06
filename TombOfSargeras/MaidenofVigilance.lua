@@ -304,13 +304,15 @@ do
 
 	function mod:TitanicBulwarkApplied(args)
 		wrathStacks = 0
-		self:OpenInfo(args.spellId, args.spellName)
-		self:SetInfo(args.spellId, 1, L.absorb)
-		self:SetInfo(args.spellId, 3, L.cast)
-		self:SetInfo(args.spellId, 5, L.stacks)
-		castOver = GetTime() + 50 -- Time to 30 stacks
-		maxAbsorb = UnitGetTotalAbsorbs("boss1")
-		timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self, args.spellId)
+		if self:CheckOption(args.spellId, "INFOBOX") then
+			self:OpenInfo(args.spellId, args.spellName)
+			self:SetInfo(args.spellId, 1, L.absorb)
+			self:SetInfo(args.spellId, 3, L.cast)
+			self:SetInfo(args.spellId, 5, L.stacks)
+			castOver = GetTime() + 50 -- Time to 30 stacks
+			maxAbsorb = UnitGetTotalAbsorbs("boss1")
+			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self, args.spellId)
+		end
 	end
 
 	function mod:TitanicBulwarkRemoved(args)
