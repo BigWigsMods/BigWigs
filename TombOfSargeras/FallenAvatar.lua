@@ -64,6 +64,11 @@ if L then
 	L.energy_leak_msg = "Energy Leak! (%d)"
 
 	L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
+
+	L.absorb = "Absorb"
+	L.absorb_text = "%.0fM (|cff%s%.0f%%|r)"
+	L.cast = "Cast"
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
 end
 --------------------------------------------------------------------------------
 -- Initialization
@@ -84,7 +89,7 @@ function mod:GetOptions()
 		239212, -- Lingering Darkness
 		{236494, "TANK"}, -- Desolate
 		236528, -- Ripple of Darkness
-		233856, -- Cleansing Protocol
+		{233856, "INFOBOX"}, -- Cleansing Protocol
 		233556, -- Corrupted Matrix
 		{239739, "FLASH", "SAY", "INFOBOX"}, -- Dark Mark
 		darkMarkIcons,
@@ -125,7 +130,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "RippleofDarkness", 236528)
 
 	-- Maiden of Valor
-	self:Log("SPELL_CAST_START", "CleansingProtocol", 233856)
+	self:Log("SPELL_AURA_APPLIED", "CleansingProtocol", 241008)
+	self:Log("SPELL_AURA_REMOVED", "CleansingProtocolRemoved", 241008)
 	self:Log("SPELL_AURA_APPLIED", "Malfunction", 233739)
 	self:Death("MaidenDeath", 117264)
 
@@ -349,12 +355,43 @@ function mod:RippleofDarkness(args)
 	self:Message(args.spellId, "Urgent", "Warning")
 end
 
-function mod:CleansingProtocol(args)
-	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
-	if self:Mythic() then
-		self:CDBar(args.spellId, 80) -- Maiden Shield (if no fail)
+do
+	local timer, castOver, maxAbsorb = nil, 0, 0
+
+	local function updateInfoBox(self)
+		local castTimeLeft = castOver - GetTime()
+		local castPercentage = castTimeLeft / 18 * 100
+		local absorb = UnitGetTotalAbsorbs("boss2")
+		local absorbPercentage = absorb / maxAbsorb * 100
+
+		local diff = castPercentage - absorbPercentage
+		local color = diff > 10 and "00ff00" or diff > 0 and "ffff00" or "ff0000"
+
+		self:SetInfo(233856, 2, L.absorb_text:format(absorb/1000000, color, absorbPercentage))
+		self:SetInfo(233856, 4, L.cast_text:format(castTimeLeft, color, castPercentage))
 	end
-	self:CastBar(args.spellId, 18)
+
+	function mod:CleansingProtocol(args)
+		self:Message(233856, "Urgent", "Alarm", CL.casting:format(args.spellName))
+		if self:Mythic() then
+			self:CDBar(233856, 80) -- Maiden Shield (if no fail)
+		end
+		self:CastBar(233856, 18)
+		self:OpenInfo(233856, args.spellName)
+		self:SetInfo(233856, 1, L.absorb)
+		self:SetInfo(233856, 3, L.cast)
+		castOver = GetTime() + 18
+		maxAbsorb = UnitGetTotalAbsorbs("boss2")
+		timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
+	end
+
+	function mod:CleansingProtocolRemoved(args)
+		self:CloseInfo(233856)
+		if timer then
+			self:CancelTimer(timer)
+			timer = nil
+		end
+	end
 end
 
 function mod:Malfunction()
