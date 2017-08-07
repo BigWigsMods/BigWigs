@@ -133,14 +133,22 @@ function mod:OnEngage()
 	wailingSoulsCounter = 1
 	wipe(soulList)
 
-	self:OpenInfo("infobox")
-	self:SetInfo("infobox", 1, self:SpellName(55336)) -- Bone Armor (Shorter Text)
-	self:SetInfo("infobox", 2, boneArmorCounter)
-	self:SetInfo("infobox", 6, L.infobox_players)
-	self:SetInfo("infobox", 7, self:SpellName(-14857)) -- Spirit Realm
-	self:SetInfo("infobox", 8, #phasedList)
-	self:SetInfo("infobox", 9, self:SpellName(-14856)) -- Corporeal Realm
-	self:SetInfo("infobox", 10, #unphasedList)
+	if self:Easy() then
+		self:OpenInfo("infobox", L.infobox_players)
+		self:SetInfo("infobox", 1, self:SpellName(-14857)) -- Spirit Realm
+		self:SetInfo("infobox", 2, #phasedList)
+		self:SetInfo("infobox", 3, self:SpellName(-14856)) -- Corporeal Realm
+		self:SetInfo("infobox", 4, #unphasedList)
+	else
+		self:OpenInfo("infobox")
+		self:SetInfo("infobox", 1, self:SpellName(55336)) -- Bone Armor (Shorter Text)
+		self:SetInfo("infobox", 2, boneArmorCounter)
+		self:SetInfo("infobox", 6, L.infobox_players)
+		self:SetInfo("infobox", 7, self:SpellName(-14857)) -- Spirit Realm
+		self:SetInfo("infobox", 8, #phasedList)
+		self:SetInfo("infobox", 9, self:SpellName(-14856)) -- Corporeal Realm
+		self:SetInfo("infobox", 10, #unphasedList)
+	end
 
 
 	self:CDBar(235907, 6) -- Collapsing Fissure
@@ -213,9 +221,14 @@ function updateProximity(self)
 end
 
 do
-	local function updateInfoBox()
-		mod:SetInfo("infobox", 8, #phasedList)
-		mod:SetInfo("infobox", 10, #unphasedList)
+	local function updateInfoBox(self)
+		if self:Easy() then
+			self:SetInfo("infobox", 2, #phasedList)
+			self:SetInfo("infobox", 4, #unphasedList)
+		else
+			self:SetInfo("infobox", 8, #phasedList)
+			self:SetInfo("infobox", 10, #unphasedList)
+		end
 	end
 
 	function mod:SpiritualBarrier(args)
@@ -228,7 +241,7 @@ do
 		if not self:Easy() then -- No Dissonance in LFR/Normal
 			updateProximity(self)
 		end
-		updateInfoBox()
+		updateInfoBox(self)
 	end
 
 	function mod:SpiritualBarrierRemoved(args)
@@ -241,7 +254,7 @@ do
 		if not self:Easy() then -- No Dissonance in LFR/Normal
 			updateProximity(self)
 		end
-		updateInfoBox()
+		updateInfoBox(self)
 	end
 end
 
