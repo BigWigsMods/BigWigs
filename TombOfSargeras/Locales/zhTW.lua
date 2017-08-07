@@ -39,11 +39,12 @@ if L then
 	L.light = "聖光"
 	L.felHammer = "魔化錘" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "聖光錘" -- Better name for "Hammer of Creation"
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%.0fM (|cff%s%.0f%%|r)" -- M = millions
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
-	--L.stacks = "Stacks"
+	L.absorb = "吸收"
+	L.absorb_text = "%.0f萬 (|cff%s%.0f%%|r)" -- M = millions
+	L.absorb_division = 10000
+	L.cast = "施放"
+	L.cast_text = "%.1f秒 (|cff%s%.0f%%|r)" -- s = seconds
+	L.stacks = "層數"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "zhTW")
@@ -59,10 +60,11 @@ if L then
 
 	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%.0fM (|cff%s%.0f%%|r)" -- M = millions
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
+	L.absorb = "吸收"
+	L.absorb_text = "%.0f萬 (|cff%s%.0f%%|r)" -- M = millions
+	L.absorb_division = 10000
+	L.cast = "施放"
+	L.cast_text = "%.1f秒 (|cff%s%.0f%%|r)" -- s = seconds
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "zhTW")
