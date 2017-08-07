@@ -41,7 +41,7 @@ if L then
 	L.lightHammer = "聖光錘" -- Better name for "Hammer of Creation"
 	L.absorb = "吸收"
 	L.absorb_text = "%.0f百萬 (|cff%s%.0f%%|r)" -- M = millions
-	--L.cast = "Cast"
+	L.cast = "施放"
 	L.cast_text = "%.1f秒 (|cff%s%.0f%%|r)" -- s = seconds
 	L.stacks = "層數"
 end
@@ -61,7 +61,7 @@ if L then
 
 	L.absorb = "吸收"
 	L.absorb_text = "%.0f百萬 (|cff%s%.0f%%|r)" -- M = millions
-	--L.cast = "Cast"
+	L.cast = "施放"
 	L.cast_text = "%.1f秒 (|cff%s%.0f%%|r)" -- s = seconds
 end
 
