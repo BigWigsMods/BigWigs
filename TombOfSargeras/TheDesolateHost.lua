@@ -30,6 +30,7 @@ local wailingSoulsCounter = 1
 local boneArmorCounter = 0
 local updateProximity = nil
 local updateRealms = nil
+local armorAppliedTimer, armorRemovedTimer = nil, nil
 local soulList = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -131,16 +132,25 @@ function mod:OnEngage()
 	boneArmorCounter = 0
 	tormentedCriesCounter = 1
 	wailingSoulsCounter = 1
+	armorAppliedTimer, armorRemovedTimer = nil, nil
 	wipe(soulList)
 
-	self:OpenInfo("infobox")
-	self:SetInfo("infobox", 1, self:SpellName(55336)) -- Bone Armor (Shorter Text)
-	self:SetInfo("infobox", 2, boneArmorCounter)
-	self:SetInfo("infobox", 6, L.infobox_players)
-	self:SetInfo("infobox", 7, self:SpellName(-14857)) -- Spirit Realm
-	self:SetInfo("infobox", 8, #phasedList)
-	self:SetInfo("infobox", 9, self:SpellName(-14856)) -- Corporeal Realm
-	self:SetInfo("infobox", 10, #unphasedList)
+	if self:Easy() then
+		self:OpenInfo("infobox", L.infobox_players)
+		self:SetInfo("infobox", 1, self:SpellName(-14857)) -- Spirit Realm
+		self:SetInfo("infobox", 2, #phasedList)
+		self:SetInfo("infobox", 3, self:SpellName(-14856)) -- Corporeal Realm
+		self:SetInfo("infobox", 4, #unphasedList)
+	else
+		self:OpenInfo("infobox")
+		self:SetInfo("infobox", 1, self:SpellName(55336)) -- Bone Armor (Shorter Text)
+		self:SetInfo("infobox", 2, boneArmorCounter)
+		self:SetInfo("infobox", 6, L.infobox_players)
+		self:SetInfo("infobox", 7, self:SpellName(-14857)) -- Spirit Realm
+		self:SetInfo("infobox", 8, #phasedList)
+		self:SetInfo("infobox", 9, self:SpellName(-14856)) -- Corporeal Realm
+		self:SetInfo("infobox", 10, #unphasedList)
+	end
 
 
 	self:CDBar(235907, 6) -- Collapsing Fissure
@@ -213,9 +223,14 @@ function updateProximity(self)
 end
 
 do
-	local function updateInfoBox()
-		mod:SetInfo("infobox", 8, #phasedList)
-		mod:SetInfo("infobox", 10, #unphasedList)
+	local function updateInfoBox(self)
+		if self:Easy() then
+			self:SetInfo("infobox", 2, #phasedList)
+			self:SetInfo("infobox", 4, #unphasedList)
+		else
+			self:SetInfo("infobox", 8, #phasedList)
+			self:SetInfo("infobox", 10, #unphasedList)
+		end
 	end
 
 	function mod:SpiritualBarrier(args)
@@ -228,7 +243,7 @@ do
 		if not self:Easy() then -- No Dissonance in LFR/Normal
 			updateProximity(self)
 		end
-		updateInfoBox()
+		updateInfoBox(self)
 	end
 
 	function mod:SpiritualBarrierRemoved(args)
@@ -241,7 +256,7 @@ do
 		if not self:Easy() then -- No Dissonance in LFR/Normal
 			updateProximity(self)
 		end
-		updateInfoBox()
+		updateInfoBox(self)
 	end
 end
 
@@ -309,18 +324,33 @@ do
 	end
 end
 
-function mod:BonecageArmor(args)
-	if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
-	boneArmorCounter = boneArmorCounter + 1
-	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.spellName, boneArmorCounter))
-	self:SetInfo("infobox", 2, boneArmorCounter)
-end
+do
+	local function printArmorApplied(self, spellId, spellName)
+		armorAppliedTimer = nil
+		self:Message(spellId, "Attention", "Warning", CL.count:format(spellName, boneArmorCounter))
+	end
+	local function printArmorRemoved(self, spellId, spellName)
+		armorRemovedTimer = nil
+		self:Message(spellId, "Positive", "Info", L.armor_remaining:format(spellName, boneArmorCounter))
+	end
 
-function mod:BonecageArmorRemoved(args)
-	if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
-	boneArmorCounter = boneArmorCounter - 1
-	self:Message(args.spellId, "Positive", "Info", L.armor_remaining:format(args.spellName, boneArmorCounter))
-	self:SetInfo("infobox", 2, boneArmorCounter)
+	function mod:BonecageArmor(args)
+		if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
+		boneArmorCounter = boneArmorCounter + 1
+		self:SetInfo("infobox", 2, boneArmorCounter)
+		if not armorAppliedTimer then
+			armorAppliedTimer = self:ScheduleTimer(printArmorApplied, 0.1, self, args.spellId, args.spellName)
+		end
+	end
+
+	function mod:BonecageArmorRemoved(args)
+		if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
+		boneArmorCounter = boneArmorCounter - 1
+		self:SetInfo("infobox", 2, boneArmorCounter)
+		if not armorRemovedTimer then
+			armorRemovedTimer = self:ScheduleTimer(printArmorRemoved, 0.1, self, args.spellId, args.spellName)
+		end
+	end
 end
 
 function mod:Wither(args)

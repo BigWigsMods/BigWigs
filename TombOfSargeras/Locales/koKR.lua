@@ -39,6 +39,11 @@ if L then
 	L.light = "빛"
 	L.felHammer = "지옥 망치" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "빛 망치" -- Better name for "Hammer of Creation"
+	--L.absorb = "Absorb"
+	--L.absorb_text = "%.0fM (|cff%s%.0f%%|r)" -- M = millions
+	--L.cast = "Cast"
+	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
+	--L.stacks = "Stacks"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "koKR")
@@ -53,6 +58,11 @@ if L then
 	L.energy_leak_msg = "마력 누출! (%d)"
 
 	L.warmup_trigger = "네 눈앞의 껍데기는 한때 살게라스의 무지막지한 힘을 담던 그릇이었다." -- 네 눈앞의 껍데기는 한때 살게라스의 무지막지한 힘을 담던 그릇이었다. 그러나 이 사원 자체가 우리에겐 포상이다. 이곳이 우리가 너희 세상을 잿더미로 만드는 발판이 되리라!
+
+	--L.absorb = "Absorb"
+	--L.absorb_text = "%.0fM (|cff%s%.0f%%|r)" -- M = millions
+	--L.cast = "Cast"
+	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "koKR")

@@ -166,7 +166,7 @@ end
 
 function mod:RealityTearSuccess(args)
 	realityTearCount = realityTearCount + 1
-	self:Bar(args.spellId, realityTearCounter % 4 == 0 and 14.6 or 12.2)
+	self:Bar(args.spellId, realityTearCount % 4 == 0 and 14.6 or 12.2)
 end
 
 function mod:CollapsingWorld(args)

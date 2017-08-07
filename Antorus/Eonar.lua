@@ -28,7 +28,7 @@ local timersNormal = {
 	[248332] = {21, 24, 24, 24, 48, 24, 96, 12},
 
 	--[[ Warp In ]]--
-	[246888] = {5, 16, 24, 24, 24, 24, 48, 24, 48, 24, 24},
+	[246888] = {5, 16, 24},
 }
 
 local timersHeroic = {
@@ -47,7 +47,7 @@ local timers = mod:Heroic() and timersHeroic or timersNormal
 
 local L = mod:GetLocale()
 if L then
-	L.warp_in = "Warp In"
+	L.warp_in = mod:SpellName(246888)
 	L.warp_in_desc = "Shows timers and messages for each Warp In." -- [and the special add coming with it]. XXX Implement specifics when certain
 	L.warp_in_icon = "inv_artifact_dimensionalrift"
 
@@ -74,7 +74,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss2")
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	self:Log("SPELL_CAST_SUCCESS", "WarpIn", 246888) -- XXX Both no icons or spell info, might be replaced
+	self:Log("SPELL_CAST_SUCCESS", "WarpIn", 246888, 246896) -- XXX Both no icons or spell info, might be replaced
 	self:RegisterUnitEvent("UNIT_POWER", nil, "boss1")
 	self:Log("SPELL_CAST_START", "LifeForce", 250048)
 	self:Log("SPELL_CAST_SUCCESS", "LifeForceSuccess", 250048)
@@ -87,8 +87,8 @@ function mod:OnEngage()
 	lifeForceCount = 1
 	timers = self:Heroic() and timersHeroic or timersNormal
 
-	self:Bar(248332, timers[spellId][rainOfFelCount]) -- Rain of Fel
-	self:Bar("warp_in", timers[246888][warpInCount], CL.count:format(args.spellName, warpInCount), "inv_artifact_dimensionalrift") -- Warp In
+	self:Bar(248332, timers[248332][rainOfFelCount]) -- Rain of Fel
+	self:Bar("warp_in", timers[246888][warpInCount], CL.count:format(L.warp_in, warpInCount), "inv_artifact_dimensionalrift") -- Warp In
 	if self:Heroic() then
 		self:CDBar(248861, 27) -- Spear of Doom
 	end
@@ -100,7 +100,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 248332 then -- Rain of Fel
-		self:Message(args.spellId, "Urgent", "Warning")
+		self:Message(spellId, "Urgent", "Warning")
 		rainOfFelCount = rainOfFelCount + 1
 		self:Bar(spellId, timers[spellId][rainOfFelCount])
 	end
@@ -121,7 +121,7 @@ do
 			prev = t
 			self:Message("warp_in", "Neutral", "Info", CL.count:format(args.spellName, warpInCount), false)
 			warpInCount = warpInCount + 1
-			self:Bar("warp_in", timers[246888][warpInCount], CL.count:format(args.spellName, warpInCount), L.warp_in_icon)
+			self:Bar("warp_in", timers[246888][warpInCount] or self:Normal() and 24, CL.count:format(args.spellName, warpInCount), L.warp_in_icon)
 		end
 	end
 end
