@@ -19,7 +19,6 @@ local waveCounter = 1
 local dreadSharkCounter = 1
 local burdenCounter = 1
 local crashingWaveStage3Mythic = {32.5, 39, 33, 45, 33}
-local slicingTimersP3 = {0, 39.0, 34.1, 42.6}
 local hydraShotCounter = 1
 local abs = math.abs
 
@@ -230,15 +229,15 @@ function mod:SlicingTornado(args)
 	slicingTornadoCounter = slicingTornadoCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
 	if self:Mythic() then
-		self:Bar(args.spellId, stage == 3 and slicingTimersP3[slicingTornadoCounter] or 45) -- -- XXX Need more p3 data.
+		self:CDBar(args.spellId, stage == 3 and 35.3 or 34)
 	else
-		self:Bar(args.spellId, stage == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45) -- -- XXX Need more p3 data.
+		self:CDBar(args.spellId, stage == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45)
 	end
 end
 
 function mod:ThunderingShock(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 36) -- was 32.8, not confirmed
+	self:CDBar(args.spellId, 32.8) -- Can be delayed sometimes by other casts
 end
 
 do
