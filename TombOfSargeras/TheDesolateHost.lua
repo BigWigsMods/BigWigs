@@ -30,6 +30,7 @@ local wailingSoulsCounter = 1
 local boneArmorCounter = 0
 local updateProximity = nil
 local updateRealms = nil
+local armorAppliedTimer, armorRemovedTimer = nil, nil
 local soulList = mod:NewTargetList()
 
 --------------------------------------------------------------------------------
@@ -131,6 +132,7 @@ function mod:OnEngage()
 	boneArmorCounter = 0
 	tormentedCriesCounter = 1
 	wailingSoulsCounter = 1
+	armorAppliedTimer, armorRemovedTimer = nil, nil
 	wipe(soulList)
 
 	if self:Easy() then
@@ -322,18 +324,33 @@ do
 	end
 end
 
-function mod:BonecageArmor(args)
-	if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
-	boneArmorCounter = boneArmorCounter + 1
-	self:Message(args.spellId, "Important", "Alert", CL.count:format(args.spellName, boneArmorCounter))
-	self:SetInfo("infobox", 2, boneArmorCounter)
-end
+do
+	local function printArmorApplied(self, spellId, spellName)
+		armorAppliedTimer = nil
+		self:Message(spellId, "Attention", "Warning", CL.count:format(spellName, boneArmorCounter))
+	end
+	local function printArmorRemoved(self, spellId, spellName)
+		armorRemovedTimer = nil
+		self:Message(spellId, "Positive", "Info", L.armor_remaining:format(spellName, boneArmorCounter))
+	end
 
-function mod:BonecageArmorRemoved(args)
-	if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
-	boneArmorCounter = boneArmorCounter - 1
-	self:Message(args.spellId, "Positive", "Info", L.armor_remaining:format(args.spellName, boneArmorCounter))
-	self:SetInfo("infobox", 2, boneArmorCounter)
+	function mod:BonecageArmor(args)
+		if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
+		boneArmorCounter = boneArmorCounter + 1
+		self:SetInfo("infobox", 2, boneArmorCounter)
+		if not armorAppliedTimer then
+			armorAppliedTimer = self:ScheduleTimer(printArmorApplied, 0.1, self, args.spellId, args.spellName)
+		end
+	end
+
+	function mod:BonecageArmorRemoved(args)
+		if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
+		boneArmorCounter = boneArmorCounter - 1
+		self:SetInfo("infobox", 2, boneArmorCounter)
+		if not armorRemovedTimer then
+			armorRemovedTimer = self:ScheduleTimer(printArmorRemoved, 0.1, self, args.spellId, args.spellName)
+		end
+	end
 end
 
 function mod:Wither(args)
