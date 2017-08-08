@@ -64,6 +64,6 @@ L.marker_npc_desc = "標記 %s 為 %s，需要權限。"
 --L.link_removed = "Link removed"
 
 -- Abbreviated numbers
---L.amount_one = "%dB"
---L.amount_two = "%dM"
+L.amount_one = "%.2f億"
+L.amount_two = "%.1f萬"
 --L.amount_three = "%dK"

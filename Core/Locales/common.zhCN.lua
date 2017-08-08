@@ -64,6 +64,6 @@ L.link_both = "%s 连接 %s"
 L.link_removed = "连接已移除"
 
 -- Abbreviated numbers
---L.amount_one = "%dB"
---L.amount_two = "%dM"
+L.amount_one = "%.2f亿"
+L.amount_two = "%.1f万"
 --L.amount_three = "%dK"
