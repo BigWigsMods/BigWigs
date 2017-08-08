@@ -62,3 +62,8 @@ L.link = "Lié(e) avec %s"
 L.link_short = "Lié : %s"
 L.link_both = "%s est lié(e) avec %s"
 L.link_removed = "Lien enlevé"
+
+-- Abbreviated numbers
+--L.amount_one = "%dB"
+--L.amount_two = "%dM"
+--L.amount_three = "%dK"

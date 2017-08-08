@@ -72,3 +72,8 @@ L.link = "%s|1과;와; 연결됨"
 L.link_short = "연결됨: %s"
 L.link_both = "%s|1과;와; %s|1이;가; 연결됨"
 L.link_removed = "연결 사라짐"
+
+-- Abbreviated numbers
+L.amount_one = "%.2f억"
+L.amount_two = "%.1f만"
+L.amount_three = "%d천"
