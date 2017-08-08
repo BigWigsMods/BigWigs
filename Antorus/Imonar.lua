@@ -160,7 +160,7 @@ end
 --[[ Stage Two: Contract to Kill ]]--
 function mod:Sever(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 3 and "Warming" or amount > 1 and "Alarm") -- Swap on 2
+	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 3 and "Warning" or amount > 1 and "Alarm") -- Swap on 2
 end
 
 function mod:SeverSuccess(args)
