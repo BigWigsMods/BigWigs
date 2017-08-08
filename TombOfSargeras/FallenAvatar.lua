@@ -368,7 +368,7 @@ do
 		local diff = castPercentage - absorbPercentage
 		local color = diff > 10 and "00ff00" or diff > 0 and "ffff00" or "ff0000"
 
-		self:SetInfo(233856, 2, L.absorb_text:format(absorb/L.absorb_division, color, absorbPercentage))
+		self:SetInfo(233856, 2, L.absorb_text:format(self:AbbreviateNumber(absorb), color, absorbPercentage))
 		self:SetInfo(233856, 4, L.cast_text:format(castTimeLeft, color, castPercentage))
 	end
 
