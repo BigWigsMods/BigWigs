@@ -107,6 +107,9 @@ function mod:OnEngage()
 		self:CDBar(230139, self:Normal() and 27 or 25, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 	end
 	self:Bar(232722, self:Easy() and 36 or 30.3) -- Slicing Tornado
+	if self:Mythic() then
+		self:Bar(239362, 13) -- Delicious Bufferfish
+	end
 	self:Berserk(self:LFR() and 540 or 480)
 end
 
@@ -118,12 +121,15 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		dreadSharkCounter = dreadSharkCounter + 1
 		if not self:Mythic() then
 			stage = dreadSharkCounter
-		elseif dreadSharkCounter == 3 or dreadSharkCounter == 5 then
-			self:Message(239436, "Urgent", "Warning")
-			stage = stage+1
 		else
-			self:Message(239436, "Urgent", "Warning")
-			return -- No stage change yet
+			self:Bar(239362, 22.5) -- Delicious Bufferfish
+			if dreadSharkCounter == 3 or dreadSharkCounter == 5 then
+				self:Message(239436, "Urgent", "Warning")
+				stage = stage + 1
+			else
+				self:Message(239436, "Urgent", "Warning")
+				return -- No stage change yet
+			end
 		end
 
 		self:StopBar(232722) -- Slicing Tornado
