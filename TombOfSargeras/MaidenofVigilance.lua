@@ -44,7 +44,6 @@ if L then
 	L.lightHammer = "Light Hammer" -- Better name for "Hammer of Creation"
 	L.absorb = "Absorb"
 	L.absorb_text = "%.0fM (|cff%s%.0f%%|r)"
-	L.absorb_division = 1000000
 	L.cast = "Cast"
 	L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
 	L.stacks = "Stacks"
@@ -298,7 +297,11 @@ do
 		local diff = castPercentage - absorbPercentage
 		local color = diff > 10 and "00ff00" or diff > 0 and "ffff00" or "ff0000"
 
-		self:SetInfo(spellId, 2, L.absorb_text:format(absorb/L.absorb_division, color, absorbPercentage))
+		if _G.GetLocale() == "koKR" then
+			self:SetInfo(spellId, 2, L.absorb_text:format(AbbreviateLargeNumbers(absorb), color, absorbPercentage))
+		else
+			self:SetInfo(spellId, 2, L.absorb_text:format(absorb/1000000, color, absorbPercentage))
+		end
 		self:SetInfo(spellId, 4, L.cast_text:format(castTimeLeft, color, castPercentage))
 		self:SetInfo(spellId, 6, ("%d/30"):format(wrathStacks))
 	end
