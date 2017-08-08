@@ -40,8 +40,8 @@ if L then
 	L.felHammer = "지옥 망치" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "빛 망치" -- Better name for "Hammer of Creation"
 	L.absorb = "흡수"
-	L.absorb_text = "%.0f만 (|cff%s%.0f%%|r)" -- M = millions
-	L.absorb_division = 10000
+	L.absorb_text = "%.2f억 (|cff%s%.0f%%|r)" -- M = millions
+	L.absorb_division = 100000000
 	L.cast = "시전"
 	L.cast_text = "%.1f초 (|cff%s%.0f%%|r)" -- s = seconds
 	L.stacks = "중첩"
@@ -61,8 +61,8 @@ if L then
 	L.warmup_trigger = "네 눈앞의 껍데기는 한때 살게라스의 무지막지한 힘을 담던 그릇이었다." -- 네 눈앞의 껍데기는 한때 살게라스의 무지막지한 힘을 담던 그릇이었다. 그러나 이 사원 자체가 우리에겐 포상이다. 이곳이 우리가 너희 세상을 잿더미로 만드는 발판이 되리라!
 
 	L.absorb = "흡수"
-	L.absorb_text = "%.0f만 (|cff%s%.0f%%|r)" -- M = millions
-	L.absorb_division = 10000
+	L.absorb_text = "%.2f억 (|cff%s%.0f%%|r)" -- M = millions
+	L.absorb_division = 100000000
 	L.cast = "시전"
 	L.cast_text = "%.1f초 (|cff%s%.0f%%|r)" -- s = seconds
 end
