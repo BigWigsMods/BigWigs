@@ -40,7 +40,7 @@ if L then
 	L.felHammer = "지옥 망치" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "빛 망치" -- Better name for "Hammer of Creation"
 	L.absorb = "흡수"
-	L.absorb_text = "%.0f만 (|cff%s%.0f%%|r)" -- M = millions
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
 	L.cast = "시전"
 	L.cast_text = "%.1f초 (|cff%s%.0f%%|r)" -- s = seconds
 	L.stacks = "중첩"
