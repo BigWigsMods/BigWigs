@@ -1850,25 +1850,25 @@ do
 	if l == "zhCN" or l == "zhTW" or l == "koKR" then
 		function boss:AbbreviateNumber(amount)
 			if amount >= 100000000 then -- 100,000,000
-				format(L.amount_one, amount/100000000)
+				return format(L.amount_one, amount/100000000)
 			elseif amount >= 10000 then -- 10,000
-				format(L.amount_two, amount/10000)
+				return format(L.amount_two, amount/10000)
 			elseif amount >= 1000 then -- 1,000
-				format(L.amount_three, amount/1000)
+				return format(L.amount_three, amount/1000)
 			else
-				format("%d", amount)
+				return format("%d", amount)
 			end
 		end
 	else
 		function boss:AbbreviateNumber(amount)
 			if amount >= 1000000000 then -- 1,000,000,000
-				format(L.amount_one, amount/1000000000)
+				return format(L.amount_one, amount/1000000000)
 			elseif amount >= 1000000 then -- 1,000,000
-				format(L.amount_two, amount/1000000)
+				return format(L.amount_two, amount/1000000)
 			elseif amount >= 1000 then -- 1,000
-				format(L.amount_three, amount/1000)
+				return format(L.amount_three, amount/1000)
 			else
-				format("%d", amount)
+				return format("%d", amount)
 			end
 		end
 	end
