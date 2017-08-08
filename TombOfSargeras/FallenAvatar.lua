@@ -66,8 +66,7 @@ if L then
 	L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 
 	L.absorb = "Absorb"
-	L.absorb_text = "%.0fM (|cff%s%.0f%%|r)"
-	L.absorb_division = 1000000
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
 	L.cast = "Cast"
 	L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
 end
