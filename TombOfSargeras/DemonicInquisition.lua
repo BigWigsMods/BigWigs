@@ -142,7 +142,7 @@ function mod:OnEngage()
 
 	self:RegisterUnitEvent("UNIT_POWER", nil, "player")
 
-	self:Berserk(480, true, nil, 248671, 248671) -- confirmed for nm/hc/my - 248671 has a nice description, 248669 is the aura applied
+	self:Berserk(720, true, nil, 248671, 248671) -- confirmed for nm/hc/my - 248671 has a nice description, 248669 is the aura applied
 
 	if self:Mythic() and (self:GetOption("fixate") > 0 or self:GetOption("custom_on_fixate_plates")) then
 		self:RegisterTargetEvents("CheckForFixate")
@@ -274,7 +274,7 @@ do
 	end
 	function mod:CalcifiedQuills(args)
 		self:GetBossTarget(printTarget, 0.7, args.sourceGUID)
-		self:CastBar(args.spellId, 3)
+		self:CastBar(args.spellId, 5)
 		self:CDBar(args.spellId, 21.5)
 	end
 end
