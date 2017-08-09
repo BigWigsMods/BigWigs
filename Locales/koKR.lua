@@ -35,8 +35,6 @@ L.dbmUsers = "DBM 사용자:"
 L.noBossMod = "우두머리 모듈 없음:"
 L.offline = "접속 종료"
 
-L.blizzRestrictionsZone = "블리자드 전투 제한때문에 불러오기를 완료하기 위해 전투가 끝날 때까지 기다립니다."
-L.finishedLoading = "전투가 종료됐습니다, BigWigs가 불러오기를 완료했습니다."
 L.blizzRestrictionsConfig = "블리자드 제한으로 인해 전투 중에 설정을 처리하려면 먼저 전투 중이 아닐 때 설정을 열어야 합니다."
 
 L.missingAddOn = "이 지역에서 타이머를 표시하려면 |cFF436EEE%s|r 플러그인이 필요합니다."

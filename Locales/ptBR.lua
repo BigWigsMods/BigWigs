@@ -35,8 +35,6 @@ L.dbmUsers = "Usuários do DBM:"
 L.noBossMod = "Sem mod de chefes:"
 L.offline = "Desconectado"
 
-L.blizzRestrictionsZone = "Esperando até o combate terminar para carregar, devido algumas restrições de combate da Blizzard."
-L.finishedLoading = "Combate terminou, BigWigs acabou de carregar."
 L.blizzRestrictionsConfig = "Devido as restrições da Blizzard, as configurações precisam ser abertas fora de combate antes de poder ser acessadas em combate."
 
 L.missingAddOn = "Por favor, note que esta zona requer o |cFF436EEE%s|r plugin para os contadores serem exibidos."

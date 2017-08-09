@@ -1142,7 +1142,6 @@ end
 do
 	local loadedList = {}
 	local warnedThisZone = {}
-	local shouldPrint = 0
 	local loadByUnitTarget, loadByZone = nil, nil
 	function mod:PLAYER_REGEN_ENABLED()
 		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
@@ -1185,10 +1184,6 @@ do
 				if combat or falling then
 					if not loadedList[id] then
 						loadByUnitTarget = unit
-						if shouldPrint ~= id then
-							shouldPrint = id
-							sysprint(L.blizzRestrictionsZone)
-						end
 						if combat then
 							bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 						elseif falling then
@@ -1202,10 +1197,6 @@ do
 							loadZone(id)
 						else
 							BigWigs:Enable()
-						end
-						if shouldPrint == id then
-							shouldPrint = 0
-							sysprint(L.finishedLoading)
 						end
 					end
 				end
@@ -1238,10 +1229,6 @@ do
 				if not IsEncounterInProgress() and IsLoggedIn() and (combat or falling) then
 					if not loadedList[id] then
 						loadByZone = true
-						if shouldPrint ~= id then
-							shouldPrint = id
-							sysprint(L.blizzRestrictionsZone)
-						end
 						if combat then
 							bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 						elseif falling then

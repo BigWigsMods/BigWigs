@@ -34,8 +34,6 @@ L.dbmUsers = "DBM users:"
 L.noBossMod = "No boss mod:"
 L.offline = "Offline"
 
-L.blizzRestrictionsZone = "Waiting until combat ends to finish loading due to Blizzard combat restrictions."
-L.finishedLoading = "Combat has ended, BigWigs has now finished loading."
 L.blizzRestrictionsConfig = "Due to Blizzard restrictions the config must first be opened out of combat, before it can be accessed in combat."
 
 L.missingAddOn = "Please note that this zone requires the |cFF436EEE%s|r plugin for timers to be displayed."
