@@ -317,7 +317,7 @@ local function loadAndEnableCore()
 end
 
 local function loadCoreAndOpenOptions()
-	if not BigWigsOptions and not IsAltKeyDown() and (InCombat() or IsFalling()) then -- Allow combat loading using ALT key.
+	if not BigWigsOptions and not IsAltKeyDown() and PlaySoundKitID and (InCombat() or IsFalling()) then -- Allow combat loading using ALT key.
 		sysprint(L.blizzRestrictionsConfig)
 		return
 	end
@@ -1181,7 +1181,7 @@ do
 			local id = mobId and worldBosses[mobId]
 			if id then
 				local combat, falling = InCombat(), IsFalling()
-				if combat or falling then
+				if PlaySoundKitID and (combat or falling) then
 					if not loadedList[id] then
 						loadByUnitTarget = unit
 						if combat then
@@ -1226,7 +1226,7 @@ do
 			elseif inside then
 				bwFrame:UnregisterEvent("UNIT_TARGET")
 				local combat, falling = InCombat(), IsFalling()
-				if not IsEncounterInProgress() and IsLoggedIn() and (combat or falling) then
+				if not IsEncounterInProgress() and PlaySoundKitID and IsLoggedIn() and (combat or falling) then
 					if not loadedList[id] then
 						loadByZone = true
 						if combat then
