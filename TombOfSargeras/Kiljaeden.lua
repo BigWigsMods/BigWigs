@@ -40,7 +40,7 @@ local stageTwoTimersEasy = {
 	-- Rupturing Singularity
 	[235059] = {73.5, 81},
 	-- Armageddon
-	[240910] = {50.4, 45, 31, 35, 30.8},
+	[240910] = {50.4, 45, 31, 35, 31, 78},
 }
 local stageOneTimersMythic = {
 	-- Rupturing Singularity
