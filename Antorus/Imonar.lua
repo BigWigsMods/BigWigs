@@ -6,23 +6,32 @@ if not IsTestBuild() then return end -- XXX dont load on live
 
 local mod, CL = BigWigs:NewBoss("Imonar the Soulhunter", nil, 2009, 1712)
 if not mod then return end
-mod:RegisterEnableMob(125055, 124158, 125692) -- XXX Remove unused ID's
+mod:RegisterEnableMob(124158)
 mod.engageId = 2082
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
+local stage = 1
+local empoweredSchrapnelBlastCount = 1
+local timers = {
+	--[[ Empowered Shrapnel Blast ]]--
+	[248070] = {15.3, 22, 19.5, 18, 16, 16, 13.5, 10}, -- XXX Need more data to confirm
+}
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
 function mod:GetOptions()
 	return {
+		"stages",
+		"berserk",
+
 		--[[ Stage One: Attack Force ]]--
 		{247367, "TANK"}, -- Shock Lance
-		{247552, "SAY"}, -- Sleep Canister
+		{247552, "SAY", "FLASH", "ICON"}, -- Sleep Canister
 		247376, -- Pulse Grenade
 
 		--[[ Stage Two: Contract to Kill ]]--
@@ -39,6 +48,7 @@ function mod:GetOptions()
 		253302, -- Conflagration
 
 	},{
+		["stages"] = "general",
 		[247367] = -16577, -- Stage One: Attack Force
 		[247687] = -16206, -- Stage Two: Contract to Kill
 		[250255] = -16208, -- Stage Three: The Perfect Weapon
@@ -47,71 +57,125 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:Log("SPELL_AURA_REMOVED", "IntermissionOver", 248233, 250135) -- Conflagration: Intermission 1, Intermission 2
+
 	--[[ Stage One: Attack Force ]]--
 	self:Log("SPELL_AURA_APPLIED", "ShockLance", 247367)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShockLance", 247367)
-	self:Log("SPELL_AURA_APPLIED", "SleepCanister", 247552, 254244) -- XXX Remove Unused id's
+	self:Log("SPELL_CAST_SUCCESS", "ShockLanceSuccess", 247367)
+	self:Log("SPELL_CAST_SUCCESS", "SleepCanister", 247552)
+	self:Log("SPELL_AURA_REMOVED", "SleepCanisterRemoved", 247552)
 	self:Log("SPELL_CAST_START", "PulseGrenade", 247376)
 
 	--[[ Stage Two: Contract to Kill ]]--
 	self:Log("SPELL_AURA_APPLIED", "Sever", 247687)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Sever", 247687)
-	self:Log("SPELL_CAST_SUCCESS", "ChargedBlasts", 247716)
+	self:Log("SPELL_CAST_SUCCESS", "SeverSuccess", 247687)
+	self:Log("SPELL_CAST_SUCCESS", "ChargedBlasts", 248254)
 	self:Log("SPELL_CAST_START", "ShrapnelBlast", 247923)
 
 	--[[ Stage Three: The Perfect Weapon ]]--
 	self:Log("SPELL_AURA_APPLIED", "EmpoweredShockLance", 250255)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EmpoweredShockLance", 250255)
+	self:Log("SPELL_CAST_SUCCESS", "EmpoweredShockLanceSuccess", 250255)
 	self:Log("SPELL_CAST_START", "EmpoweredPulseGrenade", 248068)
-	self:Log("SPELL_CAST_START", "EmpoweredShrapnelBlast", 248068)
+	self:Log("SPELL_CAST_START", "EmpoweredShrapnelBlast", 248070)
 
 	--[[ Intermission: On Deadly Ground ]]--
-	self:Log("SPELL_CAST_SUCCESS", "Conflagration", 253302, 248321)
 end
 
 function mod:OnEngage()
+	stage = 1
+	self:CDBar(247367, 4.5) -- Shock Lance
+	self:CDBar(247552, 7.3) -- Sleep Canister
+	self:CDBar(247376, 12.2) -- Pulse Grenade
+
+	self:Berserk(420)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	if spellId == 248995 or spellId == 248194 then -- Jetpacks (Intermission 1), Jetpacks (Intermission 2)
+		self:Message("stages", "Positive", "Long", CL.intermission, false)
+		-- Stage 1 timers
+		self:StopBar(247367) -- Shock Lance
+		self:StopBar(247552) -- Sleep Canister
+		self:StopBar(247376) -- Pulse Grenade
+		-- Stage 2 timers
+		self:StopBar(247687) -- Sever
+		self:StopBar(248254) -- Charged Blast
+		self:StopBar(247923) -- Shrapnel Blast
+	end
+end
+
+
+function mod:IntermissionOver()
+	stage = stage + 1
+	self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
+	if stage == 2 then
+		self:CDBar(247687, 7.7) -- Sever
+		self:CDBar(248254, 10.6) -- Charged Blast
+		self:CDBar(247923, 12.8) -- Shrapnel Blast
+	elseif stage == 3 then
+		empoweredSchrapnelBlastCount = 1
+		self:CDBar(250255, 4.3) -- Empowered Shock Lance
+		self:CDBar(248068, 6.8) -- Empowered Pulse Grenade
+		self:CDBar(248070, timers[248070][empoweredSchrapnelBlastCount]) -- Empowered Shrapnel Blast
+	end
+end
+
 --[[ Stage One: Attack Force ]]--
 function mod:ShockLance(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 2 and "Alarm") -- Swap on 3
+	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 6 and "Warning" or amount > 4 and "Alarm") -- Swap on 5, increase warning at 7
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:SleepCanister(args)
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning", nil, nil, true)
-		end
+function mod:ShockLanceSuccess(args)
+	self:Bar(args.spellId, 4.9)
+end
+
+function mod:SleepCanister(args)
+	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
+	self:Bar(args.spellId, 10.9)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:Flash(args.spellId)
 	end
+	self:PrimaryIcon(args.spellId, args.destName)
+end
+
+function mod:SleepCanisterRemoved(args)
+	self:PrimaryIcon(args.spellId)
 end
 
 function mod:PulseGrenade(args)
 	self:Message(args.spellId, "Attention", "Alert")
+	self:Bar(args.spellId, 17.0)
 end
 
 --[[ Stage Two: Contract to Kill ]]--
 function mod:Sever(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 2 and "Alarm") -- Swap on 3
+	self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 3 and "Warning" or amount > 1 and "Alarm") -- Swap on 2
+end
+
+function mod:SeverSuccess(args)
+	self:Bar(args.spellId, 7.3)
 end
 
 function mod:ChargedBlasts(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
 	self:CastBar(args.spellId, 5.5)
+	self:Bar(args.spellId, 18.2)
 end
 
 function mod:ShrapnelBlast(args)
 	self:Message(args.spellId, "Attention", "Alert")
+	self:Bar(args.spellId, 13.4)
 end
 
 --[[ Stage Three: The Perfect Weapon ]]--
@@ -120,15 +184,18 @@ function mod:EmpoweredShockLance(args)
 	self:StackMessage(args.spellId, args.destName, amount, "Important", "Alarm") -- They last until death, sound on every cast?
 end
 
+function mod:EmpoweredShockLanceSuccess(args)
+	self:Bar(args.spellId, 6.1)
+end
+
 function mod:EmpoweredPulseGrenade(args)
 	self:Message(args.spellId, "Attention", "Alert")
+	self:Bar(args.spellId, 26.7)
+
 end
 
 function mod:EmpoweredShrapnelBlast(args)
 	self:Message(args.spellId, "Urgent", "Warning")
-end
-
---[[ Intermission: On Deadly Ground ]]--
-function mod:Conflagration(args)
-	self:Message(args.spellId, "Neutral", "Long")
+	empoweredSchrapnelBlastCount = empoweredSchrapnelBlastCount + 1
+	self:CDBar(args.spellId, timers[args.spellId][empoweredSchrapnelBlastCount])
 end

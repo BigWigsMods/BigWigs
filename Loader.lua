@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 67
+local BIGWIGS_VERSION = 68
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -317,7 +317,7 @@ local function loadAndEnableCore()
 end
 
 local function loadCoreAndOpenOptions()
-	if not BigWigsOptions and not IsAltKeyDown() and (InCombat() or IsFalling()) then -- Allow combat loading using ALT key.
+	if not BigWigsOptions and not IsAltKeyDown() and PlaySoundKitID and (InCombat() or IsFalling()) then -- Allow combat loading using ALT key.
 		sysprint(L.blizzRestrictionsConfig)
 		return
 	end
@@ -1142,7 +1142,6 @@ end
 do
 	local loadedList = {}
 	local warnedThisZone = {}
-	local shouldPrint = 0
 	local loadByUnitTarget, loadByZone = nil, nil
 	function mod:PLAYER_REGEN_ENABLED()
 		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
@@ -1182,13 +1181,9 @@ do
 			local id = mobId and worldBosses[mobId]
 			if id then
 				local combat, falling = InCombat(), IsFalling()
-				if combat or falling then
+				if PlaySoundKitID and (combat or falling) then
 					if not loadedList[id] then
 						loadByUnitTarget = unit
-						if shouldPrint ~= id then
-							shouldPrint = id
-							sysprint(L.blizzRestrictionsZone)
-						end
 						if combat then
 							bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 						elseif falling then
@@ -1202,10 +1197,6 @@ do
 							loadZone(id)
 						else
 							BigWigs:Enable()
-						end
-						if shouldPrint == id then
-							shouldPrint = 0
-							sysprint(L.finishedLoading)
 						end
 					end
 				end
@@ -1235,13 +1226,9 @@ do
 			elseif inside then
 				bwFrame:UnregisterEvent("UNIT_TARGET")
 				local combat, falling = InCombat(), IsFalling()
-				if not IsEncounterInProgress() and IsLoggedIn() and (combat or falling) then
+				if not IsEncounterInProgress() and PlaySoundKitID and IsLoggedIn() and (combat or falling) then
 					if not loadedList[id] then
 						loadByZone = true
-						if shouldPrint ~= id then
-							shouldPrint = id
-							sysprint(L.blizzRestrictionsZone)
-						end
 						if combat then
 							bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 						elseif falling then

@@ -277,7 +277,9 @@ end
 function mod:FelclawsApplied(args)
 	self:Message(args.spellId, "Important", "Info")
 	felclawsCount = felclawsCount + 1
-	if stage == 3 and felclawsCount % 4 == 0 then
+	if self:Mythic() and stage == 3 then
+		self:Bar(args.spellId, felclawsCount % 4 == 0 and 29 or felclawsCount % 4 == 1 and 16 or 24)
+	elseif stage == 3 and felclawsCount % 4 == 1 then
 		self:Bar(args.spellId, 20)
 	else
 		self:Bar(args.spellId, 24)
@@ -423,7 +425,7 @@ function mod:NetherGaleRemoved() -- Stage 2
 	burstingDreadflameCount = 1
 	singularityCount = 1
 	armageddonCount = 1
-	felclawsCount = 0 -- Start at 0 to get timers correct
+	felclawsCount = 1
 
 	self:Bar(239932, 10.4) -- Felclaws
 	self:Bar(236710, self:Mythic() and 164 or 13.9, INLINE_DAMAGER_ICON.." "..L.reflectionErupting) -- Shadow Reflection: Erupting
@@ -527,6 +529,7 @@ do
 		focusedDreadflameCount = 1
 		burstingDreadflameCount = 1
 		flamingOrbCount = 1
+		felclawsCount = 1
 		self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 		self:Bar(238999, 2, CL.count:format(L.darkness, darknessCount)) -- Darkness of a Thousand Souls
 		self:Bar(239932, 11) -- Felclaws

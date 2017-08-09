@@ -66,7 +66,7 @@ if L then
 	L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 
 	L.absorb = "Absorb"
-	L.absorb_text = "%.0fM (|cff%s%.0f%%|r)"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
 	L.cast = "Cast"
 	L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
 end
@@ -367,7 +367,7 @@ do
 		local diff = castPercentage - absorbPercentage
 		local color = diff > 10 and "00ff00" or diff > 0 and "ffff00" or "ff0000"
 
-		self:SetInfo(233856, 2, L.absorb_text:format(absorb/1000000, color, absorbPercentage))
+		self:SetInfo(233856, 2, L.absorb_text:format(self:AbbreviateNumber(absorb), color, absorbPercentage))
 		self:SetInfo(233856, 4, L.cast_text:format(castTimeLeft, color, castPercentage))
 	end
 

@@ -19,7 +19,6 @@ local waveCounter = 1
 local dreadSharkCounter = 1
 local burdenCounter = 1
 local crashingWaveStage3Mythic = {32.5, 39, 33, 45, 33}
-local slicingTimersP3 = {0, 39.0, 34.1, 42.6}
 local hydraShotCounter = 1
 local abs = math.abs
 
@@ -108,6 +107,9 @@ function mod:OnEngage()
 		self:CDBar(230139, self:Normal() and 27 or 25, CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Hydra Shot
 	end
 	self:Bar(232722, self:Easy() and 36 or 30.3) -- Slicing Tornado
+	if self:Mythic() then
+		self:Bar(239362, 13) -- Delicious Bufferfish
+	end
 	self:Berserk(self:LFR() and 540 or 480)
 end
 
@@ -119,12 +121,15 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		dreadSharkCounter = dreadSharkCounter + 1
 		if not self:Mythic() then
 			stage = dreadSharkCounter
-		elseif dreadSharkCounter == 3 or dreadSharkCounter == 5 then
-			self:Message(239436, "Urgent", "Warning")
-			stage = stage+1
 		else
-			self:Message(239436, "Urgent", "Warning")
-			return -- No stage change yet
+			self:Bar(239362, 22.5) -- Delicious Bufferfish
+			if dreadSharkCounter == 3 or dreadSharkCounter == 5 then
+				self:Message(239436, "Urgent", "Warning")
+				stage = stage + 1
+			else
+				self:Message(239436, "Urgent", "Warning")
+				return -- No stage change yet
+			end
 		end
 
 		self:StopBar(232722) -- Slicing Tornado
@@ -230,15 +235,15 @@ function mod:SlicingTornado(args)
 	slicingTornadoCounter = slicingTornadoCounter + 1
 	self:Message(args.spellId, "Important", "Warning")
 	if self:Mythic() then
-		self:Bar(args.spellId, stage == 3 and slicingTimersP3[slicingTornadoCounter] or 45) -- -- XXX Need more p3 data.
+		self:CDBar(args.spellId, stage == 3 and 35.3 or 34)
 	else
-		self:Bar(args.spellId, stage == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45) -- -- XXX Need more p3 data.
+		self:CDBar(args.spellId, stage == 3 and (slicingTornadoCounter % 2 == 0 and 45 or 52) or 45)
 	end
 end
 
 function mod:ThunderingShock(args)
 	self:Message(args.spellId, "Important", "Warning")
-	self:Bar(args.spellId, 36) -- was 32.8, not confirmed
+	self:CDBar(args.spellId, 32.8) -- Can be delayed sometimes by other casts
 end
 
 do

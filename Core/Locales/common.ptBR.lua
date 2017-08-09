@@ -70,3 +70,8 @@ L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente."
 --L.link_short = "Linked: %s"
 --L.link_both = "%s linked with %s"
 --L.link_removed = "Link removed"
+
+-- Abbreviated numbers
+--L.amount_one = "%dB"
+--L.amount_two = "%dM"
+--L.amount_three = "%dK"
