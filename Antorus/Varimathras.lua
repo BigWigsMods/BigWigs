@@ -23,6 +23,7 @@ local tormentActive = 0 -- 1: Flames, 2: Frost, 3: Fel, 4: Shadows
 function mod:GetOptions()
 	return {
 		"stages", -- Torment of Flames, Frost, Fel, Shadows
+		"berserk",
 		243961, -- Misery
 		{243960, "TANK"}, -- Shadow Strike
 		243999, -- Dark Fissure
@@ -60,6 +61,8 @@ function mod:OnEngage()
 	self:CDBar(243999, 17.8) -- Dark Fissure
 	self:CDBar(244042, 25.5) -- Marked Prey
 	self:CDBar(244094, 35.3) -- Necrotic Embrace
+
+	self:Berserk(390) -- Normal PTR
 end
 
 --------------------------------------------------------------------------------
@@ -70,7 +73,11 @@ function mod:TormentofFlames(args)
 	if tormentActive ~= 1 then
 		tormentActive = 1
 		self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
-		self:CDBar("stages", 120, self:SpellName(243977), 243977) -- Torment of Frost
+		if self:Easy() then
+			self:CDBar("stages", 355, self:SpellName(243973), 243973) -- Torment of Shadows
+		else
+			self:CDBar("stages", 120, self:SpellName(243977), 243977) -- Torment of Frost
+		end
 	end
 end
 
@@ -86,7 +93,7 @@ function mod:TormentofFel(args)
 	if tormentActive ~= 3 then
 		tormentActive = 3
 		self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
-		self:CDBar("stages", 120, self:SpellName(243973), 243973) -- Torment of Shadows XXX Unconfirmed
+		self:CDBar("stages", 121, self:SpellName(243973), 243973) -- Torment of Shadows
 	end
 end
 
