@@ -44,6 +44,7 @@ function mod:GetOptions()
 		{230139, "SAY"}, -- Hydra Shot
 		hydraShotMarker,
 		{230201, "TANK", "FLASH"}, -- Burden of Pain
+		230227, -- From the Abyss // Showing this as an alternative to Burden of Pain for non-tanks, they are the same spell
 		230959, -- Concealing Murk
 		232722, -- Slicing Tornado
 		230358, -- Thundering Shock
@@ -213,8 +214,13 @@ end
 
 function mod:BurdenofPain(args)
 	burdenCounter = burdenCounter + 1
+	-- Tanks: Burden of Pain
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
 	self:Bar(args.spellId, 25.5, CL.count:format(args.spellName, burdenCounter)) -- Timer until cast_start
+	if not self:Tank() or self:GetOption(args.spellId) == 0 then -- Non-Tanks: From the Abyss
+		self:Message(230227, "Urgent", "Alarm")
+		self:Bar(230227, 28)
+	end
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 	end
