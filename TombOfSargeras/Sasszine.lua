@@ -218,8 +218,8 @@ function mod:BurdenofPain(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
 	self:Bar(args.spellId, 25.5, CL.count:format(args.spellName, burdenCounter)) -- Timer until cast_start
 	if not self:Tank() or self:GetOption(args.spellId) == 0 then -- Non-Tanks: From the Abyss
-		self:Message(230227, "Urgent", "Alarm")
-		self:Bar(230227, 28)
+		self:Message(230227, "Urgent", "Alarm", CL.count:format(self:SpellName(230227), burdenCounter-1))
+		self:Bar(230227, 28, CL.count:format(self:SpellName(230227), burdenCounter))
 	end
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
