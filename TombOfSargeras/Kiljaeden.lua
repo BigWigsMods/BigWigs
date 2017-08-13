@@ -33,12 +33,12 @@ local mobCollector = {}
 local timersLFR = {
 	[240910] = { -- Armageddon
 		{10, 22, 42, 22, 30}, -- Stage 1
-		{56, 27.7, 56.7, 26.7, 12.2}, -- Stage 2
+		{56, 27.7, 56.7, 26.7, 12.2, 18.9}, -- Stage 2
 	},
 	[238430] = { -- Bursting Dreadflame
 		{7.7, 17, 13.4, 17}, -- Stage 1 (Intermission)
 		{58.2, 53.3, 61.1}, -- Stage 2
-		{42, 25, 70, 25}, -- Stage 3
+		{42, 25, 70}, -- Stage 3, 25/70 Repeating
 	},
 }
 local timersNormal = {
@@ -53,12 +53,12 @@ local timersNormal = {
 	[238430] = { -- Bursting Dreadflame
 		{7.7, 46}, -- Stage 1 (Intermission)
 		{52.4, 48, 55, 50}, -- Stage 2
-		{42, 25, 70, 25}, -- Stage 3
+		{42, 25, 70}, -- Stage 3, 25/70 Repeating
 	},
 	[238505] = { -- Focused Dreadflame
 		{24.6, 13.4}, -- Stage 1 (Intermission)
 		{76.4, 99}, -- Stage 2
-		{80, 95}, -- Stage 3
+		{80, 95, 95}, -- Stage 3, 95 Repeating
 	},
 }
 local timersHeroic = {
@@ -73,12 +73,12 @@ local timersHeroic = {
 	[238430] = { -- Bursting Dreadflame
 		{7.7, 46}, -- Stage 1 (Intermission)
 		{52.4, 48, 55, 50}, -- Stage 2
-		{42, 25, 70, 25}, -- Stage 3
+		{42, 25, 70}, -- Stage 3, 25/70 Repeating
 	},
 	[238505] = { -- Focused Dreadflame
 		{24.6, 13.4}, -- Stage 1 (Intermission)
 		{30.4, 46, 53, 46}, -- Stage 2
-		{80, 95}, -- Stage 3
+		{80, 95, 95}, -- Stage 3, 95 Repeating
 	},
 }
 local timersMythic = {
@@ -93,12 +93,12 @@ local timersMythic = {
 	[238430] = { -- Bursting Dreadflame
 		{10.1, 79}, -- Stage 1 (Intermission)
 		{52.4, 50.0, 45.0, 48.0, 86, 50}, -- Stage 2
-		{30, 52, 43} -- Stage 3
+		{30, 52, 43} -- Stage 3, 52/43 Repeating
 	},
 	[238505] = { -- Focused Dreadflame
 		{28.7, 38.9}, -- Stage 1 (Intermission)
 		{30.4, 44, 47, 138, 44}, -- Stage 2
-		{48, 36, 59, 36}, -- Stage 3
+		{48, 36, 59}, -- Stage 3, 36/59 Repeating
 	},
 }
 local wailingMythicTimers = {49.4, 60.0, 169.1, 60.0}
@@ -361,7 +361,7 @@ do
 		if #playerList == 1 then
 			self:Bar(args.spellId, 8, INLINE_DAMAGER_ICON.." "..CL.adds)
 			if stage == 2 and not self:Mythic() then
-				self:Bar(args.spellId, 112, INLINE_DAMAGER_ICON.." "..L.reflectionErupting)
+				self:Bar(args.spellId, self:LFR() and 124.4 or 112, INLINE_DAMAGER_ICON.." "..L.reflectionErupting)
 			elseif self:Mythic() and stage == 1 then
 				self:Bar(args.spellId, 109, INLINE_DAMAGER_ICON.." "..L.reflectionErupting)
 			end
@@ -420,7 +420,7 @@ end
 
 function mod:FocusedDreadflame()
 	focusedDreadflameCount = focusedDreadflameCount + 1
-	self:Bar(238505, timers[238505][stage][focusedDreadflameCount])
+	self:Bar(238505, timers[238505][stage][stage == 3 and (focusedDreadflameCount % 2 == 0 and 2 or 3) or focusedDreadflameCount])
 end
 
 function mod:FocusedDreadflameSuccess()
@@ -440,7 +440,7 @@ do
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Warning")
 			burstingDreadflameCount = burstingDreadflameCount + 1
-			self:Bar(args.spellId, timers[args.spellId][stage][burstingDreadflameCount])
+			self:Bar(args.spellId, timers[args.spellId][stage][stage == 3 and (burstingDreadflameCount % 2 == 0 and 2 or 3) or burstingDreadflameCount])
 		end
 	end
 end
