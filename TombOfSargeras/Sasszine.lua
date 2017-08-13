@@ -105,7 +105,7 @@ function mod:OnEngage()
 	-- Tanks: Burden of Pain
 	self:Bar(230201, self:Easy() and 18 or 15.5, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
 	-- Non-Tanks: From the Abyss
-	if not self:Tank() or self:GetOption(args.spellId) == 0 then
+	if not self:Tank() or self:GetOption(230201) == 0 then
 		self:Bar(230227, self:Easy() and 20.5 or 18, CL.count:format(self:SpellName(230227), burdenCounter))
 	end
 	self:Bar(230384, 20.5) -- Consuming Hunger
@@ -162,7 +162,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			-- Tanks: Burden of Pain
 			self:Bar(230201, self:Easy() and 28 or 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
 			-- Non-Tanks: From the Abyss
-			if not self:Tank() or self:GetOption(args.spellId) == 0 then
+			if not self:Tank() or self:GetOption(230201) == 0 then
 				self:Bar(230227, self:Easy() and 30.5 or 28, CL.count:format(self:SpellName(230227), burdenCounter))
 			end
 			self:Bar(232827, self:Easy() and 39.6 or 32.5) -- Crashing Wave
@@ -172,7 +172,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			-- Tanks: Burden of Pain
 			self:Bar(230201, self:Easy() and 28 or 25.6, CL.count:format(self:SpellName(230201), burdenCounter)) -- Burden of Pain, Timer until cast_start
 			-- Non-Tanks: From the Abyss
-			if not self:Tank() or self:GetOption(args.spellId) == 0 then
+			if not self:Tank() or self:GetOption(230201) == 0 then
 				self:Bar(230227, self:Easy() and 30.5 or 28, CL.count:format(self:SpellName(230227), burdenCounter))
 			end
 			self:Bar(232827, self:Easy() and 38.5 or 32.5) -- Crashing Wave
