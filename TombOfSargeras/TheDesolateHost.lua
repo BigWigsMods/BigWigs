@@ -174,7 +174,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 			t = 65 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 5s~ cooldown
 		end
 		self:Bar(235907, t)
-	elseif spellId == 239978 then -- Soul Palour // Stage 2
+	elseif spellId == 239978 then -- Soul Pallor // Stage 2
 		stage = 2
 
 		self:StopBar(236072) -- Wailing Souls

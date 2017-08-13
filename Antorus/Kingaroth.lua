@@ -6,7 +6,7 @@ if not IsTestBuild() then return end -- XXX dont load on live
 
 local mod, CL = BigWigs:NewBoss("Kin'garoth", nil, 2004, 1712)
 if not mod then return end
-mod:RegisterEnableMob(122578, 125050) -- XXX Remove unused id's
+mod:RegisterEnableMob(122578)
 mod.engageId = 2088
 mod.respawnTime = 30
 
@@ -91,7 +91,7 @@ function mod:OnEngage()
 	}
 
 	self:Bar(244312, 7.1) -- Forging Strike
-	self:Bar(248214, 10.8) -- Diabolic Bomb
+	self:Bar(246779, 10.8) -- Diabolic Bomb
 	self:Bar(248475, 14.5) -- Reverberating Strike
 	self:Bar(246840, 24.3) -- Ruiner
 	self:Bar(246516, 33) -- Apocalypse Protocol
@@ -114,9 +114,9 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 	if spellId == 248214 then -- Diabolic Bomb
-		self:Message(spellId, "Attention", "Alert")
+		self:Message(246779, "Attention", "Alert")
 		diabolicBombCount = diabolicBombCount + 1
-		self:CDBar(spellId, diabolicBombCount % 4 == 2 and 63.2 or diabolicBombCount % 4 == 3 and 25.8 or 20.3)
+		self:CDBar(246779, diabolicBombCount % 4 == 2 and 63.2 or diabolicBombCount % 4 == 3 and 25.8 or 20.3)
 	elseif spellId == 246686 then -- Decimation
 		local guid = UnitGUID(unit)
 		local mobId = self:MobId(guid)
