@@ -94,4 +94,5 @@ if L then
 	L.dresanoth = "드레사노스"
 	L.sentry = "수호의 감시자"
 	L.acolyte = "유령 수행사제"
+	L.ryul = "희미한 자 률"
 end

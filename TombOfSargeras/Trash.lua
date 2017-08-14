@@ -26,7 +26,8 @@ mod:RegisterEnableMob(
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	120777, -- Guardian Sentry
-	120194 -- Ghostly Acolyte
+	120194, -- Ghostly Acolyte
+	120019 -- Ryul the Fading
 
 	--[[ Pre Maiden of Vigilance ]]--
 
@@ -70,6 +71,7 @@ if L then
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	L.sentry = "Guardian Sentry"
 	L.acolyte = "Ghostly Acolyte"
+	L.ryul = "Ryul the Fading"
 
 	--[[ Pre Maiden of Vigilance ]]--
 
@@ -110,6 +112,9 @@ function mod:GetOptions()
 		--[[ Sisters of the Moon -> The Desolate Host ]]--
 		{240735, "SAY"}, -- Polymorph Bomb (Guardian Sentry)
 		{239741, "SAY"}, -- Anguish (Ghostly Acolyte)
+		{241367, "FLASH"}, -- Anguishing Strike (Ryul the Fading)
+		{241675, "SAY", "PROXIMITY"}, -- Void Rift (Ryul the Fading)
+		241646, -- Soul Portal (Ryul the Fading)
 
 		--[[ Pre Maiden of Vigilance ]]--
 
@@ -128,6 +133,7 @@ function mod:GetOptions()
 		[241254] = L.dresanoth,
 		[240735] = L.sentry,
 		[239741] = L.acolyte,
+		[241367] = L.ryul,
 	}
 end
 
@@ -170,6 +176,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "PolymorphBombRemoved", 240735)
 	self:Log("SPELL_AURA_APPLIED", "Anguish", 239741)
 	self:Log("SPELL_AURA_REMOVED", "AnguishRemoved", 239741)
+	self:Log("SPELL_CAST_SUCCESS", "AnguishingStrike", 241367)
+	self:Log("SPELL_AURA_APPLIED", "AnguishingStrikeApplied", 241367)
+	self:Log("SPELL_AURA_APPLIED", "VoidRift", 241675)
+	self:Log("SPELL_AURA_REMOVED", "VoidRiftRemoved", 241675)
+	self:Log("SPELL_CAST_SUCCESS", "SoulPortal", 241646)
 
 	--[[ Pre Maiden of Vigilance ]]--
 
@@ -323,6 +334,37 @@ function mod:AnguishRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
+end
+
+function mod:AnguishingStrike(args)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, self:Tank())
+	self:Bar(args.spellId, 15.8)
+	if not self:Me(args.destGUID) and self:Tank() then
+		self:Flash(args.spellId)
+	end
+end
+
+function mod:AnguishingStrikeApplied(args)
+	self:TargetBar(args.spellId, 10, args.destName)
+end
+
+function mod:VoidRift(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
+	if self:Me(args.destGUID) then
+		self:OpenProximity(args.spellId, 10)
+		self:Say(args.spellId)
+	end
+end
+
+function mod:VoidRiftRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
+	end
+end
+
+function mod:SoulPortal(args)
+	self:Message(args.spellId, "Positive", nil, CL.spawned:format(args.spellName))
+	self:Bar(args.spellId, 15.8)
 end
 
 --[[ Pre Maiden of Vigilance ]]--

@@ -94,4 +94,5 @@ if L then
 	L.dresanoth = "Dresanoth"
 	L.sentry = "Centinela guardián"
 	L.acolyte = "Acólita fantasmal"
+	L.ryul = "Ryul el Marchito"
 end

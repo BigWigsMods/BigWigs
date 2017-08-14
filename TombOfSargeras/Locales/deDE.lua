@@ -94,4 +94,5 @@ if L then
 	L.dresanoth = "Dresanoth"
 	L.sentry = "Wachposten"
 	L.acolyte = "Geisterhafte Akolythin"
+	L.ryul = "Ryul der Schwindende"
 end

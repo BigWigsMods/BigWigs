@@ -94,4 +94,5 @@ if L then
 	L.dresanoth = "Dresanoth"
 	L.sentry = "Sentinella Guardiana"
 	L.acolyte = "Accolita Spettrale"
+	L.ryul = "Ryul lo Svanente"
 end

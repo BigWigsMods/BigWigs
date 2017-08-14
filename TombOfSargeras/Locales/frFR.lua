@@ -94,4 +94,5 @@ if L then
 	L.dresanoth = "Dresanoth"
 	L.sentry = "Factionnaire gardien"
 	L.acolyte = "Acolyte fantomatique"
+	L.ryul = "Ryul le Déclinant"
 end

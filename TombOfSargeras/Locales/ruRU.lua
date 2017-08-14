@@ -94,4 +94,5 @@ if L then
 	L.dresanoth = "Кресанот"
 	L.sentry = "Страж Хранительницы"
 	L.acolyte = "Призрачная послушница"
+	L.ryul = "Рюл Поблекший"
 end

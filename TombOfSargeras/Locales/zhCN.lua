@@ -94,4 +94,5 @@ if L then
 	L.dresanoth = "德萨诺斯"
 	L.sentry = "守护者哨兵"
 	L.acolyte = "幽灵助祭"
+	--L.ryul = "Ryul the Fading"
 end
