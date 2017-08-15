@@ -60,7 +60,7 @@ L.marker_npc_desc = "标记 %s 为 %s，需要权限。"
 -- Ability where two players have to move close to each other
 L.link = "与%s连接"
 L.link_short = "连接：%s"
-L.link_both = "%s和连接%s"
+L.link_both = "%s和%s连接"
 L.link_removed = "连接已移除"
 
 -- Abbreviated numbers
