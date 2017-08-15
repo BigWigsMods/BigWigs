@@ -28,6 +28,8 @@ if L then
 	L.armor_remaining = "%s 剩余（%d）" -- Bonecage Armor Remaining (#)
 	L.custom_on_mythic_armor = "在史诗难度下忽略复活的圣殿骑士的骨牢护甲"
 	L.custom_on_mythic_armor_desc = "如果你不是负责坦住复活的圣殿骑士的副坦克，保持此选项启用来忽略提示和计数复活的圣殿骑士的骨牢护甲。"
+	--L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
+	--L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
 	L.tormentingCriesSay = "哀嚎" -- Tormenting Cries (short say)
 end
 

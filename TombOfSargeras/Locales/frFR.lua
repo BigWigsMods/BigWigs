@@ -28,6 +28,8 @@ if L then
 	L.armor_remaining = "%s restant (%d)" -- Bonecage Armor Remaining (#)
 	L.custom_on_mythic_armor = "Ignorer Armure thoracique sur les Templiers réanimés en Mythique"
 	L.custom_on_mythic_armor_desc = "Laissez cette option activée si vous off-tankez les Templiers réanimés afin d'ignorer les alertes et le comptage des Armures thoraciques sur les Templiers réanimés."
+	--L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
+	--L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
 	L.tormentingCriesSay = "Cris" -- Tormenting Cries (short say)
 end
 
