@@ -27,9 +27,9 @@ if L then
 	L.infobox_players = "玩家"
 	L.armor_remaining = "%s 剩余（%d）" -- Bonecage Armor Remaining (#)
 	L.custom_on_mythic_armor = "在史诗难度下忽略复活的圣殿骑士的骨牢护甲"
-	L.custom_on_mythic_armor_desc = "如果你不是负责坦住复活的圣殿骑士的副坦克，保持此选项启用来忽略提示和计数复活的圣殿骑士的骨牢护甲。"
-	--L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
-	--L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_mythic_armor_desc = "如果你不是负责复活的圣殿骑士的坦克，保持此选项启用来忽略提示和计数复活的圣殿骑士的骨牢护甲。"
+	L.custom_on_armor_plates = "敌对姓名板的骨牢护甲"
+	L.custom_on_armor_plates_desc = "当复活的圣殿骑士有骨牢护甲时在姓名板上显示图标。\n需要使用敌对姓名板。此功能当前只支持 KuiNameplates。"
 	L.tormentingCriesSay = "哀嚎" -- Tormenting Cries (short say)
 end
 
@@ -96,5 +96,5 @@ if L then
 	L.dresanoth = "德萨诺斯"
 	L.sentry = "守护者哨兵"
 	L.acolyte = "幽灵助祭"
-	--L.ryul = "Ryul the Fading"
+	L.ryul = "消逝者鲁尔"
 end
