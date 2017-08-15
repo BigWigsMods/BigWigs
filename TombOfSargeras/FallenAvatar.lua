@@ -474,7 +474,11 @@ do
 		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName) -- random duration
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
-			self:Say(args.spellId, CL.count:format(args.spellName, count)) -- Announce which mark you have
+			if self:LFR() then
+				self:Say(args.spellId)
+			else
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count == 1 and 6 or count == 2 and 4 or count == 3 and 3)) -- Announce which mark you have
+			end
 			local remaining = expires-GetTime()
 			self:SayCountdown(args.spellId, remaining)
 		end

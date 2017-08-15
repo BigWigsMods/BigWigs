@@ -28,6 +28,8 @@ if L then
 	--L.armor_remaining = "%s Remaining (%d)" -- Bonecage Armor Remaining (#)
 	--L.custom_on_mythic_armor = "Ignore Bonecage Armor on Reanimated Templars in Mythic Difficulty"
 	--L.custom_on_mythic_armor_desc = "Leave this option enabled if you are offtanking Reanimated Templars to ignore warnings and counting the Bonecage Armor on the Ranimated Templars"
+	--L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
+	--L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
 	--L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
 end
 
@@ -94,4 +96,5 @@ if L then
 	L.dresanoth = "Dresanoth"
 	L.sentry = "Sentinella Guardiana"
 	L.acolyte = "Accolita Spettrale"
+	L.ryul = "Ryul lo Svanente"
 end

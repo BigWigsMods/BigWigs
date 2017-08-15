@@ -43,6 +43,9 @@ if L then
 	L.armor_remaining = "%s Remaining (%d)" -- Bonecage Armor Remaining (#)
 	L.custom_on_mythic_armor = "Ignore Bonecage Armor on Reanimated Templars in Mythic Difficulty"
 	L.custom_on_mythic_armor_desc = "Leave this option enabled if you are offtanking Reanimated Templars to ignore warnings and counting the Bonecage Armor on the Ranimated Templars"
+	L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
+	L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_armor_plates_icon = 236513
 	L.tormentingCriesSay = "Cries" -- Tormenting Cries (short say)
 end
 --------------------------------------------------------------------------------
@@ -60,6 +63,7 @@ function mod:GetOptions()
 		{238570, "SAY", "ICON"}, -- Tormented Cries
 		235927, -- Rupturing Slam
 		236513, -- Bonecage Armor
+		"custom_on_armor_plates",
 		"custom_on_mythic_armor",
 		236131, -- Wither
 		{236459, "ME_ONLY"}, -- Soulbind
@@ -338,6 +342,9 @@ do
 		if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
 		boneArmorCounter = boneArmorCounter + 1
 		self:SetInfo("infobox", 2, boneArmorCounter)
+		if self:GetOption("custom_on_armor_plates") then
+			self:AddPlateIcon(236513, args.sourceGUID) -- Display an armor icon above targets with armor
+		end
 		if not armorAppliedTimer then
 			armorAppliedTimer = self:ScheduleTimer(printArmorApplied, 0.1, self, args.spellId, args.spellName)
 		end
@@ -347,6 +354,9 @@ do
 		if self:Mythic() and self:GetOption("custom_on_mythic_armor") and self:MobId(args.destGUID) == 118715 then return end -- Reanimated Templar
 		boneArmorCounter = boneArmorCounter - 1
 		self:SetInfo("infobox", 2, boneArmorCounter)
+		if self:GetOption("custom_on_armor_plates") then
+			self:RemovePlateIcon(236513, args.sourceGUID) -- Remove the armor icon
+		end
 		if not armorRemovedTimer then
 			armorRemovedTimer = self:ScheduleTimer(printArmorRemoved, 0.1, self, args.spellId, args.spellName)
 		end

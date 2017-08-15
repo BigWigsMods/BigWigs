@@ -33,9 +33,9 @@ function mod:GetOptions()
 		{245994, "SAY", "FLASH"}, -- Scorching Blaze
 		{244693, "SAY"}, -- Wake of Flame
 		244688, -- Taeshalach Technique
-		244291, -- Foe Breaker
-		244033, -- Flame Rend
-		246014, -- Searing Tempest
+		245458, -- Foe Breaker
+		245463, -- Flame Rend
+		245301, -- Searing Tempest
 
 		--[[ Stage Two: Champion of Sargeras ]]--
 		245983, -- Flare
@@ -90,8 +90,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		comboTime = GetTime() + 60.8
 
 		self:Bar(spellId, 60.8)
-		self:Bar(244033, 4, CL.count:format(self:SpellName(244033), flameRendCount)) -- Flame Rend
-		self:Bar(246014, 15.7) -- Searing Tempest
+		self:Bar(245463, 4, CL.count:format(self:SpellName(244033), flameRendCount)) -- Flame Rend
+		self:Bar(245301, 15.7) -- Searing Tempest
 	elseif spellId == 245983 then -- Flare
 		self:Message(spellId, "Important", "Warning")
 		if comboTime < GetTime() + 15.8 then
@@ -184,7 +184,7 @@ function mod:CorruptAegis()
 	self:StopBar(244693) -- Wake of Flame
 	self:StopBar(244688) -- Taeshalach Technique
 	self:StopBar(245458, CL.count:format(self:SpellName(245458), foeBreakerCount)) -- Foe Breaker
-	self:StopBar(244033, CL.count:format(self:SpellName(244033), flameRendCount)) -- Flame Rend
+	self:StopBar(245463, CL.count:format(self:SpellName(245463), flameRendCount)) -- Flame Rend
 	self:StopBar(245301) -- Searing Tempest
 	self:StopBar(245983) -- Flare
 end
