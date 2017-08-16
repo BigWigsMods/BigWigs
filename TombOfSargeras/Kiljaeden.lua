@@ -352,12 +352,12 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:ShadowReflectionErupting(args)
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
-			self:Say(args.spellId, L.reflectionErupting)
+			self:Say(args.spellId, self:Easy() and L.reflectionErupting or CL.count_rticon:format(L.reflectionErupting, #playerList, #playerList+2))
 			self:SayCountdown(args.spellId, 8)
 		end
-		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:Bar(args.spellId, 8, INLINE_DAMAGER_ICON.." "..CL.adds)
 			if stage == 2 and not self:Mythic() then
@@ -575,6 +575,7 @@ end
 function mod:IllidansSightlessGaze(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Long")
+		self:Bar(args.spellId, 20)
 	end
 end
 
