@@ -28,8 +28,8 @@ if L then
 	L.armor_remaining = "%s restant (%d)" -- Bonecage Armor Remaining (#)
 	L.custom_on_mythic_armor = "Ignorer Armure thoracique sur les Templiers réanimés en Mythique"
 	L.custom_on_mythic_armor_desc = "Laissez cette option activée si vous off-tankez les Templiers réanimés afin d'ignorer les alertes et le comptage des Armures thoraciques sur les Templiers réanimés."
-	--L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
-	--L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_armor_plates = "Icône Armure thoracique sur les barres d'info des ennemis"
+	L.custom_on_armor_plates_desc = "Affiche une icône sur la barre d'info des Templiers réanimés sous Armure thoracique.\nNécessite l'utlisation des barres d'info des ennemis. Cette fonctionnalité est actuellement uniquement supportée par KuiNameplates."
 	L.tormentingCriesSay = "Cris" -- Tormenting Cries (short say)
 end
 
@@ -41,11 +41,11 @@ if L then
 	L.light = "Lumière"
 	L.felHammer = "Marteau gangrené" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "Marteau de Lumière" -- Better name for "Hammer of Creation"
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
-	--L.stacks = "Stacks"
+	L.absorb = "Absorb."
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
+	L.cast = "Incant."
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
+	L.stacks = "Cumuls"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "frFR")
@@ -61,10 +61,10 @@ if L then
 
 	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
+	L.absorb = "Absorb."
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
+	L.cast = "Incant."
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "frFR")
