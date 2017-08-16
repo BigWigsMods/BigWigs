@@ -454,33 +454,28 @@ end
 
 do
 	local list, infoBoxList, timer = mod:NewTargetList(), {}, nil
-	local infoBoxText = {
-		[1] = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_6.png:0|t %.1f",
-		[3] = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_4.png:0|t %.1f",
-		[5] = "|TInterface\\TARGETINGFRAME\\UI-RaidTargetingIcon_3.png:0|t %.1f",
-	}
-
 	local function updateInfoBox(self)
-		for _,debuff in pairs(infoBoxList) do
-			local pos = debuff.pos-1
-			self:SetInfo(239739, pos, (infoBoxText[pos]):format(debuff.expires-GetTime()))
+		for _,debuff in next, infoBoxList do
+			self:SetInfo(239739, debuff.pos-1, ("|T%d:0|t %.1f"):format(debuff.icon, debuff.expires-GetTime()))
 		end
 	end
 
 	function mod:DarkMark(args)
 		local count = #list+1
 		list[count] = args.destName
+		local icon = count == 1 and 6 or count == 2 and 4 or 3 -- (Blue -> Green -> Purple) in order of exploding/application
 
 		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName) -- random duration
 		if self:Me(args.destGUID) then
+			local remaining = expires-GetTime()
 			self:Flash(args.spellId)
 			if self:LFR() then
 				self:Say(args.spellId)
+				self:SayCountdown(args.spellId, remaining)
 			else
-				self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count == 1 and 6 or count == 2 and 4 or count == 3 and 3)) -- Announce which mark you have
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, icon)) -- Announce which mark you have
+				self:SayCountdown(args.spellId, remaining, icon)
 			end
-			local remaining = expires-GetTime()
-			self:SayCountdown(args.spellId, remaining)
 		end
 
 		if count == 1 then
@@ -488,25 +483,22 @@ do
 			darkMarkCounter = darkMarkCounter + 1
 			self:Bar(args.spellId, self:Mythic() and (darkMarkCounter == 2 and 25.5 or 30.5) or 34, CL.count:format(args.spellName, darkMarkCounter))
 			self:OpenInfo(args.spellId, args.spellName)
-			self:SetInfo(args.spellId, 1, infoBoxText[1]:format(6))
+			self:SetInfo(args.spellId, 1, "|T137006:0|t 6")
 			if not self:LFR() then
-				self:SetInfo(args.spellId, 3, infoBoxText[3]:format(8))
+				self:SetInfo(args.spellId, 3, "|T137004:0|t 8")
 			end
 			if not self:Easy() then
-				self:SetInfo(args.spellId, 5, infoBoxText[5]:format(10))
+				self:SetInfo(args.spellId, 5, "|T137003:0|t 10")
 			end
 			wipe(infoBoxList)
 			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 		end
 
-		infoBoxList[args.destName] = {pos = count*2, expires = expires}
+		infoBoxList[args.destGUID] = {pos = count*2, expires = expires, icon = 137000+icon}
 		self:SetInfo(args.spellId, count*2, self:ColorName(args.destName))
 
 		if self:GetOption(darkMarkIcons) then
-			local icon = count == 1 and 6 or count == 2 and 4 or count == 3 and 3 -- (Blue -> Green -> Purple) in order of exploding/application
-			if icon then
-				SetRaidTarget(args.destName, icon)
-			end
+			SetRaidTarget(args.destName, icon)
 		end
 	end
 
@@ -517,10 +509,10 @@ do
 		if self:GetOption(darkMarkIcons) then
 			SetRaidTarget(args.destName, 0)
 		end
-		if infoBoxList[args.destName] then
-			self:SetInfo(args.spellId, infoBoxList[args.destName].pos, "")
-			self:SetInfo(args.spellId, infoBoxList[args.destName].pos-1, "")
-			infoBoxList[args.destName] = nil
+		if infoBoxList[args.destGUID] then
+			self:SetInfo(args.spellId, infoBoxList[args.destGUID].pos, "")
+			self:SetInfo(args.spellId, infoBoxList[args.destGUID].pos-1, "")
+			infoBoxList[args.destGUID] = nil
 		end
 		if not next(infoBoxList) then
 			self:CloseInfo(args.spellId)
