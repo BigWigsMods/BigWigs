@@ -210,6 +210,8 @@ function mod:OnBossEnable()
 	-- Intermission: Deceiver's Veil
 	self:Log("SPELL_CAST_START", "DeceiversVeilCast", 241983) -- Deceiver's Veil Cast
 	self:Log("SPELL_AURA_APPLIED", "IllidansSightlessGaze", 241721) -- Illidan's Sightless Gaze
+	self:Log("SPELL_AURA_REFRESH", "IllidansSightlessGaze", 241721) -- Illidan's Sightless Gaze
+	self:Log("SPELL_AURA_REMOVED", "IllidansSightlessGazeRemoved", 241721) -- Illidan's Sightless Gaze
 	self:Log("SPELL_AURA_REMOVED", "DeceiversVeilRemoved", 241983) -- Deceiver's Veil Over
 
 	-- Stage Three: Darkness of A Thousand Souls
@@ -580,10 +582,23 @@ do
 	end
 end
 
-function mod:IllidansSightlessGaze(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Long")
-		self:Bar(args.spellId, 20)
+do
+	local prev = 0
+	function mod:IllidansSightlessGaze(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) then
+			if t-prev > 1.5 then
+				prev = t
+				self:Message(args.spellId, "Personal", "Long", CL.you:format(args.spellName))
+			end
+			self:Bar(args.spellId, 20)
+		end
+	end
+end
+
+function mod:IllidansSightlessGazeRemoved(args)
+	if stage == 2 then -- Don't warn in p3
+		self:Message(args.spellId, "Personal", "Alert", CL.removed:format(args.spellName))
 	end
 end
 
