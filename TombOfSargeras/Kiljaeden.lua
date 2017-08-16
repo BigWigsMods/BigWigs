@@ -1,4 +1,6 @@
 
+-- GLOBALS: INLINE_TANK_ICON, INLINE_HEALER_ICON, INLINE_DAMAGER_ICON
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- Rift Activating Timer
@@ -28,7 +30,7 @@ local flamingOrbCount = 1
 local wailingCounter = 1
 local obeliskCount = 1
 local darknessCount = 1
-local focusWarned = {}
+local focusedTarget = nil
 local mobCollector = {}
 local timersLFR = {
 	[240910] = { -- Armageddon
@@ -232,7 +234,7 @@ function mod:OnEngage()
 	obeliskCount = 1
 	wailingCounter = 1
 	darknessCount = 1
-	wipe(focusWarned)
+	focusedTarget = nil
 	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or self:Normal() and timersNormal or self:LFR() and timersLFR
 	wipe(mobCollector)
 
@@ -263,6 +265,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 		self:TargetBar(238505, 5, target)
 		self:PrimaryIcon(238505, target)
 		local guid = UnitGUID(target)
+		focusedTarget = guid
 		if self:Me(guid) then
 			self:Say(238505)
 			self:SayCountdown(238505, 5)
@@ -270,6 +273,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 		if not self:Easy() then
 			self:OpenProximity(238505, 5)
 		end
+		-- Schedule fake success in case the target uses invis, etc
+		self:ScheduleTimer("FocusedDreadflameSuccess", 5.5)
 	elseif msg:find("235059", nil, true) then -- Rupturing Singularity
 		self:Message(235059, "Urgent", "Warning", CL.count:format(self:SpellName(235059), singularityCount))
 		self:Bar("rupturingKnock", 9.85, CL.count:format(L.singularityImpact, singularityCount), 235059)
@@ -424,8 +429,11 @@ function mod:FocusedDreadflame()
 end
 
 function mod:FocusedDreadflameSuccess()
-	self:PrimaryIcon(238505)
-	self:CloseProximity(238505)
+	if focusedTarget then
+		focusedTarget = nil
+		self:PrimaryIcon(238505)
+		self:CloseProximity(238505)
+	end
 end
 
 do
