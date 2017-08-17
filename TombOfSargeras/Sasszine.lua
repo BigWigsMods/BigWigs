@@ -352,12 +352,18 @@ do
 
 	function mod:MawRemoved(args)
 		local list = ""
+		local total = 0
 		for name, n in pairs(fedTable) do
+			if total >= fedsNeeded then
+				list = list .. "..., " -- ", " will be cut
+				break
+			end
 			if n > 1 then
 				list = list .. CL.count:format(self:ColorName(name), n) .. ", "
 			else
 				list = list .. self:ColorName(name) .. ", "
 			end
+			total = total + n
 		end
 		self:Message(234621, "Positive", "Info", CL.over:format(args.spellName) .. " - " .. L.inks_fed:format(list:sub(0, list:len()-2)))
 		self:ScheduleTimer("CloseInfo", 5, 234621) -- delay a bit to make sure the people get enough credit
