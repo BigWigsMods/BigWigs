@@ -21,6 +21,7 @@ local burdenCounter = 1
 local crashingWaveStage3Mythic = {32.5, 39, 33, 45, 33}
 local hydraShotCounter = 1
 local abs = math.abs
+local hydraShotSayTimers = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -100,6 +101,7 @@ function mod:OnEngage()
 	dreadSharkCounter = 1
 	burdenCounter = 1
 	hydraShotCounter = 1
+	wipe(hydraShotSayTimers)
 
 	self:Bar(230358, 10.5) -- Thundering Shock
 	-- Tanks: Burden of Pain
@@ -187,6 +189,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 end
 
 do
+	local function sendChatWrapper(self, key, mark, remaining)
+		if not UnitBuff("player", self:SpellName(194249)) then -- Make sure that the chat bubble will make sense (no Voidform)
+			local msg = string.format("{rt%d} %d", mark, remaining)
+			self:Say(key, msg, true)
+		end
+	end
+
 	local list = mod:NewTargetList()
 	function mod:HydraShot(args)
 		local count = #list+1
@@ -197,7 +206,9 @@ do
 				self:Say(args.spellId)
 			else
 				self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
-				self:SayCountdown(args.spellId, 6, count, 4)
+				for i = 1, 4 do
+					hydraShotSayTimers[i] = self:ScheduleTimer(sendChatWrapper, 6 - i, self, args.spellId, count, i)
+				end
 			end
 		end
 
@@ -219,7 +230,10 @@ do
 			SetRaidTarget(args.destName, 0)
 		end
 		if self:Me(args.destGUID) and not self:Easy() then
-			self:CancelSayCountdown(args.spellId)
+			for i = #hydraShotSayTimers, 1, -1 do
+				self:CancelTimer(hydraShotSayTimers[i])
+				hydraShotSayTimers[i] = nil
+			end
 		end
 	end
 end
