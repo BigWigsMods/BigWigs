@@ -100,7 +100,7 @@ do
 		for i = 1, 10 do
 			self.text[i]:SetText("")
 		end
-		for i = 1, 5 do
+		for i = 1, 9, 2 do
 			self.bar[i]:Hide()
 		end
 		self.title:SetText(L.infoBox)
@@ -144,7 +144,7 @@ do
 
 	local bgLayer, bgLevel = bg:GetDrawLayer()
 	display.bar = {}
-	for i = 1, 5 do
+	for i = 1, 9, 2 do
 		local bar = display:CreateTexture(nil, bgLayer, nil, bgLevel + 1)
 		bar:SetSize(infoboxWidth, infoboxHeight/5-1)
 		bar:SetColorTexture(0, 1, 0, 0.3)
@@ -154,6 +154,7 @@ do
 			bar:SetPoint("TOPLEFT", display.bar[i-1], "BOTTOMLEFT", 0, -1)
 		end
 		display.bar[i] = bar
+		display.bar[i+1] = bar
 	end
 
 	display:Hide()
@@ -306,14 +307,14 @@ do
 end
 
 function plugin:BigWigs_SetInfoBoxBar(_, _, line, percentage, r, g, b, a)
-	local row = ceil(line / 2)
+	local bar = display.bar[line]
 	percentage = min(1, percentage)
-	display.bar[row]:SetColorTexture(r or 0.5, g or 0.5, b or 0.5, a or 0.5)
+	bar:SetColorTexture(r or 0.5, g or 0.5, b or 0.5, a or 0.5)
 	if percentage > 0 then
-		display.bar[row]:SetWidth(percentage * infoboxWidth)
-		display.bar[row]:Show()
+		bar:SetWidth(percentage * infoboxWidth)
+		bar:Show()
 	else
-		display.bar[row]:Hide()
+		bar:Hide()
 	end
 end
 
