@@ -246,7 +246,7 @@ function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
 	local row = line
 	if line % 2 == 0 then
 		row = line-1
-end
+	end
 	plugin:BigWigs_ResizeInfoBoxRow(row)
 end
 
