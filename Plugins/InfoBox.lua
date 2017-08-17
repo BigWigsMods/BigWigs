@@ -17,7 +17,6 @@ local media = LibStub("LibSharedMedia-3.0")
 plugin.displayName = L.infoBox
 
 local min = math.min
-local ceil = math.ceil
 
 local opener, display = nil, nil
 local nameList = {}
