@@ -1,3 +1,6 @@
+
+-- GLOBALS: UIParent, GameFontNormal, BigWigs
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -12,6 +15,9 @@ if not plugin then return end
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
 plugin.displayName = L.infoBox
+
+local min = math.min
+local ceil = math.ceil
 
 local opener, display = nil, nil
 local nameList = {}
@@ -94,6 +100,9 @@ do
 		for i = 1, 10 do
 			self.text[i]:SetText("")
 		end
+		for i = 1, 5 do
+			self.bar[i]:Hide()
+		end
 		self.title:SetText(L.infoBox)
 	end)
 
@@ -131,6 +140,20 @@ do
 			text:SetJustifyH("LEFT")
 		end
 		display.text[i] = text
+	end
+
+	local bgLayer, bgLevel = bg:GetDrawLayer()
+	display.bar = {}
+	for i = 1, 5 do
+		local bar = display:CreateTexture(nil, bgLayer, nil, bgLevel + 1)
+		bar:SetSize(infoboxWidth, infoboxHeight/5-1)
+		bar:SetColorTexture(0, 1, 0, 0.3)
+		if i == 1 then
+			bar:SetPoint("TOPLEFT", display, "TOPLEFT", 0, -1)
+		else
+			bar:SetPoint("TOPLEFT", display.bar[i-1], "BOTTOMLEFT", 0, -1)
+		end
+		display.bar[i] = bar
 	end
 
 	display:Hide()
@@ -172,6 +195,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_SetInfoBoxTitle")
 	self:RegisterMessage("BigWigs_SetInfoBoxLine")
 	self:RegisterMessage("BigWigs_SetInfoBoxTable")
+	self:RegisterMessage("BigWigs_SetInfoBoxBar")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
 
@@ -222,7 +246,7 @@ function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
 	local row = line
 	if line % 2 == 0 then
 		row = line-1
-	end
+end
 	plugin:BigWigs_ResizeInfoBoxRow(row)
 end
 
@@ -278,6 +302,18 @@ do
 			plugin:BigWigs_ResizeInfoBoxRow(line)
 			line = line + 2
 		end
+	end
+end
+
+function plugin:BigWigs_SetInfoBoxBar(_, _, line, percentage, r, g, b, a)
+	local row = ceil(line / 2)
+	percentage = min(1, percentage)
+	display.bar[row]:SetColorTexture(r or 0.5, g or 0.5, b or 0.5, a or 0.5)
+	if percentage > 0 then
+		display.bar[row]:SetWidth(percentage * infoboxWidth)
+		display.bar[row]:Show()
+	else
+		display.bar[row]:Hide()
 	end
 end
 
