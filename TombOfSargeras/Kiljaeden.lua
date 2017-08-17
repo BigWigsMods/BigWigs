@@ -597,7 +597,7 @@ do
 end
 
 function mod:IllidansSightlessGazeRemoved(args)
-	if stage == 2 then -- Don't warn in p3
+	if stage == 2 and self:Me(args.destGUID) then -- Don't warn in p3
 		self:Message(args.spellId, "Personal", "Alert", CL.removed:format(args.spellName))
 	end
 end
