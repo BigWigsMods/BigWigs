@@ -287,6 +287,7 @@ end
 
 do
 	local timer, castOver, maxAbsorb = nil, 0, 0
+	local red, yellow, green = {.6, 0, 0, .6}, {.7, .5, 0}, {0, .5, 0}
 
 	local function updateInfoBox(self, spellId)
 		local castTimeLeft = castOver - GetTime()
@@ -296,13 +297,13 @@ do
 
 		local diff = castPercentage - absorbPercentage
 		local hexColor = "ff0000"
-		local rgbColor = {.6, 0, 0, .6}
+		local rgbColor = red
 		if diff > 0.1 then -- over 10%
 			hexColor = "00ff00"
-			rgbColor = {0, .5, 0}
+			rgbColor = green
 		elseif diff > 0  then -- below 10%, so it's still close
 			hexColor = "ffff00"
-			rgbColor = {.7, .5, 0}
+			rgbColor = yellow
 		end
 
 		self:SetInfoBar(spellId, 1, absorbPercentage, unpack(rgbColor))
