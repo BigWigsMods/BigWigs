@@ -1,14 +1,14 @@
 local L = BigWigs:NewBossLocale("Harjatan the Bludger", "zhTW")
 if not L then return end
 if L then
-	L.custom_on_fixate_plates = "在敵方姓名板顯示追擊圖示"
-	L.custom_on_fixate_plates_desc = "當你被凝視時，在敵方姓名板上顯示一個圖示。\n需要啟用敵方姓名板，此功能目前只支援KuiNameplates。"
+	L.custom_on_fixate_plates = "在敵方名條顯示追擊圖示"
+	L.custom_on_fixate_plates_desc = "當你被凝視時，在敵方名條上顯示一個圖示。\n需要啟用敵方名條，此功能目前只支援KuiNameplates。"
 end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "zhTW")
 if L then
-	L.custom_on_fixate_plates = "在敵方姓名板顯示追擊圖示"
-	L.custom_on_fixate_plates_desc = "當你被凝視時，在敵方姓名板上顯示一個圖示。\n需要啟用敵方姓名板，此功能目前只支援KuiNameplates。"
+	L.custom_on_fixate_plates = "在敵方名條顯示追擊圖示"
+	L.custom_on_fixate_plates_desc = "當你被凝視時，在敵方明條上顯示一個圖示。\n需要啟用敵方名條，此功能目前只支援KuiNameplates。"
 
 	L.infobox_title_prisoners = "%d囚犯"
 
@@ -28,8 +28,8 @@ if L then
 	L.armor_remaining = "剩餘%s（%d）" -- Bonecage Armor Remaining (#)
 	L.custom_on_mythic_armor = "在傳奇難度中，忽略再活化的聖殿騎士的骨牢護甲"
 	L.custom_on_mythic_armor_desc = "如果你不是負責坦住「再活化的聖殿騎士」的坦克，請保持此選項啟用，以便忽略骨牢護甲的提示和計數。"
-	--L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
-	--L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_armor_plates = "在敵方名條上顯示骨牢護甲"
+	L.custom_on_armor_plates_desc = "在敵方名條上顯示骨牢護甲和其層數。\n需要啟用敵方名條，此功能目前只支援KuiNameplates。"
 	L.tormentingCriesSay = "號哭" -- Tormenting Cries (short say)
 end
 
@@ -96,5 +96,5 @@ if L then
 	L.dresanoth = "卓薩諾斯"
 	L.sentry = "守護者哨衛"
 	L.acolyte = "鬼魅侍僧"
-	--L.ryul = "Ryul the Fading"
+	L.ryul = "暗淡者萊由"
 end

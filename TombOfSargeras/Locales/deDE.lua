@@ -26,10 +26,10 @@ L = BigWigs:NewBossLocale("The Desolate Host", "deDE")
 if L then
 	L.infobox_players = "Spieler"
 	L.armor_remaining = "%s Verbleibend (%d)" -- Bonecage Armor Remaining (#)
-	--L.custom_on_mythic_armor = "Ignore Bonecage Armor on Reanimated Templars in Mythic Difficulty"
+	L.custom_on_mythic_armor = "Knochenkäfigrüstung auf Reanimierter Templern auf dem Schwierigkeitsgrad Mythisch ignorieren"
 	--L.custom_on_mythic_armor_desc = "Leave this option enabled if you are offtanking Reanimated Templars to ignore warnings and counting the Bonecage Armor on the Ranimated Templars"
-	--L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
-	--L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_armor_plates = "Knochenkäfigrüstung-Symbol auf gegnerischen Namensplaketten"
+	L.custom_on_armor_plates_desc = "Zeigt ein Symbol auf den Namensplaketten von Reanimierten Templern, welche Knochenkäfigrüstung haben.\nErfordert die Verwendung von Gegnerischen Namensplaketten. Diese Funktion wird derzeit nur von KuiNameplates unterstützt."
 	L.tormentingCriesSay = "Schreie" -- Tormenting Cries (short say)
 end
 
@@ -41,11 +41,11 @@ if L then
 	L.light = "Licht"
 	L.felHammer = "Teufelshammer" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "Lichthammer" -- Better name for "Hammer of Creation"
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
-	--L.stacks = "Stacks"
+	L.absorb = "Absorption"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
+	L.cast = "Wirkt"
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
+	L.stacks = "Stapel"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "deDE")
@@ -59,12 +59,12 @@ if L then
 	L.energy_leak_desc = "Zeigt eine Warnung, wenn Energie auf den Boss in Phase 1 zuströmt."
 	L.energy_leak_msg = "Energieleck! (%d)"
 
-	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
+	L.warmup_trigger = "Diese Hülle diente einst" -- Diese Hülle diente einst als Gefäß der Macht von Sargeras. Aber es ist der Tempel selbst, um den es uns geht. Und mit seiner Hilfe werden wir Eure Welt zu Asche verbrennen!
 
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
+	L.absorb = "Absorption"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
+	L.cast = "Wirkt"
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "deDE")

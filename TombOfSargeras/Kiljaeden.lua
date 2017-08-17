@@ -1,4 +1,6 @@
 
+-- GLOBALS: INLINE_TANK_ICON, INLINE_HEALER_ICON, INLINE_DAMAGER_ICON
+
 --------------------------------------------------------------------------------
 -- TODO List:
 -- Rift Activating Timer
@@ -28,7 +30,7 @@ local flamingOrbCount = 1
 local wailingCounter = 1
 local obeliskCount = 1
 local darknessCount = 1
-local focusWarned = {}
+local focusedTarget = nil
 local mobCollector = {}
 local timersLFR = {
 	[240910] = { -- Armageddon
@@ -208,6 +210,8 @@ function mod:OnBossEnable()
 	-- Intermission: Deceiver's Veil
 	self:Log("SPELL_CAST_START", "DeceiversVeilCast", 241983) -- Deceiver's Veil Cast
 	self:Log("SPELL_AURA_APPLIED", "IllidansSightlessGaze", 241721) -- Illidan's Sightless Gaze
+	self:Log("SPELL_AURA_REFRESH", "IllidansSightlessGaze", 241721) -- Illidan's Sightless Gaze
+	self:Log("SPELL_AURA_REMOVED", "IllidansSightlessGazeRemoved", 241721) -- Illidan's Sightless Gaze
 	self:Log("SPELL_AURA_REMOVED", "DeceiversVeilRemoved", 241983) -- Deceiver's Veil Over
 
 	-- Stage Three: Darkness of A Thousand Souls
@@ -232,7 +236,7 @@ function mod:OnEngage()
 	obeliskCount = 1
 	wailingCounter = 1
 	darknessCount = 1
-	wipe(focusWarned)
+	focusedTarget = nil
 	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or self:Normal() and timersNormal or self:LFR() and timersLFR
 	wipe(mobCollector)
 
@@ -263,6 +267,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 		self:TargetBar(238505, 5, target)
 		self:PrimaryIcon(238505, target)
 		local guid = UnitGUID(target)
+		focusedTarget = guid
 		if self:Me(guid) then
 			self:Say(238505)
 			self:SayCountdown(238505, 5)
@@ -270,6 +275,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, target)
 		if not self:Easy() then
 			self:OpenProximity(238505, 5)
 		end
+		-- Schedule fake success in case the target uses invis, etc
+		self:ScheduleTimer("FocusedDreadflameSuccess", 5.5)
 	elseif msg:find("235059", nil, true) then -- Rupturing Singularity
 		self:Message(235059, "Urgent", "Warning", CL.count:format(self:SpellName(235059), singularityCount))
 		self:Bar("rupturingKnock", 9.85, CL.count:format(L.singularityImpact, singularityCount), 235059)
@@ -352,12 +359,12 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:ShadowReflectionErupting(args)
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
-			self:Say(args.spellId, L.reflectionErupting)
+			self:Say(args.spellId, self:Easy() and L.reflectionErupting or CL.count_rticon:format(L.reflectionErupting, #playerList, #playerList+2))
 			self:SayCountdown(args.spellId, 8)
 		end
-		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:Bar(args.spellId, 8, INLINE_DAMAGER_ICON.." "..CL.adds)
 			if stage == 2 and not self:Mythic() then
@@ -424,8 +431,11 @@ function mod:FocusedDreadflame()
 end
 
 function mod:FocusedDreadflameSuccess()
-	self:PrimaryIcon(238505)
-	self:CloseProximity(238505)
+	if focusedTarget then
+		focusedTarget = nil
+		self:PrimaryIcon(238505)
+		self:CloseProximity(238505)
+	end
 end
 
 do
@@ -572,9 +582,23 @@ do
 	end
 end
 
-function mod:IllidansSightlessGaze(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Long")
+do
+	local prev = 0
+	function mod:IllidansSightlessGaze(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) then
+			if t-prev > 1.5 then
+				prev = t
+				self:Message(args.spellId, "Personal", "Long", CL.you:format(args.spellName))
+			end
+			self:Bar(args.spellId, 20)
+		end
+	end
+end
+
+function mod:IllidansSightlessGazeRemoved(args)
+	if stage == 2 then -- Don't warn in p3
+		self:Message(args.spellId, "Personal", "Alert", CL.removed:format(args.spellName))
 	end
 end
 
