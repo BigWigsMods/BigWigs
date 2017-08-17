@@ -28,8 +28,8 @@ if L then
 	L.armor_remaining = "%s 남음 (%d)" -- Bonecage Armor Remaining (#)
 	L.custom_on_mythic_armor = "신화 난이도에서 되살아난 기사단원의 뼈껍질 방어구 무시하기"
 	L.custom_on_mythic_armor_desc = "되살아난 기사단원을 방어 중이지 않을 때 되살아난 기사단원의 뼈껍질 방어구에 대한 경보와 횟수를 무시하려면 이 옵션을 활성화하세요"
-	--L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
-	--L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_armor_plates = "적 이름표에 뼈껍질 방어구 아이콘"
+	L.custom_on_armor_plates_desc = "뼈껍질 방어구를 가진 되살아난 기사단원의 이름표에 아이콘을 표시합니다.\n적 이름표를 사용해야 합니다. 이 기능은 현재 KuiNameplates만 지원합니다."
 	L.tormentingCriesSay = "외침" -- Tormenting Cries (short say)
 end
 
