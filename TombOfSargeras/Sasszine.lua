@@ -20,6 +20,7 @@ local dreadSharkCounter = 1
 local burdenCounter = 1
 local crashingWaveStage3Mythic = {32.5, 39, 33, 45, 33}
 local hydraShotCounter = 1
+local bufferfishCounter = 1
 local abs = math.abs
 
 --------------------------------------------------------------------------------
@@ -100,6 +101,7 @@ function mod:OnEngage()
 	dreadSharkCounter = 1
 	burdenCounter = 1
 	hydraShotCounter = 1
+	bufferfishCounter = 1
 
 	self:Bar(230358, 10.5) -- Thundering Shock
 	-- Tanks: Burden of Pain
@@ -114,7 +116,7 @@ function mod:OnEngage()
 	end
 	self:Bar(232722, self:Easy() and 36 or 30.3) -- Slicing Tornado
 	if self:Mythic() then
-		self:Bar(239362, 13) -- Delicious Bufferfish
+		self:Bar(239362, 13, CL.count:format(self:SpellName(239362), bufferfishCounter)) -- Delicious Bufferfish
 	end
 	self:Berserk(self:LFR() and 540 or 480)
 end
@@ -128,7 +130,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		if not self:Mythic() then
 			stage = dreadSharkCounter
 		else
-			self:Bar(239362, 22.5) -- Delicious Bufferfish
+			bufferfishCounter = bufferfishCounter + 1
+			self:Bar(239362, 22.5, CL.count:format(self:SpellName(239362), bufferfishCounter)) -- Delicious Bufferfish
 			if dreadSharkCounter == 3 or dreadSharkCounter == 5 then
 				self:Message(239436, "Urgent", "Warning")
 				stage = stage + 1
