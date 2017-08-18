@@ -28,6 +28,7 @@ local stage = 1
 local tormentedCriesCounter = 1
 local wailingSoulsCounter = 1
 local boneArmorCounter = 0
+local spearCount = 1
 local updateProximity = nil
 local updateRealms = nil
 local armorAppliedTimer, armorRemovedTimer = nil, nil
@@ -136,6 +137,7 @@ function mod:OnEngage()
 	boneArmorCounter = 0
 	tormentedCriesCounter = 1
 	wailingSoulsCounter = 1
+	spearCount = 1
 	armorAppliedTimer, armorRemovedTimer = nil, nil
 	wipe(soulList)
 
@@ -160,7 +162,7 @@ function mod:OnEngage()
 	self:CDBar(235907, 6) -- Collapsing Fissure
 	self:CDBar(236459, 16) -- Soulbind
 	if not self:Easy() then -- Heroic+ only
-		self:CDBar(235924, 20) -- Spear of Anguish
+		self:CDBar(235924, 20, CL.count:format(self:SpellName(235924), spearCount)) -- Spear of Anguish
 	end
 	self:CDBar(236072, 60) -- Wailing Souls
 	self:CDBar(238570, 120) -- Tormented Cries
@@ -188,7 +190,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 
 		self:CDBar(235907, 2.5) -- Collapsing Fissure
 		if not self:Easy() then
-			self:CDBar(235924, 8) -- Spear of Anguish
+			self:CDBar(235924, 8, CL.count:format(self:SpellName(235924), spearCount)) -- Spear of Anguish
 		end
 		self:CDBar(236459, 9) -- Soulbind
 
@@ -281,15 +283,17 @@ function mod:Quietus(args)
 end
 
 function mod:SpearofAnguish(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", CL.count:format(args.spellName, spearCount), nil, true)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 6)
 	end
+	spearCount = spearCount + 1
 	local t = 21
 	if self:BarTimeLeft(238570) < 20.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
 		t = 80.5 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 20.5s cooldown
 	end
-	self:Bar(args.spellId, t)
+	self:Bar(args.spellId, t, CL.count:format(args.spellName, spearCount))
 end
 
 function mod:TormentedCries(args)
@@ -462,5 +466,5 @@ end
 function mod:EngineDies()
 	self:StopBar(236459) -- Soulbind
 	self:StopBar(235907) -- Collapsing Fissure
-	self:StopBar(235924) -- Spear of Anguish
+	self:StopBar(CL.count:format(self:SpellName(235924), spearCount)) -- Spear of Anguish
 end
