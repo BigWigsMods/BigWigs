@@ -82,6 +82,8 @@ if L then
 	L.rupturingKnock_desc = "밀쳐내기 타이머를 표시합니다"
 
 	L.meteorImpact_desc = "유성 충돌 타이머를 표시합니다"
+
+	--L.add = "Add %d"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "koKR")

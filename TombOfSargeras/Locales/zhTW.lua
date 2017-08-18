@@ -82,6 +82,8 @@ if L then
 	L.rupturingKnock_desc = "顯示擊退計時器"
 
 	L.meteorImpact_desc = "顯示隕石雨降落計時器"
+
+	--L.add = "Add %d"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")

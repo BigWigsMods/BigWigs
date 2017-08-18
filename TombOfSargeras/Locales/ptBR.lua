@@ -82,6 +82,8 @@ if L then
 	--L.rupturingKnock_desc = "Show a timer for the knockback"
 
 	--L.meteorImpact_desc = "Show a timer for the Meteors landing"
+
+	--L.add = "Add %d"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "ptBR")

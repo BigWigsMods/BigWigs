@@ -82,6 +82,8 @@ if L then
 	L.rupturingKnock_desc = "Affiche un délai pour le knockback"
 
 	L.meteorImpact_desc = "Affiche un délai pour l'impact des météores"
+
+	--L.add = "Add %d"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "frFR")
