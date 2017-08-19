@@ -59,7 +59,7 @@ if L then
 	L.energy_leak_desc = "第一階段的能量外泄至墮落化身身上时發送警報。"
 	L.energy_leak_msg = "能量外泄！（%d）"
 
-	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
+	L.warmup_trigger = "你看到的這個軀殼原本蘊含薩格拉斯的力量" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 
 	L.absorb = "吸收"
 	L.absorb_text = "%s （|cff%s%.0f%%|r）"
@@ -83,7 +83,7 @@ if L then
 
 	L.meteorImpact_desc = "顯示隕石雨降落計時器"
 
-	--L.add = "Add %d"
+	L.add = "小怪%d"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")
