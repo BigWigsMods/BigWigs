@@ -83,7 +83,7 @@ if L then
 
 	L.meteorImpact_desc = "陨石雨降落计时器"
 
-	--L.add = "Add %d"
+	L.add = "增援 %d"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhCN")
