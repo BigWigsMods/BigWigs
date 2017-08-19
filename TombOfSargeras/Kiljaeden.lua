@@ -132,6 +132,9 @@ if L then
 	L.meteorImpact_icon = 240910
 
 	L.countx = "%s (%dx)"
+
+	L.add = "Add %d"
+	L.add_mark = "|T13700%d:0|t"
 end
 
 --------------------------------------------------------------------------------
@@ -157,6 +160,7 @@ function mod:GetOptions()
 		241564, -- Sorrowful Wail
 		241721, -- Illidan's Sightless Gaze
 		decieverAddMarker,
+		{-15397, "INFOBOX"}, -- Shadowsoul
 		238999, -- Darkness of a Thousand Souls
 		-15543, -- Demonic Obelisk
 		"obeliskExplosion",
@@ -518,8 +522,12 @@ end
 
 -- Intermission: Deceiver's Veil
 do
-	local decieversAddMarks = {}
-	function mod:DecieverAddMark(event, unit)
+	local decieversAddMarks = {} -- Marks we set
+	local addMaxHP = -1
+	local addDmg = {} -- Damage done per add
+	local addMarks = {} -- Current marks on each add
+
+	function mod:DecieverAddTargets(event, unit)
 		local guid = UnitGUID(unit)
 		if self:MobId(guid) == 121193 and not mobCollector[guid] then
 			for i = 1, 5 do
@@ -530,9 +538,72 @@ do
 					if i == 5 then
 						self:UnregisterTargetEvents()
 					end
-					return
+					break
 				end
 			end
+			local max = UnitHealthMax(unit)
+			if addMaxHP == -1 then
+				addMaxHP = max
+			end
+			addDmg[guid] = max - UnitHealth(unit)
+			local icon = GetRaidTargetIndex(unit)
+			addMarks[guid] = icon > 0 and icon < 9 and icon
+		end
+	end
+
+	local marks = {
+		[COMBATLOG_OBJECT_RAIDTARGET1] = 1,
+		[COMBATLOG_OBJECT_RAIDTARGET2] = 2,
+		[COMBATLOG_OBJECT_RAIDTARGET3] = 3,
+		[COMBATLOG_OBJECT_RAIDTARGET4] = 4,
+		[COMBATLOG_OBJECT_RAIDTARGET5] = 5,
+		[COMBATLOG_OBJECT_RAIDTARGET6] = 6,
+		[COMBATLOG_OBJECT_RAIDTARGET7] = 7,
+		[COMBATLOG_OBJECT_RAIDTARGET8] = 8,
+	}
+	local timer = nil
+	local function updateInfoBox(self)
+		if addMaxHP < 0 then return end -- no max hp yet
+		local i = 1
+		for guid, dmg in pairs(addDmg) do
+			if i > 5 then break end -- safety
+			local percentage = (addMaxHP - dmg) / addMaxHP
+			if percentage > 0 then
+				self:SetInfo(-15397, i*2-1, L.add:format(i) .." ".. (addMarks[guid] and L.add_mark:format(addMarks[guid]) or ""))
+				self:SetInfo(-15397, i*2, ("%.0f%%"):format(percentage*100))
+			else
+				self:SetInfo(-15397, i*2-1, "")
+				self:SetInfo(-15397, i*2, "")
+			end
+			self:SetInfoBar(-15397, i*2, percentage)
+			i = i + 1
+		end
+	end
+
+	local function damageToMob(guid, dmg, overkill, raidFlags)
+		addMarks[guid] = marks[raidFlags]
+		if overkill > 0 then
+			addDmg[guid] = addMaxHP
+		else
+			addDmg[guid] = (addDmg[guid] or 0) + dmg
+		end
+	end
+
+	function mod:IntermissionAddDamage(args)
+		if addDmg[args.destGUID] then
+			-- :Log isn't designed for _DAMAGE events, so we'll have to switch some things around:
+			-- - extraSpellId is the amount of damage inflicted
+			-- - extraSpellName is the amount of overkill
+			damageToMob(args.destGUID, args.extraSpellId, args.extraSpellName, args.destRaidFlags)
+		end
+	end
+
+	function mod:IntermissionAddDamageSwing(args)
+		if addDmg[args.destGUID] then
+			-- :Log isn't designed for _DAMAGE events, so we'll have to switch some things around:
+			-- - spellId is the amount of damage inflicted
+			-- - spellName is the amount of overkill
+			damageToMob(args.destGUID, args.spellId, args.spellName, args.destRaidFlags)
 		end
 	end
 
@@ -549,11 +620,27 @@ do
 		self:StopBar(INLINE_HEALER_ICON.." "..L.reflectionHopeless) -- Shadow Reflection: Hopeless
 
 		singularityCount = 1
-		self:Bar(235059, 19.1, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
+		if self:Mythic() then
+			self:Bar(235059, 19.1, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
+		end
 
-		if self:GetOption(decieverAddMarker) then
+		local shadowsoulOption = self:CheckOption(-15397, "INFOBOX")
+		if self:GetOption(decieverAddMarker) or shadowsoulOption then
 			wipe(decieversAddMarks)
-			self:RegisterTargetEvents("DecieverAddMark")
+
+			if shadowsoulOption then
+				wipe(addDmg)
+				wipe(addMarks)
+				addMaxHP = -1
+				self:Log("SPELL_DAMAGE", "IntermissionAddDamage", "*")
+				self:Log("SPELL_PERIODIC_DAMAGE", "IntermissionAddDamage", "*")
+				self:Log("RANGE_DAMAGE", "IntermissionAddDamage", "*")
+				self:Log("SWING_DAMAGE", "IntermissionAddDamageSwing", "*")
+				self:OpenInfo(-15397, self:SpellName(-15397))
+				timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
+			end
+
+			self:RegisterTargetEvents("DecieverAddTargets")
 		end
 	end
 
@@ -565,9 +652,24 @@ do
 		burstingDreadflameCount = 1
 		flamingOrbCount = 1
 		felclawsCount = 1
-		if self:GetOption(decieverAddMarker) then
+
+		local shadowsoulOption = self:CheckOption(-15397, "INFOBOX")
+		if self:GetOption(decieverAddMarker) or shadowsoulOption then
 			self:UnregisterTargetEvents()
+
+			if shadowsoulOption then
+				self:CloseInfo(-15397)
+				self:RemoveLog("SPELL_DAMAGE", "IntermissionAddDamage", "*")
+				self:RemoveLog("SPELL_PERIODIC_DAMAGE", "IntermissionAddDamage", "*")
+				self:RemoveLog("RANGE_DAMAGE", "IntermissionAddDamage", "*")
+				self:RemoveLog("SWING_DAMAGE", "IntermissionAddDamageSwing", "*")
+				if timer then
+					self:CancelTimer(timer)
+					timer = nil
+				end
+			end
 		end
+
 		self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 		self:Bar(238999, 2, CL.count:format(L.darkness, darknessCount)) -- Darkness of a Thousand Souls
 		self:Bar(239932, 11) -- Felclaws
@@ -597,7 +699,7 @@ do
 end
 
 function mod:IllidansSightlessGazeRemoved(args)
-	if stage == 2 then -- Don't warn in p3
+	if stage == 2 and self:Me(args.destGUID) then -- Don't warn in p3
 		self:Message(args.spellId, "Personal", "Alert", CL.removed:format(args.spellName))
 	end
 end

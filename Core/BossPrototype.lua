@@ -1254,6 +1254,20 @@ function boss:SetInfoTitle(key, title)
 	end
 end
 
+--- Show a background bar in an already open "Info Box".
+-- @param key the option key to check
+-- @number line the line to update, 1-10
+-- @number percentage width of the bar between 0 and 1
+-- @number[opt] r red part of rgb, 0-1
+-- @number[opt] g green part of rgb, 0-1
+-- @number[opt] b blue part of rgb, 0-1
+-- @number[opt] a alpha, 0-1
+function boss:SetInfoBar(key, line, percentage, r, g, b, a)
+	if checkFlag(self, key, C.INFOBOX) then
+		self:SendMessage("BigWigs_SetInfoBoxBar", self, line, percentage, r, g, b, a)
+	end
+end
+
 --- Open the "Info Box" display.
 -- @param key the option key to check
 -- @string title the title of the window

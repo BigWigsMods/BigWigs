@@ -357,18 +357,29 @@ end
 
 do
 	local timer, castOver, maxAbsorb = nil, 0, 0
+	local red, yellow, green = {.6, 0, 0, .6}, {.7, .5, 0}, {0, .5, 0}
 
 	local function updateInfoBox(self)
 		local castTimeLeft = castOver - GetTime()
-		local castPercentage = castTimeLeft / 18 * 100
+		local castPercentage = castTimeLeft / 18
 		local absorb = UnitGetTotalAbsorbs("boss2")
-		local absorbPercentage = absorb / maxAbsorb * 100
+		local absorbPercentage = absorb / maxAbsorb
 
 		local diff = castPercentage - absorbPercentage
-		local color = diff > 10 and "00ff00" or diff > 0 and "ffff00" or "ff0000"
+		local hexColor = "ff0000"
+		local rgbColor = red
+		if diff > 0.1 then -- over 10%
+			hexColor = "00ff00"
+			rgbColor = green
+		elseif diff > 0  then -- below 10%, so it's still close
+			hexColor = "ffff00"
+			rgbColor = yellow
+		end
 
-		self:SetInfo(233856, 2, L.absorb_text:format(self:AbbreviateNumber(absorb), color, absorbPercentage))
-		self:SetInfo(233856, 4, L.cast_text:format(castTimeLeft, color, castPercentage))
+		self:SetInfoBar(233856, 1, absorbPercentage, unpack(rgbColor))
+		self:SetInfo(233856, 2, L.absorb_text:format(self:AbbreviateNumber(absorb), hexColor, absorbPercentage*100))
+		self:SetInfoBar(233856, 3, castPercentage)
+		self:SetInfo(233856, 4, L.cast_text:format(castTimeLeft, hexColor, castPercentage*100))
 	end
 
 	function mod:CleansingProtocol(args)

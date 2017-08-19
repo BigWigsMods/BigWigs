@@ -287,18 +287,29 @@ end
 
 do
 	local timer, castOver, maxAbsorb = nil, 0, 0
+	local red, yellow, green = {.6, 0, 0, .6}, {.7, .5, 0}, {0, .5, 0}
 
 	local function updateInfoBox(self, spellId)
 		local castTimeLeft = castOver - GetTime()
-		local castPercentage = castTimeLeft / 50 * 100
+		local castPercentage = castTimeLeft / 50
 		local absorb = UnitGetTotalAbsorbs("boss1")
-		local absorbPercentage = absorb / maxAbsorb * 100
+		local absorbPercentage = absorb / maxAbsorb
 
 		local diff = castPercentage - absorbPercentage
-		local color = diff > 10 and "00ff00" or diff > 0 and "ffff00" or "ff0000"
+		local hexColor = "ff0000"
+		local rgbColor = red
+		if diff > 0.1 then -- over 10%
+			hexColor = "00ff00"
+			rgbColor = green
+		elseif diff > 0  then -- below 10%, so it's still close
+			hexColor = "ffff00"
+			rgbColor = yellow
+		end
 
-		self:SetInfo(spellId, 2, L.absorb_text:format(self:AbbreviateNumber(absorb), color, absorbPercentage))
-		self:SetInfo(spellId, 4, L.cast_text:format(castTimeLeft, color, castPercentage))
+		self:SetInfoBar(spellId, 1, absorbPercentage, unpack(rgbColor))
+		self:SetInfo(spellId, 2, L.absorb_text:format(self:AbbreviateNumber(absorb), hexColor, absorbPercentage * 100))
+		self:SetInfoBar(spellId, 3, castPercentage)
+		self:SetInfo(spellId, 4, L.cast_text:format(castTimeLeft, hexColor, castPercentage * 100))
 		self:SetInfo(spellId, 6, ("%d/30"):format(wrathStacks))
 	end
 
