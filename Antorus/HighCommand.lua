@@ -74,6 +74,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "AssumeCommand", 245227)
 	self:Log("SPELL_CAST_SUCCESS", "SunderingClaws", 244892)
 	self:Log("SPELL_AURA_APPLIED", "SunderingClawsApplied", 244892)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SunderingClawsApplied", 244892)
 
 	--[[ Stealing Power ]]--
 	self:Log("SPELL_AURA_APPLIED", "Felshield", 244910)
