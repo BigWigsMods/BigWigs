@@ -96,6 +96,7 @@ if L then
 	L.seacaller = "Mande-mers marécaille"
 	L.custodian = "Gardien des fonds marins"
 	L.dresanoth = "Dresanoth"
+	L.stalker = "Le Traqueur de l'effroi"
 	L.sentry = "Factionnaire gardien"
 	L.acolyte = "Acolyte fantomatique"
 	L.ryul = "Ryul le Déclinant"

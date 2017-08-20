@@ -96,6 +96,7 @@ if L then
 	L.seacaller = "Seeruferin der Gezeitenschuppen"
 	L.custodian = "Unterwasserverwalter"
 	L.dresanoth = "Dresanoth"
+	L.stalker = "Der Schreckenspirscher"
 	L.sentry = "Wachposten"
 	L.acolyte = "Geisterhafte Akolythin"
 	L.ryul = "Ryul der Schwindende"

@@ -96,6 +96,7 @@ if L then
 	L.seacaller = "潮鱗喚海者"
 	L.custodian = "深海守衛"
 	L.dresanoth = "卓薩諾斯"
+	--L.stalker = "The Dread Stalker"
 	L.sentry = "守護者哨衛"
 	L.acolyte = "鬼魅侍僧"
 	L.ryul = "暗淡者萊由"
