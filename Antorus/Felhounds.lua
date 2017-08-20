@@ -163,6 +163,12 @@ do
 	end
 end
 
+function mod:WeightofDarknessRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+end
+
 function mod:SiphonCorruption(args)
 	self:Message(args.spellId, "Attention", "Alert")
 	self:Bar(args.spellId, 78.0)
