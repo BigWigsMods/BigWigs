@@ -30,6 +30,7 @@ L.duration = "%s durante %s seg"
 L.over = "%s Acabou!"
 L.removed = "%s Removido"
 --L.removed_from = "%s Removed From %s"
+--L.removed_by = "%s removed by %s" -- spell removed by player
 L.incoming = "%s Chegando!"
 L.interrupted = "%s Interrompido"
 L.no = "Sem %s!"
