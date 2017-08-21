@@ -547,7 +547,9 @@ do
 			end
 			addDmg[guid] = max - UnitHealth(unit)
 			local icon = GetRaidTargetIndex(unit)
-			addMarks[guid] = icon > 0 and icon < 9 and icon
+			if icon and icon > 0 and icon < 9 then
+				addMarks[guid] = icon
+			end
 		end
 	end
 

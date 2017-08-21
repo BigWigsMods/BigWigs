@@ -59,7 +59,7 @@ if L then
 	L.energy_leak_desc = "Affiche une alerte quand de l'énergie a fuité vers le boss en phase 1."
 	L.energy_leak_msg = "Fuite d'énergie ! (%d)"
 
-	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
+	L.warmup_trigger = "L'enveloppe devant vous" -- L'enveloppe devant vous a servi de réceptacle à la puissance de Sargeras. Mais ce temple est notre véritable récompense. Le moyen par lequel nous allons réduire votre monde en cendres !
 
 	L.absorb = "Absorb."
 	L.absorb_text = "%s (|cff%s%.0f%%|r)"
@@ -83,7 +83,7 @@ if L then
 
 	L.meteorImpact_desc = "Affiche un délai pour l'impact des météores"
 
-	--L.add = "Add %d"
+	L.add = "Add %d"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "frFR")
@@ -96,6 +96,7 @@ if L then
 	L.seacaller = "Mande-mers marécaille"
 	L.custodian = "Gardien des fonds marins"
 	L.dresanoth = "Dresanoth"
+	L.stalker = "Le Traqueur de l'effroi"
 	L.sentry = "Factionnaire gardien"
 	L.acolyte = "Acolyte fantomatique"
 	L.ryul = "Ryul le Déclinant"

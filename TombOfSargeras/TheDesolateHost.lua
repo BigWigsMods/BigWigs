@@ -100,6 +100,7 @@ function mod:OnBossEnable()
 
 	-- Corporeal Realm
 	self:Log("SPELL_AURA_APPLIED", "SpearofAnguish", 235924)
+	self:Log("SPELL_AURA_REMOVED", "SpearofAnguishRemoved", 235924)
 	self:Log("SPELL_CAST_START", "TormentedCries", 238570) -- Tormented Cries
 	self:Log("SPELL_AURA_APPLIED", "TormentedCriesApplied", 238018) -- Tormented Cries (Debuff)
 	self:Log("SPELL_AURA_REMOVED", "TormentedCriesRemoved", 238018) -- Tormented Cries (Debuff)
@@ -294,6 +295,12 @@ function mod:SpearofAnguish(args)
 		t = 80.5 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 20.5s cooldown
 	end
 	self:Bar(args.spellId, t, CL.count:format(args.spellName, spearCount))
+end
+
+function mod:SpearofAnguishRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 function mod:TormentedCries(args)

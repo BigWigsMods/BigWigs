@@ -23,6 +23,7 @@ mod:RegisterEnableMob(
 	120482, -- Tidescale Seacaller
 	120463, -- Undersea Custodian
 	120012, -- Dresanoth
+	120013, -- The Dread Stalker
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	120777, -- Guardian Sentry
@@ -67,6 +68,7 @@ if L then
 	L.seacaller = "Tidescale Seacaller"
 	L.custodian = "Undersea Custodian"
 	L.dresanoth = "Dresanoth"
+	L.stalker = "The Dread Stalker"
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	L.sentry = "Guardian Sentry"
@@ -108,6 +110,8 @@ function mod:GetOptions()
 		241254, -- Frost-Fingered Fear (Dresanoth)
 		{241289, "FLASH"}, -- Mist Filled Pools (Dresanoth)
 		{241267, "TANK"}, -- Icy Talons (Dresanoth)
+		241703, -- Blood Siphon (The Dread Stalker)
+		241716, -- Blood Drain (The Dread Stalker)
 
 		--[[ Sisters of the Moon -> The Desolate Host ]]--
 		{240735, "SAY"}, -- Polymorph Bomb (Guardian Sentry)
@@ -131,6 +135,7 @@ function mod:GetOptions()
 		[240599] = L.seacaller,
 		[240169] = L.custodian,
 		[241254] = L.dresanoth,
+		[241703] = L.stalker,
 		[240735] = L.sentry,
 		[239741] = L.acolyte,
 		[241367] = L.ryul,
@@ -140,9 +145,9 @@ end
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
-	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 241262, 241169, 240176) -- Felburn, Umbra Destruction, Lightning Storm
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 241262, 241169, 240176)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 241262, 241169, 240176)
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 241262, 241169, 240176, 241703) -- Felburn, Umbra Destruction, Lightning Storm, Blood Siphon
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 241262, 241169, 240176, 241703)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 241262, 241169, 240176, 241703)
 
 	self:Log("SPELL_AURA_APPLIED", "CurseOfGuldan", 241742)
 	self:Log("SPELL_AURA_REMOVED", "CurseOfGuldanRemoved", 241742)
@@ -169,6 +174,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "MistFilledPools", 241289)
 	self:Log("SPELL_AURA_APPLIED", "IcyTalons", 241267)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "IcyTalons", 241267)
+	self:Log("SPELL_CAST_SUCCESS", "BloodDrain", 241716)
+	self:Log("SPELL_AURA_APPLIED", "BloodDrainApplied", 241716)
+	self:Log("SPELL_AURA_REMOVED", "BloodDrainRemoved", 241716)
+	self:Log("SPELL_DISPEL", "BloodDrainDispelled", "*")
 
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
@@ -298,6 +307,28 @@ function mod:IcyTalons(args)
 		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 3 and "Alarm")
 		self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
 		self:TargetBar(args.spellId, 20, args.destName, CL.count:format(args.spellName, amount))
+	end
+end
+
+function mod:BloodDrain(args)
+	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, self:Dispeller("magic"))
+	self:Bar(args.spellId, 13.3)
+end
+
+function mod:BloodDrainApplied(args)
+	if self:Me(args.destGUID) or self:Dispeller("magic") then
+		self:Flash(args.spellId)
+	end
+	self:TargetBar(args.spellId, 3, args.destName)
+end
+
+function mod:BloodDrainRemoved(args)
+	self:StopBar(args.spellName, args.destName)
+end
+
+function mod:BloodDrainDispelled(args)
+	if args.extraSpellId == 241716 then
+		self:Message(args.extraSpellId, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 	end
 end
 

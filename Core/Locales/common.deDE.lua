@@ -39,6 +39,7 @@ L.over = "%s vorbei!"
 L.phase = "Phase %d"
 L.removed = "%s entfernt"
 L.removed_from = "%s wurde von %s entfernt"
+--L.removed_by = "%s removed by %s" -- spell removed by player
 L.small_adds = "Kleine Adds"
 L.soon = "%s bald!"
 L.spawned = "%s Erschienen"

@@ -39,6 +39,7 @@ L.over = ">%s< 結束！"
 L.phase = "階段%d"
 L.removed = ">%s<移除"
 L.removed_from = "%2$s 已移除 >%1$s<"
+--L.removed_by = "%s removed by %s" -- spell removed by player
 L.small_adds = "小型增援"
 L.soon = "即將 >%s<！"
 L.spawned = "%s 已重生"

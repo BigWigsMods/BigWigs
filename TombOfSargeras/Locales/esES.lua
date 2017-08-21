@@ -96,6 +96,7 @@ if L then
 	L.seacaller = "Clamamares Marescama"
 	L.custodian = "Custodio submarino"
 	L.dresanoth = "Dresanoth"
+	L.stalker = "El acechador siniestro"
 	L.sentry = "Centinela guardián"
 	L.acolyte = "Acólita fantasmal"
 	L.ryul = "Ryul el Marchito"

@@ -123,7 +123,7 @@ function mod:FelBombardmentRemoved(args)
 end
 
 function mod:ApocalypseDrive(args)
-	self:Bar(L.cannon_ability)
+	self:StopBar(L.cannon_ability)
 	self:StopBar(244410) -- Decimation
 	self:StopBar(244761) -- Annihilation
 	self:StopBar(246220) -- Fel Bombardment
