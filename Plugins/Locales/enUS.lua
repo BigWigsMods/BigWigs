@@ -107,6 +107,7 @@ L.blockSpellErrors = "Block spell failed messages"
 L.blockSpellErrorsDesc = "Messages such as \"Spell is not ready yet\" that usually show at the top of the screen will be blocked."
 --L.blockQuestTrackingTooltips = "Hide quest objectives in tooltips"
 --L.blockQuestTrackingTooltipsDesc = "Quest objectives can take up a lot of space in tooltips when a lot of players in your group are on a quest for an encounter. This will stop these objectives from showing while in encounter combat."
+L.hideObjectiveTracker = "Collapse Objective Tracker during combat"
 
 -----------------------------------------------------------------------
 -- Colors.lua

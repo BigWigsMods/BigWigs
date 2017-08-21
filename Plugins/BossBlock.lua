@@ -16,6 +16,7 @@ plugin.defaultDB = {
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
 	blockQuestTrackingTooltips = true,
+	hideObjectiveTracker = false,
 }
 
 --------------------------------------------------------------------------------
@@ -94,7 +95,13 @@ plugin.pluginOptions = {
 			desc = L.blockQuestTrackingTooltipsDesc,
 			width = "full",
 			order = 6,
-		}
+		},
+		hideObjectiveTracker = {
+			type = "toggle",
+			name = L.hideObjectiveTracker,
+			width = "full",
+			order = 7,
+		},
 	},
 }
 
@@ -145,6 +152,8 @@ do
 		end
 	end
 
+	local objectiveTrackerWasCollapsed = false
+
 	function plugin:BigWigs_OnBossEngage()
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
@@ -164,6 +173,12 @@ do
 		end
 		if self.db.profile.blockQuestTrackingTooltips then
 			SetCVar("showQuestTrackingTooltips", 0)
+		end
+		if self.db.profile.hideObjectiveTracker and IsInRaid() then
+			objectiveTrackerWasCollapsed = ObjectiveTrackerFrame.collapsed
+			if not objectiveTrackerWasCollapsed then
+				ObjectiveTracker_Collapse()
+			end
 		end
 	end
 
@@ -186,6 +201,10 @@ do
 		end
 		if self.db.profile.blockQuestTrackingTooltips then
 			SetCVar("showQuestTrackingTooltips", questTrackingValue)
+		end
+		if self.db.profile.hideObjectiveTracker and not objectiveTrackerWasCollapsed and IsInRaid() then
+			ObjectiveTracker_Expand()
+			ObjectiveTracker_Update()
 		end
 	end
 end
