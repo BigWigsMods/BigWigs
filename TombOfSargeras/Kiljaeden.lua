@@ -35,7 +35,7 @@ local mobCollector = {}
 local timersLFR = {
 	[240910] = { -- Armageddon
 		{10, 22, 42, 22, 30}, -- Stage 1
-		{56, 27.7, 56.7, 26.7, 12.2, 18.9}, -- Stage 2
+		{56, 27.7, 56.7, 26.7, 12.2, 18.9, 18.9}, -- Stage 2
 	},
 	[238430] = { -- Bursting Dreadflame
 		{7.7, 17, 13.4, 17}, -- Stage 1 (Intermission)
