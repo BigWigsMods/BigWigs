@@ -83,14 +83,14 @@ if L then
 
 	L.meteorImpact_desc = "陨石雨降落计时器"
 
-	--L.shadowsoul = "Shadowsoul Health Tracker"
-	--L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
+	L.shadowsoul = "千魂生命值追踪"
+	L.shadowsoul_desc = "在信息盒显示当前5个千魂增援当前生命值。"
 
-	--L.custom_on_track_illidan = "Automatically Track Humanoids"
-	--L.custom_on_track_illidan_desc = "If you are a hunter or a feral druid, this option will automatically enable tracking of humanoids so you can track Illidan."
+	L.custom_on_track_illidan = "自动追踪人形生物"
+	L.custom_on_track_illidan_desc = "如果你是猎人或者野性德鲁伊，此选项将自动启用追踪人型生物以便于追踪到伊利丹。"
 
-	--L.custom_on_zoom_in = "Automatically Zoom Minimap"
-	--L.custom_on_zoom_in_desc = "This feature will set the minimap zoom to level 4 to make it easier to track Illidan, and then restore it to your previous level once the stage has ended."
+	L.custom_on_zoom_in = "自动缩放迷你地图"
+	L.custom_on_zoom_in_desc = "此功能将设置迷你地图缩放等级为4以便于更快追踪伊利丹，并将在此阶段结束后恢复到你之前设置的等级。"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhCN")
