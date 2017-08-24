@@ -83,14 +83,14 @@ if L then
 
 	L.meteorImpact_desc = "유성 충돌 타이머를 표시합니다"
 
-	--L.shadowsoul = "Shadowsoul Health Tracker"
-	--L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
+	L.shadowsoul = "어둠영혼 생명력 추적기"
+	L.shadowsoul_desc = "어둠영혼 5개체의 현재 생명력을 보여주는 정보 상자를 표시합니다."
 
-	--L.custom_on_track_illidan = "Automatically Track Humanoids"
-	--L.custom_on_track_illidan_desc = "If you are a hunter or a feral druid, this option will automatically enable tracking of humanoids so you can track Illidan."
+	L.custom_on_track_illidan = "자동 인간형 추적"
+	L.custom_on_track_illidan_desc = "당신이 사냥꾼이거나 야성 드루이드라면 이 옵션이 일리단을 추적할 수 있도록 자동으로 인간형 추적을 활성화합니다."
 
-	--L.custom_on_zoom_in = "Automatically Zoom Minimap"
-	--L.custom_on_zoom_in_desc = "This feature will set the minimap zoom to level 4 to make it easier to track Illidan, and then restore it to your previous level once the stage has ended."
+	L.custom_on_zoom_in = "자동 미니맵 확대"
+	L.custom_on_zoom_in_desc = "이 기능은 일리단을 쉽게 추적할 수 있도록 미니맵을 4배 확대합니다, 단계가 끝나면 미니맵 확대를 이전 배율로 복원합니다."
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "koKR")
