@@ -30,7 +30,9 @@ local flamingOrbCount = 1
 local wailingCounter = 1
 local obeliskCount = 1
 local darknessCount = 1
+local currentZoom = 0
 local focusedTarget = nil
+local resetMinimap = nil
 local mobCollector = {}
 local timersLFR = {
 	[240910] = { -- Armageddon
@@ -136,6 +138,14 @@ if L then
 	L.shadowsoul = "Shadowsoul Health Tracker"
 	L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
 	L.shadowsoul_icon = 241702
+
+	L.custom_on_track_illidan = "Automatically Track Humanoids"
+	L.custom_on_track_illidan_desc = "If you are a hunter or a feral druid, this option will automatically enable tracking of humanoids so you can track Illidan."
+	L.custom_on_track_illidan_icon = 19883
+
+	L.custom_on_zoom_in = "Automatically Zoom Minimap"
+	L.custom_on_zoom_in_desc = "This feature will set the minimap zoom to level 4 to make it easier to track Illidan, and then restore it to your previous level once the stage has ended."
+	L.custom_on_zoom_in_icon = 131220
 end
 
 --------------------------------------------------------------------------------
@@ -160,8 +170,10 @@ function mod:GetOptions()
 		{236378, "SAY", "FLASH"}, -- Shadow Reflection: Wailing
 		241564, -- Sorrowful Wail
 		241721, -- Illidan's Sightless Gaze
-		decieverAddMarker,
 		{"shadowsoul", "INFOBOX"}, -- Shadowsoul
+		decieverAddMarker,
+		"custom_on_track_illidan",
+		"custom_on_zoom_in",
 		238999, -- Darkness of a Thousand Souls
 		-15543, -- Demonic Obelisk
 		"obeliskExplosion",
@@ -241,6 +253,7 @@ function mod:OnEngage()
 	obeliskCount = 1
 	wailingCounter = 1
 	darknessCount = 1
+	currentZoom = 0
 	focusedTarget = nil
 	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or self:Normal() and timersNormal or self:LFR() and timersLFR
 	wipe(mobCollector)
@@ -258,6 +271,12 @@ function mod:OnEngage()
 		self:Berserk(840)
 	else
 		self:Berserk(600)
+	end
+end
+
+function mod:OnWipe()
+	if inIntermission and stage == 2 then
+		resetMinimap(self)
 	end
 end
 
@@ -653,6 +672,38 @@ do
 
 			self:RegisterTargetEvents("DecieverAddTargets")
 		end
+
+		if self:GetOption("custom_on_track_illidan") then
+			local trackHumanoids = self:SpellName(19883)
+			for i = 1, GetNumTrackingTypes() do
+				local name = GetTrackingInfo(i)
+				if name == trackHumanoids then
+					SetTracking(i, true)
+					break
+				end
+			end
+		end
+
+		if self:GetOption("custom_on_zoom_in") then
+			currentZoom = Minimap:GetZoom() or 0
+			Minimap:SetZoom(4)
+		end
+	end
+
+	function resetMinimap(self)
+		if self:GetOption("custom_on_track_illidan") then
+			local trackHumanoids = self:SpellName(19883)
+			for i = 1, GetNumTrackingTypes() do
+				local name = GetTrackingInfo(i)
+				if name == trackHumanoids then
+					SetTracking(i, false)
+					break
+				end
+			end
+		end
+		if self:GetOption("custom_on_zoom_in") then
+			Minimap:SetZoom(currentZoom)
+		end
 	end
 
 	function mod:DeceiversVeilRemoved() -- Stage 3
@@ -663,6 +714,7 @@ do
 		burstingDreadflameCount = 1
 		flamingOrbCount = 1
 		felclawsCount = 1
+		resetMinimap(self)
 
 		local shadowsoulOption = self:CheckOption("shadowsoul", "INFOBOX")
 		if self:GetOption(decieverAddMarker) or shadowsoulOption then
