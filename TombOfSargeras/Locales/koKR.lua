@@ -83,7 +83,8 @@ if L then
 
 	L.meteorImpact_desc = "유성 충돌 타이머를 표시합니다"
 
-	L.add = "어둠영혼 %d"
+	--L.shadowsoul = "Shadowsoul Health Tracker"
+	--L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "koKR")

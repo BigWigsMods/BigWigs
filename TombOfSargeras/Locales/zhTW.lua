@@ -83,7 +83,8 @@ if L then
 
 	L.meteorImpact_desc = "顯示隕石雨降落計時器"
 
-	L.add = "小怪%d"
+	--L.shadowsoul = "Shadowsoul Health Tracker"
+	--L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")

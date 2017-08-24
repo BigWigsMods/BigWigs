@@ -133,8 +133,9 @@ if L then
 
 	L.countx = "%s (%dx)"
 
-	L.add = "Add %d"
-	L.add_mark = "|T13700%d:0|t"
+	L.shadowsoul = "Shadowsoul Health Tracker"
+	L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
+	L.shadowsoul_icon = 241702
 end
 
 --------------------------------------------------------------------------------
@@ -142,7 +143,7 @@ end
 --
 
 local eruptingMarker = mod:AddMarkerOption(false, "player", 3, 236710, 3, 4, 5) -- Skip marks 1 + 2 for visibility
-local decieverAddMarker = mod:AddMarkerOption(false, "npc", 1, -15397, 1, 2, 3, 4, 5)
+local decieverAddMarker = mod:AddMarkerOption(false, "npc", 1, -15397, 1, 2, 3, 4, 5) -- Shadowsoul
 function mod:GetOptions()
 	return {
 		"stages",
@@ -160,7 +161,7 @@ function mod:GetOptions()
 		241564, -- Sorrowful Wail
 		241721, -- Illidan's Sightless Gaze
 		decieverAddMarker,
-		{-15397, "INFOBOX"}, -- Shadowsoul
+		{"shadowsoul", "INFOBOX"}, -- Shadowsoul
 		238999, -- Darkness of a Thousand Souls
 		-15543, -- Demonic Obelisk
 		"obeliskExplosion",
@@ -541,11 +542,11 @@ do
 					break
 				end
 			end
-			local max = UnitHealthMax(unit)
+			local maxHp = UnitHealthMax(unit)
 			if addMaxHP == -1 then
-				addMaxHP = max
+				addMaxHP = maxHp
 			end
-			addDmg[guid] = max - UnitHealth(unit)
+			addDmg[guid] = maxHp - UnitHealth(unit)
 			local icon = GetRaidTargetIndex(unit)
 			if icon and icon > 0 and icon < 9 then
 				addMarks[guid] = icon
@@ -554,14 +555,14 @@ do
 	end
 
 	local marks = {
-		[COMBATLOG_OBJECT_RAIDTARGET1] = 1,
-		[COMBATLOG_OBJECT_RAIDTARGET2] = 2,
-		[COMBATLOG_OBJECT_RAIDTARGET3] = 3,
-		[COMBATLOG_OBJECT_RAIDTARGET4] = 4,
-		[COMBATLOG_OBJECT_RAIDTARGET5] = 5,
-		[COMBATLOG_OBJECT_RAIDTARGET6] = 6,
-		[COMBATLOG_OBJECT_RAIDTARGET7] = 7,
-		[COMBATLOG_OBJECT_RAIDTARGET8] = 8,
+		[0x00000001] = 1, -- COMBATLOG_OBJECT_RAIDTARGET1
+		[0x00000002] = 2, -- COMBATLOG_OBJECT_RAIDTARGET2
+		[0x00000004] = 3, -- COMBATLOG_OBJECT_RAIDTARGET3
+		[0x00000008] = 4, -- COMBATLOG_OBJECT_RAIDTARGET4
+		[0x00000010] = 5, -- COMBATLOG_OBJECT_RAIDTARGET5
+		[0x00000020] = 6, -- COMBATLOG_OBJECT_RAIDTARGET6
+		[0x00000040] = 7, -- COMBATLOG_OBJECT_RAIDTARGET7
+		[0x00000080] = 8, -- COMBATLOG_OBJECT_RAIDTARGET8
 	}
 	local timer = nil
 	local function updateInfoBox(self)
@@ -571,13 +572,17 @@ do
 			if i > 5 then break end -- safety
 			local percentage = (addMaxHP - dmg) / addMaxHP
 			if percentage > 0 then
-				self:SetInfo(-15397, i*2-1, L.add:format(i) .." ".. (addMarks[guid] and L.add_mark:format(addMarks[guid]) or ""))
-				self:SetInfo(-15397, i*2, ("%.0f%%"):format(percentage*100))
+				if addMarks[guid] then
+					self:SetInfo("shadowsoul", i*2-1, ("%s |T13700%d:0|t"):format(CL.count:format(CL.add, i), addMarks[guid]))
+				else
+					self:SetInfo("shadowsoul", i*2-1, CL.count:format(CL.add, i))
+				end
+				self:SetInfo("shadowsoul", i*2, ("%.0f%%"):format(percentage*100))
 			else
-				self:SetInfo(-15397, i*2-1, "")
-				self:SetInfo(-15397, i*2, "")
+				self:SetInfo("shadowsoul", i*2-1, "")
+				self:SetInfo("shadowsoul", i*2, "")
 			end
-			self:SetInfoBar(-15397, i*2, percentage)
+			self:SetInfoBar("shadowsoul", i*2, percentage)
 			i = i + 1
 		end
 	end
@@ -626,7 +631,7 @@ do
 			self:Bar(235059, 19.1, CL.count:format(self:SpellName(235059), singularityCount)) -- Rupturing Singularity
 		end
 
-		local shadowsoulOption = self:CheckOption(-15397, "INFOBOX")
+		local shadowsoulOption = self:CheckOption("shadowsoul", "INFOBOX")
 		if self:GetOption(decieverAddMarker) or shadowsoulOption then
 			wipe(decieversAddMarks)
 
@@ -638,7 +643,11 @@ do
 				self:Log("SPELL_PERIODIC_DAMAGE", "IntermissionAddDamage", "*")
 				self:Log("RANGE_DAMAGE", "IntermissionAddDamage", "*")
 				self:Log("SWING_DAMAGE", "IntermissionAddDamageSwing", "*")
-				self:OpenInfo(-15397, self:SpellName(-15397))
+				self:OpenInfo("shadowsoul", self:SpellName(-15397)) -- Shadowsoul
+				for i = 1, 5 do
+					self:SetInfo("shadowsoul", i*2-1, CL.count:format(CL.add, i))
+					self:SetInfo("shadowsoul", i*2, "100%")
+				end
 				timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 			end
 
@@ -655,12 +664,12 @@ do
 		flamingOrbCount = 1
 		felclawsCount = 1
 
-		local shadowsoulOption = self:CheckOption(-15397, "INFOBOX")
+		local shadowsoulOption = self:CheckOption("shadowsoul", "INFOBOX")
 		if self:GetOption(decieverAddMarker) or shadowsoulOption then
 			self:UnregisterTargetEvents()
 
 			if shadowsoulOption then
-				self:CloseInfo(-15397)
+				self:CloseInfo("shadowsoul")
 				self:RemoveLog("SPELL_DAMAGE", "IntermissionAddDamage", "*")
 				self:RemoveLog("SPELL_PERIODIC_DAMAGE", "IntermissionAddDamage", "*")
 				self:RemoveLog("RANGE_DAMAGE", "IntermissionAddDamage", "*")
