@@ -59,7 +59,7 @@ if L then
 	L.energy_leak_desc = "当第一阶段首领能量泄漏时显示警报。"
 	L.energy_leak_msg = "能量泄漏！（%d）"
 
-	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
+	L.warmup_trigger = "你们眼前的躯壳曾承载过萨格拉斯的力量" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 
 	L.absorb = "吸收"
 	L.absorb_text = "%s （|cff%s%.0f%%|r）"
