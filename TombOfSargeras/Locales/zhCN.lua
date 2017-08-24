@@ -59,7 +59,7 @@ if L then
 	L.energy_leak_desc = "当第一阶段首领能量泄漏时显示警报。"
 	L.energy_leak_msg = "能量泄漏！（%d）"
 
-	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
+	L.warmup_trigger = "你们眼前的躯壳曾承载过萨格拉斯的力量" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 
 	L.absorb = "吸收"
 	L.absorb_text = "%s （|cff%s%.0f%%|r）"
@@ -83,7 +83,14 @@ if L then
 
 	L.meteorImpact_desc = "陨石雨降落计时器"
 
-	L.add = "增援 %d"
+	--L.shadowsoul = "Shadowsoul Health Tracker"
+	--L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
+
+	--L.custom_on_track_illidan = "Automatically Track Humanoids"
+	--L.custom_on_track_illidan_desc = "If you are a hunter or a feral druid, this option will automatically enable tracking of humanoids so you can track Illidan."
+
+	--L.custom_on_zoom_in = "Automatically Zoom Minimap"
+	--L.custom_on_zoom_in_desc = "This feature will set the minimap zoom to level 4 to make it easier to track Illidan, and then restore it to your previous level once the stage has ended."
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhCN")

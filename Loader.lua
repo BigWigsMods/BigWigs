@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 69
+local BIGWIGS_VERSION = 70
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -788,11 +788,13 @@ do
 
 	local L = GetLocale()
 	if L == "ptBR" then
-		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Brazilian Portugese (ptBR)? Check out our GitHub page!"
+		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Brazilian Portugese (ptBR). Can you help? Ask us on Discord for more info."
 	elseif L == "itIT" then
-		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Italian (itIT)? Check out our GitHub page!"
+		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Italian (itIT). Can you help? Ask us on Discord for more info."
+	elseif L == "ruRU" then
+		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Russian (ruRU). Can you help? Ask us on Discord for more info."
 	elseif L == "esES" or L == "esMX" then
-		delayedMessages[#delayedMessages+1] = "BigWigs needs translations. Can you translate BigWigs into Spanish (esES)? Check out our GitHub page!"
+		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Spanish (esES). Can you help? Ask us on Discord for more info."
 	end
 
 	CTimerAfter(11, function()
@@ -869,8 +871,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "16590" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.2.17" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "16632" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.2.18" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil

@@ -83,7 +83,14 @@ if L then
 
 	--L.meteorImpact_desc = "Show a timer for the Meteors landing"
 
-	--L.add = "Add %d"
+	--L.shadowsoul = "Shadowsoul Health Tracker"
+	--L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
+
+	--L.custom_on_track_illidan = "Automatically Track Humanoids"
+	--L.custom_on_track_illidan_desc = "If you are a hunter or a feral druid, this option will automatically enable tracking of humanoids so you can track Illidan."
+
+	--L.custom_on_zoom_in = "Automatically Zoom Minimap"
+	--L.custom_on_zoom_in_desc = "This feature will set the minimap zoom to level 4 to make it easier to track Illidan, and then restore it to your previous level once the stage has ended."
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "itIT")
