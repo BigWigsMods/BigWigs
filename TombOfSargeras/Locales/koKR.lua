@@ -104,7 +104,9 @@ if L then
 	L.custodian = "깊은바다 관리인"
 	L.dresanoth = "드레사노스"
 	L.stalker = "공포의 추적자"
+	L.darjah = "전쟁군주 다르자"
 	L.sentry = "수호의 감시자"
 	L.acolyte = "유령 수행사제"
 	L.ryul = "희미한 자 률"
+	L.countermeasure = "방어 장치"
 end

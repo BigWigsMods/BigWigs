@@ -104,7 +104,9 @@ if L then
 	L.custodian = "Zelador Submarino"
 	L.dresanoth = "Dresanoth"
 	L.stalker = "Espreitador Medonho"
+	L.darjah = "Senhor da Guerra Darjah"
 	L.sentry = "Sentinela Guardiã"
 	L.acolyte = "Acólita Fantasmagórica"
 	--L.ryul = "Ryul the Fading"
+	L.countermeasure = "Contramedida Defensiva"
 end
