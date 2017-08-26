@@ -10,7 +10,7 @@
 ## Title-zhTW: BigWigs [|cffeda55f安托洛斯‧燃燒王座|r]
 ## Title-itIT: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
 ## Title-ptBR: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
-## Title-koKR: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
+## Title-koKR: BigWigs [|cffeda55f안토러스, 불타는 왕좌|r]
 ## Notes: BigWigs Antorus, The Burning Throne Modules
 ## Notes-deDE: BigWigs Antorus, The Burning Throne Modules
 ## Notes-esES: BigWigs Antorus, The Burning Throne Modules
@@ -21,7 +21,7 @@
 ## Notes-zhTW: BigWigs 安托洛斯‧燃燒王座模組
 ## Notes-itIT: TBigWigs Antorus, The Burning Throne Modules
 ## Notes-ptBR: BigWigs Antorus, The Burning Throne Modules
-## Notes-koKR: BigWigs Antorus, The Burning Throne Modules
+## Notes-koKR: BigWigs 안토러스, 불타는 왕좌 모듈
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
