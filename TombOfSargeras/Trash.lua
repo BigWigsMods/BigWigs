@@ -24,15 +24,17 @@ mod:RegisterEnableMob(
 	120463, -- Undersea Custodian
 	120012, -- Dresanoth
 	120013, -- The Dread Stalker
+	120003, --Warlord Darjah
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	120777, -- Guardian Sentry
 	120194, -- Ghostly Acolyte
-	120019 -- Ryul the Fading
+	120019, -- Ryul the Fading
 
 	--[[ Pre Maiden of Vigilance ]]--
 
 	--[[ Maiden of Vigilance -> Fallen Avatar ]]--
+	120449 -- Defensive Countermeasure
 
 	--[[ Fallen Avatar -> Kil'jaeden ]]--
 
@@ -69,6 +71,7 @@ if L then
 	L.custodian = "Undersea Custodian"
 	L.dresanoth = "Dresanoth"
 	L.stalker = "The Dread Stalker"
+	L.darjah = "Warlord Darjah"
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
 	L.sentry = "Guardian Sentry"
@@ -78,6 +81,7 @@ if L then
 	--[[ Pre Maiden of Vigilance ]]--
 
 	--[[ Maiden of Vigilance -> Fallen Avatar ]]--
+	L.countermeasure = "Defensive Countermeasure"
 
 	--[[ Fallen Avatar -> Kil'jaeden ]]--
 end
@@ -112,6 +116,9 @@ function mod:GetOptions()
 		{241267, "TANK"}, -- Icy Talons (Dresanoth)
 		241703, -- Blood Siphon (The Dread Stalker)
 		241716, -- Blood Drain (The Dread Stalker)
+		{241465, "TANK"}, -- Coral Cut (Warlord Darjah)
+		241446, -- Sonic Scream (Warlord Darjah)
+		{241480, "FLASH"}, -- Summon Steam Elemental (Warlord Darjah)
 
 		--[[ Sisters of the Moon -> The Desolate Host ]]--
 		{240735, "SAY"}, -- Polymorph Bomb (Guardian Sentry)
@@ -123,6 +130,7 @@ function mod:GetOptions()
 		--[[ Pre Maiden of Vigilance ]]--
 
 		--[[ Maiden of Vigilance -> Fallen Avatar ]]--
+		241374, -- Luminescent Barrier
 
 		--[[ Fallen Avatar -> Kil'jaeden ]]--
 
@@ -136,9 +144,11 @@ function mod:GetOptions()
 		[240169] = L.custodian,
 		[241254] = L.dresanoth,
 		[241703] = L.stalker,
+		[241465] = L.darjah,
 		[240735] = L.sentry,
 		[239741] = L.acolyte,
 		[241367] = L.ryul,
+		[241374] = L.countermeasure,
 	}
 end
 
@@ -178,6 +188,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BloodDrainApplied", 241716)
 	self:Log("SPELL_AURA_REMOVED", "BloodDrainRemoved", 241716)
 	self:Log("SPELL_DISPEL", "BloodDrainDispelled", "*")
+	self:Log("SPELL_AURA_APPLIED", "CoralCut", 241465)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "CoralCut", 241465)
+	self:Log("SPELL_AURA_REMOVED", "CoralCutRemoved", 241465)
+	self:Log("SPELL_CAST_START", "SonicScream", 241446)
+	self:Log("SPELL_CAST_SUCCESS", "SummonSteamElemental", 241480)
 
 
 	--[[ Sisters of the Moon -> The Desolate Host ]]--
@@ -195,7 +210,7 @@ function mod:OnBossEnable()
 
 
 	--[[ Maiden of Vigilance -> Fallen Avatar ]]--
-
+	self:Log("SPELL_CAST_SUCCESS", "LuminescentBarrier", 241374)
 
 	--[[ Fallen Avatar -> Kil'jaeden ]]--
 
@@ -332,6 +347,40 @@ function mod:BloodDrainDispelled(args)
 	end
 end
 
+function mod:CoralCut(args)
+	if self:Tank(args.destName) then
+		local amount = args.amount or 1
+		self:StackMessage(args.spellId, args.destName, amount, "Attention")
+		if not self:Me(args.destGUID) and amount > 1 and self:Tank() and not UnitDebuff("player", args.spellName) then
+			self:PlaySound(args.spellId, "Warning")
+		end
+		self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
+		self:TargetBar(args.spellId, 15, args.destName, CL.count:format(args.spellName, amount))
+	end
+end
+
+function mod:CoralCutRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "Positive", self:Tank() and "Warning", CL.removed:format(args.spellName))
+	else
+		self:Message(args.spellId, "Positive", nil, CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+	end
+end
+
+function mod:SonicScream(args)
+	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
+	self:CastBar(args.spellId, 2)
+end
+
+function mod:SummonSteamElemental(args)
+	self:Message(args.spellId, "Urgent")
+	if self:Damager() then
+		self:Flash(args.spellId)
+		self:PlaySound(args.spellId, "Warning")
+	end
+	self:CDBar(args.spellId, 32)
+end
+
 --[[ Sisters of the Moon -> The Desolate Host ]]--
 function mod:PolymorphBomb(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
@@ -402,6 +451,8 @@ end
 
 
 --[[ Maiden of Vigilance -> Fallen Avatar ]]--
-
+function mod:LuminescentBarrier(args)
+	self:Message(args.spellId, "Attention", self:Dispeller("magic", true) and "Warning", CL.on:format(args.spellName, args.sourceName))
+end
 
 --[[ Fallen Avatar -> Kil'jaeden ]]--

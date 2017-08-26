@@ -104,7 +104,9 @@ if L then
 	L.custodian = "Gardien des fonds marins"
 	L.dresanoth = "Dresanoth"
 	L.stalker = "Le Traqueur de l'effroi"
+	L.darjah = "Seigneur de guerre Darjah"
 	L.sentry = "Factionnaire gardien"
 	L.acolyte = "Acolyte fantomatique"
 	L.ryul = "Ryul le Déclinant"
+	L.countermeasure = "Contre-mesure défensive"
 end

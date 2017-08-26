@@ -104,7 +104,9 @@ if L then
 	L.custodian = "Подводный надзиратель"
 	L.dresanoth = "Кресанот"
 	L.stalker = "Жуткий Охотник"
+	L.darjah = "Полководец Даржа"
 	L.sentry = "Страж Хранительницы"
 	L.acolyte = "Призрачная послушница"
 	L.ryul = "Рюл Поблекший"
+	L.countermeasure = "Защитные контрмеры"
 end

@@ -104,7 +104,9 @@ if L then
 	L.custodian = "海底监察者"
 	L.dresanoth = "德萨诺斯"
 	L.stalker = "恐怖追猎者"
+	--L.darjah = "Warlord Darjah"
 	L.sentry = "守护者哨兵"
 	L.acolyte = "幽灵助祭"
 	L.ryul = "消逝者鲁尔"
+	--L.countermeasure = "Defensive Countermeasure"
 end

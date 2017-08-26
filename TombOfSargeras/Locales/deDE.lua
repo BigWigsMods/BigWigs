@@ -104,7 +104,9 @@ if L then
 	L.custodian = "Unterwasserverwalter"
 	L.dresanoth = "Dresanoth"
 	L.stalker = "Der Schreckenspirscher"
+	L.darjah = "Kriegsfürst Darjah"
 	L.sentry = "Wachposten"
 	L.acolyte = "Geisterhafte Akolythin"
 	L.ryul = "Ryul der Schwindende"
+	L.countermeasure = "Defensive Gegenmaßnahmen"
 end

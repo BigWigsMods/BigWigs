@@ -83,14 +83,14 @@ if L then
 
 	L.meteorImpact_desc = "顯示隕石雨降落計時器"
 
-	--L.shadowsoul = "Shadowsoul Health Tracker"
-	--L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
+	L.shadowsoul = "暗影之魂生命值追蹤器"
+	L.shadowsoul_desc = "在訊息盒顯示五個暗影之魂的當前生命值。"
 
-	--L.custom_on_track_illidan = "Automatically Track Humanoids"
-	--L.custom_on_track_illidan_desc = "If you are a hunter or a feral druid, this option will automatically enable tracking of humanoids so you can track Illidan."
+	L.custom_on_track_illidan = "自動追蹤人型生物"
+	L.custom_on_track_illidan_desc = "如果你是野性德魯伊或獵人，啟用此選像項會自動啟用追蹤人型生物，以便追蹤伊利丹。"
 
-	--L.custom_on_zoom_in = "Automatically Zoom Minimap"
-	--L.custom_on_zoom_in_desc = "This feature will set the minimap zoom to level 4 to make it easier to track Illidan, and then restore it to your previous level once the stage has ended."
+	L.custom_on_zoom_in = "自動縮放小地圖"
+	L.custom_on_zoom_in_desc = "這個功能會將小地圖的縮放等級調整到等級4，使之更便於追蹤伊利丹；並在這個階段結束後還原為你原先設定的等級。"
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "zhTW")
@@ -103,8 +103,10 @@ if L then
 	L.seacaller = "潮鱗喚海者"
 	L.custodian = "深海守衛"
 	L.dresanoth = "卓薩諾斯"
-	--L.stalker = "The Dread Stalker"
+	L.stalker = "恐怖潛獵者"
+	--L.darjah = "Warlord Darjah"
 	L.sentry = "守護者哨衛"
 	L.acolyte = "鬼魅侍僧"
 	L.ryul = "暗淡者萊由"
+	--L.countermeasure = "Defensive Countermeasure"
 end
