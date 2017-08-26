@@ -158,15 +158,21 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:CheckForFixate(_, unit, guid)
-	local mobId = self:MobId(guid)
-	if mobId == 121138 and not fixateList[guid] and self:Me(UnitGUID(unit.."target")) then -- Tormented Fragment
-		fixateList[guid] = true
-		self:Flash("fixate", 41951)
-		self:Message("fixate", "Personal", "Long", CL.you:format(self:SpellName(41951)), 41951) -- 41951 = "Fixate"
-		if self:GetOption("custom_on_fixate_plates") then
-			self:AddPlateIcon(41951, guid)
+do
+	local prev = 0
+	function mod:CheckForFixate(_, unit, guid)
+		local mobId = self:MobId(guid)
+		if mobId == 121138 and not fixateList[guid] and self:Me(UnitGUID(unit.."target")) then -- Tormented Fragment
+			fixateList[guid] = true
+			local t = GetTime()
+			if t-prev > 1 then
+				prev = t
+				self:Flash("fixate", 41951)
+				self:Message("fixate", "Personal", "Long", CL.you:format(self:SpellName(41951)), 41951) -- 41951 = "Fixate"
+			end
+			if self:GetOption("custom_on_fixate_plates") then
+				self:AddPlateIcon(41951, guid)
+			end
 		end
 	end
 end
