@@ -83,14 +83,14 @@ if L then
 
 	L.meteorImpact_desc = "Affiche un délai pour l'impact des météores"
 
-	--L.shadowsoul = "Shadowsoul Health Tracker"
-	--L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
+	L.shadowsoul = "Suivi des vies des Ames d'ombre"
+	L.shadowsoul_desc = "Affiche la boîte d'info avec la vie actuelle des 5 Ames d'ombre."
 
-	--L.custom_on_track_illidan = "Automatically Track Humanoids"
-	--L.custom_on_track_illidan_desc = "If you are a hunter or a feral druid, this option will automatically enable tracking of humanoids so you can track Illidan."
+	L.custom_on_track_illidan = "Pistage automatique des humanoïdes"
+	L.custom_on_track_illidan_desc = "Si vous êtes un chasseur ou un druide farouche, cette option activera automatiquement le pistage des humanoïdes afin que vous puissiez traquer Illidan."
 
-	--L.custom_on_zoom_in = "Automatically Zoom Minimap"
-	--L.custom_on_zoom_in_desc = "This feature will set the minimap zoom to level 4 to make it easier to track Illidan, and then restore it to your previous level once the stage has ended."
+	L.custom_on_zoom_in = "Zoom automatique de la minicarte"
+	L.custom_on_zoom_in_desc = "Cette option mettra le zoom de la minicarte au niveau 4 pour rendre plus facile la traque d'Illidan, et la remettra ensuite à son niveau précédent une fois la phase terminée."
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "frFR")
