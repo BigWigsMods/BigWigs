@@ -153,7 +153,7 @@ end
 --
 
 local eruptingMarker = mod:AddMarkerOption(false, "player", 3, 236710, 3, 4, 5) -- Skip marks 1 + 2 for visibility
-local decieverAddMarker = mod:AddMarkerOption(false, "npc", 1, -15397, 1, 2, 3, 4, 5) -- Shadowsoul
+local shadowsoulMarker = mod:AddMarkerOption(false, "npc", 1, -15397, 1, 2, 3, 4, 5) -- Shadowsoul
 function mod:GetOptions()
 	return {
 		"stages",
@@ -171,7 +171,7 @@ function mod:GetOptions()
 		241564, -- Sorrowful Wail
 		241721, -- Illidan's Sightless Gaze
 		{"shadowsoul", "INFOBOX"}, -- Shadowsoul
-		decieverAddMarker,
+		shadowsoulMarker,
 		"custom_on_track_illidan",
 		"custom_on_zoom_in",
 		238999, -- Darkness of a Thousand Souls
@@ -547,12 +547,14 @@ do
 	local addDmg = {} -- Damage done per add
 	local addMarks = {} -- Current marks on each add
 
-	function mod:DecieverAddTargets(event, unit)
+	function mod:ShadowsoulScanner(event, unit)
 		local guid = UnitGUID(unit)
 		if self:MobId(guid) == 121193 and not mobCollector[guid] then
 			for i = 1, 5 do
 				if not decieversAddMarks[i] then
-					SetRaidTarget(unit, i)
+					if self:GetOption(shadowsoulMarker) then
+						SetRaidTarget(unit, i)
+					end
 					decieversAddMarks[i] = guid
 					mobCollector[guid] = true
 					if i == 5 then
@@ -651,7 +653,7 @@ do
 		end
 
 		local shadowsoulOption = self:CheckOption("shadowsoul", "INFOBOX")
-		if self:GetOption(decieverAddMarker) or shadowsoulOption then
+		if self:GetOption(shadowsoulMarker) or shadowsoulOption then
 			wipe(decieversAddMarks)
 
 			if shadowsoulOption then
@@ -670,7 +672,7 @@ do
 				timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 			end
 
-			self:RegisterTargetEvents("DecieverAddTargets")
+			self:RegisterTargetEvents("ShadowsoulScanner")
 		end
 
 		if self:GetOption("custom_on_track_illidan") then
@@ -717,7 +719,7 @@ do
 		resetMinimap(self)
 
 		local shadowsoulOption = self:CheckOption("shadowsoul", "INFOBOX")
-		if self:GetOption(decieverAddMarker) or shadowsoulOption then
+		if self:GetOption(shadowsoulMarker) or shadowsoulOption then
 			self:UnregisterTargetEvents()
 
 			if shadowsoulOption then
