@@ -33,7 +33,6 @@ L.BAR_desc = "在適當時會為首領技能顯示計時條。如果你想隱藏
 L.berserk = "狂暴"
 L.berserk_desc = "為首領狂暴顯示計時條及警報。"
 L.best = "最快："
-L.blizzRestrictionsConfig = "由於暴雪的限制，要打開選項配置需要離開戰鬥，或是在戰鬥之前。"
 L.chatMessages = "聊天框體訊息"
 L.chatMessagesDesc = "除了顯示設定，輸出所有 BigWigs 訊息到預設聊天框體。"
 L.colors = "顏色"

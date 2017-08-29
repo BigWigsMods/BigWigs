@@ -35,8 +35,6 @@ L.dbmUsers = "DBM 사용자:"
 L.noBossMod = "우두머리 모듈 없음:"
 L.offline = "접속 종료"
 
-L.blizzRestrictionsConfig = "블리자드 제한으로 인해 전투 중에 설정을 처리하려면 먼저 전투 중이 아닐 때 설정을 열어야 합니다."
-
 L.missingAddOn = "이 지역에서 타이머를 표시하려면 |cFF436EEE%s|r 플러그인이 필요합니다."
 L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이머를 표시할 수 없습니다."
 

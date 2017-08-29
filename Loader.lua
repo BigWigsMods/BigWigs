@@ -54,7 +54,7 @@ local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
-local GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID, IsFalling = GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID, IsFalling
+local GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID = GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetCurrentMapAreaID = GetCurrentMapAreaID
@@ -243,26 +243,16 @@ do
 	public.fakeWorldZones = fakeWorldZones
 end
 
--- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
--- GLOBALS: GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetSpellInfo, GetTime, GRAY_FONT_COLOR, InterfaceOptionsFrameOkay
+-- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, ChatFrame_ImportAllListsToHash, ChatTypeInfo, CreateFrame, CUSTOM_CLASS_COLORS, DEFAULT_CHAT_FRAME, error
+-- GLOBALS: GetAddOnEnableState, GetAddOnInfo, GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetTime, GRAY_FONT_COLOR, hash_SlashCmdList, InCombatLockdown
 -- GLOBALS: IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySound, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, StopSound
--- GLOBALS: tostring, tremove, type, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
--- GLOBALS: SLASH_BigWigsVersion1, UnitBuff, wipe
+-- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
+-- GLOBALS: SLASH_BigWigsVersion1, wipe
 
 -----------------------------------------------------------------------
 -- Utility
 --
-
-local InCombat
-do
-	local InCombatLockdown, UnitAffectingCombat = InCombatLockdown, UnitAffectingCombat
-	function InCombat()
-		if InCombatLockdown() or UnitAffectingCombat("player") then
-			return true
-		end
-	end
-end
 
 local function IsAddOnEnabled(addon)
 	local character = UnitName("player")
@@ -317,10 +307,6 @@ local function loadAndEnableCore()
 end
 
 local function loadCoreAndOpenOptions()
-	if not BigWigsOptions and not IsAltKeyDown() and PlaySoundKitID and (InCombat() or IsFalling()) then -- Allow combat loading using ALT key.
-		sysprint(L.blizzRestrictionsConfig)
-		return
-	end
 	loadAndEnableCore()
 	load(BigWigsOptions, "BigWigs_Options")
 	if BigWigsOptions then
@@ -936,7 +922,7 @@ do
 
 			local role = GetSpecializationRole(tree)
 			if role and UnitGroupRolesAssigned("player") ~= role then
-				if InCombat() then
+				if InCombatLockdown() or UnitAffectingCombat("player") then
 					bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 					return
 				end
@@ -1144,35 +1130,6 @@ end
 do
 	local loadedList = {}
 	local warnedThisZone = {}
-	local loadByUnitTarget, loadByZone = nil, nil
-	function mod:PLAYER_REGEN_ENABLED()
-		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
-		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
-
-		if loadByUnitTarget then
-			local target = loadByUnitTarget
-			loadByUnitTarget = nil
-			self:UNIT_TARGET(target)
-		elseif loadByZone then
-			loadByZone = nil
-			self:ZONE_CHANGED_NEW_AREA()
-		end
-	end
-
-	local function HasStoppedFalling()
-		if IsFalling() then
-			CTimerAfter(0.1, HasStoppedFalling)
-		else
-			if loadByUnitTarget then
-				local target = loadByUnitTarget
-				loadByUnitTarget = nil
-				mod:UNIT_TARGET(target)
-			elseif loadByZone then
-				loadByZone = nil
-				mod:ZONE_CHANGED_NEW_AREA()
-			end
-		end
-	end
 
 	local UnitGUID = UnitGUID
 	function mod:UNIT_TARGET(unit)
@@ -1182,24 +1139,12 @@ do
 			local mobId = tonumber(id)
 			local id = mobId and worldBosses[mobId]
 			if id then
-				local combat, falling = InCombat(), IsFalling()
-				if PlaySoundKitID and (combat or falling) then
-					if not loadedList[id] then
-						loadByUnitTarget = unit
-						if combat then
-							bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-						elseif falling then
-							CTimerAfter(0.1, HasStoppedFalling)
-						end
-					end
-				else
-					loadedList[id] = true
-					if loadAndEnableCore() then
-						if BigWigs:IsEnabled() then
-							loadZone(id)
-						else
-							BigWigs:Enable()
-						end
+				loadedList[id] = true
+				if loadAndEnableCore() then
+					if BigWigs:IsEnabled() then
+						loadZone(id)
+					else
+						BigWigs:Enable()
 					end
 				end
 			end
@@ -1227,24 +1172,12 @@ do
 				self:UNIT_TARGET("player")
 			elseif inside then
 				bwFrame:UnregisterEvent("UNIT_TARGET")
-				local combat, falling = InCombat(), IsFalling()
-				if not IsEncounterInProgress() and PlaySoundKitID and IsLoggedIn() and (combat or falling) then
-					if not loadedList[id] then
-						loadByZone = true
-						if combat then
-							bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-						elseif falling then
-							CTimerAfter(0.1, HasStoppedFalling)
-						end
-					end
-				else
-					loadedList[id] = true
-					if loadAndEnableCore() then
-						if BigWigs:IsEnabled() and loadOnZone[id] then
-							loadZone(id)
-						else
-							BigWigs:Enable()
-						end
+				loadedList[id] = true
+				if loadAndEnableCore() then
+					if BigWigs:IsEnabled() and loadOnZone[id] then
+						loadZone(id)
+					else
+						BigWigs:Enable()
 					end
 				end
 			end
