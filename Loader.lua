@@ -993,7 +993,7 @@ do
 				-- Using false as third arg to avoid the "only one of each sound at a time" throttle.
 				-- Only play via the "Master" channel if we have sounds turned on
 				if (BigWigs and BigWigs:GetPlugin("Sounds") and BigWigs:GetPlugin("Sounds").db.profile.sound) or self.isSoundOn ~= false then
-					local _, id = PlaySound(PlaySoundKitID and "ReadyCheck" or 8960, "Master", false) -- SOUNDKIT.READY_CHECK
+					local _, id = PlaySound(8960, "Master", false) -- SOUNDKIT.READY_CHECK
 					if id then
 						StopSound(id-1) -- Should work most of the time to stop the blizz sound
 					end
