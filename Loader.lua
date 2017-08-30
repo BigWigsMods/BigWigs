@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 70
+local BIGWIGS_VERSION = 71
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -774,13 +774,13 @@ do
 
 	local L = GetLocale()
 	if L == "ptBR" then
-		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Brazilian Portugese (ptBR). Can you help? Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Brazilian Portugese (ptBR). Can you help? Ask us on Discord for more info."
 	elseif L == "itIT" then
-		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Italian (itIT). Can you help? Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Italian (itIT). Can you help? Ask us on Discord for more info."
 	elseif L == "ruRU" then
-		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Russian (ruRU). Can you help? Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Russian (ruRU). Can you help? Ask us on Discord for more info."
 	elseif L == "esES" or L == "esMX" then
-		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Spanish (esES). Can you help? Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Spanish (esES). Can you help? Ask us on Discord for more info."
 	end
 
 	CTimerAfter(11, function()
