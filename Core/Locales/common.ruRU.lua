@@ -38,8 +38,8 @@ L.other = "%s: %s"
 L.over = "%s завершается!"
 L.phase = "Фаза %d"
 L.removed = "%s снято"
---L.removed_from = "%s Removed From %s"
---L.removed_by = "%s removed by %s" -- spell removed by player
+L.removed_from = "%s Снято С %s"
+L.removed_by = "%s был снят %s" -- spell removed by player
 L.small_adds = "Маленькие помощники"
 L.soon = "%s скоро!"
 L.spawned = "Появление: %s"
@@ -51,7 +51,7 @@ L.trash = "Трэш"
 L.underyou = "%s под ТОБОЙ!"
 L.you = "%s на ТЕБЕ"
 
---L.active = "Active" -- When a boss becomes active, after speech finishes
+L.active = "Активен" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
 L.marker = "метка %s"
@@ -59,12 +59,12 @@ L.marker_player_desc = "Отмечать игроков, затронутых %s
 L.marker_npc_desc = "Отмечать %s метрой %s, требуется быть помощником или лидером рейда."
 
 -- Ability where two players have to move close to each other
---L.link = "Linked with %s"
---L.link_short = "Linked: %s"
---L.link_both = "%s linked with %s"
---L.link_removed = "Link removed"
+L.link = "Связан с %s"
+L.link_short = "Связь: %s"
+L.link_both = "%s связан с %s"
+L.link_removed = "Связь прервана"
 
 -- Abbreviated numbers
---L.amount_one = "%dB"
---L.amount_two = "%dM"
---L.amount_three = "%dK"
+L.amount_one = "%dB"
+L.amount_two = "%dM"
+L.amount_three = "%dK"
