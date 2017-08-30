@@ -10,7 +10,7 @@ if L then
 	L.custom_on_fixate_plates = "Иконка фиксации на вражеских неймплейтах"
 	L.custom_on_fixate_plates_desc = "Показывать иконку цели, которая на вас навелась.\nТребуется чтобы вражеские неймплейты были включены. Эта функция пока поддерживается только аддоном KuiNameplates."
 
-	--L.infobox_title_prisoners = "%d |4Prisoner:Prisoners;"
+	L.infobox_title_prisoners = "%d |4Заключенный:Заключенные;"
 
 	L.custom_on_stop_timers = "Всегда показывать полосы для способностей"
 	L.custom_on_stop_timers_desc = "Демоническая инквизиция имеет некоторые способности, которые задерживаются прерываниями/другими заклинаниями. Когда эта опция включена, полосы для этих способностей останутся на вашем экране."
@@ -18,18 +18,18 @@ end
 
 L = BigWigs:NewBossLocale("Mistress Sassz'ine", "ruRU")
 if L then
-	--L.inks_fed_count = "Ink (%d/%d)"
-	--L.inks_fed = "Inks fed: %s" -- %s = List of players
+	L.inks_fed_count = "Чернила (%d/%d)"
+	L.inks_fed = "Чернил скормлено: %s" -- %s = List of players
 end
 
 L = BigWigs:NewBossLocale("The Desolate Host", "ruRU")
 if L then
 	L.infobox_players = "Игроки"
 	L.armor_remaining = "%s осталось (%d)" -- Bonecage Armor Remaining (#)
-	--L.custom_on_mythic_armor = "Ignore Bonecage Armor on Reanimated Templars in Mythic Difficulty"
-	--L.custom_on_mythic_armor_desc = "Leave this option enabled if you are offtanking Reanimated Templars to ignore warnings and counting the Bonecage Armor on the Ranimated Templars"
-	--L.custom_on_armor_plates = "Bonecage Armor icon on Enemy Nameplate"
-	--L.custom_on_armor_plates_desc = "Show an icon on the nameplate of Reanimated Templars who have Bonecage Armor.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_mythic_armor = "Игнорировать Костяную Броню на Оживленных храмовниках на Эпохальной сложности"
+	L.custom_on_mythic_armor_desc = "Оставьте эту опцию включенной, если вы оффтанчите Оживленных храмовников, чтобы игнорировать предупреждения о Костяной броне на Оживленных храмовниках"
+	L.custom_on_armor_plates = "Иконка Костяной брони над индикатором здоровья"
+	L.custom_on_armor_plates_desc = "Отобразить иконку над индикатором здоровья Оживленного храмовника с Костяной броней.\nТребуется использования Индикатора Здоровья. На данный момент поддерживается только аддоном KuiNameplates"
 	L.tormentingCriesSay = "Стон" -- Tormenting Cries (short say)
 end
 
@@ -41,11 +41,11 @@ if L then
 	L.light = "Свет"
 	L.felHammer = "Молот Скверны" -- Better name for "Hammer of Obliteration"
 	L.lightHammer = "Молот Света" -- Better name for "Hammer of Creation"
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
-	--L.stacks = "Stacks"
+	L.absorb = "Поглощение"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
+	L.cast = "Заклинание"
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
+	L.stacks = "Стаки"
 end
 
 L = BigWigs:NewBossLocale("Fallen Avatar", "ruRU")
@@ -55,42 +55,42 @@ if L then
 	L.custom_on_stop_timers = "Всегда показывать полосы для способностей"
 	L.custom_on_stop_timers_desc = "Аватара Падшего использует свои способности случайным образом. Когда эта опция включена, полосы для этих способностей останутся на вашем экране."
 
-	--L.energy_leak = "Energy Leak"
-	--L.energy_leak_desc = "Display a warning when energy has leaked onto the boss in stage 1."
-	--L.energy_leak_msg = "Energy Leak! (%d)"
+	L.energy_leak = "Утечка энергии"
+	L.energy_leak_desc = "Отобразить предупреждение, когда энергия попала в босса на 1-й фазе"
+	L.energy_leak_msg = "Утечка Энергии! (%d)"
 
-	--L.warmup_trigger = "The husk before you" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
+	L.warmup_trigger = "Аватара перед тобой!" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
 
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
+	L.absorb = "Поглощение"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
+	L.cast = "Заклинание"
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)" -- s = seconds
 end
 
 L = BigWigs:NewBossLocale("Kil'jaeden", "ruRU")
 if L then
 	L.singularityImpact = "Взрыв сингулярности"
 	L.obeliskExplosion = "Взрыв обелисков"
-	--L.obeliskExplosion_desc = "Timer for the Obelisk Explosion"
+	L.obeliskExplosion_desc = "Таймер Взрыва Обелисков"
 
 	L.darkness = "Тьма" -- Shorter name for Darkness of a Thousand Souls (238999)
 	L.reflectionErupting = "Отражение: взрывное" -- Shorter name for Shadow Reflection: Erupting (236710)
 	L.reflectionWailing = "Отражение: жалобное" -- Shorter name for Shadow Reflection: Wailing (236378)
 	L.reflectionHopeless = "Отражение: обречённое" -- Shorter name for Shadow Reflection: Hopeless (237590)
 
-	--L.rupturingKnock = "Rupturing Singularity Knockback"
-	--L.rupturingKnock_desc = "Show a timer for the knockback"
+	L.rupturingKnock = "Разрывающая Сингулярность Откидывание"
+	L.rupturingKnock_desc = "Отображать таймер для откидывания"
 
-	--L.meteorImpact_desc = "Show a timer for the Meteors landing"
+	L.meteorImpact_desc = "Отображать таймер падения Метеора"
 
-	--L.shadowsoul = "Shadowsoul Health Tracker"
-	--L.shadowsoul_desc = "Show the info box displaying the current health of the 5 Shadowsoul adds."
+	L.shadowsoul = "Отслеживание здоровья Темных душ"
+	L.shadowsoul_desc = "Отображать инфоблок с текущим здовьем пяти Темных душ."
 
-	--L.custom_on_track_illidan = "Automatically Track Humanoids"
-	--L.custom_on_track_illidan_desc = "If you are a hunter or a feral druid, this option will automatically enable tracking of humanoids so you can track Illidan."
+	L.custom_on_track_illidan = "Автоматически отслеживать гуманоидов"
+	L.custom_on_track_illidan_desc = "Если вы охотник или ферал други, эта опция автоматически включит отслеживание гуманоидов для поиска Иллидана."
 
-	--L.custom_on_zoom_in = "Automatically Zoom Minimap"
-	--L.custom_on_zoom_in_desc = "This feature will set the minimap zoom to level 4 to make it easier to track Illidan, and then restore it to your previous level once the stage has ended."
+	L.custom_on_zoom_in = "Автоматический масштаб миникарты"
+	L.custom_on_zoom_in_desc = "Эта опция установит масштаб миникарты на уровень 4 для более простого отслеживания Иллидана и вернёт на прежнее значение после окончания фазы."
 end
 
 L = BigWigs:NewBossLocale("Tomb of Sargeras Trash", "ruRU")
