@@ -59,7 +59,7 @@ if L then
 	L.energy_leak_desc = "Отобразить предупреждение, когда энергия попала в босса на 1-й фазе"
 	L.energy_leak_msg = "Утечка Энергии! (%d)"
 
-	L.warmup_trigger = "Аватара перед тобой!" -- The husk before you was once a vessel for the might of Sargeras. But this temple itself is our prize. The means by which we will reduce your world to cinders!
+	L.warmup_trigger = "Когда-то эта оболочка" -- Когда-то эта оболочка была наполнена мощью самого Саргераса. Но нашей главной целью всегда был храм – с его помощью мы испепелим ваш мир!
 
 	L.absorb = "Поглощение"
 	L.absorb_text = "%s (|cff%s%.0f%%|r)"
