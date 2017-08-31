@@ -21,6 +21,7 @@ local burdenCounter = 1
 local crashingWaveStage3Mythic = {32.5, 39, 33, 45, 33}
 local hydraShotCounter = 1
 local bufferfishCounter = 1
+local devouringMawActive = false
 local abs = math.abs
 
 --------------------------------------------------------------------------------
@@ -81,11 +82,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ConsumingHungerApplied", 230384, 234661) -- Stage 1, Stage 3
 
 	-- Stage Two: Terrors of the Deep
-	self:Log("SPELL_CAST_SUCCESS", "DevouringMaw", 232745)
+	self:Log("SPELL_CAST_SUCCESS", "BeckonSarukel", 232746) -- Devouring Maw
 	self:Log("SPELL_CAST_START", "BefoulingInk", 232756) -- Summon Ossunet = Befouling Ink incoming
 	self:Log("SPELL_CAST_START", "CrashingWave", 232827)
-	self:Log("SPELL_AURA_APPLIED", "MawApplied", 232745) -- Buffed on Sarukel
-	self:Log("SPELL_AURA_REMOVED", "MawRemoved", 232745)
+	self:Log("SPELL_AURA_APPLIED", "DevouringMawApplied", 234621)
+	self:Log("SPELL_AURA_REMOVED", "DevouringMawRemoved", 234621)
 	self:Log("SPELL_AURA_APPLIED", "InkApplied", 232913)
 	self:Log("SPELL_AURA_REMOVED", "InkRemoved", 232913)
 
@@ -102,6 +103,7 @@ function mod:OnEngage()
 	burdenCounter = 1
 	hydraShotCounter = 1
 	bufferfishCounter = 1
+	devouringMawActive = false
 
 	self:Bar(230358, 10.5) -- Thundering Shock
 	-- Tanks: Burden of Pain
@@ -281,9 +283,10 @@ do
 	end
 end
 
-function mod:DevouringMaw()
+function mod:BeckonSarukel() -- Devouring Maw
 	self:Message(234621, "Important", "Warning")
 	self:Bar(234621, 41.5)
+	self:PrepareForMaw()
 end
 
 function mod:BefoulingInk()
@@ -317,16 +320,20 @@ function mod:DeliciousBufferfishRemoved(args)
 end
 
 do
-	local debuffs, inkName = {}, mod:SpellName(232913)
+	local debuffs = {}
 	local fedTable, fedCount, fedsNeeded = {}, 0, 3
+	local applied = 0
 
-	function mod:MawApplied()
+	function mod:PrepareForMaw()
 		wipe(debuffs)
 		wipe(fedTable)
 		fedCount = 0
+		applied = 0
+		devouringMawActive = true
 		fedsNeeded = self:Mythic() and 5 or 3
 		self:OpenInfo(234621, L.inks_fed_count:format(fedCount, fedsNeeded))
 
+		local inkName = self:SpellName(232913)
 		for unit in self:IterateGroup() do
 			local _, _, _, _, _, _, expires = UnitDebuff(unit, inkName)
 			debuffs[self:UnitName(unit)] = expires
@@ -334,41 +341,57 @@ do
 	end
 
 	function mod:InkApplied(args)
-		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, inkName)
-		debuffs[self:UnitName(args.destName)] = expires
+		if devouringMawActive then
+			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+			debuffs[args.destName] = expires
+		end
 	end
 
 	function mod:InkRemoved(args)
-		local name = args.destName
-		local expires = debuffs[name] -- time when the debuff should expire
-		if expires then
-			local abs = abs(GetTime()-expires) -- difference between now and when it should've expired
-			if abs > 0.1 then -- removed early, probably fed the fish
-				fedTable[name] = (fedTable[name] or 0) + 1
-				fedCount = fedCount + 1
-				self:SetInfoTitle(234621, L.inks_fed_count:format(fedCount, fedsNeeded))
-				self:SetInfoByTable(234621, fedTable)
+		if devouringMawActive then
+			local name = args.destName
+			local expires = debuffs[name] -- time when the debuff should expire
+			if expires then
+				local abs = abs(GetTime()-expires) -- difference between now and when it should've expired
+				if abs > 0.1 then -- removed early, probably fed the fish
+					fedTable[name] = (fedTable[name] or 0) + 1
+					fedCount = fedCount + 1
+					self:SetInfoTitle(234621, L.inks_fed_count:format(fedCount, fedsNeeded))
+					self:SetInfoByTable(234621, fedTable)
+				end
+				debuffs[name] = nil
 			end
-			debuffs[name] = nil
 		end
 	end
 
-	function mod:MawRemoved(args)
-		local list = ""
-		local total = 0
-		for name, n in pairs(fedTable) do
-			if total >= fedsNeeded then
-				list = list .. "..., " -- ", " will be cut
-				break
-			end
-			if n > 1 then
-				list = list .. CL.count:format(self:ColorName(name), n) .. ", "
-			else
-				list = list .. self:ColorName(name) .. ", "
-			end
-			total = total + n
+	function mod:DevouringMawApplied(args)
+		if devouringMawActive and args.destGUID:find("Player", nil, true) then
+			applied = applied + 1
 		end
-		self:Message(234621, "Positive", "Info", CL.over:format(args.spellName) .. " - " .. L.inks_fed:format(list:sub(0, list:len()-2)))
-		self:ScheduleTimer("CloseInfo", 5, 234621) -- delay a bit to make sure the people get enough credit
+	end
+
+	function mod:DevouringMawRemoved(args)
+		if devouringMawActive and args.destGUID:find("Player", nil, true) then
+			applied = applied - 1
+			if applied == 0 then
+				devouringMawActive = false
+				local list = ""
+				local total = 0
+				for name, n in pairs(fedTable) do
+					if total >= fedsNeeded then
+						list = list .. "..., " -- ", " will be cut
+						break
+					end
+					if n > 1 then
+						list = list .. CL.count:format(self:ColorName(name), n) .. ", "
+					else
+						list = list .. self:ColorName(name) .. ", "
+					end
+					total = total + n
+				end
+				self:Message(234621, "Positive", "Info", CL.over:format(args.spellName) .. " - " .. L.inks_fed:format(list:sub(0, list:len()-2)))
+				self:ScheduleTimer("CloseInfo", 5, 234621) -- delay a bit to make sure the people get enough credit
+			end
+		end
 	end
 end
