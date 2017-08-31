@@ -32,7 +32,6 @@ L.BAR_desc = "Le Barre vengono visualizzate al momento giusto in alcuni combatti
 L.berserk = "Infuriato"
 L.berserk_desc = "Visualizza un timer e un avviso quando il boss si infurierà."
 L.best = "Migliore:"
-L.blizzRestrictionsConfig = "A causa di restrizioni Blizzard, la configurazione deve essere aperta fuori combattimento, prima che vi si possa accedere durante il combattimento."
 L.chatMessages = "Messaggi Riquadro Chat"
 L.chatMessagesDesc = "Invia tutti i messaggi di BigWigs alla chat oltre che nei settaggi di visualizzazione."
 L.colors = "Colori"

@@ -33,6 +33,7 @@ local darknessCount = 1
 local currentZoom = 0
 local focusedTarget = nil
 local resetMinimap = nil
+local timerMinimap = nil
 local mobCollector = {}
 local timersLFR = {
 	[240910] = { -- Armageddon
@@ -41,7 +42,7 @@ local timersLFR = {
 	},
 	[238430] = { -- Bursting Dreadflame
 		{7.7, 17, 13.4, 17}, -- Stage 1 (Intermission)
-		{58.2, 53.3, 61.1}, -- Stage 2
+		{58.2, 53.3, 61.1, 56.7}, -- Stage 2
 		{42, 25, 70}, -- Stage 3, 25/70 Repeating
 	},
 }
@@ -153,7 +154,7 @@ end
 --
 
 local eruptingMarker = mod:AddMarkerOption(false, "player", 3, 236710, 3, 4, 5) -- Skip marks 1 + 2 for visibility
-local decieverAddMarker = mod:AddMarkerOption(false, "npc", 1, -15397, 1, 2, 3, 4, 5) -- Shadowsoul
+local shadowsoulMarker = mod:AddMarkerOption(false, "npc", 1, -15397, 1, 2, 3, 4, 5) -- Shadowsoul
 function mod:GetOptions()
 	return {
 		"stages",
@@ -171,7 +172,7 @@ function mod:GetOptions()
 		241564, -- Sorrowful Wail
 		241721, -- Illidan's Sightless Gaze
 		{"shadowsoul", "INFOBOX"}, -- Shadowsoul
-		decieverAddMarker,
+		shadowsoulMarker,
 		"custom_on_track_illidan",
 		"custom_on_zoom_in",
 		238999, -- Darkness of a Thousand Souls
@@ -255,6 +256,7 @@ function mod:OnEngage()
 	darknessCount = 1
 	currentZoom = 0
 	focusedTarget = nil
+	timerMinimap = nil
 	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or self:Normal() and timersNormal or self:LFR() and timersLFR
 	wipe(mobCollector)
 
@@ -547,12 +549,14 @@ do
 	local addDmg = {} -- Damage done per add
 	local addMarks = {} -- Current marks on each add
 
-	function mod:DecieverAddTargets(event, unit)
+	function mod:ShadowsoulScanner(event, unit)
 		local guid = UnitGUID(unit)
 		if self:MobId(guid) == 121193 and not mobCollector[guid] then
 			for i = 1, 5 do
 				if not decieversAddMarks[i] then
-					SetRaidTarget(unit, i)
+					if self:GetOption(shadowsoulMarker) then
+						SetRaidTarget(unit, i)
+					end
 					decieversAddMarks[i] = guid
 					mobCollector[guid] = true
 					if i == 5 then
@@ -633,6 +637,16 @@ do
 		end
 	end
 
+	local function loopTracking(self, n)
+		local _, _, active = GetTrackingInfo(n)
+		if not active then
+			SetTracking(n, true)
+		else
+			self:CancelTimer(timerMinimap)
+			timerMinimap = nil
+		end
+	end
+
 	function mod:DeceiversVeilCast() -- Intermission 2
 		inIntermission = true
 		self:Message("stages", "Positive", "Long", CL.intermission, false)
@@ -651,7 +665,7 @@ do
 		end
 
 		local shadowsoulOption = self:CheckOption("shadowsoul", "INFOBOX")
-		if self:GetOption(decieverAddMarker) or shadowsoulOption then
+		if self:GetOption(shadowsoulMarker) or shadowsoulOption then
 			wipe(decieversAddMarks)
 
 			if shadowsoulOption then
@@ -670,7 +684,7 @@ do
 				timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 			end
 
-			self:RegisterTargetEvents("DecieverAddTargets")
+			self:RegisterTargetEvents("ShadowsoulScanner")
 		end
 
 		if self:GetOption("custom_on_track_illidan") then
@@ -678,7 +692,7 @@ do
 			for i = 1, GetNumTrackingTypes() do
 				local name = GetTrackingInfo(i)
 				if name == trackHumanoids then
-					SetTracking(i, true)
+					timerMinimap = self:ScheduleRepeatingTimer(loopTracking, 0.1, self, i)
 					break
 				end
 			end
@@ -691,6 +705,10 @@ do
 	end
 
 	function resetMinimap(self)
+		if timerMinimap then
+			self:CancelTimer(timerMinimap)
+			timerMinimap = nil
+		end
 		if self:GetOption("custom_on_track_illidan") then
 			local trackHumanoids = self:SpellName(19883)
 			for i = 1, GetNumTrackingTypes() do
@@ -717,7 +735,7 @@ do
 		resetMinimap(self)
 
 		local shadowsoulOption = self:CheckOption("shadowsoul", "INFOBOX")
-		if self:GetOption(decieverAddMarker) or shadowsoulOption then
+		if self:GetOption(shadowsoulMarker) or shadowsoulOption then
 			self:UnregisterTargetEvents()
 
 			if shadowsoulOption then

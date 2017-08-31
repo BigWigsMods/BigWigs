@@ -32,7 +32,6 @@ L.BAR_desc = "Las barras serán mostradas en el momento apropiado. Si esta habil
 L.berserk = "Rabia"
 L.berserk_desc = "Muestra un contador que avisa cuando el jefe entrará en rabia"
 L.best = "El mejor:"
-L.blizzRestrictionsConfig = "Debido a las restricciones de Blizzard la configuración debe abrirse primero fuera de combate, antes se podia acceder en combate."
 L.chatMessages = "Chat frame messages"
 L.chatMessagesDesc = "Todos los mensajes de salida de BigWigs a la ventana de chat por defecto en adición a los ajustes mostrados"
 L.colors = "Colores"

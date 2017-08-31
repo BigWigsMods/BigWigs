@@ -32,7 +32,6 @@ L.BAR_desc = "Leisten werden für Bossfähigkeiten angezeigt, sofern sie sinnvol
 L.berserk = "Berserker"
 L.berserk_desc = "Warnt, wenn der Boss zum Berserker wird."
 L.best = "Beste:"
-L.blizzRestrictionsConfig = "Aufgrund der Beschränkungen von Blizzard muss die Konfiguration zuerst ausserhalb des Kampfes geöffnet werden bevor dies im Kampf möglich ist."
 L.chatMessages = "Chatfenster-Nachrichten"
 L.chatMessagesDesc = "Gibt alle BigWigs-Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
 L.colors = "Farben"

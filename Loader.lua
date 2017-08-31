@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 70
+local BIGWIGS_VERSION = 71
 local BIGWIGS_RELEASE_STRING = ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -54,7 +54,7 @@ local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
-local GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID, IsFalling = GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID, IsFalling
+local GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID = GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetCurrentMapAreaID = GetCurrentMapAreaID
@@ -243,26 +243,16 @@ do
 	public.fakeWorldZones = fakeWorldZones
 end
 
--- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, CreateFrame, CUSTOM_CLASS_COLORS, error, GetAddOnEnableState, GetAddOnInfo
--- GLOBALS: GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetSpellInfo, GetTime, GRAY_FONT_COLOR, InterfaceOptionsFrameOkay
+-- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, ChatFrame_ImportAllListsToHash, ChatTypeInfo, CreateFrame, CUSTOM_CLASS_COLORS, DEFAULT_CHAT_FRAME, error
+-- GLOBALS: GetAddOnEnableState, GetAddOnInfo, GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetTime, GRAY_FONT_COLOR, hash_SlashCmdList, InCombatLockdown
 -- GLOBALS: IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySound, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, StopSound
--- GLOBALS: tostring, tremove, type, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
--- GLOBALS: SLASH_BigWigsVersion1, UnitBuff, wipe
+-- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
+-- GLOBALS: SLASH_BigWigsVersion1, wipe
 
 -----------------------------------------------------------------------
 -- Utility
 --
-
-local InCombat
-do
-	local InCombatLockdown, UnitAffectingCombat = InCombatLockdown, UnitAffectingCombat
-	function InCombat()
-		if InCombatLockdown() or UnitAffectingCombat("player") then
-			return true
-		end
-	end
-end
 
 local function IsAddOnEnabled(addon)
 	local character = UnitName("player")
@@ -317,10 +307,6 @@ local function loadAndEnableCore()
 end
 
 local function loadCoreAndOpenOptions()
-	if not BigWigsOptions and not IsAltKeyDown() and PlaySoundKitID and (InCombat() or IsFalling()) then -- Allow combat loading using ALT key.
-		sysprint(L.blizzRestrictionsConfig)
-		return
-	end
 	loadAndEnableCore()
 	load(BigWigsOptions, "BigWigs_Options")
 	if BigWigsOptions then
@@ -788,13 +774,11 @@ do
 
 	local L = GetLocale()
 	if L == "ptBR" then
-		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Brazilian Portugese (ptBR). Can you help? Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Brazilian Portugese (ptBR). Can you help? Ask us on Discord for more info."
 	elseif L == "itIT" then
-		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Italian (itIT). Can you help? Ask us on Discord for more info."
-	elseif L == "ruRU" then
-		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Russian (ruRU). Can you help? Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Italian (itIT). Can you help? Ask us on Discord for more info."
 	elseif L == "esES" or L == "esMX" then
-		delayedMessages[#delayedMessages+1] = "Some BigWigs features will not work due to missing translations for Spanish (esES). Can you help? Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Spanish (esES). Can you help? Ask us on Discord for more info."
 	end
 
 	CTimerAfter(11, function()
@@ -871,8 +855,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "16632" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.2.18" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "16674" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.3.0" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -927,6 +911,10 @@ bwFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 do
 	-- Role Updating
 	local prev = 0
+	function mod:PLAYER_REGEN_ENABLED()
+		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
+	end
 	function mod:ACTIVE_TALENT_GROUP_CHANGED()
 		if IsInGroup() then
 			if IsPartyLFG() then return end
@@ -936,7 +924,7 @@ do
 
 			local role = GetSpecializationRole(tree)
 			if role and UnitGroupRolesAssigned("player") ~= role then
-				if InCombat() then
+				if InCombatLockdown() or UnitAffectingCombat("player") then
 					bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
 					return
 				end
@@ -993,7 +981,7 @@ do
 				-- Using false as third arg to avoid the "only one of each sound at a time" throttle.
 				-- Only play via the "Master" channel if we have sounds turned on
 				if (BigWigs and BigWigs:GetPlugin("Sounds") and BigWigs:GetPlugin("Sounds").db.profile.sound) or self.isSoundOn ~= false then
-					local _, id = PlaySound(PlaySoundKitID and "ReadyCheck" or 8960, "Master", false) -- SOUNDKIT.READY_CHECK
+					local _, id = PlaySound(8960, "Master", false) -- SOUNDKIT.READY_CHECK
 					if id then
 						StopSound(id-1) -- Should work most of the time to stop the blizz sound
 					end
@@ -1144,35 +1132,6 @@ end
 do
 	local loadedList = {}
 	local warnedThisZone = {}
-	local loadByUnitTarget, loadByZone = nil, nil
-	function mod:PLAYER_REGEN_ENABLED()
-		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
-		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
-
-		if loadByUnitTarget then
-			local target = loadByUnitTarget
-			loadByUnitTarget = nil
-			self:UNIT_TARGET(target)
-		elseif loadByZone then
-			loadByZone = nil
-			self:ZONE_CHANGED_NEW_AREA()
-		end
-	end
-
-	local function HasStoppedFalling()
-		if IsFalling() then
-			CTimerAfter(0.1, HasStoppedFalling)
-		else
-			if loadByUnitTarget then
-				local target = loadByUnitTarget
-				loadByUnitTarget = nil
-				mod:UNIT_TARGET(target)
-			elseif loadByZone then
-				loadByZone = nil
-				mod:ZONE_CHANGED_NEW_AREA()
-			end
-		end
-	end
 
 	local UnitGUID = UnitGUID
 	function mod:UNIT_TARGET(unit)
@@ -1182,24 +1141,12 @@ do
 			local mobId = tonumber(id)
 			local id = mobId and worldBosses[mobId]
 			if id then
-				local combat, falling = InCombat(), IsFalling()
-				if PlaySoundKitID and (combat or falling) then
-					if not loadedList[id] then
-						loadByUnitTarget = unit
-						if combat then
-							bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-						elseif falling then
-							CTimerAfter(0.1, HasStoppedFalling)
-						end
-					end
-				else
-					loadedList[id] = true
-					if loadAndEnableCore() then
-						if BigWigs:IsEnabled() then
-							loadZone(id)
-						else
-							BigWigs:Enable()
-						end
+				loadedList[id] = true
+				if loadAndEnableCore() then
+					if BigWigs:IsEnabled() then
+						loadZone(id)
+					else
+						BigWigs:Enable()
 					end
 				end
 			end
@@ -1227,24 +1174,12 @@ do
 				self:UNIT_TARGET("player")
 			elseif inside then
 				bwFrame:UnregisterEvent("UNIT_TARGET")
-				local combat, falling = InCombat(), IsFalling()
-				if not IsEncounterInProgress() and PlaySoundKitID and IsLoggedIn() and (combat or falling) then
-					if not loadedList[id] then
-						loadByZone = true
-						if combat then
-							bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-						elseif falling then
-							CTimerAfter(0.1, HasStoppedFalling)
-						end
-					end
-				else
-					loadedList[id] = true
-					if loadAndEnableCore() then
-						if BigWigs:IsEnabled() and loadOnZone[id] then
-							loadZone(id)
-						else
-							BigWigs:Enable()
-						end
+				loadedList[id] = true
+				if loadAndEnableCore() then
+					if BigWigs:IsEnabled() and loadOnZone[id] then
+						loadZone(id)
+					else
+						BigWigs:Enable()
 					end
 				end
 			end

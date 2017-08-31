@@ -35,8 +35,6 @@ L.dbmUsers = "Usuários do DBM:"
 L.noBossMod = "Sem mod de chefes:"
 L.offline = "Desconectado"
 
-L.blizzRestrictionsConfig = "Devido as restrições da Blizzard, as configurações precisam ser abertas fora de combate antes de poder ser acessadas em combate."
-
 L.missingAddOn = "Por favor, note que esta zona requer o |cFF436EEE%s|r plugin para os contadores serem exibidos."
 L.disabledAddOn = "Você desabilitou o addOn |cFF436EEE%s|r, contadores não serão exibidos."
 

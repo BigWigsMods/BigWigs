@@ -32,7 +32,6 @@ L.BAR_desc = "当遇到某些技能时计时条将会适当显示。如果这个
 L.berserk = "狂暴"
 L.berserk_desc = "当首领进入狂暴状态时发出警报。"
 L.best = "最快："
-L.blizzRestrictionsConfig = "由于暴雪的限制必须脱离战斗后才可进行配置，然后才可以在战斗中使用。"
 L.chatMessages = "聊天框体信息"
 L.chatMessagesDesc = "除了显示设置，输出所有 BigWigs 信息到默认聊天框体。"
 L.colors = "颜色"
