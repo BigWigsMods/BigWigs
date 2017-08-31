@@ -42,7 +42,7 @@ local timersLFR = {
 	},
 	[238430] = { -- Bursting Dreadflame
 		{7.7, 17, 13.4, 17}, -- Stage 1 (Intermission)
-		{58.2, 53.3, 61.1}, -- Stage 2
+		{58.2, 53.3, 61.1, 56.7}, -- Stage 2
 		{42, 25, 70}, -- Stage 3, 25/70 Repeating
 	},
 }
