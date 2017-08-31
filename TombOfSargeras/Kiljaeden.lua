@@ -33,6 +33,7 @@ local darknessCount = 1
 local currentZoom = 0
 local focusedTarget = nil
 local resetMinimap = nil
+local timerMinimap = nil
 local mobCollector = {}
 local timersLFR = {
 	[240910] = { -- Armageddon
@@ -255,6 +256,7 @@ function mod:OnEngage()
 	darknessCount = 1
 	currentZoom = 0
 	focusedTarget = nil
+	timerMinimap = nil
 	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or self:Normal() and timersNormal or self:LFR() and timersLFR
 	wipe(mobCollector)
 
@@ -635,6 +637,16 @@ do
 		end
 	end
 
+	local function loopTracking(self, n)
+		local _, _, active = GetTrackingInfo(n)
+		if not active then
+			SetTracking(n, true)
+		else
+			self:CancelTimer(timerMinimap)
+			timerMinimap = nil
+		end
+	end
+
 	function mod:DeceiversVeilCast() -- Intermission 2
 		inIntermission = true
 		self:Message("stages", "Positive", "Long", CL.intermission, false)
@@ -680,7 +692,7 @@ do
 			for i = 1, GetNumTrackingTypes() do
 				local name = GetTrackingInfo(i)
 				if name == trackHumanoids then
-					SetTracking(i, true)
+					timerMinimap = self:ScheduleRepeatingTimer(loopTracking, 0.1, self, i)
 					break
 				end
 			end
@@ -693,6 +705,10 @@ do
 	end
 
 	function resetMinimap(self)
+		if timerMinimap then
+			self:CancelTimer(timerMinimap)
+			timerMinimap = nil
+		end
 		if self:GetOption("custom_on_track_illidan") then
 			local trackHumanoids = self:SpellName(19883)
 			for i = 1, GetNumTrackingTypes() do
