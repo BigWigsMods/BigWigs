@@ -777,8 +777,6 @@ do
 		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Brazilian Portugese (ptBR). Can you help? Ask us on Discord for more info."
 	elseif L == "itIT" then
 		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Italian (itIT). Can you help? Ask us on Discord for more info."
-	elseif L == "ruRU" then
-		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Russian (ruRU). Can you help? Ask us on Discord for more info."
 	elseif L == "esES" or L == "esMX" then
 		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Spanish (esES). Can you help? Ask us on Discord for more info."
 	end
