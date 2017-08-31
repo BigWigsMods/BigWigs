@@ -911,6 +911,10 @@ bwFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
 do
 	-- Role Updating
 	local prev = 0
+	function mod:PLAYER_REGEN_ENABLED()
+		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
+		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
+	end
 	function mod:ACTIVE_TALENT_GROUP_CHANGED()
 		if IsInGroup() then
 			if IsPartyLFG() then return end
