@@ -157,6 +157,7 @@ do
 		[1530] = l, -- The Nighthold
 		[1676] = l, -- Tomb of Sargeras
 		[1712] = l, -- Antorus, the Burning Throne
+		[1779] = l, -- Invasion Points
 
 		--[[ LittleWigs: Classic ]]--
 		[36] = lw_c, -- Deadmines
