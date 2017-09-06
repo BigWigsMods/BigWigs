@@ -1,0 +1,33 @@
+## Interface: 70300
+
+## Title: BigWigs [|cffeda55fArgus|r]
+## Title-deDE: BigWigs [|cffeda55fArgus|r]
+## Title-esES: BigWigs [|cffeda55fArgus|r]
+## Title-esMX: BigWigs [|cffeda55fArgus|r]
+## Title-frFR: BigWigs [|cffeda55fArgus|r]
+## Title-ruRU: BigWigs [|cffeda55fArgus|r]
+## Title-zhCN: BigWigs [|cffeda55fArgus|r]
+## Title-zhTW: BigWigs [|cffeda55fArgus|r]
+## Title-itIT: BigWigs [|cffeda55fArgus|r]
+## Title-ptBR: BigWigs [|cffeda55fArgus|r]
+## Title-koKR: BigWigs [|cffeda55fArgus|r]
+## Notes: BigWigs Argus Modules
+## Notes-deDE: BigWigs Argus Modules
+## Notes-esES: BigWigs Argus Modules
+## Notes-esMX: BigWigs Argus Modules
+## Notes-frFR: BigWigs Argus Modules
+## Notes-ruRU: BigWigs Argus Modules
+## Notes-zhCN: BigWigs Argus Modules
+## Notes-zhTW: BigWigs Argus Modules
+## Notes-itIT: BigWigs Argus Modules
+## Notes-ptBR: BigWigs Argus Modules
+## Notes-koKR: BigWigs Argus Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-ExtraMenu: -1184
+## X-BigWigs-LoadOn-WorldBoss: -1197, 124625
+
+modules.xml
