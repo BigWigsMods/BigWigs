@@ -82,12 +82,13 @@ local menus = {} -- contains the menus for BigWigs, once the core is loaded they
 local enableZones = {} -- contains the zones in which BigWigs will enable
 local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
-local fakeWorldZones = { -- Fake world zones used for world boss translations and loading
+local fakeZones = { -- Fake zones used as GUI menus
 	[-466]=true, -- Outland
 	[-862]=true, -- Pandaria
 	[-962]=true, -- Draenor
 	[-1007]=true, -- Broken Isles
-	[-1021]=true, -- Broken Shore
+	[1716]=true, -- Broken Shore Mage Tower
+	[1779]=true, -- Invasion Points
 }
 
 do
@@ -113,7 +114,7 @@ do
 		[509] = c, -- Ruins of Ahn'Qiraj
 		[531] = c, -- Ahn'Qiraj Temple
 		--[[ BigWigs: The Burning Crusade ]]--
-		[-466] = bc, -- Outland
+		[-466] = bc, -- Outland (Fake Menu)
 		[565] = bc, -- Gruul's Lair
 		[532] = bc, -- Karazhan
 		[548] = bc, -- Coilfang: Serpentshrine Cavern
@@ -139,25 +140,25 @@ do
 		[720] = cata, -- Firelands
 		[967] = cata, -- Dragon Soul
 		--[[ BigWigs: Mists of Pandaria ]]--
-		[-862] = mop, -- Pandaria
+		[-862] = mop, -- Pandaria (Fake Menu)
 		[1009] = mop, -- Heart of Fear
 		[996] = mop, -- Terrace of Endless Spring
 		[1008] = mop, -- Mogu'shan Vaults
 		[1098] = mop, -- Throne of Thunder
 		[1136] = mop, -- Siege of Orgrimmar
 		--[[ BigWigs: Warlords of Draenor ]]--
-		[-962] = wod, -- Draenor
+		[-962] = wod, -- Draenor (Fake Menu)
 		[1228] = wod, -- Highmaul
 		[1205] = wod, -- Blackrock Foundry
 		[1448] = wod, -- Hellfire Citadel
 		--[[ BigWigs: Legion ]]--
-		[-1007] = l, -- Broken Isles
+		[-1007] = l, -- Broken Isles (Fake Menu)
 		[1520] = l, -- The Emerald Nightmare
 		[1648] = l, -- Trial of Valor
 		[1530] = l, -- The Nighthold
 		[1676] = l, -- Tomb of Sargeras
 		[1712] = l, -- Antorus, the Burning Throne
-		[1779] = l, -- Invasion Points
+		[1779] = l, -- Invasion Points (Fake Menu)
 
 		--[[ LittleWigs: Classic ]]--
 		[36] = lw_c, -- Deadmines
@@ -219,7 +220,7 @@ do
 		[1175] = lw_wod, -- Bloodmaul Slag Mines
 		[1358] = lw_wod, -- Upper Blackrock Spire
 		--[[ LittleWigs: Legion ]]--
-		[-1021] = lw_l, -- Broken Shore (Used for Mage Tower Scenarios)
+		[1716] = lw_l, -- Broken Shore Mage Tower (Fake Menu)
 		[1544] = lw_l, -- Assault on Violet Hold
 		[1677] = lw_l, -- Cathedral of Eternal Night
 		[1571] = lw_l, -- Court of Stars
@@ -241,7 +242,6 @@ do
 		[-948] = -962, [-949] = -962, [-945] = -962, -- Draenor
 		[-1015] = -1007, [-1017] = -1007, [-1018] = -1007, [-1024] = -1007, [-1033] = -1007, -- Broken Isles
 	}
-	public.fakeWorldZones = fakeWorldZones
 end
 
 -- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, ChatFrame_ImportAllListsToHash, ChatTypeInfo, CreateFrame, CUSTOM_CLASS_COLORS, DEFAULT_CHAT_FRAME, error
@@ -457,7 +457,7 @@ do
 			local zone = tonumber(rawZone:trim())
 			if zone then
 				-- register the zone for enabling.
-				local instanceId = fakeWorldZones[zone] and zone or GetAreaMapInfo(zone)
+				local instanceId = fakeZones[zone] and zone or GetAreaMapInfo(zone)
 				if instanceId then -- Protect live client from beta client ids
 					enableZones[instanceId] = true
 
@@ -1204,7 +1204,7 @@ do
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and zoneAddon ~= "BigWigs_Legion" then
 			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
-			if inside and not fakeWorldZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
+			if inside and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
 				sysprint(msg)
