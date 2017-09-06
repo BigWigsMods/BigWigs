@@ -88,7 +88,6 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[-962]=true, -- Draenor
 	[-1007]=true, -- Broken Isles
 	[1716]=true, -- Broken Shore Mage Tower
-	[1779]=true, -- Invasion Points
 }
 
 do
@@ -158,7 +157,7 @@ do
 		[1530] = l, -- The Nighthold
 		[1676] = l, -- Tomb of Sargeras
 		[1712] = l, -- Antorus, the Burning Throne
-		[1779] = l, -- Invasion Points (Fake Menu)
+		[1779] = l, -- Invasion Points
 
 		--[[ LittleWigs: Classic ]]--
 		[36] = lw_c, -- Deadmines

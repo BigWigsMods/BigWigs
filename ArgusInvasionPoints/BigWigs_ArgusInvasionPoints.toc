@@ -27,7 +27,6 @@
 ## Dependencies: BigWigs
 
 ## X-Category: Raid
-## X-BigWigs-ExtraMenu: 1779
-## X-BigWigs-LoadOn-WorldBoss: -1197, 124625
+## X-BigWigs-LoadOn-InstanceId: 1779
 
 modules.xml

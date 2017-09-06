@@ -3,11 +3,9 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Mistress Alluradel", -1197, 1779)
+local mod = BigWigs:NewBoss("Mistress Alluradel", nil, 2011, 1779)
 if not mod then return end
 mod:RegisterEnableMob(124625)
-mod.otherMenu = 1779
-mod.worldBoss = 124625
 
 --------------------------------------------------------------------------------
 -- Initialization
