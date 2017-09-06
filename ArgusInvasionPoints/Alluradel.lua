@@ -13,9 +13,10 @@ mod:RegisterEnableMob(124625)
 
 function mod:GetOptions()
 	return {
-		247549, -- Beguiling Charm
+		{247549, "EMPHASIZE"}, -- Beguiling Charm
 		247604, -- Fel Lash
 		247517, -- Heart Breaker
+		{247544, "TANK"}, -- Sadist
 	}
 end
 
@@ -26,8 +27,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FelLash", 247604)
 	self:Log("SPELL_CAST_SUCCESS", "HeartBreaker", 247517)
 	self:Log("SPELL_AURA_APPLIED", "HeartBreakerApplied", 247517)
+	self:Log("SPELL_AURA_APPLIED", "Sadist", 247544)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Sadist", 247544)
 
-	self:Death("Win", 117239)
+	self:RegisterEvent("BOSS_KILL")
 end
 
 function mod:OnEngage()
@@ -58,3 +61,17 @@ function mod:HeartBreakerApplied(args)
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
 	end
 end
+
+function mod:Sadist(args)
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 2 and "Alert")
+	self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
+	self:TargetBar(args.spellId, 18, args.destName, CL.count:format(args.spellName, amount))
+end
+
+function mod:BOSS_KILL(_, id)
+	if id == 2083 then
+		self:Win()
+	end
+end
+
