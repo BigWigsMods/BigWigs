@@ -27,6 +27,7 @@ move-folders:
     BigWigs/TrialOfValor: BigWigs_TrialOfValor
     BigWigs/TombOfSargeras: BigWigs_TombOfSargeras
     BigWigs/Antorus: BigWigs_Antorus
+    BigWigs/ArgusInvasionPoints: BigWigs_ArgusInvasionPoints
 
 ignore:
   - .travis.yml

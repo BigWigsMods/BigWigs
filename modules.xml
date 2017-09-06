@@ -24,6 +24,9 @@
 <Include file="Antorus\modules.xml"/>
 <Include file="Antorus\locales.xml"/>
 
+<Include file="ArgusInvasionPoints\modules.xml"/>
+<!--<Include file="ArgusInvasionPoints\locales.xml"/>-->
+
 <Include file="BrokenIsles\modules.xml"/>
 <Include file="BrokenIsles\locales.xml"/>
 <!--@end-do-not-package@-->
