@@ -10,7 +10,7 @@
 ## Title-zhTW: BigWigs [|cffeda55fArgus Invasion Points|r]
 ## Title-itIT: BigWigs [|cffeda55fArgus Invasion Points|r]
 ## Title-ptBR: BigWigs [|cffeda55fArgus Invasion Points|r]
-## Title-koKR: BigWigs [|cffeda55fArgus Invasion Points|r]
+## Title-koKR: BigWigs [|cffeda55f아르거스 침공 거점|r]
 ## Notes: BigWigs Argus Modules
 ## Notes-deDE: BigWigs Argus Invasion Points Modules
 ## Notes-esES: BigWigs Argus Invasion Points Modules
@@ -21,7 +21,7 @@
 ## Notes-zhTW: BigWigs Argus Invasion Points Modules
 ## Notes-itIT: BigWigs Argus Invasion Points Modules
 ## Notes-ptBR: BigWigs Argus Invasion Points Modules
-## Notes-koKR: BigWigs Argus Invasion Points Modules
+## Notes-koKR: BigWigs 아르거스 침공 거점 모듈
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
