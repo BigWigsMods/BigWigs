@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- List which Titan abilities can be used next in the infobox?

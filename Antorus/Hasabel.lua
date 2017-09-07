@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO List:
 -- -- initial Bars for the Platform mini bosses when engaged

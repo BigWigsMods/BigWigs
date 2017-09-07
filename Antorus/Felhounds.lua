@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Raid Markers for Weigt of Darkness and/or Siphon Corruption?

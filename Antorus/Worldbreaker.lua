@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Apocalypse soon warning - 65% and 25% (warnings 67% & 27%)
