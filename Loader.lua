@@ -1164,6 +1164,7 @@ do
 			else
 				local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
 				id = instanceId
+				inside = true -- For Argus Invasion Points, 1779
 			end
 		else
 			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
