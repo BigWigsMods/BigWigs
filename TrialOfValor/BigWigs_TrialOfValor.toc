@@ -21,7 +21,7 @@
 ## Notes-zhTW: 勇氣試煉模組。
 ## Notes-itIT: Trial of Valor Modules
 ## Notes-ptBR: Módulo da Provação da Bravura do BigWigs
-## Notes-koKR: 용맹의 시험 모듈
+## Notes-koKR: BigWigs 용맹의 시험 모듈
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
