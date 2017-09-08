@@ -64,9 +64,9 @@ end
 
 function mod:Sadist(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 2 and "Alert")
-	self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
-	self:TargetBar(args.spellId, 18, args.destName, CL.count:format(args.spellName, amount))
+	if amount % 2 == 0 then
+		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 5 and "Alert")
+	end
 end
 
 function mod:BOSS_KILL(_, id)
