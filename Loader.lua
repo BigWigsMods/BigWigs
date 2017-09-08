@@ -1158,7 +1158,13 @@ do
 		local id
 		local inside = IsInInstance()
 		if not inside then
-			id = -(GetPlayerMapAreaID("player") or 0)
+			local mapId = GetPlayerMapAreaID("player")
+			if mapId then
+				id = -mapId
+			else
+				local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
+				id = instanceId
+			end
 		else
 			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
 			id = instanceId
