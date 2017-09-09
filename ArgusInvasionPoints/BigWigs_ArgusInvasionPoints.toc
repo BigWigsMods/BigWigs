@@ -7,7 +7,7 @@
 ## Title-frFR: BigWigs [|cffeda55fArgus Invasion Points|r]
 ## Title-ruRU: BigWigs [|cffeda55fArgus Invasion Points|r]
 ## Title-zhCN: BigWigs [|cffeda55f阿古斯入侵点|r]
-## Title-zhTW: BigWigs [|cffeda55fArgus Invasion Points|r]
+## Title-zhTW: BigWigs [|cffeda55f阿古斯入侵點|r]
 ## Title-itIT: BigWigs [|cffeda55fArgus Invasion Points|r]
 ## Title-ptBR: BigWigs [|cffeda55fArgus Invasion Points|r]
 ## Title-koKR: BigWigs [|cffeda55f아르거스 침공 거점|r]
@@ -18,7 +18,7 @@
 ## Notes-frFR: BigWigs Argus Invasion Points Modules
 ## Notes-ruRU: BigWigs Argus Invasion Points Modules
 ## Notes-zhCN: BigWigs 阿古斯入侵点模块
-## Notes-zhTW: BigWigs Argus Invasion Points Modules
+## Notes-zhTW: BigWigs 阿古斯入侵點模組
 ## Notes-itIT: BigWigs Argus Invasion Points Modules
 ## Notes-ptBR: BigWigs Argus Invasion Points Modules
 ## Notes-koKR: BigWigs 아르거스 침공 거점 모듈
