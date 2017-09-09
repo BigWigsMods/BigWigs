@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end -- XXX dont load on live
 --------------------------------------------------------------------------------
 -- TODO List:
 -- - Friendly Pod Warnings/Timers? Have to see how they work out in fight.

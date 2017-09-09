@@ -1,5 +1,3 @@
-if not IsTestBuild() then return end -- XXX dont load on live
-
 --------------------------------------------------------------------------------
 -- TODO List:
 -- List the important adds each wave of Warp In

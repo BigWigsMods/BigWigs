@@ -26,8 +26,8 @@ if L then
 	L.gotEssence = "Взято эссенций"
 
 	L.adds_desc = "Таймеры и предупреждения о появлении аддов."
-	--L.adds_yell1 = "Underlings! Get in here!"
-	--L.adds_yell2 = "Show these pretenders how to fight!"
+	L.adds_yell1 = "Прислужники! Живо ко мне!"
+	L.adds_yell2 = "Покажите этим ничтожествам, как сражаться!"
 end
 
 L = BigWigs:NewBossLocale("Krosus", "ruRU")
@@ -58,31 +58,31 @@ L = BigWigs:NewBossLocale("Grand Magistrix Elisande", "ruRU")
 if L then
 	L.elisande = "Элисанда"
 
-	--L.ring_yell = "Let the waves of time crash over you!"
-	--L.orb_yell = "You'll find time can be quite volatile."
+	L.ring_yell = "Волны времени сметут вас!"
+	L.orb_yell = "Время нестабильно – сейчас вы сами в этом убедитесь."
 
-	--L.slowTimeZone = "Slow Time Zone"
+	L.slowTimeZone = "Зона замедления времени"
 	L.fastTimeZone = "Зона ускорения времени"
 
-	--L.boss_active = "Elisande Active"
-	--L.boss_active_desc = "Time until Elisande is active after clearing the trash event."
-	--L.elisande_trigger = "I foresaw your coming, of course. The threads of fate that led you to this place. Your desperate attempt to stop the Legion."
+	L.boss_active = "Элисанда активна"
+	L.boss_active_desc = "Время до активации Элисанды после зачистки комнаты."
+	L.elisande_trigger = "Я предвидела ваш приход, нити судьбы, что привели вас сюда, и ваши жалкие попытки остановить Легион."
 end
 
 L = BigWigs:NewBossLocale("Gul'dan", "ruRU")
 if L then
-	--L.warmup_trigger = "Have you forgotten" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
+	L.warmup_trigger = "Вы уже забыли" -- Have you forgotten your humiliation on the Broken Shore? How your precious high king was bent and broken before me? Will you beg for your lives as he did, whimpering like some worthless dog?
 
-	--L.empowered = "(E) %s" -- (E) Eye of Gul'dan
+	L.empowered = "(E) %s" -- (E) Eye of Gul'dan
 	L.gains = "Гул'дан получает %s"
-	--L.p4_mythic_start_yell = "Time to return the demon hunter's soul to his body... and deny the Legion's master a host!"
+	L.p4_mythic_start_yell = "Вернем душу Иллидана в тело... Владыка Легиона не должен его заполучить."
 
-	--L.nightorb_desc = "Summons a Nightorb, killing it will spawn a Time Zone."
-	--L.timeStopZone = "Time Stop Zone"
+	L.nightorb_desc = "Призывает Ночную Сферу, её убийство образует Зону Остановки Времени."
+	L.timeStopZone = "Зона Остановки Времени"
 
-	--L.manifest_desc = "Summons a Soul Fragment of Azzinoth, killing it will spawn a Demonic Essence."
+	L.manifest_desc = "Призывает Фрагмент души Аззинота, после убийства образуется Демоническая сущность."
 
-	--L.winds_desc = "Gul'dan summons Violent Winds to push the players off the platform."
+	L.winds_desc = "Гул'дан призывает Жестокие Ветра, сталкивающие игроков с платформы."
 end
 
 L = BigWigs:NewBossLocale("Nighthold Trash", "ruRU")
@@ -96,7 +96,7 @@ if L then
 	L.sludgerax = "Слизерон"
 
 	--[[ Trilliax to Aluriel ]]--
-	--L.karzun = "Kar'zun"
+	L.karzun = "Кар'зун"
 	L.guardian = "Золоченый страж"
 	L.battle_magus = "Боевой маг из Сумеречной стражи"
 	L.chronowraith = "Призрак времени"

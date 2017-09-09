@@ -16,6 +16,8 @@ mod.respawnTime = 30
 local rageCounter = 0
 local roarCounter = 0
 local skipDrawIn = true
+local nextDrawIn = 0
+local drawInCheck = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -91,10 +93,12 @@ function mod:OnEngage()
 	roarCounter = 1
 	rageCounter = 1
 	skipDrawIn = true -- True until you get Drenching Waters on the floor
+	nextDrawIn = GetTime() + 58
 
 	self:CDBar(232192, 17.5) -- Commanding Roar
 	self:CDBar(231854, 20.7) -- Unchecked Rage
 	self:CDBar(232061, 58) -- Draw In
+	self:ScheduleTimer("drawInCheck", 58, self)
 	if self:Mythic() then
 		self:Bar(240319, 30) -- Hatching
 	end
@@ -112,11 +116,20 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:drawInCheck(self)
+	if skipDrawIn then
+		nextDrawIn = GetTime() + 58
+		self:CDBar(232061, 58) -- Draw In
+		self:ScheduleTimer("drawInCheck", 58, self)
+	end
+end
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 232192 then -- Commanding Roar
 		self:Message(spellId, "Important", "Alert", spellName)
 		roarCounter = roarCounter + 1
-		if roarCounter == 2 or skipDrawIn then
+		if (nextDrawIn > GetTime() + 32.8) or skipDrawIn then
 			self:Bar(spellId, 32.8)
 		end
 	end
@@ -149,20 +162,14 @@ end
 function mod:UncheckedRage(args)
 	self:Message(args.spellId, "Urgent", "Warning")
 	rageCounter = rageCounter + 1
-	if rageCounter <= 2 or skipDrawIn then
+	if (nextDrawIn > GetTime() + 20.5) or skipDrawIn then
 		self:Bar(args.spellId, 20.5)
 	end
 end
 
 function mod:DrawIn(args)
 	self:Message(args.spellId, "Important", "Alert", CL.casting:format(args.spellName))
-	if skipDrawIn then -- Reset counters so bars keep rolling for another round
-		roarCounter = 1
-		rageCounter = 1
-		self:Bar(args.spellId, 58.4) -- Draw In
-	else
-		self:CastBar(args.spellId, 10)
-	end
+	self:CastBar(args.spellId, 10)
 end
 
 function mod:FrigidBlows(args)
@@ -181,6 +188,7 @@ function mod:FrostyDischarge(args)
 	if self:Mythic() then
 		self:Bar(240319, 32) -- Hatching
 	end
+	nextDrawIn = GetTime() + 59.1
 	self:CDBar(232061, 59.1) -- Draw In
 end
 

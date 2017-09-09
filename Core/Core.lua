@@ -145,15 +145,12 @@ end
 local function zoneChanged()
 	local id
 	if not IsInInstance() then
-		-- We may be hearthing whilst a module is enabled and engaged, only wipe if we're a ghost (released spirit from an old zone).
-		if UnitIsDeadOrGhost("player") then
-			for _, module in next, bossCore.modules do
-				if module.isEngaged then
-					module:Wipe()
-				end
-			end
+		local mapId = GetPlayerMapAreaID("player")
+		if mapId then
+			id = -mapId
 		else
-			id = -(GetPlayerMapAreaID("player") or 0)
+			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
+			id = instanceId
 		end
 	else
 		local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()

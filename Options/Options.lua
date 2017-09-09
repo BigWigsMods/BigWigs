@@ -969,8 +969,13 @@ do
 			-- Do we have content for the zone we're in? Then open straight to that zone.
 			local id, parent
 			if not IsInInstance() then
-				local mapId = -(loader.GetPlayerMapAreaID("player") or 0)
-				id = loader.zoneTblWorld[mapId]
+				local mapId = GetPlayerMapAreaID("player")
+				if mapId then
+					id = loader.zoneTblWorld[-mapId]
+				else
+					local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
+					id = instanceId
+				end
 				parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
 			else
 				local _, _, _, _, _, _, _, instanceId = loader.GetInstanceInfo()
