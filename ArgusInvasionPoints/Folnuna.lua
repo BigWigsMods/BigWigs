@@ -14,7 +14,7 @@ mod:RegisterEnableMob(124514)
 function mod:GetOptions()
 	return {
 		{247361, "TANK"}, -- Infected Claws
-		247379, -- Slumbering Gasp
+		{247379, "SAY"}, -- Slumbering Gasp
 		254147, -- Fel Blast
 		247443, -- Grotesque Spawn
 	}
@@ -26,6 +26,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "InfectedClaws", 247361)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "InfectedClaws", 247361)
 	self:Log("SPELL_CAST_START", "SlumberingGasp", 247379)
+	self:Log("SPELL_AURA_APPLIED", "SlumberingGaspApplied", 247389)
 	self:Log("SPELL_CAST_START", "FelBlast", 254147)
 	self:Log("SPELL_CAST_START", "GrotesqueSpawn", 247443)
 
@@ -52,6 +53,13 @@ function mod:SlumberingGasp(args)
 	self:Message(args.spellId, "Urgent", "Warning")
 	self:CDBar(args.spellId, 55)
 	self:CastBar(args.spellId, 17)
+end
+
+function mod:SlumberingGaspApplied(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(247379, args.destName, "Personal", "Long")
+		self:Say(247379)
+	end
 end
 
 function mod:FelBlast(args)
