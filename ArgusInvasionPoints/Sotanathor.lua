@@ -16,7 +16,7 @@ function mod:GetOptions()
 		247698, -- Silence
 		{247410, "TANK"}, -- Soul Cleave
 		247416, -- Cavitation
-		247437, -- Seed of Destruction
+		{247437, "SAY", "FLASH"}, -- Seed of Destruction
 	}
 end
 
@@ -26,6 +26,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Silence", 247698)
 	self:Log("SPELL_CAST_START", "SoulCleave", 247410)
 	self:Log("SPELL_AURA_APPLIED", "ClovenSoul", 247444)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ClovenSoul", 247444)
 	self:Log("SPELL_CAST_SUCCESS", "Cavitation", 247416)
 	self:Log("SPELL_CAST_SUCCESS", "SeedofDestruction", 247437)
 	self:Log("SPELL_AURA_APPLIED", "SeedofDestructionApplied", 247437)
@@ -54,7 +55,8 @@ function mod:SoulCleave(args)
 end
 
 function mod:ClovenSoul(args)
-	self:TargetMessage(247410, args.destName, "Neutral", "Info", args.spellId, nil, true)
+	local amount = args.amount or 1
+	self:StackMessage(247410, args.destName, amount, "Neutral", amount > 1 and "Warning" or "Info", args.spellId)
 end
 
 function mod:Cavitation(args)
@@ -84,14 +86,6 @@ do
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 		end
-	end
-end
-
-function mod:SeedofDestruction(args)
-
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
 	end
 end
 
