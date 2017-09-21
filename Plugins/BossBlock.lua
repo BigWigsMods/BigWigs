@@ -180,6 +180,7 @@ do
 		[295] = true, -- Archimonde kill
 		[549] = true, -- Gul'dan kill
 		[656] = true, -- Kil'jaeden kill
+		[682] = true, -- L'uras death
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
