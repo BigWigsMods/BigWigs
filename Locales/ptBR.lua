@@ -78,7 +78,7 @@ L.slashDescRange = "|cFFFED000/range:|r Abre o indicador de distância."
 L.slashDescVersion = "|cFFFED000/bwv:|r Realiza uma verificação da versão do BigWigs."
 L.slashDescConfig = "|cFFFED000/bw:|r Abre a configuração do BigWigs."
 
-L.gitHubDesc = "BigWiggs é um software de código aberto hospedado no GitHub. Nós sempre estamos procurando por novas pessoas para ajudar e todos são bem-vindos para dar uma olhada no nosso código, fazer contribuições e reportar erros. BigWigs é incrível como é hoje na maioria das vezes devido a toda comunidade do WoW que nos ajuda.\n\n|cFF33FF99Nossa API agora é documentada e aberta para leitura na wiki do GitHub.|r"
+L.gitHubDesc = "BigWigs é um software de código aberto hospedado no GitHub. Nós sempre estamos procurando por novas pessoas para ajudar e todos são bem-vindos para dar uma olhada no nosso código, fazer contribuições e reportar erros. BigWigs é incrível como é hoje, na maioria das vezes, devido a toda comunidade do WoW que nos ajuda.\n\n|cFF33FF99Nossa API agora é documentada e aberta para leitura na wiki do GitHub.|r"
 
 L.BAR = "Barras"
 L.MESSAGE = "Mensagens"
