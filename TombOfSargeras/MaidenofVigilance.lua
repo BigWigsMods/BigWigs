@@ -328,40 +328,41 @@ do
 
 	function mod:TitanicBulwarkRemoved(args)
 		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
+
+	end
+
+	function mod:WrathoftheCreators(args)
+		self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
+	end
+
+	function mod:WrathoftheCreatorsInterrupted(args)
+		self:Message(args.spellId, "Positive", "Long", CL.interrupted:format(args.spellName))
+		massInstabilityCounter = 1
+		hammerofCreationCounter = 1
+		hammerofObliterationCounter = 1
+		infusionCounter = 1
+		orbCounter = 1
+		initialOrbs = nil
 		if timer then
 			self:CancelTimer(timer)
 			timer = nil
 		end
-	end
-end
+		self:CloseInfo(235028) -- Titanic Bulwark
 
-function mod:WrathoftheCreators(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
-end
-
-function mod:WrathoftheCreatorsInterrupted(args)
-	self:Message(args.spellId, "Positive", "Long", CL.interrupted:format(args.spellName))
-	massInstabilityCounter = 1
-	hammerofCreationCounter = 1
-	hammerofObliterationCounter = 1
-	infusionCounter = 1
-	orbCounter = 1
-	initialOrbs = nil
-	self:CloseInfo(235028) -- Titanic Bulwark
-
-	if not self:LFR() then
-		self:Bar(235271, 2) -- Infusion
-		self:Bar(241635, 14, L.lightHammer) -- Hammer of Creation
-		self:Bar(235267, 22) -- Mass Instability
-		self:Bar(241636, 32, L.felHammer) -- Hammer of Obliteration
-		self:Bar(248812, 81) -- Blowback
-		self:Bar(234891, 83.5) -- Wrath of the Creators
-	else
-		self:Bar(235267, 8) -- Mass Instability
-		self:Bar(248812, 66) -- Blowback
-		self:Bar(234891, 68) -- Wrath of the Creators
-	end
-	if self:Mythic() then
-		self:Bar(239153, 8, CL.count:format(self:SpellName(230932), orbCounter))
+		if not self:LFR() then
+			self:Bar(235271, 2) -- Infusion
+			self:Bar(241635, 14, L.lightHammer) -- Hammer of Creation
+			self:Bar(235267, 22) -- Mass Instability
+			self:Bar(241636, 32, L.felHammer) -- Hammer of Obliteration
+			self:Bar(248812, 81) -- Blowback
+			self:Bar(234891, 83.5) -- Wrath of the Creators
+		else
+			self:Bar(235267, 8) -- Mass Instability
+			self:Bar(248812, 66) -- Blowback
+			self:Bar(234891, 68) -- Wrath of the Creators
+		end
+		if self:Mythic() then
+			self:Bar(239153, 8, CL.count:format(self:SpellName(230932), orbCounter))
+		end
 	end
 end
