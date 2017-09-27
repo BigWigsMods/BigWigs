@@ -264,7 +264,7 @@ end
 function mod:CallMoontalon(args)
 	self:Message(args.spellId, "Urgent", "Alert", CL.incoming:format(self:SpellName(-15064))) -- Moontalon
 	screechCounter = 1
-	self:Bar(args.spellId, 146.9)
+	self:CDBar(args.spellId, 124.5) -- 122~127
 end
 
 function mod:DeadlyScreech(args)
