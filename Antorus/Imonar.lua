@@ -29,12 +29,12 @@ function mod:GetOptions()
 
 		--[[ Stage One: Attack Force ]]--
 		{247367, "TANK"}, -- Shock Lance
-		{247552, "SAY", "FLASH", "ICON"}, -- Sleep Canister
+		{254244, "SAY", "FLASH"}, -- Sleep Canister
 		247376, -- Pulse Grenade
 
 		--[[ Stage Two: Contract to Kill ]]--
 		{247687, "TANK"}, -- Sever
-		247716, -- Charged Blasts
+		248254, -- Charged Blasts
 		247923, -- Shrapnel Blast
 
 		--[[ Stage Three: The Perfect Weapon ]]--
@@ -55,6 +55,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_REMOVED", "IntermissionOver", 248233, 250135) -- Conflagration: Intermission 1, Intermission 2
 
@@ -62,8 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShockLance", 247367)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShockLance", 247367)
 	self:Log("SPELL_CAST_SUCCESS", "ShockLanceSuccess", 247367)
-	self:Log("SPELL_CAST_SUCCESS", "SleepCanister", 247552)
-	self:Log("SPELL_AURA_REMOVED", "SleepCanisterRemoved", 247552)
+	self:Log("SPELL_CAST_SUCCESS", "SleepCanister", 254244)
 	self:Log("SPELL_CAST_START", "PulseGrenade", 247376)
 
 	--[[ Stage Two: Contract to Kill ]]--
@@ -95,13 +95,20 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:RAID_BOSS_WHISPER(_, msg)
+	if msg:find("254244", nil, true) then -- Sleep Canister
+		self:Message(254244, "Personal", "Alarm", CL.you:format(self:SpellName(254244)))
+		self:Flash(254244)
+		self:Say(254244)
+	end
+end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 248995 or spellId == 248194 then -- Jetpacks (Intermission 1), Jetpacks (Intermission 2)
 		self:Message("stages", "Positive", "Long", CL.intermission, false)
 		-- Stage 1 timers
 		self:StopBar(247367) -- Shock Lance
-		self:StopBar(247552) -- Sleep Canister
+		self:StopBar(254244) -- Sleep Canister
 		self:StopBar(247376) -- Pulse Grenade
 		-- Stage 2 timers
 		self:StopBar(247687) -- Sever
@@ -137,17 +144,8 @@ function mod:ShockLanceSuccess(args)
 end
 
 function mod:SleepCanister(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
+	self:Message(args.spellId, "Important") -- Play sound only if targetted: See RAID_BOSS_WHISPER
 	self:Bar(args.spellId, 10.9)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Flash(args.spellId)
-	end
-	self:PrimaryIcon(args.spellId, args.destName)
-end
-
-function mod:SleepCanisterRemoved(args)
-	self:PrimaryIcon(args.spellId)
 end
 
 function mod:PulseGrenade(args)
@@ -179,11 +177,11 @@ end
 --[[ Stage Three: The Perfect Weapon ]]--
 function mod:EmpoweredShockLance(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important", "Alarm") -- They last until death, sound on every cast?
+	self:StackMessage(args.spellId, args.destName, amount, "Important", amount % 2 == 0 and "Alarm")
 end
 
 function mod:EmpoweredShockLanceSuccess(args)
-	self:Bar(args.spellId, 6.1)
+	self:Bar(args.spellId, 9.7)
 end
 
 function mod:EmpoweredPulseGrenade(args)
