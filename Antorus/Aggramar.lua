@@ -177,7 +177,7 @@ end
 
 --[[ Intermission: Fires of Taeshalach ]]--
 function mod:CorruptAegis()
-	self:Message("stages", "Neutral", "Long", CL.intermission, nil)
+	self:Message("stages", "Neutral", "Long", CL.intermission, false)
 	self:StopBar(245994) -- Scorching Blaze
 	self:StopBar(244693) -- Wake of Flame
 	self:StopBar(244688) -- Taeshalach Technique
@@ -189,7 +189,7 @@ end
 
 function mod:CorruptAegisRemoved()
 	stage = stage + 1
-	self:Message("stages", "Neutral", "Long", CL.stage:format(stage), nil)
+	self:Message("stages", "Neutral", "Long", CL.stage:format(stage), false)
 
 	self:CDBar(245994, 6) -- Scorching Blaze
 	self:Bar(244688, 37.5) -- Taeshalach Technique
