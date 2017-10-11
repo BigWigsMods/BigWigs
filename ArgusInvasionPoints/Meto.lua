@@ -66,7 +66,8 @@ do
 	function mod:SeedofChaosDamage(args)
 		if self:Me(args.destGUID) then
 			local t = GetTime()
-			if t-prev > 2 then
+			if t-prev > 1.5 then
+				prev = t
 				self:Message(247585, "Positive", "Info", args.spellName, args.spellId)
 			end
 		end
