@@ -12,10 +12,8 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local diabolicBombCount = 1
-local forgingStrikeCount = 1
 local reverberatingStrikeCount = 1
-local ruinerCount = 1
+local nextApocalypseProtocol = 0
 local mobTable = {
 	[123906] = {}, -- Garothi Annihilator
 	[123929] = {}, -- Garothi Demolisher
@@ -34,10 +32,10 @@ local mobCount = {
 function mod:GetOptions()
 	return {
 		--[[ Stage: Deployment ]]--
-		{244312, "TANK"}, -- Forging Strike
-		248475, -- Reverberating Strike
-		246779, -- Diabolic Bomb
-		246840, -- Ruiner
+		{254919, "TANK"}, -- Forging Strike
+		254926, -- Reverberating Strike
+		248214, -- Diabolic Bomb
+		246833, -- Ruiner
 		248375, -- Shattering Strike
 
 		--[[ Stage: Construction ]]--
@@ -58,9 +56,11 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
 
 	--[[ Stage: Deployment ]]--
-	self:Log("SPELL_CAST_SUCCESS", "ForgingStrike", 244312)
-	self:Log("SPELL_CAST_START", "ReverberatingStrike", 248475)
-	self:Log("SPELL_CAST_SUCCESS", "Ruiner", 246840)
+	self:Log("SPELL_CAST_START", "ForgingStrike", 254919)
+	self:Log("SPELL_AURA_APPLIED", "ForgingStrikeApplied", 254919)
+	self:Log("SPELL_CAST_START", "ReverberatingStrike", 254926)
+	self:Log("SPELL_CAST_SUCCESS", "DiabolicBomb", 248214)
+	self:Log("SPELL_CAST_START", "Ruiner", 246833)
 
 	--[[ Stage: Construction ]]--
 	self:Log("SPELL_AURA_APPLIED", "ApocalypseProtocol", 246516)
@@ -73,10 +73,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	forgingStrikeCount = 1
 	reverberatingStrikeCount = 1
-	diabolicBombCount = 1
-	ruinerCount = 1
 	mobTable = {
 		[123906] = {}, -- Garothi Annihilator
 		[123929] = {}, -- Garothi Demolisher
@@ -88,11 +85,13 @@ function mod:OnEngage()
 		[123921] = 0, -- Garothi Decimator
 	}
 
-	self:Bar(244312, 7.1) -- Forging Strike
-	self:Bar(246779, 10.8) -- Diabolic Bomb
-	self:Bar(248475, 14.5) -- Reverberating Strike
-	self:Bar(246840, 24.3) -- Ruiner
-	self:Bar(246516, 33) -- Apocalypse Protocol
+	self:Bar(254919, 7.5) -- Forging Strike
+	self:Bar(248214, 10.5) -- Diabolic Bomb
+	self:Bar(254926, 14.5) -- Reverberating Strike
+	self:Bar(246833, 21.5) -- Ruiner
+
+	nextApocalypseProtocol = GetTime() + 32.5
+	self:Bar(246516, 32.5) -- Apocalypse Protocol
 end
 
 --------------------------------------------------------------------------------
@@ -111,11 +110,7 @@ end
 --
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-	if spellId == 248214 then -- Diabolic Bomb
-		self:Message(246779, "Attention", "Alert")
-		diabolicBombCount = diabolicBombCount + 1
-		self:CDBar(246779, diabolicBombCount % 4 == 2 and 63.2 or diabolicBombCount % 4 == 3 and 25.8 or 20.3)
-	elseif spellId == 246686 then -- Decimation
+	if spellId == 246686 then -- Decimation
 		local guid = UnitGUID(unit)
 		local mobId = self:MobId(guid)
 		local mobText = getMobNumber(mobId, guid)
@@ -135,31 +130,59 @@ end
 --[[ Stage: Deployment ]]--
 function mod:ForgingStrike(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	forgingStrikeCount = forgingStrikeCount + 1
-	self:CDBar(args.spellId, 28) -- XXX Unreliable atm, needs further fixing
+	local cooldown = 28
+	if (GetTime() + cooldown) > nextApocalypseProtocol then
+		self:CDBar(args.spellId, cooldown)
+	end
+end
+
+function mod:ForgingStrikeApplied(args)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, self:Tank())
 end
 
 function mod:ReverberatingStrike(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Message(args.spellId, "Attention", "Alert")
 	reverberatingStrikeCount = reverberatingStrikeCount + 1
-	self:CDBar(args.spellId, reverberatingStrikeCount == 2 and 65 or reverberatingStrikeCount % 3 == 2 and 72 or reverberatingStrikeCount % 3 == 0 and 22.5 or 27)
+	if reverberatingStrikeCount <= 3 then
+		self:CDBar(args.spellId, reverberatingStrikeCount == 2 and 25 or 28)
+	end
+end
+
+function mod:DiabolicBomb(args)
+	self:Message(args.spellId, "Important", "Alarm")
+	local cooldown = 28
+	if (GetTime() + cooldown) > nextApocalypseProtocol then
+		self:CDBar(args.spellId, cooldown)
+	end
 end
 
 function mod:Ruiner(args)
-	self:Message(args.spellId, "Attention", "Alert")
-	ruinerCount = ruinerCount + 1
-	self:CDBar(args.spellId, ruinerCount % 3 == 2 and 70.6 or 29.2)
+	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+	local cooldown = 25.5
+	if (GetTime() + cooldown) > nextApocalypseProtocol then
+		self:CDBar(args.spellId, cooldown)
+	end
 end
 
 --[[ Stage: Construction ]]--
 function mod:ApocalypseProtocol(args)
+	self:StopBar(254919) -- Forging Strike
+	self:StopBar(248214) -- Diabolic Bomb
+	self:StopBar(254926) -- Reverberating Strike
+	self:StopBar(246833) -- Ruiner
 	self:Message(args.spellId, "Positive", "Long")
-	self:CastBar(args.spellId, 40) -- XXX Maybe some other text, Shield Active/Construction Phase?
-	self:Bar(args.spellId, 120)
+	self:CastBar(args.spellId, 40)
+	nextApocalypseProtocol = GetTime() + 129
+	self:Bar(args.spellId, 129)
 end
 
 function mod:ApocalypseProtocolOver(args)
 	self:Message(args.spellId, "Neutral", "Info", CL.over:format(args.spellName))
+	reverberatingStrikeCount = 1
+	self:Bar(248214, 0.5) -- Diabolic Bomb
+	self:Bar(254919, 2) -- Forging Strike
+	self:Bar(254926, 3) -- Reverberating Strike
+	self:Bar(246833, 20.5) -- Ruiner
 end
 
 --[[ Adds ]]--
