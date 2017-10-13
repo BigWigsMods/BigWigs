@@ -354,7 +354,7 @@ do
 			self:Bar(241635, 14, L.lightHammer) -- Hammer of Creation
 			self:Bar(235267, 22) -- Mass Instability
 			self:Bar(241636, 32, L.felHammer) -- Hammer of Obliteration
-			self:Bar(248812, 81) -- Blowback
+			self:Bar(248812, 82.5) -- Blowback
 			self:Bar(234891, 83.5) -- Wrath of the Creators
 		else
 			self:Bar(235267, 8) -- Mass Instability
