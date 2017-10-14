@@ -32,7 +32,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SeedofDestructionApplied", 247437)
 	self:Log("SPELL_AURA_REMOVED", "SeedofDestructionRemoved", 247437)
 
-	--self:RegisterEvent("BOSS_KILL") -- No BOSS_KILL? XXX
 	self:Death("Win", 124555)
 end
 
@@ -88,9 +87,3 @@ do
 		end
 	end
 end
-
---function mod:BOSS_KILL(_, id)
---	if id == 2083 then
---		self:Win()
---	end
---end

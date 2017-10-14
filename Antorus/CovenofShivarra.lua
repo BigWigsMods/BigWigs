@@ -50,11 +50,15 @@ function mod:GetOptions()
 		245586, -- Chilled Blood
 		253650, -- Orb of Frost
 
+		--[[ Thu'raya, Mother of the Cosmos (Mythic) ]]--
+		250648, -- Touch of the Cosmos
+		250912, -- Cosmic Glare
 	},{
 		[253203] = "general",
 		[244899] = -15967, -- Noura, Mother of Flame
 		[245303] = -15968, -- Asara, Mother of Night
 		[245518] = -15969, -- Diima, Mother of Gloom
+		[250648] = -16398, -- Thu'raya, Mother of the Cosmos
 	}
 end
 
@@ -80,7 +84,11 @@ function mod:OnBossEnable()
 	--[[ Diima, Mother of Gloom ]]--
 	self:Log("SPELL_CAST_SUCCESS", "Flashfreeze", 245518)
 	self:Log("SPELL_AURA_APPLIED", "ChilledBlood", 245586)
-	self:Log("SPELL_CAST_START", "OrbofFrost", 253650) -- XXX Bugged and not cast on PTR
+	self:Log("SPELL_CAST_START", "OrbofFrost", 253650)
+
+	--[[ Thu'raya, Mother of the Cosmos (Mythic) ]]--
+	self:Log("SPELL_CAST_START", "TouchoftheCosmos", 250648)
+	self:Log("SPELL_CAST_SUCCESS", "CosmicGlare", 250912)
 end
 
 function mod:OnEngage()
@@ -102,7 +110,7 @@ end
 function mod:UNIT_TARGETABLE_CHANGED(unit)
 	if self:MobId(UnitGUID(unit)) == 122468 then -- Noura
 		if UnitCanAttack("player", unit) then
-			self:Message("stages", "Positive", "Long", self:SpellName(-15967), nil) -- Noura, Mother of Flame
+			self:Message("stages", "Positive", "Long", self:SpellName(-15967), false) -- Noura, Mother of Flame
 			self:Bar(245627, 8.9) -- Whirling Saber
 			self:Bar(244899, 12.5) -- Fiery Strike
 			self:Bar(253429, 21.1) -- Fulminating Pulse
@@ -113,7 +121,7 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		end
 	elseif self:MobId(UnitGUID(unit)) == 122467 then -- Asara
 		if UnitCanAttack("player", unit) then
-			self:Message("stages", "Positive", "Long", self:SpellName(-15968), nil) -- Asara, Mother of Night
+			self:Message("stages", "Positive", "Long", self:SpellName(-15968), false) -- Asara, Mother of Night
 			self:Bar(246329, 12.6) -- Shadow Blades
 			self:Bar(252861, 28.4) -- Storm of Darkness
 		else
@@ -122,9 +130,10 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		end
 	elseif self:MobId(UnitGUID(unit)) == 122469 then -- Diima
 		if UnitCanAttack("player", unit) then
-			self:Message("stages", "Positive", "Long", self:SpellName(-15969), nil) -- Diima, Mother of Gloom
+			self:Message("stages", "Positive", "Long", self:SpellName(-15969), false) -- Diima, Mother of Gloom
 			self:Bar(245586, 8) -- Chilled Blood
 			self:Bar(245518, 12.2) -- Flashfreeze
+			self:Bar(253650, 30) -- Orb of Frost
 		else
 			self:StopBar(245518) -- Flashfreeze
 			self:StopBar(245586) -- Chilled Blood
@@ -132,7 +141,7 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		end
 	elseif self:MobId(UnitGUID(unit)) == 125436 then -- Thu'raya
 		if UnitCanAttack("player", unit) then
-			self:Message("stages", "Positive", "Long", self:SpellName(-16398), nil) -- Thu'raya, Mother of the Cosmos
+			self:Message("stages", "Positive", "Long", self:SpellName(-16398), false) -- Thu'raya, Mother of the Cosmos
 		end
 	end
 end
@@ -236,4 +245,18 @@ end
 
 function mod:OrbofFrost(args)
 	self:Message(args.spellId, "Attention", "Alert")
+	self:Bar(args.spellId, 30.5)
+end
+
+--[[ Thu'raya, Mother of the Cosmos (Mythic) ]]--
+function mod:TouchoftheCosmos(args)
+	if self:Interrupter() then
+		self:Message(args.spellId, "Urgent", "Alarm")
+	end
+	--self:Bar(args.spellId, 30.5)
+end
+
+function mod:CosmicGlare(args)
+	self:Message(args.spellId, "Attention", "Alert")
+	--self:Bar(args.spellId, 30.5)
 end

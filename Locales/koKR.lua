@@ -4,8 +4,8 @@ if not L then return end
 -- Core.lua
 L.berserk = "광폭화"
 L.berserk_desc = "우두머리가 언제 광폭화하는지 바와 시간 경고를 표시합니다."
-L.altpower = "보조 자원 표시"
-L.altpower_desc = "보조 자원 창을 표시합니다, 자신의 파티/공격대원의 보조 자원 양을 표시합니다."
+L.altpower = "보조 마력 표시"
+L.altpower_desc = "보조 마력 창을 표시합니다, 자신의 파티/공격대원의 보조 마력 수치를 표시합니다."
 L.infobox = "정보 상자"
 L.infobox_desc = "우두머리 전투와 관련된 정보를 담은 상자를 표시합니다."
 L.stages = "단계"

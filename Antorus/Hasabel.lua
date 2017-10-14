@@ -31,9 +31,6 @@ if L then
 	L.custom_on_filter_platforms = "Filter Side Platform Warnings and Bars"
 	L.custom_on_filter_platforms_desc = "Removes unnecessary messages and bars if you are not on a side platform. It will always show bars and warnings from the main Platform: Nexus."
 	L.platform_active = "%s Active!" -- Platform: Xoroth Active!
-	L.open_xoroth_yell = "Xoroth" -- Witness Xoroth, a world of infernal heat and scorched bones!
-	L.open_rancora_yell = "Rancora" -- Gaze upon Rancora, a landscape of festering pools and skittering death!
-	L.open_nathreza_yell = "Nathreza" -- Nathreza... once a world of magic and knowledge, now a twisted landscape from which none escape.
 end
 
 --------------------------------------------------------------------------------
@@ -80,7 +77,7 @@ end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_SUCCESS", "PlatformPortal", 244073, 244136, 244146) -- Xoroth, Rancora, Nathreza
 	self:Log("SPELL_CAST_SUCCESS", "ReturnPortal", 244112, 244138, 244145) -- Xoroth, Rancora, Nathreza
 
@@ -123,20 +120,19 @@ function mod:OnEngage()
 	self:Bar(243983, 12.7) -- Collapsing World
 	self:Bar(244689, 21.9) -- Transport Portal
 	self:Bar(244000, 29.0) -- Felstorm Barrage
-	self:Berserk(600) -- Confirmed Heroic
+	self:Berserk(750) -- Heroic PTR
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:CHAT_MSG_MONSTER_YELL(_, msg)
-	if msg:find(L.open_xoroth_yell, nil, true) then
-		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(-15800)), false) -- Platform: Xoroth
-	elseif msg:find(L.open_rancora_yell, nil, true) then
-		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(-15801)), false) -- Platform: Rancora
-	elseif msg:find(L.open_nathreza_yell, nil, true) then
-		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(-15802)), false) -- Platform: Nathreza
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	if spellId == 257939 then -- Gateway: Xoroth
+		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257939)), false) -- Platform: Xoroth
+	elseif spellId == 257941 then -- Gateway: Rancora
+		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257941)), false) -- Platform: Rancora
+	elseif spellId == 257942 then -- Gateway: Nathreza
+		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257942)), false) -- Platform: Nathreza
 	end
 end
 
@@ -171,18 +167,18 @@ end
 function mod:CollapsingWorld(args)
 	self:Message(args.spellId, "Important", "Warning")
 	collapsingWorldCount = collapsingWorldCount + 1
-	self:Bar(args.spellId, collapsingWorldCount % 3 == 0 and 36.5 or 32.8)
+	self:Bar(args.spellId, 32.8) -- XXX See if there is a pattern for delayed casts
 end
 
 function mod:FelstormBarrage(args)
 	self:Message(args.spellId, "Urgent", "Alert")
 	felstormBarrageCount = felstormBarrageCount + 1
-	self:Bar(args.spellId, collapsingWorldCount % 3 == 1 and 36.5 or 32.8)
+	self:Bar(args.spellId, 32.8) -- XXX See if there is a pattern for delayed casts
 end
 
 function mod:TransportPortal(args)
 	self:Message(args.spellId, "Neutral", "Info")
-	self:Bar(args.spellId, 51.1)
+	self:Bar(args.spellId, 41.5) -- XXX See if there is a pattern for delayed casts
 end
 
 function mod:HowlingShadows(args)

@@ -3,7 +3,10 @@
 
 <Script file="Folnuna.lua"/>
 <Script file="Alluradel.lua"/>
+<Script file="Meto.lua"/>
 <Script file="Sotanathor.lua"/>
+<Script file="Occularus.lua"/>
+<Script file="Vilemus.lua"/>
 
 </Ui>
 
