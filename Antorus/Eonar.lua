@@ -221,14 +221,14 @@ end
 function mod:UNIT_POWER(unit)
 	local power = UnitPower(unit)
 	if power >= 80 then
-		self:Message(250048, "Neutral", "Info", L.lifeforce_casts:format(CL.soon:format(self:SpellName(250048)), lifeForceCount, lifeForceNeeded)) -- Life Force
+		self:Message(250048, "Neutral", "Info", L.lifeforce_casts:format(CL.soon:format(self:SpellName(250048)), lifeForceCounter, lifeForceNeeded)) -- Life Force
 		self:UnregisterUnitEvent("UNIT_POWER", unit)
 	end
 end
 
 function mod:LifeForce(args)
-	self:Message(args.spellId, "Positive", "Long", L.lifeforce_casts:format(CL.casting:format(args.spellName), lifeForceCount, lifeForceNeeded))
-	lifeForceCount = lifeForceCount + 1
+	self:Message(args.spellId, "Positive", "Long", L.lifeforce_casts:format(CL.casting:format(args.spellName), lifeForceCounter, lifeForceNeeded))
+	lifeForceCounter = lifeForceCounter + 1
 end
 
 function mod:LifeForceSuccess()
