@@ -72,6 +72,7 @@ function mod:GetOptions()
 		236072, -- Wailing Souls
 		{236515, "ME_ONLY"}, -- Shattering Scream
 		236361, -- Spirit Chains
+		236241, -- Soul Rot
 		236542, -- Sundering Doom
 		236544, -- Doomed Sundering
 		236548, -- Torment
