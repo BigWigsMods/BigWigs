@@ -119,6 +119,7 @@ end
 
 function mod:drawInCheck(self)
 	if skipDrawIn then
+		self:Message(232061, "Urgent", "Alarm", CL.interrupted:format(self:SpellName(232061))) -- Draw In Interrupted
 		nextDrawIn = GetTime() + 58
 		self:CDBar(232061, 58) -- Draw In
 		self:ScheduleTimer("drawInCheck", 58, self)
@@ -136,9 +137,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 end
 
 function mod:RAID_BOSS_WHISPER(event, msg)
-	if msg:find("240319", nil, true) then -- Hatching XXX Need a log where it skips it on mythic for timers (if any)
+	if msg:find("240319", nil, true) then -- Hatching
 		self:Message(240319, "Important", "Warning")
 		self:CastBar(240319, 22)
+		if (nextDrawIn > GetTime() + 40) or skipDrawIn then
+			self:Bar(240319, 40)
+		end
 	end
 end
 
