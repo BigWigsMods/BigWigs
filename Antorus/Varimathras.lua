@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Varmathras", nil, 1983, 1712)
+local mod, CL = BigWigs:NewBoss("Varimathras", nil, 1983, 1712)
 if not mod then return end
 mod:RegisterEnableMob(122366)
 mod.engageId = 2069
@@ -148,11 +148,11 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
-			self:SayCountdown(args.spellId, 4)
+			self:SayCountdown(args.spellId, 6)
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			-- Only 1 initial application, can avoid spreading. XXX See if this remains viable, or we need to mark everyone.
+			-- Only 1 initial application, can avoid spreading
 			self:SecondaryIcon(args.spellId, args.destName)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
 		end

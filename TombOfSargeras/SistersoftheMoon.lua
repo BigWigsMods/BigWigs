@@ -18,11 +18,9 @@ mod.respawnTime = 15
 --
 
 local stage = 1
-local moonGlaiveCounter = 1
 local twilightGlaiveCounter = 1
 local screechCounter = 0
 local rapidShotCounter = 1
-local lunarFireCounter = 1
 local lunarBeaconCounter = 1
 local nextUltimate = 0
 
@@ -102,7 +100,6 @@ end
 function mod:OnEngage()
 	stage = 1
 	screechCounter = 0
-	moonGlaiveCounter = 1
 	twilightGlaiveCounter = 1
 	rapidShotCounter = 1
 	lunarBeaconCounter = 1
@@ -195,8 +192,13 @@ end
 
 function mod:MoonGlaive(args)
 	self:Message(args.spellId, "Important", "Warning")
-	moonGlaiveCounter = moonGlaiveCounter + 1
-	self:Bar(args.spellId, moonGlaiveCounter == 4 and 27.6 or 14.6) -- XXX Had a pull where the 3rd cast was delayed instead.
+	if nextUltimate > GetTime() + 15.5 then
+		self:Bar(args.spellId, 15.5)
+	else
+		local nextUltimateTimer = nextUltimate - GetTime()
+		local timer = nextUltimateTimer + 25.5 -- CD After Ultimates
+		self:Bar(args.spellId, timer)
+	end
 end
 
 function mod:Discorporate(args)
@@ -218,6 +220,11 @@ function mod:IncorporealShotApplied(args)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:Bar(args.spellId, 54.7)
 	nextUltimate = GetTime() + 54.7
+	if stage == 1 then -- Reset CD for tank abilities on Ultimate attacks
+		self:CDBar(236547, 25.5) -- Moon Glaive
+	elseif stage == 3 then
+		self:CDBar(239264, 18.5) -- Lunar Fire
+	end
 end
 
 function mod:IncorporealShotRemoved(args)
@@ -358,16 +365,13 @@ do
 	end
 end
 
-do
-	local prev = 0
-	function mod:LunarFire(args)
-		lunarFireCounter = lunarFireCounter + 1
-		local t = GetTime()
-		if t-prev > 20 or lunarFireCounter == 5 then -- Either 3rd or 4th is >20s, after that every 4th is.
-			lunarFireCounter = 1
-		end
-		prev = t
-		self:Bar(args.spellId, lunarBeaconCounter % 4 == 0 and 23.1 or 10.9)
+function mod:LunarFire(args)
+	if nextUltimate > GetTime() + 11 then
+		self:Bar(args.spellId, 11)
+	else
+		local nextUltimateTimer = nextUltimate - GetTime()
+		local timer = nextUltimateTimer + 18.5 -- CD After Ultimates
+		self:CDBar(args.spellId, timer)
 	end
 end
 

@@ -118,7 +118,7 @@ function mod:OnEngage()
 
 	if not self:LFR() then
 		self:Bar(235271, 2) -- Infusion
-		self:Bar(241635, 14, L.lightHammer) -- Hammer of Creation
+		self:Bar(241635, 12, L.lightHammer) -- Hammer of Creation
 		self:Bar(235267, 22) -- Mass Instability
 		self:Bar(241636, 32, L.felHammer) -- Hammer of Obliteration
 		self:Bar(248812, 42.5) -- Blowback
