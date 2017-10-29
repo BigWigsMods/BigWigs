@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
 ## Title-frFR: BigWigs [|cffeda55fAntorus, le Trône ardent|r]
 ## Title-ruRU: BigWigs [|cffeda55fАнторус, Пылающий Трон|r]
-## Title-zhCN: BigWigs [|cffeda55f安托鲁斯‧燃烧的王座|r]
+## Title-zhCN: BigWigs [|cffeda55f安托鲁斯，燃烧王座|r]
 ## Title-zhTW: BigWigs [|cffeda55f安托洛斯‧燃燒王座|r]
 ## Title-itIT: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
 ## Title-ptBR: BigWigs [|cffeda55fAntorus, The Burning Throne|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Antorus, The Burning Throne Modules
 ## Notes-frFR: Modules BigWigs concernant Antorus, le Trône ardent.
 ## Notes-ruRU: Модуль BigWigs для Анторус, Пылающий Трон
-## Notes-zhCN: BigWigs 安托鲁斯‧燃烧的王座模块
+## Notes-zhCN: BigWigs 安托鲁斯，燃烧王座模块
 ## Notes-zhTW: BigWigs 安托洛斯‧燃燒王座模組
 ## Notes-itIT: TBigWigs Antorus, The Burning Throne Modules
 ## Notes-ptBR: BigWigs Antorus, The Burning Throne Modules
