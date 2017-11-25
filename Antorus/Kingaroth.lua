@@ -25,6 +25,20 @@ local mobCount = {
 	[123921] = 0, -- Garothi Decimator
 }
 
+local empBomb = nil
+local empRuiner = nil
+local empStrike = nil
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.empowered = "(E) %s" -- (E) Ruiner
+	L.gains = "Kin'garoth gains %s"
+end
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -68,8 +82,16 @@ function mod:OnBossEnable()
 
 	--[[ Adds ]]--
 	self:Log("SPELL_CAST_SUCCESS", "Initializing", 246504)
+	self:Log("SPELL_AURA_APPLIED", "Decimation", 246687)
 	self:Log("SPELL_AURA_APPLIED", "Demolish", 246698)
 	self:Death("AddDeaths", 123906, 123929, 123921) -- Garothi Annihilator, Garothi Demolisher, Garothi Decimator
+
+	--[[ Mythic ]]--
+	self:Log("SPELL_AURA_APPLIED", "EmpoweredReverberatingStrike ", 254795)
+	self:Log("SPELL_AURA_APPLIED", "EmpoweredDiabolicBomb", 254796)
+	self:Log("SPELL_AURA_APPLIED", "EmpoweredRuiner", 254797)
+
+	self:Log("SPELL_AURA_APPLIED", "ReverberatingDecimation", 249680)
 end
 
 function mod:OnEngage()
@@ -84,6 +106,9 @@ function mod:OnEngage()
 		[123929] = 0, -- Garothi Demolisher
 		[123921] = 0, -- Garothi Decimator
 	}
+	empBomb = nil
+	empRuiner = nil
+	empStrike = nil
 
 	self:Bar(254919, 7.5) -- Forging Strike
 	self:Bar(248214, 10.5) -- Diabolic Bomb
@@ -114,7 +139,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		local guid = UnitGUID(unit)
 		local mobId = self:MobId(guid)
 		local mobText = getMobNumber(mobId, guid)
-		self:Message(spellId, "Urgent", "Warning")
 		self:Bar(spellId, 15.8, CL.count:format(spellName, mobText))
 	elseif spellId == 246657 then -- Annihilation
 		local guid = UnitGUID(unit)
@@ -131,7 +155,7 @@ end
 function mod:ForgingStrike(args)
 	self:Message(args.spellId, "Attention", "Alert")
 	local cooldown = 28
-	if (GetTime() + cooldown) > nextApocalypseProtocol then
+	if nextApocalypseProtocol > GetTime() + cooldown then
 		self:CDBar(args.spellId, cooldown)
 	end
 end
@@ -144,23 +168,35 @@ function mod:ReverberatingStrike(args)
 	self:Message(args.spellId, "Attention", "Alert")
 	reverberatingStrikeCount = reverberatingStrikeCount + 1
 	if reverberatingStrikeCount <= 3 then
-		self:CDBar(args.spellId, reverberatingStrikeCount == 2 and 25 or 28)
+		if empStrike then -- Empowered
+			self:CDBar(args.spellId, reverberatingStrikeCount == 2 and 25 or 28, L.empowered:format(args.spellName))
+		else
+			self:CDBar(args.spellId, reverberatingStrikeCount == 2 and 25 or 28)
+		end
 	end
 end
 
 function mod:DiabolicBomb(args)
 	self:Message(args.spellId, "Important", "Alarm")
 	local cooldown = 28
-	if (GetTime() + cooldown) > nextApocalypseProtocol then
-		self:CDBar(args.spellId, cooldown)
+	if nextApocalypseProtocol > GetTime() + cooldown then
+		if empBomb then -- Empowered
+			self:CDBar(args.spellId, cooldown, L.empowered:format(args.spellName))
+		else
+			self:CDBar(args.spellId, cooldown)
+		end
 	end
 end
 
 function mod:Ruiner(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	local cooldown = 25.5
-	if (GetTime() + cooldown) > nextApocalypseProtocol then
-		self:CDBar(args.spellId, cooldown)
+	if nextApocalypseProtocol > GetTime() + cooldown then
+		if empRuiner then -- Empowered
+			self:CDBar(args.spellId, cooldown, L.empowered:format(args.spellName))
+		else
+			self:CDBar(args.spellId, cooldown)
+		end
 	end
 end
 
@@ -170,6 +206,9 @@ function mod:ApocalypseProtocol(args)
 	self:StopBar(248214) -- Diabolic Bomb
 	self:StopBar(254926) -- Reverberating Strike
 	self:StopBar(246833) -- Ruiner
+	self:StopBar(L.empowered:format(self:SpellName(248214))) -- (E) Diabolic Bomb
+	self:StopBar(L.empowered:format(self:SpellName(254926))) -- (E) Reverberating Strike
+	self:StopBar(L.empowered:format(self:SpellName(246833))) -- (E) Ruiner
 	self:Message(args.spellId, "Positive", "Long")
 	self:CastBar(args.spellId, 40)
 	nextApocalypseProtocol = GetTime() + 129
@@ -179,10 +218,10 @@ end
 function mod:ApocalypseProtocolOver(args)
 	self:Message(args.spellId, "Neutral", "Info", CL.over:format(args.spellName))
 	reverberatingStrikeCount = 1
-	self:Bar(248214, 0.5) -- Diabolic Bomb
+	self:Bar(248214, 0.5, empBomb and L.empowered:format(self:SpellName(248214))) -- Diabolic Bomb
 	self:Bar(254919, 2) -- Forging Strike
-	self:Bar(254926, 3) -- Reverberating Strike
-	self:Bar(246833, 20.5) -- Ruiner
+	self:Bar(254926, 3, empStrike and L.empowered:format(self:SpellName(254926))) -- Reverberating Strike
+	self:Bar(246833, 20.5, empRuiner and L.empowered:format(self:SpellName(246833))) -- Ruiner
 end
 
 --[[ Adds ]]--
@@ -215,6 +254,20 @@ do
 	end
 end
 
+do
+	local playerList = mod:NewTargetList()
+	function mod:Decimation(args)
+		if self:Me(args.destGUID) then
+			self:Say(246686)
+			self:SayCountdown(246686, 6)
+		end
+		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, 246686, playerList, "Urgent", "Warning")
+		end
+	end
+end
+
 function mod:AddDeaths(args)
 	local mobText = getMobNumber(args.mobId, args.destGUID)
 	if args.mobId == 123906 then -- Garothi Annihilator
@@ -223,5 +276,38 @@ function mod:AddDeaths(args)
 		self:StopBar(CL.count:format(self:SpellName(246698), mobText)) -- Demolish
 	elseif args.mobId == 123921 then -- Garothi Decimator
 		self:StopBar(CL.count:format(self:SpellName(246686), mobText)) -- Decimation
+	end
+end
+
+--[[ Mythic ]]--
+function mod:EmpoweredRuiner(args)
+	self:Message(246833, "Neutral", "Info", L.gains:format(args.spellName))
+	empRuiner = true
+	self:Bar(246833, self:BarTimeLeft(self:SpellName(246833)), L.empowered:format(self:SpellName(246833))) -- (E) Ruiner
+end
+
+function mod:EmpoweredReverberatingStrike(args)
+	self:Message(254926, "Neutral", "Info", L.gains:format(args.spellName))
+	empStrike = true
+	self:Bar(254926, self:BarTimeLeft(self:SpellName(254926)), L.empowered:format(self:SpellName(254926))) -- (E) Reverberating Strike
+end
+
+function mod:EmpoweredDiabolicBomb(args)
+	self:Message(248214, "Neutral", "Info", L.gains:format(args.spellName))
+	empBomb = true
+	self:Bar(248214, self:BarTimeLeft(self:SpellName(248214)), L.empowered:format(self:SpellName(248214))) -- (E) Diabolic Bomb
+end
+
+do
+	local playerList = mod:NewTargetList()
+	function mod:ReverberatingDecimation(args)
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 4)
+		end
+		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
+		end
 	end
 end
