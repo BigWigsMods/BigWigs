@@ -55,12 +55,12 @@ function mod:GetOptions()
 		--[[ Platform: Xoroth ]]--
 		244607, -- Flames of Xoroth
 		244598, -- Supernova
-		244613, -- Everburning Flames
+		{244613, "SAY"}, -- Everburning Flames
 
 		--[[ Platform: Rancora ]]--
 		{244926, "SAY"}, -- Felsilk Wrap
 		246316, -- Poison Essence
-		244849, -- Caustic Slime
+		{244849, "SAY"}, -- Caustic Slime
 
 		--[[ Platform: Nathreza ]]--
 		{245050, "HEALER"}, -- Delusions
@@ -95,11 +95,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FlamesofXoroth", 244607)
 	self:Log("SPELL_CAST_SUCCESS", "Supernova", 244598)
 	self:Log("SPELL_AURA_APPLIED", "EverburningFlames", 244613)
+	self:Log("SPELL_AURA_REMOVED", "EverburningFlamesRemoved", 244613)
 
 	--[[ Platform: Rancora ]]--
 	self:Log("SPELL_CAST_SUCCESS", "FelsilkWrap", 244926)
 	self:Log("SPELL_CAST_START", "PoisonEssence", 246316)
 	self:Log("SPELL_AURA_APPLIED", "CausticSlime", 244849)
+	self:Log("SPELL_AURA_REMOVED", "CausticSlimeRemoved", 244849)
 
 	--[[ Platform: Nathreza ]]--
 	self:Log("SPELL_CAST_START", "Delusions", 245050)
@@ -208,6 +210,14 @@ end
 function mod:EverburningFlames(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
+		self:SayCountdown(args.spellId, 10)
+	end
+end
+
+
+function mod:EverburningFlamesRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
@@ -229,6 +239,13 @@ end
 function mod:CausticSlime(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
+		self:SayCountdown(args.spellId, 20)
+	end
+end
+
+function mod:CausticSlimeRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
