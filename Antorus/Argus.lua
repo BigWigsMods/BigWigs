@@ -18,8 +18,8 @@ local coneOfDeathCounter = 1
 local soulBlightOrbCounter = 1
 local torturedRageCounter = 1
 local sweepingScytheCounter = 1
-
-local mobCollector = {}
+local scanningTargets = nil
+local vulnerabilityCollector = {}
 
 local timers = {
 	[1] = { -- XXX Not needed for other stages right now, perhaps mythic?
@@ -80,6 +80,7 @@ function mod:GetOptions()
 		255200, -- Aggramar's Boon
 
 		--[[ Stage 3 ]]--
+		252516, -- The Discs of Norgannon
 		constellarMarker,
 		{252729, "SAY"}, -- Cosmic Ray
 		{252616, "SAY"}, -- Cosmic Beacon
@@ -131,6 +132,8 @@ function mod:OnBossEnable()
 	--[[ Stage 3 ]]--
 	self:Log("SPELL_CAST_START", "TemporalBlast", 257645)
 	self:Log("SPELL_CAST_SUCCESS", "TheDiscsofNorgannonSuccess", 252516)
+	self:Log("SPELL_AURA_APPLIED", "VulnerabilityApplied", 255433, 255429, 255425, 255419, 255422, 255418, 255430)
+
 	self:Log("SPELL_AURA_APPLIED", "CosmicRayApplied", 252729)
 	self:Log("SPELL_CAST_START", "CosmicBeacon", 252616)
 	self:Log("SPELL_AURA_APPLIED", "CosmicBeaconApplied", 252616)
@@ -162,7 +165,6 @@ function mod:OnEngage()
 	soulBlightOrbCounter = 1
 	torturedRageCounter = 1
 	sweepingScytheCounter = 1
-	wipe(mobCollector)
 
 	self:Bar(255594, 16) -- Sky and Sea
 	self:Bar(257296, timers[stage][257296][torturedRageCounter]) -- Tortured Rage
@@ -187,6 +189,8 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		self:StopBar(255594) -- Sky and Sea
 	elseif msg:find(L.stage3_early) then -- We start bars for stage 3 later
 		stage = 3
+		wipe(vulnerabilityCollector)
+		scanningTargets = nil
 		self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 		self:StopBar(248499) -- Sweeping Scythe
 		self:StopBar(255826) -- Edge of Obliteration
@@ -367,6 +371,8 @@ end
 function mod:TemporalBlast()
 	if not stage == 3 then
 		stage = 3
+		wipe(vulnerabilityCollector)
+		scanningTargets = nil
 		self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 		self:StopBar(248499) -- Sweeping Scythe
 		self:StopBar(255826) -- Edge of Obliteration
@@ -378,45 +384,37 @@ function mod:TemporalBlast()
 
 	self:Bar("stages", 16.6, CL.incoming:format(self:SpellName(-17070)), "achievement_boss_algalon_01") -- The Constellar Designates Incoming!
 	self:Bar("stellarArmory", 26.3, L.stellarArmory, L.stellarArmory_icon) -- The Stellar Armory
+	self:Bar(252516, 27.3) -- The Discs of Norgannon
 	self:Bar(252616, 41.3) -- Cosmic Beacon
 end
 
-function mod:TheDiscsofNorgannonSuccess()
-	if self:GetOption(constellarMarker) then
-		self:RegisterTargetEvents("constellarMark")
-		self:ScheduleTimer("UnregisterTargetEvents", 10)
-	end
-end
-
 do
-	local markCounter = 0
-	function mod:constellarMark(event, unit, guid)
-		if self:MobId(guid) == 127192 and not mobCollector[guid] then
-			if UnitDebuff(unit, 255433) then -- Arcane Vulnerability (Blue Moon)
-				SetRaidTarget(unit, 5)
-				markCounter = markCounter + 1
-			elseif UnitDebuff(unit, 255429) then -- Fire Vulnerability (Orange Circle)
-				SetRaidTarget(unit, 2)
-				markCounter = markCounter + 1
-			elseif UnitDebuff(unit, 255425) then -- Frost Vulnerability (Blue Square)
-				SetRaidTarget(unit, 6)
-				markCounter = markCounter + 1
-			elseif UnitDebuff(unit, 255419) then -- Holy Vulnerability (Yellow Star)
-				SetRaidTarget(unit, 1)
-				markCounter = markCounter + 1
-			elseif UnitDebuff(unit, 255422) then -- Nature Vulnerability (Green Triangle)
-				SetRaidTarget(unit, 4)
-				markCounter = markCounter + 1
-			elseif UnitDebuff(unit, 255418) then -- Physical Vulnerability (Red Cross)
-				SetRaidTarget(unit, 7)
-				markCounter = markCounter + 1
-			elseif UnitDebuff(unit, 255430) then -- Shadow Vulnerability (Purple Diamond)
-				SetRaidTarget(unit, 3)
-				markCounter = markCounter + 1
-			end
+	local vulnerabilityIcons = {
+		[255419] = 1, -- Holy Vulnerability (Yellow Star)
+		[255429] = 2, -- Fire Vulnerability (Orange Circle)
+		[255430] = 3, -- Shadow Vulnerability (Purple Diamond)
+		[255422] = 4, -- Nature Vulnerability (Green Triangle)
+		[255433] = 5, -- Arcane Vulnerability (Blue Moon)
+		[255425] = 6, -- Frost Vulnerability (Blue Square)
+		[255418] = 7, -- Physical Vulnerability (Red Cross)
+	}
 
-			mobCollector[guid] = true
-			if markCounter == 7 then
+	function mod:VulnerabilityApplied(args)
+		if self:GetOption(constellarMarker) then
+			vulnerabilityCollector[args.destGUID] = vulnerabilityIcons[args.spellId]
+			if not scanningTargets then
+				self:RegisterTargetEvents("ConstellarMark")
+				scanningTargets = true
+			end
+		end
+	end
+
+	function mod:ConstellarMark(event, unit, guid)
+		if vulnerabilityCollector[guid] then
+			SetRaidTarget(unit, vulnerabilityCollector[guid])
+			vulnerabilityCollector[guid] = nil
+			if not next(vulnerabilityCollector) then
+				scanningTargets = nil
 				self:UnregisterTargetEvents()
 			end
 		end
@@ -482,6 +480,8 @@ end
 
 --[[ Stage 4 ]]--
 function mod:ReapSoul()
+	self:UnregisterTargetEvents()
+
 	stage = 4
 	self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 	self:StopBar(L.stellarArmory) -- The Stellar Armory
