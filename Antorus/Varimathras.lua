@@ -13,6 +13,19 @@ mod.respawnTime = 30
 --
 
 local tormentActive = 0 -- 1: Flames, 2: Frost, 3: Fel, 4: Shadows
+local _, shadowDesc = EJ_GetSectionInfo(16350)
+local mobCollector = {}
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.shadowOfVarmathras = "{-16350}"
+	L.shadowOfVarmathras_desc = shadowDesc
+	L.shadowOfVarmathras_icon = "spell_warlock_demonsoul"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -27,6 +40,7 @@ function mod:GetOptions()
 		243999, -- Dark Fissure
 		{244042, "SAY", "FLASH", "ICON"}, -- Marked Prey
 		{244094, "SAY", "FLASH", "ICON"}, -- Necrotic Embrace
+		"shadowOfVarmathras",
 	}
 end
 
@@ -49,10 +63,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 244005) -- Dark Fissure
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 244005) -- Dark Fissure
 	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 244005) -- Dark Fissure
+
+	--[[ Mythic ]]--
+	self:Log("SPELL_CAST_SUCCESS", "EchoesofDoom", 248732)
 end
 
 function mod:OnEngage()
 	tormentActive = 0
+	wipe(mobCollector)
 
 	self:CDBar("stages", 5, self:SpellName(243968), 243968) -- Torment of Flames
 	self:CDBar(243960, 9.7) -- Shadow Strike
@@ -152,7 +170,7 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			-- Only 1 initial application, can avoid spreading
+			-- Only 1 initial application, can avoid spreading. XXX See if this remains viable, or we need to mark everyone.
 			self:SecondaryIcon(args.spellId, args.destName)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
 		end
@@ -174,5 +192,21 @@ do
 			prev = t
 			self:Message(243999, "Personal", "Alert", CL.underyou:format(args.spellName)) -- Dark Fissure
 		end
+	end
+end
+
+--[[ Mythic ]]--
+do
+	local prev = 0
+	function mod:EchoesofDoom(args)
+		if not mobCollector[args.sourceGUID] then
+			mobCollector[args.sourceGUID] = true -- Only warn once per Shadow
+			local t = GetTime()
+			if t-prev > 1.5 then -- Also don't spam too much if it's a wipe and several are spawning at the same time
+				prev = t
+				self:Message("shadowOfVarmathras", "Urgent", "Alarm", L.shadowOfVarmathras, L.shadowOfVarmathras_icon)
+			end
+		end
+
 	end
 end
