@@ -11,6 +11,7 @@ mod.respawnTime = 30
 --------------------------------------------------------------------------------
 -- Locals
 --
+
 local _, armoryDesc = EJ_GetSectionInfo(17077)
 local stage = 1
 local coneOfDeathCounter = 1
@@ -53,7 +54,9 @@ end
 -- Initialization
 --
 
-local constellarMarker = mod:AddMarkerOption(false, "npc", 1, -17070, 1, 2, 3, 4, 5, 6, 7, 8) -- The Constellar Designates
+local burstMarker = mod:AddMarkerOption(false, "player", 3, 250669, 3, 7) -- Soul Burst
+local bombMarker = mod:AddMarkerOption(false, "player", 2, 251570, 2) -- Soul Bomb
+local constellarMarker = mod:AddMarkerOption(false, "npc", 1, 252516, 1, 2, 3, 4, 5, 6, 7) -- The Discs of Norgannon
 function mod:GetOptions()
 	return {
 		"stages",
@@ -65,11 +68,13 @@ function mod:GetOptions()
 		248167, -- Death Fog
 		257296, -- Tortured Rage
 		248499, -- Sweeping Scythe
-		255594, -- Sky and Sea
+		{255594, "SAY"}, -- Sky and Sea
 
 		--[[ Stage 2 ]]--
 		{250669, "SAY"}, -- Soul Burst
+		burstMarker,
 		{251570, "SAY"}, -- Soul Bomb
+		bombMarker,
 		255826, -- Edge of Obliteration
 		255199, -- Avatar of Aggramar
 		255200, -- Aggramar's Boon
@@ -84,7 +89,7 @@ function mod:GetOptions()
 		--[[ Stage 4 ]]--
 		256544, -- End of All Things
 		258039, -- Deadly Scythe
-		256396, -- Reorigination Pulse
+		256388, -- Initialization Sequence
 		257214, -- Titanforging
 	},{
 		["stages"] = "general",
@@ -107,7 +112,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SweepingScythe", 248499)
 	self:Log("SPELL_AURA_APPLIED", "SweepingScytheStack", 244899)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SweepingScytheStack", 244899)
-	self:Log("SPELL_CAST_START", "SkyandSea", 255594)
+	self:Log("SPELL_CAST_SUCCESS", "SkyandSea", 255594)
+	self:Log("SPELL_AURA_APPLIED", "GiftoftheSea", 258647)
+	self:Log("SPELL_AURA_APPLIED", "GiftoftheSky", 258646)
 	self:Log("SPELL_AURA_APPLIED", "StrengthoftheSkyandSea", 253901, 253903) -- Strength of the Sea, Strength of the Sky
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StrengthoftheSkyandSea", 253901, 253903) -- Strength of the Sea, Strength of the Sky
 
@@ -123,6 +130,7 @@ function mod:OnBossEnable()
 
 	--[[ Stage 3 ]]--
 	self:Log("SPELL_CAST_START", "TemporalBlast", 257645)
+	self:Log("SPELL_CAST_SUCCESS", "TheDiscsofNorgannonSuccess", 252516)
 	self:Log("SPELL_AURA_APPLIED", "CosmicRayApplied", 252729)
 	self:Log("SPELL_CAST_START", "CosmicBeacon", 252616)
 	self:Log("SPELL_AURA_APPLIED", "CosmicBeaconApplied", 252616)
@@ -139,7 +147,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DeadlyScythe", 258039)
 	self:Log("SPELL_AURA_APPLIED", "DeadlyScytheStack", 258039)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DeadlyScytheStack", 258039)
-	self:Log("SPELL_CAST_START", "ReoriginationPulse", 256396)
+	self:Log("SPELL_CAST_SUCCESS", "InitializationSequence", 256388)
 	self:Log("SPELL_CAST_SUCCESS", "Titanforging", 257214)
 
 	-- Ground Effects
@@ -156,7 +164,7 @@ function mod:OnEngage()
 	sweepingScytheCounter = 1
 	wipe(mobCollector)
 
-	self:Bar(255594, 11) -- Sky and Sea
+	self:Bar(255594, 16) -- Sky and Sea
 	self:Bar(257296, timers[stage][257296][torturedRageCounter]) -- Tortured Rage
 	self:Bar(248165, timers[stage][248165][coneOfDeathCounter]) -- Cone of Death
 	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soul Blight Orb
@@ -228,21 +236,35 @@ function mod:SweepingScythe(args)
 end
 
 function mod:SweepingScytheStack(args)
-	if self:Me(args.destGUID) or self:Tank() then -- Always Show for Tanks and when on Self
+	if self:Me(args.destGUID) or self:Tank() then -- Always Show for Tanks and when on self
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "Attention", self:Tank() and (amount > 2 and "Alarm") or "Warning") -- Warning sound for non-tanks, 3+ stacks warning for tanks
 	end
 end
 
 function mod:SkyandSea(args)
-	self:Message(args.spellId, "Positive", "Long", CL.incoming:format(args.spellName))
 	self:CDBar(args.spellId, 27)
+end
+
+-- XXX 2 message perhaps too much, maybe combine?
+function mod:GiftoftheSea(args)
+	self:TargetMessage(255594, args.destName, "Positive", "Long", args.spellName, nil, true)
+	if self:Me(args.destGUID) then
+		self:Say(255594, args.spellName)
+	end
+end
+
+function mod:GiftoftheSky(args)
+	self:TargetMessage(255594, args.destName, "Positive", "Long", args.spellName, nil, true)
+	if self:Me(args.destGUID) then
+		self:Say(255594, args.spellName)
+	end
 end
 
 function mod:StrengthoftheSkyandSea(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:Message(args.spellId, "Positive", "Info", CL.stackyou:format(amount, args.spellName))
+		self:Message(255594, "Positive", "Info", CL.stackyou:format(amount, args.spellName))
 	end
 end
 
@@ -275,12 +297,20 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
+			if self:GetOption(burstMarker) then
+				SetRaidTarget(args.destName, 3)
+			end
+		elseif self:GetOption(burstMarker) then
+				SetRaidTarget(args.destName, 7)
 		end
 	end
 
 	function mod:SoulburstRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
+		end
+		if self:GetOption(burstMarker) then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
@@ -295,11 +325,18 @@ function mod:Soulbomb(args)
 
 	self:Bar(250669, stage == 4 and 54 or 42) -- Soulburst
 	self:Bar(250669, stage == 4 and 24.5 or 20, CL.count:format(self:SpellName(250669), 2)) -- Soulburst (2)
+
+	if self:GetOption(burstMarker) then
+		SetRaidTarget(args.destName, 2)
+	end
 end
 
 function mod:SoulbombRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+	end
+	if self:GetOption(burstMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
@@ -342,27 +379,45 @@ function mod:TemporalBlast()
 	self:Bar("stages", 16.6, CL.incoming:format(self:SpellName(-17070)), "achievement_boss_algalon_01") -- The Constellar Designates Incoming!
 	self:Bar("stellarArmory", 26.3, L.stellarArmory, L.stellarArmory_icon) -- The Stellar Armory
 	self:Bar(252616, 41.3) -- Cosmic Beacon
+end
 
+function mod:TheDiscsofNorgannonSuccess()
 	if self:GetOption(constellarMarker) then
 		self:RegisterTargetEvents("constellarMark")
-		self:ScheduleTimer("UnregisterTargetEvents", 20)
+		self:ScheduleTimer("UnregisterTargetEvents", 10)
 	end
 end
 
 do
-	local constellarMarks = {}
+	local markCounter = 0
 	function mod:constellarMark(event, unit, guid)
 		if self:MobId(guid) == 127192 and not mobCollector[guid] then
-			for i = 1, 8 do
-				if not constellarMarks[i] then
-					SetRaidTarget(unit, i)
-					constellarMarks[i] = guid
-					mobCollector[guid] = true
-					if i == 8 then
-						self:UnregisterTargetEvents()
-					end
-					return
-				end
+			if UnitDebuff(unit, 255433) then -- Arcane Vulnerability (Blue Moon)
+				SetRaidTarget(unit, 5)
+				markCounter = markCounter + 1
+			elseif UnitDebuff(unit, 255429) then -- Fire Vulnerability (Orange Circle)
+				SetRaidTarget(unit, 2)
+				markCounter = markCounter + 1
+			elseif UnitDebuff(unit, 255425) then -- Frost Vulnerability (Blue Square)
+				SetRaidTarget(unit, 6)
+				markCounter = markCounter + 1
+			elseif UnitDebuff(unit, 255419) then -- Holy Vulnerability (Yellow Star)
+				SetRaidTarget(unit, 1)
+				markCounter = markCounter + 1
+			elseif UnitDebuff(unit, 255422) then -- Nature Vulnerability (Green Triangle)
+				SetRaidTarget(unit, 4)
+				markCounter = markCounter + 1
+			elseif UnitDebuff(unit, 255418) then -- Physical Vulnerability (Red Cross)
+				SetRaidTarget(unit, 7)
+				markCounter = markCounter + 1
+			elseif UnitDebuff(unit, 255430) then -- Shadow Vulnerability (Purple Diamond)
+				SetRaidTarget(unit, 3)
+				markCounter = markCounter + 1
+			end
+
+			mobCollector[guid] = true
+			if markCounter == 7 then
+				self:UnregisterTargetEvents()
 			end
 		end
 	end
@@ -449,11 +504,12 @@ function mod:EndofAllThingsInterupted(args)
 	self:Message(args.spellId, "Positive", "Info", args.spellName, args.spellId)
 	self:StopBar(CL.cast:format(args.spellName))
 
+	-- XXX All timers seem to start from cast interupt
 	self:Bar(258039, 6) -- Deadly Scythe
 	--self:Bar(251570, 6) -- Soulbomb -- XXX Depends on energy going out of stage 2 atm
 	--self:Bar(250669, 6) -- Soulburst -- XXX Depends on energy going out of stage 2 atm
-	self:Bar(257296, 11) -- Tortured Rage -- XXX Might depend on stage start, not cast interupt
-	self:Bar(256396, 18.5) -- Reorigination Pulse -- XXX Might depend on stage start, not cast interupt
+	self:Bar(257296, 11) -- Tortured Rage
+	self:Bar(256396, 18.5) -- Initialization Sequence
 end
 
 function mod:DeadlyScythe(args)
@@ -470,9 +526,9 @@ end
 
 do
 	local prev = 0
-	function mod:ReoriginationPulse(args)
+	function mod:InitializationSequence(args)
 		local t = GetTime()
-		if t-prev > 20 then -- Different casts start eachother for some time, but the new set isn't until a lot later
+		if t-prev > 2 then
 			prev = t
 			self:Message(args.spellId, "Important", "Warning")
 			self:CDBar(args.spellId, 50)
