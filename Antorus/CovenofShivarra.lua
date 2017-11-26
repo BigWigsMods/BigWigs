@@ -14,7 +14,7 @@ mod.engageId = 2073
 mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
--- Locals
+-- Localization
 --
 
 local L = mod:GetLocale()
@@ -28,6 +28,7 @@ end
 -- Initialization
 --
 
+local cosmicGlareMarker = mod:AddMarkerOption(false, "player", 3, 250912, 3,4)
 function mod:GetOptions()
 	return {
 		--[[ General ]]--
@@ -52,7 +53,8 @@ function mod:GetOptions()
 
 		--[[ Thu'raya, Mother of the Cosmos (Mythic) ]]--
 		250648, -- Touch of the Cosmos
-		250912, -- Cosmic Glare
+		{250912, "SAY", "FLASH"}, -- Cosmic Glare
+		cosmicGlareMarker,
 	},{
 		[253203] = "general",
 		[244899] = -15967, -- Noura, Mother of Flame
@@ -82,13 +84,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "StormofDarkness", 252861)
 
 	--[[ Diima, Mother of Gloom ]]--
-	self:Log("SPELL_CAST_SUCCESS", "Flashfreeze", 245518)
+	self:Log("SPELL_CAST_SUCCESS", "FlashfreezeSuccess", 245518)
+	self:Log("SPELL_AURA_APPLIED", "Flashfreeze", 245518)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Flashfreeze", 245518)
 	self:Log("SPELL_AURA_APPLIED", "ChilledBlood", 245586)
 	self:Log("SPELL_CAST_START", "OrbofFrost", 253650)
 
 	--[[ Thu'raya, Mother of the Cosmos (Mythic) ]]--
 	self:Log("SPELL_CAST_START", "TouchoftheCosmos", 250648)
-	self:Log("SPELL_CAST_SUCCESS", "CosmicGlare", 250912)
+	self:Log("SPELL_AURA_APPLIED", "CosmicGlare", 250757)
+	self:Log("SPELL_AURA_REMOVED", "CosmicGlareRemoved", 250757)
 end
 
 function mod:OnEngage()
@@ -228,8 +233,14 @@ end
 
 --[[ Diima, Mother of Gloom ]]--
 function mod:Flashfreeze(args)
-	self:TargetMessage(args.spellId, args.destName, "Neutral", "Info", nil, nil, true)
-	self:Bar(args.spellId, 25.5)
+	local amount = args.amount or 1
+	if self:Me(args.destGUID) or amount > 4 then -- Swap above 4, always display stacks on self
+		self:StackMessage(args.spellId, args.destName, amount, "Neutral", "Info")
+	end
+end
+
+function mod:FlashfreezeSuccess(args)
+	self:Bar(args.spellId, 10.9)
 end
 
 do
@@ -253,10 +264,36 @@ function mod:TouchoftheCosmos(args)
 	if self:Interrupter() then
 		self:Message(args.spellId, "Urgent", "Alarm")
 	end
-	--self:Bar(args.spellId, 30.5)
 end
 
-function mod:CosmicGlare(args)
-	self:Message(args.spellId, "Attention", "Alert")
-	--self:Bar(args.spellId, 30.5)
+do
+	local playerList = mod:NewTargetList()
+	function mod:CosmicGlare(args)
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 4)
+		end
+
+		playerList[#playerList+1] = args.destName
+
+		if #playerList == 1 then
+			self:Bar(args.spellId, 25.6)
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Attention", "Alarm")
+			if self:GetOption(cosmicGlareMarker) then
+				SetRaidTarget(args.destName, 3)
+			end
+		elseif self:GetOption(cosmicGlareMarker) then
+			SetRaidTarget(args.destName, 4)
+		end
+	end
+end
+
+function mod:CosmicGlareRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+	if self:GetOption(cosmicGlareMarker) then
+		SetRaidTarget(args.destName, 0)
+	end
 end
