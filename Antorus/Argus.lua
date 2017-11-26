@@ -43,8 +43,6 @@ if L then
 	L.stage2_early = "Let the fury of the sea wash away this corruption!" -- Yell is 6s before the actual cast start
 	L.stage3_early = "No hope. Just pain. Only pain!"  -- Yell is 14.5s before the actual cast start
 
-	L.explosion = "%s Exploding"
-
 	L.stellarArmory = "{-17077}"
 	L.stellarArmory_desc = armoryDesc
 	L.stellarArmory_icon = "inv_sword_2h_pandaraid_d_01"
