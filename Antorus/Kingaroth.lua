@@ -284,18 +284,21 @@ function mod:EmpoweredRuiner(args)
 	self:Message(246833, "Neutral", "Info", L.gains:format(args.spellName))
 	empRuiner = true
 	self:Bar(246833, self:BarTimeLeft(self:SpellName(246833)), L.empowered:format(self:SpellName(246833))) -- (E) Ruiner
+	self:StopBar(246833)
 end
 
 function mod:EmpoweredReverberatingStrike(args)
 	self:Message(254926, "Neutral", "Info", L.gains:format(args.spellName))
 	empStrike = true
 	self:Bar(254926, self:BarTimeLeft(self:SpellName(254926)), L.empowered:format(self:SpellName(254926))) -- (E) Reverberating Strike
+	self:StopBar(254926)
 end
 
 function mod:EmpoweredDiabolicBomb(args)
 	self:Message(248214, "Neutral", "Info", L.gains:format(args.spellName))
 	empBomb = true
 	self:Bar(248214, self:BarTimeLeft(self:SpellName(248214)), L.empowered:format(self:SpellName(248214))) -- (E) Diabolic Bomb
+	self:StopBar(248214)
 end
 
 do
