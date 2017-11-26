@@ -20,7 +20,7 @@ local assumeCommandCount = 1
 local incomingBoss = {
 	[0] = mod:SpellName(-16100), -- Admiral Svirax
 	[1] = mod:SpellName(-16116), -- Chief Engineer Ishkar
-	[2] = mod:SpellName(-16121), -- General Erodus
+	[2] = mod:SpellName(-16118), -- General Erodus
 }
 
 --------------------------------------------------------------------------------
@@ -31,13 +31,12 @@ function mod:GetOptions()
 	return {
 		--[[ In Pod: Admiral Svirax ]] --
 		244625, -- Fusillade
-		--245292, -- Withering Fire
 
 		--[[ In Pod: Chief Engineer Ishkar ]] --
 		245161, -- Entropic Mine
 
 		--[[ In Pod: General Erodus ]] --
-		--245546, -- Summon Reinforcements
+		245546, -- Summon Reinforcements
 		246505, -- Pyroblast
 
 		--[[ Out of Pod ]] --
@@ -46,12 +45,16 @@ function mod:GetOptions()
 
 		--[[ Stealing Power ]]--
 		244910, -- Felshield
+
+		--[[ Mythic ]]--
+		244737, -- Shock Grenade
 	},{
 		[244625] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16100)), -- In Pod: Admiral Svirax
 		[245161] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16116)), -- In Pod: Chief Engineer Ishkar
-		[246505] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16121)), -- In Pod: General Erodus
+		[245546] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16118)), -- In Pod: General Erodus
 		[245227] = mod:SpellName(-16098), -- Out of Pod
 		[244910] = mod:SpellName(-16125), -- Stealing Power
+		[244737] = "mythic",
 	}
 end
 
@@ -60,13 +63,8 @@ function mod:OnBossEnable()
 
 	--[[ In Pod: Admiral Svirax ]] --
 	self:Log("SPELL_CAST_START", "Fusillade", 244625)
-	--self:Log("SPELL_CAST_SUCCESS", "WitheringFire", 245292) -- XXX Not seen in logs
-
-	--[[ In Pod: Chief Engineer Ishkar ]] --
-	-- Entropic Mines (UNIT_SPELLCAST_SUCCEEDED)
 
 	--[[ In Pod: General Erodus ]] --
-	--self:Log("SPELL_CAST_SUCCESS", "SummonReinforcements", 245546) -- XXX Not seen in logs
 	self:Log("SPELL_CAST_START", "Pyroblast", 246505)
 
 	--[[ Out of Pod ]] --
@@ -77,6 +75,12 @@ function mod:OnBossEnable()
 
 	--[[ Stealing Power ]]--
 	self:Log("SPELL_AURA_APPLIED", "Felshield", 244910)
+
+	--[[ Mythic ]]--
+	self:Log("SPELL_CAST_START", "ShockGrenadeStart", 244722)
+	self:Log("SPELL_AURA_APPLIED", "ShockGrenade", 244737)
+	self:Log("SPELL_AURA_REMOVED", "ShockGrenadeRemoved", 244737)
+
 end
 
 function mod:OnEngage()
@@ -93,6 +97,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 245304 then -- Entropic Mines
 		self:Message(245161, "Attention", "Alert")
 		self:Bar(245161, 10)
+	elseif spellId == 245546 then -- Summon Reinforcements
+		self:Message(245546, "Neutral", "Info")
+		self:Bar(245546, 35)
 	end
 end
 
@@ -100,13 +107,14 @@ function mod:AssumeCommand(args)
 	self:Message(args.spellId, "Neutral", "Long", CL.incoming:format(incomingBoss[assumeCommandCount % 3]))
 
 	if assumeCommandCount % 3 == 1 then -- Chief Engineer Ishkar
+		self:StopBar(245161) -- Entropic Mines
 		self:Bar(244625, 18.3) -- Fusillade
 	elseif assumeCommandCount % 3 == 2 then -- General Erodus
-		self:StopBar(244625) -- Fusillade
-
+		self:StopBar(245546) -- Summon Reinforcements
 		self:Bar(245161, 11) -- Entropic Mines
 	else -- Admiral Svirax
-		self:StopBar(245161) -- Entropic Mines
+		self:StopBar(244625) -- Fusillade
+		self:Bar(245546, 35) -- Summon Reinforcements
 	end
 	self:CDBar(244892, 13.5) -- Sundering Claws
 
@@ -135,39 +143,25 @@ function mod:Fusillade(args)
 	self:CDBar(args.spellId, 30) -- ~29.8-33.2s
 end
 
---[[ XXX Remove if Unused on Live
 
-function mod:WitheringFire(args)
-	self:Message(args.spellId, "Attention", "Alert")
+function mod:ShockGrenadeStart(args)
+	self:Message(244737, "Attention", "Alert", CL.incoming:format(args.spellName))
+	self:Bar(244737, 20)
 end
 
-function mod:SummonReinforcements(args)
-	self:Message(args.spellId, "Neutral", "Info")
-end
-
-do
-	local playerList = mod:NewTargetList()
-	function mod:ShockGrenade(args)
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 5)
-		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Personal", "Warning")
-		end
+function mod:ShockGrenade(args)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 5)
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
 	end
 end
 
---function mod:ShockGrenadeRemoved(args)
+function mod:ShockGrenadeRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
 end
-
-function mod:WarpField(args)
-	self:Message(args.spellId, "Important", "Long")
-end ]]--
 
 function mod:Felshield(args)
 	if self:Me(args.destGUID) then
