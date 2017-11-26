@@ -59,10 +59,14 @@ function mod:GetOptions()
 		246657, -- Annihilation
 		246686, -- Decimation
 		{246698, "SAY"}, -- Demolish
+
+		--[[ Mythic ]]--
+		{249680, "SAY"}, -- Reverberating Decimation
 	},{
 		[244312] = -16151, -- Stage: Deployment
 		[246516] = -16152, -- Stage: Construction
 		[246657] = CL.adds,
+		[249680] = "mythic",
 	}
 end
 
