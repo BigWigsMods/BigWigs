@@ -53,7 +53,7 @@ function mod:GetOptions()
 
 		--[[ Thu'raya, Mother of the Cosmos (Mythic) ]]--
 		250648, -- Touch of the Cosmos
-		{250912, "SAY", "FLASH"}, -- Cosmic Glare
+		{250757, "SAY", "FLASH"}, -- Cosmic Glare
 		cosmicGlareMarker,
 	},{
 		[253203] = "general",
