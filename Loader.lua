@@ -1183,6 +1183,10 @@ do
 				self:UNIT_TARGET("player")
 			elseif inside then
 				bwFrame:UnregisterEvent("UNIT_TARGET")
+				-- XXX temp
+				if id == 1712 and not loadedList[id] then
+					sysprint("Antorus modules are still under development. The fastest way to get bugs fixed is via our Discord.")
+				end
 				loadedList[id] = true
 				if loadAndEnableCore() then
 					if BigWigs:IsEnabled() and loadOnZone[id] then
