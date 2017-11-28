@@ -14,27 +14,27 @@ L = BigWigs:NewBossLocale("Eonar the Life-Binder", "zhTW")
 if L then
 	--L.warp_in_desc = "Shows timers and messages for each wave, along with any special adds in the wave."
 
-	--L.top_lane = "Top"
-	--L.mid_lane = "Mid"
-	--L.bot_lane = "Bot"
+	L.top_lane = "上"
+	L.mid_lane = "中"
+	L.bot_lane = "下"
 
-	--L.purifier = "Purifier" -- Fel-Powered Purifier
-	--L.destructor = "Destructor" -- Fel-Infused Destructor
-	--L.obfuscator = "Obfuscator" -- Fel-Charged Obfuscator
-	--L.bats = "Fel Bats"
+	L.purifier = "淨化者" -- Fel-Powered Purifier
+	L.destructor = "毀滅者" -- Fel-Infused Destructor
+	L.obfuscator = "匿蹤者" -- Fel-Charged Obfuscator
+	L.bats = "蝙蝠"
 end
 
 L = BigWigs:NewBossLocale("Portal Keeper Hasabel", "zhTW")
 if L then
 	--L.custom_on_filter_platforms = "Filter Side Platform Warnings and Bars"
 	--L.custom_on_filter_platforms_desc = "Removes unnecessary messages and bars if you are not on a side platform. It will always show bars and warnings from the main Platform: Nexus."
-	--L.platform_active = "%s Active!" -- Platform: Xoroth Active!
+	L.platform_active = "%s啟動！" -- Platform: Xoroth Active!
 end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "zhTW")
 if L then
 	--L.empowered = "(E) %s" -- (E) Ruiner
-	--L.gains = "Kin'garoth gains %s" -- Kin'garoth gains Empowered Ruiner
+	L.gains = "金加洛斯獲得了%s" -- Kin'garoth gains Empowered Ruiner
 end
 
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "zhTW")
