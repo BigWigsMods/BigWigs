@@ -12,7 +12,7 @@ end
 
 L = BigWigs:NewBossLocale("Eonar the Life-Binder", "zhTW")
 if L then
-	--L.warp_in_desc = "Shows timers and messages for each wave, along with any special adds in the wave."
+	L.warp_in_desc = "顯示每一波怪的計時器與訊息，並提示其中的特殊怪。"
 
 	L.top_lane = "上"
 	L.mid_lane = "中"
@@ -26,8 +26,8 @@ end
 
 L = BigWigs:NewBossLocale("Portal Keeper Hasabel", "zhTW")
 if L then
-	--L.custom_on_filter_platforms = "Filter Side Platform Warnings and Bars"
-	--L.custom_on_filter_platforms_desc = "Removes unnecessary messages and bars if you are not on a side platform. It will always show bars and warnings from the main Platform: Nexus."
+	L.custom_on_filter_platforms = "過濾外側平台的警告與計時器"
+	L.custom_on_filter_platforms_desc = "如果你不是上台組，關閉不需要的外側平台提示，只顯示中央場地的警告與計時器。"
 	L.platform_active = "%s啟動！" -- Platform: Xoroth Active!
 end
 
@@ -39,7 +39,7 @@ end
 
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "zhTW")
 if L then
-	--L.cannon_ability_desc = "Display Messages and Bars related to the 2 cannons on the Gorothi Worldbreaker's back."
+	L.cannon_ability_desc = "顯示與火砲相關的警告與計時器。"
 end
 
 
