@@ -20,7 +20,7 @@ local rainofFelCounter = 1
 local spearCounter = 1
 local finalDoomCounter = 1
 local lifeForceCounter = 1
-local lifeForceNeeded = 5
+local lifeForceNeeded = 4
 local engageTime = 0
 
 local timersNormal = {
