@@ -84,7 +84,7 @@ end
 --
 
 function mod:UNIT_HEALTH_FREQUENT(unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextApocalypseDriveWarning then
 		self:Message(240277, "Neutral", "Info", CL.soon:format(self:SpellName(240277))) -- Apocalypse Drive
 		if stage == 1 then
