@@ -18,6 +18,7 @@ local coneOfDeathCounter = 1
 local soulBlightOrbCounter = 1
 local torturedRageCounter = 1
 local sweepingScytheCounter = 1
+local initializationCount = 3
 local scanningTargets = nil
 local vulnerabilityCollector = {}
 
@@ -46,6 +47,8 @@ if L then
 	L.stellarArmory = "{-17077}"
 	L.stellarArmory_desc = armoryDesc
 	L.stellarArmory_icon = "inv_sword_2h_pandaraid_d_01"
+
+	L.countx = "%s (%dx)"
 end
 
 --------------------------------------------------------------------------------
@@ -143,7 +146,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "GiftoftheLifebinder", 257619)
 
 	self:Log("SPELL_CAST_START", "EndofAllThings", 256544)
-	self:Log("SPELL_INTERRUPT", "EndofAllThingsInterupted", 256544)
+	self:Log("SPELL_INTERRUPT", "EndofAllThingsInterupted", "*")
 	self:Log("SPELL_CAST_START", "DeadlyScythe", 258039)
 	self:Log("SPELL_AURA_APPLIED", "DeadlyScytheStack", 258039)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DeadlyScytheStack", 258039)
@@ -498,15 +501,18 @@ function mod:EndofAllThings(args)
 end
 
 function mod:EndofAllThingsInterupted(args)
-	self:Message(args.spellId, "Positive", "Info", args.spellName, args.spellId)
-	self:StopBar(CL.cast:format(args.spellName))
+	if args.extraSpellId == 256544 then
+		self:Message(args.extraSpellId, "Positive", "Info", args.extraSpellName)
+		self:StopBar(CL.cast:format(args.extraSpellName))
+		initializationCount = 3
 
-	-- XXX All timers seem to start from cast interupt
-	self:Bar(258039, 6) -- Deadly Scythe
-	--self:Bar(251570, 6) -- Soulbomb -- XXX Depends on energy going out of stage 2 atm
-	--self:Bar(250669, 6) -- Soulburst -- XXX Depends on energy going out of stage 2 atm
-	self:Bar(257296, 11) -- Tortured Rage
-	self:Bar(256396, 18.5) -- Initialization Sequence
+		-- XXX All timers seem to start from cast interupt
+		self:Bar(258039, 6) -- Deadly Scythe
+		--self:Bar(251570, 6) -- Soulbomb -- XXX Depends on energy going out of stage 2 atm
+		--self:Bar(250669, 6) -- Soulburst -- XXX Depends on energy going out of stage 2 atm
+		self:Bar(257296, 11) -- Tortured Rage
+		self:Bar(256396, 18.5, L.countx:format(self:SpellName(256396), initializationCount)) -- Initialization Sequence
+	end
 end
 
 function mod:DeadlyScythe(args)
@@ -527,8 +533,9 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Important", "Warning")
-			self:CDBar(args.spellId, 50)
+			self:Message(args.spellId, "Important", "Warning", L.countx:format(args.spellName, initializationCount))
+			initializationCount = initializationCount + 1
+			self:CDBar(args.spellId, 50, L.countx:format(args.spellName, initializationCount))
 		end
 	end
 end
