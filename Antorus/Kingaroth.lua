@@ -91,7 +91,7 @@ function mod:OnBossEnable()
 	self:Death("AddDeaths", 123906, 123929, 123921) -- Garothi Annihilator, Garothi Demolisher, Garothi Decimator
 
 	--[[ Mythic ]]--
-	self:Log("SPELL_AURA_APPLIED", "EmpoweredReverberatingStrike ", 254795)
+	self:Log("SPELL_AURA_APPLIED", "EmpoweredReverberatingStrike", 254795)
 	self:Log("SPELL_AURA_APPLIED", "EmpoweredDiabolicBomb", 254796)
 	self:Log("SPELL_AURA_APPLIED", "EmpoweredRuiner", 254797)
 
