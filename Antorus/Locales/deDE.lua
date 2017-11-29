@@ -37,6 +37,12 @@ if L then
 	--L.gains = "Kin'garoth gains %s" -- Kin'garoth gains Empowered Ruiner
 end
 
+L = BigWigs:NewBossLocale("Antoran High Command", "deDE")
+if L then
+	--L.felshieldActivated = "Felshield Activated by %s"
+	--L.felshieldUp = "Felshield Up"
+end
+
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "deDE")
 if L then
 	--L.cannon_ability_desc = "Display Messages and Bars related to the 2 cannons on the Gorothi Worldbreaker's back."

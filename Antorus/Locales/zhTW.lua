@@ -37,6 +37,12 @@ if L then
 	L.gains = "金加洛斯獲得了%s" -- Kin'garoth gains Empowered Ruiner
 end
 
+L = BigWigs:NewBossLocale("Antoran High Command", "zhTW")
+if L then
+	--L.felshieldActivated = "Felshield Activated by %s"
+	--L.felshieldUp = "Felshield Up"
+end
+
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "zhTW")
 if L then
 	L.cannon_ability_desc = "顯示被兩門火砲強化後的技能訊息與計時器。"
