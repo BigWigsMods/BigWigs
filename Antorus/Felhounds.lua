@@ -1,6 +1,7 @@
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Raid Markers for Weigt of Darkness and/or Siphon Corruption?
+-- -- Check which debuffs for Weight of Darkness are the correct ones
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -74,12 +75,12 @@ end
 function mod:OnEngage()
 	self:CDBar(251445, 10.5) -- Burning Maw
 	self:CDBar(245098, 10.5) -- Corrupting Maw
-	self:Bar(244072, 19.5) -- Molten Touch
-	self:Bar(244056, 27.5) -- Siphon Corruption
+	self:Bar(244072, 20) -- Molten Touch
+	self:Bar(244056, 28) -- Siphon Corruption
 	self:Bar(244057, 52) -- Enflame Corruption
-	self:Bar(244131, 52) -- Consuming Sphere
+	self:Bar(244131, 52.5) -- Consuming Sphere
 	self:Bar(244069, 78) -- Weight of Darkness
-	self:Bar(244072, 82.5) -- Desolate Gaze
+	self:Bar(244072, 84.5) -- Desolate Gaze
 end
 
 --------------------------------------------------------------------------------
@@ -89,7 +90,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 244159 then -- Consuming Sphere
 		self:Message(244131, "Attention", "Alert")
-		self:Bar(244131, 78.0)
+		self:Bar(244131, 78.5)
 	end
 end
 
@@ -103,7 +104,7 @@ do
 	function mod:MoltenTouchApplied(args)
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:Bar(args.spellId, 95.5)
+			self:Bar(args.spellId, 96.5)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Attention", "Warning")
 		end
 	end
@@ -118,7 +119,7 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:Bar(args.spellId, 95.5)
+			self:Bar(args.spellId, 96.5)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
 		end
 	end
@@ -164,7 +165,7 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:Bar(args.spellId, 78.0)
+			self:Bar(args.spellId, 78.5)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning", nil, nil, true)
 		end
 	end
@@ -178,7 +179,7 @@ end
 
 function mod:SiphonCorruption(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	self:Bar(args.spellId, 78.0)
+	self:Bar(args.spellId, 78.5)
 	self:CastBar(args.spellId, 9)
 end
 
