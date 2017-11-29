@@ -53,6 +53,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BurningMaw", 251445)
 	self:Log("SPELL_AURA_APPLIED", "MoltenTouchApplied", 244072)
 	self:Log("SPELL_AURA_APPLIED", "DesolateGazeApplied", 244768)
+	self:Log("SPELL_AURA_APPLIED", "DesolateGazeRemoved", 244768)
 	self:Log("SPELL_CAST_SUCCESS", "EnflameCorruption", 244057)
 	self:Log("SPELL_AURA_APPLIED", "Enflamed", 248815)
 	self:Log("SPELL_AURA_REMOVED", "EnflamedRemoved", 248815)
@@ -113,12 +114,19 @@ do
 	function mod:DesolateGazeApplied(args)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 8)
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:Bar(args.spellId, 95.5)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
 		end
+	end
+end
+
+function mod:DesolateGazeRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
