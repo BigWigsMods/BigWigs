@@ -25,7 +25,7 @@ local engageTime = 0
 
 local timersNormal = {
 	--[[ Rain of Fel ]]--
-	[248332] = {},
+	[248332] = {30, 31, 35, 45, 80, 50, 20, 35}, -- XXX vary a lot across logs
 
 	--[[ Waves ]]--
 	["top"] = {
@@ -40,7 +40,7 @@ local timersNormal = {
 
 local timersHeroic = {
 	--[[ Rain of Fel ]]--
-	[248332] = {},
+	[248332] = {15, 41, 10, 45, 35, 19, 19, 29, 45, 35, 97},
 
 	--[[ Spear of Doom ]] --
 	[248861] = {},
