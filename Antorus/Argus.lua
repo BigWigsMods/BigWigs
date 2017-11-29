@@ -129,7 +129,6 @@ function mod:OnBossEnable()
 
 	--[[ Stage 3 ]]--
 	self:Log("SPELL_CAST_START", "TemporalBlast", 257645)
-	self:Log("SPELL_CAST_SUCCESS", "TheDiscsofNorgannonSuccess", 252516)
 	self:Log("SPELL_AURA_APPLIED", "VulnerabilityApplied", 255433, 255429, 255425, 255419, 255422, 255418, 255430)
 
 	self:Log("SPELL_AURA_APPLIED", "CosmicRayApplied", 252729)
@@ -234,7 +233,7 @@ end
 function mod:SweepingScythe(args)
 	self:Message(args.spellId, "Neutral", "Alert")
 	sweepingScytheCounter = sweepingScytheCounter + 1
-	self:CDBar(args.spellId, stage == 2 and 6.1 or timers[stage][args.spellId][sweepingScytheCounter])
+	self:CDBar(args.spellId, stage ~= 1 and 6.1 or timers[stage][args.spellId][sweepingScytheCounter])
 end
 
 function mod:SweepingScytheStack(args)
@@ -381,7 +380,7 @@ function mod:TemporalBlast()
 	end
 
 	self:Bar("stages", 16.6, CL.incoming:format(self:SpellName(-17070)), "achievement_boss_algalon_01") -- The Constellar Designates Incoming!
-	self:Bar("stellarArmory", 26.3, L.stellarArmory, L.stellarArmory_icon) -- The Stellar Armory
+	self:Bar("stellarArmory", 26.3, self:SpellName(-17077), L.stellarArmory_icon) -- The Stellar Armory
 	self:Bar(252516, 27.3) -- The Discs of Norgannon
 	self:Bar(252616, 41.3) -- Cosmic Beacon
 end
@@ -466,8 +465,8 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message("stellarArmory", "Attention", "Alert", L.stellarArmory, L.stellarArmory_icon)
-			self:Bar("stellarArmory", 40, L.stellarArmory, L.stellarArmory_icon)
+			self:Message("stellarArmory", "Attention", "Alert", self:SpellName(-17077), L.stellarArmory_icon)
+			self:Bar("stellarArmory", 40, self:SpellName(-17077), L.stellarArmory_icon)
 		end
 	end
 end
