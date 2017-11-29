@@ -45,14 +45,27 @@ local timersHeroic = {
 	--[[ Spear of Doom ]] --
 	[248861] = {29.7, 59.6, 64.5, 40.3, 84.6, 35.2, 65.7},
 
-	--[[ Waves ]]--
+	--[[ Waves ]]-- -- XXX Check these after implementation
 	["top"] = {
+		{65, "obfuscator"},
+		{80, "destructor"},
+		{200, nil},
+		{311, "destructor"},
 	},
 	["mid"] = {
+		{7.5, "destructor"},
+		{110, "purifier"},
+		{215, "purifier"}, -- Also spawns a obfuscator
+		{311, "destructor"},
 	},
 	["bot"] = {
+		{29, "destructor"},
+		{183, "destructor"}, -- Also spawns a purifier
+		{311, "obfuscator"},
 	},
 	["air"] = {
+		{150, nil},
+		{277, nil},
 	}
 }
 
