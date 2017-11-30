@@ -29,6 +29,7 @@ if L then
 	L.custom_on_filter_platforms = "Filtrer les barres & messages des plateformes latérales"
 	L.custom_on_filter_platforms_desc = "Enlève les messages et les barres qui ne sont pas pertinents si vous n'êtes pas sur une plateforme latérale. Les barres et les alertes concernant la platforme principale, Nexus, seront toujours affichées."
 	L.platform_active = "%s active !" -- Platform: Xoroth Active!
+	--L.add_killed = "%s killed!"
 end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "frFR")
@@ -48,6 +49,3 @@ if L then
 	L.cannon_ability_desc = "Affiche des messages et des barres relatifs aux 2 canons sur le dos du Brise-monde garothi."
 	--L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
 end
-
-
-

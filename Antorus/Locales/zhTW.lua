@@ -29,6 +29,7 @@ if L then
 	L.custom_on_filter_platforms = "過濾外側平台的警告與計時器"
 	L.custom_on_filter_platforms_desc = "如果你不是上台組，關閉不需要的外側平台提示，只顯示中央場地的警告與計時器。"
 	L.platform_active = "%s啟動！" -- Platform: Xoroth Active!
+	--L.add_killed = "%s killed!"
 end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "zhTW")
@@ -48,6 +49,3 @@ if L then
 	L.cannon_ability_desc = "顯示被兩門火砲強化後的技能訊息與計時器。"
 	--L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
 end
-
-
-

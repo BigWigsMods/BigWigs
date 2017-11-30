@@ -16,7 +16,6 @@ mod.engageId = 2064
 -- Locals
 --
 
-local stage = 1
 local realityTearCount = 1
 local collapsingWorldCount = 1
 local felstormBarrageCount = 1
@@ -31,6 +30,7 @@ if L then
 	L.custom_on_filter_platforms = "Filter Side Platform Warnings and Bars"
 	L.custom_on_filter_platforms_desc = "Removes unnecessary messages and bars if you are not on a side platform. It will always show bars and warnings from the main Platform: Nexus."
 	L.platform_active = "%s Active!" -- Platform: Xoroth Active!
+	L.add_killed = "%s killed!"
 end
 
 --------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ function mod:GetOptions()
 		--[[ Platform: Nathreza ]]--
 		{245050, "HEALER"}, -- Delusions
 		245040, -- Corrupt
-		245118, -- Cloying Shadows
+		{245118, "SAY"}, -- Cloying Shadows
 	},{
 		["stages"] = "general",
 		[244016] = -15799, -- Platform: Nexus
@@ -96,23 +96,26 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Supernova", 244598)
 	self:Log("SPELL_AURA_APPLIED", "EverburningFlames", 244613)
 	self:Log("SPELL_AURA_REMOVED", "EverburningFlamesRemoved", 244613)
+	self:Death("VulcanarDeath", 122211)
 
 	--[[ Platform: Rancora ]]--
 	self:Log("SPELL_CAST_SUCCESS", "FelsilkWrap", 244926)
 	self:Log("SPELL_CAST_START", "PoisonEssence", 246316)
 	self:Log("SPELL_AURA_APPLIED", "CausticSlime", 244849)
 	self:Log("SPELL_AURA_REMOVED", "CausticSlimeRemoved", 244849)
+	self:Death("LadyDacidionDeath", 122212)
 
 	--[[ Platform: Nathreza ]]--
 	self:Log("SPELL_CAST_START", "Delusions", 245050)
 	self:Log("SPELL_AURA_APPLIED", "Corrupt", 245040)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Corrupt", 245040)
 	self:Log("SPELL_CAST_SUCCESS", "CorruptSuccess", 245040)
-	self:Log("SPELL_AURA_APPLIED", "CloyingShadows", 245040)
+	self:Log("SPELL_AURA_APPLIED", "CloyingShadows", 245118)
+	self:Log("SPELL_AURA_APPLIED", "CloyingShadowsRemoved", 245118)
+	self:Death("LordEilgarDeath", 122213)
 end
 
 function mod:OnEngage()
-	stage = 1
 	realityTearCount = 1
 	collapsingWorldCount = 1
 	felstormBarrageCount = 1
@@ -130,11 +133,11 @@ end
 --
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 257939 then -- Gateway: Xoroth
-		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257939)), false) -- Platform: Xoroth
+		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257939)), "spell_mage_flameorb") -- Platform: Xoroth
 	elseif spellId == 257941 then -- Gateway: Rancora
-		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257941)), false) -- Platform: Rancora
+		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257941)), "spell_mage_flameorb_green") -- Platform: Rancora
 	elseif spellId == 257942 then -- Gateway: Nathreza
-		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257942)), false) -- Platform: Nathreza
+		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257942)), "spell_mage_flameorb_purple") -- Platform: Nathreza
 	end
 end
 
@@ -184,7 +187,7 @@ function mod:TransportPortal(args)
 end
 
 function mod:HowlingShadows(args)
-	if self:Interrupter(args.sourceGUID) and platform == 1 then -- Can't interupt from other platforms
+	if self:Interrupter(args.sourceGUID) and playerPlatform == 1 then -- Can't interupt from other platforms
 		self:Message(args.spellId, "Urgent", "Alarm")
 	end
 end
@@ -204,7 +207,7 @@ end
 function mod:Supernova(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
 	self:Message(args.spellId, "Attention", "Alert")
-	self:CDBar(args.spellId, 6.5)
+	self:CDBar(args.spellId, 2.5)
 end
 
 function mod:EverburningFlames(args)
@@ -214,17 +217,22 @@ function mod:EverburningFlames(args)
 	end
 end
 
-
 function mod:EverburningFlamesRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
 end
 
+function mod:VulcanarDeath(args)
+	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb")
+	self:StopBar(244598) -- Supernova
+	self:StopBar(244607) -- Flames of Xoroth
+end
+
 function mod:FelsilkWrap(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 3 then return end
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
-	self:CDBar(args.spellId, 17.5)
+	self:CDBar(args.spellId, 17)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
@@ -249,6 +257,12 @@ function mod:CausticSlimeRemoved(args)
 	end
 end
 
+function mod:LadyDacidionDeath(args)
+	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_green")
+	self:StopBar(244926) -- Felsilk Wrap
+	self:StopBar(246316) -- Poison Essence
+end
+
 function mod:Delusions(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 4 then return end
 	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
@@ -264,11 +278,24 @@ end
 
 function mod:CorruptSuccess(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 4 then return end
-	self:CDBar(args.spellId, 8.5)
+	self:CDBar(args.spellId, 6.1)
 end
 
 function mod:CloyingShadows(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Info")
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
+		self:SayCountdown(args.spellId, 30)
 	end
+end
+
+function mod:CloyingShadowsRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+function mod:LordEilgarDeath(args)
+	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_purple")
+	self:StopBar(245050) -- Delusions
+	self:StopBar(245040) -- Corrupt
 end
