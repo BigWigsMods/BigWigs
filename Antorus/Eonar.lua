@@ -49,7 +49,7 @@ local timersHeroic = {
 	["top"] = {
 		{65, "obfuscator"},
 		{80, "destructor"},
-		{192, nil},
+		{192, "small_adds"},
 		{316, "destructor"},
 	},
 	["mid"] = {
@@ -91,8 +91,8 @@ local timersMythic = {
 		{110.5, "destructor"},
 	},
 	["bot"] = {
-		{35, nil},
-		{110.5, nil},
+		{35, "small_adds"},
+		{110.5, "small_adds"},
 		{335, "obfuscator"},
 	},
 	["air"] = {
@@ -124,6 +124,7 @@ if L then
 	L.destructor = "Destructor" -- Fel-Infused Destructor
 	L.obfuscator = "Obfuscator" -- Fel-Charged Obfuscator
 	L.bats = "Fel Bats"
+	L.small_adds = CL.small_adds
 end
 
 --------------------------------------------------------------------------------
@@ -223,7 +224,7 @@ function mod:StartWaveTimer(lane, count)
 		icon = "inv_batpet"
 	end
 
-	local addTypeText = addType == "purifier" and L.purifier or addType == "destructor" and L.destructor or addType == "obfuscator" and L.obfuscator
+	local addTypeText = L[addType]
 	local barText = addTypeText and L.lane_text:format(laneText, addTypeText) or laneText
 
 	self:Bar("warp_in", length, barText, icon)
