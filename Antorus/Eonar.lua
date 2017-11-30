@@ -49,8 +49,8 @@ local timersHeroic = {
 	["top"] = {
 		{65, "obfuscator"},
 		{80, "destructor"},
-		{200, nil},
-		{311, "destructor"},
+		{192, nil},
+		{316, "destructor"},
 	},
 	["mid"] = {
 		{7.5, "destructor"},
