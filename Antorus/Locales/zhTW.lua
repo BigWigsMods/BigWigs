@@ -46,6 +46,7 @@ end
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "zhTW")
 if L then
 	L.cannon_ability_desc = "顯示被兩門火砲強化後的技能訊息與計時器。"
+	--L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
 end
 
 

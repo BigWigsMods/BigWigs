@@ -46,6 +46,7 @@ end
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "koKR")
 if L then
 	--L.cannon_ability_desc = "Display Messages and Bars related to the 2 cannons on the Gorothi Worldbreaker's back."
+	--L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
 end
 
 

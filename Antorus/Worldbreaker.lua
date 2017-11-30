@@ -27,7 +27,7 @@ if L then
 	L.cannon_ability_icon = 57610 -- Cannon icon
 
 	L.missileImpact = mod:SpellName(94829) -- Missile Impact
-	L.missileImpact_desc = "Show a timer for the annihilation missiles landing."
+	L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
 	L.missileImpact_icon = 208426
 end
 

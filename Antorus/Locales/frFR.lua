@@ -46,6 +46,7 @@ end
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "frFR")
 if L then
 	L.cannon_ability_desc = "Affiche des messages et des barres relatifs aux 2 canons sur le dos du Brise-monde garothi."
+	--L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
 end
 
 
