@@ -20,6 +20,7 @@ local realityTearCount = 1
 local collapsingWorldCount = 1
 local felstormBarrageCount = 1
 local playerPlatform = 1 -- 1: Nexus, 2: Xoroth, 3: Rancora, 4: Nathreza
+local nextPortalSoonWarning = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -126,11 +127,28 @@ function mod:OnEngage()
 	self:Bar(244689, 21.9) -- Transport Portal
 	self:Bar(244000, 29.0) -- Felstorm Barrage
 	self:Berserk(750) -- Heroic PTR
+
+	nextPortalSoonWarning = 92 -- happens at 90%
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_HEALTH_FREQUENT(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp < nextPortalSoonWarning then
+		local platformName = (hp < 40 and self:SpellName(257942)) or (hp < 70 and self:SpellName(257941)) or self:SpellName(257939)
+		local icon = (hp < 40 and "spell_mage_flameorb_purple") or (hp < 70 and "spell_mage_flameorb_green") or "spell_mage_flameorb"
+		self:Message("stages", "Positive", nil, CL.soon:format(platformName), icon) -- Apocalypse Drive
+		nextPortalSoonWarning = nextPortalSoonWarning - 30
+		if nextPortalSoonWarning < 30 then
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+		end
+	end
+end
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 257939 then -- Gateway: Xoroth
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257939)), "spell_mage_flameorb") -- Platform: Xoroth
