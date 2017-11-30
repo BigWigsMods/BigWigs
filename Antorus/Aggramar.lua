@@ -143,15 +143,25 @@ function mod:TaeshalachsReach(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local isOnMe, scheduled = nil, nil
+
+	local function warn(self, spellId)
+		if not isOnMe then
+			self:Message(spellId, "Important")
+		end
+		isOnMe = nil
+		scheduled = nil
+	end
+
 	function mod:ScorchingBlaze(args)
 		if self:Me(args.destGUID) then
+			isOnMe = true
+			self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Warning")
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 0.3, self, args.spellId)
 			if comboTime > GetTime() + 7.3 then
 				self:CDBar(args.spellId, 7.3)
 			end
