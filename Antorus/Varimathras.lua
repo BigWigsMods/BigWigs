@@ -127,8 +127,8 @@ function mod:Misery(args)
 end
 
 function mod:ShadowStrike(args)
-	self:Message(args.spellId, "Urgent", "Warning")
-	self:CDBar(args.spellId, 9.8)
+	self:Message(243960, "Urgent", "Warning")
+	self:CDBar(243960, 9.8)
 end
 
 function mod:DarkFissure(args)
