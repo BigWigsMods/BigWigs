@@ -78,7 +78,7 @@ function mod:OnEngage()
 	self:CDBar(244042, 25.5) -- Marked Prey
 	self:CDBar(244094, 35.3) -- Necrotic Embrace
 
-	self:Berserk(390) -- Normal PTR
+	self:Berserk(310) -- Heroic
 end
 
 --------------------------------------------------------------------------------
