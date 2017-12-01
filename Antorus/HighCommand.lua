@@ -84,7 +84,7 @@ function mod:OnBossEnable()
 	--[[ Stealing Power ]]--
 	self:Log("SPELL_CAST_SUCCESS", "FelshieldUp", 244907)
 	self:Log("SPELL_AURA_APPLIED", "Felshield", 244910)
-	self:Log("SPELL_AURA_APPLIED", "FelshieldRemoved", 244910)
+	self:Log("SPELL_AURA_REMOVED", "FelshieldRemoved", 244910)
 	self:Log("SPELL_AURA_APPLIED", "PsychicAssault", 244172)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PsychicAssault", 244172)
 
