@@ -130,7 +130,7 @@ do
 			isOnMe = true
 			self:Message(args.spellId, "Personal", "Warning", CL.you:format(args.spellName))
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 3, nil, 2)
+			self:SayCountdown(args.spellId, 5)
 		end
 	end
 end
