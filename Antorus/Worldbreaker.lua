@@ -136,7 +136,7 @@ do
 end
 
 function mod:FelBombardment(args)
-	self:TargetMessage(args.spellId, args.destName, "Neutral", "Info", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", self:Me(args.destGUID) and "Warning" or "Alarm", nil, nil, true) -- Different sound for when tanking/offtanking
 	self:Bar(args.spellId, self:Mythic() and 15.8 or 20.7)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
