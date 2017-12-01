@@ -29,12 +29,22 @@ local timersNormal = {
 
 	--[[ Waves ]]--
 	["top"] = {
+		{120, "destructor"}, -- XXX not confirmed
+		{240, "destructor"} -- XXX estimate
 	},
 	["mid"] = {
+		{6, "destructor"},
+		{74, "destructor"},
+		{175, "obfuscator"}, -- XXX not confirmed
+		{300, "destructor"} -- XXX not confirmed
 	},
 	["bot"] = {
+		{44, "destructor"},
+		{130, nil}, -- XXX not confirmed
+		{225, "destructor"}
 	},
 	["air"] = {
+		{230, nil} -- XXX not confirmed
 	}
 }
 
