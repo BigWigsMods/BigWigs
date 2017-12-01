@@ -49,4 +49,3 @@ if L then
 	L.cannon_ability_desc = "显示加洛西灭世者背后两门火炮的信息和计时条。"
 	L.missileImpact_desc = "显示歼灭飞弹着陆计时器。"
 end
-
