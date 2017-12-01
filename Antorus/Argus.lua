@@ -172,7 +172,7 @@ function mod:OnEngage()
 	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soul Blight Orb
 	self:Bar(248499, timers[stage][248499][sweepingScytheCounter]) -- Sweeping Scythe
 
-	self:Berserk(720) -- Heroic PTR
+	self:Berserk(720)
 end
 
 --------------------------------------------------------------------------------

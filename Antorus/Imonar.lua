@@ -28,7 +28,6 @@ local canisterMarker = mod:AddMarkerOption(false, "player", 1, 254244, 1, 2)
 function mod:GetOptions()
 	return {
 		"stages",
-		"berserk",
 
 		--[[ Stage One: Attack Force ]]--
 		{247367, "TANK"}, -- Shock Lance
@@ -96,8 +95,6 @@ function mod:OnEngage()
 	self:CDBar(247367, 4.5) -- Shock Lance
 	self:CDBar(254244, 7.3) -- Sleep Canister
 	self:CDBar(247376, 12.2) -- Pulse Grenade
-
-	self:Berserk(420)
 
 	nextIntermissionWarning = 69
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
