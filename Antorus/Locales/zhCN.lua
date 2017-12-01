@@ -50,4 +50,3 @@ if L then
 	L.missileImpact_desc = "显示歼灭飞弹着陆计时器。"
 end
 
-end
