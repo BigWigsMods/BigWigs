@@ -12,7 +12,7 @@ end
 
 L = BigWigs:NewBossLocale("Eonar the Life-Binder", "zhCN")
 if L then
-	L.warp_in_desc = "显示每一波计时器信息，连同每波中的任一特殊增援。"
+	L.warp_in_desc = "显示每一波计条信息，连同每波中的任一特殊增援。"
 
 	L.top_lane = "上"
 	L.mid_lane = "中"
@@ -47,5 +47,5 @@ end
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "zhCN")
 if L then
 	L.cannon_ability_desc = "显示加洛西灭世者背后两门火炮的信息和计时条。"
-	L.missileImpact_desc = "显示歼灭飞弹着陆计时器。"
+	L.missileImpact_desc = "显示歼灭飞弹着陆计时条。"
 end
