@@ -33,7 +33,7 @@ function mod:GetOptions()
 		--[[ Shatug ]]--
 		245098, -- Corrupting Maw
 		244131, -- Consuming Sphere
-		{244069, "SAY", "ICON"}, -- Weight of Darkness
+		{254429, "SAY"}, -- Weight of Darkness
 		244056, -- Siphon Corruption
 		{248819, "SAY"}, -- Siphoned
 
@@ -54,15 +54,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BurningMaw", 251445)
 	self:Log("SPELL_AURA_APPLIED", "MoltenTouchApplied", 244072)
 	self:Log("SPELL_AURA_APPLIED", "DesolateGazeApplied", 244768)
-	self:Log("SPELL_AURA_APPLIED", "DesolateGazeRemoved", 244768)
+	self:Log("SPELL_AURA_REMOVED", "DesolateGazeRemoved", 244768)
 	self:Log("SPELL_CAST_SUCCESS", "EnflameCorruption", 244057)
 	self:Log("SPELL_AURA_APPLIED", "Enflamed", 248815)
 	self:Log("SPELL_AURA_REMOVED", "EnflamedRemoved", 248815)
 
 	--[[ Shatug ]]--
 	self:Log("SPELL_CAST_SUCCESS", "CorruptingMaw", 245098)
-	self:Log("SPELL_AURA_APPLIED", "WeightofDarknessApplied", 244069)
-	self:Log("SPELL_AURA_REMOVED", "WeightofDarknessRemoved", 244069)
+	self:Log("SPELL_AURA_APPLIED", "WeightofDarknessApplied", 254429)
+	self:Log("SPELL_AURA_REMOVED", "WeightofDarknessRemoved", 254429)
 	self:Log("SPELL_CAST_SUCCESS", "SiphonCorruption", 244056)
 	self:Log("SPELL_AURA_APPLIED", "Siphoned", 248819)
 	self:Log("SPELL_AURA_REMOVED", "SiphonedRemoved", 248819)
@@ -79,8 +79,8 @@ function mod:OnEngage()
 	self:Bar(244056, 28) -- Siphon Corruption
 	self:Bar(244057, 52) -- Enflame Corruption
 	self:Bar(244131, 52.5) -- Consuming Sphere
-	self:Bar(244069, 78) -- Weight of Darkness
-	self:Bar(244072, 84.5) -- Desolate Gaze
+	self:Bar(254429, 78) -- Weight of Darkness
+	self:Bar(244768, 84.5) -- Desolate Gaze
 end
 
 --------------------------------------------------------------------------------
@@ -91,6 +91,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 244159 then -- Consuming Sphere
 		self:Message(244131, "Attention", "Alert")
 		self:Bar(244131, 78.5)
+	elseif spellId == 244069 then -- Weight of Darkness
+		self:Bar(254429, 78.5)
+	elseif spellId == 244064 then -- Desolate Gaze
+		self:Bar(244768, 96.5)
 	end
 end
 
@@ -119,8 +123,7 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:Bar(args.spellId, 96.5)
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning", nil, nil, true)
 		end
 	end
 end
@@ -165,7 +168,6 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:Bar(args.spellId, 78.5)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning", nil, nil, true)
 		end
 	end
@@ -186,7 +188,6 @@ end
 function mod:Siphoned(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
-		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 4)
 	end
 end
