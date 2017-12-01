@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 -- TODO List:
--- Wave Data for all difficulties
+-- Normal mode wave data
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -20,12 +20,12 @@ local rainofFelCounter = 1
 local spearCounter = 1
 local finalDoomCounter = 1
 local lifeForceCounter = 1
-local lifeForceNeeded = 5
+local lifeForceNeeded = 4
 local engageTime = 0
 
 local timersNormal = {
 	--[[ Rain of Fel ]]--
-	[248332] = {},
+	[248332] = {30, 31, 35, 45, 80, 50, 20, 35}, -- XXX vary a lot across logs
 
 	--[[ Waves ]]--
 	["top"] = {
@@ -40,19 +40,32 @@ local timersNormal = {
 
 local timersHeroic = {
 	--[[ Rain of Fel ]]--
-	[248332] = {},
+	[248332] = {15, 38.5, 10, 45, 34.5, 19, 19, 29, 44.5, 35, 97},
 
 	--[[ Spear of Doom ]] --
-	[248861] = {},
+	[248861] = {29.7, 59.6, 64.5, 40.3, 84.6, 35.2, 65.7},
 
-	--[[ Waves ]]--
+	--[[ Waves ]]-- -- XXX Check these after implementation
 	["top"] = {
+		{68, "obfuscator"},
+		{87, "destructor"},
+		{192, "small_adds"},
+		{320, "destructor"},
 	},
 	["mid"] = {
+		{6.8, "destructor"},
+		{114, "purifier"},
+		{215, "purifier"}, -- Also spawns a obfuscator
+		{320, "destructor"},
 	},
 	["bot"] = {
+		{35, "destructor"},
+		{190, "destructor"}, -- Also spawns a purifier
+		{320, "obfuscator"},
 	},
 	["air"] = {
+		{159, nil},
+		{285, nil},
 	}
 }
 
@@ -78,8 +91,8 @@ local timersMythic = {
 		{110.5, "destructor"},
 	},
 	["bot"] = {
-		{35, nil},
-		{110.5, nil},
+		{35, "small_adds"},
+		{110.5, "small_adds"},
 		{335, "obfuscator"},
 	},
 	["air"] = {
@@ -111,6 +124,7 @@ if L then
 	L.destructor = "Destructor" -- Fel-Infused Destructor
 	L.obfuscator = "Obfuscator" -- Fel-Charged Obfuscator
 	L.bats = "Fel Bats"
+	L.small_adds = CL.small_adds
 end
 
 --------------------------------------------------------------------------------
@@ -210,7 +224,7 @@ function mod:StartWaveTimer(lane, count)
 		icon = "inv_batpet"
 	end
 
-	local addTypeText = addType == "purifier" and L.purifier or addType == "destructor" and L.destructor or addType == "obfuscator" and L.obfuscator
+	local addTypeText = L[addType]
 	local barText = addTypeText and L.lane_text:format(laneText, addTypeText) or laneText
 
 	self:Bar("warp_in", length, barText, icon)

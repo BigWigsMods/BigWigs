@@ -1,8 +1,3 @@
---------------------------------------------------------------------------------
--- TODO:
--- -- Apocalypse soon warning - 65% and 25% (warnings 67% & 27%)
--- -- Annihilation impact bars
--- -- Split Cannon ability bars in mythic and phase 1's after asking what is cast first?
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -19,8 +14,7 @@ mod.respawnTime = 30
 --
 
 local stage = 1
-local annihilatorAlive = true
-local decimatorAlive = true
+local nextApocalypseDriveWarning = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,6 +25,10 @@ if L then
 	L.cannon_ability = mod:SpellName(52541) -- Cannon Assault
 	L.cannon_ability_desc = "Display Messages and Bars related to the 2 cannons on the Gorothi Worldbreaker's back."
 	L.cannon_ability_icon = 57610 -- Cannon icon
+
+	L.missileImpact = mod:SpellName(94829) -- Missile Impact
+	L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
+	L.missileImpact_icon = 208426
 end
 
 --------------------------------------------------------------------------------
@@ -46,6 +44,7 @@ function mod:GetOptions()
 		"cannon_ability", -- Cannon Assault
 		{244410, "SAY"}, -- Decimation
 		244761, -- Annihilation
+		"missileImpact",
 	},{
 		[246220] = "general",
 		[244410] = -15915, -- Decimator
@@ -54,8 +53,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("RAID_BOSS_WHISPER") -- Decimation
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3")
+	self:Log("SPELL_CAST_SUCCESS", "Annihilation", 244294) -- normal and empowered
+	self:Log("SPELL_CAST_SUCCESS", "Decimation", 244399, 245294) -- normal, empowered
+	self:Log("SPELL_AURA_APPLIED", "DecimationApplied", 244410)
 
 	self:Log("SPELL_AURA_APPLIED", "FelBombardment", 246220) -- Fel Bombardment pre-debuff
 	self:Log("SPELL_AURA_REMOVED", "FelBombardmentRemoved", 246220) -- Fel Bombardment pre-debuff
@@ -71,41 +71,72 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	annihilatorAlive = true
-	decimatorAlive = true
 
 	self:Bar("cannon_ability", 8, L.cannon_ability, L.cannon_ability_icon)
 	self:Bar(246220, 9.4) -- Fel Bombardment
+
+	nextApocalypseDriveWarning = self:Easy() and 62 or 67 -- happens at 60% (65% hc/my)
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:RAID_BOSS_WHISPER(_, msg)
-	if msg:find("244410", nil, true) then -- Decimation
-		self:Message(244410, "Personal", "Warning", CL.you:format(self:SpellName(244410)))
-		self:Say(244410)
-		self:SayCountdown(244410, 3)
+
+function mod:UNIT_HEALTH_FREQUENT(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp < nextApocalypseDriveWarning then
+		self:Message(240277, "Neutral", "Info", CL.soon:format(self:SpellName(240277))) -- Apocalypse Drive
+		if stage == 1 then
+			nextApocalypseDriveWarning = self:Easy() and 22 or 37 -- happens at 20% (35% hc/my)
+		else
+			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+		end
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
-	if spellId == 245124 then -- Cannon Chooser
-		if stage == 1 or self:Mythic() then -- Alternates, First one random // In Mythic Cannons are empowered, not killed
-			self:Message("cannon_ability", "Attention", "Alert", L.cannon_ability, L.cannon_ability_icon)
-			self:Bar("cannon_ability", 15.8, L.cannon_ability, L.cannon_ability_icon)
-		elseif decimatorAlive then
-			self:Message(244410, "Attention", "Alert") -- Decimation
-			self:Bar(244410, 8.5) -- XXX Stage 2 timer was faster in first heroic test, in mythic it didn't change
-		elseif annihilatorAlive then
-			self:Message(244761, "Attention", "Alert") -- Annihilation
-			self:Bar(244761, 8.5) -- XXX Stage 2 timer was faster in first heroic test, in mythic it didn't change
+function mod:Annihilation(args)
+	self:Message(244761, "Important", "Alert")
+	self:CDBar("missileImpact", 6.2, L.missileImpact, L.missileImpact_icon)
+	self:Bar(244761, (self:Mythic() or stage == 1) and 31.6 or 15.8) -- Annihilation
+	if stage == 1 or self:Mythic() then
+		self:Bar(244410, 15.8) -- Decimation
+	end
+end
+
+do
+	local isOnMe, scheduled = nil, nil
+
+	local function warn(self)
+		if not isOnMe then
+			self:Message(244410, "Attention")
+		end
+		scheduled = nil
+	end
+
+	function mod:Decimation(args)
+		self:Bar(244410, (self:Mythic() or stage == 1) and 31.6 or 15.8) -- Decimation
+		if stage == 1 or self:Mythic() then
+			self:Bar(244761, 15.8) -- Annihilation
+		end
+		isOnMe = nil
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 0.3, self)
+		end
+	end
+
+	function mod:DecimationApplied(args)
+		if self:Me(args.destGUID) then
+			isOnMe = true
+			self:Message(args.spellId, "Personal", "Warning", CL.you:format(args.spellName))
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 5)
 		end
 	end
 end
 
 function mod:FelBombardment(args)
-	self:TargetMessage(args.spellId, args.destName, "Neutral", "Info", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "Urgent", self:Me(args.destGUID) and "Warning" or "Alarm", nil, nil, true) -- Different sound for when tanking/offtanking
 	self:Bar(args.spellId, self:Mythic() and 15.8 or 20.7)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
@@ -140,16 +171,14 @@ function mod:WeaponDeath(args)
 	self:Message(240277, "Positive", "Info", CL.interrupted:format(self:SpellName(240277)))
 	self:StopBar(CL.cast:format(self:SpellName(240277)))
 
-	self:Bar(244969, 7.2) -- Eradication
+	self:Bar(244969, 10.5) -- Eradication
 	self:Bar(246220, 23.1) -- Fel Bombardment
 
 	if args.mobId == 122778 then -- Annihilator death
-		annihilatorAlive = false
 		if stage == 2 then
 			self:Bar(244410, 21.9) -- Decimation
 		end
 	elseif args.mobId == 122773 then -- Decimator death
-		decimatorAlive = false
 		if stage == 2 then
 			self:Bar(244761, 21.9) -- Annihilation
 		end
@@ -157,6 +186,7 @@ function mod:WeaponDeath(args)
 end
 
 function mod:Eradication(args)
+	self:StopBar(args.spellId)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 5.5)
 end

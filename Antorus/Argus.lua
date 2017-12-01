@@ -11,14 +11,16 @@ mod.respawnTime = 30
 --------------------------------------------------------------------------------
 -- Locals
 --
+
 local _, armoryDesc = EJ_GetSectionInfo(17077)
 local stage = 1
 local coneOfDeathCounter = 1
 local soulBlightOrbCounter = 1
 local torturedRageCounter = 1
 local sweepingScytheCounter = 1
-
-local mobCollector = {}
+local initializationCount = 3
+local scanningTargets = nil
+local vulnerabilityCollector = {}
 
 local timers = {
 	[1] = { -- XXX Not needed for other stages right now, perhaps mythic?
@@ -42,18 +44,20 @@ if L then
 	L.stage2_early = "Let the fury of the sea wash away this corruption!" -- Yell is 6s before the actual cast start
 	L.stage3_early = "No hope. Just pain. Only pain!"  -- Yell is 14.5s before the actual cast start
 
-	L.explosion = "%s Exploding"
-
 	L.stellarArmory = "{-17077}"
 	L.stellarArmory_desc = armoryDesc
 	L.stellarArmory_icon = "inv_sword_2h_pandaraid_d_01"
+
+	L.countx = "%s (%dx)"
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-local constellarMarker = mod:AddMarkerOption(false, "npc", 1, -17070, 1, 2, 3, 4, 5, 6, 7, 8) -- The Constellar Designates
+local burstMarker = mod:AddMarkerOption(false, "player", 3, 250669, 3, 7) -- Soul Burst
+local bombMarker = mod:AddMarkerOption(false, "player", 2, 251570, 2) -- Soul Bomb
+local constellarMarker = mod:AddMarkerOption(false, "npc", 1, 252516, 1, 2, 3, 4, 5, 6, 7) -- The Discs of Norgannon
 function mod:GetOptions()
 	return {
 		"stages",
@@ -65,16 +69,19 @@ function mod:GetOptions()
 		248167, -- Death Fog
 		257296, -- Tortured Rage
 		248499, -- Sweeping Scythe
-		255594, -- Sky and Sea
+		{255594, "SAY"}, -- Sky and Sea
 
 		--[[ Stage 2 ]]--
 		{250669, "SAY"}, -- Soul Burst
+		burstMarker,
 		{251570, "SAY"}, -- Soul Bomb
+		bombMarker,
 		255826, -- Edge of Obliteration
 		255199, -- Avatar of Aggramar
 		255200, -- Aggramar's Boon
 
 		--[[ Stage 3 ]]--
+		252516, -- The Discs of Norgannon
 		constellarMarker,
 		{252729, "SAY"}, -- Cosmic Ray
 		{252616, "SAY"}, -- Cosmic Beacon
@@ -84,7 +91,7 @@ function mod:GetOptions()
 		--[[ Stage 4 ]]--
 		256544, -- End of All Things
 		258039, -- Deadly Scythe
-		256396, -- Reorigination Pulse
+		256388, -- Initialization Sequence
 		257214, -- Titanforging
 	},{
 		["stages"] = "general",
@@ -107,7 +114,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SweepingScythe", 248499)
 	self:Log("SPELL_AURA_APPLIED", "SweepingScytheStack", 244899)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SweepingScytheStack", 244899)
-	self:Log("SPELL_CAST_START", "SkyandSea", 255594)
+	self:Log("SPELL_CAST_SUCCESS", "SkyandSea", 255594)
+	self:Log("SPELL_AURA_APPLIED", "GiftoftheSea", 258647)
+	self:Log("SPELL_AURA_APPLIED", "GiftoftheSky", 258646)
 	self:Log("SPELL_AURA_APPLIED", "StrengthoftheSkyandSea", 253901, 253903) -- Strength of the Sea, Strength of the Sky
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StrengthoftheSkyandSea", 253901, 253903) -- Strength of the Sea, Strength of the Sky
 
@@ -123,6 +132,8 @@ function mod:OnBossEnable()
 
 	--[[ Stage 3 ]]--
 	self:Log("SPELL_CAST_START", "TemporalBlast", 257645)
+	self:Log("SPELL_AURA_APPLIED", "VulnerabilityApplied", 255433, 255429, 255425, 255419, 255422, 255418, 255430)
+
 	self:Log("SPELL_AURA_APPLIED", "CosmicRayApplied", 252729)
 	self:Log("SPELL_CAST_START", "CosmicBeacon", 252616)
 	self:Log("SPELL_AURA_APPLIED", "CosmicBeaconApplied", 252616)
@@ -135,11 +146,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "GiftoftheLifebinder", 257619)
 
 	self:Log("SPELL_CAST_START", "EndofAllThings", 256544)
-	self:Log("SPELL_INTERRUPT", "EndofAllThingsInterupted", 256544)
+	self:Log("SPELL_INTERRUPT", "EndofAllThingsInterupted", "*")
 	self:Log("SPELL_CAST_START", "DeadlyScythe", 258039)
 	self:Log("SPELL_AURA_APPLIED", "DeadlyScytheStack", 258039)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DeadlyScytheStack", 258039)
-	self:Log("SPELL_CAST_START", "ReoriginationPulse", 256396)
+	self:Log("SPELL_CAST_SUCCESS", "InitializationSequence", 256388)
 	self:Log("SPELL_CAST_SUCCESS", "Titanforging", 257214)
 
 	-- Ground Effects
@@ -154,9 +165,8 @@ function mod:OnEngage()
 	soulBlightOrbCounter = 1
 	torturedRageCounter = 1
 	sweepingScytheCounter = 1
-	wipe(mobCollector)
 
-	self:Bar(255594, 11) -- Sky and Sea
+	self:Bar(255594, 16) -- Sky and Sea
 	self:Bar(257296, timers[stage][257296][torturedRageCounter]) -- Tortured Rage
 	self:Bar(248165, timers[stage][248165][coneOfDeathCounter]) -- Cone of Death
 	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soul Blight Orb
@@ -179,6 +189,8 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		self:StopBar(255594) -- Sky and Sea
 	elseif msg:find(L.stage3_early) then -- We start bars for stage 3 later
 		stage = 3
+		wipe(vulnerabilityCollector)
+		scanningTargets = nil
 		self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 		self:StopBar(248499) -- Sweeping Scythe
 		self:StopBar(255826) -- Edge of Obliteration
@@ -224,25 +236,39 @@ end
 function mod:SweepingScythe(args)
 	self:Message(args.spellId, "Neutral", "Alert")
 	sweepingScytheCounter = sweepingScytheCounter + 1
-	self:CDBar(args.spellId, stage == 2 and 6.1 or timers[stage][args.spellId][sweepingScytheCounter])
+	self:CDBar(args.spellId, stage ~= 1 and 6.1 or timers[stage][args.spellId][sweepingScytheCounter])
 end
 
 function mod:SweepingScytheStack(args)
-	if self:Me(args.destGUID) or self:Tank() then -- Always Show for Tanks and when on Self
+	if self:Me(args.destGUID) or self:Tank() then -- Always Show for Tanks and when on self
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "Attention", self:Tank() and (amount > 2 and "Alarm") or "Warning") -- Warning sound for non-tanks, 3+ stacks warning for tanks
 	end
 end
 
 function mod:SkyandSea(args)
-	self:Message(args.spellId, "Positive", "Long", CL.incoming:format(args.spellName))
 	self:CDBar(args.spellId, 27)
+end
+
+-- XXX 2 message perhaps too much, maybe combine?
+function mod:GiftoftheSea(args)
+	self:TargetMessage(255594, args.destName, "Positive", "Long", args.spellName, nil, true)
+	if self:Me(args.destGUID) then
+		self:Say(255594, args.spellName)
+	end
+end
+
+function mod:GiftoftheSky(args)
+	self:TargetMessage(255594, args.destName, "Positive", "Long", args.spellName, nil, true)
+	if self:Me(args.destGUID) then
+		self:Say(255594, args.spellName)
+	end
 end
 
 function mod:StrengthoftheSkyandSea(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:Message(args.spellId, "Positive", "Info", CL.stackyou:format(amount, args.spellName))
+		self:Message(255594, "Positive", "Info", CL.stackyou:format(amount, args.spellName))
 	end
 end
 
@@ -275,12 +301,20 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
+			if self:GetOption(burstMarker) then
+				SetRaidTarget(args.destName, 3)
+			end
+		elseif self:GetOption(burstMarker) then
+				SetRaidTarget(args.destName, 7)
 		end
 	end
 
 	function mod:SoulburstRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
+		end
+		if self:GetOption(burstMarker) then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
@@ -295,11 +329,18 @@ function mod:Soulbomb(args)
 
 	self:Bar(250669, stage == 4 and 54 or 42) -- Soulburst
 	self:Bar(250669, stage == 4 and 24.5 or 20, CL.count:format(self:SpellName(250669), 2)) -- Soulburst (2)
+
+	if self:GetOption(burstMarker) then
+		SetRaidTarget(args.destName, 2)
+	end
 end
 
 function mod:SoulbombRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+	end
+	if self:GetOption(burstMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
@@ -330,6 +371,8 @@ end
 function mod:TemporalBlast()
 	if not stage == 3 then
 		stage = 3
+		wipe(vulnerabilityCollector)
+		scanningTargets = nil
 		self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 		self:StopBar(248499) -- Sweeping Scythe
 		self:StopBar(255826) -- Edge of Obliteration
@@ -340,29 +383,39 @@ function mod:TemporalBlast()
 	end
 
 	self:Bar("stages", 16.6, CL.incoming:format(self:SpellName(-17070)), "achievement_boss_algalon_01") -- The Constellar Designates Incoming!
-	self:Bar("stellarArmory", 26.3, L.stellarArmory, L.stellarArmory_icon) -- The Stellar Armory
+	self:Bar("stellarArmory", 26.3, self:SpellName(-17077), L.stellarArmory_icon) -- The Stellar Armory
+	self:Bar(252516, 27.3) -- The Discs of Norgannon
 	self:Bar(252616, 41.3) -- Cosmic Beacon
-
-	if self:GetOption(constellarMarker) then
-		self:RegisterTargetEvents("constellarMark")
-		self:ScheduleTimer("UnregisterTargetEvents", 20)
-	end
 end
 
 do
-	local constellarMarks = {}
-	function mod:constellarMark(event, unit, guid)
-		if self:MobId(guid) == 127192 and not mobCollector[guid] then
-			for i = 1, 8 do
-				if not constellarMarks[i] then
-					SetRaidTarget(unit, i)
-					constellarMarks[i] = guid
-					mobCollector[guid] = true
-					if i == 8 then
-						self:UnregisterTargetEvents()
-					end
-					return
-				end
+	local vulnerabilityIcons = {
+		[255419] = 1, -- Holy Vulnerability (Yellow Star)
+		[255429] = 2, -- Fire Vulnerability (Orange Circle)
+		[255430] = 3, -- Shadow Vulnerability (Purple Diamond)
+		[255422] = 4, -- Nature Vulnerability (Green Triangle)
+		[255433] = 5, -- Arcane Vulnerability (Blue Moon)
+		[255425] = 6, -- Frost Vulnerability (Blue Square)
+		[255418] = 7, -- Physical Vulnerability (Red Cross)
+	}
+
+	function mod:VulnerabilityApplied(args)
+		if self:GetOption(constellarMarker) then
+			vulnerabilityCollector[args.destGUID] = vulnerabilityIcons[args.spellId]
+			if not scanningTargets then
+				self:RegisterTargetEvents("ConstellarMark")
+				scanningTargets = true
+			end
+		end
+	end
+
+	function mod:ConstellarMark(event, unit, guid)
+		if vulnerabilityCollector[guid] then
+			SetRaidTarget(unit, vulnerabilityCollector[guid])
+			vulnerabilityCollector[guid] = nil
+			if not next(vulnerabilityCollector) then
+				scanningTargets = nil
+				self:UnregisterTargetEvents()
 			end
 		end
 	end
@@ -415,8 +468,8 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message("stellarArmory", "Attention", "Alert", L.stellarArmory, L.stellarArmory_icon)
-			self:Bar("stellarArmory", 40, L.stellarArmory, L.stellarArmory_icon)
+			self:Message("stellarArmory", "Attention", "Alert", self:SpellName(-17077), L.stellarArmory_icon)
+			self:Bar("stellarArmory", 40, self:SpellName(-17077), L.stellarArmory_icon)
 		end
 	end
 end
@@ -427,6 +480,8 @@ end
 
 --[[ Stage 4 ]]--
 function mod:ReapSoul()
+	self:UnregisterTargetEvents()
+
 	stage = 4
 	self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 	self:StopBar(L.stellarArmory) -- The Stellar Armory
@@ -446,14 +501,18 @@ function mod:EndofAllThings(args)
 end
 
 function mod:EndofAllThingsInterupted(args)
-	self:Message(args.spellId, "Positive", "Info", args.spellName, args.spellId)
-	self:StopBar(CL.cast:format(args.spellName))
+	if args.extraSpellId == 256544 then
+		self:Message(args.extraSpellId, "Positive", "Info", args.extraSpellName)
+		self:StopBar(CL.cast:format(args.extraSpellName))
+		initializationCount = 3
 
-	self:Bar(258039, 6) -- Deadly Scythe
-	--self:Bar(251570, 6) -- Soulbomb -- XXX Depends on energy going out of stage 2 atm
-	--self:Bar(250669, 6) -- Soulburst -- XXX Depends on energy going out of stage 2 atm
-	self:Bar(257296, 11) -- Tortured Rage -- XXX Might depend on stage start, not cast interupt
-	self:Bar(256396, 18.5) -- Reorigination Pulse -- XXX Might depend on stage start, not cast interupt
+		-- XXX All timers seem to start from cast interupt
+		self:Bar(258039, 6) -- Deadly Scythe
+		--self:Bar(251570, 6) -- Soulbomb -- XXX Depends on energy going out of stage 2 atm
+		--self:Bar(250669, 6) -- Soulburst -- XXX Depends on energy going out of stage 2 atm
+		self:Bar(257296, 11) -- Tortured Rage
+		self:Bar(256396, 18.5, L.countx:format(self:SpellName(256396), initializationCount)) -- Initialization Sequence
+	end
 end
 
 function mod:DeadlyScythe(args)
@@ -470,12 +529,13 @@ end
 
 do
 	local prev = 0
-	function mod:ReoriginationPulse(args)
+	function mod:InitializationSequence(args)
 		local t = GetTime()
-		if t-prev > 20 then -- Different casts start eachother for some time, but the new set isn't until a lot later
+		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Important", "Warning")
-			self:CDBar(args.spellId, 50)
+			self:Message(args.spellId, "Important", "Warning", L.countx:format(args.spellName, initializationCount))
+			initializationCount = initializationCount + 1
+			self:CDBar(args.spellId, 50, L.countx:format(args.spellName, initializationCount))
 		end
 	end
 end
