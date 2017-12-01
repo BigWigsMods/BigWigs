@@ -1,8 +1,4 @@
 --------------------------------------------------------------------------------
--- TODO List:
--- - Friendly Pod Warnings/Timers? Have to see how they work out in fight.
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -106,6 +102,8 @@ function mod:OnEngage()
 	assumeCommandCount = 1
 
 	self:Bar(244892, 8.4) -- Sundering Claws
+	self:Bar(245546, 8) -- Summon Reinforcements
+	self:Bar(245161, 15) -- Entropic Mines
 	self:Bar(245227, 93, incomingBoss[assumeCommandCount]) -- Chief Engineer Ishkar (Assume Command Bar)
 end
 
@@ -114,10 +112,10 @@ end
 --
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 245304 then -- Entropic Mines
-		self:Message(245161, "Attention", "Info")
+		self:Message(245161, "Neutral", "Info")
 		self:Bar(245161, 10)
 	elseif spellId == 245546 then -- Summon Reinforcements
-		self:Message(245546, "Neutral", "Alert")
+		self:Message(245546, "Attention", "Alert")
 		self:Bar(245546, 35)
 	end
 end
@@ -128,14 +126,17 @@ function mod:AssumeCommand(args)
 	if assumeCommandCount % 3 == 1 then -- Chief Engineer Ishkar
 		self:StopBar(245161) -- Entropic Mines
 		self:Bar(244625, 18.3) -- Fusillade
+		self:Bar(245546, 16.1) -- Summon Reinforcements
 	elseif assumeCommandCount % 3 == 2 then -- General Erodus
 		self:StopBar(245546) -- Summon Reinforcements
-		self:Bar(245161, 11) -- Entropic Mines
+		self:Bar(245161, 8.0) -- Entropic Mines
+		self:Bar(244625, 16.1) -- Fusillade
 	else -- Admiral Svirax
 		self:StopBar(244625) -- Fusillade
-		self:Bar(245546, 35) -- Summon Reinforcements
+		self:Bar(245546, 11) -- Summon Reinforcements
+		self:Bar(245161, 18.0) -- Entropic Mines
 	end
-	self:CDBar(244892, 13.5) -- Sundering Claws
+	self:CDBar(244892, 8.5) -- Sundering Claws
 
 	assumeCommandCount = assumeCommandCount + 1
 	self:Bar(args.spellId, 93, incomingBoss[assumeCommandCount % 3])
