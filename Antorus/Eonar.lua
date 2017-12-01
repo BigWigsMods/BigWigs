@@ -1,6 +1,6 @@
 --------------------------------------------------------------------------------
 -- TODO List:
--- Wave Data for all difficulties
+-- Normal mode wave data
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -47,25 +47,25 @@ local timersHeroic = {
 
 	--[[ Waves ]]-- -- XXX Check these after implementation
 	["top"] = {
-		{65, "obfuscator"},
-		{80, "destructor"},
+		{68, "obfuscator"},
+		{87, "destructor"},
 		{192, "small_adds"},
-		{316, "destructor"},
+		{320, "destructor"},
 	},
 	["mid"] = {
-		{7.5, "destructor"},
-		{110, "purifier"},
+		{6.8, "destructor"},
+		{114, "purifier"},
 		{215, "purifier"}, -- Also spawns a obfuscator
-		{311, "destructor"},
+		{320, "destructor"},
 	},
 	["bot"] = {
-		{29, "destructor"},
-		{183, "destructor"}, -- Also spawns a purifier
-		{311, "obfuscator"},
+		{35, "destructor"},
+		{190, "destructor"}, -- Also spawns a purifier
+		{320, "obfuscator"},
 	},
 	["air"] = {
-		{150, nil},
-		{277, nil},
+		{159, nil},
+		{285, nil},
 	}
 }
 
