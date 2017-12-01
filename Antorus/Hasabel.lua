@@ -179,7 +179,7 @@ end
 
 function mod:RealityTear(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 4 and "Alarm", nil, nil, true) -- Start sound warning at 5+
+	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 1 and "Alarm", nil, nil, true)
 end
 
 function mod:RealityTearSuccess(args)
