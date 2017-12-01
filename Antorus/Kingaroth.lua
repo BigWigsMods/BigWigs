@@ -56,7 +56,7 @@ function mod:GetOptions()
 		246516, -- Apocalypse Protocol
 
 		--[[ Adds ]]--
-		246657, -- Annihilation
+		246664, -- Annihilation
 		246686, -- Decimation
 		{246698, "SAY"}, -- Demolish
 
@@ -65,7 +65,9 @@ function mod:GetOptions()
 	},{
 		[244312] = -16151, -- Stage: Deployment
 		[246516] = -16152, -- Stage: Construction
-		[246657] = CL.adds,
+		[246664] = -16143, -- Garothi Annihilator
+		[246686] = -16144, -- Garothi Decimator
+		[246698] = -16145, -- Garothi Demolisher
 		[249680] = "mythic",
 	}
 end
@@ -88,6 +90,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Initializing", 246504)
 	self:Log("SPELL_AURA_APPLIED", "Decimation", 246687)
 	self:Log("SPELL_AURA_APPLIED", "Demolish", 246698)
+	self:Log("SPELL_CAST_SUCCESS", "DemolishSuccess", 246692)
 	self:Death("AddDeaths", 123906, 123929, 123921) -- Garothi Annihilator, Garothi Demolisher, Garothi Decimator
 
 	--[[ Mythic ]]--
@@ -148,8 +151,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		local guid = UnitGUID(unit)
 		local mobId = self:MobId(guid)
 		local mobText = getMobNumber(mobId, guid)
-		self:Message(spellId, "Important", "Alarm")
-		self:Bar(spellId, 15.8, CL.count:format(spellName, mobText))
+		self:Message(246664, "Important", "Alarm")
+		self:Bar(246664, 15.8, CL.count:format(spellName, mobText))
 	elseif spellId == 248375 then -- Shattering Strike
 		self:Message(spellId, "Urgent", "Warning")
 	end
@@ -233,7 +236,7 @@ function mod:Initializing(args)
 	local mobId = self:MobId(args.sourceGUID)
 	local mobText = getMobNumber(mobId, args.sourceGUID)
 	if mobId == 123906 then -- Garothi Annihilator
-		self:CDBar(246657, 45, CL.count:format(self:SpellName(246657), mobText)) -- Annihilation
+		self:CDBar(246664, 45, CL.count:format(self:SpellName(246664), mobText)) -- Annihilation
 	elseif mobId == 123929 then -- Garothi Demolisher
 		self:CDBar(246698, 47.5, CL.count:format(self:SpellName(246698), mobText)) -- Demolish
 	elseif mobId == 123921 then -- Garothi Decimator
@@ -250,11 +253,14 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
-			local mobId = self:MobId(args.sourceGUID)
-			local mobText = getMobNumber(mobId, args.sourceGUID)
-			self:Bar(args.spellId, 15.8, CL.count:format(args.spellName, mobText))
+			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, playerList, "Urgent", "Warning")
 		end
+	end
+
+	function mod:DemolishSuccess(args)
+		local mobId = self:MobId(args.sourceGUID)
+		local mobText = getMobNumber(mobId, args.sourceGUID)
+		self:Bar(246698, 15.8, CL.count:format(args.spellName, mobText))
 	end
 end
 
@@ -275,7 +281,7 @@ end
 function mod:AddDeaths(args)
 	local mobText = getMobNumber(args.mobId, args.destGUID)
 	if args.mobId == 123906 then -- Garothi Annihilator
-		self:StopBar(CL.count:format(self:SpellName(246657), mobText)) -- Annihilation
+		self:StopBar(CL.count:format(self:SpellName(246664), mobText)) -- Annihilation
 	elseif args.mobId == 123929 then -- Garothi Demolisher
 		self:StopBar(CL.count:format(self:SpellName(246698), mobText)) -- Demolish
 	elseif args.mobId == 123921 then -- Garothi Decimator
