@@ -86,7 +86,7 @@ end
 function mod:OnEngage()
 	stage = 1
 	self:CDBar(247367, 4.5) -- Shock Lance
-	self:CDBar(247552, 7.3) -- Sleep Canister
+	self:CDBar(254244, 7.3) -- Sleep Canister
 	self:CDBar(247376, 12.2) -- Pulse Grenade
 
 	self:Berserk(420)
