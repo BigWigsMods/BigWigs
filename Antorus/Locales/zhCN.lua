@@ -8,6 +8,15 @@ end
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "zhCN")
 if L then
 	L.torment_of_the_titans_desc = "破坏魔会迫使泰坦之魂使用他们的技能对抗玩家。"
+
+	--L.timeLeft = "%.1fs" -- s = seconds
+	--L.torment = "Torment: %s"
+	--L.nextTorment = "Next Torment: |cffffffff%s|r"
+	--L.nextTorments = "Next Torments:"
+	--L.tormentHeal = "Heal/DoT" -- something like Heal/DoT (max 10 characters)
+	--L.tormentLightning = "Lightning" -- short for "Chain Lightning" (or similar, max 10 characters)
+	--L.tormentArmy = "Army" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)
+	--L.tormentFlames = "Flames" -- short for "Flames of Khaz'goroth" (or similar, max 10 characters)
 end
 
 L = BigWigs:NewBossLocale("Eonar the Life-Binder", "zhCN")
