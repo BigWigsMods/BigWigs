@@ -13,6 +13,7 @@ mod.respawnTime = 30
 --
 
 local assumeCommandCount = 1
+local nextAssumeCommand = 0
 local incomingBoss = {
 	[0] = mod:SpellName(-16100), -- Admiral Svirax
 	[1] = mod:SpellName(-16116), -- Chief Engineer Ishkar
@@ -104,6 +105,8 @@ function mod:OnEngage()
 	self:Bar(244892, 8.4) -- Sundering Claws
 	self:Bar(245546, 8) -- Summon Reinforcements
 	self:Bar(245161, 15) -- Entropic Mines
+
+	nextAssumeCommand = GetTime() + 90 -- 90s because cast time is 3s so nothing new will be cast
 	self:Bar(245227, 93, incomingBoss[assumeCommandCount]) -- Chief Engineer Ishkar (Assume Command Bar)
 end
 
@@ -113,10 +116,16 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 245304 then -- Entropic Mines
 		self:Message(245161, "Neutral", "Info")
-		self:Bar(245161, 10)
+		local cooldown = 10
+		if nextAssumeCommand > GetTime() + cooldown then
+			self:Bar(245161, cooldown)
+		end
 	elseif spellId == 245546 then -- Summon Reinforcements
 		self:Message(245546, "Attention", "Alert")
-		self:Bar(245546, 35)
+		local cooldown = 35
+		if nextAssumeCommand > GetTime() + cooldown then
+			self:Bar(245546, cooldown)
+		end
 	end
 end
 
@@ -139,11 +148,16 @@ function mod:AssumeCommand(args)
 	self:CDBar(244892, 8.5) -- Sundering Claws
 
 	assumeCommandCount = assumeCommandCount + 1
+
+	nextAssumeCommand = GetTime() + 90 -- 90s because cast time is 3s so nothing new will be cast
 	self:Bar(args.spellId, 93, incomingBoss[assumeCommandCount % 3])
 end
 
 function mod:ExploitWeakness(args)
-	self:Bar(args.spellId, 8.5)
+	local cooldown = 8.5
+	if nextAssumeCommand > GetTime() + cooldown then
+		self:Bar(args.spellId, cooldown)
+	end
 end
 
 function mod:ExploitWeaknessApplied(args)
@@ -152,21 +166,25 @@ function mod:ExploitWeaknessApplied(args)
 end
 
 function mod:Pyroblast(args)
-	if self:Interrupter(args.sourceGUID) then
-		self:Message(args.spellId, "Urgent", "Warning")
-	end
+	self:Message(args.spellId, "Urgent", "Alarm")
 end
 
 function mod:Fusillade(args)
 	self:Message(args.spellId, "Urgent", "Warning")
 	self:CastBar(args.spellId, 5)
-	self:CDBar(args.spellId, 30) -- ~29.8-33.2s
+	local cooldown = 30
+	if nextAssumeCommand > GetTime() + cooldown then
+		self:CDBar(args.spellId, cooldown)
+	end
 end
 
 
 function mod:ShockGrenadeStart(args)
 	self:Message(244737, "Attention", "Alert", CL.incoming:format(args.spellName))
-	self:Bar(244737, 20)
+	local cooldown = 20
+	if nextAssumeCommand > GetTime() + cooldown then
+		self:Bar(244737, cooldown)
+	end
 end
 
 function mod:ShockGrenade(args)
