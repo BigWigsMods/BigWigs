@@ -48,6 +48,8 @@ if L then
 	L.stellarArmory_desc = armoryDesc
 	L.stellarArmory_icon = "inv_sword_2h_pandaraid_d_01"
 
+	L.explosion = "%s Explosion"
+
 	L.countx = "%s (%dx)"
 end
 
@@ -172,7 +174,7 @@ function mod:OnEngage()
 	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soul Blight Orb
 	self:Bar(248499, timers[stage][248499][sweepingScytheCounter]) -- Sweeping Scythe
 
-	self:Berserk(720)
+	self:Berserk(720) -- Heroic PTR
 end
 
 --------------------------------------------------------------------------------
@@ -234,7 +236,9 @@ function mod:TorturedRage(args)
 end
 
 function mod:SweepingScythe(args)
-	self:Message(args.spellId, "Neutral", "Alert")
+	if self:Tank() then
+		self:Message(args.spellId, "Neutral", "Alert")
+	end
 	sweepingScytheCounter = sweepingScytheCounter + 1
 	self:CDBar(args.spellId, stage ~= 1 and 6.1 or timers[stage][args.spellId][sweepingScytheCounter])
 end
@@ -301,6 +305,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
+			self:Bar(250669, 15, L.explosion:format(args.spellName)) -- Soulburst Explosion
 			if self:GetOption(burstMarker) then
 				SetRaidTarget(args.destName, 3)
 			end
@@ -325,6 +330,7 @@ function mod:Soulbomb(args)
 		self:SayCountdown(args.spellId, 15)
 	end
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning")
+	self:TargetBar(args.spellId, self:Mythic() and 12 or 15, args.destName)
 	self:Bar(args.spellId, stage == 4 and 54 or 42)
 
 	self:Bar(250669, stage == 4 and 54 or 42) -- Soulburst
@@ -336,6 +342,7 @@ function mod:Soulbomb(args)
 end
 
 function mod:SoulbombRemoved(args)
+	self:StopBar(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
@@ -502,7 +509,7 @@ end
 
 function mod:EndofAllThingsInterupted(args)
 	if args.extraSpellId == 256544 then
-		self:Message(args.extraSpellId, "Positive", "Info", args.extraSpellName)
+		self:Message(args.extraSpellId, "Positive", "Info", CL.interrupted:format(args.extraSpellName))
 		self:StopBar(CL.cast:format(args.extraSpellName))
 		initializationCount = 3
 
@@ -511,7 +518,7 @@ function mod:EndofAllThingsInterupted(args)
 		--self:Bar(251570, 6) -- Soulbomb -- XXX Depends on energy going out of stage 2 atm
 		--self:Bar(250669, 6) -- Soulburst -- XXX Depends on energy going out of stage 2 atm
 		self:Bar(257296, 11) -- Tortured Rage
-		self:Bar(256396, 18.5, L.countx:format(self:SpellName(256396), initializationCount)) -- Initialization Sequence
+		self:Bar(256388, 18.5, L.countx:format(self:SpellName(256388), initializationCount)) -- Initialization Sequence
 	end
 end
 
