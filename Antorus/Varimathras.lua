@@ -76,7 +76,9 @@ function mod:OnEngage()
 	self:CDBar(243960, 9.7) -- Shadow Strike
 	self:CDBar(243999, 17.8) -- Dark Fissure
 	self:CDBar(244042, 25.5) -- Marked Prey
-	self:CDBar(244094, 35.3) -- Necrotic Embrace
+	if not self:Easy() then
+		self:CDBar(244094, 35.3) -- Necrotic Embrace
+	end
 
 	self:Berserk(310)
 end
