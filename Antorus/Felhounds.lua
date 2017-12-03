@@ -75,12 +75,15 @@ end
 function mod:OnEngage()
 	self:CDBar(251445, 10.5) -- Burning Maw
 	self:CDBar(245098, 10.5) -- Corrupting Maw
-	self:Bar(244072, 20) -- Molten Touch
-	self:Bar(244056, 28) -- Siphon Corruption
-	self:Bar(244057, 52) -- Enflame Corruption
-	self:Bar(244131, 52.5) -- Consuming Sphere
-	self:Bar(254429, 78) -- Weight of Darkness
-	self:Bar(244768, 84.5) -- Desolate Gaze
+	self:Bar(244056, self:Easy() and 29 or 28) -- Siphon Corruption
+	self:Bar(244057, self:Easy() and 56 or 52) -- Enflame Corruption
+	self:Bar(244131, self:Easy() and 54.5 or 52.5) -- Consuming Sphere
+	self:Bar(244768, self:Easy() and 89 or 84.5) -- Desolate Gaze
+
+	if not self:Easy() then
+		self:Bar(244072, 20) -- Molten Touch
+		self:Bar(254429, 78) -- Weight of Darkness
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -90,17 +93,17 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 244159 then -- Consuming Sphere
 		self:Message(244131, "Attention", "Alert")
-		self:Bar(244131, 78.5)
+		self:Bar(244131, self:Easy() and 85 or 78.5)
 	elseif spellId == 244069 then -- Weight of Darkness
 		self:Bar(254429, 78.5)
 	elseif spellId == 244064 then -- Desolate Gaze
-		self:Bar(244768, 96.5)
+		self:Bar(244768, self:Easy() and 104 or 96.5)
 	end
 end
 
 function mod:BurningMaw(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:CDBar(args.spellId, 10.5)
+	self:CDBar(args.spellId, 11)
 end
 
 do
@@ -136,7 +139,7 @@ end
 
 function mod:EnflameCorruption(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	self:Bar(args.spellId, 95.5)
+	self:Bar(args.spellId, self:Easy() and 104 or 95.5)
 	self:CastBar(args.spellId, 9)
 end
 
@@ -156,7 +159,7 @@ end
 
 function mod:CorruptingMaw(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	self:CDBar(args.spellId, 10.5)
+	self:CDBar(args.spellId, 11)
 end
 
 do
@@ -181,7 +184,7 @@ end
 
 function mod:SiphonCorruption(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	self:Bar(args.spellId, 78.5)
+	self:Bar(args.spellId, self:Easy() and 85 or 78.5)
 	self:CastBar(args.spellId, 9)
 end
 
