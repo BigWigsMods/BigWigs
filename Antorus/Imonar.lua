@@ -165,7 +165,9 @@ do
 	end
 
 	function mod:BigWigs_BossComm(_, msg, _, name)
-		addPlayerToList(self, Ambiguate(name, "none")) -- Ambiguate might not be needed, safety for now
+		if msg == "SleepCanister" then
+			addPlayerToList(self, name)
+		end
 	end
 
 	function mod:SleepCanister(args)
