@@ -243,7 +243,7 @@ do
 	}
 end
 
--- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigs3IconDB, BigWigsLoader, BigWigsOptions, ChatFrame_ImportAllListsToHash, ChatTypeInfo, CreateFrame, CUSTOM_CLASS_COLORS, DEFAULT_CHAT_FRAME, error
+-- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigsIconDB, BigWigsLoader, BigWigsOptions, ChatFrame_ImportAllListsToHash, ChatTypeInfo, CreateFrame, CUSTOM_CLASS_COLORS, DEFAULT_CHAT_FRAME, error
 -- GLOBALS: GetAddOnEnableState, GetAddOnInfo, GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetTime, GRAY_FONT_COLOR, hash_SlashCmdList, InCombatLockdown
 -- GLOBALS: IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySound, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, StopSound
@@ -615,9 +615,16 @@ function mod:ADDON_LOADED(addon)
 
 	local icon = LibStub("LibDBIcon-1.0", true)
 	if icon and ldb then
-		if not BigWigs3IconDB then BigWigs3IconDB = {} end
-		icon:Register("BigWigs", ldb, BigWigs3IconDB)
+		if not BigWigsIconDB then
+			if BigWigs3IconDB then -- XXX temp
+				BigWigsIconDB = BigWigs3IconDB
+			else
+				BigWigsIconDB = {}
+			end
+		end
+		icon:Register("BigWigs", ldb, BigWigsIconDB)
 	end
+	BigWigs3IconDB = nil -- XXX temp
 
 	if BigWigs3DB then
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
