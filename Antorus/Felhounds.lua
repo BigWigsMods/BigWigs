@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Felhounds of Sargeras", nil, 1987, 1712)
 if not mod then return end
 mod:RegisterEnableMob(122477, 122135) -- F'harg, Shatug
 mod.engageId = 2074
-mod.respawnTime = 5
+mod.respawnTime = 29
 
 --------------------------------------------------------------------------------
 -- Locals
