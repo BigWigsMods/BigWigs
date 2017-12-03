@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("The Coven of Shivarra", nil, 1986, 1712)
 if not mod then return end
 mod:RegisterEnableMob(122468, 122467, 122469, 125436) -- Noura, Asara, Diima, Thu'raya
 mod.engageId = 2073
-mod.respawnTime = 15
+mod.respawnTime = 25
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -139,10 +139,14 @@ function mod:OnEngage()
 
 	self:Bar(245627, 8.5) -- Whirling Saber
 	self:Bar(244899, 12.1) -- Fiery Strike
-	self:Bar(253429, 20.6) -- Fulminating Pulse
+	if not self:Easy() then
+		self:Bar(253429, 20.6) -- Fulminating Pulse
+	end
 
 	self:Bar(246329, 12.1) -- Shadow Blades
-	self:Bar(252861, 27.9) -- Storm of Darkness
+	if not self:Easy() then
+		self:Bar(252861, 27.9) -- Storm of Darkness
+	end
 
 	self:CDBar("torment_of_the_titans", 82, L.torment_of_the_titans, L.torment_of_the_titans_icon)
 	self:CDBar("stages", 190, self:SpellName(-15969), "achievement_boss_argus_shivan") -- Diima, Mother of Gloom
@@ -245,7 +249,9 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 			self:Message("stages", "Positive", "Long", self:SpellName(-15967), false) -- Noura, Mother of Flame
 			self:Bar(245627, 8.9) -- Whirling Saber
 			self:Bar(244899, 12.5) -- Fiery Strike
-			self:Bar(253429, 21.1) -- Fulminating Pulse
+			if not self:Easy() then
+				self:Bar(253429, 21.1) -- Fulminating Pulse
+			end
 			self:StopBar(self:SpellName(-15967)) -- Noura, Mother of Flame
 		else
 			self:StopBar(244899) -- Fiery Strike
@@ -256,7 +262,9 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		if UnitCanAttack("player", unit) then
 			self:Message("stages", "Positive", "Long", self:SpellName(-15968), false) -- Asara, Mother of Night
 			self:Bar(246329, 12.6) -- Shadow Blades
-			self:Bar(252861, 28.4) -- Storm of Darkness
+			if not self:Easy() then
+				self:Bar(252861, 28.4) -- Storm of Darkness
+			end
 		else
 			self:StopBar(246329) -- Shadow Blades
 			self:StopBar(252861) -- Storm of Darkness
@@ -266,7 +274,9 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 			self:Message("stages", "Positive", "Long", self:SpellName(-15969), false) -- Diima, Mother of Gloom
 			self:Bar(245586, 8) -- Chilled Blood
 			self:Bar(245518, 12.2) -- Flashfreeze
-			self:Bar(253650, 30) -- Orb of Frost
+			if not self:Easy() then
+				self:Bar(253650, 30) -- Orb of Frost
+			end
 			self:StopBar(self:SpellName(-15969)) -- Diima, Mother of Gloom
 			self:CDBar("stages", 185, self:SpellName(-15967), "achievement_boss_argus_shivan") -- Noura, Mother of Flame
 		else
