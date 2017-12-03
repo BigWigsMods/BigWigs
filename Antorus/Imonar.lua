@@ -14,11 +14,13 @@ mod.respawnTime = 30
 
 local stage = 1
 local empoweredSchrapnelBlastCount = 1
+local nextIntermissionWarning = 0
+local canisterProxList = {}
+
 local timers = {
 	--[[ Empowered Shrapnel Blast ]]--
 	[248070] = {15.3, 22, 19.5, 18, 16, 16, 13.5, 10}, -- XXX Need more data to confirm
 }
-local nextIntermissionWarning = 0
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -92,6 +94,8 @@ end
 
 function mod:OnEngage()
 	stage = 1
+	wipe(canisterProxList)
+
 	self:CDBar(247367, 4.5) -- Shock Lance
 	self:CDBar(254244, 7.3) -- Sleep Canister
 	self:CDBar(247376, 12.2) -- Pulse Grenade
@@ -116,7 +120,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 do
-	local playerList, proxList, isOnMe, scheduled = mod:NewTargetList(), {}, nil, nil
+	local playerList, isOnMe, scheduled = mod:NewTargetList(), nil, nil
 	local canisterMarks = {false, false}
 
 	local function warn(self)
@@ -127,8 +131,8 @@ do
 	end
 
 	local function addPlayerToList(self, name)
-		if not tContains(proxList, name) then
-			proxList[#proxList+1] = name
+		if not tContains(canisterProxList, name) then
+			canisterProxList[#canisterProxList+1] = name
 			playerList[#playerList+1] = name
 
 			if self:GetOption(canisterMarker) then
@@ -150,7 +154,7 @@ do
 				scheduled = self:ScheduleTimer(warn, 0.3, self)
 			end
 		end
-		self:OpenProximity(254244, 10, proxList)
+		self:OpenProximity(254244, 10, canisterProxList)
 	end
 
 	function mod:RAID_BOSS_WHISPER(_, msg)
@@ -179,17 +183,17 @@ do
 
 	function mod:SleepCanisterApplied(args)
 		addPlayerToList(self, args.destName)
-		if self:Healer() and #proxList > 0 then
+		if self:Healer() and #canisterProxList > 0 then
 			self:PlaySound(254244, "Alert")
 		end
 	end
 
 	function mod:SleepCanisterRemoved(args)
-		tDeleteItem(proxList, args.destName)
-		if #proxList == 0 then
+		tDeleteItem(canisterProxList, args.destName)
+		if #canisterProxList == 0 then
 			self:CloseProximity(254244)
 		else
-			self:OpenProximity(254244, 10, proxList)
+			self:OpenProximity(254244, 10, canisterProxList)
 		end
 
 		if self:GetOption(canisterMarker) then
