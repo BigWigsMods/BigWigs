@@ -1,33 +1,33 @@
 local L = BigWigs:NewBossLocale("Argus the Unmaker", "zhCN")
 if not L then return end
 if L then
-	--L.combinedBurstAndBomb = "Combine Soulburst and Soulbomb"
-	--L.combinedBurstAndBomb_desc = "|cff71d5ffSoulbombs|r are always applied in combination with |cff71d5ffSoulbursts|r. Enable this option to combine those two messages into one."
+	L.combinedBurstAndBomb = "合并灵魂爆发和灵魂炸弹"
+	L.combinedBurstAndBomb_desc = "|cff71d5ff灵魂炸弹|r总是与|cff71d5ff灵魂爆发|r一起使用。启用此选项将此两条消息合并为一条。"
 
-	--L.custom_off_always_show_combined = "Always show the combined Soulburst and Soulbomb message"
-	--L.custom_off_always_show_combined_desc = "The combined message won't be displayed if you get the |cff71d5ffSoulbomb|r or the |cff71d5ffSoulburst|r. Enable this option to always show the combined message, even when you're affected. |cff33ff99Useful for raid leaders.|r"
+	L.custom_off_always_show_combined = "总是显示合并灵魂爆发和灵魂炸弹信息"
+	L.custom_off_always_show_combined_desc = "当你受到|cff71d5ff灵魂炸弹|r或|cff71d5ff灵魂爆发|r时合并信息不会被显示。启用此选项将总是显示合并信息，即使你受到影响。|cff33ff99对团队领袖有用处。|r"
 
 	--L.stage2_early = "Let the fury of the sea wash away this corruption!"
 	--L.stage3_early = "No hope. Just pain. Only pain!"
 
-	--L.explosion = "%s Explosion"
-	--L.gifts = "Gifts: %s (Sky), %s (Sea)"
-	--L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tBurst:%s" -- short for Soulburst
-	--L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBomb:%s" -- short for Soulbomb
+	L.explosion = "%s爆炸"
+	L.gifts = "恩赐：%s（天空），%s（海洋）"
+	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|t爆发：%s" -- short for Soulburst
+	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t炸弹：%s" -- short for Soulbomb
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "zhCN")
 if L then
 	L.torment_of_the_titans_desc = "破坏魔会迫使泰坦之魂使用他们的技能对抗玩家。"
 
-	--L.timeLeft = "%.1fs" -- s = seconds
-	--L.torment = "Torment: %s"
-	--L.nextTorment = "Next Torment: |cffffffff%s|r"
-	--L.nextTorments = "Next Torments:"
-	--L.tormentHeal = "Heal/DoT" -- something like Heal/DoT (max 10 characters)
-	--L.tormentLightning = "Lightning" -- short for "Chain Lightning" (or similar, max 10 characters)
-	--L.tormentArmy = "Army" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)
-	--L.tormentFlames = "Flames" -- short for "Flames of Khaz'goroth" (or similar, max 10 characters)
+	L.timeLeft = "%.1f秒" -- s = seconds
+	L.torment = "痛苦：%s"
+	L.nextTorment = "下次痛苦：|cffffffff%s|r"
+	L.nextTorments = "下次痛苦："
+	L.tormentHeal = "治疗/伤害" -- something like Heal/DoT (max 10 characters)
+	L.tormentLightning = "闪电" -- short for "Chain Lightning" (or similar, max 10 characters)
+	L.tormentArmy = "军团" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)
+	L.tormentFlames = "火焰" -- short for "Flames of Khaz'goroth" (or similar, max 10 characters)
 end
 
 L = BigWigs:NewBossLocale("Eonar the Life-Binder", "zhCN")
