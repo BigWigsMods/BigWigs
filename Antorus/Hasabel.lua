@@ -57,6 +57,7 @@ function mod:GetOptions()
 		244607, -- Flames of Xoroth
 		244598, -- Supernova
 		{244613, "SAY"}, -- Everburning Flames
+		255805, -- Unstable Portal, every platform add casts it and i don't know where else to put it
 
 		--[[ Platform: Rancora ]]--
 		{244926, "SAY"}, -- Felsilk Wrap
@@ -97,6 +98,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Supernova", 244598)
 	self:Log("SPELL_AURA_APPLIED", "EverburningFlames", 244613)
 	self:Log("SPELL_AURA_REMOVED", "EverburningFlamesRemoved", 244613)
+	self:Log("SPELL_CAST_START", "UnstablePortal", 255805) -- Every platform add casts it and i don't know where else to put it
 	self:Death("VulcanarDeath", 122211)
 
 	--[[ Platform: Rancora ]]--
@@ -141,7 +143,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	if hp < nextPortalSoonWarning then
 		local platformName = (hp < 40 and self:SpellName(257942)) or (hp < 70 and self:SpellName(257941)) or self:SpellName(257939)
 		local icon = (hp < 40 and "spell_mage_flameorb_purple") or (hp < 70 and "spell_mage_flameorb_green") or "spell_mage_flameorb"
-		self:Message("stages", "Positive", nil, CL.soon:format(platformName), icon) -- Apocalypse Drive
+		self:Message("stages", "Positive", nil, CL.soon:format(platformName), icon)
 		nextPortalSoonWarning = nextPortalSoonWarning - 30
 		if nextPortalSoonWarning < 30 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
@@ -157,6 +159,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	elseif spellId == 257942 then -- Gateway: Nathreza
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257942)), "spell_mage_flameorb_purple") -- Platform: Nathreza
 	end
+	self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45)
 end
 
 function mod:PlatformPortal(args)
@@ -214,18 +217,27 @@ function mod:CatastrophicImplosion(args)
 	self:Message(args.spellId, "Important", "Alarm")
 end
 
-function mod:FlamesofXoroth(args)
-	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
-	if self:Interrupter(args.sourceGUID) then
-		self:Message(args.spellId, "Urgent", "Alarm")
-	end
-	self:CDBar(args.spellId, 7.3) -- sometimes 8.5
-end
+do
+	local lastFlames = 0
 
-function mod:Supernova(args)
-	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
-	self:Message(args.spellId, "Attention", "Alert")
-	self:CDBar(args.spellId, 2.5)
+	function mod:FlamesofXoroth(args)
+		lastFlames = GetTime()
+		if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
+		if self:Interrupter(args.sourceGUID) then
+			self:Message(args.spellId, "Urgent", "Alarm")
+		end
+		self:CDBar(args.spellId, 7.3) -- sometimes 8.5 (we adjust that timer in :Supernova())
+		self:CDBar(244598, 4.8) -- Supernova
+	end
+
+	function mod:Supernova(args)
+		if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
+		self:Message(args.spellId, "Attention", "Alert")
+		if (GetTime() - lastFlames) < 5.5 then -- 2nd Supernova before Flames very likely
+			self:CDBar(args.spellId, 2.5)
+			self:CDBar(244607, 3.65) -- Flames of Xoroth
+		end
+	end
 end
 
 function mod:EverburningFlames(args)
@@ -241,10 +253,16 @@ function mod:EverburningFlamesRemoved(args)
 	end
 end
 
+function mod:UnstablePortal(args)
+	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
+	self:Message(args.spellId, "Important", self:Interrupter(args.sourceGUID) and "Alarm")
+end
+
 function mod:VulcanarDeath(args)
 	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb")
 	self:StopBar(244598) -- Supernova
 	self:StopBar(244607) -- Flames of Xoroth
+	self:StopBar(255805) -- Unstable Portal
 end
 
 function mod:FelsilkWrap(args)
@@ -279,6 +297,7 @@ function mod:LadyDacidionDeath(args)
 	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_green")
 	self:StopBar(244926) -- Felsilk Wrap
 	self:StopBar(246316) -- Poison Essence
+	self:StopBar(255805) -- Unstable Portal
 end
 
 function mod:Delusions(args)
@@ -316,4 +335,5 @@ function mod:LordEilgarDeath(args)
 	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_purple")
 	self:StopBar(245050) -- Delusions
 	self:StopBar(245040) -- Corrupt
+	self:StopBar(255805) -- Unstable Portal
 end
