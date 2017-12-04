@@ -619,11 +619,18 @@ local function populateToggleOptions(widget, module)
 	scrollFrame:ReleaseChildren()
 	scrollFrame:PauseLayout()
 
-	local sDB = BigWigsStatisticsDB
-	if module.journalId and module.zoneId and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[module.zoneId] and sDB[module.zoneId][module.journalId] then
-		sDB = sDB[module.zoneId][module.journalId]
+	local id = 0 -- XXX temp
+	if module.instanceId then
+		id = module.instanceId
+	elseif module.zoneId and module.zoneId > 0 then
+		id = GetAreaMapInfo(module.zoneId)
+	end
 
-		if sDB.LFR or sDB.normal or sDB.heroic or sDB.mythic then -- Create statistics table
+	local sDB = BigWigsStatsDB
+	if module.journalId and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][module.journalId] then
+		sDB = sDB[id][module.journalId]
+
+		if next(sDB) then -- Create statistics table
 			local statGroup = AceGUI:Create("InlineGroup")
 			statGroup:SetTitle(L.statistics)
 			statGroup:SetLayout("Flow")

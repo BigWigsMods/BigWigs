@@ -22,7 +22,7 @@
 ## X-WoWI-ID: 5086
 
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibChatAnims, LibDualSpec-1.0
-## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigs3IconDB, BigWigsStatisticsDB
+## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigs3IconDB, BigWigsStatsDB, BigWigsStatisticsDB
 
 embeds.xml
 API.lua
