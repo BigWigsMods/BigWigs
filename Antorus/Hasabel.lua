@@ -16,9 +16,7 @@ mod.engageId = 2064
 -- Locals
 --
 
-local realityTearCount = 1
-local collapsingWorldCount = 1
-local felstormBarrageCount = 1
+local addsAlive = 0
 local playerPlatform = 1 -- 1: Nexus, 2: Xoroth, 3: Rancora, 4: Nathreza
 local nextPortalSoonWarning = 0
 
@@ -119,9 +117,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	realityTearCount = 1
-	collapsingWorldCount = 1
-	felstormBarrageCount = 1
+	addsAlive = 0
 	playerPlatform = 1
 
 	self:Bar(244016, 7) -- Reality Tear
@@ -154,10 +150,13 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 257939 then -- Gateway: Xoroth
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257939)), "spell_mage_flameorb") -- Platform: Xoroth
+		addsAlive = addsAlive + 1
 	elseif spellId == 257941 then -- Gateway: Rancora
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257941)), "spell_mage_flameorb_green") -- Platform: Rancora
+		addsAlive = addsAlive + 1
 	elseif spellId == 257942 then -- Gateway: Nathreza
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257942)), "spell_mage_flameorb_purple") -- Platform: Nathreza
+		addsAlive = addsAlive + 1
 	end
 	self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45)
 end
@@ -186,19 +185,16 @@ function mod:RealityTear(args)
 end
 
 function mod:RealityTearSuccess(args)
-	realityTearCount = realityTearCount + 1
-	self:Bar(args.spellId, 12.2) -- skips some casts for unknown reason
+	self:Bar(args.spellId, addsAlive > 0 and 24.4 or 12.2) -- Cooldown increased when there are platforms active
 end
 
 function mod:CollapsingWorld(args)
 	self:Message(args.spellId, "Important", "Warning")
-	collapsingWorldCount = collapsingWorldCount + 1
 	self:Bar(args.spellId, self:Easy() and 37 or 32.8) -- XXX See if there is a pattern for delayed casts; normal: switches from 37 to 41.5 at some unknown point
 end
 
 function mod:FelstormBarrage(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	felstormBarrageCount = felstormBarrageCount + 1
 	self:Bar(args.spellId, self:Easy() and 41.5 or 32.8) -- XXX See if there is a pattern for delayed casts; normal: sometimes 37 for the first few
 end
 
@@ -263,6 +259,7 @@ function mod:VulcanarDeath(args)
 	self:StopBar(244598) -- Supernova
 	self:StopBar(244607) -- Flames of Xoroth
 	self:StopBar(255805) -- Unstable Portal
+	addsAlive = addsAlive - 1
 end
 
 function mod:FelsilkWrap(args)
@@ -298,6 +295,7 @@ function mod:LadyDacidionDeath(args)
 	self:StopBar(244926) -- Felsilk Wrap
 	self:StopBar(246316) -- Poison Essence
 	self:StopBar(255805) -- Unstable Portal
+	addsAlive = addsAlive - 1
 end
 
 function mod:Delusions(args)
@@ -336,4 +334,5 @@ function mod:LordEilgarDeath(args)
 	self:StopBar(245050) -- Delusions
 	self:StopBar(245040) -- Corrupt
 	self:StopBar(255805) -- Unstable Portal
+	addsAlive = addsAlive - 1
 end
