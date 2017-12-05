@@ -86,28 +86,36 @@ local timersMythic = {
 	--[[ Spear of Doom ]] --
 	[248861] = {15, 75, 75, 75, 25, 75, 75},
 
-	--[[ Final Doom]]--
-	[249121] = {60.5, 125, 100},
+	--[[ Final Doom ]]--
+	[249121] = {60.5, 116.5, 100, 103, 100}, -- confirm via logs
 
 	--[[ Waves ]]--
 	["top"] = {
-		{60.5, "purifier"},
-		{140.5, "destructor"},
-		{260.5, "purifier"},
-		{360.5, "obfuscator"},
+		{38, "destructor"},
+		{145, "small_adds"},
+		{328, "obfuscator"},
+		{355, "purifier"},
+		{403, "destructor"}, -- confirm / exact time needed
 	},
 	["mid"] = {
-		{7.5, "destructor"},
-		{110.5, "destructor"},
+		{6, "destructor"},
+		{65, "purifier"},
+		{133, "purifier"},
+		{278, "obfuscator"},
+		{403, "destructor"}, -- confirm / exact time needed
 	},
 	["bot"] = {
-		{35, "small_adds"},
-		{110.5, "small_adds"},
-		{335, "obfuscator"},
+		{38, "obfuscator"},
+		{108, "destructor"},
+		{208, "purifier"},
+		{297, "small_adds"},
+		{403, "obfuscator"}, -- confirm / exact time needed
 	},
 	["air"] = {
-		{211.5, nil},
-		{285, nil},
+		{165, nil}, -- confirm / exact time needed
+		{270, nil}, -- confirm / exact time needed
+		{360, nil}, -- confirm / exact time needed
+		{480, nil}, -- confirm / exact time needed
 	}
 }
 
@@ -201,7 +209,7 @@ function mod:OnEngage()
 		self:CDBar(248861, timers[248861][spearCounter]) -- Spear of Doom
 	end
 	if self:Mythic() then
-		self:CDBar(249121, timers[249121][finalDoomCounter]) -- Final Doom
+		self:CDBar(249121, timers[249121][finalDoomCounter], CL.count:format(self:SpellName(249121), finalDoomCounter)) -- Final Doom
 	end
 end
 
@@ -268,7 +276,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList, prev = mod:NewTargetList(), 0
 	function mod:RainofFel(args)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
@@ -278,8 +286,12 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
-			rainofFelCounter = rainofFelCounter + 1
-			self:Bar(args.spellId, timers[args.spellId][rainofFelCounter])
+			local t = GetTime()
+			if t-prev > 5 then -- prevent a wrong bar if Rain of Fel gets delayed late
+				prev = t
+				rainofFelCounter = rainofFelCounter + 1
+				self:Bar(args.spellId, timers[args.spellId][rainofFelCounter])
+			end
 		end
 	end
 
@@ -299,7 +311,7 @@ end
 
 function mod:Purge(args)
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(249121), finalDoomCounter-1)))
-	self:Message(249121, "Positive", "Info", CL.interupted:format(self:SpellName(249121)))
+	self:Message(249121, "Positive", "Info", CL.interrupted:format(self:SpellName(249121))) -- Final Doom
 	self:CastBar(args.spellId, 20)
 end
 
