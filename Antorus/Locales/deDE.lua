@@ -46,8 +46,11 @@ end
 
 L = BigWigs:NewBossLocale("Portal Keeper Hasabel", "deDE")
 if L then
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Hasabel randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 	--L.custom_on_filter_platforms = "Filter Side Platform Warnings and Bars"
 	--L.custom_on_filter_platforms_desc = "Removes unnecessary messages and bars if you are not on a side platform. It will always show bars and warnings from the main Platform: Nexus."
+	--L.worldExplosion_desc = "Show a timer for the Collapsing World explosion."
 	--L.platform_active = "%s Active!" -- Platform: Xoroth Active!
 	--L.add_killed = "%s killed!"
 end
@@ -67,5 +70,10 @@ end
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "deDE")
 if L then
 	--L.cannon_ability_desc = "Display Messages and Bars related to the 2 cannons on the Gorothi Worldbreaker's back."
+
+	--L.missileImpact = "Annihilation Impact"
 	--L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
+
+	--L.decimationImpact = "Decimation Impact"
+	--L.decimationImpact_desc = "Show a timer for the Decimation missiles landing."
 end
