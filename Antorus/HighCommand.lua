@@ -168,9 +168,7 @@ function mod:ExploitWeaknessApplied(args)
 end
 
 function mod:Pyroblast(args)
-	if self:Interrupter() then
-		self:Message(args.spellId, "Urgent", "Alert")
-	end
+	self:Message(args.spellId, "Urgent", "Alert")
 end
 
 function mod:Fusillade(args)
