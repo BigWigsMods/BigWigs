@@ -46,8 +46,11 @@ end
 
 L = BigWigs:NewBossLocale("Portal Keeper Hasabel", "zhTW")
 if L then
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Hasabel randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 	L.custom_on_filter_platforms = "過濾外側平台的警告與計時器"
 	L.custom_on_filter_platforms_desc = "如果你不是上台組，關閉不需要的外側平台提示，只顯示中央場地的警告與計時器。"
+	--L.worldExplosion_desc = "Show a timer for the Collapsing World explosion."
 	L.platform_active = "%s啟動！" -- Platform: Xoroth Active!
 	--L.add_killed = "%s killed!"
 end
@@ -67,5 +70,10 @@ end
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "zhTW")
 if L then
 	L.cannon_ability_desc = "顯示被兩門火砲強化後的技能訊息與計時器。"
+
+	--L.missileImpact = "Annihilation Impact"
 	--L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
+
+	--L.decimationImpact = "Decimation Impact"
+	--L.decimationImpact_desc = "Show a timer for the Decimation missiles landing."
 end

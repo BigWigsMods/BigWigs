@@ -181,6 +181,8 @@ do
 		[549] = true, -- Gul'dan kill
 		[656] = true, -- Kil'jaeden kill
 		[682] = true, -- L'uras death
+		[686] = true, -- Argus portal
+		[688] = true, -- Argus kill
 	}
 
 	function plugin:PLAY_MOVIE(_, id)

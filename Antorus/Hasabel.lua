@@ -10,15 +10,13 @@ local mod, CL = BigWigs:NewBoss("Portal Keeper Hasabel", nil, 1985, 1712)
 if not mod then return end
 mod:RegisterEnableMob(122104)
 mod.engageId = 2064
---mod.respawnTime = 30
+mod.respawnTime = 33
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local realityTearCount = 1
-local collapsingWorldCount = 1
-local felstormBarrageCount = 1
+local addsAlive = 0
 local playerPlatform = 1 -- 1: Nexus, 2: Xoroth, 3: Rancora, 4: Nathreza
 local nextPortalSoonWarning = 0
 
@@ -28,8 +26,16 @@ local nextPortalSoonWarning = 0
 
 local L = mod:GetLocale()
 if L then
+	L.custom_on_stop_timers = "Always show ability bars"
+	L.custom_on_stop_timers_desc = "Hasabel randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+
 	L.custom_on_filter_platforms = "Filter Side Platform Warnings and Bars"
 	L.custom_on_filter_platforms_desc = "Removes unnecessary messages and bars if you are not on a side platform. It will always show bars and warnings from the main Platform: Nexus."
+
+	L.worldExplosion = mod:SpellName(20476) -- Explosion
+	L.worldExplosion_desc = "Show a timer for the Collapsing World explosion."
+	L.worldExplosion_icon = 120637
+
 	L.platform_active = "%s Active!" -- Platform: Xoroth Active!
 	L.add_killed = "%s killed!"
 end
@@ -42,12 +48,14 @@ function mod:GetOptions()
 	return {
 		--[[ General ]]--
 		"stages",
+		"custom_on_stop_timers",
 		"custom_on_filter_platforms",
 		"berserk",
 
 		--[[ Platform: Nexus ]]--
 		{244016, "TANK"}, -- Reality Tear
 		243983, -- Collapsing World
+		"worldExplosion",
 		244000, -- Felstorm Barrage
 		244689, -- Transport Portal
 		245504, -- Howling Shadows
@@ -57,6 +65,7 @@ function mod:GetOptions()
 		244607, -- Flames of Xoroth
 		244598, -- Supernova
 		{244613, "SAY"}, -- Everburning Flames
+		255805, -- Unstable Portal, every platform add casts it and i don't know where else to put it
 
 		--[[ Platform: Rancora ]]--
 		{244926, "SAY"}, -- Felsilk Wrap
@@ -87,7 +96,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RealityTear", 244016)
 	self:Log("SPELL_CAST_SUCCESS", "RealityTearSuccess", 244016)
 	self:Log("SPELL_CAST_SUCCESS", "CollapsingWorld", 243983)
-	self:Log("SPELL_CAST_START", "FelstormBarrage", 244000)
+	self:Log("SPELL_CAST_SUCCESS", "FelstormBarrage", 244000)
 	self:Log("SPELL_CAST_SUCCESS", "TransportPortal", 244689)
 	self:Log("SPELL_CAST_START", "HowlingShadows", 245504)
 	self:Log("SPELL_CAST_START", "CatastrophicImplosion", 246075)
@@ -97,6 +106,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Supernova", 244598)
 	self:Log("SPELL_AURA_APPLIED", "EverburningFlames", 244613)
 	self:Log("SPELL_AURA_REMOVED", "EverburningFlamesRemoved", 244613)
+	self:Log("SPELL_CAST_START", "UnstablePortal", 255805) -- Every platform add casts it and i don't know where else to put it
 	self:Death("VulcanarDeath", 122211)
 
 	--[[ Platform: Rancora ]]--
@@ -114,18 +124,18 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CloyingShadows", 245118)
 	self:Log("SPELL_AURA_APPLIED", "CloyingShadowsRemoved", 245118)
 	self:Death("LordEilgarDeath", 122213)
+
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
 
 function mod:OnEngage()
-	realityTearCount = 1
-	collapsingWorldCount = 1
-	felstormBarrageCount = 1
+	addsAlive = 0
 	playerPlatform = 1
 
 	self:Bar(244016, 7) -- Reality Tear
 	self:Bar(243983, 12.7) -- Collapsing World
-	self:Bar(244689, 21.9) -- Transport Portal
-	self:Bar(244000, 29.0) -- Felstorm Barrage
+	self:Bar(244689, 26.7) -- Transport Portal
+	self:Bar(244000, 35.7) -- Felstorm Barrage
 	self:Berserk(720)
 
 	nextPortalSoonWarning = 92 -- happens at 90%
@@ -136,12 +146,49 @@ end
 -- Event Handlers
 --
 
+local triggerCdForOtherSpells
+do
+	local abilitysToPause = {
+		[243983] = true, -- Collapsing World
+		[244689] = true, -- Transport Portal
+		[244000] = true, -- Felstorm Barrage
+	}
+
+	local castPattern = CL.cast:gsub("%%s", ".+")
+
+	function triggerCdForOtherSpells(self, spellId)
+		for id,_ in pairs(abilitysToPause) do
+			if id ~= spellId then
+				local cd = id == 244689 and 8.5 or 9 -- Transport Portal cast is 0.5s shorter
+				if self:BarTimeLeft(id) < cd then
+					self:Bar(id, cd)
+				end
+			end
+		end
+	end
+
+	local function stopAtZeroSec(bar)
+		if bar.remaining < 0.15 then -- Pause at 0.0
+			bar:SetDuration(0.01) -- Make the bar look full
+			bar:Start()
+			bar:Pause()
+			bar:SetTimeVisibility(false)
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, _, key, text)
+		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
+			bar:AddUpdateFunction(stopAtZeroSec)
+		end
+	end
+end
+
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextPortalSoonWarning then
 		local platformName = (hp < 40 and self:SpellName(257942)) or (hp < 70 and self:SpellName(257941)) or self:SpellName(257939)
 		local icon = (hp < 40 and "spell_mage_flameorb_purple") or (hp < 70 and "spell_mage_flameorb_green") or "spell_mage_flameorb"
-		self:Message("stages", "Positive", nil, CL.soon:format(platformName), icon) -- Apocalypse Drive
+		self:Message("stages", "Positive", nil, CL.soon:format(platformName), icon)
 		nextPortalSoonWarning = nextPortalSoonWarning - 30
 		if nextPortalSoonWarning < 30 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
@@ -152,11 +199,15 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 257939 then -- Gateway: Xoroth
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257939)), "spell_mage_flameorb") -- Platform: Xoroth
+		addsAlive = addsAlive + 1
 	elseif spellId == 257941 then -- Gateway: Rancora
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257941)), "spell_mage_flameorb_green") -- Platform: Rancora
+		addsAlive = addsAlive + 1
 	elseif spellId == 257942 then -- Gateway: Nathreza
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257942)), "spell_mage_flameorb_purple") -- Platform: Nathreza
+		addsAlive = addsAlive + 1
 	end
+	self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45)
 end
 
 function mod:PlatformPortal(args)
@@ -183,25 +234,26 @@ function mod:RealityTear(args)
 end
 
 function mod:RealityTearSuccess(args)
-	realityTearCount = realityTearCount + 1
-	self:Bar(args.spellId, 12.2) -- skips some casts for unknown reason
+	self:Bar(args.spellId, addsAlive > 0 and 24.4 or 12.2) -- Cooldown increased when there are platforms active
 end
 
 function mod:CollapsingWorld(args)
 	self:Message(args.spellId, "Important", "Warning")
-	collapsingWorldCount = collapsingWorldCount + 1
-	self:Bar(args.spellId, self:Easy() and 37 or 32.8) -- XXX See if there is a pattern for delayed casts; normal: switches from 37 to 41.5 at some unknown point
+	self:Bar("worldExplosion", 8, L.worldExplosion, L.worldExplosion_icon)
+	self:Bar(args.spellId, self:Easy() and 37.1 or 32.75)
+	triggerCdForOtherSpells(self, args.spellId)
 end
 
 function mod:FelstormBarrage(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	felstormBarrageCount = felstormBarrageCount + 1
-	self:Bar(args.spellId, self:Easy() and 41.5 or 32.8) -- XXX See if there is a pattern for delayed casts; normal: sometimes 37 for the first few
+	self:Bar(args.spellId, self:Easy() and 37.1 or 32)
+	triggerCdForOtherSpells(self, args.spellId)
 end
 
 function mod:TransportPortal(args)
 	self:Message(args.spellId, "Neutral", "Info")
-	self:Bar(args.spellId, 41.5) -- XXX See if there is a pattern for delayed casts
+	self:Bar(args.spellId, 41.7)
+	triggerCdForOtherSpells(self, args.spellId)
 end
 
 function mod:HowlingShadows(args)
@@ -214,18 +266,27 @@ function mod:CatastrophicImplosion(args)
 	self:Message(args.spellId, "Important", "Alarm")
 end
 
-function mod:FlamesofXoroth(args)
-	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
-	if self:Interrupter(args.sourceGUID) then
-		self:Message(args.spellId, "Urgent", "Alarm")
-	end
-	self:CDBar(args.spellId, 7.3) -- sometimes 8.5
-end
+do
+	local lastFlames = 0
 
-function mod:Supernova(args)
-	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
-	self:Message(args.spellId, "Attention", "Alert")
-	self:CDBar(args.spellId, 2.5)
+	function mod:FlamesofXoroth(args)
+		lastFlames = GetTime()
+		if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
+		if self:Interrupter(args.sourceGUID) then
+			self:Message(args.spellId, "Urgent", "Alarm")
+		end
+		self:CDBar(args.spellId, 7.3) -- sometimes 8.5 (we adjust that timer in :Supernova())
+		self:CDBar(244598, 4.8) -- Supernova
+	end
+
+	function mod:Supernova(args)
+		if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
+		self:Message(args.spellId, "Attention", "Alert")
+		if (GetTime() - lastFlames) < 5.5 then -- 2nd Supernova before Flames very likely
+			self:CDBar(args.spellId, 2.5)
+			self:CDBar(244607, 3.65) -- Flames of Xoroth
+		end
+	end
 end
 
 function mod:EverburningFlames(args)
@@ -241,10 +302,17 @@ function mod:EverburningFlamesRemoved(args)
 	end
 end
 
+function mod:UnstablePortal(args)
+	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
+	self:Message(args.spellId, "Important", self:Interrupter(args.sourceGUID) and "Alarm")
+end
+
 function mod:VulcanarDeath(args)
 	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb")
 	self:StopBar(244598) -- Supernova
 	self:StopBar(244607) -- Flames of Xoroth
+	self:StopBar(255805) -- Unstable Portal
+	addsAlive = addsAlive - 1
 end
 
 function mod:FelsilkWrap(args)
@@ -279,6 +347,8 @@ function mod:LadyDacidionDeath(args)
 	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_green")
 	self:StopBar(244926) -- Felsilk Wrap
 	self:StopBar(246316) -- Poison Essence
+	self:StopBar(255805) -- Unstable Portal
+	addsAlive = addsAlive - 1
 end
 
 function mod:Delusions(args)
@@ -316,4 +386,6 @@ function mod:LordEilgarDeath(args)
 	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_purple")
 	self:StopBar(245050) -- Delusions
 	self:StopBar(245040) -- Corrupt
+	self:StopBar(255805) -- Unstable Portal
+	addsAlive = addsAlive - 1
 end

@@ -15,6 +15,7 @@ mod.respawnTime = 30
 
 local stage = 1
 local nextApocalypseDriveWarning = 0
+local annihilatorHaywired = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -26,9 +27,13 @@ if L then
 	L.cannon_ability_desc = "Display Messages and Bars related to the 2 cannons on the Gorothi Worldbreaker's back."
 	L.cannon_ability_icon = 57610 -- Cannon icon
 
-	L.missileImpact = mod:SpellName(94829) -- Missile Impact
+	L.missileImpact = "Annihilation Impact"
 	L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
 	L.missileImpact_icon = 208426
+
+	L.decimationImpact = "Decimation Impact"
+	L.decimationImpact_desc = "Show a timer for the Decimation missiles landing."
+	L.decimationImpact_icon = 170318
 end
 
 --------------------------------------------------------------------------------
@@ -43,19 +48,22 @@ function mod:GetOptions()
 		244106, -- Carnage
 		"cannon_ability", -- Cannon Assault
 		{244410, "SAY"}, -- Decimation
+		"decimationImpact",
 		244761, -- Annihilation
 		"missileImpact",
+		247044, -- Shrapnel
 	},{
 		[246220] = "general",
 		[244410] = -15915, -- Decimator
 		[244761] = -15917, -- Annihilator
+		[247044] = "mythic",
 	}
 end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Annihilation", 244294) -- normal and empowered
-	self:Log("SPELL_CAST_SUCCESS", "Decimation", 244399, 245294) -- normal, empowered
-	self:Log("SPELL_AURA_APPLIED", "DecimationApplied", 244410)
+	self:Log("SPELL_CAST_SUCCESS", "Decimation", 244399, 245294, 246919) -- normal, empowered, haywire (mythic)
+	self:Log("SPELL_AURA_APPLIED", "DecimationApplied", 244410, 246919)
 
 	self:Log("SPELL_AURA_APPLIED", "FelBombardment", 246220) -- Fel Bombardment pre-debuff
 	self:Log("SPELL_AURA_REMOVED", "FelBombardmentRemoved", 246220) -- Fel Bombardment pre-debuff
@@ -67,10 +75,12 @@ function mod:OnBossEnable()
 
 	--[[ Mythic ]] --
 	self:Log("SPELL_AURA_APPLIED", "Haywire", 246897, 246965) -- Decimator Hayware, Annihilator Hayware
+	self:Log("SPELL_CAST_START", "Shrapnel", 247044)
 end
 
 function mod:OnEngage()
 	stage = 1
+	annihilatorHaywired = nil
 
 	self:Bar("cannon_ability", 8, L.cannon_ability, L.cannon_ability_icon)
 	self:Bar(246220, 9.4) -- Fel Bombardment
@@ -95,7 +105,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	end
 end
 
-function mod:Annihilation(args)
+function mod:Annihilation()
 	self:Message(244761, "Important", "Alert")
 	self:CDBar("missileImpact", 6.2, L.missileImpact, L.missileImpact_icon)
 	self:Bar(244761, (self:Mythic() or stage == 1) and 31.6 or 15.8) -- Annihilation
@@ -116,8 +126,14 @@ do
 
 	function mod:Decimation(args)
 		self:Bar(244410, (self:Mythic() or stage == 1) and 31.6 or 15.8) -- Decimation
+		self:CDBar("decimationImpact", args.spellId == 246919 and 7 or 10, L.decimationImpact, L.decimationImpact_icon) -- 246919 = haywire (mythic)
 		if stage == 1 or self:Mythic() then
 			self:Bar(244761, 15.8) -- Annihilation
+			if annihilatorHaywired then
+				-- Blizzard forgot the SPELL_CAST_SUCCESS event for the Haywire'd Annihilation.
+				-- XXX check mythic transcripts for a USCS event / use Cannon Chooser
+				self:ScheduleTimer("Annihilation", 15.8)
+			end
 		end
 		isOnMe = nil
 		if not scheduled then
@@ -128,9 +144,11 @@ do
 	function mod:DecimationApplied(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:Message(args.spellId, "Personal", "Warning", CL.you:format(args.spellName))
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 5)
+			self:Message(244410, "Personal", "Warning", CL.you:format(args.spellName))
+			self:Say(244410)
+			if args.spellId ~= 246919 then -- Haywire Decimation
+				self:SayCountdown(244410, 5)
+			end
 		end
 	end
 end
@@ -196,12 +214,20 @@ function mod:Carnage(args)
 end
 
 --[[ Mythic ]]--
-function mod:Haywire()
+function mod:Haywire(args)
 	stage = stage + 1
 	self:Message(240277, "Positive", "Long", CL.interrupted:format(self:SpellName(240277)))
 	self:StopBar(CL.cast:format(self:SpellName(240277)))
 
-	self:Bar(244969, 4.1) -- Eradication
+	self:Bar(244969, 9.5) -- Eradication
 	self:Bar("cannon_ability", 19.8, L.cannon_ability, L.cannon_ability_icon)
 	self:Bar(246220, 21.1) -- Fel Bombardment
+
+	if args.spellId == 246965 then
+		annihilatorHaywired = true
+	end
+end
+
+function mod:Shrapnel(args)
+	self:CDBar(args.spellId, 4.5)
 end

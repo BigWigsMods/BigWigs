@@ -12,6 +12,7 @@ mod.respawnTime = 30
 -- Locals
 --
 
+local fusilladeCount = 1
 local assumeCommandCount = 1
 local nextAssumeCommand = 0
 local incomingBoss = {
@@ -100,6 +101,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	fusilladeCount = 1
 	assumeCommandCount = 1
 
 	self:Bar(244892, 8.4) -- Sundering Claws
@@ -115,13 +117,13 @@ end
 --
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 245304 then -- Entropic Mines
-		self:Message(245161, "Neutral", "Info")
+		self:Message(245161, "Attention", "Info")
 		local cooldown = 10
 		if nextAssumeCommand > GetTime() + cooldown then
 			self:Bar(245161, cooldown)
 		end
 	elseif spellId == 245546 then -- Summon Reinforcements
-		self:Message(245546, "Attention", "Alert")
+		self:Message(245546, "Important", "Alarm")
 		local cooldown = 35
 		if nextAssumeCommand > GetTime() + cooldown then
 			self:Bar(245546, cooldown)
@@ -134,14 +136,14 @@ function mod:AssumeCommand(args)
 
 	if assumeCommandCount % 3 == 1 then -- Chief Engineer Ishkar
 		self:StopBar(245161) -- Entropic Mines
-		self:Bar(244625, 18.3) -- Fusillade
+		self:Bar(244625, 18.3, CL.count:format(self:SpellName(244625), fusilladeCount)) -- Fusillade
 		self:Bar(245546, 16.1) -- Summon Reinforcements
 	elseif assumeCommandCount % 3 == 2 then -- General Erodus
 		self:StopBar(245546) -- Summon Reinforcements
 		self:Bar(245161, 8.0) -- Entropic Mines
-		self:Bar(244625, 16.1) -- Fusillade
+		self:Bar(244625, 16.1, CL.count:format(self:SpellName(244625), fusilladeCount)) -- Fusillade
 	else -- Admiral Svirax
-		self:StopBar(244625) -- Fusillade
+		self:StopBar(CL.count:format(self:SpellName(244625), fusilladeCount)) -- Fusillade
 		self:Bar(245546, 11) -- Summon Reinforcements
 		self:Bar(245161, 18.0) -- Entropic Mines
 	end
@@ -166,22 +168,25 @@ function mod:ExploitWeaknessApplied(args)
 end
 
 function mod:Pyroblast(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	if self:Interrupter() then
+		self:Message(args.spellId, "Urgent", "Alert")
+	end
 end
 
 function mod:Fusillade(args)
-	self:Message(args.spellId, "Urgent", "Warning")
-	self:CastBar(args.spellId, 5)
+	self:Message(args.spellId, "Urgent", "Warning", CL.count:format(self:SpellName(244625), fusilladeCount))
+	self:CastBar(args.spellId, 5, CL.count:format(self:SpellName(244625), fusilladeCount))
+	fusilladeCount = fusilladeCount + 1
 	local cooldown = 30
 	if nextAssumeCommand > GetTime() + cooldown then
-		self:CDBar(args.spellId, cooldown)
+		self:CDBar(args.spellId, cooldown, CL.count:format(self:SpellName(244625), fusilladeCount))
 	end
 end
 
 
 function mod:ShockGrenadeStart(args)
-	self:Message(244737, "Attention", "Alert", CL.incoming:format(args.spellName))
-	local cooldown = 20
+	self:Message(244737, "Attention", nil, CL.incoming:format(args.spellName))
+	local cooldown = self:Mythic() and 16 or 20 -- XXX confirm mythic via logs
 	if nextAssumeCommand > GetTime() + cooldown then
 		self:Bar(244737, cooldown)
 	end
@@ -191,7 +196,7 @@ function mod:ShockGrenade(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 5)
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 	end
 end
 
