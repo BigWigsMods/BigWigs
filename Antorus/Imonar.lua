@@ -219,6 +219,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		self:StopBar(247687) -- Sever
 		self:StopBar(248254) -- Charged Blast
 		self:StopBar(247923) -- Shrapnel Blast
+		-- Mythic timers
+		self:StopBar(248068) -- Empowered Pulse Grenade
+		self:StopBar(248070) -- Empowered Shrapnel Blast
 	end
 end
 
