@@ -265,7 +265,7 @@ end
 
 function mod:ChargedBlasts(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
-	self:CastBar(args.spellId, 5.5)
+	self:CastBar(args.spellId, 8.6)
 	self:Bar(args.spellId, 18.2)
 end
 
