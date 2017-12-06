@@ -5,7 +5,7 @@ if L then
 	L.combinedBurstAndBomb_desc = "|cff71d5ff靈魂炸彈|r總是與|cff71d5ff靈魂驟發|r一起使用。啟用此選項將兩條訊息合併為一條。"
 
 	L.custom_off_always_show_combined = "總是顯示靈魂驟發與靈魂炸彈的合併訊息"
-	L.custom_off_always_show_combined_desc = "合併訊息不會顯示你中了|cff71d5ff靈魂炸彈|r或|cff71d5ff靈魂驟發|r。啟用此選項將會使合併訊息總是顯示你中了技能。|cff33ff99對團隊領袖很有用。|r"
+	L.custom_off_always_show_combined_desc = "當你中了|cff71d5ff靈魂炸彈|r或|cff71d5ff靈魂驟發|r時，不會顯示合併訊息，只會提示你受到影響。啟用此選項將會使訊息強制以合併模式顯示，即使你中了技能。|cff33ff99對團隊領袖很有用。|r"
 
 	L.stage2_early = "讓大海的怒濤洗淨所有的腐化吧！"
 	L.stage3_early = "沒有希望。只有痛苦！"
