@@ -5,7 +5,7 @@ if L then
 	L.combinedBurstAndBomb_desc = "|cff71d5ff靈魂炸彈|r總是與|cff71d5ff靈魂驟發|r一起使用。啟用此選項將兩條訊息合併為一條。"
 
 	L.custom_off_always_show_combined = "總是顯示靈魂驟發與靈魂炸彈的合併訊息"
-	L.custom_off_always_show_combined_desc = "The combined message won't be displayed if you get the |cff71d5ffSoulbomb|r or the |cff71d5ffSoulburst|r. Enable this option to always show the combined message, even when you're affected. |cff33ff99Useful for raid leaders.|r"
+	L.custom_off_always_show_combined_desc = "合併訊息不會顯示你中了|cff71d5ff靈魂炸彈|r或|cff71d5ff靈魂驟發|r。啟用此選項將會使合併訊息總是顯示你中了技能。|cff33ff99對團隊領袖很有用。|r"
 
 	L.stage2_early = "讓大海的怒濤洗淨所有的腐化吧！"
 	L.stage3_early = "沒有希望。只有痛苦！"
@@ -24,7 +24,7 @@ if L then
 	L.torment = "苦難：%s"
 	L.nextTorment = "下次苦難：|cffffffff%s|r"
 	L.nextTorments = "下次苦難："
-	L.tormentHeal = "治療" -- something like Heal/DoT (max 10 characters)
+	L.tormentHeal = "阿曼蘇爾" -- something like Heal/DoT (max 10 characters)
 	L.tormentLightning = "閃電鍊" -- short for "Chain Lightning" (or similar, max 10 characters)
 	L.tormentArmy = "大軍" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)
 	L.tormentFlames = "噴火" -- short for "Flames of Khaz'goroth" (or similar, max 10 characters)
