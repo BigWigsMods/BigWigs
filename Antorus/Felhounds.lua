@@ -92,9 +92,6 @@ function mod:OnEngage()
 		self:Bar(244072, self:Mythic() and 18 or 20) -- Molten Touch
 		self:Bar(254429, self:Mythic() and 73 or 78) -- Weight of Darkness
 	end
-	if self:Mythic() then
-		self:Bar(251356, 120) -- Focusing Power
-	end
 end
 
 --------------------------------------------------------------------------------
@@ -229,15 +226,13 @@ do
 end
 
 do
-	local list = {}
+	local prev = 0
 	function mod:FocusingPower(args)
-		local npcId = self:MobId(args.destGUID)
-		if npcId == 127753 or npcId == 122640 then return end -- Skip Lingering Flames
-
-		list[#list+1] = args.destName
-		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Neutral", "Info")
-			self:Bar(args.spellId, 15, CL.onboss:format(args.spellName))
+		local t = GetTime()
+		if t-prev > 1.5 then
+			prev = t
+			self:Message(args.spellId, "Neutral", "Info")
+			self:Bar(args.spellId, 15)
 		end
 	end
 end
