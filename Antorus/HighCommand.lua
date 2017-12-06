@@ -110,6 +110,10 @@ function mod:OnEngage()
 
 	nextAssumeCommand = GetTime() + 90 -- 90s because cast time is 3s so nothing new will be cast
 	self:Bar(245227, 93, incomingBoss[assumeCommandCount]) -- Chief Engineer Ishkar (Assume Command Bar)
+
+	if self:Mythic() then
+		self:Bar(244737, 14.5) -- Shock Grenade
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -149,6 +153,10 @@ function mod:AssumeCommand(args)
 	end
 	self:CDBar(244892, 8.5) -- Sundering Claws
 
+	if self:Mythic() then
+		self:Bar(244737, 5) -- Shock Grenade
+	end
+
 	assumeCommandCount = assumeCommandCount + 1
 
 	nextAssumeCommand = GetTime() + 90 -- 90s because cast time is 3s so nothing new will be cast
@@ -184,7 +192,7 @@ end
 
 function mod:ShockGrenadeStart(args)
 	self:Message(244737, "Attention", nil, CL.incoming:format(args.spellName))
-	local cooldown = self:Mythic() and 16 or 20 -- XXX confirm mythic via logs
+	local cooldown = 14.5
 	if nextAssumeCommand > GetTime() + cooldown then
 		self:Bar(244737, cooldown)
 	end
