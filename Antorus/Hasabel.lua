@@ -200,14 +200,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 257939 then -- Gateway: Xoroth
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257939)), "spell_mage_flameorb") -- Platform: Xoroth
 		addsAlive = addsAlive + 1
+		self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45) -- Unstable Portal
 	elseif spellId == 257941 then -- Gateway: Rancora
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257941)), "spell_mage_flameorb_green") -- Platform: Rancora
 		addsAlive = addsAlive + 1
+		self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45) -- Unstable Portal
 	elseif spellId == 257942 then -- Gateway: Nathreza
 		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257942)), "spell_mage_flameorb_purple") -- Platform: Nathreza
 		addsAlive = addsAlive + 1
+		self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45) -- Unstable Portal
 	end
-	self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45)
 end
 
 function mod:PlatformPortal(args)
@@ -240,19 +242,19 @@ end
 function mod:CollapsingWorld(args)
 	self:Message(args.spellId, "Important", "Warning")
 	self:Bar("worldExplosion", 8, L.worldExplosion, L.worldExplosion_icon)
-	self:Bar(args.spellId, self:Easy() and 37.1 or 32.75)
+	self:Bar(args.spellId, (self:Easy() and 37.1) or (self:Mythic() and 27.5) or 32.75)
 	triggerCdForOtherSpells(self, args.spellId)
 end
 
 function mod:FelstormBarrage(args)
 	self:Message(args.spellId, "Urgent", "Alert")
-	self:Bar(args.spellId, self:Easy() and 37.1 or 32)
+	self:Bar(args.spellId, (self:Easy() and 37.1) or (self:Mythic() and 27.5) or 32.75)
 	triggerCdForOtherSpells(self, args.spellId)
 end
 
 function mod:TransportPortal(args)
 	self:Message(args.spellId, "Neutral", "Info")
-	self:Bar(args.spellId, 41.7)
+	self:Bar(args.spellId, (self:Mythic() and 36.5) or 41.7)
 	triggerCdForOtherSpells(self, args.spellId)
 end
 
