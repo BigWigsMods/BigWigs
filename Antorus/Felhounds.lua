@@ -147,7 +147,7 @@ function mod:Enflamed(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 4)
+		self:SayCountdown(args.spellId, self:Mythic() and 3 or 4, nil, self:Mythic() and 2)
 	end
 end
 
@@ -191,7 +191,7 @@ end
 function mod:Siphoned(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
-		self:SayCountdown(args.spellId, 4)
+		self:SayCountdown(args.spellId, self:Mythic() and 3 or 4, nil, self:Mythic() and 2)
 	end
 end
 
