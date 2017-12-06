@@ -7,8 +7,8 @@ if L then
 	L.custom_off_always_show_combined = "总是显示合并灵魂爆发和灵魂炸弹信息"
 	L.custom_off_always_show_combined_desc = "当你受到|cff71d5ff灵魂炸弹|r或|cff71d5ff灵魂爆发|r时合并信息不会被显示。启用此选项将总是显示合并信息，即使你受到影响。|cff33ff99对团队领袖有用处。|r"
 
-	--L.stage2_early = "Let the fury of the sea wash away this corruption!"
-	--L.stage3_early = "No hope. Just pain. Only pain!"
+	L.stage2_early = "让大海的怒涛洗刷这腐蚀吧！"
+	L.stage3_early = "没有希望。只有痛苦。痛苦！"
 
 	L.explosion = "%s爆炸"
 	L.gifts = "恩赐：%s（天空），%s（海洋）"
