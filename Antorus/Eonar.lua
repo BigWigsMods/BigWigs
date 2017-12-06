@@ -87,15 +87,15 @@ local timersMythic = {
 	[248861] = {15, 75, 75, 75, 25, 75, 75},
 
 	--[[ Final Doom ]]--
-	[249121] = {60.5, 116.5, 100, 103, 100}, -- confirm via logs
+	[249121] = {60.5, 120, 100.5, 104.5, 100.5}, -- they seem to vary a bit
 
 	--[[ Waves ]]--
 	["top"] = {
 		{38, "destructor"},
 		{145, "small_adds"},
 		{328, "obfuscator"},
-		{355, "purifier"},
-		{403, "destructor"}, -- confirm / exact time needed
+		{352, "purifier"},
+		{424, "destructor"},
 	},
 	["mid"] = {
 		{6, "destructor"},
@@ -106,14 +106,14 @@ local timersMythic = {
 	},
 	["bot"] = {
 		{38, "obfuscator"},
-		{108, "destructor"},
+		{110, "destructor"}, -- seems to vary a bit
 		{208, "purifier"},
 		{297, "small_adds"},
-		{403, "obfuscator"}, -- confirm / exact time needed
+		{413, "obfuscator"}, -- confirm / exact time needed
 	},
 	["air"] = {
-		{165, nil}, -- confirm / exact time needed
-		{270, nil}, -- confirm / exact time needed
+		{165, nil},
+		{260, nil}, -- confirm / exact time needed
 		{360, nil}, -- confirm / exact time needed
 		{480, nil}, -- confirm / exact time needed
 	}

@@ -57,7 +57,7 @@ function mod:GetOptions()
 		244172, -- Psychic Assault
 
 		--[[ Mythic ]]--
-		244737, -- Shock Grenade
+		{244737, "SAY", "FLASH", "PROXIMITY"}, -- Shock Grenade
 	},{
 		[244625] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16100)), -- In Pod: Admiral Svirax
 		[245161] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16116)), -- In Pod: Chief Engineer Ishkar
@@ -110,6 +110,10 @@ function mod:OnEngage()
 
 	nextAssumeCommand = GetTime() + 90 -- 90s because cast time is 3s so nothing new will be cast
 	self:Bar(245227, 93, incomingBoss[assumeCommandCount]) -- Chief Engineer Ishkar (Assume Command Bar)
+
+	if self:Mythic() then
+		self:Bar(244737, 14.5) -- Shock Grenade
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -149,6 +153,10 @@ function mod:AssumeCommand(args)
 	end
 	self:CDBar(244892, 8.5) -- Sundering Claws
 
+	if self:Mythic() then
+		self:Bar(244737, 5) -- Shock Grenade
+	end
+
 	assumeCommandCount = assumeCommandCount + 1
 
 	nextAssumeCommand = GetTime() + 90 -- 90s because cast time is 3s so nothing new will be cast
@@ -168,9 +176,7 @@ function mod:ExploitWeaknessApplied(args)
 end
 
 function mod:Pyroblast(args)
-	if self:Interrupter() then
-		self:Message(args.spellId, "Urgent", "Alert")
-	end
+	self:Message(args.spellId, "Urgent", "Alert")
 end
 
 function mod:Fusillade(args)
@@ -186,7 +192,7 @@ end
 
 function mod:ShockGrenadeStart(args)
 	self:Message(244737, "Attention", nil, CL.incoming:format(args.spellName))
-	local cooldown = self:Mythic() and 16 or 20 -- XXX confirm mythic via logs
+	local cooldown = 14.5
 	if nextAssumeCommand > GetTime() + cooldown then
 		self:Bar(244737, cooldown)
 	end
@@ -195,6 +201,8 @@ end
 function mod:ShockGrenade(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
+		self:Flash(args.spellId)
+		self:OpenProximity(args.spellId, 10)
 		self:SayCountdown(args.spellId, 5)
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 	end
@@ -203,6 +211,7 @@ end
 function mod:ShockGrenadeRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+		self:CloseProximity(args.spellId)
 	end
 end
 
