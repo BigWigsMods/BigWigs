@@ -19,7 +19,7 @@ local canisterProxList = {}
 
 local timersHeroic = {
 	--[[ Empowered Shrapnel Blast ]]--
-	[248070] = {15.3, 22, 19.5, 18, 16, 16, 13.5, 10}, -- XXX Need more data to confirm
+	[248070] = {15.3, 22, 19.5, 18, 16, 16, 13.5, 10, 9.5}, -- XXX Need more data to confirm
 }
 local timersMythic = {
 	--[[ Empowered Shrapnel Blast ]]--
