@@ -57,7 +57,7 @@ function mod:GetOptions()
 		244172, -- Psychic Assault
 
 		--[[ Mythic ]]--
-		244737, -- Shock Grenade
+		{244737, "SAY", "FLASH", "PROXIMITY"}, -- Shock Grenade
 	},{
 		[244625] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16100)), -- In Pod: Admiral Svirax
 		[245161] = CL.other:format(mod:SpellName(-16099), mod:SpellName(-16116)), -- In Pod: Chief Engineer Ishkar
@@ -201,6 +201,8 @@ end
 function mod:ShockGrenade(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
+		self:Flash(args.spellId)
+		self:OpenProximity(args.spellId, 10)
 		self:SayCountdown(args.spellId, 5)
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 	end
@@ -209,6 +211,7 @@ end
 function mod:ShockGrenadeRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+		self:CloseProximity(args.spellId)
 	end
 end
 
