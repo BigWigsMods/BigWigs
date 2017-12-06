@@ -212,8 +212,16 @@ do
 	end
 end
 
--- XXX Only on pull?
-function mod:FocusingPower(args)
-	self:TargetMessage(args.spellId, args.destName, "Neutral", "Info")
-	self:TargetBar(args.spellId, 15, args.destName)
+do
+	local list = {}
+	function mod:FocusingPower(args)
+		local npcId = self:MobId(args.destGUID)
+		if npcId == 127753 or npcId == 122640 then return end -- Skip Lingering Flames - XXX confirm mythic npc id
+
+		list[#list+1] = args.destName
+		if #list == 1 then
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Neutral", "Info")
+			self:Bar(args.spellId, 15, CL.onboss:format(args.spellName))
+		end
+	end
 end
