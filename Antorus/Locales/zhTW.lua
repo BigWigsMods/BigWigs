@@ -1,33 +1,33 @@
 local L = BigWigs:NewBossLocale("Argus the Unmaker", "zhTW")
 if not L then return end
 if L then
-	--L.combinedBurstAndBomb = "Combine Soulburst and Soulbomb"
-	--L.combinedBurstAndBomb_desc = "|cff71d5ffSoulbombs|r are always applied in combination with |cff71d5ffSoulbursts|r. Enable this option to combine those two messages into one."
+	L.combinedBurstAndBomb = "合併靈魂驟發&靈魂炸彈"
+	L.combinedBurstAndBomb_desc = "|cff71d5ff靈魂炸彈|r總是與|cff71d5ff靈魂驟發|r合併使用。啟用此選項將這兩個訊息合併為一個。"
 
-	--L.custom_off_always_show_combined = "Always show the combined Soulburst and Soulbomb message"
-	--L.custom_off_always_show_combined_desc = "The combined message won't be displayed if you get the |cff71d5ffSoulbomb|r or the |cff71d5ffSoulburst|r. Enable this option to always show the combined message, even when you're affected. |cff33ff99Useful for raid leaders.|r"
+	L.custom_off_always_show_combined = "永遠顯示合併的靈魂驟發&靈魂炸彈的訊息"
+	L.custom_off_always_show_combined_desc = "如果你中了|cff71d5ff靈魂炸彈|r或|cff71d5ff靈魂驟發|r合併的訊息不會顯示。啟用此選項可以永遠顯示合併的訊息，即使你受到影響。 |cff33ff99對團隊領隊是很有用的。|r"
 
-	--L.stage2_early = "Let the fury of the sea wash away this corruption!"
-	--L.stage3_early = "No hope. Just pain. Only pain!"
+	L.stage2_early = "讓大海的怒濤洗淨所有的腐化吧！"
+	L.stage3_early = "沒有希望。只有痛苦！"
 
-	--L.explosion = "%s Explosion"
-	--L.gifts = "Gifts: %s (Sky), %s (Sea)"
-	--L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tBurst:%s" -- short for Soulburst
-	--L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBomb:%s" -- short for Soulbomb
+	L.explosion = "%s 爆炸"
+	L.gifts = "賜：%s (天)，%s (海)"
+	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|t驟發:%s" -- short for Soulburst
+	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t炸彈:%s" -- short for Soulbomb
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "zhTW")
 if L then
-	--L.torment_of_the_titans_desc = "The Shivarra will force the titan souls to use their abilities against the players."
+	L.torment_of_the_titans_desc = "希瓦拉巫女將迫使泰坦靈魂使用他們的能力對付玩家。"
 
-	--L.timeLeft = "%.1fs" -- s = seconds
-	--L.torment = "Torment: %s"
-	--L.nextTorment = "Next Torment: |cffffffff%s|r"
-	--L.nextTorments = "Next Torments:"
-	--L.tormentHeal = "Heal/DoT" -- something like Heal/DoT (max 10 characters)
-	--L.tormentLightning = "Lightning" -- short for "Chain Lightning" (or similar, max 10 characters)
-	--L.tormentArmy = "Army" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)
-	--L.tormentFlames = "Flames" -- short for "Flames of Khaz'goroth" (or similar, max 10 characters)
+	L.timeLeft = "%.1f秒" -- s = seconds
+	L.torment = "苦難：%s"
+	L.nextTorment = "下次苦難：|cffffffff%s|r"
+	L.nextTorments = "下次苦難："
+	L.tormentHeal = "治療/DoT" -- something like Heal/DoT (max 10 characters)
+	L.tormentLightning = "閃電" -- short for "Chain Lightning" (or similar, max 10 characters)
+	L.tormentArmy = "大軍" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)
+	L.tormentFlames = "火焰" -- short for "Flames of Khaz'goroth" (or similar, max 10 characters)
 end
 
 L = BigWigs:NewBossLocale("Eonar the Life-Binder", "zhTW")
@@ -46,34 +46,26 @@ end
 
 L = BigWigs:NewBossLocale("Portal Keeper Hasabel", "zhTW")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Hasabel randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 	L.custom_on_filter_platforms = "過濾外側平台的警告與計時器"
 	L.custom_on_filter_platforms_desc = "如果你不是上台組，關閉不需要的外側平台提示，只顯示中央場地的警告與計時器。"
-	--L.worldExplosion_desc = "Show a timer for the Collapsing World explosion."
 	L.platform_active = "%s啟動！" -- Platform: Xoroth Active!
-	--L.add_killed = "%s killed!"
+	L.add_killed = "%s 已擊殺！"
 end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "zhTW")
 if L then
-	--L.empowered = "(E) %s" -- (E) Ruiner
+	L.empowered = "(升) %s" -- (E) Ruiner
 	L.gains = "金加洛斯獲得了%s" -- Kin'garoth gains Empowered Ruiner
 end
 
 L = BigWigs:NewBossLocale("Antoran High Command", "zhTW")
 if L then
-	--L.felshieldActivated = "Felshield Activated by %s"
-	--L.felshieldUp = "Felshield Up"
+	L.felshieldActivated = "魔盾已由%s啟動"
+	L.felshieldUp = "魔盾出現"
 end
 
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "zhTW")
 if L then
 	L.cannon_ability_desc = "顯示被兩門火砲強化後的技能訊息與計時器。"
-
-	--L.missileImpact = "Annihilation Impact"
-	--L.missileImpact_desc = "Show a timer for the Annihilation missiles landing."
-
-	--L.decimationImpact = "Decimation Impact"
-	--L.decimationImpact_desc = "Show a timer for the Decimation missiles landing."
+	L.missileImpact_desc = "顯示殲滅飛彈的著陸計時器。"
 end
