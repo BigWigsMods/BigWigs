@@ -46,11 +46,11 @@ end
 
 L = BigWigs:NewBossLocale("Portal Keeper Hasabel", "zhCN")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Hasabel randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "总是显示技能条"
+	L.custom_on_stop_timers_desc = "哈萨贝尔下次会随机释放非冷却技能。当此选项开启，这些技能条将保留在屏幕上。"
 	L.custom_on_filter_platforms = "过滤外侧平台警报和计时条"
 	L.custom_on_filter_platforms_desc = "当你不是上台分组时移除不必要的信息和计时条。这将只显示中央平台：枢纽的警报和计时条。"
-	--L.worldExplosion_desc = "Show a timer for the Collapsing World explosion."
+	L.worldExplosion_desc = "显示崩塌的世界爆炸计时条。"
 	L.platform_active = "%s激活！" -- Platform: Xoroth Active!
 	L.add_killed = "%s已击杀！"
 end
@@ -71,9 +71,9 @@ L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "zhCN")
 if L then
 	L.cannon_ability_desc = "显示加洛西灭世者背后两门火炮的信息和计时条。"
 
-	--L.missileImpact = "Annihilation Impact"
+	L.missileImpact = "歼灭撞击"
 	L.missileImpact_desc = "显示歼灭飞弹着陆计时条。"
 
-	--L.decimationImpact = "Decimation Impact"
-	--L.decimationImpact_desc = "Show a timer for the Decimation missiles landing."
+	L.decimationImpact = "屠戮撞击"
+	L.decimationImpact_desc = "显示屠戮飞弹着陆计时条。"
 end
