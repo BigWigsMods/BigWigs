@@ -113,7 +113,7 @@ do
 	-- It sill fires Cannon Chooser in USCS, so we wait for a bit and check if
 	-- Decimation got cast and if not it must've been Annihilation!
 	local function checkForDecimation(self)
-		if GetTime()-decimationCasted < 0.5 then
+		if GetTime()-decimationCasted > 1 then
 			self:Annihilation()
 		end
 	end
