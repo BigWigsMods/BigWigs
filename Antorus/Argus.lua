@@ -131,7 +131,7 @@ function mod:OnBossEnable()
 	--[[ Stage 2 ]]--
 	self:Log("SPELL_CAST_START", "GolgannethsWrath", 255648)
 	self:Log("SPELL_AURA_APPLIED", "Soulburst", 250669)
-	self:Log("SPELL_AURA_REMOVED", "SoulburstRemoved", 248396)
+	self:Log("SPELL_AURA_REMOVED", "SoulburstRemoved", 250669)
 	self:Log("SPELL_AURA_APPLIED", "Soulbomb", 251570)
 	self:Log("SPELL_AURA_REMOVED", "SoulbombRemoved", 251570)
 	self:Log("SPELL_CAST_SUCCESS", "EdgeofObliteration", 255826)
