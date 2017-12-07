@@ -13,7 +13,6 @@ mod.respawnTime = 30
 --
 
 local tormentActive = 0 -- 1: Flames, 2: Frost, 3: Fel, 4: Shadows
-local _, shadowDesc = EJ_GetSectionInfo(16350)
 local mobCollector = {}
 
 --------------------------------------------------------------------------------
@@ -22,15 +21,14 @@ local mobCollector = {}
 
 local L = mod:GetLocale()
 if L then
-	L.shadowOfVarmathras = "{-16350}"
-	L.shadowOfVarmathras_desc = shadowDesc
-	L.shadowOfVarmathras_icon = "spell_warlock_demonsoul"
+	L.shadowOfVarimathras_icon = "spell_warlock_demonsoul"
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local necroticEmbraceMarker = mod:AddMarkerOption(false, "player", 3, 244094, 3, 4) -- Necrotic Embrace
 function mod:GetOptions()
 	return {
 		"stages", -- Torment of Flames, Frost, Fel, Shadows
@@ -39,8 +37,9 @@ function mod:GetOptions()
 		{243960, "TANK"}, -- Shadow Strike
 		243999, -- Dark Fissure
 		{244042, "SAY", "FLASH", "ICON"}, -- Marked Prey
-		{244094, "SAY", "FLASH", "ICON"}, -- Necrotic Embrace
-		"shadowOfVarmathras",
+		{244094, "SAY", "FLASH"}, -- Necrotic Embrace
+		necroticEmbraceMarker,
+		-16350, -- Shadow of Varimathras
 	}
 end
 
@@ -94,7 +93,7 @@ function mod:TormentofFlames(args)
 		if self:Easy() then
 			self:CDBar("stages", 355, self:SpellName(243973), 243973) -- Torment of Shadows
 		else
-			self:CDBar("stages", 120, self:SpellName(243977), 243977) -- Torment of Frost
+			self:CDBar("stages", self:Mythic() and 100 or 120, self:SpellName(243977), 243977) -- Torment of Frost
 		end
 	end
 end
@@ -103,7 +102,7 @@ function mod:TormentofFrost(args)
 	if tormentActive ~= 2 then
 		tormentActive = 2
 		self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
-		self:CDBar("stages", 114, self:SpellName(243980), 243980) -- Torment of Fel
+		self:CDBar("stages", self:Mythic() and 100 or 114, self:SpellName(243980), 243980) -- Torment of Fel
 	end
 end
 
@@ -111,14 +110,14 @@ function mod:TormentofFel(args)
 	if tormentActive ~= 3 then
 		tormentActive = 3
 		self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
-		self:CDBar("stages", 121, self:SpellName(243973), 243973) -- Torment of Shadows
+		self:CDBar("stages", self:Mythic() and 90 or 121, self:SpellName(243973), 243973) -- Torment of Shadows
 	end
 end
 
 function mod:TormentofShadows(args)
 	if tormentActive ~= 4 then
 		tormentActive = 4
-		self:Message(args.spellId, "Positive", "Long", args.spellName, args.spellId)
+		self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
 	end
 end
 
@@ -164,6 +163,7 @@ end
 
 do
 	local playerList = mod:NewTargetList()
+
 	function mod:NecroticEmbrace(args)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
@@ -172,16 +172,19 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			-- Only 1 initial application, can avoid spreading. XXX See if this remains viable, or we need to mark everyone.
-			self:SecondaryIcon(args.spellId, args.destName)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
+		end
+		if self:GetOption(necroticEmbraceMarker) then
+			SetRaidTarget(args.destName, #playerList + 2) -- Icons 3 and 4
 		end
 	end
 
 	function mod:NecroticEmbraceRemoved(args)
-		self:SecondaryIcon(args.spellId)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
+		end
+		if self:GetOption(necroticEmbraceMarker) then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
@@ -206,9 +209,8 @@ do
 			local t = GetTime()
 			if t-prev > 1.5 then -- Also don't spam too much if it's a wipe and several are spawning at the same time
 				prev = t
-				self:Message("shadowOfVarmathras", "Urgent", "Alarm", L.shadowOfVarmathras, L.shadowOfVarmathras_icon)
+				self:Message(-16350, "Urgent", "Alarm", nil, L.shadowOfVarimathras_icon)
 			end
 		end
-
 	end
 end
