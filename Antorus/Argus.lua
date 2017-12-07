@@ -20,6 +20,15 @@ local sweepingScytheCounter = 1
 local initializationCount = 3
 local scanningTargets = nil
 local vulnerabilityCollector = {}
+local vulnerabilityIcons = {
+	[255419] = 1, -- Holy Vulnerability (Yellow Star)
+	[255429] = 2, -- Fire Vulnerability (Orange Circle)
+	[255430] = 3, -- Shadow Vulnerability (Purple Diamond)
+	[255422] = 4, -- Nature Vulnerability (Green Triangle)
+	[255433] = 5, -- Arcane Vulnerability (Blue Moon)
+	[255425] = 6, -- Frost Vulnerability (Blue Square)
+	[255418] = 7, -- Physical Vulnerability (Red Cross)
+}
 
 local timers = {
 	[1] = { -- XXX Not needed for other stages right now, perhaps mythic?
@@ -37,6 +46,16 @@ local timers = {
 --------------------------------------------------------------------------------
 -- Localization
 --
+local vulnerabilityOptionDesc
+do
+	local icons, desc = "", ""
+	for spell,icon in pairs(vulnerabilityIcons) do
+		local tex = ("|T13700%d:15|t"):format(icon)
+		icons = icons .. tex
+		desc = desc .. tex .. mod:SpellName(spell) .. ", "
+	end
+	vulnerabilityOptionDesc = CL.marker_npc_desc:format(mod:SpellName(-17070), icons) .. "\n" .. desc:sub(0, desc:len() - 2)
+end
 
 local L = mod:GetLocale()
 if L then
@@ -45,6 +64,10 @@ if L then
 
 	L.custom_off_always_show_combined = "Always show the combined Soulburst and Soulbomb message"
 	L.custom_off_always_show_combined_desc = "The combined message won't be displayed if you get the |cff71d5ffSoulbomb|r or the |cff71d5ffSoulburst|r. Enable this option to always show the combined message, even when you're affected. |cff33ff99Useful for raid leaders.|r"
+
+	L.custom_off_252516 = CL.marker:format(mod:SpellName(170967)) -- Vulnerability Marker
+	L.custom_off_252516_desc = vulnerabilityOptionDesc
+	L.custom_off_252516_icon = 1
 
 	L.stage2_early = "Let the fury of the sea wash away this corruption!" -- Yell is 6s before the actual cast start
 	L.stage3_early = "No hope. Just pain. Only pain!"  -- Yell is 14.5s before the actual cast start
@@ -63,7 +86,6 @@ end
 
 local burstMarker = mod:AddMarkerOption(false, "player", 3, 250669, 3, 7) -- Soul Burst
 local bombMarker = mod:AddMarkerOption(false, "player", 2, 251570, 2) -- Soul Bomb
-local constellarMarker = mod:AddMarkerOption(false, "npc", 1, 252516, 1, 2, 3, 4, 5, 6, 7) -- The Discs of Norgannon
 function mod:GetOptions()
 	return {
 		"stages",
@@ -90,7 +112,7 @@ function mod:GetOptions()
 
 		--[[ Stage 3 ]]--
 		252516, -- The Discs of Norgannon
-		constellarMarker,
+		"custom_off_252516",
 		{252729, "SAY"}, -- Cosmic Ray
 		{252616, "SAY"}, -- Cosmic Beacon
 		-17077, -- Stellar Armory
@@ -105,7 +127,7 @@ function mod:GetOptions()
 		["stages"] = "general",
 		[248165] = CL.stage:format(1),
 		[250669] = CL.stage:format(2),
-		[constellarMarker] = CL.stage:format(3),
+		[252516] = CL.stage:format(3),
 		[256544] = CL.stage:format(4),
 	}
 end
@@ -463,35 +485,23 @@ function mod:TemporalBlast()
 	self:Bar(252616, 41.3) -- Cosmic Beacon
 end
 
-do
-	local vulnerabilityIcons = {
-		[255419] = 1, -- Holy Vulnerability (Yellow Star)
-		[255429] = 2, -- Fire Vulnerability (Orange Circle)
-		[255430] = 3, -- Shadow Vulnerability (Purple Diamond)
-		[255422] = 4, -- Nature Vulnerability (Green Triangle)
-		[255433] = 5, -- Arcane Vulnerability (Blue Moon)
-		[255425] = 6, -- Frost Vulnerability (Blue Square)
-		[255418] = 7, -- Physical Vulnerability (Red Cross)
-	}
-
-	function mod:VulnerabilityApplied(args)
-		if self:GetOption(constellarMarker) then
-			vulnerabilityCollector[args.destGUID] = vulnerabilityIcons[args.spellId]
-			if not scanningTargets then
-				self:RegisterTargetEvents("ConstellarMark")
-				scanningTargets = true
-			end
+function mod:VulnerabilityApplied(args)
+	if self:GetOption("custom_off_252516") then
+		vulnerabilityCollector[args.destGUID] = vulnerabilityIcons[args.spellId]
+		if not scanningTargets then
+			self:RegisterTargetEvents("ConstellarMark")
+			scanningTargets = true
 		end
 	end
+end
 
-	function mod:ConstellarMark(event, unit, guid)
-		if vulnerabilityCollector[guid] then
-			SetRaidTarget(unit, vulnerabilityCollector[guid])
-			vulnerabilityCollector[guid] = nil
-			if not next(vulnerabilityCollector) then
-				scanningTargets = nil
-				self:UnregisterTargetEvents()
-			end
+function mod:ConstellarMark(event, unit, guid)
+	if vulnerabilityCollector[guid] then
+		SetRaidTarget(unit, vulnerabilityCollector[guid])
+		vulnerabilityCollector[guid] = nil
+		if not next(vulnerabilityCollector) then
+			scanningTargets = nil
+			self:UnregisterTargetEvents()
 		end
 	end
 end
