@@ -48,6 +48,7 @@ end
 -- Initialization
 --
 
+local chilledBloodMarker = mod:AddMarkerOption(false, "player", 1, 245586, 1, 2, 5)
 local cosmicGlareMarker = mod:AddMarkerOption(false, "player", 3, 250912, 3,4)
 function mod:GetOptions()
 	return {
@@ -70,6 +71,7 @@ function mod:GetOptions()
 		--[[ Diima, Mother of Gloom ]]--
 		{245518, "TANK_HEALER"}, -- Flashfreeze
 		{245586, "INFOBOX"}, -- Chilled Blood
+		chilledBloodMarker,
 		253650, -- Orb of Frost
 
 		--[[ Thu'raya, Mother of the Cosmos (Mythic) ]]--
@@ -218,7 +220,9 @@ do
 
 				for i = 1, math.min((8-bloodOffset)/2, 3) do
 					if playerTable[i] then
-						self:SetInfo("infobox", bloodOffset+1+i*2, self:ColorName(playerTable[i].name))
+						local player = playerTable[i].name
+						local icon = GetRaidTargetIndex(player)
+						self:SetInfo("infobox", bloodOffset+1+i*2, (icon and ("|T13700%d:0|t"):format(icon) or "") .. self:ColorName(player))
 						self:SetInfo("infobox", bloodOffset+2+i*2, self:AbbreviateNumber(playerTable[i].value))
 						self:SetInfoBar("infobox", bloodOffset+1+i*2, playerTable[i].value / chilledBloodMaxAbsorb)
 					else
@@ -466,6 +470,10 @@ do
 			infoboxScheduled = self:ScheduleTimer(updateInfoBox, 0.1, self)
 		end
 
+		if self:GetOption(chilledBloodMarker) then
+			SetRaidTarget(args.destName, #targetList > 2 and 5 or #targetList) -- Icons: 1, 2, 5
+		end
+
 		local debuff, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, value = UnitDebuff(args.destName, args.spellName)
 		if debuff and value and value > 0 then
 			chilledBloodList[args.destName] = true
@@ -476,6 +484,9 @@ do
 	function mod:ChilledBloodRemoved(args)
 		chilledBloodList[args.destName] = nil
 		updateInfoBox(self)
+		if self:GetOption(chilledBloodMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 	end
 end
 
