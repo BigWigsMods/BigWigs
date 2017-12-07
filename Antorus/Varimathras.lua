@@ -165,6 +165,7 @@ do
 	local playerList = mod:NewTargetList()
 
 	function mod:NecroticEmbrace(args)
+		if #playerList >= 2 then return end -- Avoid spam if something goes wrong
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
