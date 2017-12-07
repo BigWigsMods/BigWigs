@@ -23,7 +23,6 @@ if L then
 	--L.timeLeft = "%.1fs" -- s = seconds
 	--L.torment = "Torment: %s"
 	--L.nextTorment = "Next Torment: |cffffffff%s|r"
-	--L.nextTorments = "Next Torments:"
 	--L.tormentHeal = "Heal/DoT" -- something like Heal/DoT (max 10 characters)
 	--L.tormentLightning = "Lightning" -- short for "Chain Lightning" (or similar, max 10 characters)
 	--L.tormentArmy = "Army" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)
