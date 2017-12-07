@@ -37,7 +37,7 @@ local timersHeroic = {
 local timersNormal = {
 	[1] = {
 		-- Soul Blight Orb
-		[248317] = {36, 33, 28, 26.5}, -- XXX find more
+		[248317] = {36, 33, 28, 26.5},
 		-- Sweeping Scythe
 		[248499] = {7, 9.5, 7.3, 8.4, 9, 6.8, 7.3, 9.5, 7.5, 7.3, 13.1, 7.5, 8.4, 7.3, 11.5},
 	},
@@ -258,13 +258,11 @@ function mod:SweepingScythe(args)
 	end
 	sweepingScytheCounter = sweepingScytheCounter + 1
 
-	local timer = nil
+	local timer = 6.1
 	if stage == 1 then
 		timer = timers[stage][args.spellId][sweepingScytheCounter]
 	elseif stage == 4 then -- normal mode only
 		timer = sweepingScytheCounter == 2 and 8.3 or sweepingScytheCounter % 2 == 0 and 7.1 or 6.1
-	else
-		timer = 6.1
 	end
 
 	self:CDBar(args.spellId, timer)
