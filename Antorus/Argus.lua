@@ -559,7 +559,7 @@ function mod:ReapSoul()
 
 	stage = 4
 	self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
-	self:StopBar(L.stellarArmory) -- The Stellar Armory
+	self:StopBar(-17077) -- The Stellar Armory
 	self:StopBar(252616) -- Cosmic Beacon
 	self:StopBar(252729) -- Cosmic Ray
 
