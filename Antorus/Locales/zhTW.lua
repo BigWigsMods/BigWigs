@@ -23,7 +23,6 @@ if L then
 	L.timeLeft = "%.1f秒" -- s = seconds
 	L.torment = "苦難：%s"
 	L.nextTorment = "下次苦難：|cffffffff%s|r"
-	L.nextTorments = "下次苦難："
 	L.tormentHeal = "阿曼蘇爾" -- something like Heal/DoT (max 10 characters)
 	L.tormentLightning = "閃電鍊" -- short for "Chain Lightning" (or similar, max 10 characters)
 	L.tormentArmy = "大軍" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)

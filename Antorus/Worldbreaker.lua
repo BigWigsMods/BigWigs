@@ -16,6 +16,7 @@ mod.respawnTime = 30
 local stage = 1
 local nextApocalypseDriveWarning = 0
 local annihilatorHaywired = nil
+local decimationCasted = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -61,6 +62,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_CAST_SUCCESS", "Annihilation", 244294) -- normal and empowered
 	self:Log("SPELL_CAST_SUCCESS", "Decimation", 244399, 245294, 246919) -- normal, empowered, haywire (mythic)
 	self:Log("SPELL_AURA_APPLIED", "DecimationApplied", 244410, 246919)
@@ -81,6 +83,7 @@ end
 function mod:OnEngage()
 	stage = 1
 	annihilatorHaywired = nil
+	decimationCasted = 0
 
 	self:Bar("cannon_ability", 8, L.cannon_ability, L.cannon_ability_icon)
 	self:Bar(246220, 9.4) -- Fel Bombardment
@@ -101,6 +104,23 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 			nextApocalypseDriveWarning = self:Easy() and 22 or 37 -- happens at 20% (35% hc/my)
 		else
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+		end
+	end
+end
+
+do
+	-- Blizzard didn't give us a cast event for the haywire Annihilator.
+	-- It sill fires Cannon Chooser in USCS, so we wait for a bit and check if
+	-- Decimation got cast and if not it must've been Annihilation!
+	local function checkForDecimation(self)
+		if GetTime()-decimationCasted > 1 then
+			self:Annihilation()
+		end
+	end
+
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+		if spellId == 245124 and annihilatorHaywired then -- Cannon Chooser
+			self:ScheduleTimer(checkForDecimation, 0.1, self)
 		end
 	end
 end
@@ -127,14 +147,7 @@ do
 	function mod:Decimation(args)
 		self:Bar(244410, (self:Mythic() or stage == 1) and 31.6 or 15.8) -- Decimation
 		self:CDBar("decimationImpact", args.spellId == 246919 and 7 or 10, L.decimationImpact, L.decimationImpact_icon) -- 246919 = haywire (mythic)
-		if stage == 1 or self:Mythic() then
-			self:Bar(244761, 15.8) -- Annihilation
-			if annihilatorHaywired then
-				-- Blizzard forgot the SPELL_CAST_SUCCESS event for the Haywire'd Annihilation.
-				-- XXX check mythic transcripts for a USCS event / use Cannon Chooser
-				self:ScheduleTimer("Annihilation", 15.8)
-			end
-		end
+		decimationCasted = GetTime()
 		isOnMe = nil
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warn, 0.3, self)
@@ -220,8 +233,8 @@ function mod:Haywire(args)
 	self:StopBar(CL.cast:format(self:SpellName(240277)))
 
 	self:Bar(244969, 9.5) -- Eradication
-	self:Bar("cannon_ability", 19.8, L.cannon_ability, L.cannon_ability_icon)
-	self:Bar(246220, 21.1) -- Fel Bombardment
+	self:Bar("cannon_ability", 22, L.cannon_ability, L.cannon_ability_icon)
+	self:Bar(246220, 23.4) -- Fel Bombardment
 
 	if args.spellId == 246965 then
 		annihilatorHaywired = true

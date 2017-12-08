@@ -38,7 +38,6 @@ if L then
 	L.timeLeft = "%.1fs"
 	L.torment = "Torment: %s"
 	L.nextTorment = "Next Torment: |cffffffff%s|r"
-	L.nextTorments = "Next Torments:"
 	L.tormentHeal = "Heal/DoT"
 	L.tormentLightning = "Lightning" -- short for Chain Lightning
 	L.tormentArmy = "Army"
@@ -49,6 +48,7 @@ end
 -- Initialization
 --
 
+local chilledBloodMarker = mod:AddMarkerOption(false, "player", 1, 245586, 1, 2, 5)
 local cosmicGlareMarker = mod:AddMarkerOption(false, "player", 3, 250912, 3,4)
 function mod:GetOptions()
 	return {
@@ -71,6 +71,7 @@ function mod:GetOptions()
 		--[[ Diima, Mother of Gloom ]]--
 		{245518, "TANK_HEALER"}, -- Flashfreeze
 		{245586, "INFOBOX"}, -- Chilled Blood
+		chilledBloodMarker,
 		253650, -- Orb of Frost
 
 		--[[ Thu'raya, Mother of the Cosmos (Mythic) ]]--
@@ -184,15 +185,12 @@ do
 
 		-- Torment
 		if showTorments then
-			self:OpenInfo("infobox", L.nextTorments)
+			self:OpenInfo("infobox", L.nextTorment:format(""))
 
-			local pos = 0
-			for i,v in pairs(upcomingTorments) do
-				pos = pos + 1
-				local data = ("|T%s:15:15:0:0:64:64:4:60:4:60|t%s%s|r"):format(tormentMarkup[v].icon, tormentMarkup[v].color, tormentMarkup[v].text)
-				self:SetInfo("infobox", pos, data)
-			end
-			bloodOffset = math.ceil(pos/2)*2
+			local nextTorment = tormentMarkup[upcomingTorments[1]]
+			local data = ("|T%s:15:15:0:0:64:64:4:60:4:60|t%s%s|r"):format(nextTorment.icon, nextTorment.color, nextTorment.text)
+			self:SetInfo("infobox", 1, data)
+			bloodOffset = 2
 		end
 
 		-- Chilled Blood
@@ -222,7 +220,9 @@ do
 
 				for i = 1, math.min((8-bloodOffset)/2, 3) do
 					if playerTable[i] then
-						self:SetInfo("infobox", bloodOffset+1+i*2, self:ColorName(playerTable[i].name))
+						local player = playerTable[i].name
+						local icon = GetRaidTargetIndex(player)
+						self:SetInfo("infobox", bloodOffset+1+i*2, (icon and ("|T13700%d:0|t"):format(icon) or "") .. self:ColorName(player))
 						self:SetInfo("infobox", bloodOffset+2+i*2, self:AbbreviateNumber(playerTable[i].value))
 						self:SetInfoBar("infobox", bloodOffset+1+i*2, playerTable[i].value / chilledBloodMaxAbsorb)
 					else
@@ -314,58 +314,84 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
-	if spellId == 253949 then -- Machinations of Aman'thul
-		self:StopBar(L.torment:format(L.tormentHeal))
-		upcomingTorments[1] = nil
-		self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentHeal), tormentIcons["AmanThul"])
-		updateInfoBox(self)
-	elseif spellId == 253881 then -- Flames of Khaz'goroth
-		self:StopBar(L.torment:format(L.tormentFlames))
-		upcomingTorments[2] = nil
-		self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
-		updateInfoBox(self)
-	elseif spellId == 253951 then  -- Fury of Golganneth
-		self:StopBar(L.torment:format(L.tormentLightning))
-		upcomingTorments[3] = nil
-		self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentLightning), tormentIcons["Golganneth"])
-		updateInfoBox(self)
-	elseif spellId == 253950 then -- Spectral Army of Norgannon
-		self:StopBar(L.torment:format(L.tormentArmy))
-		upcomingTorments[4] = nil
-		self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentArmy), tormentIcons["Norgannon"])
-		updateInfoBox(self)
+do
+	local tormentLocaleLookup = {
+		["AmanThul"] = "tormentHeal",
+		["Norgannon"] = "tormentArmy",
+		["Khazgoroth"] = "tormentFlames",
+		["Golganneth"] = "tormentLightning",
+	}
+
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+		local announceNextTorment = nil
+		if spellId == 253949 then -- Machinations of Aman'thul
+			self:StopBar(L.torment:format(L.tormentHeal))
+			tDeleteItem(upcomingTorments, "AmanThul")
+			self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentHeal), tormentIcons["AmanThul"])
+			updateInfoBox(self)
+			announceNextTorment = true
+		elseif spellId == 253881 then -- Flames of Khaz'goroth
+			self:StopBar(L.torment:format(L.tormentFlames))
+			tDeleteItem(upcomingTorments, "Khazgoroth")
+			self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
+			updateInfoBox(self)
+			announceNextTorment = true
+		elseif spellId == 253951 then  -- Fury of Golganneth
+			self:StopBar(L.torment:format(L.tormentLightning))
+			tDeleteItem(upcomingTorments, "Golganneth")
+			self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentLightning), tormentIcons["Golganneth"])
+			updateInfoBox(self)
+			announceNextTorment = true
+		elseif spellId == 253950 then -- Spectral Army of Norgannon
+			self:StopBar(L.torment:format(L.tormentArmy))
+			tDeleteItem(upcomingTorments, "Norgannon")
+			self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentArmy), tormentIcons["Norgannon"])
+			updateInfoBox(self)
+			announceNextTorment = true
+		end
+		if announceNextTorment and #upcomingTorments == 1 then
+			local nextTorment = upcomingTorments[1]
+			self:ScheduleTimer("Message", 5, "torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L[tormentLocaleLookup[nextTorment]]), tormentIcons[nextTorment])
+		end
 	end
 end
 
 function mod:TormentofAmanThul(args)
 	self:StopBar(L.torment_of_the_titans)
-	upcomingTorments[1] = "AmanThul"
-	self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentHeal), tormentIcons["AmanThul"])
+	upcomingTorments[#upcomingTorments+1] = "AmanThul"
+	if #upcomingTorments == 1 then
+		self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentHeal), tormentIcons["AmanThul"])
+	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentHeal), tormentIcons["AmanThul"])
 	updateInfoBox(self)
 end
 
 function mod:TormentofKhazgoroth(args)
 	self:StopBar(L.torment_of_the_titans)
-	upcomingTorments[2] = "Khazgoroth"
-	self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
+	upcomingTorments[#upcomingTorments+1] = "Khazgoroth"
+	if #upcomingTorments == 1 then
+		self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
+	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
 	updateInfoBox(self)
 end
 
 function mod:TormentofGolganneth(args)
 	self:StopBar(L.torment_of_the_titans)
-	upcomingTorments[3] = "Golganneth"
-	self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentLightning), tormentIcons["Golganneth"])
+	upcomingTorments[#upcomingTorments+1] = "Golganneth"
+	if #upcomingTorments == 1 then
+		self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentLightning), tormentIcons["Golganneth"])
+	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentLightning), tormentIcons["Golganneth"])
 	updateInfoBox(self)
 end
 
 function mod:TormentofNorgannon(args)
 	self:StopBar(L.torment_of_the_titans)
-	upcomingTorments[4] = "Norgannon"
-	self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentArmy), tormentIcons["Norgannon"])
+	upcomingTorments[#upcomingTorments+1] = "Norgannon"
+	if #upcomingTorments == 1 then
+		self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentArmy), tormentIcons["Norgannon"])
+	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentArmy), tormentIcons["Norgannon"])
 	updateInfoBox(self)
 end
@@ -444,6 +470,10 @@ do
 			infoboxScheduled = self:ScheduleTimer(updateInfoBox, 0.1, self)
 		end
 
+		if self:GetOption(chilledBloodMarker) then
+			SetRaidTarget(args.destName, #targetList > 2 and 5 or #targetList) -- Icons: 1, 2, 5
+		end
+
 		local debuff, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, value = UnitDebuff(args.destName, args.spellName)
 		if debuff and value and value > 0 then
 			chilledBloodList[args.destName] = true
@@ -454,6 +484,9 @@ do
 	function mod:ChilledBloodRemoved(args)
 		chilledBloodList[args.destName] = nil
 		updateInfoBox(self)
+		if self:GetOption(chilledBloodMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 	end
 end
 
