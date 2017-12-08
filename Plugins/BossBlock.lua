@@ -218,7 +218,7 @@ do
 		["1147:6"] = true, -- Tomb of Sargeras, portal to Kil'jaeden
 		["1188:1"] = true, -- Antorus, teleportation to "The burning throne"
 		["1188:6"] = true, -- Antorus, teleportation to "The exhaust"
-		["1188:9"] = true, -- Antorus, magni PORTAL to argus room
+		["1188:9"] = true, -- Antorus, magni portal to argus room
 		
 	}
 
