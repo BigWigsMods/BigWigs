@@ -34,7 +34,7 @@ local timersHeroic = {
 	[1] = { -- XXX Not needed for other stages right now, perhaps mythic?
 		-- Cone of Death
 		[248165] = {31, 20.5, 22.7, 20.2, 20.5, 23.5},
-		-- Soul Blight Orb
+		-- Soulblight Orb
 		[248317] = {35.5, 25.5, 26.8, 23.2, 31},
 		-- Tortured Rage
 		[257296] = {12, 13.5, 13.5, 15.9, 13.5, 13.5, 15.9, 20.9, 13.5},
@@ -45,8 +45,8 @@ local timersHeroic = {
 
 local timersNormal = {
 	[1] = {
-		-- Soul Blight Orb
-		[248317] = {36, 33, 28, 26.5},
+		-- Soulblight Orb
+		[248317] = {36, 33, 28, 26.5, 26.6},
 		-- Sweeping Scythe
 		[248499] = {7, 9.5, 7.3, 8.4, 9, 6.8, 7.3, 9.5, 7.5, 7.3, 13.1, 7.5, 8.4, 7.3, 11.5, 6.5, 10.9},
 	},
@@ -102,7 +102,7 @@ function mod:GetOptions()
 		"berserk",
 		--[[ Stage 1 ]]--
 		248165, -- Cone of Death
-		248317, -- Soul Blight Orb
+		248317, -- Soulblight Orb
 		{248396, "ME_ONLY", "SAY", "FLASH"}, -- Soul Blight
 		248167, -- Death Fog
 		257296, -- Tortured Rage
@@ -210,7 +210,7 @@ function mod:OnEngage()
 	self:Bar(255594, 16) -- Sky and Sea
 	self:Bar(257296, self:Easy() and 13.5 or timers[stage][257296][torturedRageCounter]) -- Tortured Rage
 	self:Bar(248165, self:Easy() and 39 or timers[stage][248165][coneOfDeathCounter]) -- Cone of Death
-	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soul Blight Orb
+	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soulblight Orb
 	self:Bar(248499, timers[stage][248499][sweepingScytheCounter]) -- Sweeping Scythe
 
 	self:Berserk(720)
