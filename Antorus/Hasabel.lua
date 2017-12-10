@@ -137,8 +137,8 @@ function mod:OnEngage()
 
 	self:Bar(244016, 7) -- Reality Tear
 	self:Bar(243983, 12.7) -- Collapsing World
-	self:Bar(244689, 26.7) -- Transport Portal
-	self:Bar(244000, 35.7) -- Felstorm Barrage
+	self:Bar(244689, self:Mythic() and 36.3 or 26.7) -- Transport Portal
+	self:Bar(244000, self:Mythic() and 26.9 or 35.7) -- Felstorm Barrage
 	self:Berserk(720)
 
 	nextPortalSoonWarning = 92 -- happens at 90%
