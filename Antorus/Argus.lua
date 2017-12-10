@@ -48,7 +48,7 @@ local timersNormal = {
 		-- Soul Blight Orb
 		[248317] = {36, 33, 28, 26.5},
 		-- Sweeping Scythe
-		[248499] = {7, 9.5, 7.3, 8.4, 9, 6.8, 7.3, 9.5, 7.5, 7.3, 13.1, 7.5, 8.4, 7.3, 11.5},
+		[248499] = {7, 9.5, 7.3, 8.4, 9, 6.8, 7.3, 9.5, 7.5, 7.3, 13.1, 7.5, 8.4, 7.3, 11.5, 6.5, 10.9},
 	},
 }
 local timers = mod:Easy() and timersNormal or timersHeroic
