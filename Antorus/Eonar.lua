@@ -8,7 +8,7 @@
 
 local mod, CL = BigWigs:NewBoss("Eonar the Life-Binder", nil, 2025, 1712)
 if not mod then return end
-mod:RegisterEnableMob(122500) -- Essence of Eonar
+mod:RegisterEnableMob(122500, 124445) -- Essence of Eonar, The Paraxis
 mod.engageId = 2075
 mod.respawnTime = 30
 
