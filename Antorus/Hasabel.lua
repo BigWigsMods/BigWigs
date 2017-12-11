@@ -288,8 +288,15 @@ function mod:HowlingShadows(args)
 	end
 end
 
-function mod:CatastrophicImplosion(args)
-	self:Message(args.spellId, "Important", "Alarm")
+do
+	local prev = 0
+	function mod:CatastrophicImplosion(args)
+		local t = GetTime()
+		if t-prev > 0.2 then
+			prev = t
+			self:Message(args.spellId, "Important", "Alarm")
+		end
+	end
 end
 
 do
