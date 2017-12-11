@@ -140,7 +140,7 @@ function mod:AssumeCommand(args)
 
 	if assumeCommandCount % 3 == 1 then -- Chief Engineer Ishkar
 		self:StopBar(245161) -- Entropic Mines
-		self:Bar(244625, 18.3, CL.count:format(self:SpellName(244625), fusilladeCount)) -- Fusillade
+		self:Bar(244625, 15.8, CL.count:format(self:SpellName(244625), fusilladeCount)) -- Fusillade
 		self:Bar(245546, 16.1) -- Summon Reinforcements
 	elseif assumeCommandCount % 3 == 2 then -- General Erodus
 		self:StopBar(245546) -- Summon Reinforcements
