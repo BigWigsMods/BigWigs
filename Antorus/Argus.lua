@@ -521,7 +521,7 @@ function mod:VulnerabilityApplied(args)
 	end
 end
 
-function mod:ConstellarMark(event, unit, guid)
+function mod:ConstellarMark(_, unit, guid)
 	if vulnerabilityCollector[guid] then
 		SetRaidTarget(unit, vulnerabilityCollector[guid])
 		vulnerabilityCollector[guid] = nil

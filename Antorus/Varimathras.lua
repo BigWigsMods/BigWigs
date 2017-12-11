@@ -127,7 +127,7 @@ function mod:Misery(args)
 	end
 end
 
-function mod:ShadowStrike(args)
+function mod:ShadowStrike()
 	self:Message(243960, "Urgent", "Warning")
 	self:CDBar(243960, 9.8)
 end

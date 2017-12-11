@@ -174,7 +174,7 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 
 		waveEmberCounter = 0
 		if waveCollector[currentEmberWave] then
-			for key,guid in pairs(waveCollector[currentEmberWave]) do -- Count how many embers are left in this wave
+			for _ in next, waveCollector[currentEmberWave] do -- Count how many embers are left in this wave
 				waveEmberCounter = waveEmberCounter + 1
 			end
 		end
@@ -195,14 +195,14 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 end
 
 do
-	function mod:emberAddScanner(event, unit)
+	function mod:EmberAddScanner(_, unit)
 		local guid = UnitGUID(unit)
 		local mobID = self:MobId(guid)
 		if mobID == 122532 and not mobCollector[guid] then
 			mobCollector[guid] = wave -- store which wave the add is from incase it dies early
 			waveCollector[wave][guid] = true
 			waveEmberCounter = 0
-			for key,guid in pairs(waveCollector[wave]) do -- Count how many embers are left in this wave
+			for _ in next, waveCollector[currentEmberWave] do -- Count how many embers are left in this wave
 				waveEmberCounter = waveEmberCounter + 1
 			end
 		end
@@ -279,7 +279,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			waveCollector[wave] = {}
 			waveTimeCollector[wave] = (GetTime() + (self:Mythic() and 165 or 180))
 			if not trackingEmber and (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) then
-				self:RegisterTargetEvents("emberAddScanner") -- Adds spawning
+				self:RegisterTargetEvents("EmberAddScanner") -- Adds spawning
 				trackingEmber = true
 				local emberTimer = floor(waveTimeCollector[wave] - GetTime())
 				self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
@@ -381,7 +381,7 @@ do
 		lastAbilityUsed = self:SpellName(245458)
 	end
 
-	function mod:FoeBreakerSuccess(args)
+	function mod:FoeBreakerSuccess()
 		self:SetInfo(244688, (techniqueCount*2)-1, "")
 		self:SetInfo(244688, (techniqueCount*2), "|cffff0000"..self:SpellName(245458))
 		self:SetInfo(244688, (techniqueCount*2)+1, "|cff00ff00>>")
@@ -417,7 +417,7 @@ do
 		lastAbilityUsed = self:SpellName(245463)
 	end
 
-	function mod:FlameRendSuccess(args)
+	function mod:FlameRendSuccess()
 		self:SetInfo(244688, (techniqueCount*2)-1, "")
 		self:SetInfo(244688, (techniqueCount*2), "|cffff0000"..self:SpellName(245463))
 		if techniqueCount < 5 then -- otherwise there is no more
@@ -497,7 +497,7 @@ function mod:CorruptAegis()
 	waveCollector[wave] = {}
 
 	if not trackingEmber and (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) then
-		self:RegisterTargetEvents("emberAddScanner") -- Adds spawning
+		self:RegisterTargetEvents("EmberAddScanner") -- Adds spawning
 		trackingEmber = true
 	end
 	waveTimeCollector[wave] = GetTime() + (self:Mythic() and 165 or 180)
