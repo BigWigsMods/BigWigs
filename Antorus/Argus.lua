@@ -133,6 +133,10 @@ function mod:GetOptions()
 		258039, -- Deadly Scythe
 		256388, -- Initialization Sequence
 		257214, -- Titanforging
+
+		--[[ Mythic ]]--
+		{258068, "SAY", "FLASH"}, -- Sargeras' Gaze
+		257911, -- Unleased Rage
 	},{
 		["stages"] = "general",
 		[248165] = CL.stage:format(1),
@@ -144,6 +148,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	--[[ Stage 1 ]]--
 	self:Log("SPELL_CAST_START", "ConeofDeath", 248165)
@@ -193,10 +198,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "InitializationSequence", 256388)
 	self:Log("SPELL_CAST_SUCCESS", "Titanforging", 257214)
 
+	--[[ Mythic ]]--
+	self:Log("SPELL_AURA_APPLIED", "SargerasGaze", 257931, 257869) -- Fear, Rage
 	-- Ground Effects
 	self:Log("SPELL_AURA_APPLIED", "GroundEffects", 248167) -- Death Fog
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffects", 248167) -- Death Fog
 	self:Log("SPELL_PERIODIC_MISSED", "GroundEffects", 248167) -- Death Fog
+	self:Log("SPELL_AURA_APPLIED", "GroundEffects", 257911) -- Unleashed Rage
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GroundEffects", 257911)
 end
 
 function mod:OnEngage()
@@ -219,6 +228,14 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+	if msg:find("258068", nil, true) then -- Sargeras' Gaze
+		self:Message(258068, "Urgent", nil)
+		self:Bar(258068, stage == 2 and 60.5 or 35.1)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.stage2_early) then -- We start bars for stage 2 later
 		stage = 2
@@ -228,6 +245,8 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		self:StopBar(257296) -- Tortured Rage
 		self:StopBar(248499) -- Sweeping Scythe
 		self:StopBar(255594) -- Sky and Sea
+		self:StopBar(258068) -- Sargeras' Gaze
+		self:Bar("stages", 10.5, self:SpellName(255648), 255648) -- Golganneths Wrath
 	elseif msg:find(L.stage3_early) then -- We start bars for stage 3 later
 		stage = 3
 		wipe(vulnerabilityCollector)
@@ -246,7 +265,7 @@ end
 function mod:ConeofDeath(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	coneOfDeathCounter = coneOfDeathCounter + 1
-	self:CDBar(args.spellId, self:Easy() and 24 or timers[stage][248165][coneOfDeathCounter]) -- normal: 24-26
+	self:CDBar(args.spellId, self:Mythic() and 20.5 or self:Easy() and 24 or timers[stage][248165][coneOfDeathCounter]) -- normal: 24-26
 end
 
 function mod:SoulBlightOrb(args)
@@ -258,20 +277,24 @@ end
 function mod:SoulBlight(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
-		self:Say(args.spellId)
+		--self:Say(args.spellId) -- Too spammy
 		self:TargetBar(args.spellId, 8, args.destName)
+		self:SayCountdown(args.spellId, 8)
 	end
 	self:TargetMessage(args.spellId, args.destName, "Neutral", "Warning")
 end
 
 function mod:SoulBlightRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 	self:StopBar(args.spellId, args.destName)
 end
 
 function mod:TorturedRage(args)
 	self:Message(args.spellId, "Attention", "Alarm", CL.casting:format(args.spellName))
 	torturedRageCounter = torturedRageCounter + 1
-	self:CDBar(args.spellId, stage == 4 and 13.5 or self:Easy() and 15.8 or timers[stage][args.spellId][torturedRageCounter])
+	self:CDBar(args.spellId, self:Mythic() and 13.5 or stage == 4 and 13.5 or self:Easy() and 15.8 or timers[stage][args.spellId][torturedRageCounter])
 end
 
 function mod:SweepingScythe(args)
@@ -281,9 +304,9 @@ function mod:SweepingScythe(args)
 	sweepingScytheCounter = sweepingScytheCounter + 1
 
 	local timer = 6.1
-	if stage == 1 then
+	if stage == 1 and not self:Mythic() then
 		timer = timers[stage][args.spellId][sweepingScytheCounter]
-	elseif stage == 4 then -- normal mode only
+	elseif stage == 4 not self:Mythic() then -- normal mode only
 		timer = sweepingScytheCounter == 2 and 8.3 or sweepingScytheCounter % 2 == 0 and 7.1 or 6.1
 	end
 
@@ -347,6 +370,7 @@ function mod:GolgannethsWrath()
 		self:StopBar(257296) -- Tortured Rage
 		self:StopBar(248499) -- Sweeping Scythe
 		self:StopBar(255594) -- Sky and Sea
+		self:StopBar(258068) -- Sargeras' Gaze
 	end
 
 	self:Bar(248499, 17) -- Sweeping Scythe
