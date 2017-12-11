@@ -686,6 +686,15 @@ function mod:Titanforging(args)
 	self:Message(args.spellId, "Positive", "Long", CL.casting:format(args.spellName))
 end
 
+--[[ Mythic ]]--
+
+function mod:SargerasGaze(args)
+	if self:Me(args.destGUID) then
+		self:Say(258068, args.spellName)
+		self:Flash(258068)
+	end
+end
+
 -- Ground Effects
 do
 	local prev = 0
