@@ -157,8 +157,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SoulBlightRemoved", 248396)
 	self:Log("SPELL_CAST_START", "TorturedRage", 257296)
 	self:Log("SPELL_CAST_START", "SweepingScythe", 248499)
-	self:Log("SPELL_AURA_APPLIED", "SweepingScytheStack", 244899)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "SweepingScytheStack", 244899)
+	self:Log("SPELL_AURA_APPLIED", "SweepingScytheStack", 248499)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SweepingScytheStack", 248499)
 	self:Log("SPELL_CAST_SUCCESS", "SkyandSea", 255594)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSea", 258647)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSky", 258646)
@@ -314,7 +314,7 @@ function mod:SweepingScythe(args)
 end
 
 function mod:SweepingScytheStack(args)
-	if self:Me(args.destGUID) or self:Tank() then -- Always Show for Tanks and when on self
+	if self:Me(args.destGUID) or (self:Tank() and self:Tank(args.destName)) then
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "Attention", self:Tank() and (amount > 2 and "Alarm") or "Warning") -- Warning sound for non-tanks, 3+ stacks warning for tanks
 	end
