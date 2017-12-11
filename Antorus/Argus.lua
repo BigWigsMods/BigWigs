@@ -306,7 +306,7 @@ function mod:SweepingScythe(args)
 	local timer = 6.1
 	if stage == 1 and not self:Mythic() then
 		timer = timers[stage][args.spellId][sweepingScytheCounter]
-	elseif stage == 4 not self:Mythic() then -- normal mode only
+	elseif stage == 4 then -- normal mode only
 		timer = sweepingScytheCounter == 2 and 8.3 or sweepingScytheCounter % 2 == 0 and 7.1 or 6.1
 	end
 
