@@ -37,7 +37,7 @@ function mod:GetOptions()
 		{243960, "TANK"}, -- Shadow Strike
 		243999, -- Dark Fissure
 		{244042, "SAY", "FLASH", "ICON"}, -- Marked Prey
-		{244094, "SAY", "FLASH"}, -- Necrotic Embrace
+		{244094, "SAY", "FLASH", "PULSE"}, -- Necrotic Embrace
 		necroticEmbraceMarker,
 		-16350, -- Shadow of Varimathras
 	}
@@ -53,6 +53,7 @@ function mod:OnBossEnable()
 	--[[ General ]]--
 	self:Log("SPELL_AURA_APPLIED", "Misery", 243961)
 	self:Log("SPELL_CAST_SUCCESS", "ShadowStrike", 243960, 257644) -- Heroic, Normal
+	self:Log("SPELL_CAST_START", "DarkFissureStart", 243999)
 	self:Log("SPELL_CAST_SUCCESS", "DarkFissure", 243999)
 	self:Log("SPELL_AURA_APPLIED", "MarkedPrey", 244042)
 	self:Log("SPELL_AURA_REMOVED", "MarkedPreyRemoved", 244042)
@@ -132,6 +133,10 @@ function mod:ShadowStrike()
 	self:CDBar(243960, 9.8)
 end
 
+function mod:DarkFissureStart(args)
+	self:CDBar(243960, 5.3) -- Shadow Strike
+end
+
 function mod:DarkFissure(args)
 	self:Message(args.spellId, "Attention", "Alert")
 	self:CDBar(args.spellId, 32.9)
@@ -162,18 +167,30 @@ function mod:NecroticEmbraceSuccess()
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList, scheduled, isOnMe = mod:NewTargetList(), nil, nil
+
+	local function warn(self, spellId)
+		if not isOnMe then
+			self:TargetMessage(spellId, playerList, "Urgent")
+		else
+			wipe(playerList)
+		end
+		scheduled = nil
+		isOnMe = nil
+	end
 
 	function mod:NecroticEmbrace(args)
 		if #playerList >= 2 then return end -- Avoid spam if something goes wrong
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:Flash(args.spellId)
-			self:SayCountdown(args.spellId, 6)
-		end
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
+		if self:Me(args.destGUID) then
+			self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", CL.count_icon:format(args.spellName, #playerList, #playerList+2))
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #playerList, #playerList+2))
+			self:Flash(args.spellId, #playerList+2)
+			self:SayCountdown(args.spellId, 6, #playerList+2)
+			isOnMe = true
+		end
+		if not scheduled then
+			scheduled = self:ScheduleTimer(warn, 0.3, args.spellId)
 		end
 		if self:GetOption(necroticEmbraceMarker) then
 			SetRaidTarget(args.destName, #playerList + 2) -- Icons 3 and 4
