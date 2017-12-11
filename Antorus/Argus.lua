@@ -122,7 +122,7 @@ function mod:GetOptions()
 
 		--[[ Stage 3 ]]--
 		252516, -- The Discs of Norgannon
-		"custom_off_252516",
+		"custom_off_252516", -- Vulnerability Marker
 		{252729, "SAY"}, -- Cosmic Ray
 		{252616, "SAY"}, -- Cosmic Beacon
 		-17077, -- Stellar Armory
@@ -200,12 +200,12 @@ function mod:OnBossEnable()
 
 	--[[ Mythic ]]--
 	self:Log("SPELL_AURA_APPLIED", "SargerasGaze", 257931, 257869) -- Fear, Rage
+
 	-- Ground Effects
-	self:Log("SPELL_AURA_APPLIED", "GroundEffects", 248167) -- Death Fog
+	self:Log("SPELL_AURA_APPLIED", "GroundEffects", 248167, 257911) -- Death Fog, Unleashed Rage
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GroundEffects", 257911) -- Unleashed Rage
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffects", 248167) -- Death Fog
 	self:Log("SPELL_PERIODIC_MISSED", "GroundEffects", 248167) -- Death Fog
-	self:Log("SPELL_AURA_APPLIED", "GroundEffects", 257911) -- Unleashed Rage
-	self:Log("SPELL_AURA_APPLIED_DOSE", "GroundEffects", 257911)
 end
 
 function mod:OnEngage()
@@ -221,6 +221,10 @@ function mod:OnEngage()
 	self:Bar(248165, self:Easy() and 39 or timers[stage][248165][coneOfDeathCounter]) -- Cone of Death
 	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soulblight Orb
 	self:Bar(248499, timers[stage][248499][sweepingScytheCounter]) -- Sweeping Scythe
+
+	if self:Mythic() then
+		self:Bar(258068, 8.2) -- Sargeras' Gaze
+	end
 
 	self:Berserk(720)
 end
@@ -271,7 +275,7 @@ end
 function mod:SoulBlightOrb(args)
 	self:Message(args.spellId, "Neutral", "Alert", CL.casting:format(args.spellName))
 	soulBlightOrbCounter = soulBlightOrbCounter + 1
-	self:CDBar(args.spellId, timers[stage][args.spellId][soulBlightOrbCounter])
+	self:CDBar(args.spellId, self:Mythic() and 25 or timers[stage][args.spellId][soulBlightOrbCounter])
 end
 
 function mod:SoulBlight(args)
@@ -690,6 +694,7 @@ end
 
 function mod:SargerasGaze(args)
 	if self:Me(args.destGUID) then
+		self:TargetMessage(258068, args.destName, "Personal", "Warning")
 		self:Say(258068, args.spellName)
 		self:Flash(258068)
 	end
