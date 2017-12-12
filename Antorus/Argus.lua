@@ -224,9 +224,10 @@ function mod:OnEngage()
 
 	if self:Mythic() then
 		self:Bar(258068, 8.2) -- Sargeras' Gaze
+		self:Berserk(660)
+	else
+		self:Berserk(720)
 	end
-
-	self:Berserk(720)
 end
 
 --------------------------------------------------------------------------------
