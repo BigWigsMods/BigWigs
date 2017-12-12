@@ -37,9 +37,12 @@ function mod:GetOptions()
 		{243960, "TANK"}, -- Shadow Strike
 		243999, -- Dark Fissure
 		{244042, "SAY", "FLASH", "ICON"}, -- Marked Prey
-		{244094, "SAY", "FLASH", "PULSE"}, -- Necrotic Embrace
+		{244094, "SAY", "FLASH", "PULSE", "PROXIMITY"}, -- Necrotic Embrace
 		necroticEmbraceMarker,
 		-16350, -- Shadow of Varimathras
+	},{
+		["stages"] = "general",
+		[-16350] = "mythic",
 	}
 end
 
@@ -162,12 +165,13 @@ function mod:MarkedPreyRemoved(args)
 	end
 end
 
-function mod:NecroticEmbraceSuccess()
-	self:CDBar(244094, 30.5)
-end
-
 do
-	local playerList, scheduled, isOnMe = mod:NewTargetList(), nil, nil
+	local playerList, scheduled, isOnMe, proxList = mod:NewTargetList(), nil, nil, {}
+
+	function mod:NecroticEmbraceSuccess()
+		self:CDBar(244094, 30.5)
+		wipe(proxList)
+	end
 
 	local function warn(self, spellId)
 		if not isOnMe then
@@ -176,7 +180,6 @@ do
 			wipe(playerList)
 		end
 		scheduled = nil
-		isOnMe = nil
 	end
 
 	function mod:NecroticEmbrace(args)
@@ -187,11 +190,19 @@ do
 			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #playerList, #playerList+2))
 			self:Flash(args.spellId, #playerList+2)
 			self:SayCountdown(args.spellId, 6, #playerList+2)
+			self:OpenProximity(args.spellId, 10)
 			isOnMe = true
 		end
+
+		proxList[#proxList+1] = args.destName
+		if not isOnMe then
+			self:OpenProximity(args.spellId, 10, proxList)
+		end
+
 		if not scheduled then
 			scheduled = self:ScheduleTimer(warn, 0.3, args.spellId)
 		end
+
 		if self:GetOption(necroticEmbraceMarker) then
 			SetRaidTarget(args.destName, #playerList + 2) -- Icons 3 and 4
 		end
@@ -199,10 +210,23 @@ do
 
 	function mod:NecroticEmbraceRemoved(args)
 		if self:Me(args.destGUID) then
+			isOnMe = nil
 			self:CancelSayCountdown(args.spellId)
+			self:CloseProximity(args.spellId)
 		end
+
 		if self:GetOption(necroticEmbraceMarker) then
 			SetRaidTarget(args.destName, 0)
+		end
+
+		tDeleteItem(proxList, args.destName)
+
+		if not isOnMe then -- Don't change proximity if it's on you and expired on someone else
+			if #proxList == 0 then
+				self:CloseProximity(args.spellId)
+			else -- Update proximity
+				self:OpenProximity(args.spellId, 10, proxList)
+			end
 		end
 	end
 end
