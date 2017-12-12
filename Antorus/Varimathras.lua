@@ -200,7 +200,7 @@ do
 		end
 
 		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.3, args.spellId)
+			scheduled = self:ScheduleTimer(warn, 0.3, self, args.spellId)
 		end
 
 		if self:GetOption(necroticEmbraceMarker) then
