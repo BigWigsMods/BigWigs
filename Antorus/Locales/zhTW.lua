@@ -15,8 +15,8 @@ if L then
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|t驟發：%s" -- short for Soulburst
 	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t炸彈：%s" -- short for Soulbomb
 
-	L.sky_say = "{rt5}：爆擊精通" -- short for Critical Strike/Mastery (stats)
-	L.sea_say = "{rt6}：加速臨機" -- short for Haste/Versatility (stats)
+	L.sky_say = "{rt5}爆擊精通" -- short for Critical Strike/Mastery (stats)
+	L.sea_say = "{rt6}加速臨機" -- short for Haste/Versatility (stats)
 
 	L.bomb_explosions = "炸彈爆炸"
 	L.bomb_explosions_desc = "替靈魂驟發與靈魂炸彈顯示爆炸計時。"
