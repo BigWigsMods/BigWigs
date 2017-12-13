@@ -184,6 +184,8 @@ do
 
 	function mod:NecroticEmbrace(args)
 		if #playerList >= 2 then return end -- Avoid spam if something goes wrong
+		if tContains(proxList, args.destName) then return end -- Don't annouce someone twice
+
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", CL.count_icon:format(args.spellName, #playerList, #playerList+2))
