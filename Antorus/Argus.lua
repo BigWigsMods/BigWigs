@@ -57,7 +57,7 @@ local timersNormal = {
 local timersMythic = {
 	[1] = {
 		-- Soul Blight Orb
-		[248317] = {35.1, 24.4, 26.7, 30.3, 25.6},
+		[248317] = {35.1, 24.4, 25.6, 26.4, 24, 24.4},
 	},
 }
 local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
@@ -101,9 +101,6 @@ if L then
 
 	L.countx = "%s (%dx)"
 
-	L.rage_say = "Spread"
-	--L.fear_say = "Stack"
-
 	L.bomb_explosions = "Bomb Explosions"
 	L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding"
 	L.bomb_explosions_icon = 251570
@@ -113,6 +110,7 @@ end
 -- Initialization
 --
 
+local seaMarker = mod:AddMarkerOption(false, "player", 5, 255594, 5, 6) -- Sky and Sea
 local burstMarker = mod:AddMarkerOption(false, "player", 3, 250669, 3, 7) -- Soul Burst
 local bombMarker = mod:AddMarkerOption(false, "player", 2, 251570, 2) -- Soul Bomb
 function mod:GetOptions()
@@ -127,6 +125,7 @@ function mod:GetOptions()
 		257296, -- Tortured Rage
 		248499, -- Sweeping Scythe
 		{255594, "SAY"}, -- Sky and Sea
+		seaMarker,
 
 		--[[ Stage 2 ]]--
 		{250669, "SAY"}, -- Soulburst
@@ -155,7 +154,7 @@ function mod:GetOptions()
 		257214, -- Titanforging
 
 		--[[ Mythic ]]--
-		{258068, "SAY", "FLASH"}, -- Sargeras' Gaze
+		{258068, "SAY", "FLASH", "PULSE"}, -- Sargeras' Gaze
 		257911, -- Unleased Rage
 		{257966, "FLASH"}, -- Sentence of Sargeras
 		258838, -- Soulrending Scythe
@@ -185,6 +184,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SkyandSea", 255594)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSea", 258647)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSky", 258646)
+	self:Log("SPELL_AURA_REMOVED", "GiftRemoved", 258647, 258646) -- Sea, Sky
 	self:Log("SPELL_AURA_APPLIED", "StrengthoftheSkyandSea", 253901, 253903) -- Strength of the Sea, Strength of the Sky
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StrengthoftheSkyandSea", 253901, 253903) -- Strength of the Sea, Strength of the Sky
 
@@ -208,7 +208,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StellarArmoryBuffs", 255496, 255478) -- Sword of the Cosmos, Blades of the Eternal
 	self:Log("SPELL_CAST_START", "CosmicPower", 255935)
 
-
 	--[[ Stage 4 ]]--
 	self:Log("SPELL_CAST_START", "ReapSoul", 256542)
 	self:Log("SPELL_CAST_SUCCESS", "GiftoftheLifebinder", 257619)
@@ -222,7 +221,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Titanforging", 257214)
 
 	--[[ Mythic ]]--
-	self:Log("SPELL_AURA_APPLIED", "SargerasGaze", 257931, 257869) -- Fear, Rage
+	self:Log("SPELL_AURA_APPLIED", "SargerasFear", 257931)
+	self:Log("SPELL_AURA_APPLIED", "SargerasRage", 257869)
 	self:Log("SPELL_AURA_APPLIED", "SentenceofSargeras", 257966)
 	self:Log("SPELL_CAST_START", "SoulrendingScythe", 258838)
 	self:Log("SPELL_AURA_APPLIED", "SoulrendingScytheStack", 258838)
@@ -313,7 +313,6 @@ end
 function mod:SoulBlight(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
-		--self:Say(args.spellId) -- Too spammy
 		self:TargetBar(args.spellId, 8, args.destName)
 		self:SayCountdown(args.spellId, 8)
 	end
@@ -378,6 +377,9 @@ do
 		end
 		seaName = args.destName
 		announce(self)
+		if self:GetOption(seaMarker) then
+			SetRaidTarget(args.destName, 6)
+		end
 	end
 
 	function mod:GiftoftheSky(args)
@@ -386,6 +388,15 @@ do
 		end
 		skyName = args.destName
 		announce(self)
+		if self:GetOption(seaMarker) then
+			SetRaidTarget(args.destName, 5)
+		end
+	end
+end
+
+function mod:GiftRemoved(args)
+	if self:GetOption(seaMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
@@ -417,7 +428,6 @@ function mod:GolgannethsWrath()
 	self:Bar(255199, 20.8, CL.count:format(self:SpellName(255199), avatarCounter)) -- Avatar of Aggramar
 	self:Bar(251570, self:Mythic() and 30 or 36.1, CL.count:format(self:SpellName(251570), soulBombCounter)) -- Soulbomb
 	self:Bar(250669, self:Mythic() and 30 or 36.1) -- Soulburst
-
 	if self:Mythic() then
 		self:Bar(258068, 26.3) -- Sargeras' Gaze
 	end
@@ -508,7 +518,6 @@ do
 			scheduled = self:ScheduleTimer(announce, 0.1, self)
 		end
 
-		--self:TargetBar(args.spellId, self:Mythic() and 12 or 15, args.destName)
 		soulBombCounter = soulBombCounter + 1
 		self:Bar(args.spellId, stage == 4 and (self:Easy() and 100.5 or 54) or 42, CL.count:format(args.spellName, soulBombCounter))
 		if stage ~= 4 or not self:Easy() then
@@ -558,8 +567,8 @@ end
 
 --[[ Stage 3 ]]--
 function mod:TemporalBlast()
-	if self:Mythic() then
-		-- Nothing gz!
+	if self:Mythic() then -- Skips Stage 3
+		self:Bar("stages", 55.8, 257619, 257619) -- Gift of the Lifebinder
 	else
 		if not stage == 3 then
 			stage = 3
@@ -588,7 +597,6 @@ function mod:VulnerabilityApplied(args)
 		if not scanningTargets then
 			self:RegisterTargetEvents("ConstellarMark")
 			scanningTargets = true
-
 		end
 	end
 end
@@ -598,10 +606,8 @@ function mod:ConstellarMark(_, unit, guid)
 		SetRaidTarget(unit, vulnerabilityCollector[guid])
 		vulnerabilityCollector[guid] = nil
 		if not next(vulnerabilityCollector) then
-
 			scanningTargets = nil
 			self:UnregisterTargetEvents()
-
 		end
 	end
 end
@@ -693,7 +699,6 @@ function mod:EndofAllThingsInterupted(args)
 		torturedRageCounter = 1
 		sweepingScytheCounter = 1
 
-		-- XXX All timers seem to start from cast interupt
 		if self:Mythic() then
 			self:Bar(258838, 5.1) -- Soulrending Scythe
 		else
@@ -743,13 +748,17 @@ end
 
 --[[ Mythic ]]--
 
-function mod:SargerasGaze(args)
+function mod:SargerasRage(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(258068, args.destName, "Personal", "Warning")
-		if args.spellId == 257869 then -- Rage Say message only
-			self:Say(258068, L.rage_say, true)
-		end
+		self:TargetMessage(258068, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 		self:Flash(258068)
+		self:Say(258068, self:SpellName(6621)) -- Rage
+	end
+end
+
+function mod:SargerasFear(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(258068, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 	end
 end
 
