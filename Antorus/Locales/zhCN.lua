@@ -19,7 +19,7 @@ if L then
 	L.sea_say = "{rt6} 急速/全能" -- short for Haste/Versatility (stats)
 
 	L.bomb_explosions = "炸弹爆炸"
-	L.bomb_explosions_desc = "显示灵魂炸弹爆炸计时条。"
+	L.bomb_explosions_desc = "显示灵魂爆发和灵魂炸弹爆炸计时条。"
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "zhCN")
