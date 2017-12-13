@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("The Coven of Shivarra", nil, 1986, 1712)
 if not mod then return end
 mod:RegisterEnableMob(122468, 122467, 122469, 125436) -- Noura, Asara, Diima, Thu'raya
 mod.engageId = 2073
-mod.respawnTime = 25
+mod.respawnTime = 21
 
 --------------------------------------------------------------------------------
 -- Locals
