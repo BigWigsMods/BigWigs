@@ -8,7 +8,7 @@
 
 local mod, CL = BigWigs:NewBoss("Eonar the Life-Binder", nil, 2025, 1712)
 if not mod then return end
-mod:RegisterEnableMob(122500) -- Essence of Eonar
+mod:RegisterEnableMob(122500, 124445) -- Essence of Eonar, The Paraxis
 mod.engageId = 2075
 mod.respawnTime = 30
 
@@ -98,7 +98,7 @@ local timersMythic = {
 		{424, "destructor"},
 	},
 	["mid"] = {
-		{6, "destructor"},
+		{11, "destructor"},
 		{65, "purifier"},
 		{133, "purifier"},
 		{278, "obfuscator"},
@@ -167,7 +167,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_POWER", nil, "boss1")
 	self:Log("SPELL_CAST_START", "LifeForce", 250048)
 	self:Log("SPELL_CAST_SUCCESS", "LifeForceSuccess", 250048)
 
@@ -211,6 +210,8 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:CDBar(249121, timers[249121][finalDoomCounter], CL.count:format(self:SpellName(249121), finalDoomCounter)) -- Final Doom
 	end
+
+	self:RegisterUnitEvent("UNIT_POWER", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -251,7 +252,7 @@ function mod:StartWaveTimer(lane, count)
 end
 
 function mod:UNIT_POWER(unit)
-	local power = UnitPower(unit)
+	local power = UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
 	if power >= 80 then
 		self:Message(250048, "Neutral", "Info", L.lifeforce_casts:format(CL.soon:format(self:SpellName(250048)), lifeForceCounter, lifeForceNeeded)) -- Life Force
 		self:UnregisterUnitEvent("UNIT_POWER", unit)
@@ -321,6 +322,8 @@ function mod:ArcaneBuildup(args)
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
 		self:SayCountdown(args.spellId, 5)
+		self:CastBar(args.spellId, 5, CL.you:format(args.spellName))
+		self:ScheduleTimer("Bar", 5, args.spellId, 20, CL.you:format(args.spellName))
 	end
 end
 
@@ -336,6 +339,8 @@ function mod:BurningEmbers(args)
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
 		self:SayCountdown(args.spellId, 5)
+		self:CastBar(args.spellId, 5, CL.you:format(args.spellName))
+		self:ScheduleTimer("Bar", 5, args.spellId, 25, CL.you:format(args.spellName))
 	end
 end
 
@@ -348,6 +353,6 @@ end
 function mod:FoulSteps(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) and amount % 3 == 0 then
-		self:StackMessage(args.spellId, args.destName, amount, "Personal", "Alarm")
+		self:StackMessage(args.spellId, args.destName, amount, "Personal", amount > 5 and "Alarm")
 	end
 end

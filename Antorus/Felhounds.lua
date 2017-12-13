@@ -106,7 +106,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 244159 then -- Consuming Sphere
 		self:Message(244131, "Attention", "Alert")
 		consumingSphereCount = consumingSphereCount + 1

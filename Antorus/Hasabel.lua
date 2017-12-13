@@ -76,6 +76,7 @@ function mod:GetOptions()
 		{245050, "HEALER"}, -- Delusions
 		245040, -- Corrupt
 		{245118, "SAY"}, -- Cloying Shadows
+		245075, -- Hungering Gloom
 	},{
 		["stages"] = "general",
 		[244016] = -15799, -- Platform: Nexus
@@ -126,6 +127,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CorruptSuccess", 245040)
 	self:Log("SPELL_AURA_APPLIED", "CloyingShadows", 245118)
 	self:Log("SPELL_AURA_APPLIED", "CloyingShadowsRemoved", 245118)
+	self:Log("SPELL_AURA_APPLIED", "HungeringGloom", 245075)
+	self:Log("SPELL_AURA_REMOVED", "HungeringGloomRemoved", 245075)
 	self:Death("LordEilgarDeath", 122213)
 
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
@@ -137,8 +140,8 @@ function mod:OnEngage()
 
 	self:Bar(244016, 7) -- Reality Tear
 	self:Bar(243983, 12.7) -- Collapsing World
-	self:Bar(244689, 26.7) -- Transport Portal
-	self:Bar(244000, 35.7) -- Felstorm Barrage
+	self:Bar(244689, self:Mythic() and 36.3 or 26.7) -- Transport Portal
+	self:Bar(244000, self:Mythic() and 26.9 or 35.7) -- Felstorm Barrage
 	self:Berserk(720)
 
 	nextPortalSoonWarning = 92 -- happens at 90%
@@ -285,8 +288,15 @@ function mod:HowlingShadows(args)
 	end
 end
 
-function mod:CatastrophicImplosion(args)
-	self:Message(args.spellId, "Important", "Alarm")
+do
+	local prev = 0
+	function mod:CatastrophicImplosion(args)
+		local t = GetTime()
+		if t-prev > 0.2 then
+			prev = t
+			self:Message(args.spellId, "Important", "Alarm")
+		end
+	end
 end
 
 do
@@ -402,6 +412,20 @@ end
 function mod:CloyingShadowsRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+function mod:HungeringGloom(args)
+	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
+	if UnitIsUnit(args.destName, "boss2") or UnitIsUnit(args.destName, "boss3") or UnitIsUnit(args.destName, "boss4") then -- Should always be boss2, rest is safety
+		self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, true)
+		self:Bar(args.spellId, 20, CL.onboss:format(args.spellName))
+	end
+end
+
+function mod:HungeringGloomRemoved(args)
+	if UnitIsUnit(args.destName, "boss2") or UnitIsUnit(args.destName, "boss3") or UnitIsUnit(args.destName, "boss4") then -- Should always be boss2, rest is safety
+		self:StopBar(CL.onboss:format(args.spellName))
 	end
 end
 

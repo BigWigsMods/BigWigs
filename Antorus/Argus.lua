@@ -34,7 +34,7 @@ local timersHeroic = {
 	[1] = { -- XXX Not needed for other stages right now, perhaps mythic?
 		-- Cone of Death
 		[248165] = {31, 20.5, 22.7, 20.2, 20.5, 23.5},
-		-- Soul Blight Orb
+		-- Soulblight Orb
 		[248317] = {35.5, 25.5, 26.8, 23.2, 31},
 		-- Tortured Rage
 		[257296] = {12, 13.5, 13.5, 15.9, 13.5, 13.5, 15.9, 20.9, 13.5},
@@ -45,10 +45,10 @@ local timersHeroic = {
 
 local timersNormal = {
 	[1] = {
-		-- Soul Blight Orb
-		[248317] = {36, 33, 28, 26.5},
+		-- Soulblight Orb
+		[248317] = {36, 33, 28, 26.5, 26.6},
 		-- Sweeping Scythe
-		[248499] = {7, 9.5, 7.3, 8.4, 9, 6.8, 7.3, 9.5, 7.5, 7.3, 13.1, 7.5, 8.4, 7.3, 11.5},
+		[248499] = {7, 9.5, 7.3, 8.4, 9, 6.8, 7.3, 9.5, 7.5, 7.3, 13.1, 7.5, 8.4, 7.3, 11.5, 6.5, 10.9},
 	},
 }
 local timers = mod:Easy() and timersNormal or timersHeroic
@@ -102,7 +102,7 @@ function mod:GetOptions()
 		"berserk",
 		--[[ Stage 1 ]]--
 		248165, -- Cone of Death
-		248317, -- Soul Blight Orb
+		248317, -- Soulblight Orb
 		{248396, "ME_ONLY", "SAY", "FLASH"}, -- Soul Blight
 		248167, -- Death Fog
 		257296, -- Tortured Rage
@@ -122,7 +122,7 @@ function mod:GetOptions()
 
 		--[[ Stage 3 ]]--
 		252516, -- The Discs of Norgannon
-		"custom_off_252516",
+		"custom_off_252516", -- Vulnerability Marker
 		{252729, "SAY"}, -- Cosmic Ray
 		{252616, "SAY"}, -- Cosmic Beacon
 		-17077, -- Stellar Armory
@@ -133,6 +133,10 @@ function mod:GetOptions()
 		258039, -- Deadly Scythe
 		256388, -- Initialization Sequence
 		257214, -- Titanforging
+
+		--[[ Mythic ]]--
+		{258068, "SAY", "FLASH"}, -- Sargeras' Gaze
+		257911, -- Unleased Rage
 	},{
 		["stages"] = "general",
 		[248165] = CL.stage:format(1),
@@ -144,6 +148,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	--[[ Stage 1 ]]--
 	self:Log("SPELL_CAST_START", "ConeofDeath", 248165)
@@ -152,8 +157,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SoulBlightRemoved", 248396)
 	self:Log("SPELL_CAST_START", "TorturedRage", 257296)
 	self:Log("SPELL_CAST_START", "SweepingScythe", 248499)
-	self:Log("SPELL_AURA_APPLIED", "SweepingScytheStack", 244899)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "SweepingScytheStack", 244899)
+	self:Log("SPELL_AURA_APPLIED", "SweepingScytheStack", 248499)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SweepingScytheStack", 248499)
 	self:Log("SPELL_CAST_SUCCESS", "SkyandSea", 255594)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSea", 258647)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSky", 258646)
@@ -193,8 +198,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "InitializationSequence", 256388)
 	self:Log("SPELL_CAST_SUCCESS", "Titanforging", 257214)
 
+	--[[ Mythic ]]--
+	self:Log("SPELL_AURA_APPLIED", "SargerasGaze", 257931, 257869) -- Fear, Rage
+
 	-- Ground Effects
-	self:Log("SPELL_AURA_APPLIED", "GroundEffects", 248167) -- Death Fog
+	self:Log("SPELL_AURA_APPLIED", "GroundEffects", 248167, 257911) -- Death Fog, Unleashed Rage
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GroundEffects", 257911) -- Unleashed Rage
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffects", 248167) -- Death Fog
 	self:Log("SPELL_PERIODIC_MISSED", "GroundEffects", 248167) -- Death Fog
 end
@@ -210,15 +219,28 @@ function mod:OnEngage()
 	self:Bar(255594, 16) -- Sky and Sea
 	self:Bar(257296, self:Easy() and 13.5 or timers[stage][257296][torturedRageCounter]) -- Tortured Rage
 	self:Bar(248165, self:Easy() and 39 or timers[stage][248165][coneOfDeathCounter]) -- Cone of Death
-	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soul Blight Orb
+	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soulblight Orb
 	self:Bar(248499, timers[stage][248499][sweepingScytheCounter]) -- Sweeping Scythe
 
-	self:Berserk(720)
+	if self:Mythic() then
+		self:Bar(258068, 8.2) -- Sargeras' Gaze
+		self:Berserk(660)
+	else
+		self:Berserk(720)
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+	if msg:find("258068", nil, true) then -- Sargeras' Gaze
+		self:Message(258068, "Urgent", nil)
+		self:Bar(258068, stage == 2 and 60.5 or 35.1)
+	end
+end
+
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.stage2_early) then -- We start bars for stage 2 later
 		stage = 2
@@ -228,6 +250,8 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		self:StopBar(257296) -- Tortured Rage
 		self:StopBar(248499) -- Sweeping Scythe
 		self:StopBar(255594) -- Sky and Sea
+		self:StopBar(258068) -- Sargeras' Gaze
+		self:Bar("stages", 10.5, self:SpellName(255648), 255648) -- Golganneths Wrath
 	elseif msg:find(L.stage3_early) then -- We start bars for stage 3 later
 		stage = 3
 		wipe(vulnerabilityCollector)
@@ -246,32 +270,36 @@ end
 function mod:ConeofDeath(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	coneOfDeathCounter = coneOfDeathCounter + 1
-	self:CDBar(args.spellId, self:Easy() and 24 or timers[stage][248165][coneOfDeathCounter]) -- normal: 24-26
+	self:CDBar(args.spellId, self:Mythic() and 20.5 or self:Easy() and 24 or timers[stage][248165][coneOfDeathCounter]) -- normal: 24-26
 end
 
 function mod:SoulBlightOrb(args)
 	self:Message(args.spellId, "Neutral", "Alert", CL.casting:format(args.spellName))
 	soulBlightOrbCounter = soulBlightOrbCounter + 1
-	self:CDBar(args.spellId, timers[stage][args.spellId][soulBlightOrbCounter])
+	self:CDBar(args.spellId, self:Mythic() and 25 or timers[stage][args.spellId][soulBlightOrbCounter])
 end
 
 function mod:SoulBlight(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
-		self:Say(args.spellId)
+		--self:Say(args.spellId) -- Too spammy
 		self:TargetBar(args.spellId, 8, args.destName)
+		self:SayCountdown(args.spellId, 8)
 	end
 	self:TargetMessage(args.spellId, args.destName, "Neutral", "Warning")
 end
 
 function mod:SoulBlightRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 	self:StopBar(args.spellId, args.destName)
 end
 
 function mod:TorturedRage(args)
 	self:Message(args.spellId, "Attention", "Alarm", CL.casting:format(args.spellName))
 	torturedRageCounter = torturedRageCounter + 1
-	self:CDBar(args.spellId, stage == 4 and 13.5 or self:Easy() and 15.8 or timers[stage][args.spellId][torturedRageCounter])
+	self:CDBar(args.spellId, self:Mythic() and 13.5 or stage == 4 and 13.5 or self:Easy() and 15.8 or timers[stage][args.spellId][torturedRageCounter])
 end
 
 function mod:SweepingScythe(args)
@@ -281,7 +309,7 @@ function mod:SweepingScythe(args)
 	sweepingScytheCounter = sweepingScytheCounter + 1
 
 	local timer = 6.1
-	if stage == 1 then
+	if stage == 1 and not self:Mythic() then
 		timer = timers[stage][args.spellId][sweepingScytheCounter]
 	elseif stage == 4 then -- normal mode only
 		timer = sweepingScytheCounter == 2 and 8.3 or sweepingScytheCounter % 2 == 0 and 7.1 or 6.1
@@ -291,7 +319,7 @@ function mod:SweepingScythe(args)
 end
 
 function mod:SweepingScytheStack(args)
-	if self:Me(args.destGUID) or self:Tank() then -- Always Show for Tanks and when on self
+	if self:Me(args.destGUID) or (self:Tank() and self:Tank(args.destName)) then
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "Attention", self:Tank() and (amount > 2 and "Alarm") or "Warning") -- Warning sound for non-tanks, 3+ stacks warning for tanks
 	end
@@ -347,6 +375,7 @@ function mod:GolgannethsWrath()
 		self:StopBar(257296) -- Tortured Rage
 		self:StopBar(248499) -- Sweeping Scythe
 		self:StopBar(255594) -- Sky and Sea
+		self:StopBar(258068) -- Sargeras' Gaze
 	end
 
 	self:Bar(248499, 17) -- Sweeping Scythe
@@ -521,7 +550,7 @@ function mod:VulnerabilityApplied(args)
 	end
 end
 
-function mod:ConstellarMark(event, unit, guid)
+function mod:ConstellarMark(_, unit, guid)
 	if vulnerabilityCollector[guid] then
 		SetRaidTarget(unit, vulnerabilityCollector[guid])
 		vulnerabilityCollector[guid] = nil
@@ -660,6 +689,16 @@ end
 
 function mod:Titanforging(args)
 	self:Message(args.spellId, "Positive", "Long", CL.casting:format(args.spellName))
+end
+
+--[[ Mythic ]]--
+
+function mod:SargerasGaze(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(258068, args.destName, "Personal", "Warning")
+		self:Say(258068, args.spellName)
+		self:Flash(258068)
+	end
 end
 
 -- Ground Effects

@@ -356,7 +356,7 @@ do
 	end
 end
 
-function mod:TormentofAmanThul(args)
+function mod:TormentofAmanThul()
 	self:StopBar(L.torment_of_the_titans)
 	upcomingTorments[#upcomingTorments+1] = "AmanThul"
 	if #upcomingTorments == 1 then
@@ -366,7 +366,7 @@ function mod:TormentofAmanThul(args)
 	updateInfoBox(self)
 end
 
-function mod:TormentofKhazgoroth(args)
+function mod:TormentofKhazgoroth()
 	self:StopBar(L.torment_of_the_titans)
 	upcomingTorments[#upcomingTorments+1] = "Khazgoroth"
 	if #upcomingTorments == 1 then
@@ -376,7 +376,7 @@ function mod:TormentofKhazgoroth(args)
 	updateInfoBox(self)
 end
 
-function mod:TormentofGolganneth(args)
+function mod:TormentofGolganneth()
 	self:StopBar(L.torment_of_the_titans)
 	upcomingTorments[#upcomingTorments+1] = "Golganneth"
 	if #upcomingTorments == 1 then
@@ -386,7 +386,7 @@ function mod:TormentofGolganneth(args)
 	updateInfoBox(self)
 end
 
-function mod:TormentofNorgannon(args)
+function mod:TormentofNorgannon()
 	self:StopBar(L.torment_of_the_titans)
 	upcomingTorments[#upcomingTorments+1] = "Norgannon"
 	if #upcomingTorments == 1 then
