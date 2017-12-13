@@ -96,13 +96,13 @@ if L then
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tBurst:%s" -- short for Soulburst
 	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBomb:%s" -- short for Soulbomb
 
-	L.sky_say = "Crit/Mast"
-	L.sea_say = "Haste/Versa"
+	L.sky_say = "{rt5} Crit/Mast"
+	L.sea_say = "{rt6} Haste/Versa"
 
 	L.countx = "%s (%dx)"
 
 	L.bomb_explosions = "Bomb Explosions"
-	L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding"
+	L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding."
 	L.bomb_explosions_icon = 251570
 end
 

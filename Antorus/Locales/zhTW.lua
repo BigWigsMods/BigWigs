@@ -14,6 +14,12 @@ if L then
 	L.gifts = "恩賜：%s（天空），%s（大海）"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|t驟發：%s" -- short for Soulburst
 	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t炸彈：%s" -- short for Soulbomb
+
+	--L.sky_say = "{rt5} Crit/Mast" -- short for Critical Strike/Mastery (stats)
+	--L.sea_say = "{rt6} Haste/Versa" -- short for Haste/Versatility (stats)
+
+	--L.bomb_explosions = "Bomb Explosions"
+	--L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding."
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "zhTW")
