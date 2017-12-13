@@ -15,11 +15,11 @@ if L then
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|t爆发：%s" -- short for Soulburst
 	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t炸弹：%s" -- short for Soulbomb
 
-	--L.sky_say = "{rt5} Crit/Mast" -- short for Critical Strike/Mastery (stats)
-	--L.sea_say = "{rt6} Haste/Versa" -- short for Haste/Versatility (stats)
+	L.sky_say = "{rt5} 爆击/精通" -- short for Critical Strike/Mastery (stats)
+	L.sea_say = "{rt6} 急速/全能" -- short for Haste/Versatility (stats)
 
-	--L.bomb_explosions = "Bomb Explosions"
-	--L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding."
+	L.bomb_explosions = "炸弹爆炸"
+	L.bomb_explosions_desc = "显示灵魂炸弹爆炸计时条。"
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "zhCN")
