@@ -446,8 +446,8 @@ function mod:GolgannethsWrath()
 	self:Bar(248499, 17) -- Sweeping Scythe
 	self:Bar(255826, self:Mythic() and 25 or 24) -- Edge of Obliteration
 	self:Bar(255199, 20.8, CL.count:format(self:SpellName(255199), avatarCounter)) -- Avatar of Aggramar
-	self:Bar(251570, self:Mythic() and 30 or 36.1, CL.count:format(self:SpellName(251570), soulBombCounter)) -- Soulbomb
-	self:Bar(250669, self:Mythic() and 30 or 36.1) -- Soulburst
+	self:Bar(251570, 30, CL.count:format(self:SpellName(251570), soulBombCounter)) -- Soulbomb
+	self:Bar(250669, 30) -- Soulburst
 	if self:Mythic() then
 		self:Bar(258068, 26.3) -- Sargeras' Gaze
 	end
@@ -509,9 +509,6 @@ do
 			if self:GetOption(burstMarker) then
 				SetRaidTarget(args.destName, 3)
 			end
-			if self:Easy() and stage == 4 then -- starts in Soulbomb on other difficulties and stages
-				self:Bar(args.spellId, 50.2)
-			end
 		elseif self:GetOption(burstMarker) then
 				SetRaidTarget(args.destName, 7)
 		end
@@ -540,11 +537,10 @@ do
 		end
 
 		soulBombCounter = soulBombCounter + 1
-		self:Bar(args.spellId, stage == 4 and (self:Easy() and 100.5 or 54) or 42, CL.count:format(args.spellName, soulBombCounter))
-		if stage ~= 4 or not self:Easy() then
-			self:Bar(250669, stage == 4 and 54 or 42) -- Soulburst
-			self:Bar(250669, stage == 4 and 24.5 or 20, CL.count:format(self:SpellName(250669), 2)) -- Soulburst (2)
-		end
+		self:Bar(args.spellId, stage == 4 and (self:Easy() and 80.5 or 54) or 42, CL.count:format(args.spellName, soulBombCounter))
+
+		self:Bar(250669, stage == 4 and (self:Easy() and 80.5 or 54) or 42) -- Soulburst
+		self:Bar(250669, stage == 4 and (self:Easy() and 40.2 or 24.5) or 20, CL.count:format(self:SpellName(250669), 2)) -- Soulburst (2)
 
 		if self:GetOption(burstMarker) then
 			SetRaidTarget(args.destName, 2)
@@ -738,8 +734,8 @@ function mod:EndofAllThingsInterupted(args)
 			else
 				self:Bar(258039, 6) -- Deadly Scythe
 			end
-			self:Bar(251570, 100.5) -- Soulbomb
-			self:Bar(250669, 50.2) -- Soulburst
+			self:Bar(251570, 20.1) -- Soulbomb
+			self:Bar(250669, 20.1) -- Soulburst
 		end
 		self:Bar(257296, self:Mythic() and 40 or 11) -- Tortured Rage
 		self:Bar(256388, self:Mythic() and 30 or 18.5, L.countx:format(self:SpellName(256388), initializationCount)) -- Initialization Sequence
