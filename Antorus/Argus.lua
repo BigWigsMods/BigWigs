@@ -525,8 +525,8 @@ do
 
 	function mod:Soulbomb(args)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15)
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, 1, 2))
+			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, 2)
 			isOnMe = "bomb"
 		end
 
