@@ -75,7 +75,7 @@ local timersMythic = {
 		-- Sentence of Sargeras
 		[257966] = {67.4, 57.0, 60.0, 53, 53},
 		--Initialization Sequence
-		[256388] = {30, 47.5, 46, 45.5, 52.5, 52.5}
+		[256388] = {30, 47.5, 46, 45.5, 52.5, 52.5},
 		-- Edge of Annihilation
 		[258834] = {19.5, 5, 90, 5, 45, 5}
 	}
