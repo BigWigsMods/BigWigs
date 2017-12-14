@@ -393,7 +393,7 @@ do
 
 	function mod:GiftoftheSea(args)
 		if self:Me(args.destGUID) then
-			self:Say(255594, L.sea_say, true)
+			self:Say(255594, L.sea_say)
 		end
 		seaName = args.destName
 		announce(self)
@@ -404,7 +404,7 @@ do
 
 	function mod:GiftoftheSky(args)
 		if self:Me(args.destGUID) then
-			self:Say(255594, L.sky_say, true)
+			self:Say(255594, L.sky_say)
 		end
 		skyName = args.destName
 		announce(self)
@@ -496,8 +496,9 @@ do
 	function mod:Soulburst(args)
 		burstList[#burstList+1] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15)
+			local icon = #burstList == 1 and 3 or 7
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #burstList, icon))
+			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, icon)
 			isOnMe = "burst"
 		end
 		if #burstList == 1 then
