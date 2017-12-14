@@ -7,6 +7,16 @@ if L then
 	--L.custom_off_always_show_combined = "Always show the combined Soulburst and Soulbomb message"
 	--L.custom_off_always_show_combined_desc = "The combined message won't be displayed if you get the |cff71d5ffSoulbomb|r or the |cff71d5ffSoulburst|r. Enable this option to always show the combined message, even when you're affected. |cff33ff99Useful for raid leaders.|r"
 
+	--L.fear_help = "Sargeras' Fear Combination"
+	--L.fear_help_desc = "Say a special message if you're afflicted by |cff71d5ffSargeras' Fear|r and |cff71d5ffSoulblight|r/|cff71d5ffSoulburst|r/|cff71d5ffSoulbomb|r/|cff71d5ffSentence of Sargeras|r."
+	--L.fear_help_icon = 5782
+
+	--L[257931] = "Fear" -- short for Sargeras' Fear
+	--L[248396] = "Blight" -- short for Soulblight
+	--L[251570] = "Bomb" -- short for Soulbomb
+	--L[250669] = "Burst" -- short for Soulburst
+	--L[257966] = "Sentence" -- short for Sentence of Sargeras
+
 	--L.stage2_early = "Let the fury of the sea wash away this corruption!"
 	--L.stage3_early = "No hope. Just pain. Only pain!"
 

@@ -107,6 +107,16 @@ if L then
 	L.custom_off_252516_desc = vulnerabilityOptionDesc
 	L.custom_off_252516_icon = 1
 
+	L.fear_help = "Sargeras' Fear Combination"
+	L.fear_help_desc = "Say a special message if you're afflicted by |cff71d5ffSargeras' Fear|r and |cff71d5ffSoulblight|r/|cff71d5ffSoulburst|r/|cff71d5ffSoulbomb|r/|cff71d5ffSentence of Sargeras|r."
+	L.fear_help_icon = 5782
+
+	L[257931] = "Fear" -- Sargeras' Fear
+	L[248396] = "Blight" -- Soulblight
+	L[251570] = "Bomb" -- Soulbomb
+	L[250669] = "Burst" -- Soulburst
+	L[257966] = "Sentence" -- Sentence of Sargeras
+
 	L.stage2_early = "Let the fury of the sea wash away this corruption!" -- Yell is 6s before the actual cast start
 	L.stage3_early = "No hope. Just pain. Only pain!"  -- Yell is 14.5s before the actual cast start
 
@@ -173,6 +183,7 @@ function mod:GetOptions()
 
 		--[[ Mythic ]]--
 		{258068, "SAY", "FLASH", "PULSE"}, -- Sargeras' Gaze
+		{"fear_help", "SAY"},
 		257911, -- Unleased Rage
 		{257966, "FLASH"}, -- Sentence of Sargeras
 		258838, -- Soulrending Scythe
@@ -266,7 +277,7 @@ function mod:OnEngage()
 	sentenceofSargerasCount = 1
 
 	self:Bar(255594, 16) -- Sky and Sea
-	self:Bar(257296, self:Easy() and 13.5 or timers[stage][257296][torturedRageCounter], CL.count:format(self:SpellName(257296), torturedRageCounter)) -- Tortured Rage
+	self:Bar(257296, self:Heroic() and timers[stage][257296][torturedRageCounter] or 13.5, CL.count:format(self:SpellName(257296), torturedRageCounter)) -- Tortured Rage
 	self:Bar(248165, self:Mythic() and 30.5 or self:Easy() and 39 or timers[stage][248165][coneOfDeathCounter], CL.count:format(self:SpellName(248165), coneOfDeathCounter)) -- Cone of Death
 	self:Bar(248317, timers[stage][248317][soulBlightOrbCounter]) -- Soulblight Orb
 	self:Bar(248499, self:Mythic() and 5.9 or timers[stage][248499][sweepingScytheCounter]) -- Sweeping Scythe
@@ -282,6 +293,30 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+local checkForFearHelp
+do
+	local fearName = mod:SpellName(257931) -- Sargeras' Fear
+	local spells = {
+		[248396] = mod:SpellName(248396), -- Soulblight
+		[251570] = mod:SpellName(251570), -- Soulbomb
+		[250669] = mod:SpellName(250669), -- Soulburst
+		[257966] = mod:SpellName(257966), -- Sentence of Sargeras
+	}
+
+	function checkForFearHelp(self, icon)
+		if self:GetOption("fear_help") == 0 then return end
+		if UnitDebuff("player", fearName) then
+			for id, name in pairs(spells) do
+				if UnitDebuff("player", name) then
+					icon = icon or GetRaidTargetIndex("player") or 8
+					local msg = ("{rt%d} %s + %s {rt%d}"):format(icon, L[257931], L[id], icon)
+					self:Say("fear_help", msg)
+					return true
+				end
+			end
+		end
+	end
+end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("258068", nil, true) then -- Sargeras' Gaze
@@ -331,12 +366,13 @@ function mod:SoulBlightOrb(args)
 end
 
 function mod:SoulBlight(args)
+	self:TargetMessage(args.spellId, args.destName, "Neutral", "Warning")
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:TargetBar(args.spellId, 8, args.destName)
 		self:SayCountdown(args.spellId, 8)
+		checkForFearHelp(self)
 	end
-	self:TargetMessage(args.spellId, args.destName, "Neutral", "Warning")
 end
 
 function mod:SoulBlightRemoved(args)
@@ -497,9 +533,11 @@ do
 		burstList[#burstList+1] = args.destName
 		if self:Me(args.destGUID) then
 			local icon = #burstList == 1 and 3 or 7
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #burstList, icon))
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, icon)
 			isOnMe = "burst"
+			if not checkForFearHelp(self, #burstList == 1 and 3 or 7) then
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, #burstList, icon))
+			end
 		end
 		if #burstList == 1 then
 			if not scheduled then
@@ -525,9 +563,11 @@ do
 
 	function mod:Soulbomb(args)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, 1, 2))
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, 2)
 			isOnMe = "bomb"
+			if not checkForFearHelp(self, 2) then
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, 1, 2))
+			end
 		end
 
 		bombName = args.destName
@@ -786,6 +826,7 @@ end
 function mod:SargerasFear(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(258068, args.destName, "Personal", "Warning", args.spellName, args.spellId)
+		checkForFearHelp(self)
 	end
 end
 
@@ -810,6 +851,7 @@ do
 	function mod:SentenceofSargeras(args)
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
+			checkForFearHelp(self)
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then

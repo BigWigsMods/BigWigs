@@ -7,6 +7,16 @@ if L then
 	L.custom_off_always_show_combined = "Toujours afficher les messages Explosion d'âme et Bombe d'âme combinés"
 	L.custom_off_always_show_combined_desc = "Le message combiné ne s'affichera pas si vous êtes vous-même affecté par |cff71d5ffExplosion d'âme|r ou |cff71d5ffBombe d'âme|r. Activez cette option pour toujours avoir le message combiné, même si vous êtes affecté. |cff33ff99Pratique pour les chefs de raid.|r"
 
+	--L.fear_help = "Sargeras' Fear Combination"
+	--L.fear_help_desc = "Say a special message if you're afflicted by |cff71d5ffSargeras' Fear|r and |cff71d5ffSoulblight|r/|cff71d5ffSoulburst|r/|cff71d5ffSoulbomb|r/|cff71d5ffSentence of Sargeras|r."
+	--L.fear_help_icon = 5782
+
+	--L[257931] = "Fear" -- short for Sargeras' Fear
+	--L[248396] = "Blight" -- short for Soulblight
+	--L[251570] = "Bomb" -- short for Soulbomb
+	--L[250669] = "Burst" -- short for Soulburst
+	--L[257966] = "Sentence" -- short for Sentence of Sargeras
+
 	L.stage2_early = "Que la fureur de la mer engloutisse la corruption !"
 	L.stage3_early = "Aucun espoir, mais de la souffrance... et rien que de la souffrance !" -- à vérifier
 
