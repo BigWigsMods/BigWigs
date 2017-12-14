@@ -11,15 +11,15 @@ if L then
 	L.stage3_early = "Aucun espoir, mais de la souffrance... et rien que de la souffrance !" -- à vérifier
 
 	L.explosion = "Explosion |2 %s"
-	L.gifts = "Dons : %s (Cieux), %s (Mers)"
+	L.gifts = "Dons : %s (cieux), %s (mers)"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tExplosion :%s" -- short for Soulburst
 	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBombe :%s" -- short for Soulbomb
 
-	--L.sky_say = "{rt5} Crit/Mast" -- short for Critical Strike/Mastery (stats)
-	--L.sea_say = "{rt6} Haste/Versa" -- short for Haste/Versatility (stats)
+	L.sky_say = "{rt5} Crit/Maît" -- short for Critical Strike/Mastery (stats)
+	L.sea_say = "{rt6} Hâte/Poly" -- short for Haste/Versatility (stats)
 
-	--L.bomb_explosions = "Bomb Explosions"
-	--L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding."
+	L.bomb_explosions = "Explosions des bombes"
+	L.bomb_explosions_desc = "Affiche un délai pour les explosions de Explosion d'âme et Bombe d'âme."
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "frFR")
