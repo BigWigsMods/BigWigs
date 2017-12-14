@@ -218,7 +218,10 @@ function mod:OnEngage()
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss2")
 	self:OpenInfo("infobox", self.displayName)
 	self:SetInfo("infobox", 1, self:SpellName(7850)) -- Health
+	self:SetInfo("infobox", 2, "100%")
+	self:SetInfoBar("infobox", 1, 1)
 	self:SetInfo("infobox", 3, self:SpellName(185188)) -- Energy
+	self:SetInfo("infobox", 4, 0)
 end
 
 --------------------------------------------------------------------------------
