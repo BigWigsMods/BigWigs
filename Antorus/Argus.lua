@@ -38,11 +38,10 @@ local vulnerabilityIcons = {
 }
 local annihilationCount = 0
 local sentenceofSargerasCount = 0
-local sentenceCheck = nil
 local sentenceCast = nil
 
 local timersHeroic = {
-	[1] = { -- XXX Not needed for other stages right now, perhaps mythic?
+	[1] = { -- Stage
 		-- Cone of Death
 		[248165] = {31, 20.5, 22.7, 20.2, 20.5, 23.5},
 		-- Soulblight Orb
@@ -55,7 +54,7 @@ local timersHeroic = {
 }
 
 local timersNormal = {
-	[1] = {
+	[1] = { -- Stage
 		-- Soulblight Orb
 		[248317] = {36, 33, 28, 26.5, 26.6},
 		-- Sweeping Scythe
@@ -63,7 +62,7 @@ local timersNormal = {
 	},
 }
 local timersMythic = {
-	[1] = {
+	[1] = { -- Stage
 		-- Soul Blight Orb
 		[248317] = {35.1, 24.4, 25.6, 26.4, 24, 24.4},
 	},
@@ -717,7 +716,7 @@ function mod:EndofAllThings(args)
 		sentenceCast = nil
 		self:Bar(258068, timers[stage][258068][sargerasGazeCount], CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
 		self:Bar(257966, timers[stage][257966][sentenceofSargerasCount], CL.count:format(self:SpellName(257966), sentenceofSargerasCount)) -- Sentence of Sargeras
-		self:ScheduleTimer("sentenceCheck", timers[stage][257966][sentenceofSargerasCount]+1)
+		self:ScheduleTimer("SentenceCheck", timers[stage][257966][sentenceofSargerasCount]+1)
 		self:StartScytheTimer(timers[stage][258834][annihilationCount])
 	end
 end
@@ -793,7 +792,7 @@ function mod:SargerasFear(args)
 	end
 end
 
-function mod:sentenceCheck()
+function mod:SentenceCheck()
 	if not sentenceCast then
 		self:Message(257966, "Urgent", nil)
 		sentenceofSargerasCount = sentenceofSargerasCount + 1
@@ -805,7 +804,7 @@ function mod:sentenceCheck()
 	end
 	sentenceCast = nil
 	if timers[stage][257966][sentenceofSargerasCount] then
-		self:ScheduleTimer("sentenceCheck", timers[stage][257966][sentenceofSargerasCount])
+		self:ScheduleTimer("SentenceCheck", timers[stage][257966][sentenceofSargerasCount])
 	end
 end
 
