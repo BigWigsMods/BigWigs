@@ -19,7 +19,6 @@ if L then
 	L.stage2_early = "让大海的怒涛洗刷这腐蚀吧！"
 	L.stage3_early = "没有希望。只有痛苦。痛苦！"
 
-	L.explosion = "%s爆炸"
 	L.gifts = "恩赐：%s（天空），%s（海洋）"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|t爆发：%s" -- short for Soulburst
 	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t炸弹：%s" -- short for Soulbomb

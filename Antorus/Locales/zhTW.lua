@@ -9,7 +9,6 @@ if L then
 
 	L.fear_help = "合併薩格拉斯的恐懼"
 	L.fear_help_desc = "當你同時受到|cff71d5ff薩格拉斯的恐懼|r和|cff71d5ff靈魂之疫|r／|cff71d5ff靈魂驟發|r／|cff71d5ff靈魂炸彈|r／|cff71d5ff薩格拉斯的判決|r影響時，改說合併兩者的特殊訊息。"
-	L.fear_help_icon = 5782
 
 	L[257931] = "恐懼" -- short for Sargeras' Fear
 	L[248396] = "靈魂之疫" -- short for Soulblight
@@ -20,7 +19,6 @@ if L then
 	L.stage2_early = "讓大海的怒濤洗淨所有的腐化吧！"
 	L.stage3_early = "沒有希望。只有痛苦！"
 
-	L.explosion = "%s爆炸"
 	L.gifts = "天之賜：%s，海之賜：%s"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|t驟發：%s" -- short for Soulburst
 	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t炸彈：%s" -- short for Soulbomb

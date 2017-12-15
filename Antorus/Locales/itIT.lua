@@ -9,7 +9,6 @@ if L then
 
 	--L.fear_help = "Sargeras' Fear Combination"
 	--L.fear_help_desc = "Say a special message if you're afflicted by |cff71d5ffSargeras' Fear|r and |cff71d5ffSoulblight|r/|cff71d5ffSoulburst|r/|cff71d5ffSoulbomb|r/|cff71d5ffSentence of Sargeras|r."
-	--L.fear_help_icon = 5782
 
 	--L[257931] = "Fear" -- short for Sargeras' Fear
 	--L[248396] = "Blight" -- short for Soulblight
@@ -20,7 +19,6 @@ if L then
 	--L.stage2_early = "Let the fury of the sea wash away this corruption!"
 	--L.stage3_early = "No hope. Just pain. Only pain!"
 
-	--L.explosion = "%s Explosion"
 	--L.gifts = "Gifts: %s (Sky), %s (Sea)"
 	--L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tBurst:%s" -- short for Soulburst
 	--L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBomb:%s" -- short for Soulbomb
