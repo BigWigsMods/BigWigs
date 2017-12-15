@@ -7,15 +7,15 @@ if L then
 	L.custom_off_always_show_combined = "總是顯示靈魂驟發與靈魂炸彈的合併訊息"
 	L.custom_off_always_show_combined_desc = "當你中了|cff71d5ff靈魂炸彈|r或|cff71d5ff靈魂驟發|r時，不會顯示合併訊息，只會提示你受到影響。啟用此選項將會使訊息強制以合併模式顯示，即使你中了技能。|cff33ff99對團隊領袖很有用。|r"
 
-	--L.fear_help = "Sargeras' Fear Combination"
-	--L.fear_help_desc = "Say a special message if you're afflicted by |cff71d5ffSargeras' Fear|r and |cff71d5ffSoulblight|r/|cff71d5ffSoulburst|r/|cff71d5ffSoulbomb|r/|cff71d5ffSentence of Sargeras|r."
-	--L.fear_help_icon = 5782
+	L.fear_help = "合併薩格拉斯的恐懼"
+	L.fear_help_desc = "當你同時受到|cff71d5ff薩格拉斯的恐懼|r和|cff71d5ff靈魂之疫|r／|cff71d5ff靈魂驟發|r／|cff71d5ff靈魂炸彈|r／|cff71d5ff薩格拉斯的判決|r影響時，改說合併兩者的特殊訊息。"
+	L.fear_help_icon = 5782
 
-	--L[257931] = "Fear" -- short for Sargeras' Fear
-	--L[248396] = "Blight" -- short for Soulblight
-	--L[251570] = "Bomb" -- short for Soulbomb
-	--L[250669] = "Burst" -- short for Soulburst
-	--L[257966] = "Sentence" -- short for Sentence of Sargeras
+	L[257931] = "恐懼" -- short for Sargeras' Fear
+	L[248396] = "靈魂之疫" -- short for Soulblight
+	L[251570] = "靈魂炸彈" -- short for Soulbomb
+	L[250669] = "靈魂驟發" -- short for Soulburst
+	L[257966] = "判決" -- short for Sentence of Sargeras
 
 	L.stage2_early = "讓大海的怒濤洗淨所有的腐化吧！"
 	L.stage3_early = "沒有希望。只有痛苦！"
