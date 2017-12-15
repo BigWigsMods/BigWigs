@@ -7,6 +7,16 @@ if L then
 	L.custom_off_always_show_combined = "总是显示合并灵魂爆发和灵魂炸弹信息"
 	L.custom_off_always_show_combined_desc = "当你受到|cff71d5ff灵魂炸弹|r或|cff71d5ff灵魂爆发|r时合并信息不会被显示。启用此选项将总是显示合并信息，即使你受到影响。|cff33ff99对团队领袖有用处。|r"
 
+	--L.fear_help = "Sargeras' Fear Combination"
+	--L.fear_help_desc = "Say a special message if you're afflicted by |cff71d5ffSargeras' Fear|r and |cff71d5ffSoulblight|r/|cff71d5ffSoulburst|r/|cff71d5ffSoulbomb|r/|cff71d5ffSentence of Sargeras|r."
+	--L.fear_help_icon = 5782
+
+	--L[257931] = "Fear" -- short for Sargeras' Fear
+	--L[248396] = "Blight" -- short for Soulblight
+	--L[251570] = "Bomb" -- short for Soulbomb
+	--L[250669] = "Burst" -- short for Soulburst
+	--L[257966] = "Sentence" -- short for Sentence of Sargeras
+
 	L.stage2_early = "让大海的怒涛洗刷这腐蚀吧！"
 	L.stage3_early = "没有希望。只有痛苦。痛苦！"
 

@@ -21,6 +21,7 @@ local spearCounter = 1
 local finalDoomCounter = 1
 local lifeForceCounter = 1
 local lifeForceNeeded = 4
+local shouldAnnounceEnergy = true
 local engageTime = 0
 
 local timersNormal = {
@@ -152,6 +153,7 @@ end
 function mod:GetOptions()
 	return {
 		"warp_in",
+		"infobox",
 		250048, -- Life Force
 		248861, -- Spear of Doom
 		{248332, "SAY", "FLASH"}, -- Rain of Fel
@@ -195,6 +197,7 @@ function mod:OnEngage()
 	spearCounter = 1
 	finalDoomCounter = 1
 	lifeForceCounter = 1
+	shouldAnnounceEnergy = true
 
 	engageTime = GetTime()
 	self:StartWaveTimer("top", 1) -- Top wave spawns
@@ -211,7 +214,14 @@ function mod:OnEngage()
 		self:CDBar(249121, timers[249121][finalDoomCounter], CL.count:format(self:SpellName(249121), finalDoomCounter)) -- Final Doom
 	end
 
-	self:RegisterUnitEvent("UNIT_POWER", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss2")
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss2")
+	self:OpenInfo("infobox", self.displayName)
+	self:SetInfo("infobox", 1, self:SpellName(7850)) -- Health
+	self:SetInfo("infobox", 2, "100%")
+	self:SetInfoBar("infobox", 1, 1)
+	self:SetInfo("infobox", 3, self:SpellName(185188)) -- Energy
+	self:SetInfo("infobox", 4, 0)
 end
 
 --------------------------------------------------------------------------------
@@ -251,12 +261,22 @@ function mod:StartWaveTimer(lane, count)
 	self:ScheduleTimer("StartWaveTimer", length, lane, count+1)
 end
 
-function mod:UNIT_POWER(unit)
+function mod:UNIT_HEALTH_FREQUENT(unit)
+	local hp = UnitHealth(unit)
+	local max = UnitHealthMax(unit)
+	local percent = hp/max
+	self:SetInfo("infobox", 2, ("%s/%s (%.0f%%)"):format(self:AbbreviateNumber(hp), self:AbbreviateNumber(max), percent*100))
+	self:SetInfoBar("infobox", 1, percent)
+end
+
+function mod:UNIT_POWER_FREQUENT(unit)
 	local power = UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
-	if power >= 80 then
+	if power >= 80 and shouldAnnounceEnergy then
+		shouldAnnounceEnergy = nil
 		self:Message(250048, "Neutral", "Info", L.lifeforce_casts:format(CL.soon:format(self:SpellName(250048)), lifeForceCounter, lifeForceNeeded)) -- Life Force
-		self:UnregisterUnitEvent("UNIT_POWER", unit)
 	end
+	self:SetInfo("infobox", 4, ("%.0f"):format(power))
+	self:SetInfoBar("infobox", 3, power/100)
 end
 
 function mod:LifeForce(args)
@@ -265,7 +285,7 @@ function mod:LifeForce(args)
 end
 
 function mod:LifeForceSuccess()
-	self:RegisterUnitEvent("UNIT_POWER", nil, "boss1")
+	shouldAnnounceEnergy = true
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
