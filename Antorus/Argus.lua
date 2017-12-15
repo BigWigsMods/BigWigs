@@ -717,7 +717,9 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message(-17077, "Attention", "Alert", nil, "inv_sword_2h_pandaraid_d_01")
-			self:Bar(-17077, 40, nil, "inv_sword_2h_pandaraid_d_01")
+			if not self:Easy() then
+				self:Bar(-17077, 40, nil, "inv_sword_2h_pandaraid_d_01")
+			end
 		end
 	end
 end
