@@ -465,7 +465,7 @@ end
 
 --[[ Stage 2 ]]--
 function mod:GolgannethsWrath()
-	if not stage == 2 then -- We already set stage 2 from the yell
+	if stage ~= 2 then -- We already set stage 2 from the yell
 		stage = 2
 		self:Message("stages", "Positive", "Long", CL.stage:format(stage), false)
 		self:StopBar(CL.count:format(self:SpellName(248165), coneOfDeathCounter)) -- Cone of Death
@@ -627,7 +627,7 @@ function mod:TemporalBlast()
 	if self:Mythic() then -- Skips Stage 3
 		self:Bar("stages", 55.8, 257619, 257619) -- Gift of the Lifebinder
 	else
-		if not stage == 3 then
+		if stage ~= 3 then
 			stage = 3
 			wipe(vulnerabilityCollector)
 			scanningTargets = nil
