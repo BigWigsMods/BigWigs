@@ -30,6 +30,16 @@ if L then
 	--L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding."
 end
 
+L = BigWigs:NewBossLocale("Aggramar", "esES") or BigWigs:NewBossLocale("Aggramar", "esMX")
+if L then
+	--L.wave_cleared = "Wave %d Cleared!" -- Wave 1 Cleared!
+
+	--L.track_ember = "Ember of Taeshalach Tracker"
+	--L.track_ember_desc = "Display messages for each Ember of Taeshalach death."
+
+	--L.custom_off_ember_marker_desc = "Mark Ember of Taeshalach with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cff33ff99Mythic: This will only mark adds in the current wave and above 45 energy.|r"
+end
+
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "esES") or BigWigs:NewBossLocale("The Coven of Shivarra", "esMX")
 if L then
 	--L.torment_of_the_titans_desc = "The Shivarra will force the titan souls to use their abilities against the players."

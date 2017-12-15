@@ -30,6 +30,16 @@ if L then
 	L.bomb_explosions_desc = "替靈魂驟發與靈魂炸彈顯示爆炸計時。"
 end
 
+L = BigWigs:NewBossLocale("Aggramar", "zhTW")
+if L then
+	--L.wave_cleared = "Wave %d Cleared!" -- Wave 1 Cleared!
+
+	--L.track_ember = "Ember of Taeshalach Tracker"
+	--L.track_ember_desc = "Display messages for each Ember of Taeshalach death."
+
+	--L.custom_off_ember_marker_desc = "Mark Ember of Taeshalach with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cff33ff99Mythic: This will only mark adds in the current wave and above 45 energy.|r"
+end
+
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "zhTW")
 if L then
 	L.torment_of_the_titans_desc = "希瓦拉巫女會迫使泰坦的靈魂使用他們的能力對付玩家。"
