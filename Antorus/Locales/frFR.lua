@@ -7,14 +7,14 @@ if L then
 	L.custom_off_always_show_combined = "Toujours afficher les messages Explosion d'âme et Bombe d'âme combinés"
 	L.custom_off_always_show_combined_desc = "Le message combiné ne s'affichera pas si vous êtes vous-même affecté par |cff71d5ffExplosion d'âme|r ou |cff71d5ffBombe d'âme|r. Activez cette option pour toujours avoir le message combiné, même si vous êtes affecté. |cff33ff99Pratique pour les chefs de raid.|r"
 
-	--L.fear_help = "Sargeras' Fear Combination"
-	--L.fear_help_desc = "Say a special message if you're afflicted by |cff71d5ffSargeras' Fear|r and |cff71d5ffSoulblight|r/|cff71d5ffSoulburst|r/|cff71d5ffSoulbomb|r/|cff71d5ffSentence of Sargeras|r."
+	L.fear_help = "Combinaison Peur de Sargeras"
+	L.fear_help_desc = "Fait dire à votre personnage un message spécial si vous subissez |cff71d5ffPeur de Sargeras|r et |cff71d5ffFléau de l'âme|r/|cff71d5ffExplosion d'âme|r/|cff71d5ffBombe d'âme|r/|cff71d5ffCondamnation de Sargeras|r."
 
-	--L[257931] = "Fear" -- short for Sargeras' Fear
-	--L[248396] = "Blight" -- short for Soulblight
-	--L[251570] = "Bomb" -- short for Soulbomb
-	--L[250669] = "Burst" -- short for Soulburst
-	--L[257966] = "Sentence" -- short for Sentence of Sargeras
+	L[257931] = "Peur" -- short for Sargeras' Fear
+	L[248396] = "Fléau" -- short for Soulblight
+	L[251570] = "Bombe" -- short for Soulbomb
+	L[250669] = "Explosion" -- short for Soulburst
+	L[257966] = "Condamnation" -- short for Sentence of Sargeras
 
 	L.stage2_early = "Que la fureur de la mer engloutisse la corruption !"
 	L.stage3_early = "Aucun espoir, mais de la souffrance... et rien que de la souffrance !" -- à vérifier
@@ -32,12 +32,12 @@ end
 
 L = BigWigs:NewBossLocale("Aggramar", "frFR")
 if L then
-	--L.wave_cleared = "Wave %d Cleared!" -- Wave 1 Cleared!
+	L.wave_cleared = "Vague %d terminée !" -- Wave 1 Cleared!
 
-	--L.track_ember = "Ember of Taeshalach Tracker"
-	--L.track_ember_desc = "Display messages for each Ember of Taeshalach death."
+	L.track_ember = "Suivi des Braises de Taeshalach"
+	L.track_ember_desc = "Affiche un message à chaque mort d'une Braise de Taeshalach."
 
-	--L.custom_off_ember_marker_desc = "Mark Ember of Taeshalach with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cff33ff99Mythic: This will only mark adds in the current wave and above 45 energy.|r"
+	L.custom_off_ember_marker_desc = "Marque les Braises de Taeshalach avec {rt1}{rt2}{rt3}{rt4}{rt5}. Nécessite d'être assistant ou chef de raid.\n|cff33ff99Mythique : ceci ne marquera que les adds de la vague actuelle qui ont plus de 45 d'énergie.|r"
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "frFR")
