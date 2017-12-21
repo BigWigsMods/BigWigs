@@ -10,7 +10,7 @@ local mod, CL = BigWigs:NewBoss("Portal Keeper Hasabel", nil, 1985, 1712)
 if not mod then return end
 mod:RegisterEnableMob(122104)
 mod.engageId = 2064
-mod.respawnTime = 33
+mod.respawnTime = 35
 
 --------------------------------------------------------------------------------
 -- Locals
