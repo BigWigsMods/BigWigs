@@ -1557,7 +1557,7 @@ end
 do
 	local badBar = "Attempted to start bar '%q' without a valid time."
 	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
-	local newBar = "New timer for '%q' with a placement of %d and a timer of %.2f on %d running ".. BigWigsLoader:GetReleaseString() ..", tell the authors."
+	local newBar = "New timer for '%q' with a placement of %d and a timer of %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 
 	--- Display a bar.
 	-- @param key the option key
