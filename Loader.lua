@@ -8,7 +8,7 @@ local bwFrame = CreateFrame("Frame")
 --
 
 local BIGWIGS_VERSION = 86
-local BIGWIGS_RELEASE_STRING = ""
+local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
 do
@@ -39,6 +39,7 @@ do
 		releaseString = L.alphaRelease:format(BIGWIGS_VERSION, myGitHash)
 	end
 	BIGWIGS_RELEASE_STRING = releaseString
+	BIGWIGS_VERSION_STRING = ("%d-%s"):format(BIGWIGS_VERSION, myGitHash)
 	-- Format is "V:version-hash"
 	versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash)
 	versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash)
@@ -1305,6 +1306,10 @@ end
 
 function public:GetReleaseString()
 	return BIGWIGS_RELEASE_STRING
+end
+
+function public:GetVersionString()
+	return BIGWIGS_VERSION_STRING
 end
 
 function public:GetZoneMenus()
