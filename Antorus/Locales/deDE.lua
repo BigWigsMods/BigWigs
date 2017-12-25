@@ -10,23 +10,23 @@ if L then
 	--L.fear_help = "Sargeras' Fear Combination"
 	--L.fear_help_desc = "Say a special message if you're afflicted by |cff71d5ffSargeras' Fear|r and |cff71d5ffSoulblight|r/|cff71d5ffSoulburst|r/|cff71d5ffSoulbomb|r/|cff71d5ffSentence of Sargeras|r."
 
-	--L[257931] = "Fear" -- short for Sargeras' Fear
-	--L[248396] = "Blight" -- short for Soulblight
-	--L[251570] = "Bomb" -- short for Soulbomb
-	--L[250669] = "Burst" -- short for Soulburst
-	--L[257966] = "Sentence" -- short for Sentence of Sargeras
+	--L[257931] = "Furcht" -- short for Sargeras' Fear
+	--L[248396] = "Seuche" -- short for Soulblight
+	--L[251570] = "Bombe" -- short for Soulbomb
+	--L[250669] = "Explosion" -- short for Soulburst
+	--L[257966] = "Urteil" -- short for Sentence of Sargeras
 
 	--L.stage2_early = "Let the fury of the sea wash away this corruption!"
 	--L.stage3_early = "No hope. Just pain. Only pain!"
 
 	--L.gifts = "Gifts: %s (Sky), %s (Sea)"
-	--L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tBurst:%s" -- short for Soulburst
-	--L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBomb:%s" -- short for Soulbomb
+	--L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tExplosion:%s" -- short for Soulburst
+	--L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBombe:%s" -- short for Soulbomb
 
-	--L.sky_say = "{rt5} Crit/Mast" -- short for Critical Strike/Mastery (stats)
-	--L.sea_say = "{rt6} Haste/Versa" -- short for Haste/Versatility (stats)
+	--L.sky_say = "{rt5} Krit/Meist" -- short for Critical Strike/Mastery (stats)
+	--L.sea_say = "{rt6} Tempo/Viels" -- short for Haste/Versatility (stats)
 
-	--L.bomb_explosions = "Bomb Explosions"
+	--L.bomb_explosions = "Bombenexplosionen"
 	--L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding."
 end
 
@@ -34,10 +34,10 @@ L = BigWigs:NewBossLocale("Aggramar", "deDE")
 if L then
 	--L.wave_cleared = "Wave %d Cleared!" -- Wave 1 Cleared!
 
-	--L.track_ember = "Ember of Taeshalach Tracker"
-	--L.track_ember_desc = "Display messages for each Ember of Taeshalach death."
+	--L.track_ember = "Funke von Taeshalach Tracker"
+	--L.track_ember_desc = "Display messages for each Funke von Taeshalach death."
 
-	--L.custom_off_ember_marker_desc = "Mark Ember of Taeshalach with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cff33ff99Mythic: This will only mark adds in the current wave and above 45 energy.|r"
+	--L.custom_off_ember_marker_desc = "Mark Funke von Taeshalach with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cff33ff99Mythic: This will only mark adds in the current wave and above 45 energy.|r"
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "deDE")
@@ -55,16 +55,16 @@ end
 
 L = BigWigs:NewBossLocale("Eonar the Life-Binder", "deDE")
 if L then
-	--L.warp_in_desc = "Shows timers and messages for each wave, along with any special adds in the wave."
+	--L.warp_in_desc = "Zeigt Timer und Nachrichten für jede Welle sowie spezielle Adds in der Welle an."
 
 	--L.top_lane = "Top"
 	--L.mid_lane = "Mid"
 	--L.bot_lane = "Bot"
 
-	--L.purifier = "Purifier" -- Fel-Powered Purifier
-	--L.destructor = "Destructor" -- Fel-Infused Destructor
-	--L.obfuscator = "Obfuscator" -- Fel-Charged Obfuscator
-	--L.bats = "Fel Bats"
+	--L.purifier = "Läuterer" -- Fel-Powered Purifier
+	--L.destructor = "Zerstörer" -- Fel-Infused Destructor
+	--L.obfuscator = "Verdunkler" -- Fel-Charged Obfuscator
+	--L.bats = "Teufelsfledermäuse"
 end
 
 L = BigWigs:NewBossLocale("Portal Keeper Hasabel", "deDE")
