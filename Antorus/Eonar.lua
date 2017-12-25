@@ -219,7 +219,7 @@ function mod:OnEngage()
 	self:OpenInfo("infobox", self.displayName)
 	self:SetInfo("infobox", 1, self:SpellName(7850)) -- Health
 	self:SetInfo("infobox", 2, "100%")
-	self:SetInfoBar("infobox", 1, 1)
+	self:SetInfoBar("infobox", 1, 1, 0, .7, 0, 0.3) -- green
 	self:SetInfo("infobox", 3, self:SpellName(185188)) -- Energy
 	self:SetInfo("infobox", 4, 0)
 end
@@ -266,7 +266,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local max = UnitHealthMax(unit)
 	local percent = hp/max
 	self:SetInfo("infobox", 2, ("%s/%s (%.0f%%)"):format(self:AbbreviateNumber(hp), self:AbbreviateNumber(max), percent*100))
-	self:SetInfoBar("infobox", 1, percent)
+	self:SetInfoBar("infobox", 1, percent, 0, .7, 0, 0.3) -- green
 end
 
 function mod:UNIT_POWER_FREQUENT(unit)
@@ -276,7 +276,7 @@ function mod:UNIT_POWER_FREQUENT(unit)
 		self:Message(250048, "Neutral", "Info", CL.soon:format(L.lifeforce_casts:format(self:SpellName(250048), lifeForceCounter, lifeForceNeeded))) -- Life Force (n/4) soon!
 	end
 	self:SetInfo("infobox", 4, ("%.0f"):format(power))
-	self:SetInfoBar("infobox", 3, power/100)
+	self:SetInfoBar("infobox", 3, power/100, .7, .7, 0, 0.3) -- yellow
 end
 
 function mod:LifeForce(args)
