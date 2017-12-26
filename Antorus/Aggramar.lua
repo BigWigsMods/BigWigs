@@ -274,7 +274,8 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 				self:UnregisterTargetEvents()
 				trackingEmber = nil
 			else -- Start the new wave timer
-				self:CDBar(245911, waveTimeCollector[currentEmberWave+1], CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
+				local emberTimer = floor(waveTimeCollector[currentEmberWave+1] - GetTime())
+				self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), currentEmberWave+1)) -- Wrought in Flame (x)
 			end
 			currentEmberWave = currentEmberWave + 1
 		end

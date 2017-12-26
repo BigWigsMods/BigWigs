@@ -12,8 +12,8 @@ if L then
 
 	L[257931] = "恐懼" -- short for Sargeras' Fear
 	L[248396] = "靈魂之疫" -- short for Soulblight
-	L[251570] = "靈魂炸彈" -- short for Soulbomb
-	L[250669] = "靈魂驟發" -- short for Soulburst
+	L[251570] = "炸彈" -- short for Soulbomb
+	L[250669] = "驟發" -- short for Soulburst
 	L[257966] = "判決" -- short for Sentence of Sargeras
 
 	L.stage2_early = "讓大海的怒濤洗淨所有的腐化吧！"
@@ -32,12 +32,12 @@ end
 
 L = BigWigs:NewBossLocale("Aggramar", "zhTW")
 if L then
-	--L.wave_cleared = "Wave %d Cleared!" -- Wave 1 Cleared!
+	L.wave_cleared = "第%d波清理完畢！" -- Wave 1 Cleared!
 
-	--L.track_ember = "Ember of Taeshalach Tracker"
-	--L.track_ember_desc = "Display messages for each Ember of Taeshalach death."
+	L.track_ember = "泰夏拉克燼火狀態追蹤"
+	L.track_ember_desc = "替每個泰夏拉克燼火的死亡顯示訊息。"
 
-	--L.custom_off_ember_marker_desc = "Mark Ember of Taeshalach with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cff33ff99Mythic: This will only mark adds in the current wave and above 45 energy.|r"
+	L.custom_off_ember_marker_desc = "標記泰夏拉克燼火為{rt1}{rt2}{rt3}{rt4}{rt5}，需要權限。\n|cff33ff99傳奇模式：只會標記當前這波小怪中能量值超過45的目標。|r"
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "zhTW")

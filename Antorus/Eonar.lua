@@ -51,10 +51,10 @@ local timersNormal = {
 
 local timersHeroic = {
 	--[[ Rain of Fel ]]--
-	[248332] = {15, 38.5, 10, 45, 34.5, 19, 19, 29, 44.5, 35, 97},
+	[248332] = {15, 38.5, 10, 45, 34.5, 19, 19, 29, 44.5, 35, 97, 99.5},
 
 	--[[ Spear of Doom ]] --
-	[248861] = {29.7, 59.6, 64.5, 40.3, 84.6, 35.2, 65.7},
+	[248861] = {29.7, 59.6, 64.5, 40.3, 84.6, 35.2, 65.7, 35.1, 64.3},
 
 	--[[ Waves ]]-- -- XXX Check these after implementation
 	["top"] = {
@@ -219,7 +219,7 @@ function mod:OnEngage()
 	self:OpenInfo("infobox", self.displayName)
 	self:SetInfo("infobox", 1, self:SpellName(7850)) -- Health
 	self:SetInfo("infobox", 2, "100%")
-	self:SetInfoBar("infobox", 1, 1)
+	self:SetInfoBar("infobox", 1, 1, 0, .7, 0, 0.3) -- green
 	self:SetInfo("infobox", 3, self:SpellName(185188)) -- Energy
 	self:SetInfo("infobox", 4, 0)
 end
@@ -266,21 +266,21 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local max = UnitHealthMax(unit)
 	local percent = hp/max
 	self:SetInfo("infobox", 2, ("%s/%s (%.0f%%)"):format(self:AbbreviateNumber(hp), self:AbbreviateNumber(max), percent*100))
-	self:SetInfoBar("infobox", 1, percent)
+	self:SetInfoBar("infobox", 1, percent, 0, .7, 0, 0.3) -- green
 end
 
 function mod:UNIT_POWER_FREQUENT(unit)
 	local power = UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
 	if power >= 80 and shouldAnnounceEnergy then
 		shouldAnnounceEnergy = nil
-		self:Message(250048, "Neutral", "Info", L.lifeforce_casts:format(CL.soon:format(self:SpellName(250048)), lifeForceCounter, lifeForceNeeded)) -- Life Force
+		self:Message(250048, "Neutral", "Info", CL.soon:format(L.lifeforce_casts:format(self:SpellName(250048), lifeForceCounter, lifeForceNeeded))) -- Life Force (n/4) soon!
 	end
 	self:SetInfo("infobox", 4, ("%.0f"):format(power))
-	self:SetInfoBar("infobox", 3, power/100)
+	self:SetInfoBar("infobox", 3, power/100, .7, .7, 0, 0.3) -- yellow
 end
 
 function mod:LifeForce(args)
-	self:Message(args.spellId, "Positive", "Long", L.lifeforce_casts:format(CL.casting:format(args.spellName), lifeForceCounter, lifeForceNeeded))
+	self:Message(args.spellId, "Positive", "Long", CL.casting:format(L.lifeforce_casts:format(args.spellName, lifeForceCounter, lifeForceNeeded)))
 	lifeForceCounter = lifeForceCounter + 1
 end
 

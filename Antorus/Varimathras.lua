@@ -212,6 +212,7 @@ do
 
 	function mod:NecroticEmbraceRemoved(args)
 		if self:Me(args.destGUID) then
+			self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
 			isOnMe = nil
 			self:CancelSayCountdown(args.spellId)
 			self:CloseProximity(args.spellId)

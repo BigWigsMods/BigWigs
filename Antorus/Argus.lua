@@ -72,7 +72,7 @@ local timersMythic = {
 		-- Sargeras Gaze
 		[258068] = {33.4, 75, 70, 53, 53},
 		-- Sentence of Sargeras
-		[257966] = {67.4, 57.0, 60.0, 53, 53},
+		[257966] = {53, 57.0, 60.0, 53, 53},
 		--Initialization Sequence
 		[256388] = {30, 47.5, 46, 45.5, 52.5, 52.5},
 		-- Edge of Annihilation
@@ -754,8 +754,6 @@ function mod:EndofAllThings(args)
 		sentenceofSargerasCount = 1
 		sentenceCast = nil
 		self:Bar(258068, timers[stage][258068][sargerasGazeCount], CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
-		self:Bar(257966, timers[stage][257966][sentenceofSargerasCount], CL.count:format(self:SpellName(257966), sentenceofSargerasCount)) -- Sentence of Sargeras
-		self:ScheduleTimer("SentenceCheck", timers[stage][257966][sentenceofSargerasCount]+1)
 		self:StartScytheTimer(timers[stage][258834][annihilationCount])
 	end
 end
@@ -770,6 +768,8 @@ function mod:EndofAllThingsInterupted(args)
 
 		if self:Mythic() then
 			self:Bar(258838, 5.1) -- Soulrending Scythe
+			self:Bar(257966, timers[stage][257966][sentenceofSargerasCount], CL.count:format(self:SpellName(257966), sentenceofSargerasCount)) -- Sentence of Sargeras
+			self:ScheduleTimer("SentenceCheck", timers[stage][257966][sentenceofSargerasCount]+1)
 		else
 			if self:Easy() then
 				self:Bar(248499, 5.1) -- Sweeping Scythe

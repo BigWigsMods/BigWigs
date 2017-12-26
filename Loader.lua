@@ -7,8 +7,8 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 85
-local BIGWIGS_RELEASE_STRING = ""
+local BIGWIGS_VERSION = 86
+local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
 do
@@ -39,6 +39,7 @@ do
 		releaseString = L.alphaRelease:format(BIGWIGS_VERSION, myGitHash)
 	end
 	BIGWIGS_RELEASE_STRING = releaseString
+	BIGWIGS_VERSION_STRING = ("%d-%s"):format(BIGWIGS_VERSION, myGitHash)
 	-- Format is "V:version-hash"
 	versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash)
 	versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash)
@@ -864,8 +865,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "16995" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.3.13" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "17026" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.3.14" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -1307,6 +1308,10 @@ function public:GetReleaseString()
 	return BIGWIGS_RELEASE_STRING
 end
 
+function public:GetVersionString()
+	return BIGWIGS_VERSION_STRING
+end
+
 function public:GetZoneMenus()
 	return menus
 end
@@ -1447,3 +1452,11 @@ SlashCmdList.BigWigsVersion = function()
 end
 
 BigWigsLoader = public -- Set global
+
+-- XXX temp
+if not EJ_GetSectionInfo then
+	function EJ_GetSectionInfo(id)
+		local tbl = C_EncounterJournal.GetSectionInfo(id)
+		return tbl.title, tbl.description, tbl.headerType, tbl.abilityIcon, tbl.creatureDisplayID, tbl.siblingSectionID, tbl.filteredByDifficulty, tbl.link, tbl.startsOpen, tbl.uiModelSceneID
+	end
+end
