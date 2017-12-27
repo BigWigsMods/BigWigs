@@ -5,7 +5,7 @@ if L then
 	L.combinedBurstAndBomb_desc = "|cff71d5ffSeelenbomben|r werden immer in Kombination mit |cff71d5ffSeelenexplosionen|r eingesetzt. Aktiviere dies Option, um diese 2 Nachrichten in einer zu vereinen."
 
 	L.custom_off_always_show_combined = "Immer die zusammengefasste Nachricht für Seelenexplosion und Seelenbombe anzeigen."
-	L.custom_off_always_show_combined_desc = "Die zusammengefasste Nachricht wird nicht angezeigt wenn du die |cff71d5ffSeelenbombe|r oder die |cff71d5ffSeelenexplosion|r erhältst. Aktivier diese Option, damit immer die zusammengefasste Nachricht angezeigt wird, selbst wenn du betroffen bist. |cff33ff99Nützlich für Schlachtzugsleiter.|r"
+	L.custom_off_always_show_combined_desc = "Die zusammengefasste Nachricht wird nicht angezeigt, wenn du die |cff71d5ffSeelenbombe|r oder die |cff71d5ffSeelenexplosion|r erhältst. Aktiviere diese Option, damit immer die zusammengefasste Nachricht angezeigt wird, selbst wenn du betroffen bist. |cff33ff99Nützlich für Schlachtzugsleiter.|r"
 
 	L.fear_help = "Kombination Sargeras' Furcht"
 	L.fear_help_desc = "Sage eine spezielle Nachricht, wenn du von |cff71d5ffSargeras' Furcht|r and |cff71d5ffSeelenseuche|r/|cff71d5ffSeelenexplosion|r/|cff71d5ffSeelenbombe|r/|cff71d5ffUrteil des Sargeras|r betroffen bist."
@@ -37,7 +37,7 @@ if L then
 	L.track_ember = "Tracker Funke von Taeshalach"
 	L.track_ember_desc = "Zeigt Nachrichten für jeden Tod einer Funke von Taeshalach an."
 
-	L.custom_off_ember_marker_desc = "Markiert Funken von Taeshalach with {rt1}{rt2}{rt3}{rt4}{rt5}, benötigt Schlachtzugsleiter oder Assistent.\n|cff33ff99Mythisch: Dies markiert nur Adds in der momentanen Welle bei mehr als 45 Energie.|r"
+	L.custom_off_ember_marker_desc = "Markiert Funken von Taeshalach mit {rt1}{rt2}{rt3}{rt4}{rt5}, benötigt Schlachtzugsleiter oder Assistent.\n|cff33ff99Mythisch: Dies markiert nur Adds in der momentanen Welle bei mehr als 45 Energie.|r"
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "deDE")
@@ -72,7 +72,7 @@ if L then
 	L.custom_on_stop_timers = "Fähigkeitsleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Hasabel nutzt zufällig eine nicht abklingende Fähigkeit. Falls diese Option aktiviert ist, werden die Leisten für diese Fähigkeiten auf dem Bildschirm angezeigt."
 	L.custom_on_filter_platforms = "Nebenplattform-Warnungen und -Leisten ausblenden"
-	L.custom_on_filter_platforms_desc = "Entfernt  unnötige Nachrichten und Leisten, wenn du nicht auf einer Nebenplattform bist. Es werden immer Leisten und Warnungen von der Hauptplattform: Nexus angezeigt."
+	L.custom_on_filter_platforms_desc = "Entfernt unnötige Nachrichten und Leisten, wenn du nicht auf einer Nebenplattform bist. Es werden immer Leisten und Warnungen von der Hauptplattform: Nexus angezeigt."
 	L.worldExplosion_desc = "Zeigt einen Timer für die Explosion der kollabierenden Welt."
 	L.platform_active = "%s Aktiv!" -- Platform: Xoroth Active!
 	L.add_killed = "%s getötet!"
@@ -80,7 +80,7 @@ end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "deDE")
 if L then
-	L.empowered = "(M) %s" -- (E) Ruiner
+	L.empowered = "(M) %s" -- (E) Ruiner, Deutsch: Mächtig
 	L.gains = "Kin'garoth erhält %s" -- Kin'garoth gains Empowered Ruiner
 end
 
