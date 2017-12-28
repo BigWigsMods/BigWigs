@@ -117,8 +117,14 @@ local spells = setmetatable({}, {__index =
 		local value
 		if key > 0 then
 			value = GetSpellInfo(key)
+			if not value then
+				core:Print(format("An invalid spell id (%d) is being used in a boss module.", key))
+			end
 		else
 			value = EJ_GetSectionInfo(-key)
+			if not value then
+				core:Print(format("An invalid spell id (%d) is being used in a boss module.", key))
+			end
 		end
 		self[key] = value
 		return value
