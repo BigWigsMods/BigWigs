@@ -68,15 +68,15 @@ local timersMythic = {
 	},
 	[4] = {
 		-- Tortured Rage
-		[257296] = {60, 40.0, 50.0, 30.0, 35.0, 10.0, 8.0, 35.0, 10.0, 8.0, 35.0},
+		[257296] = {40, 40, 50, 30, 35, 10, 8, 35, 10, 8, 35},
 		-- Sargeras Gaze
-		[258068] = {33.4, 75, 70, 53, 53},
+		[258068] = {23, 75, 70, 53, 53},
 		-- Sentence of Sargeras
 		[257966] = {53, 57.0, 60.0, 53, 53},
 		--Initialization Sequence
 		[256388] = {30, 47.5, 46, 45.5, 52.5, 52.5},
 		-- Edge of Annihilation
-		[258834] = {19.5, 5, 90, 5, 45, 5}
+		[258834] = {5, 5, 90, 5, 45, 5}
 	}
 }
 local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
@@ -748,14 +748,6 @@ end
 function mod:EndofAllThings(args)
 	self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 15)
-	if self:Mythic() then
-		annihilationCount = 1
-		sargerasGazeCount = 1
-		sentenceofSargerasCount = 1
-		sentenceCast = nil
-		self:Bar(258068, timers[stage][258068][sargerasGazeCount], CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
-		self:StartScytheTimer(timers[stage][258834][annihilationCount])
-	end
 end
 
 function mod:EndofAllThingsInterupted(args)
@@ -767,7 +759,13 @@ function mod:EndofAllThingsInterupted(args)
 		sweepingScytheCounter = 1
 
 		if self:Mythic() then
-			self:Bar(258838, 5.1) -- Soulrending Scythe
+			annihilationCount = 1
+			sargerasGazeCount = 1
+			sentenceofSargerasCount = 1
+			sentenceCast = nil
+			self:Bar(258838, 3.8) -- Soulrending Scythe
+			self:Bar(258068, timers[stage][258068][sargerasGazeCount], CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
+			self:StartScytheTimer(timers[stage][258834][annihilationCount])
 			self:Bar(257966, timers[stage][257966][sentenceofSargerasCount], CL.count:format(self:SpellName(257966), sentenceofSargerasCount)) -- Sentence of Sargeras
 			self:ScheduleTimer("SentenceCheck", timers[stage][257966][sentenceofSargerasCount]+1)
 		else
@@ -779,8 +777,8 @@ function mod:EndofAllThingsInterupted(args)
 			self:Bar(251570, 20.1) -- Soulbomb
 			self:Bar(250669, 20.1) -- Soulburst
 		end
-		self:Bar(257296, self:Mythic() and 40 or 11) -- Tortured Rage
-		self:Bar(256388, self:Mythic() and 30 or 18.5, L.countx:format(self:SpellName(256388), initializationCount)) -- Initialization Sequence
+		self:Bar(257296, self:Mythic() and timers[stage][257296][torturedRageCounter] or 11) -- Tortured Rage
+		self:Bar(256388, self:Mythic() and timers[stage][256388][initializationCount] or 18.5, L.countx:format(self:SpellName(256388), initializationCount)) -- Initialization Sequence
 	end
 end
 
