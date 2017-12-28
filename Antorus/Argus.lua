@@ -819,7 +819,7 @@ function mod:SargerasRage(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(258068, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 		self:Flash(258068)
-		self:Say(258068, self:SpellName(6621)) -- Rage
+		self:Say(258068, self:SpellName(6612)) -- Rage
 	end
 end
 
