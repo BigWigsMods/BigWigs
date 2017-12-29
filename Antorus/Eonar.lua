@@ -38,8 +38,7 @@ local timersLFR = {
 	["bot"] = {
 		{50, "destructor"},
 		{175, "destructor"}
-	},
-	["air"] = {} -- No bats in LFR
+	}
 }
 
 local timersNormal = {
@@ -210,7 +209,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or mod:LFR() and timersLFR or timersNormal
+	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or self:LFR() and timersLFR or timersNormal
 	rainofFelCounter = 1
 	spearCounter = 1
 	finalDoomCounter = 1
@@ -222,9 +221,9 @@ function mod:OnEngage()
 	self:StartWaveTimer("top", 1) -- Top wave spawns
 	self:StartWaveTimer("mid", 1) -- Middle wave spawns
 	self:StartWaveTimer("bot", 1) -- Bottom wave spawns
-	self:StartWaveTimer("air", 1) -- Air wave spawns
 
 	if not self:LFR() then
+		self:StartWaveTimer("air", 1) -- Air wave spawns
 		self:Bar(248332, timers[248332][rainofFelCounter]) -- Rain of Fel
 	end
 
