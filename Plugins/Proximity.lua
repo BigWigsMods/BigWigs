@@ -403,7 +403,7 @@ do
 			local _, _, _, tarMapId = UnitPosition(n)
 			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
 				anyoneClose = anyoneClose + 1
-				if anyoneClose < 4 then
+				if anyoneClose < 6 then
 					local player = plugin:UnitName(n)
 					tinsert(tooClose, coloredNames[player])
 				end
