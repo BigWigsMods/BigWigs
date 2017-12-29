@@ -215,6 +215,7 @@ function mod:OnEngage()
 	spearCounter = 1
 	finalDoomCounter = 1
 	lifeForceCounter = 1
+	lifeForceNeeded = mod:LFR() and 3 or 4
 	shouldAnnounceEnergy = true
 
 	engageTime = GetTime()
