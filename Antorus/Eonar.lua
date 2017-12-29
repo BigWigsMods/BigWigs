@@ -20,9 +20,27 @@ local rainofFelCounter = 1
 local spearCounter = 1
 local finalDoomCounter = 1
 local lifeForceCounter = 1
-local lifeForceNeeded = 4
+local lifeForceNeeded = mod:LFR() and 3 or 4
 local shouldAnnounceEnergy = true
 local engageTime = 0
+
+local timersLFR = {
+	--[[ Waves ]]--
+	["top"] = {
+		{88, "destructor"},
+        	{218, "destructor"}
+	},
+	["mid"] = {
+		{10, "destructor"},
+		{135, "destructor"},
+        	{263, "destructor"}
+	},
+	["bot"] = {
+		{50, "destructor"},
+		{175, "destructor"}
+	},
+	["air"] = {} -- No bats in LFR
+}
 
 local timersNormal = {
 	--[[ Rain of Fel ]]--
@@ -120,7 +138,7 @@ local timersMythic = {
 	}
 }
 
-local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or timersNormal
+local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or mod:LFR() and timersLFR or timersNormal
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -192,7 +210,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or timersNormal
+	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or mod:LFR() and timersLFR or timersNormal
 	rainofFelCounter = 1
 	spearCounter = 1
 	finalDoomCounter = 1
@@ -205,7 +223,9 @@ function mod:OnEngage()
 	self:StartWaveTimer("bot", 1) -- Bottom wave spawns
 	self:StartWaveTimer("air", 1) -- Air wave spawns
 
-	self:Bar(248332, timers[248332][rainofFelCounter]) -- Rain of Fel
+	if not self:LFR() then
+		self:Bar(248332, timers[248332][rainofFelCounter]) -- Rain of Fel
+	end
 
 	if self:Heroic() or self:Mythic() then
 		self:CDBar(248861, timers[248861][spearCounter]) -- Spear of Doom
