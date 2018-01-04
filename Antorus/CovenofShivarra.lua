@@ -163,10 +163,10 @@ local updateInfoBox
 do
 	local debuffName = mod:SpellName(245586) -- Chilled Blood
 	local tormentMarkup = {
-		["AmanThul"] = {color = "|cff81c784", text = L.tormentHeal},
-		["Norgannon"] = {color = "|cff9575cd", text = L.tormentArmy},
-		["Khazgoroth"] = {color = "|cffe57373", text = L.tormentFlames},
-		["Golganneth"] = {color = "|cff4fc3f7", text = L.tormentLightning},
+		["AmanThul"] = {color = "|cff81c784", text = "tormentHeal"},
+		["Norgannon"] = {color = "|cff9575cd", text = "tormentArmy"},
+		["Khazgoroth"] = {color = "|cffe57373", text = "tormentFlames"},
+		["Golganneth"] = {color = "|cff4fc3f7", text = "tormentLightning"},
 	}
 	for n, id in pairs(tormentIcons) do
 		local _, _, icon = GetSpellInfo(id)
@@ -188,7 +188,7 @@ do
 			self:OpenInfo("infobox", L.nextTorment:format(""))
 
 			local nextTorment = tormentMarkup[upcomingTorments[1]]
-			local data = ("|T%s:15:15:0:0:64:64:4:60:4:60|t%s%s|r"):format(nextTorment.icon, nextTorment.color, nextTorment.text)
+			local data = ("|T%s:15:15:0:0:64:64:4:60:4:60|t%s%s|r"):format(nextTorment.icon, nextTorment.color, L[nextTorment.text])
 			self:SetInfo("infobox", 1, data)
 			bloodOffset = 2
 		end
