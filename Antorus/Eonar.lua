@@ -28,12 +28,12 @@ local timersLFR = {
 	--[[ Waves ]]--
 	["top"] = {
 		{88, "destructor"},
-        	{218, "destructor"}
+		{218, "destructor"}
 	},
 	["mid"] = {
 		{10, "destructor"},
 		{135, "destructor"},
-        	{263, "destructor"}
+		{263, "destructor"}
 	},
 	["bot"] = {
 		{50, "destructor"},
@@ -353,7 +353,7 @@ end
 function mod:Purge(args)
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(249121), finalDoomCounter-1)))
 	self:Message(249121, "Positive", "Info", CL.interrupted:format(self:SpellName(249121))) -- Final Doom
-	self:CastBar(args.spellId, 20)
+	self:CastBar(args.spellId, 30)
 end
 
 function mod:ArcaneBuildup(args)
