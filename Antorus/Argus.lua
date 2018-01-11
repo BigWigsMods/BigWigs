@@ -606,7 +606,9 @@ end
 function mod:AvatarofAggramar(args)
 	self:TargetMessage(args.spellId, args.destName, "Positive", "Long")
 	avatarCounter = avatarCounter + 1
-	self:Bar(args.spellId, 60, CL.count:format(args.spellName, avatarCounter))
+	if stage == 2 then -- Don't trigger if it procs after stage 3 RP has started
+		self:Bar(args.spellId, 60, CL.count:format(args.spellName, avatarCounter))
+	end
 end
 
 do
