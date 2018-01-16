@@ -911,6 +911,12 @@ function boss:Mythic()
 	return difficulty == 16 or difficulty == 23
 end
 
+--- Check if in a Mythic keystone difficulty instance.
+-- @return boolean
+function boss:ChallengeMode()
+	return difficulty == 8
+end
+
 --- Get the mob/npc id from a GUID.
 -- @string guid GUID of a mob/npc
 -- @return mob id
