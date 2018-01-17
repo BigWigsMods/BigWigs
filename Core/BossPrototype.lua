@@ -19,7 +19,7 @@
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
-local EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = EJ_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
+local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo
 local format, find, gsub, band = string.format, string.find, string.gsub, bit.band
@@ -102,8 +102,12 @@ local icons = setmetatable({}, {__index =
 				-- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
 				value = key + 137000
 			else
-				local _, _, _, abilityIcon = EJ_GetSectionInfo(-key)
-				value = abilityIcon or false
+				local tbl = C_EncounterJournal_GetSectionInfo(-key)
+				if not tbl then
+					core:Print(format("An invalid journal id (%d) is being used in a boss module.", key))
+				else
+					value = tbl.abilityIcon or false
+				end
 			end
 		else
 			value = "Interface\\Icons\\" .. key
@@ -121,9 +125,11 @@ local spells = setmetatable({}, {__index =
 				core:Print(format("An invalid spell id (%d) is being used in a boss module.", key))
 			end
 		else
-			value = EJ_GetSectionInfo(-key)
-			if not value then
+			local tbl = C_EncounterJournal_GetSectionInfo(-key)
+			if not tbl then
 				core:Print(format("An invalid journal id (%d) is being used in a boss module.", key))
+			else
+				value = tbl.title
 			end
 		end
 		self[key] = value

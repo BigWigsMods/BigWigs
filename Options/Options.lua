@@ -593,14 +593,19 @@ do
 						currentSize = currentSize + #link + 1
 					end
 				else
-					local _, _, _, _, _, _, _, _, link = EJ_GetSectionInfo(-o)
-					if currentSize + #link + 1 > 255 then
-						printList(channel, header, abilities)
-						wipe(abilities)
-						currentSize = 0
+					local tbl = C_EncounterJournal.GetSectionInfo(-o)
+					if not tbl or not tbl.link then
+						BigWigs:Print(("Failed to fetch the link for journal id (-)%d."):format(-o))
+					else
+						local link = tbl.link
+						if currentSize + #link + 1 > 255 then
+							printList(channel, header, abilities)
+							wipe(abilities)
+							currentSize = 0
+						end
+						abilities[#abilities + 1] = link
+						currentSize = currentSize + #link + 1
 					end
-					abilities[#abilities + 1] = link
-					currentSize = currentSize + #link + 1
 				end
 			end
 		end

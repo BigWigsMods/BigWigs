@@ -5,7 +5,7 @@ local BigWigs = BigWigs
 local names = {}
 local descriptions = {}
 
-local GetSpellInfo, GetSpellTexture, GetSpellDescription, EJ_GetSectionInfo = GetSpellInfo, GetSpellTexture, GetSpellDescription, EJ_GetSectionInfo
+local GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal_GetSectionInfo = GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal.GetSectionInfo
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
 
 -- Option bitflags
@@ -105,7 +105,12 @@ local function replaceIdWithName(msg)
 	if id > 0 then
 		return GetSpellInfo(id) or BigWigs:Print(("No spell name found for boss option using id %d."):format(id))
 	else
-		return EJ_GetSectionInfo(-id) or BigWigs:Print(("No journal name found for boss option using id %d."):format(id))
+		local tbl = C_EncounterJournal_GetSectionInfo(-id)
+		if not tbl then
+			BigWigs:Print(("No journal name found for boss option using id %d."):format(id))
+		else
+			return tbl.title
+		end
 	end
 end
 local function replaceIdWithDescription(msg)
@@ -113,8 +118,12 @@ local function replaceIdWithDescription(msg)
 	if id > 0 then
 		return GetSpellDescription(id) or BigWigs:Print(("No spell description found for boss option using id %d."):format(id))
 	else
-		local _, d = EJ_GetSectionInfo(-id)
-		return d or BigWigs:Print(("No journal description found for boss option using id %d."):format(id))
+		local tbl = C_EncounterJournal_GetSectionInfo(-id)
+		if not tbl then
+			BigWigs:Print(("No journal description found for boss option using id %d."):format(id))
+		else
+			return tbl.description
+		end
 	end
 end
 
@@ -163,8 +172,8 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				elseif icon > 0 then
 					icon = icon + 137000 -- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
 				else
-					local _
-					_, _, _, icon = EJ_GetSectionInfo(-icon)
+					local tbl = C_EncounterJournal_GetSectionInfo(-icon)
+					icon = tbl.abilityIcon
 				end
 				if not icon then
 					BigWigs:Print(("No icon found for %s using id %d."):format(module.name, L[option .. "_icon"]))
@@ -190,11 +199,14 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			return option, spellName..roleIcon, roleDesc..desc, icon
 		else
 			-- This is an EncounterJournal ID
-			local title, description, _, abilityIcon = EJ_GetSectionInfo(-option)
-			if not title then
+			local tbl = C_EncounterJournal_GetSectionInfo(-icon)
+			local title, description, abilityIcon
+			if not tbl then
 				BigWigs:Error(("Invalid option %d in module %s."):format(option, module.name))
 				title = option
 				description = option
+			else
+				title, description, abilityIcon = tbl.title, tbl.description, tbl.abilityIcon
 			end
 
 			local roleIcon, roleDesc = getRoleStrings(module, option)
