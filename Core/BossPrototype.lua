@@ -123,7 +123,7 @@ local spells = setmetatable({}, {__index =
 		else
 			value = EJ_GetSectionInfo(-key)
 			if not value then
-				core:Print(format("An invalid spell id (%d) is being used in a boss module.", key))
+				core:Print(format("An invalid journal id (%d) is being used in a boss module.", key))
 			end
 		end
 		self[key] = value
