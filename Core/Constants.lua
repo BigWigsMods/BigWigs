@@ -199,7 +199,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			return option, spellName..roleIcon, roleDesc..desc, icon
 		else
 			-- This is an EncounterJournal ID
-			local tbl = C_EncounterJournal_GetSectionInfo(-icon)
+			local tbl = C_EncounterJournal_GetSectionInfo(-option)
 			local title, description, abilityIcon
 			if not tbl then
 				BigWigs:Error(("Invalid option %d in module %s."):format(option, module.name))
