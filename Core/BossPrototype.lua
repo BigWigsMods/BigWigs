@@ -926,7 +926,7 @@ function boss:MobId(guid)
 	return tonumber(id) or 1
 end
 
---- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal entries (EJ_GetSectionInfo).
+--- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal entries (C_EncounterJournal.GetSectionInfo).
 -- @return spell name
 function boss:SpellName(spellId)
 	return spells[spellId]
