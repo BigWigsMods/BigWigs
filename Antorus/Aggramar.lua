@@ -317,8 +317,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		self:Bar(spellId, 60.8)
 		self:OpenInfo(244688, self:SpellName(244688)) -- Taeshalach Technique
 		if not self:Mythic() then -- Random Combo in Mythic
-			self:Bar(245463, 4, CL.count:format(self:SpellName(244033), flameRendCount)) -- Flame Rend
-			self:Bar(245301, 15.7) -- Searing Tempest
+			self:Bar(245463, self:Easy() and 5 or 4, CL.count:format(self:SpellName(244033), flameRendCount)) -- Flame Rend
+			self:Bar(245301, self:Easy() and 19.9 or 15.7) -- Searing Tempest
 		end
 	elseif spellId == 244792 then -- Burning Will of Taeshalach, end of Taeshalach Technique but also casted in intermission
 		if techniqueStarted then -- Check if he actually ends the combo, instead of being in intermission
@@ -425,9 +425,9 @@ function mod:FoeBreaker(args)
 	self:Message(245458, "Attention", "Alert", CL.count:format(args.spellName, foeBreakerCount))
 	foeBreakerCount = foeBreakerCount + 1
 	comboSpells[#comboSpells+1] = 245458
-	comboCastEnd = GetTime() + 2.75
+	comboCastEnd = GetTime() + (self:Easy() and 3.5 or 2.75)
 	if foeBreakerCount == 2 and not self:Mythic() then -- Random Combo in Mythic
-		self:Bar(args.spellId, 7.5, CL.count:format(args.spellName, foeBreakerCount))
+		self:Bar(args.spellId, self:Easy() and 10.1 or 7.5, CL.count:format(args.spellName, foeBreakerCount))
 	end
 	updateInfoBox(self, true)
 end
@@ -441,9 +441,9 @@ function mod:FlameRend(args)
 	self:Message(args.spellId, "Important", "Alarm", CL.count:format(args.spellName, flameRendCount))
 	flameRendCount = flameRendCount + 1
 	comboSpells[#comboSpells+1] = 245463
-	comboCastEnd = GetTime() + 2.75
+	comboCastEnd = GetTime() + (self:Easy() and 3.5 or 2.75)
 	if flameRendCount == 2 and not self:Mythic() then -- Random Combo in Mythic
-		self:Bar(args.spellId, 7.5, CL.count:format(args.spellName, flameRendCount))
+		self:Bar(args.spellId, self:Easy() and 10.2 or 7.5, CL.count:format(args.spellName, flameRendCount))
 	end
 	updateInfoBox(self, true)
 end
