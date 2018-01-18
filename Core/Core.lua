@@ -589,6 +589,24 @@ do
 			module:Enable() -- Support LoD plugins that load after we're enabled (e.g. zone based)
 		end
 	end
+
+	function addon:AddColors(moduleName, options)
+		local module = self:GetBossModule(moduleName)
+		if not module then
+			addon:Error(("AddColors: Invalid module %q."):format(moduleName))
+			return
+		end
+		module.colorOptions = options
+	end
+
+	function addon:AddSounds(moduleName, options)
+		local module = self:GetBossModule(moduleName)
+		if not module then
+			addon:Error(("AddSounds: Invalid module %q."):format(moduleName))
+			return
+		end
+		module.soundOptions = options
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -620,4 +638,3 @@ function pluginCore:OnDisable()
 end
 
 BigWigs = addon -- Set global
-

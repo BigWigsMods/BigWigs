@@ -74,6 +74,28 @@ local function reset(info)
 		plugin.db.profile[k][name][key] = nil
 	end
 end
+local function hidden(info)
+	local name, key = unpack(info.arg)
+	local module = BigWigs:GetBossModule(name:sub(16), true)
+	if not module or not module.colorOptions then -- no module entry? show all colors
+		return false
+	end
+	local optionColors = module.colorOptions[key]
+	if not optionColors then
+		return true
+	end
+	local optionName = info[#info]
+	if type(optionColors) == "table" then
+		for _, color in next, optionColors do
+			if color == optionName then
+				return false
+			end
+		end
+	else
+		return optionName ~= optionColors
+	end
+	return true
+end
 
 local function resetAll()
 	plugin.db:ResetProfile()
@@ -96,31 +118,37 @@ local colorOptions = {
 				Important = {
 					name = L.Important,
 					type = "color",
+					hidden = hidden,
 					order = 1,
 				},
 				Personal = {
 					name = L.Personal,
 					type = "color",
+					hidden = hidden,
 					order = 2,
 				},
 				Urgent = {
 					name = L.Urgent,
 					type = "color",
+					hidden = hidden,
 					order = 3,
 				},
 				Attention = {
 					name = L.Attention,
 					type = "color",
+					hidden = hidden,
 					order = 4,
 				},
 				Positive = {
 					name = L.Positive,
 					type = "color",
+					hidden = hidden,
 					order = 5,
 				},
 				Neutral = {
 					name = L.Neutral,
 					type = "color",
+					hidden = hidden,
 					order = 6,
 				},
 			},
@@ -258,4 +286,3 @@ end
 function plugin:GetColor(hint, module, key)
 	return unpack(self:GetColorTable(hint, module, key))
 end
-
