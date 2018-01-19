@@ -913,7 +913,7 @@ end
 
 --- Check if in a Mythic keystone difficulty instance.
 -- @return boolean
-function boss:ChallengeMode()
+function boss:MythicPlus()
 	return difficulty == 8
 end
 
