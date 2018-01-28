@@ -188,7 +188,9 @@ do
 		local comboCount = #comboSpells
 
 		if not currentCombo then
-			if not self:Mythic() then -- Always the same combo
+			if self:LFR() then -- Always the same combo
+				currentCombo = {245463, 245463, 245463, 245463, 245301} -- Flame Rend, Flame Rend, Flame Rend, Flame Rend, Searing Tempest
+			elseif not self:Mythic() then -- Always the same combo
 				currentCombo = {245458, 245463, 245458, 245463, 245301} -- Foe Breaker, Flame Rend, Foe Breaker, Flame Rend, Searing Tempest
 			elseif comboCount >= 2 then -- We know the combo after the first 2 casts
 				currentCombo = mythicCombos[comboSpells[1]][comboSpells[2]]
@@ -317,7 +319,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		self:Bar(spellId, 60.8)
 		self:OpenInfo(244688, self:SpellName(244688)) -- Taeshalach Technique
 		if not self:Mythic() then -- Random Combo in Mythic
-			self:Bar(245463, self:Easy() and 5 or 4, CL.count:format(self:SpellName(244033), flameRendCount)) -- Flame Rend
+			if not self:LFR() then
+				self:Bar(245463, self:Normal() and 5 or 4, CL.count:format(self:SpellName(244033), flameRendCount)) -- Flame Rend
+			end
 			self:Bar(245301, self:Easy() and 19.9 or 15.7) -- Searing Tempest
 		end
 	elseif spellId == 244792 then -- Burning Will of Taeshalach, end of Taeshalach Technique but also casted in intermission
@@ -442,8 +446,10 @@ function mod:FlameRend(args)
 	flameRendCount = flameRendCount + 1
 	comboSpells[#comboSpells+1] = 245463
 	comboCastEnd = GetTime() + (self:Easy() and 3.5 or 2.75)
-	if flameRendCount == 2 and not self:Mythic() then -- Random Combo in Mythic
-		self:Bar(args.spellId, self:Easy() and 10.2 or 7.5, CL.count:format(args.spellName, flameRendCount))
+	if self:LFR() and flameRendCount < 5 then
+		self:Bar(args.spellId, 5, CL.count:format(args.spellName, flameRendCount))
+	elseif flameRendCount == 2 and not self:Mythic() then -- Random Combo in Mythic
+		self:Bar(args.spellId, self:Normal() and 10.2 or 7.5, CL.count:format(args.spellName, flameRendCount))
 	end
 	updateInfoBox(self, true)
 end
