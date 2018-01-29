@@ -293,7 +293,7 @@ function mod:OnEngage()
 	timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
 	if self:Mythic() then
 		phase = 2 -- Mythic skips the P1 of heroic
-		self:Bar(206222, 6.8, CL.count:format(self:SpellName(206222), bondsCount)) -- Bonds of Fel
+		self:Bar(209011, 6.8, CL.count:format(self:SpellName(209011), bondsCount)) -- Bonds of Fel
 		self:Bar(212258, timers[212258][handOfGuldanCount], CL.count:format(self:SpellName(212258), handOfGuldanCount)) -- Hand of Gul'dan
 		self:Bar(209270, 26.3, CL.count:format(self:SpellName(209270), eyeCount)) -- Eye of Guldan
 		self:Bar(206219, 36.6, CL.count:format(self:SpellName(206219), liquidHellfireCount)) -- Liquid Hellfire
