@@ -62,7 +62,7 @@ function mod:GetOptions()
 		--[[ Noura, Mother of Flame ]]--
 		{244899, "TANK"}, -- Fiery Strike
 		245627, -- Whirling Saber
-		{253429, "SAY"}, -- Fulminating Pulse
+		{253520, "SAY"}, -- Fulminating Pulse
 
 		--[[ Asara, Mother of Night ]]--
 		246329, -- Shadow Blades
@@ -103,8 +103,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FieryStrike", 244899)
 	self:Log("SPELL_CAST_SUCCESS", "FieryStrikeSuccess", 244899)
 	self:Log("SPELL_CAST_START", "WhirlingSaber", 245627)
-	self:Log("SPELL_AURA_APPLIED", "FulminatingPulse", 253429)
-	self:Log("SPELL_AURA_REMOVED", "FulminatingPulseRemoved", 253429)
+	self:Log("SPELL_AURA_APPLIED", "FulminatingPulse", 253520)
+	self:Log("SPELL_AURA_REMOVED", "FulminatingPulseRemoved", 253520)
 
 	--[[ Asara, Mother of Night ]]--
 	self:Log("SPELL_CAST_SUCCESS", "ShadowBlades", 246329)
