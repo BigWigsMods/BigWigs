@@ -911,13 +911,13 @@ function boss:Heroic()
 	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15
 end
 
---- Check if in a Mythic difficulty instance.
+--- Check if in a Mythic or Mythic+ difficulty instance.
 -- @return boolean
 function boss:Mythic()
-	return difficulty == 16 or difficulty == 23
+	return difficulty == 16 or difficulty == 23 or difficulty == 8
 end
 
---- Check if in a Mythic keystone difficulty instance.
+--- Check if in a Mythic+ difficulty instance.
 -- @return boolean
 function boss:MythicPlus()
 	return difficulty == 8
