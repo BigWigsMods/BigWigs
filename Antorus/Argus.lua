@@ -490,53 +490,51 @@ function mod:GolgannethsWrath()
 end
 
 do
-	local burstList, bombName, isOnMe, scheduled = {}, nil, nil, nil
-
-	local function getPlayerIcon(unit)
-		return (UnitExists(unit) and GetRaidTargetIndex(unit) and ("|T%d:0|t"):format(137000+GetRaidTargetIndex(unit))) or " "
-	end
+	local burstList, bombName, isOnMe, scheduled = {}, nil, 0, nil
 
 	local function announce(self)
-		if isOnMe == "burst" then
-			self:Message(250669, "Personal", "Alarm", CL.you:format(self:SpellName(250669) .. getPlayerIcon("player")))
-		elseif isOnMe == "bomb" then
-			self:Message(251570, "Personal", "Warning", CL.you:format(self:SpellName(251570) .. getPlayerIcon("player")))
+		if isOnMe > 0 then -- Burst (3 or 7)
+			local icon = isOnMe == 3 and "|T137003:0|t" or "|T137007:0|t"
+			self:Message(250669, "Personal", "Alarm", CL.you:format(self:SpellName(250669) .. icon))
+		elseif isOnMe < 0 then -- Bomb (-1)
+			self:Message(251570, "Personal", "Warning", CL.you:format(self:SpellName(251570) .. "|T137002:0|t"))
 		end
 		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
-			if not isOnMe or self:GetOption("custom_off_always_show_combined") then
+			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
 				local msg = ""
 				if bombName then
-					msg = L.bomb:format(getPlayerIcon(bombName) .. self:ColorName(bombName)) .. " - "
+					msg = L.bomb:format("|T137002:0|t" .. self:ColorName(bombName) .. " - ")
 				end
 				local burstMsg = ""
-				for _, player in pairs(burstList) do
-					burstMsg = burstMsg .. getPlayerIcon(player) .. self:ColorName(player) .. ","
+				for i=1, #burstList do
+					local player = burstList[i]
+					local icon = i == 1 and "|T137003:0|t" or "|T137007:0|t"
+					burstMsg = burstMsg .. icon .. self:ColorName(player) .. (i == #burstList and "" or ",")
 				end
-				msg = msg .. L.burst:format(burstMsg:sub(0, burstMsg:len()-1))
+				msg = msg .. L.burst:format(burstMsg)
 				self:Message("combinedBurstAndBomb", "Important", nil, msg, false)
 			end
 		else
-			if isOnMe ~= "burst" then
+			if isOnMe < 3 then -- No burst on you (0 or -1)
 				self:TargetMessage(250669, self:ColorName(burstList), "Important")
 			end
-			if isOnMe ~="bomb" then
+			if isOnMe > -1 then -- No bomb on you (0, 3 or 7)
 				self:TargetMessage(251570, bombName, "Urgent")
 			end
 		end
 		wipe(burstList)
 		scheduled = nil
 		bombName = nil
-		isOnMe = nil
+		isOnMe = 0
 	end
 
 	function mod:Soulburst(args)
 		burstList[#burstList+1] = args.destName
 		if self:Me(args.destGUID) then
-			local icon = #burstList == 1 and 3 or 7
-			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, icon)
-			isOnMe = "burst"
+			isOnMe = #burstList == 1 and 3 or 7
+			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, isOnMe)
 			if not checkForFearHelp(self, #burstList == 1 and 3 or 7) then
-				self:Say(args.spellId, CL.count_rticon:format(args.spellName, #burstList, icon))
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, #burstList, isOnMe))
 			end
 		end
 		if #burstList == 1 then
@@ -548,7 +546,7 @@ do
 				SetRaidTarget(args.destName, 3)
 			end
 		elseif self:GetOption(burstMarker) then
-				SetRaidTarget(args.destName, 7)
+			SetRaidTarget(args.destName, 7)
 		end
 	end
 
@@ -564,7 +562,7 @@ do
 	function mod:Soulbomb(args)
 		if self:Me(args.destGUID) then
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, 2)
-			isOnMe = "bomb"
+			isOnMe = -1
 			if not checkForFearHelp(self, 2) then
 				self:Say(args.spellId, CL.count_rticon:format(args.spellName, 1, 2))
 			end
