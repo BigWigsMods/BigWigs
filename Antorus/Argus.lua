@@ -494,24 +494,23 @@ do
 
 	local function announce(self)
 		if isOnMe > 0 then -- Burst (3 or 7)
-			local icon = isOnMe == 3 and "|T137003:0|t" or "|T137007:0|t"
-			self:Message(250669, "Personal", "Alarm", CL.you:format(self:SpellName(250669) .. icon))
+			local positionNumber = isOnMe == 3 and 1 or 2 -- Either 1 or 2
+			self:Message(250669, "Personal", "Alarm", CL.you:format(CL.count_icon:format(self:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
 		elseif isOnMe < 0 then -- Bomb (-1)
-			self:Message(251570, "Personal", "Warning", CL.you:format(self:SpellName(251570) .. "|T137002:0|t"))
+			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count_icon:format(self:SpellName(251570), 3, 2))) -- Soulbomb (3{2}) on you
 		end
 		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
 			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
-				local msg = ""
-				if bombName then
-					msg = L.bomb:format("|T137002:0|t" .. self:ColorName(bombName) .. " - ")
-				end
 				local burstMsg = ""
 				for i=1, #burstList do
 					local player = burstList[i]
 					local icon = i == 1 and "|T137003:0|t" or "|T137007:0|t"
 					burstMsg = burstMsg .. icon .. self:ColorName(player) .. (i == #burstList and "" or ",")
 				end
-				msg = msg .. L.burst:format(burstMsg)
+				local msg = L.burst:format(burstMsg)
+				if bombName then
+					msg = msg .. " - " .. L.bomb:format("|T137002:0|t" .. self:ColorName(bombName))
+				end
 				self:Message("combinedBurstAndBomb", "Important", nil, msg, false)
 			end
 		else
@@ -531,7 +530,7 @@ do
 	function mod:Soulburst(args)
 		burstList[#burstList+1] = args.destName
 		if self:Me(args.destGUID) then
-			isOnMe = #burstList == 1 and 3 or 7
+			isOnMe = #burstList == 1 and 3 or 7 -- Soulburst on you (3 or 7)
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, isOnMe)
 			if not checkForFearHelp(self, #burstList == 1 and 3 or 7) then
 				self:Say(args.spellId, CL.count_rticon:format(args.spellName, #burstList, isOnMe))
@@ -562,9 +561,9 @@ do
 	function mod:Soulbomb(args)
 		if self:Me(args.destGUID) then
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, 2)
-			isOnMe = -1
+			isOnMe = -1 -- Soulbomb on you (-1)
 			if not checkForFearHelp(self, 2) then
-				self:Say(args.spellId, CL.count_rticon:format(args.spellName, 1, 2))
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, 3, 2))
 			end
 		end
 
