@@ -202,7 +202,7 @@ do
 		reverberatingTimeLeft = reverberatingTimeLeft + 10
 		ruinerTimeLeft = ruinerTimeLeft + 10
 
-		mod:Message("stages", "Neutral", "Info", CL.soon:format(CL.stage:format(1)))
+		mod:Message(246516, "Neutral", "Info", CL.soon:format(CL.stage:format(1)), false)
 		mod:CDBar(254919, forginTimeLeft)  -- Forging Strike
 		mod:CDBar(248214, bombTimeLeft, empBomb and L.empowered:format(mod:SpellName(248214))) -- Diabolic Bomb
 		mod:CDBar(254926, reverberatingTimeLeft, empStrike and L.empowered:format(mod:SpellName(254926))) -- Reverberating Strike
