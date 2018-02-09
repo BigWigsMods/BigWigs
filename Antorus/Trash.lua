@@ -60,14 +60,14 @@ function mod:GetOptions()
 		-- [[ Before Antoran High Command ]] --
 		252621, -- Bound by Fel
 		254500, -- Fearsome Leap
-		253600, -- Soulburn
+		{253600, "SAY"}, -- Soulburn
 
 		-- [[ Imonar to Kin'garoth ]] --
-		252760, -- Demolish
+		{252760, "SAY"}, -- Demolish
 
 		-- [[ Before Varimathras / Coven of Shivarra ]] --
-		249297, -- Flames of Reorigination
-		254122, -- Cloud of Confusion
+		{249297, "SAY"}, -- Flames of Reorigination
+		{254122, "SAY"}, -- Cloud of Confusion
 
 		-- [[ Before Aggramar ]] --
 		246209, -- Punishing Flame
