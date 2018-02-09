@@ -100,3 +100,21 @@ if L then
 	L.decimationImpact = "殲滅生效"
 	L.decimationImpact_desc = "顯示殲滅飛彈著陸計時器。"
 end
+
+L = BigWigs:NewBossLocale("Antorus Trash", "zhTW")
+if L then
+	-- [[ Before Antoran High Command ]] --
+	--L.flameweaver = "Flameweaver"
+	--L.deconix = "Imperator Deconix"
+	--L.clobex = "Clobex"
+
+	L.isLinkedWith = ">%s< 與 >%s< 相連"
+	L.yourLink = ">你< 與 >%s< 相連"
+
+	-- [[ Before Varimathras / Coven of Shivarra ]] --
+	--L.tarneth = "Tarneth"
+	--L.priestess = "Priestess of Delirium"
+
+	-- [[ Before Aggramar ]] --
+	--L.aedis = "Dark Keeper Aedis"
+end

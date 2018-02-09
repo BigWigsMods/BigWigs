@@ -100,3 +100,21 @@ if L then
 	L.decimationImpact = "Dezimierung-Einschlag"
 	L.decimationImpact_desc = "Zeigt einen Timer für einschlagende Dezimierungsgeschosse."
 end
+
+L = BigWigs:NewBossLocale("Antorus Trash", "deDE")
+if L then
+	-- [[ Before Antoran High Command ]] --
+	--L.flameweaver = "Flameweaver"
+	--L.deconix = "Imperator Deconix"
+	--L.clobex = "Clobex"
+
+	L.isLinkedWith = "%s ist mit %s verbunden"
+	L.yourLink = "Du bist mit %s verbunden"
+
+	-- [[ Before Varimathras / Coven of Shivarra ]] --
+	--L.tarneth = "Tarneth"
+	--L.priestess = "Priestess of Delirium"
+
+	-- [[ Before Aggramar ]] --
+	--L.aedis = "Dark Keeper Aedis"
+end
