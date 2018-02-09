@@ -103,13 +103,22 @@ end
 
 L = BigWigs:NewBossLocale("Antorus Trash", "zhCN")
 if L then
-	-- [[ Before Antoran High Command ]] --
+	-- [[ Before Garothi Worldbreaker ]] --
+	--L.felguard = "Antoran Felguard"
+
+	-- [[ After Garothi Worldbreaker ]] --
 	--L.flameweaver = "Flameweaver"
+
+	-- [[ Before Antoran High Command ]] --
+	--L.ravager = "Bladesworn Ravager"
 	--L.deconix = "Imperator Deconix"
 	--L.clobex = "Clobex"
 
 	L.isLinkedWith = ">%s< 与 >%s< 相连"
 	L.yourLink = ">你< 与 >%s< 相连"
+
+	-- [[ Before Portal Keeper Hasabel ]] --
+	--L.stalker = "Hungering Stalker"
 
 	-- [[ Before Varimathras / Coven of Shivarra ]] --
 	--L.tarneth = "Tarneth"
