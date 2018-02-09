@@ -117,7 +117,7 @@ do
 				self:Message(spellId, "Personal", "Warning", L.yourLink:format(self:ColorName(targets[2].name)))
 			elseif self:Me(targets[2].guid) then
 				self:Message(spellId, "Personal", "Warning", L.yourLink:format(self:ColorName(targets[1].name)))
-			elseif not self:CheckOption(args.spellId, "ME_ONLY") then
+			elseif not self:CheckOption(spellId, "ME_ONLY") then
 				self:Message(spellId, "Attention", nil, L.isLinkedWith:format(self:ColorName(targets[1].name), self:ColorName(targets[2].name)))
 			end
 		end
@@ -153,7 +153,7 @@ do
 	function mod:SoulburnRemoved(args)
 		if self:Me(args.destGUID) and expires - GetTime() > 1 then -- dispelled
 			self:CancelSayCountdown(args.spellId)
-			self:Message(args.spellId, "Positive", "Info", CL.removed(args.spellName))
+			self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
 		end
 	end
 end
@@ -174,7 +174,7 @@ end
 function mod:FlamesOfReorigination(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		self:Message(args.spellId, "Personal", "Warning", CL.you(args.spellName))
+		self:Message(args.spellId, "Personal", "Warning", CL.you:format(args.spellName))
 	elseif self:MobId(args.sourceGUID) == 123533 then -- don't announce those that were spread by players
 		self:TargetMessage(args.spellId, args.destName, "Important", nil)
 	end
