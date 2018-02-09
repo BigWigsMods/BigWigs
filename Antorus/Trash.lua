@@ -255,13 +255,20 @@ function mod:Demolish(args)
 end
 
 -- [[ Before Varimathras / Coven of Shivarra ]] --
-function mod:FlamesOfReorigination(args)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:Message(args.spellId, "Personal", "Warning", CL.you:format(args.spellName))
-		self:TargetBar(args.spellId, 6, args.destName)
-	elseif self:MobId(args.sourceGUID) == 123533 then -- don't announce those that were spread by players
-		self:TargetMessage(args.spellId, args.destName, "Important", nil)
+do
+	local prev = 0
+	function mod:FlamesOfReorigination(args)
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 6 then -- reapplications fire _APPLIED instead of _REFRESH for some reason
+				prev = t
+				self:Say(args.spellId)
+				self:Message(args.spellId, "Personal", "Warning", CL.you:format(args.spellName))
+			end
+			self:TargetBar(args.spellId, 6, args.destName)
+		elseif self:MobId(args.sourceGUID) == 123533 then -- don't announce those that were spread by players
+			self:TargetMessage(args.spellId, args.destName, "Important", nil)
+		end
 	end
 end
 
