@@ -131,6 +131,7 @@ function mod:OnBossEnable()
 
 	-- [[ Before Antoran High Command ]] --
 	self:Log("SPELL_CAST_START", "FearsomeLeap", 254500)
+	self:Death("DeconixDeath", 127723)
 	self:Log("SPELL_CAST_SUCCESS", "SoulburnCastSuccess", 253599)
 	self:Log("SPELL_AURA_APPLIED", "Soulburn", 253600)
 	self:Log("SPELL_AURA_REMOVED", "SoulburnRemoved", 253600)
@@ -141,14 +142,17 @@ function mod:OnBossEnable()
 
 	-- [[ Imonar to Kin'garoth ]] --
 	self:Log("SPELL_AURA_APPLIED", "Demolish", 252760)
+	self:Log("SPELL_AURA_REMOVED", "DemolishRemoved", 252760)
 
 	-- [[ Before Varimathras / Coven of Shivarra ]] --
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfReorigination", 249297)
 	self:Log("SPELL_AURA_REFRESH", "FlamesOfReoriginationRefreshed", 249297)
+	self:Log("SPELL_AURA_REMOVED", "FlamesOfReoriginationRemoved", 249297)
 	self:Log("SPELL_AURA_APPLIED", "CloudOfConfusion", 254122)
 
 	-- [[ Before Aggramar ]] --
 	self:Log("SPELL_CAST_START", "PunishingFlames", 246209)
+	self:Death("AedisDeath", 123680)
 end
 
 --------------------------------------------------------------------------------
@@ -198,6 +202,10 @@ end
 function mod:FearsomeLeap(args)
 	self:Message(args.spellId, "Important", self:Melee() and "Warning" or "Long", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 3)
+end
+
+function mod:DeconixDeath(args)
+	self:StopBar(CL.cast:format(self:SpellName(254500))) -- Fearsome Leap
 end
 
 do
@@ -260,6 +268,12 @@ function mod:Demolish(args)
 	end
 end
 
+function mod:DemolishRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+end
+
 -- [[ Before Varimathras / Coven of Shivarra ]] --
 do
 	local prev = 0
@@ -284,6 +298,12 @@ function mod:FlamesOfReoriginationRefreshed(args)
 	end
 end
 
+function mod:FlamesOfReoriginationRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellId, args.destName)
+	end
+end
+
 function mod:CloudOfConfusion(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
@@ -293,8 +313,19 @@ function mod:CloudOfConfusion(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 end
 
+function mod:CloudOfConfusionRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+	self:StopBar(args.spellId, args.destName)
+end
+
 -- [[ Before Aggramar ]] --
 function mod:PunishingFlames(args)
 	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 5)
+end
+
+function mod:AedisDeath(args)
+	self:StopBar(CL.cast:format(self:SpellName(246209))) -- Punishing Flames
 end
