@@ -143,6 +143,7 @@ function mod:OnBossEnable()
 
 	-- [[ Before Varimathras / Coven of Shivarra ]] --
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfReorigination", 249297)
+	self:Log("SPELL_AURA_REFRESH", "FlamesOfReoriginationRefreshed", 249297)
 	self:Log("SPELL_AURA_APPLIED", "CloudOfConfusion", 254122)
 
 	-- [[ Before Aggramar ]] --
@@ -260,7 +261,7 @@ do
 	function mod:FlamesOfReorigination(args)
 		if self:Me(args.destGUID) then
 			local t = GetTime()
-			if t-prev > 6 then -- reapplications fire _APPLIED instead of _REFRESH for some reason
+			if t-prev > 6 then -- reapplications *sometimes* fire _APPLIED instead of _REFRESH for some reason
 				prev = t
 				self:Say(args.spellId)
 				self:Message(args.spellId, "Personal", "Warning", CL.you:format(args.spellName))
@@ -269,6 +270,12 @@ do
 		elseif self:MobId(args.sourceGUID) == 123533 then -- don't announce those that were spread by players
 			self:TargetMessage(args.spellId, args.destName, "Important", nil)
 		end
+	end
+end
+
+function mod:FlamesOfReoriginationRefreshed(args)
+	if self:Me(args.destGUID) then
+		self:TargetBar(args.spellId, 6, args.destName)
 	end
 end
 
