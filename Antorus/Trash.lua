@@ -249,7 +249,7 @@ do
 	local prev = 0
 	function mod:HowlingShadows(args)
 		local t = GetTime()
-		if t-prev > 0.5 then
+		if t-prev > 1 then
 			prev = t
 			self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName))
 		end
