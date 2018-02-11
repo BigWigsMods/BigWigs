@@ -319,9 +319,9 @@ end
 function mod:CloudOfConfusion(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 6)
+		self:SayCountdown(args.spellId, 10)
 	end
-	self:TargetBar(args.spellId, 6, args.destName)
+	self:TargetBar(args.spellId, 10, args.destName)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
 end
 
