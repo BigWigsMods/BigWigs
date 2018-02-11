@@ -757,6 +757,7 @@ function mod:EndofAllThingsInterupted(args)
 		initializationCount = self:Mythic() and 1 or 3
 		torturedRageCounter = 1
 		sweepingScytheCounter = 1
+		soulBombCounter = 1
 
 		if self:Mythic() then
 			annihilationCount = 1
@@ -774,7 +775,7 @@ function mod:EndofAllThingsInterupted(args)
 			else
 				self:Bar(258039, 6) -- Deadly Scythe
 			end
-			self:Bar(251570, 20.1) -- Soulbomb
+			self:Bar(251570, 20.1, CL.count:format(self:SpellName(251570), soulBombCounter)) -- Soulbomb
 			self:Bar(250669, 20.1) -- Soulburst
 		end
 		self:Bar(257296, self:Mythic() and timers[stage][257296][torturedRageCounter] or 11) -- Tortured Rage
