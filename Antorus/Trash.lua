@@ -134,6 +134,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SoulburnCastSuccess", 253599)
 	self:Log("SPELL_AURA_APPLIED", "Soulburn", 253600)
 	self:Log("SPELL_AURA_REMOVED", "SoulburnRemoved", 253600)
+	self:Log("SPELL_DISPEL", "SoulburnDispelled", "*")
 
 	-- [[ Before Portal Keeper Hasabel ]] --
 	self:Log("SPELL_CAST_START", "HowlingShadows", 249212)
@@ -200,7 +201,7 @@ function mod:FearsomeLeap(args)
 end
 
 do
-	local expiresOnMe, lastCast = 0, 0
+	local lastCast = 0
 
 	function mod:SoulburnCastSuccess(args)
 		lastCast = GetTime()
@@ -211,7 +212,6 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 6)
-			expiresOnMe = GetTime() + 6
 			if not appliedByTheBoss then
 				self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.destName)) -- personal warning regardless of the source
 			end
@@ -225,9 +225,14 @@ do
 	end
 
 	function mod:SoulburnRemoved(args)
-		if self:Me(args.destGUID) and expiresOnMe - GetTime() > 1 then -- dispelled
+		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
-			self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
+		end
+	end
+
+	function mod:SoulburnDispelled(args)
+		if args.extraSpellId == 253600 and self:Me(args.destGUID) then
+			self:Message(args.extraSpellId, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 		end
 	end
 end
