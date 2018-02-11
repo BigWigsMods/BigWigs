@@ -147,6 +147,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REFRESH", "FlamesOfReoriginationRefreshed", 249297)
 	self:Log("SPELL_AURA_REMOVED", "FlamesOfReoriginationRemoved", 249297)
 	self:Log("SPELL_AURA_APPLIED", "CloudOfConfusion", 254122)
+	self:Log("SPELL_AURA_REMOVED", "CloudOfConfusionRemoved", 254122)
 
 	-- [[ Before Aggramar ]] --
 	self:Log("SPELL_CAST_START", "PunishingFlames", 246209)
