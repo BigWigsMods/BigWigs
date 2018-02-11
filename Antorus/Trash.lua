@@ -128,6 +128,7 @@ function mod:OnBossEnable()
 
 	-- [[ After Garothi Worldbreaker ]] --
 	self:Log("SPELL_AURA_APPLIED", "BoundByFel", 252621)
+	self:Death("FlameweaverDeath", 127233)
 
 	-- [[ Before Antoran High Command ]] --
 	self:Log("SPELL_CAST_START", "FearsomeLeap", 254500)
@@ -177,24 +178,37 @@ end
 do
 	local targets = {}
 
-	local function printTargets(self, spellId)
-		if #targets == 2 then
-			if self:Me(targets[1].guid) then
-				self:Message(spellId, "Personal", "Alarm", L.yourLink:format(self:ColorName(targets[2].name)))
-			elseif self:Me(targets[2].guid) then
-				self:Message(spellId, "Personal", "Alarm", L.yourLink:format(self:ColorName(targets[1].name)))
-			elseif not self:CheckOption(spellId, "ME_ONLY") then
-				self:Message(spellId, "Attention", nil, L.isLinkedWith:format(self:ColorName(targets[1].name), self:ColorName(targets[2].name)))
-			end
+	local function printTargets(self, spellId, sourceGUID)
+		local tbl = targets[sourceGUID]
+		if self:Me(tbl[1].guid) then
+			self:Message(spellId, "Personal", "Alarm", CL.link:format(self:ColorName(tbl[2].name)))
+		elseif self:Me(tbl[2].guid) then
+			self:Message(spellId, "Personal", "Alarm", CL.link:format(self:ColorName(tbl[1].name)))
+		elseif not self:CheckOption(spellId, "ME_ONLY") then
+			self:Message(spellId, "Attention", nil, CL.link_both:format(self:ColorName(tbl[1].name), self:ColorName(tbl[2].name)))
 		end
-		wipe(targets)
+		wipe(targets[sourceGUID])
 	end
 
 	function mod:BoundByFel(args)
-		targets[#targets + 1] = { guid = args.destGUID, name = args.destName }
-		if #targets == 1 then
-			self:ScheduleTimer(printTargets, 0.3, self, args.spellId)
+		if not targets[args.sourceGUID] then
+			targets[args.sourceGUID] = {}
 		end
+		targets[args.sourceGUID][#targets[args.sourceGUID] + 1] = { guid = args.destGUID, name = args.destName }
+		if #targets[args.sourceGUID] == 2 then
+			printTargets(self, args.spellId, args.sourceGUID)
+		else
+			-- XXX I have no logs where this happens so the possibility of this situation is an assumption:
+			-- clean up if, for some reason, the 2nd target had an immunity on.
+			self:ScheduleTimer(function()
+				if targets[args.sourceGUID] and #targets[args.sourceGUID] == 1 then
+					wipe(targets[args.sourceGUID])
+				end end, 1)
+		end
+	end
+
+	function mod:FlameweaverDeath(args)
+		targets[args.destGUID] = nil
 	end
 end
 
