@@ -501,16 +501,17 @@ do
 		end
 		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
 			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
+				local msg = ""
+				if bombName then
+					msg = L.bomb:format("|T137002:0|t" .. self:ColorName(bombName) .. " - ")
+				end
 				local burstMsg = ""
 				for i=1, #burstList do
 					local player = burstList[i]
 					local icon = i == 1 and "|T137003:0|t" or "|T137007:0|t"
 					burstMsg = burstMsg .. icon .. self:ColorName(player) .. (i == #burstList and "" or ",")
 				end
-				local msg = L.burst:format(burstMsg)
-				if bombName then
-					msg = msg .. " - " .. L.bomb:format("|T137002:0|t" .. self:ColorName(bombName))
-				end
+				msg = msg .. L.burst:format(burstMsg)
 				self:Message("combinedBurstAndBomb", "Important", nil, msg, false)
 			end
 		else
