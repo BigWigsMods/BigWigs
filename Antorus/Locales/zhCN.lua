@@ -100,3 +100,27 @@ if L then
 	L.decimationImpact = "屠戮撞击"
 	L.decimationImpact_desc = "显示屠戮飞弹着陆计时条。"
 end
+
+L = BigWigs:NewBossLocale("Antorus Trash", "zhCN")
+if L then
+	-- [[ Before Garothi Worldbreaker ]] --
+	--L.felguard = "Antoran Felguard"
+
+	-- [[ After Garothi Worldbreaker ]] --
+	--L.flameweaver = "Flameweaver"
+
+	-- [[ Before Antoran High Command ]] --
+	--L.ravager = "Bladesworn Ravager"
+	--L.deconix = "Imperator Deconix"
+	--L.clobex = "Clobex"
+
+	-- [[ Before Portal Keeper Hasabel ]] --
+	--L.stalker = "Hungering Stalker"
+
+	-- [[ Before Varimathras / Coven of Shivarra ]] --
+	--L.tarneth = "Tarneth"
+	--L.priestess = "Priestess of Delirium"
+
+	-- [[ Before Aggramar ]] --
+	--L.aedis = "Dark Keeper Aedis"
+end

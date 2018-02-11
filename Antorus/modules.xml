@@ -12,5 +12,6 @@
 <Script file="CovenofShivarra.lua"/>
 <Script file="Aggramar.lua"/>
 <Script file="Argus.lua"/>
+<Script file="Trash.lua"/>
 
 </Ui>
