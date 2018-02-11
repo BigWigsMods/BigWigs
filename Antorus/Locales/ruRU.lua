@@ -114,9 +114,6 @@ if L then
 	--L.deconix = "Imperator Deconix"
 	--L.clobex = "Clobex"
 
-	L.isLinkedWith = "%s связан(а) с %s"
-	L.yourLink = "Вы связаны с %s"
-
 	-- [[ Before Portal Keeper Hasabel ]] --
 	--L.stalker = "Hungering Stalker"
 
