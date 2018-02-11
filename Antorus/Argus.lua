@@ -497,7 +497,7 @@ do
 			local positionNumber = isOnMe == 3 and 1 or 2 -- Either 1 or 2
 			self:Message(250669, "Personal", "Alarm", CL.you:format(CL.count_icon:format(self:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
 		elseif isOnMe < 0 then -- Bomb (-1)
-			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count_icon:format(self:SpellName(251570), 3, 2))) -- Soulbomb (3{2}) on you
+			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count_icon:format(self:SpellName(251570), soulBombCounter - 1, 2))) -- Soulbomb (X{2}) on you
 		end
 		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
 			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
@@ -564,7 +564,7 @@ do
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, 2)
 			isOnMe = -1 -- Soulbomb on you (-1)
 			if not checkForFearHelp(self, 2) then
-				self:Say(args.spellId, CL.count_rticon:format(args.spellName, 3, 2))
+				self:Say(args.spellId, ("%s ({rt%d})"):format(args.spellName, 2))
 			end
 		end
 
