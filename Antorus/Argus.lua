@@ -497,20 +497,21 @@ do
 			local positionNumber = isOnMe == 3 and 1 or 2 -- Either 1 or 2
 			self:Message(250669, "Personal", "Alarm", CL.you:format(CL.count_icon:format(self:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
 		elseif isOnMe < 0 then -- Bomb (-1)
-			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count_icon:format(self:SpellName(251570), 3, 2))) -- Soulbomb (3{2}) on you
+			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count_icon:format(self:SpellName(251570), soulBombCounter - 1, 2))) -- Soulbomb (X{2}) on you
 		end
 		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
 			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
+				local msg = ""
+				if bombName then
+					msg = L.bomb:format("|T137002:0|t" .. self:ColorName(bombName) .. " - ")
+				end
 				local burstMsg = ""
 				for i=1, #burstList do
 					local player = burstList[i]
 					local icon = i == 1 and "|T137003:0|t" or "|T137007:0|t"
 					burstMsg = burstMsg .. icon .. self:ColorName(player) .. (i == #burstList and "" or ",")
 				end
-				local msg = L.burst:format(burstMsg)
-				if bombName then
-					msg = msg .. " - " .. L.bomb:format("|T137002:0|t" .. self:ColorName(bombName))
-				end
+				msg = msg .. L.burst:format(burstMsg)
 				self:Message("combinedBurstAndBomb", "Important", nil, msg, false)
 			end
 		else
@@ -563,7 +564,7 @@ do
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, 2)
 			isOnMe = -1 -- Soulbomb on you (-1)
 			if not checkForFearHelp(self, 2) then
-				self:Say(args.spellId, CL.count_rticon:format(args.spellName, 3, 2))
+				self:Say(args.spellId, ("%s ({rt%d})"):format(args.spellName, 2))
 			end
 		end
 
@@ -756,6 +757,7 @@ function mod:EndofAllThingsInterupted(args)
 		initializationCount = self:Mythic() and 1 or 3
 		torturedRageCounter = 1
 		sweepingScytheCounter = 1
+		soulBombCounter = 1
 
 		if self:Mythic() then
 			annihilationCount = 1
@@ -773,7 +775,7 @@ function mod:EndofAllThingsInterupted(args)
 			else
 				self:Bar(258039, 6) -- Deadly Scythe
 			end
-			self:Bar(251570, 20.1) -- Soulbomb
+			self:Bar(251570, 20.1, CL.count:format(self:SpellName(251570), soulBombCounter)) -- Soulbomb
 			self:Bar(250669, 20.1) -- Soulburst
 		end
 		self:Bar(257296, self:Mythic() and timers[stage][257296][torturedRageCounter] or 11) -- Tortured Rage
