@@ -21,7 +21,7 @@ if L then
 
 	L.gifts = "Dons : %s (cieux), %s (mers)"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tExplosion :%s" -- short for Soulburst
-	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBombe :%s" -- short for Soulbomb
+	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t|T137002:0|tBombe (%d):%s - " -- short for Soulbomb
 
 	L.sky_say = "{rt5} Crit/Maît" -- short for Critical Strike/Mastery (stats)
 	L.sea_say = "{rt6} Hâte/Poly" -- short for Haste/Versatility (stats)

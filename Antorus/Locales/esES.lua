@@ -21,7 +21,7 @@ if L then
 
 	--L.gifts = "Gifts: %s (Sky), %s (Sea)"
 	--L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tBurst:%s" -- short for Soulburst
-	--L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBomb:%s" -- short for Soulbomb
+	--L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t|T137002:0|tBomb (%d):%s - " -- short for Soulbomb
 
 	--L.sky_say = "{rt5} Crit/Mast" -- short for Critical Strike/Mastery (stats)
 	--L.sea_say = "{rt6} Haste/Versa" -- short for Haste/Versatility (stats)

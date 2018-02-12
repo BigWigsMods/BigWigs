@@ -122,7 +122,7 @@ if L then
 
 	L.gifts = "Gifts: %s (Sky), %s (Sea)"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tBurst:%s" -- short for Soulburst
-	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBomb:%s" -- short for Soulbomb
+	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t|T137002:0|tBomb (%d):%s - " -- short for Soulbomb
 
 	L.sky_say = "{rt5} Crit/Mast"
 	L.sea_say = "{rt6} Haste/Versa"
@@ -497,28 +497,31 @@ do
 			local positionNumber = isOnMe == 3 and 1 or 2 -- Either 1 or 2
 			self:Message(250669, "Personal", "Alarm", CL.you:format(CL.count_icon:format(self:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
 		elseif isOnMe < 0 then -- Bomb (-1)
-			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count_icon:format(self:SpellName(251570), 3, 2))) -- Soulbomb (3{2}) on you
+			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count:format("|T137002:0|t" .. self:SpellName(251570), soulBombCounter))) -- {2}Soulbomb (soulBombCounter) on you
 		end
 		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
 			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
+				local msg = ""
+				if bombName then
+					msg = L.bomb:format(soulBombCounter, self:ColorName(bombName))
+				end
+
 				local burstMsg = ""
 				for i=1, #burstList do
 					local player = burstList[i]
 					local icon = i == 1 and "|T137003:0|t" or "|T137007:0|t"
 					burstMsg = burstMsg .. icon .. self:ColorName(player) .. (i == #burstList and "" or ",")
 				end
-				local msg = L.burst:format(burstMsg)
-				if bombName then
-					msg = msg .. " - " .. L.bomb:format("|T137002:0|t" .. self:ColorName(bombName))
-				end
+				msg = msg .. L.burst:format(burstMsg)
+
 				self:Message("combinedBurstAndBomb", "Important", nil, msg, false)
 			end
 		else
+			if isOnMe > -1 then -- No bomb on you (0, 3 or 7)
+				self:TargetMessage(251570, bombName, "Urgent", nil, CL.count:format(self:SpellName(251570), soulBombCounter))
+			end
 			if isOnMe < 3 then -- No burst on you (0 or -1)
 				self:TargetMessage(250669, self:ColorName(burstList), "Important")
-			end
-			if isOnMe > -1 then -- No bomb on you (0, 3 or 7)
-				self:TargetMessage(251570, bombName, "Urgent")
 			end
 		end
 		wipe(burstList)
@@ -563,7 +566,7 @@ do
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, 2)
 			isOnMe = -1 -- Soulbomb on you (-1)
 			if not checkForFearHelp(self, 2) then
-				self:Say(args.spellId, CL.count_rticon:format(args.spellName, 3, 2))
+				self:Say(args.spellId, args.spellName .. " {rt2}")
 			end
 		end
 
