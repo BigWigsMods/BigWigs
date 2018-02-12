@@ -409,7 +409,7 @@ end
 --
 
 do
-	local GetSpellInfo, EJ_GetSectionInfo = GetSpellInfo, EJ_GetSectionInfo
+	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, C_EncounterJournal.GetSectionInfo
 
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
 	local function new(core, moduleName, mapId, journalId, instanceId)
@@ -478,9 +478,9 @@ do
 						if not n then addon:Error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
 						module.optionHeaders[k] = n or v
 					else
-						local n = EJ_GetSectionInfo(-v)
-						if not n then addon:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
-						module.optionHeaders[k] = n or v
+						local tbl = C_EncounterJournal_GetSectionInfo(-v)
+						if not tbl then addon:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
+						module.optionHeaders[k] = tbl.title or v
 					end
 				end
 			end
@@ -524,8 +524,8 @@ do
 						if not n then addon:Error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					else
-						local n = EJ_GetSectionInfo(-v)
-						if not n then addon:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
+						local tbl = C_EncounterJournal_GetSectionInfo(-v)
+						if not tbl then addon:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					end
 				end

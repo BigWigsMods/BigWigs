@@ -62,7 +62,7 @@ function mod:GetOptions()
 		--[[ Noura, Mother of Flame ]]--
 		{244899, "TANK"}, -- Fiery Strike
 		245627, -- Whirling Saber
-		{253429, "SAY"}, -- Fulminating Pulse
+		{253520, "SAY"}, -- Fulminating Pulse
 
 		--[[ Asara, Mother of Night ]]--
 		246329, -- Shadow Blades
@@ -103,8 +103,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FieryStrike", 244899)
 	self:Log("SPELL_CAST_SUCCESS", "FieryStrikeSuccess", 244899)
 	self:Log("SPELL_CAST_START", "WhirlingSaber", 245627)
-	self:Log("SPELL_AURA_APPLIED", "FulminatingPulse", 253429)
-	self:Log("SPELL_AURA_REMOVED", "FulminatingPulseRemoved", 253429)
+	self:Log("SPELL_AURA_APPLIED", "FulminatingPulse", 253520)
+	self:Log("SPELL_AURA_REMOVED", "FulminatingPulseRemoved", 253520)
 
 	--[[ Asara, Mother of Night ]]--
 	self:Log("SPELL_CAST_SUCCESS", "ShadowBlades", 246329)
@@ -141,7 +141,7 @@ function mod:OnEngage()
 	self:Bar(245627, 8.5) -- Whirling Saber
 	self:Bar(244899, 12.1) -- Fiery Strike
 	if not self:Easy() then
-		self:Bar(253429, 20.6) -- Fulminating Pulse
+		self:Bar(253520, 20.6) -- Fulminating Pulse
 	end
 
 	self:Bar(246329, 12.1) -- Shadow Blades
@@ -163,10 +163,10 @@ local updateInfoBox
 do
 	local debuffName = mod:SpellName(245586) -- Chilled Blood
 	local tormentMarkup = {
-		["AmanThul"] = {color = "|cff81c784", text = L.tormentHeal},
-		["Norgannon"] = {color = "|cff9575cd", text = L.tormentArmy},
-		["Khazgoroth"] = {color = "|cffe57373", text = L.tormentFlames},
-		["Golganneth"] = {color = "|cff4fc3f7", text = L.tormentLightning},
+		["AmanThul"] = {color = "|cff81c784", text = "tormentHeal"},
+		["Norgannon"] = {color = "|cff9575cd", text = "tormentArmy"},
+		["Khazgoroth"] = {color = "|cffe57373", text = "tormentFlames"},
+		["Golganneth"] = {color = "|cff4fc3f7", text = "tormentLightning"},
 	}
 	for n, id in pairs(tormentIcons) do
 		local _, _, icon = GetSpellInfo(id)
@@ -188,7 +188,7 @@ do
 			self:OpenInfo("infobox", L.nextTorment:format(""))
 
 			local nextTorment = tormentMarkup[upcomingTorments[1]]
-			local data = ("|T%s:15:15:0:0:64:64:4:60:4:60|t%s%s|r"):format(nextTorment.icon, nextTorment.color, nextTorment.text)
+			local data = ("|T%s:15:15:0:0:64:64:4:60:4:60|t%s%s|r"):format(nextTorment.icon, nextTorment.color, L[nextTorment.text])
 			self:SetInfo("infobox", 1, data)
 			bloodOffset = 2
 		end
@@ -250,13 +250,13 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 			self:Bar(245627, 8.9) -- Whirling Saber
 			self:Bar(244899, 12.5) -- Fiery Strike
 			if not self:Easy() then
-				self:Bar(253429, 21.1) -- Fulminating Pulse
+				self:Bar(253520, 21.1) -- Fulminating Pulse
 			end
 			self:StopBar(self:SpellName(-15967)) -- Noura, Mother of Flame
 		else
 			self:StopBar(244899) -- Fiery Strike
 			self:StopBar(245627) -- Whirling Saber
-			self:StopBar(253429) -- Fulminating Pulse
+			self:StopBar(253520) -- Fulminating Pulse
 		end
 	elseif self:MobId(UnitGUID(unit)) == 122467 then -- Asara
 		if UnitCanAttack("player", unit) then

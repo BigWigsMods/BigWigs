@@ -12,7 +12,6 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local nextApocalypseProtocol = 0
 local mobTable = {
 	[123906] = {}, -- Garothi Annihilator
 	[123929] = {}, -- Garothi Demolisher
@@ -23,7 +22,7 @@ local mobCount = {
 	[123929] = 0, -- Garothi Demolisher
 	[123921] = 0, -- Garothi Decimator
 }
-
+local apocalypseCount = 1
 local empBomb = nil
 local empRuiner = nil
 local empStrike = nil
@@ -115,14 +114,14 @@ function mod:OnEngage()
 	empBomb = nil
 	empRuiner = nil
 	empStrike = nil
+	apocalypseCount = 1
 
 	self:Bar(254919, 5.5) -- Forging Strike
 	self:Bar(248214, 12.5) -- Diabolic Bomb
 	self:Bar(254926, 14.5) -- Reverberating Strike
 	self:Bar(246833, 25) -- Ruiner
 
-	nextApocalypseProtocol = GetTime() + 37.5
-	self:Bar(246516, 37.5) -- Apocalypse Protocol
+	self:Bar(246516, 37.5, CL.count:format(self:SpellName(246516), apocalypseCount)) -- Apocalypse Protocol
 end
 
 --------------------------------------------------------------------------------
@@ -160,10 +159,7 @@ end
 --[[ Stage: Deployment ]]--
 function mod:ForgingStrike(args)
 	self:Message(args.spellId, "Attention", "Alert")
-	local cooldown = 14.5
-	if nextApocalypseProtocol > GetTime() + cooldown then
-		self:CDBar(args.spellId, cooldown)
-	end
+	self:CDBar(args.spellId, 14.5)
 end
 
 function mod:ForgingStrikeApplied(args)
@@ -182,51 +178,63 @@ do
 
 	function mod:ReverberatingStrike(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		local cooldown = 30
-		if nextApocalypseProtocol > GetTime() + cooldown then
-			self:CDBar(args.spellId, cooldown, empStrike and L.empowered:format(args.spellName))
-		end
+		self:CDBar(args.spellId, 30, empStrike and L.empowered:format(args.spellName))
 	end
 end
 
 function mod:DiabolicBomb(args)
 	self:Message(args.spellId, "Important", "Alarm")
-	local cooldown = 20.5
-	if nextApocalypseProtocol > GetTime() + cooldown then
-		self:CDBar(args.spellId, cooldown, empBomb and L.empowered:format(args.spellName))
-	end
+	self:CDBar(args.spellId, 20.5, empBomb and L.empowered:format(args.spellName))
 end
 
 function mod:Ruiner(args)
 	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 9)
-	local cooldown = 30
-	if nextApocalypseProtocol > GetTime() + cooldown then
-		self:CDBar(args.spellId, cooldown, empRuiner and L.empowered:format(args.spellName))
-	end
+	self:CDBar(args.spellId, 30, empRuiner and L.empowered:format(args.spellName))
 end
 
 --[[ Stage: Construction ]]--
-function mod:ApocalypseProtocol(args)
-	self:StopBar(254919) -- Forging Strike
-	self:StopBar(248214) -- Diabolic Bomb
-	self:StopBar(254926) -- Reverberating Strike
-	self:StopBar(246833) -- Ruiner
-	self:StopBar(L.empowered:format(self:SpellName(248214))) -- (E) Diabolic Bomb
-	self:StopBar(L.empowered:format(self:SpellName(254926))) -- (E) Reverberating Strike
-	self:StopBar(L.empowered:format(self:SpellName(246833))) -- (E) Ruiner
-	self:Message(args.spellId, "Positive", "Long")
-	self:CastBar(args.spellId, 40)
-	nextApocalypseProtocol = GetTime() + 120
-	self:Bar(args.spellId, 120)
-end
+do
+	local forginTimeLeft, bombTimeLeft, reverberatingTimeLeft, ruinerTimeLeft = 0, 0, 0, 0
+	local function restartTimers()
+		forginTimeLeft = forginTimeLeft + 10
+		bombTimeLeft = bombTimeLeft + 10
+		reverberatingTimeLeft = reverberatingTimeLeft + 10
+		ruinerTimeLeft = ruinerTimeLeft + 10
 
-function mod:ApocalypseProtocolOver(args)
-	self:Message(args.spellId, "Neutral", "Info", CL.over:format(args.spellName))
-	self:Bar(248214, 3, empBomb and L.empowered:format(self:SpellName(248214))) -- Diabolic Bomb
-	self:Bar(254919, 7.5) -- Forging Strike
-	self:Bar(246833, 12.5, empRuiner and L.empowered:format(self:SpellName(246833))) -- Ruiner
-	self:Bar(254926, 24.5, empStrike and L.empowered:format(self:SpellName(254926))) -- Reverberating Strike
+		mod:Message(246516, "Neutral", "Info", CL.soon:format(CL.stage:format(1)), false)
+		mod:CDBar(254919, forginTimeLeft)  -- Forging Strike
+		mod:CDBar(248214, bombTimeLeft, empBomb and L.empowered:format(mod:SpellName(248214))) -- Diabolic Bomb
+		mod:CDBar(254926, reverberatingTimeLeft, empStrike and L.empowered:format(mod:SpellName(254926))) -- Reverberating Strike
+		mod:CDBar(246833, ruinerTimeLeft, empRuiner and L.empowered:format(mod:SpellName(246833))) -- Ruiner
+	end
+
+	function mod:ApocalypseProtocol(args)
+		forginTimeLeft = self:BarTimeLeft(254919) -- Forging Strike
+		bombTimeLeft = empBomb and self:BarTimeLeft(L.empowered:format(self:SpellName(248214))) or self:BarTimeLeft(248214) -- Diabolic Bomb
+		reverberatingTimeLeft = empStrike and self:BarTimeLeft(L.empowered:format(self:SpellName(254926))) or self:BarTimeLeft(254926) -- Reverberating Strike
+		ruinerTimeLeft = empRuiner and self:BarTimeLeft(L.empowered:format(self:SpellName(246833))) or self:BarTimeLeft(246833) -- Ruiner
+
+		self:StopBar(254919) -- Forging Strike
+		self:StopBar(248214) -- Diabolic Bomb
+		self:StopBar(254926) -- Reverberating Strike
+		self:StopBar(246833) -- Ruiner
+		self:StopBar(L.empowered:format(self:SpellName(248214))) -- (E) Diabolic Bomb
+		self:StopBar(L.empowered:format(self:SpellName(254926))) -- (E) Reverberating Strike
+		self:StopBar(L.empowered:format(self:SpellName(246833))) -- (E) Ruiner
+
+		mod:ScheduleTimer(restartTimers, 30) -- 10 seconds before end
+
+		self:Message(args.spellId, "Positive", "Long", CL.count:format(args.spellName, apocalypseCount))
+		self:CastBar(args.spellId, 40, CL.count:format(args.spellName, apocalypseCount))
+		self:StopBar(CL.count:format(args.spellName, apocalypseCount))
+		apocalypseCount = apocalypseCount + 1
+		self:Bar(args.spellId, 120, CL.count:format(args.spellName, apocalypseCount))
+	end
+
+	function mod:ApocalypseProtocolOver(args)
+		self:Message(args.spellId, "Neutral", "Info", CL.over:format(CL.count:format(args.spellName, apocalypseCount-1)))
+	end
 end
 
 --[[ Adds ]]--

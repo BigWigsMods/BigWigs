@@ -68,15 +68,15 @@ local timersMythic = {
 	},
 	[4] = {
 		-- Tortured Rage
-		[257296] = {60, 40.0, 50.0, 30.0, 35.0, 10.0, 8.0, 35.0, 10.0, 8.0, 35.0},
+		[257296] = {40, 40, 50, 30, 35, 10, 8, 35, 10, 8, 35},
 		-- Sargeras Gaze
-		[258068] = {33.4, 75, 70, 53, 53},
+		[258068] = {23, 75, 70, 53, 53},
 		-- Sentence of Sargeras
 		[257966] = {53, 57.0, 60.0, 53, 53},
 		--Initialization Sequence
 		[256388] = {30, 47.5, 46, 45.5, 52.5, 52.5},
 		-- Edge of Annihilation
-		[258834] = {19.5, 5, 90, 5, 45, 5}
+		[258834] = {5, 5, 90, 5, 45, 5}
 	}
 }
 local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
@@ -122,7 +122,7 @@ if L then
 
 	L.gifts = "Gifts: %s (Sky), %s (Sea)"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tBurst:%s" -- short for Soulburst
-	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBomb:%s" -- short for Soulbomb
+	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t|T137002:0|tBomb (%d):%s - " -- short for Soulbomb
 
 	L.sky_say = "{rt5} Crit/Mast"
 	L.sea_say = "{rt6} Haste/Versa"
@@ -396,7 +396,7 @@ function mod:SweepingScythe(args)
 
 	local timer = 6.1
 	if stage == 1 and not self:Mythic() then
-		timer = timers[stage][args.spellId][sweepingScytheCounter]
+		timer = timers[stage][args.spellId][sweepingScytheCounter] or 5.5
 	elseif stage == 4 then -- normal mode only
 		timer = sweepingScytheCounter == 2 and 8.3 or sweepingScytheCounter % 2 == 0 and 7.1 or 6.1
 	end
@@ -490,53 +490,53 @@ function mod:GolgannethsWrath()
 end
 
 do
-	local burstList, bombName, isOnMe, scheduled = {}, nil, nil, nil
-
-	local function getPlayerIcon(unit)
-		return (UnitExists(unit) and GetRaidTargetIndex(unit) and ("|T%d:0|t"):format(137000+GetRaidTargetIndex(unit))) or " "
-	end
+	local burstList, bombName, isOnMe, scheduled = {}, nil, 0, nil
 
 	local function announce(self)
-		if isOnMe == "burst" then
-			self:Message(250669, "Personal", "Alarm", CL.you:format(self:SpellName(250669) .. getPlayerIcon("player")))
-		elseif isOnMe == "bomb" then
-			self:Message(251570, "Personal", "Warning", CL.you:format(self:SpellName(251570) .. getPlayerIcon("player")))
+		if isOnMe > 0 then -- Burst (3 or 7)
+			local positionNumber = isOnMe == 3 and 1 or 2 -- Either 1 or 2
+			self:Message(250669, "Personal", "Alarm", CL.you:format(CL.count_icon:format(self:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
+		elseif isOnMe < 0 then -- Bomb (-1)
+			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count:format("|T137002:0|t" .. self:SpellName(251570), soulBombCounter))) -- {2}Soulbomb (soulBombCounter) on you
 		end
 		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
-			if not isOnMe or self:GetOption("custom_off_always_show_combined") then
+			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
 				local msg = ""
 				if bombName then
-					msg = L.bomb:format(getPlayerIcon(bombName) .. self:ColorName(bombName)) .. " - "
+					msg = L.bomb:format(soulBombCounter, self:ColorName(bombName))
 				end
+
 				local burstMsg = ""
-				for _, player in pairs(burstList) do
-					burstMsg = burstMsg .. getPlayerIcon(player) .. self:ColorName(player) .. ","
+				for i=1, #burstList do
+					local player = burstList[i]
+					local icon = i == 1 and "|T137003:0|t" or "|T137007:0|t"
+					burstMsg = burstMsg .. icon .. self:ColorName(player) .. (i == #burstList and "" or ",")
 				end
-				msg = msg .. L.burst:format(burstMsg:sub(0, burstMsg:len()-1))
+				msg = msg .. L.burst:format(burstMsg)
+
 				self:Message("combinedBurstAndBomb", "Important", nil, msg, false)
 			end
 		else
-			if isOnMe ~= "burst" then
-				self:TargetMessage(250669, self:ColorName(burstList), "Important")
+			if isOnMe > -1 then -- No bomb on you (0, 3 or 7)
+				self:TargetMessage(251570, bombName, "Urgent", nil, CL.count:format(self:SpellName(251570), soulBombCounter))
 			end
-			if isOnMe ~="bomb" then
-				self:TargetMessage(251570, bombName, "Urgent")
+			if isOnMe < 3 then -- No burst on you (0 or -1)
+				self:TargetMessage(250669, self:ColorName(burstList), "Important")
 			end
 		end
 		wipe(burstList)
 		scheduled = nil
 		bombName = nil
-		isOnMe = nil
+		isOnMe = 0
 	end
 
 	function mod:Soulburst(args)
 		burstList[#burstList+1] = args.destName
 		if self:Me(args.destGUID) then
-			local icon = #burstList == 1 and 3 or 7
-			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, icon)
-			isOnMe = "burst"
+			isOnMe = #burstList == 1 and 3 or 7 -- Soulburst on you (3 or 7)
+			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, isOnMe)
 			if not checkForFearHelp(self, #burstList == 1 and 3 or 7) then
-				self:Say(args.spellId, CL.count_rticon:format(args.spellName, #burstList, icon))
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, #burstList, isOnMe))
 			end
 		end
 		if #burstList == 1 then
@@ -548,7 +548,7 @@ do
 				SetRaidTarget(args.destName, 3)
 			end
 		elseif self:GetOption(burstMarker) then
-				SetRaidTarget(args.destName, 7)
+			SetRaidTarget(args.destName, 7)
 		end
 	end
 
@@ -564,9 +564,9 @@ do
 	function mod:Soulbomb(args)
 		if self:Me(args.destGUID) then
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, 2)
-			isOnMe = "bomb"
+			isOnMe = -1 -- Soulbomb on you (-1)
 			if not checkForFearHelp(self, 2) then
-				self:Say(args.spellId, CL.count_rticon:format(args.spellName, 1, 2))
+				self:Say(args.spellId, args.spellName .. " {rt2}")
 			end
 		end
 
@@ -606,7 +606,9 @@ end
 function mod:AvatarofAggramar(args)
 	self:TargetMessage(args.spellId, args.destName, "Positive", "Long")
 	avatarCounter = avatarCounter + 1
-	self:Bar(args.spellId, 60, CL.count:format(args.spellName, avatarCounter))
+	if stage == 2 then -- Don't trigger if it procs after stage 3 RP has started
+		self:Bar(args.spellId, 60, CL.count:format(args.spellName, avatarCounter))
+	end
 end
 
 do
@@ -748,14 +750,6 @@ end
 function mod:EndofAllThings(args)
 	self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 15)
-	if self:Mythic() then
-		annihilationCount = 1
-		sargerasGazeCount = 1
-		sentenceofSargerasCount = 1
-		sentenceCast = nil
-		self:Bar(258068, timers[stage][258068][sargerasGazeCount], CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
-		self:StartScytheTimer(timers[stage][258834][annihilationCount])
-	end
 end
 
 function mod:EndofAllThingsInterupted(args)
@@ -767,7 +761,13 @@ function mod:EndofAllThingsInterupted(args)
 		sweepingScytheCounter = 1
 
 		if self:Mythic() then
-			self:Bar(258838, 5.1) -- Soulrending Scythe
+			annihilationCount = 1
+			sargerasGazeCount = 1
+			sentenceofSargerasCount = 1
+			sentenceCast = nil
+			self:Bar(258838, 3.8) -- Soulrending Scythe
+			self:Bar(258068, timers[stage][258068][sargerasGazeCount], CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
+			self:StartScytheTimer(timers[stage][258834][annihilationCount])
 			self:Bar(257966, timers[stage][257966][sentenceofSargerasCount], CL.count:format(self:SpellName(257966), sentenceofSargerasCount)) -- Sentence of Sargeras
 			self:ScheduleTimer("SentenceCheck", timers[stage][257966][sentenceofSargerasCount]+1)
 		else
@@ -779,8 +779,8 @@ function mod:EndofAllThingsInterupted(args)
 			self:Bar(251570, 20.1) -- Soulbomb
 			self:Bar(250669, 20.1) -- Soulburst
 		end
-		self:Bar(257296, self:Mythic() and 40 or 11) -- Tortured Rage
-		self:Bar(256388, self:Mythic() and 30 or 18.5, L.countx:format(self:SpellName(256388), initializationCount)) -- Initialization Sequence
+		self:Bar(257296, self:Mythic() and timers[stage][257296][torturedRageCounter] or 11) -- Tortured Rage
+		self:Bar(256388, self:Mythic() and timers[stage][256388][initializationCount] or 18.5, L.countx:format(self:SpellName(256388), initializationCount)) -- Initialization Sequence
 	end
 end
 
@@ -821,7 +821,7 @@ function mod:SargerasRage(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage(258068, args.destName, "Personal", "Warning", args.spellName, args.spellId)
 		self:Flash(258068)
-		self:Say(258068, self:SpellName(6621)) -- Rage
+		self:Say(258068, self:SpellName(6612)) -- Rage
 	end
 end
 

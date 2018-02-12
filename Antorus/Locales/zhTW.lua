@@ -21,7 +21,7 @@ if L then
 
 	L.gifts = "天之賜：%s，海之賜：%s"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|t驟發：%s" -- short for Soulburst
-	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t炸彈：%s" -- short for Soulbomb
+	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t|T137002:0|t炸彈（%d）：%s - " -- short for Soulbomb
 
 	L.sky_say = "{rt5}爆擊精通" -- short for Critical Strike/Mastery (stats)
 	L.sea_say = "{rt6}加速臨機" -- short for Haste/Versatility (stats)
@@ -99,4 +99,28 @@ if L then
 
 	L.decimationImpact = "殲滅生效"
 	L.decimationImpact_desc = "顯示殲滅飛彈著陸計時器。"
+end
+
+L = BigWigs:NewBossLocale("Antorus Trash", "zhTW")
+if L then
+	-- [[ Before Garothi Worldbreaker ]] --
+	--L.felguard = "Antoran Felguard"
+
+	-- [[ After Garothi Worldbreaker ]] --
+	--L.flameweaver = "Flameweaver"
+
+	-- [[ Before Antoran High Command ]] --
+	--L.ravager = "Bladesworn Ravager"
+	--L.deconix = "Imperator Deconix"
+	--L.clobex = "Clobex"
+
+	-- [[ Before Portal Keeper Hasabel ]] --
+	--L.stalker = "Hungering Stalker"
+
+	-- [[ Before Varimathras / Coven of Shivarra ]] --
+	--L.tarneth = "Tarneth"
+	--L.priestess = "Priestess of Delirium"
+
+	-- [[ Before Aggramar ]] --
+	--L.aedis = "Dark Keeper Aedis"
 end
