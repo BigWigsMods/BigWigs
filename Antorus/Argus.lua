@@ -141,7 +141,7 @@ end
 local seaMarker = mod:AddMarkerOption(false, "player", 5, 255594, 5, 6) -- Sky and Sea
 local burstMarker = mod:AddMarkerOption(false, "player", 3, 250669, 3, 7) -- Soul Burst
 local bombMarker = mod:AddMarkerOption(false, "player", 2, 251570, 2) -- Soul Bomb
-local sentenceMarker = mod:AddMarkerOption(false, "player", 1, 251570, 1, 4) -- Sentence of Sargeras
+local sentenceMarker = mod:AddMarkerOption(false, "player", 1, 257966, 1, 4) -- Sentence of Sargeras
 function mod:GetOptions()
 	return {
 		"stages",
