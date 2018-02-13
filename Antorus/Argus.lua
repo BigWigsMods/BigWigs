@@ -141,6 +141,7 @@ end
 local seaMarker = mod:AddMarkerOption(false, "player", 5, 255594, 5, 6) -- Sky and Sea
 local burstMarker = mod:AddMarkerOption(false, "player", 3, 250669, 3, 7) -- Soul Burst
 local bombMarker = mod:AddMarkerOption(false, "player", 2, 251570, 2) -- Soul Bomb
+local sentenceMarker = mod:AddMarkerOption(false, "player", 1, 251570, 1, 4) -- Sentence of Sargeras
 function mod:GetOptions()
 	return {
 		"stages",
@@ -186,6 +187,7 @@ function mod:GetOptions()
 		{"fear_help", "SAY"},
 		257911, -- Unleased Rage
 		{257966, "FLASH"}, -- Sentence of Sargeras
+		sentenceMarker,
 		258838, -- Soulrending Scythe
 		258834, -- Edge of Annihilation
 	},{
@@ -254,6 +256,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SargerasFear", 257931)
 	self:Log("SPELL_AURA_APPLIED", "SargerasRage", 257869)
 	self:Log("SPELL_AURA_APPLIED", "SentenceofSargeras", 257966)
+	self:Log("SPELL_AURA_REMOVED", "SentenceofSargerasRemoved", 257966)
 	self:Log("SPELL_CAST_START", "SoulrendingScythe", 258838)
 	self:Log("SPELL_AURA_APPLIED", "SoulrendingScytheStack", 258838)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SoulrendingScytheStack", 258838)
@@ -769,7 +772,6 @@ function mod:EndofAllThingsInterupted(args)
 			self:Bar(258068, timers[stage][258068][sargerasGazeCount], CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
 			self:StartScytheTimer(timers[stage][258834][annihilationCount])
 			self:Bar(257966, timers[stage][257966][sentenceofSargerasCount], CL.count:format(self:SpellName(257966), sentenceofSargerasCount)) -- Sentence of Sargeras
-			self:ScheduleTimer("SentenceCheck", timers[stage][257966][sentenceofSargerasCount]+1)
 		else
 			if self:Easy() then
 				self:Bar(248499, 5.1) -- Sweeping Scythe
@@ -832,22 +834,6 @@ function mod:SargerasFear(args)
 	end
 end
 
-function mod:SentenceCheck()
-	if not sentenceCast then
-		self:Message(257966, "Urgent", nil)
-		sentenceofSargerasCount = sentenceofSargerasCount + 1
-		if timers[stage][257966][sentenceofSargerasCount] then
-			self:Bar(257966, (timers[stage][257966][sentenceofSargerasCount]-1), CL.count:format(self:SpellName(257966), sentenceofSargerasCount))
-		else
-			self:Bar(257966, nil, CL.count:format(self:SpellName(257966), sentenceofSargerasCount))
-		end
-	end
-	sentenceCast = nil
-	if timers[stage][257966][sentenceofSargerasCount] then
-		self:ScheduleTimer("SentenceCheck", timers[stage][257966][sentenceofSargerasCount])
-	end
-end
-
 do
 	local playerList = mod:NewTargetList()
 	function mod:SentenceofSargeras(args)
@@ -861,7 +847,18 @@ do
 			sentenceofSargerasCount = sentenceofSargerasCount + 1
 			sentenceCast = true
 			self:Bar(args.spellId, timers[stage][args.spellId][sentenceofSargerasCount], CL.count:format(args.spellName, sentenceofSargerasCount))
+			if self:GetOption(sentenceMarker) then
+				SetRaidTarget(args.destName, 1)
+			end
+		elseif self:GetOption(sentenceMarker) then
+			SetRaidTarget(args.destName, 4)
 		end
+	end
+end
+
+function mod:SentenceofSargerasRemoved(args)
+	if self:GetOption(sentenceMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
