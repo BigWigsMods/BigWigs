@@ -38,7 +38,6 @@ local vulnerabilityIcons = {
 }
 local annihilationCount = 0
 local sentenceofSargerasCount = 0
-local sentenceCast = nil
 
 local timersHeroic = {
 	[1] = { -- Stage
@@ -767,7 +766,6 @@ function mod:EndofAllThingsInterupted(args)
 			annihilationCount = 1
 			sargerasGazeCount = 1
 			sentenceofSargerasCount = 1
-			sentenceCast = nil
 			self:Bar(258838, 3.8) -- Soulrending Scythe
 			self:Bar(258068, timers[stage][258068][sargerasGazeCount], CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
 			self:StartScytheTimer(timers[stage][258834][annihilationCount])
@@ -845,7 +843,6 @@ do
 		if #playerList == 1 then
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
 			sentenceofSargerasCount = sentenceofSargerasCount + 1
-			sentenceCast = true
 			self:Bar(args.spellId, timers[stage][args.spellId][sentenceofSargerasCount], CL.count:format(args.spellName, sentenceofSargerasCount))
 			if self:GetOption(sentenceMarker) then
 				SetRaidTarget(args.destName, 1)
