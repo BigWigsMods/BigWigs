@@ -833,15 +833,36 @@ function mod:SargerasFear(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList, isOnMe = {}, 0
+
+	local function announce(self, spellId, spellName)
+		local meOnly = self:CheckOption(spellId, "ME_ONLY")
+
+		if isOnMe > 0 and (meOnly or #playerList == 1) then
+			self:Message(251570, "Personal", "Warning", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe == 1 and 1 or 4, spellName)))
+		elseif not meOnly then
+			local msg = ""
+			for i=1, #playerList do
+				local icon = i == 1 and "|T137001:0|t" or "|T137004:0|t"
+				msg = msg .. icon .. self:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
+			end
+
+			self:Message(251570, "Urgent", isOnMe > 0 and "Warning", CL.other:format(spellName, msg))
+		end
+
+		wipe(playerList)
+		isOnMe = 0
+	end
+
 	function mod:SentenceofSargeras(args)
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
-			self:Flash(args.spellId)
+			isOnMe = #playerList
+			self:Flash(args.spellId, isOnMe == 1 and 1 or 4)
 			checkForFearHelp(self)
 		end
-		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
+			self:ScheduleTimer(announce, 0.3, self, args.spellId, args.spellName)
 			sentenceofSargerasCount = sentenceofSargerasCount + 1
 			self:Bar(args.spellId, timers[stage][args.spellId][sentenceofSargerasCount], CL.count:format(args.spellName, sentenceofSargerasCount))
 			if self:GetOption(sentenceMarker) then
