@@ -839,7 +839,7 @@ do
 		local meOnly = self:CheckOption(spellId, "ME_ONLY")
 
 		if isOnMe > 0 and (meOnly or #playerList == 1) then
-			self:Message(251570, "Personal", "Warning", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe == 1 and 1 or 4, spellName)))
+			self:Message(spellId, "Personal", "Warning", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe == 1 and 1 or 4, spellName)))
 		elseif not meOnly then
 			local msg = ""
 			for i=1, #playerList do
@@ -847,7 +847,7 @@ do
 				msg = msg .. icon .. self:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
 			end
 
-			self:Message(251570, "Urgent", isOnMe > 0 and "Warning", CL.other:format(spellName, msg))
+			self:Message(spellId, "Urgent", isOnMe > 0 and "Warning", CL.other:format(spellName, msg))
 		end
 
 		wipe(playerList)
