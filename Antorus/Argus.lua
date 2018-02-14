@@ -872,11 +872,11 @@ do
 			SetRaidTarget(args.destName, 4)
 		end
 	end
-end
 
-function mod:SentenceofSargerasRemoved(args)
-	if self:GetOption(sentenceMarker) then
-		SetRaidTarget(args.destName, 0)
+	function mod:SentenceofSargerasRemoved(args)
+		if self:GetOption(sentenceMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 	end
 end
 
