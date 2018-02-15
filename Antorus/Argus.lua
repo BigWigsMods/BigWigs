@@ -499,7 +499,7 @@ do
 			local positionNumber = isOnMe == 3 and 1 or 2 -- Either 1 or 2
 			self:Message(250669, "Personal", "Alarm", CL.you:format(CL.count_icon:format(self:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
 		elseif isOnMe < 0 then -- Bomb (-1)
-			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count:format("|T137002:0|t" .. self:SpellName(251570), soulBombCounter))) -- {2}Soulbomb (soulBombCounter) on you
+			self:Message(251570, "Personal", "Warning", CL.you:format(CL.count:format("|T137002:0|t" .. self:SpellName(251570), soulBombCounter - 1))) -- {2}Soulbomb (soulBombCounter) on you
 		end
 		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
 			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
@@ -771,12 +771,13 @@ function mod:EndofAllThingsInterupted(args)
 			self:StartScytheTimer(timers[stage][258834][annihilationCount])
 			self:Bar(257966, timers[stage][257966][sentenceofSargerasCount], CL.count:format(self:SpellName(257966), sentenceofSargerasCount)) -- Sentence of Sargeras
 		else
+			soulBombCounter = 1
 			if self:Easy() then
 				self:Bar(248499, 5.1) -- Sweeping Scythe
 			else
 				self:Bar(258039, 6) -- Deadly Scythe
 			end
-			self:Bar(251570, 20.1) -- Soulbomb
+			self:Bar(251570, 20.1, CL.count:format(self:SpellName(251570), soulBombCounter)) -- Soulbomb
 			self:Bar(250669, 20.1) -- Soulburst
 		end
 		self:Bar(257296, self:Mythic() and timers[stage][257296][torturedRageCounter] or 11) -- Tortured Rage
