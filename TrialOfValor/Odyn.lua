@@ -291,9 +291,7 @@ do
 		local t = self:Easy() and 5 or 4
 		if self:Me(guid) then
 			self:Say(228162)
-			self:ScheduleTimer("Say", t-3, 228162, 3, true)
-			self:ScheduleTimer("Say", t-2, 228162, 2, true)
-			self:ScheduleTimer("Say", t-1, 228162, 1, true)
+			self:SayCountdown(228162, t)
 		end
 		self:PrimaryIcon(228162, player)
 		self:TargetMessage(228162, player, "Important", "Alarm", nil, nil, true)

@@ -399,14 +399,15 @@ function mod:HeavenlyCrash(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
-		self:ScheduleTimer("Say", t-3, args.spellId, 3, true)
-		self:ScheduleTimer("Say", t-2, args.spellId, 2, true)
-		self:ScheduleTimer("Say", t-1, args.spellId, 1, true)
+		self:SayCountdown(args.spellId, t)
 	end
 end
 
 function mod:HeavenlyCrashRemoved(args)
 	self:StopBar(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 --[[ Aluriel to Telarn ]]--

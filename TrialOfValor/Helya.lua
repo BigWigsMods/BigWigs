@@ -515,9 +515,7 @@ do
 			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
 			local t = expires - GetTime()
 			self:TargetBar(args.spellId, t, args.destName)
-			self:ScheduleTimer("Say", t-3, args.spellId, 3, true)
-			self:ScheduleTimer("Say", t-2, args.spellId, 2, true)
-			self:ScheduleTimer("Say", t-1, args.spellId, 1, true)
+			self:SayCountdown(args.spellId, t)
 			self:OpenProximity(args.spellId, 5)
 		end
 
@@ -532,6 +530,7 @@ do
 			isOnMe = nil
 			self:StopBar(args.spellName, args.destName)
 			self:CloseProximity(args.spellId)
+			self:CancelSayCountdown(args.spellId)
 		end
 
 		tDeleteItem(proxList, args.destName)

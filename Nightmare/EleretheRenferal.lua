@@ -142,9 +142,7 @@ do
 					local _, _, _, _, _, _, expires = UnitDebuff(unit, spellName)
 					local remaining = expires-GetTime()
 					self:Bar(key, remaining, CL.you:format(spellName))
-					self:ScheduleTimer("Say", remaining-3, key, 3, true)
-					self:ScheduleTimer("Say", remaining-2, key, 2, true)
-					self:ScheduleTimer("Say", remaining-1, key, 1, true)
+					self:SayCountdown(key, remaining)
 				else
 					if scheduled then
 						self:CancelTimer(scheduled)
