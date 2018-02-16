@@ -15,8 +15,6 @@ mod.respawnTime = 50
 
 local phase = 1
 local mobCollector = {}
-local gravPullSayTimers = {}
-local icyEjectionSayTimers = {}
 local ejectionCount = 1
 local novaCount = 1
 local timers = {
@@ -168,8 +166,6 @@ function mod:OnEngage()
 	voidCount = 1
 	grandCast = nil
 	wipe(mobCollector)
-	wipe(gravPullSayTimers)
-	wipe(icyEjectionSayTimers)
 	self:Bar(206464, 12.5) -- Coronal Ejection
 	if self:Mythic() then
 		self:CDBar(205408, 15) -- Grand Conjunction
@@ -296,19 +292,15 @@ function mod:GravitationalPull(args)
 	self:TargetBar(args.spellId, remaining, args.destName)
 
 	if self:Me(args.destGUID) then
-		gravPullSayTimers[1] = self:ScheduleTimer("Say", remaining-3, args.spellId, 3, true)
-		gravPullSayTimers[2] = self:ScheduleTimer("Say", remaining-2, args.spellId, 2, true)
-		gravPullSayTimers[3] = self:ScheduleTimer("Say", remaining-1, args.spellId, 1, true)
+		self:SayCountdown(args.spellId, remaining)
 	end
 end
 
 function mod:GravitationalPullRemoved(args)
 	if self:Me(args.destGUID) then
-		for i = #gravPullSayTimers, 1, -1 do
-			self:CancelTimer(gravPullSayTimers[i])
-			gravPullSayTimers[i] = nil
-		end
+		self:CancelSayCountdown(args.spellId)
 	end
+	self:StopBar(args.spellId, args.destName)
 end
 
 function mod:IcyEjection(args)
@@ -326,9 +318,7 @@ function mod:IcyEjectionApplied(args)
 		self:OpenProximity(args.spellId, 8)
 		self:TargetBar(args.spellId, 10, args.destName)
 		if not self:LFR() then
-			icyEjectionSayTimers[1] = self:ScheduleTimer("Say", 7, args.spellId, 3, true)
-			icyEjectionSayTimers[2] = self:ScheduleTimer("Say", 8, args.spellId, 2, true)
-			icyEjectionSayTimers[3] = self:ScheduleTimer("Say", 9, args.spellId, 1, true)
+			self:SayCountdown(args.spellId, 10)
 		end
 	end
 end
@@ -336,10 +326,8 @@ end
 function mod:IcyEjectionRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CloseProximity(args.spellId)
-		for i = #icyEjectionSayTimers, 1, -1 do
-			self:CancelTimer(icyEjectionSayTimers[i])
-			icyEjectionSayTimers[i] = nil
-		end
+		self:CancelSayCountdown(args.spellId)
+		self:StopBar(args.spellId, args.destName)
 	end
 end
 

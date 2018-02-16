@@ -21,7 +21,7 @@ if L then
 
 	L.gifts = "Dons : %s (cieux), %s (mers)"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tExplosion :%s" -- short for Soulburst
-	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|t|T137002:0|tBombe (%d):%s - " -- short for Soulbomb
+	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tBombe (%d):|T137002:0|t%s - " -- short for Soulbomb
 
 	L.sky_say = "{rt5} Crit/Maît" -- short for Critical Strike/Mastery (stats)
 	L.sea_say = "{rt6} Hâte/Poly" -- short for Haste/Versatility (stats)
@@ -104,23 +104,23 @@ end
 L = BigWigs:NewBossLocale("Antorus Trash", "frFR")
 if L then
 	-- [[ Before Garothi Worldbreaker ]] --
-	--L.felguard = "Antoran Felguard"
+	L.felguard = "Gangregarde antoréen"
 
 	-- [[ After Garothi Worldbreaker ]] --
-	--L.flameweaver = "Flameweaver"
+	L.flameweaver = "Tisseur de flammes"
 
 	-- [[ Before Antoran High Command ]] --
-	--L.ravager = "Bladesworn Ravager"
-	--L.deconix = "Imperator Deconix"
-	--L.clobex = "Clobex"
+	L.ravager = "Ravageur ligelame"
+	L.deconix = "Imperator Deconix"
+	L.clobex = "Clobex"
 
 	-- [[ Before Portal Keeper Hasabel ]] --
-	--L.stalker = "Hungering Stalker"
+	L.stalker = "Traqueur affamé"
 
 	-- [[ Before Varimathras / Coven of Shivarra ]] --
-	--L.tarneth = "Tarneth"
-	--L.priestess = "Priestess of Delirium"
+	L.tarneth = "Tarneth"
+	L.priestess = "Prêtresse du délire"
 
 	-- [[ Before Aggramar ]] --
-	--L.aedis = "Dark Keeper Aedis"
+	L.aedis = "Gardien noir Aedis"
 end

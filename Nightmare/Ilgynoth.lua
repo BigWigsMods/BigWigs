@@ -485,9 +485,7 @@ do
 			self:Say(args.spellId)
 			self:TargetBar(args.spellId, 8, args.destName)
 			self:OpenProximity(args.spellId, 11)
-			self:ScheduleTimer("Say", 5, args.spellId, 3, true)
-			self:ScheduleTimer("Say", 6, args.spellId, 2, true)
-			self:ScheduleTimer("Say", 7, args.spellId, 1, true)
+			self:SayCountdown(args.spellId, 8)
 		end
 
 		proxList[#proxList+1] = args.destName
@@ -506,6 +504,7 @@ do
 			isOnMe = nil
 			self:StopBar(args.spellName, args.destName)
 			self:CloseProximity(args.spellId)
+			self:CancelSayCountdown(args.spellId)
 		end
 
 		tDeleteItem(proxList, args.destName)
