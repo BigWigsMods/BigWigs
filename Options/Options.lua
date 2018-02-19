@@ -928,9 +928,9 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = IsTestBuild() and "LittleWigs_BattleForAzeroth" or "LittleWigs_Legion" -- XXX Temp
+				defaultHeader =  C_ChatInfo and "LittleWigs_BattleForAzeroth" or "LittleWigs_Legion" -- XXX Temp
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				for i = 1, IsTestBuild() and 8 or 7 do -- XXX Temp
+				for i = 1,  C_ChatInfo and 8 or 7 do -- XXX Temp
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
