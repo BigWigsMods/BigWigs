@@ -216,7 +216,7 @@ do
 	function mod:Whirlwind(args)
 		if self:Me(args.destGUID) then
 			local t = GetTime()
-			if (self:Melee() and t-prev > 6) or t-prev > 1.5 then
+			if (not self:Melee() and t-prev > 1.5) or t-prev > 6 then
 				prev = t
 				self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 			end
