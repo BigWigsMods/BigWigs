@@ -1,4 +1,3 @@
-
 local L = BigWigsAPI:GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
@@ -106,6 +105,7 @@ do
 	local lw_mop = "LittleWigs_MistsOfPandaria"
 	local lw_wod = "LittleWigs_WarlordsOfDraenor"
 	local lw_l = "LittleWigs_Legion"
+	local lw_bfa = "LittleWigs_BattleForAzeroth"
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -234,6 +234,10 @@ do
 		[1477] = lw_l, -- Halls of Valor
 		[1493] = lw_l, -- Vault of the Wardens
 		[1753] = lw_l, -- Seat of the Triumvirate
+		--[[ LittleWigs: Battle for Azeroth ]]--
+		[1763] = lw_bfa, -- Atal'Dazar
+		[1754] = lw_bfa, -- Freehold
+		[1771] = lw_bfa, -- Tol Dagor
 	}
 
 	public.zoneTblWorld = {

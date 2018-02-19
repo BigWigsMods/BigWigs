@@ -852,6 +852,7 @@ do
 		"MistsOfPandaria",
 		"WarlordsOfDraenor",
 		"Legion",
+		"BattleForAzeroth"
 	}
 
 	local statusTable = {}
@@ -927,9 +928,9 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = "LittleWigs_Legion"
+				defaultHeader = IsTestBuild() and "LittleWigs_BattleForAzeroth" or "LittleWigs_Legion" -- XXX Temp
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				for i = 1, 7 do
+				for i = 1, IsTestBuild() and 8 or 7 do -- XXX Temp
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
