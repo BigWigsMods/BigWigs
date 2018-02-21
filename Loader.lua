@@ -3,6 +3,11 @@ local L = BigWigsAPI:GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
 
+if C_ChatInfo then -- XXX Battle For Azeroth
+	SendAddonMessage = C_ChatInfo.SendAddonMessage
+	RegisterAddonMessagePrefix = C_ChatInfo.RegisterAddonMessagePrefix
+end
+
 -----------------------------------------------------------------------
 -- Generate our version variables
 --
