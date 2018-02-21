@@ -11,6 +11,7 @@ if not plugin then return end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
+local SendAddonMessage = BigWigsLoader.SendAddonMessage
 local isLogging = false
 
 -------------------------------------------------------------------------------
@@ -185,7 +186,7 @@ end
 function plugin:BigWigs_OnBossWin()
 	if isLogging then
 		isLogging = false
-		self:ScheduleTimer(LoggingCombat, 1, isLogging) -- Delay to prevent any death events being cut out the log
+		self:ScheduleTimer(LoggingCombat, 2, isLogging) -- Delay to prevent any death events being cut out the log
 	end
 end
 
