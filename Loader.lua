@@ -3,11 +3,6 @@ local L = BigWigsAPI:GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
 
-if C_ChatInfo then -- XXX Battle For Azeroth
-	SendAddonMessage = C_ChatInfo.SendAddonMessage
-	RegisterAddonMessagePrefix = C_ChatInfo.RegisterAddonMessagePrefix
-end
-
 -----------------------------------------------------------------------
 -- Generate our version variables
 --
@@ -58,7 +53,7 @@ end
 local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
-local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
+local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo and C_ChatInfo.SendAddonMessage or SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker -- XXX C_ChatInfo check for 8.0
 local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
 local GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID = GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID
 
@@ -621,9 +616,13 @@ function mod:ADDON_LOADED(addon)
 	RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
-	RegisterAddonMessagePrefix("BigWigs")
-	RegisterAddonMessagePrefix("D4") -- DBM
-
+	if C_ChatInfo then -- XXX 8.0
+		C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
+		C_ChatInfo.RegisterAddonMessagePrefix("D4") -- DBM
+	else
+		RegisterAddonMessagePrefix("BigWigs")
+		RegisterAddonMessagePrefix("D4") -- DBM
+	end
 	local icon = LibStub("LibDBIcon-1.0", true)
 	if icon and ldb then
 		if not BigWigsIconDB then
