@@ -43,7 +43,7 @@ local timersLFR = {
 
 local timersNormal = {
 	--[[ Rain of Fel ]]--
-	[248332] = {30, 31, 35, 45, 80, 50, 20, 35}, -- XXX vary a lot across logs
+	[248332] = {30, 31, 35, 45, 80, 50, 20, 35, 20}, -- XXX vary a lot across logs
 
 	--[[ Waves ]]--
 	["top"] = {
