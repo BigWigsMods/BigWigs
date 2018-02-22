@@ -644,7 +644,7 @@ function mod:TemporalBlast()
 			self:StopBar(CL.count:format(self:SpellName(250669), 2)) -- Soulburst (2)
 		end
 
-		self:Bar("stages", 16.6, CL.incoming:format(self:SpellName(-17070)), "achievement_boss_algalon_01") -- The Constellar Designates Incoming!
+		self:Bar("stages", 16.6, CL.adds, "achievement_boss_algalon_01") -- The Constellar Designates
 		self:Bar(-17077, self:Easy() and 30.5 or 26.3, nil, "inv_sword_2h_pandaraid_d_01") -- The Stellar Armory
 		self:Bar(252516, 27.3) -- The Discs of Norgannon
 		self:Bar(252729, self:Easy() and 38 or 30.4) -- Cosmic Ray
