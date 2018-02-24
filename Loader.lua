@@ -162,6 +162,7 @@ do
 		[1779] = l, -- Invasion Points
 
 		--[[ LittleWigs: Classic ]]--
+		[33] = lw_c, -- Shadowfang Keep
 		[36] = lw_c, -- Deadmines
 		--[[ LittleWigs: The Burning Crusade ]]--
 		[540] = lw_bc, -- Hellfire Citadel: The Shattered Halls
@@ -198,10 +199,15 @@ do
 		[668] = lw_wotlk, -- Halls of Reflection
 		[632] = lw_wotlk, -- The Forge of Souls
 		--[[ LittleWigs: Cataclysm ]]--
+		[568] = lw_cata, -- Zul'Aman
+		[859] = lw_cata, -- Zul'Gurub
 		[643] = lw_cata, -- Throne of the Tides
+		[644] = lw_cata, -- Halls of Origination
+		[645] = lw_cata, -- Blackrock Caverns
 		[755] = lw_cata, -- Lost City of the Tol'vir
 		[725] = lw_cata, -- The Stonecore
 		[938] = lw_cata, -- End Time
+		[939] = lw_cata, -- Well of Eternity
 		[657] = lw_cata, -- The Vortex Pinnacle
 		[670] = lw_cata, -- Grim Batol
 		--[[ LittleWigs: Mists of Pandaria ]]--
