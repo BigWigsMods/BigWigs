@@ -29,5 +29,8 @@
 
 <Include file="BrokenIsles\modules.xml"/>
 <Include file="BrokenIsles\locales.xml"/>
+
+<Include file="Uldir\modules.xml"/>
+<!--<Include file="TombOfSargeras\locales.xml"/>-->
 <!--@end-do-not-package@-->
 </Ui>

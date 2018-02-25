@@ -880,7 +880,7 @@ do
 		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
+		elseif value:match("^BigWigs_") and value ~= (C_ChatInfo and "BigWigs_BattleForAzeroth" or "BigWigs_Legion") and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
@@ -917,8 +917,8 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = "BigWigs_Legion"
-				for i = 1, 7 do
+				defaultHeader = C_ChatInfo and "BigWigs_BattleForAzeroth" or "BigWigs_Legion" -- XXX Temp
+				for i = 1, C_ChatInfo and 8 or 7 do -- XXX Temp
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
