@@ -1,0 +1,32 @@
+## Interface: 70300
+
+## Title: BigWigs [|cffeda55fUldir|r]
+## Title-deDE: BigWigs [|cffeda55fUldir|r]
+## Title-esES: BigWigs [|cffeda55fUldir|r]
+## Title-esMX: BigWigs [|cffeda55fUldir|r]
+## Title-frFR: BigWigs [|cffeda55fUldir|r]
+## Title-ruRU: BigWigs [|cffeda55fUldir|r]
+## Title-zhCN: BigWigs [|cffeda55fUldir|r]
+## Title-zhTW: BigWigs [|cffeda55fUldir|r]
+## Title-itIT: BigWigs [|cffeda55fUldir|r]
+## Title-ptBR: BigWigs [|cffeda55fUldir|r]
+## Title-koKR: BigWigs [|cffeda55fUldir|r]
+## Notes: BigWigs Uldir Modules
+## Notes-deDE: Uldir Modules
+## Notes-esES: Uldir Modules
+## Notes-esMX: Uldir Modules
+## Notes-frFR: Uldir Modules
+## Notes-ruRU: Uldir Modules
+## Notes-zhCN: Uldir Modules
+## Notes-zhTW: Uldir Modules
+## Notes-itIT: Uldir Modules
+## Notes-ptBR: Uldir Modules
+## Notes-koKR: Uldir Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 1861
+
+modules.xml
