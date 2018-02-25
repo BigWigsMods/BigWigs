@@ -247,7 +247,14 @@ do
 		--[[ LittleWigs: Battle for Azeroth ]]--
 		[1763] = lw_bfa, -- Atal'Dazar
 		[1754] = lw_bfa, -- Freehold
+		[1762] = lw_bfa, -- King's Rest
+		[1864] = lw_bfa, -- Shrine of the Storm
+		[1822] = lw_bfa, -- Siege of Boralus
+		[1877] = lw_bfa, -- Temple of Sethraliss
+		[1594] = lw_bfa, -- The Undermine
 		[1771] = lw_bfa, -- Tol Dagor
+		[1841] = lw_bfa, -- Underrot
+		[1862] = lw_bfa, -- Waycrest Manor
 	}
 
 	public.zoneTblWorld = {
