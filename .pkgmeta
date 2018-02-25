@@ -28,9 +28,9 @@ move-folders:
     BigWigs/TombOfSargeras: BigWigs_TombOfSargeras
     BigWigs/Antorus: BigWigs_Antorus
     BigWigs/ArgusInvasionPoints: BigWigs_ArgusInvasionPoints
-    BigWigs/Uldir: BigWigs_Uldir
 
 ignore:
+  - Uldir
   - .travis.yml
   - ldoc.ltp
   - ISSUE_TEMPLATE.md
