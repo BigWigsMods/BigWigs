@@ -192,8 +192,9 @@ end
 -- Event Handlers
 --
 
-function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L.warmup_trigger, nil, true) then
+		self:UnregisterEvent(event)
 		self:Bar("warmup", 42, CL.active, "achievement_boss_titanconstructshell")
 	end
 end

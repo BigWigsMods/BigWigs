@@ -352,8 +352,9 @@ end
 -- Event Handlers
 --
 
-function mod:Warmup(_, msg)
+function mod:Warmup(event, msg)
 	if msg == L.elisande_trigger then
+		self:UnregisterEvent(event)
 		self:Bar("boss_active", 68, L.boss_active, L.boss_active_icon)
 	end
 end

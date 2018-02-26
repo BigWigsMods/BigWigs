@@ -119,15 +119,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 245861, 246199)
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 245861, 246199)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 245861, 246199)
-	-- Bladestorm (Felsworn Ravager, Imperator Deconix)
-	self:Log("SPELL_DAMAGE", "GroundEffectDamage", 251612, 254512)
-	self:Log("SPELL_MISSED", "GroundEffectDamage", 251612, 254512)
 
 	-- [[ After Garothi Worldbreaker ]] --
 	self:Log("SPELL_AURA_APPLIED", "BoundByFel", 252621)
 	self:Death("FlameweaverDeath", 127233)
 
 	-- [[ Before Antoran High Command ]] --
+	self:Log("SPELL_DAMAGE", "Whirlwind", 251612, 254512) -- Felsworn Ravager, Imperator Deconix
+	self:Log("SPELL_MISSED", "Whirlwind", 251612, 254512)
+
 	self:Log("SPELL_CAST_START", "FearsomeLeap", 254500)
 	self:Death("DeconixDeath", 127723)
 	self:Log("SPELL_CAST_SUCCESS", "SoulburnCastSuccess", 253599)
@@ -211,6 +211,19 @@ do
 end
 
 -- [[ Before Antoran High Command ]] --
+do
+	local prev = 0
+	function mod:Whirlwind(args)
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if (not self:Melee() and t-prev > 1.5) or t-prev > 6 then
+				prev = t
+				self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			end
+		end
+	end
+end
+
 function mod:FearsomeLeap(args)
 	self:Message(args.spellId, "Important", self:Melee() and "Warning" or "Long", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 3)
