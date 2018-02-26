@@ -181,7 +181,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		self:Message(235907, "Attention", "Alert", spellName)
 		local t = stage == 2 and 15.8 or 30.5
 		local remaining = nextTormentedCries - GetTime()
-		if not stage == 2 and remaining < 30.5 and remaining > 0 then
+		if stage ~= 2 and remaining < 30.5 and remaining > 0 then
 			t = 65 + remaining -- Time Left + 60s channel + 5s~ cooldown
 		end
 		self:Bar(235907, t)
