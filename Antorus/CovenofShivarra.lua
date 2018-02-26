@@ -253,6 +253,9 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 				self:Bar(253520, 21.1) -- Fulminating Pulse
 			end
 			self:StopBar(self:SpellName(-15967)) -- Noura, Mother of Flame
+			if self:Mythic() then
+				self:CDBar("stages", 46, self:SpellName(-15968), "achievement_boss_argus_shivan") -- Asara, Mother of Night
+			end
 		else
 			self:StopBar(244899) -- Fiery Strike
 			self:StopBar(245627) -- Whirling Saber
@@ -265,6 +268,7 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 			if not self:Easy() then
 				self:Bar(252861, 28.4) -- Storm of Darkness
 			end
+			self:StopBar(self:SpellName(-15968)) -- Asara, Mother of Night
 		else
 			self:StopBar(246329) -- Shadow Blades
 			self:StopBar(252861) -- Storm of Darkness
@@ -278,7 +282,11 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 				self:Bar(253650, 30) -- Orb of Frost
 			end
 			self:StopBar(self:SpellName(-15969)) -- Diima, Mother of Gloom
-			self:CDBar("stages", 185, self:SpellName(-15967), "achievement_boss_argus_shivan") -- Noura, Mother of Flame
+			if self:Mythic() then
+				self:CDBar("stages", 46, self:SpellName(-16398), "achievement_boss_argus_shivan") -- Thu'raya, Mother of the Cosmos
+			else
+				self:CDBar("stages", 185, self:SpellName(-15967), "achievement_boss_argus_shivan") -- Noura, Mother of Flame
+			end
 		else
 			self:StopBar(245518) -- Flashfreeze
 			self:StopBar(245586) -- Chilled Blood
@@ -287,6 +295,11 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 	elseif self:MobId(UnitGUID(unit)) == 125436 then -- Thu'raya
 		if UnitCanAttack("player", unit) then
 			self:Message("stages", "Positive", "Long", self:SpellName(-16398), false) -- Thu'raya, Mother of the Cosmos
+			self:Bar(250757, 5.2) -- Cosmic Glare
+			self:StopBar(self:SpellName(-16398)) -- Thu'raya, Mother of the Cosmos
+			self:CDBar("stages", 142, self:SpellName(-15967), "achievement_boss_argus_shivan") -- Noura, Mother of Flame
+		else
+			self:StopBar(250757) -- Cosmic Glare
 		end
 	end
 end
