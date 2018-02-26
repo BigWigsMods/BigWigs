@@ -20,7 +20,6 @@ L.custom_start_s = "%s iniciado - %s en %d seg"
 L.duration = "%s durante %s sec"
 L.focus_only = "|cffff0000Alertas sólo para objetivos en Foco.|r "
 L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.hard = "Modo difícil"
 L.heroic = "Modo heroico"
 L.incoming = "%s inminente"
 L.intermission = "Intermedio"

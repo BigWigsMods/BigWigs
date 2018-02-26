@@ -20,7 +20,6 @@ L.custom_start_s = "Combattimento con %s iniziato - %s in %d sec"
 L.duration = "%s per %s sec"
 L.focus_only = "|cffff0000Avviso solo per i bersagli focus.|r "
 L.general = "Generali" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.hard = "Modalità Hard"
 L.heroic = "Modalità Eroica"
 L.incoming = "%s Tra Poco"
 L.intermission = "Intermezzo"

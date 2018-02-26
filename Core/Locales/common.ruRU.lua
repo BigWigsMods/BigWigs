@@ -20,7 +20,6 @@ L.custom_start_s = "%s вступает в бой - %s через %d сек"
 L.duration = "%s для %s сек"
 L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 L.general = "Общее" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.hard = "Сложный режим"
 L.heroic = "Героический режим"
 L.incoming = "%s на подходе"
 L.intermission = "Перерыв"

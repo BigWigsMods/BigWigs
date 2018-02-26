@@ -20,7 +20,6 @@ L.custom_start_s = "%1$s參戰 - %3$d秒後%2$s"
 L.duration = "%s持續%s秒"
 L.focus_only = "|cffff0000只限專注目標。|r "
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.hard = "困難模式"
 L.heroic = "英雄模式"
 L.incoming = "即將%s"
 L.intermission = "階段轉換"
