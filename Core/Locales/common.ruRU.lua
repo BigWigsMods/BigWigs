@@ -25,6 +25,7 @@ L.heroic = "Героический режим"
 L.incoming = "%s на подходе"
 L.intermission = "Перерыв"
 L.interrupted = "%s прервано"
+--L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
 L.mob_killed = "%s убит (%d/%d)"
 L.mob_remaining = "%s убит, %d осталось"
 L.mythic = "Эпохальный режим"

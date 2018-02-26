@@ -33,6 +33,7 @@ L.removed_from = "%2$s의 %1$s 제거됨"
 L.removed_by = "%2$s|1이;가; %1$s 제거함" -- spell removed by player
 L.incoming = "곧 %s"
 L.interrupted = "%s 시전 방해됨"
+--L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
 L.no = "%s 없음"
 L.intermission = "사잇단계"
 

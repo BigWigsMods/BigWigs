@@ -25,6 +25,7 @@ L.heroic = "英雄模式"
 L.incoming = "即将%s"
 L.intermission = "阶段转换"
 L.interrupted = "%s已打断"
+--L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
 L.mob_killed = "%s已击杀（%d/%d）"
 L.mob_remaining = "%s已击杀，%d剩余"
 L.mythic = "史诗模式"

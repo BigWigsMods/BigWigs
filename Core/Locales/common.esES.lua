@@ -25,6 +25,7 @@ L.heroic = "Modo heroico"
 L.incoming = "%s inminente"
 L.intermission = "Intermedio"
 L.interrupted = "%s interrumpido"
+--L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
 L.mob_killed = "%s muerto (%d/%d)"
 L.mob_remaining = "%s muerto, %d restantes"
 L.mythic = "Modo mítico"

@@ -32,6 +32,7 @@ L.removed_from = "%s Removed From %s"
 L.removed_by = "%s removed by %s" -- spell removed by player
 L.incoming = "%s Incoming"
 L.interrupted = "%s Interrupted"
+L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
 L.no = "No %s"
 L.intermission = "Intermission"
 

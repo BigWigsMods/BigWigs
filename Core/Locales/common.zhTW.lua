@@ -25,6 +25,7 @@ L.heroic = "英雄模式"
 L.incoming = "即將%s"
 L.intermission = "階段轉換"
 L.interrupted = "%s已打斷"
+--L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
 L.mob_killed = "%s已擊殺（%d/%d）"
 L.mob_remaining = "%s已擊殺，%d剩餘"
 L.mythic = "傳奇難度"
