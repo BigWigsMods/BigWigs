@@ -33,6 +33,7 @@ local updateProximity = nil
 local updateRealms = nil
 local armorAppliedTimer, armorRemovedTimer = nil, nil
 local soulList = mod:NewTargetList()
+local nextWailingSouls, nextTormentedCries = 0, 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -141,6 +142,7 @@ function mod:OnEngage()
 	wailingSoulsCounter = 1
 	spearCount = 1
 	armorAppliedTimer, armorRemovedTimer = nil, nil
+	nextWailingSouls, nextTormentedCries = GetTime() + 60, GetTime() + 120
 	wipe(soulList)
 
 	if self:Easy() then
@@ -178,8 +180,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	if spellId == 235885 then -- Collapsing Fissure
 		self:Message(235907, "Attention", "Alert", spellName)
 		local t = stage == 2 and 15.8 or 30.5
-		if not stage == 2 and self:BarTimeLeft(238570) < 30.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
-			t = 65 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 5s~ cooldown
+		local remaining = nextTormentedCries - GetTime()
+		if stage ~= 2 and remaining < 30.5 and remaining > 0 then
+			t = 65 + remaining -- Time Left + 60s channel + 5s~ cooldown
 		end
 		self:Bar(235907, t)
 	elseif spellId == 239978 then -- Soul Pallor // Stage 2
@@ -274,7 +277,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			local spellId = (args.spellId == 236011 or args.spellId == 238018) and 238570 or args.spellId -- Tormented Cries
+			local spellId = args.spellId == 236011 and 238570 or args.spellId -- Tormented Cries
 			self:Message(spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
@@ -292,8 +295,9 @@ function mod:SpearofAnguish(args)
 	end
 	spearCount = spearCount + 1
 	local t = 21
-	if self:BarTimeLeft(238570) < 20.5 and self:BarTimeLeft(238570) > 0 then -- Tormented Cries
-		t = 80.5 + self:BarTimeLeft(238570) -- Time Left + 60s channel + 20.5s cooldown
+	local remaining = nextTormentedCries - GetTime()
+	if remaining < 20.5 and remaining > 0 then
+		t = 80.5 + remaining -- Time Left + 60s channel + 20.5s cooldown
 	end
 	self:Bar(args.spellId, t, CL.count:format(args.spellName, spearCount))
 end
@@ -308,6 +312,7 @@ function mod:TormentedCries(args)
 	self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
 	tormentedCriesCounter = tormentedCriesCounter + 1
 	if tormentedCriesCounter <= 2 then -- Does a 3rd cast exist?
+		nextTormentedCries = GetTime() + 120
 		self:Bar(args.spellId, 120)
 	end
 	self:CastBar(args.spellId, 60)
@@ -390,8 +395,9 @@ do
 			if self:Easy() then
 				t = stage == 2 and 24 or 34
 			end
-			if stage ~= 2 and self:BarTimeLeft(236072) < 24.3 and self:BarTimeLeft(236072) > 0 then -- Wailing Souls
-				t = 74.5 + self:BarTimeLeft(236072) -- Time Left + 60s channel + 14.5s cooldown
+			local remaining = nextWailingSouls - GetTime()
+			if stage ~= 2 and remaining < 24.3 and remaining > 0 then
+				t = 74.5 + remaining -- Time Left + 60s channel + 14.5s cooldown
 			end
 			self:Bar(args.spellId, t)
 			if self:GetOption(soulBindMarker) then
@@ -427,6 +433,7 @@ function mod:WailingSouls(args)
 	self:Message(args.spellId, "Important", "Warning")
 	wailingSoulsCounter = wailingSoulsCounter + 1
 	if wailingSoulsCounter <= 2 then -- XXX Does a 3rd cast exist?
+		nextWailingSouls = GetTime() + 120
 		self:Bar(args.spellId, 120)
 	end
 	self:CastBar(args.spellId, 60)
