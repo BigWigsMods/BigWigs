@@ -27,6 +27,7 @@ local GetInstanceInfo = loader.GetInstanceInfo
 
 -- Upvalues
 local next, type = next, type
+local UnitGUID = UnitGUID
 
 -------------------------------------------------------------------------------
 -- Event handling
@@ -87,7 +88,9 @@ function addon:ENCOUNTER_START(_, id)
 		if module.engageId == id then
 			if not module.enabledState then
 				module:Enable()
-				module:Engage()
+				if UnitGUID("boss1") then -- Only if _START fired after IEEU
+					module:Engage()
+				end
 			end
 		end
 	end
