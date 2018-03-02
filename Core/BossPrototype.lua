@@ -798,12 +798,11 @@ do
 
 	function boss:Win()
 		if debug then dbg(self, ":Win") end
-		self.lastKill = GetTime() -- Add the kill time for the enable check.
-		if self.OnWin then self:OnWin() end
-		self:SendMessage("BigWigs_OnBossWin", self)
-		self:Disable()
 		wipe(icons) -- Wipe icon cache
 		wipe(spells)
+		if self.OnWin then self:OnWin() end
+		self:ScheduleTimer("Disable", 1) -- Delay a little to prevent re-enabling
+		self:SendMessage("BigWigs_OnBossWin", self)
 	end
 
 	function boss:Wipe()
@@ -920,7 +919,7 @@ function boss:EncounterEnd(event, id, name, diff, size, status)
 			end
 		elseif status == 0 then
 			self:SendMessage("BigWigs_StopBars", self)
-			self:ScheduleTimer("Wipe", 5) -- Delayed for now due to issues with certain encounters and using IEEU for engage.
+			self:ScheduleTimer("Wipe", 5) -- Delayed due to issues with some multi-boss encounters showing/hiding the boss frames (IEEU) rapidly whilst wiping.
 		end
 		self:SendMessage("BigWigs_EncounterEnd", self, id, name, diff, size, status) -- Do NOT use this for wipe detection, use BigWigs_OnBossWipe.
 	end
