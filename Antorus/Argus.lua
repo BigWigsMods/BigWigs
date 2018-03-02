@@ -430,11 +430,13 @@ do
 	end
 
 	function mod:GiftoftheSea(args)
+		local meOnly = self:CheckOption(255594, "ME_ONLY")
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sea_say)
-			seaName = args.destName
-			announce(self)
-		elseif not self:CheckOption(255594, "ME_ONLY") then
+			if meOnly then
+				self:Message(255594, "Positive", "Long", CL.you:format(args.spellName), args.spellId)
+			end
+		elseif not meOnly then
 			seaName = args.destName
 			announce(self)
 		end
@@ -444,11 +446,13 @@ do
 	end
 
 	function mod:GiftoftheSky(args)
+		local meOnly = self:CheckOption(255594, "ME_ONLY")
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sky_say)
-			skyName = args.destName
-			announce(self)
-		elseif not self:CheckOption(255594, "ME_ONLY") then
+			if meOnly then
+				self:Message(255594, "Positive", "Long", CL.you:format(args.spellName), args.spellId)
+			end
+		elseif not meOnly then
 			skyName = args.destName
 			announce(self)
 		end
