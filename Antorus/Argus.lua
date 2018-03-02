@@ -432,9 +432,12 @@ do
 	function mod:GiftoftheSea(args)
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sea_say)
+			seaName = args.destName
+			announce(self)
+		elseif not self:CheckOption(255594, "ME_ONLY") then
+			seaName = args.destName
+			announce(self)
 		end
-		seaName = args.destName
-		announce(self)
 		if self:GetOption(seaMarker) then
 			SetRaidTarget(args.destName, 6)
 		end
@@ -443,9 +446,12 @@ do
 	function mod:GiftoftheSky(args)
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sky_say)
+			skyName = args.destName
+			announce(self)
+		elseif not self:CheckOption(255594, "ME_ONLY") then
+			skyName = args.destName
+			announce(self)
 		end
-		skyName = args.destName
-		announce(self)
 		if self:GetOption(seaMarker) then
 			SetRaidTarget(args.destName, 5)
 		end
