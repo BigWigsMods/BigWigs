@@ -166,6 +166,7 @@ local function zoneChanged()
 			addon:RegisterEvent("UNIT_TARGET", unitTargetChanged)
 			targetCheck("target")
 			targetCheck("mouseover")
+			targetCheck("boss1")
 		end
 	elseif monitoring then
 		monitoring = nil
