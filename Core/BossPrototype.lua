@@ -1097,28 +1097,28 @@ function boss:Damager(unit)
 end
 
 do
-	local offDispel, defDispel = "", ""
+	local offDispel, defDispel = {}, {}
 	function UpdateDispelStatus()
-		offDispel, defDispel = "", ""
+		offDispel, defDispel = {}, {}
 		if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) then
 			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage)
-			offDispel = offDispel .. "magic,"
+			offDispel.magic = true
 		end
 		if IsSpellKnown(527) or IsSpellKnown(77130) or IsSpellKnown(115450) or IsSpellKnown(4987) or IsSpellKnown(88423) then -- XXX Add DPS priest mass dispel?
 			-- Purify (Heal Priest), Purify Spirit (Heal Shaman), Detox (Heal Monk), Cleanse (Heal Paladin), Nature's Cure (Heal Druid)
-			defDispel = defDispel .. "magic,"
+			defDispel.magic = true
 		end
 		if IsSpellKnown(527) or IsSpellKnown(213634) or IsSpellKnown(115450) or IsSpellKnown(218164) or IsSpellKnown(4987) or IsSpellKnown(213644) then
 			-- Purify (Heal Priest), Purify Disease (Shadow Priest), Detox (Heal Monk), Detox (DPS Monk), Cleanse (Heal Paladin), Cleanse Toxins (DPS Paladin)
-			defDispel = defDispel .. "disease,"
+			defDispel.disease = true
 		end
 		if IsSpellKnown(88423) or IsSpellKnown(115450) or IsSpellKnown(218164) or IsSpellKnown(4987) or IsSpellKnown(2782) or IsSpellKnown(213644) then
 			-- Nature's Cure (Heal Druid), Detox (Heal Monk), Detox (DPS Monk), Cleanse (Heal Paladin), Remove Corruption (DPS Druid), Cleanse Toxins (DPS Paladin)
-			defDispel = defDispel .. "poison,"
+			defDispel.poison = true
 		end
 		if IsSpellKnown(88423) or IsSpellKnown(2782) or IsSpellKnown(77130) or IsSpellKnown(51886) then
 			-- Nature's Cure (Heal Druid), Remove Corruption (DPS Druid), Purify Spirit (Heal Shaman), Cleanse Spirit (DPS Shaman)
-			defDispel = defDispel .. "curse,"
+			defDispel.curse = true
 		end
 	end
 	--- Check if you can dispel.
@@ -1132,15 +1132,7 @@ do
 			if not o then core:Print(format("Module %s uses %q as a dispel lookup, but it doesn't exist in the module options.", self.name, key)) return end
 			if band(o, C.DISPEL) ~= C.DISPEL then return true end
 		end
-		if isOffensive then
-			if find(offDispel, dispelType, nil, true) then
-				return true
-			end
-		else
-			if find(defDispel, dispelType, nil, true) then
-				return true
-			end
-		end
+		return isOffensive and offDispel[dispelType] or defDispel[dispelType]
 	end
 end
 
