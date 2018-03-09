@@ -265,7 +265,7 @@ do
 
 	function mod:SoulburnDispelled(args)
 		if args.extraSpellId == 253600 and self:Me(args.destGUID) then
-			self:Message(args.extraSpellId, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
+			self:Message(253600, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 		end
 	end
 end

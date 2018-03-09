@@ -343,7 +343,7 @@ end
 
 function mod:BloodDrainDispelled(args)
 	if args.extraSpellId == 241716 then
-		self:Message(args.extraSpellId, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
+		self:Message(241716, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 	end
 end
 

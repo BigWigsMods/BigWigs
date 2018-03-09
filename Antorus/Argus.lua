@@ -766,7 +766,7 @@ end
 
 function mod:EndofAllThingsInterupted(args)
 	if args.extraSpellId == 256544 then
-		self:Message(args.extraSpellId, "Positive", "Info", CL.interrupted:format(args.extraSpellName))
+		self:Message(256544, "Positive", "Info", CL.interrupted:format(args.extraSpellName))
 		self:StopBar(CL.cast:format(args.extraSpellName))
 		initializationCount = self:Mythic() and 1 or 3
 		torturedRageCounter = 1

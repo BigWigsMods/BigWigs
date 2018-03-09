@@ -626,10 +626,10 @@ end
 function mod:EyeOfGuldanApplied(args)
 	if self:Me(args.destGUID) then
 		eyeOnMe = true
-		local id = args.spellId == 209454 and 209270 or 211152
+		local spellId = args.spellId == 209454 and 209270 or 211152
 		local spellName = args.spellId == 209454 and args.spellName or L.empowered:format(args.spellName)
-		self:Message(id, "Personal", "Alert", CL.you:format(spellName))
-		self:OpenProximity(id, 8)
+		self:Message(spellId, "Personal", "Alert", CL.you:format(spellName))
+		self:OpenProximity(spellId, 8)
 	end
 end
 
@@ -644,13 +644,13 @@ do
 	local prev = 0
 	function mod:EyeofGuldandDamage(args)
 		if self:Me(args.destGUID) then
-			local id = args.spellId == 209518 and 209270 or 211152
+			local spellId = args.spellId == 209518 and 209270 or 211152
 			local spellName = args.spellId == 209518 and args.spellName or L.empowered:format(args.spellName)
 			local t = GetTime()
 			if t-prev < 0.5 then -- Warn if you take more than one tick
-				self:Message(id, "Personal", "Alert", CL.underyou:format(spellName))
+				self:Message(spellId, "Personal", "Alert", CL.underyou:format(spellName))
 			elseif eyeOnMe == false then -- Always warn if you arn't fixated
-				self:Message(id, "Personal", "Alert", CL.underyou:format(spellName))
+				self:Message(spellId, "Personal", "Alert", CL.underyou:format(spellName))
 			end
 			prev = t
 		end
@@ -712,10 +712,6 @@ function mod:StormOfTheDestroyer(args)
 			end
 		end
 	end
-end
-
-function mod:WellofSoulsCast(args)
-	self:Message(args.spellId, "Neutral", "Info")
 end
 
 do
