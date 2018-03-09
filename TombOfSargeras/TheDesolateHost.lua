@@ -95,17 +95,20 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SpiritualBarrier", 235732)
 	self:Log("SPELL_AURA_REMOVED", "SpiritualBarrierRemoved", 235732)
 
-	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 236011, 235907, 236241) -- Tormented Cries , Collapsing Fissure, Soul Rot
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 236011, 235907, 236241) -- Tormented Cries , Collapsing Fissure, Soul Rot
-	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 236011, 235907, 236241) -- Tormented Cries , Collapsing Fissure, Soul Rot
+	self:Log("SPELL_AURA_APPLIED", "GroundEffectDamage", 235907, 236241) -- Collapsing Fissure, Soul Rot
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 235907, 236241) -- Collapsing Fissure, Soul Rot
+	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 235907, 236241) -- Collapsing Fissure, Soul Rot
 
 
 	-- Corporeal Realm
 	self:Log("SPELL_AURA_APPLIED", "SpearofAnguish", 235924)
 	self:Log("SPELL_AURA_REMOVED", "SpearofAnguishRemoved", 235924)
-	self:Log("SPELL_CAST_START", "TormentedCries", 238570) -- Tormented Cries
-	self:Log("SPELL_AURA_APPLIED", "TormentedCriesApplied", 238018) -- Tormented Cries (Debuff)
-	self:Log("SPELL_AURA_REMOVED", "TormentedCriesRemoved", 238018) -- Tormented Cries (Debuff)
+	self:Log("SPELL_CAST_START", "TormentedCries", 238570)
+	self:Log("SPELL_AURA_APPLIED", "TormentedCriesApplied", 238018)
+	self:Log("SPELL_AURA_REMOVED", "TormentedCriesRemoved", 238018)
+	self:Log("SPELL_AURA_APPLIED", "TormentedCriesDamage", 236011)
+	self:Log("SPELL_PERIODIC_DAMAGE", "TormentedCriesDamage", 236011, 238018)
+	self:Log("SPELL_PERIODIC_MISSED", "TormentedCriesDamage", 236011, 238018)
 	-- Adds
 	self:Log("SPELL_CAST_START", "RupturingSlam", 235927)
 	self:Log("SPELL_AURA_APPLIED", "BonecageArmor", 236513)
@@ -277,8 +280,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			local spellId = args.spellId == 236011 and 238570 or args.spellId -- Tormented Cries
-			self:Message(spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -331,6 +333,17 @@ function mod:TormentedCriesRemoved(args)
 	self:PrimaryIcon(238570)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(238570)
+	end
+end
+
+do
+	local prev = 0
+	function mod:TormentedCriesDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(238570, "Personal", "Alert", CL.underyou:format(args.spellName))
+		end
 	end
 end
 
