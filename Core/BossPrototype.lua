@@ -1887,15 +1887,24 @@ end
 --- Play a sound.
 -- @param key the option key
 -- @string sound the sound to play
-function boss:PlaySound(key, sound)
-	if not checkFlag(self, key, C.MESSAGE) then return end
-	if hasVoice and checkFlag(self, key, C.VOICE) then
-		self:SendMessage("BigWigs_Voice", self, key, sound)
-	else
-		self:SendMessage("BigWigs_Sound", self, key, sound)
+-- @string[opt] voice command to play when using a voice pack
+do
+	local tmp = { -- XXX temp
+		["long"] = "Long",
+		["info"] = "Info",
+		["alert"] = "Alert",
+		["alarm"] = "Alarm",
+		["warning"] = "Warning",
+	}
+	function boss:PlaySound(key, sound, voice)
+		if not checkFlag(self, key, C.MESSAGE) then return end
+		if hasVoice and checkFlag(self, key, C.VOICE) then
+			self:SendMessage("BigWigs_Voice", self, key, tmp[sound] or sound)
+		else
+			self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+		end
 	end
 end
-
 
 do
 	local SendAddonMessage, IsInGroup = BigWigsLoader.SendAddonMessage, IsInGroup
