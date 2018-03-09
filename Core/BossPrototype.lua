@@ -2,20 +2,20 @@
 -- Boss Prototype
 -- The API of a module created from `BigWigs:NewBoss`.
 --
---### BigWigs:NewBoss (moduleName, mapId[, journalId])
+--### BigWigs:NewBoss (moduleName, instanceId[, journalId])
 --
 --**Parameters:**
 --  - `moduleName`:  [string] a unique module name, usually the boss name
---  - `mapId`:  [number] the map id for the map the boss is located in, negative ids are used to represent world bosses
+--  - `instanceId`:  [number] the instance id for the zone the boss is located in. Negative ids are used to represent map ids using the map API (usually for world bosses)
 --  - `journalId`:  [number] the journal id for the boss, used to translate the boss name (_optional_)
 --
 --**Returns:**
 --  - boss module
---  - [common locale](https://github.com/BigWigsMods/BigWigs/blob/master/Core/Locales/common.enUS.lua) table for the current locale
+--  - [common locale](https://github.com/BigWigsMods/BigWigs/blob/master/Core/Locales/common.enUS.lua) table which holds common locale strings
 --
 -- @module BossPrototype
 -- @alias boss
--- @usage local mod, CL = BigWigs:NewBoss("Archimonde", 1026, 1438)
+-- @usage local mod, CL = BigWigs:NewBoss("Argus the Unmaker", 1712, 2031)
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
