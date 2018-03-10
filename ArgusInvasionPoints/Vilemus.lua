@@ -59,7 +59,7 @@ do
 end
 
 function mod:DrainStacks(args)
-	if self:Me(args.destGUID) then
+	if self:Me(args.destGUID) or (self:Tank() and self:Tank(args.destName)) then
 		local amount = args.amount or 1
 		self:StackMessage(247739, args.destName, amount, "Neutral", amount % 2 == 0 and "Alarm", args.spellId)
 	end
@@ -67,6 +67,7 @@ end
 
 function mod:Stomp(args)
 	self:Message(args.spellId, "Urgent", "Warning")
+	self:CastBar(args.spellId, 2)
 	self:CDBar(args.spellId, 17)
 end
 
