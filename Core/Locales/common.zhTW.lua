@@ -36,6 +36,7 @@ L.on = "%2$s %1$s"
 L.onboss = "首領%s"
 L.other = "%s：%s"
 L.over = "%s結束"
+--L.percent = "%d%% - %s" -- 20% - spell
 L.phase = "階段%d"
 L.removed = "%s移除"
 L.removed_from = "%2$s已移除%1$s"

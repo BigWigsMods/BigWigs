@@ -36,6 +36,7 @@ L.on = "%s auf %s"
 L.onboss = "%s auf dem BOSS"
 L.other = "%s: %s"
 L.over = "%s vorbei"
+--L.percent = "%d%% - %s" -- 20% - spell
 L.phase = "Phase %d"
 L.removed = "%s entfernt"
 L.removed_from = "%s wurde von %s entfernt"

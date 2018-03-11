@@ -36,6 +36,7 @@ L.on = "%s su %s"
 L.onboss = "%s sul BOSS"
 L.other = "%s: %s"
 L.over = "%s Terminato"
+--L.percent = "%d%% - %s" -- 20% - spell
 L.phase = "Fase %d"
 L.removed = "%s Rimosso"
 --L.removed_from = "%s Removed From %s"

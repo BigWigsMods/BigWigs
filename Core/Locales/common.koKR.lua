@@ -35,6 +35,7 @@ L.interrupted = "%s 시전 방해됨"
 --L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
 L.no = "%s 없음"
 L.intermission = "사잇단계"
+--L.percent = "%d%% - %s" -- 20% - spell
 
 -- Add related
 L.add_spawned = "추가 몹 생성"
