@@ -125,8 +125,8 @@ function mod:OnBossEnable()
 
 	--[[ Ground effects ]]--
 	self:Log("SPELL_AURA_APPLIED", "WhirlingSaberDamage", 245634)
-	self:Log("SPELL_PERIODIC_DAMAGE", "WhirlingSaberDamage", 245634, 253020)
-	self:Log("SPELL_PERIODIC_MISSED", "WhirlingSaberDamage", 245634, 253020)
+	self:Log("SPELL_PERIODIC_DAMAGE", "WhirlingSaberDamage", 245634)
+	self:Log("SPELL_PERIODIC_MISSED", "WhirlingSaberDamage", 245634)
 	self:Log("SPELL_DAMAGE", "WhirlingSaberDamage", 245629) -- Whirling Saber (Impact)
 	self:Log("SPELL_MISSED", "WhirlingSaberDamage", 245629)
 
