@@ -740,10 +740,10 @@ do
 
 			if shadowsoulOption then
 				self:CloseInfo("shadowsoul")
-				self:RemoveLog("SPELL_DAMAGE", "IntermissionAddDamage", "*")
-				self:RemoveLog("SPELL_PERIODIC_DAMAGE", "IntermissionAddDamage", "*")
-				self:RemoveLog("RANGE_DAMAGE", "IntermissionAddDamage", "*")
-				self:RemoveLog("SWING_DAMAGE", "IntermissionAddDamageSwing", "*")
+				self:RemoveLog("SPELL_DAMAGE", "*")
+				self:RemoveLog("SPELL_PERIODIC_DAMAGE", "*")
+				self:RemoveLog("RANGE_DAMAGE", "*")
+				self:RemoveLog("SWING_DAMAGE", "*")
 				if timer then
 					self:CancelTimer(timer)
 					timer = nil
