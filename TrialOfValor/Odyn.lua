@@ -130,7 +130,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "HornOfValorSuccess", 228012)
 	self:Log("SPELL_AURA_APPLIED", "StormOfJustice", 227807)
 	self:Log("SPELL_CAST_SUCCESS", "StormOfJusticeSuccess", 227807)
-	self:Log("SPELL_AURA_APPLIED", "ValarjarsBond", 228018, 229529, 228016, 229469) -- XXX
+	--self:Log("SPELL_AURA_APPLIED", "ValarjarsBond", 228018, 229529, 228016, 229469) -- XXX fixme
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OdynsTest", 227626)
 	self:Log("SPELL_AURA_APPLIED", "StormforgedSpear", 228918)
 	self:Log("SPELL_AURA_APPLIED", "StormforgedSpearDebuff", 228932) -- Tank got hit
@@ -352,7 +352,7 @@ function mod:StormOfJusticeSuccess(args)
 end
 
 function mod:ValarjarsBond()
-	self:TargetMessage(228018, "Positive", "Long")
+	--self:Message(228018, "Attention", "Long")
 end
 
 function mod:OdynsTest(args)
