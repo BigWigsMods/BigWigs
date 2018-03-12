@@ -29,7 +29,7 @@ local runesUp = 0
 local myAddGUID = ""
 local castingHorn = false
 local addGUIDs = {}
-local isHymdallFighting, isHyrjaFighting = nil, nil
+local isHymdallFighting, isHyrjaFighting = false, false
 local revivifyBarTexts = {}
 local addFixates = {}
 local proxLists = {
@@ -130,7 +130,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "HornOfValorSuccess", 228012)
 	self:Log("SPELL_AURA_APPLIED", "StormOfJustice", 227807)
 	self:Log("SPELL_CAST_SUCCESS", "StormOfJusticeSuccess", 227807)
-	self:RegisterUnitEvent("UNIT_AURA", nil, "boss1", "boss2", "boss3") -- Valarjar's Bond
 	self:Log("SPELL_AURA_APPLIED_DOSE", "OdynsTest", 227626)
 	self:Log("SPELL_AURA_APPLIED", "StormforgedSpear", 228918)
 	self:Log("SPELL_AURA_APPLIED", "StormforgedSpearDebuff", 228932) -- Tank got hit
@@ -173,6 +172,8 @@ function mod:OnEngage()
 		wipe(t)
 	end
 
+	self:RegisterUnitEvent("UNIT_AURA", nil, "boss1", "boss2", "boss3") -- Valarjar's Bond
+
 	self:Bar(228012, self:Easy() and 10 or 8, CL.count:format(self:SpellName(228012), hornCount)) -- Horn of Valor
 	self:Bar(228162, self:Easy() and 30 or self:Mythic() and 20 or 24, CL.count:format(self:SpellName(228162), shieldCount)) -- Shield of Light
 	self:Bar(228029, self:Easy() and 40 or self:Mythic() and 25 or 32) -- Expel Light
@@ -187,6 +188,9 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 229168 then -- Test for Players (Phase 1 end)
 		phase = 2
+		isHymdallFighting = false
+		isHyrjaFighting = false
+		self:UnregisterUnitEvent("UNIT_AURA", "boss1", "boss2", "boss3") -- Valarjar's Bond
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 		for _,barText in pairs(revivifyBarTexts) do
 			self:StopBar(barText)
@@ -196,8 +200,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		self:StopBar(CL.count:format(self:SpellName(228012), hornCount)) -- Horn of Valor
 		self:StopBar(227503) -- Draw Power
 		self:CDBar("stages", 8, self:SpellName(L.odyn), L.odyn_icon)
-		isHymdallFighting = nil
-		isHyrjaFighting = nil
 	elseif spellId == 227882 then -- Leap into Battle (Phase 2 start)
 		if not self:Easy() then
 			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
@@ -256,17 +258,17 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		end
 	end
 	if not hymdallFound and isHymdallFighting then
+		isHymdallFighting = false
 		if castingHorn then
 			castingHorn = false
 			self:CloseProximity(228012) -- Horn of Valor
 		end
 		self:Message(-14404, "Positive", "Info", L.yields:format(self:SpellName(L.hymdall)), false)
-		isHymdallFighting = nil
 		self:StopBar(CL.count:format(self:SpellName(228012), hornCount)) -- Horn of Valor
 	end
 	if not hyrjaFound and isHyrjaFighting then
+		isHyrjaFighting = false
 		self:Message(-14404, "Positive", "Info", L.yields:format(self:SpellName(L.hyrja)), false)
-		isHyrjaFighting = nil
 		self:StopBar(CL.count:format(self:SpellName(228162), shieldCount)) -- Shield of Light
 		self:StopBar(228029) -- Expel Light
 	end
@@ -352,11 +354,11 @@ function mod:StormOfJusticeSuccess(args)
 end
 
 do
-	local prev, spellName = 0, mod:SpellName(228018) -- Valarjar's Bond
+	local prev, UnitBuff, spellName = 0, UnitBuff, mod:SpellName(228018) -- Valarjar's Bond
 	function mod:UNIT_AURA(unit)
-		if UnitBuff(unit, spellName) and GetTime() - prev > 2 then
+		if UnitBuff(unit, spellName) and GetTime() - prev > 4 then -- We want this repeated
 			prev = GetTime()
-			self:Message(228018, "Important", "Alarm")
+			self:Message(228018, "Important", "Alarm") -- Valarjar's Bond
 		end
 	end
 end
