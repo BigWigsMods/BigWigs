@@ -482,21 +482,21 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 		end
 
 	-- Should be in DelphuricBeamCast XXX remove if confirmed
-	--[[elseif msg:find(L.beam_msg) then
-		self:Message(209244, "Urgent", "Alert")
-		beamCount = beamCount + 1
-		if not savedBeamCount or beamCount < savedBeamCount then
-			local t = timers[209244][beamCount]
-			if t then
-				self:Bar(209244, t, CL.count:format(self:SpellName(209244), beamCount))
-			end
-		end]]
+	--elseif msg:find(L.beam_msg) then
+	--	self:Message(209244, "Urgent", "Alert")
+	--	beamCount = beamCount + 1
+	--	if not savedBeamCount or beamCount < savedBeamCount then
+	--		local t = timers[209244][beamCount]
+	--		if t then
+	--			self:Bar(209244, t, CL.count:format(self:SpellName(209244), beamCount))
+	--		end
+	--	end
 
 	-- Should be in StartSingularityTimer XXX remove if confirmed
-	--[[elseif msg:find(L.singularity_msg) and phase == 2 or phase == 3 then -- Mythic only, zones apears 2s after the message.
-		self:ScheduleTimer("Message", 2, 209170, "Attention", "Info", self:SpellName(209170))
-		]]
-	end
+	--elseif msg:find(L.singularity_msg) and phase == 2 or phase == 3 then -- Mythic only, zones apears 2s after the message.
+	--	self:ScheduleTimer("Message", 2, 209170, "Attention", "Info", self:SpellName(209170))
+	--	
+	--end
 end
 
 -- No event, so we are using this scheduling (mythic p2+p3 only)
