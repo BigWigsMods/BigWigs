@@ -135,7 +135,7 @@ do
 				players[guid] = true
 				list[#list+1] = self:UnitName(unit)
 				if unit == "player" then
-					self:Message(key, "Personal", "Long", CL.you:format(spellName))
+					self:Message(key, "Personal", "Long", CL.you:format(spellName)) -- SetOption:215443,210864:::
 					self:Flash(key)
 					self:Say(key)
 
