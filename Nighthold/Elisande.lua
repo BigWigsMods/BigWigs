@@ -495,8 +495,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	-- Should be in StartSingularityTimer XXX remove if confirmed
 	--elseif msg:find(L.singularity_msg) and phase == 2 or phase == 3 then -- Mythic only, zones apears 2s after the message.
 	--	self:ScheduleTimer("Message", 2, 209170, "Attention", "Info", self:SpellName(209170))
-	--	
-	--end
+	end
 end
 
 -- No event, so we are using this scheduling (mythic p2+p3 only)
