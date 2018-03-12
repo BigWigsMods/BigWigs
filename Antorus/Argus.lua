@@ -25,6 +25,7 @@ local avatarCounter = 1
 local soulBombCounter = 1
 local initializationCount = 3
 local sargerasGazeCount = 0
+local skyName, seaName = nil, nil
 local scanningTargets = nil
 local vulnerabilityCollector = {}
 local vulnerabilityIcons = {
@@ -277,6 +278,7 @@ function mod:OnEngage()
 	soulBombCounter = 1
 	sargerasGazeCount = 1
 	sentenceofSargerasCount = 1
+	skyName, seaName = nil, nil
 
 	self:Bar(255594, 16) -- Sky and Sea
 	self:Bar(257296, self:Heroic() and timers[stage][257296][torturedRageCounter] or 13.5, CL.count:format(self:SpellName(257296), torturedRageCounter)) -- Tortured Rage
@@ -418,8 +420,6 @@ function mod:SkyandSea(args)
 end
 
 do
-	local skyName, seaName = nil, nil
-
 	local function announce(self)
 		if skyName and seaName then
 			local text = L.gifts:format(self:ColorName(skyName), self:ColorName(seaName))
