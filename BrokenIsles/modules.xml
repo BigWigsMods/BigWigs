@@ -16,6 +16,7 @@
 <Script file="TheSoultakers.lua"/>
 <Script file="WitheredJim.lua"/>
 
+<Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>
 
 </Ui>

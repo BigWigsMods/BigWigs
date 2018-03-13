@@ -1,33 +1,16 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 <!--@do-not-package@-->
-<Include file="Core\locales.xml"/>
 <Include file="Core\modules.xml"/>
-
-<Include file="Plugins\locales.xml"/>
 <Include file="Plugins\modules.xml"/>
-
 <Include file="Options\modules.xml"/>
 
 <Include file="Nightmare\modules.xml"/>
-<Include file="Nightmare\locales.xml"/>
-
 <Include file="Nighthold\modules.xml"/>
-<Include file="Nighthold\locales.xml"/>
-
 <Include file="TrialOfValor\modules.xml"/>
-<Include file="TrialOfValor\locales.xml"/>
-
 <Include file="TombOfSargeras\modules.xml"/>
-<Include file="TombOfSargeras\locales.xml"/>
-
 <Include file="Antorus\modules.xml"/>
-<Include file="Antorus\locales.xml"/>
-
 <Include file="ArgusInvasionPoints\modules.xml"/>
-<!--<Include file="ArgusInvasionPoints\locales.xml"/>-->
-
 <Include file="BrokenIsles\modules.xml"/>
-<Include file="BrokenIsles\locales.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
