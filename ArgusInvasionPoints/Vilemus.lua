@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Pit Lord Vilemus", nil, 2015, 1779)
+local mod = BigWigs:NewBoss("Pit Lord Vilemus", 1779, 2015)
 if not mod then return end
 mod:RegisterEnableMob(124719)
 

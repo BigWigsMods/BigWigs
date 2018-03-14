@@ -9,7 +9,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Elerethe Renferal", 1094, 1744)
+local mod, CL = BigWigs:NewBoss("Elerethe Renferal", 1520, 1744)
 if not mod then return end
 mod:RegisterEnableMob(106087)
 mod.engageId = 1876

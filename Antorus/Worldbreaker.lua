@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Gorothi Worldbreaker", nil, 1992, 1712)
+local mod, CL = BigWigs:NewBoss("Gorothi Worldbreaker", 1712, 1992)
 if not mod then return end
 mod:RegisterEnableMob(122450) -- Garothi Worldbreaker
 mod.engageId = 2076

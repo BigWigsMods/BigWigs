@@ -12,7 +12,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Grand Magistrix Elisande", 1088, 1743)
+local mod, CL = BigWigs:NewBoss("Grand Magistrix Elisande", 1530, 1743)
 if not mod then return end
 mod:RegisterEnableMob(106643, 111151) -- Elisande, Midnight Siphoner
 mod.engageId = 1872

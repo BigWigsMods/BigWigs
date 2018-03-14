@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Coven of Shivarra", nil, 1986, 1712)
+local mod, CL = BigWigs:NewBoss("The Coven of Shivarra", 1712, 1986)
 if not mod then return end
 mod:RegisterEnableMob(122468, 122467, 122469, 125436) -- Noura, Asara, Diima, Thu'raya
 mod.engageId = 2073

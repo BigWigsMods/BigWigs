@@ -9,7 +9,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Odyn-TrialOfValor", 1114, 1819)
+local mod, CL = BigWigs:NewBoss("Odyn-TrialOfValor", 1648, 1819)
 if not mod then return end
 mod:RegisterEnableMob(114263, 114361, 114360) -- Odyn, Hymdall, Hyrja
 mod.engageId = 1958

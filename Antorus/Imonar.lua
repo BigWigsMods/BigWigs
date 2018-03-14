@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Imonar the Soulhunter", nil, 2009, 1712)
+local mod, CL = BigWigs:NewBoss("Imonar the Soulhunter", 1712, 2009)
 if not mod then return end
 mod:RegisterEnableMob(124158)
 mod.engageId = 2082

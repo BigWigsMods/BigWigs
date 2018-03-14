@@ -11,7 +11,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Helya-TrialOfValor", 1114, 1829)
+local mod, CL = BigWigs:NewBoss("Helya-TrialOfValor", 1648, 1829)
 if not mod then return end
 mod:RegisterEnableMob(114537)
 mod.engageId = 2008

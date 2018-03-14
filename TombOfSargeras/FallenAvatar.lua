@@ -11,7 +11,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Fallen Avatar", 1147, 1873)
+local mod, CL = BigWigs:NewBoss("Fallen Avatar", 1676, 1873)
 if not mod then return end
 mod:RegisterEnableMob(116939, 117264) -- Fallen Avatar, Maiden of Valor
 mod.engageId = 2038

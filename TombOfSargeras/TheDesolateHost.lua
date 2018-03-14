@@ -11,7 +11,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Desolate Host", 1147, 1896)
+local mod, CL = BigWigs:NewBoss("The Desolate Host", 1676, 1896)
 if not mod then return end
 mod:RegisterEnableMob(118460, 118462, 119072) -- Engine of Souls, Soul Queen Dejahna, The Desolate Host
 mod.engageId = 2054

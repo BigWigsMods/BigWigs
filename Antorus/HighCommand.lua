@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Antoran High Command", nil, 1997, 1712)
+local mod, CL = BigWigs:NewBoss("Antoran High Command", 1712, 1997)
 if not mod then return end
 mod:RegisterEnableMob(122367, 122369, 122333) -- Admiral Svirax, Chief Engineer Ishkar, General Erodus
 mod.engageId = 2070
