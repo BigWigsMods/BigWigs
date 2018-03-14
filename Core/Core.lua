@@ -432,11 +432,15 @@ do
 			m.RegisterEvent = addon.RegisterEvent
 			m.UnregisterEvent = addon.UnregisterEvent
 
-			m.journalId = journalId
-			if loadId > 0 then
-				m.instanceId = loadId
-			else
-				m.mapId = -loadId
+			if journalId then
+				m.journalId = journalId
+			end
+			if loadId then
+				if loadId > 0 then
+					m.instanceId = loadId
+				else
+					m.mapId = -loadId
+				end
 			end
 			return m, CL
 		end
