@@ -1,5 +1,5 @@
 
--- Script to parse boss module files and output ability=>sound mappings
+-- Script to parse boss module files and output ability=>color/sound mappings
 
 local modules = {}
 local module_colors = {}
@@ -403,7 +403,7 @@ local function parseLua(file)
 						add(module_name, module_colors, keys, c)
 					end
 				elseif c and c ~= "nil" then
-					-- `color` was set, but it didn't match an actual color, so warn about it.
+					-- A color was set but didn't match an actual color, so warn about it.
 					error(string.format("    %s:%d: Invalid color! func=%s, key=%s, color=%s", file:match(".*/(.*)$"), n, f, table.concat(keys, " "), c))
 				end
 			end
@@ -416,7 +416,7 @@ local function parseLua(file)
 						add(module_name, module_sounds, keys, s)
 					end
 				elseif s and s ~= "nil" then
-					-- `sound` was set, but it didn't match an actual sound, so warn about it.
+					-- A sound was set but didn't match an actual sound, so warn about it.
 					error(string.format("    %s:%d: Invalid sound! func=%s, key=%s, sound=%s", file:match(".*/(.*)$"), n, f, table.concat(keys, " "), s))
 				end
 			end
@@ -452,7 +452,21 @@ end
 
 
 -- aaaaaand start
-local start_path = arg[1] or arg[0]:match(".*/") or ""
-parse(start_path .. "modules.xml")
+local start_path = "modules.xml"
+if arg then
+	local path
+	if arg[1] then
+		path = arg[1]:gsub("\\", "/")
+		if path:sub(-1) ~= "/" then
+			path = path .. "/"
+		end
+	else
+		path = arg[0]:gsub("\\", "/"):match(".*/")
+	end
+	if path then
+		start_path = path:gsub("^./", "") .. start_path
+	end
+end
+parse(start_path)
 
 os.exit(exit_code)
