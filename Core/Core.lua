@@ -22,7 +22,6 @@ local bossCore, pluginCore
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetPlayerMapAreaID = loader.GetPlayerMapAreaID
 local SendAddonMessage = loader.SendAddonMessage
-local GetAreaMapInfo = loader.GetAreaMapInfo
 local GetInstanceInfo = loader.GetInstanceInfo
 
 -- Upvalues

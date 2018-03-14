@@ -55,13 +55,12 @@ local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo and C_ChatInfo.SendAddonMessage or SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker -- XXX C_ChatInfo check for 8.0
 local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
-local GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID = GetAreaMapInfo, GetInstanceInfo, GetPlayerMapAreaID
+local GetInstanceInfo, GetPlayerMapAreaID = GetInstanceInfo, GetPlayerMapAreaID
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetCurrentMapAreaID = GetCurrentMapAreaID
 public.GetPlayerMapAreaID = GetPlayerMapAreaID
 public.SetMapToCurrentZone = SetMapToCurrentZone
-public.GetAreaMapInfo = GetAreaMapInfo
 public.GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel
 public.GetInstanceInfo = GetInstanceInfo
 public.SendAddonMessage = SendAddonMessage
@@ -367,7 +366,6 @@ do
 		BigWigs_Options = true,
 		BigWigs_Plugins = true,
 	}
-	local loadOnZoneAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-ZoneId directive
 	local loadOnInstanceAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-InstanceId directive
 	local loadOnWorldBoss = {} -- Addons that should load when targetting a specific mob
 	local extraMenus = {} -- Addons that contain extra zone menus to appear in the GUI
@@ -380,10 +378,6 @@ do
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
 				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = i
-			end
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
-			if meta then
-				loadOnZoneAddons[#loadOnZoneAddons + 1] = i
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then
@@ -434,24 +428,7 @@ do
 		elseif reqFuncAddons[name] then
 			sysprint(L.coreAddonDisabled:format(name))
 		else
-			--[[ DEPRECATED ]]--
-			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-ZoneId")
-			if meta then -- Disabled content
-				for j = 1, select("#", strsplit(",", meta)) do
-					local rawId = select(j, strsplit(",", meta))
-					local id = tonumber(rawId:trim())
-					if id and id > 0 then
-						local instanceId = GetAreaMapInfo(id) -- convert map id to instance id
-						if public.zoneTbl[instanceId] then
-							if not disabledZones then disabledZones = {} end
-							disabledZones[instanceId] = name
-						end
-					end
-				end
-			end
-			--
-
-			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
+			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then -- Disabled content
 				for j = 1, select("#", strsplit(",", meta)) do
 					local rawId = select(j, strsplit(",", meta))
@@ -470,30 +447,6 @@ do
 			ChatFrame_ImportAllListsToHash() -- Add our slashes to the hash.
 		end
 	end
-
-	--[[ DEPRECATED ]]--
-	local function iterateZones(addon, ...)
-		for i = 1, select("#", ...) do
-			local rawZone = select(i, ...)
-			local zone = tonumber(rawZone:trim())
-			if zone then
-				-- register the zone for enabling.
-				local instanceId = fakeZones[zone] and zone or GetAreaMapInfo(zone)
-				if instanceId then -- Protect live client from beta client ids
-					enableZones[instanceId] = true
-
-					if not loadOnZone[instanceId] then loadOnZone[instanceId] = {} end
-					loadOnZone[instanceId][#loadOnZone[instanceId] + 1] = addon
-
-					if not menus[instanceId] and not blockedMenus[instanceId] then menus[instanceId] = true end
-				end
-			else
-				local name = GetAddOnInfo(addon)
-				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZone), name))
-			end
-		end
-	end
-	--
 
 	local function iterateInstanceIds(addon, ...)
 		for i = 1, select("#", ...) do
@@ -592,16 +545,6 @@ do
 			blockMenus(index, strsplit(",", data))
 		end
 	end
-
-	--[[ DEPRECATED ]]--
-	for i = 1, #loadOnZoneAddons do
-		local index = loadOnZoneAddons[i]
-		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-ZoneId")
-		if zones then
-			iterateZones(index, strsplit(",", zones))
-		end
-	end
-	--
 
 	for i = 1, #loadOnInstanceAddons do
 		local index = loadOnInstanceAddons[i]
