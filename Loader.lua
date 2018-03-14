@@ -1278,13 +1278,14 @@ end
 
 function mod:BigWigs_BossModuleRegistered(_, _, module)
 	if module.worldBoss then
-		enableZones[module.zoneId] = "world"
-		worldBosses[module.worldBoss] = module.zoneId
+		local id = -(module.mapId)
+		enableZones[id] = "world"
+		worldBosses[module.worldBoss] = id
 	else
-		enableZones[module.instanceId or GetAreaMapInfo(module.zoneId)] = true
+		enableZones[module.instanceId] = true
 	end
 
-	local id = module.otherMenu or module.instanceId or module.zoneId > 0 and GetAreaMapInfo(module.zoneId) or module.zoneId
+	local id = module.otherMenu or module.instanceId or -(module.mapId)
 	if type(menus[id]) ~= "table" then menus[id] = {} end
 	menus[id][#menus[id]+1] = module
 end

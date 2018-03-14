@@ -416,7 +416,7 @@ do
 	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, C_EncounterJournal.GetSectionInfo
 
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
-	local function new(core, moduleName, mapId, journalId, instanceId)
+	local function new(core, moduleName, loadId, journalId)
 		if core:GetModule(moduleName, true) then
 			addon:Print(errorAlreadyRegistered:format(moduleName))
 		else
@@ -432,9 +432,12 @@ do
 			m.RegisterEvent = addon.RegisterEvent
 			m.UnregisterEvent = addon.UnregisterEvent
 
-			m.zoneId = mapId
 			m.journalId = journalId
-			m.instanceId = instanceId
+			if loadId > 0 then
+				m.instanceId = loadId
+			else
+				m.mapId = -loadId
+			end
 			return m, CL
 		end
 	end
@@ -565,7 +568,7 @@ do
 
 		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
-		local id = module.worldBoss and module.zoneId or module.instanceId or GetAreaMapInfo(module.zoneId)
+		local id = module.instanceId or -(module.mapId)
 		if not enablezones[id] then
 			enablezones[id] = true
 		end

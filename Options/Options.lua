@@ -624,15 +624,10 @@ local function populateToggleOptions(widget, module)
 	scrollFrame:ReleaseChildren()
 	scrollFrame:PauseLayout()
 
-	local id = 0 -- XXX temp
-	if module.instanceId then
-		id = module.instanceId
-	elseif module.zoneId and module.zoneId > 0 then
-		id = GetAreaMapInfo(module.zoneId)
-	end
+	local id = module.instanceId
 
 	local sDB = BigWigsStatsDB
-	if module.journalId and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][module.journalId] then
+	if module.journalId and id and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][module.journalId] then
 		sDB = sDB[id][module.journalId]
 
 		if next(sDB) then -- Create statistics table
