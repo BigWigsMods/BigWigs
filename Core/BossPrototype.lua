@@ -65,9 +65,13 @@ local updateData = function(module)
 	for unit in module:IterateGroup() do
 		local _, _, _, tarInstanceId = UnitPosition(unit)
 		local guid = UnitGUID(unit)
-		myGroupGUIDs[guid] = true
-		if solo and tarInstanceId == instanceId and myGUID ~= guid and UnitIsConnected(unit) then
-			solo = false
+		if guid then
+			myGroupGUIDs[guid] = true
+			if solo and tarInstanceId == instanceId and myGUID ~= guid and UnitIsConnected(unit) then
+				solo = false
+			end
+		else -- XXX temp
+			BigWigs:Print("Nil GUID for ".. unit ..". ".. tostring((UnitName(unit))))
 		end
 	end
 
