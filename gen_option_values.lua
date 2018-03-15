@@ -186,20 +186,33 @@ local function add(module_name, option_table, keys, value)
 	end
 end
 
-local function findCallingMethod(lines, n, func)
-	local current_func = nil
-	for i = n, #lines do
+local function findCallingMethod(lines, start, local_func)
+	local func, if_key = nil, nil
+	for i = start+1, #lines do
 		local line = lines[i]
 		local res = line:match("^%s*function%s+%w+[.:]([%a0-9_]+)%s*%(")
 		if res then
-			current_func = res
+			func = res
+			if_key = nil
 		end
-		if current_func then -- make sure we're out of the local function
-			if line:match(":ScheduleTimer%(%s*"..func.."%s*,") or
-				 line:match(":ScheduleRepeatingTimer%(%s*"..func.."%s*,") or
-				 line:match("^%s*"..func.."%s*%(")
+		res = line:match("^%s*local function%s+([%a0-9_.:]+)%s*%(")
+		if res then
+			func = nil
+			if_key = nil
+		end
+		res = line:match("if (.+) then")
+		if res and line:match("spellId == %d+") then
+			if_key = {}
+			for m in res:gmatch("spellId == (%d+)") do
+				if_key[#if_key+1] = m
+			end
+		end
+		if func then -- make sure we're out of the local function
+			if line:match(":ScheduleTimer%(%s*"..local_func.."%s*,") or
+				 line:match(":ScheduleRepeatingTimer%(%s*"..local_func.."%s*,") or
+				 line:match("^%s*"..local_func.."%s*%(")
 			then
-				return current_func
+				return func, if_key
 			end
 		end
 	end
@@ -295,7 +308,8 @@ local function parseLua(file)
 		if res then
 			current_func = nil
 			rep = {}
-			rep.local_func_key = options[findCallingMethod(lines, n, res)]
+			local caller, if_key = findCallingMethod(lines, n, res)
+			rep.local_func_key = options[caller] or if_key
 		end
 		-- For UNIT functions, record the last spellId checked to use as the key.
 		res = line:match("if (.+) then")
@@ -348,6 +362,12 @@ local function parseLua(file)
 			if set_key then
 				if set_key ~= "" then
 					key = strsplit(set_key)
+					for k, v in next, key do
+						if not tonumber(v) then
+							-- string keys are expected to be quoted
+							key[k] = string.format("%q", unquote(v))
+						end
+					end
 				end
 				if set_color ~= "" then
 					color = strsplit(set_color)
