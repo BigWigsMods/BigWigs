@@ -124,11 +124,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CosmicGlareRemoved", 250757)
 
 	--[[ Ground effects ]]--
-	self:Log("SPELL_AURA_APPLIED", "WhirlingSaberDamage", 245634)
-	self:Log("SPELL_PERIODIC_DAMAGE", "WhirlingSaberDamage", 245634)
-	self:Log("SPELL_PERIODIC_MISSED", "WhirlingSaberDamage", 245634)
-	self:Log("SPELL_DAMAGE", "WhirlingSaberDamage", 245629) -- Whirling Saber (Impact)
-	self:Log("SPELL_MISSED", "WhirlingSaberDamage", 245629)
+	self:Log("SPELL_DAMAGE", "WhirlingSaberDamage", 245629, 245634) -- Initial impact, standing in it
+	self:Log("SPELL_MISSED", "WhirlingSaberDamage", 245629, 245634)
 
 	self:Log("SPELL_AURA_APPLIED", "StormOfDarknessDamage", 253020)
 	self:Log("SPELL_PERIODIC_DAMAGE", "StormOfDarknessDamage", 253020)
@@ -555,10 +552,12 @@ end
 do
 	local prev = 0
 	function mod:WhirlingSaberDamage(args)
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 1.5 then
-			prev = t
-			self:Message(245627, "Personal", "Alert", CL.underyou:format(args.spellName))
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 1.5 then
+				prev = t
+				self:Message(245627, "Personal", "Alert", CL.underyou:format(args.spellName))
+			end
 		end
 	end
 end
@@ -566,10 +565,12 @@ end
 do
 	local prev = 0
 	function mod:StormOfDarknessDamage(args)
-		local t = GetTime()
-		if self:Me(args.destGUID) and t-prev > 1.5 then
-			prev = t
-			self:Message(252861, "Personal", "Alert", CL.underyou:format(args.spellName))
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 1.5 then
+				prev = t
+				self:Message(252861, "Personal", "Alert", CL.underyou:format(args.spellName))
+			end
 		end
 	end
 end
