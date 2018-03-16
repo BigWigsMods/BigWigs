@@ -528,7 +528,7 @@ do
 		playerList[#playerList+1] = args.destName
 
 		if #playerList == 1 then
-			self:Bar(args.spellId, 25.6)
+			self:CDBar(args.spellId, 15)
 			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Attention", "Alarm")
 			if self:GetOption(cosmicGlareMarker) then
 				SetRaidTarget(args.destName, 3)
