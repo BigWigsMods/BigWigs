@@ -923,7 +923,7 @@ function boss:EncounterEnd(event, id, name, diff, size, status)
 				self:Disable() -- Custom external boss module
 			end
 		elseif status == 0 then
-			self:SendMessage("BigWigs_StopBars", self)
+			self:SendMessage("BigWigs_StopBarsX", self)
 			self:ScheduleTimer("Wipe", 5) -- Delayed due to issues with some multi-boss encounters showing/hiding the boss frames (IEEU) rapidly whilst wiping.
 		end
 		self:SendMessage("BigWigs_EncounterEnd", self, id, name, diff, size, status) -- Do NOT use this for wipe detection, use BigWigs_OnBossWipe.
@@ -1454,7 +1454,7 @@ function boss:Message(key, color, sound, text, icon)
 			core:Print(("Message '%s' doesn't have an icon set."):format(textType == "string" and text or spells[text or key])) -- XXX temp
 		end
 
-		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, icon ~= false and icons[icon or textType == "number" and text or key])
+		self:SendMessage("BigWigs_MessageX", self, key, textType == "string" and text or spells[text or key], color, icon ~= false and icons[icon or textType == "number" and text or key])
 		if sound then
 			if hasVoice and checkFlag(self, key, C.VOICE) then
 				self:SendMessage("BigWigs_Voice", self, key, sound)
@@ -1525,9 +1525,9 @@ do
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
 			if player == pName then
-				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "Personal", icon ~= false and icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_MessageX", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "Personal", icon ~= false and icons[icon or textType == "number" and text or key])
 			elseif not checkFlag(self, key, C.ME_ONLY) then
-				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, icon ~= false and icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_MessageX", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, icon ~= false and icons[icon or textType == "number" and text or key])
 			end
 			if sound then
 				if hasVoice and checkFlag(self, key, C.VOICE) then
@@ -1563,9 +1563,9 @@ do
 				if not checkFlag(self, key, C.MESSAGE) and not meOnly then wipe(player) return end
 			end
 			if meOnly or (onMe and #player == 1) then
-				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+				self:SendMessage("BigWigs_MessageX", self, key, format(L.you, msg), "Personal", texture)
 			else
-				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
+				self:SendMessage("BigWigs_MessageX", self, key, format(L.other, msg, list), color, texture)
 			end
 			if sound then
 				if hasVoice and checkFlag(self, key, C.VOICE) then
@@ -1578,7 +1578,7 @@ do
 		else
 			if not player then
 				if checkFlag(self, key, C.MESSAGE) then
-					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, "???"), color, texture)
+					self:SendMessage("BigWigs_MessageX", self, key, format(L.other, msg, "???"), color, texture)
 					if alwaysPlaySound then
 						self:SendMessage("BigWigs_Sound", self, key, sound)
 					end
@@ -1587,7 +1587,7 @@ do
 			end
 			if player == pName then
 				if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
-					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+					self:SendMessage("BigWigs_MessageX", self, key, format(L.you, msg), "Personal", texture)
 					if sound then
 						if hasVoice and checkFlag(self, key, C.VOICE) then
 							self:SendMessage("BigWigs_Voice", self, key, sound, true)
@@ -1599,7 +1599,7 @@ do
 			else
 				if checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 					-- Change color and remove sound (if not alwaysPlaySound) when warning about effects on other players
-					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture)
+					self:SendMessage("BigWigs_MessageX", self, key, format(L.other, msg, coloredNames[player]), color, texture)
 					if sound then
 						if alwaysPlaySound and hasVoice and checkFlag(self, key, C.VOICE) then
 							self:SendMessage("BigWigs_Voice", self, key, sound)
@@ -1653,7 +1653,7 @@ do
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBarX", self, key, msg, length, icons[icon or textType == "number" and text or key])
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
@@ -1691,7 +1691,7 @@ do
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], true)
+			self:SendMessage("BigWigs_StartBarX", self, key, msg, length, icons[icon or textType == "number" and text or key], true)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
@@ -1712,19 +1712,19 @@ do
 
 		local textType = type(text)
 		if not player and checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBarX", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
 			return
 		end
 		if player == pName then
 			local msg = format(L.you, textType == "string" and text or spells[text or key])
 			if checkFlag(self, key, C.BAR) then
-				self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_StartBarX", self, key, msg, length, icons[icon or textType == "number" and text or key])
 			end
 			if checkFlag(self, key, C.COUNTDOWN) then
 				self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
 			end
 		elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBarX", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
 		end
 	end
 
@@ -1742,7 +1742,7 @@ do
 		local textType = type(text)
 		local msg = format(L.cast, textType == "string" and text or spells[text or key])
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBarX", self, key, msg, length, icons[icon or textType == "number" and text or key])
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
@@ -1758,13 +1758,13 @@ function boss:StopBar(text, player)
 	if player then
 		if player == pName then
 			msg = format(L.you, msg)
-			self:SendMessage("BigWigs_StopBar", self, msg)
+			self:SendMessage("BigWigs_StopBarX", self, msg)
 			self:SendMessage("BigWigs_StopEmphasize", self, msg)
 		else
-			self:SendMessage("BigWigs_StopBar", self, format(L.other, msg, gsub(player, "%-.+", "*")))
+			self:SendMessage("BigWigs_StopBarX", self, format(L.other, msg, gsub(player, "%-.+", "*")))
 		end
 	else
-		self:SendMessage("BigWigs_StopBar", self, msg)
+		self:SendMessage("BigWigs_StopBarX", self, msg)
 		self:SendMessage("BigWigs_StopEmphasize", self, msg)
 	end
 end

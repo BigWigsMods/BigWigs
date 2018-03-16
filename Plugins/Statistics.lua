@@ -232,7 +232,7 @@ do
 
 				local best = sDB[difficultyTable[diff]].best
 				if self.db.profile.showBar and best then
-					self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, 237538) -- 237538 = "Interface\\Icons\\spell_holy_borrowedtime"
+					self:SendMessage("BigWigs_StartBarX", self, nil, L.bestTimeBar, best, 237538) -- 237538 = "Interface\\Icons\\spell_holy_borrowedtime"
 				end
 			end
 
@@ -317,7 +317,7 @@ function plugin:BigWigs_OnBossDisable(event, module)
 			healthPools[module.journalId] = nil
 		end
 
-		self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
+		self:SendMessage("BigWigs_StopBarX", self, L.bestTimeBar)
 	end
 end
 
