@@ -71,7 +71,8 @@ local updateData = function(module)
 				solo = false
 			end
 		else -- XXX temp
-			BigWigs:Print("Nil GUID for ".. unit ..". ".. tostring((UnitName(unit))))
+			local n = GetNumGroupMembers()
+			BigWigs:Print("Nil GUID for ".. unit ..". ".. tostring(n) .." / ".. tostring((UnitName(unit))) .." / ".. tostring((UnitExists(unit))))
 		end
 	end
 
