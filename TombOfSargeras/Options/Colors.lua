@@ -12,7 +12,7 @@ BigWigs:AddColors("Goroth", {
 BigWigs:AddColors("Demonic Inquisition", {
 	[233104] = "Personal",
 	[233426] = "Attention",
-	[233431] = {"Urgent","Personal"},
+	[233431] = {"Personal","Urgent"},
 	[233441] = "Important",
 	[233895] = {"Attention","Personal"},
 	[233983] = "Important",
@@ -28,17 +28,17 @@ BigWigs:AddColors("Harjatan the Bludger", {
 	[231729] = {"Important","Personal"},
 	[231768] = "Personal",
 	[231854] = "Urgent",
-	[231998] = {"Urgent","Personal"},
-	[232061] = {"Urgent","Important"},
+	[231998] = {"Personal","Urgent"},
+	[232061] = {"Important","Urgent"},
 	[232174] = "Urgent",
 	[232192] = "Important",
-	[233429] = {"Urgent","Personal"},
+	[233429] = {"Personal","Urgent"},
 	[240319] = "Important",
 })
 
 BigWigs:AddColors("Mistress Sassz'ine", {
 	[230139] = {"Important","Personal"},
-	[230201] = {"Attention","Urgent","Personal"},
+	[230201] = {"Attention","Personal","Urgent"},
 	[230227] = "Urgent",
 	[230358] = "Important",
 	[230384] = {"Attention","Personal"},
@@ -54,13 +54,13 @@ BigWigs:AddColors("Mistress Sassz'ine", {
 
 BigWigs:AddColors("Sisters of the Moon", {
 	[233263] = "Attention",
-	[236305] = {"Urgent","Personal"},
+	[236305] = {"Personal","Urgent"},
 	[236442] = {"Attention","Personal"},
 	[236480] = "Important",
 	[236519] = {"Attention","Personal"},
 	[236541] = {"Attention","Personal"},
 	[236547] = "Important",
-	[236550] = {"Urgent","Personal"},
+	[236550] = {"Personal","Urgent"},
 	[236603] = {"Attention","Personal"},
 	[236694] = "Urgent",
 	[236697] = "Attention",
@@ -72,7 +72,7 @@ BigWigs:AddColors("Sisters of the Moon", {
 
 BigWigs:AddColors("The Desolate Host", {
 	[235907] = {"Attention","Personal"},
-	[235924] = {"Urgent","Personal"},
+	[235924] = {"Personal","Urgent"},
 	[235927] = "Attention",
 	[236072] = "Important",
 	[236131] = "Personal",
@@ -85,16 +85,16 @@ BigWigs:AddColors("The Desolate Host", {
 	[236544] = "Important",
 	[236548] = {"Attention","Personal"},
 	[236678] = "Important",
-	[238570] = {"Attention","Urgent","Personal"},
+	[238570] = {"Attention","Personal","Urgent"},
 	[239006] = "Neutral",
 })
 
 BigWigs:AddColors("Maiden of Vigilance", {
-	[234891] = {"Urgent","Attention","Positive"},
+	[234891] = {"Attention","Positive","Urgent"},
 	[235028] = "Positive",
 	[235117] = "Personal",
 	[235267] = "Attention",
-	[235271] = {"Neutral","Important","Positive"},
+	[235271] = {"Important","Neutral","Positive"},
 	[238028] = "Personal",
 	[238408] = "Personal",
 	[239153] = "Attention",
@@ -106,11 +106,11 @@ BigWigs:AddColors("Maiden of Vigilance", {
 
 BigWigs:AddColors("Fallen Avatar", {
 	[233556] = "Important",
-	[233856] = {"Attention","Urgent","Positive"},
-	[234059] = {"Attention","Urgent","Personal"},
+	[233856] = {"Attention","Positive","Urgent"},
+	[234059] = {"Attention","Personal","Urgent"},
 	[234418] = "Important",
 	[235572] = "Urgent",
-	[236494] = {"Attention","Urgent","Personal"},
+	[236494] = {"Attention","Personal","Urgent"},
 	[236528] = "Urgent",
 	[236604] = {"Attention","Personal"},
 	[236684] = "Attention",
@@ -119,7 +119,7 @@ BigWigs:AddColors("Fallen Avatar", {
 	[239212] = "Personal",
 	[239739] = {"Attention","Personal"},
 	[240623] = "Important",
-	[240728] = {"Urgent","Personal"},
+	[240728] = {"Personal","Urgent"},
 	["energy_leak"] = "Attention",
 	["stages"] = {"Neutral","Positive"},
 })
@@ -127,9 +127,9 @@ BigWigs:AddColors("Fallen Avatar", {
 BigWigs:AddColors("Kil'jaeden", {
 	[-15543] = "Attention",
 	[235059] = "Urgent",
-	[236378] = {"Urgent","Personal"},
-	[236710] = {"Urgent","Personal"},
-	[237590] = {"Urgent","Personal"},
+	[236378] = {"Personal","Urgent"},
+	[236710] = {"Personal","Urgent"},
+	[237590] = {"Personal","Urgent"},
 	[238430] = {"Important","Personal"},
 	[238505] = {"Attention","Personal"},
 	[238999] = "Urgent",
@@ -144,16 +144,16 @@ BigWigs:AddColors("Kil'jaeden", {
 })
 
 BigWigs:AddColors("Tomb of Sargeras Trash", {
-	[239741] = {"Urgent","Personal"},
+	[239741] = {"Personal","Urgent"},
 	[240169] = "Important",
 	[240176] = "Personal",
 	[240599] = {"Attention","Personal"},
-	[240735] = {"Urgent","Personal"},
+	[240735] = {"Personal","Urgent"},
 	[241169] = "Personal",
 	[241171] = {"Attention","Personal"},
 	[241254] = "Attention",
 	[241262] = "Personal",
-	[241267] = {"Urgent","Personal"},
+	[241267] = {"Personal","Urgent"},
 	[241289] = "Important",
 	[241301] = "Attention",
 	[241367] = {"Attention","Personal"},
@@ -162,7 +162,7 @@ BigWigs:AddColors("Tomb of Sargeras Trash", {
 	[241465] = {"Attention","Personal","Positive"},
 	[241480] = "Urgent",
 	[241646] = "Positive",
-	[241675] = {"Urgent","Personal"},
+	[241675] = {"Personal","Urgent"},
 	[241703] = "Personal",
 	[241716] = {"Attention","Personal","Positive"},
 	[241742] = {"Attention","Personal"},

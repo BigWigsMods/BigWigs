@@ -12,7 +12,7 @@ BigWigs:AddSounds("Nythendra", {
 BigWigs:AddSounds("Il'gynoth", {
 	[208689] = "Alarm",
 	[208697] = "Info",
-	[208929] = {"Info","Alert"},
+	[208929] = {"Alert","Info"},
 	[210099] = "Info",
 	[210984] = "Warning",
 	[212886] = "Alert",
@@ -21,7 +21,7 @@ BigWigs:AddSounds("Il'gynoth", {
 	[223121] = "Info",
 	["nightmare_horror"] = "Info",
 	["shriveled_eyestalk"] = "Info",
-	["stages"] = {"Long","Info"},
+	["stages"] = {"Info","Long"},
 })
 
 BigWigs:AddSounds("Elerethe Renferal", {
@@ -44,16 +44,16 @@ BigWigs:AddSounds("Ursoc", {
 	[197969] = "Alarm",
 	[198006] = "Warning",
 	[198388] = {"Info","Long"},
-	[204859] = {"Warning","Info"},
+	[204859] = {"Info","Warning"},
 	[205611] = "Alert",
 })
 
 BigWigs:AddSounds("Dragons of Nightmare", {
 	[-13460] = "Long",
-	[-12809] = {"Warning","Info"},
+	[-12809] = {"Info","Warning"},
 	[203028] = "Info",
 	[203147] = "Alert",
-	[203770] = {"Alert","Alarm"},
+	[203770] = {"Alarm","Alert"},
 	[203787] = "Alert",
 	[203888] = "Alert",
 	[204040] = "Warning",
@@ -67,7 +67,7 @@ BigWigs:AddSounds("Dragons of Nightmare", {
 })
 
 BigWigs:AddSounds("Cenarius", {
-	[210279] = {"Warning","Info"},
+	[210279] = {"Info","Warning"},
 	[210290] = "Alarm",
 	[210346] = {"Alarm","Info"},
 	[211192] = "Alert",

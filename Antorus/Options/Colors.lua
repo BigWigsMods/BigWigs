@@ -1,11 +1,11 @@
 
 BigWigs:AddColors("Gorothi Worldbreaker", {
-	[240277] = {"Neutral","Important","Urgent","Positive"},
+	[240277] = {"Important","Neutral","Positive","Urgent"},
 	[244106] = "Urgent",
 	[244410] = {"Attention","Personal"},
 	[244761] = "Important",
 	[244969] = "Urgent",
-	[246220] = {"Urgent","Personal"},
+	[246220] = {"Personal","Urgent"},
 })
 
 BigWigs:AddColors("Felhounds of Sargeras", {
@@ -16,21 +16,21 @@ BigWigs:AddColors("Felhounds of Sargeras", {
 	[244057] = "Attention",
 	[244072] = {"Attention","Personal"},
 	[244131] = "Attention",
-	[244768] = {"Urgent","Personal"},
+	[244768] = {"Personal","Urgent"},
 	[245098] = "Important",
 	[248815] = "Personal",
 	[248819] = "Personal",
 	[251356] = "Neutral",
 	[251445] = "Important",
-	[254429] = {"Urgent","Personal"},
+	[254429] = {"Personal","Urgent"},
 })
 
 BigWigs:AddColors("Antoran High Command", {
 	[244172] = "Personal",
 	[244625] = "Urgent",
 	[244737] = {"Attention","Personal"},
-	[244892] = {"Urgent","Personal"},
-	[244910] = {"Positive","Personal"},
+	[244892] = {"Personal","Urgent"},
+	[244910] = {"Personal","Positive"},
 	[245161] = "Attention",
 	[245227] = "Neutral",
 	[245546] = "Important",
@@ -41,16 +41,16 @@ BigWigs:AddColors("Antoran High Command", {
 BigWigs:AddColors("Portal Keeper Hasabel", {
 	[243983] = "Important",
 	[244000] = "Urgent",
-	[244016] = {"Urgent","Personal"},
+	[244016] = {"Personal","Urgent"},
 	[244598] = "Attention",
 	[244607] = "Urgent",
 	[244613] = "Personal",
 	[244689] = "Neutral",
 	[244849] = "Personal",
-	[244926] = {"Urgent","Personal"},
+	[244926] = {"Personal","Urgent"},
 	[245040] = {"Attention","Personal"},
 	[245050] = "Attention",
-	[245075] = {"Urgent","Personal"},
+	[245075] = {"Personal","Urgent"},
 	[245118] = "Personal",
 	[245504] = "Urgent",
 	[246075] = "Important",
@@ -86,14 +86,14 @@ BigWigs:AddColors("Imonar the Soulhunter", {
 BigWigs:AddColors("Kin'garoth", {
 	[246516] = {"Neutral","Positive"},
 	[246664] = "Important",
-	[246686] = {"Urgent","Personal"},
-	[246698] = {"Urgent","Personal"},
-	[246833] = {"Urgent","Neutral"},
+	[246686] = {"Personal","Urgent"},
+	[246698] = {"Personal","Urgent"},
+	[246833] = {"Neutral","Urgent"},
 	[248214] = {"Important","Neutral"},
 	[248375] = "Urgent",
-	[249680] = {"Urgent","Personal"},
-	[254919] = {"Attention","Urgent","Personal"},
-	[254926] = {"Attention","Personal","Neutral"},
+	[249680] = {"Personal","Urgent"},
+	[254919] = {"Attention","Personal","Urgent"},
+	[254926] = {"Attention","Neutral","Personal"},
 })
 
 BigWigs:AddColors("Varimathras", {
@@ -102,14 +102,14 @@ BigWigs:AddColors("Varimathras", {
 	[243961] = "Personal",
 	[243999] = {"Attention","Personal"},
 	[244042] = {"Important","Personal"},
-	[244094] = {"Urgent","Personal","Positive"},
+	[244094] = {"Personal","Positive","Urgent"},
 	["stages"] = "Positive",
 })
 
 BigWigs:AddColors("The Coven of Shivarra", {
 	[244899] = {"Neutral","Personal"},
 	[245518] = {"Neutral","Personal"},
-	[245586] = {"Positive","Personal"},
+	[245586] = {"Personal","Positive"},
 	[245627] = {"Attention","Personal"},
 	[246329] = "Attention",
 	[250648] = "Urgent",
@@ -119,7 +119,7 @@ BigWigs:AddColors("The Coven of Shivarra", {
 	[253520] = {"Important","Personal"},
 	[253650] = "Attention",
 	["stages"] = "Positive",
-	["torment_of_the_titans"] = {"Urgent","Important","Neutral"},
+	["torment_of_the_titans"] = {"Important","Neutral","Urgent"},
 })
 
 BigWigs:AddColors("Aggramar", {
@@ -134,7 +134,7 @@ BigWigs:AddColors("Aggramar", {
 	[254452] = {"Important","Personal"},
 	[255058] = "Important",
 	[255061] = "Urgent",
-	["stages"] = {"Positive","Neutral"},
+	["stages"] = {"Neutral","Positive"},
 	["track_ember"] = "Neutral",
 })
 
@@ -144,12 +144,12 @@ BigWigs:AddColors("Argus the Unmaker", {
 	[248167] = "Personal",
 	[248317] = "Neutral",
 	[248396] = {"Neutral","Personal"},
-	[248499] = {"Neutral","Attention","Personal"},
-	[250669] = {"Personal","Important"},
+	[248499] = {"Attention","Neutral","Personal"},
+	[250669] = {"Important","Personal"},
 	[251570] = {"Personal","Urgent"},
-	[252616] = {"Important","Urgent","Personal"},
-	[252729] = {"Urgent","Personal"},
-	[255199] = {"Positive","Personal"},
+	[252616] = {"Important","Personal","Urgent"},
+	[252729] = {"Personal","Urgent"},
+	[255199] = {"Personal","Positive"},
 	[255200] = "Personal",
 	[255594] = "Positive",
 	[255826] = "Attention",
@@ -159,10 +159,10 @@ BigWigs:AddColors("Argus the Unmaker", {
 	[257214] = "Positive",
 	[257296] = "Attention",
 	[257966] = {"Personal","Urgent"},
-	[258039] = {"Neutral","Attention","Personal"},
-	[258068] = {"Urgent","Personal"},
+	[258039] = {"Attention","Neutral","Personal"},
+	[258068] = {"Personal","Urgent"},
 	[258834] = "Attention",
-	[258838] = {"Neutral","Attention","Personal"},
+	[258838] = {"Attention","Neutral","Personal"},
 	["combinedBurstAndBomb"] = "Important",
 	["stages"] = "Positive",
 })
@@ -172,12 +172,12 @@ BigWigs:AddColors("Antorus Trash", {
 	[246199] = "Personal",
 	[246209] = "Attention",
 	[249212] = "Important",
-	[249297] = {"Personal","Important"},
+	[249297] = {"Important","Personal"},
 	[251612] = "Personal",
-	[252621] = {"Personal","Attention"},
-	[252760] = {"Urgent","Personal"},
-	[253600] = {"Personal","Urgent","Positive"},
-	[254122] = {"Urgent","Personal"},
+	[252621] = {"Attention","Personal"},
+	[252760] = {"Personal","Urgent"},
+	[253600] = {"Personal","Positive","Urgent"},
+	[254122] = {"Personal","Urgent"},
 	[254500] = "Important",
 	[254512] = "Personal",
 })
