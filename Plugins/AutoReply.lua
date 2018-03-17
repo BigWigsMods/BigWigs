@@ -17,7 +17,7 @@ plugin.defaultDB = {
 -- Locals
 --
 
-local SendChatMessage = BigWigsLoader.SendChatMessage
+local SendChatMessage, GetTime = BigWigsLoader.SendChatMessage, GetTime
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.autoReply
 local curDiff = 0
@@ -70,8 +70,8 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_OnBossEngage(module, difficulty)
-	if self.db.profile.enabled then
+function plugin:BigWigs_OnBossEngage(event, module, difficulty)
+	if not self.db.profile.disabled then
 		curDiff = difficulty
 		curModule = module
 		throttle = {}
@@ -80,7 +80,7 @@ function plugin:BigWigs_OnBossEngage(module, difficulty)
 end
 
 function plugin:BigWigs_OnBossWin()
-	if self.db.profile.enabled then
+	if not self.db.profile.disabled then
 		curDiff = 0
 		curModule = nil
 		self:UnregisterEvent("CHAT_MSG_WHISPER")
@@ -90,8 +90,9 @@ end
 function plugin:CHAT_MSG_WHISPER(event, msg, sender)
 	if curDiff > 0 then
 		if not throttle[sender] or GetTime() - throttle[sender] > 5 then
+			throttle[sender] = GetTime()
 			local msg = L.autoReplyBasic:format(curModule.displayName)
-			SendChatMessage(msg, "WHISPER", sender)
+			SendChatMessage(msg, "WHISPER", nil, sender)
 		end
 	end
 end
