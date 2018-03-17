@@ -17,6 +17,14 @@ L.disabled = "Disabled"
 L.disabledDisplayDesc = "Disable the display for all modules that use it."
 
 -----------------------------------------------------------------------
+-- AutoReply.lua
+--
+
+L.autoReply = "Auto Reply"
+L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
+L.autoReplyBasic = "[BigWigs] I'm currently busy in combat with '%s'."
+
+-----------------------------------------------------------------------
 -- Bars.lua
 --
 
