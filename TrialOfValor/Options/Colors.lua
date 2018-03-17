@@ -1,7 +1,7 @@
 
 BigWigs:AddColors("Odyn-TrialOfValor", {
-	[-14404] = {"Neutral","Positive"},
 	[-14495] = "Personal",
+	[-14404] = {"Neutral","Positive"},
 	[197961] = "Personal",
 	[227475] = "Personal",
 	[227503] = {"Attention","Positive"},

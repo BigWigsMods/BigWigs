@@ -49,8 +49,8 @@ BigWigs:AddSounds("Ursoc", {
 })
 
 BigWigs:AddSounds("Dragons of Nightmare", {
-	[-12809] = {"Warning","Info"},
 	[-13460] = "Long",
+	[-12809] = {"Warning","Info"},
 	[203028] = "Info",
 	[203147] = "Alert",
 	[203770] = {"Alert","Alarm"},

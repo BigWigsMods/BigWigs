@@ -1,7 +1,7 @@
 
 BigWigs:AddSounds("Odyn-TrialOfValor", {
-	[-14404] = "Info",
 	[-14495] = "Warning",
+	[-14404] = "Info",
 	[197961] = "Warning",
 	[227475] = "Alarm",
 	[227503] = "Long",

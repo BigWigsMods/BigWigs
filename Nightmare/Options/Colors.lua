@@ -51,8 +51,8 @@ BigWigs:AddColors("Ursoc", {
 })
 
 BigWigs:AddColors("Dragons of Nightmare", {
-	[-12809] = {"Important","Personal","Positive"},
 	[-13460] = "Neutral",
+	[-12809] = {"Important","Personal","Positive"},
 	[203028] = "Urgent",
 	[203147] = "Important",
 	[203770] = {"Attention","Personal"},
