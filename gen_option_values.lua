@@ -113,6 +113,17 @@ local function strsplit(str)
 	return t
 end
 
+
+local function cmp(a, b) return string.lower(a) < string.lower(b) end
+local function sortKeys(keys)
+	local t = {}
+	for key in next, keys do
+		t[#t+1] = key
+	end
+	table.sort(t, cmp)
+	return t
+end
+
 -- Write out a module option values to [module dir]/Options/[value].lua
 local function dumpValues(path, name, options_table)
 	local file = path .. name .. ".lua"
@@ -127,7 +138,8 @@ local function dumpValues(path, name, options_table)
 	for _, mod in ipairs(modules) do
 		if options_table[mod] then
 			data = data .. string.format("\r\nBigWigs:Add%s(%q, {\r\n", name, mod)
-			for key, values in next, options_table[mod] do
+			for _, key in ipairs(sortKeys(options_table[mod])) do
+				local values = options_table[mod][key]
 				if type(key) == "string" then key = string.format("%q", key) end
 				if #values == 1 then
 					data = data .. string.format("\t[%s] = %q,\r\n", key, values[1])
