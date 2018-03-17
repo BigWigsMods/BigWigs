@@ -114,7 +114,12 @@ local function strsplit(str)
 end
 
 
-local function cmp(a, b) return string.lower(a) < string.lower(b) end
+local function cmp(a, b)
+	if type(a) == type(b) then
+		return a < b
+	end
+	return type(a) ~= "string"
+end
 local function sortKeys(keys)
 	local t = {}
 	for key in next, keys do
