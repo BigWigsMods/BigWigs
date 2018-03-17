@@ -150,7 +150,7 @@ local function dumpValues(path, name, options_table)
 				if #values == 1 then
 					data = data .. string.format("\t[%s] = %q,\r\n", key, values[1])
 				else
-					table.sort(values, function(a, b) return string.lower(a) < string.lower(b) end)
+					table.sort(values, cmp)
 					for i = 1, #values do
 						values[i] = string.format("%q", values[i])
 					end
