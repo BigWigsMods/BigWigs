@@ -2,7 +2,7 @@
 BigWigs:AddColors("Apocron", {
 	[241458] = "Urgent",
 	[241498] = "Attention",
-	[241518] = {"Important","Positive","Personal"},
+	[241518] = {"Important","Personal","Positive"},
 })
 
 BigWigs:AddColors("Brutallus", {
@@ -24,12 +24,12 @@ BigWigs:AddColors("Calamir", {
 BigWigs:AddColors("Drugon the Frostblood", {
 	[219493] = "Important",
 	[219542] = "Attention",
-	[219602] = {"Urgent","Positive","Personal"},
-	[219803] = {"Positive","Personal"},
+	[219602] = {"Personal","Positive","Urgent"},
+	[219803] = {"Personal","Positive"},
 })
 
 BigWigs:AddColors("Flotsam", {
-	[220295] = {"Positive","Personal"},
+	[220295] = {"Personal","Positive"},
 	[220340] = "Attention",
 	[223317] = "Important",
 	[223373] = "Urgent",
@@ -70,7 +70,7 @@ BigWigs:AddColors("Nithogg", {
 	[212836] = "Attention",
 	[212852] = "Urgent",
 	[212867] = "Important",
-	[212887] = {"Positive","Personal"},
+	[212887] = {"Personal","Positive"},
 })
 
 BigWigs:AddColors("Shar'thos", {

@@ -2,7 +2,7 @@
 BigWigs:AddSounds("Apocron", {
 	[241458] = "Warning",
 	[241498] = "Long",
-	[241518] = {"Info","Alarm"},
+	[241518] = {"Alarm","Info"},
 })
 
 BigWigs:AddSounds("Brutallus", {
@@ -14,7 +14,7 @@ BigWigs:AddSounds("Brutallus", {
 BigWigs:AddSounds("Calamir", {
 	[217877] = "Alert",
 	[217893] = "Alarm",
-	[217925] = {"Long","Alarm"},
+	[217925] = {"Alarm","Long"},
 	[217966] = "Warning",
 	[217986] = "Alert",
 	[218012] = "Long",
@@ -24,7 +24,7 @@ BigWigs:AddSounds("Calamir", {
 BigWigs:AddSounds("Drugon the Frostblood", {
 	[219493] = "Alert",
 	[219542] = "Warning",
-	[219602] = {"Long","Alarm"},
+	[219602] = {"Alarm","Long"},
 })
 
 BigWigs:AddSounds("Flotsam", {

@@ -113,8 +113,14 @@ local function strsplit(str)
 	return t
 end
 
+local function cmp(a, b)
+	if type(a) == "number" and type(b) == "number" then
+		return a < b
+	else
+		return string.lower(a) < string.lower(b)
+	end
+end
 
-local function cmp(a, b) return string.lower(a) < string.lower(b) end
 local function sortKeys(keys)
 	local t = {}
 	for key in next, keys do
@@ -144,6 +150,7 @@ local function dumpValues(path, name, options_table)
 				if #values == 1 then
 					data = data .. string.format("\t[%s] = %q,\r\n", key, values[1])
 				else
+					table.sort(values, cmp)
 					for i = 1, #values do
 						values[i] = string.format("%q", values[i])
 					end

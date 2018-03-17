@@ -1,7 +1,7 @@
 
 BigWigs:AddSounds("Odyn-TrialOfValor", {
-	[-14404] = "Info",
 	[-14495] = "Warning",
+	[-14404] = "Info",
 	[197961] = "Warning",
 	[227475] = "Alarm",
 	[227503] = "Long",
@@ -47,9 +47,9 @@ BigWigs:AddSounds("Helya-TrialOfValor", {
 	[228730] = "Long",
 	[228854] = "Info",
 	[228872] = "Long",
-	[229119] = {"Warning","Alarm"},
+	[229119] = {"Alarm","Warning"},
 	[230197] = "Alarm",
-	[230267] = {"Warning","Alarm"},
+	[230267] = {"Alarm","Warning"},
 	[232450] = "Long",
 	[232488] = "Alarm",
 	["stages"] = "Long",

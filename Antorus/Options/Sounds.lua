@@ -1,11 +1,11 @@
 
 BigWigs:AddSounds("Gorothi Worldbreaker", {
-	[240277] = {"Info","Long","Alarm"},
+	[240277] = {"Alarm","Info","Long"},
 	[244106] = "Alarm",
 	[244410] = "Warning",
 	[244761] = "Alert",
 	[244969] = "Warning",
-	[246220] = {"Warning","Alarm"},
+	[246220] = {"Alarm","Warning"},
 })
 
 BigWigs:AddSounds("Felhounds of Sargeras", {
@@ -62,7 +62,7 @@ BigWigs:AddSounds("Portal Keeper Hasabel", {
 BigWigs:AddSounds("Eonar the Life-Binder", {
 	[248332] = "Alarm",
 	[248861] = "Warning",
-	[249121] = {"Warning","Info"},
+	[249121] = {"Info","Warning"},
 	[250048] = {"Info","Long"},
 	[250140] = "Alarm",
 	[250691] = "Alarm",
@@ -71,9 +71,9 @@ BigWigs:AddSounds("Eonar the Life-Binder", {
 })
 
 BigWigs:AddSounds("Imonar the Soulhunter", {
-	[247367] = {"Warning","Alarm"},
+	[247367] = {"Alarm","Warning"},
 	[247376] = "Alert",
-	[247687] = {"Warning","Alarm"},
+	[247687] = {"Alarm","Warning"},
 	[247923] = "Alert",
 	[248068] = "Alert",
 	[248070] = "Warning",
@@ -88,7 +88,7 @@ BigWigs:AddSounds("Kin'garoth", {
 	[246664] = "Alarm",
 	[246686] = "Warning",
 	[246698] = "Warning",
-	[246833] = {"Warning","Info"},
+	[246833] = {"Info","Warning"},
 	[248214] = {"Alarm","Info"},
 	[248375] = "Warning",
 	[249680] = "Warning",
@@ -102,7 +102,7 @@ BigWigs:AddSounds("Varimathras", {
 	[243961] = "Alarm",
 	[243999] = "Alert",
 	[244042] = "Alarm",
-	[244094] = {"Warning","Info"},
+	[244094] = {"Info","Warning"},
 	["stages"] = "Long",
 })
 
@@ -119,7 +119,7 @@ BigWigs:AddSounds("The Coven of Shivarra", {
 	[253520] = "Alarm",
 	[253650] = "Alert",
 	["stages"] = "Long",
-	["torment_of_the_titans"] = {"Warning","Info"},
+	["torment_of_the_titans"] = {"Info","Warning"},
 })
 
 BigWigs:AddSounds("Aggramar", {
@@ -144,25 +144,25 @@ BigWigs:AddSounds("Argus the Unmaker", {
 	[248167] = "Alarm",
 	[248317] = "Alert",
 	[248396] = "Warning",
-	[248499] = {"Alert","Alarm","Warning"},
+	[248499] = {"Alarm","Alert","Warning"},
 	[250669] = "Alarm",
 	[251570] = "Warning",
 	[252616] = "Alarm",
 	[252729] = "Warning",
 	[255199] = "Long",
 	[255200] = "Info",
-	[255594] = {"Long","Info"},
+	[255594] = {"Info","Long"},
 	[255826] = "Alarm",
 	[255935] = "Alert",
 	[256388] = "Warning",
-	[256544] = {"Warning","Info"},
+	[256544] = {"Info","Warning"},
 	[257214] = "Long",
 	[257296] = "Alarm",
 	[257966] = "Warning",
-	[258039] = {"Alert","Alarm","Warning"},
+	[258039] = {"Alarm","Alert","Warning"},
 	[258068] = "Warning",
 	[258834] = "Info",
-	[258838] = {"Alert","Alarm","Warning"},
+	[258838] = {"Alarm","Alert","Warning"},
 	["stages"] = "Long",
 })
 
@@ -177,6 +177,6 @@ BigWigs:AddSounds("Antorus Trash", {
 	[252760] = "Warning",
 	[253600] = {"Alarm","Info"},
 	[254122] = "Alarm",
-	[254500] = {"Warning","Long"},
+	[254500] = {"Long","Warning"},
 	[254512] = "Alert",
 })

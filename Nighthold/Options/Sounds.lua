@@ -91,7 +91,7 @@ BigWigs:AddSounds("High Botanist Tel'arn", {
 	[218503] = "Warning",
 	[218774] = "Alert",
 	[218809] = "Alert",
-	[218927] = {"Long","Alarm"},
+	[218927] = {"Alarm","Long"},
 	[219235] = "Info",
 	["stages"] = "Info",
 })
@@ -116,8 +116,8 @@ BigWigs:AddSounds("Star Augur Etraeus", {
 BigWigs:AddSounds("Grand Magistrix Elisande", {
 	[209165] = "Long",
 	[209166] = "Long",
-	[209170] = {"Info","Alert"},
-	[209244] = {"Alert","Alarm"},
+	[209170] = {"Alert","Info"},
+	[209244] = {"Alarm","Alert"},
 	[209597] = "Alarm",
 	[209615] = "Warning",
 	[209617] = "Info",
@@ -158,7 +158,7 @@ BigWigs:AddSounds("Gul'dan", {
 	[212568] = "Alarm",
 	[217770] = "Alarm",
 	[217830] = "Info",
-	[220957] = {"Warning","Alert"},
+	[220957] = {"Alert","Warning"},
 	[221408] = "Alert",
 	[221486] = "Alarm",
 	[221606] = "Warning",
