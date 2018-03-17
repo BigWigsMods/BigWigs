@@ -113,13 +113,17 @@ local function strsplit(str)
 	return t
 end
 
-
 local function cmp(a, b)
-	if type(a) == type(b) then
-		return a < b
+	local typeOfA = type(a)
+	if typeOfA == type(b) then
+		if typeOfA == "number" then
+			return a < b
+		end
+		return string.lower(a) < string.lower(b)
 	end
-	return type(a) ~= "string"
+	return typeOfA ~= "string"
 end
+
 local function sortKeys(keys)
 	local t = {}
 	for key in next, keys do
