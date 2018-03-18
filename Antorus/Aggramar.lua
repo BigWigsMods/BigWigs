@@ -42,7 +42,6 @@ local mobCollector = {}
 local waveCollector = {}
 local emberAddMarks = {}
 local currentEmberWave = 1
-local embersLeft = 0
 local trackingEmber = nil
 local waveTimeCollector = {}
 
@@ -149,7 +148,6 @@ function mod:OnEngage()
 	wipe(waveTimeCollector)
 	wave = 0
 	currentEmberWave = 1
-	embersLeft = 0
 	trackingEmber = nil
 
 	if self:Mythic() then
@@ -250,11 +248,11 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:BlazingEruption(args) -- Add Death/Raid Explosion
-	if (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) and trackingEmber then
-		-- Remove the ember from marks list and wave List
-		embersLeft = embersLeft - 1
+	if trackingEmber and (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) then
+		waveEmberCounter = waveEmberCounter - 1
+
 		if self:GetOption("custom_off_ember_marker") then
-			for key,guid in pairs(emberAddMarks) do
+			for key,guid in pairs(emberAddMarks) do -- Make the icon available for use again
 				if guid == args.sourceGUID then
 					emberAddMarks[key] = nil
 				end
@@ -262,18 +260,16 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 		end
 
 		if self:Mythic() and stage >= 2 then -- Don't need to check different waves outside of Mythic intermission 2+
-			if mobCollector[args.sourceGUID] then
-				waveCollector[mobCollector[args.sourceGUID]][args.sourceGUID] = nil -- Check which wave the add was from, incase its from an earlier wave
+			if mobCollector[args.sourceGUID] then -- Remove the add from the wave's table
+				waveCollector[mobCollector[args.sourceGUID]][args.sourceGUID] = nil
 			end
 
 			waveEmberCounter = 0
-			if waveCollector[currentEmberWave] then
-				for _ in next, waveCollector[currentEmberWave] do -- Count how many embers are left in this wave
+			if waveCollector[currentEmberWave] then -- Count how many embers are left in this wave instead
+				for _ in next, waveCollector[currentEmberWave] do
 					waveEmberCounter = waveEmberCounter + 1
 				end
 			end
-		else
-			waveEmberCounter = embersLeft
 		end
 
 		if waveEmberCounter > 0 then
@@ -294,10 +290,10 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 end
 
 function mod:EmberDeath()
-	embersLeft = embersLeft - 1
-	if embersLeft > 0 then
+	waveEmberCounter = waveEmberCounter - 1
+	if waveEmberCounter > 0 then
 		self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
-	elseif currentEmberWave then -- Next wave time!
+	else
 		self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
 		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
 		self:UnregisterTargetEvents()
@@ -513,7 +509,7 @@ function mod:CorruptAegis()
 	wipe(waveTimeCollector)
 	wipe(emberAddMarks)
 	currentEmberWave = 1
-	embersLeft = self:Mythic() and 10 or 6
+	waveEmberCounter = self:Mythic() and 10 or 6
 	wave = 1
 	waveCollector[wave] = {}
 
