@@ -30,6 +30,7 @@ move-folders:
     BigWigs/ArgusInvasionPoints: BigWigs_ArgusInvasionPoints
 
 ignore:
+  - Uldir
   - .travis.yml
   - gen_option_values.lua
   - ldoc.ltp

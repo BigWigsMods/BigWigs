@@ -98,6 +98,7 @@ do
 	local mop = "BigWigs_MistsOfPandaria"
 	local wod = "BigWigs_WarlordsOfDraenor"
 	local l = "BigWigs_Legion"
+	local bfa = "BigWigs_BattleForAzeroth"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -159,6 +160,8 @@ do
 		[1676] = l, -- Tomb of Sargeras
 		[1712] = l, -- Antorus, the Burning Throne
 		[1779] = l, -- Invasion Points
+		--[[ BigWigs: Battle for Azeroth ]]--
+		[1861] = bfa, -- Uldir
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
