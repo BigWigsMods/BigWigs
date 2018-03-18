@@ -110,7 +110,7 @@ end
 
 function plugin:BigWigs_OnBossWin(event, module)
 	if self.db.profile.bigwigsMsg then
-		self:SendMessage("BigWigs_MessageX", self, nil, L.defeated:format(module.displayName), "Positive")
+		self:SendMessage("BigWigs_Message", self, nil, L.defeated:format(module.displayName), "Positive")
 	end
 	local name = self.db.profile.soundName
 	if name ~= "None" then

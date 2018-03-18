@@ -94,17 +94,17 @@ do
 		if timeLeft == 0 then
 			self:CancelTimer(timer)
 			timer = nil
-			self:SendMessage("BigWigs_MessageX", self, nil, L.pulling, "Attention", 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
+			self:SendMessage("BigWigs_Message", self, nil, L.pulling, "Attention", 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
 			self:SendMessage("BigWigs_Sound", self, nil, "Alarm")
 		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
 			self:CancelTimer(timer)
 			timeLeft = 0
 			BigWigs:Print(L.pullStopped:format(COMBAT))
-			self:SendMessage("BigWigs_StopBarX", self, L.pull)
+			self:SendMessage("BigWigs_StopBar", self, L.pull)
 			self:SendMessage("BigWigs_StopPull", self, COMBAT)
 		elseif timeLeft < 11 then
 			if self.db.profile.countType == "normal" then
-				self:SendMessage("BigWigs_MessageX", self, nil, L.pullIn:format(timeLeft), "Attention")
+				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
 			else
 				self:SendMessage("BigWigs_EmphasizedCountdownMessage", timeLeft)
 			end
@@ -132,7 +132,7 @@ do
 				if seconds == 0 then
 					timeLeft = 0
 					BigWigs:Print(L.pullStopped:format(nick))
-					self:SendMessage("BigWigs_StopBarX", self, L.pull)
+					self:SendMessage("BigWigs_StopBar", self, L.pull)
 					self:SendMessage("BigWigs_StopPull", self, nick, isDBM)
 					return
 				end
@@ -157,15 +157,15 @@ do
 			--			if quality and (quality < 2 or iLevel < 300) then
 			--				local msg = ("Bad Item Equipped: %s"):format(GetInventoryItemLink("player", i))
 			--				BigWigs:Print(msg)
-			--				self:SendMessage("BigWigs_MessageX", self, nil, msg, "Personal")
+			--				self:SendMessage("BigWigs_Message", self, nil, msg, "Personal")
 			--			end
 			--		end
 			--	end
 			--end
 
-			self:SendMessage("BigWigs_MessageX", self, nil, L.pullIn:format(timeLeft), "Attention")
+			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
 			self:SendMessage("BigWigs_Sound", self, nil, "Long")
-			self:SendMessage("BigWigs_StartBarX", self, nil, L.pull, seconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
+			self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
 			self:SendMessage("BigWigs_StartPull", self, seconds, nick, isDBM)
 		end
 	end

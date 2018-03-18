@@ -439,7 +439,7 @@ function plugin:OnPluginEnable()
 
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_SetConfigureTarget")
-	self:RegisterMessage("BigWigs_MessageX")
+	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
@@ -608,7 +608,7 @@ do
 	end
 end
 
-function plugin:BigWigs_MessageX(event, module, key, text, color, icon)
+function plugin:BigWigs_Message(event, module, key, text, color, icon)
 	if not text then return end
 
 	local r, g, b = 1, 1, 1 -- Default to white.

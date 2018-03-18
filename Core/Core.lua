@@ -215,7 +215,7 @@ do
 				addon:SendMessage("BigWigs_Flash", addon, key)
 			end
 			addon:Print(L.test .." - ".. color ..": ".. key)
-			addon:SendMessage("BigWigs_MessageX", addon, key, color..": "..key, color, messages[key])
+			addon:SendMessage("BigWigs_Message", addon, key, color..": "..key, color, messages[key])
 			addon:SendMessage("BigWigs_Sound", addon, key, sound)
 			messages[key] = nil
 		end
@@ -238,7 +238,7 @@ do
 		local time = random(11, 30)
 		messages[spell] = icon
 
-		addon:SendMessage("BigWigs_StartBarX", addon, spell, spell, time, icon)
+		addon:SendMessage("BigWigs_StartBar", addon, spell, spell, time, icon)
 	end
 end
 
