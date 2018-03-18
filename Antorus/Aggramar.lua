@@ -505,7 +505,7 @@ function mod:CorruptAegis()
 	waveCollector[wave] = {}
 
 	if not trackingEmber and (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) then
-		if (self:Mythic() and stage > 2) or self:GetOption("custom_off_ember_marker") then -- Always scan them in 2nd intermission and 3rd stage for mythic due to extra waves spawning
+		if (self:Mythic() and stage >= 2) or self:GetOption("custom_off_ember_marker") then -- Always scan them in 2nd intermission and 3rd stage for mythic due to extra waves spawning
 			self:RegisterTargetEvents("EmberAddScanner")
 		end
 		trackingEmber = true
