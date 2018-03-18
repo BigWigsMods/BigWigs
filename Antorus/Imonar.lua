@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Imonar the Soulhunter", nil, 2009, 1712)
+local mod, CL = BigWigs:NewBoss("Imonar the Soulhunter", 1712, 2009)
 if not mod then return end
 mod:RegisterEnableMob(124158)
 mod.engageId = 2082
@@ -19,11 +19,11 @@ local canisterProxList = {}
 
 local timersHeroic = {
 	--[[ Empowered Shrapnel Blast ]]--
-	[248070] = {15.3, 22, 19.5, 18, 16, 16, 13.5, 10, 9.5}, -- XXX Need more data to confirm
+	[248070] = {15.3, 22, 19.5, 18, 16, 16, 13.5, 10},
 }
 local timersMythic = {
 	--[[ Empowered Shrapnel Blast ]]--
-	[248070] = {15.7, 15.7, 15.7, 14.5, 14.5, 12.2, 12.2, 9.7, 9.7}, -- XXX Need more data to confirm
+	[248070] = {15.7, 15.7, 15.7, 14.5, 14.5, 12.2, 12.2},
 }
 local timers = mod:Mythic() and timersMythic or timersHeroic
 
@@ -324,5 +324,5 @@ end
 function mod:EmpoweredShrapnelBlast(args)
 	self:Message(args.spellId, "Urgent", "Warning")
 	empoweredSchrapnelBlastCount = empoweredSchrapnelBlastCount + 1
-	self:CDBar(args.spellId, stage == 4 and 26.8 or timers[args.spellId][empoweredSchrapnelBlastCount])
+	self:CDBar(args.spellId, stage == 4 and 26.8 or timers[args.spellId][empoweredSchrapnelBlastCount] or 9.6)
 end

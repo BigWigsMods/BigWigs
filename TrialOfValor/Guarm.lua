@@ -7,7 +7,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Guarm-TrialOfValor", 1114, 1830)
+local mod, CL = BigWigs:NewBoss("Guarm-TrialOfValor", 1648, 1830)
 if not mod then return end
 mod:RegisterEnableMob(114323)
 mod.engageId = 1962

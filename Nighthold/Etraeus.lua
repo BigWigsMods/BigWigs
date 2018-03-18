@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Star Augur Etraeus", 1088, 1732)
+local mod, CL = BigWigs:NewBoss("Star Augur Etraeus", 1530, 1732)
 if not mod then return end
 mod:RegisterEnableMob(103758)
 mod.engageId = 1863
@@ -479,8 +479,7 @@ do
 			for i = 1, #starSignTables[mySign] do
 				playerList[#playerList+1] = starSignTables[mySign][i]
 			end
-			local color = mySign == 205429 and "Attention" or mySign == 205445 and "Important" or mySign == 216345 and "Positive" or "Personal"
-			self:TargetMessage(205408, playerList, color, "Warning", mySign, mySign)
+			self:TargetMessage(205408, playerList, mySign == 205429 and "Attention" or mySign == 205445 and "Important" or mySign == 216345 and "Positive" or "Personal", "Warning", mySign, mySign)
 		end
 	end
 

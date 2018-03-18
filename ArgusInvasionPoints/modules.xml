@@ -8,5 +8,6 @@
 <Script file="Occularus.lua"/>
 <Script file="Vilemus.lua"/>
 
-</Ui>
+<Include file="Options\options.xml"/>
 
+</Ui>

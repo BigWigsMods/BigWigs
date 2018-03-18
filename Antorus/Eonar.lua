@@ -6,7 +6,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Eonar the Life-Binder", nil, 2025, 1712)
+local mod, CL = BigWigs:NewBoss("Eonar the Life-Binder", 1712, 2025)
 if not mod then return end
 mod:RegisterEnableMob(122500, 124445) -- Essence of Eonar, The Paraxis
 mod.engageId = 2075
@@ -99,7 +99,7 @@ local timersHeroic = {
 
 local timersMythic = {
 	--[[ Rain of Fel ]]--
-	[248332] = {6, 29, 25, 48.5, 5, 20, 50.5, 25, 4.5, 46, 24, 4, 50, 50},
+	[248332] = {6, 29, 25, 48.5, 5, 20, 50.5, 25, 4.5, 46, 24, 4, 50, 50, 50},
 
 	--[[ Spear of Doom ]] --
 	[248861] = {15, 75, 75, 75, 25, 75, 75, 50, 50},

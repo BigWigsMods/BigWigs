@@ -61,6 +61,7 @@ local proxAnchor, proxTitle, proxCircle, proxPulseOut, proxPulseIn = nil, nil, n
 
 -- Upvalues
 local CTimerAfter = BigWigsLoader.CTimerAfter
+local GameTooltip = CreateFrame("GameTooltip", "BigWigsProximityTooltip", UIParent, "GameTooltipTemplate")
 local UnitPosition, GetPlayerFacing = UnitPosition, GetPlayerFacing
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
 local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown

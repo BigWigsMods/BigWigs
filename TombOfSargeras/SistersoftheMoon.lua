@@ -7,7 +7,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Sisters of the Moon", 1147, 1903)
+local mod, CL = BigWigs:NewBoss("Sisters of the Moon", 1676, 1903)
 if not mod then return end
 mod:RegisterEnableMob(118523, 118374, 118518, 119205) -- Huntress Kasparian, Captain Yathae Moonstrike, Priestess Lunaspyre, Moontalon
 mod.engageId = 2050

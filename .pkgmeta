@@ -32,6 +32,7 @@ move-folders:
 ignore:
   - Uldir
   - .travis.yml
+  - gen_option_values.lua
   - ldoc.ltp
   - ISSUE_TEMPLATE.md
   - README.md

@@ -21,7 +21,6 @@ L.phase = "Fase %d"
 L.stage = "Estágio %d"
 L.normal = "Modo normal"
 L.heroic = "Modo heroico"
-L.hard = "Modo Difícil"
 L.mythic = "Modo mítico"
 --L.active = "Active" -- When a boss becomes active, after speech finishes
 L.general = "Geral" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
@@ -33,8 +32,10 @@ L.removed = "%s Removido"
 --L.removed_by = "%s removed by %s" -- spell removed by player
 L.incoming = "%s Chegando"
 L.interrupted = "%s Interrompido"
+--L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
 L.no = "Sem %s"
 L.intermission = "Intervalo"
+--L.percent = "%d%% - %s" -- 20% - spell
 
 -- Add Related
 L.add_spawned = "Add surgiu"
