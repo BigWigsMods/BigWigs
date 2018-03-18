@@ -123,6 +123,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CorruptAegis", 244894)
 	self:Log("SPELL_AURA_REMOVED", "CorruptAegisRemoved", 244894)
 	self:Log("SPELL_CAST_SUCCESS", "BlazingEruption", 244912) -- Add dying
+	self:Death("EmberDeath", 122532) -- You can kill Embers in LFR & Normal
 
 	--[[ Mythic ]]--
 	self:Log("SPELL_AURA_APPLIED", "RavenousBlaze", 254452)
@@ -279,7 +280,7 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 			self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
 		elseif currentEmberWave then -- Next wave time!
 			self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
-			self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave))
+			self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
 			if not self:Mythic() or not waveTimeCollector[currentEmberWave+1] then -- Always 1 wave in heroic, or we are out of current waves.
 				self:UnregisterTargetEvents()
 				trackingEmber = nil
@@ -289,6 +290,18 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 			end
 			currentEmberWave = currentEmberWave + 1
 		end
+	end
+end
+
+function mod:EmberDeath()
+	embersLeft = embersLeft - 1
+	if embersLeft > 0 then
+		self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
+	elseif currentEmberWave then -- Next wave time!
+		self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
+		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
+		self:UnregisterTargetEvents()
+		trackingEmber = nil
 	end
 end
 
