@@ -72,7 +72,10 @@ local updateData = function(module)
 			end
 		else -- XXX temp
 			local n = GetNumGroupMembers()
-			BigWigs:Print("Nil GUID for ".. unit ..". ".. tostring(n) .." / ".. tostring((UnitName(unit))) .." / ".. tostring((UnitExists(unit))))
+			local msg = "Nil GUID for ".. unit ..". ".. tostring(n) .." / ".. tostring((UnitName(unit))) .." / ".. tostring((UnitExists(unit)))
+			BigWigs:Print(msg)
+			geterrorhandler()(msg)
+			break
 		end
 	end
 
