@@ -15,6 +15,8 @@ plugin.defaultDB = {
 	blockGarrison = true,
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
+	blockQuestTrackingTooltips = true,
+	hideObjectiveTracker = false,
 }
 
 --------------------------------------------------------------------------------
@@ -26,6 +28,7 @@ plugin.displayName = L.bossBlock
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
 local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
 local GetCurrentMapDungeonLevel = BigWigsLoader.GetCurrentMapDungeonLevel
+local questTrackingValue = 1 -- default 1 after dc
 
 -------------------------------------------------------------------------------
 -- Options
@@ -86,6 +89,19 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 5,
 		},
+		blockQuestTrackingTooltips = {
+			type = "toggle",
+			name = L.blockQuestTrackingTooltips,
+			desc = L.blockQuestTrackingTooltipsDesc,
+			width = "full",
+			order = 6,
+		},
+		hideObjectiveTracker = {
+			type = "toggle",
+			name = L.hideObjectiveTracker,
+			width = "full",
+			order = 7,
+		},
 	},
 }
 
@@ -105,6 +121,14 @@ function plugin:OnPluginEnable()
 	self:RegisterEvent("CINEMATIC_START")
 	self:RegisterEvent("PLAY_MOVIE")
 	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
+	questTrackingValue = GetCVar("showQuestTrackingTooltips")
+end
+
+
+function plugin:OnPluginDisable()
+	if self.db.profile.blockQuestTrackingTooltips then
+		SetCVar("showQuestTrackingTooltips", questTrackingValue)
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -128,6 +152,8 @@ do
 		end
 	end
 
+	local objectiveTrackerWasCollapsed = false
+
 	function plugin:BigWigs_OnBossEngage()
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
@@ -144,6 +170,15 @@ do
 		end
 		if self.db.profile.blockSpellErrors then
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+		end
+		if self.db.profile.blockQuestTrackingTooltips then
+			SetCVar("showQuestTrackingTooltips", 0)
+		end
+		if self.db.profile.hideObjectiveTracker and IsInRaid() then
+			objectiveTrackerWasCollapsed = ObjectiveTrackerFrame.collapsed
+			if not objectiveTrackerWasCollapsed then
+				ObjectiveTracker_Collapse()
+			end
 		end
 	end
 
@@ -163,6 +198,13 @@ do
 		end
 		if self.db.profile.blockSpellErrors then
 			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+		end
+		if self.db.profile.blockQuestTrackingTooltips then
+			SetCVar("showQuestTrackingTooltips", questTrackingValue)
+		end
+		if self.db.profile.hideObjectiveTracker and not objectiveTrackerWasCollapsed and IsInRaid() then
+			ObjectiveTracker_Expand()
+			ObjectiveTracker_Update()
 		end
 	end
 end
@@ -276,4 +318,3 @@ do
 		end
 	end
 end
-

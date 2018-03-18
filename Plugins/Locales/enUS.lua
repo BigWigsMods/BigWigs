@@ -105,6 +105,9 @@ L.blockGuildChallenge = "Block guild challenge popups"
 L.blockGuildChallengeDesc = "Guild challenge popups show for a few things, mainly when a group in your guild completes a heroic dungeon or a challenge mode dungeon.\n\nThese popups can cover up critical parts of your UI during a boss fight, so we recommend blocking them."
 L.blockSpellErrors = "Block spell failed messages"
 L.blockSpellErrorsDesc = "Messages such as \"Spell is not ready yet\" that usually show at the top of the screen will be blocked."
+--L.blockQuestTrackingTooltips = "Hide quest objectives in tooltips"
+--L.blockQuestTrackingTooltipsDesc = "Quest objectives can take up a lot of space in tooltips when a lot of players in your group are on a quest for an encounter. This will stop these objectives from showing while in encounter combat."
+L.hideObjectiveTracker = "Collapse Objective Tracker during combat"
 
 -----------------------------------------------------------------------
 -- Colors.lua
