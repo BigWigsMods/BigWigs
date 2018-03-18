@@ -778,9 +778,14 @@ end
 do
 	local callbackMap = {}
 	function public:RegisterMessage(msg, func)
-		-- XXX temp friendly error via geterrorhandler
-		if self == public then geterrorhandler()(".RegisterMessage(addon, message, function) attempted to register a function to BigWigsLoader, you might be using : instead of . to register the callback.") end
-		if type(msg) ~= "string" then error(":RegisterMessage(message, function) attempted to register invalid message, must be a string!") end
+		if self == public then
+			error(".RegisterMessage(addon, message, function) attempted to register a function to BigWigsLoader, you might be using : instead of . to register the callback.")
+		end
+
+		if type(msg) ~= "string" then
+			error(":RegisterMessage(message, function) attempted to register invalid message, must be a string!")
+		end
+
 		local funcType = type(func)
 		if funcType == "string" then
 			if not self[func] then error((":RegisterMessage(message, function) attempted to register the function '%s' but it doesn't exist!"):format(func)) end
@@ -789,6 +794,7 @@ do
 		elseif funcType ~= "function" then
 			error(":RegisterMessage(message, function) attempted to register an invalid function!")
 		end
+
 		if not callbackMap[msg] then callbackMap[msg] = {} end
 		callbackMap[msg][self] = func or msg
 	end
