@@ -247,14 +247,7 @@ end
 --
 
 local function bossComm(_, msg, extra, sender)
-	if msg == "Engage" and extra then
-		local m = addon:GetBossModule(extra, true)
-		if not m or m.isEngaged or m.engageId or not m:IsEnabled() then
-			return
-		end
-		m:UnregisterEvent("PLAYER_REGEN_DISABLED")
-		m:Engage()
-	elseif msg == "Enable1" and extra then
+	if msg == "Enable1" and extra then
 		local m = addon:GetBossModule(extra, true)
 		if m and not m:IsEnabled() and sender ~= pName then
 			enableBossModule(m)

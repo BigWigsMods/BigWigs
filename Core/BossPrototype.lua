@@ -760,7 +760,8 @@ do
 		local go = scan(self)
 		if go then
 			if debug then dbg(self, "Engage scan found active boss entities, transmitting engage sync.") end
-			self:Sync("Engage", self.moduleName)
+			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
+			self:Engage()
 		else
 			if debug then dbg(self, "Engage scan did NOT find any active boss entities. Re-scheduling another engage check in 0.5 seconds.") end
 			self:ScheduleTimer("CheckForEngage", .5)
@@ -788,19 +789,21 @@ do
 	end
 
 	function boss:Engage(noEngage)
-		-- Engage
-		self.isEngaged = true
+		if not self.isEngaged then
+			-- Engage
+			self.isEngaged = true
 
-		if debug then dbg(self, ":Engage") end
+			if debug then dbg(self, ":Engage") end
 
-		if not noEngage or noEngage ~= "NoEngage" then
-			updateData(self)
+			if not noEngage or noEngage ~= "NoEngage" then
+				updateData(self)
 
-			if self.OnEngage then
-				self:OnEngage(difficulty)
+				if self.OnEngage then
+					self:OnEngage(difficulty)
+				end
+
+				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
 			end
-
-			self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
 		end
 	end
 
