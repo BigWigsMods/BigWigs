@@ -106,7 +106,7 @@ local function enableBossModule(module, sync)
 	if not module:IsEnabled() then
 		module:Enable()
 		if sync and not module.worldBoss then
-			module:Sync("Enable1", module:GetName())
+			module:Sync("Enable", module:GetName())
 		end
 	end
 end
@@ -247,7 +247,7 @@ end
 --
 
 local function bossComm(_, msg, extra, sender)
-	if msg == "Enable1" and extra then
+	if msg == "Enable" and extra then
 		local m = addon:GetBossModule(extra, true)
 		if m and not m:IsEnabled() and sender ~= pName then
 			enableBossModule(m)
