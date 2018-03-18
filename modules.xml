@@ -12,5 +12,8 @@
 <Include file="Antorus\modules.xml"/>
 <Include file="ArgusInvasionPoints\modules.xml"/>
 <Include file="BrokenIsles\modules.xml"/>
+
+<Include file="Uldir\modules.xml"/>
+<!--<Include file="TombOfSargeras\locales.xml"/>-->
 <!--@end-do-not-package@-->
 </Ui>
