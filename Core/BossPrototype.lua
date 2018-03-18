@@ -72,9 +72,7 @@ local updateData = function(module)
 			end
 		else -- XXX temp
 			local n = GetNumGroupMembers()
-			local msg = "Nil GUID for ".. unit ..". ".. tostring(n) .." / ".. tostring((UnitName(unit))) .." / ".. tostring((UnitExists(unit)))
-			BigWigs:Print(msg)
-			geterrorhandler()(msg)
+			BigWigs:Error("Nil GUID for ".. unit ..". ".. tostring(n) .." / ".. tostring((UnitName(unit))) .." / ".. tostring((UnitExists(unit))))
 			break
 		end
 	end
@@ -790,7 +788,6 @@ do
 
 	function boss:Engage(noEngage)
 		if not self.isEngaged then
-			-- Engage
 			self.isEngaged = true
 
 			if debug then dbg(self, ":Engage") end
