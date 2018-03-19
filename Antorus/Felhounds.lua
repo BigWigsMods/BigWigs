@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Felhounds of Sargeras", nil, 1987, 1712)
+local mod, CL = BigWigs:NewBoss("Felhounds of Sargeras", 1712, 1987)
 if not mod then return end
 mod:RegisterEnableMob(122477, 122135) -- F'harg, Shatug
 mod.engageId = 2074

@@ -9,7 +9,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Kil'jaeden", 1147, 1898)
+local mod, CL = BigWigs:NewBoss("Kil'jaeden", 1676, 1898)
 if not mod then return end
 mod:RegisterEnableMob(117269)
 mod.engageId = 2051
@@ -740,10 +740,10 @@ do
 
 			if shadowsoulOption then
 				self:CloseInfo("shadowsoul")
-				self:RemoveLog("SPELL_DAMAGE", "IntermissionAddDamage", "*")
-				self:RemoveLog("SPELL_PERIODIC_DAMAGE", "IntermissionAddDamage", "*")
-				self:RemoveLog("RANGE_DAMAGE", "IntermissionAddDamage", "*")
-				self:RemoveLog("SWING_DAMAGE", "IntermissionAddDamageSwing", "*")
+				self:RemoveLog("SPELL_DAMAGE", "*")
+				self:RemoveLog("SPELL_PERIODIC_DAMAGE", "*")
+				self:RemoveLog("RANGE_DAMAGE", "*")
+				self:RemoveLog("SWING_DAMAGE", "*")
 				if timer then
 					self:CancelTimer(timer)
 					timer = nil

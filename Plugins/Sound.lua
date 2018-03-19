@@ -178,6 +178,28 @@ function plugin:OnRegister()
 				db[optionName][name][key] = soundList[value]
 				-- We don't cleanup/reset the DB as someone may have a custom global sound but wish to use the default sound on a specific option
 			end,
+			hidden = function(info)
+				local name, key = unpack(info.arg)
+				local module = BigWigs:GetBossModule(name:sub(16), true)
+				if not module or not module.soundOptions then -- no module entry? show all sounds
+					return false
+				end
+				local optionSounds = module.soundOptions[key]
+				if not optionSounds then
+					return true
+				end
+				local optionName = info[#info]
+				if type(optionSounds) == "table" then
+					for _, sound in next, optionSounds do
+						if sound == optionName then
+							return false
+						end
+					end
+				else
+					return optionName ~= optionSounds
+				end
+				return true
+			end,
 			type = "select",
 			values = soundList,
 			order = 2,
@@ -217,4 +239,3 @@ do
 		end
 	end
 end
-

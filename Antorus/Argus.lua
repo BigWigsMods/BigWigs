@@ -6,7 +6,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Argus the Unmaker", nil, 2031, 1712)
+local mod, CL = BigWigs:NewBoss("Argus the Unmaker", 1712, 2031)
 if not mod then return end
 mod:RegisterEnableMob(124828)
 mod.engageId = 2092
@@ -25,6 +25,7 @@ local avatarCounter = 1
 local soulBombCounter = 1
 local initializationCount = 3
 local sargerasGazeCount = 0
+local skyName, seaName = nil, nil
 local scanningTargets = nil
 local vulnerabilityCollector = {}
 local vulnerabilityIcons = {
@@ -46,7 +47,7 @@ local timersHeroic = {
 		-- Soulblight Orb
 		[248317] = {35.5, 25.5, 26.8, 23.2, 31},
 		-- Tortured Rage
-		[257296] = {12, 13.5, 13.5, 15.9, 13.5, 13.5, 15.9, 20.9, 13.5},
+		[257296] = {12, 13.5, 13.5, 15.9, 13.5, 13.5, 15.9, 20.9, 13.5, 13.3},
 		-- Sweeping Scythe
 		[248499] = {5.8, 11.7, 6.6, 10.3, 10.0, 5.6, 10.3, 5.9, 11.5, 10.1, 5.6, 10.3, 5.6, 15.2},
 	},
@@ -277,6 +278,7 @@ function mod:OnEngage()
 	soulBombCounter = 1
 	sargerasGazeCount = 1
 	sentenceofSargerasCount = 1
+	skyName, seaName = nil, nil
 
 	self:Bar(255594, 16) -- Sky and Sea
 	self:Bar(257296, self:Heroic() and timers[stage][257296][torturedRageCounter] or 13.5, CL.count:format(self:SpellName(257296), torturedRageCounter)) -- Tortured Rage
@@ -418,8 +420,6 @@ function mod:SkyandSea(args)
 end
 
 do
-	local skyName, seaName = nil, nil
-
 	local function announce(self)
 		if skyName and seaName then
 			local text = L.gifts:format(self:ColorName(skyName), self:ColorName(seaName))
@@ -430,22 +430,32 @@ do
 	end
 
 	function mod:GiftoftheSea(args)
+		local meOnly = self:CheckOption(255594, "ME_ONLY")
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sea_say)
+			if meOnly then
+				self:Message(255594, "Positive", "Long", CL.you:format(args.spellName), args.spellId)
+			end
+		elseif not meOnly then
+			seaName = args.destName
+			announce(self)
 		end
-		seaName = args.destName
-		announce(self)
 		if self:GetOption(seaMarker) then
 			SetRaidTarget(args.destName, 6)
 		end
 	end
 
 	function mod:GiftoftheSky(args)
+		local meOnly = self:CheckOption(255594, "ME_ONLY")
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sky_say)
+			if meOnly then
+				self:Message(255594, "Positive", "Long", CL.you:format(args.spellName), args.spellId)
+			end
+		elseif not meOnly then
+			skyName = args.destName
+			announce(self)
 		end
-		skyName = args.destName
-		announce(self)
 		if self:GetOption(seaMarker) then
 			SetRaidTarget(args.destName, 5)
 		end
@@ -756,7 +766,7 @@ end
 
 function mod:EndofAllThingsInterupted(args)
 	if args.extraSpellId == 256544 then
-		self:Message(args.extraSpellId, "Positive", "Info", CL.interrupted:format(args.extraSpellName))
+		self:Message(256544, "Positive", "Info", CL.interrupted:format(args.extraSpellName))
 		self:StopBar(CL.cast:format(args.extraSpellName))
 		initializationCount = self:Mythic() and 1 or 3
 		torturedRageCounter = 1

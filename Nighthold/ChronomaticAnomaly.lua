@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Chronomatic Anomaly", 1088, 1725)
+local mod, CL = BigWigs:NewBoss("Chronomatic Anomaly", 1530, 1725)
 if not mod then return end
 mod:RegisterEnableMob(104415)
 mod.engageId = 1865

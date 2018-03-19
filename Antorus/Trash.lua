@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Antorus Trash", nil, nil, 1712)
+local mod, CL = BigWigs:NewBoss("Antorus Trash", 1712)
 if not mod then return end
 mod.displayName = CL.trash
 mod:RegisterEnableMob(
@@ -176,32 +176,29 @@ end
 do
 	local targets = {}
 
-	local function printTargets(self, spellId, sourceGUID)
-		local tbl = targets[sourceGUID]
-		if self:Me(tbl[1].guid) then
-			self:Message(spellId, "Personal", "Alarm", CL.link:format(self:ColorName(tbl[2].name)))
-		elseif self:Me(tbl[2].guid) then
-			self:Message(spellId, "Personal", "Alarm", CL.link:format(self:ColorName(tbl[1].name)))
-		elseif not self:CheckOption(spellId, "ME_ONLY") then
-			self:Message(spellId, "Attention", nil, CL.link_both:format(self:ColorName(tbl[1].name), self:ColorName(tbl[2].name)))
-		end
-		wipe(targets[sourceGUID])
-	end
-
 	function mod:BoundByFel(args)
 		if not targets[args.sourceGUID] then
 			targets[args.sourceGUID] = {}
 		end
-		targets[args.sourceGUID][#targets[args.sourceGUID] + 1] = { guid = args.destGUID, name = args.destName }
-		if #targets[args.sourceGUID] == 2 then
-			printTargets(self, args.spellId, args.sourceGUID)
+		local tbl = targets[args.sourceGUID]
+		tbl[#tbl + 1] = { guid = args.destGUID, name = args.destName }
+		if #tbl == 2 then
+			if self:Me(tbl[1].guid) then
+				self:Message(args.spellId, "Personal", "Alarm", CL.link:format(self:ColorName(tbl[2].name)))
+			elseif self:Me(tbl[2].guid) then
+				self:Message(args.spellId, "Personal", "Alarm", CL.link:format(self:ColorName(tbl[1].name)))
+			elseif not self:CheckOption(args.spellId, "ME_ONLY") then
+				self:Message(args.spellId, "Attention", nil, CL.link_both:format(self:ColorName(tbl[1].name), self:ColorName(tbl[2].name)))
+			end
+			wipe(tbl)
 		else
 			-- XXX I have no logs where this happens so the possibility of this situation is an assumption:
 			-- clean up if, for some reason, the 2nd target had an immunity on.
 			self:ScheduleTimer(function()
-				if targets[args.sourceGUID] and #targets[args.sourceGUID] == 1 then
-					wipe(targets[args.sourceGUID])
-				end end, 1)
+				if tbl and #tbl == 1 then
+					wipe(tbl)
+				end
+			end, 1)
 		end
 	end
 
@@ -265,7 +262,7 @@ do
 
 	function mod:SoulburnDispelled(args)
 		if args.extraSpellId == 253600 and self:Me(args.destGUID) then
-			self:Message(args.extraSpellId, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
+			self:Message(253600, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 		end
 	end
 end

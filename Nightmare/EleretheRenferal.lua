@@ -9,7 +9,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Elerethe Renferal", 1094, 1744)
+local mod, CL = BigWigs:NewBoss("Elerethe Renferal", 1520, 1744)
 if not mod then return end
 mod:RegisterEnableMob(106087)
 mod.engageId = 1876
@@ -128,14 +128,14 @@ do
 	local scheduled, players, list = nil, {}, mod:NewTargetList()
 	local key, spellName = 0, ""
 
-	function mod:UNIT_AURA(_, unit)
+	function mod:UNIT_AURA(_, unit) -- XXX get Blizz to fix this
 		if UnitDebuff(unit, spellName) then
 			local guid = UnitGUID(unit)
 			if not players[guid] then
 				players[guid] = true
 				list[#list+1] = self:UnitName(unit)
 				if unit == "player" then
-					self:Message(key, "Personal", "Long", CL.you:format(spellName))
+					self:Message(key, "Personal", "Long", CL.you:format(spellName)) -- SetOption:215443,210864:::
 					self:Flash(key)
 					self:Say(key)
 
@@ -149,9 +149,9 @@ do
 						scheduled = nil
 					end
 					if #list == 2 then
-						self:TargetMessage(key, list, "Urgent", "Warning")
+						self:TargetMessage(key, list, "Urgent", "Warning") -- SetOption:215443,210864:Urgent:Warning:
 					else
-						scheduled = self:ScheduleTimer("TargetMessage", 0.5, key, list, "Urgent", "Warning")
+						scheduled = self:ScheduleTimer("TargetMessage", 0.5, key, list, "Urgent", "Warning") -- SetOption:215443,210864:Urgent:Warning:
 					end
 				end
 			end

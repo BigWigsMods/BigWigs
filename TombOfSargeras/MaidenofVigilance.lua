@@ -9,7 +9,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Maiden of Vigilance", 1147, 1897)
+local mod, CL = BigWigs:NewBoss("Maiden of Vigilance", 1676, 1897)
 if not mod then return end
 mod:RegisterEnableMob(118289) -- Maiden of Vigilance
 mod.engageId = 2052

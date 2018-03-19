@@ -8,7 +8,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Il'gynoth", 1094, 1738)
+local mod, CL = BigWigs:NewBoss("Il'gynoth", 1520, 1738)
 if not mod then return end
 mod:RegisterEnableMob(105906, 105393, 105304) -- Eye of Il'gynoth, Il'gynoth, Dominator Tentacle
 mod.engageId = 1873
