@@ -38,6 +38,8 @@ if L then
 
 	L.platform_active = "%s Active!" -- Platform: Xoroth Active!
 	L.add_killed = "%s killed!"
+
+	L.achiev = "'Portal Combat' achievement debuffs" -- Achievement 11928
 end
 
 --------------------------------------------------------------------------------
@@ -77,12 +79,18 @@ function mod:GetOptions()
 		245040, -- Corrupt
 		{245118, "SAY"}, -- Cloying Shadows
 		245075, -- Hungering Gloom
+
+		--[[ 'Portal Combat' achievement debuffs ]]--
+		246911, -- Binding: Xoroth
+		246925, -- Binding: Rancora
+		246929, -- Binding: Nathreza
 	},{
 		["stages"] = "general",
 		[244016] = -15799, -- Platform: Nexus
 		[244607] = -15800, -- Platform: Xoroth
 		[244926] = -15801, -- Platform: Rancora
 		[245050] = -15802, -- Platform: Nathreza
+		[246911] = L.achiev,
 	}
 end
 
@@ -130,6 +138,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "HungeringGloom", 245075)
 	self:Log("SPELL_AURA_REMOVED", "HungeringGloomRemoved", 245075)
 	self:Death("LordEilgarDeath", 122213)
+
+	--[[ 'Portal Combat' achievement debuffs ]]--
+	self:Log("SPELL_AURA_APPLIED", "Binding", 246911, 246925, 246929) -- Binding: Xoroth, Binding: Rancora, Binding: Nathreza
 
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
@@ -435,4 +446,12 @@ function mod:LordEilgarDeath(args)
 	self:StopBar(245040) -- Corrupt
 	self:StopBar(255805) -- Unstable Portal
 	addsAlive = addsAlive - 1
+end
+
+--[[ 'Portal Combat' achievement debuffs ]]--
+function mod:Binding(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
+		self:TargetBar(args.spellId, 16, args.destName)
+	end
 end

@@ -76,6 +76,7 @@ if L then
 	L.worldExplosion_desc = "显示崩塌的世界爆炸计时条。"
 	L.platform_active = "%s激活！" -- Platform: Xoroth Active!
 	L.add_killed = "%s已击杀！"
+	--L.achiev = "'致命传送' achievement debuffs" -- Achievement 11928
 end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "zhCN")

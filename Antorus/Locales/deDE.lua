@@ -76,6 +76,7 @@ if L then
 	L.worldExplosion_desc = "Zeigt einen Timer für die Explosion der kollabierenden Welt."
 	L.platform_active = "%s Aktiv!" -- Platform: Xoroth Active!
 	L.add_killed = "%s getötet!"
+	L.achiev = "'Voll Portal' achievement debuffs" -- Achievement 11928
 end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "deDE")
