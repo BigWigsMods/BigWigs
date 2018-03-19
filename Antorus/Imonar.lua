@@ -76,8 +76,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShockLance", 247367)
 	self:Log("SPELL_CAST_SUCCESS", "ShockLanceSuccess", 247367)
 	self:Log("SPELL_CAST_SUCCESS", "SleepCanister", 254244)
-	self:Log("SPELL_AURA_APPLIED", "SleepCanisterApplied", 255029)
-	self:Log("SPELL_AURA_REMOVED", "SleepCanisterRemoved", 255029)
+	self:Log("SPELL_AURA_APPLIED", "SleepCanisterApplied", 257196, 255029) -- LFR, Others
+	self:Log("SPELL_AURA_REMOVED", "SleepCanisterRemoved", 257196, 255029)
 	self:Log("SPELL_MISSED", "SleepCanisterRemoved", 255029)
 	self:Log("SPELL_CAST_START", "PulseGrenade", 247376)
 
