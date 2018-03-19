@@ -17,15 +17,15 @@ local empoweredSchrapnelBlastCount = 1
 local nextIntermissionWarning = 0
 local canisterProxList = {}
 
-local timersHeroic = {
+local timersOther = {
 	--[[ Empowered Shrapnel Blast ]]--
-	[248070] = {15.3, 22, 19.5, 18, 16, 16, 13.5, 10},
+	[248070] = {15.3, 21.8, 20.6, 18, 15.8, 16, 13.5, 10},
 }
 local timersMythic = {
 	--[[ Empowered Shrapnel Blast ]]--
 	[248070] = {15.7, 15.7, 15.7, 14.5, 14.5, 12.2, 12.2},
 }
-local timers = mod:Mythic() and timersMythic or timersHeroic
+local timers = mod:Mythic() and timersMythic or timersOther
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -99,7 +99,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or timersHeroic
+	timers = self:Mythic() and timersMythic or timersOther
 	stage = 1
 	wipe(canisterProxList)
 
