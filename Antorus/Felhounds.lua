@@ -75,10 +75,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Siphoned", 248819)
 	self:Log("SPELL_AURA_REMOVED", "SiphonedRemoved", 248819)
 
-	self:Log("SPELL_AURA_APPLIED", "ConsumingSphere", 245024) -- Consumed
-	self:Log("SPELL_DAMAGE", "ConsumingSphere", 254403)
-	self:Log("SPELL_MISSED", "ConsumingSphere", 254403)
-
 	--[[ General ]]--
 	self:Log("SPELL_AURA_APPLIED", "SargerasBlessing", 246057) -- Destroyer's Boon buff
 	self:Log("SPELL_AURA_APPLIED", "FocusingPower", 251356)
@@ -228,19 +224,6 @@ end
 function mod:SiphonedRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
-	end
-end
-
-do
-	local prev = 0
-	function mod:ConsumingSphere(args)
-		if self:Me(args.destGUID) then
-			local t = GetTime()
-			if t-prev > 2 then
-				prev = t
-				self:Message(244131, "Personal", "Alert", CL.underyou:format(self:SpellName(244131))) -- the debuff's name is different, hence not using args.spellName here
-			end
-		end
 	end
 end
 
