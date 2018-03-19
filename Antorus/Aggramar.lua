@@ -248,17 +248,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:BlazingEruption(args) -- Add Death/Raid Explosion
-	if trackingEmber and (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) then
-		waveEmberCounter = waveEmberCounter - 1
-
-		if self:GetOption("custom_off_ember_marker") then
-			for key,guid in pairs(emberAddMarks) do -- Make the icon available for use again
-				if guid == args.sourceGUID then
-					emberAddMarks[key] = nil
-				end
-			end
-		end
-
+	if trackingEmber then
 		if self:Mythic() and stage >= 2 then -- Don't need to check different waves outside of Mythic intermission 2+
 			if mobCollector[args.sourceGUID] then -- Remove the add from the wave's table
 				waveCollector[mobCollector[args.sourceGUID]][args.sourceGUID] = nil
@@ -270,6 +260,8 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 					waveEmberCounter = waveEmberCounter + 1
 				end
 			end
+		else
+			waveEmberCounter = waveEmberCounter - 1
 		end
 
 		if waveEmberCounter > 0 then
@@ -283,8 +275,17 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 			else -- Start the new wave timer
 				local emberTimer = floor(waveTimeCollector[currentEmberWave+1] - GetTime())
 				self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), currentEmberWave+1)) -- Wrought in Flame (x)
+				wipe(emberAddMarks) -- Reset Icons available
 			end
 			currentEmberWave = currentEmberWave + 1
+		end
+
+		if self:GetOption("custom_off_ember_marker") then
+			for key,guid in pairs(emberAddMarks) do -- Make the icon available for use again
+				if guid == args.sourceGUID then
+					emberAddMarks[key] = nil
+				end
+			end
 		end
 	end
 end
@@ -293,11 +294,19 @@ function mod:EmberDeath()
 	waveEmberCounter = waveEmberCounter - 1
 	if waveEmberCounter > 0 then
 		self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
+		if self:GetOption("custom_off_ember_marker") then
+			for key,guid in pairs(emberAddMarks) do -- Make the icon available for use again
+				if guid == args.sourceGUID then
+					emberAddMarks[key] = nil
+				end
+			end
+		end
 	else
 		self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
 		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
 		self:UnregisterTargetEvents()
 		trackingEmber = nil
+		wipe(emberAddMarks) -- Reset Icons available
 	end
 end
 
