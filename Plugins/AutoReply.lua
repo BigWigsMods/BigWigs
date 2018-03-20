@@ -11,6 +11,7 @@ if not plugin then return end
 
 plugin.defaultDB = {
 	disabled = true,
+	mode = 2,
 }
 
 --------------------------------------------------------------------------------
@@ -91,7 +92,17 @@ function plugin:CHAT_MSG_WHISPER(event, msg, sender)
 	if curDiff > 0 then
 		if not throttle[sender] or GetTime() - throttle[sender] > 5 then
 			throttle[sender] = GetTime()
-			local msg = L.autoReplyBasic:format(curModule.displayName)
+			local mode = self.db.profile.mode
+			local msg
+			if mode == 2 then
+				msg = L.autoReplyNormal:format(curModule.displayName) -- In combat with encounterName
+			elseif mode == 3 then
+				msg = L.autoReplyDetailed:format(curModule.displayName) -- In combat with encounterName, difficulty, playersAlive
+			elseif mode == 4 then
+				msg = L.autoReplyAdvanced:format(curModule.displayName) -- In combat with encounterName, difficulty, playersAlive, bossHealth
+			else
+				msg = L.autoReplyBasic -- In combat
+			end
 			SendChatMessage(msg, "WHISPER", nil, sender)
 		end
 	end

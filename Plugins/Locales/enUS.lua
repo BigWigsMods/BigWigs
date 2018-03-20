@@ -22,7 +22,10 @@ L.disabledDisplayDesc = "Disable the display for all modules that use it."
 
 L.autoReply = "Auto Reply"
 L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
-L.autoReplyBasic = "[BigWigs] I'm currently busy in combat with '%s'."
+L.autoReplyBasic = "[BigWigs] I'm busy in combat with a boss encounter."
+L.autoReplyNormal = "[BigWigs] I'm busy in combat with '%s'."
+L.autoReplyDetailed = "[BigWigs] I'm busy in combat with '%s' (%s) and %d/%d people are alive."
+L.autoReplyAdvanced = "[BigWigs] I'm busy in combat with '%s' (%s) and %d/%d people are alive. Boss health: %s"
 
 -----------------------------------------------------------------------
 -- Bars.lua
