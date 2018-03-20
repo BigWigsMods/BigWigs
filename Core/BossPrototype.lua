@@ -23,7 +23,7 @@ local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime,
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local Timer = C_Timer.After
 local SendChatMessage, GetInstanceInfo = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo
-local format, find, gsub, band = string.format, string.find, string.gsub, bit.band
+local format, find, gsub, band, wipe = string.format, string.find, string.gsub, bit.band, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
 local core = BigWigs
 local C = core.C
@@ -1618,41 +1618,41 @@ do
 	end
 
 	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
+	local tconcat = table.concat
 	local function printTargets(self, key, playerTable, color, text, icon)
 		local playersInTable = #playerTable
 		if playersInTable ~= 0 then
-			local textType = type(text)
-			local msg = textType == "string" and text or spells[text or key]
-			local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+			if checkFlag(self, key, C.MESSAGE) then
+				local textType = type(text)
+				local msg = textType == "string" and text or spells[text or key]
+				local texture = icon ~= false and icons[icon or textType == "number" and text or key]
 
-			local list, onMe = "", false
-			for i = playersInTable, 1 do
-				local name = playersInTable[i]
-				if name == cpName then
-					onMe = true
+				local onMe = false
+				local list = tconcat(playerTable, comma)
+				for i = playersInTable, 1 do
+					if playerTable[i] == cpName then
+						onMe = true
+					end
+					playerTable[i] = nil
 				end
-				if i == 1 then
-					list = name .. list
-				else
-					list = comma .. name .. list
-				end
-				playersInTable[i] = nil
-			end
 
-			local meOnly = checkFlag(self, key, C.ME_ONLY)
-			if onMe and (meOnly or playersInTable == 1) then
-				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
-			elseif not meOnly then
-				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
+				local meOnly = checkFlag(self, key, C.ME_ONLY)
+				if onMe and (meOnly or playersInTable == 1) then
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+				elseif not meOnly then
+					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
+				end
+			else
+				wipe(playerTable)
 			end
 		end
 	end
 
 	function boss:TargetsMessage(key, playerTable, color, playerCount, text, icon, customTime)
 		local playersInTable = #playerTable
-		if playersInTable == playerCount and checkFlag(self, key, C.MESSAGE) then
+		if playersInTable == playerCount then
 			printTargets(self, key, playerTable, color, text, icon)
-		elseif playersInTable == 1 and checkFlag(self, key, C.MESSAGE) then
+		elseif playersInTable == 1 then
 			Timer(customTime or 0.3, function()
 				printTargets(self, key, playerTable, color, text, icon)
 			end)
