@@ -6,7 +6,9 @@ addons:
     - luarocks
 
 install: luarocks install --local luacheck
-before_script: /home/travis/.luarocks/bin/luacheck . --no-color -qo "011"
+before_script:
+ - lua gen_option_values.lua
+ - /home/travis/.luarocks/bin/luacheck . -qo "011"
 script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
 
 notifications:

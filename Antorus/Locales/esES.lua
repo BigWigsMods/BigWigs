@@ -88,6 +88,7 @@ L = BigWigs:NewBossLocale("Antoran High Command", "esES") or BigWigs:NewBossLoca
 if L then
 	--L.felshieldActivated = "Felshield Activated by %s"
 	--L.felshieldUp = "Felshield Up"
+	L.achiev = "'En el portal de Hasabel' achievement debuffs" -- Achievement 11928
 end
 
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "esES") or BigWigs:NewBossLocale("Gorothi Worldbreaker", "esMX")

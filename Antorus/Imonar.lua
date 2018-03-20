@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Imonar the Soulhunter", nil, 2009, 1712)
+local mod, CL = BigWigs:NewBoss("Imonar the Soulhunter", 1712, 2009)
 if not mod then return end
 mod:RegisterEnableMob(124158)
 mod.engageId = 2082
@@ -17,15 +17,15 @@ local empoweredSchrapnelBlastCount = 1
 local nextIntermissionWarning = 0
 local canisterProxList = {}
 
-local timersHeroic = {
+local timersOther = {
 	--[[ Empowered Shrapnel Blast ]]--
-	[248070] = {15.3, 22, 19.5, 18, 16, 16, 13.5, 10, 9.5}, -- XXX Need more data to confirm
+	[248070] = {15.3, 21.8, 20.6, 18, 15.8, 16, 13.5, 10},
 }
 local timersMythic = {
 	--[[ Empowered Shrapnel Blast ]]--
-	[248070] = {15.7, 15.7, 15.7, 14.5, 14.5, 12.2, 12.2, 9.7, 9.7}, -- XXX Need more data to confirm
+	[248070] = {15.7, 15.7, 15.7, 14.5, 14.5, 12.2, 12.2},
 }
-local timers = mod:Mythic() and timersMythic or timersHeroic
+local timers = mod:Mythic() and timersMythic or timersOther
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -76,9 +76,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShockLance", 247367)
 	self:Log("SPELL_CAST_SUCCESS", "ShockLanceSuccess", 247367)
 	self:Log("SPELL_CAST_SUCCESS", "SleepCanister", 254244)
-	self:Log("SPELL_AURA_APPLIED", "SleepCanisterApplied", 255029)
-	self:Log("SPELL_AURA_REMOVED", "SleepCanisterRemoved", 255029)
-	self:Log("SPELL_MISSED", "SleepCanisterRemoved", 255029)
+	self:Log("SPELL_AURA_APPLIED", "SleepCanisterApplied", 257196, 255029) -- LFR, Others. (Backup for the WHISPER event)
+	self:Log("SPELL_AURA_REMOVED", "SleepCanisterRemoved", 257196, 255029)
+	self:Log("SPELL_MISSED", "SleepCanisterRemoved", 257196, 255029) -- Since we're using WHISPER as it's faster than APPLIED, people might immune it
 	self:Log("SPELL_CAST_START", "PulseGrenade", 247376)
 
 	--[[ Stage Two: Contract to Kill ]]--
@@ -99,7 +99,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or timersHeroic
+	timers = self:Mythic() and timersMythic or timersOther
 	stage = 1
 	wipe(canisterProxList)
 
@@ -324,5 +324,5 @@ end
 function mod:EmpoweredShrapnelBlast(args)
 	self:Message(args.spellId, "Urgent", "Warning")
 	empoweredSchrapnelBlastCount = empoweredSchrapnelBlastCount + 1
-	self:CDBar(args.spellId, stage == 4 and 26.8 or timers[args.spellId][empoweredSchrapnelBlastCount])
+	self:CDBar(args.spellId, stage == 4 and 26.8 or timers[args.spellId][empoweredSchrapnelBlastCount] or 9.6)
 end

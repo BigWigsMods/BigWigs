@@ -35,6 +35,7 @@ L.interrupted = "%s Interrompido"
 --L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
 L.no = "Sem %s"
 L.intermission = "Intervalo"
+--L.percent = "%d%% - %s" -- 20% - spell
 
 -- Add Related
 L.add_spawned = "Add surgiu"

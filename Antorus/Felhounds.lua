@@ -3,7 +3,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Felhounds of Sargeras", nil, 1987, 1712)
+local mod, CL = BigWigs:NewBoss("Felhounds of Sargeras", 1712, 1987)
 if not mod then return end
 mod:RegisterEnableMob(122477, 122135) -- F'harg, Shatug
 mod.engageId = 2074
@@ -46,6 +46,7 @@ function mod:GetOptions()
 		--[[ Mythic ]]--
 		244054, -- Flametouched
 		244055, -- Shadowtouched
+		245022, -- Burning Remnant
 	},{
 		[251445] = -15842, -- F'harg
 		[245098] = -15836, -- Shatug
@@ -80,6 +81,10 @@ function mod:OnBossEnable()
 
 	--[[ Mythic ]]--
 	self:Log("SPELL_AURA_APPLIED", "Touched", 244054, 244055)
+
+	self:Log("SPELL_AURA_APPLIED", "BurningRemnant", 245022)
+	self:Log("SPELL_PERIODIC_DAMAGE", "BurningRemnant", 245022)
+	self:Log("SPELL_PERIODIC_MISSED", "BurningRemnant", 245022)
 end
 
 function mod:OnEngage()
@@ -249,5 +254,18 @@ end
 function mod:Touched(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, args.spellId == 244054 and "Important" or "Personal", "Warning", CL.you:format(args.spellName)) -- Important for Flame, Personal for Shadow
+	end
+end
+
+do
+	local prev = 0
+	function mod:BurningRemnant(args)
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			end
+		end
 	end
 end

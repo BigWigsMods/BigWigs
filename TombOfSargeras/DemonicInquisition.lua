@@ -13,7 +13,7 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Demonic Inquisition", 1147, 1867)
+local mod, CL = BigWigs:NewBoss("Demonic Inquisition", 1676, 1867)
 if not mod then return end
 mod:RegisterEnableMob(116689, 116691)
 mod.engageId = 2048

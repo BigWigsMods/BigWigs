@@ -218,14 +218,9 @@ do
 		end
 	end
 	function plugin:BigWigs_OnBossEngage(event, module, diff)
-		local id = 0 -- XXX temp
-		if module.instanceId then
-			id = module.instanceId
-		elseif module.zoneId and module.zoneId > 0 then
-			id = GetAreaMapInfo(module.zoneId)
-		end
+		local id = module.instanceId
 
-		if module.journalId and id > 0 and not module.worldBoss then -- Raid restricted for now
+		if module.journalId and id and id > 0 and not module.worldBoss then -- Raid restricted for now
 			activeDurations[module.journalId] = GetTime()
 
 			if diff and difficultyTable[diff] then
@@ -262,14 +257,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 
 		local diff = module:Difficulty()
 		if difficultyTable[diff] then
-			local id = 0 -- XXX temp
-			if module.instanceId then
-				id = module.instanceId
-			elseif module.zoneId and module.zoneId > 0 then
-				id = GetAreaMapInfo(module.zoneId)
-			end
-
-			local sDB = BigWigsStatsDB[id][module.journalId][difficultyTable[diff]]
+			local sDB = BigWigsStatsDB[module.instanceId][module.journalId][difficultyTable[diff]]
 			if self.db.profile.saveKills then
 				sDB.kills = sDB.kills and sDB.kills + 1 or 1
 			end
@@ -296,14 +284,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 
 			local diff = module:Difficulty()
 			if difficultyTable[diff] and self.db.profile.saveWipes then
-				local id = 0 -- XXX temp
-				if module.instanceId then
-					id = module.instanceId
-				elseif module.zoneId and module.zoneId > 0 then
-					id = GetAreaMapInfo(module.zoneId)
-				end
-
-				local sDB = BigWigsStatsDB[id][module.journalId][difficultyTable[diff]]
+				local sDB = BigWigsStatsDB[module.instanceId][module.journalId][difficultyTable[diff]]
 				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
 			end
 

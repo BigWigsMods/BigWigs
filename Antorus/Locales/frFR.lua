@@ -76,6 +76,7 @@ if L then
 	L.worldExplosion_desc = "Affiche un délai pour l'explosion d'Effondrement du monde."
 	L.platform_active = "%s active !" -- Platform: Xoroth Active!
 	L.add_killed = "%s tué !"
+	L.achiev = "'Portail Kombat' achievement debuffs" -- Achievement 11928
 end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "frFR")

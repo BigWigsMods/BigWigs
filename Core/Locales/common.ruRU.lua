@@ -36,6 +36,7 @@ L.on = "%s на %s"
 L.onboss = "%s на БОССЕ"
 L.other = "%s: %s"
 L.over = "%s завершается"
+--L.percent = "%d%% - %s" -- 20% - spell
 L.phase = "Фаза %d"
 L.removed = "%s снято"
 L.removed_from = "%s Снято С %s"
