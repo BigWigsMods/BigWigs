@@ -120,7 +120,7 @@ function mod:OnBossEnable()
 	--[[ Intermission: Fires of Taeshalach ]]--
 	self:Log("SPELL_AURA_APPLIED", "CorruptAegis", 244894)
 	self:Log("SPELL_AURA_REMOVED", "CorruptAegisRemoved", 244894)
-	self:Log("SPELL_CAST_SUCCESS", "BlazingEruption", 244912) -- Add dying
+	self:Log("SPELL_CAST_SUCCESS", "BlazingEruption", 244912) -- Embers don't trigger UNIT_DIED when this is cast
 	self:Death("EmberDeath", 122532) -- You can kill Embers in LFR & Normal
 
 	--[[ Mythic ]]--
@@ -262,6 +262,13 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 
 	if waveEmberCounter > 0 then
 		self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
+		if self:GetOption("custom_off_ember_marker") then
+			for key,guid in pairs(emberAddMarks) do -- Remove icon from used list
+				if guid == args.sourceGUID then
+					emberAddMarks[key] = nil
+				end
+			end
+		end
 	else
 		self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
 		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
@@ -273,14 +280,6 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 			wipe(emberAddMarks)
 		end
 		currentEmberWave = currentEmberWave + 1
-	end
-
-	if self:GetOption("custom_off_ember_marker") then
-		for key,guid in pairs(emberAddMarks) do -- Remove icon from used list
-			if guid == args.sourceGUID then
-				emberAddMarks[key] = nil
-			end
-		end
 	end
 end
 
@@ -312,7 +311,7 @@ do
 			waveCollector[wave][guid] = true
 		end
 		if self:GetOption("custom_off_ember_marker") then
-			if mobID == 122532 and waveCollector[currentEmberWave] and (not self:Mythic() or UnitPower(unit, 3) > 45) then -- Mark all above 45 energy or everything below Mythic
+			if mobID == 122532 and waveCollector[currentEmberWave] and (not self:Mythic() or UnitPower(unit, 3) > 45) then -- Mark Embers above 45 energy in Mythic
 				if waveCollector[currentEmberWave][guid] then
 					for i = 1, 5 do -- Use only 5 marks, leaving 6, 7, 8 for raid use purposes
 						if not emberAddMarks[i] and not GetRaidTargetIndex(unit) then -- Don't re-mark the same add and re-use marks
