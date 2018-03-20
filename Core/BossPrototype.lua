@@ -21,6 +21,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local Timer = C_Timer.After
 local SendChatMessage, GetInstanceInfo = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo
 local format, find, gsub, band = string.format, string.find, string.gsub, bit.band
 local select, type, next, tonumber = select, type, next, tonumber
@@ -1488,6 +1489,7 @@ do
 			end
 		end
 	})
+	local cpName = coloredNames[pName]
 
 	local mt = {
 		__newindex = function(self, key, value)
@@ -1611,6 +1613,53 @@ do
 						end
 					end
 				end
+			end
+		end
+	end
+
+	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
+	local function printTargets(self, key, playerTable, color, playerCount, text, icon)
+		local playersInTable = #playerTable
+		if playersInTable ~= 0 then
+			local textType = type(text)
+			local msg = textType == "string" and text or spells[text or key]
+			local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+
+			local list, onMe = "", false
+			for i = 1, playersInTable do
+				local name = playersInTable[i]
+				if name == cpName then
+					onMe = true
+				end
+				if i == playersInTable then
+					list = list .. name
+				else
+					list = list .. name .. comma
+				end
+			end
+
+			local meOnly = checkFlag(self, key, C.ME_ONLY)
+			if onMe and (meOnly or playersInTable == 1) then
+				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+			elseif not meOnly then
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
+			end
+
+			for i = playersInTable, 1 do
+				playerTable[i] = nil
+			end
+		end
+	end
+
+	function boss:TargetsMessage(key, playerTable, color, playerCount, text, icon, customTime)
+		if checkFlag(self, key, C.MESSAGE) then
+			local playersInTable = #playerTable
+			if playersInTable == playerCount then
+				printTargets(self, key, playerTable, color, playerCount, text, icon)
+			elseif playersInTable == 1 then
+				Timer(customTime or 0.3, function()
+					printTargets(self, key, playerTable, color, playerCount, text, icon)
+				end)
 			end
 		end
 	end
