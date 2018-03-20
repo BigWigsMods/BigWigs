@@ -1618,7 +1618,7 @@ do
 	end
 
 	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
-	local function printTargets(self, key, playerTable, color, playerCount, text, icon)
+	local function printTargets(self, key, playerTable, color, text, icon)
 		local playersInTable = #playerTable
 		if playersInTable ~= 0 then
 			local textType = type(text)
@@ -1626,16 +1626,17 @@ do
 			local texture = icon ~= false and icons[icon or textType == "number" and text or key]
 
 			local list, onMe = "", false
-			for i = 1, playersInTable do
+			for i = playersInTable, 1 do
 				local name = playersInTable[i]
 				if name == cpName then
 					onMe = true
 				end
-				if i == playersInTable then
-					list = list .. name
+				if i == 1 then
+					list = name .. list
 				else
-					list = list .. name .. comma
+					list = comma .. name .. list
 				end
+				playersInTable[i] = nil
 			end
 
 			local meOnly = checkFlag(self, key, C.ME_ONLY)
@@ -1644,23 +1645,17 @@ do
 			elseif not meOnly then
 				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
 			end
-
-			for i = playersInTable, 1 do
-				playerTable[i] = nil
-			end
 		end
 	end
 
 	function boss:TargetsMessage(key, playerTable, color, playerCount, text, icon, customTime)
-		if checkFlag(self, key, C.MESSAGE) then
-			local playersInTable = #playerTable
-			if playersInTable == playerCount then
-				printTargets(self, key, playerTable, color, playerCount, text, icon)
-			elseif playersInTable == 1 then
-				Timer(customTime or 0.3, function()
-					printTargets(self, key, playerTable, color, playerCount, text, icon)
-				end)
-			end
+		local playersInTable = #playerTable
+		if playersInTable == playerCount and checkFlag(self, key, C.MESSAGE) then
+			printTargets(self, key, playerTable, color, text, icon)
+		elseif playersInTable == 1 and checkFlag(self, key, C.MESSAGE) then
+			Timer(customTime or 0.3, function()
+				printTargets(self, key, playerTable, color, text, icon)
+			end)
 		end
 	end
 end
