@@ -1622,24 +1622,26 @@ do
 	local function printTargets(self, key, playerTable, color, text, icon)
 		local playersInTable = #playerTable
 		if playersInTable ~= 0 then
-			if checkFlag(self, key, C.MESSAGE) then
+			local meOnly = checkFlag(self, key, C.ME_ONLY)
+			local msgEnabled = checkFlag(self, key, C.MESSAGE)
+			if meOnly or msgEnabled then -- Allow ME_ONLY messages when normal messages are disabled
 				local textType = type(text)
 				local msg = textType == "string" and text or spells[text or key]
 				local texture = icon ~= false and icons[icon or textType == "number" and text or key]
 
 				local onMe = false
-				local list = tconcat(playerTable, comma)
-				for i = playersInTable, 1 do
+				for i = 1, playersInTable do
 					if playerTable[i] == cpName then
 						onMe = true
 					end
-					playerTable[i] = nil
 				end
 
-				local meOnly = checkFlag(self, key, C.ME_ONLY)
-				if onMe and (meOnly or playersInTable == 1) then
+				if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
+					wipe(playerTable)
 					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
-				elseif not meOnly then
+				elseif not meOnly and msgEnabled then
+					local list = tconcat(playerTable, comma, 1, playersInTable)
+					wipe(playerTable)
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
 				end
 			else
@@ -1969,9 +1971,10 @@ do
 		if msg then
 			self:SendMessage("BigWigs_BossComm", msg, extra, pName)
 			if IsInGroup() then
-				msg = "B^".. msg
 				if extra then
-					msg = msg .."^".. extra
+					msg = "B^".. msg .."^".. extra
+				else
+					msg = "B^".. msg
 				end
 				SendAddonMessage("BigWigs", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 			end
