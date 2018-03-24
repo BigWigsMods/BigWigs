@@ -23,7 +23,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.autoReply
 local curDiff = 0
 local curModule = nil
-local throttle = {}
+local throttle, throttleBN = {}, {}
 
 -------------------------------------------------------------------------------
 -- Options
@@ -56,7 +56,7 @@ plugin.pluginOptions = {
 		},
 		mode = {
 			type = "select",
-			name = "Reponse Type",
+			name = L.autoReplyResponseType,
 			order = 2,
 			values = {
 				L.autoReplyBasic,
@@ -88,7 +88,7 @@ function plugin:BigWigs_OnBossEngage(event, module, difficulty)
 	if not self.db.profile.disabled and module and module.journalId then
 		curDiff = difficulty
 		curModule = module
-		throttle = {}
+		throttle, throttleBN = {}, {}
 		self:RegisterEvent("CHAT_MSG_WHISPER")
 		self:RegisterEvent("CHAT_MSG_BN_WHISPER")
 	end
@@ -166,10 +166,12 @@ do
 		end
 	end
 
-	function plugin:CHAT_MSG_BN_WHISPER(event, _, sender)
-		if curDiff > 0 then
-			if not throttle[sender] or GetTime() - throttle[sender] > 10 then
-				throttle[sender] = GetTime()
+	function plugin:CHAT_MSG_BN_WHISPER(event, _, playerName, _, _, _, _, _, _, _, _, _, _, bnSenderID)
+		if curDiff > 0 and not BNIsSelf(bnSenderID) then
+			if not throttleBN[bnSenderID] or GetTime() - throttleBN[bnSenderID] > 10 then
+				throttleBN[bnSenderID] = GetTime()
+				local msg = CreateResponse()
+				BNSendWhisper(bnSenderID, "[BigWigs] ".. msg)
 			end
 		end
 	end
