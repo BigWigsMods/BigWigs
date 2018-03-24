@@ -799,10 +799,10 @@ do
 			stacks = args.amount
 			if t - prev > 1 then -- on Mythic players usually revive themselves simultaneously, we don't want to show multiple messages
 				if scheduled then self:CancelTimer(scheduled) end
-				announce(args.spellId, args.spellName)
+				announce(self, args.spellId, args.spellName)
 			else
 				if not scheduled then
-					scheduled = self:ScheduleTimer(announce, t - prev, args.spellId, args.spellName)
+					scheduled = self:ScheduleTimer(announce, t - prev, self, args.spellId, args.spellName)
 				end
 			end
 		end
