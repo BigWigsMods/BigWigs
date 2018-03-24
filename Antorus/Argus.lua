@@ -778,7 +778,7 @@ do
 		if self:GetOption(args.spellId) ~= 0 and (self:CheckOption(args.spellId, "HEALER") ~= false or self:Healer()) then -- follow the same format as WitheringRootsStacks for healers
 			prev = GetTime()
 			lastAnnouncedStacks = 1
-			self:Message(args.spellId, "Attention", "Alert", L.stacks(1, args.spellName))
+			self:Message(args.spellId, "Attention", "Alert", L.stacks:format(1, args.spellName))
 		else -- for others: just warn that the tree is now withering
 			self:Message("stages", "Positive", "Long", args.spellId)
 		end
@@ -787,7 +787,7 @@ do
 	-- helper function with access to a local variable to avoid
 	-- passing by value and rescheduling the timer
 	local function announce(self, spellId, spellName)
-		self:Message(spellId, "Attention", "Alert", L.stacks(stacks, spellName))
+		self:Message(spellId, "Attention", "Alert", L.stacks:format(stacks, spellName))
 		lastAnnouncedStacks = stacks
 		prev = GetTime()
 		scheduled = nil
@@ -799,7 +799,7 @@ do
 			if t - prev > 1 then -- on Mythic players usually revive themselves simultaneously, we don't want to show multiple messages
 				prev = t
 				lastAnnouncedStacks = args.amount
-				self:Message(args.spellId, "Attention", "Alert", L.stacks(args.amount, args.spellName))
+				self:Message(args.spellId, "Attention", "Alert", L.stacks:format(args.amount, args.spellName))
 			else
 				stacks = args.amount
 				if not scheduled then
