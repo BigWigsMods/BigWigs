@@ -802,7 +802,7 @@ do
 				announce(self, args.spellId, args.spellName)
 			else
 				if not scheduled then
-					scheduled = self:ScheduleTimer(announce, t - prev, self, args.spellId, args.spellName)
+					scheduled = self:ScheduleTimer(announce, 1 - (t - prev), self, args.spellId, args.spellName)
 				end
 			end
 		end
