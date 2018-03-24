@@ -775,7 +775,7 @@ end
 do
 	local prev, lastAnnouncedStacks, stacks, scheduled = 0, 0, nil
 	function mod:WitheringRoots(args)
-		if self:GetOption(args.spellId) ~= 0 and (self:CheckOption(args.spellId, "HEALER") ~= false or self:Healer()) then -- follow the same format as WitheringRootsStacks for healers
+		if self:GetOption(args.spellId) ~= 0 and (self:CheckOption(args.spellId, "HEALER") == false or self:Healer()) then -- follow the same format as WitheringRootsStacks for healers
 			prev = GetTime()
 			lastAnnouncedStacks = 1
 			self:Message(args.spellId, "Attention", "Alert", L.stacks:format(1, args.spellName))
