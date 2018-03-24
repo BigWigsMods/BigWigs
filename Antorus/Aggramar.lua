@@ -240,7 +240,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	if hp < nextIntermissionSoonWarning then
 		self:Message("stages", "Positive", nil, CL.soon:format(CL.intermission), false)
 		nextIntermissionSoonWarning = nextIntermissionSoonWarning - 40
-		if nextIntermissionSoonWarning < 40 then
+		if nextIntermissionSoonWarning < 40 or self:LFR() then -- only 1 intermission in LFR
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		end
 	end
