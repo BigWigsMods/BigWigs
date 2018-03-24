@@ -128,6 +128,7 @@ if L then
 	L.sea_say = "{rt6} Haste/Versa"
 
 	L.countx = "%s (%dx)"
+	L.stacks = "%dx %s" -- for Withering Roots, the target is obvious (and has a rather long name)
 
 	L.bomb_explosions = "Bomb Explosions"
 	L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding."
@@ -177,6 +178,7 @@ function mod:GetOptions()
 		255935, -- Cosmic Power
 
 		--[[ Stage 4 ]]--
+		{256399, "HEALER"}, -- Withering Roots
 		256544, -- End of All Things
 		258039, -- Deadly Scythe
 		256388, -- Initialization Sequence
@@ -243,6 +245,8 @@ function mod:OnBossEnable()
 	--[[ Stage 4 ]]--
 	self:Log("SPELL_CAST_START", "ReapSoul", 256542)
 	self:Log("SPELL_CAST_SUCCESS", "GiftoftheLifebinder", 257619)
+	self:Log("SPELL_AURA_APPLIED", "WitheringRoots", 256399)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "WitheringRootsStacks", 256399)
 
 	self:Log("SPELL_CAST_START", "EndofAllThings", 256544)
 	self:Log("SPELL_INTERRUPT", "EndofAllThingsInterupted", "*")
@@ -757,6 +761,53 @@ end
 
 function mod:GiftoftheLifebinder(args)
 	self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
+	self:RegisterUnitEvent("UNIT_POWER", nil, "boss3") -- boss1 = Argus, boss2 = Khaz'goroth, boss3 = Gift of the Lifebinder
+end
+
+function mod:UNIT_POWER(unit)
+	local power = UnitPower(unit) / UnitPowerMax(unit) * 100
+	if power <= 10 then
+		self:UnregisterUnitEvent("UNIT_POWER", unit)
+		self:Message("stages", "Positive", "Long", CL.soon:format(self:SpellName(256399)), 256399) -- Withering Roots
+	end
+end
+
+do
+	local prev, lastAnnouncedStacks, stacks, scheduled = 0, 0, nil
+	function mod:WitheringRoots(args)
+		if self:GetOption(args.spellId) ~= 0 and (self:CheckOption(args.spellId, "HEALER") ~= false or self:Healer()) then -- follow the same format as WitheringRootsStacks for healers
+			prev = GetTime()
+			lastAnnouncedStacks = 1
+			self:Message(args.spellId, "Attention", "Alert", L.stacks(1, args.spellName))
+		else -- for others: just warn that the tree is now withering
+			self:Message("stages", "Positive", "Long", args.spellId)
+		end
+	end
+
+	-- helper function with access to a local variable to avoid
+	-- passing by value and rescheduling the timer
+	local function announce(self, spellId, spellName)
+		self:Message(spellId, "Attention", "Alert", L.stacks(stacks, spellName))
+		lastAnnouncedStacks = stacks
+		prev = GetTime()
+		scheduled = nil
+	end
+
+	function mod:WitheringRootsStacks(args)
+		if args.amount - lastAnnouncedStacks > 2 then -- normally it'll be 1, 4, 7...
+			local t = GetTime()
+			if t - prev > 1 then -- on Mythic players usually revive themselves simultaneously, we don't want to show multiple messages
+				prev = t
+				lastAnnouncedStacks = args.amount
+				self:Message(args.spellId, "Attention", "Alert", L.stacks(args.amount, args.spellName))
+			else
+				stacks = args.amount
+				if not scheduled then
+					scheduled = self:ScheduleTimer(announce, t - prev, args.spellId, args.spellName)
+				end
+			end
+		end
+	end
 end
 
 function mod:EndofAllThings(args)
