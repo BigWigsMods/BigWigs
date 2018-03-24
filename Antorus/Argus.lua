@@ -796,12 +796,11 @@ do
 	function mod:WitheringRootsStacks(args)
 		if args.amount - lastAnnouncedStacks > 2 then -- normally it'll be 1, 4, 7...
 			local t = GetTime()
+			stacks = args.amount
 			if t - prev > 1 then -- on Mythic players usually revive themselves simultaneously, we don't want to show multiple messages
-				prev = t
-				lastAnnouncedStacks = args.amount
-				self:Message(args.spellId, "Attention", "Alert", L.stacks:format(args.amount, args.spellName))
+				if scheduled then self:CancelTimer(scheduled) end
+				announce(args.spellId, args.spellName)
 			else
-				stacks = args.amount
 				if not scheduled then
 					scheduled = self:ScheduleTimer(announce, t - prev, args.spellId, args.spellName)
 				end
