@@ -197,7 +197,7 @@ function mod:GetOptions()
 		[248165] = CL.stage:format(1),
 		[250669] = CL.stage:format(2),
 		[252516] = CL.stage:format(3),
-		[256544] = CL.stage:format(4),
+		[256399] = CL.stage:format(4),
 		[258068] = "mythic",
 	}
 end
