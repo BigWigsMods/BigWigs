@@ -11,8 +11,8 @@ if not plugin then return end
 
 plugin.defaultDB = {
 	disabled = true,
-	modeOther = 1,
 	mode = 2,
+	modeOther = 1,
 	exitCombat = 3,
 	exitCombatOther = 2,
 }
@@ -33,98 +33,77 @@ local hogger = EJ_GetEncounterInfo(464)
 -- Options
 --
 
-plugin.pluginOptions = {
-	name = L.autoReply,
-	desc = L.autoReplyDesc,
-	type = "group",
-	childGroups = "tab",
-	get = function(info)
-		return plugin.db.profile[info[#info]]
-	end,
-	set = function(info, value)
-		local entry = info[#info]
-		plugin.db.profile[entry] = value
-	end,
-	args = {
-		heading = {
-			type = "description",
-			name = L.autoReplyDesc.. "\n\n",
-			order = 1,
-			width = "full",
-			fontSize = "medium",
+do
+	local disabled = function() return plugin.db.profile.disabled end
+	local modeTbl = {
+		type = "select",
+		name = L.responseType,
+		order = 1,
+		values = {
+			L.autoReplyBasic,
+			L.autoReplyNormal:format(hogger),
+			L.autoReplyAdvanced:format(hogger, GetDifficultyInfo(2), 12, 20),
+			L.autoReplyExtreme:format(hogger, GetDifficultyInfo(2), 12, 20, L.healthFormat:format(hogger, 42)),
 		},
-		disabled = {
-			type = "toggle",
-			name = L.disabled,
-			width = "full",
-			order = 2,
+		width = "full",
+		style = "radio",
+	}
+	local exitCombatTbl = {
+		type = "select",
+		name = L.autoReplyFinalReply,
+		order = 2,
+		values = {
+			L.none,
+			L.autoReplyLeftCombat,
+			L.autoReplyLeftCombatWin:format(hogger),
 		},
-		friendly = {
-			name = L.guildAndFriends,
-			type = "group",
-			order = 3,
-			args = {
-				mode = {
-					type = "select",
-					name = L.responseType,
-					order = 1,
-					values = {
-						L.autoReplyBasic,
-						L.autoReplyNormal:format(hogger),
-						L.autoReplyAdvanced:format(hogger, GetDifficultyInfo(2), 12, 20),
-						L.autoReplyExtreme:format(hogger, GetDifficultyInfo(2), 12, 20, L.healthFormat:format(hogger, 42)),
-					},
-					width = "full",
-					style = "radio",
-				},
-				exitCombat = {
-					type = "select",
-					name = L.autoReplyFinalReply,
-					order = 2,
-					values = {
-						L.none,
-						L.autoReplyLeftCombat,
-						L.autoReplyLeftCombatWin:format(hogger),
-					},
-					width = "full",
-					style = "radio",
-				},
+		width = "full",
+		style = "radio",
+	}
+
+	plugin.pluginOptions = {
+		name = L.autoReply,
+		desc = L.autoReplyDesc,
+		type = "group",
+		childGroups = "tab",
+		get = function(info)
+			return plugin.db.profile[info[#info]]
+		end,
+		set = function(info, value)
+			local entry = info[#info]
+			plugin.db.profile[entry] = value
+		end,
+		args = {
+			heading = {
+				type = "description",
+				name = L.autoReplyDesc.. "\n\n",
+				order = 1,
+				width = "full",
+				fontSize = "medium",
+			},
+			disabled = {
+				type = "toggle",
+				name = L.disabled,
+				width = "full",
+				order = 2,
+			},
+			friendly = {
+				name = L.guildAndFriends,
+				type = "group",
+				order = 3,
+				disabled = disabled,
+				args = {mode = modeTbl, exitCombat = exitCombatTbl},
+			},
+			other = {
+				name = L.everyoneElse,
+				type = "group",
+				order = 4,
+				disabled = disabled,
+				args = {modeOther = modeTbl, exitCombatOther = exitCombatTbl},
 			},
 		},
-		other = {
-			name = L.everyoneElse,
-			type = "group",
-			order = 4,
-			args = {
-				modeOther = {
-					type = "select",
-					name = L.responseType,
-					order = 1,
-					values = {
-						L.autoReplyBasic,
-						L.autoReplyNormal:format(hogger),
-						L.autoReplyAdvanced:format(hogger, GetDifficultyInfo(2), 12, 20),
-						L.autoReplyExtreme:format(hogger, GetDifficultyInfo(2), 12, 20, L.healthFormat:format(hogger, 42)),
-					},
-					width = "full",
-					style = "radio",
-				},
-				exitCombatOther = {
-					type = "select",
-					name = L.autoReplyFinalReply,
-					order = 2,
-					values = {
-						L.none,
-						L.autoReplyLeftCombat,
-						L.autoReplyLeftCombatWin:format(hogger),
-					},
-					width = "full",
-					style = "radio",
-				},
-			},
-		},
-	},
-}
+	}
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
