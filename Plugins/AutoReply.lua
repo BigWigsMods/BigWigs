@@ -223,7 +223,7 @@ do
 	function plugin:CHAT_MSG_WHISPER(event, _, sender, _, _, _, flag, _, _, _, _, _, guid)
 		if curDiff > 0 and flag ~= "GM" and flag ~= "DEV" then
 			local trimmedPlayer = Ambiguate(sender, "none")
-			if not UnitInRaid(trimmedPlayer) and not UnitInParty(trimmedPlayer) and (not throttle[sender] or GetTime() - throttle[sender] > 10) then
+			if not UnitInRaid(trimmedPlayer) and not UnitInParty(trimmedPlayer) and (not throttle[sender] or GetTime() - throttle[sender] > 30) then
 				throttle[sender] = GetTime()
 				local _, characterName = BNGetGameAccountInfoByGUID(guid)
 				local msg
@@ -240,8 +240,21 @@ do
 
 	function plugin:CHAT_MSG_BN_WHISPER(event, _, playerName, _, _, _, _, _, _, _, _, _, _, bnSenderID)
 		if curDiff > 0 and not BNIsSelf(bnSenderID) then
-			if not throttleBN[bnSenderID] or GetTime() - throttleBN[bnSenderID] > 10 then
+			if not throttleBN[bnSenderID] or GetTime() - throttleBN[bnSenderID] > 30 then
 				throttleBN[bnSenderID] = GetTime()
+				local index = BNGetFriendIndex(bnSenderID)
+				local gameAccs = BNGetNumFriendGameAccounts(index)
+				for i=1, gameAccs do
+					local _, player, game, server = BNGetFriendGameAccountInfo(index, i)
+					if game == "WoW" then
+						if server ~= GetRealmName() then
+							player = player .. "-" .. server
+						end
+						if UnitInRaid(player) or UnitInParty(player) then
+							return
+						end
+					end
+				end
 				local msg = CreateResponse(self.db.profile.mode)
 				BNSendWhisper(bnSenderID, "[BigWigs] ".. msg)
 			end
