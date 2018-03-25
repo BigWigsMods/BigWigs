@@ -248,7 +248,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:BlazingEruption(args) -- Add Death/Raid Explosion
-	if (self:Mythic() and stage == 2 and intermission == true) or (self:Mythic() and stage == 3) then -- Count adds in intermission 2+ for mythic
+	if self:Mythic() and ((stage == 2 and intermission == true) or stage == 3) then -- Count adds in intermission 2+ for mythic
 		if mobCollector[args.sourceGUID] then -- Remove the add from the tables if seen before
 			waveCollector[mobCollector[args.sourceGUID]][args.sourceGUID] = nil
 		end
