@@ -517,7 +517,7 @@ function mod:CorruptAegis()
 	wave = 1
 	waveCollector[wave] = {}
 
-	if self:GetOption("custom_off_ember_marker") or ((self:GetOption("track_ember") or self:GetOption(245911)) and (self:Mythic() and stage >= 2)) then
+	if self:GetOption("custom_off_ember_marker") or ((self:GetOption("track_ember") or self:GetOption(245911)) and (self:Mythic() and stage == 2 and intermission == true)) then
 		self:RegisterTargetEvents("EmberAddScanner")
 	end
 
