@@ -158,7 +158,7 @@ function mod:OnEngage()
 	self:Bar(244693, self:Mythic() and 10.5 or 5.5) -- Wake of Flame
 	self:Bar(244688, self:Mythic() and 14.5 or 35) -- Taeshalach Technique
 
-	nextIntermissionSoonWarning = 82 -- happens at 80%
+	nextIntermissionSoonWarning = self:LFR() and 62 or 82 -- happens at 60% on LFR, 80% on other difficulties
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
@@ -240,7 +240,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	if hp < nextIntermissionSoonWarning then
 		self:Message("stages", "Positive", nil, CL.soon:format(CL.intermission), false)
 		nextIntermissionSoonWarning = nextIntermissionSoonWarning - 40
-		if nextIntermissionSoonWarning < 40 or self:LFR() then -- only 1 intermission in LFR
+		if nextIntermissionSoonWarning < 40 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		end
 	end
