@@ -294,7 +294,7 @@ function mod:TransportPortal(args)
 end
 
 function mod:HowlingShadows(args)
-	if self:Interrupter(args.sourceGUID) and playerPlatform == 1 then -- Can't interupt from other platforms
+	if playerPlatform == 1 then
 		self:Message(args.spellId, "Urgent", "Alarm")
 	end
 end
