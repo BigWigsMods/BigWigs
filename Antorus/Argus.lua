@@ -779,10 +779,10 @@ do
 
 	-- helper function with access to a local variable to avoid
 	-- passing by value and rescheduling the timer
-	local function announce(self, spellId, spellName)
+	local function announce(self, spellId, spellName, t)
 		self:Message(spellId, "Attention", "Alert", L.stacks:format(stacks, spellName))
 		lastAnnouncedStacks = stacks
-		prev = GetTime()
+		prev = t or GetTime()
 		scheduled = nil
 	end
 
@@ -801,7 +801,7 @@ do
 			stacks = args.amount
 			if t - prev > 1 then -- on Mythic players usually revive themselves simultaneously, we don't want to show multiple messages
 				if scheduled then self:CancelTimer(scheduled) end
-				announce(self, args.spellId, args.spellName)
+				announce(self, args.spellId, args.spellName, t)
 			else
 				if not scheduled then
 					scheduled = self:ScheduleTimer(announce, 1 - (t - prev), self, args.spellId, args.spellName)
