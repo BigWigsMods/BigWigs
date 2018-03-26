@@ -244,9 +244,11 @@ function mod:OnBossEnable()
 
 	--[[ Stage 4 ]]--
 	self:Log("SPELL_CAST_START", "ReapSoul", 256542)
+
 	self:Log("SPELL_CAST_SUCCESS", "GiftoftheLifebinder", 257619)
 	self:Log("SPELL_AURA_APPLIED", "WitheringRoots", 256399)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WitheringRootsStacks", 256399)
+	self:Death("TreeDeath", 129386)
 
 	self:Log("SPELL_CAST_START", "EndofAllThings", 256544)
 	self:Log("SPELL_INTERRUPT", "EndofAllThingsInterupted", "*")
@@ -805,6 +807,12 @@ do
 					scheduled = self:ScheduleTimer(announce, 1 - (t - prev), self, args.spellId, args.spellName)
 				end
 			end
+		end
+	end
+
+	function mod:TreeDeath()
+		if scheduled then
+			self:CancelTimer(scheduled)
 		end
 	end
 end
