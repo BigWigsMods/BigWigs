@@ -15,6 +15,7 @@ plugin.defaultDB = {
 	blockGarrison = true,
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
+	blockQuestTrackingTooltips = true,
 }
 
 --------------------------------------------------------------------------------
@@ -26,6 +27,7 @@ plugin.displayName = L.bossBlock
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
 local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
 local GetCurrentMapDungeonLevel = BigWigsLoader.GetCurrentMapDungeonLevel
+local questTrackingValue = 1 -- default 1 after dc
 
 -------------------------------------------------------------------------------
 -- Options
@@ -86,6 +88,13 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 5,
 		},
+		blockQuestTrackingTooltips = {
+			type = "toggle",
+			name = L.blockQuestTrackingTooltips,
+			desc = L.blockQuestTrackingTooltipsDesc,
+			width = "full",
+			order = 6,
+		}
 	},
 }
 
@@ -105,6 +114,14 @@ function plugin:OnPluginEnable()
 	self:RegisterEvent("CINEMATIC_START")
 	self:RegisterEvent("PLAY_MOVIE")
 	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
+	questTrackingValue = GetCVar("showQuestTrackingTooltips")
+end
+
+
+function plugin:OnPluginDisable()
+	if self.db.profile.blockQuestTrackingTooltips then
+		SetCVar("showQuestTrackingTooltips", questTrackingValue)
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -145,6 +162,9 @@ do
 		if self.db.profile.blockSpellErrors then
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
+		if self.db.profile.blockQuestTrackingTooltips then
+			SetCVar("showQuestTrackingTooltips", 0)
+		end
 	end
 
 	function plugin:BigWigs_OnBossWin()
@@ -163,6 +183,9 @@ do
 		end
 		if self.db.profile.blockSpellErrors then
 			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+		end
+		if self.db.profile.blockQuestTrackingTooltips then
+			SetCVar("showQuestTrackingTooltips", questTrackingValue)
 		end
 	end
 end
@@ -276,4 +299,3 @@ do
 		end
 	end
 end
-

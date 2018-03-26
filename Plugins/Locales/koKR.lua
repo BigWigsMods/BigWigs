@@ -106,6 +106,8 @@ L.blockGuildChallenge = "길드 도전 알림 차단"
 L.blockGuildChallengeDesc = "길드 도전 알림은 여러가지를 표시하지만 주로 당신의 길드 파티의 영웅 던전이나 도전 모드 던전 완료를 표시합니다.\n\n이 알림들은 우두머리 전투 중 UI를 치명적으로 가릴 수 있습니다, 따라서 차단을 권장합니다."
 L.blockSpellErrors = "주문 실패 메시지 차단"
 L.blockSpellErrorsDesc = "일반적으로 화면 상단에 표시되는 \"마법이 아직 준비되지 않았습니다\" 같은 메시지를 차단합니다."
+--L.blockQuestTrackingTooltips = "Hide quest objectives in tooltips"
+--L.blockQuestTrackingTooltipsDesc = "Quest objectives can take up a lot of space in tooltips when a lot of players in your group are on a quest for an encounter. This will stop these objectives from showing while in encounter combat."
 
 -----------------------------------------------------------------------
 -- Colors.lua
