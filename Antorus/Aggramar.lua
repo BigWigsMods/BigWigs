@@ -42,8 +42,8 @@ local mobCollector = {}
 local waveCollector = {}
 local emberAddMarks = {}
 local currentEmberWave = 1
-local trackingEmber = nil
 local waveTimeCollector = {}
+local intermission = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -121,7 +121,8 @@ function mod:OnBossEnable()
 	--[[ Intermission: Fires of Taeshalach ]]--
 	self:Log("SPELL_AURA_APPLIED", "CorruptAegis", 244894)
 	self:Log("SPELL_AURA_REMOVED", "CorruptAegisRemoved", 244894)
-	self:Log("SPELL_CAST_SUCCESS", "BlazingEruption", 244912) -- Add dying
+	self:Log("SPELL_CAST_SUCCESS", "BlazingEruption", 244912) -- Embers don't trigger UNIT_DIED when this is cast
+	self:Death("EmberDeath", 122532) -- You can kill Embers in LFR & Normal
 
 	--[[ Mythic ]]--
 	self:Log("SPELL_AURA_APPLIED", "RavenousBlaze", 254452)
@@ -140,6 +141,7 @@ function mod:OnEngage()
 
 	blazeTick = 1
 	blazeOnMe = nil
+	intermission = false
 	wipe(blazeProxList)
 
 	wipe(mobCollector)
@@ -147,7 +149,6 @@ function mod:OnEngage()
 	wipe(waveTimeCollector)
 	wave = 0
 	currentEmberWave = 1
-	trackingEmber = nil
 
 	if self:Mythic() then
 		self:Bar(254452, 4.8) -- Ravenous Blaze
@@ -247,40 +248,59 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:BlazingEruption(args) -- Add Death/Raid Explosion
-	if (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) and trackingEmber then
-		-- Remove the ember from marks list and wave List
+	if self:Mythic() and ((stage == 2 and intermission) or stage == 3) then -- Count adds in intermission 2+ for mythic
+		if mobCollector[args.sourceGUID] then -- Remove the add from the tables if seen before
+			waveCollector[mobCollector[args.sourceGUID]][args.sourceGUID] = nil
+		end
+		waveEmberCounter = 0
+		if waveCollector[currentEmberWave] then
+			for _ in next, waveCollector[currentEmberWave] do
+				waveEmberCounter = waveEmberCounter + 1
+			end
+		end
+	else
+		waveEmberCounter = waveEmberCounter - 1
+	end
+
+	if waveEmberCounter > 0 then
+		self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
 		if self:GetOption("custom_off_ember_marker") then
+			for key,guid in pairs(emberAddMarks) do -- Remove icon from used list
+				if guid == args.sourceGUID then
+					emberAddMarks[key] = nil
+				end
+			end
+		end
+	else
+		self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
+		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
+		if not self:Mythic() or not waveTimeCollector[currentEmberWave+1] then -- No more waves
+			self:UnregisterTargetEvents()
+		else
+			local emberTimer = floor(waveTimeCollector[currentEmberWave+1] - GetTime())
+			self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), currentEmberWave+1)) -- Wrought in Flame (x)
+			wipe(emberAddMarks)
+		end
+		currentEmberWave = currentEmberWave + 1
+	end
+end
+
+function mod:EmberDeath(args)
+	waveEmberCounter = waveEmberCounter - 1
+	if waveEmberCounter > 0 then
+		self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
+		if self:GetOption("custom_off_ember_marker") then -- Remove icon from used list
 			for key,guid in pairs(emberAddMarks) do
 				if guid == args.sourceGUID then
 					emberAddMarks[key] = nil
 				end
 			end
 		end
-
-		if mobCollector[args.sourceGUID] then
-			waveCollector[mobCollector[args.sourceGUID]][args.sourceGUID] = nil -- Check which wave the add was from, incase its from an earlier wave
-		end
-
-		waveEmberCounter = 0
-		if waveCollector[currentEmberWave] then
-			for _ in next, waveCollector[currentEmberWave] do -- Count how many embers are left in this wave
-				waveEmberCounter = waveEmberCounter + 1
-			end
-		end
-		if waveEmberCounter > 0 then
-			self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
-		elseif currentEmberWave then -- Next wave time!
-			self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
-			self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave))
-			if not self:Mythic() or not waveTimeCollector[currentEmberWave+1] then -- Always 1 wave in heroic, or we are out of current waves.
-				self:UnregisterTargetEvents()
-				trackingEmber = nil
-			else -- Start the new wave timer
-				local emberTimer = floor(waveTimeCollector[currentEmberWave+1] - GetTime())
-				self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), currentEmberWave+1)) -- Wrought in Flame (x)
-			end
-			currentEmberWave = currentEmberWave + 1
-		end
+	else
+		self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
+		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
+		self:UnregisterTargetEvents()
+		wipe(emberAddMarks)
 	end
 end
 
@@ -293,7 +313,7 @@ do
 			waveCollector[wave][guid] = true
 		end
 		if self:GetOption("custom_off_ember_marker") then
-			if mobID == 122532 and waveCollector[currentEmberWave] and (not self:Mythic() or UnitPower(unit, 3) > 45) then -- Mark all above 45 energy or everything below Mythic
+			if mobID == 122532 and waveCollector[currentEmberWave] and (not self:Mythic() or UnitPower(unit, 3) > 45) then -- Mark Embers above 45 energy in Mythic
 				if waveCollector[currentEmberWave][guid] then
 					for i = 1, 5 do -- Use only 5 marks, leaving 6, 7, 8 for raid use purposes
 						if not emberAddMarks[i] and not GetRaidTargetIndex(unit) then -- Don't re-mark the same add and re-use marks
@@ -349,16 +369,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		end
 	elseif spellId == 246037 then -- Empowered Flare
 		self:Message(spellId, "Important", "Warning")
-		-- Start tracking new ember wave (mythic)
-		if self:Mythic() then
+		if self:Mythic() then -- Start tracking new ember wave (mythic)
 			wave = wave + 1
 			waveCollector[wave] = {}
-			waveTimeCollector[wave] = (GetTime() + (self:Mythic() and 165 or 180))
-			if not trackingEmber and (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) then
-				self:RegisterTargetEvents("EmberAddScanner") -- Adds spawning
-				trackingEmber = true
-				local emberTimer = floor(waveTimeCollector[wave] - GetTime())
-				self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
+			waveTimeCollector[wave] = GetTime() + 165
+			if self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker") then
+				self:RegisterTargetEvents("EmberAddScanner")
+				if currentEmberWave == wave then
+					local emberTimer = floor(waveTimeCollector[wave] - GetTime())
+					self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), wave)) -- Wrought in Flame (x)
+				end
 			end
 		end
 		if comboTime > GetTime() + 16.2 and not self:Mythic() then
@@ -474,6 +494,7 @@ end
 
 --[[ Intermission: Fires of Taeshalach ]]--
 function mod:CorruptAegis()
+	intermission = true
 	techniqueStarted = nil -- End current technique
 	self:CloseInfo(244688)
 	self:Message("stages", "Neutral", "Long", CL.intermission, false)
@@ -492,19 +513,21 @@ function mod:CorruptAegis()
 	wipe(waveTimeCollector)
 	wipe(emberAddMarks)
 	currentEmberWave = 1
+	waveEmberCounter = self:Mythic() and 10 or 6
 	wave = 1
 	waveCollector[wave] = {}
 
-	if not trackingEmber and (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) then
-		self:RegisterTargetEvents("EmberAddScanner") -- Adds spawning
-		trackingEmber = true
+	if self:GetOption("custom_off_ember_marker") or ((self:GetOption("track_ember") or self:GetOption(245911)) and (self:Mythic() and stage == 2 and intermission)) then -- Checking for 245911 (Wrought in Flame) as we need to track adds to know the timer
+		self:RegisterTargetEvents("EmberAddScanner")
 	end
-	waveTimeCollector[wave] = GetTime() + (self:Mythic() and 165 or 180)
+
+	waveTimeCollector[wave] = GetTime() + (self:Mythic() and 165 or self:LFR() and 240 or 180)
 	self:CDBar(245911, self:Mythic() and 165 or 180, CL.count:format(self:SpellName(245911), wave)) -- Wrought in Flame (x)
 end
 
 function mod:CorruptAegisRemoved()
 	stage = stage + 1
+	intermission = false
 	comboTime = GetTime() + 37.5
 	self:Message("stages", "Neutral", "Long", CL.stage:format(stage), false)
 
