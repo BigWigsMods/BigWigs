@@ -813,6 +813,7 @@ do
 	function mod:TreeDeath()
 		if scheduled then
 			self:CancelTimer(scheduled)
+			scheduled = nil
 		end
 	end
 end
