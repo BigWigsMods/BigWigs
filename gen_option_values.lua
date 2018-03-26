@@ -305,11 +305,12 @@ local function parseLua(file)
 			else
 				callback = event
 			end
-			spells = strsplit(spells)
-			for i = 1, #spells do
-				spells[i] = tonumber(spells[i])
+			if not options[callback] then
+				options[callback] = {}
 			end
-			options[callback] = spells
+			for _, v in next, strsplit(spells) do
+				table.insert(options[callback], tonumber(v))
+			end
 		end
 
 		--- Set spellId replacement values.
