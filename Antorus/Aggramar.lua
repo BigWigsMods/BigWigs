@@ -248,7 +248,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:BlazingEruption(args) -- Add Death/Raid Explosion
-	if self:Mythic() and ((stage == 2 and intermission == true) or stage == 3) then -- Count adds in intermission 2+ for mythic
+	if self:Mythic() and ((stage == 2 and intermission) or stage == 3) then -- Count adds in intermission 2+ for mythic
 		if mobCollector[args.sourceGUID] then -- Remove the add from the tables if seen before
 			waveCollector[mobCollector[args.sourceGUID]][args.sourceGUID] = nil
 		end
@@ -517,7 +517,7 @@ function mod:CorruptAegis()
 	wave = 1
 	waveCollector[wave] = {}
 
-	if self:GetOption("custom_off_ember_marker") or ((self:GetOption("track_ember") or self:GetOption(245911)) and (self:Mythic() and stage == 2 and intermission == true)) then -- Checking for 245911 (Wrought in Flame) as we need to track adds to know the timer
+	if self:GetOption("custom_off_ember_marker") or ((self:GetOption("track_ember") or self:GetOption(245911)) and (self:Mythic() and stage == 2 and intermission)) then -- Checking for 245911 (Wrought in Flame) as we need to track adds to know the timer
 		self:RegisterTargetEvents("EmberAddScanner")
 	end
 
