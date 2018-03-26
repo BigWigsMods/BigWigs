@@ -776,15 +776,6 @@ end
 
 do
 	local prev, lastAnnouncedStacks, stacks, scheduled = 0, 0, nil
-	function mod:WitheringRoots(args)
-		if self:GetOption(args.spellId) ~= 0 and (self:CheckOption(args.spellId, "HEALER") == false or self:Healer()) then -- follow the same format as WitheringRootsStacks for healers
-			prev = GetTime()
-			lastAnnouncedStacks = 1
-			self:Message(args.spellId, "Attention", "Alert", L.stacks:format(1, args.spellName))
-		else -- for others: just warn that the tree is now withering
-			self:Message("stages", "Positive", "Long", args.spellId)
-		end
-	end
 
 	-- helper function with access to a local variable to avoid
 	-- passing by value and rescheduling the timer
@@ -793,6 +784,15 @@ do
 		lastAnnouncedStacks = stacks
 		prev = GetTime()
 		scheduled = nil
+	end
+
+	function mod:WitheringRoots(args)
+		if self:GetOption(args.spellId) ~= 0 and (self:CheckOption(args.spellId, "HEALER") == false or self:Healer()) then -- follow the same format as WitheringRootsStacks for healers
+			stacks = 1
+			announce(self, args.spellId, args.spellName)
+		else -- for others: just warn that the tree is now withering
+			self:Message("stages", "Positive", "Long", args.spellId)
+		end
 	end
 
 	function mod:WitheringRootsStacks(args)
