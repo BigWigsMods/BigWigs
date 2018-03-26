@@ -145,18 +145,12 @@ local function unitTargetChanged(event, target)
 end
 
 local function zoneChanged()
-	local id
-	if not IsInInstance() then
+	local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
+	if instanceType == "none" then
 		local mapId = GetPlayerMapAreaID("player")
 		if mapId then
 			id = -mapId
-		else
-			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
-			id = instanceId
 		end
-	else
-		local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
-		id = instanceId
 	end
 	if enablezones[id] then
 		if not monitoring then
