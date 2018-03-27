@@ -13,6 +13,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local SendAddonMessage = BigWigsLoader.SendAddonMessage
 local isLogging = false
+local PlaySoundFile = PlaySoundFile
 local media = LibStub("LibSharedMedia-3.0")
 
 -------------------------------------------------------------------------------
@@ -23,9 +24,22 @@ plugin.defaultDB = {
 	countType = "emphasized",
 	combatLog = false,
 	engageSound = "None",
+	startPullSound = "BigWigs: Long",
+	endPullSound = "None",
 }
 
 do
+	local function soundGet(info)
+		for i, v in next, media:List("sound") do
+			if v == plugin.db.profile[info[#info]] then
+				return i
+			end
+		end
+	end
+	local function soundSet(info, value)
+		plugin.db.profile[info[#info]] = media:List("sound")[value]
+	end
+
 	plugin.pluginOptions = {
 		name = "Pull",
 		type = "group",
@@ -48,12 +62,15 @@ do
 				order = 1.1,
 				width = "full",
 			},
-			combatLog = {
-				type = "toggle",
-				name = L.combatLog,
-				desc = L.combatLogDesc,
+			engageSound = {
+				type = "select",
+				name = L.engageSoundTitle,
 				order = 2,
-				width = "full",
+				get = soundGet,
+				set = soundSet,
+				values = media:List("sound"),
+				width = "double",
+				itemControl = "DDI-Sound",
 			},
 			spacer2 = {
 				type = "description",
@@ -61,23 +78,38 @@ do
 				order = 2.1,
 				width = "full",
 			},
-			engageSound = {
+			startPullSound = {
 				type = "select",
-				name = L.pullSoundTitle,
+				name = L.pullStartedSoundTitle,
 				order = 3,
-				get = function()
-					for i, v in next, media:List(media.MediaType.SOUND) do
-						if v == plugin.db.profile.engageSound then
-							return i
-						end
-					end
-				end,
-				set = function(_, value)
-					plugin.db.profile.engageSound = media:List(media.MediaType.SOUND)[value]
-				end,
-				values = media:List(media.MediaType.SOUND),
+				get = soundGet,
+				set = soundSet,
+				values = media:List("sound"),
 				width = "double",
 				itemControl = "DDI-Sound",
+			},
+			endPullSound = {
+				type = "select",
+				name = L.pullFinishedSoundTitle,
+				order = 4,
+				get = soundGet,
+				set = soundSet,
+				values = media:List("sound"),
+				width = "double",
+				itemControl = "DDI-Sound",
+			},
+			spacer3 = {
+				type = "description",
+				name = "\n",
+				order = 4.1,
+				width = "full",
+			},
+			combatLog = {
+				type = "toggle",
+				name = L.combatLog,
+				desc = L.combatLogDesc,
+				order = 5,
+				width = "full",
 			},
 		},
 	}
@@ -110,6 +142,13 @@ do
 			timer = nil
 			if self.db.profile.countType == "emphasized" then
 				self:SendMessage("BigWigs_EmphasizedCountdownMessage", "")
+			end
+			local soundName = self.db.profile.endPullSound
+			if soundName ~= "None" then
+				local sound = media:Fetch("sound", soundName, true)
+				if sound then
+					PlaySoundFile(sound, "Master")
+				end
 			end
 		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
 			self:CancelTimer(timer)
@@ -162,9 +201,15 @@ do
 			end
 
 			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
-			self:SendMessage("BigWigs_Sound", self, nil, "Long")
 			self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
 			self:SendMessage("BigWigs_StartPull", self, seconds, nick, isDBM)
+			local soundName = self.db.profile.startPullSound
+			if soundName ~= "None" then
+				local sound = media:Fetch("sound", soundName, true)
+				if sound then
+					PlaySoundFile(sound, "Master")
+				end
+			end
 		end
 	end
 end
@@ -190,9 +235,12 @@ end
 
 function plugin:BigWigs_OnBossEngage(_, module)
 	if module and module.journalId then
-		local name = self.db.profile.engageSound
-		if name ~= "None" then
-			PlaySoundFile(media:Fetch(media.MediaType.SOUND, name), "Master")
+		local soundName = self.db.profile.engageSound
+		if soundName ~= "None" then
+			local sound = media:Fetch("sound", soundName, true)
+			if sound then
+				PlaySoundFile(sound, "Master")
+			end
 		end
 	end
 end
