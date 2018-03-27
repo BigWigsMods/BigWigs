@@ -251,14 +251,6 @@ L.secondary = "Secondary"
 L.secondaryDesc = "The second raid target icon that a encounter script should use."
 
 -----------------------------------------------------------------------
--- Respawn.lua
---
-
-L.respawn = "Respawn"
-L.showRespawnBar = "Show respawn bar"
-L.showRespawnBarDesc = "Show a bar after you wipe on a boss displaying the time until the boss respawns."
-
------------------------------------------------------------------------
 -- Sound.lua
 --
 
@@ -317,3 +309,11 @@ L.victoryMessageBigWigsDesc = "The BigWigs message is a simple \"boss has been d
 L.victoryMessageBlizzard = "Show the Blizzard message"
 L.victoryMessageBlizzardDesc = "The Blizzard message is a very large \"boss has been defeated\" animation in the middle of your screen."
 L.defeated = "%s has been defeated"
+
+-----------------------------------------------------------------------
+-- Wipe.lua
+--
+
+L.respawn = "Respawn"
+L.showRespawnBar = "Show respawn bar"
+L.showRespawnBarDesc = "Show a bar after you wipe on a boss displaying the time until the boss respawns."

@@ -252,14 +252,6 @@ L.secondary = "두번째"
 L.secondaryDesc = "우두머리 전투 스크립트가 사용할 두번째 공격대 대상 아이콘입니다."
 
 -----------------------------------------------------------------------
--- Respawn.lua
---
-
-L.respawn = "재생성"
-L.showRespawnBar = "재생성 바 표시"
-L.showRespawnBarDesc = "우두머리에서 전멸 후에 우두머리 재생성까지 남은 시간을 보여주는 바를 표시합니다."
-
------------------------------------------------------------------------
 -- Sound.lua
 --
 
@@ -318,3 +310,11 @@ L.victoryMessageBigWigsDesc = "BigWigs 메시지는 단순한 \"우두머리를 
 L.victoryMessageBlizzard = "블리자드 메시지 표시"
 L.victoryMessageBlizzardDesc = "Blizzard 메시지는 화면 중앙의 아주 큰 \"우두머리 처치\" 애니메이션입니다."
 L.defeated = "%s|1을;를; 처치했습니다"
+
+-----------------------------------------------------------------------
+-- Wipe.lua
+--
+
+L.respawn = "재생성"
+L.showRespawnBar = "재생성 바 표시"
+L.showRespawnBarDesc = "우두머리에서 전멸 후에 우두머리 재생성까지 남은 시간을 보여주는 바를 표시합니다."

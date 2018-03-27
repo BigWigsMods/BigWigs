@@ -254,14 +254,6 @@ L.secondary = "Secundário"
 L.secondaryDesc = "O segundo ícone de raide que um script usará."
 
 -----------------------------------------------------------------------
--- Respawn.lua
---
-
-L.respawn = "Respawn"
-L.showRespawnBar = "Mostrar barra de respawn"
-L.showRespawnBarDesc = "Mostra uma barra depois de você ser derrotado num chefe informando o tempo até que o chefe renasça."
-
------------------------------------------------------------------------
 -- Sound.lua
 --
 
@@ -320,3 +312,11 @@ L.victoryMessageBigWigsDesc = "A mensagem do BigWigs é uma simples mensagem de 
 L.victoryMessageBlizzard = "Mostra a mensagem da Blizzard"
 L.victoryMessageBlizzardDesc = "A mensagem da Blizzard é uma animação com \"chefe foi derrotado\" bem grande no meio da tela."
 L.defeated = "%s foi derrotado"
+
+-----------------------------------------------------------------------
+-- Wipe.lua
+--
+
+L.respawn = "Respawn"
+L.showRespawnBar = "Mostrar barra de respawn"
+L.showRespawnBarDesc = "Mostra uma barra depois de você ser derrotado num chefe informando o tempo até que o chefe renasça."
