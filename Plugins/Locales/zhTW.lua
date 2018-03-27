@@ -148,7 +148,6 @@ L.proximity_name = "玩家雷達"
 L.proximityTitle = "%d碼 / %d 玩家"
 L.pull = "拉怪倒數"
 L.pullIn = "%d秒後拉怪"
-L.pulling = "拉怪中!"
 L.pullStarted = "拉怪倒數計時開始於 %s 使用者 %s."
 L.pullStopped = "%s取消了拉怪計時器。"
 L.raidIconsDesc = [=[團隊中有些首領模塊使用團隊標記來為某些中了特定技能的隊員打上標記。例如類似“炸彈”類或心靈控制的技能。如果你關閉此功能，你將不會給隊員打標記。

@@ -94,8 +94,9 @@ do
 		if timeLeft == 0 then
 			self:CancelTimer(timer)
 			timer = nil
-			self:SendMessage("BigWigs_Message", self, nil, L.pulling, "Attention", 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
-			self:SendMessage("BigWigs_Sound", self, nil, "Alarm")
+			if self.db.profile.countType == "emphasized" then
+				self:SendMessage("BigWigs_EmphasizedCountdownMessage", "")
+			end
 		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
 			self:CancelTimer(timer)
 			timeLeft = 0
@@ -103,10 +104,10 @@ do
 			self:SendMessage("BigWigs_StopBar", self, L.pull)
 			self:SendMessage("BigWigs_StopPull", self, COMBAT)
 		elseif timeLeft < 11 then
-			if self.db.profile.countType == "normal" then
-				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
-			else
+			if self.db.profile.countType == "emphasized" then
 				self:SendMessage("BigWigs_EmphasizedCountdownMessage", timeLeft)
+			else
+				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
 			end
 			local module = BigWigs:GetPlugin("Sounds", true)
 			if timeLeft < 6 and module and module.db.profile.sound then

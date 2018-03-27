@@ -233,7 +233,6 @@ L.combatLog = "Registro de combate automático"
 L.combatLogDesc = "Inicia automaticamente o registro de combate quando um contador de pull é iniciado e termina ele quando o encontro termina."
 
 L.pull = "Pull"
-L.pulling = "Puxando!"
 L.pullStarted = "Pull iniciado por %s pelo usuário %s."
 L.pullStopped = "Pull cancelado por %s."
 L.pullIn = "Pull em %d seg"

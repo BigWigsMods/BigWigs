@@ -148,7 +148,6 @@ L.proximity_name = "Nähe"
 L.proximityTitle = "%d m / %d Spieler"
 L.pull = "Pull"
 L.pullIn = "Pull in %d Sek."
-L.pulling = "Pull!"
 L.pullStarted = "Pull-Timer wurde von %s-Nutzer %s gestartet."
 L.pullStopped = "Pull-Timer von %s abgebrochen."
 L.raidIconsDesc = [=[Einige Bossmodule benutzen Schlachtzugssymbole, um Spieler zu markieren, die von speziellem Interesse für deine Gruppe sind. Beispiele wären Bombeneffekte und Gedankenkontrolle. Wenn du diese Option ausschaltest, markierst du niemanden mehr.

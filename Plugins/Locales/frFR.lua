@@ -147,7 +147,6 @@ L.proximity_name = "Proximité"
 L.proximityTitle = "%d m / %d |4joueur:joueurs;"
 L.pull = "Pull"
 L.pullIn = "Pull dans %d sec."
-L.pulling = "Pull !"
 L.pullStarted = "Délai de pull lancé par l'utilisateur de %s %s."
 L.pullStopped = "Délai de pull annulé par %s."
 L.raidIconsDesc = [=[Certains scripts de rencontre utilisent des icônes pour marquer les joueurs affectés par des techniques précises. Par exemple, les effets de type "bombe" et les contrôles mentaux. Si vous décochez ceci, vous ne marquerez personne.

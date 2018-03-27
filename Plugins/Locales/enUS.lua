@@ -230,7 +230,6 @@ L.combatLog = "Automatic Combat Logging"
 L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 
 L.pull = "Pull"
-L.pulling = "Pulling!"
 L.pullStarted = "Pull timer started by %s user %s."
 L.pullStopped = "Pull timer cancelled by %s."
 L.pullIn = "Pull in %d sec"

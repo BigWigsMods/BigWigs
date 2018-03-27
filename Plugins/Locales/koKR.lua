@@ -231,7 +231,6 @@ L.combatLog = "자동 전투 기록"
 L.combatLogDesc = "전투 예정 타이머 시작부터 우두머리 전투 종료로 타이머가 끝날 때까지의 전투 기록을 자동으로 켭니다."
 
 L.pull = "전투 예정"
-L.pulling = "전투 시작!"
 L.pullStarted = "%s 사용자 %s|1이;가; 전투 예정 타이머를 시작했습니다."
 L.pullStopped = "%s|1이;가; 전투 예정 타이머를 취소했습니다."
 L.pullIn = "%d초 후 전투 시작"
