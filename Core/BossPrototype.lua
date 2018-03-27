@@ -1950,12 +1950,28 @@ do
 		["alarm"] = "Alarm",
 		["warning"] = "Warning",
 	}
-	function boss:PlaySound(key, sound, voice)
-		if not checkFlag(self, key, C.MESSAGE) then return end
-		if hasVoice and checkFlag(self, key, C.VOICE) then
-			self:SendMessage("BigWigs_Voice", self, key, tmp[sound] or sound)
-		else
-			self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+	function boss:PlaySound(key, sound, voice, player)
+		if player then
+			local meOnly = checkFlag(self, key, C.ME_ONLY)
+			if type(player) == "table" then
+				if meOnly then
+					if player[#player] == cpName then
+						self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+					end
+				elseif #player == 1 then
+					self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+				end
+			else
+				if not meOnly or (meOnly and player == pName) then
+					self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+				end
+			end
+		elseif checkFlag(self, key, C.MESSAGE) then
+			if hasVoice and checkFlag(self, key, C.VOICE) then
+				self:SendMessage("BigWigs_Voice", self, key, tmp[sound] or sound)
+			else
+				self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+			end
 		end
 	end
 end
