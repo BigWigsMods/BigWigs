@@ -314,6 +314,8 @@ L.defeated = "%s has been defeated"
 -- Wipe.lua
 --
 
+L.wipe = "Wipe"
+L.wipeSoundTitle = "Play a sound when you wipe"
 L.respawn = "Respawn"
 L.showRespawnBar = "Show respawn bar"
 L.showRespawnBarDesc = "Show a bar after you wipe on a boss displaying the time until the boss respawns."

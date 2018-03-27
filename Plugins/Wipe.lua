@@ -2,7 +2,7 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Respawn")
+local plugin = BigWigs:NewPlugin("Wipe")
 if not plugin then return end
 
 -------------------------------------------------------------------------------
@@ -10,17 +10,19 @@ if not plugin then return end
 --
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
+local media = LibStub("LibSharedMedia-3.0")
 
 -------------------------------------------------------------------------------
 -- Options
 --
 
 plugin.defaultDB = {
+	wipeSound = "None",
 	respawnBar = true,
 }
 
 plugin.pluginOptions = {
-	name = L.respawn,
+	name = L.wipe,
 	type = "group",
 	childGroups = "tab",
 	get = function(i) return plugin.db.profile[i[#i]] end,
@@ -29,11 +31,35 @@ plugin.pluginOptions = {
 		plugin.db.profile[n] = value
 	end,
 	args = {
+		wipeSound = {
+			type = "select",
+			name = L.wipeSoundTitle,
+			order = 1,
+			get = function(info)
+				for i, v in next, media:List(media.MediaType.SOUND) do
+					if v == plugin.db.profile[info[#info]] then
+						return i
+					end
+				end
+			end,
+			set = function(info, value)
+				plugin.db.profile[info[#info]] = media:List(media.MediaType.SOUND)[value]
+			end,
+			values = media:List(media.MediaType.SOUND),
+			width = "double",
+			itemControl = "DDI-Sound",
+		},
+		spacer = {
+			type = "description",
+			name = "\n",
+			order = 1.1,
+			width = "full",
+		},
 		respawnBar = {
 			type = "toggle",
 			name = L.showRespawnBar,
 			desc = L.showRespawnBarDesc,
-			order = 1,
+			order = 2,
 			width = "full",
 		},
 	},
@@ -52,8 +78,13 @@ end
 --
 
 function plugin:BigWigs_EncounterEnd(_, module, _, _, _, _, status)
-	if status == 0 and module.respawnTime and self.db.profile.respawnBar then
-		self:SendMessage("BigWigs_StartBar", self, nil, L.respawn, module.respawnTime, 236372) -- 236372 = "Interface\\Icons\\achievement_bg_returnxflags_def_wsg"
+	if status == 0 and module and module.journalId then
+		if module.respawnTime and self.db.profile.respawnBar then
+			self:SendMessage("BigWigs_StartBar", self, nil, L.respawn, module.respawnTime, 236372) -- 236372 = "Interface\\Icons\\achievement_bg_returnxflags_def_wsg"
+		end
+		local name = self.db.profile.wipeSound
+		if name ~= "None" then
+			PlaySoundFile(media:Fetch(media.MediaType.SOUND, name), "Master")
+		end
 	end
 end
-

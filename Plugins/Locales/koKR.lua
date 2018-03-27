@@ -315,6 +315,8 @@ L.defeated = "%s|1을;를; 처치했습니다"
 -- Wipe.lua
 --
 
+--L.wipe = "Wipe"
+--L.wipeSoundTitle = "Play a sound when you wipe"
 L.respawn = "재생성"
 L.showRespawnBar = "재생성 바 표시"
 L.showRespawnBarDesc = "우두머리에서 전멸 후에 우두머리 재생성까지 남은 시간을 보여주는 바를 표시합니다."

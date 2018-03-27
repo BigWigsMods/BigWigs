@@ -317,6 +317,8 @@ L.defeated = "%s foi derrotado"
 -- Wipe.lua
 --
 
+--L.wipe = "Wipe"
+--L.wipeSoundTitle = "Play a sound when you wipe"
 L.respawn = "Respawn"
 L.showRespawnBar = "Mostrar barra de respawn"
 L.showRespawnBarDesc = "Mostra uma barra depois de você ser derrotado num chefe informando o tempo até que o chefe renasça."
