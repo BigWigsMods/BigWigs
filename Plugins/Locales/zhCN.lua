@@ -148,8 +148,10 @@ L.proximity_name = "近距离"
 L.proximityTitle = "%d码/%d玩家"
 L.pull = "拉怪"
 L.pullIn = "%d秒后拉怪"
+--L.pullSoundTitle = "Play a sound when the boss encounter has started"
 L.pullStarted = "拉怪由%s玩家%s发起的计时器。"
 L.pullStopped = "%s取消了拉怪计时器。"
+--L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.raidIconsDesc = [=[团队中有些首领模块使用团队标记来为某些中了特定技能的队员打上标记。例如类似“炸弹”类或心灵控制的技能。如果你关闭此功能，你将不会给队员打标记。
 
 |cffff4411只有团队领袖或被提升为助理时才可以这么做！|r]=]

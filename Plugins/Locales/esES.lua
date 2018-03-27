@@ -148,8 +148,10 @@ L.proximity_name = "Proximidad"
 L.proximityTitle = "%d m / %d |4jugador:jugadores;"
 L.pull = "Pull"
 L.pullIn = "Pull en %d seg"
+--L.pullSoundTitle = "Play a sound when the boss encounter has started"
 L.pullStarted = "Cuenta atrás para el Pull lanzada por el jugador %s %s."
 L.pullStopped = "Pull cancelado por %s."
+--L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.raidIconsDesc = [=[Algunos encuentros usan los iconos de raid para marcar jugadores de interés especial para tu grupo. Por ejemplo los efectos tipo 'bomba' y control mental. Si la cambias a desactivado, no marcarás a nadie.
 
 |cffff4411¡Solo aplica las marcas si eres ayudante o lider!|r]=]

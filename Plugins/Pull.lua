@@ -13,6 +13,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local SendAddonMessage = BigWigsLoader.SendAddonMessage
 local isLogging = false
+local media = LibStub("LibSharedMedia-3.0")
 
 -------------------------------------------------------------------------------
 -- Options
@@ -21,7 +22,7 @@ local isLogging = false
 plugin.defaultDB = {
 	countType = "emphasized",
 	combatLog = false,
-	--gearCheck = true,
+	engageSound = "None",
 }
 
 do
@@ -41,7 +42,7 @@ do
 					emphasized = L.emphasized,
 				},
 			},
-			desc1 = {
+			spacer1 = {
 				type = "description",
 				name = "\n",
 				order = 1.1,
@@ -54,19 +55,30 @@ do
 				order = 2,
 				width = "full",
 			},
-			--desc2 = {
-			--	type = "description",
-			--	name = "",
-			--	order = 2.1,
-			--	width = "full",
-			--},
-			--gearCheck = {
-			--	type = "toggle",
-			--	name = "Bad Gear Check",
-			--	desc = "Scan your equipped gear for potentially bad items when starting a pull timer.",
-			--	order = 3,
-			--	width = "full",
-			--},
+			spacer2 = {
+				type = "description",
+				name = "\n",
+				order = 2.1,
+				width = "full",
+			},
+			engageSound = {
+				type = "select",
+				name = L.pullSoundTitle,
+				order = 3,
+				get = function()
+					for i, v in next, media:List(media.MediaType.SOUND) do
+						if v == plugin.db.profile.engageSound then
+							return i
+						end
+					end
+				end,
+				set = function(_, value)
+					plugin.db.profile.engageSound = media:List(media.MediaType.SOUND)[value]
+				end,
+				values = media:List(media.MediaType.SOUND),
+				width = "double",
+				itemControl = "DDI-Sound",
+			},
 		},
 	}
 end
@@ -81,6 +93,8 @@ function plugin:OnPluginEnable()
 
 	self:RegisterMessage("BigWigs_OnBossWin")
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
+
+	self:RegisterMessage("BigWigs_OnBossEngage")
 end
 
 -------------------------------------------------------------------------------
@@ -100,7 +114,7 @@ do
 		elseif timeLeft > 2 and IsEncounterInProgress() then -- Cancel the pull timer if we ninja pulled
 			self:CancelTimer(timer)
 			timeLeft = 0
-			BigWigs:Print(L.pullStopped:format(COMBAT))
+			BigWigs:Print(L.pullStoppedCombat)
 			self:SendMessage("BigWigs_StopBar", self, L.pull)
 			self:SendMessage("BigWigs_StopPull", self, COMBAT)
 		elseif timeLeft < 11 then
@@ -147,23 +161,6 @@ do
 				LoggingCombat(isLogging)
 			end
 
-			--if self.db.profile.gearCheck then
-			--	local _, zoneType = GetInstanceInfo()
-			--	if zoneType == "raid" and IsInRaid() then
-			--		for i = 1, 18 do
-			--			-- 0 Poor/Grey, 1 Common/White, 2 Uncommon/Green, 3 Rare/Blue, 4 Epic/Purple, 5 Legendary, 6 Artifact, 7 Heirloom
-			--			local quality = GetInventoryItemQuality("player", i)
-			--			local itemId = GetInventoryItemID("player", i)
-			--			local _, _, _, iLevel = GetItemInfo(itemId or 0) -- XXX this doesn't compensate for items that drop with multiple item levels
-			--			if quality and (quality < 2 or iLevel < 300) then
-			--				local msg = ("Bad Item Equipped: %s"):format(GetInventoryItemLink("player", i))
-			--				BigWigs:Print(msg)
-			--				self:SendMessage("BigWigs_Message", self, nil, msg, "Personal")
-			--			end
-			--		end
-			--	end
-			--end
-
 			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
 			self:SendMessage("BigWigs_Sound", self, nil, "Long")
 			self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
@@ -188,6 +185,15 @@ function plugin:BigWigs_OnBossWin()
 	if isLogging then
 		isLogging = false
 		self:ScheduleTimer(LoggingCombat, 2, isLogging) -- Delay to prevent any death events being cut out the log
+	end
+end
+
+function plugin:BigWigs_OnBossEngage(_, module)
+	if module and module.journalId then
+		local name = self.db.profile.engageSound
+		if name ~= "None" then
+			PlaySoundFile(media:Fetch(media.MediaType.SOUND, name), "Master")
+		end
 	end
 end
 

@@ -148,8 +148,10 @@ L.proximity_name = "Радар близости"
 L.proximityTitle = "%d м / %d |4игрок:игрока:игроков;"
 L.pull = "Атака"
 L.pullIn = "Атакуем через %d сек"
+--L.pullSoundTitle = "Play a sound when the boss encounter has started"
 L.pullStarted = "Таймер атаки начат %s игроком %s."
 L.pullStopped = "%s отменил таймер атаки."
+--L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.raidIconsDesc = [=[Некоторые скрипты событий используют рейдовые метки, чтобы помечать игроков, которые оказывают особое влияние на вашу группу. Например, такой тип эффектов как 'бомба' и контроль разума.
 
 |cffff4411Применимо, если вы Лидер рейда или помощник!|r]=]

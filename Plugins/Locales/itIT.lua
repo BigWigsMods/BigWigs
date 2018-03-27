@@ -148,8 +148,10 @@ L.proximity_name = "Prossimità"
 L.proximityTitle = "%d m / %d |4giocatore:giocatori;"
 L.pull = "Ingaggio"
 L.pullIn = "Ingaggio tra %d sec"
+--L.pullSoundTitle = "Play a sound when the boss encounter has started"
 L.pullStarted = "Timer Ingaggio iniziato da utente %s - %s."
 L.pullStopped = "Barra d'ingaggio cancellata da %s."
+--L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.raidIconsDesc = [=[Alcuni combattimenti richiedono di evidenziare alcuni giocatori di particolare interesse nell'incontro con dei simboli. Per esempio effetti di tipo 'bomba' o 'controllo della mente'. Se disattivi questa opzione, non metterai nessun simbolo.
 
 |cffff4411Si applica solo quando sei il capogruppo della spedizione o sei stato stato promosso!|r]=]
