@@ -32,9 +32,11 @@ L.autoReplyNormal = "I'm busy in combat with '%s'."
 L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
 L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
 
-L.autoReplyLeftCombat = "I am no longer in combat with a boss encounter."
-L.autoReplyLeftCombatWin = "I won against '%s'."
-L.autoReplyLeftCombatWipe = "I lost against '%s'."
+L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
+L.autoReplyLeftCombatNormalWin = "I won against '%s'."
+L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
+L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
+L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
 
 -----------------------------------------------------------------------
 -- Bars.lua

@@ -28,6 +28,8 @@ local curDiff = 0
 local curModule = nil
 local throttle, throttleBN, friendlies = {}, {}, {}
 local hogger = EJ_GetEncounterInfo(464)
+local healthPools, healthPoolNames = {}, {}
+local timer = nil
 
 -------------------------------------------------------------------------------
 -- Options
@@ -54,8 +56,9 @@ do
 		order = 2,
 		values = {
 			L.none,
-			L.autoReplyLeftCombat,
-			L.autoReplyLeftCombatWin:format(hogger),
+			L.autoReplyLeftCombatBasic,
+			L.autoReplyLeftCombatNormalWin:format(hogger),
+			"|cFF00FF00".. L.autoReplyLeftCombatAdvancedWin:format(hogger, 1, 20) .."|r   |cFFFF0000".. L.autoReplyLeftCombatAdvancedWipe:format(hogger, L.healthFormat:format(hogger, 0.1)) .."|r",
 		},
 		width = "full",
 		style = "radio",
@@ -120,7 +123,7 @@ end
 --
 
 function plugin:BigWigs_OnBossEngage(event, module, difficulty)
-	if not self.db.profile.disabled and module and module.journalId then
+	if not self.db.profile.disabled and module and module.journalId and not module.worldBoss then
 		curDiff = difficulty
 		curModule = module
 		throttle, throttleBN, friendlies = {}, {}, {}
@@ -129,47 +132,117 @@ function plugin:BigWigs_OnBossEngage(event, module, difficulty)
 	end
 end
 
-function plugin:BigWigs_OnBossWin(event, module)
-	if not self.db.profile.disabled and module and module.journalId then
-		curDiff = 0
-		self:UnregisterEvent("CHAT_MSG_WHISPER")
-		self:UnregisterEvent("CHAT_MSG_BN_WHISPER")
-
-		local exitCombat, exitCombatOther = self.db.profile.exitCombat, self.db.profile.exitCombatOther
-		local win = event == "BigWigs_OnBossWin"
-		if exitCombat > 1 then
-			for k in next, throttleBN do
-				if exitCombat == 3 then
-					BNSendWhisper(k, "[BigWigs] ".. (win and L.autoReplyLeftCombatWin or L.autoReplyLeftCombatWipe):format(curModule.displayName))
-				else
-					BNSendWhisper(k, "[BigWigs] ".. L.autoReplyLeftCombat)
-				end
-			end
-			for k in next, friendlies do
-				if exitCombat == 3 then
-					SendChatMessage("[BigWigs] ".. (win and L.autoReplyLeftCombatWin or L.autoReplyLeftCombatWipe):format(curModule.displayName), "WHISPER", nil, k)
-				else
-					SendChatMessage("[BigWigs] ".. L.autoReplyLeftCombat, "WHISPER", nil, k)
-				end
-			end
-		elseif exitCombatOther > 1 then
-			for k in next, throttle do
-				if not friendlies[k] then
-					if exitCombatOther == 3 then
-						SendChatMessage("[BigWigs] ".. (win and L.autoReplyLeftCombatWin or L.autoReplyLeftCombatWipe):format(curModule.displayName), "WHISPER", nil, k)
-					else
-						SendChatMessage("[BigWigs] ".. L.autoReplyLeftCombat, "WHISPER", nil, k)
+do
+	local function CreateAdvancedFinalReply(win)
+		if win then
+			local _, _, _, instanceId = UnitPosition("player")
+			local playersTotal, playersAlive = 0, 0
+			for unit in curModule:IterateGroup() do
+				local _, _, _, tarInstanceId = UnitPosition(unit)
+				if tarInstanceId == instanceId then
+					playersTotal = playersTotal + 1
+					if not UnitIsDeadOrGhost(unit) then
+						playersAlive = playersAlive + 1
 					end
 				end
 			end
+			return L.autoReplyLeftCombatAdvancedWin:format(curModule.displayName, playersAlive, playersTotal)
+		else
+			local totalHp = ""
+			for i = 1, 5 do
+				local hp = healthPools[i]
+				local name = healthPoolNames[i]
+				if hp then
+					if totalHp == "" then
+						totalHp = L.healthFormat:format(name, hp*100)
+					else
+						totalHp = totalHp .. ", " .. L.healthFormat:format(name, hp*100)
+					end
+				end
+			end
+			return L.autoReplyLeftCombatAdvancedWipe:format(curModule.displayName, totalHp)
 		end
+	end
 
-		curModule = nil
+	function plugin:BigWigs_OnBossWin(event, module)
+		if not self.db.profile.disabled and module and module.journalId and not module.worldBoss then
+			curDiff = 0
+			self:UnregisterEvent("CHAT_MSG_WHISPER")
+			self:UnregisterEvent("CHAT_MSG_BN_WHISPER")
+			if timer then
+				self:CancelTimer(timer)
+				timer = nil
+			end
+
+			local exitCombat, exitCombatOther = self.db.profile.exitCombat, self.db.profile.exitCombatOther
+			local win = event == "BigWigs_OnBossWin"
+			if exitCombat > 1 then
+				for k in next, throttleBN do
+					local msg
+					if exitCombat == 3 then
+						msg = (win and L.autoReplyLeftCombatNormalWin or L.autoReplyLeftCombatNormalWipe):format(curModule.displayName)
+					elseif exitCombat == 4 then
+						msg = CreateAdvancedFinalReply(win)
+					else
+						msg = L.autoReplyLeftCombatBasic
+					end
+					BNSendWhisper(k, "[BigWigs] ".. msg)
+				end
+				for k in next, friendlies do
+					local msg
+					if exitCombat == 3 then
+						msg = (win and L.autoReplyLeftCombatNormalWin or L.autoReplyLeftCombatNormalWipe):format(curModule.displayName)
+					elseif exitCombat == 4 then
+						msg = CreateAdvancedFinalReply(win)
+					else
+						msg = L.autoReplyLeftCombatBasic
+					end
+					SendChatMessage("[BigWigs] ".. msg, "WHISPER", nil, k)
+				end
+			end
+			if exitCombatOther > 1 then
+				for k in next, throttle do
+					if not friendlies[k] then
+						local msg
+						if exitCombatOther == 3 then
+							msg = (win and L.autoReplyLeftCombatNormalWin or L.autoReplyLeftCombatNormalWipe):format(curModule.displayName)
+						elseif exitCombatOther == 4 then
+							msg = CreateAdvancedFinalReply(win)
+						else
+							msg = L.autoReplyLeftCombatBasic
+						end
+						SendChatMessage("[BigWigs] ".. msg, "WHISPER", nil, k)
+					end
+				end
+			end
+
+			curModule = nil
+		end
 	end
 end
 
 do
 	local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
+
+	local UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress = UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress
+	local function StoreHealth()
+		if IsEncounterInProgress() then
+			for i = 1, 5 do
+				local unit = units[i]
+				local rawHealth = UnitHealth(unit)
+				if rawHealth > 0 then
+					local maxHealth = UnitHealthMax(unit)
+					local health = rawHealth / maxHealth
+					healthPools[i] = health
+					healthPoolNames[i] = UnitName(unit)
+				elseif healthPools[i] then
+					healthPools[i] = nil
+					healthPoolNames[i] = nil
+				end
+			end
+		end
+	end
+
 	local function CreateResponse(mode)
 		if mode == 2 then
 			return L.autoReplyNormal:format(curModule.displayName) -- In combat with encounterName
@@ -230,8 +303,14 @@ do
 				if characterName or IsGuildMember(guid) or IsCharacterFriend(guid) then
 					friendlies[sender] = true
 					msg = CreateResponse(self.db.profile.mode)
+					if not timer and self.db.profile.exitCombat == 4 then
+						timer = self:ScheduleRepeatingTimer(StoreHealth, 2)
+					end
 				else
 					msg = CreateResponse(self.db.profile.modeOther)
+					if not timer and self.db.profile.exitCombatOther == 4 then
+						timer = self:ScheduleRepeatingTimer(StoreHealth, 2)
+					end
 				end
 				SendChatMessage("[BigWigs] ".. msg, "WHISPER", nil, sender)
 			end
@@ -257,6 +336,9 @@ do
 				end
 				local msg = CreateResponse(self.db.profile.mode)
 				BNSendWhisper(bnSenderID, "[BigWigs] ".. msg)
+				if not timer and self.db.profile.exitCombat == 4 then
+					timer = self:ScheduleRepeatingTimer(StoreHealth, 2)
+				end
 			end
 		end
 	end
