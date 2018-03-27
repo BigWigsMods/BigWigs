@@ -723,6 +723,8 @@ do
 		BigWigs_DispelResist = "",
 		BigWigs_Voice_HeroesOfTheStorm = "BigWigs_Countdown_HeroesOfTheStorm",
 		BigWigs_Voice_Overwatch = "BigWigs_Countdown_Overwatch",
+		BigWigs_AutoReply = "BigWigs",
+		BigWigs_AutoReply2 = "BigWigs",
 	}
 	local delayedMessages = {}
 
