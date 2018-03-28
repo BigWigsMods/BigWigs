@@ -23,6 +23,8 @@ local valid_sounds = {
 local color_methods = {
 	Message = 2,
 	TargetMessage = 3,
+	TargetMessage2 = 3,
+	TargetsMessage = 3,
 	StackMessage = 4,
 	DelayedMessage = 3,
 }
@@ -368,7 +370,7 @@ local function parseLua(file)
 					key = unternary(args[1], "(-?%d+)") -- XXX doesn't allow for string keys
 					sound = unternary(args[sound_index], "\"(.-)\"", valid_sounds)
 					color = tablize(unternary(args[color_index], "\"(.-)\"", valid_colors))
-					if method == "TargetMessage" or method == "StackMessage" then
+					if method:sub(1,6) == "Target" or method == "StackMessage" then
 						color[#color+1] = "Personal" -- Replaces the color with Personal for on me
 					end
 				end
