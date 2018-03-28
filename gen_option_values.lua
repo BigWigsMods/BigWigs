@@ -116,9 +116,8 @@ end
 local function cmp(a, b)
 	if type(a) == "number" and type(b) == "number" then
 		return a < b
-	else
-		return string.lower(a) < string.lower(b)
 	end
+	return string.lower(a) < string.lower(b)
 end
 
 local function sortKeys(keys)
@@ -173,10 +172,10 @@ local function dump(module_dir)
 	if not next(modules) then return end
 
 	local path = module_dir .. "Options/"
-	assert(os.execute("mkdir -p \"" .. path .. "\"")) -- XXX Remove this
+	-- assert(os.execute("mkdir -p \"" .. path .. "\"")) -- XXX Remove this
 
-	dumpValues(path, "Sounds", module_sounds)
 	dumpValues(path, "Colors", module_colors)
+	dumpValues(path, "Sounds", module_sounds)
 
 	print(string.format("    Parsed %d modules.", #modules))
 end
@@ -376,8 +375,9 @@ local function parseLua(file)
 			end
 
 			-- Handle manually setting the key, color, and sound with a comment. Has to be on the
-			-- same line as the function call. All three values can be a comma seperated list.
-			-- e.g.: -- SetOption:1234,1235:Urgent:Info,Alert:
+			-- same line as the function call. All three values can also be a comma seperated list
+			-- or left empty.
+			-- e.g.: -- SetOption:1234,1235:Urgent:Info,Alert:  or  -- SetOption:1234:::
 			local set_key, set_color, set_sound = comment:match("SetOption:(.*):(.*):(.*):")
 			if set_key then
 				if set_key ~= "" then
