@@ -239,7 +239,7 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextIntermissionSoonWarning then
-		self:Message("stages", "Positive", nil, CL.soon:format(CL.intermission), false)
+		self:Message("stages", "green", nil, CL.soon:format(CL.intermission), false)
 		nextIntermissionSoonWarning = nextIntermissionSoonWarning - 40
 		if nextIntermissionSoonWarning < 40 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
@@ -263,7 +263,7 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 	end
 
 	if waveEmberCounter > 0 then
-		self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
+		self:Message("track_ember", "cyan", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
 		if self:GetOption("custom_off_ember_marker") then
 			for key,guid in pairs(emberAddMarks) do -- Remove icon from used list
 				if guid == args.sourceGUID then
@@ -272,7 +272,7 @@ function mod:BlazingEruption(args) -- Add Death/Raid Explosion
 			end
 		end
 	else
-		self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
+		self:Message("track_ember", "cyan", "Info", L.wave_cleared:format(currentEmberWave), false)
 		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
 		if not self:Mythic() or not waveTimeCollector[currentEmberWave+1] then -- No more waves
 			self:UnregisterTargetEvents()
@@ -288,7 +288,7 @@ end
 function mod:EmberDeath(args)
 	waveEmberCounter = waveEmberCounter - 1
 	if waveEmberCounter > 0 then
-		self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
+		self:Message("track_ember", "cyan", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
 		if self:GetOption("custom_off_ember_marker") then -- Remove icon from used list
 			for key,guid in pairs(emberAddMarks) do
 				if guid == args.sourceGUID then
@@ -297,7 +297,7 @@ function mod:EmberDeath(args)
 			end
 		end
 	else
-		self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
+		self:Message("track_ember", "cyan", "Info", L.wave_cleared:format(currentEmberWave), false)
 		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
 		self:UnregisterTargetEvents()
 		wipe(emberAddMarks)
@@ -363,12 +363,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			end
 		end
 	elseif spellId == 245983 then -- Flare
-		self:Message(spellId, "Important", "Warning")
+		self:Message(spellId, "red", "Warning")
 		if comboTime > GetTime() + 15.8 and not self:Mythic() then
 			self:Bar(spellId, 15.8)
 		end
 	elseif spellId == 246037 then -- Empowered Flare
-		self:Message(spellId, "Important", "Warning")
+		self:Message(spellId, "red", "Warning")
 		if self:Mythic() then -- Start tracking new ember wave (mythic)
 			wave = wave + 1
 			waveCollector[wave] = {}
@@ -391,7 +391,7 @@ end
 function mod:TaeshalachsReach(args)
 	local amount = args.amount or 1
 	if amount % 3 == 0 or amount > 7 then
-		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Alarm") -- Swap on 8+
+		self:StackMessage(args.spellId, args.destName, amount, "red", amount > 7 and "Alarm") -- Swap on 8+
 	end
 end
 
@@ -400,7 +400,7 @@ do
 
 	local function warn(self, spellId)
 		if not blazeOnMe then
-			self:Message(spellId, "Important")
+			self:Message(spellId, "red")
 		end
 		scheduled = nil
 	end
@@ -408,7 +408,7 @@ do
 	function mod:ScorchingBlaze(args)
 		if self:Me(args.destGUID) then
 			blazeOnMe = true
-			self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
+			self:TargetMessage(args.spellId, args.destName, "red", "Warning")
 			self:Say(args.spellId)
 		end
 		if not scheduled then
@@ -431,7 +431,7 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(244693, name, "Attention", "Alert", nil, nil, true)
+		self:TargetMessage(244693, name, "yellow", "Alert", nil, nil, true)
 		if self:Me(guid) then
 			self:Say(244693)
 		end
@@ -446,7 +446,7 @@ do
 end
 
 function mod:FoeBreaker(args)
-	self:Message(245458, "Attention", "Alert", CL.count:format(args.spellName, foeBreakerCount))
+	self:Message(245458, "yellow", "Alert", CL.count:format(args.spellName, foeBreakerCount))
 	foeBreakerCount = foeBreakerCount + 1
 	comboSpells[#comboSpells+1] = 245458
 	comboCastEnd = GetTime() + (self:Easy() and 3.5 or 2.75)
@@ -462,7 +462,7 @@ function mod:FoeBreakerSuccess()
 end
 
 function mod:FlameRend(args)
-	self:Message(args.spellId, "Important", "Alarm", CL.count:format(args.spellName, flameRendCount))
+	self:Message(args.spellId, "red", "Alarm", CL.count:format(args.spellName, flameRendCount))
 	flameRendCount = flameRendCount + 1
 	comboSpells[#comboSpells+1] = 245463
 	comboCastEnd = GetTime() + (self:Easy() and 3.5 or 2.75)
@@ -480,7 +480,7 @@ function mod:FlameRendSuccess()
 end
 
 function mod:SearingTempest(args)
-	self:Message(args.spellId, "Urgent", "Warning")
+	self:Message(args.spellId, "orange", "Warning")
 	self:CastBar(args.spellId, 6)
 	comboSpells[#comboSpells+1] = 245301
 	comboCastEnd = GetTime() + 6
@@ -497,7 +497,7 @@ function mod:CorruptAegis()
 	intermission = true
 	techniqueStarted = nil -- End current technique
 	self:CloseInfo(244688)
-	self:Message("stages", "Neutral", "Long", CL.intermission, false)
+	self:Message("stages", "cyan", "Long", CL.intermission, false)
 	self:StopBar(245994) -- Scorching Blaze
 	self:StopBar(244693) -- Wake of Flame
 	self:StopBar(244688) -- Taeshalach Technique
@@ -529,7 +529,7 @@ function mod:CorruptAegisRemoved()
 	stage = stage + 1
 	intermission = false
 	comboTime = GetTime() + 37.5
-	self:Message("stages", "Neutral", "Long", CL.stage:format(stage), false)
+	self:Message("stages", "cyan", "Long", CL.stage:format(stage), false)
 
 	if self:Mythic() then
 		self:Bar(254452, 23) -- Ravenous Blaze
@@ -569,7 +569,7 @@ do
 			if comboTime > GetTime() + cooldown then
 				self:CDBar(args.spellId, cooldown)
 			end
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Warning")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "red", "Warning")
 			blazeTick = 1
 			scheduled = self:ScheduleRepeatingTimer(addBlazeTick, 2, self)
 		end

@@ -113,7 +113,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 244159 then -- Consuming Sphere
-		self:Message(244131, "Attention", "Alert")
+		self:Message(244131, "yellow", "Alert")
 		consumingSphereCount = consumingSphereCount + 1
 		self:Bar(244131, self:Mythic() and (consumingSphereCount % 2 == 1 and 86 or 72.5) or self:Easy() and 85 or 78.5)
 	elseif spellId == 244069 then -- Weight of Darkness
@@ -125,7 +125,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 end
 
 function mod:BurningMaw(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:CDBar(args.spellId, self:Mythic() and 10.9 or 11)
 end
 
@@ -134,7 +134,7 @@ do
 	function mod:MoltenTouchApplied(args)
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Attention", "Warning")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "yellow", "Warning")
 			moltenTouchCount = moltenTouchCount + 1
 			self:Bar(args.spellId, self:Mythic() and (moltenTouchCount % 2 == 1 and 103.3 or 88.8) or 96.5)
 		end
@@ -150,7 +150,7 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning", nil, nil, true)
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "orange", "Warning", nil, nil, true)
 		end
 	end
 end
@@ -162,7 +162,7 @@ function mod:DesolateGazeRemoved(args)
 end
 
 function mod:EnflameCorruption(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	enflameCorruptionCount = enflameCorruptionCount + 1
 	self:Bar(args.spellId, self:Mythic() and (enflameCorruptionCount % 2 == 1 and 88.8 or 104.6) or self:Easy() and 104 or 95.5)
 	self:CastBar(args.spellId, 9)
@@ -170,7 +170,7 @@ end
 
 function mod:Enflamed(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Warning")
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, self:Mythic() and 3 or 4, nil, self:Mythic() and 2)
 	end
@@ -183,7 +183,7 @@ function mod:EnflamedRemoved(args)
 end
 
 function mod:CorruptingMaw(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:CDBar(args.spellId, self:Mythic() and 10.9 or 11)
 end
 
@@ -196,7 +196,7 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning", nil, nil, true)
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "orange", "Warning", nil, nil, true)
 		end
 	end
 end
@@ -208,7 +208,7 @@ function mod:WeightofDarknessRemoved(args)
 end
 
 function mod:SiphonCorruption(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	siphonCorruptionCount = siphonCorruptionCount + 1
 	self:Bar(args.spellId, self:Mythic() and (siphonCorruptionCount % 2 == 1 and 86.3 or 73) or self:Easy() and 85 or 78.5)
 	self:CastBar(args.spellId, 9)
@@ -216,7 +216,7 @@ end
 
 function mod:Siphoned(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Warning")
 		self:SayCountdown(args.spellId, self:Mythic() and 3 or 4, nil, self:Mythic() and 2)
 	end
 end
@@ -233,7 +233,7 @@ do
 		local t = GetTime()
 		if t-prev > 0.5 then
 			prev = t
-			self:Message(244050, "Urgent", "Warning", args.spellName, args.spellId)
+			self:Message(244050, "orange", "Warning", args.spellName, args.spellId)
 		end
 	end
 end
@@ -244,7 +244,7 @@ do
 		local t = GetTime()
 		if t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Neutral", "Info")
+			self:Message(args.spellId, "cyan", "Info")
 			self:Bar(args.spellId, 15)
 		end
 	end
@@ -253,7 +253,7 @@ end
 --[[ Mythic ]]--
 function mod:Touched(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, args.spellId == 244054 and "Important" or "Personal", "Warning", CL.you:format(args.spellName)) -- Important for Flame, Personal for Shadow
+		self:Message(args.spellId, args.spellId == 244054 and "red" or "blue", "Warning", CL.you:format(args.spellName)) -- Important for Flame, Personal for Shadow
 	end
 end
 
@@ -264,7 +264,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+				self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 			end
 		end
 	end
