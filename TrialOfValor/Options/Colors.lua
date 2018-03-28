@@ -49,7 +49,7 @@ BigWigs:AddColors("Helya-TrialOfValor", {
 	[228730] = "Urgent",
 	[228854] = "Positive",
 	[228872] = "Important",
-	[229119] = "Personal",
+	[229119] = {"Personal","Urgent"},
 	[230197] = "Personal",
 	[230267] = {"Personal","Urgent"},
 	[232450] = {"Attention","Personal"},
