@@ -28,6 +28,7 @@ local select, type, next, tonumber = select, type, next, tonumber
 local core = BigWigs
 local C = core.C
 local pName = UnitName("player")
+local cpName
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
@@ -1490,7 +1491,7 @@ do
 			end
 		end
 	})
-	local cpName = coloredNames[pName]
+	cpName = coloredNames[pName]
 
 	local mt = {
 		__newindex = function(self, key, value)
@@ -1659,6 +1660,24 @@ do
 			Timer(customTime or 0.3, function()
 				printTargets(self, key, playerTable, color, text, icon)
 			end)
+		end
+	end
+
+	function boss:TargetMessage2(key, player, color, underYou, text, icon)
+		local textType = type(text)
+		local msg = textType == "string" and text or spells[text or key]
+		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+
+		if not player then
+			if checkFlag(self, key, C.MESSAGE) then
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, "???"), color, texture)
+			end
+		elseif player == pName then
+			if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
+				self:SendMessage("BigWigs_Message", self, key, format(underYou and L.underyou or L.you, msg), "Personal", texture)
+			end
+		elseif checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
+			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture)
 		end
 	end
 end
