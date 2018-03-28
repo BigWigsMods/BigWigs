@@ -492,15 +492,12 @@ do
 		labels[1] = old
 		-- reposition
 		local align = db.align == "CENTER" and "" or db.align
-		old:ClearAllPoints()
 		old:SetPoint("TOP"..align)
 		for i = 2, 4 do
-			local lbl = labels[i]
-			lbl:ClearAllPoints()
-			lbl:SetPoint("TOP"..align, labels[i - 1], "BOTTOM"..align)
+			labels[i]:SetPoint("TOP"..align, labels[i - 1], "BOTTOM"..align)
 		end
 		-- new message at 1
-		return labels[1]
+		return old
 	end
 
 	local function getNextSlotUp()
@@ -512,20 +509,20 @@ do
 		labels[4] = old
 		-- reposition
 		local align = db.align == "CENTER" and "" or db.align
-		old:ClearAllPoints()
 		old:SetPoint("BOTTOM"..align)
-		for i = 1, 3 do
-			local lbl = labels[i]
-			lbl:ClearAllPoints()
-			lbl:SetPoint("BOTTOM"..align, labels[i + 1], "TOP"..align)
+		for i = 3, 1, -1 do
+			labels[i]:SetPoint("BOTTOM"..align, labels[i + 1], "TOP"..align)
 		end
 		-- new message at 4
-		return labels[4]
+		return old
 	end
 
 	function plugin:Print(_, text, r, g, b, _, _, _, _, _, icon)
 		BWMessageFrame:Show()
 
+		for i = 1, 4 do
+			labels[i]:ClearAllPoints()
+		end
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
 		slot:SetText(text)
 		slot:SetTextColor(r, g, b, 1)
