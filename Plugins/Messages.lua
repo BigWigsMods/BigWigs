@@ -26,6 +26,8 @@ local BWMessageFrame = nil
 local emphasizedText = nil
 local emphasizedCountdownText = nil
 
+local labelsPrimaryPoint, labelsSecondaryPoint = nil, nil
+
 local db = nil
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
@@ -249,10 +251,11 @@ local function updateProfile()
 	BWMessageFrame:ClearAllPoints()
 	local align = db.align == "CENTER" and "" or db.align
 	if db.growUpwards then
-		BWMessageFrame:SetPoint("BOTTOM"..align, normalAnchor, "TOP"..align)
+		labelsPrimaryPoint, labelsSecondaryPoint = "BOTTOM"..align, "TOP"..align
 	else
-		BWMessageFrame:SetPoint("TOP"..align, normalAnchor, "BOTTOM"..align)
+		labelsPrimaryPoint, labelsSecondaryPoint = "TOP"..align, "BOTTOM"..align
 	end
+	BWMessageFrame:SetPoint(labelsPrimaryPoint, normalAnchor, labelsSecondaryPoint)
 	BWMessageFrame:SetScale(db.scale)
 	BWMessageFrame:SetWidth(UIParent:GetWidth())
 
@@ -484,6 +487,9 @@ do
 	end
 
 	local function getNextSlotDown()
+		for i = 4, 1, -1 do
+			labels[i]:ClearAllPoints()
+		end
 		-- move 4 -> 1
 		local old = labels[4]
 		labels[4] = labels[3]
@@ -491,16 +497,18 @@ do
 		labels[2] = labels[1]
 		labels[1] = old
 		-- reposition
-		local align = db.align == "CENTER" and "" or db.align
-		old:SetPoint("TOP"..align)
+		old:SetPoint(labelsPrimaryPoint)
 		for i = 2, 4 do
-			labels[i]:SetPoint("TOP"..align, labels[i - 1], "BOTTOM"..align)
+			labels[i]:SetPoint(labelsPrimaryPoint, labels[i - 1], labelsSecondaryPoint)
 		end
 		-- new message at 1
 		return old
 	end
 
 	local function getNextSlotUp()
+		for i = 1, 4 do
+			labels[i]:ClearAllPoints()
+		end
 		-- move 1 -> 4
 		local old = labels[1]
 		labels[1] = labels[2]
@@ -508,10 +516,9 @@ do
 		labels[3] = labels[4]
 		labels[4] = old
 		-- reposition
-		local align = db.align == "CENTER" and "" or db.align
-		old:SetPoint("BOTTOM"..align)
+		old:SetPoint(labelsPrimaryPoint)
 		for i = 3, 1, -1 do
-			labels[i]:SetPoint("BOTTOM"..align, labels[i + 1], "TOP"..align)
+			labels[i]:SetPoint(labelsPrimaryPoint, labels[i + 1], labelsSecondaryPoint)
 		end
 		-- new message at 4
 		return old
@@ -520,9 +527,6 @@ do
 	function plugin:Print(_, text, r, g, b, _, _, _, _, _, icon)
 		BWMessageFrame:Show()
 
-		for i = 1, 4 do
-			labels[i]:ClearAllPoints()
-		end
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
 		slot:SetText(text)
 		slot:SetTextColor(r, g, b, 1)
