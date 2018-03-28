@@ -775,6 +775,7 @@ do
 	-- Possibly a concern?
 
 	--- Start a repeating timer checking if your group has left combat with a boss.
+	-- @string[opt] first The event name when used as a callback
 	function boss:CheckForWipe(first)
 		if debug then dbg(self, ":CheckForWipe initiated.") end
 		local go = scan(self)
@@ -1938,10 +1939,6 @@ function boss:CancelSayCountdown(key)
 	end
 end
 
---- Play a sound.
--- @param key the option key
--- @string sound the sound to play
--- @string[opt] voice command to play when using a voice pack
 do
 	local tmp = { -- XXX temp
 		["long"] = "Long",
@@ -1950,6 +1947,10 @@ do
 		["alarm"] = "Alarm",
 		["warning"] = "Warning",
 	}
+	--- Play a sound.
+	-- @param key the option key
+	-- @string sound the sound to play
+	-- @string[opt] voice command to play when using a voice pack
 	function boss:PlaySound(key, sound, voice, player)
 		if player then
 			local meOnly = checkFlag(self, key, C.ME_ONLY)
