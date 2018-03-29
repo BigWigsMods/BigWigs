@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "deDE")
 if not L then return end
 
+L.comma = ", "
+
 L.abilityName = "Fähigkeitsname"
 L.abilityNameDesc = "Zeigt oder versteckt den Fähigkeitsnamen über dem Fenster."
 L.Alarm = "Alarm"

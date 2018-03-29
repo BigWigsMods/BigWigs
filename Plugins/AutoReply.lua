@@ -156,7 +156,7 @@ do
 					if totalHp == "" then
 						totalHp = L.healthFormat:format(name, hp*100)
 					else
-						totalHp = totalHp .. ", " .. L.healthFormat:format(name, hp*100)
+						totalHp = totalHp .. L.comma .. L.healthFormat:format(name, hp*100)
 					end
 				end
 			end
@@ -282,7 +282,7 @@ do
 					if totalHp == "" then
 						totalHp = L.healthFormat:format(name, hp*100)
 					else
-						totalHp = totalHp .. ", " .. L.healthFormat:format(name, hp*100)
+						totalHp = totalHp .. L.comma .. L.healthFormat:format(name, hp*100)
 					end
 				end
 			end

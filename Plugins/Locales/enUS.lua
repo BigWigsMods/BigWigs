@@ -1,6 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "enUS")
 
 L.general = "General"
+L.comma = ", "
 
 L.positionX = "X Position"
 L.positionY = "Y Position"

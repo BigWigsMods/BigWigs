@@ -2,6 +2,7 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "koKR")
 if not L then return end
 
 L.general = "일반"
+L.comma = ", "
 
 L.positionX = "X 위치"
 L.positionY = "Y 위치"

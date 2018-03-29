@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "frFR")
 if not L then return end
 
+L.comma = ", "
+
 L.abilityName = "Nom de la technique"
 L.abilityNameDesc = "Affiche ou non le nom de la technique au dessus de la fenêtre."
 L.Alarm = "Alarme"

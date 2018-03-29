@@ -2,6 +2,7 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "ptBR")
 if not L then return end
 
 L.general = "Geral"
+L.comma = ", "
 
 L.positionX = "Posição X"
 L.positionY = "Posição Y"

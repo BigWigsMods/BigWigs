@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "zhCN")
 if not L then return end
 
+L.comma = "，"
+
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
 L.Alarm = "警报"
