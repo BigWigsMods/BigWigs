@@ -35,6 +35,12 @@ local sound_methods = {
 	StackMessage = 5,
 	DelayedMessage = 6,
 }
+local valid_methods = {
+	ScheduleTimer = true,
+	ScheduleRepeatingTimer = true,
+}
+for k in next, color_methods do valid_methods[k] = true end
+for k in next, sound_methods do valid_methods[k] = true end
 
 -- Set an exit code if we show an error.
 local exit_code = 0
@@ -352,24 +358,21 @@ local function parseLua(file)
 		if line:find("Message", nil, true) or line:find("PlaySound", nil, true) then
 			local key, sound, color = nil, nil, nil
 			local method, args = line:match("%w+:(.-)%(%s*(.+)%s*%)")
-			if sound_methods[method] or method == "ScheduleTimer" then
+			local offset = 0
+			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
+				method = args:match("^\"(.-)\"")
+				offset = 2
+			end
+			if valid_methods[method] then
 				args = strsplit(clean(args))
-				if method == "ScheduleTimer" then
-					-- boss:ScheduleTimer(callback, delay, args...)
-					method = unquote(table.remove(args, 1))
-					table.remove(args, 1) -- delay
-				end
+				key = unternary(args[1+offset], "(-?%d+)") -- XXX doesn't allow for string keys
 				local sound_index = sound_methods[method]
 				if sound_index then
-					-- boss:Message(key, color, sound, text, icon)
-					-- boss:TargetMessage(key, player, color, sound, text, icon, alwaysPlaySound)
-					-- boss:StackMessage(key, player, stack, color, sound, text, icon)
-					-- boss:DelayedMessage(key, delay, color, text, icon, sound)
-					-- boss:PlaySound(key, sound)
-					local color_index = color_methods[method]
-					key = unternary(args[1], "(-?%d+)") -- XXX doesn't allow for string keys
-					sound = unternary(args[sound_index], "\"(.-)\"", valid_sounds)
-					color = tablize(unternary(args[color_index], "\"(.-)\"", valid_colors))
+					sound = unternary(args[sound_index+offset], "\"(.-)\"", valid_sounds)
+				end
+				local color_index = color_methods[method]
+				if color_index then
+					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
 					if method:sub(1,6) == "Target" or method == "StackMessage" then
 						color[#color+1] = "Personal" -- Replaces the color with Personal for on me
 					end
