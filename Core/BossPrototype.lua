@@ -21,8 +21,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
-local Timer = C_Timer.After
-local SendChatMessage, GetInstanceInfo = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo
+local SendChatMessage, GetInstanceInfo, Timer = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter
 local format, find, gsub, band, wipe = string.format, string.find, string.gsub, bit.band, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
 local core = BigWigs
@@ -1905,6 +1904,13 @@ end
 -- Misc.
 -- @section misc
 --
+
+--- Trigger a function after a specific delay
+-- @param func callback function to trigger after the delay
+-- @number delay how long to wait until triggering the function
+function boss:SimpleTimer(func, delay)
+	Timer(delay, func)
+end
 
 --- Flash the screen edges.
 -- @param key the option key
