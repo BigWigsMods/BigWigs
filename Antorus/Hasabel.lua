@@ -232,13 +232,13 @@ function mod:ActivatePortals(_, _, _, _, spellId)
 end
 
 function mod:TransferPortals(_, _, _, _, spellId)
-	if args.spellId == 244450 then -- Platform: Nexus
+	if spellId == 244450 then -- Platform: Nexus
 		playerPlatform = 1
-	elseif args.spellId == 244455 then -- Xoroth
+	elseif spellId == 244455 then -- Xoroth
 		playerPlatform = 2
-	elseif args.spellId == 244512 then -- Rancora
+	elseif spellId == 244512 then -- Rancora
 		playerPlatform = 3
-	elseif args.spellId == 244513 then -- Nathreza
+	elseif spellId == 244513 then -- Nathreza
 		playerPlatform = 4
 	end
 end
@@ -444,7 +444,7 @@ function mod:HungeringGloom(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
 	if UnitGUID("boss2") == args.destGUID or UnitGUID("boss3") == args.destGUID or UnitGUID("boss4") == args.destGUID then -- Should always be boss2, rest is safety
 		self:PlaySound(args.spellId, "Info")
-		self:Message(args.spellId, "orange", nil, CL.on(args.spellName, args.destName))
+		self:Message(args.spellId, "orange", nil, CL.on:format(args.spellName, args.destName))
 		self:Bar(args.spellId, 20, CL.onboss:format(args.spellName))
 	end
 end
