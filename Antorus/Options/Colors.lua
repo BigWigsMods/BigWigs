@@ -2,7 +2,7 @@
 BigWigs:AddColors("Gorothi Worldbreaker", {
 	[240277] = {"cyan","green","orange","red"},
 	[244106] = "orange",
-	[244410] = {"blue","yellow"},
+	[244410] = {"blue","Personal","yellow"},
 	[244761] = "red",
 	[244969] = "orange",
 	[246220] = {"orange","Personal"},
@@ -17,13 +17,13 @@ BigWigs:AddColors("Felhounds of Sargeras", {
 	[244072] = {"Personal","yellow"},
 	[244131] = "yellow",
 	[244768] = {"orange","Personal"},
-	[245022] = "blue",
+	[245022] = {"blue","Personal"},
 	[245098] = "red",
 	[248815] = {"blue","Personal"},
 	[248819] = {"blue","Personal"},
 	[251356] = "cyan",
 	[251445] = "red",
-	[254429] = {"orange","Personal"},
+	[254429] = "orange",
 })
 
 BigWigs:AddColors("Antoran High Command", {
@@ -36,7 +36,7 @@ BigWigs:AddColors("Antoran High Command", {
 	[245227] = "cyan",
 	[245546] = "red",
 	[246505] = "orange",
-	[253039] = "blue",
+	[253039] = {"blue","Personal"},
 })
 
 BigWigs:AddColors("Portal Keeper Hasabel", {
@@ -51,7 +51,7 @@ BigWigs:AddColors("Portal Keeper Hasabel", {
 	[244926] = {"orange","Personal"},
 	[245040] = {"Personal","yellow"},
 	[245050] = "yellow",
-	[245075] = {"orange","Personal"},
+	[245075] = "orange",
 	[245118] = {"blue","Personal"},
 	[245504] = "orange",
 	[246075] = "red",
@@ -83,7 +83,7 @@ BigWigs:AddColors("Imonar the Soulhunter", {
 	[248070] = "orange",
 	[248254] = "orange",
 	[250255] = {"Personal","red"},
-	[254244] = {"blue","Personal","red"},
+	[254244] = {"Personal","red"},
 	["stages"] = "green",
 })
 
