@@ -119,8 +119,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		self:Bar(244131, self:Mythic() and (consumingSphereCount % 2 == 1 and 86 or 72.5) or self:Easy() and 85 or 78.5)
 	elseif spellId == 244069 then -- Weight of Darkness
 		weightofDarknessCount = weightofDarknessCount + 1
-		self:Flash(args.spellId)
-		self:Message(args.spellId, "orange", "Warning")
+		self:Flash(254429)
+		self:Message(254429, "orange", "Warning")
 		self:Bar(254429, self:Mythic() and (weightofDarknessCount % 2 == 1 and 72.5 or 86) or 78.5)
 	elseif spellId == 244064 then -- Desolate Gaze
 		self:Bar(244768, self:Mythic() and 103 or self:Easy() and 104 or 96.5)
