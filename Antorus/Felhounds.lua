@@ -148,7 +148,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "Warning")
 		end
-		self:TargetsMessage(args.spellId, playerList, "yellow", 3)
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3)
 	end
 end
 
@@ -161,7 +161,7 @@ do
 			self:SayCountdown(args.spellId, 8)
 		end
 		self:PlaySound(args.spellId, "Warning", nil, playerList)
-		self:TargetsMessage(args.spellId, playerList, "orange", 5)
+		self:TargetsMessage(args.spellId, "orange", playerList, 5)
 	end
 end
 
@@ -206,7 +206,7 @@ end
 function mod:EnflamedOrSiphoned(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "Warning")
-		self:TargetMessage2(args.spellId, args.destName, "blue")
+		self:TargetMessage2(args.spellId, "blue", args.destName)
 		self:Say(args.spellId)
 		if self:Mythic() then
 			self:SayCountdown(args.spellId, 3, nil, 2)
@@ -260,7 +260,7 @@ do
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(args.spellId, "Alert")
-				self:TargetMessage2(args.spellId, args.destName, "blue", true)
+				self:TargetMessage2(args.spellId, "blue", args.destName, true)
 			end
 		end
 	end

@@ -1652,7 +1652,7 @@ do
 		end
 	end
 
-	function boss:TargetsMessage(key, playerTable, color, playerCount, text, icon, customTime)
+	function boss:TargetsMessage(key, color, playerTable, playerCount, text, icon, customTime)
 		local playersInTable = #playerTable
 		if playersInTable == playerCount then
 			printTargets(self, key, playerTable, color, text, icon)
@@ -1663,7 +1663,7 @@ do
 		end
 	end
 
-	function boss:TargetMessage2(key, player, color, underYou, text, icon)
+	function boss:TargetMessage2(key, color, player, underYou, text, icon)
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		local texture = icon ~= false and icons[icon or textType == "number" and text or key]

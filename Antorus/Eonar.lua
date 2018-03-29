@@ -326,7 +326,7 @@ do
 			self:SayCountdown(args.spellId, 5)
 			self:PlaySound(args.spellId, "Alarm")
 		end
-		self:TargetsMessage(args.spellId, playerList, "red", 6)
+		self:TargetsMessage(args.spellId, "red", playerList, 6)
 		if #playerList == 1 then
 			local t = GetTime()
 			if t-prev > 5 then -- prevent a wrong bar if Rain of Fel gets delayed late
@@ -360,7 +360,7 @@ end
 function mod:ArcaneBuildup(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "Alarm")
-		self:TargetMessage2(args.spellId, args.destName, "blue")
+		self:TargetMessage2(args.spellId, "blue", args.destName)
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
 		self:SayCountdown(args.spellId, 5)
@@ -378,7 +378,7 @@ end
 function mod:BurningEmbers(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "Alarm")
-		self:TargetMessage2(args.spellId, args.destName, "blue")
+		self:TargetMessage2(args.spellId, "blue", args.destName)
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
 		self:SayCountdown(args.spellId, 5)

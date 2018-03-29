@@ -205,7 +205,7 @@ function mod:ShockGrenade(args)
 		self:OpenProximity(args.spellId, 10)
 		self:SayCountdown(args.spellId, 5)
 		self:PlaySound(args.spellId, "Warning")
-		self:TargetMessage2(args.spellId, args.destName, "blue")
+		self:TargetMessage2(args.spellId, "blue", args.destName)
 	end
 end
 
@@ -255,7 +255,7 @@ do
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
 			self:PlaySound(args.spellId, "Alert")
-			self:TargetMessage2(args.spellId, args.destName, "blue", true)
+			self:TargetMessage2(args.spellId, "blue", args.destName, true)
 		end
 	end
 end

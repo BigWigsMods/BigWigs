@@ -23,8 +23,8 @@ local valid_sounds = {
 local color_methods = {
 	Message = 2,
 	TargetMessage = 3,
-	TargetMessage2 = 3,
-	TargetsMessage = 3,
+	TargetMessage2 = 2,
+	TargetsMessage = 2,
 	StackMessage = 4,
 	DelayedMessage = 3,
 }

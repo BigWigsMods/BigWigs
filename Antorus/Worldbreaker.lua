@@ -161,7 +161,7 @@ do
 		if self:Me(args.destGUID) then
 			isOnMe = true
 			self:PlaySound(244410, "Warning")
-			self:TargetMessage2(244410, args.destName, "blue")
+			self:TargetMessage2(244410, "blue", args.destName)
 			self:Say(244410)
 			if args.spellId ~= 246919 then -- Haywire Decimation
 				self:SayCountdown(244410, 5)
@@ -179,7 +179,7 @@ function mod:FelBombardment(args)
 	else
 		self:PlaySound(args.spellId, "Alarm", nil, args.destName) -- Different sound for when tanking/offtanking
 	end
-	self:TargetMessage2(args.spellId, args.destName, "orange")
+	self:TargetMessage2(args.spellId, "orange", args.destName)
 	self:Bar(args.spellId, self:Mythic() and 15.8 or 20.7)
 end
 

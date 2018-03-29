@@ -149,10 +149,10 @@ do
 				end
 			end
 
-			if self:Easy() or isOnMe then
-				self:TargetsMessage(254244, playerList, "red", 1)
-			else
-				self:TargetsMessage(254244, playerList, "red", 2)
+			if self:Easy() or (isOnMe and name == self:UnitName("player")) then -- Not warning for others when on you
+				self:TargetsMessage(254244, "red", playerList, 1)
+			elseif not isOnMe then
+				self:TargetsMessage(254244, "red", playerList, 2)
 			end
 		end
 		self:OpenProximity(254244, 10, canisterProxList)
