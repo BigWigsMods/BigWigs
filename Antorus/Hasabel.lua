@@ -96,9 +96,11 @@ end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	self:Log("SPELL_CAST_SUCCESS", "PlatformPortal", 244073, 244136, 244146) -- Xoroth, Rancora, Nathreza
-	self:Log("SPELL_CAST_SUCCESS", "ReturnPortal", 244112, 244138, 244145) -- Xoroth, Rancora, Nathreza
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "ActivatePortals", "boss1") -- Used when portals activate
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "TransferPortals", "player") -- Used to track which platform a player is on as the spells below have been removed from CLUE
+
+	--self:Log("SPELL_CAST_SUCCESS", "PlatformPortal", 244073, 244136, 244146) -- Xoroth, Rancora, Nathreza
+	--self:Log("SPELL_CAST_SUCCESS", "ReturnPortal", 244112, 244138, 244145) -- Xoroth, Rancora, Nathreza
 
 	--[[ Platform: Nexus ]]--
 	self:Log("SPELL_AURA_APPLIED", "RealityTear", 244016)
@@ -213,7 +215,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:ActivatePortals(_, _, _, _, spellId)
 	if spellId == 257939 then -- Gateway: Xoroth
 		self:Message("stages", "green", "Long", L.platform_active:format(self:SpellName(257939)), "spell_mage_flameorb") -- Platform: Xoroth
 		addsAlive = addsAlive + 1
@@ -229,23 +231,35 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	end
 end
 
-function mod:PlatformPortal(args)
-	if self:Me(args.sourceGUID) then
-		if args.spellId == 244073 then -- Xoroth
-			playerPlatform = 2
-		elseif args.spellId == 244136 then -- Rancora
-			playerPlatform = 3
-		elseif args.spellId == 244146 then -- Nathreza
-			playerPlatform = 4
-		end
+function mod:TransferPortals(_, _, _, _, spellId)
+	if args.spellId == 244450 then -- Platform: Nexus
+		playerPlatform = 1
+	elseif args.spellId == 244455 then -- Xoroth
+		playerPlatform = 2
+	elseif args.spellId == 244512 then -- Rancora
+		playerPlatform = 3
+	elseif args.spellId == 244513 then -- Nathreza
+		playerPlatform = 4
 	end
 end
 
-function mod:ReturnPortal(args)
-	if self:Me(args.sourceGUID) then
-		playerPlatform = 1
-	end
-end
+--function mod:PlatformPortal(args)
+--	if self:Me(args.sourceGUID) then
+--		if args.spellId == 244073 then -- Xoroth
+--			playerPlatform = 2
+--		elseif args.spellId == 244136 then -- Rancora
+--			playerPlatform = 3
+--		elseif args.spellId == 244146 then -- Nathreza
+--			playerPlatform = 4
+--		end
+--	end
+--end
+
+--function mod:ReturnPortal(args)
+--	if self:Me(args.sourceGUID) then
+--		playerPlatform = 1
+--	end
+--end
 
 function mod:RealityTear(args)
 	local amount = args.amount or 1
@@ -258,7 +272,6 @@ end
 
 function mod:CollapsingWorldStart(args)
 	self:StopBar(args.spellId)
-	self:CastBar(args.spellId, 2)
 	triggerCdForOtherSpells(self, args.spellId, 2)
 end
 
@@ -271,7 +284,6 @@ end
 
 function mod:FelstormBarrageStart(args)
 	self:StopBar(args.spellId)
-	self:CastBar(args.spellId, 2)
 	triggerCdForOtherSpells(self, args.spellId, 2)
 end
 
@@ -283,13 +295,13 @@ end
 
 function mod:TransportPortalStart(args)
 	self:StopBar(args.spellId)
-	self:CastBar(args.spellId, 1.5)
 	triggerCdForOtherSpells(self, args.spellId, 1.5)
 end
 
 function mod:TransportPortal(args)
 	self:Message(args.spellId, "cyan", "Info")
 	self:Bar(args.spellId, (self:Mythic() and 36.5) or 41.7)
+	self:CDBar(args.spellId, 12, CL.spawning:format(CL.adds))
 	triggerCdForOtherSpells(self, args.spellId)
 end
 
@@ -432,7 +444,7 @@ function mod:HungeringGloom(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
 	if UnitGUID("boss2") == args.destGUID or UnitGUID("boss3") == args.destGUID or UnitGUID("boss4") == args.destGUID then -- Should always be boss2, rest is safety
 		self:PlaySound(args.spellId, "Info")
-		self:BasicTargetMessage(args.spellId, "orange", args.destName)
+		self:Message(args.spellId, "orange", nil, CL.on(args.spellName, args.destName))
 		self:Bar(args.spellId, 20, CL.onboss:format(args.spellName))
 	end
 end
