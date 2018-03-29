@@ -261,8 +261,8 @@ L.everyoneElse = "Все остальные"
 
 L.autoReplyBasic = "В настоящее время я в бою с боссом."
 L.autoReplyNormal = "В настоящее время я в бою с '%s'."
-L.autoReplyAdvanced = "В настоящее время я в бою с '%s' (%s) и %d/%d игроков живы."
-L.autoReplyExtreme = "В настоящее время я в бою с '%s' (%s) и %d/%d игроков живы: %s"
+L.autoReplyAdvanced = "В настоящее время я в бою с '%s' (%s) и %d/%d игроков живые."
+L.autoReplyExtreme = "В настоящее время я в бою с '%s' (%s) и %d/%d игроков живые: %s"
 
 L.autoReplyLeftCombatBasic = "Я больше не в бою с боссом."
 L.autoReplyLeftCombatNormalWin = "Я победил '%s'."
