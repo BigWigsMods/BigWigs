@@ -204,7 +204,8 @@ function mod:ShockGrenade(args)
 		self:Flash(args.spellId)
 		self:OpenProximity(args.spellId, 10)
 		self:SayCountdown(args.spellId, 5)
-		self:TargetMessage(args.spellId, args.destName, "blue", "Warning")
+		self:PlaySound(args.spellId, "Warning")
+		self:TargetMessage2(args.spellId, args.destName, "blue")
 	end
 end
 
@@ -253,7 +254,8 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
+			self:PlaySound(args.spellId, "Alert")
+			self:TargetMessage2(args.spellId, args.destName, "blue", true)
 		end
 	end
 end

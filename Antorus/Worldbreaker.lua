@@ -160,7 +160,8 @@ do
 	function mod:DecimationApplied(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:Message(244410, "blue", "Warning", CL.you:format(args.spellName))
+			self:PlaySound(244410, "Warning")
+			self:TargetMessage2(244410, args.destName, "blue")
 			self:Say(244410)
 			if args.spellId ~= 246919 then -- Haywire Decimation
 				self:SayCountdown(244410, 5)
@@ -170,13 +171,16 @@ do
 end
 
 function mod:FelBombardment(args)
-	self:TargetMessage(args.spellId, args.destName, "orange", self:Me(args.destGUID) and "Warning" or "Alarm", nil, nil, true) -- Different sound for when tanking/offtanking
-	self:Bar(args.spellId, self:Mythic() and 15.8 or 20.7)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 7)
 		self:TargetBar(args.spellId, 7, args.destName)
+		self:PlaySound(args.spellId, "Warning")
+	else
+		self:PlaySound(args.spellId, "Alarm", nil, args.destName) -- Different sound for when tanking/offtanking
 	end
+	self:TargetMessage2(args.spellId, args.destName, "orange")
+	self:Bar(args.spellId, self:Mythic() and 15.8 or 20.7)
 end
 
 function mod:FelBombardmentRemoved(args)

@@ -361,7 +361,8 @@ end
 
 function mod:FelsilkWrap(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 3 then return end
-	self:TargetMessage(args.spellId, args.destName, "orange", "Warning", nil, nil, true)
+	self:PlaySound(args.spellId, "Warning")
+	self:TargetMessage2(args.spellId, args.destName, "orange")
 	self:CDBar(args.spellId, 17)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
@@ -415,7 +416,8 @@ end
 
 function mod:CloyingShadows(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "blue", "Info")
+		self:PlaySound(args.spellId, "Info")
+		self:TargetMessage2(args.spellId, args.destName, "blue")
 		self:SayCountdown(args.spellId, 30)
 	end
 end
@@ -428,14 +430,15 @@ end
 
 function mod:HungeringGloom(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
-	if UnitIsUnit(args.destName, "boss2") or UnitIsUnit(args.destName, "boss3") or UnitIsUnit(args.destName, "boss4") then -- Should always be boss2, rest is safety
-		self:TargetMessage(args.spellId, args.destName, "orange", "Info", nil, nil, true)
+	if UnitGUID("boss2") == args.destGUID or UnitGUID("boss3") == args.destGUID or UnitGUID("boss4") == args.destGUID then -- Should always be boss2, rest is safety
+		self:PlaySound(args.spellId, "Info")
+		self:BasicTargetMessage(args.spellId, args.destName, "orange")
 		self:Bar(args.spellId, 20, CL.onboss:format(args.spellName))
 	end
 end
 
 function mod:HungeringGloomRemoved(args)
-	if UnitIsUnit(args.destName, "boss2") or UnitIsUnit(args.destName, "boss3") or UnitIsUnit(args.destName, "boss4") then -- Should always be boss2, rest is safety
+	if UnitGUID("boss2") == args.destGUID or UnitGUID("boss3") == args.destGUID or UnitGUID("boss4") == args.destGUID then -- Should always be boss2, rest is safety
 		self:StopBar(CL.onboss:format(args.spellName))
 	end
 end
@@ -451,7 +454,8 @@ end
 --[[ 'Portal Combat' achievement debuffs ]]--
 function mod:Binding(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "blue", "Info")
+		self:PlaySound(args.spellId, "Info")
+		self:TargetMessage2(args.spellId, args.destName, "blue")
 		self:TargetBar(args.spellId, 16, args.destName)
 	end
 end

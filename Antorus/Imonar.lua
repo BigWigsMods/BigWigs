@@ -131,15 +131,8 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 do
-	local playerList, isOnMe, scheduled = mod:NewTargetList(), nil, nil
+	local playerList, isOnMe = mod:NewTargetList(), false
 	local canisterMarks = {false, false}
-
-	local function warn(self)
-		if not isOnMe then
-			self:TargetMessage(254244, playerList, "red")
-		end
-		scheduled = nil
-	end
 
 	local function addPlayerToList(self, name)
 		if not tContains(canisterProxList, name) then
@@ -156,13 +149,10 @@ do
 				end
 			end
 
-			if #playerList == (self:Easy() and 1 or 2) then
-				if scheduled then
-					self:CancelTimer(scheduled)
-				end
-				warn(self)
-			elseif not scheduled then
-				scheduled = self:ScheduleTimer(warn, 0.3, self)
+			if self:Easy() or isOnMe then
+				self:TargetsMessage(254244, playerList, "red", 1)
+			else
+				self:TargetsMessage(254244, playerList, "red", 2)
 			end
 		end
 		self:OpenProximity(254244, 10, canisterProxList)
@@ -171,7 +161,7 @@ do
 	function mod:RAID_BOSS_WHISPER(_, msg)
 		if msg:find("254244", nil, true) then -- Sleep Canister
 			isOnMe = true
-			self:Message(254244, "blue", "Alarm", CL.you:format(self:SpellName(254244)))
+			self:PlaySound(254244, "Alarm")
 			self:Flash(254244)
 			self:Say(254244)
 			addPlayerToList(self, self:UnitName("player"))
@@ -186,7 +176,7 @@ do
 	end
 
 	function mod:SleepCanister(args)
-		isOnMe = nil
+		isOnMe = false
 		wipe(playerList)
 		canisterMarks = {false, false}
 		self:Bar(args.spellId, self:Mythic() and 12.1 or 10.9)
