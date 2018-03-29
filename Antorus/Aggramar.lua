@@ -185,13 +185,13 @@ do
 		},
 	}
 
-	function updateInfoBox(self, newSpell)
+	function updateInfoBox(newSpell)
 		local comboCount = #comboSpells
 
 		if not currentCombo then
-			if self:LFR() then -- Always the same combo
+			if mod:LFR() then -- Always the same combo
 				currentCombo = {245463, 245463, 245463, 245463, 245301} -- Flame Rend, Flame Rend, Flame Rend, Flame Rend, Searing Tempest
-			elseif not self:Mythic() then -- Always the same combo
+			elseif not mod:Mythic() then -- Always the same combo
 				currentCombo = {245458, 245463, 245458, 245463, 245301} -- Foe Breaker, Flame Rend, Foe Breaker, Flame Rend, Searing Tempest
 			elseif comboCount >= 2 then -- We know the combo after the first 2 casts
 				currentCombo = mythicCombos[comboSpells[1]][comboSpells[2]]
@@ -205,20 +205,20 @@ do
 				local spell = currentCombo and comboSpellLookup[currentCombo[i]] or comboSpellLookup[comboSpells[i]]
 				if currentCombo or comboSpells[i] then
 					local color = comboCount == i and t > 0 and nextSpell or comboCount >= i and spellUsed or spell.color
-					self:SetInfo(244688, i*2, texture:format(spell.icon) .. color .. spell.name)
+					mod:SetInfo(244688, i*2, texture:format(spell.icon) .. color .. spell.name)
 				else
-					self:SetInfo(244688, i*2, "")
+					mod:SetInfo(244688, i*2, "")
 				end
 			end
 		end
 
 		local castPos = max(comboCount*2-1, 1)
-		self:SetInfo(244688, castPos, t > 0 and nextSpell..castTime:format(t) or "")
-		self:SetInfoBar(244688, castPos, t > 0 and t/comboSpellLookup[comboSpells[comboCount]].castTime or 0)
+		mod:SetInfo(244688, castPos, t > 0 and nextSpell..castTime:format(t) or "")
+		mod:SetInfoBar(244688, castPos, t > 0 and t/comboSpellLookup[comboSpells[comboCount]].castTime or 0)
 		if t > 0 then
-			self:ScheduleTimer(updateInfoBox, 0.05, self)
+			mod:SimpleTimer(updateInfoBox, 0.05)
 		elseif comboCount*2+1 < 10 then -- Current spell done, set arrows for next spell
-			self:SetInfo(244688, comboCount*2+1, nextSpell..">>")
+			mod:SetInfo(244688, comboCount*2+1, nextSpell..">>")
 		end
 	end
 end
@@ -453,12 +453,12 @@ function mod:FoeBreaker(args)
 	if foeBreakerCount == 2 and not self:Mythic() then -- Random Combo in Mythic
 		self:Bar(args.spellId, self:Easy() and 10.1 or 7.5, CL.count:format(args.spellName, foeBreakerCount))
 	end
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:FoeBreakerSuccess()
 	comboCastEnd = 0
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:FlameRend(args)
@@ -471,12 +471,12 @@ function mod:FlameRend(args)
 	elseif flameRendCount == 2 and not self:Mythic() then -- Random Combo in Mythic
 		self:Bar(args.spellId, self:Normal() and 10.2 or 7.5, CL.count:format(args.spellName, flameRendCount))
 	end
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:FlameRendSuccess()
 	comboCastEnd = 0
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:SearingTempest(args)
@@ -484,12 +484,12 @@ function mod:SearingTempest(args)
 	self:CastBar(args.spellId, 6)
 	comboSpells[#comboSpells+1] = 245301
 	comboCastEnd = GetTime() + 6
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:SearingTempestSuccess(args)
 	comboCastEnd = 0
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 --[[ Intermission: Fires of Taeshalach ]]--
