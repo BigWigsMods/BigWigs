@@ -16,7 +16,7 @@ L.background = "背景"
 L.backgroundDesc = "顯示或隱藏背景。"
 L.bars = "計時條"
 L.bestTimeBar = "最快時間"
-L.Beware = "當心（艾爾加隆 ）"
+L.Beware = "當心（艾爾加隆）"
 L.bigWigsBarStyleName_Default = "預設"
 L.blockEmotes = "封鎖畫面中央表情訊息"
 L.blockEmotesDesc = [=[某些首領施放某些技能時會顯示表情，此類訊息過於冗長及不直觀。我們嘗試提供的訊息更精簡、不會影響遊戲體驗和不會指示玩家要做什麼。
@@ -148,11 +148,11 @@ L.proximity = "玩家雷達"
 L.proximity_desc = "顯示玩家雷達視窗，列出距離你過近的玩家。"
 L.proximity_name = "玩家雷達"
 L.proximityTitle = "%d碼 / %d 玩家"
-L.pull = "拉怪倒數"
-L.pullIn = "%d秒後拉怪"
---L.engageSoundTitle = "Play a sound when a boss encounter has started"
---L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
---L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
+L.pull = "開怪倒數"
+L.pullIn = "%d秒後開怪"
+L.engageSoundTitle = "首領戰開使時播放音效"
+L.pullStartedSoundTitle = "開怪倒數計時器開使時播放音效"
+L.pullFinishedSoundTitle = "開怪倒數計時器結束時播放音效"
 L.pullStarted = "拉怪倒數計時開始於 %s 使用者 %s."
 L.pullStopped = "%s取消了拉怪計時器。"
 --L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
@@ -243,8 +243,8 @@ L.victoryMessageBlizzardDesc = "暴雪內建訊息會以特效顯示「首領被
 L.victoryMessages = "顯示擊敗首領訊息"
 L.victorySound = "播放勝利音效"
 L.Warning = "警報"
---L.wipe = "Wipe"
---L.wipeSoundTitle = "Play a sound when you wipe"
+L.wipe = "滅團"
+L.wipeSoundTitle = "滅團時播放音效"
 L.wrongBreakFormat = "必須介於1至60分鐘之間。正確用法：/break 5"
 L.wrongCustomBarFormat = "不正確的格式。一個正確的範例是: /raidbar 20 文字"
 L.wrongPullFormat = "必須位於1至60秒之間。正確用法：/pull 5"
@@ -254,34 +254,34 @@ L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 �
 -- AutoReply.lua
 --
 
---L.autoReply = "Auto Reply"
---L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
---L.responseType = "Response Type"
---L.autoReplyFinalReply = "Also whisper when leaving combat"
---L.guildAndFriends = "Guild & Friends"
---L.everyoneElse = "Everyone else"
+L.autoReply = "自動回覆"
+L.autoReplyDesc = "在首領戰期間自動回覆密語"
+L.responseType = "回應格式"
+L.autoReplyFinalReply = "戰鬥結束後也發送密語"
+L.guildAndFriends = "公會與好友"
+L.everyoneElse = "所有人"
 
---L.autoReplyBasic = "I'm busy in combat with a boss encounter."
---L.autoReplyNormal = "I'm busy in combat with '%s'."
---L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
---L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+L.autoReplyBasic = "正處於首領戰的戰鬥中。"
+L.autoReplyNormal = "正在與「%s」戰鬥。"
+L.autoReplyAdvanced = "正在與「%s」（%s）戰鬥，尚有%d／%d人存活。"
+L.autoReplyExtreme = "正在與「%s」（%s）戰鬥，尚有%d／%d人存活：%s"
 
---L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
---L.autoReplyLeftCombatNormalWin = "I won against '%s'."
---L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
---L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
---L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+L.autoReplyLeftCombatBasic = "已結束首領戰。"
+L.autoReplyLeftCombatNormalWin = "已擊敗「%s」。"
+L.autoReplyLeftCombatNormalWipe = "在「%s」的戰鬥中滅團。"
+L.autoReplyLeftCombatAdvancedWin = "已擊敗「%s」，尚有%d／%d人存活。"
+L.autoReplyLeftCombatAdvancedWipe = "在「%s」的戰鬥中滅團：%s"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
---L.infoBox = "InfoBox"
+L.infoBox = "訊息盒"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
 --
 
---L.printHealthOption = "Boss Health"
---L.healthPrint = "Health: %s。"
-L.healthFormat = "%s （%.1f%%）"
+L.printHealthOption = "首領血量"
+L.healthPrint = "血量：%s。"
+L.healthFormat = "%s（%.1f%%）"
