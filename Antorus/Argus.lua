@@ -770,7 +770,7 @@ function mod:UNIT_POWER(unit)
 	local power = UnitPower(unit) / UnitPowerMax(unit) * 100
 	if power <= 10 then
 		self:UnregisterUnitEvent("UNIT_POWER", unit)
-		self:Message("stages", "Positive", "Long", CL.soon:format(self:SpellName(256399)), 256399) -- Withering Roots
+		self:Message("stages", "green", "Long", CL.soon:format(self:SpellName(256399)), 256399) -- Withering Roots
 	end
 end
 
@@ -780,7 +780,7 @@ do
 	-- helper function with access to a local variable to avoid
 	-- passing by value and rescheduling the timer
 	local function announce(self, spellId, spellName, t)
-		self:Message(spellId, "Attention", "Alert", L.stacks:format(stacks, spellName))
+		self:Message(spellId, "yellow", "Alert", L.stacks:format(stacks, spellName))
 		lastAnnouncedStacks = stacks
 		prev = t or GetTime()
 		scheduled = nil
@@ -791,7 +791,7 @@ do
 			stacks = 1
 			announce(self, args.spellId, args.spellName)
 		else -- for others: just warn that the tree is now withering
-			self:Message("stages", "Positive", "Long", args.spellId)
+			self:Message("stages", "green", "Long", args.spellId)
 		end
 	end
 
