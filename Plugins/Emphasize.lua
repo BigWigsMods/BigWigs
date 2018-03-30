@@ -407,8 +407,8 @@ function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 	self:BigWigs_StartEmphasize(nil, module, key, text, time)
 end
 
-function plugin:BigWigs_PlayCountdownNumber(_, _, num)
-	local sound = BigWigsAPI:GetCountdownSound(self.db.profile.voice, num)
+function plugin:BigWigs_PlayCountdownNumber(_, _, num, voice)
+	local sound = BigWigsAPI:GetCountdownSound(voice or self.db.profile.voice, num)
 	if sound then
 		PlaySoundFile(sound, "Master")
 	end

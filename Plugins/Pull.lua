@@ -21,13 +21,28 @@ local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 -- Options
 --
 
-plugin.defaultDB = {
-	countType = "emphasized",
-	combatLog = false,
-	engageSound = "None",
-	startPullSound = "BigWigs: Long",
-	endPullSound = "None",
-}
+do
+	local voiceMap = {
+		deDE = "Deutsch: Heroes of the Storm",
+		esES = "Español: Heroes of the Storm",
+		esMX = "Español: Heroes of the Storm",
+		frFR = "Français: Heroes of the Storm",
+		ruRU = "Русский: Heroes of the Storm",
+		koKR = "한국어: Heroes of the Storm",
+		itIT = "Italiano: Heroes of the Storm",
+		ptBR = "Português: Heroes of the Storm",
+		zhCN = "简体中文: Heroes of the Storm",
+		zhTW = "繁體中文: Heroes of the Storm",
+	}
+	plugin.defaultDB = {
+		countType = "emphasized",
+		combatLog = false,
+		engageSound = "None",
+		startPullSound = "BigWigs: Long",
+		endPullSound = "None",
+		voice = voiceMap[GetLocale()] or "English: Amy",
+	}
+end
 
 do
 	local function soundGet(info)
@@ -99,17 +114,24 @@ do
 				width = "double",
 				itemControl = "DDI-Sound",
 			},
+			voice = {
+				name = L.countdownVoice,
+				type = "select",
+				values = function() return BigWigsAPI:GetCountdownList() end,
+				order = 5,
+				width = "double",
+			},
 			spacer3 = {
 				type = "description",
 				name = "\n",
-				order = 4.1,
+				order = 5.1,
 				width = "full",
 			},
 			combatLog = {
 				type = "toggle",
 				name = L.combatLog,
 				desc = L.combatLogDesc,
-				order = 5,
+				order = 6,
 				width = "full",
 			},
 		},
@@ -165,7 +187,7 @@ do
 			end
 			local module = BigWigs:GetPlugin("Sounds", true)
 			if timeLeft < 6 and module and module.db.profile.sound then
-				self:SendMessage("BigWigs_PlayCountdownNumber", self, timeLeft)
+				self:SendMessage("BigWigs_PlayCountdownNumber", self, timeLeft, self.db.profile.voice)
 			end
 		end
 	end
