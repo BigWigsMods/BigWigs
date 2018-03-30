@@ -301,7 +301,7 @@ end
 function mod:TransportPortal(args)
 	self:Message(args.spellId, "cyan", "Info")
 	self:Bar(args.spellId, (self:Mythic() and 36.5) or 41.7)
-	self:CDBar(args.spellId, 12, CL.spawning:format(CL.adds))
+	self:CastBar(args.spellId, 12, CL.spawning:format(CL.adds))
 	triggerCdForOtherSpells(self, args.spellId)
 end
 
@@ -444,7 +444,7 @@ function mod:HungeringGloom(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
 	if UnitGUID("boss2") == args.destGUID or UnitGUID("boss3") == args.destGUID or UnitGUID("boss4") == args.destGUID then -- Should always be boss2, rest is safety
 		self:PlaySound(args.spellId, "Info")
-		self:Message(args.spellId, "orange", nil, CL.on:format(args.spellName, args.destName))
+		self:Message(args.spellId, "orange", nil, CL.other:format(args.spellName, args.destName))
 		self:Bar(args.spellId, 20, CL.onboss:format(args.spellName))
 	end
 end
