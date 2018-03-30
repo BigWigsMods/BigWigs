@@ -1,6 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "enUS")
 
 L.general = "General"
+L.comma = ", "
 
 L.positionX = "X Position"
 L.positionY = "Y Position"
@@ -15,6 +16,28 @@ L.altPowerTitle = "AltPower"
 L.toggleDisplayPrint = "The display will show next time. To disable it completely for this encounter, you need to toggle it off in the encounter options."
 L.disabled = "Disabled"
 L.disabledDisplayDesc = "Disable the display for all modules that use it."
+
+-----------------------------------------------------------------------
+-- AutoReply.lua
+--
+
+L.autoReply = "Auto Reply"
+L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
+L.responseType = "Response Type"
+L.autoReplyFinalReply = "Also whisper when leaving combat"
+L.guildAndFriends = "Guild & Friends"
+L.everyoneElse = "Everyone else"
+
+L.autoReplyBasic = "I'm busy in combat with a boss encounter."
+L.autoReplyNormal = "I'm busy in combat with '%s'."
+L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
+L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+
+L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
+L.autoReplyLeftCombatNormalWin = "I won against '%s'."
+L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
+L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
+L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
 
 -----------------------------------------------------------------------
 -- Bars.lua
@@ -230,9 +253,12 @@ L.combatLog = "Automatic Combat Logging"
 L.combatLogDesc = "Automatically start logging combat when a pull timer is started and end it when the encounter ends."
 
 L.pull = "Pull"
-L.pulling = "Pulling!"
+L.engageSoundTitle = "Play a sound when a boss encounter has started"
+L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
+L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
 L.pullStarted = "Pull timer started by %s user %s."
 L.pullStopped = "Pull timer cancelled by %s."
+L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.pullIn = "Pull in %d sec"
 L.sendPull = "Sending a pull timer to BigWigs and DBM users."
 L.wrongPullFormat = "Must be between 1 and 60 seconds. A correct example is: /pull 5"
@@ -248,14 +274,6 @@ L.primary = "Primary"
 L.primaryDesc = "The first raid target icon that a encounter script should use."
 L.secondary = "Secondary"
 L.secondaryDesc = "The second raid target icon that a encounter script should use."
-
------------------------------------------------------------------------
--- Respawn.lua
---
-
-L.respawn = "Respawn"
-L.showRespawnBar = "Show respawn bar"
-L.showRespawnBarDesc = "Show a bar after you wipe on a boss displaying the time until the boss respawns."
 
 -----------------------------------------------------------------------
 -- Sound.lua
@@ -316,3 +334,13 @@ L.victoryMessageBigWigsDesc = "The BigWigs message is a simple \"boss has been d
 L.victoryMessageBlizzard = "Show the Blizzard message"
 L.victoryMessageBlizzardDesc = "The Blizzard message is a very large \"boss has been defeated\" animation in the middle of your screen."
 L.defeated = "%s has been defeated"
+
+-----------------------------------------------------------------------
+-- Wipe.lua
+--
+
+L.wipe = "Wipe"
+L.wipeSoundTitle = "Play a sound when you wipe"
+L.respawn = "Respawn"
+L.showRespawnBar = "Show respawn bar"
+L.showRespawnBarDesc = "Show a bar after you wipe on a boss displaying the time until the boss respawns."

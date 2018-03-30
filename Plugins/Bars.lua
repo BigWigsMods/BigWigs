@@ -35,6 +35,8 @@ local startBreak -- Break timer function
 local colors = nil
 local candy = LibStub("LibCandyBar-3.0")
 local media = LibStub("LibSharedMedia-3.0")
+local FONT = media.MediaType and media.MediaType.FONT or "font"
+local STATUSBAR = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
 local next = next
 local tremove = tremove
 local db = nil
@@ -525,11 +527,11 @@ do
 		get = function(info)
 			local key = info[#info]
 			if key == "texture" then
-				for i, v in next, media:List("statusbar") do
+				for i, v in next, media:List(STATUSBAR) do
 					if v == db.texture then return i end
 				end
 			elseif key == "font" then
-				for i, v in next, media:List("font") do
+				for i, v in next, media:List(FONT) do
 					if v == db.font then return i end
 				end
 			end
@@ -538,10 +540,10 @@ do
 		set = function(info, value)
 			local key = info[#info]
 			if key == "texture" then
-				local list = media:List("statusbar")
+				local list = media:List(STATUSBAR)
 				db.texture = list[value]
 			elseif key == "font" then
-				local list = media:List("font")
+				local list = media:List(FONT)
 				db.font = list[value]
 			elseif key == "barStyle" then
 				plugin:SetBarStyle(value)
@@ -563,7 +565,7 @@ do
 						type = "select",
 						name = L.font,
 						order = 1,
-						values = media:List("font"),
+						values = media:List(FONT),
 						itemControl = "DDI-Font",
 					},
 					outline = {
@@ -637,7 +639,7 @@ do
 						type = "select",
 						name = L.texture,
 						order = 9,
-						values = media:List("statusbar"),
+						values = media:List(STATUSBAR),
 						itemControl = "DDI-Statusbar",
 					},
 					barStyle = {
@@ -1050,13 +1052,13 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
-	if not db.font then db.font = media:GetDefault("font") end
+	if not db.font then db.font = media:GetDefault(FONT) end
 	if normalAnchor then
 		normalAnchor:RefixPosition()
 		emphasizeAnchor:RefixPosition()
 	end
 	if plugin:IsEnabled() then
-		if not media:Fetch("statusbar", db.texture, true) then db.texture = "BantoBar" end
+		if not media:Fetch(STATUSBAR, db.texture, true) then db.texture = "BantoBar" end
 		plugin:SetBarStyle(db.barStyle)
 		plugin:RegisterMessage("DBM_AddonMessage")
 	end
@@ -1069,11 +1071,11 @@ end
 --
 
 function plugin:OnRegister()
-	media:Register("statusbar", "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
-	media:Register("statusbar", "Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
-	media:Register("statusbar", "Glaze", "Interface\\AddOns\\BigWigs\\Textures\\glaze")
-	media:Register("statusbar", "Charcoal", "Interface\\AddOns\\BigWigs\\Textures\\Charcoal")
-	media:Register("statusbar", "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
+	media:Register(STATUSBAR, "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
+	media:Register(STATUSBAR, "Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
+	media:Register(STATUSBAR, "Glaze", "Interface\\AddOns\\BigWigs\\Textures\\glaze")
+	media:Register(STATUSBAR, "Charcoal", "Interface\\AddOns\\BigWigs\\Textures\\Charcoal")
+	media:Register(STATUSBAR, "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -1415,7 +1417,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	if createAnchors then createAnchors() end
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)
-	local bar = candy:New(media:Fetch("statusbar", db.texture), 200, 14)
+	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), 200, 14)
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:anchor", normalAnchor)
@@ -1435,7 +1437,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	elseif db.outline ~= "NONE" then
 		flags = db.outline
 	end
-	local f = media:Fetch("font", db.font)
+	local f = media:Fetch(FONT, db.font)
 	bar.candyBarLabel:SetFont(f, db.fontSize, flags)
 	bar.candyBarDuration:SetFont(f, db.fontSize, flags)
 

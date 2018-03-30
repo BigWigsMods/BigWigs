@@ -2,6 +2,7 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "koKR")
 if not L then return end
 
 L.general = "일반"
+L.comma = ", "
 
 L.positionX = "X 위치"
 L.positionY = "Y 위치"
@@ -16,6 +17,28 @@ L.altPowerTitle = "보조 자원"
 L.toggleDisplayPrint = "디스플레이가 다음에 표시됩니다. 이 우두머리 전투에서 완전히 비활성하려면 우두머리 전투 옵션에서 끄도록 전환해야 합니다."
 L.disabled = "비활성"
 L.disabledDisplayDesc = "디스플레이를 사용하는 모든 모듈에서 디스플레이를 비활성화합니다."
+
+-----------------------------------------------------------------------
+-- AutoReply.lua
+--
+
+--L.autoReply = "Auto Reply"
+--L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
+--L.responseType = "Response Type"
+--L.autoReplyFinalReply = "Also whisper when leaving combat"
+--L.guildAndFriends = "Guild & Friends"
+--L.everyoneElse = "Everyone else"
+
+--L.autoReplyBasic = "I'm busy in combat with a boss encounter."
+--L.autoReplyNormal = "I'm busy in combat with '%s'."
+--L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
+--L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+
+--L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
+--L.autoReplyLeftCombatNormalWin = "I won against '%s'."
+--L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
+--L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
+--L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
 
 -----------------------------------------------------------------------
 -- Bars.lua
@@ -231,9 +254,12 @@ L.combatLog = "자동 전투 기록"
 L.combatLogDesc = "전투 예정 타이머 시작부터 우두머리 전투 종료로 타이머가 끝날 때까지의 전투 기록을 자동으로 켭니다."
 
 L.pull = "전투 예정"
-L.pulling = "전투 시작!"
+--L.engageSoundTitle = "Play a sound when a boss encounter has started"
+--L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
+--L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
 L.pullStarted = "%s 사용자 %s|1이;가; 전투 예정 타이머를 시작했습니다."
 L.pullStopped = "%s|1이;가; 전투 예정 타이머를 취소했습니다."
+--L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.pullIn = "%d초 후 전투 시작"
 L.sendPull = "BigWigs와 DBM 사용자에게 전투 예정 타이머를 보냅니다."
 L.wrongPullFormat = "1초에서 60초 사이여야 합니다. 올바른 예제: /pull 5"
@@ -249,14 +275,6 @@ L.primary = "첫번째"
 L.primaryDesc = "우두머리 전투 스크립트가 사용할 첫번째 공격대 대상 아이콘입니다."
 L.secondary = "두번째"
 L.secondaryDesc = "우두머리 전투 스크립트가 사용할 두번째 공격대 대상 아이콘입니다."
-
------------------------------------------------------------------------
--- Respawn.lua
---
-
-L.respawn = "재생성"
-L.showRespawnBar = "재생성 바 표시"
-L.showRespawnBarDesc = "우두머리에서 전멸 후에 우두머리 재생성까지 남은 시간을 보여주는 바를 표시합니다."
 
 -----------------------------------------------------------------------
 -- Sound.lua
@@ -317,3 +335,13 @@ L.victoryMessageBigWigsDesc = "BigWigs 메시지는 단순한 \"우두머리를 
 L.victoryMessageBlizzard = "블리자드 메시지 표시"
 L.victoryMessageBlizzardDesc = "Blizzard 메시지는 화면 중앙의 아주 큰 \"우두머리 처치\" 애니메이션입니다."
 L.defeated = "%s|1을;를; 처치했습니다"
+
+-----------------------------------------------------------------------
+-- Wipe.lua
+--
+
+--L.wipe = "Wipe"
+--L.wipeSoundTitle = "Play a sound when you wipe"
+L.respawn = "재생성"
+L.showRespawnBar = "재생성 바 표시"
+L.showRespawnBarDesc = "우두머리에서 전멸 후에 우두머리 재생성까지 남은 시간을 보여주는 바를 표시합니다."

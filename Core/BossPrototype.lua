@@ -21,13 +21,13 @@ local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
-local Timer = C_Timer.After
-local SendChatMessage, GetInstanceInfo = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo
+local SendChatMessage, GetInstanceInfo, Timer = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter
 local format, find, gsub, band, wipe = string.format, string.find, string.gsub, bit.band, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
 local core = BigWigs
 local C = core.C
 local pName = UnitName("player")
+local cpName
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
 local enabledModules = {}
@@ -775,6 +775,7 @@ do
 	-- Possibly a concern?
 
 	--- Start a repeating timer checking if your group has left combat with a boss.
+	-- @string[opt] first The event name when used as a callback
 	function boss:CheckForWipe(first)
 		if debug then dbg(self, ":CheckForWipe initiated.") end
 		local go = scan(self)
@@ -1489,7 +1490,7 @@ do
 			end
 		end
 	})
-	local cpName = coloredNames[pName]
+	cpName = coloredNames[pName]
 
 	local mt = {
 		__newindex = function(self, key, value)
@@ -1650,7 +1651,7 @@ do
 		end
 	end
 
-	function boss:TargetsMessage(key, playerTable, color, playerCount, text, icon, customTime)
+	function boss:TargetsMessage(key, color, playerTable, playerCount, text, icon, customTime)
 		local playersInTable = #playerTable
 		if playersInTable == playerCount then
 			printTargets(self, key, playerTable, color, text, icon)
@@ -1658,6 +1659,24 @@ do
 			Timer(customTime or 0.3, function()
 				printTargets(self, key, playerTable, color, text, icon)
 			end)
+		end
+	end
+
+	function boss:TargetMessage2(key, color, player, underYou, text, icon)
+		local textType = type(text)
+		local msg = textType == "string" and text or spells[text or key]
+		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+
+		if not player then
+			if checkFlag(self, key, C.MESSAGE) then
+				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, "???"), color, texture)
+			end
+		elseif player == pName then
+			if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
+				self:SendMessage("BigWigs_Message", self, key, format(underYou and L.underyou or L.you, msg), "Personal", texture)
+			end
+		elseif checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
+			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture)
 		end
 	end
 end
@@ -1886,6 +1905,13 @@ end
 -- @section misc
 --
 
+--- Trigger a function after a specific delay
+-- @param func callback function to trigger after the delay
+-- @number delay how long to wait until triggering the function
+function boss:SimpleTimer(func, delay)
+	Timer(delay, func)
+end
+
 --- Flash the screen edges.
 -- @param key the option key
 -- @param[opt] icon the icon to pulse if PULSE is set (if nil, key is used)
@@ -1938,10 +1964,6 @@ function boss:CancelSayCountdown(key)
 	end
 end
 
---- Play a sound.
--- @param key the option key
--- @string sound the sound to play
--- @string[opt] voice command to play when using a voice pack
 do
 	local tmp = { -- XXX temp
 		["long"] = "Long",
@@ -1950,12 +1972,32 @@ do
 		["alarm"] = "Alarm",
 		["warning"] = "Warning",
 	}
-	function boss:PlaySound(key, sound, voice)
-		if not checkFlag(self, key, C.MESSAGE) then return end
-		if hasVoice and checkFlag(self, key, C.VOICE) then
-			self:SendMessage("BigWigs_Voice", self, key, tmp[sound] or sound)
-		else
-			self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+	--- Play a sound.
+	-- @param key the option key
+	-- @string sound the sound to play
+	-- @string[opt] voice command to play when using a voice pack
+	function boss:PlaySound(key, sound, voice, player)
+		if player then
+			local meOnly = checkFlag(self, key, C.ME_ONLY)
+			if type(player) == "table" then
+				if meOnly then
+					if player[#player] == cpName then
+						self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+					end
+				elseif #player == 1 then
+					self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+				end
+			else
+				if not meOnly or (meOnly and player == pName) then
+					self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+				end
+			end
+		elseif checkFlag(self, key, C.MESSAGE) then
+			if hasVoice and checkFlag(self, key, C.VOICE) then
+				self:SendMessage("BigWigs_Voice", self, key, tmp[sound] or sound)
+			else
+				self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+			end
 		end
 	end
 end

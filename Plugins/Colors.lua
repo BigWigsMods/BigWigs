@@ -87,12 +87,12 @@ local function hidden(info)
 	local optionName = info[#info]
 	if type(optionColors) == "table" then
 		for _, color in next, optionColors do
-			if color == optionName then
+			if color == optionName or colorWrapper[color] == optionName then
 				return false
 			end
 		end
 	else
-		return optionName ~= optionColors
+		return optionName ~= optionColors and optionName ~= colorWrapper[optionColors]
 	end
 	return true
 end

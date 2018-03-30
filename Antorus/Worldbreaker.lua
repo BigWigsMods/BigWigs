@@ -99,7 +99,7 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextApocalypseDriveWarning then
-		self:Message(240277, "Neutral", "Info", CL.soon:format(self:SpellName(240277))) -- Apocalypse Drive
+		self:Message(240277, "cyan", "Info", CL.soon:format(self:SpellName(240277))) -- Apocalypse Drive
 		if stage == 1 then
 			nextApocalypseDriveWarning = self:Easy() and 22 or 37 -- happens at 20% (35% hc/my)
 		else
@@ -126,7 +126,7 @@ do
 end
 
 function mod:Annihilation()
-	self:Message(244761, "Important", "Alert")
+	self:Message(244761, "red", "Alert")
 	self:CDBar("missileImpact", 6.2, L.missileImpact, L.missileImpact_icon)
 	self:Bar(244761, (self:Mythic() or stage == 1) and 31.6 or 15.8) -- Annihilation
 	if stage == 1 or self:Mythic() then
@@ -139,7 +139,7 @@ do
 
 	local function warn(self)
 		if not isOnMe then
-			self:Message(244410, "Attention")
+			self:Message(244410, "yellow")
 		end
 		scheduled = nil
 	end
@@ -160,7 +160,8 @@ do
 	function mod:DecimationApplied(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:Message(244410, "Personal", "Warning", CL.you:format(args.spellName))
+			self:PlaySound(244410, "Warning")
+			self:TargetMessage2(244410, "blue", args.destName)
 			self:Say(244410)
 			if args.spellId ~= 246919 then -- Haywire Decimation
 				self:SayCountdown(244410, 5)
@@ -170,13 +171,16 @@ do
 end
 
 function mod:FelBombardment(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", self:Me(args.destGUID) and "Warning" or "Alarm", nil, nil, true) -- Different sound for when tanking/offtanking
-	self:Bar(args.spellId, self:Mythic() and 15.8 or 20.7)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 7)
 		self:TargetBar(args.spellId, 7, args.destName)
+		self:PlaySound(args.spellId, "Warning")
+	else
+		self:PlaySound(args.spellId, "Alarm", nil, args.destName) -- Different sound for when tanking/offtanking
 	end
+	self:TargetMessage2(args.spellId, "orange", args.destName)
+	self:Bar(args.spellId, self:Mythic() and 15.8 or 20.7)
 end
 
 function mod:FelBombardmentRemoved(args)
@@ -192,17 +196,17 @@ function mod:ApocalypseDrive(args)
 	self:StopBar(244761) -- Annihilation
 	self:StopBar(246220) -- Fel Bombardment
 
-	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", "Long", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 20)
 end
 
 function mod:ApocalypseDriveSuccess(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Message(args.spellId, "orange", "Alarm")
 end
 
 function mod:WeaponDeath(args)
 	stage = stage + 1
-	self:Message(240277, "Positive", "Info", CL.interrupted:format(self:SpellName(240277)))
+	self:Message(240277, "green", "Info", CL.interrupted:format(self:SpellName(240277)))
 	self:StopBar(CL.cast:format(self:SpellName(240277)))
 
 	self:Bar(244969, 10) -- Eradication
@@ -221,18 +225,18 @@ end
 
 function mod:Eradication(args)
 	self:StopBar(args.spellId)
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", "Warning", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 5.5)
 end
 
 function mod:Carnage(args)
-	self:Message(args.spellId, "Urgent", "Alarm")
+	self:Message(args.spellId, "orange", "Alarm")
 end
 
 --[[ Mythic ]]--
 function mod:Haywire(args)
 	stage = stage + 1
-	self:Message(240277, "Positive", "Long", CL.interrupted:format(self:SpellName(240277)))
+	self:Message(240277, "green", "Long", CL.interrupted:format(self:SpellName(240277)))
 	self:StopBar(CL.cast:format(self:SpellName(240277)))
 
 	self:Bar(244969, 9.5) -- Eradication

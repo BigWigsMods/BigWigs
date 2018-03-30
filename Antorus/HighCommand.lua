@@ -121,13 +121,13 @@ end
 --
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 	if spellId == 245304 then -- Entropic Mines
-		self:Message(245161, "Attention", "Info")
+		self:Message(245161, "yellow", "Info")
 		local cooldown = 10
 		if nextAssumeCommand > GetTime() + cooldown then
 			self:Bar(245161, cooldown)
 		end
 	elseif spellId == 245546 then -- Summon Reinforcements
-		self:Message(245546, "Important", "Alarm")
+		self:Message(245546, "red", "Alarm")
 		local cooldown = 35
 		if nextAssumeCommand > GetTime() + cooldown then
 			self:Bar(245546, cooldown)
@@ -136,7 +136,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 end
 
 function mod:AssumeCommand(args)
-	self:Message(args.spellId, "Neutral", "Long", CL.incoming:format(incomingBoss[assumeCommandCount % 3]))
+	self:Message(args.spellId, "cyan", "Long", CL.incoming:format(incomingBoss[assumeCommandCount % 3]))
 
 	if assumeCommandCount % 3 == 1 then -- Chief Engineer Ishkar
 		self:StopBar(245161) -- Entropic Mines
@@ -172,15 +172,15 @@ end
 
 function mod:ExploitWeaknessApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 1 and "Warning") -- Swap on 2
+	self:StackMessage(args.spellId, args.destName, amount, "orange", amount > 1 and "Warning") -- Swap on 2
 end
 
 function mod:Pyroblast(args)
-	self:Message(args.spellId, "Urgent", "Alert")
+	self:Message(args.spellId, "orange", "Alert")
 end
 
 function mod:Fusillade(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.count:format(self:SpellName(244625), fusilladeCount))
+	self:Message(args.spellId, "orange", "Warning", CL.count:format(self:SpellName(244625), fusilladeCount))
 	self:CastBar(args.spellId, 5, CL.count:format(self:SpellName(244625), fusilladeCount))
 	fusilladeCount = fusilladeCount + 1
 	local cooldown = 30
@@ -191,7 +191,7 @@ end
 
 
 function mod:ShockGrenadeStart(args)
-	self:Message(244737, "Attention", nil, CL.incoming:format(args.spellName))
+	self:Message(244737, "yellow", nil, CL.incoming:format(args.spellName))
 	local cooldown = 14.5
 	if nextAssumeCommand > GetTime() + cooldown then
 		self:Bar(244737, cooldown)
@@ -204,7 +204,8 @@ function mod:ShockGrenade(args)
 		self:Flash(args.spellId)
 		self:OpenProximity(args.spellId, 10)
 		self:SayCountdown(args.spellId, 5)
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:PlaySound(args.spellId, "Warning")
+		self:TargetMessage2(args.spellId, "blue", args.destName)
 	end
 end
 
@@ -220,7 +221,7 @@ do
 	function mod:FelshieldUp(args)
 		if args.destGUID ~= prev then
 			prev = args.destGUID
-			self:Message(244910, "Positive", nil, L.felshieldActivated:format(self:ColorName(args.sourceName)))
+			self:Message(244910, "green", nil, L.felshieldActivated:format(self:ColorName(args.sourceName)))
 			self:Bar(244910, 10, L.felshieldUp)
 		end
 	end
@@ -228,13 +229,13 @@ end
 
 function mod:Felshield(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Positive", "Info", CL.you:format(args.spellName))
+		self:Message(args.spellId, "green", "Info", CL.you:format(args.spellName))
 	end
 end
 
 function mod:FelshieldRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", nil, CL.removed:format(args.spellName))
+		self:Message(args.spellId, "blue", nil, CL.removed:format(args.spellName))
 	end
 end
 
@@ -242,7 +243,7 @@ function mod:PsychicAssault(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if (amount > 10 and amount % 5 == 0) or (amount > 20 and amount % 2 == 0) then
-			self:StackMessage(args.spellId, args.destName, amount, "Personal", amount > 15 and "Warning")
+			self:StackMessage(args.spellId, args.destName, amount, "blue", amount > 15 and "Warning")
 		end
 	end
 end
@@ -253,7 +254,8 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:PlaySound(args.spellId, "Alert")
+			self:TargetMessage2(args.spellId, "blue", args.destName, true)
 		end
 	end
 end

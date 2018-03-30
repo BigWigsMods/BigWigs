@@ -11,7 +11,7 @@ if not plugin then return end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
-local mType = media.MediaType and media.MediaType.SOUND or "sound"
+local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 local soundList = nil
 local db
 local sounds = {
@@ -26,20 +26,20 @@ local sounds = {
 -- Sound Registration
 --
 
-media:Register(mType, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.ogg")
-media:Register(mType, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.ogg")
-media:Register(mType, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.ogg")
-media:Register(mType, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.ogg")
+media:Register(SOUND, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.ogg")
+media:Register(SOUND, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.ogg")
+media:Register(SOUND, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.ogg")
+media:Register(SOUND, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.ogg")
 
 -- Ingame sounds that DBM uses for DBM converts
-media:Register(mType, "BigWigs: [DBM] ".. L.FlagTaken, "Sound\\Spells\\PVPFlagTaken.ogg")
-media:Register(mType, "BigWigs: [DBM] ".. L.Beware, "Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.ogg")
-media:Register(mType, "BigWigs: [DBM] ".. L.Destruction, "Sound\\Creature\\KilJaeden\\KILJAEDEN02.ogg")
-media:Register(mType, "BigWigs: [DBM] ".. L.RunAway, "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.ogg")
+media:Register(SOUND, "BigWigs: [DBM] ".. L.FlagTaken, "Sound\\Spells\\PVPFlagTaken.ogg")
+media:Register(SOUND, "BigWigs: [DBM] ".. L.Beware, "Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.ogg")
+media:Register(SOUND, "BigWigs: [DBM] ".. L.Destruction, "Sound\\Creature\\KilJaeden\\KILJAEDEN02.ogg")
+media:Register(SOUND, "BigWigs: [DBM] ".. L.RunAway, "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.ogg")
 
 -- Ingame sounds used by Blizzard
-media:Register(mType, "BigWigs: Raid Warning", "Sound\\Interface\\RaidWarning.ogg")
-media:Register(mType, "BigWigs: Raid Boss Whisper", "Sound\\Interface\\UI_RaidBossWhisperWarning.ogg")
+media:Register(SOUND, "BigWigs: Raid Warning", "Sound\\Interface\\RaidWarning.ogg")
+media:Register(SOUND, "BigWigs: Raid Boss Whisper", "Sound\\Interface\\UI_RaidBossWhisperWarning.ogg")
 
 --------------------------------------------------------------------------------
 -- Options
@@ -68,7 +68,7 @@ plugin.pluginOptions = {
 	end,
 	set = function(info, value)
 		local sound = info[#info]
-		PlaySoundFile(media:Fetch(mType, soundList[value]), "Master")
+		PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
 		db.media[sound] = soundList[value]
 	end,
 	args = {
@@ -145,7 +145,7 @@ end
 function plugin:OnRegister()
 	updateProfile()
 
-	soundList = media:List(mType)
+	soundList = media:List(SOUND)
 
 	for k in next, sounds do
 		local n = L[k] or k
@@ -221,17 +221,17 @@ end
 
 do
 	local PlaySoundFile = PlaySoundFile
-	function plugin:BigWigs_Sound(event, module, key, sound)
+	function plugin:BigWigs_Sound(event, module, key, soundName)
 		if db.sound then
-			local sDb = db[sound]
+			local sDb = db[soundName]
 			if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
-				local path = db.media[sound] and media:Fetch(mType, db.media[sound]) or media:Fetch(mType, sound)
+				local path = db.media[soundName] and media:Fetch(SOUND, db.media[soundName], true) or media:Fetch(SOUND, soundName, true)
 				if path then
 					PlaySoundFile(path, "Master")
 				end
 			else
 				local newSound = sDb[module.name][key]
-				local path = db.media[newSound] and media:Fetch(mType, db.media[newSound]) or media:Fetch(mType, newSound)
+				local path = db.media[newSound] and media:Fetch(SOUND, db.media[newSound], true) or media:Fetch(SOUND, newSound, true)
 				if path then
 					PlaySoundFile(path, "Master")
 				end

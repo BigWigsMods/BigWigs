@@ -93,7 +93,7 @@ end
 function mod:TormentofFlames(args)
 	if tormentActive ~= 1 then
 		tormentActive = 1
-		self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
+		self:Message("stages", "green", "Long", args.spellName, args.spellId)
 		if self:Easy() then
 			self:CDBar("stages", 355, self:SpellName(243973), 243973) -- Torment of Shadows
 		else
@@ -105,7 +105,7 @@ end
 function mod:TormentofFrost(args)
 	if tormentActive ~= 2 then
 		tormentActive = 2
-		self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
+		self:Message("stages", "green", "Long", args.spellName, args.spellId)
 		self:CDBar("stages", self:Mythic() and 100 or 114, self:SpellName(243980), 243980) -- Torment of Fel
 	end
 end
@@ -113,7 +113,7 @@ end
 function mod:TormentofFel(args)
 	if tormentActive ~= 3 then
 		tormentActive = 3
-		self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
+		self:Message("stages", "green", "Long", args.spellName, args.spellId)
 		self:CDBar("stages", self:Mythic() and 90 or 121, self:SpellName(243973), 243973) -- Torment of Shadows
 	end
 end
@@ -121,18 +121,18 @@ end
 function mod:TormentofShadows(args)
 	if tormentActive ~= 4 then
 		tormentActive = 4
-		self:Message("stages", "Positive", "Long", args.spellName, args.spellId)
+		self:Message("stages", "green", "Long", args.spellName, args.spellId)
 	end
 end
 
 function mod:Misery(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.spellName))
+		self:Message(args.spellId, "blue", "Alarm", CL.you:format(args.spellName))
 	end
 end
 
 function mod:ShadowStrike()
-	self:Message(243960, "Urgent", "Warning")
+	self:Message(243960, "orange", "Warning")
 	self:CDBar(243960, 9.8)
 end
 
@@ -141,7 +141,7 @@ function mod:DarkFissureStart(args)
 end
 
 function mod:DarkFissure(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	self:CDBar(args.spellId, 32.9)
 end
 
@@ -152,7 +152,7 @@ function mod:MarkedPrey(args)
 		self:SayCountdown(args.spellId, 5)
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "red", "Alarm")
 	self:TargetBar(args.spellId, 5, args.destName)
 	self:CDBar(args.spellId, 32.8)
 end
@@ -175,7 +175,7 @@ do
 
 	local function warn(self, spellId)
 		if not isOnMe then
-			self:TargetMessage(spellId, playerList, "Urgent")
+			self:TargetMessage(spellId, playerList, "orange")
 		else
 			wipe(playerList)
 		end
@@ -188,7 +188,7 @@ do
 
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
-			self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", CL.count_icon:format(args.spellName, #playerList, #playerList+2))
+			self:TargetMessage(args.spellId, args.destName, "orange", "Warning", CL.count_icon:format(args.spellName, #playerList, #playerList+2))
 			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #playerList, #playerList+2))
 			self:Flash(args.spellId, #playerList+2)
 			self:SayCountdown(args.spellId, 6, #playerList+2)
@@ -212,7 +212,7 @@ do
 
 	function mod:NecroticEmbraceRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
+			self:Message(args.spellId, "green", "Info", CL.removed:format(args.spellName))
 			isOnMe = nil
 			self:CancelSayCountdown(args.spellId)
 			self:CloseProximity(args.spellId)
@@ -240,7 +240,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(243999, "Personal", "Alert", CL.underyou:format(args.spellName)) -- Dark Fissure
+			self:Message(243999, "blue", "Alert", CL.underyou:format(args.spellName)) -- Dark Fissure
 		end
 	end
 end
@@ -254,7 +254,7 @@ do
 			local t = GetTime()
 			if t-prev > 1.5 then -- Also don't spam too much if it's a wipe and several are spawning at the same time
 				prev = t
-				self:Message(-16350, "Urgent", "Alarm", nil, L.shadowOfVarimathras_icon)
+				self:Message(-16350, "orange", "Alarm", nil, L.shadowOfVarimathras_icon)
 			end
 		end
 	end

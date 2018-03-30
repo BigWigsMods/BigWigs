@@ -23,6 +23,8 @@ local valid_sounds = {
 local color_methods = {
 	Message = 2,
 	TargetMessage = 3,
+	TargetMessage2 = 2,
+	TargetsMessage = 2,
 	StackMessage = 4,
 	DelayedMessage = 3,
 }
@@ -33,6 +35,12 @@ local sound_methods = {
 	StackMessage = 5,
 	DelayedMessage = 6,
 }
+local valid_methods = {
+	ScheduleTimer = true,
+	ScheduleRepeatingTimer = true,
+}
+for k in next, color_methods do valid_methods[k] = true end
+for k in next, sound_methods do valid_methods[k] = true end
 
 -- Set an exit code if we show an error.
 local exit_code = 0
@@ -116,9 +124,8 @@ end
 local function cmp(a, b)
 	if type(a) == "number" and type(b) == "number" then
 		return a < b
-	else
-		return string.lower(a) < string.lower(b)
 	end
+	return string.lower(a) < string.lower(b)
 end
 
 local function sortKeys(keys)
@@ -173,10 +180,10 @@ local function dump(module_dir)
 	if not next(modules) then return end
 
 	local path = module_dir .. "Options/"
-	assert(os.execute("mkdir -p \"" .. path .. "\"")) -- XXX Remove this
+	-- assert(os.execute("mkdir -p \"" .. path .. "\"")) -- XXX Remove this
 
-	dumpValues(path, "Sounds", module_sounds)
 	dumpValues(path, "Colors", module_colors)
+	dumpValues(path, "Sounds", module_sounds)
 
 	print(string.format("    Parsed %d modules.", #modules))
 end
@@ -305,11 +312,12 @@ local function parseLua(file)
 			else
 				callback = event
 			end
-			spells = strsplit(spells)
-			for i = 1, #spells do
-				spells[i] = tonumber(spells[i])
+			if not options[callback] then
+				options[callback] = {}
 			end
-			options[callback] = spells
+			for _, v in next, strsplit(spells) do
+				table.insert(options[callback], tonumber(v))
+			end
 		end
 
 		--- Set spellId replacement values.
@@ -350,33 +358,31 @@ local function parseLua(file)
 		if line:find("Message", nil, true) or line:find("PlaySound", nil, true) then
 			local key, sound, color = nil, nil, nil
 			local method, args = line:match("%w+:(.-)%(%s*(.+)%s*%)")
-			if sound_methods[method] or method == "ScheduleTimer" then
+			local offset = 0
+			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
+				method = args:match("^\"(.-)\"")
+				offset = 2
+			end
+			if valid_methods[method] then
 				args = strsplit(clean(args))
-				if method == "ScheduleTimer" then
-					-- boss:ScheduleTimer(callback, delay, args...)
-					method = unquote(table.remove(args, 1))
-					table.remove(args, 1) -- delay
-				end
+				key = unternary(args[1+offset], "(-?%d+)") -- XXX doesn't allow for string keys
 				local sound_index = sound_methods[method]
 				if sound_index then
-					-- boss:Message(key, color, sound, text, icon)
-					-- boss:TargetMessage(key, player, color, sound, text, icon, alwaysPlaySound)
-					-- boss:StackMessage(key, player, stack, color, sound, text, icon)
-					-- boss:DelayedMessage(key, delay, color, text, icon, sound)
-					-- boss:PlaySound(key, sound)
-					local color_index = color_methods[method]
-					key = unternary(args[1], "(-?%d+)") -- XXX doesn't allow for string keys
-					sound = unternary(args[sound_index], "\"(.-)\"", valid_sounds)
-					color = tablize(unternary(args[color_index], "\"(.-)\"", valid_colors))
-					if method == "TargetMessage" or method == "StackMessage" then
+					sound = unternary(args[sound_index+offset], "\"(.-)\"", valid_sounds)
+				end
+				local color_index = color_methods[method]
+				if color_index then
+					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
+					if method:sub(1,6) == "Target" or method == "StackMessage" then
 						color[#color+1] = "Personal" -- Replaces the color with Personal for on me
 					end
 				end
 			end
 
 			-- Handle manually setting the key, color, and sound with a comment. Has to be on the
-			-- same line as the function call. All three values can be a comma seperated list.
-			-- e.g.: -- SetOption:1234,1235:Urgent:Info,Alert:
+			-- same line as the function call. All three values can also be a comma seperated list
+			-- or left empty.
+			-- e.g.: -- SetOption:1234,1235:Urgent:Info,Alert:  or  -- SetOption:1234:::
 			local set_key, set_color, set_sound = comment:match("SetOption:(.*):(.*):(.*):")
 			if set_key then
 				if set_key ~= "" then

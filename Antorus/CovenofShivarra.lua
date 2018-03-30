@@ -247,7 +247,7 @@ end
 function mod:UNIT_TARGETABLE_CHANGED(unit)
 	if self:MobId(UnitGUID(unit)) == 122468 then -- Noura
 		if UnitCanAttack("player", unit) then
-			self:Message("stages", "Positive", "Long", -15967, false) -- Noura, Mother of Flame
+			self:Message("stages", "green", "Long", -15967, false) -- Noura, Mother of Flame
 			self:Bar(245627, 8.9) -- Whirling Saber
 			self:Bar(244899, 12.5) -- Fiery Strike
 			if not self:Easy() then
@@ -264,7 +264,7 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		end
 	elseif self:MobId(UnitGUID(unit)) == 122467 then -- Asara
 		if UnitCanAttack("player", unit) then
-			self:Message("stages", "Positive", "Long", -15968, false) -- Asara, Mother of Night
+			self:Message("stages", "green", "Long", -15968, false) -- Asara, Mother of Night
 			self:Bar(246329, 12.6) -- Shadow Blades
 			if not self:Easy() then
 				self:Bar(252861, 28.4) -- Storm of Darkness
@@ -276,7 +276,7 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		end
 	elseif self:MobId(UnitGUID(unit)) == 122469 then -- Diima
 		if UnitCanAttack("player", unit) then
-			self:Message("stages", "Positive", "Long", -15969, false) -- Diima, Mother of Gloom
+			self:Message("stages", "green", "Long", -15969, false) -- Diima, Mother of Gloom
 			self:Bar(245586, 8) -- Chilled Blood
 			self:Bar(245518, 12.2) -- Flashfreeze
 			if not self:Easy() then
@@ -295,7 +295,7 @@ function mod:UNIT_TARGETABLE_CHANGED(unit)
 		end
 	elseif self:MobId(UnitGUID(unit)) == 125436 then -- Thu'raya
 		if UnitCanAttack("player", unit) then
-			self:Message("stages", "Positive", "Long", -16398, false) -- Thu'raya, Mother of the Cosmos
+			self:Message("stages", "green", "Long", -16398, false) -- Thu'raya, Mother of the Cosmos
 			self:Bar(250757, 5.2) -- Cosmic Glare
 			self:StopBar(-16398) -- Thu'raya, Mother of the Cosmos
 			self:CDBar("stages", 142, -15967, "achievement_boss_argus_shivan") -- Noura, Mother of Flame
@@ -311,20 +311,20 @@ do
 		local t = GetTime()
 		if t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Important", "Info")
+			self:Message(args.spellId, "red", "Info")
 		end
 	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("250095", nil, true) then -- Machinations of Aman'thul
-		self:Message("torment_of_the_titans", "Urgent", nil, CL.soon:format(L.torment:format(L.tormentHeal)), tormentIcons["AmanThul"])
+		self:Message("torment_of_the_titans", "orange", nil, CL.soon:format(L.torment:format(L.tormentHeal)), tormentIcons["AmanThul"])
 	elseif msg:find("245671", nil, true) then -- Flames of Khaz'goroth
-		self:Message("torment_of_the_titans", "Urgent", nil, CL.soon:format(L.torment:format(L.tormentFlames)), tormentIcons["Khazgoroth"])
+		self:Message("torment_of_the_titans", "orange", nil, CL.soon:format(L.torment:format(L.tormentFlames)), tormentIcons["Khazgoroth"])
 	elseif msg:find("246763", nil, true) then -- Fury of Golganneth
-		self:Message("torment_of_the_titans", "Urgent", nil, CL.soon:format(L.torment:format(L.tormentLightning)), tormentIcons["Golganneth"])
+		self:Message("torment_of_the_titans", "orange", nil, CL.soon:format(L.torment:format(L.tormentLightning)), tormentIcons["Golganneth"])
 	elseif msg:find("245910", nil, true) then -- Spectral Army of Norgannon
-		self:Message("torment_of_the_titans", "Urgent", nil, CL.soon:format(L.torment:format(L.tormentArmy)), tormentIcons["Norgannon"])
+		self:Message("torment_of_the_titans", "orange", nil, CL.soon:format(L.torment:format(L.tormentArmy)), tormentIcons["Norgannon"])
 	end
 end
 
@@ -341,31 +341,31 @@ do
 		if spellId == 253949 then -- Machinations of Aman'thul
 			self:StopBar(L.torment:format(L.tormentHeal))
 			tDeleteItem(upcomingTorments, "AmanThul")
-			self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentHeal), tormentIcons["AmanThul"])
+			self:Message("torment_of_the_titans", "red", "Warning", L.torment:format(L.tormentHeal), tormentIcons["AmanThul"])
 			updateInfoBox(self)
 			announceNextTorment = true
 		elseif spellId == 253881 then -- Flames of Khaz'goroth
 			self:StopBar(L.torment:format(L.tormentFlames))
 			tDeleteItem(upcomingTorments, "Khazgoroth")
-			self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
+			self:Message("torment_of_the_titans", "red", "Warning", L.torment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
 			updateInfoBox(self)
 			announceNextTorment = true
 		elseif spellId == 253951 then  -- Fury of Golganneth
 			self:StopBar(L.torment:format(L.tormentLightning))
 			tDeleteItem(upcomingTorments, "Golganneth")
-			self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentLightning), tormentIcons["Golganneth"])
+			self:Message("torment_of_the_titans", "red", "Warning", L.torment:format(L.tormentLightning), tormentIcons["Golganneth"])
 			updateInfoBox(self)
 			announceNextTorment = true
 		elseif spellId == 253950 then -- Spectral Army of Norgannon
 			self:StopBar(L.torment:format(L.tormentArmy))
 			tDeleteItem(upcomingTorments, "Norgannon")
-			self:Message("torment_of_the_titans", "Important", "Warning", L.torment:format(L.tormentArmy), tormentIcons["Norgannon"])
+			self:Message("torment_of_the_titans", "red", "Warning", L.torment:format(L.tormentArmy), tormentIcons["Norgannon"])
 			updateInfoBox(self)
 			announceNextTorment = true
 		end
 		if announceNextTorment and #upcomingTorments == 1 then
 			local nextTorment = upcomingTorments[1]
-			self:ScheduleTimer("Message", 5, "torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L[tormentLocaleLookup[nextTorment]]), tormentIcons[nextTorment])
+			self:ScheduleTimer("Message", 5, "torment_of_the_titans", "cyan", "Info", L.nextTorment:format(L[tormentLocaleLookup[nextTorment]]), tormentIcons[nextTorment])
 		end
 	end
 end
@@ -374,7 +374,7 @@ function mod:TormentofAmanThul()
 	self:StopBar(L.torment_of_the_titans)
 	upcomingTorments[#upcomingTorments+1] = "AmanThul"
 	if #upcomingTorments == 1 then
-		self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentHeal), tormentIcons["AmanThul"])
+		self:Message("torment_of_the_titans", "cyan", "Info", L.nextTorment:format(L.tormentHeal), tormentIcons["AmanThul"])
 	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentHeal), tormentIcons["AmanThul"])
 	updateInfoBox(self)
@@ -384,7 +384,7 @@ function mod:TormentofKhazgoroth()
 	self:StopBar(L.torment_of_the_titans)
 	upcomingTorments[#upcomingTorments+1] = "Khazgoroth"
 	if #upcomingTorments == 1 then
-		self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
+		self:Message("torment_of_the_titans", "cyan", "Info", L.nextTorment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
 	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
 	updateInfoBox(self)
@@ -394,7 +394,7 @@ function mod:TormentofGolganneth()
 	self:StopBar(L.torment_of_the_titans)
 	upcomingTorments[#upcomingTorments+1] = "Golganneth"
 	if #upcomingTorments == 1 then
-		self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentLightning), tormentIcons["Golganneth"])
+		self:Message("torment_of_the_titans", "cyan", "Info", L.nextTorment:format(L.tormentLightning), tormentIcons["Golganneth"])
 	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentLightning), tormentIcons["Golganneth"])
 	updateInfoBox(self)
@@ -404,7 +404,7 @@ function mod:TormentofNorgannon()
 	self:StopBar(L.torment_of_the_titans)
 	upcomingTorments[#upcomingTorments+1] = "Norgannon"
 	if #upcomingTorments == 1 then
-		self:Message("torment_of_the_titans", "Neutral", "Info", L.nextTorment:format(L.tormentArmy), tormentIcons["Norgannon"])
+		self:Message("torment_of_the_titans", "cyan", "Info", L.nextTorment:format(L.tormentArmy), tormentIcons["Norgannon"])
 	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentArmy), tormentIcons["Norgannon"])
 	updateInfoBox(self)
@@ -414,7 +414,7 @@ end
 function mod:FieryStrike(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) or amount > 2 then -- Swap above 2, always display stacks on self
-		self:StackMessage(args.spellId, args.destName, amount, "Neutral", "Info")
+		self:StackMessage(args.spellId, args.destName, amount, "cyan", "Info")
 	end
 end
 
@@ -423,7 +423,7 @@ function mod:FieryStrikeSuccess(args)
 end
 
 function mod:WhirlingSaber(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Alert", CL.incoming:format(args.spellName))
 	self:Bar(args.spellId, 35.3)
 end
 
@@ -436,7 +436,7 @@ do
 		end
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "red", "Alarm")
 			self:Bar(args.spellId, 40.1)
 		end
 	end
@@ -450,12 +450,12 @@ end
 
 --[[ Asara, Mother of Night ]]--
 function mod:ShadowBlades(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	self:CDBar(args.spellId, 29.2)
 end
 
 function mod:StormofDarkness(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:Bar(args.spellId, 58.5)
 end
 
@@ -463,7 +463,7 @@ end
 function mod:Flashfreeze(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, args.destName, amount, "Neutral", "Info")
+		self:StackMessage(args.spellId, args.destName, amount, "cyan", "Info")
 	end
 end
 
@@ -478,7 +478,7 @@ do
 		targetList[#targetList+1] = args.destName
 
 		if #targetList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, targetList, "Positive", "Alarm", nil, nil, self:Healer() and true) -- Always play a sound for healers
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, targetList, "green", "Alarm", nil, nil, self:Healer() and true) -- Always play a sound for healers
 			self:Bar(args.spellId, 25.5)
 			chilledBloodTime = GetTime()
 			infoboxScheduled = self:ScheduleTimer(updateInfoBox, 0.1, self)
@@ -505,14 +505,14 @@ do
 end
 
 function mod:OrbofFrost(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	self:Bar(args.spellId, 30.4)
 end
 
 --[[ Thu'raya, Mother of the Cosmos (Mythic) ]]--
 function mod:TouchoftheCosmos(args)
 	if self:Interrupter() then
-		self:Message(args.spellId, "Urgent", "Alarm")
+		self:Message(args.spellId, "orange", "Alarm")
 	end
 end
 
@@ -529,7 +529,7 @@ do
 
 		if #playerList == 1 then
 			self:CDBar(args.spellId, 15)
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Attention", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "yellow", "Alarm")
 			if self:GetOption(cosmicGlareMarker) then
 				SetRaidTarget(args.destName, 3)
 			end
@@ -556,7 +556,7 @@ do
 			local t = GetTime()
 			if t-prev > 1.5 then
 				prev = t
-				self:Message(245627, "Personal", "Alert", CL.underyou:format(args.spellName))
+				self:Message(245627, "blue", "Alert", CL.underyou:format(args.spellName))
 			end
 		end
 	end
@@ -569,7 +569,7 @@ do
 			local t = GetTime()
 			if t-prev > 1.5 then
 				prev = t
-				self:Message(252861, "Personal", "Alert", CL.underyou:format(args.spellName))
+				self:Message(252861, "blue", "Alert", CL.underyou:format(args.spellName))
 			end
 		end
 	end
