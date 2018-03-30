@@ -254,23 +254,23 @@ L.wrongTime = "Неверно указанное время. <время> мож
 -- AutoReply.lua
 --
 
---L.autoReply = "Auto Reply"
---L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
---L.responseType = "Response Type"
---L.autoReplyFinalReply = "Also whisper when leaving combat"
---L.guildAndFriends = "Guild & Friends"
---L.everyoneElse = "Everyone else"
+L.autoReply = "Автоответчик"
+L.autoReplyDesc = "Автоматически отвечать на приватные сообщения в бою с боссом."
+L.responseType = "Тип ответа"
+L.autoReplyFinalReply = "Также отвечать при выходе из боя"
+L.guildAndFriends = "Гильдия и Друзья"
+L.everyoneElse = "Все остальные"
 
---L.autoReplyBasic = "I'm busy in combat with a boss encounter."
---L.autoReplyNormal = "I'm busy in combat with '%s'."
---L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
---L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+L.autoReplyBasic = "В настоящее время я в бою с боссом."
+L.autoReplyNormal = "В настоящее время я в бою с '%s'."
+L.autoReplyAdvanced = "В настоящее время я в бою с '%s' (%s), %d/%d игроков живо."
+L.autoReplyExtreme = "В настоящее время я в бою с '%s' (%s), %d/%d игроков живо: %s"
 
---L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
---L.autoReplyLeftCombatNormalWin = "I won against '%s'."
---L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
---L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
---L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+L.autoReplyLeftCombatBasic = "Я больше не в бою с боссом."
+L.autoReplyLeftCombatNormalWin = "Я победил '%s'."
+L.autoReplyLeftCombatNormalWipe = "Я проиграл '%s'."
+L.autoReplyLeftCombatAdvancedWin = "Я победил '%s' с %d/%d живыми игроками."
+L.autoReplyLeftCombatAdvancedWipe = "Я проиграл '%s' на: %s"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
