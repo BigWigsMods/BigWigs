@@ -11,6 +11,8 @@ if not plugin then return end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
+local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
+local PlaySoundFile = PlaySoundFile
 
 -------------------------------------------------------------------------------
 -- Options
@@ -36,16 +38,16 @@ plugin.pluginOptions = {
 			name = L.wipeSoundTitle,
 			order = 1,
 			get = function(info)
-				for i, v in next, media:List(media.MediaType.SOUND) do
+				for i, v in next, media:List(SOUND) do
 					if v == plugin.db.profile[info[#info]] then
 						return i
 					end
 				end
 			end,
 			set = function(info, value)
-				plugin.db.profile[info[#info]] = media:List(media.MediaType.SOUND)[value]
+				plugin.db.profile[info[#info]] = media:List(SOUND)[value]
 			end,
-			values = media:List(media.MediaType.SOUND),
+			values = media:List(SOUND),
 			width = "double",
 			itemControl = "DDI-Sound",
 		},
@@ -82,9 +84,12 @@ function plugin:BigWigs_EncounterEnd(_, module, _, _, _, _, status)
 		if module.respawnTime and self.db.profile.respawnBar then
 			self:SendMessage("BigWigs_StartBar", self, nil, L.respawn, module.respawnTime, 236372) -- 236372 = "Interface\\Icons\\achievement_bg_returnxflags_def_wsg"
 		end
-		local name = self.db.profile.wipeSound
-		if name ~= "None" then
-			PlaySoundFile(media:Fetch(media.MediaType.SOUND, name), "Master")
+		local soundName = self.db.profile.wipeSound
+		if soundName ~= "None" then
+			local sound = media:Fetch(SOUND, soundName, true)
+			if sound then
+				PlaySoundFile(sound, "Master")
+			end
 		end
 	end
 end

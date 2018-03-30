@@ -11,6 +11,7 @@ LibStub("LibSink-2.0"):Embed(plugin)
 --
 
 local media = LibStub("LibSharedMedia-3.0")
+local FONT = media.MediaType and media.MediaType.FONT or "font"
 
 local labels = {}
 
@@ -212,7 +213,7 @@ local function updateProfile()
 	plugin:SetSinkStorage(db)
 	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
 	if not db.font then
-		db.font = media:GetDefault("font")
+		db.font = media:GetDefault(FONT)
 	end
 	if not db.fontSize then
 		local _, size = GameFontNormalHuge:GetFont()
@@ -229,9 +230,9 @@ local function updateProfile()
 			flags = seModule.db.profile.outline
 		end
 
-		emphasizedText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, flags)
+		emphasizedText:SetFont(media:Fetch(FONT, seModule.db.profile.font), seModule.db.profile.fontSize, flags)
 
-		emphasizedCountdownText:SetFont(media:Fetch("font", seModule.db.profile.font), seModule.db.profile.fontSize, flags)
+		emphasizedCountdownText:SetFont(media:Fetch(FONT, seModule.db.profile.font), seModule.db.profile.fontSize, flags)
 		emphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
 	end
 
@@ -273,7 +274,7 @@ local function updateProfile()
 		font.icon.animFade:SetStartDelay(db.displaytime)
 		font.animFade:SetDuration(db.fadetime)
 		font.icon.animFade:SetDuration(db.fadetime)
-		font:SetFont(media:Fetch("font", db.font), db.fontSize, flags)
+		font:SetFont(media:Fetch(FONT, db.font), db.fontSize, flags)
 	end
 end
 plugin.updateProfile = updateProfile -- XXX temp until the emphasize module is refactored
@@ -325,15 +326,15 @@ plugin.pluginOptions.args.more = {
 			type = "select",
 			name = L.font,
 			order = 1,
-			values = media:List("font"),
+			values = media:List(FONT),
 			itemControl = "DDI-Font",
 			get = function()
-				for i, v in next, media:List("font") do
+				for i, v in next, media:List(FONT) do
 					if v == plugin.db.profile.font then return i end
 				end
 			end,
 			set = function(_, value)
-				local list = media:List("font")
+				local list = media:List(FONT)
 				plugin.db.profile.font = list[value]
 			end,
 		},

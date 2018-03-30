@@ -23,6 +23,7 @@ plugin.defaultDB = {
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
+local FONT = media.MediaType and media.MediaType.FONT or "font"
 plugin.displayName = L.altPowerTitle
 
 local powerList, sortedUnitList, roleColoredList = nil, nil, nil
@@ -89,7 +90,7 @@ function plugin:RestyleWindow(dirty)
 	end
 
 	local font, size, flags = GameFontNormal:GetFont()
-	local curFont = media:Fetch("font", db.font)
+	local curFont = media:Fetch(FONT, db.font)
 	if dirty or curFont ~= font or db.fontSize ~= size or db.fontOutline ~= flags then
 		local newFlags
 		if db.monochrome and db.fontOutline ~= "" then
@@ -142,15 +143,15 @@ do
 				type = "select",
 				name = L.font,
 				order = 3,
-				values = media:List("font"),
+				values = media:List(FONT),
 				itemControl = "DDI-Font",
 				get = function()
-					for i, v in next, media:List("font") do
+					for i, v in next, media:List(FONT) do
 						if v == db.font then return i end
 					end
 				end,
 				set = function(_, value)
-					db.font = media:List("font")[value]
+					db.font = media:List(FONT)[value]
 					plugin:RestyleWindow(true)
 				end,
 				disabled = disabled,
@@ -283,7 +284,7 @@ local function updateProfile()
 	db = plugin.db.profile
 
 	if not db.font then
-		db.font = media:GetDefault("font")
+		db.font = media:GetDefault(FONT)
 	end
 	if not db.fontSize then
 		local _, size = GameFontNormal:GetFont()
