@@ -53,8 +53,8 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:TidalWave(args)
-	self:Message(args.spellId, "Urgent", "Warning")
-	self:CDBar(args.spellId, 22)
+	self:Message(233996, "Urgent", "Warning")
+	self:CDBar(233996, 22)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, castGUID, spellId)
