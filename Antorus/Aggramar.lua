@@ -406,6 +406,7 @@ do
 	end
 
 	function mod:ScorchingBlaze(args)
+		blazeProxList[#blazeProxList+1] = args.destName
 		if self:Me(args.destGUID) then
 			blazeOnMe = true
 			self:TargetMessage(args.spellId, args.destName, "red", "Warning")
