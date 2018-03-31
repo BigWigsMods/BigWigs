@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "ruRU")
 if not L then return end
 
+L.comma = ", "
+
 L.abilityName = "Название способности"
 L.abilityNameDesc = "Показывает или скрывает название способности в верхней части окна."
 L.Alarm = "Тревога"
@@ -148,9 +150,12 @@ L.proximity_name = "Радар близости"
 L.proximityTitle = "%d м / %d |4игрок:игрока:игроков;"
 L.pull = "Атака"
 L.pullIn = "Атакуем через %d сек"
-L.pulling = "Выступаем!"
+--L.engageSoundTitle = "Play a sound when a boss encounter has started"
+--L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
+--L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
 L.pullStarted = "Таймер атаки начат %s игроком %s."
 L.pullStopped = "%s отменил таймер атаки."
+--L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.raidIconsDesc = [=[Некоторые скрипты событий используют рейдовые метки, чтобы помечать игроков, которые оказывают особое влияние на вашу группу. Например, такой тип эффектов как 'бомба' и контроль разума.
 
 |cffff4411Применимо, если вы Лидер рейда или помощник!|r]=]
@@ -238,10 +243,34 @@ L.victoryMessageBlizzardDesc = "Сообщение Blizzard - это очень 
 L.victoryMessages = "Показывать сообщения о победе над боссом"
 L.victorySound = "Проигрывать звук победы над боссом"
 L.Warning = "Предупреждение"
+--L.wipe = "Wipe"
+--L.wipeSoundTitle = "Play a sound when you wipe"
 L.wrongBreakFormat = "Должно быть между 1 и 60 минутами. Например: /break 5"
 L.wrongCustomBarFormat = "Неверный формат. Правильно будет: /raidbar 20 текст"
 L.wrongPullFormat = "Должно быть между 1 и 60 секундами. Например: /pull 5"
 L.wrongTime = "Неверно указанное время. <время> может быть числом в секундах, М:С парой, или Mm. Например, 5, 1:20 или 2m."
+
+-----------------------------------------------------------------------
+-- AutoReply.lua
+--
+
+L.autoReply = "Автоответчик"
+L.autoReplyDesc = "Автоматически отвечать на приватные сообщения в бою с боссом."
+L.responseType = "Тип ответа"
+L.autoReplyFinalReply = "Также отвечать при выходе из боя"
+L.guildAndFriends = "Гильдия и Друзья"
+L.everyoneElse = "Все остальные"
+
+L.autoReplyBasic = "В настоящее время я в бою с боссом."
+L.autoReplyNormal = "В настоящее время я в бою с '%s'."
+L.autoReplyAdvanced = "В настоящее время я в бою с '%s' (%s), %d/%d игроков живо."
+L.autoReplyExtreme = "В настоящее время я в бою с '%s' (%s), %d/%d игроков живо: %s"
+
+L.autoReplyLeftCombatBasic = "Я больше не в бою с боссом."
+L.autoReplyLeftCombatNormalWin = "Я победил '%s'."
+L.autoReplyLeftCombatNormalWipe = "Я проиграл '%s'."
+L.autoReplyLeftCombatAdvancedWin = "Я победил '%s' с %d/%d живыми игроками."
+L.autoReplyLeftCombatAdvancedWipe = "Я проиграл '%s' на: %s"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

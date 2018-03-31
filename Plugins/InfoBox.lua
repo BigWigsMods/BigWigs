@@ -14,6 +14,7 @@ if not plugin then return end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
+local FONT = media.MediaType and media.MediaType.FONT or "font"
 plugin.displayName = L.infoBox
 
 local min = math.min
@@ -34,7 +35,7 @@ function plugin:RestyleWindow(dirty)
 	end
 
 	local font, size, flags = GameFontNormal:GetFont()
-	local curFont = media:Fetch("font", db.font)
+	local curFont = media:Fetch(FONT, db.font)
 	if dirty or curFont ~= font or db.fontSize ~= size or db.fontOutline ~= flags then
 		local newFlags
 		if db.monochrome and db.fontOutline ~= "" then
@@ -57,7 +58,7 @@ end
 --
 
 do
-	local font = media:GetDefault("font")
+	local font = media:GetDefault(FONT)
 	local _, size, flags = GameFontNormal:GetFont()
 
 	plugin.defaultDB = {

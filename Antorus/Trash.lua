@@ -166,7 +166,7 @@ do
 			local t = GetTime()
 			if t-prev > 1.5 then
 				prev = t
-				self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+				self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 			end
 		end
 	end
@@ -184,11 +184,11 @@ do
 		tbl[#tbl + 1] = { guid = args.destGUID, name = args.destName }
 		if #tbl == 2 then
 			if self:Me(tbl[1].guid) then
-				self:Message(args.spellId, "Personal", "Alarm", CL.link:format(self:ColorName(tbl[2].name)))
+				self:Message(args.spellId, "blue", "Alarm", CL.link:format(self:ColorName(tbl[2].name)))
 			elseif self:Me(tbl[2].guid) then
-				self:Message(args.spellId, "Personal", "Alarm", CL.link:format(self:ColorName(tbl[1].name)))
+				self:Message(args.spellId, "blue", "Alarm", CL.link:format(self:ColorName(tbl[1].name)))
 			elseif not self:CheckOption(args.spellId, "ME_ONLY") then
-				self:Message(args.spellId, "Attention", nil, CL.link_both:format(self:ColorName(tbl[1].name), self:ColorName(tbl[2].name)))
+				self:Message(args.spellId, "yellow", nil, CL.link_both:format(self:ColorName(tbl[1].name), self:ColorName(tbl[2].name)))
 			end
 			wipe(tbl)
 		else
@@ -215,14 +215,14 @@ do
 			local t = GetTime()
 			if (not self:Melee() and t-prev > 1.5) or t-prev > 6 then
 				prev = t
-				self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+				self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 			end
 		end
 	end
 end
 
 function mod:FearsomeLeap(args)
-	self:Message(args.spellId, "Important", self:Melee() and "Warning" or "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", self:Melee() and "Warning" or "Long", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 3)
 end
 
@@ -243,13 +243,13 @@ do
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 6)
 			if not appliedByTheBoss then
-				self:Message(args.spellId, "Personal", "Alarm", CL.you:format(args.destName)) -- personal warning regardless of the source
+				self:Message(args.spellId, "blue", "Alarm", CL.you:format(args.destName)) -- personal warning regardless of the source
 			end
 		end
 		if appliedByTheBoss then -- don't announce those that were spread by players
 			list[#list+1] = args.destName
 			if #list == 1 then
-				self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Alarm", nil, nil, self:Dispeller("magic"))
+				self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "orange", "Alarm", nil, nil, self:Dispeller("magic"))
 			end
 		end
 	end
@@ -262,7 +262,7 @@ do
 
 	function mod:SoulburnDispelled(args)
 		if args.extraSpellId == 253600 and self:Me(args.destGUID) then
-			self:Message(253600, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
+			self:Message(253600, "green", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 		end
 	end
 end
@@ -273,7 +273,7 @@ do
 		local t = GetTime()
 		if t-prev > 1 then
 			prev = t
-			self:Message(args.spellId, "Important", "Warning", CL.casting:format(args.spellName))
+			self:Message(args.spellId, "red", "Warning", CL.casting:format(args.spellName))
 		end
 	end
 end
@@ -286,7 +286,7 @@ function mod:Demolish(args)
 	end
 	list[#list+1] = args.destName
 	if #list == 1 then
-		self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Urgent", "Warning")
+		self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "orange", "Warning")
 	end
 end
 
@@ -305,11 +305,11 @@ do
 			if t-prev > 6 then -- reapplications *sometimes* fire _APPLIED instead of _REFRESH for some reason
 				prev = t
 				self:Say(args.spellId)
-				self:Message(args.spellId, "Personal", "Warning", CL.you:format(args.spellName))
+				self:Message(args.spellId, "blue", "Warning", CL.you:format(args.spellName))
 			end
 			self:TargetBar(args.spellId, 6, args.destName)
 		elseif self:MobId(args.sourceGUID) == 123533 then -- don't announce those that were spread by players
-			self:TargetMessage(args.spellId, args.destName, "Important", nil)
+			self:TargetMessage(args.spellId, args.destName, "red", nil)
 		end
 	end
 end
@@ -332,7 +332,7 @@ function mod:CloudOfConfusion(args)
 		self:SayCountdown(args.spellId, 10)
 	end
 	self:TargetBar(args.spellId, 10, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "orange", "Alarm")
 end
 
 function mod:CloudOfConfusionRemoved(args)
@@ -344,7 +344,7 @@ end
 
 -- [[ Before Aggramar ]] --
 function mod:PunishingFlames(args)
-	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Long", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 5)
 end
 

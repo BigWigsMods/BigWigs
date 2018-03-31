@@ -42,8 +42,8 @@ local mobCollector = {}
 local waveCollector = {}
 local emberAddMarks = {}
 local currentEmberWave = 1
-local trackingEmber = nil
 local waveTimeCollector = {}
+local intermission = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -121,7 +121,8 @@ function mod:OnBossEnable()
 	--[[ Intermission: Fires of Taeshalach ]]--
 	self:Log("SPELL_AURA_APPLIED", "CorruptAegis", 244894)
 	self:Log("SPELL_AURA_REMOVED", "CorruptAegisRemoved", 244894)
-	self:Log("SPELL_CAST_SUCCESS", "BlazingEruption", 244912) -- Add dying
+	self:Log("SPELL_CAST_SUCCESS", "BlazingEruption", 244912) -- Embers don't trigger UNIT_DIED when this is cast
+	self:Death("EmberDeath", 122532) -- You can kill Embers in LFR & Normal
 
 	--[[ Mythic ]]--
 	self:Log("SPELL_AURA_APPLIED", "RavenousBlaze", 254452)
@@ -140,6 +141,7 @@ function mod:OnEngage()
 
 	blazeTick = 1
 	blazeOnMe = nil
+	intermission = false
 	wipe(blazeProxList)
 
 	wipe(mobCollector)
@@ -147,7 +149,6 @@ function mod:OnEngage()
 	wipe(waveTimeCollector)
 	wave = 0
 	currentEmberWave = 1
-	trackingEmber = nil
 
 	if self:Mythic() then
 		self:Bar(254452, 4.8) -- Ravenous Blaze
@@ -158,7 +159,7 @@ function mod:OnEngage()
 	self:Bar(244693, self:Mythic() and 10.5 or 5.5) -- Wake of Flame
 	self:Bar(244688, self:Mythic() and 14.5 or 35) -- Taeshalach Technique
 
-	nextIntermissionSoonWarning = 82 -- happens at 80%
+	nextIntermissionSoonWarning = self:LFR() and 62 or 82 -- happens at 60% on LFR, 80% on other difficulties
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
@@ -184,13 +185,13 @@ do
 		},
 	}
 
-	function updateInfoBox(self, newSpell)
+	function updateInfoBox(newSpell)
 		local comboCount = #comboSpells
 
 		if not currentCombo then
-			if self:LFR() then -- Always the same combo
+			if mod:LFR() then -- Always the same combo
 				currentCombo = {245463, 245463, 245463, 245463, 245301} -- Flame Rend, Flame Rend, Flame Rend, Flame Rend, Searing Tempest
-			elseif not self:Mythic() then -- Always the same combo
+			elseif not mod:Mythic() then -- Always the same combo
 				currentCombo = {245458, 245463, 245458, 245463, 245301} -- Foe Breaker, Flame Rend, Foe Breaker, Flame Rend, Searing Tempest
 			elseif comboCount >= 2 then -- We know the combo after the first 2 casts
 				currentCombo = mythicCombos[comboSpells[1]][comboSpells[2]]
@@ -204,20 +205,20 @@ do
 				local spell = currentCombo and comboSpellLookup[currentCombo[i]] or comboSpellLookup[comboSpells[i]]
 				if currentCombo or comboSpells[i] then
 					local color = comboCount == i and t > 0 and nextSpell or comboCount >= i and spellUsed or spell.color
-					self:SetInfo(244688, i*2, texture:format(spell.icon) .. color .. spell.name)
+					mod:SetInfo(244688, i*2, texture:format(spell.icon) .. color .. spell.name)
 				else
-					self:SetInfo(244688, i*2, "")
+					mod:SetInfo(244688, i*2, "")
 				end
 			end
 		end
 
 		local castPos = max(comboCount*2-1, 1)
-		self:SetInfo(244688, castPos, t > 0 and nextSpell..castTime:format(t) or "")
-		self:SetInfoBar(244688, castPos, t > 0 and t/comboSpellLookup[comboSpells[comboCount]].castTime or 0)
+		mod:SetInfo(244688, castPos, t > 0 and nextSpell..castTime:format(t) or "")
+		mod:SetInfoBar(244688, castPos, t > 0 and t/comboSpellLookup[comboSpells[comboCount]].castTime or 0)
 		if t > 0 then
-			self:ScheduleTimer(updateInfoBox, 0.05, self)
+			mod:SimpleTimer(updateInfoBox, 0.05)
 		elseif comboCount*2+1 < 10 then -- Current spell done, set arrows for next spell
-			self:SetInfo(244688, comboCount*2+1, nextSpell..">>")
+			mod:SetInfo(244688, comboCount*2+1, nextSpell..">>")
 		end
 	end
 end
@@ -238,7 +239,7 @@ end
 function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextIntermissionSoonWarning then
-		self:Message("stages", "Positive", nil, CL.soon:format(CL.intermission), false)
+		self:Message("stages", "green", nil, CL.soon:format(CL.intermission), false)
 		nextIntermissionSoonWarning = nextIntermissionSoonWarning - 40
 		if nextIntermissionSoonWarning < 40 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
@@ -247,40 +248,59 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 end
 
 function mod:BlazingEruption(args) -- Add Death/Raid Explosion
-	if (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) and trackingEmber then
-		-- Remove the ember from marks list and wave List
+	if self:Mythic() and ((stage == 2 and intermission) or stage == 3) then -- Count adds in intermission 2+ for mythic
+		if mobCollector[args.sourceGUID] then -- Remove the add from the tables if seen before
+			waveCollector[mobCollector[args.sourceGUID]][args.sourceGUID] = nil
+		end
+		waveEmberCounter = 0
+		if waveCollector[currentEmberWave] then
+			for _ in next, waveCollector[currentEmberWave] do
+				waveEmberCounter = waveEmberCounter + 1
+			end
+		end
+	else
+		waveEmberCounter = waveEmberCounter - 1
+	end
+
+	if waveEmberCounter > 0 then
+		self:Message("track_ember", "cyan", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
 		if self:GetOption("custom_off_ember_marker") then
+			for key,guid in pairs(emberAddMarks) do -- Remove icon from used list
+				if guid == args.sourceGUID then
+					emberAddMarks[key] = nil
+				end
+			end
+		end
+	else
+		self:Message("track_ember", "cyan", "Info", L.wave_cleared:format(currentEmberWave), false)
+		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
+		if not self:Mythic() or not waveTimeCollector[currentEmberWave+1] then -- No more waves
+			self:UnregisterTargetEvents()
+		else
+			local emberTimer = floor(waveTimeCollector[currentEmberWave+1] - GetTime())
+			self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), currentEmberWave+1)) -- Wrought in Flame (x)
+			wipe(emberAddMarks)
+		end
+		currentEmberWave = currentEmberWave + 1
+	end
+end
+
+function mod:EmberDeath(args)
+	waveEmberCounter = waveEmberCounter - 1
+	if waveEmberCounter > 0 then
+		self:Message("track_ember", "cyan", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
+		if self:GetOption("custom_off_ember_marker") then -- Remove icon from used list
 			for key,guid in pairs(emberAddMarks) do
 				if guid == args.sourceGUID then
 					emberAddMarks[key] = nil
 				end
 			end
 		end
-
-		if mobCollector[args.sourceGUID] then
-			waveCollector[mobCollector[args.sourceGUID]][args.sourceGUID] = nil -- Check which wave the add was from, incase its from an earlier wave
-		end
-
-		waveEmberCounter = 0
-		if waveCollector[currentEmberWave] then
-			for _ in next, waveCollector[currentEmberWave] do -- Count how many embers are left in this wave
-				waveEmberCounter = waveEmberCounter + 1
-			end
-		end
-		if waveEmberCounter > 0 then
-			self:Message("track_ember", "Neutral", "Info", CL.mob_remaining:format(self:SpellName(-16686), waveEmberCounter), false)
-		elseif currentEmberWave then -- Next wave time!
-			self:Message("track_ember", "Neutral", "Info", L.wave_cleared:format(currentEmberWave), false)
-			self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave))
-			if not self:Mythic() or not waveTimeCollector[currentEmberWave+1] then -- Always 1 wave in heroic, or we are out of current waves.
-				self:UnregisterTargetEvents()
-				trackingEmber = nil
-			else -- Start the new wave timer
-				local emberTimer = floor(waveTimeCollector[currentEmberWave+1] - GetTime())
-				self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), currentEmberWave+1)) -- Wrought in Flame (x)
-			end
-			currentEmberWave = currentEmberWave + 1
-		end
+	else
+		self:Message("track_ember", "cyan", "Info", L.wave_cleared:format(currentEmberWave), false)
+		self:StopBar(CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
+		self:UnregisterTargetEvents()
+		wipe(emberAddMarks)
 	end
 end
 
@@ -293,7 +313,7 @@ do
 			waveCollector[wave][guid] = true
 		end
 		if self:GetOption("custom_off_ember_marker") then
-			if mobID == 122532 and waveCollector[currentEmberWave] and (not self:Mythic() or UnitPower(unit, 3) > 45) then -- Mark all above 45 energy or everything below Mythic
+			if mobID == 122532 and waveCollector[currentEmberWave] and (not self:Mythic() or UnitPower(unit, 3) > 45) then -- Mark Embers above 45 energy in Mythic
 				if waveCollector[currentEmberWave][guid] then
 					for i = 1, 5 do -- Use only 5 marks, leaving 6, 7, 8 for raid use purposes
 						if not emberAddMarks[i] and not GetRaidTargetIndex(unit) then -- Don't re-mark the same add and re-use marks
@@ -343,22 +363,22 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 			end
 		end
 	elseif spellId == 245983 then -- Flare
-		self:Message(spellId, "Important", "Warning")
+		self:Message(spellId, "red", "Warning")
 		if comboTime > GetTime() + 15.8 and not self:Mythic() then
 			self:Bar(spellId, 15.8)
 		end
 	elseif spellId == 246037 then -- Empowered Flare
-		self:Message(spellId, "Important", "Warning")
-		-- Start tracking new ember wave (mythic)
-		if self:Mythic() then
+		self:Message(spellId, "red", "Warning")
+		if self:Mythic() then -- Start tracking new ember wave (mythic)
 			wave = wave + 1
 			waveCollector[wave] = {}
-			waveTimeCollector[wave] = (GetTime() + (self:Mythic() and 165 or 180))
-			if not trackingEmber and (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) then
-				self:RegisterTargetEvents("EmberAddScanner") -- Adds spawning
-				trackingEmber = true
-				local emberTimer = floor(waveTimeCollector[wave] - GetTime())
-				self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), currentEmberWave)) -- Wrought in Flame (x)
+			waveTimeCollector[wave] = GetTime() + 165
+			if self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker") then
+				self:RegisterTargetEvents("EmberAddScanner")
+				if currentEmberWave == wave then
+					local emberTimer = floor(waveTimeCollector[wave] - GetTime())
+					self:CDBar(245911, emberTimer, CL.count:format(self:SpellName(245911), wave)) -- Wrought in Flame (x)
+				end
 			end
 		end
 		if comboTime > GetTime() + 16.2 and not self:Mythic() then
@@ -371,7 +391,7 @@ end
 function mod:TaeshalachsReach(args)
 	local amount = args.amount or 1
 	if amount % 3 == 0 or amount > 7 then
-		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 7 and "Alarm") -- Swap on 8+
+		self:StackMessage(args.spellId, args.destName, amount, "red", amount > 7 and "Alarm") -- Swap on 8+
 	end
 end
 
@@ -380,7 +400,7 @@ do
 
 	local function warn(self, spellId)
 		if not blazeOnMe then
-			self:Message(spellId, "Important")
+			self:Message(spellId, "red")
 		end
 		scheduled = nil
 	end
@@ -388,7 +408,7 @@ do
 	function mod:ScorchingBlaze(args)
 		if self:Me(args.destGUID) then
 			blazeOnMe = true
-			self:TargetMessage(args.spellId, args.destName, "Important", "Warning")
+			self:TargetMessage(args.spellId, args.destName, "red", "Warning")
 			self:Say(args.spellId)
 		end
 		if not scheduled then
@@ -411,7 +431,7 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(244693, name, "Attention", "Alert", nil, nil, true)
+		self:TargetMessage(244693, name, "yellow", "Alert", nil, nil, true)
 		if self:Me(guid) then
 			self:Say(244693)
 		end
@@ -426,23 +446,23 @@ do
 end
 
 function mod:FoeBreaker(args)
-	self:Message(245458, "Attention", "Alert", CL.count:format(args.spellName, foeBreakerCount))
+	self:Message(245458, "yellow", "Alert", CL.count:format(args.spellName, foeBreakerCount))
 	foeBreakerCount = foeBreakerCount + 1
 	comboSpells[#comboSpells+1] = 245458
 	comboCastEnd = GetTime() + (self:Easy() and 3.5 or 2.75)
 	if foeBreakerCount == 2 and not self:Mythic() then -- Random Combo in Mythic
 		self:Bar(args.spellId, self:Easy() and 10.1 or 7.5, CL.count:format(args.spellName, foeBreakerCount))
 	end
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:FoeBreakerSuccess()
 	comboCastEnd = 0
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:FlameRend(args)
-	self:Message(args.spellId, "Important", "Alarm", CL.count:format(args.spellName, flameRendCount))
+	self:Message(args.spellId, "red", "Alarm", CL.count:format(args.spellName, flameRendCount))
 	flameRendCount = flameRendCount + 1
 	comboSpells[#comboSpells+1] = 245463
 	comboCastEnd = GetTime() + (self:Easy() and 3.5 or 2.75)
@@ -451,32 +471,33 @@ function mod:FlameRend(args)
 	elseif flameRendCount == 2 and not self:Mythic() then -- Random Combo in Mythic
 		self:Bar(args.spellId, self:Normal() and 10.2 or 7.5, CL.count:format(args.spellName, flameRendCount))
 	end
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:FlameRendSuccess()
 	comboCastEnd = 0
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:SearingTempest(args)
-	self:Message(args.spellId, "Urgent", "Warning")
+	self:Message(args.spellId, "orange", "Warning")
 	self:CastBar(args.spellId, 6)
 	comboSpells[#comboSpells+1] = 245301
 	comboCastEnd = GetTime() + 6
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 function mod:SearingTempestSuccess(args)
 	comboCastEnd = 0
-	updateInfoBox(self, true)
+	updateInfoBox(true)
 end
 
 --[[ Intermission: Fires of Taeshalach ]]--
 function mod:CorruptAegis()
+	intermission = true
 	techniqueStarted = nil -- End current technique
 	self:CloseInfo(244688)
-	self:Message("stages", "Neutral", "Long", CL.intermission, false)
+	self:Message("stages", "cyan", "Long", CL.intermission, false)
 	self:StopBar(245994) -- Scorching Blaze
 	self:StopBar(244693) -- Wake of Flame
 	self:StopBar(244688) -- Taeshalach Technique
@@ -492,21 +513,23 @@ function mod:CorruptAegis()
 	wipe(waveTimeCollector)
 	wipe(emberAddMarks)
 	currentEmberWave = 1
+	waveEmberCounter = self:Mythic() and 10 or 6
 	wave = 1
 	waveCollector[wave] = {}
 
-	if not trackingEmber and (self:GetOption("track_ember") or self:GetOption("custom_off_ember_marker")) then
-		self:RegisterTargetEvents("EmberAddScanner") -- Adds spawning
-		trackingEmber = true
+	if self:GetOption("custom_off_ember_marker") or ((self:GetOption("track_ember") or self:GetOption(245911)) and (self:Mythic() and stage == 2 and intermission)) then -- Checking for 245911 (Wrought in Flame) as we need to track adds to know the timer
+		self:RegisterTargetEvents("EmberAddScanner")
 	end
-	waveTimeCollector[wave] = GetTime() + (self:Mythic() and 165 or 180)
+
+	waveTimeCollector[wave] = GetTime() + (self:Mythic() and 165 or self:LFR() and 240 or 180)
 	self:CDBar(245911, self:Mythic() and 165 or 180, CL.count:format(self:SpellName(245911), wave)) -- Wrought in Flame (x)
 end
 
 function mod:CorruptAegisRemoved()
 	stage = stage + 1
+	intermission = false
 	comboTime = GetTime() + 37.5
-	self:Message("stages", "Neutral", "Long", CL.stage:format(stage), false)
+	self:Message("stages", "cyan", "Long", CL.stage:format(stage), false)
 
 	if self:Mythic() then
 		self:Bar(254452, 23) -- Ravenous Blaze
@@ -546,7 +569,7 @@ do
 			if comboTime > GetTime() + cooldown then
 				self:CDBar(args.spellId, cooldown)
 			end
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Warning")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "red", "Warning")
 			blazeTick = 1
 			scheduled = self:ScheduleRepeatingTimer(addBlazeTick, 2, self)
 		end

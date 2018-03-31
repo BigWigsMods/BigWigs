@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 91
+local BIGWIGS_VERSION = 92
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -723,6 +723,8 @@ do
 		BigWigs_DispelResist = "",
 		BigWigs_Voice_HeroesOfTheStorm = "BigWigs_Countdown_HeroesOfTheStorm",
 		BigWigs_Voice_Overwatch = "BigWigs_Countdown_Overwatch",
+		BigWigs_AutoReply = "BigWigs",
+		BigWigs_AutoReply2 = "BigWigs",
 	}
 	local delayedMessages = {}
 
@@ -1114,18 +1116,16 @@ do
 end
 
 do
-	local loadedList = {}
 	local warnedThisZone = {}
 
 	local UnitGUID = UnitGUID
 	function mod:UNIT_TARGET(unit)
 		local guid = UnitGUID(unit.."target")
 		if guid then
-			local _, _, _, _, _, id = strsplit("-", guid)
-			local mobId = tonumber(id)
+			local _, _, _, _, _, mobId = strsplit("-", guid)
+			mobId = tonumber(mobId)
 			local id = mobId and worldBosses[mobId]
 			if id then
-				loadedList[id] = true
 				if loadAndEnableCore() then
 					if BigWigs:IsEnabled() then
 						loadZone(id)
@@ -1139,33 +1139,18 @@ do
 
 	function mod:ZONE_CHANGED_NEW_AREA()
 		-- Zone checking
-		local id
-		local inside = IsInInstance()
-		if not inside then
+		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
+		if instanceType == "none" then
 			local mapId = GetPlayerMapAreaID("player")
 			if mapId then
-				id = -mapId
-			else
-				local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
-				id = instanceId
-				inside = true -- For Argus Invasion Points, 1779
+				id = -mapId -- Use map id for world bosses
 			end
-		else
-			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
-			id = instanceId
 		end
 
 		-- Module loading
 		if enableZones[id] then
-			if not inside and enableZones[id] == "world" then
-				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
-					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
-				end
-				bwFrame:RegisterEvent("UNIT_TARGET")
-				self:UNIT_TARGET("player")
-			elseif inside then
+			if id > 0 then
 				bwFrame:UnregisterEvent("UNIT_TARGET")
-				loadedList[id] = true
 				if loadAndEnableCore() then
 					if BigWigs:IsEnabled() and loadOnZone[id] then
 						loadZone(id)
@@ -1173,6 +1158,12 @@ do
 						BigWigs:Enable()
 					end
 				end
+			elseif enableZones[id] == "world" then
+				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
+					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
+				end
+				bwFrame:RegisterEvent("UNIT_TARGET")
+				self:UNIT_TARGET("player")
 			end
 		else
 			bwFrame:UnregisterEvent("UNIT_TARGET")
@@ -1194,7 +1185,7 @@ do
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and zoneAddon ~= "BigWigs_Legion" then
 			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
-			if inside and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
+			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
 				sysprint(msg)
