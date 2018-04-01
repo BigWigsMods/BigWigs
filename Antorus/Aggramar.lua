@@ -33,7 +33,7 @@ for id,_ in pairs(comboSpellLookup) do
 end
 
 local blazeTick = 1
-local blazeOnMe = nil
+local blazeOnMe = false
 local blazeProxList = {}
 
 local wave = 0
@@ -140,7 +140,7 @@ function mod:OnEngage()
 	comboSpellLookup[245463].castTime = self:Easy() and 3.5 or 2.75 -- Flame Rend
 
 	blazeTick = 1
-	blazeOnMe = nil
+	blazeOnMe = false
 	intermission = false
 	wipe(blazeProxList)
 
@@ -396,24 +396,22 @@ function mod:TaeshalachsReach(args)
 end
 
 do
-	local scheduled = nil
-
-	local function warn(self, spellId)
+	local function warn()
 		if not blazeOnMe then
-			self:Message(spellId, "red")
+			mod:Message(245994, "red") -- Scorching Blaze
 		end
-		scheduled = nil
 	end
 
 	function mod:ScorchingBlaze(args)
 		blazeProxList[#blazeProxList+1] = args.destName
 		if self:Me(args.destGUID) then
 			blazeOnMe = true
-			self:TargetMessage(args.spellId, args.destName, "red", "Warning")
+			self:PlaySound(args.spellId, "Warning")
+			self:TargetMessage2(args.spellId, "red", args.destName)
 			self:Say(args.spellId)
 		end
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.3, self, args.spellId)
+		if #blazeProxList == 1 then
+			self:SimpleTimer(warn, 0.3)
 			if comboTime > GetTime() + 7.3 then
 				self:CDBar(args.spellId, 7.3)
 			end
@@ -423,7 +421,7 @@ do
 
 	function mod:ScorchingBlazeRemoved(args)
 		if self:Me(args.destGUID) then
-			blazeOnMe = nil
+			blazeOnMe = false
 		end
 		tDeleteItem(blazeProxList, args.destName)
 		updateProximity(self)
@@ -432,7 +430,8 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(244693, name, "yellow", "Alert", nil, nil, true)
+		self:PlaySound(244693, "Alert", nil, name)
+		self:TargetMessage2(244693, "yellow", name)
 		if self:Me(guid) then
 			self:Say(244693)
 		end
@@ -562,15 +561,16 @@ do
 			blazeOnMe = true
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
+			self:PlaySound(args.spellId, "Warning")
 		end
 		playerList[#playerList+1] = args.destName
 		blazeProxList[#blazeProxList+1] = args.destName
+		self:TargetsMessage(args.spellId, "red", playerList, 5)
 		if #playerList == 1 then
 			local cooldown = stage == 1 and 23.1 or 60.1 -- this cooldown should only trigger in stage 1+
 			if comboTime > GetTime() + cooldown then
 				self:CDBar(args.spellId, cooldown)
 			end
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "red", "Warning")
 			blazeTick = 1
 			scheduled = self:ScheduleRepeatingTimer(addBlazeTick, 2, self)
 		end
@@ -579,7 +579,7 @@ do
 
 	function mod:RavenousBlazeRemoved(args)
 		if self:Me(args.destGUID) then
-			blazeOnMe = nil
+			blazeOnMe = false
 		end
 		tDeleteItem(blazeProxList, args.destName)
 		updateProximity(self)
