@@ -150,9 +150,10 @@ function mod:MarkedPrey(args)
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 5)
+		self:PlaySound(args.spellId, "Alarm")
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "red", "Alarm")
+	self:TargetMessage2(args.spellId, "red", args.destName)
 	self:TargetBar(args.spellId, 5, args.destName)
 	self:CDBar(args.spellId, 32.8)
 end
@@ -166,20 +167,19 @@ function mod:MarkedPreyRemoved(args)
 end
 
 do
-	local playerList, scheduled, isOnMe, proxList = mod:NewTargetList(), nil, nil, {}
+	local playerList, isOnMe, proxList = mod:NewTargetList(), false, {}
 
 	function mod:NecroticEmbraceSuccess()
-		self:CDBar(244094, 30.5)
 		wipe(proxList)
+		self:CDBar(244094, 30.5)
 	end
 
-	local function warn(self, spellId)
+	local function warn()
 		if not isOnMe then
-			self:TargetMessage(spellId, playerList, "orange")
+			mod:TargetsMessage(244094, "orange", playerList) -- Necrotic Embrace
 		else
 			wipe(playerList)
 		end
-		scheduled = nil
 	end
 
 	function mod:NecroticEmbrace(args)
@@ -187,13 +187,16 @@ do
 		if tContains(proxList, args.destName) then return end -- Don't annouce someone twice
 
 		playerList[#playerList+1] = args.destName
+		local count = #playerList
+		local countTwo = count + 2
 		if self:Me(args.destGUID) then
-			self:TargetMessage(args.spellId, args.destName, "orange", "Warning", CL.count_icon:format(args.spellName, #playerList, #playerList+2))
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #playerList, #playerList+2))
-			self:Flash(args.spellId, #playerList+2)
-			self:SayCountdown(args.spellId, 6, #playerList+2)
-			self:OpenProximity(args.spellId, 10)
 			isOnMe = true
+			self:PlaySound(args.spellId, "Warning")
+			self:TargetMessage2(args.spellId, "orange", args.destName, CL.count_icon:format(args.spellName, count, countTwo))
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, countTwo))
+			self:Flash(args.spellId, countTwo)
+			self:SayCountdown(args.spellId, 6, countTwo)
+			self:OpenProximity(args.spellId, 10)
 		end
 
 		proxList[#proxList+1] = args.destName
@@ -201,19 +204,19 @@ do
 			self:OpenProximity(args.spellId, 10, proxList)
 		end
 
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.3, self, args.spellId)
+		if count == 1 then
+			self:SimpleTimer(warn, 0.3)
 		end
 
 		if self:GetOption(necroticEmbraceMarker) then
-			SetRaidTarget(args.destName, #playerList + 2) -- Icons 3 and 4
+			SetRaidTarget(args.destName, countTwo) -- Icons 3 and 4
 		end
 	end
 
 	function mod:NecroticEmbraceRemoved(args)
 		if self:Me(args.destGUID) then
 			self:Message(args.spellId, "green", "Info", CL.removed:format(args.spellName))
-			isOnMe = nil
+			isOnMe = false
 			self:CancelSayCountdown(args.spellId)
 			self:CloseProximity(args.spellId)
 		end

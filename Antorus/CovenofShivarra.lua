@@ -433,10 +433,11 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 10)
+			self:PlaySound(args.spellId, "Alarm")
 		end
 		playerList[#playerList+1] = args.destName
+		self:TargetsMessage(args.spellId, "red", playerList, 3)
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "red", "Alarm")
 			self:Bar(args.spellId, 40.1)
 		end
 	end
@@ -472,20 +473,26 @@ function mod:FlashfreezeSuccess(args)
 end
 
 do
-	local targetList = mod:NewTargetList()
+	local playerList = mod:NewTargetList()
 
 	function mod:ChilledBlood(args)
-		targetList[#targetList+1] = args.destName
+		playerList[#playerList+1] = args.destName
 
-		if #targetList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, targetList, "green", "Alarm", nil, nil, self:Healer() and true) -- Always play a sound for healers
-			self:Bar(args.spellId, 25.5)
+		if self:Healer() then -- Always play a sound for healers
+			self:PlaySound(args.spellId, "Alarm", nil, playerList)
+		elseif self:Me() then
+			self:PlaySound(args.spellId, "Alarm")
+		end
+
+		self:TargetsMessage(args.spellId, "green", playerList, 3)
+		if #playerList == 1 then
 			chilledBloodTime = GetTime()
+			self:Bar(args.spellId, 25.5)
 			infoboxScheduled = self:ScheduleTimer(updateInfoBox, 0.1, self)
 		end
 
 		if self:GetOption(chilledBloodMarker) then
-			SetRaidTarget(args.destName, #targetList > 2 and 5 or #targetList) -- Icons: 1, 2, 5
+			SetRaidTarget(args.destName, #playerList > 2 and 5 or #playerList) -- Icons: 1, 2, 5
 		end
 
 		local debuff, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, value = UnitDebuff(args.destName, args.spellName)
@@ -523,13 +530,14 @@ do
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 4)
+			self:PlaySound(args.spellId, "Alarm")
 		end
 
 		playerList[#playerList+1] = args.destName
 
+		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
 		if #playerList == 1 then
 			self:CDBar(args.spellId, 15)
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "yellow", "Alarm")
 			if self:GetOption(cosmicGlareMarker) then
 				SetRaidTarget(args.destName, 3)
 			end
