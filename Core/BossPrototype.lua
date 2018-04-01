@@ -22,7 +22,7 @@ local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter
-local format, find, gsub, band, wipe = string.format, string.find, string.gsub, bit.band, table.wipe
+local format, find, gsub, band, tremove, wipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
 local core = BigWigs
 local C = core.C
@@ -30,7 +30,7 @@ local pName = UnitName("player")
 local cpName
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
-local enabledModules = {}
+local enabledModules, bossTargetScans, unitTargetScans = {}, {}, {}
 local allowedEvents = {}
 local difficulty = 0
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
@@ -60,6 +60,9 @@ local updateData = function(module)
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
 
+	UpdateDispelStatus()
+	UpdateInterruptStatus()
+
 	solo = true
 	myGroupGUIDs = {}
 	local _, _, _, instanceId = UnitPosition("player")
@@ -77,9 +80,6 @@ local updateData = function(module)
 			break
 		end
 	end
-
-	UpdateDispelStatus()
-	UpdateInterruptStatus()
 end
 
 -------------------------------------------------------------------------------
@@ -233,6 +233,19 @@ function boss:OnDisable(isWipe)
 	-- No enabled modules? Unregister the combat log!
 	if #enabledModules == 0 then
 		bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		wipe(bossTargetScans)
+		wipe(unitTargetScans)
+	else
+		for i = #bossTargetScans, 1, -1 do
+			if self == bossTargetScans[i][1] then
+				tremove(bossTargetScans, i)
+			end
+		end
+		for i = #unitTargetScans, 1, -1 do
+			if self == unitTargetScans[i][1] then
+				tremove(unitTargetScans, i)
+			end
+		end
 	end
 
 	-- Unregister the Unit Events for this module
@@ -256,8 +269,6 @@ function boss:OnDisable(isWipe)
 
 	self.sayCountdowns = nil
 	self.scheduledMessages = nil
-	self.scheduledScans = nil
-	self.scheduledScansCounter = nil
 	self.targetEventFunc = nil
 	self.missing = nil
 	self.isWiping = nil
@@ -693,46 +704,46 @@ do
 	-- @return unit id if found, nil otherwise
 	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
 
-	local function unitScanner(self, func, tankCheckExpiry, guid)
-		local elapsed = self.scheduledScansCounter[guid] + 0.05
+	local function unitScanner()
+		for i = #unitTargetScans, 1, -1 do
+			local self, func, tankCheckExpiry, guid = unitTargetScans[i][1], unitTargetScans[i][2], unitTargetScans[i][3], unitTargetScans[i][4]
+			local elapsed = unitTargetScans[i][5] + 0.05
+			unitTargetScans[i][5] = elapsed
 
-		local unit = findTargetByGUID(guid)
-		if unit then
-			local unitTarget = unit.."target"
-			local playerGUID = UnitGUID(unitTarget)
-			if playerGUID and ((not UnitDetailedThreatSituation(unitTarget, unit) and not self:Tank(unitTarget)) or elapsed > tankCheckExpiry) then
-				local name = self:UnitName(unitTarget)
-				self:CancelTimer(self.scheduledScans[guid])
-				func(self, name, playerGUID, elapsed)
-				self.scheduledScans[guid] = nil
+			local unit = findTargetByGUID(guid)
+			if unit then
+				local unitTarget = unit.."target"
+				local playerGUID = UnitGUID(unitTarget)
+				if playerGUID and ((not UnitDetailedThreatSituation(unitTarget, unit) and not self:Tank(unitTarget)) or elapsed > tankCheckExpiry) then
+					local name = self:UnitName(unitTarget)
+					tremove(unitTargetScans, i)
+					elapsed = 0
+					func(self, name, playerGUID)
+				end
+			end
+
+			if elapsed > 0.8 then
+				tremove(unitTargetScans, i)
 			end
 		end
 
-		if elapsed > 0.8 then
-			self:CancelTimer(self.scheduledScans[guid])
-			self.scheduledScans[guid] = nil
+		if #unitTargetScans ~= 0 then
+			Timer(0.05, unitScanner)
 		end
-
-		self.scheduledScansCounter[guid] = elapsed
 	end
 
 	--- Register a callback to get the first non-tank target of a mob.
 	-- Looks for the unit as defined by the GUID and then returns the target of that unit.
 	-- If the target is a tank, it will keep looking until the designated time has elapsed.
-	-- @param func callback function, passed (module, playerName, playerGUID, timeElapsed)
+	-- @param func callback function, passed (module, playerName, playerGUID)
 	-- @number tankCheckExpiry seconds to wait, if a tank is still the target after this time, it will return the tank as the target (max 0.8)
 	-- @string guid GUID of the mob to get the target of
 	function boss:GetUnitTarget(func, tankCheckExpiry, guid)
-		if not self.scheduledScans then
-			self.scheduledScans, self.scheduledScansCounter = {}, {}
+		if #unitTargetScans == 0 then
+			Timer(0.05, unitScanner)
 		end
 
-		if self.scheduledScans[guid] then
-			self:CancelTimer(self.scheduledScans[guid]) -- Should never be needed, safety
-		end
-
-		self.scheduledScansCounter[guid] = 0
-		self.scheduledScans[guid] = self:ScheduleRepeatingTimer(unitScanner, 0.05, self, func, solo and 0.1 or tankCheckExpiry, guid) -- Tiny allowance when solo
+		unitTargetScans[#unitTargetScans+1] = {self, func, solo and 0.1 or tankCheckExpiry, guid, 0} -- Tiny allowance when solo
 	end
 
 	local function scan(self)
@@ -825,48 +836,48 @@ do
 	local bosses = {"boss1", "boss2", "boss3", "boss4", "boss5"}
 	local bossTargets = {"boss1target", "boss2target", "boss3target", "boss4target", "boss5target"}
 	local UnitDetailedThreatSituation = UnitDetailedThreatSituation
-	local function bossScanner(self, func, tankCheckExpiry, guid)
-		local elapsed = self.scheduledScansCounter[guid] + 0.05
+	local function bossScanner()
+		for i = #bossTargetScans, 1, -1 do
+			local self, func, tankCheckExpiry, guid = bossTargetScans[i][1], bossTargetScans[i][2], bossTargetScans[i][3], bossTargetScans[i][4]
+			local elapsed = bossTargetScans[i][5] + 0.05
+			bossTargetScans[i][5] = elapsed
 
-		for i = 1, 5 do
-			local unit = bosses[i]
-			if UnitGUID(unit) == guid then
-				local bossTarget = bossTargets[i]
-				local playerGUID = UnitGUID(bossTarget)
-				if playerGUID and ((not UnitDetailedThreatSituation(bossTarget, unit) and not self:Tank(bossTarget)) or elapsed > tankCheckExpiry) then
-					local name = self:UnitName(bossTarget)
-					self:CancelTimer(self.scheduledScans[guid])
-					func(self, name, playerGUID, elapsed)
-					self.scheduledScans[guid] = nil
+			for j = 1, 5 do
+				local unit = bosses[j]
+				if UnitGUID(unit) == guid then
+					local bossTarget = bossTargets[j]
+					local playerGUID = UnitGUID(bossTarget)
+					if playerGUID and ((not UnitDetailedThreatSituation(bossTarget, unit) and not self:Tank(bossTarget)) or elapsed > tankCheckExpiry) then
+						local name = self:UnitName(bossTarget)
+						tremove(bossTargetScans, i)
+						elapsed = 0
+						func(self, name, playerGUID)
+					end
+					break
 				end
-				break
+			end
+
+			if elapsed > 0.8 then
+				tremove(bossTargetScans, i)
 			end
 		end
 
-		if elapsed > 0.8 then
-			self:CancelTimer(self.scheduledScans[guid])
-			self.scheduledScans[guid] = nil
+		if #bossTargetScans ~= 0 then
+			Timer(0.05, bossScanner)
 		end
-
-		self.scheduledScansCounter[guid] = elapsed
 	end
 	--- Register a callback to get the first non-tank target of a boss (boss1 - boss5).
 	-- Looks for the boss as defined by the GUID and then returns the target of that boss.
 	-- If the target is a tank, it will keep looking until the designated time has elapsed.
-	-- @param func callback function, passed (module, playerName, playerGUID, timeElapsed)
+	-- @param func callback function, passed (module, playerName, playerGUID)
 	-- @number tankCheckExpiry seconds to wait, if a tank is still the target after this time, it will return the tank as the target (max 0.8)
 	-- @string guid GUID of the mob to get the target of
 	function boss:GetBossTarget(func, tankCheckExpiry, guid)
-		if not self.scheduledScans then
-			self.scheduledScans, self.scheduledScansCounter = {}, {}
+		if #bossTargetScans == 0 then
+			Timer(0.05, bossScanner)
 		end
 
-		if self.scheduledScans[guid] then
-			self:CancelTimer(self.scheduledScans[guid]) -- Should never be needed, safety
-		end
-
-		self.scheduledScansCounter[guid] = 0
-		self.scheduledScans[guid] = self:ScheduleRepeatingTimer(bossScanner, 0.05, self, func, solo and 0.1 or tankCheckExpiry, guid) -- Tiny allowance when solo
+		bossTargetScans[#bossTargetScans+1] = {self, func, solo and 0.1 or tankCheckExpiry, guid, 0} -- Tiny allowance when solo
 	end
 end
 
