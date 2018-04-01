@@ -308,7 +308,7 @@ function mod:Demolish(args)
 		self:PlaySound(args.spellId, "Warning")
 	end
 	list[#list+1] = args.destName
-	self:TargetsMessage(args.spellId, "orange", list, 2)
+	self:TargetsMessage(args.spellId, "orange", list, self:LFR() and 1 or 2)
 end
 
 function mod:DemolishRemoved(args)
@@ -335,7 +335,7 @@ do
 		if spellId == 252797 or spellId == 245770 then
 			local guid = UnitGUID(unit)
 			if not players[guid] then
-				players[guid] = GetTime()
+				players[guid] = true
 				if unit == "player" then
 					self:PlaySound(252797, "Warning")
 					self:Say(252797)
