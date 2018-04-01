@@ -9,6 +9,8 @@ mod.displayName = CL.trash
 mod:RegisterEnableMob(
 	-- [[ Before Garothi Worldbreaker ]] --
 	123478, -- Antoran Felguard
+	123398, -- Garothi Annihilator
+	123402, -- Garothi Decimator
 
 	-- [[ After Garothi Worldbreaker ]] --
 	127233, -- Flameweaver
@@ -126,6 +128,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundEffectDamage", 245861, 246199)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundEffectDamage", 245861, 246199)
 
+	-- [[ Before Garothi Worldbreaker ]] --
+	self:Log("SPELL_CAST_START", "Annihilation", 245807)
+
 	-- [[ After Garothi Worldbreaker ]] --
 	self:Log("SPELL_AURA_APPLIED", "BoundByFel", 252621)
 	self:Death("FlameweaverDeath", 127233)
@@ -178,6 +183,11 @@ do
 			end
 		end
 	end
+end
+
+-- [[ Before Garothi Worldbreaker ]] --
+function mod:Annihilation()
+	self:Message(252743, "Important", "Long")
 end
 
 -- [[ After Garothi Worldbreaker ]] --
@@ -259,8 +269,10 @@ do
 		end
 		if appliedByTheBoss then -- don't announce those that were spread by players
 			list[#list+1] = args.destName
-			self:PlaySound(args.spellId, "Alarm", nil, self:Dispeller("magic") and list)
-			self:TargetsMessage(args.spellId, "orange", list, 3)
+			if self:Dispeller("magic") then
+				self:PlaySound(args.spellId, "Alarm", nil, list)
+			end
+			self:TargetsMessage(args.spellId, "orange", list, 2)
 		end
 	end
 
@@ -310,7 +322,7 @@ do
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellGUID, spellId)
 		if spellId == 252740 and spellGUID ~= prev then -- Annihilation
 			prev = spellGUID
-			self:Message(252743, "Important", "Info")
+			self:Message(252743, "Important", "Long")
 		end
 	end
 end
@@ -319,18 +331,28 @@ do
 	local players, spellName = {}, mod:SpellName(252797) -- Decimation
 	local UnitDebuff, UnitGUID = UnitDebuff, UnitGUID
 	function mod:UNIT_AURA(_, unit)
-		if UnitDebuff(unit, spellName) then
+		local _, _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, spellName)
+		if spellId == 252797 or spellId == 245770 then
 			local guid = UnitGUID(unit)
 			if not players[guid] then
-				players[guid] = true
+				players[guid] = GetTime()
 				if unit == "player" then
 					self:PlaySound(252797, "Warning")
 					self:Say(252797)
+					if spellId == 245770 then -- Pre Garothi Worldbreaker
+						self:SayCountdown(252797, 3, nil, 2)
+					else -- Pre Kin'garoth
+						self:SayCountdown(252797, 5)
+					end
 				end
-				self:TargetMessage2(252797, "orange", self:UnitName(unit))
+				list[#list+1] = self:UnitName(unit)
+				self:TargetsMessage(252797, "orange", list, 2)
 			end
 		elseif players[UnitGUID(unit)] then
 			players[UnitGUID(unit)] = nil
+			if unit == "player" then
+				self:CancelSayCountdown(252797)
+			end
 		end
 	end
 end
@@ -344,7 +366,8 @@ do
 			if t-prev > 6 then -- reapplications *sometimes* fire _APPLIED instead of _REFRESH for some reason
 				prev = t
 				self:Say(args.spellId)
-				self:Message(args.spellId, "blue", "Warning", CL.you:format(args.spellName))
+				self:PlaySound(args.spellId, "Warning")
+				self:TargetMessage2(args.spellId, "blue", args.destName)
 			end
 			self:TargetBar(args.spellId, 6, args.destName)
 		elseif self:MobId(args.sourceGUID) == 123533 then -- don't announce those that were spread by players
