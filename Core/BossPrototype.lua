@@ -940,7 +940,7 @@ function boss:EncounterEnd(event, id, name, diff, size, status)
 			end
 		elseif status == 0 then
 			self:SendMessage("BigWigs_StopBars", self)
-			self:ScheduleTimer("Wipe", 5) -- Delayed due to issues with some multi-boss encounters showing/hiding the boss frames (IEEU) rapidly whilst wiping.
+			Timer(5, function() self:Wipe() end) -- Delayed due to issues with some multi-boss encounters showing/hiding the boss frames (IEEU) rapidly whilst wiping.
 		end
 		self:SendMessage("BigWigs_EncounterEnd", self, id, name, diff, size, status) -- Do NOT use this for wipe detection, use BigWigs_OnBossWipe.
 	end
@@ -1955,10 +1955,15 @@ end
 -- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
 function boss:SayCountdown(key, seconds, icon, startAt)
 	if not checkFlag(self, key, C.SAY) then return end -- XXX implement a dedicated option for 7.3
-	local tbl = {}
+	local tbl = {false, startAt or 3}
+	local function printTime()
+		if not tbl[1] then
+			SendChatMessage(icon and format("{rt%d} %d", icon, tbl[2]) or tbl[2], "SAY")
+			tbl[2] = tbl[2] - 1
+		end
+	end
 	for i = 1, (startAt or 3) do
-		local msg = icon and format("{rt%d} %d", icon, i) or i
-		tbl[i] = self:ScheduleTimer(SendChatMessage, seconds-i, msg, "SAY")
+		Timer(seconds-i, printTime)
 	end
 	self.sayCountdowns[key] = tbl
 end
@@ -1969,9 +1974,7 @@ function boss:CancelSayCountdown(key)
 	if not checkFlag(self, key, C.SAY) then return end
 	local tbl = self.sayCountdowns[key]
 	if tbl then
-		for i = 1, #tbl do
-			self:CancelTimer(tbl[i])
-		end
+		tbl[1] = true
 	end
 end
 
