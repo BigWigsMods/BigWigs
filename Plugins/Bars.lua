@@ -679,6 +679,7 @@ do
 					spacing = {
 						type = "range",
 						name = L.spacing,
+						desc = L.spacingDesc,
 						order = 14,
 						softMax = 30,
 						min = 0,

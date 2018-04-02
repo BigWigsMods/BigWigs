@@ -94,6 +94,7 @@ L.restartDesc = "Reinicia as barras enfatizadas para que comecem novamente e con
 L.fill = "Completar"
 L.fillDesc = "Completa as barras ao invés de drena-las."
 --L.spacing = "Spacing"
+--L.spacingDesc = "Change the space between each bar."
 
 L.localTimer = "Local"
 L.timerFinished = "%s: Contador [%s] terminado."

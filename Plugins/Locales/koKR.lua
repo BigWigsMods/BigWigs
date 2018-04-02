@@ -94,6 +94,7 @@ L.restartDesc = "강조된 바를 10부터 다시 셉니다."
 L.fill = "채우기"
 L.fillDesc = "바를 비우는 대신 채워나갑니다."
 --L.spacing = "Spacing"
+--L.spacingDesc = "Change the space between each bar."
 
 L.localTimer = "지역"
 L.timerFinished = "%s: 타이머 [%s] 종료됨."

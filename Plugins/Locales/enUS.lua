@@ -94,6 +94,7 @@ L.restartDesc = "Restarts emphasized bars so they start from the beginning and c
 L.fill = "Fill"
 L.fillDesc = "Fills the bars up instead of draining them."
 L.spacing = "Spacing"
+L.spacingDesc = "Change the space between each bar."
 
 L.localTimer = "Local"
 L.timerFinished = "%s: Timer [%s] finished."

@@ -276,6 +276,7 @@ L.autoReplyLeftCombatAdvancedWipe = "Ich habe gegen '%s' verloren: %s"
 --
 
 --L.spacing = "Spacing"
+--L.spacingDesc = "Change the space between each bar."
 --L.emphasizeMultiplier = "Size Multiplier"
 --L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
 
