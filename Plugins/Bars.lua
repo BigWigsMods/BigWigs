@@ -184,9 +184,6 @@ do
 		local tex = bar:Get("bigwigs:restoreicon")
 		if tex then
 			local icon = bar.candyBarIconFrame
-			icon:ClearAllPoints()
-			icon:SetPoint("TOPLEFT")
-			icon:SetPoint("BOTTOMLEFT")
 			bar:SetIcon(tex)
 
 			bar.candyBarIconFrameBackdrop:Hide()
@@ -221,8 +218,12 @@ do
 			local tex = icon.icon
 			bar:SetIcon(nil)
 			icon:SetTexture(tex)
-			icon:ClearAllPoints()
-			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -5, 0)
+			icon:Show()
+			if bar.iconPosition == "RIGHT" then
+				icon:SetPoint("BOTTOMLEFT", bar, "BOTTOMRIGHT", 5, 0)
+			else
+				icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -5, 0)
+			end
 			icon:SetSize(height, height)
 			bar:Set("bigwigs:restoreicon", tex)
 
@@ -244,17 +245,6 @@ do
 		bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "TOPRIGHT", -2, 2)
 	end
 
-	local function onEmph(bar)
-		local height = bar:GetHeight()
-		bar:SetHeight(height/2)
-		if plugin.db.profile.icon then
-			local icon = bar.candyBarIconFrame
-			icon:ClearAllPoints()
-			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", -5, 0)
-			icon:SetSize(height, height)
-		end
-	end
-
 	barStyles.MonoUI = {
 		apiVersion = 1,
 		version = 10,
@@ -262,7 +252,6 @@ do
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "MonoUI" end,
-		OnEmphasize = onEmph,
 	}
 end
 
@@ -369,9 +358,6 @@ do
 		local tex = bar:Get("bigwigs:restoreicon")
 		if tex then
 			local icon = bar.candyBarIconFrame
-			icon:ClearAllPoints()
-			icon:SetPoint("TOPLEFT")
-			icon:SetPoint("BOTTOMLEFT")
 			bar:SetIcon(tex)
 
 			local iconBd = bar.candyBarIconFrameBackdrop
@@ -408,8 +394,12 @@ do
 			local tex = icon.icon
 			bar:SetIcon(nil)
 			icon:SetTexture(tex)
-			icon:ClearAllPoints()
-			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", E and (E.PixelMode and -1 or -5) or -1, 0)
+			icon:Show()
+			if bar.iconPosition == "RIGHT" then
+				icon:SetPoint("BOTTOMLEFT", bar, "BOTTOMRIGHT", E and (E.PixelMode and 1 or 5) or 1, 0)
+			else
+				icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", E and (E.PixelMode and -1 or -5) or -1, 0)
+			end
 			icon:SetSize(bar:GetHeight(), bar:GetHeight())
 			bar:Set("bigwigs:restoreicon", tex)
 
@@ -437,15 +427,6 @@ do
 		bd:Show()
 	end
 
-	local function onEmph(bar)
-		if plugin.db.profile.icon then
-			local icon = bar.candyBarIconFrame
-			icon:ClearAllPoints()
-			icon:SetPoint("BOTTOMRIGHT", bar, "BOTTOMLEFT", E and (E.PixelMode and -1 or -5) or -1, 0)
-			icon:SetSize(bar:GetHeight(), bar:GetHeight())
-		end
-	end
-
 	barStyles.ElvUI = {
 		apiVersion = 1,
 		version = 10,
@@ -453,7 +434,6 @@ do
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "ElvUI" end,
-		OnEmphasize = onEmph,
 	}
 end
 
@@ -473,6 +453,7 @@ plugin.defaultDB = {
 	alignText = "LEFT",
 	alignTime = "RIGHT",
 	icon = true,
+	iconPosition = "LEFT",
 	fill = nil,
 	barStyle = "Default",
 	emphasize = true,
@@ -664,26 +645,38 @@ do
 						name = "",
 						order = 11,
 					},
-					icon = {
-						type = "toggle",
-						name = L.icon,
-						desc = L.iconDesc,
-						order = 12,
-					},
 					time = {
 						type = "toggle",
 						name = L.time,
 						desc = L.timeDesc,
-						order = 13,
+						order = 12,
 					},
 					spacing = {
 						type = "range",
 						name = L.spacing,
 						desc = L.spacingDesc,
-						order = 14,
+						order = 13,
 						softMax = 30,
 						min = 0,
 						step = 1,
+						width = "double",
+					},
+					icon = {
+						type = "toggle",
+						name = L.icon,
+						desc = L.iconDesc,
+						order = 14,
+					},
+					iconPosition = {
+						type = "select",
+						name = L.iconPosition,
+						desc = L.iconPositionDesc,
+						order = 15,
+						values = {
+							LEFT = L.left,
+							RIGHT = L.right,
+						},
+						disabled = function() return not db.icon end,
 					},
 				},
 			},
@@ -993,12 +986,8 @@ local function onResize(self, width, height)
 	db[self.w] = width
 	db[self.h] = height
 	for k in next, self.bars do
-		k:SetSize(width, height)
-		if k:GetIcon() then
-			k.width, k.height = width, height
-			k:SetIcon(k:GetIcon())
-		end
 		currentBarStyler.BarStopped(k)
+		k:SetSize(width, height)
 		currentBarStyler.ApplyStyle(k)
 		rearrangeBars(self)
 	end
@@ -1502,16 +1491,17 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar:SetDuration(time, isApprox)
 	bar:SetTimeVisibility(db.time)
 	bar:SetIcon(db.icon and icon or nil)
+	bar:SetIconPosition(db.iconPosition)
 	bar:SetFill(db.fill)
 	if db.interceptMouse and not db.onlyInterceptOnKeypress then
 		refixClickOnBar(true, bar)
 	end
-	currentBarStyler.ApplyStyle(bar)
 
 	if db.emphasize and time < db.emphasizeTime then
 		self:EmphasizeBar(bar, true)
 	else
 		bar:Start() -- Don't fire :Start twice when emphasizeRestart is on
+		currentBarStyler.ApplyStyle(bar)
 	end
 	rearrangeBars(bar:Get("bigwigs:anchor"))
 
@@ -1575,13 +1565,10 @@ function plugin:EmphasizeBar(bar, start)
 	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
+	currentBarStyler.BarStopped(bar)
 	bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
 	bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
-	bar.width, bar.height = db.BigWigsEmphasizeAnchor_width, db.BigWigsEmphasizeAnchor_height
-	if bar:GetIcon() then
-		bar:SetIcon(bar:GetIcon())
-	end
-	currentBarStyler.OnEmphasize(bar)
+	currentBarStyler.ApplyStyle(bar)
 	bar:Set("bigwigs:emphasized", true)
 end
 
