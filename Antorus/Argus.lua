@@ -512,42 +512,42 @@ function mod:GolgannethsWrath()
 end
 
 do
-	local burstList, bombName, isOnMe, scheduled = {}, nil, 0, nil
+	local burstList, bombName, isOnMe, scheduled = {}, nil, 0, false
 
-	local function announce(self)
+	local function announce()
 		if isOnMe > 0 then -- Burst (3 or 7)
 			local positionNumber = isOnMe == 3 and 1 or 2 -- Either 1 or 2
-			self:Message(250669, "blue", "Alarm", CL.you:format(CL.count_icon:format(self:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
+			mod:Message(250669, "blue", "Alarm", CL.you:format(CL.count_icon:format(mod:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
 		elseif isOnMe < 0 then -- Bomb (-1)
-			self:Message(251570, "blue", "Warning", CL.you:format(CL.count:format("|T137002:0|t" .. self:SpellName(251570), soulBombCounter - 1))) -- {2}Soulbomb (soulBombCounter) on you
+			mod:Message(251570, "blue", "Warning", CL.you:format(CL.count:format("|T137002:0|t" .. mod:SpellName(251570), soulBombCounter - 1))) -- {2}Soulbomb (soulBombCounter) on you
 		end
-		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
-			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
+		if mod:CheckOption("combinedBurstAndBomb", "MESSAGE") then
+			if isOnMe == 0 or mod:GetOption("custom_off_always_show_combined") then
 				local msg = ""
 				if bombName then
-					msg = L.bomb:format(soulBombCounter, self:ColorName(bombName))
+					msg = L.bomb:format(soulBombCounter, mod:ColorName(bombName))
 				end
 
 				local burstMsg = ""
 				for i=1, #burstList do
 					local player = burstList[i]
 					local icon = i == 1 and "|T137003:0|t" or "|T137007:0|t"
-					burstMsg = burstMsg .. icon .. self:ColorName(player) .. (i == #burstList and "" or ",")
+					burstMsg = burstMsg .. icon .. mod:ColorName(player) .. (i == #burstList and "" or ",")
 				end
 				msg = msg .. L.burst:format(burstMsg)
 
-				self:Message("combinedBurstAndBomb", "red", nil, msg, false)
+				mod:Message("combinedBurstAndBomb", "red", nil, msg, false)
 			end
 		else
 			if isOnMe > -1 then -- No bomb on you (0, 3 or 7)
-				self:TargetMessage2(251570, "orange", bombName, false, CL.count:format(self:SpellName(251570), soulBombCounter))
+				mod:TargetMessage2(251570, "orange", bombName, false, CL.count:format(mod:SpellName(251570), soulBombCounter))
 			end
 			if isOnMe < 3 then -- No burst on you (0 or -1)
-				self:TargetsMessage(250669, "red", self:ColorName(burstList), #burstList)
+				mod:TargetsMessage(250669, "red", mod:ColorName(burstList), #burstList)
 			end
 		end
 		wipe(burstList)
-		scheduled = nil
+		scheduled = false
 		bombName = nil
 		isOnMe = 0
 	end
@@ -563,7 +563,8 @@ do
 		end
 		if #burstList == 1 then
 			if not scheduled then
-				scheduled = self:ScheduleTimer(announce, 0.1, self)
+				scheduled = true
+				self:SimpleTimer(announce, 0.1)
 			end
 			self:Bar("bomb_explosions", self:Mythic() and 12 or 15, L.bomb_explosions, L.bomb_explosions_icon) -- Bomb Explosions
 			if self:GetOption(burstMarker) then
@@ -595,7 +596,8 @@ do
 		bombName = args.destName
 
 		if not scheduled then
-			scheduled = self:ScheduleTimer(announce, 0.1, self)
+			scheduled = true
+			self:SimpleTimer(announce, 0.1)
 		end
 
 		soulBombCounter = soulBombCounter + 1
@@ -931,19 +933,19 @@ end
 do
 	local playerList, isOnMe = {}, 0
 
-	local function announce(self, spellId, spellName)
-		local meOnly = self:CheckOption(spellId, "ME_ONLY")
+	local function announce()
+		local meOnly = mod:CheckOption(257966, "ME_ONLY")
 
 		if isOnMe > 0 and (meOnly or #playerList == 1) then
-			self:Message(spellId, "blue", "Warning", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe == 1 and 1 or 4, spellName)))
+			mod:Message(257966, "blue", "Warning", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe == 1 and 1 or 4, mod:SpellName(257966))))
 		elseif not meOnly then
 			local msg = ""
 			for i=1, #playerList do
 				local icon = i == 1 and "|T137001:0|t" or "|T137004:0|t"
-				msg = msg .. icon .. self:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
+				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
 			end
 
-			self:Message(spellId, "orange", isOnMe > 0 and "Warning", CL.other:format(spellName, msg))
+			mod:Message(257966, "orange", isOnMe > 0 and "Warning", CL.other:format(mod:SpellName(257966), msg))
 		end
 
 		wipe(playerList)
@@ -958,7 +960,7 @@ do
 			checkForFearHelp(self)
 		end
 		if #playerList == 1 then
-			self:ScheduleTimer(announce, 0.3, self, args.spellId, args.spellName)
+			self:SimpleTimer(announce, 0.3)
 			sentenceofSargerasCount = sentenceofSargerasCount + 1
 			self:Bar(args.spellId, timers[stage][args.spellId][sentenceofSargerasCount], CL.count:format(args.spellName, sentenceofSargerasCount))
 			if self:GetOption(sentenceMarker) then

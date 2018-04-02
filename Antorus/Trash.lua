@@ -212,7 +212,7 @@ do
 		else
 			-- XXX I have no logs where this happens so the possibility of this situation is an assumption:
 			-- clean up if, for some reason, the 2nd target had an immunity on.
-			self:ScheduleTimer(function()
+			self:SimpleTimer(function()
 				if tbl and #tbl == 1 then
 					wipe(tbl)
 				end
@@ -350,9 +350,6 @@ do
 			end
 		elseif players[UnitGUID(unit)] then
 			players[UnitGUID(unit)] = nil
-			if unit == "player" then
-				self:CancelSayCountdown(252797)
-			end
 		end
 	end
 end

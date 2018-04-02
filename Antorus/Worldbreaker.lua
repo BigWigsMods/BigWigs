@@ -112,15 +112,15 @@ do
 	-- Blizzard didn't give us a cast event for the haywire Annihilator.
 	-- It sill fires Cannon Chooser in USCS, so we wait for a bit and check if
 	-- Decimation got cast and if not it must've been Annihilation!
-	local function checkForDecimation(self)
+	local function checkForDecimation()
 		if GetTime()-decimationCasted > 1 then
-			self:Annihilation()
+			mod:Annihilation()
 		end
 	end
 
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
 		if spellId == 245124 and annihilatorHaywired then -- Cannon Chooser
-			self:ScheduleTimer(checkForDecimation, 0.1, self)
+			self:SimpleTimer(checkForDecimation, 0.1)
 		end
 	end
 end
@@ -135,13 +135,12 @@ function mod:Annihilation()
 end
 
 do
-	local isOnMe, scheduled = nil, nil
+	local isOnMe = false
 
-	local function warn(self)
+	local function warn()
 		if not isOnMe then
-			self:Message(244410, "yellow")
+			mod:Message(244410, "yellow")
 		end
-		scheduled = nil
 	end
 
 	function mod:Decimation(args)
@@ -151,10 +150,8 @@ do
 			self:Bar(244761, 15.8) -- Annihilation
 		end
 		decimationCasted = GetTime()
-		isOnMe = nil
-		if not scheduled then
-			scheduled = self:ScheduleTimer(warn, 0.3, self)
-		end
+		isOnMe = false
+		self:SimpleTimer(warn, 0.3)
 	end
 
 	function mod:DecimationApplied(args)
