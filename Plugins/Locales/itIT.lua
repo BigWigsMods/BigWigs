@@ -276,6 +276,8 @@ L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in
 --
 
 --L.spacing = "Spacing"
+--L.emphasizeMultiplier = "Size Multiplier"
+--L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

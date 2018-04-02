@@ -276,6 +276,8 @@ L.autoReplyLeftCombatAdvancedWipe = "在「%s」的戰鬥中滅團：%s"
 --
 
 --L.spacing = "Spacing"
+--L.emphasizeMultiplier = "Size Multiplier"
+--L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

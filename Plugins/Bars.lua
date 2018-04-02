@@ -480,6 +480,7 @@ plugin.defaultDB = {
 	emphasizeGrowup = nil,
 	emphasizeRestart = true,
 	emphasizeTime = 11,
+	emphasizeMultiplier = 1.1,
 	BigWigsAnchor_width = 220,
 	BigWigsAnchor_height = 16,
 	BigWigsEmphasizeAnchor_width = 320,
@@ -745,28 +746,22 @@ do
 						name = L.enable,
 						order = 1,
 					},
-					emphasizeMove = {
-						type = "toggle",
-						name = L.move,
-						desc = L.moveDesc,
-						order = 2,
-					},
 					emphasizeRestart = {
 						type = "toggle",
 						name = L.restart,
 						desc = L.restartDesc,
-						order = 3,
+						order = 2,
 					},
 					emphasizeGrowup = {
 						type = "toggle",
 						name = L.growingUpwards,
 						desc = L.growingUpwardsDesc,
-						order = 4,
+						order = 3,
 					},
 					emphasizeTime = {
 						type = "range",
 						name = L.emphasizeAt,
-						order = 5,
+						order = 4,
 						min = 6,
 						max = 20,
 						step = 1,
@@ -775,15 +770,44 @@ do
 						type = "range",
 						name = L.fontSize,
 						width = "double",
-						order = 6,
+						order = 5,
 						max = 200, softMax = 72,
 						min = 1,
 						step = 1,
 					},
+					emphasizeMove = {
+						type = "toggle",
+						name = L.move,
+						desc = L.moveDesc,
+						order = 6,
+						set = function(_, value)
+							db.emphasizeMove = value
+							if not value then
+								db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*db.emphasizeMultiplier
+								db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*db.emphasizeMultiplier
+							end
+						end,
+					},
+					emphasizeMultiplier = {
+						type = "range",
+						name = L.emphasizeMultiplier,
+						desc = L.emphasizeMultiplierDesc,
+						width = "double",
+						order = 7,
+						max = 3,
+						min = 1,
+						step = 0.01,
+						set = function(_, value)
+							db.emphasizeMultiplier = value
+							db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*value
+							db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*value
+						end,
+						disabled = function() return db.emphasizeMove end,
+					},
 					exactPositioning = {
 						type = "group",
 						name = L.positionExact,
-						order = 7,
+						order = 8,
 						inline = true,
 						args = {
 							BigWigsEmphasizeAnchor_x = {
@@ -1091,6 +1115,10 @@ local function updateProfile()
 	-- XXX temp cleanup [7.3.5]
 	db.scale = nil
 	db.emphasizeScale = nil
+	if not db.emphasizeMove then
+		db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*db.emphasizeMultiplier
+		db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*db.emphasizeMultiplier
+	end
 end
 
 --------------------------------------------------------------------------------
