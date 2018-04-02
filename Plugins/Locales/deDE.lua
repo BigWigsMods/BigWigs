@@ -183,7 +183,6 @@ L.restart = "Neu starten"
 L.restartDesc = "Startet die hervorgehobenen Leisten neu, so dass sie bis 10 hochzählen anstatt von 10 herunter."
 L.right = "Rechts"
 L.RunAway = "Lauf kleines Mädchen, lauf (Der große böse Wolf)"
-L.scale = "Skalierung"
 L.secondary = "Zweites Symbol"
 L.secondaryDesc = "Das zweite Schlachtzugssymbol, das verwendet wird."
 L.sendBreak = "Sende Pausentimer an BigWigs- und DBM-Nutzer."
@@ -271,6 +270,12 @@ L.wrongTime = "Ungültige Zeitangabe. <time> kann eine Zahl in Sekunden, ein M:S
 --L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
 --L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
 --L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

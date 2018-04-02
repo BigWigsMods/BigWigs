@@ -183,7 +183,6 @@ L.restart = "Перезапуск"
 L.restartDesc = "Перезапуск увеличенных полос так, что они стартуют с самого начала, отсчитывая от 10."
 L.right = "Вправо"
 L.RunAway = "Беги, малышка, беги (Злой и страшный серый волк)"
-L.scale = "Масштаб"
 L.secondary = "Второстепенная"
 L.secondaryDesc = "Вторая метка рейда, которая будет использоваться скриптом события."
 L.sendBreak = "Отправка таймера перерыва пользователям BigWigs и DBM."
@@ -271,6 +270,12 @@ L.autoReplyLeftCombatNormalWin = "Я победил '%s'."
 L.autoReplyLeftCombatNormalWipe = "Я проиграл '%s'."
 L.autoReplyLeftCombatAdvancedWin = "Я победил '%s' с %d/%d живыми игроками."
 L.autoReplyLeftCombatAdvancedWipe = "Я проиграл '%s' на: %s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

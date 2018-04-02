@@ -183,7 +183,6 @@ L.restart = "Reiniciar"
 L.restartDesc = "Reinicia las barras enfatizadas para que empiecen desde el principio y el recuento desde 10."
 L.right = "Derecha"
 L.RunAway = "Corre pequeña (El Lobo Feroz)"
-L.scale = "Escala"
 L.secondary = "Secundario"
 L.secondaryDesc = "El secundario objetivo de la raid el cual debería usar este icono"
 L.sendBreak = "Enviando un descanso a los jugadores con BigWigs y DBM."
@@ -271,6 +270,12 @@ L.wrongTime = "Tiempo especificado inválido. <time> puede ser bien un número e
 --L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
 --L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
 --L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

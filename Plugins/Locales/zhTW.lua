@@ -183,7 +183,6 @@ L.restart = "重新加載"
 L.restartDesc = "重新加載強調計時條並從10開始倒數。"
 L.right = "右"
 L.RunAway = "快逃啊小女孩，快逃……（大野狼）"
-L.scale = "縮放"
 L.secondary = "次要"
 L.secondaryDesc = "戰鬥時使用的第二個團隊圖示。"
 L.sendBreak = "發送休息時間計時器到 BigWigs 和 DBM 用戶。"
@@ -271,6 +270,12 @@ L.autoReplyLeftCombatNormalWin = "已擊敗「%s」。"
 L.autoReplyLeftCombatNormalWipe = "在「%s」的戰鬥中滅團。"
 L.autoReplyLeftCombatAdvancedWin = "已擊敗「%s」，尚有%d／%d人存活。"
 L.autoReplyLeftCombatAdvancedWipe = "在「%s」的戰鬥中滅團：%s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

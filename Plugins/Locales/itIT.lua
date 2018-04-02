@@ -183,7 +183,6 @@ L.restart = "Riavvia"
 L.restartDesc = "Riavvia le barre Enfatizzate in modo che partano dall'inizio e contino fino a 10."
 L.right = "Destra"
 L.RunAway = "Scappa ragazzina, scappa!!! (Big Bad Wolf)"
-L.scale = "Scala"
 L.secondary = "Secondario"
 L.secondaryDesc = "Il secondo Simbolo che l'automazione del combattimento dovrebbe usare."
 L.sendBreak = "Invia un timer di pausa a tutti gli utenti BigWigs e DBM."
@@ -271,6 +270,12 @@ L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in
 --L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
 --L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
 --L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

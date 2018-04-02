@@ -182,7 +182,6 @@ L.restart = "Relancer"
 L.restartDesc = "Relance les barres mises en évidence afin qu'elles commencent du début."
 L.right = "Droite"
 L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
-L.scale = "Échelle"
 L.secondary = "Secondaire"
 L.secondaryDesc = "La seconde icône de cible de raid qu'un script de rencontre doit utiliser."
 L.sendBreak = "Envoi d'un temps de pause aux utilisateurs de BigWigs et DBM."
@@ -270,6 +269,12 @@ L.wrongTime = "Durée spécifiée incorrecte. <durée> peut être exprimée soit
 --L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
 --L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
 --L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

@@ -183,7 +183,6 @@ L.restart = "重新加载"
 L.restartDesc = "重新加载醒目计时条并从10开始倒数。"
 L.right = "右"
 L.RunAway = "快跑吧小姑娘，快跑……（大灰狼）"
-L.scale = "缩放"
 L.secondary = "次要"
 L.secondaryDesc = "战斗时使用的第二个团队标记。"
 L.sendBreak = "发送休息时间计时器到 BigWigs 和 DBM 用户。"
@@ -271,6 +270,12 @@ L.autoReplyLeftCombatNormalWin = "与“%s”战斗取得了胜利。"
 L.autoReplyLeftCombatNormalWipe = "与“%s”战斗团灭。"
 L.autoReplyLeftCombatAdvancedWin = "与“%s”战斗取得了胜利，%d/%d人存活。"
 L.autoReplyLeftCombatAdvancedWipe = "与“%s”战斗团灭：%s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
