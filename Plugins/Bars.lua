@@ -449,7 +449,7 @@ end
 
 plugin.defaultDB = {
 	fontSize = 10,
-	fontSizeEmph = 11,
+	fontSizeEmph = 13,
 	texture = "BantoBar",
 	font = nil,
 	monochrome = nil,
