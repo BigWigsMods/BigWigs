@@ -181,7 +181,10 @@ do
 
 	local function removeStyle(bar)
 		bar.candyBarBackdrop:Hide()
-		bar:SetHeight(bar:Get("bigwigs:restoreheight"))
+		local height = bar:Get("bigwigs:restoreheight")
+		if height then
+			bar:SetHeight(height)
+		end
 
 		local tex = bar:Get("bigwigs:restoreicon")
 		if tex then
