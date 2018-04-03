@@ -149,12 +149,12 @@ L.proximity_name = "Proximité"
 L.proximityTitle = "%d m / %d |4joueur:joueurs;"
 L.pull = "Pull"
 L.pullIn = "Pull dans %d sec."
---L.engageSoundTitle = "Play a sound when a boss encounter has started"
---L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
---L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
+L.engageSoundTitle = "Jouer un son quand une rencontre de boss débute"
+L.pullStartedSoundTitle = "Jouer un son quand le délai de pull est lancé"
+L.pullFinishedSoundTitle = "Jouer un son quand le délai de pull est terminé"
 L.pullStarted = "Délai de pull lancé par l'utilisateur de %s %s."
 L.pullStopped = "Délai de pull annulé par %s."
---L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
+L.pullStoppedCombat = "Délai de pull annulé car vous êtes entré en combat."
 L.raidIconsDesc = [=[Certains scripts de rencontre utilisent des icônes pour marquer les joueurs affectés par des techniques précises. Par exemple, les effets de type "bombe" et les contrôles mentaux. Si vous décochez ceci, vous ne marquerez personne.
 
 |cffff4411Ne fonctionne que si vous êtes soit le chef du groupe (de raid), soit un de ses assistants !|r]=]
@@ -241,8 +241,8 @@ L.victoryMessageBlizzardDesc = "Le message Blizzard est une imposante animation 
 L.victoryMessages = "Affichage des messages de défaite des boss"
 L.victorySound = "Jouer un son de victoire"
 L.Warning = "Avertissement"
---L.wipe = "Wipe"
---L.wipeSoundTitle = "Play a sound when you wipe"
+L.wipe = "Wipe"
+L.wipeSoundTitle = "Joue un son quand vous wipez"
 L.wrongBreakFormat = "Doit être compris entre 1 et 60 minutes. Un exemple correct est le suivant : /break 5"
 L.wrongCustomBarFormat = "Format incorrect. Un exemple correct est le suivant : /raidbar 20 texte"
 L.wrongPullFormat = "Doit être compris entre 1 et 60 secondes. Un exemple correct est le suivant : /pull 5"
@@ -252,34 +252,34 @@ L.wrongTime = "Durée spécifiée incorrecte. <durée> peut être exprimée soit
 -- AutoReply.lua
 --
 
---L.autoReply = "Auto Reply"
---L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
---L.responseType = "Response Type"
---L.autoReplyFinalReply = "Also whisper when leaving combat"
---L.guildAndFriends = "Guild & Friends"
---L.everyoneElse = "Everyone else"
+L.autoReply = "Répondeur auto."
+L.autoReplyDesc = "Répond automatiquement aux chuchotements quand vous êtes dans une rencontre de boss."
+L.responseType = "Type de réponse"
+L.autoReplyFinalReply = "Chuchoter également à la fin du combat"
+L.guildAndFriends = "Guilde & Amis"
+L.everyoneElse = "Tout le reste"
 
---L.autoReplyBasic = "I'm busy in combat with a boss encounter."
---L.autoReplyNormal = "I'm busy in combat with '%s'."
---L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
---L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+L.autoReplyBasic = "Je suis occupé à combattre un boss."
+L.autoReplyNormal = "Je suis occupé à combattre '%s'."
+L.autoReplyAdvanced = "Je suis occupé à combattre '%s' (%s) et %d/%d personnes sont en vie."
+L.autoReplyExtreme = "Je suis occupé à combattre '%s' (%s) et %d/%d personnes sont en vie : %s"
 
---L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
---L.autoReplyLeftCombatNormalWin = "I won against '%s'."
---L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
---L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
---L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+L.autoReplyLeftCombatBasic = "Je ne suis plus en combat avec un boss."
+L.autoReplyLeftCombatNormalWin = "J'ai terrassé '%s'."
+L.autoReplyLeftCombatNormalWipe = "J'ai perdu face à '%s'."
+L.autoReplyLeftCombatAdvancedWin = "J'ai terrassé '%s' avec %d/%d personnes en vie."
+L.autoReplyLeftCombatAdvancedWipe = "J'ai perdu face à '%s' à : %s"
 
 -----------------------------------------------------------------------
 -- Bars.lua
 --
 
---L.spacing = "Spacing"
---L.spacingDesc = "Change the space between each bar."
---L.emphasizeMultiplier = "Size Multiplier"
---L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
---L.iconPosition = "Icon Position"
---L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
+L.spacing = "Espacement"
+L.spacingDesc = "Modifie l'espacement entre chaque barre."
+L.emphasizeMultiplier = "Multiplicateur de taille"
+L.emphasizeMultiplierDesc = "Si vous désactivez le déplacement des barres vers l'ancre de mise en évidence, cette option décidera la taille des barres mises en évidence en multipliant la taille des barres normales."
+L.iconPosition = "Position de l'icône"
+L.iconPositionDesc = "Définit où l'icône est positionnée sur la barre."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
