@@ -176,7 +176,8 @@ do
 
 	local function warn()
 		if not isOnMe then
-			mod:TargetsMessage(244094, "orange", playerList) -- Necrotic Embrace
+			mod:TargetsMessage(244094, "orange", playerList, #playerList) -- Necrotic Embrace
+			mod:OpenProximity(244094, 10, proxList)
 		else
 			wipe(playerList)
 		end
@@ -195,14 +196,11 @@ do
 			self:TargetMessage2(args.spellId, "orange", args.destName, CL.count_icon:format(args.spellName, count, countTwo))
 			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, countTwo))
 			self:Flash(args.spellId, countTwo)
-			self:SayCountdown(args.spellId, 6, countTwo)
+			self:SayCountdown(args.spellId, 6)
 			self:OpenProximity(args.spellId, 10)
 		end
 
 		proxList[#proxList+1] = args.destName
-		if not isOnMe then
-			self:OpenProximity(args.spellId, 10, proxList)
-		end
 
 		if count == 1 then
 			self:SimpleTimer(warn, 0.3)
