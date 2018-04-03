@@ -1168,10 +1168,6 @@ local function createAnchor(frameName, title)
 	display:SetScript("OnSizeChanged", onResize)
 	display:SetScript("OnDragStart", onDragStart)
 	display:SetScript("OnDragStop", onDragStop)
-	display:SetScript("OnMouseUp", function(self, button)
-		if button ~= "LeftButton" then return end
-		plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
-	end)
 	display.bars = {}
 	display.Reset = function(self)
 		db[self.x] = nil
@@ -1274,7 +1270,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossReboot", "StopModuleBars")
 	self:RegisterMessage("BigWigs_OnPluginDisable", "StopModuleBars")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
-	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -1295,16 +1290,6 @@ function plugin:OnPluginEnable()
 		else
 			startBreak(seconds-(curTime-prevTime), nick, isDBM, true)
 		end
-	end
-end
-
-function plugin:BigWigs_SetConfigureTarget(event, module)
-	if module == self then
-		normalAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-		emphasizeAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-	else
-		normalAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-		emphasizeAnchor.background:SetColorTexture(0, 0, 0, 0.3)
 	end
 end
 

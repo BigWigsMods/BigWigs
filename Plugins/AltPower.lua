@@ -307,7 +307,6 @@ function plugin:OnPluginEnable()
 
 	self:RegisterMessage("BigWigs_StartConfigureMode", "Test")
 	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
-	self:RegisterMessage("BigWigs_SetConfigureTarget")
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
@@ -364,11 +363,6 @@ do
 		display:SetSize(230, db.expanded and 210 or 80)
 		display:SetClampedToScreen(true)
 		display:EnableMouse(true)
-		display:SetScript("OnMouseUp", function(self, button)
-			if inTestMode and button == "LeftButton" then
-				plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
-			end
-		end)
 
 		local bg = display:CreateTexture()
 		bg:SetAllPoints(display)
@@ -471,14 +465,6 @@ do
 		display.title:SetText(L.altPowerTitle)
 		display:Show()
 		inTestMode = true
-	end
-end
-
-function plugin:BigWigs_SetConfigureTarget(event, module)
-	if module == self then
-		display.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-	else
-		display.background:SetColorTexture(0, 0, 0, 0.3)
 	end
 end
 

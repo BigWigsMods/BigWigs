@@ -859,7 +859,6 @@ do
 			options:SendMessage("BigWigs_StopConfigureMode")
 		else
 			options:SendMessage("BigWigs_StartConfigureMode")
-			options:SendMessage("BigWigs_SetConfigureTarget", BigWigs:GetPlugin("Bars"))
 		end
 	end
 
