@@ -189,14 +189,14 @@ do
 
 		playerList[#playerList+1] = args.destName
 		local count = #playerList
-		local countTwo = count + 2
+		local icon = count + 2
 		if self:Me(args.destGUID) then
 			isOnMe = true
 			self:PlaySound(args.spellId, "Warning")
-			self:TargetMessage2(args.spellId, "orange", args.destName, CL.count_icon:format(args.spellName, count, countTwo))
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, countTwo))
-			self:Flash(args.spellId, countTwo)
-			self:SayCountdown(args.spellId, 6)
+			self:TargetMessage2(args.spellId, "orange", args.destName, CL.count_icon:format(args.spellName, count, icon))
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, icon))
+			self:Flash(args.spellId, icon)
+			self:SayCountdown(args.spellId, 6, icon)
 			self:OpenProximity(args.spellId, 10)
 		end
 
@@ -207,7 +207,7 @@ do
 		end
 
 		if self:GetOption(necroticEmbraceMarker) then
-			SetRaidTarget(args.destName, countTwo) -- Icons 3 and 4
+			SetRaidTarget(args.destName, icon) -- Icons 3 and 4
 		end
 	end
 
