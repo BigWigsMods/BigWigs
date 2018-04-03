@@ -1131,77 +1131,72 @@ local function onDragStop(self)
 	plugin:UpdateGUI() -- Update X/Y if GUI is open.
 end
 
-local function createAnchor(frameName, title)
-	local display = CreateFrame("Frame", frameName, UIParent)
-	display.w, display.h, display.x, display.y = frameName .. "_width", frameName .. "_height", frameName .. "_x", frameName .. "_y"
-	display:EnableMouse(true)
-	display:SetClampedToScreen(true)
-	display:SetMovable(true)
-	display:SetResizable(true)
-	display:RegisterForDrag("LeftButton")
-	display:SetMinResize(80, 8)
-	display:SetFrameLevel(20)
-	local bg = display:CreateTexture(nil, "BACKGROUND")
-	bg:SetAllPoints(display)
-	bg:SetColorTexture(0, 0, 0, 0.3)
-	display.background = bg
-	local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")
-	header:SetText(title)
-	header:SetAllPoints(display)
-	header:SetJustifyH("CENTER")
-	header:SetJustifyV("MIDDLE")
-	local drag = CreateFrame("Frame", nil, display)
-	drag:SetFrameLevel(display:GetFrameLevel() + 10)
-	drag:SetWidth(16)
-	drag:SetHeight(16)
-	drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
-	drag:EnableMouse(true)
-	drag:SetScript("OnMouseDown", onDragHandleMouseDown)
-	drag:SetScript("OnMouseUp", onDragHandleMouseUp)
-	drag:SetAlpha(0.5)
-	local tex = drag:CreateTexture(nil, "OVERLAY")
-	tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
-	tex:SetWidth(16)
-	tex:SetHeight(16)
-	tex:SetBlendMode("ADD")
-	tex:SetPoint("CENTER", drag)
-	display:SetScript("OnSizeChanged", onResize)
-	display:SetScript("OnDragStart", onDragStart)
-	display:SetScript("OnDragStop", onDragStop)
-	display.bars = {}
-	display.Reset = function(self)
-		db[self.x] = nil
-		db[self.y] = nil
-		db[self.w] = nil
-		db[self.h] = nil
-		self:RefixPosition()
-	end
-	display.RefixPosition = function(self)
-		self:ClearAllPoints()
-		if db[self.x] and db[self.y] then
-			local s = self:GetEffectiveScale()
-			self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
-		else
-			self:SetPoint(unpack(defaultPositions[self:GetName()]))
+do
+	local function createAnchor(frameName, title)
+		local display = CreateFrame("Frame", frameName, UIParent)
+		display.w, display.h, display.x, display.y = frameName .. "_width", frameName .. "_height", frameName .. "_x", frameName .. "_y"
+		display:EnableMouse(true)
+		display:SetClampedToScreen(true)
+		display:SetMovable(true)
+		display:SetResizable(true)
+		display:RegisterForDrag("LeftButton")
+		display:SetMinResize(80, 8)
+		display:SetFrameLevel(20)
+		local bg = display:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints(display)
+		bg:SetColorTexture(0, 0, 0, 0.3)
+		display.background = bg
+		local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+		header:SetText(title)
+		header:SetAllPoints(display)
+		header:SetJustifyH("CENTER")
+		header:SetJustifyV("MIDDLE")
+		local drag = CreateFrame("Frame", nil, display)
+		drag:SetFrameLevel(display:GetFrameLevel() + 10)
+		drag:SetWidth(16)
+		drag:SetHeight(16)
+		drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
+		drag:EnableMouse(true)
+		drag:SetScript("OnMouseDown", onDragHandleMouseDown)
+		drag:SetScript("OnMouseUp", onDragHandleMouseUp)
+		drag:SetAlpha(0.5)
+		local tex = drag:CreateTexture(nil, "OVERLAY")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
+		tex:SetWidth(16)
+		tex:SetHeight(16)
+		tex:SetBlendMode("ADD")
+		tex:SetPoint("CENTER", drag)
+		display:SetScript("OnSizeChanged", onResize)
+		display:SetScript("OnDragStart", onDragStart)
+		display:SetScript("OnDragStop", onDragStop)
+		display.bars = {}
+		display.Reset = function(self)
+			db[self.x] = nil
+			db[self.y] = nil
+			db[self.w] = nil
+			db[self.h] = nil
+			self:RefixPosition()
 		end
-		self:SetWidth(db[self.w] or plugin.defaultDB[self.w])
-		self:SetHeight(db[self.h] or plugin.defaultDB[self.h])
+		display.RefixPosition = function(self)
+			self:ClearAllPoints()
+			if db[self.x] and db[self.y] then
+				local s = self:GetEffectiveScale()
+				self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
+			else
+				self:SetPoint(unpack(defaultPositions[self:GetName()]))
+			end
+			self:SetWidth(db[self.w] or plugin.defaultDB[self.w])
+			self:SetHeight(db[self.h] or plugin.defaultDB[self.h])
+		end
+		display:Hide()
+		return display
 	end
-	display:RefixPosition()
-	display:Hide()
-	return display
-end
 
-local function createAnchors()
 	normalAnchor = createAnchor("BigWigsAnchor", L.bars)
 	emphasizeAnchor = createAnchor("BigWigsEmphasizeAnchor", L.emphasizedBars)
-
-	createAnchors = nil
-	createAnchor = nil
 end
 
 local function showAnchors()
-	if createAnchors then createAnchors() end
 	normalAnchor:Show()
 	emphasizeAnchor:Show()
 end
@@ -1219,10 +1214,8 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 	if not db.font then db.font = media:GetDefault(FONT) end
-	if normalAnchor then
-		normalAnchor:RefixPosition()
-		emphasizeAnchor:RefixPosition()
-	end
+	normalAnchor:RefixPosition()
+	emphasizeAnchor:RefixPosition()
 	if plugin:IsEnabled() then
 		if not media:Fetch(STATUSBAR, db.texture, true) then db.texture = "BantoBar" end
 		plugin:SetBarStyle(db.barStyle)
@@ -1575,7 +1568,6 @@ end
 --
 
 function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
-	if createAnchors then createAnchors() end
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)
 	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), db.BigWigsAnchor_width, db.BigWigsAnchor_height)
