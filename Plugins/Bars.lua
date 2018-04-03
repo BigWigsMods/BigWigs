@@ -779,6 +779,9 @@ do
 							if not value then
 								db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*db.emphasizeMultiplier
 								db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*db.emphasizeMultiplier
+							else
+								db.BigWigsEmphasizeAnchor_width = BigWigsEmphasizeAnchor:GetWidth()
+								db.BigWigsEmphasizeAnchor_height = BigWigsEmphasizeAnchor:GetHeight()
 							end
 						end,
 					},
