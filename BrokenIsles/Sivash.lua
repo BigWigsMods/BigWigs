@@ -31,7 +31,7 @@ function mod:OnBossEnable()
 	self:ScheduleTimer("CheckForEngage", 1)
 	self:RegisterEvent("BOSS_KILL")
 
-	self:Log("SPELL_CAST_SUCCESS", "TidalWave", 241458)
+	self:Log("SPELL_CAST_SUCCESS", "TidalWave", 233996)
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 
 	self:Death("Win", 117470)
@@ -53,8 +53,8 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:TidalWave(args)
-	self:Message(233996, "Urgent", "Warning")
-	self:CDBar(233996, 22)
+	self:Message(args.spellId, "Urgent", "Warning")
+	self:CDBar(args.spellId, 22)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, castGUID, spellId)
