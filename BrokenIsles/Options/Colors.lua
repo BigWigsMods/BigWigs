@@ -83,8 +83,8 @@ BigWigs:AddColors("Shar'thos", {
 
 BigWigs:AddColors("Si'vash", {
 	[233968] = "Urgent",
+	[233996] = "Urgent",
 	[241433] = "Attention",
-	[241458] = "Urgent",
 })
 
 BigWigs:AddColors("The Soultakers", {
