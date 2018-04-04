@@ -163,7 +163,7 @@ do
 	barStyles.BeautyCase = {
 		apiVersion = 1,
 		version = 10,
-		GetSpacing = function() return 8 end,
+		barSpacing = 8,
 		ApplyStyle = styleBar,
 		BarStopped = freeStyle,
 		GetStyleName = function() return "!Beautycase" end,
@@ -254,7 +254,10 @@ do
 	barStyles.MonoUI = {
 		apiVersion = 1,
 		version = 10,
-		GetSpacing = function(bar) return bar:GetHeight()+5 end,
+		barHeight = 20,
+		fontSizeNormal = 10,
+		fontSizeEmphasized = 11,
+		GetSpacing = function(bar) return bar:GetHeight()+6 end,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "MonoUI" end,
@@ -336,7 +339,7 @@ do
 	barStyles.TukUI = {
 		apiVersion = 1,
 		version = 10,
-		GetSpacing = function() return 7 end,
+		barSpacing = 7,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "TukUI" end,
@@ -436,7 +439,8 @@ do
 	barStyles.ElvUI = {
 		apiVersion = 1,
 		version = 10,
-		GetSpacing = function() return E and (E.PixelMode and 4 or 8) or 4 end,
+		barSpacing = E and (E.PixelMode and 4 or 8) or 4,
+		barHeight = 20,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "ElvUI" end,
@@ -527,13 +531,16 @@ do
 	}
 
 	local function updateFont(info, value)
-		local key = info[#info]
-		if key == "font" then
-			local list = media:List(FONT)
-			db[key] = list[value]
-		else
-			db[key] = value
+		if info then
+			local key = info[#info]
+			if key == "font" then
+				local list = media:List(FONT)
+				db[key] = list[value]
+			else
+				db[key] = value
+			end
 		end
+
 		local flags = nil
 		if db.monochrome and db.outline ~= "NONE" then
 			flags = "MONOCHROME," .. db.outline
@@ -616,25 +623,10 @@ do
 						name = "",
 						order = 5,
 					},
-					fill = {
-						type = "toggle",
-						name = L.fill,
-						desc = L.fillDesc,
-						order = 6,
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								bar:SetFill(value)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								bar:SetFill(value)
-							end
-						end,
-					},
 					alignText = {
 						type = "select",
 						name = L.alignText,
-						order = 7,
+						order = 6,
 						values = {
 							LEFT = L.left,
 							CENTER = L.center,
@@ -657,7 +649,7 @@ do
 					alignTime = {
 						type = "select",
 						name = L.alignTime,
-						order = 8,
+						order = 7,
 						values = {
 							LEFT = L.left,
 							CENTER = L.center,
@@ -674,6 +666,21 @@ do
 								currentBarStyler.BarStopped(bar)
 								bar.candyBarDuration:SetJustifyH(value)
 								currentBarStyler.ApplyStyle(bar)
+							end
+						end,
+					},
+					fill = {
+						type = "toggle",
+						name = L.fill,
+						desc = L.fillDesc,
+						order = 8,
+						set = function(info, value)
+							db[info[#info]] = value
+							for bar in next, normalAnchor.bars do
+								bar:SetFill(value)
+							end
+							for bar in next, emphasizeAnchor.bars do
+								bar:SetFill(value)
 							end
 						end,
 					},
@@ -712,6 +719,47 @@ do
 						set = function(info, value)
 							db[info[#info]] = value
 							plugin:SetBarStyle(value)
+							local style = barStyles[value]
+							if style then
+								if style.barSpacing then
+									db.spacing = style.barSpacing
+								else
+									db.spacing = 1
+								end
+								rearrangeBars(normalAnchor)
+								rearrangeBars(emphasizeAnchor)
+
+								if style.barHeight then
+									db.BigWigsAnchor_height = style.barHeight
+									db.BigWigsEmphasizeAnchor_height = style.barHeight * 1.1
+								else
+									db.BigWigsAnchor_height = 16
+									db.BigWigsEmphasizeAnchor_height = 22
+								end
+								if style.fontSizeNormal then
+									db.fontSize = style.fontSizeNormal
+									updateFont()
+								end
+								if style.fontSizeEmphasized then
+									db.fontSizeEmph = style.fontSizeEmphasized
+									updateFont()
+								end
+
+								for bar in next, normalAnchor.bars do
+									currentBarStyler.BarStopped(bar)
+									bar:SetHeight(db.BigWigsAnchor_height)
+									currentBarStyler.ApplyStyle(bar)
+								end
+								for bar in next, emphasizeAnchor.bars do
+									currentBarStyler.BarStopped(bar)
+									bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
+									currentBarStyler.ApplyStyle(bar)
+								end
+
+								BigWigsAnchor:RefixPosition()
+								BigWigsEmphasizeAnchor:RefixPosition()
+								plugin:UpdateGUI()
+							end
 						end,
 					},
 					header2 = {
@@ -748,6 +796,10 @@ do
 						step = 1,
 						width = "double",
 						set = sortBars,
+						disabled = function()
+							-- Just throw in a random frame (normalAnchor) instead of a bar to see if it returns a value since we noop() styles that don't have a .GetSpacing entry
+							return currentBarStyler.GetSpacing(normalAnchor)
+						end,
 					},
 					icon = {
 						type = "toggle",
@@ -1115,9 +1167,23 @@ local function onDragHandleMouseUp(self) self:GetParent():StopMovingOrSizing() e
 local function onResize(self, width, height)
 	db[self.w] = width
 	db[self.h] = height
+	if self == normalAnchor and not db.emphasizeMove then
+		-- Move is disabled and we are configuring the normal anchor. Make sure to update the emphasized bars also.
+		db[emphasizeAnchor.w] = width * db.emphasizeMultiplier
+		db[emphasizeAnchor.h] = height * db.emphasizeMultiplier
+	end
 	for k in next, self.bars do
 		currentBarStyler.BarStopped(k)
-		k:SetSize(width, height)
+		if db.emphasizeMove then
+			k:SetSize(width, height) -- Move enabled, set the size no matter which anchor we are configuring
+		elseif self == normalAnchor then
+			-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
+			if k:Get("bigwigs:emphasized") then
+				k:SetSize(db[emphasizeAnchor.w], db[emphasizeAnchor.h])
+			else
+				k:SetSize(width, height)
+			end
+		end
 		currentBarStyler.ApplyStyle(k)
 		rearrangeBars(self)
 	end
