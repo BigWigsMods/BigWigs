@@ -915,7 +915,7 @@ end
 
 function mod:SargerasRage(args)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "Warning")
+		self:PlaySound(258068, "Warning")
 		self:TargetMessage2(258068, "blue", args.destName, false, args.spellName, args.spellId)
 		self:Flash(258068)
 		self:Say(258068, self:SpellName(6612)) -- Rage
@@ -924,7 +924,7 @@ end
 
 function mod:SargerasFear(args)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "Warning")
+		self:PlaySound(258068, "Warning")
 		self:TargetMessage2(258068, "blue", args.destName, false, args.spellName, args.spellId)
 		checkForFearHelp(self)
 	end
