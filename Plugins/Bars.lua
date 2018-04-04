@@ -1294,6 +1294,13 @@ local function updateProfile()
 		db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*db.emphasizeMultiplier
 		db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*db.emphasizeMultiplier
 	end
+	if db.barStyle == "MonoUI" and not db.tempMonoUIReset then
+		db.BigWigsAnchor_height = 20
+		db.BigWigsEmphasizeAnchor_height = 22
+		db.fontSize = 10
+		db.fontSizeEmph = 11
+	end
+	db.tempMonoUIReset = true
 end
 
 --------------------------------------------------------------------------------
@@ -1714,12 +1721,12 @@ do
 end
 
 function plugin:EmphasizeBar(bar, start)
-	currentBarStyler.BarStopped(bar)
 	if db.emphasizeMove then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
 	end
+	currentBarStyler.BarStopped(bar)
 	if start or db.emphasizeRestart then
 		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
 	end
