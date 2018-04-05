@@ -1301,6 +1301,16 @@ local function updateProfile()
 		db.fontSizeEmph = 11
 	end
 	db.tempMonoUIReset = true
+	if not db.tempSpacingReset then
+		if db.barStyle == "BeautyCase" then
+			db.spacing = 8
+		elseif db.barStyle == "TukUI" then
+			db.spacing = 7
+		elseif db.barStyle == "ElvUI" then
+			db.spacing = barStyles.ElvUI.barSpacing or 4
+		end
+	end
+	db.tempSpacingReset = true
 end
 
 --------------------------------------------------------------------------------
