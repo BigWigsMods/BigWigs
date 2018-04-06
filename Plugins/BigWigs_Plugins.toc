@@ -31,6 +31,4 @@
 ## X-Category: Raid
 
 libs.xml
-locales.xml
 modules.xml
-
