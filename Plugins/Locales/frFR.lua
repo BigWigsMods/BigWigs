@@ -261,14 +261,14 @@ L.everyoneElse = "Tout le reste"
 
 L.autoReplyBasic = "Je suis occupé à combattre un boss."
 L.autoReplyNormal = "Je suis occupé à combattre '%s'."
-L.autoReplyAdvanced = "Je suis occupé à combattre '%s' (%s) et %d/%d personnes sont en vie."
-L.autoReplyExtreme = "Je suis occupé à combattre '%s' (%s) et %d/%d personnes sont en vie : %s"
+L.autoReplyAdvanced = "Je suis occupé à combattre '%s' (%s). %d/%d joueurs en vie."
+L.autoReplyExtreme = "Je suis occupé à combattre '%s' (%s). %d/%d joueurs en vie : %s"
 
 L.autoReplyLeftCombatBasic = "Je ne suis plus en combat avec un boss."
 L.autoReplyLeftCombatNormalWin = "J'ai terrassé '%s'."
 L.autoReplyLeftCombatNormalWipe = "J'ai perdu face à '%s'."
-L.autoReplyLeftCombatAdvancedWin = "J'ai terrassé '%s' avec %d/%d personnes en vie."
-L.autoReplyLeftCombatAdvancedWipe = "J'ai perdu face à '%s' à : %s"
+L.autoReplyLeftCombatAdvancedWin = "J'ai terrassé '%s' avec %d/%d joueurs en vie."
+L.autoReplyLeftCombatAdvancedWipe = "J'ai perdu face à '%s' : %s"
 
 -----------------------------------------------------------------------
 -- Bars.lua
