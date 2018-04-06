@@ -57,7 +57,7 @@ do
 		values = {
 			L.none,
 			L.autoReplyLeftCombatBasic,
-			L.autoReplyLeftCombatNormalWin:format(hogger),
+			"|cFF00FF00".. L.autoReplyLeftCombatNormalWin:format(hogger) .."|r   |cFFFF0000".. L.autoReplyLeftCombatNormalWipe:format(hogger) .. "|r",
 			"|cFF00FF00".. L.autoReplyLeftCombatAdvancedWin:format(hogger, 1, 20) .."|r   |cFFFF0000".. L.autoReplyLeftCombatAdvancedWipe:format(hogger, L.healthFormat:format(hogger, 0.1)) .."|r",
 		},
 		width = "full",
