@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "frFR")
 if not L then return end
 
+L.comma = ", "
+
 L.abilityName = "Nom de la technique"
 L.abilityNameDesc = "Affiche ou non le nom de la technique au dessus de la fenêtre."
 L.Alarm = "Alarme"
@@ -147,9 +149,12 @@ L.proximity_name = "Proximité"
 L.proximityTitle = "%d m / %d |4joueur:joueurs;"
 L.pull = "Pull"
 L.pullIn = "Pull dans %d sec."
-L.pulling = "Pull !"
+L.engageSoundTitle = "Jouer un son quand une rencontre de boss débute"
+L.pullStartedSoundTitle = "Jouer un son quand le délai de pull est lancé"
+L.pullFinishedSoundTitle = "Jouer un son quand le délai de pull est terminé"
 L.pullStarted = "Délai de pull lancé par l'utilisateur de %s %s."
 L.pullStopped = "Délai de pull annulé par %s."
+L.pullStoppedCombat = "Délai de pull annulé car vous êtes entré en combat."
 L.raidIconsDesc = [=[Certains scripts de rencontre utilisent des icônes pour marquer les joueurs affectés par des techniques précises. Par exemple, les effets de type "bombe" et les contrôles mentaux. Si vous décochez ceci, vous ne marquerez personne.
 
 |cffff4411Ne fonctionne que si vous êtes soit le chef du groupe (de raid), soit un de ses assistants !|r]=]
@@ -177,7 +182,6 @@ L.restart = "Relancer"
 L.restartDesc = "Relance les barres mises en évidence afin qu'elles commencent du début."
 L.right = "Droite"
 L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
-L.scale = "Échelle"
 L.secondary = "Secondaire"
 L.secondaryDesc = "La seconde icône de cible de raid qu'un script de rencontre doit utiliser."
 L.sendBreak = "Envoi d'un temps de pause aux utilisateurs de BigWigs et DBM."
@@ -237,10 +241,45 @@ L.victoryMessageBlizzardDesc = "Le message Blizzard est une imposante animation 
 L.victoryMessages = "Affichage des messages de défaite des boss"
 L.victorySound = "Jouer un son de victoire"
 L.Warning = "Avertissement"
+L.wipe = "Wipe"
+L.wipeSoundTitle = "Joue un son quand vous wipez"
 L.wrongBreakFormat = "Doit être compris entre 1 et 60 minutes. Un exemple correct est le suivant : /break 5"
 L.wrongCustomBarFormat = "Format incorrect. Un exemple correct est le suivant : /raidbar 20 texte"
 L.wrongPullFormat = "Doit être compris entre 1 et 60 secondes. Un exemple correct est le suivant : /pull 5"
 L.wrongTime = "Durée spécifiée incorrecte. <durée> peut être exprimée soit avec un nombre en secondes, avec une paire M:S ou avec Mm. Par exemple 5, 1:20 ou 2m."
+
+-----------------------------------------------------------------------
+-- AutoReply.lua
+--
+
+L.autoReply = "Répondeur auto."
+L.autoReplyDesc = "Répond automatiquement aux chuchotements quand vous êtes dans une rencontre de boss."
+L.responseType = "Type de réponse"
+L.autoReplyFinalReply = "Chuchoter également à la fin du combat"
+L.guildAndFriends = "Guilde & Amis"
+L.everyoneElse = "Tout le reste"
+
+L.autoReplyBasic = "Je suis occupé à combattre un boss."
+L.autoReplyNormal = "Je suis occupé à combattre '%s'."
+L.autoReplyAdvanced = "Je suis occupé à combattre '%s' (%s) et %d/%d personnes sont en vie."
+L.autoReplyExtreme = "Je suis occupé à combattre '%s' (%s) et %d/%d personnes sont en vie : %s"
+
+L.autoReplyLeftCombatBasic = "Je ne suis plus en combat avec un boss."
+L.autoReplyLeftCombatNormalWin = "J'ai terrassé '%s'."
+L.autoReplyLeftCombatNormalWipe = "J'ai perdu face à '%s'."
+L.autoReplyLeftCombatAdvancedWin = "J'ai terrassé '%s' avec %d/%d personnes en vie."
+L.autoReplyLeftCombatAdvancedWipe = "J'ai perdu face à '%s' à : %s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+L.spacing = "Espacement"
+L.spacingDesc = "Modifie l'espacement entre chaque barre."
+L.emphasizeMultiplier = "Multiplicateur de taille"
+L.emphasizeMultiplierDesc = "Si vous désactivez le déplacement des barres vers l'ancre de mise en évidence, cette option décidera la taille des barres mises en évidence en multipliant la taille des barres normales."
+L.iconPosition = "Position de l'icône"
+L.iconPositionDesc = "Définit où l'icône est positionnée sur la barre."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

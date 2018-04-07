@@ -1,6 +1,8 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "esES") or BigWigsAPI:NewLocale("BigWigs: Plugins", "esMX")
 if not L then return end
 
+L.comma = ", "
+
 L.abilityName = "Nombre de habilidad"
 L.abilityNameDesc = "Muestra/oculta el nombre de la habilidad encima de la ventana"
 L.Alarm = "Alarma"
@@ -148,9 +150,12 @@ L.proximity_name = "Proximidad"
 L.proximityTitle = "%d m / %d |4jugador:jugadores;"
 L.pull = "Pull"
 L.pullIn = "Pull en %d seg"
-L.pulling = "¡Puleando!"
+--L.engageSoundTitle = "Play a sound when a boss encounter has started"
+--L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
+--L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
 L.pullStarted = "Cuenta atrás para el Pull lanzada por el jugador %s %s."
 L.pullStopped = "Pull cancelado por %s."
+--L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.raidIconsDesc = [=[Algunos encuentros usan los iconos de raid para marcar jugadores de interés especial para tu grupo. Por ejemplo los efectos tipo 'bomba' y control mental. Si la cambias a desactivado, no marcarás a nadie.
 
 |cffff4411¡Solo aplica las marcas si eres ayudante o lider!|r]=]
@@ -178,7 +183,6 @@ L.restart = "Reiniciar"
 L.restartDesc = "Reinicia las barras enfatizadas para que empiecen desde el principio y el recuento desde 10."
 L.right = "Derecha"
 L.RunAway = "Corre pequeña (El Lobo Feroz)"
-L.scale = "Escala"
 L.secondary = "Secundario"
 L.secondaryDesc = "El secundario objetivo de la raid el cual debería usar este icono"
 L.sendBreak = "Enviando un descanso a los jugadores con BigWigs y DBM."
@@ -238,10 +242,45 @@ L.victoryMessageBlizzardDesc = "El mensaje de Blizzard es una animación de gran
 L.victoryMessages = "Mostrar mensajes de jefe derrotado"
 L.victorySound = "Reproduce un sonido de victoria"
 L.Warning = "Advertencia"
+--L.wipe = "Wipe"
+--L.wipeSoundTitle = "Play a sound when you wipe"
 L.wrongBreakFormat = "Debe ser entre 1 y 60 minutos. Por ejemplo: /break 5"
 L.wrongCustomBarFormat = "Formato incorrecto. Un ejemplo seria: /raidbar 20 text"
 L.wrongPullFormat = "Debe ser entre 1 y 60. Un ejemplo sería: /pull 5"
 L.wrongTime = "Tiempo especificado inválido. <time> puede ser bien un número en segundos, un par M:S, o Min. Por ejemplo 5, 1:20 o 2m."
+
+-----------------------------------------------------------------------
+-- AutoReply.lua
+--
+
+--L.autoReply = "Auto Reply"
+--L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
+--L.responseType = "Response Type"
+--L.autoReplyFinalReply = "Also whisper when leaving combat"
+--L.guildAndFriends = "Guild & Friends"
+--L.everyoneElse = "Everyone else"
+
+--L.autoReplyBasic = "I'm busy in combat with a boss encounter."
+--L.autoReplyNormal = "I'm busy in combat with '%s'."
+--L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
+--L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+
+--L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
+--L.autoReplyLeftCombatNormalWin = "I won against '%s'."
+--L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
+--L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
+--L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
+--L.spacingDesc = "Change the space between each bar."
+--L.emphasizeMultiplier = "Size Multiplier"
+--L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+--L.iconPosition = "Icon Position"
+--L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

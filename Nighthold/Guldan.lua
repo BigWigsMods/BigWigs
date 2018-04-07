@@ -201,13 +201,18 @@ function mod:OnBossEnable()
 
 	--[[ Stage One ]]--
 	self:Log("SPELL_CAST_START", "LiquidHellfire", 206219, 206220) -- Normal, Empowered
-	self:Log("SPELL_CAST_START", "FelEfflux", 206514)
 	self:Log("SPELL_CAST_START", "HandOfGuldan", 212258)
+	self:Log("SPELL_CAST_START", "FelEfflux", 206514)
+	self:Log("SPELL_AURA_APPLIED", "FelEffluxDamage", 206515)
+	self:Log("SPELL_PERIODIC_DAMAGE", "FelEffluxDamage", 206515)
+	self:Log("SPELL_PERIODIC_MISSED", "FelEffluxDamage", 206515)
 
 	--[[ Inquisitor Vethriz ]]--
 	self:Log("SPELL_CAST_SUCCESS", "Shadowblink", 207938)
 	self:Log("SPELL_AURA_APPLIED", "Drain", 212568)
-	self:Log("SPELL_CAST_START", "GazeofVethrizCast", 206840)
+	self:Log("SPELL_CAST_START", "GazeOfVethrizCast", 206840)
+	self:Log("SPELL_DAMAGE", "GazeOfVethrizDamage", 217770)
+	self:Log("SPELL_MISSED", "GazeOfVethrizDamage", 217770)
 
 	--[[ Fel Lord Kuraz'mal ]]--
 	self:Log("SPELL_CAST_START", "ShatterEssence", 206675)
@@ -242,11 +247,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BlackHarvest", 206744)
 	self:Log("SPELL_AURA_APPLIED", "FlamesOfSargerasSoon", 221606)
 
-	self:Log("SPELL_AURA_APPLIED", "Damage", 206515, 221781) -- Fel Efflux, Desolate Ground
-	self:Log("SPELL_PERIODIC_DAMAGE", "Damage", 206515, 221781)
-	self:Log("SPELL_PERIODIC_MISSED", "Damage", 206515, 221781)
-	self:Log("SPELL_DAMAGE", "Damage", 217770, 221781) -- Gaze of Vethriz, Desolate Ground
-	self:Log("SPELL_MISSED", "Damage", 217770, 221781)
+	self:Log("SPELL_AURA_APPLIED", "DesolateGroundDamage", 221781)
+	self:Log("SPELL_PERIODIC_DAMAGE", "DesolateGroundDamage", 221781)
+	self:Log("SPELL_PERIODIC_MISSED", "DesolateGroundDamage", 221781)
+	self:Log("SPELL_DAMAGE", "DesolateGroundDamage", 221781)
+	self:Log("SPELL_MISSED", "DesolateGroundDamage", 221781)
+
 	self:Death("Deaths", 104537, 104534, 111070, 104154) -- Fel Lord Kuraz'mal, D'zorykx the Trapper, Fragment of Azzinoth, Gul'dan
 
 	-- Mythic
@@ -512,6 +518,17 @@ function mod:FelEfflux(args)
 	end
 end
 
+do
+	local prev = 0
+	function mod:FelEffluxDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(206514, "Personal", "Alarm", CL.underyou:format(args.spellName))
+		end
+	end
+end
+
 function mod:HandOfGuldan(args)
 	self:Message(args.spellId, "Attention", "Info")
 	handOfGuldanCount = handOfGuldanCount + 1
@@ -536,8 +553,19 @@ function mod:Drain(args)
 	end
 end
 
-function mod:GazeofVethrizCast(args)
+function mod:GazeOfVethrizCast(args)
 	self:Message(args.spellId, "Attention", "Info")
+end
+
+do
+	local prev = 0
+	function mod:GazeOfVethrizDamage(args)
+		local t = GetTime()
+		if self:Me(args.destGUID) and t-prev > 1.5 then
+			prev = t
+			self:Message(206840, "Personal", "Alarm", CL.underyou:format(args.spellName))
+		end
+	end
 end
 
 --[[ Fel Lord Kuraz'mal ]]--
@@ -749,17 +777,11 @@ end
 
 do
 	local prev = 0
-	function mod:Damage(args)
-		local spellId = args.spellId
-		if args.spellId == 206515 then -- Fel Efflux
-			spellId = 206514
-		elseif args.spellId == 217770 then -- Gaze of Vethriz
-			spellId = 206840
-		end
+	function mod:DesolateGroundDamage(args)
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end

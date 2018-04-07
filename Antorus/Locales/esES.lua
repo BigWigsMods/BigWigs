@@ -88,6 +88,7 @@ L = BigWigs:NewBossLocale("Antoran High Command", "esES") or BigWigs:NewBossLoca
 if L then
 	--L.felshieldActivated = "Felshield Activated by %s"
 	--L.felshieldUp = "Felshield Up"
+	L.achiev = "'En el portal de Hasabel' achievement debuffs" -- Achievement 11928
 end
 
 L = BigWigs:NewBossLocale("Gorothi Worldbreaker", "esES") or BigWigs:NewBossLocale("Gorothi Worldbreaker", "esMX")
@@ -104,23 +105,23 @@ end
 L = BigWigs:NewBossLocale("Antorus Trash", "esES") or BigWigs:NewBossLocale("Antorus Trash", "esMX")
 if L then
 	-- [[ Before Garothi Worldbreaker ]] --
-	--L.felguard = "Antoran Felguard"
+	L.felguard = "Guardia vil antoran"
 
 	-- [[ After Garothi Worldbreaker ]] --
-	--L.flameweaver = "Flameweaver"
+	L.flameweaver = "Tejedor de fuego"
 
 	-- [[ Before Antoran High Command ]] --
-	--L.ravager = "Bladesworn Ravager"
-	--L.deconix = "Imperator Deconix"
-	--L.clobex = "Clobex"
+	L.ravager = "Devastador juraespadas"
+	L.deconix = "Imperador Deconix"
+	L.clobex = "Clobex"
 
 	-- [[ Before Portal Keeper Hasabel ]] --
-	--L.stalker = "Hungering Stalker"
+	L.stalker = "Acechador hambriento"
 
 	-- [[ Before Varimathras / Coven of Shivarra ]] --
-	--L.tarneth = "Tarneth"
-	--L.priestess = "Priestess of Delirium"
+	L.tarneth = "Tarneth"
+	L.priestess = "Sacerdotisa del delirio"
 
 	-- [[ Before Aggramar ]] --
-	--L.aedis = "Dark Keeper Aedis"
+	L.aedis = "Guarda oscuro Aedis"
 end

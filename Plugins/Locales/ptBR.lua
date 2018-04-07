@@ -2,6 +2,7 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "ptBR")
 if not L then return end
 
 L.general = "Geral"
+L.comma = ", "
 
 L.positionX = "Posição X"
 L.positionY = "Posição Y"
@@ -16,6 +17,28 @@ L.altPowerTitle = "Poder alternativo"
 L.toggleDisplayPrint = "Esta exibição será usada da próxima vez. Para desativá-la completamente para esse encontro, você precisa desativar isto nas opções de encontro."
 L.disabled = "Desativado"
 L.disabledDisplayDesc = "Desativa a exibição para todos os módulos que usam ela."
+
+-----------------------------------------------------------------------
+-- AutoReply.lua
+--
+
+--L.autoReply = "Auto Reply"
+--L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
+--L.responseType = "Response Type"
+--L.autoReplyFinalReply = "Also whisper when leaving combat"
+--L.guildAndFriends = "Guild & Friends"
+--L.everyoneElse = "Everyone else"
+
+--L.autoReplyBasic = "I'm busy in combat with a boss encounter."
+--L.autoReplyNormal = "I'm busy in combat with '%s'."
+--L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
+--L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+
+--L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
+--L.autoReplyLeftCombatNormalWin = "I won against '%s'."
+--L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
+--L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
+--L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
 
 -----------------------------------------------------------------------
 -- Bars.lua
@@ -44,11 +67,12 @@ L.disable = "Desativar"
 L.disableDesc = "Desativa permanentemente a opção da habilidade de encontro do chefe que criou esta barra."
 
 L.emphasizeAt = "Enfatizar em... (segundos)"
-L.scale = "Escala"
 L.growingUpwards = "Crescimento para cima"
 L.growingUpwardsDesc = "Alterna crescimento para cima ou para baixo a partir da âncora."
 L.texture = "Textura"
 L.emphasize = "Enfatizar"
+--L.emphasizeMultiplier = "Size Multiplier"
+--L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
 L.enable = "Habilitar"
 L.move = "Mover"
 L.moveDesc = "Move barras enfatizadas para a âncora de Enfatizar. Se esta opção estiver desativada, barras enfatizadas terão apenas sua cor e tamanho alterados."
@@ -64,11 +88,15 @@ L.time = "Tempo"
 L.timeDesc = "Mostra ou oculta o tempo restante nas barras."
 L.icon = "ícone"
 L.iconDesc = "Mostra ou oculta os ícones das barras."
+--L.iconPosition = "Icon Position"
+--L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
 L.font = "Fonte"
 L.restart = "Reiniciar"
 L.restartDesc = "Reinicia as barras enfatizadas para que comecem novamente e conta a partir de 10."
 L.fill = "Completar"
 L.fillDesc = "Completa as barras ao invés de drena-las."
+--L.spacing = "Spacing"
+--L.spacingDesc = "Change the space between each bar."
 
 L.localTimer = "Local"
 L.timerFinished = "%s: Contador [%s] terminado."
@@ -233,9 +261,12 @@ L.combatLog = "Registro de combate automático"
 L.combatLogDesc = "Inicia automaticamente o registro de combate quando um contador de pull é iniciado e termina ele quando o encontro termina."
 
 L.pull = "Pull"
-L.pulling = "Puxando!"
+--L.engageSoundTitle = "Play a sound when a boss encounter has started"
+--L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
+--L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
 L.pullStarted = "Pull iniciado por %s pelo usuário %s."
 L.pullStopped = "Pull cancelado por %s."
+--L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.pullIn = "Pull em %d seg"
 L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
 L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
@@ -251,14 +282,6 @@ L.primary = "Primário"
 L.primaryDesc = "O primeiro ícone de raide que um script usará."
 L.secondary = "Secundário"
 L.secondaryDesc = "O segundo ícone de raide que um script usará."
-
------------------------------------------------------------------------
--- Respawn.lua
---
-
-L.respawn = "Respawn"
-L.showRespawnBar = "Mostrar barra de respawn"
-L.showRespawnBarDesc = "Mostra uma barra depois de você ser derrotado num chefe informando o tempo até que o chefe renasça."
 
 -----------------------------------------------------------------------
 -- Sound.lua
@@ -319,3 +342,13 @@ L.victoryMessageBigWigsDesc = "A mensagem do BigWigs é uma simples mensagem de 
 L.victoryMessageBlizzard = "Mostra a mensagem da Blizzard"
 L.victoryMessageBlizzardDesc = "A mensagem da Blizzard é uma animação com \"chefe foi derrotado\" bem grande no meio da tela."
 L.defeated = "%s foi derrotado"
+
+-----------------------------------------------------------------------
+-- Wipe.lua
+--
+
+--L.wipe = "Wipe"
+--L.wipeSoundTitle = "Play a sound when you wipe"
+L.respawn = "Respawn"
+L.showRespawnBar = "Mostrar barra de respawn"
+L.showRespawnBarDesc = "Mostra uma barra depois de você ser derrotado num chefe informando o tempo até que o chefe renasça."

@@ -26,6 +26,8 @@ local apocalypseCount = 1
 local empBomb = nil
 local empRuiner = nil
 local empStrike = nil
+local numDecimation = mod:LFR() and 2 or mod:Normal() and 3 or mod:Heroic() and 4 or 5
+local numDemolish = mod:Easy() and 1 or mod:Heroic() and 2 or 3
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -77,7 +79,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ForgingStrike", 254919)
 	self:Log("SPELL_AURA_APPLIED", "ForgingStrikeApplied", 254919)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ForgingStrikeApplied", 254919)
-	self:Log("SPELL_CAST_START", "ReverberatingStrike", 254926)
+	self:Log("SPELL_CAST_START", "ReverberatingStrike", 257997, 254926) -- LFR, others
 	self:Log("SPELL_CAST_SUCCESS", "DiabolicBomb", 248214)
 	self:Log("SPELL_CAST_START", "Ruiner", 246833)
 
@@ -115,6 +117,8 @@ function mod:OnEngage()
 	empRuiner = nil
 	empStrike = nil
 	apocalypseCount = 1
+	numDecimation = self:LFR() and 2 or self:Normal() and 3 or self:Heroic() and 4 or 5
+	numDemolish = self:Easy() and 1 or self:Heroic() and 2 or 3
 
 	self:Bar(254919, 5.5) -- Forging Strike
 	self:Bar(248214, 12.5) -- Diabolic Bomb
@@ -149,28 +153,29 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
 		local guid = UnitGUID(unit)
 		local mobId = self:MobId(guid)
 		local mobText = getMobNumber(mobId, guid)
-		self:Message(246664, "Important", "Alarm")
+		self:Message(246664, "red", "Alarm")
 		self:Bar(246664, 15.8, CL.count:format(spellName, mobText))
 	elseif spellId == 248375 then -- Shattering Strike
-		self:Message(spellId, "Urgent", "Warning")
+		self:Message(spellId, "orange", "Warning")
 	end
 end
 
 --[[ Stage: Deployment ]]--
 function mod:ForgingStrike(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	self:CDBar(args.spellId, 14.5)
 end
 
 function mod:ForgingStrikeApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", "Warning")
+	self:StackMessage(args.spellId, args.destName, amount, "orange", "Warning")
 end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(254926, name, "Attention", "Alert", nil, nil, true)
-		if self:Me(guid) then
+		self:PlaySound(254926, "Alert", nil, name)
+		self:TargetMessage2(254926, "yellow", name)
+		if self:Me(guid) and not self:LFR() then
 			self:Say(254926)
 			self:Flash(254926)
 		end
@@ -178,17 +183,17 @@ do
 
 	function mod:ReverberatingStrike(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		self:CDBar(args.spellId, 30, empStrike and L.empowered:format(args.spellName))
+		self:CDBar(254926, 30, empStrike and L.empowered:format(args.spellName))
 	end
 end
 
 function mod:DiabolicBomb(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:CDBar(args.spellId, 20.5, empBomb and L.empowered:format(args.spellName))
 end
 
 function mod:Ruiner(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", "Warning", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 9)
 	self:CDBar(args.spellId, 30, empRuiner and L.empowered:format(args.spellName))
 end
@@ -202,7 +207,7 @@ do
 		reverberatingTimeLeft = reverberatingTimeLeft + 10
 		ruinerTimeLeft = ruinerTimeLeft + 10
 
-		mod:Message(246516, "Neutral", "Info", CL.soon:format(CL.stage:format(1)), false)
+		mod:Message(246516, "cyan", "Info", CL.soon:format(CL.stage:format(1)), false)
 		mod:CDBar(254919, forginTimeLeft)  -- Forging Strike
 		mod:CDBar(248214, bombTimeLeft, empBomb and L.empowered:format(mod:SpellName(248214))) -- Diabolic Bomb
 		mod:CDBar(254926, reverberatingTimeLeft, empStrike and L.empowered:format(mod:SpellName(254926))) -- Reverberating Strike
@@ -225,7 +230,7 @@ do
 
 		mod:ScheduleTimer(restartTimers, 30) -- 10 seconds before end
 
-		self:Message(args.spellId, "Positive", "Long", CL.count:format(args.spellName, apocalypseCount))
+		self:Message(args.spellId, "green", "Long", CL.count:format(args.spellName, apocalypseCount))
 		self:CastBar(args.spellId, 40, CL.count:format(args.spellName, apocalypseCount))
 		self:StopBar(CL.count:format(args.spellName, apocalypseCount))
 		apocalypseCount = apocalypseCount + 1
@@ -233,7 +238,7 @@ do
 	end
 
 	function mod:ApocalypseProtocolOver(args)
-		self:Message(args.spellId, "Neutral", "Info", CL.over:format(CL.count:format(args.spellName, apocalypseCount-1)))
+		self:Message(args.spellId, "cyan", "Info", CL.over:format(CL.count:format(args.spellName, apocalypseCount-1)))
 	end
 end
 
@@ -256,11 +261,10 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 6)
+			self:PlaySound(args.spellId, "Warning")
 		end
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, playerList, "Urgent", "Warning")
-		end
+		self:TargetsMessage(args.spellId, "orange", playerList, numDemolish, nil, nil, 0.5)
 	end
 
 	function mod:DemolishSuccess(args)
@@ -273,14 +277,13 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:Decimation(args)
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(246686)
 			self:SayCountdown(246686, 6)
+			self:PlaySound(246686, "Warning")
 		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 246686, playerList, "Urgent", "Warning")
-		end
+		self:TargetsMessage(246686, "orange", playerList, numDecimation)
 	end
 end
 
@@ -297,21 +300,21 @@ end
 
 --[[ Mythic ]]--
 function mod:EmpoweredRuiner(args)
-	self:Message(246833, "Neutral", "Info", L.gains:format(args.spellName))
+	self:Message(246833, "cyan", "Info", L.gains:format(args.spellName))
 	empRuiner = true
 	self:Bar(246833, self:BarTimeLeft(self:SpellName(246833)), L.empowered:format(self:SpellName(246833))) -- (E) Ruiner
 	self:StopBar(246833)
 end
 
 function mod:EmpoweredReverberatingStrike(args)
-	self:Message(254926, "Neutral", "Info", L.gains:format(args.spellName))
+	self:Message(254926, "cyan", "Info", L.gains:format(args.spellName))
 	empStrike = true
 	self:Bar(254926, self:BarTimeLeft(self:SpellName(254926)), L.empowered:format(self:SpellName(254926))) -- (E) Reverberating Strike
 	self:StopBar(254926)
 end
 
 function mod:EmpoweredDiabolicBomb(args)
-	self:Message(248214, "Neutral", "Info", L.gains:format(args.spellName))
+	self:Message(248214, "cyan", "Info", L.gains:format(args.spellName))
 	empBomb = true
 	self:Bar(248214, self:BarTimeLeft(self:SpellName(248214)), L.empowered:format(self:SpellName(248214))) -- (E) Diabolic Bomb
 	self:StopBar(248214)
@@ -320,13 +323,12 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:ReverberatingDecimation(args)
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 4)
+			self:PlaySound(args.spellId, "Warning")
 		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning")
-		end
+		self:TargetsMessage(args.spellId, "orange", playerList, numDecimation)
 	end
 end

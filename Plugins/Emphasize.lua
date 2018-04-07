@@ -10,6 +10,7 @@ if not plugin then return end
 --
 
 local media = LibStub("LibSharedMedia-3.0")
+local FONT = media.MediaType and media.MediaType.FONT or "font"
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.superEmphasize
 local PlaySoundFile = PlaySoundFile
@@ -96,15 +97,15 @@ local function createOptions()
 					type = "select",
 					name = L.font,
 					order = 1,
-					values = media:List("font"),
+					values = media:List(FONT),
 					itemControl = "DDI-Font",
 					get = function()
-						for i, v in next, media:List("font") do
+						for i, v in next, media:List(FONT) do
 							if v == plugin.db.profile.font then return i end
 						end
 					end,
 					set = function(_, value)
-						local list = media:List("font")
+						local list = media:List(FONT)
 						plugin.db.profile.font = list[value]
 						mModule.updateProfile()
 					end,
@@ -205,7 +206,7 @@ end
 
 local function updateProfile()
 	if not plugin.db.profile.font then
-		plugin.db.profile.font = media:GetDefault("font")
+		plugin.db.profile.font = media:GetDefault(FONT)
 	end
 	-- Reset invalid voice selections
 	if not BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
@@ -359,7 +360,7 @@ do
 		if text and timers[text] then wipe(timers[text]) end
 	end
 	function plugin:BigWigs_StartEmphasize(_, module, key, text, time)
-		if module and module:CheckOption(key, "COUNTDOWN") then
+		if (key and temporaryEmphasizes[key]) or (module and module:CheckOption(key, "COUNTDOWN")) then
 			self:BigWigs_StopEmphasize(nil, module, text)
 			if time > 1.3 then
 				if not timers[text] then timers[text] = {} end
@@ -395,7 +396,7 @@ function plugin:IsSuperEmphasized(module, key)
 	if not module or not key then return end
 	if temporaryEmphasizes[key] and temporaryEmphasizes[key] > GetTime() then return true else temporaryEmphasizes[key] = nil end
 	if module == BigWigs then -- test bars
-		return math.random(1,2) == 2
+		return math.random(1,3) == 2
 	end
 	return module.CheckOption and module:CheckOption(key, "EMPHASIZE")
 end
@@ -406,8 +407,8 @@ function plugin:BigWigs_TempSuperEmphasize(_, module, key, text, time)
 	self:BigWigs_StartEmphasize(nil, module, key, text, time)
 end
 
-function plugin:BigWigs_PlayCountdownNumber(_, _, num)
-	local sound = BigWigsAPI:GetCountdownSound(self.db.profile.voice, num)
+function plugin:BigWigs_PlayCountdownNumber(_, _, num, voice)
+	local sound = BigWigsAPI:GetCountdownSound(voice or self.db.profile.voice, num)
 	if sound then
 		PlaySoundFile(sound, "Master")
 	end

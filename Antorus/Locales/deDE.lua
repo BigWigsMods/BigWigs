@@ -76,6 +76,7 @@ if L then
 	L.worldExplosion_desc = "Zeigt einen Timer für die Explosion der kollabierenden Welt."
 	L.platform_active = "%s Aktiv!" -- Platform: Xoroth Active!
 	L.add_killed = "%s getötet!"
+	L.achiev = "'Voll Portal' achievement debuffs" -- Achievement 11928
 end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "deDE")
@@ -104,23 +105,23 @@ end
 L = BigWigs:NewBossLocale("Antorus Trash", "deDE")
 if L then
 	-- [[ Before Garothi Worldbreaker ]] --
-	--L.felguard = "Antoran Felguard"
+	L.felguard = "Antorische Teufelswache"
 
 	-- [[ After Garothi Worldbreaker ]] --
-	--L.flameweaver = "Flameweaver"
+	L.flameweaver = "Flammenwirker"
 
 	-- [[ Before Antoran High Command ]] --
-	--L.ravager = "Bladesworn Ravager"
-	--L.deconix = "Imperator Deconix"
-	--L.clobex = "Clobex"
+	L.ravager = "Klingenverschriebener Verheerer"
+	L.deconix = "Imperator Deconix"
+	L.clobex = "Clobex"
 
 	-- [[ Before Portal Keeper Hasabel ]] --
-	--L.stalker = "Hungering Stalker"
+	L.stalker = "Hungernder Pirscher"
 
 	-- [[ Before Varimathras / Coven of Shivarra ]] --
-	--L.tarneth = "Tarneth"
-	--L.priestess = "Priestess of Delirium"
+	L.tarneth = "Tarneth"
+	L.priestess = "Priesterin des Deliriums"
 
 	-- [[ Before Aggramar ]] --
-	--L.aedis = "Dark Keeper Aedis"
+	L.aedis = "Dunkler Hüter Aedis"
 end

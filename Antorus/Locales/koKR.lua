@@ -76,6 +76,7 @@ if L then
 	--L.worldExplosion_desc = "Show a timer for the Collapsing World explosion."
 	--L.platform_active = "%s Active!" -- Platform: Xoroth Active!
 	--L.add_killed = "%s killed!"
+	L.achiev = "'포탈 컴뱃' achievement debuffs" -- Achievement 11928
 end
 
 L = BigWigs:NewBossLocale("Kin'garoth", "koKR")
@@ -104,23 +105,23 @@ end
 L = BigWigs:NewBossLocale("Antorus Trash", "koKR")
 if L then
 	-- [[ Before Garothi Worldbreaker ]] --
-	--L.felguard = "Antoran Felguard"
+	L.felguard = "안토란 지옥수호병"
 
 	-- [[ After Garothi Worldbreaker ]] --
-	--L.flameweaver = "Flameweaver"
+	L.flameweaver = "화염술사"
 
 	-- [[ Before Antoran High Command ]] --
-	--L.ravager = "Bladesworn Ravager"
-	--L.deconix = "Imperator Deconix"
-	--L.clobex = "Clobex"
+	L.ravager = "칼날서약병 약탈자"
+	L.deconix = "전제군주 데코닉스"
+	L.clobex = "클로벡스"
 
 	-- [[ Before Portal Keeper Hasabel ]] --
-	--L.stalker = "Hungering Stalker"
+	L.stalker = "굶주린 추적자"
 
 	-- [[ Before Varimathras / Coven of Shivarra ]] --
-	--L.tarneth = "Tarneth"
-	--L.priestess = "Priestess of Delirium"
+	L.tarneth = "타네스"
+	L.priestess = "착란의 여사제"
 
 	-- [[ Before Aggramar ]] --
-	--L.aedis = "Dark Keeper Aedis"
+	L.aedis = "암흑의 문지기 에이디스"
 end

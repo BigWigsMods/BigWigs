@@ -11,10 +11,12 @@ if not plugin then return end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
+local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
+local PlaySoundFile = PlaySoundFile
 
-media:Register(media.MediaType.SOUND, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.ogg")
-media:Register(media.MediaType.SOUND, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.ogg")
-media:Register(media.MediaType.SOUND, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.ogg")
+media:Register(SOUND, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Sounds\\Victory.ogg")
+media:Register(SOUND, "BigWigs: Victory Long", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryLong.ogg")
+media:Register(SOUND, "BigWigs: Victory Classic", "Interface\\AddOns\\BigWigs\\Sounds\\VictoryClassic.ogg")
 
 -------------------------------------------------------------------------------
 -- Options
@@ -55,16 +57,16 @@ plugin.pluginOptions = {
 			name = L.victorySound,
 			order = 2,
 			get = function(info)
-				for i, v in next, media:List(media.MediaType.SOUND) do
+				for i, v in next, media:List(SOUND) do
 					if v == plugin.db.profile[info[#info]] then
 						return i
 					end
 				end
 			end,
 			set = function(info, value)
-				plugin.db.profile[info[#info]] = media:List(media.MediaType.SOUND)[value]
+				plugin.db.profile[info[#info]] = media:List(SOUND)[value]
 			end,
-			values = media:List(media.MediaType.SOUND),
+			values = media:List(SOUND),
 			width = "full",
 			itemControl = "DDI-Sound",
 		},
@@ -112,9 +114,12 @@ function plugin:BigWigs_OnBossWin(event, module)
 	if self.db.profile.bigwigsMsg then
 		self:SendMessage("BigWigs_Message", self, nil, L.defeated:format(module.displayName), "Positive")
 	end
-	local name = self.db.profile.soundName
-	if name ~= "None" then
-		PlaySoundFile(media:Fetch(media.MediaType.SOUND, name), "Master")
+	local soundName = self.db.profile.soundName
+	if soundName ~= "None" then
+		local sound = media:Fetch(SOUND, soundName, true)
+		if sound then
+			PlaySoundFile(sound, "Master")
+		end
 	end
 end
 

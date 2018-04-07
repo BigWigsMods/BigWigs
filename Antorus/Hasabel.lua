@@ -38,6 +38,8 @@ if L then
 
 	L.platform_active = "%s Active!" -- Platform: Xoroth Active!
 	L.add_killed = "%s killed!"
+
+	L.achiev = "'Portal Combat' achievement debuffs" -- Achievement 11928
 end
 
 --------------------------------------------------------------------------------
@@ -77,20 +79,28 @@ function mod:GetOptions()
 		245040, -- Corrupt
 		{245118, "SAY"}, -- Cloying Shadows
 		245075, -- Hungering Gloom
+
+		--[[ 'Portal Combat' achievement debuffs ]]--
+		246911, -- Binding: Xoroth
+		246925, -- Binding: Rancora
+		246929, -- Binding: Nathreza
 	},{
 		["stages"] = "general",
 		[244016] = -15799, -- Platform: Nexus
 		[244607] = -15800, -- Platform: Xoroth
 		[244926] = -15801, -- Platform: Rancora
 		[245050] = -15802, -- Platform: Nathreza
+		[246911] = L.achiev,
 	}
 end
 
 function mod:OnBossEnable()
 	--[[ General ]]--
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	self:Log("SPELL_CAST_SUCCESS", "PlatformPortal", 244073, 244136, 244146) -- Xoroth, Rancora, Nathreza
-	self:Log("SPELL_CAST_SUCCESS", "ReturnPortal", 244112, 244138, 244145) -- Xoroth, Rancora, Nathreza
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "ActivatePortals", "boss1") -- Used when portals activate
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "TransferPortals", "player") -- Used to track which platform a player is on as the spells below have been removed from CLUE
+
+	--self:Log("SPELL_CAST_SUCCESS", "PlatformPortal", 244073, 244136, 244146) -- Xoroth, Rancora, Nathreza
+	--self:Log("SPELL_CAST_SUCCESS", "ReturnPortal", 244112, 244138, 244145) -- Xoroth, Rancora, Nathreza
 
 	--[[ Platform: Nexus ]]--
 	self:Log("SPELL_AURA_APPLIED", "RealityTear", 244016)
@@ -130,6 +140,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "HungeringGloom", 245075)
 	self:Log("SPELL_AURA_REMOVED", "HungeringGloomRemoved", 245075)
 	self:Death("LordEilgarDeath", 122213)
+
+	--[[ 'Portal Combat' achievement debuffs ]]--
+	self:Log("SPELL_AURA_APPLIED", "Binding", 246911, 246925, 246929) -- Binding: Xoroth, Binding: Rancora, Binding: Nathreza
 
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
@@ -194,7 +207,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	if hp < nextPortalSoonWarning then
 		local platformName = (hp < 40 and self:SpellName(257942)) or (hp < 70 and self:SpellName(257941)) or self:SpellName(257939)
 		local icon = (hp < 40 and "spell_mage_flameorb_purple") or (hp < 70 and "spell_mage_flameorb_green") or "spell_mage_flameorb"
-		self:Message("stages", "Positive", nil, CL.soon:format(platformName), icon)
+		self:Message("stages", "green", nil, CL.soon:format(platformName), icon)
 		nextPortalSoonWarning = nextPortalSoonWarning - 30
 		if nextPortalSoonWarning < 30 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
@@ -202,43 +215,55 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:ActivatePortals(_, _, _, _, spellId)
 	if spellId == 257939 then -- Gateway: Xoroth
-		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257939)), "spell_mage_flameorb") -- Platform: Xoroth
+		self:Message("stages", "green", "Long", L.platform_active:format(self:SpellName(257939)), "spell_mage_flameorb") -- Platform: Xoroth
 		addsAlive = addsAlive + 1
 		self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45) -- Unstable Portal
 	elseif spellId == 257941 then -- Gateway: Rancora
-		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257941)), "spell_mage_flameorb_green") -- Platform: Rancora
+		self:Message("stages", "green", "Long", L.platform_active:format(self:SpellName(257941)), "spell_mage_flameorb_green") -- Platform: Rancora
 		addsAlive = addsAlive + 1
 		self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45) -- Unstable Portal
 	elseif spellId == 257942 then -- Gateway: Nathreza
-		self:Message("stages", "Positive", "Long", L.platform_active:format(self:SpellName(257942)), "spell_mage_flameorb_purple") -- Platform: Nathreza
+		self:Message("stages", "green", "Long", L.platform_active:format(self:SpellName(257942)), "spell_mage_flameorb_purple") -- Platform: Nathreza
 		addsAlive = addsAlive + 1
 		self:CDBar(255805, (self:LFR() and 60) or (self:Mythic() and 30) or 45) -- Unstable Portal
 	end
 end
 
-function mod:PlatformPortal(args)
-	if self:Me(args.sourceGUID) then
-		if args.spellId == 244073 then -- Xoroth
-			playerPlatform = 2
-		elseif args.spellId == 244136 then -- Rancora
-			playerPlatform = 3
-		elseif args.spellId == 244146 then -- Nathreza
-			playerPlatform = 4
-		end
+function mod:TransferPortals(_, _, _, _, spellId)
+	if spellId == 244450 then -- Platform: Nexus
+		playerPlatform = 1
+	elseif spellId == 244455 then -- Xoroth
+		playerPlatform = 2
+	elseif spellId == 244512 then -- Rancora
+		playerPlatform = 3
+	elseif spellId == 244513 then -- Nathreza
+		playerPlatform = 4
 	end
 end
 
-function mod:ReturnPortal(args)
-	if self:Me(args.sourceGUID) then
-		playerPlatform = 1
-	end
-end
+--function mod:PlatformPortal(args)
+--	if self:Me(args.sourceGUID) then
+--		if args.spellId == 244073 then -- Xoroth
+--			playerPlatform = 2
+--		elseif args.spellId == 244136 then -- Rancora
+--			playerPlatform = 3
+--		elseif args.spellId == 244146 then -- Nathreza
+--			playerPlatform = 4
+--		end
+--	end
+--end
+
+--function mod:ReturnPortal(args)
+--	if self:Me(args.sourceGUID) then
+--		playerPlatform = 1
+--	end
+--end
 
 function mod:RealityTear(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 1 and "Alarm", nil, nil, true)
+	self:StackMessage(args.spellId, args.destName, amount, "orange", amount > 1 and "Alarm", nil, nil, true)
 end
 
 function mod:RealityTearSuccess(args)
@@ -247,12 +272,11 @@ end
 
 function mod:CollapsingWorldStart(args)
 	self:StopBar(args.spellId)
-	self:CastBar(args.spellId, 2)
 	triggerCdForOtherSpells(self, args.spellId, 2)
 end
 
 function mod:CollapsingWorld(args)
-	self:Message(args.spellId, "Important", "Warning")
+	self:Message(args.spellId, "red", "Warning")
 	self:Bar("worldExplosion", 8, L.worldExplosion, L.worldExplosion_icon)
 	self:Bar(args.spellId, (self:Easy() and 37.1) or (self:Mythic() and 27.5) or 32.75)
 	triggerCdForOtherSpells(self, args.spellId)
@@ -260,31 +284,30 @@ end
 
 function mod:FelstormBarrageStart(args)
 	self:StopBar(args.spellId)
-	self:CastBar(args.spellId, 2)
 	triggerCdForOtherSpells(self, args.spellId, 2)
 end
 
 function mod:FelstormBarrage(args)
-	self:Message(args.spellId, "Urgent", "Alert")
+	self:Message(args.spellId, "orange", "Alert")
 	self:Bar(args.spellId, (self:Easy() and 37.1) or (self:Mythic() and 27.5) or 32.75)
 	triggerCdForOtherSpells(self, args.spellId)
 end
 
 function mod:TransportPortalStart(args)
 	self:StopBar(args.spellId)
-	self:CastBar(args.spellId, 1.5)
 	triggerCdForOtherSpells(self, args.spellId, 1.5)
 end
 
 function mod:TransportPortal(args)
-	self:Message(args.spellId, "Neutral", "Info")
+	self:Message(args.spellId, "cyan", "Info")
 	self:Bar(args.spellId, (self:Mythic() and 36.5) or 41.7)
+	self:CastBar(args.spellId, 12, CL.spawning:format(CL.adds))
 	triggerCdForOtherSpells(self, args.spellId)
 end
 
 function mod:HowlingShadows(args)
-	if self:Interrupter(args.sourceGUID) and playerPlatform == 1 then -- Can't interupt from other platforms
-		self:Message(args.spellId, "Urgent", "Alarm")
+	if playerPlatform == 1 then
+		self:Message(args.spellId, "orange", "Alarm")
 	end
 end
 
@@ -294,7 +317,7 @@ do
 		local t = GetTime()
 		if t-prev > 0.2 then
 			prev = t
-			self:Message(args.spellId, "Important", "Alarm")
+			self:Message(args.spellId, "red", "Alarm")
 		end
 	end
 end
@@ -306,7 +329,7 @@ do
 		lastFlames = GetTime()
 		if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
 		if self:Interrupter(args.sourceGUID) then
-			self:Message(args.spellId, "Urgent", "Alarm")
+			self:Message(args.spellId, "orange", "Alarm")
 		end
 		self:CDBar(args.spellId, 7.3) -- sometimes 8.5 (we adjust that timer in :Supernova())
 		self:CDBar(244598, 4.8) -- Supernova
@@ -314,7 +337,7 @@ do
 
 	function mod:Supernova(args)
 		if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 2 then return end
-		self:Message(args.spellId, "Attention", "Alert")
+		self:Message(args.spellId, "yellow", "Alert")
 		if (GetTime() - lastFlames) < 5.5 then -- 2nd Supernova before Flames very likely
 			self:CDBar(args.spellId, 2.5)
 			self:CDBar(244607, 3.65) -- Flames of Xoroth
@@ -324,7 +347,7 @@ end
 
 function mod:EverburningFlames(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
+		self:Message(args.spellId, "blue", "Info", CL.you:format(args.spellName))
 		self:SayCountdown(args.spellId, 10)
 	end
 end
@@ -337,11 +360,11 @@ end
 
 function mod:UnstablePortal(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
-	self:Message(args.spellId, "Important", self:Interrupter(args.sourceGUID) and "Alarm")
+	self:Message(args.spellId, "red", self:Interrupter(args.sourceGUID) and "Alarm")
 end
 
 function mod:VulcanarDeath(args)
-	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb")
+	self:Message("stages", "green", nil, L.add_killed:format(args.destName), "spell_mage_flameorb")
 	self:StopBar(244598) -- Supernova
 	self:StopBar(244607) -- Flames of Xoroth
 	self:StopBar(255805) -- Unstable Portal
@@ -350,7 +373,8 @@ end
 
 function mod:FelsilkWrap(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 3 then return end
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
+	self:PlaySound(args.spellId, "Warning")
+	self:TargetMessage2(args.spellId, "orange", args.destName)
 	self:CDBar(args.spellId, 17)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
@@ -359,13 +383,13 @@ end
 
 function mod:PoisonEssence(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 3 then return end
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:CDBar(args.spellId, 9.7)
 end
 
 function mod:CausticSlime(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", "Info", CL.you:format(args.spellName))
+		self:Message(args.spellId, "blue", "Info", CL.you:format(args.spellName))
 		self:SayCountdown(args.spellId, 20)
 	end
 end
@@ -377,7 +401,7 @@ function mod:CausticSlimeRemoved(args)
 end
 
 function mod:LadyDacidionDeath(args)
-	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_green")
+	self:Message("stages", "green", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_green")
 	self:StopBar(244926) -- Felsilk Wrap
 	self:StopBar(246316) -- Poison Essence
 	self:StopBar(255805) -- Unstable Portal
@@ -386,14 +410,14 @@ end
 
 function mod:Delusions(args)
 	if self:GetOption("custom_on_filter_platforms") and playerPlatform ~= 4 then return end
-	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Alert", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 14.5)
 end
 
 function mod:Corrupt(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, args.destName, amount, "Attention", amount > 2 and "Warning") -- Sound when stacks are 3 or higher
+		self:StackMessage(args.spellId, args.destName, amount, "yellow", amount > 2 and "Warning") -- Sound when stacks are 3 or higher
 	end
 end
 
@@ -404,7 +428,8 @@ end
 
 function mod:CloyingShadows(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
+		self:PlaySound(args.spellId, "Info")
+		self:TargetMessage2(args.spellId, "blue", args.destName)
 		self:SayCountdown(args.spellId, 30)
 	end
 end
@@ -416,23 +441,32 @@ function mod:CloyingShadowsRemoved(args)
 end
 
 function mod:HungeringGloom(args)
-	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
-	if UnitIsUnit(args.destName, "boss2") or UnitIsUnit(args.destName, "boss3") or UnitIsUnit(args.destName, "boss4") then -- Should always be boss2, rest is safety
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Info", nil, nil, true)
+	if UnitGUID("boss2") == args.destGUID or UnitGUID("boss3") == args.destGUID or UnitGUID("boss4") == args.destGUID then -- Should always be boss2, rest is safety
+		self:PlaySound(args.spellId, "Info")
+		self:Message(args.spellId, "orange", nil, CL.other:format(args.spellName, args.destName))
 		self:Bar(args.spellId, 20, CL.onboss:format(args.spellName))
 	end
 end
 
 function mod:HungeringGloomRemoved(args)
-	if UnitIsUnit(args.destName, "boss2") or UnitIsUnit(args.destName, "boss3") or UnitIsUnit(args.destName, "boss4") then -- Should always be boss2, rest is safety
+	if UnitGUID("boss2") == args.destGUID or UnitGUID("boss3") == args.destGUID or UnitGUID("boss4") == args.destGUID then -- Should always be boss2, rest is safety
 		self:StopBar(CL.onboss:format(args.spellName))
 	end
 end
 
 function mod:LordEilgarDeath(args)
-	self:Message("stages", "Positive", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_purple")
+	self:Message("stages", "green", nil, L.add_killed:format(args.destName), "spell_mage_flameorb_purple")
 	self:StopBar(245050) -- Delusions
 	self:StopBar(245040) -- Corrupt
 	self:StopBar(255805) -- Unstable Portal
 	addsAlive = addsAlive - 1
+end
+
+--[[ 'Portal Combat' achievement debuffs ]]--
+function mod:Binding(args)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "Info")
+		self:TargetMessage2(args.spellId, "blue", args.destName)
+		self:TargetBar(args.spellId, 16, args.destName)
+	end
 end

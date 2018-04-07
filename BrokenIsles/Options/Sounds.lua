@@ -82,8 +82,8 @@ BigWigs:AddSounds("Shar'thos", {
 
 BigWigs:AddSounds("Si'vash", {
 	[233968] = "Long",
+	[233996] = "Warning",
 	[241433] = "Alarm",
-	[241458] = "Warning",
 })
 
 BigWigs:AddSounds("The Soultakers", {

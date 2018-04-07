@@ -297,7 +297,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 						if total == "" then
 							total = L.healthFormat:format(healthPools[module.journalId].names[unit], hp*100)
 						else
-							total = total .. ", " .. L.healthFormat:format(healthPools[module.journalId].names[unit], hp*100)
+							total = total .. L.comma .. L.healthFormat:format(healthPools[module.journalId].names[unit], hp*100)
 						end
 					end
 				end

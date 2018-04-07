@@ -91,11 +91,6 @@ end
 --
 
 function plugin:OnPluginEnable()
-	-- XXX temp [v7.0]
-	if self.db.profile.icon == 9 then self.db.profile.icon = 8 end
-	if self.db.profile.secondIcon == 9 then self.db.profile.secondIcon = 7 end
-	--
-
 	self:RegisterMessage("BigWigs_SetRaidIcon")
 	self:RegisterMessage("BigWigs_RemoveRaidIcon")
 	self:RegisterMessage("BigWigs_OnBossDisable")

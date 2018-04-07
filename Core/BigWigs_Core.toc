@@ -27,6 +27,4 @@
 ## Dependencies: BigWigs
 
 libs.xml
-locales.xml
 modules.xml
-

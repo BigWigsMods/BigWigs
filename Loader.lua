@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 91
+local BIGWIGS_VERSION = 94
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -726,6 +726,8 @@ do
 		BigWigs_DispelResist = "",
 		BigWigs_Voice_HeroesOfTheStorm = "BigWigs_Countdown_HeroesOfTheStorm",
 		BigWigs_Voice_Overwatch = "BigWigs_Countdown_Overwatch",
+		BigWigs_AutoReply = "BigWigs",
+		BigWigs_AutoReply2 = "BigWigs",
 	}
 	local delayedMessages = {}
 
@@ -842,8 +844,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "17403" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.3.25" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "17424" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.3.26" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -1117,18 +1119,16 @@ do
 end
 
 do
-	local loadedList = {}
 	local warnedThisZone = {}
 
 	local UnitGUID = UnitGUID
 	function mod:UNIT_TARGET(unit)
 		local guid = UnitGUID(unit.."target")
 		if guid then
-			local _, _, _, _, _, id = strsplit("-", guid)
-			local mobId = tonumber(id)
+			local _, _, _, _, _, mobId = strsplit("-", guid)
+			mobId = tonumber(mobId)
 			local id = mobId and worldBosses[mobId]
 			if id then
-				loadedList[id] = true
 				if loadAndEnableCore() then
 					if BigWigs:IsEnabled() then
 						loadZone(id)
@@ -1140,35 +1140,21 @@ do
 		end
 	end
 
+	local block = false -- XXX temp
 	function mod:ZONE_CHANGED_NEW_AREA()
 		-- Zone checking
-		local id
-		local inside = IsInInstance()
-		if not inside then
+		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
+		if instanceType == "none" then
 			local mapId = GetPlayerMapAreaID("player")
 			if mapId then
-				id = -mapId
-			else
-				local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
-				id = instanceId
-				inside = true -- For Argus Invasion Points, 1779
+				id = -mapId -- Use map id for world bosses
 			end
-		else
-			local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
-			id = instanceId
 		end
 
 		-- Module loading
 		if enableZones[id] then
-			if not inside and enableZones[id] == "world" then
-				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
-					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
-				end
-				bwFrame:RegisterEvent("UNIT_TARGET")
-				self:UNIT_TARGET("player")
-			elseif inside then
+			if id > 0 then
 				bwFrame:UnregisterEvent("UNIT_TARGET")
-				loadedList[id] = true
 				if loadAndEnableCore() then
 					if BigWigs:IsEnabled() and loadOnZone[id] then
 						loadZone(id)
@@ -1176,6 +1162,31 @@ do
 						BigWigs:Enable()
 					end
 				end
+				-- XXX temp
+				if id == 1712 and not block then
+					block = true
+					if not BigWigs3DB.fPrint or BigWigs3DB.fPrint < 3 then
+						if not BigWigs3DB.fPrint then
+							BigWigs3DB.fPrint = 1
+						else
+							BigWigs3DB.fPrint = BigWigs3DB.fPrint + 1
+						end
+						CTimerAfter(5, function()
+							sysprint("Have you seen some of our latest changes?")
+							sysprint("- AutoReply: New feature!")
+							sysprint("- Pull: Full audio customizability, including countdown sound.")
+							sysprint("- Bars: Both width & height can now be changed by dragging the anchors. You can also change bar spacing, icon position, and separate font sizes for normal/emphasized bars.")
+							sysprint("- Bosses: When customizing ability colors or sounds, only the colors/sounds being used by that ability will show. This should make setting a custom sound or color a lot easier.")
+						end)
+					end
+				end
+				-- XXX endtemp
+			elseif enableZones[id] == "world" then
+				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
+					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
+				end
+				bwFrame:RegisterEvent("UNIT_TARGET")
+				self:UNIT_TARGET("player")
 			end
 		else
 			bwFrame:UnregisterEvent("UNIT_TARGET")
@@ -1197,7 +1208,7 @@ do
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and zoneAddon ~= "BigWigs_Legion" then
 			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
-			if inside and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
+			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
 				sysprint(msg)

@@ -23,6 +23,7 @@ plugin.defaultDB = {
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local media = LibStub("LibSharedMedia-3.0")
+local FONT = media.MediaType and media.MediaType.FONT or "font"
 plugin.displayName = L.altPowerTitle
 
 local powerList, sortedUnitList, roleColoredList = nil, nil, nil
@@ -89,7 +90,7 @@ function plugin:RestyleWindow(dirty)
 	end
 
 	local font, size, flags = GameFontNormal:GetFont()
-	local curFont = media:Fetch("font", db.font)
+	local curFont = media:Fetch(FONT, db.font)
 	if dirty or curFont ~= font or db.fontSize ~= size or db.fontOutline ~= flags then
 		local newFlags
 		if db.monochrome and db.fontOutline ~= "" then
@@ -142,15 +143,15 @@ do
 				type = "select",
 				name = L.font,
 				order = 3,
-				values = media:List("font"),
+				values = media:List(FONT),
 				itemControl = "DDI-Font",
 				get = function()
-					for i, v in next, media:List("font") do
+					for i, v in next, media:List(FONT) do
 						if v == db.font then return i end
 					end
 				end,
 				set = function(_, value)
-					db.font = media:List("font")[value]
+					db.font = media:List(FONT)[value]
 					plugin:RestyleWindow(true)
 				end,
 				disabled = disabled,
@@ -283,7 +284,7 @@ local function updateProfile()
 	db = plugin.db.profile
 
 	if not db.font then
-		db.font = media:GetDefault("font")
+		db.font = media:GetDefault(FONT)
 	end
 	if not db.fontSize then
 		local _, size = GameFontNormal:GetFont()
@@ -306,7 +307,6 @@ function plugin:OnPluginEnable()
 
 	self:RegisterMessage("BigWigs_StartConfigureMode", "Test")
 	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
-	self:RegisterMessage("BigWigs_SetConfigureTarget")
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
@@ -358,16 +358,12 @@ do
 		end
 	end
 
-	local function createFrame()
+	do
 		display = CreateFrame("Frame", "BigWigsAltPower", UIParent)
-		display:SetSize(230, db.expanded and 210 or 80)
+		display:SetSize(230, 80)
 		display:SetClampedToScreen(true)
 		display:EnableMouse(true)
-		display:SetScript("OnMouseUp", function(self, button)
-			if inTestMode and button == "LeftButton" then
-				plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
-			end
-		end)
+		display:Hide()
 
 		local bg = display:CreateTexture()
 		bg:SetAllPoints(display)
@@ -388,7 +384,7 @@ do
 		expand:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
 		expand:SetHeight(16)
 		expand:SetWidth(16)
-		expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
+		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
 		expand:SetScript("OnClick", function()
 			if db.expanded then
 				plugin:Contract()
@@ -419,7 +415,10 @@ do
 		end
 
 		display:SetScript("OnEvent", GROUP_ROSTER_UPDATE)
-		plugin:RestyleWindow()
+		display:SetScript("OnShow", function(self)
+			self:SetSize(230, db.expanded and 210 or 80)
+			self.expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
+		end)
 
 		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
 		-- local name, addon = ...
@@ -434,7 +433,7 @@ do
 	function plugin:BigWigs_ShowAltPower(event, module, title, sorting, sync)
 		if db.disabled or not IsInGroup() then return end -- Solo runs of old content
 
-		if createFrame then createFrame() createFrame = nil end
+		self:RestyleWindow()
 		self:Close()
 
 		if sync then
@@ -455,30 +454,21 @@ do
 		GROUP_ROSTER_UPDATE()
 		UpdateDisplay()
 	end
-
-	function plugin:Test()
-		if createFrame then createFrame() createFrame = nil end
-		self:Close()
-
-		sortDir = "AZ"
-		unitList = self:GetRaidList()
-		for i = 1, db.expanded and 25 or 10 do
-			local power = 100-(i*(db.expanded and 4 or 10))
-			local r, g = colorize(power)
-			display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, unitList[i])
-		end
-		display.title:SetText(L.altPowerTitle)
-		display:Show()
-		inTestMode = true
-	end
 end
 
-function plugin:BigWigs_SetConfigureTarget(event, module)
-	if module == self then
-		display.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-	else
-		display.background:SetColorTexture(0, 0, 0, 0.3)
+function plugin:Test()
+	self:Close()
+
+	sortDir = "AZ"
+	unitList = self:GetRaidList()
+	for i = 1, db.expanded and 25 or 10 do
+		local power = 100-(i*(db.expanded and 4 or 10))
+		local r, g = colorize(power)
+		display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, unitList[i])
 	end
+	display.title:SetText(L.altPowerTitle)
+	display:Show()
+	inTestMode = true
 end
 
 do
