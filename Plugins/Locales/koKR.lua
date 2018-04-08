@@ -8,6 +8,9 @@ L.positionX = "X 위치"
 L.positionY = "Y 위치"
 L.positionExact = "정확한 위치"
 L.positionDesc = "고정기로부터 정확한 위치를 원한다면 상자에 입력하거나 슬라이더를 움직이세요."
+--L.width = "Width"
+--L.height = "Height"
+--L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
 
 -----------------------------------------------------------------------
 -- AltPower.lua

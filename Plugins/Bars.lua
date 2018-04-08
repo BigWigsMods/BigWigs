@@ -889,20 +889,40 @@ do
 								name = L.positionX,
 								desc = L.positionDesc,
 								min = 0,
-								max = 2048,
+								softMax = 2048,
 								step = 1,
 								order = 1,
-								width = "full",
+								width = 3.2,
 							},
 							BigWigsAnchor_y = {
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
 								min = 0,
-								max = 2048,
+								softMax = 2048,
 								step = 1,
 								order = 2,
-								width = "full",
+								width = 3.2,
+							},
+							BigWigsAnchor_width = {
+								type = "range",
+								name = L.width,
+								desc = L.sizeDesc,
+								min = 80,
+								softMax = 2000,
+								step = 1,
+								order = 3,
+								width = 1.6,
+							},
+							BigWigsAnchor_height = {
+								type = "range",
+								name = L.height,
+								desc = L.sizeDesc,
+								min = 8,
+								softMax = 150,
+								step = 1,
+								order = 4,
+								width = 1.6,
 							},
 						},
 					},
@@ -992,20 +1012,40 @@ do
 								name = L.positionX,
 								desc = L.positionDesc,
 								min = 0,
-								max = 2048,
+								softMax = 2048,
 								step = 1,
 								order = 1,
-								width = "full",
+								width = 3.2,
 							},
 							BigWigsEmphasizeAnchor_y = {
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
 								min = 0,
-								max = 2048,
+								softMax = 2048,
 								step = 1,
 								order = 2,
-								width = "full",
+								width = 3.2,
+							},
+							BigWigsEmphasizeAnchor_width = {
+								type = "range",
+								name = L.width,
+								desc = L.sizeDesc,
+								min = 80,
+								softMax = 2000,
+								step = 1,
+								order = 3,
+								width = 1.6,
+							},
+							BigWigsEmphasizeAnchor_height = {
+								type = "range",
+								name = L.height,
+								desc = L.sizeDesc,
+								min = 8,
+								softMax = 150,
+								step = 1,
+								order = 4,
+								width = 1.6,
 							},
 						},
 					},
@@ -1187,6 +1227,7 @@ local function onResize(self, width, height)
 		currentBarStyler.ApplyStyle(k)
 		rearrangeBars(self)
 	end
+	plugin:UpdateGUI() -- Update width/height if GUI is open
 end
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
@@ -1194,7 +1235,7 @@ local function onDragStop(self)
 	local s = self:GetEffectiveScale()
 	db[self.x] = self:GetLeft() * s
 	db[self.y] = self:GetTop() * s
-	plugin:UpdateGUI() -- Update X/Y if GUI is open.
+	plugin:UpdateGUI() -- Update X/Y if GUI is open
 end
 
 do

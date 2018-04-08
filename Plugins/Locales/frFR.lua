@@ -2,6 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "frFR")
 if not L then return end
 
 L.comma = ", "
+--L.width = "Width"
+--L.height = "Height"
+--L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
 
 L.abilityName = "Nom de la technique"
 L.abilityNameDesc = "Affiche ou non le nom de la technique au dessus de la fenêtre."
