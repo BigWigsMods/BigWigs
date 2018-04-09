@@ -242,24 +242,27 @@ local function findCallingMethod(lines, start, local_func)
 end
 
 local function parseGetOptions(lines, start)
-	local stop = nil
-	for i = start+1, #lines do
+	local chunk = nil
+	for i = start, #lines do
+		if lines[i]:match("^%s*return {.+}%s*$") then
+			-- old style one line options
+			chunk = lines[i]
+			break
+		end
 		if lines[i]:match("^%s*},%s*{") then
 			-- we don't want to parse headers (to avoid setfenv) so stop here
-			stop = i
+			chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
 			break
 		end
 		if lines[i]:match("^%s*end") then
-			-- no headers, so we need to back up to the }
-			stop = i-1
+			chunk = table.concat(lines, "\n", start, i-1) -- no headers, so we need to back up to the }
 			break
 		end
 	end
-	if not stop then
-		return false, "Hit EOF... something is terribly wrong."
+	if not chunk or chunk == "" then
+		return false, "Something is wrong."
 	end
 
-	local chunk = table.concat(lines, "\n", start+1, stop-1) .. "\n}" -- we only want "return {...}"
 	local success, result = pcall(loadstring(chunk))
 	if success then
 		local options = {}
@@ -336,7 +339,7 @@ local function parseLua(file)
 
 		--- loadstring the options table
 		if line == "function mod:GetOptions()" then
-			local opts, err = parseGetOptions(lines, n)
+			local opts, err = parseGetOptions(lines, n+1)
 			if not opts then
 				-- rip keys
 				error(string.format("    %s:%d: Error parsing GetOptions! %s", file:match(".*/(.*)$"), n, err))
