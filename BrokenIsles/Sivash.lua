@@ -31,7 +31,7 @@ function mod:OnBossEnable()
 	self:ScheduleTimer("CheckForEngage", 1)
 	self:RegisterEvent("BOSS_KILL")
 
-	self:Log("SPELL_CAST_SUCCESS", "TidalWave", 241458)
+	self:Log("SPELL_CAST_SUCCESS", "TidalWave", 233996)
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 
 	self:Death("Win", 117470)

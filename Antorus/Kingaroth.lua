@@ -26,6 +26,8 @@ local apocalypseCount = 1
 local empBomb = nil
 local empRuiner = nil
 local empStrike = nil
+local numDecimation = mod:LFR() and 2 or mod:Normal() and 3 or mod:Heroic() and 4 or 5
+local numDemolish = mod:Easy() and 1 or mod:Heroic() and 2 or 3
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -77,7 +79,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ForgingStrike", 254919)
 	self:Log("SPELL_AURA_APPLIED", "ForgingStrikeApplied", 254919)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ForgingStrikeApplied", 254919)
-	self:Log("SPELL_CAST_START", "ReverberatingStrike", 254926)
+	self:Log("SPELL_CAST_START", "ReverberatingStrike", 257997, 254926) -- LFR, others
 	self:Log("SPELL_CAST_SUCCESS", "DiabolicBomb", 248214)
 	self:Log("SPELL_CAST_START", "Ruiner", 246833)
 
@@ -115,6 +117,8 @@ function mod:OnEngage()
 	empRuiner = nil
 	empStrike = nil
 	apocalypseCount = 1
+	numDecimation = self:LFR() and 2 or self:Normal() and 3 or self:Heroic() and 4 or 5
+	numDemolish = self:Easy() and 1 or self:Heroic() and 2 or 3
 
 	self:Bar(254919, 5.5) -- Forging Strike
 	self:Bar(248214, 12.5) -- Diabolic Bomb
@@ -169,8 +173,9 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(254926, name, "yellow", "Alert", nil, nil, true)
-		if self:Me(guid) then
+		self:PlaySound(254926, "Alert", nil, name)
+		self:TargetMessage2(254926, "yellow", name)
+		if self:Me(guid) and not self:LFR() then
 			self:Say(254926)
 			self:Flash(254926)
 		end
@@ -178,7 +183,7 @@ do
 
 	function mod:ReverberatingStrike(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		self:CDBar(args.spellId, 30, empStrike and L.empowered:format(args.spellName))
+		self:CDBar(254926, 30, empStrike and L.empowered:format(args.spellName))
 	end
 end
 
@@ -256,11 +261,10 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 6)
+			self:PlaySound(args.spellId, "Warning")
 		end
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.5, args.spellId, playerList, "orange", "Warning")
-		end
+		self:TargetsMessage(args.spellId, "orange", playerList, numDemolish, nil, nil, 0.5)
 	end
 
 	function mod:DemolishSuccess(args)
@@ -273,14 +277,13 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:Decimation(args)
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(246686)
 			self:SayCountdown(246686, 6)
+			self:PlaySound(246686, "Warning")
 		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 246686, playerList, "orange", "Warning")
-		end
+		self:TargetsMessage(246686, "orange", playerList, numDecimation)
 	end
 end
 
@@ -320,13 +323,12 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:ReverberatingDecimation(args)
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 4)
+			self:PlaySound(args.spellId, "Warning")
 		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "orange", "Warning")
-		end
+		self:TargetsMessage(args.spellId, "orange", playerList, numDecimation)
 	end
 end

@@ -35,10 +35,7 @@ local sound_methods = {
 	StackMessage = 5,
 	DelayedMessage = 6,
 }
-local valid_methods = {
-	ScheduleTimer = true,
-	ScheduleRepeatingTimer = true,
-}
+local valid_methods = {}
 for k in next, color_methods do valid_methods[k] = true end
 for k in next, sound_methods do valid_methods[k] = true end
 
@@ -244,6 +241,44 @@ local function findCallingMethod(lines, start, local_func)
 	end
 end
 
+local function parseGetOptions(lines, start)
+	local chunk = nil
+	for i = start, #lines do
+		if lines[i]:match("^%s*return {.+}%s*$") then
+			-- old style one line options
+			chunk = lines[i]
+			break
+		end
+		if lines[i]:match("^%s*},%s*{") then
+			-- we don't want to parse headers (to avoid setfenv) so stop here
+			chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
+			break
+		end
+		if lines[i]:match("^%s*end") then
+			chunk = table.concat(lines, "\n", start, i-1) -- no headers, so we need to back up to the }
+			break
+		end
+	end
+	if not chunk or chunk == "" then
+		return false, "Something is wrong."
+	end
+
+	local success, result = pcall(loadstring(chunk))
+	if success then
+		local options = {}
+		for _, opt in next, result do
+			if type(opt) == "table" then
+				opt = opt[1]
+			end
+			if opt then -- marker option vars will be nil
+				options[opt] = true
+			end
+		end
+		return options
+	end
+	return success, result
+end
+
 
 -- Read modules.xml and return a table of boss module file paths.
 local function parseXML(file)
@@ -294,12 +329,24 @@ local function parseLua(file)
 	end
 	data = nil
 
+	local option_keys = {}
 	local options = {}
 	local current_func = nil
 	local rep = {}
 	for n, line in ipairs(lines) do
 		local comment = line:match("%-%-%s*(.*)") or ""
 		line = line:gsub("%-%-.*$", "") -- strip comments
+
+		--- loadstring the options table
+		if line == "function mod:GetOptions()" then
+			local opts, err = parseGetOptions(lines, n+1)
+			if not opts then
+				-- rip keys
+				error(string.format("    %s:%d: Error parsing GetOptions! %s", file:match(".*/(.*)$"), n, err))
+			else
+				option_keys = opts
+			end
+		end
 
 		--- Build the callback map.
 		-- Parse :Log calls and save the callback => spellId association so we can
@@ -316,7 +363,13 @@ local function parseLua(file)
 				options[callback] = {}
 			end
 			for _, v in next, strsplit(spells) do
-				table.insert(options[callback], tonumber(v))
+				v = tonumber(v)
+				if option_keys[v] then
+					table.insert(options[callback], v)
+				end
+			end
+			if not next(options[callback]) then
+				options[callback] = nil
 			end
 		end
 
@@ -373,8 +426,8 @@ local function parseLua(file)
 				local color_index = color_methods[method]
 				if color_index then
 					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
-					if method:sub(1,6) == "Target" or method == "StackMessage" then
-						color[#color+1] = "Personal" -- Replaces the color with Personal for on me
+					if method:sub(1, 6) == "Target" or method == "StackMessage" then
+						color[#color+1] = "Personal" -- used when on the player
 					end
 				end
 			end
@@ -409,35 +462,27 @@ local function parseLua(file)
 			local keys = {}
 			-- Do key replacements.
 			for _, k in next, tablize(key) do
-				local replaced = nil
 				if k == "args.spellId" and rep.func_key then
 					k = rep.func_key
-					replaced = true
 				end
 				if k == "spellId" and rep.if_key then
 					k = rep.if_key
-					replaced = true
 				end
 				if k == "spellId" and rep.local_func_key then
 					k = rep.local_func_key
-					replaced = true
 				end
-				if not replaced then
-					keys[#keys+1] = k
-				else
-					for _, nk in next, tablize(k) do
-						keys[#keys+1] = nk
-					end
+				for _, nk in next, tablize(k) do
+					keys[#keys+1] = nk
 				end
 			end
 			--- Validate keys.
 			for i, k in next, keys do
-				local unquoted = unquote(k)
-				if not tonumber(k) and (k == unquoted or string.find(k, "%s")) then -- catch vars and expressions
-					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file:match(".*/(.*)$"), n, f, k))
+				local key = tonumber(k) or unquote(k)
+				if not option_keys[key] then
+					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file:match(".*/(.*)$"), n, f, key))
 					errors = true
 				end
-				keys[i] = unquoted
+				keys[i] = key
 			end
 
 			-- Add the color entries.

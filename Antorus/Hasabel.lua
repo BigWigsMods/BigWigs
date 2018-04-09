@@ -441,7 +441,6 @@ function mod:CloyingShadowsRemoved(args)
 end
 
 function mod:HungeringGloom(args)
-	if self:GetOption("custom_on_filter_platforms") and playerPlatform == 1 then return end
 	if UnitGUID("boss2") == args.destGUID or UnitGUID("boss3") == args.destGUID or UnitGUID("boss4") == args.destGUID then -- Should always be boss2, rest is safety
 		self:PlaySound(args.spellId, "Info")
 		self:Message(args.spellId, "orange", nil, CL.other:format(args.spellName, args.destName))

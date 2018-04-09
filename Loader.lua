@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 92
+local BIGWIGS_VERSION = 94
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -841,8 +841,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "17403" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.3.25" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "17424" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.3.26" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -1137,6 +1137,7 @@ do
 		end
 	end
 
+	local block = false -- XXX temp
 	function mod:ZONE_CHANGED_NEW_AREA()
 		-- Zone checking
 		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
@@ -1158,6 +1159,25 @@ do
 						BigWigs:Enable()
 					end
 				end
+				-- XXX temp
+				if id == 1712 and not block then
+					block = true
+					if not BigWigs3DB.fPrint or BigWigs3DB.fPrint < 3 then
+						if not BigWigs3DB.fPrint then
+							BigWigs3DB.fPrint = 1
+						else
+							BigWigs3DB.fPrint = BigWigs3DB.fPrint + 1
+						end
+						CTimerAfter(5, function()
+							sysprint("Have you seen some of our latest changes?")
+							sysprint("- AutoReply: New feature!")
+							sysprint("- Pull: Full audio customizability, including countdown sound.")
+							sysprint("- Bars: Both width & height can now be changed by dragging the anchors. You can also change bar spacing, icon position, and separate font sizes for normal/emphasized bars.")
+							sysprint("- Bosses: When customizing ability colors or sounds, only the colors/sounds being used by that ability will show. This should make setting a custom sound or color a lot easier.")
+						end)
+					end
+				end
+				-- XXX endtemp
 			elseif enableZones[id] == "world" then
 				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
 					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first

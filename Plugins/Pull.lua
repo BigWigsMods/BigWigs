@@ -39,7 +39,7 @@ do
 		combatLog = false,
 		engageSound = "None",
 		startPullSound = "BigWigs: Long",
-		endPullSound = "None",
+		endPullSound = "BigWigs: Alarm",
 		voice = voiceMap[GetLocale()] or "English: Amy",
 	}
 end

@@ -2,6 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "zhCN")
 if not L then return end
 
 L.comma = "，"
+--L.width = "Width"
+--L.height = "Height"
+--L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
 
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
@@ -150,12 +153,12 @@ L.proximity_name = "近距离"
 L.proximityTitle = "%d码/%d玩家"
 L.pull = "拉怪"
 L.pullIn = "%d秒后拉怪"
---L.engageSoundTitle = "Play a sound when a boss encounter has started"
---L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
---L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
+L.engageSoundTitle = "当首领战斗开始时播放音效"
+L.pullStartedSoundTitle = "当拉怪计时器开始时播放音效"
+L.pullFinishedSoundTitle = "当拉怪计时器结束时播放音效"
 L.pullStarted = "拉怪由%s玩家%s发起的计时器。"
 L.pullStopped = "%s取消了拉怪计时器。"
---L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
+L.pullStoppedCombat = "拉怪计时器因进入战斗而取消。"
 L.raidIconsDesc = [=[团队中有些首领模块使用团队标记来为某些中了特定技能的队员打上标记。例如类似“炸弹”类或心灵控制的技能。如果你关闭此功能，你将不会给队员打标记。
 
 |cffff4411只有团队领袖或被提升为助理时才可以这么做！|r]=]
@@ -183,7 +186,6 @@ L.restart = "重新加载"
 L.restartDesc = "重新加载醒目计时条并从10开始倒数。"
 L.right = "右"
 L.RunAway = "快跑吧小姑娘，快跑……（大灰狼）"
-L.scale = "缩放"
 L.secondary = "次要"
 L.secondaryDesc = "战斗时使用的第二个团队标记。"
 L.sendBreak = "发送休息时间计时器到 BigWigs 和 DBM 用户。"
@@ -243,8 +245,8 @@ L.victoryMessageBlizzardDesc = "位于屏幕中央的暴雪动画“首领已被
 L.victoryMessages = "显示击败首领信息"
 L.victorySound = "播放胜利音效"
 L.Warning = "警报"
---L.wipe = "Wipe"
---L.wipeSoundTitle = "Play a sound when you wipe"
+L.wipe = "团灭"
+L.wipeSoundTitle = "当团灭时播放音效"
 L.wrongBreakFormat = "必须位于1至60分钟之间。正确用法：/break 5"
 L.wrongCustomBarFormat = "错误格式。正确用法：/raidbar 20 文本"
 L.wrongPullFormat = "必须位于1到60秒之间。正确用法：/pull 5"
@@ -254,23 +256,34 @@ L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单�
 -- AutoReply.lua
 --
 
---L.autoReply = "Auto Reply"
---L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
---L.responseType = "Response Type"
---L.autoReplyFinalReply = "Also whisper when leaving combat"
---L.guildAndFriends = "Guild & Friends"
---L.everyoneElse = "Everyone else"
+L.autoReply = "自动回复"
+L.autoReplyDesc = "在与首领战斗时自动回复密语。"
+L.responseType = "回应类型"
+L.autoReplyFinalReply = "离开战斗后密语"
+L.guildAndFriends = "公会和好友"
+L.everyoneElse = "所有人"
 
---L.autoReplyBasic = "I'm busy in combat with a boss encounter."
---L.autoReplyNormal = "I'm busy in combat with '%s'."
---L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
---L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+L.autoReplyBasic = "正在与首领战斗，很忙。"
+L.autoReplyNormal = "正在与“%s”战斗，很忙。"
+L.autoReplyAdvanced = "正在与“%s”（%s）战斗，%d/%d人存活。"
+L.autoReplyExtreme = "正在与“%s”（%s）战斗，%d/%d人存活：%s"
 
---L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
---L.autoReplyLeftCombatNormalWin = "I won against '%s'."
---L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
---L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
---L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+L.autoReplyLeftCombatBasic = "与首领战斗已结束。"
+L.autoReplyLeftCombatNormalWin = "与“%s”战斗取得了胜利。"
+L.autoReplyLeftCombatNormalWipe = "与“%s”战斗团灭。"
+L.autoReplyLeftCombatAdvancedWin = "与“%s”战斗取得了胜利，%d/%d人存活。"
+L.autoReplyLeftCombatAdvancedWipe = "与“%s”战斗团灭：%s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
+--L.spacingDesc = "Change the space between each bar."
+--L.emphasizeMultiplier = "Size Multiplier"
+--L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+--L.iconPosition = "Icon Position"
+--L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

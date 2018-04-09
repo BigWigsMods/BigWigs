@@ -360,7 +360,7 @@ do
 		if text and timers[text] then wipe(timers[text]) end
 	end
 	function plugin:BigWigs_StartEmphasize(_, module, key, text, time)
-		if module and module:CheckOption(key, "COUNTDOWN") then
+		if (key and temporaryEmphasizes[key]) or (module and module:CheckOption(key, "COUNTDOWN")) then
 			self:BigWigs_StopEmphasize(nil, module, text)
 			if time > 1.3 then
 				if not timers[text] then timers[text] = {} end

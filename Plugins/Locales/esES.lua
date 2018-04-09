@@ -2,6 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "esES") or BigWigsAPI:NewLoca
 if not L then return end
 
 L.comma = ", "
+--L.width = "Width"
+--L.height = "Height"
+--L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
 
 L.abilityName = "Nombre de habilidad"
 L.abilityNameDesc = "Muestra/oculta el nombre de la habilidad encima de la ventana"
@@ -183,7 +186,6 @@ L.restart = "Reiniciar"
 L.restartDesc = "Reinicia las barras enfatizadas para que empiecen desde el principio y el recuento desde 10."
 L.right = "Derecha"
 L.RunAway = "Corre pequeña (El Lobo Feroz)"
-L.scale = "Escala"
 L.secondary = "Secundario"
 L.secondaryDesc = "El secundario objetivo de la raid el cual debería usar este icono"
 L.sendBreak = "Enviando un descanso a los jugadores con BigWigs y DBM."
@@ -271,6 +273,17 @@ L.wrongTime = "Tiempo especificado inválido. <time> puede ser bien un número e
 --L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
 --L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
 --L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
+--L.spacingDesc = "Change the space between each bar."
+--L.emphasizeMultiplier = "Size Multiplier"
+--L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+--L.iconPosition = "Icon Position"
+--L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

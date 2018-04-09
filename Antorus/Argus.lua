@@ -25,6 +25,7 @@ local avatarCounter = 1
 local soulBombCounter = 1
 local initializationCount = 3
 local sargerasGazeCount = 0
+local beaconsBeingCast, cosmicRaysBeingCast = 0, 0
 local skyName, seaName = nil, nil
 local scanningTargets = nil
 local vulnerabilityCollector = {}
@@ -128,6 +129,7 @@ if L then
 	L.sea_say = "{rt6} Haste/Versa"
 
 	L.countx = "%s (%dx)"
+	L.stacks = "%dx %s" -- for Withering Roots, the target is obvious (and has a rather long name)
 
 	L.bomb_explosions = "Bomb Explosions"
 	L.bomb_explosions_desc = "Show a timer for Soulburst and Soulbomb exploding."
@@ -177,6 +179,7 @@ function mod:GetOptions()
 		255935, -- Cosmic Power
 
 		--[[ Stage 4 ]]--
+		{256399, "HEALER"}, -- Withering Roots
 		256544, -- End of All Things
 		258039, -- Deadly Scythe
 		256388, -- Initialization Sequence
@@ -195,7 +198,7 @@ function mod:GetOptions()
 		[248165] = CL.stage:format(1),
 		[250669] = CL.stage:format(2),
 		[252516] = CL.stage:format(3),
-		[256544] = CL.stage:format(4),
+		[256399] = CL.stage:format(4),
 		[258068] = "mythic",
 	}
 end
@@ -207,7 +210,7 @@ function mod:OnBossEnable()
 	--[[ Stage 1 ]]--
 	self:Log("SPELL_CAST_START", "ConeofDeath", 248165)
 	self:Log("SPELL_CAST_START", "SoulBlightOrb", 248317)
-	self:Log("SPELL_AURA_APPLIED", "SoulBlight", 248396)
+	self:Log("SPELL_AURA_APPLIED", "SoulBlightApplied", 248396)
 	self:Log("SPELL_AURA_REMOVED", "SoulBlightRemoved", 248396)
 	self:Log("SPELL_CAST_START", "TorturedRage", 257296)
 	self:Log("SPELL_CAST_START", "SweepingScythe", 248499)
@@ -234,6 +237,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TemporalBlast", 257645)
 	self:Log("SPELL_AURA_APPLIED", "VulnerabilityApplied", 255433, 255429, 255425, 255419, 255422, 255418, 255430)
 
+	self:Log("SPELL_CAST_SUCCESS", "CosmicRay", 252729)
 	self:Log("SPELL_AURA_APPLIED", "CosmicRayApplied", 252729)
 	self:Log("SPELL_CAST_START", "CosmicBeacon", 252616)
 	self:Log("SPELL_AURA_APPLIED", "CosmicBeaconApplied", 252616)
@@ -242,10 +246,14 @@ function mod:OnBossEnable()
 
 	--[[ Stage 4 ]]--
 	self:Log("SPELL_CAST_START", "ReapSoul", 256542)
+
 	self:Log("SPELL_CAST_SUCCESS", "GiftoftheLifebinder", 257619)
+	self:Log("SPELL_AURA_APPLIED", "WitheringRoots", 256399)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "WitheringRootsStacks", 256399)
+	self:Death("TreeDeath", 129386)
 
 	self:Log("SPELL_CAST_START", "EndofAllThings", 256544)
-	self:Log("SPELL_INTERRUPT", "EndofAllThingsInterupted", "*")
+	self:Log("SPELL_INTERRUPT", "Interupted", "*")
 	self:Log("SPELL_CAST_START", "DeadlyScythe", 258039)
 	self:Log("SPELL_AURA_APPLIED", "DeadlyScytheStack", 258039)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DeadlyScytheStack", 258039)
@@ -278,6 +286,7 @@ function mod:OnEngage()
 	soulBombCounter = 1
 	sargerasGazeCount = 1
 	sentenceofSargerasCount = 1
+	beaconsBeingCast, cosmicRaysBeingCast = 0, 0
 	skyName, seaName = nil, nil
 
 	self:Bar(255594, 16) -- Sky and Sea
@@ -369,14 +378,15 @@ function mod:SoulBlightOrb(args)
 	self:CDBar(args.spellId, timers[stage][args.spellId][soulBlightOrbCounter])
 end
 
-function mod:SoulBlight(args)
-	self:TargetMessage(args.spellId, args.destName, "cyan", "Warning")
+function mod:SoulBlightApplied(args)
 	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "Warning")
 		self:Flash(args.spellId)
 		self:TargetBar(args.spellId, 8, args.destName)
 		self:SayCountdown(args.spellId, 8)
 		checkForFearHelp(self)
 	end
+	self:TargetMessage2(args.spellId, "orange", args.destName)
 end
 
 function mod:SoulBlightRemoved(args)
@@ -502,42 +512,42 @@ function mod:GolgannethsWrath()
 end
 
 do
-	local burstList, bombName, isOnMe, scheduled = {}, nil, 0, nil
+	local burstList, bombName, isOnMe, scheduled = {}, nil, 0, false
 
-	local function announce(self)
+	local function announce()
 		if isOnMe > 0 then -- Burst (3 or 7)
 			local positionNumber = isOnMe == 3 and 1 or 2 -- Either 1 or 2
-			self:Message(250669, "blue", "Alarm", CL.you:format(CL.count_icon:format(self:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
+			mod:Message(250669, "blue", "Alarm", CL.you:format(CL.count_icon:format(mod:SpellName(250669), positionNumber, isOnMe))) -- Soulburst (1{3}) on you, Soulburst (2{7}) on you
 		elseif isOnMe < 0 then -- Bomb (-1)
-			self:Message(251570, "blue", "Warning", CL.you:format(CL.count:format("|T137002:0|t" .. self:SpellName(251570), soulBombCounter - 1))) -- {2}Soulbomb (soulBombCounter) on you
+			mod:Message(251570, "blue", "Warning", CL.you:format(CL.count:format("|T137002:0|t" .. mod:SpellName(251570), soulBombCounter - 1))) -- {2}Soulbomb (soulBombCounter) on you
 		end
-		if self:CheckOption("combinedBurstAndBomb", "MESSAGE") then
-			if isOnMe == 0 or self:GetOption("custom_off_always_show_combined") then
+		if mod:CheckOption("combinedBurstAndBomb", "MESSAGE") then
+			if isOnMe == 0 or mod:GetOption("custom_off_always_show_combined") then
 				local msg = ""
 				if bombName then
-					msg = L.bomb:format(soulBombCounter, self:ColorName(bombName))
+					msg = L.bomb:format(soulBombCounter, mod:ColorName(bombName))
 				end
 
 				local burstMsg = ""
 				for i=1, #burstList do
 					local player = burstList[i]
 					local icon = i == 1 and "|T137003:0|t" or "|T137007:0|t"
-					burstMsg = burstMsg .. icon .. self:ColorName(player) .. (i == #burstList and "" or ",")
+					burstMsg = burstMsg .. icon .. mod:ColorName(player) .. (i == #burstList and "" or ",")
 				end
 				msg = msg .. L.burst:format(burstMsg)
 
-				self:Message("combinedBurstAndBomb", "red", nil, msg, false)
+				mod:Message("combinedBurstAndBomb", "red", nil, msg, false)
 			end
 		else
 			if isOnMe > -1 then -- No bomb on you (0, 3 or 7)
-				self:TargetMessage(251570, bombName, "orange", nil, CL.count:format(self:SpellName(251570), soulBombCounter))
+				mod:TargetMessage2(251570, "orange", bombName, false, CL.count:format(mod:SpellName(251570), soulBombCounter))
 			end
 			if isOnMe < 3 then -- No burst on you (0 or -1)
-				self:TargetMessage(250669, self:ColorName(burstList), "red")
+				mod:TargetsMessage(250669, "red", mod:ColorName(burstList), #burstList)
 			end
 		end
 		wipe(burstList)
-		scheduled = nil
+		scheduled = false
 		bombName = nil
 		isOnMe = 0
 	end
@@ -553,7 +563,8 @@ do
 		end
 		if #burstList == 1 then
 			if not scheduled then
-				scheduled = self:ScheduleTimer(announce, 0.1, self)
+				scheduled = true
+				self:SimpleTimer(announce, 0.1)
 			end
 			self:Bar("bomb_explosions", self:Mythic() and 12 or 15, L.bomb_explosions, L.bomb_explosions_icon) -- Bomb Explosions
 			if self:GetOption(burstMarker) then
@@ -585,7 +596,8 @@ do
 		bombName = args.destName
 
 		if not scheduled then
-			scheduled = self:ScheduleTimer(announce, 0.1, self)
+			scheduled = true
+			self:SimpleTimer(announce, 0.1)
 		end
 
 		soulBombCounter = soulBombCounter + 1
@@ -616,7 +628,10 @@ function mod:EdgeofObliteration(args)
 end
 
 function mod:AvatarofAggramar(args)
-	self:TargetMessage(args.spellId, args.destName, "green", "Long")
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "Long")
+	end
+	self:TargetMessage2(args.spellId, "green", args.destName)
 	avatarCounter = avatarCounter + 1
 	if stage == 2 then -- Don't trigger if it procs after stage 3 RP has started
 		self:Bar(args.spellId, 60, CL.count:format(args.spellName, avatarCounter))
@@ -630,7 +645,8 @@ do
 			local t = GetTime()
 			if t-prev > 0.5 then -- Throttle incase you are on the edge/tank moves around slightly
 				prev = t
-				self:TargetMessage(args.spellId, args.destName, "blue", "Info")
+				self:PlaySound(args.spellId, "Info")
+				self:TargetMessage2(args.spellId, "blue", args.destName)
 			end
 		end
 	end
@@ -684,17 +700,29 @@ function mod:ConstellarMark(_, unit, guid)
 end
 
 do
+	local prev = 0
+	function mod:CosmicRay(args)
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			cosmicRaysBeingCast = 1
+			self:Bar(args.spellId, self:Easy() and 30 or 20)
+		else
+			cosmicRaysBeingCast = cosmicRaysBeingCast + 1
+		end
+	end
+end
+
+do
 	local playerList = mod:NewTargetList()
 	function mod:CosmicRayApplied(args)
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
 		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "orange", "Warning", nil, nil, true)
-			self:Bar(args.spellId, self:Easy() and 30 or 20)
-		end
+		self:PlaySound(args.spellId, "Warning", nil, playerList)
+		self:TargetsMessage(args.spellId, "orange", playerList, cosmicRaysBeingCast)
 	end
 end
 
@@ -702,10 +730,13 @@ do
 	local prev = 0
 	function mod:CosmicBeacon(args)
 		local t = GetTime()
-		if t-prev > 2 then
+		if t-prev > 5 then
 			prev = t
+			beaconsBeingCast = 1
 			self:Message(args.spellId, "red", "Alarm", CL.casting:format(args.spellName))
 			self:Bar(args.spellId, self:Easy() and 30 or 20)
+		else
+			beaconsBeingCast = beaconsBeingCast + 1
 		end
 	end
 end
@@ -713,14 +744,13 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:CosmicBeaconApplied(args)
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
 		end
-		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "orange", "Alarm", nil, nil, true)
-		end
+		self:PlaySound(args.spellId, "Alarm", nil, playerList)
+		self:TargetsMessage(args.spellId, "orange", playerList, beaconsBeingCast)
 	end
 end
 
@@ -757,6 +787,59 @@ end
 
 function mod:GiftoftheLifebinder(args)
 	self:Message("stages", "green", "Long", args.spellName, args.spellId)
+	self:RegisterUnitEvent("UNIT_POWER", nil, "boss3") -- boss1 = Argus, boss2 = Khaz'goroth, boss3 = Gift of the Lifebinder
+end
+
+function mod:UNIT_POWER(unit)
+	local power = UnitPower(unit) / UnitPowerMax(unit) * 100
+	if power <= 10 then
+		self:UnregisterUnitEvent("UNIT_POWER", unit)
+		self:Message("stages", "green", "Long", CL.soon:format(self:SpellName(256399)), 256399) -- Withering Roots
+	end
+end
+
+do
+	local prev, lastAnnouncedStacks, stacks, scheduled = 0, 0, nil
+
+	-- helper function with access to a local variable to avoid
+	-- passing by value and rescheduling the timer
+	local function announce(self, spellId, spellName, t)
+		self:Message(spellId, "yellow", "Alert", L.stacks:format(stacks, spellName))
+		lastAnnouncedStacks = stacks
+		prev = t or GetTime()
+		scheduled = nil
+	end
+
+	function mod:WitheringRoots(args)
+		if self:GetOption(args.spellId) ~= 0 and (self:CheckOption(args.spellId, "HEALER") == false or self:Healer()) then -- follow the same format as WitheringRootsStacks for healers
+			stacks = 1
+			announce(self, args.spellId, args.spellName)
+		else -- for others: just warn that the tree is now withering
+			self:Message("stages", "green", "Long", args.spellId)
+		end
+	end
+
+	function mod:WitheringRootsStacks(args)
+		if args.amount - lastAnnouncedStacks > 2 then -- normally it'll be 1, 4, 7...
+			local t = GetTime()
+			stacks = args.amount
+			if t - prev > 1 then -- on Mythic players usually revive themselves simultaneously, we don't want to show multiple messages
+				if scheduled then self:CancelTimer(scheduled) end
+				announce(self, args.spellId, args.spellName, t)
+			else
+				if not scheduled then
+					scheduled = self:ScheduleTimer(announce, 1 - (t - prev), self, args.spellId, args.spellName)
+				end
+			end
+		end
+	end
+
+	function mod:TreeDeath()
+		if scheduled then
+			self:CancelTimer(scheduled)
+			scheduled = nil
+		end
+	end
 end
 
 function mod:EndofAllThings(args)
@@ -764,8 +847,8 @@ function mod:EndofAllThings(args)
 	self:CastBar(args.spellId, 15)
 end
 
-function mod:EndofAllThingsInterupted(args)
-	if args.extraSpellId == 256544 then
+function mod:Interupted(args)
+	if args.extraSpellId == 256544 then -- End of All Things
 		self:Message(256544, "green", "Info", CL.interrupted:format(args.extraSpellName))
 		self:StopBar(CL.cast:format(args.extraSpellName))
 		initializationCount = self:Mythic() and 1 or 3
@@ -792,6 +875,8 @@ function mod:EndofAllThingsInterupted(args)
 		end
 		self:Bar(257296, self:Mythic() and timers[stage][257296][torturedRageCounter] or 11) -- Tortured Rage
 		self:Bar(256388, self:Mythic() and timers[stage][256388][initializationCount] or 18.5, L.countx:format(self:SpellName(256388), initializationCount)) -- Initialization Sequence
+	elseif args.extraSpellId == 252616 then -- Cosmic Beacon
+		beaconsBeingCast = beaconsBeingCast - 1
 	end
 end
 
@@ -830,7 +915,8 @@ end
 
 function mod:SargerasRage(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(258068, args.destName, "blue", "Warning", args.spellName, args.spellId)
+		self:PlaySound(258068, "Warning")
+		self:TargetMessage2(258068, "blue", args.destName, false, args.spellName, args.spellId)
 		self:Flash(258068)
 		self:Say(258068, self:SpellName(6612)) -- Rage
 	end
@@ -838,7 +924,8 @@ end
 
 function mod:SargerasFear(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(258068, args.destName, "blue", "Warning", args.spellName, args.spellId)
+		self:PlaySound(258068, "Warning")
+		self:TargetMessage2(258068, "blue", args.destName, false, args.spellName, args.spellId)
 		checkForFearHelp(self)
 	end
 end
@@ -846,19 +933,19 @@ end
 do
 	local playerList, isOnMe = {}, 0
 
-	local function announce(self, spellId, spellName)
-		local meOnly = self:CheckOption(spellId, "ME_ONLY")
+	local function announce()
+		local meOnly = mod:CheckOption(257966, "ME_ONLY")
 
 		if isOnMe > 0 and (meOnly or #playerList == 1) then
-			self:Message(spellId, "blue", "Warning", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe == 1 and 1 or 4, spellName)))
+			mod:Message(257966, "blue", "Warning", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe == 1 and 1 or 4, mod:SpellName(257966))))
 		elseif not meOnly then
 			local msg = ""
 			for i=1, #playerList do
 				local icon = i == 1 and "|T137001:0|t" or "|T137004:0|t"
-				msg = msg .. icon .. self:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
+				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
 			end
 
-			self:Message(spellId, "orange", isOnMe > 0 and "Warning", CL.other:format(spellName, msg))
+			mod:Message(257966, "orange", isOnMe > 0 and "Warning", CL.other:format(mod:SpellName(257966), msg))
 		end
 
 		wipe(playerList)
@@ -873,7 +960,7 @@ do
 			checkForFearHelp(self)
 		end
 		if #playerList == 1 then
-			self:ScheduleTimer(announce, 0.3, self, args.spellId, args.spellName)
+			self:SimpleTimer(announce, 0.3)
 			sentenceofSargerasCount = sentenceofSargerasCount + 1
 			self:Bar(args.spellId, timers[stage][args.spellId][sentenceofSargerasCount], CL.count:format(args.spellName, sentenceofSargerasCount))
 			if self:GetOption(sentenceMarker) then

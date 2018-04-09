@@ -13,15 +13,14 @@ mod.respawnTime = 21
 -- Locals
 --
 
-local infoboxScheduled = nil
 local chilledBloodTime = 0
 local chilledBloodList = {}
 local chilledBloodMaxAbsorb = 1
 local tormentIcons = {
-	["AmanThul"] = 139, -- Renew
-	["Norgannon"] = 245910, -- Army
-	["Khazgoroth"] = 245671, -- Flames
-	["Golganneth"] = 421, -- Chain Lightning
+	AmanThul = 139, -- Renew
+	Norgannon = 245910, -- Army
+	Khazgoroth = 245671, -- Flames
+	Golganneth = 421, -- Chain Lightning
 }
 local upcomingTorments = {}
 
@@ -133,7 +132,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	infoboxScheduled = nil
 	chilledBloodTime = 0
 	wipe(chilledBloodList)
 	chilledBloodMaxAbsorb = 1
@@ -164,72 +162,66 @@ local updateInfoBox
 do
 	local debuffName = mod:SpellName(245586) -- Chilled Blood
 	local tormentMarkup = {
-		["AmanThul"] = {color = "|cff81c784", text = "tormentHeal"},
-		["Norgannon"] = {color = "|cff9575cd", text = "tormentArmy"},
-		["Khazgoroth"] = {color = "|cffe57373", text = "tormentFlames"},
-		["Golganneth"] = {color = "|cff4fc3f7", text = "tormentLightning"},
+		AmanThul = {color = "|cff81c784", text = "tormentHeal", icon = GetSpellTexture(tormentIcons.AmanThul)},
+		Norgannon = {color = "|cff9575cd", text = "tormentArmy", icon = GetSpellTexture(tormentIcons.Norgannon)},
+		Khazgoroth = {color = "|cffe57373", text = "tormentFlames", icon = GetSpellTexture(tormentIcons.Khazgoroth)},
+		Golganneth = {color = "|cff4fc3f7", text = "tormentLightning", icon = GetSpellTexture(tormentIcons.Golganneth)},
 	}
-	for n, id in pairs(tormentIcons) do
-		local _, _, icon = GetSpellInfo(id)
-		tormentMarkup[n].icon = icon
+
+	local UnitDebuff, sort, min, sortFunc = UnitDebuff, table.sort, math.min, function(a, b)
+		return a[2] > b[2]
 	end
-
-	function updateInfoBox(self)
-		if infoboxScheduled then
-			self:CancelTimer(infoboxScheduled)
-			infoboxScheduled = nil
-		end
-
+	function updateInfoBox()
 		local showTorments = next(upcomingTorments)
-		local showChilledBlood = self:CheckOption(245586, "INFOBOX")
+		local showChilledBlood = mod:CheckOption(245586, "INFOBOX")
 		local bloodOffset = 0
 
 		-- Torment
 		if showTorments then
-			self:OpenInfo("infobox", L.nextTorment:format(""))
+			mod:OpenInfo("infobox", L.nextTorment:format(""))
 
 			local nextTorment = tormentMarkup[upcomingTorments[1]]
 			local data = ("|T%s:15:15:0:0:64:64:4:60:4:60|t%s%s|r"):format(nextTorment.icon, nextTorment.color, L[nextTorment.text])
-			self:SetInfo("infobox", 1, data)
+			mod:SetInfo("infobox", 1, data)
 			bloodOffset = 2
 		end
 
 		-- Chilled Blood
 		if showChilledBlood then
-			local playerTable, totalAbsorb = {}, 0
-			for name,_ in pairs(chilledBloodList) do
-				local debuff, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, value = UnitDebuff(name, debuffName)
+			local totalAbsorb = 0
+			for i = 1, #chilledBloodList do
+				local debuff, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, value = UnitDebuff(chilledBloodList[i][1], debuffName)
 				if debuff and value and value > 0 then
-					playerTable[#playerTable+1] = {name = name, value = value}
+					chilledBloodList[i][2] = value
 					totalAbsorb = totalAbsorb + value
 				end
 			end
 
 			local timeLeft = chilledBloodTime + 10 - GetTime()
 
-			if #playerTable > 0 and timeLeft > 0 then
+			if #chilledBloodList > 0 and timeLeft > 0 then
 				if not showTorments then
-					self:OpenInfo("infobox", debuffName)
+					mod:OpenInfo("infobox", debuffName)
 				end
 
-				infoboxScheduled = self:ScheduleTimer(updateInfoBox, 0.1, self)
-				self:SetInfo("infobox", bloodOffset+1, "|cffffffff" .. self:SpellName(245586))
-				self:SetInfo("infobox", bloodOffset+2, L.timeLeft:format(timeLeft))
-				self:SetInfoBar("infobox", bloodOffset+1, timeLeft/10)
+				mod:SimpleTimer(updateInfoBox, 0.1)
+				mod:SetInfo("infobox", bloodOffset+1, "|cffffffff" .. mod:SpellName(245586))
+				mod:SetInfo("infobox", bloodOffset+2, L.timeLeft:format(timeLeft))
+				mod:SetInfoBar("infobox", bloodOffset+1, timeLeft/10)
 
-				sort(playerTable, function(a, b) return a.value > b.value end)
+				sort(chilledBloodList, sortFunc)
 
-				for i = 1, math.min((8-bloodOffset)/2, 3) do
-					if playerTable[i] then
-						local player = playerTable[i].name
+				for i = 1, min((8-bloodOffset)/2, 3) do
+					if chilledBloodList[i] then
+						local player = chilledBloodList[i][1]
 						local icon = GetRaidTargetIndex(player)
-						self:SetInfo("infobox", bloodOffset+1+i*2, (icon and ("|T13700%d:0|t"):format(icon) or "") .. self:ColorName(player))
-						self:SetInfo("infobox", bloodOffset+2+i*2, self:AbbreviateNumber(playerTable[i].value))
-						self:SetInfoBar("infobox", bloodOffset+1+i*2, playerTable[i].value / chilledBloodMaxAbsorb)
+						mod:SetInfo("infobox", bloodOffset+1+i*2, (icon and ("|T13700%d:0|t"):format(icon) or "") .. mod:ColorName(player))
+						mod:SetInfo("infobox", bloodOffset+2+i*2, mod:AbbreviateNumber(chilledBloodList[i][2]))
+						mod:SetInfoBar("infobox", bloodOffset+1+i*2, chilledBloodList[i][2] / chilledBloodMaxAbsorb)
 					else
-						self:SetInfo("infobox", bloodOffset+1+i*2, "")
-						self:SetInfo("infobox", bloodOffset+2+i*2, "")
-						self:SetInfoBar("infobox", bloodOffset+1+i*2, 0)
+						mod:SetInfo("infobox", bloodOffset+1+i*2, "")
+						mod:SetInfo("infobox", bloodOffset+2+i*2, "")
+						mod:SetInfoBar("infobox", bloodOffset+1+i*2, 0)
 					end
 				end
 			else
@@ -238,7 +230,7 @@ do
 		end
 
 		if not showChilledBlood and not showTorments then
-			self:CloseInfo("infobox")
+			mod:CloseInfo("infobox")
 		end
 	end
 end
@@ -342,25 +334,25 @@ do
 			self:StopBar(L.torment:format(L.tormentHeal))
 			tDeleteItem(upcomingTorments, "AmanThul")
 			self:Message("torment_of_the_titans", "red", "Warning", L.torment:format(L.tormentHeal), tormentIcons["AmanThul"])
-			updateInfoBox(self)
+			updateInfoBox()
 			announceNextTorment = true
 		elseif spellId == 253881 then -- Flames of Khaz'goroth
 			self:StopBar(L.torment:format(L.tormentFlames))
 			tDeleteItem(upcomingTorments, "Khazgoroth")
 			self:Message("torment_of_the_titans", "red", "Warning", L.torment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
-			updateInfoBox(self)
+			updateInfoBox()
 			announceNextTorment = true
 		elseif spellId == 253951 then  -- Fury of Golganneth
 			self:StopBar(L.torment:format(L.tormentLightning))
 			tDeleteItem(upcomingTorments, "Golganneth")
 			self:Message("torment_of_the_titans", "red", "Warning", L.torment:format(L.tormentLightning), tormentIcons["Golganneth"])
-			updateInfoBox(self)
+			updateInfoBox()
 			announceNextTorment = true
 		elseif spellId == 253950 then -- Spectral Army of Norgannon
 			self:StopBar(L.torment:format(L.tormentArmy))
 			tDeleteItem(upcomingTorments, "Norgannon")
 			self:Message("torment_of_the_titans", "red", "Warning", L.torment:format(L.tormentArmy), tormentIcons["Norgannon"])
-			updateInfoBox(self)
+			updateInfoBox()
 			announceNextTorment = true
 		end
 		if announceNextTorment and #upcomingTorments == 1 then
@@ -377,7 +369,7 @@ function mod:TormentofAmanThul()
 		self:Message("torment_of_the_titans", "cyan", "Info", L.nextTorment:format(L.tormentHeal), tormentIcons["AmanThul"])
 	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentHeal), tormentIcons["AmanThul"])
-	updateInfoBox(self)
+	updateInfoBox()
 end
 
 function mod:TormentofKhazgoroth()
@@ -387,7 +379,7 @@ function mod:TormentofKhazgoroth()
 		self:Message("torment_of_the_titans", "cyan", "Info", L.nextTorment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
 	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentFlames), tormentIcons["Khazgoroth"])
-	updateInfoBox(self)
+	updateInfoBox()
 end
 
 function mod:TormentofGolganneth()
@@ -397,7 +389,7 @@ function mod:TormentofGolganneth()
 		self:Message("torment_of_the_titans", "cyan", "Info", L.nextTorment:format(L.tormentLightning), tormentIcons["Golganneth"])
 	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentLightning), tormentIcons["Golganneth"])
-	updateInfoBox(self)
+	updateInfoBox()
 end
 
 function mod:TormentofNorgannon()
@@ -407,7 +399,7 @@ function mod:TormentofNorgannon()
 		self:Message("torment_of_the_titans", "cyan", "Info", L.nextTorment:format(L.tormentArmy), tormentIcons["Norgannon"])
 	end
 	self:Bar("torment_of_the_titans", 90, L.torment:format(L.tormentArmy), tormentIcons["Norgannon"])
-	updateInfoBox(self)
+	updateInfoBox()
 end
 
 --[[ Noura, Mother of Flame ]]--
@@ -433,10 +425,11 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 10)
+			self:PlaySound(args.spellId, "Alarm")
 		end
 		playerList[#playerList+1] = args.destName
+		self:TargetsMessage(args.spellId, "red", playerList, 3)
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "red", "Alarm")
 			self:Bar(args.spellId, 40.1)
 		end
 	end
@@ -472,32 +465,41 @@ function mod:FlashfreezeSuccess(args)
 end
 
 do
-	local targetList = mod:NewTargetList()
+	local playerList = mod:NewTargetList()
 
 	function mod:ChilledBlood(args)
-		targetList[#targetList+1] = args.destName
+		playerList[#playerList+1] = args.destName
 
-		if #targetList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, targetList, "green", "Alarm", nil, nil, self:Healer() and true) -- Always play a sound for healers
-			self:Bar(args.spellId, 25.5)
+		if self:Healer() then -- Always play a sound for healers
+			self:PlaySound(args.spellId, "Alarm", nil, playerList)
+		elseif self:Me() then
+			self:PlaySound(args.spellId, "Alarm")
+		end
+
+		self:TargetsMessage(args.spellId, "green", playerList, 3)
+		if #playerList == 1 then
 			chilledBloodTime = GetTime()
-			infoboxScheduled = self:ScheduleTimer(updateInfoBox, 0.1, self)
+			self:Bar(args.spellId, 25.5)
+			self:SimpleTimer(updateInfoBox, 0.3)
 		end
 
 		if self:GetOption(chilledBloodMarker) then
-			SetRaidTarget(args.destName, #targetList > 2 and 5 or #targetList) -- Icons: 1, 2, 5
+			SetRaidTarget(args.destName, #playerList > 2 and 5 or #playerList) -- Icons: 1, 2, 5
 		end
 
 		local debuff, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, value = UnitDebuff(args.destName, args.spellName)
 		if debuff and value and value > 0 then
-			chilledBloodList[args.destName] = true
+			chilledBloodList[#chilledBloodList+1] = {args.destName, value}
 			chilledBloodMaxAbsorb = math.max(chilledBloodMaxAbsorb, value)
 		end
 	end
 
 	function mod:ChilledBloodRemoved(args)
-		chilledBloodList[args.destName] = nil
-		updateInfoBox(self)
+		for i = #chilledBloodList, 1, -1 do
+			if chilledBloodList[i][1] == args.destName then
+				tremove(chilledBloodList, i)
+			end
+		end
 		if self:GetOption(chilledBloodMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
@@ -523,13 +525,14 @@ do
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 4)
+			self:PlaySound(args.spellId, "Alarm")
 		end
 
 		playerList[#playerList+1] = args.destName
 
+		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
 		if #playerList == 1 then
 			self:CDBar(args.spellId, 15)
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "yellow", "Alarm")
 			if self:GetOption(cosmicGlareMarker) then
 				SetRaidTarget(args.destName, 3)
 			end

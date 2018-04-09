@@ -2,6 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "zhTW")
 if not L then return end
 
 L.comma = "，"
+--L.width = "Width"
+--L.height = "Height"
+--L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
 
 L.abilityName = "技能名稱"
 L.abilityNameDesc = "在視窗上面顯示或隱藏技能名稱。"
@@ -183,7 +186,6 @@ L.restart = "重新加載"
 L.restartDesc = "重新加載強調計時條並從10開始倒數。"
 L.right = "右"
 L.RunAway = "快逃啊小女孩，快逃……（大野狼）"
-L.scale = "縮放"
 L.secondary = "次要"
 L.secondaryDesc = "戰鬥時使用的第二個團隊圖示。"
 L.sendBreak = "發送休息時間計時器到 BigWigs 和 DBM 用戶。"
@@ -271,6 +273,17 @@ L.autoReplyLeftCombatNormalWin = "已擊敗「%s」。"
 L.autoReplyLeftCombatNormalWipe = "在「%s」的戰鬥中滅團。"
 L.autoReplyLeftCombatAdvancedWin = "已擊敗「%s」，尚有%d／%d人存活。"
 L.autoReplyLeftCombatAdvancedWipe = "在「%s」的戰鬥中滅團：%s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
+--L.spacingDesc = "Change the space between each bar."
+--L.emphasizeMultiplier = "Size Multiplier"
+--L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+--L.iconPosition = "Icon Position"
+--L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

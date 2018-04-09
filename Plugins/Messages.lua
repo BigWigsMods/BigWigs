@@ -78,14 +78,6 @@ do
 		db[self.x] = self:GetLeft() * s
 		db[self.y] = self:GetTop() * s
 	end
-	local function OnMouseUp(self, button)
-		if button ~= "LeftButton" then return end
-		if self:GetName() == "BWEmphasizeCountdownMessageAnchor" or self:GetName() == "BWEmphasizeMessageAnchor" then
-			seModule:SendMessage("BigWigs_SetConfigureTarget", seModule)
-		else
-			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
-		end
-	end
 	local function Reset(self)
 		db[self.x] = nil
 		db[self.y] = nil
@@ -126,7 +118,6 @@ do
 		header:SetJustifyH("CENTER")
 		display:SetScript("OnDragStart", OnDragStart)
 		display:SetScript("OnDragStop", OnDragStop)
-		display:SetScript("OnMouseUp", OnMouseUp)
 		display.Reset = Reset
 		display.RefixPosition = RefixPosition
 		display:SetPoint(unpack(defaultPositions[frameName]))
@@ -442,7 +433,6 @@ function plugin:OnPluginEnable()
 	updateProfile()
 
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
-	self:RegisterMessage("BigWigs_SetConfigureTarget")
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
@@ -452,22 +442,6 @@ end
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function plugin:BigWigs_SetConfigureTarget(event, module)
-	if module == self then
-		normalAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-		emphasizeAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-		emphasizeCountdownAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-	elseif module == seModule then
-		normalAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-		emphasizeAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-		emphasizeCountdownAnchor.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-	else
-		normalAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-		emphasizeAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-		emphasizeCountdownAnchor.background:SetColorTexture(0, 0, 0, 0.3)
-	end
-end
 
 do
 	local floor = math.floor

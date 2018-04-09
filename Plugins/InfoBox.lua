@@ -88,11 +88,6 @@ do
 		db.posx = self:GetLeft() * s
 		db.posy = self:GetTop() * s
 	end)
-	display:SetScript("OnMouseUp", function(self, button)
-		if inTestMode and button == "LeftButton" then
-			plugin:SendMessage("BigWigs_SetConfigureTarget", plugin)
-		end
-	end)
 	display:SetScript("OnHide", function(self)
 		inTestMode = false
 		opener = nil
@@ -202,7 +197,6 @@ function plugin:OnPluginEnable()
 
 	self:RegisterMessage("BigWigs_StartConfigureMode", "Test")
 	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
-	self:RegisterMessage("BigWigs_SetConfigureTarget")
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
@@ -216,14 +210,6 @@ end
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function plugin:BigWigs_SetConfigureTarget(_, module)
-	if module == self then
-		display.background:SetColorTexture(0.2, 1, 0.2, 0.3)
-	else
-		display.background:SetColorTexture(0, 0, 0, 0.3)
-	end
-end
 
 function plugin:BigWigs_ShowInfoBox(_, module, title)
 	if opener then

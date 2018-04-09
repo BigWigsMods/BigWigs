@@ -2,6 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "deDE")
 if not L then return end
 
 L.comma = ", "
+--L.width = "Width"
+--L.height = "Height"
+--L.sizeDesc = "Move the slider if you need to set an exact size. You can also type the value into the box, which has no maximum."
 
 L.abilityName = "Fähigkeitsname"
 L.abilityNameDesc = "Zeigt oder versteckt den Fähigkeitsnamen über dem Fenster."
@@ -183,7 +186,6 @@ L.restart = "Neu starten"
 L.restartDesc = "Startet die hervorgehobenen Leisten neu, so dass sie bis 10 hochzählen anstatt von 10 herunter."
 L.right = "Rechts"
 L.RunAway = "Lauf kleines Mädchen, lauf (Der große böse Wolf)"
-L.scale = "Skalierung"
 L.secondary = "Zweites Symbol"
 L.secondaryDesc = "Das zweite Schlachtzugssymbol, das verwendet wird."
 L.sendBreak = "Sende Pausentimer an BigWigs- und DBM-Nutzer."
@@ -254,23 +256,34 @@ L.wrongTime = "Ungültige Zeitangabe. <time> kann eine Zahl in Sekunden, ein M:S
 -- AutoReply.lua
 --
 
---L.autoReply = "Auto Reply"
---L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
---L.responseType = "Response Type"
---L.autoReplyFinalReply = "Also whisper when leaving combat"
---L.guildAndFriends = "Guild & Friends"
---L.everyoneElse = "Everyone else"
+L.autoReply = "Automatisch Antworten"
+L.autoReplyDesc = "Automatisch auf Flüsternachrichten antworten, wenn ich mich in einem Bosskampf befinde."
+L.responseType = "Antwortart"
+L.autoReplyFinalReply = "Auch flüstern wenn ich den Kampf verlassen habe"
+L.guildAndFriends = "Gilde & Freunde"
+L.everyoneElse = "Jeden"
 
---L.autoReplyBasic = "I'm busy in combat with a boss encounter."
---L.autoReplyNormal = "I'm busy in combat with '%s'."
---L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
---L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+L.autoReplyBasic = "Ich befinde mich in einem Bosskampf."
+L.autoReplyNormal = "Ich kämpfe gerade gegen '%s'."
+L.autoReplyAdvanced = "Ich kämpfe gerade gegen '%s' (%s) und %d/%d Spieler sind noch am Leben."
+L.autoReplyExtreme = "Ich kämpfe gerade gegen '%s' (%s) und %d/%d Spieler sind noch am Leben: %s"
 
---L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
---L.autoReplyLeftCombatNormalWin = "I won against '%s'."
---L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
---L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
---L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+L.autoReplyLeftCombatBasic = "Ich befinde mich nicht mehr im Bosskampf."
+L.autoReplyLeftCombatNormalWin = "Ich habe gegen '%s' gewonnen."
+L.autoReplyLeftCombatNormalWipe = "Ich habe gegen '%s' verloren."
+L.autoReplyLeftCombatAdvancedWin = "Ich habe gegen '%s' gewonnen und %d/%d Spieler sind noch am leben."
+L.autoReplyLeftCombatAdvancedWipe = "Ich habe gegen '%s' verloren: %s"
+
+-----------------------------------------------------------------------
+-- Bars.lua
+--
+
+--L.spacing = "Spacing"
+--L.spacingDesc = "Change the space between each bar."
+--L.emphasizeMultiplier = "Size Multiplier"
+--L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+--L.iconPosition = "Icon Position"
+--L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
