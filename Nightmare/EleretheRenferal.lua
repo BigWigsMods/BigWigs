@@ -132,26 +132,27 @@ do
 		if UnitDebuff(unit, spellName) then
 			local guid = UnitGUID(unit)
 			if not players[guid] then
+				local spellId = key -- SetOption:215443,210864:
 				players[guid] = true
 				list[#list+1] = self:UnitName(unit)
 				if unit == "player" then
-					self:Message(key, "Personal", "Long", CL.you:format(spellName)) -- SetOption:215443,210864:::
-					self:Flash(key)
-					self:Say(key)
+					self:Message(spellId, "Personal", "Long", CL.you:format(spellName))
+					self:Flash(spellId)
+					self:Say(spellId)
 
 					local _, _, _, _, _, _, expires = UnitDebuff(unit, spellName)
 					local remaining = expires-GetTime()
-					self:Bar(key, remaining, CL.you:format(spellName))
-					self:SayCountdown(key, remaining)
+					self:Bar(spellId, remaining, CL.you:format(spellName))
+					self:SayCountdown(spellId, remaining)
 				else
 					if scheduled then
 						self:CancelTimer(scheduled)
 						scheduled = nil
 					end
 					if #list == 2 then
-						self:TargetMessage(key, list, "Urgent", "Warning") -- SetOption:215443,210864:Urgent:Warning:
+						self:TargetMessage(spellId, list, "Urgent", "Warning")
 					else
-						scheduled = self:ScheduleTimer("TargetMessage", 0.5, key, list, "Urgent", "Warning") -- SetOption:215443,210864:Urgent:Warning:
+						scheduled = self:ScheduleTimer("TargetMessage", 0.5, spellId, list, "Urgent", "Warning")
 					end
 				end
 			end

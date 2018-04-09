@@ -168,19 +168,19 @@ end
 local triggerCdForOtherSpells
 do
 	local abilitysToPause = {
-		[243983] = true, -- Collapsing World
-		[244689] = true, -- Transport Portal
-		[244000] = true, -- Felstorm Barrage
+		[243983] = 9, -- Collapsing World
+		[244689] = 8.5, -- Transport Portal
+		[244000] = 9, -- Felstorm Barrage
 	}
 
 	local castPattern = CL.cast:gsub("%%s", ".+")
 
-	function triggerCdForOtherSpells(self, spellId, castTime)
-		for id,_ in pairs(abilitysToPause) do
+	function triggerCdForOtherSpells(self, id, castTime)
+		for spellId, extraTime in next, abilitysToPause do
 			if id ~= spellId then
-				local cd = (id == 244689 and 8.5 or 9) + (castTime or 0) -- Transport Portal cast is 0.5s shorter
-				if self:BarTimeLeft(id) < cd then
-					self:Bar(id, cd)
+				local cd = extraTime + (castTime or 0)
+				if self:BarTimeLeft(spellId) < cd then
+					self:Bar(spellId, cd)
 				end
 			end
 		end
