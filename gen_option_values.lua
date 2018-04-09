@@ -35,7 +35,17 @@ local sound_methods = {
 	StackMessage = 5,
 	DelayedMessage = 6,
 }
-local valid_methods = {}
+local valid_methods = {
+	Bar = true,
+	CDBar = true,
+	CastBar = true,
+	TargetBar = true,
+	PrimaryIcon = true,
+	SecondaryIcon = true,
+	Flash = true,
+	Say = true,
+	SayCountdown = true,
+}
 for k in next, color_methods do valid_methods[k] = true end
 for k in next, sound_methods do valid_methods[k] = true end
 
@@ -291,6 +301,15 @@ local function parseGetOptions(lines, start)
 	return success, result
 end
 
+local function checkForAPI(line)
+	for method in next, valid_methods do
+		if line:find(method, nil, true) then
+			return true
+		end
+	end
+	return false
+end
+
 
 -- Read modules.xml and return a table of boss module file paths.
 local function parseXML(file)
@@ -428,7 +447,7 @@ local function parseLua(file)
 		--- Parse message calls.
 		-- Check for function calls that will trigger a sound, including calls
 		-- delayed with ScheduleTimer.
-		if line:find("Message", nil, true) or line:find("PlaySound", nil, true) then
+		if checkForAPI(line) then
 			local key, sound, color = nil, nil, nil
 			local method, args = line:match("%w+:(.-)%(%s*(.+)%s*%)")
 			local offset = 0
