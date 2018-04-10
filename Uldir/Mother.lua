@@ -2,10 +2,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Titan Discs", nil, 2169, 1861)
+local mod, CL = BigWigs:NewBoss("MOTHER", 1861, 2167)
 if not mod then return end
 mod:RegisterEnableMob(0)
-mod.engageId = 2136
+mod.engageId = 2141
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------

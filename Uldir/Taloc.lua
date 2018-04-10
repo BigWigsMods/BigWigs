@@ -2,10 +2,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Blood of G'huun", 1861, 2166)
+local mod, CL = BigWigs:NewBoss("Titan Keeper Hezrel", 1861, 2168)
 if not mod then return end
 mod:RegisterEnableMob(0)
-mod.engageId = 2088
+mod.engageId = 2135
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
