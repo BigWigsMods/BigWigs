@@ -8,6 +8,9 @@ L.positionX = "Posição X"
 L.positionY = "Posição Y"
 L.positionExact = "Posicionamento Exato"
 L.positionDesc = "Digite na caixa ou mova o cursor se precisa posicionamento exato para a âncora."
+--L.width = "Width"
+--L.height = "Height"
+--L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
 
 -----------------------------------------------------------------------
 -- AltPower.lua

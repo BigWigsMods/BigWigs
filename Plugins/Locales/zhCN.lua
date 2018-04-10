@@ -2,6 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "zhCN")
 if not L then return end
 
 L.comma = "，"
+L.width = "宽度"
+L.height = "高度"
+L.sizeDesc = "通常通过拖动锚点设置尺寸。如果需要一个精确的尺寸，可以使用这个滑动条或者将数值输入到没有最大值的框中。"
 
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
@@ -101,7 +104,7 @@ L.FlagTaken = "夺旗（PvP）"
 L.flash = "闪烁"
 L.font = "字体"
 L.fontColor = "字体颜色"
-L.fontSize = "字体大小"
+L.fontSize = "字体尺寸"
 L.general = "一般"
 L.growingUpwards = "向上成长"
 L.growingUpwardsDesc = "切换在锚点向上或向下成长。"
@@ -275,12 +278,12 @@ L.autoReplyLeftCombatAdvancedWipe = "与“%s”战斗团灭：%s"
 -- Bars.lua
 --
 
---L.spacing = "Spacing"
---L.spacingDesc = "Change the space between each bar."
---L.emphasizeMultiplier = "Size Multiplier"
---L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
---L.iconPosition = "Icon Position"
---L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
+L.spacing = "间隙"
+L.spacingDesc = "更每个改计时条之间间隙。"
+L.emphasizeMultiplier = "尺寸倍数"
+L.emphasizeMultiplierDesc = "如禁用计时条移向醒目锚点，此选项将决定以一般计时条乘以倍数作为醒目计时条的尺寸。"
+L.iconPosition = "图标位置"
+L.iconPositionDesc = "选择计时条上图标的位置。"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

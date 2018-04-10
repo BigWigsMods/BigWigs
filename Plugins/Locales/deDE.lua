@@ -2,6 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "deDE")
 if not L then return end
 
 L.comma = ", "
+--L.width = "Width"
+--L.height = "Height"
+--L.sizeDesc = "Move the slider if you need to set an exact size. You can also type the value into the box, which has no maximum."
 
 L.abilityName = "Fähigkeitsname"
 L.abilityNameDesc = "Zeigt oder versteckt den Fähigkeitsnamen über dem Fenster."
