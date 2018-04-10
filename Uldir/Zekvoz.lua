@@ -39,21 +39,21 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-		--[[ General ]]--
+	--[[ General ]]--
 	self:Log("SPELL_CAST_SUCCESS", "SurgingDarkness", 265451)
 	self:Log("SPELL_CAST_START", "VoidLash", 265231)
 	self:Log("SPELL_CAST_START", "Shatter", 265248)
 
-		--[[ Stage 1 ]]--
+	--[[ Stage 1 ]]--
 	self:Log("SPELL_CAST_START", "EyeBeam", 264382)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 264219)
 
-		--[[ Stage 2 ]]--
+	--[[ Stage 2 ]]--
 	self:Log("SPELL_AURA_APPLIED", "RoilingDeceit", 265360)
 	self:Log("SPELL_AURA_REMOVED", "RoilingDeceitRemoved", 265360)
 	self:Log("SPELL_CAST_START", "VoidBolt", 267180)
 
-		--[[ Stage 3 ]]--
+	--[[ Stage 3 ]]--
 	self:Log("SPELL_CAST_START", "OrbofCorruption", 267239)
 	self:Log("SPELL_AURA_APPLIED", "CorruptorsPact", 265662)
 	self:Log("SPELL_AURA_REMOVED", "CorruptorsPactRemoved", 265662)
@@ -79,13 +79,13 @@ end
 
 function mod:Shatter(args)
 	self:PlaySound(args.spellId, "alert")
-	self:Message(args.spellId, "purple")
+	self:Message(args.spellId, "cyan") -- XXX purple for tank?
 end
 
 --[[ Stage 1 ]]--
 function mod:EyeBeam(args)
-	self:PlaySound(args.spellId, "yellow")
-	self:Message(args.spellId, "alert")
+	self:PlaySound(args.spellId, "alert")
+	self:Message(args.spellId, "yellow")
 end
 
 function mod:Fixate(args)
