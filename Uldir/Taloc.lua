@@ -5,7 +5,7 @@
 local mod, CL = BigWigs:NewBoss("Titan Keeper Hezrel", 1861, 2168)
 if not mod then return end
 mod:RegisterEnableMob(0)
-mod.engageId = 2135
+mod.engageId = 2144
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
