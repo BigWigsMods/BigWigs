@@ -2,9 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "deDE")
 if not L then return end
 
 L.comma = ", "
---L.width = "Width"
---L.height = "Height"
---L.sizeDesc = "Move the slider if you need to set an exact size. You can also type the value into the box, which has no maximum."
+L.width = "Breite"
+L.height = "Höhe"
+L.sizeDesc = "Bewege den Schieber, falls du eine exakte Größe festlegen möchtest. Du kannst ebenfalls eine Zahl in das Feld eintragen, diese Zahl kann beliebig groß sein."
 
 L.abilityName = "Fähigkeitsname"
 L.abilityNameDesc = "Zeigt oder versteckt den Fähigkeitsnamen über dem Fenster."
@@ -153,12 +153,12 @@ L.proximity_name = "Nähe"
 L.proximityTitle = "%d m / %d Spieler"
 L.pull = "Pull"
 L.pullIn = "Pull in %d Sek."
---L.engageSoundTitle = "Play a sound when a boss encounter has started"
---L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
---L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
+L.engageSoundTitle = "Spiele  einen Sound ab, sobald ein Bosskampf beginnt"
+L.pullStartedSoundTitle = "Spiele einen Sound ab, sobald ein Pull-Timer gestartet wurde"
+L.pullFinishedSoundTitle = "Spiele einen Sound ab, sobald ein Pull-Timer abgelaufen ist"
 L.pullStarted = "Pull-Timer wurde von %s-Nutzer %s gestartet."
 L.pullStopped = "Pull-Timer von %s abgebrochen."
---L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
+L.pullStoppedCombat = "Pull-Timer wurde abgebrochen, weil du einen Kampf begonnen hast."
 L.raidIconsDesc = [=[Einige Bossmodule benutzen Schlachtzugssymbole, um Spieler zu markieren, die von speziellem Interesse für deine Gruppe sind. Beispiele wären Bombeneffekte und Gedankenkontrolle. Wenn du diese Option ausschaltest, markierst du niemanden mehr.
 
 |cffff4411Trifft nur zu, sofern du Schlachtzugsleiter oder Assistent bist.|r]=]
@@ -245,8 +245,8 @@ L.victoryMessageBlizzardDesc = "Die Blizzard-Mitteilung ist eine sehr große Bos
 L.victoryMessages = "Boss-besiegt-Nachrichten zeigen"
 L.victorySound = "Spiele einen Sieg-Sound"
 L.Warning = "Warnung"
---L.wipe = "Wipe"
---L.wipeSoundTitle = "Play a sound when you wipe"
+L.wipe = "Wipe"
+L.wipeSoundTitle = "Play a sound when you wipe"
 L.wrongBreakFormat = "Muss zwischen 1 und 60 Minuten liegen. Beispiel: /break 5"
 L.wrongCustomBarFormat = "Ungültiges Format. Beispiel: /raidbar 20 text"
 L.wrongPullFormat = "Muss zwischen 1 und 60 Sekunden liegen. Beispiel: /pull 5"
@@ -278,12 +278,12 @@ L.autoReplyLeftCombatAdvancedWipe = "Ich habe gegen '%s' verloren: %s"
 -- Bars.lua
 --
 
---L.spacing = "Spacing"
---L.spacingDesc = "Change the space between each bar."
---L.emphasizeMultiplier = "Size Multiplier"
+L.spacing = "Abstand"
+L.spacingDesc = "Verändert den Abstand zwischen den Leisten."
+L.emphasizeMultiplier = "Größenmultiplikator"
 --L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
---L.iconPosition = "Icon Position"
---L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
+L.iconPosition = "Symbolposition"
+L.iconPositionDesc = "Wähle, wo sich das Symbol auf der Leiste befinden soll."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
