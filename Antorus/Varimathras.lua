@@ -193,7 +193,7 @@ do
 		if self:Me(args.destGUID) then
 			isOnMe = true
 			self:PlaySound(args.spellId, "Warning")
-			self:TargetMessage2(args.spellId, "orange", args.destName, CL.count_icon:format(args.spellName, count, icon))
+			self:TargetMessage2(args.spellId, "orange", args.destName, false, CL.count_icon:format(args.spellName, count, icon))
 			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, icon))
 			self:Flash(args.spellId, icon)
 			self:SayCountdown(args.spellId, 6, icon)
