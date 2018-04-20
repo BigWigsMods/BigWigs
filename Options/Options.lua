@@ -879,7 +879,7 @@ do
 		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
+		elseif value:match("^BigWigs_") and value ~= (C_ChatInfo and "BigWigs_BattleForAzeroth" or "BigWigs_Legion") and GetAddOnEnableState(playerName, value) == 0 then -- XXX BfA Needs fixing
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
@@ -981,7 +981,9 @@ do
 			-- Do we have content for the zone we're in? Then open straight to that zone.
 			local id, parent
 			if not IsInInstance() then
-				local mapId = GetPlayerMapAreaID("player")
+				if not C_Map then -- XXX BfA Needs fixing
+					local mapId = GetPlayerMapAreaID("player")
+				end
 				if mapId then
 					id = loader.zoneTblWorld[-mapId]
 				else

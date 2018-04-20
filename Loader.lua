@@ -1145,7 +1145,9 @@ do
 		-- Zone checking
 		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 		if instanceType == "none" then
-			local mapId = GetPlayerMapAreaID("player")
+			if not C_Map then -- XXX BfA Needs Replacement
+				local mapId = GetPlayerMapAreaID("player")
+			end
 			if mapId then
 				id = -mapId -- Use map id for world bosses
 			end
