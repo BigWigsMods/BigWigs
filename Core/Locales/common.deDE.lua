@@ -24,7 +24,7 @@ L.heroic = "Heroischer Modus"
 L.incoming = "%s bevorstehend"
 L.intermission = "Unterbrechung"
 L.interrupted = "%s unterbrochen"
---L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
+L.interrupted_by = "%s wurde von %s unterbrochen" -- spell interrupted by player
 L.mob_killed = "%s getötet (%d/%d)"
 L.mob_remaining = "%s getötet, noch %d übrig"
 L.mythic = "Mythischer Modus"
@@ -36,11 +36,11 @@ L.on = "%s auf %s"
 L.onboss = "%s auf dem BOSS"
 L.other = "%s: %s"
 L.over = "%s vorbei"
---L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - spell
 L.phase = "Phase %d"
 L.removed = "%s entfernt"
 L.removed_from = "%s wurde von %s entfernt"
---L.removed_by = "%s removed by %s" -- spell removed by player
+L.removed_by = "%s wurde durch %s entfernt" -- spell removed by player
 L.small_adds = "Kleine Adds"
 L.soon = "%s bald"
 L.spawned = "%s Erschienen"
@@ -60,12 +60,12 @@ L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s, ben
 L.marker_npc_desc = "Markiert %s mit %s, benötigt Leiter oder Assistent."
 
 -- Ability where two players have to move close to each other
---L.link = "Linked with %s"
---L.link_short = "Linked: %s"
---L.link_both = "%s linked with %s"
---L.link_removed = "Link removed"
+L.link = "Verbunden mit %s"
+L.link_short = "Verbunden: %s"
+L.link_both = "%s verbunden mit %s"
+L.link_removed = "Verbindung entfernt"
 
 -- Abbreviated numbers
---L.amount_one = "%dB"
---L.amount_two = "%dM"
---L.amount_three = "%dK"
+L.amount_one = "%dB"
+L.amount_two = "%dM"
+L.amount_three = "%dK"
