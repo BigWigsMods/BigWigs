@@ -236,6 +236,10 @@ local function findCalls(lines, start, local_func, options)
 		if res then
 			func = nil
 			if_key = nil
+			if res == local_func then
+				-- redefined?! we shouldn't be here...
+				break
+			end
 		end
 		res = line:match("if (.+) then")
 		if res and line:match("spellId == %d+") then
