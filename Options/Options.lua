@@ -983,7 +983,12 @@ do
 			local _, instanceType, _, _, _, _, _, id = loader.GetInstanceInfo()
 			local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
 			if instanceType == "none" then
-				local mapId = GetBestMapForUnit and GetBestMapForUnit("player") or GetPlayerMapAreaID("player")
+				local mapId
+				if GetBestMapForUnit then -- XXX temp
+					mapId = GetBestMapForUnit("player")
+				else
+					mapId = GetPlayerMapAreaID("player")
+				end
 				if mapId then
 					id = loader.zoneTblWorld[-mapId]
 					parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]

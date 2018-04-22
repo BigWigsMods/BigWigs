@@ -148,7 +148,12 @@ end
 local function zoneChanged()
 	local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 	if instanceType == "none" then
-		local mapId = GetBestMapForUnit and GetBestMapForUnit("player") or GetPlayerMapAreaID("player") -- XXX 8.0
+		local mapId
+		if GetBestMapForUnit then -- XXX temp
+			mapId = GetBestMapForUnit("player")
+		else
+			mapId = GetPlayerMapAreaID("player")
+		end
 		if mapId then
 			id = -mapId
 		end
