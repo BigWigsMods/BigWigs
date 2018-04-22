@@ -55,13 +55,14 @@ local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo and C_ChatInfo.SendAddonMessage or SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker -- XXX C_ChatInfo check for 8.0
 local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
-local GetInstanceInfo, GetPlayerMapAreaID = GetInstanceInfo, GetPlayerMapAreaID
+local GetInstanceInfo, GetPlayerMapAreaID, GetBestMapForUnit = GetInstanceInfo, GetPlayerMapAreaID, C_Map and C_Map.GetBestMapForUnit -- XXX remove GetPlayerMapAreaID
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
-public.GetCurrentMapAreaID = GetCurrentMapAreaID
-public.GetPlayerMapAreaID = GetPlayerMapAreaID
-public.SetMapToCurrentZone = SetMapToCurrentZone
-public.GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel
+public.GetCurrentMapAreaID = GetCurrentMapAreaID -- XXX remove
+public.GetPlayerMapAreaID = GetPlayerMapAreaID -- XXX remove
+public.GetBestMapForUnit = GetBestMapForUnit
+public.SetMapToCurrentZone = SetMapToCurrentZone -- XXX remove
+public.GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel -- XXX remove
 public.GetInstanceInfo = GetInstanceInfo
 public.SendAddonMessage = SendAddonMessage
 public.SendChatMessage = SendChatMessage
@@ -1142,7 +1143,7 @@ do
 		-- Zone checking
 		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 		if instanceType == "none" then
-			local mapId = GetPlayerMapAreaID("player")
+			local mapId = GetBestMapForUnit and GetBestMapForUnit("player") or GetPlayerMapAreaID("player")
 			if mapId then
 				id = -mapId -- Use map id for world bosses
 			end
