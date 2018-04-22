@@ -4,7 +4,7 @@ if not L then return end
 L.comma = ", "
 L.width = "Breite"
 L.height = "Höhe"
-L.sizeDesc = "Bewege den Schieber, falls du eine exakte Größe festlegen möchtest. Du kannst ebenfalls eine Zahl in das Feld eintragen, diese Zahl kann beliebig groß sein."
+L.sizeDesc = "Normal wird die Größe festgelegt, indem du den Anker bewegst. Falls du eine exakte Größe benötigst, bewege diesen Schieber oder trage den Wert in das Feld ein, diese Zahl kann beliebig groß sein."
 
 L.abilityName = "Fähigkeitsname"
 L.abilityNameDesc = "Zeigt oder versteckt den Fähigkeitsnamen über dem Fenster."
