@@ -30,7 +30,7 @@ options.SendMessage = loader.SendMessage
 
 local colorModule
 local soundModule
-local isOpen
+local isOpen, isPluginOpen
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 
@@ -205,6 +205,8 @@ do
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
 		acd:SetDefaultSize("BigWigs", 858, 660)
+
+		acr.RegisterCallback(options, "ConfigTableChange")
 
 		colorModule = BigWigs:GetPlugin("Colors")
 		soundModule = BigWigs:GetPlugin("Sounds")
@@ -909,10 +911,12 @@ do
 			container:SetFullWidth(true)
 
 			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
+			isPluginOpen = container
 			acd:Open("BigWigs", container)
 
 			widget:AddChild(container)
 		else
+			isPluginOpen = nil
 			local treeTbl = {}
 			local addonNameToHeader = {}
 			local defaultHeader
@@ -1021,6 +1025,7 @@ do
 		bw:SetCallback("OnClose", function(widget)
 			AceGUI:Release(widget)
 			wipe(statusTable)
+			isPluginOpen = nil
 			isOpen = nil
 		end)
 
@@ -1095,6 +1100,12 @@ do
 			acOptions.args[key] = opts()
 		end
 		return acOptions
+	end
+end
+
+function options:ConfigTableChange(_, appName)
+	if appName == "BigWigs" and isPluginOpen then
+		acd:Open("BigWigs", isPluginOpen)
 	end
 end
 
