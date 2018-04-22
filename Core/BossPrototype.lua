@@ -1649,16 +1649,13 @@ do
 				end
 
 				if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
-					wipe(playerTable)
 					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
 				elseif not meOnly and msgEnabled then
 					local list = tconcat(playerTable, comma, 1, playersInTable)
-					wipe(playerTable)
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
 				end
-			else
-				wipe(playerTable)
 			end
+			wipe(playerTable)
 		end
 	end
 
