@@ -852,6 +852,7 @@ do
 
 	local statusTable = {}
 	local playerName = nil
+	local GetBestMapForUnit = loader.GetBestMapForUnit
 
 	local function toggleAnchors()
 		if not BigWigs:IsEnabled() then BigWigs:Enable() end
@@ -979,21 +980,16 @@ do
 			tree:SetCallback("OnGroupSelected", onTreeGroupSelected)
 
 			-- Do we have content for the zone we're in? Then open straight to that zone.
-			local id, parent
-			if not IsInInstance() then
-				local mapId = GetPlayerMapAreaID("player")
+			local _, instanceType, _, _, _, _, _, id = loader.GetInstanceInfo()
+			local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
+			if instanceType == "none" then
+				local mapId = GetBestMapForUnit and GetBestMapForUnit("player") or GetPlayerMapAreaID("player")
 				if mapId then
 					id = loader.zoneTblWorld[-mapId]
-				else
-					local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
-					id = instanceId
+					parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
 				end
-				parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
-			else
-				local _, _, _, _, _, _, _, instanceId = loader.GetInstanceInfo()
-				id = instanceId
-				parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]]
 			end
+
 			if parent then
 				local moduleList = id and loader:GetZoneMenus()[id]
 				local value = treeTbl[parent].value
