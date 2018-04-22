@@ -943,7 +943,7 @@ do
 			do
 				local zoneToId, alphabeticalZoneList = {}, {}
 				for k in next, loader:GetZoneMenus() do
-					local zone = k < 0 and GetMapNameByID(-k) or GetRealZoneText(k)
+					local zone = k < 0 and (GetMapNameByID and GetMapNameByID(-k) or k) or GetRealZoneText(k) -- XXX 8.0 fixme
 					if zone then
 						if zoneToId[zone] then
 							zone = zone .. "1" -- When instances exist more than once (Karazhan)

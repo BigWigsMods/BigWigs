@@ -500,7 +500,7 @@ do
 			local rawMenu = select(i, ...)
 			local id = tonumber(rawMenu:trim())
 			if id then
-				local name = id < 0 and GetMapNameByID(-id) or GetRealZoneText(id)
+				local name = id < 0 and (GetMapNameByID and GetMapNameByID(-id) or id) or GetRealZoneText(id) -- XXX 8.0 fixme
 				if name and name ~= "" then -- Protect live client from beta client ids
 					if not loadOnZone[id] then loadOnZone[id] = {} end
 					loadOnZone[id][#loadOnZone[id] + 1] = addon
@@ -519,7 +519,7 @@ do
 			local rawMenu = select(i, ...)
 			local id = tonumber(rawMenu:trim())
 			if id then
-				local name = id < 0 and GetMapNameByID(-id) or GetRealZoneText(id)
+				local name = id < 0 and (GetMapNameByID and GetMapNameByID(-id) or id) or GetRealZoneText(id) -- XXX 8.0 fixme
 				if name and name ~= "" and not blockedMenus[id] then -- Protect live client from beta client ids
 					blockedMenus[id] = true
 				end
