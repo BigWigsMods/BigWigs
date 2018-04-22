@@ -174,6 +174,9 @@ local function dumpValues(path, name, options_table)
 			data = data .. "})\r\n"
 		end
 	end
+	if data == "" then
+		data = "-- Don't error because I'm empty, please."
+	end
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
 		f = assert(io.open(file, "w"))
