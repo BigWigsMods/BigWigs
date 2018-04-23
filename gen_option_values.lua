@@ -1,6 +1,8 @@
 
 -- Script to parse boss module files and output ability=>color/sound mappings
 
+local loadstring = loadstring or load -- 5.2 compat
+
 local modules = {}
 local module_colors = {}
 local module_sounds = {}
@@ -367,6 +369,8 @@ local function parseLua(file)
 	end
 	data = nil
 
+	local file_name = file:match(".*/(.*)$") or file
+
 	local option_keys = {}
 	local options = {}
 	local current_func = nil
@@ -380,7 +384,7 @@ local function parseLua(file)
 			local opts, err = parseGetOptions(lines, n+1)
 			if not opts then
 				-- rip keys
-				error(string.format("    %s:%d: Error parsing GetOptions! %s", file:match(".*/(.*)$"), n, err))
+				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
 			else
 				option_keys = opts
 			end
@@ -525,7 +529,7 @@ local function parseLua(file)
 			for i, k in next, keys do
 				local key = tonumber(k) or unquote(k)
 				if not option_keys[key] then
-					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file:match(".*/(.*)$"), n, f, key))
+					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
 					errors = true
 				end
 				keys[i] = key
@@ -540,7 +544,7 @@ local function parseLua(file)
 					end
 				elseif c and c ~= "nil" then
 					-- A color was set but didn't match an actual color, so warn about it.
-					error(string.format("    %s:%d: Invalid color! func=%s, key=%s, color=%s", file:match(".*/(.*)$"), n, f, table.concat(keys, " "), c))
+					error(string.format("    %s:%d: Invalid color! func=%s, key=%s, color=%s", file_name, n, f, table.concat(keys, " "), c))
 				end
 			end
 
@@ -553,7 +557,7 @@ local function parseLua(file)
 					end
 				elseif s and s ~= "nil" then
 					-- A sound was set but didn't match an actual sound, so warn about it.
-					error(string.format("    %s:%d: Invalid sound! func=%s, key=%s, sound=%s", file:match(".*/(.*)$"), n, f, table.concat(keys, " "), s))
+					error(string.format("    %s:%d: Invalid sound! func=%s, key=%s, sound=%s", file_name, n, f, table.concat(keys, " "), s))
 				end
 			end
 		end
@@ -589,18 +593,17 @@ end
 
 -- aaaaaand start
 local start_path = "modules.xml"
-if arg then
-	local path
-	if arg[1] then
-		path = arg[1]:gsub("\\", "/")
-		if path:sub(-1) ~= "/" then
-			path = path .. "/"
-		end
-	else
-		path = arg[0]:gsub("\\", "/"):match(".*/")
+if arg and arg[1] then
+	local path = arg[1]:gsub("\\", "/")
+	local is_file = path:sub(-4) == ".lua"
+	if path:sub(-1) ~= "/" and not is_file then
+		path = path .. "/"
 	end
-	if path then
-		start_path = path:gsub("^./", "") .. start_path
+	path = path:gsub("^./", "")
+	if is_file then
+		start_path = path
+	else
+		start_path = path .. start_path
 	end
 end
 parse(start_path)
