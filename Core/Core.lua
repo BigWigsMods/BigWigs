@@ -590,18 +590,18 @@ do
 	end
 
 	function addon:AddColors(moduleName, options)
-		local module = self:GetBossModule(moduleName)
+		local module = self:GetBossModule(moduleName, true)
 		if not module then
-			addon:Error(("AddColors: Invalid module %q."):format(moduleName))
+			-- addon:Error(("AddColors: Invalid module %q."):format(moduleName))
 			return
 		end
 		module.colorOptions = options
 	end
 
 	function addon:AddSounds(moduleName, options)
-		local module = self:GetBossModule(moduleName)
+		local module = self:GetBossModule(moduleName, true)
 		if not module then
-			addon:Error(("AddSounds: Invalid module %q."):format(moduleName))
+			-- addon:Error(("AddSounds: Invalid module %q."):format(moduleName))
 			return
 		end
 		module.soundOptions = options
