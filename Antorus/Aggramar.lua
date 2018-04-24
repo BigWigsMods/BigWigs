@@ -59,7 +59,7 @@ if L then
 	L.track_ember_icon = 245911 -- Wrought in Flame icon
 
 	L.custom_off_ember_marker = CL.marker:format(mod:SpellName(-15903))
-	L.custom_off_ember_marker_desc = "Mark Ember of Taeshalach with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cff33ff99Mythic: This will only mark adds in the current wave and above 45 energy.|r"
+	L.custom_off_ember_marker_desc = "Mark Ember of Taeshalach with {rt1}{rt2}{rt3}{rt4}{rt5}, requires promoted or leader.\n|cff33ff99Mythic: This will only mark adds in the current wave.|r"
 end
 
 --------------------------------------------------------------------------------
@@ -313,7 +313,7 @@ do
 			waveCollector[wave][guid] = true
 		end
 		if self:GetOption("custom_off_ember_marker") then
-			if mobID == 122532 and waveCollector[currentEmberWave] and (not self:Mythic() or UnitPower(unit, 3) > 45) then -- Mark Embers above 45 energy in Mythic
+			if mobID == 122532 and waveCollector[currentEmberWave] then
 				if waveCollector[currentEmberWave][guid] then
 					for i = 1, 5 do -- Use only 5 marks, leaving 6, 7, 8 for raid use purposes
 						if not emberAddMarks[i] and not GetRaidTargetIndex(unit) then -- Don't re-mark the same add and re-use marks
