@@ -891,7 +891,7 @@ end
 function mod:DeadlyScytheStack(args)
 	if self:Me(args.destGUID) or self:Tank() then -- Always Show for Tanks and when on Self
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, args.destName, amount, "yellow", self:Tank() and (self:Me(args.destGUID) and "Alarm") or "Warning") -- Warning sound for non-tanks, only on self when a tank
+		self:StackMessage(args.spellId, args.destName, amount, "yellow", self:Tank() and (self:Me(args.destGUID) and "Alarm") or not self:Tank() and "Warning") -- Warning sound for non-tanks, only on self when a tank
 	end
 end
 
