@@ -216,6 +216,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SweepingScythe", 248499)
 	self:Log("SPELL_AURA_APPLIED", "SweepingScytheStack", 248499)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SweepingScytheStack", 248499)
+	self:Log("SPELL_CAST_START", "SkyandSeaStart", 255594)
 	self:Log("SPELL_CAST_SUCCESS", "SkyandSea", 255594)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSea", 258647)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSky", 258646)
@@ -287,7 +288,6 @@ function mod:OnEngage()
 	sargerasGazeCount = 1
 	sentenceofSargerasCount = 1
 	beaconsBeingCast, cosmicRaysBeingCast = 0, 0
-	skyName, seaName = nil, nil
 
 	self:Bar(255594, 16) -- Sky and Sea
 	self:Bar(257296, self:Heroic() and timers[stage][257296][torturedRageCounter] or 13.5, CL.count:format(self:SpellName(257296), torturedRageCounter)) -- Tortured Rage
@@ -425,6 +425,10 @@ function mod:SweepingScytheStack(args)
 	end
 end
 
+function mod:SkyandSeaStart()
+	skyName, seaName = nil, nil
+end
+
 function mod:SkyandSea(args)
 	self:CDBar(args.spellId, self:Easy() and 30.3 or 27)
 end
@@ -433,39 +437,36 @@ do
 	local function announce(self)
 		if skyName and seaName then
 			local text = L.gifts:format(self:ColorName(skyName), self:ColorName(seaName))
+			skyName, seaName = nil, nil
 			self:Message(255594, "green", "Long", text, 255594)
-			skyName = nil
-			seaName = nil
 		end
 	end
 
 	function mod:GiftoftheSea(args)
-		local meOnly = self:CheckOption(255594, "ME_ONLY")
+		seaName = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sea_say)
-			if meOnly then
+			if self:CheckOption(255594, "ME_ONLY") then
+				seaName = nil
 				self:Message(255594, "green", "Long", CL.you:format(args.spellName), args.spellId)
 			end
-		elseif not meOnly then
-			seaName = args.destName
-			announce(self)
 		end
+		announce(self)
 		if self:GetOption(seaMarker) then
 			SetRaidTarget(args.destName, 6)
 		end
 	end
 
 	function mod:GiftoftheSky(args)
-		local meOnly = self:CheckOption(255594, "ME_ONLY")
+		skyName = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sky_say)
-			if meOnly then
+			if self:CheckOption(255594, "ME_ONLY") then
+				skyName = nil
 				self:Message(255594, "green", "Long", CL.you:format(args.spellName), args.spellId)
 			end
-		elseif not meOnly then
-			skyName = args.destName
-			announce(self)
 		end
+		announce(self)
 		if self:GetOption(seaMarker) then
 			SetRaidTarget(args.destName, 5)
 		end
