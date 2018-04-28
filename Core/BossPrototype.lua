@@ -1074,6 +1074,77 @@ do
 	end
 end
 
+do
+	local UnitAura = UnitAura
+	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+	local blacklist = {}
+	--- Get the buff info of a unit.
+	-- @string unit unit token or name
+	-- @number spell the spell ID of the buff to scan for
+	-- @return args
+	function boss:UnitBuff(unit, spell)
+		local name, stack, duration, expirationTime, spellId, value, _
+		local argType = type(spell)
+		local t1, t2, t3, t4, t5
+		for i = 1, 100 do
+			if CombatLogGetCurrentEventInfo then
+				name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+			else
+				name, _, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+			end
+
+			if argType == "string" then
+				if name == spell then
+					if not blacklist[spellId] then
+						blacklist[spellId] = true
+						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId)
+					end
+					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
+				end
+			elseif spellId == spell then
+				return name, stack, duration, expirationTime, value
+			end
+
+			if not spellId then
+				return t1, t2, t3, t4, t5
+			end
+		end
+	end
+
+	--- Get the debuff info of a unit.
+	-- @string unit unit token or name
+	-- @number spell the spell ID of the debuff to scan for
+	-- @return args
+	function boss:UnitDebuff(unit, spell)
+		local name, stack, duration, expirationTime, spellId, value, _
+		local argType = type(spell)
+		local t1, t2, t3, t4, t5
+		for i = 1, 100 do
+			if CombatLogGetCurrentEventInfo then
+				name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+			else
+				name, _, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+			end
+
+			if argType == "string" then
+				if name == spell then
+					if not blacklist[spellId] then
+						blacklist[spellId] = true
+						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId)
+					end
+					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
+				end
+			elseif spellId == spell then
+				return name, stack, duration, expirationTime, value
+			end
+
+			if not spellId then
+				return t1, t2, t3, t4, t5
+			end
+		end
+	end
+end
+
 --- Check if you're the only person inside an instance, despite being in a group or not.
 -- @return boolean
 function boss:Solo()
