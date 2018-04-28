@@ -129,7 +129,7 @@ do
 	local key, spellName = 0, ""
 
 	function mod:UNIT_AURA(_, unit) -- XXX get Blizz to fix this
-		if UnitDebuff(unit, spellName) then
+		if self:UnitDebuff(unit, spellName) then
 			local guid = UnitGUID(unit)
 			if not players[guid] then
 				local spellId = key -- SetOption:215443,210864:
@@ -140,7 +140,7 @@ do
 					self:Flash(spellId)
 					self:Say(spellId)
 
-					local _, _, _, _, _, _, expires = UnitDebuff(unit, spellName)
+					local _, _, _, expires = self:UnitDebuff(unit, spellName)
 					local remaining = expires-GetTime()
 					self:Bar(spellId, remaining, CL.you:format(spellName))
 					self:SayCountdown(spellId, remaining)
@@ -212,12 +212,12 @@ end
 function mod:WebOfPainApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "Personal", "Warning", L.yourLink:format(self:ColorName(args.sourceName)))
-		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+		local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 		local remaining = expires-GetTime()
 		self:Bar(args.spellId, remaining, L.yourLinkShort:format(self:ColorName(args.sourceName)))
 	elseif self:Me(args.sourceGUID) then
 		self:Message(args.spellId, "Personal", "Warning", L.yourLink:format(self:ColorName(args.destName)))
-		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+		local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 		local remaining = expires-GetTime()
 		self:Bar(args.spellId, remaining, L.yourLinkShort:format(self:ColorName(args.destName)))
 	elseif not self:CheckOption(args.spellId, "ME_ONLY") then

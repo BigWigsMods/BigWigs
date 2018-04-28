@@ -209,7 +209,7 @@ function mod:MarkApplied(args)
 			self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
 		end
 
-		local _, _, _, _, _, duration = UnitDebuff("player", args.spellName)
+		local _, _, duration = self:UnitDebuff("player", args.spellName)
 		self:TargetBar(-12809, duration or 35, args.destName, CL.count:format(args.spellName, amount), args.spellId)
 	end
 end

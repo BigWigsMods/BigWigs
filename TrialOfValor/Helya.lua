@@ -512,7 +512,7 @@ do
 			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
-			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 			local t = expires - GetTime()
 			self:TargetBar(args.spellId, t, args.destName)
 			self:SayCountdown(args.spellId, t)

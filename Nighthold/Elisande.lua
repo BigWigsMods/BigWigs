@@ -613,7 +613,7 @@ end
 function mod:SlowTime(args)
 	if self:Me(args.destGUID)then
 		self:TargetMessage(args.spellId, args.destName, "Personal", "Long")
-		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+		local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 		local t = expires - GetTime()
 		self:TargetBar(args.spellId, t, args.destName)
 	end
@@ -627,7 +627,7 @@ end
 function mod:FastTime(args)
 	if self:Me(args.destGUID)then
 		self:Message(args.spellId, "Positive", "Long", CL.you:format(args.spellName))
-		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+		local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 		local t = expires - GetTime()
 		self:TargetBar(args.spellId, t, args.destName)
 	end
@@ -682,7 +682,7 @@ function mod:DelphuricBeam(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
-		local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+		local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 		local t = expires - GetTime()
 		self:TargetBar(args.spellId, t, args.destName)
 		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
@@ -714,7 +714,7 @@ do
 	local playerList = mod:NewTargetList()
 	function mod:PermeliativeTorment(args)
 		if self:Me(args.destGUID) then
-			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 			local t = expires - GetTime()
 			self:TargetBar(args.spellId, t, args.destName)
 		end
@@ -747,7 +747,7 @@ do
 			self:Flash(209597)
 			self:Say(209597)
 			-- Need to constantly update because of fast/slow time
-			--local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			--local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 			--local t = expires - GetTime()
 			--self:TargetBar(209597, t, args.destName)
 		end

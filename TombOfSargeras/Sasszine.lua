@@ -335,14 +335,14 @@ do
 
 		local inkName = self:SpellName(232913)
 		for unit in self:IterateGroup() do
-			local _, _, _, _, _, _, expires = UnitDebuff(unit, inkName)
+			local _, _, _, expires = self:UnitDebuff(unit, inkName)
 			debuffs[self:UnitName(unit)] = expires
 		end
 	end
 
 	function mod:InkApplied(args)
 		if devouringMawActive then
-			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+			local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName)
 			debuffs[args.destName] = expires
 		end
 	end

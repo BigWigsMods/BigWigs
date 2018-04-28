@@ -282,7 +282,7 @@ do
 		self:Bar(227503, self:Easy() and 45 or 35) -- Draw Power
 		self:Bar(args.spellId, self:Easy() and 78 or (self:Mythic() and (phase == 2 and 69 or 68)) or 73)
 
-		if self:Mythic() and not UnitDebuff("player", protected) then
+		if self:Mythic() and not self:UnitDebuff("player", protected) then
 			self:Message(229584, "Personal", nil, CL.no:format(protected))
 		end
 	end
@@ -354,9 +354,9 @@ function mod:StormOfJusticeSuccess(args)
 end
 
 do
-	local prev, UnitBuff, spellName = 0, UnitBuff, mod:SpellName(228018) -- Valarjar's Bond
+	local prev = 0
 	function mod:UNIT_AURA(unit)
-		if UnitBuff(unit, spellName) and GetTime() - prev > 4 then -- We want this repeated
+		if self:UnitBuff(unit, self:SpellName(228018)) and GetTime() - prev > 4 then -- We want this repeated
 			prev = GetTime()
 			self:Message(228018, "Important", "Alarm") -- Valarjar's Bond
 		end

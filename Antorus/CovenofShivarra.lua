@@ -168,7 +168,7 @@ do
 		Golganneth = {color = "|cff4fc3f7", text = "tormentLightning", icon = GetSpellTexture(tormentIcons.Golganneth)},
 	}
 
-	local UnitDebuff, sort, min, sortFunc = UnitDebuff, table.sort, math.min, function(a, b)
+	local sort, min, sortFunc = table.sort, math.min, function(a, b)
 		return a[2] > b[2]
 	end
 	function updateInfoBox()
@@ -190,7 +190,7 @@ do
 		if showChilledBlood then
 			local totalAbsorb = 0
 			for i = 1, #chilledBloodList do
-				local debuff, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, value = UnitDebuff(chilledBloodList[i][1], debuffName)
+				local debuff, _, _, _, value = mod:UnitDebuff(chilledBloodList[i][1], debuffName)
 				if debuff and value and value > 0 then
 					chilledBloodList[i][2] = value
 					totalAbsorb = totalAbsorb + value

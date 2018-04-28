@@ -318,9 +318,9 @@ do
 
 	function checkForFearHelp(self, icon)
 		if self:GetOption("fear_help") == 0 then return end
-		if UnitDebuff("player", fearName) then
+		if self:UnitDebuff("player", fearName) then
 			for id, name in pairs(spells) do
-				if UnitDebuff("player", name) then
+				if self:UnitDebuff("player", name) then
 					icon = icon or GetRaidTargetIndex("player") or 8
 					local msg = ("{rt%d} %s + %s {rt%d}"):format(icon, L[257931], L[id], icon)
 					self:Say("fear_help", msg)
