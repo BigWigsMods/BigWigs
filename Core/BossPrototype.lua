@@ -1097,7 +1097,7 @@ do
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId)
+						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
@@ -1130,7 +1130,7 @@ do
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId)
+						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
