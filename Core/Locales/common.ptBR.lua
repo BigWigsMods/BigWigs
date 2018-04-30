@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Common", "ptBR")
 if not L then return end
 
-Prototype.lua common words
+-- Prototype.lua common words
 L.you = "%s em VOCÊ"
 L.underyou = "%s debaixo de VOCÊ"
 L.other = "%s: %s"
