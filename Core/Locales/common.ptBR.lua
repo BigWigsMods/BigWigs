@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Common", "ptBR")
 if not L then return end
 
--- Prototype.lua common words
+Prototype.lua palavras comuns
 L.you = "%s em VOCÊ"
 L.underyou = "%s debaixo de VOCÊ"
 L.other = "%s: %s"
@@ -22,22 +22,22 @@ L.stage = "Estágio %d"
 L.normal = "Modo normal"
 L.heroic = "Modo heroico"
 L.mythic = "Modo mítico"
---L.active = "Active" -- When a boss becomes active, after speech finishes
-L.general = "Geral" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+L.active = "Ativo"  Quando um chefe se torna ativo, depois que sua fala termina.
+L.general = "Geral" Configurações gerais, ou seja, opções que se aplicam ao modo normal, heróico e mítico.
 
 L.duration = "%s durante %s seg"
 L.over = "%s Acabou"
 L.removed = "%s Removido"
---L.removed_from = "%s Removed From %s"
---L.removed_by = "%s removed by %s" -- spell removed by player
+L.removed_from = "%s Removido %s"
+L.removed_by = "%s Removido por %s"  feitiço removido pelo jogador
 L.incoming = "%s Chegando"
 L.interrupted = "%s Interrompido"
---L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
+L.interrupted_by = "%s interrompido por %s"  feitiço interrompido pelo jogador
 L.no = "Sem %s"
 L.intermission = "Intervalo"
---L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - feitiço
 
--- Add Related
+Add Relacionado
 L.add_spawned = "Add surgiu"
 L.spawned = "%s surgiu"
 L.spawning = "%s Chegando"
@@ -49,7 +49,7 @@ L.adds = "Inimigos adicionais"
 L.big_add = "Add Grande"
 L.small_adds = "Adds Pequenos"
 
--- Mob related
+Mob relacionado
 L.mob_killed = "%s morto (%d/%d)"
 L.mob_remaining = "%s morto, %d restando"
 
@@ -62,18 +62,18 @@ L.custom_sec = "%s em %d seg"
 L.focus_only = "|cffff0000Apenas alertas de focar alvo.|r "
 L.trash = "Trash"
 
--- Common raid marking locale
+Local de marcação comum na raid
 L.marker = "Marcador %s"
 L.marker_player_desc = "Marca jogadores afetados por %s com %s, requer líder ou assistente."
 L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente."
 
--- Ability where two players have to move close to each other
---L.link = "Linked with %s"
---L.link_short = "Linked: %s"
---L.link_both = "%s linked with %s"
---L.link_removed = "Link removed"
+Habilidade onde dois jogadores devem se aproximar um do outro
+L.link = "Ligado com %s"
+L.link_short = "Ligado: %s"
+L.link_both = "%s ligado com %s"
+L.link_removed = "Ligação removida"
 
--- Abbreviated numbers
---L.amount_one = "%dB"
---L.amount_two = "%dM"
---L.amount_three = "%dK"
+Números abreviados
+L.amount_one = "%dB"
+L.amount_two = "%dM"
+L.amount_three = "%dK"
