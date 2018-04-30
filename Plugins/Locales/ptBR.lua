@@ -13,7 +13,7 @@ L.height = "Altura"
 L.sizeDesc = "Normalmente você define o tamanho arrastando a âncora. Se você precisa de um tamanho exato, você pode usar este controle deslizante ou digitar o valor na caixa, que não tem um tamanho máximo."
 
 -----------------------------------------------------------------------
-PoderAlternativo.lua
+-- AltPower.lua
 --
 
 L.altPowerTitle = "Poder alternativo"
@@ -22,8 +22,8 @@ L.disabled = "Desativado"
 L.disabledDisplayDesc = "Desativa a exibição para todos os módulos que usam ela."
 
 -----------------------------------------------------------------------
-AutoResposta.lua
-
+-- AutoReply.lua
+--
 
 L.autoReply = "Auto Resposta"
 L.autoReplyDesc = "Responde automaticamente aos sussurros quando ocupado em uma luta com o Chefe."
@@ -44,8 +44,8 @@ L.autoReplyLeftCombatAdvancedWin = "Eu venci '%s' com %d/%d pessoas vivas."
 L.autoReplyLeftCombatAdvancedWipe = "Eu perdi para '%s' at: %s"
 
 -----------------------------------------------------------------------
-Barras.lua
-
+-- Bars.lua
+--
 
 L.bars = "Barras"
 L.style = "Estilo"
@@ -121,8 +121,8 @@ L.breakSeconds = "Intervalo acaba em %d |4segundo:segundos;!"
 L.breakFinished = "Intervalo acabou!"
 
 -----------------------------------------------------------------------
-Bloqueio de Chefe.lua
-
+-- BossBlock.lua
+--
 
 L.bossBlock = "Bloqueio de Chefe"
 L.bossBlockDesc = "Configura diversas coisas que você pode bloquear durante um encontro com um chefe."
@@ -139,8 +139,8 @@ L.blockSpellErrors = "Bloquear mensagens sobre feitiços que falharam."
 L.blockSpellErrorsDesc = "Mensagens do tipo \"O feitiço não está pronto ainda\" que normalmente aparecem no topo da tela serão bloqueados."
 
 -----------------------------------------------------------------------
-Cores.lua
-
+-- Colors.lua
+--
 
 L.colors = "Cores"
 
@@ -163,8 +163,8 @@ L.Positive = "Positivo"
 L.Neutral = "Neutro"
 
 -----------------------------------------------------------------------
-Enfatizar.lua
-
+-- Emphasize.lua
+--
 
 L.superEmphasize = "Super enfatizar"
 L.superEmphasizeDesc = "Melhora as mensagens e barras relacionadas a uma habilidade de encontro de chefe específica.\n\nAqui você configura exatamente o que deverá acontecer quando ativar a opção de super enfatizar na sessão avançada para uma habilidade de encontro de chefe.\n\n|cffff4411Nota: Super enfatizar está desabilitado por padrão para todas as habilidades.|r"
@@ -179,14 +179,14 @@ L.countdownTest = "Teste de contagem regressiva"
 L.countdownAt = "Contagem regressiva em... (segundos)"
 
 -----------------------------------------------------------------------
-Caixa de informações.lua
-
+-- InfoBox.lua
+--
 
 L.infoBox = ""
 
 -----------------------------------------------------------------------
-Mensagens.lua
-
+-- Messages.lua
+--
 
 L.sinkDescription = "Redireciona a saída deste addOn pela exibição de mensagens do BigWigs. Ela dá suporte a ícones, cores e pode mostrar até 4 mensagens na tela de uma vez. Mensagens novas crescerão de tamanho e encolherão de novo rapidamente para notificar o usuário."
 L.emphasizedSinkDescription = "Redireciona a saída deste addOn pela exibição de mensagens enfatizadas do BigWigs. Ele dá suporte a texto e cores, e só exibe uma mensagem por vez."
@@ -221,8 +221,8 @@ L.fadeTime = "Tempo até esmaecer"
 L.fadeTimeDesc = "Tempo até esmaecer a mensagem, em segundos."
 
 -----------------------------------------------------------------------
-Proximidade.lua
-
+-- Proximity.lua
+--
 
 L.customRange = "Indicador de distância personalizado"
 L.proximityTitle = "%d m / %d |4jogador:jogadores;"
@@ -254,8 +254,8 @@ L.tooltip = "Dica de feitiço"
 L.tooltipDesc = "Mostra ou oculta a dica do feitiço se a janela de aproximação estiver associada diretamente a uma habilidade de chefe."
 
 -----------------------------------------------------------------------
-Pull.lua
-
+-- Pull.lua
+--
 
 L.countdownType = "Tipo de contagem regressiva"
 L.combatLog = "Registro de combate automático"
@@ -273,8 +273,8 @@ L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
 L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
 
 -----------------------------------------------------------------------
-Ícones da Raid.lua
-
+-- RaidIcon.lua
+--
 
 L.icons = "Ícones"
 L.raidIconsDesc = "Alguns scripts de encontros usam os ícones de raide para marcar jogadores que são de interesse especial para seu grupo. Por exemplo, os efeitos tipo 'bomba' e controle mental. Se esta opção estiver desativada, não marcará nada.\n\n|cffff4411Somente aplicará as marcas se você for assistente ou líder!|r"
@@ -285,8 +285,8 @@ L.secondary = "Secundário"
 L.secondaryDesc = "O segundo ícone de raide que um script usará."
 
 -----------------------------------------------------------------------
-Som.lua
-
+-- Sound.lua
+--
 
 L.Sounds = "Sons"
 
@@ -308,8 +308,8 @@ L.customSoundDesc = "Reproduzir um som personalizado ao invés do padrão do mó
 L.resetAllCustomSound = "Se você personalizou sons para qualquer configuração de encontro, este botão ira redefinir TODOS eles para que os sons definidos aqui sejam utilizados."
 
 -----------------------------------------------------------------------
-Estatísticas.lua
-
+-- Statistics.lua
+--
 
 L.bossDefeatDurationPrint = "Derrotou '%s' após '%s'"
 L.bossWipeDurationPrint = "Foi derrotado por '%s' após %s"
@@ -331,8 +331,8 @@ L.healthPrint = "Vida: %s."
 L.healthFormat = "%s (%.1f%%)"
 
 -----------------------------------------------------------------------
-Vitória.lua
-
+-- Victory.lua
+--
 
 L.Victory = "Vitória"
 L.victoryHeader = "Configura as ações que devem ser tomadas após vencer um encontro."
@@ -345,8 +345,8 @@ L.victoryMessageBlizzardDesc = "A mensagem da Blizzard é uma animação com \"c
 L.defeated = "%s foi derrotado"
 
 -----------------------------------------------------------------------
-Derrota.Lua
-
+-- Wipe.lua
+--
 
 L.wipe = "Derrota"
 L.wipeSoundTitle = "Tocar um som quando você for derrotado"
