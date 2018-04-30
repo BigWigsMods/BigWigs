@@ -38,7 +38,7 @@ L.autoReplyAdvanced = "Estou ocupado lutando com '%s' (%s) e %d/%d pessoas estã
 L.autoReplyExtreme = "Estou ocupado lutando com '%s' (%s) e %d/%d pessoas estão vivas: %s"
 
 L.autoReplyLeftCombatBasic = "Não estou mais lutando contra um Chefe."
-L.autoReplyLeftCombatNormalWin = "Eu veni '%s'."
+L.autoReplyLeftCombatNormalWin = "Eu venci '%s'."
 L.autoReplyLeftCombatNormalWipe = "Eu perdi para '%s'."
 L.autoReplyLeftCombatAdvancedWin = "Eu venci '%s' com %d/%d pessoas vivas."
 L.autoReplyLeftCombatAdvancedWipe = "Eu perdi para '%s' at: %s"
