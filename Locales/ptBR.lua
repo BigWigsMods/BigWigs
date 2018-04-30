@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "ptBR")
 if not L then return end
 
--- Core.lua
+Núcleo.lua
 L.berserk = "Frenesi"
 L.berserk_desc = "Mostra uma barra e um contador para quando o chefe entrar em Frenesi."
 L.altpower = "Alterar como o poder é mostrado"
@@ -15,7 +15,7 @@ L.warmup_desc = "Tempo até o combate com o chefe começar."
 
 L.already_registered = "|cffff0000ATENÇÃO:|r |cff00ff00%s|r (|cffffff00%s|r) já existe como um módulo do BigWigs, mas as vezes ele tenta registra-lo novamente. Isso normalmente significa que você tem duas cópias deste módulo na sua pasta de addOns devido a alguma falha ao atualizar um addOn. É recomendado que você delete todas as pastas do BigWigs existentes e reinstale-o novamente."
 
--- Loader / Options.lua
+Carregador / Opções.lua
 L.officialRelease = "Você está executando uma versão oficial do BigWigs %s (%s)"
 L.alphaRelease = "Você está executando uma versão ALPHA do BigWigs %s (%s)"
 L.sourceCheckout = "Você está executando uma cópia de código do BigWigs %s diretamente do repositório."
@@ -42,7 +42,7 @@ L.coreAddonDisabled = "BigWigs não irá funcionar corretamente com o addOn %s d
 
 L.removeAddon = "Por favor remova '|cFF436EEE%s|r' porque este foi substituído por '|cFF436EEE%s|r'."
 
--- Options.lua
+Opções.lua
 L.options = "Opções"
 L.raidBosses = "Chefes de Raid"
 L.dungeonBosses = "Chefes de Masmorras"
@@ -123,7 +123,7 @@ L.healer = "|cFFFF0000Alertas para Healer apenas.|r "
 L.tankhealer = "|cFFFF0000Alertas para Tank e Healer.|r "
 L.dispeller = "|cFFFF0000Alerta para Dispellers apenas.|r "
 
--- Statistics
+Estatísticas
 L.statistics = "Estatísticas"
 L.lfr = "LFR"
 L.normal = "Normal"
