@@ -20,7 +20,8 @@ local bwUtilityFrame = CreateFrame("Frame")
 local bossCore, pluginCore
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
-local GetPlayerMapAreaID = loader.GetPlayerMapAreaID
+local GetPlayerMapAreaID = loader.GetPlayerMapAreaID -- XXX remove
+local GetBestMapForUnit = loader.GetBestMapForUnit
 local SendAddonMessage = loader.SendAddonMessage
 local GetInstanceInfo = loader.GetInstanceInfo
 
@@ -147,7 +148,12 @@ end
 local function zoneChanged()
 	local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 	if instanceType == "none" then
-		local mapId = GetPlayerMapAreaID("player")
+		local mapId
+		if GetBestMapForUnit then -- XXX temp
+			mapId = GetBestMapForUnit("player")
+		else
+			mapId = GetPlayerMapAreaID("player")
+		end
 		if mapId then
 			id = -mapId
 		end
@@ -584,18 +590,18 @@ do
 	end
 
 	function addon:AddColors(moduleName, options)
-		local module = self:GetBossModule(moduleName)
+		local module = self:GetBossModule(moduleName, true)
 		if not module then
-			addon:Error(("AddColors: Invalid module %q."):format(moduleName))
+			-- addon:Error(("AddColors: Invalid module %q."):format(moduleName))
 			return
 		end
 		module.colorOptions = options
 	end
 
 	function addon:AddSounds(moduleName, options)
-		local module = self:GetBossModule(moduleName)
+		local module = self:GetBossModule(moduleName, true)
 		if not module then
-			addon:Error(("AddSounds: Invalid module %q."):format(moduleName))
+			-- addon:Error(("AddSounds: Invalid module %q."):format(moduleName))
 			return
 		end
 		module.soundOptions = options

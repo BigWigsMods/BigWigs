@@ -96,6 +96,7 @@ local dbg = function(self, msg) print(format("[DBG:%s] %s", self.displayName, ms
 local metaMap = {__index = function(self, key) self[key] = {} return self[key] end}
 local eventMap = setmetatable({}, metaMap)
 local unitEventMap = setmetatable({}, metaMap)
+local widgetEventMap = setmetatable({}, metaMap)
 local icons = setmetatable({}, {__index =
 	function(self, key)
 		local value
@@ -258,6 +259,7 @@ function boss:OnDisable(isWipe)
 	-- Empty the event maps for this module
 	eventMap[self] = nil
 	unitEventMap[self] = nil
+	widgetEventMap[self] = nil
 	wipe(allowedEvents)
 
 	-- Re-add allowed events if more than one module is enabled
@@ -588,6 +590,47 @@ do
 				if debug then dbg(self, "Removing: "..event..", "..unit) end
 				frameTbl[unit]:UnregisterEvent(event)
 			end
+		end
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Widget-specific event update management
+-- @section widget_events
+--
+
+do
+	local noID = "Module '%s' tried to register/unregister a widget event without specifying a widget id."
+	local noFunc = "Module '%s' tried to register a widget event with the function '%s' which doesn't exist in the module."
+
+	local GetIconAndTextWidgetVisualizationInfo = C_UIWidgetManager and C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo
+	function boss:UPDATE_UI_WIDGET(_, tbl)
+		local id = tbl.widgetID
+		local func = widgetEventMap[self][id]
+		if func then
+			local dataTbl = GetIconAndTextWidgetVisualizationInfo(id)
+			self[func](self, id, dataTbl.text)
+		end
+	end
+
+	--- Register a callback for a widget event for the specified widget id.
+	-- @number id the id of the widget to listen to
+	-- @param func callback function, passed (widgetId, widgetText)
+	function boss:RegisterWidgetEvent(id, func)
+		if type(id) ~= "number" then core:Print(format(noID, self.moduleName)) return end
+		if type(func) ~= "string" or not self[func] then core:Print(format(noFunc, self.moduleName, tostring(func))) return end
+		if not widgetEventMap[self][id] then widgetEventMap[self][id] = func end
+		self:RegisterEvent("UPDATE_UI_WIDGET")
+		if debug then dbg(self, format("Adding widget event for widget: %d", id)) end
+	end
+	--- Unregister a callback for widget events.
+	-- @number id the widget id to stop listening to
+	function boss:UnregisterWidgetEvent(id)
+		if type(id) ~= "number" then core:Print(format(noID, self.moduleName)) return end
+		if not widgetEventMap[self][id] then return end
+		widgetEventMap[self][id] = nil
+		if not next(widgetEventMap[self]) then
+			self:UnregisterEvent("UPDATE_UI_WIDGET")
 		end
 	end
 end
@@ -1028,6 +1071,77 @@ do
 			name = name .."-".. server
 		end
 		return name
+	end
+end
+
+do
+	local UnitAura = UnitAura
+	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+	local blacklist = {}
+	--- Get the buff info of a unit.
+	-- @string unit unit token or name
+	-- @number spell the spell ID of the buff to scan for
+	-- @return args
+	function boss:UnitBuff(unit, spell)
+		local name, stack, duration, expirationTime, spellId, value, _
+		local argType = type(spell)
+		local t1, t2, t3, t4, t5
+		for i = 1, 100 do
+			if CombatLogGetCurrentEventInfo then
+				name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+			else
+				name, _, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+			end
+
+			if argType == "string" then
+				if name == spell then
+					if not blacklist[spellId] then
+						blacklist[spellId] = true
+						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId))
+					end
+					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
+				end
+			elseif spellId == spell then
+				return name, stack, duration, expirationTime, value
+			end
+
+			if not spellId then
+				return t1, t2, t3, t4, t5
+			end
+		end
+	end
+
+	--- Get the debuff info of a unit.
+	-- @string unit unit token or name
+	-- @number spell the spell ID of the debuff to scan for
+	-- @return args
+	function boss:UnitDebuff(unit, spell)
+		local name, stack, duration, expirationTime, spellId, value, _
+		local argType = type(spell)
+		local t1, t2, t3, t4, t5
+		for i = 1, 100 do
+			if CombatLogGetCurrentEventInfo then
+				name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+			else
+				name, _, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+			end
+
+			if argType == "string" then
+				if name == spell then
+					if not blacklist[spellId] then
+						blacklist[spellId] = true
+						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId))
+					end
+					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
+				end
+			elseif spellId == spell then
+				return name, stack, duration, expirationTime, value
+			end
+
+			if not spellId then
+				return t1, t2, t3, t4, t5
+			end
+		end
 	end
 end
 
@@ -1649,16 +1763,13 @@ do
 				end
 
 				if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
-					wipe(playerTable)
 					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
 				elseif not meOnly and msgEnabled then
 					local list = tconcat(playerTable, comma, 1, playersInTable)
-					wipe(playerTable)
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
 				end
-			else
-				wipe(playerTable)
 			end
+			wipe(playerTable)
 		end
 	end
 

@@ -178,8 +178,9 @@ do
 		if not isOnMe then
 			mod:TargetsMessage(244094, "orange", playerList, #playerList) -- Necrotic Embrace
 			mod:OpenProximity(244094, 10, proxList)
+		else
+			wipe(playerList)
 		end
-		wipe(playerList)
 	end
 
 	function mod:NecroticEmbrace(args)

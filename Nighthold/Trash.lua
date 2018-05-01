@@ -392,7 +392,7 @@ end
 function mod:HeavenlyCrash(args)
 	self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, true)
 
-	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+	local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName)
 	local t = expires - GetTime()
 	self:TargetBar(args.spellId, t, args.destName)
 

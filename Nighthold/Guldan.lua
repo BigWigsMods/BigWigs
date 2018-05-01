@@ -838,7 +838,7 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:ParasiticWound(args)
-		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+		local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName)
 		local remaining = expires-GetTime()
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
@@ -878,7 +878,7 @@ end
 
 function mod:TimeStopRemoved(args) -- Resume Parasite Say Messages
 	if self:Me(args.destGUID) then
-		local debuff, _, _, _, _, _, expires = UnitDebuff("player", self:SpellName(206847))
+		local debuff, _, _, expires = self:UnitDebuff("player", self:SpellName(206847))
 		if not debuff then return end
 		local remaining = floor(expires - GetTime())
 
@@ -923,7 +923,7 @@ do
 	local function checkForTimeStop(self)
 		if UnitIsDead("player") then
 			-- Nothing
-		elseif not UnitDebuff("player", timeStop) then
+		elseif not self:UnitDebuff("player", timeStop) then
 			self:Message(206310, "Personal", "Warning", CL.no:format(timeStop))
 			timeStopCheck = self:ScheduleTimer(checkForTimeStop, 1.5, self)
 		else

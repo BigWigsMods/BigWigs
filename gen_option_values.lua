@@ -35,7 +35,17 @@ local sound_methods = {
 	StackMessage = 5,
 	DelayedMessage = 6,
 }
-local valid_methods = {}
+local valid_methods = {
+	Bar = true,
+	CDBar = true,
+	CastBar = true,
+	TargetBar = true,
+	PrimaryIcon = true,
+	SecondaryIcon = true,
+	Flash = true,
+	Say = true,
+	SayCountdown = true,
+}
 for k in next, color_methods do valid_methods[k] = true end
 for k in next, sound_methods do valid_methods[k] = true end
 
@@ -164,6 +174,9 @@ local function dumpValues(path, name, options_table)
 			data = data .. "})\r\n"
 		end
 	end
+	if data == "" then
+		data = "-- Don't error because I'm empty, please."
+	end
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
 		f = assert(io.open(file, "w"))
@@ -209,19 +222,24 @@ local function add(module_name, option_table, keys, value)
 	end
 end
 
-local function findCallingMethod(lines, start, local_func)
+local function findCalls(lines, start, local_func, options)
+	local keys = {}
 	local func, if_key = nil, nil
 	for i = start+1, #lines do
 		local line = lines[i]
-		local res = line:match("^%s*function%s+%w+[.:]([%a0-9_]+)%s*%(")
+		local res = line:match("^%s*function%s+[%w_]+[.:]([%w_]+)%s*%(")
 		if res then
 			func = res
 			if_key = nil
 		end
-		res = line:match("^%s*local function%s+([%a0-9_.:]+)%s*%(")
+		res = line:match("^%s*local function%s+([%w_]+)%s*%(")
 		if res then
 			func = nil
 			if_key = nil
+			if res == local_func then
+				-- redefined?! we shouldn't be here...
+				break
+			end
 		end
 		res = line:match("if (.+) then")
 		if res and line:match("spellId == %d+") then
@@ -235,16 +253,27 @@ local function findCallingMethod(lines, start, local_func)
 				 line:match(":ScheduleRepeatingTimer%(%s*"..local_func.."%s*,") or
 				 line:match("^%s*"..local_func.."%s*%(")
 			then
-				return func, if_key
+				if func and options[func] then
+					for _, k in next, options[func] do
+						keys[#keys+1] = k
+					end
+				end
+				if if_key then
+					for _, k in next, if_key do
+						keys[#keys+1] = k
+					end
+				end
+				func, if_key = nil, nil
 			end
 		end
 	end
+	return #keys > 0 and keys or nil
 end
 
 local function parseGetOptions(lines, start)
 	local chunk = nil
 	for i = start, #lines do
-		if lines[i]:match("^%s*return {.+}%s*$") then
+		if i == start and lines[i]:match("^%s*return {.+}%s*$") then
 			-- old style one line options
 			chunk = lines[i]
 			break
@@ -277,6 +306,15 @@ local function parseGetOptions(lines, start)
 		return options
 	end
 	return success, result
+end
+
+local function checkForAPI(line)
+	for method in next, valid_methods do
+		if line:find(method, nil, true) then
+			return true
+		end
+	end
+	return false
 end
 
 
@@ -376,7 +414,7 @@ local function parseLua(file)
 		--- Set spellId replacement values.
 		-- Record the function that was declared and use the callback map that was
 		-- created earlier to set the associated spellId(s).
-		local res = line:match("^%s*function%s+([%a0-9_.:]+)%s*%(")
+		local res = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*%(")
 		if res then
 			current_func = res
 			rep = {}
@@ -384,12 +422,11 @@ local function parseLua(file)
 		end
 		-- For local functions, look ahead and record the key for the first function
 		-- that calls it.
-		res = line:match("^%s*local function%s+([%a0-9_.:]+)%s*%(")
+		res = line:match("^%s*local function%s+([%w_]+)%s*%(") or line:match("^%s*function%s+([%w_]+)%s*%(")
 		if res then
-			current_func = nil
+			current_func = res
 			rep = {}
-			local caller, if_key = findCallingMethod(lines, n, res)
-			rep.local_func_key = options[caller] or if_key
+			rep.local_func_key = findCalls(lines, n, current_func, options)
 		end
 		-- For UNIT functions, record the last spellId checked to use as the key.
 		res = line:match("if (.+) then")
@@ -402,13 +439,22 @@ local function parseLua(file)
 		-- For expression keys used multiple times
 		res = line:match("%s*local spellId%s*=%s*(.+)")
 		if res then
-			rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+			-- fuck off Elerethe
+			local set_key = comment:match("SetOption:(.-):")
+			if set_key and set_key ~= "" then
+				rep.if_key = {}
+				for k, v in next, strsplit(set_key) do
+					rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
+				end
+			else
+				rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+			end
 		end
 
 		--- Parse message calls.
 		-- Check for function calls that will trigger a sound, including calls
 		-- delayed with ScheduleTimer.
-		if line:find("Message", nil, true) or line:find("PlaySound", nil, true) then
+		if checkForAPI(line) then
 			local key, sound, color = nil, nil, nil
 			local method, args = line:match("%w+:(.-)%(%s*(.+)%s*%)")
 			local offset = 0

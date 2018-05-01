@@ -37,7 +37,7 @@ if L then
 	L.track_ember = "泰沙拉克的余烬追踪器"
 	L.track_ember_desc = "显示每个泰沙拉克的余烬死亡信息。"
 
-	L.custom_off_ember_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4}{rt5} 标记泰沙拉克的余烬，需要权限。\n|cff33ff99史诗：将只会标记当前一波能量大于45的增援。|r"
+	L.custom_off_ember_marker_desc = "使用 {rt1}{rt2}{rt3}{rt4}{rt5} 标记泰沙拉克的余烬，需要权限。\n|cff33ff99史诗：将只会标记当前一波的增援。|r"
 end
 
 L = BigWigs:NewBossLocale("The Coven of Shivarra", "zhCN")

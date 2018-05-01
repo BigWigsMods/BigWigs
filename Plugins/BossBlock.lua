@@ -26,6 +26,7 @@ plugin.displayName = L.bossBlock
 local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
 local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
 local GetCurrentMapDungeonLevel = BigWigsLoader.GetCurrentMapDungeonLevel
+local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 
 -------------------------------------------------------------------------------
 -- Options
@@ -199,7 +200,7 @@ end
 
 do
 	-- Cinematic blocking
-	local cinematicZones = {
+	local cinematicZones = { -- XXX fixme for 8.0
 		["800:1"] = true, -- Firelands bridge lowering
 		["875:1"] = true, -- Gate of the Setting Sun gate breach
 		["930:3"] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
@@ -244,10 +245,15 @@ do
 
 	function plugin:CINEMATIC_START()
 		if self.db.profile.blockMovies then
-			SetMapToCurrentZone()
-			local areaId = GetCurrentMapAreaID() or 0
-			local areaLevel = GetCurrentMapDungeonLevel() or 0
-			local id = ("%d:%d"):format(areaId, areaLevel)
+			local id
+			if SetMapToCurrentZone then
+				SetMapToCurrentZone()
+				local areaId = GetCurrentMapAreaID() or 0
+				local areaLevel = GetCurrentMapDungeonLevel() or 0
+				id = ("%d:%d"):format(areaId, areaLevel)
+			else
+				id = -(GetBestMapForUnit("player"))
+			end
 
 			if cinematicZones[id] then
 				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per floor

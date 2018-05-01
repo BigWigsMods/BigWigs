@@ -171,7 +171,7 @@ do
 				self:TargetMessage(235117, args.destName, "Personal", "Alarm")
 			end
 			-- Duration can be longer if the debuff gets refreshed
-			local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+			local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName)
 			local remaining = expires-GetTime()
 			self:TargetBar(235117, remaining, args.destName)
 		end
