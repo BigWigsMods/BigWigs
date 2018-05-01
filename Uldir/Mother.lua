@@ -51,7 +51,7 @@ end
 function mod:DefenseGridStacks(args)
 	local _, _, _, _, _, _, _, _, playersInRaid = GetInstanceInfo()
 	if args.amount % 5 == 0 or args.amount > playersInRaid then
-		self:Message(args.spellId, "cyan", nil, CL.count(args.spellName, args.amount))
+		self:Message(args.spellId, "cyan", nil, CL.count:format(args.spellName, args.amount))
 		self:PlaySound(args.spellId, args.amount > 16 and "alarm" or "info")
 	end
 end
