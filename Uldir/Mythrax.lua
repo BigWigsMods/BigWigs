@@ -17,7 +17,7 @@ function mod:GetOptions()
 		{273282, "TANK"}, -- Essence Shear
 		273554, -- Obliteration Wave
 		272407, -- Oblivion Sphere
-		272536, -- Imminent Ruin
+		{272536, "SAY"}, -- Imminent Ruin
 		273810, -- Xalzaix's Awakening
 		272115, -- Obliteration Beam
 		273951, -- Visions of Madness

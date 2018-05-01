@@ -15,7 +15,7 @@ mod.engageId = 2088
 function mod:GetOptions()
 	return {
 		{265178, "TANK"}, -- Mutagenic Pathogen
-		{265212, "ICON"}, -- Gestate
+		{265212, "SAY", "ICON"}, -- Gestate
 		265217, -- Liquefy
 		266948, -- Hypergenesis
 	}
