@@ -7,7 +7,7 @@
 <Script file="Mother.lua"/>
 <Script file="Devourer.lua"/>
 <Script file="Zekvoz.lua"/>
-<Script file="Blood.lua"/>
+<Script file="Vectis.lua"/>
 <Script file="Ghuun.lua"/>
 
 </Ui>
