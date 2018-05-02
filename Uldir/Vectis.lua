@@ -5,7 +5,7 @@
 local mod, CL = BigWigs:NewBoss("Vectis", 1861, 2166)
 if not mod then return end
 mod:RegisterEnableMob(134442) -- Blood of G'huun
-mod.engageId = 2088
+mod.engageId = 2134
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ function mod:GestateApplied(args) -- XXX Proximity open
 	self:PrimaryIcon(args.spellId, args.destName)
 end
 
-function mod:GestateApplied(args)
+function mod:GestateRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
