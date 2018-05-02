@@ -43,7 +43,7 @@ end
 -- end
 
 function mod:MutagenicPathogenApplied(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+	self:StackMessage(args.spellId, args.destName, args.amount, "red")
 	self:PlaySound(args.spellId, "alert", args.destName)
 end
 

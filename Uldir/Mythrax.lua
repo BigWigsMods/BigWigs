@@ -49,7 +49,7 @@ function mod:EssenceShear(args)
 end
 
 function mod:EssenceShearApplied(args)
-	self:TargetMessage2(273282, "purle", args.destName)
+	self:TargetMessage2(273282, "red", args.destName)
 	self:PlaySound(273282, "alarm", nil, args.destName)
 end
 

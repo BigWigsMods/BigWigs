@@ -79,7 +79,7 @@ end
 
 function mod:SunderingScalpelApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, amount, args.amount, "purple")
+	self:StackMessage(args.spellId, amount, args.amount, "red")
 	if self:Me(args.destGUID) or amount > 1 then
 		self:PlaySound(args.spellId, "alarm", args.destName)
 	end

@@ -42,7 +42,7 @@ end
 --
 
 function mod:ThrashingTerror(args)
-	self:Message(args.spellId, "purple", nil, CL.soon:format(args.spellName))
+	self:Message(args.spellId, "red", nil, CL.soon:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
 end
 
