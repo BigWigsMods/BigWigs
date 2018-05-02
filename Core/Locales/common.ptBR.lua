@@ -37,7 +37,7 @@ L.no = "Sem %s"
 L.intermission = "Intervalo"
 L.percent = "%d%% - %s" -- 20% - spell
 
--- Add related
+-- Add Related
 L.add_spawned = "Add surgiu"
 L.spawned = "%s surgiu"
 L.spawning = "%s Chegando"
