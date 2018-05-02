@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("MOTHER", 1861, 2167)
 if not mod then return end
 mod:RegisterEnableMob(135452) -- MOTHER
 mod.engageId = 2141
---mod.respawnTime = 30
+mod.respawnTime = 20
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -79,7 +79,7 @@ end
 
 function mod:SunderingScalpelApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, amount, args.amount, "red")
+	self:StackMessage(args.spellId, args.destName, args.amount, "red")
 	if self:Me(args.destGUID) or amount > 1 then
 		self:PlaySound(args.spellId, "alarm", args.destName)
 	end
