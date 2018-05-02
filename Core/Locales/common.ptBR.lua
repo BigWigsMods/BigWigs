@@ -22,20 +22,20 @@ L.stage = "Estágio %d"
 L.normal = "Modo normal"
 L.heroic = "Modo heroico"
 L.mythic = "Modo mítico"
---L.active = "Active" -- When a boss becomes active, after speech finishes
+L.active = "Ativo" -- When a boss becomes active, after speech finishes
 L.general = "Geral" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
 L.duration = "%s durante %s seg"
 L.over = "%s Acabou"
 L.removed = "%s Removido"
---L.removed_from = "%s Removed From %s"
---L.removed_by = "%s removed by %s" -- spell removed by player
+L.removed_from = "%s Removido %s"
+L.removed_by = "%s Removido por %s" -- spell removed by player
 L.incoming = "%s Chegando"
 L.interrupted = "%s Interrompido"
---L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
+L.interrupted_by = "%s interrompido por %s" -- spell interrupted by player
 L.no = "Sem %s"
 L.intermission = "Intervalo"
---L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - spell
 
 -- Add Related
 L.add_spawned = "Add surgiu"
@@ -68,12 +68,12 @@ L.marker_player_desc = "Marca jogadores afetados por %s com %s, requer líder ou
 L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente."
 
 -- Ability where two players have to move close to each other
---L.link = "Linked with %s"
---L.link_short = "Linked: %s"
---L.link_both = "%s linked with %s"
---L.link_removed = "Link removed"
+L.link = "Ligado com %s"
+L.link_short = "Ligado: %s"
+L.link_both = "%s ligado com %s"
+L.link_removed = "Ligação removida"
 
 -- Abbreviated numbers
---L.amount_one = "%dB"
---L.amount_two = "%dM"
---L.amount_three = "%dK"
+L.amount_one = "%dB"
+L.amount_two = "%dM"
+L.amount_three = "%dK"
