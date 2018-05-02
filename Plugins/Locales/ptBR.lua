@@ -8,9 +8,9 @@ L.positionX = "Posição X"
 L.positionY = "Posição Y"
 L.positionExact = "Posicionamento Exato"
 L.positionDesc = "Digite na caixa ou mova o cursor se precisa posicionamento exato para a âncora."
---L.width = "Width"
---L.height = "Height"
---L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
+L.width = "Largura"
+L.height = "Altura"
+L.sizeDesc = "Normalmente você define o tamanho arrastando a âncora. Se você precisa de um tamanho exato, você pode usar este controle deslizante ou digitar o valor na caixa, que não tem um tamanho máximo."
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -25,23 +25,23 @@ L.disabledDisplayDesc = "Desativa a exibição para todos os módulos que usam e
 -- AutoReply.lua
 --
 
---L.autoReply = "Auto Reply"
---L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
---L.responseType = "Response Type"
---L.autoReplyFinalReply = "Also whisper when leaving combat"
---L.guildAndFriends = "Guild & Friends"
---L.everyoneElse = "Everyone else"
+L.autoReply = "Auto Resposta"
+L.autoReplyDesc = "Responde automaticamente aos sussurros quando ocupado em uma luta com o Chefe."
+L.responseType = "Tipo de Resposta"
+L.autoReplyFinalReply = "Também sussurra ao sair de combate"
+L.guildAndFriends = "Guilda & Amigos"
+L.everyoneElse = "Todos os outros"
 
---L.autoReplyBasic = "I'm busy in combat with a boss encounter."
---L.autoReplyNormal = "I'm busy in combat with '%s'."
---L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
---L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+L.autoReplyBasic = "Estou ocupado lutando contra um Chefe."
+L.autoReplyNormal = "Estou ocupado lutando com '%s'."
+L.autoReplyAdvanced = "Estou ocupado lutando com '%s' (%s) e %d/%d pessoas estão vivas."
+L.autoReplyExtreme = "Estou ocupado lutando com '%s' (%s) e %d/%d pessoas estão vivas: %s"
 
---L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
---L.autoReplyLeftCombatNormalWin = "I won against '%s'."
---L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
---L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
---L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+L.autoReplyLeftCombatBasic = "Não estou mais lutando contra um Chefe."
+L.autoReplyLeftCombatNormalWin = "Eu venci '%s'."
+L.autoReplyLeftCombatNormalWipe = "Eu perdi para '%s'."
+L.autoReplyLeftCombatAdvancedWin = "Eu venci '%s' com %d/%d pessoas vivas."
+L.autoReplyLeftCombatAdvancedWipe = "Eu perdi para '%s' at: %s"
 
 -----------------------------------------------------------------------
 -- Bars.lua
@@ -74,8 +74,8 @@ L.growingUpwards = "Crescimento para cima"
 L.growingUpwardsDesc = "Alterna crescimento para cima ou para baixo a partir da âncora."
 L.texture = "Textura"
 L.emphasize = "Enfatizar"
---L.emphasizeMultiplier = "Size Multiplier"
---L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+L.emphasizeMultiplier = "Multiplicador de Tamanho"
+L.emphasizeMultiplierDesc = "Se você desabilitar as barras movendo-as para a âncora em destaque, esta opção irá decidir qual tamanho as barras em destaque terão, ao se multiplicar o tamanho das barras normais."
 L.enable = "Habilitar"
 L.move = "Mover"
 L.moveDesc = "Move barras enfatizadas para a âncora de Enfatizar. Se esta opção estiver desativada, barras enfatizadas terão apenas sua cor e tamanho alterados."
@@ -91,15 +91,15 @@ L.time = "Tempo"
 L.timeDesc = "Mostra ou oculta o tempo restante nas barras."
 L.icon = "ícone"
 L.iconDesc = "Mostra ou oculta os ícones das barras."
---L.iconPosition = "Icon Position"
---L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
+L.iconPosition = "Posição do ícone"
+L.iconPositionDesc = "Escolha onde na barra o ícone deve ser posicionado."
 L.font = "Fonte"
 L.restart = "Reiniciar"
 L.restartDesc = "Reinicia as barras enfatizadas para que comecem novamente e conta a partir de 10."
 L.fill = "Completar"
 L.fillDesc = "Completa as barras ao invés de drena-las."
---L.spacing = "Spacing"
---L.spacingDesc = "Change the space between each bar."
+L.spacing = "Espaçamento"
+L.spacingDesc = "Muda o espaço entre cada barra."
 
 L.localTimer = "Local"
 L.timerFinished = "%s: Contador [%s] terminado."
@@ -182,7 +182,7 @@ L.countdownAt = "Contagem regressiva em... (segundos)"
 -- InfoBox.lua
 --
 
-L.infoBox = "Caixa de informações"
+L.infoBox = "Caixa de Informações"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -192,7 +192,7 @@ L.sinkDescription = "Redireciona a saída deste addOn pela exibição de mensage
 L.emphasizedSinkDescription = "Redireciona a saída deste addOn pela exibição de mensagens enfatizadas do BigWigs. Ele dá suporte a texto e cores, e só exibe uma mensagem por vez."
 L.emphasizedCountdownSinkDescription = "Redireciona a saída deste addOn pela exibição de contagem regressiva enfatizada do BigWigs. Ele dá suporte a texto e cores, e só exibe uma mensagem por vez."
 
-L.bwEmphasized = "BigWigs enfatizado" -- TODO: Needs reviewing
+L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Mensagens"
 L.normalMessages = "Mensagens normais"
 L.emphasizedMessages = "Mensagens enfatizadas"
@@ -225,8 +225,6 @@ L.fadeTimeDesc = "Tempo até esmaecer a mensagem, em segundos."
 --
 
 L.customRange = "Indicador de distância personalizado"
--- The translation keeps values but changes the unit to meters instead of yards, as we are more used to the metric system.
--- I'm opting to keep it the way the localization of the game uses as it's not possible to measure precisely neither it does any difference as the numbers are the same.
 L.proximityTitle = "%d m / %d |4jogador:jogadores;"
 L.proximity_name = "Proximidade"
 L.soundDelay = "Atraso de som"
@@ -264,12 +262,12 @@ L.combatLog = "Registro de combate automático"
 L.combatLogDesc = "Inicia automaticamente o registro de combate quando um contador de pull é iniciado e termina ele quando o encontro termina."
 
 L.pull = "Pull"
---L.engageSoundTitle = "Play a sound when a boss encounter has started"
---L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
---L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
+L.engageSoundTitle = "Tocar um som quando uma luta contra um Chefe começou"
+L.pullStartedSoundTitle = "Tocar um som quando o temporizador for iniciado"
+L.pullFinishedSoundTitle = "Tocar um som quando o temporizador terminar"
 L.pullStarted = "Pull iniciado por %s pelo usuário %s."
 L.pullStopped = "Pull cancelado por %s."
---L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
+L.pullStoppedCombat = "Temporizador cancelado porque você entrou em combate."
 L.pullIn = "Pull em %d seg"
 L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
 L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
@@ -350,8 +348,8 @@ L.defeated = "%s foi derrotado"
 -- Wipe.lua
 --
 
---L.wipe = "Wipe"
---L.wipeSoundTitle = "Play a sound when you wipe"
+L.wipe = "Derrota"
+L.wipeSoundTitle = "Tocar um som quando você for derrotado"
 L.respawn = "Respawn"
 L.showRespawnBar = "Mostrar barra de respawn"
 L.showRespawnBarDesc = "Mostra uma barra depois de você ser derrotado num chefe informando o tempo até que o chefe renasça."

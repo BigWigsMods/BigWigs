@@ -1,0 +1,13 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Taloc.lua"/>
+<Script file="Mother.lua"/>
+<Script file="Devourer.lua"/>
+<Script file="Zekvoz.lua"/>
+<Script file="Vectis.lua"/>
+<Script file="Zul.lua"/>
+<Script file="Mythrax.lua"/>
+<Script file="Ghuun.lua"/>
+
+</Ui>

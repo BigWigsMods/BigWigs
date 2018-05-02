@@ -28,6 +28,7 @@ local sargerasGazeCount = 0
 local beaconsBeingCast, cosmicRaysBeingCast = 0, 0
 local skyName, seaName = nil, nil
 local scanningTargets = nil
+local fearOnMe, soulblightOnMe, soulbombOnMe, soulburstOnMe, sentenceOnMe = false, false, false, false, false
 local vulnerabilityCollector = {}
 local vulnerabilityIcons = {
 	[255419] = 1, -- Holy Vulnerability (Yellow Star)
@@ -216,6 +217,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SweepingScythe", 248499)
 	self:Log("SPELL_AURA_APPLIED", "SweepingScytheStack", 248499)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SweepingScytheStack", 248499)
+	self:Log("SPELL_CAST_START", "SkyandSeaStart", 255594)
 	self:Log("SPELL_CAST_SUCCESS", "SkyandSea", 255594)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSea", 258647)
 	self:Log("SPELL_AURA_APPLIED", "GiftoftheSky", 258646)
@@ -262,6 +264,7 @@ function mod:OnBossEnable()
 
 	--[[ Mythic ]]--
 	self:Log("SPELL_AURA_APPLIED", "SargerasFear", 257931)
+	self:Log("SPELL_AURA_REMOVED", "SargerasFearRemoved", 257931)
 	self:Log("SPELL_AURA_APPLIED", "SargerasRage", 257869)
 	self:Log("SPELL_AURA_APPLIED", "SentenceofSargeras", 257966)
 	self:Log("SPELL_AURA_REMOVED", "SentenceofSargerasRemoved", 257966)
@@ -277,7 +280,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 	stage = 1
 	coneOfDeathCounter = 1
 	soulBlightOrbCounter = 1
@@ -287,7 +289,8 @@ function mod:OnEngage()
 	sargerasGazeCount = 1
 	sentenceofSargerasCount = 1
 	beaconsBeingCast, cosmicRaysBeingCast = 0, 0
-	skyName, seaName = nil, nil
+	fearOnMe, soulblightOnMe, soulbombOnMe, soulburstOnMe, sentenceOnMe = false, false, false, false, false
+	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 
 	self:Bar(255594, 16) -- Sky and Sea
 	self:Bar(257296, self:Heroic() and timers[stage][257296][torturedRageCounter] or 13.5, CL.count:format(self:SpellName(257296), torturedRageCounter)) -- Tortured Rage
@@ -306,27 +309,16 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-local checkForFearHelp
-do
-	local fearName = mod:SpellName(257931) -- Sargeras' Fear
-	local spells = {
-		[248396] = mod:SpellName(248396), -- Soulblight
-		[251570] = mod:SpellName(251570), -- Soulbomb
-		[250669] = mod:SpellName(250669), -- Soulburst
-		[257966] = mod:SpellName(257966), -- Sentence of Sargeras
-	}
 
-	function checkForFearHelp(self, icon)
-		if self:GetOption("fear_help") == 0 then return end
-		if UnitDebuff("player", fearName) then
-			for id, name in pairs(spells) do
-				if UnitDebuff("player", name) then
-					icon = icon or GetRaidTargetIndex("player") or 8
-					local msg = ("{rt%d} %s + %s {rt%d}"):format(icon, L[257931], L[id], icon)
-					self:Say("fear_help", msg)
-					return true
-				end
-			end
+local function checkForFearHelp(self, icon)
+	if self:GetOption("fear_help") == 0 then return end
+	if fearOnMe then
+		local id = soulblightOnMe and 248396 or soulbombOnMe and 251570 or soulburstOnMe and 250669 or sentenceOnMe and 257966
+		if id then
+			icon = icon or GetRaidTargetIndex("player") or 8
+			local msg = ("{rt%d} %s + %s {rt%d}"):format(icon, L[257931], L[id], icon)
+			self:Say("fear_help", msg)
+			return true
 		end
 	end
 end
@@ -380,6 +372,7 @@ end
 
 function mod:SoulBlightApplied(args)
 	if self:Me(args.destGUID) then
+		soulblightOnMe = true
 		self:PlaySound(args.spellId, "Warning")
 		self:Flash(args.spellId)
 		self:TargetBar(args.spellId, 8, args.destName)
@@ -391,6 +384,7 @@ end
 
 function mod:SoulBlightRemoved(args)
 	if self:Me(args.destGUID) then
+		soulblightOnMe = false
 		self:CancelSayCountdown(args.spellId)
 	end
 	self:StopBar(args.spellId, args.destName)
@@ -425,6 +419,10 @@ function mod:SweepingScytheStack(args)
 	end
 end
 
+function mod:SkyandSeaStart()
+	skyName, seaName = nil, nil
+end
+
 function mod:SkyandSea(args)
 	self:CDBar(args.spellId, self:Easy() and 30.3 or 27)
 end
@@ -433,39 +431,36 @@ do
 	local function announce(self)
 		if skyName and seaName then
 			local text = L.gifts:format(self:ColorName(skyName), self:ColorName(seaName))
+			skyName, seaName = nil, nil
 			self:Message(255594, "green", "Long", text, 255594)
-			skyName = nil
-			seaName = nil
 		end
 	end
 
 	function mod:GiftoftheSea(args)
-		local meOnly = self:CheckOption(255594, "ME_ONLY")
+		seaName = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sea_say)
-			if meOnly then
+			if self:CheckOption(255594, "ME_ONLY") then
+				seaName = nil
 				self:Message(255594, "green", "Long", CL.you:format(args.spellName), args.spellId)
 			end
-		elseif not meOnly then
-			seaName = args.destName
-			announce(self)
 		end
+		announce(self)
 		if self:GetOption(seaMarker) then
 			SetRaidTarget(args.destName, 6)
 		end
 	end
 
 	function mod:GiftoftheSky(args)
-		local meOnly = self:CheckOption(255594, "ME_ONLY")
+		skyName = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(255594, L.sky_say)
-			if meOnly then
+			if self:CheckOption(255594, "ME_ONLY") then
+				skyName = nil
 				self:Message(255594, "green", "Long", CL.you:format(args.spellName), args.spellId)
 			end
-		elseif not meOnly then
-			skyName = args.destName
-			announce(self)
 		end
+		announce(self)
 		if self:GetOption(seaMarker) then
 			SetRaidTarget(args.destName, 5)
 		end
@@ -555,6 +550,7 @@ do
 	function mod:Soulburst(args)
 		burstList[#burstList+1] = args.destName
 		if self:Me(args.destGUID) then
+			soulburstOnMe = true
 			isOnMe = #burstList == 1 and 3 or 7 -- Soulburst on you (3 or 7)
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, isOnMe)
 			if not checkForFearHelp(self, #burstList == 1 and 3 or 7) then
@@ -577,6 +573,7 @@ do
 
 	function mod:SoulburstRemoved(args)
 		if self:Me(args.destGUID) then
+			soulburstOnMe = false
 			self:CancelSayCountdown(args.spellId)
 		end
 		if self:GetOption(burstMarker) then
@@ -586,6 +583,7 @@ do
 
 	function mod:Soulbomb(args)
 		if self:Me(args.destGUID) then
+			soulbombOnMe = true
 			self:SayCountdown(args.spellId, self:Mythic() and 12 or 15, 2)
 			isOnMe = -1 -- Soulbomb on you (-1)
 			if not checkForFearHelp(self, 2) then
@@ -613,10 +611,11 @@ do
 end
 
 function mod:SoulbombRemoved(args)
-	self:StopBar(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
+		soulbombOnMe = false
 		self:CancelSayCountdown(args.spellId)
 	end
+	self:StopBar(args.spellId, args.destName)
 	if self:GetOption(burstMarker) then
 		SetRaidTarget(args.destName, 0)
 	end
@@ -890,7 +889,7 @@ end
 function mod:DeadlyScytheStack(args)
 	if self:Me(args.destGUID) or self:Tank() then -- Always Show for Tanks and when on Self
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, args.destName, amount, "yellow", self:Tank() and (self:Me(args.destGUID) and "Alarm") or "Warning") -- Warning sound for non-tanks, only on self when a tank
+		self:StackMessage(args.spellId, args.destName, amount, "yellow", self:Tank() and (self:Me(args.destGUID) and "Alarm") or not self:Tank() and "Warning") -- Warning sound for non-tanks, only on self when a tank
 	end
 end
 
@@ -924,9 +923,16 @@ end
 
 function mod:SargerasFear(args)
 	if self:Me(args.destGUID) then
+		fearOnMe = true
 		self:PlaySound(258068, "Warning")
 		self:TargetMessage2(258068, "blue", args.destName, false, args.spellName, args.spellId)
 		checkForFearHelp(self)
+	end
+end
+
+function mod:SargerasFearRemoved(args)
+	if self:Me(args.destGUID) then
+		fearOnMe = false
 	end
 end
 
@@ -955,6 +961,7 @@ do
 	function mod:SentenceofSargeras(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
+			sentenceOnMe = true
 			isOnMe = #playerList
 			self:Flash(args.spellId, isOnMe == 1 and 1 or 4)
 			checkForFearHelp(self)
@@ -972,6 +979,9 @@ do
 	end
 
 	function mod:SentenceofSargerasRemoved(args)
+		if self:Me(args.destGUID) then
+			sentenceOnMe = false
+		end
 		if self:GetOption(sentenceMarker) then
 			SetRaidTarget(args.destName, 0)
 		end

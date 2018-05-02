@@ -241,7 +241,7 @@ do
 
 		if myPartner then
 			self:Message(208910, "Personal", "Warning", L.yourLink:format(self:ColorName(myPartner)))
-			local _, _, _, _, _, _, expires = UnitDebuff("player", args.spellName)
+			local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 			local remaining = expires-GetTime()
 			self:Bar(208910, remaining, L.yourLinkShort:format(self:ColorName(myPartner)))
 			myPartner = nil

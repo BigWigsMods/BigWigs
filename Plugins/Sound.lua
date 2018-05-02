@@ -188,15 +188,15 @@ function plugin:OnRegister()
 				if not optionSounds then
 					return true
 				end
-				local optionName = info[#info]
+				local optionName = info[#info]:lower()
 				if type(optionSounds) == "table" then
 					for _, sound in next, optionSounds do
-						if sound == optionName then
+						if sound:lower() == optionName then
 							return false
 						end
 					end
 				else
-					return optionName ~= optionSounds
+					return optionName ~= optionSounds:lower()
 				end
 				return true
 			end,

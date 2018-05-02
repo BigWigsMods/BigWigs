@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 94
+local BIGWIGS_VERSION = 97
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -55,13 +55,14 @@ local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo and C_ChatInfo.SendAddonMessage or SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker -- XXX C_ChatInfo check for 8.0
 local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
-local GetInstanceInfo, GetPlayerMapAreaID = GetInstanceInfo, GetPlayerMapAreaID
+local GetInstanceInfo, GetPlayerMapAreaID, GetBestMapForUnit = GetInstanceInfo, GetPlayerMapAreaID, C_Map and C_Map.GetBestMapForUnit -- XXX remove GetPlayerMapAreaID
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
-public.GetCurrentMapAreaID = GetCurrentMapAreaID
-public.GetPlayerMapAreaID = GetPlayerMapAreaID
-public.SetMapToCurrentZone = SetMapToCurrentZone
-public.GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel
+public.GetCurrentMapAreaID = GetCurrentMapAreaID -- XXX remove
+public.GetPlayerMapAreaID = GetPlayerMapAreaID -- XXX remove
+public.GetBestMapForUnit = GetBestMapForUnit
+public.SetMapToCurrentZone = SetMapToCurrentZone -- XXX remove
+public.GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel -- XXX remove
 public.GetInstanceInfo = GetInstanceInfo
 public.SendAddonMessage = SendAddonMessage
 public.SendChatMessage = SendChatMessage
@@ -98,6 +99,7 @@ do
 	local mop = "BigWigs_MistsOfPandaria"
 	local wod = "BigWigs_WarlordsOfDraenor"
 	local l = "BigWigs_Legion"
+	local bfa = "BigWigs_BattleForAzeroth"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -159,6 +161,8 @@ do
 		[1676] = l, -- Tomb of Sargeras
 		[1712] = l, -- Antorus, the Burning Throne
 		[1779] = l, -- Invasion Points
+		--[[ BigWigs: Battle for Azeroth ]]--
+		[1861] = bfa, -- Uldir
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -500,7 +504,7 @@ do
 			local rawMenu = select(i, ...)
 			local id = tonumber(rawMenu:trim())
 			if id then
-				local name = id < 0 and GetMapNameByID(-id) or GetRealZoneText(id)
+				local name = id < 0 and (GetMapNameByID and GetMapNameByID(-id) or tostring(id)) or GetRealZoneText(id) -- XXX 8.0 fixme
 				if name and name ~= "" then -- Protect live client from beta client ids
 					if not loadOnZone[id] then loadOnZone[id] = {} end
 					loadOnZone[id][#loadOnZone[id] + 1] = addon
@@ -519,7 +523,7 @@ do
 			local rawMenu = select(i, ...)
 			local id = tonumber(rawMenu:trim())
 			if id then
-				local name = id < 0 and GetMapNameByID(-id) or GetRealZoneText(id)
+				local name = id < 0 and (GetMapNameByID and GetMapNameByID(-id) or tostring(id)) or GetRealZoneText(id) -- XXX 8.0 fixme
 				if name and name ~= "" and not blockedMenus[id] then -- Protect live client from beta client ids
 					blockedMenus[id] = true
 				end
@@ -1142,7 +1146,12 @@ do
 		-- Zone checking
 		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 		if instanceType == "none" then
-			local mapId = GetPlayerMapAreaID("player")
+			local mapId
+			if GetBestMapForUnit then -- XXX temp
+				mapId = GetBestMapForUnit("player")
+			else
+				mapId = GetPlayerMapAreaID("player")
+			end
 			if mapId then
 				id = -mapId -- Use map id for world bosses
 			end

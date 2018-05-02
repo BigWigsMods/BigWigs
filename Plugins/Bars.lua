@@ -281,8 +281,10 @@ do
 	local function removeStyle(bar)
 		local bd = bar.candyBarBackdrop
 		bd:Hide()
-		bd.tukiborder:Hide()
-		bd.tukoborder:Hide()
+		if bd.tukiborder then
+			bd.tukiborder:Hide()
+			bd.tukoborder:Hide()
+		end
 	end
 
 	local function styleBar(bar)

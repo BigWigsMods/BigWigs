@@ -30,7 +30,7 @@ options.SendMessage = loader.SendMessage
 
 local colorModule
 local soundModule
-local isOpen
+local isOpen, isPluginOpen
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 
@@ -205,6 +205,8 @@ do
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
 		acd:SetDefaultSize("BigWigs", 858, 660)
+
+		acr.RegisterCallback(options, "ConfigTableChange")
 
 		colorModule = BigWigs:GetPlugin("Colors")
 		soundModule = BigWigs:GetPlugin("Sounds")
@@ -852,6 +854,7 @@ do
 
 	local statusTable = {}
 	local playerName = nil
+	local GetBestMapForUnit = loader.GetBestMapForUnit
 
 	local function toggleAnchors()
 		if not BigWigs:IsEnabled() then BigWigs:Enable() end
@@ -908,16 +911,18 @@ do
 			container:SetFullWidth(true)
 
 			-- Have to use :Open instead of just :FeedGroup because some widget types (range, color) call :Open to refresh on change
+			isPluginOpen = container
 			acd:Open("BigWigs", container)
 
 			widget:AddChild(container)
 		else
+			isPluginOpen = nil
 			local treeTbl = {}
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = "BigWigs_Legion"
-				for i = 1, 7 do
+				defaultHeader = C_ChatInfo and "BigWigs_BattleForAzeroth" or "BigWigs_Legion" -- XXX Temp
+				for i = 1, C_ChatInfo and 8 or 7 do -- XXX Temp
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
@@ -943,7 +948,7 @@ do
 			do
 				local zoneToId, alphabeticalZoneList = {}, {}
 				for k in next, loader:GetZoneMenus() do
-					local zone = k < 0 and GetMapNameByID(-k) or GetRealZoneText(k)
+					local zone = k < 0 and (GetMapNameByID and GetMapNameByID(-k) or tostring(k)) or GetRealZoneText(k) -- XXX 8.0 fixme
 					if zone then
 						if zoneToId[zone] then
 							zone = zone .. "1" -- When instances exist more than once (Karazhan)
@@ -979,21 +984,21 @@ do
 			tree:SetCallback("OnGroupSelected", onTreeGroupSelected)
 
 			-- Do we have content for the zone we're in? Then open straight to that zone.
-			local id, parent
-			if not IsInInstance() then
-				local mapId = GetPlayerMapAreaID("player")
+			local _, instanceType, _, _, _, _, _, id = loader.GetInstanceInfo()
+			local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
+			if instanceType == "none" then
+				local mapId
+				if GetBestMapForUnit then -- XXX temp
+					mapId = GetBestMapForUnit("player")
+				else
+					mapId = GetPlayerMapAreaID("player")
+				end
 				if mapId then
 					id = loader.zoneTblWorld[-mapId]
-				else
-					local _, _, _, _, _, _, _, instanceId = GetInstanceInfo()
-					id = instanceId
+					parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
 				end
-				parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]]
-			else
-				local _, _, _, _, _, _, _, instanceId = loader.GetInstanceInfo()
-				id = instanceId
-				parent = loader.zoneTbl[instanceId] and addonNameToHeader[loader.zoneTbl[instanceId]]
 			end
+
 			if parent then
 				local moduleList = id and loader:GetZoneMenus()[id]
 				local value = treeTbl[parent].value
@@ -1020,6 +1025,7 @@ do
 		bw:SetCallback("OnClose", function(widget)
 			AceGUI:Release(widget)
 			wipe(statusTable)
+			isPluginOpen = nil
 			isOpen = nil
 		end)
 
@@ -1094,6 +1100,12 @@ do
 			acOptions.args[key] = opts()
 		end
 		return acOptions
+	end
+end
+
+function options:ConfigTableChange(_, appName)
+	if appName == "BigWigs" and isPluginOpen then
+		acd:Open("BigWigs", isPluginOpen)
 	end
 end
 

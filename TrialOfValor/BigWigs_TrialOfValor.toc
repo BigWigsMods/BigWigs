@@ -30,4 +30,3 @@
 ## X-BigWigs-LoadOn-InstanceId: 1648
 
 modules.xml
-locales.xml

@@ -99,7 +99,7 @@ end
 do
 	local spellName = mod:SpellName(219861)
 	function mod:UNIT_AURA(unit)
-		if UnitDebuff(unit, spellName) then
+		if self:UnitDebuff(unit, spellName) then
 			self:UnregisterUnitEvent("UNIT_AURA", unit)
 			self:Say(219861)
 		end

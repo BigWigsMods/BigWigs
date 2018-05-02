@@ -328,18 +328,19 @@ do
 end
 
 do
-	local players, spellName = {}, mod:SpellName(252797) -- Decimation
+	local players = {}
 	local UnitDebuff, UnitGUID = UnitDebuff, UnitGUID
 	function mod:UNIT_AURA(_, unit)
-		local _, _, _, _, _, _, _, _, _, _, spellId = UnitDebuff(unit, spellName)
-		if spellId == 252797 or spellId == 245770 then
+		local decimation1 = self:UnitDebuff(unit, 252797)
+		local decimation2 = self:UnitDebuff(unit, 245770)
+		if decimation1 or decimation2 then
 			local guid = UnitGUID(unit)
 			if not players[guid] then
 				players[guid] = true
 				if unit == "player" then
 					self:PlaySound(252797, "Warning")
 					self:Say(252797)
-					if spellId == 245770 then -- Pre Garothi Worldbreaker
+					if decimation2 then -- Pre Garothi Worldbreaker
 						self:SayCountdown(252797, 3, nil, 2)
 					else -- Pre Kin'garoth
 						self:SayCountdown(252797, 5)

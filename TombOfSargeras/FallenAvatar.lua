@@ -477,7 +477,7 @@ do
 		list[count] = args.destName
 		local icon = count == 1 and 6 or count == 2 and 4 or 3 -- (Blue -> Green -> Purple) in order of exploding/application
 
-		local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName) -- random duration
+		local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName) -- random duration
 		if self:Me(args.destGUID) then
 			local remaining = expires-GetTime()
 			self:Flash(args.spellId)

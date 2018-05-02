@@ -287,7 +287,7 @@ do
 end
 
 function mod:GravitationalPull(args)
-	local _, _, _, _, _, _, expires = UnitDebuff(args.destName, args.spellName)
+	local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName)
 	local remaining = expires-GetTime()
 	self:TargetBar(args.spellId, remaining, args.destName)
 
