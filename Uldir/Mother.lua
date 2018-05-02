@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("MOTHER", 1861, 2167)
 if not mod then return end
-mod:RegisterEnableMob(0) -- XXX
+mod:RegisterEnableMob(135452) -- MOTHER
 mod.engageId = 2141
 --mod.respawnTime = 30
 
