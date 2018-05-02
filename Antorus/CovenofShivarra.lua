@@ -16,6 +16,7 @@ mod.respawnTime = 21
 local chilledBloodTime = 0
 local chilledBloodList = {}
 local chilledBloodMaxAbsorb = 1
+local bloodBarPlacement = 0
 local tormentIcons = {
 	AmanThul = 139, -- Renew
 	Norgannon = 245910, -- Army
@@ -133,6 +134,7 @@ end
 
 function mod:OnEngage()
 	chilledBloodTime = 0
+	bloodBarPlacement = 0
 	wipe(chilledBloodList)
 	chilledBloodMaxAbsorb = 1
 	wipe(upcomingTorments)
@@ -187,26 +189,17 @@ do
 
 		-- Chilled Blood
 		if showChilledBlood then
-			local totalAbsorb = 0
-			for i = 1, #chilledBloodList do
-				local debuff, _, _, _, value = mod:UnitDebuff(chilledBloodList[i][1], 245586) -- Chilled Blood
-				if debuff and value and value > 0 then
-					chilledBloodList[i][2] = value
-					totalAbsorb = totalAbsorb + value
-				end
-			end
-
-			local timeLeft = chilledBloodTime + 10 - GetTime()
+			local timeLeft = chilledBloodTime - GetTime()
 
 			if #chilledBloodList > 0 and timeLeft > 0 then
 				if not showTorments then
 					mod:OpenInfo("infobox", mod:SpellName(245586))
 				end
 
-				mod:SimpleTimer(updateInfoBox, 0.1)
-				mod:SetInfo("infobox", bloodOffset+1, "|cffffffff" .. mod:SpellName(245586))
+				bloodBarPlacement = bloodOffset+1
+				mod:SetInfo("infobox", bloodBarPlacement, "|cffffffff" .. mod:SpellName(245586))
 				mod:SetInfo("infobox", bloodOffset+2, L.timeLeft:format(timeLeft))
-				mod:SetInfoBar("infobox", bloodOffset+1, timeLeft/10)
+				mod:SetInfoBar("infobox", bloodBarPlacement, timeLeft/10)
 
 				sort(chilledBloodList, sortFunc)
 
@@ -466,8 +459,30 @@ end
 do
 	local playerList = mod:NewTargetList()
 
+	local function UpdateChilledBloodInfoBoxTimeLeft()
+		if chilledBloodList[1] then
+			local timeLeft = chilledBloodTime - GetTime()
+			mod:SetInfoBar("infobox", bloodBarPlacement, timeLeft/10)
+			mod:SetInfo("infobox", bloodBarPlacement+1, L.timeLeft:format(timeLeft))
+			mod:SimpleTimer(UpdateChilledBloodInfoBoxTimeLeft, 0.1)
+		end
+	end
+
+	function mod:UpdateChilledBloodInfoBoxAbsorbs(_, _, subEvent, _, _, _, _, _, _, destName, _, _, spellId, _, _, _, _, _, _, _, _, _, absorbed)
+		if subEvent == "SPELL_HEAL_ABSORBED" and spellId == 245586 then
+			for i = 1, #chilledBloodList do
+				if chilledBloodList[i][1] == destName then
+					chilledBloodList[i][2] = chilledBloodList[i][2] - absorbed
+					updateInfoBox()
+					break
+				end
+			end
+		end
+	end
+
 	function mod:ChilledBlood(args)
 		playerList[#playerList+1] = args.destName
+		chilledBloodList[#chilledBloodList+1] = {args.destName, args.amount}
 
 		if self:Healer() then -- Always play a sound for healers
 			self:PlaySound(args.spellId, "Alarm", nil, playerList)
@@ -477,20 +492,21 @@ do
 
 		self:TargetsMessage(args.spellId, "green", playerList, 3)
 		if #playerList == 1 then
-			chilledBloodTime = GetTime()
+			chilledBloodTime = GetTime() + 10
+			chilledBloodMaxAbsorb = args.amount
 			self:Bar(args.spellId, 25.5)
-			self:SimpleTimer(updateInfoBox, 0.3)
+			if self:CheckOption(args.spellId, "INFOBOX") then
+				self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UpdateChilledBloodInfoBoxAbsorbs")
+				self:SimpleTimer(UpdateChilledBloodInfoBoxTimeLeft, 0.1)
+			end
 		end
 
 		if self:GetOption(chilledBloodMarker) then
 			SetRaidTarget(args.destName, #playerList > 2 and 5 or #playerList) -- Icons: 1, 2, 5
 		end
 
-		local debuff, _, _, _, value = self:UnitDebuff(args.destName, args.spellId)
-		if debuff and value and value > 0 then
-			chilledBloodList[#chilledBloodList+1] = {args.destName, value}
-			chilledBloodMaxAbsorb = math.max(chilledBloodMaxAbsorb, value)
-		end
+
+		updateInfoBox()
 	end
 
 	function mod:ChilledBloodRemoved(args)
@@ -499,9 +515,13 @@ do
 				tremove(chilledBloodList, i)
 			end
 		end
+		if not chilledBloodList[1] then
+			self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		end
 		if self:GetOption(chilledBloodMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
+		updateInfoBox()
 	end
 end
 
