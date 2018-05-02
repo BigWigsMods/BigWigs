@@ -12,16 +12,16 @@
 ## Title-ptBR: BigWigs [|cffeda55fUldir|r]
 ## Title-koKR: BigWigs [|cffeda55fUldir|r]
 ## Notes: BigWigs Uldir Modules
-## Notes-deDE: Uldir Modules
-## Notes-esES: Uldir Modules
-## Notes-esMX: Uldir Modules
-## Notes-frFR: Uldir Modules
-## Notes-ruRU: Uldir Modules
-## Notes-zhCN: Uldir Modules
-## Notes-zhTW: Uldir Modules
-## Notes-itIT: Uldir Modules
-## Notes-ptBR: Uldir Modules
-## Notes-koKR: Uldir Modules
+## Notes-deDE: BigWigs Uldir Modules
+## Notes-esES: BigWigs Uldir Modules
+## Notes-esMX: BigWigs Uldir Modules
+## Notes-frFR: BigWigs Uldir Modules
+## Notes-ruRU: BigWigs Uldir Modules
+## Notes-zhCN: BigWigs Uldir Modules
+## Notes-zhTW: BigWigs Uldir Modules
+## Notes-itIT: BigWigs Uldir Modules
+## Notes-ptBR: BigWigs Uldir Modules
+## Notes-koKR: BigWigs Uldir Modules
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
