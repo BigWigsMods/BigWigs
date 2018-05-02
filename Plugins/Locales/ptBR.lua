@@ -182,7 +182,7 @@ L.countdownAt = "Contagem regressiva em... (segundos)"
 -- InfoBox.lua
 --
 
-L.infoBox = ""
+L.infoBox = "Caixa de Informações"
 
 -----------------------------------------------------------------------
 -- Messages.lua
