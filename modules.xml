@@ -12,5 +12,7 @@
 <Include file="Antorus\modules.xml"/>
 <Include file="ArgusInvasionPoints\modules.xml"/>
 <Include file="BrokenIsles\modules.xml"/>
+
+<Include file="Uldir\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
