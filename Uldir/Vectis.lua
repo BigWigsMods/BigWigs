@@ -4,9 +4,9 @@
 
 local mod, CL = BigWigs:NewBoss("Vectis", 1861, 2166)
 if not mod then return end
-mod:RegisterEnableMob(134442) -- Blood of G'huun
+mod:RegisterEnableMob(134442)
 mod.engageId = 2134
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -47,7 +47,7 @@ function mod:MutagenicPathogenApplied(args)
 	self:PlaySound(args.spellId, "alert", args.destName)
 end
 
-function mod:GestateApplied(args) -- XXX Proximity open
+function mod:GestateApplied(args) -- XXX Proximity open TargetScan on Start
 	self:TargetMessage2(args.spellId, "orange", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alert")
