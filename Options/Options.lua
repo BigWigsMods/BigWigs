@@ -306,11 +306,11 @@ local function masterOptionToggled(self, event, value)
 		else
 			module.db.profile[key] = 0
 		end
-		local scrollFrame = self:GetUserData("scrollFrame")
+		local dropdown = self:GetUserData("dropdown")
 		-- This data ONLY exists if we're looking at the advanced options tab,
 		-- we force a refresh of all checkboxes when enabling/disabling the master option.
-		if scrollFrame then
-			local dropdown = self:GetUserData("dropdown")
+		if dropdown then
+			local scrollFrame = self:GetUserData("scrollFrame")
 			local bossOption = self:GetUserData("option")
 			scrollFrame:ReleaseChildren()
 			scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
@@ -505,12 +505,48 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	end
 end
 
+local spellUpdater = CreateFrame("Frame")
+local needsUpdate, needsLayout = {}, {}
+
+local function RefreshOnUpdate(self)
+	local scrollFrame = nil
+	for widget in next, needsLayout do
+		needsLayout[widget] = nil
+		scrollFrame = widget:GetUserData("scrollFrame")
+		local module, bossOption = widget:GetUserData("module"), widget:GetUserData("option")
+		local _, _, desc = BigWigs:GetBossOptionDetails(module, bossOption)
+		widget:SetDescription(desc)
+	end
+	if scrollFrame then
+		scrollFrame:PerformLayout()
+	end
+	self:SetScript("OnUpdate", nil)
+end
+
+spellUpdater:SetScript("OnEvent", function(self, event, spellId, success)
+	if success and needsUpdate[spellId] then
+		needsLayout[needsUpdate[spellId]] = true
+		local desc = GetSpellDescription(spellId)
+		self:SetScript("OnUpdate", RefreshOnUpdate)
+	end
+	needsUpdate[spellId] = nil
+end)
+spellUpdater:RegisterEvent("SPELL_DATA_LOAD_RESULT")
+
+local function clearPendingUpdates()
+	spellUpdater:SetScript("OnUpdate", nil)
+	wipe(needsUpdate)
+	wipe(needsLayout)
+end
+
 local function buttonClicked(widget)
+	clearPendingUpdates()
 	local scrollFrame = widget:GetUserData("scrollFrame")
 	local dropdown = widget:GetUserData("dropdown")
 	local module = widget:GetUserData("module")
 	local bossOption = widget:GetUserData("bossOption")
 	scrollFrame:ReleaseChildren()
+	scrollFrame:SetScroll(0)
 	scrollFrame:AddChildren(getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption))
 	scrollFrame:PerformLayout()
 end
@@ -525,10 +561,37 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetUserData("key", dbKey)
 	check:SetUserData("module", module)
 	check:SetUserData("option", bossOption)
+	check:SetUserData("scrollFrame", scrollFrame)
 	check:SetDescription(desc)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
 	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
+
+	local spellId = nil
+	if type(dbKey) == "number" then
+		if dbKey < 0 then
+			-- the "why did you use an ej id instead of the spell directly" check
+			-- headers and other non-spell entries don't load async
+			local info = C_EncounterJournal.GetSectionInfo(-dbKey)
+			if info.spellID > 0 then
+				spellId = info.spellID
+			end
+		else
+			spellId = dbKey
+		end
+	else
+		local L = module:GetLocale(true)
+		local title, description = L[dbKey], L[dbKey .. "_desc"]
+		if type(title) == "number" and not description then
+			spellId = title
+		elseif type(description) == "number" then
+			spellId = description
+		end
+	end
+	if spellId and not C_Spell.IsSpellDataCached(spellId) then
+		needsUpdate[spellId] = check
+		C_Spell.RequestLoadSpellData(spellId)
+	end
 
 	if type(dbKey) == "string" and dbKey:find("^custom_") then
 		return check
@@ -622,6 +685,7 @@ local function SecondsToTime(time)
 end
 
 local function populateToggleOptions(widget, module)
+	clearPendingUpdates()
 	local scrollFrame = widget:GetUserData("parent")
 	scrollFrame:ReleaseChildren()
 	scrollFrame:PauseLayout()
@@ -774,6 +838,7 @@ local function populateToggleOptions(widget, module)
 	list:SetUserData("module", module)
 	list:SetCallback("OnClick", listAbilitiesInChat)
 	scrollFrame:AddChild(list)
+	scrollFrame:SetScroll(0)
 	scrollFrame:ResumeLayout()
 	scrollFrame:PerformLayout()
 end
