@@ -371,8 +371,8 @@ local function parseLua(file)
 
 	local file_name = file:match(".*/(.*)$") or file
 
-	local option_keys = {}
-	local options = {}
+	local options, option_keys = {}, {}
+	local methods, registered_methods = {}, {}
 	local current_func = nil
 	local rep = {}
 	for n, line in ipairs(lines) do
@@ -385,6 +385,7 @@ local function parseLua(file)
 			if not opts then
 				-- rip keys
 				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
+				-- return
 			else
 				option_keys = opts
 			end
@@ -394,7 +395,7 @@ local function parseLua(file)
 		-- Parse :Log calls and save the callback => spellId association so we can
 		-- replace args.spellId with the actual spellId(s) based on the last function
 		-- that was entered when a message function is called.
-		local event, callback, spells = line:match("self:Log%(\"(.-)\",%s*(.-)%s*,%s*([^)]*)%)")
+		local event, callback, spells = line:match("self:Log%(\"(.-)\"%s*,%s*(.-)%s*,%s*([^)]*)%)")
 		if event then
 			if callback ~= "nil" then
 				callback = unquote(callback)
@@ -413,6 +414,21 @@ local function parseLua(file)
 			if not next(options[callback]) then
 				options[callback] = nil
 			end
+			registered_methods[callback] = n
+		end
+		-- Record other registered events to check at the end
+		event, callback = line:match(":RegisterUnitEvent%(\"(.-)\"%s*,%s*(.-)%s*,.-%)")
+		-- if not event then
+		--	-- XXX need to filter proto methods for this
+		-- 	event, callback = line:match(":RegisterEvent%(\"(.-)\"%s*,?%s*(.*)%)")
+		-- end
+		if event then
+			if callback == "" or callback == "nil" then
+				callback = event
+			else
+				callback = unquote(callback)
+			end
+			registered_methods[callback] = n
 		end
 
 		--- Set spellId replacement values.
@@ -421,8 +437,10 @@ local function parseLua(file)
 		local res = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*%(")
 		if res then
 			current_func = res
+			local name = res:match(":(.+)")
+			methods[name] = true
 			rep = {}
-			rep.func_key = options[res:match(":(.+)")]
+			rep.func_key = options[name]
 		end
 		-- For local functions, look ahead and record the key for the first function
 		-- that calls it.
@@ -560,6 +578,14 @@ local function parseLua(file)
 					error(string.format("    %s:%d: Invalid sound! func=%s, key=%s, sound=%s", file_name, n, f, table.concat(keys, " "), s))
 				end
 			end
+		end
+	end
+
+	-- Check for callbacks that were registered but don't exist.
+	-- This will also error when using a local function as a callback.
+	for f, n in next, registered_methods do
+		if not methods[f] then
+			error(string.format("    %s:%d: %q was registered as a callback, but it does not exist.", file_name, n, f))
 		end
 	end
 end
