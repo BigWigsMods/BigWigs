@@ -2,13 +2,13 @@ local L = BigWigs:NewBossLocale("Harjatan the Bludger", "ptBR")
 if not L then return end
 if L then
 	L.custom_on_fixate_plates = "Fixar ícone na placa de identificação do inimigo"
-	L.custom_on_fixate_plates_desc = "Mostra um ícone na placa de identificação no alvo que está se fixando em você. \ NRequer o uso de Placas de Identificação do Inimigo. Atualmente este recurso é suportado apenas por KuiNameplates."
+	L.custom_on_fixate_plates_desc = "Mostra um ícone na placa de identificação no alvo que está se fixando em você.\nRequer o uso de Placas de Identificação do Inimigo. Atualmente este recurso é suportado apenas por KuiNameplates."
 end
 
 L = BigWigs:NewBossLocale("Demonic Inquisition", "ptBR")
 if L then
 	L.custom_on_fixate_plates = "Fixar ícone na placa de identificação do inimigo"
-	L.custom_on_fixate_plates_desc = "Mostra um ícone na placa de identificação no alvo que está se fixando em você. \ NRequer o uso de Placas de Identificação do Inimigo. Atualmente este recurso é suportado apenas por KuiNameplates."
+	L.custom_on_fixate_plates_desc = "Mostra um ícone na placa de identificação no alvo que está se fixando em você.\nRequer o uso de Placas de Identificação do Inimigo. Atualmente este recurso é suportado apenas por KuiNameplates."
 
 	L.infobox_title_prisoners = "%d |4Prisionero:Prisioneros;"
 
