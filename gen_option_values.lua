@@ -1,6 +1,8 @@
 
 -- Script to parse boss module files and output ability=>color/sound mappings
 
+local loadstring = loadstring or load -- 5.2 compat
+
 local modules = {}
 local module_colors = {}
 local module_sounds = {}
@@ -367,8 +369,10 @@ local function parseLua(file)
 	end
 	data = nil
 
-	local option_keys = {}
-	local options = {}
+	local file_name = file:match(".*/(.*)$") or file
+
+	local options, option_keys = {}, {}
+	local methods, registered_methods = {}, {}
 	local current_func = nil
 	local rep = {}
 	for n, line in ipairs(lines) do
@@ -380,7 +384,8 @@ local function parseLua(file)
 			local opts, err = parseGetOptions(lines, n+1)
 			if not opts then
 				-- rip keys
-				error(string.format("    %s:%d: Error parsing GetOptions! %s", file:match(".*/(.*)$"), n, err))
+				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
+				-- return
 			else
 				option_keys = opts
 			end
@@ -390,7 +395,7 @@ local function parseLua(file)
 		-- Parse :Log calls and save the callback => spellId association so we can
 		-- replace args.spellId with the actual spellId(s) based on the last function
 		-- that was entered when a message function is called.
-		local event, callback, spells = line:match("self:Log%(\"(.-)\",%s*(.-)%s*,%s*([^)]*)%)")
+		local event, callback, spells = line:match("self:Log%(\"(.-)\"%s*,%s*(.-)%s*,%s*([^)]*)%)")
 		if event then
 			if callback ~= "nil" then
 				callback = unquote(callback)
@@ -409,6 +414,21 @@ local function parseLua(file)
 			if not next(options[callback]) then
 				options[callback] = nil
 			end
+			registered_methods[callback] = n
+		end
+		-- Record other registered events to check at the end
+		event, callback = line:match(":RegisterUnitEvent%(\"(.-)\"%s*,%s*(.-)%s*,.-%)")
+		-- if not event then
+		--	-- XXX need to filter proto methods for this
+		-- 	event, callback = line:match(":RegisterEvent%(\"(.-)\"%s*,?%s*(.*)%)")
+		-- end
+		if event then
+			if callback == "" or callback == "nil" then
+				callback = event
+			else
+				callback = unquote(callback)
+			end
+			registered_methods[callback] = n
 		end
 
 		--- Set spellId replacement values.
@@ -417,8 +437,10 @@ local function parseLua(file)
 		local res = line:match("^%s*function%s+([%w_]+:[%w_]+)%s*%(")
 		if res then
 			current_func = res
+			local name = res:match(":(.+)")
+			methods[name] = true
 			rep = {}
-			rep.func_key = options[res:match(":(.+)")]
+			rep.func_key = options[name]
 		end
 		-- For local functions, look ahead and record the key for the first function
 		-- that calls it.
@@ -525,7 +547,7 @@ local function parseLua(file)
 			for i, k in next, keys do
 				local key = tonumber(k) or unquote(k)
 				if not option_keys[key] then
-					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file:match(".*/(.*)$"), n, f, key))
+					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
 					errors = true
 				end
 				keys[i] = key
@@ -540,7 +562,7 @@ local function parseLua(file)
 					end
 				elseif c and c ~= "nil" then
 					-- A color was set but didn't match an actual color, so warn about it.
-					error(string.format("    %s:%d: Invalid color! func=%s, key=%s, color=%s", file:match(".*/(.*)$"), n, f, table.concat(keys, " "), c))
+					error(string.format("    %s:%d: Invalid color! func=%s, key=%s, color=%s", file_name, n, f, table.concat(keys, " "), c))
 				end
 			end
 
@@ -553,9 +575,17 @@ local function parseLua(file)
 					end
 				elseif s and s ~= "nil" then
 					-- A sound was set but didn't match an actual sound, so warn about it.
-					error(string.format("    %s:%d: Invalid sound! func=%s, key=%s, sound=%s", file:match(".*/(.*)$"), n, f, table.concat(keys, " "), s))
+					error(string.format("    %s:%d: Invalid sound! func=%s, key=%s, sound=%s", file_name, n, f, table.concat(keys, " "), s))
 				end
 			end
+		end
+	end
+
+	-- Check for callbacks that were registered but don't exist.
+	-- This will also error when using a local function as a callback.
+	for f, n in next, registered_methods do
+		if not methods[f] then
+			error(string.format("    %s:%d: %q was registered as a callback, but it does not exist.", file_name, n, f))
 		end
 	end
 end
@@ -589,18 +619,17 @@ end
 
 -- aaaaaand start
 local start_path = "modules.xml"
-if arg then
-	local path
-	if arg[1] then
-		path = arg[1]:gsub("\\", "/")
-		if path:sub(-1) ~= "/" then
-			path = path .. "/"
-		end
-	else
-		path = arg[0]:gsub("\\", "/"):match(".*/")
+if arg and arg[1] then
+	local path = arg[1]:gsub("\\", "/")
+	local is_file = path:sub(-4) == ".lua"
+	if path:sub(-1) ~= "/" and not is_file then
+		path = path .. "/"
 	end
-	if path then
-		start_path = path:gsub("^./", "") .. start_path
+	path = path:gsub("^./", "")
+	if is_file then
+		start_path = path
+	else
+		start_path = path .. start_path
 	end
 end
 parse(start_path)
