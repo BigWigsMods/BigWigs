@@ -757,12 +757,14 @@ do
 	end
 
 	local L = GetLocale()
-	if L == "ptBR" then
-		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Brazilian Portugese (ptBR). Can you help? Ask us on Discord for more info."
+	if L == "ruRU" then
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Russian (ruRU). Can you help? Visit git.io/vpBye or ask us on Discord for more info."
 	elseif L == "itIT" then
-		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Italian (itIT). Can you help? Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Italian (itIT). Can you help? Visit git.io/vpBye or ask us on Discord for more info."
+	elseif L == "koKR" then
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Korean (koKR). Can you help? Visit git.io/vpBye or ask us on Discord for more info."
 	elseif L == "esES" or L == "esMX" then
-		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Spanish (esES). Can you help? Ask us on Discord for more info."
+		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Spanish (esES). Can you help? Visit git.io/vpBye or ask us on Discord for more info."
 	end
 
 	CTimerAfter(11, function()
