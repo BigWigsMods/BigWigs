@@ -19,7 +19,7 @@ if L then
 	L.stage2_early = "Ярость морей смоет эту скверну!"  -- Aman'thul's accurate quote
 	L.stage3_early = "Надежды нет. Есть только боль!" -- Argus' accurate quote 
 
-	L.gifts = "ДарыGifts: %s (Небо), %s (Море)"
+	L.gifts = "Дары: %s (Небо), %s (Море)"
 	L.burst = "|T1778229:15:15:0:0:64:64:4:60:4:60|tВзрыв:%s" -- short for Soulburst
 	L.bomb = "|T1778228:15:15:0:0:64:64:4:60:4:60|tБомба (%d):|T137002:0|t%s - " -- short for Soulbomb
 
