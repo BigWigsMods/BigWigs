@@ -132,6 +132,7 @@ do
 	function mod:WindTunnel(args) -- XXX We can track only the casts for room 1 if we do not need directions in room 2
 		local t = GetTime()
 		if t-prev > 2 then
+			prev = t
 			self:Message(267878, "red")
 			self:PlaySound(267878, "warning")
 			self:CastBar(267878, 11)
