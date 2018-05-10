@@ -1,14 +1,14 @@
 local L = BigWigs:NewBossLocale("Argus the Unmaker", "koKR")
 if not L then return end
 if L then
-	L.combinedBurstAndBomb = "영혼분출 영혼폭탄 메세지 통합"
-	L.combinedBurstAndBomb_desc = "|cff71d5ff영혼폭탄|r 은 항상 |cff71d5ff영혼분출|r 과 동시에 걸립니다. 이 옵션을 활성화하면 두개의 메세지를 하나로 통합할 수 있습니다."
+	L.combinedBurstAndBomb = "영혼분출 영혼폭탄 전투 메세지 통합"
+	L.combinedBurstAndBomb_desc = "|cff71d5ff영혼폭탄|r 은 항상 |cff71d5ff영혼분출|r 과 동시에 걸립니다. 이 옵션을 활성화하면 두개의 전투 메세지를 하나로 통합할 수 있습니다."
 
-	L.custom_off_always_show_combined = "영혼분출과 영혼폭탄이 같이 올때 항상 통합"
-	L.custom_off_always_show_combined_desc = "통합 메세지는 플레이어가 |cff71d5ff영혼폭탄|r 이나 |cff71d5ff영혼분출|r 이 걸렸을때는 표시되지 않습니다. 이 옵션을 활성화하면 영혼폭탄이나 영혼분출과 무관하게 메세지를 항상 표시할 수 있습니다. |cff33ff99공격대장에게 유용한 .|r"
+	L.custom_off_always_show_combined = "영혼분출과 영혼폭탄이 같이 올때 항상 통합 메세지로 표시"
+	L.custom_off_always_show_combined_desc = "통합 전투 메세지는 플레이어가 |cff71d5ff영혼폭탄|r 이나 |cff71d5ff영혼분출|r 이 걸렸을때는 표시되지 않습니다. 이 옵션을 활성화하면 영혼폭탄이나 영혼분출과 무관하게 전투 메세지를 표시할 수 있습니다. |cff33ff99공격대장에게 유용한 .|r"
 
 	L.fear_help = "살게라스의 공포 관련 경보"
-	L.fear_help_desc = "다음의 기술과 함께 걸렸을 때 특수 메제시 전송: |cff71d5ff살게라스의 공포|r and |cff71d5ff영혼역병|r/|cff71d5ff영혼분출|r/|cff71d5ff영혼폭탄|r/|cff71d5ff살게라스의 선고|r."
+	L.fear_help_desc = "다음의 기술과 함께 걸렸을 때 특수 전투 메제시 전송: |cff71d5ff살게라스의 공포|r and |cff71d5ff영혼역병|r/|cff71d5ff영혼분출|r/|cff71d5ff영혼폭탄|r/|cff71d5ff살게라스의 선고|r."
 
 	L[257931] = "공포" -- short for Sargeras' Fear
 	L[248396] = "역병" -- short for Soulblight
@@ -27,7 +27,7 @@ if L then
 	L.sea_say = "{rt6} 가속/유연" -- short for Haste/Versatility (stats)
 
 	L.bomb_explosions = "폭탄 폭발"
-	L.bomb_explosions_desc = "영혼분출과 영혼폭탄 터질때까지 타이머 표시."
+	L.bomb_explosions_desc = "영혼분출과 영혼폭탄 터질 때까지 타이머 표시."
 end
 
 L = BigWigs:NewBossLocale("Aggramar", "koKR")
@@ -35,7 +35,7 @@ if L then
 	L.wave_cleared = "불씨 %d 번 웨이브 완료!" -- Wave 1 Cleared!
 
 	L.track_ember = "테샤라크의 불씨 상태 확인"
-	L.track_ember_desc = "테샤라크의 불씨가 죽을때 마다 메세지 표시."
+	L.track_ember_desc = "테샤라크의 불씨가 죽을때 마다 전투 메세지 표시."
 
 	L.custom_off_ember_marker_desc = "테샤라크의 불씨에 {rt1}{rt2}{rt3}{rt4}{rt5} 징표 부여, 공격대장이나 부공격대장 권한 필요.\n|cff33ff99신화 난이도: 현재 웨이브에서 기력 45 이상인 불씨만 징표가 찍힙니다.|r"
 end
