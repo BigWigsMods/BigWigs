@@ -1,3 +1,5 @@
+if not C_ChatInfo then return end -- XXX Don't load outside of 8.0
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -9,27 +11,38 @@ mod.engageId = 2144
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local plasmaCount = 1
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
 function mod:GetOptions()
 	return {
-		271222, -- Plasma Discharge
+		{271224, "SAY"}, -- Plasma Discharge
 		270290, -- Blood Storm
-		{271296, "TANK"}, -- Cudgel of Gore
+		271296, -- Cudgel of Gore
 		271728, -- Retrieve Cudgel
-		272582, -- Sanguine Static
+		271895, -- Sanguine Static
 		271965, -- Powered Down
+		{275270, "SAY"}, -- Fixate
 		275432, -- Uldir Defensive Beam
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "PlasmaDischarge", 271222)
+	self:Log("SPELL_CAST_SUCCESS", "PlasmaDischarge", 271224)
+	self:Log("SPELL_CAST_SUCCESS", "PlasmaDischargeApplied", 271224)
+	self:Log("SPELL_CAST_SUCCESS", "PlasmaDischargeRemoved", 271224)
 	self:Log("SPELL_CAST_START", "CudgelofGore", 271296)
 	self:Log("SPELL_CAST_START", "RetrieveCudgel", 271728)
-	self:Log("SPELL_CAST_SUCCESS", "SanguineStatic", 272582)
+	self:Log("SPELL_CAST_SUCCESS", "SanguineStatic", 271895)
 	self:Log("SPELL_AURA_APPLIED", "PoweredDown", 271965)
+	self:Log("SPELL_AURA_REMOVED", "PoweredDownRemoved", 271965)
+	self:Log("SPELL_AURA_APPLIED", "Fixate", 275270)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 270290, 275432) -- Blood Storm, Uldir Defensive Beam
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 270290, 275432)
@@ -37,6 +50,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	plasmaCount = 1
+	self:Bar(271224, 6) -- Plasma Discharge
+	self:Bar(271895, 20.5) -- Sanguine Static
+	self:Bar(271296, 31.5) -- Cudgel of Gore
+	self:Bar(271728, 53.5) -- Retrieve Cudgel
 end
 
 --------------------------------------------------------------------------------
@@ -44,29 +62,75 @@ end
 --
 
 function mod:PlasmaDischarge(args)
-	self:Message(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+	plasmaCount = plasmaCount + 1
+	self:Bar(args.spellId, plasmaCount == 2 and 42.5 or 30.5)
+end
+
+do
+	local playerList = mod:NewTargetList()
+	function mod:PlasmaDischargeApplied(args)
+		playerList[#playerList+1] = args.destName
+		self:PlaySound(args.spellId, "warning", nil, playerList)
+		self:TargetsMessage(args.spellId, "yellow", playerList)
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 6)
+		end
+	end
+
+	function mod:PlasmaDischargeRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
+	end
 end
 
 function mod:CudgelofGore(args)
-	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
+	self:Message(args.spellId, "red")
 	self:CastBar(args.spellId, 4.5)
+	self:CDBar(args.spellId, 59)
 end
 
 function mod:RetrieveCudgel(args)
-	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
+	self:Message(args.spellId, "orange")
+	self:CDBar(args.spellId, 59)
 end
 
 function mod:SanguineStatic(args)
-	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:Message(args.spellId, "yellow")
+	self:CDBar(args.spellId, 61)
 end
 
 function mod:PoweredDown(args)
-	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
+	self:Message(args.spellId, "green")
+	self:StopBar(271224) -- Plasma Discharge
+	self:StopBar(271895) -- Sanguine Static
+	self:StopBar(271296) -- Cudgel of Gore
+	self:StopBar(271728) -- Retrieve Cudgel
+
+	self:CDBar(args.spellId, 88.8, CL.intermission)
+end
+
+function mod:PoweredDownRemoved(args)
+	self:PlaySound(args.spellId, "long")
+	self:Message(args.spellId, "green", nil, CL.over:format(CL.intermission))
+
+	self:Bar(271224, 6) -- Plasma Discharge
+	self:Bar(271895, 20.5) -- Sanguine Static
+	self:Bar(271296, 31.5) -- Cudgel of Gore
+	self:Bar(271728, 53.5) -- Retrieve Cudgel
+end
+
+function mod:Fixate(args)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "warning")
+		self:TargetMessage2(args.spellId, "blue", args.destName)
+		self:Say(args.spellId)
+	end
 end
 
 do
