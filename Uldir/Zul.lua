@@ -58,7 +58,7 @@ end
 -- Event Handlers
 --
 
-function mod:PoolofDarkness(args)
+function mod:DarkRevelation(args)
 	self:Bar(args.spellId, 45)
 end
 
