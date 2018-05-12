@@ -9,5 +9,6 @@
 <Script file="Zul.lua"/>
 <Script file="Mythrax.lua"/>
 <Script file="Ghuun.lua"/>
+<Script file="Trash.lua"/>
 
 </Ui>
