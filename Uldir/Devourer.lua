@@ -28,7 +28,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TerribleThrash", 262277)
-	self:Log("SPELL_CAST_SUCCESS", "RottingRegurgitation", 262292)
+	self:Log("SPELL_CAST_START", "RottingRegurgitation", 262292)
 	self:Log("SPELL_CAST_START", "ShockwaveStomp", 262288)
 	self:Log("SPELL_AURA_APPLIED", "MalodorousMiasmaApplied", 262313)
 	self:Log("SPELL_AURA_APPLIED", "PutridParoxysmApplied", 262314)
@@ -82,9 +82,16 @@ function mod:PutridParoxysmApplied(args)
 	end
 end
 
+do
+	local prev = 0
 function mod:EnticingEssence(args)
-	self:Message(args.spellId, "red")
-	self:PlaySound(args.spellId, "warning")
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Message(args.spellId, "red")
+			self:PlaySound(args.spellId, "warning")
+		end
+	end
 end
 
 function mod:FetidFrenzy(args)
