@@ -35,8 +35,8 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "PlasmaDischarge", 271224)
-	self:Log("SPELL_CAST_SUCCESS", "PlasmaDischargeApplied", 271224)
-	self:Log("SPELL_CAST_SUCCESS", "PlasmaDischargeRemoved", 271224)
+	self:Log("SPELL_AURA_APPLIED", "PlasmaDischargeApplied", 271224)
+	self:Log("SPELL_AURA_REMOVED", "PlasmaDischargeRemoved", 271224)
 	self:Log("SPELL_CAST_START", "CudgelofGore", 271296)
 	self:Log("SPELL_CAST_START", "RetrieveCudgel", 271728)
 	self:Log("SPELL_CAST_SUCCESS", "SanguineStatic", 271895)
