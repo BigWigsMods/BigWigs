@@ -57,7 +57,7 @@ function mod:GetOptions()
 		267239, -- Orb of Corruption
 		265662, -- Corruptor's Pact
 	},{
-		[265530] = "general",
+		["stages"] = "general",
 		[264382] = CL.stage:format(1),
 		[265360] = CL.stage:format(2),
 		[267239] = CL.stage:format(3),
@@ -91,7 +91,7 @@ end
 function mod:OnEngage()
 	stage = 1
 	self:Bar(265231, 15.5) -- Void Lash (Initial)
-	self:Bar(265530, 33.5) -- Surging Darkness
+	self:Bar(265530, 30.5) -- Surging Darkness
 	self:Bar(-18390, 70, nil, 275772) -- Qiraji Warrior
 	self:CDBar(264382, 96) -- Eye Beam
 
