@@ -27,7 +27,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "TerribleThrash", 262277)
+	self:Log("SPELL_CAST_START", "TerribleThrash", 262277)
 	self:Log("SPELL_CAST_START", "RottingRegurgitation", 262292)
 	self:Log("SPELL_CAST_START", "ShockwaveStomp", 262288)
 	self:Log("SPELL_AURA_APPLIED", "MalodorousMiasmaApplied", 262313)
@@ -35,15 +35,17 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EnticingEssence", 262364)
 	self:Log("SPELL_AURA_APPLIED", "FetidFrenzy", 262378)
 
-	-- Trash spawning
+	-- Adds spawning
 	self:Log("SPELL_CAST_SUCCESS", "TrashChuteVisualState", 274470)
 end
 
 function mod:OnEngage()
 	self:CDBar(262277, 5.5) -- Terrible Thrash
-	self:CDBar(262292, 41.5) -- Rotting Regurgitation
-	self:Bar(262288, 26) -- Shockwave Stomp
-	self:Bar(262364, 35.5, CL.adds) -- Shockwave Stomp
+	self:CDBar(262292, self:Easy() and 30.5 or 41.5) -- Rotting Regurgitation
+	if not self:Easy() then
+		self:Bar(262288, 26) -- Shockwave Stomp
+	end
+	self:Bar(262364, self:Easy() and 50 or 35.5, CL.adds) -- Adds / Enticing Essence
 end
 
 --------------------------------------------------------------------------------
@@ -59,7 +61,7 @@ end
 function mod:RottingRegurgitation(args)
 	self:Message(args.spellId, "yellow", nil, CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 46) -- 41.3, 52.1, 46.3, 41.9, 32.6, 34.1 XXX
+	self:CDBar(args.spellId, self:Easy() and 30.5 or 46) -- 41.3, 52.1, 46.3, 41.9, 32.6, 34.1 XXX
 	self:CastBar(args.spellId, 6.5)
 end
 
@@ -84,7 +86,7 @@ end
 
 do
 	local prev = 0
-function mod:EnticingEssence(args)
+	function mod:EnticingEssence(args)
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
@@ -107,7 +109,7 @@ do
 			prev = t
 			self:Message(262364, "cyan", nil, CL.incoming:format(CL.adds))
 			self:PlaySound(262364, "long")
-			self:Bar(262364, 55, CL.adds)
+			self:Bar(262364, self:Easy() and 60 or 55, CL.adds) -- Adds / Enticing Essence
 		end
 	end
 end
