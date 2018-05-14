@@ -197,7 +197,6 @@ L.messages = "메시지"
 L.normalMessages = "일반 메시지"
 L.emphasizedMessages = "강조 메시지"
 L.output = "출력"
-L.emphasizedCountdown = "강조 초읽기"
 
 L.useColors = "색상 사용"
 L.useColorsDesc = "색상을 무시하도록 메시지에 색상 사용을 전환합니다."

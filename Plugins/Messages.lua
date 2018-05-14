@@ -127,7 +127,7 @@ do
 
 	normalAnchor = createAnchor("BWMessageAnchor", L.messages)
 	emphasizeAnchor = createAnchor("BWEmphasizeMessageAnchor", L.emphasizedMessages)
-	emphasizeCountdownAnchor = createAnchor("BWEmphasizeCountdownMessageAnchor", L.emphasizedCountdown)
+	emphasizeCountdownAnchor = createAnchor("BWEmphasizeCountdownMessageAnchor", L.textCountdown)
 
 	BWMessageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
 	BWMessageFrame:SetWidth(UIParent:GetWidth())

@@ -197,7 +197,6 @@ L.messages = "Mensagens"
 L.normalMessages = "Mensagens normais"
 L.emphasizedMessages = "Mensagens enfatizadas"
 L.output = "Saída"
-L.emphasizedCountdown = "Contagem regressiva enfatizada"
 
 L.useColors = "Usar cores"
 L.useColorsDesc = "Alterna entre mensagens em branco ou coloridas."
