@@ -48,9 +48,9 @@ if L then
 	L.torment = "티탄의 고통: %s"
 	L.nextTorment = "다음 : |cffffffff%s|r"
 	L.tormentHeal = "힐/도트" -- something like Heal/DoT (max 10 characters)
-	L.tormentLightning = "산개" -- short for "Chain Lightning" (or similar, max 10 characters)
-	L.tormentArmy = "메즈" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)
-	L.tormentFlames = "불길" -- short for "Flames of Khaz'goroth" (or similar, max 10 characters)
+	L.tormentLightning = "골가네스" -- short for "Chain Lightning" (or similar, max 10 characters)
+	L.tormentArmy = "노르간논" -- short for "Spectral Army of Norgannon" (or similar, max 10 characters)
+	L.tormentFlames = "카즈고로스" -- short for "Flames of Khaz'goroth" (or similar, max 10 characters)
 end
 
 L = BigWigs:NewBossLocale("Eonar the Life-Binder", "koKR")
