@@ -102,6 +102,15 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable()
+	if BigWigsLoader.SetMapToCurrentZone then -- XXX 8.0
+		BigWigsLoader.SetMapToCurrentZone()
+		return BigWigsLoader.GetCurrentMapDungeonLevel() == 9
+	else
+		return BigWigsLoader.GetBestMapForUnit("player") == 917
+	end
+end
+
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
