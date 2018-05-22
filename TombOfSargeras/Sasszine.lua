@@ -333,16 +333,15 @@ do
 		fedsNeeded = self:Mythic() and 5 or 3
 		self:OpenInfo(234621, L.inks_fed_count:format(fedCount, fedsNeeded))
 
-		local inkName = self:SpellName(232913)
 		for unit in self:IterateGroup() do
-			local _, _, _, expires = self:UnitDebuff(unit, inkName)
+			local _, _, _, expires = self:UnitDebuff(unit, 232913) -- Befouling Ink
 			debuffs[self:UnitName(unit)] = expires
 		end
 	end
 
 	function mod:InkApplied(args)
 		if devouringMawActive then
-			local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName)
+			local _, _, _, expires = self:UnitDebuff(args.destName, args.spellId)
 			debuffs[args.destName] = expires
 		end
 	end
