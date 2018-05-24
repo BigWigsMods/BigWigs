@@ -356,7 +356,7 @@ end
 do
 	local prev = 0
 	function mod:UNIT_AURA(unit)
-		if self:UnitBuff(unit, self:SpellName(228018)) and GetTime() - prev > 4 then -- We want this repeated
+		if self:UnitBuff(unit, 228018) and GetTime() - prev > 4 then -- We want this repeated
 			prev = GetTime()
 			self:Message(228018, "Important", "Alarm") -- Valarjar's Bond
 		end
