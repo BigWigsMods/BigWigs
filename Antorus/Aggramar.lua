@@ -249,8 +249,8 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextIntermissionSoonWarning then
 		self:Message("stages", "green", nil, CL.soon:format(CL.intermission), false)
-		nextIntermissionSoonWarning = nextIntermissionSoonWarning - 40
-		if nextIntermissionSoonWarning < 40 then
+		nextIntermissionSoonWarning = self:Mythic() and nextIntermissionSoonWarning - 45 or nextIntermissionSoonWarning - 40
+		if nextIntermissionSoonWarning < 35 then
 			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
 		end
 	end
