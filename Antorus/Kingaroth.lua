@@ -76,9 +76,9 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
 
 	--[[ Stage: Deployment ]]--
-	self:Log("SPELL_CAST_START", "ForgingStrike", 254919)
-	self:Log("SPELL_AURA_APPLIED", "ForgingStrikeApplied", 254919)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ForgingStrikeApplied", 254919)
+	self:Log("SPELL_CAST_START", "ForgingStrike", 257978, 254919) -- LFR, others
+	self:Log("SPELL_AURA_APPLIED", "ForgingStrikeApplied", 257978, 254919)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ForgingStrikeApplied", 257978, 254919)
 	self:Log("SPELL_CAST_START", "ReverberatingStrike", 257997, 254926) -- LFR, others
 	self:Log("SPELL_CAST_SUCCESS", "DiabolicBomb", 248214)
 	self:Log("SPELL_CAST_START", "Ruiner", 246833)
@@ -162,13 +162,13 @@ end
 
 --[[ Stage: Deployment ]]--
 function mod:ForgingStrike(args)
-	self:Message(args.spellId, "yellow", "Alert")
-	self:CDBar(args.spellId, 14.5)
+	self:Message(254919, "yellow", "Alert")
+	self:CDBar(254919, 14.5)
 end
 
 function mod:ForgingStrikeApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "orange", "Warning")
+	self:StackMessage(254919, args.destName, amount, "orange", "Warning")
 end
 
 do
