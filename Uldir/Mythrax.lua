@@ -14,7 +14,6 @@ mod.engageId = 2135
 -- Locals
 --
 
-local oblivionSphereCount = 1
 local annihilationList = {}
 
 --------------------------------------------------------------------------------
@@ -43,7 +42,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "EssenceShear", 273282)
 	self:Log("SPELL_AURA_APPLIED", "EssenceShearApplied", 274693)
-	self:Log("SPELL_CAST_SUCCESS", "ObliterationWave", 273538)
+	self:Log("SPELL_CAST_SUCCESS", "ObliterationBlast", 273538)
 	self:Log("SPELL_CAST_SUCCESS", "OblivionSphere", 272404)
 	self:Log("SPELL_CAST_SUCCESS", "ImminentRuin", 272533)
 	self:Log("SPELL_AURA_APPLIED", "ImminentRuinApplied", 272536)
@@ -55,14 +54,14 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	oblivionSphereCount = 1
 	wipe(annihilationList)
 
 	self:OpenInfo(272146) -- Annihilation
 
-	self:Bar(273282, 3) -- Essence Shear
-	self:Bar(273538, 9.5) -- Obliteration Wave
-	self:Bar(272404, 20) -- Oblivion Sphere
+	self:Bar(273538, 9.5) -- Obliteration Blast
+	self:Bar(272404, 9) -- Oblivion Sphere
+	self:Bar(273282, 20) -- Essence Shear
+
 end
 
 --------------------------------------------------------------------------------
@@ -84,14 +83,16 @@ function mod:EssenceShear(args)
 end
 
 function mod:EssenceShearApplied(args)
-	self:TargetMessage2(273282, "red", args.destName)
-	self:PlaySound(273282, "alarm", nil, args.destName)
+	if self:Tank(args.destName) then
+		self:TargetMessage2(273282, "red", args.destName)
+		self:PlaySound(273282, "alarm")
+	end
 end
 
-function mod:ObliterationWave(args)
+function mod:ObliterationBlast(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 20)
+	self:Bar(args.spellId, 15)
 end
 
 do
@@ -102,14 +103,13 @@ do
 			prev = t
 			self:Message(args.spellId, "red")
 			self:PlaySound(args.spellId, "warning")
-			oblivionSphereCount = oblivionSphereCount + 1
-			self:Bar(args.spellId, oblivionSphereCount % 3 == 1 and 40 or 20)
+			self:Bar(args.spellId, 15)
 		end
 	end
 end
 
 function mod:ImminentRuin()
-	self:Bar(272536, 20)
+	self:Bar(272536, 15)
 end
 
 do
