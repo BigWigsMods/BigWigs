@@ -54,7 +54,7 @@ local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo and C_ChatInfo.SendAddonMessage or SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker -- XXX C_ChatInfo check for 8.0
-local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
+local GetCurrentMapAreaID, SetMapToCurrentZone = GetCurrentMapAreaID, SetMapToCurrentZone
 local GetInstanceInfo, GetPlayerMapAreaID, GetBestMapForUnit = GetInstanceInfo, GetPlayerMapAreaID, C_Map and C_Map.GetBestMapForUnit -- XXX remove GetPlayerMapAreaID
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
@@ -849,8 +849,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "17510" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.3.29" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "17598" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "7.3.31" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil

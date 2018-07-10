@@ -329,7 +329,7 @@ end
 
 do
 	local players = {}
-	local UnitDebuff, UnitGUID = UnitDebuff, UnitGUID
+	local UnitGUID = UnitGUID
 	function mod:UNIT_AURA(_, unit)
 		local decimation1 = self:UnitDebuff(unit, 252797)
 		local decimation2 = self:UnitDebuff(unit, 245770)
