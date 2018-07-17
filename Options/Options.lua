@@ -922,20 +922,20 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = C_ChatInfo and "BigWigs_BattleForAzeroth" or "BigWigs_Legion" -- XXX Temp
-				for i = 1, C_ChatInfo and 8 or 7 do -- XXX Temp
+				defaultHeader = "BigWigs_BattleForAzeroth"
+				for i = 1, 8 do
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
-						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
+						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value == "BigWigs_Legion" and "BigWigs" or value) > 0), -- XXX temp
 					}
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader =  C_ChatInfo and "LittleWigs_BattleForAzeroth" or "LittleWigs_Legion" -- XXX Temp
+				defaultHeader = "LittleWigs_BattleForAzeroth"
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				for i = 1,  C_ChatInfo and 8 or 7 do -- XXX Temp
+				for i = 1, 8 do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
