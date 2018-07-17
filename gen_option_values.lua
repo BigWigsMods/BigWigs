@@ -390,6 +390,20 @@ local function parseLua(file)
 				option_keys = opts
 			end
 		end
+		local toggle_options = line:match("^mod%.toggleOptions = ({.+})")
+		if toggle_options then
+			local success, result = pcall(loadstring("return " .. toggle_options))
+			if success then
+				for _, opt in next, result do
+					if type(opt) == "table" then
+						opt = opt[1]
+					end
+					if opt then -- marker option vars will be nil
+						option_keys[opt] = true
+					end
+				end
+			end
+		end
 
 		--- Build the callback map.
 		-- Parse :Log calls and save the callback => spellId association so we can
@@ -447,6 +461,7 @@ local function parseLua(file)
 		res = line:match("^%s*local function%s+([%w_]+)%s*%(") or line:match("^%s*function%s+([%w_]+)%s*%(")
 		if res then
 			current_func = res
+			methods[res] = true
 			rep = {}
 			rep.local_func_key = findCalls(lines, n, current_func, options)
 		end
