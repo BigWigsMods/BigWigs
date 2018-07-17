@@ -202,7 +202,7 @@ do
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 233895 then -- Suffocating Dark
 		self:Message(spellId, "Attention", "Info")
 		suffocatingDarkCounter = suffocatingDarkCounter + 1
@@ -212,7 +212,7 @@ end
 
 do
 	local lastPower, prev = 0, 0
-	function mod:UNIT_POWER(unit, pType)
+	function mod:UNIT_POWER(event, unit, pType)
 		if pType == "ALTERNATE" then
 			local power = UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
 			if power < lastPower or power >= nextAltPowerWarning then

@@ -185,7 +185,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 229168 then -- Test for Players (Phase 1 end)
 		phase = 2
 		isHymdallFighting = false
@@ -355,7 +355,7 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_AURA(unit)
+	function mod:UNIT_AURA(_, unit)
 		if self:UnitBuff(unit, 228018) and GetTime() - prev > 4 then -- We want this repeated
 			prev = GetTime()
 			self:Message(228018, "Important", "Alarm") -- Valarjar's Bond

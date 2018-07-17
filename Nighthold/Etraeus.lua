@@ -188,7 +188,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 222130 then -- Phase 2 Conversation
 		phase = 2
 		self:Message("stages", "Neutral", "Long", "90% - ".. CL.stage:format(2), false)

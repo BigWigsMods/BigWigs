@@ -182,7 +182,7 @@ do
 end
 
 --[[ Spider Form ]]--
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 212364 then -- Feeding Time, there is also 214305, fires about 1.2s later
 		self:Message(spellId, "Important", "Info")
 		self:Bar(214348, 8.2) -- Vile Ambush

@@ -116,10 +116,10 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 228187 then -- Guardian's Breath (starts casting)
 		breathCounter = breathCounter + 1
-		self:Bar(spellId, (breathCounter % 2 == 0 and 51) or 20.7, CL.count:format(spellName, breathCounter+1))
+		self:Bar(spellId, (breathCounter % 2 == 0 and 51) or 20.7, CL.count:format(self:SpellName(spellId), breathCounter+1))
 		self:Message(spellId, "Attention", "Warning")
 		self:CastBar(spellId, 5)
 		self:Flash(spellId)

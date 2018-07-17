@@ -143,18 +143,18 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(event, unit, _, spellId)
 	if spellId == 246686 then -- Decimation
 		local guid = UnitGUID(unit)
 		local mobId = self:MobId(guid)
 		local mobText = getMobNumber(mobId, guid)
-		self:Bar(spellId, 15.8, CL.count:format(spellName, mobText))
+		self:Bar(spellId, 15.8, CL.count:format(self:SpellName(spellId), mobText))
 	elseif spellId == 246657 then -- Annihilation
 		local guid = UnitGUID(unit)
 		local mobId = self:MobId(guid)
 		local mobText = getMobNumber(mobId, guid)
 		self:Message(246664, "red", "Alarm")
-		self:Bar(246664, 15.8, CL.count:format(spellName, mobText))
+		self:Bar(246664, 15.8, CL.count:format(self:SpellName(spellId), mobText))
 	elseif spellId == 248375 then -- Shattering Strike
 		self:Message(spellId, "orange", "Warning")
 	end
