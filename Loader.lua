@@ -86,9 +86,9 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeZones = { -- Fake zones used as GUI menus
-	[-466]=true, -- Outland
-	[-862]=true, -- Pandaria
-	[-962]=true, -- Draenor
+	[-101]=true, -- Outland
+	[-1153]=true, -- Pandaria
+	[-572]=true, -- Draenor
 	[-619]=true, -- Broken Isles
 	[1716]=true, -- Broken Shore Mage Tower
 }
@@ -118,7 +118,7 @@ do
 		[509] = c, -- Ruins of Ahn'Qiraj
 		[531] = c, -- Ahn'Qiraj Temple
 		--[[ BigWigs: The Burning Crusade ]]--
-		[-466] = bc, -- Outland (Fake Menu)
+		[-101] = bc, -- Outland (Fake Menu)
 		[565] = bc, -- Gruul's Lair
 		[532] = bc, -- Karazhan
 		[548] = bc, -- Coilfang: Serpentshrine Cavern
@@ -144,19 +144,19 @@ do
 		[720] = cata, -- Firelands
 		[967] = cata, -- Dragon Soul
 		--[[ BigWigs: Mists of Pandaria ]]--
-		[-862] = mop, -- Pandaria (Fake Menu)
+		[-1153] = mop, -- Pandaria (Fake Menu)
 		[1009] = mop, -- Heart of Fear
 		[996] = mop, -- Terrace of Endless Spring
 		[1008] = mop, -- Mogu'shan Vaults
 		[1098] = mop, -- Throne of Thunder
 		[1136] = mop, -- Siege of Orgrimmar
 		--[[ BigWigs: Warlords of Draenor ]]--
-		[-962] = wod, -- Draenor (Fake Menu)
+		[-572] = wod, -- Draenor (Fake Menu)
 		[1228] = wod, -- Highmaul
 		[1205] = wod, -- Blackrock Foundry
 		[1448] = wod, -- Hellfire Citadel
 		--[[ BigWigs: Legion ]]--
-		[-1007] = l, -- Broken Isles (Fake Menu)
+		[-619] = l, -- Broken Isles (Fake Menu)
 		[1520] = l, -- The Emerald Nightmare
 		[1648] = l, -- Trial of Valor
 		[1530] = l, -- The Nighthold
@@ -263,10 +263,10 @@ do
 	}
 
 	public.zoneTblWorld = {
-		[-473] = -466, [-465] = -466, -- Outland
-		[-807] = -862, [-809] = -862, [-928] = -862, [-929] = -862, [-951] = -862, -- Pandaria
-		[-948] = -962, [-949] = -962, [-945] = -962, -- Draenor
-		[-1015] = -1007, [-1017] = -1007, [-1018] = -1007, [-1024] = -1007, [-1033] = -1007, -- Broken Isles
+		[-104] = -101, [-100] = -101, -- Outland
+		[-376] = -1153, [-379] = -1153, [-504] = -1153, [-507] = -1153, [-554] = -1153, -- Pandaria
+		[-542] = -572, [-543] = -572, [-534] = -572, -- Draenor
+		[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
 	}
 end
 
