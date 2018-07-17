@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 80000
 
 ## Title: BigWigs [|cffeda55fTomb of Sargeras|r]
 ## Title-deDE: BigWigs [|cffeda55fDas Grabmal des Sargeras|r]

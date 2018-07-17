@@ -1,4 +1,4 @@
-## Interface: 70300
+## Interface: 80000
 
 ## Title: BigWigs [|cffeda55fBroken Isles|r]
 ## Title-deDE: BigWigs [|cffeda55fVerheerte Inseln|r]
