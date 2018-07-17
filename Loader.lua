@@ -87,7 +87,7 @@ local disabledZones -- contains the zones in which BigWigs will enable, but the 
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeZones = { -- Fake zones used as GUI menus
 	[-101]=true, -- Outland
-	[-1153]=true, -- Pandaria
+	[-424]=true, -- Pandaria
 	[-572]=true, -- Draenor
 	[-619]=true, -- Broken Isles
 	[1716]=true, -- Broken Shore Mage Tower
@@ -144,7 +144,7 @@ do
 		[720] = cata, -- Firelands
 		[967] = cata, -- Dragon Soul
 		--[[ BigWigs: Mists of Pandaria ]]--
-		[-1153] = mop, -- Pandaria (Fake Menu)
+		[-424] = mop, -- Pandaria (Fake Menu)
 		[1009] = mop, -- Heart of Fear
 		[996] = mop, -- Terrace of Endless Spring
 		[1008] = mop, -- Mogu'shan Vaults
@@ -264,7 +264,7 @@ do
 
 	public.zoneTblWorld = {
 		[-104] = -101, [-100] = -101, -- Outland
-		[-376] = -1153, [-379] = -1153, [-504] = -1153, [-507] = -1153, [-554] = -1153, -- Pandaria
+		[-376] = -424, [-379] = -424, [-504] = -424, [-507] = -424, [-554] = -424, -- Pandaria
 		[-542] = -572, [-543] = -572, [-534] = -572, -- Draenor
 		[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
 	}
