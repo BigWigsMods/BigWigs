@@ -327,6 +327,7 @@ plugin.pluginOptions.args.more = {
 			set = function(_, value)
 				local list = media:List(FONT)
 				plugin.db.profile.font = list[value]
+				updateProfile()
 			end,
 		},
 		outline = {
