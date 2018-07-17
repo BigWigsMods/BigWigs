@@ -281,7 +281,7 @@ function mod:StartWaveTimer(lane, count)
 	self:ScheduleTimer("StartWaveTimer", length, lane, count+1)
 end
 
-function mod:UNIT_HEALTH_FREQUENT(unit)
+function mod:UNIT_HEALTH_FREQUENT(_, unit)
 	local hp = UnitHealth(unit)
 	local max = UnitHealthMax(unit)
 	local percent = hp/max
@@ -289,7 +289,7 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 	self:SetInfoBar("infobox", 1, percent, 0, .7, 0, 0.3) -- green
 end
 
-function mod:UNIT_POWER_FREQUENT(unit)
+function mod:UNIT_POWER_FREQUENT(_, unit)
 	local power = UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
 	if power >= 80 and shouldAnnounceEnergy then
 		shouldAnnounceEnergy = nil

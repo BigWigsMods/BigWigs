@@ -190,7 +190,7 @@ local function updateProximity(self)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 215455 then -- Arcane Orb
 		self:Message(213520, "Important")
 	elseif spellId == 213390 then -- Detonate: Arcane Orb

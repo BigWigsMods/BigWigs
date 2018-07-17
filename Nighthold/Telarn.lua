@@ -156,13 +156,13 @@ function mod:ArcaneInfusion()
 	iconsUnused = {1, 2, 3, 4, 5, 6}
 end
 
-function mod:UNIT_HEALTH_FREQUENT(unit)
+function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextPhaseSoon then
 		self:Message("stages", "Neutral", "Info", CL.soon:format(CL.stage:format(phase+1)), false)
 		nextPhaseSoon = nextPhaseSoon - 25
 		if nextPhaseSoon < 50 then
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+			self:UnregisterUnitEvent(event, unit)
 		end
 	end
 end

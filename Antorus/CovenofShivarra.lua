@@ -228,7 +228,7 @@ do
 end
 
 --[[ General ]]--
-function mod:UNIT_TARGETABLE_CHANGED(unit)
+function mod:UNIT_TARGETABLE_CHANGED(_, unit)
 	if self:MobId(UnitGUID(unit)) == 122468 then -- Noura
 		if UnitCanAttack("player", unit) then
 			self:Message("stages", "green", "Long", -15967, false) -- Noura, Mother of Flame
@@ -320,7 +320,7 @@ do
 		["Golganneth"] = "tormentLightning",
 	}
 
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		local announceNextTorment = nil
 		if spellId == 253949 then -- Machinations of Aman'thul
 			self:StopBar(L.torment:format(L.tormentHeal))

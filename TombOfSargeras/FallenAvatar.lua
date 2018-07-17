@@ -260,7 +260,7 @@ end
 do
 	local bladeTimer = nil
 
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		if spellId == 234057 then -- Unbound Chaos
 			if self:Tank() then
 				self:Message(234059, "Attention", "Alert")
@@ -296,11 +296,11 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	end
 end
 
-function mod:UNIT_POWER(unit)
+function mod:UNIT_POWER(event, unit)
 	local power = UnitPower(unit)
 	if power >= 85 then
 		self:Message(233856, "Attention", self:Damager() and "Info", CL.soon:format(self:SpellName(233856))) -- Cleansing Protocol
-		self:UnregisterUnitEvent("UNIT_POWER", unit)
+		self:UnregisterUnitEvent(event, unit)
 	end
 end
 

@@ -126,9 +126,9 @@ function mod:drawInCheck(self)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 232192 then -- Commanding Roar
-		self:Message(spellId, "Important", "Alert", spellName)
+		self:Message(spellId, "Important", "Alert")
 		roarCounter = roarCounter + 1
 		if (nextDrawIn > GetTime() + 32.8) or skipDrawIn then
 			self:Bar(spellId, 32.8)

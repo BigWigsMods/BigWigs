@@ -142,7 +142,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 239153 then -- Spontaneous Fragmentation
 		self:Message(spellId, "Attention", "Alert", self:SpellName(230932))
 		orbCounter = orbCounter + 1
@@ -156,7 +156,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		-- so we have to count the casts.
 		wrathStacks = wrathStacks + 1
 		if (wrathStacks >= 10 and wrathStacks % 5 == 0) or (wrathStacks >= 25) then -- 10,15,20,25,26,27,28,29,30
-			self:Message(234891, "Urgent", wrathStacks >= 25 and "Alert", CL.count:format(spellName, wrathStacks))
+			self:Message(234891, "Urgent", wrathStacks >= 25 and "Alert", CL.count:format(self:SpellName(spellId), wrathStacks))
 		end
 	end
 end

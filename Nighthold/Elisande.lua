@@ -362,7 +362,7 @@ end
 --[[ General ]]--
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		if spellId == 211614 then -- Slow
 			self:Message("recursive_elemental", "Neutral", "Info", L.recursive_elemental, L.recursive_elemental_icon)
 			slowElementalCount = slowElementalCount + 1
@@ -392,7 +392,7 @@ do
 			singularityCount = singularityCount + 1
 			local timer = timers[209170][singularityCount]
 			if timer then
-				self:Bar(209170, timer, CL.count:format(spellName, singularityCount))
+				self:Bar(209170, timer, CL.count:format(self:SpellName(spellId), singularityCount))
 			end
 		elseif self:Easy() and (spellId == 209168 or spellId == 233010) then -- Spanning Singularity normal mode / LFR
 			local t = GetTime()
@@ -402,9 +402,9 @@ do
 				singularityCount = singularityCount + 1
 				local timer = timers[209170][singularityCount]
 				if self:LFR() then -- XXX Unsure if timers are complete
-					self:Bar(209170, timer, CL.count:format(spellName, singularityCount))
+					self:Bar(209170, timer, CL.count:format(self:SpellName(spellId), singularityCount))
 				elseif timer then
-					self:Bar(209170, timer, CL.count:format(spellName, singularityCount))
+					self:Bar(209170, timer, CL.count:format(self:SpellName(spellId), singularityCount))
 				end
 			end
 		end

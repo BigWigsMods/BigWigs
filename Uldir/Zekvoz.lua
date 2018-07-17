@@ -103,14 +103,14 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_HEALTH_FREQUENT(unit)
+function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then
 		local nextStage = stage + 1
 		self:Message("stages", "green", nil, CL.soon:format(CL.stage:format(nextStage)), false)
 		nextStageWarning = nextStageWarning - 30
 		if nextStageWarning < 40 then
-			self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+			self:UnregisterUnitEvent(event, unit)
 		end
 	end
 end
@@ -135,7 +135,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 266913 then -- Spawn Qiraji Warrior
 		self:Message(-18390, "cyan", nil, nil, 275772)
 		self:PlaySound(-18390, "long")

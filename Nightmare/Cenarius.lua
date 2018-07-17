@@ -226,7 +226,7 @@ function mod:WispDeath(args)
 end
 
 --[[ Cenarius ]]--
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 210290 then -- Nightmare Brambles
 		self:Bar(spellId, phase == 2 and 20 or 30) -- at some point starts casting with 15sec-20sec cd
 		local targetGUID = UnitGUID("boss1target") -- selects target 2sec prior to the cast
@@ -234,7 +234,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 			if self:Me(targetGUID) then
 				self:Flash(spellId)
 				self:Say(spellId, L.bramblesSay:format(self:UnitName("player")), true)
-				self:Message(spellId, "Urgent", "Alarm", CL.near:format(spellName))
+				self:Message(spellId, "Urgent", "Alarm", CL.near:format(self:SpellName(spellId)))
 			else
 				self:Message(spellId, "Urgent", "Alarm")
 			end
@@ -249,7 +249,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		self:Bar(214505, 35) -- Entangling Nightmares
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
 	elseif spellId == 214876 then -- Beasts of Nightmare
-		self:Message(spellId, "Important", "Alert", CL.incoming:format(spellName))
+		self:Message(spellId, "Important", "Alert", CL.incoming:format(self:SpellName(spellId)))
 		self:Bar(spellId, 30.3)
 	end
 end
@@ -420,7 +420,7 @@ function mod:RottenBreath(args)
 	end
 end
 
-function mod:BreathTarget(unit) -- They love to drop their target after casting
+function mod:BreathTarget(event, unit) -- They love to drop their target after casting
 	local target = unit.."target"
 	local guid = UnitGUID(target)
 	if not guid or UnitDetailedThreatSituation(target, unit) ~= false or self:MobId(guid) ~= 1 then return end

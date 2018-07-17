@@ -181,10 +181,10 @@ do
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(unit)
+function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit)
 	if hp < 0.35 then -- Blood Frenzy at 30%
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+		self:UnregisterUnitEvent(event, unit)
 		self:Message(198388, "Neutral", "Info", CL.soon:format(self:SpellName(198388))) -- Blood Frenzy
 	end
 end

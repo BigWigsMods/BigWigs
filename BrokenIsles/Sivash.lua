@@ -57,7 +57,7 @@ function mod:TidalWave(args)
 	self:CDBar(args.spellId, 22)
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, castGUID, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 	if castCollector[castGUID] then return end -- Don't fire twice for the same cast
 
 	if spellId == 241433 then -- Submerge

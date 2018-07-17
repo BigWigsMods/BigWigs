@@ -53,7 +53,7 @@ end
 
 do
 	local prev = nil
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, castGUID, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 		if spellId == 212837 and castGUID ~= prev then -- Crackling Jolt
 			prev = castGUID
 			self:Message(-13327, "Important", "Alarm")

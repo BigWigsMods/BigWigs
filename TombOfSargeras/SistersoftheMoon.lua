@@ -121,7 +121,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 235268 then -- Lunar Ghost (Transition)
 		stage = stage + 1
 		local nextUltimateTimer = nextUltimate - GetTime()

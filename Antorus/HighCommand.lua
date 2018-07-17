@@ -119,7 +119,7 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 245304 then -- Entropic Mines
 		self:Message(245161, "yellow", "Info")
 		local cooldown = 10

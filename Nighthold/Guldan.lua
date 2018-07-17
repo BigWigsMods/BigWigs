@@ -369,7 +369,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 210273 then -- Fel Obelisk
 		obeliskCounter = obeliskCounter+1
 		self:Message(229945, "Attention", "Alarm")
@@ -382,12 +382,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		self:Bar("manifest", 41.0, 221149, L.manifest_icon) -- Glaive Icon
 	elseif spellId == 227071 then -- Flame Crash
 		crashCounter = crashCounter + 1
-		self:Bar(spellId, crashCounter == 5 and 50 or crashCounter == 8 and 50 or 20, CL.count:format(spellName, crashCounter))
+		self:Bar(spellId, crashCounter == 5 and 50 or crashCounter == 8 and 50 or 20, CL.count:format(self:SpellName(spellId), crashCounter))
 	elseif spellId == 227283 then -- Nightorb
 		orbCounter = orbCounter + 1
 		self:Message("nightorb", "Attention", "Alert", spellId, L.nightorb_icon)
 		if orbCounter ~= 5 then
-			self:Bar("nightorb", orbCounter == 3 and 60 or orbCounter == 4 and 40 or 45, CL.count:format(spellName, orbCounter), L.nightorb_icon)
+			self:Bar("nightorb", orbCounter == 3 and 60 or orbCounter == 4 and 40 or 45, CL.count:format(self:SpellName(spellId), orbCounter), L.nightorb_icon)
 		end
 	end
 end
