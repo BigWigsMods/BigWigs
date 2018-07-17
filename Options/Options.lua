@@ -855,6 +855,7 @@ do
 	local statusTable = {}
 	local playerName = nil
 	local GetBestMapForUnit = loader.GetBestMapForUnit
+	local GetMapInfo = loader.GetMapInfo
 
 	local function toggleAnchors()
 		if not BigWigs:IsEnabled() then BigWigs:Enable() end
@@ -948,7 +949,17 @@ do
 			do
 				local zoneToId, alphabeticalZoneList = {}, {}
 				for k in next, loader:GetZoneMenus() do
-					local zone = k < 0 and (GetMapNameByID and GetMapNameByID(-k) or tostring(k)) or GetRealZoneText(k) -- XXX 8.0 fixme
+					local zone
+					if k < 0 then
+						local tbl = GetMapInfo(-k)
+						if tbl then
+							zone = tbl.name
+						else
+							zone = tostring(k)
+						end
+					else
+						zone = GetRealZoneText(k)
+					end
 					if zone then
 						if zoneToId[zone] then
 							zone = zone .. "1" -- When instances exist more than once (Karazhan)

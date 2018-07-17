@@ -56,6 +56,7 @@ local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo and C_ChatInfo.SendAddonMessage or SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker -- XXX C_ChatInfo check for 8.0
 local GetCurrentMapAreaID, SetMapToCurrentZone = GetCurrentMapAreaID, SetMapToCurrentZone
 local GetInstanceInfo, GetPlayerMapAreaID, GetBestMapForUnit = GetInstanceInfo, GetPlayerMapAreaID, C_Map and C_Map.GetBestMapForUnit -- XXX remove GetPlayerMapAreaID
+local GetMapInfo = C_Map.GetMapInfo
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetCurrentMapAreaID = GetCurrentMapAreaID -- XXX remove
@@ -63,6 +64,7 @@ public.GetPlayerMapAreaID = GetPlayerMapAreaID -- XXX remove
 public.GetBestMapForUnit = GetBestMapForUnit
 public.SetMapToCurrentZone = SetMapToCurrentZone -- XXX remove
 public.GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel -- XXX remove
+public.GetMapInfo = GetMapInfo
 public.GetInstanceInfo = GetInstanceInfo
 public.SendAddonMessage = SendAddonMessage
 public.SendChatMessage = SendChatMessage
@@ -87,7 +89,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[-466]=true, -- Outland
 	[-862]=true, -- Pandaria
 	[-962]=true, -- Draenor
-	[-1007]=true, -- Broken Isles
+	[-619]=true, -- Broken Isles
 	[1716]=true, -- Broken Shore Mage Tower
 }
 
@@ -504,7 +506,17 @@ do
 			local rawMenu = select(i, ...)
 			local id = tonumber(rawMenu:trim())
 			if id then
-				local name = id < 0 and (GetMapNameByID and GetMapNameByID(-id) or tostring(id)) or GetRealZoneText(id) -- XXX 8.0 fixme
+				local name
+				if id < 0 then
+					local tbl = GetMapInfo(-id)
+					if tbl then
+						name = tbl.name
+					else
+						name = tostring(id)
+					end
+				else
+					name = GetRealZoneText(id)
+				end
 				if name and name ~= "" then -- Protect live client from beta client ids
 					if not loadOnZone[id] then loadOnZone[id] = {} end
 					loadOnZone[id][#loadOnZone[id] + 1] = addon
@@ -523,7 +535,17 @@ do
 			local rawMenu = select(i, ...)
 			local id = tonumber(rawMenu:trim())
 			if id then
-				local name = id < 0 and (GetMapNameByID and GetMapNameByID(-id) or tostring(id)) or GetRealZoneText(id) -- XXX 8.0 fixme
+				local name
+				if id < 0 then
+					local tbl = GetMapInfo(-id)
+					if tbl then
+						name = tbl.name
+					else
+						name = tostring(id)
+					end
+				else
+					name = GetRealZoneText(id)
+				end
 				if name and name ~= "" and not blockedMenus[id] then -- Protect live client from beta client ids
 					blockedMenus[id] = true
 				end

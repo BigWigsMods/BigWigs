@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Apocron", -1021, 1956)
+local mod = BigWigs:NewBoss("Apocron", -646, 1956)
 if not mod then return end
 mod:RegisterEnableMob(121124)
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 121124
 
 --------------------------------------------------------------------------------

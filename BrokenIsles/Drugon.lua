@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Drugon the Frostblood", -1024, 1789)
+local mod, CL = BigWigs:NewBoss("Drugon the Frostblood", -650, 1789)
 if not mod then return end
 mod:RegisterEnableMob(110378)
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 110378
 
 --------------------------------------------------------------------------------

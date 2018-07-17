@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Calamir", -1015, 1774)
+local mod, CL = BigWigs:NewBoss("Calamir", -630, 1774)
 if not mod then return end
 mod:RegisterEnableMob(109331)
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 109331
 
 --------------------------------------------------------------------------------
