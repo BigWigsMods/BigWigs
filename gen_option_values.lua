@@ -372,7 +372,7 @@ local function parseLua(file)
 	local file_name = file:match(".*/(.*)$") or file
 
 	local options, option_keys = {}, {}
-	local methods, registered_methods = {}, {}
+	local methods, registered_methods = {Win=true}, {}
 	local current_func = nil
 	local rep = {}
 	for n, line in ipairs(lines) do
@@ -380,7 +380,7 @@ local function parseLua(file)
 		line = line:gsub("%-%-.*$", "") -- strip comments
 
 		--- loadstring the options table
-		if line == "function mod:GetOptions()" then
+		if line == "function mod:GetOptions()" or line == "function mod:GetOptions(CL)" then
 			local opts, err = parseGetOptions(lines, n+1)
 			if not opts then
 				-- rip keys
