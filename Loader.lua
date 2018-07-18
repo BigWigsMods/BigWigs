@@ -84,7 +84,6 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[-424]=true, -- Pandaria
 	[-572]=true, -- Draenor
 	[-619]=true, -- Broken Isles
-	[1716]=true, -- Broken Shore Mage Tower
 }
 
 do
@@ -229,7 +228,6 @@ do
 		[1175] = lw_wod, -- Bloodmaul Slag Mines
 		[1358] = lw_wod, -- Upper Blackrock Spire
 		--[[ LittleWigs: Legion ]]--
-		[1716] = lw_l, -- Broken Shore Mage Tower (Fake Menu)
 		[1544] = lw_l, -- Assault on Violet Hold
 		[1677] = lw_l, -- Cathedral of Eternal Night
 		[1571] = lw_l, -- Court of Stars
