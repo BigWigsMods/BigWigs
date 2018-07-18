@@ -197,26 +197,26 @@ end
 
 do
 	-- Cinematic blocking
-	local cinematicZones = { -- XXX fixme for 8.0
-		["800:1"] = true, -- Firelands bridge lowering
-		["875:1"] = true, -- Gate of the Setting Sun gate breach
-		["930:3"] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
-		["930:7"] = true, -- Ra-Den room opening
-		["953:2"] = true, -- After Immerseus, entry to Fallen Protectors
-		["953:8"] = true, -- Blackfuse room opening, just outside the door
-		["953:9"] = true, -- Blackfuse room opening, in Thok area
-		["953:12"] = true, -- Mythic Garrosh Phase 4
-		["964:1"] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
-		["969:2"] = true, -- Shadowmoon Burial Grounds, final boss introduction
-		["984:1"] = {false, -1, true}, -- Auchindoun has 2 cinematics. One before the 1st boss (false) and one after the 3rd boss (true), 2nd arg is garbage for the iterator to work.
-		["993:2"] = true, -- Grimrail Depot, boarding the train
-		["993:4"] = true, -- Grimrail Depot, destroying the train
-		["994:3"] = true, -- Highmaul, Kargath Death
-		["1042:1"] = true, -- Maw of Souls, after Ymiron
-		["1147:6"] = true, -- Tomb of Sargeras, portal to Kil'jaeden
-		["1188:1"] = true, -- Antorus, teleportation to "The exhaust"
-		["1188:6"] = true, -- Antorus, teleportation to "The burning throne"
-		["1188:9"] = true, -- Antorus, magni portal to argus room
+	local cinematicZones = {
+		[-367] = true, -- Firelands bridge lowering
+		[-437] = true, -- Gate of the Setting Sun gate breach
+		[-510] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?
+		[-514] = true, -- Ra-Den room opening
+		[-557] = true, -- After Immerseus, entry to Fallen Protectors
+		[-563] = true, -- Blackfuse room opening, just outside the door
+		[-564] = true, -- Blackfuse room opening, in Thok area
+		[-567] = true, -- Mythic Garrosh Phase 4
+		[-573] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
+		[-575] = true, -- Shadowmoon Burial Grounds, final boss introduction
+		[-593] = {false, -1, true}, -- Auchindoun has 2 cinematics. One before the 1st boss (false) and one after the 3rd boss (true), 2nd arg is garbage for the iterator to work.
+		[-607] = true, -- Grimrail Depot, boarding the train
+		[-609] = true, -- Grimrail Depot, destroying the train
+		[-612] = true, -- Highmaul, Kargath Death
+		[-706] = true, -- Maw of Souls, after Ymiron
+		[-855] = true, -- Tomb of Sargeras, portal to Kil'jaeden
+		[-909] = true, -- Antorus, teleportation to "The exhaust"
+		[-914] = true, -- Antorus, teleportation to "The burning throne"
+		[-917] = true, -- Antorus, magni portal to argus room
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
