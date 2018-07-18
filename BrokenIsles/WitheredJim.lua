@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Withered J'im", -1015, 1796)
+local mod = BigWigs:NewBoss("Withered J'im", -630, 1796)
 if not mod then return end
 mod:RegisterEnableMob(102075, 112350) -- Withered J'im, Clone
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 102075
 
 --------------------------------------------------------------------------------

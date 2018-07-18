@@ -197,7 +197,6 @@ L.messages = "Messages"
 L.normalMessages = "Normal messages"
 L.emphasizedMessages = "Emphasized messages"
 L.output = "Output"
-L.emphasizedCountdown = "Emphasized countdown"
 
 L.useColors = "Use colors"
 L.useColorsDesc = "Toggles white only messages ignoring coloring."

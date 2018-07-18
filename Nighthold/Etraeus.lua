@@ -188,7 +188,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 222130 then -- Phase 2 Conversation
 		phase = 2
 		self:Message("stages", "Neutral", "Long", "90% - ".. CL.stage:format(2), false)
@@ -287,7 +287,7 @@ do
 end
 
 function mod:GravitationalPull(args)
-	local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName)
+	local _, _, _, expires = self:UnitDebuff(args.destName, args.spellId)
 	local remaining = expires-GetTime()
 	self:TargetBar(args.spellId, remaining, args.destName)
 

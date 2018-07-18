@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Nithogg", -1017, 1749)
+local mod = BigWigs:NewBoss("Nithogg", -634, 1749)
 if not mod then return end
 mod:RegisterEnableMob(107023)
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 107023
 
 --------------------------------------------------------------------------------
@@ -53,7 +53,7 @@ end
 
 do
 	local prev = nil
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, castGUID, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 		if spellId == 212837 and castGUID ~= prev then -- Crackling Jolt
 			prev = castGUID
 			self:Message(-13327, "Important", "Alarm")

@@ -150,7 +150,7 @@ end
 --
 
 --[[ General ]]--
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 226193 then -- Xavius Energize Phase 2
 		phase = 2
 		self:Message("stages", "Neutral", "Long", "65% - ".. CL.stage:format(2), false)
@@ -176,9 +176,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		local percentage = dreamingCount == 1 and "97% - " or "60% - "
 		if self:Mythic() then
 			percentage = dreamingCount == 1 and "97% - " or dreamingCount == 2 and "80% - " or dreamingCount == 3 and "60% - " or "45% - "
-			self:CastBar(spellId, 6, CL.count:format(spellName, dreamingCount))
+			self:CastBar(spellId, 6, CL.count:format(self:SpellName(spellId), dreamingCount))
 		end
-		self:Message(spellId, "Positive", "Long", percentage .. CL.count:format(spellName, dreamingCount))
+		self:Message(spellId, "Positive", "Long", percentage .. CL.count:format(self:SpellName(spellId), dreamingCount))
 		dreamingCount = dreamingCount + 1
 	end
 end

@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Na'zak the Fiend", -1033, 1783)
+local mod, CL = BigWigs:NewBoss("Na'zak the Fiend", -680, 1783)
 if not mod then return end
 mod:RegisterEnableMob(110321)
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 110321
 
 --------------------------------------------------------------------------------
@@ -98,9 +98,9 @@ end
 
 do
 	local spellName = mod:SpellName(219861)
-	function mod:UNIT_AURA(unit)
+	function mod:UNIT_AURA(event, unit)
 		if self:UnitDebuff(unit, spellName) then
-			self:UnregisterUnitEvent("UNIT_AURA", unit)
+			self:UnregisterUnitEvent(event, unit)
 			self:Say(219861)
 		end
 	end

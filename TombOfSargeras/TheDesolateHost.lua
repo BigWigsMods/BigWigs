@@ -179,9 +179,9 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 235885 then -- Collapsing Fissure
-		self:Message(235907, "Attention", "Alert", spellName)
+		self:Message(235907, "Attention", "Alert", spellId, 235907)
 		local t = stage == 2 and 15.8 or 30.5
 		local remaining = nextTormentedCries - GetTime()
 		if stage ~= 2 and remaining < 30.5 and remaining > 0 then
@@ -212,7 +212,7 @@ function updateRealms(self)
 	wipe(phasedList)
 	wipe(unphasedList)
 	for unit in self:IterateGroup() do
-		local buffCheck = self:UnitDebuff(unit, self:SpellName(235621)) -- Spirit Realm
+		local buffCheck = self:UnitDebuff(unit, 235621) -- Spirit Realm
 		local guid = UnitGUID(unit)
 		if buffCheck then
 			phasedList[#phasedList+1] = self:UnitName(unit)

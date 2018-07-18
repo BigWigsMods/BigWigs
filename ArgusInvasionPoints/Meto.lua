@@ -49,12 +49,12 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		if spellId == 247585 then -- Seed of Chaos
 			local t = GetTime()
 			if t-prev > 1.5 then
 				prev = t
-				self:Message(spellId, "Urgent", "Long", spellName)
+				self:Message(spellId, "Urgent", "Long")
 				self:CDBar(spellId, 30)
 			end
 		end

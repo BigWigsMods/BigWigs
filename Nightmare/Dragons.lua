@@ -166,7 +166,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 204720 then -- Aerial
 		local id = self:MobId(UnitGUID(unit))
 		local name = self:UnitName(unit)

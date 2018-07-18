@@ -114,7 +114,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 207620 then -- Annihilation
 		self:Message(207630, "Important", "Long")
 	end

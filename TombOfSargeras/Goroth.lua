@@ -84,9 +84,9 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 233050 then --Infernal Spike
-		self:Message(233514, "Important", "Alert", CL.casting:format(spellName))
+		self:Message(233514, "Important", "Alert", CL.casting:format(self:SpellName(spellId)))
 		spikeCounter = spikeCounter + 1
 		if self:LFR() then
 			self:Bar(233514, spikeCounter == 4 and 26 or 16.6)
@@ -95,8 +95,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 		end
 	elseif spellId == 233285 then -- Rain of Brimstone
 		rainCounter = rainCounter + 1
-		self:Message(238588, "Urgent", "Warning", CL.incoming:format(spellName))
-		self:Bar(238588, rainCounter == 5 and 68 or 60, CL.count:format(spellName, rainCounter))
+		self:Message(238588, "Urgent", "Warning", CL.incoming:format(self:SpellName(spellId)))
+		self:Bar(238588, rainCounter == 5 and 68 or 60, CL.count:format(self:SpellName(spellId), rainCounter))
 		self:Bar(238588, 8, self:SpellName(182580), 238588) -- Meteor Impact
 	end
 end

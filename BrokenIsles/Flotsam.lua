@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Flotsam", -1024, 1795)
+local mod, CL = BigWigs:NewBoss("Flotsam", -650, 1795)
 if not mod then return end
 mod:RegisterEnableMob(99929)
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 99929
 
 --------------------------------------------------------------------------------
@@ -51,7 +51,7 @@ do
 	end
 
 	local prev = nil
-	function mod:Jetsam(_, unit, _, _, castGUID, spellId)
+	function mod:Jetsam(_, unit, castGUID, spellId)
 		if spellId == 220295 and castGUID ~= prev then -- Jetsam
 			prev = castGUID
 			self:GetUnitTarget(printTarget, 0.3, UnitGUID(unit))

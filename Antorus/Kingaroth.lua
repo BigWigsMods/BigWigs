@@ -76,9 +76,9 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
 
 	--[[ Stage: Deployment ]]--
-	self:Log("SPELL_CAST_START", "ForgingStrike", 254919)
-	self:Log("SPELL_AURA_APPLIED", "ForgingStrikeApplied", 254919)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ForgingStrikeApplied", 254919)
+	self:Log("SPELL_CAST_START", "ForgingStrike", 257978, 254919) -- LFR, others
+	self:Log("SPELL_AURA_APPLIED", "ForgingStrikeApplied", 257978, 254919)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ForgingStrikeApplied", 257978, 254919)
 	self:Log("SPELL_CAST_START", "ReverberatingStrike", 257997, 254926) -- LFR, others
 	self:Log("SPELL_CAST_SUCCESS", "DiabolicBomb", 248214)
 	self:Log("SPELL_CAST_START", "Ruiner", 246833)
@@ -143,18 +143,18 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(event, unit, _, spellId)
 	if spellId == 246686 then -- Decimation
 		local guid = UnitGUID(unit)
 		local mobId = self:MobId(guid)
 		local mobText = getMobNumber(mobId, guid)
-		self:Bar(spellId, 15.8, CL.count:format(spellName, mobText))
+		self:Bar(spellId, 15.8, CL.count:format(self:SpellName(spellId), mobText))
 	elseif spellId == 246657 then -- Annihilation
 		local guid = UnitGUID(unit)
 		local mobId = self:MobId(guid)
 		local mobText = getMobNumber(mobId, guid)
 		self:Message(246664, "red", "Alarm")
-		self:Bar(246664, 15.8, CL.count:format(spellName, mobText))
+		self:Bar(246664, 15.8, CL.count:format(self:SpellName(spellId), mobText))
 	elseif spellId == 248375 then -- Shattering Strike
 		self:Message(spellId, "orange", "Warning")
 	end
@@ -162,13 +162,13 @@ end
 
 --[[ Stage: Deployment ]]--
 function mod:ForgingStrike(args)
-	self:Message(args.spellId, "yellow", "Alert")
-	self:CDBar(args.spellId, 14.5)
+	self:Message(254919, "yellow", "Alert")
+	self:CDBar(254919, 14.5)
 end
 
 function mod:ForgingStrikeApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "orange", "Warning")
+	self:StackMessage(254919, args.destName, amount, "orange", "Warning")
 end
 
 do

@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 97
+local BIGWIGS_VERSION = 99
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -54,8 +54,9 @@ local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo and C_ChatInfo.SendAddonMessage or SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker -- XXX C_ChatInfo check for 8.0
-local IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone = IsInInstance, GetCurrentMapAreaID, SetMapToCurrentZone
+local GetCurrentMapAreaID, SetMapToCurrentZone = GetCurrentMapAreaID, SetMapToCurrentZone
 local GetInstanceInfo, GetPlayerMapAreaID, GetBestMapForUnit = GetInstanceInfo, GetPlayerMapAreaID, C_Map and C_Map.GetBestMapForUnit -- XXX remove GetPlayerMapAreaID
+local GetMapInfo = C_Map.GetMapInfo
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetCurrentMapAreaID = GetCurrentMapAreaID -- XXX remove
@@ -63,6 +64,7 @@ public.GetPlayerMapAreaID = GetPlayerMapAreaID -- XXX remove
 public.GetBestMapForUnit = GetBestMapForUnit
 public.SetMapToCurrentZone = SetMapToCurrentZone -- XXX remove
 public.GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel -- XXX remove
+public.GetMapInfo = GetMapInfo
 public.GetInstanceInfo = GetInstanceInfo
 public.SendAddonMessage = SendAddonMessage
 public.SendChatMessage = SendChatMessage
@@ -84,10 +86,10 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeZones = { -- Fake zones used as GUI menus
-	[-466]=true, -- Outland
-	[-862]=true, -- Pandaria
-	[-962]=true, -- Draenor
-	[-1007]=true, -- Broken Isles
+	[-101]=true, -- Outland
+	[-424]=true, -- Pandaria
+	[-572]=true, -- Draenor
+	[-619]=true, -- Broken Isles
 	[1716]=true, -- Broken Shore Mage Tower
 }
 
@@ -116,7 +118,7 @@ do
 		[509] = c, -- Ruins of Ahn'Qiraj
 		[531] = c, -- Ahn'Qiraj Temple
 		--[[ BigWigs: The Burning Crusade ]]--
-		[-466] = bc, -- Outland (Fake Menu)
+		[-101] = bc, -- Outland (Fake Menu)
 		[565] = bc, -- Gruul's Lair
 		[532] = bc, -- Karazhan
 		[548] = bc, -- Coilfang: Serpentshrine Cavern
@@ -142,19 +144,19 @@ do
 		[720] = cata, -- Firelands
 		[967] = cata, -- Dragon Soul
 		--[[ BigWigs: Mists of Pandaria ]]--
-		[-862] = mop, -- Pandaria (Fake Menu)
+		[-424] = mop, -- Pandaria (Fake Menu)
 		[1009] = mop, -- Heart of Fear
 		[996] = mop, -- Terrace of Endless Spring
 		[1008] = mop, -- Mogu'shan Vaults
 		[1098] = mop, -- Throne of Thunder
 		[1136] = mop, -- Siege of Orgrimmar
 		--[[ BigWigs: Warlords of Draenor ]]--
-		[-962] = wod, -- Draenor (Fake Menu)
+		[-572] = wod, -- Draenor (Fake Menu)
 		[1228] = wod, -- Highmaul
 		[1205] = wod, -- Blackrock Foundry
 		[1448] = wod, -- Hellfire Citadel
 		--[[ BigWigs: Legion ]]--
-		[-1007] = l, -- Broken Isles (Fake Menu)
+		[-619] = l, -- Broken Isles (Fake Menu)
 		[1520] = l, -- The Emerald Nightmare
 		[1648] = l, -- Trial of Valor
 		[1530] = l, -- The Nighthold
@@ -261,10 +263,10 @@ do
 	}
 
 	public.zoneTblWorld = {
-		[-473] = -466, [-465] = -466, -- Outland
-		[-807] = -862, [-809] = -862, [-928] = -862, [-929] = -862, [-951] = -862, -- Pandaria
-		[-948] = -962, [-949] = -962, [-945] = -962, -- Draenor
-		[-1015] = -1007, [-1017] = -1007, [-1018] = -1007, [-1024] = -1007, [-1033] = -1007, -- Broken Isles
+		[-104] = -101, [-100] = -101, -- Outland
+		[-376] = -424, [-379] = -424, [-504] = -424, [-507] = -424, [-554] = -424, -- Pandaria
+		[-542] = -572, [-543] = -572, [-534] = -572, -- Draenor
+		[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
 	}
 end
 
@@ -504,7 +506,17 @@ do
 			local rawMenu = select(i, ...)
 			local id = tonumber(rawMenu:trim())
 			if id then
-				local name = id < 0 and (GetMapNameByID and GetMapNameByID(-id) or tostring(id)) or GetRealZoneText(id) -- XXX 8.0 fixme
+				local name
+				if id < 0 then
+					local tbl = GetMapInfo(-id)
+					if tbl then
+						name = tbl.name
+					else
+						name = tostring(id)
+					end
+				else
+					name = GetRealZoneText(id)
+				end
 				if name and name ~= "" then -- Protect live client from beta client ids
 					if not loadOnZone[id] then loadOnZone[id] = {} end
 					loadOnZone[id][#loadOnZone[id] + 1] = addon
@@ -523,7 +535,17 @@ do
 			local rawMenu = select(i, ...)
 			local id = tonumber(rawMenu:trim())
 			if id then
-				local name = id < 0 and (GetMapNameByID and GetMapNameByID(-id) or tostring(id)) or GetRealZoneText(id) -- XXX 8.0 fixme
+				local name
+				if id < 0 then
+					local tbl = GetMapInfo(-id)
+					if tbl then
+						name = tbl.name
+					else
+						name = tostring(id)
+					end
+				else
+					name = GetRealZoneText(id)
+				end
 				if name and name ~= "" and not blockedMenus[id] then -- Protect live client from beta client ids
 					blockedMenus[id] = true
 				end
@@ -597,7 +619,7 @@ function mod:ADDON_LOADED(addon)
 		end
 		icon:Register("BigWigs", ldb, BigWigsIconDB)
 	end
-	BigWigs3IconDB = nil -- XXX temp
+	BigWigs3IconDB = nil -- XXX temp 7.3.5
 
 	if BigWigs3DB then
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
@@ -628,6 +650,7 @@ function mod:ADDON_LOADED(addon)
 			BigWigs3DB.discord = (BigWigs3DB.discord or 0) + 1
 			CTimerAfter(11, function() sysprint("We are now on Discord: https://discord.gg/jGveg85") end)
 		end
+		BigWigs3DB.fPrint = nil -- XXX temp 7.3.5
 	end
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
@@ -757,12 +780,15 @@ do
 	end
 
 	local L = GetLocale()
-	if L == "ptBR" then
-		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Brazilian Portugese (ptBR). Can you help? Ask us on Discord for more info."
-	elseif L == "itIT" then
-		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Italian (itIT). Can you help? Ask us on Discord for more info."
-	elseif L == "esES" or L == "esMX" then
-		delayedMessages[#delayedMessages+1] = "BigWigs is missing translations for Spanish (esES). Can you help? Ask us on Discord for more info."
+	local locales = {
+		--ruRU = "Russian (ruRU)",
+		itIT = "Italian (itIT)",
+		--koKR = "Korean (koKR)",
+		esES = "Spanish (esES)",
+		esMX = "Spanish (esMX)",
+	}
+	if locales[L] then
+		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
 	end
 
 	CTimerAfter(11, function()
@@ -845,8 +871,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "17424" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "7.3.26" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "17623" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "8.0.0" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -1141,13 +1167,12 @@ do
 		end
 	end
 
-	local block = false -- XXX temp
 	function mod:ZONE_CHANGED_NEW_AREA()
 		-- Zone checking
 		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 		if instanceType == "none" then
 			local mapId
-			if GetBestMapForUnit then -- XXX temp
+			if GetBestMapForUnit then -- XXX 8.0
 				mapId = GetBestMapForUnit("player")
 			else
 				mapId = GetPlayerMapAreaID("player")
@@ -1168,25 +1193,6 @@ do
 						BigWigs:Enable()
 					end
 				end
-				-- XXX temp
-				if id == 1712 and not block then
-					block = true
-					if not BigWigs3DB.fPrint or BigWigs3DB.fPrint < 3 then
-						if not BigWigs3DB.fPrint then
-							BigWigs3DB.fPrint = 1
-						else
-							BigWigs3DB.fPrint = BigWigs3DB.fPrint + 1
-						end
-						CTimerAfter(5, function()
-							sysprint("Have you seen some of our latest changes?")
-							sysprint("- AutoReply: New feature!")
-							sysprint("- Pull: Full audio customizability, including countdown sound.")
-							sysprint("- Bars: Both width & height can now be changed by dragging the anchors. You can also change bar spacing, icon position, and separate font sizes for normal/emphasized bars.")
-							sysprint("- Bosses: When customizing ability colors or sounds, only the colors/sounds being used by that ability will show. This should make setting a custom sound or color a lot easier.")
-						end)
-					end
-				end
-				-- XXX endtemp
 			elseif enableZones[id] == "world" then
 				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
 					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first

@@ -87,9 +87,9 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_START(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_START(_, _, _, spellId)
 	if spellId == 202977 then -- Infested Breath
-		self:Message(spellId, "Urgent", "Alarm", CL.casting:format(spellName))
+		self:Message(spellId, "Urgent", "Alarm", CL.casting:format(self:SpellName(spellId)))
 		self:CastBar(spellId, 8) -- 3s cast time + 5s channel
 
 		if self:BarTimeLeft(203552) > 37 then -- Heart of the Swarm

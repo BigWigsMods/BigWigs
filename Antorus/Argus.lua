@@ -299,7 +299,7 @@ function mod:OnEngage()
 	self:Bar(248499, self:Mythic() and 5.9 or timers[stage][248499][sweepingScytheCounter]) -- Sweeping Scythe
 
 	if self:Mythic() then
-		self:Bar(258068, 8.2) -- Sargeras' Gaze
+		self:Bar(258068, 8.2, CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
 		self:Berserk(660)
 	else
 		self:Berserk(720)
@@ -502,7 +502,7 @@ function mod:GolgannethsWrath()
 	self:Bar(251570, 30, CL.count:format(self:SpellName(251570), soulBombCounter)) -- Soulbomb
 	self:Bar(250669, 30) -- Soulburst
 	if self:Mythic() then
-		self:Bar(258068, 26.3) -- Sargeras' Gaze
+		self:Bar(258068, 26.3, CL.count:format(self:SpellName(258068), sargerasGazeCount)) -- Sargeras' Gaze
 	end
 end
 
@@ -789,10 +789,10 @@ function mod:GiftoftheLifebinder(args)
 	self:RegisterUnitEvent("UNIT_POWER", nil, "boss3") -- boss1 = Argus, boss2 = Khaz'goroth, boss3 = Gift of the Lifebinder
 end
 
-function mod:UNIT_POWER(unit)
+function mod:UNIT_POWER(event, unit)
 	local power = UnitPower(unit) / UnitPowerMax(unit) * 100
 	if power <= 10 then
-		self:UnregisterUnitEvent("UNIT_POWER", unit)
+		self:UnregisterUnitEvent(event, unit)
 		self:Message("stages", "green", "Long", CL.soon:format(self:SpellName(256399)), 256399) -- Withering Roots
 	end
 end

@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Soultakers", -1017, 1756)
+local mod, CL = BigWigs:NewBoss("The Soultakers", -634, 1756)
 if not mod then return end
 mod:RegisterEnableMob(106981) -- Captain Hring
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 106981
 
 --------------------------------------------------------------------------------

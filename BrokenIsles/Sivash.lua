@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod = BigWigs:NewBoss("Si'vash", -1021, 1885)
+local mod = BigWigs:NewBoss("Si'vash", -646, 1885)
 if not mod then return end
 mod:RegisterEnableMob(117470)
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 117470
 
 --------------------------------------------------------------------------------
@@ -57,7 +57,7 @@ function mod:TidalWave(args)
 	self:CDBar(args.spellId, 22)
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, castGUID, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 	if castCollector[castGUID] then return end -- Don't fire twice for the same cast
 
 	if spellId == 241433 then -- Submerge

@@ -1,3 +1,5 @@
+if not C_ChatInfo then return end -- XXX Don't load outside of 8.0
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -16,7 +18,7 @@ function mod:GetOptions()
 	return {
 		273365, -- Dark Revelation
 		{269936, "SAY"}, -- Fixate
-		273361, -- Pool of Darkness
+		273360, -- Pool of Darkness
 		273889, -- Call of Blood
 		273288, -- Thrumming Pulse
 		273451, -- Congeal Blood
@@ -30,10 +32,11 @@ end
 
 function mod:OnBossEnable()
 	-- Stage 1
+	self:Log("SPELL_CAST_SUCCESS", "DarkRevelation", 273365)
 	self:Log("SPELL_AURA_APPLIED", "DarkRevelationApplied", 273365)
-	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 269936, 276020) -- XXX Might not need both
-	self:Log("SPELL_CAST_START", "PoolofDarkness", 273361)
-	self:Log("SPELL_CAST_START", "CallofBlood", 273889)
+	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 269936, 276020)
+	self:Log("SPELL_CAST_START", "PoolofDarkness", 273360)
+	self:Log("SPELL_CAST_START", "CallofBlood", 273889, 274098, 274119)
 	self:Log("SPELL_CAST_START", "ThrummingPulse", 273288)
 	self:Log("SPELL_CAST_SUCCESS", "CongealBlood", 273451)
 	self:Log("SPELL_CAST_START", "Bloodshard", 273350)
@@ -47,11 +50,17 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Bar(273360, 21) -- Pool of Darkness
+	self:Bar(273365, 30) -- Dark Revelation
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:DarkRevelation(args)
+	self:Bar(args.spellId, 45)
+end
 
 do
 	local playerList = mod:NewTargetList()
@@ -63,28 +72,36 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 5)
+			self:SayCountdown(args.spellId, 10)
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList)
 	end
 end
 
-function mod:FixateApplied(args)
-	if self:Me(args.destGUID) then
-		self:TargetMessage2(269936, "blue", args.destName)
-		self:PlaySound(269936, "warning")
-		self:Say(269936)
+do
+	local prev = 0
+	function mod:FixateApplied(args)
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 2 then
+				prev = t
+				self:TargetMessage2(269936, "blue", args.destName)
+				self:PlaySound(269936, "warning")
+				self:Say(269936)
+			end
+		end
 	end
 end
 
 function mod:PoolofDarkness(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "info")
+	self:Bar(args.spellId, 31.5)
 end
 
-function mod:CallofBlood(args)
-	self:Message(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "long")
+function mod:CallofBlood(args) -- XXX Add types each wave/wave timers
+	self:Message(273889, "cyan")
+	self:PlaySound(273889, "long")
 end
 
 function mod:ThrummingPulse(args)

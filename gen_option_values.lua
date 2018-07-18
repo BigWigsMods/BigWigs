@@ -372,7 +372,7 @@ local function parseLua(file)
 	local file_name = file:match(".*/(.*)$") or file
 
 	local options, option_keys = {}, {}
-	local methods, registered_methods = {}, {}
+	local methods, registered_methods = {Win=true}, {}
 	local current_func = nil
 	local rep = {}
 	for n, line in ipairs(lines) do
@@ -380,7 +380,7 @@ local function parseLua(file)
 		line = line:gsub("%-%-.*$", "") -- strip comments
 
 		--- loadstring the options table
-		if line == "function mod:GetOptions()" then
+		if line == "function mod:GetOptions()" or line == "function mod:GetOptions(CL)" then
 			local opts, err = parseGetOptions(lines, n+1)
 			if not opts then
 				-- rip keys
@@ -388,6 +388,20 @@ local function parseLua(file)
 				-- return
 			else
 				option_keys = opts
+			end
+		end
+		local toggle_options = line:match("^mod%.toggleOptions = ({.+})")
+		if toggle_options then
+			local success, result = pcall(loadstring("return " .. toggle_options))
+			if success then
+				for _, opt in next, result do
+					if type(opt) == "table" then
+						opt = opt[1]
+					end
+					if opt then -- marker option vars will be nil
+						option_keys[opt] = true
+					end
+				end
 			end
 		end
 
@@ -447,6 +461,7 @@ local function parseLua(file)
 		res = line:match("^%s*local function%s+([%w_]+)%s*%(") or line:match("^%s*function%s+([%w_]+)%s*%(")
 		if res then
 			current_func = res
+			methods[res] = true
 			rep = {}
 			rep.local_func_key = findCalls(lines, n, current_func, options)
 		end

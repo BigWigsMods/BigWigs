@@ -105,7 +105,7 @@ do
 	local brokenShardCheck, name = nil, mod:SpellName(204284)
 
 	local function checkForBrokenShard()
-		if not self:UnitDebuff("player", name) then
+		if not mod:UnitDebuff("player", name) then
 			mod:Message(204284, "Personal", "Warning", CL.no:format(name))
 			brokenShardCheck = mod:ScheduleTimer(checkForBrokenShard, 1)
 		else
@@ -172,7 +172,7 @@ end
 
 do
 	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		local t = GetTime()
 		if spellId == 214800 and t-prev > 1 then -- Red
 			prev = t

@@ -214,7 +214,7 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 34098 then -- ClearAllDebuffs
 		phase = 2
 		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
@@ -276,7 +276,7 @@ function mod:RAID_BOSS_WHISPER(event, msg)
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(unit)
+function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit)*100
 	if phase == 2 then
 		local tentaclesLeft = self:Mythic() and floor((hp-45)/2.5) or floor((hp-40)/2.77)
@@ -285,11 +285,11 @@ function mod:UNIT_HEALTH_FREQUENT(unit)
 			if tentaclesLeft >= 0 then
 				self:Message("stages", "Neutral", nil, CL.mob_remaining:format(self:SpellName(L.gripping_tentacle), tentaclesLeft), false)
 			else
-				self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+				self:UnregisterUnitEvent(event, unit)
 			end
 		end
 	else
-		self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", unit)
+		self:UnregisterUnitEvent(event, unit)
 	end
 end
 

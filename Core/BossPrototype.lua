@@ -544,7 +544,7 @@ do
 			local self = enabledModules[i]
 			local m = unitEventMap[self] and unitEventMap[self][event]
 			if m and m[unit] then
-				self[m[unit]](self, unit, ...)
+				self[m[unit]](self, event, unit, ...)
 			end
 		end
 	end

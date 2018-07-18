@@ -295,7 +295,7 @@ local function timeBombCountdown(self)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 207012 then -- Speed: Normal
 		normalPhase = normalPhase + 1
 		currentTimers = timers["normal" .. normalPhase]
@@ -310,7 +310,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, spellName, _, _, spellId)
 	end
 
 	if spellId == 207012 or spellId == 207011 or spellId == 207013 then -- Speed: Normal / Slow / Fast
-		self:Message("stages", "Neutral", "Info", spellName, spellId)
+		self:Message("stages", "Neutral", "Info", spellId)
 
 		timeBombCountdown(self)
 		self:ScheduleTimer(timeBombCountdown, 2, self) -- XXX let's see if this fixes wrong time bomb says

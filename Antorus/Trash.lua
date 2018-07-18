@@ -319,7 +319,7 @@ end
 
 do
 	local prev = nil
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, _, spellGUID, spellId)
+	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellGUID, spellId)
 		if spellId == 252740 and spellGUID ~= prev then -- Annihilation
 			prev = spellGUID
 			self:Message(252743, "Important", "Long")
@@ -329,7 +329,7 @@ end
 
 do
 	local players = {}
-	local UnitDebuff, UnitGUID = UnitDebuff, UnitGUID
+	local UnitGUID = UnitGUID
 	function mod:UNIT_AURA(_, unit)
 		local decimation1 = self:UnitDebuff(unit, 252797)
 		local decimation2 = self:UnitDebuff(unit, 245770)

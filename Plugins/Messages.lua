@@ -127,7 +127,7 @@ do
 
 	normalAnchor = createAnchor("BWMessageAnchor", L.messages)
 	emphasizeAnchor = createAnchor("BWEmphasizeMessageAnchor", L.emphasizedMessages)
-	emphasizeCountdownAnchor = createAnchor("BWEmphasizeCountdownMessageAnchor", L.emphasizedCountdown)
+	emphasizeCountdownAnchor = createAnchor("BWEmphasizeCountdownMessageAnchor", L.textCountdown)
 
 	BWMessageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
 	BWMessageFrame:SetWidth(UIParent:GetWidth())
@@ -327,6 +327,7 @@ plugin.pluginOptions.args.more = {
 			set = function(_, value)
 				local list = media:List(FONT)
 				plugin.db.profile.font = list[value]
+				updateProfile()
 			end,
 		},
 		outline = {

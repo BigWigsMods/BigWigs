@@ -2,9 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "ruRU")
 if not L then return end
 
 L.comma = ", "
---L.width = "Width"
---L.height = "Height"
---L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
+L.width = "Ширина"
+L.height = "Высота"
+L.sizeDesc = "Обычно размеры меняются перемещением якоря. Если Вам необходим точный размер, можете использовать слайдер или ввести значение в поле, максимума нет."
 
 L.abilityName = "Название способности"
 L.abilityNameDesc = "Показывает или скрывает название способности в верхней части окна."
@@ -89,7 +89,6 @@ L.emphasize = "Увеличение"
 L.emphasizeAt = "Увеличение на... (секунды)"
 L.emphasized = "Увеличенные"
 L.emphasizedBars = "Увеличенные полосы"
-L.emphasizedCountdown = "Увеличенный обратный отсчет"
 L.emphasizedCountdownSinkDescription = "Пути вывода увеличенных сообщений с обратным отсчетом. Отображение поддерживает текст и цвета, и позволяет вывести одно сообщение за один раз."
 L.emphasizedMessages = "Увеличенные сообщения"
 L.emphasizedSinkDescription = "Пути вывода увеличенных сообщений. Отображение поддерживает текст и цвета, и позволяет вывести одно сообщение за один раз."
@@ -153,12 +152,12 @@ L.proximity_name = "Радар близости"
 L.proximityTitle = "%d м / %d |4игрок:игрока:игроков;"
 L.pull = "Атака"
 L.pullIn = "Атакуем через %d сек"
---L.engageSoundTitle = "Play a sound when a boss encounter has started"
---L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
---L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
+L.engageSoundTitle = "Воспроизвести звук, когда начинается бой с боссом"
+L.pullStartedSoundTitle = "Воспроизвести звук, когда запускается таймер атаки"
+L.pullFinishedSoundTitle = "Воспроизвести звук, когда завершается таймер атаки"
 L.pullStarted = "Таймер атаки начат %s игроком %s."
 L.pullStopped = "%s отменил таймер атаки."
---L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
+L.pullStoppedCombat = "Таймер атаки  отменен, поскольку Вы вступили в бой."
 L.raidIconsDesc = [=[Некоторые скрипты событий используют рейдовые метки, чтобы помечать игроков, которые оказывают особое влияние на вашу группу. Например, такой тип эффектов как 'бомба' и контроль разума.
 
 |cffff4411Применимо, если вы Лидер рейда или помощник!|r]=]
@@ -245,8 +244,8 @@ L.victoryMessageBlizzardDesc = "Сообщение Blizzard - это очень 
 L.victoryMessages = "Показывать сообщения о победе над боссом"
 L.victorySound = "Проигрывать звук победы над боссом"
 L.Warning = "Предупреждение"
---L.wipe = "Wipe"
---L.wipeSoundTitle = "Play a sound when you wipe"
+L.wipe = "Вайп"
+L.wipeSoundTitle = "Пригрывать звук после вайпа"
 L.wrongBreakFormat = "Должно быть между 1 и 60 минутами. Например: /break 5"
 L.wrongCustomBarFormat = "Неверный формат. Правильно будет: /raidbar 20 текст"
 L.wrongPullFormat = "Должно быть между 1 и 60 секундами. Например: /pull 5"
@@ -278,12 +277,12 @@ L.autoReplyLeftCombatAdvancedWipe = "Я проиграл '%s' на: %s"
 -- Bars.lua
 --
 
---L.spacing = "Spacing"
---L.spacingDesc = "Change the space between each bar."
---L.emphasizeMultiplier = "Size Multiplier"
---L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
---L.iconPosition = "Icon Position"
---L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
+L.spacing = "Промежуток"
+L.spacingDesc = "Изменить промежуток между полосами."
+L.emphasizeMultiplier = "Множитель Размера"
+L.emphasizeMultiplierDesc = "Если Вы отмените перемещение увеличенных полос к своему якорю, эта опция будет просто определять, насколько будут увеличиваться полосы по отношению к нормальным."
+L.iconPosition = "Позиция Иконки"
+L.iconPositionDesc = "Выберите, где на полосе будет находиться иконка."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

@@ -3,10 +3,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Calamir", -1015, 1774)
+local mod, CL = BigWigs:NewBoss("Calamir", -630, 1774)
 if not mod then return end
 mod:RegisterEnableMob(109331)
-mod.otherMenu = -1007
+mod.otherMenu = -619
 mod.worldBoss = 109331
 
 --------------------------------------------------------------------------------
@@ -78,26 +78,26 @@ end
 --
 
 --[[ General ]] --
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellName, _, castGUID, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 	if castCollector[castGUID] then return end -- don't fire twice for the same cast
 
 	if spellId == 217563 then --[[ Ancient Rage: Fire ]]--
 		castCollector[castGUID] = true
-		self:Message("stages", "Neutral", "Info", spellName, spellId)
+		self:Message("stages", "Neutral", "Info", spellId)
 		self:Bar("stages", 25.6, self:SpellName(217831), 217831) -- next: Frost
 		burningBombCount = 1
 		self:CDBar(217877, 2) -- Burning Bomb
 		self:CDBar(217893, 8.2) -- Wrathful Flames
 	elseif spellId == 217831 then --[[ Ancient Rage: Frost ]]--
 		castCollector[castGUID] = true
-		self:Message("stages", "Neutral", "Info", spellName, spellId)
+		self:Message("stages", "Neutral", "Info", spellId)
 		self:Bar("stages", 25.6, self:SpellName(217834), 217834) -- next: Arcane
 		howlingGaleCount = 1
 		self:CDBar(217966, 2) -- Howling Gale
 		self:CDBar(217925, 8.5) -- Icy Comet
 	elseif spellId == 217834 then --[[ Ancient Rage: Arcane  ]]--
 		castCollector[castGUID] = true
-		self:Message("stages", "Neutral", "Info", spellName, spellId)
+		self:Message("stages", "Neutral", "Info", spellId)
 		self:Bar("stages", 25.6, self:SpellName(217563), 217563) -- next: Fire
 		arcanopulseCount = 1
 		arcaneDesolationCount = 1
