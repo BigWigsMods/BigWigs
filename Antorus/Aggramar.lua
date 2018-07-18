@@ -103,12 +103,7 @@ function mod:GetOptions()
 end
 
 function mod:VerifyEnable()
-	if BigWigsLoader.SetMapToCurrentZone then -- XXX 8.0
-		BigWigsLoader.SetMapToCurrentZone()
-		return BigWigsLoader.GetCurrentMapDungeonLevel() == 9
-	else
-		return BigWigsLoader.GetBestMapForUnit("player") == 917
-	end
+	return BigWigsLoader.GetBestMapForUnit("player") == 917 -- Floor 9, The World Soul
 end
 
 function mod:OnBossEnable()

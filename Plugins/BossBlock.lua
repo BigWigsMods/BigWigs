@@ -23,9 +23,6 @@ plugin.defaultDB = {
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
-local SetMapToCurrentZone = BigWigsLoader.SetMapToCurrentZone
-local GetCurrentMapAreaID = BigWigsLoader.GetCurrentMapAreaID
-local GetCurrentMapDungeonLevel = BigWigsLoader.GetCurrentMapDungeonLevel
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 
 -------------------------------------------------------------------------------
@@ -245,15 +242,7 @@ do
 
 	function plugin:CINEMATIC_START()
 		if self.db.profile.blockMovies then
-			local id
-			if SetMapToCurrentZone then
-				SetMapToCurrentZone()
-				local areaId = GetCurrentMapAreaID() or 0
-				local areaLevel = GetCurrentMapDungeonLevel() or 0
-				id = ("%d:%d"):format(areaId, areaLevel)
-			else
-				id = -(GetBestMapForUnit("player"))
-			end
+			local id = -(GetBestMapForUnit("player") or 0)
 
 			if cinematicZones[id] then
 				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per floor
