@@ -468,13 +468,17 @@ do
 		end
 	end
 
-	function mod:UpdateChilledBloodInfoBoxAbsorbs(_, _, subEvent, _, _, _, _, _, _, destName, _, _, spellId, _, _, _, _, _, _, _, _, _, absorbed)
-		if subEvent == "SPELL_HEAL_ABSORBED" and spellId == 245586 then
-			for i = 1, #chilledBloodList do
-				if chilledBloodList[i][1] == destName then
-					chilledBloodList[i][2] = chilledBloodList[i][2] - absorbed
-					updateInfoBox()
-					break
+	do
+		local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+		function mod:UpdateChilledBloodInfoBoxAbsorbs()
+			local _, subEvent, _, _, _, _, _, _, destName, _, _, spellId, _, _, _, _, _, _, _, _, _, absorbed = CombatLogGetCurrentEventInfo()
+			if subEvent == "SPELL_HEAL_ABSORBED" and spellId == 245586 then -- Chilled Blood
+				for i = 1, #chilledBloodList do
+					if chilledBloodList[i][1] == destName then
+						chilledBloodList[i][2] = chilledBloodList[i][2] - absorbed
+						updateInfoBox()
+						break
+					end
 				end
 			end
 		end
