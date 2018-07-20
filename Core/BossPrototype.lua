@@ -1037,26 +1037,39 @@ do
 	-- @string unit unit token or name
 	-- @number spell the spell ID of the buff to scan for
 	-- @return args
-	function boss:UnitBuff(unit, spell)
-		local argType = type(spell)
-		local t1, t2, t3, t4, t5
-		for i = 1, 100 do
-			local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+	function boss:UnitBuff(unit, spell, ...)
+		if type(spell) == "string" then
+			if ... then
+				for i = 1, select("#", ...) do
+					local blacklistSpell = select(i, ...)
+					blacklist[blacklistSpell] = true
+				end
+			end
+			local t1, t2, t3, t4, t5
+			for i = 1, 100 do
+				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
 
-			if argType == "string" then
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId))
+						BigWigs:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
-			elseif spellId == spell then
-				return name, stack, duration, expirationTime, value
-			end
 
-			if not spellId then
-				return t1, t2, t3, t4, t5
+				if not spellId then
+					return t1, t2, t3, t4, t5
+				end
+			end
+		else
+			for i = 1, 100 do
+				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+
+				if not spellId then
+					return
+				elseif spellId == spell then
+					return name, stack, duration, expirationTime, value
+				end
 			end
 		end
 	end
@@ -1065,26 +1078,39 @@ do
 	-- @string unit unit token or name
 	-- @number spell the spell ID of the debuff to scan for
 	-- @return args
-	function boss:UnitDebuff(unit, spell)
-		local argType = type(spell)
-		local t1, t2, t3, t4, t5
-		for i = 1, 100 do
-			local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+	function boss:UnitDebuff(unit, spell, ...)
+		if type(spell) == "string" then
+			if ... then
+				for i = 1, select("#", ...) do
+					local blacklistSpell = select(i, ...)
+					blacklist[blacklistSpell] = true
+				end
+			end
+			local t1, t2, t3, t4, t5
+			for i = 1, 100 do
+				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
 
-			if argType == "string" then
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId))
+						BigWigs:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
-			elseif spellId == spell then
-				return name, stack, duration, expirationTime, value
-			end
 
-			if not spellId then
-				return t1, t2, t3, t4, t5
+				if not spellId then
+					return t1, t2, t3, t4, t5
+				end
+			end
+		else
+			for i = 1, 100 do
+				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+
+				if not spellId then
+					return
+				elseif spellId == spell then
+					return name, stack, duration, expirationTime, value
+				end
 			end
 		end
 	end
