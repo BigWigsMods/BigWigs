@@ -1,4 +1,3 @@
-if not C_ChatInfo then return end -- XXX Don't load outside of 8.0
 --------------------------------------------------------------------------------
 -- TODO:
 -- - Dark Bargain bars and counter for each unique add?

@@ -144,7 +144,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 239153 then -- Spontaneous Fragmentation
-		self:Message(spellId, "Attention", "Alert", self:SpellName(230932))
+		self:Message(spellId, "yellow", "Alert", self:SpellName(230932))
 		orbCounter = orbCounter + 1
 		if orbCounter <= 4 and initialOrbs then
 			self:Bar(spellId, 8, CL.count:format(self:SpellName(230932), orbCounter))
@@ -156,7 +156,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		-- so we have to count the casts.
 		wrathStacks = wrathStacks + 1
 		if (wrathStacks >= 10 and wrathStacks % 5 == 0) or (wrathStacks >= 25) then -- 10,15,20,25,26,27,28,29,30
-			self:Message(234891, "Urgent", wrathStacks >= 25 and "Alert", CL.count:format(self:SpellName(spellId), wrathStacks))
+			self:Message(234891, "orange", wrathStacks >= 25 and "Alert", CL.count:format(self:SpellName(spellId), wrathStacks))
 		end
 	end
 end
@@ -168,7 +168,7 @@ do
 			local t = GetTime()
 			if t-prev > 1.5 then
 				prev = t
-				self:TargetMessage(235117, args.destName, "Personal", "Alarm")
+				self:TargetMessage(235117, args.destName, "blue", "Alarm")
 			end
 			-- Duration can be longer if the debuff gets refreshed
 			local _, _, _, expires = self:UnitDebuff(args.destName, args.spellId)
@@ -186,7 +186,7 @@ end
 
 function mod:AegwynnsWardApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(241593, "Neutral", "Info")
+		self:Message(241593, "cyan", "Info")
 	end
 end
 
@@ -196,13 +196,13 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
 
 function mod:Infusion(args)
-	self:Message(args.spellId, "Neutral", nil, CL.casting:format(args.spellName))
+	self:Message(args.spellId, "cyan", nil, CL.casting:format(args.spellName))
 	if self:LFR() then return end
 	infusionCounter = infusionCounter + 1
 	if infusionCounter == 2 then
@@ -214,10 +214,10 @@ do
 	local function checkSide(self, newSide, spellName)
 		local sideString = newSide == 235240 and L.fel or L.light
 		if mySide ~= newSide then
-			self:Message(235271, "Important", "Warning", mySide == 0 and spellName or L.infusionChanged:format(sideString), newSide)
+			self:Message(235271, "red", "Warning", mySide == 0 and spellName or L.infusionChanged:format(sideString), newSide)
 			self:Flash(235271)
 		else
-			self:Message(235271, "Positive", "Info", L.sameInfusion:format(sideString), newSide)
+			self:Message(235271, "green", "Info", L.sameInfusion:format(sideString), newSide)
 		end
 		mySide = newSide
 	end
@@ -247,12 +247,12 @@ end
 
 function mod:InfusionLFR(args)
 	if self:Me(args.destGUID) then
-		self:Message(235271, "Positive", "Info", args.spellName)
+		self:Message(235271, "green", "Info", args.spellName)
 	end
 end
 
 function mod:HammerofCreation(args)
-	self:Message(args.spellId, "Urgent", "Alert", L.lightHammer)
+	self:Message(args.spellId, "orange", "Alert", L.lightHammer)
 	hammerofCreationCounter = hammerofCreationCounter + 1
 	if hammerofCreationCounter == 2 then
 		self:Bar(args.spellId, 36, L.lightHammer)
@@ -260,7 +260,7 @@ function mod:HammerofCreation(args)
 end
 
 function mod:HammerofObliteration(args)
-	self:Message(args.spellId, "Urgent", "Alert", L.felHammer)
+	self:Message(args.spellId, "orange", "Alert", L.felHammer)
 	hammerofObliterationCounter = hammerofObliterationCounter + 1
 	if hammerofObliterationCounter == 2 then
 		self:Bar(args.spellId, 36, L.felHammer)
@@ -268,7 +268,7 @@ function mod:HammerofObliteration(args)
 end
 
 function mod:MassInstability(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	massInstabilityCounter = massInstabilityCounter + 1
 	if self:LFR() then
 		if massInstabilityCounter < 5 then
@@ -282,7 +282,7 @@ function mod:MassInstability(args)
 end
 
 function mod:Blowback(args)
-	self:Message(args.spellId, "Important", "Warning")
+	self:Message(args.spellId, "red", "Warning")
 end
 
 do
@@ -327,16 +327,16 @@ do
 	end
 
 	function mod:TitanicBulwarkRemoved(args)
-		self:Message(args.spellId, "Positive", "Info", CL.removed:format(args.spellName))
+		self:Message(args.spellId, "green", "Info", CL.removed:format(args.spellName))
 
 	end
 
 	function mod:WrathoftheCreators(args)
-		self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
+		self:Message(args.spellId, "yellow", "Alert", CL.casting:format(args.spellName))
 	end
 
 	function mod:WrathoftheCreatorsInterrupted(args)
-		self:Message(args.spellId, "Positive", "Long", CL.interrupted:format(args.spellName))
+		self:Message(args.spellId, "green", "Long", CL.interrupted:format(args.spellName))
 		massInstabilityCounter = 1
 		hammerofCreationCounter = 1
 		hammerofObliterationCounter = 1

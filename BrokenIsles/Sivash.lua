@@ -53,7 +53,7 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:TidalWave(args)
-	self:Message(args.spellId, "Urgent", "Warning")
+	self:Message(args.spellId, "orange", "Warning")
 	self:CDBar(args.spellId, 22)
 end
 
@@ -62,11 +62,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 
 	if spellId == 241433 then -- Submerge
 		castCollector[castGUID] = true
-		self:Message(spellId, "Attention", "Alarm")
+		self:Message(spellId, "yellow", "Alarm")
 		self:CDBar(spellId, 13)
 	elseif spellId == 233968 then -- Summon Honor Guard
 		castCollector[castGUID] = true
-		self:Message(spellId, "Urgent", "Long")
+		self:Message(spellId, "orange", "Long")
 		self:CDBar(spellId, 24)
 	end
 end

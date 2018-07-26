@@ -44,22 +44,22 @@ end
 --
 
 function mod:Silence(args)
-	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Long", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 25)
 end
 
 function mod:SoulCleave(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:CDBar(args.spellId, 25)
 end
 
 function mod:ClovenSoul(args)
 	local amount = args.amount or 1
-	self:StackMessage(247410, args.destName, amount, "Neutral", amount > 1 and "Warning" or "Info", args.spellId)
+	self:StackMessage(247410, args.destName, amount, "cyan", amount > 1 and "Warning" or "Info", args.spellId)
 end
 
 function mod:Cavitation(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	self:CDBar(args.spellId, 25)
 end
 
@@ -77,7 +77,7 @@ do
 			self:SayCountdown(args.spellId, 4)
 		end
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Urgent", "Warning", nil, nil, true)
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "orange", "Warning", nil, nil, true)
 		end
 	end
 

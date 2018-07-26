@@ -47,16 +47,16 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:MeteorSlash(args)
-	self:Message(args.spellId, "Urgent", "Warning")
+	self:Message(args.spellId, "orange", "Warning")
 	self:CDBar(args.spellId, 16)
 end
 
 function mod:Rupture(args)
-	self:Message(args.spellId, "Attention", "Info")
+	self:Message(args.spellId, "yellow", "Info")
 	self:CDBar(args.spellId, 18)
 end
 
 function mod:CrashingEmbers(args)
-	self:Message(args.spellId, "Important", "Alert")
+	self:Message(args.spellId, "red", "Alert")
 	self:CDBar(args.spellId, 17)
 end

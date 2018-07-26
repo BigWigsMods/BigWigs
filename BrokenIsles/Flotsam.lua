@@ -47,7 +47,7 @@ do
 		if self:Me(guid) then
 			self:Say(220295)
 		end
-		self:TargetMessage(220295, player, "Positive", "Alarm")
+		self:TargetMessage(220295, player, "green", "Alarm")
 	end
 
 	local prev = nil
@@ -60,17 +60,17 @@ do
 end
 
 function mod:Breaksam(args)
-	self:Message(args.spellId, "Important", self:Melee() and "Alert")
+	self:Message(args.spellId, "red", self:Melee() and "Alert")
 end
 
 function mod:Getsam(args)
-	self:Message(args.spellId, "Attention", "Warning", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Warning", CL.incoming:format(args.spellName))
 	self:CDBar(args.spellId, 53)
 	self:Flash(args.spellId)
 end
 
 function mod:Yaksam(args)
-	self:Message(args.spellId, "Urgent", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", "Long", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 50)
 end
 

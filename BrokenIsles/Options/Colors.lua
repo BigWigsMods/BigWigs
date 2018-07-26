@@ -1,103 +1,103 @@
 
 BigWigs:AddColors("Apocron", {
-	[241458] = "Urgent",
-	[241498] = "Attention",
-	[241518] = {"Important","Personal","Positive"},
+	[241458] = "orange",
+	[241498] = "yellow",
+	[241518] = {"red","blue","green"},
 })
 
 BigWigs:AddColors("Brutallus", {
-	[233484] = "Urgent",
-	[233515] = "Important",
-	[233566] = "Attention",
+	[233484] = "orange",
+	[233515] = "red",
+	[233566] = "yellow",
 })
 
 BigWigs:AddColors("Calamir", {
-	[217877] = {"Attention","Personal"},
-	[217893] = "Important",
-	[217925] = {"Attention","Personal"},
-	[217966] = "Important",
-	[217986] = "Important",
-	[218012] = "Attention",
-	["stages"] = "Neutral",
+	[217877] = {"yellow","blue"},
+	[217893] = "red",
+	[217925] = {"yellow","blue"},
+	[217966] = "red",
+	[217986] = "red",
+	[218012] = "yellow",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Drugon the Frostblood", {
-	[219493] = "Important",
-	[219542] = "Attention",
-	[219602] = {"Personal","Positive","Urgent"},
-	[219803] = {"Personal","Positive"},
+	[219493] = "red",
+	[219542] = "yellow",
+	[219602] = {"blue","green","orange"},
+	[219803] = {"blue","green"},
 })
 
 BigWigs:AddColors("Flotsam", {
-	[220295] = {"Personal","Positive"},
-	[220340] = "Attention",
-	[223317] = "Important",
-	[223373] = "Urgent",
+	[220295] = {"blue","green"},
+	[220340] = "yellow",
+	[223317] = "red",
+	[223373] = "orange",
 })
 
 BigWigs:AddColors("Humongris", {
-	[216428] = {"Attention","Personal"},
-	[216430] = "Urgent",
-	[216432] = {"Important","Personal"},
-	[216467] = "Positive",
-	[216476] = "Personal",
-	[216817] = {"Important","Personal"},
+	[216428] = {"yellow","blue"},
+	[216430] = "orange",
+	[216432] = {"red","blue"},
+	[216467] = "green",
+	[216476] = "blue",
+	[216817] = {"red","blue"},
 })
 
 BigWigs:AddColors("Levantus", {
-	[217206] = "Personal",
-	[217235] = "Urgent",
-	[217249] = "Attention",
-	[217344] = "Positive",
+	[217206] = "blue",
+	[217235] = "orange",
+	[217249] = "yellow",
+	[217344] = "green",
 })
 
 BigWigs:AddColors("Malificus", {
-	[233570] = "Attention",
-	[233614] = "Urgent",
-	[233850] = "Personal",
-	[234452] = "Urgent",
+	[233570] = "yellow",
+	[233614] = "orange",
+	[233850] = "blue",
+	[234452] = "orange",
 })
 
 BigWigs:AddColors("Na'zak the Fiend", {
-	[219349] = "Urgent",
-	[219591] = "Attention",
-	[219813] = "Important",
-	[219861] = "Positive",
+	[219349] = "orange",
+	[219591] = "yellow",
+	[219813] = "red",
+	[219861] = "green",
 })
 
 BigWigs:AddColors("Nithogg", {
-	[-13327] = "Important",
-	[212836] = "Attention",
-	[212852] = "Urgent",
-	[212867] = "Important",
-	[212887] = {"Personal","Positive"},
+	[-13327] = "red",
+	[212836] = "yellow",
+	[212852] = "orange",
+	[212867] = "red",
+	[212887] = {"blue","green"},
 })
 
 BigWigs:AddColors("Shar'thos", {
-	[215806] = "Personal",
-	[215821] = "Important",
-	[215876] = "Personal",
-	[216043] = {"Attention","Personal"},
-	[216044] = "Urgent",
+	[215806] = "blue",
+	[215821] = "red",
+	[215876] = "blue",
+	[216043] = {"yellow","blue"},
+	[216044] = "orange",
 })
 
 BigWigs:AddColors("Si'vash", {
-	[233968] = "Urgent",
-	[233996] = "Urgent",
-	[241433] = "Attention",
+	[233968] = "orange",
+	[233996] = "orange",
+	[241433] = "yellow",
 })
 
 BigWigs:AddColors("The Soultakers", {
-	[213420] = "Positive",
-	[213532] = "Important",
-	[213588] = {"Important","Personal"},
-	[213606] = "Attention",
-	[213625] = "Personal",
-	[213665] = "Urgent",
+	[213420] = "green",
+	[213532] = "red",
+	[213588] = {"red","blue"},
+	[213606] = "yellow",
+	[213625] = "blue",
+	[213665] = "orange",
 })
 
 BigWigs:AddColors("Withered J'im", {
-	[223614] = "Urgent",
-	[223623] = "Attention",
-	[223715] = "Neutral",
+	[223614] = "orange",
+	[223623] = "yellow",
+	[223715] = "cyan",
 })

@@ -95,7 +95,7 @@ end
 --
 function mod:Arcanoslash(args)
 	if arcanoslashCount % 3 == 1 then -- flurry of 3x 1s casts
-		self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
+		self:Message(args.spellId, "red", "Alarm", CL.casting:format(args.spellName))
 		self:CDBar(args.spellId, 10)
 	end
 	arcanoslashCount = arcanoslashCount + 1
@@ -106,15 +106,15 @@ do
 
 	local function checkForBrokenShard()
 		if not mod:UnitDebuff("player", name) then
-			mod:Message(204284, "Personal", "Warning", CL.no:format(name))
+			mod:Message(204284, "blue", "Warning", CL.no:format(name))
 			brokenShardCheck = mod:ScheduleTimer(checkForBrokenShard, 1)
 		else
-			mod:Message(204284, "Positive", nil, CL.you:format(name))
+			mod:Message(204284, "green", nil, CL.you:format(name))
 		end
 	end
 
 	function mod:Shockwave(args)
-		self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
+		self:Message(args.spellId, "red", "Alarm", CL.casting:format(args.spellName))
 		self:CastBar(args.spellId, 3)
 		self:CDBar(args.spellId, 58) -- can be delayed by up to 3s
 		self:CDBar(204372, 11) -- Call of the Scorpid (time to _start)
@@ -131,30 +131,30 @@ end
 
 function mod:ChitinousExoskeletonApplied(args)
 	if self.isEngaged and (GetTime() - engageTime) > 10 then -- also applied when the boss spawns and/or(?) is pulled
-		self:Message(args.spellId, "Neutral", nil)
+		self:Message(args.spellId, "cyan", nil)
 	end
 end
 
 function mod:ChitinousExoskeletonStacks(args)
 	if (args.amount % 5 == 0) or args.amount < 4 then -- 20,15,10,5,3,2,1 This seems sane for now
-		self:Message(args.spellId, "Neutral", nil, CL.count:format(self:SpellName(args.spellId), args.amount))
+		self:Message(args.spellId, "cyan", nil, CL.count:format(self:SpellName(args.spellId), args.amount))
 	end
 end
 
 function mod:ExoskeletalVulnerabilityApplied(args)
-	self:Message(args.spellId, "Positive", "Info")
+	self:Message(args.spellId, "green", "Info")
 	self:CastBar(args.spellId, 14, 160734, args.spellId) -- 160734 = Vulnerability
 	self:CDBar(204471, 21.5) -- Focused Blast (time to _success), 14+7.5
 	self:CDBar(204372, 22.5) -- Call of the Scorpid, 14+8.5
 end
 
 function mod:CallOfTheScorpid(args)
-	self:Message(args.spellId, "Attention", "Long")
+	self:Message(args.spellId, "yellow", "Long")
 	self:CDBar(args.spellId, 20)
 end
 
 function mod:FocusedBlast(args)
-	self:Message(args.spellId, "Urgent", "Alert")
+	self:Message(args.spellId, "orange", "Alert")
 	self:CastBar(args.spellId, 4)
 	self:CDBar(args.spellId, 30)
 end
@@ -165,7 +165,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -176,19 +176,19 @@ do
 		local t = GetTime()
 		if spellId == 214800 and t-prev > 1 then -- Red
 			prev = t
-			self:Message(-13767, "Neutral", "Info", L.mode:format(L.red), 211801)
+			self:Message(-13767, "cyan", "Info", L.mode:format(L.red), 211801)
 			self:Bar(-13767, 45, L.mode:format(L.green), 214718)
 			self:StopBar(L.mode:format(L.red))
 			self:StopBar(L.mode:format(L.blue))
 		elseif spellId == 215042 and t-prev > 1 then -- Green
 			prev = t
-			self:Message(-13767, "Neutral", "Info", L.mode:format(L.green), 214718)
+			self:Message(-13767, "cyan", "Info", L.mode:format(L.green), 214718)
 			self:Bar(-13767, 45, L.mode:format(L.blue), 204292)
 			self:StopBar(L.mode:format(L.red))
 			self:StopBar(L.mode:format(L.green))
 		elseif spellId == 215055 and t-prev > 1 then -- Blue
 			prev = t
-			self:Message(-13767, "Neutral", "Info", L.mode:format(L.blue), 204292)
+			self:Message(-13767, "cyan", "Info", L.mode:format(L.blue), 204292)
 			self:Bar(-13767, 45, L.mode:format(L.red), 211801)
 			self:StopBar(L.mode:format(L.green))
 			self:StopBar(L.mode:format(L.blue))

@@ -119,7 +119,7 @@ end
 
 function mod:drawInCheck(self)
 	if skipDrawIn then
-		self:Message(232061, "Urgent", "Alarm", CL.interrupted:format(self:SpellName(232061))) -- Draw In Interrupted
+		self:Message(232061, "orange", "Alarm", CL.interrupted:format(self:SpellName(232061))) -- Draw In Interrupted
 		nextDrawIn = GetTime() + 58
 		self:CDBar(232061, 58) -- Draw In
 		self:ScheduleTimer("drawInCheck", 58, self)
@@ -128,7 +128,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 232192 then -- Commanding Roar
-		self:Message(spellId, "Important", "Alert")
+		self:Message(spellId, "red", "Alert")
 		roarCounter = roarCounter + 1
 		if (nextDrawIn > GetTime() + 32.8) or skipDrawIn then
 			self:Bar(spellId, 32.8)
@@ -138,7 +138,7 @@ end
 
 function mod:RAID_BOSS_WHISPER(event, msg)
 	if msg:find("240319", nil, true) then -- Hatching
-		self:Message(240319, "Important", "Warning")
+		self:Message(240319, "red", "Warning")
 		self:CastBar(240319, 22)
 		if (nextDrawIn > GetTime() + 40) or skipDrawIn then
 			self:Bar(240319, 40)
@@ -153,18 +153,18 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
 
 function mod:JaggedAbrasion(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 4 and "Warning") -- Swap on 4~5
+	self:StackMessage(args.spellId, args.destName, amount, "orange", amount > 4 and "Warning") -- Swap on 4~5
 end
 
 function mod:UncheckedRage(args)
-	self:Message(args.spellId, "Urgent", "Warning")
+	self:Message(args.spellId, "orange", "Warning")
 	rageCounter = rageCounter + 1
 	if (nextDrawIn > GetTime() + 20.5) or skipDrawIn then
 		self:Bar(args.spellId, 20.5)
@@ -172,21 +172,21 @@ function mod:UncheckedRage(args)
 end
 
 function mod:DrawIn(args)
-	self:Message(args.spellId, "Important", "Alert", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", "Alert", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 10)
 end
 
 function mod:FrigidBlows(args)
 	local amount = args.amount or 1
 	if amount < 5 or amount % 5 == 0 then -- Every 5 stacks or when below 5.
-		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount < 4 and "Alarm") -- Add sound on last 3 stacks as pre-warning that the phase is ending
+		self:StackMessage(args.spellId, args.destName, amount, "orange", amount < 4 and "Alarm") -- Add sound on last 3 stacks as pre-warning that the phase is ending
 	end
 end
 
 function mod:FrostyDischarge(args)
 	roarCounter = 1
 	rageCounter = 1
-	self:Message(args.spellId, "Urgent", "Warning", args.spellName)
+	self:Message(args.spellId, "orange", "Warning", args.spellName)
 	self:CDBar(232192, 17) -- Commanding Roar
 	self:CDBar(231854, 21.4) -- Unchecked Rage
 	if self:Mythic() then
@@ -207,7 +207,7 @@ do
 		playerList[#playerList+1] = args.destName
 
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Important", "Alarm")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "red", "Alarm")
 		end
 	end
 end

@@ -191,7 +191,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		isHymdallFighting = false
 		isHyrjaFighting = false
 		self:UnregisterUnitEvent("UNIT_AURA", "boss1", "boss2", "boss3") -- Valarjar's Bond
-		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+		self:Message("stages", "cyan", "Long", CL.stage:format(2), false)
 		for _,barText in pairs(revivifyBarTexts) do
 			self:StopBar(barText)
 		end
@@ -209,7 +209,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Bar(227629, self:Mythic() and 70 or 73) -- Unerring Blast
 	elseif spellId == 228740 then
 		phase = 3
-		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
+		self:Message("stages", "cyan", "Long", CL.stage:format(3), false)
 		self:StopBar(L.hyrja)
 		self:StopBar(L.hymdall)
 		self:StopBar(227503) -- Draw Power
@@ -221,7 +221,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		end
 	elseif spellId == 229576 or spellId == 227503 then -- Draw Power, 229576 = mythic, 227503 = others
 		runesUp = (self:Easy() and phase == 1 and 3) or 5 -- could be :Normal(), not sure about LFR
-		self:Message(227503, "Attention", "Long")
+		self:Message(227503, "yellow", "Long")
 	elseif spellId == 231297 then -- Runic Brand P3, Mythic
 		self:Bar(231350, 7.5) -- Radiant Smite
 	end
@@ -240,7 +240,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 				if not isHymdallFighting then
 					isHymdallFighting = true
 					hornCount = 1
-					self:Message(-14404, "Neutral", "Info", self:SpellName(L.hymdall), false)
+					self:Message(-14404, "cyan", "Info", self:SpellName(L.hymdall), false)
 					self:CDBar(228012, 10) -- Horn of Valor
 					self:CDBar(-14404, self:Mythic() and 66 or 69.5, L.hyrja, L.hyrja_icon)
 				end
@@ -249,7 +249,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 				if not isHyrjaFighting then
 					isHyrjaFighting = true
 					shieldCount = 1
-					self:Message(-14404, "Neutral", "Info", self:SpellName(L.hyrja), false)
+					self:Message(-14404, "cyan", "Info", self:SpellName(L.hyrja), false)
 					self:CDBar(228029, 5) -- Expel Light
 					self:CDBar(228162, 9.5) -- Shield of Light
 					self:CDBar(-14404, self:Mythic() and 66 or 69.5, L.hymdall, L.hymdall_icon)
@@ -263,12 +263,12 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			castingHorn = false
 			self:CloseProximity(228012) -- Horn of Valor
 		end
-		self:Message(-14404, "Positive", "Info", L.yields:format(self:SpellName(L.hymdall)), false)
+		self:Message(-14404, "green", "Info", L.yields:format(self:SpellName(L.hymdall)), false)
 		self:StopBar(CL.count:format(self:SpellName(228012), hornCount)) -- Horn of Valor
 	end
 	if not hyrjaFound and isHyrjaFighting then
 		isHyrjaFighting = false
-		self:Message(-14404, "Positive", "Info", L.yields:format(self:SpellName(L.hyrja)), false)
+		self:Message(-14404, "green", "Info", L.yields:format(self:SpellName(L.hyrja)), false)
 		self:StopBar(CL.count:format(self:SpellName(228162), shieldCount)) -- Shield of Light
 		self:StopBar(228029) -- Expel Light
 	end
@@ -277,13 +277,13 @@ end
 do
 	local protected = mod:SpellName(229584)
 	function mod:UnerringBlast(args)
-		self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
+		self:Message(args.spellId, "orange", "Alert", CL.casting:format(args.spellName))
 		self:CastBar(args.spellId, 3)
 		self:Bar(227503, self:Easy() and 45 or 35) -- Draw Power
 		self:Bar(args.spellId, self:Easy() and 78 or (self:Mythic() and (phase == 2 and 69 or 68)) or 73)
 
 		if self:Mythic() and not self:UnitDebuff("player", protected) then
-			self:Message(229584, "Personal", nil, CL.no:format(protected))
+			self:Message(229584, "blue", nil, CL.no:format(protected))
 		end
 	end
 end
@@ -296,7 +296,7 @@ do
 			self:SayCountdown(228162, t)
 		end
 		self:PrimaryIcon(228162, player)
-		self:TargetMessage(228162, player, "Important", "Alarm", nil, nil, true)
+		self:TargetMessage(228162, player, "red", "Alarm", nil, nil, true)
 		self:TargetBar(228162, t, player)
 	end
 
@@ -320,7 +320,7 @@ end
 
 function mod:HornOfValor(args)
 	castingHorn = true
-	self:Message(args.spellId, "Urgent", "Alert", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", "Alert", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, self:Easy() and 5 or 4.5, CL.count:format(args.spellName, hornCount))
 	hornCount = hornCount + 1
 
@@ -341,7 +341,7 @@ end
 
 function mod:StormOfJustice(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Alarm")
 		self:TargetBar(args.spellId, 5, args.destName)
 		self:Say(args.spellId)
 		self:Flash(args.spellId)
@@ -358,7 +358,7 @@ do
 	function mod:UNIT_AURA(_, unit)
 		if self:UnitBuff(unit, self:SpellName(228018), 228018) and GetTime() - prev > 4 then -- We want this repeated
 			prev = GetTime()
-			self:Message(228018, "Important", "Alarm") -- Valarjar's Bond
+			self:Message(228018, "red", "Alarm") -- Valarjar's Bond
 		end
 	end
 end
@@ -366,12 +366,12 @@ end
 function mod:OdynsTest(args)
 	if args.amount % 3 == 0 then
 		-- This is the buff the boss gains if he is hitting the same tank. It's not really a stack message on the tank, but this is a clearer way of presenting it.
-		self:StackMessage(args.spellId, self:UnitName("boss1target"), args.amount, "Attention")
+		self:StackMessage(args.spellId, self:UnitName("boss1target"), args.amount, "yellow")
 	end
 end
 
 function mod:StormforgedSpear(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "red", "Alarm")
 	self:TargetBar(args.spellId, 6, args.destName)
 	self:Bar(args.spellId, spearCount % 3 == 0 and 13.5 or 11)
 	self:PrimaryIcon(args.spellId, args.destName)
@@ -400,7 +400,7 @@ end
 
 do
 	function mod:ExpelLightApplied(args)
-		self:TargetMessage(args.spellId, args.destName, "Important", "Alarm")
+		self:TargetMessage(args.spellId, args.destName, "red", "Alarm")
 		self:PrimaryIcon(args.spellId, args.destName)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
@@ -421,7 +421,7 @@ function mod:Revivify(args)
 		castingHorn = false
 		self:CloseProximity(228012) -- Horn of Valor
 	end
-	self:TargetMessage(args.spellId, args.sourceName, "Positive", "Long")
+	self:TargetMessage(args.spellId, args.sourceName, "green", "Long")
 	local text = CL.other:format(args.sourceName, args.spellName)
 	revivifyBarTexts[#revivifyBarTexts+1] = text
 	self:Bar(args.spellId, self:Easy() and 15 or 10, text)
@@ -448,7 +448,7 @@ end
 
 function mod:BrandedFixate(args)
 	if self:Me(args.destGUID) then
-		self:Message(-14495, "Personal", "Warning", L[args.spellId], args.spellId)
+		self:Message(-14495, "blue", "Warning", L[args.spellId], args.spellId)
 		self:Flash(-14495, args.spellId)
 		self:Say(-14495, L.say[args.spellId]:format(args.spellName))
 		myAddGUID = args.sourceGUID
@@ -468,7 +468,7 @@ end
 
 function mod:RunicShield(args)
 	if args.sourceGUID == myAddGUID then
-		self:Message(-14495, "Personal", "Warning", CL.on:format(args.spellName, args.sourceName), args.spellId)
+		self:Message(-14495, "blue", "Warning", CL.on:format(args.spellName, args.sourceName), args.spellId)
 	end
 end
 
@@ -492,7 +492,7 @@ do
 			end
 		end
 		runesUp = runesUp - 1
-		self:ScheduleTimer("Message", 0.3, 227503, "Positive", nil, CL.add_remaining:format(runesUp) .. addsUp)
+		self:ScheduleTimer("Message", 0.3, 227503, "green", nil, CL.add_remaining:format(runesUp) .. addsUp)
 	end
 end
 
@@ -506,7 +506,7 @@ do
 	}
 	function mod:Branded(args)
 		if self:Me(args.destGUID) then
-			self:Message(-14495, "Personal", "Warning", L[lookupTable[args.spellId]], lookupTable[args.spellId])
+			self:Message(-14495, "blue", "Warning", L[lookupTable[args.spellId]], lookupTable[args.spellId])
 			self:Flash(-14495, args.spellId)
 		end
 	end
@@ -514,7 +514,7 @@ end
 
 function mod:Protected(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Positive", "Info", CL.you:format(args.spellName))
+		self:Message(args.spellId, "green", "Info", CL.you:format(args.spellName))
 	end
 end
 
@@ -556,7 +556,7 @@ do
 		if self:Me(args.destGUID) then
 			local tanslatedSpellId = lookupTable[args.spellId]
 			isOnMe = args.spellId
-			self:Message(197961, "Personal", "Warning", CL.other:format(args.spellName, L[tanslatedSpellId]), args.spellId)
+			self:Message(197961, "blue", "Warning", CL.other:format(args.spellName, L[tanslatedSpellId]), args.spellId)
 			self:Flash(197961, args.spellId)
 			self:Say(197961, L.say[tanslatedSpellId]:format(args.spellName))
 			self:TargetBar(197961, 10, args.destName, nil, args.spellId)
@@ -575,7 +575,7 @@ do
 	end
 
 	function mod:RadiantSmite(args)
-		self:Message(args.spellId, "Important", "Long")
+		self:Message(args.spellId, "red", "Long")
 		wipeProxLists(self)
 		self:Bar(197961, 28)
 	end
@@ -587,7 +587,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
-			self:Message(227475, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(227475, "blue", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end

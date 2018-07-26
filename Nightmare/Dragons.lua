@@ -187,12 +187,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 			self:StopBar(205298) -- Essence of Corruption
 		end
 	elseif spellId == 203147 then -- Ysondre: Nightmare Blast
-		self:Message(spellId, "Important", "Alert")
+		self:Message(spellId, "red", "Alert")
 		self:CDBar(spellId, 16)
 	elseif spellId == 205331 then -- Taerar: Seeping Fog
-		self:Message(205341, "Urgent", "Alarm")
+		self:Message(205341, "orange", "Alarm")
 	elseif spellId == 205528 then -- Emeriss: Corruption of the Dream
-		self:Message(204245, "Attention", "Alarm")
+		self:Message(204245, "yellow", "Alarm")
 	end
 end
 
@@ -202,7 +202,7 @@ function mod:MarkApplied(args)
 		local amount = args.amount or 1
 		markStacks[args.spellId] = args.amount
 		if amount == 1 or amount > 6 then -- could need fine tuning
-			self:StackMessage(-12809, args.destName, amount, "Important", "Warning", args.spellName, args.spellId)
+			self:StackMessage(-12809, args.destName, amount, "red", "Warning", args.spellName, args.spellId)
 		end
 
 		if amount > 1 then
@@ -216,7 +216,7 @@ end
 
 function mod:MarkRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(-12809, "Positive", "Info", CL.removed:format(args.spellName), args.spellId)
+		self:Message(-12809, "green", "Info", CL.removed:format(args.spellName), args.spellId)
 		self:StopBar(CL.count:format(args.spellName, markStacks[args.spellId]), args.destName)
 		markStacks[args.spellId] = 0
 	end
@@ -226,7 +226,7 @@ do
 	local prev = 0
 	function mod:CorruptedBreath(args)
 		local t = GetTime()
-		self:Message(args.spellId, "Urgent", t-prev > 0.5 and "Info", CL.other:format(args.sourceName, args.spellName))
+		self:Message(args.spellId, "orange", t-prev > 0.5 and "Info", CL.other:format(args.sourceName, args.spellName))
 		self:CDBar(args.spellId, 30, CL.other:format(args.sourceName, args.spellName))
 		prev = t
 	end
@@ -234,7 +234,7 @@ end
 
 --[[ Ysondre ]]--
 function mod:CallDefiledSpiritCast(args)
-	self:Message(args.spellId, "Important")
+	self:Message(args.spellId, "red")
 	self:Bar(args.spellId, 33)
 end
 
@@ -243,7 +243,7 @@ do
 
 	local function warn(self, spellId)
 		if not isOnMe then
-			self:Message(spellId, "Attention", self:Dispeller("magic") and "Alert")
+			self:Message(spellId, "yellow", self:Dispeller("magic") and "Alert")
 		end
 		scheduled = nil
 		isOnMe = nil
@@ -255,7 +255,7 @@ do
 		end
 
 		if not isOnMe and self:Me(args.destGUID) then
-			self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+			self:TargetMessage(args.spellId, args.destName, "blue", "Alarm")
 			self:Say(args.spellId)
 			isOnMe = true
 		end
@@ -268,7 +268,7 @@ do
 	function mod:VolatileInfection(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Attention", "Alert", nil, nil, self:Dispeller("magic"))
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "yellow", "Alert", nil, nil, self:Dispeller("magic"))
 			self:Bar(args.spellId, 45)
 		end
 
@@ -297,7 +297,7 @@ function mod:VolatileInfectionRemoved(args)
 end
 
 function mod:EssenceOfCorruption(args)
-	self:Message(args.spellId, "Attention", "Long")
+	self:Message(args.spellId, "yellow", "Long")
 	self:Bar(args.spellId, 30)
 end
 
@@ -306,7 +306,7 @@ do
 	function mod:Corruption(args)
 		local t = GetTime()
 		if t-prev > 1.5 then
-			self:Message(args.spellId, "Attention", "Info", CL.casting:format(args.spellName))
+			self:Message(args.spellId, "yellow", "Info", CL.casting:format(args.spellName))
 			self:Bar(args.spellId, 15)
 			prev = t
 		end
@@ -315,20 +315,20 @@ end
 
 --[[ Lethon ]]--
 function mod:SiphonSpirit(args)
-	self:Message(args.spellId, "Important", "Alert")
+	self:Message(args.spellId, "red", "Alert")
 	self:Bar(args.spellId, 49.5)
 end
 
 function mod:ShadowBurst(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Warning")
 		self:TargetBar(args.spellId, 10, args.destName)
 	end
 end
 
 --[[ Taerar ]]--
 function mod:ShadesOfTaerar(args)
-	self:Message(args.spellId, "Urgent", "Long", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "orange", "Long", CL.incoming:format(args.spellName))
 	self:Bar(args.spellId, 49)
 end
 
@@ -337,7 +337,7 @@ do
 	function mod:ShadeCorruptedBreath(args)
 		local t = GetTime()
 		if t-prev > 1.5 then
-			self:Message(args.spellId, "Attention", t-prev > 0.5 and "Long", CL.other:format(args.sourceName, args.spellName)) -- "Shade" instead of "Shade of Taerar"
+			self:Message(args.spellId, "yellow", t-prev > 0.5 and "Long", CL.other:format(args.sourceName, args.spellName)) -- "Shade" instead of "Shade of Taerar"
 			self:CDBar(args.spellId, 17, CL.other:format(self:SpellName(24313), args.spellName))
 			prev = t
 		end
@@ -345,7 +345,7 @@ do
 end
 
 function mod:BellowingRoar(args)
-	self:Message(args.spellId, "Important", "Alarm", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", "Alarm", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 6)
 	self:Bar(args.spellId, 51)
 end
@@ -354,6 +354,6 @@ end
 function mod:NightmareSouls()
 	local spell = mythicAdd == 1 and 214610 or mythicAdd == 2 and 214588 or 214604 -- Dream Essence: Hinterlands / Ashenvale / Feralas
 	local percentage = mythicAdd == 1 and "90% - " or mythicAdd == 2 and "60% - " or "30% - "
-	self:Message(-13460, "Neutral", "Long", percentage .. self:SpellName(spell), spell)
+	self:Message(-13460, "cyan", "Long", percentage .. self:SpellName(spell), spell)
 	mythicAdd = mythicAdd + 1
 end

@@ -116,7 +116,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 207620 then -- Annihilation
-		self:Message(207630, "Important", "Long")
+		self:Message(207630, "red", "Long")
 	end
 end
 
@@ -128,7 +128,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			mobCollector[guid] = true
 			local id = self:MobId(guid)
 			if id == 108303 then -- Imprint
-				self:Message(215066, "Neutral", "Long", UnitName(unit), false)
+				self:Message(215066, "cyan", "Long", UnitName(unit), false)
 				self:Bar(214670, 2.5, CL.other:format(L.imprint, self:SpellName(214670))) -- Energized
 				if imprintCount == 1 then
 					self:Bar(215062, 15.8, CL.other:format(L.imprint, self:SpellName(215062))) -- Toxic Slice
@@ -140,7 +140,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 end
 
 function mod:Phase(args)
-	self:Message("stages", "Neutral", "Long", args.spellName, args.spellId)
+	self:Message("stages", "cyan", "Long", args.spellName, args.spellId)
 	if args.spellId == 206560 then -- Cleaner
 		phase = 1
 		self:Bar("stages", 45, 206557, 206557) -- The Maniac
@@ -166,7 +166,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -178,7 +178,7 @@ do
 
 	function mod:ArcaneSlash(args)
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 2 and "Warning")
+		self:StackMessage(args.spellId, args.destName, amount, "red", amount > 2 and "Warning")
 		local t = phase == 2 and 7.3 or 11
 		if timeToNextPhase(self) > t then
 			self:Bar(args.spellId, t)
@@ -186,7 +186,7 @@ do
 	end
 
 	function mod:ToxicSlice(args)
-		self:Message(args.spellId, "Urgent", "Alarm", CL.incoming:format(args.spellName))
+		self:Message(args.spellId, "orange", "Alarm", CL.incoming:format(args.spellName))
 		if timeToNextPhase(self) > 26 then
 			self:CDBar(args.spellId, 26)
 		end
@@ -198,7 +198,7 @@ do
 	function mod:Sterilize(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Important", "Warning")
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "red", "Warning")
 		end
 
 		if self:Me(args.destGUID) then
@@ -216,7 +216,7 @@ function mod:SterilizeRemoved(args)
 end
 
 function mod:CleansingRage(args)
-	self:Message(args.spellId, "Attention", "Alarm")
+	self:Message(args.spellId, "yellow", "Alarm")
 end
 
 function mod:ArcingBondsCast()
@@ -240,7 +240,7 @@ do
 		end
 
 		if myPartner then
-			self:Message(208910, "Personal", "Warning", L.yourLink:format(self:ColorName(myPartner)))
+			self:Message(208910, "blue", "Warning", L.yourLink:format(self:ColorName(myPartner)))
 			local _, _, _, expires = self:UnitDebuff("player", args.spellName)
 			local remaining = expires-GetTime()
 			self:Bar(208910, remaining, L.yourLinkShort:format(self:ColorName(myPartner)))
@@ -255,30 +255,30 @@ function mod:Annihilation(args)
 end
 
 function mod:SucculentFeastCast(args)
-	self:Message(args.spellId, "Attention", "Info", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Info", CL.incoming:format(args.spellName))
 end
 
 function mod:SucculentFeastApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(207502, args.destName, "Personal", "Info")
+		self:TargetMessage(207502, args.destName, "blue", "Info")
 	end
 end
 
 function mod:SucculentFeastRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(207502, "Personal", "Info", CL.removed:format(args.spellName))
+		self:Message(207502, "blue", "Info", CL.removed:format(args.spellName))
 	end
 end
 
 function mod:Energized(args)
 	if not UnitIsPlayer(args.destName) then
-		self:Message(args.spellId, "Important", self:Dispeller("magic", true) and "Alert", CL.on:format(args.spellName, args.destName))
+		self:Message(args.spellId, "red", self:Dispeller("magic", true) and "Alert", CL.on:format(args.spellName, args.destName))
 		self:Bar(args.spellId, 20.5, CL.other:format(L.imprint, self:SpellName(214670))) -- Energized
 	end
 end
 
 function mod:ToxicSliceImprint(args)
-	self:Message(args.spellId, "Urgent", "Alarm", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "orange", "Alarm", CL.incoming:format(args.spellName))
 	self:Bar(args.spellId, 17, CL.other:format(L.imprint, args.spellName)) -- Toxic Slice
 end
 
