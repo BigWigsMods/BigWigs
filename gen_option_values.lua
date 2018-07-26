@@ -8,12 +8,12 @@ local module_colors = {}
 local module_sounds = {}
 
 local valid_colors = {
-	Positive = true, green = true,
-	Personal = true, blue = true,
-	Attention = true, yellow = true,
-	Urgent = true, orange = true,
-	Important = true, red = true,
-	Neutral = true, cyan = true,
+	green = true,
+	blue = true,
+	yellow = true,
+	orange = true,
+	red = true,
+	cyan = true,
 }
 local valid_sounds = {
 	Info = true, info = true,
