@@ -510,7 +510,7 @@ local function parseLua(file)
 				if color_index then
 					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
 					if method:sub(1, 6) == "Target" or method == "StackMessage" then
-						color[#color+1] = "Personal" -- used when on the player
+						color[#color+1] = "blue" -- used when on the player
 					end
 				end
 			end
