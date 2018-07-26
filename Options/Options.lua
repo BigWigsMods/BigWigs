@@ -647,8 +647,11 @@ do
 				if o > 0 then
 					local link = GetSpellLink(o)
 					if not link then
-						BigWigs:Print(("Failed to fetch the link for spell id %d."):format(o))
-					else
+						local name = GetSpellInfo(o)
+						link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(o, name)
+						--BigWigs:Error(("Failed to fetch the link for spell id %d, tell the authors."):format(o))
+					end
+					--else -- XXX Waiting for GetSpellLink fix to stop returning nil for some spells
 						if currentSize + #link + 1 > 255 then
 							printList(channel, header, abilities)
 							wipe(abilities)
@@ -656,11 +659,11 @@ do
 						end
 						abilities[#abilities + 1] = link
 						currentSize = currentSize + #link + 1
-					end
+					--end
 				else
 					local tbl = C_EncounterJournal.GetSectionInfo(-o)
 					if not tbl or not tbl.link then
-						BigWigs:Print(("Failed to fetch the link for journal id (-)%d."):format(-o))
+						BigWigs:Error(("Failed to fetch the link for journal id (-)%d, tell the authors."):format(-o))
 					else
 						local link = tbl.link
 						if currentSize + #link + 1 > 255 then
