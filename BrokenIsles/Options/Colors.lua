@@ -2,7 +2,7 @@
 BigWigs:AddColors("Apocron", {
 	[241458] = "orange",
 	[241498] = "yellow",
-	[241518] = {"red","blue","green"},
+	[241518] = {"blue","green","red"},
 })
 
 BigWigs:AddColors("Brutallus", {
@@ -12,9 +12,9 @@ BigWigs:AddColors("Brutallus", {
 })
 
 BigWigs:AddColors("Calamir", {
-	[217877] = {"yellow","blue"},
+	[217877] = {"blue","yellow"},
 	[217893] = "red",
-	[217925] = {"yellow","blue"},
+	[217925] = {"blue","yellow"},
 	[217966] = "red",
 	[217986] = "red",
 	[218012] = "yellow",
@@ -36,12 +36,12 @@ BigWigs:AddColors("Flotsam", {
 })
 
 BigWigs:AddColors("Humongris", {
-	[216428] = {"yellow","blue"},
+	[216428] = {"blue","yellow"},
 	[216430] = "orange",
-	[216432] = {"red","blue"},
+	[216432] = {"blue","red"},
 	[216467] = "green",
 	[216476] = "blue",
-	[216817] = {"red","blue"},
+	[216817] = {"blue","red"},
 })
 
 BigWigs:AddColors("Levantus", {
@@ -77,7 +77,7 @@ BigWigs:AddColors("Shar'thos", {
 	[215806] = "blue",
 	[215821] = "red",
 	[215876] = "blue",
-	[216043] = {"yellow","blue"},
+	[216043] = {"blue","yellow"},
 	[216044] = "orange",
 })
 
@@ -90,7 +90,7 @@ BigWigs:AddColors("Si'vash", {
 BigWigs:AddColors("The Soultakers", {
 	[213420] = "green",
 	[213532] = "red",
-	[213588] = {"red","blue"},
+	[213588] = {"blue","red"},
 	[213606] = "yellow",
 	[213625] = "blue",
 	[213665] = "orange",
