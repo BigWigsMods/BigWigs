@@ -667,6 +667,7 @@ end
 do
 	local old = {
 		BigWigs_Ulduar = "BigWigs_WrathOfTheLichKing",
+		BigWigs_Yogg_Brain = "BigWigs_WrathOfTheLichKing",
 		BigWigs_TheEye = "BigWigs_BurningCrusade",
 		BigWigs_Sunwell = "BigWigs_BurningCrusade",
 		BigWigs_SSC = "BigWigs_BurningCrusade",
