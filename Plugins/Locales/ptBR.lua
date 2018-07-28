@@ -155,12 +155,13 @@ L.resetDesc = "Reinicia as cores padrões"
 L.resetAll = "Reiniciar tudo"
 L.resetAllDesc = "Se você personalizou as cores para os ajustes de algum encontro de chefe, este botão reiniciará TODOS ELES e usará as cores padrões."
 
-L.Important = "Importante"
-L.Personal = "Pessoal"
-L.Urgent = "Urgente"
-L.Attention = "Atenção"
-L.Positive = "Positivo"
-L.Neutral = "Neutro"
+--L.red = "Red (General warnings)"
+--L.blue = "Blue (Warnings for things that affect you directly)"
+--L.orange = "Orange (General warnings)"
+--L.yellow = "Yellow (General warnings)"
+--L.green = "Green (Warnings for good things such as a debuff being removed)"
+--L.cyan = "Cyan (Warnings for encounter status changes such as advancing to the next stage)"
+--L.purple = "Purple (Tank specific warnings)"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

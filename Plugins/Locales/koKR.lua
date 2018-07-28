@@ -155,12 +155,13 @@ L.resetDesc = "위의 색상을 기본 색상으로 초기화합니다."
 L.resetAll = "모두 초기화"
 L.resetAllDesc = "우두머리 전투 설정에 사용자 설정 색상을 적용했다면, 이 버튼은 여기에 정의된 색상이 대신 사용되도록 모두 초기화합니다."
 
-L.Important = "중요"
-L.Personal = "개인"
-L.Urgent = "긴급"
-L.Attention = "주의"
-L.Positive = "적극"
-L.Neutral = "중립"
+--L.red = "Red (General warnings)"
+--L.blue = "Blue (Warnings for things that affect you directly)"
+--L.orange = "Orange (General warnings)"
+--L.yellow = "Yellow (General warnings)"
+--L.green = "Green (Warnings for good things such as a debuff being removed)"
+--L.cyan = "Cyan (Warnings for encounter status changes such as advancing to the next stage)"
+--L.purple = "Purple (Tank specific warnings)"
 
 -----------------------------------------------------------------------
 -- Emphasize.lua

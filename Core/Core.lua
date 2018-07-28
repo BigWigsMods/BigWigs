@@ -196,7 +196,7 @@ end
 do
 	local callbackRegistered = nil
 	local messages = {}
-	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Neutral"}
+	local colors = {"red", "blue", "orange", "yellow", "green", "cyan", "purple"}
 	local sounds = {"Long", "Info", "Alert", "Alarm", "Warning", false, false, false, false, false}
 
 	local function barStopped(event, bar)

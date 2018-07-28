@@ -627,6 +627,38 @@ function mod:ADDON_LOADED(addon)
 				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
 					BigWigs3DB.namespaces[k] = nil
 				end
+				-- XXX start temp 8.0.1 color conversion
+				if k == "BigWigs_Plugins_Colors" then
+					for profiles, profileList in next, v do
+						for name, tbl in next, profileList do
+							if tbl["Positive"] then
+								tbl["green"] = tbl["Positive"]
+								tbl["Positive"] = nil
+							end
+							if tbl["Personal"] then
+								tbl["blue"] = tbl["Personal"]
+								tbl["Personal"] = nil
+							end
+							if tbl["Important"] then
+								tbl["red"] = tbl["Important"]
+								tbl["Important"] = nil
+							end
+							if tbl["Urgent"] then
+								tbl["orange"] = tbl["Urgent"]
+								tbl["Urgent"] = nil
+							end
+							if tbl["Neutral"] then
+								tbl["cyan"] = tbl["Neutral"]
+								tbl["Neutral"] = nil
+							end
+							if tbl["Attention"] then
+								tbl["yellow"] = tbl["Attention"]
+								tbl["Attention"] = nil
+							end
+						end
+					end
+				end
+				-- XXX end temp 8.0.1 color conversion
 			end
 		end
 		if not BigWigs3DB.discord or BigWigs3DB.discord < 15 then

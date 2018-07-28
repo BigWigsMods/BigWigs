@@ -14,6 +14,7 @@ local valid_colors = {
 	orange = true,
 	red = true,
 	cyan = true,
+	purple = true,
 }
 local valid_sounds = {
 	Info = true, info = true,

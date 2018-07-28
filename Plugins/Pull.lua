@@ -183,7 +183,7 @@ do
 			if self.db.profile.countType == "emphasized" then
 				self:SendMessage("BigWigs_EmphasizedCountdownMessage", timeLeft)
 			else
-				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
+				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
 			end
 			local module = BigWigs:GetPlugin("Sounds", true)
 			if timeLeft < 6 and module and module.db.profile.sound then
@@ -223,7 +223,7 @@ do
 				LoggingCombat(isLogging)
 			end
 
-			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "Attention")
+			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
 			self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
 			self:SendMessage("BigWigs_StartPull", self, seconds, nick, isDBM)
 			local soundName = self.db.profile.startPullSound
