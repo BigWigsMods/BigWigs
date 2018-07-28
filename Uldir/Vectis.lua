@@ -62,7 +62,7 @@ function mod:EvolvingAffliction(args)
 end
 
 function mod:EvolvingAfflictionApplied(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "red")
+	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	self:PlaySound(args.spellId, "alert", args.destName)
 end
 

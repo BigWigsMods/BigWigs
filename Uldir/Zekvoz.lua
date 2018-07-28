@@ -166,7 +166,7 @@ end
 
 function mod:Shatter(args)
 	self:PlaySound(args.spellId, "alert")
-	self:Message(args.spellId, "cyan") -- XXX purple for tank?
+	self:Message(args.spellId, "purple")
 end
 
 --[[ Stage 1 ]]--

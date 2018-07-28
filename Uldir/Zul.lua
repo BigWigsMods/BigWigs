@@ -132,7 +132,7 @@ end
 
 function mod:RupturingBloodApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, args.amount, "red")
+	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	if self:Me(args.destGUID) or amount > 2 then
 		self:PlaySound(args.spellId, "warning", args.destName)
 	end

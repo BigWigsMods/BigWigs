@@ -74,7 +74,7 @@ function mod:Annihilation(args)
 end
 
 function mod:EssenceShear(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	if self:MobId(args.sourceGUID) == 134546 then -- Mythrax the Unraveler
 		self:Bar(args.spellId, 20)
