@@ -2,9 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "zhTW")
 if not L then return end
 
 L.comma = "，"
---L.width = "Width"
---L.height = "Height"
---L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
+L.width = "寬度"
+L.height = "高度"
+L.sizeDesc = "通常透過拖動錨點來條整尺寸，如果你需要一個精確的尺寸大小，可以調整這個值，或直接輸入到框中"
 
 L.abilityName = "技能名稱"
 L.abilityNameDesc = "在視窗上面顯示或隱藏技能名稱。"
@@ -277,12 +277,12 @@ L.autoReplyLeftCombatAdvancedWipe = "在「%s」的戰鬥中滅團：%s"
 -- Bars.lua
 --
 
---L.spacing = "Spacing"
---L.spacingDesc = "Change the space between each bar."
---L.emphasizeMultiplier = "Size Multiplier"
---L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
---L.iconPosition = "Icon Position"
---L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
+L.spacing = "間距"
+L.spacingDesc = "更改每個計時條之間的間距"
+L.emphasizeMultiplier = "尺寸倍數"
+L.emphasizeMultiplierDesc = "如果你禁止計時條移動到強調計時條錨點，此選項可以調整一般計時條進入強調倒數後的放大倍率。"
+L.iconPosition = "圖示位置"
+L.iconPositionDesc = "選擇將圖示置於計時條的哪一側。"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
