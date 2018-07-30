@@ -37,8 +37,6 @@ L.offline = "Offline"
 L.missingAddOn = "Please note that this zone requires the |cFF436EEE%s|r plugin for timers to be displayed."
 L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
 
-L.coreAddonDisabled = "BigWigs won't function properly since the addon %s is disabled. You can enable it from the addon control panel at the character selection screen."
-
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
 
 -- Options.lua

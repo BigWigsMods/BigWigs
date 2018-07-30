@@ -424,7 +424,7 @@ do
 				end
 			end
 		elseif reqFuncAddons[name] then
-			sysprint(L.coreAddonDisabled:format(name))
+			EnableAddOn(name) -- Make sure it wasn't left disabled for whatever reason
 		else
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then -- Disabled content

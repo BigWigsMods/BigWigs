@@ -38,8 +38,6 @@ L.offline = "Desconectado"
 L.missingAddOn = "Por favor, note que esta zona requer o |cFF436EEE%s|r plugin para os contadores serem exibidos."
 L.disabledAddOn = "Você desabilitou o addOn |cFF436EEE%s|r, contadores não serão exibidos."
 
-L.coreAddonDisabled = "BigWigs não irá funcionar corretamente com o addOn %s desativado. Você pode ativa-lo pelo painel de controle de addOn na aba de seleção de personagem."
-
 L.removeAddon = "Por favor remova '|cFF436EEE%s|r' porque este foi substituído por '|cFF436EEE%s|r'."
 
 -- Options.lua
