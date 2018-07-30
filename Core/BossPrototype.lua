@@ -1627,7 +1627,7 @@ do
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
 			if player == pName then
-				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "Personal", icon ~= false and icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or textType == "number" and text or key])
 			elseif not checkFlag(self, key, C.ME_ONLY) then
 				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, icon ~= false and icons[icon or textType == "number" and text or key])
 			end
@@ -1665,7 +1665,7 @@ do
 				if not checkFlag(self, key, C.MESSAGE) and not meOnly then wipe(player) return end
 			end
 			if meOnly or (onMe and #player == 1) then
-				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture)
 			else
 				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
 			end
@@ -1689,7 +1689,7 @@ do
 			end
 			if player == pName then
 				if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
-					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture)
 					if sound then
 						if hasVoice and checkFlag(self, key, C.VOICE) then
 							self:SendMessage("BigWigs_Voice", self, key, sound, true)
@@ -1734,7 +1734,7 @@ do
 				end
 
 				if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
-					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture)
 				elseif not meOnly and msgEnabled then
 					local list = tconcat(playerTable, comma, 1, playersInTable)
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
@@ -1766,7 +1766,7 @@ do
 			end
 		elseif player == pName then
 			if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
-				self:SendMessage("BigWigs_Message", self, key, format(underYou and L.underyou or L.you, msg), "Personal", texture)
+				self:SendMessage("BigWigs_Message", self, key, format(underYou and L.underyou or L.you, msg), "blue", texture)
 			end
 		elseif checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture)
