@@ -478,7 +478,8 @@ plugin.defaultDB = {
 	BigWigsAnchor_height = 16,
 	BigWigsEmphasizeAnchor_width = 320,
 	BigWigsEmphasizeAnchor_height = 22,
-	spacing = 1,
+	spacing = 1,	
+	maxCount = 0,
 	interceptMouse = nil,
 	onlyInterceptOnKeypress = nil,
 	interceptKey = "CTRL",
@@ -927,6 +928,20 @@ do
 								width = 1.6,
 							},
 						},
+					},										
+					maxCount = {
+						type = "range",
+						name = L.maxCount,
+						desc = L.maxCountDesc,
+						order = 4,
+						softMax = 25,
+						min = 0,
+						step = 1,
+						width = "double",
+						set = sortBars,
+						disabled = function()
+							return db.emphasize and db.emphasizeMove
+						end,
 					},
 				},
 			},
@@ -1165,22 +1180,27 @@ do
 		if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
 		for i = 1, #tmp do
 			local bar = tmp[i]
-			local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
-			bar:ClearAllPoints()
-			if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
-				if lastBar then -- Growing from a bar
-					bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
-				else -- Growing from the anchor
-					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
-				end
-				lastBar = bar
+			if not (db.emphasize and db.emphasizeMove) and i>db.maxCount and db.maxCount ~= 0 then				
+				bar:Hide()
 			else
-				if lastBar then -- Growing from a bar
-					bar:SetPoint("TOPLEFT", lastBar, "BOTTOMLEFT", 0, -spacing)
-				else -- Growing from the anchor
-					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+				bar:Show()
+				local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
+				bar:ClearAllPoints()
+				if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
+					if lastBar then -- Growing from a bar
+						bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
+					else -- Growing from the anchor
+						bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+					end
+					lastBar = bar
+				else
+					if lastBar then -- Growing from a bar
+						bar:SetPoint("TOPLEFT", lastBar, "BOTTOMLEFT", 0, -spacing)
+					else -- Growing from the anchor
+						bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+					end
+					lastBar = bar
 				end
-				lastBar = bar
 			end
 		end
 	end
