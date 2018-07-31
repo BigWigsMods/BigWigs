@@ -479,7 +479,8 @@ plugin.defaultDB = {
 	BigWigsEmphasizeAnchor_width = 320,
 	BigWigsEmphasizeAnchor_height = 22,
 	spacing = 1,	
-	visibleBarLimit = 100,
+	visibleBarLimit = 100,	
+	visibleBarLimitEmph = 100,
 	interceptMouse = nil,
 	onlyInterceptOnKeypress = nil,
 	interceptKey = "CTRL",
@@ -939,9 +940,6 @@ do
 						step = 1,
 						width = "double",
 						set = sortBars,
-						disabled = function()
-							return db.emphasize and db.emphasizeMove
-						end,
 					},
 				},
 			},
@@ -1066,6 +1064,17 @@ do
 							},
 						},
 					},
+					visibleBarLimitEmph = {
+						type = "range",
+						name = L.visibleBarLimit,
+						desc = L.visibleBarLimitDesc,
+						order = 9,
+						max = 100,
+						min = 0,
+						step = 1,
+						width = "double",
+						set = sortBars,
+					},
 				},
 			},
 			clicking = {
@@ -1180,7 +1189,8 @@ do
 		if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
 		for i = 1, #tmp do
 			local bar = tmp[i]
-			if  not (db.emphasize and db.emphasizeMove) and i>db.visibleBarLimit then
+			local barLimit = bar:Get("bigwigs:emphasized") and db.visibleBarLimitEmph or db.visibleBarLimit
+			if  i>barLimit then
 				bar:Hide()
 			else
 				bar:Show()
