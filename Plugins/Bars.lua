@@ -929,14 +929,14 @@ do
 								width = 1.6,
 							},
 						},
-					},										
+					},
 					visibleBarLimit = {
 						type = "range",
 						name = L.visibleBarLimit,
 						desc = L.visibleBarLimitDesc,
 						order = 4,
 						max = 100,
-						min = 0,
+						min = 1,
 						step = 1,
 						width = "double",
 						set = sortBars,
@@ -1070,7 +1070,7 @@ do
 						desc = L.visibleBarLimitDesc,
 						order = 9,
 						max = 100,
-						min = 0,
+						min = 1,
 						step = 1,
 						width = "double",
 						set = sortBars,
@@ -1185,15 +1185,20 @@ do
 		end
 		table.sort(tmp, barSorter)
 		local lastBar = nil
-		local up = nil
-		if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
+		local up, barLimit
+		if anchor == normalAnchor then
+			up = db.growup
+			barLimit = db.visibleBarLimit
+		else
+			up = db.emphasizeGrowup
+			barLimit = db.visibleBarLimitEmph
+		end
 		for i = 1, #tmp do
 			local bar = tmp[i]
-			local barLimit = bar:Get("bigwigs:emphasized") and db.visibleBarLimitEmph or db.visibleBarLimit
-			if  i>barLimit then
-				bar:Hide()
+			if i>barLimit then
+				bar:SetAlpha(0)
 			else
-				bar:Show()
+				bar:SetAlpha(1)
 				local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
 				bar:ClearAllPoints()
 				if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
