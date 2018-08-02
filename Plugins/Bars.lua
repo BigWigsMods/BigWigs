@@ -478,7 +478,9 @@ plugin.defaultDB = {
 	BigWigsAnchor_height = 16,
 	BigWigsEmphasizeAnchor_width = 320,
 	BigWigsEmphasizeAnchor_height = 22,
-	spacing = 1,
+	spacing = 1,	
+	visibleBarLimit = 100,	
+	visibleBarLimitEmph = 100,
 	interceptMouse = nil,
 	onlyInterceptOnKeypress = nil,
 	interceptKey = "CTRL",
@@ -928,6 +930,17 @@ do
 							},
 						},
 					},
+					visibleBarLimit = {
+						type = "range",
+						name = L.visibleBarLimit,
+						desc = L.visibleBarLimitDesc,
+						order = 4,
+						max = 100,
+						min = 1,
+						step = 1,
+						width = "double",
+						set = sortBars,
+					},
 				},
 			},
 			emphasize = {
@@ -1051,6 +1064,17 @@ do
 							},
 						},
 					},
+					visibleBarLimitEmph = {
+						type = "range",
+						name = L.visibleBarLimit,
+						desc = L.visibleBarLimitDesc,
+						order = 9,
+						max = 100,
+						min = 1,
+						step = 1,
+						width = "double",
+						set = sortBars,
+					},
 				},
 			},
 			clicking = {
@@ -1161,26 +1185,37 @@ do
 		end
 		table.sort(tmp, barSorter)
 		local lastBar = nil
-		local up = nil
-		if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
+		local up, barLimit
+		if anchor == normalAnchor then
+			up = db.growup
+			barLimit = db.visibleBarLimit
+		else
+			up = db.emphasizeGrowup
+			barLimit = db.visibleBarLimitEmph
+		end
 		for i = 1, #tmp do
 			local bar = tmp[i]
-			local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
-			bar:ClearAllPoints()
-			if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
-				if lastBar then -- Growing from a bar
-					bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
-				else -- Growing from the anchor
-					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
-				end
-				lastBar = bar
+			if i>barLimit then
+				bar:SetAlpha(0)
 			else
-				if lastBar then -- Growing from a bar
-					bar:SetPoint("TOPLEFT", lastBar, "BOTTOMLEFT", 0, -spacing)
-				else -- Growing from the anchor
-					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+				bar:SetAlpha(1)
+				local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
+				bar:ClearAllPoints()
+				if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
+					if lastBar then -- Growing from a bar
+						bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
+					else -- Growing from the anchor
+						bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+					end
+					lastBar = bar
+				else
+					if lastBar then -- Growing from a bar
+						bar:SetPoint("TOPLEFT", lastBar, "BOTTOMLEFT", 0, -spacing)
+					else -- Growing from the anchor
+						bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+					end
+					lastBar = bar
 				end
-				lastBar = bar
 			end
 		end
 	end
