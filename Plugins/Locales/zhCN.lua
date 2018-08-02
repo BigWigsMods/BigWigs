@@ -282,13 +282,18 @@ L.iconPositionDesc = "选择计时条上图标的位置。"
 -- Colors.lua
 --
 
---L.red = "Red (General warnings)"
---L.blue = "Blue (Warnings for things that affect you directly)"
---L.orange = "Orange (General warnings)"
---L.yellow = "Yellow (General warnings)"
---L.green = "Green (Warnings for good things such as a debuff being removed)"
---L.cyan = "Cyan (Warnings for encounter status changes such as advancing to the next stage)"
---L.purple = "Purple (Tank specific warnings)"
+--L.red = "Red"
+--L.redDesc = "General encounter warnings."
+--L.blue = "Blue"
+--L.blueDesc = "Warnings for things that affect you directly such as a debuff being applied to you."
+--L.orange = "Orange"
+--L.yellow = "Yellow"
+--L.green = "Green"
+--L.greenDesc = "Warnings for good things that happen such as a debuff being removed from you."
+--L.cyan = "Cyan"
+--L.cyanDesc = "Warnings for encounter status changes such as advancing to the next stage."
+--L.purple = "Purple"
+--L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

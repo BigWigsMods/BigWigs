@@ -109,42 +109,49 @@ local colorOptions = {
 			args = {
 				red = {
 					name = L.red,
+					desc = L.redDesc,
 					type = "color",
 					hidden = hidden,
 					order = 1,
 				},
-				orange = {
-					name = L.orange,
+				blue = {
+					name = L.blue,
+					desc = L.blueDesc,
 					type = "color",
 					hidden = hidden,
 					order = 2,
 				},
-				yellow = {
-					name = L.yellow,
+				orange = {
+					name = L.orange,
+					desc = L.redDesc,
 					type = "color",
 					hidden = hidden,
 					order = 3,
 				},
-				blue = {
-					name = L.blue,
+				green = {
+					name = L.green,
+					desc = L.greenDesc,
 					type = "color",
 					hidden = hidden,
 					order = 4,
 				},
-				green = {
-					name = L.green,
+				yellow = {
+					name = L.yellow,
+					desc = L.redDesc,
 					type = "color",
 					hidden = hidden,
 					order = 5,
 				},
 				cyan = {
 					name = L.cyan,
+					desc = L.cyanDesc,
 					type = "color",
 					hidden = hidden,
 					order = 6,
 				},
 				purple = {
 					name = L.purple,
+					desc = L.purpleDesc,
 					type = "color",
 					hidden = hidden,
 					order = 7,
