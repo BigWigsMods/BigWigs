@@ -461,6 +461,7 @@ plugin.defaultDB = {
 	monochrome = nil,
 	outline = "NONE",
 	growup = true,
+	reverseStacking = nil,
 	time = true,
 	alignText = "LEFT",
 	alignTime = "RIGHT",
@@ -471,6 +472,7 @@ plugin.defaultDB = {
 	emphasize = true,
 	emphasizeMove = true,
 	emphasizeGrowup = nil,
+	emphasizeReverseStacking = nil,
 	emphasizeRestart = true,
 	emphasizeTime = 11,
 	emphasizeMultiplier = 1.1,
@@ -872,11 +874,18 @@ do
 						order = 1,
 						set = sortBars,
 					},
+					reverseStacking = {
+						type = "toggle",
+						name = L.reverseStacking,
+						desc = L.reverseStackingDesc,
+						order = 2,
+						set = sortBars,
+					},
 					fontSize = {
 						type = "range",
 						name = L.fontSize,
 						width = "double",
-						order = 2,
+						order = 3,
 						max = 200, softMax = 72,
 						min = 1,
 						step = 1,
@@ -885,7 +894,7 @@ do
 					exactPositioning = {
 						type = "group",
 						name = L.positionExact,
-						order = 3,
+						order = 4,
 						inline = true,
 						args = {
 							BigWigsAnchor_x = {
@@ -958,37 +967,20 @@ do
 						name = L.restart,
 						desc = L.restartDesc,
 						order = 2,
-					},
-					emphasizeGrowup = {
-						type = "toggle",
-						name = L.growingUpwards,
-						desc = L.growingUpwardsDesc,
-						order = 3,
-						set = sortBars,
-					},
+					},					
 					emphasizeTime = {
 						type = "range",
 						name = L.emphasizeAt,
-						order = 4,
+						order = 3,
 						min = 6,
 						max = 20,
 						step = 1,
-					},
-					fontSizeEmph = {
-						type = "range",
-						name = L.fontSize,
-						width = "double",
-						order = 5,
-						max = 200, softMax = 72,
-						min = 1,
-						step = 1,
-						set = updateFont,
 					},
 					emphasizeMove = {
 						type = "toggle",
 						name = L.move,
 						desc = L.moveDesc,
-						order = 6,
+						order = 4,
 						set = function(_, value)
 							db.emphasizeMove = value
 							if not value then
@@ -1000,12 +992,36 @@ do
 							end
 						end,
 					},
+					emphasizeGrowup = {
+						type = "toggle",
+						name = L.growingUpwards,
+						desc = L.growingUpwardsDesc,
+						order = 5,
+						set = sortBars,
+					},
+					emphasizeReverseStacking = {
+						type = "toggle",
+						name = L.reverseStacking,
+						desc = L.reverseStackingDesc,
+						order = 6,
+						set = sortBars,
+					},					
+					fontSizeEmph = {
+						type = "range",
+						name = L.fontSize,
+						width = "double",
+						order = 7,
+						max = 200, softMax = 72,
+						min = 1,
+						step = 1,
+						set = updateFont,
+					},					
 					emphasizeMultiplier = {
 						type = "range",
 						name = L.emphasizeMultiplier,
 						desc = L.emphasizeMultiplierDesc,
 						width = "double",
-						order = 7,
+						order = 8,
 						max = 3,
 						min = 1,
 						step = 0.01,
@@ -1019,7 +1035,7 @@ do
 					exactPositioning = {
 						type = "group",
 						name = L.positionExact,
-						order = 8,
+						order = 9,
 						inline = true,
 						args = {
 							BigWigsEmphasizeAnchor_x = {
@@ -1167,6 +1183,9 @@ do
 	local function barSorter(a, b)
 		return a.remaining < b.remaining and true or false
 	end
+	local function barSorterRev(a, b)
+		return a.remaining > b.remaining and true or false 
+	end
 	local tmp = {}
 	rearrangeBars = function(anchor)
 		if not anchor then return end
@@ -1183,7 +1202,10 @@ do
 		for bar in next, anchor.bars do
 			tmp[#tmp + 1] = bar
 		end
-		table.sort(tmp, barSorter)
+		if anchor == normalAnchor and db.reverseStacking then table.sort(tmp, barSorterRev)
+		elseif anchor == normalAnchor then table.sort(tmp, barSorter) 
+		elseif db.emphasizeReverseStacking then table.sort(tmp, barSorterRev)
+		else table.sort(tmp, barSorter) end
 		local lastBar = nil
 		local up, barLimit
 		if anchor == normalAnchor then
