@@ -1195,27 +1195,31 @@ do
 		end
 		for i = 1, #tmp do
 			local bar = tmp[i]
-			if i>barLimit then
+			if i > barLimit then
 				bar:SetAlpha(0)
-			else
+				bar:EnableMouse(false)
+			elseif barLimit ~= 100 then
 				bar:SetAlpha(1)
-				local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
-				bar:ClearAllPoints()
-				if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
-					if lastBar then -- Growing from a bar
-						bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
-					else -- Growing from the anchor
-						bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
-					end
-					lastBar = bar
-				else
-					if lastBar then -- Growing from a bar
-						bar:SetPoint("TOPLEFT", lastBar, "BOTTOMLEFT", 0, -spacing)
-					else -- Growing from the anchor
-						bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
-					end
-					lastBar = bar
+				if db.interceptMouse and not db.onlyInterceptOnKeypress then
+					bar:EnableMouse(true)
 				end
+			end
+			local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
+			bar:ClearAllPoints()
+			if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
+				if lastBar then -- Growing from a bar
+					bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
+				else -- Growing from the anchor
+					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+				end
+				lastBar = bar
+			else
+				if lastBar then -- Growing from a bar
+					bar:SetPoint("TOPLEFT", lastBar, "BOTTOMLEFT", 0, -spacing)
+				else -- Growing from the anchor
+					bar:SetPoint("BOTTOMLEFT", anchor, "BOTTOMLEFT")
+				end
+				lastBar = bar
 			end
 		end
 	end
@@ -1635,7 +1639,9 @@ local function refixClickOnBar(intercept, bar)
 end
 local function refixClickOnAnchor(intercept, anchor)
 	for bar in next, anchor.bars do
-		refixClickOnBar(intercept, bar)
+		if not intercept or bar:GetAlpha() > 0 then -- Don't enable for hidden bars
+			refixClickOnBar(intercept, bar)
+		end
 	end
 end
 
