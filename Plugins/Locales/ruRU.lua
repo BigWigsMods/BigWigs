@@ -277,6 +277,8 @@ L.emphasizeMultiplier = "Множитель Размера"
 L.emphasizeMultiplierDesc = "Если Вы отмените перемещение увеличенных полос к своему якорю, эта опция будет просто определять, насколько будут увеличиваться полосы по отношению к нормальным."
 L.iconPosition = "Позиция Иконки"
 L.iconPositionDesc = "Выберите, где на полосе будет находиться иконка."
+--L.visibleBarLimit = "Visible bar limit"
+--L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 
 -----------------------------------------------------------------------
 -- Colors.lua

@@ -277,6 +277,8 @@ L.emphasizeMultiplier = "尺寸倍数"
 L.emphasizeMultiplierDesc = "如禁用计时条移向醒目锚点，此选项将决定以一般计时条乘以倍数作为醒目计时条的尺寸。"
 L.iconPosition = "图标位置"
 L.iconPositionDesc = "选择计时条上图标的位置。"
+--L.visibleBarLimit = "Visible bar limit"
+--L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 
 -----------------------------------------------------------------------
 -- Colors.lua

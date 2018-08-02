@@ -100,6 +100,8 @@ L.fill = "채우기"
 L.fillDesc = "바를 비우는 대신 채워나갑니다."
 L.spacing = "간격"
 L.spacingDesc = "각 바 사이의 간격을 조절합니다."
+--L.visibleBarLimit = "Visible bar limit"
+--L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 
 L.localTimer = "지역"
 L.timerFinished = "%s: 타이머 [%s] 종료됨."

@@ -277,6 +277,8 @@ L.emphasizeMultiplier = "尺寸倍數"
 L.emphasizeMultiplierDesc = "如果你禁止計時條移動到強調計時條錨點，此選項可以調整一般計時條進入強調倒數後的放大倍率。"
 L.iconPosition = "圖示位置"
 L.iconPositionDesc = "選擇將圖示置於計時條的哪一側。"
+--L.visibleBarLimit = "Visible bar limit"
+--L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 
 -----------------------------------------------------------------------
 -- Colors.lua

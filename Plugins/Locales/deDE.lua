@@ -277,6 +277,8 @@ L.emphasizeMultiplier = "Größenmultiplikator"
 --L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
 L.iconPosition = "Symbolposition"
 L.iconPositionDesc = "Wähle, wo sich das Symbol auf der Leiste befinden soll."
+--L.visibleBarLimit = "Visible bar limit"
+--L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 
 -----------------------------------------------------------------------
 -- Colors.lua

@@ -100,6 +100,8 @@ L.fill = "Completar"
 L.fillDesc = "Completa as barras ao invés de drena-las."
 L.spacing = "Espaçamento"
 L.spacingDesc = "Muda o espaço entre cada barra."
+--L.visibleBarLimit = "Visible bar limit"
+--L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 
 L.localTimer = "Local"
 L.timerFinished = "%s: Contador [%s] terminado."

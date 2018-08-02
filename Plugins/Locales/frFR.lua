@@ -276,6 +276,8 @@ L.emphasizeMultiplier = "Multiplicateur de taille"
 L.emphasizeMultiplierDesc = "Si vous désactivez le déplacement des barres vers l'ancre de mise en évidence, cette option décidera la taille des barres mises en évidence en multipliant la taille des barres normales."
 L.iconPosition = "Position de l'icône"
 L.iconPositionDesc = "Définit où l'icône est positionnée sur la barre."
+--L.visibleBarLimit = "Visible bar limit"
+--L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 
 -----------------------------------------------------------------------
 -- Colors.lua
