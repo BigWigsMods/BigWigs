@@ -294,6 +294,7 @@ local function load(obj, index)
 		loadOnSlash[index] = nil
 	end
 
+	EnableAddOn(index) -- Make sure it wasn't left disabled for whatever reason
 	local loaded, reason = LoadAddOn(index)
 	if not loaded then
 		sysprint(ADDON_LOAD_FAILED:format(GetAddOnInfo(index), _G["ADDON_"..reason]))
