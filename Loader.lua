@@ -55,6 +55,7 @@ local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
+local UnitName = UnitName
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetBestMapForUnit = GetBestMapForUnit
@@ -266,7 +267,7 @@ end
 -- GLOBALS: GetAddOnEnableState, GetAddOnInfo, GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetTime, GRAY_FONT_COLOR, hash_SlashCmdList, InCombatLockdown
 -- GLOBALS: IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySound, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, StopSound
--- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
+-- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
 -- GLOBALS: SLASH_BigWigsVersion1, wipe
 
 -----------------------------------------------------------------------
@@ -303,14 +304,18 @@ local function load(obj, index)
 end
 
 local function loadAddons(tbl)
-	if not tbl then return end
-	for _, index in next, tbl do
+	if not tbl[1] then return end
+
+	for i = 1, #tbl do
+		local index = tbl[i]
 		if not IsAddOnLoaded(index) and load(nil, index) then
 			local name = GetAddOnInfo(index)
 			public:SendMessage("BigWigs_ModulePackLoaded", name)
 		end
 	end
-	tbl = nil
+	for i = #tbl, 1, -1 do
+		tbl[i] = nil
+	end
 end
 
 local function loadZone(zone)
@@ -376,7 +381,11 @@ do
 		if IsAddOnEnabled(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
-				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = i
+				if name == "BigWigs_Plugins" then -- Always first
+					table.insert(loadOnCoreEnabled, 1, i)
+				else
+					loadOnCoreEnabled[#loadOnCoreEnabled + 1] = i
+				end
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then
@@ -425,7 +434,7 @@ do
 				end
 			end
 		elseif reqFuncAddons[name] then
-			EnableAddOn(name) -- Make sure it wasn't left disabled for whatever reason
+			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
 		else
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then -- Disabled content
@@ -573,7 +582,8 @@ do
 		end
 	end
 
-	for _, index in next, loadOnWorldBoss do
+	for i = 1, #loadOnWorldBoss do
+		local index = loadOnWorldBoss[i]
 		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-WorldBoss")
 		if zones then
 			iterateWorldBosses(index, strsplit(",", zones))
