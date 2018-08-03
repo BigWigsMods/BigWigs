@@ -378,6 +378,10 @@ do
 
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
+		if reqFuncAddons[name] then
+			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
+		end
+
 		if IsAddOnEnabled(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
@@ -433,8 +437,6 @@ do
 					loadOnSlash[i][j] = slash
 				end
 			end
-		elseif reqFuncAddons[name] then
-			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
 		else
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then -- Disabled content
