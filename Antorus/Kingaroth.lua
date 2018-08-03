@@ -162,13 +162,13 @@ end
 
 --[[ Stage: Deployment ]]--
 function mod:ForgingStrike(args)
-	self:Message(254919, "yellow", "Alert")
+	self:Message(254919, "purple", "Alert")
 	self:CDBar(254919, 14.5)
 end
 
 function mod:ForgingStrikeApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(254919, args.destName, amount, "orange", "Warning")
+	self:StackMessage(254919, args.destName, amount, "purple", "Warning")
 end
 
 do

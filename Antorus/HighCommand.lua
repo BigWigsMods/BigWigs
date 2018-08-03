@@ -172,7 +172,7 @@ end
 
 function mod:ExploitWeaknessApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "orange", amount > 1 and "Warning") -- Swap on 2
+	self:StackMessage(args.spellId, args.destName, amount, "purple", amount > 1 and "Warning") -- Swap on 2
 end
 
 function mod:Pyroblast(args)

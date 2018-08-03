@@ -262,7 +262,7 @@ end
 --[[ Stage One: Attack Force ]]--
 function mod:ShockLance(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "red", amount > 6 and "Warning" or amount > 4 and "Alarm") -- Swap on 5, increase warning at 7
+	self:StackMessage(args.spellId, args.destName, amount, "purple", amount > 6 and "Warning" or amount > 4 and "Alarm") -- Swap on 5, increase warning at 7
 end
 
 function mod:ShockLanceSuccess(args)
@@ -277,7 +277,7 @@ end
 --[[ Stage Two: Contract to Kill ]]--
 function mod:Sever(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "red", amount > 3 and "Warning" or amount > 1 and "Alarm") -- Swap on 2
+	self:StackMessage(args.spellId, args.destName, amount, "purple", amount > 3 and "Warning" or amount > 1 and "Alarm") -- Swap on 2
 end
 
 function mod:SeverSuccess(args)
@@ -298,7 +298,7 @@ end
 --[[ Stage Three: The Perfect Weapon ]]--
 function mod:EmpoweredShockLance(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "red", amount % 2 == 0 and "Alarm")
+	self:StackMessage(args.spellId, args.destName, amount, "purple", amount % 2 == 0 and "Alarm")
 end
 
 function mod:EmpoweredShockLanceSuccess(args)

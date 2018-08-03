@@ -448,7 +448,7 @@ end
 function mod:Flashfreeze(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, args.destName, amount, "cyan", "Info")
+		self:StackMessage(args.spellId, args.destName, amount, "blue", "Info")
 	end
 end
 
