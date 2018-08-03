@@ -25,7 +25,7 @@
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs, BigWigs_Core
-## LoadWith: BigWigs_Core
+## X-BigWigs-LoadOn-CoreEnabled: 1
 ## X-BigWigs-LoadOn-Slash: /proximity, /range, /localbar, /raidbar, /pull, /break
 
 ## X-Category: Raid
