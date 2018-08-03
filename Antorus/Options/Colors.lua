@@ -5,7 +5,7 @@ BigWigs:AddColors("Gorothi Worldbreaker", {
 	[244410] = {"blue","yellow"},
 	[244761] = "red",
 	[244969] = "orange",
-	[246220] = {"blue","orange"},
+	[246220] = {"blue","purple"},
 })
 
 BigWigs:AddColors("Felhounds of Sargeras", {
@@ -30,7 +30,7 @@ BigWigs:AddColors("Antoran High Command", {
 	[244172] = "blue",
 	[244625] = "orange",
 	[244737] = {"blue","yellow"},
-	[244892] = {"blue","orange"},
+	[244892] = {"blue","purple"},
 	[244910] = {"blue","green"},
 	[245161] = "yellow",
 	[245227] = "cyan",
@@ -75,14 +75,14 @@ BigWigs:AddColors("Eonar the Life-Binder", {
 })
 
 BigWigs:AddColors("Imonar the Soulhunter", {
-	[247367] = {"blue","red"},
+	[247367] = {"blue","purple"},
 	[247376] = "yellow",
-	[247687] = {"blue","red"},
+	[247687] = {"blue","purple"},
 	[247923] = "yellow",
 	[248068] = "yellow",
 	[248070] = "orange",
 	[248254] = "orange",
-	[250255] = {"blue","red"},
+	[250255] = {"blue","purple"},
 	[254244] = {"blue","red"},
 	["stages"] = "green",
 })
@@ -96,13 +96,13 @@ BigWigs:AddColors("Kin'garoth", {
 	[248214] = {"cyan","red"},
 	[248375] = "orange",
 	[249680] = {"blue","orange"},
-	[254919] = {"blue","orange","yellow"},
+	[254919] = {"blue","purple"},
 	[254926] = {"blue","cyan","yellow"},
 })
 
 BigWigs:AddColors("Varimathras", {
 	[-16350] = "orange",
-	[243960] = "orange",
+	[243960] = "purple",
 	[243961] = "blue",
 	[243999] = {"blue","yellow"},
 	[244042] = {"blue","red"},
@@ -112,7 +112,7 @@ BigWigs:AddColors("Varimathras", {
 
 BigWigs:AddColors("The Coven of Shivarra", {
 	[244899] = {"blue","cyan"},
-	[245518] = {"blue","cyan"},
+	[245518] = "blue",
 	[245586] = {"blue","green"},
 	[245627] = {"blue","yellow"},
 	[246329] = "yellow",
@@ -132,7 +132,7 @@ BigWigs:AddColors("Aggramar", {
 	[245458] = "yellow",
 	[245463] = "red",
 	[245983] = "red",
-	[245990] = {"blue","red"},
+	[245990] = {"blue","purple"},
 	[245994] = {"blue","red"},
 	[246037] = "red",
 	[254452] = {"blue","red"},
