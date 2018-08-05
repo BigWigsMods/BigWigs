@@ -277,25 +277,25 @@ L.emphasizeMultiplier = "尺寸倍数"
 L.emphasizeMultiplierDesc = "如禁用计时条移向醒目锚点，此选项将决定以一般计时条乘以倍数作为醒目计时条的尺寸。"
 L.iconPosition = "图标位置"
 L.iconPositionDesc = "选择计时条上图标的位置。"
---L.visibleBarLimit = "Visible bar limit"
---L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
+L.visibleBarLimit = "可视条限制"
+L.visibleBarLimitDesc = "设定同时可见最大条的数量。"
 
 -----------------------------------------------------------------------
 -- Colors.lua
 --
 
---L.red = "Red"
---L.redDesc = "General encounter warnings."
---L.blue = "Blue"
---L.blueDesc = "Warnings for things that affect you directly such as a debuff being applied to you."
---L.orange = "Orange"
---L.yellow = "Yellow"
---L.green = "Green"
---L.greenDesc = "Warnings for good things that happen such as a debuff being removed from you."
---L.cyan = "Cyan"
---L.cyanDesc = "Warnings for encounter status changes such as advancing to the next stage."
---L.purple = "Purple"
---L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
+L.red = "红色"
+L.redDesc = "一般战斗警报。"
+L.blue = "蓝色"
+L.blueDesc = "直接对你造成影响的警报，例如负面效果。"
+L.orange = "橙色"
+L.yellow = "黄色"
+L.green = "绿色"
+L.greenDesc = "对你有好事发生的警报，例如负面效果移除。"
+L.cyan = "青色"
+L.cyanDesc = "遇到状态改变的警报，例如进入到下一阶段。"
+L.purple = "粉色"
+L.purpleDesc = "坦克特定技能的警报，例如负面效果叠加。"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
