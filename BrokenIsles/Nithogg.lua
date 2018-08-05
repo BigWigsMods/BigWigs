@@ -47,7 +47,7 @@ end
 --
 
 function mod:StormBreath(args)
-	self:Message(args.spellId, "Urgent", self:Tank() and "Warning")
+	self:Message(args.spellId, "orange", self:Tank() and "Warning")
 	self:CDBar(args.spellId, 23.7)
 end
 
@@ -56,18 +56,18 @@ do
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 		if spellId == 212837 and castGUID ~= prev then -- Crackling Jolt
 			prev = castGUID
-			self:Message(-13327, "Important", "Alarm")
+			self:Message(-13327, "red", "Alarm")
 			self:CDBar(-13327, 11)
 		end
 	end
 end
 
 function mod:TailLash(args)
-	self:Message(args.spellId, "Attention", self:Melee() and "Alert")
+	self:Message(args.spellId, "yellow", self:Melee() and "Alert")
 end
 
 function mod:ElectricalStorm(args)
-	self:Message(args.spellId, "Important", "Info")
+	self:Message(args.spellId, "red", "Info")
 	self:CDBar(args.spellId, 30)
 end
 
@@ -76,7 +76,7 @@ function mod:StaticCharge(args)
 end
 
 function mod:StaticChargeApplied(args)
-	self:TargetMessage(args.spellId, args.destName, "Positive", "Warning")
+	self:TargetMessage(args.spellId, args.destName, "green", "Warning")
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end

@@ -53,7 +53,7 @@ do
 			self:Flash(args.spellId)
 		end
 		if #playerList == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "Attention", "Alert")
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, playerList, "yellow", "Alert")
 		end
 	end
 end
@@ -61,17 +61,17 @@ end
 function mod:DrainStacks(args)
 	if self:Me(args.destGUID) or (self:Tank() and self:Tank(args.destName)) then
 		local amount = args.amount or 1
-		self:StackMessage(247739, args.destName, amount, "Neutral", amount % 2 == 0 and "Alarm", args.spellId)
+		self:StackMessage(247739, args.destName, amount, "cyan", amount % 2 == 0 and "Alarm", args.spellId)
 	end
 end
 
 function mod:Stomp(args)
-	self:Message(args.spellId, "Urgent", "Warning")
+	self:Message(args.spellId, "orange", "Warning")
 	self:CastBar(args.spellId, 2)
 	self:CDBar(args.spellId, 17)
 end
 
 function mod:FelBreath(args)
-	self:Message(args.spellId, "Important", "Long")
+	self:Message(args.spellId, "red", "Long")
 	self:CDBar(args.spellId, 15.5)
 end

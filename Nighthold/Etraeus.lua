@@ -191,7 +191,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 222130 then -- Phase 2 Conversation
 		phase = 2
-		self:Message("stages", "Neutral", "Long", "90% - ".. CL.stage:format(2), false)
+		self:Message("stages", "cyan", "Long", "90% - ".. CL.stage:format(2), false)
 		ejectionCount = 1
 		novaCount = 1
 		self:CDBar(206936, timers[206936][ejectionCount], CL.count:format(self:SpellName(206936), ejectionCount))
@@ -206,7 +206,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		end
 	elseif spellId == 222133 then -- Phase 3 Conversation
 		phase = 3
-		self:Message("stages", "Neutral", "Long", "60% - ".. CL.stage:format(3), false)
+		self:Message("stages", "cyan", "Long", "60% - ".. CL.stage:format(3), false)
 		self:StopBar(CL.count:format(self:SpellName(206936), ejectionCount)) -- Icy Ejection
 		self:StopBar(CL.count:format(self:SpellName(206949), novaCount)) -- Frigid Nova
 		ejectionCount = 1
@@ -223,7 +223,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		end
 	elseif spellId == 222134 then -- Phase 4 Conversation
 		phase = 4
-		self:Message("stages", "Neutral", "Long", "30% - ".. CL.stage:format(4), false)
+		self:Message("stages", "cyan", "Long", "30% - ".. CL.stage:format(4), false)
 		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 		self:StopBar(CL.count:format(self:SpellName(205649), ejectionCount)) -- Fel Ejection
 		self:StopBar(CL.count:format(self:SpellName(206517), novaCount)) -- Fel Nova
@@ -259,14 +259,14 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
 
 --[[ Stage One ]]--
 function mod:CoronalEjection(args)
-	self:Message(args.spellId, "Attention")
+	self:Message(args.spellId, "yellow")
 end
 
 --[[ Stage Two ]]--
@@ -278,7 +278,7 @@ do
 	}
 	function mod:GravitationalPullSuccess(args)
 		-- Only show this once by using the success event
-		self:TargetMessage(args.spellId, args.destName, "Urgent", "Warning", nil, nil, self:Tank())
+		self:TargetMessage(args.spellId, args.destName, "orange", "Warning", nil, nil, self:Tank())
 		self:CDBar(args.spellId, timers[args.spellId])
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
@@ -313,7 +313,7 @@ end
 
 function mod:IcyEjectionApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+		self:TargetMessage(args.spellId, args.destName, "yellow", "Warning")
 		self:Say(args.spellId)
 		self:OpenProximity(args.spellId, 8)
 		self:TargetBar(args.spellId, 10, args.destName)
@@ -332,7 +332,7 @@ function mod:IcyEjectionRemoved(args)
 end
 
 function mod:FrigidNova(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:CastBar(args.spellId, 4)
 	novaCount = novaCount + 1
 	self:CDBar(args.spellId, 61, CL.count:format(args.spellName, novaCount))
@@ -340,7 +340,7 @@ end
 
 function mod:Chilled(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal")
+		self:TargetMessage(args.spellId, args.destName, "blue")
 		self:TargetBar(args.spellId, 12, args.destName)
 	end
 end
@@ -349,12 +349,12 @@ end
 function mod:Felburst(args)
 	local amount = args.amount or 1
 	if amount % 2 == 1 or amount > 5 then
-		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 5 and "Warning")
+		self:StackMessage(args.spellId, args.destName, amount, "red", amount > 5 and "Warning")
 	end
 end
 
 function mod:FelNova(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:CastBar(args.spellId, 4)
 	novaCount = novaCount + 1
 	self:Bar(args.spellId, (self:Mythic() and (novaCount == 2 and 48.5 or 51)) or 45, CL.count:format(args.spellName, novaCount))
@@ -370,7 +370,7 @@ end
 
 function mod:FelEjectionApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Warning")
 		self:Say(args.spellId)
 		self:TargetBar(args.spellId, 8, args.destName)
 	end
@@ -378,19 +378,19 @@ end
 
 function mod:FelEjectionRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Personal", nil, CL.removed:format(args.spellName))
+		self:Message(args.spellId, "blue", nil, CL.removed:format(args.spellName))
 	end
 end
 
 --[[ Stage Four ]]--
 function mod:VoidNova(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:CastBar(args.spellId, 4)
 	self:CDBar(args.spellId, 75)
 end
 
 function mod:WorldDevouringForce(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	worldDevouringForceCounter = worldDevouringForceCounter + 1
 	local t = worldDevouringForceTimers[worldDevouringForceCounter]
 	if t then
@@ -415,7 +415,7 @@ end
 
 function mod:WitnessTheVoid(args)
 	self:StopBar(CL.count:format(args.spellName, voidCount)) -- will be replaced by a CL.cast bar
-	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(CL.count:format(args.spellName, voidCount)))
+	self:Message(args.spellId, "yellow", "Warning", CL.casting:format(CL.count:format(args.spellName, voidCount)))
 	self:CastBar(args.spellId, self:Mythic() and 2.8 or 4, CL.count:format(args.spellName, voidCount))
 	voidCount = voidCount + 1
 	self:Bar(args.spellId, self:Mythic() and 16.2 or 18.6, CL.count:format(args.spellName, voidCount)) -- m: 13.4 cd + 2.8, hc = 14.6 cd + 4
@@ -443,7 +443,7 @@ do
 		scheduled = nil
 		grandCast = true
 
-		self:Message(args.spellId, "Attention", "Info", CL.count:format(args.spellName, grandCounter))
+		self:Message(args.spellId, "yellow", "Info", CL.count:format(args.spellName, grandCounter))
 		grandCounter = grandCounter + 1
 		self:CastBar(args.spellId, 4)
 		self:OpenProximity(args.spellId, 5) -- no idea if this range is reasonable
@@ -479,7 +479,7 @@ do
 			for i = 1, #starSignTables[mySign] do
 				playerList[#playerList+1] = starSignTables[mySign][i]
 			end
-			self:TargetMessage(205408, playerList, mySign == 205429 and "Attention" or mySign == 205445 and "Important" or mySign == 216345 and "Positive" or "Personal", "Warning", mySign, mySign)
+			self:TargetMessage(205408, playerList, mySign == 205429 and "yellow" or mySign == 205445 and "red" or mySign == 216345 and "green" or "blue", "Warning", mySign, mySign)
 		end
 	end
 
@@ -537,7 +537,7 @@ do
 		tDeleteItem(starSignTables[args.spellId], args.destName)
 
 		if self:Me(args.destGUID) then
-			self:Message(205408, "Personal", "Info", CL.removed:format(args.spellName), args.spellId)
+			self:Message(205408, "blue", "Info", CL.removed:format(args.spellName), args.spellId)
 			mySign = nil
 			updateInfoBox(self)
 		end

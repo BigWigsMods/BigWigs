@@ -176,7 +176,7 @@ function mod:FelBombardment(args)
 	else
 		self:PlaySound(args.spellId, "Alarm", nil, args.destName) -- Different sound for when tanking/offtanking
 	end
-	self:TargetMessage2(args.spellId, "orange", args.destName)
+	self:TargetMessage2(args.spellId, "purple", args.destName)
 	self:Bar(args.spellId, self:Mythic() and 15.8 or 20.7)
 end
 

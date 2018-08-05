@@ -103,12 +103,7 @@ function mod:GetOptions()
 end
 
 function mod:VerifyEnable()
-	if BigWigsLoader.SetMapToCurrentZone then -- XXX 8.0
-		BigWigsLoader.SetMapToCurrentZone()
-		return BigWigsLoader.GetCurrentMapDungeonLevel() == 9
-	else
-		return BigWigsLoader.GetBestMapForUnit("player") == 917
-	end
+	return BigWigsLoader.GetBestMapForUnit("player") == 917 -- Floor 9, The World Soul
 end
 
 function mod:OnBossEnable()
@@ -400,7 +395,7 @@ end
 function mod:TaeshalachsReach(args)
 	local amount = args.amount or 1
 	if amount % 3 == 0 or amount > 7 then
-		self:StackMessage(args.spellId, args.destName, amount, "red", amount > 7 and "Alarm") -- Swap on 8+
+		self:StackMessage(args.spellId, args.destName, amount, "purple", amount > 7 and "Alarm") -- Swap on 8+
 	end
 end
 

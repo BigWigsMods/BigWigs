@@ -47,19 +47,19 @@ end
 function mod:ExpelSoul(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Alarm")
 	end
 end
 
 function mod:SoulRend(args)
-	self:Message(args.spellId, "Attention", "Warning", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Warning", CL.incoming:format(args.spellName))
 end
 
 function mod:MaraudingMists(args)
 	if self:Melee() then
 		self:CDBar(args.spellId, 11)
 		if self:MobId(UnitGUID("target")) == 106982 then -- Reaver Jdorn
-			self:Message(args.spellId, "Urgent", "Info", CL.casting:format(args.spellName))
+			self:Message(args.spellId, "orange", "Info", CL.casting:format(args.spellName))
 		end
 	end
 end
@@ -69,7 +69,7 @@ do
 		if self:Me(guid) then
 			self:Say(213588)
 		end
-		self:TargetMessage(213588, player, "Important", "Alert", nil, nil, true)
+		self:TargetMessage(213588, player, "red", "Alert", nil, nil, true)
 	end
 
 	function mod:SeadogsScuttle(args)
@@ -78,11 +78,11 @@ do
 end
 
 function mod:TentacleBash(args)
-	self:Message(args.spellId, "Positive", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "green", "Long", CL.casting:format(args.spellName))
 end
 
 function mod:CursedCrew()
-	self:Message(213532, "Important", "Warning", CL.custom_sec:format(self:SpellName(213532), 11))
+	self:Message(213532, "red", "Warning", CL.custom_sec:format(self:SpellName(213532), 11))
 	self:Bar(213532, 11)
 end
 

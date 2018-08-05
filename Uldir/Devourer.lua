@@ -1,4 +1,3 @@
-if not C_ChatInfo then return end -- XXX Don't load outside of 8.0
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -53,7 +52,7 @@ end
 --
 
 function mod:TerribleThrash(args)
-	self:Message(args.spellId, "red")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 6)
 end

@@ -71,7 +71,7 @@ end
 --[[ Gelatinized Decay ]]--
 function mod:WaveofDecay(args)
 	if not self:LFR() then
-		self:Message(args.spellId, "Urgent", self:Interrupter(args.sourceGUID) and "Info", CL.casting:format(args.spellName))
+		self:Message(args.spellId, "orange", self:Interrupter(args.sourceGUID) and "Info", CL.casting:format(args.spellName))
 	end
 end
 
@@ -79,13 +79,13 @@ function mod:UnstableDecay(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:TargetBar(args.spellId, 9, args.destName)
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Warning")
 	end
 end
 
 --[[ Taintheart Befouler ]]--
 function mod:Befoulment(args)
-	self:TargetMessage(args.spellId, args.destName, "Positive", "Alert", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "green", "Alert", nil, nil, true)
 	self:TargetBar(args.spellId, 15, args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
@@ -97,7 +97,7 @@ do
 	local guids = {}
 	local nextIcon = 8
 	function mod:CorruptedTotem(args)
-		self:Message("totem", "Important", "Long", args.spellName, L.totem_icon)
+		self:Message("totem", "red", "Long", args.spellName, L.totem_icon)
 		if self:GetOption(totemMarker) then
 			if not next(guids) then
 				nextIcon = 8

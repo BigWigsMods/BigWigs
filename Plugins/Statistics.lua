@@ -167,22 +167,6 @@ end
 function plugin:OnPluginEnable()
 	if not BigWigsStatsDB then
 		BigWigsStatsDB = {}
-
-		-- XXX temp DB conversion
-		if BigWigsStatisticsDB and next(BigWigsStatisticsDB) then
-			for k,v in next, BigWigsStatisticsDB do
-				local id = 0
-				if k > 0 then
-					id = GetAreaMapInfo(k)
-				end
-				if id and id > 0 then
-					BigWigsStatsDB[id] = v
-				else
-					BigWigs:Print("This id failed conversion to the new stats database:", k)
-				end
-			end
-		end
-		-- XXX end temp DB conversion
 	end
 
 	if self.db.profile.enabled then

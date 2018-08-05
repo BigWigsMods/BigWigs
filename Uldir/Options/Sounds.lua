@@ -87,10 +87,10 @@ BigWigs:AddSounds("G'huun", {
 	[267462] = "warning",
 	[267509] = "info",
 	[270287] = "alarm",
-	[270428] = "alarm",
+	[270373] = "alarm",
 	[270447] = "alarm",
 	[272506] = "warning",
-	[274577] = "alarm",
+	[274582] = "alarm",
 	[275160] = "warning",
 	["stages"] = "long",
 })

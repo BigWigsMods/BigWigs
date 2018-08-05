@@ -45,7 +45,7 @@ end
 
 do
 	local function printTarget(self, player)
-		self:TargetMessage(219803, player, "Positive")
+		self:TargetMessage(219803, player, "green")
 	end
 	function mod:IceHurl(args)
 		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
@@ -53,22 +53,22 @@ do
 end
 
 function mod:SnowCrash(args)
-	self:Message(args.spellId, "Important", self:Melee() and "Alert")
+	self:Message(args.spellId, "red", self:Melee() and "Alert")
 	self:CDBar(args.spellId, 19)
 end
 
 function mod:Avalanche(args)
-	self:Message(args.spellId, "Attention", "Warning")
+	self:Message(args.spellId, "yellow", "Warning")
 	self:Flash(args.spellId)
 end
 
 function mod:SnowPlow(args)
-	self:Message(219602, "Urgent", "Long", CL.incoming:format(args.spellName))
+	self:Message(219602, "orange", "Long", CL.incoming:format(args.spellName))
 end
 
 function mod:SnowPlowApplied(args)
 	if self:MobId(args.destGUID) ~= 110378 then -- Skip the boss
-		self:TargetMessage(args.spellId, args.destName, "Positive", "Alarm")
+		self:TargetMessage(args.spellId, args.destName, "green", "Alarm")
 		self:PrimaryIcon(args.spellId, args.destName)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)

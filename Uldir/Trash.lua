@@ -1,4 +1,3 @@
-if not C_ChatInfo then return end -- XXX Don't load outside of 8.0
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -59,7 +58,7 @@ do
 			self:Say(277047)
 			self:PlaySound(277047, "warning")
 		end
-		self:TargetMessage(277047, player, "Attention")
+		self:TargetMessage(277047, player, "yellow")
 	end
 	function mod:CorruptingGaze(args)
 		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
@@ -68,5 +67,5 @@ end
 
 function mod:BloodShield(args)
 	self:PlaySound(args.spellId, "long")
-	self:Message(args.spellId, "Important", nil, CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", nil, CL.casting:format(args.spellName))
 end

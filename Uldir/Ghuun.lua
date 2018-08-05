@@ -1,4 +1,3 @@
-if not C_ChatInfo then return end -- XXX Don't load outside of 8.0
 --------------------------------------------------------------------------------
 -- TODO:
 -- - Dark Bargain bars and counter for each unique add?
@@ -150,7 +149,7 @@ function mod:Torment(args)
 end
 
 function mod:MassiveSmash(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	self:CDBar(args.spellId, 9.7)
 end
@@ -187,7 +186,7 @@ end
 
 -- Stage 2
 function mod:GrowingCorruption(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "red")
+	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -233,7 +232,7 @@ function mod:Collapse(args)
 	self:StopBar(263482) -- Reorigination Blast
 
 	waveOfCorruptionCount = 1
-	
+
 	self:CastBar("stages", 20, args.spellName, args.spellId) -- Collapse
 	self:Bar(274582, 25.5) -- Malignant Growth
 	self:Bar(272506, 30) -- Explosive Corruption

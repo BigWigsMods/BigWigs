@@ -306,11 +306,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		fastPhase = fastPhase + 1
 		currentTimers = timers["fast" .. fastPhase]
 	elseif spellId == 206700 then -- Summon Slow Add
-		self:Message(-13022, "Neutral", "Info", CL.spawning:format(self:Mythic() and CL.adds or CL.add), false)
+		self:Message(-13022, "cyan", "Info", CL.spawning:format(self:Mythic() and CL.adds or CL.add), false)
 	end
 
 	if spellId == 207012 or spellId == 207011 or spellId == 207013 then -- Speed: Normal / Slow / Fast
-		self:Message("stages", "Neutral", "Info", spellId)
+		self:Message("stages", "cyan", "Info", spellId)
 
 		timeBombCountdown(self)
 		self:ScheduleTimer(timeBombCountdown, 2, self) -- XXX let's see if this fixes wrong time bomb says
@@ -356,7 +356,7 @@ end
 function mod:ChronometricParticles(args)
 	local amount = args.amount or 1
 	if amount % 2 == 0 or amount > 6 then -- might be different for each speed
-		self:StackMessage(args.spellId, args.destName, amount, "Important", amount > 6 and "Warning")
+		self:StackMessage(args.spellId, args.destName, amount, "red", amount > 6 and "Warning")
 	end
 end
 
@@ -365,7 +365,7 @@ do
 	function mod:TimeRelease(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "Urgent")
+			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "orange")
 		end
 
 		if self:Me(args.destGUID) then
@@ -437,7 +437,7 @@ do
 	end
 
 	function mod:TimeReleaseSuccess(args)
-		self:Message(206609, "Attention", "Alarm", CL.incoming:format(args.spellName))
+		self:Message(206609, "yellow", "Alarm", CL.incoming:format(args.spellName))
 
 		releaseCount = releaseCount + 1
 		local releaseTime = currentTimers and currentTimers[206609][releaseCount]
@@ -457,7 +457,7 @@ do
 	function mod:TimeBomb(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "Important", "Alert")
+			self:ScheduleTimer("TargetMessage", 0.2, args.spellId, list, "red", "Alert")
 
 			bombCount = bombCount + 1
 			local bombTime = currentTimers and currentTimers[args.spellId][bombCount]
@@ -474,7 +474,7 @@ do
 end
 
 function mod:TemporalOrb(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 
 	temporalCount = temporalCount + 1
 	local temporalTime = currentTimers and currentTimers[args.spellId][temporalCount]
@@ -489,27 +489,27 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
 
 function mod:TemporalCharge(args)
 	if UnitIsPlayer(args.destName) then
-		self:TargetMessage(args.spellId, args.destName, "Positive", "Info")
+		self:TargetMessage(args.spellId, args.destName, "green", "Info")
 	end
 end
 
 function mod:PowerOverwhelming(args)
-	self:Message(args.spellId, "Attention", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Long", CL.casting:format(args.spellName))
 	self:StopBar(206609) -- Time Release
 	self:StopBar(206617) -- Time Bomb
 end
 
 function mod:WarpNightwell(args)
-	self:Message(args.spellId, "Urgent", self:Interrupter(args.sourceGUID) and "Alert")
+	self:Message(args.spellId, "orange", self:Interrupter(args.sourceGUID) and "Alert")
 end
 
 function mod:FullPower(args)
-	self:Message(args.spellId, "Neutral", "Long")
+	self:Message(args.spellId, "cyan", "Long")
 end

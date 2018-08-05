@@ -393,93 +393,49 @@ do
 	end
 
 	local args = {}
-	if CombatLogGetCurrentEventInfo then
-		local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
-		bossUtilityFrame:SetScript("OnEvent", function()
-			local _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount = CombatLogGetCurrentEventInfo()
-			if allowedEvents[event] then
-				if event == "UNIT_DIED" then
-					local _, _, _, _, _, id = strsplit("-", destGUID)
-					local mobId = tonumber(id)
-					if mobId then
-						for i = #enabledModules, 1, -1 do
-							local self = enabledModules[i]
-							local m = eventMap[self][event]
-							if m and m[mobId] then
-								local func = m[mobId]
-								args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags = mobId, destGUID, destName, destFlags, args.destRaidFlags
-								if type(func) == "function" then
-									func(args)
-								else
-									self[func](self, args)
-								end
-							end
-						end
-					end
-				else
+	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+	bossUtilityFrame:SetScript("OnEvent", function()
+		local _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount = CombatLogGetCurrentEventInfo()
+		if allowedEvents[event] then
+			if event == "UNIT_DIED" then
+				local _, _, _, _, _, id = strsplit("-", destGUID)
+				local mobId = tonumber(id)
+				if mobId then
 					for i = #enabledModules, 1, -1 do
 						local self = enabledModules[i]
 						local m = eventMap[self][event]
-						if m and (m[spellId] or m["*"]) then
-							local func = m[spellId] or m["*"]
-							-- DEVS! Please ask if you need args attached to the table that we've missed out!
-							args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
-							args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
-							args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = spellId, spellName, extraSpellId, amount, amount
+						if m and m[mobId] then
+							local func = m[mobId]
+							args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags = mobId, destGUID, destName, destFlags, args.destRaidFlags
 							if type(func) == "function" then
 								func(args)
 							else
 								self[func](self, args)
-								if debug then dbg(self, "Firing func: "..func) end
 							end
 						end
 					end
 				end
-			end
-		end)
-	else
-		bossUtilityFrame:SetScript("OnEvent", function(_, _, _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount)
-			if allowedEvents[event] then
-				if event == "UNIT_DIED" then
-					local _, _, _, _, _, id = strsplit("-", destGUID)
-					local mobId = tonumber(id)
-					if mobId then
-						for i = #enabledModules, 1, -1 do
-							local self = enabledModules[i]
-							local m = eventMap[self][event]
-							if m and m[mobId] then
-								local func = m[mobId]
-								args.mobId, args.destGUID, args.destName, args.destFlags, args.destRaidFlags = mobId, destGUID, destName, destFlags, args.destRaidFlags
-								if type(func) == "function" then
-									func(args)
-								else
-									self[func](self, args)
-								end
-							end
-						end
-					end
-				else
-					for i = #enabledModules, 1, -1 do
-						local self = enabledModules[i]
-						local m = eventMap[self][event]
-						if m and (m[spellId] or m["*"]) then
-							local func = m[spellId] or m["*"]
-							-- DEVS! Please ask if you need args attached to the table that we've missed out!
-							args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
-							args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
-							args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = spellId, spellName, extraSpellId, amount, amount
-							if type(func) == "function" then
-								func(args)
-							else
-								self[func](self, args)
-								if debug then dbg(self, "Firing func: "..func) end
-							end
+			else
+				for i = #enabledModules, 1, -1 do
+					local self = enabledModules[i]
+					local m = eventMap[self][event]
+					if m and (m[spellId] or m["*"]) then
+						local func = m[spellId] or m["*"]
+						-- DEVS! Please ask if you need args attached to the table that we've missed out!
+						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
+						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
+						args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = spellId, spellName, extraSpellId, amount, amount
+						if type(func) == "function" then
+							func(args)
+						else
+							self[func](self, args)
+							if debug then dbg(self, "Firing func: "..func) end
 						end
 					end
 				end
 			end
-		end)
-	end
+		end
+	end)
 	--- Register a callback for COMBAT_LOG_EVENT.
 	-- @string event COMBAT_LOG_EVENT to fire for e.g. SPELL_CAST_START
 	-- @param func callback function, passed a keyed table (sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, extraSpellId, extraSpellName, amount)
@@ -1076,37 +1032,44 @@ end
 
 do
 	local UnitAura = UnitAura
-	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 	local blacklist = {}
 	--- Get the buff info of a unit.
 	-- @string unit unit token or name
 	-- @number spell the spell ID of the buff to scan for
 	-- @return args
-	function boss:UnitBuff(unit, spell)
-		local name, stack, duration, expirationTime, spellId, value, _
-		local argType = type(spell)
-		local t1, t2, t3, t4, t5
-		for i = 1, 100 do
-			if CombatLogGetCurrentEventInfo then
-				name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
-			else
-				name, _, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+	function boss:UnitBuff(unit, spell, ...)
+		if type(spell) == "string" then
+			if ... then
+				for i = 1, select("#", ...) do
+					local blacklistSpell = select(i, ...)
+					blacklist[blacklistSpell] = true
+				end
 			end
+			local t1, t2, t3, t4, t5
+			for i = 1, 100 do
+				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
 
-			if argType == "string" then
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId))
+						BigWigs:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
-			elseif spellId == spell then
-				return name, stack, duration, expirationTime, value
-			end
 
-			if not spellId then
-				return t1, t2, t3, t4, t5
+				if not spellId then
+					return t1, t2, t3, t4, t5
+				end
+			end
+		else
+			for i = 1, 100 do
+				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+
+				if not spellId then
+					return
+				elseif spellId == spell then
+					return name, stack, duration, expirationTime, value
+				end
 			end
 		end
 	end
@@ -1115,31 +1078,39 @@ do
 	-- @string unit unit token or name
 	-- @number spell the spell ID of the debuff to scan for
 	-- @return args
-	function boss:UnitDebuff(unit, spell)
-		local name, stack, duration, expirationTime, spellId, value, _
-		local argType = type(spell)
-		local t1, t2, t3, t4, t5
-		for i = 1, 100 do
-			if CombatLogGetCurrentEventInfo then
-				name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
-			else
-				name, _, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+	function boss:UnitDebuff(unit, spell, ...)
+		if type(spell) == "string" then
+			if ... then
+				for i = 1, select("#", ...) do
+					local blacklistSpell = select(i, ...)
+					blacklist[blacklistSpell] = true
+				end
 			end
+			local t1, t2, t3, t4, t5
+			for i = 1, 100 do
+				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
 
-			if argType == "string" then
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						BigWigs:Print(format("Found spell '%s' using id %d, tell the authors!", name, spellId))
+						BigWigs:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
-			elseif spellId == spell then
-				return name, stack, duration, expirationTime, value
-			end
 
-			if not spellId then
-				return t1, t2, t3, t4, t5
+				if not spellId then
+					return t1, t2, t3, t4, t5
+				end
+			end
+		else
+			for i = 1, 100 do
+				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+
+				if not spellId then
+					return
+				elseif spellId == spell then
+					return name, stack, duration, expirationTime, value
+				end
 			end
 		end
 	end
@@ -1656,7 +1627,7 @@ do
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
 			if player == pName then
-				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "Personal", icon ~= false and icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or textType == "number" and text or key])
 			elseif not checkFlag(self, key, C.ME_ONLY) then
 				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, icon ~= false and icons[icon or textType == "number" and text or key])
 			end
@@ -1694,7 +1665,7 @@ do
 				if not checkFlag(self, key, C.MESSAGE) and not meOnly then wipe(player) return end
 			end
 			if meOnly or (onMe and #player == 1) then
-				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture)
 			else
 				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
 			end
@@ -1718,7 +1689,7 @@ do
 			end
 			if player == pName then
 				if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
-					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture)
 					if sound then
 						if hasVoice and checkFlag(self, key, C.VOICE) then
 							self:SendMessage("BigWigs_Voice", self, key, sound, true)
@@ -1763,7 +1734,7 @@ do
 				end
 
 				if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
-					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "Personal", texture)
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture)
 				elseif not meOnly and msgEnabled then
 					local list = tconcat(playerTable, comma, 1, playersInTable)
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture)
@@ -1795,7 +1766,7 @@ do
 			end
 		elseif player == pName then
 			if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
-				self:SendMessage("BigWigs_Message", self, key, format(underYou and L.underyou or L.you, msg), "Personal", texture)
+				self:SendMessage("BigWigs_Message", self, key, format(underYou and L.underyou or L.you, msg), "blue", texture)
 			end
 		elseif checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture)
@@ -2204,18 +2175,18 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message(key, "Attention", nil, format(L.custom_start, name, berserk, seconds / 60), false)
+		self:Message(key, "yellow", nil, format(L.custom_start, name, berserk, seconds / 60), false)
 	end
 
 	-- Half-way to enrage warning.
 	local half = seconds / 2
 	local m = half % 60
 	local halfMin = (half - m) / 60
-	self:DelayedMessage(key, half + m, "Positive", format(L.custom_min, berserk, halfMin))
+	self:DelayedMessage(key, half + m, "yellow", format(L.custom_min, berserk, halfMin))
 
-	self:DelayedMessage(key, seconds - 60, "Positive", format(L.custom_min, berserk, 1))
-	self:DelayedMessage(key, seconds - 30, "Urgent", format(L.custom_sec, berserk, 30))
-	self:DelayedMessage(key, seconds - 10, "Urgent", format(L.custom_sec, berserk, 10))
-	self:DelayedMessage(key, seconds - 5, "Important", format(L.custom_sec, berserk, 5))
-	self:DelayedMessage(key, seconds, "Important", customFinalMessage or format(L.custom_end, name, berserk), icon, "Alarm")
+	self:DelayedMessage(key, seconds - 60, "orange", format(L.custom_min, berserk, 1))
+	self:DelayedMessage(key, seconds - 30, "orange", format(L.custom_sec, berserk, 30))
+	self:DelayedMessage(key, seconds - 10, "orange", format(L.custom_sec, berserk, 10))
+	self:DelayedMessage(key, seconds - 5, "orange", format(L.custom_sec, berserk, 5))
+	self:DelayedMessage(key, seconds, "red", customFinalMessage or format(L.custom_end, name, berserk), icon, "Alarm")
 end

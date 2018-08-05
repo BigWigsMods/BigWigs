@@ -1,4 +1,3 @@
-if not C_ChatInfo then return end -- XXX Don't load outside of 8.0
 
 --------------------------------------------------------------------------------
 -- TODO:
@@ -167,7 +166,7 @@ end
 
 function mod:Shatter(args)
 	self:PlaySound(args.spellId, "alert")
-	self:Message(args.spellId, "cyan") -- XXX purple for tank?
+	self:Message(args.spellId, "purple")
 end
 
 --[[ Stage 1 ]]--

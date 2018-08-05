@@ -217,7 +217,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 34098 then -- ClearAllDebuffs
 		phase = 2
-		self:Message("stages", "Neutral", "Long", CL.stage:format(2), false)
+		self:Message("stages", "cyan", "Long", CL.stage:format(2), false)
 		self:StopBar(CL.count:format(L.orb_ranged_bar, orbCount))
 		self:StopBar(CL.count:format(L.orb_melee_bar, orbCount))
 		self:StopBar(CL.count:format(self:SpellName(228054), taintCount)) -- Taint of the Sea
@@ -233,7 +233,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		phase = 3
 		orbCount = 1
 		breathCount = 1
-		self:Message("stages", "Neutral", "Long", CL.stage:format(3), false)
+		self:Message("stages", "cyan", "Long", CL.stage:format(3), false)
 		self:StopBar(228300) -- Fury of the Maw
 		self:StopBar(CL.cast:format(self:SpellName(228300))) -- Cast: Fury of the Maw
 		self:StopBar(CL.adds)
@@ -250,14 +250,14 @@ end
 
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find(L.nearTrigger) then
-		self:Message("tentacle_near", "Urgent", "Long", CL.count:format(L.tentacle_near, tentacleMsgCount), 228730)
+		self:Message("tentacle_near", "orange", "Long", CL.count:format(L.tentacle_near, tentacleMsgCount), 228730)
 		tentacleMsgCount = tentacleMsgCount + 1
 	elseif msg:find(L.farTrigger) then
-		self:Message("tentacle_far", "Urgent", "Long", CL.count:format(L.tentacle_far, tentacleMsgCount), 228730)
+		self:Message("tentacle_far", "orange", "Long", CL.count:format(L.tentacle_far, tentacleMsgCount), 228730)
 		tentacleMsgCount = tentacleMsgCount + 1
 	elseif msg:find("inv_misc_monsterhorn_03", nil, true) then -- Fallback for no locale
 		msg = msg:gsub("|T[^|]+|t", "")
-		self:Message(228730, "Urgent", "Long", CL.count:format(msg:format(npcname), tentacleMsgCount), 228730)
+		self:Message(228730, "orange", "Long", CL.count:format(msg:format(npcname), tentacleMsgCount), 228730)
 		tentacleMsgCount = tentacleMsgCount + 1
 		BigWigs:Print("Missing translation for tentacle strike. Please report it on Discord/Curse/GitHub.") -- XXX temp
 		BigWigs:Error(("TELL THE AUTHORS: %s"):format(msg))
@@ -266,11 +266,11 @@ end
 
 function mod:RAID_BOSS_WHISPER(event, msg)
 	if msg:find("227920") then -- P1 Orb of Corruption
-		self:Message(229119, "Personal", "Warning", CL.you:format(self:SpellName(229119))) -- Orb of Corruption
+		self:Message(229119, "blue", "Warning", CL.you:format(self:SpellName(229119))) -- Orb of Corruption
 		self:Say(229119, L.orb_say)
 		self:Flash(229119)
 	elseif msg:find("228058") then -- P2 Orb of Corrosion
-		self:Message(230267, "Personal", "Warning", CL.you:format(self:SpellName(230267))) -- Orb of Corrosion
+		self:Message(230267, "blue", "Warning", CL.you:format(self:SpellName(230267))) -- Orb of Corrosion
 		self:Say(230267, L.orb_say)
 		self:Flash(230267)
 	end
@@ -283,7 +283,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		if tentaclesLeft < tentaclesUp then
 			tentaclesUp = tentaclesLeft
 			if tentaclesLeft >= 0 then
-				self:Message("stages", "Neutral", nil, CL.mob_remaining:format(self:SpellName(L.gripping_tentacle), tentaclesLeft), false)
+				self:Message("stages", "cyan", nil, CL.mob_remaining:format(self:SpellName(L.gripping_tentacle), tentaclesLeft), false)
 			else
 				self:UnregisterUnitEvent(event, unit)
 			end
@@ -298,7 +298,7 @@ do
 
 	local function warn(self, spellId, spellName)
 		if not isOnMe then
-			self:TargetMessage(spellId, list, "Urgent", "Warning", CL.count:format(spellName, orbCount - 1)) -- gets incremented on the cast
+			self:TargetMessage(spellId, list, "orange", "Warning", CL.count:format(spellName, orbCount - 1)) -- gets incremented on the cast
 		else
 			wipe(list)
 		end
@@ -354,13 +354,13 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
-			self:Message(args.spellId == 228063 and 230267 or 229119, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(args.spellId == 228063 and 230267 or 229119, "blue", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
 
 function mod:BilewaterBreath(args)
-	self:Message(args.spellId, "Important", "Alarm", CL.count:format(args.spellName, breathCount))
+	self:Message(args.spellId, "red", "Alarm", CL.count:format(args.spellName, breathCount))
 	self:CastBar(args.spellId, 3, CL.count:format(args.spellName, breathCount))
 	self:CastBar(227992, self:Easy() and 25.5 or 20.5) -- Bilewater Liquefaction
 	breathCount = breathCount + 1
@@ -369,7 +369,7 @@ end
 
 function mod:BilewaterRedox(args)
 	if self:Tank(args.destName) then -- others might get hit, only tank is relevant
-		self:TargetMessage(args.spellId, args.destName, "Urgent", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
+		self:TargetMessage(args.spellId, args.destName, "orange", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
 		self:TargetBar(args.spellId, 30, args.destName)
 	end
 end
@@ -380,13 +380,13 @@ do
 		list[#list+1] = args.destName
 		if #list == 1 then
 			taintMarkerCount = 4
-			timer = self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount), nil, self:Dispeller("magic"))
+			timer = self:ScheduleTimer("TargetMessage", 0.4, args.spellId, list, "yellow", "Alert", CL.count:format(args.spellName, taintCount), nil, self:Dispeller("magic"))
 			taintCount = taintCount + 1
 			self:CDBar(args.spellId, phase == 1 and (self:LFR() and 17 or 12.1) or (self:Mythic() and 20 or 28), CL.count:format(args.spellName, taintCount))
 		elseif #list == 5 or (#list == 3 and not self:Mythic()) then
 			self:CancelTimer(timer)
 			timer = nil
-			self:TargetMessage(args.spellId, list, "Attention", "Alert", CL.count:format(args.spellName, taintCount-1), nil, self:Dispeller("magic"))
+			self:TargetMessage(args.spellId, list, "yellow", "Alert", CL.count:format(args.spellName, taintCount-1), nil, self:Dispeller("magic"))
 		end
 
 		if self:GetOption(taintMarker) then
@@ -399,7 +399,7 @@ do
 	local prev, wasOnMe, scheduled = 0, nil, nil
 
 	local function warn(self, spellId, spellName)
-		self:Message(spellId, "Positive", "Warning", wasOnMe and CL.underyou:format(spellName) or CL.near:format(spellName))
+		self:Message(spellId, "green", "Warning", wasOnMe and CL.underyou:format(spellName) or CL.near:format(spellName))
 		wasOnMe = nil
 		scheduled = nil
 	end
@@ -438,7 +438,7 @@ do
 		local t = GetTime()
 		if t-prev > 3 then
 			prev = t
-			self:Message(args.spellId, "Important", self:Tank() and "Long")
+			self:Message(args.spellId, "red", self:Tank() and "Long")
 		end
 	end
 end
@@ -449,18 +449,18 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alarm", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alarm", CL.underyou:format(args.spellName))
 		end
 	end
 end
 
 function mod:FuryOfTheMaw(args)
-	self:Message(args.spellId, "Important", "Info")
+	self:Message(args.spellId, "red", "Info")
 	self:CastBar(args.spellId, self:Mythic() and 24 or 32)
 end
 
 function mod:FuryOfTheMawRemoved(args)
-	self:Message(args.spellId, "Important", nil, CL.over:format(args.spellName))
+	self:Message(args.spellId, "red", nil, CL.over:format(args.spellName))
 	self:Bar(args.spellId, 44.5)
 end
 
@@ -471,7 +471,7 @@ do
 		local t = GetTime()
 		if t-prev > 1 then
 			prev = t
-			self:Message(args.spellId, "Neutral", "Long", phase == 2 and CL.adds or args.destName) -- destName = name of the spawning add
+			self:Message(args.spellId, "cyan", "Long", phase == 2 and CL.adds or args.destName) -- destName = name of the spawning add
 		end
 
 		if phase == 2 then
@@ -498,7 +498,7 @@ end
 
 --[[ Grimelord ]]--
 function mod:SludgeNova(args)
-	self:Message(args.spellId, "Attention", "Alert", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Alert", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 3)
 	self:Bar(args.spellId, 24.3)
 end
@@ -509,7 +509,7 @@ do
 	function mod:FetidRot(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:TargetMessage(args.spellId, args.destName, "Personal", "Warning")
+			self:TargetMessage(args.spellId, args.destName, "blue", "Warning")
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
 			local _, _, _, expires = self:UnitDebuff("player", args.spellName)
@@ -546,7 +546,7 @@ do
 end
 
 function mod:AnchorSlam(args)
-	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", "Alarm", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, self:Normal() and 14.6 or 12)
 end
 
@@ -561,19 +561,19 @@ end
 
 --[[ Night Watch Mariner ]]--
 function mod:LanternOfDarkness(args)
-	self:Message(args.spellId, "Important", "Long")
+	self:Message(args.spellId, "red", "Long")
 	self:CastBar(args.spellId, 7)
 end
 
 function mod:GiveNoQuarter(args)
-	self:Message(args.spellId, "Attention", self:Ranged() and "Alert")
+	self:Message(args.spellId, "yellow", self:Ranged() and "Alert")
 	self:Bar(args.spellId, self:Easy() and 9.3 or 6.1)
 end
 
 function mod:GhostlyRage(args)
 	local unit = self:GetUnitIdByGUID(args.sourceGUID)
 	if unit and UnitDetailedThreatSituation("player", unit) then
-		self:Message(args.spellId, "Urgent", "Long", CL.on:format(args.spellName, args.sourceName))
+		self:Message(args.spellId, "orange", "Long", CL.on:format(args.spellName, args.sourceName))
 	end
 	self:Bar(args.spellId, 9.7)
 end
@@ -594,7 +594,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 3 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -606,7 +606,7 @@ do
 		local t = GetTime()
 		if t-prev > 1 then
 			prev = t
-			self:Message(args.spellId, "Positive", self:Interrupter(args.sourceGUID) and "Info")
+			self:Message(args.spellId, "green", self:Interrupter(args.sourceGUID) and "Info")
 		end
 	end
 end
@@ -623,7 +623,7 @@ function mod:OrbOfCorrosion()
 end
 
 function mod:CorruptedBreath(args)
-	self:Message(args.spellId, "Important", "Alarm", CL.count:format(args.spellName, breathCount))
+	self:Message(args.spellId, "red", "Alarm", CL.count:format(args.spellName, breathCount))
 	self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, breathCount))
 	breathCount = breathCount + 1
 	self:Bar(args.spellId, self:Mythic() and 43 or self:Heroic() and 47 or 51, CL.count:format(args.spellName, breathCount))
@@ -631,7 +631,7 @@ end
 
 function mod:DarkHatred(args)
 	if self:Tank(args.destName) then -- others might get hit, only tank is relevant
-		self:TargetMessage(args.spellId, args.destName, "Urgent", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
+		self:TargetMessage(args.spellId, args.destName, "orange", not self:Me(args.destGUID) and "Alarm", nil, nil, true)
 		self:TargetBar(args.spellId, 12, args.destName)
 	end
 end
@@ -642,9 +642,9 @@ do
 	local function warn(self, spellId)
 		if not isOnMe then
 			if #list < 6 then -- If the pools don't get soaked, everyone gets a debuff
-				self:TargetMessage(spellId, list, "Attention", "Long", nil, nil, true)
+				self:TargetMessage(spellId, list, "yellow", "Long", nil, nil, true)
 			else
-				self:Message(spellId, "Attention", "Long")
+				self:Message(spellId, "yellow", "Long")
 			end
 		end
 		isOnMe = nil
@@ -657,7 +657,7 @@ do
 		end
 
 		if self:Me(args.destGUID) then
-			self:TargetMessage(args.spellId, args.destName, "Personal", "Long")
+			self:TargetMessage(args.spellId, args.destName, "blue", "Long")
 			isOnMe = true
 		end
 	end

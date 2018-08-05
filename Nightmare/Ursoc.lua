@@ -88,7 +88,7 @@ end
 --
 
 function mod:RoaringCacophony(args)
-	self:Message(args.spellId, "Urgent", nil, CL.casting:format(CL.count:format(args.spellName, cacophonyCount)))
+	self:Message(args.spellId, "orange", nil, CL.casting:format(CL.count:format(args.spellName, cacophonyCount)))
 end
 
 function mod:RoaringCacophonySuccess(args)
@@ -96,7 +96,7 @@ function mod:RoaringCacophonySuccess(args)
 	if self:Mythic() and cacophonyCount > 2 and cacophonyCount % 2 == 1 then
 		text = text.." - ".. CL.spawning:format(CL.add)
 	end
-	self:Message(args.spellId, "Urgent", "Alarm", text)
+	self:Message(args.spellId, "orange", "Alarm", text)
 
 	cacophonyCount = cacophonyCount + 1
 
@@ -109,7 +109,7 @@ end
 
 function mod:Overwhelm(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "Important")
+	self:StackMessage(args.spellId, args.destName, amount, "red")
 	if amount > 1 then
 		self:PlaySound(args.spellId, self:Me(args.destGUID) and "Alarm" or "Warning") -- Warning = taunt
 	end
@@ -117,7 +117,7 @@ function mod:Overwhelm(args)
 end
 
 function mod:RendFleshCast(args)
-	self:Message(204859, "Attention", nil, CL.casting:format(args.spellName))
+	self:Message(204859, "yellow", nil, CL.casting:format(args.spellName))
 	if self:Tank() and not UnitDetailedThreatSituation("player", "boss1") then
 		local _, _, _, expiration = self:UnitDebuff("player", self:SpellName(197943)) -- Overwhelm
 		if not expiration or expiration-GetTime() < 2.5 then
@@ -127,7 +127,7 @@ function mod:RendFleshCast(args)
 end
 
 function mod:RendFlesh(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Info")
+	self:TargetMessage(args.spellId, args.destName, "yellow", "Info")
 	self:Bar(args.spellId, 20)
 end
 
@@ -149,7 +149,7 @@ function mod:FocusedGaze(args)
 	end
 
 	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", countMessage, args.spellId, true)
+	self:TargetMessage(args.spellId, args.destName, "red", "Warning", countMessage, args.spellId, true)
 	self:TargetBar(args.spellId, 6, args.destName, countMessage)
 	focusedGazeCount = focusedGazeCount + 1
 	if showingIcons then
@@ -176,7 +176,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(205611, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(205611, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -185,10 +185,10 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit)
 	if hp < 0.35 then -- Blood Frenzy at 30%
 		self:UnregisterUnitEvent(event, unit)
-		self:Message(198388, "Neutral", "Info", CL.soon:format(self:SpellName(198388))) -- Blood Frenzy
+		self:Message(198388, "cyan", "Info", CL.soon:format(self:SpellName(198388))) -- Blood Frenzy
 	end
 end
 
 function mod:BloodFrenzy(args)
-	self:Message(args.spellId, "Urgent", "Long", "30% - ".. args.spellName)
+	self:Message(args.spellId, "orange", "Long", "30% - ".. args.spellName)
 end

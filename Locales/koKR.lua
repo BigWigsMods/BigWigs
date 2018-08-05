@@ -38,8 +38,6 @@ L.offline = "접속 종료"
 L.missingAddOn = "이 지역에서 타이머를 표시하려면 |cFF436EEE%s|r 플러그인이 필요합니다."
 L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이머를 표시할 수 없습니다."
 
-L.coreAddonDisabled = "%s 애드온이 비활성화되어 있어서 BigWigs가 제대로 작동하지 않습니다. 캐릭터 선택 화면의 애드온 설정 창을 통해 활성화할 수 있습니다."
-
 L.removeAddon = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체되었으므로 제거해주세요."
 
 -- Options.lua

@@ -54,7 +54,7 @@ do
 			local t = GetTime()
 			if t-prev > 1.5 then
 				prev = t
-				self:Message(spellId, "Urgent", "Long")
+				self:Message(spellId, "orange", "Long")
 				self:CDBar(spellId, 30)
 			end
 		end
@@ -68,32 +68,32 @@ do
 			local t = GetTime()
 			if t-prev > 1.5 then
 				prev = t
-				self:Message(247585, "Positive", "Info", args.spellName, args.spellId)
+				self:Message(247585, "green", "Info", args.spellName, args.spellId)
 			end
 		end
 	end
 end
 
 function mod:Reap(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	self:CDBar(args.spellId, 20)
 end
 
 function mod:ReapApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Alarm")
 	end
 end
 
 function mod:Sow(args)
-	self:Message(args.spellId, "Attention", "Alert")
+	self:Message(args.spellId, "yellow", "Alert")
 	self:CDBar(args.spellId, 15)
 end
 
 function mod:SowApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, args.destName, amount, "Personal", "Warning")
+		self:StackMessage(args.spellId, args.destName, amount, "blue", "Warning")
 	end
 end
 
@@ -103,6 +103,6 @@ end
 
 function mod:DeathFieldApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Alarm")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Alarm")
 	end
 end

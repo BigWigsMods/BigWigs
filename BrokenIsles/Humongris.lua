@@ -54,7 +54,7 @@ end
 
 do
 	local function printTarget(self, player, guid)
-		self:TargetMessage(216428, player, "Attention", "Alarm")
+		self:TargetMessage(216428, player, "yellow", "Alarm")
 		if self:Me(guid) then
 			self:Say(216428)
 		end
@@ -65,13 +65,13 @@ do
 end
 
 function mod:EarthshakeStomp(args)
-	self:Message(args.spellId, "Urgent", "Info", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", "Info", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 34)
 end
 
 do
 	local function printTarget(self, player, guid)
-		self:TargetMessage(216432, player, "Important", "Alert")
+		self:TargetMessage(216432, player, "red", "Alert")
 		if self:Me(guid) then
 			self:Say(216432)
 		end
@@ -83,7 +83,7 @@ do
 end
 
 function mod:MakeTheSnow(args)
-	self:Message(args.spellId, "Positive", "Long")
+	self:Message(args.spellId, "green", "Long")
 	self:CDBar(args.spellId, 34)
 end
 
@@ -92,7 +92,7 @@ function mod:YouGoBang(args)
 end
 
 function mod:YouGoBangApplied(args)
-	self:TargetMessage(args.spellId, args.destName, "Important", "Warning", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "red", "Warning", nil, nil, true)
 	self:TargetBar(args.spellId, 12, args.destName, self:SpellName(47496)) -- 47496 = "Explode"
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
@@ -105,7 +105,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 3 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end

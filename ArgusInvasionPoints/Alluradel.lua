@@ -42,13 +42,13 @@ end
 --
 
 function mod:BeguilingCharm(args)
-	self:Message(args.spellId, "Urgent", "Warning")
+	self:Message(args.spellId, "orange", "Warning")
 	self:CDBar(args.spellId, 37.5)
 	self:CastBar(args.spellId, 4.5)
 end
 
 function mod:FelLash(args)
-	self:Message(args.spellId, "Attention", "Alarm")
+	self:Message(args.spellId, "yellow", "Alarm")
 	self:CDBar(args.spellId, 32)
 end
 
@@ -58,14 +58,14 @@ end
 
 function mod:HeartBreakerApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(args.spellId, args.destName, "Personal", "Info")
+		self:TargetMessage(args.spellId, args.destName, "blue", "Info")
 	end
 end
 
 function mod:Sadist(args)
 	local amount = args.amount or 1
 	if amount % 2 == 0 then
-		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 5 and "Alert")
+		self:StackMessage(args.spellId, args.destName, amount, "orange", amount > 5 and "Alert")
 	end
 end
 

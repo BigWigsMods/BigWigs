@@ -20,7 +20,6 @@ local bwUtilityFrame = CreateFrame("Frame")
 local bossCore, pluginCore
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
-local GetPlayerMapAreaID = loader.GetPlayerMapAreaID -- XXX remove
 local GetBestMapForUnit = loader.GetBestMapForUnit
 local SendAddonMessage = loader.SendAddonMessage
 local GetInstanceInfo = loader.GetInstanceInfo
@@ -148,12 +147,7 @@ end
 local function zoneChanged()
 	local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 	if instanceType == "none" then
-		local mapId
-		if GetBestMapForUnit then -- XXX temp
-			mapId = GetBestMapForUnit("player")
-		else
-			mapId = GetPlayerMapAreaID("player")
-		end
+		local mapId = GetBestMapForUnit("player")
 		if mapId then
 			id = -mapId
 		end
@@ -202,7 +196,7 @@ end
 do
 	local callbackRegistered = nil
 	local messages = {}
-	local colors = {"Important", "Personal", "Urgent", "Attention", "Positive", "Neutral"}
+	local colors = {"red", "blue", "orange", "yellow", "green", "cyan", "purple"}
 	local sounds = {"Long", "Info", "Alert", "Alarm", "Warning", false, false, false, false, false}
 
 	local function barStopped(event, bar)
@@ -406,6 +400,7 @@ end
 
 do
 	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, C_EncounterJournal.GetSectionInfo
+	local EJ_GetEncounterInfo = EJ_GetEncounterInfo
 
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
 	local function new(core, moduleName, loadId, journalId)
@@ -426,7 +421,11 @@ do
 
 			if journalId then
 				m.journalId = journalId
+				m.displayName = EJ_GetEncounterInfo(journalId)
+			else
+				m.displayName = moduleName
 			end
+
 			if loadId then
 				if loadId > 0 then
 					m.instanceId = loadId
@@ -549,11 +548,6 @@ do
 	end
 
 	function addon:RegisterBossModule(module)
-		if module.journalId then
-			module.displayName = EJ_GetEncounterInfo(module.journalId)
-		end
-		if not module.displayName then module.displayName = module.moduleName end
-
 		module.SetupOptions = moduleOptions
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)

@@ -6,8 +6,8 @@
 ## Title-esMX: BigWigs [|cffeda55fUldir|r]
 ## Title-frFR: BigWigs [|cffeda55fUldir|r]
 ## Title-ruRU: BigWigs [|cffeda55fUldir|r]
-## Title-zhCN: BigWigs [|cffeda55fUldir|r]
-## Title-zhTW: BigWigs [|cffeda55fUldir|r]
+## Title-zhCN: BigWigs [|cffeda55f奥迪尔|r]
+## Title-zhTW: BigWigs [|cffeda55f奧迪爾|r]
 ## Title-itIT: BigWigs [|cffeda55fUldir|r]
 ## Title-ptBR: BigWigs [|cffeda55fUldir|r]
 ## Title-koKR: BigWigs [|cffeda55fUldir|r]
@@ -17,8 +17,8 @@
 ## Notes-esMX: BigWigs Uldir Modules
 ## Notes-frFR: BigWigs Uldir Modules
 ## Notes-ruRU: BigWigs Uldir Modules
-## Notes-zhCN: BigWigs Uldir Modules
-## Notes-zhTW: BigWigs Uldir Modules
+## Notes-zhCN: BigWigs 奥迪尔模块。
+## Notes-zhTW: BigWigs 奧迪爾模組。
 ## Notes-itIT: BigWigs Uldir Modules
 ## Notes-ptBR: BigWigs Uldir Modules
 ## Notes-koKR: BigWigs Uldir Modules

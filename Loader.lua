@@ -7,7 +7,7 @@ local bwFrame = CreateFrame("Frame")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 99
+local BIGWIGS_VERSION = 102
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -53,17 +53,12 @@ end
 local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
-local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo and C_ChatInfo.SendAddonMessage or SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker -- XXX C_ChatInfo check for 8.0
-local GetCurrentMapAreaID, SetMapToCurrentZone = GetCurrentMapAreaID, SetMapToCurrentZone
-local GetInstanceInfo, GetPlayerMapAreaID, GetBestMapForUnit = GetInstanceInfo, GetPlayerMapAreaID, C_Map and C_Map.GetBestMapForUnit -- XXX remove GetPlayerMapAreaID
-local GetMapInfo = C_Map.GetMapInfo
+local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
+local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
+local UnitName = UnitName
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
-public.GetCurrentMapAreaID = GetCurrentMapAreaID -- XXX remove
-public.GetPlayerMapAreaID = GetPlayerMapAreaID -- XXX remove
 public.GetBestMapForUnit = GetBestMapForUnit
-public.SetMapToCurrentZone = SetMapToCurrentZone -- XXX remove
-public.GetCurrentMapDungeonLevel = GetCurrentMapDungeonLevel -- XXX remove
 public.GetMapInfo = GetMapInfo
 public.GetInstanceInfo = GetInstanceInfo
 public.SendAddonMessage = SendAddonMessage
@@ -90,7 +85,6 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[-424]=true, -- Pandaria
 	[-572]=true, -- Draenor
 	[-619]=true, -- Broken Isles
-	[1716]=true, -- Broken Shore Mage Tower
 }
 
 do
@@ -235,7 +229,6 @@ do
 		[1175] = lw_wod, -- Bloodmaul Slag Mines
 		[1358] = lw_wod, -- Upper Blackrock Spire
 		--[[ LittleWigs: Legion ]]--
-		[1716] = lw_l, -- Broken Shore Mage Tower (Fake Menu)
 		[1544] = lw_l, -- Assault on Violet Hold
 		[1677] = lw_l, -- Cathedral of Eternal Night
 		[1571] = lw_l, -- Court of Stars
@@ -274,7 +267,7 @@ end
 -- GLOBALS: GetAddOnEnableState, GetAddOnInfo, GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetTime, GRAY_FONT_COLOR, hash_SlashCmdList, InCombatLockdown
 -- GLOBALS: IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySound, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, StopSound
--- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitName, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
+-- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
 -- GLOBALS: SLASH_BigWigsVersion1, wipe
 
 -----------------------------------------------------------------------
@@ -302,6 +295,7 @@ local function load(obj, index)
 		loadOnSlash[index] = nil
 	end
 
+	EnableAddOn(index) -- Make sure it wasn't left disabled for whatever reason
 	local loaded, reason = LoadAddOn(index)
 	if not loaded then
 		sysprint(ADDON_LOAD_FAILED:format(GetAddOnInfo(index), _G["ADDON_"..reason]))
@@ -310,14 +304,18 @@ local function load(obj, index)
 end
 
 local function loadAddons(tbl)
-	if not tbl then return end
-	for _, index in next, tbl do
+	if not tbl[1] then return end
+
+	for i = 1, #tbl do
+		local index = tbl[i]
 		if not IsAddOnLoaded(index) and load(nil, index) then
 			local name = GetAddOnInfo(index)
 			public:SendMessage("BigWigs_ModulePackLoaded", name)
 		end
 	end
-	tbl = nil
+	for i = #tbl, 1, -1 do
+		tbl[i] = nil
+	end
 end
 
 local function loadZone(zone)
@@ -380,10 +378,18 @@ do
 
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
+		if reqFuncAddons[name] then
+			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
+		end
+
 		if IsAddOnEnabled(i) then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
-				loadOnCoreEnabled[#loadOnCoreEnabled + 1] = i
+				if name == "BigWigs_Plugins" then -- Always first
+					table.insert(loadOnCoreEnabled, 1, i)
+				else
+					loadOnCoreEnabled[#loadOnCoreEnabled + 1] = i
+				end
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then
@@ -431,8 +437,6 @@ do
 					loadOnSlash[i][j] = slash
 				end
 			end
-		elseif reqFuncAddons[name] then
-			sysprint(L.coreAddonDisabled:format(name))
 		else
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 			if meta then -- Disabled content
@@ -580,7 +584,8 @@ do
 		end
 	end
 
-	for _, index in next, loadOnWorldBoss do
+	for i = 1, #loadOnWorldBoss do
+		local index = loadOnWorldBoss[i]
 		local zones = GetAddOnMetadata(index, "X-BigWigs-LoadOn-WorldBoss")
 		if zones then
 			iterateWorldBosses(index, strsplit(",", zones))
@@ -601,25 +606,16 @@ function mod:ADDON_LOADED(addon)
 	RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
-	if C_ChatInfo then -- XXX 8.0
-		C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
-		C_ChatInfo.RegisterAddonMessagePrefix("D4") -- DBM
-	else
-		RegisterAddonMessagePrefix("BigWigs")
-		RegisterAddonMessagePrefix("D4") -- DBM
-	end
+	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
+	C_ChatInfo.RegisterAddonMessagePrefix("D4") -- DBM
+
 	local icon = LibStub("LibDBIcon-1.0", true)
 	if icon and ldb then
-		if not BigWigsIconDB then
-			if BigWigs3IconDB then -- XXX temp
-				BigWigsIconDB = BigWigs3IconDB
-			else
-				BigWigsIconDB = {}
-			end
+		if type(BigWigsIconDB) ~= "table" then
+			BigWigsIconDB = {}
 		end
 		icon:Register("BigWigs", ldb, BigWigsIconDB)
 	end
-	BigWigs3IconDB = nil -- XXX temp 7.3.5
 
 	if BigWigs3DB then
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
@@ -644,6 +640,38 @@ function mod:ADDON_LOADED(addon)
 				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
 					BigWigs3DB.namespaces[k] = nil
 				end
+				-- XXX start temp 8.0.1 color conversion
+				if k == "BigWigs_Plugins_Colors" then
+					for profiles, profileList in next, v do
+						for name, tbl in next, profileList do
+							if tbl["Positive"] then
+								tbl["green"] = tbl["Positive"]
+								tbl["Positive"] = nil
+							end
+							if tbl["Personal"] then
+								tbl["blue"] = tbl["Personal"]
+								tbl["Personal"] = nil
+							end
+							if tbl["Important"] then
+								tbl["red"] = tbl["Important"]
+								tbl["Important"] = nil
+							end
+							if tbl["Urgent"] then
+								tbl["orange"] = tbl["Urgent"]
+								tbl["Urgent"] = nil
+							end
+							if tbl["Neutral"] then
+								tbl["cyan"] = tbl["Neutral"]
+								tbl["Neutral"] = nil
+							end
+							if tbl["Attention"] then
+								tbl["yellow"] = tbl["Attention"]
+								tbl["Attention"] = nil
+							end
+						end
+					end
+				end
+				-- XXX end temp 8.0.1 color conversion
 			end
 		end
 		if not BigWigs3DB.discord or BigWigs3DB.discord < 15 then
@@ -684,6 +712,7 @@ end
 do
 	local old = {
 		BigWigs_Ulduar = "BigWigs_WrathOfTheLichKing",
+		BigWigs_Yogg_Brain = "BigWigs_WrathOfTheLichKing",
 		BigWigs_TheEye = "BigWigs_BurningCrusade",
 		BigWigs_Sunwell = "BigWigs_BurningCrusade",
 		BigWigs_SSC = "BigWigs_BurningCrusade",
@@ -871,8 +900,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "17623" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "8.0.0" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "17635" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "8.0.1" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -1171,12 +1200,7 @@ do
 		-- Zone checking
 		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 		if instanceType == "none" then
-			local mapId
-			if GetBestMapForUnit then -- XXX 8.0
-				mapId = GetBestMapForUnit("player")
-			else
-				mapId = GetPlayerMapAreaID("player")
-			end
+			local mapId = GetBestMapForUnit("player")
 			if mapId then
 				id = -mapId -- Use map id for world bosses
 			end

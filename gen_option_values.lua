@@ -8,12 +8,13 @@ local module_colors = {}
 local module_sounds = {}
 
 local valid_colors = {
-	Positive = true, green = true,
-	Personal = true, blue = true,
-	Attention = true, yellow = true,
-	Urgent = true, orange = true,
-	Important = true, red = true,
-	Neutral = true, cyan = true,
+	green = true,
+	blue = true,
+	yellow = true,
+	orange = true,
+	red = true,
+	cyan = true,
+	purple = true,
 }
 local valid_sounds = {
 	Info = true, info = true,
@@ -510,7 +511,7 @@ local function parseLua(file)
 				if color_index then
 					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
 					if method:sub(1, 6) == "Target" or method == "StackMessage" then
-						color[#color+1] = "Personal" -- used when on the player
+						color[#color+1] = "blue" -- used when on the player
 					end
 				end
 			end

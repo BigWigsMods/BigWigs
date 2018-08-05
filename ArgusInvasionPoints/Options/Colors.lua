@@ -1,42 +1,42 @@
 
 BigWigs:AddColors("Matron Folnuna", {
-	[247361] = {"Neutral","Personal"},
-	[247379] = {"Personal","Urgent"},
-	[247443] = "Important",
-	[254147] = "Attention",
+	[247361] = {"blue","cyan"},
+	[247379] = {"blue","orange"},
+	[247443] = "red",
+	[254147] = "yellow",
 })
 
 BigWigs:AddColors("Mistress Alluradel", {
-	[247517] = "Personal",
-	[247544] = {"Personal","Urgent"},
-	[247549] = "Urgent",
-	[247604] = "Attention",
+	[247517] = "blue",
+	[247544] = {"blue","orange"},
+	[247549] = "orange",
+	[247604] = "yellow",
 })
 
 BigWigs:AddColors("Inquisitor Meto", {
-	[247492] = {"Attention","Personal"},
-	[247495] = {"Attention","Personal"},
-	[247585] = {"Positive","Urgent"},
-	[247632] = "Personal",
+	[247492] = {"blue","yellow"},
+	[247495] = {"blue","yellow"},
+	[247585] = {"green","orange"},
+	[247632] = "blue",
 })
 
 BigWigs:AddColors("Sothanar", {
-	[247410] = {"Important","Neutral","Personal"},
-	[247416] = "Attention",
-	[247437] = {"Personal","Urgent"},
-	[247698] = "Attention",
+	[247410] = {"blue","cyan","red"},
+	[247416] = "yellow",
+	[247437] = {"blue","orange"},
+	[247698] = "yellow",
 })
 
 BigWigs:AddColors("Occularus", {
-	[247318] = {"Important","Personal"},
-	[247320] = "Urgent",
-	[247325] = "Attention",
-	[247332] = {"Attention","Personal"},
-	[247393] = {"Neutral","Personal"},
+	[247318] = {"blue","red"},
+	[247320] = "orange",
+	[247325] = "yellow",
+	[247332] = {"blue","yellow"},
+	[247393] = {"blue","cyan"},
 })
 
 BigWigs:AddColors("Pit Lord Vilemus", {
-	[247731] = "Important",
-	[247733] = "Urgent",
-	[247739] = {"Attention","Neutral","Personal"},
+	[247731] = "red",
+	[247733] = "orange",
+	[247739] = {"blue","cyan","yellow"},
 })

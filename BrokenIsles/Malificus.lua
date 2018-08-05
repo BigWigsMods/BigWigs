@@ -52,7 +52,7 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:Pestilence(args)
-	self:Message(args.spellId, "Urgent", "Warning", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "orange", "Warning", CL.incoming:format(args.spellName))
 	self:CDBar(args.spellId, 14)
 end
 
@@ -62,14 +62,14 @@ do
 		local t = GetTime()
 		if t-prev > 4 then
 			prev = t
-			self:Message(args.spellId, "Attention", "Info")
+			self:Message(args.spellId, "yellow", "Info")
 			self:CDBar(args.spellId, 14)
 		end
 	end
 end
 
 function mod:ShadowBarrage(args)
-	self:Message(args.spellId, "Urgent", "Alarm", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", "Alarm", CL.casting:format(args.spellName))
 	self:CDBar(args.spellId, 17)
 end
 
@@ -79,7 +79,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end

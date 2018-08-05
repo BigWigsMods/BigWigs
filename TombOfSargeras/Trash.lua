@@ -227,13 +227,13 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
 
 function mod:CurseOfGuldan(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "yellow", "Warning", nil, nil, true)
 	self:TargetBar(args.spellId, 180, args.destName)
 	self:Flash(args.spellId)
 end
@@ -248,7 +248,7 @@ do
 	function mod:MassiveEruption(args)
 		local t = GetTime()
 		if t-prev > 3 then
-			self:Message(args.spellId, "Urgent", "Long")
+			self:Message(args.spellId, "orange", "Long")
 		end
 	end
 end
@@ -261,12 +261,12 @@ end
 
 --[[ Goroth -> Sisters of the Moon ]]--
 function mod:WallOfDoom(args)
-	self:Message(args.spellId, "Attention", "Info")
+	self:Message(args.spellId, "yellow", "Info")
 	self:CDBar(args.spellId, 6.1)
 end
 
 function mod:LunarBomb(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning")
+	self:TargetMessage(args.spellId, args.destName, "yellow", "Warning")
 	self:TargetBar(args.spellId, 10, args.destName)
 
 	if self:Me(args.destGUID) then
@@ -284,7 +284,7 @@ end
 
 --[[ Harjatan -> Mistress Sassz'ine ]]--
 function mod:EmbraceOfTheTides(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Alert")
+	self:TargetMessage(args.spellId, args.destName, "yellow", "Alert")
 	self:TargetBar(args.spellId, 20, args.destName)
 	if self:Me(args.destGUID) then
 		self:OpenProximity(args.spellId, 8)
@@ -300,33 +300,33 @@ function mod:EmbraceOfTheTidesRemoved(args)
 end
 
 function mod:ElectricShock(args)
-	self:Message(args.spellId, "Important", "Alarm")
+	self:Message(args.spellId, "red", "Alarm")
 	self:CastBar(args.spellId, 4)
 end
 
 function mod:FrostFingeredFear(args)
 	local fear = self:SpellName(5782) -- "Fear"
-	self:Message(args.spellId, "Attention", "Long", CL.casting:format(fear))
+	self:Message(args.spellId, "yellow", "Long", CL.casting:format(fear))
 	self:CDBar(args.spellId, 31, fear)
 end
 
 function mod:MistFilledPools(args)
 	self:Flash(args.spellId)
-	self:Message(args.spellId, "Important", "Warning", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "red", "Warning", CL.incoming:format(args.spellName))
 	self:CDBar(args.spellId, 23)
 end
 
 function mod:IcyTalons(args)
 	if self:Tank(args.destName) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, args.destName, amount, "Urgent", amount > 3 and "Alarm")
+		self:StackMessage(args.spellId, args.destName, amount, "orange", amount > 3 and "Alarm")
 		self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
 		self:TargetBar(args.spellId, 20, args.destName, CL.count:format(args.spellName, amount))
 	end
 end
 
 function mod:BloodDrain(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, self:Dispeller("magic"))
+	self:TargetMessage(args.spellId, args.destName, "yellow", "Warning", nil, nil, self:Dispeller("magic"))
 	self:Bar(args.spellId, 13.3)
 end
 
@@ -343,14 +343,14 @@ end
 
 function mod:BloodDrainDispelled(args)
 	if args.extraSpellId == 241716 then
-		self:Message(241716, "Positive", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
+		self:Message(241716, "green", "Info", CL.removed_by:format(args.extraSpellName, self:ColorName(args.sourceName)))
 	end
 end
 
 function mod:CoralCut(args)
 	if self:Tank(args.destName) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, args.destName, amount, "Attention")
+		self:StackMessage(args.spellId, args.destName, amount, "yellow")
 		if not self:Me(args.destGUID) and amount > 1 and self:Tank() and not self:UnitDebuff("player", args.spellName) then
 			self:PlaySound(args.spellId, "Warning")
 		end
@@ -361,19 +361,19 @@ end
 
 function mod:CoralCutRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "Positive", self:Tank() and "Warning", CL.removed:format(args.spellName))
+		self:Message(args.spellId, "green", self:Tank() and "Warning", CL.removed:format(args.spellName))
 	else
-		self:Message(args.spellId, "Positive", nil, CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+		self:Message(args.spellId, "green", nil, CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
 	end
 end
 
 function mod:SonicScream(args)
-	self:Message(args.spellId, "Important", "Long", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", "Long", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 2)
 end
 
 function mod:SummonSteamElemental(args)
-	self:Message(args.spellId, "Urgent")
+	self:Message(args.spellId, "orange")
 	if self:Damager() then
 		self:Flash(args.spellId)
 		self:PlaySound(args.spellId, "Warning")
@@ -383,7 +383,7 @@ end
 
 --[[ Sisters of the Moon -> The Desolate Host ]]--
 function mod:PolymorphBomb(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "orange", "Alarm")
 	self:TargetBar(args.spellId, 10, args.destName)
 
 	if self:Me(args.destGUID) then
@@ -400,7 +400,7 @@ function mod:PolymorphBombRemoved(args)
 end
 
 function mod:Anguish(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm")
+	self:TargetMessage(args.spellId, args.destName, "orange", "Alarm")
 	self:TargetBar(args.spellId, 6, args.destName)
 
 	if self:Me(args.destGUID) then
@@ -417,7 +417,7 @@ function mod:AnguishRemoved(args)
 end
 
 function mod:AnguishingStrike(args)
-	self:TargetMessage(args.spellId, args.destName, "Attention", "Warning", nil, nil, self:Tank())
+	self:TargetMessage(args.spellId, args.destName, "yellow", "Warning", nil, nil, self:Tank())
 	self:Bar(args.spellId, 15.8)
 	if not self:Me(args.destGUID) and self:Tank() then
 		self:Flash(args.spellId)
@@ -429,7 +429,7 @@ function mod:AnguishingStrikeApplied(args)
 end
 
 function mod:VoidRift(args)
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alert")
+	self:TargetMessage(args.spellId, args.destName, "orange", "Alert")
 	if self:Me(args.destGUID) then
 		self:OpenProximity(args.spellId, 10)
 		self:Say(args.spellId)
@@ -443,7 +443,7 @@ function mod:VoidRiftRemoved(args)
 end
 
 function mod:SoulPortal(args)
-	self:Message(args.spellId, "Positive", nil, CL.spawned:format(args.spellName))
+	self:Message(args.spellId, "green", nil, CL.spawned:format(args.spellName))
 	self:Bar(args.spellId, 15.8)
 end
 
@@ -452,7 +452,7 @@ end
 
 --[[ Maiden of Vigilance -> Fallen Avatar ]]--
 function mod:LuminescentBarrier(args)
-	self:Message(args.spellId, "Attention", self:Dispeller("magic", true) and "Warning", CL.on:format(args.spellName, args.sourceName))
+	self:Message(args.spellId, "yellow", self:Dispeller("magic", true) and "Warning", CL.on:format(args.spellName, args.sourceName))
 end
 
 --[[ Fallen Avatar -> Kil'jaeden ]]--

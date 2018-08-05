@@ -187,7 +187,7 @@ end
 
 -- [[ Before Garothi Worldbreaker ]] --
 function mod:Annihilation()
-	self:Message(252743, "Important", "Long")
+	self:Message(252743, "red", "Long")
 end
 
 -- [[ After Garothi Worldbreaker ]] --
@@ -322,7 +322,7 @@ do
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, spellGUID, spellId)
 		if spellId == 252740 and spellGUID ~= prev then -- Annihilation
 			prev = spellGUID
-			self:Message(252743, "Important", "Long")
+			self:Message(252743, "red", "Long")
 		end
 	end
 end

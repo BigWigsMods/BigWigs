@@ -140,7 +140,7 @@ function mod:OnEngage()
 	-- Belac
 	self:CDBar(235230, 35) -- Fel Squall
 
-	self:RegisterUnitEvent("UNIT_POWER", nil, "player")
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "player")
 
 	self:Berserk(720, true, nil, 248671, 248671) -- confirmed for nm/hc/my - 248671 has a nice description, 248669 is the aura applied
 
@@ -168,7 +168,7 @@ do
 			if t-prev > 1 then
 				prev = t
 				self:Flash("fixate", 41951)
-				self:Message("fixate", "Personal", "Long", CL.you:format(self:SpellName(41951)), 41951) -- 41951 = "Fixate"
+				self:Message("fixate", "blue", "Long", CL.you:format(self:SpellName(41951)), 41951) -- 41951 = "Fixate"
 			end
 			if self:GetOption("custom_on_fixate_plates") then
 				self:AddPlateIcon(41951, guid)
@@ -204,7 +204,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 233895 then -- Suffocating Dark
-		self:Message(spellId, "Attention", "Info")
+		self:Message(spellId, "yellow", "Info")
 		suffocatingDarkCounter = suffocatingDarkCounter + 1
 		self:CDBar(spellId, suffocatingDarkCounter == 2 and 42 or 25)
 	end
@@ -212,11 +212,11 @@ end
 
 do
 	local lastPower, prev = 0, 0
-	function mod:UNIT_POWER(event, unit, pType)
+	function mod:UNIT_POWER_FREQUENT(event, unit, pType)
 		if pType == "ALTERNATE" then
 			local power = UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
 			if power < lastPower or power >= nextAltPowerWarning then
-				self:StackMessage(233104, self:UnitName(unit), power, "Personal")
+				self:StackMessage(233104, self:UnitName(unit), power, "blue")
 				local t = GetTime()
 				if (power >= 80 or power < lastPower) and t-prev > 1.5 then
 					self:PlaySound(233104, "Info")
@@ -239,7 +239,7 @@ do
 
 	function mod:BelacsPrisoner(args)
 		if self:Me(args.destGUID)then
-			self:TargetMessage(args.spellId, args.destName, "Personal", "Alert")
+			self:TargetMessage(args.spellId, args.destName, "blue", "Alert")
 		end
 
 		-- Add person to InfoBox
@@ -266,14 +266,14 @@ function mod:BelacsPrisonerRemoved(args)
 end
 
 function mod:ScytheSweep(args)
-	self:Message(args.spellId, "Attention", self:Tank() and "Alert")
+	self:Message(args.spellId, "yellow", self:Tank() and "Alert")
 	sweepCounter = sweepCounter + 1
 	self:CDBar(args.spellId, sweepCounter > 4 and sweepCounter % 2 == 0 and 35 or 24)
 end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage(233431, name, "Urgent", "Alert", nil, nil, true)
+		self:TargetMessage(233431, name, "orange", "Alert", nil, nil, true)
 		if self:Me(guid) then
 			self:Say(233431)
 		end
@@ -286,7 +286,7 @@ do
 end
 
 function mod:BoneSaw(args)
-	self:Message(args.spellId, "Important", "Warning")
+	self:Message(args.spellId, "red", "Warning")
 	self:CastBar(args.spellId, 16)
 	if self:Easy() then
 		self:Bar(args.spellId, 60.5)
@@ -296,12 +296,12 @@ function mod:BoneSaw(args)
 end
 
 function mod:PangsofGuilt(args) -- Interuptable
-	self:Message(args.spellId, "Important", self:Interrupter(args.sourceGUID) and "Alarm", CL.casting:format(CL.count:format(args.spellName, pangsofGuiltCounter)))
+	self:Message(args.spellId, "red", self:Interrupter(args.sourceGUID) and "Alarm", CL.casting:format(CL.count:format(args.spellName, pangsofGuiltCounter)))
 	pangsofGuiltCounter = (pangsofGuiltCounter % 3) + 1
 end
 
 function mod:EchoingAnguish(args)
-	self:Message(args.spellId, "Important", "Alert")
+	self:Message(args.spellId, "red", "Alert")
 	self:OpenProximity(args.spellId, 8) -- Open proximity a bit before
 	self:CDBar(args.spellId, 22)
 end
@@ -337,12 +337,12 @@ do
 end
 
 function mod:TormentingBurst(args)
-	self:Message(args.spellId, "Attention", self:Healer() and "Long")
+	self:Message(args.spellId, "yellow", self:Healer() and "Long")
 	self:CDBar(args.spellId, 17.1)
 end
 
 function mod:FelSquall(args)
-	self:Message(args.spellId, "Important", "Warning")
+	self:Message(args.spellId, "red", "Warning")
 	self:CastBar(args.spellId, 16)
 	self:Bar(args.spellId, 60.5)
 end
@@ -353,7 +353,7 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 3 then
 			prev = t
-			self:Message(233895, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(233895, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
@@ -362,7 +362,7 @@ function mod:SoulCorruption(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 5 == 0 then
-			self:StackMessage(args.spellId, args.destName, amount, "Important", "Warning") -- check sound amount
+			self:StackMessage(args.spellId, args.destName, amount, "red", "Warning") -- check sound amount
 		end
 	end
 end

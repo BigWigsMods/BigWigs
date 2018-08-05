@@ -135,10 +135,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 			bufferfishCounter = bufferfishCounter + 1
 			self:Bar(239362, 22.5, CL.count:format(self:SpellName(239362), bufferfishCounter)) -- Delicious Bufferfish
 			if dreadSharkCounter == 3 or dreadSharkCounter == 5 then
-				self:Message(239436, "Urgent", "Warning")
+				self:Message(239436, "orange", "Warning")
 				stage = stage + 1
 			else
-				self:Message(239436, "Urgent", "Warning")
+				self:Message(239436, "orange", "Warning")
 				return -- No stage change yet
 			end
 		end
@@ -158,7 +158,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		burdenCounter = 1
 		hydraShotCounter = 1
 
-		self:Message("stages", "Neutral", "Long", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", "Long", CL.stage:format(stage), false)
 		if stage == 2 then
 			self:Bar(232913, 11) -- Befouling Ink
 			if not self:LFR() then
@@ -209,7 +209,7 @@ do
 		if count == 1 then
 			self:StopBar(CL.count:format(self:SpellName(230139), hydraShotCounter)) -- Stop previous one if early
 			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, hydraShotCounter))
-			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "Important", "Warning", nil, nil, true)
+			self:ScheduleTimer("TargetMessage", 0.3, args.spellId, list, "red", "Warning", nil, nil, true)
 			hydraShotCounter = hydraShotCounter + 1
 			-- Normal stage 3 seems to swing between 41-43 or 51-53
 			self:CDBar(args.spellId, self:Mythic() and 30.5 or stage == 2 and 30 or (self:Normal() and stage == 3 and 41.3) or 40, CL.count:format(args.spellName, hydraShotCounter))
@@ -230,16 +230,16 @@ do
 end
 
 function mod:BurdenofPainCast(args)
-	self:Message(args.spellId, "Attention", "Warning", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "yellow", "Warning", CL.casting:format(args.spellName))
 end
 
 function mod:BurdenofPain(args)
 	burdenCounter = burdenCounter + 1
 	-- Tanks: Burden of Pain
-	self:TargetMessage(args.spellId, args.destName, "Urgent", "Alarm", nil, nil, true)
+	self:TargetMessage(args.spellId, args.destName, "orange", "Alarm", nil, nil, true)
 	self:Bar(args.spellId, 25.5, CL.count:format(args.spellName, burdenCounter)) -- Timer until cast_start
 	if not self:Tank() or self:GetOption(args.spellId) == 0 then -- Non-Tanks: From the Abyss
-		self:Message(230227, "Urgent", "Alarm", CL.count:format(self:SpellName(230227), burdenCounter-1))
+		self:Message(230227, "orange", "Alarm", CL.count:format(self:SpellName(230227), burdenCounter-1))
 		self:Bar(230227, 28, CL.count:format(self:SpellName(230227), burdenCounter))
 	end
 	if self:Me(args.destGUID) then
@@ -253,14 +253,14 @@ do
 		local t = GetTime()
 		if self:Me(args.destGUID) and t-prev > 1.5 then
 			prev = t
-			self:Message(args.spellId, "Personal", "Alert", CL.underyou:format(args.spellName))
+			self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
 		end
 	end
 end
 
 function mod:SlicingTornado(args)
 	slicingTornadoCounter = slicingTornadoCounter + 1
-	self:Message(args.spellId, "Important", "Warning")
+	self:Message(args.spellId, "red", "Warning")
 	if self:Mythic() then
 		self:CDBar(args.spellId, stage == 3 and 35.3 or 34)
 	else
@@ -269,7 +269,7 @@ function mod:SlicingTornado(args)
 end
 
 function mod:ThunderingShock(args)
-	self:Message(args.spellId, "Important", "Warning")
+	self:Message(args.spellId, "red", "Warning")
 	self:CDBar(args.spellId, 32.8) -- Can be delayed sometimes by other casts
 end
 
@@ -278,25 +278,25 @@ do
 	function mod:ConsumingHungerApplied(args)
 		list[#list+1] = args.destName
 		if #list == 1 then
-			self:ScheduleTimer("TargetMessage", 0.3, 230384, list, "Attention", "Alert", nil, nil, true)
+			self:ScheduleTimer("TargetMessage", 0.3, 230384, list, "yellow", "Alert", nil, nil, true)
 		end
 	end
 end
 
 function mod:BeckonSarukel() -- Devouring Maw
-	self:Message(234621, "Important", "Warning")
+	self:Message(234621, "red", "Warning")
 	self:Bar(234621, 41.5)
 	self:PrepareForMaw()
 end
 
 function mod:BefoulingInk()
-	self:Message(232913, "Attention", "Info", CL.incoming:format(self:SpellName(232913))) -- Befouling Ink incoming!
+	self:Message(232913, "yellow", "Info", CL.incoming:format(self:SpellName(232913))) -- Befouling Ink incoming!
 	self:CDBar(232913, stage == 3 and (self:Mythic() and 37 or 32) or 41.5)
 end
 
 function mod:CrashingWave(args)
 	waveCounter = waveCounter + 1
-	self:Message(args.spellId, "Important", "Warning")
+	self:Message(args.spellId, "red", "Warning")
 	self:CastBar(args.spellId, self:LFR() and 7 or 5)
 	local timer = 42
 	if self:Mythic() and stage == 3 then
@@ -309,13 +309,13 @@ end
 
 function mod:DeliciousBufferfish(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage(239362, args.destName, "Personal", "Alert")
+		self:TargetMessage(239362, args.destName, "blue", "Alert")
 	end
 end
 
 function mod:DeliciousBufferfishRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(239362, "Personal", "Alert", CL.removed:format(args.spellName))
+		self:Message(239362, "blue", "Alert", CL.removed:format(args.spellName))
 	end
 end
 
@@ -388,7 +388,7 @@ do
 					end
 					total = total + n
 				end
-				self:Message(234621, "Positive", "Info", CL.over:format(args.spellName) .. " - " .. L.inks_fed:format(list:sub(0, list:len()-2)))
+				self:Message(234621, "green", "Info", CL.over:format(args.spellName) .. " - " .. L.inks_fed:format(list:sub(0, list:len()-2)))
 				self:ScheduleTimer("CloseInfo", 5, 234621) -- delay a bit to make sure the people get enough credit
 			end
 		end

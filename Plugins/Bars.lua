@@ -479,6 +479,8 @@ plugin.defaultDB = {
 	BigWigsEmphasizeAnchor_width = 320,
 	BigWigsEmphasizeAnchor_height = 22,
 	spacing = 1,
+	visibleBarLimit = 100,
+	visibleBarLimitEmph = 100,
 	interceptMouse = nil,
 	onlyInterceptOnKeypress = nil,
 	interceptKey = "CTRL",
@@ -796,7 +798,7 @@ do
 						softMax = 30,
 						min = 0,
 						step = 1,
-						width = "double",
+						width = 2,
 						set = sortBars,
 						disabled = function()
 							-- Just throw in a random frame (normalAnchor) instead of a bar to see if it returns a value since we noop() styles that don't have a .GetSpacing entry
@@ -870,11 +872,21 @@ do
 						order = 1,
 						set = sortBars,
 					},
+					visibleBarLimit = {
+						type = "range",
+						name = L.visibleBarLimit,
+						desc = L.visibleBarLimitDesc,
+						order = 2,
+						max = 100,
+						min = 1,
+						step = 1,
+						set = sortBars,
+					},
 					fontSize = {
 						type = "range",
 						name = L.fontSize,
-						width = "double",
-						order = 2,
+						width = 2,
+						order = 3,
 						max = 200, softMax = 72,
 						min = 1,
 						step = 1,
@@ -883,7 +895,7 @@ do
 					exactPositioning = {
 						type = "group",
 						name = L.positionExact,
-						order = 3,
+						order = 4,
 						inline = true,
 						args = {
 							BigWigsAnchor_x = {
@@ -953,29 +965,11 @@ do
 						order = 3,
 						set = sortBars,
 					},
-					emphasizeTime = {
-						type = "range",
-						name = L.emphasizeAt,
-						order = 4,
-						min = 6,
-						max = 20,
-						step = 1,
-					},
-					fontSizeEmph = {
-						type = "range",
-						name = L.fontSize,
-						width = "double",
-						order = 5,
-						max = 200, softMax = 72,
-						min = 1,
-						step = 1,
-						set = updateFont,
-					},
 					emphasizeMove = {
 						type = "toggle",
 						name = L.move,
 						desc = L.moveDesc,
-						order = 6,
+						order = 4,
 						set = function(_, value)
 							db.emphasizeMove = value
 							if not value then
@@ -991,8 +985,8 @@ do
 						type = "range",
 						name = L.emphasizeMultiplier,
 						desc = L.emphasizeMultiplierDesc,
-						width = "double",
-						order = 7,
+						width = 2,
+						order = 5,
 						max = 3,
 						min = 1,
 						step = 0.01,
@@ -1003,10 +997,37 @@ do
 						end,
 						disabled = function() return db.emphasizeMove end,
 					},
+					emphasizeTime = {
+						type = "range",
+						name = L.emphasizeAt,
+						order = 6,
+						min = 6,
+						max = 20,
+						step = 1,
+					},
+					fontSizeEmph = {
+						type = "range",
+						name = L.fontSize,
+						order = 7,
+						max = 200, softMax = 72,
+						min = 1,
+						step = 1,
+						set = updateFont,
+					},
+					visibleBarLimitEmph = {
+						type = "range",
+						name = L.visibleBarLimit,
+						desc = L.visibleBarLimitDesc,
+						order = 8,
+						max = 100,
+						min = 1,
+						step = 1,
+						set = sortBars,
+					},
 					exactPositioning = {
 						type = "group",
 						name = L.positionExact,
-						order = 8,
+						order = 9,
 						inline = true,
 						args = {
 							BigWigsEmphasizeAnchor_x = {
@@ -1161,10 +1182,25 @@ do
 		end
 		table.sort(tmp, barSorter)
 		local lastBar = nil
-		local up = nil
-		if anchor == normalAnchor then up = db.growup else up = db.emphasizeGrowup end
+		local up, barLimit
+		if anchor == normalAnchor then
+			up = db.growup
+			barLimit = db.visibleBarLimit
+		else
+			up = db.emphasizeGrowup
+			barLimit = db.visibleBarLimitEmph
+		end
 		for i = 1, #tmp do
 			local bar = tmp[i]
+			if i > barLimit then
+				bar:SetAlpha(0)
+				bar:EnableMouse(false)
+			elseif barLimit ~= 100 then
+				bar:SetAlpha(1)
+				if db.interceptMouse and not db.onlyInterceptOnKeypress then
+					bar:EnableMouse(true)
+				end
+			end
 			local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
 			bar:ClearAllPoints()
 			if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
@@ -1600,7 +1636,9 @@ local function refixClickOnBar(intercept, bar)
 end
 local function refixClickOnAnchor(intercept, anchor)
 	for bar in next, anchor.bars do
-		refixClickOnBar(intercept, bar)
+		if not intercept or bar:GetAlpha() > 0 then -- Don't enable for hidden bars
+			refixClickOnBar(intercept, bar)
+		end
 	end
 end
 
@@ -1856,7 +1894,7 @@ do
 		if seconds == 0 then
 			plugin:SendMessage("BigWigs_StopBar", plugin, nick..": "..barText)
 		else
-			timers[id] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, false, L.timerFinished:format(nick, barText), "Attention", 134376)
+			timers[id] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, false, L.timerFinished:format(nick, barText), "yellow", 134376)
 			plugin:SendMessage("BigWigs_StartBar", plugin, id, nick..": "..barText, seconds, 134376) -- 134376 = "Interface\\Icons\\INV_Misc_PocketWatch_01"
 		end
 	end
@@ -1895,24 +1933,24 @@ do
 		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "BigWigs", nick))
 
 		timerTbl = {
-			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "Urgent", 134062), -- 134062 = "Interface\\Icons\\inv_misc_fork&knife"
-			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "Urgent", 134062),
-			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "Important", 134062),
-			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "Important", 134062),
+			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "orange", 134062), -- 134062 = "Interface\\Icons\\inv_misc_fork&knife"
+			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "orange", 134062),
+			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "orange", 134062),
+			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "red", 134062),
 			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Sound", plugin, nil, "Long"),
 			plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
 		}
 		if seconds > 119 then -- 2min
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "Positive", 134062)
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "yellow", 134062)
 		end
 		if seconds > 239 then -- 4min
 			local half = seconds / 2
 			local m = half % 60
 			local halfMin = (half - m) / 60
-			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", plugin, nil, L.breakMinutes:format(halfMin), "Positive", 134062)
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", plugin, nil, L.breakMinutes:format(halfMin), "yellow", 134062)
 		end
 
-		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(seconds/60), "Attention", 134062)
+		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(seconds/60), "green", 134062)
 		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, 134062)
 		plugin:SendMessage("BigWigs_StartBreak", plugin, seconds, nick, isDBM, reboot)
