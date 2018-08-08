@@ -7,6 +7,9 @@ local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceTimer-3.0")
 addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
 
+local adb = LibStub("AceDB-3.0")
+local lds = LibStub("LibDualSpec-1.0")
+
 local C -- = BigWigs.C, set from Constants.lua
 local L = BigWigsAPI:GetLocale("BigWigs")
 local CL = BigWigsAPI:GetLocale("BigWigs: Common")
@@ -297,8 +300,8 @@ do
 				watchedMovies = {},
 			},
 		}
-		local db = LibStub("AceDB-3.0"):New("BigWigs3DB", defaults, true)
-		LibStub("LibDualSpec-1.0"):EnhanceDatabase(db, "BigWigs3DB")
+		local db = adb:New("BigWigs3DB", defaults, true)
+		lds:EnhanceDatabase(db, "BigWigs3DB")
 
 		db.RegisterCallback(self, "OnProfileChanged", profileUpdate)
 		db.RegisterCallback(self, "OnProfileCopied", profileUpdate)

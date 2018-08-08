@@ -3,6 +3,9 @@ local L = BigWigsAPI:GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
 
+local ldb = LibStub("LibDataBroker-1.1")
+local ldbi = LibStub("LibDBIcon-1.0")
+
 -----------------------------------------------------------------------
 -- Generate our version variables
 --
@@ -50,7 +53,6 @@ end
 -- Locals
 --
 
-local ldb = nil
 local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
@@ -340,6 +342,57 @@ local function loadCoreAndOpenOptions()
 end
 
 -----------------------------------------------------------------------
+-- LDB Plugin
+--
+
+local dataBroker = ldb:NewDataObject("BigWigs",
+	{type = "launcher", label = "BigWigs", icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"}
+)
+
+function dataBroker.OnClick(self, button)
+	if button == "RightButton" then
+		loadCoreAndOpenOptions()
+	else
+		loadAndEnableCore()
+		if IsAltKeyDown() then
+			if IsControlKeyDown() then
+				BigWigs:Disable()
+			else
+				for name, module in BigWigs:IterateBossModules() do
+					if module:IsEnabled() then module:Disable() end
+				end
+				sysprint(L.modulesDisabled)
+			end
+		else
+			for name, module in BigWigs:IterateBossModules() do
+				if module:IsEnabled() then module:Reboot() end
+			end
+			sysprint(L.modulesReset)
+		end
+	end
+end
+
+function dataBroker.OnTooltipShow(tt)
+	tt:AddLine("BigWigs")
+	if BigWigs and BigWigs:IsEnabled() then
+		local added = nil
+		for name, module in BigWigs:IterateBossModules() do
+			if module:IsEnabled() then
+				if not added then
+					tt:AddLine(L.activeBossModules, 1, 1, 1)
+					added = true
+				end
+				tt:AddLine(module.displayName)
+			end
+		end
+	end
+	for i = 1, #tooltipFunctions do
+		tooltipFunctions[i](tt)
+	end
+	tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, 1)
+end
+
+-----------------------------------------------------------------------
 -- Version listing functions
 --
 
@@ -609,13 +662,11 @@ function mod:ADDON_LOADED(addon)
 	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
 	C_ChatInfo.RegisterAddonMessagePrefix("D4") -- DBM
 
-	local icon = LibStub("LibDBIcon-1.0", true)
-	if icon and ldb then
-		if type(BigWigsIconDB) ~= "table" then
-			BigWigsIconDB = {}
-		end
-		icon:Register("BigWigs", ldb, BigWigsIconDB)
+	-- LibDBIcon setup
+	if type(BigWigsIconDB) ~= "table" then
+		BigWigsIconDB = {}
 	end
+	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
 
 	if BigWigs3DB then
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
@@ -1291,9 +1342,7 @@ end
 public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 
 function mod:BigWigs_CoreEnabled()
-	if ldb then
-		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-enabled"
-	end
+	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-enabled"
 
 	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
 	-- which kills your ability to receive addon comms during the loading process.
@@ -1310,9 +1359,7 @@ end
 public.RegisterMessage(mod, "BigWigs_CoreEnabled")
 
 function mod:BigWigs_CoreDisabled()
-	if ldb then
-		ldb.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"
-	end
+	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"
 end
 public.RegisterMessage(mod, "BigWigs_CoreDisabled")
 
@@ -1343,64 +1390,6 @@ end
 
 function public:LoadZone(zone)
 	loadZone(zone)
-end
-
------------------------------------------------------------------------
--- LDB Plugin
---
-
-do
-	local ldb11 = LibStub("LibDataBroker-1.1", true)
-	if ldb11 then
-		ldb = ldb11:NewDataObject("BigWigs", {
-			type = "launcher",
-			label = "BigWigs",
-			icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled",
-		})
-
-		function ldb.OnClick(self, button)
-			if button == "RightButton" then
-				loadCoreAndOpenOptions()
-			else
-				loadAndEnableCore()
-				if IsAltKeyDown() then
-					if IsControlKeyDown() then
-						BigWigs:Disable()
-					else
-						for name, module in BigWigs:IterateBossModules() do
-							if module:IsEnabled() then module:Disable() end
-						end
-						sysprint(L.modulesDisabled)
-					end
-				else
-					for name, module in BigWigs:IterateBossModules() do
-						if module:IsEnabled() then module:Reboot() end
-					end
-					sysprint(L.modulesReset)
-				end
-			end
-		end
-
-		function ldb.OnTooltipShow(tt)
-			tt:AddLine("BigWigs")
-			if BigWigs and BigWigs:IsEnabled() then
-				local added = nil
-				for name, module in BigWigs:IterateBossModules() do
-					if module:IsEnabled() then
-						if not added then
-							tt:AddLine(L.activeBossModules, 1, 1, 1)
-							added = true
-						end
-						tt:AddLine(module.displayName)
-					end
-				end
-			end
-			for i = 1, #tooltipFunctions do
-				tooltipFunctions[i](tt)
-			end
-			tt:AddLine(L.tooltipHint, 0.2, 1, 0.2, 1)
-		end
-	end
 end
 
 -----------------------------------------------------------------------

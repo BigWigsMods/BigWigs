@@ -19,10 +19,12 @@ local C = BigWigs.C
 
 local L = BigWigsAPI:GetLocale("BigWigs")
 
-local icon = LibStub("LibDBIcon-1.0", true)
+local ldbi = LibStub("LibDBIcon-1.0")
 local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
+local adbo = LibStub("AceDBOptions-3.0")
+local lds = LibStub("LibDualSpec-1.0")
 
 local loader = BigWigsLoader
 local API = BigWigsAPI
@@ -61,13 +63,12 @@ local acOptions = {
 					set = function(_, v)
 						if v then
 							BigWigsIconDB.hide = nil
-							icon:Show("BigWigs")
+							ldbi:Show("BigWigs")
 						else
 							BigWigsIconDB.hide = true
-							icon:Hide("BigWigs")
+							ldbi:Hide("BigWigs")
 						end
 					end,
-					hidden = function() return not icon end,
 					width = "full",
 				},
 				separator2 = {
@@ -199,9 +200,9 @@ do
 	local function Initialize(_, _, addon)
 		if addon ~= addonName then return end
 
-		acOptions.args.general.args.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
+		acOptions.args.general.args.profileOptions = adbo:GetOptionsTable(BigWigs.db)
 		acOptions.args.general.args.profileOptions.order = 1
-		LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
+		lds:EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
 		acd:SetDefaultSize("BigWigs", 858, 660)
