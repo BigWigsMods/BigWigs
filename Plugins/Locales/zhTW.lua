@@ -277,25 +277,25 @@ L.emphasizeMultiplier = "尺寸倍數"
 L.emphasizeMultiplierDesc = "如果你禁止計時條移動到強調計時條錨點，此選項可以調整一般計時條進入強調倒數後的放大倍率。"
 L.iconPosition = "圖示位置"
 L.iconPositionDesc = "選擇將圖示置於計時條的哪一側。"
---L.visibleBarLimit = "Visible bar limit"
---L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
+L.visibleBarLimit = "最大可見數量"
+L.visibleBarLimitDesc = "設定同時於螢幕上可見的計時條之最大數量。"
 
 -----------------------------------------------------------------------
 -- Colors.lua
 --
 
---L.red = "Red"
---L.redDesc = "General encounter warnings."
---L.blue = "Blue"
---L.blueDesc = "Warnings for things that affect you directly such as a debuff being applied to you."
---L.orange = "Orange"
---L.yellow = "Yellow"
---L.green = "Green"
---L.greenDesc = "Warnings for good things that happen such as a debuff being removed from you."
---L.cyan = "Cyan"
---L.cyanDesc = "Warnings for encounter status changes such as advancing to the next stage."
---L.purple = "Purple"
---L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
+L.red = "紅色"
+L.redDesc = "一般戰鬥警報"
+L.blue = "藍色"
+L.blueDesc = "受到影響警報，例如獲得負面效果（中了debuff）。"
+L.orange = "橘色"
+L.yellow = "黃色"
+L.green = "綠色"
+L.greenDesc = "好事發生警報，例如負面效果移除（debuff消失）。"
+L.cyan = "青色"
+L.cyanDesc = "狀態改變警報，例如階段轉換。"
+L.purple = "紫色"
+L.purpleDesc = "坦克相關警報，例如對坦減益效果疊加（特定層數換坦的debuff）。"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
