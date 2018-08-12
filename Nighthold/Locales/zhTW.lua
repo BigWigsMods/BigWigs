@@ -9,8 +9,7 @@ end
 
 L = BigWigs:NewBossLocale("Chronomatic Anomaly", "zhTW")
 if L then
-	L.affected = "被影響"
-	L.totalAbsorb = "總吸收"
+	L.timeLeft = "%.1f秒" -- s = seconds
 end
 
 L = BigWigs:NewBossLocale("Trilliax", "zhTW")

@@ -20,6 +20,9 @@ local bombCount = 1
 local releaseCount = 1
 local temporalCount = 1
 local bombSayTimers = {}
+local infoBoxList = {}
+local timeReleaseTime = 0
+local timeReleaseMaxAbsorb = 0
 
 local getTimers
 do
@@ -208,8 +211,7 @@ local currentTimers = nil
 
 local L = mod:GetLocale()
 if L then
-	L.affected = "Affected"
-	L.totalAbsorb = "Total Absorb"
+	L.timeLeft = "%.1fs"
 end
 
 --------------------------------------------------------------------------------
@@ -261,11 +263,12 @@ function mod:OnEngage()
 	bombCount = 1
 	releaseCount = 1
 	temporalCount = 1
+	infoBoxList = {}
+	timeReleaseTime = 0
+	timeReleaseMaxAbsorb = 0
 	wipe(bombSayTimers)
 	timers = getTimers(self)
 	currentTimers = nil
-	self:SetInfo(206609, 1, L.affected) -- Time Release InfoBox
-	self:SetInfo(206609, 3, L.totalAbsorb)
 	if self:Mythic() then
 		self:Berserk(360, true, nil, 207976, 207976) -- Full power
 	end
@@ -361,15 +364,75 @@ function mod:ChronometricParticles(args)
 end
 
 do
+	local function UpdateInfoBoxTimeLeft()
+		if infoBoxList[1] then
+			local timeLeft = timeReleaseTime - GetTime()
+			mod:SetInfoBar(206609, 1, timeLeft/30)
+			mod:SetInfo(206609, 2, L.timeLeft:format(timeLeft))
+			mod:SimpleTimer(UpdateInfoBoxTimeLeft, 0.1)
+		end
+	end
+
+	local sort, min, sortFunc = table.sort, math.min, function(a, b)
+		return a[2] > b[2]
+	end
+	local function updateInfoBox()
+		sort(infoBoxList, sortFunc)
+
+		for i = 1, #infoBoxList do
+			if i < 5 then -- Only room for 4 players
+				if infoBoxList[i] then
+					local player = infoBoxList[i][1]
+					local icon = GetRaidTargetIndex(player)
+					mod:SetInfo(206609, 1+i*2, (icon and ("|T13700%d:0|t"):format(icon) or "") .. mod:ColorName(player))
+					mod:SetInfo(206609, 2+i*2, mod:AbbreviateNumber(infoBoxList[i][2]))
+					mod:SetInfoBar(206609, 1+i*2, infoBoxList[i][2] / timeReleaseMaxAbsorb)
+				else
+					mod:SetInfo(206609, 1+i*2, "")
+					mod:SetInfo(206609, 2+i*2, "")
+					mod:SetInfoBar(206609, 1+i*2, 0)
+				end
+			end
+		end
+	end
+
+	do
+		local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+		function mod:UpdateInfoBoxAbsorbs()
+			local _, subEvent, _, _, _, _, _, _, destName, _, _, spellId, _, _, _, _, _, _, _, _, _, absorbed = CombatLogGetCurrentEventInfo()
+			if subEvent == "SPELL_HEAL_ABSORBED" and spellId == 206609 then -- Time Release
+				for i = 1, #infoBoxList do
+					if infoBoxList[i][1] == destName then
+						infoBoxList[i][2] = infoBoxList[i][2] - absorbed
+						updateInfoBox()
+						break
+					end
+				end
+			end
+		end
+	end
+
 	local list = mod:NewTargetList()
 	function mod:TimeRelease(args)
 		list[#list+1] = args.destName
+		infoBoxList[#infoBoxList+1] = {args.destName, args.amount}
 		if #list == 1 then
 			self:ScheduleTimer("TargetMessage", 0.1, args.spellId, list, "orange")
 		end
 
+		if #infoBoxList == 1 and self:CheckOption(args.spellId, "INFOBOX") then
+			timeReleaseTime = GetTime() + 30
+			timeReleaseMaxAbsorb = args.amount
+			self:OpenInfo(args.spellId, args.spellName)
+			self:SetInfo(args.spellId, 1, "|cffffffff" .. args.spellName .. "|r")
+			self:SetInfo(args.spellId, 2, L.timeLeft:format(30))
+			self:SetInfoBar(args.spellId, 1, 30)
+			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UpdateInfoBoxAbsorbs")
+			self:SimpleTimer(UpdateInfoBoxTimeLeft, 0.1)
+		end
+
 		if self:Me(args.destGUID) then
-			local _, _, _, expires = self:UnitDebuff("player", args.spellName)
+			local _, _, _, expires = self:UnitDebuff("player", args.spellId)
 			if expires and expires > 0 then
 				local timeLeft = expires - GetTime()
 				self:TargetBar(args.spellId, timeLeft, args.destName)
@@ -379,76 +442,27 @@ do
 end
 
 function mod:TimeReleaseRemoved(args)
+	for i = #infoBoxList, 1, -1 do
+		if infoBoxList[i][1] == args.destName then
+			tremove(infoBoxList, i)
+		end
+	end
+	if not infoBoxList[1] then
+		self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		self:CloseInfo(args.spellId)
+	end
 	if self:Me(args.destGUID) then
 		self:StopBar(args.spellId, args.destName)
 	end
 end
 
-do
-	local debuffName = mod:SpellName(219966)
-	local scheduled, scanCount, lookingForDebuffs = nil, 0, nil
+function mod:TimeReleaseSuccess(args)
+	self:Message(206609, "yellow", "Alarm", CL.incoming:format(args.spellName))
 
-	local function updateTimeReleaseInfobox(self)
-		scheduled = nil
-		local playerTable = {}
-		for unit in self:IterateGroup() do
-			local name, _, _, _, value = self:UnitDebuff(unit, debuffName)
-			if name then
-				playerTable[#playerTable+1] = {name = self:UnitName(unit), value = value}
-			end
-		end
-
-		if #playerTable > 0 then
-			scheduled = self:ScheduleTimer(updateTimeReleaseInfobox, 0.5, self)
-			lookingForDebuffs = nil
-
-			local absorbRemaining = 0
-			for _,t in pairs(playerTable) do
-				absorbRemaining = absorbRemaining + t.value
-			end
-
-			self:SetInfo(206609, 1, L.affected)
-			self:SetInfo(206609, 2, #playerTable)
-			self:SetInfo(206609, 3, L.totalAbsorb)
-			self:SetInfo(206609, 4, AbbreviateNumbers(absorbRemaining))
-
-			sort(playerTable, function(a, b) return a.value > b.value end)
-
-			for i = 1, 3 do
-				if playerTable[i] then
-					self:SetInfo(206609, 3+i*2, self:ColorName(playerTable[i].name))
-					self:SetInfo(206609, 4+i*2, AbbreviateNumbers(playerTable[i].value))
-				else
-					self:SetInfo(206609, 3+i*2, "")
-					self:SetInfo(206609, 4+i*2, "")
-				end
-			end
-			self:OpenInfo(206609, debuffName)
-		else -- no debuffs in the raid
-			if lookingForDebuffs then -- debuffs will be applied soon
-				scanCount = scanCount + 1
-				if scanCount < 9 then -- scan for 4s every .5s. debuffs could've been applied and removed between our scans
-					scheduled = self:ScheduleTimer(updateTimeReleaseInfobox, 0.5, self)
-				end
-			end
-			self:CloseInfo(206609)
-		end
-
-	end
-
-	function mod:TimeReleaseSuccess(args)
-		self:Message(206609, "yellow", "Alarm", CL.incoming:format(args.spellName))
-
-		releaseCount = releaseCount + 1
-		local releaseTime = currentTimers and currentTimers[206609][releaseCount]
-		if releaseTime then
-			self:Bar(206609, releaseTime) -- Time Release
-		end
-		scanCount = 0
-		lookingForDebuffs = true
-		if not scheduled then
-			scheduled = self:ScheduleTimer(updateTimeReleaseInfobox, 0.5, self)
-		end
+	releaseCount = releaseCount + 1
+	local releaseTime = currentTimers and currentTimers[206609][releaseCount]
+	if releaseTime then
+		self:Bar(206609, releaseTime) -- Time Release
 	end
 end
 
