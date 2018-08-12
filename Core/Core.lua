@@ -461,13 +461,12 @@ do
 		if not C then C = addon.C end
 		if not defaultToggles then
 			defaultToggles = setmetatable({
-				berserk = C.BAR + C.MESSAGE,
-				bosskill = C.MESSAGE,
+				berserk = C.BAR + C.MESSAGE + C.SOUND,
 				proximity = C.PROXIMITY,
 				altpower = C.ALTPOWER,
 				infobox = C.INFOBOX,
 			}, {__index = function()
-				return C.BAR + C.MESSAGE + C.VOICE
+				return C.BAR + C.MESSAGE + C.ICON + C.SOUND + C.SAY + C.PROXIMITY + C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX
 			end})
 		end
 

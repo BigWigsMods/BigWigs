@@ -388,6 +388,17 @@ local function advancedToggles(dbKey, module, check)
 					local name, desc = BigWigs:GetOptionDetails(key)
 					advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
 				end
+			elseif key == "ICON" or key == "SAY" or key == "PROXIMITY" or key == "ALTPOWER" or key == "INFOBOX" then -- All on by default, check if we should add a GUI widget
+				for _, opTbl in next, module.toggleOptions do
+					if type(opTbl) == "table" and opTbl[1] == dbKey then
+						for i = 2, #opTbl do
+							if opTbl[i] == key then
+								local name, desc = BigWigs:GetOptionDetails(key)
+								advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
+							end
+						end
+					end
+				end
 			else
 				local name, desc = BigWigs:GetOptionDetails(key)
 				advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
