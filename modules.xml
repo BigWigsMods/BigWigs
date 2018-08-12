@@ -5,14 +5,6 @@
 <Include file="Plugins\modules.xml"/>
 <Include file="Options\modules.xml"/>
 
-<Include file="Nightmare\modules.xml"/>
-<Include file="Nighthold\modules.xml"/>
-<Include file="TrialOfValor\modules.xml"/>
-<Include file="TombOfSargeras\modules.xml"/>
-<Include file="Antorus\modules.xml"/>
-<Include file="ArgusInvasionPoints\modules.xml"/>
-<Include file="BrokenIsles\modules.xml"/>
-
 <Include file="Uldir\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
