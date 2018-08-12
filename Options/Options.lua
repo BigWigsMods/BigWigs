@@ -337,7 +337,7 @@ local function getSlaveToggle(label, desc, key, module, flag, master)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(colorize[label])
 	-- Flags to have at half width
-	if flag == C.MESSAGE or flag == C.ME_ONLY or flag == C.FLASH or flag == C.PULSE or flag == C.EMPHASIZE or flag == C.COUNTDOWN or flag == C.BAR or flag == C.SOUND then
+	if flag == C.MESSAGE or flag == C.ME_ONLY or flag == C.FLASH or flag == C.PULSE or flag == C.EMPHASIZE or flag == C.COUNTDOWN or flag == C.BAR or flag == C.CASTBAR then
 		toggle:SetRelativeWidth(0.5)
 	else
 		toggle:SetFullWidth(true)
@@ -371,6 +371,19 @@ local function advancedToggles(dbKey, module, check)
 				messageGroup:AddChild(onMe)
 
 				advancedOptions[#advancedOptions + 1] = messageGroup
+			elseif key == "BAR" then
+				local barGroup = AceGUI:Create("InlineGroup")
+				barGroup:SetLayout("Flow")
+				barGroup:SetFullWidth(true)
+
+				local name, desc = BigWigs:GetOptionDetails(key)
+				local bar = getSlaveToggle(name, desc, dbKey, module, flag, check)
+				barGroup:AddChild(bar)
+
+				local castBar = getSlaveToggle(L.CASTBAR, L.CASTBAR_desc, dbKey, module, C.CASTBAR, check)
+				barGroup:AddChild(castBar)
+
+				advancedOptions[#advancedOptions + 1] = barGroup
 			elseif key == "FLASH" then
 				local flashGroup = AceGUI:Create("InlineGroup")
 				flashGroup:SetLayout("Flow")
