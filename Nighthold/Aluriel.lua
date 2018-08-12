@@ -414,7 +414,7 @@ end
 function mod:SearingBrandApplied(args)
 	if self:Me(args.destGUID) then
 		searingBrandOnMe = true
-		local _, _, _, expires = self:UnitDebuff("player", args.spellName)
+		local _, _, _, expires = self:UnitDebuff("player", args.spellName, args.spellId)
 		if expires and expires > 0 then
 			local timeLeft = expires - GetTime()
 			self:TargetBar(args.spellId, timeLeft, args.destName)

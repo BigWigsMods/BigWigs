@@ -613,7 +613,7 @@ end
 function mod:SlowTime(args)
 	if self:Me(args.destGUID)then
 		self:TargetMessage(args.spellId, args.destName, "blue", "Long")
-		local _, _, _, expires = self:UnitDebuff("player", args.spellName)
+		local _, _, _, expires = self:UnitDebuff("player", args.spellName, args.spellId)
 		local t = expires - GetTime()
 		self:TargetBar(args.spellId, t, args.destName)
 	end
@@ -627,7 +627,7 @@ end
 function mod:FastTime(args)
 	if self:Me(args.destGUID)then
 		self:Message(args.spellId, "green", "Long", CL.you:format(args.spellName))
-		local _, _, _, expires = self:UnitDebuff("player", args.spellName)
+		local _, _, _, expires = self:UnitDebuff("player", args.spellName, args.spellId)
 		local t = expires - GetTime()
 		self:TargetBar(args.spellId, t, args.destName)
 	end
@@ -682,7 +682,7 @@ function mod:DelphuricBeam(args)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
-		local _, _, _, expires = self:UnitDebuff("player", args.spellName)
+		local _, _, _, expires = self:UnitDebuff("player", args.spellName, args.spellId)
 		local t = expires - GetTime()
 		self:TargetBar(args.spellId, t, args.destName)
 		self:TargetMessage(args.spellId, args.destName, "red", "Alarm")
@@ -714,7 +714,7 @@ do
 	local playerList = mod:NewTargetList()
 	function mod:PermeliativeTorment(args)
 		if self:Me(args.destGUID) then
-			local _, _, _, expires = self:UnitDebuff("player", args.spellName)
+			local _, _, _, expires = self:UnitDebuff("player", args.spellName, args.spellId)
 			local t = expires - GetTime()
 			self:TargetBar(args.spellId, t, args.destName)
 		end

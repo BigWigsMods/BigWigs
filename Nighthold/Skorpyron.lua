@@ -20,6 +20,7 @@ mod.respawnTime = 40 -- moves into room at 30, ~40 until he's attackable
 
 local engageTime = 0
 local arcanoslashCount = 1
+local shardOnMe = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -63,6 +64,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Arcanoslash", 204275)
 	self:Log("SPELL_CAST_START", "Shockwave", 204316)
 	self:Log("SPELL_CAST_SUCCESS", "ShockwaveSuccess", 204316)
+	self:Log("SPELL_AURA_APPLIED", "BrokenShard", 204284)
+	self:Log("SPELL_AURA_REMOVED", "BrokenShardRemoved", 204284)
 	self:Log("SPELL_AURA_APPLIED", "ChitinousExoskeletonApplied", 204448)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "ChitinousExoskeletonStacks", 204448)
 	self:Log("SPELL_AURA_APPLIED", "ExoskeletalVulnerabilityApplied", 204459)
@@ -77,6 +80,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	shardOnMe = false
 	engageTime = GetTime()
 	arcanoslashCount = 1
 	self:Berserk(542) -- Heroic
@@ -105,7 +109,7 @@ do
 	local brokenShardCheck, name = nil, mod:SpellName(204284)
 
 	local function checkForBrokenShard()
-		if not mod:UnitDebuff("player", name) then
+		if not shardOnMe then
 			mod:Message(204284, "blue", "Warning", CL.no:format(name))
 			brokenShardCheck = mod:ScheduleTimer(checkForBrokenShard, 1)
 		else
@@ -126,6 +130,18 @@ do
 		if brokenShardCheck then
 			self:CancelTimer(brokenShardCheck)
 		end
+	end
+end
+
+function mod:BrokenShard(args)
+	if self:Me(args.destGUID) then
+		shardOnMe = true
+	end
+end
+
+function mod:BrokenShardRemoved(args)
+	if self:Me(args.destGUID) then
+		shardOnMe = false
 	end
 end
 

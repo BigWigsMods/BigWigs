@@ -838,7 +838,7 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:ParasiticWound(args)
-		local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName)
+		local _, _, _, expires = self:UnitDebuff(args.destName, args.spellName, args.spellId)
 		local remaining = expires-GetTime()
 		if self:Me(args.destGUID) then
 			self:Flash(args.spellId)
