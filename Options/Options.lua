@@ -952,7 +952,7 @@ do
 		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
+		elseif value:match("^BigWigs_") and value ~= "BigWigs_BattleForAzeroth" and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
@@ -997,7 +997,7 @@ do
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
-						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value == "BigWigs_Legion" and "BigWigs" or value) > 0), -- XXX temp
+						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
 					}
 					addonNameToHeader[value] = i
 				end

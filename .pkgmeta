@@ -21,13 +21,6 @@ move-folders:
     BigWigs/Core: BigWigs_Core
     BigWigs/Options: BigWigs_Options
     BigWigs/Plugins: BigWigs_Plugins
-    BigWigs/Nighthold: BigWigs_Nighthold
-    BigWigs/Nightmare: BigWigs_Nightmare
-    BigWigs/BrokenIsles: BigWigs_BrokenIsles
-    BigWigs/TrialOfValor: BigWigs_TrialOfValor
-    BigWigs/TombOfSargeras: BigWigs_TombOfSargeras
-    BigWigs/Antorus: BigWigs_Antorus
-    BigWigs/ArgusInvasionPoints: BigWigs_ArgusInvasionPoints
     BigWigs/Uldir: BigWigs_Uldir
 
 ignore:

@@ -832,6 +832,13 @@ do
 		BigWigs_Voice_Overwatch = "BigWigs_Countdown_Overwatch",
 		BigWigs_AutoReply = "BigWigs",
 		BigWigs_AutoReply2 = "BigWigs",
+		BigWigs_Antorus = "BigWigs_Legion",
+		BigWigs_ArgusInvasionPoints = "BigWigs_Legion",
+		BigWigs_BrokenIsles = "BigWigs_Legion",
+		BigWigs_Nighthold = "BigWigs_Legion",
+		BigWigs_Nightmare = "BigWigs_Legion",
+		BigWigs_TombOfSargeras = "BigWigs_Legion",
+		BigWigs_TrialOfValor = "BigWigs_Legion",
 	}
 	local delayedMessages = {}
 
@@ -1293,7 +1300,7 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and zoneAddon ~= "BigWigs_Legion" then
+		if zoneAddon and zoneAddon ~= "BigWigs_BattleForAzeroth" then
 			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
