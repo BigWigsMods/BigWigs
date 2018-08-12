@@ -112,6 +112,8 @@ L.COUNTDOWN = "Contagem Regressiva"
 L.COUNTDOWN_desc = "Se ativado, uma contagem regressiva sonora e visual será adicionado para os últimos 5 segundos. Imagine alguém contando regressivamente \"5... 4... 3... 2... 1...\" com um número grande no meio da tela."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
+--L.SOUND = "Sound"
+--L.SOUND_desc = "Boss abilities usually play sounds to help you notice them. If you disable this option, none of the sounds attached to it will play."
 
 L.advanced = "Opções Avançadas"
 L.back = "<< Voltar"

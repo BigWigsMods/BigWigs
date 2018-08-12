@@ -121,3 +121,5 @@ L.wipes = "Niederlagen:"
 L.zoneMessages = "Gebietsmeldungen anzeigen"
 L.zoneMessagesDesc = "Wenn Du diese Option deaktivierst, zeigt BigWigs beim Betreten von Gebieten ohne installierte Bossmods keine Meldungen mehr an. Es wird empfohlen, diese Option aktiviert zu lassen, da sie über neu erstellte Timer für neue Gebiete informiert."
 
+--L.SOUND = "Sound"
+--L.SOUND_desc = "Boss abilities usually play sounds to help you notice them. If you disable this option, none of the sounds attached to it will play."

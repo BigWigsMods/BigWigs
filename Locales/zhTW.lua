@@ -121,3 +121,6 @@ L.warmup_desc = "首領戰鬥之前的預備時間。"
 L.wipes = "團滅："
 L.zoneMessages = "顯示區域訊息"
 L.zoneMessagesDesc = "此選項於進入區域時提示可安裝的 BigWigs 模組。建議啟用此選項，因為當我們為一個新區域建立 BigWigs 模組，這將會是唯一的提示安裝訊息。"
+
+--L.SOUND = "Sound"
+--L.SOUND_desc = "Boss abilities usually play sounds to help you notice them. If you disable this option, none of the sounds attached to it will play."

@@ -113,6 +113,8 @@ L.COUNTDOWN = "초읽기"
 L.COUNTDOWN_desc = "활성화하면, 마지막 5초에 음성과 시각적 초읽기가 추가됩니다. 화면 가운데에 \"5... 4... 3... 2... 1...\"의 큰 숫자와 함께 초읽기를 해줍니다."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
+--L.SOUND = "Sound"
+--L.SOUND_desc = "Boss abilities usually play sounds to help you notice them. If you disable this option, none of the sounds attached to it will play."
 
 L.advanced = "고급 옵션"
 L.back = "<< 뒤로"

@@ -336,7 +336,8 @@ end
 local function getSlaveToggle(label, desc, key, module, flag, master)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(colorize[label])
-	if flag == C.MESSAGE or flag == C.ME_ONLY or flag == C.FLASH or flag == C.PULSE or flag == C.EMPHASIZE or flag == C.COUNTDOWN then
+	-- Flags to have at half width
+	if flag == C.MESSAGE or flag == C.ME_ONLY or flag == C.FLASH or flag == C.PULSE or flag == C.EMPHASIZE or flag == C.COUNTDOWN or flag == C.BAR or flag == C.SOUND then
 		toggle:SetRelativeWidth(0.5)
 	else
 		toggle:SetFullWidth(true)

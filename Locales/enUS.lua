@@ -112,6 +112,8 @@ L.COUNTDOWN = "Countdown"
 L.COUNTDOWN_desc = "If enabled, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1...\" with a big number in the middle of your screen."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
+L.SOUND = "Sound"
+L.SOUND_desc = "Boss abilities usually play sounds to help you notice them. If you disable this option, none of the sounds attached to it will play."
 
 L.advanced = "Advanced options"
 L.back = "<< Back"
