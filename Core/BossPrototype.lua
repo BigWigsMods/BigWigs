@@ -2036,7 +2036,7 @@ end
 -- @number[opt] icon Add the designated raid icon to the countdown
 -- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
 function boss:SayCountdown(key, seconds, icon, startAt)
-	if not checkFlag(self, key, C.SAY) then return end -- XXX implement a dedicated option for 7.3
+	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 	local tbl = {false, startAt or 3}
 	local function printTime()
 		if not tbl[1] then

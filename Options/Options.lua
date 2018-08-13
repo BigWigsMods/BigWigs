@@ -376,6 +376,7 @@ local icons = {
 	ALTPOWER = 429383, -- Interface\\Icons\\spell_arcane_invocation
 	INFOBOX = 443374, -- Interface\\Icons\\INV_MISC_CAT_TRINKET05
 	SAY = 2056011, -- Interface\\Icons\\UI_Chat
+	SAY_COUNTDOWN = 2056011, -- Interface\\Icons\\UI_Chat
 }
 
 local function advancedToggles(dbKey, module, check)
@@ -443,7 +444,8 @@ local function advancedToggles(dbKey, module, check)
 					local name, desc = BigWigs:GetOptionDetails(key)
 					advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check, 589118) -- Interface\\Icons\\Warrior_DisruptingShout
 				end
-			elseif key == "ICON" or key == "SAY" or key == "PROXIMITY" or key == "ALTPOWER" or key == "INFOBOX" then -- All on by default, check if we should add a GUI widget
+			-- All on by default, check if we should add a GUI widget
+			elseif key == "ICON" or key == "SAY" or key == "SAY_COUNTDOWN" or key == "PROXIMITY" or key == "ALTPOWER" or key == "INFOBOX" then
 				for _, opTbl in next, module.toggleOptions do
 					if type(opTbl) == "table" and opTbl[1] == dbKey then
 						for i = 2, #opTbl do
