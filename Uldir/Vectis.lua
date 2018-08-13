@@ -24,7 +24,7 @@ function mod:GetOptions()
 	return {
 		{265178, "TANK"}, -- Evolving Affliction
 		267242, -- Contagion
-		{265212, "SAY", "ICON"}, -- Gestate
+		{265212, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Gestate
 		265217, -- Liquefy
 		266459, -- Pathogen Bomb
 	}

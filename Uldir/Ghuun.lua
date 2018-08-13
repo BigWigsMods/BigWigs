@@ -37,7 +37,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage 1
-		{272506, "SAY"}, -- Explosive Corruption
+		{272506, "SAY", "SAY_COUNTDOWN"}, -- Explosive Corruption
 		270287, -- Blighted Ground
 		267509, -- Thousand Maws
 		267427, -- Torment
@@ -48,7 +48,7 @@ function mod:GetOptions()
 		-- Stage 2
 		{270447, "TANK"}, -- Growing Corruption
 		270373, -- Wave of Corruption
-		{263235, "SAY"}, -- Blood Feast
+		{263235, "SAY", "SAY_COUNTDOWN"}, -- Blood Feast
 		263307, -- Mind-Numbing Chatter
 		-- Stage 3
 		274582, -- Malignant Growth
