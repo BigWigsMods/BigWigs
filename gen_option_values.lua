@@ -124,6 +124,15 @@ local function unternary(str, pattern, validate_table)
 	return str
 end
 
+local function contains(t, v)
+	for _, value in next, t do
+		if value == v then
+			return true
+		end
+	end
+	return false
+end
+
 -- Removes some things that break simple comma splitting.
 local function clean(str)
 	str = str:gsub(":Dispeller%b()", "")
@@ -445,7 +454,7 @@ local function parseLua(file)
 			end
 			for _, v in next, strsplit(spells) do
 				v = tonumber(v)
-				if option_keys[v] then
+				if not contains(options[callback], v) then
 					table.insert(options[callback], v)
 				end
 			end
