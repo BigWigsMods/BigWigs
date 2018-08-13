@@ -19,7 +19,7 @@ for i, toggle in next, coreToggles do
 end
 
 -- Toggles that should actually be shown in the interface options
-local listToggles = { "MESSAGE", "BAR", "FLASH", "SOUND", "ICON", "SAY", "PROXIMITY", "ALTPOWER", "VOICE", "INFOBOX" }
+local listToggles = { "BAR", "FLASH", "MESSAGE", "ICON", "SAY", "PROXIMITY", "ALTPOWER", "VOICE", "INFOBOX" }
 local roleToggles = { "TANK", "HEALER", "TANK_HEALER", "DISPEL" }
 
 local used = nil
