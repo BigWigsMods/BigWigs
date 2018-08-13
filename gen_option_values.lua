@@ -7,6 +7,11 @@ local modules = {}
 local module_colors = {}
 local module_sounds = {}
 
+local default_options = {
+	altpower = {ALTPOWER = true},
+	infobox = {INFOBOX = true},
+	proximity = {PROXIMITY = true},
+}
 local valid_colors = {
 	green = true,
 	blue = true,
@@ -41,13 +46,23 @@ local sound_methods = {
 local valid_methods = {
 	Bar = true,
 	CDBar = true,
-	CastBar = true,
+	CastBar = true, --"CASTBAR",
 	TargetBar = true,
-	PrimaryIcon = true,
-	SecondaryIcon = true,
-	Flash = true,
-	Say = true,
-	SayCountdown = true,
+	PrimaryIcon = "ICON",
+	SecondaryIcon = "ICON",
+	Flash = "FLASH",
+	Say = "SAY",
+	SayCountdown = "SAY_COUNTDOWN",
+	OpenAltPower = "ALTPOWER",
+	CloseAltPower = "ALTPOWER",
+	OpenProximity = "PROXIMITY",
+	CloseProximity = "PROXIMITY",
+	OpenInfo = "INFOBOX",
+	SetInfoByTable = "INFOBOX",
+	SetInfoTitle = "INFOBOX",
+	SetInfo = "INFOBOX",
+	SetInfoBar = "INFOBOX",
+	CloseInfo = "INFOBOX",
 }
 for k in next, color_methods do valid_methods[k] = true end
 for k in next, sound_methods do valid_methods[k] = true end
@@ -297,13 +312,21 @@ local function parseGetOptions(lines, start)
 
 	local success, result = pcall(loadstring(chunk))
 	if success then
-		local options = {}
+		local options, option_flags = {}, {}
 		for _, opt in next, result do
+			local flags = true
 			if type(opt) == "table" then
+				flags = {}
+				for i=2, #opt do
+					flags[opt[i]] = true
+				end
 				opt = opt[1]
 			end
 			if opt then -- marker option vars will be nil
-				options[opt] = true
+				if default_options[opt] then
+					flags = default_options[opt]
+				end
+				options[opt] = flags
 			end
 		end
 		return options
@@ -493,7 +516,7 @@ local function parseLua(file)
 		-- Check for function calls that will trigger a sound, including calls
 		-- delayed with ScheduleTimer.
 		if checkForAPI(line) then
-			local key, sound, color = nil, nil, nil
+			local key, sound, color, bitflag = nil, nil, nil, nil
 			local method, args = line:match("%w+:(.-)%(%s*(.+)%s*%)")
 			local offset = 0
 			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
@@ -513,6 +536,9 @@ local function parseLua(file)
 					if method:sub(1, 6) == "Target" or method == "StackMessage" then
 						color[#color+1] = "blue" -- used when on the player
 					end
+				end
+				if valid_methods[method] ~= true then
+					bitflag = valid_methods[method]
 				end
 			end
 
@@ -564,6 +590,9 @@ local function parseLua(file)
 				local key = tonumber(k) or unquote(k)
 				if not option_keys[key] then
 					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
+					errors = true
+				elseif bitflag and (type(option_keys[key]) ~= "table" or not option_keys[key][bitflag]) then
+					error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, key))
 					errors = true
 				end
 				keys[i] = key
