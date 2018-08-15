@@ -123,7 +123,7 @@ L.zoneMessagesDesc = "La désactivation de ceci enlevera les messages qui s'affi
 
 L.SOUND = "Son"
 L.SOUND_desc = "Les techniques des boss sont habituellement accompagnées de sons afin de vous aider à les repérer. Si vous désactivez cette option, aucun des sons qui l'accompagnent ne seront joués."
-L.CASTBAR = "Cast Barres d'incantation"
+L.CASTBAR = "Barres d'incantation"
 L.CASTBAR_desc = "Les barres d'incantation sont parfois affichées sur certains boss, habituellement pour attirer l'attention sur une technique critique imminente. Si cette technique est accompagnée d'une barre d'incantation que vous souhaitez cacher, désactivez cette option."
 L.SAY_COUNTDOWN = "Dire le compte à rebours"
 L.SAY_COUNTDOWN_desc = "Les bulles de discussion sont faciles à repérer. BigWigs utilisera plusieurs messages en compte à rebours pour avertir les personnes proches qu'une technique vous affectant est sur le point de disparaitre."
