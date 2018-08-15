@@ -341,6 +341,11 @@ local function loadCoreAndOpenOptions()
 	end
 end
 
+local function Popup(msg)
+	BasicMessageDialog.Text:SetText(msg)
+	BasicMessageDialog:Show()
+end
+
 -----------------------------------------------------------------------
 -- LDB Plugin
 --
@@ -863,7 +868,7 @@ do
 
 		if old[name] then
 			delayedMessages[#delayedMessages+1] = L.removeAddon:format(name, old[name])
-			message(L.removeAddon:format(name, old[name]))
+			Popup(L.removeAddon:format(name, old[name]))
 		end
 	end
 
@@ -1193,7 +1198,7 @@ do
 				local diff = highestFoundVersion - BIGWIGS_VERSION
 				local msg = L.warnSeveralReleases:format(diff)
 				sysprint(msg)
-				message(msg)
+				Popup(msg)
 				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 20)
 			end, 1)
 		elseif warnedReallyOutOfDate > 1 and hasWarned < 2 then
@@ -1291,7 +1296,7 @@ do
 			if disabledZones and disabledZones[id] then -- We have content for the zone but it is disabled in the addons menu
 				local msg = L.disabledAddOn:format(disabledZones[id])
 				sysprint(msg)
-				message(msg)
+				Popup(msg)
 				-- Only print once
 				warnedThisZone[id] = true
 				disabledZones[id] = nil
