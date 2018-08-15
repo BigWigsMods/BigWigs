@@ -15,7 +15,7 @@
 ## Notes-deDE: BigWigs Uldir Modules
 ## Notes-esES: BigWigs Uldir Modules
 ## Notes-esMX: BigWigs Uldir Modules
-## Notes-frFR: BigWigs Uldir Modules
+## Notes-frFR: Modules BigWigs concernant Uldir.
 ## Notes-ruRU: BigWigs Uldir Modules
 ## Notes-zhCN: BigWigs 奥迪尔模块。
 ## Notes-zhTW: BigWigs 奧迪爾模組。
