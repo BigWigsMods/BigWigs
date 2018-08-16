@@ -112,6 +112,12 @@ L.COUNTDOWN = "Countdown"
 L.COUNTDOWN_desc = "If enabled, a vocal and visual countdown will be added for the last 5 seconds. Imagine someone counting down \"5... 4... 3... 2... 1...\" with a big number in the middle of your screen."
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
+L.SOUND = "Sound"
+L.SOUND_desc = "Boss abilities usually play sounds to help you notice them. If you disable this option, none of the sounds attached to it will play."
+L.CASTBAR = "Cast Bars"
+L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
+L.SAY_COUNTDOWN = "Say Countdown"
+L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
 
 L.advanced = "Advanced options"
 L.back = "<< Back"

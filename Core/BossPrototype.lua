@@ -1902,11 +1902,11 @@ do
 
 		local textType = type(text)
 		local msg = format(L.cast, textType == "string" and text or spells[text or key])
-		if checkFlag(self, key, C.BAR) then
+		if checkFlag(self, key, C.CASTBAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
-		end
-		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			if checkFlag(self, key, C.COUNTDOWN) then
+				self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			end
 		end
 	end
 end
@@ -2036,7 +2036,7 @@ end
 -- @number[opt] icon Add the designated raid icon to the countdown
 -- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
 function boss:SayCountdown(key, seconds, icon, startAt)
-	if not checkFlag(self, key, C.SAY) then return end -- XXX implement a dedicated option for 7.3
+	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 	local tbl = {false, startAt or 3}
 	local function printTime()
 		if not tbl[1] then
@@ -2073,26 +2073,28 @@ do
 	-- @string sound the sound to play
 	-- @string[opt] voice command to play when using a voice pack
 	function boss:PlaySound(key, sound, voice, player)
-		if player then
-			local meOnly = checkFlag(self, key, C.ME_ONLY)
-			if type(player) == "table" then
-				if meOnly then
-					if player[#player] == cpName then
+		if checkFlag(self, key, C.SOUND) then
+			if player then
+				local meOnly = checkFlag(self, key, C.ME_ONLY)
+				if type(player) == "table" then
+					if meOnly then
+						if player[#player] == cpName then
+							self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+						end
+					elseif #player == 1 then
 						self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
 					end
-				elseif #player == 1 then
-					self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+				else
+					if not meOnly or (meOnly and player == pName) then
+						self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+					end
 				end
 			else
-				if not meOnly or (meOnly and player == pName) then
+				if hasVoice and checkFlag(self, key, C.VOICE) then
+					self:SendMessage("BigWigs_Voice", self, key, tmp[sound] or sound)
+				else
 					self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
 				end
-			end
-		elseif checkFlag(self, key, C.MESSAGE) then
-			if hasVoice and checkFlag(self, key, C.VOICE) then
-				self:SendMessage("BigWigs_Voice", self, key, tmp[sound] or sound)
-			else
-				self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
 			end
 		end
 	end

@@ -19,10 +19,12 @@ local C = BigWigs.C
 
 local L = BigWigsAPI:GetLocale("BigWigs")
 
-local icon = LibStub("LibDBIcon-1.0", true)
+local ldbi = LibStub("LibDBIcon-1.0")
 local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
+local adbo = LibStub("AceDBOptions-3.0")
+local lds = LibStub("LibDualSpec-1.0")
 
 local loader = BigWigsLoader
 local API = BigWigsAPI
@@ -61,13 +63,12 @@ local acOptions = {
 					set = function(_, v)
 						if v then
 							BigWigsIconDB.hide = nil
-							icon:Show("BigWigs")
+							ldbi:Show("BigWigs")
 						else
 							BigWigsIconDB.hide = true
-							icon:Hide("BigWigs")
+							ldbi:Hide("BigWigs")
 						end
 					end,
-					hidden = function() return not icon end,
 					width = "full",
 				},
 				separator2 = {
@@ -199,9 +200,9 @@ do
 	local function Initialize(_, _, addon)
 		if addon ~= addonName then return end
 
-		acOptions.args.general.args.profileOptions = LibStub("AceDBOptions-3.0"):GetOptionsTable(BigWigs.db)
+		acOptions.args.general.args.profileOptions = adbo:GetOptionsTable(BigWigs.db)
 		acOptions.args.general.args.profileOptions.order = 1
-		LibStub("LibDualSpec-1.0"):EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
+		lds:EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
 		acd:SetDefaultSize("BigWigs", 858, 660)
@@ -332,27 +333,67 @@ local function slaveOptionToggled(self, event, value)
 	master:SetValue(getMasterOption(master))
 end
 
-local function getSlaveToggle(label, desc, key, module, flag, master)
+local function slaveOptionMouseOver(self, event, value)
+	GameTooltip:SetOwner(self.frame, "ANCHOR_RIGHT")
+	GameTooltip:AddLine(self:GetUserData("desc"), 1, 1, 1, true)
+	GameTooltip:Show()
+end
+
+local function slaveOptionMouseLeave()
+	GameTooltip:Hide()
+end
+
+local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(colorize[label])
-	if flag == C.MESSAGE or flag == C.ME_ONLY or flag == C.FLASH or flag == C.PULSE or flag == C.EMPHASIZE or flag == C.COUNTDOWN then
+	-- Flags to have at half width
+	if flag == C.FLASH or flag == C.PULSE or flag == C.EMPHASIZE or flag == C.COUNTDOWN or flag == C.BAR or flag == C.CASTBAR then
 		toggle:SetRelativeWidth(0.5)
+	elseif flag == C.ME_ONLY then
+		toggle:SetRelativeWidth(0.4)
 	else
-		toggle:SetFullWidth(true)
+		toggle:SetRelativeWidth(0.3)
 	end
-	toggle:SetDescription(desc)
+
+	if icon then
+		toggle:SetImage(icon)
+	end
 	toggle:SetUserData("key", key)
+	toggle:SetUserData("desc", desc)
 	toggle:SetUserData("module", module)
 	toggle:SetUserData("flag", flag)
 	toggle:SetUserData("master", master)
 	toggle:SetCallback("OnValueChanged", slaveOptionToggled)
+	toggle:SetCallback("OnEnter", slaveOptionMouseOver)
+	toggle:SetCallback("OnLeave", slaveOptionMouseLeave)
 	toggle:SetValue(getSlaveOption(toggle))
 	return toggle
 end
 
+local icons = {
+	ICON = 137008, -- Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8
+	PROXIMITY = 132181, -- Interface\\Icons\\ability_hunter_pathfinding
+	ALTPOWER = 429383, -- Interface\\Icons\\spell_arcane_invocation
+	INFOBOX = 443374, -- Interface\\Icons\\INV_MISC_CAT_TRINKET05
+	SAY = 2056011, -- Interface\\Icons\\UI_Chat
+	SAY_COUNTDOWN = 2056011, -- Interface\\Icons\\UI_Chat
+}
+
 local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
 	local advancedOptions = {}
+
+	-- Emphasize & Countdown widgets
+	local emphasizeGroup = AceGUI:Create("InlineGroup")
+	emphasizeGroup:SetLayout("Flow")
+	emphasizeGroup:SetFullWidth(true)
+	local emphasize = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check)
+	emphasizeGroup:AddChild(emphasize)
+	local countdown = getSlaveToggle(L.COUNTDOWN, L.COUNTDOWN_desc, dbKey, module, C.COUNTDOWN, check, 1035057) -- Interface\\Icons\\Achievement_GarrisonQuests_0005
+	emphasizeGroup:AddChild(countdown)
+	advancedOptions[#advancedOptions + 1] = emphasizeGroup
+	--
+
 	for i, key in next, BigWigs:GetOptions() do
 		local flag = C[key]
 		if bit.band(dbv, flag) == flag then
@@ -362,30 +403,58 @@ local function advancedToggles(dbKey, module, check)
 				messageGroup:SetFullWidth(true)
 
 				local name, desc = BigWigs:GetOptionDetails(key)
-				local message = getSlaveToggle(name, desc, dbKey, module, flag, check)
+				local message = getSlaveToggle(name, desc, dbKey, module, flag, check, 134332) -- Interface\\Icons\\INV_MISC_NOTE_06
 				messageGroup:AddChild(message)
 
-				local onMe = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check)
+				local onMe = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check, 463836) -- Interface\\Icons\\Priest_spell_leapoffaith_b
 				messageGroup:AddChild(onMe)
 
+				local sound = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, 130977) -- "Interface\\Common\\VoiceChat-On"
+				messageGroup:AddChild(sound)
+
 				advancedOptions[#advancedOptions + 1] = messageGroup
+			elseif key == "BAR" then
+				local barGroup = AceGUI:Create("InlineGroup")
+				barGroup:SetLayout("Flow")
+				barGroup:SetFullWidth(true)
+
+				local name, desc = BigWigs:GetOptionDetails(key)
+				local bar = getSlaveToggle(name, desc, dbKey, module, flag, check)
+				barGroup:AddChild(bar)
+
+				local castBar = getSlaveToggle(L.CASTBAR, L.CASTBAR_desc, dbKey, module, C.CASTBAR, check)
+				barGroup:AddChild(castBar)
+
+				advancedOptions[#advancedOptions + 1] = barGroup
 			elseif key == "FLASH" then
 				local flashGroup = AceGUI:Create("InlineGroup")
 				flashGroup:SetLayout("Flow")
 				flashGroup:SetFullWidth(true)
 
 				local name, desc = BigWigs:GetOptionDetails(key)
-				local flash = getSlaveToggle(name, desc, dbKey, module, flag, check)
+				local flash = getSlaveToggle(name, desc, dbKey, module, flag, check, 135849) -- Interface\\Icons\\Spell_Frost_FrostShock
 				flashGroup:AddChild(flash)
 
-				local pulse = getSlaveToggle(L.PULSE, L.PULSE_desc, dbKey, module, C.PULSE, check)
+				local pulse = getSlaveToggle(L.PULSE, L.PULSE_desc, dbKey, module, C.PULSE, check, 135731) -- Interface\\Icons\\Spell_Arcane_Arcane04
 				flashGroup:AddChild(pulse)
 
 				advancedOptions[#advancedOptions + 1] = flashGroup
 			elseif key == "VOICE" then
 				if API:HasVoicePack() then
 					local name, desc = BigWigs:GetOptionDetails(key)
-					advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
+					advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check, 589118) -- Interface\\Icons\\Warrior_DisruptingShout
+				end
+			-- All on by default, check if we should add a GUI widget
+			elseif key == "ICON" or key == "SAY" or key == "SAY_COUNTDOWN" or key == "PROXIMITY" or key == "ALTPOWER" or key == "INFOBOX" then
+				for _, opTbl in next, module.toggleOptions do
+					if type(opTbl) == "table" and opTbl[1] == dbKey then
+						for i = 2, #opTbl do
+							if opTbl[i] == key then
+								local name, desc = BigWigs:GetOptionDetails(key)
+								advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check, icons[key])
+							end
+						end
+					end
 				end
 			else
 				local name, desc = BigWigs:GetOptionDetails(key)
@@ -393,18 +462,6 @@ local function advancedToggles(dbKey, module, check)
 			end
 		end
 	end
-
-	local emphasizeGroup = AceGUI:Create("InlineGroup")
-	emphasizeGroup:SetLayout("Flow")
-	emphasizeGroup:SetFullWidth(true)
-
-	local emphasize = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check)
-	emphasizeGroup:AddChild(emphasize)
-
-	local countdown = getSlaveToggle(L.COUNTDOWN, L.COUNTDOWN_desc, dbKey, module, C.COUNTDOWN, check)
-	emphasizeGroup:AddChild(countdown)
-
-	advancedOptions[#advancedOptions + 1] = emphasizeGroup
 
 	return unpack(advancedOptions)
 end
@@ -951,7 +1008,7 @@ do
 		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= "BigWigs_Legion" and GetAddOnEnableState(playerName, value) == 0 then
+		elseif value:match("^BigWigs_") and value ~= "BigWigs_BattleForAzeroth" and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
@@ -996,7 +1053,7 @@ do
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
-						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value == "BigWigs_Legion" and "BigWigs" or value) > 0), -- XXX temp
+						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
 					}
 					addonNameToHeader[value] = i
 				end

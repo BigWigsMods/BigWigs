@@ -14,6 +14,8 @@ mod.respawnTime = 16
 --
 
 local plasmaCount = 1
+local defensiveBeamCount = 1
+local timersUldirDefensiveBeam = {30, 15, 15, 15} -- XXX Check times for each difficulty
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -26,7 +28,7 @@ function mod:GetOptions()
 		270290, -- Blood Storm
 		271296, -- Cudgel of Gore
 		271728, -- Retrieve Cudgel
-		271895, -- Sanguine Static
+		{271895, "SAY"}, -- Sanguine Static
 		271965, -- Powered Down
 		275270, -- Fixate
 		275432, -- Uldir Defensive Beam
@@ -39,6 +41,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "PlasmaDischargeRemoved", 271224)
 	self:Log("SPELL_CAST_START", "CudgelofGore", 271296)
 	self:Log("SPELL_CAST_START", "RetrieveCudgel", 271728)
+	self:Log("SPELL_CAST_START", "SanguineStaticStart", 271895)
 	self:Log("SPELL_CAST_SUCCESS", "SanguineStatic", 271895)
 	self:Log("SPELL_AURA_APPLIED", "PoweredDown", 271965)
 	self:Log("SPELL_AURA_REMOVED", "PoweredDownRemoved", 271965)
@@ -108,9 +111,21 @@ function mod:RetrieveCudgel(args)
 	self:CDBar(args.spellId, 59)
 end
 
+do
+	local function printTarget(self, name, guid)
+		self:PlaySound(271895, "alert")
+		self:TargetMessage2(271895, "yellow", name)
+		if self:Me(guid) then
+			self:Say(271895)
+		end
+	end
+
+	function mod:SanguineStaticStart(args)
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+	end
+end
+
 function mod:SanguineStatic(args)
-	self:PlaySound(args.spellId, "alert")
-	self:Message(args.spellId, "yellow")
 	self:CDBar(args.spellId, 61)
 end
 
@@ -123,6 +138,19 @@ function mod:PoweredDown(args)
 	self:StopBar(271728) -- Retrieve Cudgel
 
 	self:CDBar(args.spellId, 88.8, CL.intermission)
+
+	defensiveBeamCount = 1
+	self:StartDefensiveBeamTimer(timersUldirDefensiveBeam[defensiveBeamCount])
+end
+
+function mod:StartDefensiveBeamTimer(timer)
+	self:Bar(275432, timer, CL.count:format(self:SpellName(275432), defensiveBeamCount))
+	self:ScheduleTimer("Message", timer, 275432, "red", nil, CL.incoming:format(self:SpellName(275432), defensiveBeamCount))
+	self:ScheduleTimer("PlaySound", timer, 275432, "long")
+	defensiveBeamCount = defensiveBeamCount + 1
+	if timersUldirDefensiveBeam[defensiveBeamCount] then
+		self:ScheduleTimer("StartDefensiveBeamTimer", timer, timersUldirDefensiveBeam[defensiveBeamCount])
+	end
 end
 
 function mod:PoweredDownRemoved(args)

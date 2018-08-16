@@ -15,7 +15,7 @@ mod.engageId = 2145 -- XXX Needs checking
 
 function mod:GetOptions()
 	return {
-		273365, -- Dark Revelation
+		{273365, "SAY", "SAY_COUNTDOWN"}, -- Dark Revelation
 		{269936, "SAY"}, -- Fixate
 		273360, -- Pool of Darkness
 		273889, -- Call of Blood

@@ -4,13 +4,13 @@
 
 local plugin = BigWigs:NewPlugin("Messages")
 if not plugin then return end
-LibStub("LibSink-2.0"):Embed(plugin)
 
 -------------------------------------------------------------------------------
 -- Locals
 --
 
 local media = LibStub("LibSharedMedia-3.0")
+local sink = LibStub("LibSink-2.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 
 local labels = {}
@@ -35,7 +35,9 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
 local fakeEmphasizeMessageAddon = {}
-LibStub("LibSink-2.0"):Embed(fakeEmphasizeMessageAddon)
+
+sink:Embed(plugin)
+sink:Embed(fakeEmphasizeMessageAddon)
 
 --------------------------------------------------------------------------------
 -- Anchors & Frames

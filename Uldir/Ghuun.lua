@@ -37,7 +37,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage 1
-		{272506, "SAY"}, -- Explosive Corruption
+		{272506, "SAY", "SAY_COUNTDOWN"}, -- Explosive Corruption
 		270287, -- Blighted Ground
 		267509, -- Thousand Maws
 		267427, -- Torment
@@ -48,15 +48,18 @@ function mod:GetOptions()
 		-- Stage 2
 		{270447, "TANK"}, -- Growing Corruption
 		270373, -- Wave of Corruption
-		{263235, "SAY"}, -- Blood Feast
+		{263235, "SAY", "SAY_COUNTDOWN"}, -- Blood Feast
 		263307, -- Mind-Numbing Chatter
 		-- Stage 3
 		274582, -- Malignant Growth
 		275160, -- Gaze of G'huun
+		263321, -- Undulating Mass
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
 	-- Stage 1
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveCorruptionSuccess", 272505)
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveCorruptionApplied", 272506)
@@ -73,7 +76,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CorruptingBiteApplied", 270443) -- Stage 2 start
 	self:Log("SPELL_AURA_APPLIED", "GrowingCorruption", 270447)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrowingCorruption", 270447)
-	self:Log("SPELL_CAST_SUCCESS", "WaveofCorruption", 270373)
 	self:Log("SPELL_CAST_SUCCESS", "BloodFeastSuccess", 263235)
 	self:Log("SPELL_AURA_REMOVED", "BloodFeastRemoved", 263235)
 	self:Log("SPELL_CAST_START", "MindNumbingChatter", 263307)
@@ -99,6 +101,15 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 270373 then -- Wave of Corruption
+		self:Message(spellId, "yellow")
+		self:PlaySound(spellId, "alarm")
+		waveOfCorruptionCount = waveOfCorruptionCount + 1
+		self:Bar(spellId, waveOfCorruptionCount % 2 == 0 and 20.5 or 40.5)
+	end
+end
 
 -- Stage 1
 function mod:CorruptingBiteApplied()
@@ -174,13 +185,13 @@ function mod:ReoriginationBlast(args)
 end
 
 function mod:ReoriginationBlastSuccess(args)
-	self:Bar(args.spellId, 25)
+	self:Bar(args.spellId, 24)
 	if stage == 1 then -- Stage 1 ending
-			self:StopBar(CL.count:format(self:SpellName(267509), waveCounter)) -- Thousand Maws (x)
-			self:StopBar(267412) -- Massive Smash
-			self:StopBar(267409) -- Dark Bargain
-			self:StopBar(272506) -- Explosive Corruption
-			self:StopBar(267462) -- Decaying Eruption
+		self:StopBar(CL.count:format(self:SpellName(267509), waveCounter)) -- Thousand Maws (x)
+		self:StopBar(267412) -- Massive Smash
+		self:StopBar(267409) -- Dark Bargain
+		self:StopBar(272506) -- Explosive Corruption
+		self:StopBar(267462) -- Decaying Eruption
 	end
 end
 
@@ -190,13 +201,6 @@ function mod:GrowingCorruption(args)
 	self:PlaySound(args.spellId, "alarm")
 end
 
-function mod:WaveofCorruption(args)
-	self:Message(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alarm")
-	waveOfCorruptionCount = waveOfCorruptionCount + 1
-	self:Bar(args.spellId, waveOfCorruptionCount % 2 == 0 and 15.5 or 31) -- XXX Need to check this again
-end
-
 function mod:BloodFeastSuccess(args)
 	self:PlaySound(args.spellId, "warning")
 	self:TargetMessage2(args.spellId, "red", args.destName)
@@ -204,7 +208,7 @@ function mod:BloodFeastSuccess(args)
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 8)
 	end
-	self:CDBar(args.spellId, 46.5)
+	self:CDBar(args.spellId, 62)
 end
 
 function mod:BloodFeastRemoved(args)
@@ -216,7 +220,7 @@ end
 function mod:MindNumbingChatter(args)
 	self:Message(args.spellId, "orange", nil, CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 46.5)
+	self:CDBar(args.spellId, 62)
 end
 
 -- Stage 3
@@ -243,11 +247,13 @@ end
 function mod:MalignantGrowth(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
+	self:Bar(args.spellId, 20.5)
 end
 
 function mod:GazeofGhuun(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
+	self:Bar(args.spellId, 21.9)
 end
 
 do

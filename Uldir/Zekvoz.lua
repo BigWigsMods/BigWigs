@@ -44,17 +44,17 @@ function mod:GetOptions()
 		{265248, "TANK"}, -- Shatter
 
 		--[[ Stage 1 ]]--
-		264382, -- Eye Beam
+		{264382, "SAY"}, -- Eye Beam
 		-18390, -- Qiraji Warrior
 
 		--[[ Stage 2 ]]--
-		265360, -- Roiling Deceit
+		{265360, "SAY", "SAY_COUNTDOWN"}, -- Roiling Deceit
 		-18397, -- Anub'ar Voidweaver
 		267180, -- Void Bolt
 
 		--[[ Stage 3 ]]--
 		267239, -- Orb of Corruption
-		265662, -- Corruptor's Pact
+		{265662, "SAY_COUNTDOWN"}, -- Corruptor's Pact
 	},{
 		["stages"] = "general",
 		[264382] = CL.stage:format(1),
