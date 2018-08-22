@@ -13,8 +13,8 @@
 ## Title-koKR: BigWigs [|cffeda55fUldir|r]
 ## Notes: BigWigs Uldir Modules
 ## Notes-deDE: BigWigs Uldir Modules
-## Notes-esES: BigWigs Uldir Modules
-## Notes-esMX: BigWigs Uldir Modules
+## Notes-esES: BigWigs Módulos de Uldir.
+## Notes-esMX: BigWigs Módulos de Uldir.
 ## Notes-frFR: Modules BigWigs concernant Uldir.
 ## Notes-ruRU: BigWigs Uldir Modules
 ## Notes-zhCN: BigWigs 奥迪尔模块。
