@@ -2,9 +2,9 @@ local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "esES") or BigWigsAPI:NewLoca
 if not L then return end
 
 L.comma = ", "
---L.width = "Width"
---L.height = "Height"
---L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
+L.width = "Ancho"
+L.height = "Alto"
+L.sizeDesc = "Normalmente ajusta el tamaño deslizando por la barra. Si necesitas un tamaño exacto puedes usar este deslizador o teclea el valor dentro de la caja, no tiene máximo."
 
 L.abilityName = "Nombre de habilidad"
 L.abilityNameDesc = "Muestra/oculta el nombre de la habilidad encima de la ventana"
@@ -147,12 +147,12 @@ L.proximity_name = "Proximidad"
 L.proximityTitle = "%d m / %d |4jugador:jugadores;"
 L.pull = "Pull"
 L.pullIn = "Pull en %d seg"
---L.engageSoundTitle = "Play a sound when a boss encounter has started"
---L.pullStartedSoundTitle = "Play a sound when the pull timer is started"
---L.pullFinishedSoundTitle = "Play a sound when the pull timer is finished"
+L.engageSoundTitle = "Reproduce un sonido cuando un encuentro ha comenzado"
+L.pullStartedSoundTitle = "Reproduce un sonido cuando el contador de pull ha empezado"
+L.pullFinishedSoundTitle = "Reproduce un sonido cuando el contador de pull ha finalizado"
 L.pullStarted = "Cuenta atrás para el Pull lanzada por el jugador %s %s."
 L.pullStopped = "Pull cancelado por %s."
---L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
+L.pullStoppedCombat = "Contador de Pull cancelado porque has entrado en combate."
 L.raidIconsDesc = [=[Algunos encuentros usan los iconos de raid para marcar jugadores de interés especial para tu grupo. Por ejemplo los efectos tipo 'bomba' y control mental. Si la cambias a desactivado, no marcarás a nadie.
 
 |cffff4411¡Solo aplica las marcas si eres ayudante o lider!|r]=]
@@ -238,8 +238,8 @@ L.victoryMessageBlizzardDesc = "El mensaje de Blizzard es una animación de gran
 L.victoryMessages = "Mostrar mensajes de jefe derrotado"
 L.victorySound = "Reproduce un sonido de victoria"
 L.Warning = "Advertencia"
---L.wipe = "Wipe"
---L.wipeSoundTitle = "Play a sound when you wipe"
+L.wipe = "Wipe"
+L.wipeSoundTitle = "Reproduce un sonido cuando hay wipe"
 L.wrongBreakFormat = "Debe ser entre 1 y 60 minutos. Por ejemplo: /break 5"
 L.wrongCustomBarFormat = "Formato incorrecto. Un ejemplo seria: /raidbar 20 text"
 L.wrongPullFormat = "Debe ser entre 1 y 60. Un ejemplo sería: /pull 5"
@@ -249,64 +249,64 @@ L.wrongTime = "Tiempo especificado inválido. <time> puede ser bien un número e
 -- AutoReply.lua
 --
 
---L.autoReply = "Auto Reply"
---L.autoReplyDesc = "Automatically reply to whispers when engaged in a boss encounter."
---L.responseType = "Response Type"
---L.autoReplyFinalReply = "Also whisper when leaving combat"
---L.guildAndFriends = "Guild & Friends"
---L.everyoneElse = "Everyone else"
+L.autoReply = "Auto Respuesta"
+L.autoReplyDesc = "Automáticamente responde a los que te susurran cuando estás ocupado durante un encuentro."
+L.responseType = "Tipo de respuesta"
+L.autoReplyFinalReply = "También susurra cuando acabas el combate"
+L.guildAndFriends = "Hermandad y Amimgos"
+L.everyoneElse = "Todos los demás"
 
---L.autoReplyBasic = "I'm busy in combat with a boss encounter."
---L.autoReplyNormal = "I'm busy in combat with '%s'."
---L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
---L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+L.autoReplyBasic = "Estoy ocupado combatiendo contra un jefe."
+L.autoReplyNormal = "Estoy ocupado luchando contra '%s'."
+L.autoReplyAdvanced = "Estoy ocupado luchando contra '%s' (%s) y %d/%d personas están vivas."
+L.autoReplyExtreme = "Estoy ocupado luchando contra '%s' (%s) y %d/%d personas están vivas: %s"
 
---L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
---L.autoReplyLeftCombatNormalWin = "I won against '%s'."
---L.autoReplyLeftCombatNormalWipe = "I lost against '%s'."
---L.autoReplyLeftCombatAdvancedWin = "I won against '%s' with %d/%d people alive."
---L.autoReplyLeftCombatAdvancedWipe = "I lost against '%s' at: %s"
+L.autoReplyLeftCombatBasic = "Ya no estoy en combate con ningún jefe."
+L.autoReplyLeftCombatNormalWin = "Gané contra '%s'."
+L.autoReplyLeftCombatNormalWipe = "Perdí contra '%s'."
+L.autoReplyLeftCombatAdvancedWin = "Gané contra '%s' con %d/%d personas vivas."
+L.autoReplyLeftCombatAdvancedWipe = "Perdí contra '%s' en: %s"
 
 -----------------------------------------------------------------------
 -- Bars.lua
 --
 
---L.spacing = "Spacing"
---L.spacingDesc = "Change the space between each bar."
---L.emphasizeMultiplier = "Size Multiplier"
---L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
---L.iconPosition = "Icon Position"
---L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
---L.visibleBarLimit = "Visible bar limit"
---L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
+L.spacing = "Espaciado"
+L.spacingDesc = "Cambia el espacio entre cada barra."
+L.emphasizeMultiplier = "Multiplicador de tamaño"
+L.emphasizeMultiplierDesc = "Si desactivas las barras moviéndose al anclaje enfatizado, esta opción decidirá que tamaño tendrán las barras enfatizadas multiplicando el tamaño de las barras normales."
+L.iconPosition = "Posición del icono"
+L.iconPositionDesc = "Elige dónde en la barra se posicionará el icono."
+L.visibleBarLimit = "Límite de barras visibles"
+L.visibleBarLimitDesc = "Ajusta la máxima cantidad de barras que serán visibles al mismo tiempo."
 
 -----------------------------------------------------------------------
 -- Colors.lua
 --
 
---L.red = "Red"
---L.redDesc = "General encounter warnings."
---L.blue = "Blue"
---L.blueDesc = "Warnings for things that affect you directly such as a debuff being applied to you."
---L.orange = "Orange"
---L.yellow = "Yellow"
---L.green = "Green"
---L.greenDesc = "Warnings for good things that happen such as a debuff being removed from you."
---L.cyan = "Cyan"
---L.cyanDesc = "Warnings for encounter status changes such as advancing to the next stage."
---L.purple = "Purple"
---L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
+L.red = "Rojo"
+L.redDesc = "Avisos Generales para encuentros."
+L.blue = "Azul"
+L.blueDesc = "Avisos para cosas que te afecta a ti directamente como un debuff siendo aplicado a ti."
+L.orange = "Naranja"
+L.yellow = "Amarillo"
+L.green = "Verde"
+L.greenDesc = "Avisos para cosas buenas que ocurren, como un debuff siendo eliminado de ti."
+L.cyan = "Cian"
+L.cyanDesc = "Avisos para cambios de estados durante un encuentro como el avance a la siguiente fase."
+L.purple = "Púrpura"
+L.purpleDesc = "Avisos para habilidades específicas para tanques como acumulaciones de un debuff en un tanque."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
---L.infoBox = "InfoBox"
+L.infoBox = "InfoBox"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
 --
 
---L.printHealthOption = "Boss Health"
---L.healthPrint = "Health: %s."
---L.healthFormat = "%s (%.1f%%)"
+L.printHealthOption = "Salud del jefe"
+L.healthPrint = "Salud: %s."
+L.healthFormat = "%s (%.1f%%)"
