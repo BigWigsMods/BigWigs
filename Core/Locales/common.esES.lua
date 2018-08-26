@@ -24,7 +24,7 @@ L.heroic = "Modo heroico"
 L.incoming = "%s inminente"
 L.intermission = "Intermedio"
 L.interrupted = "%s interrumpido"
---L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
+L.interrupted_by = "%s interrupido por %s" -- hechizo interrumpido por jugador
 L.mob_killed = "%s muerto (%d/%d)"
 L.mob_remaining = "%s muerto, %d restantes"
 L.mythic = "Modo mítico"
@@ -36,11 +36,11 @@ L.on = "%s en %s"
 L.onboss = "%s en el JEFE"
 L.other = "%s: %s"
 L.over = "%s terminado"
---L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - spell
 L.phase = "Fase %d"
 L.removed = "%s eliminado"
---L.removed_from = "%s Removed From %s"
---L.removed_by = "%s removed by %s" -- spell removed by player
+L.removed_from = "%s eliminado de %s"
+L.removed_by = "%s eliminado por %s" -- hechizo eliminado por jugador
 L.small_adds = "Esbirros pequeños"
 L.soon = "%s pronto"
 L.spawned = "%s Apareció"
@@ -52,20 +52,20 @@ L.trash = "Basura"
 L.underyou = "%s debajo de TI"
 L.you = "%s en TI"
 
---L.active = "Active" -- When a boss becomes active, after speech finishes
+L.active = "Activo" -- Cuando un jefe se activa, después de que acabe el diálogo
 
 -- Common raid marking locale
---L.marker = "%s Marker"
---L.marker_player_desc = "Mark players affected by %s with %s, requires promoted or leader."
---L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."
+L.marker = "%s Marcador"
+L.marker_player_desc = "Marca jugadores afectados por %s con %s, requiere ayudante o líder."
+L.marker_npc_desc = "Marca %s con %s, requiere ayudante o líder."
 
 -- Ability where two players have to move close to each other
---L.link = "Linked with %s"
---L.link_short = "Linked: %s"
---L.link_both = "%s linked with %s"
---L.link_removed = "Link removed"
+L.link = "Enlazado con %s"
+L.link_short = "Enlazado: %s"
+L.link_both = "%s enlazado con %s"
+L.link_removed = "Enlace eliminado"
 
 -- Abbreviated numbers
---L.amount_one = "%dB"
---L.amount_two = "%dM"
---L.amount_three = "%dK"
+L.amount_one = "%dB"
+L.amount_two = "%dM"
+L.amount_three = "%dK"
