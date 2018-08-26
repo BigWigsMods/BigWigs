@@ -63,7 +63,7 @@ L.marker_npc_desc = "Marca %s con %s, requiere ayudante o líder."
 L.link = "Enlazado con %s"
 L.link_short = "Enlazado: %s"
 L.link_both = "%s enlazado con %s"
-L.link_removed = "Enlace eliminado
+L.link_removed = "Enlace eliminado"
 
 -- Abbreviated numbers
 L.amount_one = "%dB"
