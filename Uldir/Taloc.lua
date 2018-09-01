@@ -32,6 +32,8 @@ function mod:GetOptions()
 		271965, -- Powered Down
 		275270, -- Fixate
 		275432, -- Uldir Defensive Beam
+		{275189, "SAY", "SAY_COUNTDOWN"}, -- Hardened Arteries
+		{275205, "SAY", "SAY_COUNTDOWN"}, -- Enlarged Heart
 	}
 end
 
@@ -46,6 +48,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PoweredDown", 271965)
 	self:Log("SPELL_AURA_REMOVED", "PoweredDownRemoved", 271965)
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 275270)
+
+	-- Mythic
+
+	self:Log("SPELL_AURA_APPLIED", "HardenedArteriesApplied", 275189)
+	self:Log("SPELL_AURA_REMOVED", "HardenedArteriesRemoved", 275189)
+
+	self:Log("SPELL_CAST_SUCCESS", "EnlargedHeart", 275205)
+	self:Log("SPELL_AURA_APPLIED", "EnlargedHeartApplied", 275205)
+	self:Log("SPELL_AURA_REMOVED", "EnlargedHeartRemoved", 275205)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 270290, 275432) -- Blood Storm, Uldir Defensive Beam
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 270290, 275432)
@@ -136,6 +147,7 @@ function mod:PoweredDown(args)
 	self:StopBar(271895) -- Sanguine Static
 	self:StopBar(271296) -- Cudgel of Gore
 	self:StopBar(271728) -- Retrieve Cudgel
+	self:StopBar(275205) -- Enlarged Heart
 
 	self:CDBar(args.spellId, 88.8, CL.intermission)
 
@@ -168,6 +180,48 @@ function mod:Fixate(args)
 		self:PlaySound(args.spellId, "warning")
 		self:TargetMessage2(args.spellId, "blue", args.destName)
 	end
+end
+
+do
+	local prev = 0
+	function mod:HardenedArteriesApplied(args)
+		local t = GetTime()
+		if t-prev > 2 then
+			self:Message(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "alert")
+			if self:Me(args.destGUID) then
+				self:Say(args.spellId)
+				self:SayCountdown(args.spellId, 6)
+			end
+		end
+	end
+
+	function mod:HardenedArteriesRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
+	end
+end
+
+function mod:EnlargedHeart(args)
+	self:CDBar(args.spellId, 62)
+end
+
+function mod:EnlargedHeartApplied(args)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "warning")
+		self:Flash(args.spellId)
+		self:SayCountdown(args.spellId, 6)
+	end
+	self:TargetMessage2(args.spellId, "orange", args.destName)
+	self:TargetBar(args.spellId, 6, args.destName)
+end
+
+function mod:EnlargedHeartRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+	self:StopBar(args.spellId, args.destName)
 end
 
 do
