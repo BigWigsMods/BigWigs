@@ -26,7 +26,7 @@ function mod:GetOptions()
 		267242, -- Contagion
 		{265212, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Gestate
 		265217, -- Liquefy
-		266459, -- Pathogen Bomb
+		266459, -- Plague Bomb
 	}
 end
 
@@ -40,7 +40,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "GestateRemoved", 265212)
 	self:Log("SPELL_CAST_START", "Liquefy", 265217)
 	self:Log("SPELL_AURA_REMOVED", "LiquefyRemoved", 265217)
-	self:Log("SPELL_CAST_SUCCESS", "PathogenBomb", 266459)
+	self:Log("SPELL_CAST_SUCCESS", "PlagueBomb", 266459)
 end
 
 function mod:OnEngage()
@@ -130,7 +130,7 @@ function mod:Liquefy(args)
 	self:StopBar(265178) -- Evolving Affliction
 
 	pathogenBombCount = 1
-	self:Bar(266459, 13.5) -- Pathogen Bomb
+	self:Bar(266459, 13.5) -- Plague Bomb
 end
 
 function mod:LiquefyRemoved(args)
@@ -147,7 +147,7 @@ end
 
 
 
-function mod:PathogenBomb(args)
+function mod:PlagueBomb(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	pathogenBombCount = pathogenBombCount + 1
