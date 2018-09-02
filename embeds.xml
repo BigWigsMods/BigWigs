@@ -6,6 +6,7 @@
 
 <!--@no-lib-strip@-->
 <Include file="Libs\AceAddon-3.0\AceAddon-3.0.xml"/>
+<Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 <!--@end-no-lib-strip@-->
 
 <Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
