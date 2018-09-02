@@ -1,4 +1,5 @@
 
+local L = BigWigsAPI:GetLocale("BigWigs")
 local media = LibStub("LibSharedMedia-3.0")
 
 -- Bar Textures
