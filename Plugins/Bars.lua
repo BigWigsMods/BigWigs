@@ -1397,11 +1397,6 @@ end
 --
 
 function plugin:OnRegister()
-	media:Register(STATUSBAR, "Otravi", "Interface\\AddOns\\BigWigs\\Media\\Textures\\otravi")
-	media:Register(STATUSBAR, "Smooth", "Interface\\AddOns\\BigWigs\\Media\\Textures\\smooth")
-	media:Register(STATUSBAR, "Glaze", "Interface\\AddOns\\BigWigs\\Media\\Textures\\glaze")
-	media:Register(STATUSBAR, "Charcoal", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Charcoal")
-	media:Register(STATUSBAR, "BantoBar", "Interface\\AddOns\\BigWigs\\Media\\Textures\\default")
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
