@@ -40,6 +40,12 @@ L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이�
 
 L.removeAddon = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체되었으므로 제거해주세요."
 
+-- Media.lua
+L.Beware = "조심해라 (알갈론)"
+L.FlagTaken = "깃발 뺏김 (PvP)"
+L.Destruction = "파괴 (킬제덴)"
+L.RunAway = "도망쳐라 꼬마야 달아나라 (커다란 나쁜 늑대)"
+
 -- Options.lua
 L.options = "옵션"
 L.raidBosses = "공격대 우두머리"

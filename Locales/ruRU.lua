@@ -127,3 +127,9 @@ L.zoneMessagesDesc = "Отключив, вы перестанете получа
 --L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
 --L.SAY_COUNTDOWN = "Say Countdown"
 --L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
+
+-- Media.lua
+L.Beware = "Берегитесь (Алгалон)"
+L.FlagTaken = "Взятие флага (PvP)"
+L.Destruction = "Разрушение (Кил'джеден)"
+L.RunAway = "Беги, малышка, беги (Злой и страшный серый волк)"

@@ -303,11 +303,6 @@ L.Alert = "Alerte"
 L.Long = "Long"
 L.Warning = "Avertissement"
 
-L.Beware = "Attention (Algalon)"
-L.FlagTaken = "Drapeau pris (JcJ)"
-L.Destruction = "Destruction (Kil'jaeden)"
-L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
-
 L.sound = "Son"
 L.soundDesc = "Les messages sont le plus souvent accompagnés de sons. Certaines personnes trouvent plus faciles d'entendre ces sons pour réagir une fois qu'elles ont appris quels sons sont liés à quels messages, plutôt que de lire les messages à chaque fois."
 

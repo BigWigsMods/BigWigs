@@ -127,3 +127,9 @@ L.CASTBAR = "施法条"
 L.CASTBAR_desc = "施法条会在某些首领战斗中出现，一些即将到来的重要技能通常会引起注意。如果想隐藏此技能相关的施法条，请禁用此选项。"
 L.SAY_COUNTDOWN = "说话冷却"
 L.SAY_COUNTDOWN_desc = "聊天泡泡很容易被发现。BigWigs 将使用多个说话消息倒计时提醒附近的人身上的技能即将到期。"
+
+-- Media.lua
+L.Beware = "当心（奥尔加隆）"
+L.FlagTaken = "夺旗（PvP）"
+L.Destruction = "毁灭（基尔加丹）"
+L.RunAway = "快跑吧小姑娘，快跑……（大灰狼）"

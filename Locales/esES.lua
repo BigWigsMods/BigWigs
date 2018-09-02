@@ -40,6 +40,12 @@ L.disabledAddOn  = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores
 
 L.removeAddon  = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 
+-- Media.lua
+L.Beware = "Cuidado (Algalon)"
+L.FlagTaken = "Bandera tomada (PvP)"
+L.Destruction = "Destrucción (Kil'jaeden)"
+L.RunAway = "Corre pequeña (El Lobo Feroz)"
+
 -- Options.lua
 L.options  = "Opciones"
 L.raidBosses  = "Jefes de Raid"

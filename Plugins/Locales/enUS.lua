@@ -303,11 +303,6 @@ L.Alert = "Alert"
 L.Long = "Long"
 L.Warning = "Warning"
 
-L.Beware = "Beware (Algalon)"
-L.FlagTaken = "Flag Taken (PvP)"
-L.Destruction = "Destruction (Kil'jaeden)"
-L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
-
 L.sound = "Sound"
 L.soundDesc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages."
 
