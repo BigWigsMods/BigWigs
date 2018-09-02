@@ -43,8 +43,8 @@ local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
-local mute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\mute"
-local unmute = "Interface\\AddOns\\BigWigs\\Textures\\icons\\unmute"
+local mute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\mute"
+local unmute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\unmute"
 
 local inConfigMode = nil
 local activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = 0, 0, 0, 0
@@ -792,7 +792,7 @@ local function updateBlipIcons()
 			blip.hasIcon = true
 		elseif not icon and blip.hasIcon then
 			blip.hasIcon = nil
-			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+			blip:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\blip")
 			local _, class = UnitClass(n)
 			if class then
 				local c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
@@ -810,7 +810,7 @@ local function updateBlipColors()
 		local n = unitList[i]
 		if not GetRaidTargetIndex(n) then
 			local blip = blipList[n]
-			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+			blip:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\blip")
 			local _, class = UnitClass(n)
 			if class then
 				local c = CUSTOM_CLASS_COLORS and CUSTOM_CLASS_COLORS[class] or RAID_CLASS_COLORS[class]
@@ -903,7 +903,7 @@ do
 			customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 			plugin:Close(true)
 		end)
-		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\close")
 		proxAnchor.close = close
 
 		local sound = CreateFrame("Button", nil, proxAnchor)
@@ -939,7 +939,7 @@ do
 
 		local rangeCircle = proxAnchor:CreateTexture(nil, "ARTWORK")
 		rangeCircle:SetPoint("CENTER")
-		rangeCircle:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\alert_circle")
+		rangeCircle:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\alert_circle")
 		rangeCircle:SetBlendMode("ADD")
 		proxAnchor.rangeCircle = rangeCircle
 		proxCircle = rangeCircle
@@ -1022,7 +1022,7 @@ do
 		proxAnchor.drag = drag
 
 		local tex = drag:CreateTexture(nil, "OVERLAY")
-		tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\draghandle")
 		tex:SetWidth(16)
 		tex:SetHeight(16)
 		tex:SetBlendMode("ADD")
@@ -1036,14 +1036,14 @@ do
 		for i = 1, 40 do
 			local blip = proxAnchor:CreateTexture(nil, "OVERLAY")
 			blip:SetSize(16, 16)
-			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+			blip:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\blip")
 			blipList[rList[i]] = blip
 		end
 		local pList = plugin:GetPartyList()
 		for i = 1, 5 do
 			local blip = proxAnchor:CreateTexture(nil, "OVERLAY")
 			blip:SetSize(16, 16)
-			blip:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\blip")
+			blip:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\blip")
 			blipList[pList[i]] = blip
 		end
 

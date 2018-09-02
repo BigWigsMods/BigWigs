@@ -29,13 +29,13 @@ ignore:
   - ldoc.ltp
   - ISSUE_TEMPLATE.md
   - README.md
-  - Sounds/Long.wav
-  - Sounds/Alarm.wav
-  - Sounds/Alert.wav
-  - Sounds/VictoryClassic.wav
-  - Sounds/Victory.wav
-  - Sounds/VictoryLong.wav
-  - Sounds/Info.mp3
-  - Sounds/Amy/countdown.wav
-  - Sounds/David/countdown.wav
-  - Sounds/Jim/countdown.wav
+  - Media/Sounds/Long.wav
+  - Media/Sounds/Alarm.wav
+  - Media/Sounds/Alert.wav
+  - Media/Sounds/VictoryClassic.wav
+  - Media/Sounds/Victory.wav
+  - Media/Sounds/VictoryLong.wav
+  - Media/Sounds/Info.mp3
+  - Media/Sounds/Amy/countdown.wav
+  - Media/Sounds/David/countdown.wav
+  - Media/Sounds/Jim/countdown.wav

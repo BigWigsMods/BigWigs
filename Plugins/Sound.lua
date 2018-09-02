@@ -26,10 +26,10 @@ local sounds = {
 -- Sound Registration
 --
 
-media:Register(SOUND, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.ogg")
-media:Register(SOUND, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.ogg")
-media:Register(SOUND, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.ogg")
-media:Register(SOUND, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.ogg")
+media:Register(SOUND, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Long.ogg")
+media:Register(SOUND, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Info.ogg")
+media:Register(SOUND, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Alert.ogg")
+media:Register(SOUND, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Alarm.ogg")
 
 -- Ingame sounds that DBM uses for DBM converts
 media:Register(SOUND, "BigWigs: [DBM] ".. L.FlagTaken, "Sound\\Spells\\PVPFlagTaken.ogg")

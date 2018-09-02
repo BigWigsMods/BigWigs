@@ -110,7 +110,7 @@ do
 	close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
 	close:SetHeight(16)
 	close:SetWidth(16)
-	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+	close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\close")
 	close:SetScript("OnClick", function()
 		BigWigs:Print(L.toggleDisplayPrint)
 		plugin:Close()

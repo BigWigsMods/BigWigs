@@ -374,7 +374,7 @@ do
 		close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
 		close:SetHeight(16)
 		close:SetWidth(16)
-		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\close")
 		close:SetScript("OnClick", function()
 			BigWigs:Print(L.toggleDisplayPrint)
 			plugin:Close()
@@ -384,7 +384,7 @@ do
 		expand:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
 		expand:SetHeight(16)
 		expand:SetWidth(16)
-		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
+		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
 		expand:SetScript("OnClick", function()
 			if db.expanded then
 				plugin:Contract()
@@ -417,7 +417,7 @@ do
 		display:SetScript("OnEvent", GROUP_ROSTER_UPDATE)
 		display:SetScript("OnShow", function(self)
 			self:SetSize(230, db.expanded and 210 or 80)
-			self.expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
+			self.expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
 		end)
 
 		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
@@ -506,7 +506,7 @@ end
 function plugin:Expand()
 	db.expanded = true
 	display:SetHeight(210)
-	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_up")
+	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_up")
 	if inTestMode then
 		self:Test()
 	else
@@ -517,7 +517,7 @@ end
 function plugin:Contract()
 	db.expanded = false
 	display:SetHeight(80)
-	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
+	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
 	for i = 11, 25 do
 		display.text[i]:SetText("")
 	end

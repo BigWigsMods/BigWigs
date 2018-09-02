@@ -69,7 +69,7 @@ local barStyleRegister = {}
 do
 	-- !Beautycase styling, based on !Beatycase by Neal "Neave" @ WowI, texture made by Game92 "Aftermathh" @ WowI
 
-	local textureNormal = "Interface\\AddOns\\BigWigs\\Textures\\beautycase"
+	local textureNormal = "Interface\\AddOns\\BigWigs\\Media\\Textures\\beautycase"
 
 	local backdropbc = {
 		bgFile = "Interface\\Buttons\\WHITE8x8",
@@ -1306,7 +1306,7 @@ do
 		drag:SetScript("OnMouseUp", onDragHandleMouseUp)
 		drag:SetAlpha(0.5)
 		local tex = drag:CreateTexture(nil, "OVERLAY")
-		tex:SetTexture("Interface\\AddOns\\BigWigs\\Textures\\draghandle")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\draghandle")
 		tex:SetWidth(16)
 		tex:SetHeight(16)
 		tex:SetBlendMode("ADD")
@@ -1397,11 +1397,11 @@ end
 --
 
 function plugin:OnRegister()
-	media:Register(STATUSBAR, "Otravi", "Interface\\AddOns\\BigWigs\\Textures\\otravi")
-	media:Register(STATUSBAR, "Smooth", "Interface\\AddOns\\BigWigs\\Textures\\smooth")
-	media:Register(STATUSBAR, "Glaze", "Interface\\AddOns\\BigWigs\\Textures\\glaze")
-	media:Register(STATUSBAR, "Charcoal", "Interface\\AddOns\\BigWigs\\Textures\\Charcoal")
-	media:Register(STATUSBAR, "BantoBar", "Interface\\AddOns\\BigWigs\\Textures\\default")
+	media:Register(STATUSBAR, "Otravi", "Interface\\AddOns\\BigWigs\\Media\\Textures\\otravi")
+	media:Register(STATUSBAR, "Smooth", "Interface\\AddOns\\BigWigs\\Media\\Textures\\smooth")
+	media:Register(STATUSBAR, "Glaze", "Interface\\AddOns\\BigWigs\\Media\\Textures\\glaze")
+	media:Register(STATUSBAR, "Charcoal", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Charcoal")
+	media:Register(STATUSBAR, "BantoBar", "Interface\\AddOns\\BigWigs\\Media\\Textures\\default")
 	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
