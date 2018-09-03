@@ -42,3 +42,9 @@ do
 	local FONT = media.MediaType and media.MediaType.FONT or "font"
 	media:Register(FONT, "Noto Sans Regular", "Interface\\AddOns\\BigWigs\\Media\\Fonts\\Noto.ttf")
 end
+
+-- XXX temp
+do
+	local _, t = ...
+	t.moved = true
+end
