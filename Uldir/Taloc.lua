@@ -33,7 +33,7 @@ function mod:GetOptions()
 		275270, -- Fixate
 		275432, -- Uldir Defensive Beam
 		{275189, "SAY", "SAY_COUNTDOWN"}, -- Hardened Arteries
-		{275205, "SAY", "SAY_COUNTDOWN"}, -- Enlarged Heart
+		{275205, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Enlarged Heart
 	}
 end
 

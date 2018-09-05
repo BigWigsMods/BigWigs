@@ -19,7 +19,7 @@ function mod:GetOptions()
 		262292, -- Rotting Regurgitation
 		262288, -- Shockwave Stomp
 		{262313, "ME_ONLY", "SAY", "SAY_COUNTDOWN"}, -- Malodorous Miasma
-		{262314, "ME_ONLY", "PULSE", "SAY", "SAY_COUNTDOWN"}, -- Putrid Paroxysm
+		{262314, "ME_ONLY", "FLASH", "SAY", "SAY_COUNTDOWN"}, -- Putrid Paroxysm
 		262364, -- Enticing Essence -- XXX Used for CL.adds right now
 		262378, -- Fetid Frenzy
 	}
