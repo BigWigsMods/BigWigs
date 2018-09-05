@@ -144,3 +144,26 @@ do
 		end
 	end
 end
+
+do
+	local loc = GetLocale()
+	local isWest = loc ~= "koKR" and loc ~= "zhCN" and loc ~= "zhTW" and true
+	local media = LibStub("LibSharedMedia-3.0")
+	local FONT = media.MediaType and media.MediaType.FONT or "font"
+
+	local sizes = {
+		[10] = isWest and 10 or loc == "koKR" and 11 or 15,
+		[12] = (isWest or loc == "koKR") and 12 or 15,
+	}
+	local fontName = isWest and "Noto Sans Regular" or media:GetDefault(FONT)
+	local fontPath = media:Fetch(FONT, fontName)
+
+	function plugin:GetDefaultFont(size)
+		if size then
+			if sizes[size] then size = sizes[size] end
+			return fontPath, size
+		else
+			return fontName
+		end
+	end
+end
