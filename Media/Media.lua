@@ -40,7 +40,7 @@ end
 -- Fonts
 do
 	local FONT = media.MediaType and media.MediaType.FONT or "font"
-	media:Register(FONT, "Noto Sans Regular", "Interface\\AddOns\\BigWigs\\Media\\Fonts\\Noto.ttf")
+	media:Register(FONT, "Noto Sans Regular", "Interface\\AddOns\\BigWigs\\Media\\Fonts\\Noto.ttf", 130) -- 130 latin + cyr
 end
 
 -- XXX temp
