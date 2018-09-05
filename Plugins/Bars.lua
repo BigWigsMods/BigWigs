@@ -538,7 +538,7 @@ do
 	local function updateFont(info, value)
 		if info then
 			local key = info[#info]
-			if key == "font" then
+			if key == "fontName" then
 				local list = media:List(FONT)
 				db[key] = list[value]
 			else
@@ -592,7 +592,7 @@ do
 				name = L.general,
 				order = 1,
 				args = {
-					font = {
+					fontName = {
 						type = "select",
 						name = L.font,
 						order = 1,
