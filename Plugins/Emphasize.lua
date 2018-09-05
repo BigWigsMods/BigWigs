@@ -41,7 +41,7 @@ local voiceMap = {
 plugin.defaultDB = {
 	upper = true,
 	countdown = true,
-	font = nil,
+	fontName = plugin:GetDefaultFont(),
 	outline = "THICKOUTLINE",
 	fontSize = 48,
 	fontColor = { r = 1, g = 0, b = 0 },
@@ -101,12 +101,12 @@ local function createOptions()
 					itemControl = "DDI-Font",
 					get = function()
 						for i, v in next, media:List(FONT) do
-							if v == plugin.db.profile.font then return i end
+							if v == plugin.db.profile.fontName then return i end
 						end
 					end,
 					set = function(_, value)
 						local list = media:List(FONT)
-						plugin.db.profile.font = list[value]
+						plugin.db.profile.fontName = list[value]
 						mModule.updateProfile()
 					end,
 				},
@@ -205,9 +205,6 @@ local function createOptions()
 end
 
 local function updateProfile()
-	if not plugin.db.profile.font then
-		plugin.db.profile.font = media:GetDefault(FONT)
-	end
 	-- Reset invalid voice selections
 	if not BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
 		plugin.db.profile.voice = voiceMap[GetLocale()] or "English: Amy"

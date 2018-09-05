@@ -27,29 +27,26 @@ local infoboxHeight = 100
 local db = nil
 local inTestMode = false
 
-function plugin:RestyleWindow(dirty)
+function plugin:RestyleWindow()
 	if db.lock then
 		display:EnableMouse(false)
 	else
 		display:EnableMouse(true)
 	end
 
-	local font, size, flags = GameFontNormal:GetFont()
-	local curFont = media:Fetch(FONT, db.font)
-	if dirty or curFont ~= font or db.fontSize ~= size or db.fontOutline ~= flags then
-		local newFlags
-		if db.monochrome and db.fontOutline ~= "" then
-			newFlags = "MONOCHROME," .. db.fontOutline
-		elseif db.monochrome then
-			newFlags = "MONOCHROME"
-		else
-			newFlags = db.fontOutline
-		end
+	local font = media:Fetch(FONT, db.fontName)
+	local flags
+	if db.monochrome and db.fontOutline ~= "" then
+		flags = "MONOCHROME," .. db.fontOutline
+	elseif db.monochrome then
+		flags = "MONOCHROME"
+	else
+		flags = db.fontOutline
+	end
 
-		display.title:SetFont(curFont, db.fontSize, newFlags)
-		for i = 1, 10 do
-			display.text[i]:SetFont(curFont, db.fontSize, newFlags)
-		end
+	display.title:SetFont(font, db.fontSize, flags)
+	for i = 1, 10 do
+		display.text[i]:SetFont(font, db.fontSize, flags)
 	end
 end
 
@@ -57,18 +54,13 @@ end
 -- Options
 --
 
-do
-	local font = media:GetDefault(FONT)
-	local _, size, flags = GameFontNormal:GetFont()
-
-	plugin.defaultDB = {
-		disabled = false,
-		lock = false,
-		font = font,
-		fontSize = size,
-		fontOutline = flags,
-	}
-end
+plugin.defaultDB = {
+	disabled = false,
+	lock = false,
+	--fontName = plugin:GetDefaultFont(),
+	--fontSize = 12,
+	fontOutline = "",
+}
 
 -------------------------------------------------------------------------------
 -- Frame Creation
@@ -116,13 +108,19 @@ do
 		plugin:Close()
 	end)
 
-	local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+	local header = display:CreateFontString(nil, "OVERLAY")
+	header:SetFont(plugin:GetDefaultFont(12))
+	header:SetShadowOffset(1, -1)
+	header:SetTextColor(1,0.82,0,1)
 	header:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
 	display.title = header
 
 	display.text = {}
 	for i = 1, 10 do
-		local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+		local text = display:CreateFontString(nil, "OVERLAY")
+		text:SetFont(plugin:GetDefaultFont(12))
+		text:SetShadowOffset(1, -1)
+		text:SetTextColor(1,0.82,0,1)
 		text:SetSize(infoboxWidth/2, infoboxHeight/5)
 		if i == 1 then
 			text:SetPoint("TOPLEFT", display, "TOPLEFT", 5, 0)

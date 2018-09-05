@@ -454,6 +454,7 @@ end
 --
 
 plugin.defaultDB = {
+	fontName = plugin:GetDefaultFont(),
 	fontSize = 10,
 	fontSizeEmph = 13,
 	texture = "BantoBar",
@@ -553,7 +554,7 @@ do
 		elseif db.outline ~= "NONE" then
 			flags = db.outline
 		end
-		local f = media:Fetch(FONT, db.font)
+		local f = media:Fetch(FONT, db.fontName)
 		for bar in next, normalAnchor.bars do
 			bar.candyBarLabel:SetFont(f, db.fontSize, flags)
 			bar.candyBarDuration:SetFont(f, db.fontSize, flags)
@@ -599,7 +600,7 @@ do
 						itemControl = "DDI-Font",
 						get = function(info)
 							for i, v in next, media:List(FONT) do
-								if v == db[info[#info]] then return i end
+								if v == db.fontName then return i end
 							end
 						end,
 						set = updateFont,
@@ -1291,7 +1292,10 @@ do
 		bg:SetAllPoints(display)
 		bg:SetColorTexture(0, 0, 0, 0.3)
 		display.background = bg
-		local header = display:CreateFontString(nil, "ARTWORK", "GameFontNormal")
+		local header = display:CreateFontString(nil, "ARTWORK")
+		header:SetFont(plugin:GetDefaultFont(12))
+		header:SetShadowOffset(1, -1)
+		header:SetTextColor(1,0.82,0,1)
 		header:SetText(title)
 		header:SetAllPoints(display)
 		header:SetJustifyH("CENTER")
@@ -1358,7 +1362,6 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
-	if not db.font then db.font = media:GetDefault(FONT) end
 	normalAnchor:RefixPosition()
 	emphasizeAnchor:RefixPosition()
 	if plugin:IsEnabled() then
@@ -1366,30 +1369,16 @@ local function updateProfile()
 		plugin:SetBarStyle(db.barStyle)
 		plugin:RegisterMessage("DBM_AddonMessage")
 	end
-	-- XXX temp cleanup [7.3.5]
+	-- XXX temp cleanup [8.0.1]
 	db.scale = nil
 	db.emphasizeScale = nil
 	if not db.emphasizeMove then
 		db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*db.emphasizeMultiplier
 		db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*db.emphasizeMultiplier
 	end
-	if db.barStyle == "MonoUI" and not db.tempMonoUIReset then
-		db.BigWigsAnchor_height = 20
-		db.BigWigsEmphasizeAnchor_height = 22
-		db.fontSize = 10
-		db.fontSizeEmph = 11
-	end
-	db.tempMonoUIReset = true
-	if not db.tempSpacingReset then
-		if db.barStyle == "BeautyCase" then
-			db.spacing = 8
-		elseif db.barStyle == "TukUI" then
-			db.spacing = 7
-		elseif db.barStyle == "ElvUI" then
-			db.spacing = barStyles.ElvUI.barSpacing or 4
-		end
-	end
-	db.tempSpacingReset = true
+	db.tempMonoUIReset = nil
+	db.tempSpacingReset = nil
+	db.font = nil
 end
 
 --------------------------------------------------------------------------------
@@ -1749,7 +1738,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	elseif db.outline ~= "NONE" then
 		flags = db.outline
 	end
-	local f = media:Fetch(FONT, db.font)
+	local f = media:Fetch(FONT, db.fontName)
 	bar.candyBarLabel:SetFont(f, db.fontSize, flags)
 	bar.candyBarDuration:SetFont(f, db.fontSize, flags)
 
@@ -1827,7 +1816,7 @@ function plugin:EmphasizeBar(bar, start)
 	elseif db.outline ~= "NONE" then
 		flags = db.outline
 	end
-	local f = media:Fetch(FONT, db.font)
+	local f = media:Fetch(FONT, db.fontName)
 	bar.candyBarLabel:SetFont(f, db.fontSizeEmph, flags)
 	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
 

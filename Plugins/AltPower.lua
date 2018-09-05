@@ -8,9 +8,9 @@ if not plugin then return end
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
-	font = nil,
-	fontSize = nil,
-	fontOutline = nil,
+	fontName = plugin:GetDefaultFont(),
+	fontSize = select(2, plugin:GetDefaultFont(12)),
+	fontOutline = "",
 	monochrome = false,
 	expanded = false,
 	disabled = false,
@@ -57,7 +57,7 @@ local function colorize(power)
 	end
 end
 
-function plugin:RestyleWindow(dirty)
+function plugin:RestyleWindow()
 	if not display then return end
 
 	local x = db.posx
@@ -89,22 +89,19 @@ function plugin:RestyleWindow(dirty)
 		end)
 	end
 
-	local font, size, flags = GameFontNormal:GetFont()
-	local curFont = media:Fetch(FONT, db.font)
-	if dirty or curFont ~= font or db.fontSize ~= size or db.fontOutline ~= flags then
-		local newFlags
-		if db.monochrome and db.fontOutline ~= "" then
-			newFlags = "MONOCHROME," .. db.fontOutline
-		elseif db.monochrome then
-			newFlags = "MONOCHROME"
-		else
-			newFlags = db.fontOutline
-		end
+	local font = media:Fetch(FONT, db.fontName)
+	local flags
+	if db.monochrome and db.fontOutline ~= "" then
+		flags = "MONOCHROME," .. db.fontOutline
+	elseif db.monochrome then
+		flags = "MONOCHROME"
+	else
+		flags = db.fontOutline
+	end
 
-		display.title:SetFont(curFont, db.fontSize, newFlags)
-		for i = 1, 25 do
-			display.text[i]:SetFont(curFont, db.fontSize, newFlags)
-		end
+	display.title:SetFont(font, db.fontSize, flags)
+	for i = 1, 25 do
+		display.text[i]:SetFont(font, db.fontSize, flags)
 	end
 end
 
@@ -123,7 +120,7 @@ do
 		set = function(info, value)
 			local entry = info[#info]
 			db[entry] = value
-			plugin:RestyleWindow(entry == "fontOutline" or entry == "fontSize" or entry == "monochrome")
+			plugin:RestyleWindow()
 		end,
 		args = {
 			disabled = {
@@ -147,12 +144,12 @@ do
 				itemControl = "DDI-Font",
 				get = function()
 					for i, v in next, media:List(FONT) do
-						if v == db.font then return i end
+						if v == db.fontName then return i end
 					end
 				end,
 				set = function(_, value)
-					db.font = media:List(FONT)[value]
-					plugin:RestyleWindow(true)
+					db.fontName = media:List(FONT)[value]
+					plugin:RestyleWindow()
 				end,
 				disabled = disabled,
 			},
@@ -283,18 +280,6 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 
-	if not db.font then
-		db.font = media:GetDefault(FONT)
-	end
-	if not db.fontSize then
-		local _, size = GameFontNormal:GetFont()
-		db.fontSize = size
-	end
-	if not db.fontOutline then
-		local _, _, flags = GameFontNormal:GetFont()
-		db.fontOutline = flags
-	end
-
 	plugin:RestyleWindow()
 end
 
@@ -394,14 +379,17 @@ do
 		end)
 		display.expand = expand
 
-		local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+		local header = display:CreateFontString(nil, "OVERLAY")
+		header:SetShadowOffset(1, -1)
+		header:SetTextColor(1,0.82,0,1)
 		header:SetPoint("BOTTOM", display, "TOP", 0, 4)
 		display.title = header
 
 		display.text = {}
 		for i = 1, 25 do
-			local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-			text:SetText("")
+			local text = display:CreateFontString(nil, "OVERLAY")
+			text:SetShadowOffset(1, -1)
+			text:SetTextColor(1,0.82,0,1)
 			text:SetSize(115, 16)
 			text:SetJustifyH("LEFT")
 			if i == 1 then
