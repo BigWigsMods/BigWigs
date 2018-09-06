@@ -12,7 +12,7 @@ mod.respawnTime = 30
 --------------------------------------------------------------------------------
 -- Locals
 --
-d
+
 local omegaList = {}
 local omegaIconCount = 0
 local pathogenBombCount = 1
