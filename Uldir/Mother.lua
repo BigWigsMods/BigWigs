@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("MOTHER", 1861, 2167)
 if not mod then return end
 mod:RegisterEnableMob(135452) -- MOTHER
 mod.engageId = 2141
-mod.respawnTime = 20
+mod.respawnTime = 26
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -38,7 +38,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "PurifyingFlameDamage", 268277)
 	self:Log("SPELL_PERIODIC_MISSED", "PurifyingFlameDamage", 268277)
 	self:Log("SPELL_CAST_SUCCESS", "WindTunnel", 267945, 267885, 267878) -- Room 1, Room 2 Left, Room 2 Right (Need to confirm which side is wich)
-	self:Log("SPELL_CAST_SUCCESS", "UldirDefensiveBeam", 269827)
+	self:Log("SPELL_CAST_SUCCESS", "UldirDefensiveBeam", 277973, 269827) -- Normal, XXX Verify 269827
 	self:Log("SPELL_PERIODIC_DAMAGE", "UldirDefensiveBeamDamage", 268253)
 	self:Log("SPELL_PERIODIC_MISSED", "UldirDefensiveBeamDamage", 268253)
 end
