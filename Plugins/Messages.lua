@@ -108,7 +108,10 @@ do
 		bg:SetAllPoints(display)
 		bg:SetColorTexture(0, 0, 0, 0.3)
 		display.background = bg
-		local header = display:CreateFontString(nil, nil, "GameFontNormal")
+		local header = display:CreateFontString()
+		header:SetFont(plugin:GetDefaultFont(12))
+		header:SetShadowOffset(1, -1)
+		header:SetTextColor(1,0.82,0,1)
 		header:SetText(title)
 		if frameName == "BWEmphasizeCountdownMessageAnchor" then
 			header:SetPoint("BOTTOM", display, "TOP", 0, 5)
@@ -182,11 +185,11 @@ end
 
 plugin.defaultDB = {
 	sink20OutputSink = "BigWigs",
-	font = nil,
+	fontName = plugin:GetDefaultFont(),
 	monochrome = nil,
 	outline = "THICKOUTLINE",
 	align = "CENTER",
-	fontSize = nil,
+	fontSize = 20,
 	usecolors = true,
 	scale = 1,
 	chat = nil,
@@ -205,13 +208,6 @@ local function updateProfile()
 
 	plugin:SetSinkStorage(db)
 	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
-	if not db.font then
-		db.font = media:GetDefault(FONT)
-	end
-	if not db.fontSize then
-		local _, size = GameFontNormalHuge:GetFont()
-		db.fontSize = size
-	end
 
 	if seModule then
 		local flags = nil
@@ -223,9 +219,9 @@ local function updateProfile()
 			flags = seModule.db.profile.outline
 		end
 
-		emphasizedText:SetFont(media:Fetch(FONT, seModule.db.profile.font), seModule.db.profile.fontSize, flags)
+		emphasizedText:SetFont(media:Fetch(FONT, seModule.db.profile.fontName), seModule.db.profile.fontSize, flags)
 
-		emphasizedCountdownText:SetFont(media:Fetch(FONT, seModule.db.profile.font), seModule.db.profile.fontSize, flags)
+		emphasizedCountdownText:SetFont(media:Fetch(FONT, seModule.db.profile.fontName), seModule.db.profile.fontSize, flags)
 		emphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
 	end
 
@@ -267,7 +263,7 @@ local function updateProfile()
 		font.icon.animFade:SetStartDelay(db.displaytime)
 		font.animFade:SetDuration(db.fadetime)
 		font.icon.animFade:SetDuration(db.fadetime)
-		font:SetFont(media:Fetch(FONT, db.font), db.fontSize, flags)
+		font:SetFont(media:Fetch(FONT, db.fontName), db.fontSize, flags)
 	end
 end
 plugin.updateProfile = updateProfile -- XXX temp until the emphasize module is refactored
@@ -323,12 +319,12 @@ plugin.pluginOptions.args.more = {
 			itemControl = "DDI-Font",
 			get = function()
 				for i, v in next, media:List(FONT) do
-					if v == plugin.db.profile.font then return i end
+					if v == plugin.db.profile.fontName then return i end
 				end
 			end,
 			set = function(_, value)
 				local list = media:List(FONT)
-				plugin.db.profile.font = list[value]
+				plugin.db.profile.fontName = list[value]
 				updateProfile()
 			end,
 		},

@@ -5,6 +5,7 @@
 <Include file="Plugins\modules.xml"/>
 <Include file="Options\modules.xml"/>
 
+<Include file="Azeroth\modules.xml"/>
 <Include file="Uldir\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>

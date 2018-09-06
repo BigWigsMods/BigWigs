@@ -23,25 +23,6 @@ local sounds = {
 }
 
 --------------------------------------------------------------------------------
--- Sound Registration
---
-
-media:Register(SOUND, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Sounds\\Long.ogg")
-media:Register(SOUND, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Sounds\\Info.ogg")
-media:Register(SOUND, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Sounds\\Alert.ogg")
-media:Register(SOUND, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Sounds\\Alarm.ogg")
-
--- Ingame sounds that DBM uses for DBM converts
-media:Register(SOUND, "BigWigs: [DBM] ".. L.FlagTaken, "Sound\\Spells\\PVPFlagTaken.ogg")
-media:Register(SOUND, "BigWigs: [DBM] ".. L.Beware, "Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.ogg")
-media:Register(SOUND, "BigWigs: [DBM] ".. L.Destruction, "Sound\\Creature\\KilJaeden\\KILJAEDEN02.ogg")
-media:Register(SOUND, "BigWigs: [DBM] ".. L.RunAway, "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.ogg")
-
--- Ingame sounds used by Blizzard
-media:Register(SOUND, "BigWigs: Raid Warning", "Sound\\Interface\\RaidWarning.ogg")
-media:Register(SOUND, "BigWigs: Raid Boss Whisper", "Sound\\Interface\\UI_RaidBossWhisperWarning.ogg")
-
---------------------------------------------------------------------------------
 -- Options
 --
 

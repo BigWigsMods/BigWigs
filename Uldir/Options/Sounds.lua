@@ -6,8 +6,10 @@ BigWigs:AddSounds("Taloc", {
 	[271728] = "alarm",
 	[271895] = "alert",
 	[271965] = "long",
+	[275189] = "alert",
+	[275205] = "warning",
 	[275270] = "warning",
-	[275432] = "alarm",
+	[275432] = {"alarm","long"},
 })
 
 BigWigs:AddSounds("MOTHER", {
@@ -45,6 +47,7 @@ BigWigs:AddSounds("Zek'voz, Herald of N'zoth", {
 })
 
 BigWigs:AddSounds("Vectis", {
+	[265143] = "alarm",
 	[265178] = "alert",
 	[265212] = "alert",
 	[265217] = {"info","long"},
@@ -80,6 +83,7 @@ BigWigs:AddSounds("Mythrax the Unraveler", {
 BigWigs:AddSounds("G'huun", {
 	[263235] = "warning",
 	[263307] = "alert",
+	[263321] = "alarm",
 	[263482] = "long",
 	[267409] = "alert",
 	[267412] = "alarm",

@@ -1,0 +1,33 @@
+## Interface: 80000
+
+## Title: BigWigs [|cffeda55fAzeroth|r]
+## Title-deDE: BigWigs [|cffeda55fAzeroth|r]
+## Title-esES: BigWigs [|cffeda55fAzeroth|r]
+## Title-esMX: BigWigs [|cffeda55fAzeroth|r]
+## Title-frFR: BigWigs [|cffeda55fAzeroth|r]
+## Title-ruRU: BigWigs [|cffeda55fAzeroth|r]
+## Title-zhCN: BigWigs [|cffeda55fAzeroth|r]
+## Title-zhTW: BigWigs [|cffeda55fAzeroth|r]
+## Title-itIT: BigWigs [|cffeda55fAzeroth|r]
+## Title-ptBR: BigWigs [|cffeda55fAzeroth|r]
+## Title-koKR: BigWigs [|cffeda55fAzeroth|r]
+## Notes: BigWigs Azeroth Modules
+## Notes-deDE: BigWigs Azeroth Modules
+## Notes-esES: BigWigs Azeroth Modules
+## Notes-esMX: BigWigs Azeroth Modules
+## Notes-frFR: BigWigs Azeroth Modules
+## Notes-ruRU: BigWigs Azeroth Modules
+## Notes-zhCN: BigWigs Azeroth Modules
+## Notes-zhTW: BigWigs Azeroth Modules
+## Notes-itIT: BigWigs Azeroth Modules
+## Notes-ptBR: BigWigs Azeroth Modules
+## Notes-koKR: BigWigs Azeroth Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-ExtraMenu: -947
+## X-BigWigs-LoadOn-WorldBoss: -942, 140163
+
+modules.xml

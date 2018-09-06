@@ -8,9 +8,9 @@ if not plugin then return end
 plugin.defaultDB = {
 	posx = nil,
 	posy = nil,
-	font = nil,
-	fontSize = nil,
-	fontOutline = nil,
+	fontName = plugin:GetDefaultFont(),
+	fontSize = select(2, plugin:GetDefaultFont(12)),
+	fontOutline = "",
 	monochrome = false,
 	expanded = false,
 	disabled = false,
@@ -57,7 +57,7 @@ local function colorize(power)
 	end
 end
 
-function plugin:RestyleWindow(dirty)
+function plugin:RestyleWindow()
 	if not display then return end
 
 	local x = db.posx
@@ -89,22 +89,19 @@ function plugin:RestyleWindow(dirty)
 		end)
 	end
 
-	local font, size, flags = GameFontNormal:GetFont()
-	local curFont = media:Fetch(FONT, db.font)
-	if dirty or curFont ~= font or db.fontSize ~= size or db.fontOutline ~= flags then
-		local newFlags
-		if db.monochrome and db.fontOutline ~= "" then
-			newFlags = "MONOCHROME," .. db.fontOutline
-		elseif db.monochrome then
-			newFlags = "MONOCHROME"
-		else
-			newFlags = db.fontOutline
-		end
+	local font = media:Fetch(FONT, db.fontName)
+	local flags
+	if db.monochrome and db.fontOutline ~= "" then
+		flags = "MONOCHROME," .. db.fontOutline
+	elseif db.monochrome then
+		flags = "MONOCHROME"
+	else
+		flags = db.fontOutline
+	end
 
-		display.title:SetFont(curFont, db.fontSize, newFlags)
-		for i = 1, 25 do
-			display.text[i]:SetFont(curFont, db.fontSize, newFlags)
-		end
+	display.title:SetFont(font, db.fontSize, flags)
+	for i = 1, 25 do
+		display.text[i]:SetFont(font, db.fontSize, flags)
 	end
 end
 
@@ -123,7 +120,7 @@ do
 		set = function(info, value)
 			local entry = info[#info]
 			db[entry] = value
-			plugin:RestyleWindow(entry == "fontOutline" or entry == "fontSize" or entry == "monochrome")
+			plugin:RestyleWindow()
 		end,
 		args = {
 			disabled = {
@@ -147,12 +144,12 @@ do
 				itemControl = "DDI-Font",
 				get = function()
 					for i, v in next, media:List(FONT) do
-						if v == db.font then return i end
+						if v == db.fontName then return i end
 					end
 				end,
 				set = function(_, value)
-					db.font = media:List(FONT)[value]
-					plugin:RestyleWindow(true)
+					db.fontName = media:List(FONT)[value]
+					plugin:RestyleWindow()
 				end,
 				disabled = disabled,
 			},
@@ -283,18 +280,6 @@ end
 local function updateProfile()
 	db = plugin.db.profile
 
-	if not db.font then
-		db.font = media:GetDefault(FONT)
-	end
-	if not db.fontSize then
-		local _, size = GameFontNormal:GetFont()
-		db.fontSize = size
-	end
-	if not db.fontOutline then
-		local _, _, flags = GameFontNormal:GetFont()
-		db.fontOutline = flags
-	end
-
 	plugin:RestyleWindow()
 end
 
@@ -374,7 +359,7 @@ do
 		close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
 		close:SetHeight(16)
 		close:SetWidth(16)
-		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\close")
+		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\close")
 		close:SetScript("OnClick", function()
 			BigWigs:Print(L.toggleDisplayPrint)
 			plugin:Close()
@@ -384,7 +369,7 @@ do
 		expand:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
 		expand:SetHeight(16)
 		expand:SetWidth(16)
-		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
+		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
 		expand:SetScript("OnClick", function()
 			if db.expanded then
 				plugin:Contract()
@@ -394,14 +379,17 @@ do
 		end)
 		display.expand = expand
 
-		local header = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
+		local header = display:CreateFontString(nil, "OVERLAY")
+		header:SetShadowOffset(1, -1)
+		header:SetTextColor(1,0.82,0,1)
 		header:SetPoint("BOTTOM", display, "TOP", 0, 4)
 		display.title = header
 
 		display.text = {}
 		for i = 1, 25 do
-			local text = display:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-			text:SetText("")
+			local text = display:CreateFontString(nil, "OVERLAY")
+			text:SetShadowOffset(1, -1)
+			text:SetTextColor(1,0.82,0,1)
 			text:SetSize(115, 16)
 			text:SetJustifyH("LEFT")
 			if i == 1 then
@@ -417,7 +405,7 @@ do
 		display:SetScript("OnEvent", GROUP_ROSTER_UPDATE)
 		display:SetScript("OnShow", function(self)
 			self:SetSize(230, db.expanded and 210 or 80)
-			self.expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
+			self.expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
 		end)
 
 		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
@@ -506,7 +494,7 @@ end
 function plugin:Expand()
 	db.expanded = true
 	display:SetHeight(210)
-	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_up")
+	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_up")
 	if inTestMode then
 		self:Test()
 	else
@@ -517,7 +505,7 @@ end
 function plugin:Contract()
 	db.expanded = false
 	display:SetHeight(80)
-	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Textures\\icons\\arrows_down")
+	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
 	for i = 11, 25 do
 		display.text[i]:SetText("")
 	end

@@ -13,6 +13,8 @@ mod.respawnTime = 30
 -- Locals
 --
 
+local omegaList = {}
+local omegaIconCount = 1
 local pathogenBombCount = 1
 local nextLiquify = 0
 
@@ -20,17 +22,22 @@ local nextLiquify = 0
 -- Initialization
 --
 
+local omegaVectorMarker = mod:AddMarkerOption(false, "player", 1, 265143, 1, 2, 3) -- Omega Vector
 function mod:GetOptions()
 	return {
+		{265143, "SAY_COUNTDOWN"}, -- Omega Vector
+		omegaVectorMarker,
 		{265178, "TANK"}, -- Evolving Affliction
 		267242, -- Contagion
 		{265212, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Gestate
 		265217, -- Liquefy
-		266459, -- Pathogen Bomb
+		266459, -- Plague Bomb
 	}
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "OmegaVectorApplied", 265129, 265143) -- Normal, Heroic
+	self:Log("SPELL_AURA_REMOVED", "OmegaVectorRemoved", 265129, 265143) -- Normal, Heroic
 	self:Log("SPELL_CAST_SUCCESS", "EvolvingAffliction", 265178)
 	self:Log("SPELL_AURA_APPLIED", "EvolvingAfflictionApplied", 265178)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EvolvingAfflictionApplied", 265178)
@@ -40,10 +47,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "GestateRemoved", 265212)
 	self:Log("SPELL_CAST_START", "Liquefy", 265217)
 	self:Log("SPELL_AURA_REMOVED", "LiquefyRemoved", 265217)
-	self:Log("SPELL_CAST_SUCCESS", "PathogenBomb", 266459)
+	self:Log("SPELL_CAST_SUCCESS", "PlagueBomb", 266459)
 end
 
 function mod:OnEngage()
+	omegaList = {}
+	omegaIconCount = 1
+
 	self:Bar(267242, self:Easy() and 20.5 or 11.5) -- Contagion
 	self:Bar(265212, self:Easy() and 10.5 or 14.5) -- Gestate
 
@@ -54,6 +64,36 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:OmegaVectorApplied(args)
+	if not omegaList[args.destName] then
+		omegaList[args.destName] = 1
+	else
+		omegaList[args.destName] = omegaList[args.destName] + 1
+	end
+	if self:GetOption(omegaVectorMarker) and omegaList[args.destName] == 1 then
+		SetRaidTarget(args.destName, self:Easy() and 1 or (omegaIconCount%3)+1) -- Normal: 1 Heroic+: 1->2->3->1
+		omegaIconCount = omegaIconCount + 1
+	end
+	if self:Me(args.destGUID) then
+		self:TargetMessage2(265143, "blue", args.destName)
+		self:PlaySound(265143, "alarm")
+		self:SayCountdown(265143, 10)
+	end
+end
+
+function mod:OmegaVectorRemoved(args)
+	omegaList[args.destName] = omegaList[args.destName] - 1
+	if omegaList[args.destName] == 0 then
+		omegaList[args.destName] = nil
+		if self:GetOption(omegaVectorMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(265143)
+		end
+	end
+end
 
 function mod:EvolvingAffliction(args)
 	if nextLiquify > GetTime() + 8.5 then
@@ -130,7 +170,7 @@ function mod:Liquefy(args)
 	self:StopBar(265178) -- Evolving Affliction
 
 	pathogenBombCount = 1
-	self:Bar(266459, 13.5) -- Pathogen Bomb
+	self:Bar(266459, 13.5) -- Plague Bomb
 end
 
 function mod:LiquefyRemoved(args)
@@ -145,9 +185,7 @@ function mod:LiquefyRemoved(args)
 	self:Bar(args.spellId, 93)
 end
 
-
-
-function mod:PathogenBomb(args)
+function mod:PlagueBomb(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	pathogenBombCount = pathogenBombCount + 1

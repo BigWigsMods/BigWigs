@@ -303,11 +303,6 @@ L.Alert = "Alerta"
 L.Long = "Longo"
 L.Warning = "Aviso"
 
-L.Beware = "Cuidado (Algalon)"
-L.FlagTaken = "Bandeira capturada (JvJ)"
-L.Destruction = "Destruição (Kil'jaeden)"
-L.RunAway = "Corra, garotinha! (Lobo Mau)"
-
 L.sound = "Som"
 L.soundDesc = "As mensagens podem conter um som. Para algumas pessoas fica mais fácil escutar quando aprendem que tal som aparece com tal mensagem, ao invés de ler a mensagem."
 

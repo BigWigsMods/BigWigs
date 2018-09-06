@@ -18,8 +18,8 @@ function mod:GetOptions()
 		{262277, "TANK"}, -- Thrashing Terror
 		262292, -- Rotting Regurgitation
 		262288, -- Shockwave Stomp
-		{262313, "ME_ONLY"}, -- Malodorous Miasma
-		{262314, "ME_ONLY", "PULSE"}, -- Putrid Paroxysm
+		{262313, "ME_ONLY", "SAY", "SAY_COUNTDOWN"}, -- Malodorous Miasma
+		{262314, "ME_ONLY", "FLASH", "SAY", "SAY_COUNTDOWN"}, -- Putrid Paroxysm
 		262364, -- Enticing Essence -- XXX Used for CL.adds right now
 		262378, -- Fetid Frenzy
 	}
@@ -30,7 +30,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RottingRegurgitation", 262292)
 	self:Log("SPELL_CAST_START", "ShockwaveStomp", 262288)
 	self:Log("SPELL_AURA_APPLIED", "MalodorousMiasmaApplied", 262313)
+	self:Log("SPELL_AURA_REMOVED", "MalodorousMiasmaRemoved", 262313)
 	self:Log("SPELL_AURA_APPLIED", "PutridParoxysmApplied", 262314)
+	self:Log("SPELL_AURA_REMOVED", "PutridParoxysmRemoved", 262314)
 	self:Log("SPELL_CAST_START", "EnticingEssence", 262364)
 	self:Log("SPELL_AURA_APPLIED", "FetidFrenzy", 262378)
 
@@ -73,6 +75,16 @@ end
 function mod:MalodorousMiasmaApplied(args)
 	self:TargetMessage2(args.spellId, "orange", args.destName)
 	self:PlaySound(args.spellId, "info", nil, args.destName)
+	if self:Mythic() and self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 18)
+	end
+end
+
+function mod:MalodorousMiasmaRemoved(args)
+	if self:Mythic() and self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 function mod:PutridParoxysmApplied(args)
@@ -80,6 +92,16 @@ function mod:PutridParoxysmApplied(args)
 	self:PlaySound(args.spellId, "warning", nil, args.destName)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
+		if self:Mythic() then
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 6)
+		end
+	end
+end
+
+function mod:PutridParoxysmRemoved(args)
+	if self:Mythic() and self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 

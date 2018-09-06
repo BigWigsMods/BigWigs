@@ -10,7 +10,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 104
+local BIGWIGS_VERSION = 106
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -87,6 +87,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[-424]=true, -- Pandaria
 	[-572]=true, -- Draenor
 	[-619]=true, -- Broken Isles
+	[-947]=true, -- Azeroth
 }
 
 do
@@ -160,6 +161,7 @@ do
 		[1712] = l, -- Antorus, the Burning Throne
 		[1779] = l, -- Invasion Points
 		--[[ BigWigs: Battle for Azeroth ]]--
+		[-947] = bfa, -- Azeroth (Fake Menu)
 		[1861] = bfa, -- Uldir
 
 		--[[ LittleWigs: Classic ]]--
@@ -262,6 +264,7 @@ do
 		[-376] = -424, [-379] = -424, [-504] = -424, [-507] = -424, [-554] = -424, -- Pandaria
 		[-542] = -572, [-543] = -572, [-534] = -572, -- Draenor
 		[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
+		[-942] = -947, -- Azeroth/BfA
 	}
 end
 
@@ -351,7 +354,7 @@ end
 --
 
 local dataBroker = ldb:NewDataObject("BigWigs",
-	{type = "launcher", label = "BigWigs", icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"}
+	{type = "launcher", label = "BigWigs", icon = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\core-disabled"}
 )
 
 function dataBroker.OnClick(self, button)
@@ -872,6 +875,15 @@ do
 		end
 	end
 
+	-- XXX temp
+	do
+		local _, t = ...
+		if not t.moved then
+			RaidNotice_AddMessage(RaidWarningFrame, "Restart WoW to finish BigWigs update", {r=1,g=1,b=1}, 300)
+		end
+	end
+	-- XXX
+
 	local L = GetLocale()
 	local locales = {
 		--ruRU = "Russian (ruRU)",
@@ -964,8 +976,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "17635" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "8.0.1" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "17762" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "8.0.6" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -1355,7 +1367,7 @@ end
 public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 
 function mod:BigWigs_CoreEnabled()
-	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-enabled"
+	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\core-enabled"
 
 	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
 	-- which kills your ability to receive addon comms during the loading process.
@@ -1372,7 +1384,7 @@ end
 public.RegisterMessage(mod, "BigWigs_CoreEnabled")
 
 function mod:BigWigs_CoreDisabled()
-	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Textures\\icons\\core-disabled"
+	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\core-disabled"
 end
 public.RegisterMessage(mod, "BigWigs_CoreDisabled")
 

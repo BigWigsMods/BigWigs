@@ -127,3 +127,9 @@ L.zoneMessagesDesc = "Disabilitando questa opzione BigWigs non mostrerà più i 
 --L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
 --L.SAY_COUNTDOWN = "Say Countdown"
 --L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
+
+-- Media.lua
+L.Beware = "Attenti! (Algalon)"
+L.FlagTaken = "Cattura Bandiera (PvP)"
+L.Destruction = "Distruzione (Kil'jaeden)"
+L.RunAway = "Scappa ragazzina, scappa!!! (Big Bad Wolf)"

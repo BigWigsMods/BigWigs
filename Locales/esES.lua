@@ -40,6 +40,12 @@ L.disabledAddOn  = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores
 
 L.removeAddon  = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 
+-- Media.lua
+L.Beware = "Cuidado (Algalon)"
+L.FlagTaken = "Bandera tomada (PvP)"
+L.Destruction = "Destrucción (Kil'jaeden)"
+L.RunAway = "Corre pequeña (El Lobo Feroz)"
+
 -- Options.lua
 L.options  = "Opciones"
 L.raidBosses  = "Jefes de Raid"
@@ -113,12 +119,12 @@ L.COUNTDOWN  = "Cuenta atrás"
 L.COUNTDOWN_desc  = "Si está activo, una cuenta atrás vocal y visual será agregada para los últimos 5 segundos. Imagina a alguien contando hacia atrás \"5... 4... 3... 2... 1...\" con un número grande en el medio de la pantalla."
 L.INFOBOX  = L.infobox
 L.INFOBOX_desc  = L.infobox_desc
---L.SOUND = "Sound"
---L.SOUND_desc = "Boss abilities usually play sounds to help you notice them. If you disable this option, none of the sounds attached to it will play."
---L.CASTBAR = "Cast Bars"
---L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
---L.SAY_COUNTDOWN = "Say Countdown"
---L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
+L.SOUND = "Sonido"
+L.SOUND_desc = "Las habilidades de jefes habitualmente reproducen sonidos para ayudarte con ellas. Si desactivas esta opción, ningún sonido adjunto sonará."
+L.CASTBAR = "Barras de lanzamiento"
+L.CASTBAR_desc = "Barras de lanzamiento se muestran a veces con ciertos jefes, normalmente para atraer la atención de que una habilidad crítica está en camino. Si esta habilidad está acompañada por una barra de lanzamiento que quieres ocultar, desactiva esta opción."
+L.SAY_COUNTDOWN = "Decir cuenta atrás"
+L.SAY_COUNTDOWN_desc = "Las burbujas de chat son fáciles de detectar. BigWigs usará múltiples mensajes de cuenta atrás para alertar a los que estén cerca que una habilidad en ti está a punto de expirar."
 
 L.advanced  = "Opciones avanzadas"
 L.back  = "<< Volver"
