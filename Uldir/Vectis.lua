@@ -17,6 +17,7 @@ local omegaList = {}
 local omegaIconCount = 1
 local pathogenBombCount = 1
 local nextLiquify = 0
+local lingeringInfectionList = {}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -27,6 +28,7 @@ function mod:GetOptions()
 	return {
 		{265143, "SAY_COUNTDOWN"}, -- Omega Vector
 		omegaVectorMarker,
+		{265127, "INFOBOX"} -- Lingering Infection
 		{265178, "TANK"}, -- Evolving Affliction
 		267242, -- Contagion
 		{265212, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Gestate
@@ -38,6 +40,8 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "OmegaVectorApplied", 265129, 265143) -- Normal, Heroic
 	self:Log("SPELL_AURA_REMOVED", "OmegaVectorRemoved", 265129, 265143) -- Normal, Heroic
+	self:Log("SPELL_AURA_APPLIED", "LingeringInfection", 265127)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "LingeringInfection", 265127)
 	self:Log("SPELL_CAST_SUCCESS", "EvolvingAffliction", 265178)
 	self:Log("SPELL_AURA_APPLIED", "EvolvingAfflictionApplied", 265178)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EvolvingAfflictionApplied", 265178)
@@ -52,6 +56,7 @@ end
 
 function mod:OnEngage()
 	omegaList = {}
+	lingeringInfectionList = {}
 	omegaIconCount = 1
 
 	self:Bar(267242, self:Easy() and 20.5 or 11.5) -- Contagion
@@ -59,6 +64,8 @@ function mod:OnEngage()
 
 	nextLiquify = GetTime() + 90
 	self:Bar(265217, 90) -- Liquefy
+
+	self:OpenInfo(265127, self:SpellName(265127)) -- Lingering Infection
 end
 
 --------------------------------------------------------------------------------
@@ -93,6 +100,11 @@ function mod:OmegaVectorRemoved(args)
 			self:CancelSayCountdown(265143)
 		end
 	end
+end
+
+function mod:LingeringInfection(args)
+	lingeringInfectionList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, lingeringInfectionList)
 end
 
 function mod:EvolvingAffliction(args)
