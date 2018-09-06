@@ -60,9 +60,9 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Stage 1
-	self:Log("SPELL_CAST_SUCCESS", "ExplosiveCorruptionSuccess", 272505)
-	self:Log("SPELL_AURA_APPLIED", "ExplosiveCorruptionApplied", 272506)
-	self:Log("SPELL_AURA_REMOVED", "ExplosiveCorruptionRemoved", 272506)
+	self:Log("SPELL_CAST_SUCCESS", "ExplosiveCorruptionSuccess", 274262, 272505)
+	self:Log("SPELL_AURA_APPLIED", "ExplosiveCorruptionApplied", 275756, 272506)
+	self:Log("SPELL_AURA_REMOVED", "ExplosiveCorruptionRemoved", 275756, 272506)
 	self:Log("SPELL_CAST_START", "ThousandMaws", 267509)
 	self:Log("SPELL_CAST_START", "Torment", 267427)
 	self:Log("SPELL_CAST_START", "MassiveSmash", 267412)
@@ -126,7 +126,7 @@ end
 
 function mod:ExplosiveCorruptionSuccess(args)
 	self:TargetMessage2(272506, "orange", args.destName)
-		if self:Me(args.destGUID) then
+	if self:Me(args.destGUID) then
 		self:PlaySound(272506, "warning")
 	end
 	self:CDBar(272506, stage == 1 and 13 or 13.4)
@@ -134,14 +134,15 @@ end
 
 function mod:ExplosiveCorruptionApplied(args)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 5)
+		self:TargetMessage2(272506, "blue", args.destName)
+		self:Say(272506)
+		self:SayCountdown(272506, 4)
 	end
 end
 
 function mod:ExplosiveCorruptionRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelSayCountdown(272506)
 	end
 end
 
