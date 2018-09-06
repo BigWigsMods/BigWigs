@@ -92,7 +92,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			plasmaCount = plasmaCount + 1
-			self:Bar(args.spellId, plasmaCount == 2 and 42.5 or 30.5)
+			self:Bar(271224, plasmaCount == 2 and 42.5 or 30.5)
 		end
 	end
 end
@@ -101,11 +101,11 @@ do
 	local playerList = mod:NewTargetList()
 	function mod:PlasmaDischargeApplied(args)
 		playerList[#playerList+1] = args.destName
-		self:PlaySound(args.spellId, "warning", nil, playerList)
-		self:TargetsMessage(args.spellId, "yellow", playerList)
+		self:PlaySound(271224, "warning", nil, playerList)
+		self:TargetsMessage(271224, "yellow", playerList)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 3.5)
+			self:Say(271224)
+			self:SayCountdown(271224, 3.5)
 		end
 	end
 
