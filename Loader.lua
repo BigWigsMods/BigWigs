@@ -87,6 +87,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[-424]=true, -- Pandaria
 	[-572]=true, -- Draenor
 	[-619]=true, -- Broken Isles
+	[-947]=true, -- Azeroth
 }
 
 do
@@ -160,6 +161,7 @@ do
 		[1712] = l, -- Antorus, the Burning Throne
 		[1779] = l, -- Invasion Points
 		--[[ BigWigs: Battle for Azeroth ]]--
+		[-947] = bfa, -- Azeroth (Fake Menu)
 		[1861] = bfa, -- Uldir
 
 		--[[ LittleWigs: Classic ]]--
@@ -262,6 +264,7 @@ do
 		[-376] = -424, [-379] = -424, [-504] = -424, [-507] = -424, [-554] = -424, -- Pandaria
 		[-542] = -572, [-543] = -572, [-534] = -572, -- Draenor
 		[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
+		[-942] = -947, -- Azeroth/BfA
 	}
 end
 

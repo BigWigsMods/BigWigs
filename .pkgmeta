@@ -21,6 +21,7 @@ move-folders:
     BigWigs/Core: BigWigs_Core
     BigWigs/Options: BigWigs_Options
     BigWigs/Plugins: BigWigs_Plugins
+    BigWigs/Azeroth: BigWigs_Azeroth
     BigWigs/Uldir: BigWigs_Uldir
 
 ignore:
