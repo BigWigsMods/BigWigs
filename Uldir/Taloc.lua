@@ -15,7 +15,7 @@ mod.respawnTime = 16
 
 local plasmaCount = 1
 local defensiveBeamCount = 1
-local timersUldirDefensiveBeam = {30, 15, 15, 15} -- XXX Check times for each difficulty
+local timersUldirDefensiveBeam = {28, 15, 15, 15}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -24,7 +24,7 @@ local timersUldirDefensiveBeam = {30, 15, 15, 15} -- XXX Check times for each di
 function mod:GetOptions()
 	return {
 		"stages",
-		{271224, "SAY"}, -- Plasma Discharge
+		{271224, "SAY", "SAY_COUNTDOWN"}, -- Plasma Discharge
 		270290, -- Blood Storm
 		271296, -- Cudgel of Gore
 		271728, -- Retrieve Cudgel
@@ -32,15 +32,15 @@ function mod:GetOptions()
 		271965, -- Powered Down
 		275270, -- Fixate
 		275432, -- Uldir Defensive Beam
-		{275189, "SAY", "SAY_COUNTDOWN"}, -- Hardened Arteries
+		{275189, "SAY_COUNTDOWN"}, -- Hardened Arteries
 		{275205, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Enlarged Heart
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "PlasmaDischarge", 271224)
-	self:Log("SPELL_AURA_APPLIED", "PlasmaDischargeApplied", 271224)
-	self:Log("SPELL_AURA_REMOVED", "PlasmaDischargeRemoved", 271224)
+	self:Log("SPELL_CAST_SUCCESS", "PlasmaDischarge", 271224, 278888) -- Stage 1, Stage 2
+	self:Log("SPELL_AURA_APPLIED", "PlasmaDischargeApplied", 271224, 278888)
+	self:Log("SPELL_AURA_REMOVED", "PlasmaDischargeRemoved", 271224, 278888)
 	self:Log("SPELL_CAST_START", "CudgelofGore", 271296)
 	self:Log("SPELL_CAST_START", "RetrieveCudgel", 271728)
 	self:Log("SPELL_CAST_START", "SanguineStaticStart", 271895)
@@ -66,9 +66,9 @@ end
 function mod:OnEngage()
 	plasmaCount = 1
 	self:Bar(271224, 6) -- Plasma Discharge
-	self:Bar(271895, 20.5) -- Sanguine Static
-	self:Bar(271296, 31.5) -- Cudgel of Gore
-	self:Bar(271728, 53.5) -- Retrieve Cudgel
+	self:Bar(271895, 22.5) -- Sanguine Static
+	self:Bar(271296, 36) -- Cudgel of Gore
+	self:Bar(271728, 52) -- Retrieve Cudgel
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
@@ -79,15 +79,22 @@ end
 
 function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp < 63 then -- Intermission at 60%
+	if hp < 38 then -- Intermission at 35%
 		self:Message("stages", "green", nil, CL.soon:format(CL.intermission), false)
 		self:UnregisterUnitEvent(event, unit)
 	end
 end
 
-function mod:PlasmaDischarge(args)
-	plasmaCount = plasmaCount + 1
-	self:Bar(args.spellId, plasmaCount == 2 and 42.5 or 30.5)
+do
+	local prev = 0
+	function mod:PlasmaDischarge(args)
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			plasmaCount = plasmaCount + 1
+			self:Bar(args.spellId, plasmaCount == 2 and 42.5 or 30.5)
+		end
+	end
 end
 
 do
@@ -98,7 +105,7 @@ do
 		self:TargetsMessage(args.spellId, "yellow", playerList)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
-			--self:SayCountdown(args.spellId, 6) XXX Countdown until you start dropping pools instead
+			self:SayCountdown(args.spellId, 3.5)
 		end
 	end
 
@@ -149,7 +156,7 @@ function mod:PoweredDown(args)
 	self:StopBar(271728) -- Retrieve Cudgel
 	self:StopBar(275205) -- Enlarged Heart
 
-	self:CDBar(args.spellId, 88.8, CL.intermission)
+	self:CDBar(args.spellId, 87.5, CL.intermission)
 
 	defensiveBeamCount = 1
 	self:StartDefensiveBeamTimer(timersUldirDefensiveBeam[defensiveBeamCount])
@@ -169,10 +176,10 @@ function mod:PoweredDownRemoved(args)
 	self:PlaySound(args.spellId, "long")
 	self:Message(args.spellId, "green", nil, CL.over:format(CL.intermission))
 
-	self:Bar(271224, 6) -- Plasma Discharge
-	self:Bar(271895, 20.5) -- Sanguine Static
-	self:Bar(271296, 31.5) -- Cudgel of Gore
-	self:Bar(271728, 53.5) -- Retrieve Cudgel
+	self:Bar(271224, 12.8) -- Plasma Discharge
+	self:Bar(271895, 27.5) -- Sanguine Static
+	self:Bar(271296, 37) -- Cudgel of Gore
+	self:Bar(271728, 57.5) -- Retrieve Cudgel
 end
 
 function mod:Fixate(args)
@@ -187,12 +194,12 @@ do
 	function mod:HardenedArteriesApplied(args)
 		local t = GetTime()
 		if t-prev > 2 then
+			prev = t
 			self:Message(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
-			if self:Me(args.destGUID) then
-				self:Say(args.spellId)
-				self:SayCountdown(args.spellId, 6)
-			end
+		end
+		if self:Me(args.destGUID) then
+			self:SayCountdown(args.spellId, 6)
 		end
 	end
 
