@@ -14,7 +14,7 @@ mod.respawnTime = 30
 --
 
 local omegaList = {}
-local omegaIconCount = 0
+local omegaIconCount = 1
 local pathogenBombCount = 1
 local nextLiquify = 0
 
@@ -22,7 +22,7 @@ local nextLiquify = 0
 -- Initialization
 --
 
-local omegaVectorMarker = mod:AddMarkerOption(false, "player", 1, 265143, 1, 2, 3) -- Sentence of Sargeras
+local omegaVectorMarker = mod:AddMarkerOption(false, "player", 1, 265143, 1, 2, 3) -- Omega Vector
 function mod:GetOptions()
 	return {
 		{265143, "SAY_COUNTDOWN"}, -- Omega Vector
@@ -38,7 +38,6 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "OmegaVectorApplied", 265129, 265143) -- Normal, Heroic
 	self:Log("SPELL_AURA_REMOVED", "OmegaVectorRemoved", 265129, 265143) -- Normal, Heroic
-
 	self:Log("SPELL_CAST_SUCCESS", "EvolvingAffliction", 265178)
 	self:Log("SPELL_AURA_APPLIED", "EvolvingAfflictionApplied", 265178)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EvolvingAfflictionApplied", 265178)
@@ -185,8 +184,6 @@ function mod:LiquefyRemoved(args)
 	nextLiquify = GetTime() + 93
 	self:Bar(args.spellId, 93)
 end
-
-
 
 function mod:PlagueBomb(args)
 	self:Message(args.spellId, "red")
