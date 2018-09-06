@@ -28,7 +28,7 @@ function mod:GetOptions()
 	return {
 		{265143, "SAY_COUNTDOWN"}, -- Omega Vector
 		omegaVectorMarker,
-		{265127, "INFOBOX"} -- Lingering Infection
+		{265127, "INFOBOX"}, -- Lingering Infection
 		{265178, "TANK"}, -- Evolving Affliction
 		267242, -- Contagion
 		{265212, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Gestate
