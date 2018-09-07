@@ -321,7 +321,6 @@ do
 
 		proxCircle:Show()
 		proxAnchor.playerDot:Show()
-		proxAnchor.rangeCircle:Show()
 		proxAnchor.text:Hide()
 	end
 
@@ -338,7 +337,6 @@ do
 	end
 
 	function testText()
-		proxAnchor.rangeCircle:Hide()
 		proxAnchor.playerDot:Hide()
 		proxAnchor.text:SetText("|cffaad372Legolasftw|r\n|cfff48cbaTirionman|r\n|cfffff468Sneakystab|r\n|cffc69b6dIamconanok|r")
 		proxAnchor.text:Show()
@@ -935,13 +933,6 @@ do
 		text:SetAllPoints(proxAnchor)
 		proxAnchor.text = text
 
-		local rangeCircle = proxAnchor:CreateTexture(nil, "ARTWORK")
-		rangeCircle:SetPoint("CENTER")
-		rangeCircle:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\alert_circle")
-		rangeCircle:SetBlendMode("ADD")
-		proxAnchor.rangeCircle = rangeCircle
-		proxCircle = rangeCircle
-
 		local rangePulse = proxAnchor:CreateTexture(nil, "ARTWORK")
 		rangePulse:SetPoint("CENTER")
 		rangePulse:SetAtlas("GarrLanding-CircleGlow")
@@ -1361,7 +1352,6 @@ do
 		updateUnits()
 
 		if db.textMode then
-			proxAnchor.rangeCircle:Hide()
 			proxAnchor.playerDot:Hide()
 			proxAnchor.text:SetText("")
 			proxAnchor.text:Show()
@@ -1369,7 +1359,6 @@ do
 			local size = min(proxAnchor:GetSize())
 			proxAnchor.rangePulse:SetSize(size, size)
 		else
-			proxAnchor.rangeCircle:Show()
 			proxAnchor.playerDot:Show()
 			proxAnchor.text:Hide()
 
