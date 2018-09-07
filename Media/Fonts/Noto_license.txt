@@ -1,0 +1,5 @@
+License: SIL Open Font License, Version 1.1
+License URL: https://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL
+Author: Google
+Source: https://www.google.com/get/noto/
+Modifications: None
