@@ -23,7 +23,7 @@ function mod:GetOptions()
 	return {
 		{272146, "INFOBOX"}, -- Annihilation
 		{273282, "TANK"}, -- Essence Shear
-		273538, -- Obliteration Wave
+		273538, -- Obliteration Blast
 		272404, -- Oblivion Sphere
 		{272536, "SAY", "SAY_COUNTDOWN"}, -- Imminent Ruin
 		273810, -- Xalzaix's Awakening
@@ -137,7 +137,7 @@ function mod:XalzaixsAwakening(args)
 
 	self:StopBar(272536) -- Imminent Ruin
 	self:StopBar(273282) -- Essence Shear
-	self:StopBar(273538) -- Obliteration Wave
+	self:StopBar(273538) -- Obliteration Blast
 	self:StopBar(272404) -- Oblivion Sphere
 
 	self:Bar(273949, 11.5) -- Visions of Madness
@@ -151,7 +151,7 @@ function mod:OblivionsVeilRemoved(args)
 
 	self:Bar(273282, 3) -- Essence Shear
 	-- XXX Need Data
-	--self:Bar(273538, 9.5) -- Obliteration Wave
+	--self:Bar(273538, 9.5) -- Obliteration Blast
 	--self:Bar(272404, 20) -- Oblivion Sphere
 	--self:Bar(272536, 20) -- Imminent Ruin
 end
