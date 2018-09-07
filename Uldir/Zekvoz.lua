@@ -19,7 +19,11 @@ mod.engageId = 2136
 --
 
 local stage = 1
-local nextStageWarning = 70
+local nextStageWarning = 73
+local lastPower = 0
+local eyeBeamCount = 0
+local roilingDeceitCount = 0
+local roilingDeceitTargets = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -27,8 +31,7 @@ local nextStageWarning = 70
 
 local L = mod:GetLocale()
 if L then
-	L.stage2_yell = "Yogg-Saron data loading." -- Full Yell: Disc accessed. Yogg-Saron data loading.
-	L.stage3_yell = "Corrupted data loading." -- Full Yell: Disc accessed. Corrupted data loading.
+	
 end
 
 --------------------------------------------------------------------------------
@@ -44,7 +47,7 @@ function mod:GetOptions()
 		{265248, "TANK"}, -- Shatter
 
 		--[[ Stage 1 ]]--
-		{264382, "SAY"}, -- Eye Beam
+		{264382, "SAY", "ICON"}, -- Eye Beam
 		-18390, -- Qiraji Warrior
 
 		--[[ Stage 2 ]]--
@@ -64,7 +67,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	--[[ General ]]--
@@ -89,13 +91,19 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	self:Bar(265231, 15.5) -- Void Lash (Initial)
-	self:Bar(265530, 30.5) -- Surging Darkness
-	self:Bar(-18390, 70, nil, 275772) -- Qiraji Warrior
-	self:CDBar(264382, 96) -- Eye Beam
-
 	nextStageWarning = 73
+	lastPower = 0
+	eyeBeamCount = 0
+	roilingDeceitCount = 0
+	roilingDeceitTargets = {}
+
+	self:Bar(265231, 15.4) -- Void Lash (Initial)
+	self:Bar(265530, 25) -- Surging Darkness
+	self:Bar(-18390, 55.5, nil, 275772) -- Qiraji Warrior
+	self:CDBar(264382, 51.8) -- Eye Beam
+
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -114,24 +122,26 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(_, msg)
-	if msg:find(L.stage2_yell) then
-		stage = 2
+function mod:UNIT_POWER_FREQUENT(event, unit)
+	local power = UnitPower(unit)
+	if power < lastPower and lastPower ~= 100 then
+		stage = stage + 1
 		self:Message("stages", "green", "Long", CL.stage:format(stage), false)
-		self:StopBar(-18390) -- Qiraji Warrior
-		self:StopBar(264382) -- Eye Beam
-		self:CDBar(265360, 27) -- Roiling Deceit
-		self:Bar(265231, 30) -- Void Lash (Initial)
-		self:Bar(265530, 60.5) -- Surging Darkness
-	elseif msg:find(L.stage3_yell) then
-		stage = 3
-		self:Message("stages", "green", "Long", CL.stage:format(stage), false)
-		self:StopBar(-18397) -- Anub'ar Voidweaver
-		self:StopBar(265360) -- Roiling Deceit
-		self:Bar(267239, 17.5) -- Orb of Corruption
-		self:Bar(265231, 35) -- Void Lash (Initial)
-		self:Bar(265530, 60.5) -- Surging Darkness
+		self:Bar(265530, 80) -- Surging Darkness
+		if stage == 2 then
+			self:StopBar(-18390) -- Qiraji Warrior
+			self:StopBar(264382) -- Eye Beam
+			self:CDBar(265360, 27) -- Roiling Deceit -- Until APPLIED not START
+			self:Bar(265231, 30) -- Void Lash (Initial)
+		elseif stage == 3 then
+			self:UnregisterUnitEvent(event, unit)
+			self:StopBar(-18397) -- Anub'ar Voidweaver
+			self:StopBar(265360) -- Roiling Deceit
+			self:Bar(267239, 12) -- Orb of Corruption
+			self:Bar(265231, 30) -- Void Lash (Initial)
+		end
 	end
+	lastPower = power
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
@@ -142,7 +152,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	elseif spellId == 267192 then -- Spawn Anub'ar Caster
 		self:Message(-18397, "cyan", nil, nil, 267180)
 		self:PlaySound(-18397, "long")
-		self:Bar(-18397, 62, nil, 267180)
+		self:Bar(-18397, 80, nil, 267180)
 	end
 end
 
@@ -150,7 +160,7 @@ end
 function mod:SurgingDarkness(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
-	self:Bar(args.spellId, 63.5)
+	self:Bar(args.spellId, 83)
 end
 
 function mod:VoidLash(args)
@@ -160,7 +170,7 @@ function mod:VoidLash(args)
 		self:Bar(265248, 4) -- Shatter
 		self:Bar(265231, 6.5) -- Void Lash (Secondary)
 	else -- Secondary
-		self:Bar(265231, 31.5) -- Void Lash (Initial)
+		self:Bar(265231, 31.2) -- Void Lash (Time to initial 37.7 - 6.5)
 	end
 end
 
@@ -171,58 +181,64 @@ end
 
 --[[ Stage 1 ]]--
 do
-	local prev = 0
 	local function printTarget(self, name, guid)
-		self:TargetMessage2(264382, "yellow", name)
+		local count = CL.count:format(self:SpellName(264382), eyeBeamCount)
+		self:TargetMessage2(264382, "yellow", name, nil, count)
 		self:PlaySound(264382, "alert")
+		self:PrimaryIcon(264382, name)
 		if self:Me(guid) then
-			self:Say(264382)
+			self:Say(264382, count)
+		end
+		if eyeBeamCount == 3 then
+			self:ScheduleTimer("PrimaryIcon", 3, 264382)
 		end
 	end
 	function mod:EyeBeam(args)
-		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
 		self:CastBar(args.spellId, 3)
-		local t = GetTime()
-		if t-prev > 15 then -- Casts it in sets of 3, we only need the cooldown between the sets
-			prev = t
-			self:CDBar(args.spellId, 46)
+		eyeBeamCount = eyeBeamCount + 1
+		if eyeBeamCount == 4 then
+			eyeBeamCount = 1
+		elseif eyeBeamCount == 3 then
+			self:CDBar(args.spellId, 32.8)
 		end
 	end
 end
 
 --[[ Stage 2 ]]--
 do
-	local prev, targetFound = 0, false
 	local function printTarget(self, name, guid)
-		if not self:Tank(name) then
-			targetFound = true
-			self:TargetMessage2(265360, "yellow", name)
-			if self:Me(guid) then
-				self:PlaySound(265360, "warning")
-				self:Say(265360)
-			end
+		roilingDeceitTargets[guid] = true
+		local count = CL.count:format(self:SpellName(265360), roilingDeceitCount)
+		self:TargetMessage2(265360, "yellow", name, nil, count)
+		if self:Me(guid) then
+			self:PlaySound(265360, "warning")
+			self:Say(265360, count)
 		end
 	end
 	function mod:RoilingDeceit(args)
-		targetFound = false
-		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		local t = GetTime()
-		if t-prev > 15 then -- Casts it in sets of 3, we only need the cooldown between the sets
-			prev = t
-			self:CDBar(265360, 46)
+		self:GetBossTarget(printTarget, 1, args.sourceGUID)
+		roilingDeceitCount = roilingDeceitCount + 1
+		if roilingDeceitCount == 4 then
+			roilingDeceitCount = 1
+		elseif roilingDeceitCount == 3 then
+			self:CDBar(265360, 52.7)
 		end
 	end
 
 	function mod:RoilingDeceitApplied(args)
-		if not targetFound then
+		if not roilingDeceitTargets[args.destGUID] then -- Backup for target scan
 			self:TargetMessage2(args.spellId, "yellow", args.destName)
 			if self:Me(args.destGUID) then
 				self:PlaySound(args.spellId, "warning")
 				self:SayCountdown(args.spellId, 12)
 				self:Say(args.spellId)
 			end
-		elseif self:Me(args.destGUID) then
-			self:SayCountdown(args.spellId, 12)
+		else
+			roilingDeceitTargets[args.destGUID] = nil
+			if self:Me(args.destGUID) then
+				self:SayCountdown(args.spellId, 12)
+			end
 		end
 	end
 
@@ -244,7 +260,7 @@ end
 function mod:OrbofCorruption(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 90)
+	self:Bar(args.spellId, 90) -- XXX verify
 end
 
 function mod:CorruptorsPact(args)
