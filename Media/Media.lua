@@ -5,11 +5,12 @@ local media = LibStub("LibSharedMedia-3.0")
 -- Bar Textures
 do
 	local STATUSBAR = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
-	media:Register(STATUSBAR, "Otravi", "Interface\\AddOns\\BigWigs\\Media\\Textures\\otravi")
-	media:Register(STATUSBAR, "Smooth", "Interface\\AddOns\\BigWigs\\Media\\Textures\\smooth")
-	media:Register(STATUSBAR, "Glaze", "Interface\\AddOns\\BigWigs\\Media\\Textures\\glaze")
+	media:Register(STATUSBAR, "Otravi", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Otravi")
+	media:Register(STATUSBAR, "Smooth", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Smooth")
+	media:Register(STATUSBAR, "Smooth v2", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Smoothv2")
+	media:Register(STATUSBAR, "Glaze", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Glaze")
 	media:Register(STATUSBAR, "Charcoal", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Charcoal")
-	media:Register(STATUSBAR, "BantoBar", "Interface\\AddOns\\BigWigs\\Media\\Textures\\default")
+	media:Register(STATUSBAR, "BantoBar", "Interface\\AddOns\\BigWigs\\Media\\Textures\\BantoBar")
 end
 
 -- Sounds
