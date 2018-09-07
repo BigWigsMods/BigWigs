@@ -79,7 +79,7 @@ function mod:OmegaVectorApplied(args)
 		omegaList[args.destName] = omegaList[args.destName] + 1
 	end
 	if self:GetOption(omegaVectorMarker) and omegaList[args.destName] == 1 then
-		SetRaidTarget(args.destName, self:Easy() and 1 or (omegaIconCount%3)+1) -- Normal: 1 Heroic+: 1->2->3->1
+		SetRaidTarget(args.destName, (omegaIconCount%3)+1) -- Normal: 1 Heroic+: 1->2->3->1
 		omegaIconCount = omegaIconCount + 1
 	end
 	if self:Me(args.destGUID) then
