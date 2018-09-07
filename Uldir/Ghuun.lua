@@ -60,9 +60,10 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Stage 1
-	self:Log("SPELL_CAST_SUCCESS", "ExplosiveCorruptionSuccess", 274262, 272505)
-	self:Log("SPELL_AURA_APPLIED", "ExplosiveCorruptionApplied", 275756, 272506)
-	self:Log("SPELL_AURA_REMOVED", "ExplosiveCorruptionRemoved", 275756, 272506)
+	self:Log("SPELL_CAST_SUCCESS", "ExplosiveCorruptionSuccess", 275756, 272505) -- Stage 1 + 2, Stage 3
+	self:Log("SPELL_AURA_APPLIED", "ExplosiveCorruptionApplied", 274262, 272506) -- Stage 1 + 2, Stage 3 + Orb Hit
+	self:Log("SPELL_MISSED", "ExplosiveCorruptionRemoved", 274262, 272506) -- Incase it's immuned
+	self:Log("SPELL_AURA_REMOVED", "ExplosiveCorruptionRemoved", 274262, 272506)
 	self:Log("SPELL_CAST_START", "ThousandMaws", 267509)
 	self:Log("SPELL_CAST_START", "Torment", 267427)
 	self:Log("SPELL_CAST_START", "MassiveSmash", 267412)
@@ -124,25 +125,44 @@ function mod:CorruptingBiteApplied()
 	self:Bar(263235, 47) -- Blood Feast
 end
 
-function mod:ExplosiveCorruptionSuccess(args)
-	self:TargetMessage2(272506, "orange", args.destName)
-	if self:Me(args.destGUID) then
-		self:PlaySound(272506, "warning")
+do
+	local castOnMe = nil
+	function mod:ExplosiveCorruptionSuccess(args)
+		if args.spellId == 272505 then -- Initial application in stage 3 on heroic
+			if self:Me(args.destGUID) then
+				castOnMe = true
+			end
+			self:TargetMessage2(272506, "orange", args.destName)
+		end
+		self:CDBar(272506, stage == 1 and 13 or 13.4)
 	end
-	self:CDBar(272506, stage == 1 and 13 or 13.4)
-end
 
-function mod:ExplosiveCorruptionApplied(args)
-	if self:Me(args.destGUID) then
-		self:TargetMessage2(272506, "blue", args.destName)
-		self:Say(272506)
-		self:SayCountdown(272506, 4)
+	local playerList = mod:NewTargetList()
+	function mod:ExplosiveCorruptionApplied(args)
+		if args.spellId == 274262 then -- Initial debuff
+			playerList[#playerList+1] = args.destName
+			if self:Me(args.destGUID) then
+				self:PlaySound(272506, "alarm")
+				self:Say(272506)
+				self:SayCountdown(272506, 4)
+			end
+			self:TargetsMessage(272506, "orange", playerList, 3)
+		elseif self:Me(args.destGUID) then -- Secondary Target or Stage 3 initial application
+			if castOnMe == true then
+				castOnMe = false
+			else
+				self:TargetMessage2(272506, "blue", args.destName)
+			end
+			self:Say(272506)
+			self:SayCountdown(272506, 4)
+		end
 	end
-end
 
-function mod:ExplosiveCorruptionRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(272506)
+	function mod:ExplosiveCorruptionRemoved(args)
+		if self:Me(args.destGUID) then
+			castOnMe = false
+			self:CancelSayCountdown(272506)
+		end
 	end
 end
 
