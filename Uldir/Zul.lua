@@ -13,9 +13,12 @@ mod.engageId = 2145 -- XXX Needs checking
 -- Initialization
 --
 
+local darkRevelationMarker = mod:AddMarkerOption(false, "player", 1, 273365, 1, 2) -- Dark Revelation
+local deathwishMarker = mod:AddMarkerOption(false, "player", 1, 274271, 1, 2) -- Deathwish
 function mod:GetOptions()
 	return {
 		{273365, "SAY", "SAY_COUNTDOWN"}, -- Dark Revelation
+		darkRevelationMarker,
 		{269936, "SAY"}, -- Fixate
 		273360, -- Pool of Darkness
 		273889, -- Call of Blood
@@ -26,6 +29,7 @@ function mod:GetOptions()
 		274168, -- Locus of Corruption
 		{274358, "TANK"}, -- Rupturing Blood
 		274271, -- Deathwish
+		deathwishMarker,
 	}
 end
 
@@ -33,6 +37,7 @@ function mod:OnBossEnable()
 	-- Stage 1
 	self:Log("SPELL_CAST_SUCCESS", "DarkRevelation", 273365)
 	self:Log("SPELL_AURA_APPLIED", "DarkRevelationApplied", 273365)
+	self:Log("SPELL_AURA_REMOVED", "DarkRevelationRemoved", 273365)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 269936, 276020)
 	self:Log("SPELL_CAST_START", "PoolofDarkness", 273360)
 	self:Log("SPELL_CAST_START", "CallofBlood", 273889, 274098, 274119)
@@ -46,6 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "RupturingBloodApplied", 274358)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RupturingBloodApplied", 274358)
 	self:Log("SPELL_AURA_APPLIED", "DeathwishApplied", 274271)
+	self:Log("SPELL_AURA_REMOVED", "DeathwishRemoved", 274271)
 end
 
 function mod:OnEngage()
@@ -62,18 +68,48 @@ function mod:DarkRevelation(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList, isOnMe = {}, nil
+
+	local function announce()
+		local meOnly = mod:CheckOption(273365, "ME_ONLY")
+
+		if isOnMe and (meOnly or #playerList == 1) then
+			mod:Message(273365, "blue", nil, CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(273365))))
+		elseif not meOnly then
+			local msg = ""
+			for i=1, #playerList do
+				local icon = ("|T13700%d:0|t"):format(i)
+				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
+			end
+
+			mod:Message(273365, "yellow", nil, CL.other:format(mod:SpellName(273365), msg))
+		end
+
+		playerList = {}
+		isOnMe = nil
+	end
+
 	function mod:DarkRevelationApplied(args)
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
+			self:SimpleTimer(announce, 0.1)
 			self:CastBar(args.spellId, 10) -- XXX Change to an 'Exploding Bar' incase more appropriate
 		end
 		if self:Me(args.destGUID) then
+			isOnMe = #playerList
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 10)
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList)
+		if self:GetOption(darkRevelationMarker) then
+			SetRaidTarget(args.destName, #playerList)
+		end
+	end
+end
+
+function mod:DarkRevelationRemoved(args)
+	if self:GetOption(darkRevelationMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
@@ -139,12 +175,44 @@ function mod:RupturingBloodApplied(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList, isOnMe = {}, nil
+
+	local function announce()
+		local meOnly = mod:CheckOption(274271, "ME_ONLY")
+
+		if isOnMe and (meOnly or #playerList == 1) then
+			mod:Message(274271, "blue", nil, CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(274271))))
+		elseif not meOnly then
+			local msg = ""
+			for i=1, #playerList do
+				local icon = ("|T13700%d:0|t"):format(i)
+				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
+			end
+
+			mod:Message(274271, "orange", nil, CL.other:format(mod:SpellName(274271), msg))
+		end
+
+		playerList = {}
+		isOnMe = nil
+	end
+
 	function mod:DeathwishApplied(args)
 		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			self:SimpleTimer(announce, 0.1)
+		end
 		if self:Me(args.destGUID) then
+			isOnMe = #playerList
 			self:PlaySound(args.spellId, "alarm")
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList)
+		if self:GetOption(deathwishMarker) then
+			SetRaidTarget(args.destName, #playerList)
+		end
+	end
+end
+
+function mod:DeathwishRemoved(args)
+	if self:GetOption(deathwishMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
