@@ -13,6 +13,7 @@ mod.respawnTime = 16
 -- Locals
 --
 
+local stage = 1
 local plasmaCount = 1
 local defensiveBeamCount = 1
 local timersUldirDefensiveBeam = {28, 15, 15, 15}
@@ -29,7 +30,6 @@ function mod:GetOptions()
 		271296, -- Cudgel of Gore
 		271728, -- Retrieve Cudgel
 		{271895, "SAY"}, -- Sanguine Static
-		271965, -- Powered Down
 		275270, -- Fixate
 		275432, -- Uldir Defensive Beam
 		{275189, "SAY_COUNTDOWN"}, -- Hardened Arteries
@@ -64,6 +64,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	stage = 1
 	plasmaCount = 1
 	self:Bar(271224, 6) -- Plasma Discharge
 	self:Bar(271895, 22.5) -- Sanguine Static
@@ -148,15 +149,15 @@ function mod:SanguineStatic(args)
 end
 
 function mod:PoweredDown(args)
-	self:PlaySound(args.spellId, "long")
-	self:Message(args.spellId, "green")
+	self:PlaySound("stages", "long")
+	self:Message("stages", "green", nil, CL.intermission, false)
 	self:StopBar(271224) -- Plasma Discharge
 	self:StopBar(271895) -- Sanguine Static
 	self:StopBar(271296) -- Cudgel of Gore
 	self:StopBar(271728) -- Retrieve Cudgel
 	self:StopBar(275205) -- Enlarged Heart
 
-	self:CDBar(args.spellId, 87.5, CL.intermission)
+	self:CDBar("stages", 87.5, CL.intermission)
 
 	defensiveBeamCount = 1
 	self:StartDefensiveBeamTimer(timersUldirDefensiveBeam[defensiveBeamCount])
@@ -173,8 +174,9 @@ function mod:StartDefensiveBeamTimer(timer)
 end
 
 function mod:PoweredDownRemoved(args)
-	self:PlaySound(args.spellId, "long")
-	self:Message(args.spellId, "green", nil, CL.over:format(CL.intermission))
+	stage = 2
+	self:PlaySound("stages", "long")
+	self:Message("stages", "green", nil, CL.stage:format(stage), false)
 
 	self:Bar(271224, 12.8) -- Plasma Discharge
 	self:Bar(271895, 27.5) -- Sanguine Static
