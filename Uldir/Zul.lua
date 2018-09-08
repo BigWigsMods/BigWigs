@@ -14,7 +14,7 @@ mod.engageId = 2145 -- XXX Needs checking
 --
 
 local darkRevelationMarker = mod:AddMarkerOption(false, "player", 1, 273365, 1, 2) -- Dark Revelation
-local deathwishMarker = mod:AddMarkerOption(false, "player", 3, 274271, 3, 4) -- Deathwish
+local deathwishMarker = mod:AddMarkerOption(false, "player", 1, 274271, 1, 2) -- Deathwish
 function mod:GetOptions()
 	return {
 		{273365, "SAY", "SAY_COUNTDOWN"}, -- Dark Revelation
@@ -181,11 +181,11 @@ do
 		local meOnly = mod:CheckOption(274271, "ME_ONLY")
 
 		if isOnMe and (meOnly or #playerList == 1) then
-			mod:Message(274271, "blue", nil, CL.you:format(("|T13700%d:0|t%s"):format(isOnMe + 2, mod:SpellName(274271))))
+			mod:Message(274271, "blue", nil, CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(274271))))
 		elseif not meOnly then
 			local msg = ""
 			for i=1, #playerList do
-				local icon = ("|T13700%d:0|t"):format(i + 2)
+				local icon = ("|T13700%d:0|t"):format(i)
 				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
 			end
 
@@ -206,7 +206,7 @@ do
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(deathwishMarker) then
-			SetRaidTarget(args.destName, #playerList + 2)
+			SetRaidTarget(args.destName, #playerList)
 		end
 	end
 end
