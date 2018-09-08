@@ -92,7 +92,7 @@ do
 	function mod:DarkRevelationApplied(args)
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:SimpleTimer(announce, 0.3)
+			self:SimpleTimer(announce, 0.1)
 			self:CastBar(args.spellId, 10) -- XXX Change to an 'Exploding Bar' incase more appropriate
 		end
 		if self:Me(args.destGUID) then
@@ -199,7 +199,7 @@ do
 	function mod:DeathwishApplied(args)
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
-			self:SimpleTimer(announce, 0.3)
+			self:SimpleTimer(announce, 0.1)
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = #playerList
