@@ -9,6 +9,7 @@ mod:RegisterEnableMob(138967) -- XXX Needs checking
 mod.engageId = 2145 -- XXX Needs checking
 --mod.respawnTime = 30
 
+local stage = 1
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -17,16 +18,16 @@ local darkRevelationMarker = mod:AddMarkerOption(false, "player", 1, 273365, 1, 
 local deathwishMarker = mod:AddMarkerOption(false, "player", 1, 274271, 1, 2) -- Deathwish
 function mod:GetOptions()
 	return {
+		"stages",
 		{273365, "SAY", "SAY_COUNTDOWN"}, -- Dark Revelation
 		darkRevelationMarker,
-		{269936, "SAY"}, -- Fixate
-		273360, -- Pool of Darkness
+		269936, -- Fixate
+		273361, -- Pool of Darkness
 		273889, -- Call of Blood
 		273288, -- Thrumming Pulse
 		273451, -- Congeal Blood
 		273350, -- Bloodshard
 		276299, -- Engorged Burst
-		274168, -- Locus of Corruption
 		{274358, "TANK"}, -- Rupturing Blood
 		274271, -- Deathwish
 		deathwishMarker,
@@ -34,12 +35,13 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
 	-- Stage 1
 	self:Log("SPELL_CAST_SUCCESS", "DarkRevelation", 273365)
 	self:Log("SPELL_AURA_APPLIED", "DarkRevelationApplied", 273365)
 	self:Log("SPELL_AURA_REMOVED", "DarkRevelationRemoved", 273365)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 269936, 276020)
-	self:Log("SPELL_CAST_START", "PoolofDarkness", 273360)
 	self:Log("SPELL_CAST_START", "CallofBlood", 273889, 274098, 274119)
 	self:Log("SPELL_CAST_START", "ThrummingPulse", 273288)
 	self:Log("SPELL_CAST_SUCCESS", "CongealBlood", 273451)
@@ -55,16 +57,38 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(273360, 21) -- Pool of Darkness
+	stage = 1
+	self:Bar(273361, 21) -- Pool of Darkness
 	self:Bar(273365, 30) -- Dark Revelation
+
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:UNIT_HEALTH_FREQUENT(event, unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp < 43 then -- 40% Transition
+		local nextStage = stage + 1
+		self:Message("stages", "green", nil, CL.soon:format(CL.stage:format(nextStage)), false)
+		self:UnregisterUnitEvent(event, unit)
+	end
+end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 273361 then -- Pool of Darkness
+		self:Message(spellId, "orange")
+		self:PlaySound(spellId, "info")
+		self:Bar(spellId, stage == 1 and 31.5 or 15.8)
+	elseif spellId == 274315 then -- Deathwish
+		self:Bar(274271, 28)
+	end
+end
+
 function mod:DarkRevelation(args)
-	self:Bar(args.spellId, 45)
+	self:CDBar(args.spellId, 56) -- pull:30.5, 58.4, 56.0, 64.4
 end
 
 do
@@ -122,16 +146,9 @@ do
 				prev = t
 				self:TargetMessage2(269936, "blue", args.destName)
 				self:PlaySound(269936, "warning")
-				self:Say(269936)
 			end
 		end
 	end
-end
-
-function mod:PoolofDarkness(args)
-	self:Message(args.spellId, "orange")
-	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, 31.5)
 end
 
 function mod:CallofBlood(args) -- XXX Add types each wave/wave timers
@@ -162,8 +179,12 @@ function mod:EngorgedBurst(args)
 end
 
 function mod:LocusofCorruption(args)
-	self:Message(args.spellId, "green")
-	self:PlaySound(args.spellId, "long")
+	stage = 2
+	self:Message("stages", "green", nil, CL.stage:format(stage), false)
+	self:PlaySound("stages", "long")
+
+	self:CDBar(274358, 10) -- Rupturing Blood
+	self:CDBar(274271, 26) -- Death Wish
 end
 
 function mod:RupturingBloodApplied(args)
@@ -172,6 +193,7 @@ function mod:RupturingBloodApplied(args)
 	if self:Me(args.destGUID) or amount > 2 then
 		self:PlaySound(args.spellId, "warning", args.destName)
 	end
+	self:CDBar(args.spellId, 6.1)
 end
 
 do
