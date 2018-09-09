@@ -79,7 +79,6 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	callofBloodCount = 1
 	self:Bar(273361, 21) -- Pool of Darkness
 	self:Bar(273365, 30) -- Dark Revelation
 
