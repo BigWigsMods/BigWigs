@@ -31,7 +31,7 @@ local roilingDeceitTargets = {}
 
 local L = mod:GetLocale()
 if L then
-	
+	L.surging_darkness_eruption = "Eruption (%d)"
 end
 
 --------------------------------------------------------------------------------
@@ -161,6 +161,9 @@ function mod:SurgingDarkness(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 83)
+	self:CDBar(args.spellId, 10.5, L.surging_darkness_eruption:format(1))
+	self:CDBar(args.spellId, 17, L.surging_darkness_eruption:format(2))
+	self:CDBar(args.spellId, 23.5, L.surging_darkness_eruption:format(3))
 end
 
 function mod:VoidLash(args)
