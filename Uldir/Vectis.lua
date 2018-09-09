@@ -16,6 +16,8 @@ mod.respawnTime = 30
 local omegaList = {}
 local omegaIconCount = 1
 local pathogenBombCount = 1
+local contagionCount = 1
+local immunosuppressionCount = 1
 local nextLiquify = 0
 local lingeringInfectionList = {}
 
@@ -32,6 +34,7 @@ function mod:GetOptions()
 		{265178, "TANK"}, -- Evolving Affliction
 		267242, -- Contagion
 		{265212, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Gestate
+		265206, -- Immunosuppression
 		265217, -- Liquefy
 		266459, -- Plague Bomb
 	}
@@ -49,6 +52,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Gestate", 265209)
 	self:Log("SPELL_AURA_APPLIED", "GestateApplied", 265212)
 	self:Log("SPELL_AURA_REMOVED", "GestateRemoved", 265212)
+	self:Log("SPELL_CAST_START", "Immunosuppression", 265206)
+	self:Death("PlagueAmalgamDeath", 135016)
 	self:Log("SPELL_CAST_START", "Liquefy", 265217)
 	self:Log("SPELL_AURA_REMOVED", "LiquefyRemoved", 265217)
 	self:Log("SPELL_CAST_SUCCESS", "PlagueBomb", 266459)
@@ -58,8 +63,9 @@ function mod:OnEngage()
 	omegaList = {}
 	lingeringInfectionList = {}
 	omegaIconCount = 1
+	contagionCount = 1
 
-	self:Bar(267242, 20.5) -- Contagion
+	self:Bar(267242, 20.5, CL.count:format(self:SpellName(267242), contagionCount)) -- Contagion
 	self:Bar(265212, 10) -- Gestate
 
 	nextLiquify = GetTime() + 90
@@ -119,11 +125,12 @@ function mod:EvolvingAfflictionApplied(args)
 end
 
 function mod:Contagion(args)
-	self:Message(args.spellId, "orange")
+	self:Message(args.spellId, "orange", nil, CL.count:format(args.spellName, contagionCount))
 	self:PlaySound(args.spellId, "alarm")
+	contagionCount = contagionCount + 1
 	local timer = 23.1
 	if nextLiquify > GetTime() + timer then
-		self:Bar(args.spellId, timer)
+		self:Bar(args.spellId, timer, CL.count:format(args.spellName, contagionCount))
 	end
 end
 
@@ -138,6 +145,8 @@ function mod:Gestate(args)
 	end
 	self:TargetMessage2(265212, "orange", args.destName)
 	self:PrimaryIcon(265212, args.destName)
+	immunosuppressionCount = 1
+	self:CDBar(265206, 6, CL.count:format(self:SpellName(265206), contagionCount)) -- Immunosuppression
 end
 
 function mod:GestateApplied(args)
@@ -153,13 +162,24 @@ function mod:GestateRemoved(args)
 	self:PrimaryIcon(args.spellId)
 end
 
+function mod:Immunosuppression(args)
+	self:Message(args.spellId, "orange", nil, CL.count:format(args.spellName, immunosuppressionCount))
+	self:PlaySound(args.spellId, "alarm")
+	immunosuppressionCount = immunosuppressionCount + 1
+	self:Bar(args.spellId, 9.7, CL.count:format(args.spellName, immunosuppressionCount))
+end
+
+function mod:PlagueAmalgamDeath()
+	self:StopBar(CL.count:format(self:SpellName(265206), contagionCount))
+end
+
 function mod:Liquefy(args)
 	self:Message(args.spellId, "cyan", nil, CL.intermission)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 33)
 
 	self:StopBar(265209) -- Gestate
-	self:StopBar(267242) -- Contagion
+	self:StopBar(CL.count:format(self:SpellName(267242), contagionCount)) -- Contagion
 	self:StopBar(265178) -- Evolving Affliction
 
 	pathogenBombCount = 1
