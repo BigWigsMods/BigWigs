@@ -5,11 +5,28 @@
 
 local mod, CL = BigWigs:NewBoss("Zul", 1861, 2195)
 if not mod then return end
-mod:RegisterEnableMob(138967) -- XXX Needs checking
-mod.engageId = 2145 -- XXX Needs checking
+mod:RegisterEnableMob(138967)
+mod.engageId = 2145
 --mod.respawnTime = 30
 
+--------------------------------------------------------------------------------
+-- Locals
+--
+
 local stage = 1
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.crawg = "Crawg"
+	L.bloodhexer = "Bloodhexer"
+	L.crusher = "Crusher"
+	L.spawning = "Spawning: %s"
+end
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -23,7 +40,9 @@ function mod:GetOptions()
 		darkRevelationMarker,
 		269936, -- Fixate
 		273361, -- Pool of Darkness
-		273889, -- Call of Blood
+		-18539, -- Nazmani Crusher
+		-18540, -- Nazmani Bloodhexer
+		-18541, -- Bloodthirsty Crawg
 		273288, -- Thrumming Pulse
 		273451, -- Congeal Blood
 		273350, -- Bloodshard
@@ -42,7 +61,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DarkRevelationApplied", 273365)
 	self:Log("SPELL_AURA_REMOVED", "DarkRevelationRemoved", 273365)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 269936, 276020)
-	self:Log("SPELL_CAST_START", "CallofBlood", 273889, 274098, 274119)
+	self:Log("SPELL_CAST_START", "NazmaniCrusher", 274119)
+	self:Log("SPELL_CAST_START", "NazmaniBloodhexer", 274098)
+	self:Log("SPELL_CAST_START", "BloodthirstyCrawg", 273889)
 	self:Log("SPELL_CAST_START", "ThrummingPulse", 273288)
 	self:Log("SPELL_CAST_SUCCESS", "CongealBlood", 273451)
 	self:Log("SPELL_CAST_START", "Bloodshard", 273350)
@@ -58,8 +79,13 @@ end
 
 function mod:OnEngage()
 	stage = 1
+	callofBloodCount = 1
 	self:Bar(273361, 21) -- Pool of Darkness
 	self:Bar(273365, 30) -- Dark Revelation
+
+	self:CDBar(-18541, 37, L.crawg, "achievement_dungeon_infestedcrawg")
+	self:CDBar(-18540, 50, L.bloodhexer, "inv_bloodtrollfemalehead")
+	self:CDBar(-18539, 75, L.crusher, "inv_bloodtrollfemaleheaddire01")
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
@@ -151,9 +177,31 @@ do
 	end
 end
 
-function mod:CallofBlood(args) -- XXX Add types each wave/wave timers
-	self:Message(273889, "cyan")
-	self:PlaySound(273889, "long")
+function mod:NazmaniCrusher(args)
+	local messageText = L.crusher
+	local icon = "inv_bloodtrollfemaleheaddire01"
+	self:Message(-18539, "cyan", nil, CL.incoming:format(messageText), icon)
+	self:PlaySound(-18539, "long")
+	self:CDBar(-18539, 62.5, messageText, icon)
+	self:Bar(-18539, 14, L.spawning:format(messageText), icon)
+end
+
+function mod:NazmaniBloodhexer(args)
+	local messageText = L.bloodhexer
+	local icon = "inv_bloodtrollfemalehead"
+	self:Message(-18540, "cyan", nil, CL.incoming:format(messageText), icon)
+	self:PlaySound(-18540, "long")
+	self:CDBar(-18540, 62.5, messageText, icon)
+	self:Bar(-18540, 14, L.spawning:format(messageText), icon)
+end
+
+function mod:BloodthirstyCrawg(args)
+	local messageText = L.crawg
+	local icon = "achievement_dungeon_infestedcrawg"
+	self:Message(-18541, "cyan", nil, CL.incoming:format(messageText), icon)
+	self:PlaySound(-18541, "long")
+	self:CDBar(-18541, 42.5, messageText, icon)
+	self:Bar(-18541, 14, L.spawning:format(messageText), icon)
 end
 
 function mod:ThrummingPulse(args)
@@ -179,11 +227,18 @@ function mod:EngorgedBurst(args)
 end
 
 function mod:LocusofCorruption(args)
+	self:StopBar(L.crawg)
+	self:StopBar(L.bloodhexer)
+	self:StopBar(L.crusher)
+	self:StopBar(273361) -- Pool of Blood
+	self:StopBar(273365) -- Dark Revelation
+
 	stage = 2
 	self:Message("stages", "green", nil, CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
 	self:CDBar(274358, 10) -- Rupturing Blood
+	self:CDBar(273361, 16) -- Pool of Blood
 	self:CDBar(274271, 26) -- Death Wish
 end
 
