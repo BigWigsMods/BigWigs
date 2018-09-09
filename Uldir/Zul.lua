@@ -214,8 +214,8 @@ function mod:CongealBlood(args)
 end
 
 function mod:Bloodshard(args)
-	self:Message(args.spellId, "orange")
-	if self:Interrupter() then
+	if self:Interrupter(args.sourceGUID) then
+		self:Message(args.spellId, "orange")
 		self:PlaySound(args.spellId, "alert")
 	end
 end
