@@ -19,7 +19,7 @@ mod.engageId = 2136
 --
 
 local stage = 1
-local nextStageWarning = 73
+local nextStageWarning = 68
 local lastPower = 0
 local eyeBeamCount = 0
 local roilingDeceitCount = 0
@@ -91,7 +91,7 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	nextStageWarning = 73
+	nextStageWarning = self:Mythic() and 43 or 68
 	lastPower = 0
 	eyeBeamCount = 0
 	roilingDeceitCount = 0
@@ -112,11 +112,11 @@ end
 
 function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp < nextStageWarning then
+	if hp < nextStageWarning then -- Mythic: 40%, other: 65% and 30%
 		local nextStage = stage + 1
 		self:Message("stages", "green", nil, CL.soon:format(CL.stage:format(nextStage)), false)
-		nextStageWarning = nextStageWarning - 30
-		if nextStageWarning < 40 then
+		nextStageWarning = nextStageWarning - 35
+		if nextStageWarning < 35 then
 			self:UnregisterUnitEvent(event, unit)
 		end
 	end
@@ -131,6 +131,7 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 		if stage == 2 then
 			self:StopBar(-18390) -- Qiraji Warrior
 			self:StopBar(264382) -- Eye Beam
+			self:Bar(-18397, 20.5, nil, 267180) -- Anub'ar Voidweaver
 			self:CDBar(265360, 27) -- Roiling Deceit -- Until APPLIED not START
 			self:Bar(265231, 30) -- Void Lash (Initial)
 		elseif stage == 3 then
