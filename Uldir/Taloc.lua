@@ -17,6 +17,8 @@ local stage = 1
 local plasmaCount = 1
 local defensiveBeamCount = 1
 local timersUldirDefensiveBeam = {28, 15, 15, 15}
+local cudgelCount = 1
+local arteriesCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -50,7 +52,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 275270)
 
 	-- Mythic
-
 	self:Log("SPELL_AURA_APPLIED", "HardenedArteriesApplied", 275189)
 	self:Log("SPELL_AURA_REMOVED", "HardenedArteriesRemoved", 275189)
 
@@ -66,11 +67,17 @@ end
 function mod:OnEngage()
 	stage = 1
 	plasmaCount = 1
+	cudgelCount = 1
+	arteriesCount = 1
+
 	self:Bar(271224, 6) -- Plasma Discharge
 	self:Bar(271895, 22.5) -- Sanguine Static
-	self:Bar(271296, 36) -- Cudgel of Gore
+	self:Bar(271296, 36, CL.count:format(self:SpellName(271296), cudgelCount)) -- Cudgel of Gore
 	self:Bar(271728, 52) -- Retrieve Cudgel
-
+	if self:Mythic() then
+		self:Bar(275189, 25, CL.count:format(self:SpellName(275189), arteriesCount)) -- Hardened Arteries
+		self:Bar(275205, 26) -- Enlarged Heart
+	end
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
@@ -118,10 +125,11 @@ do
 end
 
 function mod:CudgelofGore(args)
-	self:PlaySound(args.spellId, "warning")
+	self:PlaySound(args.spellId, "warning", nil, CL.count:format(args.spellName, cudgelCount))
 	self:Message(args.spellId, "red")
-	self:CastBar(args.spellId, 4.5)
-	self:CDBar(args.spellId, 59)
+	self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, cudgelCount))
+	cudgelCount = cudgelCount + 1
+	self:CDBar(args.spellId, 59, CL.count:format(args.spellName, cudgelCount))
 end
 
 function mod:RetrieveCudgel(args)
@@ -153,9 +161,10 @@ function mod:PoweredDown(args)
 	self:Message("stages", "green", nil, CL.intermission, false)
 	self:StopBar(271224) -- Plasma Discharge
 	self:StopBar(271895) -- Sanguine Static
-	self:StopBar(271296) -- Cudgel of Gore
+	self:StopBar(CL.count:format(self:SpellName(271296), cudgelCount)) -- Cudgel of Gore
 	self:StopBar(271728) -- Retrieve Cudgel
 	self:StopBar(275205) -- Enlarged Heart
+	self:StopBar(CL.count:format(self:SpellName(275189), arteriesCount)) -- Hardened Arteries
 
 	self:CDBar("stages", 87.5, CL.intermission)
 
@@ -178,10 +187,17 @@ function mod:PoweredDownRemoved(args)
 	self:PlaySound("stages", "long")
 	self:Message("stages", "green", nil, CL.stage:format(stage), false)
 
+	arteriesCount = 1
+	cudgelCount = 1
+
 	self:Bar(271224, 12.8) -- Plasma Discharge
 	self:Bar(271895, 27.5) -- Sanguine Static
-	self:Bar(271296, 37) -- Cudgel of Gore
+	self:Bar(271296, 37, CL.count:format(self:SpellName(271296), cudgelCount)) -- Cudgel of Gore
 	self:Bar(271728, 57.5) -- Retrieve Cudgel
+	--if self:Mythic() then XXX Need timers
+	--	self:Bar(275189, 25, CL.count:format(self:SpellName(275189), arteriesCount)) -- Hardened Arteries
+	--	self:Bar(275205, 26) -- Enlarged Heart
+	--end
 end
 
 function mod:Fixate(args)
@@ -197,8 +213,10 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "yellow")
+			self:Message(args.spellId, "yellow", nil, CL.count:format(args.spellName, arteriesCount))
 			self:PlaySound(args.spellId, "alert")
+			arteriesCount = arteriesCount + 1
+			self:CDBar(args.spellId, 60.5, CL.count:format(args.spellName, arteriesCount))
 		end
 		if self:Me(args.destGUID) then
 			self:SayCountdown(args.spellId, 6)
@@ -213,7 +231,7 @@ do
 end
 
 function mod:EnlargedHeart(args)
-	self:CDBar(args.spellId, 62)
+	self:CDBar(args.spellId, 60.5)
 end
 
 function mod:EnlargedHeartApplied(args)
