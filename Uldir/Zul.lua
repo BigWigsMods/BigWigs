@@ -57,7 +57,7 @@ function mod:GetOptions()
 		273451, -- Congeal Blood
 		273350, -- Bloodshard
 		276299, -- Engorged Burst
-		{274358, "TANK", "SAY_COUNTDOWN"}, -- Rupturing Blood
+		{274358, "SAY_COUNTDOWN"}, -- Rupturing Blood
 		274271, -- Deathwish
 		deathwishMarker,
 	}
@@ -81,6 +81,7 @@ function mod:OnBossEnable()
 
 	-- Stage 2
 	self:Log("SPELL_CAST_SUCCESS", "LocusofCorruption", 274168)
+	self:Log("SPELL_CAST_SUCCESS", "RupturingBlood", 274358)
 	self:Log("SPELL_AURA_APPLIED", "RupturingBloodApplied", 274358)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RupturingBloodApplied", 274358)
 	self:Log("SPELL_AURA_REMOVED", "RupturingBloodRemoved", 274358)
@@ -247,22 +248,32 @@ function mod:LocusofCorruption(args)
 	self:Message("stages", "green", nil, CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
-	self:CDBar(274358, 10) -- Rupturing Blood
+	if self:Tank() then
+		self:CDBar(274358, 10) -- Rupturing Blood
+	end
 	self:CDBar(273361, 16) -- Pool of Blood
 	self:CDBar(274271, 26) -- Death Wish
 end
 
+function mod:RupturingBlood(args)
+	if self:Tank() then
+		self:CDBar(args.spellId, 6.1)
+	end
+end
+
 function mod:RupturingBloodApplied(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 		self:SayCountdown(args.spellId, 20, nil, 5)
 		self:PlaySound(args.spellId, "warning", args.destName)
-	elseif amount > 2 then
-		self:PlaySound(args.spellId, "warning", args.destName)
+		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+	elseif self:Tank() and self:Tank(args.destName) then
+		local amount = args.amount or 1
+		self:StackMessage(args.spellId, args.destName, amount, "purple")
+		if amount > 2 then
+			self:PlaySound(args.spellId, "warning", args.destName)
+		end
 	end
-	self:CDBar(args.spellId, 6.1)
 end
 
 function mod:RupturingBloodRemoved(args)
