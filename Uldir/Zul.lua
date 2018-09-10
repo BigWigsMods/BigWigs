@@ -21,17 +21,17 @@ local stage = 1
 
 local L = mod:GetLocale()
 if L then
-	L.crawg = -18541, -- Bloodthirsty Crawg
+	L.crawg = -18541 -- Bloodthirsty Crawg
 	L.crawg_msg = "Crawg"
 	L.crawg_desc = "Warnings and timers for when the Nazmani Bloodhexer spawns."
 	L.crawg_icon = "inv_bloodtrollfemalehead"
 
-	L.bloodhexer = -18540, -- Nazmani Bloodhexer
+	L.bloodhexer = -18540 -- Nazmani Bloodhexer
 	L.bloodhexer_msg = "Bloodhexer"
 	L.bloodhexer_desc = "Warnings and timers for when the Nazmani Bloodhexer spawns."
 	L.bloodhexer_icon = "inv_bloodtrollfemalehead"
 
-	L.crusher = -18539, -- Nazmani Crusher
+	L.crusher = -18539 -- Nazmani Crusher
 	L.crusher_msg = "Crusher"
 	L.crusher_desc = "Warnings and timers for when the Nazmani Crusher spawns."
 	L.crusher_icon = "inv_bloodtrollfemaleheaddire01"
@@ -152,7 +152,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:SimpleTimer(announce, 0.1)
-			self:TargetBar(args.spellId, 10, 140995) -- 140995 = "Explode"
+			self:TargetBar(args.spellId, 10, 140995, args.spellId) -- 140995 = "Explode"
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = #playerList
