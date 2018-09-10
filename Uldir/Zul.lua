@@ -23,7 +23,7 @@ local L = mod:GetLocale()
 if L then
 	L.crawg = -18541 -- Bloodthirsty Crawg
 	L.crawg_msg = "Crawg"
-	L.crawg_desc = "Warnings and timers for when the Nazmani Bloodhexer spawns."
+	L.crawg_desc = "Warnings and timers for when the Bloodthirsty Crawg spawns."
 	L.crawg_icon = "achievement_dungeon_infestedcrawg"
 
 	L.bloodhexer = -18540 -- Nazmani Bloodhexer
