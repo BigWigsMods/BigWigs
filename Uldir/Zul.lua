@@ -154,7 +154,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:SimpleTimer(announce, 0.1)
-			self:TargetBar(args.spellId, 10, 140995, args.spellId) -- 140995 = "Explode"
+			self:TargetBar(args.spellId, 10, args.destName, 140995, args.spellId) -- 140995 = "Explode"
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = #playerList
