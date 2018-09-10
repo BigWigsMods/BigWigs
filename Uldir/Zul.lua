@@ -57,7 +57,7 @@ function mod:GetOptions()
 		273451, -- Congeal Blood
 		273350, -- Bloodshard
 		276299, -- Engorged Burst
-		{274358, "TANK"}, -- Rupturing Blood
+		{274358, "TANK", "SAY_COUNTDOWN"}, -- Rupturing Blood
 		274271, -- Deathwish
 		deathwishMarker,
 	}
@@ -83,6 +83,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "LocusofCorruption", 274168)
 	self:Log("SPELL_AURA_APPLIED", "RupturingBloodApplied", 274358)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RupturingBloodApplied", 274358)
+	self:Log("SPELL_AURA_REMOVED", "RupturingBloodRemoved", 274358)
 	self:Log("SPELL_AURA_APPLIED", "DeathwishApplied", 274271)
 	self:Log("SPELL_AURA_REMOVED", "DeathwishRemoved", 274271)
 end
@@ -167,6 +168,9 @@ do
 end
 
 function mod:DarkRevelationRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 	if self:GetOption(darkRevelationMarker) then
 		SetRaidTarget(args.destName, 0)
 	end
@@ -248,10 +252,20 @@ end
 function mod:RupturingBloodApplied(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
-	if self:Me(args.destGUID) or amount > 2 then
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+		self:SayCountdown(args.spellId, 20, nil, 5)
+		self:PlaySound(args.spellId, "warning", args.destName)
+	elseif amount > 2 then
 		self:PlaySound(args.spellId, "warning", args.destName)
 	end
 	self:CDBar(args.spellId, 6.1)
+end
+
+function mod:RupturingBloodRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 do
