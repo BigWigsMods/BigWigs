@@ -21,10 +21,20 @@ local stage = 1
 
 local L = mod:GetLocale()
 if L then
-	L.crawg = "Crawg"
-	L.bloodhexer = "Bloodhexer"
-	L.crusher = "Crusher"
-	L.spawning = "Spawning: %s"
+	L.crawg = -18541, -- Bloodthirsty Crawg
+	L.crawg_msg = "Crawg"
+	L.crawg_desc = "Warnings and timers for when the Nazmani Bloodhexer spawns."
+	L.crawg_icon = "inv_bloodtrollfemalehead"
+
+	L.bloodhexer = -18540, -- Nazmani Bloodhexer
+	L.bloodhexer_msg = "Bloodhexer"
+	L.bloodhexer_desc = "Warnings and timers for when the Nazmani Bloodhexer spawns."
+	L.bloodhexer_icon = "inv_bloodtrollfemalehead"
+
+	L.crusher = -18539, -- Nazmani Crusher
+	L.crusher_msg = "Crusher"
+	L.crusher_desc = "Warnings and timers for when the Nazmani Crusher spawns."
+	L.crusher_icon = "inv_bloodtrollfemaleheaddire01"
 end
 
 --------------------------------------------------------------------------------
@@ -40,9 +50,9 @@ function mod:GetOptions()
 		darkRevelationMarker,
 		269936, -- Fixate
 		273361, -- Pool of Darkness
-		-18539, -- Nazmani Crusher
-		-18540, -- Nazmani Bloodhexer
-		-18541, -- Bloodthirsty Crawg
+		"crusher",
+		"bloodhexer",
+		"crawg",
 		273288, -- Thrumming Pulse
 		273451, -- Congeal Blood
 		273350, -- Bloodshard
@@ -82,9 +92,9 @@ function mod:OnEngage()
 	self:Bar(273361, 21) -- Pool of Darkness
 	self:Bar(273365, 30) -- Dark Revelation
 
-	self:CDBar(-18541, 37, L.crawg, "achievement_dungeon_infestedcrawg")
-	self:CDBar(-18540, 50, L.bloodhexer, "inv_bloodtrollfemalehead")
-	self:CDBar(-18539, 75, L.crusher, "inv_bloodtrollfemaleheaddire01")
+	self:CDBar("crawg", 37, CL.soon:format(L.crawg_msg), L.crawg_icon)
+	self:CDBar("bloodhexer", 50, CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
+	self:CDBar("crusher", 75, CL.soon:format(L.crusher_msg), L.crusher_icon)
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
@@ -142,7 +152,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:SimpleTimer(announce, 0.1)
-			self:CastBar(args.spellId, 10) -- XXX Change to an 'Exploding Bar' incase more appropriate
+			self:TargetBar(args.spellId, 10, 140995) -- 140995 = "Explode"
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = #playerList
@@ -177,30 +187,24 @@ do
 end
 
 function mod:NazmaniCrusher(args)
-	local messageText = L.crusher
-	local icon = "inv_bloodtrollfemaleheaddire01"
-	self:Message(-18539, "cyan", nil, CL.incoming:format(messageText), icon)
-	self:PlaySound(-18539, "long")
-	self:CDBar(-18539, 62.5, messageText, icon)
-	self:Bar(-18539, 14, L.spawning:format(messageText), icon)
+	self:Message("crusher", "cyan", nil, CL.soon:format(L.crusher_msg), L.crusher_icon)
+	self:PlaySound("crusher", "long")
+	self:CDBar("crusher", 62.5, CL.soon:format(L.crusher_msg), L.crusher_icon)
+	self:Bar("crusher", 14, CL.spawning:format(L.crusher_msg), L.crusher_icon)
 end
 
 function mod:NazmaniBloodhexer(args)
-	local messageText = L.bloodhexer
-	local icon = "inv_bloodtrollfemalehead"
-	self:Message(-18540, "cyan", nil, CL.incoming:format(messageText), icon)
-	self:PlaySound(-18540, "long")
-	self:CDBar(-18540, 62.5, messageText, icon)
-	self:Bar(-18540, 14, L.spawning:format(messageText), icon)
+	self:Message("bloodhexer", "cyan", nil, CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
+	self:PlaySound("bloodhexer", "long")
+	self:CDBar("bloodhexer", 62.5, L.bloodhexer_msg, L.bloodhexer_icon)
+	self:Bar("bloodhexer", 14, CL.spawning:format(L.bloodhexer_msg), L.bloodhexer_icon)
 end
 
 function mod:BloodthirstyCrawg(args)
-	local messageText = L.crawg
-	local icon = "achievement_dungeon_infestedcrawg"
-	self:Message(-18541, "cyan", nil, CL.incoming:format(messageText), icon)
-	self:PlaySound(-18541, "long")
-	self:CDBar(-18541, 42.5, messageText, icon)
-	self:Bar(-18541, 14, L.spawning:format(messageText), icon)
+	self:Message("crawg", "cyan", nil, CL.soon:format(L.crawg_msg), L.crawg_icon)
+	self:PlaySound("crawg", "long")
+	self:CDBar("crawg", 42.5, L.crawg_msg, L.crawg_icon)
+	self:Bar("crawg", 14, CL.spawning:format(L.crawg_msg), L.crawg_icon)
 end
 
 function mod:ThrummingPulse(args)
