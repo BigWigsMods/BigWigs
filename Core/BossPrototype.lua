@@ -1285,12 +1285,14 @@ do
 					ready = false
 				end
 			end
+
 			if guid then
-				if canInterrupt and (UnitGUID("target") == guid or UnitGUID("focus") == guid) then
+				if UnitGUID("target") == guid or UnitGUID("focus") == guid then
 					return canInterrupt, ready
 				end
 				return
 			end
+
 			return canInterrupt, ready
 		end
 	end
