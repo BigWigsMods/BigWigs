@@ -15,6 +15,7 @@ mod.respawnTime = 30
 
 local omegaList = {}
 local omegaIconCount = 1
+local omegaIconReset = mod:Mythic() and 5 or 4
 local pathogenBombCount = 1
 local contagionCount = 1
 local immunosuppressionCount = 1
@@ -26,7 +27,7 @@ local omegaVectorDuration = nil
 -- Initialization
 --
 
-local omegaVectorMarker = mod:AddMarkerOption(false, "player", 1, 265143, 1, 2, 3) -- Omega Vector
+local omegaVectorMarker = mod:AddMarkerOption(false, "player", 1, 265143, 1, 2, 3, 4) -- Omega Vector
 function mod:GetOptions()
 	return {
 		{265143, "SAY_COUNTDOWN"}, -- Omega Vector
@@ -66,6 +67,7 @@ function mod:OnEngage()
 	omegaIconCount = 1
 	contagionCount = 1
 	omegaVectorDuration = nil
+	omegaIconReset = self:Mythic() and 5 or 4
 
 	self:Bar(267242, 20.5, CL.count:format(self:SpellName(267242), contagionCount)) -- Contagion
 	self:Bar(265212, 10) -- Gestate
@@ -96,8 +98,11 @@ function mod:OmegaVectorApplied(args)
 		omegaList[args.destName] = omegaList[args.destName] + 1
 	end
 	if self:GetOption(omegaVectorMarker) and omegaList[args.destName] == 1 then
-		SetRaidTarget(args.destName, (omegaIconCount%3)+1) -- Normal: 1 Heroic+: 1->2->3->1
+		SetRaidTarget(args.destName, omegaIconCount) -- Mythic: 4, Others: 3
 		omegaIconCount = omegaIconCount + 1
+		if omegaIconCount == omegaIconReset then
+			omegaIconCount = 1
+		end
 	end
 	if self:Me(args.destGUID) then
 		self:TargetMessage2(265143, "blue", args.destName)
