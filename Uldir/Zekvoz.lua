@@ -203,7 +203,7 @@ do
 	end
 	function mod:EyeBeam(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		self:CastBar(args.spellId, self:Mythic() 1.5 or 3)
+		self:CastBar(args.spellId, self:Mythic() and 1.5 or 3)
 		eyeBeamCount = eyeBeamCount + 1
 		if eyeBeamCount == 4 then
 			eyeBeamCount = 1
