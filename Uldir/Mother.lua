@@ -97,7 +97,8 @@ end
 
 function mod:ClingingCorruption(args)
 	self:Message(args.spellId, "orange")
-	if self:Interrupter() then
+	local _, ready = self:Interrupter()
+	if ready then
 		self:PlaySound(args.spellId, "alert")
 	end
 end

@@ -254,9 +254,12 @@ do
 end
 
 function mod:VoidBolt(args)
-	if self:Interrupter(args.sourceGUID) then
+	local canDo, ready = self:Interrupter(args.sourceGUID)
+	if canDo then
 		self:Message(args.spellId, "yellow")
-		self:PlaySound(args.spellId, "alert")
+		if ready then
+			self:PlaySound(args.spellId, "alert")
+		end
 	end
 end
 
