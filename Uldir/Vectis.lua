@@ -85,9 +85,11 @@ function mod:OmegaVectorApplied(args)
 		omegaList[args.destName] = 1
 		if not omegaVectorDuration then
 			local _, _, _, expires = self:UnitDebuff(args.destName, args.spellId)
-			local duration = expires-GetTime()
-			if duration > 9 then -- Safety
-				omegaVectorDuration = duration
+			if expires then -- Safety
+				local duration = expires-GetTime()
+				if duration > 9 then -- Safety
+					omegaVectorDuration = duration
+				end
 			end
 		end
 	else
