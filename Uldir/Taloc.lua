@@ -34,7 +34,7 @@ function mod:GetOptions()
 		{271895, "SAY"}, -- Sanguine Static
 		275270, -- Fixate
 		275432, -- Uldir Defensive Beam
-		{275189, "SAY_COUNTDOWN"}, -- Hardened Arteries
+		{275189, "SAY_COUNTDOWN", "FLASH"}, -- Hardened Arteries
 		{275205, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Enlarged Heart
 	}
 end
@@ -76,7 +76,7 @@ function mod:OnEngage()
 	self:Bar(271728, 52) -- Retrieve Cudgel
 	if self:Mythic() then
 		self:Bar(275189, 25, CL.count:format(self:SpellName(275189), arteriesCount)) -- Hardened Arteries
-		self:Bar(275205, 26) -- Enlarged Heart
+		self:Bar(275205, 25) -- Enlarged Heart
 	end
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
@@ -126,7 +126,7 @@ end
 
 function mod:CudgelofGore(args)
 	self:PlaySound(args.spellId, "warning")
-	self:Message(args.spellId, "red")
+	self:Message(args.spellId, "red", nil, CL.count:format(args.spellName, cudgelCount))
 	self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, cudgelCount))
 	cudgelCount = cudgelCount + 1
 	self:CDBar(args.spellId, 59, CL.count:format(args.spellName, cudgelCount))
@@ -166,7 +166,7 @@ function mod:PoweredDown(args)
 	self:StopBar(275205) -- Enlarged Heart
 	self:StopBar(CL.count:format(self:SpellName(275189), arteriesCount)) -- Hardened Arteries
 
-	self:CDBar("stages", 87.5, CL.intermission)
+	self:CDBar("stages", 87.5, CL.intermission, 271965) -- Powered Down
 
 	defensiveBeamCount = 1
 	self:StartDefensiveBeamTimer(timersUldirDefensiveBeam[defensiveBeamCount])
@@ -194,10 +194,10 @@ function mod:PoweredDownRemoved(args)
 	self:Bar(271895, 27.5) -- Sanguine Static
 	self:Bar(271296, 37, CL.count:format(self:SpellName(271296), cudgelCount)) -- Cudgel of Gore
 	self:Bar(271728, 57.5) -- Retrieve Cudgel
-	--if self:Mythic() then XXX Need timers
-	--	self:Bar(275189, 25, CL.count:format(self:SpellName(275189), arteriesCount)) -- Hardened Arteries
-	--	self:Bar(275205, 26) -- Enlarged Heart
-	--end
+	if self:Mythic() then
+		self:Bar(275189, 31, CL.count:format(self:SpellName(275189), arteriesCount)) -- Hardened Arteries
+		self:Bar(275205, 31) -- Enlarged Heart
+	end
 end
 
 function mod:Fixate(args)
@@ -219,6 +219,7 @@ do
 			self:CDBar(args.spellId, 60.5, CL.count:format(args.spellName, arteriesCount))
 		end
 		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
 			self:SayCountdown(args.spellId, 6)
 		end
 	end
