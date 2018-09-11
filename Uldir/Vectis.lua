@@ -39,6 +39,11 @@ function mod:GetOptions()
 		265206, -- Immunosuppression
 		265217, -- Liquefy
 		266459, -- Plague Bomb
+		-- Mythic
+		{274990, "FLASH"}, -- Bursting Lesions
+	},{
+		[265143] = "general",
+		[274990] = CL.mythic,
 	}
 end
 
@@ -59,6 +64,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Liquefy", 265217)
 	self:Log("SPELL_AURA_REMOVED", "LiquefyRemoved", 265217)
 	self:Log("SPELL_CAST_SUCCESS", "PlagueBomb", 266459)
+
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "BurstingLesionsApplied", 274990)
 end
 
 function mod:OnEngage()
@@ -220,5 +228,14 @@ function mod:PlagueBomb(args)
 	pathogenBombCount = pathogenBombCount + 1
 	if pathogenBombCount < 3 then
 		self:Bar(args.spellId, 12.2)
+	end
+end
+
+
+function mod:BurstingLesionsApplied(args)
+	if self:Me(args.destGUID) then
+		self:TargetMessage2(args.spellId, "blue", args.destName)
+		self:PlaySound(args.spellId, "warning")
+		self:Flash(args.spellId)
 	end
 end
