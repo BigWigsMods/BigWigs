@@ -18,6 +18,7 @@ local nextStageWarning = 69
 local annihilationList = {}
 local visionCount = 1
 local beamCount = 1
+local ruinCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,6 +33,7 @@ end
 -- Initialization
 --
 
+local imminentRuinMarker = mod:AddMarkerOption(false, "player", 1, 272536, 1, 2) -- Imminent Ruin
 function mod:GetOptions()
 	return {
 		"stages",
@@ -40,6 +42,7 @@ function mod:GetOptions()
 		273538, -- Obliteration Blast
 		{272404, "PROXIMITY"}, -- Oblivion Sphere
 		{272536, "SAY", "SAY_COUNTDOWN"}, -- Imminent Ruin
+		imminentRuinMarker,
 		279013, -- Essence Shatter
 		273810, -- Xalzaix's Awakening
 		274230, -- Oblivion's Veil
@@ -76,8 +79,9 @@ end
 
 function mod:OnEngage()
 	stage = 1
+	ruinCount = 0
 	nextStageWarning = 69
-	wipe(annihilationList)
+	annihilationList = {}
 
 	self:OpenInfo(272146) -- Annihilation
 
@@ -179,18 +183,23 @@ function mod:OblivionSphere(args)
 end
 
 function mod:ImminentRuin()
+	ruinCount = 0
 	self:Bar(272536, 15)
 end
 
 do
 	local playerList = mod:NewTargetList()
 	function mod:ImminentRuinApplied(args)
+		ruinCount = ruinCount + 1
 		playerList[#playerList+1] = args.destName
 		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, ruinCount, ruinCount))
 			self:SayCountdown(args.spellId, 12)
 			self:PlaySound(args.spellId, "alert")
+		end
+		if self:GetOption(imminentRuinMarker) then
+			SetRaidTarget(args.destName, ruinCount)
 		end
 	end
 end
@@ -198,6 +207,9 @@ end
 function mod:ImminentRuinRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+	end
+	if self:GetOption(imminentRuinMarker) then
+		SetRaidTarget(args.destName, 0)
 	end
 end
 
