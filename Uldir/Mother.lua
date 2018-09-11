@@ -23,6 +23,7 @@ local L = mod:GetLocale()
 if L then
 	L.sideLaser = "(Side) Beams" -- short for: (location) Uldir Defensive Beam
 	L.upLaser = "(Roof) Beams"
+	L.mythic_beams = "(Side + Roof) Beams"
 end
 
 --------------------------------------------------------------------------------
@@ -38,6 +39,11 @@ function mod:GetOptions()
 		267795, -- Purifying Flame
 		267878, -- Wind Tunnel
 		268253, -- Uldir Defensive Beam
+		-- Mythic
+		{279662, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Endemic Virus
+	},{
+		[268198] = CL.general,
+		[279662] = CL.mythic,
 	}
 end
 
@@ -58,6 +64,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "UldirDefensiveBeam", 277973, 277742, 269827) -- Sideways Beams, Room 2 Roof Beams, Room 3 Roof Beams
 	self:Log("SPELL_PERIODIC_DAMAGE", "UldirDefensiveBeamDamage", 268253)
 	self:Log("SPELL_PERIODIC_MISSED", "UldirDefensiveBeamDamage", 268253)
+
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "EndemicVirusApplied", 279662)
+	self:Log("SPELL_AURA_REMOVED", "EndemicVirusRemoved", 279662)
 end
 
 function mod:OnEngage()
@@ -176,6 +186,11 @@ function mod:UldirDefensiveBeam(args)
 		castTime = 4
 		nextBeam = L.sideLaser
 		timer = 31.5
+	elseif self:Mythic() then
+		beamType = L.mythic_beams
+		castTime = 4
+		nextBeam = L.mythic_beams
+		timer = 31.5
 	elseif args.spellId == 277973 then
 		beamType = L.sideLaser
 		castTime = 4
@@ -203,6 +218,27 @@ do
 				self:PlaySound(args.spellId, "alarm")
 				self:TargetMessage2(args.spellId, "blue", args.destName, true)
 			end
+		end
+	end
+end
+
+-- Mythic
+do
+	local playerList = mod:NewTargetList()
+	function mod:EndemicVirusApplied(args)
+		playerList[#playerList+1] = args.destName
+		self:PlaySound(args.spellId, "warning", nil, playerList)
+		self:TargetsMessage(args.spellId, "yellow", playerList)
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 20)
+		end
+	end
+
+	function mod:EndemicVirusRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
 		end
 	end
 end
