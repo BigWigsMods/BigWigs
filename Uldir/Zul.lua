@@ -170,7 +170,7 @@ do
 		if self:Me(args.destGUID) then
 			isOnMe = #playerList
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId)
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, isOnMe, isOnMe))
 			self:SayCountdown(args.spellId, 10)
 		end
 		if self:GetOption(darkRevelationMarker) then
