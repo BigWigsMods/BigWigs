@@ -12,7 +12,7 @@ local mod, CL = BigWigs:NewBoss("Zek'voz, Herald of N'zoth", 1861, 2169)
 if not mod then return end
 mod:RegisterEnableMob(134445) -- Zek'voz
 mod.engageId = 2136
---mod.respawnTime = 30
+mod.respawnTime = 30 -- XXX verify
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -33,7 +33,7 @@ local L = mod:GetLocale()
 if L then
 	L.surging_darkness_eruption = "Eruption (%d)"
 	L.mythic_adds = "Mythic Adds"
-	L.mythic_adds_desc = "Show timers when adds will spawn in Mythic (Both Qiraji Warrior and Anub'ar Voidweaver spawn at the same time)"
+	L.mythic_adds_desc = "Show timers when adds will spawn in Mythic (Both Qiraji Warrior and Anub'ar Voidweaver spawn at the same time)."
 	L.mythic_adds_icon = "inv_misc_ahnqirajtrinket_01"
 end
 

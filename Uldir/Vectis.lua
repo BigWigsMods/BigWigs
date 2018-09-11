@@ -231,7 +231,6 @@ function mod:PlagueBomb(args)
 	end
 end
 
-
 function mod:BurstingLesionsApplied(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage2(args.spellId, "blue", args.destName)
