@@ -20,6 +20,7 @@ local contagionCount = 1
 local immunosuppressionCount = 1
 local nextLiquify = 0
 local lingeringInfectionList = {}
+local omegaVectorDuration = nil
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -64,6 +65,7 @@ function mod:OnEngage()
 	lingeringInfectionList = {}
 	omegaIconCount = 1
 	contagionCount = 1
+	omegaVectorDuration = nil
 
 	self:Bar(267242, 20.5, CL.count:format(self:SpellName(267242), contagionCount)) -- Contagion
 	self:Bar(265212, 10) -- Gestate
@@ -81,6 +83,13 @@ end
 function mod:OmegaVectorApplied(args)
 	if not omegaList[args.destName] then
 		omegaList[args.destName] = 1
+		if not omegaVectorDuration then
+			local _, _, _, expires = self:UnitDebuff(args.destName, args.spellId)
+			local duration = expires-GetTime()
+			if duration > 9 then -- Safety
+				omegaVectorDuration = duration
+			end
+		end
 	else
 		omegaList[args.destName] = omegaList[args.destName] + 1
 	end
@@ -91,7 +100,7 @@ function mod:OmegaVectorApplied(args)
 	if self:Me(args.destGUID) then
 		self:TargetMessage2(265143, "blue", args.destName)
 		self:PlaySound(265143, "alarm")
-		self:SayCountdown(265143, 10)
+		self:SayCountdown(265143, omegaVectorDuration or 10) -- duration based on raid size
 	end
 end
 
