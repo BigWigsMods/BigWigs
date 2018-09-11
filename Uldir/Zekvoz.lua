@@ -162,9 +162,13 @@ function mod:SurgingDarkness(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 83)
-	self:CDBar(args.spellId, 10.5, L.surging_darkness_eruption:format(1))
-	self:CDBar(args.spellId, 17, L.surging_darkness_eruption:format(2))
-	self:CDBar(args.spellId, 23.5, L.surging_darkness_eruption:format(3))
+	-- XXX Lots of Bars, try to rework into a less intrusive manner
+	self:CDBar(args.spellId, self:Mythic() and 8 or 10.5, L.surging_darkness_eruption:format(1))
+	self:CDBar(args.spellId, self:Mythic() and 12 or 17, L.surging_darkness_eruption:format(2))
+	self:CDBar(args.spellId, self:Mythic() and 16 or 23.5, L.surging_darkness_eruption:format(3))
+	if self:Mythic() then
+		self:CDBar(args.spellId, 20, L.surging_darkness_eruption:format(4))
+	end
 end
 
 function mod:VoidLash(args)
@@ -199,7 +203,7 @@ do
 	end
 	function mod:EyeBeam(args)
 		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
-		self:CastBar(args.spellId, 3)
+		self:CastBar(args.spellId, self:Mythic() 1.5 or 3)
 		eyeBeamCount = eyeBeamCount + 1
 		if eyeBeamCount == 4 then
 			eyeBeamCount = 1
