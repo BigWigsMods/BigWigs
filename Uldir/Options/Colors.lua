@@ -57,6 +57,7 @@ BigWigs:AddColors("Vectis", {
 })
 
 BigWigs:AddColors("Zul", {
+	[-18530] = "cyan",
 	[269936] = "blue",
 	[273288] = "yellow",
 	[273350] = "orange",
