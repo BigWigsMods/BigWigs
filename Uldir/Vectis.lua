@@ -132,7 +132,7 @@ end
 
 function mod:EvolvingAfflictionApplied(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
-	self:PlaySound(args.spellId, "alert", args.destName)
+	self:PlaySound(args.spellId, "alert", nil, args.destName)
 end
 
 function mod:Contagion(args)
