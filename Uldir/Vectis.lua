@@ -14,8 +14,8 @@ mod.respawnTime = 30
 --
 
 local omegaList = {}
-local omegaIconCount = 1
-local omegaIconReset = mod:Mythic() and 5 or 4
+local omegaMarker = {false, false, false, false}
+local omegaIconMax = mod:Mythic() and 4 or 3
 local pathogenBombCount = 1
 local contagionCount = 1
 local immunosuppressionCount = 1
@@ -74,10 +74,10 @@ end
 function mod:OnEngage()
 	omegaList = {}
 	lingeringInfectionList = {}
-	omegaIconCount = 1
+	omegaMarker = {false, false, false, false}
 	contagionCount = 1
 	omegaVectorDuration = nil
-	omegaIconReset = self:Mythic() and 5 or 4
+	omegaIconMax = self:Mythic() and 4 or 3
 
 	self:Bar(267242, 20.5, CL.count:format(self:SpellName(267242), contagionCount)) -- Contagion
 	self:Bar(265212, 10) -- Gestate
@@ -188,13 +188,25 @@ function mod:OmegaVectorApplied(args)
 		local t = GetTime()
 		omegaList[args.destName][count+1] = t
 	end
-	if self:GetOption(omegaVectorMarker) and omegaList[args.destName] == 1 then
-		SetRaidTarget(args.destName, omegaIconCount) -- Mythic: 4, Others: 3
-		omegaIconCount = omegaIconCount + 1
-		if omegaIconCount == omegaIconReset then
-			omegaIconCount = 1
+
+	local icon
+	for i = 1, omegaIconMax do
+		-- If 2 debuffs on a player always mark with the one expiring first
+		if omegaMarker[i] == args.destName and not icon then
+			icon = i
+		elseif not omegaMarker[i] then
+			omegaMarker[i] = args.destName
+			if not icon then
+				icon = i
+			end
+			break
 		end
 	end
+
+	if self:GetOption(omegaVectorMarker) and icon then
+		SetRaidTarget(args.destName, icon)
+	end
+
 	if self:Me(args.destGUID) then
 		self:TargetMessage2(265143, "blue", args.destName)
 		self:PlaySound(265143, "alarm")
@@ -204,13 +216,27 @@ end
 
 function mod:OmegaVectorRemoved(args)
 	tremove(omegaList[args.destName], 1)
-	if #omegaList[args.destName] == 0 then
-		if self:GetOption(omegaVectorMarker) then
-			SetRaidTarget(args.destName, 0)
+
+	local icon, found = 0, false
+	for i = 1, omegaIconMax do
+		if omegaMarker[i] == args.destName then
+			if found then
+				icon = i
+				break
+			else
+				found = true
+				omegaMarker[i] = false
+			end
 		end
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(265143)
-		end
+	end
+
+	if self:GetOption(omegaVectorMarker) then
+		-- Either remove the mark or update it to the next debuff
+		SetRaidTarget(args.destName, icon)
+	end
+
+	if self:Me(args.destGUID) and icon == 0 then
+		self:CancelSayCountdown(265143)
 	end
 end
 
