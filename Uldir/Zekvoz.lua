@@ -230,7 +230,7 @@ do
 		if eyeBeamCount == 4 then
 			eyeBeamCount = 1
 		elseif eyeBeamCount == 3 then
-			self:CDBar(args.spellId, 32.8)
+			self:CDBar(args.spellId, self:Mythic() and 52.5 or 32.8)
 		end
 	end
 end
