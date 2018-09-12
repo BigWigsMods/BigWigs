@@ -84,10 +84,10 @@ do
 		inTestMode = false
 		opener = nil
 		nameList = {}
-		for i = 1, 10 do
+		for i = 1, 40 do
 			self.text[i]:SetText("")
 		end
-		for i = 1, 9, 2 do
+		for i = 1, 40, 2 do
 			self.bar[i]:Hide()
 		end
 		self.title:SetText(L.infoBox)
@@ -97,6 +97,27 @@ do
 	bg:SetAllPoints(display)
 	bg:SetColorTexture(0, 0, 0, 0.3)
 	display.background = bg
+
+	local xxx1 = display:CreateTexture()
+	xxx1:SetPoint("LEFT", display, "RIGHT")
+	xxx1:SetColorTexture(0, 0, 0, 0.3)
+	xxx1:SetSize(infoboxWidth, infoboxHeight)
+	xxx1:Hide()
+	display.xxx1 = xxx1
+
+	local xxx2 = display:CreateTexture()
+	xxx2:SetPoint("TOP", display, "BOTTOM")
+	xxx2:SetColorTexture(0, 0, 0, 0.3)
+	xxx2:SetSize(infoboxWidth, infoboxHeight)
+	xxx2:Hide()
+	display.xxx2 = xxx2
+
+	local xxx3 = display:CreateTexture()
+	xxx3:SetPoint("TOPLEFT", display, "BOTTOMRIGHT")
+	xxx3:SetColorTexture(0, 0, 0, 0.3)
+	xxx3:SetSize(infoboxWidth, infoboxHeight)
+	xxx3:Hide()
+	display.xxx3 = xxx3
 
 	local close = CreateFrame("Button", nil, display)
 	close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
@@ -116,7 +137,7 @@ do
 	display.title = header
 
 	display.text = {}
-	for i = 1, 10 do
+	for i = 1, 20 do
 		local text = display:CreateFontString(nil, "OVERLAY")
 		text:SetFont(plugin:GetDefaultFont(12))
 		text:SetShadowOffset(1, -1)
@@ -134,15 +155,32 @@ do
 		end
 		display.text[i] = text
 	end
+	for i = 21, 40 do
+		local text = display:CreateFontString(nil, "OVERLAY")
+		text:SetFont(plugin:GetDefaultFont(12))
+		text:SetShadowOffset(1, -1)
+		text:SetTextColor(1,0.82,0,1)
+		text:SetSize(infoboxWidth/2, infoboxHeight/5)
+		if i % 2 == 0 then
+			text:SetPoint("LEFT", display.text[i-1], "RIGHT", -5, 0)
+			text:SetJustifyH("RIGHT")
+		else
+			text:SetPoint("LEFT", display.text[i-19], "RIGHT")
+			text:SetJustifyH("LEFT")
+		end
+		display.text[i] = text
+	end
 
 	local bgLayer, bgLevel = bg:GetDrawLayer()
 	display.bar = {}
-	for i = 1, 9, 2 do
+	for i = 1, 40, 2 do
 		local bar = display:CreateTexture(nil, bgLayer, nil, bgLevel + 1)
 		bar:SetSize(infoboxWidth, infoboxHeight/5-1)
 		bar:SetColorTexture(0, 1, 0, 0.3)
 		if i == 1 then
 			bar:SetPoint("TOPLEFT", display, "TOPLEFT", 0, -1)
+		elseif i == 21 then
+			bar:SetPoint("TOPLEFT", display, "TOPRIGHT", 0, -1)
 		else
 			bar:SetPoint("TOPLEFT", display.bar[i-1], "BOTTOMLEFT", 0, -1)
 		end
@@ -209,7 +247,7 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_ShowInfoBox(_, module, title)
+function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
 	if opener then
 		display:Hide()
 	end
@@ -220,6 +258,16 @@ function plugin:BigWigs_ShowInfoBox(_, module, title)
 	end
 	display.title:SetText(title)
 	display:Show()
+
+	if TEMP then
+		display.xxx1:Show()
+		display.xxx2:Show()
+		display.xxx3:Show()
+	else
+		display.xxx1:Hide()
+		display.xxx2:Hide()
+		display.xxx3:Hide()
+	end
 end
 
 function plugin:BigWigs_SetInfoBoxTitle(_, _, text)
