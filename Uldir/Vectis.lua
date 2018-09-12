@@ -101,7 +101,11 @@ end
 do
 	local function sortFunc(x,y)
 		local px, py = lingeringInfectionList[x] or -1, lingeringInfectionList[y] or -1
-		return px > py
+		if px == py then
+			return x > y
+		else
+			return px > py
+		end
 	end
 	local tsort = table.sort
 
@@ -130,6 +134,7 @@ do
 				else
 					mod:SetInfo(265127, i+19, "")
 					mod:SetInfo(265127, i+20, "")
+					mod:SetInfoBar(265127, i+19, 0)
 				end
 			else
 				if result then
@@ -151,6 +156,7 @@ do
 				else
 					mod:SetInfo(265127, i, "")
 					mod:SetInfo(265127, i+1, "")
+					mod:SetInfoBar(265127, i, 0)
 				end
 			end
 		end
