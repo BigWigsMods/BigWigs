@@ -168,8 +168,10 @@ function mod:PoweredDown(args)
 
 	self:CDBar("stages", 87.5, CL.intermission, 271965) -- Powered Down
 
-	defensiveBeamCount = 1
-	self:StartDefensiveBeamTimer(timersUldirDefensiveBeam[defensiveBeamCount])
+	if not self:Easy() then
+		defensiveBeamCount = 1
+		self:StartDefensiveBeamTimer(timersUldirDefensiveBeam[defensiveBeamCount])
+	end
 end
 
 function mod:StartDefensiveBeamTimer(timer)
