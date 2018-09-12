@@ -23,6 +23,9 @@ local nextLiquify = 0
 local lingeringInfectionList = {}
 local omegaVectorDuration = nil
 
+local nameList = {}
+local UpdateInfoBox
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -83,27 +86,99 @@ function mod:OnEngage()
 	nextLiquify = GetTime() + 90
 	self:Bar(265217, 90) -- Liquefy
 
-	self:OpenInfo(265127, self:SpellName(265127)) -- Lingering Infection
+	self:OpenInfo(265127, self:SpellName(265127), "TEMP") -- Lingering Infection
+	nameList = {}
+	for unit in self:IterateGroup() do
+		nameList[#nameList+1] = self:UnitName(unit)
+	end
+	UpdateInfoBox()
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+do
+	local function sortFunc(x,y)
+		local px, py = lingeringInfectionList[x] or -1, lingeringInfectionList[y] or -1
+		return px > py
+	end
+	local tsort = table.sort
+
+	function UpdateInfoBox()
+		tsort(nameList, sortFunc)
+		local line = 1
+		for i = 1, 20 do
+			local n = nameList[i]
+			local result = lingeringInfectionList[n]
+			if i % 2 == 0 then
+				if result then
+					local icon = GetRaidTargetIndex(n)
+					mod:SetInfo(265127, i+19, (icon and ("|T13700%d:0|t"):format(icon) or "") .. mod:ColorName(n))
+					mod:SetInfo(265127, i+20, result)
+					local vector = omegaList[n] and omegaList[n][1]
+					if vector then
+						local t = GetTime()
+						local elap = t - vector
+						local duration = omegaVectorDuration or 10
+						local remaining = duration - elap
+						if IsItemInRange(63427, n) then -- Worgsaw, 8yd
+							mod:SetInfoBar(265127, i+19, remaining/duration, 0, 0, 1)
+						else
+							mod:SetInfoBar(265127, i+19, remaining/duration)
+						end
+					end
+				else
+					mod:SetInfo(265127, i+19, "")
+					mod:SetInfo(265127, i+20, "")
+				end
+			else
+				if result then
+					local icon = GetRaidTargetIndex(n)
+					mod:SetInfo(265127, i, (icon and ("|T13700%d:0|t"):format(icon) or "") .. mod:ColorName(n))
+					mod:SetInfo(265127, i+1, result)
+					local vector = omegaList[n] and omegaList[n][1]
+					if vector then
+						local t = GetTime()
+						local elap = t - vector
+						local duration = omegaVectorDuration or 10
+						local remaining = duration - elap
+						if IsItemInRange(63427, n) then -- Worgsaw, 8yd
+							mod:SetInfoBar(265127, i+19, remaining/duration, 0, 0, 1)
+						else
+							mod:SetInfoBar(265127, i+19, remaining/duration)
+						end
+					end
+				else
+					mod:SetInfo(265127, i, "")
+					mod:SetInfo(265127, i+1, "")
+				end
+			end
+		end
+
+		if mod.isEngaged then
+			mod:SimpleTimer(UpdateInfoBox, 0.1)
+		end
+	end
+end
+
 function mod:OmegaVectorApplied(args)
 	if not omegaList[args.destName] then
-		omegaList[args.destName] = 1
+		local t = GetTime()
+		omegaList[args.destName] = {t}
 		if not omegaVectorDuration then
 			local _, _, _, expires = self:UnitDebuff(args.destName, args.spellId)
 			if expires then -- Safety
-				local duration = expires-GetTime()
+				local duration = expires-t
 				if duration > 9 then -- Safety
 					omegaVectorDuration = duration
 				end
 			end
 		end
 	else
-		omegaList[args.destName] = omegaList[args.destName] + 1
+		local count = #omegaList[args.destName]
+		local t = GetTime()
+		omegaList[args.destName][count+1] = t
 	end
 	if self:GetOption(omegaVectorMarker) and omegaList[args.destName] == 1 then
 		SetRaidTarget(args.destName, omegaIconCount) -- Mythic: 4, Others: 3
@@ -120,9 +195,8 @@ function mod:OmegaVectorApplied(args)
 end
 
 function mod:OmegaVectorRemoved(args)
-	omegaList[args.destName] = omegaList[args.destName] - 1
-	if omegaList[args.destName] == 0 then
-		omegaList[args.destName] = nil
+	tremove(omegaList[args.destName], 1)
+	if #omegaList[args.destName] == 0 then
 		if self:GetOption(omegaVectorMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
