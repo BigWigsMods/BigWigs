@@ -38,7 +38,7 @@ function mod:GetOptions()
 		{265127, "INFOBOX"}, -- Lingering Infection
 		{265178, "TANK"}, -- Evolving Affliction
 		267242, -- Contagion
-		{265212, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Gestate
+		{265212, "SAY", "ICON"}, -- Gestate
 		265206, -- Immunosuppression
 		265217, -- Liquefy
 		266459, -- Plague Bomb
@@ -60,7 +60,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EvolvingAfflictionApplied", 265178)
 	self:Log("SPELL_CAST_START", "Contagion", 267242)
 	self:Log("SPELL_CAST_SUCCESS", "Gestate", 265209)
-	self:Log("SPELL_AURA_APPLIED", "GestateApplied", 265212)
 	self:Log("SPELL_AURA_REMOVED", "GestateRemoved", 265212)
 	self:Log("SPELL_CAST_START", "Immunosuppression", 265206)
 	self:Death("PlagueAmalgamDeath", 135016)
@@ -256,16 +255,7 @@ function mod:Gestate(args)
 	self:CDBar(265206, 6, CL.count:format(self:SpellName(265206), immunosuppressionCount)) -- Immunosuppression
 end
 
-function mod:GestateApplied(args)
-	if self:Me(args.destGUID) then
-		self:SayCountdown(args.spellId, 5)
-	end
-end
-
 function mod:GestateRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
-	end
 	self:PrimaryIcon(args.spellId)
 end
 
