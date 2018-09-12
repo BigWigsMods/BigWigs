@@ -12,7 +12,7 @@ local mod, CL = BigWigs:NewBoss("Zek'voz, Herald of N'zoth", 1861, 2169)
 if not mod then return end
 mod:RegisterEnableMob(134445) -- Zek'voz
 mod.engageId = 2136
-mod.respawnTime = 30 -- XXX verify
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -114,7 +114,7 @@ function mod:OnEngage()
 	if self:Mythic() then
 		self:CDBar(265360, 31) -- Roiling Deceit -- Until APPLIED not START
 		self:Bar("mythic_adds", 60, CL.adds, L.mythic_adds_icon)
-	else
+	elseif not self:LFR() then
 		self:Bar(-18390, 55.5, nil, 275772) -- Qiraji Warrior
 	end
 
@@ -152,7 +152,9 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 		elseif stage == 2 then
 			self:StopBar(-18390) -- Qiraji Warrior
 			self:StopBar(264382) -- Eye Beam
-			self:Bar(-18397, 20.5, nil, 267180) -- Anub'ar Voidweaver
+			if not self:LFR() then
+				self:Bar(-18397, 20.5, nil, 267180) -- Anub'ar Voidweaver
+			end
 			self:CDBar(265360, 27) -- Roiling Deceit -- Until APPLIED not START
 			self:Bar(265231, 30) -- Void Lash (Initial)
 		elseif stage == 3 then
