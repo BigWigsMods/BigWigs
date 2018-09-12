@@ -319,7 +319,11 @@ do
 	local sortingTbl = nil
 	local function sortFunc(x,y)
 		local px, py = sortingTbl[x] or -1, sortingTbl[y] or -1
-		return px > py
+		if px == py then
+			return x > y
+		else
+			return px > py
+		end
 	end
 	local tsort = table.sort
 	local colors = plugin:GetColoredNameTable()
