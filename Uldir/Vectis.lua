@@ -129,6 +129,8 @@ do
 						else
 							mod:SetInfoBar(265127, i+19, remaining/duration)
 						end
+					else
+						mod:SetInfoBar(265127, i+19, 0)
 					end
 				else
 					mod:SetInfo(265127, i+19, "")
@@ -147,10 +149,12 @@ do
 						local duration = omegaVectorDuration or 10
 						local remaining = duration - elap
 						if IsItemInRange(63427, n) then -- Worgsaw, 8yd
-							mod:SetInfoBar(265127, i+19, remaining/duration, 0, 0, 1)
+							mod:SetInfoBar(265127, i, remaining/duration, 0, 0, 1)
 						else
-							mod:SetInfoBar(265127, i+19, remaining/duration)
+							mod:SetInfoBar(265127, i, remaining/duration)
 						end
+					else
+						mod:SetInfoBar(265127, i, 0)
 					end
 				else
 					mod:SetInfo(265127, i, "")
