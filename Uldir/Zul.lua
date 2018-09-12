@@ -141,9 +141,9 @@ do
 		local meOnly = mod:CheckOption(273365, "ME_ONLY")
 
 		if isOnMe then
-			self:TargetBar(273365, 10, args.destName)
+			mod:TargetBar(273365, 10, args.destName)
 		else
-			self:Bar(-18530, 10, -18530, 172884) -- Minion of Zul, spell_shadow_shadowfiend
+			mod:Bar(-18530, 10, -18530, 172884) -- Minion of Zul, spell_shadow_shadowfiend
 		end
 
 		if isOnMe and (meOnly or #playerList == 1) then
