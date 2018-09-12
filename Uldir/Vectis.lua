@@ -107,14 +107,13 @@ do
 
 	function UpdateInfoBox()
 		tsort(nameList, sortFunc)
-		local line = 1
 		for i = 1, 20 do
 			local n = nameList[i]
 			local result = lingeringInfectionList[n]
 			if i % 2 == 0 then
 				if result then
 					local icon = GetRaidTargetIndex(n)
-					mod:SetInfo(265127, i+19, (icon and ("|T13700%d:0|t"):format(icon) or "") .. mod:ColorName(n))
+					mod:SetInfo(265127, i+19, (icon and ("  |T13700%d:0|t"):format(icon) or "  ") .. mod:ColorName(n))
 					mod:SetInfo(265127, i+20, result)
 					local vector = omegaList[n] and omegaList[n][1]
 					if vector then
