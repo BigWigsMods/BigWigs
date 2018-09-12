@@ -162,6 +162,10 @@ do
 end
 
 function mod:OmegaVectorApplied(args)
+	if not lingeringInfectionList[args.destName] then
+		lingeringInfectionList[args.destName] = 0
+	end
+
 	if not omegaList[args.destName] then
 		local t = GetTime()
 		omegaList[args.destName] = {t}
