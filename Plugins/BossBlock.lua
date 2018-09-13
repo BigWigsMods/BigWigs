@@ -218,7 +218,9 @@ do
 		[-914] = true, -- Antorus, teleportation to "The burning throne"
 		[-917] = true, -- Antorus, magni portal to argus room
 		[-1004] = true, -- Kings' Rest, before the last boss "Dazar"
-		[-1152] = true, -- Uldir, raising stairs for Zul
+		[-1151] = true, -- Uldir, raising stairs for Zul (Zek'voz)
+		[-1152] = true, -- Uldir, raising stairs for Zul (Vectis)
+		[-1153] = true, -- Uldir, raising stairs for Zul (Fetid Devourer)
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
