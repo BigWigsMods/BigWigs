@@ -691,8 +691,8 @@ do
 		output(channel, "BigWigs: ", module.displayName or module.moduleName or module.name)
 		local currentSize = 0
 		for i, option in next, module.toggleOptions do
-			local o = option
-			if type(o) == "table" then o = option[1] end
+			local o = type(option) == "table" and option[1] or option
+
 			if module.optionHeaders and module.optionHeaders[o] then
 				-- print what we have so far
 				printList(channel, header, abilities)
@@ -700,38 +700,49 @@ do
 				header = module.optionHeaders[o]
 				currentSize = #header
 			end
+
+			local link
 			if type(o) == "number" then
 				if o > 0 then
-					local link = GetSpellLink(o)
-					if not link then
-						local name = GetSpellInfo(o)
-						link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(o, name)
+					local spellLink = GetSpellLink(o)
+					if not spellLink then
+						local spellName = GetSpellInfo(o)
+						link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(o, spellName)
 						--BigWigs:Error(("Failed to fetch the link for spell id %d, tell the authors."):format(o))
+					else
+						link = spellLink
 					end
-					--else -- XXX Waiting for GetSpellLink fix to stop returning nil for some spells
-						if currentSize + #link + 1 > 255 then
-							printList(channel, header, abilities)
-							wipe(abilities)
-							currentSize = 0
-						end
-						abilities[#abilities + 1] = link
-						currentSize = currentSize + #link + 1
-					--end
 				else
 					local tbl = C_EncounterJournal.GetSectionInfo(-o)
 					if not tbl or not tbl.link then
 						BigWigs:Error(("Failed to fetch the link for journal id (-)%d, tell the authors."):format(-o))
 					else
-						local link = tbl.link
-						if currentSize + #link + 1 > 255 then
-							printList(channel, header, abilities)
-							wipe(abilities)
-							currentSize = 0
-						end
-						abilities[#abilities + 1] = link
-						currentSize = currentSize + #link + 1
+						link = tbl.link
 					end
 				end
+			elseif type(o) == "string" then -- Attempt to build links for strings that are just basic spell renaming
+				local L = module:GetLocale()
+				if L then
+					local name, desc, icon = L[o], L[o.."_desc"], L[o.."_icon"]
+					if name and type(desc) == "number" and desc == icon then
+						if desc > 0 then
+							local spellName = GetSpellInfo(desc)
+							link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(desc, spellName)
+						else
+							-- EJ?
+						end
+					end
+				end
+			end
+
+			if link then
+				if currentSize + #link + 1 > 255 then
+					printList(channel, header, abilities)
+					wipe(abilities)
+					currentSize = 0
+				end
+				abilities[#abilities + 1] = link
+				currentSize = currentSize + #link + 1
 			end
 		end
 		printList(channel, header, abilities)
