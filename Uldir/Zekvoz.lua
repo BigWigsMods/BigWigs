@@ -61,6 +61,7 @@ function mod:GetOptions()
 		--[[ Stage 3 ]]--
 		267239, -- Orb of Corruption
 		{265662, "SAY_COUNTDOWN"}, -- Corruptor's Pact
+		265646, -- Will of the Corruptor
 
 		--[[ Mythic ]]--
 		"mythic_adds",
@@ -94,6 +95,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "OrbofCorruption", 267239)
 	self:Log("SPELL_AURA_APPLIED", "CorruptorsPact", 265662)
 	self:Log("SPELL_AURA_REMOVED", "CorruptorsPactRemoved", 265662)
+	self:Log("SPELL_AURA_APPLIED", "WillOfTheCorruptor", 265646)
 
 	--[[ Mythic ]]--
 	self:Log("SPELL_CAST_SUCCESS", "MythicAdds", 271099)
@@ -295,14 +297,13 @@ end
 function mod:OrbofCorruption(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 90) -- XXX Does not get cast again?
 end
 
 function mod:CorruptorsPact(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "long")
 		self:TargetMessage2(args.spellId, "blue", args.destName)
-		self:SayCountdown(args.spellId, 20)
+		self:SayCountdown(args.spellId, 30)
 	end
 end
 
@@ -310,6 +311,11 @@ function mod:CorruptorsPactRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
+end
+
+function mod:WillOfTheCorruptor(args)
+	self:TargetMessage2(args.spellId, "red", args.destName)
+	self:PlaySound(args.spellId, "warning")
 end
 
 --[[ Mythic ]]--
