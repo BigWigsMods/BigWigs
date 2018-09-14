@@ -83,7 +83,7 @@ function mod:OnEngage()
 	nextStageWarning = 69
 	annihilationList = {}
 
-	self:OpenInfo(272146) -- Annihilation
+	self:OpenInfo(272146, self:SpellName(272146)) -- Annihilation
 
 	self:Bar(272536, 5) -- Imminent Ruin
 	self:Bar(272404, 9) -- Oblivion Sphere
