@@ -38,7 +38,7 @@ if L then
 	L.crusher_icon = "inv_bloodtrollfemaleheaddire01"
 
 	L.custom_off_decaying_flesh_marker = "Decaying Flesh Marker"
-	L.custom_off_decaying_flesh_marker_desc = "Mark the enemy forces afflicted by Decaying Flesh with {rt8}. (requires Raid Leader or Assist in the raid)"
+	L.custom_off_decaying_flesh_marker_desc = "Mark the enemy forces afflicted by Decaying Flesh with {rt8}, requires promoted or leader."
 	L.custom_off_decaying_flesh_marker_icon = 276434
 end
 
