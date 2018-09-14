@@ -7,9 +7,20 @@ local mod, CL = BigWigs:NewBoss("Fetid Devourer", 1861, 2146)
 if not mod then return end
 mod:RegisterEnableMob(133298)
 mod.engageId = 2128
-mod.respawnTime = 32
+mod.respawnTime = 31
 
 local trashCount = 0
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.breath = "{262292} ({18609})" -- Rotting Regurgitation (Breath)
+	L.breath_desc = 262292
+	L.breath_icon = 262292
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -18,12 +29,13 @@ local trashCount = 0
 function mod:GetOptions()
 	return {
 		{262277, "TANK"}, -- Thrashing Terror
-		262292, -- Rotting Regurgitation
+		"breath", -- Rotting Regurgitation
 		262288, -- Shockwave Stomp
 		{262313, "ME_ONLY", "SAY", "SAY_COUNTDOWN"}, -- Malodorous Miasma
 		{262314, "ME_ONLY", "FLASH", "SAY", "SAY_COUNTDOWN"}, -- Putrid Paroxysm
 		262364, -- Enticing Essence -- XXX Used for CL.adds right now
 		262378, -- Fetid Frenzy
+		"berserk",
 	}
 end
 
@@ -47,11 +59,12 @@ end
 function mod:OnEngage()
 	trashCount = 0
 	self:CDBar(262277, 5.5) -- Terrible Thrash
-	self:CDBar(262292, self:Easy() and 30.5 or 41.5) -- Rotting Regurgitation
+	self:CDBar("breath", self:Easy() and 30.5 or 41.5, 18609, 262292) -- Breath (Rotting Regurgitation)
 	if not self:Easy() then
 		self:Bar(262288, 26) -- Shockwave Stomp
 	end
 	self:Bar(262364, self:Easy() and 50 or 35.5, self:SpellName(-18875)) -- Waste Disposal Units
+	self:Berserk(330)
 end
 
 --------------------------------------------------------------------------------
@@ -65,10 +78,10 @@ function mod:TerribleThrash(args)
 end
 
 function mod:RottingRegurgitation(args)
-	self:Message(args.spellId, "yellow", nil, CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, self:Easy() and 30.5 or 46) -- 41.3, 52.1, 46.3, 41.9, 32.6, 34.1 XXX
-	self:CastBar(args.spellId, 6.5)
+	self:Message("breath", "yellow", nil, 18609, 262292) -- Breath (Rotting Regurgitation)
+	self:PlaySound("breath", "alert")
+	self:CDBar("breath", self:Easy() and 30.5 or 46, 18609, 262292) -- 41.3, 52.1, 46.3, 41.9, 32.6, 34.1 XXX
+	self:CastBar("breath", 6.5, 18609, 262292)
 end
 
 function mod:ShockwaveStomp(args)
