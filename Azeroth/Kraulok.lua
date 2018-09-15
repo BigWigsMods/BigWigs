@@ -56,13 +56,13 @@ end
 --end
 
 function mod:ShakeLoose(args)
-	self:Message(args.spellId, "red")
+	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(args.spellId, 28)
 end
 
 function mod:PrimalRage(args)
-	self:Message(args.spellId, "orange")
+	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 33)
 end
@@ -77,7 +77,7 @@ end
 --			local t = GetTime()
 --			if t-prev > 0.5 then
 --				prev = t
---				self:Message(spellId, "orange")
+--				self:Message2(spellId, "orange")
 --				self:PlaySound(spellId, "warning")
 --				self:CDBar(spellId, 12)
 --			end

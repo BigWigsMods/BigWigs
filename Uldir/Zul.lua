@@ -155,14 +155,14 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 43 then -- 40% Transition
 		local nextStage = stage + 1
-		self:Message("stages", "green", nil, CL.soon:format(CL.stage:format(nextStage)), false)
+		self:Message2("stages", "green", CL.soon:format(CL.stage:format(nextStage)), false)
 		self:UnregisterUnitEvent(event, unit)
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 273361 then -- Pool of Darkness
-		self:Message(spellId, "orange")
+		self:Message2(spellId, "orange")
 		self:PlaySound(spellId, "info")
 		self:Bar(spellId, stage == 1 and 31.5 or 15.8)
 	elseif spellId == 274315 then -- Deathwish
@@ -187,7 +187,7 @@ do
 		end
 
 		if isOnMe and (meOnly or #playerList == 1) then
-			mod:Message(273365, "blue", nil, CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(273365))))
+			mod:Message2(273365, "blue", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(273365))))
 		elseif not meOnly then
 			local msg = ""
 			for i=1, #playerList do
@@ -195,7 +195,7 @@ do
 				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
 			end
 
-			mod:Message(273365, "yellow", nil, CL.other:format(mod:SpellName(273365), msg))
+			mod:Message2(273365, "yellow", CL.other:format(mod:SpellName(273365), msg))
 		end
 
 		playerList = {}
@@ -232,7 +232,7 @@ do
 		local t = GetTime()
 		if t-prev > 1 then
 			prev = t
-			self:Message(-18530, "cyan", nil, CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
+			self:Message2(-18530, "cyan", CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
 		end
 	end
 end
@@ -244,7 +244,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				prev = t
-				self:TargetMessage2(269936, "blue", args.destName)
+				self:PersonalMessage(269936)
 				self:PlaySound(269936, "warning")
 			end
 		end
@@ -252,40 +252,40 @@ do
 end
 
 function mod:NazmaniCrusher(args)
-	self:Message("crusher", "cyan", nil, CL.soon:format(L.crusher_msg), L.crusher_icon)
+	self:Message2("crusher", "cyan", CL.soon:format(L.crusher_msg), L.crusher_icon)
 	self:PlaySound("crusher", "long")
 	self:CDBar("crusher", 62.5, L.crusher_msg, L.crusher_icon)
 	self:Bar("crusher", 14, CL.spawning:format(L.crusher_msg), L.crusher_icon)
 end
 
 function mod:NazmaniBloodhexer(args)
-	self:Message("bloodhexer", "cyan", nil, CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
+	self:Message2("bloodhexer", "cyan", CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
 	self:PlaySound("bloodhexer", "long")
 	self:CDBar("bloodhexer", 62.5, L.bloodhexer_msg, L.bloodhexer_icon)
 	self:Bar("bloodhexer", 14, CL.spawning:format(L.bloodhexer_msg), L.bloodhexer_icon)
 end
 
 function mod:BloodthirstyCrawg(args)
-	self:Message("crawg", "cyan", nil, CL.soon:format(L.crawg_msg), L.crawg_icon)
+	self:Message2("crawg", "cyan", CL.soon:format(L.crawg_msg), L.crawg_icon)
 	self:PlaySound("crawg", "long")
 	self:CDBar("crawg", 42.5, L.crawg_msg, L.crawg_icon)
 	self:Bar("crawg", 14, CL.spawning:format(L.crawg_msg), L.crawg_icon)
 end
 
 function mod:ThrummingPulse(args)
-	self:Message(args.spellId, "yellow", nil, CL.other:format(L.crusher_msg, args.spellName))
+	self:Message2(args.spellId, "yellow", CL.other:format(L.crusher_msg, args.spellName))
 	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:CongealBlood(args)
-	self:Message(args.spellId, "red")
+	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 end
 
 function mod:Bloodshard(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
-		self:Message(args.spellId, "orange")
+		self:Message2(args.spellId, "orange")
 		if ready then
 			self:PlaySound(args.spellId, "alert")
 		end
@@ -293,7 +293,7 @@ function mod:Bloodshard(args)
 end
 
 function mod:EngorgedBurst(args)
-	self:Message(args.spellId, "yellow", nil, CL.other:format(L.crawg_msg, args.spellName))
+	self:Message2(args.spellId, "yellow", CL.other:format(L.crawg_msg, args.spellName))
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -305,7 +305,7 @@ function mod:LocusofCorruption(args)
 	self:StopBar(273365) -- Dark Revelation
 
 	stage = 2
-	self:Message("stages", "green", nil, CL.stage:format(stage), false)
+	self:Message2("stages", "green", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
 	if self:Tank() then
@@ -349,7 +349,7 @@ do
 		local meOnly = mod:CheckOption(274271, "ME_ONLY")
 
 		if isOnMe and (meOnly or #playerList == 1) then
-			mod:Message(274271, "blue", nil, CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(274271))))
+			mod:Message2(274271, "blue", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(274271))))
 		elseif not meOnly then
 			local msg = ""
 			for i=1, #playerList do
@@ -357,7 +357,7 @@ do
 				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
 			end
 
-			mod:Message(274271, "orange", nil, CL.other:format(mod:SpellName(274271), msg))
+			mod:Message2(274271, "orange", CL.other:format(mod:SpellName(274271), msg))
 		end
 
 		playerList = {}
@@ -388,7 +388,7 @@ do
 		local t = GetTime()
 		if t-prev > 1 then
 			prev = t
-			self:Message(-18530, "cyan", nil, CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
+			self:Message2(-18530, "cyan", CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
 		end
 	end
 end

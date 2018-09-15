@@ -101,7 +101,7 @@ end
 function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then -- Intermission at 66% & 33%
-		self:Message("stages", "green", nil, CL.stage:format(2), false)
+		self:Message2("stages", "green", CL.stage:format(2), false)
 		nextStageWarning = nextStageWarning - 33
 		if nextStageWarning < 33 then
 			self:UnregisterUnitEvent(event, unit)
@@ -113,7 +113,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 279749 then -- Intermission Start
 		stage = 2
 		self:PlaySound("stages", "long")
-		self:Message("stages", "cyan", nil, CL.stage:format(stage), false)
+		self:Message2("stages", "cyan", CL.stage:format(stage), false)
 		self:CloseProximity(272404) -- Oblivion Sphere
 
 		self:StopBar(272536) -- Imminent Ruin
@@ -131,7 +131,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	elseif spellId == 279748 then -- Intermission End
 		stage = 1
 		self:PlaySound("stages", "long")
-		self:Message("stages", "cyan", nil, CL.stage:format(stage), false)
+		self:Message2("stages", "cyan", CL.stage:format(stage), false)
 		self:OpenProximity(272404, 8) -- Oblivion Sphere
 
 		self:Bar(272536, 5) -- Imminent Ruin
@@ -149,7 +149,7 @@ end
 do
 	local prev = 0
 	function mod:EssenceShear(args)
-		self:Message(args.spellId, "purple")
+		self:Message2(args.spellId, "purple")
 		self:PlaySound(args.spellId, "alert")
 		if self:MobId(args.sourceGUID) == 134546 then -- Mythrax the Unraveler
 			self:Bar(args.spellId, 20.5)
@@ -171,13 +171,13 @@ function mod:EssenceShearApplied(args)
 end
 
 function mod:ObliterationBlast(args)
-	self:Message(args.spellId, "orange")
+	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 15)
 end
 
 function mod:OblivionSphere(args)
-	self:Message(args.spellId, "red")
+	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:Bar(args.spellId, 15)
 end
@@ -214,18 +214,18 @@ function mod:ImminentRuinRemoved(args)
 end
 
 function mod:XalzaixsAwakening(args)
-	self:Message(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 8) -- 2s cast, 6s channel
 end
 
 function mod:OblivionsVeilRemoved(args)
-	self:Message(args.spellId, "green", nil, CL.removed:format(args.spellName))
+	self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:ObliterationBeam(args)
-	self:Message(args.spellId, "orange")
+	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 7.5) -- 2.5s cast, 5s channel
 
@@ -236,7 +236,7 @@ function mod:ObliterationBeam(args)
 end
 
 function mod:VisionsofMadness(args)
-	self:Message(args.spellId, "red")
+	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	visionCount = visionCount + 1
 	if visionCount <= 2 then
@@ -245,6 +245,6 @@ function mod:VisionsofMadness(args)
 end
 
 function mod:EssenceShatter(args)
-	self:Message(args.spellId, "red", nil, CL.casting:format(args.spellName))
+	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
 end

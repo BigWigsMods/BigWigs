@@ -58,7 +58,7 @@ do
 			self:Say(277047)
 			self:PlaySound(277047, "warning")
 		end
-		self:TargetMessage(277047, player, "yellow")
+		self:TargetMessage2(277047, "yellow", player)
 	end
 	function mod:CorruptingGaze(args)
 		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
@@ -67,5 +67,5 @@ end
 
 function mod:BloodShield(args)
 	self:PlaySound(args.spellId, "long")
-	self:Message(args.spellId, "red", nil, CL.casting:format(args.spellName))
+	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
 end

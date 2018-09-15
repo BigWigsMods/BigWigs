@@ -72,20 +72,20 @@ end
 --
 
 function mod:TerribleThrash(args)
-	self:Message(args.spellId, "purple")
+	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 6)
 end
 
 function mod:RottingRegurgitation(args)
-	self:Message("breath", "yellow", nil, 18609, 262292) -- Breath (Rotting Regurgitation)
+	self:Message2("breath", "yellow", 18609, 262292) -- Breath (Rotting Regurgitation)
 	self:PlaySound("breath", "alert")
 	self:CDBar("breath", self:Easy() and 30.5 or 46, 18609, 262292) -- 41.3, 52.1, 46.3, 41.9, 32.6, 34.1 XXX
 	self:CastBar("breath", 6.5, 18609, 262292)
 end
 
 function mod:ShockwaveStomp(args)
-	self:Message(args.spellId, "orange")
+	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 30)
 end
@@ -145,28 +145,28 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(args.spellId, "red")
+			self:Message2(args.spellId, "red")
 			self:PlaySound(args.spellId, "warning")
 		end
 	end
 end
 
 function mod:FetidFrenzy(args)
-	self:Message(args.spellId, "cyan")
+	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:TrashChuteVisualState()
 	trashCount = trashCount + 1
 	if (self:Mythic() and trashCount % 3 == 2) or (not self:Mythic() and trashCount % 2 == 1) then -- Small add
-		self:Message(262364, "cyan", nil, CL.incoming:format(self:SpellName(-17867)))
+		self:Message2(262364, "cyan", CL.incoming:format(self:SpellName(-17867)))
 		self:PlaySound(262364, "long")
 		if not self:Mythic() then
 			self:Bar(262364, self:Mythic() and 75 or self:Easy() and 60 or 55, self:SpellName(-18875)) -- Waste Disposal Units
 			self:Bar(262364, 10, CL.spawning:format(CL.adds)) -- Adds / Enticing Essence
 		end
 	elseif (self:Mythic() and trashCount % 3 == 1) then -- Big Add
-		self:Message(262364, "cyan", nil, CL.incoming:format(self:SpellName(-18565)))
+		self:Message2(262364, "cyan", CL.incoming:format(self:SpellName(-18565)))
 		self:PlaySound(262364, "long")
 		self:Bar(262364, 75, self:SpellName(-18875)) -- Waste Disposal Units
 		self:Bar(262364, 20, CL.spawning:format(CL.adds)) -- Adds

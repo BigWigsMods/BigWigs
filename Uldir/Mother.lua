@@ -99,14 +99,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 			self:StopBar(L.upLaser)
 			self:CDBar(268253, 10, L.sideLaser)
 		end
-		self:Message(spellId, "cyan", nil, CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
+		self:Message2(spellId, "cyan", CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
 		self:PlaySound(spellId, "info")
 		self:Bar(spellId, 182, CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
 	end
 end
 
 function mod:ClingingCorruption(args)
-	self:Message(args.spellId, "orange")
+	self:Message2(args.spellId, "orange")
 	local _, ready = self:Interrupter()
 	if ready then
 		self:PlaySound(args.spellId, "alert")
@@ -127,12 +127,12 @@ function mod:CleansingPurgeFinished(args)
 	elseif self:MobId(args.sourceGUID) == 137023 then -- Room 3
 		room = 3
 	end
-	self:Message(269051, "red", nil, CL.casting:format(CL.count:format(args.spellName, room)), "ability_mage_firestarter") -- XXX Casting or Activating?
+	self:Message2(269051, "red", CL.casting:format(CL.count:format(args.spellName, room)), "ability_mage_firestarter") -- XXX Casting or Activating?
 	self:PlaySound(269051, "alarm")
 end
 
 function mod:SanitizingStrikeStart(args)
-	self:Message(args.spellId, "purple")
+	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 end
 
@@ -146,7 +146,7 @@ function mod:SanitizingStrikeApplied(args)
 end
 
 function mod:PurifyingFlame(args)
-	self:Message(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 23.2)
 end
@@ -159,7 +159,7 @@ do
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(267795, "alarm")
-				self:TargetMessage2(267795, "blue", args.destName, true)
+				self:PersonalMessage(267795, "underyou")
 			end
 		end
 	end
@@ -171,7 +171,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message(267878, "red")
+			self:Message2(267878, "red")
 			self:PlaySound(267878, "warning")
 			self:CastBar(267878, 11)
 			self:CDBar(267878, 46.5)
@@ -202,7 +202,7 @@ function mod:UldirDefensiveBeam(args)
 		nextBeam = L.sideLaser
 		timer = stage == 3 and 16 or 17
 	end
-	self:Message(268253, "yellow", nil, beamType)
+	self:Message2(268253, "yellow", beamType)
 	self:PlaySound(268253, "alert")
 	self:CastBar(268253, castTime, beamType)
 	self:CDBar(268253, timer, nextBeam)
@@ -216,7 +216,7 @@ do
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(args.spellId, "alarm")
-				self:TargetMessage2(args.spellId, "blue", args.destName, true)
+				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end
 	end

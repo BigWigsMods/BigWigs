@@ -106,7 +106,7 @@ end
 -- Stage 1
 function mod:CorruptingBiteApplied()
 	stage = 2
-	self:Message("stages", "cyan", nil, CL.stage:format(stage), false)
+	self:Message2("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 	waveOfCorruptionCount = 1
 
@@ -141,7 +141,7 @@ do
 			if castOnMe == true then
 				castOnMe = false
 			else
-				self:TargetMessage2(272506, "blue", args.destName)
+				self:PersonalMessage(272506)
 			end
 			self:Say(272506)
 			self:SayCountdown(272506, 4)
@@ -157,7 +157,7 @@ do
 end
 
 function mod:ThousandMaws(args)
-	self:Message(args.spellId, "cyan", nil, CL.count:format(args.spellName, waveCounter))
+	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, waveCounter))
 	self:PlaySound(args.spellId, "info")
 	waveCounter = waveCounter + 1
 	self:Bar(args.spellId, 25.5, CL.count:format(args.spellName, waveCounter))
@@ -165,25 +165,25 @@ end
 
 function mod:Torment(args)
 	if self:Interrupter(args.sourceGUID) then
-		self:Message(args.spellId, "yellow")
+		self:Message2(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alert")
 	end
 end
 
 function mod:MassiveSmash(args)
-	self:Message(args.spellId, "purple")
+	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	self:CDBar(args.spellId, 9.7)
 end
 
 function mod:DarkBargain(args)
-	self:Message(args.spellId, "red")
+	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 23)
 end
 
 function mod:DecayingEruption(args)
-	self:Message(args.spellId, "orange")
+	self:Message2(args.spellId, "orange")
 	if self:Interrupter() then
 		self:PlaySound(args.spellId, "warning")
 	end
@@ -191,7 +191,7 @@ function mod:DecayingEruption(args)
 end
 
 function mod:ReoriginationBlast(args)
-	self:Message(args.spellId, "green")
+	self:Message2(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
 end
 
@@ -226,7 +226,7 @@ function mod:GrowingCorruption(args)
 end
 
 function mod:WaveofCorruption(args)
-	self:Message(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alarm")
 	waveOfCorruptionCount = waveOfCorruptionCount + 1
 	self:Bar(args.spellId, stage == 3 and 25.5 or waveOfCorruptionCount % 2 == 0 and 15 or 31)
@@ -250,7 +250,7 @@ function mod:BloodFeastRemoved(args)
 end
 
 function mod:MindNumbingChatter(args)
-	self:Message(args.spellId, "orange", nil, CL.casting:format(args.spellName))
+	self:Message2(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 13.5)
 end
@@ -263,7 +263,7 @@ end
 -- Stage 3
 function mod:Collapse(args)
 	stage = 3
-	self:Message("stages", "cyan", nil, CL.stage:format(stage), false)
+	self:Message2("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
 	self:StopBar(272506) -- Explosive Corruption
@@ -281,13 +281,13 @@ function mod:Collapse(args)
 end
 
 function mod:MalignantGrowth(args)
-	self:Message(args.spellId, "red")
+	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 25.5)
 end
 
 function mod:GazeofGhuun(args)
-	self:Message(args.spellId, "orange")
+	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:Bar(args.spellId, 25.9)
 end
@@ -300,7 +300,7 @@ do
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(args.spellId, "alarm")
-				self:TargetMessage2(args.spellId, "blue", args.destName, true)
+				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end
 	end

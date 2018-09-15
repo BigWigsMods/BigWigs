@@ -132,7 +132,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then -- Mythic: 40%, other: 65% and 30%
 		local nextStage = stage + 1
-		self:Message("stages", "green", nil, CL.soon:format(CL.stage:format(nextStage)), false)
+		self:Message2("stages", "green", CL.soon:format(CL.stage:format(nextStage)), false)
 		nextStageWarning = nextStageWarning - 35
 		if nextStageWarning < 35 then
 			self:UnregisterUnitEvent(event, unit)
@@ -144,7 +144,8 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 	local power = UnitPower(unit)
 	if power < lastPower and lastPower ~= 100 then
 		stage = stage + 1
-		self:Message("stages", "green", "Long", CL.stage:format(stage), false)
+		self:Message2("stages", "green", CL.stage:format(stage), false)
+		self:PlaySound("stages", "long")
 		self:Bar(265530, 80) -- Surging Darkness
 		if self:Mythic() then
 			self:StopBar(-18390) -- Qiraji Warrior
@@ -173,11 +174,11 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if self:Mythic() then return end -- Adds are handled better in Mythic
 	if spellId == 266913 then -- Spawn Qiraji Warrior
-		self:Message(-18390, "cyan", nil, nil, 275772)
+		self:Message2(-18390, "cyan", -18390, 275772)
 		self:PlaySound(-18390, "long")
 		self:Bar(-18390, 60, nil, 275772)
 	elseif spellId == 267192 then -- Spawn Anub'ar Caster
-		self:Message(-18397, "cyan", nil, nil, 267180)
+		self:Message2(-18397, "cyan", -18397, 267180)
 		self:PlaySound(-18397, "long")
 		self:Bar(-18397, 80, nil, 267180)
 	end
@@ -185,7 +186,7 @@ end
 
 --[[ General ]]--
 function mod:SurgingDarkness(args)
-	self:Message(args.spellId, "red")
+	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 83)
 	-- XXX Lots of Bars, try to rework into a less intrusive manner
@@ -199,7 +200,7 @@ end
 
 function mod:VoidLash(args)
 	self:PlaySound(265231, "alarm")
-	self:Message(265231, "orange")
+	self:Message2(265231, "orange")
 	if args.spellId == 265231 then
 		self:Bar(265248, 4) -- Shatter
 		self:Bar(265231, 6.5) -- Void Lash (Secondary)
@@ -210,7 +211,7 @@ end
 
 function mod:Shatter(args)
 	self:PlaySound(args.spellId, "alert")
-	self:Message(args.spellId, "purple")
+	self:Message2(args.spellId, "purple")
 end
 
 --[[ Stage 1 ]]--
@@ -286,7 +287,7 @@ end
 function mod:VoidBolt(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
-		self:Message(args.spellId, "yellow")
+		self:Message2(args.spellId, "yellow")
 		if ready then
 			self:PlaySound(args.spellId, "alert")
 		end
@@ -295,14 +296,14 @@ end
 
 --[[ Stage 3 ]]--
 function mod:OrbofCorruption(args)
-	self:Message(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:CorruptorsPact(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "long")
-		self:TargetMessage2(args.spellId, "blue", args.destName)
+		self:PersonalMessage(args.spellId)
 		self:SayCountdown(args.spellId, 30)
 	end
 end
@@ -320,7 +321,7 @@ end
 
 --[[ Mythic ]]--
 function mod:MythicAdds()
-	self:Message("mythic_adds", "cyan", nil, CL.incoming:format(CL.adds), L.mythic_adds_icon)
+	self:Message2("mythic_adds", "cyan", CL.incoming:format(CL.adds), L.mythic_adds_icon)
 	self:PlaySound("mythic_adds", "long")
 	self:Bar("mythic_adds", 120, CL.adds, L.mythic_adds_icon)
 end
