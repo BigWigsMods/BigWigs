@@ -318,7 +318,7 @@ function mod:LiquefyRemoved(args)
 	self:PlaySound(args.spellId, "info")
 
 	self:CDBar(265178, 8.5) -- Evolving Affliction, up to 10s
-	self:Bar(267242, 24.3) -- Contagion
+	self:Bar(267242, 24.3, CL.count:format(self:SpellName(267242), contagionCount)) -- Contagion
 	self:Bar(265212, 15) -- Gestate
 
 	nextLiquify = GetTime() + 93
