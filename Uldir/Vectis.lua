@@ -264,9 +264,9 @@ function mod:Contagion(args)
 	self:Message(args.spellId, "orange", nil, CL.count:format(args.spellName, contagionCount))
 	self:PlaySound(args.spellId, "alarm")
 	contagionCount = contagionCount + 1
-	local timer = 23.1
+	local timer = 23.1 -- up to 24.6s
 	if nextLiquify > GetTime() + timer then
-		self:Bar(args.spellId, timer, CL.count:format(args.spellName, contagionCount))
+		self:CDBar(args.spellId, timer, CL.count:format(args.spellName, contagionCount))
 	end
 end
 
@@ -317,9 +317,9 @@ function mod:LiquefyRemoved(args)
 	self:Message(args.spellId, "cyan", nil, CL.over:format(CL.intermission))
 	self:PlaySound(args.spellId, "info")
 
-	self:Bar(265178, 5.5) -- Evolving Affliction
-	self:Bar(267242, 15.5) -- Contagion
-	self:Bar(265212, 19) -- Gestate
+	self:CDBar(265178, 8.5) -- Evolving Affliction, up to 10s
+	self:Bar(267242, 24.3) -- Contagion
+	self:Bar(265212, 15) -- Gestate
 
 	nextLiquify = GetTime() + 93
 	self:Bar(args.spellId, 93)
