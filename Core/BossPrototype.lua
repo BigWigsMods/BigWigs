@@ -1607,7 +1607,7 @@ end
 
 function boss:PersonalMessage(key, localeString, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
-		local str = localeString and CL[localeString] or CL.you
+		local str = localeString and L[localeString] or L.you
 		local msg = format(str, type(text) == "string" and text or spells[text or key])
 		self:SendMessage("BigWigs_Message", self, key, msg, "blue", icon ~= false and icons[icon or key])
 	end
