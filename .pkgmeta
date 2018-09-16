@@ -25,6 +25,7 @@ move-folders:
     BigWigs/Uldir: BigWigs_Uldir
 
 ignore:
+  - .luacheckrc
   - .travis.yml
   - gen_option_values.lua
   - ldoc.ltp

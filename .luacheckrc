@@ -78,10 +78,7 @@ globals = {
 	"wipe",
 
 	-- framexml
-	"getglobal",
 	"getprinthandler",
-	"message",
-	"setglobal",
 	"setprinthandler",
 	"tContains",
 	"tDeleteItem",
