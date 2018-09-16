@@ -20,7 +20,7 @@ local visionCount = 1
 local beamCount = 1
 local ruinCount = 0
 local mobCollector = {}
-local voidEchoesCount = nil
+local voidEchoesCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -29,7 +29,6 @@ local voidEchoesCount = nil
 local L = mod:GetLocale()
 if L then
 	L.destroyer_cast = "%s (N'raqi Destroyer)" -- npc id: 139381
-	L.living_weapon_cast = "%s (Xalzaix)" -- 276922
 	L.xalzaix_returned = "Xalzaix returned!"
 	L.add_blast = "Add Blast"
 	L.boss_blast = "Boss Blast"
@@ -98,7 +97,7 @@ function mod:OnEngage()
 	ruinCount = 0
 	nextStageWarning = 69
 	annihilationList = {}
-	wipe(mobCollector)
+	mobCollector = {}
 
 	self:OpenInfo(272146, self:SpellName(272146)) -- Annihilation
 
@@ -120,12 +119,10 @@ end
 --
 
 function mod:UNIT_TARGETABLE_CHANGED(_, unit)
-	if self:MobId(UnitGUID(unit)) == 138324 then -- Xalzaix
-		if not UnitCanAttack("player", unit) then
-			self:Message2(276922, "green", L.xalzaix_returned, false)
-			self:StopBar(L.add_blast)
-			self:StopBar(CL.count:format(self:SpellName(279157), voidEchoesCount))
-		end
+	if self:MobId(UnitGUID(unit)) == 138324 and not UnitCanAttack("player", unit) then -- Xalzaix
+		self:Message2(276922, "green", L.xalzaix_returned, false)
+		self:StopBar(L.add_blast)
+		self:StopBar(CL.count:format(self:SpellName(279157), voidEchoesCount))
 	end
 end
 
@@ -177,8 +174,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Message2(276922, "orange", CL.spawning:format(self:SpellName(276922)))
 		self:PlaySound(276922, "long")
 		voidEchoesCount = 1
-		self:Bar(276922, 60)
-		self:Bar(276922, 5, CL.spawning:format(self:SpellName(276922))) -- Living Weapon
+		self:Bar(276922, 60) -- Living Weapon
+		self:Bar(276922, 5, CL.spawning:format(self:SpellName(276922))) -- Living Weapon Spawning
 		self:Bar(273538, 12.5, L.add_blast) -- Obliteration Blast
 		self:Bar(279157, 8, CL.count:format(self:SpellName(279157), voidEchoesCount)) -- Void Echoes (x)
 	end
@@ -318,11 +315,11 @@ do
 		if visionCount <= 2 then
 			self:Bar(args.spellId, self:Mythic() and 30 or 20)
 		end
-			if self:GetOption(visionMarker) then
-				wipe(visionAddMarks)
-				self:RegisterTargetEvents("visionAddMark")
-				self:ScheduleTimer("UnregisterTargetEvents", 10)
-			end
+		if self:GetOption(visionMarker) then
+			wipe(visionAddMarks)
+			self:RegisterTargetEvents("visionAddMark")
+			self:ScheduleTimer("UnregisterTargetEvents", 10)
+		end
 	end
 end
 
