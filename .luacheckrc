@@ -79,6 +79,7 @@ globals = {
 
 	-- framexml
 	"getprinthandler",
+	"hash_SlashCmdList",
 	"setprinthandler",
 	"tContains",
 	"tDeleteItem",
