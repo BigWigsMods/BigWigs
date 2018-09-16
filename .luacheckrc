@@ -5,7 +5,7 @@ exclude_files = {
 }
 only = {
 	"011", -- syntax
-	"1/[a-z]*" -- lowercase globals
+	"1/[a-z].*" -- lowercase globals
 }
 globals = {
 	-- wow std api
