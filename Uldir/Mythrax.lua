@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Mythrax the Unraveler", 1861, 2194)
 if not mod then return end
 mod:RegisterEnableMob(134546)
 mod.engageId = 2135
-mod.respawnTime = 30 -- XXX verify
+mod.respawnTime = 34
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -39,7 +39,7 @@ end
 --
 
 local imminentRuinMarker = mod:AddMarkerOption(false, "player", 1, 272536, 1, 2) -- Imminent Ruin
-local visionMarker = mod:AddMarkerOption(false, "npc", 1, 273949, 1, 2, 3, 4, 5)
+local visionMarker = mod:AddMarkerOption(false, "npc", 1, 273949, 1, 2, 3, 4, 5) -- Visions of Madness
 function mod:GetOptions()
 	return {
 		"stages",
