@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Taloc", 1861, 2168)
 if not mod then return end
 mod:RegisterEnableMob(137119)
 mod.engageId = 2144
-mod.respawnTime = 16
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
