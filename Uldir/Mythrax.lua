@@ -20,6 +20,7 @@ local visionCount = 1
 local beamCount = 1
 local ruinCount = 0
 local mobCollector = {}
+local voidEchoesCount = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -99,7 +100,7 @@ function mod:OnEngage()
 	annihilationList = {}
 	wipe(mobCollector)
 
-	self:OpenInfo(272146) -- Annihilation
+	self:OpenInfo(272146, self:SpellName(272146)) -- Annihilation
 
 	self:Bar(272536, 5) -- Imminent Ruin
 	self:Bar(272404, self:Mythic() and 7 or 9) -- Oblivion Sphere
@@ -143,7 +144,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 279749 then -- Intermission Start
 		stage = 2
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan",CL.stage:format(stage), false) 
+		self:Message2("stages", "cyan",CL.stage:format(stage), false)
 		self:CloseProximity(272404) -- Oblivion Sphere
 
 		self:StopBar(272536) -- Imminent Ruin
