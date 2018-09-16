@@ -51,7 +51,7 @@ function mod:GetOptions()
 		263307, -- Mind-Numbing Chatter
 		-- Stage 3
 		274582, -- Malignant Growth
-		275160, -- Gaze of G'huun
+		{275160, "EMPHASIZE"}, -- Gaze of G'huun
 		263321, -- Undulating Mass
 	}
 end
