@@ -12,3 +12,8 @@ BigWigs:AddColors("Warbringer Yenajz", {
 	[274904] = "blue",
 	[274932] = "red",
 })
+
+BigWigs:AddColors("Dunegorger Kraulok", {
+	[275200] = "orange",
+	[276046] = "red",
+})

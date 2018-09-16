@@ -12,3 +12,8 @@ BigWigs:AddSounds("Warbringer Yenajz", {
 	[274904] = "alarm",
 	[274932] = "long",
 })
+
+BigWigs:AddSounds("Dunegorger Kraulok", {
+	[275200] = "info",
+	[276046] = "long",
+})

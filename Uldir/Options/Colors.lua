@@ -20,16 +20,17 @@ BigWigs:AddColors("MOTHER", {
 	[268253] = {"blue","yellow"},
 	[269051] = {"cyan","red"},
 	[274205] = {"blue","green"},
+	[279662] = {"blue","yellow"},
 })
 
 BigWigs:AddColors("Fetid Devourer", {
 	[262277] = "purple",
 	[262288] = "orange",
-	[262292] = "yellow",
 	[262313] = {"blue","orange"},
-	[262314] = "blue",
+	[262314] = {"blue","orange"},
 	[262364] = {"cyan","red"},
 	[262378] = "cyan",
+	["breath"] = "yellow",
 })
 
 BigWigs:AddColors("Zek'voz, Herald of N'zoth", {
@@ -40,9 +41,11 @@ BigWigs:AddColors("Zek'voz, Herald of N'zoth", {
 	[265248] = "purple",
 	[265360] = {"blue","yellow"},
 	[265530] = "red",
+	[265646] = {"blue","red"},
 	[265662] = "blue",
 	[267180] = "yellow",
 	[267239] = "yellow",
+	["mythic_adds"] = "cyan",
 	["stages"] = "green",
 })
 
@@ -54,6 +57,7 @@ BigWigs:AddColors("Vectis", {
 	[265217] = "cyan",
 	[266459] = "red",
 	[267242] = "orange",
+	[274990] = "blue",
 })
 
 BigWigs:AddColors("Zul", {
@@ -82,7 +86,9 @@ BigWigs:AddColors("Mythrax the Unraveler", {
 	[273810] = "yellow",
 	[273949] = "red",
 	[274230] = "green",
+	[276922] = {"cyan","green","orange"},
 	[279013] = "red",
+	[279157] = "orange",
 	["stages"] = {"cyan","green"},
 })
 
