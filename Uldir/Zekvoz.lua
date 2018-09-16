@@ -218,7 +218,7 @@ end
 do
 	local function printTarget(self, name, guid)
 		local count = CL.count:format(self:SpellName(264382), eyeBeamCount)
-		self:TargetMessage2(264382, "yellow", name, nil, count)
+		self:TargetMessage2(264382, "yellow", name, count)
 		self:PlaySound(264382, "alert")
 		self:PrimaryIcon(264382, name)
 		if self:Me(guid) then
@@ -245,7 +245,7 @@ do
 	local function printTarget(self, name, guid)
 		roilingDeceitTargets[guid] = true
 		local count = CL.count:format(self:SpellName(265360), roilingDeceitCount)
-		self:TargetMessage2(265360, "yellow", name, nil, count)
+		self:TargetMessage2(265360, "yellow", name, count)
 		if self:Me(guid) then
 			self:PlaySound(265360, "warning")
 			self:Say(265360, count)
