@@ -1782,7 +1782,7 @@ do
 		end
 	end
 
-	function boss:TargetMessage2(key, color, player, underYou, text, icon)
+	function boss:TargetMessage2(key, color, player, text, icon)
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
@@ -1793,7 +1793,7 @@ do
 			end
 		elseif player == pName then
 			if checkFlag(self, key, C.MESSAGE) or checkFlag(self, key, C.ME_ONLY) then
-				self:SendMessage("BigWigs_Message", self, key, format(underYou and L.underyou or L.you, msg), "blue", texture)
+				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture)
 			end
 		elseif checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture)
