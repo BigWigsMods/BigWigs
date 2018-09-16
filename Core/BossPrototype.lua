@@ -1204,11 +1204,28 @@ end
 
 do
 	local offDispel, defDispel = {}, {}
+	local _, class = UnitClass("player")
+	local function petCanDispel()
+		if class == "HUNTER" then
+			return IsSpellKnown(264266, true) -- Nature's Grace (Stag)
+				or IsSpellKnown(264265, true) -- Spirit Shock (Spirit Beast)
+				or IsSpellKnown(264264, true) -- Nether Shock (Nether Ray)
+				or IsSpellKnown(264263, true) -- Sonic Blast (Bat)
+				or IsSpellKnown(264262, true) -- Soothing Water (Water Strider)
+				or IsSpellKnown(264056, true) -- Spore Cloud (Sporebat)
+				or IsSpellKnown(264055, true) -- Serenity Dust (Moth)
+				or IsSpellKnown(264028, true) -- Chi-Ji's Tranquility (Crane)
+		end
+	end
 	function UpdateDispelStatus()
 		offDispel, defDispel = {}, {}
-		if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) then
-			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage)
+		if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(278326) or petCanDispel() then
+			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Hunter pet
 			offDispel.magic = true
+		end
+		if IsSpellKnown(2908) or petCanDispel() then
+			-- Soothe (Druid), Hunter pet
+			offDispel.enrage = true
 		end
 		if IsSpellKnown(527) or IsSpellKnown(77130) or IsSpellKnown(115450) or IsSpellKnown(4987) or IsSpellKnown(88423) then -- XXX Add DPS priest mass dispel?
 			-- Purify (Heal Priest), Purify Spirit (Heal Shaman), Detox (Heal Monk), Cleanse (Heal Paladin), Nature's Cure (Heal Druid)
@@ -1222,8 +1239,8 @@ do
 			-- Nature's Cure (Heal Druid), Detox (Heal Monk), Detox (DPS Monk), Cleanse (Heal Paladin), Remove Corruption (DPS Druid), Cleanse Toxins (DPS Paladin)
 			defDispel.poison = true
 		end
-		if IsSpellKnown(88423) or IsSpellKnown(2782) or IsSpellKnown(77130) or IsSpellKnown(51886) then
-			-- Nature's Cure (Heal Druid), Remove Corruption (DPS Druid), Purify Spirit (Heal Shaman), Cleanse Spirit (DPS Shaman)
+		if IsSpellKnown(88423) or IsSpellKnown(2782) or IsSpellKnown(77130) or IsSpellKnown(51886) or IsSpellKnown(475) then
+			-- Nature's Cure (Heal Druid), Remove Corruption (DPS Druid), Purify Spirit (Heal Shaman), Cleanse Spirit (DPS Shaman), Remove Curse (Mage)
 			defDispel.curse = true
 		end
 	end
@@ -1258,15 +1275,18 @@ do
 		2139, -- Counterspell (Mage)
 		1766, -- Kick (Rogue)
 		6552, -- Pummel (Warrior)
-		183752, -- Consume Magic (Demon Hunter)
-		-- XXX warlock?
+		183752, -- Disrupt (Demon Hunter)
 	}
 	function UpdateInterruptStatus()
+		-- if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
+		-- 	canInterrupt = 19647
+		-- 	return
+		-- end
 		canInterrupt = false
 		for i = 1, #spellList do
 			local spell = spellList[i]
 			if IsSpellKnown(spell) then
-				canInterrupt = spell -- XXX check for cooldown also?
+				canInterrupt = spell
 				break
 			end
 		end
