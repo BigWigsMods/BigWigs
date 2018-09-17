@@ -38,7 +38,7 @@ function mod:GetOptions()
 		{265127, "INFOBOX"}, -- Lingering Infection
 		{265178, "TANK"}, -- Evolving Affliction
 		267242, -- Contagion
-		{265212, "SAY", "ICON"}, -- Gestate
+		{265212, "SAY", "ICON", "PROXIMITY"}, -- Gestate
 		265206, -- Immunosuppression
 		265217, -- Liquefy
 		266459, -- Plague Bomb
@@ -148,7 +148,7 @@ do
 						local elap = t - vector
 						local duration = omegaVectorDuration or 10
 						local remaining = duration - elap
-						if IsItemInRange(63427, n) then -- Worgsaw, 8yd
+						if IsItemInRange(37727, n) then -- Ruby Acorn, 5yd
 							mod:SetInfoBar(265127, i, remaining/duration, 0, 0, 1)
 						else
 							mod:SetInfoBar(265127, i, remaining/duration)
@@ -212,9 +212,9 @@ function mod:OmegaVectorApplied(args)
 	end
 
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(265143)
+		self:PersonalMessage(265143, nil, CL.you:format(CL.count_icon:format(args.spellName, icon, icon)))
 		self:PlaySound(265143, "alarm")
-		self:SayCountdown(265143, omegaVectorDuration or 10) -- duration based on raid size
+		self:SayCountdown(265143, omegaVectorDuration or 10, icon) -- duration based on raid size
 	end
 end
 
@@ -278,6 +278,8 @@ function mod:Gestate(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(265212, "alert")
 		self:Say(265212)
+	else
+		self:OpenProximity(265212, 5, args.destName)
 	end
 	self:TargetMessage2(265212, "orange", args.destName)
 	self:PrimaryIcon(265212, args.destName)
@@ -287,6 +289,7 @@ end
 
 function mod:GestateRemoved(args)
 	self:PrimaryIcon(args.spellId)
+	self:CloseProximity(265212)
 end
 
 function mod:Immunosuppression(args)
