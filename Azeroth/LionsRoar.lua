@@ -1,14 +1,14 @@
-if UnitFactionGroup("player") ~= "Alliance" then return end
+if UnitFactionGroup("player") ~= "Horde" then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Doom's Howl", -14, 2213)
+local mod, CL = BigWigs:NewBoss("The Lion's Roar", -14, 2212)
 if not mod then return end
-mod:RegisterEnableMob(138122)
+mod:RegisterEnableMob(137374)
 mod.otherMenu = -947
-mod.worldBoss = 138122
+mod.worldBoss = 137374
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -21,7 +21,7 @@ local markerIcon = 8
 -- Initialization
 --
 
-local engineerMarker = mod:AddMarkerOption(true, "npc", 8, -18702, 8, 7) -- Doom's Howl Engineer
+local engineerMarker = mod:AddMarkerOption(true, "npc", 8, -18682, 8, 7) -- Lion's Engineer
 function mod:GetOptions()
 	return {
 		271163, -- Shattering Pulse
@@ -65,7 +65,7 @@ end
 --
 
 function mod:BOSS_KILL(_, id)
-	if id == 2253 then
+	if id == 2252 then
 		castCollector = {}
 		self:Win()
 	end
@@ -108,7 +108,7 @@ do
 end
 
 function mod:MarkEngineer(_, unit, guid)
-	if not castCollector[guid] and self:MobId(guid) == 138129 then -- Doom's Howl Engineer
+	if not castCollector[guid] and self:MobId(guid) == 137883 then -- Lion's Engineer
 		castCollector[guid] = true -- Just reuse this table
 		SetRaidTarget(unit, markerIcon)
 		markerIcon = markerIcon - 1
