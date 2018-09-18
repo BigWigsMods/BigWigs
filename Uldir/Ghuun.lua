@@ -66,7 +66,7 @@ function mod:GetOptions()
 		-- Mythic
 		277007, -- Bursting Boil
 		burstingMarker,
-		268074, -- Fixate
+		{268074, "FLASH"}, -- Fixate
 		"custom_on_fixate_plates",
 	}
 end
