@@ -1,16 +1,4 @@
 --------------------------------------------------------------------------------
--- TODO:
--- - Dark Bargain bars and counter for each unique add?
--- - Massive Smash bars for each unique add
--- - Decaying Eruption bars for each unique add
--- - Burrow timers and warnings
--- - Thousand Maws add specifics
--- - Stop and Start bars on transitions better
--- - Amount of orbs/energy left until Reorigination Blast
--- - Check ground damage id's
--- - Last target hit for tank warnings?
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -27,14 +15,36 @@ mod.respawnTime = 30
 local stage = 1
 local waveCounter = 0
 local waveOfCorruptionCount = 1
+local burstingBoilCount = 1
+local orbsCounter = 0
+local burstingBoilIconCount = 0
+local burstingOnMe = false
+local orbDunkTime = 0
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.orb_icon = "ability_titankeeper_cleansingorb"
+	L.orbs_deposited = "Orbs Deposited (%d/3) - %s sec"
+	L.orb_spawning = "Orb Spawning"
+
+	L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
+	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates_icon = 268074
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local burstingMarker = mod:AddMarkerOption(false, "player", 1, 277007, 1, 2, 3, 4, 5, 6) -- Bursting Boil
 function mod:GetOptions()
 	return {
 		"stages",
+		-18109, -- Power Matrix
 		-- Stage 1
 		{272506, "SAY", "SAY_COUNTDOWN"}, -- Explosive Corruption
 		270287, -- Blighted Ground
@@ -53,10 +63,17 @@ function mod:GetOptions()
 		274582, -- Malignant Growth
 		{275160, "EMPHASIZE"}, -- Gaze of G'huun
 		263321, -- Undulating Mass
+		-- Mythic
+		277007, -- Bursting Boil
+		burstingMarker,
+		268074, -- Fixate
+		"custom_on_fixate_plates",
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
 	-- Stage 1
 	self:Log("SPELL_CAST_SUCCESS", "ExplosiveCorruptionSuccess", 275756, 272505) -- Stage 1 + 2, Stage 3
 	self:Log("SPELL_AURA_APPLIED", "ExplosiveCorruptionApplied", 274262, 272506) -- Stage 1 + 2, Stage 3 + Orb Hit
@@ -89,19 +106,83 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 270287, 263321) -- Blighted Ground, Undulating Mass
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 270287, 263321)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 270287, 263321)
+
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "BurstingBloodApplied", 277007)
+	self:Log("SPELL_AURA_REMOVED", "BurstingBloodRemoved", 277007)
+	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 268074)
+	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 268074)
+
+	if self:GetOption("custom_on_fixate_plates") then
+		self:ShowPlates()
+	end
 end
 
 function mod:OnEngage()
 	stage = 1
 	waveCounter = 1
+	burstingBoilCount = 1
+	orbsCounter = 0
+	burstingBoilIconCount = 0
+	burstingOnMe = false
 
-	self:Bar(267509, 25.5, CL.count:format(self:SpellName(267509), waveCounter)) -- Thousand Maws (x)
+	self:Bar(-18109, 6, L.orb_spawning, L.orb_icon) -- Power Matrix
 	self:CDBar(272506, 8) -- Explosive Corruption
+	self:Bar(267509, 25.5, CL.count:format(self:SpellName(267509), waveCounter)) -- Thousand Maws (x)
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss2")
+	orbDunkTime = GetTime() + 6 -- Adjust for spawn
+end
+
+function mod:OnBossDisable()
+	if self:GetOption("custom_on_fixate_plates") then
+		self:HidePlates()
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_POWER_FREQUENT(event, unit)
+	if self:MobId(UnitGUID(unit)) == 134118 then
+		local power = UnitPower(unit)
+		local seconds = math.floor((GetTime() - orbDunkTime) * 100)/100
+		if power == 100 and orbsCounter < 3 then
+			orbsCounter = orbsCounter+1
+			self:Message(-18109, "green", nil, L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
+			self:PlaySound(-18109, "long")
+			orbDunkTime = GetTime() + 26 -- Adjust for Reorigination Blast timer
+		elseif power > 60 and orbsCounter < 2 then
+			orbsCounter = orbsCounter+1
+			self:Message(-18109, "green", nil, L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
+			self:PlaySound(-18109, "long")
+			self:Bar(-18109, 12.5, L.orb_spawning, L.orb_icon) -- Power Matrix
+			orbDunkTime = GetTime() + 12.5 -- Adjust for Spawn timer
+		elseif power > 30 and orbsCounter < 1 then
+			orbsCounter = orbsCounter+1
+			self:Message(-18109, "green", nil, L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
+			self:PlaySound(-18109, "long")
+			self:Bar(-18109, 12.5, L.orb_spawning, L.orb_icon) -- Power Matrix
+			orbDunkTime = GetTime() + 12.5 -- Adjust for Spawn timer
+		end
+	end
+end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 277057 then -- Summon Bursting Boil
+		local spellName = self:SpellName(277007)
+		self:StopBar(CL.count:format(spellName, burstingBoilCount))
+		self:Message(277007, "red", nil, CL.count:format(spellName, burstingBoilCount))
+		if burstingOnMe ~= true then
+			self:PlaySound(277007, "warning")
+		else
+			self:PlaySound(277007, "info")
+		end
+		self:CastBar(277007, 8, CL.count:format(spellName, burstingBoilCount))
+		burstingBoilCount = burstingBoilCount + 1
+		self:CDBar(277007, 22, CL.count:format(spellName, burstingBoilCount))
+	end
+end
 
 -- Stage 1
 function mod:CorruptingBiteApplied()
@@ -109,34 +190,45 @@ function mod:CorruptingBiteApplied()
 	self:Message2("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 	waveOfCorruptionCount = 1
-
-	self:Bar(272506, 9) -- Explosive Corruption
-	self:Bar(270373, 15.5) -- Wave of Corruption
-	self:Bar(263235, 47) -- Blood Feast
+	burstingBoilCount = 1
+	if self:Mythic() then
+		self:Bar(277007, 14.3, CL.count:format(self:SpellName(277007), burstingBoilCount)) -- Bursting Boil
+	else
+		self:Bar(272506, 9) -- Explosive Corruption
+	end
+	self:Bar(270373, 15.5, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
+	self:Bar(263235, self:Mythic() and 32 or 47) -- Blood Feast
 end
 
 do
 	local castOnMe = nil
 	function mod:ExplosiveCorruptionSuccess(args)
-		if args.spellId == 272505 then -- Initial application in stage 3 on heroic
+		if self:Mythic() then
+			self:Message2(272506, "orange")
+		elseif args.spellId == 272505 then -- Initial application in stage 3 on heroic
 			if self:Me(args.destGUID) then
 				castOnMe = true
 			end
 			self:TargetMessage2(272506, "orange", args.destName)
 		end
-		self:CDBar(272506, stage == 1 and 26 or stage == 2 and 15.9 or 13.4)
+		self:CDBar(272506, self:Mythic() and stage == 3 and 27 or 44 or stage == 1 and 26 or stage == 2 and 15.9 or 13.4)
 	end
 
 	local playerList = mod:NewTargetList()
 	function mod:ExplosiveCorruptionApplied(args)
 		if args.spellId == 274262 then -- Initial debuff
-			playerList[#playerList+1] = args.destName
 			if self:Me(args.destGUID) then
+				if self:Mythic() then
+					self:TargetMessage2(272506, "orange", args.destName)
+				end
 				self:PlaySound(272506, "alarm")
 				self:Say(272506)
 				self:SayCountdown(272506, 4)
 			end
-			self:TargetsMessage(272506, "orange", playerList, 3, nil, nil, 2) -- Travel time
+			if not self:Mythic() then
+				playerList[#playerList+1] = args.destName
+				self:TargetsMessage(272506, "orange", playerList, 3, nil, nil, 2) -- Travel time
+			end
 		elseif self:Me(args.destGUID) then -- Secondary Target or Stage 3 initial application
 			if castOnMe == true then
 				castOnMe = false
@@ -205,42 +297,53 @@ function mod:ReoriginationBlastSuccess(args)
 		self:StopBar(267462) -- Decaying Eruption
 	else
 		self:PauseBar(272506) -- Explosive Corruption
-		self:PauseBar(270373) -- Wave of Corruption
+		self:PauseBar(270373, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
 		self:PauseBar(263235) -- Blood Feast
+		self:PauseBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount))
 	end
 end
 
 
 function mod:ReoriginationBlastRemoved(args)
+	orbsCounter = 0
 	if stage == 2 then -- These bars don't exist in stage 1, no stun happens in stage 3
 		self:ResumeBar(272506) -- Explosive Corruption
-		self:ResumeBar(270373) -- Wave of Corruption
+		self:ResumeBar(270373, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
 		self:ResumeBar(263235) -- Blood Feast
+		self:ResumeBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount))
 	end
 end
 
 -- Stage 2
 function mod:GrowingCorruption(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
-	self:PlaySound(args.spellId, "alarm")
+	local amount = args.amount or 1
+	if amount % 2 == 1 and amount > 2 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+		self:PlaySound(args.spellId, "alarm")
+	end
 end
 
 function mod:WaveofCorruption(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, waveOfCorruptionCount))
 	self:PlaySound(args.spellId, "alarm")
+	self:StopBar(CL.count:format(args.spellName, waveOfCorruptionCount))
 	waveOfCorruptionCount = waveOfCorruptionCount + 1
-	self:Bar(args.spellId, stage == 3 and 25.5 or waveOfCorruptionCount % 2 == 0 and 15 or 31)
+	self:Bar(args.spellId, stage == 3 and (self:Mythic() and 15.9 or 25.5) or waveOfCorruptionCount % 2 == 0 and 15 or 31, CL.count:format(args.spellName, waveOfCorruptionCount))
+	if stage == 2 and waveOfCorruptionCount % 2 == 1 then -- Update Blood feast timer
+		self:Bar(263235, 15) -- Blood Feast
+	end
 end
 
 function mod:BloodFeastSuccess(args)
-	self:PlaySound(args.spellId, "warning")
+	self:PlaySound(args.spellId, "alert")
 	self:TargetMessage2(args.spellId, "red", args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 10)
+		self:SayCountdown(args.spellId, self:Mythic() and 6 or 10)
 	end
 	self:CDBar(args.spellId, 46.3)
-	self:CDBar(263307, 20) -- Mind-Numbing Chatter
+	self:Bar(270373, 15.5, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Update Wave of corruption timer
+	self:CDBar(263307, self:Mythic() and 12.9 or 20) -- Mind-Numbing Chatter
 end
 
 function mod:BloodFeastRemoved(args)
@@ -251,7 +354,7 @@ end
 
 function mod:MindNumbingChatter(args)
 	self:Message2(args.spellId, "orange", CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "alarm")
 	self:CDBar(args.spellId, 13.5)
 end
 
@@ -267,17 +370,22 @@ function mod:Collapse(args)
 	self:PlaySound("stages", "long")
 
 	self:StopBar(272506) -- Explosive Corruption
-	self:StopBar(270373) -- Wave of Corruption
+	self:StopBar(CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
 	self:StopBar(263235) -- Blood Feast
 	self:StopBar(263482) -- Reorigination Blast
+	self:StopBar(CL.count:format(self:SpellName(277007), burstingBoilCount))
 
 	waveOfCorruptionCount = 1
+	burstingBoilCount = 1
 
 	self:CastBar("stages", 20, args.spellName, args.spellId) -- Collapse
-	self:Bar(272506, 30) -- Explosive Corruption
-	self:Bar(274582, 34) -- Malignant Growth
-	self:Bar(275160, 47.5) -- Gaze of G'huun
-	self:Bar(270373, 50.5) -- Wave of Corruption
+	self:Bar(272506, self:Mythic() and 48.3 or 30) -- Explosive Corruption
+	self:Bar(274582, self:Mythic() and 35 or 34) -- Malignant Growth
+	self:Bar(275160, self:Mythic() or 43.8 or 47.5) -- Gaze of G'huun
+	self:Bar(270373, self:Mythic() and 39 or 50.5, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
+	if self:Mythic() then
+		self:CDBar(277007, 28, CL.count:format(self:SpellName(277007), burstingBoilCount)) -- Bursting Boil
+	end
 end
 
 function mod:MalignantGrowth(args)
@@ -289,7 +397,7 @@ end
 function mod:GazeofGhuun(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 25.9)
+	self:Bar(args.spellId, self:Mythic() and 23 or 25.9)
 end
 
 do
@@ -303,5 +411,43 @@ do
 				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end
+	end
+end
+
+-- Mythic
+function mod:BurstingBloodApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "info")
+		burstingOnMe = true
+	end
+	if self:GetOption(burstingMarker) then
+		local icon = (burstingBoilIconCount % 6) + 1
+		SetRaidTarget(args.destName, icon)
+		burstingBoilIconCount = burstingBoilIconCount + 1
+	end
+end
+
+function mod:BurstingBloodRemoved(args)
+	if self:Me(args.destGUID) then
+		burstingOnMe = false
+	end
+	if self:GetOption(burstingMarker) then
+		SetRaidTarget(args.destName, 0)
+	end
+end
+
+function mod:FixateApplied(args)
+	if self:Me(args.destGUID) then
+		self:Flash(268074)
+		if self:GetOption("custom_on_fixate_plates") then
+			self:AddPlateIcon(268074, args.sourceGUID)
+		end
+	end
+end
+
+function mod:FixateRemoved(args)
+	if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
+		self:RemovePlateIcon(268074, args.sourceGUID)
 	end
 end
