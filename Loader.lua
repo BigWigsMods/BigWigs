@@ -875,15 +875,6 @@ do
 		end
 	end
 
-	-- XXX temp
-	do
-		local _, t = ...
-		if not t.moved then
-			RaidNotice_AddMessage(RaidWarningFrame, "Restart WoW to finish BigWigs update", {r=1,g=1,b=1}, 300)
-		end
-	end
-	-- XXX
-
 	local L = GetLocale()
 	local locales = {
 		--ruRU = "Russian (ruRU)",

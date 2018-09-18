@@ -3,7 +3,11 @@
 -- @module PluginPrototype
 -- @alias plugin
 
-local core = BigWigs
+local core
+do
+	local _, tbl =...
+	core = tbl.core
+end
 
 local plugin = {}
 core:GetModule("Plugins"):SetDefaultModulePrototype(plugin)

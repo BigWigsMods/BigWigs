@@ -1,7 +1,13 @@
+
+local BigWigs
+do
+	local _, tbl =...
+	BigWigs = tbl.core
+end
+
 local C = {}
 local L = BigWigsAPI:GetLocale("BigWigs")
 local CL = BigWigsAPI:GetLocale("BigWigs: Common")
-local BigWigs = BigWigs
 local names = {}
 local descriptions = {}
 

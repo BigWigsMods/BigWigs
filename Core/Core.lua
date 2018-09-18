@@ -7,6 +7,11 @@ local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceTimer-3.0")
 addon:SetEnabledState(false)
 addon:SetDefaultModuleState(false)
 
+do
+	local _, tbl =...
+	tbl.core = addon
+end
+
 local adb = LibStub("AceDB-3.0")
 local lds = LibStub("LibDualSpec-1.0")
 
