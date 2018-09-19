@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("MOTHER", "zhCN")
 if not L then return end
 if L then
 	L.sideLaser = "侧面光束" -- short for: (location) Uldir Defensive Beam
-	L.upLaser = "垂直光束"
+	L.upLaser = "顶部光束"
 	L.mythic_beams = "双重光束"
 end
 
@@ -36,15 +36,15 @@ end
 L = BigWigs:NewBossLocale("Mythrax the Unraveler", "zhCN")
 if L then
 	L.destroyer_cast = "恩拉其毁灭者：%s" -- npc id: 139381
-	L.xalzaix_returned = "夏尔扎克斯出现" -- npc id: 138324
-	--L.add_blast = "Add Blast"
-	--L.boss_blast = "Boss Blast"
+	L.xalzaix_returned = "夏尔扎克斯出现！" -- npc id: 138324
+	L.add_blast = "小怪湮灭冲击"
+	L.boss_blast = "首领湮灭冲击"
 end
 
 L = BigWigs:NewBossLocale("G'huun", "zhCN")
 if L then
-	--L.orbs_deposited = "Orbs Deposited (%d/3) - %.1f sec"
-	--L.orb_spawning = "Orb Spawning"
+	L.orbs_deposited = "充能（%d／3） - %.1f秒"
+	L.orb_spawning = "能量矩阵出现"
 
 	--L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
 	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
