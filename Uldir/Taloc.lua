@@ -119,7 +119,7 @@ do
 
 	function mod:PlasmaDischargeRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(271224)
 		end
 	end
 end
