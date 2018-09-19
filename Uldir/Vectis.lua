@@ -16,6 +16,9 @@ mod.respawnTime = 30
 local omegaList = {}
 local omegaMarker = {false, false, false, false}
 local omegaIconMax = mod:Mythic() and 4 or 3
+local omegaCountMythic = 0
+local omegaMythicPreventIconsByGroup = false
+local omegaMythicIconTracker = {}
 local pathogenBombCount = 1
 local contagionCount = 1
 local immunosuppressionCount = 1
@@ -78,6 +81,9 @@ function mod:OnEngage()
 	contagionCount = 1
 	omegaVectorDuration = nil
 	omegaIconMax = self:Mythic() and 4 or 3
+	omegaCountMythic = 0
+	omegaMythicIconTracker = {}
+	omegaMythicPreventIconsByGroup = false
 
 	self:Bar(267242, 20.5, CL.count:format(self:SpellName(267242), contagionCount)) -- Contagion
 	self:Bar(265212, 10) -- Gestate
@@ -207,12 +213,60 @@ function mod:OmegaVectorApplied(args)
 		end
 	end
 
+	if self:Mythic() and not omegaMythicPreventIconsByGroup then -- We *try* to restrict markers to specific groups on mythic
+		omegaCountMythic = omegaCountMythic + 1
+		if omegaCountMythic > 4 then -- First 4 random applications
+			local index = UnitInRaid(args.destName)
+			if omegaCountMythic < 9 then -- Between application 5-8 is when we scan what icon will be assigned to what group
+				if not index then -- Something went wrong
+					omegaMythicPreventIconsByGroup = true
+				elseif index < 6 then -- Group 1
+					if omegaMythicIconTracker[1] then -- Something went wrong or not using group tactic
+						omegaMythicPreventIconsByGroup = true
+					else
+						omegaMythicIconTracker[1] = icon
+					end
+				if index < 11 then -- Group 2
+					if omegaMythicIconTracker[2] then -- Something went wrong or not using group tactic
+						omegaMythicPreventIconsByGroup = true
+					else
+						omegaMythicIconTracker[2] = icon
+					end
+				if index < 16 then -- Group 3
+					if omegaMythicIconTracker[3] then -- Something went wrong or not using group tactic
+						omegaMythicPreventIconsByGroup = true
+					else
+						omegaMythicIconTracker[3] = icon
+					end
+				else -- Group 4
+					if omegaMythicIconTracker[4] then -- Something went wrong or not using group tactic
+						omegaMythicPreventIconsByGroup = true
+					else
+						omegaMythicIconTracker[4] = icon
+					end
+				end
+			else -- Application 9 or above, we can now set icon by group
+				if not index then
+					-- Fall back to normal icon setting
+				elseif index < 6 then -- Group 1
+					icon = omegaMythicIconTracker[1]
+				elseif index < 11 then -- Group 2
+					icon = omegaMythicIconTracker[2]
+				elseif index < 16 then -- Group 3
+					icon = omegaMythicIconTracker[3]
+				else -- Group 4
+					icon = omegaMythicIconTracker[4]
+				end
+			end
+		end
+	end
+
 	if self:GetOption(omegaVectorMarker) and icon then
 		SetRaidTarget(args.destName, icon)
 	end
 
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(265143, nil, CL.you:format(CL.count_icon:format(args.spellName, icon, icon)))
+		self:PersonalMessage(265143, nil, icon and CL.you:format(CL.count_icon:format(args.spellName, icon, icon)) or nil)
 		self:PlaySound(265143, "alarm")
 		self:SayCountdown(265143, omegaVectorDuration or 10, icon) -- duration based on raid size
 	end
@@ -236,7 +290,7 @@ function mod:OmegaVectorRemoved(args)
 
 	if self:GetOption(omegaVectorMarker) then
 		-- Either remove the mark or update it to the next debuff
-		SetRaidTarget(args.destName, icon)
+		SetRaidTarget(args.destName, self:Mythic() and 0 or icon)
 	end
 
 	if self:Me(args.destGUID) and icon == 0 then
