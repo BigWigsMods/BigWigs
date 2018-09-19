@@ -155,7 +155,7 @@ do
 	local prev = 0
 	function mod:PurifyingFlameDamage(args)
 		if self:Me(args.destGUID) then
-			local t = GetTime()
+			local t = args.time
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(267795, "alarm")
@@ -167,8 +167,8 @@ end
 
 do
 	local prev = 0
-	function mod:WindTunnel()
-		local t = GetTime()
+	function mod:WindTunnel(args)
+		local t = args.time
 		if t-prev > 2 then
 			prev = t
 			self:Message2(267878, "red")
@@ -212,7 +212,7 @@ do
 	local prev = 0
 	function mod:UldirDefensiveBeamDamage(args)
 		if self:Me(args.destGUID) then
-			local t = GetTime()
+			local t = args.time
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(args.spellId, "alarm")

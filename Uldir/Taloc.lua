@@ -96,7 +96,7 @@ end
 do
 	local prev = 0
 	function mod:PlasmaDischarge(args)
-		local t = GetTime()
+		local t = args.time
 		if t-prev > 2 then
 			prev = t
 			plasmaCount = plasmaCount + 1
@@ -212,7 +212,7 @@ end
 do
 	local prev = 0
 	function mod:HardenedArteriesApplied(args)
-		local t = GetTime()
+		local t = args.time
 		if t-prev > 2 then
 			prev = t
 			self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, arteriesCount))
@@ -258,7 +258,7 @@ do
 	local prev = 0
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) then
-			local t = GetTime()
+			local t = args.time
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(args.spellId, "alarm")

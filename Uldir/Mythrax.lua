@@ -194,7 +194,7 @@ do
 		if self:MobId(args.sourceGUID) == 134546 then -- Mythrax the Unraveler
 			self:Bar(args.spellId, 20.5)
 		else -- Intermission Adds
-			local t = GetTime()
+			local t = args.time
 			if t-prev > 2 then
 				prev = t
 				self:CDBar(args.spellId, 20.5, L.destroyer_cast:format(args.spellName))

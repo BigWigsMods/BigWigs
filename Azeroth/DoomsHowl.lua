@@ -99,7 +99,7 @@ do
 	function mod:BattleFieldRepair(args)
 		local raidIcon = CombatLog_String_GetIcon(args.sourceRaidFlags)
 		self:Message2(args.spellId, "red", raidIcon .. args.spellName)
-		local t = GetTime()
+		local t = args.time
 		if t-prev > 0.5 then
 			prev = t
 			self:PlaySound(args.spellId, "warning")
@@ -134,7 +134,7 @@ do
 
 		if spellId == 271164 then -- Mortar Shot
 			castCollector[castGUID] = true
-			local t = GetTime()
+			local t = args.time
 			if t-prev > 0.5 then
 				prev = t
 				self:Message2(spellId, "orange")

@@ -142,7 +142,7 @@ end
 do
 	local prev = 0
 	function mod:EnticingEssence(args)
-		local t = GetTime()
+		local t = args.time
 		if t-prev > 2 then
 			prev = t
 			self:Message2(args.spellId, "red")

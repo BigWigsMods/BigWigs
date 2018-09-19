@@ -416,7 +416,7 @@ do
 	local prev = 0
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) then
-			local t = GetTime()
+			local t = args.time
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(args.spellId, "alarm")

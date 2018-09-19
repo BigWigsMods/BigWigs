@@ -229,7 +229,7 @@ do
 		if self:GetOption(darkRevelationMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
-		local t = GetTime()
+		local t = args.time
 		if t-prev > 1 then
 			prev = t
 			self:Message2(-18530, "cyan", CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
@@ -241,7 +241,7 @@ do
 	local prev = 0
 	function mod:FixateApplied(args)
 		if self:Me(args.destGUID) then
-			local t = GetTime()
+			local t = args.time
 			if t-prev > 2 then
 				prev = t
 				self:PersonalMessage(269936)
@@ -385,7 +385,7 @@ do
 		if self:GetOption(deathwishMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
-		local t = GetTime()
+		local t = args.time
 		if t-prev > 1 then
 			prev = t
 			self:Message2(-18530, "cyan", CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
