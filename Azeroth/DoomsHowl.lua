@@ -134,7 +134,7 @@ do
 
 		if spellId == 271164 then -- Mortar Shot
 			castCollector[castGUID] = true
-			local t = args.time
+			local t = GetTime()
 			if t-prev > 0.5 then
 				prev = t
 				self:Message2(spellId, "orange")
