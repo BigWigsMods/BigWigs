@@ -219,7 +219,7 @@ do
 		if args.spellId == 274262 then -- Initial debuff
 			if self:Me(args.destGUID) then
 				if self:Mythic() then
-					self:TargetMessage2(272506, "orange", args.destName)
+					self:PersonalMessage(272506)
 				end
 				self:PlaySound(272506, "alarm")
 				self:Say(272506)
