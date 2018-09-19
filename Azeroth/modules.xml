@@ -1,6 +1,7 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
+<Script file="Azurethos.lua"/>
 <Script file="DoomsHowl.lua"/>
 <Script file="LionsRoar.lua"/>
 <Script file="Yenajz.lua"/>
