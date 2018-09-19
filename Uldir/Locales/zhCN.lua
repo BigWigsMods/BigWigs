@@ -46,8 +46,8 @@ if L then
 	L.orbs_deposited = "充能（%d／3） - %.1f秒"
 	L.orb_spawning = "能量矩阵出现"
 	L.orb_spawning_side = "能量矩阵出现 (%s)"
-	--L.left = "Left"
-	--L.right = "Right"
+	L.left = "左"
+	L.right = "右"
 
 	L.custom_on_fixate_plates = "敌对姓名板凝视图标"
 	L.custom_on_fixate_plates_desc = "当你被凝视时在目标姓名板上显示一个图标。\n需要使用敌对姓名板。此功能目前只支持 KuiNameplates。"
