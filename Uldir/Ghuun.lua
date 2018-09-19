@@ -173,7 +173,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		local spellName = self:SpellName(277007)
 		self:StopBar(CL.count:format(spellName, burstingBoilCount))
 		self:Message(277007, "red", nil, CL.count:format(spellName, burstingBoilCount))
-		if burstingOnMe ~= true then
+		if burstingOnMe then
 			self:PlaySound(277007, "warning")
 		else
 			self:PlaySound(277007, "info")
@@ -397,7 +397,7 @@ end
 function mod:GazeofGhuun(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, self:Mythic() and 23 or 25.9)
+	self:Bar(args.spellId, self:Mythic() and 23 or self:Heroic() and 25.9 or 31.6)
 end
 
 do
@@ -417,9 +417,9 @@ end
 -- Mythic
 function mod:BurstingBloodApplied(args)
 	if self:Me(args.destGUID) then
+		burstingOnMe = true
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "info")
-		burstingOnMe = true
 	end
 	if self:GetOption(burstingMarker) then
 		local icon = (burstingBoilIconCount % 6) + 1
