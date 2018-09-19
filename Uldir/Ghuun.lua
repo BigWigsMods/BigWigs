@@ -173,7 +173,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		local spellName = self:SpellName(277007)
 		self:StopBar(CL.count:format(spellName, burstingBoilCount))
 		self:Message(277007, "red", nil, CL.count:format(spellName, burstingBoilCount))
-		if burstingOnMe then
+		if not burstingOnMe then
 			self:PlaySound(277007, "warning")
 		else
 			self:PlaySound(277007, "info")
