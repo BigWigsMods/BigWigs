@@ -28,7 +28,7 @@ local orbDunkTime = 0
 local L = mod:GetLocale()
 if L then
 	L.orb_icon = "ability_titankeeper_cleansingorb"
-	L.orbs_deposited = "Orbs Deposited (%d/3) - %s sec"
+	L.orbs_deposited = "Orbs Deposited (%d/3) - %.1f sec"
 	L.orb_spawning = "Orb Spawning"
 
 	L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
