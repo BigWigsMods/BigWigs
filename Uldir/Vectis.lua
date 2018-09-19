@@ -226,13 +226,13 @@ function mod:OmegaVectorApplied(args)
 					else
 						omegaMythicIconTracker[1] = icon
 					end
-				if index < 11 then -- Group 2
+				elseif index < 11 then -- Group 2
 					if omegaMythicIconTracker[2] then -- Something went wrong or not using group tactic
 						omegaMythicPreventIconsByGroup = true
 					else
 						omegaMythicIconTracker[2] = icon
 					end
-				if index < 16 then -- Group 3
+				elseif index < 16 then -- Group 3
 					if omegaMythicIconTracker[3] then -- Something went wrong or not using group tactic
 						omegaMythicPreventIconsByGroup = true
 					else
