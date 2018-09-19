@@ -400,7 +400,7 @@ do
 	local args = {}
 	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 	bossUtilityFrame:SetScript("OnEvent", function()
-		local _, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount = CombatLogGetCurrentEventInfo()
+		local time, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount = CombatLogGetCurrentEventInfo()
 		if allowedEvents[event] then
 			if event == "UNIT_DIED" then
 				local _, _, _, _, _, id = strsplit("-", destGUID)
@@ -429,7 +429,7 @@ do
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
-						args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = spellId, spellName, extraSpellId, amount, amount
+						args.time, args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = time, spellId, spellName, extraSpellId, amount, amount
 						if type(func) == "function" then
 							func(args)
 						else
