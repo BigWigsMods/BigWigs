@@ -40,6 +40,9 @@ L = BigWigs:NewBossLocale("G'huun", "ruRU")
 if L then
 	--L.orbs_deposited = "Orbs Deposited (%d/3) - %.1f sec"
 	--L.orb_spawning = "Orb Spawning"
+	--L.orb_spawning_side = "Orb Spawning (%s)"
+	--L.left = "Left"
+	--L.right = "Right"
 
 	--L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
 	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."

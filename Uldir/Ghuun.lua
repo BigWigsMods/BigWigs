@@ -30,6 +30,9 @@ if L then
 	L.orb_icon = "ability_titankeeper_cleansingorb"
 	L.orbs_deposited = "Orbs Deposited (%d/3) - %.1f sec"
 	L.orb_spawning = "Orb Spawning"
+	L.orb_spawning_side = "Orb Spawning (%s)"
+	L.left = "Left"
+	L.right = "Right"
 
 	L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
 	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
@@ -45,6 +48,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-18109, -- Power Matrix
+		263482, -- Reorigination Blast
 		-- Stage 1
 		{272506, "SAY", "SAY_COUNTDOWN"}, -- Explosive Corruption
 		270287, -- Blighted Ground
@@ -53,10 +57,9 @@ function mod:GetOptions()
 		{267412, "TANK"}, -- Massive Smash
 		267409, -- Dark Bargain
 		267462, -- Decaying Eruption
-		263482, -- Reorigination Blast
 		-- Stage 2
 		{270447, "TANK"}, -- Growing Corruption
-		270373, -- Wave of Corruption
+		{270373, "PROXIMITY"}, -- Wave of Corruption
 		{263235, "SAY", "SAY_COUNTDOWN"}, -- Blood Feast
 		263307, -- Mind-Numbing Chatter
 		-- Stage 3
@@ -68,6 +71,12 @@ function mod:GetOptions()
 		burstingMarker,
 		{268074, "FLASH"}, -- Fixate
 		"custom_on_fixate_plates",
+	}, {
+		["stages"] = "general",
+		[272506] = CL.stage:format(1),
+		[270447] = CL.stage:format(2),
+		[274582] = CL.stage:format(3),
+		[277007] = "mythic",
 	}
 end
 
@@ -126,7 +135,7 @@ function mod:OnEngage()
 	burstingBoilIconCount = 0
 	burstingOnMe = false
 
-	self:Bar(-18109, 6, L.orb_spawning, L.orb_icon) -- Power Matrix
+	self:Bar(-18109, 6, self:Mythic() and L.orb_spawning or L.orb_spawning_side:format(L.left), L.orb_icon) -- Power Matrix
 	self:CDBar(272506, 8) -- Explosive Corruption
 	self:Bar(267509, 25.5, CL.count:format(self:SpellName(267509), waveCounter)) -- Thousand Maws (x)
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss2")
@@ -156,13 +165,13 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 			orbsCounter = orbsCounter+1
 			self:Message(-18109, "green", nil, L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
 			self:PlaySound(-18109, "long")
-			self:Bar(-18109, 12.5, L.orb_spawning, L.orb_icon) -- Power Matrix
+			self:Bar(-18109, 12.5, self:Mythic() and L.orb_spawning or L.orb_spawning_side:format(L.left), L.orb_icon) -- Power Matrix
 			orbDunkTime = GetTime() + 12.5 -- Adjust for Spawn timer
 		elseif power > 30 and orbsCounter < 1 then
 			orbsCounter = orbsCounter+1
 			self:Message(-18109, "green", nil, L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
 			self:PlaySound(-18109, "long")
-			self:Bar(-18109, 12.5, L.orb_spawning, L.orb_icon) -- Power Matrix
+			self:Bar(-18109, 12.5, self:Mythic() and L.orb_spawning or L.orb_spawning_side:format(L.right), L.orb_icon) -- Power Matrix
 			orbDunkTime = GetTime() + 12.5 -- Adjust for Spawn timer
 		end
 	end
@@ -197,6 +206,7 @@ function mod:CorruptingBiteApplied()
 		self:Bar(272506, 9) -- Explosive Corruption
 	end
 	self:Bar(270373, 15.5, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
+	self:OpenProximity(270373, 5)
 	self:Bar(263235, self:Mythic() and 32 or 47) -- Blood Feast
 end
 
@@ -298,8 +308,9 @@ function mod:ReoriginationBlastSuccess(args)
 	else
 		self:PauseBar(272506) -- Explosive Corruption
 		self:PauseBar(270373, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
+		self:CloseProximity(270373)
 		self:PauseBar(263235) -- Blood Feast
-		self:PauseBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount))
+		self:PauseBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount)) -- Bursting Boil
 	end
 end
 
@@ -309,8 +320,9 @@ function mod:ReoriginationBlastRemoved(args)
 	if stage == 2 then -- These bars don't exist in stage 1, no stun happens in stage 3
 		self:ResumeBar(272506) -- Explosive Corruption
 		self:ResumeBar(270373, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
+		self:OpenProximity(270373, 5)
 		self:ResumeBar(263235) -- Blood Feast
-		self:ResumeBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount))
+		self:ResumeBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount)) -- Bursting Boil
 	end
 end
 
@@ -373,7 +385,7 @@ function mod:Collapse(args)
 	self:StopBar(CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
 	self:StopBar(263235) -- Blood Feast
 	self:StopBar(263482) -- Reorigination Blast
-	self:StopBar(CL.count:format(self:SpellName(277007), burstingBoilCount))
+	self:StopBar(CL.count:format(self:SpellName(277007), burstingBoilCount)) -- Bursting Boil
 
 	waveOfCorruptionCount = 1
 	burstingBoilCount = 1
@@ -439,15 +451,15 @@ end
 
 function mod:FixateApplied(args)
 	if self:Me(args.destGUID) then
-		self:Flash(268074)
+		self:Flash(args.spellId)
 		if self:GetOption("custom_on_fixate_plates") then
-			self:AddPlateIcon(268074, args.sourceGUID)
+			self:AddPlateIcon(args.spellId, args.sourceGUID)
 		end
 	end
 end
 
 function mod:FixateRemoved(args)
 	if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
-		self:RemovePlateIcon(268074, args.sourceGUID)
+		self:RemovePlateIcon(args.spellId, args.sourceGUID)
 	end
 end
