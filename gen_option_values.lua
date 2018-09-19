@@ -55,6 +55,7 @@ local valid_methods = {
 	Flash = "FLASH",
 	Say = "SAY",
 	SayCountdown = "SAY_COUNTDOWN",
+	CancelSayCountdown = "SAY_COUNTDOWN",
 	OpenAltPower = "ALTPOWER",
 	CloseAltPower = "ALTPOWER",
 	OpenProximity = "PROXIMITY",
