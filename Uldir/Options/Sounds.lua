@@ -92,8 +92,9 @@ BigWigs:AddSounds("Mythrax the Unraveler", {
 })
 
 BigWigs:AddSounds("G'huun", {
-	[263235] = "warning",
-	[263307] = "alert",
+	[-18109] = "long",
+	[263235] = "alert",
+	[263307] = "alarm",
 	[263321] = "alarm",
 	[263482] = "long",
 	[267409] = "alert",
@@ -107,6 +108,7 @@ BigWigs:AddSounds("G'huun", {
 	[272506] = "alarm",
 	[274582] = "alarm",
 	[275160] = "warning",
+	[277007] = {"info","warning"},
 	["stages"] = "long",
 })
 
