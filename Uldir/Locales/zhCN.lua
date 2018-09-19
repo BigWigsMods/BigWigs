@@ -10,7 +10,7 @@ L = BigWigs:NewBossLocale("Zek'voz, Herald of N'zoth", "zhCN")
 if L then
 	L.surging_darkness_eruption = "翻腾黑暗（%d）"
 	L.mythic_adds = "史诗模式增援"
-	--L.mythic_adds_desc = "Show timers for when the adds will spawn in Mythic (both Qiraji Warrior and Anub'ar Voidweaver spawn at the same time)."
+	L.mythic_adds_desc = "替史詩模式特有的小怪組合顯示計時器（异种虫战士和蛛魔虚空编织者同时出现的那一波）。"
 end
 
 L = BigWigs:NewBossLocale("Fetid Devourer", "zhCN")
@@ -21,16 +21,16 @@ end
 L = BigWigs:NewBossLocale("Zul", "zhCN")
 if L then
 	L.crawg_msg = "抱齿兽" -- Short for 'Bloodthirsty Crawg'
-	--L.crawg_desc = "Warnings and timers for when the Bloodthirsty Crawg spawns."
+	L.crawg_desc = "替抱齿兽的生成显示计时器和警告。"
 
 	L.bloodhexer_msg = "鲜血妖术师" -- Short for 'Nazmani Bloodhexer'
-	--L.bloodhexer_desc = "Warnings and timers for when the Nazmani Bloodhexer spawns."
+	L.bloodhexer_desc = "替鲜血妖术师的生成显示计时器和警告。"
 
 	L.crusher_msg = "碾压者" -- Short for 'Nazmani Crusher'
-	--L.crusher_desc = "Warnings and timers for when the Nazmani Crusher spawns."
+	L.crusher_desc = "替碾压者的生成显示计时器和警告。"
 
-	--L.custom_off_decaying_flesh_marker = "Decaying Flesh Marker"
-	--L.custom_off_decaying_flesh_marker_desc = "Mark the enemy forces afflicted by Decaying Flesh with {rt8}, requires promoted or leader."
+	L.custom_off_decaying_flesh_marker = "腐烂血肉标记"
+	L.custom_off_decaying_flesh_marker_desc = "使用 {rt8} 标记受到腐烂血肉效果的敌人，需要权限。"
 end
 
 L = BigWigs:NewBossLocale("Mythrax the Unraveler", "zhCN")
@@ -46,6 +46,6 @@ if L then
 	L.orbs_deposited = "充能（%d／3） - %.1f秒"
 	L.orb_spawning = "能量矩阵出现"
 
-	--L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
-	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "敌对姓名板凝视图标"
+	L.custom_on_fixate_plates_desc = "当你被凝视时在目标姓名板上显示一个图标。\n需要使用敌对姓名板。此功能目前只支持 KuiNameplates。"
 end
