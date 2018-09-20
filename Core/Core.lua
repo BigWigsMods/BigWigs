@@ -440,20 +440,21 @@ do
 		if bosses[moduleName] then
 			addon:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = setmetatable({}, { __index = bossCore, __metatable = false })
-			m.name = "BigWigs_Bosses_"..moduleName -- XXX AceAddon/AceDB backwards compat
-			m.moduleName = moduleName
+			local m = setmetatable({
+				name = "BigWigs_Bosses_"..moduleName, -- XXX AceAddon/AceDB backwards compat
+				moduleName = moduleName,
+
+				-- Embed callback handler
+				RegisterMessage = loader.RegisterMessage,
+				UnregisterMessage = loader.UnregisterMessage,
+				SendMessage = loader.SendMessage,
+
+				-- Embed event handler
+				RegisterEvent = addon.RegisterEvent,
+				UnregisterEvent = addon.UnregisterEvent,
+			}, { __index = bossCore, __metatable = false })
 			bosses[moduleName] = m
 			initModules[#initModules+1] = m
-
-			-- Embed callback handler
-			m.RegisterMessage = loader.RegisterMessage
-			m.UnregisterMessage = loader.UnregisterMessage
-			m.SendMessage = loader.SendMessage
-
-			-- Embed event handler
-			m.RegisterEvent = addon.RegisterEvent
-			m.UnregisterEvent = addon.UnregisterEvent
 
 			if journalId then
 				m.journalId = journalId
@@ -475,20 +476,21 @@ do
 		if plugins[moduleName] then
 			addon:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = setmetatable({}, { __index = pluginCore, __metatable = false })
-			m.name = "BigWigs_Plugins_"..moduleName -- XXX AceAddon/AceDB backwards compat
-			m.moduleName = moduleName
+			local m = setmetatable({
+				name = "BigWigs_Plugins_"..moduleName, -- XXX AceAddon/AceDB backwards compat
+				moduleName = moduleName,
+
+				-- Embed callback handler
+				RegisterMessage = loader.RegisterMessage,
+				UnregisterMessage = loader.UnregisterMessage,
+				SendMessage = loader.SendMessage,
+
+				-- Embed event handler
+				RegisterEvent = addon.RegisterEvent,
+				UnregisterEvent = addon.UnregisterEvent,
+			}, { __index = pluginCore, __metatable = false })
 			plugins[moduleName] = m
 			initModules[#initModules+1] = m
-
-			-- Embed callback handler
-			m.RegisterMessage = loader.RegisterMessage
-			m.UnregisterMessage = loader.UnregisterMessage
-			m.SendMessage = loader.SendMessage
-
-			-- Embed event handler
-			m.RegisterEvent = addon.RegisterEvent
-			m.UnregisterEvent = addon.UnregisterEvent
 
 			return m, CL
 		end
