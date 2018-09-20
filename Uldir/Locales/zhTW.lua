@@ -36,7 +36,7 @@ end
 L = BigWigs:NewBossLocale("Mythrax the Unraveler", "zhTW")
 if L then
 	L.destroyer_cast = "恩拉奇毀滅者：%s" -- npc id: 139381
-	L.xalzaix_returned = "薩爾札克斯出現！Xalzaix returned!" -- npc id: 138324
+	L.xalzaix_returned = "薩爾札克斯出現！" -- npc id: 138324
 	L.add_blast = "小怪滅寂衝擊"
 	L.boss_blast = "首領滅寂衝擊"
 end
@@ -46,8 +46,8 @@ if L then
 	L.orbs_deposited = "充能（%d／3） - %.1f秒"
 	L.orb_spawning = "能量矩陣出現"
 	L.orb_spawning_side = "能量矩陣出現 (%s)"
-	--L.left = "Left"
-	--L.right = "Right"
+	L.left = "左"
+	L.right = "右"
 
 	L.custom_on_fixate_plates = "在敵方名條顯示追擊圖示"
 	L.custom_on_fixate_plates_desc = "當你被凝視時，在敵方名條上顯示一個圖示。\n需要啟用敵方名條，此功能目前只支援KuiNameplates。"
