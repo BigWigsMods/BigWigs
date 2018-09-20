@@ -78,8 +78,8 @@ do
 	end
 end
 
---------------------------------------------------------------------------------
--- BarStyles
+-------------------------------------------------------------------------------
+-- Global
 --
 
-BigWigsAPI = API
+BigWigsAPI = setmetatable({}, { __index = API, __newindex = function() end, __metatable = false })

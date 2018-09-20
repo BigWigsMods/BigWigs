@@ -5,7 +5,6 @@
 <Script file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
 
 <!--@no-lib-strip@-->
-<Include file="Libs\AceAddon-3.0\AceAddon-3.0.xml"/>
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
 <!--@end-no-lib-strip@-->
 

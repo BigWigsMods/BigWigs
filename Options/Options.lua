@@ -1,7 +1,6 @@
 
 local BigWigs = BigWigs
-local options = BigWigs:NewModule("Options")
-options:SetEnabledState(true)
+local options = {}
 
 local colorize = nil
 do
@@ -199,6 +198,7 @@ do
 	f:RegisterEvent("ADDON_LOADED")
 	local function Initialize(_, _, addon)
 		if addon ~= addonName then return end
+		f:UnregisterEvent("ADDON_LOADED")
 
 		acOptions.args.general.args.profileOptions = adbo:GetOptionsTable(BigWigs.db)
 		acOptions.args.general.args.profileOptions.order = 1
@@ -214,28 +214,23 @@ do
 		acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
 		acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
 
-		f:UnregisterEvent("ADDON_LOADED")
+		loader.RegisterMessage(options, "BigWigs_BossModuleRegistered", "Register")
+		loader.RegisterMessage(options, "BigWigs_PluginRegistered", "Register")
+
+		for name, module in BigWigs:IterateBossModules() do
+			options:Register("BigWigs_BossModuleRegistered", name, module)
+		end
+		for name, module in BigWigs:IteratePlugins() do
+			options:Register("BigWigs_PluginRegistered", name, module)
+		end
+
+		loader.RegisterMessage(options, "BigWigs_StartConfigureMode")
+		loader.RegisterMessage(options, "BigWigs_StopConfigureMode")
+
 		-- Wait with nilling, we don't know how many addons will load during this same execution.
 		loader.CTimerAfter(5, function() f:SetScript("OnEvent", nil) end)
 	end
 	f:SetScript("OnEvent", Initialize)
-end
-
-function options:OnEnable()
-	loader.RegisterMessage(self, "BigWigs_BossModuleRegistered", "Register")
-	loader.RegisterMessage(self, "BigWigs_PluginRegistered", "Register")
-
-	for name, module in BigWigs:IterateBossModules() do
-		self:Register("BigWigs_BossModuleRegistered", name, module)
-	end
-	for name, module in BigWigs:IteratePlugins() do
-		self:Register("BigWigs_PluginRegistered", name, module)
-	end
-
-	loader.RegisterMessage(self, "BigWigs_StartConfigureMode")
-	loader.RegisterMessage(self, "BigWigs_StopConfigureMode")
-
-	self.OnEnable = nil
 end
 
 function options:Open()

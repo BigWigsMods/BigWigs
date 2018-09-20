@@ -906,7 +906,7 @@ end
 do
 	local callbackMap = {}
 	function public:RegisterMessage(msg, func)
-		if self == public then
+		if self == BigWigsLoader then
 			error(".RegisterMessage(addon, message, function) attempted to register a function to BigWigsLoader, you might be using : instead of . to register the callback.")
 		end
 
@@ -927,6 +927,10 @@ do
 		callbackMap[msg][self] = func or msg
 	end
 	function public:UnregisterMessage(msg)
+		if self == BigWigsLoader then
+			error(".UnregisterMessage(addon, message, function) attempted to unregister a function from BigWigsLoader, you might be using : instead of . to register the callback.")
+		end
+
 		if type(msg) ~= "string" then error(":UnregisterMessage(message) attempted to unregister an invalid message, must be a string!") end
 		if not callbackMap[msg] then return end
 		callbackMap[msg][self] = nil
@@ -1481,4 +1485,8 @@ SlashCmdList.BigWigsVersion = function()
 	if #bad > 0 then print(L.noBossMod, unpack(bad)) end
 end
 
-BigWigsLoader = public -- Set global
+-------------------------------------------------------------------------------
+-- Global
+--
+
+BigWigsLoader = setmetatable({}, { __index = public, __newindex = function() end, __metatable = false })

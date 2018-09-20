@@ -1,8 +1,8 @@
 
-local BigWigs
+local BigWigs = {}
 do
 	local _, tbl =...
-	BigWigs = tbl.core
+	tbl.core = BigWigs
 end
 
 local C = {}

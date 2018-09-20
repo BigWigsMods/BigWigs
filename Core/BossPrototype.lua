@@ -17,10 +17,12 @@
 -- @alias boss
 -- @usage local mod, CL = BigWigs:NewBoss("Argus the Unmaker", 1712, 2031)
 
+local boss = {}
 local core
 do
 	local _, tbl =...
 	core = tbl.core
+	tbl.bossPrototype = boss
 end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
@@ -155,9 +157,6 @@ local spells = setmetatable({}, {__index =
 -- @section core
 --
 
-local boss = {}
-core:GetModule("Bosses"):SetDefaultModulePrototype(boss)
-
 --- Register the module to enable on mob id.
 -- @number ... Any number of mob ids
 function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
@@ -188,114 +187,123 @@ function boss:GetOption(key)
 	return self.db.profile[key]
 end
 
---- Module type check.
--- A module is either from BossPrototype or PluginPrototype.
--- @return true
-function boss:IsBossModule()
-	return true
+--- Module enabled check.
+-- A module is either enabled or disabled.
+-- @return true or nil
+function boss:IsEnabled()
+	return self.enabled
 end
 
 function boss:Initialize() core:RegisterBossModule(self) end
-function boss:OnEnable(isWipe)
-	if debug then dbg(self, isWipe and "OnEnable() via Wipe()" or "OnEnable()") end
+function boss:Enable(isWipe)
+	if not self.enabled then
+		self.enabled = true
 
-	updateData(self)
-	self.sayCountdowns = {}
+		if debug then dbg(self, isWipe and "Enable() via Wipe()" or "Enable()") end
 
-	-- Update enabled modules list
-	for i = #enabledModules, 1, -1 do
-		local module = enabledModules[i]
-		if module == self then return end
-	end
-	enabledModules[#enabledModules+1] = self
+		updateData(self)
+		self.sayCountdowns = {}
 
-	if self.engageId then
-		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
-		self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
-	end
+		-- Update enabled modules list
+		for i = #enabledModules, 1, -1 do
+			local module = enabledModules[i]
+			if module == self then return end
+		end
+		enabledModules[#enabledModules+1] = self
 
-	if self.SetupOptions then self:SetupOptions() end
-	if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
+		if self.engageId then
+			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
+			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
+		end
 
-	if IsEncounterInProgress() and not isWipe then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
-		self:CheckForEncounterEngage("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
-	end
+		if self.SetupOptions then self:SetupOptions() end
+		if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 
-	if not isWipe then
-		self:SendMessage("BigWigs_OnBossEnable", self)
+		if IsEncounterInProgress() and not isWipe then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
+			self:CheckForEncounterEngage("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
+		end
+
+		if not isWipe then
+			self:SendMessage("BigWigs_OnBossEnable", self)
+		end
 	end
 end
-function boss:OnDisable(isWipe)
-	if debug then dbg(self, isWipe and "OnDisable() via Wipe()" or "OnDisable()") end
-	if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
+function boss:Disable(isWipe)
+	if self.enabled then
+		self.enabled = nil
 
-	-- Update enabled modules list
-	for i = #enabledModules, 1, -1 do
-		if self == enabledModules[i] then
-			tremove(enabledModules, i)
-		end
-	end
+		if debug then dbg(self, isWipe and "Disable() via Wipe()" or "Disable()") end
+		if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
-	-- No enabled modules? Unregister the combat log!
-	if #enabledModules == 0 then
-		bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-		wipe(bossTargetScans)
-		wipe(unitTargetScans)
-	else
-		for i = #bossTargetScans, 1, -1 do
-			if self == bossTargetScans[i][1] then
-				tremove(bossTargetScans, i)
+		-- Update enabled modules list
+		for i = #enabledModules, 1, -1 do
+			if self == enabledModules[i] then
+				tremove(enabledModules, i)
 			end
 		end
-		for i = #unitTargetScans, 1, -1 do
-			if self == unitTargetScans[i][1] then
-				tremove(unitTargetScans, i)
+
+		-- No enabled modules? Unregister the combat log!
+		if #enabledModules == 0 then
+			bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+			bossTargetScans, unitTargetScans = {}, {}
+		else
+			for i = #bossTargetScans, 1, -1 do
+				if self == bossTargetScans[i][1] then
+					tremove(bossTargetScans, i)
+				end
+			end
+			for i = #unitTargetScans, 1, -1 do
+				if self == unitTargetScans[i][1] then
+					tremove(unitTargetScans, i)
+				end
 			end
 		end
-	end
 
-	-- Unregister the Unit Events for this module
-	for a, b in next, unitEventMap[self] do
-		for k in next, b do
-			self:UnregisterUnitEvent(a, k)
+		-- Unregister the Unit Events for this module
+		for a, b in next, unitEventMap[self] do
+			for k in next, b do
+				self:UnregisterUnitEvent(a, k)
+			end
 		end
-	end
 
-	-- Empty the event maps for this module
-	eventMap[self] = nil
-	unitEventMap[self] = nil
-	widgetEventMap[self] = nil
-	wipe(allowedEvents)
+		-- Empty the event maps for this module
+		eventMap[self] = nil
+		unitEventMap[self] = nil
+		widgetEventMap[self] = nil
+		allowedEvents = {}
 
-	-- Re-add allowed events if more than one module is enabled
-	for _, b in next, eventMap do
-		for k in next, b do
-			allowedEvents[k] = true
+		-- Re-add allowed events if more than one module is enabled
+		for _, b in next, eventMap do
+			for k in next, b do
+				allowedEvents[k] = true
+			end
 		end
-	end
 
-	self.sayCountdowns = nil
-	self.scheduledMessages = nil
-	self.targetEventFunc = nil
-	self.missing = nil
-	self.isWiping = nil
-	self.isEngaged = nil
+		self.sayCountdowns = nil
+		self.scheduledMessages = nil
+		self.targetEventFunc = nil
+		self.missing = nil
+		self.isWiping = nil
+		self.isEngaged = nil
 
-	if not isWipe then
-		self:SendMessage("BigWigs_OnBossDisable", self)
+		if not isWipe then
+			self:SendMessage("BigWigs_OnBossDisable", self)
+		end
 	end
 end
 function boss:Reboot(isWipe)
-	if debug then dbg(self, ":Reboot()") end
-	if isWipe then
-		-- Devs, in 99% of cases you'll want to use OnBossWipe
-		self:SendMessage("BigWigs_OnBossWipe", self)
+	if self.enabled then
+		if debug then dbg(self, ":Reboot()") end
+		if isWipe then
+			-- Devs, in 99% of cases you'll want to use OnBossWipe
+			self:SendMessage("BigWigs_OnBossWipe", self)
+		end
+		-- Reboot covers everything including hard module reboots (clicking the minimap icon)
+		self:SendMessage("BigWigs_OnBossReboot", self)
+		self:Disable(isWipe)
+		self:CancelAllTimers()
+		self:Enable(isWipe)
 	end
-	-- Reboot covers everything including hard module reboots (clicking the minimap icon)
-	self:SendMessage("BigWigs_OnBossReboot", self)
-	self:OnDisable(isWipe)
-	self:CancelAllTimers()
-	self:OnEnable(isWipe)
 end
 
 -------------------------------------------------------------------------------
@@ -935,7 +943,7 @@ do
 end
 
 function boss:EncounterEnd(event, id, name, diff, size, status)
-	if self.engageId == id and self.enabledState then
+	if self.engageId == id and self.enabled then
 		if status == 1 then
 			if self.journalId then
 				self:Win() -- Official boss module
