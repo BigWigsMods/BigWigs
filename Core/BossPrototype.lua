@@ -286,6 +286,8 @@ function boss:Disable(isWipe)
 		self.isWiping = nil
 		self.isEngaged = nil
 
+		self:CancelAllTimers()
+
 		if not isWipe then
 			self:SendMessage("BigWigs_OnBossDisable", self)
 		end
@@ -301,7 +303,6 @@ function boss:Reboot(isWipe)
 		-- Reboot covers everything including hard module reboots (clicking the minimap icon)
 		self:SendMessage("BigWigs_OnBossReboot", self)
 		self:Disable(isWipe)
-		self:CancelAllTimers()
 		self:Enable(isWipe)
 	end
 end
