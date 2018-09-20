@@ -106,7 +106,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		end
 		self:Message2(spellId, "cyan", CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
 		self:PlaySound(spellId, "info")
-		self:Bar(spellId, 182, CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
+		self:Bar(spellId, self:Mythic() and 121.5 or 182, CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
 	end
 end
 
