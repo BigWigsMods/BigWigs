@@ -42,6 +42,8 @@ function plugin:Disable()
 			self:OnPluginDisable()
 		end
 
+		self:CancelAllTimers()
+
 		self:SendMessage("BigWigs_OnPluginDisable", self)
 	end
 end

@@ -369,6 +369,8 @@ do
 			addon.UnregisterEvent(mod, "ENCOUNTER_START")
 			addon.UnregisterEvent(mod, "RAID_BOSS_WHISPER")
 
+			self:CancelAllTimers()
+
 			zoneChanged() -- Unregister zone events
 			DisableModules()
 			monitoring = nil
