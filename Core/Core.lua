@@ -120,7 +120,7 @@ local function enableBossModule(module, sync)
 	if not module.enabled then
 		module:Enable()
 		if sync and not module.worldBoss then
-			module:Sync("Enable", module.name)
+			module:Sync("Enable", module.moduleName)
 		end
 	end
 end
