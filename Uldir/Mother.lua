@@ -47,6 +47,11 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(unit)
+	local hp = UnitHealthMax(unit)
+	return hp > 0 and (UnitHealth(unit) / hp) > 0.2 -- 20%
+end
+
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
 
