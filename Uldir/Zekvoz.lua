@@ -219,7 +219,7 @@ do
 	local function printTarget(self, name, guid)
 		local count = CL.count:format(self:SpellName(264382), eyeBeamCount)
 		self:TargetMessage2(264382, "yellow", name, count)
-		self:PlaySound(264382, "alert")
+		self:PlaySound(264382, "alert", nil, name)
 		self:PrimaryIcon(264382, name)
 		if self:Me(guid) then
 			self:Say(264382, count)
