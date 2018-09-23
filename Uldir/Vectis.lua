@@ -266,7 +266,7 @@ function mod:OmegaVectorApplied(args)
 	end
 
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(265143, nil, icon and CL.you:format(CL.count_icon:format(args.spellName, icon, icon)) or nil)
+		self:PersonalMessage(265143, nil, icon and CL.count_icon:format(args.spellName, icon, icon) or nil)
 		self:PlaySound(265143, "alarm")
 		self:SayCountdown(265143, omegaVectorDuration or 10, icon) -- duration based on raid size
 	end
