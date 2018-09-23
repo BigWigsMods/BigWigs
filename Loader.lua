@@ -358,26 +358,26 @@ local dataBroker = ldb:NewDataObject("BigWigs",
 )
 
 function dataBroker.OnClick(self, button)
-	if button == "RightButton" then
+	--if button == "RightButton" then
 		loadCoreAndOpenOptions()
-	else
-		loadAndEnableCore()
-		if IsAltKeyDown() then
-			if IsControlKeyDown() then
-				BigWigs:Disable()
-			else
-				for name, module in BigWigs:IterateBossModules() do
-					if module:IsEnabled() then module:Disable() end
-				end
-				sysprint(L.modulesDisabled)
-			end
-		else
-			for name, module in BigWigs:IterateBossModules() do
-				if module:IsEnabled() then module:Reboot() end
-			end
-			sysprint(L.modulesReset)
-		end
-	end
+	--else
+	--	loadAndEnableCore()
+	--	if IsAltKeyDown() then
+	--		if IsControlKeyDown() then
+	--			BigWigs:Disable()
+	--		else
+	--			for name, module in BigWigs:IterateBossModules() do
+	--				if module:IsEnabled() then module:Disable() end
+	--			end
+	--			sysprint(L.modulesDisabled)
+	--		end
+	--	else
+	--		for name, module in BigWigs:IterateBossModules() do
+	--			if module:IsEnabled() then module:Reboot() end
+	--		end
+	--		sysprint(L.modulesReset)
+	--	end
+	--end
 end
 
 function dataBroker.OnTooltipShow(tt)
