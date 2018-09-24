@@ -140,7 +140,7 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:PlaySound(271895, "alert")
+		self:PlaySound(271895, "alert", nil, name)
 		self:TargetMessage2(271895, "yellow", name)
 		if self:Me(guid) then
 			self:Say(271895)

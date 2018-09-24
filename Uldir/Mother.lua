@@ -147,7 +147,7 @@ end
 
 function mod:SanitizingStrikeApplied(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "red")
-	self:PlaySound(args.spellId, "alarm")
+	self:PlaySound(args.spellId, "alarm", nil, args.destName)
 end
 
 function mod:PurifyingFlame(args)

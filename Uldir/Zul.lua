@@ -325,7 +325,7 @@ function mod:RupturingBloodApplied(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 		self:SayCountdown(args.spellId, 20, nil, 5)
-		self:PlaySound(args.spellId, "warning", nil, args.destName)
+		self:PlaySound(args.spellId, "warning")
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	elseif self:Tank() and self:Tank(args.destName) then
 		local amount = args.amount or 1

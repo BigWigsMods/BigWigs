@@ -331,7 +331,7 @@ function mod:GrowingCorruption(args)
 	local amount = args.amount or 1
 	if amount % 2 == 1 and amount > 2 then
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
 end
 
