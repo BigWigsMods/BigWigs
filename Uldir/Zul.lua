@@ -254,21 +254,21 @@ end
 function mod:NazmaniCrusher(args)
 	self:Message2("crusher", "cyan", CL.soon:format(L.crusher_msg), L.crusher_icon)
 	self:PlaySound("crusher", "long")
-	self:CDBar("crusher", 62.5, L.crusher_msg, L.crusher_icon)
+	self:CDBar("crusher", 62.5, CL.soon:format(L.crusher_msg), L.crusher_icon)
 	self:Bar("crusher", 14, CL.spawning:format(L.crusher_msg), L.crusher_icon)
 end
 
 function mod:NazmaniBloodhexer(args)
 	self:Message2("bloodhexer", "cyan", CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
 	self:PlaySound("bloodhexer", "long")
-	self:CDBar("bloodhexer", 62.5, L.bloodhexer_msg, L.bloodhexer_icon)
+	self:CDBar("bloodhexer", 62.5, CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
 	self:Bar("bloodhexer", 14, CL.spawning:format(L.bloodhexer_msg), L.bloodhexer_icon)
 end
 
 function mod:BloodthirstyCrawg(args)
 	self:Message2("crawg", "cyan", CL.soon:format(L.crawg_msg), L.crawg_icon)
 	self:PlaySound("crawg", "long")
-	self:CDBar("crawg", 42.5, L.crawg_msg, L.crawg_icon)
+	self:CDBar("crawg", 42.5, CL.soon:format(L.crawg_msg), L.crawg_icon)
 	self:Bar("crawg", 14, CL.spawning:format(L.crawg_msg), L.crawg_icon)
 end
 
@@ -298,9 +298,9 @@ function mod:EngorgedBurst(args)
 end
 
 function mod:LocusofCorruption(args)
-	self:StopBar(L.crawg_msg)
-	self:StopBar(L.bloodhexer_msg)
-	self:StopBar(L.crusher_msg)
+	self:StopBar(CL.soon:format(L.crawg_msg))
+	self:StopBar(CL.soon:format(L.bloodhexer_msg))
+	self:StopBar(CL.soon:format(L.crusher_msg))
 	self:StopBar(273361) -- Pool of Blood
 	self:StopBar(273365) -- Dark Revelation
 
