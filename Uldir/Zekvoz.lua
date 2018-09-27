@@ -50,7 +50,7 @@ function mod:GetOptions()
 		{265248, "TANK"}, -- Shatter
 
 		--[[ Stage 1 ]]--
-		{264382, "SAY", "ICON"}, -- Eye Beam
+		{264382, "SAY", "ICON", "ME_ONLY_EMPHASIZE"}, -- Eye Beam
 		-18390, -- Qiraji Warrior
 
 		--[[ Stage 2 ]]--
