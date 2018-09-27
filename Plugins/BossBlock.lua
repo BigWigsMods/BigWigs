@@ -103,6 +103,7 @@ function plugin:OnPluginEnable()
 	self:RegisterEvent("CINEMATIC_START")
 	self:RegisterEvent("PLAY_MOVIE")
 	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
+	self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
 end
 
 -------------------------------------------------------------------------------
@@ -227,20 +228,43 @@ do
 	function plugin:SiegeOfOrgrimmarCinematics()
 		local hasItem
 		for i = 105930, 105935 do -- Vision of Time items
-			local _, _, cd = GetItemCooldown(i)
-			if cd > 0 then hasItem = true end -- Item is found in our inventory
+			local count = GetItemCount(i)
+			if count > 0 then hasItem = true break end -- Item is found in our inventory
 		end
 		if hasItem and not self.SiegeOfOrgrimmarCinematicsFrame then
 			local tbl = {[149370] = true, [149371] = true, [149372] = true, [149373] = true, [149374] = true, [149375] = true}
 			self.SiegeOfOrgrimmarCinematicsFrame = CreateFrame("Frame")
-			-- frame:UNIT_SPELLCAST_SUCCEEDED:player:Vision of Time Scene 2::227:149371:
-			self.SiegeOfOrgrimmarCinematicsFrame:SetScript("OnEvent", function(_, _, _, _, _, _, spellId)
-				if tbl[spellId] then
+			-- frame:UNIT_SPELLCAST_SUCCEEDED:player:Cast-GUID:149371:
+			self.SiegeOfOrgrimmarCinematicsFrame:SetScript("OnEvent", function(_, _, _, _, spellId)
+				if tbl[spellId] and plugin:IsEnabled() then
 					plugin:UnregisterEvent("CINEMATIC_START")
 					plugin:ScheduleTimer("RegisterEvent", 10, "CINEMATIC_START")
 				end
 			end)
 			self.SiegeOfOrgrimmarCinematicsFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
+		end
+	end
+
+	-- Cinematic skipping hack to workaround specific toys that create cinematics.
+	function plugin:ToyCheck()
+		local toys = { -- Classed as items not toys
+			133542, -- Tosselwrench's Mega-Accurate Simulation Viewfinder
+		}
+		for i = 1, #toys do
+			if PlayerHasToy(toys[i]) and not self.toysFrame then
+				local tbl = {
+					[201179] = true -- Deathwing Simulator
+				}
+				self.toysFrame = CreateFrame("Frame")
+				-- frame:UNIT_SPELLCAST_SUCCEEDED:player:Cast-GUID:149371:
+				self.toysFrame:SetScript("OnEvent", function(_, _, _, _, spellId)
+					if tbl[spellId] and plugin:IsEnabled() then
+						plugin:UnregisterEvent("CINEMATIC_START")
+						plugin:ScheduleTimer("RegisterEvent", 5, "CINEMATIC_START")
+					end
+				end)
+				self.toysFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
+			end
 		end
 	end
 
