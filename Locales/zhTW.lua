@@ -68,8 +68,6 @@ L.MESSAGE_desc = "大多數首領技能會有一條或多條訊息被 BigWigs �
 L.minimapIcon = "小地圖圖示"
 L.minimapToggle = "打開或關閉小地圖圖示。"
 L.missingAddOn = "請注意這個區域需要此 |cFF436EEE%s|r 計時器掛件才能顯示。"
-L.modulesDisabled = "所有運作中的模組都已停用。"
-L.modulesReset = "所有運作中的模組都已重置。"
 L.mythic = "傳奇"
 L.noBossMod = "沒有首領模組："
 L.normal = "普通模式"
@@ -110,9 +108,7 @@ L.testBarsBtn = "創建測試計時條"
 L.testBarsBtn_desc = "創建一個測試計時條以測試當前顯示設定。"
 L.toggleAnchorsBtn = "切換錨點"
 L.toggleAnchorsBtn_desc = "切換顯示或隱藏全部錨點。"
-L.tooltipHint = [=[|cffeda55f點擊|r圖示重置所有運作中的模組。
-|cffeda55fAlt-點擊|r可以禁用所有首領模組。
-|cffeda55f右擊|r打開選項。]=]
+L.tooltipHint = "|cffeda55f右擊|r打開選項。"
 L.upToDate = "已更新："
 L.VOICE = "語音"
 L.VOICE_desc = "如果安裝了語音插件，此選項可以開啟並播放警報音效文件。"

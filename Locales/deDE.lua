@@ -67,8 +67,6 @@ L.MESSAGE_desc = "Für die meisten Bossfähigkeiten gibt es eine oder mehrere Na
 L.minimapIcon = "Minikartensymbol"
 L.minimapToggle = "Zeigt oder versteckt das Minikartensymbol."
 L.missingAddOn = "Bitte beachte, dass diese Zone das |cFF436EEE%s|r-Plugin für Timer zur Anzeige benötigt."
-L.modulesDisabled = "Alle laufenden Module wurden beendet."
-L.modulesReset = "Alle laufenden Module wurden zurückgesetzt."
 L.mythic = "Mythisch"
 L.noBossMod = "Kein Bossmod:"
 L.normal = "Normal"
@@ -109,9 +107,7 @@ L.testBarsBtn = "Testleiste anzeigen"
 L.testBarsBtn_desc = "Zeigt eine Leiste zum Testen der aktuellen Einstellungen an."
 L.toggleAnchorsBtn = "Anker ein-/ausblenden"
 L.toggleAnchorsBtn_desc = "Blendet die Ankerpunkte ein oder aus."
-L.tooltipHint = [=[|cffeda55fKlicken|r, um alle laufenden Module zurückzusetzen.
-|cffeda55fAlt+Klick|r, um alle laufenden Module zu beenden.
-|cffeda55fRechtsklick|r, um auf die Optionen zuzugreifen.]=]
+L.tooltipHint = "|cffeda55fRechtsklick|r, um auf die Optionen zuzugreifen."
 L.upToDate = "Aktuell:"
 L.VOICE = "Stimmen"
 L.VOICE_desc = "Wenn ein Stimmplugin installiert ist, aktiviert diese Option die Wiedergabe einer Sounddatei, welche die Warnung laut ausspricht."

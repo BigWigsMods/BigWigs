@@ -67,8 +67,6 @@ L.MESSAGE_desc = "La plupart des techniques des rencontres comportent un ou plus
 L.minimapIcon = "Icône de la minicarte"
 L.minimapToggle = "Affiche ou non l'icône de la minicarte."
 L.missingAddOn = "Notez que cette zone nécessite le plugin |cFF436EEE%s|r pour que les délais puissent s'afficher."
-L.modulesDisabled = "Tous les modules actifs ont été désactivés."
-L.modulesReset = "Tous les modules actifs ont été réinitialisés."
 L.mythic = "Mythique"
 L.noBossMod = "Pas de boss mod :"
 L.normal = "Normal"
@@ -109,9 +107,7 @@ L.testBarsBtn = "Créer une barre de test"
 L.testBarsBtn_desc = "Créée une barre pour que vous puissiez tester vos paramètres d'affichage actuels."
 L.toggleAnchorsBtn = "Afficher/cacher ancres"
 L.toggleAnchorsBtn_desc = "Affiche ou cache toutes les ancres."
-L.tooltipHint = [=[|cffeda55fClic gauche|r pour redémarrer les modules actifs.
-|cffeda55fAlt-Clic gauche|r pour les désactiver.
-|cffeda55fClic droit|r pour accéder aux options.]=]
+L.tooltipHint = "|cffeda55fClic droit|r pour accéder aux options."
 L.upToDate = "À jour :"
 L.VOICE = "Voix"
 L.VOICE_desc = "Si vous avez un plugin vocal installé, cette option l'activera afin qu'il puisse jouer un fichier son qui dira cette alerte à voix haute pour vous."

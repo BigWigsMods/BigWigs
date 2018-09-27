@@ -23,10 +23,8 @@ L.getNewRelease  = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo f
 L.warnTwoReleases  = "Tu BigWigs está 2 versiones desfasado! Tu versión puede tener fallos, faltarle características, o temporizadores incorrectos. Es muy recomendable que lo actualices."
 L.warnSeveralReleases  = "|cffff0000Tu BigWigs está desfasado %d actualizaciones!! Te recomendamos MUCHÍSIMO que lo actualices cuanto antes para prevenir problemas de sincronización con otros jugadores!|r"
 
-L.tooltipHint  = "|cffeda55fClic|r para reiniciar todos los módulos.\n|cffeda55fAlt-Clic|r para desactivarlos.\n|cffeda55fRight-Clic|r para acceder a las opciones."
+L.tooltipHint  = "|cffeda55fRight-Clic|r para acceder a las opciones."
 L.activeBossModules  = "Módulos de jefes activos:"
-L.modulesReset  = "Todos los módulos han sido reiniciados."
-L.modulesDisabled  = "Todos los módulos han sido desactivados."
 
 L.oldVersionsInGroup  = "Hay gente en tu grupo con versiones antiguas o sin BigWigs. Más detalles con /bwv."
 L.upToDate  = "Al día:"

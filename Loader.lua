@@ -358,32 +358,15 @@ local dataBroker = ldb:NewDataObject("BigWigs",
 )
 
 function dataBroker.OnClick(self, button)
-	--if button == "RightButton" then
+	if button == "RightButton" then
 		loadCoreAndOpenOptions()
-	--else
-	--	loadAndEnableCore()
-	--	if IsAltKeyDown() then
-	--		if IsControlKeyDown() then
-	--			BigWigs:Disable()
-	--		else
-	--			for name, module in BigWigs:IterateBossModules() do
-	--				if module:IsEnabled() then module:Disable() end
-	--			end
-	--			sysprint(L.modulesDisabled)
-	--		end
-	--	else
-	--		for name, module in BigWigs:IterateBossModules() do
-	--			if module:IsEnabled() then module:Reboot() end
-	--		end
-	--		sysprint(L.modulesReset)
-	--	end
-	--end
+	end
 end
 
 function dataBroker.OnTooltipShow(tt)
 	tt:AddLine("BigWigs")
 	if BigWigs and BigWigs:IsEnabled() then
-		local added = nil
+		local added = false
 		for name, module in BigWigs:IterateBossModules() do
 			if module:IsEnabled() then
 				if not added then
@@ -405,7 +388,7 @@ end
 --
 
 tooltipFunctions[#tooltipFunctions+1] = function(tt)
-	local add, i = nil, 0
+	local add, i = false, 0
 	for _, version in next, usersVersion do
 		i = i + 1
 		if version < highestFoundVersion then
