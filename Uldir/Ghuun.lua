@@ -221,7 +221,7 @@ do
 			end
 			self:TargetMessage2(272506, "orange", args.destName)
 		end
-		self:CDBar(272506, self:Mythic() and stage == 3 and 27 or 44 or stage == 1 and 26 or stage == 2 and 15.9 or 13.4)
+		self:CDBar(272506, self:Mythic() and (stage == 3 and 27 or 44) or stage == 1 and 26 or stage == 2 and 15.9 or 13.4)
 	end
 
 	local playerList = mod:NewTargetList()
