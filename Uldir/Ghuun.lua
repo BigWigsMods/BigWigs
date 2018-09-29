@@ -94,7 +94,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DarkBargain", 267409)
 	self:Log("SPELL_CAST_START", "DecayingEruption", 267462)
 	self:Log("SPELL_CAST_START", "ReoriginationBlast", 263482)
-	self:Log("SPELL_CAST_SUCCESS", "ReoriginationBlastSuccess", 263482)
 	self:Log("SPELL_AURA_REMOVED", "ReoriginationBlastRemoved", 263504)
 
 	-- Stage 2
@@ -295,10 +294,7 @@ end
 function mod:ReoriginationBlast(args)
 	self:Message2(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
-end
-
-function mod:ReoriginationBlastSuccess(args)
-	self:Bar(args.spellId, 24)
+	self:Bar(args.spellId, 28)
 	if stage == 1 then -- Stage 1 ending
 		self:StopBar(CL.count:format(self:SpellName(267509), waveCounter)) -- Thousand Maws (x)
 		self:StopBar(267412) -- Massive Smash
@@ -313,7 +309,6 @@ function mod:ReoriginationBlastSuccess(args)
 		self:PauseBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount)) -- Bursting Boil
 	end
 end
-
 
 function mod:ReoriginationBlastRemoved(args)
 	orbsCounter = 0
