@@ -837,6 +837,7 @@ do
 		if self.OnWin then self:OnWin() end
 		self:ScheduleTimer("Disable", 1) -- Delay a little to prevent re-enabling
 		self:SendMessage("BigWigs_OnBossWin", self)
+		self:SendMessage("BigWigs_VictorySound", self)
 	end
 
 	function boss:Wipe()
@@ -2174,6 +2175,11 @@ do
 			end
 		end
 	end
+end
+
+--- Request to play the victory sound.
+function boss:PlayVictorySound()
+	self:SendMessage("BigWigs_VictorySound", self)
 end
 
 do
