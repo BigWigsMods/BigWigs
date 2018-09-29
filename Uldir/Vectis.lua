@@ -24,6 +24,7 @@ local contagionCount = 1
 local immunosuppressionCount = 1
 local nextLiquify = 0
 local lingeringInfectionList = {}
+local lingeringInfectionStacks = 0
 local omegaVectorDuration = nil
 
 local nameList = {}
@@ -41,12 +42,12 @@ function mod:GetOptions()
 		{265127, "INFOBOX"}, -- Lingering Infection
 		{265178, "TANK"}, -- Evolving Affliction
 		267242, -- Contagion
-		{265212, "SAY", "ICON", "PROXIMITY"}, -- Gestate
+		{265212, "SAY", "ICON"}, -- Gestate
 		265206, -- Immunosuppression
 		265217, -- Liquefy
 		266459, -- Plague Bomb
 		-- Mythic
-		{274990, "FLASH"}, -- Bursting Lesions
+		{274990, "FLASH", "PROXIMITY"}, -- Bursting Lesions
 	},{
 		[265143] = "general",
 		[274990] = CL.mythic,
@@ -77,6 +78,7 @@ end
 function mod:OnEngage()
 	omegaList = {}
 	lingeringInfectionList = {}
+	lingeringInfectionStacks = 0
 	omegaMarker = {false, false, false, false}
 	contagionCount = 1
 	omegaVectorDuration = nil
@@ -299,8 +301,16 @@ function mod:OmegaVectorRemoved(args)
 end
 
 function mod:LingeringInfection(args)
-	lingeringInfectionList[args.destName] = args.amount or 1
+	local amount = args.amount or 1
+	lingeringInfectionList[args.destName] = amount
 	self:SetInfoByTable(args.spellId, lingeringInfectionList)
+	if self:Mythic() and self:Me(args.destGUID) then -- Check if we have to warn for high stacks in Mythic
+		lingeringInfectionStacks = amount
+		if amount >= 6 then
+			self:StackMessage(args.spellId, args.destName, amount, "blue")
+			self:PlaySound(args.spellId, "warning")
+		end
+	end
 end
 
 function mod:EvolvingAffliction(args)
@@ -322,6 +332,9 @@ function mod:Contagion(args)
 	if nextLiquify > GetTime() + timer then
 		self:CDBar(args.spellId, timer, CL.count:format(args.spellName, contagionCount))
 	end
+	if self:Mythic() and lingeringInfectionStacks >= 6 then -- No special effects under 6 stacks and below Mythic difficulty
+		self:OpenProximity(274990, 5) -- Bursting Lesions
+	end
 end
 
 function mod:Gestate(args)
@@ -332,8 +345,6 @@ function mod:Gestate(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(265212, "alert")
 		self:Say(265212)
-	else
-		self:OpenProximity(265212, 5, args.destName)
 	end
 	self:TargetMessage2(265212, "orange", args.destName)
 	self:PrimaryIcon(265212, args.destName)
@@ -343,7 +354,6 @@ end
 
 function mod:GestateRemoved(args)
 	self:PrimaryIcon(args.spellId)
-	self:CloseProximity(265212)
 end
 
 function mod:Immunosuppression(args)
@@ -395,6 +405,13 @@ function mod:BurstingLesionsApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning")
+		self:OpenProximity(args.spellId, 5)
 		self:Flash(args.spellId)
+	end
+end
+
+function mod:BurstingLesionsRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
 	end
 end
