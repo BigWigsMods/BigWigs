@@ -73,6 +73,7 @@ function mod:OnBossEnable()
 
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "BurstingLesionsApplied", 274990)
+	self:Log("SPELL_AURA_REMOVED", "BurstingLesionsRemoved", 274990)
 end
 
 function mod:OnEngage()
