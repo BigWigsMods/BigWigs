@@ -696,9 +696,10 @@ do
 		"raid31target", "raid32target", "raid33target", "raid34target", "raid35target",
 		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target"
 	}
+	local unitTableCount = #unitTable
 	local function findTargetByGUID(id)
 		local isNumber = type(id) == "number"
-		for i = 1, #unitTable do
+		for i = 1, unitTableCount do
 			local unit = unitTable[i]
 			local guid = UnitGUID(unit)
 			if guid and not UnitIsPlayer(unit) then
@@ -716,6 +717,19 @@ do
 	-- @param id GUID or mob/npc id
 	-- @return unit id if found, nil otherwise
 	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
+
+	--- Fetches a unit id by scanning boss units only.
+	-- @param guid GUID of the boss to find
+	-- @return unit id if found, nil otherwise
+	function boss:GetBossIdByGUID(guid)
+		for i = 1, 5 do
+			local unit = unitTable[i]
+			local id = UnitGUID(unit)
+			if guid == id then
+				return unit
+			end
+		end
+	end
 
 	local function unitScanner()
 		for i = #unitTargetScans, 1, -1 do
