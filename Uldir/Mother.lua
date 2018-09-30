@@ -23,7 +23,7 @@ local L = mod:GetLocale()
 if L then
 	L.sideLaser = "(Side) Beams" -- short for: (location) Uldir Defensive Beam
 	L.upLaser = "(Roof) Beams"
-	L.mythic_beams = "(Side + Roof) Beams"
+	L.mythic_beams = "Beams"
 end
 
 --------------------------------------------------------------------------------
@@ -94,15 +94,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 			room = 1
 		elseif self:MobId(sourceGUID) == 137022 then -- Room 2
 			room = 2
-			self:StopBar(L.sideLaser)
-			self:StopBar(L.upLaser)
-			self:CDBar(268253, 20, L.sideLaser)
+			self:CDBar(268253, self:Mythic() and 11 or 20, self:Mythic() and L.mythic_beams or L.sideLaser)
 		elseif self:MobId(sourceGUID) == 137023 then -- Room 3
 			room = 3
 			stage = 3
 			self:StopBar(L.sideLaser)
 			self:StopBar(L.upLaser)
-			self:CDBar(268253, 10, L.sideLaser)
+			self:StopBar(L.mythic_beams)
+			self:CDBar(268253, 10, self:Mythic() and L.mythic_beams or L.sideLaser)
 		end
 		self:Message2(spellId, "cyan", CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
 		self:PlaySound(spellId, "info")
@@ -195,7 +194,7 @@ function mod:UldirDefensiveBeam(args)
 		beamType = L.mythic_beams
 		castTime = 4
 		nextBeam = L.mythic_beams
-		timer = 31.5
+		timer = stage == 3 and 23 or 51
 	elseif args.spellId == 277973 then
 		beamType = L.sideLaser
 		castTime = 4
@@ -207,6 +206,8 @@ function mod:UldirDefensiveBeam(args)
 		nextBeam = L.sideLaser
 		timer = stage == 3 and 16 or 17
 	end
+	self:StopBar(L.sideLaser)
+	self:StopBar(L.upLaser)
 	self:Message2(268253, "yellow", beamType)
 	self:PlaySound(268253, "alert")
 	self:CastBar(268253, castTime, beamType)

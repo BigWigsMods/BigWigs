@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.sideLaser = "Rayons (côté)" -- short for: (location) Uldir Defensive Beam
 	L.upLaser = "Rayons (plafond)"
-	L.mythic_beams = "Rayons (côté + plafond)"
+	L.mythic_beams = "Rayons"
 end
 
 L = BigWigs:NewBossLocale("Zek'voz, Herald of N'zoth", "frFR")
