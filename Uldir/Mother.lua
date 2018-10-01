@@ -94,7 +94,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 			room = 1
 		elseif self:MobId(sourceGUID) == 137022 then -- Room 2
 			room = 2
-			self:CDBar(268253, self:Mythic() and 11 or 20, self:Mythic() and L.mythic_beams or L.sideLaser)
+			if self:Mythic() then
+				self:CDBar(268253, 11, L.mythic_beams)
+			else
+				self:CDBar(268253, 20, L.sideLaser)
+			end
 		elseif self:MobId(sourceGUID) == 137023 then -- Room 3
 			room = 3
 			stage = 3

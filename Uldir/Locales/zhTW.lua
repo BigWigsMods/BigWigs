@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.sideLaser = "側面光束" -- short for: (location) Uldir Defensive Beam
 	L.upLaser = "頂部光束"
-	--L.mythic_beams = "Beams"
+	L.mythic_beams = "光束"
 end
 
 L = BigWigs:NewBossLocale("Zek'voz, Herald of N'zoth", "zhTW")
