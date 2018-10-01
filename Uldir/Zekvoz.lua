@@ -86,7 +86,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EyeBeam", 264382)
 
 	--[[ Stage 2 ]]--
-	self:Log("SPELL_CAST_START", "RoilingDeceit", 265358)
+	self:Log("SPELL_CAST_SUCCESS", "RoilingDeceit", 265358)
 	self:Log("SPELL_AURA_APPLIED", "RoilingDeceitApplied", 265360)
 	self:Log("SPELL_AURA_REMOVED", "RoilingDeceitRemoved", 265360)
 	self:Log("SPELL_CAST_START", "VoidBolt", 267180)
@@ -230,8 +230,18 @@ do
 			self:ScheduleTimer("PrimaryIcon", 3, 264382)
 		end
 	end
+	function mod:UNIT_TARGET(event, unit)
+		self:UnregisterUnitEvent(event, unit)
+		local id = unit.."target"
+		printTarget(self, self:UnitName(id), UnitGUID(id))
+	end
 	function mod:EyeBeam(args)
-		self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		local unit = self:GetBossIdByGUID(args.sourceGUID)
+		if unit then
+			self:RegisterUnitEvent("UNIT_TARGET", nil, unit)
+		else
+			self:GetBossTarget(printTarget, 0.5, args.sourceGUID)
+		end
 		self:CastBar(args.spellId, self:Mythic() and 1.5 or 3)
 		eyeBeamCount = eyeBeamCount + 1
 		if eyeBeamCount == 4 then
