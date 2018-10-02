@@ -68,8 +68,8 @@ function mod:HurricaneCrash(args)
 end
 
 function mod:MatriarchsCall(args)
-	self:Message2(spellId, "orange")
-	self:PlaySound(spellId, "alert")
-	self:CDBar(spellId, firstCall and 12 or 45) -- pull:29.2, 12.3, 47.8
+	self:Message2(args.spellId, "orange")
+	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, firstCall and 12 or 45) -- pull:29.2, 12.3, 47.8
 	firstCall = false
 end
