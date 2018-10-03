@@ -1472,6 +1472,15 @@ function boss:SetInfoByTable(key, tbl)
 	end
 end
 
+--- Set the "Info Box" display to show a list of players and their assigned values in ascending order with bars counting down a specified duration.
+-- @param key the option key to check
+-- @param[type=table] tbl a table in the format of {player = {amount, barDuration, startAt}}
+function boss:SetInfoBarsByTable(key, tbl)
+	if checkFlag(self, key, C.INFOBOX) then
+		self:SendMessage("BigWigs_SetInfoBoxTableWithBars", self, tbl)
+	end
+end
+
 --- Update the title of an already open "Info Box".
 -- @param key the option key to check
 -- @string title the title of the window
@@ -2163,6 +2172,7 @@ do
 	-- @param key the option key
 	-- @string sound the sound to play
 	-- @string[opt] voice command to play when using a voice pack
+	-- @param[opt] player either a string or a table of players to prevent playing a sound if ME_ONLY is enabled
 	function boss:PlaySound(key, sound, voice, player)
 		if checkFlag(self, key, C.SOUND) then
 			if player then

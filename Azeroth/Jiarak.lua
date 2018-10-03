@@ -13,7 +13,6 @@ mod.worldBoss = 132253
 -- Locals
 --
 
-local castCollector = {} -- for all UNIT casts
 local firstStorm, firstCall = true, true
 
 --------------------------------------------------------------------------------
@@ -34,12 +33,10 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "StormWing", 260908)
 	self:Log("SPELL_CAST_SUCCESS", "HurricaneCrash", 261088)
-
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:Log("SPELL_CAST_SUCCESS", "MatriarchsCall", 261467)
 end
 
 function mod:OnEngage()
-	castCollector = {}
 	firstStorm, firstCall = true, true
 	self:CheckForWipe()
 	self:CDBar(260908, 11) -- Storm Wing
@@ -70,14 +67,9 @@ function mod:HurricaneCrash(args)
 	self:Bar(args.spellId, 45)
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
-	if castCollector[castGUID] then return end -- don't fire twice for the same cast
-
-	if spellId == 261467 then -- Matriarch's Call
-		castCollector[castGUID] = true
-		self:Message2(spellId, "orange")
-		self:PlaySound(spellId, "alert")
-		self:CDBar(spellId, firstCall and 12 or 45) -- pull:29.2, 12.3, 47.8
-		firstCall = false
-	end
+function mod:MatriarchsCall(args)
+	self:Message2(args.spellId, "orange")
+	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, firstCall and 12 or 45) -- pull:29.2, 12.3, 47.8
+	firstCall = false
 end

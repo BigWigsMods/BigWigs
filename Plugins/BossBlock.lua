@@ -199,6 +199,7 @@ end
 do
 	-- Cinematic blocking
 	local cinematicZones = {
+		[-323] = true, -- Throne of the Tides, zapping the squid after Lazy Naz'jar
 		[-367] = true, -- Firelands bridge lowering
 		[-437] = true, -- Gate of the Setting Sun gate breach
 		[-510] = true, -- Tortos cave entry -- Doesn't work, apparently Blizzard don't want us to skip this..?

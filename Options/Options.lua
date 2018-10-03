@@ -329,7 +329,7 @@ local function slaveOptionToggled(self, event, value)
 end
 
 local function slaveOptionMouseOver(self, event, value)
-	GameTooltip:SetOwner(self.frame, "ANCHOR_RIGHT")
+	GameTooltip:SetOwner(self.frame, "ANCHOR_TOP")
 	GameTooltip:AddLine(self:GetUserData("desc"), 1, 1, 1, true)
 	GameTooltip:Show()
 end
@@ -342,13 +342,14 @@ local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(colorize[label])
 	-- Flags to have at half width
-	if flag == C.FLASH or flag == C.PULSE or flag == C.EMPHASIZE or flag == C.COUNTDOWN or flag == C.BAR or flag == C.CASTBAR then
+	if flag == C.PULSE or flag == C.CASTBAR then
 		toggle:SetRelativeWidth(0.5)
-	elseif flag == C.ME_ONLY then
+	elseif flag == C.ME_ONLY or flag == C.ME_ONLY_EMPHASIZE then
 		toggle:SetRelativeWidth(0.4)
 	else
 		toggle:SetRelativeWidth(0.3)
 	end
+	toggle:SetHeight(30)
 
 	if icon then
 		toggle:SetImage(icon)
@@ -378,81 +379,62 @@ local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
 	local advancedOptions = {}
 
-	-- Emphasize & Countdown widgets
-	local emphasizeGroup = AceGUI:Create("InlineGroup")
-	emphasizeGroup:SetLayout("Flow")
-	emphasizeGroup:SetFullWidth(true)
-	local emphasize = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check)
-	emphasizeGroup:AddChild(emphasize)
-	local countdown = getSlaveToggle(L.COUNTDOWN, L.COUNTDOWN_desc, dbKey, module, C.COUNTDOWN, check, 1035057) -- Interface\\Icons\\Achievement_GarrisonQuests_0005
-	emphasizeGroup:AddChild(countdown)
-	advancedOptions[#advancedOptions + 1] = emphasizeGroup
+	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
+		-- Emphasize & Countdown widgets
+		advancedOptions[1] = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check)
+		advancedOptions[2] = getSlaveToggle(L.ME_ONLY_EMPHASIZE, L.ME_ONLY_EMPHASIZE_desc, dbKey, module, C.ME_ONLY_EMPHASIZE, check)
+		advancedOptions[3] = getSlaveToggle(L.COUNTDOWN, L.COUNTDOWN_desc, dbKey, module, C.COUNTDOWN, check, 1035057) -- Interface\\Icons\\Achievement_GarrisonQuests_0005
+		--
+
+		-- Messages & Sound
+		advancedOptions[4] = getSlaveToggle(L.MESSAGE, L.MESSAGE_desc, dbKey, module, C.MESSAGE, check, 134332) -- Interface\\Icons\\INV_MISC_NOTE_06
+		advancedOptions[5] = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check, 463836) -- Interface\\Icons\\Priest_spell_leapoffaith_b
+		advancedOptions[6] = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, 130977) -- "Interface\\Common\\VoiceChat-On"
+		--
+
+		-- Bars
+		advancedOptions[7] = getSlaveToggle(L.BAR, L.BAR_desc, dbKey, module, C.BAR, check)
+		advancedOptions[8] = getSlaveToggle(L.CASTBAR, L.CASTBAR_desc, dbKey, module, C.CASTBAR, check)
+		--
+	end
+
+	-- Flash & Pulse
+	if bit.band(dbv, C.FLASH) == C.FLASH then
+		for _, opTbl in next, module.toggleOptions do
+			if type(opTbl) == "table" and opTbl[1] == dbKey then
+				for i = 2, #opTbl do
+					if opTbl[i] == "FLASH" then
+						advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.FLASH, L.FLASH_desc, dbKey, module, C.FLASH, check, 135849) -- Interface\\Icons\\Spell_Frost_FrostShock
+						advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.PULSE, L.PULSE_desc, dbKey, module, C.PULSE, check, 135731) -- Interface\\Icons\\Spell_Arcane_Arcane04
+					end
+				end
+			end
+		end
+	end
 	--
+
+	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
+		if API:HasVoicePack() then
+			advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.VOICE, L.VOICE_desc, dbKey, module, C.VOICE, check, 589118) -- Interface\\Icons\\Warrior_DisruptingShout
+		end
+	end
 
 	for i, key in next, BigWigs:GetOptions() do
 		local flag = C[key]
 		if bit.band(dbv, flag) == flag then
-			if key == "MESSAGE" then
-				local messageGroup = AceGUI:Create("InlineGroup")
-				messageGroup:SetLayout("Flow")
-				messageGroup:SetFullWidth(true)
-
-				local name, desc = BigWigs:GetOptionDetails(key)
-				local message = getSlaveToggle(name, desc, dbKey, module, flag, check, 134332) -- Interface\\Icons\\INV_MISC_NOTE_06
-				messageGroup:AddChild(message)
-
-				local onMe = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check, 463836) -- Interface\\Icons\\Priest_spell_leapoffaith_b
-				messageGroup:AddChild(onMe)
-
-				local sound = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, 130977) -- "Interface\\Common\\VoiceChat-On"
-				messageGroup:AddChild(sound)
-
-				advancedOptions[#advancedOptions + 1] = messageGroup
-			elseif key == "BAR" then
-				local barGroup = AceGUI:Create("InlineGroup")
-				barGroup:SetLayout("Flow")
-				barGroup:SetFullWidth(true)
-
-				local name, desc = BigWigs:GetOptionDetails(key)
-				local bar = getSlaveToggle(name, desc, dbKey, module, flag, check)
-				barGroup:AddChild(bar)
-
-				local castBar = getSlaveToggle(L.CASTBAR, L.CASTBAR_desc, dbKey, module, C.CASTBAR, check)
-				barGroup:AddChild(castBar)
-
-				advancedOptions[#advancedOptions + 1] = barGroup
-			elseif key == "FLASH" then
-				local flashGroup = AceGUI:Create("InlineGroup")
-				flashGroup:SetLayout("Flow")
-				flashGroup:SetFullWidth(true)
-
-				local name, desc = BigWigs:GetOptionDetails(key)
-				local flash = getSlaveToggle(name, desc, dbKey, module, flag, check, 135849) -- Interface\\Icons\\Spell_Frost_FrostShock
-				flashGroup:AddChild(flash)
-
-				local pulse = getSlaveToggle(L.PULSE, L.PULSE_desc, dbKey, module, C.PULSE, check, 135731) -- Interface\\Icons\\Spell_Arcane_Arcane04
-				flashGroup:AddChild(pulse)
-
-				advancedOptions[#advancedOptions + 1] = flashGroup
-			elseif key == "VOICE" then
-				if API:HasVoicePack() then
-					local name, desc = BigWigs:GetOptionDetails(key)
-					advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check, 589118) -- Interface\\Icons\\Warrior_DisruptingShout
-				end
+			local name, desc = BigWigs:GetOptionDetails(key)
 			-- All on by default, check if we should add a GUI widget
-			elseif key == "ICON" or key == "SAY" or key == "SAY_COUNTDOWN" or key == "PROXIMITY" or key == "ALTPOWER" or key == "INFOBOX" then
+			if key == "ICON" or key == "SAY" or key == "SAY_COUNTDOWN" or key == "PROXIMITY" or key == "ALTPOWER" or key == "INFOBOX" then
 				for _, opTbl in next, module.toggleOptions do
 					if type(opTbl) == "table" and opTbl[1] == dbKey then
 						for i = 2, #opTbl do
 							if opTbl[i] == key then
-								local name, desc = BigWigs:GetOptionDetails(key)
 								advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check, icons[key])
 							end
 						end
 					end
 				end
-			else
-				local name, desc = BigWigs:GetOptionDetails(key)
+			elseif key ~= "MESSAGE" and key ~= "BAR" and key ~= "FLASH" and key ~= "VOICE" then
 				advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
 			end
 		end
