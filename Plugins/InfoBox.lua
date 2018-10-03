@@ -227,6 +227,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_SetInfoBoxTitle")
 	self:RegisterMessage("BigWigs_SetInfoBoxLine")
 	self:RegisterMessage("BigWigs_SetInfoBoxTable")
+	self:RegisterMessage("BigWigs_SetInfoBoxTableWithBars")
 	self:RegisterMessage("BigWigs_SetInfoBoxBar")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
@@ -280,7 +281,7 @@ function plugin:BigWigs_SetInfoBoxLine(_, _, line, text)
 	if line % 2 == 0 then
 		row = line-1
 	end
-	plugin:BigWigs_ResizeInfoBoxRow(row)
+	self:BigWigs_ResizeInfoBoxRow(row)
 end
 
 function plugin:BigWigs_ResizeInfoBoxRow(row)
@@ -334,10 +335,73 @@ do
 		for i = 1, 5 do
 			local n = nameList[i]
 			local result = tbl[n]
-			display.text[line]:SetText(result and colors[n] or "")
-			display.text[line+1]:SetText(result or "")
-			plugin:BigWigs_ResizeInfoBoxRow(line)
+			if result then
+				display.text[line]:SetText(colors[n])
+				display.text[line+1]:SetText(result)
+			else
+				display.text[line]:SetText("")
+				display.text[line+1]:SetText("")
+			end
+			self:BigWigs_ResizeInfoBoxRow(line)
 			line = line + 2
+		end
+	end
+
+	local function sortBarsFunc(x,y)
+		local px, py = sortingTbl[x] and sortingTbl[x][1] or -1, sortingTbl[y] and sortingTbl[y][1] or -1
+		if px == py then
+			if px == -1 then
+				return x > y
+			else
+				return sortingTbl[x][3] > sortingTbl[y][3]
+			end
+		else
+			return px > py
+		end
+	end
+	local next = next
+	local Timer = C_Timer.After
+	local reschedule = false
+	local function update()
+		if next(sortingTbl) then
+			Timer(0.1, update)
+		else
+			reschedule = false
+			return
+		end
+
+		for i = 1, 5 do
+			local n = nameList[i]
+			local result = sortingTbl[n]
+			if result then
+				local t = result[3] + 0.1
+				result[3] = t
+				local duration = result[2]
+				local remaining = duration - t
+				plugin:BigWigs_SetInfoBoxBar(nil, nil, i*2, remaining/duration)
+			end
+		end
+	end
+	function plugin:BigWigs_SetInfoBoxTableWithBars(_, _, tbl)
+		sortingTbl = tbl
+		tsort(nameList, sortBarsFunc)
+		local line = 1
+		for i = 1, 5 do
+			local n = nameList[i]
+			local result = tbl[n]
+			if result then
+				display.text[line]:SetText(colors[n])
+				display.text[line+1]:SetText(result[1])
+			else
+				display.text[line]:SetText("")
+				display.text[line+1]:SetText("")
+			end
+			self:BigWigs_ResizeInfoBoxRow(line)
+			line = line + 2
+		end
+		if not reschedule then
+			reschedule = true
+			Timer(0.1, update)
 		end
 	end
 end
