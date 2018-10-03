@@ -21,6 +21,7 @@ local beamCount = 1
 local ruinCount = 0
 local mobCollector = {}
 local voidEchoesCount = 1
+local ruinCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -98,10 +99,11 @@ function mod:OnEngage()
 	nextStageWarning = 69
 	annihilationList = {}
 	mobCollector = {}
+	ruinCounter = 1
 
 	self:OpenInfo(272146, self:SpellName(272146)) -- Annihilation
 
-	self:Bar(272536, 5) -- Imminent Ruin
+	self:Bar(272536, 5, CL.count:format(self:SpellName(272536), ruinCounter)) -- Imminent Ruin
 	self:Bar(272404, self:Mythic() and 7 or 9) -- Oblivion Sphere
 	self:Bar(273538, 15, L.boss_blast) -- Obliteration Blast
 	self:Bar(273282, 20.5) -- Essence Shear
@@ -144,7 +146,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Message2("stages", "cyan",CL.stage:format(stage), false)
 		self:CloseProximity(272404) -- Oblivion Sphere
 
-		self:StopBar(272536) -- Imminent Ruin
+		self:StopBar(CL.count:format(self:SpellName(272536), ruinCounter)) -- Imminent Ruin
 		self:StopBar(273282) -- Essence Shear
 		self:StopBar(L.boss_blast) -- Obliteration Blast
 		self:StopBar(272404) -- Oblivion Sphere
@@ -163,7 +165,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
 		self:OpenProximity(272404, 8) -- Oblivion Sphere
 
-		self:Bar(272536, 5) -- Imminent Ruin
+		self:Bar(272536, 5, CL.count:format(self:SpellName(272536), ruinCounter)) -- Imminent Ruin
 		self:Bar(272404, self:Mythic() and 7 or 9) -- Oblivion Sphere
 		self:Bar(273538, 15, L.boss_blast) -- Obliteration Blast
 		self:Bar(273282, self:Mythic() and 23 or 20.5) -- Essence Shear
@@ -229,9 +231,10 @@ function mod:OblivionSphere(args)
 	end
 end
 
-function mod:ImminentRuin()
+function mod:ImminentRuin(args)
 	ruinCount = 0
-	self:Bar(272536, self:Mythic() and 20 or 15)
+	self:Bar(272536, self:Mythic() and 20 or 15, CL.count:format(args.spellName, ruinCounter))
+	ruinCounter = ruinCounter + 1
 end
 
 do
