@@ -157,6 +157,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 
 		visionCount = 1
 		beamCount = 1
+		ruinCounter = 1
 
 		self:CDBar("stages", self:Mythic() and 79 or 84, CL.intermission, 274230) -- 274230 = inv_icon_shadowcouncilorb_purple
 	elseif spellId == 279748 then -- Intermission End
