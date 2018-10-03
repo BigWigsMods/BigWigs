@@ -1,4 +1,16 @@
 
+BigWigs:AddSounds("Ji'arak", {
+	[260908] = "info",
+	[261088] = "long",
+	[261467] = "alert",
+})
+
+BigWigs:AddSounds("Azurethos, The Winged Typhoon", {
+	[274829] = "warning",
+	[274832] = "long",
+	[274839] = "long",
+})
+
 BigWigs:AddSounds("Doom's Howl", {
 	[271120] = "alarm",
 	[271163] = "alert",
