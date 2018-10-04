@@ -270,28 +270,28 @@ L.autoReplyLeftCombatAdvancedWipe = "Ich habe gegen '%s' verloren: %s"
 L.spacing = "Abstand"
 L.spacingDesc = "Verändert den Abstand zwischen den Leisten."
 L.emphasizeMultiplier = "Größenmultiplikator"
---L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+L.emphasizeMultiplierDesc = "Wenn das Bewegen der Leisten zu den hervorgehobenen Leisten deaktiviert ist, entscheidet diese Option welche Größe die hervorgehobenen Leisten multipliziert mit den normalen Leisten haben."
 L.iconPosition = "Symbolposition"
 L.iconPositionDesc = "Wähle, wo sich das Symbol auf der Leiste befinden soll."
---L.visibleBarLimit = "Visible bar limit"
---L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
+L.visibleBarLimit = "Maximale Leistenanzahl"
+L.visibleBarLimitDesc = "Legt die maximale Anzahl der Leisten fest, welche gleichzeitig angezeigt werden."
 
 -----------------------------------------------------------------------
 -- Colors.lua
 --
 
---L.red = "Red"
---L.redDesc = "General encounter warnings."
---L.blue = "Blue"
---L.blueDesc = "Warnings for things that affect you directly such as a debuff being applied to you."
---L.orange = "Orange"
---L.yellow = "Yellow"
---L.green = "Green"
---L.greenDesc = "Warnings for good things that happen such as a debuff being removed from you."
---L.cyan = "Cyan"
---L.cyanDesc = "Warnings for encounter status changes such as advancing to the next stage."
---L.purple = "Purple"
---L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
+L.red = "Rot"
+L.redDesc = "Allgemeine Bosswarnungen."
+L.blue = "Blau"
+L.blueDesc = "Warnungen für Dinge welche Dich direkt betreffen wie Zauber auf Dir."
+L.orange = "Orange"
+L.yellow = "Gelb"
+L.green = "Grün"
+L.greenDesc = "Warnungen für positive Dinge wie ein von Dir entfernter Zauber."
+L.cyan = "Cyan"
+L.cyanDesc = "Warnungen für Statusänderungen im Bosskampf wie Phasenwechsel."
+L.purple = "Violett"
+L.purpleDesc = "Warnungen für tankspezifische Fähigkeiten wie ein stapelnder Tankdebuff."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
