@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Jiarak.lua"/>
+<Script file="Construct.lua"/>
 <Script file="Azurethos.lua"/>
 <Script file="DoomsHowl.lua"/>
 <Script file="LionsRoar.lua"/>
