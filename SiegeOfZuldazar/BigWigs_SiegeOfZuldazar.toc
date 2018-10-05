@@ -1,0 +1,32 @@
+## Interface: 80000
+
+## Title: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-deDE: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-esES: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-esMX: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-frFR: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-ruRU: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-zhCN: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-zhTW: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-itIT: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-ptBR: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Title-koKR: BigWigs [|cffeda55fSiege of Zuldazar|r]
+## Notes: BigWigs Siege of Zuldazar Modules
+## Notes-deDE: BigWigs Siege of Zuldazar Modules
+## Notes-esES: BigWigs Siege of Zuldazar Modules
+## Notes-esMX: BigWigs Siege of Zuldazar Modules
+## Notes-frFR: BigWigs Siege of Zuldazar Modules
+## Notes-ruRU: BigWigs Siege of Zuldazar Modules
+## Notes-zhCN: BigWigs Siege of Zuldazar Modules
+## Notes-zhTW: BigWigs Siege of Zuldazar Modules
+## Notes-itIT: BigWigs Siege of Zuldazar Modules
+## Notes-ptBR: BigWigs Siege of Zuldazar Modules
+## Notes-koKR: BigWigs Siege of Zuldazar Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2070
+
+modules.xml

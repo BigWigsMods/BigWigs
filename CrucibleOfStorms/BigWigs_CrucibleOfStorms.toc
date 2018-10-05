@@ -1,0 +1,32 @@
+## Interface: 80000
+
+## Title: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-deDE: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-esES: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-esMX: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-frFR: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-ruRU: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-zhCN: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-zhTW: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-itIT: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-ptBR: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-koKR: BigWigs [|cffeda55fCrucible of Storms|r]
+## Notes: BigWigs Crucible of Storms Modules
+## Notes-deDE: BigWigs Crucible of Storms Modules
+## Notes-esES: BigWigs Crucible of Storms Modules
+## Notes-esMX: BigWigs Crucible of Storms Modules
+## Notes-frFR: BigWigs Crucible of Storms Modules
+## Notes-ruRU: BigWigs Crucible of Storms Modules
+## Notes-zhCN: BigWigs Crucible of Storms Modules
+## Notes-zhTW: BigWigs Crucible of Storms Modules
+## Notes-itIT: BigWigs Crucible of Storms Modules
+## Notes-ptBR: BigWigs Crucible of Storms Modules
+## Notes-koKR: BigWigs Crucible of Storms Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2096
+
+modules.xml
