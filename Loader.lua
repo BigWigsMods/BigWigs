@@ -1262,6 +1262,10 @@ do
 			end
 		end
 
+		if id == 2070 and IsTestBuild() then -- XXX temp
+			sysprint("Current modules are alpha quality. Help us improve them! More details on our Discord PTR channel.")
+		end
+
 		-- Module loading
 		if enableZones[id] then
 			if id > 0 then
