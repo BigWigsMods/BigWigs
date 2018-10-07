@@ -317,7 +317,7 @@ function plugin:BigWigs_ResizeInfoBoxRow(row)
 end
 
 do
-	local sortingTbl = nil
+	local sortingTbl = {}
 	local function sortFunc(x,y)
 		local px, py = sortingTbl[x] or -1, sortingTbl[y] or -1
 		if px == py then
@@ -404,6 +404,11 @@ do
 			Timer(0.1, update)
 		end
 	end
+
+	function plugin:Close()
+		display:Hide()
+		sortingTbl = {}
+	end
 end
 
 function plugin:BigWigs_SetInfoBoxBar(_, _, line, percentage, r, g, b, a)
@@ -416,10 +421,6 @@ function plugin:BigWigs_SetInfoBoxBar(_, _, line, percentage, r, g, b, a)
 	else
 		bar:Hide()
 	end
-end
-
-function plugin:Close()
-	display:Hide()
 end
 
 function plugin:BigWigs_OnBossDisable(_, module)
