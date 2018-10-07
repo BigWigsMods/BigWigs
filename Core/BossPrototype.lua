@@ -279,6 +279,11 @@ function boss:Disable(isWipe)
 			end
 		end
 
+		-- Cancel all say countdowns
+		for _, tbl in next, self.sayCountdowns do
+			tbl[1] = true
+		end
+
 		self.sayCountdowns = nil
 		self.scheduledMessages = nil
 		self.targetEventFunc = nil
@@ -2137,14 +2142,15 @@ end
 -- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
 function boss:SayCountdown(key, seconds, icon, startAt)
 	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
-	local tbl = {false, startAt or 3}
+	local start = startAt or 3
+	local tbl = {false, start}
 	local function printTime()
 		if not tbl[1] then
 			SendChatMessage(icon and format("{rt%d} %d", icon, tbl[2]) or tbl[2], "SAY")
 			tbl[2] = tbl[2] - 1
 		end
 	end
-	for i = 1, (startAt or 3) do
+	for i = 1, start do
 		Timer(seconds-i, printTime)
 	end
 	self.sayCountdowns[key] = tbl
@@ -2153,7 +2159,7 @@ end
 --- Cancel a countdown using say messages.
 -- @param key the option key
 function boss:CancelSayCountdown(key)
-	if not checkFlag(self, key, C.SAY) then return end
+	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 	local tbl = self.sayCountdowns[key]
 	if tbl then
 		tbl[1] = true
