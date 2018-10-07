@@ -92,7 +92,7 @@ function mod:RottingRegurgitation(args)
 end
 
 function mod:ShockwaveStomp(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, stompCount))
 	self:PlaySound(args.spellId, "alarm")
 end
 
