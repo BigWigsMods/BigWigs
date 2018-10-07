@@ -395,6 +395,7 @@ do
 			else
 				display.text[line]:SetText("")
 				display.text[line+1]:SetText("")
+				self:BigWigs_SetInfoBoxBar(nil, nil, i*2, 0)
 			end
 			self:BigWigs_ResizeInfoBoxRow(line)
 			line = line + 2
