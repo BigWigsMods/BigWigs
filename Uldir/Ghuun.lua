@@ -37,6 +37,9 @@ if L then
 	L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
 	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
 	L.custom_on_fixate_plates_icon = 268074
+
+	L.custom_on_stop_timers = "Always show ability bars"
+	L.custom_on_stop_timers_desc = "G'huun can delay his abilities. When this option is enabled, the bars for those abilities will stay on your screen."
 end
 
 --------------------------------------------------------------------------------
@@ -46,6 +49,7 @@ end
 local burstingMarker = mod:AddMarkerOption(false, "player", 1, 277007, 1, 2, 3, 4, 5, 6) -- Bursting Boil
 function mod:GetOptions()
 	return {
+		"custom_on_stop_timers",
 		"stages",
 		-18109, -- Power Matrix
 		263482, -- Reorigination Blast
@@ -81,6 +85,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Stage 1
@@ -151,6 +156,34 @@ end
 -- Event Handlers
 --
 
+do
+	local abilitysToPause = {
+		[272506] = true, -- Explosive Corruption
+		[277007] = true, -- Summon Bursting Boil
+		[270373] = true, -- Wave of Corruption
+		[263235] = true, -- Blood Feast
+		[274582] = true, -- Malignant Growth
+		[275160] = true, -- Gaze of G'huun
+	}
+
+	local castPattern = CL.cast:gsub("%%s", ".+")
+
+	local function stopAtZeroSec(bar)
+		if bar.remaining < 0.15 then -- Pause at 0.0
+			bar:SetDuration(0.01) -- Make the bar look full
+			bar:Start()
+			bar:Pause()
+			bar:SetTimeVisibility(false)
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, _, key, text)
+		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
+			bar:AddUpdateFunction(stopAtZeroSec)
+		end
+	end
+end
+
 function mod:UNIT_POWER_FREQUENT(event, unit)
 	if self:MobId(UnitGUID(unit)) == 134118 then
 		local power = UnitPower(unit)
@@ -220,6 +253,7 @@ do
 			end
 			self:TargetMessage2(272506, "orange", args.destName)
 		end
+		self:StopBar(272506)
 		self:CDBar(272506, self:Mythic() and (stage == 3 and 27 or 44) or stage == 1 and 26 or stage == 2 and 15.9 or 13.4)
 	end
 
@@ -244,6 +278,7 @@ do
 			else
 				self:PersonalMessage(272506)
 			end
+			self:PlaySound(272506, "alarm")
 			self:Say(272506)
 			self:SayCountdown(272506, 4)
 		end
@@ -310,17 +345,25 @@ function mod:ReoriginationBlast(args)
 	end
 end
 
-function mod:ReoriginationBlastRemoved(args)
-	orbsCounter = 0
-	if stage == 2 then -- These bars don't exist in stage 1, no stun happens in stage 3
-		self:ResumeBar(272506) -- Explosive Corruption
-		self:ResumeBar(270373, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
-		self:OpenProximity(270373, 5)
-		self:ResumeBar(263235) -- Blood Feast
-		self:ResumeBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount)) -- Bursting Boil
+do
+	local function CustomResumeBar(key, barText) -- We don't want to remove bars that are stopped with custom_on_stop_timers
+		local checkText = barText or mod:SpellName(key)
+		if mod:BarTimeLeft(checkText) > 0.15 then
+			mod:ResumeBar(key, barText)
+		end
+	end
+
+	function mod:ReoriginationBlastRemoved(args)
+		orbsCounter = 0
+		if stage == 2 then -- These bars don't exist in stage 1, no stun happens in stage 3
+			CustomResumeBar(272506) -- Explosive Corruption
+			CustomResumeBar(270373, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
+			CustomResumeBar(263235) -- Blood Feast
+			CustomResumeBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount)) -- Bursting Boil
+			self:OpenProximity(270373, 5)
+		end
 	end
 end
-
 -- Stage 2
 function mod:GrowingCorruption(args)
 	local amount = args.amount or 1
@@ -344,6 +387,7 @@ end
 function mod:BloodFeastSuccess(args)
 	self:PlaySound(args.spellId, "alert")
 	self:TargetMessage2(args.spellId, "red", args.destName)
+	self:StopBar(args.spellId)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, self:Mythic() and 6 or 10)
@@ -398,12 +442,14 @@ end
 function mod:MalignantGrowth(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
+	self:StopBar(args.spellId)
 	self:Bar(args.spellId, 25.5)
 end
 
 function mod:GazeofGhuun(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
+	self:StopBar(args.spellId)
 	self:Bar(args.spellId, self:Mythic() and 23 or self:Heroic() and 25.9 or 31.6)
 end
 
