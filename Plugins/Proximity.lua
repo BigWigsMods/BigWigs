@@ -1060,7 +1060,7 @@ do
 
 		self:RegisterMessage("BigWigs_ShowProximity")
 		self:RegisterMessage("BigWigs_HideProximity", "BigWigs_OnBossDisable")
-		self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
+		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_OnBossDisable")
 
 		self:RegisterMessage("BigWigs_StartConfigureMode")

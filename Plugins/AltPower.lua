@@ -288,7 +288,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ShowAltPower")
 	self:RegisterMessage("BigWigs_HideAltPower", "Close")
 	self:RegisterMessage("BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 
 	self:RegisterMessage("BigWigs_StartConfigureMode", "Test")
 	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")

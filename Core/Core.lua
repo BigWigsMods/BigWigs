@@ -88,7 +88,7 @@ do
 		end
 	end
 	loader.RegisterMessage(mod, "BigWigs_OnBossDisable", UnregisterAllEvents)
-	loader.RegisterMessage(mod, "BigWigs_OnBossReboot", UnregisterAllEvents)
+	loader.RegisterMessage(mod, "BigWigs_OnBossWipe", UnregisterAllEvents)
 	loader.RegisterMessage(mod, "BigWigs_OnPluginDisable", UnregisterAllEvents)
 end
 

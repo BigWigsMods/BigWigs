@@ -305,8 +305,6 @@ function boss:Reboot(isWipe)
 			-- Devs, in 99% of cases you'll want to use OnBossWipe
 			self:SendMessage("BigWigs_OnBossWipe", self)
 		end
-		-- Reboot covers everything including hard module reboots (clicking the minimap icon)
-		self:SendMessage("BigWigs_OnBossReboot", self)
 		self:Disable(isWipe)
 		self:Enable(isWipe)
 	end

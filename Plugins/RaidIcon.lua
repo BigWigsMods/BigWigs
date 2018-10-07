@@ -94,7 +94,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_SetRaidIcon")
 	self:RegisterMessage("BigWigs_RemoveRaidIcon")
 	self:RegisterMessage("BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_OnBossReboot", "BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 end
 
 function plugin:BigWigs_OnBossDisable()
