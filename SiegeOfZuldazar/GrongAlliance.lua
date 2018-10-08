@@ -1,4 +1,5 @@
 if not IsTestBuild() then return end
+if UnitFactionGroup("player") ~= "Alliance" then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -55,7 +56,7 @@ function mod:OnBossEnable()
 	--[[ Death Specter ]]--
 	self:Log("SPELL_CAST_SUCCESS", "VoodooBlast", 282471)
 	self:Log("SPELL_CAST_START", "DeathEmpowerment", 282533)
-	self:Log("SPELL_CAST_START", "DeathEmpowerment", 282533)
+	self:Log("SPELL_AURA_APPLIED", "ShadowCore", 286434)
 	self:Log("SPELL_CAST_START", "DischargeShadowCore", 286435)
 end
 

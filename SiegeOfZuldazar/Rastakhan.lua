@@ -1,4 +1,5 @@
 if not IsTestBuild() then return end
+if UnitFactionGroup("player") ~= "Alliance" then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration

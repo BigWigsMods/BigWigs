@@ -1,4 +1,5 @@
 if not IsTestBuild() then return end
+if UnitFactionGroup("player") ~= "Horde" then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -8,7 +9,7 @@ local mod, CL = BigWigs:NewBoss("Frida Ironbellows", 2070, 2333)
 if not mod then return end
 mod:RegisterEnableMob(144680)
 mod.engageId = 2265
---mod.respawnTime = 31
+mod.respawnTime = 15 -- XXX first PTR value, re-check
 
 --------------------------------------------------------------------------------
 -- Locals
