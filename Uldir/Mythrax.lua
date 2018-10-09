@@ -144,7 +144,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		stage = 2
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan",CL.stage:format(stage), false)
-		self:CloseProximity(272404) -- Oblivion Sphere
 
 		self:StopBar(CL.count:format(self:SpellName(272536), ruinCounter)) -- Imminent Ruin
 		self:StopBar(273282) -- Essence Shear
@@ -229,6 +228,8 @@ function mod:OblivionSphere(args)
 	self:PlaySound(args.spellId, "warning")
 	if stage == 1 then
 		self:Bar(args.spellId, 15)
+	elseif stage == 2 then
+		self:CloseProximity(272404) -- Oblivion Sphere
 	end
 end
 
@@ -272,6 +273,7 @@ function mod:XalzaixsAwakening(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 8) -- 2s cast, 6s channel
 
+	self:Bar(272404, 7) -- Oblivion Sphere
 	self:CDBar(272115, 18.5) -- Obliteration Beam
 	self:CDBar(273949, self:Mythic() and 26.1 or 30) -- Visions of Madness
 	self:CDBar(273282, self:Mythic() and 32 or 30, L.destroyer_cast:format(self:SpellName(273282))) -- Essence Shear
