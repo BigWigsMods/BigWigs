@@ -238,7 +238,9 @@ function mod:CorruptingBiteApplied()
 		self:Bar(272506, 9) -- Explosive Corruption
 	end
 	self:Bar(270373, 15.5, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
-	self:OpenProximity(270373, 5)
+	if not self:Easy() then
+		self:OpenProximity(270373, 5)
+	end
 	self:Bar(263235, self:Mythic() and 32 or 47) -- Blood Feast
 end
 
@@ -360,7 +362,9 @@ do
 			CustomResumeBar(270373, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
 			CustomResumeBar(263235) -- Blood Feast
 			CustomResumeBar(277007, CL.count:format(self:SpellName(277007), burstingBoilCount)) -- Bursting Boil
-			self:OpenProximity(270373, 5)
+			if not self:Easy() then
+				self:OpenProximity(270373, 5)
+			end
 		end
 	end
 end
