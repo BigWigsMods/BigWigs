@@ -431,7 +431,9 @@ function mod:Collapse(args)
 
 	self:CastBar("stages", 20, args.spellName, args.spellId) -- Collapse
 	self:Bar(272506, self:Mythic() and 48.3 or 30) -- Explosive Corruption
-	self:Bar(274582, self:Mythic() and 35 or 34) -- Malignant Growth
+	if not self:Easy() then
+		self:Bar(274582, self:Mythic() and 35 or 34) -- Malignant Growth
+	end
 	self:Bar(275160, self:Mythic() and 43.8 or self:Heroic() and 47.2 or 52.3) -- Gaze of G'huun
 	self:Bar(270373, self:Mythic() and 39 or 50.5, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Wave of Corruption
 	if self:Mythic() then
