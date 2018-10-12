@@ -343,8 +343,8 @@ function mod:Gestate(args)
 	if nextLiquify > GetTime() + timer then
 		self:CDBar(265212, timer)
 	end
+	self:PlaySound(265212, "alert")
 	if self:Me(args.destGUID) then
-		self:PlaySound(265212, "alert")
 		self:Say(265212)
 	end
 	self:TargetMessage2(265212, "orange", args.destName)
