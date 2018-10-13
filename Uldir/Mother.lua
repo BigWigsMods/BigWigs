@@ -14,6 +14,7 @@ mod.respawnTime = 26
 --
 
 local stage = 1
+local nextBeam = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -65,7 +66,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "PurifyingFlame", 267795)
 	self:Log("SPELL_PERIODIC_DAMAGE", "PurifyingFlameDamage", 268277)
 	self:Log("SPELL_PERIODIC_MISSED", "PurifyingFlameDamage", 268277)
-	self:Log("SPELL_CAST_SUCCESS", "WindTunnel", 267945, 267885, 267878) -- XXX 267878 267945 Heroic, Verify 267885
+	self:Log("SPELL_CAST_SUCCESS", "WindTunnel", 267945)
 	self:Log("SPELL_CAST_SUCCESS", "UldirDefensiveBeam", 277973, 277742, 269827) -- Sideways Beams, Room 2 Roof Beams, Room 3 Roof Beams
 	self:Log("SPELL_PERIODIC_DAMAGE", "UldirDefensiveBeamDamage", 268253)
 	self:Log("SPELL_PERIODIC_MISSED", "UldirDefensiveBeamDamage", 268253)
@@ -95,8 +96,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		elseif self:MobId(sourceGUID) == 137022 then -- Room 2
 			room = 2
 			if self:Mythic() then
+				nextBeam = L.mythic_beams
 				self:CDBar(268253, 11, L.mythic_beams)
 			else
+				nextBeam = L.sideLaser
 				self:CDBar(268253, 20, L.sideLaser)
 			end
 		elseif self:MobId(sourceGUID) == 137023 then -- Room 3
@@ -105,6 +108,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 			self:StopBar(L.sideLaser)
 			self:StopBar(L.upLaser)
 			self:StopBar(L.mythic_beams)
+			nextBeam = self:Mythic() and L.mythic_beams or L.sideLaser
 			self:CDBar(268253, 10, self:Mythic() and L.mythic_beams or L.sideLaser)
 		end
 		self:Message2(spellId, "cyan", CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
@@ -173,22 +177,18 @@ do
 	end
 end
 
-do
-	local prev = 0
-	function mod:WindTunnel(args)
-		local t = args.time
-		if t-prev > 2 then
-			prev = t
-			self:Message2(267878, "red")
-			self:PlaySound(267878, "warning")
-			self:CastBar(267878, 11)
-			self:CDBar(267878, 46.5)
-		end
+function mod:WindTunnel(args)
+	self:Message2(267878, "red")
+	self:PlaySound(267878, "warning")
+	self:CastBar(267878, 11)
+	self:CDBar(267878, 42.5)
+	if self:BarTimeLeft(nextBeam) < 11 then -- No beams during winds
+		self:CDBar(268253, 11, nextBeam)
 	end
 end
 
 function mod:UldirDefensiveBeam(args)
-	local beamType, castTime, nextBeam, timer = nil, nil, nil, nil
+	local beamType, castTime, timer = nil, nil, nil
 	if self:Easy() then
 		beamType = L.sideLaser
 		castTime = 4
@@ -216,6 +216,9 @@ function mod:UldirDefensiveBeam(args)
 	self:PlaySound(268253, "alert")
 	self:CastBar(268253, castTime, beamType)
 	self:CDBar(268253, timer, nextBeam)
+	if self:BarTimeLeft(self:SpellName(267878)) < 8 then -- No winds during beams
+		self:CDBar(267878, 8) -- Wind Tunnel
+	end
 end
 
 do
