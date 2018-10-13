@@ -394,7 +394,7 @@ function mod:BloodFeastSuccess(args)
 	self:StopBar(args.spellId)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, self:Mythic() and 6 or 10)
+		self:SayCountdown(args.spellId, self:Mythic() and 6 or 10, 7) -- Cross to make clear it's different from Orb debufs
 	end
 	self:CDBar(args.spellId, 46.3)
 	self:Bar(270373, 15.5, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Update Wave of corruption timer
