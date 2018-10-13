@@ -24,6 +24,7 @@ local lastPower = 0
 local eyeBeamCount = 0
 local roilingDeceitCount = 0
 local roilingDeceitTargets = {}
+local surgingDarknessCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
