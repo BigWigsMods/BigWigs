@@ -127,6 +127,7 @@ end
 function mod:CudgelofGore(args)
 	self:PlaySound(args.spellId, "warning")
 	self:Message2(args.spellId, "red", CL.count:format(args.spellName, cudgelCount))
+	self:StopBar(CL.count:format(args.spellName, cudgelCount))
 	self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, cudgelCount))
 	cudgelCount = cudgelCount + 1
 	self:CDBar(args.spellId, 59, CL.count:format(args.spellName, cudgelCount))
