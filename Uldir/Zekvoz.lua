@@ -190,15 +190,15 @@ function mod:SurgingDarkness(args)
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 83)
 	surgingDarknessCount = 1
-	self:StartSurgingDarknessTimer(args.spellId, self:Mythic() and 8 or 10.5)
+	self:StartSurgingDarknessTimer(self:Mythic() and 8 or 10.5)
 end
 
-function mod:StartSurgingDarknessTimer(spellId, t)
-	self:Bar(spellId, t, CL.count:format(self:SpellName(spellId), surgingDarknessCount))
+function mod:StartSurgingDarknessTimer(t)
+	self:Bar(265530, t, CL.count:format(self:SpellName(265530), surgingDarknessCount))
 	surgingDarknessCount = surgingDarknessCount + 1
 	local maxEruptions = self:Mythic() and 4 or 3
 	if maxEruptions >= surgingDarknessCount then
-		self:ScheduleTimer("StartSurgingDarknessTimer", t, spellId, self:Mythic() and 4 or 6.5)
+		self:ScheduleTimer("StartSurgingDarknessTimer", t, self:Mythic() and 4 or 6.5)
 	end
 end
 
