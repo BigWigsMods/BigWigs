@@ -189,12 +189,16 @@ function mod:SurgingDarkness(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 83)
-	-- XXX Lots of Bars, try to rework into a less intrusive manner
-	self:CDBar(args.spellId, self:Mythic() and 8 or 10.5, L.surging_darkness_eruption:format(1))
-	self:CDBar(args.spellId, self:Mythic() and 12 or 17, L.surging_darkness_eruption:format(2))
-	self:CDBar(args.spellId, self:Mythic() and 16 or 23.5, L.surging_darkness_eruption:format(3))
-	if self:Mythic() then
-		self:CDBar(args.spellId, 20, L.surging_darkness_eruption:format(4))
+	surgingDarknessCount = 1
+	self:StartSurgingDarknessTimer(args.spellId, self:Mythic() and 8 or 10.5)
+end
+
+function mod:StartSurgingDarknessTimer(spellId, t)
+	self:Bar(spellId, t, CL.count:format(self:SpellName(spellId), surgingDarknessCount))
+	surgingDarknessCount = surgingDarknessCount + 1
+	local maxEruptions = self:Mythic() and 4 or 3
+	if maxEruptions >= surgingDarknessCount then
+		self:ScheduleTimer("StartSurgingDarknessTimer", t, spellId, self:Mythic() and 4 or 6.5)
 	end
 end
 
