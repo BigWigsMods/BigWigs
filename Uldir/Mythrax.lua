@@ -164,6 +164,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
 		self:OpenProximity(272404, 8) -- Oblivion Sphere
+		self:StopBar(CL.intermission)
 
 		self:Bar(272536, 5, CL.count:format(self:SpellName(272536), ruinCounter)) -- Imminent Ruin
 		self:Bar(272404, self:Mythic() and 7 or 9) -- Oblivion Sphere
