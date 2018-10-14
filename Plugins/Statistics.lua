@@ -173,7 +173,6 @@ function plugin:OnPluginEnable()
 		self:RegisterMessage("BigWigs_OnBossEngage")
 		self:RegisterMessage("BigWigs_OnBossWin")
 		self:RegisterMessage("BigWigs_OnBossWipe")
-		self:RegisterMessage("BigWigs_OnBossDisable")
 	end
 end
 
@@ -195,7 +194,6 @@ do
 					healthPools[module.journalId].names[unit] = UnitName(unit)
 				elseif healthPools[module.journalId][unit] then
 					healthPools[module.journalId][unit] = nil
-					healthPools[module.journalId].names[unit] = nil
 				end
 			end
 		end
@@ -220,13 +218,24 @@ do
 			end
 
 			if self.db.profile.printHealth then
-				if not healthPools[module.journalId] then
-					healthPools[module.journalId] = {}
-					healthPools[module.journalId].names = {}
-				end
-				healthPools[module.journalId].timer = self:ScheduleRepeatingTimer(StoreHealth, 2, module)
+				healthPools[module.journalId] = {
+					names = {},
+					timer = self:ScheduleRepeatingTimer(StoreHealth, 2, module),
+				}
 			end
 		end
+	end
+end
+
+local function Stop(self, module)
+	if module.journalId then
+		activeDurations[module.journalId] = nil
+		if healthPools[module.journalId] then
+			self:CancelTimer(healthPools[module.journalId].timer)
+			healthPools[module.journalId] = nil
+		end
+
+		self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
 	end
 end
 
@@ -254,6 +263,8 @@ function plugin:BigWigs_OnBossWin(event, module)
 			end
 		end
 	end
+
+	Stop(self, module)
 end
 
 function plugin:BigWigs_OnBossWipe(event, module)
@@ -290,17 +301,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 			end
 		end
 	end
-end
 
-function plugin:BigWigs_OnBossDisable(event, module)
-	if module.journalId then
-		activeDurations[module.journalId] = nil
-		if healthPools[module.journalId] then
-			self:CancelTimer(healthPools[module.journalId].timer)
-			healthPools[module.journalId] = nil
-		end
-
-		self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
-	end
+	Stop(self, module)
 end
 
