@@ -174,7 +174,6 @@ function plugin:OnPluginEnable()
 		self:RegisterMessage("BigWigs_OnBossWin")
 		self:RegisterMessage("BigWigs_OnBossWipe")
 		self:RegisterMessage("BigWigs_OnBossDisable")
-		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 	end
 end
 
