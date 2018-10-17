@@ -347,7 +347,7 @@ function mod:Gestate(args)
 		self:Say(265212)
 	end
 	self:TargetMessage2(265212, "orange", args.destName)
-	self:PlaySound(265212, "alert", nil, args.destName)
+	self:PlaySound(265212, "alert")
 	self:PrimaryIcon(265212, args.destName)
 	immunosuppressionCount = 1
 	self:CDBar(265206, 6, CL.count:format(self:SpellName(265206), immunosuppressionCount)) -- Immunosuppression
