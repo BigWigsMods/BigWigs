@@ -22,7 +22,7 @@ move-folders:
     BigWigs/Plugins: BigWigs_Plugins
     BigWigs/Azeroth: BigWigs_Azeroth
     BigWigs/Uldir: BigWigs_Uldir
-    BigWigs/SiegeOfZuldazar: BigWigs_SiegeOfZuldazar
+    BigWigs/BattleOfDazaralor: BigWigs_BattleOfDazaralor
     BigWigs/CrucibleOfStorms: BigWigs_CrucibleOfStorms
 
 ignore:

@@ -163,7 +163,7 @@ do
 		--[[ BigWigs: Battle for Azeroth ]]--
 		[-947] = bfa, -- Azeroth (Fake Menu)
 		[1861] = bfa, -- Uldir
-		[2070] = bfa, -- Zuldazar Raid XXX Recheck Name
+		[2070] = bfa, -- Battle Of Dazar'alor
 		[2096] = bfa, -- Crucible of Storms
 
 		--[[ LittleWigs: Classic ]]--
