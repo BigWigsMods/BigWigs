@@ -833,6 +833,7 @@ do
 		BigWigs_Nightmare = "BigWigs_Legion",
 		BigWigs_TombOfSargeras = "BigWigs_Legion",
 		BigWigs_TrialOfValor = "BigWigs_Legion",
+		BigWigs_SiegeOfZuldazar = "BigWigs",
 	}
 	local delayedMessages = {}
 
