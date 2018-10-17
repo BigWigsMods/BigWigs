@@ -217,6 +217,7 @@ globals = {
 	"UnitEffectiveLevel",
 	"UnitExists",
 	"UnitFactionGroup",
+	"UnitGetTotalAbsorbs",
 	"UnitGroupRolesAssigned",
 	"UnitGUID",
 	"UnitHealth",
