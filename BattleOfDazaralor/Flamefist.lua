@@ -79,7 +79,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PrismaticShieldApplied", 286425)
 	self:Log("SPELL_AURA_REMOVED", "PrismaticShieldRemoved", 286425)
 	self:Log("SPELL_AURA_APPLIED", "SearingEmbersApplied", 286988)
-	self:Log("SPELL_AURA_REMOVED", "SearingEmbersRemoved", 286425)
+	self:Log("SPELL_AURA_REMOVED", "SearingEmbersRemoved", 286988)
 	self:Log("SPELL_CAST_SUCCESS", "MagmaTrap", 284374)
 
 	-- Team Attacks
@@ -135,7 +135,7 @@ function mod:RisingFlamesApplied(args)
 	self:TargetBar(args.spellId, 6, args.destName)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
-		self:SayCountdown(args.spellId, 6)
+		self:SayCountdown(args.spellId, 6, nil, 2)
 		self:PlaySound(args.spellId, "alarm")
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	elseif self:Tank() and self:Tank(args.destName) then
@@ -164,7 +164,7 @@ do
 
 	function mod:Interupted(args)
 		if args.extraSpellId == 286379 then -- Pyroblast
-			interruptTime = math.floor((args.time - interruptTime) * 100)/100
+			interruptTime = 8 - (math.floor((args.time - interruptTime) * 100)/100)
 			self:Message2(args.extraSpellId, "green", L.interrupted_after:format(args.extraSpellName, self:ColorName(args.sourceName), interruptTime))
 			self:StopBar(CL.cast:format(args.extraSpellName))
 		end
@@ -203,7 +203,7 @@ do
 			self:OpenInfo(args.spellId, args.spellName)
 			self:SetInfo(args.spellId, 1, L.absorb)
 			self:SetInfo(args.spellId, 3, L.cast)
-			castOver = args.time + 8 -- XXX Have to use the cast from pyroblast depending when it's applied/cast, but this could be at the same time.
+			castOver = GetTime() + 8 -- XXX Have to use the cast from pyroblast depending when it's applied/cast, but this could be at the same time.
 			maxAbsorb = UnitGetTotalAbsorbs("boss2") -- Assumed
 			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 		end

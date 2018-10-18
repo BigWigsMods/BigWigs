@@ -57,7 +57,7 @@ function mod:OnBossEnable()
 	-- Brother Joseph
 	self:Log("SPELL_CAST_SUCCESS", "SeaStorm", 284360)
 	self:Log("SPELL_CAST_START", "SeasTemptation", 284383)
-	self:Log("SPELL_CAST_SUCCESS", "Tempting Song", 284405)
+	self:Log("SPELL_CAST_SUCCESS", "TemptingSong", 284405)
 
 	-- Stage 2
 	self:Log("SPELL_AURA_APPLIED", "KelpWrappedApplied", 285000)
@@ -67,7 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IreoftheDeep", 285017)
 
 	self:Log("SPELL_AURA_APPLIED", "StormsWailApplied", 285350)
-	self:Log("SPELL_AURA_REMOVED", "StormsWailRemoved", 285000)
+	self:Log("SPELL_AURA_REMOVED", "StormsWailRemoved", 285350)
 end
 
 function mod:OnEngage()
@@ -112,7 +112,7 @@ function mod:SeasTemptation(args)
 	self:PlaySound(args.spellId, "info")
 end
 
-function mod:SeasTemptation(args)
+function mod:TemptingSong(args)
 	self:TargetMessage2(args.spellId, "red", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
