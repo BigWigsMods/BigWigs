@@ -134,7 +134,7 @@ end
 
 function mod:QuickenedPulseApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, args.destName, amount, "green")
+		self:StackMessage(args.spellId, args.destName, args.amount, "green")
 		self:PlaySound(args.spellId, "info")
 	end
 end
@@ -217,7 +217,7 @@ function mod:ChannelGold(args)
 end
 
 function mod:CoinShowerApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", name)
+	self:TargetMessage2(args.spellId, "yellow", args.destName)
 	self:PlaySound(args.spellId, "alert")
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetBar(args.spellId, 10, args.destName)
