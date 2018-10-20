@@ -112,7 +112,7 @@ function mod:OnEngage()
 		self:CDBar(276922, 10) -- Living Weapon
 	end
 
-	self:OpenProximity(272404, 8) -- Oblivion Sphere
+	self:OpenProximity(272404, 5) -- Oblivion Sphere
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
 end
 
@@ -163,7 +163,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		stage = 1
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
-		self:OpenProximity(272404, 8) -- Oblivion Sphere
+		self:OpenProximity(272404, 5) -- Oblivion Sphere
 		self:StopBar(CL.intermission)
 
 		self:Bar(272536, 5, CL.count:format(self:SpellName(272536), ruinCounter)) -- Imminent Ruin
