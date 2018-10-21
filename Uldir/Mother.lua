@@ -182,7 +182,7 @@ function mod:WindTunnel(args)
 	self:PlaySound(267878, "warning")
 	self:CastBar(267878, 11)
 	self:CDBar(267878, 42.5)
-	if self:BarTimeLeft(nextBeam) < 11 then -- No beams during winds
+	if stage > 1 and self:BarTimeLeft(nextBeam) < 11 then -- No beams during winds
 		self:CDBar(268253, 11, nextBeam)
 	end
 end
