@@ -35,9 +35,9 @@ function mod:GetOptions()
 		284262, -- Voltaic Flash
 		284106, -- Crackling Lightning
 		-- Brother Joseph
-		284360, -- Sea Storm
+		284362, -- Sea Storm
 		284383, -- Sea's Temptation XXX Rename bar to "Add"?
-		284405, -- Tempting Song
+		284406, -- Tempting Song
 		-- Stage 2
 		{285000, "TANK", "SAY_COUNTDOWN"}, -- Kelp-Wrapped
 		{285118, "PROXIMITY"}, -- Sea Swell
@@ -55,9 +55,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CracklingLightning", 284106)
 
 	-- Brother Joseph
-	self:Log("SPELL_CAST_SUCCESS", "SeaStorm", 284360)
+	self:Log("SPELL_CAST_START", "SeaStorm", 284362)
 	self:Log("SPELL_CAST_START", "SeasTemptation", 284383)
-	self:Log("SPELL_CAST_SUCCESS", "TemptingSong", 284405)
+	--self:Log("SPELL_CAST_SUCCESS", "TemptingSong", 284406)
+	self:Log("SPELL_AURA_APPLIED", "TemptingSongApplied", 284405, 284410)
 
 	-- Stage 2
 	self:Log("SPELL_AURA_APPLIED", "KelpWrappedApplied", 285000)
@@ -71,6 +72,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:CDBar(284362, 7) -- Sea Storm
+	self:CDBar(284106, 10.5) -- Crackling Lightning
+	self:CDBar(284383, 12) -- Sea's Temptation
+	self:CDBar(286558, 15.5) -- Tidal Shroud
+	self:CDBar(284262, 24) -- Voltaic Flash
 end
 
 --------------------------------------------------------------------------------
@@ -86,6 +92,7 @@ do
 			prev = t
 			self:Message2(args.spellId, "cyan")
 			self:PlaySound(args.spellId, "long")
+			self:CDBar(args.spellId, 17)
 		end
 	end
 end
@@ -94,29 +101,31 @@ end
 function mod:VoltaicFlash(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
+	self:CDBar(args.spellId, 17)
 end
 
 function mod:CracklingLightning(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, 17)
 end
 
 -- Brother Joseph
 function mod:SeaStorm(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, 17)
 end
 
 function mod:SeasTemptation(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
+	self:CDBar(284406, 7)
 end
 
-function mod:TemptingSong(args)
-	self:TargetMessage2(args.spellId, "red", args.destName)
-	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "warning")
-	end
+function mod:TemptingSongApplied(args)
+	self:TargetMessage2(284406, "red", args.destName)
+	self:PlaySound(284406, "warning")
 end
 
 -- Stage 2
