@@ -9,7 +9,7 @@ local mod, CL = BigWigs:NewBoss("Ra'wani Kanae", 2070, 2344)
 if not mod then return end
 mod:RegisterEnableMob(144683)
 mod.engageId = 2265
---mod.respawnTime = 31
+mod.respawnTime = 15 -- PTR
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -41,6 +41,8 @@ function mod:GetOptions()
 		284595, -- Penance
 		283628, -- Heal
 		283650, -- Blinding Faith
+		-- Mythic
+		287469, -- Prayer for the Fallen
 	}
 end
 
@@ -57,9 +59,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Penance", 284595)
 	self:Log("SPELL_CAST_START", "Heal", 283628)
 	self:Log("SPELL_CAST_START", "BlindingFaith", 283650)
+
+	-- Mythic
+	self:Log("SPELL_CAST_START", "PrayerfortheFallen", 287469)
 end
 
 function mod:OnEngage()
+	self:CDBar(283650, 12) -- Blinding Faith
+	self:Bar(283598, 13) -- Wave of Light
+	self:CDBar(283662, 109) -- Call to Arms
 end
 
 --------------------------------------------------------------------------------
@@ -77,11 +85,13 @@ end
 function mod:WaveofLight(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:Bar(args.spellId, 11)
 end
 
 function mod:SealofRetributionApplied(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
+	self:CDBar(283933, 51) -- Judgement: Righteousness
 end
 
 function mod:JudgementRighteousness(args)
@@ -92,6 +102,7 @@ end
 function mod:SealofReckoning(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
+	self:CDBar(284474, 51) -- Judgement: Reckoning
 end
 
 function mod:JudgmentReckoning(args)
@@ -102,6 +113,7 @@ end
 function mod:CalltoArms(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
+	self:CDBar(args.spellId, 105)
 end
 
 function mod:AvengingWrathApplied(args)
@@ -127,4 +139,10 @@ function mod:BlindingFaith(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 4)
+	self:CDBar(args.spellId, 15)
+end
+
+function mod:PrayerfortheFallen(args)
+	self:Message2(args.spellId, "red")
+	self:PlaySound(args.spellId, "warning")
 end
