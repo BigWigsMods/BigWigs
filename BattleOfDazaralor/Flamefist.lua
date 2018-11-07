@@ -110,8 +110,8 @@ end
 --
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 285645 then -- Spirits of Xuen
-		self:Message2(args.spellId, "yellow")
-		self:PlaySound(args.spellId, "info")
+		self:Message2(spellId, "yellow")
+		self:PlaySound(spellId, "info")
 		self:CDBar(spellId, 40.5)
 	end
 end
