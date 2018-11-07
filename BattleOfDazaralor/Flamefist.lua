@@ -40,11 +40,11 @@ end
 -- Initialization
 --
 
-local searingEmbersMarker = mod:AddMarkerOption(false, "player", 1, 286988, 1, 2, 3, 4) -- Searing Embers
+local searingEmbersMarker = mod:AddMarkerOption(false, "player", 1, 286988, 1, 2, 3) -- Searing Embers
 function mod:GetOptions()
 	return {
 		-- Mestrah, the Illuminated
-		286436, -- Spinning Crane Kick
+		286436, -- Whirling Jade Storm
 		282030, -- Multi-Sided Strike
 		285645, -- Spirits of Xuen
 		{285632, "FLASH"}, -- Stalking
@@ -55,18 +55,21 @@ function mod:GetOptions()
 		{286425, "INFOBOX"}, -- Prismatic Shield
 		286988, -- Searing Embers
 		searingEmbersMarker,
-		284374, -- Magma Trap
+		--284374, -- Magma Trap
 		-- Team Attacks
-		284453, -- Chi-Ji's Song
+		285428, -- Fire from Mist
+		284656, -- Ring of Hostility
+		282040, -- Blazing Phoenix
 		286396, -- Dragon's Breath
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+
 	-- Mestrah, the Illuminated
-	self:Log("SPELL_CAST_SUCCESS", "SpinningCraneKick", 286436)
+	self:Log("SPELL_CAST_SUCCESS", "WhirlingJadeStorm", 286436)
 	self:Log("SPELL_CAST_START", "MultiSidedStrike", 282030)
-	self:Log("SPELL_CAST_SUCCESS", "SpiritsofXuen", 285645)
 	self:Log("SPELL_AURA_APPLIED", "StalkingApplied", 285632)
 	self:Log("SPELL_AURA_REMOVED", "StalkingRemoved", 285632)
 
@@ -80,10 +83,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "PrismaticShieldRemoved", 286425)
 	self:Log("SPELL_AURA_APPLIED", "SearingEmbersApplied", 286988)
 	self:Log("SPELL_AURA_REMOVED", "SearingEmbersRemoved", 286988)
-	self:Log("SPELL_CAST_SUCCESS", "MagmaTrap", 284374)
+	-- self:Log("SPELL_CAST_SUCCESS", "MagmaTrap", 284374)
 
 	-- Team Attacks
-	self:Log("SPELL_CAST_SUCCESS", "ChiJisSong", 284453)
+	self:Log("SPELL_CAST_START", "FirefromMist", 285428)
+	self:Log("SPELL_CAST_SUCCESS", "RingofHostility", 284656)
+	self:Log("SPELL_AURA_REMOVED", "RingofHostilityRemoved", 284656)
+	self:Log("SPELL_CAST_START", "BlazingPhoenix", 282040)
 	self:Log("SPELL_CAST_START", "DragonsBreath", 286396)
 
 	if self:GetOption("custom_on_fixate_plates") then
@@ -92,26 +98,36 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:CDBar(286436, 9.5) -- Whirling Jade Storm
+	self:CDBar(286379, 9.5) -- Pyroblast
+	self:CDBar(282030, 15.5) -- Multi-Sided Strike
+	self:CDBar(285645, 25.5) -- Spirits of Xuen
+	self:CDBar(285428, 88) -- Fire from Mist
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 285645 then -- Spirits of Xuen
+		self:Message2(args.spellId, "yellow")
+		self:PlaySound(args.spellId, "info")
+		self:CDBar(spellId, 40.5)
+	end
+end
 
-function mod:SpinningCraneKick(args)
+function mod:WhirlingJadeStorm(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:Bar(args.spellId, 20.5)
 end
 
 function mod:MultiSidedStrike(args)
 	if self:Mythic() or self:Tank() then -- No warnings needed for non-tanks unless it's Mythic
 		self:Message2(args.spellId, "red")
 		self:PlaySound(args.spellId, "warning")
+		self:CDBar(args.spellId, 35.5)
 	end
-end
-
-function mod:SpiritsofXuen(args)
-	self:Message2(args.spellId, "yellow")
 end
 
 function mod:StalkingApplied(args)
@@ -141,7 +157,7 @@ function mod:RisingFlamesApplied(args)
 	elseif self:Tank() and self:Tank(args.destName) then
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "purple")
-		if amount > 2 then
+		if amount > 3 then
 			self:PlaySound(args.spellId, "warning", nil, args.destName)
 		end
 	end
@@ -160,6 +176,7 @@ do
 		self:PlaySound(args.spellId, "warning")
 		interruptTime = args.time
 		self:CastBar(args.spellId, 8)
+		self:CDBar(args.spellId, 15) -- 14.6~15.8
 	end
 
 	function mod:Interupted(args)
@@ -246,6 +263,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:SimpleTimer(announce, 0.1)
+			self:CDBar(args.spellId, 17) -- 17-31s (depends when a pyroblast is cast/interrupted?)
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = #playerList
@@ -263,14 +281,32 @@ do
 	end
 end
 
-function mod:MagmaTrap(args)
-	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "alarm")
-end
+-- function mod:MagmaTrap(args)
+	-- self:Message2(args.spellId, "orange")
+	-- self:PlaySound(args.spellId, "alarm")
+-- end
 
-function mod:ChiJisSong(args)
+function mod:FirefromMist(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
+	self:CDBar(284656, 112) -- Ring of Hostility
+end
+
+function mod:RingofHostility(args)
+	self:Message2(args.spellId, "yellow")
+	self:PlaySound(args.spellId, "long")
+end
+
+function mod:RingofHostilityRemoved(args)
+	self:Message2(args.spellId, "green", CL.over:format(args.spellName))
+	self:PlaySound(args.spellId, "long")
+	self:CDBar(282040, 120) -- Blazing Phoenix
+end
+
+function mod:BlazingPhoenix(args)
+	self:Message2(args.spellId, "yellow")
+	self:PlaySound(args.spellId, "long")
+	self:CDBar(286396, 16) -- Dragon's Breath
 end
 
 function mod:DragonsBreath(args)
