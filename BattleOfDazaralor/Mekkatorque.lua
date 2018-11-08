@@ -1,4 +1,10 @@
 if not IsTestBuild() then return end
+--------------------------------------------------------------------------------
+-- TODO:
+-- - Assistant on robots?
+-- - Intermission soon warnings
+-- - Initial timers
+-- - Improve timers generally
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -45,8 +51,9 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BusterCannon", 282153)
 	self:Log("SPELL_CAST_START", "BlastOff", 282205)
-	self:Log("SPELL_AURA_APPLIED", "GigavoltChargeApplied", 283409)
-	self:Log("SPELL_AURA_REMOVED", "GigavoltChargeRemoved", 283409)
+	self:Log("SPELL_CAST_SUCCESS", "GigavoltCharge", 286597)
+	self:Log("SPELL_AURA_APPLIED", "GigavoltChargeApplied", 283409, 286646)
+	self:Log("SPELL_AURA_REMOVED", "GigavoltChargeRemoved", 283409, 286646)
 	self:Log("SPELL_CAST_START", "DimensionalRipperXL", 287952)
 	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 284042)
 	self:Log("SPELL_CAST_START", "ShrinkRay", 288049)
@@ -64,31 +71,38 @@ end
 function mod:BusterCannon(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, 25)
 end
 
 function mod:BlastOff(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
+	self:CDBar(args.spellId, 30)
+end
+
+function mod:GigavoltCharge(args)
+	self:CDBar(283409, 30)
 end
 
 function mod:GigavoltChargeApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage2(283409, "yellow", args.destName)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 15)
+		self:PlaySound(283409, "warning")
+		self:Say(283409)
+		self:SayCountdown(283409, 15)
 	end
 end
 
 function mod:GigavoltChargeRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelSayCountdown(283409)
 	end
 end
 
 function mod:DimensionalRipperXL(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, 44)
 end
 
 function mod:DeploySparkBot(args)
