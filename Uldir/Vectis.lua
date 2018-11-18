@@ -118,6 +118,12 @@ do
 	local tsort = table.sort
 
 	function UpdateInfoBox()
+		if mod.isEngaged then
+			mod:SimpleTimer(UpdateInfoBox, 0.1)
+		else
+			return
+		end
+
 		tsort(nameList, sortFunc)
 		for i = 1, 20 do
 			local n = nameList[i]
@@ -171,10 +177,6 @@ do
 					mod:SetInfoBar(265127, i, 0)
 				end
 			end
-		end
-
-		if mod.isEngaged then
-			mod:SimpleTimer(UpdateInfoBox, 0.1)
 		end
 	end
 end
