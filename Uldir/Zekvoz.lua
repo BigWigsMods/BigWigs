@@ -82,6 +82,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SurgingDarkness", 265530)
 	self:Log("SPELL_CAST_START", "VoidLash", 265231, 265268) -- Initial, Secondary
 	self:Log("SPELL_CAST_START", "Shatter", 265248)
+	self:Log("SPELL_CAST_SUCCESS", "Stages", 181089) -- Encounter Event spell
 
 	--[[ Stage 1 ]]--
 	self:Log("SPELL_CAST_START", "EyeBeam", 264382)
@@ -122,7 +123,6 @@ function mod:OnEngage()
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
-	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -139,37 +139,6 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 			self:UnregisterUnitEvent(event, unit)
 		end
 	end
-end
-
-function mod:UNIT_POWER_FREQUENT(event, unit)
-	local power = UnitPower(unit)
-	if power < lastPower and lastPower ~= 100 then
-		stage = stage + 1
-		self:Message2("stages", "green", CL.stage:format(stage), false)
-		self:PlaySound("stages", "long")
-		self:Bar(265530, 80) -- Surging Darkness
-		if self:Mythic() then
-			self:StopBar(-18390) -- Qiraji Warrior
-			self:StopBar(-18397) -- Anub'ar Voidweaver
-			self:Bar(267239, 15) -- Orb of Corruption
-			self:Bar(265231, 35) -- Void Lash (Initial)
-		elseif stage == 2 then
-			self:StopBar(-18390) -- Qiraji Warrior
-			self:StopBar(264382) -- Eye Beam
-			if not self:LFR() then
-				self:Bar(-18397, 20.5, nil, 267180) -- Anub'ar Voidweaver
-			end
-			self:CDBar(265360, 27) -- Roiling Deceit -- Until APPLIED not START
-			self:Bar(265231, 30) -- Void Lash (Initial)
-		elseif stage == 3 then
-			self:UnregisterUnitEvent(event, unit)
-			self:StopBar(-18397) -- Anub'ar Voidweaver
-			self:StopBar(265360) -- Roiling Deceit
-			self:Bar(267239, 12) -- Orb of Corruption
-			self:Bar(265231, 30) -- Void Lash (Initial)
-		end
-	end
-	lastPower = power
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
@@ -217,6 +186,33 @@ end
 function mod:Shatter(args)
 	self:PlaySound(args.spellId, "alert")
 	self:Message2(args.spellId, "purple")
+end
+
+function mod:Stages()
+	stage = stage + 1
+	self:Message2("stages", "green", CL.stage:format(stage), false)
+	self:PlaySound("stages", "long")
+	self:Bar(265530, 80) -- Surging Darkness
+	if self:Mythic() then
+		self:StopBar(-18390) -- Qiraji Warrior
+		self:StopBar(-18397) -- Anub'ar Voidweaver
+		self:Bar(267239, 15) -- Orb of Corruption
+		self:Bar(265231, 35) -- Void Lash (Initial)
+	elseif stage == 2 then
+		self:StopBar(-18390) -- Qiraji Warrior
+		self:StopBar(264382) -- Eye Beam
+		if not self:LFR() then
+			self:Bar(-18397, 20.5, nil, 267180) -- Anub'ar Voidweaver
+		end
+		self:CDBar(265360, 27) -- Roiling Deceit -- Until APPLIED not START
+		self:Bar(265231, 30) -- Void Lash (Initial)
+	elseif stage == 3 then
+		self:UnregisterUnitEvent(event, unit)
+		self:StopBar(-18397) -- Anub'ar Voidweaver
+		self:StopBar(265360) -- Roiling Deceit
+		self:Bar(267239, 12) -- Orb of Corruption
+		self:Bar(265231, 30) -- Void Lash (Initial)
+	end
 end
 
 --[[ Stage 1 ]]--
