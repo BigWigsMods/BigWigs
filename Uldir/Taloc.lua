@@ -72,7 +72,7 @@ function mod:OnEngage()
 
 	self:Bar(271224, 6) -- Plasma Discharge
 	self:Bar(271895, 22.5) -- Sanguine Static
-	self:Bar(271296, 36, CL.count:format(self:SpellName(271296), cudgelCount)) -- Cudgel of Gore
+	self:Bar(271296, self:Mythic() and 35.1 or 31.5, CL.count:format(self:SpellName(271296), cudgelCount)) -- Cudgel of Gore
 	self:Bar(271728, 52) -- Retrieve Cudgel
 	if self:Mythic() then
 		self:Bar(275189, 25, CL.count:format(self:SpellName(275189), arteriesCount)) -- Hardened Arteries
@@ -130,7 +130,12 @@ function mod:CudgelofGore(args)
 	self:StopBar(CL.count:format(args.spellName, cudgelCount))
 	self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, cudgelCount))
 	cudgelCount = cudgelCount + 1
-	self:CDBar(args.spellId, 59, CL.count:format(args.spellName, cudgelCount))
+	if self:Mythic() then
+		-- Mythic (both stages) the 2nd cast seems to be 65.5s after 1st
+		self:CDBar(args.spellId, cudgelCount == 2 and 65.5 or 59, CL.count:format(args.spellName, cudgelCount))
+	else
+		self:CDBar(args.spellId, 57, CL.count:format(args.spellName, cudgelCount)) -- Between 57 and 59
+	end
 end
 
 function mod:RetrieveCudgel(args)
