@@ -207,7 +207,6 @@ function mod:Stages()
 		self:CDBar(265360, 27) -- Roiling Deceit -- Until APPLIED not START
 		self:Bar(265231, 30) -- Void Lash (Initial)
 	elseif stage == 3 then
-		self:UnregisterUnitEvent(event, unit)
 		self:StopBar(-18397) -- Anub'ar Voidweaver
 		self:StopBar(265360) -- Roiling Deceit
 		self:Bar(267239, 12) -- Orb of Corruption
