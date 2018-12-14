@@ -47,3 +47,10 @@ if L then
 	--L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
 	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
 end
+
+L = BigWigs:NewBossLocale("Uldir Trash", "itIT")
+if L then
+	L.watcher = "Guardiano Corrotto"
+	L.ascendant = "Ascesa Nazmani"
+	L.dominator = "Dominatrice Nazmani"
+end

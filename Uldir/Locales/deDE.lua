@@ -47,3 +47,10 @@ if L then
 	L.custom_on_fixate_plates = "Symbol an Namensplaketten fixierender Gegner"
 	L.custom_on_fixate_plates_desc = "Zeigt ein Symbol an der Namensplakette des Dich fixierenden Ziels an.\nBenötigt die Verwendung gegnerischer Namensplaketten. Diese Funktion wird derzeit nur von KuiNameplates unterstützt."
 end
+
+L = BigWigs:NewBossLocale("Uldir Trash", "deDE")
+if L then
+	L.watcher = "Verderbter Hüter"
+	L.ascendant = "Aszendentin der Nazmani"
+	L.dominator = "Dominatorin der Nazmani"
+end

@@ -52,3 +52,10 @@ if L then
 	L.custom_on_fixate_plates = "敌对姓名板凝视图标"
 	L.custom_on_fixate_plates_desc = "当你被凝视时在目标姓名板上显示一个图标。\n需要使用敌对姓名板。此功能目前只支持 KuiNameplates。"
 end
+
+L = BigWigs:NewBossLocale("Uldir Trash", "zhCN")
+if L then
+	L.watcher = "腐化的守护者"
+	L.ascendant = "纳兹曼尼晋升者"
+	L.dominator = "纳兹曼尼统御者"
+end
