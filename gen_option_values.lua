@@ -30,6 +30,7 @@ local valid_sounds = {
 }
 local color_methods = {
 	Message = 2,
+	Message2 = 2,
 	TargetMessage = 3,
 	TargetMessage2 = 2,
 	TargetsMessage = 2,
@@ -48,11 +49,13 @@ local valid_methods = {
 	CDBar = true,
 	CastBar = true, --"CASTBAR",
 	TargetBar = true,
+	PersonalMessage = true,
 	PrimaryIcon = "ICON",
 	SecondaryIcon = "ICON",
 	Flash = "FLASH",
 	Say = "SAY",
 	SayCountdown = "SAY_COUNTDOWN",
+	CancelSayCountdown = "SAY_COUNTDOWN",
 	OpenAltPower = "ALTPOWER",
 	CloseAltPower = "ALTPOWER",
 	OpenProximity = "PROXIMITY",
@@ -545,6 +548,9 @@ local function parseLua(file)
 					if method:sub(1, 6) == "Target" or method == "StackMessage" then
 						color[#color+1] = "blue" -- used when on the player
 					end
+				end
+				if method == "PersonalMessage" then
+					color = {"blue"}
 				end
 				if valid_methods[method] ~= true then
 					bitflag = valid_methods[method]

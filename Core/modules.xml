@@ -3,9 +3,9 @@
 
 <Include file="Locales\locales.xml"/>
 
-<Script file="Core.lua"/>
 <Script file="Constants.lua"/>
 <Script file="BossPrototype.lua"/>
 <Script file="PluginPrototype.lua"/>
+<Script file="Core.lua"/>
 
 </Ui>

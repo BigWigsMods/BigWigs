@@ -67,8 +67,6 @@ L.MESSAGE_desc = "Molte abilità dei boss hanno uno o più messaggi di BigWigs s
 L.minimapIcon = "Icona MiniMappa"
 L.minimapToggle = "Visualizza/Nasconde l'icona di BigWigs nella minimappa."
 L.missingAddOn = "Per favore, prendi nota che questa zona richiede il plugin |cFF436EEE%s|r per fare in modo di visualizzare barre e timers."
-L.modulesDisabled = "Tutti i moduli sono stati disattivati."
-L.modulesReset = "Tutti i moduli sono stati riavviati."
 L.mythic = "Mitica"
 L.noBossMod = "Nessun Boss mod:"
 L.normal = "Normale"
@@ -109,9 +107,7 @@ L.testBarsBtn = "Crea Barra Test"
 L.testBarsBtn_desc = "Crea una barra test per provare le tue impostazioni attuali."
 L.toggleAnchorsBtn = "Attiva o disattiva gli Ancoraggi"
 L.toggleAnchorsBtn_desc = "Attiva o disattiva la visualizzazione dei punti di ancoraggio."
-L.tooltipHint = [=[|cffeda55fClic|r per reinizializzare tutti i moduli.
-|cffeda55fAlt-Clic|r per Disattivarli.
-|cffeda55fClic-Destro|r per aprire le Opzioni.]=]
+L.tooltipHint = "|cffeda55fClic-Destro|r per aprire le Opzioni."
 L.upToDate = "Aggiornati:"
 L.VOICE = "Voce"
 L.VOICE_desc = "Se hai un plugin vocale installato, questa opzione lo indurrà a riprodurre un file sonoro per annunciarti l'avvertimento."
@@ -127,6 +123,8 @@ L.zoneMessagesDesc = "Disabilitando questa opzione BigWigs non mostrerà più i 
 --L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
 --L.SAY_COUNTDOWN = "Say Countdown"
 --L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
+--L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
+--L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
 
 -- Media.lua
 L.Beware = "Attenti! (Algalon)"

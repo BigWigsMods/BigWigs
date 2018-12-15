@@ -3,7 +3,6 @@ wowi-archive-previous: no
 
 externals:
     Libs/LibDBIcon-1.0: https://repos.wowace.com/wow/libdbicon-1-0/trunk/LibDBIcon-1.0
-    Libs/AceAddon-3.0: https://repos.wowace.com/wow/ace3/trunk/AceAddon-3.0
     Libs/LibSharedMedia-3.0: https://repos.wowace.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
     Core/Libs/AceTimer-3.0: https://repos.wowace.com/wow/ace3/trunk/AceTimer-3.0
     Core/Libs/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
@@ -23,8 +22,11 @@ move-folders:
     BigWigs/Plugins: BigWigs_Plugins
     BigWigs/Azeroth: BigWigs_Azeroth
     BigWigs/Uldir: BigWigs_Uldir
+    BigWigs/BattleOfDazaralor: BigWigs_BattleOfDazaralor
+    BigWigs/CrucibleOfStorms: BigWigs_CrucibleOfStorms
 
 ignore:
+  - .luacheckrc
   - .travis.yml
   - gen_option_values.lua
   - ldoc.ltp

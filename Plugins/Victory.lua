@@ -100,6 +100,7 @@ function plugin:OnPluginEnable()
 		BossBanner:UnregisterEvent("BOSS_KILL")
 	end
 	self:RegisterMessage("BigWigs_OnBossWin")
+	self:RegisterMessage("BigWigs_VictorySound")
 end
 
 -------------------------------------------------------------------------------
@@ -110,6 +111,9 @@ function plugin:BigWigs_OnBossWin(event, module)
 	if self.db.profile.bigwigsMsg then
 		self:SendMessage("BigWigs_Message", self, nil, L.defeated:format(module.displayName), "green")
 	end
+end
+
+function plugin:BigWigs_VictorySound()
 	local soundName = self.db.profile.soundName
 	if soundName ~= "None" then
 		local sound = media:Fetch(SOUND, soundName, true)
@@ -118,4 +122,3 @@ function plugin:BigWigs_OnBossWin(event, module)
 		end
 	end
 end
-

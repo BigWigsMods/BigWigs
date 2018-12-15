@@ -300,7 +300,7 @@ do
 				throttle[sender] = GetTime()
 				local _, characterName = BNGetGameAccountInfoByGUID(guid)
 				local msg
-				if characterName or IsGuildMember(guid) or IsCharacterFriend(guid) then
+				if characterName or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
 					friendlies[sender] = true
 					msg = CreateResponse(self.db.profile.mode)
 					if not timer and self.db.profile.exitCombat == 4 then

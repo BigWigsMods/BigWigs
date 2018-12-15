@@ -1,7 +1,6 @@
 
 local BigWigs = BigWigs
-local options = BigWigs:NewModule("Options")
-options:SetEnabledState(true)
+local options = {}
 
 local colorize = nil
 do
@@ -199,6 +198,7 @@ do
 	f:RegisterEvent("ADDON_LOADED")
 	local function Initialize(_, _, addon)
 		if addon ~= addonName then return end
+		f:UnregisterEvent("ADDON_LOADED")
 
 		acOptions.args.general.args.profileOptions = adbo:GetOptionsTable(BigWigs.db)
 		acOptions.args.general.args.profileOptions.order = 1
@@ -214,28 +214,23 @@ do
 		acr:RegisterOptionsTable("BigWigs: Colors Override", colorModule:SetColorOptions("dummy", "dummy"), true)
 		acr:RegisterOptionsTable("BigWigs: Sounds Override", soundModule:SetSoundOptions("dummy", "dummy"), true)
 
-		f:UnregisterEvent("ADDON_LOADED")
+		loader.RegisterMessage(options, "BigWigs_BossModuleRegistered", "Register")
+		loader.RegisterMessage(options, "BigWigs_PluginRegistered", "Register")
+
+		for name, module in BigWigs:IterateBossModules() do
+			options:Register("BigWigs_BossModuleRegistered", name, module)
+		end
+		for name, module in BigWigs:IteratePlugins() do
+			options:Register("BigWigs_PluginRegistered", name, module)
+		end
+
+		loader.RegisterMessage(options, "BigWigs_StartConfigureMode")
+		loader.RegisterMessage(options, "BigWigs_StopConfigureMode")
+
 		-- Wait with nilling, we don't know how many addons will load during this same execution.
 		loader.CTimerAfter(5, function() f:SetScript("OnEvent", nil) end)
 	end
 	f:SetScript("OnEvent", Initialize)
-end
-
-function options:OnEnable()
-	loader.RegisterMessage(self, "BigWigs_BossModuleRegistered", "Register")
-	loader.RegisterMessage(self, "BigWigs_PluginRegistered", "Register")
-
-	for name, module in BigWigs:IterateBossModules() do
-		self:Register("BigWigs_BossModuleRegistered", name, module)
-	end
-	for name, module in BigWigs:IteratePlugins() do
-		self:Register("BigWigs_PluginRegistered", name, module)
-	end
-
-	loader.RegisterMessage(self, "BigWigs_StartConfigureMode")
-	loader.RegisterMessage(self, "BigWigs_StopConfigureMode")
-
-	self.OnEnable = nil
 end
 
 function options:Open()
@@ -334,7 +329,7 @@ local function slaveOptionToggled(self, event, value)
 end
 
 local function slaveOptionMouseOver(self, event, value)
-	GameTooltip:SetOwner(self.frame, "ANCHOR_RIGHT")
+	GameTooltip:SetOwner(self.frame, "ANCHOR_TOP")
 	GameTooltip:AddLine(self:GetUserData("desc"), 1, 1, 1, true)
 	GameTooltip:Show()
 end
@@ -347,13 +342,14 @@ local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(colorize[label])
 	-- Flags to have at half width
-	if flag == C.FLASH or flag == C.PULSE or flag == C.EMPHASIZE or flag == C.COUNTDOWN or flag == C.BAR or flag == C.CASTBAR then
+	if flag == C.PULSE or flag == C.CASTBAR then
 		toggle:SetRelativeWidth(0.5)
-	elseif flag == C.ME_ONLY then
+	elseif flag == C.ME_ONLY or flag == C.ME_ONLY_EMPHASIZE then
 		toggle:SetRelativeWidth(0.4)
 	else
 		toggle:SetRelativeWidth(0.3)
 	end
+	toggle:SetHeight(30)
 
 	if icon then
 		toggle:SetImage(icon)
@@ -383,81 +379,62 @@ local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
 	local advancedOptions = {}
 
-	-- Emphasize & Countdown widgets
-	local emphasizeGroup = AceGUI:Create("InlineGroup")
-	emphasizeGroup:SetLayout("Flow")
-	emphasizeGroup:SetFullWidth(true)
-	local emphasize = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check)
-	emphasizeGroup:AddChild(emphasize)
-	local countdown = getSlaveToggle(L.COUNTDOWN, L.COUNTDOWN_desc, dbKey, module, C.COUNTDOWN, check, 1035057) -- Interface\\Icons\\Achievement_GarrisonQuests_0005
-	emphasizeGroup:AddChild(countdown)
-	advancedOptions[#advancedOptions + 1] = emphasizeGroup
+	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
+		-- Emphasize & Countdown widgets
+		advancedOptions[1] = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check)
+		advancedOptions[2] = getSlaveToggle(L.ME_ONLY_EMPHASIZE, L.ME_ONLY_EMPHASIZE_desc, dbKey, module, C.ME_ONLY_EMPHASIZE, check)
+		advancedOptions[3] = getSlaveToggle(L.COUNTDOWN, L.COUNTDOWN_desc, dbKey, module, C.COUNTDOWN, check, 1035057) -- Interface\\Icons\\Achievement_GarrisonQuests_0005
+		--
+
+		-- Messages & Sound
+		advancedOptions[4] = getSlaveToggle(L.MESSAGE, L.MESSAGE_desc, dbKey, module, C.MESSAGE, check, 134332) -- Interface\\Icons\\INV_MISC_NOTE_06
+		advancedOptions[5] = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check, 463836) -- Interface\\Icons\\Priest_spell_leapoffaith_b
+		advancedOptions[6] = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, 130977) -- "Interface\\Common\\VoiceChat-On"
+		--
+
+		-- Bars
+		advancedOptions[7] = getSlaveToggle(L.BAR, L.BAR_desc, dbKey, module, C.BAR, check)
+		advancedOptions[8] = getSlaveToggle(L.CASTBAR, L.CASTBAR_desc, dbKey, module, C.CASTBAR, check)
+		--
+	end
+
+	-- Flash & Pulse
+	if bit.band(dbv, C.FLASH) == C.FLASH then
+		for _, opTbl in next, module.toggleOptions do
+			if type(opTbl) == "table" and opTbl[1] == dbKey then
+				for i = 2, #opTbl do
+					if opTbl[i] == "FLASH" then
+						advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.FLASH, L.FLASH_desc, dbKey, module, C.FLASH, check, 135849) -- Interface\\Icons\\Spell_Frost_FrostShock
+						advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.PULSE, L.PULSE_desc, dbKey, module, C.PULSE, check, 135731) -- Interface\\Icons\\Spell_Arcane_Arcane04
+					end
+				end
+			end
+		end
+	end
 	--
+
+	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
+		if API:HasVoicePack() then
+			advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.VOICE, L.VOICE_desc, dbKey, module, C.VOICE, check, 589118) -- Interface\\Icons\\Warrior_DisruptingShout
+		end
+	end
 
 	for i, key in next, BigWigs:GetOptions() do
 		local flag = C[key]
 		if bit.band(dbv, flag) == flag then
-			if key == "MESSAGE" then
-				local messageGroup = AceGUI:Create("InlineGroup")
-				messageGroup:SetLayout("Flow")
-				messageGroup:SetFullWidth(true)
-
-				local name, desc = BigWigs:GetOptionDetails(key)
-				local message = getSlaveToggle(name, desc, dbKey, module, flag, check, 134332) -- Interface\\Icons\\INV_MISC_NOTE_06
-				messageGroup:AddChild(message)
-
-				local onMe = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check, 463836) -- Interface\\Icons\\Priest_spell_leapoffaith_b
-				messageGroup:AddChild(onMe)
-
-				local sound = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, 130977) -- "Interface\\Common\\VoiceChat-On"
-				messageGroup:AddChild(sound)
-
-				advancedOptions[#advancedOptions + 1] = messageGroup
-			elseif key == "BAR" then
-				local barGroup = AceGUI:Create("InlineGroup")
-				barGroup:SetLayout("Flow")
-				barGroup:SetFullWidth(true)
-
-				local name, desc = BigWigs:GetOptionDetails(key)
-				local bar = getSlaveToggle(name, desc, dbKey, module, flag, check)
-				barGroup:AddChild(bar)
-
-				local castBar = getSlaveToggle(L.CASTBAR, L.CASTBAR_desc, dbKey, module, C.CASTBAR, check)
-				barGroup:AddChild(castBar)
-
-				advancedOptions[#advancedOptions + 1] = barGroup
-			elseif key == "FLASH" then
-				local flashGroup = AceGUI:Create("InlineGroup")
-				flashGroup:SetLayout("Flow")
-				flashGroup:SetFullWidth(true)
-
-				local name, desc = BigWigs:GetOptionDetails(key)
-				local flash = getSlaveToggle(name, desc, dbKey, module, flag, check, 135849) -- Interface\\Icons\\Spell_Frost_FrostShock
-				flashGroup:AddChild(flash)
-
-				local pulse = getSlaveToggle(L.PULSE, L.PULSE_desc, dbKey, module, C.PULSE, check, 135731) -- Interface\\Icons\\Spell_Arcane_Arcane04
-				flashGroup:AddChild(pulse)
-
-				advancedOptions[#advancedOptions + 1] = flashGroup
-			elseif key == "VOICE" then
-				if API:HasVoicePack() then
-					local name, desc = BigWigs:GetOptionDetails(key)
-					advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check, 589118) -- Interface\\Icons\\Warrior_DisruptingShout
-				end
+			local name, desc = BigWigs:GetOptionDetails(key)
 			-- All on by default, check if we should add a GUI widget
-			elseif key == "ICON" or key == "SAY" or key == "SAY_COUNTDOWN" or key == "PROXIMITY" or key == "ALTPOWER" or key == "INFOBOX" then
+			if key == "ICON" or key == "SAY" or key == "SAY_COUNTDOWN" or key == "PROXIMITY" or key == "ALTPOWER" or key == "INFOBOX" then
 				for _, opTbl in next, module.toggleOptions do
 					if type(opTbl) == "table" and opTbl[1] == dbKey then
 						for i = 2, #opTbl do
 							if opTbl[i] == key then
-								local name, desc = BigWigs:GetOptionDetails(key)
 								advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check, icons[key])
 							end
 						end
 					end
 				end
-			else
-				local name, desc = BigWigs:GetOptionDetails(key)
+			elseif key ~= "MESSAGE" and key ~= "BAR" and key ~= "FLASH" and key ~= "VOICE" then
 				advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
 			end
 		end
@@ -691,8 +668,8 @@ do
 		output(channel, "BigWigs: ", module.displayName or module.moduleName or module.name)
 		local currentSize = 0
 		for i, option in next, module.toggleOptions do
-			local o = option
-			if type(o) == "table" then o = option[1] end
+			local o = type(option) == "table" and option[1] or option
+
 			if module.optionHeaders and module.optionHeaders[o] then
 				-- print what we have so far
 				printList(channel, header, abilities)
@@ -700,38 +677,49 @@ do
 				header = module.optionHeaders[o]
 				currentSize = #header
 			end
+
+			local link
 			if type(o) == "number" then
 				if o > 0 then
-					local link = GetSpellLink(o)
-					if not link then
-						local name = GetSpellInfo(o)
-						link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(o, name)
+					local spellLink = GetSpellLink(o)
+					if not spellLink then
+						local spellName = GetSpellInfo(o)
+						link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(o, spellName)
 						--BigWigs:Error(("Failed to fetch the link for spell id %d, tell the authors."):format(o))
+					else
+						link = spellLink
 					end
-					--else -- XXX Waiting for GetSpellLink fix to stop returning nil for some spells
-						if currentSize + #link + 1 > 255 then
-							printList(channel, header, abilities)
-							wipe(abilities)
-							currentSize = 0
-						end
-						abilities[#abilities + 1] = link
-						currentSize = currentSize + #link + 1
-					--end
 				else
 					local tbl = C_EncounterJournal.GetSectionInfo(-o)
 					if not tbl or not tbl.link then
 						BigWigs:Error(("Failed to fetch the link for journal id (-)%d, tell the authors."):format(-o))
 					else
-						local link = tbl.link
-						if currentSize + #link + 1 > 255 then
-							printList(channel, header, abilities)
-							wipe(abilities)
-							currentSize = 0
-						end
-						abilities[#abilities + 1] = link
-						currentSize = currentSize + #link + 1
+						link = tbl.link
 					end
 				end
+			elseif type(o) == "string" then -- Attempt to build links for strings that are just basic spell renaming
+				local L = module:GetLocale()
+				if L then
+					local name, desc, icon = L[o], L[o.."_desc"], L[o.."_icon"]
+					if name and type(desc) == "number" and desc == icon then
+						if desc > 0 then
+							local spellName = GetSpellInfo(desc)
+							link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(desc, spellName)
+						else
+							-- EJ?
+						end
+					end
+				end
+			end
+
+			if link then
+				if currentSize + #link + 1 > 255 then
+					printList(channel, header, abilities)
+					wipe(abilities)
+					currentSize = 0
+				end
+				abilities[#abilities + 1] = link
+				currentSize = currentSize + #link + 1
 			end
 		end
 		printList(channel, header, abilities)

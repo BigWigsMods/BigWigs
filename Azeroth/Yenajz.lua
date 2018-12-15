@@ -54,20 +54,20 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:EndlessAbyss(args)
-	self:Message(args.spellId, "red")
+	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(args.spellId, 45)
 end
 
 function mod:VoidNova(args)
-	self:Message(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 22.3)
 end
 
 function mod:RealityTear(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "blue", nil, L.tear)
+		self:Message2(args.spellId, "blue", L.tear)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end

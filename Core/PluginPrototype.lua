@@ -3,33 +3,50 @@
 -- @module PluginPrototype
 -- @alias plugin
 
-local core = BigWigs
-
 local plugin = {}
-core:GetModule("Plugins"):SetDefaultModulePrototype(plugin)
+local core
+do
+	local _, tbl =...
+	core = tbl.core
+	tbl.pluginPrototype = plugin
+end
 
 function plugin:Initialize()
 	core:RegisterPlugin(self)
 end
 
-function plugin:OnEnable()
-	if type(self.OnPluginEnable) == "function" then
-		self:OnPluginEnable()
-	end
-	self:SendMessage("BigWigs_OnPluginEnable", self)
+--- Module enabled check.
+-- A module is either enabled or disabled.
+-- @return true or nil
+function plugin:IsEnabled()
+	return self.enabled
 end
 
-function plugin:OnDisable()
-	if type(self.OnPluginDisable) == "function" then
-		self:OnPluginDisable()
+function plugin:Enable()
+	if not self.enabled then
+		self.enabled = true
+
+		if type(self.OnPluginEnable) == "function" then
+			self:OnPluginEnable()
+		end
+
+		self:SendMessage("BigWigs_OnPluginEnable", self)
 	end
-	self:SendMessage("BigWigs_OnPluginDisable", self)
 end
 
---- Module type check.
--- A module is either from BossPrototype or PluginPrototype.
--- @return nil
-function plugin:IsBossModule() return end
+function plugin:Disable()
+	if self.enabled then
+		self.enabled = nil
+
+		if type(self.OnPluginDisable) == "function" then
+			self:OnPluginDisable()
+		end
+
+		self:CancelAllTimers()
+
+		self:SendMessage("BigWigs_OnPluginDisable", self)
+	end
+end
 
 do
 	local UnitName = UnitName

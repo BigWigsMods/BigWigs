@@ -23,10 +23,8 @@ L.getNewRelease = "당신의 BigWigs는 구버전이지만 (/bwv) Twitch 클라�
 L.warnTwoReleases = "당신의 BigWigs는 최신 버전보다 2번 앞서 배포된 구버전입니다! 당신의 버전은 오류가 있거나, 기능이 누락됐거나, 완전히 틀린 타이머를 가지고 있을 수 있습니다. 업데이트를 강력히 권장합니다."
 L.warnSeveralReleases = "|cffff0000당신의 BigWigs는 최신 버전보다 %d번 앞서 배포된 구버전입니다!! 다른 플레이어와 동기화 문제를 방지하기 위해 업데이트를 강력히 권장합니다!|r"
 
-L.tooltipHint = "실행 중인 모든 모듈을 초기화하려면 |cffeda55f클릭|r하세요.\n모듈을 비활성화하려면 |cffeda55fAlt-클릭|r하세요.\n옵션에 접근하려면 |cffeda55f오른쪽 클릭|r하세요."
+L.tooltipHint = "옵션에 접근하려면 |cffeda55f오른쪽 클릭|r하세요."
 L.activeBossModules = "활성화된 우두머리 모듈:"
-L.modulesReset = "실행 중인 모든 모듈이 초기화되었습니다."
-L.modulesDisabled = "실행 중인 모든 모듈이 비활성화되었습니다."
 
 L.oldVersionsInGroup = "파티 내에 BigWigs가 없거나 구버전을 가진 사람입니다. /bwv 명령어로 더 자세한 정보를 얻을 수 있습니다."
 L.upToDate = "최신 버전:"
@@ -125,6 +123,8 @@ L.INFOBOX_desc = L.infobox_desc
 --L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
 --L.SAY_COUNTDOWN = "Say Countdown"
 --L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
+--L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
+--L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
 
 L.advanced = "고급 옵션"
 L.back = "<< 뒤로"

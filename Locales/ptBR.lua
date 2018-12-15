@@ -23,10 +23,8 @@ L.getNewRelease = "Seu BigWigs está desatualizado (/bwv) mas você pode facilme
 L.warnTwoReleases = "Seu BigWigs está 2 versões desatualizado! Sua versão provavelmente contém bugs, faltam funcionalidades, ou possui contadores incorretos. É extremamente recomendado uma atualização."
 L.warnSeveralReleases = "|cffff0000Seu BigWigs está %d versões desatualizado!! Nós recomendamos EXTREMAMENTE a atualização para prevenir problemas de sincronização com outros jogadores!|r"
 
-L.tooltipHint = "|cffeda55fClique|r para resetar todos os módulos executando.\n|cffeda55fAlt-Clique|r para desativá-los.\n|cffeda55fClique-Direito|r para acessar as opções."
+L.tooltipHint = "|cffeda55fClique-Direito|r para acessar as opções."
 L.activeBossModules = "Módulos de chefes ativos:"
-L.modulesReset = "Todos os módulos executando foram resetados."
-L.modulesDisabled = "Todos os módulos executando foram desativados."
 
 L.oldVersionsInGroup = "Existem pessoas no seu grupo com uma versão antiga ou sem o BigWigs. Você pode ver mais detalhes com /bwv."
 L.upToDate = "Atualizado:"
@@ -124,6 +122,8 @@ L.INFOBOX_desc = L.infobox_desc
 --L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
 --L.SAY_COUNTDOWN = "Say Countdown"
 --L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
+--L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
+--L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
 
 L.advanced = "Opções Avançadas"
 L.back = "<< Voltar"

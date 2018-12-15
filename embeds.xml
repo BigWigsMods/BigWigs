@@ -3,21 +3,11 @@
 
 <Script file="Libs\LibStub\LibStub.lua"/>
 <Script file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua"/>
-
-<!--@no-lib-strip@-->
-<Include file="Libs\AceAddon-3.0\AceAddon-3.0.xml"/>
-<Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
-<!--@end-no-lib-strip@-->
-
 <Script file="Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua"/>
-<!--@no-lib-strip@-->
-<Include file="Libs\LibDBIcon-1.0\lib.xml"/>
-<!--@end-no-lib-strip@-->
 
-<!--@do-not-package@-->
-<Include file="Core\libs.xml"/>
-<Include file="Plugins\libs.xml"/>
-<Include file="Options\libs.xml"/>
-<!--@end-do-not-package@-->
+<!--@non-debug@
+<Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
+<Include file="Libs\LibDBIcon-1.0\lib.xml"/>
+@end-non-debug@-->
 </Ui>
 

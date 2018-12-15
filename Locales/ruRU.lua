@@ -67,8 +67,6 @@ L.MESSAGE_desc = "Большинство способностей сопрово
 L.minimapIcon = "Иконка у миникарты"
 L.minimapToggle = "Показать/скрыть иконку у миникарты."
 L.missingAddOn = "Обратите внимание, что эта зона требует дополнение |cFF436EEE%s|r для показа таймеров."
-L.modulesDisabled = "Все запущенные модули были отключены."
-L.modulesReset = "Все запущенные модули сброшены."
 L.mythic = "Эпохальный"
 L.noBossMod = "Нет аддона:"
 L.normal = "Обычный"
@@ -109,9 +107,7 @@ L.testBarsBtn = "Создать тестовый индикатор оповещ
 L.testBarsBtn_desc = "Создаёт индикатор для теста ваших текущих настроек отображения оповещений BigWigs."
 L.toggleAnchorsBtn = "Задать положение индикаторов оповещений"
 L.toggleAnchorsBtn_desc = "Показать / спрятать привязки индикаторов для всех типов оповещений"
-L.tooltipHint = [=[|cffeda55fЩёлкните|r, чтобы сбросить все запущенные модули.
-|cffeda55fAlt+Левый клик|r - чтобы отключить их.
-|cffeda55fПравый клик|r открыть настройки.]=]
+L.tooltipHint = "|cffeda55fПравый клик|r открыть настройки."
 L.upToDate = "Текущий:"
 L.VOICE = "Голосовое оповещение"
 L.VOICE_desc = "Если установлен плагин голосового оповещения, эта опция позволит проиграть звуковой файл с голосовым предупреждением для вас."
@@ -127,6 +123,8 @@ L.zoneMessagesDesc = "Отключив, вы перестанете получа
 --L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
 --L.SAY_COUNTDOWN = "Say Countdown"
 --L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
+--L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
+--L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
 
 -- Media.lua
 L.Beware = "Берегитесь (Алгалон)"

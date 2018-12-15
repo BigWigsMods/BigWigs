@@ -583,7 +583,7 @@ do
 	end
 end
 
-function plugin:BigWigs_Message(event, module, key, text, color, icon)
+function plugin:BigWigs_Message(event, module, key, text, color, icon, emphasized)
 	if not text then return end
 
 	local r, g, b = 1, 1, 1 -- Default to white.
@@ -601,7 +601,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, icon)
 
 	if not db.useicons then icon = nil end
 
-	if seModule and seModule:IsSuperEmphasized(module, key) then
+	if seModule and emphasized then
 		if seModule.db.profile.upper then
 			text = text:upper()
 			text = text:gsub("(:%d+|)T", "%1t") -- Fix texture paths that need to end in lowercase |t

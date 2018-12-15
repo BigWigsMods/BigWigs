@@ -22,10 +22,8 @@ L.getNewRelease = "Your BigWigs is old (/bwv) but you can easily update it using
 L.warnTwoReleases = "Your BigWigs is 2 releases out of date! Your version may have bugs, missing features, or completely incorrect timers. It is strongly recommended you update."
 L.warnSeveralReleases = "|cffff0000Your BigWigs is %d releases out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
 
-L.tooltipHint = "|cffeda55fClick|r to reset all running modules.\n|cffeda55fAlt-Click|r to disable them.\n|cffeda55fRight-Click|r to access options."
+L.tooltipHint = "|cffeda55fRight-Click|r to access options."
 L.activeBossModules = "Active boss modules:"
-L.modulesReset = "All running modules have been reset."
-L.modulesDisabled = "All running modules have been disabled."
 
 L.oldVersionsInGroup = "There are people in your group with older versions or without BigWigs. You can get more details with /bwv."
 L.upToDate = "Up to date:"
@@ -124,6 +122,8 @@ L.CASTBAR = "Cast Bars"
 L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
 L.SAY_COUNTDOWN = "Say Countdown"
 L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
+L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
+L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
 
 L.advanced = "Advanced options"
 L.back = "<< Back"

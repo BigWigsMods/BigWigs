@@ -1,26 +1,36 @@
 -------------------------------------------------------------------------------
 -- BigWigs API
 -- @module BigWigs
--- @alias addon
+-- @alias core
 
-local addon = LibStub("AceAddon-3.0"):NewAddon("BigWigs", "AceTimer-3.0")
-addon:SetEnabledState(false)
-addon:SetDefaultModuleState(false)
+local core, bossPrototype, pluginPrototype
+do
+	local _, tbl =...
+	core = tbl.core
+	bossPrototype = tbl.bossPrototype
+	pluginPrototype = tbl.pluginPrototype
+
+	core.name = "BigWigs"
+
+	local at = LibStub("AceTimer-3.0")
+	at:Embed(core)
+	at:Embed(bossPrototype)
+	at:Embed(pluginPrototype)
+end
 
 local adb = LibStub("AceDB-3.0")
 local lds = LibStub("LibDualSpec-1.0")
 
-local C -- = BigWigs.C, set from Constants.lua
 local L = BigWigsAPI:GetLocale("BigWigs")
 local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local loader = BigWigsLoader
-addon.SendMessage = loader.SendMessage
+core.SendMessage = loader.SendMessage
 
 local customBossOptions = {}
 local pName = UnitName("player")
-local bwUtilityFrame = CreateFrame("Frame")
 
-local bossCore, pluginCore
+local mod, bosses, plugins = {}, {}, {}
+local coreEnabled = false
 
 -- Try to grab unhooked copies of critical loading funcs (hooked by some crappy addons)
 local GetBestMapForUnit = loader.GetBestMapForUnit
@@ -28,7 +38,7 @@ local SendAddonMessage = loader.SendAddonMessage
 local GetInstanceInfo = loader.GetInstanceInfo
 
 -- Upvalues
-local next, type = next, type
+local next, type, setmetatable = next, type, setmetatable
 local UnitGUID = UnitGUID
 
 -------------------------------------------------------------------------------
@@ -40,6 +50,7 @@ do
 	local noFunc = "Module %q tried to register an event with the function '%s' which doesn't exist in the module."
 
 	local eventMap = {}
+	local bwUtilityFrame = CreateFrame("Frame")
 	bwUtilityFrame:SetScript("OnEvent", function(_, event, ...)
 		for k,v in next, eventMap[event] do
 			if type(v) == "function" then
@@ -50,14 +61,14 @@ do
 		end
 	end)
 
-	function addon:RegisterEvent(event, func)
+	function core:RegisterEvent(event, func)
 		if type(event) ~= "string" then error((noEvent):format(self.moduleName)) end
 		if (not func and not self[event]) or (type(func) == "string" and not self[func]) then error((noFunc):format(self.moduleName or "?", func or event)) end
 		if not eventMap[event] then eventMap[event] = {} end
 		eventMap[event][self] = func or event
 		bwUtilityFrame:RegisterEvent(event)
 	end
-	function addon:UnregisterEvent(event)
+	function core:UnregisterEvent(event)
 		if type(event) ~= "string" then error((noEvent):format(self.moduleName)) end
 		if not eventMap[event] then return end
 		eventMap[event][self] = nil
@@ -76,19 +87,19 @@ do
 			end
 		end
 	end
-	loader.RegisterMessage(bwUtilityFrame, "BigWigs_OnBossDisable", UnregisterAllEvents)
-	loader.RegisterMessage(bwUtilityFrame, "BigWigs_OnBossReboot", UnregisterAllEvents)
-	loader.RegisterMessage(bwUtilityFrame, "BigWigs_OnPluginDisable", UnregisterAllEvents)
+	loader.RegisterMessage(mod, "BigWigs_OnBossDisable", UnregisterAllEvents)
+	loader.RegisterMessage(mod, "BigWigs_OnBossWipe", UnregisterAllEvents)
+	loader.RegisterMessage(mod, "BigWigs_OnPluginDisable", UnregisterAllEvents)
 end
 
 -------------------------------------------------------------------------------
 -- ENCOUNTER event handler
 --
 
-function addon:ENCOUNTER_START(_, id)
-	for _, module in next, bossCore.modules do
+function mod:ENCOUNTER_START(_, id)
+	for _, module in next, bosses do
 		if module.engageId == id then
-			if not module.enabledState then
+			if not module.enabled then
 				module:Enable()
 				if UnitGUID("boss1") then -- Only if _START fired after IEEU
 					module:Engage()
@@ -103,20 +114,20 @@ end
 --
 
 local enablezones, enablemobs = {}, {}
-local monitoring = nil
+local monitoring = false
 
 local function enableBossModule(module, sync)
-	if not module:IsEnabled() then
+	if not module.enabled then
 		module:Enable()
 		if sync and not module.worldBoss then
-			module:Sync("Enable", module:GetName())
+			module:Sync("Enable", module.moduleName)
 		end
 	end
 end
 
 local function shouldReallyEnable(unit, moduleName, mobId, sync)
-	local module = bossCore:GetModule(moduleName)
-	if not module or module:IsEnabled() then return end
+	local module = bosses[moduleName]
+	if not module or module.enabled then return end
 	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId)) then
 		enableBossModule(module, sync)
 	end
@@ -158,16 +169,16 @@ local function zoneChanged()
 	if enablezones[id] then
 		if not monitoring then
 			monitoring = true
-			addon:RegisterEvent("UPDATE_MOUSEOVER_UNIT", updateMouseover)
-			addon:RegisterEvent("UNIT_TARGET", unitTargetChanged)
+			core.RegisterEvent(mod, "UPDATE_MOUSEOVER_UNIT", updateMouseover)
+			core.RegisterEvent(mod, "UNIT_TARGET", unitTargetChanged)
 			targetCheck("target")
 			targetCheck("mouseover")
 			targetCheck("boss1")
 		end
 	elseif monitoring then
-		monitoring = nil
-		addon:UnregisterEvent("UPDATE_MOUSEOVER_UNIT")
-		addon:UnregisterEvent("UNIT_TARGET")
+		monitoring = false
+		core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
+		core.UnregisterEvent(mod, "UNIT_TARGET")
 	end
 end
 
@@ -188,8 +199,8 @@ do
 			end
 		end
 	end
-	function addon:RegisterEnableMob(module, ...) add(module.moduleName, enablemobs, ...) end
-	function addon:GetEnableMobs() return enablemobs end
+	function core:RegisterEnableMob(module, ...) add(module.moduleName, enablemobs, ...) end
+	function core:GetEnableMobs() return enablemobs end
 end
 
 -------------------------------------------------------------------------------
@@ -209,18 +220,18 @@ do
 			local color = colors[random(1, #colors)]
 			local sound = sounds[random(1, #sounds)]
 			if random(1, 4) == 2 then
-				addon:SendMessage("BigWigs_Flash", addon, key)
+				core:SendMessage("BigWigs_Flash", core, key)
 			end
-			addon:Print(L.test .." - ".. color ..": ".. key)
-			addon:SendMessage("BigWigs_Message", addon, key, color..": "..key, color, messages[key])
-			addon:SendMessage("BigWigs_Sound", addon, key, sound)
+			core:Print(L.test .." - ".. color ..": ".. key)
+			core:SendMessage("BigWigs_Message", core, key, color..": "..key, color, messages[key])
+			core:SendMessage("BigWigs_Sound", core, key, sound)
 			messages[key] = nil
 		end
 	end
 
-	function addon:Test()
+	function core:Test()
 		if not callbackRegistered then
-			LibStub("LibCandyBar-3.0").RegisterCallback(self, "LibCandyBar_Stop", barStopped)
+			LibStub("LibCandyBar-3.0").RegisterCallback(core, "LibCandyBar_Stop", barStopped)
 			callbackRegistered = true
 		end
 
@@ -235,7 +246,7 @@ do
 		local time = random(11, 30)
 		messages[spell] = icon
 
-		addon:SendMessage("BigWigs_StartBar", addon, spell, spell, time, icon)
+		core:SendMessage("BigWigs_StartBar", core, spell, spell, time, icon)
 	end
 end
 
@@ -245,14 +256,14 @@ end
 
 local function bossComm(_, msg, extra, sender)
 	if msg == "Enable" and extra then
-		local m = addon:GetBossModule(extra, true)
-		if m and not m:IsEnabled() and sender ~= pName then
+		local m = bosses[extra]
+		if m and not m.enabled and sender ~= pName then
 			enableBossModule(m)
 		end
 	end
 end
 
-function addon:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
+function mod:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
 	if IsInGroup() then
 		SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 	end
@@ -268,10 +279,9 @@ do
 		local count = #initModules
 		if count > 0 then
 			for i = 1, count do
-				local module = initModules[i]
-				module:Initialize()
-				initModules[i] = nil
+				initModules[i]:Initialize()
 			end
+			initModules = {}
 			-- For LoD users
 			-- ZONE_CHANGED_NEW_AREA > LoadAddOn
 			-- ADDON_LOADED > InitializeModules
@@ -282,11 +292,11 @@ do
 	end
 
 	local function profileUpdate()
-		addon:SendMessage("BigWigs_ProfileUpdate")
+		core:SendMessage("BigWigs_ProfileUpdate")
 	end
 
 	local addonName = ...
-	function addon:ADDON_LOADED(_, name)
+	function mod:ADDON_LOADED(_, name)
 		if name ~= addonName then return end
 
 		local defaults = {
@@ -303,61 +313,82 @@ do
 		local db = adb:New("BigWigs3DB", defaults, true)
 		lds:EnhanceDatabase(db, "BigWigs3DB")
 
-		db.RegisterCallback(self, "OnProfileChanged", profileUpdate)
-		db.RegisterCallback(self, "OnProfileCopied", profileUpdate)
-		db.RegisterCallback(self, "OnProfileReset", profileUpdate)
-		self.db = db
+		db.RegisterCallback(mod, "OnProfileChanged", profileUpdate)
+		db.RegisterCallback(mod, "OnProfileCopied", profileUpdate)
+		db.RegisterCallback(mod, "OnProfileReset", profileUpdate)
+		core.db = db
 
-		self.ADDON_LOADED = InitializeModules
+		mod.ADDON_LOADED = InitializeModules
 		InitializeModules()
 	end
-	addon:RegisterEvent("ADDON_LOADED")
+	core.RegisterEvent(mod, "ADDON_LOADED")
 end
 
-function addon:OnEnable()
-	loader.RegisterMessage(bwUtilityFrame, "BigWigs_BossComm", bossComm)
-	self:RegisterEvent("ZONE_CHANGED_NEW_AREA", zoneChanged)
-
-	self:RegisterEvent("ENCOUNTER_START")
-
-	self:RegisterEvent("RAID_BOSS_WHISPER")
-
-	if IsLoggedIn() then
-		self:EnableModules()
-	else
-		self:RegisterEvent("PLAYER_LOGIN", "EnableModules")
+do
+	local function EnablePlugins()
+		for _, module in next, plugins do
+			module:Enable()
+		end
 	end
+	function core:Enable()
+		if not coreEnabled then
+			coreEnabled = true
 
-	zoneChanged()
-	self:SendMessage("BigWigs_CoreEnabled")
+			loader.RegisterMessage(mod, "BigWigs_BossComm", bossComm)
+			core.RegisterEvent(mod, "ZONE_CHANGED_NEW_AREA", zoneChanged)
+			core.RegisterEvent(mod, "ENCOUNTER_START")
+			core.RegisterEvent(mod, "RAID_BOSS_WHISPER")
+
+			if IsLoggedIn() then
+				EnablePlugins()
+			else
+				core.RegisterEvent(mod, "PLAYER_LOGIN", EnablePlugins)
+			end
+
+			zoneChanged()
+			core:SendMessage("BigWigs_CoreEnabled")
+		end
+	end
 end
 
-function addon:OnDisable()
-	self:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
-	loader.UnregisterMessage(bwUtilityFrame, "BigWigs_BossComm")
+do
+	local function DisableModules()
+		for _, module in next, bosses do
+			module:Disable()
+		end
+		for _, module in next, plugins do
+			module:Disable()
+		end
+	end
+	function core:Disable()
+		if coreEnabled then
+			coreEnabled = false
 
-	self:UnregisterEvent("ENCOUNTER_START")
+			loader.UnregisterMessage(mod, "BigWigs_BossComm")
+			core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
+			core.UnregisterEvent(mod, "ENCOUNTER_START")
+			core.UnregisterEvent(mod, "RAID_BOSS_WHISPER")
 
-	self:UnregisterEvent("RAID_BOSS_WHISPER")
+			self:CancelAllTimers()
 
-	zoneChanged() -- Unregister zone events
-	bossCore:Disable()
-	pluginCore:Disable()
-	monitoring = nil
-	self:SendMessage("BigWigs_CoreDisabled")
+			zoneChanged() -- Unregister zone events
+			DisableModules()
+			monitoring = false
+			core:SendMessage("BigWigs_CoreDisabled")
+		end
+	end
 end
 
-function addon:EnableModules()
-	pluginCore:Enable()
-	bossCore:Enable()
+function core:IsEnabled()
+	return coreEnabled
 end
 
-function addon:Print(msg)
+function core:Print(msg)
 	print("BigWigs: |cffffff00"..msg.."|r")
 end
 
-function addon:Error(msg)
-	self:Print(msg)
+function core:Error(msg)
+	core:Print(msg)
 	geterrorhandler()(msg)
 end
 
@@ -367,7 +398,7 @@ end
 --
 
 do
-	function addon:RegisterBossOption(key, name, desc, func, icon)
+	function core:RegisterBossOption(key, name, desc, func, icon)
 		if customBossOptions[key] then
 			error("The custom boss option %q has already been registered."):format(key)
 		end
@@ -375,22 +406,22 @@ do
 	end
 
 	-- Adding core generic toggles
-	addon:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, 136224) -- 136224 = "Interface\\Icons\\spell_shadow_unholyfrenzy"
-	addon:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, 429383) -- 429383 = "Interface\\Icons\\spell_arcane_invocation"
-	addon:RegisterBossOption("infobox", L.infobox, L.infobox_desc, nil, 443374) -- Interface\\Icons\\INV_MISC_CAT_TRINKET05
-	addon:RegisterBossOption("stages", L.stages, L.stages_desc)
-	addon:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
+	core:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, 136224) -- 136224 = "Interface\\Icons\\spell_shadow_unholyfrenzy"
+	core:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, 429383) -- 429383 = "Interface\\Icons\\spell_arcane_invocation"
+	core:RegisterBossOption("infobox", L.infobox, L.infobox_desc, nil, 443374) -- Interface\\Icons\\INV_MISC_CAT_TRINKET05
+	core:RegisterBossOption("stages", L.stages, L.stages_desc)
+	core:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
 end
 
-function addon:GetCustomBossOptions()
+function core:GetCustomBossOptions()
 	return customBossOptions
 end
 
 do
 	local L = GetLocale()
 	if L == "enGB" then L = "enUS" end
-	function addon:NewBossLocale(moduleName, locale)
-		local module = addon:GetBossModule(moduleName, true)
+	function core:NewBossLocale(moduleName, locale)
+		local module = bosses[moduleName]
 		if module and L == locale then
 			return module:GetLocale()
 		end
@@ -402,25 +433,28 @@ end
 --
 
 do
-	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, C_EncounterJournal.GetSectionInfo
 	local EJ_GetEncounterInfo = EJ_GetEncounterInfo
-
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
-	local function new(core, moduleName, loadId, journalId)
-		if core:GetModule(moduleName, true) then
-			addon:Print(errorAlreadyRegistered:format(moduleName))
+	local bossMeta = { __index = bossPrototype, __metatable = false }
+	function core:NewBoss(moduleName, zoneId, journalId, instanceId)
+		if bosses[moduleName] then
+			core:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = core:NewModule(moduleName)
+			local m = setmetatable({
+				name = "BigWigs_Bosses_"..moduleName, -- XXX AceAddon/AceDB backwards compat
+				moduleName = moduleName,
+
+				-- Embed callback handler
+				RegisterMessage = loader.RegisterMessage,
+				UnregisterMessage = loader.UnregisterMessage,
+				SendMessage = loader.SendMessage,
+
+				-- Embed event handler
+				RegisterEvent = core.RegisterEvent,
+				UnregisterEvent = core.UnregisterEvent,
+			}, bossMeta)
+			bosses[moduleName] = m
 			initModules[#initModules+1] = m
-
-			-- Embed callback handler
-			m.RegisterMessage = loader.RegisterMessage
-			m.UnregisterMessage = loader.UnregisterMessage
-			m.SendMessage = loader.SendMessage
-
-			-- Embed event handler
-			m.RegisterEvent = addon.RegisterEvent
-			m.UnregisterEvent = addon.UnregisterEvent
 
 			if journalId then
 				m.journalId = journalId
@@ -429,47 +463,79 @@ do
 				m.displayName = moduleName
 			end
 
-			if loadId then
-				if loadId > 0 then
-					m.instanceId = loadId
-				else
-					m.mapId = -loadId
-				end
+			if zoneId > 0 then
+				m.instanceId = zoneId
+			else
+				m.mapId = -zoneId
 			end
 			return m, CL
 		end
 	end
 
-	-- A wrapper for :NewModule to present users with more information in the
-	-- case where a module with the same name has already been registered.
-	function addon:NewBoss(moduleName, zoneId, journalId, instanceId)
-		return new(bossCore, moduleName, zoneId, journalId, instanceId)
+	local pluginMeta = { __index = pluginPrototype, __metatable = false }
+	function core:NewPlugin(moduleName)
+		if plugins[moduleName] then
+			core:Print(errorAlreadyRegistered:format(moduleName))
+		else
+			local m = setmetatable({
+				name = "BigWigs_Plugins_"..moduleName, -- XXX AceAddon/AceDB backwards compat
+				moduleName = moduleName,
+
+				-- Embed callback handler
+				RegisterMessage = loader.RegisterMessage,
+				UnregisterMessage = loader.UnregisterMessage,
+				SendMessage = loader.SendMessage,
+
+				-- Embed event handler
+				RegisterEvent = core.RegisterEvent,
+				UnregisterEvent = core.UnregisterEvent,
+			}, pluginMeta)
+			plugins[moduleName] = m
+			initModules[#initModules+1] = m
+
+			return m, CL
+		end
 	end
-	function addon:NewPlugin(moduleName)
-		return new(pluginCore, moduleName)
+end
+
+function core:IterateBossModules()
+	return next, bosses
+end
+
+function core:GetBossModule(moduleName, silent) 
+	if not silent and not bosses[moduleName] then
+		error(("No boss module named '%s' found."):format(moduleName))
+	else
+		return bosses[moduleName]
 	end
+end
 
-	function addon:IterateBossModules() return bossCore:IterateModules() end
-	function addon:GetBossModule(...) return bossCore:GetModule(...) end
+function core:IteratePlugins()
+	return next, plugins
+end
 
-	function addon:IteratePlugins() return pluginCore:IterateModules() end
-	function addon:GetPlugin(...) return pluginCore:GetModule(...) end
+function core:GetPlugin(moduleName, silent)
+	if not silent and not plugins[moduleName] then
+		error(("No plugin named '%s' found."):format(moduleName))
+	else
+		return plugins[moduleName]
+	end
+end
 
-	local defaultToggles = nil
+do
+	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, C_EncounterJournal.GetSectionInfo
+	local C = core.C -- Set from Constants.lua
+	local standardFlag = C.BAR + C.CASTBAR + C.MESSAGE + C.ICON + C.SOUND + C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY + C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX
+	local defaultToggles = setmetatable({
+		berserk = C.BAR + C.MESSAGE + C.SOUND,
+		proximity = C.PROXIMITY,
+		altpower = C.ALTPOWER,
+		infobox = C.INFOBOX,
+	}, {__index = function()
+		return standardFlag
+	end})
 
 	local function setupOptions(module)
-		if not C then C = addon.C end
-		if not defaultToggles then
-			defaultToggles = setmetatable({
-				berserk = C.BAR + C.MESSAGE + C.SOUND,
-				proximity = C.PROXIMITY,
-				altpower = C.ALTPOWER,
-				infobox = C.INFOBOX,
-			}, {__index = function()
-				return C.BAR + C.CASTBAR + C.MESSAGE + C.ICON + C.SOUND + C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY + C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX
-			end})
-		end
-
 		if module.optionHeaders then
 			for k, v in next, module.optionHeaders do
 				if type(v) == "string" then
@@ -479,11 +545,11 @@ do
 				elseif type(v) == "number" then
 					if v > 0 then
 						local n = GetSpellInfo(v)
-						if not n then addon:Error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
+						if not n then core:Error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
 						module.optionHeaders[k] = n or v
 					else
 						local tbl = C_EncounterJournal_GetSectionInfo(-v)
-						if not tbl then addon:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
+						if not tbl then core:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
 						module.optionHeaders[k] = tbl.title or v
 					end
 				end
@@ -525,16 +591,16 @@ do
 				elseif t == "number" then
 					if v > 0 then
 						local n = GetSpellInfo(v)
-						if not n then addon:Error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
+						if not n then core:Error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					else
 						local tbl = C_EncounterJournal_GetSectionInfo(-v)
-						if not tbl then addon:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
+						if not tbl then core:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					end
 				end
 			end
-			module.db = addon.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
+			module.db = core.db:RegisterNamespace(module.name, { profile = module.toggleDefaults })
 		end
 	end
 
@@ -549,7 +615,7 @@ do
 		self.SetupOptions = nil
 	end
 
-	function addon:RegisterBossModule(module)
+	function core:RegisterBossModule(module)
 		module.SetupOptions = moduleOptions
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
@@ -558,7 +624,7 @@ do
 			module.OnRegister = nil
 		end
 
-		self:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
+		core:SendMessage("BigWigs_BossModuleRegistered", module.moduleName, module)
 
 		local id = module.instanceId or -(module.mapId)
 		if not enablezones[id] then
@@ -566,9 +632,9 @@ do
 		end
 	end
 
-	function addon:RegisterPlugin(module)
+	function core:RegisterPlugin(module)
 		if type(module.defaultDB) == "table" then
-			module.db = self.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
+			module.db = core.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
 		end
 
 		setupOptions(module)
@@ -578,58 +644,34 @@ do
 			module:OnRegister()
 			module.OnRegister = nil
 		end
-		self:SendMessage("BigWigs_PluginRegistered", module.moduleName, module)
+		core:SendMessage("BigWigs_PluginRegistered", module.moduleName, module)
 
-		if pluginCore:IsEnabled() then
+		if coreEnabled then
 			module:Enable() -- Support LoD plugins that load after we're enabled (e.g. zone based)
 		end
 	end
+end
 
-	function addon:AddColors(moduleName, options)
-		local module = self:GetBossModule(moduleName, true)
-		if not module then
-			-- addon:Error(("AddColors: Invalid module %q."):format(moduleName))
-			return
-		end
-		module.colorOptions = options
+function core:AddColors(moduleName, options)
+	local module = bosses[moduleName]
+	if not module then
+		-- core:Error(("AddColors: Invalid module %q."):format(moduleName))
+		return
 	end
+	module.colorOptions = options
+end
 
-	function addon:AddSounds(moduleName, options)
-		local module = self:GetBossModule(moduleName, true)
-		if not module then
-			-- addon:Error(("AddSounds: Invalid module %q."):format(moduleName))
-			return
-		end
-		module.soundOptions = options
+function core:AddSounds(moduleName, options)
+	local module = bosses[moduleName]
+	if not module then
+		-- core:Error(("AddSounds: Invalid module %q."):format(moduleName))
+		return
 	end
+	module.soundOptions = options
 end
 
 -------------------------------------------------------------------------------
--- Module cores
+-- Global
 --
 
--- @local
-bossCore = addon:NewModule("Bosses")
-bossCore:SetDefaultModuleLibraries("AceTimer-3.0")
-bossCore:SetDefaultModuleState(false)
-function bossCore:OnDisable()
-	for name, mod in next, self.modules do
-		mod:Disable()
-	end
-end
-
-pluginCore = addon:NewModule("Plugins")
-pluginCore:SetDefaultModuleLibraries("AceTimer-3.0")
-pluginCore:SetDefaultModuleState(false)
-function pluginCore:OnEnable()
-	for name, mod in next, self.modules do
-		mod:Enable()
-	end
-end
-function pluginCore:OnDisable()
-	for name, mod in next, self.modules do
-		mod:Disable()
-	end
-end
-
-BigWigs = addon -- Set global
+BigWigs = setmetatable({}, { __index = core, __newindex = function() end, __metatable = false })

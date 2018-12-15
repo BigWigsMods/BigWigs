@@ -1,4 +1,4 @@
-## Interface: 80000
+## Interface: 80100
 
 ## Title: BigWigs [|cffeda55fAzeroth|r]
 ## Title-deDE: BigWigs [|cffeda55fAzeroth|r]
@@ -28,6 +28,6 @@
 
 ## X-Category: Raid
 ## X-BigWigs-ExtraMenu: -947
-## X-BigWigs-LoadOn-WorldBoss: -942, 140163
+## X-BigWigs-LoadOn-WorldBoss: -942, 140163, -14, 138122, -14, 137374, -864, 138794, -895, 136385, -862, 132253, -896, 140252, -863, 132701
 
 modules.xml

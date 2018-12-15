@@ -1,8 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
-<!--@no-lib-strip@-->
 <Include file="Libs\LibSink-2.0\lib.xml"/>
 <Include file="Libs\LibCandyBar-3.0\lib.xml"/>
-<!--@end-no-lib-strip@-->
 </Ui>
 

@@ -67,8 +67,6 @@ L.MESSAGE_desc = "大多数首领技能带有若干个 BigWigs 可以显示的�
 L.minimapIcon = "小地图图标"
 L.minimapToggle = "打开或关闭小地图图标。"
 L.missingAddOn = "请注意，这个区域需要 |cFF436EEE%s|r 插件计时器才可被显示。"
-L.modulesDisabled = "所有运行中的模块都已禁用。"
-L.modulesReset = "所有运行中的模块都已重置。"
 L.mythic = "史诗"
 L.noBossMod = "没有首领模块："
 L.normal = "普通"
@@ -109,9 +107,7 @@ L.testBarsBtn = "创建测试计时条"
 L.testBarsBtn_desc = "创建一个测试计时条以便于测试当前显示设置。"
 L.toggleAnchorsBtn = "切换锚点"
 L.toggleAnchorsBtn_desc = "切换显示或隐藏全部锚点。"
-L.tooltipHint = [=[|cffeda55f点击|r图标重置所有运行中的模块。
-|cffeda55fAlt-点击|r可以禁用所有首领模块。
-|cffeda55f右击|r打开选项。]=]
+L.tooltipHint = "|cffeda55f右击|r打开选项。"
 L.upToDate = "已更新："
 L.VOICE = "语音"
 L.VOICE_desc = "如果安装了语音插件，此选项可以开启并播放警报音效文件。"
@@ -127,6 +123,8 @@ L.CASTBAR = "施法条"
 L.CASTBAR_desc = "施法条会在某些首领战斗中出现，一些即将到来的重要技能通常会引起注意。如果想隐藏此技能相关的施法条，请禁用此选项。"
 L.SAY_COUNTDOWN = "说话冷却"
 L.SAY_COUNTDOWN_desc = "聊天泡泡很容易被发现。BigWigs 将使用多个说话消息倒计时提醒附近的人身上的技能即将到期。"
+--L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
+--L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
 
 -- Media.lua
 L.Beware = "当心（奥尔加隆）"

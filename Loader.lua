@@ -10,7 +10,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 106
+local BIGWIGS_VERSION = 123
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -163,6 +163,8 @@ do
 		--[[ BigWigs: Battle for Azeroth ]]--
 		[-947] = bfa, -- Azeroth (Fake Menu)
 		[1861] = bfa, -- Uldir
+		[2070] = bfa, -- Battle Of Dazar'alor
+		[2096] = bfa, -- Crucible of Storms
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -360,30 +362,13 @@ local dataBroker = ldb:NewDataObject("BigWigs",
 function dataBroker.OnClick(self, button)
 	if button == "RightButton" then
 		loadCoreAndOpenOptions()
-	else
-		loadAndEnableCore()
-		if IsAltKeyDown() then
-			if IsControlKeyDown() then
-				BigWigs:Disable()
-			else
-				for name, module in BigWigs:IterateBossModules() do
-					if module:IsEnabled() then module:Disable() end
-				end
-				sysprint(L.modulesDisabled)
-			end
-		else
-			for name, module in BigWigs:IterateBossModules() do
-				if module:IsEnabled() then module:Reboot() end
-			end
-			sysprint(L.modulesReset)
-		end
 	end
 end
 
 function dataBroker.OnTooltipShow(tt)
 	tt:AddLine("BigWigs")
 	if BigWigs and BigWigs:IsEnabled() then
-		local added = nil
+		local added = false
 		for name, module in BigWigs:IterateBossModules() do
 			if module:IsEnabled() then
 				if not added then
@@ -405,7 +390,7 @@ end
 --
 
 tooltipFunctions[#tooltipFunctions+1] = function(tt)
-	local add, i = nil, 0
+	local add, i = false, 0
 	for _, version in next, usersVersion do
 		i = i + 1
 		if version < highestFoundVersion then
@@ -848,6 +833,7 @@ do
 		BigWigs_Nightmare = "BigWigs_Legion",
 		BigWigs_TombOfSargeras = "BigWigs_Legion",
 		BigWigs_TrialOfValor = "BigWigs_Legion",
+		BigWigs_SiegeOfZuldazar = "BigWigs",
 	}
 	local delayedMessages = {}
 
@@ -874,15 +860,6 @@ do
 			Popup(L.removeAddon:format(name, old[name]))
 		end
 	end
-
-	-- XXX temp
-	do
-		local _, t = ...
-		if not t.moved then
-			RaidNotice_AddMessage(RaidWarningFrame, "Restart WoW to finish BigWigs update", {r=1,g=1,b=1}, 300)
-		end
-	end
-	-- XXX
 
 	local L = GetLocale()
 	local locales = {
@@ -915,7 +892,7 @@ end
 do
 	local callbackMap = {}
 	function public:RegisterMessage(msg, func)
-		if self == public then
+		if self == BigWigsLoader then
 			error(".RegisterMessage(addon, message, function) attempted to register a function to BigWigsLoader, you might be using : instead of . to register the callback.")
 		end
 
@@ -936,6 +913,10 @@ do
 		callbackMap[msg][self] = func or msg
 	end
 	function public:UnregisterMessage(msg)
+		if self == BigWigsLoader then
+			error(".UnregisterMessage(addon, message, function) attempted to unregister a function from BigWigsLoader, you might be using : instead of . to register the callback.")
+		end
+
 		if type(msg) ~= "string" then error(":UnregisterMessage(message) attempted to unregister an invalid message, must be a string!") end
 		if not callbackMap[msg] then return end
 		callbackMap[msg][self] = nil
@@ -966,7 +947,7 @@ do
 		end
 	end
 	public.RegisterMessage(mod, "BigWigs_OnBossDisable", UnregisterAllMessages)
-	public.RegisterMessage(mod, "BigWigs_OnBossReboot", UnregisterAllMessages)
+	public.RegisterMessage(mod, "BigWigs_OnBossWipe", UnregisterAllMessages)
 	public.RegisterMessage(mod, "BigWigs_OnPluginDisable", UnregisterAllMessages)
 end
 
@@ -976,8 +957,8 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "17762" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "8.0.6" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotRevision = "18125" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "8.1.0" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
 	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
@@ -1211,7 +1192,7 @@ do
 				local msg = L.warnSeveralReleases:format(diff)
 				sysprint(msg)
 				Popup(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 20)
+				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 40)
 			end, 1)
 		elseif warnedReallyOutOfDate > 1 and hasWarned < 2 then
 			if verTimer then verTimer:Cancel() end
@@ -1280,6 +1261,10 @@ do
 			if mapId then
 				id = -mapId -- Use map id for world bosses
 			end
+		end
+
+		if id == 2070 and IsTestBuild() then -- XXX temp
+			sysprint("Current modules are alpha quality. Help us improve them! More details on our Discord PTR channel.")
 		end
 
 		-- Module loading
@@ -1490,4 +1475,8 @@ SlashCmdList.BigWigsVersion = function()
 	if #bad > 0 then print(L.noBossMod, unpack(bad)) end
 end
 
-BigWigsLoader = public -- Set global
+-------------------------------------------------------------------------------
+-- Global
+--
+
+BigWigsLoader = setmetatable({}, { __index = public, __newindex = function() end, __metatable = false })
