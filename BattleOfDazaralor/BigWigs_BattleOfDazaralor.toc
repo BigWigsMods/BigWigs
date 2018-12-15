@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fBattle of Dazar'alor|r]
 ## Title-frFR: BigWigs [|cffeda55fBattle of Dazar'alor|r]
 ## Title-ruRU: BigWigs [|cffeda55fBattle of Dazar'alor|r]
-## Title-zhCN: BigWigs [|cffeda55fBattle of Dazar'alor|r]
+## Title-zhCN: BigWigs [|cffeda55f达萨罗之战|r]
 ## Title-zhTW: BigWigs [|cffeda55fBattle of Dazar'alor|r]
 ## Title-itIT: BigWigs [|cffeda55fBattle of Dazar'alor|r]
 ## Title-ptBR: BigWigs [|cffeda55fBattle of Dazar'alor|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Battle of Dazar'alor Modules
 ## Notes-frFR: BigWigs Battle of Dazar'alor Modules
 ## Notes-ruRU: BigWigs Battle of Dazar'alor Modules
-## Notes-zhCN: BigWigs Battle of Dazar'alor Modules
+## Notes-zhCN: BigWigs 达萨罗之战模块。
 ## Notes-zhTW: BigWigs Battle of Dazar'alor Modules
 ## Notes-itIT: BigWigs Battle of Dazar'alor Modules
 ## Notes-ptBR: BigWigs Battle of Dazar'alor Modules
