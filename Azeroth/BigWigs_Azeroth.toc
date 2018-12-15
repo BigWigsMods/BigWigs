@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fAzeroth|r]
 ## Title-frFR: BigWigs [|cffeda55fAzeroth|r]
 ## Title-ruRU: BigWigs [|cffeda55fAzeroth|r]
-## Title-zhCN: BigWigs [|cffeda55fAzeroth|r]
+## Title-zhCN: BigWigs [|cffeda55f艾泽拉斯|r]
 ## Title-zhTW: BigWigs [|cffeda55fAzeroth|r]
 ## Title-itIT: BigWigs [|cffeda55fAzeroth|r]
 ## Title-ptBR: BigWigs [|cffeda55fAzeroth|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Azeroth Modules
 ## Notes-frFR: BigWigs Azeroth Modules
 ## Notes-ruRU: BigWigs Azeroth Modules
-## Notes-zhCN: BigWigs Azeroth Modules
+## Notes-zhCN: BigWigs 艾泽拉斯模块。
 ## Notes-zhTW: BigWigs Azeroth Modules
 ## Notes-itIT: BigWigs Azeroth Modules
 ## Notes-ptBR: BigWigs Azeroth Modules
