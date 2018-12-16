@@ -15,7 +15,7 @@
 ## Notes-deDE: BigWigs Azeroth Modules
 ## Notes-esES: BigWigs Azeroth Modules
 ## Notes-esMX: BigWigs Azeroth Modules
-## Notes-frFR: BigWigs Azeroth Modules
+## Notes-frFR: Modules BigWigs concernant Azeroth.
 ## Notes-ruRU: BigWigs Azeroth Modules
 ## Notes-zhCN: BigWigs 艾泽拉斯模块。
 ## Notes-zhTW: BigWigs Azeroth Modules
