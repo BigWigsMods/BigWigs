@@ -14,6 +14,8 @@ mod.engageId = 2269
 -- Locals
 --
 
+local crushingCount = 0
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -89,6 +91,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	crushingCount = 0
 end
 
 --------------------------------------------------------------------------------
@@ -220,19 +223,19 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:CrushingDoubtApplied(args)
-		ruinCount = ruinCount + 1
+		crushingCount = crushingCount + 1
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:CastBar(args.spellId, 12) -- Explosion
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, ruinCount, ruinCount))
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, crushingCount, crushingCount))
 			self:SayCountdown(args.spellId, 12)
 			self:PlaySound(args.spellId, "alert")
 		end
 		if self:GetOption(crushingDoubtMarker) then
-			SetRaidTarget(args.destName, ruinCount)
+			SetRaidTarget(args.destName, crushingCount)
 		end
 	end
 end
