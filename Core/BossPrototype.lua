@@ -290,6 +290,7 @@ function boss:Disable(isWipe)
 		self.missing = nil
 		self.isWiping = nil
 		self.isEngaged = nil
+		self.throttled = nil
 
 		self:CancelAllTimers()
 
@@ -1152,6 +1153,20 @@ end
 -- @return boolean
 function boss:Solo()
 	return solo
+end
+
+-- Runs a function immediately if it hasn't been run recently. If it has been run within a number seconds, nothing happens.
+-- @param key the option key
+-- @number rate time, in seconds, that must pass before the function can be run again
+-- @param func function that will be run if enough time has elapsed since the previous call with the same key, passed (self).
+function boss:Throttle(key, rate, func)
+	if not self.throttled then self.throttled = {} end
+	local prev = self.throttled[key]
+	local t = GetTime()
+	if not prev or t - prev > rate then
+		self.throttled[key] = t
+		func(self)
+	end
 end
 
 -------------------------------------------------------------------------------
