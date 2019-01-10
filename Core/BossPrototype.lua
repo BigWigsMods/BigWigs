@@ -1155,10 +1155,10 @@ function boss:Solo()
 	return solo
 end
 
--- Runs a function immediately if one with the same key has not been run recently. If a has been run within a number seconds, this does nothing.
+-- Runs a function immediately if one with the same key has not been run within a specified number of seconds. If it has been run, this does nothing.
 -- @param key the option key
 -- @number rate time, in seconds, that must pass before the function can be run again
--- @param func function that will be run if enough time has elapsed, passed (self).
+-- @param func function that will be run if enough time has elapsed, passed (self)
 function boss:Throttle(key, rate, func)
 	if not self.throttled then self.throttled = {} end
 	local prev = self.throttled[key]
