@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- TODO:
 -- - Info warnings about player abilities from Jewels
@@ -23,10 +22,16 @@ local wailofGreedCount = 1
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
---
---end
+local L = mod:GetLocale()
+if L then
+	L.custom_on_hand_timers = "The Hand of In'zashi"
+	L.custom_on_hand_timers_desc = "Show warnings and bars for The Hand of In'zashi's abilities."
+	L.hand_cast = "Hand: %s"
+
+	L.custom_on_bulwark_timers = "Yalat's Bulwark"
+	L.custom_on_bulwark_timers_desc = "Show warnings and bars for Yalat's Bulwark's abilities."
+	L.bulwark_cast = "Bulwark: %s"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -35,8 +40,12 @@ local wailofGreedCount = 1
 local timeBombMarker = mod:AddMarkerOption(false, "player", 1, 284470, 1, 2, 3, 4) -- Time Bomb
 function mod:GetOptions()
 	return {
+		"stages",
+		286541, -- Consuming Flame
 		-- Stage 1
-		283604, -- Crush
+		"custom_on_hand_timers",
+		"custom_on_bulwark_timers",
+		283606, -- Crush
 		-- The Hand of In'zashi
 		{283507, "SAY", "SAY_COUNTDOWN"}, -- Volatile Charge
 		-- Yalat's Bulwark
@@ -61,13 +70,15 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+
 	-- Stage 1
-	self:Log("SPELL_CAST_SUCCESS", "Crush", 283604)
+	self:Log("SPELL_CAST_START", "Crush", 283606)
 	-- The Hand of In'zashi
 	self:Log("SPELL_AURA_APPLIED", "VolatileChargeApplied", 283507)
 	self:Log("SPELL_AURA_REMOVED", "VolatileChargeRemoved", 283507)
 	-- Yalat's Bulwark
-	self:Log("SPELL_CAST_START", "FlamesofPunishment", 283507)
+	self:Log("SPELL_CAST_START", "FlamesofPunishment", 282939)
 	-- Traps
 	self:Log("SPELL_CAST_SUCCESS", "PulsequickeningToxin", 284493)
 	self:Log("SPELL_AURA_APPLIED", "QuickenedPulseApplied", 284519)
@@ -97,21 +108,51 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
+	if spellId == 286541 then -- Consuming Flame
+		if self:MobId(UnitGUID(unit)) == 145273 and self:GetOption("custom_on_hand_timers") then
+			self:Message2(spellId, "cyan", L.hand_cast:format(self:SpellName(spellId)))
+			self:PlaySound(spellId, "long")
+			self:Bar(283507, 14.2) -- Volatile Charge
+			self:Bar(283606, 14.7, L.hand_cast:format(self:SpellName(283606))) -- Crush
+		elseif self:GetOption("custom_on_bulwark_timers") then
+			self:Message2(spellId, "cyan", L.bulwark_cast:format(self:SpellName(spellId)))
+			self:PlaySound(spellId, "long")
+			self:Bar(283606, 14.7, L.bulwark_cast:format(self:SpellName(283606))) -- Crush
+			self:Bar(282939, 20.7) -- Flames of Punishment
+		end
+	end
+end
 
 function mod:Crush(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+	local text = nil
+	if self:MobId(args.sourceGUID) == 145273 and self:GetOption("custom_on_hand_timers") then -- The Hand of In'zashi
+		text = L.hand_cast:format(args.spellName)
+		self:Message2(args.spellId, "yellow", text)
+		self:PlaySound(args.spellId, "alert")
+		self:Bar(args.spellId, 15.5, text)
+	elseif self:GetOption("custom_on_bulwark_timers") then  -- Yalat's Bulwark
+		text = L.bulwark_cast:format(args.spellName)
+		self:Message2(args.spellId, "yellow", text)
+		self:PlaySound(args.spellId, "alert")
+		self:Bar(args.spellId, 15.5, text)
+	end
 end
 
 do
 	local playerList = mod:NewTargetList()
 	function mod:VolatileChargeApplied(args)
-		playerList[#playerList+1] = args.destName
-		self:TargetsMessage(args.spellId, "yellow", playerList)
+		if self:GetOption("custom_on_hand_timers") or self:Me(args.destGUID) then
+			playerList[#playerList+1] = args.destName
+			self:TargetsMessage(args.spellId, "yellow", playerList)
+		end
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 8)
+		end
+		if #playerList == 1 and self:GetOption("custom_on_hand_timers") then
+			self:Bar(args.spellId, 12.2)
 		end
 	end
 
@@ -123,8 +164,11 @@ do
 end
 
 function mod:FlamesofPunishment(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "alarm")
+	if self:GetOption("custom_on_bulwark_timers") then
+		self:Message2(args.spellId, "red")
+		self:PlaySound(args.spellId, "alarm")
+		self:Bar(args.spellId, 23.1)
+	end
 end
 
 function mod:PulsequickeningToxin(args)
@@ -185,6 +229,16 @@ end
 function mod:DrawPower(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
+end
+
+function mod:DrawPowerSuccess(args)
+	self:Message2(args.spellId, "cyan", CL.stage:format(2), false)
+	self:PlaySound(args.spellId, "info")
+	self:StopBar(L.bulwark_cast:format(self:SpellName(283606))) -- Hand: Crush
+	self:StopBar(L.hand_cast:format(self:SpellName(283606))) -- Bulwark: Crush
+	self:StopBar(283507) -- Volatile Charge
+	self:StopBar(282939) -- Flames of Punishment
+
 end
 
 do
