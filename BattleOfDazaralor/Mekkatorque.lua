@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- TODO:
 -- - Assistant on robots?
@@ -38,7 +37,7 @@ function mod:GetOptions()
 		-- General
 		282153, -- Buster Cannon
 		282205, -- Blast Off
-		{283409, "SAY", "SAY_COUNTDOWN"}, -- Gigavolt Charge
+		{286646, "SAY", "SAY_COUNTDOWN"}, -- Gigavolt Charge
 		287952, -- Dimensional Ripper XL
 		284042, -- Deploy Spark Bot
 		288049, -- Shrink Ray
@@ -52,8 +51,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BusterCannon", 282153)
 	self:Log("SPELL_CAST_START", "BlastOff", 282205)
 	self:Log("SPELL_CAST_SUCCESS", "GigavoltCharge", 286597)
-	self:Log("SPELL_AURA_APPLIED", "GigavoltChargeApplied", 283409, 286646)
-	self:Log("SPELL_AURA_REMOVED", "GigavoltChargeRemoved", 283409, 286646)
+	self:Log("SPELL_AURA_APPLIED", "GigavoltChargeApplied", 286646)
+	self:Log("SPELL_AURA_REMOVED", "GigavoltChargeRemoved", 286646)
 	self:Log("SPELL_CAST_START", "DimensionalRipperXL", 287952)
 	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 284042)
 	self:Log("SPELL_CAST_START", "ShrinkRay", 288049)
@@ -81,21 +80,21 @@ function mod:BlastOff(args)
 end
 
 function mod:GigavoltCharge(args)
-	self:CDBar(283409, 30)
+	self:CDBar(args.spellId, 30)
 end
 
 function mod:GigavoltChargeApplied(args)
-	self:TargetMessage2(283409, "yellow", args.destName)
+	self:TargetMessage2(args.spellId, "yellow", args.destName)
 	if self:Me(args.destGUID) then
-		self:PlaySound(283409, "warning")
-		self:Say(283409)
-		self:SayCountdown(283409, 15)
+		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 15)
 	end
 end
 
 function mod:GigavoltChargeRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(283409)
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 

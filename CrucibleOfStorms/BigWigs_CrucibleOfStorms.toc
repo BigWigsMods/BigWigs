@@ -4,7 +4,7 @@
 ## Title-deDE: BigWigs [|cffeda55fCrucible of Storms|r]
 ## Title-esES: BigWigs [|cffeda55fCrucible of Storms|r]
 ## Title-esMX: BigWigs [|cffeda55fCrucible of Storms|r]
-## Title-frFR: BigWigs [|cffeda55fCrucible of Storms|r]
+## Title-frFR: BigWigs [|cffeda55fCreuset des Tempêtes|r]
 ## Title-ruRU: BigWigs [|cffeda55fCrucible of Storms|r]
 ## Title-zhCN: BigWigs [|cffeda55f风暴熔炉|r]
 ## Title-zhTW: BigWigs [|cffeda55fCrucible of Storms|r]
@@ -15,7 +15,7 @@
 ## Notes-deDE: BigWigs Crucible of Storms Modules
 ## Notes-esES: BigWigs Crucible of Storms Modules
 ## Notes-esMX: BigWigs Crucible of Storms Modules
-## Notes-frFR: BigWigs Crucible of Storms Modules
+## Notes-frFR: BigWigs Modules BigWigs concernant le Creuset des Tempêtes.
 ## Notes-ruRU: BigWigs Crucible of Storms Modules
 ## Notes-zhCN: BigWigs 风暴熔炉模块。
 ## Notes-zhTW: BigWigs Crucible of Storms Modules

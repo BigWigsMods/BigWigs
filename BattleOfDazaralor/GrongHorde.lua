@@ -1,6 +1,4 @@
-if not IsTestBuild() then return end
 if UnitFactionGroup("player") ~= "Horde" then return end
-
 --------------------------------------------------------------------------------
 -- TODO
 -- - Better Apetagonizer Core warnings and timers
