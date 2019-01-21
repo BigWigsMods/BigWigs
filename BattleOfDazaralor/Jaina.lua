@@ -12,6 +12,9 @@ mod.engageId = 2281
 -- Locals
 --
 
+local ringofIceCount = 1
+local iceFallCount = 1
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -104,6 +107,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	ringofIceCount = 1
+	iceFallCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -178,8 +183,9 @@ function mod:FreezingBlast(args)
 end
 
 function mod:RingofIce(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, ringofIceCount))
 	self:PlaySound(args.spellId, "long")
+	ringofIceCount = ringofIceCount + 1
 end
 
 -- Intermission
@@ -200,8 +206,10 @@ function mod:GlacialRay(args)
 end
 
 function mod:IceFall(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, iceFallCount))
 	self:PlaySound(args.spellId, "long")
+	--self:CastBar(args.spellId, 10, CL.count:format(args.spellName, iceFallCount)) -- impact
+	iceFallCount = iceFallCount + 1
 end
 
 -- Intermission: Flash Freeze
