@@ -9,7 +9,7 @@ if UnitFactionGroup("player") ~= "Horde" then return end
 
 local mod, CL = BigWigs:NewBoss("Flamefist and the Illuminated", 2070, 2341)
 if not mod then return end
-mod:RegisterEnableMob(144693, 146099, 144690, 148270) -- 2x Manceroy Flamefist, 2x Mestrah
+mod:RegisterEnableMob(144693, 144690) -- Manceroy Flamefist, Mestrah
 mod.engageId = 2266
 --mod.respawnTime = 31
 
@@ -49,10 +49,10 @@ function mod:GetOptions()
 		{285632, "FLASH"}, -- Stalking
 		"custom_on_fixate_plates",
 		-- Manceroy Flamefist
-		{282037, "SAY_COUNTDOWN"}, -- Rising Flames
+		282037, -- Rising Flames
 		286379, -- Pyroblast
 		{286425, "INFOBOX"}, -- Prismatic Shield
-		286988, -- Searing Embers
+		{286988, "SAY"}, -- Searing Embers
 		searingEmbersMarker,
 		--284374, -- Magma Trap
 		-- Team Attacks
@@ -149,8 +149,8 @@ end
 function mod:RisingFlamesApplied(args)
 	self:TargetBar(args.spellId, 6, args.destName)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
-		self:SayCountdown(args.spellId, 6, nil, 2)
+		--self:CancelSayCountdown(args.spellId) -- XXX See if we need this, was spammy
+		--self:SayCountdown(args.spellId, 6, nil, 2)
 		self:PlaySound(args.spellId, "alarm")
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	elseif self:Tank() and self:Tank(args.destName) then
@@ -266,6 +266,7 @@ do
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = #playerList
+			self:Say(args.spellId)
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(searingEmbersMarker) then
