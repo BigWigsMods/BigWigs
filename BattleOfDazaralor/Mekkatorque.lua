@@ -19,14 +19,16 @@ mod.engageId = 2276
 -- Locals
 --
 
+local sparkBotCount = 1
+
 --------------------------------------------------------------------------------
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
---
---end
+local L = mod:GetLocale()
+if L then
+	L.gigavolt_alt_text = "Bomb"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -61,6 +63,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	sparkBotCount = sparkBotCount + 1
 end
 
 --------------------------------------------------------------------------------
@@ -80,14 +83,14 @@ function mod:BlastOff(args)
 end
 
 function mod:GigavoltCharge(args)
-	self:CDBar(args.spellId, 30)
+	self:CDBar(args.spellId, 30, L.gigavolt_alt_text)
 end
 
 function mod:GigavoltChargeApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage2(args.spellId, "yellow", args.destName, L.gigavolt_alt_text)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
+		self:Say(args.spellId, L.gigavolt_alt_text)
 		self:SayCountdown(args.spellId, 15)
 	end
 end
@@ -105,8 +108,9 @@ function mod:DimensionalRipperXL(args)
 end
 
 function mod:DeploySparkBot(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, sparkBotCount))
 	self:PlaySound(args.spellId, "info")
+	sparkBotCount = sparkBotCount + 1
 end
 
 function mod:ShrinkRay(args)
