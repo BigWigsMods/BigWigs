@@ -9,8 +9,8 @@
 <Script file="Flamefist.lua"/>
 <Script file="Guardian.lua"/>
 <Script file="Council.lua"/>
-<Script file="Mekkatorque.lua"/>
 <Script file="Rastakhan.lua"/>
+<Script file="Mekkatorque.lua"/>
 <Script file="Blockade.lua"/>
 <Script file="Jaina.lua"/>
 <!--
