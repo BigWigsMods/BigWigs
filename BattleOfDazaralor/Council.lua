@@ -44,7 +44,7 @@ function mod:GetOptions()
 		{282135, "SAY", "SAY_COUNTDOWN"}, -- Crawling Hex
 		285893, -- Wild Maul
 		282155, -- Gonk's Wrath
-		{282209, "FLASH"}, -- Mark of Prey
+		{282209, "SAY", "FLASH"}, -- Mark of Prey
 		-- Kimbul's Aspect
 		{282444, "TANK"}, -- Lacerating Claws
 		282447, -- Kimbul's Wrath

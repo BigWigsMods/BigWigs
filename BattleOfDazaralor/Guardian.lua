@@ -17,6 +17,7 @@ mod.engageId = 2271
 --
 
 local wailofGreedCount = 1
+local spiritsofGoldCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -87,6 +88,7 @@ function mod:OnBossEnable()
 
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "DrawPower", 287070)
+	self:Log("SPELL_CAST_SUCCESS", "DrawPowerSuccess", 287070)
 	self:Log("SPELL_AURA_APPLIED", "LiquidGoldApplied", 287072)
 	self:Log("SPELL_AURA_REMOVED", "LiquidGoldRemoved", 287072)
 	self:Log("SPELL_CAST_START", "SpiritsofGold", 285995)
@@ -103,6 +105,7 @@ end
 
 function mod:OnEngage()
 	wailofGreedCount = 1
+	spiritsofGoldCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -167,6 +170,7 @@ function mod:FlamesofPunishment(args)
 	if self:GetOption("custom_on_bulwark_timers") then
 		self:Message2(args.spellId, "red")
 		self:PlaySound(args.spellId, "alarm")
+		self:CastBar(args.spellId, 12)
 		self:Bar(args.spellId, 23.1)
 	end
 end
@@ -238,7 +242,6 @@ function mod:DrawPowerSuccess(args)
 	self:StopBar(L.hand_cast:format(self:SpellName(283606))) -- Bulwark: Crush
 	self:StopBar(283507) -- Volatile Charge
 	self:StopBar(282939) -- Flames of Punishment
-
 end
 
 do
@@ -261,8 +264,9 @@ do
 end
 
 function mod:SpiritsofGold(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, spiritsofGoldCount))
 	self:PlaySound(args.spellId, "long")
+	spiritsofGoldCount = spiritsofGoldCount + 1
 end
 
 function mod:ChannelGold(args)
@@ -290,9 +294,9 @@ function mod:CoinShowerRemoved(args)
 end
 
 function mod:WailofGreed(args)
-	self:Message2(args.spellId, "red", CL.count:format(self:SpellName(args.spellId), wailofGreedCount))
+	self:Message2(args.spellId, "red", CL.count:format(args.spellName, wailofGreedCount))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 12, CL.count:format(self:SpellName(args.spellId), wailofGreedCount)) -- 2s cast, 10s channel
+	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, wailofGreedCount)) -- 2s cast, 10s channel
 	wailofGreedCount = wailofGreedCount + 1
 end
 

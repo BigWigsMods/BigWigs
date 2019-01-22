@@ -117,4 +117,5 @@ BigWigs:AddColors("G'huun", {
 BigWigs:AddColors("Uldir Trash", {
 	[276540] = "red",
 	[277047] = {"blue","yellow"},
+	[278990] = "red",
 })

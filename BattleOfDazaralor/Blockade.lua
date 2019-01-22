@@ -12,6 +12,9 @@ mod.engageId = 2280
 -- Locals
 --
 
+local ireCount = 1
+local stormsWailCount = 1
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -70,6 +73,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	ireCount = 1
+	stormsWailCount = 1
 	self:CDBar(284362, 7) -- Sea Storm
 	self:CDBar(284106, 10.5) -- Crackling Lightning
 	self:CDBar(284383, 12) -- Sea's Temptation
@@ -155,17 +160,19 @@ function mod:SeaSwell(args)
 end
 
 function mod:IreoftheDeep(args)
-	self:Message2(args.spellId, "red")
+	self:Message2(args.spellId, "red", CL.count:format(args.spellName, ireCount))
 	self:PlaySound(args.spellId, "warning")
+	ireCount = ireCount + 1
 end
 
 function mod:StormsWailApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
-	self:TargetBar(args.spellId, 10, args.destName)
+	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, stormsWailCount))
+	self:TargetBar(args.spellId, 10, args.destName, CL.count:format(args.spellName, stormsWailCount))
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:SayCountdown(args.spellId, 10) -- XXX make it different from tank one (or change tank countdown)
 	end
+	stormsWailCount = stormsWailCount + 1
 end
 
 function mod:StormsWailRemoved(args)

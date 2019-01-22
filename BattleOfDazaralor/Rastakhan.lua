@@ -12,6 +12,8 @@ mod.respawnTime = 12 -- PTR
 -- Locals
 --
 
+local toadCount = 1
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -70,6 +72,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	toadCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -84,9 +87,10 @@ function mod:ScorchingDetonationSuccess(args)
 end
 
 function mod:PlagueofToads(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, toadCount))
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 20)
+	toadCount = toadCount + 1
+	self:Bar(args.spellId, 20, CL.count:format(args.spellName, toadCount))
 end
 
 function mod:GreaterSerpentTotem(args)
@@ -159,7 +163,7 @@ end
 function mod:PlagueofFireApplied(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(285347, "warning")
-		self:Say(285347)
+		self:Say(285347, self:SpellName(177849)) -- Fire on X
 	end
 end
 
@@ -174,7 +178,7 @@ function mod:VoodooDoll(args)
 end
 
 function mod:CaressofDeath(args)
-	self:Message2(args.spellId, "pueple")
+	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -187,15 +191,6 @@ end
 function mod:DeathsDoor(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
-end
-
-function mod:PlagueofFireApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alert")
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 2)
-	end
 end
 
 function mod:InevitableEnd(args)
