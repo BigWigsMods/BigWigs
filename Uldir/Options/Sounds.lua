@@ -116,4 +116,5 @@ BigWigs:AddSounds("G'huun", {
 BigWigs:AddSounds("Uldir Trash", {
 	[276540] = "long",
 	[277047] = "warning",
+	[278990] = "long",
 })
