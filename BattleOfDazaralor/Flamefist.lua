@@ -164,7 +164,7 @@ end
 
 function mod:RisingFlamesRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		--self:CancelSayCountdown(args.spellId)
 	end
 end
 
