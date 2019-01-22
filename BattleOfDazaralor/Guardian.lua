@@ -88,6 +88,7 @@ function mod:OnBossEnable()
 
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "DrawPower", 287070)
+	self:Log("SPELL_CAST_SUCCESS", "DrawPowerSuccess", 287070)
 	self:Log("SPELL_AURA_APPLIED", "LiquidGoldApplied", 287072)
 	self:Log("SPELL_AURA_REMOVED", "LiquidGoldRemoved", 287072)
 	self:Log("SPELL_CAST_START", "SpiritsofGold", 285995)
@@ -241,7 +242,6 @@ function mod:DrawPowerSuccess(args)
 	self:StopBar(L.hand_cast:format(self:SpellName(283606))) -- Bulwark: Crush
 	self:StopBar(283507) -- Volatile Charge
 	self:StopBar(282939) -- Flames of Punishment
-
 end
 
 do

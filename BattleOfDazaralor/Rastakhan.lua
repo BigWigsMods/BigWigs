@@ -178,7 +178,7 @@ function mod:VoodooDoll(args)
 end
 
 function mod:CaressofDeath(args)
-	self:Message2(args.spellId, "pueple")
+	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -191,15 +191,6 @@ end
 function mod:DeathsDoor(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
-end
-
-function mod:PlagueofFireApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alert")
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 2)
-	end
 end
 
 function mod:InevitableEnd(args)

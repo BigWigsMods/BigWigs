@@ -71,7 +71,7 @@ function mod:OnBossEnable()
 	-- Manceroy Flamefist
 	self:Log("SPELL_AURA_APPLIED", "RisingFlamesApplied", 282037)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RisingFlamesApplied", 282037)
-	self:Log("SPELL_AURA_REMOVED", "RisingFlamesRemoved", 274358)
+	self:Log("SPELL_AURA_REMOVED", "RisingFlamesRemoved", 282037)
 	self:Log("SPELL_CAST_START", "Pyroblast", 286379)
 	self:Log("SPELL_INTERRUPT", "Interupted", "*")
 	self:Log("SPELL_AURA_APPLIED", "PrismaticShieldApplied", 286425)
@@ -177,7 +177,7 @@ do
 	function mod:Interupted(args)
 		if args.extraSpellId == 286379 then -- Pyroblast
 			interruptTime = 8 - (math.floor((args.time - interruptTime) * 100)/100)
-			self:Message2(args.extraSpellId, "green", L.interrupted_after:format(args.extraSpellName, self:ColorName(args.sourceName), interruptTime))
+			self:Message2(286379, "green", L.interrupted_after:format(args.extraSpellName, self:ColorName(args.sourceName), interruptTime))
 			self:StopBar(CL.cast:format(args.extraSpellName))
 		end
 	end

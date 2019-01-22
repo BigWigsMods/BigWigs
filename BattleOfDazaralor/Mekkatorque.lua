@@ -83,7 +83,7 @@ function mod:BlastOff(args)
 end
 
 function mod:GigavoltCharge(args)
-	self:CDBar(args.spellId, 30, L.gigavolt_alt_text)
+	self:CDBar(286646, 30, L.gigavolt_alt_text)
 end
 
 function mod:GigavoltChargeApplied(args)
