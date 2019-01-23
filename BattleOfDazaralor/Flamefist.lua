@@ -17,6 +17,8 @@ mod.engageId = 2266
 -- Locals
 --
 
+local lastWarnedPower = 0
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -42,6 +44,7 @@ end
 local searingEmbersMarker = mod:AddMarkerOption(false, "player", 1, 286988, 1, 2, 3) -- Searing Embers
 function mod:GetOptions()
 	return {
+		"stages",
 		-- Mestrah, the Illuminated
 		286436, -- Whirling Jade Storm
 		282030, -- Multi-Sided Strike
@@ -51,7 +54,7 @@ function mod:GetOptions()
 		-- Manceroy Flamefist
 		282037, -- Rising Flames
 		286379, -- Pyroblast
-		{286425, "INFOBOX"}, -- Prismatic Shield
+		{286425, "INFOBOX"}, -- Fire Shield
 		{286988, "SAY"}, -- Searing Embers
 		searingEmbersMarker,
 		--284374, -- Magma Trap
@@ -78,14 +81,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "RisingFlamesRemoved", 282037)
 	self:Log("SPELL_CAST_START", "Pyroblast", 286379)
 	self:Log("SPELL_INTERRUPT", "Interupted", "*")
-	self:Log("SPELL_AURA_APPLIED", "PrismaticShieldApplied", 286425)
-	self:Log("SPELL_AURA_REMOVED", "PrismaticShieldRemoved", 286425)
+	self:Log("SPELL_AURA_APPLIED", "FireShieldApplied", 286425)
+	self:Log("SPELL_AURA_REMOVED", "FireShieldRemoved", 286425)
 	self:Log("SPELL_AURA_APPLIED", "SearingEmbersApplied", 286988)
 	self:Log("SPELL_AURA_REMOVED", "SearingEmbersRemoved", 286988)
 	-- self:Log("SPELL_CAST_SUCCESS", "MagmaTrap", 284374)
 
 	-- Team Attacks
-	self:Log("SPELL_CAST_START", "FirefromMist", 285428)
+	--self:Log("SPELL_CAST_START", "FirefromMist", 285428)
 	self:Log("SPELL_CAST_SUCCESS", "RingofHostility", 284656)
 	self:Log("SPELL_AURA_REMOVED", "RingofHostilityRemoved", 284656)
 	self:Log("SPELL_CAST_START", "BlazingPhoenix", 282040)
@@ -97,11 +100,15 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:CDBar(286436, 9.5) -- Whirling Jade Storm
-	self:CDBar(286379, 9.5) -- Pyroblast
-	self:CDBar(282030, 15.5) -- Multi-Sided Strike
-	self:CDBar(285645, 25.5) -- Spirits of Xuen
-	self:CDBar(285428, 88) -- Fire from Mist
+	lastWarnedPower = 0
+
+	self:CDBar(286379, 20.5) -- Pyroblast
+	self:CDBar(286436, 21.5) -- Whirling Jade Storm
+	self:CDBar(282030, 30) -- Multi-Sided Strike
+	self:CDBar(285645, 74) -- Spirits of Xuen
+	self:CDBar(285428, 40) -- Fire from Mist XXX Estimated - no spell found for this?
+
+	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -111,21 +118,39 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 285645 then -- Spirits of Xuen
 		self:Message2(spellId, "yellow")
 		self:PlaySound(spellId, "info")
-		self:CDBar(spellId, 40.5)
+		self:CDBar(spellId, 127.7) -- XXX Need correct info after Ring of Hostility stage
+	end
+end
+
+function mod:UNIT_POWER_FREQUENT(event, unit)
+	local power = UnitPower(unit)
+	if power >= 25 and lastWarnedPower < 25 then
+		lastWarnedPower = 25
+		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(285428))) -- Fire from Mist
+		self:PlaySound("stages", "info")
+	elseif power >= 55 and lastWarnedPower < 55 then
+		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(284656))) -- Ring of Hostility
+		self:PlaySound("stages", "info")
+		lastWarnedPower = 55
+	elseif power >= 95 and lastWarnedPower < 95  then
+		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(-19409))) -- The Serpent and the Phoenix
+		self:PlaySound("stages", "info")
+		lastWarnedPower = 95
+		self:UnregisterUnitEvent(event, unit)
 	end
 end
 
 function mod:WhirlingJadeStorm(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 20.5)
+	self:Bar(args.spellId, 45)
 end
 
 function mod:MultiSidedStrike(args)
 	if self:Mythic() or self:Tank() then -- No warnings needed for non-tanks unless it's Mythic
 		self:Message2(args.spellId, "red")
 		self:PlaySound(args.spellId, "warning")
-		self:CDBar(args.spellId, 35.5)
+		self:CDBar(args.spellId, 55)
 	end
 end
 
@@ -175,7 +200,7 @@ do
 		self:PlaySound(args.spellId, "warning")
 		interruptTime = args.time
 		self:CastBar(args.spellId, 8)
-		self:CDBar(args.spellId, 15) -- 14.6~15.8
+		self:CDBar(args.spellId, 52) -- 14.6~15.8
 	end
 
 	function mod:Interupted(args)
@@ -214,7 +239,7 @@ do
 		self:SetInfo(286425, 4, L.cast_text:format(castTimeLeft, hexColor, castPercentage*100))
 	end
 
-	function mod:PrismaticShieldApplied(args)
+	function mod:FireShieldApplied(args)
 		if self:CheckOption(args.spellId, "INFOBOX") then
 			self:OpenInfo(args.spellId, args.spellName)
 			self:SetInfo(args.spellId, 1, L.absorb)
@@ -225,7 +250,7 @@ do
 		end
 	end
 
-	function mod:PrismaticShieldRemoved(args)
+	function mod:FireShieldRemoved(args)
 		self:Message2(args.spellId, "cyan", CL.removed:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 		self:CloseInfo(args.spellId)
@@ -262,7 +287,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:SimpleTimer(announce, 0.1)
-			self:CDBar(args.spellId, 17) -- 17-31s (depends when a pyroblast is cast/interrupted?)
+			self:CDBar(args.spellId, 40)
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = #playerList
@@ -286,15 +311,16 @@ end
 	-- self:PlaySound(args.spellId, "alarm")
 -- end
 
-function mod:FirefromMist(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "long")
-	self:CDBar(284656, 112) -- Ring of Hostility
-end
+--function mod:FirefromMist(args)
+--	self:Message2(args.spellId, "yellow")
+--	self:PlaySound(args.spellId, "long")
+--	self:CDBar(284656, 112) -- Ring of Hostility
+--end
 
 function mod:RingofHostility(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
+	-- XXX Stop bars?
 end
 
 function mod:RingofHostilityRemoved(args)
