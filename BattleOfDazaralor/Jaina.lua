@@ -14,6 +14,7 @@ mod.engageId = 2281
 
 local ringofIceCount = 1
 local icefallCount = 1
+local stage = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -109,6 +110,10 @@ end
 function mod:OnEngage()
 	ringofIceCount = 1
 	icefallCount = 1
+	stage = 1
+	self:CDBar(287565, 8) -- Avalanche
+	self:CDBar(285177, 17) -- Freezing Blast
+	self:CDBar(285459, 60, CL.count:format(self:SpellName(285459), ringofIceCount)) -- Ring of Ice
 end
 
 --------------------------------------------------------------------------------
@@ -161,6 +166,7 @@ end
 function mod:Avalanche(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, stage > 1 and 75 or 60)
 end
 
 function mod:TimeWarp(args)
@@ -180,16 +186,19 @@ end
 function mod:FreezingBlast(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
+	self:CDBar(args.spellId, 10)
 end
 
 function mod:RingofIce(args)
 	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, ringofIceCount))
 	self:PlaySound(args.spellId, "long")
 	ringofIceCount = ringofIceCount + 1
+	self:CDBar(args.spellId, 60, CL.count:format(args.spellName, ringofIceCount))
 end
 
 -- Intermission
 function mod:HowlingWinds(args)
+	stage = stage + 1
 	self:Message2(args.spellId, "green")
 	self:PlaySound(args.spellId, "info")
 end
@@ -198,22 +207,31 @@ end
 function mod:CrystallineDust(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, 15, CL.count:format(args.spellName, icefallCount))
 end
 
 function mod:GlacialRay(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
+	self:CDBar(args.spellId, 60, CL.count:format(args.spellName, icefallCount))
 end
 
 function mod:Icefall(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, icefallCount))
-	self:PlaySound(args.spellId, "long")
-	--self:CastBar(args.spellId, 10, CL.count:format(args.spellName, icefallCount)) -- impact
-	icefallCount = icefallCount + 1
+	if self:MobId(args.sourceGUID) == 133251 then -- Jaina
+		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, icefallCount))
+		self:PlaySound(args.spellId, "long")
+		--self:CastBar(args.spellId, 10, CL.count:format(args.spellName, icefallCount)) -- impact
+		icefallCount = icefallCount + 1
+		self:CDBar(args.spellId, 55, CL.count:format(args.spellName, icefallCount))
+	else -- Prismatic Image
+		self:Message2(args.spellId, "orange")
+		self:PlaySound(args.spellId, "long")
+	end
 end
 
 -- Intermission: Flash Freeze
 function mod:FlashFreeze(args)
+	stage = 3
 	self:Message2(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
 end
@@ -256,8 +274,8 @@ end
 function mod:PrismaticImage(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
+	self:CDBar(args.spellId, 51)
 end
-
 
 do
 	local prev = 0
