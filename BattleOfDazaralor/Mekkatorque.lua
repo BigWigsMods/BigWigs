@@ -11,7 +11,7 @@
 
 local mod, CL = BigWigs:NewBoss("High Tinker Mekkatorque", 2070, 2334)
 if not mod then return end
-mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(144838)
 mod.engageId = 2276
 --mod.respawnTime = 31
 
