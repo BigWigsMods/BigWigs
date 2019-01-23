@@ -8,7 +8,7 @@
 
 local mod, CL = BigWigs:NewBoss("Treasure Guardian", 2070, 2342)
 if not mod then return end
-mod:RegisterEnableMob(145273, 145274, 145261, 147564) -- The Hand of In'zashi, Yalat's Bulwark, 2x Treasure Guardian
+mod:RegisterEnableMob(145273, 145274, 145261) -- The Hand of In'zashi, Yalat's Bulwark, 2x Treasure Guardian
 mod.engageId = 2271
 --mod.respawnTime = 31
 
@@ -59,7 +59,7 @@ function mod:GetOptions()
 		284470, -- Time Bomb
 		timeBombMarker,
 		-- Stage 2
-		287070, -- Draw Power
+		287070, -- Hoard Power
 		{287072, "SAY", "SAY_COUNTDOWN"}, -- Liquid Gold
 		287074, -- Molten Gold
 		285995, -- Spirits of Gold
@@ -87,8 +87,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "TimeBombRemoved", 284470)
 
 	-- Stage 2
-	self:Log("SPELL_CAST_START", "DrawPower", 287070)
-	self:Log("SPELL_CAST_SUCCESS", "DrawPowerSuccess", 287070)
+	self:Log("SPELL_CAST_START", "HoardPower", 287070)
+	--self:Log("SPELL_CAST_SUCCESS", "HoardPowerSuccess", 287070)
 	self:Log("SPELL_AURA_APPLIED", "LiquidGoldApplied", 287072)
 	self:Log("SPELL_AURA_REMOVED", "LiquidGoldRemoved", 287072)
 	self:Log("SPELL_CAST_START", "SpiritsofGold", 285995)
@@ -230,25 +230,40 @@ do
 	end
 end
 
-function mod:DrawPower(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "long")
-end
-
-function mod:DrawPowerSuccess(args)
+function mod:HoardPower(args)
+	--self:Message2(args.spellId, "red")
+	--self:PlaySound(args.spellId, "long")
+	-- XXX TEMP HERE - NO SUCCESS IN LOG?
 	self:Message2(args.spellId, "cyan", CL.stage:format(2), false)
 	self:PlaySound(args.spellId, "info")
 	self:StopBar(L.bulwark_cast:format(self:SpellName(283606))) -- Hand: Crush
 	self:StopBar(L.hand_cast:format(self:SpellName(283606))) -- Bulwark: Crush
 	self:StopBar(283507) -- Volatile Charge
 	self:StopBar(282939) -- Flames of Punishment
+
+	self:CDBar(287072, 14.5) -- Liquid Gold
+	self:CDBar(285014, 16.7) -- Coin Shower
+	self:CDBar(285995, 28, CL.count:format(self:SpellName(285995), spiritsofGoldCount)) -- Spirits of Gold (x)
+	self:CDBar(284941, 61, CL.count:format(self:SpellName(284941), wailofGreedCount)) -- Wail of Greed (x)
 end
+
+--function mod:HoardPowerSuccess(args)
+--	self:Message2(args.spellId, "cyan", CL.stage:format(2), false)
+--	self:PlaySound(args.spellId, "info")
+--	self:StopBar(L.bulwark_cast:format(self:SpellName(283606))) -- Hand: Crush
+--	self:StopBar(L.hand_cast:format(self:SpellName(283606))) -- Bulwark: Crush
+--	self:StopBar(283507) -- Volatile Charge
+--	self:StopBar(282939) -- Flames of Punishment
+--end
 
 do
 	local playerList = mod:NewTargetList()
 	function mod:LiquidGoldApplied(args)
 		playerList[#playerList+1] = args.destName
 		self:TargetsMessage(args.spellId, "yellow", playerList)
+		if #playerList == 1 then
+			self:CDBar(args.spellId, 15)
+		end
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId)
@@ -267,6 +282,7 @@ function mod:SpiritsofGold(args)
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, spiritsofGoldCount))
 	self:PlaySound(args.spellId, "long")
 	spiritsofGoldCount = spiritsofGoldCount + 1
+	self:CDBar(args.spellId, 66, CL.count:format(args.spellName, spiritsofGoldCount))
 end
 
 function mod:ChannelGold(args)
@@ -279,6 +295,7 @@ function mod:CoinShowerApplied(args)
 	self:PlaySound(args.spellId, "alert")
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetBar(args.spellId, 10, args.destName)
+	self:CDBar(args.spellId, 30.5)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 10)
@@ -298,6 +315,7 @@ function mod:WailofGreed(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, wailofGreedCount)) -- 2s cast, 10s channel
 	wailofGreedCount = wailofGreedCount + 1
+	self:CDBar(args.spellId, 71, CL.count:format(args.spellName, wailofGreedCount))
 end
 
 function mod:CoinSweepApplied(args)
