@@ -76,10 +76,10 @@ function mod:OnBossEnable()
 	-- Stage 1
 	self:Log("SPELL_CAST_START", "Crush", 283606)
 	-- The Hand of In'zashi
-	self:Log("SPELL_AURA_APPLIED", "VolatileChargeApplied", 283507)
-	self:Log("SPELL_AURA_REMOVED", "VolatileChargeRemoved", 283507)
+	self:Log("SPELL_AURA_APPLIED", "VolatileChargeApplied", 283507, 287648) -- Normal, Empowered
+	self:Log("SPELL_AURA_REMOVED", "VolatileChargeRemoved", 283507, 287648)
 	-- Yalat's Bulwark
-	self:Log("SPELL_CAST_START", "FlamesofPunishment", 282939)
+	self:Log("SPELL_CAST_START", "FlamesofPunishment", 282939, 287659) -- Normal, Empowered
 	-- Traps
 	self:Log("SPELL_CAST_SUCCESS", "PulsequickeningToxin", 284493)
 	self:Log("SPELL_AURA_APPLIED", "QuickenedPulseApplied", 284519)
@@ -147,31 +147,31 @@ do
 	function mod:VolatileChargeApplied(args)
 		if self:GetOption("custom_on_hand_timers") or self:Me(args.destGUID) then
 			playerList[#playerList+1] = args.destName
-			self:TargetsMessage(args.spellId, "yellow", playerList)
+			self:TargetsMessage(283507, "yellow", playerList)
 		end
 		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 8)
+			self:PlaySound(283507, "warning")
+			self:Say(283507)
+			self:SayCountdown(283507, 8)
 		end
 		if #playerList == 1 and self:GetOption("custom_on_hand_timers") then
-			self:Bar(args.spellId, 12.2)
+			self:Bar(283507, 12.2)
 		end
 	end
 
 	function mod:VolatileChargeRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(283507)
 		end
 	end
 end
 
 function mod:FlamesofPunishment(args)
 	if self:GetOption("custom_on_bulwark_timers") then
-		self:Message2(args.spellId, "red")
-		self:PlaySound(args.spellId, "alarm")
-		self:CastBar(args.spellId, 12)
-		self:Bar(args.spellId, 23.1)
+		self:Message2(282939, "red")
+		self:PlaySound(282939, "alarm")
+		self:CastBar(282939, 12)
+		self:Bar(282939, 23.1)
 	end
 end
 
