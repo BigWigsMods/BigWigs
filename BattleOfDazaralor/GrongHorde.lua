@@ -1,10 +1,5 @@
 if UnitFactionGroup("player") ~= "Horde" then return end
 --------------------------------------------------------------------------------
--- TODO
--- - Better Apetagonizer Core warnings and timers
--- - Tanrum timers and adjustements based on energy gain/rate
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -17,6 +12,8 @@ mod.engageId = 2263
 --------------------------------------------------------------------------------
 -- Locals
 --
+
+local addCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -38,10 +35,11 @@ function mod:GetOptions()
 		282082, -- Bestial Combo
 		{285671, "TANK"}, -- Crushed
 		{285875, "TANK"}, -- Rending Bite
+		289401, -- Bestial Throw
 		282179, -- Reverberating Slam
 		285994, -- Ferocious Roar
 		--[[ Flying Ape Wranglers  ]]--
-		{282215, "SAY"}, -- Megatomic Seeker Missile
+		--{282215, "SAY"}, -- Megatomic Seeker Missile
 		--[[ Apetaganizer 3000 ]]--
 		282247, -- Apetagonizer 3000 Bomb
 		282243, -- Apetagonize
@@ -58,10 +56,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushedApplied", 285671)
 	self:Log("SPELL_AURA_APPLIED", "RendingBiteApplied", 285875)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RendingBiteApplied", 285875)
+	self:Log("SPELL_CAST_SUCCESS", "BestialThrow", 289401)
+	self:Log("SPELL_CAST_SUCCESS", "BestialThrowTarget", 289307)
 	self:Log("SPELL_CAST_SUCCESS", "ReverberatingSlam", 282179)
 	self:Log("SPELL_CAST_START", "FerociousRoar", 285994)
+
 	--[[ Flying Ape Wranglers  ]]--
-	self:Log("SPELL_CAST_SUCCESS", "MegatomicSeekerMissile", 282215)
+	--self:Log("SPELL_CAST_SUCCESS", "MegatomicSeekerMissile", 282215) XXX Check what we can do with this
 	--[[ Apetaganizer 3000 ]]--
 	self:Log("SPELL_CAST_SUCCESS", "Apetagonizer3000Bomb", 282247)
 	self:Log("SPELL_CAST_START", "Apetagonize", 282243)
@@ -70,10 +71,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	addCount = 1
 	self:Bar(282179, 13.1) -- Reverberating Slam
-	self:Bar(282247, 16.8, CL.add) -- Apetagonizer 3000 Bomb, Add?
-	self:Bar(282082, 20.5)	-- Bestial Combo
-	self:Bar(285994, 26.5) -- Ferocious Roar
+	self:Bar(282247, 16.8, CL.count:format(CL.add, addCount)) -- Apetagonizer 3000 Bomb, Add
+	self:Bar(282082, 22)	-- Bestial Combo
+	self:Bar(285994, 37.5) -- Ferocious Roar
 end
 
 --------------------------------------------------------------------------------
@@ -87,7 +89,7 @@ function mod:Tantrum(args)
 end
 
 function mod:BestialCombo(args)
-	self:Bar(args.spellId, 20.5)
+	self:Bar(args.spellId, 30.5)
 end
 
 function mod:CrushedApplied(args)
@@ -100,31 +102,41 @@ function mod:RendingBiteApplied(args)
 	self:PlaySound(args.spellId, "alert", nil, args.destName)
 end
 
+function mod:BestialThrow(args)
+	self:Bar(args.spellId, 30.5)
+end
+
+function mod:BestialThrowTarget(args)
+	self:TargetMessage2(289401, "purple", args.destName)
+	self:PlaySound(289401, "alarm")
+end
+
 function mod:ReverberatingSlam(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 23.1)
+	self:CDBar(args.spellId, 29)
 end
 
 function mod:FerociousRoar(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 23.1)
+	self:Bar(args.spellId, 36.5)
 end
 
-function mod:MegatomicSeekerMissile(args)
-	self:TargetMessage2(args.spellId, "orange", args.destName. args.spellName)
-	self:PlaySound(args.spellId, "alarm")
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-	end
-	self:Bar(args.spellId, 23.1)
-end
+--function mod:MegatomicSeekerMissile(args)
+--	self:TargetMessage2(args.spellId, "orange", args.destName)
+--	self:PlaySound(args.spellId, "alarm")
+--	if self:Me(args.destGUID) then
+--		self:Say(args.spellId)
+--	end
+--	self:Bar(args.spellId, 23.1)
+--end
 
 function mod:Apetagonizer3000Bomb(args)
-	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.add))
+	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, addCount)))
 	self:PlaySound(args.spellId, "long")
-	self:Bar(args.spellId, 60.5)
+	addCount = addCount + 1
+	self:Bar(args.spellId, 60.5, CL.count:format(CL.add, addCount))
 end
 
 function mod:Apetagonize(args)
@@ -133,7 +145,7 @@ function mod:Apetagonize(args)
 end
 
 function mod:ApetagonizerCore(args)
-	self:TargetMessage2(285660, "green", args.destName. args.spellName)
+	self:TargetMessage2(args.spellId, "green", args.destName. args.spellName)
 end
 
 function mod:DischargeApetagonizerCore(args)
