@@ -14,6 +14,8 @@ mod.respawnTime = 15 -- PTR
 -- Locals
 --
 
+local waveofLightCounter = 0
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -64,9 +66,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	waveofLightCounter = 1
+
 	self:CDBar(283650, 12) -- Blinding Faith
-	self:Bar(283598, 13) -- Wave of Light
-	self:CDBar(283662, 109) -- Call to Arms
+	self:Bar(283598, 13, CL.count:format(self:SpellName(283598), waveofLightCounter)) -- Wave of Light
+	self:CDBar(283662, 100) -- Call to Arms
 end
 
 --------------------------------------------------------------------------------
@@ -82,9 +86,10 @@ function mod:SacredBladeApplied(args)
 end
 
 function mod:WaveofLight(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, waveofLightCounter))
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 11)
+	waveofLightCounter = waveofLightCounter + 1
+	self:Bar(args.spellId, 11, CL.count:format(args.spellName, waveofLightCounter))
 end
 
 function mod:SealofRetributionApplied(args)
@@ -112,7 +117,7 @@ end
 function mod:CalltoArms(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
-	self:CDBar(args.spellId, 105)
+	self:CDBar(args.spellId, 100)
 end
 
 function mod:AvengingWrathApplied(args)

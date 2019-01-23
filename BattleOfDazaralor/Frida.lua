@@ -69,7 +69,7 @@ function mod:OnEngage()
 
 	self:CDBar(283650, 12) -- Blinding Faith
 	self:Bar(283598, 13, CL.count:format(self:SpellName(283598), waveofLightCounter)) -- Wave of Light
-	self:CDBar(283662, 109) -- Call to Arms
+	self:CDBar(283662, 100) -- Call to Arms
 end
 
 --------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ end
 function mod:CalltoArms(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
-	self:CDBar(args.spellId, 105)
+	self:CDBar(args.spellId, 100)
 end
 
 function mod:AvengingWrathApplied(args)
