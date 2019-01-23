@@ -34,12 +34,14 @@ end
 -- Initialization
 --
 
+local gigavoltChargeMarker = mod:AddMarkerOption(false, "player", 1, 286646, 1, 2, 3) -- Gigavolt Charge
 function mod:GetOptions()
 	return {
 		-- General
 		282153, -- Buster Cannon
 		282205, -- Blast Off
 		{286646, "SAY", "SAY_COUNTDOWN"}, -- Gigavolt Charge
+		gigavoltChargeMarker,
 		287952, -- Dimensional Ripper XL
 		284042, -- Deploy Spark Bot
 		288049, -- Shrink Ray
@@ -86,18 +88,59 @@ function mod:GigavoltCharge(args)
 	self:CDBar(286646, 30, L.gigavolt_alt_text)
 end
 
-function mod:GigavoltChargeApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName, L.gigavolt_alt_text)
-	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, L.gigavolt_alt_text)
-		self:SayCountdown(args.spellId, 15)
+do
+	local playerList, isOnMe = {}, nil
+
+	local function announce()
+		local meOnly = mod:CheckOption(286646, "ME_ONLY")
+
+		if isOnMe then
+			mod:TargetBar(286646, 15, mod:UnitName("player"), L.gigavolt_alt_text)
+		end
+
+		if isOnMe and (meOnly or #playerList == 1) then
+			mod:Message2(286646, "blue", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, L.gigavolt_alt_text)))
+		elseif not meOnly then
+			local msg = ""
+			for i=1, #playerList do
+				local icon = ("|T13700%d:0|t"):format(i)
+				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
+			end
+
+			mod:Message2(286646, "yellow", CL.other:format(L.gigavolt_alt_text, msg))
+		end
+
+		playerList = {}
+		isOnMe = nil
+	end
+
+	function mod:GigavoltChargeApplied(args)
+		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			self:SimpleTimer(announce, 0.1)
+		end
+		if self:Me(args.destGUID) then
+			isOnMe = #playerList
+			self:PlaySound(args.spellId, "warning")
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, isOnMe, isOnMe))
+			self:SayCountdown(args.spellId, 15)
+		end
+		if self:GetOption(gigavoltChargeMarker) then
+			SetRaidTarget(args.destName, #playerList)
+		end
 	end
 end
 
-function mod:GigavoltChargeRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+do
+	local prev = 0
+	function mod:GigavoltChargeRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+			self:StopBar(L.gigavolt_alt_text, args.destName)
+		end
+		if self:GetOption(gigavoltChargeMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 	end
 end
 
