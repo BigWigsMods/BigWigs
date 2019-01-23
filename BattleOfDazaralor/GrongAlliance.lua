@@ -143,7 +143,7 @@ function mod:DeathEmpowerment(args)
 end
 
 function mod:ShadowCore(args)
-	self:TargetMessage2(args.spellId, "green", args.destName. args.spellName)
+	self:TargetMessage2(args.spellId, "green", args.destName, args.spellName)
 end
 
 function mod:DischargeShadowCore(args)

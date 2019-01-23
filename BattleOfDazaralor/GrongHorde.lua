@@ -145,7 +145,7 @@ function mod:Apetagonize(args)
 end
 
 function mod:ApetagonizerCore(args)
-	self:TargetMessage2(args.spellId, "green", args.destName. args.spellName)
+	self:TargetMessage2(args.spellId, "green", args.destName, args.spellName)
 end
 
 function mod:DischargeApetagonizerCore(args)
