@@ -6,11 +6,11 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Treasure Guardian", 2070, 2342)
+local mod, CL = BigWigs:NewBoss("Opulence", 2070, 2342)
 if not mod then return end
-mod:RegisterEnableMob(145273, 145274, 145261) -- The Hand of In'zashi, Yalat's Bulwark, 2x Treasure Guardian
+mod:RegisterEnableMob(145273, 145274, 145261) -- The Hand of In'zashi, Yalat's Bulwark, Opulence
 mod.engageId = 2271
---mod.respawnTime = 31
+mod.respawnTime = 32
 
 --------------------------------------------------------------------------------
 -- Locals
