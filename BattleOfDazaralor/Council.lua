@@ -74,8 +74,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CrawlingHexApplied", 282135)
 	self:Log("SPELL_AURA_REMOVED", "CrawlingHexRemoved", 282135)
 	self:Log("SPELL_CAST_SUCCESS", "WildMaul", 285893)
-	self:Log("SPELL_CAST_START", "GonksWrath", 282155)
-	self:Log("SPELL_AURA_APPLIED", "MarkofPrey", 282209)
+	self:Log("SPELL_AURA_APPLIED", "MarkofPrey", 282209) -- Used for Gonk's Wrath as well
 
 	-- Kimbul's Aspect
 	self:Log("SPELL_CAST_START", "LaceratingClaws", 282444)
@@ -170,17 +169,22 @@ function mod:WildMaul(args)
 	self:CDBar(args.spellId, 17)
 end
 
-function mod:GonksWrath(args)
-	self:Message2(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "info")
-end
-
-function mod:MarkofPrey(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning")
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
+do
+	local prev = 0
+	function mod:MarkofPrey(args)
+		local t = args.time
+		if t-prev > 50 then
+			prev = t
+			self:Message2(282155, "cyan") -- Gonk's Wrath
+			self:PlaySound(282155, "info") -- Gonk's Wrath
+			self:Bar(282155, 60) -- Gonk's Wrath
+		end
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId)
+			self:PlaySound(args.spellId, "warning")
+			self:Flash(args.spellId)
+			self:Say(args.spellId)
+		end
 	end
 end
 
