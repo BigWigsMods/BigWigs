@@ -172,6 +172,8 @@ end
 do
 	local prev = 0
 	function mod:MarkofPrey(args)
+		-- Gonk's Wrath isn't in the combat log
+		-- Instead, throttle the debuff that the raptors apply immediately
 		local t = args.time
 		if t-prev > 50 then
 			prev = t
