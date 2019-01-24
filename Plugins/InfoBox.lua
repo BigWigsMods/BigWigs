@@ -377,6 +377,8 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
 		display.xxx2:Hide()
 		display.xxx3:Hide()
 	end
+	
+	self:RestyleWindow()
 end
 
 function plugin:BigWigs_SetInfoBoxTitle(_, _, text)
