@@ -69,7 +69,7 @@ plugin.defaultDB = {
 	disabled = false,
 	lock = false,
 	fontName = plugin:GetDefaultFont(),
-	fontSize = select(2, plugin:GetDefaultFont(12)),
+	fontSize = 12,
 	fontOutline = "",
 }
 
@@ -248,18 +248,8 @@ do
 		plugin:Close()
 	end)
 
-	local font = media:Fetch(FONT, db.fontName)
-	local flags
-	if db.monochrome and db.fontOutline ~= "" then
-		flags = "MONOCHROME," .. db.fontOutline
-	elseif db.monochrome then
-		flags = "MONOCHROME"
-	else
-		flags = db.fontOutline
-	end
-
 	local header = display:CreateFontString(nil, "OVERLAY")
-	header:SetFont(font, db.fontSize, flags)
+	header:SetFont(plugin:GetDefaultFont(12))
 	header:SetShadowOffset(1, -1)
 	header:SetTextColor(1,0.82,0,1)
 	header:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
@@ -268,7 +258,7 @@ do
 	display.text = {}
 	for i = 1, 20 do
 		local text = display:CreateFontString(nil, "OVERLAY")
-		text:SetFont(font, db.fontSize, flags)
+		text:SetFont(plugin:GetDefaultFont(12))
 		text:SetShadowOffset(1, -1)
 		text:SetTextColor(1,0.82,0,1)
 		text:SetSize(infoboxWidth/2, infoboxHeight/5)
@@ -286,7 +276,7 @@ do
 	end
 	for i = 21, 40 do
 		local text = display:CreateFontString(nil, "OVERLAY")
-		text:SetFont(font, db.fontSize, flags)
+		text:SetFont(plugin:GetDefaultFont(12))
 		text:SetShadowOffset(1, -1)
 		text:SetTextColor(1,0.82,0,1)
 		text:SetSize(infoboxWidth/2, infoboxHeight/5)
