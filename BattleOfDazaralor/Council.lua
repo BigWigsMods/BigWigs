@@ -56,6 +56,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "LoasWrath", 282736)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LoasWrath", 282736)
@@ -66,7 +68,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "GiftofWind", 282098)
 	self:Log("SPELL_AURA_APPLIED", "HasteningWinds", 285945)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "HasteningWinds", 285945)
-	self:Log("SPELL_CAST_START", "PakusWrath", 282107)
 
 	-- Gonk's Aspect
 	self:Log("SPELL_CAST_START", "CrawlingHex", 283193)
@@ -99,6 +100,14 @@ end
 -- Event Handlers
 --
 
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+	if msg:find("282107", nil, true) then -- Pa'ku's Wrath
+		self:Message2(282107, "red")
+		self:PlaySound(282107, "warning")
+		self:Bar(282107, 60)
+	end
+end
+
 function mod:LoasWrath(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "cyan")
 	self:PlaySound(args.spellId, "info")
@@ -127,11 +136,6 @@ function mod:HasteningWinds(args)
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
-end
-
-function mod:PakusWrath(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "warning")
 end
 
 function mod:CrawlingHex(args)
