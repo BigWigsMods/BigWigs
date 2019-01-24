@@ -3,9 +3,9 @@ if UnitFactionGroup("player") ~= "Alliance" then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Grimfang and Firecaller", 2070, 2323)
+local mod, CL = BigWigs:NewBoss("Jadefire Masters", 2070, 2323)
 if not mod then return end
-mod:RegisterEnableMob(148238, 146100) -- Ma'ra Grimfang, Anathos Firecaller
+mod:RegisterEnableMob(144691, 144692) -- Ma'ra Grimfang, Anathos Firecaller
 mod.engageId = 2285
 --mod.respawnTime = 31
 

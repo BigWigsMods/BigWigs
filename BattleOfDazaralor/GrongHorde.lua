@@ -3,11 +3,11 @@ if UnitFactionGroup("player") ~= "Horde" then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("King Grong", 2070, 2325)
+local mod, CL = BigWigs:NewBoss("Grong", 2070, 2325)
 if not mod then return end
-mod:RegisterEnableMob(147268)
+mod:RegisterEnableMob(144637)
 mod.engageId = 2263
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
