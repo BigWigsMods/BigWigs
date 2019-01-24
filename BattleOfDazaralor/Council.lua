@@ -47,7 +47,7 @@ function mod:GetOptions()
 		{282209, "SAY", "FLASH"}, -- Mark of Prey
 		-- Kimbul's Aspect
 		{282444, "TANK"}, -- Lacerating Claws
-		{282834, "SAY", "PROXIMITY"}, -- Kimbul's Wrath
+		{282834, "SAY", "FLASH", "PROXIMITY"}, -- Kimbul's Wrath
 		-- Akunda's Aspect
 		282411, -- Thundering Storm
 		285878, -- Mind Wipe
@@ -211,6 +211,7 @@ do
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
+			self:Flash(args.spellId)
 		end
 		playerList[#playerList+1] = args.destName
 		self:TargetsMessage(args.spellId, "orange", playerList)
