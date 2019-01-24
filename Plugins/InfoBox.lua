@@ -28,6 +28,17 @@ local db = nil
 local inTestMode = false
 
 function plugin:RestyleWindow()
+	local x = db.posx
+	local y = db.posy
+	if x and y then
+		local s = display:GetEffectiveScale()
+		display:ClearAllPoints()
+		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
+	else
+		display:ClearAllPoints()
+		display:SetPoint("CENTER", UIParent, "CENTER", -300, -80)
+	end
+
 	if db.lock then
 		display:EnableMouse(false)
 	else
@@ -57,10 +68,117 @@ end
 plugin.defaultDB = {
 	disabled = false,
 	lock = false,
-	--fontName = plugin:GetDefaultFont(),
-	--fontSize = 12,
+	fontName = plugin:GetDefaultFont(),
+	fontSize = 12,
 	fontOutline = "",
 }
+
+--------------------------------------------------------------------------------
+-- Options
+--
+do
+	local disabled = function() return plugin.db.profile.disabled end
+	plugin.pluginOptions = {
+		name = L.infoBox,
+		type = "group",
+		get = function(info)
+			return db[info[#info]]
+		end,
+		set = function(info, value)
+			local entry = info[#info]
+			db[entry] = value
+			plugin:RestyleWindow()
+		end,
+		args = {
+			disabled = {
+				type = "toggle",
+				name = L.disabled,
+				desc = L.disabledDisplayDesc,
+				order = 1,
+			},
+			lock = {
+				type = "toggle",
+				name = L.lock,
+				desc = L.lockDesc,
+				order = 2,
+				disabled = disabled,
+			},
+			font = {
+				type = "select",
+				name = L.font,
+				order = 3,
+				values = media:List(FONT),
+				itemControl = "DDI-Font",
+				get = function()
+					for i, v in next, media:List(FONT) do
+						if v == db.fontName then return i end
+					end
+				end,
+				set = function(_, value)
+					db.fontName = media:List(FONT)[value]
+					plugin:RestyleWindow()
+				end,
+				disabled = disabled,
+			},
+			fontOutline = {
+				type = "select",
+				name = L.outline,
+				order = 4,
+				values = {
+					[""] = L.none,
+					OUTLINE = L.thin,
+					THICKOUTLINE = L.thick,
+				},
+				disabled = disabled,
+			},
+			fontSize = {
+				type = "range",
+				name = L.fontSize,
+				order = 5,
+				max = 200, softMax = 72,
+				min = 1,
+				step = 1,
+				disabled = disabled,
+			},
+			monochrome = {
+				type = "toggle",
+				name = L.monochrome,
+				desc = L.monochromeDesc,
+				order = 6,
+				disabled = disabled,
+			},
+			exactPositioning = {
+				type = "group",
+				name = L.positionExact,
+				order = 8,
+				inline = true,
+				args = {
+					posx = {
+						type = "range",
+						name = L.positionX,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 1,
+						width = "full",
+					},
+					posy = {
+						type = "range",
+						name = L.positionY,
+						desc = L.positionDesc,
+						min = 0,
+						max = 2048,
+						step = 1,
+						order = 2,
+						width = "full",
+					},
+				},
+			},
+		},
+	}
+end
+
 
 -------------------------------------------------------------------------------
 -- Frame Creation
@@ -206,18 +324,7 @@ local function updateProfile()
 	db = plugin.db.profile
 
 	if display then
-		local x = db.posx
-		local y = db.posy
-		if x and y then
-			local s = display:GetEffectiveScale()
-			display:ClearAllPoints()
-			display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-		else
-			display:ClearAllPoints()
-			display:SetPoint("CENTER", UIParent, "CENTER", -300, -80)
-		end
-
-		--plugin:RestyleWindow()
+		plugin:RestyleWindow()
 	end
 end
 
