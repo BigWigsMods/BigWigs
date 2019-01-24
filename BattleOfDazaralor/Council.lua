@@ -81,7 +81,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "LaceratingClaws", 282444)
 	self:Log("SPELL_AURA_APPLIED", "LaceratingClawsApplied", 282444)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LaceratingClawsApplied", 282444)
-	self:Log("SPELL_CAST_SUCCESS", "KimbulsWrath", 282447)
+	self:Log("SPELL_AURA_APPLIED", "KimbulsWrathApplied", 282834)
 
 	-- Akunda's Aspect
 	self:Log("SPELL_CAST_START", "ThunderingStorm", 282411)
@@ -192,9 +192,17 @@ function mod:LaceratingClawsApplied(args)
 	self:PlaySound(args.spellId, "alarm", nil, args.destName)
 end
 
-function mod:KimbulsWrath(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+do
+	local prev = 0
+	function mod:KimbulsWrathApplied(args)
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			self:Message2(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "alert")
+			self:Bar(args.spellId, 60)
+		end
+	end
 end
 
 function mod:ThunderingStorm(args)
