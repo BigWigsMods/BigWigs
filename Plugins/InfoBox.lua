@@ -69,7 +69,7 @@ plugin.defaultDB = {
 	disabled = false,
 	lock = false,
 	fontName = plugin:GetDefaultFont(),
-	fontSize = 12,
+	fontSize = select(2, plugin:GetDefaultFont(12)),
 	fontOutline = "",
 }
 
