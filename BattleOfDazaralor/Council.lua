@@ -47,7 +47,7 @@ function mod:GetOptions()
 		{282209, "SAY", "FLASH"}, -- Mark of Prey
 		-- Kimbul's Aspect
 		{282444, "TANK"}, -- Lacerating Claws
-		282447, -- Kimbul's Wrath
+		{282834, "SAY", "PROXIMITY"}, -- Kimbul's Wrath
 		-- Akunda's Aspect
 		282411, -- Thundering Storm
 		285878, -- Mind Wipe
@@ -82,6 +82,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LaceratingClawsApplied", 282444)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LaceratingClawsApplied", 282444)
 	self:Log("SPELL_AURA_APPLIED", "KimbulsWrathApplied", 282834)
+	self:Log("SPELL_AURA_REMOVED", "KimbulsWrathRemoved", 282834)
 
 	-- Akunda's Aspect
 	self:Log("SPELL_CAST_START", "ThunderingStorm", 282411)
@@ -194,6 +195,7 @@ end
 
 do
 	local prev = 0
+	local playerList = mod:NewTargetList()
 	function mod:KimbulsWrathApplied(args)
 		local t = args.time
 		if t-prev > 2 then
@@ -201,7 +203,19 @@ do
 			self:Message2(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
 			self:Bar(args.spellId, 60)
+			self:OpenProximity(args.spellId, 5)
 		end
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+		end
+		playerList[#playerList+1] = args.destName
+		self:TargetsMessage(args.spellId, "orange", playerList)
+	end
+end
+
+function mod:KimbulsWrathRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CloseProximity(args.spellId)
 	end
 end
 
