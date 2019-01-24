@@ -197,6 +197,7 @@ do
 		local s = self:GetEffectiveScale()
 		db.posx = self:GetLeft() * s
 		db.posy = self:GetTop() * s
+		plugin:UpdateGUI()
 	end)
 	display:SetScript("OnHide", function(self)
 		inTestMode = false
