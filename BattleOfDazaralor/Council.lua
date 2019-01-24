@@ -232,6 +232,7 @@ function mod:MindWipe(args)
 end
 
 function mod:AkundasWrathApplied(args)
+	self:Bar(args.spellId, 60)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:Say(args.spellId)
