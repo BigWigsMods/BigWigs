@@ -74,7 +74,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CrawlingHexRemoved", 282135)
 	self:Log("SPELL_CAST_SUCCESS", "WildMaul", 285893)
 	self:Log("SPELL_CAST_START", "GonksWrath", 282155)
-	self:Log("SPELL_AURA_APPLIED", "MarkofPrey", 282209)
+	self:Log("SPELL_AURA_APPLIED", "MarkofPreyApplied", 282209)
+	self:Log("SPELL_AURA_REMOVED", "MarkofPreyRemoved", 282209)
 
 	-- Kimbul's Aspect
 	self:Log("SPELL_CAST_START", "LaceratingClaws", 282444)
@@ -170,12 +171,19 @@ function mod:GonksWrath(args)
 	self:PlaySound(args.spellId, "info")
 end
 
-function mod:MarkofPrey(args)
+function mod:MarkofPreyApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning")
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
+		self:AddPlateIcon(args.spellId, args.sourceGUID)
+	end
+end
+
+function mod:MarkofPreyRemoved(args)
+	if self:Me(args.destGUID) then
+		self:RemovePlateIcon(args.spellId, args.sourceGUID)
 	end
 end
 
