@@ -157,12 +157,14 @@ function mod:SeaSwell(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	self:OpenProximity(args.spellId, 5) -- XXX Open on stage 2 start
+	self:CDBar(args.spellId, 17)
 end
 
 function mod:IreoftheDeep(args)
 	self:Message2(args.spellId, "red", CL.count:format(args.spellName, ireCount))
 	self:PlaySound(args.spellId, "warning")
 	ireCount = ireCount + 1
+	self:CDBar(args.spellId, 32, CL.count:format(args.spellName, ireCount))
 end
 
 function mod:StormsWailApplied(args)
@@ -173,6 +175,7 @@ function mod:StormsWailApplied(args)
 		self:SayCountdown(args.spellId, 10) -- XXX make it different from tank one (or change tank countdown)
 	end
 	stormsWailCount = stormsWailCount + 1
+	self:CDBar(args.spellId, 120, CL.count:format(args.spellName, stormsWailCount))
 end
 
 function mod:StormsWailRemoved(args)

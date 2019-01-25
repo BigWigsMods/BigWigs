@@ -7,11 +7,11 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Loa Council", 2070, 2330)
+local mod, CL = BigWigs:NewBoss("Conclave of the Chosen", 2070, 2330)
 if not mod then return end
-mod:RegisterEnableMob(144747, 144767, 144963, 144941)
+mod:RegisterEnableMob(144747, 144767, 144963, 144941) -- Pa'ku's Aspect, Gonk's Aspect, Kimbul's Aspect, Akunda's Aspect
 mod.engageId = 2268
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals

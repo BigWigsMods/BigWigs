@@ -4,9 +4,10 @@
 
 local mod, CL = BigWigs:NewBoss("King Rastakhan", 2070, 2335)
 if not mod then return end
-mod:RegisterEnableMob(145616, 146322, 146326, 146320, 145644) -- King Rastakhan, Siegebreaker Roka, Headhunter Gal'wana, Prelate Za'lan, Bwonsamdi
+-- King Rastakhan, Siegebreaker Roka, Headhunter Gal'wana, Prelate Za'lan, Bwonsamdi
+mod:RegisterEnableMob(145616, 146322, 146326, 146320, 145644)
 mod.engageId = 2272
-mod.respawnTime = 12 -- PTR
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
