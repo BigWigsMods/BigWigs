@@ -94,6 +94,7 @@ function mod:OnEngage()
 	self:CDBar(282098, 5) -- Gift of Wind
 	self:CDBar(282135, 13.5) -- Crawling Hex
 	self:CDBar(285893, 17) -- Wild Maul
+	self:Bar(282107, 60) -- Pa'ku's Wrath
 end
 
 --------------------------------------------------------------------------------
