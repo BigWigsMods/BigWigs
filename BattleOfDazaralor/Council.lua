@@ -177,7 +177,7 @@ do
 		-- Gonk's Wrath isn't in the combat log
 		-- Instead, throttle the debuff that the raptors apply immediately
 		local t = args.time
-		if t-prev > 50 then
+		if t-prev > 58 then
 			prev = t
 			self:Message2(282155, "cyan") -- Gonk's Wrath
 			self:PlaySound(282155, "info") -- Gonk's Wrath
