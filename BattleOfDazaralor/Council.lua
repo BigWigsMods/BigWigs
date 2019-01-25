@@ -21,10 +21,12 @@ mod.respawnTime = 30
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
---
---end
+local L = mod:GetLocale()
+if L then
+	L.custom_on_fixate_plates = "Mark of Prey icon on Enemy Nameplate"
+	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates_icon = 282209
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -45,6 +47,7 @@ function mod:GetOptions()
 		285893, -- Wild Maul
 		282155, -- Gonk's Wrath
 		{282209, "SAY", "FLASH"}, -- Mark of Prey
+		"custom_on_fixate_plates",
 		-- Kimbul's Aspect
 		{282444, "TANK"}, -- Lacerating Claws
 		282447, -- Kimbul's Wrath
@@ -88,12 +91,22 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "MindWipe", 285878)
 	self:Log("SPELL_AURA_APPLIED", "AkundasWrathApplied", 286811)
 	self:Log("SPELL_AURA_REMOVED", "AkundasWrathRemoved", 286811)
+
+	if self:GetOption("custom_on_fixate_plates") then
+		self:ShowPlates()
+	end
 end
 
 function mod:OnEngage()
 	self:CDBar(282098, 5) -- Gift of Wind
 	self:CDBar(282135, 13.5) -- Crawling Hex
 	self:CDBar(285893, 17) -- Wild Maul
+end
+
+function mod:OnBossDisable()
+	if self:GetOption("custom_on_fixate_plates") then
+		self:HidePlates()
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -177,12 +190,14 @@ function mod:MarkofPreyApplied(args)
 		self:PlaySound(args.spellId, "warning")
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
-		self:AddPlateIcon(args.spellId, args.sourceGUID)
+		if self:GetOption("custom_on_fixate_plates") then
+			self:AddPlateIcon(args.spellId, args.sourceGUID)
+		end
 	end
 end
 
 function mod:MarkofPreyRemoved(args)
-	if self:Me(args.destGUID) then
+	if self:GetOption("custom_on_fixate_plates") and self:Me(args.destGUID) then
 		self:RemovePlateIcon(args.spellId, args.sourceGUID)
 	end
 end
