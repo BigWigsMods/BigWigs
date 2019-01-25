@@ -209,11 +209,11 @@ do
 			self:Message2(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
 			self:Bar(args.spellId, 60)
-			self:OpenProximity(args.spellId, 5)
 		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
+			self:OpenProximity(args.spellId, 5)
 		end
 		playerList[#playerList+1] = args.destName
 		self:TargetsMessage(args.spellId, "orange", playerList)
