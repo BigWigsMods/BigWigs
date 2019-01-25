@@ -102,7 +102,7 @@ end
 --
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
-	if msg:find("282107", nil, true) then -- Pa'ku's Wrath
+	if msg:find("282107", nil, true) then -- Pa'ku's Wrath, not in the combat log
 		self:Message2(282107, "red")
 		self:PlaySound(282107, "warning")
 		self:Bar(282107, 60)
