@@ -20,6 +20,8 @@ mod.engageId = 2276
 --
 
 local sparkBotCount = 1
+local botMarkCount = 0
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -28,6 +30,9 @@ local sparkBotCount = 1
 local L = mod:GetLocale()
 if L then
 	L.gigavolt_alt_text = "Bomb"
+
+	L.custom_off_sparkbot_marker = "Spark Bot Marker"
+	L.custom_off_sparkbot_marker_desc = "Mark Spark Bots with {rt4}{rt5}{rt6}{rt7}{rt8}."
 end
 
 --------------------------------------------------------------------------------
@@ -44,6 +49,7 @@ function mod:GetOptions()
 		gigavoltChargeMarker,
 		287952, -- Dimensional Ripper XL
 		284042, -- Deploy Spark Bot
+		"custom_off_sparkbot_marker",
 		288049, -- Shrink Ray
 		286051, -- Hyperdrive
 		-- Intermission
@@ -65,7 +71,12 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	botMarkCount = 0
 	sparkBotCount = sparkBotCount + 1
+	mobCollector = {}
+	if self:GetOption("custom_off_sparkbot_marker") then
+		self:RegisterTargetEvents("sparkBotMark")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -154,6 +165,14 @@ function mod:DeploySparkBot(args)
 	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, sparkBotCount))
 	self:PlaySound(args.spellId, "info")
 	sparkBotCount = sparkBotCount + 1
+end
+
+function mod:sparkBotMark(event, unit, guid)
+	if self:MobId(guid) == 144942 and not mobCollector[guid] then
+		botMarkCount = botMarkCount + 1
+		SetRaidTarget(unit, (botMarkCount % 5)+4)
+		mobCollector[guid] = true
+	end
 end
 
 function mod:ShrinkRay(args)
