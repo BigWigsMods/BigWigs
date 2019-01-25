@@ -200,23 +200,30 @@ function mod:LaceratingClawsApplied(args)
 end
 
 do
-	local prev = 0
-	local playerList = mod:NewTargetList()
+	local scheduled, isOnMe = nil, nil
+	local function announce()
+		if not isOnMe then -- Already announced if it was on me
+			mod:Message2(282834, "yellow")
+			mod:PlaySound(282834, "alert")
+		end
+		scheduled = nil
+		isOnMe = nil
+	end
+
 	function mod:KimbulsWrathApplied(args)
-		local t = args.time
-		if t-prev > 2 then
-			prev = t
-			self:Message2(args.spellId, "yellow")
-			self:PlaySound(args.spellId, "alert")
+		if not scheduled then
+			scheduled = true
 			self:Bar(args.spellId, 60)
+			self:SimpleTimer(announce, 0.1)
 		end
 		if self:Me(args.destGUID) then
+			isOnMe = true
+			self:PersonalMessage(args.spellId)
+			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId)
 			self:Flash(args.spellId)
 			self:OpenProximity(args.spellId, 5)
 		end
-		playerList[#playerList+1] = args.destName
-		self:TargetsMessage(args.spellId, "orange", playerList)
 	end
 end
 
