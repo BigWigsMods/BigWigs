@@ -25,6 +25,14 @@ if L then
 	L.interrupted_after = "%s被%s中斷（尚餘%.1f秒）"
 end
 
+L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "zhCN")
+if L then
+	L.gigavolt_alt_text = "炸彈"
+
+	L.custom_off_sparkbot_marker = "火花機器人標記"
+	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 標記火花機器人，需要權限。"
+end
+
 L = BigWigs:NewBossLocale("Treasure Guardian", "zhTW")
 if L then
 	L.custom_on_hand_timers = "因扎希之手"
