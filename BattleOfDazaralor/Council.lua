@@ -106,6 +106,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		self:Message2(282107, "red")
 		self:PlaySound(282107, "warning")
 		self:Bar(282107, 60)
+		self:CastBar(282107, 5)
 	end
 end
 
