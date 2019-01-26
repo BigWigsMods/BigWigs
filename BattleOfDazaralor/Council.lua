@@ -17,6 +17,8 @@ mod.respawnTime = 30
 -- Locals
 --
 
+local bossesKilled = 0
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -88,9 +90,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "MindWipe", 285878)
 	self:Log("SPELL_AURA_APPLIED", "AkundasWrathApplied", 286811)
 	self:Log("SPELL_AURA_REMOVED", "AkundasWrathRemoved", 286811)
+
+	self:Death("BossDeath", 144747, 144767, 144963, 144941) -- Pa'ku's Aspect, Gonk's Aspect, Kimbul's Aspect, Akunda's Aspect)
 end
 
 function mod:OnEngage()
+	bossesKilled = 0
 	self:CDBar(282098, 5) -- Gift of Wind
 	self:CDBar(282135, 13.5) -- Crawling Hex
 	self:CDBar(285893, 17) -- Wild Maul
@@ -260,5 +265,14 @@ end
 function mod:AkundasWrathRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+function mod:BossDeath(args)
+	bossesKilled = bossesKilled + 1
+	if bossesKilled == 1 then -- Kimbul spawning
+		-- XXX Kimbul's Wrath timer here
+	elseif bossesKilled == 2 then -- Akunda spawning
+		-- XXX Akunda's Wrath timer here
 	end
 end
