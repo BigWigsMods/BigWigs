@@ -274,7 +274,7 @@ end
 function mod:BossDeath(args)
 	bossesKilled = bossesKilled + 1
 	if bossesKilled == 1 then -- Kimbul spawning
-		self:Bar(282834, 49) -- Kimbul's Wrath XXX check this
+		self:Bar(282834, 50) -- Kimbul's Wrath XXX check this
 	elseif bossesKilled == 2 then -- Akunda spawning
 		self:Bar(286811, 20) -- Akunda's Wrath XXX check this
 	end
