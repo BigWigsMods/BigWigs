@@ -269,10 +269,6 @@ function mod:WildMaul(args)
 	self:CDBar(args.spellId, 16)
 end
 
-function mod:GonksWrath(args)
-	self:Message2(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "info")
-end
 do
 	local prev = 0
 	function mod:MarkofPrey(args)
