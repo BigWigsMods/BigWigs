@@ -1,3 +1,9 @@
+local L = BigWigs:NewBossLocale("Conclave of the Chosen", "deDE")
+if not L then return end
+if L then
+	L.killed = "%s getötet!"
+end
+
 local L = BigWigs:NewBossLocale("Flamefist and the Illuminated", "deDE")
 if not L then return end
 if L then
