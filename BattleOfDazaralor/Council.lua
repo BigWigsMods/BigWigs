@@ -34,7 +34,8 @@ end
 -- Initialization
 --
 
-local crawlingHexMarker = mod:AddMarkerOption(false, "player", 1, 282135, 1, 2, 3, 4, 5, 6) -- Crawling Hex
+local crawlingHexMarker = mod:AddMarkerOption(false, "player", 1, 282135, 1, 2, 3, 4, 5) -- Crawling Hex
+local kimbulsWrathMarker = mod:AddMarkerOption(false, "player", 8, 282447, 8, 7, 6, 5) -- Kimbul's Wrath
 local mindWipeMarker = mod:AddMarkerOption(false, "player", 1, 285879, 1, 2, 3, 4, 5) -- Mind Wipe
 function mod:GetOptions()
 	return {
@@ -57,6 +58,7 @@ function mod:GetOptions()
 		-- Kimbul's Aspect
 		{282444, "TANK"}, -- Lacerating Claws
 		{282447, "SAY", "FLASH"}, -- Kimbul's Wrath
+		kimbulsWrathMarker,
 
 		-- Akunda's Aspect
 		282411, -- Thundering Storm
@@ -99,6 +101,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LaceratingClawsApplied", 282444)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LaceratingClawsApplied", 282444)
 	self:Log("SPELL_AURA_APPLIED", "KimbulsWrathApplied", 282834)
+	self:Log("SPELL_AURA_REMOVED", "KimbulsWrathRemoved", 282834)
 
 	-- Akunda's Aspect
 	self:Log("SPELL_CAST_START", "ThunderingStorm", 282411)
@@ -233,7 +236,7 @@ do
 			self:SimpleTimer(warn, 0.3)
 		end
 
-		if self:GetOption(crawlingHexMarker) then
+		if self:GetOption(crawlingHexMarker) and count < 6 then
 			SetRaidTarget(args.destName, count)
 		end
 	end
@@ -300,7 +303,7 @@ function mod:LaceratingClawsApplied(args)
 end
 
 do
-	local scheduled, isOnMe, isNearMe = nil, nil, nil
+	local scheduled, isOnMe, isNearMe, count = nil, nil, nil, 0
 
 	local function leapWarn(self)
 		if not isOnMe then
@@ -316,6 +319,7 @@ do
 		scheduled = nil
 		isOnMe = nil
 		isNearMe = nil
+		count = 0
 	end
 
 	function mod:KimbulsWrathApplied(args)
@@ -326,10 +330,20 @@ do
 			self:Flash(282447)
 			self:Say(282447, L.leap)
 		end
+		count = count + 1
+		if self:GetOption(kimbulsWrathMarker) and count < 5 then
+			SetRaidTarget(args.destName, 9-count)
+		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer(leapWarn, 0.1, self)
 		end
 		isNearMe = isNearMe or IsItemInRange(37727, args.destName) -- 5yd
+	end
+	
+	function mod:KimbulsWrathRemoved(args)
+		if self:GetOption(kimbulsWrathMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 	end
 end
 
@@ -359,7 +373,7 @@ do
 				self:PlaySound(args.spellId, "alert")
 		end
 
-		if self:GetOption(mindWipeMarker) then
+		if self:GetOption(mindWipeMarker) and #playerList < 6 then
 			SetRaidTarget(args.destName, #playerList)
 		end
 	end
