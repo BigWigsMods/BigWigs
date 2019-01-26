@@ -13,6 +13,7 @@ mod.respawnTime = 30
 -- Locals
 --
 
+local stage = 1
 local toadCount = 1
 
 --------------------------------------------------------------------------------
@@ -30,73 +31,122 @@ local toadCount = 1
 
 function mod:GetOptions()
 	return {
+		"stages",
 		-- Stage 1
 		284831, -- Scorching Detonation
 		284933, -- Plague of Toads
 		285172, -- Greater Serpent Totem
-		{284662, "SAY", "FLASH"}, -- Seal of Purification
+		{290450, "SAY", "FLASH"}, -- Seal of Purification
 		284686, -- Meteor Leap
 		284719, -- Crushing Leap
 		284781, -- Grievous Axe
 		-- Stage 2
-		{285347, "SAY"}, -- Plague of Fire
+		{285346, "SAY"}, -- Plague of Fire
 		285003, -- Zombie Dust Totem
-		285402, -- Voodoo Doll
 		{285213, "TANK_HEALER"}, -- Caress of Death
-		283504, -- Suffering Spirits
 		{288449, "SAY", "SAY_COUNTDOWN"}, -- Death's Door
 		-- Stage 3
 		287333, -- Inevitable End
+		286742, -- Necrotic Smash
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	-- Stage 1
 	self:Log("SPELL_CAST_SUCCESS", "ScorchingDetonationSuccess", 284831)
 	self:Log("SPELL_CAST_START", "PlagueofToads", 284933)
 	self:Log("SPELL_CAST_SUCCESS", "GreaterSerpentTotem", 285172)
-	self:Log("SPELL_AURA_APPLIED", "SealofPurificationApplied", 284662)
+	self:Log("SPELL_AURA_APPLIED", "SealofPurificationApplied", 290450)
 	self:Log("SPELL_CAST_START", "MeteorLeap", 284686)
 	self:Log("SPELL_CAST_SUCCESS", "CrushingLeap", 284719)
 	self:Log("SPELL_CAST_START", "GrievousAxe", 284781)
 	self:Log("SPELL_AURA_APPLIED", "GrievousAxeApplied", 284781)
 	-- Stage 2
-	self:Log("SPELL_CAST_SUCCESS", "PlagueofFire", 285347)
+	self:Log("SPELL_CAST_SUCCESS", "PlagueofFire", 285346)
 	self:Log("SPELL_AURA_APPLIED", "PlagueofFireApplied", 285349)
 	self:Log("SPELL_CAST_SUCCESS", "ZombieDustTotem", 285003)
-	self:Log("SPELL_CAST_SUCCESS", "VoodooDoll", 285402)
 	self:Log("SPELL_CAST_START", "CaressofDeath", 285213)
-	self:Log("SPELL_CAST_START", "SufferingSpirits", 283504)
 	self:Log("SPELL_CAST_START", "DeathsDoor", 288449)
 	-- Stage 3
 	self:Log("SPELL_CAST_START", "InevitableEnd", 287333)
+	self:Log("SPELL_CAST_START", "NecroticSmash", 286742)
 end
 
 function mod:OnEngage()
 	toadCount = 1
+	stage = 1
+
+	self:Bar(284781, 8.5) -- Grievous Axe
+	self:Bar(290450, 8.5) -- Seal of Purification
+	self:Bar(284686, 15.5) -- Meteor Leap
+	self:Bar(284933, 20.5, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
+	self:Bar(284831, 26.5) -- Scorching Detonation
+	self:Bar(285172, 31.5) -- Greater Serpent Totem
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
+	if spellId == 287165 then -- King Rastakhan P1 -> P2 Conversation
+		stage = 2
+		self:PlaySound("stages", "long")
+		self:Message2("stages", "cyan",CL.stage:format(stage), false)
+		self:StopBar(284781) -- Grievous Axe
+		self:StopBar(290450) -- Seal of Purification
+		self:StopBar(284686) -- Meteor Leap
+		self:StopBar(CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
+		self:StopBar(284831) -- Scorching Detonation
+		self:StopBar(285172) -- Greater Serpent Totem
+
+		-- XXX Check timers
+		self:Bar(284831, 15) -- Scorching Detonation
+		self:Bar(284933, 20.5, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
+		self:Bar(285003, 26.5) -- Zombie Dust Totem
+		self:Bar(285346, 41) -- Plague of Fire
+		self:Bar(285213, 42.5) -- Caress of Death
+		self:Bar(288449, 60.5) -- Death's Door
+	elseif spellId == 290801 then -- King Rastakhan P2 -> P3 Conversation
+		stage = 3
+		self:PlaySound("stages", "long")
+		self:Message2("stages", "cyan",CL.stage:format(stage), false)
+
+		self:StopBar(284933, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
+		self:StopBar(285213) -- Caress of Death
+		self:StopBar(288449) -- Death's Door
+
+		self:CDBar(286742, 28.5) -- Necrotic Smash
+	elseif spellId == 290852 then -- King Rastakhan P3 -> P4 Conversation
+		stage = 4
+		toadCount = 1
+		self:PlaySound("stages", "long")
+		self:Message2("stages", "cyan",CL.stage:format(stage), false)
+		self:StopBar(285003) -- Zombie Dust Totem
+
+		self:Bar(284933, 20.5, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
+	end
+end
+
 function mod:ScorchingDetonationSuccess(args)
 	self:TargetMessage2(args.spellId, "purple", args.destName)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 5)
-	self:Bar(args.spellId, 22)
+	self:CDBar(args.spellId, stage == 2 and 41 or stage == 3 and 33 or stage == 4 and 27 or 22)
 end
 
 function mod:PlagueofToads(args)
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, toadCount))
 	self:PlaySound(args.spellId, "alert")
 	toadCount = toadCount + 1
-	self:Bar(args.spellId, 20, CL.count:format(args.spellName, toadCount))
+	self:Bar(args.spellId, stage == 2 and 44 or 20, CL.count:format(args.spellName, toadCount))
 end
 
 function mod:GreaterSerpentTotem(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
+	self:Bar(args.spellId, 31.5)
 end
 
 function mod:SealofPurificationApplied(args)
@@ -106,13 +156,14 @@ function mod:SealofPurificationApplied(args)
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
 	end
+	self:Bar(args.spellId, 25.5)
 end
 
 function mod:MeteorLeap(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	self:CastBar(args.spellId, 5)
-	self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, 30) -- Unconfirmed
 end
 
 function mod:CrushingLeap(args)
@@ -148,54 +199,45 @@ do
 	end
 end
 
-do
-	local prev = 0
-	function mod:PlagueofFire(args)
-		local t = args.time
-		if t-prev > 2 then
-			prev = t
-			self:Message2(args.spellId, "orange")
-			self:PlaySound(args.spellId, "alarm")
-			self:Bar(args.spellId, 30)
-		end
-	end
+function mod:PlagueofFire(args)
+	self:Message2(args.spellId, "orange")
+	self:PlaySound(args.spellId, "alarm")
+	self:Bar(args.spellId, 25.5)
 end
 
 function mod:PlagueofFireApplied(args)
 	if self:Me(args.destGUID) then
-		self:PlaySound(285347, "warning")
-		self:Say(285347, self:SpellName(177849)) -- Fire on X
+		self:PersonalMessage(285346)
+		self:PlaySound(285346, "warning")
+		self:Say(285346, self:SpellName(177849)) -- Fire on X
 	end
 end
 
 function mod:ZombieDustTotem(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
-end
-
-function mod:VoodooDoll(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+	self:Bar(args.spellId, 45)
 end
 
 function mod:CaressofDeath(args)
 	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
-end
-
-function mod:SufferingSpirits(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 10) -- 2s cast, 8s channel
+	self:Bar(args.spellId, 43)
 end
 
 function mod:DeathsDoor(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
+	self:CDBar(args.spellId, 28)
 end
 
 function mod:InevitableEnd(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 6)
+end
+
+function mod:NecroticSmash(args)
+	self:Message2(args.spellId, "red")
+	self:PlaySound(args.spellId, "alarm")
 end
