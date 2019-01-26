@@ -117,8 +117,11 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 end
 
 function mod:LoasWrath(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "cyan")
-	self:PlaySound(args.spellId, "info")
+	local unit = self:GetBossByGUID(args.destGUID)
+	if unit and not UnitIsDead(unit) then
+		self:StackMessage(args.spellId, args.destName, args.amount, "cyan")
+		self:PlaySound(args.spellId, "info")
+	end
 end
 
 function mod:LoasPact(args)
