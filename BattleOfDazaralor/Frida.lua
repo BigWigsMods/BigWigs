@@ -4,7 +4,7 @@ if UnitFactionGroup("player") ~= "Horde" then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Frida Ironbellows", 2070, 2333)
+local mod, CL = BigWigs:NewBoss("Champion of the Light Horde", 2070, 2333)
 if not mod then return end
 mod:RegisterEnableMob(144680)
 mod.engageId = 2265

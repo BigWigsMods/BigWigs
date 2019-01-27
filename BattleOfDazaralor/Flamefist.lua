@@ -7,7 +7,7 @@ if UnitFactionGroup("player") ~= "Horde" then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Flamefist and the Illuminated", 2070, 2341)
+local mod, CL = BigWigs:NewBoss("Jadefire Masters Horde", 2070, 2341)
 if not mod then return end
 mod:RegisterEnableMob(144693, 144690) -- Manceroy Flamefist, Mestrah
 mod.engageId = 2266

@@ -4,7 +4,7 @@ if UnitFactionGroup("player") ~= "Alliance" then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Ra'wani Kanae", 2070, 2344)
+local mod, CL = BigWigs:NewBoss("Champion of the Light Alliance", 2070, 2344)
 if not mod then return end
 mod:RegisterEnableMob(144683)
 mod.engageId = 2265

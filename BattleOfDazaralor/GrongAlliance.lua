@@ -3,7 +3,7 @@ if UnitFactionGroup("player") ~= "Alliance" then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Grong the Revenant", 2070, 2340)
+local mod, CL = BigWigs:NewBoss("Grong Alliance", 2070, 2340)
 if not mod then return end
 mod:RegisterEnableMob(144638)
 mod.engageId = 2284
