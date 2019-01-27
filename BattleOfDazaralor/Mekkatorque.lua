@@ -68,7 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 288410, 287691) -- phase 1 spellid, phase 2+ spellid
 	self:Log("SPELL_CAST_START", "ShrinkRay", 288049)
 	self:Log("SPELL_CAST_SUCCESS", "EvasiveManeuvers", 287751)
-	self:Log("SPELL_CAST_SUCCESS", "CrashDown", 282245) -- Spell that starts phase 3
+	self:Log("SPELL_CAST_SUCCESS", "CrashDown", 287797) -- Spell that starts phase 3
 	self:Log("SPELL_CAST_START", "SignalExplodingSheep", 287929)
 end
 
