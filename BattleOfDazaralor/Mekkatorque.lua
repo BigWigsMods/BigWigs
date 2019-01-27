@@ -18,6 +18,7 @@ mod.respawnTime = 32
 -- Locals
 --
 
+local stage = 1
 local sparkBotCount = 0
 local botMarkCount = 0
 local mobCollector = {}
@@ -41,6 +42,7 @@ end
 local gigavoltChargeMarker = mod:AddMarkerOption(false, "player", 1, 286646, 1, 2, 3) -- Gigavolt Charge
 function mod:GetOptions()
 	return {
+		"stages",
 		-- General
 		282153, -- Buster Cannon
 		282205, -- Blast Off
@@ -63,13 +65,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GigavoltChargeApplied", 286646)
 	self:Log("SPELL_AURA_REMOVED", "GigavoltChargeRemoved", 286646)
 	self:Log("SPELL_CAST_START", "DimensionalRipperXL", 287952)
-	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 288410, 287691) -- phase 1 spellid, phase 2 spellid
+	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 288410, 287691) -- phase 1 spellid, phase 2+ spellid
 	self:Log("SPELL_CAST_START", "ShrinkRay", 288049)
-	self:Log("SPELL_AURA_APPLIED", "Hyperdrive", 286051)
+	self:Log("SPELL_CAST_SUCCESS", "EvasiveManeuvers", 287751)
+	self:Log("SPELL_CAST_SUCCESS", "CrashDown", 282245) -- Spell that starts phase 3
 	self:Log("SPELL_CAST_START", "SignalExplodingSheep", 287929)
 end
 
 function mod:OnEngage()
+	stage = 1
 	botMarkCount = 0
 	sparkBotCount = 0
 	mobCollector = {}
@@ -188,9 +192,16 @@ function mod:ShrinkRay(args)
 	self:PlaySound(args.spellId, "long")
 end
 
-function mod:Hyperdrive(args)
-	self:Message2(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "info")
+function mod:EvasiveManeuvers(args)
+	stage = 2
+	self:Message2("stages", "cyan", CL.stage:format(stage))
+	self:PlaySound("stages", "long")
+end
+
+function mod:CrashDown(args)
+	stage = 3
+	self:Message2("stages", "cyan", CL.stage:format(stage))
+	self:PlaySound("stages", "info")
 end
 
 function mod:SignalExplodingSheep(args)
