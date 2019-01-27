@@ -30,7 +30,7 @@ if L then
 	L.interrupted_after = "%s被%s中斷（尚餘%.1f秒）"
 end
 
-L = BigWigs:NewBossLocale("Grimfang and Firecaller", "zhTW")
+L = BigWigs:NewBossLocale("Jadefire Masters", "zhTW")
 if L then
 	L.custom_on_fixate_plates = "在敵方名條顯示追獵圖示"
 	L.custom_on_fixate_plates_desc = "當你被追獵時，在敵方名條上顯示一個圖示。\n需要啟用敵方名條，此功能目前只有KuiNameplates支援。"
@@ -51,7 +51,7 @@ if L then
 	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 標記火花機器人，需要權限。"
 end
 
-L = BigWigs:NewBossLocale("Treasure Guardian", "zhTW")
+L = BigWigs:NewBossLocale("Opulence", "zhTW")
 if L then
 	L.custom_on_hand_timers = "因扎希之手"
 	L.custom_on_hand_timers_desc = "顯示因扎希之手的技能警報和計時器。"
