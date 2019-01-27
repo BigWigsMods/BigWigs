@@ -1,14 +1,14 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
 ..\FrameXML\UI.xsd">
 
-<Script file="Kanae.lua"/>
-<Script file="Frida.lua"/>
-<Script file="Grimfang.lua"/>
+<Script file="ChampionAlliance.lua"/>
+<Script file="ChampionHorde.lua"/>
+<Script file="JadefireAlliance.lua"/>
 <Script file="GrongHorde.lua"/>
 <Script file="GrongAlliance.lua"/>
-<Script file="Flamefist.lua"/>
-<Script file="Guardian.lua"/>
-<Script file="Council.lua"/>
+<Script file="JadefireHorde.lua"/>
+<Script file="Opulence.lua"/>
+<Script file="Conclave.lua"/>
 <Script file="Rastakhan.lua"/>
 <Script file="Mekkatorque.lua"/>
 <Script file="Blockade.lua"/>
