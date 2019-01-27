@@ -339,7 +339,7 @@ do
 		end
 		isNearMe = isNearMe or IsItemInRange(37727, args.destName) -- 5yd
 	end
-	
+
 	function mod:KimbulsWrathRemoved(args)
 		if self:GetOption(kimbulsWrathMarker) then
 			SetRaidTarget(args.destName, 0)
@@ -367,7 +367,6 @@ do
 		end
 
 		playerList[#playerList+1] = args.destName
-		self:TargetsMessage(args.spellId, "yellow", playerList)
 
 		if self:Dispeller("magic", nil, args.spellId) then
 				self:PlaySound(args.spellId, "alert")
@@ -380,7 +379,7 @@ do
 
 	function mod:MindWipeRemoved(args)
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, "removed", "green")
+			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
 		if self:GetOption(mindWipeMarker) then
@@ -401,7 +400,7 @@ end
 
 function mod:AkundasWrathRemoved(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, "removed", "green")
+		self:PersonalMessage(args.spellId, "removed")
 		self:CancelSayCountdown(args.spellId)
 	end
 end
