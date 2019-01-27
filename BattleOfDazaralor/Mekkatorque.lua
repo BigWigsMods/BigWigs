@@ -59,7 +59,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BusterCannon", 282153)
 	self:Log("SPELL_CAST_START", "BlastOff", 282205)
-	self:Log("SPELL_CAST_SUCCESS", "GigavoltCharge", 286597)
+	self:Log("SPELL_CAST_SUCCESS", "GigavoltCharge", 286597, 287757)
 	self:Log("SPELL_AURA_APPLIED", "GigavoltChargeApplied", 286646)
 	self:Log("SPELL_AURA_REMOVED", "GigavoltChargeRemoved", 286646)
 	self:Log("SPELL_CAST_START", "DimensionalRipperXL", 287952)
