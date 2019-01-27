@@ -196,7 +196,8 @@ function mod:EvasiveManeuvers(args)
 	stage = 2
 	self:Message2("stages", "cyan", CL.stage:format(stage))
 	self:PlaySound("stages", "long")
-	self:Bar(286646, 14, L.gigavolt_alt_text) -- Gigavolt Charge
+	self:Bar(286646, 14.3, L.gigavolt_alt_text) -- Gigavolt Charge
+	self:Bar(288410, 18.3) -- Deploy Spark Bot
 end
 
 function mod:CrashDown(args)
