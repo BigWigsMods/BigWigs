@@ -190,7 +190,6 @@ end
 
 function mod:DeathsPresence(args)
 	if stage < 2 then
-		prev = args.time
 		stage = 2
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
