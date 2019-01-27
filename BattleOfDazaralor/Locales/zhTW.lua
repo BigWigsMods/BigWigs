@@ -7,13 +7,13 @@ end
 local L = BigWigs:NewBossLocale("Frida Ironbellows", "zhTW")
 if not L then return end
 if L then
-	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+	L.disorient_desc = "為|cff71d5ff[盲信]|r顯示施法條，如果你需要一個倒數計時的話。\n" -- Blinding Faith = 283650
 end
 
 local L = BigWigs:NewBossLocale("Ra'wani Kanae", "zhTW")
 if not L then return end
 if L then
-	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+	L.disorient_desc = "為|cff71d5ff[盲信]|r顯示施法條，如果你需要一個倒數計時的話。\n" -- Blinding Faith = 283650
 end
 
 local L = BigWigs:NewBossLocale("Flamefist and the Illuminated", "zhTW")
