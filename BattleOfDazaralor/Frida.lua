@@ -1,4 +1,5 @@
 if UnitFactionGroup("player") ~= "Horde" then return end
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -19,10 +20,12 @@ local waveofLightCounter = 0
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
---
---end
+local L = mod:GetLocale()
+if L then
+	L.disorient = 156266 -- Disorient
+	L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+	L.disorient_icon = 156266 -- Some swirl
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -41,6 +44,7 @@ function mod:GetOptions()
 		284595, -- Penance
 		283628, -- Heal
 		283650, -- Blinding Faith
+		{"disorient", "COUNTDOWN"},
 		-- Mythic
 		287469, -- Prayer for the Fallen
 	}, {
@@ -147,7 +151,7 @@ end
 function mod:BlindingFaith(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 4)
+	self:CastBar("disorient", 4, L.disorient, L.disorient_icon)
 	self:CDBar(args.spellId, 15)
 end
 

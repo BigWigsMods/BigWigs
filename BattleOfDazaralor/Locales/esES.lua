@@ -4,6 +4,18 @@ if L then
 	--L.killed = "%s killed!"
 end
 
+local L = BigWigs:NewBossLocale("Frida Ironbellows", "esES") or BigWigs:NewBossLocale("Frida Ironbellows", "esMX")
+if not L then return end
+if L then
+	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+end
+
+local L = BigWigs:NewBossLocale("Ra'wani Kanae", "esES") or BigWigs:NewBossLocale("Ra'wani Kanae", "esMX")
+if not L then return end
+if L then
+	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+end
+
 local L = BigWigs:NewBossLocale("Flamefist and the Illuminated", "esES") or BigWigs:NewBossLocale("Flamefist and the Illuminated", "esMX")
 if not L then return end
 if L then
