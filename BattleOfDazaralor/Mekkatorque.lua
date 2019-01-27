@@ -169,7 +169,7 @@ function mod:DeploySparkBot(args)
 	self:Message2(288410, "cyan", CL.count:format(args.spellName, sparkBotCount))
 	self:PlaySound(288410, "info")
 	if args.spellId == 288410 then -- Phase 1
-		self:Bar(288410, sparkBotCount % 3 == 0 and 42.5 or 22.5)
+		self:Bar(288410, sparkBotCount % 3 == 0 and 42.5 or 22.5) -- 3 casts spaced a short distance apart, followed by a longer wait
 	else -- Phase 2
 		self:Bar(288410, 40)
 	end
