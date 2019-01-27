@@ -198,6 +198,7 @@ function mod:EvasiveManeuvers(args)
 	self:PlaySound("stages", "long")
 	self:Bar(286646, 14.3, L.gigavolt_alt_text) -- Gigavolt Charge
 	self:Bar(288410, 18.3) -- Deploy Spark Bot
+	self:StopBar(282205) -- Blast Off
 end
 
 function mod:CrashDown(args)
