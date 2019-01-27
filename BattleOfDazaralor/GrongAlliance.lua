@@ -39,11 +39,15 @@ function mod:GetOptions()
 		282543, -- Deathly Slam
 		285994, -- Ferocious Roar
 		--[[ Death Specter ]]--
-		--282471, -- Voodoo Blast
+		282471, -- Voodoo Blast
+		286373, -- Chill of Death
 		282526, -- Death Specter
 		282533, -- Death Empowerment
 		286434, -- Shadow Core
 		286435, -- Discharge Shadow Core
+	}, {
+		[282399] = mod.displayName,
+		[282471] = -18965, -- Death Specter
 	}
 end
 
@@ -62,6 +66,12 @@ function mod:OnBossEnable()
 
 	--[[ Death Specter ]]--
 	--self:Log("SPELL_CAST_SUCCESS", "VoodooBlast", 282471) XXX Check what we can do with this
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 286373) -- Chill of Death
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 286373) -- Chill of Death
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 286373)
+	self:Log("SPELL_DAMAGE", "GroundDamage", 282471) -- Voodoo Blast
+	self:Log("SPELL_MISSED", "GroundDamage", 282471)
+	
 	self:Log("SPELL_CAST_SUCCESS", "DeathSpecter", 282526)
 	self:Log("SPELL_CAST_START", "DeathEmpowerment", 282533)
 	self:Log("SPELL_AURA_APPLIED", "ShadowCore", 286434)
@@ -129,6 +139,20 @@ end
 --	end
 --	self:Bar(args.spellId, 23.1)
 --end
+
+do
+	local prev = 0
+	function mod:GroundDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 1.5 then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
+	end
+end
 
 function mod:DeathSpecter(args)
 	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, addCount)))
