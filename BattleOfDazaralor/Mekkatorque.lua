@@ -44,7 +44,7 @@ function mod:GetOptions()
 	return {
 		-- General
 		"stages",
-		282153, -- Buster Cannon
+		{282153, "EMPHASIZE"}, -- Buster Cannon
 		282205, -- Blast Off
 		{286646, "SAY", "SAY_COUNTDOWN"}, -- Gigavolt Charge
 		gigavoltChargeMarker,
@@ -106,7 +106,7 @@ end
 
 function mod:BusterCannon(args)
 	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "warning")
 	-- XXX Improve Fix Timers
 	self:CDBar(args.spellId, 25)
 end
