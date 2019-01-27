@@ -205,6 +205,9 @@ function mod:CrashDown(args)
 	stage = 3
 	self:Message2("stages", "cyan", CL.stage:format(stage))
 	self:PlaySound("stages", "info")
+	self:Bar(286646, 19.3, L.gigavolt_alt_text) -- Gigavolt Charge
+	self:Bar(288410, 14.3) -- Deploy Spark Bot
+	self:Bar(282205, 38.9) -- Blast Off
 end
 
 function mod:SignalExplodingSheep(args)
