@@ -18,7 +18,7 @@ mod.respawnTime = 32
 -- Locals
 --
 
-local sparkBotCount = 1
+local sparkBotCount = 0
 local botMarkCount = 0
 local mobCollector = {}
 
@@ -47,7 +47,7 @@ function mod:GetOptions()
 		{286646, "SAY", "SAY_COUNTDOWN"}, -- Gigavolt Charge
 		gigavoltChargeMarker,
 		287952, -- Dimensional Ripper XL
-		284042, -- Deploy Spark Bot
+		288410, -- Deploy Spark Bot
 		"custom_off_sparkbot_marker",
 		288049, -- Shrink Ray
 		286051, -- Hyperdrive
@@ -63,7 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GigavoltChargeApplied", 286646)
 	self:Log("SPELL_AURA_REMOVED", "GigavoltChargeRemoved", 286646)
 	self:Log("SPELL_CAST_START", "DimensionalRipperXL", 287952)
-	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 284042)
+	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 288410)
 	self:Log("SPELL_CAST_START", "ShrinkRay", 288049)
 	self:Log("SPELL_AURA_APPLIED", "Hyperdrive", 286051)
 	self:Log("SPELL_CAST_START", "SignalExplodingSheep", 287929)
@@ -71,7 +71,7 @@ end
 
 function mod:OnEngage()
 	botMarkCount = 0
-	sparkBotCount = sparkBotCount + 1
+	sparkBotCount = 0
 	mobCollector = {}
 	if self:GetOption("custom_off_sparkbot_marker") then
 		self:RegisterTargetEvents("sparkBotMark")
@@ -79,7 +79,7 @@ function mod:OnEngage()
 	self:Bar(282153, 13) -- Buster Cannon
 	self:Bar(282205, 41) -- Blast Off
 	self:Bar(286597, 21.5) -- Gigavolt Charge
-	self:Bar(284042, 6.5) -- Deploy Spark Bot
+	self:Bar(288410, 6.5) -- Deploy Spark Bot
 end
 
 --------------------------------------------------------------------------------
@@ -165,9 +165,10 @@ function mod:DimensionalRipperXL(args)
 end
 
 function mod:DeploySparkBot(args)
+	sparkBotCount = sparkBotCount + 1
 	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, sparkBotCount))
 	self:PlaySound(args.spellId, "info")
-	sparkBotCount = sparkBotCount + 1
+	self:Bar(args.spellId, sparkBotCount % 3 == 0 and 42.5 or 22.5)
 end
 
 function mod:sparkBotMark(event, unit, guid)
