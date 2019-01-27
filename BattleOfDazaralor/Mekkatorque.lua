@@ -79,7 +79,7 @@ function mod:OnEngage()
 	sparkBotCount = 1
 	mobCollector = {}
 
-	self:Bar(288410, 6.5, CL.count:format(args.spellName, sparkBotCount)) -- Deploy Spark Bot
+	self:CDBar(288410, 6.5, CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
 	self:CDBar(282153, 13) -- Buster Cannon
 	self:CDBar(286646, 20, L.gigavolt_alt_text) -- Bombs // Gigavolt Charge
 	self:CDBar(287952, 38) -- Wormhole Generator
