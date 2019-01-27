@@ -35,14 +35,6 @@ if L then
 	L.interrupted_after = "%s被%s中断（%.1f秒剩余）"
 end
 
-L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "zhCN")
-if L then
-	L.gigavolt_alt_text = "炸弹"
-
-	L.custom_off_sparkbot_marker = "火花机器人标记"
-	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 标记火花机器人。"
-end
-
 L = BigWigs:NewBossLocale("Opulence", "zhCN")
 if L then
 	L.custom_on_hand_timers = "因扎希之手"
@@ -57,4 +49,13 @@ end
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "zhCN")
 if L then
 	L.killed = "%s已击杀！"
+	L.count_of = "%s （%d/%d）"
+end
+
+L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "zhCN")
+if L then
+	L.gigavolt_alt_text = "炸弹"
+
+	L.custom_off_sparkbot_marker = "火花机器人标记"
+	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 标记火花机器人。"
 end

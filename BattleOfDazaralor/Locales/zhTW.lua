@@ -49,4 +49,13 @@ end
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "zhTW")
 if L then
 	--L.killed = "%s killed!"
+	L.count_of = "%s （%d/%d）"
+end
+
+L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "zhTW")
+if L then
+	--L.gigavolt_alt_text = "Bomb"
+
+	--L.custom_off_sparkbot_marker = "Spark Bot Marker"
+	--L.custom_off_sparkbot_marker_desc = "Mark Spark Bots with {rt4}{rt5}{rt6}{rt7}{rt8}."
 end
