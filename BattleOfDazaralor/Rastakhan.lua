@@ -243,7 +243,6 @@ end
 function mod:DeathsDoorApplied(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
-		self:Flash(args.spellId)
 		self:SayCountdown(args.spellId, 8)
 	end
 	self:TargetMessage2(args.spellId, "orange", args.destName)
