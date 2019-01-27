@@ -63,7 +63,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GigavoltChargeApplied", 286646)
 	self:Log("SPELL_AURA_REMOVED", "GigavoltChargeRemoved", 286646)
 	self:Log("SPELL_CAST_START", "DimensionalRipperXL", 287952)
-	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 288410)
+	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 288410, 287691) -- phase 1 spellid, phase 2 spellid
 	self:Log("SPELL_CAST_START", "ShrinkRay", 288049)
 	self:Log("SPELL_AURA_APPLIED", "Hyperdrive", 286051)
 	self:Log("SPELL_CAST_START", "SignalExplodingSheep", 287929)
@@ -166,9 +166,13 @@ end
 
 function mod:DeploySparkBot(args)
 	sparkBotCount = sparkBotCount + 1
-	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, sparkBotCount))
-	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, sparkBotCount % 3 == 0 and 42.5 or 22.5)
+	self:Message2(288410, "cyan", CL.count:format(args.spellName, sparkBotCount))
+	self:PlaySound(288410, "info")
+	if args.spellId == 288410 then -- Phase 1
+		self:Bar(288410, sparkBotCount % 3 == 0 and 42.5 or 22.5)
+	else -- Phase 2
+		self:Bar(288410, 40)
+	end
 end
 
 function mod:sparkBotMark(event, unit, guid)
