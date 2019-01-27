@@ -2,7 +2,6 @@
 -- TODO:
 -- - Assistant on robots?
 -- - Intermission soon warnings
--- - Initial timers
 -- - Improve timers generally
 
 --------------------------------------------------------------------------------
@@ -77,6 +76,10 @@ function mod:OnEngage()
 	if self:GetOption("custom_off_sparkbot_marker") then
 		self:RegisterTargetEvents("sparkBotMark")
 	end
+	self:Bar(282153, 13) -- Buster Cannon
+	self:Bar(282205, 41) -- Blast Off
+	self:Bar(286597, 21.5) -- Gigavolt Charge
+	self:Bar(284042, 6.5) -- Deploy Spark Bot
 end
 
 --------------------------------------------------------------------------------
