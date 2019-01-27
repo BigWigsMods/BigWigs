@@ -1,23 +1,15 @@
-local L = BigWigs:NewBossLocale("Conclave of the Chosen", "frFR")
-if not L then return end
-if L then
-	--L.killed = "%s killed!"
-end
-
-local L = BigWigs:NewBossLocale("Frida Ironbellows", "frFR")
+local L = BigWigs:NewBossLocale("Champion of the Light Horde", "frFR")
 if not L then return end
 if L then
 	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
 end
 
-local L = BigWigs:NewBossLocale("Ra'wani Kanae", "frFR")
-if not L then return end
+L = BigWigs:NewBossLocale("Champion of the Light Alliance", "frFR")
 if L then
 	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
 end
 
-local L = BigWigs:NewBossLocale("Flamefist and the Illuminated", "frFR")
-if not L then return end
+L = BigWigs:NewBossLocale("Jadefire Masters Horde", "frFR")
 if L then
 	--L.custom_on_fixate_plates = "Stalking icon on Enemy Nameplate"
 	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is stalking on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
@@ -30,7 +22,7 @@ if L then
 	--L.interrupted_after = "%s interrupted by %s (%.1f seconds remaining)"
 end
 
-L = BigWigs:NewBossLocale("Grimfang and Firecaller", "frFR")
+L = BigWigs:NewBossLocale("Jadefire Masters Alliance", "frFR")
 if L then
 	--L.custom_on_fixate_plates = "Stalking icon on Enemy Nameplate"
 	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is stalking on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
@@ -43,7 +35,7 @@ if L then
 	--L.interrupted_after = "%s interrupted by %s (%.1f seconds remaining)"
 end
 
-L = BigWigs:NewBossLocale("Treasure Guardian", "frFR")
+L = BigWigs:NewBossLocale("Opulence", "frFR")
 if L then
 	--L.custom_on_hand_timers = "The Hand of In'zashi"
 	--L.custom_on_hand_timers_desc = "Show warnings and bars for The Hand of In'zashi's abilities."
@@ -52,4 +44,9 @@ if L then
 	--L.custom_on_bulwark_timers = "Yalat's Bulwark"
 	--L.custom_on_bulwark_timers_desc = "Show warnings and bars for Yalat's Bulwark's abilities."
 	--L.bulwark_cast = "Bulwark: %s"
+end
+
+L = BigWigs:NewBossLocale("Conclave of the Chosen", "frFR")
+if L then
+	--L.killed = "%s killed!"
 end
