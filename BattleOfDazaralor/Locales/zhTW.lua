@@ -1,12 +1,12 @@
 local L = BigWigs:NewBossLocale("Champion of the Light Horde", "zhTW")
 if not L then return end
 if L then
-	L.disorient_desc = "為|cff71d5ff[盲信]|r顯示施法條，如果你需要一個倒數計時的話。\n" -- Blinding Faith = 2836500
+	L.disorient_desc = "為|cff71d5ff[盲信]|r顯示施法條，如果你需要一個倒數計時的話。" -- Blinding Faith = 2836500
 end
 
 L = BigWigs:NewBossLocale("Champion of the Light Alliance", "zhTW")
 if L then
-	L.disorient_desc = "為|cff71d5ff[盲信]|r顯示施法條，如果你需要一個倒數計時的話。\n" -- Blinding Faith = 2836500
+	L.disorient_desc = "為|cff71d5ff[盲信]|r顯示施法條，如果你需要一個倒數計時的話。" -- Blinding Faith = 2836500
 end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Horde", "zhTW")
