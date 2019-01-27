@@ -43,6 +43,9 @@ function mod:GetOptions()
 		283650, -- Blinding Faith
 		-- Mythic
 		287469, -- Prayer for the Fallen
+	}, {
+		[283573] = CL.general,
+		[287469] = CL.mythic,
 	}
 end
 
@@ -70,6 +73,9 @@ function mod:OnEngage()
 	self:CDBar(283650, 12) -- Blinding Faith
 	self:Bar(283598, 13, CL.count:format(self:SpellName(283598), waveofLightCounter)) -- Wave of Light
 	self:CDBar(283662, 100) -- Call to Arms
+	if self:Mythic() then
+		self:CDBar(287469, 25) -- Prayer for the Fallen
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -148,4 +154,5 @@ end
 function mod:PrayerfortheFallen(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
+	self:CDBar(args.spellId, 50)
 end
