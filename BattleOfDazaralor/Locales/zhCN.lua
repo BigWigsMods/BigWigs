@@ -1,12 +1,12 @@
 local L = BigWigs:NewBossLocale("Champion of the Light Horde", "zhCN")
 if not L then return end
 if L then
-	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n这可能是你所需要的冷却计时条。" -- Blinding Faith = 283650
 end
 
 L = BigWigs:NewBossLocale("Champion of the Light Alliance", "zhCN")
 if L then
-	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n这可能是你所需要的冷却计时条。" -- Blinding Faith = 283650
 end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Horde", "zhCN")
@@ -49,7 +49,7 @@ end
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "zhCN")
 if L then
 	L.killed = "%s已击杀！"
-	L.count_of = "%s （%d/%d）"
+	L.count_of = "%s（%d/%d）"
 end
 
 L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "zhCN")
@@ -60,11 +60,19 @@ if L then
 	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 标记火花机器人。"
 end
 
+L = BigWigs:NewBossLocale("Stormwall Blockade", "zhCN")
+if L then
+	L.killed = "%s已击杀！"
+
+	L.custom_on_fade_out_bars = "退回到第1阶段计时条"
+	L.custom_on_fade_out_bars_desc = "根据第1阶段未激活船上首领的退回计时条。"
+end
+
 L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhCN")
 if L then
-	--L.punisher = "Rastari Punisher"
-	--L.vessel = "Vessel of Bwonsamdi"
+	L.punisher = "拉斯塔利惩罚者"
+	L.vessel = "邦桑迪的使者"
 
-	--L.victim = "%s stabbed YOU with %s!"
-	--L.witness = "%s stabbed %s with %s!"
+	L.victim = "%s的%s刺中了你！"
+	L.witness = "%1$s的%3$s刺中了%2$s！"
 end
