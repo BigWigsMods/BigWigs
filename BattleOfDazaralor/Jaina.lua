@@ -47,6 +47,7 @@ local broadsideMarker = mod:AddMarkerOption(false, "player", 1, 288212, 1, 2, 3)
 function mod:GetOptions()
 	return {
 		-- General
+		"stages",
 		{285215, "INFOBOX"}, -- Chilling Touch
 		287490, -- Frozen Solid
 		-- Stage 1
@@ -66,14 +67,14 @@ function mod:GetOptions()
 		broadsideMarker,
 		{288374, "ICON", "SAY", "SAY_COUNTDOWN"}, -- Siegebreaker Blast
 		288345, -- Glacial Ray
-		288475, -- Icefall
+		288441, -- Icefall
 		-- Intermission
 		289220, -- Heart of Frost
 		289219, -- Frost Nova
 		290084, -- Water Bolt Volley
 		-- Stage 3
 		289940, -- Crystalline Dust
-		288647, -- Orb of Frost
+		288619, -- Orb of Frost
 		288747, -- Prismatic Image
 	}
 end
@@ -110,7 +111,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SiegebreakerBlastApplied", 288374)
 	self:Log("SPELL_AURA_REMOVED", "SiegebreakerBlastRemoved", 288374)
 	self:Log("SPELL_CAST_START", "GlacialRay", 288345)
-	self:Log("SPELL_CAST_START", "Icefall", 288475)
+	self:Log("SPELL_CAST_START", "Icefall", 288441)
 
 	-- Intermission
 	self:Log("SPELL_CAST_START", "FlashFreeze", 288719)
@@ -368,7 +369,7 @@ function mod:ArcaneBarrageRemoved(args)
 	self:Message2("stages", "cyan", CL.stage:format(stage), false)
 
 	self:CDBar(288619, 11.5, CL.count:format(self:SpellName(288619), orbofFrostCount)) -- Orb of Frost
-	self:CDBar(288211, 20) -- Broadside
+	self:CDBar(288212, 20) -- Broadside
 	self:CDBar(288747, 23) -- Prismatic Image
 	self:CDBar(289940, 26.5) -- Crystalline Dust
 	self:CDBar(288345, 49.5) -- Glacial Ray
