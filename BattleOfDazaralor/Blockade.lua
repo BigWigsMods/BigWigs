@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Stormwall Blockade", 2070, 2337)
 if not mod then return end
 mod:RegisterEnableMob(146251, 146253, 146256) -- Sister Katherine, Brother Joseph, Laminaria
 mod.engageId = 2280
---mod.respawnTime = 31
+mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
 -- Locals

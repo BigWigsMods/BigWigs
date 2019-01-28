@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Jadefire Masters Alliance", 2070, 2323)
 if not mod then return end
 mod:RegisterEnableMob(144691, 144692) -- Ma'ra Grimfang, Anathos Firecaller
 mod.engageId = 2285
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
