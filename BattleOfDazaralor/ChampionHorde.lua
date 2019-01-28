@@ -1,12 +1,12 @@
-if UnitFactionGroup("player") ~= "Alliance" then return end
+if UnitFactionGroup("player") ~= "Horde" then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Ra'wani Kanae", 2070, 2344)
+local mod, CL = BigWigs:NewBoss("Champion of the Light Horde", 2070, 2333)
 if not mod then return end
-mod:RegisterEnableMob(144683)
+mod:RegisterEnableMob(144680)
 mod.engageId = 2265
 mod.respawnTime = 15 -- PTR
 
@@ -20,10 +20,12 @@ local waveofLightCounter = 0
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
---
---end
+local L = mod:GetLocale()
+if L then
+	L.disorient = 156266 -- Disorient
+	L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+	L.disorient_icon = 156266 -- Some swirl
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -42,8 +44,12 @@ function mod:GetOptions()
 		284595, -- Penance
 		283628, -- Heal
 		283650, -- Blinding Faith
+		{"disorient", "COUNTDOWN"},
 		-- Mythic
 		287469, -- Prayer for the Fallen
+	}, {
+		[283573] = CL.general,
+		[287469] = CL.mythic,
 	}
 end
 
@@ -71,6 +77,9 @@ function mod:OnEngage()
 	self:CDBar(283650, 12) -- Blinding Faith
 	self:Bar(283598, 13, CL.count:format(self:SpellName(283598), waveofLightCounter)) -- Wave of Light
 	self:CDBar(283662, 100) -- Call to Arms
+	if self:Mythic() then
+		self:CDBar(287469, 25) -- Prayer for the Fallen
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -142,11 +151,12 @@ end
 function mod:BlindingFaith(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 4)
+	self:CastBar("disorient", 4, L.disorient, L.disorient_icon)
 	self:CDBar(args.spellId, 15)
 end
 
 function mod:PrayerfortheFallen(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
+	self:CDBar(args.spellId, 50)
 end

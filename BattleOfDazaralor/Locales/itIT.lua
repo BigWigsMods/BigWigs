@@ -1,11 +1,15 @@
-local L = BigWigs:NewBossLocale("Conclave of the Chosen", "itIT")
+local L = BigWigs:NewBossLocale("Champion of the Light Horde", "itIT")
 if not L then return end
 if L then
-	--L.killed = "%s killed!"
+	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
 end
 
-local L = BigWigs:NewBossLocale("Flamefist and the Illuminated", "itIT")
-if not L then return end
+L = BigWigs:NewBossLocale("Champion of the Light Alliance", "itIT")
+if L then
+	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+end
+
+L = BigWigs:NewBossLocale("Jadefire Masters Horde", "itIT")
 if L then
 	--L.custom_on_fixate_plates = "Stalking icon on Enemy Nameplate"
 	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is stalking on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
@@ -18,7 +22,7 @@ if L then
 	--L.interrupted_after = "%s interrupted by %s (%.1f seconds remaining)"
 end
 
-L = BigWigs:NewBossLocale("Grimfang and Firecaller", "itIT")
+L = BigWigs:NewBossLocale("Jadefire Masters Alliance", "itIT")
 if L then
 	--L.custom_on_fixate_plates = "Stalking icon on Enemy Nameplate"
 	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is stalking on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
@@ -31,7 +35,7 @@ if L then
 	--L.interrupted_after = "%s interrupted by %s (%.1f seconds remaining)"
 end
 
-L = BigWigs:NewBossLocale("Treasure Guardian", "itIT")
+L = BigWigs:NewBossLocale("Opulence", "itIT")
 if L then
 	--L.custom_on_hand_timers = "The Hand of In'zashi"
 	--L.custom_on_hand_timers_desc = "Show warnings and bars for The Hand of In'zashi's abilities."
@@ -40,4 +44,27 @@ if L then
 	--L.custom_on_bulwark_timers = "Yalat's Bulwark"
 	--L.custom_on_bulwark_timers_desc = "Show warnings and bars for Yalat's Bulwark's abilities."
 	--L.bulwark_cast = "Bulwark: %s"
+end
+
+L = BigWigs:NewBossLocale("Conclave of the Chosen", "itIT")
+if L then
+	--L.killed = "%s killed!"
+	--L.count_of = "%s (%d/%d)"
+end
+
+L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "itIT")
+if L then
+	--L.gigavolt_alt_text = "Bomb"
+
+	--L.custom_off_sparkbot_marker = "Spark Bot Marker"
+	--L.custom_off_sparkbot_marker_desc = "Mark Spark Bots with {rt4}{rt5}{rt6}{rt7}{rt8}."
+end
+
+L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "itIT")
+if L then
+	--L.punisher = "Rastari Punisher"
+	--L.vessel = "Vessel of Bwonsamdi"
+
+	--L.victim = "%s stabbed YOU with %s!"
+	--L.witness = "%s stabbed %s with %s!"
 end

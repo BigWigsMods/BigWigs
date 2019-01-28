@@ -1,5 +1,5 @@
 
-BigWigs:AddColors("Ra'wani Kanae", {
+BigWigs:AddColors("Champion of the Light Alliance", {
 	[282113] = "cyan",
 	[283573] = {"blue","purple"},
 	[283598] = "yellow",
@@ -14,7 +14,7 @@ BigWigs:AddColors("Ra'wani Kanae", {
 	[287469] = "red",
 })
 
-BigWigs:AddColors("Frida Ironbellows", {
+BigWigs:AddColors("Champion of the Light Horde", {
 	[282113] = "cyan",
 	[283573] = {"blue","purple"},
 	[283598] = "yellow",
@@ -29,12 +29,11 @@ BigWigs:AddColors("Frida Ironbellows", {
 	[287469] = "red",
 })
 
-BigWigs:AddColors("Grimfang and Firecaller", {
+BigWigs:AddColors("Jadefire Masters Alliance", {
 	[282030] = "red",
 	[282037] = {"blue","purple"},
 	[282040] = "yellow",
 	[284656] = {"green","yellow"},
-	[285428] = "yellow",
 	[285632] = "blue",
 	[285645] = "yellow",
 	[286379] = {"green","orange"},
@@ -42,38 +41,44 @@ BigWigs:AddColors("Grimfang and Firecaller", {
 	[286425] = "cyan",
 	[286436] = "yellow",
 	[286988] = {"blue","orange"},
+	["stages"] = "cyan",
 })
 
-BigWigs:AddColors("King Grong", {
+BigWigs:AddColors("Grong Horde", {
 	[281936] = "orange",
 	[282179] = "yellow",
-	[282215] = {"blue","orange"},
+	[282215] = "blue",
 	[282243] = "yellow",
 	[282247] = "yellow",
-	[285660] = {"blue","green"},
+	[283069] = "blue",
+	[285659] = {"blue","green"},
+	[285660] = "green",
 	[285671] = {"blue","purple"},
 	[285875] = {"blue","purple"},
 	[285994] = "red",
+	[289401] = {"blue","purple"},
 })
 
-BigWigs:AddColors("Grong the Revenant", {
+BigWigs:AddColors("Grong Alliance", {
 	[282399] = "orange",
-	[282471] = "orange",
+	[282471] = "blue",
+	[282526] = "yellow",
 	[282533] = "yellow",
 	[282543] = "yellow",
 	[285671] = {"blue","purple"},
 	[285875] = {"blue","purple"},
 	[285994] = "red",
+	[286373] = "blue",
 	[286434] = {"blue","green"},
 	[286435] = "green",
+	[289401] = {"blue","purple"},
 })
 
-BigWigs:AddColors("Flamefist and the Illuminated", {
+BigWigs:AddColors("Jadefire Masters Horde", {
 	[282030] = "red",
 	[282037] = {"blue","purple"},
 	[282040] = "yellow",
 	[284656] = {"green","yellow"},
-	[285428] = "yellow",
 	[285632] = "blue",
 	[285645] = "yellow",
 	[286379] = {"green","orange"},
@@ -81,9 +86,10 @@ BigWigs:AddColors("Flamefist and the Illuminated", {
 	[286425] = "cyan",
 	[286436] = "yellow",
 	[286988] = {"blue","orange"},
+	["stages"] = "cyan",
 })
 
-BigWigs:AddColors("Treasure Guardian", {
+BigWigs:AddColors("Opulence", {
 	[282939] = "red",
 	[283507] = {"blue","yellow"},
 	[283606] = "yellow",
@@ -98,31 +104,29 @@ BigWigs:AddColors("Treasure Guardian", {
 	[286026] = "orange",
 	[286541] = "cyan",
 	[287037] = {"blue","purple"},
-	[287070] = {"cyan","red"},
+	[287070] = "cyan",
 	[287072] = {"blue","yellow"},
 	[287074] = "blue",
 })
 
-BigWigs:AddColors("Loa Council", {
+BigWigs:AddColors("Conclave of the Chosen", {
 	[282079] = "orange",
 	[282098] = "yellow",
 	[282107] = "red",
-	[282135] = {"blue","orange"},
+	[282135] = {"blue","green","orange"},
 	[282155] = "cyan",
 	[282209] = "blue",
 	[282411] = "red",
 	[282444] = {"blue","purple"},
-	[282447] = "yellow",
-	[282736] = {"blue","cyan"},
-	[285878] = "yellow",
+	[282447] = {"blue","orange","yellow"},
+	[285879] = {"blue","yellow"},
 	[285893] = "yellow",
 	[285945] = {"blue","purple"},
-	[286060] = "yellow",
+	[286811] = "blue",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("King Rastakhan", {
-	[283504] = "red",
-	[284662] = {"blue","yellow"},
 	[284686] = "orange",
 	[284719] = "cyan",
 	[284781] = {"blue","yellow"},
@@ -131,24 +135,26 @@ BigWigs:AddColors("King Rastakhan", {
 	[285003] = "cyan",
 	[285172] = "cyan",
 	[285213] = "purple",
-	[285347] = "orange",
-	[285402] = "yellow",
+	[285346] = {"blue","orange"},
+	[286742] = "red",
 	[287333] = "orange",
-	[288449] = "cyan",
+	[288449] = {"blue","orange"},
+	[290450] = {"blue","yellow"},
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("High Tinker Mekkatorque", {
 	[282153] = "yellow",
 	[282205] = "orange",
-	[284042] = "cyan",
-	[286051] = "cyan",
 	[286646] = {"blue","yellow"},
+	[286693] = "yellow",
 	[287929] = "yellow",
 	[287952] = "red",
-	[288049] = "yellow",
+	[288410] = "cyan",
+	["stages"] = {"cyan","green"},
 })
 
-BigWigs:AddColors("Sea Priest Blockade", {
+BigWigs:AddColors("Stormwall Blockade", {
 	[284106] = "yellow",
 	[284262] = "orange",
 	[284362] = "yellow",
@@ -161,7 +167,7 @@ BigWigs:AddColors("Sea Priest Blockade", {
 	[286558] = "cyan",
 })
 
-BigWigs:AddColors("Jaina Proudmoore", {
+BigWigs:AddColors("Lady Jaina Proudmoore", {
 	[285177] = "red",
 	[285215] = "blue",
 	[285253] = {"blue","purple"},

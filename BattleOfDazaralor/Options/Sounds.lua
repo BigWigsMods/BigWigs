@@ -1,5 +1,5 @@
 
-BigWigs:AddSounds("Ra'wani Kanae", {
+BigWigs:AddSounds("Champion of the Light Alliance", {
 	[282113] = "info",
 	[283573] = "alarm",
 	[283598] = "alert",
@@ -14,7 +14,7 @@ BigWigs:AddSounds("Ra'wani Kanae", {
 	[287469] = "warning",
 })
 
-BigWigs:AddSounds("Frida Ironbellows", {
+BigWigs:AddSounds("Champion of the Light Horde", {
 	[282113] = "info",
 	[283573] = "alarm",
 	[283598] = "alert",
@@ -29,12 +29,11 @@ BigWigs:AddSounds("Frida Ironbellows", {
 	[287469] = "warning",
 })
 
-BigWigs:AddSounds("Grimfang and Firecaller", {
+BigWigs:AddSounds("Jadefire Masters Alliance", {
 	[282030] = "warning",
 	[282037] = {"alarm","warning"},
 	[282040] = "long",
 	[284656] = "long",
-	[285428] = "long",
 	[285632] = "alarm",
 	[285645] = "info",
 	[286379] = "warning",
@@ -42,37 +41,42 @@ BigWigs:AddSounds("Grimfang and Firecaller", {
 	[286425] = "info",
 	[286436] = "alert",
 	[286988] = "alarm",
+	["stages"] = "info",
 })
 
-BigWigs:AddSounds("King Grong", {
+BigWigs:AddSounds("Grong Horde", {
 	[281936] = "alarm",
 	[282179] = "alert",
 	[282215] = "alarm",
 	[282243] = "alert",
 	[282247] = "long",
+	[283069] = "alarm",
 	[285660] = "info",
 	[285671] = "alarm",
 	[285875] = "alert",
 	[285994] = "warning",
+	[289401] = "alarm",
 })
 
-BigWigs:AddSounds("Grong the Revenant", {
+BigWigs:AddSounds("Grong Alliance", {
 	[282399] = "alarm",
 	[282471] = "alarm",
+	[282526] = "long",
 	[282533] = "alert",
 	[282543] = "alert",
 	[285671] = "alarm",
 	[285875] = "alert",
 	[285994] = "warning",
+	[286373] = "alarm",
 	[286435] = "info",
+	[289401] = "alarm",
 })
 
-BigWigs:AddSounds("Flamefist and the Illuminated", {
+BigWigs:AddSounds("Jadefire Masters Horde", {
 	[282030] = "warning",
 	[282037] = {"alarm","warning"},
 	[282040] = "long",
 	[284656] = "long",
-	[285428] = "long",
 	[285632] = "alarm",
 	[285645] = "info",
 	[286379] = "warning",
@@ -80,9 +84,10 @@ BigWigs:AddSounds("Flamefist and the Illuminated", {
 	[286425] = "info",
 	[286436] = "alert",
 	[286988] = "alarm",
+	["stages"] = "info",
 })
 
-BigWigs:AddSounds("Treasure Guardian", {
+BigWigs:AddSounds("Opulence", {
 	[282939] = "alarm",
 	[283507] = "warning",
 	[283606] = "alert",
@@ -97,32 +102,29 @@ BigWigs:AddSounds("Treasure Guardian", {
 	[286026] = "alarm",
 	[286541] = "long",
 	[287037] = "alarm",
-	[287070] = {"info","long"},
+	[287070] = "info",
 	[287072] = "warning",
 	[287074] = "alarm",
 })
 
-BigWigs:AddSounds("Loa Council", {
+BigWigs:AddSounds("Conclave of the Chosen", {
 	[282079] = "alarm",
 	[282098] = "alert",
 	[282107] = "warning",
-	[282135] = {"alarm","warning"},
+	[282135] = {"alarm","info","warning"},
 	[282155] = "info",
 	[282209] = "warning",
 	[282411] = "alarm",
 	[282444] = "alarm",
-	[282447] = "alert",
-	[282736] = "info",
-	[285878] = "alert",
+	[282447] = {"alert","warning"},
+	[285879] = {"alert","info"},
 	[285893] = "alert",
 	[285945] = "alarm",
-	[286060] = "long",
 	[286811] = "warning",
+	["stages"] = "info",
 })
 
 BigWigs:AddSounds("King Rastakhan", {
-	[283504] = "long",
-	[284662] = "warning",
 	[284686] = "alarm",
 	[284719] = "info",
 	[284781] = "warning",
@@ -131,24 +133,26 @@ BigWigs:AddSounds("King Rastakhan", {
 	[285003] = "info",
 	[285172] = "info",
 	[285213] = "alarm",
-	[285347] = {"alarm","warning"},
-	[285402] = "alert",
+	[285346] = {"alarm","warning"},
+	[286742] = "alarm",
 	[287333] = "warning",
-	[288449] = "info",
+	[288449] = "warning",
+	[290450] = "warning",
+	["stages"] = "long",
 })
 
 BigWigs:AddSounds("High Tinker Mekkatorque", {
 	[282153] = "alert",
 	[282205] = "alarm",
-	[284042] = "info",
-	[286051] = "info",
 	[286646] = "warning",
+	[286693] = "long",
 	[287929] = "long",
 	[287952] = "alert",
-	[288049] = "long",
+	[288410] = "info",
+	["stages"] = "long",
 })
 
-BigWigs:AddSounds("Sea Priest Blockade", {
+BigWigs:AddSounds("Stormwall Blockade", {
 	[284106] = "alert",
 	[284262] = "alarm",
 	[284362] = "alert",
@@ -161,7 +165,7 @@ BigWigs:AddSounds("Sea Priest Blockade", {
 	[286558] = "long",
 })
 
-BigWigs:AddSounds("Jaina Proudmoore", {
+BigWigs:AddSounds("Lady Jaina Proudmoore", {
 	[285177] = "alarm",
 	[285215] = "alarm",
 	[285253] = "alert",

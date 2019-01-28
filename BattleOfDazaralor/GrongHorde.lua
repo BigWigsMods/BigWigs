@@ -3,7 +3,7 @@ if UnitFactionGroup("player") ~= "Horde" then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Grong", 2070, 2325)
+local mod, CL = BigWigs:NewBoss("Grong Horde", 2070, 2325)
 if not mod then return end
 mod:RegisterEnableMob(144637)
 mod.engageId = 2263
@@ -39,12 +39,17 @@ function mod:GetOptions()
 		282179, -- Reverberating Slam
 		285994, -- Ferocious Roar
 		--[[ Flying Ape Wranglers  ]]--
-		--{282215, "SAY"}, -- Megatomic Seeker Missile
+		282215, -- Megatomic Seeker Missile
+		283069, -- Megatomic Fire
 		--[[ Apetaganizer 3000 ]]--
 		282247, -- Apetagonizer 3000 Bomb
 		282243, -- Apetagonize
 		285659, -- Apetagonizer Core
 		285660, -- Discharge Apetagonizer Core
+	}, {
+		[281936] = mod.displayName,
+		[282215] = -18953, -- Flying Ape Wranglers
+		[282247] = -18955, -- Apetaganizer 3000
 	}
 end
 
@@ -63,6 +68,12 @@ function mod:OnBossEnable()
 
 	--[[ Flying Ape Wranglers  ]]--
 	--self:Log("SPELL_CAST_SUCCESS", "MegatomicSeekerMissile", 282215) XXX Check what we can do with this
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 283069) -- Megatomic Fire
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 283069) -- Megatomic Fire
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 283069)
+	self:Log("SPELL_DAMAGE", "GroundDamage", 282215) -- Megatomic Seeker Missile
+	self:Log("SPELL_MISSED", "GroundDamage", 282215)
+	
 	--[[ Apetaganizer 3000 ]]--
 	self:Log("SPELL_CAST_SUCCESS", "Apetagonizer3000Bomb", 282247)
 	self:Log("SPELL_CAST_START", "Apetagonize", 282243)
@@ -131,6 +142,20 @@ end
 --	end
 --	self:Bar(args.spellId, 23.1)
 --end
+
+do
+	local prev = 0
+	function mod:GroundDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 1.5 then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
+	end
+end
 
 function mod:Apetagonizer3000Bomb(args)
 	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, addCount)))
