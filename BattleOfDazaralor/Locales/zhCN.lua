@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Conclave of the Chosen", "zhCN")
 if not L then return end
 if L then
-	L.killed = "%s已击杀！"
+	--L.killed = "%s killed!"
 end
 
 local L = BigWigs:NewBossLocale("Flamefist and the Illuminated", "zhCN")
