@@ -59,3 +59,12 @@ if L then
 	L.custom_off_sparkbot_marker = "火花机器人标记"
 	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 标记火花机器人。"
 end
+
+L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhCN")
+if L then
+	--L.punisher = "Rastari Punisher"
+	--L.vessel = "Vessel of Bwonsamdi"
+
+	--L.victim = "%s stabbed YOU with %s!"
+	--L.witness = "%s stabbed %s with %s!"
+end

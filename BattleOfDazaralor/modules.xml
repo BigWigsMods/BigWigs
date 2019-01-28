@@ -13,6 +13,7 @@
 <Script file="Mekkatorque.lua"/>
 <Script file="Blockade.lua"/>
 <Script file="Jaina.lua"/>
+<Script file="Trash.lua"/>
 
 <Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>
