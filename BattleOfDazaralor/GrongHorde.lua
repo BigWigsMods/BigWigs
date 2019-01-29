@@ -73,7 +73,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 283069)
 	self:Log("SPELL_DAMAGE", "GroundDamage", 282215) -- Megatomic Seeker Missile
 	self:Log("SPELL_MISSED", "GroundDamage", 282215)
-	
+
 	--[[ Apetaganizer 3000 ]]--
 	self:Log("SPELL_CAST_SUCCESS", "Apetagonizer3000Bomb", 282247)
 	self:Log("SPELL_CAST_START", "Apetagonize", 282243)
@@ -164,9 +164,16 @@ function mod:Apetagonizer3000Bomb(args)
 	self:Bar(args.spellId, 60.5, CL.count:format(CL.add, addCount))
 end
 
-function mod:Apetagonize(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+do
+	local prev = 0
+	function mod:Apetagonize(args)
+		local t = args.time
+		if t-prev > 1.5 then
+			prev = t
+			self:Message2(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "alert")
+		end
+	end
 end
 
 function mod:ApetagonizerCore(args)

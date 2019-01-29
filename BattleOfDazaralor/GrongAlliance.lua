@@ -71,7 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 286373)
 	self:Log("SPELL_DAMAGE", "GroundDamage", 282471) -- Voodoo Blast
 	self:Log("SPELL_MISSED", "GroundDamage", 282471)
-	
+
 	self:Log("SPELL_CAST_SUCCESS", "DeathSpecter", 282526)
 	self:Log("SPELL_CAST_START", "DeathEmpowerment", 282533)
 	self:Log("SPELL_AURA_APPLIED", "ShadowCore", 286434)
@@ -161,9 +161,16 @@ function mod:DeathSpecter(args)
 	self:Bar(args.spellId, 60.5, CL.count:format(CL.add, addCount))
 end
 
-function mod:DeathEmpowerment(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+do
+	local prev = 0
+	function mod:DeathEmpowerment(args)
+		local t = args.time
+		if t-prev > 1.5 then
+			prev = t
+			self:Message2(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "alert")
+		end
+	end
 end
 
 function mod:ShadowCore(args)
