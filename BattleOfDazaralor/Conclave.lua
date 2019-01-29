@@ -201,8 +201,6 @@ do
 	function mod:CrawlingHexSuccess()
 		wipe(proxList)
 		isOnMe = false
-		self:Message2(282135, "orange")
-		self:PlaySound(282135, "alarm")
 		self:Bar(282135, 25.5)
 	end
 
@@ -210,6 +208,9 @@ do
 		if not isOnMe then
 			mod:TargetsMessage(282135, "orange", playerList, #playerList) -- Crawling Hex
 			mod:OpenProximity(282135, 8, proxList)
+			if mod:Dispeller("curse", nil, 282135) then
+				mod:PlaySound(282135, "alarm")
+			end
 		else
 			wipe(playerList)
 		end
