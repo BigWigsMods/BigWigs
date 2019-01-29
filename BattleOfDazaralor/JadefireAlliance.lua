@@ -54,7 +54,7 @@ function mod:GetOptions()
 		{286425, "INFOBOX"}, -- Fire Shield
 		{286988, "SAY"}, -- Searing Embers
 		searingEmbersMarker,
-		--284374, -- Magma Trap
+		284374, -- Magma Trap
 		-- Team Attacks
 		285428, -- Fire from Mist
 		284656, -- Ring of Hostility
@@ -70,6 +70,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	-- Mestrah, the Illuminated
 	self:Log("SPELL_CAST_SUCCESS", "WhirlingJadeStorm", 286436)
@@ -106,6 +107,7 @@ function mod:OnEngage()
 
 	self:CDBar(286379, 20.5) -- Pyroblast
 	self:CDBar(286436, 21.5) -- Whirling Jade Storm
+	self:CDBar(284374, 28) -- Magma Trap
 	self:CDBar(282030, 30) -- Multi-Sided Strike
 	self:CDBar(285428, 68) -- Fire from Mist
 	self:CDBar(285645, 74) -- Spirits of Xuen
@@ -121,6 +123,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Message2(spellId, "yellow")
 		self:PlaySound(spellId, "info")
 		self:CDBar(spellId, 119) -- XXX Need correct info after Ring of Hostility stage
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
+	if msg:find("284374", nil, true) then -- Magma Trap
+		self:Message2(284374, "red")
+		self:PlaySound(284374, "warning")
+		self:CDBar(284374, 35)
 	end
 end
 
