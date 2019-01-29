@@ -62,8 +62,8 @@ end
 
 L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "koKR")
 if L then
-	--L.punisher = "Rastari Punisher"
-	--L.vessel = "Vessel of Bwonsamdi"
+	L.punisher = "라스타리 응징자"
+	L.vessel = "브원삼디의 매개체"
 
 	--L.victim = "%s stabbed YOU with %s!"
 	--L.witness = "%s stabbed %s with %s!"

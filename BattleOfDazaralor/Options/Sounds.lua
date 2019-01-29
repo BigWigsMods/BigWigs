@@ -142,7 +142,7 @@ BigWigs:AddSounds("King Rastakhan", {
 })
 
 BigWigs:AddSounds("High Tinker Mekkatorque", {
-	[282153] = "alert",
+	[282153] = "warning",
 	[282205] = "alarm",
 	[286646] = "warning",
 	[286693] = "long",
@@ -156,19 +156,22 @@ BigWigs:AddSounds("Stormwall Blockade", {
 	[284106] = "alert",
 	[284262] = "alarm",
 	[284362] = "alert",
-	[284383] = "info",
-	[284406] = "warning",
+	[284383] = "alarm",
+	[284405] = "warning",
 	[285000] = "warning",
 	[285017] = "warning",
 	[285118] = "alert",
 	[285350] = "warning",
-	[286558] = "long",
+	[286558] = "info",
+	[287995] = "info",
+	[288696] = "info",
+	["stages"] = "long",
 })
 
 BigWigs:AddSounds("Lady Jaina Proudmoore", {
 	[285177] = "alarm",
 	[285215] = "alarm",
-	[285253] = "alert",
+	[285253] = {"alarm","alert"},
 	[285459] = "long",
 	[285725] = "warning",
 	[285828] = "alarm",
@@ -178,16 +181,22 @@ BigWigs:AddSounds("Lady Jaina Proudmoore", {
 	[287626] = "alert",
 	[287925] = "info",
 	[288038] = "alarm",
-	[288345] = "warning",
-	[288475] = "long",
-	[288647] = "alert",
-	[288671] = "warning",
-	[288719] = "long",
+	[288212] = "warning",
+	[288297] = "alarm",
+	[288345] = "alarm",
+	[288374] = "alert",
+	[288441] = "long",
+	[288619] = "alert",
 	[288747] = "long",
 	[289219] = "alarm",
 	[289220] = "alert",
-	[289861] = "info",
 	[289940] = "alert",
-	[289985] = "alarm",
 	[290084] = "alert",
+	["stages"] = "long",
+})
+
+BigWigs:AddSounds("Battle of Dazar'alor Trash", {
+	[289917] = "warning",
+	[289937] = "long",
+	[290578] = "warning",
 })
