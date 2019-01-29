@@ -49,7 +49,7 @@ function mod:GetOptions()
 	return {
 		-- General
 		"stages",
-		{285215, "INFOBOX"}, -- Chilling Touch
+		{287993, "INFOBOX"}, -- Chilling Touch
 		287490, -- Frozen Solid
 		-- Stage 1
 		{288038, "FLASH"}, -- Marked Target
@@ -85,9 +85,9 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- General
-	self:Log("SPELL_AURA_APPLIED", "ChillingTouch", 285215)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ChillingTouch", 285215)
-	self:Log("SPELL_AURA_REMOVED", "ChillingTouch", 285215)
+	self:Log("SPELL_AURA_APPLIED", "ChillingTouch", 287993)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ChillingTouch", 287993)
+	self:Log("SPELL_AURA_REMOVED", "ChillingTouch", 287993)
 	self:Log("SPELL_AURA_APPLIED", "FrozenSolid", 287490)
 
 	-- Stage 1
@@ -145,7 +145,7 @@ function mod:OnEngage()
 	orbofFrostCount = 1
 	crystallineDustCount = 1
 
-	self:OpenInfo(285215, self:SpellName(285215)) -- Chilling Touch
+	self:OpenInfo(287993, self:SpellName(287993)) -- Chilling Touch
 
 	self:CDBar(285254, 8) -- Avalanche
 	self:CDBar(285177, 17) -- Freezing Blast
