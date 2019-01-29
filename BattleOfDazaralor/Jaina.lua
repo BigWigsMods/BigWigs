@@ -152,6 +152,8 @@ function mod:OnEngage()
 	self:CDBar(285459, 60, CL.count:format(self:SpellName(285459), ringofIceCount)) -- Ring of Ice
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+
+	self:Berserk(self:Mythic() and 720 or 900)
 end
 
 --------------------------------------------------------------------------------
