@@ -44,6 +44,7 @@ local crystallineDustCount = 1
 --
 
 local broadsideMarker = mod:AddMarkerOption(false, "player", 1, 288212, 1, 2, 3) -- Broadside
+local avalanceMarker = mod:AddMarkerOption(false, "player", 1, 285254, 1, 2, 3) -- Avalance
 function mod:GetOptions()
 	return {
 		-- General
@@ -56,7 +57,8 @@ function mod:GetOptions()
 		285828, -- Bombard
 		287365, -- Searing Pitch
 		{285253, "TANK"}, -- Ice Shard
-		287565, -- Avalanche
+		{285254, "FLASH", "SAY", "ICON"}, -- Avalanche
+		avalanceMarker,
 		287925, -- Time Warp
 		287626, -- Grasp of Frost
 		285177, -- Freezing Blast
@@ -95,6 +97,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "IceShard", 285253)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "IceShard", 285253)
 	self:Log("SPELL_CAST_START", "Avalanche", 287565)
+	self:Log("SPELL_AURA_APPLIED", "AvalancheApplied", 285254)
+	self:Log("SPELL_AURA_REMOVED", "AvalancheRemoved", 285254)
 	self:Log("SPELL_CAST_SUCCESS", "TimeWarp", 287925)
 	self:Log("SPELL_AURA_APPLIED", "GraspofFrost", 287626)
 	self:Log("SPELL_CAST_START", "FreezingBlast", 285177)
@@ -143,7 +147,7 @@ function mod:OnEngage()
 
 	self:OpenInfo(285215, self:SpellName(285215)) -- Chilling Touch
 
-	self:CDBar(287565, 8) -- Avalanche
+	self:CDBar(285254, 8) -- Avalanche
 	self:CDBar(285177, 17) -- Freezing Blast
 	self:CDBar(285459, 60, CL.count:format(self:SpellName(285459), ringofIceCount)) -- Ring of Ice
 
@@ -170,7 +174,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "green", CL.intermission, false)
 
-		self:StopBar(287565) -- Avalanche
+		self:StopBar(285254) -- Avalanche
 		self:StopBar(285177) -- Freezing Blast
 		self:StopBar(CL.count:format(self:SpellName(285459), ringofIceCount)) -- Ring of Ice
 	end
@@ -225,9 +229,44 @@ function mod:IceShard(args)
 end
 
 function mod:Avalanche(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, stage > 1 and 75 or 60)
+	self:CDBar(285254, stage > 1 and 75 or 60) -- Avalanche
+end
+
+do
+	local playerList = mod:NewTargetList()
+	function mod:AvalancheApplied(args)
+		if stage == 1 then -- 3 targets
+			local count = #playerList + 1
+			playerList[count] = args.destName
+			self:TargetsMessage(args.spellId, "yellow", playerList, 3)
+			if self:Me(args.destGUID) then
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+				self:PlaySound(args.spellId, "warning")
+				self:Flash(args.spellId)
+			end
+			if self:GetOption(avalanceMarker) then
+				SetRaidTarget(args.destName, count)
+			end
+		else -- 1 target (tank)
+			self:TargetMessage2(args.spellId, "yellow", args.destName)
+			self:PrimaryIcon(args.spellId, args.destName)
+			if self:Me(args.destGUID) then
+				self:Say(args.spellId)
+				self:PlaySound(args.spellId, "warning")
+				self:Flash(args.spellId)
+			end
+		end
+	end
+end
+
+function mod:AvalancheRemoved(args)
+	if stage == 1 then
+		if self:GetOption(avalanceMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
+	else
+		self:PrimaryIcon(args.spellId, args.destName)
+	end
 end
 
 function mod:TimeWarp(args)
@@ -266,7 +305,7 @@ function mod:HowlingWindsRemoved(args)
 
 	self:CDBar(288212, 3) -- Broadside
 	self:CDBar(288345, 7) -- Glacial Ray
-	self:CDBar(287565, 17) -- Avalanche
+	self:CDBar(285254, 17) -- Avalanche
 	self:CDBar(288441, 31, CL.count:format(self:SpellName(288441), icefallCount)) -- Icefall
 	self:CDBar(288374, 42) -- Siegebreaker Blast
 end
@@ -350,7 +389,7 @@ function mod:FlashFreeze(args)
 	self:Message2("stages", "green", CL.intermission, false)
 	self:StopBar(288212) -- Broadside
 	self:StopBar(288345) -- Glacial Ray
-	self:StopBar(287565) -- Avalanche
+	self:StopBar(285254) -- Avalanche
 	self:StopBar(CL.count:format(self:SpellName(288441), icefallCount)) -- Icefall
 	self:StopBar(288374) -- Siegebreaker Blast
 end
