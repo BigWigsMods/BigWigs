@@ -87,7 +87,7 @@ function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "ChillingTouch", 287993)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ChillingTouch", 287993)
-	self:Log("SPELL_AURA_REMOVED", "ChillingTouch", 287993)
+	self:Log("SPELL_AURA_REMOVED", "ChillingTouchRemoved", 287993)
 	self:Log("SPELL_AURA_APPLIED", "FrozenSolid", 287490)
 
 	-- Stage 1
@@ -189,6 +189,15 @@ function mod:ChillingTouch(args)
 		end
 	end
 	chillingTouchList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, chillingTouchList)
+end
+
+function mod:ChillingTouchRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "info")
+	end
+	chillingTouchList[args.destName] = 0
 	self:SetInfoByTable(args.spellId, chillingTouchList)
 end
 
