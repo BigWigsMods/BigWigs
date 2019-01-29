@@ -307,11 +307,10 @@ do
 	local scheduled, isOnMe, isNearMe, count = nil, nil, nil, 0
 
 	local function leapWarn(self)
-		if not isOnMe then
+		if not isOnMe and not mod:CheckOption(282447, "ME_ONLY") then
 			if isNearMe then
 				self:Message2(282447, "orange", CL.near:format(L.leap))
 				self:PlaySound(282447, "alert")
-				self:Flash(282447)
 			else
 				self:Message2(282447, "yellow", L.leap)
 			end
