@@ -62,7 +62,7 @@ function mod:GetOptions()
 
 		-- Akunda's Aspect
 		282411, -- Thundering Storm
-		285879, -- Mind Wipe
+		{285879, "DISPEL"}, -- Mind Wipe
 		mindWipeMarker,
 		{286811, "SAY", "SAY_COUNTDOWN"}, -- Akunda's Wrath
 
@@ -189,7 +189,7 @@ end
 
 function mod:HasteningWinds(args)
 	local amount = args.amount or 1
-	if amount % 5 == 1 and amount > 12 then
+	if amount % 5 == 0 and amount > 12 then
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
@@ -208,7 +208,7 @@ do
 		if not isOnMe then
 			mod:TargetsMessage(282135, "orange", playerList, #playerList) -- Crawling Hex
 			mod:OpenProximity(282135, 8, proxList)
-			if mod:Dispeller("curse", nil, 282135) then
+			if mod:Dispeller("curse") then
 				mod:PlaySound(282135, "alarm")
 			end
 		else
@@ -370,7 +370,8 @@ do
 		playerList[#playerList+1] = args.destName
 
 		if self:Dispeller("magic", nil, args.spellId) then
-				self:PlaySound(args.spellId, "alert")
+			self:TargetsMessage(args.spellId, "yellow", playerList)
+			self:PlaySound(args.spellId, "alert")
 		end
 
 		if self:GetOption(mindWipeMarker) and #playerList < 6 then
