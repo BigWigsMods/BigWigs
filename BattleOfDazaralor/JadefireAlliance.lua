@@ -15,6 +15,7 @@ mod.respawnTime = 30
 --
 
 local lastWarnedPower = 0
+local trapCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -104,10 +105,11 @@ end
 
 function mod:OnEngage()
 	lastWarnedPower = 0
+	trapCount = 1
 
 	self:CDBar(286379, 20.5) -- Pyroblast
 	self:CDBar(286436, 21.5) -- Whirling Jade Storm
-	self:CDBar(284374, 28) -- Magma Trap
+	self:CDBar(284374, 28, CL.count:format(self:SpellName(284374), trapCount)) -- Magma Trap
 	self:CDBar(282030, 30) -- Multi-Sided Strike
 	self:CDBar(285428, 68) -- Fire from Mist
 	self:CDBar(285645, 74) -- Spirits of Xuen
@@ -128,9 +130,10 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 	if msg:find("284374", nil, true) then -- Magma Trap
-		self:Message2(284374, "red")
+		self:Message2(284374, "red", CL.count:format(self:SpellName(284374), trapCount))
 		self:PlaySound(284374, "warning")
-		self:CDBar(284374, 35)
+		trapCount = trapCount + 1
+		self:CDBar(284374, 35, CL.count:format(self:SpellName(284374), trapCount))
 	end
 end
 
