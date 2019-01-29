@@ -8,7 +8,7 @@ local mod, CL = BigWigs:NewBoss("Jadefire Masters Horde", 2070, 2341)
 if not mod then return end
 mod:RegisterEnableMob(144693, 144690) -- Manceroy Flamefist, Mestrah
 mod.engageId = 2266
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -73,7 +73,7 @@ function mod:OnBossEnable()
 
 	-- Mestrah, the Illuminated
 	self:Log("SPELL_CAST_SUCCESS", "WhirlingJadeStorm", 286436)
-	self:Log("SPELL_CAST_START", "MultiSidedStrike", 282030)
+	self:Log("SPELL_CAST_START", "MultiSidedStrike", 282030, 285818)
 	self:Log("SPELL_AURA_APPLIED", "StalkingApplied", 285632)
 	self:Log("SPELL_AURA_REMOVED", "StalkingRemoved", 285632)
 
@@ -120,7 +120,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 285645 then -- Spirits of Xuen
 		self:Message2(spellId, "yellow")
 		self:PlaySound(spellId, "info")
-		self:CDBar(spellId, 127.7) -- XXX Need correct info after Ring of Hostility stage
+		self:CDBar(spellId, 119) -- XXX Need correct info after Ring of Hostility stage
 	end
 end
 
@@ -150,9 +150,9 @@ end
 
 function mod:MultiSidedStrike(args)
 	if self:Mythic() or self:Tank() then -- No warnings needed for non-tanks unless it's Mythic
-		self:Message2(args.spellId, "red")
-		self:PlaySound(args.spellId, "warning")
-		self:CDBar(args.spellId, 55)
+		self:Message2(282030, "red")
+		self:PlaySound(282030, "warning")
+		self:CDBar(282030, self:Mythic() and 73 or 55)
 	end
 end
 
@@ -174,16 +174,18 @@ function mod:StalkingRemoved(args)
 end
 
 function mod:RisingFlamesApplied(args)
-	self:TargetBar(args.spellId, 15, args.destName)
+	self:TargetBar(args.spellId, 15, self:ColorName(args.destName))
+	local amount = args.amount or 1
 	if self:Me(args.destGUID) then
 		--self:CancelSayCountdown(args.spellId) -- XXX See if we need this, was spammy
 		--self:SayCountdown(args.spellId, 6, nil, 2)
-		self:PlaySound(args.spellId, "alarm")
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+		if amount % 2 == 1 then
+			self:PlaySound(args.spellId, "alarm")
+		end
 	elseif self:Tank() and self:Tank(args.destName) then
-		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "purple")
-		if amount > 3 then
+		if amount > 3 and amount % 2 == 0 then
 			self:PlaySound(args.spellId, "warning", nil, args.destName)
 		end
 	end
@@ -221,7 +223,7 @@ do
 
 	local function updateInfoBox(self)
 		local castTimeLeft = castOver - GetTime()
-		local castPercentage = castTimeLeft / 8
+		local castPercentage = castTimeLeft / 10
 		local absorb = UnitGetTotalAbsorbs("boss2")
 		local absorbPercentage = absorb / maxAbsorb
 
