@@ -54,6 +54,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
 	--[[ Grong ]]--
 	self:Log("SPELL_CAST_START", "Tantrum", 281936)
 	self:Log("SPELL_CAST_SUCCESS", "BestialCombo", 282082)
@@ -67,7 +69,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FerociousRoar", 285994)
 
 	--[[ Flying Ape Wranglers  ]]--
-	--self:Log("SPELL_CAST_SUCCESS", "MegatomicSeekerMissile", 282215) XXX Check what we can do with this
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 283069) -- Megatomic Fire
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 283069) -- Megatomic Fire
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 283069)
@@ -83,6 +84,7 @@ end
 
 function mod:OnEngage()
 	addCount = 1
+	self:Bar(282215, 10.5) -- Megatomic Seeker Missile
 	self:Bar(282179, 13.1) -- Reverberating Slam
 	self:Bar(282247, 16.8, CL.count:format(CL.add, addCount)) -- Apetagonizer 3000 Bomb, Add
 	self:Bar(282082, 22)	-- Bestial Combo
@@ -92,6 +94,14 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
+	if spellId == 282190 then -- Megatomic Seeker Missile
+		self:Message2(282215, "red")
+		self:PlaySound(282215, "warning")
+		self:CDBar(282215, 23)
+	end
+end
 
 function mod:Tantrum(args)
 	self:Message2(args.spellId, "orange")

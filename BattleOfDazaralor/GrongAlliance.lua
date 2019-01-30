@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Grong Alliance", 2070, 2340)
 if not mod then return end
 mod:RegisterEnableMob(144638)
 mod.engageId = 2284
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -52,6 +52,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
 	--[[ Grong ]]--
 	self:Log("SPELL_CAST_START", "DeathKnel", 282399)
 	self:Log("SPELL_CAST_SUCCESS", "NecroticCombo", 286450)
@@ -65,7 +67,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FerociousRoar", 285994)
 
 	--[[ Death Specter ]]--
-	--self:Log("SPELL_CAST_SUCCESS", "VoodooBlast", 282471) XXX Check what we can do with this
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 286373) -- Chill of Death
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 286373) -- Chill of Death
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 286373)
@@ -80,6 +81,7 @@ end
 
 function mod:OnEngage()
 	addCount = 1
+	self:Bar(282471, 10.5) -- Voodoo Blast
 	self:Bar(282543, 13.1) -- Deathly Slam
 	self:Bar(282526, 16.8, CL.count:format(CL.add, addCount)) -- DeathSpecter, Add
 	self:Bar(286450, 22)	-- Necrotic Combo
@@ -89,6 +91,14 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
+	if spellId == 282467 then -- Voodoo Blast
+		self:Message2(282471, "red")
+		self:PlaySound(282471, "warning")
+		self:CDBar(282471, 23)
+	end
+end
 
 function mod:DeathKnel(args)
 	self:Message2(args.spellId, "orange")
