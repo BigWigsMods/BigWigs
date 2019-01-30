@@ -106,17 +106,17 @@ function mod:EmbraceoftheVoidApplied(args)
 end
 
 function mod:UmbralShellRemoved(args)
-	self:Message(args.spellId, "cyan")
+	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:CustodyoftheDeep(args)
-	self:Message(args.spellId, "green")
+	self:Message2(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
 end
 
 function mod:StormofAnnihilation(args)
-	self:Message(args.spellId, "orange")
+	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 15)
 end
@@ -132,7 +132,7 @@ do
 		local t = args.time
 		if t-prev > 1 then
 			prev = t
-			self:Message(args.spellId, "red")
+			self:Message2(args.spellId, "red")
 			self:PlaySound(args.spellId, "long")
 			self:CastBar(args.spellId, 12)
 		end
@@ -176,7 +176,7 @@ function mod:AgentofDemise(args)
 end
 
 function mod:CerebralAssault(args)
-	self:Message(args.spellId, "orange")
+	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	self:CastBar(args.spellId, 6)
 end
@@ -200,7 +200,7 @@ function mod:PromisesofPower(args)
 end
 
 function mod:TerrifyingEcho(args)
-	self:Message(args.spellId, "red")
+	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 6)
 end
@@ -215,7 +215,7 @@ function mod:ShearMindApplied(args)
 end
 
 function mod:TerrifyingEcho(args)
-	self:Message(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 end
 

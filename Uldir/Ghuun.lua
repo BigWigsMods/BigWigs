@@ -190,18 +190,18 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 		local seconds = math.floor((GetTime() - orbDunkTime) * 100)/100
 		if power == 100 and orbsCounter < 3 then
 			orbsCounter = orbsCounter+1
-			self:Message(-18109, "green", nil, L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
+			self:Message2(-18109, "green", L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
 			self:PlaySound(-18109, "long")
 			orbDunkTime = GetTime() + 26 -- Adjust for Reorigination Blast timer
 		elseif power > 60 and orbsCounter < 2 then
 			orbsCounter = orbsCounter+1
-			self:Message(-18109, "green", nil, L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
+			self:Message2(-18109, "green", L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
 			self:PlaySound(-18109, "long")
 			self:Bar(-18109, 12.5, self:Mythic() and L.orb_spawning or L.orb_spawning_side:format(L.left), L.orb_icon) -- Power Matrix
 			orbDunkTime = GetTime() + 12.5 -- Adjust for Spawn timer
 		elseif power > 30 and orbsCounter < 1 then
 			orbsCounter = orbsCounter+1
-			self:Message(-18109, "green", nil, L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
+			self:Message2(-18109, "green", L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
 			self:PlaySound(-18109, "long")
 			self:Bar(-18109, 12.5, self:Mythic() and L.orb_spawning or L.orb_spawning_side:format(L.right), L.orb_icon) -- Power Matrix
 			orbDunkTime = GetTime() + 12.5 -- Adjust for Spawn timer
@@ -213,7 +213,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 277057 then -- Summon Bursting Boil
 		local spellName = self:SpellName(277007)
 		self:StopBar(CL.count:format(spellName, burstingBoilCount))
-		self:Message(277007, "red", nil, CL.count:format(spellName, burstingBoilCount))
+		self:Message2(277007, "red", CL.count:format(spellName, burstingBoilCount))
 		if not burstingOnMe then
 			self:PlaySound(277007, "warning")
 		else

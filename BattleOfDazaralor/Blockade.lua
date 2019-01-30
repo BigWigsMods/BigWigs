@@ -334,14 +334,14 @@ end
 -- Stage 2
 function mod:CatastrophicTides(args)
 	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "info")
+	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 15)
 end
 
 function mod:Interupted(args)
 	if args.extraSpellId == 288696 then -- Catastrophic Tides
-		self:Message(288696, "green", "Info", CL.interrupted:format(args.extraSpellName))
-		self:PlaySound(288696, "long")
+		self:Message2(288696, "green", CL.interrupted:format(args.extraSpellName))
+		self:PlaySound(288696, "info")
 		self:StopBar(CL.cast:format(args.extraSpellName))
 
 		stormsWailCount = 1

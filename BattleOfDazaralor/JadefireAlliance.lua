@@ -187,7 +187,7 @@ function mod:StalkingRemoved(args)
 end
 
 function mod:RisingFlamesApplied(args)
-	self:TargetBar(args.spellId, 15, self:ColorName(args.destName))
+	self:TargetBar(args.spellId, 15, args.destName)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) then
 		--self:CancelSayCountdown(args.spellId) -- XXX See if we need this, was spammy
@@ -205,7 +205,7 @@ function mod:RisingFlamesApplied(args)
 end
 
 function mod:RisingFlamesRemoved(args)
-	self:StopBar(args.spellId, self:ColorName(args.destName))
+	self:StopBar(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		--self:CancelSayCountdown(args.spellId)
 	end
