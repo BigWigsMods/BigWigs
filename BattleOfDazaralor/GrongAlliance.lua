@@ -126,7 +126,7 @@ end
 
 function mod:BestialThrowTarget(args)
 	self:TargetMessage2(289401, "purple", args.destName)
-	self:PlaySound(289401, "alarm")
+	self:PlaySound(289401, "alarm", nil, args.destName)
 end
 
 function mod:DeathlySlam(args)

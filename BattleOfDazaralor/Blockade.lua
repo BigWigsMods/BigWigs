@@ -319,7 +319,7 @@ end
 function mod:TemptingSongApplied(args)
 	if self:IsBrotherOnPlatform() then
 		self:TargetMessage2(args.spellId, "red", args.destName)
-		self:PlaySound(args.spellId, "warning")
+		self:PlaySound(args.spellId, "warning", nil, args.destName)
 	end
 end
 

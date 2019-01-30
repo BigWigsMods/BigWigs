@@ -209,7 +209,7 @@ do
 			mod:TargetsMessage(282135, "orange", playerList, #playerList) -- Crawling Hex
 			mod:OpenProximity(282135, 8, proxList)
 			if mod:Dispeller("curse") then
-				mod:PlaySound(282135, "alarm")
+				mod:PlaySound(282135, "alarm", nil, playerList)
 			end
 		else
 			wipe(playerList)
@@ -370,7 +370,7 @@ do
 
 		if self:Dispeller("magic", nil, args.spellId) then
 			self:TargetsMessage(args.spellId, "yellow", playerList)
-			self:PlaySound(args.spellId, "alert")
+			self:PlaySound(args.spellId, "alert", nil, playerList)
 		end
 
 		if self:GetOption(mindWipeMarker) and #playerList < 6 then

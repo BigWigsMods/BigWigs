@@ -120,7 +120,7 @@ end
 
 function mod:ScorchingDetonationSuccess(args)
 	self:TargetMessage2(args.spellId, "purple", args.destName)
-	self:PlaySound(args.spellId, "warning")
+	self:PlaySound(args.spellId, "warning", nil, args.destName)
 	self:CastBar(args.spellId, 5)
 	self:CDBar(args.spellId, stage == 2 and 41 or stage == 3 and 33 or stage == 4 and 27 or 22)
 end

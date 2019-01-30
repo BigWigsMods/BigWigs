@@ -389,7 +389,7 @@ function mod:WaveofCorruption(args)
 end
 
 function mod:BloodFeastSuccess(args)
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "alert", nil, args.destName)
 	self:TargetMessage2(args.spellId, "red", args.destName)
 	self:StopBar(args.spellId)
 	if self:Me(args.destGUID) then

@@ -126,7 +126,7 @@ function mod:ClingingCorruption(args)
 end
 
 function mod:DepletedEnergy(args)
-	self:TargetMessage2(args.spellId, "green", args.destName)
+	self:TargetMessage2(args.spellId, "green", args.destName) -- Cast on herself
 	self:PlaySound(args.spellId, "long")
 end
 
