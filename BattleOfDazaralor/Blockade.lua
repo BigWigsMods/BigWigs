@@ -94,7 +94,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "IreoftheDeep", 285017)
 
 	self:Log("SPELL_AURA_APPLIED", "StormsWailApplied", 285350)
-	self:Log("SPELL_AURA_REMOVED", "StormsWailRemoved", 285350)
+	self:Log("SPELL_AURA_APPLIED", "StormsWailSecondaryApplied", 285426)
+	self:Log("SPELL_AURA_REMOVED", "StormsWailRemoved", 285350, 285426)
 end
 
 function mod:OnEngage()
@@ -398,8 +399,17 @@ function mod:StormsWailApplied(args)
 	self:CDBar(args.spellId, 120, CL.count:format(args.spellName, stormsWailCount))
 end
 
+function mod:StormsWailSecondaryApplied(args)
+	self:TargetMessage2(285350, "yellow", args.destName)
+	self:TargetBar(285350, 10, args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(285350, "warning")
+		self:SayCountdown(285350, 10)
+	end
+end
+
 function mod:StormsWailRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelSayCountdown(285350)
 	end
 end
