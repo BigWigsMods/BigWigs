@@ -83,7 +83,7 @@ function mod:OnEngage()
 	addCount = 1
 	self:Bar(282471, 10.5) -- Voodoo Blast
 	self:Bar(282543, 13.1) -- Deathly Slam
-	self:Bar(282526, 16.8, CL.count:format(CL.add, addCount)) -- DeathSpecter, Add
+	self:Bar(282526, 16.8, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount)) -- DeathSpecter, Add
 	self:Bar(286450, 22)	-- Necrotic Combo
 	self:Bar(285994, 37.5) -- Ferocious Roar
 end
@@ -168,7 +168,7 @@ function mod:DeathSpecter(args)
 	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, addCount)))
 	self:PlaySound(args.spellId, "long")
 	addCount = addCount + 1
-	self:Bar(args.spellId, 60.5, CL.count:format(CL.add, addCount))
+	self:Bar(args.spellId, self:Mythic() and 120 or 60.5, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount))
 end
 
 do

@@ -86,7 +86,7 @@ function mod:OnEngage()
 	addCount = 1
 	self:Bar(282215, 10.5) -- Megatomic Seeker Missile
 	self:Bar(282179, 13.1) -- Reverberating Slam
-	self:Bar(282247, 16.8, CL.count:format(CL.add, addCount)) -- Apetagonizer 3000 Bomb, Add
+	self:Bar(282247, 16.8, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount)) -- Apetagonizer 3000 Bomb, Add
 	self:Bar(282082, 22)	-- Bestial Combo
 	self:Bar(285994, 37.5) -- Ferocious Roar
 end
@@ -168,10 +168,10 @@ do
 end
 
 function mod:Apetagonizer3000Bomb(args)
-	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, addCount)))
+	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(self:Mythic() and CL.adds or CL.add, addCount)))
 	self:PlaySound(args.spellId, "long")
 	addCount = addCount + 1
-	self:Bar(args.spellId, 60.5, CL.count:format(CL.add, addCount))
+	self:Bar(args.spellId, self:Mythic() and 120 or 60.5, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount))
 end
 
 do
