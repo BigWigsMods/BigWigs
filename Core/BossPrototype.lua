@@ -1887,6 +1887,7 @@ do
 				end
 			end
 			wipe(playerTable)
+			if markers then wipe(markers) end
 		end
 	end
 
