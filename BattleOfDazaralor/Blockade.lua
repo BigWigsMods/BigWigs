@@ -390,10 +390,11 @@ end
 
 function mod:StormsWailApplied(args)
 	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, stormsWailCount))
-	self:TargetBar(args.spellId, 10, args.destName, CL.count:format(args.spellName, stormsWailCount))
+	local duration = self:Easy() and 13 or 10
+	self:TargetBar(args.spellId, duration, args.destName, CL.count:format(args.spellName, stormsWailCount))
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
-		self:SayCountdown(args.spellId, 10)
+		self:SayCountdown(args.spellId, duration)
 	end
 	stormsWailCount = stormsWailCount + 1
 	self:CDBar(args.spellId, 120, CL.count:format(args.spellName, stormsWailCount))
@@ -401,10 +402,11 @@ end
 
 function mod:StormsWailSecondaryApplied(args)
 	self:TargetMessage2(285350, "yellow", args.destName)
-	self:TargetBar(285350, 10, args.destName)
+	local duration = self:Easy() and 13 or 10
+	self:TargetBar(285350, duration, args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(285350, "warning")
-		self:SayCountdown(285350, 10)
+		self:SayCountdown(285350, duration)
 	end
 end
 
