@@ -1838,6 +1838,10 @@ do
 					local list = tconcat(playerTable, comma, 1, playersInTable)
 					local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
+					-- If emphasize is NOT enabled, and message contains your name, and emphasize (me only) IS enabled show a 2nd (emphasized) message
+					if not isEmphasized and onMe and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
+						self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, true)
+					end
 				end
 			end
 			wipe(playerTable)
