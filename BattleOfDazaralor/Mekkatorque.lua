@@ -124,41 +124,17 @@ function mod:GigavoltCharge(args)
 end
 
 do
-	local playerList, isOnMe = {}, nil
-
-	local function announce()
-		local meOnly = mod:CheckOption(286646, "ME_ONLY")
-
-		if isOnMe then
-			mod:TargetBar(286646, 15, mod:UnitName("player"), L.gigavolt_alt_text)
-		end
-
-		if isOnMe and (meOnly or #playerList == 1) then
-			mod:Message2(286646, "blue", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, L.gigavolt_alt_text)))
-		elseif not meOnly then
-			local msg = ""
-			for i=1, #playerList do
-				local icon = ("|T13700%d:0|t"):format(i)
-				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
-			end
-
-			mod:Message2(286646, "yellow", CL.other:format(L.gigavolt_alt_text, msg))
-		end
-
-		playerList = {}
-		isOnMe = nil
-	end
+	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:GigavoltChargeApplied(args)
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:SimpleTimer(announce, 0.1)
-		end
+		playerIcons[#playerIcons+1] = #playerIcons+1
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.gigavolt_alt_text, nil, nil, playerIcons)
 		if self:Me(args.destGUID) then
-			isOnMe = #playerList
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, isOnMe, isOnMe))
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #playerList, #playerList))
 			self:SayCountdown(args.spellId, 15)
+			self:TargetBar(args.spellId, 15, args.destName, L.gigavolt_alt_text)
 		end
 		if self:GetOption(gigavoltChargeMarker) then
 			SetRaidTarget(args.destName, #playerList)

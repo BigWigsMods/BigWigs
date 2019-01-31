@@ -188,34 +188,13 @@ function mod:QuickenedPulseApplied(args)
 end
 
 do
-	local playerList, isOnMe = {}, nil
-
-	local function announce()
-		local meOnly = mod:CheckOption(284470, "ME_ONLY")
-
-		if isOnMe and (meOnly or #playerList == 1) then
-			mod:Message2(284470, "blue", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(284470))))
-		elseif not meOnly then
-			local msg = ""
-			for i=1, #playerList do
-				local icon = ("|T13700%d:0|t"):format(i)
-				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
-			end
-
-			mod:Message2(284470, "orange", CL.other:format(mod:SpellName(284470), msg))
-		end
-
-		playerList = {}
-		isOnMe = nil
-	end
+	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:TimeBombApplied(args)
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:SimpleTimer(announce, 0.1)
-		end
+		playerIcons[#playerIcons+1] = #playerIcons+1
+		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
 		if self:Me(args.destGUID) then
-			isOnMe = #playerList
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(timeBombMarker) then
