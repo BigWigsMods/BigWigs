@@ -15,6 +15,7 @@ mod.respawnTime = 30
 
 local stage = 1
 local toadCount = 1
+local zombieDustTotemCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -58,7 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ScorchingDetonationSuccess", 284831)
 	self:Log("SPELL_CAST_START", "PlagueofToads", 284933)
 	self:Log("SPELL_CAST_SUCCESS", "GreaterSerpentTotem", 285172)
-	self:Log("SPELL_AURA_APPLIED", "SealofPurificationApplied", 290450)
+	self:Log("SPELL_AURA_APPLIED", "SealofPurificationApplied", 290450, 284662) -- Heroic, Mythic
 	self:Log("SPELL_CAST_START", "MeteorLeap", 284686)
 	self:Log("SPELL_CAST_SUCCESS", "CrushingLeap", 284719)
 	self:Log("SPELL_CAST_START", "GrievousAxe", 284781)
@@ -80,6 +81,7 @@ end
 
 function mod:OnEngage()
 	toadCount = 1
+	zombieDustTotemCount = 1
 	stage = 1
 
 	self:Bar(284781, 8.5) -- Grievous Axe
@@ -103,7 +105,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		self:StopBar(284933, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
 		self:StopBar(285213) -- Caress of Death
 		self:StopBar(288449) -- Death's Door
-		self:StopBar(285003) -- Zombie Dust Totem
+		self:StopBar(CL.count:format(self:SpellName(285003), zombieDustTotemCount)) -- Zombie Dust Totem
 
 		self:CDBar(286742, 28.5) -- Necrotic Smash
 		self:CDBar(287333, 44) -- Inevitable End
@@ -139,13 +141,13 @@ function mod:GreaterSerpentTotem(args)
 end
 
 function mod:SealofPurificationApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage2(290450, "yellow", args.destName)
 	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "warning")
-		self:Flash(args.spellId)
-		self:Say(args.spellId)
+		self:PlaySound(290450, "warning")
+		self:Flash(290450)
+		self:Say(290450)
 	end
-	self:Bar(args.spellId, 25.5)
+	self:Bar(290450, 25.5)
 end
 
 function mod:MeteorLeap(args)
@@ -200,7 +202,7 @@ function mod:DeathsPresence(args)
 		self:StopBar(284831) -- Scorching Detonation
 		self:StopBar(285172) -- Greater Serpent Totem
 
-		self:Bar(285003, 19) -- Zombie Dust Totem
+		self:Bar(285003, 19, CL.count:format(self:SpellName(285003), zombieDustTotemCount)) -- Zombie Dust Totem
 		self:Bar(285213, 24.3) -- Caress of Death
 		self:Bar(284831, 27.3) -- Scorching Detonation
 		self:Bar(285346, 35) -- Plague of Fire
@@ -224,9 +226,10 @@ function mod:PlagueofFireApplied(args)
 end
 
 function mod:ZombieDustTotem(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, zombieDustTotemCount))
 	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, 45)
+	zombieDustTotemCount = zombieDustTotemCount + 1
+	self:Bar(args.spellId, 45, CL.count:format(args.spellName, zombieDustTotemCount))
 end
 
 function mod:CaressofDeath(args)
