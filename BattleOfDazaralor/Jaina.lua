@@ -49,6 +49,7 @@ function mod:GetOptions()
 	return {
 		-- General
 		"stages",
+		"berserk",
 		{287993, "INFOBOX"}, -- Chilling Touch
 		287490, -- Frozen Solid
 		-- Stage 1
