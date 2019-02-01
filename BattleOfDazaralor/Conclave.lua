@@ -368,13 +368,13 @@ do
 
 		playerList[#playerList+1] = args.destName
 
+		if self:GetOption(mindWipeMarker) and #playerList < 6 then
+			SetRaidTarget(args.destName, #playerList)
+		end
+
 		if self:Dispeller("magic", nil, args.spellId) then
 			self:TargetsMessage(args.spellId, "yellow", playerList)
 			self:PlaySound(args.spellId, "alert", nil, playerList)
-		end
-
-		if self:GetOption(mindWipeMarker) and #playerList < 6 then
-			SetRaidTarget(args.destName, #playerList)
 		end
 	end
 

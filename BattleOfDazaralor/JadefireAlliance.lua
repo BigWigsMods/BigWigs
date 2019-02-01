@@ -283,10 +283,10 @@ do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:SearingEmbersApplied(args)
+		local playerIconsCount = #playerIcons+1
 		playerList[#playerList+1] = args.destName
-		playerIcons[#playerIcons+1] = #playerIcons+1
-		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
-		if #playerList == 1 then
+		playerIcons[playerIconsCount] = playerIconsCount
+		if playerIconsCount == 1 then
 			self:CDBar(args.spellId, 40)
 		end
 		if self:Me(args.destGUID) then
@@ -294,8 +294,9 @@ do
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(searingEmbersMarker) then
-			SetRaidTarget(args.destName, #playerList)
+			SetRaidTarget(args.destName, playerIconsCount)
 		end
+		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
 	end
 
 	function mod:SearingEmbersRemoved(args)

@@ -127,18 +127,19 @@ do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:GigavoltChargeApplied(args)
+		local playerIconsCount = #playerIcons+1
 		playerList[#playerList+1] = args.destName
-		playerIcons[#playerIcons+1] = #playerIcons+1
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.gigavolt_alt_text, nil, nil, playerIcons)
+		playerIcons[playerIconsCount] = playerIconsCount
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #playerList, #playerList))
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, playerIconsCount, playerIconsCount))
 			self:SayCountdown(args.spellId, 15)
 			self:TargetBar(args.spellId, 15, args.destName, L.gigavolt_alt_text)
 		end
 		if self:GetOption(gigavoltChargeMarker) then
-			SetRaidTarget(args.destName, #playerList)
+			SetRaidTarget(args.destName, playerIconsCount)
 		end
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.gigavolt_alt_text, nil, nil, playerIcons)
 	end
 end
 

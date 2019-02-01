@@ -145,10 +145,7 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:VolatileChargeApplied(args)
-		if self:GetOption("custom_on_hand_timers") or self:Me(args.destGUID) then
-			playerList[#playerList+1] = args.destName
-			self:TargetsMessage(283507, "yellow", playerList)
-		end
+		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(283507, "warning")
 			self:Say(283507)
@@ -156,6 +153,9 @@ do
 		end
 		if #playerList == 1 and self:GetOption("custom_on_hand_timers") then
 			self:Bar(283507, 12.2)
+		end
+		if self:GetOption("custom_on_hand_timers") or self:Me(args.destGUID) then
+			self:TargetsMessage(283507, "yellow", playerList)
 		end
 	end
 
@@ -191,15 +191,16 @@ do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:TimeBombApplied(args)
+		local playerIconsCount = #playerIcons+1
 		playerList[#playerList+1] = args.destName
-		playerIcons[#playerIcons+1] = #playerIcons+1
-		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
+		playerIcons[playerIconsCount] = playerIconsCount
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(timeBombMarker) then
-			SetRaidTarget(args.destName, #playerList)
+			SetRaidTarget(args.destName, playerIconsCount)
 		end
+		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
 	end
 
 	function mod:TimeBombRemoved(args)
@@ -239,7 +240,6 @@ do
 	local playerList = mod:NewTargetList()
 	function mod:LiquidGoldApplied(args)
 		playerList[#playerList+1] = args.destName
-		self:TargetsMessage(args.spellId, "yellow", playerList)
 		if #playerList == 1 then
 			self:CDBar(args.spellId, 15)
 		end
@@ -248,6 +248,7 @@ do
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 12)
 		end
+		self:TargetsMessage(args.spellId, "yellow", playerList)
 	end
 
 	function mod:LiquidGoldRemoved(args)
