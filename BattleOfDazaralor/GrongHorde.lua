@@ -66,7 +66,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BestialThrow", 289401)
 	self:Log("SPELL_CAST_SUCCESS", "BestialThrowTarget", 289307)
 	self:Log("SPELL_CAST_SUCCESS", "ReverberatingSlam", 282179)
-	self:Log("SPELL_CAST_START", "FerociousRoar", 285994)
+	self:Log("SPELL_CAST_START", "FerociousRoar", 290574, 285994) -- Mythic, Others
 
 	--[[ Flying Ape Wranglers  ]]--
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 283069) -- Megatomic Fire

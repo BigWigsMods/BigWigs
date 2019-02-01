@@ -64,7 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BestialThrow", 289401)
 	self:Log("SPELL_CAST_SUCCESS", "BestialThrowTarget", 289307)
 	self:Log("SPELL_CAST_SUCCESS", "DeathlySlam", 282543)
-	self:Log("SPELL_CAST_START", "FerociousRoar", 285994)
+	self:Log("SPELL_CAST_START", "FerociousRoar", 290574, 285994) -- Mythic, Others
 
 	--[[ Death Specter ]]--
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 286373) -- Chill of Death
@@ -136,9 +136,9 @@ function mod:DeathlySlam(args)
 end
 
 function mod:FerociousRoar(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 36.5)
+	self:Message2(285994, "red")
+	self:PlaySound(285994, "warning")
+	self:Bar(285994, 36.5)
 end
 
 --function mod:VoodooBlast(args)
