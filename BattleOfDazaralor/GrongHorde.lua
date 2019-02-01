@@ -139,9 +139,9 @@ function mod:ReverberatingSlam(args)
 end
 
 function mod:FerociousRoar(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 36.5)
+	self:Message2(285994, "red")
+	self:PlaySound(285994, "warning")
+	self:Bar(285994, 36.5)
 end
 
 --function mod:MegatomicSeekerMissile(args)
