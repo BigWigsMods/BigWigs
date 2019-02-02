@@ -219,11 +219,12 @@ do
 		if a and messages[key] then
 			local color = colors[random(1, #colors)]
 			local sound = sounds[random(1, #sounds)]
+			local emphasized = random(1, 3) == 1
 			if random(1, 4) == 2 then
 				core:SendMessage("BigWigs_Flash", core, key)
 			end
 			core:Print(L.test .." - ".. color ..": ".. key)
-			core:SendMessage("BigWigs_Message", core, key, color..": "..key, color, messages[key])
+			core:SendMessage("BigWigs_Message", core, key, color..": "..key, color, messages[key], emphasized)
 			core:SendMessage("BigWigs_Sound", core, key, sound)
 			messages[key] = nil
 		end
@@ -502,7 +503,7 @@ function core:IterateBossModules()
 	return next, bosses
 end
 
-function core:GetBossModule(moduleName, silent) 
+function core:GetBossModule(moduleName, silent)
 	if not silent and not bosses[moduleName] then
 		error(("No boss module named '%s' found."):format(moduleName))
 	else
