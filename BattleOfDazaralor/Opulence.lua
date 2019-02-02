@@ -109,7 +109,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FlamesofPunishment", 282939, 287659) -- Normal, Empowered
 	-- Traps
 	self:Log("SPELL_AURA_APPLIED", "PulsequickeningToxin", 284493)
-	self:Log("SPELL_AURA_REMOVED", "PulsequickeningToxinRemoved", 284493)
 	self:Log("SPELL_AURA_APPLIED", "QuickenedPulseApplied", 284519)
 	self:Log("SPELL_AURA_APPLIED", "HexOfLethargyApplied", 284470)
 	self:Log("SPELL_AURA_REMOVED", "HexOfLethargyRemoved", 284470)
