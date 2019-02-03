@@ -331,8 +331,8 @@ function mod:TemptingSongStart(args)
 	-- No summon events in Mythic stage 2, so we have to use the cast_start
 	if self:Mythic() and stage == 2 and not mobCollector[args.sourceGUID] then
 		mobCollector[args.sourceGUID] = true
-		self:Message2(args.spellId, "cyan", CL.count:format(args.sourceName, sirenCount))
-		self:PlaySound(args.spellId, "info")
+		self:Message2(284383, "cyan", CL.count:format(args.sourceName, sirenCount))
+		self:PlaySound(284383, "info")
 		sirenCount = sirenCount + 1
 		if sirenCount % 2 == 0 then
 			self:Bar(284383, 5, CL.count:format(args.sourceName, sirenCount))
