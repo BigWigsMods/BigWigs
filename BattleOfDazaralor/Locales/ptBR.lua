@@ -37,6 +37,13 @@ end
 
 L = BigWigs:NewBossLocale("Opulence", "ptBR")
 if L then
+	--L.room = "Room (%d/8)"
+	--L.no_jewel = "No Jewel:"
+	--L.seconds = "%.1fs"
+
+	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
+	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the construct which isn't in your hall during stage 1."
+
 	--L.custom_on_hand_timers = "The Hand of In'zashi"
 	--L.custom_on_hand_timers_desc = "Show warnings and bars for The Hand of In'zashi's abilities."
 	--L.hand_cast = "Hand: %s"

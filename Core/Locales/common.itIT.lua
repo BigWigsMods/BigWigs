@@ -51,6 +51,7 @@ L.stage = "Fase %d"
 L.trash = "Trash"
 L.underyou = "%s sotto di TE"
 L.you = "%s su di TE"
+L.you_icon = "%s su di |T13700%d:0|tTE"
 
 --L.active = "Active" -- When a boss becomes active, after speech finishes
 

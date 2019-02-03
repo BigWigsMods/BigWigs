@@ -3,6 +3,7 @@ if not L then return end
 
 -- Prototype.lua common words
 L.you = "%s em VOCÊ"
+L.you_icon = "%s em |T13700%d:0|tVOCÊ"
 L.underyou = "%s debaixo de VOCÊ"
 L.other = "%s: %s"
 L.onboss = "%s no CHEFE"

@@ -2,6 +2,7 @@ local L = BigWigsAPI:NewLocale("BigWigs: Common", "enUS")
 
 -- Prototype.lua common words
 L.you = "%s on YOU"
+L.you_icon = "%s on |T13700%d:0|tYOU"
 L.underyou = "%s under YOU"
 L.other = "%s: %s"
 L.onboss = "%s on BOSS"

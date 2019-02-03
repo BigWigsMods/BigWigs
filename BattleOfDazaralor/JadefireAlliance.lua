@@ -15,6 +15,7 @@ mod.respawnTime = 30
 --
 
 local lastWarnedPower = 0
+local trapCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -54,7 +55,7 @@ function mod:GetOptions()
 		{286425, "INFOBOX"}, -- Fire Shield
 		{286988, "SAY"}, -- Searing Embers
 		searingEmbersMarker,
-		--284374, -- Magma Trap
+		284374, -- Magma Trap
 		-- Team Attacks
 		285428, -- Fire from Mist
 		284656, -- Ring of Hostility
@@ -70,10 +71,11 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	-- Mestrah, the Illuminated
 	self:Log("SPELL_CAST_SUCCESS", "WhirlingJadeStorm", 286436)
-	self:Log("SPELL_CAST_START", "MultiSidedStrike", 282030)
+	self:Log("SPELL_CAST_START", "MultiSidedStrike", 282030, 285818)
 	self:Log("SPELL_AURA_APPLIED", "StalkingApplied", 285632)
 	self:Log("SPELL_AURA_REMOVED", "StalkingRemoved", 285632)
 
@@ -103,9 +105,11 @@ end
 
 function mod:OnEngage()
 	lastWarnedPower = 0
+	trapCount = 1
 
 	self:CDBar(286379, 20.5) -- Pyroblast
 	self:CDBar(286436, 21.5) -- Whirling Jade Storm
+	self:CDBar(284374, 28, CL.count:format(self:SpellName(284374), trapCount)) -- Magma Trap
 	self:CDBar(282030, 30) -- Multi-Sided Strike
 	self:CDBar(285428, 68) -- Fire from Mist
 	self:CDBar(285645, 74) -- Spirits of Xuen
@@ -120,7 +124,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 285645 then -- Spirits of Xuen
 		self:Message2(spellId, "yellow")
 		self:PlaySound(spellId, "info")
-		self:CDBar(spellId, 127.7) -- XXX Need correct info after Ring of Hostility stage
+		self:CDBar(spellId, 119) -- XXX Need correct info after Ring of Hostility stage
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
+	if msg:find("284374", nil, true) then -- Magma Trap
+		self:Message2(284374, "red", CL.count:format(self:SpellName(284374), trapCount))
+		self:PlaySound(284374, "warning")
+		trapCount = trapCount + 1
+		self:CDBar(284374, 35, CL.count:format(self:SpellName(284374), trapCount))
 	end
 end
 
@@ -150,9 +163,9 @@ end
 
 function mod:MultiSidedStrike(args)
 	if self:Mythic() or self:Tank() then -- No warnings needed for non-tanks unless it's Mythic
-		self:Message2(args.spellId, "red")
-		self:PlaySound(args.spellId, "warning")
-		self:CDBar(args.spellId, 55)
+		self:Message2(282030, "red")
+		self:PlaySound(282030, "warning")
+		self:CDBar(282030, self:Mythic() and 73 or 55)
 	end
 end
 
@@ -174,23 +187,25 @@ function mod:StalkingRemoved(args)
 end
 
 function mod:RisingFlamesApplied(args)
-	self:TargetBar(args.spellId, 15, self:ColorName(args.destName))
+	self:TargetBar(args.spellId, 15, args.destName)
+	local amount = args.amount or 1
 	if self:Me(args.destGUID) then
 		--self:CancelSayCountdown(args.spellId) -- XXX See if we need this, was spammy
 		--self:SayCountdown(args.spellId, 6, nil, 2)
-		self:PlaySound(args.spellId, "alarm")
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+		if amount % 2 == 1 then
+			self:PlaySound(args.spellId, "alarm")
+		end
 	elseif self:Tank() and self:Tank(args.destName) then
-		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "purple")
-		if amount > 3 then
+		if amount > 3 and amount % 2 == 0 then
 			self:PlaySound(args.spellId, "warning", nil, args.destName)
 		end
 	end
 end
 
 function mod:RisingFlamesRemoved(args)
-	self:StopBar(args.spellId, self:ColorName(args.destName))
+	self:StopBar(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		--self:CancelSayCountdown(args.spellId)
 	end
@@ -221,7 +236,7 @@ do
 
 	local function updateInfoBox(self)
 		local castTimeLeft = castOver - GetTime()
-		local castPercentage = castTimeLeft / 8
+		local castPercentage = castTimeLeft / 10
 		local absorb = UnitGetTotalAbsorbs("boss2")
 		local absorbPercentage = absorb / maxAbsorb
 
@@ -265,41 +280,23 @@ do
 end
 
 do
-	local playerList, isOnMe = {}, nil
-
-	local function announce()
-		local meOnly = mod:CheckOption(286988, "ME_ONLY")
-
-		if isOnMe and (meOnly or #playerList == 1) then
-			mod:Message2(286988, "blue", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(286988))))
-		elseif not meOnly then
-			local msg = ""
-			for i=1, #playerList do
-				local icon = ("|T13700%d:0|t"):format(i)
-				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
-			end
-
-			mod:Message2(286988, "orange", CL.other:format(mod:SpellName(286988), msg))
-		end
-
-		playerList = {}
-		isOnMe = nil
-	end
+	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:SearingEmbersApplied(args)
+		local playerIconsCount = #playerIcons+1
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:SimpleTimer(announce, 0.1)
+		playerIcons[playerIconsCount] = playerIconsCount
+		if playerIconsCount == 1 then
 			self:CDBar(args.spellId, 40)
 		end
 		if self:Me(args.destGUID) then
-			isOnMe = #playerList
 			self:Say(args.spellId)
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(searingEmbersMarker) then
-			SetRaidTarget(args.destName, #playerList)
+			SetRaidTarget(args.destName, playerIconsCount)
 		end
+		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
 	end
 
 	function mod:SearingEmbersRemoved(args)

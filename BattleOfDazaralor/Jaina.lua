@@ -15,7 +15,7 @@ local mod, CL = BigWigs:NewBoss("Lady Jaina Proudmoore", 2070, 2343)
 if not mod then return end
 mod:RegisterEnableMob(146409) -- Lady Jaina Proudmoore
 mod.engageId = 2281
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -44,11 +44,13 @@ local crystallineDustCount = 1
 --
 
 local broadsideMarker = mod:AddMarkerOption(false, "player", 1, 288212, 1, 2, 3) -- Broadside
+local avalanceMarker = mod:AddMarkerOption(false, "player", 1, 285254, 1, 2, 3) -- Avalance
 function mod:GetOptions()
 	return {
 		-- General
 		"stages",
-		{285215, "INFOBOX"}, -- Chilling Touch
+		"berserk",
+		{287993, "INFOBOX"}, -- Chilling Touch
 		287490, -- Frozen Solid
 		-- Stage 1
 		{288038, "FLASH"}, -- Marked Target
@@ -56,7 +58,8 @@ function mod:GetOptions()
 		285828, -- Bombard
 		287365, -- Searing Pitch
 		{285253, "TANK"}, -- Ice Shard
-		287565, -- Avalanche
+		{285254, "FLASH", "SAY", "ICON"}, -- Avalanche
+		avalanceMarker,
 		287925, -- Time Warp
 		287626, -- Grasp of Frost
 		285177, -- Freezing Blast
@@ -83,9 +86,9 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- General
-	self:Log("SPELL_AURA_APPLIED", "ChillingTouch", 285215)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ChillingTouch", 285215)
-	self:Log("SPELL_AURA_REMOVED", "ChillingTouch", 285215)
+	self:Log("SPELL_AURA_APPLIED", "ChillingTouch", 287993)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ChillingTouch", 287993)
+	self:Log("SPELL_AURA_REMOVED", "ChillingTouchRemoved", 287993)
 	self:Log("SPELL_AURA_APPLIED", "FrozenSolid", 287490)
 
 	-- Stage 1
@@ -95,6 +98,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "IceShard", 285253)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "IceShard", 285253)
 	self:Log("SPELL_CAST_START", "Avalanche", 287565)
+	self:Log("SPELL_AURA_APPLIED", "AvalancheApplied", 285254)
+	self:Log("SPELL_AURA_REMOVED", "AvalancheRemoved", 285254)
 	self:Log("SPELL_CAST_SUCCESS", "TimeWarp", 287925)
 	self:Log("SPELL_AURA_APPLIED", "GraspofFrost", 287626)
 	self:Log("SPELL_CAST_START", "FreezingBlast", 285177)
@@ -141,13 +146,15 @@ function mod:OnEngage()
 	orbofFrostCount = 1
 	crystallineDustCount = 1
 
-	self:OpenInfo(285215, self:SpellName(285215)) -- Chilling Touch
+	self:OpenInfo(287993, self:SpellName(287993)) -- Chilling Touch
 
-	self:CDBar(287565, 8) -- Avalanche
+	self:CDBar(285254, 8) -- Avalanche
 	self:CDBar(285177, 17) -- Freezing Blast
 	self:CDBar(285459, 60, CL.count:format(self:SpellName(285459), ringofIceCount)) -- Ring of Ice
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+
+	self:Berserk(self:Mythic() and 720 or 900)
 end
 
 --------------------------------------------------------------------------------
@@ -170,7 +177,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "green", CL.intermission, false)
 
-		self:StopBar(287565) -- Avalanche
+		self:StopBar(285254) -- Avalanche
 		self:StopBar(285177) -- Freezing Blast
 		self:StopBar(CL.count:format(self:SpellName(285459), ringofIceCount)) -- Ring of Ice
 	end
@@ -185,6 +192,15 @@ function mod:ChillingTouch(args)
 		end
 	end
 	chillingTouchList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, chillingTouchList)
+end
+
+function mod:ChillingTouchRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "info")
+	end
+	chillingTouchList[args.destName] = 0
 	self:SetInfoByTable(args.spellId, chillingTouchList)
 end
 
@@ -225,9 +241,44 @@ function mod:IceShard(args)
 end
 
 function mod:Avalanche(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, stage > 1 and 75 or 60)
+	self:CDBar(285254, stage > 1 and 75 or 60) -- Avalanche
+end
+
+do
+	local playerList = mod:NewTargetList()
+	function mod:AvalancheApplied(args)
+		if stage == 1 then -- 3 targets
+			local count = #playerList + 1
+			playerList[count] = args.destName
+			self:TargetsMessage(args.spellId, "yellow", playerList, 3)
+			if self:Me(args.destGUID) then
+				self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+				self:PlaySound(args.spellId, "warning")
+				self:Flash(args.spellId)
+			end
+			if self:GetOption(avalanceMarker) then
+				SetRaidTarget(args.destName, count)
+			end
+		else -- 1 target (tank)
+			self:TargetMessage2(args.spellId, "yellow", args.destName)
+			self:PrimaryIcon(args.spellId, args.destName)
+			if self:Me(args.destGUID) then
+				self:Say(args.spellId)
+				self:PlaySound(args.spellId, "warning")
+				self:Flash(args.spellId)
+			end
+		end
+	end
+end
+
+function mod:AvalancheRemoved(args)
+	if stage == 1 then
+		if self:GetOption(avalanceMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
+	else
+		self:PrimaryIcon(args.spellId, args.destName)
+	end
 end
 
 function mod:TimeWarp(args)
@@ -266,9 +317,16 @@ function mod:HowlingWindsRemoved(args)
 
 	self:CDBar(288212, 3) -- Broadside
 	self:CDBar(288345, 7) -- Glacial Ray
-	self:CDBar(287565, 17) -- Avalanche
+	self:CDBar(285254, 17) -- Avalanche
 	self:CDBar(288441, 31, CL.count:format(self:SpellName(288441), icefallCount)) -- Icefall
 	self:CDBar(288374, 42) -- Siegebreaker Blast
+
+	-- Reopening the InfoBox and here is why:
+	--  - During the cinematic, UIParent:Hide() is called.
+	--  => We cleanup our InfoBox on hide, so we basically lose track of the raid.
+	--     Easy fix: Just open it again. Done.
+	self:OpenInfo(287993, self:SpellName(287993))
+	self:SetInfoByTable(287993, chillingTouchList)
 end
 
 -- Stage 2
@@ -309,7 +367,7 @@ end
 
 function mod:SiegebreakerBlastApplied(args)
 	self:TargetMessage2(args.spellId, "yellow", args.destName)
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "alert", nil, args.destName)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetBar(args.spellId, 8, args.destName)
 	if self:Me(args.destGUID) then
@@ -350,7 +408,7 @@ function mod:FlashFreeze(args)
 	self:Message2("stages", "green", CL.intermission, false)
 	self:StopBar(288212) -- Broadside
 	self:StopBar(288345) -- Glacial Ray
-	self:StopBar(287565) -- Avalanche
+	self:StopBar(285254) -- Avalanche
 	self:StopBar(CL.count:format(self:SpellName(288441), icefallCount)) -- Icefall
 	self:StopBar(288374) -- Siegebreaker Blast
 end
@@ -375,6 +433,13 @@ function mod:ArcaneBarrageRemoved(args)
 	self:CDBar(288345, 49.5) -- Glacial Ray
 	self:CDBar(288374, 60.5) -- Siegebreaker Blast
 	self:CDBar(288441, 61.5, CL.count:format(self:SpellName(288441), icefallCount)) -- Icefall
+
+	-- Reopening the InfoBox and here is why:
+	--  - During the cinematic, UIParent:Hide() is called.
+	--  => We cleanup our InfoBox on hide, so we basically lose track of the raid.
+	--     Easy fix: Just open it again. Done.
+	self:OpenInfo(287993, self:SpellName(287993))
+	self:SetInfoByTable(287993, chillingTouchList)
 end
 
 do

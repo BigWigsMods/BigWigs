@@ -67,7 +67,7 @@ end
 function mod:BwonsamdisKnife(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning") -- Only if you were the target, the caster already knows
-		self:Message2(args.spellId, "blue", L.victim:format(self:ColorName(args.destName), args.spellName))
+		self:Message2(args.spellId, "blue", L.victim:format(self:ColorName(args.sourceName), args.spellName))
 	else
 		self:Message2(args.spellId, "red", L.witness:format(self:ColorName(args.sourceName), self:ColorName(args.destName), args.spellName))
 	end

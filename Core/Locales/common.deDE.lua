@@ -51,6 +51,7 @@ L.stage = "Phase %d"
 L.trash = "Trash"
 L.underyou = "%s unter DIR"
 L.you = "%s auf DIR"
+L.you_icon = "%s auf |T13700%d:0|tDIR"
 
 L.active = "Aktiv" -- When a boss becomes active, after speech finishes
 
