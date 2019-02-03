@@ -19,7 +19,7 @@ if L then
 	L.cast = "施放"
 	L.cast_text = "%.1f秒（|cff%s%.0f%%|r）"
 
-	L.interrupted_after = "%s被%s中断（%.1f秒剩余）"
+	L.interrupted_after = "%s被%s中断（尚余%.1f秒）"
 end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Alliance", "zhCN")
