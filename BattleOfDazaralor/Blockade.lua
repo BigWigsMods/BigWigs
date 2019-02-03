@@ -238,6 +238,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 284993 then -- Move Laminaria to Position // Might want to use Anchor Here 45313
+		stage = 2
 		self:Message2("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 	end
@@ -358,8 +359,6 @@ end
 
 -- Stage 2
 function mod:CatastrophicTides(args)
-	stage = 2
-	sirenCount = 1
 	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 15)
@@ -371,8 +370,9 @@ function mod:Interupted(args)
 		self:PlaySound(288696, "info")
 		self:StopBar(CL.cast:format(args.extraSpellName))
 
-		stormsWailCount = 1
 		ireCount = 1
+		stormsWailCount = 1
+		sirenCount = 1
 
 		self:CDBar(285017, self:Mythic() and 4 or 6, CL.count:format(self:SpellName(285017), ireCount)) -- Ire of the Deep
 		self:CDBar(285118, self:Mythic() and 8 or 10.5) -- Sea Swell
