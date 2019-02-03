@@ -16,6 +16,7 @@ mod.respawnTime = 30
 local stage = 1
 local toadCount = 1
 local zombieDustTotemCount = 1
+local detonationCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -88,7 +89,7 @@ function mod:OnEngage()
 	self:Bar(290450, 8.5) -- Seal of Purification
 	self:Bar(284686, 15.5) -- Meteor Leap
 	self:Bar(284933, 20.5, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
-	self:Bar(284831, 26.5) -- Scorching Detonation
+	self:Bar(284831, 26.5, CL.count:format(self:SpellName(284831), detonationCount)) -- Scorching Detonation
 	self:Bar(285172, 31.5) -- Greater Serpent Totem
 end
 
@@ -121,10 +122,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 end
 
 function mod:ScorchingDetonationSuccess(args)
-	self:TargetMessage2(args.spellId, "purple", args.destName)
+	self:TargetMessage2(args.spellId, "purple", args.destName, CL.count:format(args.spellName, detonationCount))
 	self:PlaySound(args.spellId, "warning", nil, args.destName)
-	self:CastBar(args.spellId, 5)
-	self:CDBar(args.spellId, stage == 2 and 41 or stage == 3 and 33 or stage == 4 and 27 or 22)
+	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, detonationCount))
+	detonationCount = detonationCount + 1
+	self:CDBar(args.spellId, stage == 2 and 41 or stage == 3 and 33 or stage == 4 and 27 or 22, CL.count:format(args.spellName, detonationCount))
 end
 
 function mod:PlagueofToads(args)
