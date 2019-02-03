@@ -84,6 +84,7 @@ function mod:OnEngage()
 	toadCount = 1
 	zombieDustTotemCount = 1
 	stage = 1
+	detonationCount = 1
 
 	self:Bar(284781, 8.5) -- Grievous Axe
 	self:Bar(290450, 8.5) -- Seal of Purification
