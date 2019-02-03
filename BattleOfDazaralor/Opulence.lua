@@ -18,6 +18,7 @@ local wailofGreedCount = 1
 local spiritsofGoldCount = 1
 local handRoomCount = 1
 local bulwarkRoomCount = 1
+local bulwarkCrushCount = 1
 local jewelTracker = {} -- Who has which jewel
 local topazStackTracker = {} -- Stacks
 local critBuffTracker = {} -- Time on crit buff
@@ -99,7 +100,7 @@ function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 	self:RegisterMessage("BigWigs_BarEmphasized", "BarEmphasized")
 	-- Stage 1
-	self:Log("SPELL_CAST_START", "Crush", 283606)
+	self:Log("SPELL_CAST_START", "Crush", 283606, 289906)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumingFlame", 286541)
 	self:Log("SPELL_AURA_APPLIED", "ChaoticDisplacement", 289383)
 	-- The Hand of In'zashi
@@ -145,12 +146,21 @@ function mod:OnEngage()
 	spiritsofGoldCount = 1
 	handRoomCount = 1
 	bulwarkRoomCount = 1
+	bulwarkCrushCount = 1
 	wipe(jewelTracker)
 	wipe(topazStackTracker)
 	wipe(critBuffTracker)
 	gemInfoBoxOpen = nil
 	if self:Mythic() then
 		self:Bar(289383, 30, self:SpellName(L.swap), 289383) -- Chaotic Displacement
+	end
+	if self:GetOption("custom_on_hand_timers") then
+		self:Bar(283507, 5) -- Volatile Charge
+		self:Bar(283606, 7, L.hand_cast:format(self:SpellName(283606))) -- Crush
+	end
+	if self:GetOption("custom_on_bulwark_timers") then
+		self:Bar(283606, 6, L.bulwark_cast:format(self:SpellName(283606))) -- Crush
+		self:Bar(282939, 16.5) -- Flames of Punishment
 	end
 end
 
@@ -355,17 +365,18 @@ function mod:Crush(args)
 	if self:MobId(args.sourceGUID) == 145273 and self:GetOption("custom_on_hand_timers") then -- The Hand of In'zashi
 		local text = L.hand_cast:format(args.spellName)
 		if self:IsHandOnPlatform() then
-			self:Message2(args.spellId, "yellow", text)
-			self:PlaySound(args.spellId, "alert")
+			self:Message2(283606, "yellow", text)
+			self:PlaySound(283606, "alert")
 		end
-		self:Bar(args.spellId, 15.5, text)
+		self:Bar(283606, 15.75, text)
 	elseif self:GetOption("custom_on_bulwark_timers") then  -- Yalat's Bulwark
 		local text = L.bulwark_cast:format(args.spellName)
 		if self:IsBulwarkOnPlatform() then
-			self:Message2(args.spellId, "yellow", text)
-			self:PlaySound(args.spellId, "alert")
+			self:Message2(283606, "yellow", text)
+			self:PlaySound(283606, "alert")
 		end
-		self:Bar(args.spellId, 15.5, text)
+		bulwarkCrushCount = bulwarkCrushCount + 1
+		self:Bar(283606, bulwarkCrushCount == 2 and 21.8 or 24.3, text)
 	end
 end
 
@@ -382,11 +393,12 @@ function mod:ConsumingFlame(args)
 				self:Message2(args.spellId, "cyan", L.hand_cast:format(L.room:format(handRoomCount)))
 				self:PlaySound(args.spellId, "long")
 			end
-			self:Bar(283507, 14.2) -- Volatile Charge
-			self:Bar(283606, 14.7, L.hand_cast:format(self:SpellName(283606))) -- Crush
+			self:Bar(283507, 13.3) -- Volatile Charge
+			self:Bar(283606, 13.5, L.hand_cast:format(self:SpellName(283606))) -- Crush
 		end
 	else
 		bulwarkRoomCount = bulwarkRoomCount + 1
+		bulwarkCrushCount = 1
 
 		if bulwarkRoomCount > 6 then
 			self:UpdateGemRoomInfoBox()
@@ -397,8 +409,8 @@ function mod:ConsumingFlame(args)
 				self:Message2(args.spellId, "cyan", L.bulwark_cast:format(L.room:format(bulwarkRoomCount)))
 				self:PlaySound(args.spellId, "long")
 			end
-			self:Bar(283606, 14.7, L.bulwark_cast:format(self:SpellName(283606))) -- Crush
-			self:Bar(282939, 20.7) -- Flames of Punishment
+			self:Bar(283606, 13.5, L.bulwark_cast:format(self:SpellName(283606))) -- Crush
+			self:Bar(282939, 23.3) -- Flames of Punishment
 		end
 	end
 end
@@ -428,7 +440,7 @@ do
 			self:SayCountdown(283507, 8)
 		end
 		if #playerList == 1 and self:GetOption("custom_on_hand_timers") then
-			self:Bar(283507, 12.2)
+			self:Bar(283507, 12.1)
 		end
 		if (self:GetOption("custom_on_hand_timers") and self:IsHandOnPlatform()) or self:Me(args.destGUID) then
 			self:TargetsMessage(283507, "yellow", playerList)
@@ -449,7 +461,7 @@ function mod:FlamesofPunishment(args)
 			self:PlaySound(282939, "alarm")
 		end
 		self:CastBar(282939, 12)
-		self:Bar(282939, 23.1)
+		self:Bar(282939, 24.2)
 	end
 end
 
@@ -630,7 +642,7 @@ function mod:WailofGreed(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, wailofGreedCount)) -- 2s cast, 10s channel
 	wailofGreedCount = wailofGreedCount + 1
-	self:CDBar(args.spellId, 71, CL.count:format(args.spellName, wailofGreedCount))
+	self:CDBar(args.spellId, 62, CL.count:format(args.spellName, wailofGreedCount))
 end
 
 function mod:CoinSweepApplied(args)
