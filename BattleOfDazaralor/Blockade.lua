@@ -15,6 +15,8 @@ mod.respawnTime = 15
 local ireCount = 1
 local stormsWailCount = 1
 local cracklingLightningCount = 1
+local stage = 1
+local sirenCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -90,7 +92,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REFRESH", "KelpWrappedApplied", 285000)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "KelpWrappedApplied", 285000)
 	self:Log("SPELL_AURA_REMOVED", "KelpWrappedRemoved", 285000)
-	self:Log("SPELL_CAST_START", "SeaSwell", 285118)
+	self:Log("SPELL_CAST_SUCCESS", "SeaSwell", 285118, 290694) -- Stage 2, Mythic Stage 1
 	self:Log("SPELL_CAST_START", "IreoftheDeep", 285017)
 
 	self:Log("SPELL_AURA_APPLIED", "StormsWailApplied", 285350)
@@ -99,9 +101,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	stage = 1
 	ireCount = 1
 	stormsWailCount = 1
 	cracklingLightningCount = 1
+	sirenCount = 1
 
 	self:CDBar(284362, 7) -- Sea Storm
 	self:CDBar(284106, 10.5) -- Crackling Lightning
@@ -109,6 +113,9 @@ function mod:OnEngage()
 	self:CDBar(284262, 24) -- Voltaic Flash
 	self:CDBar(287995, 30) -- Electric Shroud
 	self:CDBar(286558, 32) -- Tidal Shroud
+	if self:Mythic() then
+		self:Bar(285118, 19.7) -- Sea Swell
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -318,9 +325,12 @@ function mod:SeasTemptation(args)
 end
 
 function mod:TemptingSongApplied(args)
-	if self:IsBrotherOnPlatform() then
+	if self:IsBrotherOnPlatform() or stage == 2 then
 		self:TargetMessage2(args.spellId, "red", args.destName)
 		self:PlaySound(args.spellId, "warning", nil, args.destName)
+	sirenCount = sirenCount + 1
+	if self:Mythic() and stage == 2 and sirenCount % 3 == 0 then -- No summon events in Mythic stage 2, come in sets of 3
+		self:CDBar(284383, 45)
 	end
 end
 
@@ -334,6 +344,8 @@ end
 
 -- Stage 2
 function mod:CatastrophicTides(args)
+	stage = 2
+	sirenCount = 1
 	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 15)
@@ -348,9 +360,9 @@ function mod:Interupted(args)
 		stormsWailCount = 1
 		ireCount = 1
 
-		self:CDBar(285017, 6, CL.count:format(self:SpellName(285017), ireCount)) -- Ire of the Deep
-		self:CDBar(285118, 8.5) -- Sea Swell
-		self:CDBar(285350, 15.5, CL.count:format(self:SpellName(285350), stormsWailCount)) -- Storm's Wail
+		self:CDBar(285017, self:Mythic() and 4 or 6, CL.count:format(self:SpellName(285017), ireCount)) -- Ire of the Deep
+		self:CDBar(285118, self:Mythic() and 8 or 10.5) -- Sea Swell
+		self:CDBar(285350, self:Mythic() and 8.5 or 15.5, CL.count:format(self:SpellName(285350), stormsWailCount)) -- Storm's Wail
 	end
 end
 
@@ -375,17 +387,24 @@ function mod:KelpWrappedRemoved(args)
 	end
 end
 
-function mod:SeaSwell(args)
-	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 20.6)
+do
+	local prev = 0
+	function mod:SeaSwell(args)
+		local t = args.time
+		if t-prev > 1.5 then
+			prev = t
+			self:Message2(285118, "orange")
+			self:PlaySound(285118, "alert")
+			self:Bar(285118, self:Mythic() and (stage == 1 and 20 or 17) or 20.6)
+		end
+	end
 end
 
 function mod:IreoftheDeep(args)
 	self:Message2(args.spellId, "red", CL.count:format(args.spellName, ireCount))
 	self:PlaySound(args.spellId, "warning")
 	ireCount = ireCount + 1
-	self:CDBar(args.spellId, 32.5, CL.count:format(args.spellName, ireCount))
+	self:CDBar(args.spellId, self:Mythic() and 32.8 or 32.5, CL.count:format(args.spellName, ireCount))
 end
 
 function mod:StormsWailApplied(args)
