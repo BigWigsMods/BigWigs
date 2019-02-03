@@ -36,7 +36,7 @@ function mod:GetOptions()
 		282082, -- Bestial Combo
 		{285671, "TANK"}, -- Crushed
 		{285875, "TANK"}, -- Rending Bite
-		289401, -- Bestial Throw
+		{289401, "SAY", "FLASH"}, -- Bestial Throw
 		282179, -- Reverberating Slam
 		285994, -- Ferocious Roar
 		--[[ Flying Ape Wranglers  ]]--
@@ -133,6 +133,10 @@ end
 function mod:BestialThrowTarget(args)
 	self:TargetMessage2(289401, "purple", args.destName)
 	self:PlaySound(289401, "alarm", nil, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(289401)
+		self:Flash(289401)
+	end
 end
 
 function mod:ReverberatingSlam(args)

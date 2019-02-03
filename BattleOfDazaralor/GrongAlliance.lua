@@ -36,7 +36,7 @@ function mod:GetOptions()
 		286450, -- Necrotic Combo
 		{285671, "TANK"}, -- Crushed
 		{285875, "TANK"}, -- Rending Bite
-		289401, -- Bestial Throw
+		{289401, "SAY", "FLASH"}, -- Bestial Throw
 		282543, -- Deathly Slam
 		285994, -- Ferocious Roar
 		--[[ Death Specter ]]--
@@ -130,6 +130,10 @@ end
 function mod:BestialThrowTarget(args)
 	self:TargetMessage2(289401, "purple", args.destName)
 	self:PlaySound(289401, "alarm", nil, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(289401)
+		self:Flash(289401)
+	end
 end
 
 function mod:DeathlySlam(args)
