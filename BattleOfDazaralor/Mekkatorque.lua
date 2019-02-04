@@ -202,8 +202,8 @@ function mod:OnEngage()
 	botMarkCount = 0
 	wipe(mobCollector)
 
-	-- local timers = mod:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or mod:Normal() and normalTimers or lfrTimers
-	timers = mythicTimers
+	-- local timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or self:Normal() and normalTimers or lfrTimers
+	timers = self:Mythic() and mythicTimers or heroicTimers
 
 	self:Bar(288410, timers[288410][1][sparkBotCount], CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
 	self:Bar(282153, timers[282153][1][cannonCount], CL.count:format(self:SpellName(282153), cannonCount)) -- Buster Cannon
