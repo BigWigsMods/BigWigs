@@ -1,5 +1,14 @@
-local L = BigWigs:NewBossLocale("Champion of the Light Horde", "ptBR")
+local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "ptBR")
 if not L then return end
+if L then
+	L.punisher = "Castigador Rastari"
+	L.vessel = "Receptáculo de Bwonsamdi"
+
+	--L.victim = "%s stabbed YOU with %s!"
+	--L.witness = "%s stabbed %s with %s!"
+end
+
+L = BigWigs:NewBossLocale("Champion of the Light Horde", "ptBR")
 if L then
 	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
 end
@@ -65,13 +74,4 @@ if L then
 
 	--L.custom_off_sparkbot_marker = "Spark Bot Marker"
 	--L.custom_off_sparkbot_marker_desc = "Mark Spark Bots with {rt4}{rt5}{rt6}{rt7}{rt8}."
-end
-
-L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "ptBR")
-if L then
-	L.punisher = "Castigador Rastari"
-	L.vessel = "Receptáculo de Bwonsamdi"
-
-	--L.victim = "%s stabbed YOU with %s!"
-	--L.witness = "%s stabbed %s with %s!"
 end
