@@ -14,6 +14,7 @@ mod.respawnTime = 30
 --
 
 local addCount = 1
+local tantrumCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,7 +36,7 @@ function mod:GetOptions()
 		282082, -- Bestial Combo
 		{285671, "TANK"}, -- Crushed
 		{285875, "TANK"}, -- Rending Bite
-		289401, -- Bestial Throw
+		{289401, "SAY", "FLASH"}, -- Bestial Throw
 		282179, -- Reverberating Slam
 		285994, -- Ferocious Roar
 		--[[ Flying Ape Wranglers  ]]--
@@ -84,6 +85,7 @@ end
 
 function mod:OnEngage()
 	addCount = 1
+	tantrumCount = 1
 	self:Bar(282215, 10.5) -- Megatomic Seeker Missile
 	self:Bar(282179, 13.1) -- Reverberating Slam
 	self:Bar(282247, 16.8, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount)) -- Apetagonizer 3000 Bomb, Add
@@ -104,9 +106,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 end
 
 function mod:Tantrum(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, tantrumCount))
 	self:PlaySound(args.spellId, "alarm")
-	self:CastBar(args.spellId, 5) -- 1s + 4s Channel
+	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, tantrumCount)) -- 1s + 4s Channel
+	tantrumCount = tantrumCount + 1
 end
 
 function mod:BestialCombo(args)
@@ -130,6 +133,10 @@ end
 function mod:BestialThrowTarget(args)
 	self:TargetMessage2(289401, "purple", args.destName)
 	self:PlaySound(289401, "alarm", nil, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(289401)
+		self:Flash(289401)
+	end
 end
 
 function mod:ReverberatingSlam(args)

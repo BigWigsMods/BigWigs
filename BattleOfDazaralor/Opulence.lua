@@ -103,6 +103,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Crush", 283606, 289906)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumingFlame", 286541)
 	self:Log("SPELL_AURA_APPLIED", "ChaoticDisplacement", 289383)
+	self:Log("SPELL_AURA_REMOVED", "ChaoticDisplacementRemoved", 289383)
 	-- The Hand of In'zashi
 	self:Log("SPELL_AURA_APPLIED", "VolatileChargeApplied", 283507, 287648) -- Normal, Empowered
 	self:Log("SPELL_AURA_REMOVED", "VolatileChargeRemoved", 283507, 287648)
@@ -287,10 +288,14 @@ function mod:UpdateGemRoomInfoBox()
 
 	local noDebuffList = {}
 
+	local _, _, _, myMapId = UnitPosition("player")
 	for unit in self:IterateGroup() do
 		local name = self:UnitName(unit)
-		if name and not jewelTracker[name] then
-			noDebuffList[#noDebuffList+1] = self:ColorName(name)
+		if name and not UnitIsDead(unit) and not jewelTracker[name] then
+			local _, _, _, tarMapId = UnitPosition(unit)
+			if tarMapId == myMapId then
+				noDebuffList[#noDebuffList+1] = self:ColorName(name)
+			end
 		end
 	end
 
@@ -427,6 +432,13 @@ do
 		if t-prev > 2 and stage == 1 then
 			self:Bar(args.spellId, 30, L.swap, args.spellId)
 		end
+	end
+end
+
+function mod:ChaoticDisplacementRemoved(args)
+	if self:GetOption("custom_on_fade_out_bars") then
+		self:CheckBossPlatforms()
+		self:ScheduleTimer("CheckBossPlatforms", 1) -- XXX figure out what's reasonable for a recheck
 	end
 end
 

@@ -17,6 +17,7 @@ local stormsWailCount = 1
 local cracklingLightningCount = 1
 local stage = 1
 local sirenCount = 1
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -82,6 +83,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TidalShroud", 286558)
 	self:Log("SPELL_CAST_START", "SeaStorm", 284362)
 	self:Log("SPELL_CAST_START", "SeasTemptation", 284383)
+	self:Log("SPELL_CAST_START", "SirenSpawn", 289795) -- Zuldazar Reuse Spell 06
 	self:Log("SPELL_AURA_APPLIED", "TemptingSongApplied", 284405)
 	self:Death("BrotherDeath", 146253) -- Brother Joseph
 
@@ -106,6 +108,7 @@ function mod:OnEngage()
 	stormsWailCount = 1
 	cracklingLightningCount = 1
 	sirenCount = 1
+	wipe(mobCollector)
 
 	self:CDBar(284362, 7) -- Sea Storm
 	self:CDBar(284106, 10.5) -- Crackling Lightning
@@ -235,6 +238,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 284993 then -- Move Laminaria to Position // Might want to use Anchor Here 45313
+		stage = 2
 		self:Message2("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 	end
@@ -324,13 +328,23 @@ function mod:SeasTemptation(args)
 	self:CDBar(args.spellId, 7)
 end
 
+function mod:SirenSpawn(args)
+	if self:Mythic() and stage == 2 and not mobCollector[args.sourceGUID] then
+		mobCollector[args.sourceGUID] = true
+		self:Message2(284383, "cyan", CL.incoming:format(CL.count:format(args.sourceName, sirenCount)))
+		self:PlaySound(284383, "info")
+		sirenCount = sirenCount + 1
+		if sirenCount % 2 == 0 then
+			self:Bar(284383, 5, CL.count:format(args.sourceName, sirenCount))
+			self:CDBar(284383, 43, CL.count:format(args.sourceName, sirenCount+1))
+		end
+	end
+end
+
 function mod:TemptingSongApplied(args)
 	if self:IsBrotherOnPlatform() or stage == 2 then
 		self:TargetMessage2(args.spellId, "red", args.destName)
 		self:PlaySound(args.spellId, "warning", nil, args.destName)
-	sirenCount = sirenCount + 1
-	if self:Mythic() and stage == 2 and sirenCount % 3 == 0 then -- No summon events in Mythic stage 2, come in sets of 3
-		self:CDBar(284383, 45)
 	end
 end
 
@@ -344,8 +358,6 @@ end
 
 -- Stage 2
 function mod:CatastrophicTides(args)
-	stage = 2
-	sirenCount = 1
 	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 15)
@@ -357,12 +369,16 @@ function mod:Interupted(args)
 		self:PlaySound(288696, "info")
 		self:StopBar(CL.cast:format(args.extraSpellName))
 
-		stormsWailCount = 1
 		ireCount = 1
+		stormsWailCount = 1
+		sirenCount = 1
 
 		self:CDBar(285017, self:Mythic() and 4 or 6, CL.count:format(self:SpellName(285017), ireCount)) -- Ire of the Deep
 		self:CDBar(285118, self:Mythic() and 8 or 10.5) -- Sea Swell
 		self:CDBar(285350, self:Mythic() and 8.5 or 15.5, CL.count:format(self:SpellName(285350), stormsWailCount)) -- Storm's Wail
+		if self:Mythic() then
+			self:Bar(284383, 40, CL.count:format(self:SpellName(-19279), sirenCount)) -- Tempting Siren
+		end
 	end
 end
 
