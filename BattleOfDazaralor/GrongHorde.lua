@@ -3,17 +3,18 @@ if UnitFactionGroup("player") ~= "Horde" then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("King Grong", 2070, 2325)
+local mod, CL = BigWigs:NewBoss("Grong Horde", 2070, 2325)
 if not mod then return end
-mod:RegisterEnableMob(147268)
+mod:RegisterEnableMob(144637)
 mod.engageId = 2263
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
 local addCount = 1
+local tantrumCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,20 +36,27 @@ function mod:GetOptions()
 		282082, -- Bestial Combo
 		{285671, "TANK"}, -- Crushed
 		{285875, "TANK"}, -- Rending Bite
-		289401, -- Bestial Throw
+		{289401, "SAY", "FLASH"}, -- Bestial Throw
 		282179, -- Reverberating Slam
 		285994, -- Ferocious Roar
 		--[[ Flying Ape Wranglers  ]]--
-		--{282215, "SAY"}, -- Megatomic Seeker Missile
+		282215, -- Megatomic Seeker Missile
+		283069, -- Megatomic Fire
 		--[[ Apetaganizer 3000 ]]--
 		282247, -- Apetagonizer 3000 Bomb
 		282243, -- Apetagonize
 		285659, -- Apetagonizer Core
 		285660, -- Discharge Apetagonizer Core
+	}, {
+		[281936] = mod.displayName,
+		[282215] = -18953, -- Flying Ape Wranglers
+		[282247] = -18955, -- Apetaganizer 3000
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
 	--[[ Grong ]]--
 	self:Log("SPELL_CAST_START", "Tantrum", 281936)
 	self:Log("SPELL_CAST_SUCCESS", "BestialCombo", 282082)
@@ -59,10 +67,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BestialThrow", 289401)
 	self:Log("SPELL_CAST_SUCCESS", "BestialThrowTarget", 289307)
 	self:Log("SPELL_CAST_SUCCESS", "ReverberatingSlam", 282179)
-	self:Log("SPELL_CAST_START", "FerociousRoar", 285994)
+	self:Log("SPELL_CAST_START", "FerociousRoar", 290574, 285994) -- Mythic, Others
 
 	--[[ Flying Ape Wranglers  ]]--
-	--self:Log("SPELL_CAST_SUCCESS", "MegatomicSeekerMissile", 282215) XXX Check what we can do with this
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 283069) -- Megatomic Fire
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 283069) -- Megatomic Fire
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 283069)
+	self:Log("SPELL_DAMAGE", "GroundDamage", 282215) -- Megatomic Seeker Missile
+	self:Log("SPELL_MISSED", "GroundDamage", 282215)
+
 	--[[ Apetaganizer 3000 ]]--
 	self:Log("SPELL_CAST_SUCCESS", "Apetagonizer3000Bomb", 282247)
 	self:Log("SPELL_CAST_START", "Apetagonize", 282243)
@@ -72,8 +85,10 @@ end
 
 function mod:OnEngage()
 	addCount = 1
+	tantrumCount = 1
+	self:Bar(282215, 10.5) -- Megatomic Seeker Missile
 	self:Bar(282179, 13.1) -- Reverberating Slam
-	self:Bar(282247, 16.8, CL.count:format(CL.add, addCount)) -- Apetagonizer 3000 Bomb, Add
+	self:Bar(282247, 16.8, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount)) -- Apetagonizer 3000 Bomb, Add
 	self:Bar(282082, 22)	-- Bestial Combo
 	self:Bar(285994, 37.5) -- Ferocious Roar
 end
@@ -82,10 +97,19 @@ end
 -- Event Handlers
 --
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
+	if spellId == 282190 then -- Megatomic Seeker Missile
+		self:Message2(282215, "red")
+		self:PlaySound(282215, "warning")
+		self:CDBar(282215, 23)
+	end
+end
+
 function mod:Tantrum(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, tantrumCount))
 	self:PlaySound(args.spellId, "alarm")
-	self:CastBar(args.spellId, 5) -- 1s + 4s Channel
+	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, tantrumCount)) -- 1s + 4s Channel
+	tantrumCount = tantrumCount + 1
 end
 
 function mod:BestialCombo(args)
@@ -108,7 +132,11 @@ end
 
 function mod:BestialThrowTarget(args)
 	self:TargetMessage2(289401, "purple", args.destName)
-	self:PlaySound(289401, "alarm")
+	self:PlaySound(289401, "alarm", nil, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(289401)
+		self:Flash(289401)
+	end
 end
 
 function mod:ReverberatingSlam(args)
@@ -118,9 +146,9 @@ function mod:ReverberatingSlam(args)
 end
 
 function mod:FerociousRoar(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 36.5)
+	self:Message2(285994, "red")
+	self:PlaySound(285994, "warning")
+	self:Bar(285994, 36.5)
 end
 
 --function mod:MegatomicSeekerMissile(args)
@@ -132,16 +160,37 @@ end
 --	self:Bar(args.spellId, 23.1)
 --end
 
-function mod:Apetagonizer3000Bomb(args)
-	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, addCount)))
-	self:PlaySound(args.spellId, "long")
-	addCount = addCount + 1
-	self:Bar(args.spellId, 60.5, CL.count:format(CL.add, addCount))
+do
+	local prev = 0
+	function mod:GroundDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 1.5 then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
+	end
 end
 
-function mod:Apetagonize(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+function mod:Apetagonizer3000Bomb(args)
+	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(self:Mythic() and CL.adds or CL.add, addCount)))
+	self:PlaySound(args.spellId, "long")
+	addCount = addCount + 1
+	self:Bar(args.spellId, self:Mythic() and 120 or 60.5, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount))
+end
+
+do
+	local prev = 0
+	function mod:Apetagonize(args)
+		local t = args.time
+		if t-prev > 1.5 then
+			prev = t
+			self:Message2(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "alert")
+		end
+	end
 end
 
 function mod:ApetagonizerCore(args)

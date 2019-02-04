@@ -1,23 +1,21 @@
-if UnitFactionGroup("player") ~= "Horde" then return end
---------------------------------------------------------------------------------
--- TODO:
--- -- Fix Menu sub's (split by boss)
+if UnitFactionGroup("player") ~= "Alliance" then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Flamefist and the Illuminated", 2070, 2341)
+local mod, CL = BigWigs:NewBoss("Jadefire Masters Alliance", 2070, 2323)
 if not mod then return end
-mod:RegisterEnableMob(144693, 144690) -- Manceroy Flamefist, Mestrah
-mod.engageId = 2266
---mod.respawnTime = 31
+mod:RegisterEnableMob(144691, 144692) -- Ma'ra Grimfang, Anathos Firecaller
+mod.engageId = 2285
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
 local lastWarnedPower = 0
+local trapCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -45,33 +43,39 @@ local searingEmbersMarker = mod:AddMarkerOption(false, "player", 1, 286988, 1, 2
 function mod:GetOptions()
 	return {
 		"stages",
-		-- Mestrah, the Illuminated
+		-- Ma'ra Grimfang
 		286436, -- Whirling Jade Storm
 		282030, -- Multi-Sided Strike
 		285645, -- Spirits of Xuen
 		{285632, "FLASH"}, -- Stalking
 		"custom_on_fixate_plates",
-		-- Manceroy Flamefist
+		-- Anathos Firecaller
 		282037, -- Rising Flames
 		286379, -- Pyroblast
 		{286425, "INFOBOX"}, -- Fire Shield
 		{286988, "SAY"}, -- Searing Embers
 		searingEmbersMarker,
-		--284374, -- Magma Trap
+		284374, -- Magma Trap
 		-- Team Attacks
 		285428, -- Fire from Mist
 		284656, -- Ring of Hostility
 		282040, -- Blazing Phoenix
 		286396, -- Dragon's Breath
+	}, {
+		["stages"] = CL.general,
+		[286436] = -19197, -- Ma'ra Grimfang
+		[282037] = -19200, -- Anathos Firecaller
+		[285428] = -19203, -- Team Attacks
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	-- Mestrah, the Illuminated
 	self:Log("SPELL_CAST_SUCCESS", "WhirlingJadeStorm", 286436)
-	self:Log("SPELL_CAST_START", "MultiSidedStrike", 282030)
+	self:Log("SPELL_CAST_START", "MultiSidedStrike", 282030, 285818)
 	self:Log("SPELL_AURA_APPLIED", "StalkingApplied", 285632)
 	self:Log("SPELL_AURA_REMOVED", "StalkingRemoved", 285632)
 
@@ -88,7 +92,7 @@ function mod:OnBossEnable()
 	-- self:Log("SPELL_CAST_SUCCESS", "MagmaTrap", 284374)
 
 	-- Team Attacks
-	--self:Log("SPELL_CAST_START", "FirefromMist", 285428)
+	self:Log("SPELL_CAST_START", "FirefromMist", 285428)
 	self:Log("SPELL_CAST_SUCCESS", "RingofHostility", 284656)
 	self:Log("SPELL_AURA_REMOVED", "RingofHostilityRemoved", 284656)
 	self:Log("SPELL_CAST_START", "BlazingPhoenix", 282040)
@@ -101,12 +105,14 @@ end
 
 function mod:OnEngage()
 	lastWarnedPower = 0
+	trapCount = 1
 
 	self:CDBar(286379, 20.5) -- Pyroblast
 	self:CDBar(286436, 21.5) -- Whirling Jade Storm
+	self:CDBar(284374, 28, CL.count:format(self:SpellName(284374), trapCount)) -- Magma Trap
 	self:CDBar(282030, 30) -- Multi-Sided Strike
+	self:CDBar(285428, 68) -- Fire from Mist
 	self:CDBar(285645, 74) -- Spirits of Xuen
-	self:CDBar(285428, 40) -- Fire from Mist XXX Estimated - no spell found for this?
 
 	self:RegisterUnitEvent("UNIT_POWER_FREQUENT", nil, "boss1")
 end
@@ -118,7 +124,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 285645 then -- Spirits of Xuen
 		self:Message2(spellId, "yellow")
 		self:PlaySound(spellId, "info")
-		self:CDBar(spellId, 127.7) -- XXX Need correct info after Ring of Hostility stage
+		self:CDBar(spellId, 119) -- XXX Need correct info after Ring of Hostility stage
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
+	if msg:find("284374", nil, true) then -- Magma Trap
+		self:Message2(284374, "red", CL.count:format(self:SpellName(284374), trapCount))
+		self:PlaySound(284374, "warning")
+		trapCount = trapCount + 1
+		self:CDBar(284374, 35, CL.count:format(self:SpellName(284374), trapCount))
 	end
 end
 
@@ -126,16 +141,16 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 	local power = UnitPower(unit)
 	if power >= 25 and lastWarnedPower < 25 then
 		lastWarnedPower = 25
-		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(285428))) -- Fire from Mist
+		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(285428)), false) -- Fire from Mist
 		self:PlaySound("stages", "info")
 	elseif power >= 55 and lastWarnedPower < 55 then
-		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(284656))) -- Ring of Hostility
-		self:PlaySound("stages", "info")
 		lastWarnedPower = 55
-	elseif power >= 95 and lastWarnedPower < 95  then
-		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(-19409))) -- The Serpent and the Phoenix
+		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(284656)), false) -- Ring of Hostility
 		self:PlaySound("stages", "info")
+	elseif power >= 95 and lastWarnedPower < 95  then
 		lastWarnedPower = 95
+		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(-19409)), false) -- The Serpent and the Phoenix
+		self:PlaySound("stages", "info")
 		self:UnregisterUnitEvent(event, unit)
 	end
 end
@@ -143,14 +158,14 @@ end
 function mod:WhirlingJadeStorm(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 45)
+	self:CDBar(args.spellId, 45)
 end
 
 function mod:MultiSidedStrike(args)
 	if self:Mythic() or self:Tank() then -- No warnings needed for non-tanks unless it's Mythic
-		self:Message2(args.spellId, "red")
-		self:PlaySound(args.spellId, "warning")
-		self:CDBar(args.spellId, 55)
+		self:Message2(282030, "red")
+		self:PlaySound(282030, "warning")
+		self:CDBar(282030, self:Mythic() and 73 or 55)
 	end
 end
 
@@ -172,22 +187,25 @@ function mod:StalkingRemoved(args)
 end
 
 function mod:RisingFlamesApplied(args)
-	self:TargetBar(args.spellId, 6, args.destName)
+	self:TargetBar(args.spellId, 15, args.destName)
+	local amount = args.amount or 1
 	if self:Me(args.destGUID) then
 		--self:CancelSayCountdown(args.spellId) -- XXX See if we need this, was spammy
 		--self:SayCountdown(args.spellId, 6, nil, 2)
-		self:PlaySound(args.spellId, "alarm")
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+		if amount % 2 == 1 then
+			self:PlaySound(args.spellId, "alarm")
+		end
 	elseif self:Tank() and self:Tank(args.destName) then
-		local amount = args.amount or 1
 		self:StackMessage(args.spellId, args.destName, amount, "purple")
-		if amount > 3 then
+		if amount > 3 and amount % 2 == 0 then
 			self:PlaySound(args.spellId, "warning", nil, args.destName)
 		end
 	end
 end
 
 function mod:RisingFlamesRemoved(args)
+	self:StopBar(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		--self:CancelSayCountdown(args.spellId)
 	end
@@ -199,13 +217,13 @@ do
 		self:Message2(args.spellId, "orange")
 		self:PlaySound(args.spellId, "warning")
 		interruptTime = args.time
-		self:CastBar(args.spellId, 8)
-		self:CDBar(args.spellId, 52) -- 14.6~15.8
+		self:CastBar(args.spellId, 10)
+		self:CDBar(args.spellId, 52) -- XXX appears to get lower during the fight
 	end
 
 	function mod:Interupted(args)
 		if args.extraSpellId == 286379 then -- Pyroblast
-			interruptTime = 8 - (math.floor((args.time - interruptTime) * 100)/100)
+			interruptTime = 10 - (math.floor((args.time - interruptTime) * 100)/100)
 			self:Message2(286379, "green", L.interrupted_after:format(args.extraSpellName, self:ColorName(args.sourceName), interruptTime))
 			self:StopBar(CL.cast:format(args.extraSpellName))
 		end
@@ -218,7 +236,7 @@ do
 
 	local function updateInfoBox(self)
 		local castTimeLeft = castOver - GetTime()
-		local castPercentage = castTimeLeft / 8
+		local castPercentage = castTimeLeft / 10
 		local absorb = UnitGetTotalAbsorbs("boss2")
 		local absorbPercentage = absorb / maxAbsorb
 
@@ -244,7 +262,7 @@ do
 			self:OpenInfo(args.spellId, args.spellName)
 			self:SetInfo(args.spellId, 1, L.absorb)
 			self:SetInfo(args.spellId, 3, L.cast)
-			castOver = GetTime() + 8 -- XXX Have to use the cast from pyroblast depending when it's applied/cast, but this could be at the same time.
+			castOver = GetTime() + 10 -- XXX Have to use the cast from pyroblast depending when it's applied/cast, but this could be at the same time.
 			maxAbsorb = UnitGetTotalAbsorbs("boss2") -- Assumed
 			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 		end
@@ -262,41 +280,23 @@ do
 end
 
 do
-	local playerList, isOnMe = {}, nil
-
-	local function announce()
-		local meOnly = mod:CheckOption(286988, "ME_ONLY")
-
-		if isOnMe and (meOnly or #playerList == 1) then
-			mod:Message2(286988, "blue", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(286988))))
-		elseif not meOnly then
-			local msg = ""
-			for i=1, #playerList do
-				local icon = ("|T13700%d:0|t"):format(i)
-				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
-			end
-
-			mod:Message2(286988, "orange", CL.other:format(mod:SpellName(286988), msg))
-		end
-
-		playerList = {}
-		isOnMe = nil
-	end
+	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:SearingEmbersApplied(args)
+		local playerIconsCount = #playerIcons+1
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:SimpleTimer(announce, 0.1)
+		playerIcons[playerIconsCount] = playerIconsCount
+		if playerIconsCount == 1 then
 			self:CDBar(args.spellId, 40)
 		end
 		if self:Me(args.destGUID) then
-			isOnMe = #playerList
 			self:Say(args.spellId)
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(searingEmbersMarker) then
-			SetRaidTarget(args.destName, #playerList)
+			SetRaidTarget(args.destName, playerIconsCount)
 		end
+		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
 	end
 
 	function mod:SearingEmbersRemoved(args)
@@ -311,11 +311,11 @@ end
 	-- self:PlaySound(args.spellId, "alarm")
 -- end
 
---function mod:FirefromMist(args)
---	self:Message2(args.spellId, "yellow")
---	self:PlaySound(args.spellId, "long")
---	self:CDBar(284656, 112) -- Ring of Hostility
---end
+function mod:FirefromMist(args)
+	self:Message2(args.spellId, "yellow")
+	self:PlaySound(args.spellId, "long")
+	self:CDBar(284656, 95) -- Ring of Hostility
+end
 
 function mod:RingofHostility(args)
 	self:Message2(args.spellId, "yellow")
@@ -326,7 +326,7 @@ end
 function mod:RingofHostilityRemoved(args)
 	self:Message2(args.spellId, "green", CL.over:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
-	self:CDBar(282040, 120) -- Blazing Phoenix
+	self:CDBar(282040, 90) -- Blazing Phoenix
 end
 
 function mod:BlazingPhoenix(args)
