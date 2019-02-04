@@ -67,11 +67,19 @@ if L then
 	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 標記火花機器人，需要權限。"
 end
 
+L = BigWigs:NewBossLocale("Stormwall Blockade", "zhTW")
+if L then
+	L.killed = "%s%已擊殺！"
+
+	L.custom_on_fade_out_bars = "階段1淡出非本船計時條"
+	L.custom_on_fade_out_bars_desc = "階段1淡出不在本船首領的技能計時條。"
+end
+
 L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhTW")
 if L then
-	--L.punisher = "Rastari Punisher"
-	--L.vessel = "Vessel of Bwonsamdi"
+	L.punisher = "拉斯塔瑞懲戒者"
+	L.vessel = "伯昂薩姆第的容器"
 
-	--L.victim = "%s stabbed YOU with %s!"
-	--L.witness = "%s stabbed %s with %s!"
+	L.victim = "%s的%s刺中了你！"
+	L.witness = "%1$s的%3$s刺中了%2$s！"
 end
