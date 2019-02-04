@@ -1812,9 +1812,19 @@ do
 		end
 	end
 
+	local markerIcons = {
+		"|T137001:0|t",
+		"|T137002:0|t",
+		"|T137003:0|t",
+		"|T137004:0|t",
+		"|T137005:0|t",
+		"|T137006:0|t",
+		"|T137007:0|t",
+		"|T137008:0|t",
+	}
 	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
 	local tconcat = table.concat
-	local function printTargets(self, key, playerTable, color, text, icon)
+	local function printTargets(self, key, playerTable, color, text, icon, markers)
 		local playersInTable = #playerTable
 		if playersInTable ~= 0 then
 			local meOnly = checkFlag(self, key, C.ME_ONLY)
@@ -1824,37 +1834,89 @@ do
 				local msg = textType == "string" and text or spells[text or key]
 				local texture = icon ~= false and icons[icon or textType == "number" and text or key]
 
-				local onMe = false
-				for i = 1, playersInTable do
-					if playerTable[i] == cpName then
-						onMe = true
+				if markers then
+					local onMe
+					if meOnly then
+						for i = 1, playersInTable do
+							if playerTable[i] == cpName then
+								onMe = markers[i]
+							end
+						end
+					else
+						for i = 1, playersInTable do
+							if playerTable[i] == cpName then
+								onMe = markers[i]
+							end
+							playerTable[i] = markerIcons[markers[i]] .. playerTable[i] -- Only concat icons if ME_ONLY is off
+						end
 					end
-				end
 
-				if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
-					local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
-					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
-				elseif not meOnly and msgEnabled then
-					local list = tconcat(playerTable, comma, 1, playersInTable)
-					local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
-					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
+					if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
+						local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
+						self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, onMe), "blue", texture, isEmphasized)
+					elseif not meOnly and msgEnabled then
+						local list = tconcat(playerTable, comma, 1, playersInTable)
+						local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
+						self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
+						-- If emphasize is NOT enabled, and message contains your name, and emphasize (me only) IS enabled show a 2nd (emphasized) message
+						if not isEmphasized and onMe and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
+							self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, onMe), "blue", texture, true)
+						end
+					end
+				else
+					local onMe = false
+
+					for i = 1, playersInTable do
+						if playerTable[i] == cpName then
+							onMe = true
+						end
+					end
+
+					if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
+						local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
+						self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
+					elseif not meOnly and msgEnabled then
+						local list = tconcat(playerTable, comma, 1, playersInTable)
+						local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
+						self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
+						-- If emphasize is NOT enabled, and message contains your name, and emphasize (me only) IS enabled show a 2nd (emphasized) message
+						if not isEmphasized and onMe and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
+							self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, true)
+						end
+					end
 				end
 			end
 			wipe(playerTable)
+			if markers then wipe(markers) end
 		end
 	end
 
-	function boss:TargetsMessage(key, color, playerTable, playerCount, text, icon, customTime)
+	--- Display a target message of multiple players using a table.
+	-- @param key the option key
+	-- @string color the message color category
+	-- @param playerTable a table containing the list of players
+	-- @number playerCount the max amount of players you expect to be included, message will instantly print when this max is reached
+	-- @param[opt] text the message text (if nil, key is used)
+	-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
+	-- @number[opt] customTime how long to wait to reach the max players in the table. If the max is not reached, it will print after this value (0.3s is used if nil)
+	-- @param[opt] markers a table containing the markers that should be attached next to the player names
+	function boss:TargetsMessage(key, color, playerTable, playerCount, text, icon, customTime, markers)
 		local playersInTable = #playerTable
 		if playersInTable == playerCount then
-			printTargets(self, key, playerTable, color, text, icon)
+			printTargets(self, key, playerTable, color, text, icon, markers)
 		elseif playersInTable == 1 then
 			Timer(customTime or 0.3, function()
-				printTargets(self, key, playerTable, color, text, icon)
+				printTargets(self, key, playerTable, color, text, icon, markers)
 			end)
 		end
 	end
 
+	--- Display a target message of a single player.
+	-- @param key the option key
+	-- @string color the message color category
+	-- @string player the player name
+	-- @param[opt] text the message text (if nil, key is used)
+	-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
 	function boss:TargetMessage2(key, color, player, text, icon)
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]

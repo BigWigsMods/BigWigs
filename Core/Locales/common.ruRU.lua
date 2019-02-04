@@ -51,6 +51,7 @@ L.stage = "Этап %d"
 L.trash = "Трэш"
 L.underyou = "%s под ТОБОЙ"
 L.you = "%s на ТЕБЕ"
+L.you_icon = "%s на |T13700%d:0|tТЕБЕ"
 
 L.active = "Активен" -- When a boss becomes active, after speech finishes
 

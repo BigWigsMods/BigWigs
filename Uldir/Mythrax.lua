@@ -316,7 +316,7 @@ do
 	end
 
 	function mod:VisionsofMadness(args)
-		self:Message(args.spellId, "red")
+		self:Message2(args.spellId, "red")
 		self:PlaySound(args.spellId, "warning")
 		visionCount = visionCount + 1
 		if visionCount <= 2 then

@@ -57,7 +57,7 @@ do
 	end
 
 	plugin.pluginOptions = {
-		name = "Pull",
+		name = L.pull,
 		type = "group",
 		childGroups = "tab",
 		get = function(i) return plugin.db.profile[i[#i]] end,

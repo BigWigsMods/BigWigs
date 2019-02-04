@@ -64,7 +64,7 @@ function mod:GetOptions()
 
 		-- Akunda's Aspect
 		282411, -- Thundering Storm
-		285879, -- Mind Wipe
+		{285879, "DISPEL"}, -- Mind Wipe
 		mindWipeMarker,
 		{286811, "SAY", "SAY_COUNTDOWN"}, -- Akunda's Wrath
 
@@ -201,7 +201,7 @@ end
 
 function mod:HasteningWinds(args)
 	local amount = args.amount or 1
-	if amount % 5 == 1 and amount > 12 then
+	if amount % 5 == 0 and amount > 12 then
 		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
@@ -213,8 +213,6 @@ do
 	function mod:CrawlingHexSuccess()
 		wipe(proxList)
 		isOnMe = false
-		self:Message2(282135, "orange")
-		self:PlaySound(282135, "alarm")
 		self:Bar(282135, 25.5)
 	end
 
@@ -222,6 +220,9 @@ do
 		if not isOnMe then
 			mod:TargetsMessage(282135, "orange", playerList, #playerList) -- Crawling Hex
 			mod:OpenProximity(282135, 8, proxList)
+			if mod:Dispeller("curse") then
+				mod:PlaySound(282135, "alarm", nil, playerList)
+			end
 		else
 			wipe(playerList)
 		end
@@ -318,11 +319,10 @@ do
 	local scheduled, isOnMe, isNearMe, count = nil, nil, nil, 0
 
 	local function leapWarn(self)
-		if not isOnMe then
+		if not isOnMe and not mod:CheckOption(282447, "ME_ONLY") then
 			if isNearMe then
 				self:Message2(282447, "orange", CL.near:format(L.leap))
 				self:PlaySound(282447, "alert")
-				self:Flash(282447)
 			else
 				self:Message2(282447, "yellow", L.leap)
 			end
@@ -379,20 +379,20 @@ do
 		end
 
 		playerList[#playerList+1] = args.destName
-		self:TargetsMessage(args.spellId, "yellow", playerList)
-
-		if self:Dispeller("magic", nil, args.spellId) then
-				self:PlaySound(args.spellId, "alert")
-		end
 
 		if self:GetOption(mindWipeMarker) and #playerList < 6 then
 			SetRaidTarget(args.destName, #playerList)
+		end
+
+		if self:Dispeller("magic", nil, args.spellId) then
+			self:TargetsMessage(args.spellId, "yellow", playerList)
+			self:PlaySound(args.spellId, "alert", nil, playerList)
 		end
 	end
 
 	function mod:MindWipeRemoved(args)
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, "removed", "green")
+			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
 		if self:GetOption(mindWipeMarker) then
@@ -413,7 +413,7 @@ end
 
 function mod:AkundasWrathRemoved(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, "removed", "green")
+		self:PersonalMessage(args.spellId, "removed")
 		self:CancelSayCountdown(args.spellId)
 	end
 end

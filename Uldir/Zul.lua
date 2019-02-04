@@ -178,47 +178,31 @@ function mod:DarkRevelation(args)
 end
 
 do
-	local playerList, isOnMe = {}, nil
-
-	local function announce()
-		local meOnly = mod:CheckOption(273365, "ME_ONLY")
-
-		if isOnMe then
-			mod:TargetBar(273365, 10, mod:UnitName("player"))
-		else
-			mod:Bar(-18530, 10, -18530, 172884) -- Minion of Zul, spell_shadow_shadowfiend
-		end
-
-		if isOnMe and (meOnly or #playerList == 1) then
-			mod:Message2(273365, "blue", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(273365))))
-		elseif not meOnly then
-			local msg = ""
-			for i=1, #playerList do
-				local icon = ("|T13700%d:0|t"):format(i)
-				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
-			end
-
-			mod:Message2(273365, "yellow", CL.other:format(mod:SpellName(273365), msg))
-		end
-
-		playerList = {}
-		isOnMe = nil
-	end
+	local playerList, playerIcons = mod:NewTargetList(), {}
+	local isOnMe = false
 
 	function mod:DarkRevelationApplied(args)
+		local maxExpected = self:Easy() and 1 or 2
+		local playerIconsCount = #playerIcons+1
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:SimpleTimer(announce, 0.1)
+		playerIcons[playerIconsCount] = playerIconsCount
+		if playerIconsCount == 1 then
+			isOnMe = false -- reset
 		end
 		if self:Me(args.destGUID) then
-			isOnMe = #playerList
+			isOnMe = true
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, isOnMe, isOnMe))
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, playerIconsCount, playerIconsCount))
 			self:SayCountdown(args.spellId, 10)
+			self:TargetBar(args.spellId, 10, args.destName)
+		end
+		if playerIconsCount == maxExpected and not isOnMe then
+			self:Bar(-18530, 10, -18530, 172884) -- Minion of Zul, spell_shadow_shadowfiend
 		end
 		if self:GetOption(darkRevelationMarker) then
-			SetRaidTarget(args.destName, #playerList)
+			SetRaidTarget(args.destName, playerIconsCount)
 		end
+		self:TargetsMessage(args.spellId, "yellow", playerList, maxExpected, nil, nil, nil, playerIcons)
 	end
 end
 
@@ -346,39 +330,19 @@ function mod:RupturingBloodRemoved(args)
 end
 
 do
-	local playerList, isOnMe = {}, nil
-
-	local function announce()
-		local meOnly = mod:CheckOption(274271, "ME_ONLY")
-
-		if isOnMe and (meOnly or #playerList == 1) then
-			mod:Message2(274271, "blue", CL.you:format(("|T13700%d:0|t%s"):format(isOnMe, mod:SpellName(274271))))
-		elseif not meOnly then
-			local msg = ""
-			for i=1, #playerList do
-				local icon = ("|T13700%d:0|t"):format(i)
-				msg = msg .. icon .. mod:ColorName(playerList[i]) .. (i == #playerList and "" or ",")
-			end
-
-			mod:Message2(274271, "orange", CL.other:format(mod:SpellName(274271), msg))
-		end
-
-		playerList = {}
-		isOnMe = nil
-	end
+	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:DeathwishApplied(args)
+		local playerIconsCount = #playerIcons+1
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-			self:SimpleTimer(announce, 0.1)
-		end
+		playerIcons[playerIconsCount] = playerIconsCount
 		if self:Me(args.destGUID) then
-			isOnMe = #playerList
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(deathwishMarker) then
-			SetRaidTarget(args.destName, #playerList)
+			SetRaidTarget(args.destName, playerIconsCount)
 		end
+		self:TargetsMessage(args.spellId, "orange", playerList, 2, nil, nil, nil, playerIcons)
 	end
 end
 
