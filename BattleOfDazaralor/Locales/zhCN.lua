@@ -19,7 +19,7 @@ if L then
 	L.cast = "施放"
 	L.cast_text = "%.1f秒（|cff%s%.0f%%|r）"
 
-	L.interrupted_after = "%s被%s中断（%.1f秒剩余）"
+	L.interrupted_after = "%s被%s中断（剩余%.1f秒）"
 end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Alliance", "zhCN")
@@ -32,17 +32,17 @@ if L then
 	L.cast = "施放"
 	L.cast_text = "%.1f秒（|cff%s%.0f%%|r）"
 
-	L.interrupted_after = "%s被%s中断（%.1f秒剩余）"
+	L.interrupted_after = "%s被%s中断（剩余%.1f秒）"
 end
 
 L = BigWigs:NewBossLocale("Opulence", "zhCN")
 if L then
-	--L.room = "Room (%d/8)"
-	--L.no_jewel = "No Jewel:"
-	--L.seconds = "%.1fs"
+	L.room = "房间（%d／8）"
+	L.no_jewel = "没有宝石："
+	L.seconds = "%.1f秒"
 
-	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
-	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the construct which isn't in your hall during stage 1."
+	L.custom_on_fade_out_bars = "淡出第1阶段计时条"
+	L.custom_on_fade_out_bars_desc = "第1阶段时，淡出另一侧房间的首领技能计时条。"
 
 	L.custom_on_hand_timers = "因扎希之手"
 	L.custom_on_hand_timers_desc = "显示因扎希之手技能警报和计时条。"
@@ -71,8 +71,8 @@ L = BigWigs:NewBossLocale("Stormwall Blockade", "zhCN")
 if L then
 	L.killed = "%s已击杀！"
 
-	L.custom_on_fade_out_bars = "退回到第1阶段计时条"
-	L.custom_on_fade_out_bars_desc = "根据第1阶段未激活船上首领的退回计时条。"
+	L.custom_on_fade_out_bars = "淡出第1阶段计时条"
+	L.custom_on_fade_out_bars_desc = "第1阶段时，淡出另一条船上的首领技能计时条。"
 end
 
 L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhCN")
