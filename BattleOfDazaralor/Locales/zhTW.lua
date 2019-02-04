@@ -82,4 +82,10 @@ if L then
 
 	L.custom_on_fade_out_bars = "淡出第一階段計時條"
 	L.custom_on_fade_out_bars_desc = "第一階段時，淡出另一條船上的首領技能計時條。"
+
+	--L.custom_off_repeating_shrunk_say = "Repeating Shrunk Say" -- Shrunk = 284168
+	--L.custom_off_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
+
+	--L.custom_off_repeating_tampering_say = "Repeating Tampering Say" -- Tampering = 286105
+	--L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
 end

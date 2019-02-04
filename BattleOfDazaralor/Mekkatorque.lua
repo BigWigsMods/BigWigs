@@ -150,6 +150,14 @@ if L then
 
 	L.custom_off_sparkbot_marker = "Spark Bot Marker"
 	L.custom_off_sparkbot_marker_desc = "Mark Spark Bots with {rt4}{rt5}{rt6}{rt7}{rt8}."
+
+	L.custom_off_repeating_shrunk_say = "Repeating Shrunk Say"
+	L.custom_off_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
+	L.custom_off_repeating_shrunk_say_icon = 284168
+
+	L.custom_off_repeating_tampering_say = "Repeating Tampering Say"
+	L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
+	L.custom_off_repeating_tampering_say_icon = 286105
 end
 
 --------------------------------------------------------------------------------
@@ -169,6 +177,9 @@ function mod:GetOptions()
 		288410, -- Deploy Spark Bot
 		"custom_off_sparkbot_marker",
 		286693, -- World Enlarger
+		284168, -- Shrunk
+		"custom_off_repeating_shrunk_say",
+		"custom_off_repeating_tampering_say",
 		-- Intermission
 		287929, -- Signal Exploding Sheep
 	}
@@ -183,6 +194,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WormholeGenerator", 287952)
 	self:Log("SPELL_CAST_SUCCESS", "DeploySparkBot", 288410, 287691) -- Stage 1, Stage 2+3
 	self:Log("SPELL_CAST_START", "WorldEnlarger", 286693, 288041, 289537)
+	self:Log("SPELL_AURA_APPLIED", "ShrunkApplied", 284168)
+	self:Log("SPELL_AURA_REMOVED", "ShrunkRemoved", 284168)
+	self:Log("SPELL_AURA_APPLIED", "TamperingApplied", 286105)
+	self:Log("SPELL_AURA_REMOVED", "TamperingRemoved", 286105)
 
 	self:Log("SPELL_CAST_START", "EvasiveManeuvers", 287751)
 	self:Log("SPELL_CAST_START", "CrashDown", 287797)
@@ -309,6 +324,47 @@ function mod:WorldEnlarger(args)
 	self:PlaySound(286693, "long")
 	enlargerCount = enlargerCount + 1
 	self:Bar(286693, timers[286693][stage][enlargerCount], CL.count:format(args.spellName, enlargerCount))
+end
+
+do
+	local timer = nil
+	function mod:ShrunkApplied(args)
+		if self:Me(args.destGUID) then
+			self:TargetMessage2(args.spellId, "blue", args.destName)
+			self:PlaySound(args.spellId, "alert")
+			if not timer and self:GetOption("custom_off_repeating_shrunk_say") then
+				SendChatMessage(args.spellName, "SAY")
+				timer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, args.spellName, "SAY")
+			end
+		end
+	end
+
+	function mod:ShrunkRemoved(args)
+		if self:Me(args.destGUID) and timer then
+			self:CancelTimer(timer)
+			timer = nil
+		end
+	end
+end
+
+do
+	local timer = nil
+
+	function mod:TamperingApplied(args)
+		if self:Me(args.destGUID) then
+			if not timer and self:GetOption("custom_off_repeating_tampering_say") then
+				SendChatMessage(args.destName, "SAY")
+				timer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, args.destName, "SAY")
+			end
+		end
+	end
+
+	function mod:TamperingRemoved(args)
+		if self:Me(args.destGUID) and timer then
+			self:CancelTimer(timer)
+			timer = nil
+		end
+	end
 end
 
 function mod:EvasiveManeuvers(args)
