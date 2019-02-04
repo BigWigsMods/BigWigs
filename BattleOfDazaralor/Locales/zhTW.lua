@@ -1,4 +1,5 @@
 local L = BigWigs:NewBossLocale("Champion of the Light Horde", "zhTW")
+if not L then return end
 if L then
 	L.disorient_desc = "為|cff71d5ff[盲信]|r顯示施法條，如果你需要顯示精確的施法進度。" -- Blinding Faith = 283650
 end
