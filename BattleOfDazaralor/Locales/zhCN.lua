@@ -76,7 +76,7 @@ if L then
 	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 标记火花机器人。"
 
 	L.custom_off_repeating_shrunk_say = "重复缩小喊话" -- Shrunk = 284168
-	L.custom_off_repeating_shrunk_say_desc = "当你受到|cff71d5ff[缩小]|r时重复喊话。可能会持续到状态结束。"
+	L.custom_off_repeating_shrunk_say_desc = "当你受到|cff71d5ff[缩小]|r时重复喊话。这可能防止你被踩死。"
 
 	L.custom_off_repeating_tampering_say = "重复干涉喊话" -- Tampering = 286105
 	L.custom_off_repeating_tampering_say_desc = "当你控制机器人时重复喊话你的名字。"
