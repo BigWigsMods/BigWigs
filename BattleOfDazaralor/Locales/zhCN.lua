@@ -1,12 +1,12 @@
 local L = BigWigs:NewBossLocale("Champion of the Light Horde", "zhCN")
 if not L then return end
 if L then
-	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n这可能是你所需要的倒数计时条。" -- Blinding Faith = 283650
+	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n你可能会需要这个精确的施法进度条。" -- Blinding Faith = 283650
 end
 
 L = BigWigs:NewBossLocale("Champion of the Light Alliance", "zhCN")
 if L then
-	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n这可能是你所需要的倒数计时条。" -- Blinding Faith = 283650
+	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n你可能会需要这个精确的施法进度条。" -- Blinding Faith = 283650
 end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Horde", "zhCN")
@@ -37,7 +37,7 @@ end
 
 L = BigWigs:NewBossLocale("Opulence", "zhCN")
 if L then
-	L.room = "房间（%d/8）"
+	L.room = "房间（%d／8）"
 	L.no_jewel = "没有宝石："
 	L.seconds = "%.1f秒"
 
