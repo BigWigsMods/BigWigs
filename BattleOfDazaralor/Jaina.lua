@@ -48,7 +48,7 @@ if L then
 	L.ship_icon = "inv_garrison_cargoship"
 
 	L.custom_on_stop_timers = "Always show ability bars"
-	L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 
 	L.frozenblood_player = "%s (%d players)"
 
@@ -408,7 +408,6 @@ function mod:RingofIce(args)
 end
 
 -- Intermission
-
 function mod:HowlingWindsStart()
 	intermissionTime = GetTime()
 end
@@ -419,7 +418,7 @@ function mod:HowlingWindsRemoved(args)
 	icefallCount = 1
 	local seconds = math.floor((GetTime() - intermissionTime) * 100)/100
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "cyan" L.intermission_stage2:format(seconds), false)
+	self:Message2("stages", "cyan", L.intermission_stage2:format(seconds), false)
 
 	self:CDBar(288212, 3.5) -- Broadside
 	self:CDBar(288345, 7) -- Glacial Ray

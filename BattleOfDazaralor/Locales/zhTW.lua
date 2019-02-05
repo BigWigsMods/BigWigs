@@ -101,7 +101,7 @@ if L then
 	--L.ship_icon = "inv_garrison_cargoship"
 
 	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability he uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 
 	--L.frozenblood_player = "%s (%d players)"
 
