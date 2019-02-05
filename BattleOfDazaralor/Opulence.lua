@@ -23,6 +23,7 @@ local jewelTracker = {} -- Who has which jewel
 local topazStackTracker = {} -- Stacks
 local critBuffTracker = {} -- Time on crit buff
 local gemInfoBoxOpen = nil
+local hexCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -148,6 +149,7 @@ function mod:OnEngage()
 	handRoomCount = 1
 	bulwarkRoomCount = 1
 	bulwarkCrushCount = 1
+	hexCounter = 0
 	wipe(jewelTracker)
 	wipe(topazStackTracker)
 	wipe(critBuffTracker)
@@ -495,17 +497,19 @@ do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:HexOfLethargyApplied(args)
-		local playerIconsCount = #playerIcons+1
-		playerList[#playerList+1] = args.destName
-		playerIcons[playerIconsCount] = playerIconsCount
+		hexCounter = hexCounter + 1
+		if hexCounter == 5 then hexCounter = 1 end
+		local playerListCount = #playerList+1
+		playerList[playerListCount] = args.destName
+		playerIcons[playerListCount] = hexCounter
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(hexOfLethargyMarker) then
-			SetRaidTarget(args.destName, playerIconsCount)
+			SetRaidTarget(args.destName, hexCounter)
 		end
 		if self:Healer() then
-			self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
+			self:TargetsMessage(args.spellId, "orange", playerList, 2, nil, nil, nil, playerIcons)
 		end
 	end
 

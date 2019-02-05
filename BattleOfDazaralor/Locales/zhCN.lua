@@ -1,5 +1,14 @@
-local L = BigWigs:NewBossLocale("Champion of the Light Horde", "zhCN")
+local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhCN")
 if not L then return end
+if L then
+	L.punisher = "拉斯塔利惩罚者"
+	L.vessel = "邦桑迪的使者"
+
+	L.victim = "%s的%s刺中了你！"
+	L.witness = "%1$s的%3$s刺中了%2$s！"
+end
+
+L = BigWigs:NewBossLocale("Champion of the Light Horde", "zhCN")
 if L then
 	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n你可能会需要这个精确的施法进度条。" -- Blinding Faith = 283650
 end
@@ -73,13 +82,10 @@ if L then
 
 	L.custom_on_fade_out_bars = "淡出第1阶段计时条"
 	L.custom_on_fade_out_bars_desc = "第1阶段时，淡出另一条船上的首领技能计时条。"
-end
 
-L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhCN")
-if L then
-	L.punisher = "拉斯塔利惩罚者"
-	L.vessel = "邦桑迪的使者"
+	--L.custom_off_repeating_shrunk_say = "Repeating Shrunk Say" -- Shrunk = 284168
+	--L.custom_off_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
 
-	L.victim = "%s的%s刺中了你！"
-	L.witness = "%1$s的%3$s刺中了%2$s！"
+	--L.custom_off_repeating_tampering_say = "Repeating Tampering Say" -- Tampering = 286105
+	--L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
 end

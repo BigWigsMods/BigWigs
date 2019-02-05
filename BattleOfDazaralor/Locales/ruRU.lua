@@ -1,5 +1,14 @@
-local L = BigWigs:NewBossLocale("Champion of the Light Horde", "ruRU")
+local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "ruRU")
 if not L then return end
+if L then
+	L.punisher = "Растарский каратель"
+	L.vessel = "Сосуд Бвонсамди"
+
+	--L.victim = "%s stabbed YOU with %s!"
+	--L.witness = "%s stabbed %s with %s!"
+end
+
+L = BigWigs:NewBossLocale("Champion of the Light Horde", "ruRU")
 if L then
 	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
 end
@@ -65,13 +74,10 @@ if L then
 
 	--L.custom_off_sparkbot_marker = "Spark Bot Marker"
 	--L.custom_off_sparkbot_marker_desc = "Mark Spark Bots with {rt4}{rt5}{rt6}{rt7}{rt8}."
-end
 
-L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "ruRU")
-if L then
-	L.punisher = "Растарский каратель"
-	L.vessel = "Сосуд Бвонсамди"
+	--L.custom_off_repeating_shrunk_say = "Repeating Shrunk Say" -- Shrunk = 284168
+	--L.custom_off_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
 
-	--L.victim = "%s stabbed YOU with %s!"
-	--L.witness = "%s stabbed %s with %s!"
+	--L.custom_off_repeating_tampering_say = "Repeating Tampering Say" -- Tampering = 286105
+	--L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
 end
