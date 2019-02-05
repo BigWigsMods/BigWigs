@@ -74,6 +74,12 @@ if L then
 
 	L.custom_off_sparkbot_marker = "火花机器人标记"
 	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 标记火花机器人。"
+
+	L.custom_off_repeating_shrunk_say = "重复缩小喊话" -- Shrunk = 284168
+	L.custom_off_repeating_shrunk_say_desc = "当你受到|cff71d5ff[缩小]|r时重复喊话。可能会持续到状态结束。"
+
+	L.custom_off_repeating_tampering_say = "重复干涉喊话" -- Tampering = 286105
+	L.custom_off_repeating_tampering_say_desc = "当你控制机器人时重复喊话你的名字。"
 end
 
 L = BigWigs:NewBossLocale("Stormwall Blockade", "zhCN")
@@ -82,10 +88,4 @@ if L then
 
 	L.custom_on_fade_out_bars = "淡出第1阶段计时条"
 	L.custom_on_fade_out_bars_desc = "第1阶段时，淡出另一条船上的首领技能计时条。"
-
-	L.custom_off_repeating_shrunk_say = "重复缩小喊话" -- Shrunk = 284168
-	L.custom_off_repeating_shrunk_say_desc = "当你受到|cff71d5ff[缩小]|r时重复喊话。可能会持续到状态结束。"
-
-	L.custom_off_repeating_tampering_say = "重复干涉喊话" -- Tampering = 286105
-	L.custom_off_repeating_tampering_say_desc = "当你控制机器人时重复喊话你的名字。"
 end
