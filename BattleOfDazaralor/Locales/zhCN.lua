@@ -10,12 +10,12 @@ end
 
 L = BigWigs:NewBossLocale("Champion of the Light Horde", "zhCN")
 if L then
-	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n你可能会需要这个精确的施法进度条。" -- Blinding Faith = 283650
+	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n这可能是你所需要的倒数计时条。" -- Blinding Faith = 283650
 end
 
 L = BigWigs:NewBossLocale("Champion of the Light Alliance", "zhCN")
 if L then
-	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n你可能会需要这个精确的施法进度条。" -- Blinding Faith = 283650
+	L.disorient_desc = "|cff71d5ff[炫目信仰]|r施放计时条。\n这可能是你所需要的倒数计时条。" -- Blinding Faith = 283650
 end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Horde", "zhCN")
@@ -46,7 +46,7 @@ end
 
 L = BigWigs:NewBossLocale("Opulence", "zhCN")
 if L then
-	L.room = "房间（%d／8）"
+	L.room = "房间（%d/8）"
 	L.no_jewel = "没有宝石："
 	L.seconds = "%.1f秒"
 
@@ -83,9 +83,9 @@ if L then
 	L.custom_on_fade_out_bars = "淡出第1阶段计时条"
 	L.custom_on_fade_out_bars_desc = "第1阶段时，淡出另一条船上的首领技能计时条。"
 
-	--L.custom_off_repeating_shrunk_say = "Repeating Shrunk Say" -- Shrunk = 284168
-	--L.custom_off_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
+	L.custom_off_repeating_shrunk_say = "重复缩小喊话" -- Shrunk = 284168
+	L.custom_off_repeating_shrunk_say_desc = "当你受到|cff71d5ff[缩小]|r时重复喊话。可能会持续到状态结束。"
 
-	--L.custom_off_repeating_tampering_say = "Repeating Tampering Say" -- Tampering = 286105
-	--L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
+	L.custom_off_repeating_tampering_say = "重复干涉喊话" -- Tampering = 286105
+	L.custom_off_repeating_tampering_say_desc = "当你控制机器人时重复喊话你的名字。"
 end
