@@ -90,7 +90,9 @@ function mod:OnEngage()
 	self:Bar(282179, 13.1) -- Reverberating Slam
 	self:Bar(282247, 16.8, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount)) -- Apetagonizer 3000 Bomb, Add
 	self:Bar(282082, 22)	-- Bestial Combo
-	self:Bar(285994, 37.5) -- Ferocious Roar
+	if not self:Easy() then
+		self:Bar(285994, 37.5) -- Ferocious Roar
+	end
 end
 
 --------------------------------------------------------------------------------
