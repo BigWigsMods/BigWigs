@@ -92,18 +92,16 @@ end
 
 L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "zhCN")
 if L then
-	--L.starbord_ship_emote = "A Kul Tiran Corsair approaches on the starboard side!"
-	--L.port_side_ship_emote = "A Kul Tiran Corsair approaches on the port side!"
+	L.starbord_ship_emote = "一帮库尔提拉斯海盗朝右舷冲来了！"
+	L.port_side_ship_emote = "一帮库尔提拉斯海盗朝左舷冲来了！"
 
-	--L.starbord_txt = "Right Ship" -- starboard
-	--L.port_side_txt = "Left Ship" -- port
+	L.starbord_txt = "右舰" -- starboard
+	L.port_side_txt = "左舰" -- port
 
-	--L.ship_icon = "inv_garrison_cargoship"
+	L.custom_on_stop_timers = "总是显示技能条"
+	L.custom_on_stop_timers_desc = "吉安娜下次会随机释放非冷却技能。当此选项开启，这些技能条将保留在屏幕上。"
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.frozenblood_player = "%s（%d人）"
 
-	--L.frozenblood_player = "%s (%d players)"
-
-	--L.intermission_stage2 = "Stage 2 - %.1f sec"
+	L.intermission_stage2 = "第2阶段 - %.1f秒"
 end
