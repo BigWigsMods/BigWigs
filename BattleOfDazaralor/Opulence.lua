@@ -459,6 +459,7 @@ do
 		if (self:GetOption("custom_on_hand_timers") and self:IsHandOnPlatform()) or self:Me(args.destGUID) then
 			self:TargetsMessage(283507, "yellow", playerList)
 		end
+		self:ScheduleTimer(wipe, 0.5, playerList)
 	end
 
 	function mod:VolatileChargeRemoved(args)
