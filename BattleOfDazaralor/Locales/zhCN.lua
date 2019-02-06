@@ -89,3 +89,21 @@ if L then
 	L.custom_on_fade_out_bars = "淡出第1阶段计时条"
 	L.custom_on_fade_out_bars_desc = "第1阶段时，淡出另一条船上的首领技能计时条。"
 end
+
+L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "zhCN")
+if L then
+	--L.starbord_ship_emote = "A Kul Tiran Corsair approaches on the starboard side!"
+	--L.port_side_ship_emote = "A Kul Tiran Corsair approaches on the port side!"
+
+	--L.starbord_txt = "Right Ship" -- starboard
+	--L.port_side_txt = "Left Ship" -- port
+
+	--L.ship_icon = "inv_garrison_cargoship"
+
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+
+	--L.frozenblood_player = "%s (%d players)"
+
+	--L.intermission_stage2 = "Stage 2 - %.1f sec"
+end
