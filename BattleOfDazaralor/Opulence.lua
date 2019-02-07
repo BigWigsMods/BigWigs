@@ -23,6 +23,7 @@ local jewelTracker = {} -- Who has which jewel
 local topazStackTracker = {} -- Stacks
 local critBuffTracker = {} -- Time on crit buff
 local gemInfoBoxOpen = nil
+local hexCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -85,6 +86,8 @@ function mod:GetOptions()
 		{285014, "ICON", "SAY", "SAY_COUNTDOWN"}, -- Coin Shower
 		284941, -- Wail of Greed
 		{287037, "TANK"}, -- Coin Sweep
+		-- Mythic
+		289155, -- Surging Gold
 	}, {
 		["stages"] = CL.general,
 		[-19494] = -19494, -- Crown Jewels
@@ -93,6 +96,7 @@ function mod:GetOptions()
 		["custom_on_bulwark_timers"] = -19498, -- Yalat's Bulwark
 		[285479] = -19519, -- Traps
 		[287070] = CL.stage:format(2),
+		[289155] = CL.mythic,
 	}
 end
 
@@ -135,6 +139,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CoinShowerRemoved", 285014)
 	self:Log("SPELL_CAST_START", "WailofGreed", 284941)
 	self:Log("SPELL_AURA_APPLIED", "CoinSweepApplied", 287037)
+	self:Log("SPELL_CAST_START", "SurgingGold", 289155)
+	self:Log("SPELL_CAST_SUCCESS", "SurgingGoldSuccess", 289155)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 285479, 284424, 287074) -- Flame Jet, Scorching Ground, Molten Gold
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 285479, 284424, 287074)
@@ -148,6 +154,7 @@ function mod:OnEngage()
 	handRoomCount = 1
 	bulwarkRoomCount = 1
 	bulwarkCrushCount = 1
+	hexCounter = 0
 	wipe(jewelTracker)
 	wipe(topazStackTracker)
 	wipe(critBuffTracker)
@@ -457,6 +464,7 @@ do
 		if (self:GetOption("custom_on_hand_timers") and self:IsHandOnPlatform()) or self:Me(args.destGUID) then
 			self:TargetsMessage(283507, "yellow", playerList)
 		end
+		self:ScheduleTimer(wipe, 0.5, playerList)
 	end
 
 	function mod:VolatileChargeRemoved(args)
@@ -495,17 +503,19 @@ do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:HexOfLethargyApplied(args)
-		local playerIconsCount = #playerIcons+1
-		playerList[#playerList+1] = args.destName
-		playerIcons[playerIconsCount] = playerIconsCount
+		hexCounter = hexCounter + 1
+		if hexCounter == 5 then hexCounter = 1 end
+		local playerListCount = #playerList+1
+		playerList[playerListCount] = args.destName
+		playerIcons[playerListCount] = hexCounter
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(hexOfLethargyMarker) then
-			SetRaidTarget(args.destName, playerIconsCount)
+			SetRaidTarget(args.destName, hexCounter)
 		end
 		if self:Healer() then
-			self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
+			self:TargetsMessage(args.spellId, "orange", playerList, 2, nil, nil, nil, playerIcons)
 		end
 	end
 
@@ -570,10 +580,12 @@ function mod:HoardPower(args)
 	self:StopBar(L.hand_cast:format(self:SpellName(283606))) -- Bulwark: Crush
 	self:StopBar(283507) -- Volatile Charge
 	self:StopBar(282939) -- Flames of Punishment
+	self:StopBar(L.swap) -- Chaotic Displacement
 
 	self:CDBar(287072, 14.5) -- Liquid Gold
 	self:CDBar(285014, 16.7) -- Coin Shower
 	self:CDBar(285995, 28, CL.count:format(self:SpellName(285995), spiritsofGoldCount)) -- Spirits of Gold (x)
+	self:Bar(289155, 46.2) -- Surging Gold
 	self:CDBar(284941, 61, CL.count:format(self:SpellName(284941), wailofGreedCount)) -- Wail of Greed (x)
 end
 
@@ -660,6 +672,17 @@ end
 function mod:CoinSweepApplied(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	self:PlaySound(args.spellId, "alarm", nil, args.destName)
+end
+
+function mod:SurgingGold(args)
+	self:Message2(args.spellId, "orange", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "info")
+	self:CastBar(args.spellId, 2.5)
+	self:Bar(args.spellId, 42.5)
+end
+
+function mod:SurgingGoldSuccess(args)
+	self:Bar(args.spellId, 30, CL.onboss:format(args.spellName))
 end
 
 do

@@ -102,9 +102,11 @@ function mod:WaveofLight(args)
 end
 
 function mod:SealofRetributionApplied(args)
-	self:Message2(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "info")
-	self:CDBar(283933, 51) -- Judgement: Righteousness
+	if self.isEngaged then -- Casted after boss respawns
+		self:Message2(args.spellId, "cyan")
+		self:PlaySound(args.spellId, "info")
+		self:CDBar(283933, 51) -- Judgement: Righteousness
+	end
 end
 
 function mod:JudgementRighteousness(args)
