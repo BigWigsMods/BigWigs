@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhTW")
 if not L then return end
 if L then
+	--L.enforcer = "Eternal Enforcer"
 	L.punisher = "拉斯塔瑞懲戒者"
 	L.vessel = "伯昂薩姆第的容器"
 
