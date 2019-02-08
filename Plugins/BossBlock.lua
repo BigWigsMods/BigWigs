@@ -182,6 +182,7 @@ do
 		[682] = true, -- L'uras death
 		[686] = true, -- Argus portal
 		[688] = true, -- Argus kill
+		[876] = true, -- Entering Battle of Dazar'alor
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
