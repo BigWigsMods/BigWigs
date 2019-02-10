@@ -65,7 +65,7 @@ end
 
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "zhTW")
 if L then
-	L.killed = "%s%已擊殺！"
+	L.killed = "%s已擊殺！"
 	L.count_of = "%s（%d／%d）"
 end
 
@@ -101,8 +101,8 @@ if L then
 
 	--L.ship_icon = "inv_garrison_cargoship"
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "總是顯示計時器"
+	L.custom_on_stop_timers_desc = "珍娜會在下一次施放技能時隨機施放已經冷卻完畢的技能。啟用此選項後，這些技能的計時條會保持顯示。"
 
 	L.frozenblood_player = "%s（%d人）"
 
