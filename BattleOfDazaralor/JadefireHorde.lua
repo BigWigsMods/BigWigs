@@ -53,7 +53,7 @@ function mod:GetOptions()
 		282037, -- Rising Flames
 		286379, -- Pyroblast
 		{286425, "INFOBOX"}, -- Fire Shield
-		{286988, "SAY"}, -- Searing Embers
+		286988, -- Searing Embers
 		searingEmbersMarker,
 		284374, -- Magma Trap
 		-- Team Attacks
@@ -331,7 +331,6 @@ do
 			self:CDBar(args.spellId, 40)
 		end
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(searingEmbersMarker) then
