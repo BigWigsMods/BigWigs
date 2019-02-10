@@ -39,7 +39,7 @@ end
 -- Initialization
 --
 
-local searingEmbersMarker = mod:AddMarkerOption(false, "player", 1, 286988, 1, 2, 3) -- Searing Embers
+local searingEmbersMarker = mod:AddMarkerOption(false, "player", 1, 286988, 1, 2, 3, 4) -- Searing Embers
 function mod:GetOptions()
 	return {
 		"stages",
@@ -337,7 +337,7 @@ do
 		if self:GetOption(searingEmbersMarker) then
 			SetRaidTarget(args.destName, playerIconsCount)
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
+		self:TargetsMessage(args.spellId, "orange", playerList, 4, nil, nil, nil, playerIcons)
 	end
 
 	function mod:SearingEmbersRemoved(args)
