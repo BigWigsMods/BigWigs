@@ -83,7 +83,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TidalShroud", 286558)
 	self:Log("SPELL_CAST_START", "SeaStorm", 284362)
 	self:Log("SPELL_CAST_START", "SeasTemptation", 284383)
-	self:Log("SPELL_CAST_START", "SirenSpawn", 289795) -- Zuldazar Reuse Spell 06
+	self:Log("SPELL_CAST_SUCCESS", "SirenSpawn", 289795) -- Zuldazar Reuse Spell 06
 	self:Log("SPELL_AURA_APPLIED", "TemptingSongApplied", 284405)
 	self:Death("BrotherDeath", 146253) -- Brother Joseph
 
@@ -215,7 +215,7 @@ do
 	end
 
 	function mod:BarCreated(_, _, bar, _, key, text)
-		if not self:GetOption("custom_on_fade_out_bars") then return end
+		if not self:GetOption("custom_on_fade_out_bars") or stage ~= 1 then return end
 		if sisterAbilities[key] then
 			if not self:IsSisterOnPlatform() then
 				fadeOutBar(self, bar)
@@ -296,7 +296,7 @@ function mod:CracklingLightning(args)
 end
 
 function mod:SisterDeath(args)
-	self:Message2("stages", "red", L.killed:format(args.destName), false)
+	self:Message2("stages", "cyan", L.killed:format(args.destName), false)
 	self:PlaySound("stages", "long")
 	self:StopBar(287995) -- Electric Shroud
 	self:StopBar(284262) -- Voltaic Flash

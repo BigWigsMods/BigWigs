@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "deDE")
 if not L then return end
 if L then
+	L.enforcer = "Ewiger Vollstrecker"
 	L.punisher = "Bestrafer der Rastari"
 	L.vessel = "Gefäß für Bwonsamdi"
 
@@ -80,4 +81,22 @@ if L then
 
 	--L.custom_off_repeating_tampering_say = "Repeating Tampering Say" -- Tampering = 286105
 	--L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
+end
+
+L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "deDE")
+if L then
+	--L.starbord_ship_emote = "A Kul Tiran Corsair approaches on the starboard side!"
+	--L.port_side_ship_emote = "A Kul Tiran Corsair approaches on the port side!"
+
+	--L.starbord_txt = "Right Ship" -- starboard
+	--L.port_side_txt = "Left Ship" -- port
+
+	--L.ship_icon = "inv_garrison_cargoship"
+
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+
+	--L.frozenblood_player = "%s (%d players)"
+
+	--L.intermission_stage2 = "Stage 2 - %.1f sec"
 end

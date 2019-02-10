@@ -87,7 +87,9 @@ function mod:OnEngage()
 	self:Bar(282543, 13.1) -- Deathly Slam
 	self:Bar(282526, 16.8, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount)) -- DeathSpecter, Add
 	self:Bar(286450, 22)	-- Necrotic Combo
-	self:Bar(285994, 37.5) -- Ferocious Roar
+	if not self:Easy() then
+		self:Bar(285994, 37.5) -- Ferocious Roar
+	end
 end
 
 --------------------------------------------------------------------------------

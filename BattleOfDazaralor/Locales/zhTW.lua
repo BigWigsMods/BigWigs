@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhTW")
 if not L then return end
 if L then
+	--L.enforcer = "Eternal Enforcer"
 	L.punisher = "拉斯塔瑞懲戒者"
 	L.vessel = "伯昂薩姆第的容器"
 
@@ -88,4 +89,22 @@ if L then
 
 	L.custom_on_fade_out_bars = "淡出第一階段計時條"
 	L.custom_on_fade_out_bars_desc = "第一階段時，淡出另一條船上的首領技能計時條。"
+end
+
+L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "zhTW")
+if L then
+	--L.starbord_ship_emote = "A Kul Tiran Corsair approaches on the starboard side!"
+	--L.port_side_ship_emote = "A Kul Tiran Corsair approaches on the port side!"
+
+	--L.starbord_txt = "Right Ship" -- starboard
+	--L.port_side_txt = "Left Ship" -- port
+
+	--L.ship_icon = "inv_garrison_cargoship"
+
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+
+	--L.frozenblood_player = "%s (%d players)"
+
+	--L.intermission_stage2 = "Stage 2 - %.1f sec"
 end
