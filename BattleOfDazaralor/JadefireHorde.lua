@@ -337,7 +337,7 @@ do
 		if self:GetOption(searingEmbersMarker) then
 			SetRaidTarget(args.destName, playerIconsCount)
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 4, nil, nil, nil, playerIcons)
+		self:TargetsMessage(args.spellId, "orange", playerList, self:Easy() and 3 or 4, nil, nil, nil, playerIcons)
 	end
 
 	function mod:SearingEmbersRemoved(args)
