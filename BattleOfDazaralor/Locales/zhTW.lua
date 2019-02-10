@@ -85,7 +85,7 @@ end
 
 L = BigWigs:NewBossLocale("Stormwall Blockade", "zhTW")
 if L then
-	L.killed = "%s%已擊殺！"
+	L.killed = "%s已擊殺！"
 
 	L.custom_on_fade_out_bars = "淡出第一階段計時條"
 	L.custom_on_fade_out_bars_desc = "第一階段時，淡出另一條船上的首領技能計時條。"
@@ -93,18 +93,18 @@ end
 
 L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "zhTW")
 if L then
-	--L.starbord_ship_emote = "A Kul Tiran Corsair approaches on the starboard side!"
-	--L.port_side_ship_emote = "A Kul Tiran Corsair approaches on the port side!"
+	L.starbord_ship_emote = "有庫爾提拉斯海寇靠近右弦了！"
+	L.port_side_ship_emote = "有個庫爾提拉斯海寇靠近碼頭了！"
 
-	--L.starbord_txt = "Right Ship" -- starboard
-	--L.port_side_txt = "Left Ship" -- port
+	L.starbord_txt = "右側船" -- starboard
+	L.port_side_txt = "左側船" -- port
 
 	--L.ship_icon = "inv_garrison_cargoship"
 
 	--L.custom_on_stop_timers = "Always show ability bars"
 	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
 
-	--L.frozenblood_player = "%s (%d players)"
+	L.frozenblood_player = "%s（%d人）"
 
-	--L.intermission_stage2 = "Stage 2 - %.1f sec"
+	L.intermission_stage2 = "階段二：%.1f秒"
 end
