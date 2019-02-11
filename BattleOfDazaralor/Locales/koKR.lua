@@ -83,6 +83,14 @@ if L then
 	L.custom_off_repeating_tampering_say_desc = "불꽃봇을 컨트롤하는 동안 계속 채팅으로 알림."
 end
 
+L = BigWigs:NewBossLocale("Stormwall Blockade", "koKR")
+if L then
+	--L.killed = "%s killed!"
+
+	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
+	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss who isn't active on your boat in stage 1."
+end
+
 L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "koKR")
 if L then
 	L.starbord_ship_emote = "쿨 티란 함선이 오른쪽에서 접근!"
@@ -90,8 +98,6 @@ if L then
 
 	--L.starbord_txt = "Right Ship" -- starboard
 	--L.port_side_txt = "Left Ship" -- port
-
-	--L.ship_icon = "inv_garrison_cargoship"
 
 	L.custom_on_stop_timers = "능력 바 항상 표시"
 	L.custom_on_stop_timers_desc = "제이나는 쿨이 온 기술들을 무작위로 사용합니다. 이 옵션이 활성화되면, 다음 쓸 수 있는 능력들을 표시하는 바가 화면에 남아있습니다.."

@@ -99,8 +99,6 @@ if L then
 	L.starbord_txt = "右側船" -- starboard
 	L.port_side_txt = "左側船" -- port
 
-	--L.ship_icon = "inv_garrison_cargoship"
-
 	L.custom_on_stop_timers = "總是顯示計時器"
 	L.custom_on_stop_timers_desc = "珍娜會在下一次施放技能時隨機施放已經冷卻完畢的技能。啟用此選項後，這些技能的計時條會保持顯示。"
 
