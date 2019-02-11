@@ -10,7 +10,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 134
+local BIGWIGS_VERSION = 135
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -863,11 +863,14 @@ do
 
 	local L = GetLocale()
 	local locales = {
-		--ruRU = "Russian (ruRU)",
+		ruRU = "Russian (ruRU)",
 		itIT = "Italian (itIT)",
 		--koKR = "Korean (koKR)",
 		esES = "Spanish (esES)",
 		esMX = "Spanish (esMX)",
+		deDE = "German (deDE)",
+		ptBR = "Portuguese (ptBR)",
+		frFR = "French (frFR)",
 	}
 	if locales[L] then
 		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
