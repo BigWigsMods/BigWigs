@@ -80,6 +80,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Apetagonizer3000Bomb", 282247)
 	self:Log("SPELL_CAST_START", "Apetagonize", 282243)
 	self:Log("SPELL_AURA_APPLIED", "ApetagonizerCore", 285659)
+	self:Log("SPELL_AURA_REMOVED", "ApetagonizerCoreRemoved", 285659)
 	self:Log("SPELL_CAST_START", "DischargeApetagonizerCore", 285660)
 end
 
@@ -197,6 +198,15 @@ end
 
 function mod:ApetagonizerCore(args)
 	self:TargetMessage2(args.spellId, "green", args.destName, args.spellName)
+	if self:Me(args.destGUID) then
+		self:TargetBar(args.spellId, 20, args.destName)
+	end
+end
+
+function mod:ApetagonizerCoreRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellName, args.destName)
+	end
 end
 
 function mod:DischargeApetagonizerCore(args)

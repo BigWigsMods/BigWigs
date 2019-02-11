@@ -77,6 +77,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DeathSpecter", 282526)
 	self:Log("SPELL_CAST_START", "DeathEmpowerment", 282533)
 	self:Log("SPELL_AURA_APPLIED", "ShadowCore", 286434)
+	self:Log("SPELL_AURA_REMOVED", "ShadowCoreRemoved", 286434)
 	self:Log("SPELL_CAST_START", "DischargeShadowCore", 286435)
 end
 
@@ -194,6 +195,15 @@ end
 
 function mod:ShadowCore(args)
 	self:TargetMessage2(args.spellId, "green", args.destName, args.spellName)
+	if self:Me(args.destGUID) then
+		self:TargetBar(args.spellId, 20, args.destName)
+	end
+end
+
+function mod:ShadowCoreRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellName, args.destName)
+	end
 end
 
 function mod:DischargeShadowCore(args)
