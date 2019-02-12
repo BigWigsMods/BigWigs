@@ -49,7 +49,7 @@ L = BigWigs:NewBossLocale("Opulence", "ruRU")
 if L then
 	L.room = "Комната (%d/8)"
 	L.no_jewel = "Нет Камня:"
-	L.seconds = "%.1fс"
+	L.seconds = "%.1fs"
 
 	L.custom_on_fade_out_bars = "Скрыть полосы 1-ой фазы"
 	L.custom_on_fade_out_bars_desc = "Скрыть полосы, которые не принадлежат голему в вашей комнате на 1-ой фазе."
