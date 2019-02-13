@@ -93,11 +93,11 @@ end
 
 L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "zhTW")
 if L then
-	L.starbord_ship_emote = "有庫爾提拉斯海寇靠近右弦了！"
+	L.starbord_ship_emote = "有庫爾提拉斯海寇靠近右舷了！"
 	L.port_side_ship_emote = "有個庫爾提拉斯海寇靠近碼頭了！"
 
-	L.starbord_txt = "右側船" -- starboard
-	L.port_side_txt = "左側船" -- port
+	L.starbord_txt = "右側船來襲" -- starboard
+	L.port_side_txt = "左側船來襲" -- port
 
 	L.custom_on_stop_timers = "總是顯示計時器"
 	L.custom_on_stop_timers_desc = "珍娜會在下一次施放技能時隨機施放已經冷卻完畢的技能。啟用此選項後，這些技能的計時條會保持顯示。"
