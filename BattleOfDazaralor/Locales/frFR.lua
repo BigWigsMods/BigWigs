@@ -5,8 +5,8 @@ if L then
 	L.punisher = "Punisseur rastari"
 	L.vessel = "Engeance de Bwonsamdi"
 
-	--L.victim = "%s stabbed YOU with %s!"
-	--L.witness = "%s stabbed %s with %s!"
+	L.victim = "%s VOUS a poignardé avec %s!"
+	L.witness = "%s a poignardé %s avec %s!"
 end
 
 L = BigWigs:NewBossLocale("Champion of the Light Horde", "frFR")
@@ -29,7 +29,7 @@ if L then
 	--L.cast = "Cast"
 	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
 
-	--L.interrupted_after = "%s interrupted by %s (%.1f seconds remaining)"
+	L.interrupted_after = "%s interrompu par %s (%.1f secondes restantes)"
 end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Alliance", "frFR")
@@ -47,7 +47,7 @@ end
 
 L = BigWigs:NewBossLocale("Opulence", "frFR")
 if L then
-	--L.room = "Room (%d/8)"
+	L.room = "Salle (%d/8)"
 	--L.no_jewel = "No Jewel:"
 	--L.seconds = "%.1fs"
 
@@ -93,8 +93,8 @@ end
 
 L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "frFR")
 if L then
-	--L.starbord_ship_emote = "A Kul Tiran Corsair approaches on the starboard side!"
-	--L.port_side_ship_emote = "A Kul Tiran Corsair approaches on the port side!"
+	L.starbord_ship_emote = "Un bateau de Kul Tiras se rapproche à tribord !"
+	L.port_side_ship_emote = "Un bateau de Kul Tiras se rapproche à bâbord !"
 
 	--L.starbord_txt = "Right Ship" -- starboard
 	--L.port_side_txt = "Left Ship" -- port
