@@ -261,7 +261,7 @@ end
 
 function mod:GigavoltCharge(args)
 	chargeCount = chargeCount + 1
-	self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(args.spellName, chargeCount))
+	self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount))
 end
 
 do
@@ -273,7 +273,7 @@ do
 		playerIcons[playerListCount] = playerListCount
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, playerListCount, playerListCount))
+			self:Say(args.spellId, CL.count_rticon:format(L.gigavolt_alt_text, playerListCount, playerListCount))
 			self:SayCountdown(args.spellId, 15)
 			self:TargetBar(args.spellId, 15, args.destName, L.gigavolt_alt_text)
 		end
