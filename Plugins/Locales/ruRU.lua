@@ -273,25 +273,25 @@ L.emphasizeMultiplier = "Множитель Размера"
 L.emphasizeMultiplierDesc = "Если Вы отмените перемещение увеличенных полос к своему якорю, эта опция будет просто определять, насколько будут увеличиваться полосы по отношению к нормальным."
 L.iconPosition = "Позиция Иконки"
 L.iconPositionDesc = "Выберите, где на полосе будет находиться иконка."
---L.visibleBarLimit = "Visible bar limit"
---L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
+L.visibleBarLimit = "Лимит отображаемых полос"
+L.visibleBarLimitDesc = "Установить максимальное количество полос, отображаемых единовременно."
 
 -----------------------------------------------------------------------
 -- Colors.lua
 --
 
---L.red = "Red"
---L.redDesc = "General encounter warnings."
---L.blue = "Blue"
---L.blueDesc = "Warnings for things that affect you directly such as a debuff being applied to you."
---L.orange = "Orange"
---L.yellow = "Yellow"
---L.green = "Green"
---L.greenDesc = "Warnings for good things that happen such as a debuff being removed from you."
---L.cyan = "Cyan"
---L.cyanDesc = "Warnings for encounter status changes such as advancing to the next stage."
---L.purple = "Purple"
---L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
+L.red = "Красный"
+L.redDesc = "Общие оповещения боя."
+L.blue = "Синий"
+L.blueDesc = "Оповещение событий, касающихся непосредственно Вас, например, наложение дебаффа."
+L.orange = "Оранжевый"
+L.yellow = "Желтый"
+L.green = "Зеленый"
+L.greenDesc = "Оповещение хороших событий, например, снятие дебаффа с Вас."
+L.cyan = "Циановый"
+L.cyanDesc = "Оповещение о изменении статуса боя, например, переход на следующую фазу."
+L.purple = "Фиолетовый"
+L.purpleDesc = "Оповещение о способностях только для танков, например, стаки дебаффа на танке."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
