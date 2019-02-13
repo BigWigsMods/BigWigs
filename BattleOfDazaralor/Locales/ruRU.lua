@@ -22,7 +22,7 @@ end
 L = BigWigs:NewBossLocale("Jadefire Masters Horde", "ruRU")
 if L then
 	L.custom_on_fixate_plates = "Иконка Преследования на Полосах Здоровья противников"
-	L.custom_on_fixate_plates_desc = "Отображаеть иконку на Полосе Здоровья противнка, что преследует Вас.\nНеобходимо включить Полосы Здоровья противников. Данная опция поддерживает только KuiNameplates."
+	L.custom_on_fixate_plates_desc = "Отображать иконку на Полосе Здоровья противника, что преследует Вас.\nНеобходимо включить Полосы Здоровья противников. Только KuiNameplates поддерживает данную опцию."
 
 	L.absorb = "Щит"
 	L.absorb_text = "%s (|cff%s%.0f%%|r)"
@@ -35,7 +35,7 @@ end
 L = BigWigs:NewBossLocale("Jadefire Masters Alliance", "ruRU")
 if L then
 	L.custom_on_fixate_plates = "Иконка Преследования на Полосах Здоровья противников"
-	L.custom_on_fixate_plates_desc = "Отображаеть иконку на Полосе Здоровья противнка, что преследует Вас.\nНеобходимо включить Полосы Здоровья противников. Данная опция поддерживает только KuiNameplates."
+	L.custom_on_fixate_plates_desc = "Отображать иконку на Полосе Здоровья противника, что преследует Вас.\nНеобходимо включить Полосы Здоровья противников. Только KuiNameplates поддерживает данную опция."
 
 	L.absorb = "Щит"
 	L.absorb_text = "%s (|cff%s%.0f%%|r)"
