@@ -48,7 +48,7 @@ end
 L = BigWigs:NewBossLocale("Opulence", "frFR")
 if L then
 	L.room = "Salle (%d/8)"
-	L.no_jewel = "Pas de gemme :"
+	L.no_jewel = "Pas de Joyau :"
 	L.seconds = "%.1fs"
 
 	L.custom_on_fade_out_bars = "Estomper les barres de la phase 1"
