@@ -278,6 +278,13 @@ L.visibleBarLimitDesc = "設定同時於螢幕上可見的計時條之最大數�
 --L.textDesc = "Whether to show or hide the text displayed on the bars."
 
 -----------------------------------------------------------------------
+-- BossBlock.lua
+--
+
+--L.disableSfx = "Disable sound effects"
+--L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
+
+-----------------------------------------------------------------------
 -- Colors.lua
 --
 

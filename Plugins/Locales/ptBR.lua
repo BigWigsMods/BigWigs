@@ -140,6 +140,8 @@ L.blockGuildChallenge = "Bloquear avisos de desafios de guilda"
 L.blockGuildChallengeDesc = "Avisos de desafio de guilda aparecem por alguns motivos, principalmente quando um grupo em sua guilda completa uma masmorra heroica ou uma masmorra em modo desafio.\n\nEsses avisos podem cobrir partes essenciais de sua interface durante uma luta contra um chefe, então recomendamos bloqueá-los."
 L.blockSpellErrors = "Bloquear mensagens sobre feitiços que falharam."
 L.blockSpellErrorsDesc = "Mensagens do tipo \"O feitiço não está pronto ainda\" que normalmente aparecem no topo da tela serão bloqueados."
+--L.disableSfx = "Disable sound effects"
+--L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 
 -----------------------------------------------------------------------
 -- Colors.lua
