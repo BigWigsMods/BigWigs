@@ -275,6 +275,7 @@ L.iconPosition = "Symbolposition"
 L.iconPositionDesc = "Wähle, wo sich das Symbol auf der Leiste befinden soll."
 L.visibleBarLimit = "Maximale Leistenanzahl"
 L.visibleBarLimitDesc = "Legt die maximale Anzahl der Leisten fest, welche gleichzeitig angezeigt werden."
+--L.textDesc = "Whether to show or hide the text displayed on the bars."
 
 -----------------------------------------------------------------------
 -- Colors.lua

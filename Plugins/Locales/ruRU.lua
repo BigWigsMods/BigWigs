@@ -275,6 +275,7 @@ L.iconPosition = "Позиция Иконки"
 L.iconPositionDesc = "Выберите, где на полосе будет находиться иконка."
 L.visibleBarLimit = "Лимит отображаемых полос"
 L.visibleBarLimitDesc = "Установить максимальное количество полос, отображаемых единовременно."
+--L.textDesc = "Whether to show or hide the text displayed on the bars."
 
 -----------------------------------------------------------------------
 -- Colors.lua

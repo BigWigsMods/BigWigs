@@ -275,6 +275,7 @@ L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in
 --L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
 --L.visibleBarLimit = "Visible bar limit"
 --L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
+--L.textDesc = "Whether to show or hide the text displayed on the bars."
 
 -----------------------------------------------------------------------
 -- Colors.lua

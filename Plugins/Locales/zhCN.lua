@@ -275,6 +275,7 @@ L.iconPosition = "图标位置"
 L.iconPositionDesc = "选择计时条上图标的位置。"
 L.visibleBarLimit = "可视条限制"
 L.visibleBarLimitDesc = "设定同时可见最大条的数量。"
+--L.textDesc = "Whether to show or hide the text displayed on the bars."
 
 -----------------------------------------------------------------------
 -- Colors.lua

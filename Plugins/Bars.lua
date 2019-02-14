@@ -462,6 +462,7 @@ plugin.defaultDB = {
 	monochrome = nil,
 	outline = "NONE",
 	growup = true,
+	text = true,
 	time = true,
 	alignText = "LEFT",
 	alignTime = "RIGHT",
@@ -626,100 +627,12 @@ do
 					header1 = {
 						type = "header",
 						name = "",
-						order = 5,
-					},
-					alignText = {
-						type = "select",
-						name = L.alignText,
-						order = 6,
-						values = {
-							LEFT = L.left,
-							CENTER = L.center,
-							RIGHT = L.right,
-						},
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar.candyBarLabel:SetJustifyH(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar.candyBarLabel:SetJustifyH(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
-					},
-					alignTime = {
-						type = "select",
-						name = L.alignTime,
-						order = 7,
-						values = {
-							LEFT = L.left,
-							CENTER = L.center,
-							RIGHT = L.right,
-						},
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar.candyBarDuration:SetJustifyH(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar.candyBarDuration:SetJustifyH(value)
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
-					},
-					fill = {
-						type = "toggle",
-						name = L.fill,
-						desc = L.fillDesc,
-						order = 8,
-						set = function(info, value)
-							db[info[#info]] = value
-							for bar in next, normalAnchor.bars do
-								bar:SetFill(value)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								bar:SetFill(value)
-							end
-						end,
-					},
-					texture = {
-						type = "select",
-						name = L.texture,
-						order = 9,
-						values = media:List(STATUSBAR),
-						itemControl = "DDI-Statusbar",
-						get = function(info)
-							for i, v in next, media:List(STATUSBAR) do
-								if v == db[info[#info]] then return i end
-							end
-						end,
-						set = function(info, value)
-							local list = media:List(STATUSBAR)
-							local tex = list[value]
-							db[info[#info]] = tex
-							for bar in next, normalAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetTexture(media:Fetch(STATUSBAR, tex))
-								currentBarStyler.ApplyStyle(bar)
-							end
-							for bar in next, emphasizeAnchor.bars do
-								currentBarStyler.BarStopped(bar)
-								bar:SetTexture(media:Fetch(STATUSBAR, tex))
-								currentBarStyler.ApplyStyle(bar)
-							end
-						end,
+						order = 4,
 					},
 					barStyle = {
 						type = "select",
 						name = L.style,
-						order = 10,
+						order = 5,
 						values = barStyleRegister,
 						set = function(info, value)
 							db[info[#info]] = value
@@ -767,16 +680,121 @@ do
 							end
 						end,
 					},
+					spacing = {
+						type = "range",
+						name = L.spacing,
+						desc = L.spacingDesc,
+						order = 6,
+						softMax = 30,
+						min = 0,
+						step = 1,
+						width = 2,
+						set = sortBars,
+						disabled = function()
+							-- Just throw in a random frame (normalAnchor) instead of a bar to see if it returns a value since we noop() styles that don't have a .GetSpacing entry
+							return currentBarStyler.GetSpacing(normalAnchor)
+						end,
+					},
+					fill = {
+						type = "toggle",
+						name = L.fill,
+						desc = L.fillDesc,
+						order = 7,
+						set = function(info, value)
+							db[info[#info]] = value
+							for bar in next, normalAnchor.bars do
+								bar:SetFill(value)
+							end
+							for bar in next, emphasizeAnchor.bars do
+								bar:SetFill(value)
+							end
+						end,
+					},
+					texture = {
+						type = "select",
+						name = L.texture,
+						order = 8,
+						width = 2,
+						values = media:List(STATUSBAR),
+						itemControl = "DDI-Statusbar",
+						get = function(info)
+							for i, v in next, media:List(STATUSBAR) do
+								if v == db[info[#info]] then return i end
+							end
+						end,
+						set = function(info, value)
+							local list = media:List(STATUSBAR)
+							local tex = list[value]
+							db[info[#info]] = tex
+							for bar in next, normalAnchor.bars do
+								currentBarStyler.BarStopped(bar)
+								bar:SetTexture(media:Fetch(STATUSBAR, tex))
+								currentBarStyler.ApplyStyle(bar)
+							end
+							for bar in next, emphasizeAnchor.bars do
+								currentBarStyler.BarStopped(bar)
+								bar:SetTexture(media:Fetch(STATUSBAR, tex))
+								currentBarStyler.ApplyStyle(bar)
+							end
+						end,
+					},
 					header2 = {
 						type = "header",
 						name = "",
+						order = 9,
+					},
+					text = {
+						type = "toggle",
+						name = L.text,
+						desc = L.textDesc,
+						order = 10,
+						set = function(info, value)
+							db[info[#info]] = value
+							for bar in next, normalAnchor.bars do
+								currentBarStyler.BarStopped(bar)
+								bar:SetLabelVisibility(value)
+								currentBarStyler.ApplyStyle(bar)
+							end
+							for bar in next, emphasizeAnchor.bars do
+								currentBarStyler.BarStopped(bar)
+								bar:SetLabelVisibility(value)
+								currentBarStyler.ApplyStyle(bar)
+							end
+						end,
+					},
+					alignText = {
+						type = "select",
+						name = L.alignText,
 						order = 11,
+						values = {
+							LEFT = L.left,
+							CENTER = L.center,
+							RIGHT = L.right,
+						},
+						set = function(info, value)
+							db[info[#info]] = value
+							for bar in next, normalAnchor.bars do
+								currentBarStyler.BarStopped(bar)
+								bar.candyBarLabel:SetJustifyH(value)
+								currentBarStyler.ApplyStyle(bar)
+							end
+							for bar in next, emphasizeAnchor.bars do
+								currentBarStyler.BarStopped(bar)
+								bar.candyBarLabel:SetJustifyH(value)
+								currentBarStyler.ApplyStyle(bar)
+							end
+						end,
+					},
+					textSpacer = {
+						type = "description",
+						name = " ",
+						order = 12,
 					},
 					time = {
 						type = "toggle",
 						name = L.time,
 						desc = L.timeDesc,
-						order = 12,
+						order = 13,
 						set = function(info, value)
 							db[info[#info]] = value
 							for bar in next, normalAnchor.bars do
@@ -791,26 +809,39 @@ do
 							end
 						end,
 					},
-					spacing = {
-						type = "range",
-						name = L.spacing,
-						desc = L.spacingDesc,
-						order = 13,
-						softMax = 30,
-						min = 0,
-						step = 1,
-						width = 2,
-						set = sortBars,
-						disabled = function()
-							-- Just throw in a random frame (normalAnchor) instead of a bar to see if it returns a value since we noop() styles that don't have a .GetSpacing entry
-							return currentBarStyler.GetSpacing(normalAnchor)
+					alignTime = {
+						type = "select",
+						name = L.alignTime,
+						order = 14,
+						values = {
+							LEFT = L.left,
+							CENTER = L.center,
+							RIGHT = L.right,
+						},
+						set = function(info, value)
+							db[info[#info]] = value
+							for bar in next, normalAnchor.bars do
+								currentBarStyler.BarStopped(bar)
+								bar.candyBarDuration:SetJustifyH(value)
+								currentBarStyler.ApplyStyle(bar)
+							end
+							for bar in next, emphasizeAnchor.bars do
+								currentBarStyler.BarStopped(bar)
+								bar.candyBarDuration:SetJustifyH(value)
+								currentBarStyler.ApplyStyle(bar)
+							end
 						end,
+					},
+					timeSpacer = {
+						type = "description",
+						name = " ",
+						order = 15,
 					},
 					icon = {
 						type = "toggle",
 						name = L.icon,
 						desc = L.iconDesc,
-						order = 14,
+						order = 16,
 						set = function(info, value)
 							db[info[#info]] = value
 							for bar in next, normalAnchor.bars do
@@ -839,7 +870,7 @@ do
 						type = "select",
 						name = L.iconPosition,
 						desc = L.iconPositionDesc,
-						order = 15,
+						order = 17,
 						values = {
 							LEFT = L.left,
 							RIGHT = L.right,
@@ -1745,6 +1776,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar:SetLabel(text)
 	bar:SetDuration(time, isApprox)
 	bar:SetTimeVisibility(db.time)
+	bar:SetLabelVisibility(db.text)
 	bar:SetIcon(db.icon and icon or nil)
 	bar:SetIconPosition(db.iconPosition)
 	bar:SetFill(db.fill)

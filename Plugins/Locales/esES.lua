@@ -275,6 +275,7 @@ L.iconPosition = "Posición del icono"
 L.iconPositionDesc = "Elige dónde en la barra se posicionará el icono."
 L.visibleBarLimit = "Límite de barras visibles"
 L.visibleBarLimitDesc = "Ajusta la máxima cantidad de barras que serán visibles al mismo tiempo."
+--L.textDesc = "Whether to show or hide the text displayed on the bars."
 
 -----------------------------------------------------------------------
 -- Colors.lua
