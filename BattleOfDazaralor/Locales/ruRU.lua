@@ -1,101 +1,108 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "ruRU")
 if not L then return end
 if L then
+	L.enforcer = "Вечный каратель"
 	L.punisher = "Растарский каратель"
 	L.vessel = "Сосуд Бвонсамди"
 
-	--L.victim = "%s stabbed YOU with %s!"
-	--L.witness = "%s stabbed %s with %s!"
+	L.victim = "%s проткнул ВАС %s!"
+	L.witness = "%s проткнул %s %s!"
 end
 
 L = BigWigs:NewBossLocale("Champion of the Light Horde", "ruRU")
 if L then
-	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+	L.disorient_desc = "Полоса для |cff71d5ff[Слепящей веры]|r.\nВозможно, это полоса, которую вы хотите отслеживать." -- Blinding Faith = 283650
 end
 
 L = BigWigs:NewBossLocale("Champion of the Light Alliance", "ruRU")
 if L then
-	--L.disorient_desc = "Bar for the |cff71d5ff[Blinding Faith]|r cast.\nThis is probably the bar you want to have the countdown on." -- Blinding Faith = 283650
+	L.disorient_desc = "Полоса для |cff71d5ff[Слепящей веры]|r.\nВозможно, это полоса, которую вы хотите отслеживать." -- Blinding Faith = 283650
 end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Horde", "ruRU")
 if L then
-	--L.custom_on_fixate_plates = "Stalking icon on Enemy Nameplate"
-	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is stalking on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "Иконка Преследования на Полосах Здоровья противников"
+	L.custom_on_fixate_plates_desc = "Отображать иконку на Полосе Здоровья противника, что преследует Вас.\nНеобходимо включить Полосы Здоровья противников. Только KuiNameplates поддерживает данную опцию."
 
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
+	L.absorb = "Щит"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
+	L.cast = "Произнесение"
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
 
-	--L.interrupted_after = "%s interrupted by %s (%.1f seconds remaining)"
+	L.interrupted_after = "%s прерван %s (%.1f секунд осталось)"
 end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Alliance", "ruRU")
 if L then
-	--L.custom_on_fixate_plates = "Stalking icon on Enemy Nameplate"
-	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is stalking on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "Иконка Преследования на Полосах Здоровья противников"
+	L.custom_on_fixate_plates_desc = "Отображать иконку на Полосе Здоровья противника, что преследует Вас.\nНеобходимо включить Полосы Здоровья противников. Только KuiNameplates поддерживает данную опция."
 
-	--L.absorb = "Absorb"
-	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
-	--L.cast = "Cast"
-	--L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
+	L.absorb = "Щит"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
+	L.cast = "Произнесение"
+	L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
 
-	--L.interrupted_after = "%s interrupted by %s (%.1f seconds remaining)"
+	L.interrupted_after = "%s прерван %s (%.1f секунд осталось)"
 end
 
 L = BigWigs:NewBossLocale("Opulence", "ruRU")
 if L then
-	--L.room = "Room (%d/8)"
-	--L.no_jewel = "No Jewel:"
-	--L.seconds = "%.1fs"
+	L.room = "Комната (%d/8)"
+	L.no_jewel = "Нет Камня:"
+	L.seconds = "%.1fс"
 
-	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
-	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the construct which isn't in your hall during stage 1."
+	L.custom_on_fade_out_bars = "Скрыть полосы 1-ой фазы"
+	L.custom_on_fade_out_bars_desc = "Скрыть полосы, которые не принадлежат голему в вашей комнате на 1-ой фазе."
 
-	--L.custom_on_hand_timers = "The Hand of In'zashi"
-	--L.custom_on_hand_timers_desc = "Show warnings and bars for The Hand of In'zashi's abilities."
-	--L.hand_cast = "Hand: %s"
+	L.custom_on_hand_timers = "Десница Ин'заши"
+	L.custom_on_hand_timers_desc = "Отображать объявления и полосы для способностей Десницы Ин'заши."
+	L.hand_cast = "Десница: %s"
 
-	--L.custom_on_bulwark_timers = "Yalat's Bulwark"
-	--L.custom_on_bulwark_timers_desc = "Show warnings and bars for Yalat's Bulwark's abilities."
-	--L.bulwark_cast = "Bulwark: %s"
+	L.custom_on_bulwark_timers = "Защитник Ялата"
+	L.custom_on_bulwark_timers_desc = "Отображать объявления и полосы для способностей Защитника Ялаты."
+	L.bulwark_cast = "Защитник: %s"
 end
 
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "ruRU")
 if L then
-	--L.killed = "%s killed!"
+	L.killed = "%s убит!"
 	--L.count_of = "%s (%d/%d)"
 end
 
 L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "ruRU")
 if L then
-	--L.gigavolt_alt_text = "Bomb"
+	L.gigavolt_alt_text = "Бомба"
 
-	--L.custom_off_sparkbot_marker = "Spark Bot Marker"
-	--L.custom_off_sparkbot_marker_desc = "Mark Spark Bots with {rt4}{rt5}{rt6}{rt7}{rt8}."
+	L.custom_off_sparkbot_marker = "Метки на Раздражаторов"
+	L.custom_off_sparkbot_marker_desc = "Отмечает Раздражаторов {rt4}{rt5}{rt6}{rt7}{rt8}."
 
-	--L.custom_off_repeating_shrunk_say = "Repeating Shrunk Say" -- Shrunk = 284168
-	--L.custom_off_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
+	L.custom_off_repeating_shrunk_say = "Повторяющееся сообщение об Уменьшении" -- Shrunk = 284168
+	L.custom_off_repeating_shrunk_say_desc = "Спамить Уменьшение, когда Вы |cff71d5ff[Уменьшены]|r. Может тогда по Вам перестанут бегать."
 
-	--L.custom_off_repeating_tampering_say = "Repeating Tampering Say" -- Tampering = 286105
-	--L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
+	L.custom_off_repeating_tampering_say = "Повторяющееся сообщение во время Взлома" -- Tampering = 286105
+	L.custom_off_repeating_tampering_say_desc = "Спамить Ваще имя, когда Вы управляете Раздражатором."
+end
+
+L = BigWigs:NewBossLocale("Stormwall Blockade", "ruRU")
+if L then
+	L.killed = "%s убит!"
+
+	L.custom_on_fade_out_bars = "Скрыть полосы 1-ой фазы"
+	L.custom_on_fade_out_bars_desc = "Скрыть полосы, которые не принадлежат боссу на Вашем корабле на 1-ой фазе."
 end
 
 L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "ruRU")
 if L then
-	--L.starbord_ship_emote = "A Kul Tiran Corsair approaches on the starboard side!"
-	--L.port_side_ship_emote = "A Kul Tiran Corsair approaches on the port side!"
+	L.starbord_ship_emote = "Кул-тирасский фрегат приближается по правому борту!"
+	L.port_side_ship_emote = "Кул-тирасский фрегат приближается по левому борту!"
 
-	--L.starbord_txt = "Right Ship" -- starboard
-	--L.port_side_txt = "Left Ship" -- port
+	L.starbord_txt = "Правый Корабль" -- starboard
+	L.port_side_txt = "Левый Корабль" -- port
 
-	--L.ship_icon = "inv_garrison_cargoship"
+	L.custom_on_stop_timers = "Всегда отображать полосы способностей"
+	L.custom_on_stop_timers_desc = "Джайна использует восстановившиеся способности случайно. С этой опцией полосы с готовыми способностями будут оставаться на экране."
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.frozenblood_player = "%s (%d игроков)"
 
-	--L.frozenblood_player = "%s (%d players)"
-
-	--L.intermission_stage2 = "Stage 2 - %.1f sec"
+	L.intermission_stage2 = "Фаза 2 - %.1f сек"
 end

@@ -1947,7 +1947,7 @@ end
 do
 	local badBar = "Attempted to start bar '%q' without a valid time."
 	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
-	local newBar = "New timer for '%q' with a placement of %d and a timer of %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
+	local newBar = "New timer for '%q' at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 
 	--- Display a bar.
 	-- @param key the option key
@@ -1963,7 +1963,7 @@ do
 			else
 				local t, c = GetTime(), #self.missing[key]
 				local new = t - self.missing[key][c]
-				core:Print(format(newBar, key, c, new, self:Difficulty()))
+				core:Print(format(newBar, key, self.stage or 0, c, new, self:Difficulty()))
 				self.missing[key][c+1] = t
 			end
 			return
@@ -2001,7 +2001,7 @@ do
 			else
 				local t, c = GetTime(), #self.missing[key]
 				local new = t - self.missing[key][c]
-				core:Print(format(newBar, key, c, new, self:Difficulty()))
+				core:Print(format(newBar, key, self.stage or 0, c, new, self:Difficulty()))
 				self.missing[key][c+1] = t
 			end
 			return

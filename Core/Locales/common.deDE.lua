@@ -21,8 +21,8 @@ L.duration = "%s für %s sec"
 L.focus_only = "|cffff0000Warnungen nur für Fokusziel.|r "
 L.general = "Allgemein" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.heroic = "Heroischer Modus"
-L.incoming = "%s bevorstehend"
-L.intermission = "Unterbrechung"
+L.incoming = "%s steht bevor"
+L.intermission = "Zwischenphase"
 L.interrupted = "%s unterbrochen"
 L.interrupted_by = "%s wurde von %s unterbrochen" -- spell interrupted by player
 L.mob_killed = "%s getötet (%d/%d)"
@@ -43,7 +43,7 @@ L.removed_from = "%s wurde von %s entfernt"
 L.removed_by = "%s wurde durch %s entfernt" -- spell removed by player
 L.small_adds = "Kleine Adds"
 L.soon = "%s bald"
-L.spawned = "%s Erschienen"
+L.spawned = "%s erschienen"
 L.spawning = "%s entsteht"
 L.stack = "%dx %s auf %s"
 L.stackyou = "%dx %s auf DIR"
@@ -57,8 +57,8 @@ L.active = "Aktiv" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
 L.marker = "%s markieren"
-L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s, benötigt Leiter oder Assistent."
-L.marker_npc_desc = "Markiert %s mit %s, benötigt Leiter oder Assistent."
+L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s. Benötigt Leiter oder Assistent."
+L.marker_npc_desc = "Markiert %s mit %s. Benötigt Leiter oder Assistent."
 
 -- Ability where two players have to move close to each other
 L.link = "Verbunden mit %s"

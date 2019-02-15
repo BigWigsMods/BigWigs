@@ -275,6 +275,14 @@ L.iconPosition = "图标位置"
 L.iconPositionDesc = "选择计时条上图标的位置。"
 L.visibleBarLimit = "可视条限制"
 L.visibleBarLimitDesc = "设定同时可见最大条的数量。"
+--L.textDesc = "Whether to show or hide the text displayed on the bars."
+
+-----------------------------------------------------------------------
+-- BossBlock.lua
+--
+
+--L.disableSfx = "Disable sound effects"
+--L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 
 -----------------------------------------------------------------------
 -- Colors.lua

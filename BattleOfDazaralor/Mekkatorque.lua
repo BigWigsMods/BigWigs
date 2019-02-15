@@ -19,6 +19,7 @@ mod.respawnTime = 33
 --
 
 local stage = 1
+mod.stage = stage
 local cannonCount = 1
 local blastCount = 1
 local chargeCount = 1
@@ -124,7 +125,7 @@ local mythicTimers = {
 
 	-- "SPELL_CAST_START", "WorldEnlarger", 286693, 288041, 289537
 	[286693] = {
-		[1] = {75.0, 90.0},
+		[1] = {75.0, 90.0, 90.0},
 		[2] = {7.8, 31.0},
 		[3] = {75.8, 90.0, 90.0},
 	},
@@ -207,6 +208,7 @@ end
 
 function mod:OnEngage()
 	stage = 1
+	self.stage = stage
 	cannonCount = 1
 	blastCount = 1
 	chargeCount = 1
@@ -220,12 +222,12 @@ function mod:OnEngage()
 	-- local timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or self:Normal() and normalTimers or lfrTimers
 	timers = self:Mythic() and mythicTimers or heroicTimers
 
-	self:Bar(288410, timers[288410][1][sparkBotCount], CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
-	self:Bar(282153, timers[282153][1][cannonCount], CL.count:format(self:SpellName(282153), cannonCount)) -- Buster Cannon
-	self:Bar(286646, timers[286646][1][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
-	self:Bar(287952, timers[287952][1][wormholeCount], CL.count:format(self:SpellName(287952), wormholeCount)) -- Wormhole Generator
-	self:Bar(282205, timers[282205][1][blastCount], CL.count:format(self:SpellName(282205), blastCount)) -- Blast Off
-	self:Bar(286693, timers[286693][1][enlargerCount], CL.count:format(self:SpellName(286693), enlargerCount)) -- World Enlarger
+	self:Bar(288410, timers[288410][stage][sparkBotCount], CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
+	self:Bar(282153, timers[282153][stage][cannonCount], CL.count:format(self:SpellName(282153), cannonCount)) -- Buster Cannon
+	self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
+	self:Bar(287952, timers[287952][stage][wormholeCount], CL.count:format(self:SpellName(287952), wormholeCount)) -- Wormhole Generator
+	self:Bar(282205, timers[282205][stage][blastCount], CL.count:format(self:SpellName(282205), blastCount)) -- Blast Off
+	self:Bar(286693, timers[286693][stage][enlargerCount], CL.count:format(self:SpellName(286693), enlargerCount)) -- World Enlarger
 
 	if self:GetOption("custom_off_sparkbot_marker") then
 		self:RegisterTargetEvents("sparkBotMark")
@@ -261,24 +263,24 @@ end
 
 function mod:GigavoltCharge(args)
 	chargeCount = chargeCount + 1
-	self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(args.spellName, chargeCount))
+	self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount))
 end
 
 do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:GigavoltChargeApplied(args)
-		local playerIconsCount = #playerIcons+1
-		playerList[#playerList+1] = args.destName
-		playerIcons[playerIconsCount] = playerIconsCount
+		local playerListCount = #playerList+1
+		playerList[playerListCount] = args.destName
+		playerIcons[playerListCount] = playerListCount
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, playerIconsCount, playerIconsCount))
+			self:Say(args.spellId, CL.count_rticon:format(L.gigavolt_alt_text, playerListCount, playerListCount))
 			self:SayCountdown(args.spellId, 15)
 			self:TargetBar(args.spellId, 15, args.destName, L.gigavolt_alt_text)
 		end
 		if self:GetOption(gigavoltChargeMarker) then
-			SetRaidTarget(args.destName, playerIconsCount)
+			SetRaidTarget(args.destName, playerListCount)
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.gigavolt_alt_text, nil, nil, playerIcons)
 	end
@@ -369,6 +371,7 @@ end
 
 function mod:EvasiveManeuvers(args)
 	stage = 2
+	self.stage = stage
 	self:Message2("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 	self:StopBar(CL.count:format(self:SpellName(282153), cannonCount)) -- Buster Cannon
@@ -387,18 +390,19 @@ function mod:EvasiveManeuvers(args)
 	sheepCount = 1
 
 	if not self:Mythic() then
-		self:Bar(286646, timers[286646][2][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
+		self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
 	end
-	self:Bar(287952, timers[287952][2][wormholeCount], CL.count:format(self:SpellName(287952), wormholeCount)) -- Wormhole Generator
-	self:Bar(288410, timers[288410][2][sparkBotCount], CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
-	self:Bar(286693, timers[286693][2][enlargerCount], CL.count:format(self:SpellName(286693), enlargerCount)) -- World Enlarger
-	self:Bar(287929, timers[287929][2][sheepCount], CL.count:format(self:SpellName(287929), sheepCount)) -- Signal Exploding Sheep
+	self:Bar(287952, timers[287952][stage][wormholeCount], CL.count:format(self:SpellName(287952), wormholeCount)) -- Wormhole Generator
+	self:Bar(288410, timers[288410][stage][sparkBotCount], CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
+	self:Bar(286693, timers[286693][stage][enlargerCount], CL.count:format(self:SpellName(286693), enlargerCount)) -- World Enlarger
+	self:Bar(287929, timers[287929][stage][sheepCount], CL.count:format(self:SpellName(287929), sheepCount)) -- Signal Exploding Sheep
 	self:CDBar("stages", 65, 287797) -- Crash Down
 end
 
 function mod:CrashDown(args)
 	stage = 3
-	self:Message2("stages", "cyan", CL.stage:format(3), false)
+	self.stage = stage
+	self:Message2("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 	self:StopBar(CL.count:format(self:SpellName(282153), cannonCount)) -- Buster Cannon
 	self:StopBar(CL.count:format(self:SpellName(282205), blastCount)) -- Blast Off
@@ -416,13 +420,13 @@ function mod:CrashDown(args)
 	enlargerCount = 1
 	sheepCount = 1
 
-	self:Bar(282153, timers[282153][3][cannonCount], CL.count:format(self:SpellName(282153), cannonCount)) -- Buster Cannon
-	self:Bar(282205, timers[282205][3][blastCount], CL.count:format(self:SpellName(282205), blastCount)) -- Blast Off
-	self:Bar(286646, timers[286646][3][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
-	self:Bar(287952, timers[287952][3][wormholeCount], CL.count:format(self:SpellName(287952), wormholeCount)) -- Wormhole Generator
-	self:Bar(288410, timers[288410][3][sparkBotCount], CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
-	self:Bar(286693, timers[286693][3][enlargerCount], CL.count:format(self:SpellName(286693), enlargerCount)) -- World Enlarger
-	self:Bar(287929, timers[287929][3][sheepCount], CL.count:format(self:SpellName(287929), sheepCount)) -- Signal Exploding Sheep
+	self:Bar(282153, timers[282153][stage][cannonCount], CL.count:format(self:SpellName(282153), cannonCount)) -- Buster Cannon
+	self:Bar(282205, timers[282205][stage][blastCount], CL.count:format(self:SpellName(282205), blastCount)) -- Blast Off
+	self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
+	self:Bar(287952, timers[287952][stage][wormholeCount], CL.count:format(self:SpellName(287952), wormholeCount)) -- Wormhole Generator
+	self:Bar(288410, timers[288410][stage][sparkBotCount], CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
+	self:Bar(286693, timers[286693][stage][enlargerCount], CL.count:format(self:SpellName(286693), enlargerCount)) -- World Enlarger
+	self:Bar(287929, timers[287929][stage][sheepCount], CL.count:format(self:SpellName(287929), sheepCount)) -- Signal Exploding Sheep
 end
 
 function mod:SignalExplodingSheep(args)

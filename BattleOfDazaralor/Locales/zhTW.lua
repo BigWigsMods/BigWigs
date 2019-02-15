@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhTW")
 if not L then return end
 if L then
+	L.enforcer = "永生執法者"
 	L.punisher = "拉斯塔瑞懲戒者"
 	L.vessel = "伯昂薩姆第的容器"
 
@@ -64,7 +65,7 @@ end
 
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "zhTW")
 if L then
-	L.killed = "%s%已擊殺！"
+	L.killed = "%s已擊殺！"
 	L.count_of = "%s（%d／%d）"
 end
 
@@ -74,36 +75,34 @@ if L then
 
 	L.custom_off_sparkbot_marker = "火花機器人標記"
 	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 標記火花機器人，需要權限。"
+
+	L.custom_off_repeating_shrunk_say = "重覆縮小喊話" -- Shrunk = 284168
+	L.custom_off_repeating_shrunk_say_desc = "當你受到|cff71d5ff[縮小]|r時每秒重覆喊話，也許其他人能因此停止踩踏你。"
+
+	L.custom_off_repeating_tampering_say = "重覆干涉喊話" -- Tampering = 286105
+	L.custom_off_repeating_tampering_say_desc = "當你控制機器人時，每秒重覆喊話自己的名字。注意：啟用這項功能可能使對話泡泡遮擋火花機器人標記或關機密碼。"
 end
 
 L = BigWigs:NewBossLocale("Stormwall Blockade", "zhTW")
 if L then
-	L.killed = "%s%已擊殺！"
+	L.killed = "%s已擊殺！"
 
 	L.custom_on_fade_out_bars = "淡出第一階段計時條"
 	L.custom_on_fade_out_bars_desc = "第一階段時，淡出另一條船上的首領技能計時條。"
-
-	--L.custom_off_repeating_shrunk_say = "Repeating Shrunk Say" -- Shrunk = 284168
-	--L.custom_off_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
-
-	--L.custom_off_repeating_tampering_say = "Repeating Tampering Say" -- Tampering = 286105
-	--L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
 end
 
 L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "zhTW")
 if L then
-	--L.starbord_ship_emote = "A Kul Tiran Corsair approaches on the starboard side!"
-	--L.port_side_ship_emote = "A Kul Tiran Corsair approaches on the port side!"
+	L.starbord_ship_emote = "有庫爾提拉斯海寇靠近右舷了！"
+	L.port_side_ship_emote = "有個庫爾提拉斯海寇靠近碼頭了！"
 
-	--L.starbord_txt = "Right Ship" -- starboard
-	--L.port_side_txt = "Left Ship" -- port
+	L.starbord_txt = "右側船來襲" -- starboard
+	L.port_side_txt = "左側船來襲" -- port
 
-	--L.ship_icon = "inv_garrison_cargoship"
+	L.custom_on_stop_timers = "總是顯示計時器"
+	L.custom_on_stop_timers_desc = "珍娜會在下一次施放技能時隨機施放已經冷卻完畢的技能。啟用此選項後，這些技能的計時條會保持顯示。"
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.frozenblood_player = "%s（%d人）"
 
-	--L.frozenblood_player = "%s (%d players)"
-
-	--L.intermission_stage2 = "Stage 2 - %.1f sec"
+	L.intermission_stage2 = "階段二：%.1f秒"
 end
