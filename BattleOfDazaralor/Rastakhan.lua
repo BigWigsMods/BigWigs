@@ -72,7 +72,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DeathsPresence", 284376)
 	self:Log("SPELL_AURA_APPLIED", "DeathlyWithering", 285195)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DeathlyWithering", 285195)
-	self:Log("SPELL_AURA_REMOVED", "DeathlyWithering", 285195)
+	self:Log("SPELL_AURA_REMOVED", "DeathlyWitheringRemoved", 285195)
 	self:Log("SPELL_CAST_SUCCESS", "PlagueofFire", 285346)
 	self:Log("SPELL_AURA_APPLIED", "PlagueofFireApplied", 285349)
 	self:Log("SPELL_CAST_SUCCESS", "ZombieDustTotem", 285003)
@@ -225,6 +225,11 @@ end
 
 function mod:DeathlyWithering(args)
 	deathlyWitheringList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, deathlyWitheringList)
+end
+
+function mod:DeathlyWitheringRemoved(args)
+	deathlyWitheringList[args.destName] = nil
 	self:SetInfoByTable(args.spellId, deathlyWitheringList)
 end
 
