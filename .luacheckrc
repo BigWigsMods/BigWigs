@@ -121,6 +121,7 @@ globals = {
 	"CombatLogGetCurrentEventInfo",
 	"CombatLog_String_GetIcon",
 	"CreateFrame",
+	"C_CVar",
 	"C_Scenario",
 	"C_Spell",
 	"C_Timer",
