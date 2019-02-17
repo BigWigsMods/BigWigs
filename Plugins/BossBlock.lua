@@ -25,6 +25,7 @@ plugin.defaultDB = {
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
+local SetCVar = C_CVar and C_CVar.SetCVar or SetCVar -- XXX 8.1.5 compat
 
 -------------------------------------------------------------------------------
 -- Options
@@ -105,7 +106,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
 
 	if self.db.profile.disableSfx then
-		SetCVar("Sound_EnableSFX", 1) -- Enable this every time we load just in case some kind of DC during the fight left it disabled
+		SetCVar("Sound_EnableSFX", "1") -- Enable this every time we load just in case some kind of DC during the fight left it disabled
 	end
 
 	if IsEncounterInProgress() then -- Just assume we logged into an encounter after a DC
@@ -157,7 +158,7 @@ do
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
 		if self.db.profile.disableSfx then
-			SetCVar("Sound_EnableSFX", 0)
+			SetCVar("Sound_EnableSFX", "0")
 		end
 	end
 
@@ -179,7 +180,7 @@ do
 			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
 		if self.db.profile.disableSfx then
-			SetCVar("Sound_EnableSFX", 1)
+			SetCVar("Sound_EnableSFX", "1")
 		end
 	end
 end
