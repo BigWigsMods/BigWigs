@@ -71,6 +71,8 @@ end
 
 L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "zhCN")
 if L then
+	L.seconds = "%.1f秒"
+
 	L.gigavolt_alt_text = "炸弹"
 
 	L.custom_off_sparkbot_marker = "火花机器人标记"
