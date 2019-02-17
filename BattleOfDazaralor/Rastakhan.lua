@@ -17,6 +17,7 @@ local stage = 1
 local toadCount = 1
 local zombieDustTotemCount = 1
 local detonationCount = 1
+local doorCount = 1
 local deathlyWitheringList = {}
 
 --------------------------------------------------------------------------------
@@ -90,6 +91,7 @@ function mod:OnEngage()
 	zombieDustTotemCount = 1
 	stage = 1
 	detonationCount = 1
+	doorCount = 1
 	deathlyWitheringList = {}
 
 	self:Bar(284781, 8.5) -- Grievous Axe
@@ -112,7 +114,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 
 		self:StopBar(284933, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
 		self:StopBar(285213) -- Caress of Death
-		self:StopBar(288449) -- Death's Door
+		self:StopBar(CL.count:format(self:SpellName(288449), doorCount)) -- Death's Door
 		self:StopBar(CL.count:format(self:SpellName(285003), zombieDustTotemCount)) -- Zombie Dust Totem
 
 		self:CDBar(286742, 28.5) -- Necrotic Smash
@@ -219,7 +221,7 @@ function mod:DeathsPresence(args)
 		self:Bar(284831, 27.3) -- Scorching Detonation
 		self:Bar(285346, 35) -- Plague of Fire
 		self:Bar(284933, 41, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
-		self:Bar(288449, 43.8) -- Death's Door
+		self:Bar(288449, 43.8, CL.count:format(self:SpellName(288449), doorCount)) -- Death's Door
 	end
 end
 
@@ -261,7 +263,8 @@ function mod:CaressofDeath(args)
 end
 
 function mod:DeathsDoor(args)
-	self:CDBar(args.spellId, stage == 4 and 20 or 28)
+	doorCount = doorCount + 1
+	self:CDBar(args.spellId, stage == 4 and 20 or 28, CL.count:format(args.spellName, doorCount))
 end
 
 function mod:DeathsDoorApplied(args)
