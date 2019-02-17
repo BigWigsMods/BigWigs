@@ -17,6 +17,7 @@ local stage = 1
 local toadCount = 1
 local zombieDustTotemCount = 1
 local detonationCount = 1
+local deathlyWitheringList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,6 +44,7 @@ function mod:GetOptions()
 		284719, -- Crushing Leap
 		284781, -- Grievous Axe
 		-- Stage 2
+		{285195, "INFOBOX"}, -- Deathly Withering
 		{285346, "SAY"}, -- Plague of Fire
 		285003, -- Zombie Dust Totem
 		{285213, "TANK_HEALER"}, -- Caress of Death
@@ -68,6 +70,9 @@ function mod:OnBossEnable()
 
 	-- Stage 2
 	self:Log("SPELL_AURA_APPLIED", "DeathsPresence", 284376)
+	self:Log("SPELL_AURA_APPLIED", "DeathlyWithering", 285195)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "DeathlyWithering", 285195)
+	self:Log("SPELL_AURA_REMOVED", "DeathlyWithering", 285195)
 	self:Log("SPELL_CAST_SUCCESS", "PlagueofFire", 285346)
 	self:Log("SPELL_AURA_APPLIED", "PlagueofFireApplied", 285349)
 	self:Log("SPELL_CAST_SUCCESS", "ZombieDustTotem", 285003)
@@ -85,6 +90,7 @@ function mod:OnEngage()
 	zombieDustTotemCount = 1
 	stage = 1
 	detonationCount = 1
+	deathlyWitheringList = {}
 
 	self:Bar(284781, 8.5) -- Grievous Axe
 	self:Bar(290450, 8.5) -- Seal of Purification
@@ -114,6 +120,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	elseif spellId == 290852 then -- King Rastakhan P3 -> P4 Conversation
 		stage = 4
 		toadCount = 1
+		self:CloseInfo(285195) -- Deathly Withering
+
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
 
@@ -205,6 +213,7 @@ function mod:DeathsPresence(args)
 		self:StopBar(284831) -- Scorching Detonation
 		self:StopBar(285172) -- Greater Serpent Totem
 
+		self:OpenInfo(285195, self:SpellName(285195)) -- Deathly Withering
 		self:Bar(285003, 19, CL.count:format(self:SpellName(285003), zombieDustTotemCount)) -- Zombie Dust Totem
 		self:Bar(285213, 24.3) -- Caress of Death
 		self:Bar(284831, 27.3) -- Scorching Detonation
@@ -212,6 +221,11 @@ function mod:DeathsPresence(args)
 		self:Bar(284933, 41, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
 		self:Bar(288449, 43.8) -- Death's Door
 	end
+end
+
+function mod:DeathlyWithering(args)
+	deathlyWitheringList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, deathlyWitheringList)
 end
 
 function mod:PlagueofFire(args)
