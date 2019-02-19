@@ -3,8 +3,8 @@
 
 <Script file="Cabal.lua"/>
 <Script file="Uunat.lua"/>
-<!--
-<Include file="Locales\locales.xml"/>
+
+<!--<Include file="Locales\locales.xml"/>-->
 <Include file="Options\options.xml"/>
--->
+
 </Ui>
