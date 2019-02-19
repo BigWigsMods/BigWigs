@@ -75,7 +75,7 @@ function mod:GetOptions()
 		284424, -- Scorching Ground
 		284493, -- Pulse-quickening Toxin
 		284519, -- Quickened Pulse
-		284470, -- Hex of Lethargy
+		{284470, "ME_ONLY_EMPHASIZE"}, -- Hex of Lethargy
 		hexOfLethargyMarker,
 		-- Stage 2
 		287070, -- Hoard Power
@@ -514,9 +514,7 @@ do
 		if self:GetOption(hexOfLethargyMarker) then
 			SetRaidTarget(args.destName, hexCounter)
 		end
-		if self:Healer() then
-			self:TargetsMessage(args.spellId, "orange", playerList, 2, nil, nil, nil, playerIcons)
-		end
+		self:TargetsMessage(args.spellId, "orange", playerList, 2, nil, nil, nil, playerIcons)
 	end
 
 	function mod:HexOfLethargyRemoved(args)
