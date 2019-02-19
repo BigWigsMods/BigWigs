@@ -1,12 +1,10 @@
-if not IsTestBuild() then return end
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod, CL = BigWigs:NewBoss("The Restless Cabal", 2096, 2328)
 if not mod then return end
-mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(146497, 146495) -- Zaxasj the Speaker, Fa'thuul the Feared
 mod.engageId = 2269
 --mod.respawnTime = 31
 
