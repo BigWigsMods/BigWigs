@@ -30,6 +30,7 @@ local sheepCount = 1
 local botMarkCount = 0
 local shrunkCount = 0
 local tamperCount = 0
+local shrunkList, tamperingList = {}, {}
 local mobCollector = {}
 
 local lfrTimers = { -- XXX add me
@@ -154,12 +155,12 @@ if L then
 	L.custom_off_sparkbot_marker = "Spark Bot Marker"
 	L.custom_off_sparkbot_marker_desc = "Mark Spark Bots with {rt4}{rt5}{rt6}{rt7}{rt8}."
 
-	L.custom_off_repeating_shrunk_say = "Repeating Shrunk Say"
-	L.custom_off_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
-	L.custom_off_repeating_shrunk_say_icon = 284168
+	L.custom_on_repeating_shrunk_say = "Repeating Shrunk Say"
+	L.custom_on_repeating_shrunk_say_desc = "Spam the word 'Shrunk' in say chat while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over if they see the chat bubble."
+	L.custom_on_repeating_shrunk_say_icon = 284168
 
 	L.custom_off_repeating_tampering_say = "Repeating Tampering Say"
-	L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
+	L.custom_off_repeating_tampering_say_desc = "Spam your name in say chat while you're controlling a robot."
 	L.custom_off_repeating_tampering_say_icon = 286105
 end
 
@@ -181,7 +182,7 @@ function mod:GetOptions()
 		"custom_off_sparkbot_marker",
 		286693, -- World Enlarger
 		{284168, "INFOBOX"}, -- Shrunk
-		"custom_off_repeating_shrunk_say",
+		"custom_on_repeating_shrunk_say",
 		"custom_off_repeating_tampering_say",
 		-- Intermission
 		287929, -- Signal Exploding Sheep
@@ -221,7 +222,8 @@ function mod:OnEngage()
 	botMarkCount = 0
 	shrunkCount = 0
 	tamperCount = 0
-	wipe(mobCollector)
+	shrunkList, tamperingList = {}, {}
+	mobCollector = {}
 
 	-- local timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or self:Normal() and normalTimers or lfrTimers
 	timers = self:Mythic() and mythicTimers or heroicTimers
@@ -333,25 +335,21 @@ function mod:WorldEnlarger(args)
 end
 
 do
-	local shrunkTimer, tamperTimer, shrunkList, tamperingList, scheduled  = nil, nil, {}, {}, nil
-	function mod:UpdateShrunkBox()
-		if scheduled then
-			self:CancelTimer(scheduled)
-			scheduled = nil
-		end
+	local shrunkTimer, tamperTimer = nil, nil
+	local function UpdateShrunkBox()
 		if shrunkCount == 0 and tamperCount == 0 then
-			self:CloseInfo(284168)
+			mod:CloseInfo(284168)
 		else
-			self:OpenInfo(284168, mod:SpellName(284168))
+			mod:SimpleTimer(UpdateShrunkBox, 0.1)
 			local lines = 0
 			for name, expires in pairs(tamperingList) do
 				lines = lines + 1
 				if lines < 6 then -- room for 5 in infobox
 					local timeLeft = math.max(expires - GetTime(), 0)
-					local timeLeftPercentage = timeLeft / (self:Mythic() and 30 or 45)
-					self:SetInfo(284168, (lines*2) - 1, "|T134520:15:15:0:0:64:64:4:60:4:60|t "..self:ColorName(name)) -- 134520 = inv_misc_wrench_01
-					self:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
-					self:SetInfoBar(284168, (lines*2), timeLeftPercentage, .3, 1, .3, .67)
+					local timeLeftPercentage = timeLeft / (mod:Mythic() and 30 or 45)
+					mod:SetInfo(284168, (lines*2) - 1, "|T134520:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 134520 = inv_misc_wrench_01
+					mod:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
+					mod:SetInfoBar(284168, (lines*2), timeLeftPercentage, .3, 1, .3, .67)
 				end
 			end
 
@@ -360,14 +358,10 @@ do
 				if lines < 6 then -- room for 5 in infobox
 					local timeLeft = math.max(expires - GetTime(), 0)
 					local timeLeftPercentage = timeLeft / 30
-					self:SetInfo(284168, (lines*2) - 1, "|T236446:15:15:0:0:64:64:4:60:4:60|t "..self:ColorName(name)) -- 236446 = achievement_character_gnome_male
-					self:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
-					self:SetInfoBar(284168, (lines*2), timeLeftPercentage, .48, .48, .48, .67)
+					mod:SetInfo(284168, (lines*2) - 1, "|T236446:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 236446 = achievement_character_gnome_male
+					mod:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
+					mod:SetInfoBar(284168, (lines*2), timeLeftPercentage, .48, .48, .48, .67)
 				end
-			end
-
-			if not scheduled then
-				scheduled = self:ScheduleTimer("UpdateShrunkBox", 0.1)
 			end
 		end
 	end
@@ -376,7 +370,7 @@ do
 		if self:Me(args.destGUID) then
 			self:TargetMessage2(args.spellId, "blue", args.destName)
 			self:PlaySound(args.spellId, "alert")
-			if not shrunkTimer and self:GetOption("custom_off_repeating_shrunk_say") then
+			if not shrunkTimer and self:GetOption("custom_on_repeating_shrunk_say") and not self:LFR() then
 				SendChatMessage(args.spellName, "SAY")
 				shrunkTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, args.spellName, "SAY")
 			end
@@ -384,7 +378,10 @@ do
 
 		shrunkCount = shrunkCount + 1
 		shrunkList[args.destName] = GetTime() + 30
-		self:UpdateShrunkBox()
+		if shrunkCount == 1 and tamperCount == 0 then -- First application
+			self:OpenInfo(284168, self:SpellName(284168))
+			UpdateShrunkBox()
+		else
 	end
 
 	function mod:ShrunkRemoved(args)
@@ -395,9 +392,7 @@ do
 
 		shrunkCount = shrunkCount - 1
 		shrunkList[args.destName] = nil
-		self:UpdateShrunkBox()
 	end
-
 
 	function mod:TamperingApplied(args)
 		if self:Me(args.destGUID) then
@@ -408,7 +403,10 @@ do
 		end
 		tamperCount = tamperCount + 1
 		tamperingList[args.destName] = GetTime() + (self:Mythic() and 30 or 45)
-		self:UpdateShrunkBox()
+		if shrunkCount == 0 and tamperCount == 1 then -- First application
+			self:OpenInfo(284168, self:SpellName(284168))
+			UpdateShrunkBox()
+		else
 	end
 
 	function mod:TamperingRemoved(args)
@@ -418,7 +416,6 @@ do
 		end
 		tamperCount = tamperCount - 1
 		tamperingList[args.destName] = nil
-		self:UpdateShrunkBox()
 	end
 end
 
