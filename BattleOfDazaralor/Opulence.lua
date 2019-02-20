@@ -646,14 +646,14 @@ function mod:CoinShowerApplied(args)
 	self:TargetBar(args.spellId, 10, args.destName)
 	self:CDBar(args.spellId, 30.5)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 10)
+		self:Yell2(args.spellId)
+		self:YellCountdown(args.spellId, 10)
 	end
 end
 
 function mod:CoinShowerRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelYellCountdown(args.spellId)
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:StopBar(args.spellId, args.destName)
