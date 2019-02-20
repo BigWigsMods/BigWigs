@@ -21,15 +21,6 @@ local doorCount = 1
 local deathlyWitheringList = {}
 
 --------------------------------------------------------------------------------
--- Localization
---
-
---local L = mod:GetLocale()
---if L then
---
---end
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -49,7 +40,7 @@ function mod:GetOptions()
 		{285346, "SAY"}, -- Plague of Fire
 		285003, -- Zombie Dust Totem
 		{285213, "TANK_HEALER"}, -- Caress of Death
-		{288449, "SAY", "SAY_COUNTDOWN"}, -- Death's Door
+		{288449, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Death's Door
 		-- Stage 3
 		287333, -- Inevitable End
 		286742, -- Necrotic Smash
@@ -118,6 +109,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		self:StopBar(CL.count:format(self:SpellName(285003), zombieDustTotemCount)) -- Zombie Dust Totem
 
 		self:CDBar(286742, 28.5) -- Necrotic Smash
+		self:Bar(285346, 48) -- Plague of Fire
 		self:CDBar(287333, 44) -- Inevitable End
 	elseif spellId == 290852 then -- King Rastakhan P3 -> P4 Conversation
 		stage = 4
@@ -238,7 +230,7 @@ end
 function mod:PlagueofFire(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, 25.5)
+	self:Bar(args.spellId, stage == 3 and 39 or 25.5)
 end
 
 function mod:PlagueofFireApplied(args)
@@ -270,6 +262,7 @@ end
 function mod:DeathsDoorApplied(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
+		self:Flash(args.spellId)
 		self:SayCountdown(args.spellId, 8)
 	end
 	self:TargetMessage2(args.spellId, "orange", args.destName)
