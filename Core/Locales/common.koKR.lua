@@ -77,6 +77,7 @@ L.link_both = "%s|1과;와; %s|1이;가; 연결됨"
 L.link_removed = "연결 사라짐"
 
 -- Abbreviated numbers
-L.amount_one = "%.2f억"
-L.amount_two = "%.1f만"
-L.amount_three = "%d천"
+L.amount_one = "%.2f억" -- Billions 1,000,000,000
+L.amount_two = "%.1f만" -- Millions 1,000,000
+L.amount_three = "%d천" -- Thousands 1,000
+L.seconds = "%.1f초" -- 1.1 seconds

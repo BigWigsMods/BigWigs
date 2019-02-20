@@ -33,7 +33,6 @@ local L = mod:GetLocale()
 if L then
 	L.room = "Room (%d/8)"
 	L.no_jewel = "No Jewel:"
-	L.seconds = "%.1fs"
 
 	L.swap = 161399 -- Swap (replacement for Chaotic Displacement)
 
@@ -75,7 +74,7 @@ function mod:GetOptions()
 		284424, -- Scorching Ground
 		284493, -- Pulse-quickening Toxin
 		284519, -- Quickened Pulse
-		284470, -- Hex of Lethargy
+		{284470, "ME_ONLY_EMPHASIZE"}, -- Hex of Lethargy
 		hexOfLethargyMarker,
 		-- Stage 2
 		287070, -- Hoard Power
@@ -345,7 +344,7 @@ do
 			local timeLeft = math.max(expires - GetTime(), 0)
 			local timeLeftPercentage = timeLeft / 20
 			self:SetInfo(284645, (lines*2) - 1, self:ColorName(name))
-			self:SetInfo(284645, (lines*2), L.seconds:format(timeLeft))
+			self:SetInfo(284645, (lines*2), CL.seconds:format(timeLeft))
 			self:SetInfoBar(284645, (lines*2), timeLeftPercentage, .46, 1, 0, .67)
 			if not scheduled then
 				scheduled = self:ScheduleTimer("UpdateTopazInfoBox", 0.1)
@@ -514,9 +513,7 @@ do
 		if self:GetOption(hexOfLethargyMarker) then
 			SetRaidTarget(args.destName, hexCounter)
 		end
-		if self:Healer() then
-			self:TargetsMessage(args.spellId, "orange", playerList, 2, nil, nil, nil, playerIcons)
-		end
+		self:TargetsMessage(args.spellId, "orange", playerList, 2, nil, nil, nil, playerIcons)
 	end
 
 	function mod:HexOfLethargyRemoved(args)
@@ -649,14 +646,14 @@ function mod:CoinShowerApplied(args)
 	self:TargetBar(args.spellId, 10, args.destName)
 	self:CDBar(args.spellId, 30.5)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 10)
+		self:Yell2(args.spellId)
+		self:YellCountdown(args.spellId, 10)
 	end
 end
 
 function mod:CoinShowerRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelYellCountdown(args.spellId)
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:StopBar(args.spellId, args.destName)

@@ -67,6 +67,7 @@ L.link_both = "%s связан с %s"
 L.link_removed = "Связь прервана"
 
 -- Abbreviated numbers
-L.amount_one = "%dB"
-L.amount_two = "%dM"
-L.amount_three = "%dK"
+L.amount_one = "%dB" -- Billions 1,000,000,000
+L.amount_two = "%dM" -- Millions 1,000,000
+L.amount_three = "%dK" -- Thousands 1,000
+L.seconds = "%.1fс" -- 1.1 seconds

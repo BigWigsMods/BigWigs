@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "deDE")
 if not L then return end
 if L then
+	L.flamespeaker = "Flammensprecher der Rastari"
 	L.enforcer = "Ewiger Vollstrecker"
 	L.punisher = "Bestrafer der Rastari"
 	L.vessel = "Gefäß für Bwonsamdi"
@@ -48,7 +49,6 @@ L = BigWigs:NewBossLocale("Opulence", "deDE")
 if L then
 	L.room = "Raum (%d/8)"
 	L.no_jewel = "Kein Juwel:"
-	L.seconds = "%.1fs"
 
 	L.custom_on_fade_out_bars = "Blende Leisten für Phase 1 aus."
 	L.custom_on_fade_out_bars_desc = "Blende Leisten aus, welche zu dem Konstrukt gehören, das während Phase 1 nicht in deinem Gang ist."

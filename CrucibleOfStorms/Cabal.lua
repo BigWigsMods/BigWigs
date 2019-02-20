@@ -1,12 +1,10 @@
-if not IsTestBuild() then return end
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod, CL = BigWigs:NewBoss("The Restless Cabal", 2096, 2328)
 if not mod then return end
-mod:RegisterEnableMob(0)
+mod:RegisterEnableMob(146497, 146495) -- Zaxasj the Speaker, Fa'thuul the Feared
 mod.engageId = 2269
 --mod.respawnTime = 31
 
@@ -48,7 +46,7 @@ function mod:GetOptions()
 		282562, -- Promises of Power
 		282517, -- Terrifying Echo
 		-- Fa'thuul the Feared
-		{282384, "TANK"}, -- Shear Mind
+		{282384, "TANK", "SAY", "SAY_COUNTDOWN"}, -- Shear Mind
 		282407, -- Void Crash
 		{282432, "SAY", "SAY_COUNTDOWN"}, -- Crushing Doubt
 		crushingDoubtMarker,
@@ -59,10 +57,10 @@ end
 function mod:OnBossEnable()
 
 	-- Relics of Power
-	self:Log("SPELL_CAST_SUCCES", "EmbraceoftheVoid", 282738)
+	self:Log("SPELL_AURA_APPLIED", "EmbraceoftheVoidApplied", 282738)
 	self:Log("SPELL_AURA_REMOVED", "UmbralShellRemoved", 282741)
-	self:Log("SPELL_CAST_SUCCES", "CustodyoftheDeep", 282750)
-	self:Log("SPELL_CAST_SUCCES", "StormofAnnihilation", 282750)
+	self:Log("SPELL_CAST_SUCCESS", "CustodyoftheDeep", 282750)
+	self:Log("SPELL_CAST_SUCCESS", "StormofAnnihilation", 282742)
 	self:Log("SPELL_AURA_APPLIED", "PowerOverwhelming", 282914)
 	self:Log("SPELL_CAST_START", "PactoftheRestless", 282675)
 
@@ -72,18 +70,18 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REFRESH", "AphoticBlastRefresh", 282386)
 	self:Log("SPELL_AURA_APPLIED", "AgentofDemise", 282540)
 	self:Log("SPELL_CAST_START", "CerebralAssault", 282589)
-	self:Log("SPELL_AURA_APPLIED", "DarkHeraldApplied", 282561)
+	self:Log("SPELL_AURA_APPLIED", "DarkHerald", 282561)
 	self:Log("SPELL_AURA_REMOVED", "DarkHeraldRemoved", 282561)
 	self:Log("SPELL_AURA_APPLIED", "PromisesofPower", 282562)
 	self:Log("SPELL_CAST_START", "TerrifyingEcho", 282517)
 
 	-- Fa'thuul the Feared
-	--self:Log("SPELL_CAST_SUCCES", "ShearMind", 282384)
+	--self:Log("SPELL_CAST_SUCCESS", "ShearMind", 282384)
 	self:Log("SPELL_AURA_APPLIED", "ShearMindApplied", 282384)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShearMindApplied", 282384)
 	self:Log("SPELL_CAST_START", "VoidCrash", 282407)
-	self:Log("SPELL_AURA_APPLIED", "CrushingDoubtApplied", 282384)
-	self:Log("SPELL_AURA_REMOVED", "CrushingDoubtRemoved", 282384)
+	self:Log("SPELL_AURA_APPLIED", "CrushingDoubtApplied", 282432)
+	self:Log("SPELL_AURA_REMOVED", "CrushingDoubtRemoved", 282432)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 287876) -- Enveloping Darkness
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 287876)
@@ -214,7 +212,7 @@ function mod:ShearMindApplied(args)
 	self:PlaySound(args.spellId, "alert", nil, args.destName)
 end
 
-function mod:TerrifyingEcho(args)
+function mod:VoidCrash(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 end

@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhCN")
 if not L then return end
 if L then
+	L.flamespeaker = "拉斯塔利火语者"
 	L.enforcer = "永恒执行者"
 	L.punisher = "拉斯塔利惩罚者"
 	L.vessel = "邦桑迪的使者"
@@ -49,7 +50,6 @@ L = BigWigs:NewBossLocale("Opulence", "zhCN")
 if L then
 	L.room = "房间（%d/8）"
 	L.no_jewel = "没有宝石："
-	L.seconds = "%.1f秒"
 
 	L.custom_on_fade_out_bars = "淡出第1阶段计时条"
 	L.custom_on_fade_out_bars_desc = "第1阶段时，淡出另一侧房间的首领技能计时条。"

@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "koKR")
 if not L then return end
 if L then
+	L.flamespeaker = "라스타리 화염예언자"
 	L.enforcer = "영원의 집행자"
 	L.punisher = "라스타리 응징자"
 	L.vessel = "브원삼디의 매개체"
@@ -49,7 +50,6 @@ L = BigWigs:NewBossLocale("Opulence", "koKR")
 if L then
 	--L.room = "방 (%d/8)"
 	L.no_jewel = "보석 없음:"
-	L.seconds = "%.1f초"
 
 	L.custom_on_fade_out_bars = "1페이지 바 숨기기"
 	L.custom_on_fade_out_bars_desc = "1페이지 동안 반대편 피조물 타이머 바 숨기기."

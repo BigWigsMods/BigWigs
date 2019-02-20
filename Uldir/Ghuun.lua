@@ -393,8 +393,8 @@ function mod:BloodFeastSuccess(args)
 	self:TargetMessage2(args.spellId, "red", args.destName)
 	self:StopBar(args.spellId)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, self:Mythic() and 6 or 10, 7) -- Cross to make clear it's different from Orb debufs
+		self:Yell2(args.spellId)
+		self:YellCountdown(args.spellId, self:Mythic() and 6 or 10)
 	end
 	self:CDBar(args.spellId, 46.3)
 	self:Bar(270373, 15.5, CL.count:format(self:SpellName(270373), waveOfCorruptionCount)) -- Update Wave of corruption timer
@@ -403,7 +403,7 @@ end
 
 function mod:BloodFeastRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelYellCountdown(args.spellId)
 	end
 end
 

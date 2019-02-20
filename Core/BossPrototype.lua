@@ -2182,7 +2182,7 @@ function boss:Flash(key, icon)
 	end
 end
 
---- Send a message in SAY.
+--- Send a message in SAY. Generally used for abilities where you need to spread out or run away.
 -- @param key the option key
 -- @param msg the message to say (if nil, key is used)
 -- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
@@ -2195,7 +2195,7 @@ function boss:Say(key, msg, directPrint)
 	end
 end
 
---- Start a countdown using say messages.
+--- Start a countdown using say messages. Generally used for abilities where you need to spread out or run away.
 -- @param key the option key
 -- @number seconds the amount of time in seconds until the countdown expires
 -- @number[opt] icon Add the designated raid icon to the countdown
@@ -2219,6 +2219,50 @@ end
 --- Cancel a countdown using say messages.
 -- @param key the option key
 function boss:CancelSayCountdown(key)
+	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
+	local tbl = self.sayCountdowns[key]
+	if tbl then
+		tbl[1] = true
+	end
+end
+
+--- Send a message in YELL. Generally used for abilities where you need to group up.
+-- @param key the option key
+-- @param msg the message to yell (if nil, key is used)
+-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
+function boss:Yell2(key, msg, directPrint) -- XXX fixme
+	if not checkFlag(self, key, C.SAY) then return end
+	if directPrint then
+		SendChatMessage(msg, "YELL")
+	else
+		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "YELL")
+	end
+end
+
+--- Start a countdown using yell messages. Generally used for abilities where you need to group up.
+-- @param key the option key
+-- @number seconds the amount of time in seconds until the countdown expires
+-- @number[opt] icon Add the designated raid icon to the countdown
+-- @number[opt] startAt When to start sending messages in yell, default value is at 3 seconds remaining
+function boss:YellCountdown(key, seconds, icon, startAt)
+	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
+	local start = startAt or 3
+	local tbl = {false, start}
+	local function printTime()
+		if not tbl[1] then
+			SendChatMessage(icon and format("{rt%d} %d", icon, tbl[2]) or tbl[2], "YELL")
+			tbl[2] = tbl[2] - 1
+		end
+	end
+	for i = 1, start do
+		Timer(seconds-i, printTime)
+	end
+	self.sayCountdowns[key] = tbl
+end
+
+--- Cancel a countdown using yell messages.
+-- @param key the option key
+function boss:CancelYellCountdown(key)
 	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 	local tbl = self.sayCountdowns[key]
 	if tbl then

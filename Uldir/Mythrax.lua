@@ -72,8 +72,8 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "Annihilation", 272146)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "Annihilation", 272146)
-	self:Log("SPELL_AURA_REMOVED", "Annihilation", 272146)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "Annihilation", 272146)
+	self:Log("SPELL_AURA_REMOVED", "AnnihilationRemoved", 272146)
 
 	self:Log("SPELL_CAST_START", "EssenceShear", 273282)
 	self:Log("SPELL_AURA_APPLIED", "EssenceShearApplied", 274693)
@@ -186,6 +186,11 @@ end
 
 function mod:Annihilation(args)
 	annihilationList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, annihilationList)
+end
+
+function mod:AnnihilationRemoved(args)
+	annihilationList[args.destName] = nil
 	self:SetInfoByTable(args.spellId, annihilationList)
 end
 

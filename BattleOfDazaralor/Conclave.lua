@@ -227,8 +227,8 @@ do
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
 			self:Flash(args.spellId, count)
-			self:SayCountdown(args.spellId, 6, count)
-			self:OpenProximity(args.spellId, 10)
+			self:SayCountdown(args.spellId, 5, count)
+			self:OpenProximity(args.spellId, 8)
 		end
 
 		proxList[#proxList+1] = args.destName
