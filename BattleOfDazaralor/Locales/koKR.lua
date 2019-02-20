@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "koKR")
 if not L then return end
 if L then
+	L.flamespeaker = "라스타리 화염예언자"
 	L.enforcer = "영원의 집행자"
 	L.punisher = "라스타리 응징자"
 	L.vessel = "브원삼디의 매개체"
