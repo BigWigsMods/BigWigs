@@ -49,7 +49,6 @@ L = BigWigs:NewBossLocale("Opulence", "ptBR")
 if L then
 	--L.room = "Room (%d/8)"
 	--L.no_jewel = "No Jewel:"
-	--L.seconds = "%.1fs"
 
 	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
 	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the construct which isn't in your hall during stage 1."

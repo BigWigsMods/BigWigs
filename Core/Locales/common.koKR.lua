@@ -80,4 +80,4 @@ L.link_removed = "연결 사라짐"
 L.amount_one = "%.2f억" -- Billions 1,000,000,000
 L.amount_two = "%.1f만" -- Millions 1,000,000
 L.amount_three = "%d천" -- Thousands 1,000
---L.seconds = "%.1fs" -- 1.1 seconds
+L.seconds = "%.1f초" -- 1.1 seconds

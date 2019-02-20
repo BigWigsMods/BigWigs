@@ -70,4 +70,4 @@ L.link_removed = "連結移除"
 L.amount_one = "%.2f億" -- Billions 1,000,000,000
 L.amount_two = "%.1f萬" -- Millions 1,000,000
 L.amount_three = "%d千" -- Thousands 1,000
---L.seconds = "%.1fs" -- 1.1 seconds
+L.seconds = "%.1f秒" -- 1.1 seconds

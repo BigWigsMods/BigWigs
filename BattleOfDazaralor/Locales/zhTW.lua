@@ -49,7 +49,6 @@ L = BigWigs:NewBossLocale("Opulence", "zhTW")
 if L then
 	L.room = "房間（%d／8）"
 	L.no_jewel = "無寶石："
-	L.seconds = "%.1f秒"
 
 	L.custom_on_fade_out_bars = "淡出第一階段計時條"
 	L.custom_on_fade_out_bars_desc = "第一階段時，淡出另一個房間的首領技能計時條。"

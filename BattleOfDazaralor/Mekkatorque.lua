@@ -149,8 +149,6 @@ local timers = mod:Mythic() and mythicTimers or heroicTimers
 
 local L = mod:GetLocale()
 if L then
-	L.seconds = "%.1fs"
-
 	L.gigavolt_alt_text = "Bomb"
 
 	L.custom_off_sparkbot_marker = "Spark Bot Marker"
@@ -351,9 +349,8 @@ do
 				if lines < 6 then -- room for 5 in infobox
 					local timeLeft = math.max(expires - GetTime(), 0)
 					local timeLeftPercentage = timeLeft / (self:Mythic() and 30 or 45)
-					local colour =
 					self:SetInfo(284168, (lines*2) - 1, "|T134520:15:15:0:0:64:64:4:60:4:60|t "..self:ColorName(name)) -- 134520 = inv_misc_wrench_01
-					self:SetInfo(284168, (lines*2), L.seconds:format(timeLeft))
+					self:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
 					self:SetInfoBar(284168, (lines*2), timeLeftPercentage, .3, 1, .3, .67)
 				end
 			end
@@ -363,9 +360,8 @@ do
 				if lines < 6 then -- room for 5 in infobox
 					local timeLeft = math.max(expires - GetTime(), 0)
 					local timeLeftPercentage = timeLeft / 30
-					local colour =
 					self:SetInfo(284168, (lines*2) - 1, "|T236446:15:15:0:0:64:64:4:60:4:60|t "..self:ColorName(name)) -- 236446 = achievement_character_gnome_male
-					self:SetInfo(284168, (lines*2), L.seconds:format(timeLeft))
+					self:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
 					self:SetInfoBar(284168, (lines*2), timeLeftPercentage, .48, .48, .48, .67)
 				end
 			end

@@ -49,7 +49,6 @@ L = BigWigs:NewBossLocale("Opulence", "koKR")
 if L then
 	--L.room = "방 (%d/8)"
 	L.no_jewel = "보석 없음:"
-	L.seconds = "%.1f초"
 
 	L.custom_on_fade_out_bars = "1페이지 바 숨기기"
 	L.custom_on_fade_out_bars_desc = "1페이지 동안 반대편 피조물 타이머 바 숨기기."

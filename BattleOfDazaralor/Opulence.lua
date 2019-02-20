@@ -33,7 +33,6 @@ local L = mod:GetLocale()
 if L then
 	L.room = "Room (%d/8)"
 	L.no_jewel = "No Jewel:"
-	L.seconds = "%.1fs"
 
 	L.swap = 161399 -- Swap (replacement for Chaotic Displacement)
 
@@ -345,7 +344,7 @@ do
 			local timeLeft = math.max(expires - GetTime(), 0)
 			local timeLeftPercentage = timeLeft / 20
 			self:SetInfo(284645, (lines*2) - 1, self:ColorName(name))
-			self:SetInfo(284645, (lines*2), L.seconds:format(timeLeft))
+			self:SetInfo(284645, (lines*2), CL.seconds:format(timeLeft))
 			self:SetInfoBar(284645, (lines*2), timeLeftPercentage, .46, 1, 0, .67)
 			if not scheduled then
 				scheduled = self:ScheduleTimer("UpdateTopazInfoBox", 0.1)
