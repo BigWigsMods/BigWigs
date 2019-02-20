@@ -71,15 +71,13 @@ end
 
 L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "zhCN")
 if L then
-	L.seconds = "%.1f秒"
-
 	L.gigavolt_alt_text = "炸弹"
 
 	L.custom_off_sparkbot_marker = "火花机器人标记"
 	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 标记火花机器人。"
 
-	L.custom_off_repeating_shrunk_say = "重复缩小喊话" -- Shrunk = 284168
-	L.custom_off_repeating_shrunk_say_desc = "当你受到|cff71d5ff[缩小]|r时重复喊话。这可能防止你被踩死。"
+	L.custom_on_repeating_shrunk_say = "重复缩小喊话" -- Shrunk = 284168
+	L.custom_on_repeating_shrunk_say_desc = "当你受到|cff71d5ff[缩小]|r时重复喊话“缩小”。如果其他人看到此聊天泡泡尽可能防止你被踩死。"
 
 	L.custom_off_repeating_tampering_say = "重复干涉喊话" -- Tampering = 286105
 	L.custom_off_repeating_tampering_say_desc = "当你控制机器人时重复喊话你的名字。"
