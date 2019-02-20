@@ -381,7 +381,7 @@ do
 		if shrunkCount == 1 and tamperCount == 0 then -- First application
 			self:OpenInfo(284168, self:SpellName(284168))
 			UpdateShrunkBox()
-		else
+		end
 	end
 
 	function mod:ShrunkRemoved(args)
@@ -406,7 +406,7 @@ do
 		if shrunkCount == 0 and tamperCount == 1 then -- First application
 			self:OpenInfo(284168, self:SpellName(284168))
 			UpdateShrunkBox()
-		else
+		end
 	end
 
 	function mod:TamperingRemoved(args)
