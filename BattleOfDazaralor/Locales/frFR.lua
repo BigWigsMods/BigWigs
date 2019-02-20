@@ -76,8 +76,8 @@ if L then
 	L.custom_off_sparkbot_marker = "Marqueur de robot étourdisseur"
 	L.custom_off_sparkbot_marker_desc = "Marquer les robots étourdisseurs avec {rt4}{rt5}{rt6}{rt7}{rt8}."
 
-	L.custom_off_repeating_shrunk_say = "Répéter Rétrécissement - Dire" -- Shrunk = 284168
-	L.custom_off_repeating_shrunk_say_desc = "Spamme Rétrécissement tant que vous êtes la cible de |cff71d5ff[Rétrécissement]|r. Peut-être qu'ils arrêteront de vous marcher dessus."
+	L.custom_on_repeating_shrunk_say = "Répéter Rétrécissement - Dire" -- Shrunk = 284168
+	L.custom_on_repeating_shrunk_say_desc = "Spamme Rétrécissement tant que vous êtes la cible de |cff71d5ff[Rétrécissement]|r. Peut-être qu'ils arrêteront de vous marcher dessus."
 
 	L.custom_off_repeating_tampering_say = "Répéter Piratage - Dire" -- Tampering = 286105
 	L.custom_off_repeating_tampering_say_desc = "Spamme votre nom pendant que vous contrôlez un robot."

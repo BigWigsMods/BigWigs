@@ -76,8 +76,8 @@ if L then
 	L.custom_off_sparkbot_marker = "火花機器人標記"
 	L.custom_off_sparkbot_marker_desc = "使用 {rt4}{rt5}{rt6}{rt7}{rt8} 標記火花機器人，需要權限。"
 
-	L.custom_off_repeating_shrunk_say = "重覆縮小喊話" -- Shrunk = 284168
-	L.custom_off_repeating_shrunk_say_desc = "當你受到|cff71d5ff[縮小]|r時每秒重覆喊話，也許其他人能因此停止踩踏你。"
+	L.custom_on_repeating_shrunk_say = "重覆縮小喊話" -- Shrunk = 284168
+	L.custom_on_repeating_shrunk_say_desc = "當你受到|cff71d5ff[縮小]|r時每秒重覆喊話，也許其他人能因此停止踩踏你。"
 
 	L.custom_off_repeating_tampering_say = "重覆干涉喊話" -- Tampering = 286105
 	L.custom_off_repeating_tampering_say_desc = "當你控制機器人時，每秒重覆喊話自己的名字。注意：啟用這項功能可能使對話泡泡遮擋火花機器人標記或關機密碼。"

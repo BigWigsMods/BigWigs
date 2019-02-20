@@ -75,8 +75,8 @@ if L then
 	L.custom_off_sparkbot_marker = "Funkenbot Marker"
 	L.custom_off_sparkbot_marker_desc = "Markiere Funkenbots mit {rt4}{rt5}{rt6}{rt7}{rt8}."
 
-	L.custom_off_repeating_shrunk_say = "Wiederholende Schrumpfen-Ansage" -- Shrunk = 284168
-	L.custom_off_repeating_shrunk_say_desc = "Spamme Schrumpfen während |cff71d5ff[Geschrumpft]|r. Eventuell hören sie dann auf dich zu zertreten."
+	L.custom_on_repeating_shrunk_say = "Wiederholende Schrumpfen-Ansage" -- Shrunk = 284168
+	L.custom_on_repeating_shrunk_say_desc = "Spamme Schrumpfen während |cff71d5ff[Geschrumpft]|r. Eventuell hören sie dann auf dich zu zertreten."
 
 	L.custom_off_repeating_tampering_say = "Wiederholende Manipulation!-Ansage" -- Tampering = 286105
 	L.custom_off_repeating_tampering_say_desc = "Spamme deinen Namen während du einen Roboter kontrollierst."
