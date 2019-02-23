@@ -199,7 +199,8 @@ function boss:Enable(isWipe)
 	if not self.enabled then
 		self.enabled = true
 
-		if debug then dbg(self, isWipe and "Enable() via Wipe()" or "Enable()") end
+		local isWiping = isWipe == true
+		if debug then dbg(self, isWiping and "Enable() via Wipe()" or "Enable()") end
 
 		updateData(self)
 		self.sayCountdowns = {}
@@ -219,11 +220,11 @@ function boss:Enable(isWipe)
 		if self.SetupOptions then self:SetupOptions() end
 		if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 
-		if IsEncounterInProgress() and not isWipe then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
+		if IsEncounterInProgress() and not isWiping then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
 			self:CheckForEncounterEngage("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
 		end
 
-		if not isWipe then
+		if not isWiping then
 			self:SendMessage("BigWigs_OnBossEnable", self)
 		end
 	end
@@ -232,7 +233,8 @@ function boss:Disable(isWipe)
 	if self.enabled then
 		self.enabled = nil
 
-		if debug then dbg(self, isWipe and "Disable() via Wipe()" or "Disable()") end
+		local isWiping = isWipe == true
+		if debug then dbg(self, isWiping and "Disable() via Wipe()" or "Disable()") end
 		if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 		-- Update enabled modules list
@@ -293,7 +295,7 @@ function boss:Disable(isWipe)
 
 		self:CancelAllTimers()
 
-		if not isWipe then
+		if not isWiping then
 			self:SendMessage("BigWigs_OnBossDisable", self)
 		end
 	end
