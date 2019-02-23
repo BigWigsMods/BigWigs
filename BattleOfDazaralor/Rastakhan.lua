@@ -17,15 +17,8 @@ local stage = 1
 local toadCount = 1
 local zombieDustTotemCount = 1
 local detonationCount = 1
-
---------------------------------------------------------------------------------
--- Localization
---
-
---local L = mod:GetLocale()
---if L then
---
---end
+local doorCount = 1
+local deathlyWitheringList = {}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -43,10 +36,11 @@ function mod:GetOptions()
 		284719, -- Crushing Leap
 		284781, -- Grievous Axe
 		-- Stage 2
+		{285195, "INFOBOX"}, -- Deathly Withering
 		{285346, "SAY"}, -- Plague of Fire
 		285003, -- Zombie Dust Totem
 		{285213, "TANK_HEALER"}, -- Caress of Death
-		{288449, "SAY", "SAY_COUNTDOWN"}, -- Death's Door
+		{288449, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Death's Door
 		-- Stage 3
 		287333, -- Inevitable End
 		286742, -- Necrotic Smash
@@ -68,6 +62,9 @@ function mod:OnBossEnable()
 
 	-- Stage 2
 	self:Log("SPELL_AURA_APPLIED", "DeathsPresence", 284376)
+	self:Log("SPELL_AURA_APPLIED", "DeathlyWithering", 285195)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "DeathlyWithering", 285195)
+	self:Log("SPELL_AURA_REMOVED", "DeathlyWitheringRemoved", 285195)
 	self:Log("SPELL_CAST_SUCCESS", "PlagueofFire", 285346)
 	self:Log("SPELL_AURA_APPLIED", "PlagueofFireApplied", 285349)
 	self:Log("SPELL_CAST_SUCCESS", "ZombieDustTotem", 285003)
@@ -85,6 +82,8 @@ function mod:OnEngage()
 	zombieDustTotemCount = 1
 	stage = 1
 	detonationCount = 1
+	doorCount = 1
+	deathlyWitheringList = {}
 
 	self:Bar(284781, 8.5) -- Grievous Axe
 	self:Bar(290450, 8.5) -- Seal of Purification
@@ -106,14 +105,17 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 
 		self:StopBar(284933, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
 		self:StopBar(285213) -- Caress of Death
-		self:StopBar(288449) -- Death's Door
+		self:StopBar(CL.count:format(self:SpellName(288449), doorCount)) -- Death's Door
 		self:StopBar(CL.count:format(self:SpellName(285003), zombieDustTotemCount)) -- Zombie Dust Totem
 
 		self:CDBar(286742, 28.5) -- Necrotic Smash
+		self:Bar(285346, 48) -- Plague of Fire
 		self:CDBar(287333, 44) -- Inevitable End
 	elseif spellId == 290852 then -- King Rastakhan P3 -> P4 Conversation
 		stage = 4
 		toadCount = 1
+		self:CloseInfo(285195) -- Deathly Withering
+
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
 
@@ -205,19 +207,30 @@ function mod:DeathsPresence(args)
 		self:StopBar(284831) -- Scorching Detonation
 		self:StopBar(285172) -- Greater Serpent Totem
 
+		self:OpenInfo(285195, self:SpellName(285195)) -- Deathly Withering
 		self:Bar(285003, 19, CL.count:format(self:SpellName(285003), zombieDustTotemCount)) -- Zombie Dust Totem
 		self:Bar(285213, 24.3) -- Caress of Death
 		self:Bar(284831, 27.3) -- Scorching Detonation
 		self:Bar(285346, 35) -- Plague of Fire
 		self:Bar(284933, 41, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
-		self:Bar(288449, 43.8) -- Death's Door
+		self:Bar(288449, 43.8, CL.count:format(self:SpellName(288449), doorCount)) -- Death's Door
 	end
+end
+
+function mod:DeathlyWithering(args)
+	deathlyWitheringList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, deathlyWitheringList)
+end
+
+function mod:DeathlyWitheringRemoved(args)
+	deathlyWitheringList[args.destName] = nil
+	self:SetInfoByTable(args.spellId, deathlyWitheringList)
 end
 
 function mod:PlagueofFire(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, 25.5)
+	self:Bar(args.spellId, stage == 3 and 39 or 25.5)
 end
 
 function mod:PlagueofFireApplied(args)
@@ -242,12 +255,14 @@ function mod:CaressofDeath(args)
 end
 
 function mod:DeathsDoor(args)
-	self:CDBar(args.spellId, stage == 4 and 20 or 28)
+	doorCount = doorCount + 1
+	self:CDBar(args.spellId, stage == 4 and 20 or 28, CL.count:format(args.spellName, doorCount))
 end
 
 function mod:DeathsDoorApplied(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
+		self:Flash(args.spellId)
 		self:SayCountdown(args.spellId, 8)
 	end
 	self:TargetMessage2(args.spellId, "orange", args.destName)

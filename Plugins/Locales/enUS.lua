@@ -89,6 +89,7 @@ L.center = "Center"
 L.right = "Right"
 L.time = "Time"
 L.timeDesc = "Whether to show or hide the time left on the bars."
+L.textDesc = "Whether to show or hide the text displayed on the bars."
 L.icon = "Icon"
 L.iconDesc = "Shows or hides the bar icons."
 L.iconPosition = "Icon Position"
@@ -139,6 +140,8 @@ L.blockGuildChallenge = "Block guild challenge popups"
 L.blockGuildChallengeDesc = "Guild challenge popups show for a few things, mainly when a group in your guild completes a heroic dungeon or a challenge mode dungeon.\n\nThese popups can cover up critical parts of your UI during a boss fight, so we recommend blocking them."
 L.blockSpellErrors = "Block spell failed messages"
 L.blockSpellErrorsDesc = "Messages such as \"Spell is not ready yet\" that usually show at the top of the screen will be blocked."
+L.disableSfx = "Disable sound effects"
+L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 
 -----------------------------------------------------------------------
 -- Colors.lua

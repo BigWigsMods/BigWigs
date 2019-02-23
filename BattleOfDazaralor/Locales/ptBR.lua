@@ -1,6 +1,8 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "ptBR")
 if not L then return end
 if L then
+	L.flamespeaker = "Flamiglota Rastari"
+	L.enforcer = "Impositor Eterno"
 	L.punisher = "Castigador Rastari"
 	L.vessel = "Receptáculo de Bwonsamdi"
 
@@ -48,7 +50,6 @@ L = BigWigs:NewBossLocale("Opulence", "ptBR")
 if L then
 	--L.room = "Room (%d/8)"
 	--L.no_jewel = "No Jewel:"
-	--L.seconds = "%.1fs"
 
 	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
 	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the construct which isn't in your hall during stage 1."
@@ -75,11 +76,19 @@ if L then
 	--L.custom_off_sparkbot_marker = "Spark Bot Marker"
 	--L.custom_off_sparkbot_marker_desc = "Mark Spark Bots with {rt4}{rt5}{rt6}{rt7}{rt8}."
 
-	--L.custom_off_repeating_shrunk_say = "Repeating Shrunk Say" -- Shrunk = 284168
-	--L.custom_off_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
+	--L.custom_on_repeating_shrunk_say = "Repeating Shrunk Say" -- Shrunk = 284168
+	--L.custom_on_repeating_shrunk_say_desc = "Spam Shrunk while you're |cff71d5ff[Shrunk]|r. Maybe they'll stop running you over."
 
 	--L.custom_off_repeating_tampering_say = "Repeating Tampering Say" -- Tampering = 286105
 	--L.custom_off_repeating_tampering_say_desc = "Spam your name while you're controlling a robot."
+end
+
+L = BigWigs:NewBossLocale("Stormwall Blockade", "ptBR")
+if L then
+	--L.killed = "%s killed!"
+
+	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
+	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss who isn't active on your boat in stage 1."
 end
 
 L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "ptBR")
@@ -89,8 +98,6 @@ if L then
 
 	--L.starbord_txt = "Right Ship" -- starboard
 	--L.port_side_txt = "Left Ship" -- port
-
-	--L.ship_icon = "inv_garrison_cargoship"
 
 	--L.custom_on_stop_timers = "Always show ability bars"
 	--L.custom_on_stop_timers_desc = "Jaina randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."

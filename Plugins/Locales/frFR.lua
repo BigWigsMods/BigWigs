@@ -89,6 +89,7 @@ L.center = "Centre"
 L.right = "Droite"
 L.time = "Temps"
 L.timeDesc = "Affiche ou non le temps restant sur les barres."
+--L.textDesc = "Whether to show or hide the text displayed on the bars."
 L.icon = "Icône"
 L.iconDesc = "Affiche ou non les icônes des barres."
 L.iconPosition = "Position de l'icône"
@@ -139,6 +140,8 @@ L.blockGuildChallenge = "Bloquer les popups de défi de guilde"
 L.blockGuildChallengeDesc = "Les popups de défi de guilde s'affichent de temps en temps, principalement quand un groupe de votre guilde termine un donjon héroïque ou un donjon en mode défi.\n\nCes popups pouvant cacher des éléments critiques de votre interface pendant les rencontres de boss, nous vous recommandons de les bloquer."
 L.blockSpellErrors = "Bloquer les messages de sorts échoués"
 L.blockSpellErrorsDesc = "Les messages tels que \"Le sort n'est pas encore utilisable\" qui s'affichent en haut de l'écran seront bloqués."
+--L.disableSfx = "Disable sound effects"
+--L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 
 -----------------------------------------------------------------------
 -- Colors.lua

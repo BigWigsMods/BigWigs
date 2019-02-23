@@ -1,51 +1,51 @@
 local L = BigWigs:NewBossLocale("MOTHER", "ruRU")
 if not L then return end
 if L then
-	--L.sideLaser = "(Side) Beams" -- short for: (location) Uldir Defensive Beam
-	--L.upLaser = "(Roof) Beams"
-	--L.mythic_beams = "Beams"
+	L.sideLaser = "(Сбоку) Лучи" -- short for: (location) Uldir Defensive Beam
+	L.upLaser = "(Сверху) Лучи"
+	L.mythic_beams = "Лучи"
 end
 
 L = BigWigs:NewBossLocale("Zek'voz, Herald of N'zoth", "ruRU")
 if L then
-	--L.surging_darkness_eruption = "Eruption (%d)"
-	--L.mythic_adds = "Mythic Adds"
-	--L.mythic_adds_desc = "Show timers for when the adds will spawn in Mythic (both Qiraji Warrior and Anub'ar Voidweaver spawn at the same time)."
+	L.surging_darkness_eruption = "Извержение (%d)"
+	L.mythic_adds = "Эпохальные Адды"
+	L.mythic_adds_desc = "Отображать таймеры появления аддов в Эпохальной сложности (Силитиды-воины и Нерубские заклинатели Бездны появляются одновременно)."
 end
 
 L = BigWigs:NewBossLocale("Zul", "ruRU")
 if L then
-	--L.crawg_msg = "Crawg" -- Short for 'Bloodthirsty Crawg'
-	--L.crawg_desc = "Warnings and timers for when the Bloodthirsty Crawg spawns."
+	L.crawg_msg = "Крог" -- Short for 'Bloodthirsty Crawg'
+	L.crawg_desc = "Предупреждения и таймеры появления Кровожадного Крога."
 
-	--L.bloodhexer_msg = "Bloodhexer" -- Short for 'Nazmani Bloodhexer'
-	--L.bloodhexer_desc = "Warnings and timers for when the Nazmani Bloodhexer spawns."
+	L.bloodhexer_msg = "Проклинательница" -- Short for 'Nazmani Bloodhexer'
+	L.bloodhexer_desc = "Предупреждения и таймеры появления Назманийской проклинательницы крови."
 
-	--L.crusher_msg = "Crusher" -- Short for 'Nazmani Crusher'
-	--L.crusher_desc = "Warnings and timers for when the Nazmani Crusher spawns."
+	L.crusher_msg = "Крушительница" -- Short for 'Nazmani Crusher'
+	L.crusher_desc = "Предупреждения и таймеры появления  Назманийской крушительницы."
 
-	--L.custom_off_decaying_flesh_marker = "Decaying Flesh Marker"
-	--L.custom_off_decaying_flesh_marker_desc = "Mark the enemy forces afflicted by Decaying Flesh with {rt8}, requires promoted or leader."
+	L.custom_off_decaying_flesh_marker = "Метки Разлагающейся плоти"
+	L.custom_off_decaying_flesh_marker_desc = "Отмечает противников под воздействием Разлагающейся плоти {rt8}, требуется быть лидером или помощником."
 end
 
 L = BigWigs:NewBossLocale("Mythrax the Unraveler", "ruRU")
 if L then
-	--L.destroyer_cast = "%s (N'raqi Destroyer)" -- npc id: 139381
-	--L.xalzaix_returned = "Xalzaix returned!" -- npc id: 138324
-	--L.add_blast = "Add Blast"
-	--L.boss_blast = "Boss Blast"
+	L.destroyer_cast = "%s (Н'ракский разрушитель)" -- npc id: 139381
+	L.xalzaix_returned = "Залзеикс вернулся!" -- npc id: 138324
+	L.add_blast = "Адд Взрыв"
+	L.boss_blast = "Босс Взрыв"
 end
 
 L = BigWigs:NewBossLocale("G'huun", "ruRU")
 if L then
-	--L.orbs_deposited = "Orbs Deposited (%d/3) - %.1f sec"
-	--L.orb_spawning = "Orb Spawning"
-	--L.orb_spawning_side = "Orb Spawning (%s)"
-	--L.left = "Left"
-	--L.right = "Right"
+	L.orbs_deposited = "Сферы вставлены (%d/3) - %.1f сек"
+	L.orb_spawning = "Появление сфер"
+	L.orb_spawning_side = "Появление сфер (%s)"
+	L.left = "Слева"
+	L.right = "Справа"
 
-	--L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
-	--L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "Иконка Преследования на Полосах Здоровья противников"
+	L.custom_on_fixate_plates_desc = "Отображать иконку Преследования на Полосе Здоровья противника, что преследует Вас.\nПолосы здоровья должны быть включены. Только KuiNameplates поддерживает данную опция."
 end
 
 L = BigWigs:NewBossLocale("Uldir Trash", "ruRU")

@@ -29,6 +29,7 @@ local intermission = false
 local intermissionTime = 0
 local nextStageWarning = 63
 local chillingTouchList = {}
+local burningExplosionCounter = 1
 local broadsideCount = 0
 local orbofFrostCount = 1
 local crystallineDustCount = 1
@@ -88,6 +89,7 @@ function mod:GetOptions()
 		{288374, "ICON", "SAY", "SAY_COUNTDOWN"}, -- Siegebreaker Blast
 		288345, -- Glacial Ray
 		288441, -- Icefall
+		288221, -- Burning Explosion
 		-- Intermission
 		289220, -- Heart of Frost
 		289219, -- Frost Nova
@@ -148,6 +150,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SiegebreakerBlastRemoved", 288374)
 	self:Log("SPELL_CAST_START", "GlacialRay", 288345)
 	self:Log("SPELL_CAST_SUCCESS", "Icefall", 288441)
+	self:Log("SPELL_CAST_START", "BurningExplosion", 288221)
 
 	-- Intermission
 	self:Log("SPELL_CAST_START", "FlashFreeze", 288719)
@@ -183,6 +186,7 @@ function mod:OnEngage()
 	intermission = false
 	nextStageWarning = 63
 	chillingTouchList = {}
+	burningExplosionCounter = 1
 	broadsideCount = 0
 	orbofFrostCount = 1
 	crystallineDustCount = 1
@@ -416,6 +420,7 @@ function mod:HowlingWindsRemoved(args)
 	stage = 2
 	intermission = false
 	icefallCount = 1
+	burningExplosionCounter = 1
 	local seconds = math.floor((GetTime() - intermissionTime) * 100)/100
 	self:PlaySound("stages", "long")
 	self:Message2("stages", "cyan", L.intermission_stage2:format(seconds), false)
@@ -507,6 +512,13 @@ function mod:Icefall(args)
 		self:Message2(args.spellId, "orange")
 		self:PlaySound(args.spellId, "long")
 	end
+end
+
+function mod:BurningExplosion(args)
+	self:Message2(args.spellId, "green", CL.count:format(CL.casting:format(args.spellName), burningExplosionCounter))
+	self:PlaySound(args.spellId, "info")
+	self:CastBar(args.spellId, self:Mythic() and 8 or 15, CL.count:format(args.spellName, burningExplosionCounter))
+	burningExplosionCounter = burningExplosionCounter + 1
 end
 
 -- Intermission: Flash Freeze

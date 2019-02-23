@@ -77,6 +77,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DeathSpecter", 282526)
 	self:Log("SPELL_CAST_START", "DeathEmpowerment", 282533)
 	self:Log("SPELL_AURA_APPLIED", "ShadowCore", 286434)
+	self:Log("SPELL_AURA_REMOVED", "ShadowCoreRemoved", 286434)
 	self:Log("SPELL_CAST_START", "DischargeShadowCore", 286435)
 end
 
@@ -87,7 +88,9 @@ function mod:OnEngage()
 	self:Bar(282543, 13.1) -- Deathly Slam
 	self:Bar(282526, 16.8, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount)) -- DeathSpecter, Add
 	self:Bar(286450, 22)	-- Necrotic Combo
-	self:Bar(285994, 37.5) -- Ferocious Roar
+	if not self:Easy() then
+		self:Bar(285994, 37.5) -- Ferocious Roar
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -192,6 +195,15 @@ end
 
 function mod:ShadowCore(args)
 	self:TargetMessage2(args.spellId, "green", args.destName, args.spellName)
+	if self:Me(args.destGUID) then
+		self:TargetBar(args.spellId, 20, args.destName)
+	end
+end
+
+function mod:ShadowCoreRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellName, args.destName)
+	end
 end
 
 function mod:DischargeShadowCore(args)

@@ -67,6 +67,7 @@ L.link_both = "%s和%s连接"
 L.link_removed = "连接已移除"
 
 -- Abbreviated numbers
-L.amount_one = "%.2f亿"
-L.amount_two = "%.1f万"
-L.amount_three = "%d千"
+L.amount_one = "%.2f亿" -- Billions 1,000,000,000
+L.amount_two = "%.1f万" -- Millions 1,000,000
+L.amount_three = "%d千" -- Thousands 1,000
+L.seconds = "%.1f秒" -- 1.1 seconds
