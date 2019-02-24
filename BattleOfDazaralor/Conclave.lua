@@ -23,10 +23,11 @@ local bossesKilled = 0
 
 local L = mod:GetLocale()
 if L then
+	L.custom_on_fixate_plates = "Mark of Prey icon on Enemy Nameplate"
+	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates_icon = 282209
 	L.killed = "%s killed!"
-
 	L.count_of = "%s (%d/%d)"
-
 	L.leap = mod:SpellName(192553) -- Leap, replacement for Kimbul's Wrath
 end
 
@@ -54,6 +55,7 @@ function mod:GetOptions()
 		285893, -- Wild Maul
 		282155, -- Gonk's Wrath
 		{282209, "SAY", "FLASH"}, -- Mark of Prey
+		"custom_on_fixate_plates",
 
 		-- Kimbul's Aspect
 		{282444, "TANK"}, -- Lacerating Claws
@@ -95,6 +97,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CrawlingHexRemoved", 282135)
 	self:Log("SPELL_CAST_SUCCESS", "WildMaul", 285893)
 	self:Log("SPELL_AURA_APPLIED", "MarkofPrey", 282209)
+	self:Log("SPELL_AURA_REMOVED", "MarkofPreyRemoved", 282209)
 
 	-- Kimbul's Aspect
 	self:Log("SPELL_CAST_START", "LaceratingClaws", 289560)
@@ -113,6 +116,10 @@ function mod:OnBossEnable()
 
 	-- Krag'wa
 	self:Log("SPELL_CAST_SUCCESS", "KragwasWrath", 282636)
+
+	if self:GetOption("custom_on_fixate_plates") then
+		self:ShowPlates()
+	end
 end
 
 function mod:OnEngage()
@@ -126,6 +133,12 @@ function mod:OnEngage()
 	self:Bar(282107, 73) -- Pa'ku's Wrath
 	if not self:Easy() then
 		self:CDBar(282636, 29) -- Krag'wa's Wrath
+	end
+end
+
+function mod:OnBossDisable()
+	if self:GetOption("custom_on_fixate_plates") then
+		self:HidePlates()
 	end
 end
 
@@ -290,7 +303,16 @@ do
 			self:PlaySound(args.spellId, "warning")
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
+			if self:GetOption("custom_on_fixate_plates") then
+				self:AddPlateIcon(args.spellId, args.sourceGUID)
+			end
 		end
+	end
+end
+
+function mod:MarkofPreyRemoved(args)
+	if self:Me(args.destGUID) and self:GetOption("custom_on_fixate_plates") then
+		self:RemovePlateIcon(args.spellId, args.sourceGUID)
 	end
 end
 
