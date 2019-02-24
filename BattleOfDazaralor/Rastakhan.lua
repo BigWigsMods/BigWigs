@@ -32,7 +32,7 @@ function mod:GetOptions()
 		284933, -- Plague of Toads
 		285172, -- Greater Serpent Totem
 		{290450, "SAY", "FLASH"}, -- Seal of Purification
-		284686, -- Meteor Leap
+		{284686, "SAY", "FLASH"}, -- Meteor Leap
 		284719, -- Crushing Leap
 		284781, -- Grievous Axe
 		-- Stage 2
@@ -155,11 +155,21 @@ function mod:SealofPurificationApplied(args)
 	self:Bar(290450, 25.5)
 end
 
-function mod:MeteorLeap(args)
-	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "alarm")
-	self:CastBar(args.spellId, 5)
-	self:Bar(args.spellId, 34)
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage2(284686, "orange", name)
+		self:PlaySound(284686, "alarm")
+		if self:Me(guid) then
+			self:Flash(284686)
+			self:Say(284686)
+		end
+	end
+
+	function mod:MeteorLeap(args)
+		self:GetBossTarget(printTarget, 0.4, args.sourceGUID)
+		self:CastBar(args.spellId, 5)
+		self:Bar(args.spellId, 34)
+	end
 end
 
 function mod:CrushingLeap(args)
