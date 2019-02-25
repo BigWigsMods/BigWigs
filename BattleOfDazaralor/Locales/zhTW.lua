@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhTW")
 if not L then return end
 if L then
+	--L.prelate = "Prelate Akk'al"
 	--L.flamespeaker = "Rastari Flamespeaker"
 	L.enforcer = "永生執法者"
 	L.punisher = "拉斯塔瑞懲戒者"

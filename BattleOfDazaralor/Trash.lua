@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Battle of Dazar'alor Trash", 2070)
 if not mod then return end
 mod.displayName = CL.trash
 mod:RegisterEnableMob(
+	147497, -- Prelate Akk'al
 	147830, -- Rastari Flamespeaker
 	149556, -- Eternal Enforcer
 	148667, -- Rastari Punisher
@@ -19,6 +20,7 @@ mod:RegisterEnableMob(
 
 local L = mod:GetLocale()
 if L then
+	L.prelate = "Prelate Akk'al"
 	L.flamespeaker = "Rastari Flamespeaker"
 	L.enforcer = "Eternal Enforcer"
 	L.punisher = "Rastari Punisher"
@@ -34,12 +36,14 @@ end
 
 function mod:GetOptions()
 	return {
+		288808, -- Consecration
 		288815, -- Breath of Fire
 		{289772, "SAY"}, -- Impale
 		289937, -- Thundering Slam
 		289917, -- Bwonsamdi's Pact
 		290578, -- Bwonsamdi's Knife
 	}, {
+		[288808] = L.prelate,
 		[288815] = L.flamespeaker,
 		[289772] = L.enforcer,
 		[289937] = L.punisher,
@@ -50,6 +54,10 @@ end
 function mod:OnBossEnable()
 	--[[ General ]]--
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
+
+	self:Log("SPELL_AURA_APPLIED", "ConsecrationDamage", 288808)
+	self:Log("SPELL_PERIODIC_DAMAGE", "ConsecrationDamage", 288808)
+	self:Log("SPELL_PERIODIC_MISSED", "ConsecrationDamage", 288808)
 
 	self:Log("SPELL_CAST_START", "BreathOfFire", 288815)
 	self:Log("SPELL_AURA_APPLIED", "Impale", 289772)
@@ -62,6 +70,20 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local prev = 0
+	function mod:ConsecrationDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 2 then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
+	end
+end
 
 function mod:BreathOfFire(args)
 	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
