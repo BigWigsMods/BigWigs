@@ -2,6 +2,7 @@
 BigWigs:AddColors("Champion of the Light Alliance", {
 	[282113] = "cyan",
 	[283573] = {"blue","purple"},
+	[283582] = "blue",
 	[283598] = "yellow",
 	[283628] = "yellow",
 	[283650] = "orange",
@@ -17,6 +18,7 @@ BigWigs:AddColors("Champion of the Light Alliance", {
 BigWigs:AddColors("Champion of the Light Horde", {
 	[282113] = "cyan",
 	[283573] = {"blue","purple"},
+	[283582] = "blue",
 	[283598] = "yellow",
 	[283628] = "yellow",
 	[283650] = "orange",
@@ -212,6 +214,7 @@ BigWigs:AddColors("Lady Jaina Proudmoore", {
 })
 
 BigWigs:AddColors("Battle of Dazar'alor Trash", {
+	[288808] = "blue",
 	[288815] = "red",
 	[289772] = {"blue","red"},
 	[289917] = {"blue","orange"},
