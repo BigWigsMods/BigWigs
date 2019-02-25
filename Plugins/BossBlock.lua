@@ -201,6 +201,7 @@ do
 		[682] = true, -- L'uras death
 		[686] = true, -- Argus portal
 		[688] = true, -- Argus kill
+		[875] = true, -- Killing King Rastakhan
 		[876] = true, -- Entering Battle of Dazar'alor
 	}
 
@@ -243,6 +244,10 @@ do
 		[-1151] = true, -- Uldir, raising stairs for Zul (Zek'voz)
 		[-1152] = true, -- Uldir, raising stairs for Zul (Vectis)
 		[-1153] = true, -- Uldir, raising stairs for Zul (Fetid Devourer)
+		[-1358] = true, -- Battle of Dazar'alor, after killing 1st boss, Bwonsamdi (Horde side)
+		--[-1352] = true, -- Battle of Dazar'alor, after killing 2nd boss, Bwonsamdi (Alliance side)
+		--[-1352] = true, -- Battle of Dazar'alor, after killing blockade
+		--[-1364] = true, -- Battle of Dazar'alor, Jaina stage 1 intermission (unskippable)
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
