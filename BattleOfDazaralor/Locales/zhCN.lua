@@ -66,8 +66,8 @@ end
 
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "zhCN")
 if L then
-	-- L.custom_on_fixate_plates = "Mark of Prey icon on Enemy Nameplate"
-	-- L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "掠食印记图标位于敌对姓名板"
+	L.custom_on_fixate_plates_desc = "当你被锁定时在目标姓名板上显示一个图标。\n需要使用敌对姓名板。此功能目前只支持 KuiNameplates。"
 	L.killed = "%s已击杀！"
 	L.count_of = "%s（%d/%d）"
 end
