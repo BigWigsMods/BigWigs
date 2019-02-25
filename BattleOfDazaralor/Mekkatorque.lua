@@ -413,6 +413,7 @@ do
 		end
 		tamperCount = tamperCount + 1
 		tamperingList[args.destName] = GetTime() + (self:Mythic() and 30 or 45)
+		shrunkList[args.destName] = nil
 		if shrunkCount == 0 and tamperCount == 1 then -- First application
 			self:OpenInfo(284168, self:SpellName(284168))
 			UpdateShrunkBox()
