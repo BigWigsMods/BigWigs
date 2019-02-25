@@ -233,17 +233,13 @@ function mod:DeathsPresence(args)
 end
 
 function mod:DeathlyWithering(args)
-	if not self:LFR() then
-		deathlyWitheringList[args.destName] = args.amount or 1
-		self:SetInfoByTable(args.spellId, deathlyWitheringList)
-	end
+	deathlyWitheringList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, deathlyWitheringList)
 end
 
 function mod:DeathlyWitheringRemoved(args)
-	if not self:LFR() then
-		deathlyWitheringList[args.destName] = nil
-		self:SetInfoByTable(args.spellId, deathlyWitheringList)
-	end
+	deathlyWitheringList[args.destName] = nil
+	self:SetInfoByTable(args.spellId, deathlyWitheringList)
 end
 
 function mod:PlagueofFire(args)
@@ -256,7 +252,7 @@ do
 	local prev = 0
 	function mod:PlagueofFireApplied(args)
 		local t = args.time
-		if self:Me(args.destGUID) and t-prev > 2 then
+		if self:Me(args.destGUID) and t-prev > 2 then -- Can spread a lot if not dealt with correctly
 			prev = t
 			self:PersonalMessage(285346)
 			self:PlaySound(285346, "warning")
