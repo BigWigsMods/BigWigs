@@ -108,7 +108,7 @@ local mythicTimers = {
 	-- "SPELL_CAST_SUCCESS", "GigavoltCharge", 287757, 286597
 	[286646] = {
 		[1] = {20, 41.5, 38.5, 34.5, 82, 43, 30.5},
-		[2] = {},
+		[2] = {17.3, 32},
 		[3] = {20.5, 40, 40, 35, 40},
 	},
 
@@ -449,9 +449,7 @@ function mod:EvasiveManeuvers(args)
 	enlargerCount = 1
 	sheepCount = 1
 
-	if not self:Mythic() then
-		self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
-	end
+	self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
 	self:Bar(287952, timers[287952][stage][wormholeCount], CL.count:format(self:SpellName(287952), wormholeCount)) -- Wormhole Generator
 	self:Bar(288410, timers[288410][stage][sparkBotCount], CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
 	self:Bar(286693, timers[286693][stage][enlargerCount], CL.count:format(self:SpellName(286693), enlargerCount)) -- World Enlarger
