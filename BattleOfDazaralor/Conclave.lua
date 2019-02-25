@@ -93,8 +93,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "HasteningWinds", 285945)
 
 	-- Gonk's Aspect
-	self:Log("SPELL_AURA_APPLIED", "CrawlingHexApplied", 282135)
-	self:Log("SPELL_AURA_REMOVED", "CrawlingHexRemoved", 282135)
+	self:Log("SPELL_AURA_APPLIED", "CrawlingHexApplied", 290573, 282135) -- LFR, others
+	self:Log("SPELL_AURA_REMOVED", "CrawlingHexRemoved", 290573, 282135) -- LFR, others
 	self:Log("SPELL_CAST_SUCCESS", "WildMaul", 285893)
 	self:Log("SPELL_AURA_APPLIED", "MarkofPrey", 282209)
 	self:Log("SPELL_AURA_REMOVED", "MarkofPreyRemoved", 282209)
@@ -236,12 +236,12 @@ do
 		local count = #playerList
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:TargetMessage2(args.spellId, "blue", args.destName, CL.count_icon:format(args.spellName, count, count))
-			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
-			self:Flash(args.spellId, count)
-			self:SayCountdown(args.spellId, 5, count)
-			self:OpenProximity(args.spellId, 8)
+			self:TargetMessage2(282135, "blue", args.destName, CL.count_icon:format(args.spellName, count, count))
+			self:PlaySound(282135, "warning")
+			self:Say(282135, CL.count_rticon:format(args.spellName, count, count))
+			self:Flash(282135, count)
+			self:SayCountdown(282135, 5, count)
+			self:OpenProximity(282135, 8)
 		end
 
 		proxList[#proxList+1] = args.destName
@@ -257,11 +257,11 @@ do
 
 	function mod:CrawlingHexRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
-			self:PlaySound(args.spellId, "info")
+			self:Message2(282135, "green", CL.removed:format(args.spellName))
+			self:PlaySound(282135, "info")
 			isOnMe = false
-			self:CancelSayCountdown(args.spellId)
-			self:CloseProximity(args.spellId)
+			self:CancelSayCountdown(282135)
+			self:CloseProximity(282135)
 		end
 
 		if self:GetOption(crawlingHexMarker) then
@@ -272,9 +272,9 @@ do
 
 		if not isOnMe then -- Don't change proximity if it's on you and expired on someone else
 			if #proxList == 0 then
-				self:CloseProximity(args.spellId)
+				self:CloseProximity(282135)
 			else -- Update proximity
-				self:OpenProximity(args.spellId, 8, proxList)
+				self:OpenProximity(282135, 8, proxList)
 			end
 		end
 	end
