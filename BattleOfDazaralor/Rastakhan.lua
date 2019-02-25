@@ -32,7 +32,7 @@ function mod:GetOptions()
 		284933, -- Plague of Toads
 		285172, -- Greater Serpent Totem
 		{290450, "SAY", "FLASH"}, -- Seal of Purification
-		284686, -- Meteor Leap
+		{284686, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Meteor Leap
 		284719, -- Crushing Leap
 		284781, -- Grievous Axe
 		-- Stage 2
@@ -114,7 +114,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	elseif spellId == 290852 then -- King Rastakhan P3 -> P4 Conversation
 		stage = 4
 		toadCount = 1
-		self:CloseInfo(285195) -- Deathly Withering
+		if not self:LFR() then
+			self:CloseInfo(285195) -- Deathly Withering
+		end
 
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
@@ -155,11 +157,22 @@ function mod:SealofPurificationApplied(args)
 	self:Bar(290450, 25.5)
 end
 
-function mod:MeteorLeap(args)
-	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "alarm")
-	self:CastBar(args.spellId, 5)
-	self:Bar(args.spellId, 34)
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage2(284686, "orange", name)
+		self:PlaySound(284686, "alarm")
+		if self:Me(guid) then
+			self:Flash(284686)
+			self:Yell2(284686)
+			self:YellCountdown(284686, 5)
+		end
+	end
+
+	function mod:MeteorLeap(args)
+		self:GetBossTarget(printTarget, 0.4, args.sourceGUID)
+		self:CastBar(args.spellId, 5)
+		self:Bar(args.spellId, 34)
+	end
 end
 
 function mod:CrushingLeap(args)
@@ -207,7 +220,9 @@ function mod:DeathsPresence(args)
 		self:StopBar(284831) -- Scorching Detonation
 		self:StopBar(285172) -- Greater Serpent Totem
 
-		self:OpenInfo(285195, self:SpellName(285195)) -- Deathly Withering
+		if not self:LFR() then
+			self:OpenInfo(285195, self:SpellName(285195)) -- Deathly Withering
+		end
 		self:Bar(285003, 19, CL.count:format(self:SpellName(285003), zombieDustTotemCount)) -- Zombie Dust Totem
 		self:Bar(285213, 24.3) -- Caress of Death
 		self:Bar(284831, 27.3) -- Scorching Detonation
@@ -233,11 +248,16 @@ function mod:PlagueofFire(args)
 	self:Bar(args.spellId, stage == 3 and 39 or 25.5)
 end
 
-function mod:PlagueofFireApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(285346)
-		self:PlaySound(285346, "warning")
-		self:Say(285346, self:SpellName(177849)) -- Fire on X
+do
+	local prev = 0
+	function mod:PlagueofFireApplied(args)
+		local t = args.time
+		if self:Me(args.destGUID) and t-prev > 2 then -- Can spread a lot if not dealt with correctly
+			prev = t
+			self:PersonalMessage(285346)
+			self:PlaySound(285346, "warning")
+			self:Say(285346, self:SpellName(177849)) -- Fire on X
+		end
 	end
 end
 

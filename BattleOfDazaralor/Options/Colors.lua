@@ -135,7 +135,7 @@ BigWigs:AddColors("Conclave of the Chosen", {
 })
 
 BigWigs:AddColors("King Rastakhan", {
-	[284686] = "orange",
+	[284686] = {"blue","orange"},
 	[284719] = "cyan",
 	[284781] = {"blue","yellow"},
 	[284831] = {"blue","purple"},
