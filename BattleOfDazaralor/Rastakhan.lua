@@ -114,7 +114,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	elseif spellId == 290852 then -- King Rastakhan P3 -> P4 Conversation
 		stage = 4
 		toadCount = 1
-		self:CloseInfo(285195) -- Deathly Withering
+		if not self:LFR() then
+			self:CloseInfo(285195) -- Deathly Withering
+		end
 
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
@@ -162,6 +164,7 @@ do
 		if self:Me(guid) then
 			self:Flash(284686)
 			self:Yell2(284686)
+			self:YellCountdown(284686, 5)
 		end
 	end
 
@@ -217,7 +220,9 @@ function mod:DeathsPresence(args)
 		self:StopBar(284831) -- Scorching Detonation
 		self:StopBar(285172) -- Greater Serpent Totem
 
-		self:OpenInfo(285195, self:SpellName(285195)) -- Deathly Withering
+		if not self:LFR() then
+			self:OpenInfo(285195, self:SpellName(285195)) -- Deathly Withering
+		end
 		self:Bar(285003, 19, CL.count:format(self:SpellName(285003), zombieDustTotemCount)) -- Zombie Dust Totem
 		self:Bar(285213, 24.3) -- Caress of Death
 		self:Bar(284831, 27.3) -- Scorching Detonation
@@ -228,13 +233,17 @@ function mod:DeathsPresence(args)
 end
 
 function mod:DeathlyWithering(args)
-	deathlyWitheringList[args.destName] = args.amount or 1
-	self:SetInfoByTable(args.spellId, deathlyWitheringList)
+	if not self:LFR() then
+		deathlyWitheringList[args.destName] = args.amount or 1
+		self:SetInfoByTable(args.spellId, deathlyWitheringList)
+	end
 end
 
 function mod:DeathlyWitheringRemoved(args)
-	deathlyWitheringList[args.destName] = nil
-	self:SetInfoByTable(args.spellId, deathlyWitheringList)
+	if not self:LFR() then
+		deathlyWitheringList[args.destName] = nil
+		self:SetInfoByTable(args.spellId, deathlyWitheringList)
+	end
 end
 
 function mod:PlagueofFire(args)
@@ -243,11 +252,16 @@ function mod:PlagueofFire(args)
 	self:Bar(args.spellId, stage == 3 and 39 or 25.5)
 end
 
-function mod:PlagueofFireApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(285346)
-		self:PlaySound(285346, "warning")
-		self:Say(285346, self:SpellName(177849)) -- Fire on X
+do
+	local prev = 0
+	function mod:PlagueofFireApplied(args)
+		local t = args.time
+		if self:Me(args.destGUID) and t-prev > 2 then
+			prev = t
+			self:PersonalMessage(285346)
+			self:PlaySound(285346, "warning")
+			self:Say(285346, self:SpellName(177849)) -- Fire on X
+		end
 	end
 end
 
