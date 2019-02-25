@@ -366,7 +366,7 @@ do
 				end
 			end
 
-			while lines < 5 then
+			while lines < 5 do
 				lines = lines + 1
 				local lines2 = lines*2
 				mod:SetInfo(284168, lines2 - 1, "")
