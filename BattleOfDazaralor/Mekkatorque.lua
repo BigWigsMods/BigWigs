@@ -347,9 +347,10 @@ do
 				if lines < 6 then -- room for 5 in infobox
 					local timeLeft = math.max(expires - GetTime(), 0)
 					local timeLeftPercentage = timeLeft / (mod:Mythic() and 30 or 45)
-					mod:SetInfo(284168, (lines*2) - 1, "|T134520:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 134520 = inv_misc_wrench_01
-					mod:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
-					mod:SetInfoBar(284168, (lines*2), timeLeftPercentage, .3, 1, .3, .67)
+					local lines2 = lines*2
+					mod:SetInfo(284168, lines2 - 1, "|T134520:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 134520 = inv_misc_wrench_01
+					mod:SetInfo(284168, lines2, CL.seconds:format(timeLeft))
+					mod:SetInfoBar(284168, lines2, timeLeftPercentage, .3, 1, .3, .67)
 				end
 			end
 
@@ -358,10 +359,19 @@ do
 				if lines < 6 then -- room for 5 in infobox
 					local timeLeft = math.max(expires - GetTime(), 0)
 					local timeLeftPercentage = timeLeft / 30
-					mod:SetInfo(284168, (lines*2) - 1, "|T236446:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 236446 = achievement_character_gnome_male
-					mod:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
-					mod:SetInfoBar(284168, (lines*2), timeLeftPercentage, .48, .48, .48, .67)
+					local lines2 = lines*2
+					mod:SetInfo(284168, lines2 - 1, "|T236446:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 236446 = achievement_character_gnome_male
+					mod:SetInfo(284168, lines2, CL.seconds:format(timeLeft))
+					mod:SetInfoBar(284168, lines2, timeLeftPercentage, .48, .48, .48, .67)
 				end
+			end
+
+			while lines < 5 then
+				lines = lines + 1
+				local lines2 = lines*2
+				mod:SetInfo(284168, lines2 - 1, "")
+				mod:SetInfo(284168, lines2, "")
+				mod:SetInfoBar(284168, lines2, 0)
 			end
 		end
 	end
