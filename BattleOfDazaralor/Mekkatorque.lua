@@ -42,21 +42,21 @@ local normalTimers = { -- XXX add me
 local heroicTimers = {
 	-- "SPELL_CAST_START", "BusterCannon", 282153
 	[282153] = {
-		[1] = {13, 33, 64.5, 40, 26.5, 65, 28},
+		[1] = {13, 33, 64.5, 40, 26.5, 65, 28, 30.5},
 		[2] = {},
 		[3] = {17.7, 29, 64.5, 40, 26.5, 65, 28}
 	},
 
 	-- "SPELL_CAST_START", "BlastOff", 282205
 	[282205] = {
-		[1] = {41.1, 26.9, 37.5, 34.3, 50.2, 75.6,},
+		[1] = {41.1, 26.9, 37.5, 34.3, 50.2, 75.6, 30.0},
 		[2] = {},
 		[3] = {41.7, 29, 35.5, 34.3, 50.2, 75, 30.5},
 	},
 
 	-- "SPELL_CAST_SUCCESS", "GigavoltCharge", 287757, 286597
 	[286646] = {
-		[1] = {21.5, 40, 40, 33, 42, 40, 44.5},
+		[1] = {21.5, 40, 40, 33, 42, 40, 44.5, 30.5},
 		[2] = {17.4, 34.1},
 		[3] = {22.2, 40, 40, 35, 40, 40, 47.6, 27.4},
 	},
@@ -70,7 +70,7 @@ local heroicTimers = {
 
 	-- "SPELL_CAST_SUCCESS", "DeploySparkBot", 288410, 287691
 	[288410] = {
-		[1] = {6.5, 22.5, 27.5, 42.5, 22.5, 25, 42.5, 22.5, 22.5},
+		[1] = {6.5, 22.5, 27.5, 42.5, 22.5, 25, 42.5, 22.5, 22.5, 55.0},
 		[2] = {21.5},
 		[3] = {17.2, 40, 42.5, 47.4, 42.5, 45, 55}
 	},
@@ -347,9 +347,10 @@ do
 				if lines < 6 then -- room for 5 in infobox
 					local timeLeft = math.max(expires - GetTime(), 0)
 					local timeLeftPercentage = timeLeft / (mod:Mythic() and 30 or 45)
-					mod:SetInfo(284168, (lines*2) - 1, "|T134520:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 134520 = inv_misc_wrench_01
-					mod:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
-					mod:SetInfoBar(284168, (lines*2), timeLeftPercentage, .3, 1, .3, .67)
+					local lines2 = lines*2
+					mod:SetInfo(284168, lines2 - 1, "|T134520:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 134520 = inv_misc_wrench_01
+					mod:SetInfo(284168, lines2, CL.seconds:format(timeLeft))
+					mod:SetInfoBar(284168, lines2, timeLeftPercentage, .3, 1, .3, .67)
 				end
 			end
 
@@ -358,10 +359,19 @@ do
 				if lines < 6 then -- room for 5 in infobox
 					local timeLeft = math.max(expires - GetTime(), 0)
 					local timeLeftPercentage = timeLeft / 30
-					mod:SetInfo(284168, (lines*2) - 1, "|T236446:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 236446 = achievement_character_gnome_male
-					mod:SetInfo(284168, (lines*2), CL.seconds:format(timeLeft))
-					mod:SetInfoBar(284168, (lines*2), timeLeftPercentage, .48, .48, .48, .67)
+					local lines2 = lines*2
+					mod:SetInfo(284168, lines2 - 1, "|T236446:15:15:0:0:64:64:4:60:4:60|t "..mod:ColorName(name)) -- 236446 = achievement_character_gnome_male
+					mod:SetInfo(284168, lines2, CL.seconds:format(timeLeft))
+					mod:SetInfoBar(284168, lines2, timeLeftPercentage, .48, .48, .48, .67)
 				end
+			end
+
+			while lines < 5 do
+				lines = lines + 1
+				local lines2 = lines*2
+				mod:SetInfo(284168, lines2 - 1, "")
+				mod:SetInfo(284168, lines2, "")
+				mod:SetInfoBar(284168, lines2, 0)
 			end
 		end
 	end
