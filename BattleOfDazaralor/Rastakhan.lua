@@ -32,7 +32,7 @@ function mod:GetOptions()
 		284933, -- Plague of Toads
 		285172, -- Greater Serpent Totem
 		{290450, "SAY", "FLASH"}, -- Seal of Purification
-		{284686, "SAY", "FLASH"}, -- Meteor Leap
+		{284686, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Meteor Leap
 		284719, -- Crushing Leap
 		284781, -- Grievous Axe
 		-- Stage 2
