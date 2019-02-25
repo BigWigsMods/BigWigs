@@ -45,6 +45,7 @@ function mod:GetOptions()
 		283628, -- Heal
 		283650, -- Blinding Faith
 		{"disorient", "COUNTDOWN"},
+		283582, -- Consecration
 		-- Mythic
 		287469, -- Prayer for the Fallen
 	}, {
@@ -66,6 +67,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Penance", 284595)
 	self:Log("SPELL_CAST_START", "Heal", 283628)
 	self:Log("SPELL_CAST_START", "BlindingFaith", 283650)
+
+	self:Log("SPELL_AURA_APPLIED", "ConsecrationDamage", 283582)
+	self:Log("SPELL_PERIODIC_DAMAGE", "ConsecrationDamage", 283582)
+	self:Log("SPELL_PERIODIC_MISSED", "ConsecrationDamage", 283582)
 
 	-- Mythic
 	self:Log("SPELL_CAST_START", "PrayerfortheFallen", 287469)
@@ -155,6 +160,20 @@ function mod:BlindingFaith(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar("disorient", 4, L.disorient, L.disorient_icon)
 	self:CDBar(args.spellId, 15)
+end
+
+do
+	local prev = 0
+	function mod:ConsecrationDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 2 then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
+	end
 end
 
 function mod:PrayerfortheFallen(args)
