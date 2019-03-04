@@ -398,6 +398,7 @@ do
 		inTestMode = false
 		opener = nil
 		nameList, sortingTbl = {}, {}
+		display:Hide()
 		for i = 1, 40 do
 			display.text[i]:SetText("")
 		end
