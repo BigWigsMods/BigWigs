@@ -165,6 +165,7 @@ do
 		local bar = display:CreateTexture(nil, bgLayer, nil, bgLevel + 1)
 		bar:SetSize(infoboxWidth, infoboxHeight/5-1)
 		bar:SetColorTexture(0, 1, 0, 0.3)
+		bar:Hide()
 		if i == 1 then
 			bar:SetPoint("TOPLEFT", display, "TOPLEFT", 0, -1)
 		elseif i == 21 then
