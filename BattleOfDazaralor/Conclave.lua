@@ -390,7 +390,9 @@ do
 	function mod:MindWipeApplied(args)
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "alert")
+			if not self:Dispeller("magic", nil, args.spellId) then -- Don't play twice if it's on you and you're a dispeller
+				self:PlaySound(args.spellId, "alert")
+			end
 		end
 
 		playerList[#playerList+1] = args.destName
