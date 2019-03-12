@@ -13,7 +13,7 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local isPakusAspectDead = nil
+local fasterPakusWrathActive = false
 local kragwasWrathCount = 0
 local bossesKilled = 0
 
@@ -123,7 +123,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	isPakusAspectDead = nil
+	fasterPakusWrathActive = false
 	kragwasWrathCount = 0
 	bossesKilled = 0
 	self:Bar(282098, 5) -- Gift of Wind
@@ -155,7 +155,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		-- Stop bars
 		local mobId = self:MobId(UnitGUID(unit))
 		if mobId == 144747 then -- Pa'ku's Aspect
-			isPakusAspectDead = true
 			self:StopBar(282098) -- Gift of Wind
 		elseif mobId == 144767 then -- Gonk's Aspect
 			self:StopBar(282135) -- Crawling Hex
@@ -172,6 +171,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 			self:Bar(282444, 20.5) -- Lacerating Claws
 			self:CDBar(282447, 45, L.leap) -- Kimbul's Wrath XXX check this
 		elseif bossesKilled == 2 then -- Akunda spawning
+			fasterPakusWrathActive = true
+			local t = self:BarTimeLeft(282107)
+			if t > 15 then -- Guess. We don't know what the buffer is other than being 14s or higher
+				self:Bar(282107, t-10)
+			end
+
 			self:Bar(285879, 5) -- Mind Wipe
 			self:Bar(282411, 16) -- Thundering Storm
 			self:CDBar(286811, 20) -- Akunda's Wrath XXX check this
@@ -185,7 +190,7 @@ function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find("282107", nil, true) then -- Pa'ku's Wrath
 		self:Message2(282107, "red")
 		self:PlaySound(282107, "warning")
-		self:Bar(282107, isPakusAspectDead and 60 or 70)
+		self:Bar(282107, fasterPakusWrathActive and 60 or 70)
 	end
 end
 
@@ -385,7 +390,9 @@ do
 	function mod:MindWipeApplied(args)
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "alert")
+			if not self:Dispeller("magic", nil, args.spellId) then -- Don't play twice if it's on you and you're a dispeller
+				self:PlaySound(args.spellId, "alert")
+			end
 		end
 
 		playerList[#playerList+1] = args.destName

@@ -80,18 +80,6 @@ do
 		db.posx = self:GetLeft() * s
 		db.posy = self:GetTop() * s
 	end)
-	display:SetScript("OnHide", function(self)
-		inTestMode = false
-		opener = nil
-		nameList = {}
-		for i = 1, 40 do
-			self.text[i]:SetText("")
-		end
-		for i = 1, 40, 2 do
-			self.bar[i]:Hide()
-		end
-		self.title:SetText(L.infoBox)
-	end)
 
 	local bg = display:CreateTexture()
 	bg:SetAllPoints(display)
@@ -177,6 +165,7 @@ do
 		local bar = display:CreateTexture(nil, bgLayer, nil, bgLevel + 1)
 		bar:SetSize(infoboxWidth, infoboxHeight/5-1)
 		bar:SetColorTexture(0, 1, 0, 0.3)
+		bar:Hide()
 		if i == 1 then
 			bar:SetPoint("TOPLEFT", display, "TOPLEFT", 0, -1)
 		elseif i == 21 then
@@ -250,7 +239,7 @@ end
 
 function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
 	if opener then
-		display:Hide()
+		self:Close()
 	end
 
 	opener = module or self
@@ -407,8 +396,17 @@ do
 	end
 
 	function plugin:Close()
+		inTestMode = false
+		opener = nil
+		nameList, sortingTbl = {}, {}
 		display:Hide()
-		sortingTbl = {}
+		for i = 1, 40 do
+			display.text[i]:SetText("")
+		end
+		for i = 1, 40, 2 do
+			display.bar[i]:Hide()
+		end
+		display.title:SetText(L.infoBox)
 	end
 end
 

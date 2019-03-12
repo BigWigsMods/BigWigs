@@ -507,7 +507,9 @@ do
 		local playerListCount = #playerList+1
 		playerList[playerListCount] = args.destName
 		playerIcons[playerListCount] = hexCounter
-		if self:Me(args.destGUID) then
+		if self:Dispeller("magic") then
+			self:PlaySound(args.spellId, "alarm", nil, playerList)
+		elseif self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(hexOfLethargyMarker) then

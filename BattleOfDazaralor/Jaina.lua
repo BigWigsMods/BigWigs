@@ -430,13 +430,6 @@ function mod:HowlingWindsRemoved(args)
 	self:CDBar(285254, 16) -- Avalanche
 	self:CDBar(288441, 32.5, CL.count:format(self:SpellName(288441), icefallCount)) -- Icefall
 	self:CDBar(288374, 41.5) -- Siegebreaker Blast
-
-	-- Reopening the InfoBox and here is why:
-	--  - During the cinematic, UIParent:Hide() is called.
-	--  => We cleanup our InfoBox on hide, so we basically lose track of the raid.
-	--     Easy fix: Just open it again. Done.
-	self:OpenInfo(287993, self:SpellName(287993))
-	self:SetInfoByTable(287993, chillingTouchList)
 end
 
 -- Stage 2
@@ -552,13 +545,6 @@ function mod:ArcaneBarrageRemoved(args)
 	self:CDBar(288345, self:Mythic() and 49 or 49.5) -- Glacial Ray
 	self:CDBar(288374, 60.5) -- Siegebreaker Blast
 	self:CDBar(288441, 61.5, CL.count:format(self:SpellName(288441), icefallCount)) -- Icefall
-
-	-- Reopening the InfoBox and here is why:
-	--  - During the cinematic, UIParent:Hide() is called.
-	--  => We cleanup our InfoBox on hide, so we basically lose track of the raid.
-	--     Easy fix: Just open it again. Done.
-	self:OpenInfo(287993, self:SpellName(287993))
-	self:SetInfoByTable(287993, chillingTouchList)
 end
 
 do

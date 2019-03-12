@@ -2,6 +2,7 @@
 BigWigs:AddSounds("Champion of the Light Alliance", {
 	[282113] = "info",
 	[283573] = "alarm",
+	[283582] = "alarm",
 	[283598] = "alert",
 	[283628] = "alert",
 	[283650] = "warning",
@@ -17,6 +18,7 @@ BigWigs:AddSounds("Champion of the Light Alliance", {
 BigWigs:AddSounds("Champion of the Light Horde", {
 	[282113] = "info",
 	[283573] = "alarm",
+	[283582] = "alarm",
 	[283598] = "alert",
 	[283628] = "alert",
 	[283650] = "warning",
@@ -209,6 +211,7 @@ BigWigs:AddSounds("Lady Jaina Proudmoore", {
 })
 
 BigWigs:AddSounds("Battle of Dazar'alor Trash", {
+	[288808] = "alarm",
 	[288815] = "long",
 	[289772] = "long",
 	[289917] = "warning",

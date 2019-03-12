@@ -56,7 +56,7 @@ local heroicTimers = {
 
 	-- "SPELL_CAST_SUCCESS", "GigavoltCharge", 287757, 286597
 	[286646] = {
-		[1] = {21.5, 40, 40, 33, 42, 40, 44.5, 30.5},
+		[1] = {21.5, 40, 40, 33, 42, 40, 44.5, 30.5, 33},
 		[2] = {17.4, 34.1},
 		[3] = {22.2, 40, 40, 35, 40, 40, 47.6, 27.4},
 	},
@@ -70,7 +70,7 @@ local heroicTimers = {
 
 	-- "SPELL_CAST_SUCCESS", "DeploySparkBot", 288410, 287691
 	[288410] = {
-		[1] = {6.5, 22.5, 27.5, 42.5, 22.5, 25, 42.5, 22.5, 22.5, 55.0},
+		[1] = {6.5, 22.5, 27.5, 42.5, 22.5, 25, 42.5, 22.5, 22.5, 55.0, 22.5},
 		[2] = {21.5},
 		[3] = {17.2, 40, 42.5, 47.4, 42.5, 45, 55}
 	},
@@ -93,35 +93,35 @@ local heroicTimers = {
 local mythicTimers = {
 	-- "SPELL_CAST_START", "BusterCannon", 282153
 	[282153] = {
-		[1] = {13.1, 33.0, 33.5, 31.0, 40.0, 26.5, 65.0, 28.0, 30.5},
+		[1] = {13.1, 33.0, 33.5, 31.0, 40.0, 26.5, 65.0, 28.0, 30.5, 40},
 		[2] = {},
 		[3] = {17.8, 29.0, 33.5, 31.0, 40.0, 26.5},
 	},
 
 	-- "SPELL_CAST_START", "BlastOff", 282205
 	[282205] = {
-		[1] = {41.5, 28.5, 35.5, 34.5, 49.9, 75.5, 30.0},
+		[1] = {41.5, 28.5, 35.5, 34.5, 49.9, 75.5, 30.0, 34.5},
 		[2] = {},
 		[3] = {42.2, 28.5, 35.5, 34.6},
 	},
 
 	-- "SPELL_CAST_SUCCESS", "GigavoltCharge", 287757, 286597
 	[286646] = {
-		[1] = {20, 41.5, 38.5, 34.5, 82, 43, 30.5},
-		[2] = {},
+		[1] = {20, 41.5, 38.5, 34.5, 82, 43, 30.5, 33},
+		[2] = {17.3, 32},
 		[3] = {20.5, 40, 40, 35, 40},
 	},
 
 	-- "SPELL_CAST_START", "WormholeGenerator", 287952
 	[287952] = {
-		[1] = {38.0, 98.7, 125.8},
+		[1] = {38.0, 98.7, 125.8, 64.3},
 		[2] = {50.3},
 		[3] = {38.7, 98.7},
 	},
 
 	-- "SPELL_CAST_SUCCESS", "DeploySparkBot", 288410, 287691
 	[288410] = {
-		[1] = {6.6, 22.5, 27.5, 42.5, 22.5, 25.0, 42.5, 22.5, 22.5, 55.0, 22.5},
+		[1] = {6.6, 22.5, 27.5, 42.5, 22.5, 25.0, 42.5, 22.5, 22.5, 55.0, 22.5, 25},
 		[2] = {21.3},
 		[3] = {17.2, 40.0, 42.5, 48.5, 41.5},
 	},
@@ -413,6 +413,7 @@ do
 		end
 		tamperCount = tamperCount + 1
 		tamperingList[args.destName] = GetTime() + (self:Mythic() and 30 or 45)
+		shrunkList[args.destName] = nil
 		if shrunkCount == 0 and tamperCount == 1 then -- First application
 			self:OpenInfo(284168, self:SpellName(284168))
 			UpdateShrunkBox()
@@ -449,9 +450,7 @@ function mod:EvasiveManeuvers(args)
 	enlargerCount = 1
 	sheepCount = 1
 
-	if not self:Mythic() then
-		self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
-	end
+	self:Bar(286646, timers[286646][stage][chargeCount], CL.count:format(L.gigavolt_alt_text, chargeCount)) -- Bombs // Gigavolt Charge
 	self:Bar(287952, timers[287952][stage][wormholeCount], CL.count:format(self:SpellName(287952), wormholeCount)) -- Wormhole Generator
 	self:Bar(288410, timers[288410][stage][sparkBotCount], CL.count:format(self:SpellName(288410), sparkBotCount)) -- Deploy Spark Bot
 	self:Bar(286693, timers[286693][stage][enlargerCount], CL.count:format(self:SpellName(286693), enlargerCount)) -- World Enlarger
