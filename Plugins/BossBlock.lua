@@ -25,7 +25,7 @@ plugin.defaultDB = {
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
-local SetCVar = C_CVar and C_CVar.SetCVar or SetCVar -- XXX 8.1.5 compat
+local SetCVar = C_CVar.SetCVar
 
 -------------------------------------------------------------------------------
 -- Options
