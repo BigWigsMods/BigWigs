@@ -48,7 +48,7 @@ function mod:GetOptions()
 		286435, -- Discharge Shadow Core
 	}, {
 		[282399] = mod.displayName,
-		[282471] = -18965, -- Death Specter
+		[282471] = -19378, -- Death Specter
 	}
 end
 
