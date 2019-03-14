@@ -208,6 +208,11 @@ function mod:OnEngage()
 	self:Berserk(self:Mythic() and 720 or 900)
 end
 
+function mod:VerifyEnable(unit)
+	local hp = UnitHealthMax(unit)
+	return hp > 0 and (UnitHealth(unit) / hp) > 0.1 -- 10%
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
