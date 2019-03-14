@@ -19,6 +19,7 @@ local zombieDustTotemCount = 1
 local detonationCount = 1
 local doorCount = 1
 local deathlyWitheringList = {}
+local inDeathRealm = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -86,6 +87,8 @@ function mod:OnBossEnable()
 	-- Stage 3
 	self:Log("SPELL_CAST_START", "InevitableEnd", 287333)
 	self:Log("SPELL_CAST_START", "NecroticSmash", 286742)
+	self:Log("SPELL_AURA_APPLIED", "RealmOfDeathApplied", 284455)
+	self:Log("SPELL_AURA_REMOVED", "RealmOfDeathRemoved", 284455)
 end
 
 function mod:OnEngage()
@@ -95,6 +98,7 @@ function mod:OnEngage()
 	detonationCount = 1
 	doorCount = 1
 	deathlyWitheringList = {}
+	inDeathRealm = false
 
 	self:Bar(284781, 8.5) -- Grievous Axe
 	self:Bar(290450, 8.5) -- Seal of Purification
@@ -261,7 +265,14 @@ function mod:DeathsPresence(args)
 end
 
 function mod:DeathlyWithering(args)
-	deathlyWitheringList[args.destName] = args.amount or 1
+	local amount = args.amount or 1
+	if inDeathRealm and self:Me(args.destGUID) and amount % 5 == 0 then
+		self:StackMessage(args.spellId, args.destName, args.amount, "blue")
+		if amount > 5 then
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+	deathlyWitheringList[args.destName] = amount
 	self:SetInfoByTable(args.spellId, deathlyWitheringList)
 end
 
@@ -327,4 +338,16 @@ function mod:NecroticSmash(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 34)
+end
+
+function mod:RealmOfDeathApplied(args)
+	if self:Me(args.destGUID) then
+		inDeathRealm = true
+	end
+end
+
+function mod:RealmOfDeathRemoved(args)
+	if self:Me(args.destGUID) then
+		inDeathRealm = false
+	end
 end
