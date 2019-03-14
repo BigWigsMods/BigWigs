@@ -15,6 +15,7 @@ mod.respawnTime = 15 -- PTR
 --
 
 local waveofLightCounter = 0
+local faithCaster = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -67,6 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Penance", 284595)
 	self:Log("SPELL_CAST_START", "Heal", 283628)
 	self:Log("SPELL_CAST_START", "BlindingFaith", 283650)
+	self:Death("CrusaderDeath", 145903) -- Darkforged Crusader
 
 	self:Log("SPELL_AURA_APPLIED", "ConsecrationDamage", 283582)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ConsecrationDamage", 283582)
@@ -78,6 +80,7 @@ end
 
 function mod:OnEngage()
 	waveofLightCounter = 1
+	faithCaster = nil
 
 	self:CDBar(283650, 12) -- Blinding Faith
 	self:Bar(283598, 13, CL.count:format(self:SpellName(283598), waveofLightCounter)) -- Wave of Light
@@ -156,10 +159,17 @@ function mod:Heal(args)
 end
 
 function mod:BlindingFaith(args)
+	faithCaster = args.sourceGUID
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar("disorient", 4, L.disorient, L.disorient_icon)
 	self:CDBar(args.spellId, 15)
+end
+
+function mod:CrusaderDeath(args)
+	if args.destGUID == faithCaster then
+		self:StopBar(L.disorient)
+	end
 end
 
 do
