@@ -21,6 +21,15 @@ local doorCount = 1
 local deathlyWitheringList = {}
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.leap_cancelled = "Leap Cancelled"
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -56,9 +65,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "GreaterSerpentTotem", 285172)
 	self:Log("SPELL_AURA_APPLIED", "SealofPurificationApplied", 290450, 284662) -- Heroic, Mythic
 	self:Log("SPELL_CAST_START", "MeteorLeap", 284686)
+	self:Log("SPELL_CAST_SUCCESS", "MeteorLeapSuccess", 284686)
 	self:Log("SPELL_CAST_SUCCESS", "CrushingLeap", 284719)
 	self:Log("SPELL_CAST_START", "GrievousAxe", 284781)
 	self:Log("SPELL_AURA_APPLIED", "GrievousAxeApplied", 284781)
+	self:Death("RokaDeath", 146322) -- Siegebreaker Roka
 
 	-- Stage 2
 	self:Log("SPELL_AURA_APPLIED", "DeathsPresence", 284376)
@@ -158,7 +169,9 @@ function mod:SealofPurificationApplied(args)
 end
 
 do
+	local tarGuid = nil
 	local function printTarget(self, name, guid)
+		tarGuid = guid
 		self:TargetMessage2(284686, "orange", name)
 		self:PlaySound(284686, "alarm")
 		if self:Me(guid) then
@@ -172,6 +185,21 @@ do
 		self:GetBossTarget(printTarget, 0.4, args.sourceGUID)
 		self:CastBar(args.spellId, 5)
 		self:Bar(args.spellId, 34)
+	end
+
+	function mod:MeteorLeapSuccess()
+		tarGuid = nil
+	end
+
+	function mod:RokaDeath()
+		if tarGuid then
+			if self:Me(tarGuid) then
+				self:Message2(284686, "blue", L.leap_cancelled)
+				self:CancelYellCountdown(284686)
+			else
+				self:Message2(284686, "green", L.leap_cancelled)
+			end
+		end
 	end
 end
 
