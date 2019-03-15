@@ -64,7 +64,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ScorchingDetonationSuccess", 284831)
 	self:Log("SPELL_CAST_START", "PlagueofToads", 284933)
 	self:Log("SPELL_CAST_SUCCESS", "GreaterSerpentTotem", 285172)
-	self:Log("SPELL_AURA_APPLIED", "SealofPurificationApplied", 290450, 284662) -- Heroic, Mythic
+	self:Log("SPELL_CAST_START", "SealofPurification", 284662, 290450) -- Mythic, Others
+	self:Log("SPELL_AURA_APPLIED", "SealofPurificationApplied", 284662, 290450) -- Mythic, Others
 	self:Log("SPELL_CAST_START", "MeteorLeap", 284686)
 	self:Log("SPELL_CAST_SUCCESS", "MeteorLeapSuccess", 284686)
 	self:Log("SPELL_CAST_SUCCESS", "CrushingLeap", 284719)
@@ -162,14 +163,35 @@ function mod:GreaterSerpentTotem(args)
 	self:Bar(args.spellId, 31.5)
 end
 
-function mod:SealofPurificationApplied(args)
-	self:TargetMessage2(290450, "yellow", args.destName)
-	if self:Me(args.destGUID) then
-		self:PlaySound(290450, "warning")
-		self:Flash(290450)
-		self:Say(290450)
+do
+	local prev = 0
+	function mod:SealofPurificationApplied(args)
+		local t = GetTime()
+		if t-prev > 2 then -- Backup for the scan failing
+			prev = t
+			self:TargetMessage2(290450, "yellow", args.destName)
+			if self:Me(args.destGUID) then
+				self:PlaySound(290450, "warning")
+				self:Flash(290450)
+				self:Say(290450)
+			end
+		end
 	end
-	self:Bar(290450, 25.5)
+
+	local function printTarget(self, name, guid)
+		prev = GetTime()
+		self:TargetMessage2(290450, "yellow", name)
+		if self:Me(guid) then
+			self:PlaySound(290450, "warning")
+			self:Flash(290450)
+			self:Say(290450)
+		end
+	end
+
+	function mod:SealofPurification(args)
+		self:GetBossTarget(printTarget, 0.4, args.sourceGUID)
+		self:Bar(290450, 25.5)
+	end
 end
 
 do
