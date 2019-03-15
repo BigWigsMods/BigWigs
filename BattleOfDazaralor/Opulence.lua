@@ -519,6 +519,9 @@ do
 	end
 
 	function mod:HexOfLethargyRemoved(args)
+		if self:Me(args.destGUID) then
+			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+		end
 		if self:GetOption(hexOfLethargyMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
