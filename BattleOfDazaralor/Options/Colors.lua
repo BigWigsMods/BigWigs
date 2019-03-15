@@ -101,7 +101,7 @@ BigWigs:AddColors("Opulence", {
 	[283507] = {"blue","yellow"},
 	[283606] = "yellow",
 	[284424] = "blue",
-	[284470] = {"blue","orange"},
+	[284470] = {"blue","green","orange"},
 	[284493] = "orange",
 	[284519] = {"blue","green"},
 	[284645] = {"blue","green"},
@@ -137,13 +137,14 @@ BigWigs:AddColors("Conclave of the Chosen", {
 })
 
 BigWigs:AddColors("King Rastakhan", {
-	[284686] = {"blue","orange"},
+	[284686] = {"blue","green","orange"},
 	[284719] = "cyan",
 	[284781] = {"blue","yellow"},
 	[284831] = {"blue","purple"},
 	[284933] = "yellow",
 	[285003] = "cyan",
 	[285172] = "cyan",
+	[285195] = "blue",
 	[285213] = "purple",
 	[285346] = {"blue","orange"},
 	[286742] = "red",
@@ -166,7 +167,6 @@ BigWigs:AddColors("High Tinker Mekkatorque", {
 })
 
 BigWigs:AddColors("Stormwall Blockade", {
-	[284106] = "yellow",
 	[284262] = "orange",
 	[284362] = "yellow",
 	[284383] = "cyan",
@@ -177,6 +177,7 @@ BigWigs:AddColors("Stormwall Blockade", {
 	[285350] = {"blue","yellow"},
 	[286558] = "red",
 	[287995] = "red",
+	[288205] = {"blue","yellow"},
 	[288696] = {"green","red"},
 	["stages"] = "cyan",
 })

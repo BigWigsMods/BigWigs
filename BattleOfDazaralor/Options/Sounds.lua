@@ -141,6 +141,7 @@ BigWigs:AddSounds("King Rastakhan", {
 	[284933] = "alert",
 	[285003] = "info",
 	[285172] = "info",
+	[285195] = "alarm",
 	[285213] = "alarm",
 	[285346] = {"alarm","warning"},
 	[286742] = "alarm",
@@ -163,7 +164,6 @@ BigWigs:AddSounds("High Tinker Mekkatorque", {
 })
 
 BigWigs:AddSounds("Stormwall Blockade", {
-	[284106] = "alert",
 	[284262] = "alarm",
 	[284362] = "alert",
 	[284383] = {"alarm","info"},
@@ -174,6 +174,7 @@ BigWigs:AddSounds("Stormwall Blockade", {
 	[285350] = "warning",
 	[286558] = "info",
 	[287995] = "info",
+	[288205] = "warning",
 	[288696] = {"info","long"},
 	["stages"] = "long",
 })
