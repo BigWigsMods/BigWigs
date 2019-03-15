@@ -242,7 +242,13 @@ function plugin:RestyleWindow()
 			end
 		end
 	end
-	proxAnchor.text:SetFont(media:Fetch(FONT, db.fontName), db.fontSize)
+
+	local font = media:Fetch(FONT, db.fontName)
+	-- Font sizes match original from createAnchor
+	proxAnchor.title:SetFont(font, 10)
+	proxAnchor.ability:SetFont(font, 12)
+	proxAnchor.text:SetFont(font, db.fontSize)
+
 	if db.lock then
 		locked = nil
 		lockDisplay()
