@@ -13,7 +13,7 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local isPakusAspectDead = nil
+local fasterPakusWrathActive = false
 local kragwasWrathCount = 0
 local bossesKilled = 0
 
@@ -23,10 +23,11 @@ local bossesKilled = 0
 
 local L = mod:GetLocale()
 if L then
+	L.custom_on_fixate_plates = "Mark of Prey icon on Enemy Nameplate"
+	L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates_icon = 282209
 	L.killed = "%s killed!"
-
 	L.count_of = "%s (%d/%d)"
-
 	L.leap = mod:SpellName(192553) -- Leap, replacement for Kimbul's Wrath
 end
 
@@ -54,6 +55,7 @@ function mod:GetOptions()
 		285893, -- Wild Maul
 		282155, -- Gonk's Wrath
 		{282209, "SAY", "FLASH"}, -- Mark of Prey
+		"custom_on_fixate_plates",
 
 		-- Kimbul's Aspect
 		{282444, "TANK"}, -- Lacerating Claws
@@ -91,10 +93,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "HasteningWinds", 285945)
 
 	-- Gonk's Aspect
-	self:Log("SPELL_AURA_APPLIED", "CrawlingHexApplied", 282135)
-	self:Log("SPELL_AURA_REMOVED", "CrawlingHexRemoved", 282135)
+	self:Log("SPELL_AURA_APPLIED", "CrawlingHexApplied", 290573, 282135) -- LFR, others
+	self:Log("SPELL_AURA_REMOVED", "CrawlingHexRemoved", 290573, 282135) -- LFR, others
 	self:Log("SPELL_CAST_SUCCESS", "WildMaul", 285893)
 	self:Log("SPELL_AURA_APPLIED", "MarkofPrey", 282209)
+	self:Log("SPELL_AURA_REMOVED", "MarkofPreyRemoved", 282209)
 
 	-- Kimbul's Aspect
 	self:Log("SPELL_CAST_START", "LaceratingClaws", 289560)
@@ -113,10 +116,14 @@ function mod:OnBossEnable()
 
 	-- Krag'wa
 	self:Log("SPELL_CAST_SUCCESS", "KragwasWrath", 282636)
+
+	if self:GetOption("custom_on_fixate_plates") then
+		self:ShowPlates()
+	end
 end
 
 function mod:OnEngage()
-	isPakusAspectDead = nil
+	fasterPakusWrathActive = false
 	kragwasWrathCount = 0
 	bossesKilled = 0
 	self:Bar(282098, 5) -- Gift of Wind
@@ -126,6 +133,12 @@ function mod:OnEngage()
 	self:Bar(282107, 73) -- Pa'ku's Wrath
 	if not self:Easy() then
 		self:CDBar(282636, 29) -- Krag'wa's Wrath
+	end
+end
+
+function mod:OnBossDisable()
+	if self:GetOption("custom_on_fixate_plates") then
+		self:HidePlates()
 	end
 end
 
@@ -142,7 +155,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		-- Stop bars
 		local mobId = self:MobId(UnitGUID(unit))
 		if mobId == 144747 then -- Pa'ku's Aspect
-			isPakusAspectDead = true
 			self:StopBar(282098) -- Gift of Wind
 		elseif mobId == 144767 then -- Gonk's Aspect
 			self:StopBar(282135) -- Crawling Hex
@@ -159,6 +171,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 			self:Bar(282444, 20.5) -- Lacerating Claws
 			self:CDBar(282447, 45, L.leap) -- Kimbul's Wrath XXX check this
 		elseif bossesKilled == 2 then -- Akunda spawning
+			fasterPakusWrathActive = true
+			local t = self:BarTimeLeft(282107)
+			if t > 15 then -- Guess. We don't know what the buffer is other than being 14s or higher
+				self:Bar(282107, t-10)
+			end
+
 			self:Bar(285879, 5) -- Mind Wipe
 			self:Bar(282411, 16) -- Thundering Storm
 			self:CDBar(286811, 20) -- Akunda's Wrath XXX check this
@@ -172,7 +190,7 @@ function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find("282107", nil, true) then -- Pa'ku's Wrath
 		self:Message2(282107, "red")
 		self:PlaySound(282107, "warning")
-		self:Bar(282107, isPakusAspectDead and 60 or 70)
+		self:Bar(282107, fasterPakusWrathActive and 60 or 70)
 	end
 end
 
@@ -223,12 +241,12 @@ do
 		local count = #playerList
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:TargetMessage2(args.spellId, "blue", args.destName, CL.count_icon:format(args.spellName, count, count))
-			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
-			self:Flash(args.spellId, count)
-			self:SayCountdown(args.spellId, 6, count)
-			self:OpenProximity(args.spellId, 10)
+			self:TargetMessage2(282135, "blue", args.destName, CL.count_icon:format(args.spellName, count, count))
+			self:PlaySound(282135, "warning")
+			self:Say(282135, CL.count_rticon:format(args.spellName, count, count))
+			self:Flash(282135, count)
+			self:SayCountdown(282135, 5, count)
+			self:OpenProximity(282135, 8)
 		end
 
 		proxList[#proxList+1] = args.destName
@@ -244,11 +262,11 @@ do
 
 	function mod:CrawlingHexRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
-			self:PlaySound(args.spellId, "info")
+			self:Message2(282135, "green", CL.removed:format(args.spellName))
+			self:PlaySound(282135, "info")
 			isOnMe = false
-			self:CancelSayCountdown(args.spellId)
-			self:CloseProximity(args.spellId)
+			self:CancelSayCountdown(282135)
+			self:CloseProximity(282135)
 		end
 
 		if self:GetOption(crawlingHexMarker) then
@@ -259,9 +277,9 @@ do
 
 		if not isOnMe then -- Don't change proximity if it's on you and expired on someone else
 			if #proxList == 0 then
-				self:CloseProximity(args.spellId)
+				self:CloseProximity(282135)
 			else -- Update proximity
-				self:OpenProximity(args.spellId, 8, proxList)
+				self:OpenProximity(282135, 8, proxList)
 			end
 		end
 	end
@@ -290,7 +308,16 @@ do
 			self:PlaySound(args.spellId, "warning")
 			self:Flash(args.spellId)
 			self:Say(args.spellId)
+			if self:GetOption("custom_on_fixate_plates") then
+				self:AddPlateIcon(args.spellId, args.sourceGUID)
+			end
 		end
+	end
+end
+
+function mod:MarkofPreyRemoved(args)
+	if self:Me(args.destGUID) and self:GetOption("custom_on_fixate_plates") then
+		self:RemovePlateIcon(args.spellId, args.sourceGUID)
 	end
 end
 
@@ -363,7 +390,9 @@ do
 	function mod:MindWipeApplied(args)
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "alert")
+			if not self:Dispeller("magic", nil, args.spellId) then -- Don't play twice if it's on you and you're a dispeller
+				self:PlaySound(args.spellId, "alert")
+			end
 		end
 
 		playerList[#playerList+1] = args.destName

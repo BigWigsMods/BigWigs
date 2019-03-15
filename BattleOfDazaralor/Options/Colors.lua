@@ -2,6 +2,7 @@
 BigWigs:AddColors("Champion of the Light Alliance", {
 	[282113] = "cyan",
 	[283573] = {"blue","purple"},
+	[283582] = "blue",
 	[283598] = "yellow",
 	[283628] = "yellow",
 	[283650] = "orange",
@@ -17,6 +18,7 @@ BigWigs:AddColors("Champion of the Light Alliance", {
 BigWigs:AddColors("Champion of the Light Horde", {
 	[282113] = "cyan",
 	[283573] = {"blue","purple"},
+	[283582] = "blue",
 	[283598] = "yellow",
 	[283628] = "yellow",
 	[283650] = "orange",
@@ -33,7 +35,9 @@ BigWigs:AddColors("Jadefire Masters Alliance", {
 	[282030] = "red",
 	[282037] = {"blue","purple"},
 	[282040] = "yellow",
+	[284374] = "red",
 	[284656] = {"green","yellow"},
+	[285428] = "yellow",
 	[285632] = "blue",
 	[285645] = "yellow",
 	[286379] = {"green","orange"},
@@ -47,7 +51,7 @@ BigWigs:AddColors("Jadefire Masters Alliance", {
 BigWigs:AddColors("Grong Horde", {
 	[281936] = "orange",
 	[282179] = "yellow",
-	[282215] = "blue",
+	[282215] = {"blue","red"},
 	[282243] = "yellow",
 	[282247] = "yellow",
 	[283069] = "blue",
@@ -61,7 +65,7 @@ BigWigs:AddColors("Grong Horde", {
 
 BigWigs:AddColors("Grong Alliance", {
 	[282399] = "orange",
-	[282471] = "blue",
+	[282471] = {"blue","red"},
 	[282526] = "yellow",
 	[282533] = "yellow",
 	[282543] = "yellow",
@@ -78,7 +82,9 @@ BigWigs:AddColors("Jadefire Masters Horde", {
 	[282030] = "red",
 	[282037] = {"blue","purple"},
 	[282040] = "yellow",
+	[284374] = "red",
 	[284656] = {"green","yellow"},
+	[285428] = "yellow",
 	[285632] = "blue",
 	[285645] = "yellow",
 	[286379] = {"green","orange"},
@@ -90,23 +96,27 @@ BigWigs:AddColors("Jadefire Masters Horde", {
 })
 
 BigWigs:AddColors("Opulence", {
+	[-19494] = "blue",
 	[282939] = "red",
 	[283507] = {"blue","yellow"},
 	[283606] = "yellow",
 	[284424] = "blue",
 	[284470] = {"blue","orange"},
-	[284493] = "yellow",
+	[284493] = "orange",
 	[284519] = {"blue","green"},
+	[284645] = {"blue","green"},
 	[284941] = "red",
 	[285014] = {"blue","yellow"},
 	[285479] = "blue",
 	[285995] = "yellow",
 	[286026] = "orange",
 	[286541] = "cyan",
-	[287037] = {"blue","purple"},
+	[287037] = "purple",
 	[287070] = "cyan",
 	[287072] = {"blue","yellow"},
 	[287074] = "blue",
+	[289155] = "orange",
+	[289383] = "blue",
 })
 
 BigWigs:AddColors("Conclave of the Chosen", {
@@ -119,7 +129,7 @@ BigWigs:AddColors("Conclave of the Chosen", {
 	[282411] = "red",
 	[282444] = {"blue","purple"},
 	[282447] = {"blue","orange","yellow"},
-	[285879] = {"blue","green"},
+	[285879] = {"blue","green","yellow"},
 	[285893] = "yellow",
 	[285945] = {"blue","purple"},
 	[286811] = "blue",
@@ -127,7 +137,7 @@ BigWigs:AddColors("Conclave of the Chosen", {
 })
 
 BigWigs:AddColors("King Rastakhan", {
-	[284686] = "orange",
+	[284686] = {"blue","orange"},
 	[284719] = "cyan",
 	[284781] = {"blue","yellow"},
 	[284831] = {"blue","purple"},
@@ -146,6 +156,7 @@ BigWigs:AddColors("King Rastakhan", {
 BigWigs:AddColors("High Tinker Mekkatorque", {
 	[282153] = "yellow",
 	[282205] = "orange",
+	[284168] = "blue",
 	[286646] = {"blue","yellow"},
 	[286693] = "yellow",
 	[287929] = "yellow",
@@ -166,24 +177,27 @@ BigWigs:AddColors("Stormwall Blockade", {
 	[285350] = {"blue","yellow"},
 	[286558] = "red",
 	[287995] = "red",
-	[288696] = "red",
-	["stages"] = {"cyan","red"},
+	[288696] = {"green","red"},
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Lady Jaina Proudmoore", {
+	[-19825] = "cyan",
+	[-19690] = "yellow",
 	[285177] = "red",
-	[285215] = "blue",
 	[285253] = {"blue","purple"},
+	[285254] = {"blue","yellow"},
 	[285459] = "orange",
 	[285725] = "red",
-	[285828] = "orange",
 	[287365] = "blue",
 	[287490] = {"blue","yellow"},
-	[287565] = "yellow",
 	[287626] = {"blue","yellow"},
 	[287925] = "cyan",
+	[287993] = {"blue","green"},
 	[288038] = "blue",
+	[288169] = "red",
 	[288212] = {"blue","yellow"},
+	[288221] = "green",
 	[288297] = "blue",
 	[288345] = "red",
 	[288374] = {"blue","yellow"},
@@ -192,12 +206,17 @@ BigWigs:AddColors("Lady Jaina Proudmoore", {
 	[288747] = "cyan",
 	[289219] = "red",
 	[289220] = {"blue","yellow"},
+	[289387] = "blue",
+	[289488] = "yellow",
 	[289940] = "yellow",
 	[290084] = "yellow",
 	["stages"] = {"cyan","green"},
 })
 
 BigWigs:AddColors("Battle of Dazar'alor Trash", {
+	[288808] = "blue",
+	[288815] = "red",
+	[289772] = {"blue","red"},
 	[289917] = {"blue","orange"},
 	[289937] = "yellow",
 	[290578] = {"blue","red"},

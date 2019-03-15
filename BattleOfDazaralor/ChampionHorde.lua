@@ -15,6 +15,7 @@ mod.respawnTime = 15 -- PTR
 --
 
 local waveofLightCounter = 0
+local faithCaster = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -45,6 +46,7 @@ function mod:GetOptions()
 		283628, -- Heal
 		283650, -- Blinding Faith
 		{"disorient", "COUNTDOWN"},
+		283582, -- Consecration
 		-- Mythic
 		287469, -- Prayer for the Fallen
 	}, {
@@ -66,6 +68,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Penance", 284595)
 	self:Log("SPELL_CAST_START", "Heal", 283628)
 	self:Log("SPELL_CAST_START", "BlindingFaith", 283650)
+	self:Death("CrusaderDeath", 145903) -- Darkforged Crusader
+
+	self:Log("SPELL_AURA_APPLIED", "ConsecrationDamage", 283582)
+	self:Log("SPELL_PERIODIC_DAMAGE", "ConsecrationDamage", 283582)
+	self:Log("SPELL_PERIODIC_MISSED", "ConsecrationDamage", 283582)
 
 	-- Mythic
 	self:Log("SPELL_CAST_START", "PrayerfortheFallen", 287469)
@@ -73,6 +80,7 @@ end
 
 function mod:OnEngage()
 	waveofLightCounter = 1
+	faithCaster = nil
 
 	self:CDBar(283650, 12) -- Blinding Faith
 	self:Bar(283598, 13, CL.count:format(self:SpellName(283598), waveofLightCounter)) -- Wave of Light
@@ -102,9 +110,11 @@ function mod:WaveofLight(args)
 end
 
 function mod:SealofRetributionApplied(args)
-	self:Message2(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "info")
-	self:CDBar(283933, 51) -- Judgement: Righteousness
+	if self.isEngaged then -- Casted after boss respawns
+		self:Message2(args.spellId, "cyan")
+		self:PlaySound(args.spellId, "info")
+		self:CDBar(283933, 51) -- Judgement: Righteousness
+	end
 end
 
 function mod:JudgementRighteousness(args)
@@ -149,10 +159,31 @@ function mod:Heal(args)
 end
 
 function mod:BlindingFaith(args)
+	faithCaster = args.sourceGUID
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar("disorient", 4, L.disorient, L.disorient_icon)
 	self:CDBar(args.spellId, 15)
+end
+
+function mod:CrusaderDeath(args)
+	if args.destGUID == faithCaster then
+		self:StopBar(L.disorient)
+	end
+end
+
+do
+	local prev = 0
+	function mod:ConsecrationDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 2 then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
+	end
 end
 
 function mod:PrayerfortheFallen(args)

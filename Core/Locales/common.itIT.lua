@@ -67,6 +67,7 @@ L.you_icon = "%s su di |T13700%d:0|tTE"
 --L.link_removed = "Link removed"
 
 -- Abbreviated numbers
---L.amount_one = "%dB"
---L.amount_two = "%dM"
---L.amount_three = "%dK"
+--L.amount_one = "%dB" -- Billions 1,000,000,000
+--L.amount_two = "%dM" -- Millions 1,000,000
+--L.amount_three = "%dK" -- Thousands 1,000
+--L.seconds = "%.1fs" -- 1.1 seconds

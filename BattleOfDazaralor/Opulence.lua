@@ -23,6 +23,7 @@ local jewelTracker = {} -- Who has which jewel
 local topazStackTracker = {} -- Stacks
 local critBuffTracker = {} -- Time on crit buff
 local gemInfoBoxOpen = nil
+local hexCounter = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,7 +33,6 @@ local L = mod:GetLocale()
 if L then
 	L.room = "Room (%d/8)"
 	L.no_jewel = "No Jewel:"
-	L.seconds = "%.1fs"
 
 	L.swap = 161399 -- Swap (replacement for Chaotic Displacement)
 
@@ -74,7 +74,7 @@ function mod:GetOptions()
 		284424, -- Scorching Ground
 		284493, -- Pulse-quickening Toxin
 		284519, -- Quickened Pulse
-		284470, -- Hex of Lethargy
+		{284470, "ME_ONLY_EMPHASIZE"}, -- Hex of Lethargy
 		hexOfLethargyMarker,
 		-- Stage 2
 		287070, -- Hoard Power
@@ -85,6 +85,8 @@ function mod:GetOptions()
 		{285014, "ICON", "SAY", "SAY_COUNTDOWN"}, -- Coin Shower
 		284941, -- Wail of Greed
 		{287037, "TANK"}, -- Coin Sweep
+		-- Mythic
+		289155, -- Surging Gold
 	}, {
 		["stages"] = CL.general,
 		[-19494] = -19494, -- Crown Jewels
@@ -93,6 +95,7 @@ function mod:GetOptions()
 		["custom_on_bulwark_timers"] = -19498, -- Yalat's Bulwark
 		[285479] = -19519, -- Traps
 		[287070] = CL.stage:format(2),
+		[289155] = CL.mythic,
 	}
 end
 
@@ -134,7 +137,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CoinShowerApplied", 285014)
 	self:Log("SPELL_AURA_REMOVED", "CoinShowerRemoved", 285014)
 	self:Log("SPELL_CAST_START", "WailofGreed", 284941)
-	self:Log("SPELL_AURA_APPLIED", "CoinSweepApplied", 287037)
+	self:Log("SPELL_CAST_SUCCESS", "CoinSweep", 287037)
+	self:Log("SPELL_CAST_START", "SurgingGold", 289155)
+	self:Log("SPELL_CAST_SUCCESS", "SurgingGoldSuccess", 289155)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 285479, 284424, 287074) -- Flame Jet, Scorching Ground, Molten Gold
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 285479, 284424, 287074)
@@ -148,6 +153,7 @@ function mod:OnEngage()
 	handRoomCount = 1
 	bulwarkRoomCount = 1
 	bulwarkCrushCount = 1
+	hexCounter = 0
 	wipe(jewelTracker)
 	wipe(topazStackTracker)
 	wipe(critBuffTracker)
@@ -338,7 +344,7 @@ do
 			local timeLeft = math.max(expires - GetTime(), 0)
 			local timeLeftPercentage = timeLeft / 20
 			self:SetInfo(284645, (lines*2) - 1, self:ColorName(name))
-			self:SetInfo(284645, (lines*2), L.seconds:format(timeLeft))
+			self:SetInfo(284645, (lines*2), CL.seconds:format(timeLeft))
 			self:SetInfoBar(284645, (lines*2), timeLeftPercentage, .46, 1, 0, .67)
 			if not scheduled then
 				scheduled = self:ScheduleTimer("UpdateTopazInfoBox", 0.1)
@@ -457,6 +463,7 @@ do
 		if (self:GetOption("custom_on_hand_timers") and self:IsHandOnPlatform()) or self:Me(args.destGUID) then
 			self:TargetsMessage(283507, "yellow", playerList)
 		end
+		self:ScheduleTimer(wipe, 0.5, playerList)
 	end
 
 	function mod:VolatileChargeRemoved(args)
@@ -495,21 +502,26 @@ do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:HexOfLethargyApplied(args)
-		local playerIconsCount = #playerIcons+1
-		playerList[#playerList+1] = args.destName
-		playerIcons[playerIconsCount] = playerIconsCount
-		if self:Me(args.destGUID) then
+		hexCounter = hexCounter + 1
+		if hexCounter == 5 then hexCounter = 1 end
+		local playerListCount = #playerList+1
+		playerList[playerListCount] = args.destName
+		playerIcons[playerListCount] = hexCounter
+		if self:Dispeller("magic") then
+			self:PlaySound(args.spellId, "alarm", nil, playerList)
+		elseif self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(hexOfLethargyMarker) then
-			SetRaidTarget(args.destName, playerIconsCount)
+			SetRaidTarget(args.destName, hexCounter)
 		end
-		if self:Healer() then
-			self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
-		end
+		self:TargetsMessage(args.spellId, "orange", playerList, 2, nil, nil, nil, playerIcons)
 	end
 
 	function mod:HexOfLethargyRemoved(args)
+		if self:Me(args.destGUID) then
+			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+		end
 		if self:GetOption(hexOfLethargyMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
@@ -570,10 +582,13 @@ function mod:HoardPower(args)
 	self:StopBar(L.hand_cast:format(self:SpellName(283606))) -- Bulwark: Crush
 	self:StopBar(283507) -- Volatile Charge
 	self:StopBar(282939) -- Flames of Punishment
+	self:StopBar(L.swap) -- Chaotic Displacement
 
 	self:CDBar(287072, 14.5) -- Liquid Gold
+	self:CDBar(287037, 16.3) -- Coin Sweep
 	self:CDBar(285014, 16.7) -- Coin Shower
 	self:CDBar(285995, 28, CL.count:format(self:SpellName(285995), spiritsofGoldCount)) -- Spirits of Gold (x)
+	self:Bar(289155, 46.2) -- Surging Gold
 	self:CDBar(284941, 61, CL.count:format(self:SpellName(284941), wailofGreedCount)) -- Wail of Greed (x)
 end
 
@@ -636,14 +651,14 @@ function mod:CoinShowerApplied(args)
 	self:TargetBar(args.spellId, 10, args.destName)
 	self:CDBar(args.spellId, 30.5)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 10)
+		self:Yell2(args.spellId)
+		self:YellCountdown(args.spellId, 10)
 	end
 end
 
 function mod:CoinShowerRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelYellCountdown(args.spellId)
 	end
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:StopBar(args.spellId, args.destName)
@@ -654,12 +669,25 @@ function mod:WailofGreed(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, wailofGreedCount)) -- 2s cast, 10s channel
 	wailofGreedCount = wailofGreedCount + 1
-	self:CDBar(args.spellId, 62, CL.count:format(args.spellName, wailofGreedCount))
+	self:CDBar(args.spellId, self:Mythic() and 62 or 72, CL.count:format(args.spellName, wailofGreedCount))
+	self:CDBar(287037, 12.7) -- Coin Sweep
 end
 
-function mod:CoinSweepApplied(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
-	self:PlaySound(args.spellId, "alarm", nil, args.destName)
+function mod:CoinSweep(args)
+	self:Message2(args.spellId, "purple")
+	self:PlaySound(args.spellId, "alarm")
+	self:CDBar(args.spellId, 10.9)
+end
+
+function mod:SurgingGold(args)
+	self:Message2(args.spellId, "orange", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "info")
+	self:CastBar(args.spellId, 2.5)
+	self:Bar(args.spellId, 42.5)
+end
+
+function mod:SurgingGoldSuccess(args)
+	self:Bar(args.spellId, 30, CL.onboss:format(args.spellName))
 end
 
 do

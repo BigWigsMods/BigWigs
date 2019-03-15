@@ -199,7 +199,8 @@ function boss:Enable(isWipe)
 	if not self.enabled then
 		self.enabled = true
 
-		if debug then dbg(self, isWipe and "Enable() via Wipe()" or "Enable()") end
+		local isWiping = isWipe == true
+		if debug then dbg(self, isWiping and "Enable() via Wipe()" or "Enable()") end
 
 		updateData(self)
 		self.sayCountdowns = {}
@@ -219,11 +220,11 @@ function boss:Enable(isWipe)
 		if self.SetupOptions then self:SetupOptions() end
 		if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
 
-		if IsEncounterInProgress() and not isWipe then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
+		if IsEncounterInProgress() and not isWiping then -- Safety. ENCOUNTER_END might fire whilst IsEncounterInProgress is still true and engage a module.
 			self:CheckForEncounterEngage("NoEngage") -- Prevent engaging if enabling during a boss fight (after a DC)
 		end
 
-		if not isWipe then
+		if not isWiping then
 			self:SendMessage("BigWigs_OnBossEnable", self)
 		end
 	end
@@ -232,7 +233,8 @@ function boss:Disable(isWipe)
 	if self.enabled then
 		self.enabled = nil
 
-		if debug then dbg(self, isWipe and "Disable() via Wipe()" or "Disable()") end
+		local isWiping = isWipe == true
+		if debug then dbg(self, isWiping and "Disable() via Wipe()" or "Disable()") end
 		if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 		-- Update enabled modules list
@@ -293,7 +295,7 @@ function boss:Disable(isWipe)
 
 		self:CancelAllTimers()
 
-		if not isWipe then
+		if not isWiping then
 			self:SendMessage("BigWigs_OnBossDisable", self)
 		end
 	end
@@ -1947,7 +1949,7 @@ end
 do
 	local badBar = "Attempted to start bar '%q' without a valid time."
 	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
-	local newBar = "New timer for '%q' with a placement of %d and a timer of %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
+	local newBar = "New timer for '%q' at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 
 	--- Display a bar.
 	-- @param key the option key
@@ -1963,7 +1965,7 @@ do
 			else
 				local t, c = GetTime(), #self.missing[key]
 				local new = t - self.missing[key][c]
-				core:Print(format(newBar, key, c, new, self:Difficulty()))
+				core:Print(format(newBar, key, self.stage or 0, c, new, self:Difficulty()))
 				self.missing[key][c+1] = t
 			end
 			return
@@ -2001,7 +2003,7 @@ do
 			else
 				local t, c = GetTime(), #self.missing[key]
 				local new = t - self.missing[key][c]
-				core:Print(format(newBar, key, c, new, self:Difficulty()))
+				core:Print(format(newBar, key, self.stage or 0, c, new, self:Difficulty()))
 				self.missing[key][c+1] = t
 			end
 			return
@@ -2182,7 +2184,7 @@ function boss:Flash(key, icon)
 	end
 end
 
---- Send a message in SAY.
+--- Send a message in SAY. Generally used for abilities where you need to spread out or run away.
 -- @param key the option key
 -- @param msg the message to say (if nil, key is used)
 -- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
@@ -2195,7 +2197,7 @@ function boss:Say(key, msg, directPrint)
 	end
 end
 
---- Start a countdown using say messages.
+--- Start a countdown using say messages. Generally used for abilities where you need to spread out or run away.
 -- @param key the option key
 -- @number seconds the amount of time in seconds until the countdown expires
 -- @number[opt] icon Add the designated raid icon to the countdown
@@ -2219,6 +2221,50 @@ end
 --- Cancel a countdown using say messages.
 -- @param key the option key
 function boss:CancelSayCountdown(key)
+	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
+	local tbl = self.sayCountdowns[key]
+	if tbl then
+		tbl[1] = true
+	end
+end
+
+--- Send a message in YELL. Generally used for abilities where you need to group up.
+-- @param key the option key
+-- @param msg the message to yell (if nil, key is used)
+-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
+function boss:Yell2(key, msg, directPrint) -- XXX fixme
+	if not checkFlag(self, key, C.SAY) then return end
+	if directPrint then
+		SendChatMessage(msg, "YELL")
+	else
+		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "YELL")
+	end
+end
+
+--- Start a countdown using yell messages. Generally used for abilities where you need to group up.
+-- @param key the option key
+-- @number seconds the amount of time in seconds until the countdown expires
+-- @number[opt] icon Add the designated raid icon to the countdown
+-- @number[opt] startAt When to start sending messages in yell, default value is at 3 seconds remaining
+function boss:YellCountdown(key, seconds, icon, startAt)
+	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
+	local start = startAt or 3
+	local tbl = {false, start}
+	local function printTime()
+		if not tbl[1] then
+			SendChatMessage(icon and format("{rt%d} %d", icon, tbl[2]) or tbl[2], "YELL")
+			tbl[2] = tbl[2] - 1
+		end
+	end
+	for i = 1, start do
+		Timer(seconds-i, printTime)
+	end
+	self.sayCountdowns[key] = tbl
+end
+
+--- Cancel a countdown using yell messages.
+-- @param key the option key
+function boss:CancelYellCountdown(key)
 	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 	local tbl = self.sayCountdowns[key]
 	if tbl then

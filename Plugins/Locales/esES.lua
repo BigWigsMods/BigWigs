@@ -275,6 +275,14 @@ L.iconPosition = "Posición del icono"
 L.iconPositionDesc = "Elige dónde en la barra se posicionará el icono."
 L.visibleBarLimit = "Límite de barras visibles"
 L.visibleBarLimitDesc = "Ajusta la máxima cantidad de barras que serán visibles al mismo tiempo."
+--L.textDesc = "Whether to show or hide the text displayed on the bars."
+
+-----------------------------------------------------------------------
+-- BossBlock.lua
+--
+
+--L.disableSfx = "Disable sound effects"
+--L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 
 -----------------------------------------------------------------------
 -- Colors.lua

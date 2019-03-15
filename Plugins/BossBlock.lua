@@ -15,6 +15,7 @@ plugin.defaultDB = {
 	blockGarrison = true,
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
+	disableSfx = false,
 }
 
 --------------------------------------------------------------------------------
@@ -24,6 +25,7 @@ plugin.defaultDB = {
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
+local SetCVar = C_CVar.SetCVar
 
 -------------------------------------------------------------------------------
 -- Options
@@ -84,6 +86,13 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 5,
 		},
+		disableSfx = {
+			type = "toggle",
+			name = L.disableSfx,
+			desc = L.disableSfxDesc,
+			width = "full",
+			order = 6,
+		},
 	},
 }
 
@@ -95,6 +104,10 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossEngage")
 	self:RegisterMessage("BigWigs_OnBossWin")
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
+
+	if self.db.profile.disableSfx then
+		SetCVar("Sound_EnableSFX", "1") -- Enable this every time we load just in case some kind of DC during the fight left it disabled
+	end
 
 	if IsEncounterInProgress() then -- Just assume we logged into an encounter after a DC
 		self:BigWigs_OnBossEngage()
@@ -144,6 +157,9 @@ do
 		if self.db.profile.blockSpellErrors then
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
+		if self.db.profile.disableSfx then
+			SetCVar("Sound_EnableSFX", "0")
+		end
 	end
 
 	function plugin:BigWigs_OnBossWin()
@@ -162,6 +178,9 @@ do
 		end
 		if self.db.profile.blockSpellErrors then
 			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
+		end
+		if self.db.profile.disableSfx then
+			SetCVar("Sound_EnableSFX", "1")
 		end
 	end
 end
@@ -182,6 +201,8 @@ do
 		[682] = true, -- L'uras death
 		[686] = true, -- Argus portal
 		[688] = true, -- Argus kill
+		[875] = true, -- Killing King Rastakhan
+		[876] = true, -- Entering Battle of Dazar'alor
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
@@ -223,6 +244,10 @@ do
 		[-1151] = true, -- Uldir, raising stairs for Zul (Zek'voz)
 		[-1152] = true, -- Uldir, raising stairs for Zul (Vectis)
 		[-1153] = true, -- Uldir, raising stairs for Zul (Fetid Devourer)
+		[-1358] = true, -- Battle of Dazar'alor, after killing 1st boss, Bwonsamdi (Horde side)
+		--[-1352] = true, -- Battle of Dazar'alor, after killing 2nd boss, Bwonsamdi (Alliance side)
+		--[-1352] = true, -- Battle of Dazar'alor, after killing blockade
+		--[-1364] = true, -- Battle of Dazar'alor, Jaina stage 1 intermission (unskippable)
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.

@@ -39,7 +39,7 @@ end
 -- Initialization
 --
 
-local searingEmbersMarker = mod:AddMarkerOption(false, "player", 1, 286988, 1, 2, 3) -- Searing Embers
+local searingEmbersMarker = mod:AddMarkerOption(false, "player", 1, 286988, 1, 2, 3, 4) -- Searing Embers
 function mod:GetOptions()
 	return {
 		"stages",
@@ -53,7 +53,7 @@ function mod:GetOptions()
 		282037, -- Rising Flames
 		286379, -- Pyroblast
 		{286425, "INFOBOX"}, -- Fire Shield
-		{286988, "SAY"}, -- Searing Embers
+		286988, -- Searing Embers
 		searingEmbersMarker,
 		284374, -- Magma Trap
 		-- Team Attacks
@@ -71,6 +71,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_STOP", nil, "boss1", "boss2")
 	self:RegisterEvent("CHAT_MSG_MONSTER_EMOTE")
 
 	-- Mestrah, the Illuminated
@@ -120,6 +121,7 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 285645 then -- Spirits of Xuen
 		self:Message2(spellId, "yellow")
@@ -212,69 +214,108 @@ function mod:RisingFlamesRemoved(args)
 end
 
 do
-	local interruptTime = nil
+	local castOver, maxAbsorb, absorbRemoved = 0, 0, 0
+	local red, yellow, green = {.6, 0, 0, .6}, {.7, .5, 0}, {0, .5, 0}
+
+	local function updateInfoBox(cleuUpdate)
+		if castOver > 0 then
+			if not cleuUpdate then
+				mod:SimpleTimer(updateInfoBox, 0.1)
+			end
+
+			local castTimeLeft = castOver - GetTime()
+			local castPercentage = castTimeLeft / 10
+			local absorb = maxAbsorb - absorbRemoved
+			local absorbPercentage = absorb / maxAbsorb
+
+			local diff = castPercentage - absorbPercentage
+			local hexColor = "ff0000"
+			local rgbColor = red
+			if diff > 0.1 then -- over 10%
+				hexColor = "00ff00"
+				rgbColor = green
+			elseif diff > 0  then -- below 10%, so it's still close
+				hexColor = "ffff00"
+				rgbColor = yellow
+			end
+
+			mod:SetInfoBar(286425, 1, absorbPercentage, unpack(rgbColor))
+			mod:SetInfo(286425, 2, L.absorb_text:format(mod:AbbreviateNumber(absorb), hexColor, absorbPercentage*100))
+			mod:SetInfoBar(286425, 3, castPercentage)
+			mod:SetInfo(286425, 4, L.cast_text:format(castTimeLeft, hexColor, castPercentage*100))
+		else
+			local absorb = maxAbsorb - absorbRemoved
+			local absorbPercentage = absorb / maxAbsorb
+			mod:SetInfoBar(286425, 1, absorbPercentage)
+			mod:SetInfo(286425, 2, L.absorb_text:format(mod:AbbreviateNumber(absorb), "00ff00", absorbPercentage*100))
+		end
+	end
+
+	do
+		local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+		function mod:UpdateFireShieldAbsorbs()
+			local _, subEvent, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, spellId, _, _, absorbed = CombatLogGetCurrentEventInfo()
+			if subEvent == "SPELL_ABSORBED" and spellId == 286425 then -- Fire Shield
+				absorbRemoved = absorbRemoved + absorbed
+				--print(maxAbsorb - absorbRemoved, UnitGetTotalAbsorbs("boss2"), UnitGetTotalAbsorbs("boss1"))
+				updateInfoBox(true)
+			end
+		end
+	end
+
+	function mod:FireShieldApplied(args)
+		if self:CheckOption(args.spellId, "INFOBOX") then
+			castOver = 0
+			absorbRemoved = 0
+			maxAbsorb = args.amount
+			--print(args.amount, UnitGetTotalAbsorbs("boss2"), UnitGetTotalAbsorbs("boss1"))
+			self:OpenInfo(args.spellId, args.spellName)
+			self:SetInfo(args.spellId, 1, L.absorb)
+			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UpdateFireShieldAbsorbs")
+		end
+	end
+
+	function mod:FireShieldRemoved(args)
+		self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		self:Message2(args.spellId, "cyan", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "info")
+		--print(maxAbsorb, absorbRemoved, UnitGetTotalAbsorbs("boss2"), UnitGetTotalAbsorbs("boss1"))
+		if castOver == 0 then
+			self:CloseInfo(args.spellId)
+		else
+			absorbRemoved = maxAbsorb -- XXX temp, investigate why absorbRemoved ends up less than maxAbsorb
+		end
+	end
+
+	local interruptTime = 0
 	function mod:Pyroblast(args)
+		interruptTime = args.time
+		castOver = GetTime() + 10
+		self:CastBar(args.spellId, 10)
 		self:Message2(args.spellId, "orange")
 		self:PlaySound(args.spellId, "warning")
-		interruptTime = args.time
-		self:CastBar(args.spellId, 10)
+		self:SetInfo(286425, 3, L.cast)
 		self:CDBar(args.spellId, 52) -- XXX appears to get lower during the fight
+		self:SimpleTimer(updateInfoBox, 0.1)
 	end
 
 	function mod:Interupted(args)
 		if args.extraSpellId == 286379 then -- Pyroblast
 			interruptTime = 10 - (math.floor((args.time - interruptTime) * 100)/100)
 			self:Message2(286379, "green", L.interrupted_after:format(args.extraSpellName, self:ColorName(args.sourceName), interruptTime))
-			self:StopBar(CL.cast:format(args.extraSpellName))
-		end
-	end
-end
-
-do
-	local timer, castOver, maxAbsorb = nil, 0, 0
-	local red, yellow, green = {.6, 0, 0, .6}, {.7, .5, 0}, {0, .5, 0}
-
-	local function updateInfoBox(self)
-		local castTimeLeft = castOver - GetTime()
-		local castPercentage = castTimeLeft / 10
-		local absorb = UnitGetTotalAbsorbs("boss2")
-		local absorbPercentage = absorb / maxAbsorb
-
-		local diff = castPercentage - absorbPercentage
-		local hexColor = "ff0000"
-		local rgbColor = red
-		if diff > 0.1 then -- over 10%
-			hexColor = "00ff00"
-			rgbColor = green
-		elseif diff > 0  then -- below 10%, so it's still close
-			hexColor = "ffff00"
-			rgbColor = yellow
-		end
-
-		self:SetInfoBar(286425, 1, absorbPercentage, unpack(rgbColor))
-		self:SetInfo(286425, 2, L.absorb_text:format(self:AbbreviateNumber(absorb), hexColor, absorbPercentage*100))
-		self:SetInfoBar(286425, 3, castPercentage)
-		self:SetInfo(286425, 4, L.cast_text:format(castTimeLeft, hexColor, castPercentage*100))
-	end
-
-	function mod:FireShieldApplied(args)
-		if self:CheckOption(args.spellId, "INFOBOX") then
-			self:OpenInfo(args.spellId, args.spellName)
-			self:SetInfo(args.spellId, 1, L.absorb)
-			self:SetInfo(args.spellId, 3, L.cast)
-			castOver = GetTime() + 10 -- XXX Have to use the cast from pyroblast depending when it's applied/cast, but this could be at the same time.
-			maxAbsorb = UnitGetTotalAbsorbs("boss2") -- Assumed
-			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 		end
 	end
 
-	function mod:FireShieldRemoved(args)
-		self:Message2(args.spellId, "cyan", CL.removed:format(args.spellName))
-		self:PlaySound(args.spellId, "info")
-		self:CloseInfo(args.spellId)
-		if timer then
-			self:CancelTimer(timer)
-			timer = nil
+	function mod:UNIT_SPELLCAST_STOP(_, _, _, spellId) -- Sometimes he interrupts himself
+		if spellId == 286379 then -- Pyroblast
+			castOver = 0
+			self:StopBar(CL.cast:format(self:SpellName(spellId)))
+			if maxAbsorb == absorbRemoved then
+				self:CloseInfo(286425)
+			else -- He stopped casting but still has shield left
+				self:SetInfoBar(286425, 3, 0)
+				self:SetInfo(286425, 4, "")
+			end
 		end
 	end
 end
@@ -289,14 +330,15 @@ do
 		if playerIconsCount == 1 then
 			self:CDBar(args.spellId, 40)
 		end
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+		if self:Dispeller("magic") then
+			self:PlaySound(args.spellId, "alarm", nil, playerList)
+		elseif self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(searingEmbersMarker) then
 			SetRaidTarget(args.destName, playerIconsCount)
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
+		self:TargetsMessage(args.spellId, "orange", playerList, self:Easy() and 3 or 4, nil, nil, nil, playerIcons)
 	end
 
 	function mod:SearingEmbersRemoved(args)
