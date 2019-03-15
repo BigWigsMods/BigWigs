@@ -56,8 +56,8 @@ function plugin:RestyleWindow()
 	end
 
 	display.title:SetFont(font, db.fontSize, flags)
-	for i = 1, 10 do
-		display.text[i]:SetFont(font, db.fontSize, flags)
+	for i, text in next, display.text do
+		text:SetFont(font, db.fontSize, flags)
 	end
 end
 
@@ -346,6 +346,7 @@ end
 --
 
 function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
+	if db.disabled then return end
 	if opener then
 		self:Close()
 	end
@@ -366,7 +367,7 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
 		display.xxx2:Hide()
 		display.xxx3:Hide()
 	end
-	
+
 	self:RestyleWindow()
 end
 
