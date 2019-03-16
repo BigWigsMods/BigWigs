@@ -72,6 +72,11 @@ if L then
 	--L.count_of = "%s (%d/%d)"
 end
 
+L = BigWigs:NewBossLocale("King Rastakhan", "ptBR")
+if L then
+	--L.leap_cancelled = "Leap Cancelled"
+end
+
 L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "ptBR")
 if L then
 	--L.gigavolt_alt_text = "Bomb"
