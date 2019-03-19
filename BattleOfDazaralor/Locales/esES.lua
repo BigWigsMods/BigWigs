@@ -23,8 +23,8 @@ end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Horde", "esES") or BigWigs:NewBossLocale("Jadefire Masters Horde", "esMX")
 if L then
-	L.custom_on_fixate_plates = "Icono de acecho en la placa de identificación del enemigo"
-	L.custom_on_fixate_plates_desc = "Muestra un ícono en la placa de identificación del objetivo que te está acechando.\nRequiere el uso de placas de identificación enemigas. Esta característica actualmente solo es compatible con KuiNameplates."
+	L.custom_on_fixate_plates = "Fija un icono en la placa de nombre enemiga"
+	L.custom_on_fixate_plates_desc = "Muestra un ícono en la placa de identificación del objetivo que te tiene fijado.\nRequiere el uso de placas de identificación enemigas. Esta característica actualmente solo es compatible con KuiNameplates."
 
 	L.absorb = "Absorbido"
 	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
@@ -36,8 +36,8 @@ end
 
 L = BigWigs:NewBossLocale("Jadefire Masters Alliance", "esES") or BigWigs:NewBossLocale("Jadefire Masters Alliance", "esMX")
 if L then
-	L.custom_on_fixate_plates = "Icono de acecho en la placa de identificación del enemigo"
-	L.custom_on_fixate_plates_desc = "Muestra un ícono en la placa de identificación del objetivo que te está acechando.\nRequiere el uso de placas de identificación enemigas. Esta característica actualmente solo es compatible con KuiNameplates."
+	L.custom_on_fixate_plates = "Fija un icono en la placa de nombre enemiga"
+	L.custom_on_fixate_plates_desc = "Muestra un ícono en la placa de identificación del objetivo que te tiene fijado.\nRequiere el uso de placas de identificación enemigas. Esta característica actualmente solo es compatible con KuiNameplates."
 
 	L.absorb = "Absorbido"
 	--L.absorb_text = "%s (|cff%s%.0f%%|r)"
@@ -49,25 +49,25 @@ end
 
 L = BigWigs:NewBossLocale("Opulence", "esES") or BigWigs:NewBossLocale("Opulence", "esMX")
 if L then
-	L.room = "Sala (%d/8)"
+	L.room = "Cámara  (%d/8)"
 	L.no_jewel = "Sin Gemas:"
 
-	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
-	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the construct which isn't in your hall during stage 1."
+	L.custom_on_fade_out_bars = "Elimina las barras de la fase 1"
+	L.custom_on_fade_out_bars_desc = "Elimina las barras que pertenecen al guardian que no se encuentra en tu sala durante la fase 1"
 
 	L.custom_on_hand_timers = "La Mano de In'zashi"
 	L.custom_on_hand_timers_desc = "Muestra advertencias y barras para las habilidades de La Mano de In'zashi."
 	L.hand_cast = "Mano: %s"
 
 	L.custom_on_bulwark_timers = "Baluarte de Yalat"
-	L.custom_on_bulwark_timers_desc = "Muestra advertencias y barras para las habilidades de Baluarte de Yalat."
+	L.custom_on_bulwark_timers_desc = "Muestra advertencias y barras para las habilidades del Baluarte de Yalat."
 	L.bulwark_cast = "Baluarte: %s"
 end
 
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "esES") or BigWigs:NewBossLocale("Conclave of the Chosen", "esMX")
 if L then
-	L.custom_on_fixate_plates = "Icono de marca de la presa en la placa de identificación del enemigo"
-	L.custom_on_fixate_plates_desc = "Muestra un ícono en la placa de identificación del objetivo que te está fijando.\nRequiere el uso de placas de identificación enemigas. Esta característica actualmente solo es compatible con KuiNameplates."
+	L.custom_on_fixate_plates = "Fija un icono en la placa de nombre enemiga"
+	L.custom_on_fixate_plates_desc = "Muestra un ícono en la placa de identificación del objetivo que te tiene fijado.\nRequiere el uso de placas de identificación enemigas. Esta característica actualmente solo es compatible con KuiNameplates."
 	L.killed = "¡%s muerto!"
 	--L.count_of = "%s (%d/%d)"
 end
@@ -95,8 +95,8 @@ L = BigWigs:NewBossLocale("Stormwall Blockade", "esES") or BigWigs:NewBossLocale
 if L then
 	L.killed = "¡%s muerto!"
 
-	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
-	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss who isn't active on your boat in stage 1."
+	L.custom_on_fade_out_bars = "Elimina las barras de la fase 1"
+	L.custom_on_fade_out_bars_desc = "Elimina las barras del jefe que no se encuentra activo en tu barco durante la fase 1"
 end
 
 L = BigWigs:NewBossLocale("Lady Jaina Proudmoore", "esES") or BigWigs:NewBossLocale("Lady Jaina Proudmoore", "esMX")
