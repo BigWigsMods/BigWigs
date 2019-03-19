@@ -67,7 +67,7 @@ end
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "esES") or BigWigs:NewBossLocale("Conclave of the Chosen", "esMX")
 if L then
 	L.custom_on_fixate_plates = "Fija un icono en la placa de nombre enemiga"
-	L.custom_on_fixate_plates_desc = "Muestra un ícono en la placa de identificación del objetivo que que te tiene fijado.\nRequiere el uso de placas de identificación enemigas. Esta característica actualmente solo es compatible con KuiNameplates."
+	L.custom_on_fixate_plates_desc = "Muestra un ícono en la placa de identificación del objetivo que te tiene fijado.\nRequiere el uso de placas de identificación enemigas. Esta característica actualmente solo es compatible con KuiNameplates."
 	L.killed = "¡%s muerto!"
 	--L.count_of = "%s (%d/%d)"
 end
