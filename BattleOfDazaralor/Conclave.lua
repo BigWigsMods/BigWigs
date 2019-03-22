@@ -200,13 +200,13 @@ function mod:NextWrathCDBar(spellId)
 		-- If the last boss was killed between the aspect spawn and the wrath, 
 		-- reconstruct the situation at spawn time.
 		offset = offset + wrathOffset[lastBossKillNextAspect]
-		self:CDBar(lastBossKillNextAspect, lastBossKillSpawnCooldown + offset)
+		self:CDBar(lastBossKillNextAspect, lastBossKillSpawnCooldown + offset) -- SetOption:282107,282155,282447,286811:::
 		lastWrathBar[lastBossKillNextAspect] = now
 	else
 		local nextAspect = self:NextAspect()
 		offset = offset + wrathOffset[nextAspect]
-    		self:CDBar(nextAspect, spawnCooldown + offset)
-    		lastWrathBar[nextAspect] = now
+		self:CDBar(nextAspect, spawnCooldown + offset) -- SetOption:282107,282155,282447,286811:::
+		lastWrathBar[nextAspect] = now
 	end
 end
 
