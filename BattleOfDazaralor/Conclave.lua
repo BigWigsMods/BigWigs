@@ -144,19 +144,19 @@ function mod:OnEngage()
 	lastBossKillNextAspect = 0
 	lastWrathBarTime = 0
 	lastWrathBar = { 
-		[282155] = 0,  -- Gonk
+		[282155] = GetTime(),  -- Gonk
 		[282107] = 0,  -- Paku
 		[282447] = 0,  -- Kimbul
 		[286811] = 0,  -- Akunda 
 	}
+
 	self:Bar(282098, 5) -- Gift of Wind
 	self:CDBar(282135, 13) -- Crawling Hex
 	self:CDBar(285893, 17) -- Wild Maul
 	if not self:Easy() then
 		self:CDBar(282636, 29) -- Krag'wa's Wrath
 	end
-	self:CDBar(282155, spawnCooldown + wrathOffset[282155])  -- Gonk always spawns first
-	lastWrathBar[282155] = GetTime()
+	self:CDBar(282155, spawnCooldown)  -- Gonk always spawns first
 end
 
 function mod:OnBossDisable()
@@ -241,12 +241,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 
 		-- Start bars
 		if bossesKilled == 1 then -- Kimbul spawning
-			self:Bar(282444, 20.5) -- Lacerating Claws
 			spawnCooldown = 20
+			self:Bar(282444, 20.5) -- Lacerating Claws
 		elseif bossesKilled == 2 then -- Akunda spawning
+			spawnCooldown = 15
 			self:Bar(285879, 5) -- Mind Wipe
 			self:Bar(282411, 16) -- Thundering Storm
-			spawnCooldown = 15
 		end
 	elseif spellId == 283193 then -- Crawling Hex
 		self:CrawlingHexSuccess()
