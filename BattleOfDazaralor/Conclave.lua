@@ -13,9 +13,22 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local fasterPakusWrathActive = false
 local kragwasWrathCount = 0
 local bossesKilled = 0
+local spawnCooldown = 0
+local lastBossKillTime = 0
+local lastBossKillSpawnCooldown = 0
+local lastBossKillNextAspect = 0
+local lastWrathBarTime = 0
+local lastWrathBar = {}
+
+-- Offset between aspect spawn time and wrath
+local wrathOffset = {
+	 [282155] = 1,  -- Gonk
+	 [282107] = 13,  -- Paku
+	 [286811] = 1,  -- Kimbul
+	 [282447] = 1,  -- Akunda
+ }
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -123,22 +136,77 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	fasterPakusWrathActive = false
 	kragwasWrathCount = 0
 	bossesKilled = 0
+	spawnCooldown = 30
+	lastBossKillTime = 0
+	lastBossKillSpawnCooldown = 0
+	lastBossKillNextAspect = 0
+	lastWrathBarTime = 0
+	lastWrathBar = { 
+		[282155] = 0,  -- Gonk
+		[282107] = 0,  -- Paku
+		[282447] = 0,  -- Kimbul
+		[286811] = 0,  -- Akunda 
+	}
 	self:Bar(282098, 5) -- Gift of Wind
 	self:CDBar(282135, 13) -- Crawling Hex
 	self:CDBar(285893, 17) -- Wild Maul
-	self:Bar(282155, 31) -- Gonk's Wrath
-	self:Bar(282107, 73) -- Pa'ku's Wrath
 	if not self:Easy() then
 		self:CDBar(282636, 29) -- Krag'wa's Wrath
 	end
+	self:CDBar(282155, spawnCooldown + wrathOffset[282155])  -- Gonk always spawns first
+	lastWrathBar[282155] = GetTime()
 end
 
 function mod:OnBossDisable()
 	if self:GetOption("custom_on_fixate_plates") then
 		self:HidePlates()
+	end
+end
+
+function mod:NextAspect()
+	local aspect = 0
+	local last = GetTime()
+	if lastWrathBar[282155] < last then -- Gonk
+		aspect = 282155
+		last = lastWrathBar[282155]
+	end
+	if lastWrathBar[282107] < last then -- Paku
+		aspect = 282107
+		last = lastWrathBar[282107]
+	end
+	if bossesKilled >= 1 then
+		if lastWrathBar[282447] < last then -- Kimbul
+			aspect = 282447
+			last = lastWrathBar[282447]
+		end
+	end
+	if bossesKilled >= 2 then
+		if lastWrathBar[286811] < last then -- Akunda 
+			aspect = 286811
+			last = lastWrathBar[286811]
+		end
+	end
+	return aspect
+end
+
+function mod:NextWrathCDBar(spellId)
+	local now = GetTime()
+	if now < lastWrathBarTime + 1.5 then return end
+	lastWrathBarTime = now
+	local offset = -wrathOffset[spellId]
+	if lastBossKillTime > now + offset then
+		-- If the last boss was killed between the aspect spawn and the wrath, 
+		-- reconstruct the situation at spawn time.
+		offset = offset + wrathOffset[lastBossKillNextAspect]
+		self:CDBar(lastBossKillNextAspect, lastBossKillSpawnCooldown + offset)
+		lastWrathBar[lastBossKillNextAspect] = now
+	else
+		local nextAspect = self:NextAspect()
+		offset = offset + wrathOffset[nextAspect]
+    		self:CDBar(nextAspect, spawnCooldown + offset)
+    		lastWrathBar[nextAspect] = now
 	end
 end
 
@@ -148,6 +216,11 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 130966 then -- Permanent Feign Death
+		-- Snapshot state at kill time.
+		lastBossKillTime = GetTime()
+		lastBossKillSpawnCooldown = spawnCooldown
+		lastBossKillNextAspect = self:NextAspect()
+		
 		bossesKilled = bossesKilled + 1
 		self:Message2("stages", "cyan", L.killed:format(self:UnitName(unit)), false)
 		self:PlaySound("stages", "info")
@@ -169,17 +242,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		-- Start bars
 		if bossesKilled == 1 then -- Kimbul spawning
 			self:Bar(282444, 20.5) -- Lacerating Claws
-			self:CDBar(282447, 45, L.leap) -- Kimbul's Wrath XXX check this
+			spawnCooldown = 20
 		elseif bossesKilled == 2 then -- Akunda spawning
-			fasterPakusWrathActive = true
-			local t = self:BarTimeLeft(282107)
-			if t > 15 then -- Guess. We don't know what the buffer is other than being 14s or higher
-				self:Bar(282107, t-10)
-			end
-
 			self:Bar(285879, 5) -- Mind Wipe
 			self:Bar(282411, 16) -- Thundering Storm
-			self:CDBar(286811, 20) -- Akunda's Wrath XXX check this
+			spawnCooldown = 15
 		end
 	elseif spellId == 283193 then -- Crawling Hex
 		self:CrawlingHexSuccess()
@@ -190,7 +257,7 @@ function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find("282107", nil, true) then -- Pa'ku's Wrath
 		self:Message2(282107, "red")
 		self:PlaySound(282107, "warning")
-		self:Bar(282107, fasterPakusWrathActive and 60 or 70)
+		self:NextWrathCDBar(282107)
 	end
 end
 
@@ -301,7 +368,7 @@ do
 			prev = t
 			self:Message2(282155, "cyan") -- Gonk's Wrath
 			self:PlaySound(282155, "info") -- Gonk's Wrath
-			self:Bar(282155, 60) -- Gonk's Wrath
+			self:NextWrathCDBar(282155)
 		end
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
@@ -342,7 +409,7 @@ do
 				self:Message2(282447, "yellow", L.leap)
 			end
 		end
-		self:Bar(282447, 60, L.leap)
+		self:NextWrathCDBar(286811)
 		scheduled = nil
 		isOnMe = nil
 		isNearMe = nil
@@ -419,7 +486,7 @@ do
 end
 
 function mod:AkundasWrathApplied(args)
-	self:Bar(args.spellId, 60)
+	self:NextWrathCDBar(282447)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning")
