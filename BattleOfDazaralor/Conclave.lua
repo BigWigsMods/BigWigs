@@ -156,7 +156,7 @@ function mod:OnEngage()
 	if not self:Easy() then
 		self:CDBar(282636, 29) -- Krag'wa's Wrath
 	end
-	self:CDBar(282155, spawnCooldown)  -- Gonk always spawns first
+	self:CDBar(282155, spawnCooldown + wrathOffset[282155])  -- Gonk always spawns first
 end
 
 function mod:OnBossDisable()
