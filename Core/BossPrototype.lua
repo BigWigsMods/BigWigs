@@ -731,12 +731,11 @@ do
 		for i = 1, 5 do
 			local unit = unitTable[i]
 			local guid = UnitGUID(unit)
-			if guid then
-				if isNumber then
-					local _, _, _, _, _, mobId = strsplit("-", guid)
-					guid = tonumber(mobId)
-				end
-				if guid == id then return unit end
+			if id == guid then
+				return unit
+			elseif guid and isNumber then
+				local _, _, _, _, _, mobId = strsplit("-", guid)
+				return id == tonumber(mobId) and unit
 			end
 		end
 	end
