@@ -724,7 +724,7 @@ do
 	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
 
 	--- Fetches a unit id by scanning boss units only.
-	-- @param guid GUID or mpb/npc id of the boss to find
+	-- @param guid GUID or mob/npc id of the boss to find
 	-- @return unit id if found, nil otherwise
 	function boss:GetBossIdByGUID(id)
 		local isNumber = type(id) == "number"
