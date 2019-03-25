@@ -171,6 +171,7 @@ globals = {
 	"GetSpellLink",
 	"GetSpellTabInfo",
 	"GetSpellTexture",
+	"GetSubZoneText",
 	"GetTime",
 	"InCombatLockdown",
 	"IsAddOnLoaded",
