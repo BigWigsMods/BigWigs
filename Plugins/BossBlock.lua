@@ -125,7 +125,7 @@ function plugin:OnPluginEnable()
 			BigWigs.db.global.watchedMovies[id] = nil
 		end
 	end
-	BigWigs.db.global.watchedMovies[-593] = nil -- Auchindoun temp
+	BigWigs.db.global.watchedMovies[-593] = nil -- Auchindoun temp reset
 end
 
 -------------------------------------------------------------------------------
@@ -240,7 +240,10 @@ do
 		[-567] = true, -- Mythic Garrosh Phase 4
 		[-573] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
 		[-575] = true, -- Shadowmoon Burial Grounds, final boss introduction
-		-- XXX FIXME --[-593] = {false, -1, true}, -- Auchindoun has 2 cinematics. One before the 1st boss (false) and one after the 3rd boss (true), 2nd arg is garbage for the iterator to work.
+		[-593] = { -- Auchindoun
+			"", -- "": Before the 1st boss, the tunnel doesn't have a sub zone
+			L.subzone_eastern_transept, -- Eastern Transept: After the 3rd boss, Teren'gor porting in
+		},
 		[-607] = true, -- Grimrail Depot, boarding the train
 		[-609] = true, -- Grimrail Depot, destroying the train
 		[-612] = true, -- Highmaul, Kargath Death
@@ -255,7 +258,7 @@ do
 		[-1153] = true, -- Uldir, raising stairs for Zul (Fetid Devourer)
 		[-1352] = { -- Battle of Dazar'alor
 			L.subzone_grand_bazaar, -- Grand Bazaar: After killing 2nd boss, Bwonsamdi (Alliance side only)
-			L.subzone_port_of_zandalar -- Port of Zandalar: After killing blockade, boat arriving
+			L.subzone_port_of_zandalar, -- Port of Zandalar: After killing blockade, boat arriving
 		},
 		[-1358] = true, -- Battle of Dazar'alor, after killing 1st boss, Bwonsamdi (Horde side only)
 		--[-1364] = true, -- Battle of Dazar'alor, Jaina stage 1 intermission (unskippable)
