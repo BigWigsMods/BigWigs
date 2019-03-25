@@ -143,6 +143,9 @@ L.blockSpellErrorsDesc = "Messages such as \"Spell is not ready yet\" that usual
 L.disableSfx = "Disable sound effects"
 L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 
+L.subzone_grand_bazaar = "Grand Bazaar"
+L.subzone_port_of_zandalar = "Port of Zandalar"
+
 -----------------------------------------------------------------------
 -- Colors.lua
 --

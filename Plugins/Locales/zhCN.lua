@@ -284,6 +284,9 @@ L.textDesc = "显示或隐藏计时条上的文本。"
 L.disableSfx = "禁用音效"
 L.disableSfxDesc = "魔兽世界声音选项中的“音效”选项将被关闭，当首领战斗结束后会重新打开。这可以帮助集中注意力放在 BigWigs 警报音效上。"
 
+L.subzone_grand_bazaar = "百商集市"
+L.subzone_port_of_zandalar = "赞达拉港"
+
 -----------------------------------------------------------------------
 -- Colors.lua
 --

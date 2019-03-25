@@ -284,6 +284,9 @@ L.textDesc = "Text in den Leisten anzeigen oder verstecken."
 L.disableSfx = "Soundeffekte deaktivieren"
 L.disableSfxDesc = "Die Option 'Soundeffekte' im WoW Soundmenü wird deaktiviert und erst nach dem Bosskampf wieder aktiviert. Dies kann helfen sich auf die BigWigs Sounds zu konzentrieren."
 
+L.subzone_grand_bazaar = "Der Große Basar"
+L.subzone_port_of_zandalar = "Der Hafen von Zandalar"
+
 -----------------------------------------------------------------------
 -- Colors.lua
 --

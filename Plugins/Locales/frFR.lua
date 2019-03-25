@@ -143,6 +143,9 @@ L.blockSpellErrorsDesc = "Les messages tels que \"Le sort n'est pas encore utili
 --L.disableSfx = "Disable sound effects"
 --L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 
+L.subzone_grand_bazaar = "Le Grand bazar"
+L.subzone_port_of_zandalar = "Port de Zandalar"
+
 -----------------------------------------------------------------------
 -- Colors.lua
 --

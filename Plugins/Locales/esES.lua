@@ -284,6 +284,9 @@ L.textDesc = "Ya sea para mostrar u ocultar el texto que se muestra en las barra
 L.disableSfx = "Deshabilitar efectos de sonido"
 L.disableSfxDesc = "La opción de 'Efectos de Sonido' en las opciones de sonido de WoW se desactivará, luego se vovlerá a activar cuando el encuentro con el jefe finalice. Esto puede ayudarte a concentrarte en los sonidos de avisos de BigWigs."
 
+L.subzone_grand_bazaar = "Gran Bazar"
+L.subzone_port_of_zandalar = "Puerto de Zandalar"
+
 -----------------------------------------------------------------------
 -- Colors.lua
 --

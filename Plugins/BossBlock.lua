@@ -25,6 +25,7 @@ plugin.defaultDB = {
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
+local GetSubZoneText = GetSubZoneText
 local SetCVar = C_CVar.SetCVar
 
 -------------------------------------------------------------------------------
@@ -231,7 +232,7 @@ do
 		[-567] = true, -- Mythic Garrosh Phase 4
 		[-573] = true, -- Bloodmaul Slag Mines, activating bridge to Roltall
 		[-575] = true, -- Shadowmoon Burial Grounds, final boss introduction
-		[-593] = {false, -1, true}, -- Auchindoun has 2 cinematics. One before the 1st boss (false) and one after the 3rd boss (true), 2nd arg is garbage for the iterator to work.
+		-- XXX FIXME --[-593] = {false, -1, true}, -- Auchindoun has 2 cinematics. One before the 1st boss (false) and one after the 3rd boss (true), 2nd arg is garbage for the iterator to work.
 		[-607] = true, -- Grimrail Depot, boarding the train
 		[-609] = true, -- Grimrail Depot, destroying the train
 		[-612] = true, -- Highmaul, Kargath Death
@@ -244,9 +245,11 @@ do
 		[-1151] = true, -- Uldir, raising stairs for Zul (Zek'voz)
 		[-1152] = true, -- Uldir, raising stairs for Zul (Vectis)
 		[-1153] = true, -- Uldir, raising stairs for Zul (Fetid Devourer)
-		[-1358] = true, -- Battle of Dazar'alor, after killing 1st boss, Bwonsamdi (Horde side)
-		--[-1352] = true, -- Battle of Dazar'alor, after killing 2nd boss, Bwonsamdi (Alliance side)
-		--[-1352] = true, -- Battle of Dazar'alor, after killing blockade
+		[-1352] = { -- Battle of Dazar'alor
+			L.subzone_grand_bazaar, -- Grand Bazaar: After killing 2nd boss, Bwonsamdi (Alliance side only)
+			L.subzone_port_of_zandalar -- Port of Zandalar: After killing blockade, boat arriving
+		},
+		[-1358] = true, -- Battle of Dazar'alor, after killing 1st boss, Bwonsamdi (Horde side only)
 		--[-1364] = true, -- Battle of Dazar'alor, Jaina stage 1 intermission (unskippable)
 	}
 
@@ -299,11 +302,11 @@ do
 			local id = -(GetBestMapForUnit("player") or 0)
 
 			if cinematicZones[id] then
-				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per floor
+				if type(cinematicZones[id]) == "table" then -- For zones with more than 1 cinematic per map id
 					if type(BigWigs.db.global.watchedMovies[id]) ~= "table" then BigWigs.db.global.watchedMovies[id] = {} end
-					for i=#cinematicZones[id], 1, -1 do -- In reverse so for example: we don't trigger off the first boss when at the third boss
-						local _, _, done = C_Scenario.GetCriteriaInfoByStep(1,i)
-						if done == cinematicZones[id][i] then
+					for i = 1, #cinematicZones[id] do
+						local subZone = cinematicZones[id][i]
+						if subZone == GetSubZoneText() then
 							if BigWigs.db.global.watchedMovies[id][i] then
 								BigWigs:Print(L.movieBlocked)
 								CinematicFrame_CancelCinematic()
