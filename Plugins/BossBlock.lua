@@ -118,6 +118,14 @@ function plugin:OnPluginEnable()
 	self:RegisterEvent("PLAY_MOVIE")
 	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
 	self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
+
+	-- XXX temp 8.1.5
+	for id in next, BigWigs.db.global.watchedMovies do
+		if type(id) == "string" then
+			BigWigs.db.global.watchedMovies[id] = nil
+		end
+	end
+	BigWigs.db.global.watchedMovies[-593] = nil -- Auchindoun temp
 end
 
 -------------------------------------------------------------------------------
