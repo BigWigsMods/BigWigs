@@ -3,6 +3,7 @@ if not L then return end
 if L then
 	L.prelate = "Прелат Акк'ал"
 	L.flamespeaker = "Растарский заклинатель огня"
+	L.hulk = "Воскрешенный громила"
 	L.enforcer = "Вечный каратель"
 	L.punisher = "Растарский каратель"
 	L.vessel = "Сосуд Бвонсамди"

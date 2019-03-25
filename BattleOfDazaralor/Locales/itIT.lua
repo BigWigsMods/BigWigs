@@ -3,6 +3,7 @@ if not L then return end
 if L then
 	L.prelate = "Prelato Akk'al"
 	L.flamespeaker = "Oratore delle Fiamme Rastari"
+	L.hulk = "Colosso Risorto"
 	L.enforcer = "Scagnozzo Eterno"
 	L.punisher = "Punitore Rastari"
 	L.vessel = "Ricettacolo di Bwonsamdi"
