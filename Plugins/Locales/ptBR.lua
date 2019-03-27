@@ -143,6 +143,10 @@ L.blockSpellErrorsDesc = "Mensagens do tipo \"O feitiço não está pronto ainda
 --L.disableSfx = "Disable sound effects"
 --L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 
+L.subzone_grand_bazaar = "Grande Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
+L.subzone_port_of_zandalar = "Porto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
+--L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
+
 -----------------------------------------------------------------------
 -- Colors.lua
 --

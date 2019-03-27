@@ -214,6 +214,7 @@ BigWigs:AddSounds("Lady Jaina Proudmoore", {
 BigWigs:AddSounds("Battle of Dazar'alor Trash", {
 	[288808] = "alarm",
 	[288815] = "long",
+	[288959] = "warning",
 	[289772] = "long",
 	[289917] = "warning",
 	[289937] = "long",

@@ -236,7 +236,7 @@ do
 		printTarget(self, self:UnitName(id), UnitGUID(id))
 	end
 	function mod:EyeBeam(args)
-		local unit = self:GetBossIdByGUID(args.sourceGUID)
+		local unit = self:GetBossId(args.sourceGUID)
 		if unit then
 			self:RegisterUnitEvent("UNIT_TARGET", nil, unit)
 		else

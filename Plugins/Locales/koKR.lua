@@ -143,6 +143,10 @@ L.blockSpellErrorsDesc = "일반적으로 화면 상단에 표시되는 \"마법
 --L.disableSfx = "Disable sound effects"
 --L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 
+L.subzone_grand_bazaar = "대시장" -- Battle of Dazar'alor raid (Battle for Azeroth)
+L.subzone_port_of_zandalar = "잔달라 항구" -- Battle of Dazar'alor raid (Battle for Azeroth)
+--L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
+
 -----------------------------------------------------------------------
 -- Colors.lua
 --

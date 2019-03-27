@@ -9,6 +9,7 @@ mod.displayName = CL.trash
 mod:RegisterEnableMob(
 	147497, -- Prelate Akk'al
 	147830, -- Rastari Flamespeaker
+	148221, -- Risen Hulk
 	149556, -- Eternal Enforcer
 	148667, -- Rastari Punisher
 	148673 -- Vessel of Bwonsamdi
@@ -22,6 +23,7 @@ local L = mod:GetLocale()
 if L then
 	L.prelate = "Prelate Akk'al"
 	L.flamespeaker = "Rastari Flamespeaker"
+	L.hulk = "Risen Hulk"
 	L.enforcer = "Eternal Enforcer"
 	L.punisher = "Rastari Punisher"
 	L.vessel = "Vessel of Bwonsamdi"
@@ -38,6 +40,7 @@ function mod:GetOptions()
 	return {
 		288808, -- Consecration
 		288815, -- Breath of Fire
+		{288959, "SAY"}, -- Spectral Charge
 		{289772, "SAY"}, -- Impale
 		289937, -- Thundering Slam
 		289917, -- Bwonsamdi's Pact
@@ -45,6 +48,7 @@ function mod:GetOptions()
 	}, {
 		[288808] = L.prelate,
 		[288815] = L.flamespeaker,
+		[288959] = L.hulk,
 		[289772] = L.enforcer,
 		[289937] = L.punisher,
 		[289917] = L.vessel,
@@ -60,6 +64,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "ConsecrationDamage", 288808)
 
 	self:Log("SPELL_CAST_START", "BreathOfFire", 288815)
+	self:Log("SPELL_CAST_START", "SpectralCharge", 288959)
 	self:Log("SPELL_AURA_APPLIED", "Impale", 289772)
 	self:Log("SPELL_AURA_REMOVED", "ImpaleRemoved", 289772)
 	self:Log("SPELL_CAST_START", "ThunderingSlam", 289937)
@@ -90,6 +95,19 @@ function mod:BreathOfFire(args)
 	local _, ready = self:Interrupter()
 	if ready then
 		self:PlaySound(args.spellId, "long")
+	end
+end
+
+do
+	local function printTarget(self, player, guid)
+		if self:Me(guid) then
+			self:Say(288959)
+			self:PlaySound(288959, "warning")
+		end
+		self:TargetMessage2(288959, "yellow", player)
+	end
+	function mod:SpectralCharge(args)
+		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
 	end
 end
 

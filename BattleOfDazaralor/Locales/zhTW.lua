@@ -3,6 +3,7 @@ if not L then return end
 if L then
 	--L.prelate = "Prelate Akk'al"
 	--L.flamespeaker = "Rastari Flamespeaker"
+	--L.hulk = "Risen Hulk"
 	L.enforcer = "永生執法者"
 	L.punisher = "拉斯塔瑞懲戒者"
 	L.vessel = "伯昂薩姆第的容器"

@@ -217,6 +217,7 @@ BigWigs:AddColors("Lady Jaina Proudmoore", {
 BigWigs:AddColors("Battle of Dazar'alor Trash", {
 	[288808] = "blue",
 	[288815] = "red",
+	[288959] = {"blue","yellow"},
 	[289772] = {"blue","red"},
 	[289917] = {"blue","orange"},
 	[289937] = "yellow",

@@ -3,6 +3,7 @@ if not L then return end
 if L then
 	L.prelate = "圣武士阿克阿尔"
 	L.flamespeaker = "拉斯塔利火语者"
+	L.hulk = "复生的蛮兵"
 	L.enforcer = "永恒执行者"
 	L.punisher = "拉斯塔利惩罚者"
 	L.vessel = "邦桑迪的使者"
