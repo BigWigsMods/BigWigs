@@ -286,7 +286,7 @@ L.disableSfxDesc = "魔兽世界声音选项中的“音效”选项将被关闭
 
 L.subzone_grand_bazaar = "百商集市" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "赞达拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
---L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
+L.subzone_eastern_transept = "东侧耳堂" -- Auchindoun dungeon (Warlords of Draenor)
 
 -----------------------------------------------------------------------
 -- Colors.lua
