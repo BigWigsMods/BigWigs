@@ -735,7 +735,9 @@ do
 				return unit
 			elseif guid and isNumber then
 				local _, _, _, _, _, mobId = strsplit("-", guid)
-				return id == tonumber(mobId) and unit
+				if id == tonumber(mobId) then
+					return unit
+				end
 			end
 		end
 	end
