@@ -168,7 +168,7 @@ BigWigs:AddColors("High Tinker Mekkatorque", {
 
 BigWigs:AddColors("Stormwall Blockade", {
 	[284262] = "orange",
-	[284362] = "yellow",
+	[284362] = {"blue","yellow"},
 	[284383] = "cyan",
 	[284405] = {"blue","red"},
 	[285000] = {"blue","purple"},

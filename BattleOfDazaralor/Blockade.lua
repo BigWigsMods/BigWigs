@@ -47,7 +47,7 @@ function mod:GetOptions()
 		{288205, "PROXIMITY", "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Crackling Lightning
 		-- Brother Joseph
 		286558, -- Tidal Shroud
-		284362, -- Sea Storm
+		{284362, "SAY", "FLASH"}, -- Sea Storm
 		seaStormMarker,
 		284383, -- Sea's Temptation XXX Rename bar to "Add"?
 		284405, -- Tempting Song
@@ -348,11 +348,11 @@ do
 				SetRaidTarget(args.destName, count)
 			end
 			if self:Me(args.destGUID) then
-				self:Say(args.spellId)
-				self:Flash(args.spellId)
+				self:Say(284362)
+				self:Flash(284362)
 			end
-			self:PlaySound(args.spellId, "alert", nil, playerList)
-			self:TargetsMessage(args.spellId, "yellow", playerList, 3, nil, nil, nil, playerIcons)
+			self:PlaySound(284362, "alert", nil, playerList)
+			self:TargetsMessage(284362, "yellow", playerList, 3, nil, nil, nil, playerIcons)
 		end
 	end
 end
