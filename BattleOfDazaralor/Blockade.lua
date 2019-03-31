@@ -87,6 +87,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TidalShroud", 286558)
 	self:Log("SPELL_CAST_START", "SeaStorm", 284362)
 	self:Log("SPELL_AURA_APPLIED", "SeaStormApplied", 284361)
+	self:Log("SPELL_AURA_REMOVED", "SeaStormRemoved", 284361)
 	self:Log("SPELL_CAST_START", "SeasTemptation", 284383)
 	self:Log("SPELL_CAST_SUCCESS", "SirenSpawn", 289795) -- Zuldazar Reuse Spell 06
 	self:Log("SPELL_AURA_APPLIED", "TemptingSongApplied", 284405)
