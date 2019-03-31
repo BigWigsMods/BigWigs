@@ -35,7 +35,6 @@ end
 -- Initialization
 --
 
-local seaStormMarker = mod:AddMarkerOption(false, "player", 1, 284362, 1, 2, 3)
 function mod:GetOptions()
 	return {
 		"stages",
@@ -48,7 +47,6 @@ function mod:GetOptions()
 		-- Brother Joseph
 		286558, -- Tidal Shroud
 		{284362, "SAY", "FLASH"}, -- Sea Storm
-		seaStormMarker,
 		284383, -- Sea's Temptation XXX Rename bar to "Add"?
 		284405, -- Tempting Song
 		-- Stage 2
@@ -87,7 +85,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "TidalShroud", 286558)
 	self:Log("SPELL_CAST_START", "SeaStorm", 284362)
 	self:Log("SPELL_AURA_APPLIED", "SeaStormApplied", 284361)
-	self:Log("SPELL_AURA_REMOVED", "SeaStormRemoved", 284361)
 	self:Log("SPELL_CAST_START", "SeasTemptation", 284383)
 	self:Log("SPELL_CAST_SUCCESS", "SirenSpawn", 289795) -- Zuldazar Reuse Spell 06
 	self:Log("SPELL_AURA_APPLIED", "TemptingSongApplied", 284405)
@@ -339,28 +336,17 @@ function mod:SeaStorm(args)
 end
 
 do
-	local playerList, playerIcons = mod:NewTargetList(), {}
+	local playerList = mod:NewTargetList()
 	function mod:SeaStormApplied(args)
 		if self:IsBrotherOnPlatform() then
-			local count = #playerList+1
-			playerList[count] = args.destName
-			playerIcons[count] = count
-			if self:GetOption(seaStormMarker) then
-				SetRaidTarget(args.destName, count)
-			end
+			playerList[#playerList+1] = args.destName
 			if self:Me(args.destGUID) then
 				self:Say(284362)
 				self:Flash(284362)
 			end
 			self:PlaySound(284362, "alert", nil, playerList)
-			self:TargetsMessage(284362, "yellow", playerList, 3, nil, nil, nil, playerIcons)
+			self:TargetsMessage(284362, "yellow", playerList, 3)
 		end
-	end
-end
-
-function mod:SeaStormRemoved(args)
-	if self:GetOption(seaStormMarker) then
-		SetRaidTarget(args.destName, 0)
 	end
 end
 
