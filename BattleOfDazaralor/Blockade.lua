@@ -357,6 +357,12 @@ do
 	end
 end
 
+function mod:SeaStormRemoved(args)
+	if self:GetOption(seaStormMarker) then
+		SetRaidTarget(args.destName, 0)
+	end
+end
+
 function mod:SeasTemptation(args)
 	if self:IsBrotherOnPlatform() then
 		self:Message2(args.spellId, "cyan")
