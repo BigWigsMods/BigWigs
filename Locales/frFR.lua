@@ -125,6 +125,8 @@ L.SAY_COUNTDOWN = "Dire le compte à rebours"
 L.SAY_COUNTDOWN_desc = "Les bulles de discussion sont faciles à repérer. BigWigs utilisera plusieurs messages en compte à rebours pour avertir les personnes proches qu'une technique vous affectant est sur le point de disparaitre."
 L.ME_ONLY_EMPHASIZE = "Mise en évidence (sur moi)"
 L.ME_ONLY_EMPHASIZE_desc = "L'activation de cette option mettra en évidence tous les messages associés à cette technique UNIQUEMENT si vous en êtes la cible, les rendant plus grands et plus visibles."
+--L.DO_NOT_EMPHASIZE = "Do NOT Emphasize"
+--L.DO_NOT_EMPHASIZE = "Enabling this will prevent the bar for this ability from being emphasized upon reaching the duration threshold"
 
 -- Media.lua
 L.Beware = "Attention (Algalon)"

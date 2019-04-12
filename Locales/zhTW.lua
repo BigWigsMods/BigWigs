@@ -126,6 +126,8 @@ L.SAY_COUNTDOWN = "倒數報數"
 L.SAY_COUNTDOWN_desc = "聊天泡泡十分醒目，利用此特性，BigWigs 以倒數計時的說話消息來提醒附近的人技能即將到期。"
 --L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
 --L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
+--L.DO_NOT_EMPHASIZE = "Do NOT Emphasize"
+--L.DO_NOT_EMPHASIZE = "Enabling this will prevent the bar for this ability from being emphasized upon reaching the duration threshold"
 
 -- Media.lua
 L.Beware = "當心（艾爾加隆）"

@@ -1984,10 +1984,12 @@ do
 			self.missing[key] = nil
 		end
 
+		local emp = checkFlag(self, key, C.DO_NOT_EMPHASIZE)
+
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], emp)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)

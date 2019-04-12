@@ -395,6 +395,7 @@ local function advancedToggles(dbKey, module, check)
 		-- Bars
 		advancedOptions[7] = getSlaveToggle(L.BAR, L.BAR_desc, dbKey, module, C.BAR, check)
 		advancedOptions[8] = getSlaveToggle(L.CASTBAR, L.CASTBAR_desc, dbKey, module, C.CASTBAR, check)
+		advancedOptions[9] = getSlaveToggle(L.DO_NOT_EMPHASIZE, L.DO_NOT_EMPHASIZE_desc, dbKey, module, C.DO_NOT_EMPHASIZE, check)
 		--
 	end
 

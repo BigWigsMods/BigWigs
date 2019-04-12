@@ -1746,7 +1746,7 @@ end
 -- Start bars
 --
 
-function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
+function plugin:BigWigs_StartBar(_, module, key, text, time, icon, no_emp, isApprox)
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)
 	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), db.BigWigsAnchor_width, db.BigWigsAnchor_height)
@@ -1759,6 +1759,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
 	bar.candyBarLabel:SetJustifyH(db.alignText)
 	bar.candyBarDuration:SetJustifyH(db.alignTime)
+	bar.no_emp = no_emp
 	normalAnchor.bars[bar] = true
 
 	local flags = nil
@@ -1784,7 +1785,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 		refixClickOnBar(true, bar)
 	end
 
-	if db.emphasize and time < db.emphasizeTime then
+	if db.emphasize and not bar.no_emp and time < db.emphasizeTime then
 		self:EmphasizeBar(bar, true)
 	else
 		bar:Start() -- Don't fire :Start twice when emphasizeRestart is on
@@ -1809,7 +1810,7 @@ do
 	empUpdate = CreateFrame("Frame"):CreateAnimationGroup()
 	empUpdate:SetScript("OnLoop", function()
 		for k in next, normalAnchor.bars do
-			if k.remaining < db.emphasizeTime and not k:Get("bigwigs:emphasized") then
+			if k.remaining < db.emphasizeTime and not k.no_emp and not k:Get("bigwigs:emphasized") then
 				dirty = true
 				plugin:EmphasizeBar(k)
 				plugin:SendMessage("BigWigs_BarEmphasized", plugin, k)

@@ -125,6 +125,8 @@ L.SAY_COUNTDOWN = "Sprechblasen-Countdown"
 L.SAY_COUNTDOWN_desc = "Sprechblasen sind gut sichtbar. BigWigs nutzt oftmals Sprechblasen zum Herunterzählen, um Spieler in der Nähe vor auslaufenden Fähigkeiten zu warnen."
 L.ME_ONLY_EMPHASIZE = "Hervorheben (nur auf mir)"
 L.ME_ONLY_EMPHASIZE_desc = "Die Aktivierung dieser Option hebt Nachrichten zu dieser Fähigkeit NUR DANN hervor, wenn diese auf Dich angewandt wurden. Dadurch werden diese größer und sichtbarer dargestellt."
+--L.DO_NOT_EMPHASIZE = "Do NOT Emphasize"
+--L.DO_NOT_EMPHASIZE = "Enabling this will prevent the bar for this ability from being emphasized upon reaching the duration threshold"
 
 -- Media.lua
 L.Beware = "Hütet Euch (Algalon)"

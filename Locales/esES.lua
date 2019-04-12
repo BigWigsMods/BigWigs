@@ -125,6 +125,8 @@ L.SAY_COUNTDOWN = "Decir cuenta atrás"
 L.SAY_COUNTDOWN_desc = "Las burbujas de chat son fáciles de detectar. BigWigs usará múltiples mensajes de cuenta atrás para alertar a los que estén cerca que una habilidad en ti está a punto de expirar."
 L.ME_ONLY_EMPHASIZE = "Enfatizar (sólo en mi)"
 L.ME_ONLY_EMPHASIZE_desc = "Habilitar esto enfatizará cualquier mensaje asociado con esta habilidad SOLO si se lanza sobre ti, mostrandolo más grande y visible."
+--L.DO_NOT_EMPHASIZE = "Do NOT Emphasize"
+--L.DO_NOT_EMPHASIZE = "Enabling this will prevent the bar for this ability from being emphasized upon reaching the duration threshold"
 
 L.advanced  = "Opciones avanzadas"
 L.back  = "<< Volver"

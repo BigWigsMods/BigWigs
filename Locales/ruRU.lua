@@ -125,6 +125,8 @@ L.SAY_COUNTDOWN = "Отсчет в /сказать"
 L.SAY_COUNTDOWN_desc = "Облачка чата легко заметить. BigWigs будет производить отсчет в /сказать, чтобы оповестить рядом стоящих игроков об окончании времени способности на Вас."
 L.ME_ONLY_EMPHASIZE = "Выделить (только для себя)"
 L.ME_ONLY_EMPHASIZE_desc = "С включенной опцией все сообщения, связанные с данной способностью будут выделенны ТОЛЬКО тогда, когда использованы на Вас, становясь более заметными."
+--L.DO_NOT_EMPHASIZE = "Do NOT Emphasize"
+--L.DO_NOT_EMPHASIZE = "Enabling this will prevent the bar for this ability from being emphasized upon reaching the duration threshold"
 
 -- Media.lua
 L.Beware = "Берегитесь (Алгалон)"
