@@ -27,7 +27,7 @@ local tormentCount = 0
 -- Initialization
 --
 
-local tormentMarker = mod:AddMarkerOption(false, "player", 1, 285652, 1, 2, 3, 4, 5) -- Broadside
+local tormentMarker = mod:AddMarkerOption(false, "player", 1, 285652, 1, 2, 3, 4, 5) -- Insatiable Torment
 function mod:GetOptions()
 	return {
 		284722, -- Umbral Shell
@@ -35,12 +35,13 @@ function mod:GetOptions()
 		284583, -- Storm of Annihilation
 		{284851, "TANK"}, -- Touch of the End
 		285185, -- Oblivion Tear
-		285410, -- Void Crash
+		285416, -- Void Crash
 		285376, -- Eyes of N'Zoth
 		285345, -- Maddening Eyes of N'Zoth
 		285367, -- Piercing Gaze of N'Zoth
 		285453, -- Gift of N'Zoth: Obscurity
-		{285307, "TANK"}, -- Feed
+		285820, -- Call Undying Guardian
+		{285307, "TANK"}, -- Feed XXX Mythic
 		285638, -- Gift of N'Zoth: Hysteria
 		285427, -- Consume Essence
 		285562, -- Unknowable Terror
@@ -63,16 +64,17 @@ function mod:OnBossEnable()
 
 	-- Stage One: His All-Seeing Eyes
 	-- Uu'nat, Harbinger of the Void
+	self:Log("SPELL_CAST_SUCCESS", "TouchoftheEndSuccess", 284851)
 	self:Log("SPELL_AURA_APPLIED", "TouchoftheEndApplied", 284851)
 	self:Log("SPELL_CAST_START", "OblivionTear", 285185)
-	self:Log("SPELL_CAST_SUCCESS", "VoidCrash", 285410)
+	self:Log("SPELL_CAST_SUCCESS", "VoidCrash", 285416)
 	self:Log("SPELL_CAST_START", "EyesofNZoth", 285376)
 	self:Log("SPELL_CAST_START", "MaddeningEyesofNZoth", 285345)
-	self:Log("SPELL_CAST_SUCCESS", "PiercingGazeofNZoth", 285367)
 	self:Log("SPELL_CAST_START", "GiftofNZothObscurity", 285453)
+	self:Log("SPELL_CAST_START", "CallUndyingGuardian", 285820)
 
 	-- Undying Guardian
-	self:Log("SPELL_CAST_START", "Feed", 285307)
+	self:Log("SPELL_CAST_START", "Feed", 285307) -- XXX Mythic
 
 	-- Stage Two: His Dutiful Servants
 	self:Log("SPELL_CAST_START", "GiftofNZothHysteria", 285638)
@@ -87,6 +89,13 @@ end
 
 function mod:OnEngage()
 	tormentCount = 0
+	self:Bar(285416, 7.1) --  Void Crash
+	self:Bar(285185, 12.2) --  Oblivion Tear
+	self:Bar(285453, 20.7) --  Gift of NZoth Obscurity
+	self:Bar(284851, 26.8) --  Touch of the End
+	self:Bar(285820, 30.1) --  Call Undying Guardian
+	self:Bar(285376, 42.5) -- Eyes of NZoth
+	self:Bar(285345, 77) -- Maddening Eyes of NZoth
 end
 
 --------------------------------------------------------------------------------
@@ -110,6 +119,10 @@ end
 
 -- Stage One: His All-Seeing Eyes
 -- Uu'nat, Harbinger of the Void
+function mod:TouchoftheEndSuccess(args)
+	self:Bar(args.spellId, 25.5)
+end
+
 function mod:TouchoftheEndApplied(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	self:PlaySound(args.spellId, "alarm", nil, args.destName)
@@ -118,39 +131,40 @@ end
 function mod:OblivionTear(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
+	self:Bar(args.spellId, 12.1)
 end
 
 function mod:VoidCrash(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
+	self:Bar(args.spellId, 31.6)
 end
 
 function mod:EyesofNZoth(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
+	self:Bar(args.spellId, 33)
 end
 
-do
-	local prev = 0
-	function mod:MaddeningEyesofNZoth(args)
-		local t = args.time
-		if t-prev > 2 then
-			prev = t
-			self:Message2(args.spellId, "orange")
-			self:PlaySound(args.spellId, "alarm")
-		end
-	end
+function mod:MaddeningEyesofNZoth(args)
+	self:Message2(args.spellId, "orange")
+	self:PlaySound(args.spellId, "alarm")
+	--self:Bar(args.spellId, 33)
 end
 
-function mod:PiercingGazeofNZoth(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
-end
 
 function mod:GiftofNZothObscurity(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
+	self:Bar(args.spellId, 42.5)
 end
+
+function mod:CallUndyingGuardian(args)
+	self:Message2(args.spellId, "cyan")
+	self:PlaySound(args.spellId, "info")
+	self:Bar(args.spellId, 51.4)
+end
+
 
 -- Undying Guardian
 do
