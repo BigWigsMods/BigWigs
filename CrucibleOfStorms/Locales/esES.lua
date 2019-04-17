@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("The Restless Cabal", "esES")
+local L = BigWigs:NewBossLocale("The Restless Cabal", "esES") or BigWigs:NewBossLocale("The Restless Cabal", "esMX")
 if not L then return end
 if L then
 	--L.custom_off_eldritch_marker = "Eldritch Abomination Marker"
