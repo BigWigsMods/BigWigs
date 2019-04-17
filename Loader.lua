@@ -10,7 +10,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 142
+local BIGWIGS_VERSION = 143
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -960,9 +960,9 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "18454" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "8.1.12" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
-	local DBMdotReleaseRevision = DBMdotRevision -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20190417003356" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "8.1.18" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotReleaseRevision = "20190420000000" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
@@ -977,22 +977,22 @@ do
 			timer = CTimerNewTicker(3.3, sendMsg, 1)
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
-			if BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM then
-				-- If there are people with newer versions than us, suddenly we've upgraded!
-				local rev, dotRev = tonumber(revision), tonumber(DBMdotRevision)
-				if rev and displayVersion and rev ~= 99999 and rev > dotRev and not displayVersion:find("alpha", nil, true) then -- Failsafes
-					if not prevUpgradedUser then
-						prevUpgradedUser = sender
-					elseif prevUpgradedUser ~= sender then
-						DBMdotRevision = revision -- Update our local rev with the highest possible rev found.
-						DBMdotReleaseRevision = releaseRevision -- Update our release rev with the highest found, this should be the same for alpha users and latest release users.
-						DBMdotDisplayVersion = displayVersion -- Update to the latest display version.
-						-- Re-send the addon message.
-						if timer then timer:Cancel() end
-						timer = CTimerNewTicker(1, sendMsg, 1)
-					end
-				end
-			end
+			--if BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM then
+			--	-- If there are people with newer versions than us, suddenly we've upgraded!
+			--	local rev, dotRev = tonumber(revision), tonumber(DBMdotRevision)
+			--	if rev and displayVersion and rev ~= 99999 and rev > dotRev and not displayVersion:find("alpha", nil, true) then -- Failsafes
+			--		if not prevUpgradedUser then
+			--			prevUpgradedUser = sender
+			--		elseif prevUpgradedUser ~= sender then
+			--			DBMdotRevision = revision -- Update our local rev with the highest possible rev found.
+			--			DBMdotReleaseRevision = releaseRevision -- Update our release rev with the highest found, this should be the same for alpha users and latest release users.
+			--			DBMdotDisplayVersion = displayVersion -- Update to the latest display version.
+			--			-- Re-send the addon message.
+			--			if timer then timer:Cancel() end
+			--			timer = CTimerNewTicker(1, sendMsg, 1)
+			--		end
+			--	end
+			--end
 		end
 	end
 	function mod:BigWigs_CoreOptionToggled(_, key, value)

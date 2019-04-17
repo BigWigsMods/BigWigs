@@ -488,7 +488,7 @@ function mod:SiegebreakerBlastRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
-	self:PrimaryIcon(args.spellId, args.destName)
+	self:PrimaryIcon(args.spellId)
 	self:StopBar(args.spellId, args.destName)
 end
 

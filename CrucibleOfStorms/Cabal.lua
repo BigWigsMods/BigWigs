@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("The Restless Cabal", 2096, 2328)
 if not mod then return end
-mod:RegisterEnableMob(146497, 146495) -- Zaxasj the Speaker, Fa'thuul the Feared
+mod:RegisterEnableMob(144755, 144754) -- Zaxasj the Speaker, Fa'thuul the Feared
 mod.engageId = 2269
 --mod.respawnTime = 31
 
@@ -13,21 +13,24 @@ mod.engageId = 2269
 --
 
 local crushingCount = 0
+local eldritchCount = 0
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
---
---end
+local L = mod:GetLocale()
+if L then
+	L.custom_off_eldritch_marker = "Eldritch Abomination Marker"
+	L.custom_off_eldritch_marker_desc = "Mark Eldritch Abomination with {rt4}{rt5}{rt6}."
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-local crushingDoubtMarker = mod:AddMarkerOption(false, "player", 1, 282432, 1, 2, 3, 4) -- Crushing Doubt
+local crushingDoubtMarker = mod:AddMarkerOption(false, "player", 1, 282432, 1, 2) -- Crushing Doubt
 function mod:GetOptions()
 	return {
 		-- Relics of Power
@@ -39,17 +42,18 @@ function mod:GetOptions()
 		--
 		282675, -- Pact of the Restless
 		-- Zaxasj the Speaker
-		{282386, "SAY_COUNTDOWN"}, -- Aphotic Blast
+		282386, -- Aphotic Blast
 		282540, -- Agent of Demise
 		282589, -- Cerebral Assault
 		{282561, "ICON"}, -- Dark Herald
 		282562, -- Promises of Power
 		282517, -- Terrifying Echo
 		-- Fa'thuul the Feared
-		{282384, "TANK", "SAY", "SAY_COUNTDOWN"}, -- Shear Mind
+		{282384, "TANK"}, -- Shear Mind
 		282407, -- Void Crash
 		{282432, "SAY", "SAY_COUNTDOWN"}, -- Crushing Doubt
 		crushingDoubtMarker,
+		"custom_off_eldritch_marker",
 		287876, -- Enveloping Darkness
 	}
 end
@@ -68,15 +72,17 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_START", "AphoticBlastStart", 282386)
 	self:Log("SPELL_AURA_APPLIED", "AphoticBlastApplied", 282386)
 	self:Log("SPELL_AURA_REFRESH", "AphoticBlastRefresh", 282386)
+	self:Log("SPELL_AURA_REMOVED", "AphoticBlastRemoved", 282386)
 	self:Log("SPELL_AURA_APPLIED", "AgentofDemise", 282540)
 	self:Log("SPELL_CAST_START", "CerebralAssault", 282589)
+	self:Log("SPELL_AURA_SUCCESS", "DarkHeraldSuccess", 282561)
 	self:Log("SPELL_AURA_APPLIED", "DarkHerald", 282561)
 	self:Log("SPELL_AURA_REMOVED", "DarkHeraldRemoved", 282561)
 	self:Log("SPELL_AURA_APPLIED", "PromisesofPower", 282562)
 	self:Log("SPELL_CAST_START", "TerrifyingEcho", 282517)
 
 	-- Fa'thuul the Feared
-	--self:Log("SPELL_CAST_SUCCESS", "ShearMind", 282384)
+	self:Log("SPELL_CAST_SUCCESS", "ShearMind", 282384)
 	self:Log("SPELL_AURA_APPLIED", "ShearMindApplied", 282384)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShearMindApplied", 282384)
 	self:Log("SPELL_CAST_START", "VoidCrash", 282407)
@@ -90,6 +96,17 @@ end
 
 function mod:OnEngage()
 	crushingCount = 0
+	eldritchCount = 0
+	mobCollector = {}
+
+	self:Bar(282384, 7.1) -- Shear Mind
+	self:Bar(282561, 10.3) -- Dark Herald
+	self:Bar(282407, 13.2) -- Void Crash
+	self:Bar(282589, 15.6) -- Cerebral Assault
+	self:Bar(282432, 18.9) -- Crushing Doubt
+	if self:GetOption("custom_off_eldritch_marker") then
+		self:RegisterTargetEvents("eldritchMarker")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -154,16 +171,18 @@ function mod:AphoticBlastApplied(args)
 	self:TargetMessage2(args.spellId, "purple", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm")
-		self:SayCountdown(args.spellId, 20)
 		self:TargetBar(args.spellId, 20, args.destName)
 	end
 end
 
 function mod:AphoticBlastRefresh(args)
 	if self:Me(args.destGUID) then
-		self:SayCountdown(args.spellId, 20)
 		self:TargetBar(args.spellId, 20, args.destName)
 	end
+end
+
+function mod:AphoticBlastRemoved(args)
+	self:StopBar(args.spellId, args.destName)
 end
 
 function mod:AgentofDemise(args)
@@ -177,6 +196,12 @@ function mod:CerebralAssault(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	self:CastBar(args.spellId, 6)
+	self:Bar(args.spellId, 31.5)
+end
+
+
+function mod:DarkHeraldSuccess(args)
+	self:CDBar(args.spellId, 33) -- 32.7-34
 end
 
 function mod:DarkHerald(args)
@@ -203,9 +228,9 @@ function mod:TerrifyingEcho(args)
 	self:CastBar(args.spellId, 6)
 end
 
--- function mod:ShearMind(args)
-	-- self:CDBar(args.spellId, 30)
--- end
+function mod:ShearMind(args)
+	self:CDBar(args.spellId, 7) -- To cast_start
+end
 
 function mod:ShearMindApplied(args)
 	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
@@ -215,6 +240,7 @@ end
 function mod:VoidCrash(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:Bar(args.spellId, 13.2)
 end
 
 
@@ -225,6 +251,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:CastBar(args.spellId, 12) -- Explosion
+			self:Bar(args.spellId, 42.5)
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
 		if self:Me(args.destGUID) then
@@ -244,6 +271,14 @@ function mod:CrushingDoubtRemoved(args)
 	end
 	if self:GetOption(crushingDoubtMarker) then
 		SetRaidTarget(args.destName, 0)
+	end
+end
+
+function mod:eldritchMarker(event, unit, guid)
+	if self:MobId(guid) == 145053 and not mobCollector[guid] then
+		eldritchCount = eldritchCount + 1
+		SetRaidTarget(unit, (eldritchCount % 3)+4)
+		mobCollector[guid] = true
 	end
 end
 

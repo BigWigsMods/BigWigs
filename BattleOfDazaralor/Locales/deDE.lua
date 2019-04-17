@@ -74,7 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("King Rastakhan", "deDE")
 if L then
-	--L.leap_cancelled = "Leap Cancelled"
+	L.leap_cancelled = "Sprung abgebrochen"
 end
 
 L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "deDE")
