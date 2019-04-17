@@ -13,21 +13,24 @@ mod.engageId = 2269
 --
 
 local crushingCount = 0
+local eldritchCount = 0
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
---
---end
+local L = mod:GetLocale()
+if L then
+	L.custom_off_eldritch_marker = "Eldritch Abomination Marker"
+	L.custom_off_eldritch_marker_desc = "Mark Eldritch Abomination with {rt4}{rt5}{rt6}."
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-local crushingDoubtMarker = mod:AddMarkerOption(false, "player", 1, 282432, 1, 2, 3, 4) -- Crushing Doubt
+local crushingDoubtMarker = mod:AddMarkerOption(false, "player", 1, 282432, 1, 2) -- Crushing Doubt
 function mod:GetOptions()
 	return {
 		-- Relics of Power
@@ -39,7 +42,7 @@ function mod:GetOptions()
 		--
 		282675, -- Pact of the Restless
 		-- Zaxasj the Speaker
-		{282386, "ICON", "SAY_COUNTDOWN"}, -- Aphotic Blast
+		282386, -- Aphotic Blast
 		282540, -- Agent of Demise
 		282589, -- Cerebral Assault
 		{282561, "ICON"}, -- Dark Herald
@@ -50,6 +53,7 @@ function mod:GetOptions()
 		282407, -- Void Crash
 		{282432, "SAY", "SAY_COUNTDOWN"}, -- Crushing Doubt
 		crushingDoubtMarker,
+		"custom_off_eldritch_marker",
 		287876, -- Enveloping Darkness
 	}
 end
@@ -92,12 +96,17 @@ end
 
 function mod:OnEngage()
 	crushingCount = 0
+	eldritchCount = 0
+	mobCollector = {}
 
 	self:Bar(282384, 7.1) -- Shear Mind
 	self:Bar(282561, 10.3) -- Dark Herald
 	self:Bar(282407, 13.2) -- Void Crash
 	self:Bar(282589, 15.6) -- Cerebral Assault
 	self:Bar(282432, 18.9) -- Crushing Doubt
+	if self:GetOption("custom_off_eldritch_marker") then
+		self:RegisterTargetEvents("eldritchMarker")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -161,9 +170,7 @@ end
 function mod:AphoticBlastApplied(args)
 	self:TargetMessage2(args.spellId, "purple", args.destName)
 	if self:Me(args.destGUID) then
-		self:SecondaryIcon(args.spellId, args.destName)
 		self:PlaySound(args.spellId, "alarm")
-		self:SayCountdown(args.spellId, 20)
 		self:TargetBar(args.spellId, 20, args.destName)
 	end
 end
@@ -266,6 +273,14 @@ function mod:CrushingDoubtRemoved(args)
 	end
 	if self:GetOption(crushingDoubtMarker) then
 		SetRaidTarget(args.destName, 0)
+	end
+end
+
+function mod:eldritchMarker(event, unit, guid)
+	if self:MobId(guid) == 145053 and not mobCollector[guid] then
+		eldritchCount = eldritchCount + 1
+		SetRaidTarget(unit, (eldritchCount % 3)+4)
+		mobCollector[guid] = true
 	end
 end
 
