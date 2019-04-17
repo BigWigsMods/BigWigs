@@ -177,8 +177,6 @@ end
 
 function mod:AphoticBlastRefresh(args)
 	if self:Me(args.destGUID) then
-		self:SecondaryIcon(args.spellId, args.destName)
-		self:SayCountdown(args.spellId, 20)
 		self:TargetBar(args.spellId, 20, args.destName)
 	end
 end
