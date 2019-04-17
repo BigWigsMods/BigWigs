@@ -12,7 +12,6 @@ mod.engageId = 2269
 -- Locals
 --
 
-local crushingCount = 0
 local eldritchCount = 0
 local mobCollector = {}
 
@@ -95,7 +94,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	crushingCount = 0
 	eldritchCount = 0
 	mobCollector = {}
 
@@ -247,20 +245,19 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:CrushingDoubtApplied(args)
-		crushingCount = crushingCount + 1
 		playerList[#playerList+1] = args.destName
 		if #playerList == 1 then
 			self:CastBar(args.spellId, 12) -- Explosion
 			self:Bar(args.spellId, 42.5)
 		end
+		if self:GetOption(crushingDoubtMarker) and #playerList < 3 then
+			SetRaidTarget(args.destName, #playerList)
+		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, crushingCount, crushingCount))
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #playerList, #playerList))
 			self:SayCountdown(args.spellId, 12)
 			self:PlaySound(args.spellId, "alert")
-		end
-		if self:GetOption(crushingDoubtMarker) then
-			SetRaidTarget(args.destName, crushingCount)
 		end
 	end
 end
