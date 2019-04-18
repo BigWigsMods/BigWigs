@@ -1,9 +1,9 @@
 local L = BigWigs:NewBossLocale("Battle of Dazar'alor Trash", "zhTW")
 if not L then return end
 if L then
-	--L.prelate = "Prelate Akk'al"
-	--L.flamespeaker = "Rastari Flamespeaker"
-	--L.hulk = "Risen Hulk"
+	L.prelate = "高階教士阿卡爾"
+	L.flamespeaker = "拉斯塔瑞火語者"
+	L.hulk = "復活的巨怪"
 	L.enforcer = "永生執法者"
 	L.punisher = "拉斯塔瑞懲戒者"
 	L.vessel = "伯昂薩姆第的容器"
@@ -67,15 +67,15 @@ end
 
 L = BigWigs:NewBossLocale("Conclave of the Chosen", "zhTW")
 if L then
-	-- L.custom_on_fixate_plates = "Mark of Prey icon on Enemy Nameplate"
-	-- L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "在敵方名條顯示獵物印記的追獵圖示"
+	L.custom_on_fixate_plates_desc = "當你被追獵時，在追獵你的目標名條上顯示一個圖示。\n需要啟用敵方名條，此功能目前只有KuiNameplates支援。"
 	L.killed = "%s已擊殺！"
 	L.count_of = "%s（%d／%d）"
 end
 
 L = BigWigs:NewBossLocale("King Rastakhan", "zhTW")
 if L then
-	--L.leap_cancelled = "Leap Cancelled"
+	L.leap_cancelled = "隕石躍擊取消"
 end
 
 L = BigWigs:NewBossLocale("High Tinker Mekkatorque", "zhTW")
