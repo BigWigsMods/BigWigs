@@ -19,10 +19,11 @@ local nextStageWarning = 73
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
---
---end
+local L = mod:GetLocale()
+if L then
+	L.custom_off_mindbender_marker = "Primordial Mindbender Marker"
+	L.custom_off_mindbender_marker_desc = "Mark Primordial Mindbender with {rt4}{rt5}{rt6}."
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -44,6 +45,7 @@ function mod:GetOptions()
 		285820, -- Call Undying Guardian
 		285638, -- Gift of N'Zoth: Hysteria
 		-19118, -- Primordial Mindbender
+		"custom_off_mindbender_marker",
 		285427, -- Consume Essence
 		285562, -- Unknowable Terror
 		{285652, "SAY", "ICON"}, -- Insatiable Torment
@@ -98,6 +100,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	mindbenderCount = 0
+	mobCollector = {}
 	stage = 1
 	nextStageWarning = 73
 	self:Bar(285416, 7.1) -- Void Crash
@@ -109,6 +113,10 @@ function mod:OnEngage()
 	self:Bar(285345, 76) -- Maddening Eyes of N'Zoth
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	
+	if self:GetOption("custom_off_mindbender_marker") then
+		self:RegisterTargetEvents("mindbenderMarker")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -251,6 +259,14 @@ function mod:GiftofNZothHysteria(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:Bar(args.spellId, 42.6)
+end
+
+function mod:mindbenderMarker(event, unit, guid)
+	if self:MobId(guid) == 146940 and not mobCollector[guid] then
+		mindbenderCount = mindbenderCount + 1
+		SetRaidTarget(unit, (mindbenderCount % 3)+4)
+		mobCollector[guid] = true
+	end
 end
 
 do
