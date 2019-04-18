@@ -14,6 +14,8 @@ mod.engageId = 2273
 
 local stage = 1
 local nextStageWarning = 73
+local mindbenderCount = 0
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -100,10 +102,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	mindbenderCount = 0
-	mobCollector = {}
 	stage = 1
 	nextStageWarning = 73
+	mindbenderCount = 0
+	mobCollector = {}
+	
 	self:Bar(285416, 7.1) -- Void Crash
 	self:Bar(285185, 12.2) -- Oblivion Tear
 	self:Bar(285453, 20.7) -- Gift of N'Zoth: Obscurity
