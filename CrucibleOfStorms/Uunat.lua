@@ -274,7 +274,7 @@ do
 			mindbenderList = {} -- Reset list for marking
 			self:CDBar(-19118, 60.0, -19118, 285427) -- Primordial Mindbender, Consume Essence icon
 		end
-		if not mobCollector[guid] then
+		if not mobCollector[args.sourceGUID] then
 			mindbenderCount = mindbenderCount + 1
 			mobCollector[args.sourceGUID] = true
 			mindbenderList[args.sourceGUID] = (mindbenderCount % 3) + 1 -- 1, 2, 3
