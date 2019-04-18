@@ -14,15 +14,19 @@ mod.engageId = 2273
 
 local stage = 1
 local nextStageWarning = 73
+local mindbenderList = {}
+local mobCollector = {}
+local mindbenderCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
---
---end
+local L = mod:GetLocale()
+if L then
+	L.custom_off_mindbender_marker = "Primordial Mindbender Marker"
+	L.custom_off_mindbender_marker_desc = "Mark Primordial Mindbender with {rt1}{rt2}{rt3}."
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -45,6 +49,7 @@ function mod:GetOptions()
 		285638, -- Gift of N'Zoth: Hysteria
 		-19118, -- Primordial Mindbender
 		285427, -- Consume Essence
+		"custom_off_mindbender_marker",
 		285562, -- Unknowable Terror
 		{285652, "SAY", "ICON"}, -- Insatiable Torment
 		285685, -- Gift of N'Zoth: Lunacy
@@ -100,6 +105,10 @@ end
 function mod:OnEngage()
 	stage = 1
 	nextStageWarning = 73
+	mindbenderList = {}
+	mobCollector = {}
+	mindbenderCount = 0
+
 	self:Bar(285416, 7.1) -- Void Crash
 	self:Bar(285185, 12.2) -- Oblivion Tear
 	self:Bar(285453, 20.7) -- Gift of N'Zoth: Obscurity
@@ -109,6 +118,9 @@ function mod:OnEngage()
 	self:Bar(285345, 76) -- Maddening Eyes of N'Zoth
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	if self:GetOption("custom_off_mindbender_marker") then
+		self:RegisterTargetEvents("MinderbenderMarker")
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -256,17 +268,29 @@ end
 do
 	local prev = 0
 	function mod:ConsumeEssence(args)
+		local t = args.time
+		if t-prev > 58 then -- Throttle this 58s as the cooldown is 60s
+			prev = t
+			mindbenderList = {} -- Reset list for marking
+			self:CDBar(-19118, 60.0, -19118, 285427) -- Primordial Mindbender, Consume Essence icon
+		end
+		if not mobCollector[guid] then
+			mindbenderCount = mindbenderCount + 1
+			mobCollector[args.sourceGUID] = true
+			mindbenderList[args.sourceGUID] = (mindbenderCount % 3) + 1 -- 1, 2, 3
+		end
+
 		local _, ready = self:Interrupter(args.sourceGUID)
 		if ready then
 			self:Message2(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
 		end
+	end
+end
 
-		local t = args.time
-		if t-prev > 58 then -- Throttle this 58s as the cooldown is 60s
-			prev = t
-			self:CDBar(-19118, 34.0, -19118, 285427) -- Primordial Mindbender, Consume Essence icon
-		end
+function mod:MinderbenderMarker(event, unit, guid)
+	if self:MobId(guid) == 146940 and mindbenderList[guid] then -- Primordial Mindbender
+		SetRaidTarget(unit, mindbenderList[guid])
 	end
 end
 
