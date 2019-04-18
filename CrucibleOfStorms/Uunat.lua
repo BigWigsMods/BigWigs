@@ -132,7 +132,7 @@ function mod:UmbralShellApplied(args)
 end
 
 function mod:UmbralShellRemoved(args)
-	self:Message2(args.spellId, "cyan", CL.removed_from:format(args.spelName, args.destName))
+	self:Message2(args.spellId, "cyan", CL.removed_from:format(args.spellName, args.destName))
 	self:PlaySound(args.spellId, "info", nil, args.destName)
 end
 
