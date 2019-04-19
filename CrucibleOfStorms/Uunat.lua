@@ -32,10 +32,11 @@ local insatiableTormentCount = 1
 -- Localization
 --
 
---local L = mod:GetLocale()
---if L then
-
---end
+local L = mod:GetLocale()
+if L then
+	L.absorb = "Absorb"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -46,7 +47,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		"berserk",
-		284722, -- Umbral Shell
+		{284722, "INFOBOX"}, -- Umbral Shell
 		284804, -- Custody of the Deep
 		284583, -- Storm of Annihilation
 		{284851, "TANK"}, -- Touch of the End
@@ -62,7 +63,7 @@ function mod:GetOptions()
 		285427, -- Consume Essence
 		mindbenderMarker,
 		285562, -- Unknowable Terror
-		{285652, "SAY", "ICON"}, -- Insatiable Torment
+		{285652, "SAY"}, -- Insatiable Torment
 		285685, -- Gift of N'Zoth: Lunacy
 		{285307, "TANK"}, -- Feed
 	},{
@@ -105,7 +106,6 @@ function mod:OnBossEnable()
 	-- Stage Three: His Unwavering Gaze
 	self:Log("SPELL_CAST_SUCCESS", "InsatiableTormentSuccess", 285652)
 	self:Log("SPELL_AURA_APPLIED", "InsatiableTormentApplied", 285652)
-	self:Log("SPELL_AURA_REMOVED", "InsatiableTormentRemoved", 285652)
 	self:Log("SPELL_CAST_START", "GiftofNZothLunacy", 285685)
 
 	-- Mythic
@@ -160,16 +160,46 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	end
 end
 
-function mod:UmbralShellApplied(args)
-	self:TargetMessage2(args.spellId, "cyan", args.destName)
-	self:PlaySound(args.spellId, "info", nil, args.destName)
-end
+do
+	local maxAbsorb, absorbRemoved = 0, 0
 
-function mod:UmbralShellRemoved(args)
-	self:Message2(args.spellId, "cyan", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
-	self:PlaySound(args.spellId, "info", nil, args.destName)
-end
+	local function updateInfoBox()
+		local absorb = maxAbsorb - absorbRemoved
+		local absorbPercentage = absorb / maxAbsorb
+		mod:SetInfoBar(284722, 1, absorbPercentage)
+		mod:SetInfo(284722, 2, L.absorb_text:format(mod:AbbreviateNumber(absorb), "00ff00", absorbPercentage*100))
+	end
 
+	do
+		local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+		function mod:UmbralShellAbsorbs()
+			local _, subEvent, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, spellId, _, _, absorbed = CombatLogGetCurrentEventInfo()
+			if subEvent == "SPELL_ABSORBED" and spellId == 284722 then -- Umbral Shell
+				absorbRemoved = absorbRemoved + absorbed
+				updateInfoBox()
+			end
+		end
+	end
+
+	function mod:UmbralShellApplied(args)
+		self:TargetMessage2(args.spellId, "cyan", args.destName)
+		self:PlaySound(args.spellId, "info", nil, args.destName)
+		if self:CheckOption(args.spellId, "INFOBOX") then
+			absorbRemoved = 0
+			maxAbsorb = args.amount
+			self:OpenInfo(args.spellId, args.destName)
+			self:SetInfo(args.spellId, 1, L.absorb)
+			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UmbralShellAbsorbs")
+		end
+	end
+
+	function mod:UmbralShellRemoved(args)
+		self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		self:Message2(args.spellId, "cyan", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+		self:PlaySound(args.spellId, "info", nil, args.destName)
+		self:CloseInfo(args.spellId)
+	end
+end
 
 function mod:AbyssalCollapseStart(args) -- XXX Way to detect when the cast is over after shield breaks?
 	self:Message2(284804, "cyan") -- Custody of the Deep
@@ -222,12 +252,19 @@ function mod:EyesofNZoth(args)
 	self:Bar(args.spellId, stage == 3 and 47 or 33, CL.count:format(args.spellName, eyesCount))
 end
 
-function mod:MaddeningEyesofNZoth(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, maddeningCount))
-	self:PlaySound(args.spellId, "alarm")
-	self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, maddeningCount))
-	maddeningCount = maddeningCount + 1
-	--self:Bar(args.spellId, 33, CL.count:format(args.spellName, maddeningCount))
+do
+	local prev = 0
+	function mod:MaddeningEyesofNZoth(args)
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			self:Message2(args.spellId, "orange", CL.count:format(args.spellName, maddeningCount))
+			self:PlaySound(args.spellId, "alarm")
+			self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, maddeningCount))
+			maddeningCount = maddeningCount + 1
+			--self:Bar(args.spellId, 33, CL.count:format(args.spellName, maddeningCount))
+		end
+	end
 end
 
 function mod:GiftofNZothObscurity(args)
@@ -354,14 +391,9 @@ end
 function mod:InsatiableTormentApplied(args)
 	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, insatiableTormentCount-1)) -- count-1 due to Success being before applied
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
+		self:Say(args.spellId, 143924) -- Leech
 		self:PlaySound(args.spellId, "warning")
 	end
-	self:PrimaryIcon(args.spellId, args.destName)
-end
-
-function mod:InsatiableTormentRemoved(args)
-	self:PrimaryIcon(args.spellId)
 end
 
 function mod:GiftofNZothLunacy(args)
