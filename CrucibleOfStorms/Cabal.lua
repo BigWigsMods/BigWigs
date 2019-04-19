@@ -14,6 +14,7 @@ mod.engageId = 2269
 
 local eldritchCount = 0
 local mobCollector = {}
+local eldritchList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -22,7 +23,10 @@ local mobCollector = {}
 local L = mod:GetLocale()
 if L then
 	L.custom_off_eldritch_marker = "Eldritch Abomination Marker"
-	L.custom_off_eldritch_marker_desc = "Mark Eldritch Abomination with {rt4}{rt5}{rt6}."
+	L.custom_off_eldritch_marker_desc = "Mark Eldritch Abomination with {rt3}{rt4}{rt5}."
+
+	L.absorb = "Absorb"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
 end
 
 --------------------------------------------------------------------------------
@@ -33,12 +37,11 @@ local crushingDoubtMarker = mod:AddMarkerOption(false, "player", 1, 282432, 1, 2
 function mod:GetOptions()
 	return {
 		-- Relics of Power
-		282738, -- Embrace of the Void
-		282741, -- Umbral Shell
-		282750, -- Custody of the Deep
+		{282741, "INFOBOX"}, -- Umbral Shell
+		283066, -- Custody of the Deep
+		282886, -- Abyssal Collapse
 		282742, -- Storm of Annihilation
 		282914, -- Power Overwhelming
-		--
 		282675, -- Pact of the Restless
 		-- Zaxasj the Speaker
 		282386, -- Aphotic Blast
@@ -46,6 +49,7 @@ function mod:GetOptions()
 		282589, -- Cerebral Assault
 		{282561, "ICON"}, -- Dark Herald
 		282562, -- Promises of Power
+		282515, -- Visage from Beyond
 		282517, -- Terrifying Echo
 		-- Fa'thuul the Feared
 		{282384, "TANK"}, -- Shear Mind
@@ -54,21 +58,26 @@ function mod:GetOptions()
 		crushingDoubtMarker,
 		"custom_off_eldritch_marker",
 		287876, -- Enveloping Darkness
+	},{
+		[282741] = -18970, -- Relics of Power
+		[282386] = -18974, -- Zaxasj the Speaker
+		[282384] = -18983, -- Fa'thuul the Feared
+		--[287876] = "mythic",
 	}
 end
 
 function mod:OnBossEnable()
 
 	-- Relics of Power
-	self:Log("SPELL_AURA_APPLIED", "EmbraceoftheVoidApplied", 282738)
+	self:Log("SPELL_AURA_APPLIED", "UmbralShellApplied", 282741)
 	self:Log("SPELL_AURA_REMOVED", "UmbralShellRemoved", 282741)
-	self:Log("SPELL_CAST_SUCCESS", "CustodyoftheDeep", 282750)
+	self:Log("SPELL_CAST_SUCCESS", "CustodyoftheDeep", 283066)
+	self:Log("SPELL_CAST_START", "AbyssalCollapseStart", 282886)
 	self:Log("SPELL_CAST_SUCCESS", "StormofAnnihilation", 282742)
 	self:Log("SPELL_AURA_APPLIED", "PowerOverwhelming", 282914)
 	self:Log("SPELL_CAST_START", "PactoftheRestless", 282675)
 
 	-- Zaxasj the Speaker
-	--self:Log("SPELL_CAST_START", "AphoticBlastStart", 282386)
 	self:Log("SPELL_AURA_APPLIED", "AphoticBlastApplied", 282386)
 	self:Log("SPELL_AURA_REFRESH", "AphoticBlastRefresh", 282386)
 	self:Log("SPELL_AURA_REMOVED", "AphoticBlastRemoved", 282386)
@@ -78,6 +87,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DarkHerald", 282561)
 	self:Log("SPELL_AURA_REMOVED", "DarkHeraldRemoved", 282561)
 	self:Log("SPELL_AURA_APPLIED", "PromisesofPower", 282562)
+	self:Log("SPELL_AURA_SUCCESS", "VisagefromBeyond", 282515)
 	self:Log("SPELL_CAST_START", "TerrifyingEcho", 282517)
 
 	-- Fa'thuul the Feared
@@ -87,6 +97,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "VoidCrash", 282407)
 	self:Log("SPELL_AURA_APPLIED", "CrushingDoubtApplied", 282432)
 	self:Log("SPELL_AURA_REMOVED", "CrushingDoubtRemoved", 282432)
+	self:Log("SPELL_CAST_START", "EldritchRevelation", 282617)
+	self:Log("SPELL_CAST_START", "WitnesstheEnd", 282621)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 287876) -- Enveloping Darkness
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 287876)
@@ -96,6 +108,7 @@ end
 function mod:OnEngage()
 	eldritchCount = 0
 	mobCollector = {}
+	eldritchList = {}
 
 	self:Bar(282384, 7.1) -- Shear Mind
 	self:Bar(282561, 10.3) -- Dark Herald
@@ -111,21 +124,55 @@ end
 -- Event Handlers
 --
 
-function mod:EmbraceoftheVoidApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alert")
-	end
-end
+-- Relics of Power
+do
+	local maxAbsorb, absorbRemoved = 0, 0
 
-function mod:UmbralShellRemoved(args)
-	self:Message2(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "info")
+	local function updateInfoBox()
+		local absorb = maxAbsorb - absorbRemoved
+		local absorbPercentage = absorb / maxAbsorb
+		mod:SetInfoBar(282741, 1, absorbPercentage)
+		mod:SetInfo(282741, 2, L.absorb_text:format(mod:AbbreviateNumber(absorb), "00ff00", absorbPercentage*100))
+	end
+
+	do
+		local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+		function mod:UmbralShellAbsorbs()
+			local _, subEvent, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, spellId, _, _, absorbed = CombatLogGetCurrentEventInfo()
+			if subEvent == "SPELL_ABSORBED" and spellId == 282741 then -- Umbral Shell
+				absorbRemoved = absorbRemoved + absorbed
+				updateInfoBox()
+			end
+		end
+	end
+
+	function mod:UmbralShellApplied(args)
+		self:TargetMessage2(args.spellId, "red", args.destName)
+		self:PlaySound(args.spellId, "warning")
+		if self:CheckOption(args.spellId, "INFOBOX") then
+			absorbRemoved = 0
+			maxAbsorb = args.amount
+			self:OpenInfo(args.spellId, args.spellName)
+			self:SetInfo(args.spellId, 1, L.absorb)
+			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UmbralShellAbsorbs")
+		end
+	end
+
+	function mod:UmbralShellRemoved(args)
+		self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		self:Message2(args.spellId, "cyan", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "info")
+		self:CloseInfo(args.spellId)
+	end
 end
 
 function mod:CustodyoftheDeep(args)
 	self:Message2(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
+end
+
+function mod:AbyssalCollapseStart(args) -- XXX Detect the Ocean Rune cast being over and cancel cast bar.
+	self:CastBar(args.spellId, 20)
 end
 
 function mod:StormofAnnihilation(args)
@@ -152,19 +199,7 @@ do
 	end
 end
 
--- do
-	-- local function printTarget(self, player, guid)
-		-- if self:Me(guid) then
-			-- self:Say(282386)
-			-- self:PlaySound(282386, "warning")
-		-- end
-		-- self:TargetMessage2(282386, "yellow", player)
-	-- end
-	-- function mod:AphoticBlastStart(args)
-		-- self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
-	-- end
--- end
-
+-- Zaxasj the Speaker
 function mod:AphoticBlastApplied(args)
 	self:TargetMessage2(args.spellId, "purple", args.destName)
 	if self:Me(args.destGUID) then
@@ -220,12 +255,17 @@ function mod:PromisesofPower(args)
 	end
 end
 
+function mod:VisagefromBeyond(args)
+	self:Bar(args.spellId, 90)
+end
+
 function mod:TerrifyingEcho(args)
 	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "warning")
+	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 6)
 end
 
+-- Fa'thuul the Feared
 function mod:ShearMind(args)
 	self:CDBar(args.spellId, 7) -- To cast_start
 end
@@ -271,11 +311,21 @@ function mod:CrushingDoubtRemoved(args)
 	end
 end
 
-function mod:eldritchMarker(event, unit, guid)
-	if self:MobId(guid) == 145053 and not mobCollector[guid] then
+function mod:EldritchRevelation() -- XXX Do we need a warning for this? We`re already warning for relics.
+	eldritchList = {}
+end
+
+function mod:WitnesstheEnd(args)
+	if not mobCollector[args.sourceGUID] then
 		eldritchCount = eldritchCount + 1
-		SetRaidTarget(unit, (eldritchCount % 3)+4)
-		mobCollector[guid] = true
+		mobCollector[args.sourceGUID] = true
+		eldritchList[args.sourceGUID] = (eldritchCount % 3) + 3 -- 3, 4, 5
+	end
+end
+
+function mod:eldritchMarker(event, unit, guid)
+	if self:MobId(guid) == 145053 and eldritchList[guid] then -- Eldritch Abomination
+		SetRaidTarget(unit, eldritchList[guid])
 	end
 end
 
