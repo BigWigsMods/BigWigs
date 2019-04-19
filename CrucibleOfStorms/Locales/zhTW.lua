@@ -10,6 +10,6 @@ end
 
 L = BigWigs:NewBossLocale("Uu'nat, Harbinger of the Void", "zhTW")
 if L then
-	L.custom_off_eldritch_marker = "原始屈心魔標記"
-	L.custom_off_eldritch_marker_desc = "使用 {rt3}{rt4}{rt5} 標記原始屈心魔，需要權限。"
+	L.custom_off_mindbender_marker = "原始屈心魔標記"
+	L.custom_off_mindbender_marker_desc = "使用 {rt3}{rt4}{rt5} 標記原始屈心魔，需要權限。"
 end
