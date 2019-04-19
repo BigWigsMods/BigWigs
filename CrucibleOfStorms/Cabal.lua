@@ -48,6 +48,7 @@ function mod:GetOptions()
 		282914, -- Power Overwhelming
 		-- General
 		282675, -- Pact of the Restless
+		"berserk",
 		-- Zaxasj the Speaker
 		282386, -- Aphotic Blast
 		282540, -- Agent of Demise
@@ -136,6 +137,7 @@ function mod:OnEngage()
 	if self:GetOption(eldritchAbominationMarker) then
 		self:RegisterTargetEvents("eldritchMarker")
 	end
+	self:Berserk(780)
 end
 
 --------------------------------------------------------------------------------
