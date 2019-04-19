@@ -293,12 +293,12 @@ do
 		if self:GetOption(crushingDoubtMarker) and #playerList < 3 then
 			SetRaidTarget(args.destName, #playerList)
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.count_rticon:format(args.spellName, #playerList, #playerList))
 			self:SayCountdown(args.spellId, 12)
 			self:PlaySound(args.spellId, "alert")
 		end
+		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
 	end
 end
 
