@@ -45,6 +45,7 @@ local mindbenderMarker = mod:AddMarkerOption(false, "npc", 1, -19118, 1, 2, 3) -
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 		284722, -- Umbral Shell
 		284804, -- Custody of the Deep
 		284583, -- Storm of Annihilation
@@ -141,6 +142,7 @@ function mod:OnEngage()
 	if self:GetOption(mindbenderMarker) then
 		self:RegisterTargetEvents("MinderbenderMarker")
 	end
+	self:Berserk(780)
 end
 
 --------------------------------------------------------------------------------
