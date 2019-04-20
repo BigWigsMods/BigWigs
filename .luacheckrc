@@ -135,6 +135,7 @@ globals = {
 	"GameFontHighlight",
 	"GameFontNormal",
 	"GameTooltip",
+	"GameTooltip_Hide",
 	"GetAddOnDependencies",
 	"GetAddOnEnableState",
 	"GetAddOnInfo",

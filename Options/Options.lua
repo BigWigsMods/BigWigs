@@ -367,13 +367,33 @@ local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 end
 
 local icons = {
+	MESSAGE = 134332, -- Interface\\Icons\\INV_MISC_NOTE_06
+	ME_ONLY = 463836, -- Interface\\Icons\\Priest_spell_leapoffaith_b
+	SOUND = 130977, -- "Interface\\Common\\VoiceChat-On"
 	ICON = 137008, -- Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8
+	FLASH = 135849, -- Interface\\Icons\\Spell_Frost_FrostShock
+	PULSE = 135731, -- Interface\\Icons\\Spell_Arcane_Arcane04
 	PROXIMITY = 132181, -- Interface\\Icons\\ability_hunter_pathfinding
 	ALTPOWER = 429383, -- Interface\\Icons\\spell_arcane_invocation
 	INFOBOX = 443374, -- Interface\\Icons\\INV_MISC_CAT_TRINKET05
+	COUNTDOWN = 1035057, -- Interface\\Icons\\Achievement_GarrisonQuests_0005
 	SAY = 2056011, -- Interface\\Icons\\UI_Chat
 	SAY_COUNTDOWN = 2056011, -- Interface\\Icons\\UI_Chat
+	VOICE = 589118, -- Interface\\Icons\\Warrior_DisruptingShout
 }
+
+local function hasOptionFlag(dbKey, module, key)
+	-- Check the actual option table instead of using toggleDefaults
+	for _, opTbl in next, module.toggleOptions do
+		if type(opTbl) == "table" and opTbl[1] == dbKey then
+			for i = 2, #opTbl do
+				if opTbl[i] == key then
+					return true
+				end
+			end
+		end
+	end
+end
 
 local function advancedToggles(dbKey, module, check)
 	local dbv = module.toggleDefaults[dbKey]
@@ -383,13 +403,13 @@ local function advancedToggles(dbKey, module, check)
 		-- Emphasize & Countdown widgets
 		advancedOptions[1] = getSlaveToggle(L.EMPHASIZE, L.EMPHASIZE_desc, dbKey, module, C.EMPHASIZE, check)
 		advancedOptions[2] = getSlaveToggle(L.ME_ONLY_EMPHASIZE, L.ME_ONLY_EMPHASIZE_desc, dbKey, module, C.ME_ONLY_EMPHASIZE, check)
-		advancedOptions[3] = getSlaveToggle(L.COUNTDOWN, L.COUNTDOWN_desc, dbKey, module, C.COUNTDOWN, check, 1035057) -- Interface\\Icons\\Achievement_GarrisonQuests_0005
+		advancedOptions[3] = getSlaveToggle(L.COUNTDOWN, L.COUNTDOWN_desc, dbKey, module, C.COUNTDOWN, check, icons["COUNTDOWN"])
 		--
 
 		-- Messages & Sound
-		advancedOptions[4] = getSlaveToggle(L.MESSAGE, L.MESSAGE_desc, dbKey, module, C.MESSAGE, check, 134332) -- Interface\\Icons\\INV_MISC_NOTE_06
-		advancedOptions[5] = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check, 463836) -- Interface\\Icons\\Priest_spell_leapoffaith_b
-		advancedOptions[6] = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, 130977) -- "Interface\\Common\\VoiceChat-On"
+		advancedOptions[4] = getSlaveToggle(L.MESSAGE, L.MESSAGE_desc, dbKey, module, C.MESSAGE, check, icons["MESSAGE"])
+		advancedOptions[5] = getSlaveToggle(L.ME_ONLY, L.ME_ONLY_desc, dbKey, module, C.ME_ONLY, check, icons["ME_ONLY"])
+		advancedOptions[6] = getSlaveToggle(L.SOUND, L.SOUND_desc, dbKey, module, C.SOUND, check, icons["SOUND"])
 		--
 
 		-- Bars
@@ -399,23 +419,15 @@ local function advancedToggles(dbKey, module, check)
 	end
 
 	-- Flash & Pulse
-	if bit.band(dbv, C.FLASH) == C.FLASH then
-		for _, opTbl in next, module.toggleOptions do
-			if type(opTbl) == "table" and opTbl[1] == dbKey then
-				for i = 2, #opTbl do
-					if opTbl[i] == "FLASH" then
-						advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.FLASH, L.FLASH_desc, dbKey, module, C.FLASH, check, 135849) -- Interface\\Icons\\Spell_Frost_FrostShock
-						advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.PULSE, L.PULSE_desc, dbKey, module, C.PULSE, check, 135731) -- Interface\\Icons\\Spell_Arcane_Arcane04
-					end
-				end
-			end
-		end
+	if bit.band(dbv, C.FLASH) == C.FLASH and hasOptionFlag(dbKey, module, "FLASH") then
+		advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.FLASH, L.FLASH_desc, dbKey, module, C.FLASH, check, icons["FLASH"])
+		advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.PULSE, L.PULSE_desc, dbKey, module, C.PULSE, check, icons["PULSE"])
 	end
 	--
 
 	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
 		if API:HasVoicePack() then
-			advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.VOICE, L.VOICE_desc, dbKey, module, C.VOICE, check, 589118) -- Interface\\Icons\\Warrior_DisruptingShout
+			advancedOptions[#advancedOptions + 1] = getSlaveToggle(L.VOICE, L.VOICE_desc, dbKey, module, C.VOICE, check, icons["VOICE"])
 		end
 	end
 
@@ -425,14 +437,8 @@ local function advancedToggles(dbKey, module, check)
 			local name, desc = BigWigs:GetOptionDetails(key)
 			-- All on by default, check if we should add a GUI widget
 			if key == "ICON" or key == "SAY" or key == "SAY_COUNTDOWN" or key == "PROXIMITY" or key == "ALTPOWER" or key == "INFOBOX" then
-				for _, opTbl in next, module.toggleOptions do
-					if type(opTbl) == "table" and opTbl[1] == dbKey then
-						for i = 2, #opTbl do
-							if opTbl[i] == key then
-								advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check, icons[key])
-							end
-						end
-					end
+				if hasOptionFlag(dbKey, module, key) then
+					advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check, icons[key])
 				end
 			elseif key ~= "MESSAGE" and key ~= "BAR" and key ~= "FLASH" and key ~= "VOICE" then
 				advancedOptions[#advancedOptions + 1] = getSlaveToggle(name, desc, dbKey, module, flag, check)
@@ -585,6 +591,12 @@ local function buttonClicked(widget)
 	scrollFrame:PerformLayout()
 end
 
+local function flagOnEnter(widget)
+	GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+	GameTooltip:SetText(widget:GetUserData("tooltipText"), 1, 1, 1, true)
+	GameTooltip:Show()
+end
+
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
 
@@ -629,18 +641,91 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 
 	if type(dbKey) == "string" and dbKey:find("^custom_") then
 		return check
-	else
-		local button = AceGUI:Create("Button")
-		button:SetText(">>")
-		button:SetRelativeWidth(0.15)
-		-- userdata baby
-		button:SetUserData("scrollFrame", scrollFrame)
-		button:SetUserData("dropdown", dropdown)
-		button:SetUserData("module", module)
-		button:SetUserData("bossOption", bossOption)
-		button:SetCallback("OnClick", buttonClicked)
-		return check, button
 	end
+
+	local flagIcons = {}
+	local showFlags = {
+		"TANK_HEALER", "TANK", "HEALER", "DISPEL",
+		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
+		"PROXIMITY", "INFOBOX", "ALTPOWER",
+	}
+	for _, key in next, showFlags do
+		if hasOptionFlag(dbKey, module, key) and (key ~= "SAY_COUNTDOWN" or not hasOptionFlag(dbKey, module, "SAY")) then -- don't show both SAY and SAY_COUNTDOWN
+			local icon = AceGUI:Create("Icon")
+			icon:SetWidth(16)
+			icon:SetImageSize(16, 16)
+			icon:SetUserData("tooltipText", L[key])
+			icon:SetCallback("OnEnter", flagOnEnter)
+			icon:SetCallback("OnLeave", GameTooltip_Hide)
+
+			-- 337497 = Interface/LFGFrame/UI-LFG-ICON-PORTRAITROLES, 521749 = Interface/EncounterJournal/UI-EJ-Icons
+			if key == "TANK" then
+				icon:SetImage(337497, 0, 0.296875, 0.34375, 0.640625)
+			elseif key == "HEALER" then
+				icon:SetImage(337497, 0.3125, 0.609375, 0.015625, 0.3125)
+			elseif key == "TANK_HEALER" then
+				-- add both "TANK" and "HEALER" icons
+				local icon1 = AceGUI:Create("Icon")
+				icon1:SetWidth(16)
+				icon1:SetImage(337497, 0, 0.2968754, 0.34375, 0.640625) -- TANK
+				icon1:SetImageSize(16, 16)
+				icon1:SetUserData("tooltipText", L[key])
+				icon1:SetCallback("OnEnter", flagOnEnter)
+				icon1:SetCallback("OnLeave", GameTooltip_Hide)
+				icon1.frame:SetParent(check.frame)
+				icon1.frame:Show()
+				flagIcons[#flagIcons+1] = icon1
+				-- first icon, don't bother with SetPoint
+
+				icon:SetImage(337497, 0.3125, 0.609375, 0.015625, 0.3125) -- HEALER
+			elseif key == "DISPEL" then
+				icon:SetImage(521749, 0.8984375, 0.9765625, 0.09375, 0.40625)
+			-- elseif key == "INTERRUPT" then -- just incase :p EJ interrupt icon
+			-- 	icon:SetImage(521749, 0.7734375	0.8515625	0.09375	0.40625)
+			elseif key == "EMPHASIZE" then
+				icon:SetImage(521749, 0.6484375, 0.7265625, 0.09375, 0.40625)
+			else
+				icon:SetImage(icons[key])
+			end
+
+			-- Combine the two SAY options
+			if key == "SAY" and hasOptionFlag(dbKey, module, "SAY_COUNTDOWN") then
+				icon:SetUserData("tooltipText", L[key] .. PLAYER_LIST_DELIMITER .. L["SAY_COUNTDOWN"])
+			end
+
+			icon.frame:SetParent(check.frame)
+			icon.frame:Show()
+
+			flagIcons[#flagIcons+1] = icon
+			if #flagIcons > 1 then
+				icon:SetPoint("LEFT", flagIcons[#flagIcons-1].frame, "RIGHT", 1, 0)
+			end
+		end
+	end
+
+	if #flagIcons > 0 then
+		-- flagIcons[1]:SetPoint("LEFT", check.text, "RIGHT", -(#flagIcons * (16+1)) - 30, 0)
+		flagIcons[1]:SetPoint("LEFT", check.text, "LEFT", check.text:GetStringWidth() + 5, 0)
+
+		-- need to clean these up since they are not added to a container
+		check:SetUserData("icons", flagIcons)
+		check:SetCallback("OnRelease", function(widget)
+			for _, icon in next, widget:GetUserData("icons") do
+				icon:Release()
+			end
+		end)
+	end
+
+	local button = AceGUI:Create("Button")
+	button:SetText(">>")
+	button:SetRelativeWidth(0.15)
+	button:SetUserData("scrollFrame", scrollFrame)
+	button:SetUserData("dropdown", dropdown)
+	button:SetUserData("module", module)
+	button:SetUserData("bossOption", bossOption)
+	button:SetCallback("OnClick", buttonClicked)
+
+	return check, button
 end
 
 local listAbilitiesInChat = nil
