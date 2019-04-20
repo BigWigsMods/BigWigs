@@ -10,6 +10,6 @@ end
 
 L = BigWigs:NewBossLocale("Uu'nat, Harbinger of the Void", "zhCN")
 if L then
-	L.custom_off_mindbender_marker = "原始摧心魔标记"
-	L.custom_off_mindbender_marker_desc = "使用 {rt1}{rt2}{rt3} 标记原始摧心魔。"
+	--L.custom_off_mindbender_marker = "Primordial Mindbender Marker"
+	--L.custom_off_mindbender_marker_desc = "Mark Primordial Mindbender with {rt1}{rt2}{rt3}."
 end
