@@ -657,47 +657,50 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 
 	-- luacheck: globals GetTexCoordsForRoleSmallCircle GameTooltip_Hide
 	local flagIcons = {}
-	local showFlags = { "TANK", "HEALER", "TANK_HEALER", "DISPEL", "EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN", "PROXIMITY", "INFOBOX", "ALTPOWER" }
+	local showFlags = {
+		"TANK", "HEALER", "TANK_HEALER", "DISPEL",
+		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN", "PROXIMITY", "INFOBOX", "ALTPOWER"
+	}
 	for _, key in next, showFlags do
 		if hasOptionFlag(dbKey, module, key) then
-			local toggle = AceGUI:Create("Icon")
-			toggle:SetImageSize(16, 16)
-			toggle:SetWidth(16)
-			toggle:SetUserData("tooltipText", BigWigs:GetOptionDetails(key))
-			toggle:SetCallback("OnEnter", flagOnEnter)
-			toggle:SetCallback("OnLeave", GameTooltip_Hide)
+			local icon = AceGUI:Create("Icon")
+			icon:SetWidth(16)
+			icon:SetImageSize(16, 16)
+			icon:SetUserData("tooltipText", BigWigs:GetOptionDetails(key))
+			icon:SetCallback("OnEnter", flagOnEnter)
+			icon:SetCallback("OnLeave", GameTooltip_Hide)
 
 			if key == "TANK" or key == "HEALER" then
-				toggle:SetImage("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES", GetTexCoordsForRoleSmallCircle(key))
+				icon:SetImage("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES", GetTexCoordsForRoleSmallCircle(key))
 			elseif key == "TANK_HEALER" then
-				-- add both "TANK" and "HEALER"
-				local toggle2 = AceGUI:Create("Icon")
-				toggle2:SetImage("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES", GetTexCoordsForRoleSmallCircle("TANK"))
-				toggle2:SetImageSize(16, 16)
-				toggle2:SetWidth(16)
-				toggle2:SetUserData("tooltipText", BigWigs:GetOptionDetails("TANK_HEALER"))
-				toggle2:SetCallback("OnEnter", flagOnEnter)
-				toggle2:SetCallback("OnLeave", GameTooltip_Hide)
-				toggle2.frame:SetParent(check.frame)
-				toggle2.frame:Show()
-				flagIcons[#flagIcons+1] = toggle2
+				-- add both "TANK" and "HEALER" icons
+				local icon2 = AceGUI:Create("Icon")
+				icon2:SetWidth(16)
+				icon2:SetImage("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES", GetTexCoordsForRoleSmallCircle("TANK"))
+				icon2:SetImageSize(16, 16)
+				icon2:SetUserData("tooltipText", BigWigs:GetOptionDetails(key))
+				icon2:SetCallback("OnEnter", flagOnEnter)
+				icon2:SetCallback("OnLeave", GameTooltip_Hide)
+				icon2.frame:SetParent(check.frame)
+				icon2.frame:Show()
+				flagIcons[#flagIcons+1] = icon2
 				-- should be the first icon, so don't bother with SetPoint
 
-				toggle:SetImage("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES", GetTexCoordsForRoleSmallCircle("HEALER"))
+				icon:SetImage("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES", GetTexCoordsForRoleSmallCircle("HEALER"))
 			elseif key == "DISPEL" then
-				toggle:SetImage("Interface\\EncounterJournal\\UI-EJ-Icons", GetTexCoordsForEJIcon(7))
+				icon:SetImage("Interface\\EncounterJournal\\UI-EJ-Icons", GetTexCoordsForEJIcon(7))
 			elseif key == "EMPHASIZE" then
-				toggle:SetImage("Interface\\EncounterJournal\\UI-EJ-Icons", GetTexCoordsForEJIcon(5))
+				icon:SetImage("Interface\\EncounterJournal\\UI-EJ-Icons", GetTexCoordsForEJIcon(5))
 			else
-				toggle:SetImage(icons[key] or "Interface\\AddOns\\BigWigs\\Textures\\options\\"..key)
+				icon:SetImage(icons[key] or "Interface\\AddOns\\BigWigs\\Textures\\options\\"..key)
 			end
 
-			toggle.frame:SetParent(check.frame)
-			toggle.frame:Show()
+			icon.frame:SetParent(check.frame)
+			icon.frame:Show()
 
-			flagIcons[#flagIcons+1] = toggle
+			flagIcons[#flagIcons+1] = icon
 			if #flagIcons > 1 then
-				toggle.frame:SetPoint("LEFT", flagIcons[#flagIcons-1].frame, "RIGHT", 1, 0)
+				icon:SetPoint("LEFT", flagIcons[#flagIcons-1].frame, "RIGHT", 1, 0)
 			end
 		end
 	end
@@ -707,9 +710,9 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		flagIcons[1]:SetPoint("LEFT", check.text, "LEFT", check.text:GetStringWidth() + 5, 0)
 
 		-- need to clean these up since they are not added to a container
-		check:SetUserData("flagIcons", flagIcons)
+		check:SetUserData("icons", flagIcons)
 		check:SetCallback("OnRelease", function(widget)
-			for _, icon in next, widget:GetUserData("flagIcons") do
+			for _, icon in next, widget:GetUserData("icons") do
 				icon:Release()
 			end
 		end)
