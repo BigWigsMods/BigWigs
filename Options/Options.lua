@@ -659,7 +659,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local flagIcons = {}
 	local showFlags = {
 		"TANK", "HEALER", "TANK_HEALER", "DISPEL",
-		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN", "PROXIMITY", "INFOBOX", "ALTPOWER"
+		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "PROXIMITY", "INFOBOX", "ALTPOWER"
 	}
 	for _, key in next, showFlags do
 		if hasOptionFlag(dbKey, module, key) then
