@@ -190,6 +190,7 @@ do
 			self:OpenInfo(args.spellId, args.destName)
 			self:SetInfo(args.spellId, 1, L.absorb)
 			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UmbralShellAbsorbs")
+			updateInfoBox()
 		end
 	end
 
