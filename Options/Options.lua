@@ -659,10 +659,10 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local flagIcons = {}
 	local showFlags = {
 		"TANK", "HEALER", "TANK_HEALER", "DISPEL",
-		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "PROXIMITY", "INFOBOX", "ALTPOWER"
+		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN", "PROXIMITY", "INFOBOX", "ALTPOWER",
 	}
 	for _, key in next, showFlags do
-		if hasOptionFlag(dbKey, module, key) then
+		if hasOptionFlag(dbKey, module, key) and (key ~= "SAY_COUNTDOWN" or not hasOptionFlag(dbKey, module, "SAY")) then -- don't show both SAY and SAY_COUNTDOWN
 			local icon = AceGUI:Create("Icon")
 			icon:SetWidth(16)
 			icon:SetImageSize(16, 16)
@@ -693,6 +693,11 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 				icon:SetImage("Interface\\EncounterJournal\\UI-EJ-Icons", GetTexCoordsForEJIcon(5))
 			else
 				icon:SetImage(icons[key])
+			end
+
+			-- Combine the two SAY options
+			if key == "SAY" and hasOptionFlag(dbKey, module, "SAY_COUNTDOWN") then
+				icon:SetUserData("tooltipText", BigWigs:GetOptionDetails(key) .. PLAYER_LIST_DELIMITER .. BigWigs:GetOptionDetails("SAY_COUNTDOWN"))
 			end
 
 			icon.frame:SetParent(check.frame)
