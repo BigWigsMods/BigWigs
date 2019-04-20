@@ -597,18 +597,6 @@ local function flagOnEnter(widget)
 	GameTooltip:Show()
 end
 
-local function GetTexCoordsForEJIcon(index)
-	-- coords for Interface\EncounterJournal\UI-EJ-Icons
-	-- the icons are 32x32, but I don't want all the extra padding
-	local width, height = 256, 64
-	local rows, columns = 2, 8
-	local l = mod(index, columns)/columns + 6/width
-	local r = l + 20/width
-	local t = floor(index/columns)/rows + 6/height
-	local b = t + 20/height
-	return l,r,t,b
-end
-
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
 
@@ -655,11 +643,11 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		return check
 	end
 
-	-- luacheck: globals GetTexCoordsForRoleSmallCircle GameTooltip_Hide
 	local flagIcons = {}
 	local showFlags = {
-		"TANK", "HEALER", "TANK_HEALER", "DISPEL",
-		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN", "PROXIMITY", "INFOBOX", "ALTPOWER",
+		"TANK_HEALER", "TANK", "HEALER", "DISPEL",
+		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
+		"PROXIMITY", "INFOBOX", "ALTPOWER",
 	}
 	for _, key in next, showFlags do
 		if hasOptionFlag(dbKey, module, key) and (key ~= "SAY_COUNTDOWN" or not hasOptionFlag(dbKey, module, "SAY")) then -- don't show both SAY and SAY_COUNTDOWN
@@ -670,27 +658,32 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			icon:SetCallback("OnEnter", flagOnEnter)
 			icon:SetCallback("OnLeave", GameTooltip_Hide)
 
-			if key == "TANK" or key == "HEALER" then
-				icon:SetImage("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES", GetTexCoordsForRoleSmallCircle(key))
+			-- 337497 = Interface/LFGFrame/UI-LFG-ICON-PORTRAITROLES, 521749 = Interface/EncounterJournal/UI-EJ-Icons
+			if key == "TANK" then
+				icon:SetImage(337497, 0, 0.296875, 0.34375, 0.640625)
+			elseif key == "HEALER" then
+				icon:SetImage(337497, 0.3125, 0.609375, 0.015625, 0.3125)
 			elseif key == "TANK_HEALER" then
 				-- add both "TANK" and "HEALER" icons
-				local icon2 = AceGUI:Create("Icon")
-				icon2:SetWidth(16)
-				icon2:SetImage("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES", GetTexCoordsForRoleSmallCircle("TANK"))
-				icon2:SetImageSize(16, 16)
-				icon2:SetUserData("tooltipText", BigWigs:GetOptionDetails(key))
-				icon2:SetCallback("OnEnter", flagOnEnter)
-				icon2:SetCallback("OnLeave", GameTooltip_Hide)
-				icon2.frame:SetParent(check.frame)
-				icon2.frame:Show()
-				flagIcons[#flagIcons+1] = icon2
-				-- should be the first icon, so don't bother with SetPoint
+				local icon1 = AceGUI:Create("Icon")
+				icon1:SetWidth(16)
+				icon1:SetImage(337497, 0, 0.2968754, 0.34375, 0.640625) -- TANK
+				icon1:SetImageSize(16, 16)
+				icon1:SetUserData("tooltipText", BigWigs:GetOptionDetails(key))
+				icon1:SetCallback("OnEnter", flagOnEnter)
+				icon1:SetCallback("OnLeave", GameTooltip_Hide)
+				icon1.frame:SetParent(check.frame)
+				icon1.frame:Show()
+				flagIcons[#flagIcons+1] = icon1
+				-- first icon, don't bother with SetPoint
 
-				icon:SetImage("Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES", GetTexCoordsForRoleSmallCircle("HEALER"))
+				icon:SetImage(337497, 0.3125, 0.609375, 0.015625, 0.3125) -- HEALER
 			elseif key == "DISPEL" then
-				icon:SetImage("Interface\\EncounterJournal\\UI-EJ-Icons", GetTexCoordsForEJIcon(7))
+				icon:SetImage(521749, 0.8984375, 0.9765625, 0.09375, 0.40625)
+			-- elseif key == "INTERRUPT" then -- just incase :p EJ interrupt icon
+			-- 	icon:SetImage(521749, 0.7734375	0.8515625	0.09375	0.40625)
 			elseif key == "EMPHASIZE" then
-				icon:SetImage("Interface\\EncounterJournal\\UI-EJ-Icons", GetTexCoordsForEJIcon(5))
+				icon:SetImage(521749, 0.6484375, 0.7265625, 0.09375, 0.40625)
 			else
 				icon:SetImage(icons[key])
 			end
