@@ -654,7 +654,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			local icon = AceGUI:Create("Icon")
 			icon:SetWidth(16)
 			icon:SetImageSize(16, 16)
-			icon:SetUserData("tooltipText", BigWigs:GetOptionDetails(key))
+			icon:SetUserData("tooltipText", L[key])
 			icon:SetCallback("OnEnter", flagOnEnter)
 			icon:SetCallback("OnLeave", GameTooltip_Hide)
 
@@ -669,7 +669,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 				icon1:SetWidth(16)
 				icon1:SetImage(337497, 0, 0.2968754, 0.34375, 0.640625) -- TANK
 				icon1:SetImageSize(16, 16)
-				icon1:SetUserData("tooltipText", BigWigs:GetOptionDetails(key))
+				icon1:SetUserData("tooltipText", L[key])
 				icon1:SetCallback("OnEnter", flagOnEnter)
 				icon1:SetCallback("OnLeave", GameTooltip_Hide)
 				icon1.frame:SetParent(check.frame)
@@ -690,7 +690,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 
 			-- Combine the two SAY options
 			if key == "SAY" and hasOptionFlag(dbKey, module, "SAY_COUNTDOWN") then
-				icon:SetUserData("tooltipText", BigWigs:GetOptionDetails(key) .. PLAYER_LIST_DELIMITER .. BigWigs:GetOptionDetails("SAY_COUNTDOWN"))
+				icon:SetUserData("tooltipText", L[key] .. PLAYER_LIST_DELIMITER .. L["SAY_COUNTDOWN"])
 			end
 
 			icon.frame:SetParent(check.frame)
