@@ -16,7 +16,17 @@ local stage = 1
 local nextStageWarning = 73
 local mindbenderList = {}
 local mobCollector = {}
-local mindbenderCount = 0
+local mindbenderSpawnCount = 0
+
+local oblivionTearCount = 1
+local voidCrashCount = 1
+local giftCount = 1
+local eyesCount = 1
+local maddeningCount = 1
+local guardianCount = 1
+local mindbenderCount = 1
+local unknowableTerrorCount = 1
+local insatiableTormentCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -24,18 +34,20 @@ local mindbenderCount = 0
 
 local L = mod:GetLocale()
 if L then
-	L.custom_off_mindbender_marker = "Primordial Mindbender Marker"
-	L.custom_off_mindbender_marker_desc = "Mark Primordial Mindbender with {rt1}{rt2}{rt3}."
+	L.absorb = "Absorb"
+	L.absorb_text = "%s (|cff%s%.0f%%|r)"
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local mindbenderMarker = mod:AddMarkerOption(false, "npc", 1, -19118, 1, 2, 3) -- Primordial Mindbender
 function mod:GetOptions()
 	return {
 		"stages",
-		284722, -- Umbral Shell
+		"berserk",
+		{284722, "INFOBOX"}, -- Umbral Shell
 		284804, -- Custody of the Deep
 		284583, -- Storm of Annihilation
 		{284851, "TANK"}, -- Touch of the End
@@ -49,9 +61,9 @@ function mod:GetOptions()
 		285638, -- Gift of N'Zoth: Hysteria
 		-19118, -- Primordial Mindbender
 		285427, -- Consume Essence
-		"custom_off_mindbender_marker",
+		mindbenderMarker,
 		285562, -- Unknowable Terror
-		{285652, "SAY", "ICON"}, -- Insatiable Torment
+		{285652, "SAY"}, -- Insatiable Torment
 		285685, -- Gift of N'Zoth: Lunacy
 		{285307, "TANK"}, -- Feed
 	},{
@@ -94,7 +106,6 @@ function mod:OnBossEnable()
 	-- Stage Three: His Unwavering Gaze
 	self:Log("SPELL_CAST_SUCCESS", "InsatiableTormentSuccess", 285652)
 	self:Log("SPELL_AURA_APPLIED", "InsatiableTormentApplied", 285652)
-	self:Log("SPELL_AURA_REMOVED", "InsatiableTormentRemoved", 285652)
 	self:Log("SPELL_CAST_START", "GiftofNZothLunacy", 285685)
 
 	-- Mythic
@@ -107,20 +118,31 @@ function mod:OnEngage()
 	nextStageWarning = 73
 	mindbenderList = {}
 	mobCollector = {}
-	mindbenderCount = 0
+	mindbenderSpawnCount = 0
 
-	self:Bar(285416, 7.1) -- Void Crash
-	self:Bar(285185, 12.2) -- Oblivion Tear
-	self:Bar(285453, 20.7) -- Gift of N'Zoth: Obscurity
+	oblivionTearCount = 1
+	voidCrashCount = 1
+	giftCount = 1
+	eyesCount = 1
+	maddeningCount = 1
+	guardianCount = 1
+	mindbenderCount = 1
+	unknowableTerrorCount = 1
+	insatiableTormentCount = 1
+
+	self:Bar(285416, 7.1, CL.count:format(self:SpellName(285416), voidCrashCount)) -- Void Crash
+	self:Bar(285185, 12.2, CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
+	self:Bar(285453, 20.7, CL.count:format(self:SpellName(285453), giftCount)) -- Gift of N'Zoth: Obscurity
 	self:Bar(284851, 26.8) -- Touch of the End
-	self:Bar(285820, 30.1) -- Call Undying Guardian
-	self:Bar(285376, 42.5) -- Eyes of N'Zoth
-	self:Bar(285345, 76) -- Maddening Eyes of N'Zoth
+	self:Bar(285820, 30.1, CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
+	self:Bar(285376, 42.5, CL.count:format(self:SpellName(285376), eyesCount)) -- Eyes of N'Zoth
+	self:Bar(285345, 76, CL.count:format(self:SpellName(285345), maddeningCount)) -- Maddening Eyes of N'Zoth
 
 	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
-	if self:GetOption("custom_off_mindbender_marker") then
+	if self:GetOption(mindbenderMarker) then
 		self:RegisterTargetEvents("MinderbenderMarker")
 	end
+	self:Berserk(780)
 end
 
 --------------------------------------------------------------------------------
@@ -138,16 +160,47 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	end
 end
 
-function mod:UmbralShellApplied(args)
-	self:TargetMessage2(args.spellId, "cyan", args.destName)
-	self:PlaySound(args.spellId, "info", nil, args.destName)
-end
+do
+	local maxAbsorb, absorbRemoved = 0, 0
 
-function mod:UmbralShellRemoved(args)
-	self:Message2(args.spellId, "cyan", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
-	self:PlaySound(args.spellId, "info", nil, args.destName)
-end
+	local function updateInfoBox()
+		local absorb = maxAbsorb - absorbRemoved
+		local absorbPercentage = absorb / maxAbsorb
+		mod:SetInfoBar(284722, 1, absorbPercentage)
+		mod:SetInfo(284722, 2, L.absorb_text:format(mod:AbbreviateNumber(absorb), "00ff00", absorbPercentage*100))
+	end
 
+	do
+		local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
+		function mod:UmbralShellAbsorbs()
+			local _, subEvent, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, spellId, _, _, absorbed = CombatLogGetCurrentEventInfo()
+			if subEvent == "SPELL_ABSORBED" and spellId == 284722 then -- Umbral Shell
+				absorbRemoved = absorbRemoved + absorbed
+				updateInfoBox()
+			end
+		end
+	end
+
+	function mod:UmbralShellApplied(args)
+		self:TargetMessage2(args.spellId, "cyan", args.destName)
+		self:PlaySound(args.spellId, "info", nil, args.destName)
+		if self:CheckOption(args.spellId, "INFOBOX") then
+			absorbRemoved = 0
+			maxAbsorb = args.amount
+			self:OpenInfo(args.spellId, args.destName)
+			self:SetInfo(args.spellId, 1, L.absorb)
+			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UmbralShellAbsorbs")
+			updateInfoBox()
+		end
+	end
+
+	function mod:UmbralShellRemoved(args)
+		self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+		self:Message2(args.spellId, "cyan", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+		self:PlaySound(args.spellId, "info", nil, args.destName)
+		self:CloseInfo(args.spellId)
+	end
+end
 
 function mod:AbyssalCollapseStart(args) -- XXX Way to detect when the cast is over after shield breaks?
 	self:Message2(284804, "cyan") -- Custody of the Deep
@@ -180,40 +233,53 @@ function mod:TouchoftheEndApplied(args)
 end
 
 function mod:OblivionTear(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, oblivionTearCount))
 	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, stage == 3 and 12.2 or 17)
+	oblivionTearCount = oblivionTearCount + 1
+	self:Bar(args.spellId, stage == 3 and 12.2 or 17, CL.count:format(args.spellName, oblivionTearCount))
 end
 
 function mod:VoidCrash(args)
-	self:Message2(args.spellId, "red")
+	self:Message2(args.spellId, "red", CL.count:format(args.spellName, voidCrashCount))
 	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 31.6)
+	voidCrashCount = voidCrashCount + 1
+	self:Bar(args.spellId, 31.6, CL.count:format(args.spellName, voidCrashCount))
 end
 
 function mod:EyesofNZoth(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, eyesCount))
 	self:PlaySound(args.spellId, "long")
-	self:Bar(args.spellId, stage == 3 and 47 or 33)
+	eyesCount = eyesCount + 1
+	self:Bar(args.spellId, stage == 3 and 47 or 33, CL.count:format(args.spellName, eyesCount))
 end
 
-function mod:MaddeningEyesofNZoth(args)
-	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "alarm")
-	self:CastBar(args.spellId, 4.5)
-	--self:Bar(args.spellId, 33)
+do
+	local prev = 0
+	function mod:MaddeningEyesofNZoth(args)
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			self:Message2(args.spellId, "orange", CL.count:format(args.spellName, maddeningCount))
+			self:PlaySound(args.spellId, "alarm")
+			self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, maddeningCount))
+			maddeningCount = maddeningCount + 1
+			--self:Bar(args.spellId, 33, CL.count:format(args.spellName, maddeningCount))
+		end
+	end
 end
 
 function mod:GiftofNZothObscurity(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, giftCount))
 	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 42.5)
+	giftCount = giftCount + 1
+	self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, giftCount))
 end
 
 function mod:CallUndyingGuardian(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, guardianCount))
 	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, stage == 3 and 31.5 or 51.4)
+	guardianCount = guardianCount + 1
+	self:Bar(args.spellId, stage == 3 and 31.5 or 51.4, CL.count:format(args.spellName, guardianCount))
 end
 
 
@@ -223,46 +289,58 @@ function mod:VoidShieldApplied(args)
 	self:Bar("stages", 15.8, CL.intermission, args.spellId)
 
 	-- Stage 1 Bars
-	self:StopBar(285416) -- Void Crash
-	self:StopBar(285185) -- Oblivion Tear
-	self:StopBar(285453) -- Gift of N'Zoth: Obscurity
+	self:StopBar(CL.count:format(self:SpellName(285416), voidCrashCount)) -- Void Crash
+	self:StopBar(CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
+	self:StopBar(CL.count:format(self:SpellName(285453), giftCount)) -- Gift of N'Zoth: Obscurity
 	self:StopBar(284851) -- Touch of the End
-	self:StopBar(285820) -- Call Undying Guardian
-	self:StopBar(285376) -- Eyes of N'Zoth
-	self:StopBar(285345) -- Maddening Eyes of N'Zoth
+	self:StopBar(CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
+	self:StopBar(CL.count:format(self:SpellName(285376), eyesCount)) -- Eyes of N'Zoth
+	self:StopBar(CL.count:format(self:SpellName(285345), maddeningCount)) -- Maddening Eyes of N'Zoth
 
 	-- Additional Stage 2 Bars
-	self:StopBar(285562) -- Unknowable Terror XXX
-	self:StopBar(-19118) -- Primordial Mindbender
-	self:StopBar(285638) -- Gift of N'Zoth: Hysteria
+	self:StopBar(CL.count:format(self:SpellName(285562), unknowableTerrorCount)) -- Unknowable Terror
+	self:StopBar(CL.count:format(self:SpellName(-19118), mindbenderCount)) -- Primordial Mindbender
+	self:StopBar(CL.count:format(self:SpellName(285638), giftCount)) -- Gift of N'Zoth: Hysteria
 end
 
 function mod:VoidShieldRemoved(args)
 	stage = stage + 1
 	self:PlaySound("stages", "long")
 	self:Message2("stages", "cyan", CL.stage:format(stage), false)
+
+	oblivionTearCount = 1
+	voidCrashCount = 1
+	giftCount = 1
+	eyesCount = 1
+	maddeningCount = 1
+	guardianCount = 1
+	mindbenderCount = 1
+	unknowableTerrorCount = 1
+	insatiableTormentCount = 1
+
 	if stage == 2 then
-		self:Bar(285185, 13.3) -- Oblivion Tear
-		self:Bar(285562, 18.2) -- Unknowable Terror
+		self:Bar(285185, 13.3, CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
+		self:Bar(285562, 18.2, CL.count:format(self:SpellName(285562), unknowableTerrorCount)) -- Unknowable Terror
 		self:Bar(284851, 21.9) -- Touch of the End
-		self:Bar(285820, 31.6) -- Call Undying Guardian
-		self:Bar(-19118, 34.0, -19118, 285427) -- Primordial Mindbender, Consume Essence icon
-		self:Bar(285638, 40.1) -- Gift of N'Zoth: Hysteria
+		self:Bar(285820, 31.6, CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
+		self:Bar(-19118, 34.0, CL.count:format(self:SpellName(-19118), mindbenderCount), 285427) -- Primordial Mindbender, Consume Essence icon
+		self:Bar(285638, 40.1, CL.count:format(self:SpellName(285638), giftCount)) -- Gift of N'Zoth: Hysteria
 	else -- stage 3
-		self:Bar(285652, 12.1) -- Insatiable Torment
-		self:Bar(285185, 13.3) -- Oblivion Tear
+		self:Bar(285652, 12.1, CL.count:format(self:SpellName(285652), insatiableTormentCount)) -- Insatiable Torment
+		self:Bar(285185, 13.3, CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
 		self:Bar(284851, 21.8) -- Touch of the End
-		self:Bar(285820, 26.7) -- Call Undying Guardian
-		self:Bar(285685, 40.0) -- Gift of N'Zoth: Lunacy
-		self:Bar(285376, 45.7) -- Eyes of N'Zoth
+		self:Bar(285820, 26.7, CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
+		self:Bar(285685, 40.0, CL.count:format(self:SpellName(285685), giftCount)) -- Gift of N'Zoth: Lunacy
+		self:Bar(285376, 45.7, CL.count:format(self:SpellName(285376), eyesCount)) -- Eyes of N'Zoth
 	end
 end
 
 -- Stage Two: His Dutiful Servants
 function mod:GiftofNZothHysteria(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, giftCount))
 	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 42.6)
+	giftCount = giftCount + 1
+	self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, giftCount))
 end
 
 do
@@ -272,12 +350,15 @@ do
 		if t-prev > 58 then -- Throttle this 58s as the cooldown is 60s
 			prev = t
 			mindbenderList = {} -- Reset list for marking
-			self:CDBar(-19118, 60.0, -19118, 285427) -- Primordial Mindbender, Consume Essence icon
+			self:Message2(args.spellId, "yellow", CL.count:format(self:SpellName(-19118), mindbenderCount), 285427) -- Primordial Mindbender, Consume Essence icon
+			self:PlaySound(args.spellId, "long")
+			mindbenderCount = mindbenderCount + 1
+			self:CDBar(-19118, 60.0, CL.count:format(self:SpellName(-19118), mindbenderCount), 285427) -- Primordial Mindbender, Consume Essence icon
 		end
 		if not mobCollector[args.sourceGUID] then
-			mindbenderCount = mindbenderCount + 1
+			mindbenderSpawnCount = mindbenderSpawnCount + 1
 			mobCollector[args.sourceGUID] = true
-			mindbenderList[args.sourceGUID] = (mindbenderCount % 3) + 1 -- 1, 2, 3
+			mindbenderList[args.sourceGUID] = (mindbenderSpawnCount % 3) + 1 -- 1, 2, 3
 		end
 
 		local _, ready = self:Interrupter(args.sourceGUID)
@@ -295,34 +376,32 @@ function mod:MinderbenderMarker(event, unit, guid)
 end
 
 function mod:UnknowableTerror(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, unknowableTerrorCount))
 	self:PlaySound(args.spellId, "alarm")
-	self:CastBar(args.spellId, 8)
-	self:Bar(args.spellId, 41)
+	self:CastBar(args.spellId, 8, CL.count:format(args.spellName, unknowableTerrorCount))
+	unknowableTerrorCount = unknowableTerrorCount + 1
+	self:Bar(args.spellId, 41, CL.count:format(args.spellName, unknowableTerrorCount))
 end
 
 -- Stage Three: His Unwavering Gaze
 function mod:InsatiableTormentSuccess(args)
-	self:Bar(args.spellId, 29.2)
+	insatiableTormentCount = insatiableTormentCount + 1
+	self:Bar(args.spellId, 29.2, CL.count:format(args.spellName, insatiableTormentCount))
 end
 
 function mod:InsatiableTormentApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, insatiableTormentCount-1)) -- count-1 due to Success being before applied
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
+		self:Say(args.spellId, 143924) -- Leech
 		self:PlaySound(args.spellId, "warning")
 	end
-	self:PrimaryIcon(args.spellId, args.destName)
-end
-
-function mod:InsatiableTormentRemoved(args)
-	self:PrimaryIcon(args.spellId)
 end
 
 function mod:GiftofNZothLunacy(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, giftCount))
 	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 42.6)
+	giftCount = giftCount + 1
+	self:Bar(args.spellId, 42.6, CL.count:format(args.spellName, giftCount))
 end
 
 -- Mythic
