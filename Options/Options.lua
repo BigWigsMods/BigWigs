@@ -692,7 +692,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			elseif key == "EMPHASIZE" then
 				icon:SetImage("Interface\\EncounterJournal\\UI-EJ-Icons", GetTexCoordsForEJIcon(5))
 			else
-				icon:SetImage(icons[key] or "Interface\\AddOns\\BigWigs\\Textures\\options\\"..key)
+				icon:SetImage(icons[key])
 			end
 
 			icon.frame:SetParent(check.frame)
