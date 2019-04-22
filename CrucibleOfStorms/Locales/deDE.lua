@@ -19,9 +19,9 @@ if L then
 	L.cast = "Zauber"
 	L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
 
-	L.void = "Leere", -- Unstable Resonance: Void
-	L.ocean = "Ozean", -- Unstable Resonance: Ocean
-	L.storm = "Sturm", -- Unstable Resonance: Storm
+	L.void = "Leere" -- Unstable Resonance: Void
+	L.ocean = "Ozean" -- Unstable Resonance: Ocean
+	L.storm = "Sturm" -- Unstable Resonance: Storm
 	L.custom_on_repeating_resonance_say = "Instabile Resonanz-Ansage wiederholen"
 	L.custom_on_repeating_resonance_say_desc = "Wiederholt die Symbole {rt3}{rt5}{rt6} (Leere, Ozean und Sturm) im Chat, um diesen während Instabiler Resonanz auszuweichen."
 end
