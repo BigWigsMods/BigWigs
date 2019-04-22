@@ -48,10 +48,13 @@ if L then
 
 	L.absorb = "Absorb"
 	L.absorb_text = "%s (|cff%s%.0f%%|r)"
-	L.bubble = "Bubble"
+	L.bubble = "Bubble" -- Custody of the Deep Bubble
 	L.cast = "Cast"
 	L.cast_text = "%.1fs (|cff%s%.0f%%|r)"
 
+	L.void = "Void", -- Unstable Resonance: Void
+	L.ocean = "Ocean", -- Unstable Resonance: Ocean
+	L.storm = "Storm", -- Unstable Resonance: Storm
 	L.custom_on_repeating_resonance_say = "Repeating Unstable Resonance Say"
 	L.custom_on_repeating_resonance_say_desc = "Spam the icons {rt3}{rt5}{rt6} (Void, Ocean and Storm) in say chat to be avoided during Unstable Resonance."
 	L.custom_on_repeating_resonance_say_icon = 293653
@@ -603,9 +606,9 @@ do
 		[293661] = 6, -- Storm, Square
 	}
 	local debuffNames = {
-		[293663] = "Void",
-		[293662] = "Ocean",
-		[293661] = "Storm",
+		[293663] = L.void,
+		[293662] = L.ocean,
+		[293661] = L.storm,
 	}
 	function mod:UnstableResonanceStart(args)
 		self:Message2(args.spellId, "red")
