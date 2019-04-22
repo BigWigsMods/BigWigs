@@ -540,8 +540,8 @@ do
 				for k, v in pairs(mindbenderList) do
 					local unit = self:findTargetByGUID(k)
 					if unit then
-						SetRaidTarget(unit, mindbenderList[guid])
-						mindbenderList[guid] = nil
+						SetRaidTarget(unit, mindbenderList[k])
+						mindbenderList[k] = nil
 					end
 				end
 			end
