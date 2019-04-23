@@ -26,14 +26,3 @@ if L then
 	L.custom_on_repeating_resonance_say_desc = "在聊天中重复喊话 {rt3}{rt5}{rt6}（虚空、海洋和风暴）图标，以在动荡共鸣期间避免爆炸。"
 end
 
-L = BigWigs:NewBossLocale("Uu'nat, Harbinger of the Void", "zhCN")
-if L then
-	L.absorb = "吸收"
-	L.absorb_text = "%s（|cff%s%.0f%%|r）"
-end
-
-L = BigWigs:NewBossLocale("Uu'nat, Harbinger of the Void", "zhCN")
-if L then
-	L.absorb = "吸收"
-	L.absorb_text = "%s（|cff%s%.0f%%|r）"
-end
