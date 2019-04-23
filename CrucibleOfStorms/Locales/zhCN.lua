@@ -25,3 +25,9 @@ if L then
 	--L.custom_on_repeating_resonance_say = "Repeating Unstable Resonance Say"
 	--L.custom_on_repeating_resonance_say_desc = "Spam the icons {rt3}{rt5}{rt6} (Void, Ocean and Storm) in say chat to be avoided during Unstable Resonance."
 end
+
+L = BigWigs:NewBossLocale("Uu'nat, Harbinger of the Void", "zhCN")
+if L then
+	L.absorb = "吸收"
+	L.absorb_text = "%s（|cff%s%.0f%%|r）"
+end
