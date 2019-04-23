@@ -22,8 +22,8 @@ if L then
 	L.void = "虚无" -- Unstable Resonance: Void
 	L.ocean = "海洋" -- Unstable Resonance: Ocean
 	L.storm = "风暴" -- Unstable Resonance: Storm
-	--L.custom_on_repeating_resonance_say = "Repeating Unstable Resonance Say"
-	--L.custom_on_repeating_resonance_say_desc = "Spam the icons {rt3}{rt5}{rt6} (Void, Ocean and Storm) in say chat to be avoided during Unstable Resonance."
+	L.custom_on_repeating_resonance_say = "重复动荡共鸣喊话"
+	L.custom_on_repeating_resonance_say_desc = "在动荡共鸣期间，重复喊话 {rt3}{rt5}{rt6} 标记（虚无、海洋以及风暴）。"
 end
 
 L = BigWigs:NewBossLocale("Uu'nat, Harbinger of the Void", "zhCN")
