@@ -25,9 +25,3 @@ if L then
 	L.custom_on_repeating_resonance_say = "重复动荡共鸣喊话"
 	L.custom_on_repeating_resonance_say_desc = "在动荡共鸣期间，重复喊话 {rt3}{rt5}{rt6} 标记（虚无、海洋以及风暴）。"
 end
-
-L = BigWigs:NewBossLocale("Uu'nat, Harbinger of the Void", "zhCN")
-if L then
-	L.absorb = "吸收"
-	L.absorb_text = "%s（|cff%s%.0f%%|r）"
-end
