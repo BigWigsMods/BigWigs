@@ -109,7 +109,7 @@ if L then
 	L.port_side_txt = "左舰" -- port
 
 	L.custom_on_stop_timers = "总是显示技能条"
-	L.custom_on_stop_timers_desc = "吉安娜下次会随机释放非冷却技能。当此选项开启，这些技能条将保留在屏幕上。"
+	L.custom_on_stop_timers_desc = "吉安娜下次会随机释放非冷却技能。当此选项启用，这些技能条将保留在屏幕上。"
 
 	L.frozenblood_player = "%s（%d人）"
 
