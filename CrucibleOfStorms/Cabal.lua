@@ -460,7 +460,7 @@ function mod:WitnesstheEnd(args)
 		mobCollector[args.sourceGUID] = true
 		eldritchList[args.sourceGUID] = (eldritchCount % 3) + 3 -- 3, 4, 5
 		for k, v in pairs(eldritchList) do
-			local unit = self:findTargetByGUID(k)
+			local unit = self:GetUnitIdByGUID(k)
 			if unit then
 				SetRaidTarget(unit, eldritchList[k])
 				eldritchList[k] = nil
