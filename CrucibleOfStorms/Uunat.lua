@@ -539,13 +539,11 @@ do
 			mindbenderSpawnCount = mindbenderSpawnCount + 1
 			mobCollector[args.sourceGUID] = true
 			mindbenderList[args.sourceGUID] = (mindbenderSpawnCount % 3) + 1 -- 1, 2, 3
-			if #mindbenderList == 3 then
-				for k, v in pairs(mindbenderList) do
-					local unit = self:findTargetByGUID(k)
-					if unit then
-						SetRaidTarget(unit, mindbenderList[k])
-						mindbenderList[k] = nil
-					end
+			for k, v in pairs(mindbenderList) do
+				local unit = self:GetUnitIdByGUID(k)
+				if unit then
+					SetRaidTarget(unit, mindbenderList[k])
+					mindbenderList[k] = nil
 				end
 			end
 		end
