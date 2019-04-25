@@ -256,6 +256,7 @@ do
 		[-1151] = true, -- Uldir, raising stairs for Zul (Zek'voz)
 		[-1152] = true, -- Uldir, raising stairs for Zul (Vectis)
 		[-1153] = true, -- Uldir, raising stairs for Zul (Fetid Devourer)
+		[-1345] = true, -- Crucible of Storms, after killing first boss
 		[-1352] = { -- Battle of Dazar'alor
 			L.subzone_grand_bazaar, -- Grand Bazaar: After killing 2nd boss, Bwonsamdi (Alliance side only)
 			L.subzone_port_of_zandalar, -- Port of Zandalar: After killing blockade, boat arriving
