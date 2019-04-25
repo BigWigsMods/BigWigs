@@ -148,7 +148,7 @@ function mod:OnEngage()
 	self:Bar(282589, self:Mythic() and 16.5 or 30.1, CL.count:format(self:SpellName(282589), cerebralAssaultCount)) -- Cerebral Assault
 	self:Bar(282432, 18.9, CL.count:format(self:SpellName(282432), crushingDoubtCount)) -- Crushing Doubt
 	if self:GetOption(eldritchAbominationMarker) then
-		self:RegisterTargetEvents("eldritchMarker")
+		self:RegisterTargetEvents("EldritchMarker")
 	end
 	if self:CheckOption(-18970, "INFOBOX") then
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss3")
@@ -169,7 +169,7 @@ do
 	local maxAbsorb, absorbRemoved, absorbTarget, maxShield, currentShield, castOver, scheduled = 0, 0, nil, 0, 0, 0, nil
 	local red, yellow, green = {.6, 0, 0, .6}, {.7, .5, 0}, {0, .5, 0}
 
-	function mod:updateInfoBox(logUpdate)
+	function mod:UpdateInfoBox(logUpdate)
 		if absorbActive == false and shieldActive == false then
 			self:CloseInfo(-18970)
 		else
@@ -219,7 +219,7 @@ do
 					scheduled = self:ScheduleTimer("CheckRune", 0.1)
 				end
 				if not logUpdate then
-					self:ScheduleTimer("updateInfoBox", 0.1)
+					self:ScheduleTimer("UpdateInfoBox", 0.1)
 				end
 			end
 		end
@@ -231,7 +231,7 @@ do
 			shieldActive = true
 			maxShield = UnitHealthMax(unit)
 			currentShield = UnitHealth(unit)
-			self:updateInfoBox(true)
+			self:UpdateInfoBox(true)
 		end
 	end
 
@@ -241,7 +241,7 @@ do
 			local _, subEvent, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, spellId, _, _, absorbed = CombatLogGetCurrentEventInfo()
 			if subEvent == "SPELL_ABSORBED" and spellId == 282741 then -- Umbral Shell
 				absorbRemoved = absorbRemoved + absorbed
-				self:updateInfoBox(true)
+				self:UpdateInfoBox(true)
 			end
 		end
 	end
@@ -255,7 +255,7 @@ do
 			absorbTarget = args.destName
 			maxAbsorb = args.amount
 			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UmbralShellAbsorbs")
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 		umbralShellCount = umbralShellCount + 1
 	end
@@ -267,7 +267,7 @@ do
 			absorbActive = false
 			absorbTarget = nil
 			self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 	end
 
@@ -283,7 +283,7 @@ do
 			mod:Message2(282886, "cyan" , CL.over:format(mod:SpellName(282886))) -- Abyssal Collapse
 			mod:PlaySound(282886, "info")
 			mod:StopBar(CL.cast:format(mod:SpellName(282886)))
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 	end
 
@@ -292,7 +292,7 @@ do
 		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, abyssalCollapseCount))
 		self:PlaySound(args.spellId, "alarm")
 		self:CastBar(args.spellId, 20, CL.count:format(args.spellName, abyssalCollapseCount))
-		self:updateInfoBox()
+		self:UpdateInfoBox()
 		abyssalCollapseCount = abyssalCollapseCount + 1
 	end
 
@@ -302,7 +302,7 @@ do
 		self:Message2(args.spellId, "cyan" , CL.over:format(args.spellName)) -- Custody of the Deep
 		self:PlaySound(args.spellId, "info") -- Custody of the Deep
 		self:StopBar(CL.cast:format(args.spellName)) -- Custody of the Deep
-		self:updateInfoBox()
+		self:UpdateInfoBox()
 	end
 
 	function mod:StormofAnnihilation(args)
@@ -469,7 +469,7 @@ function mod:WitnesstheEnd(args)
 	end
 end
 
-function mod:eldritchMarker(event, unit, guid)
+function mod:EldritchMarker(event, unit, guid)
 	if self:MobId(guid) == 145053 and eldritchList[guid] then -- Eldritch Abomination
 		SetRaidTarget(unit, eldritchList[guid])
 		eldritchList[guid] = nil
