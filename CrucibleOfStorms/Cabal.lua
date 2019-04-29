@@ -455,7 +455,7 @@ function mod:EldritchRevelation()
 end
 
 function mod:WitnesstheEnd(args)
-	if not mobCollector[args.sourceGUID] then
+	if self:GetOption(eldritchAbominationMarker) and not mobCollector[args.sourceGUID] then
 		eldritchCount = eldritchCount + 1
 		mobCollector[args.sourceGUID] = true
 		eldritchList[args.sourceGUID] = (eldritchCount % 3) + 3 -- 3, 4, 5

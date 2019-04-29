@@ -535,7 +535,7 @@ do
 			mindbenderCount = mindbenderCount + 1
 			self:CDBar(-19118, 60.0, CL.count:format(self:SpellName(-19118), mindbenderCount), 285427) -- Primordial Mindbender, Consume Essence icon
 		end
-		if not mobCollector[args.sourceGUID] then
+		if self:GetOption(mindbenderMarker) and not mobCollector[args.sourceGUID] then
 			mindbenderSpawnCount = mindbenderSpawnCount + 1
 			mobCollector[args.sourceGUID] = true
 			mindbenderList[args.sourceGUID] = (mindbenderSpawnCount % 3) + 1 -- 1, 2, 3
