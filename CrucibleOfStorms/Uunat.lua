@@ -226,7 +226,7 @@ do
 	local maxAbsorb, absorbRemoved, absorbTarget, maxShield, currentShield, castOver, scheduled = 0, 0, nil, 0, 0, 0, nil
 	local red, yellow, green = {.6, 0, 0, .6}, {.7, .5, 0}, {0, .5, 0}
 
-	function mod:updateInfoBox(logUpdate)
+	function mod:UpdateInfoBox(logUpdate)
 		if absorbActive == false and shieldActive == false then
 			self:CloseInfo(-19055)
 		else
@@ -276,7 +276,7 @@ do
 					scheduled = self:ScheduleTimer("CheckRune", 0.1)
 				end
 				if not logUpdate then
-					self:ScheduleTimer("updateInfoBox", 0.1)
+					self:ScheduleTimer("UpdateInfoBox", 0.1)
 				end
 			end
 		end
@@ -298,7 +298,7 @@ do
 				shieldActive = true
 				maxShield = UnitHealthMax(unit)
 				currentShield = UnitHealth(unit)
-				self:updateInfoBox(true) -- Abyssal Collapse
+				self:UpdateInfoBox(true) -- Abyssal Collapse
 			end
 		end
 	end
@@ -309,7 +309,7 @@ do
 			local _, subEvent, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, spellId, _, _, absorbed = CombatLogGetCurrentEventInfo()
 			if subEvent == "SPELL_ABSORBED" and spellId == 284722 then -- Umbral Shell
 				absorbRemoved = absorbRemoved + absorbed
-				self:updateInfoBox(true)
+				self:UpdateInfoBox(true)
 			end
 		end
 	end
@@ -323,7 +323,7 @@ do
 			maxAbsorb = args.amount
 			absorbTarget = args.destName
 			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UmbralShellAbsorbs")
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 	end
 
@@ -334,7 +334,7 @@ do
 			absorbActive = false
 			absorbTarget = nil
 			self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 	end
 
@@ -351,7 +351,7 @@ do
 			mod:PlaySound(284809, "info")
 			mod:StopBar(CL.cast:format(mod:SpellName(284809)))
 			if self:CheckOption(-19055, "INFOBOX") then
-				self:updateInfoBox()
+				self:UpdateInfoBox()
 			end
 		end
 	end
@@ -364,7 +364,7 @@ do
 		self:CastBar(args.spellId, 20)
 		scheduled = mod:ScheduleTimer("CheckRune", 0.5)
 		if self:CheckOption(-19055, "INFOBOX") then
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 	end
 
@@ -375,7 +375,7 @@ do
 		self:PlaySound(args.spellId, "info")
 		self:StopBar(CL.cast:format(args.spellName))
 		if self:CheckOption(-19055, "INFOBOX") then
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 	end
 
@@ -539,13 +539,11 @@ do
 			mindbenderSpawnCount = mindbenderSpawnCount + 1
 			mobCollector[args.sourceGUID] = true
 			mindbenderList[args.sourceGUID] = (mindbenderSpawnCount % 3) + 1 -- 1, 2, 3
-			if #mindbenderList == 3 then
-				for k, v in pairs(mindbenderList) do
-					local unit = self:findTargetByGUID(k)
-					if unit then
-						SetRaidTarget(unit, mindbenderList[k])
-						mindbenderList[k] = nil
-					end
+			for k, v in pairs(mindbenderList) do
+				local unit = self:GetUnitIdByGUID(k)
+				if unit then
+					SetRaidTarget(unit, mindbenderList[k])
+					mindbenderList[k] = nil
 				end
 			end
 		end

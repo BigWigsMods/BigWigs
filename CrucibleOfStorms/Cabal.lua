@@ -105,8 +105,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REFRESH", "AphoticBlastRefresh", 282386)
 	self:Log("SPELL_AURA_REMOVED", "AphoticBlastRemoved", 282386)
 	self:Log("SPELL_AURA_APPLIED", "AgentofDemise", 282540)
-	self:Log("SPELL_CAST_START", "CerebralAssault", 282589)
-	self:Log("SPELL_CAST_START", "DarkHeraldStart", 282561)
+	self:Log("SPELL_CAST_START", "CerebralAssault", 282589, 285154)
 	self:Log("SPELL_AURA_APPLIED", "DarkHerald", 282561)
 	self:Log("SPELL_AURA_APPLIED", "PromisesofPower", 282566)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PromisesofPower", 282566)
@@ -144,17 +143,21 @@ function mod:OnEngage()
 	visageCount = 1
 
 	self:Bar(282384, 7.1) -- Shear Mind
-	self:Bar(282561, 10.3, CL.count:format(self:SpellName(282561), darkHeraldCount)) -- Dark Herald
+	self:Bar(282561, self:Mythic() and 16.5 or 10.3, CL.count:format(self:SpellName(282561), darkHeraldCount)) -- Dark Herald
 	self:Bar(282407, 13.2, CL.count:format(self:SpellName(282407), voidCrashCount)) -- Void Crash
-	self:Bar(282589, 30.1, CL.count:format(self:SpellName(282589), cerebralAssaultCount)) -- Cerebral Assault
+	self:Bar(282589, self:Mythic() and 16.5 or 30.1, CL.count:format(self:SpellName(282589), cerebralAssaultCount)) -- Cerebral Assault
 	self:Bar(282432, 18.9, CL.count:format(self:SpellName(282432), crushingDoubtCount)) -- Crushing Doubt
 	if self:GetOption(eldritchAbominationMarker) then
-		self:RegisterTargetEvents("eldritchMarker")
+		self:RegisterTargetEvents("EldritchMarker")
 	end
 	if self:CheckOption(-18970, "INFOBOX") then
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss3")
 	end
-	self:Berserk(780)
+	if self:Mythic() then
+		self:Berserk(510)
+	else
+		self:Berserk(780)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -166,7 +169,7 @@ do
 	local maxAbsorb, absorbRemoved, absorbTarget, maxShield, currentShield, castOver, scheduled = 0, 0, nil, 0, 0, 0, nil
 	local red, yellow, green = {.6, 0, 0, .6}, {.7, .5, 0}, {0, .5, 0}
 
-	function mod:updateInfoBox(logUpdate)
+	function mod:UpdateInfoBox(logUpdate)
 		if absorbActive == false and shieldActive == false then
 			self:CloseInfo(-18970)
 		else
@@ -216,7 +219,7 @@ do
 					scheduled = self:ScheduleTimer("CheckRune", 0.1)
 				end
 				if not logUpdate then
-					self:ScheduleTimer("updateInfoBox", 0.1)
+					self:ScheduleTimer("UpdateInfoBox", 0.1)
 				end
 			end
 		end
@@ -228,7 +231,7 @@ do
 			shieldActive = true
 			maxShield = UnitHealthMax(unit)
 			currentShield = UnitHealth(unit)
-			self:updateInfoBox(true)
+			self:UpdateInfoBox(true)
 		end
 	end
 
@@ -238,7 +241,7 @@ do
 			local _, subEvent, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, spellId, _, _, absorbed = CombatLogGetCurrentEventInfo()
 			if subEvent == "SPELL_ABSORBED" and spellId == 282741 then -- Umbral Shell
 				absorbRemoved = absorbRemoved + absorbed
-				self:updateInfoBox(true)
+				self:UpdateInfoBox(true)
 			end
 		end
 	end
@@ -252,7 +255,7 @@ do
 			absorbTarget = args.destName
 			maxAbsorb = args.amount
 			self:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED", "UmbralShellAbsorbs")
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 		umbralShellCount = umbralShellCount + 1
 	end
@@ -264,7 +267,7 @@ do
 			absorbActive = false
 			absorbTarget = nil
 			self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 	end
 
@@ -280,7 +283,7 @@ do
 			mod:Message2(282886, "cyan" , CL.over:format(mod:SpellName(282886))) -- Abyssal Collapse
 			mod:PlaySound(282886, "info")
 			mod:StopBar(CL.cast:format(mod:SpellName(282886)))
-			self:updateInfoBox()
+			self:UpdateInfoBox()
 		end
 	end
 
@@ -289,7 +292,7 @@ do
 		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, abyssalCollapseCount))
 		self:PlaySound(args.spellId, "alarm")
 		self:CastBar(args.spellId, 20, CL.count:format(args.spellName, abyssalCollapseCount))
-		self:updateInfoBox()
+		self:UpdateInfoBox()
 		abyssalCollapseCount = abyssalCollapseCount + 1
 	end
 
@@ -299,7 +302,7 @@ do
 		self:Message2(args.spellId, "cyan" , CL.over:format(args.spellName)) -- Custody of the Deep
 		self:PlaySound(args.spellId, "info") -- Custody of the Deep
 		self:StopBar(CL.cast:format(args.spellName)) -- Custody of the Deep
-		self:updateInfoBox()
+		self:UpdateInfoBox()
 	end
 
 	function mod:StormofAnnihilation(args)
@@ -355,22 +358,20 @@ function mod:AgentofDemise(args)
 end
 
 function mod:CerebralAssault(args)
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, cerebralAssaultCount))
-	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cerebralAssaultCount))
+	self:Message2(282589, "red", CL.count:format(args.spellName, cerebralAssaultCount))
+	self:PlaySound(282589, "warning")
+	self:CastBar(282589, 6, CL.count:format(args.spellName, cerebralAssaultCount))
 	cerebralAssaultCount = cerebralAssaultCount + 1
-	self:Bar(args.spellId, 41.3, CL.count:format(args.spellName, cerebralAssaultCount))
-end
-
-function mod:DarkHeraldStart(args)
-	darkHeraldCount = darkHeraldCount + 1
-	self:CDBar(args.spellId, 34.1, CL.count:format(args.spellName, darkHeraldCount)) -- to _success
+	self:Bar(282589, self:Mythic() and 31.5 or 41.3, CL.count:format(args.spellName, cerebralAssaultCount))
 end
 
 function mod:DarkHerald(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, darkHeraldCount-1)) -- Count - 1 since applied is after Success
+	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, darkHeraldCount)) -- Count - 1 since applied is after Success
 	self:PlaySound(args.spellId, "alert")
-	self:TargetBar(args.spellId, 20, args.destName, CL.count:format(args.spellName, darkHeraldCount-1))
+	self:TargetBar(args.spellId, 10, args.destName, CL.count:format(args.spellName, darkHeraldCount))
+	darkHeraldCount = darkHeraldCount + 1
+	self:CDBar(args.spellId, self:Mythic() and 18.2 or 32.1, CL.count:format(args.spellName, darkHeraldCount))
+	-- self:PrimaryIcon(args.spellId, args.destName)
 end
 
 function mod:PromisesofPower(args)
@@ -398,7 +399,7 @@ end
 function mod:TerrifyingEcho(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 6)
+	self:CastBar(args.spellId, self:Mythic() and 15 or 20)
 end
 
 -- Fa'thuul the Feared
@@ -425,7 +426,7 @@ do
 		if #playerList == 1 then
 			self:CastBar(args.spellId, 12, CL.count:format(args.spellName, crushingDoubtCount)) -- Explosion
 			crushingDoubtCount = crushingDoubtCount + 1
-			self:Bar(args.spellId, 60.5, CL.count:format(args.spellName, crushingDoubtCount))
+			self:Bar(args.spellId, self:Mythic() and 46.5 or 60.5, CL.count:format(args.spellName, crushingDoubtCount))
 		end
 		if self:GetOption(crushingDoubtMarker) and #playerList < 3 then
 			SetRaidTarget(args.destName, #playerList)
@@ -458,19 +459,17 @@ function mod:WitnesstheEnd(args)
 		eldritchCount = eldritchCount + 1
 		mobCollector[args.sourceGUID] = true
 		eldritchList[args.sourceGUID] = (eldritchCount % 3) + 3 -- 3, 4, 5
-		if #eldritchList == 3 then
-			for k, v in pairs(eldritchList) do
-				local unit = self:findTargetByGUID(k)
-				if unit then
-					SetRaidTarget(unit, eldritchList[k])
-					eldritchList[k] = nil
-				end
+		for k, v in pairs(eldritchList) do
+			local unit = self:GetUnitIdByGUID(k)
+			if unit then
+				SetRaidTarget(unit, eldritchList[k])
+				eldritchList[k] = nil
 			end
 		end
 	end
 end
 
-function mod:eldritchMarker(event, unit, guid)
+function mod:EldritchMarker(event, unit, guid)
 	if self:MobId(guid) == 145053 and eldritchList[guid] then -- Eldritch Abomination
 		SetRaidTarget(unit, eldritchList[guid])
 		eldritchList[guid] = nil
