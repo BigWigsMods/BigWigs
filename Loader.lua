@@ -326,7 +326,7 @@ local function loadAddons(tbl)
 end
 
 local function loadZone(zone)
-	if not zone then return end
+	if not loadOnZone[zone] then return end
 	loadAddons(loadOnZone[zone])
 end
 
