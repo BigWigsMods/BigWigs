@@ -683,7 +683,7 @@ do
 	end
 
 	function mod:UnstableResonanceSuccess(args)
-		if self:GetOption("custom_on_repeating_resonance_yell" then
+		if self:GetOption("custom_on_repeating_resonance_yell") then
 			if self:UnitBuff("player", 284684) then -- Void
 				local sayText = "{rt3} "..L.void.." {rt3}"
 				SendChatMessage(sayText, "YELL")
