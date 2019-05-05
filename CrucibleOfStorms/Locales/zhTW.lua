@@ -22,6 +22,10 @@ if L then
 	L.void = "虛無" -- Unstable Resonance: Void
 	L.ocean = "海洋" -- Unstable Resonance: Ocean
 	L.storm = "風暴" -- Unstable Resonance: Storm
+
+	--L.custom_on_repeating_resonance_yell = "Repeating Relics of Power Yell"
+	--L.custom_on_repeating_resonance_yell_desc = "Spam a yell stating which relic you are holding during Unstable Resonance."
+
 	L.custom_on_repeating_resonance_say = "重複不穩定的共鳴喊話"
 	L.custom_on_repeating_resonance_say_desc = "在不穩定的共鳴期間，每秒重複喊話 {rt3}{rt5}{rt6} 標記（虛無、海洋以及風暴）。"
 end

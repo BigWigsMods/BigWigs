@@ -70,8 +70,8 @@ end
 -- Initialization
 --
 
-local mindbenderMarker = mod:AddMarkerOption(false, "npc", 1, -19118, 1, 2, 4) -- Primordial Mindbender
-local relicMarker = mod:AddMarkerOption(false, "player", 1, -19055, 3, 5, 6) -- Relics of Power
+local mindbenderMarker = mod:AddMarkerOption(false, "npc", 1, -19118, 1, 2, 4) -- Primordial Mindbender / Skip 3 as it's used for relics
+local relicMarker = mod:AddMarkerOption(false, "player", 1, -19055, 3, 5, 6) -- Relics of Power / Specifically 3/5/6 to represent the relics best.
 function mod:GetOptions()
 	return {
 		"stages",
@@ -646,6 +646,7 @@ do
 		[293662] = L.ocean,
 		[293661] = L.storm,
 	}
+	local buffOnMe = nil
 
 	function mod:UnstableResonanceStart(args)
 		self:StopBar(CL.count:format(args.spellName, unstableResonceCount))
@@ -684,17 +685,17 @@ do
 
 	function mod:UnstableResonanceSuccess(args)
 		if self:GetOption("custom_on_repeating_resonance_yell") then
-			if self:UnitBuff("player", 284684) then -- Void
+			if buffOnMe == 284684 then -- Void
 				local sayText = "{rt3} "..L.void.." {rt3}"
 				SendChatMessage(sayText, "YELL")
 				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, sayText, "YELL")
 				self:ScheduleTimer("CancelTimer", 15, sayTimer)
-			elseif self:UnitBuff("player", 284768) then -- Trident
+			elseif buffOnMe == 284768 then -- Trident
 				local sayText = "{rt5} "..L.ocean.." {rt5}"
 				SendChatMessage(sayText, "YELL")
 				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, sayText, "YELL")
 				self:ScheduleTimer("CancelTimer", 15, sayTimer)
-			elseif self:UnitBuff("player", 284569) then -- Tempest
+			elseif buffOnMe == 284569 then -- Tempest
 				local sayText = "{rt6} "..L.storm.." {rt6}"
 				SendChatMessage(sayText, "YELL")
 				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, sayText, "YELL")
@@ -729,36 +730,54 @@ do
 	end
 
 	function mod:VoidStone(args)
+		if self:Me(args.destGUID) then
+			buffOnMe = args.spellId
+		end
 		if self:GetOption(relicMarker) then
 			SetRaidTarget(args.destName, 3) -- 3 for Diamond
 		end
 	end
 
 	function mod:VoidStoneDropped(args)
+		if self:Me(args.destGUID) then
+			buffOnMe = nil
+		end
 		if self:GetOption(relicMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
 	end
 
 	function mod:TempestCaller(args)
+		if self:Me(args.destGUID) then
+			buffOnMe = args.spellId
+		end
 		if self:GetOption(relicMarker) then
 			SetRaidTarget(args.destName, 6) -- 6 for Square
 		end
 	end
 
 	function mod:TempestCallerDropped(args)
+		if self:Me(args.destGUID) then
+			buffOnMe = nil
+		end
 		if self:GetOption(relicMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
 	end
 
 	function mod:Trident(args)
+		if self:Me(args.destGUID) then
+			buffOnMe = args.spellId
+		end
 		if self:GetOption(relicMarker) then
 			SetRaidTarget(args.destName, 5) -- 5 for Moon
 		end
 	end
 
 	function mod:TridentDropped(args)
+		if self:Me(args.destGUID) then
+			buffOnMe = nil
+		end
 		if self:GetOption(relicMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
