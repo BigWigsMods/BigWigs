@@ -275,18 +275,18 @@ L.iconPosition = "圖示位置"
 L.iconPositionDesc = "選擇將圖示置於計時條的哪一側。"
 L.visibleBarLimit = "最大可見數量"
 L.visibleBarLimitDesc = "設定同時於螢幕上可見的計時條之最大數量。"
---L.textDesc = "Whether to show or hide the text displayed on the bars."
+L.textDesc = "是否顯示或隱藏計時條上的文字。"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
 
---L.disableSfx = "Disable sound effects"
---L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
+L.disableSfx = "禁用音效"
+L.disableSfxDesc = "在魔獸世界的音效選項中的'音效'將被關閉，然後在首領戰之後恢復。這可以幫助您專注在BigWigs的警告音效。"
 
---L.subzone_grand_bazaar = "Grand Bazaar" -- Battle of Dazar'alor raid (Battle for Azeroth)
---L.subzone_port_of_zandalar = "Port of Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
---L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
+L.subzone_grand_bazaar = "大市集" -- Battle of Dazar'alor raid (Battle for Azeroth)
+L.subzone_port_of_zandalar = "贊達拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
+L.subzone_eastern_transept = "東穿堂" -- Auchindoun dungeon (Warlords of Draenor)
 
 -----------------------------------------------------------------------
 -- Colors.lua
