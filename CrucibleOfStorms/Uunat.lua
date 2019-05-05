@@ -2,7 +2,6 @@
 -- TODO
 --
 -- - When infobox is not in use - display who holds a relic (or on the ground)
--- - Mythic Icons Pulse debuff
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -12,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Uu'nat, Harbinger of the Void", 2096, 2332)
 if not mod then return end
 mod:RegisterEnableMob(145371) -- Uu'nat
 mod.engageId = 2273
---mod.respawnTime = 31
+mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -37,6 +36,8 @@ local insatiableTormentCount = 1
 local absorbActive = false
 local shieldActive = false
 
+local unstableResonceCount = 1
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -55,22 +56,29 @@ if L then
 	L.void = "Void" -- Unstable Resonance: Void
 	L.ocean = "Ocean" -- Unstable Resonance: Ocean
 	L.storm = "Storm" -- Unstable Resonance: Storm
-	L.custom_on_repeating_resonance_say = "Repeating Unstable Resonance Say"
-	L.custom_on_repeating_resonance_say_desc = "Spam the icons {rt3}{rt5}{rt6} (Void, Ocean and Storm) in say chat to be avoided during Unstable Resonance."
-	L.custom_on_repeating_resonance_say_icon = 293653
+
+	L.custom_on_repeating_resonance_yell = "Repeating Relics of Power Yell"
+	L.custom_on_repeating_resonance_yell_desc = "Spam a yell stating which relic you are holding during Unstable Resonance."
+	L.custom_on_repeating_resonance_yell_icon = 293653
+
+	L.custom_off_repeating_resonance_say = "Repeating Unstable Resonance Say"
+	L.custom_off_repeating_resonance_say_desc = "Spam the icons {rt3}{rt5}{rt6} (Void, Ocean and Storm) in say chat to be avoided during Unstable Resonance."
+	L.custom_off_repeating_resonance_say_icon = 293653
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-local mindbenderMarker = mod:AddMarkerOption(false, "npc", 1, -19118, 1, 2, 3) -- Primordial Mindbender
+local mindbenderMarker = mod:AddMarkerOption(false, "npc", 1, -19118, 1, 2, 4) -- Primordial Mindbender
+local relicMarker = mod:AddMarkerOption(false, "player", 1, -19055, 3, 5, 6) -- Relics of Power
 function mod:GetOptions()
 	return {
 		"stages",
 		"custom_on_stop_timers",
 		"berserk",
 		{-19055, "INFOBOX"}, -- Relics of Power
+		relicMarker,
 		284722, -- Umbral Shell
 		284804, -- Custody of the Deep
 		284809, -- Abyssal Collapse
@@ -90,7 +98,8 @@ function mod:GetOptions()
 		{285652, "SAY"}, -- Insatiable Torment
 		285685, -- Gift of N'Zoth: Lunacy
 		{293653, "FLASH", "PULSE"}, -- Unstable Resonance
-		"custom_on_repeating_resonance_say",
+		"custom_on_repeating_resonance_yell",
+		"custom_off_repeating_resonance_say",
 		{285307, "TANK"}, -- Feed
 	},{
 		["stages"] = "general",
@@ -136,8 +145,15 @@ function mod:OnBossEnable()
 
 	-- Mythic
 	self:Log("SPELL_CAST_START", "UnstableResonanceStart", 293653)
+	self:Log("SPELL_CAST_SUCCESS", "UnstableResonanceSuccess", 293653)
 	self:Log("SPELL_AURA_APPLIED", "UnstableResonanceDebuff", 293663, 293662, 293661) -- Void, Ocean, Storm
 	self:Log("SPELL_AURA_REMOVED", "UnstableResonanceDebuffRemoved", 293663, 293662, 293661) -- Void, Ocean, Storm
+	self:Log("SPELL_AURA_APPLIED", "VoidStone", 284684)
+	self:Log("SPELL_AURA_REMOVED", "VoidStoneDropped", 284684)
+	self:Log("SPELL_AURA_APPLIED", "TempestCaller", 284569)
+	self:Log("SPELL_AURA_REMOVED", "TempestCallerDropped", 284569)
+	self:Log("SPELL_AURA_APPLIED", "Trident", 284768)
+	self:Log("SPELL_AURA_REMOVED", "TridentDropped", 284768)
 
 	-- Undying Guardian (Mythic)
 	self:Log("SPELL_CAST_START", "Feed", 285307)
@@ -161,6 +177,7 @@ function mod:OnEngage()
 	mindbenderCount = 1
 	unknowableTerrorCount = 1
 	insatiableTormentCount = 1
+	unstableResonceCount = 1
 
 	absorbActive = false
 	shieldActive = false
@@ -172,6 +189,9 @@ function mod:OnEngage()
 	self:Bar(285820, 30.1, CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
 	self:Bar(285376, 42.5, CL.count:format(self:SpellName(285376), eyesCount)) -- Eyes of N'Zoth
 	self:Bar(285345, 77.2, CL.count:format(self:SpellName(285345), maddeningCount)) -- Maddening Eyes of N'Zoth
+	if self:Mythic() then
+		self:Bar(293653, 14.2, CL.count:format(self:SpellName(293653), unstableResonceCount)) -- Unstable Resonance
+	end
 
 	if self:CheckOption(-19055, "INFOBOX") then
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3", "boss4")
@@ -201,6 +221,7 @@ do
 		[285638] = true, -- Gift of N'Zoth: Hysteria
 		[285652] = true, -- Insatiable Torment
 		[285685] = true, -- Gift of N'Zoth: Lunacy
+		[293653] = true, -- Unstable Resonance
 	}
 
 	local castPattern = CL.cast:gsub("%%s", ".+")
@@ -389,7 +410,7 @@ do
 	function mod:StormofAnnihilationApplied(args)
 		self:TargetMessage2(args.spellId, "cyan", args.destName)
 		self:PlaySound(args.spellId, "long", nil, args.destName)
-		self:CastBar(args.spellId, 15) -- Custody of the Deep
+		self:CastBar(args.spellId, 15)
 	end
 end
 
@@ -405,27 +426,34 @@ function mod:TouchoftheEndApplied(args)
 end
 
 function mod:OblivionTear(args)
-	self:StopBar(CL.count:format(args.spellName, oblivionTearCount))
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, oblivionTearCount))
+	self:StopBar(args.spellId)
+	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	oblivionTearCount = oblivionTearCount + 1
-	self:Bar(args.spellId, stage == 3 and 12.2 or 17, CL.count:format(args.spellName, oblivionTearCount))
+	local t = 0
+	if self:Mythic() then -- XXX Improve this
+		t = stage == 3 and (oblivionTearCount % 2 == 0 and 12.2 or 29) or stage == 2 and (oblivionTearCount % 2 == 0 and 17 or 24.3) or (oblivionTearCount % 2 == 0 and 23.4 or 16.1)
+	else
+		t = stage == 3 and 12.2 or 17
+	end
+	self:Bar(args.spellId, t)
 end
 
 function mod:VoidCrash(args)
 	self:StopBar(CL.count:format(args.spellName, voidCrashCount))
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, voidCrashCount))
-	self:PlaySound(args.spellId, "warning")
+	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, voidCrashCount))
+	self:PlaySound(args.spellId, "alert")
 	voidCrashCount = voidCrashCount + 1
 	self:Bar(args.spellId, 31.6, CL.count:format(args.spellName, voidCrashCount))
 end
 
 function mod:EyesofNZoth(args)
+	if self:Mythic() and ((eyesCount == maddeningCount+1) and stage == 1) then return end -- Also uses Eye's of N'zoth cast to trigger MAddening Eyes, is this the same outside mythic? XXX
 	self:StopBar(CL.count:format(args.spellName, eyesCount))
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, eyesCount))
 	self:PlaySound(args.spellId, "long")
 	eyesCount = eyesCount + 1
-	self:Bar(args.spellId, stage == 3 and 47 or 33, CL.count:format(args.spellName, eyesCount))
+	self:Bar(args.spellId, stage == 3 and (self:Mythic() and 42.2 or 47) or self:Mythic() and 75 or 33, CL.count:format(args.spellName, eyesCount))
 end
 
 do
@@ -439,7 +467,7 @@ do
 			self:PlaySound(args.spellId, "alarm")
 			self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, maddeningCount))
 			maddeningCount = maddeningCount + 1
-			self:Bar(args.spellId, 65, CL.count:format(args.spellName, maddeningCount))
+			self:Bar(args.spellId, self:Mythic() and 70 or 65, CL.count:format(args.spellName, maddeningCount))
 		end
 	end
 end
@@ -479,6 +507,9 @@ function mod:VoidShieldApplied(args)
 	self:StopBar(CL.count:format(self:SpellName(285562), unknowableTerrorCount)) -- Unknowable Terror
 	self:StopBar(CL.count:format(self:SpellName(-19118), mindbenderCount)) -- Primordial Mindbender
 	self:StopBar(CL.count:format(self:SpellName(285638), giftCount)) -- Gift of N'Zoth: Hysteria
+
+	-- Mythic
+	self:StopBar(CL.count:format(self:SpellName(293653), unstableResonceCount)) -- Unstable Resonance
 end
 
 function mod:VoidShieldRemoved(args)
@@ -495,21 +526,28 @@ function mod:VoidShieldRemoved(args)
 	mindbenderCount = 1
 	unknowableTerrorCount = 1
 	insatiableTormentCount = 1
+	unstableResonceCount = 1
 
 	if stage == 2 then
-		self:Bar(285185, 13.3, CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
+		self:Bar(285185, 13.3) -- Oblivion Tear
 		self:Bar(285562, 18.2, CL.count:format(self:SpellName(285562), unknowableTerrorCount)) -- Unknowable Terror
 		self:Bar(284851, 21.9) -- Touch of the End
 		self:Bar(285820, 31.6, CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
 		self:Bar(-19118, 34.0, CL.count:format(self:SpellName(-19118), mindbenderCount), 285427) -- Primordial Mindbender, Consume Essence icon
 		self:Bar(285638, 40.1, CL.count:format(self:SpellName(285638), giftCount)) -- Gift of N'Zoth: Hysteria
+		if self:Mythic() then
+			self:Bar(293653, 33.2, CL.count:format(self:SpellName(293653), unstableResonceCount)) -- Unstable Resonance
+		end
 	else -- stage 3
 		self:Bar(285652, 12.1, CL.count:format(self:SpellName(285652), insatiableTormentCount)) -- Insatiable Torment
-		self:Bar(285185, 13.3, CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
+		self:Bar(285185, self:Mythic() and 15.3 or 13.3, CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
 		self:Bar(284851, 21.8) -- Touch of the End
 		self:Bar(285820, 26.7, CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
 		self:Bar(285685, 40.0, CL.count:format(self:SpellName(285685), giftCount)) -- Gift of N'Zoth: Lunacy
-		self:Bar(285376, 45.7, CL.count:format(self:SpellName(285376), eyesCount)) -- Eyes of N'Zoth
+		self:Bar(285376, self:Mythic() and 52.3 or 45.7, CL.count:format(self:SpellName(285376), eyesCount)) -- Eyes of N'Zoth
+		if self:Mythic() then
+			self:Bar(293653, 32.8, CL.count:format(self:SpellName(293653), unstableResonceCount)) -- Unstable Resonance
+		end
 	end
 end
 
@@ -538,7 +576,7 @@ do
 		if self:GetOption(mindbenderMarker) and not mobCollector[args.sourceGUID] then
 			mindbenderSpawnCount = mindbenderSpawnCount + 1
 			mobCollector[args.sourceGUID] = true
-			mindbenderList[args.sourceGUID] = (mindbenderSpawnCount % 3) + 1 -- 1, 2, 3
+			mindbenderList[args.sourceGUID] = (mindbenderSpawnCount % 3 == 2) and 4 or (mindbenderSpawnCount % 3) + 1 -- 1, 2, 4
 			for k, v in pairs(mindbenderList) do
 				local unit = self:GetUnitIdByGUID(k)
 				if unit then
@@ -567,7 +605,7 @@ function mod:UnknowableTerror(args)
 	self:StopBar(CL.count:format(args.spellName, unknowableTerrorCount))
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, unknowableTerrorCount))
 	self:PlaySound(args.spellId, "alarm")
-	self:CastBar(args.spellId, 8, CL.count:format(args.spellName, unknowableTerrorCount))
+	self:CastBar(args.spellId, self:Mythic() and 6 or 8, CL.count:format(args.spellName, unknowableTerrorCount))
 	unknowableTerrorCount = unknowableTerrorCount + 1
 	self:Bar(args.spellId, 41, CL.count:format(args.spellName, unknowableTerrorCount))
 end
@@ -608,10 +646,27 @@ do
 		[293662] = L.ocean,
 		[293661] = L.storm,
 	}
+
 	function mod:UnstableResonanceStart(args)
-		self:Message2(args.spellId, "red")
+		self:StopBar(CL.count:format(args.spellName, unstableResonceCount))
+		self:Message2(args.spellId, "red", CL.count:format(args.spellName, unstableResonceCount))
 		self:PlaySound(args.spellId, "warning")
-		--self:Bar(args.spellId, 42.6)
+		unstableResonceCount = unstableResonceCount + 1
+		self:CDBar(args.spellId, 42,  CL.count:format(args.spellName, unstableResonceCount))
+		if self:GetOption(relicMarker) then
+			local void = self:GetBossId(146581)
+			if void then
+				SetRaidTarget(void, 3)
+			end
+			local tempest = self:GetBossId(146496)
+			if tempest then
+				SetRaidTarget(tempest, 6)
+			end
+			local trident = self:GetBossId(146582)
+			if trident then
+				SetRaidTarget(trident, 5)
+			end
+		end
 	end
 
 	function mod:UnstableResonanceDebuff(args) -- 293653 Unstable Resonance
@@ -619,7 +674,7 @@ do
 			self:Message2(293653, "blue", CL.you_icon:format(debuffNames[args.spellId], debuffMarks[args.spellId]), args.spellId)
 			self:Flash(293653, args.spellId)
 			self:PlaySound(293653, "alarm")
-			if self:GetOption("custom_on_repeating_resonance_say") then
+			if self:GetOption("custom_off_repeating_resonance_say") then
 				local sayText = "{rt"..debuffMarks[args.spellId].."}"
 				SendChatMessage(sayText, "SAY")
 				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, sayText, "SAY")
@@ -627,14 +682,85 @@ do
 		end
 	end
 
+	function mod:UnstableResonanceSuccess(args)
+		if self:GetOption("custom_on_repeating_resonance_yell" then
+			if self:UnitBuff("player", 284684) then -- Void
+				local sayText = "{rt3} "..L.void.." {rt3}"
+				SendChatMessage(sayText, "YELL")
+				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, sayText, "YELL")
+				self:ScheduleTimer("CancelTimer", 15, sayTimer)
+			elseif self:UnitBuff("player", 284768) then -- Trident
+				local sayText = "{rt5} "..L.ocean.." {rt5}"
+				SendChatMessage(sayText, "YELL")
+				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, sayText, "YELL")
+				self:ScheduleTimer("CancelTimer", 15, sayTimer)
+			elseif self:UnitBuff("player", 284569) then -- Tempest
+				local sayText = "{rt6} "..L.storm.." {rt6}"
+				SendChatMessage(sayText, "YELL")
+				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, sayText, "YELL")
+				self:ScheduleTimer("CancelTimer", 15, sayTimer)
+			end
+		end
+		if self:GetOption(relicMarker) then
+			local void = self:GetBossId(146581)
+			if void then
+				SetRaidTarget(void, 3)
+			end
+			local tempest = self:GetBossId(146496)
+			if tempest then
+				SetRaidTarget(tempest, 6)
+			end
+			local trident = self:GetBossId(146582)
+			if trident then
+				SetRaidTarget(trident, 5)
+			end
+		end
+	end
+
 	function mod:UnstableResonanceDebuffRemoved(args) -- 293653 Unstable Resonance
 		if self:Me(args.destGUID) then
-			self:Message2(293653, "green", CL.removed:format(debuffNames[args.spellId]))
+			self:Message2(293653, "green", CL.removed:format(debuffNames[args.spellId]), false)
 			self:PlaySound(293653, "info")
 			if sayTimer then
 				self:CancelTimer(sayTimer)
 				sayTimer = nil
 			end
+		end
+	end
+
+	function mod:VoidStone(args)
+		if self:GetOption(relicMarker) then
+			SetRaidTarget(args.destName, 3) -- 3 for Diamond
+		end
+	end
+
+	function mod:VoidStoneDropped(args)
+		if self:GetOption(relicMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
+	end
+
+	function mod:TempestCaller(args)
+		if self:GetOption(relicMarker) then
+			SetRaidTarget(args.destName, 6) -- 6 for Square
+		end
+	end
+
+	function mod:TempestCallerDropped(args)
+		if self:GetOption(relicMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
+	end
+
+	function mod:Trident(args)
+		if self:GetOption(relicMarker) then
+			SetRaidTarget(args.destName, 5) -- 5 for Moon
+		end
+	end
+
+	function mod:TridentDropped(args)
+		if self:GetOption(relicMarker) then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
