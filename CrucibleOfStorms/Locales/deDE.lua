@@ -26,6 +26,6 @@ if L then
 	--L.custom_on_repeating_resonance_yell = "Repeating Relics of Power Yell"
 	--L.custom_on_repeating_resonance_yell_desc = "Spam a yell stating which relic you are holding during Unstable Resonance."
 
-	L.custom_on_repeating_resonance_say = "Instabile Resonanz-Ansage wiederholen"
-	L.custom_on_repeating_resonance_say_desc = "Wiederholt die Symbole {rt3}{rt5}{rt6} (Leere, Ozean und Sturm) im Chat, um diesen während Instabiler Resonanz auszuweichen."
+	L.custom_off_repeating_resonance_say = "Instabile Resonanz-Ansage wiederholen"
+	L.custom_off_repeating_resonance_say_desc = "Wiederholt die Symbole {rt3}{rt5}{rt6} (Leere, Ozean und Sturm) im Chat, um diesen während Instabiler Resonanz auszuweichen."
 end
