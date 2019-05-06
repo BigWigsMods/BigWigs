@@ -124,8 +124,8 @@ L.CASTBAR = "施法條"
 L.CASTBAR_desc = "施法條會在某些首領戰場合出現，通常用來提醒即將到來的重要技能。如果想隱藏施法條，請禁用此選項。"
 L.SAY_COUNTDOWN = "倒數報數"
 L.SAY_COUNTDOWN_desc = "聊天泡泡十分醒目，利用此特性，BigWigs 以倒數計時的說話消息來提醒附近的人技能即將到期。"
---L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
---L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
+L.ME_ONLY_EMPHASIZE = "強調 (只有我)"
+L.ME_ONLY_EMPHASIZE_desc = "啟用後會強調所有只施放在你的技能相關的訊息，使它們更大和更容易看到。"
 
 -- Media.lua
 L.Beware = "當心（艾爾加隆）"
