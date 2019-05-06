@@ -53,7 +53,7 @@ L.underyou = "你腳下：%s"
 L.you = "你 %s"
 L.you_icon = "|T13700%2$d:0|t你 %1$s"
 
-L.active = "激活" -- When a boss becomes active, after speech finishes
+L.active = "開戰" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
 L.marker = "%s標記"

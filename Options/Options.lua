@@ -646,10 +646,11 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local flagIcons = {}
 	local showFlags = {
 		"TANK_HEALER", "TANK", "HEALER", "DISPEL",
-		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
+		"EMPHASIZE", "ME_ONLY", "ME_ONLY_EMPHASIZE", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
 		"PROXIMITY", "INFOBOX", "ALTPOWER",
 	}
-	for _, key in next, showFlags do
+	for i = 1, #showFlags do
+		local key = showFlags[i]
 		if hasOptionFlag(dbKey, module, key) and (key ~= "SAY_COUNTDOWN" or not hasOptionFlag(dbKey, module, "SAY")) then -- don't show both SAY and SAY_COUNTDOWN
 			local icon = AceGUI:Create("Icon")
 			icon:SetWidth(16)
@@ -681,8 +682,8 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			elseif key == "DISPEL" then
 				icon:SetImage(521749, 0.8984375, 0.9765625, 0.09375, 0.40625)
 			-- elseif key == "INTERRUPT" then -- just incase :p EJ interrupt icon
-			-- 	icon:SetImage(521749, 0.7734375	0.8515625	0.09375	0.40625)
-			elseif key == "EMPHASIZE" then
+			-- 	icon:SetImage(521749, 0.7734375, 0.8515625, 0.09375, 0.40625)
+			elseif key == "EMPHASIZE" or key == "ME_ONLY_EMPHASIZE" then
 				icon:SetImage(521749, 0.6484375, 0.7265625, 0.09375, 0.40625)
 			else
 				icon:SetImage(icons[key])
