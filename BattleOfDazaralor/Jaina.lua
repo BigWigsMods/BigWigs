@@ -91,7 +91,7 @@ function mod:GetOptions()
 		288441, -- Icefall
 		288221, -- Burning Explosion
 		-- Intermission
-		289220, -- Heart of Frost
+		{289220, "FLASH"}, -- Heart of Frost
 		289219, -- Frost Nova
 		290084, -- Water Bolt Volley
 		-- Stage 3
@@ -559,6 +559,9 @@ do
 		self:PlaySound(args.spellId, "alert", nil, playerList)
 		self:TargetsMessage(args.spellId, "yellow", playerList)
 		self:CDBar(args.spellId, 8)
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+		end
 	end
 end
 
