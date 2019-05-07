@@ -37,6 +37,7 @@ local absorbActive = false
 local shieldActive = false
 
 local unstableResonceCount = 1
+local nextUnstableResonance = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -190,6 +191,7 @@ function mod:OnEngage()
 	self:Bar(285376, 42.5, CL.count:format(self:SpellName(285376), eyesCount)) -- Eyes of N'Zoth
 	self:Bar(285345, 77.2, CL.count:format(self:SpellName(285345), maddeningCount)) -- Maddening Eyes of N'Zoth
 	if self:Mythic() then
+		nextUnstableResonance = GetTime() + 14.2
 		self:Bar(293653, 14.2, CL.count:format(self:SpellName(293653), unstableResonceCount)) -- Unstable Resonance
 	end
 
@@ -430,13 +432,17 @@ function mod:OblivionTear(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	oblivionTearCount = oblivionTearCount + 1
-	local t = 0
-	if self:Mythic() then -- XXX Improve this
-		t = stage == 3 and (oblivionTearCount % 2 == 0 and 12.2 or 29) or stage == 2 and (oblivionTearCount % 2 == 0 and 17 or 24.3) or (oblivionTearCount % 2 == 0 and 23.4 or 16.1)
+	local tearCooldown = 0
+	if self:Mythic() then
+		local nextUnstableResonanceTimer = nextUnstableResonance - GetTime()
+		tearCooldown = stage == 3 and 12.1 or 16.5
+		if nextUnstableResonanceTimer < tearCooldown then
+			tearCooldown = tearCooldown + 8.4
+		end
 	else
-		t = stage == 3 and 12.2 or 17
+		tearCooldown = stage == 3 and 12.1 or 17
 	end
-	self:Bar(args.spellId, t)
+	self:Bar(args.spellId, tearCooldown)
 end
 
 function mod:VoidCrash(args)
@@ -536,6 +542,7 @@ function mod:VoidShieldRemoved(args)
 		self:Bar(-19118, 34.0, CL.count:format(self:SpellName(-19118), mindbenderCount), 285427) -- Primordial Mindbender, Consume Essence icon
 		self:Bar(285638, 40.1, CL.count:format(self:SpellName(285638), giftCount)) -- Gift of N'Zoth: Hysteria
 		if self:Mythic() then
+			nextUnstableResonance = GetTime() + 33.2
 			self:Bar(293653, 33.2, CL.count:format(self:SpellName(293653), unstableResonceCount)) -- Unstable Resonance
 		end
 	else -- stage 3
@@ -546,6 +553,7 @@ function mod:VoidShieldRemoved(args)
 		self:Bar(285685, 40.0, CL.count:format(self:SpellName(285685), giftCount)) -- Gift of N'Zoth: Lunacy
 		self:Bar(285376, self:Mythic() and 52.3 or 45.7, CL.count:format(self:SpellName(285376), eyesCount)) -- Eyes of N'Zoth
 		if self:Mythic() then
+			nextUnstableResonance = GetTime() + 32.8
 			self:Bar(293653, 32.8, CL.count:format(self:SpellName(293653), unstableResonceCount)) -- Unstable Resonance
 		end
 	end
@@ -614,7 +622,7 @@ end
 function mod:InsatiableTormentSuccess(args)
 	self:StopBar(CL.count:format(args.spellName, insatiableTormentCount))
 	insatiableTormentCount = insatiableTormentCount + 1
-	self:Bar(args.spellId, 20.8, CL.count:format(args.spellName, insatiableTormentCount))
+	self:Bar(args.spellId, self:Mythic() and 45 or 20.8, CL.count:format(args.spellName, insatiableTormentCount)) -- XXX Calculate depending on raid size for non-mythic
 end
 
 function mod:InsatiableTormentApplied(args)
@@ -653,6 +661,7 @@ do
 		self:Message2(args.spellId, "red", CL.count:format(args.spellName, unstableResonceCount))
 		self:PlaySound(args.spellId, "warning")
 		unstableResonceCount = unstableResonceCount + 1
+		nextUnstableResonance = GetTime() + 42
 		self:CDBar(args.spellId, 42,  CL.count:format(args.spellName, unstableResonceCount))
 		if self:GetOption(relicMarker) then
 			local void = self:GetBossId(146581)
