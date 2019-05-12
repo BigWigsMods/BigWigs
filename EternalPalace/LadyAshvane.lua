@@ -14,6 +14,7 @@ mod.engageId = 2304
 -- Locals
 --
 
+local stage = 1
 local barnacleBashCount = 1
 local nextCarapace = 0
 local arcingAzeriteCount = 1

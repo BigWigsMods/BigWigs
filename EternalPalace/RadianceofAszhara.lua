@@ -14,8 +14,9 @@ mod.engageId = 2305
 -- Locals
 --
 
-local unshackledPowerCount = 1
 local stage = 1
+local nextAncientTempest = nil
+local unshackledPowerCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
