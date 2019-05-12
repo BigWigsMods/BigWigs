@@ -130,7 +130,7 @@ function mod:BarnacleBash(args)
 end
 
 function mod:BarnacleBashApplied(args)
-	self:StackMessage(args.spellId, args.destName, amount, "purple")
+	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	self:PlaySound(args.spellId, "alert")
 end
 
