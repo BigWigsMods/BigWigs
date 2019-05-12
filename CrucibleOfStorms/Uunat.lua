@@ -184,7 +184,7 @@ function mod:OnEngage()
 	shieldActive = false
 
 	self:Bar(285416, 7.1, CL.count:format(self:SpellName(285416), voidCrashCount)) -- Void Crash
-	self:Bar(285185, 12.2, CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
+	self:Bar(285185, 12.2) -- Oblivion Tear
 	self:Bar(285453, 20.7, CL.count:format(self:SpellName(285453), giftCount)) -- Gift of N'Zoth: Obscurity
 	self:Bar(284851, 26.8) -- Touch of the End
 	self:Bar(285820, 30.1, CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
