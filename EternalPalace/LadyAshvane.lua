@@ -265,7 +265,7 @@ do
 	end
 end
 
-function mod:HardenedCarapaceRemoved(args)
+function mod:HardenedCarapaceApplied(args)
 	if stage == 2 then -- Applied on Pull
 		stage = 1
 		self:Message2("stages", "orange", CL.stage:format(stage), args.spellId)

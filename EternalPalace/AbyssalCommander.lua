@@ -21,7 +21,7 @@ function mod:GetOptions()
 		{-20300, "SAY_COUNTDOWN"}, -- Frostvenom Tipped
 		296551, -- Overwhelming Barrage
 		{-20006, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Overflow
-		295601, -- Frostshock Bolts
+		{295601, "SAY"}, -- Frostshock Bolts
 		{295791, "SAY", "SAY_COUNTDOWN"}, -- Inversion
 	}
 end
@@ -81,7 +81,7 @@ function mod:FrostvenomTippedApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 2 == 1 then
-			self:StackMessage(-20300, args.destName, amount, "purple", args.spellName, args.spellId)
+			self:StackMessage(-20300, args.destName, amount, "purple", nil, args.spellName, args.spellId)
 		end
 		self:SayCountdown(-20300, 10)
 	end

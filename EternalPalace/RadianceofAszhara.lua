@@ -45,7 +45,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ArcaneBombRemoved", 296737)
 	self:Log("SPELL_CAST_START", "UnshackledPower", 296894)
 	self:Log("SPELL_CAST_START", "AncientTempest", 295916)
-	self:Log("SPELL_AURA_REMOVED", "AncientTempestOver", 300307)
 	self:Log("SPELL_CAST_START", "GaleBuffet", 296701)
 end
 
@@ -77,8 +76,8 @@ function mod:TideFistStart(args)
 end
 
 function mod:TideFistApplied(args)
-	self:TargetMessage2(args.spellId, "purple", args.destName)
-	self:PlaySound(args.spellId, "alert", args.destName)
+	self:TargetMessage2(296546, "purple", args.destName)
+	self:PlaySound(296546, "alert", args.destName)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
