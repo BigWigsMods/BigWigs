@@ -23,10 +23,6 @@ L.blockEmotes = "Hinweise in der Bildschirmmitte blockieren"
 L.blockEmotesDesc = [=[Einige Bosse zeigen sehr lange und ungenaue Hinweise für spezielle Fähigkeiten an. BigWigs versucht kürzere und passendere Mitteilungen zu erstellen, die den Spielfluss weniger beeinflussen.
 
 Hinweis: Bossmitteilungen werden weiterhin im Chat sichtbar sein und können dort gelesen werden.]=]
-L.blockGarrison = "Popups der Garnison blockieren"
-L.blockGarrisonDesc = [=[Popups der Garnison zeigen hauptsächlich abgeschlossene Missionen von Anhängern an.
-
-Da diese Popups während des Bosskampfes ablenken und das Interface überdecken können, sollten sie blockiert werden.]=]
 L.blockGuildChallenge = "Popups von Gildenherausforderungen blockieren"
 L.blockGuildChallengeDesc = [=[Popups von Gildenherausforderungen zeigen hauptsächlich den Abschluss eines heroischen Dungeons oder des Herausforderungsmodus an.
 
@@ -285,6 +281,8 @@ L.disableSfx = "Soundeffekte deaktivieren"
 L.disableSfxDesc = "Die Option 'Soundeffekte' im WoW Soundmenü wird deaktiviert und erst nach dem Bosskampf wieder aktiviert. Dies kann helfen sich auf die BigWigs Sounds zu konzentrieren."
 --L.blockTooltipQuests = "Block tooltip quest objectives"
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
+--L.blockFollowerMission = "Popups der Garnison blockieren" -- Rename to follower mission
+--L.blockFollowerMissionDesc = "Popups der Garnison zeigen hauptsächlich abgeschlossene Missionen von Anhängern an.\n\nDa diese Popups während des Bosskampfes ablenken und das Interface überdecken können, sollten sie blockiert werden."
 
 L.subzone_grand_bazaar = "Der Große Basar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Der Hafen von Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)

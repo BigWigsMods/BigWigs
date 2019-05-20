@@ -69,8 +69,8 @@ plugin.pluginOptions = {
 		},
 		blockGarrison = {
 			type = "toggle",
-			name = L.blockGarrison,
-			desc = L.blockGarrisonDesc,
+			name = L.blockFollowerMission,
+			desc = L.blockFollowerMissionDesc,
 			width = "full",
 			order = 3,
 		},

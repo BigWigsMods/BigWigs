@@ -23,10 +23,6 @@ L.blockEmotes = "Blocca gli emote a mezzo-schermo"
 L.blockEmotesDesc = [=[Alcuni boss mostrano delle emote per determinate abilità; questi messaggi sono sia troppo lunghi che troppo descrittivi. Cerchiamo di produrre messaggi più compatti e puliti che non interferiscono con lo svolgimento del gioco, e non dicono specificatamente cosa fare.
 
 Nota bene: gli emote dei Boss sono sempre visibili nella chat se vuoi leggerli.]=]
-L.blockGarrison = "Blocca i popup della Guarnigione"
-L.blockGarrisonDesc = [=[I popup della Guarnigione appaiono per certe attività, ma principalmente quando un seguace completa una missione.
-
-Questi popup possono coprire parti critiche o importanti della tua UI durante il combattimento contro un boss, raccomandiamo quindi di bloccarli.]=]
 L.blockGuildChallenge = "Blocca i popup delle sfide di Gilda"
 L.blockGuildChallengeDesc = [=[I popup delle Sfide di Gilda vengono mostrati per vari avvisi, principalmente quando la tua gilda completa una spedizione eroica o una spedizione in modalità sfida.
 
@@ -285,6 +281,8 @@ L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in
 --L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 --L.blockTooltipQuests = "Block tooltip quest objectives"
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
+--L.blockFollowerMission = "Blocca i popup della Guarnigione" -- Rename to follower mission
+--L.blockFollowerMissionDesc = "I popup della Guarnigione appaiono per certe attività, ma principalmente quando un seguace completa una missione.\n\n\Questi popup possono coprire parti critiche o importanti della tua UI durante il combattimento contro un boss, raccomandiamo quindi di bloccarli."
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
