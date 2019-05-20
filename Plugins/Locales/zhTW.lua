@@ -283,6 +283,8 @@ L.textDesc = "是否顯示或隱藏計時條上的文字。"
 
 L.disableSfx = "禁用音效"
 L.disableSfxDesc = "在魔獸世界的音效選項中的'音效'將被關閉，然後在首領戰之後恢復。這可以幫助您專注在BigWigs的警告音效。"
+--L.blockTooltipQuests = "Block tooltip quest objectives"
+--L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
 
 L.subzone_grand_bazaar = "大市集" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "贊達拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)

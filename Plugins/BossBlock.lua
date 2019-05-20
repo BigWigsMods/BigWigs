@@ -15,6 +15,7 @@ plugin.defaultDB = {
 	blockGarrison = true,
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
+	blockTooltipQuests = true,
 	disableSfx = false,
 }
 
@@ -87,12 +88,19 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 5,
 		},
+		blockTooltipQuests = {
+			type = "toggle",
+			name = L.blockTooltipQuests,
+			desc = L.blockTooltipQuestsDesc,
+			width = "full",
+			order = 6,
+		},
 		disableSfx = {
 			type = "toggle",
 			name = L.disableSfx,
 			desc = L.disableSfxDesc,
 			width = "full",
-			order = 6,
+			order = 7,
 		},
 	},
 }
@@ -106,8 +114,12 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossWin")
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
 
+	-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
 	if self.db.profile.disableSfx then
-		SetCVar("Sound_EnableSFX", "1") -- Enable this every time we load just in case some kind of DC during the fight left it disabled
+		SetCVar("Sound_EnableSFX", "1")
+	end
+	if self.db.profile.blockTooltipQuests then
+		SetCVar("showQuestTrackingTooltips", "1")
 	end
 
 	if IsEncounterInProgress() then -- Just assume we logged into an encounter after a DC
@@ -169,6 +181,9 @@ do
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "0")
 		end
+		if self.db.profile.blockTooltipQuests then
+			SetCVar("showQuestTrackingTooltips", "0")
+		end
 	end
 
 	function plugin:BigWigs_OnBossWin()
@@ -190,6 +205,9 @@ do
 		end
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "1")
+		end
+		if self.db.profile.blockTooltipQuests then
+			SetCVar("showQuestTrackingTooltips", "1")
 		end
 	end
 end
