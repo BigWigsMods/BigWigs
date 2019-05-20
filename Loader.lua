@@ -260,6 +260,7 @@ do
 		[1771] = lw_bfa, -- Tol Dagor
 		[1841] = lw_bfa, -- Underrot
 		[1862] = lw_bfa, -- Waycrest Manor
+		[2097] = lw_bfa, -- Operation: Mechagon
 	}
 
 	public.zoneTblWorld = {
