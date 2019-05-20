@@ -283,6 +283,8 @@ L.visibleBarLimitDesc = "Установить максимальное коли�
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
 --L.blockFollowerMission = "Скрыть уведомления гарнизона" -- Rename to follower mission
 --L.blockFollowerMissionDesc = "Всплывающие сообщения гарнизона показывают в основном уведомление о выполнении соратником задания.\n\nЭти уведомления могут скрыть важные части вашего интерфейса в течении боя с боссом, поэтому мы рекомендуем скрыть их."
+--L.blockObjectiveTracker = "Hide quest tracker"
+--L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space."
 
 L.subzone_grand_bazaar = "Большой базар" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Порт Зандалара" -- Battle of Dazar'alor raid (Battle for Azeroth)

@@ -283,6 +283,8 @@ L.disableSfxDesc = "La opción de 'Efectos de Sonido' en las opciones de sonido 
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
 --L.blockFollowerMission = "Bloquear ventanas emergentes de ciudadela" -- Rename to follower mission
 --L.blockFollowerMissionDesc = "Las ventanas emergentes de ciudadela muestran varias cosas, pero principalmente cuando un seguidor a completado una misión.\n\nEstas ventanas pueden cubrir partes críticas de tu interfaz durante un encuentro, así que recomendamos bloquearlas."
+--L.blockObjectiveTracker = "Hide quest tracker"
+--L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space."
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Puerto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)

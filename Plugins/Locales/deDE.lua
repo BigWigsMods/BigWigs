@@ -283,6 +283,8 @@ L.disableSfxDesc = "Die Option 'Soundeffekte' im WoW Soundmenü wird deaktiviert
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
 --L.blockFollowerMission = "Popups der Garnison blockieren" -- Rename to follower mission
 --L.blockFollowerMissionDesc = "Popups der Garnison zeigen hauptsächlich abgeschlossene Missionen von Anhängern an.\n\nDa diese Popups während des Bosskampfes ablenken und das Interface überdecken können, sollten sie blockiert werden."
+--L.blockObjectiveTracker = "Hide quest tracker"
+--L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space."
 
 L.subzone_grand_bazaar = "Der Große Basar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Der Hafen von Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)

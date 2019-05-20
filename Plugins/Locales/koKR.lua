@@ -144,6 +144,8 @@ L.blockSpellErrorsDesc = "일반적으로 화면 상단에 표시되는 \"마법
 --L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 --L.blockTooltipQuests = "Block tooltip quest objectives"
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
+--L.blockObjectiveTracker = "Hide quest tracker"
+--L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space."
 
 L.subzone_grand_bazaar = "대시장" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "잔달라 항구" -- Battle of Dazar'alor raid (Battle for Azeroth)

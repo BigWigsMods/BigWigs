@@ -16,6 +16,7 @@ plugin.defaultDB = {
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
 	blockTooltipQuests = true,
+	blockObjectiveTracker = true,
 	disableSfx = false,
 }
 
@@ -95,12 +96,19 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 6,
 		},
+		blockObjectiveTracker = {
+			type = "toggle",
+			name = L.blockObjectiveTracker,
+			desc = L.blockObjectiveTrackerDesc,
+			width = "full",
+			order = 7,
+		},
 		disableSfx = {
 			type = "toggle",
 			name = L.disableSfx,
 			desc = L.disableSfxDesc,
 			width = "full",
-			order = 7,
+			order = 8,
 		},
 	},
 }
@@ -161,6 +169,7 @@ do
 		end
 	end
 
+	local restoreObjectiveTracker = false
 	function plugin:BigWigs_OnBossEngage()
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
@@ -183,6 +192,10 @@ do
 		end
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "0")
+		end
+		if self.db.profile.blockObjectiveTracker and ObjectiveTrackerFrame:IsShown() then
+			restoreObjectiveTracker = true
+			ObjectiveTrackerFrame:Hide()
 		end
 	end
 
@@ -208,6 +221,10 @@ do
 		end
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "1")
+		end
+		if restoreObjectiveTracker then
+			restoreObjectiveTracker = false
+			ObjectiveTrackerFrame:Show()
 		end
 	end
 end
