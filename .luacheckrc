@@ -193,6 +193,7 @@ globals = {
 	"LoadAddOn",
 	"LoggingCombat",
 	"MovieFrame",
+	"ObjectiveTrackerFrame",
 	"PlayerHasToy",
 	"PlaySound",
 	"PlaySoundFile",
