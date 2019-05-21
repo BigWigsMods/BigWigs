@@ -174,6 +174,7 @@ globals = {
 	"GetSpellTexture",
 	"GetSubZoneText",
 	"GetTime",
+	"GetTrackedAchievements",
 	"InCombatLockdown",
 	"IsAddOnLoaded",
 	"IsAddOnLoadOnDemand",

@@ -193,7 +193,8 @@ do
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "0")
 		end
-		if self.db.profile.blockObjectiveTracker and ObjectiveTrackerFrame:IsShown() then
+		-- Never hide when tracking achievements
+		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() then
 			restoreObjectiveTracker = true
 			ObjectiveTrackerFrame:Hide()
 		end
