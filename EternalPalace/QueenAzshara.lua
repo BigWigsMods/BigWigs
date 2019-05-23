@@ -252,7 +252,7 @@ function mod:ArcaneDetonation(args)
 end
 
 function mod:ReversalofFortune(args)
-	self:Message2(args.spellId, "info")
+	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 end
 
@@ -275,7 +275,7 @@ end
 
 -- Stage 3
 function mod:Inversion(args)
-	self:Message2(args.spellId, "info")
+	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 end
 
