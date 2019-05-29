@@ -23,10 +23,6 @@ L.blockEmotes = "封鎖畫面中央表情訊息"
 L.blockEmotesDesc = [=[某些首領施放某些技能時會顯示表情，此類訊息過於冗長及不直觀。我們嘗試提供的訊息更精簡、不會影響遊戲體驗和不會指示玩家要做什麼。
 
 請注意：若你想看首領表情，首領表情仍然會顯示於聊天視窗。]=]
-L.blockGarrison = "封鎖要塞彈出訊息"
-L.blockGarrisonDesc = [=[要塞彈出訊息顯示幾種資訊，其中最主要的是追隨者任務完成。
-
-這些彈出訊息有可能在首領戰鬥中遮蓋你的介面中重要的部份，因此我們建議封鎖這些彈出訊息。]=]
 L.blockGuildChallenge = "封鎖公會挑戰彈出訊息"
 L.blockGuildChallengeDesc = [=[公會挑戰彈出訊息顯示幾種資訊，其中最主要的是你的公會中有小隊完成了一場英雄地城或挑戰地城。
 
@@ -283,6 +279,12 @@ L.textDesc = "是否顯示或隱藏計時條上的文字。"
 
 L.disableSfx = "禁用音效"
 L.disableSfxDesc = "在魔獸世界的音效選項中的'音效'將被關閉，然後在首領戰之後恢復。這可以幫助您專注在BigWigs的警告音效。"
+--L.blockTooltipQuests = "Block tooltip quest objectives"
+--L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
+--L.blockFollowerMission = "封鎖要塞彈出訊息" -- Rename to follower mission
+--L.blockFollowerMissionDesc = "要塞彈出訊息顯示幾種資訊，其中最主要的是追隨者任務完成。\n\n這些彈出訊息有可能在首領戰鬥中遮蓋你的介面中重要的部份，因此我們建議封鎖這些彈出訊息。"
+--L.blockObjectiveTracker = "Hide quest tracker"
+--L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space."
 
 L.subzone_grand_bazaar = "大市集" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "贊達拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)

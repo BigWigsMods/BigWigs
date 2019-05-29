@@ -1,0 +1,32 @@
+## Interface: 80100
+
+## Title: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-deDE: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-esES: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-esMX: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-frFR: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-ruRU: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-zhCN: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-zhTW: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-itIT: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-ptBR: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-koKR: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Notes: BigWigs The Eternal Palace Modules
+## Notes-deDE: BigWigs The Eternal Palace Modules
+## Notes-esES: BigWigs The Eternal Palace Modules
+## Notes-esMX: BigWigs The Eternal Palace Modules
+## Notes-frFR: BigWigs The Eternal Palace Modules
+## Notes-ruRU: BigWigs The Eternal Palace Modules
+## Notes-zhCN: BigWigs The Eternal Palace Modules
+## Notes-zhTW: BigWigs The Eternal Palace Modules
+## Notes-itIT: BigWigs The Eternal Palace Modules
+## Notes-ptBR: BigWigs The Eternal Palace Modules
+## Notes-koKR: BigWigs The Eternal Palace Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2164
+
+modules.xml

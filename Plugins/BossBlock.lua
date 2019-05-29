@@ -15,6 +15,8 @@ plugin.defaultDB = {
 	blockGarrison = true,
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
+	blockTooltipQuests = true,
+	blockObjectiveTracker = true,
 	disableSfx = false,
 }
 
@@ -68,8 +70,8 @@ plugin.pluginOptions = {
 		},
 		blockGarrison = {
 			type = "toggle",
-			name = L.blockGarrison,
-			desc = L.blockGarrisonDesc,
+			name = L.blockFollowerMission,
+			desc = L.blockFollowerMissionDesc,
 			width = "full",
 			order = 3,
 		},
@@ -87,12 +89,26 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 5,
 		},
+		blockTooltipQuests = {
+			type = "toggle",
+			name = L.blockTooltipQuests,
+			desc = L.blockTooltipQuestsDesc,
+			width = "full",
+			order = 6,
+		},
+		blockObjectiveTracker = {
+			type = "toggle",
+			name = L.blockObjectiveTracker,
+			desc = L.blockObjectiveTrackerDesc,
+			width = "full",
+			order = 7,
+		},
 		disableSfx = {
 			type = "toggle",
 			name = L.disableSfx,
 			desc = L.disableSfxDesc,
 			width = "full",
-			order = 6,
+			order = 8,
 		},
 	},
 }
@@ -106,8 +122,12 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossWin")
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
 
+	-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
 	if self.db.profile.disableSfx then
-		SetCVar("Sound_EnableSFX", "1") -- Enable this every time we load just in case some kind of DC during the fight left it disabled
+		SetCVar("Sound_EnableSFX", "1")
+	end
+	if self.db.profile.blockTooltipQuests then
+		SetCVar("showQuestTrackingTooltips", "1")
 	end
 
 	if IsEncounterInProgress() then -- Just assume we logged into an encounter after a DC
@@ -149,6 +169,7 @@ do
 		end
 	end
 
+	local restoreObjectiveTracker = false
 	function plugin:BigWigs_OnBossEngage()
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
@@ -168,6 +189,14 @@ do
 		end
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "0")
+		end
+		if self.db.profile.blockTooltipQuests then
+			SetCVar("showQuestTrackingTooltips", "0")
+		end
+		-- Never hide when tracking achievements
+		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() then
+			restoreObjectiveTracker = true
+			ObjectiveTrackerFrame:Hide()
 		end
 	end
 
@@ -190,6 +219,13 @@ do
 		end
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "1")
+		end
+		if self.db.profile.blockTooltipQuests then
+			SetCVar("showQuestTrackingTooltips", "1")
+		end
+		if restoreObjectiveTracker then
+			restoreObjectiveTracker = false
+			ObjectiveTrackerFrame:Show()
 		end
 	end
 end
