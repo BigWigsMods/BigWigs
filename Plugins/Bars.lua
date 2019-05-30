@@ -2024,7 +2024,7 @@ end
 SlashCmdList.BIGWIGSLOCALBAR = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 
-	local seconds, barText = input:match("(%S+) (.*)")
+	local seconds, barText = input:match("(%S+)%s*(.*)")
 	if not seconds or not barText then BigWigs:Print(L.wrongCustomBarFormat:gsub("/raidbar", "/localbar")) return end
 
 	seconds = parseTime(seconds)
