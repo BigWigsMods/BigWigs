@@ -278,13 +278,13 @@ L.textDesc = "是否顯示或隱藏計時條上的文字。"
 --
 
 L.disableSfx = "禁用音效"
-L.disableSfxDesc = "在魔獸世界的音效選項中的'音效'將被關閉，然後在首領戰之後恢復。這可以幫助您專注在BigWigs的警告音效。"
---L.blockTooltipQuests = "Block tooltip quest objectives"
---L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
---L.blockFollowerMission = "封鎖要塞彈出訊息" -- Rename to follower mission
---L.blockFollowerMissionDesc = "要塞彈出訊息顯示幾種資訊，其中最主要的是追隨者任務完成。\n\n這些彈出訊息有可能在首領戰鬥中遮蓋你的介面中重要的部份，因此我們建議封鎖這些彈出訊息。"
---L.blockObjectiveTracker = "Hide quest tracker"
---L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space."
+L.disableSfxDesc = "關閉魔獸世界的音效選項中的「音效」部份，然後在首領戰之後恢復。這可以幫助您專注在BigWigs的警告音效。"
+L.blockTooltipQuests = "滑鼠提示不顯示任務資訊"
+L.blockTooltipQuestsDesc = "當你在進行擊殺某首領的任務時，滑鼠提示指向首領會顯示「0/1 完成」，導致滑鼠提示框變得很大，啟用這項功能可以避免這個情況。"
+L.blockFollowerMission = "封鎖要塞彈出訊息" -- Rename to follower mission
+L.blockFollowerMissionDesc = "要塞會彈出訊息，其中最主要的是追隨者任務完成的提示。\n\n這些彈出訊息有可能在首領戰鬥中遮蓋你的介面中重要的部份，因此我們建議封鎖這些彈出訊息。"
+L.blockObjectiveTracker = "隱藏任務追蹤"
+L.blockObjectiveTrackerDesc = "在首領戰期間隱藏任務追蹤列表，使你的畫面能夠淨空。"
 
 L.subzone_grand_bazaar = "大市集" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "贊達拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
