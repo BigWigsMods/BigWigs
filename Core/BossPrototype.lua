@@ -1306,7 +1306,8 @@ do
 			if not o then core:Print(format("Module %s uses %q as a dispel lookup, but it doesn't exist in the module options.", self.name, key)) return end
 			if band(o, C.DISPEL) ~= C.DISPEL then return true end
 		end
-		return isOffensive and offDispel[dispelType] or defDispel[dispelType]
+		local dispelTable = isOffensive and offDispel or defDispel
+		return dispelTable[dispelType]
 	end
 end
 
