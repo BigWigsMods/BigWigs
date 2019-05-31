@@ -281,10 +281,10 @@ L.disableSfx = "禁用音效"
 L.disableSfxDesc = "魔兽世界声音选项中的“音效”选项将被关闭，当首领战斗结束后会重新打开。这可以帮助集中注意力放在 BigWigs 警报音效上。"
 L.blockTooltipQuests = "屏蔽提示任务物品"
 L.blockTooltipQuestsDesc = "当需要因任务击杀首领时，通常在鼠标悬停在首领上会显示为“0/1 完成”的提示。此功能将在战斗中将其隐藏以防止提示变得非常大。"
-L.blockFollowerMission = "屏蔽追随者任务弹出窗口" -- Rename to follower mission
+L.blockFollowerMission = "屏蔽追随者任务弹出窗口"
 L.blockFollowerMissionDesc = "追随者任务弹出窗口会显示一些事情，但主要是追随者任务已经完成。\n\n这些弹出窗口会在首领战斗时覆盖在你重要的用户界面之上，所以建议屏蔽它们。"
 L.blockObjectiveTracker = "隐藏任务追踪器"
-L.blockObjectiveTrackerDesc = "任务追踪器将在首领战斗中隐藏以给屏幕空出更多空间。"
+--L.blockObjectiveTrackerDesc = "任务追踪器将在首领战斗中隐藏以给屏幕空出更多空间。\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
 
 L.subzone_grand_bazaar = "百商集市" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "赞达拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
