@@ -194,7 +194,7 @@ do
 			SetCVar("showQuestTrackingTooltips", "0")
 		end
 		-- Never hide when tracking achievements
-		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() then
+		if self.db.profile.blockObjectiveTracker and not InCombatLockdown() and not GetTrackedAchievements() and ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() then
 			restoreObjectiveTracker = true
 			ObjectiveTrackerFrame:Hide()
 		end
@@ -224,10 +224,19 @@ do
 			SetCVar("showQuestTrackingTooltips", "1")
 		end
 		if restoreObjectiveTracker then
-			restoreObjectiveTracker = false
-			ObjectiveTrackerFrame:Show()
+			if InCombatLockdown() then
+				self:RegisterEvent("PLAYER_REGEN_ENABLED")
+			else
+				restoreObjectiveTracker = false
+				ObjectiveTrackerFrame:Show()
+			end
 		end
 	end
+end
+
+function plugin:PLAYER_REGEN_ENABLED()
+	self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+	ObjectiveTrackerFrame:Show()
 end
 
 do
@@ -376,4 +385,3 @@ do
 		end
 	end
 end
-
