@@ -1248,7 +1248,7 @@ function boss:Damager(unit)
 	end
 end
 
-petUtilityFrame:SetScript("OnEvent", function(_, event, unit)
+petUtilityFrame:SetScript("OnEvent", function()
 	UpdateDispelStatus()
 	UpdateInterruptStatus()
 end)
