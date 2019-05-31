@@ -1288,7 +1288,9 @@ do
 			end
 		else
 			bwFrame:UnregisterEvent("UNIT_TARGET")
-			if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
+			if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player")
+			and (not BigWigsOptions or not BigWigsOptions:IsOpen()) -- Not if the GUI is open
+			and (not BigWigsAnchor or (not next(BigWigsAnchor.bars) and not next(BigWigsEmphasizeAnchor.bars))) then -- Not if bars are showing
 				BigWigs:Disable() -- Alive in a non-enable zone, disable
 			end
 			if disabledZones and disabledZones[id] then -- We have content for the zone but it is disabled in the addons menu
