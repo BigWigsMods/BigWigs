@@ -193,8 +193,9 @@ do
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "0")
 		end
-		-- Never hide when tracking achievements
-		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements()
+		-- Never hide when tracking achievements or in Mythic+
+		local _, _, diff = GetInstanceInfo()
+		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8
 		and ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() and not ObjectiveTrackerFrame.collapsed then
 			restoreObjectiveTracker = true
 			ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:Click()
