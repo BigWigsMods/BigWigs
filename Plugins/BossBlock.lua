@@ -199,8 +199,8 @@ do
 		and ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() and not ObjectiveTrackerFrame.collapsed then
 			restoreObjectiveTracker = true
 			ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:Click()
-			local played, id = PlaySound(856, nil, false)
-			if played then -- Sounds might not even be enabled
+			local _, id = PlaySound(856, nil, false)
+			if id then -- Sounds might not even be enabled
 				StopSound(id - 1) -- Stop the click sound
 				StopSound(id)
 			end
@@ -235,8 +235,10 @@ do
 			restoreObjectiveTracker = false
 			ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:Click()
 			local _, id = PlaySound(856, nil, false)
-			StopSound(id - 1)
-			StopSound(id)
+			if id then -- Sounds might not even be enabled
+				StopSound(id - 1) -- Stop the click sound
+				StopSound(id)
+			end
 			ObjectiveTrackerFrame.HeaderMenu:SetAlpha(1)
 		end
 	end
