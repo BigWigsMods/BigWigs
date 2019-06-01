@@ -37,6 +37,7 @@ local pName = UnitName("player")
 local cpName
 local hasVoice = BigWigsAPI:HasVoicePack()
 local bossUtilityFrame = CreateFrame("Frame")
+local petUtilityFrame = CreateFrame("Frame")
 local enabledModules, bossTargetScans, unitTargetScans = {}, {}, {}
 local allowedEvents = {}
 local difficulty = 0
@@ -216,6 +217,10 @@ function boss:Enable(isWipe)
 			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
 		end
+		local _, class = UnitClass("player")
+		if class == "WARLOCK" or class == "HUNTER" then
+			petUtilityFrame:RegisterUnitEvent("UNIT_PET", "player")
+		end
 
 		if self.SetupOptions then self:SetupOptions() end
 		if type(self.OnBossEnable) == "function" then self:OnBossEnable() end
@@ -247,6 +252,7 @@ function boss:Disable(isWipe)
 		-- No enabled modules? Unregister the combat log!
 		if #enabledModules == 0 then
 			bossUtilityFrame:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+			petUtilityFrame:UnregisterEvent("UNIT_PET")
 			bossTargetScans, unitTargetScans = {}, {}
 		else
 			for i = #bossTargetScans, 1, -1 do
@@ -1242,6 +1248,11 @@ function boss:Damager(unit)
 	end
 end
 
+petUtilityFrame:SetScript("OnEvent", function()
+	UpdateDispelStatus()
+	UpdateInterruptStatus()
+end)
+
 do
 	local offDispel, defDispel = {}, {}
 	local _, class = UnitClass("player")
@@ -1259,8 +1270,8 @@ do
 	end
 	function UpdateDispelStatus()
 		offDispel, defDispel = {}, {}
-		if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(278326) or petCanDispel() then
-			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Hunter pet
+		if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(278326) or IsSpellKnown(19505, true) or petCanDispel() then
+			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Devour Magic (Warlock Felhunter), Hunter pet
 			offDispel.magic = true
 		end
 		if IsSpellKnown(2908) or petCanDispel() then
@@ -1295,7 +1306,8 @@ do
 			if not o then core:Print(format("Module %s uses %q as a dispel lookup, but it doesn't exist in the module options.", self.name, key)) return end
 			if band(o, C.DISPEL) ~= C.DISPEL then return true end
 		end
-		return isOffensive and offDispel[dispelType] or defDispel[dispelType]
+		local dispelTable = isOffensive and offDispel or defDispel
+		return dispelTable[dispelType]
 	end
 end
 
@@ -1318,10 +1330,10 @@ do
 		183752, -- Disrupt (Demon Hunter)
 	}
 	function UpdateInterruptStatus()
-		-- if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
-		-- 	canInterrupt = 19647
-		-- 	return
-		-- end
+		if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
+			canInterrupt = 19647
+			return
+		end
 		canInterrupt = false
 		for i = 1, #spellList do
 			local spell = spellList[i]

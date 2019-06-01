@@ -193,10 +193,18 @@ do
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "0")
 		end
-		-- Never hide when tracking achievements
-		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() then
+		-- Never hide when tracking achievements or in Mythic+
+		local _, _, diff = GetInstanceInfo()
+		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8
+		and ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() and not ObjectiveTrackerFrame.collapsed then
 			restoreObjectiveTracker = true
-			ObjectiveTrackerFrame:Hide()
+			ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:Click()
+			local _, id = PlaySound(856, nil, false)
+			if id then -- Sounds might not even be enabled
+				StopSound(id - 1) -- Stop the click sound
+				StopSound(id)
+			end
+			ObjectiveTrackerFrame.HeaderMenu:SetAlpha(0)
 		end
 	end
 
@@ -225,7 +233,13 @@ do
 		end
 		if restoreObjectiveTracker then
 			restoreObjectiveTracker = false
-			ObjectiveTrackerFrame:Show()
+			ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:Click()
+			local _, id = PlaySound(856, nil, false)
+			if id then -- Sounds might not even be enabled
+				StopSound(id - 1) -- Stop the click sound
+				StopSound(id)
+			end
+			ObjectiveTrackerFrame.HeaderMenu:SetAlpha(1)
 		end
 	end
 end
