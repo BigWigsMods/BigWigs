@@ -17,14 +17,6 @@ mod.engageId = 2311
 local formationCounter = 1
 
 --------------------------------------------------------------------------------
--- Localization
---
-
--- local L = mod:GetLocale()
--- if L then
--- end
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -137,7 +129,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	elseif msg:find("301244", nil, true) then -- Repeat Performance
 		self:Message2(301244, "cyan")
 		self:PlaySound(301244, "info")
-		self:Bar(nextSpell, cooldown) -- Stand Alone
+		self:Bar(297656, cooldown) -- Stand Alone
 	elseif msg:find("297656", nil, true) then -- Stand Alone
 		self:OpenProximity(297656, 3) -- Stand Alone XXX Need to confirm range
 		self:Message2(297656, "cyan")
@@ -151,7 +143,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	elseif msg:find("297585", nil, true) then -- Obey or Suffer
 		self:Message2(297585, "cyan")
 		self:PlaySound(297585, "info")
-		self:Bar(298050, cooldown) -- Decree
+		self:Bar(298050, cooldown) -- Form Ranks
 	end
 end
 
