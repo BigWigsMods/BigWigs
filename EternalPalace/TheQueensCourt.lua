@@ -126,33 +126,32 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	-- Decree Order: Form Ranks -> Repeat Performance -> Stand Alone -> Deferred Sentence -> Obey and Suffer -> Form Ranks
-	local spellId = nil
-	local nextSpell = nil
+	local cooldown = self:Mythic() and 30 or 40
 	if msg:find("298050", nil, true) then -- Form Ranks
 		formationCounter = 1
-		spellId = 298050
-		nextSpell = 301244
+		self:Message2(298050, "cyan")
+		self:PlaySound(298050, "info")
 		self:CastBar(298050, 5, CL.count:format(self:SpellName(298050), formationCounter))
 		self:ScheduleTimer("ScheduledFormRanksTimer", 10)
+		self:Bar(301244, cooldown) -- Repeat Performance
 	elseif msg:find("301244", nil, true) then -- Repeat Performance
-		spellId = 301244
-		nextSpell = 297656
+		self:Message2(301244, "cyan")
+		self:PlaySound(301244, "info")
+		self:Bar(nextSpell, cooldown) -- Stand Alone
 	elseif msg:find("297656", nil, true) then -- Stand Alone
 		self:OpenProximity(297656, 3) -- Stand Alone XXX Need to confirm range
-		spellId = 297656
-		nextSpell = 297566
+		self:Message2(297656, "cyan")
+		self:PlaySound(297656, "info")
+		self:Bar(297566, cooldown) -- Deferred Sentence
 	elseif msg:find("297566", nil, true) then -- Deferred Sentence
 		self:CloseProximity(297656) -- Stand Alone
-		spellId = 297566
-		nextSpell = 297585
+		self:Message2(297566, "cyan")
+		self:PlaySound(297566, "info")
+		self:Bar(297585, cooldown) -- Obey or Suffer
 	elseif msg:find("297585", nil, true) then -- Obey or Suffer
-		spellId = 297585
-		nextSpell = 298050
-	end
-	if spellId then
-		self:Message2(spellId, "cyan")
-		self:PlaySound(spellId, "info")
-		self:Bar(nextSpell, self:Mythic() and 30 or 40) -- Decree
+		self:Message2(297585, "cyan")
+		self:PlaySound(297585, "info")
+		self:Bar(298050, cooldown) -- Decree
 	end
 end
 
