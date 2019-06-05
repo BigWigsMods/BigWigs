@@ -122,6 +122,7 @@ globals = {
 	"CombatLog_String_GetIcon",
 	"CreateFrame",
 	"C_CVar",
+	"C_RaidLocks",
 	"C_Scenario",
 	"C_Spell",
 	"C_Timer",
