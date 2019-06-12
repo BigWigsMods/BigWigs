@@ -6,8 +6,8 @@
 ## Title-esMX: BigWigs [|cffeda55fThe Eternal Palace|r]
 ## Title-frFR: BigWigs [|cffeda55fThe Eternal Palace|r]
 ## Title-ruRU: BigWigs [|cffeda55fВечный Дворец|r]
-## Title-zhCN: BigWigs [|cffeda55fThe Eternal Palace|r]
-## Title-zhTW: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-zhCN: BigWigs [|cffeda55f永恆王宮|r]
+## Title-zhTW: BigWigs [|cffeda55f永恆宮殿|r]
 ## Title-itIT: BigWigs [|cffeda55fThe Eternal Palace|r]
 ## Title-ptBR: BigWigs [|cffeda55fThe Eternal Palace|r]
 ## Title-koKR: BigWigs [|cffeda55fThe Eternal Palace|r]
@@ -17,8 +17,8 @@
 ## Notes-esMX: BigWigs The Eternal Palace Modules
 ## Notes-frFR: BigWigs The Eternal Palace Modules
 ## Notes-ruRU: BigWigs модули Вечного Дворца
-## Notes-zhCN: BigWigs The Eternal Palace Modules
-## Notes-zhTW: BigWigs The Eternal Palace Modules
+## Notes-zhCN: BigWigs 永恆王宮模块。
+## Notes-zhTW: BigWigs 永恆宮殿模組。
 ## Notes-itIT: BigWigs The Eternal Palace Modules
 ## Notes-ptBR: BigWigs The Eternal Palace Modules
 ## Notes-koKR: BigWigs The Eternal Palace Modules
