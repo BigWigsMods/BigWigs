@@ -31,6 +31,7 @@ function mod:GetOptions()
 		292159, -- Toxic Spine
 		292270, -- Shock Pulse
 		{301494, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Piercing Barb
+		292083, -- Cavitation
 		301180, -- Slipstream
 	}
 end
@@ -49,8 +50,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ToxicSpine", 292159)
 	self:Log("SPELL_AURA_APPLIED", "ToxicSpineApplied", 292167)
 	self:Log("SPELL_CAST_START", "ShockPulse", 292270)
-	self:Log("SPELL_CAST_SUCCESS", "PiercingBarb", 292159)
-	self:Log("SPELL_AURA_APPLIED", "PiercingBarbApplied", 292167)
+	self:Log("SPELL_CAST_SUCCESS", "PiercingBarb", 301477)
+	self:Log("SPELL_AURA_APPLIED", "PiercingBarbApplied", 301494)
 
 	self:Log("SPELL_AURA_APPLIED", "SlipstreamApplied", 301180)
 	self:Log("SPELL_CAST_START", "Cavitation", 292083)
@@ -155,7 +156,7 @@ end
 function mod:PiercingBarb(args)
 	local timeToIntermission = intermissionTime - GetTime()
 	if stage == 3 or timeToIntermission > 30 then
-		self:Bar(args.spellId, 30)
+		self:Bar(301494, 30)
 	end
 end
 
