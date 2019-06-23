@@ -1,5 +1,3 @@
-if not IsTestBuild() then return end
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -18,11 +16,24 @@ local stage = 1
 local barnacleBashCount = 1
 local nextCarapace = 0
 local arcingAzeriteCount = 1
+local raidList = {}
+
+function mod:UpdateRaidList()
+	raidList = {}
+	for id = 1,30 do
+		local unit = "raid"..id
+		if UnitExists(unit) then
+			local name = UnitName(unit)
+			raidList[name] = id
+		end
+	end
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local arcingAzeriteMarker = mod:AddMarkerOption(false, "player", 1, -20096, 1, 4, 7, 2, 6, 3) -- Arcing Azerite
 function mod:GetOptions()
 	return {
 		"stages",
@@ -32,6 +43,7 @@ function mod:GetOptions()
 		298056, -- Upsurge
 		{296725, "TANK"}, -- Barnacle Bash
 		{-20096, "FLASH"}, -- Arcing Azerite
+		arcingAzeriteMarker,
 	},{
 		[296569] = CL.stage:format(1),
 		[-20096] = CL.stage:format(2),
@@ -39,7 +51,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-
 	self:Log("SPELL_CAST_SUCCESS", "CoralGrowth", 296569)
 	self:Log("SPELL_CAST_START", "RipplingWave", 296569)
 	self:Log("SPELL_AURA_APPLIED", "CrushingDepthsApplied", 297397)
@@ -50,9 +61,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarnacleBashApplied", 296725)
 	self:Log("SPELL_AURA_REMOVED", "HardenedCarapaceRemoved", 296650)
 	self:Log("SPELL_AURA_APPLIED", "ArcingAzeriteApplied", 296938, 296941, 296939, 296942, 296940, 296943) -- Green, Green, Orange, Orange, Purple, Purple
+	self:Log("SPELL_AURA_APPLIED", "ArcingAzeriteRemoved", 296938, 296941, 296939, 296942, 296940, 296943)
 	self:Log("SPELL_AURA_APPLIED", "HardenedCarapaceApplied", 296650)
 
 	-- Ground Effects: Cutting Coral 296752
+
+	if self:GetOption(arcingAzeriteMarker) then
+		self:UpdateRaidList()
+	end
 end
 
 function mod:OnEngage()
@@ -63,6 +79,10 @@ function mod:OnEngage()
 	self:Bar(296662, 13) -- Rippling Wave
 	self:Bar(296569, 30) -- Coral Growth
 	self:Bar(297397, 39) -- Crushing Depths
+
+	if self:GetOption(arcingAzeriteMarker) then
+		self:UpdateRaidList()
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -158,7 +178,7 @@ end
 do
 	local playerListGreen, playerListOrange, playerListPurple, isOnMe, scheduled = {}, {}, {}, 0, nil
 
-	local function announce()
+	local function announce(self)
 		if isOnMe == 1 then -- Green
 			local playerName = UnitName("player")
 			local playersInTable = #playerListGreen
@@ -169,9 +189,9 @@ do
 					break
 				end
 			end
-			mod:Message2(-20096, "blue", CL.link:format(mod:ColorName(linkedPlayer)), 296938)
-			mod:PlaySound(-20096, "warning")
-			mod:Flash(-20096)
+			self:Message2(-20096, "blue", CL.link:format(self:ColorName(linkedPlayer)), 296938)
+			self:PlaySound(-20096, "warning")
+			self:Flash(-20096)
 		elseif isOnMe == 2 then -- Orange
 			local playerName = UnitName("player")
 			local playersInTable = #playerListOrange
@@ -182,9 +202,9 @@ do
 					break
 				end
 			end
-			mod:Message2(-20096, "blue", CL.link:format(mod:ColorName(linkedPlayer)), 296939)
-			mod:PlaySound(-20096, "warning")
-			mod:Flash(-20096)
+			self:Message2(-20096, "blue", CL.link:format(self:ColorName(linkedPlayer)), 296939)
+			self:PlaySound(-20096, "warning")
+			self:Flash(-20096)
 		elseif isOnMe == 3 then -- Purple
 			local playerName = UnitName("player")
 			local playersInTable = #playerListPurple
@@ -195,19 +215,18 @@ do
 					break
 				end
 			end
-			mod:Message2(-20096, "blue", CL.link:format(mod:ColorName(linkedPlayer)), 296940)
-			mod:PlaySound(-20096, "warning")
-			mod:Flash(-20096)
-		elseif not mod:CheckOption(-20096, "ME_ONLY") then
-			-- XXX Make a warning with all players listed?
-			-- Example: Player1 {rt4} Player2, Player1 {rt2} Player2, Player1 {rt3} Player2
+			self:Message2(-20096, "blue", CL.link:format(self:ColorName(linkedPlayer)), 296940)
+			self:PlaySound(-20096, "warning")
+			self:Flash(-20096)
+		elseif not self:CheckOption(-20096, "ME_ONLY") then
 			local iconGreen = "|T"..GetSpellTexture(296938)..":15:15:0:0:64:64:4:60:4:60|t"
 			local iconOrange = "|T"..GetSpellTexture(296939)..":15:15:0:0:64:64:4:60:4:60|t"
 			local iconPurple = "|T"..GetSpellTexture(296940)..":15:15:0:0:64:64:4:60:4:60|t"
 			local messageText = ""
 			local playersInTable = #playerListGreen
+
 			for i = 1, playersInTable do
-				messageText = messageText..mod:ColorName(playerListGreen[i])
+				messageText = messageText..self:ColorName(playerListGreen[i])
 				if i == 1 then -- Add icon
 					messageText = messageText..iconGreen
 				end
@@ -215,22 +234,59 @@ do
 			playersInTable = #playerListOrange
 			for i = 1, playersInTable do
 				if i == 1 then -- Add icon
-					messageText = messageText..", "..mod:ColorName(playerListOrange[i])..iconOrange
+					messageText = messageText..", "..self:ColorName(playerListOrange[i])..iconOrange
 				else
-					messageText = messageText..mod:ColorName(playerListOrange[i])
+					messageText = messageText..self:ColorName(playerListOrange[i])
 				end
 			end
 			playersInTable = #playerListPurple
 			for i = 1, playersInTable do
 				if i == 1 then
-					messageText = messageText..", "..mod:ColorName(playerListPurple[i])..iconPurple
+					messageText = messageText..", "..self:ColorName(playerListPurple[i])..iconPurple
 				else
-					messageText = messageText..mod:ColorName(playerListPurple[i])
+					messageText = messageText..self:ColorName(playerListPurple[i])
 				end
 			end
-			mod:Message2(-20096, "yellow", CL.other:format(mod:SpellName(-20096), messageText))
-			mod:PlaySound(-20096, "alert")
+			self:Message2(-20096, "yellow", CL.other:format(self:SpellName(-20096), messageText))
+			self:PlaySound(-20096, "alert")
 		end
+
+		if self:GetOption(arcingAzeriteMarker) then
+			if #playerListGreen == 2 then
+				if raidList[playerListGreen[1]] < raidList[playerListGreen[2]] then
+					SetRaidTarget(playerListGreen[1], 1) -- Star
+					SetRaidTarget(playerListGreen[2], 4) -- Triangle
+				else
+					SetRaidTarget(playerListGreen[2], 1) -- Star
+					SetRaidTarget(playerListGreen[1], 4) -- Triangle
+				end
+			elseif playerListGreen[1] then -- Only prio melee icon
+				SetRaidTarget(playerListGreen[1], 1)
+			end
+			if #playerListOrange == 2 then
+				if raidList[playerListOrange[1]] < raidList[playerListOrange[2]] then
+					SetRaidTarget(playerListOrange[1], 2) -- Circle
+					SetRaidTarget(playerListOrange[2], 7) -- Cross
+				else
+					SetRaidTarget(playerListOrange[2], 2) -- Circle
+					SetRaidTarget(playerListOrange[1], 7) -- Cross
+				end
+			elseif playerListOrange[1] then -- Only prio melee icon
+				SetRaidTarget(playerListOrange[1], 2) -- Circle
+			end
+			if #playerListPurple == 2 then
+				if raidList[playerListPurple[1]] < raidList[playerListPurple[2]] then
+					SetRaidTarget(playerListPurple[1], 3) -- Diamond
+					SetRaidTarget(playerListPurple[2], 6) -- Moon
+				else
+					SetRaidTarget(playerListPurple[2], 3) -- Diamond
+					SetRaidTarget(playerListPurple[1], 6) -- Moon
+				end
+			elseif playerListPurple[1] then -- Only prio melee icon
+				SetRaidTarget(playerListPurple[1], 3) -- Diamond
+			end
+		end
+
 		scheduled = nil
 		isOnMe = 0
 		wipe(playerListGreen)
@@ -257,11 +313,18 @@ do
 		end
 		if not scheduled then
 			arcingAzeriteCount = arcingAzeriteCount + 1
-			scheduled = true
-			self:SimpleTimer(announce, 0.1)
+			if not scheduled then
+				scheduled = self:ScheduleTimer(announce, 0.1, self)
+			end
 			if arcingAzeriteCount == 2 then
 				self:Bar(-20096, 39)
 			end
+		end
+	end
+
+	function mod:ArcingAzeriteRemoved(args)
+		if self:GetOption(arcingAzeriteMarker) then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
