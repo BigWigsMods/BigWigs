@@ -347,17 +347,20 @@ end
 do
 	local debuffs = {}
 	local comma = (GetLocale() == "zhTW" or GetLocale() == "zhCN") and "，" or ", "
+	local tconcat =  table.concat
 	local function announce()
-		local msg = tconcat(debuffs, comma, 1, debuffs)
-		self:PersonalMessage(299250, nil, args.spellName, args.spellId)
-		self:PlaySound(299250, "alarm")
+		local msg = tconcat(debuffs, comma, 1, #debuffs)
+		mod:PersonalMessage(299250, nil, msg)
+		mod:PlaySound(299250, "alarm")
 		debuffs = {}
 	end
 
 	function mod:PersonalDecrees(args)
 		if self:Me(args.destGUID) then
 			debuffs[#debuffs+1] = args.spellName
-			self:SimpleTimer(announce, 0.1)
+			if #debuffs == 1 then
+				self:SimpleTimer(announce, 0.1)
+			end
 		end
 	end
 end
