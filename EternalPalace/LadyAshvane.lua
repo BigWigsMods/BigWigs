@@ -18,7 +18,7 @@ local nextCarapace = 0
 local arcingAzeriteCount = 1
 local raidList = {}
 
-function UpdateRaidList()
+local function UpdateRaidList()
 	raidList = {}
 	for id = 1,30 do
 		local unit = "raid"..id
