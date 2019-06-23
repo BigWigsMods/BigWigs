@@ -18,12 +18,12 @@ local nextCarapace = 0
 local arcingAzeriteCount = 1
 local raidList = {}
 
-function mod:UpdateRaidList()
+function UpdateRaidList()
 	raidList = {}
 	for id = 1,30 do
 		local unit = "raid"..id
-		if UnitExists(unit) then
-			local name = UnitName(unit)
+		local name = mod:UnitName(unit)
+		if name then
 			raidList[name] = id
 		end
 	end
@@ -61,13 +61,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarnacleBashApplied", 296725)
 	self:Log("SPELL_AURA_REMOVED", "HardenedCarapaceRemoved", 296650)
 	self:Log("SPELL_AURA_APPLIED", "ArcingAzeriteApplied", 296938, 296941, 296939, 296942, 296940, 296943) -- Green, Green, Orange, Orange, Purple, Purple
-	self:Log("SPELL_AURA_APPLIED", "ArcingAzeriteRemoved", 296938, 296941, 296939, 296942, 296940, 296943)
+	self:Log("SPELL_AURA_REMOVED", "ArcingAzeriteRemoved", 296938, 296941, 296939, 296942, 296940, 296943)
 	self:Log("SPELL_AURA_APPLIED", "HardenedCarapaceApplied", 296650)
 
 	-- Ground Effects: Cutting Coral 296752
 
 	if self:GetOption(arcingAzeriteMarker) then
-		self:UpdateRaidList()
+		UpdateRaidList()
 	end
 end
 
@@ -81,7 +81,7 @@ function mod:OnEngage()
 	self:Bar(297397, 39) -- Crushing Depths
 
 	if self:GetOption(arcingAzeriteMarker) then
-		self:UpdateRaidList()
+		UpdateRaidList()
 	end
 end
 
