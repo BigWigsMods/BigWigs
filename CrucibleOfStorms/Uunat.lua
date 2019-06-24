@@ -502,7 +502,7 @@ function mod:VoidShieldApplied(args)
 
 	-- Stage 1 Bars
 	self:StopBar(CL.count:format(self:SpellName(285416), voidCrashCount)) -- Void Crash
-	self:StopBar(CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
+	self:StopBar(285185) -- Oblivion Tear
 	self:StopBar(CL.count:format(self:SpellName(285453), giftCount)) -- Gift of N'Zoth: Obscurity
 	self:StopBar(284851) -- Touch of the End
 	self:StopBar(CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
@@ -547,7 +547,7 @@ function mod:VoidShieldRemoved(args)
 		end
 	else -- stage 3
 		self:Bar(285652, 12.1, CL.count:format(self:SpellName(285652), insatiableTormentCount)) -- Insatiable Torment
-		self:Bar(285185, self:Mythic() and 15.3 or 13.3, CL.count:format(self:SpellName(285185), oblivionTearCount)) -- Oblivion Tear
+		self:Bar(285185, self:Mythic() and 15.3 or 13.3) -- Oblivion Tear
 		self:Bar(284851, 21.8) -- Touch of the End
 		self:Bar(285820, 26.7, CL.count:format(self:SpellName(285820), guardianCount)) -- Call Undying Guardian
 		self:Bar(285685, 40.0, CL.count:format(self:SpellName(285685), giftCount)) -- Gift of N'Zoth: Lunacy
