@@ -1,4 +1,4 @@
-## Interface: 80100
+## Interface: 80200
 
 ## Title: BigWigs [|cffeda55fBattle of Dazar'alor|r]
 ## Title-deDE: BigWigs [|cffeda55fBattle of Dazar'alor|r]
