@@ -313,9 +313,7 @@ do
 		end
 		if not scheduled then
 			arcingAzeriteCount = arcingAzeriteCount + 1
-			if not scheduled then
-				scheduled = self:ScheduleTimer(announce, 0.1, self)
-			end
+			scheduled = self:ScheduleTimer(announce, 0.1, self)
 			if arcingAzeriteCount == 2 then
 				self:Bar(-20096, 39)
 			end
