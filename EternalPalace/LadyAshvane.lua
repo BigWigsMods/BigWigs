@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Lady Ashvane", 2164, 2354)
 if not mod then return end
-mod:RegisterEnableMob(153732) -- Priscilla Ashvane
+mod:RegisterEnableMob(153732, 152236) -- Priscilla Ashvane
 mod.engageId = 2304
 --mod.respawnTime = 31
 
