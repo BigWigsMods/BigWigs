@@ -81,6 +81,7 @@ function mod:FrostvenomTippedApplied(args)
 		if amount % 2 == 1 then
 			self:StackMessage(-20300, args.destName, amount, "purple", nil, args.spellName, args.spellId)
 		end
+		self:CancelSayCountdown(-20300)
 		self:SayCountdown(-20300, 10)
 	end
 end
@@ -149,20 +150,16 @@ function mod:InversionStart(args)
 	self:Bar(args.spellId, 92)
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:InversionSicknessApplied(args)
-		playerList[#playerList+1] = args.destName
-		if self:Me(args.destGUID) then
-			self:Say(295791, 295791)
-			self:SayCountdown(295791, 4)
-		end
-		self:TargetsMessage(295791, "yellow", playerList)
+function mod:InversionSicknessApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(295791)
+		self:Say(295791, 295791)
+		self:SayCountdown(295791, 4)
 	end
+end
 
-	function mod:InversionSicknessRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(295791)
-		end
+function mod:InversionSicknessRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(295791)
 	end
 end
