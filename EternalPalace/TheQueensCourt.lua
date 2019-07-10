@@ -159,11 +159,13 @@ end
 do
 	local prev = 0
 	function mod:StandAlone(args)
-		local t = GetTime()
-		if t-prev > 1.5 then
-			prev = t
-			self:PersonalMessage(297656)
-			self:PlaySound(297656, "alarm")
+		if self:Me(args.destGUID) then
+			local t = GetTime()
+			if t-prev > 1.5 then
+				prev = t
+				self:PersonalMessage(297656)
+				self:PlaySound(297656, "alarm")
+			end
 		end
 	end
 end
