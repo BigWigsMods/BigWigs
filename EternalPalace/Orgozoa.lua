@@ -25,7 +25,7 @@ function mod:GetOptions()
 		{298156, "TANK"}, -- Desensitizing Sting
 		298103, -- Dribbling Ichor
 		298242, -- Incubation Fluid
-		305048, -- Arcing Current
+		{305048, "SAY"}, -- Arcing Current
 		298465, -- Amniotic Splatter
 		298548, -- Massive Incubator
 		{295779, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Aqua Lance
@@ -43,6 +43,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "IncubationFluid", 298242)
 	self:Log("SPELL_AURA_APPLIED", "IncubationFluidApplied", 298306)
 	self:Log("SPELL_CAST_START", "ArcingCurrent", 305048)
+	self:RegisterEvent("RAID_BOSS_WHISPER") -- Arcing Current
 
 	-- Adds
 	self:Log("SPELL_CAST_SUCCESS", "AmnioticSplatter", 298465)
@@ -122,10 +123,23 @@ end
 
 function mod:ArcingCurrent(args)
 	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "warning")
+	if self:Mythic() then
+		-- Sound for everyone on mythic, but only the 1 target on non-Mythic
+		self:PlaySound(args.spellId, "warning")
+	end
 	local timeToIntermission = intermissionTime - GetTime()
 	if stage == 2 or timeToIntermission > 30 then
 		self:CDBar(args.spellId, 30)
+	end
+end
+
+function mod:RAID_BOSS_WHISPER(_, msg)
+	if msg:find("298413", nil, true) then -- Arcing Current
+		self:PersonalMessage(305048)
+		if not self:Mythic() then
+			self:PlaySound(305048, "warning")
+			self:Say(305048)
+		end
 	end
 end
 
