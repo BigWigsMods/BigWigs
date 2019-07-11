@@ -53,8 +53,8 @@ end
 function mod:OnBossEnable()
 	-- self:Log("SPELL_CAST_SUCCESS", "CoralGrowth", 296569)
 	self:Log("SPELL_CAST_START", "RipplingWave", 296662)
-	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 297397)
-	self:Log("SPELL_AURA_REMOVED", "BrinyBubbleRemoved", 297397)
+	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 302992, 297397) -- Normal, etc
+	self:Log("SPELL_AURA_REMOVED", "BrinyBubbleRemoved", 302992, 297397)
 	self:Log("SPELL_CAST_SUCCESS", "Upsurge", 298056)
 	self:Log("SPELL_CAST_SUCCESS", "BarnacleBash", 296725)
 	self:Log("SPELL_AURA_APPLIED", "BarnacleBashApplied", 296725)
@@ -106,24 +106,24 @@ do
 	function mod:BrinyBubbleApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, args.spellName)
-			self:SayCountdown(args.spellId, 6)
-			self:Flash(args.spellId)
+			self:PlaySound(297397, "warning")
+			self:Say(297397, args.spellName)
+			self:SayCountdown(297397, 6)
+			self:Flash(297397)
 		end
 		if #playerList == 1 then
 			local cd = 45
 			local nextCarapaceCD = nextCarapace - GetTime()
 			if stage == 1 or nextCarapaceCD > cd then
-				self:CDBar(args.spellId, cd)
+				self:CDBar(297397, cd)
 			end
 		end
-		self:TargetsMessage(args.spellId, "red", playerList)
+		self:TargetsMessage(297397, "red", playerList)
 	end
 
 	function mod:BrinyBubbleRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(297397)
 		end
 	end
 end
