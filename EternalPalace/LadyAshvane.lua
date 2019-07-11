@@ -129,12 +129,12 @@ do
 end
 
 function mod:Upsurge(args)
-	self:Message2(spellId, "orange")
-	self:PlaySound(spellId, "alarm")
+	self:Message2(args.spellId, "orange")
+	self:PlaySound(args.spellId, "alarm")
 	local cd = 15
 	local nextCarapaceCD = nextCarapace - GetTime()
 	if stage == 1 or nextCarapaceCD > cd then
-		self:CDBar(spellId, cd)
+		self:CDBar(args.spellId, cd)
 	end
 end
 
@@ -339,7 +339,7 @@ function mod:HardenedCarapaceApplied(args)
 		self:CDBar(298056, 7.2) -- Upsurge
 		self:CDBar(296725, 12.2) -- Barnacle Bash
 		self:Bar(296662, 17.3) -- Rippling Wave
-		self:Bar(296569, 34.5) -- Coral Growth
+		--self:Bar(296569, 34.5) -- Coral Growth
 		self:Bar(297397, 43.3) -- Crushing Depths
 	end
 end
