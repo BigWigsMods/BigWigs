@@ -118,7 +118,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 4)
+			self:SayCountdown(args.spellId, self:Mythic() and 4 or 10)
 			self:PlaySound(args.spellId, "alert")
 		end
 		if #playerList == 1 then
@@ -134,6 +134,7 @@ do
 	function mod:ArcaneBombRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
+			self:Message2(args.spellI, "green", CL.removed:format(args.spellName), args.spellId)
 		end
 	end
 end
