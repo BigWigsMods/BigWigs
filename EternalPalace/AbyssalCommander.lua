@@ -31,8 +31,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FrostvenomTippedApplied", 300701, 300705) -- Rimefrost, Septic Taint
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrostvenomTippedApplied", 300701, 300705)
 	self:Log("SPELL_AURA_REMOVED", "FrostvenomTippedRemoved", 300701, 300705)
-	self:Log("SPELL_CAST_START", "OverwhelmingBarrage", 296551, 298122) -- Overflowing Chill, Overflowing Venom
-	self:Log("SPELL_AURA_APPLIED", "OverflowApplied", 295348, 295421)
+	self:Log("SPELL_CAST_START", "OverwhelmingBarrage", 296551, 298122)
+	self:Log("SPELL_AURA_APPLIED", "OverflowApplied", 295348, 295421) -- Overflowing Chill, Overflowing Venom
 	self:Log("SPELL_AURA_REMOVED", "OverflowRemoved", 295348, 295421)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Frostshock Bolts
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Frostshock Bolts
@@ -43,10 +43,10 @@ end
 
 function mod:OnEngage()
 	self:CDBar(295332, 11) -- Crushing Reverberation
-	self:Bar(-20006, 15.3) -- Overflow
+	self:Bar(-20006, 16) -- Overflow
 	self:Bar(296551, 40) -- Overwhelming Barrage
-	self:Bar(295601, 48) -- Frostshock Bolts
-	self:Bar(295791, 90) -- Inversion
+	self:Bar(295601, 53) -- Frostshock Bolts
+	self:Bar(295791, 70) -- Inversion
 end
 
 --------------------------------------------------------------------------------
@@ -111,7 +111,7 @@ do
 			self:Flash(-20006)
 		end
 		if #playerList == 1 then
-			self:Bar(-20006, 30)
+			self:CDBar(-20006, 30) -- XXX Check if this is always the case: 16.8, 33, 40, 40, 30, 30, 35, 30
 		end
 		self:TargetsMessage(-20006, "yellow", playerList)
 	end
@@ -125,7 +125,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 295601 then -- Frostshock Bolts
-		self:Bar(spellId, 60)
+		self:Bar(spellId, 80)
 	end
 end
 
@@ -147,7 +147,7 @@ end
 function mod:InversionStart(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
-	self:Bar(args.spellId, 92)
+	self:Bar(args.spellId, 73)
 end
 
 function mod:InversionSicknessApplied(args)

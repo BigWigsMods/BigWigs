@@ -80,15 +80,17 @@ end
 function mod:OnEngage()
 	formationCounter = 1
 
-	self:CDBar(301947, 20) -- Potent Spark
+	self:CDBar(301947, 15) -- Potent Spark
 	self:Bar(298050, 30) -- Form Ranks
-	self:Bar(299914, 30) -- Frenetic Charge
-	self:Bar(296851, 34) -- Fanatical Verdict
-	self:Bar(301807, 51) -- Zealous Eruption
-	self:Bar(297325, 106) -- Violent Outburst
+	self:Bar(296851, 39) -- Fanatical Verdict
+	self:Bar(301807, 60) -- Zealous Eruption
+	self:Bar(299914, 75) -- Frenetic Charge
+	self:Bar(297325, 101) -- Violent Outburst
 
 	if self:Mythic() then
 		self:Berserk(420)
+	else
+		self:Berserk(510)
 	end
 end
 
@@ -179,7 +181,7 @@ end
 
 -- Silivaz the Zealous
 function mod:FreneticCharge()
-	self:CDBar(299914, self:Mythic() and 40 or 60)
+	self:CDBar(299914, 40)
 end
 
 function mod:FreneticChargeApplied(args)

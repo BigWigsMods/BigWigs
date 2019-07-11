@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Blackwater Behemoth", 2164, 2347)
 if not mod then return end
-mod:RegisterEnableMob(155103, 150653) -- Blackwater Behemoth
+mod:RegisterEnableMob(150653) -- Blackwater Behemoth
 mod.engageId = 2289
 --mod.respawnTime = 31
 
@@ -62,8 +62,11 @@ function mod:OnEngage()
 	stage = 1
 
 	self:Bar(292159, 8) -- Toxic Spine
-	self:Bar(301494, 11) -- Piercing Barb
 	self:Bar(292270, 23) -- Shock Pulse
+
+	if self:Mythic() then
+		self:Bar(301494, 11) -- Piercing Barb
+	end
 
 	intermissionTime = GetTime() + 100
 	self:Bar("stages", 100, CL.intermission, "achievement_boss_wolfeel")
@@ -184,8 +187,11 @@ function mod:Interupted(args)
 		self:StopBar(CL.cast:format(args.extraSpellName))
 
 		self:Bar(292159, 8) -- Toxic Spine
-		self:Bar(301494, 11) -- Piercing Barb
 		self:Bar(292270, 23) -- Shock Pulse
+
+		if self:Mythic() then
+			self:Bar(301494, 11) -- Piercing Barb
+		end
 
 		if stage < 3 then -- Does not move again at stage 3
 			intermissionTime = GetTime() + 100

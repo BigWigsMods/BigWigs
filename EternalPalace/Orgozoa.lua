@@ -65,8 +65,8 @@ function mod:OnEngage()
 	self:CDBar(298103, 25) -- Dribbling Ichor
 	self:CDBar(305048, 36) -- Arcing Current
 
-	intermissionTime = GetTime() + 215
-	self:Bar("stages", 215, CL.intermission, "achievement_boss_orgozoa")
+	intermissionTime = GetTime() + 212
+	self:Bar("stages", 212, CL.intermission, "achievement_boss_orgozoa")
 end
 
 --------------------------------------------------------------------------------
@@ -124,8 +124,8 @@ function mod:ArcingCurrent(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	local timeToIntermission = intermissionTime - GetTime()
-	if stage == 2 or timeToIntermission > 35 then
-		self:CDBar(args.spellId, 35)
+	if stage == 2 or timeToIntermission > 30 then
+		self:CDBar(args.spellId, 30)
 	end
 end
 
@@ -189,5 +189,5 @@ end
 function mod:PowerfulStomp(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 20)
+	self:CastBar(args.spellId, 4.5)
 end

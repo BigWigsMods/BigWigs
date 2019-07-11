@@ -96,7 +96,7 @@ function mod:OnEngage()
 	self:CDBar(295444, 5.5) -- Mind Tether
 	self:CDBar(292963, 14.2) -- Dread
 	self:CDBar(294535, 20) -- Portal of Madness
-	self:CDBar(301141, 31.5) -- Crushing Grasp
+	self:CDBar(301141, 30.5) -- Crushing Grasp
 end
 
 --------------------------------------------------------------------------------
@@ -109,6 +109,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
 
+		self:StopBar(294535) -- Portal of Madness
+
 		self:Bar(304733, 4.5) -- Delirium's Descent
 	end
 end
@@ -118,21 +120,29 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		if stage == 1 then -- Portal of Madness
 			self:Message2(294535, "yellow")
 			self:PlaySound(294535, "alert")
-			--self:Bar(294535, 60)
+			self:Bar(294535, 84)
 		elseif stage == 4 then
 			self:Message2(299702, "yellow")
 			self:PlaySound(299702, "alert")
-			--self:Bar(299702, 60)
+			self:Bar(299702, 84)
 		end
 	elseif spellId == 295361 then -- Cancel All Phases (Encounter Reset) (Stage 4 start) Alternative: Energy Tracker-296465
 		stage = 4
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+
+		self:StopBar(292963) -- Dread
 		self:StopBar(304733) -- Delirium's Descent
+
+		self:CDBar(296018, 15) -- Manic Dread
+		self:Bar(299702, 84) -- Portal of Madness
+		self:Bar(292996, 34) -- Maddening Eruption
+		self:CDBar(301141, 30.5) -- Crushing Grasp
+
 		if self:Mythic() then
 			self:Bar(295814, 45) -- Psychotic Split
 		else
-			self:Bar(303971, 45) -- Dark Pulse
+			self:Bar(303971, 75) -- Dark Pulse
 		end
 	elseif spellId == 299974 then -- Pick a Dread
 		if stage < 4 then
@@ -181,9 +191,6 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alert")
 		end
-		if #playerList == 1 then
-			self:CDBar(args.spellId, 75)
-		end
 		self:TargetsMessage(args.spellId, "yellow", playerList)
 	end
 end
@@ -226,7 +233,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("292996", nil, true) then -- Maddening Eruption
 		self:Message2(292996, "cyan")
 		self:PlaySound(292996, "info")
-		self:CDBar(292996, 30)
+		self:CDBar(292996, stage == 4 and 90.5 or 60)
 		self:CDBar(295099, 25) -- Punctured Darkness
 	end
 end
@@ -242,6 +249,7 @@ function mod:DeliriumsDescent(args)
 	if stage < 3 then -- Stage 3 Emote was not found
 		stage = 3
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:StopBar(294535) -- Portal of Madness
 	end
 
 	self:Message2(args.spellId, "orange")

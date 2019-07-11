@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Lady Ashvane", 2164, 2354)
 if not mod then return end
-mod:RegisterEnableMob(153732, 152236) -- Priscilla Ashvane
+mod:RegisterEnableMob(152236) -- Priscilla Ashvane
 mod.engageId = 2304
 --mod.respawnTime = 31
 
@@ -37,9 +37,9 @@ local arcingAzeriteMarker = mod:AddMarkerOption(false, "player", 1, -20096, 1, 4
 function mod:GetOptions()
 	return {
 		"stages",
-		296569, -- Coral Growth
+		-- 296569, -- Coral Growth
 		296662, -- Rippling Wave
-		{297397, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Crushing Depths
+		{297397, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Briny Bubble
 		298056, -- Upsurge
 		{296725, "TANK"}, -- Barnacle Bash
 		{-20096, "FLASH"}, -- Arcing Azerite
@@ -51,11 +51,11 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "CoralGrowth", 296569)
-	self:Log("SPELL_CAST_START", "RipplingWave", 296569)
-	self:Log("SPELL_AURA_APPLIED", "CrushingDepthsApplied", 297397)
-	self:Log("SPELL_AURA_REMOVED", "CrushingDepthsRemoved", 297397)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Upsurge
+	-- self:Log("SPELL_CAST_SUCCESS", "CoralGrowth", 296569)
+	self:Log("SPELL_CAST_START", "RipplingWave", 296662)
+	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 297397)
+	self:Log("SPELL_AURA_REMOVED", "BrinyBubbleRemoved", 297397)
+	self:Log("SPELL_CAST_SUCCESS", "Upsurge", 298056)
 	self:Log("SPELL_CAST_SUCCESS", "BarnacleBash", 296725)
 	self:Log("SPELL_AURA_APPLIED", "BarnacleBashApplied", 296725)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarnacleBashApplied", 296725)
@@ -76,8 +76,8 @@ function mod:OnEngage()
 
 	self:CDBar(298056, 2.5) -- Upsurge
 	self:CDBar(296725, 8) -- Barnacle Bash
-	self:Bar(296662, 13) -- Rippling Wave
-	self:Bar(296569, 30) -- Coral Growth
+	self:Bar(296662, 15) -- Rippling Wave
+	-- self:Bar(296569, 30) -- Coral Growth
 	self:Bar(297397, 39) -- Crushing Depths
 
 	if self:GetOption(arcingAzeriteMarker) then
@@ -89,21 +89,21 @@ end
 -- Event Handlers
 --
 
-function mod:CoralGrowth(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 30)
-end
+-- function mod:CoralGrowth(args)
+	-- self:Message2(args.spellId, "yellow")
+	-- self:PlaySound(args.spellId, "alert")
+	-- self:CDBar(args.spellId, 30)
+-- end
 
 function mod:RipplingWave(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
-	self:CDBar(args.spellId, 33)
+	self:CDBar(args.spellId, 30)
 end
 
 do
 	local playerList = mod:NewTargetList()
-	function mod:CrushingDepthsApplied(args)
+	function mod:BrinyBubbleApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
@@ -112,7 +112,7 @@ do
 			self:Flash(args.spellId)
 		end
 		if #playerList == 1 then
-			local cd = 48
+			local cd = 45
 			local nextCarapaceCD = nextCarapace - GetTime()
 			if stage == 1 or nextCarapaceCD > cd then
 				self:CDBar(args.spellId, cd)
@@ -121,28 +121,26 @@ do
 		self:TargetsMessage(args.spellId, "red", playerList)
 	end
 
-	function mod:CrushingDepthsRemoved(args)
+	function mod:BrinyBubbleRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 		end
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 298056 then -- Upsurge
-		self:Message2(spellId, "orange")
-		self:PlaySound(spellId, "alarm")
-		local cd = 16
-		local nextCarapaceCD = nextCarapace - GetTime()
-		if stage == 1 or nextCarapaceCD > cd then
-			self:CDBar(spellId, cd)
-		end
+function mod:Upsurge(args)
+	self:Message2(spellId, "orange")
+	self:PlaySound(spellId, "alarm")
+	local cd = 15
+	local nextCarapaceCD = nextCarapace - GetTime()
+	if stage == 1 or nextCarapaceCD > cd then
+		self:CDBar(spellId, cd)
 	end
 end
 
 function mod:BarnacleBash(args)
 	barnacleBashCount = barnacleBashCount + 1
-	local cd = stage == 1 and (barnacleBashCount % 2 == 0 and 16 or 31.5) or 15
+	local cd = stage == 1 and (barnacleBashCount % 2 == 0 and 15 or 30) or 15
 	local nextCarapaceCD = nextCarapace - GetTime()
 	if stage == 1 or nextCarapaceCD > cd then
 		self:CDBar(args.spellId, cd)
@@ -315,7 +313,7 @@ do
 			arcingAzeriteCount = arcingAzeriteCount + 1
 			scheduled = self:ScheduleTimer(announce, 0.1, self)
 			if arcingAzeriteCount == 2 then
-				self:Bar(-20096, 39)
+				self:Bar(-20096, 34)
 			end
 		end
 	end
