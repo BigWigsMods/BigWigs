@@ -134,7 +134,7 @@ do
 	function mod:ArcaneBombRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
-			self:Message2(args.spellI, "green", CL.removed:format(args.spellName), args.spellId)
+			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
 		end
 	end
 end
