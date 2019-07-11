@@ -37,7 +37,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Frostshock Bolts
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Frostshock Bolts
 	self:Log("SPELL_CAST_START", "InversionStart", 295791)
-	self:Log("SPELL_AURA_APPLIED", "InversionSicknessApplied", 300882, 300883)
+	self:Log("SPELL_AURA_APPLIED", "InversionSicknessApplied", 300882, 300883) -- Frost, Toxic
 	self:Log("SPELL_AURA_REMOVED", "InversionSicknessRemoved", 300882, 300883)
 end
 
@@ -107,7 +107,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(-20006, "alarm")
 			self:Say(-20006, args.spellName)
-			self:SayCountdown(-20006, 8)
+			self:SayCountdown(-20006, 7)
 			self:Flash(-20006)
 		end
 		if #playerList == 1 then
