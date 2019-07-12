@@ -37,7 +37,6 @@ local arcingAzeriteMarker = mod:AddMarkerOption(false, "player", 1, -20096, 1, 4
 function mod:GetOptions()
 	return {
 		"stages",
-		-- 296569, -- Coral Growth
 		296662, -- Rippling Wave
 		{297397, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Briny Bubble
 		298056, -- Upsurge
@@ -51,7 +50,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	-- self:Log("SPELL_CAST_SUCCESS", "CoralGrowth", 296569)
 	self:Log("SPELL_CAST_START", "RipplingWave", 296662)
 	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 302992, 297397) -- Normal, etc
 	self:Log("SPELL_AURA_REMOVED", "BrinyBubbleRemoved", 302992, 297397)
@@ -77,8 +75,7 @@ function mod:OnEngage()
 	self:CDBar(298056, 2.5) -- Upsurge
 	self:CDBar(296725, 8) -- Barnacle Bash
 	self:Bar(296662, 15) -- Rippling Wave
-	-- self:Bar(296569, 30) -- Coral Growth
-	self:Bar(297397, 39) -- Crushing Depths
+	self:Bar(297397, 39) -- Briny Bubble
 
 	if self:GetOption(arcingAzeriteMarker) then
 		UpdateRaidList()
@@ -88,12 +85,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
--- function mod:CoralGrowth(args)
-	-- self:Message2(args.spellId, "yellow")
-	-- self:PlaySound(args.spellId, "alert")
-	-- self:CDBar(args.spellId, 30)
--- end
 
 function mod:RipplingWave(args)
 	self:Message2(args.spellId, "cyan")
@@ -163,11 +154,12 @@ function mod:HardenedCarapaceRemoved(args)
 	self:StopBar(296725) -- Barnacle Bash
 	self:StopBar(296662) -- Rippling Wave
 	self:StopBar(296569) -- Coral Growth
-	self:StopBar(297397) -- Crushing Depths
+	self:StopBar(297397) -- Briny Bubble
 
-	self:CDBar(296725, 9) -- Barnacle Bash
-	self:Bar(-20096, 16.2) -- Arcing Azerite
-	self:Bar(297397, 30.3) -- Crushing Depths
+	self:CDBar(296725, 12.5) -- Barnacle Bash
+	self:CDBar(298056, 17.6) -- Upsurge
+	self:Bar(-20096, 20.5) -- Arcing Azerite
+	self:Bar(297397, 38.6) -- Briny Bubble
 
 	nextCarapace = GetTime() + 65.8
 	self:Bar("stages", 65.8, 296650, 296650) -- Hardened Carapace
@@ -336,10 +328,9 @@ function mod:HardenedCarapaceApplied(args)
 		self:StopBar(296725) -- Barnacle Bash
 		self:StopBar(297397) -- Crushing Depths
 
-		self:CDBar(298056, 7.2) -- Upsurge
-		self:CDBar(296725, 12.2) -- Barnacle Bash
-		self:Bar(296662, 17.3) -- Rippling Wave
-		--self:Bar(296569, 34.5) -- Coral Growth
-		self:Bar(297397, 43.3) -- Crushing Depths
+		self:CDBar(296725, 10.9) -- Barnacle Bash
+		self:CDBar(298056, 12.9) -- Upsurge
+		self:Bar(296662, 18.9) -- Rippling Wave
+		self:Bar(297397, 40.9) -- Briny Bubble
 	end
 end
