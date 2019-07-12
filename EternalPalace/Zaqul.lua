@@ -254,7 +254,7 @@ function mod:DeliriumsDescent(args)
 
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
-	self:Bar(args.spellId, 20)
+	self:Bar(args.spellId, 35)
 end
 
 -- Stage 4
