@@ -41,6 +41,7 @@ function mod:GetOptions()
 		{297397, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Briny Bubble
 		298056, -- Upsurge
 		{296725, "TANK"}, -- Barnacle Bash
+		296752, -- Cutting Coral
 		{-20096, "FLASH"}, -- Arcing Azerite
 		arcingAzeriteMarker,
 	},{
@@ -62,7 +63,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ArcingAzeriteRemoved", 296938, 296941, 296939, 296942, 296940, 296943)
 	self:Log("SPELL_AURA_APPLIED", "HardenedCarapaceApplied", 296650)
 
-	-- Ground Effects: Cutting Coral 296752
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 296752) -- Cutting Coral
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 296752)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 296752)
 
 	if self:GetOption(arcingAzeriteMarker) then
 		UpdateRaidList()
@@ -332,5 +335,17 @@ function mod:HardenedCarapaceApplied(args)
 		self:CDBar(298056, 12.9) -- Upsurge
 		self:Bar(296662, 18.9) -- Rippling Wave
 		self:Bar(297397, 40.9) -- Briny Bubble
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundDamage(args)
+		if self:Me(args.destGUID) then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
 	end
 end
