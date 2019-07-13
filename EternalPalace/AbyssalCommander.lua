@@ -53,19 +53,31 @@ end
 -- Event Handlers
 --
 
-function mod:ToxicBrandApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(294726, nil, args.spellName, args.spellId)
-		self:PlaySound(294726, "alarm")
-		self:Flash(294726, args.spellId)
+do
+	local prev = 0
+	function mod:ToxicBrandApplied(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 3 then
+				self:PersonalMessage(294726, nil, args.spellName, args.spellId)
+				self:PlaySound(294726, "alarm")
+				self:Flash(294726, args.spellId)
+			end
+		end
 	end
 end
 
-function mod:FrostMarkApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(294726, nil, args.spellName, args.spellId)
-		self:PlaySound(294726, "alarm")
-		self:Flash(294726, args.spellId)
+do
+	local prev = 0
+	function mod:FrostMarkApplied(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 3 then
+				self:PersonalMessage(294726, nil, args.spellName, args.spellId)
+				self:PlaySound(294726, "alarm")
+				self:Flash(294726, args.spellId)
+			end
+		end
 	end
 end
 
