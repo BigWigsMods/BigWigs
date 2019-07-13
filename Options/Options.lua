@@ -29,6 +29,8 @@ local loader = BigWigsLoader
 local API = BigWigsAPI
 options.SendMessage = loader.SendMessage
 
+local bwTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
+
 local colorModule
 local soundModule
 local isOpen, isPluginOpen
@@ -329,13 +331,13 @@ local function slaveOptionToggled(self, event, value)
 end
 
 local function slaveOptionMouseOver(self, event, value)
-	GameTooltip:SetOwner(self.frame, "ANCHOR_TOP")
-	GameTooltip:AddLine(self:GetUserData("desc"), 1, 1, 1, true)
-	GameTooltip:Show()
+	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+	bwTooltip:AddLine(self:GetUserData("desc"), 1, 1, 1, true)
+	bwTooltip:Show()
 end
 
 local function slaveOptionMouseLeave()
-	GameTooltip:Hide()
+	bwTooltip:Hide()
 end
 
 local function getSlaveToggle(label, desc, key, module, flag, master, icon)
@@ -592,9 +594,13 @@ local function buttonClicked(widget)
 end
 
 local function flagOnEnter(widget)
-	GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-	GameTooltip:SetText(widget:GetUserData("tooltipText"), 1, 1, 1, true)
-	GameTooltip:Show()
+	bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+	bwTooltip:SetText(widget:GetUserData("tooltipText"), 1, 1, 1, true)
+	bwTooltip:Show()
+end
+
+local function flagOnLeave()
+	bwTooltip:Hide()
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
@@ -657,7 +663,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			icon:SetImageSize(16, 16)
 			icon:SetUserData("tooltipText", L[key])
 			icon:SetCallback("OnEnter", flagOnEnter)
-			icon:SetCallback("OnLeave", GameTooltip_Hide)
+			icon:SetCallback("OnLeave", flagOnLeave)
 
 			-- 337497 = Interface/LFGFrame/UI-LFG-ICON-PORTRAITROLES, 521749 = Interface/EncounterJournal/UI-EJ-Icons
 			if key == "TANK" then
@@ -672,7 +678,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 				icon1:SetImageSize(16, 16)
 				icon1:SetUserData("tooltipText", L[key])
 				icon1:SetCallback("OnEnter", flagOnEnter)
-				icon1:SetCallback("OnLeave", GameTooltip_Hide)
+				icon1:SetCallback("OnLeave", flagOnLeave)
 				icon1.frame:SetParent(check.frame)
 				icon1.frame:Show()
 				flagIcons[#flagIcons+1] = icon1
@@ -1065,16 +1071,15 @@ do
 		end
 	end
 
-	local GameTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
 	local function onControlEnter(widget)
-		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		GameTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
-		GameTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
-		GameTooltip:Show()
+		bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+		bwTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
+		bwTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
+		bwTooltip:Show()
 	end
 
 	local function onControlLeave()
-		GameTooltip:Hide()
+		bwTooltip:Hide()
 	end
 
 	local function onTreeGroupSelected(widget, event, value)

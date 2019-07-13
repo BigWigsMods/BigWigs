@@ -154,7 +154,7 @@ function mod:OnEngage()
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss3")
 	end
 	if self:Mythic() then
-		self:Berserk(510)
+		self:Berserk(570)
 	else
 		self:Berserk(780)
 	end
