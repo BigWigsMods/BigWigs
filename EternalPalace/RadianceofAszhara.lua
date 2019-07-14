@@ -20,12 +20,14 @@ local unshackledPowerCount = 1
 -- Initialization
 --
 
+local arcaneBombMarker = mod:AddMarkerOption(false, "player", 1, 296737, 1, 2, 3, 4) -- Arcane Bomb
 function mod:GetOptions()
 	return {
 		{296546, "TANK"}, -- Tide Fist
 		296428, -- Arcanado Burst
 		296459, -- Squall Trap
 		{296737, "SAY", "SAY_COUNTDOWN"}, -- Arcane Bomb
+		arcaneBombMarker,
 		296894, -- Unshackled Power
 		295916, -- Ancient Tempest
 		296701, -- Gale Buffet
@@ -113,12 +115,14 @@ function mod:SquallTrap(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList, playerIcons = mod:NewTargetList(), {}
 	function mod:ArcaneBombApplied(args)
-		playerList[#playerList+1] = args.destName
+		local count = #playerList+1
+		playerList[count] = args.destName
+		playerIcons[playerListCount] = playerListCount
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, self:Mythic() and 4 or 10)
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+			self:SayCountdown(args.spellId, self:Mythic() and 4 or 10, count)
 			self:PlaySound(args.spellId, "alert")
 		end
 		if #playerList == 1 then
@@ -128,10 +132,16 @@ do
 				self:Bar(args.spellId, cd)
 			end
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList)
+		if self:GetOption(arcaneBombMarker) then
+			SetRaidTarget(args.destName, #playerList)
+		end
+		self:TargetsMessage(args.spellId, "yellow", playerList, 4, nil, nil, nil, playerIcons)
 	end
 
 	function mod:ArcaneBombRemoved(args)
+		if self:GetOption(arcaneBombMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
