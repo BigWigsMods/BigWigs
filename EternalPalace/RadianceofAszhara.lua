@@ -119,7 +119,7 @@ do
 	function mod:ArcaneBombApplied(args)
 		local count = #playerList+1
 		playerList[count] = args.destName
-		playerIcons[playerListCount] = playerListCount
+		playerIcons[count] = count
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
 			self:SayCountdown(args.spellId, self:Mythic() and 4 or 10, count)
