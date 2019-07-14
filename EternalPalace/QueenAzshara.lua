@@ -112,7 +112,7 @@ function mod:OnBossEnable()
 	-- Queen Azshara
 	self:Log("SPELL_CAST_SUCCESS", "ArcaneOrbs", 298787)
 	self:Log("SPELL_CAST_SUCCESS", "Beckon", 299094, 302141, 303797) -- Stage 1, Stage 2, Stage 3
-	self:Log("SPELL_AURA_APPLIED", "BeckonApplied", 299094, 302141, 303797)
+	--self:Log("SPELL_AURA_APPLIED", "BeckonApplied", 299094, 302141, 303797)
 
 	-- Intermission
 	self:Log("SPELL_CAST_START", "QueensDecree", 299250)
