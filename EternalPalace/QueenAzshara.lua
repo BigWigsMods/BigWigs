@@ -20,6 +20,7 @@ mod.engageId = 2299
 --
 
 local stage = 1
+local portalCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -49,7 +50,7 @@ function mod:GetOptions()
 		298531, -- Ground Pound
 		300428, -- Infuriated
 		298787, -- Arcane Orbs
-		299094, -- Beckon
+		{299094, "SAY", "FLASH", "PULSE"}, -- Beckon
 		299250, -- Queen's Decree
 		302999, -- Arcane Vulnerability
 		{304475, "TANK"}, -- Arcane Jolt
@@ -60,9 +61,10 @@ function mod:GetOptions()
 		{300492, "SAY", "FLASH"}, -- Static Shock
 		300620, -- Crystalline Shield
 		297372, -- Greater Reversal of Fortune
+		300768, -- Piercing Gaze
 		{300743, "TANK"}, -- Void Touched
-		303980, -- Nether Portal
-		300807, -- Overload
+		303982, -- Nether Portal
+		301431, -- Overload
 	},{
 		["stages"] = "general",
 		[297937] = -20250, -- Stage One: Cursed Lovers
@@ -73,11 +75,12 @@ function mod:GetOptions()
 		[299250] = CL.intermission, -- Intermission One: Queen's Decree
 		[302999] = -20323, -- Stage Two: Hearts Unleashed
 		[300492] = -20340, -- Stage Three: Song of the Tides
-		[300743] = -20361, -- Stage Four: My Palace Is a Prison
+		[300768] = -20361, -- Stage Four: My Palace Is a Prison
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
 	self:Log("SPELL_DAMAGE", "PressureSurge", 300074)
 	self:Log("SPELL_AURA_APPLIED", "DrainedSoulApplied", 298569)
@@ -131,10 +134,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CrystallineShield", 300620)
 
 	-- Stage 4
+	self:Log("SPELL_CAST_SUCCESS", "PiercingGaze", 300768)
+	self:Log("SPELL_CAST_SUCCESS", "VoidTouchedSuccess", 300743)
 	self:Log("SPELL_AURA_APPLIED", "VoidTouchedApplied", 300743)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidTouchedApplied", 300743)
-	self:Log("SPELL_CAST_SUCCESS", "NetherPortal", 303980)
-	self:Log("SPELL_CAST_START", "Overload", 300807)
+	self:Log("SPELL_CAST_START", "Overload", 301431)
 
 	-- Ground Effects
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 297907) -- Cursed Heart
@@ -144,12 +148,13 @@ end
 
 function mod:OnEngage()
 	stage = 1
+	portalCount = 1
 
-	self:CDBar(297937, 20) -- Painful Memories
-	self:CDBar(298121, 24.4) -- Lightning Orbs
-	self:Bar(299094, 58) -- Beckon
+	self:CDBar(297937, 19.2) -- Painful Memories
+	self:CDBar(298121, 23.5) -- Lightning Orbs
+	self:Bar(299094, 54.5) -- Beckon
 	self:Bar(298787, 70) -- Arcane Orbs
-	self:CDBar(-20480, 64, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
+	--self:CDBar(-20480, 64, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
 end
 
 --------------------------------------------------------------------------------
@@ -178,6 +183,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:PlaySound(spellId, "long")
 		self:Message2(spellId, "cyan")
 		self:CDBar(spellId, 80)
+	elseif spellId == 297372 then -- Greater Reversal of Fortune
+		self:PlaySound(spellId, "long")
+		self:Message2(spellId, "cyan")
+		self:CDBar(spellId, 70)
 	elseif spellId == 303629 then -- Arcane Burst
 		self:CDBar(303657, 70)
 	elseif spellId == 302034 then -- Adjure // 2nd Intermission Start / Stage 3
@@ -194,8 +203,29 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Bar(304475, 36) -- Arcane Jolt
 		self:Bar(299094, 48.5) -- Beckon
 		self:Bar(300519, 59.5) -- Arcane Detonation
-		--self:Bar(303657, 40) -- Arcane Burst
-		--self:Bar(000000, 56) -- Greater Reversal of Fortune
+		self:Bar(303657, 90) -- Arcane Burst
+		self:Bar(297372, 80) -- Greater Reversal of Fortune
+	elseif spellId == 302860 then -- Queen Azshara (Stage 4)
+		stage = 4
+		self:PlaySound("stages", "long")
+		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:StopBar(304475) -- Arcane Jolt
+		self:StopBar(299094) -- Beckon
+		self:StopBar(303657) -- Arcane Burst
+		self:StopBar(297372) -- Greater Reversal of Fortune
+		self:StopBar(300519) -- Arcane Detonation
+		portalCount = 1
+
+		self:Bar(300743, 12) -- Void Touched
+		self:Bar(301431, 17) -- Overload
+		self:Bar(303982, 24) -- Nether Portal
+		self:Bar(300768, 44) -- Pirecing Gaze
+		self:Bar(299094, 68.5) -- Beckon
+	elseif spellId == 303982 then -- Nether Portal
+		self:Message2(303982, "yellow")
+		self:PlaySound(303982, "alert")
+		portalCount = portalCount + 1
+		self:Bar(303982, portalCount == 2 and 40 or portalCount == 3 and 44 or 35) -- XXX Make a Table for more data
 	end
 end
 
@@ -223,16 +253,27 @@ function mod:DrainedSoulApplied(args)
 end
 
 -- Stage 1
-function mod:PainfulMemories(args)
-	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "long")
-	self:CDBar(297934, 63) -- Longing
-end
+do
+	local prev = 0
+	function mod:PainfulMemories(args)
+		local t = GetTime()
+		if t-prev > 1.5 then
+			prev = t
+			self:Message2(args.spellId, "orange")
+			self:PlaySound(args.spellId, "long")
+			self:CDBar(297934, 65) -- Longing
+		end
+	end
 
-function mod:Longing(args)
-	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "long")
-	self:CDBar(297937, 30) -- Painful Memories
+	function mod:Longing(args)
+		local t = GetTime()
+		if t-prev > 1.5 then
+			prev = t
+			self:Message2(args.spellId, "orange")
+			self:PlaySound(args.spellId, "long")
+			self:CDBar(297937, 20) -- Painful Memories
+		end
+	end
 end
 
 do
@@ -251,7 +292,7 @@ end
 function mod:LightningOrbs(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
-	self:CDBar(args.spellId, 30)
+	self:CDBar(args.spellId, 18.5)
 end
 
 function mod:ChainLightning(args)
@@ -267,7 +308,7 @@ end
 function mod:ColdBlast(args)
 	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 10)
+	self:CDBar(args.spellId, 11)
 end
 
 function mod:ColdBlastApplied(args)
@@ -291,7 +332,7 @@ function mod:SerratedEdgeApplied(args)
 end
 
 function mod:ChargedSpear(args)
-	self:CDBar(args.spellId, stage == 3 and 13 or 33)
+	self:CDBar(args.spellId, stage == 3 and 13.5 or 40)
 end
 
 function mod:ChargedSpearApplied(args)
@@ -322,17 +363,16 @@ function mod:ArcaneOrbs(args)
 end
 
 function mod:Beckon(args)
-	self:CDBar(299094, stage == 2 and 85 or 70)
+	self:Message2(299094, "yellow")
+	self:CDBar(299094, stage > 2 and 70 or 85) -- XXX Stage 4 unkown timer
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:BeckonApplied(args)
-		playerList[#playerList+1] = args.destName
-		if self:Me(args.destGUID) then
-			self:PlaySound(299094, "alert")
-		end
-		self:TargetsMessage(299094, "yellow", playerList)
+function mod:RAID_BOSS_WHISPER(_, msg)
+	if msg:find("299094", nil, true) then -- Beckon
+		self:PersonalMessage(299094)
+		self:PlaySound(299094, "Alarm")
+		self:Flash(299094)
+		self:Say(299094)
 	end
 end
 
@@ -397,7 +437,7 @@ end
 function mod:ArcaneDetonation(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, 80)
+	self:CDBar(args.spellId, 75)
 end
 
 do
@@ -446,20 +486,26 @@ function mod:GreaterReversalofFortune(args)
 end
 
 -- Stage 4
+function mod:PiercingGaze(args)
+	self:Message2(args.spellId, "orange")
+	self:PlaySound(args.spellId, "long")
+	self:Bar(args.spellId, 45)
+end
+
+function mod:VoidTouchedSuccess(args)
+	self:CDBar(args.spellId, 7.5)
+end
+
 function mod:VoidTouchedApplied(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	self:PlaySound(args.spellId, "alert", nil, args.destName)
-end
-
-function mod:NetherPortal(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, amount > 2 and "warning" or "alert", nil, args.destName)
 end
 
 function mod:Overload(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
+	self:CDBar(args.spellId, 45)
 end
 
 do
