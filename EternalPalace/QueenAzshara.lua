@@ -166,19 +166,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Message2(-20480, "cyan", self:SpellName(-20480), "achievement_boss_nagabruteboss") -- Overzealous Hulk
 		self:PlaySound("stages", "long")
 		self:CDBar(-20480, 64, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
-	elseif spellId == 117624 then -- Stage 1 Over // Casted 2x so increase stage early to avoid double trigger
-		if stage == 1 then
-			stage = 2
-			self:PlaySound("stages", "long")
-			self:Message2("stages", "green", CL.intermission, false)
-			self:StopBar(297937) -- Painful Memories
-			self:StopBar(297934) -- Longing
-			self:StopBar(298121) -- Lightning Orbs
-			self:StopBar(299094) -- Beckon
-			self:StopBar(298787) -- Arcane Orbs
-			self:StopBar(-20480) -- Overzealous Hulk
-			self:CDBar("stages", 41, CL.intermission, 299250) -- Queens Decree
-		end
 	elseif spellId == 297371 then -- Reversal of Fortune
 		self:PlaySound(spellId, "long")
 		self:Message2(spellId, "cyan")
@@ -380,6 +367,14 @@ end
 function mod:QueensDecree(args)
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
+	self:StopBar(297937) -- Painful Memories
+	self:StopBar(297934) -- Longing
+	self:StopBar(298121) -- Lightning Orbs
+	self:StopBar(299094) -- Beckon
+	self:StopBar(298787) -- Arcane Orbs
+	self:StopBar(-20480) -- Overzealous Hulk
+	self:StopBar(301078) -- Charged Spear
+	self:CDBar("stages", 36.2, CL.intermission, 299250) -- Queens Decree
 end
 
 do
