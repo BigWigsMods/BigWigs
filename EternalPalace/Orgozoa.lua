@@ -77,7 +77,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 298077 then -- Dribbling Ichor
 		self:Message2(298103, "orange")
 		self:PlaySound(298103, "long")
-		nextIchor = GetTime() + 85
+		nextIchorTime = GetTime() + 85
 		self:CDBar(298103, 85)
 	elseif spellId == 298689 then -- Absorb Fluids
 		self:PlaySound("stages", "long")
