@@ -134,7 +134,7 @@ end
 
 function mod:BarnacleBash(args)
 	barnacleBashCount = barnacleBashCount + 1
-	local cd = stage == 1 and (barnacleBashCount % 2 == 0 and 15 or 30) or 15
+	local cd = stage == 1 and (barnacleBashCount % 2 == 0 and 15 or 30) or barnacleBashCount == 2 and 15 or 26) -- Stage 1: Alternate 15, 30..; Stage 2: 12.5, 15, 26
 	local nextCarapaceCD = nextCarapace - GetTime()
 	if stage == 1 or nextCarapaceCD > cd then
 		self:CDBar(args.spellId, cd)
