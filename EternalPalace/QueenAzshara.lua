@@ -150,10 +150,10 @@ function mod:OnEngage()
 	stage = 1
 	portalCount = 1
 
-	self:CDBar(297937, 19.2) -- Painful Memories
-	self:CDBar(298121, 23.5) -- Lightning Orbs
-	self:Bar(299094, 54.5) -- Beckon
-	self:Bar(298787, 70) -- Arcane Orbs
+	self:CDBar(297937, 14.2) -- Painful Memories
+	self:CDBar(298121, 18.5) -- Lightning Orbs
+	self:Bar(299094, 49.5) -- Beckon
+	self:Bar(298787, 65) -- Arcane Orbs
 	--self:CDBar(-20480, 64, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
 end
 
@@ -433,6 +433,7 @@ function mod:ArcaneDetonation(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, 75)
+	self:CastBar(args.spellId, self:Mythic() and 4 or self:Heroic() and 5 or 6) -- Mythic 4s, Heroic 5s, Normal/LFR 6s
 end
 
 do
