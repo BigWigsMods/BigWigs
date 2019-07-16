@@ -38,7 +38,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "TideFistStart", 296546)
+	self:Log("SPELL_CAST_START", "TideFistStart", 296566)
 	self:Log("SPELL_AURA_APPLIED", "TideFistApplied", 296566)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Arcanado Burst, Power Gain (Ancient Tempest Over)
 	self:Log("SPELL_CAST_START", "SquallTrap", 296459)
@@ -69,7 +69,7 @@ end
 function mod:TideFistStart(args)
 	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
-	local cd = 18
+	local cd = 20
 	local nextAncientTempestCD = nextAncientTempest - GetTime()
 	if nextAncientTempestCD > cd then
 		self:CDBar(args.spellId, cd)
