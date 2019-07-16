@@ -13,7 +13,7 @@ mod.engageId = 2303
 --
 
 local stage = 1
-local intermissionTime = 0
+local nextIchorTime = 0
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -66,8 +66,7 @@ function mod:OnEngage()
 	self:CDBar(298103, 25) -- Dribbling Ichor
 	self:CDBar(305048, 36) -- Arcing Current
 
-	intermissionTime = GetTime() + 212
-	self:Bar("stages", 212, CL.intermission, "achievement_boss_orgozoa")
+	nextIchorTime = GetTime() + 25
 end
 
 --------------------------------------------------------------------------------
@@ -78,20 +77,25 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 298077 then -- Dribbling Ichor
 		self:Message2(298103, "orange")
 		self:PlaySound(298103, "long")
-		local timeToIntermission = intermissionTime - GetTime()
-		if stage == 2 or timeToIntermission > 85 then
-			self:CDBar(298103, 85)
-		end
+		nextIchor = GetTime() + 85
+		self:CDBar(298103, 85)
 	elseif spellId == 298689 then -- Absorb Fluids
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "green", CL.intermission, false)
+
+		self:StopBar(298156) -- Desensitizing Sting
+		self:StopBar(298242) -- Incubation Fluid
+		self:StopBar(298103) -- Dribbling Ichor
+		self:StopBar(305048) -- Arcing Current
 	end
 end
 
 function mod:DesensitizingSting(args)
-	local timeToIntermission = intermissionTime - GetTime()
-	if stage == 2 or timeToIntermission > 6 then
-		self:CDBar(args.spellId, 6) -- XXX 15.8 if he stars casting Dribbling Ichor
+	local nextIchorCooldown = nextIchorTime - GetTime()
+	if nextIchorCooldown > 6 then
+		self:CDBar(args.spellId, 6)
+	else
+		self:CDBar(args.spellId, 15.6)
 	end
 end
 
@@ -108,10 +112,7 @@ end
 function mod:IncubationFluid(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	local timeToIntermission = intermissionTime - GetTime()
-	if stage == 2 or timeToIntermission > 32 then
-		self:CDBar(args.spellId, 32)
-	end
+	self:CDBar(args.spellId, 32)
 end
 
 function mod:IncubationFluidApplied(args)
@@ -127,10 +128,7 @@ function mod:ArcingCurrent(args)
 		-- Sound for everyone on mythic, but only the 1 target on non-Mythic
 		self:PlaySound(args.spellId, "warning")
 	end
-	local timeToIntermission = intermissionTime - GetTime()
-	if stage == 2 or timeToIntermission > 30 then
-		self:CDBar(args.spellId, 30)
-	end
+	self:CDBar(args.spellId, 30)
 end
 
 function mod:RAID_BOSS_WHISPER(_, msg)
