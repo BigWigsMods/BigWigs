@@ -23,7 +23,7 @@ local unshackledPowerCount = 1
 local arcaneBombMarker = mod:AddMarkerOption(false, "player", 1, 296737, 1, 2, 3, 4) -- Arcane Bomb
 function mod:GetOptions()
 	return {
-		{296546, "TANK"}, -- Tide Fist
+		{296566, "TANK"}, -- Tide Fist
 		296428, -- Arcanado Burst
 		296459, -- Squall Trap
 		{296737, "SAY", "SAY_COUNTDOWN"}, -- Arcane Bomb
@@ -57,7 +57,7 @@ function mod:OnEngage()
 	self:CDBar(296428, 6) -- Arcanado Burst
 	self:CDBar(296737, 7) -- Arcane Bomb
 	self:CDBar(296894, 10) -- Unshackled Power
-	self:CDBar(296546, 15) -- Tide Fist
+	self:CDBar(296566, 15) -- Tide Fist
 	self:CDBar(296459, 85) -- Squall Trap
 	self:CDBar(295916, 96) -- Ancient Tempest
 end
@@ -77,8 +77,8 @@ function mod:TideFistStart(args)
 end
 
 function mod:TideFistApplied(args)
-	self:TargetMessage2(296546, "purple", args.destName)
-	self:PlaySound(296546, "alert", args.destName)
+	self:TargetMessage2(args.spellId, "purple", args.destName)
+	self:PlaySound(args.spellId, "alert", args.destName)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
@@ -103,7 +103,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:CDBar(296428, 6) -- Arcanado Burst
 		self:CDBar(296737, 7) -- Arcane Bomb
 		self:CDBar(296894, 10) -- Unshackled Power
-		self:CDBar(296546, 15.2) -- Tide Fist
+		self:CDBar(296566, 15.2) -- Tide Fist
 		self:CDBar(296459, 85) -- Squall Trap
 		self:CDBar(295916, 96) -- Ancient Tempest
 	end
@@ -169,7 +169,7 @@ function mod:AncientTempest(args)
 	self:StopBar(296428) -- Arcanado Burst
 	self:StopBar(296737) -- Arcane Bomb
 	self:StopBar(296894) -- Unshackled Power
-	self:StopBar(296546) -- Tide Fist
+	self:StopBar(296566) -- Tide Fist
 
 	self:CDBar(296737, 7) -- Arcane Bomb
 	self:CDBar(296701, 26) -- Gale Buffet
