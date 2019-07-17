@@ -168,16 +168,14 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	local unit, guid = self:GetBossId(153064) -- Overzealous Hulk
 	if unit and not hulkCollection[guid] then
 		hulkCollection[guid] = true
-		self:CDBar(-20480, 85, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
+		self:Message2(-20480, "cyan", self:SpellName(-20480), "achievement_boss_nagabruteboss")
+		self:PlaySound(-20480, "long")
+		self:CDBar(-20480, self:Easy() and 84 or 59, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 298496 then -- Rush Ancient Ward (Overzealous Hulk)
-		self:Message2(-20480, "cyan", self:SpellName(-20480), "achievement_boss_nagabruteboss") -- Overzealous Hulk
-		self:PlaySound("stages", "long")
-		self:CDBar(-20480, 64, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
-	elseif spellId == 297371 then -- Reversal of Fortune
+	if spellId == 297371 then -- Reversal of Fortune
 		self:PlaySound(spellId, "long")
 		self:Message2(spellId, "cyan")
 		self:CDBar(spellId, 80)
