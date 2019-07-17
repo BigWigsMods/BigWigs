@@ -729,20 +729,21 @@ do
 	-- @return unit id if found, nil otherwise
 	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
 
-	--- Fetches a unit id by scanning boss units only.
-	-- @param guid GUID or mob/npc id of the boss to find
+	--- Fetches a unit id by scanning boss units 1 to 5 only.
+	-- @param guid Either the GUID or the mob/npc id of the boss unit to find
 	-- @return unit id if found, nil otherwise
+	-- @return guid if found, nil otherwise
 	function boss:GetBossId(id)
 		local isNumber = type(id) == "number"
 		for i = 1, 5 do
 			local unit = unitTable[i]
 			local guid = UnitGUID(unit)
 			if id == guid then
-				return unit
+				return unit, guid
 			elseif guid and isNumber then
 				local _, _, _, _, _, mobId = strsplit("-", guid)
 				if id == tonumber(mobId) then
-					return unit
+					return unit, guid
 				end
 			end
 		end
