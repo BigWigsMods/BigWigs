@@ -21,6 +21,7 @@ mod.respawnTime = 30
 
 local stage = 1
 local portalCount = 1
+local hulkCollection = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -149,17 +150,27 @@ end
 function mod:OnEngage()
 	stage = 1
 	portalCount = 1
+	hulkCollection = {}
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
 	self:CDBar(297937, 14.2) -- Painful Memories
 	self:CDBar(298121, 18.5) -- Lightning Orbs
 	self:Bar(299094, 49.5) -- Beckon
 	self:Bar(298787, 65) -- Arcane Orbs
-	--self:CDBar(-20480, 64, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
+	self:CDBar(-20480, 35, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	local unit, guid = GetBossId(153064) -- Overzealous Hulk
+	if unit and not hulkCollection[guid] then
+		hulkCollection[guid] = true
+		self:CDBar(-20480, 85, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
+	end
+end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 298496 then -- Rush Ancient Ward (Overzealous Hulk)
