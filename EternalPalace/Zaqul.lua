@@ -52,6 +52,8 @@ function mod:GetOptions()
 		[304733] = CL.stage:format(3),
 		[303971] = CL.stage:format(4),
 		[295814] = CL.mythic,
+	},{
+		[301141] = self:SpellName(285205), -- Crushing Grasp (Tentacle)
 	}
 end
 
@@ -96,7 +98,7 @@ function mod:OnEngage()
 	self:CDBar(295444, 5.5) -- Mind Tether
 	self:CDBar(292963, 14.2) -- Dread
 	self:CDBar(294535, 20) -- Portal of Madness
-	self:CDBar(301141, 30.5) -- Crushing Grasp
+	self:CDBar(301141, 30.5, self:SpellName(285205)) -- Crushing Grasp (Tentacle)
 end
 
 --------------------------------------------------------------------------------
@@ -137,7 +139,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:CDBar(296018, 15) -- Manic Dread
 		self:Bar(299702, 84) -- Portal of Madness
 		self:Bar(292996, 34) -- Maddening Eruption
-		self:CDBar(301141, 30.5) -- Crushing Grasp
+		self:CDBar(301141, 30.5, self:SpellName(285205)) -- Crushing Grasp (Tentacle)
 
 		if self:Mythic() then
 			self:Bar(295814, 45) -- Psychotic Split
@@ -177,10 +179,10 @@ function mod:MindTetherApplied(args) -- XXX Make it better perhaps? this is very
 	end
 end
 
-function mod:CrushingGrasp(args)
-	self:Message2(args.spellId, "orange")
+function mod:CrushingGrasp(args) -- Tentacle
+	self:Message2(args.spellId, "orange", self:SpellName(285205))
 	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, 31.5)
+	self:CDBar(args.spellId, 31.5, self:SpellName(285205))
 	--self:CastBar(args.spellId, 8) XXX Mythic has 3 casts, figure out a clever way if needed
 end
 
