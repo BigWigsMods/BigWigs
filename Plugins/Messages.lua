@@ -348,7 +348,6 @@ plugin.pluginOptions.args.more = {
 				CENTER = L.center,
 				RIGHT = L.right,
 			},
-			width = "half",
 			style = "radio",
 			order = 3,
 		},
