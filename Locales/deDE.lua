@@ -17,6 +17,7 @@ L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
 L.disabledAddOn = "Du hast das Addon |cFF436EEE%s|r deaktiviert, Timer werden nicht angezeigt."
+L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 L.activeBossModules = "Aktive Bossmodule:"
 L.advanced = "Erweiterte Optionen"

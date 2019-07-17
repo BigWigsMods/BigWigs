@@ -37,6 +37,7 @@ L.missingAddOn = "이 지역에서 타이머를 표시하려면 |cFF436EEE%s|r �
 L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이머를 표시할 수 없습니다."
 
 L.removeAddon = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체되었으므로 제거해주세요."
+L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 -- Media.lua
 L.Beware = "조심해라 (알갈론)"

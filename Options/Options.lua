@@ -2,18 +2,6 @@
 local BigWigs = BigWigs
 local options = {}
 
-local colorize = nil
-do
-	local r, g, b
-	colorize = setmetatable({}, { __index =
-		function(self, key)
-			if not r then r, g, b = GameFontNormal:GetTextColor() end
-			self[key] = ("|cff%02x%02x%02x%s|r"):format(r * 255, g * 255, b * 255, key)
-			return self[key]
-		end
-	})
-end
-
 local C = BigWigs.C
 
 local L = BigWigsAPI:GetLocale("BigWigs")
@@ -330,6 +318,9 @@ local function masterOptionToggled(self, event, value)
 			scrollFrame:PerformLayout()
 		end
 	end
+
+	-- After :SetValue so it's not overwritten
+	self.text:SetTextColor(1, 0.82, 0)
 end
 
 local function slaveOptionToggled(self, event, value)
@@ -343,6 +334,10 @@ local function slaveOptionToggled(self, event, value)
 		module.db.profile[key] = module.db.profile[key] - flag
 	end
 	master:SetValue(getMasterOption(master))
+
+	-- After :SetValue so it's not overwritten
+	master.text:SetTextColor(1, 0.82, 0)
+	self.text:SetTextColor(1, 0.82, 0)
 end
 
 local function slaveOptionMouseOver(self, event, value)
@@ -357,7 +352,7 @@ end
 
 local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 	local toggle = AceGUI:Create("CheckBox")
-	toggle:SetLabel(colorize[label])
+	toggle:SetLabel(label)
 	-- Flags to have at half width
 	if flag == C.PULSE or flag == C.CASTBAR then
 		toggle:SetRelativeWidth(0.5)
@@ -380,6 +375,7 @@ local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 	toggle:SetCallback("OnEnter", slaveOptionMouseOver)
 	toggle:SetCallback("OnLeave", slaveOptionMouseLeave)
 	toggle:SetValue(getSlaveOption(toggle))
+	toggle.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
 	return toggle
 end
 
@@ -511,18 +507,17 @@ local advancedTabs = {
 }
 
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
 	back:SetText(L.back)
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
 		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
 	end)
-	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(colorize[name])
-	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
-	check:SetTriState(true)
 
+	local check = AceGUI:Create("CheckBox")
+	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
+	check:SetTriState(true)
 	check:SetFullWidth(true)
 	check:SetDescription(desc)
 	check:SetUserData("key", dbKey)
@@ -532,6 +527,10 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetUserData("option", bossOption)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
+	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
+	if icon then
+		check:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
+	end
 
 	-- Create role-specific secondary checkbox
 	local roleRestrictionCheckbox = nil
@@ -619,10 +618,10 @@ local function flagOnLeave()
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(colorize[name])
+	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
 	check:SetTriState(true)
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
@@ -632,6 +631,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetDescription(desc)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
+	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
 	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 
 	local spellId = nil

@@ -17,6 +17,7 @@ L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
 L.disabledAddOn = "L'addon |cFF436EEE%s|r est désactivé, les délais ne seront pas affichés."
+L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 L.activeBossModules = "Modules de boss actifs :"
 L.advanced = "Options avancées"

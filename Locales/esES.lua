@@ -37,6 +37,7 @@ L.missingAddOn  = "Tenga en cuenta que esta zona requiere el plugin |cFF436EEE%s
 L.disabledAddOn  = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores no se mostraran."
 
 L.removeAddon  = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
+L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 -- Media.lua
 L.Beware = "Cuidado (Algalon)"

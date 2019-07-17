@@ -17,6 +17,7 @@ L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
 L.disabledAddOn = "У вас выключена модификация |cFF436EEE%s|r, таймеры не будут показываться."
+L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 L.activeBossModules = "Активные модули боссов:"
 L.advanced = "Дополнительные настройки"

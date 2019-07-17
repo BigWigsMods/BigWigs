@@ -17,6 +17,7 @@ if not L then return end
 --L.INFOBOX_desc = L.infobox_desc
 
 --L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
+L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 L.activeBossModules = "Moduli dei Combattimenti Attivi:"
 L.advanced = "Opzioni Avanzate"
