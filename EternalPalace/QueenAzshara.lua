@@ -13,7 +13,7 @@ local mod, CL = BigWigs:NewBoss("Queen Azshara", 2164, 2361)
 if not mod then return end
 mod:RegisterEnableMob(152910, 153059, 153060) -- Queen Azshara, Aethanel, Cyranus
 mod.engageId = 2299
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Local

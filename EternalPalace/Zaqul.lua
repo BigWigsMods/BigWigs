@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Za'qul, Herald of Ny'alotha", 2164, 2349)
 if not mod then return end
 mod:RegisterEnableMob(150859) -- Za'qul
 mod.engageId = 2293
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals

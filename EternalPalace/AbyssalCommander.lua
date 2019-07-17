@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Abyssal Commander Sivara", 2164, 2352)
 if not mod then return end
 mod:RegisterEnableMob(151881) -- Abyssal Commander Sivara
 mod.engageId = 2298
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Initialization

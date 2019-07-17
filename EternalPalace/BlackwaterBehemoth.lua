@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Blackwater Behemoth", 2164, 2347)
 if not mod then return end
 mod:RegisterEnableMob(150653) -- Blackwater Behemoth
 mod.engageId = 2289
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Local

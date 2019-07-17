@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("The Queen's Court", 2164, 2359)
 if not mod then return end
 mod:RegisterEnableMob(152853, 152852) -- Silivaz the Zealous, Pashmar the Fanatical
 mod.engageId = 2311
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals

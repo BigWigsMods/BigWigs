@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Orgozoa", 2164, 2351)
 if not mod then return end
 mod:RegisterEnableMob(152128) -- Orgozoa
 mod.engageId = 2303
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Local
