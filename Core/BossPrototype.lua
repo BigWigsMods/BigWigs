@@ -183,7 +183,7 @@ boss.otherMenu = nil
 
 --- Check if a module option is enabled.
 -- This is a wrapper around the self.db.profile[key] table.
--- @return boolean
+-- @return boolean or number, depending on option type
 function boss:GetOption(key)
 	return self.db.profile[key]
 end
@@ -584,7 +584,7 @@ do
 	local noID = "Module '%s' tried to register/unregister a widget event without specifying a widget id."
 	local noFunc = "Module '%s' tried to register a widget event with the function '%s' which doesn't exist in the module."
 
-	local GetIconAndTextWidgetVisualizationInfo = C_UIWidgetManager and C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo
+	local GetIconAndTextWidgetVisualizationInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo
 	function boss:UPDATE_UI_WIDGET(_, tbl)
 		local id = tbl.widgetID
 		local func = widgetEventMap[self][id]
@@ -618,7 +618,6 @@ end
 
 -------------------------------------------------------------------------------
 -- Engage / wipe checking + unit scanning
--- @section engage_status
 --
 
 do
@@ -629,13 +628,13 @@ do
 		end
 	end
 
-	--- Start checking for a wipe.
+	-- Start checking for a wipe.
 	-- Starts a repeating timer checking IsEncounterInProgress() and reboots the module if false.
 	function boss:StartWipeCheck()
 		self:StopWipeCheck()
 		self.isWiping = self:ScheduleRepeatingTimer(wipeCheck, 1, self)
 	end
-	--- Stop checking for a wipe.
+	-- Stop checking for a wipe.
 	-- Stops the repeating timer checking IsEncounterInProgress() if it is running.
 	function boss:StopWipeCheck()
 		if self.isWiping then
@@ -644,10 +643,10 @@ do
 		end
 	end
 
-	--- Update module engage status from querying boss units.
+	-- Update module engage status from querying boss units.
 	-- Engages modules if boss1-boss5 matches an registered enabled mob,
 	-- disables the module if set as engaged but has no boss match.
-	-- @string noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
+	-- noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
 	function boss:CheckForEncounterEngage(noEngage)
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
 		if not self.isEngaged and hasBoss then
@@ -672,8 +671,7 @@ do
 		end
 	end
 
-	--- Query boss units to update engage status.
-	-- @see CheckForEncounterEngage
+	-- Query boss units to update engage status.
 	function boss:CheckBossStatus()
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
 		if not hasBoss and self.isEngaged then
@@ -1041,7 +1039,7 @@ end
 
 --- Get the mob/npc id from a GUID.
 -- @string guid GUID of a mob/npc
--- @return mob id
+-- @return mob/npc id
 function boss:MobId(guid)
 	if not guid then return 1 end
 	local _, _, _, _, _, id = strsplit("-", guid)
@@ -1346,7 +1344,8 @@ do
 	end
 	--- Check if you can interrupt.
 	-- @string[opt] guid if not nil, will only return true if the GUID matches your target or focus.
-	-- @return boolean
+	-- @return boolean, if the unit can interrupt
+	-- @return boolean, if the interrupt is off cooldown and ready to use
 	function boss:Interrupter(guid)
 		if canInterrupt then
 			local ready = true
@@ -1440,6 +1439,7 @@ do
 	--- Check if an option has a flag set.
 	-- @param key the option key
 	-- @string flag the option flag
+	-- @return boolean
 	function boss:CheckOption(key, flag)
 		return checkFlag(self, key, C[flag])
 	end
@@ -1669,6 +1669,11 @@ function boss:Message2(key, color, text, icon)
 	end
 end
 
+--- Display a personal message in blue.
+-- @param key the option key
+-- @string localeString if nil then the "%s on YOU" string will be used, otherwise the common locale will be referenced via CL[localeString]
+-- @param[opt] text the message text (if nil, key is used)
+-- @param[opt] icon the message icon (spell id or texture name)
 function boss:PersonalMessage(key, localeString, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local str = localeString and L[localeString] or L.you
@@ -1920,7 +1925,7 @@ do
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
 	-- @number[opt] customTime how long to wait to reach the max players in the table. If the max is not reached, it will print after this value (0.3s is used if nil)
-	-- @param[opt] markers a table containing the markers that should be attached next to the player names
+	-- @param[opt] markers a table containing the markers that should be attached next to the player names e.g. {1, 2, 3}
 	function boss:TargetsMessage(key, color, playerTable, playerCount, text, icon, customTime, markers)
 		local playersInTable = #playerTable
 		if playersInTable == playerCount then
@@ -2374,6 +2379,9 @@ do
 			end
 		end
 	else
+		--- Return a string as a formatted abbreviated number.
+		-- @number amount the number you wish to abbreviate
+		-- @return string the formatted string e.g. 10M or 10K
 		function boss:AbbreviateNumber(amount)
 			if amount >= 1000000000 then -- 1,000,000,000
 				return format(L.amount_one, amount/1000000000)
