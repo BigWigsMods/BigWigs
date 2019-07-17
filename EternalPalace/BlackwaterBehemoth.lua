@@ -159,7 +159,7 @@ end
 function mod:PiercingBarb(args)
 	local timeToIntermission = intermissionTime - GetTime()
 	if stage == 3 or timeToIntermission > 30 then
-		self:Bar(301494, 30)
+		self:Bar(args.spellId, 30)
 	end
 end
 
