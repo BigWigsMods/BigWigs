@@ -50,7 +50,7 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	nextAncientTempest = GetTime() + 96
+	nextAncientTempest = GetTime() + 95.5
 
 	self:CDBar(296428, 6) -- Arcanado Burst
 	self:CDBar(296737, 7) -- Arcane Bomb
