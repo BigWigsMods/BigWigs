@@ -504,24 +504,21 @@ do
 		BWMessageFrame:Show()
 
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
+		local slotIcon = slot.icon
 		slot:SetText(text)
 		slot:SetTextColor(r, g, b, 1)
-		local height = db.fontSize
-		slot:SetHeight(height)
 
 		if icon then
-			slot.icon:SetWidth(height)
-			slot.icon:SetHeight(height)
-			slot.icon:SetTexture(icon)
-			slot.icon.anim:Stop()
-			slot.icon:Show()
-			slot.icon.anim:Play()
+			slotIcon:SetTexture(icon)
+			slotIcon.anim:Stop()
+			slotIcon:Show()
+			slotIcon.anim:Play()
 		else
-			slot.icon:Hide()
+			slotIcon:Hide()
 		end
 		slot.anim:Stop()
 		slot:SetAlpha(1)
-		slot.icon:SetAlpha(1)
+		slotIcon:SetAlpha(1)
 		slot.elapsed = 0
 		slot.anim:SetScript("OnUpdate", bounceAnimation)
 		slot:Show()
