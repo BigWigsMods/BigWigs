@@ -14,6 +14,8 @@ mod.respawnTime = 30
 
 local stage = 1
 local barnacleBashCount = 1
+local upsurgeCount = 1
+local ripplingWaveCount = 1
 local nextCarapace = 0
 local arcingAzeriteCount = 1
 local raidList = {}
@@ -55,7 +57,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 302992, 297397) -- Normal, etc
 	self:Log("SPELL_AURA_REMOVED", "BrinyBubbleRemoved", 302992, 297397)
 	self:Log("SPELL_CAST_SUCCESS", "Upsurge", 298056)
-	self:Log("SPELL_CAST_SUCCESS", "BarnacleBash", 296725)
+	self:Log("SPELL_CAST_START", "BarnacleBash", 296725)
 	self:Log("SPELL_AURA_APPLIED", "BarnacleBashApplied", 296725)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarnacleBashApplied", 296725)
 	self:Log("SPELL_AURA_REMOVED", "HardenedCarapaceRemoved", 296650)
@@ -74,10 +76,12 @@ end
 
 function mod:OnEngage()
 	barnacleBashCount = 1
+	upsurgeCount = 1
+	ripplingWaveCount = 1
 
 	self:CDBar(298056, 2.5) -- Upsurge
-	self:CDBar(296725, 8) -- Barnacle Bash
-	self:Bar(296662, 15) -- Rippling Wave
+	self:CDBar(296725, 7) -- Barnacle Bash
+	self:Bar(296662, 15, CL.count:format(self:SpellName(296662), ripplingWaveCount)) -- Rippling Wave
 	self:Bar(297397, 39) -- Briny Bubble
 
 	if self:GetOption(arcingAzeriteMarker) then
@@ -90,9 +94,11 @@ end
 --
 
 function mod:RipplingWave(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, ripplingWaveCount))
 	self:PlaySound(args.spellId, "long")
-	self:CDBar(args.spellId, 30)
+	self:StopBar(CL.count:format(args.spellName, ripplingWaveCount)) -- Rippling Wave
+	ripplingWaveCount = ripplingWaveCount + 1
+	self:CDBar(args.spellId, 30, CL.count:format(args.spellName, ripplingWaveCount))
 end
 
 do
@@ -125,7 +131,8 @@ end
 function mod:Upsurge(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	local cd = 15
+	upsurgeCount = upsurgeCount + 1
+	local cd = stage == 1 and (upsurgeCount % 2 == 1 and 30 or 15) or upsurgeCount < 3 and 44 -- Stage 1: 30/15 Alternating, Stage 2 44
 	local nextCarapaceCD = nextCarapace - GetTime()
 	if stage == 1 or nextCarapaceCD > cd then
 		self:CDBar(args.spellId, cd)
@@ -153,15 +160,16 @@ function mod:HardenedCarapaceRemoved(args)
 
 	arcingAzeriteCount = 1
 	barnacleBashCount = 1
+	upsurgeCount = 1
 
 	self:StopBar(298056) -- Upsurge
 	self:StopBar(296725) -- Barnacle Bash
-	self:StopBar(296662) -- Rippling Wave
+	self:StopBar(CL.count:format(self:SpellName(296662), ripplingWaveCount)) -- Rippling Wave
 	self:StopBar(296569) -- Coral Growth
 	self:StopBar(297397) -- Briny Bubble
 
-	self:CDBar(296725, 12.5) -- Barnacle Bash
-	self:CDBar(298056, 17.6) -- Upsurge
+	self:CDBar(296725, 13.4) -- Barnacle Bash
+	self:CDBar(298056, 17.4) -- Upsurge
 	self:Bar(-20096, 20.5) -- Arcing Azerite
 	self:Bar(297397, 38.6) -- Briny Bubble
 
@@ -328,13 +336,15 @@ function mod:HardenedCarapaceApplied(args)
 		self:PlaySound("stages", "long")
 
 		barnacleBashCount = 1
+		upsurgeCount = 1
+		ripplingWaveCount = 1
 
 		self:StopBar(296725) -- Barnacle Bash
 		self:StopBar(297397) -- Crushing Depths
 
 		self:CDBar(296725, 10.9) -- Barnacle Bash
 		self:CDBar(298056, 12.9) -- Upsurge
-		self:Bar(296662, 18.9) -- Rippling Wave
+		self:Bar(296662, 18.9, CL.count:format(self:SpellName(296662), ripplingWaveCount)) -- Rippling Wave
 		self:Bar(297397, 40.9) -- Briny Bubble
 	end
 end
