@@ -1,11 +1,11 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "frFR")
 if not L then return end
 
-L.getNewRelease = "Votre BigWigs est ancien (/bwv), mais vous pouvez facilement le mettre à jour en utilisant le client Twitch. Vous pouvez également le mettre à jour à partir de curse.com ou wowinterface.com."
+L.getNewRelease = "Votre BigWigs est ancien (/bwv), mais vous pouvez facilement le mettre à jour en utilisant le client Twitch. Vous pouvez également le mettre à jour à partir de curseforge.com ou wowinterface.com."
 L.warnTwoReleases = "Votre BigWigs est obsolète de 2 versions ! Votre version risque de contenir des bugs, des fonctionnalités manquantes, voire même des délais totalement incorrects. Il est recommandé de faire la mise à jour."
 L.warnSeveralReleases = "|cffff0000Votre BigWigs est %d versions derrière la plus récente !! Il est VIVEMENT recommandé d'effectuer la mise à jour afin d'éviter tout problème de synchronisation avec les autres joueurs !|r"
 
-L.gitHubDesc = "BigWigs est un logiciel open source hébergé sur GitHub. Nous sommes toujours à la recherche de nouvelles personnes pour nous aider et tout le monde est le bienvenu pour inspecter notre code, effectuer des contributions et soumettre des rapports de bogues. BigWigs existe en grande partie grâce à l'aide précieuse de la communauté de WoW.\n\n|cFF33FF99Notre API est désormais documentée et librement consultable sur le wiki GitHub.|r"
+L.gitHubDesc = "BigWigs est un logiciel open source hébergé sur GitHub. Nous sommes toujours à la recherche de nouvelles personnes pour nous aider et tout le monde est le bienvenu pour inspecter notre code, effectuer des contributions et soumettre des rapports de bogues. BigWigs existe en grande partie grâce à l'aide précieuse de la communauté de WoW."
 
 L.options = "Options"
 L.raidBosses = "Boss de raid"

@@ -19,7 +19,7 @@ L.already_registered = "|cffff0000ATENÇÃO:|r |cff00ff00%s|r (|cffffff00%s|r) j
 L.officialRelease = "Você está executando uma versão oficial do BigWigs %s (%s)"
 L.alphaRelease = "Você está executando uma versão ALPHA do BigWigs %s (%s)"
 L.sourceCheckout = "Você está executando uma cópia de código do BigWigs %s diretamente do repositório."
-L.getNewRelease = "Seu BigWigs está desatualizado (/bwv) mas você pode facilmente atualizá-lo usando o Twitch Client. Como alternativa, você pode atualizar manualmente em curse.com ou wowinterface.com."
+L.getNewRelease = "Seu BigWigs está desatualizado (/bwv) mas você pode facilmente atualizá-lo usando o Twitch Client. Como alternativa, você pode atualizar manualmente em curseforge.com ou wowinterface.com."
 L.warnTwoReleases = "Seu BigWigs está 2 versões desatualizado! Sua versão provavelmente contém bugs, faltam funcionalidades, ou possui contadores incorretos. É extremamente recomendado uma atualização."
 L.warnSeveralReleases = "|cffff0000Seu BigWigs está %d versões desatualizado!! Nós recomendamos EXTREMAMENTE a atualização para prevenir problemas de sincronização com outros jogadores!|r"
 
@@ -80,7 +80,7 @@ L.slashDescRange = "|cFFFED000/range:|r Abre o indicador de distância."
 L.slashDescVersion = "|cFFFED000/bwv:|r Realiza uma verificação da versão do BigWigs."
 L.slashDescConfig = "|cFFFED000/bw:|r Abre a configuração do BigWigs."
 
-L.gitHubDesc = "BigWigs é um software de código aberto hospedado no GitHub. Nós sempre estamos procurando por novas pessoas para ajudar e todos são bem-vindos para dar uma olhada no nosso código, fazer contribuições e reportar erros. BigWigs é incrível como é hoje, na maioria das vezes, devido a toda comunidade do WoW que nos ajuda.\n\n|cFF33FF99Nossa API agora é documentada e aberta para leitura na wiki do GitHub.|r"
+L.gitHubDesc = "BigWigs é um software de código aberto hospedado no GitHub. Nós sempre estamos procurando por novas pessoas para ajudar e todos são bem-vindos para dar uma olhada no nosso código, fazer contribuições e reportar erros. BigWigs é incrível como é hoje, na maioria das vezes, devido a toda comunidade do WoW que nos ajuda."
 
 L.BAR = "Barras"
 L.MESSAGE = "Mensagens"
