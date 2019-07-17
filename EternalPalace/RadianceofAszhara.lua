@@ -14,7 +14,6 @@ mod.respawnTime = 30
 
 local stage = 1
 local nextAncientTempest = nil
-local unshackledPowerCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -51,7 +50,6 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	unshackledPowerCount = 1
 	nextAncientTempest = GetTime() + 96
 
 	self:CDBar(296428, 6) -- Arcanado Burst
@@ -59,7 +57,7 @@ function mod:OnEngage()
 	self:CDBar(296894, 10) -- Unshackled Power
 	self:CDBar(296566, 15) -- Tide Fist
 	self:CDBar(296459, 85) -- Squall Trap
-	self:CDBar(295916, 96) -- Ancient Tempest
+	self:CDBar(295916, 95.5) -- Ancient Tempest
 end
 
 --------------------------------------------------------------------------------
@@ -97,7 +95,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(296701) -- Gale Buffet
 
 		stage = 1
-		unshackledPowerCount = 1
 		nextAncientTempest = GetTime() + 96
 
 		self:CDBar(296428, 6) -- Arcanado Burst
@@ -152,8 +149,7 @@ end
 function mod:UnshackledPower(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	unshackledPowerCount = unshackledPowerCount + 1
-	local cd = unshackledPowerCount == 3 and 9 or 17
+	local cd = 18
 	local nextAncientTempestCD = nextAncientTempest - GetTime()
 	if nextAncientTempestCD > cd then
 		self:CDBar(args.spellId, cd)
@@ -178,5 +174,5 @@ end
 function mod:GaleBuffet(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, 23)
+	self:CDBar(args.spellId, self:Mythic() and 22.2 or 23)
 end
