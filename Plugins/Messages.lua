@@ -263,6 +263,8 @@ local function updateProfile()
 		font.icon.animFade:SetStartDelay(db.displaytime)
 		font.animFade:SetDuration(db.fadetime)
 		font.icon.animFade:SetDuration(db.fadetime)
+		font.icon:SetSize(db.fontSize, db.fontSize)
+		font:SetHeight(db.fontSize)
 		font:SetFont(media:Fetch(FONT, db.fontName), db.fontSize, flags)
 	end
 end
@@ -504,12 +506,12 @@ do
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
 		slot:SetText(text)
 		slot:SetTextColor(r, g, b, 1)
-		slot:SetHeight(slot:GetStringHeight())
+		local height = db.fontSize
+		slot:SetHeight(height)
 
 		if icon then
-			local h = slot:GetHeight()
-			slot.icon:SetWidth(h)
-			slot.icon:SetHeight(h)
+			slot.icon:SetWidth(height)
+			slot.icon:SetHeight(height)
 			slot.icon:SetTexture(icon)
 			slot.icon.anim:Stop()
 			slot.icon:Show()
