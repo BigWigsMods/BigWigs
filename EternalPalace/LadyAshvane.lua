@@ -152,6 +152,7 @@ function mod:HardenedCarapaceRemoved(args)
 	self:PlaySound("stages", "long")
 
 	arcingAzeriteCount = 1
+	barnacleBashCount = 1
 
 	self:StopBar(298056) -- Upsurge
 	self:StopBar(296725) -- Barnacle Bash
