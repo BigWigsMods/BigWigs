@@ -165,7 +165,7 @@ end
 --
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	local unit, guid = GetBossId(153064) -- Overzealous Hulk
+	local unit, guid = self:GetBossId(153064) -- Overzealous Hulk
 	if unit and not hulkCollection[guid] then
 		hulkCollection[guid] = true
 		self:CDBar(-20480, 85, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
