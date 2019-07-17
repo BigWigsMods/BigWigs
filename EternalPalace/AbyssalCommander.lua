@@ -43,10 +43,10 @@ end
 
 function mod:OnEngage()
 	self:CDBar(295332, 11) -- Crushing Reverberation
-	self:Bar(-20006, 16) -- Overflow
+	self:Bar(-20006, self:Mythic() and 19 or 16) -- Overflow
 	self:Bar(296551, 40) -- Overwhelming Barrage
-	self:Bar(295601, 53) -- Frostshock Bolts
-	self:Bar(295791, 70) -- Inversion
+	self:CDBar(295601, 50) -- Frostshock Bolts
+	self:CDBar(295791, 70) -- Inversion
 end
 
 --------------------------------------------------------------------------------
@@ -84,7 +84,7 @@ end
 function mod:CrushingReverberation(args)
 	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 23)
+	self:CDBar(args.spellId, self:Mythic() and 29 or 23) -- XXX review all dificulties for what causes the variance
 end
 
 function mod:FrostvenomTippedApplied(args)
@@ -119,11 +119,11 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(-20006, "alarm")
 			self:Say(-20006, args.spellName)
-			self:SayCountdown(-20006, 7)
+			self:SayCountdown(-20006, self:Mythic() and 6 or 7)
 			self:Flash(-20006)
 		end
 		if #playerList == 1 then
-			self:CDBar(-20006, 30) -- XXX Check if this is always the case: 16.8, 33, 40, 40, 30, 30, 35, 30
+			self:CDBar(-20006, self:Mythic() and 40 or 30) -- XXX Check if this is always the case: 16.8, 33, 40, 40, 30, 30, 35, 30
 		end
 		self:TargetsMessage(-20006, "yellow", playerList)
 	end
@@ -137,7 +137,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 295601 then -- Frostshock Bolts
-		self:Bar(spellId, 80)
+		self:CDBar(spellId, 80) -- XXX as low as 75?
 	end
 end
 
