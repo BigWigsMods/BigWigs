@@ -54,8 +54,8 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RipplingWave", 296662)
-	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 302992, 297397) -- Normal, etc
-	self:Log("SPELL_AURA_REMOVED", "BrinyBubbleRemoved", 302992, 297397)
+	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 302989, 297397) -- Normal, etc
+	self:Log("SPELL_AURA_REMOVED", "BrinyBubbleRemoved", 302989, 297397)
 	self:Log("SPELL_CAST_SUCCESS", "Upsurge", 298056)
 	self:Log("SPELL_CAST_START", "BarnacleBash", 296725)
 	self:Log("SPELL_AURA_APPLIED", "BarnacleBashApplied", 296725)
@@ -132,7 +132,7 @@ function mod:Upsurge(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	upsurgeCount = upsurgeCount + 1
-	local cd = stage == 1 and (upsurgeCount % 2 == 1 and 30 or 15) or upsurgeCount < 3 and 44 -- Stage 1: 30/15 Alternating, Stage 2 44
+	local cd = stage == 1 and (upsurgeCount % 2 == 1 and 30 or 15) or 44 -- Stage 1: 30/15 Alternating, Stage 2 44
 	local nextCarapaceCD = nextCarapace - GetTime()
 	if stage == 1 or nextCarapaceCD > cd then
 		self:CDBar(args.spellId, cd)
