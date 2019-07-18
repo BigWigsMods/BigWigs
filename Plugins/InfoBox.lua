@@ -315,11 +315,19 @@ do
 			return px > py
 		end
 	end
+	local function sortFuncReverse(x,y)
+		local px, py = sortingTbl[x] or -1, sortingTbl[y] or -1
+		if px == py then
+			return x > y
+		else
+			return px < py
+		end
+	end
 	local tsort = table.sort
 	local colors = plugin:GetColoredNameTable()
-	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl)
+	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl, reverseOrder)
 		sortingTbl = tbl
-		tsort(nameList, sortFunc)
+		tsort(nameList, reverseOrder and sortFuncReverse or sortFunc)
 		local line = 1
 		for i = 1, 5 do
 			local n = nameList[i]
