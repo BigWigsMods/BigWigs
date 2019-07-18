@@ -303,7 +303,8 @@ local function masterOptionToggled(self, event, value)
 		module.db.profile[key] = value or false
 	else
 		if value then
-			module.db.profile[key] = module.toggleDefaults[key]
+			-- If an option is disabled by default using the "OFF" toggle flag, then when we turn it on, we want all the default flags on also
+			module.db.profile[key] = module.toggleDisabled and module.toggleDisabled[key] or module.toggleDefaults[key]
 		else
 			module.db.profile[key] = 0
 		end
@@ -409,7 +410,7 @@ local function hasOptionFlag(dbKey, module, key)
 end
 
 local function advancedToggles(dbKey, module, check)
-	local dbv = module.toggleDefaults[dbKey]
+	local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
 	local advancedOptions = {}
 
 	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
@@ -536,7 +537,8 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local roleRestrictionCheckbox = nil
 	for i, key in next, BigWigs:GetRoleOptions() do
 		local flag = C[key]
-		if bit.band(module.toggleDefaults[dbKey], flag) == flag then
+		local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
+		if bit.band(dbv, flag) == flag then
 			local roleName, roleDesc = BigWigs:GetOptionDetails(key)
 			roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check)
 		end
