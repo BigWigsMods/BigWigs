@@ -69,11 +69,11 @@ function mod:OnEngage()
 
 	self:CDBar(298156, 3.5) -- Desensitizing Sting
 	self:CDBar(298242, 17.5) -- Incubation Fluid
-	nextIchorTime = GetTime() + self:Mythic() and 28.5 or 25
+	nextIchorTime = GetTime() + (self:Mythic() and 28.5 or 25)
 	self:CDBar(298103, self:Mythic() and 28.5 or 25) -- Dribbling Ichor
 	self:CDBar(305048, self:Mythic() and 40 or 36, CL.count:format(self:SpellName(305048), arcingCount)) -- Arcing Current
 
-	if self:Mythic() then 
+	if self:Mythic() then
 		self:CDBar(305057, 20) -- Call of the Tender
 	end
 end
