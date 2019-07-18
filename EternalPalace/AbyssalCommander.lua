@@ -9,12 +9,18 @@ mod.engageId = 2298
 mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local markList = {}
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
 function mod:GetOptions()
 	return {
-		{294726, "FLASH", "PULSE"}, -- Chimeric Marks
+		{294726, "FLASH", "PULSE", "INFOBOX"}, -- Chimeric Marks
 		295332, -- Crushing Reverberation
 		{-20300, "SAY_COUNTDOWN"}, -- Frostvenom Tipped
 		296551, -- Overwhelming Barrage
@@ -27,6 +33,8 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ToxicBrandApplied", 294715)
 	self:Log("SPELL_AURA_APPLIED", "FrostMarkApplied", 294711)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "MarkAppliedDose", 294715, 294711)
+	self:Log("SPELL_AURA_REMOVED", "MarkRemoved", 294715, 294711)
 	self:Log("SPELL_CAST_START", "CrushingReverberation", 295332)
 	self:Log("SPELL_AURA_APPLIED", "FrostvenomTippedApplied", 300701, 300705) -- Rimefrost, Septic Taint
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrostvenomTippedApplied", 300701, 300705)
@@ -42,11 +50,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	markList = {}
 	self:CDBar(295332, 11) -- Crushing Reverberation
 	self:Bar(-20006, self:Mythic() and 19 or 16) -- Overflow
 	self:Bar(296551, 40) -- Overwhelming Barrage
 	self:CDBar(295601, 50) -- Frostshock Bolts
 	self:CDBar(295791, 70) -- Inversion
+	self:OpenInfo(294726, self:SpellName(294726)) -- Chimeric Marks
 end
 
 --------------------------------------------------------------------------------
@@ -79,6 +89,16 @@ do
 			end
 		end
 	end
+end
+
+function mod:MarkAppliedDose(args)
+	markList[args.destName] = args.amount
+	self:SetInfoByTable(294726, markList)
+end
+
+function mod:MarkRemoved(args)
+	markList[args.destName] = nil
+	self:SetInfoByTable(294726, markList)
 end
 
 function mod:CrushingReverberation(args)
