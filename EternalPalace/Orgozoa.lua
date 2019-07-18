@@ -14,6 +14,7 @@ mod.respawnTime = 30
 
 local stage = 1
 local nextIchorTime = 0
+local arcingCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -31,6 +32,7 @@ function mod:GetOptions()
 		{295779, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Aqua Lance
 		295822, -- Conductive Pulse
 		296691, -- Powerful Stomp
+		305057, -- Call of the Tender
 	}
 end
 
@@ -42,7 +44,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DesensitizingStingApplied", 298156)
 	self:Log("SPELL_CAST_SUCCESS", "IncubationFluid", 298242)
 	self:Log("SPELL_AURA_APPLIED", "IncubationFluidApplied", 298306)
-	self:Log("SPELL_CAST_START", "ArcingCurrent", 305048)
+	self:Log("SPELL_CAST_START", "ArcingCurrent", 305048, 305857)
 	self:RegisterEvent("RAID_BOSS_WHISPER") -- Arcing Current
 
 	-- Adds
@@ -56,17 +58,24 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "AquaLanceRemoved", 295779)
 	self:Log("SPELL_CAST_START", "ConductivePulse", 295822)
 	self:Log("SPELL_CAST_START", "PowerfulStomp", 296691)
+
+	-- Mythic
+	self:Log("SPELL_CAST_SUCCESS", "CalloftheTender", 305057)
 end
 
 function mod:OnEngage()
 	stage = 1
+	arcingCount = 1
 
 	self:CDBar(298156, 3.5) -- Desensitizing Sting
 	self:CDBar(298242, 17.5) -- Incubation Fluid
-	self:CDBar(298103, 25) -- Dribbling Ichor
-	self:CDBar(305048, 36) -- Arcing Current
+	nextIchorTime = GetTime() + self:Mythic() and 28.5 or 25
+	self:CDBar(298103, self:Mythic() and 28.5 or 25) -- Dribbling Ichor
+	self:CDBar(305048, self:Mythic() and 40 or 36, CL.count:format(self:SpellName(305048), arcingCount)) -- Arcing Current
 
-	nextIchorTime = GetTime() + 25
+	if self:Mythic() then 
+		self:CDBar(305057, 20) -- Call of the Tender
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -123,12 +132,14 @@ function mod:IncubationFluidApplied(args)
 end
 
 function mod:ArcingCurrent(args)
-	self:Message2(args.spellId, "red")
+	self:Message2(305048, "red", CL.count:format(args.spellName, arcingCount))
 	if self:Mythic() then
 		-- Sound for everyone on mythic, but only the 1 target on non-Mythic
-		self:PlaySound(args.spellId, "warning")
+		self:PlaySound(305048, "warning")
 	end
-	self:CDBar(args.spellId, 30)
+	self:StopBar(CL.count:format(args.spellName, arcingCount))
+	arcingCount = arcingCount + 1
+	self:CDBar(305048, 30, CL.count:format(args.spellName, arcingCount))
 end
 
 function mod:RAID_BOSS_WHISPER(_, msg)
@@ -165,10 +176,11 @@ function mod:Interupted(args)
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
 		self:StopBar(CL.cast:format(args.extraSpellName))
 
+		arcingCount = 1
 		self:CDBar(298156, 3.5) -- Desensitizing Sting
 		self:CDBar(298242, 17.5) -- Incubation Fluid
 		self:CDBar(298103, 25) -- Dribbling Ichor
-		self:CDBar(305048, 36) -- Arcing Current
+		self:CDBar(305048, 36, CL.count:format(args.spellName, arcingCount)) -- Arcing Current
 	end
 end
 
@@ -202,4 +214,10 @@ function mod:PowerfulStomp(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 4.5)
+end
+
+function mod:CalloftheTender(args)
+	self:Message2(args.spellId, "cyan")
+	self:PlaySound(args.spellId, "info")
+	self:CDBar(args.spellId, 35)
 end
