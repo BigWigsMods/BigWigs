@@ -37,7 +37,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		300074, -- Pressure Surge
-		298569, -- Drained Soul
+		{298569, "INFOBOX"}, -- Drained Soul
 		297937, -- Painful Memories
 		297934, -- Longing
 		297912, -- Torment
