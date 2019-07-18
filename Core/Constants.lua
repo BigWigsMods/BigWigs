@@ -27,6 +27,7 @@ end
 -- Toggles that should actually be shown in the interface options
 local listToggles = { "BAR", "FLASH", "MESSAGE", "ICON", "SAY", "SAY_COUNTDOWN", "PROXIMITY", "ALTPOWER", "VOICE", "INFOBOX" }
 local roleToggles = { "TANK", "HEALER", "TANK_HEALER", "DISPEL" }
+-- NOTE: The toggle "OFF" is also valid for entirely disabling an option by default
 
 local used = nil
 function BigWigs:RegisterOption(key, name, desc)
