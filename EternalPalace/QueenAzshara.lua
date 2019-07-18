@@ -22,6 +22,7 @@ mod.respawnTime = 30
 local stage = 1
 local portalCount = 1
 local hulkCollection = {}
+local drainedSoulList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -86,6 +87,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "PressureSurge", 300074)
 	self:Log("SPELL_AURA_APPLIED", "DrainedSoulApplied", 298569)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DrainedSoulApplied", 298569)
+	self:Log("SPELL_AURA_REMOVED", "DrainedSoulRemoved", 298569)
 
 	-- Stage 1
 	self:Log("SPELL_CAST_START", "PainfulMemories", 297937)
@@ -151,6 +153,7 @@ function mod:OnEngage()
 	stage = 1
 	portalCount = 1
 	hulkCollection = {}
+	drainedSoulList = {}
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
 	self:CDBar(297937, 14.2) -- Painful Memories
@@ -239,6 +242,8 @@ do
 end
 
 function mod:DrainedSoulApplied(args)
+	drainedSoulList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, drainedSoulList)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 2 == 0 or amount >= 7 then
@@ -246,6 +251,11 @@ function mod:DrainedSoulApplied(args)
 			self:PlaySound(args.spellId, amount > 7 and "warning" or "alarm", nil, args.destName)
 		end
 	end
+end
+
+function mod:DrainedSoulRemoved(args)
+	drainedSoulList[args.destName] = nil
+	self:SetInfoByTable(args.spellId, drainedSoulList)
 end
 
 -- Stage 1
