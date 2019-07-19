@@ -30,12 +30,12 @@ local drainedSoulList = {}
 
 local L = mod:GetLocale()
 if L then
-	L[299249] = "%s (Soak Orbs)",
-	L[299251] = "%s (Avoid Orbs)",
-	L[299254] = "%s (Hug Others)",
-	L[299255] = "%s (Avoid Everyone)",
-	L[299252] = "%s (Keep Moving)",
-	L[299253] = "%s (Stand Still)",
+	L[299249] = "%s (Soak Orbs)"
+	L[299251] = "%s (Avoid Orbs)"
+	L[299254] = "%s (Hug Others)"
+	L[299255] = "%s (Avoid Everyone)"
+	L[299252] = "%s (Keep Moving)"
+	L[299253] = "%s (Stand Still)"
 end
 
 --------------------------------------------------------------------------------
