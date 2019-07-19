@@ -28,6 +28,16 @@ local drainedSoulList = {}
 -- Localization
 --
 
+local L = mod:GetLocale()
+if L then
+	L[299249] = "%s (Soak Orbs)",
+	L[299251] = "%s (Avoid Orbs)",
+	L[299254] = "%s (Hug Others)",
+	L[299255] = "%s (Avoid Everyone)",
+	L[299252] = "%s (Keep Moving)",
+	L[299253] = "%s (Stand Still)",
+end
+
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -53,7 +63,7 @@ function mod:GetOptions()
 		300428, -- Infuriated
 		298787, -- Arcane Orbs
 		{299094, "SAY", "FLASH", "PULSE"}, -- Beckon
-		299250, -- Queen's Decree
+		{299250, "SAY"}, -- Queen's Decree
 		302999, -- Arcane Vulnerability
 		{304475, "TANK"}, -- Arcane Jolt
 		300519, -- Arcane Detonation
@@ -418,9 +428,12 @@ do
 
 	function mod:PersonalDecrees(args)
 		if self:Me(args.destGUID) then
-			debuffs[#debuffs+1] = args.spellName
+			debuffs[#debuffs+1] = L[args.spellId]:format(args.spellName)
 			if #debuffs == 1 then
 				self:SimpleTimer(announce, 0.1)
+			end
+			if args.spellId == 299254 then -- Stand Together!
+				self:Yell2(args.spellId)
 			end
 		end
 	end
