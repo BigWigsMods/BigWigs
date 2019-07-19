@@ -433,7 +433,7 @@ do
 				self:SimpleTimer(announce, 0.1)
 			end
 			if args.spellId == 299254 then -- Stand Together!
-				self:Yell2(args.spellId)
+				self:Yell2(299250, args.spellName)
 			end
 		end
 	end
