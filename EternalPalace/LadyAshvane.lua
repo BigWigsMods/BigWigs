@@ -32,6 +32,15 @@ local function UpdateRaidList()
 end
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.linkText = "|T%d:15:15:0:0:64:64:4:60:4:60|t(%s+%s) "
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -44,7 +53,7 @@ function mod:GetOptions()
 		298056, -- Upsurge
 		{296725, "TANK"}, -- Barnacle Bash
 		296752, -- Cutting Coral
-		{-20096, "FLASH"}, -- Arcing Azerite
+		{-20096, "FLASH", "SAY"}, -- Arcing Azerite
 		arcingAzeriteMarker,
 	},{
 		[296569] = CL.stage:format(1),
@@ -178,144 +187,172 @@ function mod:HardenedCarapaceRemoved(args)
 end
 
 do
-	local playerListGreen, playerListOrange, playerListPurple, isOnMe, scheduled = {}, {}, {}, 0, nil
+	local playerListGreen, playerListOrange, playerListPurple, isOnMe, scheduled = {}, {}, {}, 0, false
 
-	local function announce(self)
+	local function announce()
+		local self = mod
 		if isOnMe == 1 then -- Green
-			local playerName = UnitName("player")
+			local playerName = self:UnitName("player")
 			local playersInTable = #playerListGreen
-			local linkedPlayer = nil
+			local linkedPlayer = ""
 			for i = 1, playersInTable do
-				if playerListGreen[i] ~= playerName then
-					linkedPlayer = playerListGreen[i]
-					break
+				if playerListGreen[i][1] ~= playerName then
+					linkedPlayer = ("|T13700%d:0|t%s"):format(playerListGreen[i][2], self:ColorName(playerListGreen[i][1]))
+				else
+					self:Say(-20096, CL.count_rticon:format(self:SpellName(-20096), isOnMe, playerListGreen[i][2]))
 				end
 			end
-			self:Message2(-20096, "blue", CL.link:format(self:ColorName(linkedPlayer)), 296938)
+			self:Message2(-20096, "blue", CL.link:format(linkedPlayer), 296938)
 			self:PlaySound(-20096, "warning")
-			self:Flash(-20096)
+			self:Flash(-20096, 296938)
 		elseif isOnMe == 2 then -- Orange
-			local playerName = UnitName("player")
+			local playerName = self:UnitName("player")
 			local playersInTable = #playerListOrange
-			local linkedPlayer = nil
+			local linkedPlayer = ""
 			for i = 1, playersInTable do
-				if playerListOrange[i] ~= playerName then
-					linkedPlayer = playerListOrange[i]
-					break
+				if playerListOrange[i][1] ~= playerName then
+					linkedPlayer = ("|T13700%d:0|t%s"):format(playerListOrange[i][2], self:ColorName(playerListOrange[i][1]))
+				else
+					self:Say(-20096, CL.count_rticon:format(self:SpellName(-20096), isOnMe, playerListOrange[i][2]))
 				end
 			end
-			self:Message2(-20096, "blue", CL.link:format(self:ColorName(linkedPlayer)), 296939)
+			self:Message2(-20096, "blue", CL.link:format(linkedPlayer), 296939)
 			self:PlaySound(-20096, "warning")
-			self:Flash(-20096)
+			self:Flash(-20096, 296939)
 		elseif isOnMe == 3 then -- Purple
-			local playerName = UnitName("player")
+			local playerName = self:UnitName("player")
 			local playersInTable = #playerListPurple
-			local linkedPlayer = nil
+			local linkedPlayer = ""
 			for i = 1, playersInTable do
-				if playerListPurple[i] ~= playerName then
-					linkedPlayer = playerListPurple[i]
-					break
+				if playerListPurple[i][1] ~= playerName then
+					linkedPlayer = ("|T13700%d:0|t%s"):format(playerListPurple[i][2], self:ColorName(playerListPurple[i][1]))
+				else
+					self:Say(-20096, CL.count_rticon:format(self:SpellName(-20096), isOnMe, playerListPurple[i][2]))
 				end
 			end
-			self:Message2(-20096, "blue", CL.link:format(self:ColorName(linkedPlayer)), 296940)
+			self:Message2(-20096, "blue", CL.link:format(linkedPlayer), 296940)
 			self:PlaySound(-20096, "warning")
-			self:Flash(-20096)
+			self:Flash(-20096, 296940)
 		elseif not self:CheckOption(-20096, "ME_ONLY") then
-			local iconGreen = "|T"..GetSpellTexture(296938)..":15:15:0:0:64:64:4:60:4:60|t"
-			local iconOrange = "|T"..GetSpellTexture(296939)..":15:15:0:0:64:64:4:60:4:60|t"
-			local iconPurple = "|T"..GetSpellTexture(296940)..":15:15:0:0:64:64:4:60:4:60|t"
 			local messageText = ""
-			local playersInTable = #playerListGreen
 
-			for i = 1, playersInTable do
-				messageText = messageText..self:ColorName(playerListGreen[i])
-				if i == 1 then -- Add icon
-					messageText = messageText..iconGreen
+			local playersInTable = #playerListGreen
+			if playersInTable > 0 then
+				if playerListGreen[2] then
+					local player1 = ("|T13700%d:0|t%s"):format(playerListGreen[1][2], self:ColorName(playerListGreen[1][1]))
+					local player2 = ("|T13700%d:0|t%s"):format(playerListGreen[2][2], self:ColorName(playerListGreen[2][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296938), player1, player2)
+				else
+					local player1 = ("|T13700%d:0|t%s"):format(playerListGreen[1][2], self:ColorName(playerListGreen[1][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296938), player1, "")
 				end
 			end
+
 			playersInTable = #playerListOrange
-			for i = 1, playersInTable do
-				if i == 1 then -- Add icon
-					messageText = messageText..", "..self:ColorName(playerListOrange[i])..iconOrange
+			if playersInTable > 0 then
+				if playerListOrange[2] then
+					local player1 = ("|T13700%d:0|t%s"):format(playerListOrange[1][2], self:ColorName(playerListOrange[1][1]))
+					local player2 = ("|T13700%d:0|t%s"):format(playerListOrange[2][2], self:ColorName(playerListOrange[2][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296939), player1, player2)
 				else
-					messageText = messageText..self:ColorName(playerListOrange[i])
+					local player1 = ("|T13700%d:0|t%s"):format(playerListOrange[1][2], self:ColorName(playerListOrange[1][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296939), player1, "")
 				end
 			end
+
 			playersInTable = #playerListPurple
-			for i = 1, playersInTable do
-				if i == 1 then
-					messageText = messageText..", "..self:ColorName(playerListPurple[i])..iconPurple
+			if playersInTable > 0 then
+				if playerListPurple[2] then
+					local player1 = ("|T13700%d:0|t%s"):format(playerListPurple[1][2], self:ColorName(playerListPurple[1][1]))
+					local player2 = ("|T13700%d:0|t%s"):format(playerListPurple[2][2], self:ColorName(playerListPurple[2][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296940), player1, player2)
 				else
-					messageText = messageText..self:ColorName(playerListPurple[i])
+					local player1 = ("|T13700%d:0|t%s"):format(playerListPurple[1][2], self:ColorName(playerListPurple[1][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296940), player1, "")
 				end
 			end
+
 			self:Message2(-20096, "yellow", CL.other:format(self:SpellName(-20096), messageText))
 			self:PlaySound(-20096, "alert")
 		end
 
 		if self:GetOption(arcingAzeriteMarker) then
-			if #playerListGreen == 2 then
-				if raidList[playerListGreen[1]] < raidList[playerListGreen[2]] then
-					SetRaidTarget(playerListGreen[1], 1) -- Star
-					SetRaidTarget(playerListGreen[2], 4) -- Triangle
-				else
-					SetRaidTarget(playerListGreen[2], 1) -- Star
-					SetRaidTarget(playerListGreen[1], 4) -- Triangle
+			-- Green
+			if playerListGreen[1] then
+				SetRaidTarget(playerListGreen[1][1], playerListGreen[1][2])
+				if playerListGreen[2] then
+					SetRaidTarget(playerListGreen[2][1], playerListGreen[2][2])
 				end
-			elseif playerListGreen[1] then -- Only prio melee icon
-				SetRaidTarget(playerListGreen[1], 1)
 			end
-			if #playerListOrange == 2 then
-				if raidList[playerListOrange[1]] < raidList[playerListOrange[2]] then
-					SetRaidTarget(playerListOrange[1], 2) -- Circle
-					SetRaidTarget(playerListOrange[2], 7) -- Cross
-				else
-					SetRaidTarget(playerListOrange[2], 2) -- Circle
-					SetRaidTarget(playerListOrange[1], 7) -- Cross
+			-- Orange
+			if playerListOrange[1] then
+				SetRaidTarget(playerListOrange[1][1], playerListOrange[1][2])
+				if playerListOrange[2] then
+					SetRaidTarget(playerListOrange[2][1], playerListOrange[2][2])
 				end
-			elseif playerListOrange[1] then -- Only prio melee icon
-				SetRaidTarget(playerListOrange[1], 2) -- Circle
 			end
-			if #playerListPurple == 2 then
-				if raidList[playerListPurple[1]] < raidList[playerListPurple[2]] then
-					SetRaidTarget(playerListPurple[1], 3) -- Diamond
-					SetRaidTarget(playerListPurple[2], 6) -- Moon
-				else
-					SetRaidTarget(playerListPurple[2], 3) -- Diamond
-					SetRaidTarget(playerListPurple[1], 6) -- Moon
+			-- Purple
+			if playerListPurple[1] then
+				SetRaidTarget(playerListPurple[1][1], playerListPurple[1][2])
+				if playerListPurple[2] then
+					SetRaidTarget(playerListPurple[2][1], playerListPurple[2][2])
 				end
-			elseif playerListPurple[1] then -- Only prio melee icon
-				SetRaidTarget(playerListPurple[1], 3) -- Diamond
 			end
 		end
 
-		scheduled = nil
+		scheduled = false
 		isOnMe = 0
-		wipe(playerListGreen)
-		wipe(playerListOrange)
-		wipe(playerListPurple)
+		playerListGreen, playerListOrange, playerListPurple = {}, {}, {}
 	end
 
 	function mod:ArcingAzeriteApplied(args)
 		if args.spellId == 296938 or args.spellId == 296941 then -- Green
-			playerListGreen[#playerListGreen+1] = args.destName
+			playerListGreen[#playerListGreen+1] = {args.destName, 1}
+			if #playerListGreen == 2 then
+				if raidList[playerListGreen[1][1]] < raidList[playerListGreen[2][1]] then
+					playerListGreen[1][2] = 1 -- Star
+					playerListGreen[2][2] = 4 -- Triangle
+				else
+					playerListGreen[2][2] = 1 -- Star
+					playerListGreen[1][2] = 4 -- Triangle
+				end
+			end
 			if self:Me(args.destGUID) then
 				isOnMe = 1
 			end
 		elseif args.spellId == 296939 or args.spellId == 296942 then -- Orange
-			playerListOrange[#playerListOrange+1] = args.destName
+			playerListOrange[#playerListOrange+1] = {args.destName, 2}
+			if #playerListOrange == 2 then
+				if raidList[playerListOrange[1][1]] < raidList[playerListOrange[2][1]] then
+					playerListOrange[1][2] = 2 -- Circle
+					playerListOrange[2][2] = 7 -- Cross
+				else
+					playerListOrange[2][2] = 2 -- Circle
+					playerListOrange[1][2] = 7 -- Cross
+				end
+			end
 			if self:Me(args.destGUID) then
 				isOnMe = 2
 			end
 		elseif args.spellId == 296940 or args.spellId == 296943 then -- Purple
-			playerListPurple[#playerListPurple+1] = args.destName
+			playerListPurple[#playerListPurple+1] = {args.destName, 3}
+			if #playerListPurple == 2 then
+				if raidList[playerListPurple[1][2]] < raidList[playerListPurple[2][2]] then
+					playerListPurple[1][2] = 3 -- Diamond
+					playerListPurple[2][2] = 6 -- Moon
+				else
+					playerListPurple[2][2] = 3 -- Diamond
+					playerListPurple[1][2] = 6 -- Moon
+				end
+			end
 			if self:Me(args.destGUID) then
 				isOnMe = 3
 			end
 		end
 		if not scheduled then
+			scheduled = true
 			arcingAzeriteCount = arcingAzeriteCount + 1
-			scheduled = self:ScheduleTimer(announce, 0.1, self)
+			self:SimpleTimer(announce, 0.1)
 			if arcingAzeriteCount == 2 then
 				self:Bar(-20096, 34)
 			end
