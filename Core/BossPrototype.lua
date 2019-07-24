@@ -1490,6 +1490,7 @@ end
 --- Set the "Info Box" display to show a list of players and their assigned values in ascending order.
 -- @param key the option key to check
 -- @param[type=table] tbl a table in the format of {player = number}
+-- @bool reverseOrder Set as true to sort in reverse (0 before 1)
 function boss:SetInfoByTable(key, tbl, reverseOrder)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_SetInfoBoxTable", self, tbl, reverseOrder)
@@ -1499,9 +1500,10 @@ end
 --- Set the "Info Box" display to show a list of players and their assigned values in ascending order with bars counting down a specified duration.
 -- @param key the option key to check
 -- @param[type=table] tbl a table in the format of {player = {amount, barDuration, startAt}}
-function boss:SetInfoBarsByTable(key, tbl)
+-- @bool reverseOrder Set as true to sort in reverse (0 before 1, then by lowest time to expire)
+function boss:SetInfoBarsByTable(key, tbl, reverseOrder)
 	if checkFlag(self, key, C.INFOBOX) then
-		self:SendMessage("BigWigs_SetInfoBoxTableWithBars", self, tbl)
+		self:SendMessage("BigWigs_SetInfoBoxTableWithBars", self, tbl, reverseOrder)
 	end
 end
 
