@@ -78,9 +78,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 296752)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 296752)
 
-	if self:GetOption(arcingAzeriteMarker) then
-		UpdateRaidList()
-	end
+	UpdateRaidList()
 end
 
 function mod:OnEngage()
@@ -93,9 +91,7 @@ function mod:OnEngage()
 	self:Bar(296662, 15, CL.count:format(self:SpellName(296662), ripplingWaveCount)) -- Rippling Wave
 	self:Bar(297397, 39) -- Briny Bubble
 
-	if self:GetOption(arcingAzeriteMarker) then
-		UpdateRaidList()
-	end
+	UpdateRaidList()
 end
 
 --------------------------------------------------------------------------------
