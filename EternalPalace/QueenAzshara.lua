@@ -178,7 +178,7 @@ function mod:OnEngage()
 		local _, _, _, tarInstanceId = UnitPosition(unit)
 		local name = self:UnitName(unit)
 		if name and tarInstanceId == 2164 and not self:Tank(unit) then
-			drainedSoulList[name] = {0, 0}
+			drainedSoulList[name] = {0, 0, 110}
 		end
 	end
 	self:SetInfoBarsByTable(298569, drainedSoulList, true) -- Drained Soul
@@ -264,7 +264,7 @@ end
 
 function mod:DrainedSoulApplied(args)
 	if not drainedSoulList[args.destName] then
-		drainedSoulList[args.destName] = {args.amount or 1, GetTime()+110}
+		drainedSoulList[args.destName] = {args.amount or 1, GetTime()+110, 110}
 	else
 		drainedSoulList[args.destName][1] = args.amount or 1
 		drainedSoulList[args.destName][2] = GetTime()+110
