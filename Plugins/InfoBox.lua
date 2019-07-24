@@ -397,7 +397,7 @@ do
 			if result then
 				local endTime = result[2]
 				local remaining = endTime - t
-				plugin:BigWigs_SetInfoBoxBar(nil, nil, i*2, remaining/endTime)
+				plugin:BigWigs_SetInfoBoxBar(nil, nil, i*2, remaining/result[3])
 			end
 		end
 	end
