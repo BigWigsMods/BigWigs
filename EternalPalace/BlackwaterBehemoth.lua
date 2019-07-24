@@ -22,6 +22,7 @@ local intermissionTime = 0
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 		292127, -- Darkest Depths
 		292205, -- Bioluminescent Cloud
 		292133, -- Bioluminescence
@@ -70,6 +71,7 @@ function mod:OnEngage()
 
 	intermissionTime = GetTime() + 100
 	self:Bar("stages", 100, CL.intermission, "achievement_boss_wolfeel")
+	self:Berserk(self:Mythic() and 420 or 480)
 end
 
 --------------------------------------------------------------------------------

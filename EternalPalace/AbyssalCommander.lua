@@ -20,6 +20,7 @@ local markList = {}
 
 function mod:GetOptions()
 	return {
+		"berserk",
 		{294726, "FLASH", "PULSE", "INFOBOX"}, -- Chimeric Marks
 		295332, -- Crushing Reverberation
 		{-20300, "SAY_COUNTDOWN"}, -- Frostvenom Tipped
@@ -56,6 +57,7 @@ function mod:OnEngage()
 	self:Bar(296551, 40) -- Overwhelming Barrage
 	self:CDBar(295601, 50) -- Frostshock Bolts
 	self:CDBar(295791, 70) -- Inversion
+	self:Berserk(self:Easy() and 390 or 360)
 	self:OpenInfo(294726, self:SpellName(294726)) -- Chimeric Marks
 end
 

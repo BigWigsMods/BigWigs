@@ -22,6 +22,7 @@ local nextAncientTempest = nil
 local arcaneBombMarker = mod:AddMarkerOption(false, "player", 1, 296737, 1, 2, 3, 4) -- Arcane Bomb
 function mod:GetOptions()
 	return {
+		"berserk",
 		{296566, "TANK"}, -- Tide Fist
 		296428, -- Arcanado Burst
 		296459, -- Squall Trap
@@ -58,6 +59,7 @@ function mod:OnEngage()
 	self:CDBar(296566, 15) -- Tide Fist
 	self:CDBar(296459, 85) -- Squall Trap
 	self:CDBar(295916, 95.5) -- Ancient Tempest
+	self:Berserk(self:Mythic() and 540 or 720)
 end
 
 --------------------------------------------------------------------------------

@@ -89,11 +89,7 @@ function mod:OnEngage()
 	self:Bar(299914, self:Mythic() and 30 or 75, CL.count:format(self:SpellName(299914), chargeCounter)) -- Frenetic Charge
 	self:Bar(297325, 100.5) -- Violent Outburst
 
-	if self:Mythic() then
-		self:Berserk(450)
-	else
-		self:Berserk(510)
-	end
+	self:Berserk(self:Mythic() and 450 or 570)
 end
 
 --------------------------------------------------------------------------------

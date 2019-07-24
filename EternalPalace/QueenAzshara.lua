@@ -46,6 +46,7 @@ local arcaneBurstMarker = mod:AddMarkerOption(false, "player", 1, 303657, 1, 2, 
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 		300074, -- Pressure Surge
 		{298569, "INFOBOX"}, -- Drained Soul
 		297937, -- Painful Memories
@@ -171,6 +172,7 @@ function mod:OnEngage()
 	self:Bar(299094, 49.5) -- Beckon
 	self:Bar(298787, 65) -- Arcane Orbs
 	self:CDBar(-20480, 35, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
+	self:Berserk(840)
 	self:OpenInfo(298569, self:SpellName(298569)) -- Drained Soul
 	for unit in self:IterateGroup() do
 		local _, _, _, tarInstanceId = UnitPosition(unit)
