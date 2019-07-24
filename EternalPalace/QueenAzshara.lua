@@ -175,11 +175,11 @@ function mod:OnEngage()
 	for unit in self:IterateGroup() do
 		local _, _, _, tarInstanceId = UnitPosition(unit)
 		local name = self:UnitName(unit)
-		if name and tarInstanceId == 2164 then
-			drainedSoulList[name] = 0
+		if name and tarInstanceId == 2164 and not self:Tank(unit) then
+			drainedSoulList[name] = {0, 0}
 		end
 	end
-	self:SetInfoByTable(298569, drainedSoulList, true) -- Drained Soul
+	self:SetInfoBarsByTable(298569, drainedSoulList, true) -- Drained Soul
 end
 
 --------------------------------------------------------------------------------
@@ -261,8 +261,13 @@ do
 end
 
 function mod:DrainedSoulApplied(args)
-	drainedSoulList[args.destName] = args.amount or 1
-	self:SetInfoByTable(args.spellId, drainedSoulList, true)
+	if not drainedSoulList[args.destName] then
+		drainedSoulList[args.destName] = {args.amount or 1, GetTime()+110}
+	else
+		drainedSoulList[args.destName][1] = args.amount or 1
+		drainedSoulList[args.destName][2] = GetTime()+110
+	end
+	self:SetInfoBarsByTable(args.spellId, drainedSoulList, true)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 2 == 0 or amount >= 7 then
@@ -273,8 +278,13 @@ function mod:DrainedSoulApplied(args)
 end
 
 function mod:DrainedSoulRemoved(args)
-	drainedSoulList[args.destName] = 0
-	self:SetInfoByTable(args.spellId, drainedSoulList, true)
+	if self:Tank(args.destName) then
+		drainedSoulList[args.destName] = nil
+	else
+		drainedSoulList[args.destName][1] = 0
+		drainedSoulList[args.destName][2] = 0
+	end
+	self:SetInfoBarsByTable(args.spellId, drainedSoulList, true)
 end
 
 -- Stage 1
