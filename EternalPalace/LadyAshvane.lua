@@ -333,7 +333,7 @@ do
 		elseif args.spellId == 296940 or args.spellId == 296943 then -- Purple
 			playerListPurple[#playerListPurple+1] = {args.destName, 3}
 			if #playerListPurple == 2 then
-				if raidList[playerListPurple[1][2]] < raidList[playerListPurple[2][2]] then
+				if raidList[playerListPurple[1][1]] < raidList[playerListPurple[2][1]] then
 					playerListPurple[1][2] = 3 -- Diamond
 					playerListPurple[2][2] = 6 -- Moon
 				else
