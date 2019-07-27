@@ -56,7 +56,9 @@ function mod:OnEngage()
 	self:Bar(-20006, self:Mythic() and 19 or 16) -- Overflow
 	self:Bar(296551, 40) -- Overwhelming Barrage
 	self:CDBar(295601, 50) -- Frostshock Bolts
-	self:CDBar(295791, 70) -- Inversion
+	if not self:LFR() then
+		self:CDBar(295791, 70) -- Inversion
+	end
 	self:Berserk(self:Easy() and 390 or 360)
 	self:OpenInfo(294726, self:SpellName(294726)) -- Chimeric Marks
 end
