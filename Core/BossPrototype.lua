@@ -1673,13 +1673,13 @@ end
 
 --- Display a personal message in blue.
 -- @param key the option key
--- @string localeString if nil then the "%s on YOU" string will be used, otherwise the common locale will be referenced via CL[localeString]
+-- @param[opt] localeString if nil then the "%s on YOU" string will be used, if false then the text field will be printed directly, otherwise the common locale will be referenced via CL[localeString]
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name)
 function boss:PersonalMessage(key, localeString, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local str = localeString and L[localeString] or L.you
-		local msg = format(str, type(text) == "string" and text or spells[text or key])
+		local msg = localeString == false and text or format(str, type(text) == "string" and text or spells[text or key])
 		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
 		self:SendMessage("BigWigs_Message", self, key, msg, "blue", icon ~= false and icons[icon or key], isEmphasized)
 	end
