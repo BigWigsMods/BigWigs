@@ -165,7 +165,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ArcaneBurstRemoved", 303657)
 
 	-- Stage 3
-	self:Log("SPELL_CAST_START", "GreaterReversalofFortune", 297372)
 	self:Log("SPELL_AURA_APPLIED", "StaticShock", 300492)
 	self:Log("SPELL_AURA_APPLIED", "CrystallineShield", 300620)
 
