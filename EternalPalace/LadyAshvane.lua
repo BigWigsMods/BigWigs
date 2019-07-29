@@ -47,13 +47,13 @@ end
 local arcingAzeriteMarker = mod:AddMarkerOption(false, "player", 1, -20096, 1, 4, 7, 2, 6, 3) -- Arcing Azerite
 function mod:GetOptions()
 	return {
-		"stages",
+		{"stages", "EMPHASIZE"},
 		296662, -- Rippling Wave
 		{297397, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Briny Bubble
 		298056, -- Upsurge
 		{296725, "TANK"}, -- Barnacle Bash
 		296752, -- Cutting Coral
-		{-20096, "FLASH", "SAY"}, -- Arcing Azerite
+		{-20096, "FLASH", "SAY", "ME_ONLY_EMPHASIZE"}, -- Arcing Azerite
 		arcingAzeriteMarker,
 	},{
 		[296569] = CL.stage:format(1),
@@ -198,7 +198,7 @@ do
 					self:Say(-20096, CL.count_rticon:format(self:SpellName(-20096), isOnMe, playerListGreen[i][2]))
 				end
 			end
-			self:Message2(-20096, "blue", CL.link:format(linkedPlayer), 296938)
+			self:PersonalMessage(-20096, false, CL.link:format(linkedPlayer), 296938)
 			self:PlaySound(-20096, "warning")
 			self:Flash(-20096, 296938)
 		elseif isOnMe == 2 then -- Orange
@@ -212,7 +212,7 @@ do
 					self:Say(-20096, CL.count_rticon:format(self:SpellName(-20096), isOnMe, playerListOrange[i][2]))
 				end
 			end
-			self:Message2(-20096, "blue", CL.link:format(linkedPlayer), 296939)
+			self:PersonalMessage(-20096, false, CL.link:format(linkedPlayer), 296939)
 			self:PlaySound(-20096, "warning")
 			self:Flash(-20096, 296939)
 		elseif isOnMe == 3 then -- Purple
@@ -226,7 +226,7 @@ do
 					self:Say(-20096, CL.count_rticon:format(self:SpellName(-20096), isOnMe, playerListPurple[i][2]))
 				end
 			end
-			self:Message2(-20096, "blue", CL.link:format(linkedPlayer), 296940)
+			self:PersonalMessage(-20096, false, CL.link:format(linkedPlayer), 296940)
 			self:PlaySound(-20096, "warning")
 			self:Flash(-20096, 296940)
 		elseif not self:CheckOption(-20096, "ME_ONLY") then
