@@ -107,8 +107,8 @@ function mod:GetOptions()
 		[300768] = -20361, -- Stage Four: My Palace Is a Prison
 		[300478] = "mythic",
 	},{
-		[297371] = "Reversal", -- Reversal of Fortune
-		[297372] = "Reversal (Greater)" -- Greater Reversal of Fortune
+		[297371] = L.reversal, -- Reversal of Fortune
+		[297372] = L.greater_reversal, -- Greater Reversal of Fortune
 	}
 end
 
@@ -472,7 +472,7 @@ function mod:SerratedEdgeApplied(args)
 end
 
 function mod:ChargedSpear(args)
-	self:CDBar(args.spellId, self:Mythic() and stage == 3 and 15 or 18 or stage == 3 and 13.5 or 40)
+	self:CDBar(args.spellId, self:Mythic() and (stage == 3 and 15 or 18) or stage == 3 and 13.5 or 40)
 end
 
 function mod:ChargedSpearApplied(args)
