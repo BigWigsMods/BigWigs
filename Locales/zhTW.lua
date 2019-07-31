@@ -17,7 +17,7 @@ L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，計時器將不被顯示。"
-L.alternativeName = "%s （|cFF436EEE%s|r）"
+L.alternativeName = "%s（|cFF436EEE%s|r）"
 
 L.activeBossModules = "啟動首領模組："
 L.advanced = "進階選項"
@@ -30,7 +30,6 @@ L.ALTPOWER_desc = "玩家在一些首領戰鬥中會使用替代能量機制。�
 L.back = "<< 返回"
 L.BAR = "計時條"
 L.BAR_desc = "在適當時會為首領技能顯示計時條。如果你想隱藏此技能的計時條，停用此選項。"
-
 L.berserk = "狂暴"
 L.berserk_desc = "為首領狂暴顯示計時條及警報。"
 L.best = "最快："
