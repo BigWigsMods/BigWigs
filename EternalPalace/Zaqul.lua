@@ -207,7 +207,9 @@ function mod:OpeningFearRealm(args)
 	self:PlaySound("stages", "long")
 	self:Message2("stages", "cyan", CL.stage:format(stage), false)
 	self:StopBar(294535) -- Portal of Madness
-
+	self:StopBar(292963) -- Dread
+	
+	self:CDBar(292963, 75) -- Dread
 	self:CDBar(292996, 3.5) -- Maddening Eruption
 	self:Bar(293509, 32.5) -- Manifest Nightmares
 end
