@@ -561,12 +561,16 @@ do
 			module.toggleDefaults = {}
 			for k, v in next, module.toggleOptions do
 				local bitflags = 0
+				local disabled = false
 				local t = type(v)
 				if t == "table" then
 					for i = 2, #v do
 						local flagName = v[i]
 						if C[flagName] then
 							bitflags = bitflags + C[flagName]
+						elseif flagName == "OFF" then
+							disabled = true
+							break
 						else
 							error(("%q tried to register '%q' as a bitflag for toggleoption '%q'"):format(module.moduleName, flagName, v[1]))
 						end
@@ -575,12 +579,19 @@ do
 					t = type(v)
 				end
 				-- mix in default toggles for keys we know
-				-- this allows for mod.toggleOptions = {1234, {"bosskill", "bar"}}
-				-- while bosskill usually only has message
+				-- this allows for mod.toggleOptions = {{1234, "bar", "message"}}
+				-- while option keys don't usually specify common features such as bar or message
 				for _, b in next, C do
 					if bit.band(defaultToggles[v], b) == b and bit.band(bitflags, b) ~= b then
 						bitflags = bitflags + b
 					end
+				end
+				if disabled then
+					if not module.toggleDisabled then
+						module.toggleDisabled = {}
+					end
+					module.toggleDisabled[v] = bitflags
+					bitflags = 0
 				end
 				if t == "string" then
 					local custom = v:match("^custom_(o[nf]f?)_.*")
@@ -607,9 +618,10 @@ do
 
 	local function moduleOptions(self)
 		if self.GetOptions then
-			local toggles, headers = self:GetOptions(CL)
+			local toggles, headers, altNames = self:GetOptions(CL)
 			if toggles then self.toggleOptions = toggles end
 			if headers then self.optionHeaders = headers end
+			if altNames then self.altNames = altNames end
 			self.GetOptions = nil
 		end
 		setupOptions(self)

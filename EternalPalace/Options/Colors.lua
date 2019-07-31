@@ -5,7 +5,7 @@ BigWigs:AddColors("Abyssal Commander Sivara", {
 	[294726] = "blue",
 	[295332] = "purple",
 	[295601] = {"blue","orange"},
-	[295791] = {"blue","orange","yellow"},
+	[295791] = {"blue","orange"},
 	[296551] = "red",
 })
 
@@ -13,9 +13,9 @@ BigWigs:AddColors("Radiance of Azshara", {
 	[295916] = "cyan",
 	[296428] = "yellow",
 	[296459] = "yellow",
-	[296546] = {"blue","purple"},
+	[296566] = {"blue","purple"},
 	[296701] = "orange",
-	[296737] = {"blue","yellow"},
+	[296737] = {"blue","green","yellow"},
 	[296894] = "yellow",
 })
 
@@ -36,8 +36,9 @@ BigWigs:AddColors("Blackwater Behemoth", {
 
 BigWigs:AddColors("Lady Ashvane", {
 	[-20096] = {"blue","yellow"},
-	[296569] = {"cyan","yellow"},
+	[296662] = "cyan",
 	[296725] = {"blue","purple"},
+	[296752] = "blue",
 	[297397] = {"blue","red"},
 	[298056] = "orange",
 	["stages"] = "orange",
@@ -52,7 +53,7 @@ BigWigs:AddColors("Orgozoa", {
 	[298242] = "yellow",
 	[298465] = "cyan",
 	[298548] = "cyan",
-	[305048] = "red",
+	[305048] = {"blue","red"},
 	["stages"] = {"cyan","green"},
 })
 
@@ -80,6 +81,7 @@ BigWigs:AddColors("Za'qul, Herald of Ny'alotha", {
 	[293509] = {"blue","yellow"},
 	[294535] = "yellow",
 	[295099] = {"blue","green"},
+	[295444] = "blue",
 	[295814] = "red",
 	[296018] = {"blue","yellow"},
 	[298192] = "blue",
@@ -114,11 +116,12 @@ BigWigs:AddColors("Queen Azshara", {
 	[300519] = "red",
 	[300620] = {"blue","yellow"},
 	[300743] = {"blue","purple"},
-	[300807] = "red",
+	[300768] = "orange",
 	[301078] = {"blue","yellow"},
+	[301431] = "red",
 	[302999] = "blue",
 	[303657] = {"blue","yellow"},
-	[303980] = "yellow",
+	[303982] = "yellow",
 	[304475] = "cyan",
 	["stages"] = {"cyan","green"},
 })

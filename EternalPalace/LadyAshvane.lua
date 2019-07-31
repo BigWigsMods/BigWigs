@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Lady Ashvane", 2164, 2354)
 if not mod then return end
 mod:RegisterEnableMob(152236) -- Priscilla Ashvane
 mod.engageId = 2304
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -14,6 +14,8 @@ mod.engageId = 2304
 
 local stage = 1
 local barnacleBashCount = 1
+local upsurgeCount = 1
+local ripplingWaveCount = 1
 local nextCarapace = 0
 local arcingAzeriteCount = 1
 local raidList = {}
@@ -30,18 +32,28 @@ local function UpdateRaidList()
 end
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.linkText = "|T%d:15:15:0:0:64:64:4:60:4:60|t(%s+%s) "
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
 local arcingAzeriteMarker = mod:AddMarkerOption(false, "player", 1, -20096, 1, 4, 7, 2, 6, 3) -- Arcing Azerite
 function mod:GetOptions()
 	return {
-		"stages",
+		{"stages", "EMPHASIZE"},
 		296662, -- Rippling Wave
 		{297397, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Briny Bubble
 		298056, -- Upsurge
 		{296725, "TANK"}, -- Barnacle Bash
-		{-20096, "FLASH"}, -- Arcing Azerite
+		296752, -- Cutting Coral
+		{-20096, "FLASH", "SAY", "ME_ONLY_EMPHASIZE"}, -- Arcing Azerite
 		arcingAzeriteMarker,
 	},{
 		[296569] = CL.stage:format(1),
@@ -51,10 +63,10 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RipplingWave", 296662)
-	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 302992, 297397) -- Normal, etc
-	self:Log("SPELL_AURA_REMOVED", "BrinyBubbleRemoved", 302992, 297397)
+	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 302989, 297397) -- Normal, etc
+	self:Log("SPELL_AURA_REMOVED", "BrinyBubbleRemoved", 302989, 297397)
 	self:Log("SPELL_CAST_SUCCESS", "Upsurge", 298056)
-	self:Log("SPELL_CAST_SUCCESS", "BarnacleBash", 296725)
+	self:Log("SPELL_CAST_START", "BarnacleBash", 296725)
 	self:Log("SPELL_AURA_APPLIED", "BarnacleBashApplied", 296725)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarnacleBashApplied", 296725)
 	self:Log("SPELL_AURA_REMOVED", "HardenedCarapaceRemoved", 296650)
@@ -62,24 +74,24 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ArcingAzeriteRemoved", 296938, 296941, 296939, 296942, 296940, 296943)
 	self:Log("SPELL_AURA_APPLIED", "HardenedCarapaceApplied", 296650)
 
-	-- Ground Effects: Cutting Coral 296752
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 296752) -- Cutting Coral
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 296752)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 296752)
 
-	if self:GetOption(arcingAzeriteMarker) then
-		UpdateRaidList()
-	end
+	UpdateRaidList()
 end
 
 function mod:OnEngage()
 	barnacleBashCount = 1
+	upsurgeCount = 1
+	ripplingWaveCount = 1
 
 	self:CDBar(298056, 2.5) -- Upsurge
-	self:CDBar(296725, 8) -- Barnacle Bash
-	self:Bar(296662, 15) -- Rippling Wave
+	self:CDBar(296725, 7) -- Barnacle Bash
+	self:Bar(296662, 15, CL.count:format(self:SpellName(296662), ripplingWaveCount)) -- Rippling Wave
 	self:Bar(297397, 39) -- Briny Bubble
 
-	if self:GetOption(arcingAzeriteMarker) then
-		UpdateRaidList()
-	end
+	UpdateRaidList()
 end
 
 --------------------------------------------------------------------------------
@@ -87,9 +99,11 @@ end
 --
 
 function mod:RipplingWave(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, ripplingWaveCount))
 	self:PlaySound(args.spellId, "long")
-	self:CDBar(args.spellId, 30)
+	self:StopBar(CL.count:format(args.spellName, ripplingWaveCount)) -- Rippling Wave
+	ripplingWaveCount = ripplingWaveCount + 1
+	self:CDBar(args.spellId, 30, CL.count:format(args.spellName, ripplingWaveCount))
 end
 
 do
@@ -122,7 +136,8 @@ end
 function mod:Upsurge(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	local cd = 15
+	upsurgeCount = upsurgeCount + 1
+	local cd = stage == 1 and (upsurgeCount % 2 == 1 and 30 or 15) or 44 -- Stage 1: 30/15 Alternating, Stage 2 44
 	local nextCarapaceCD = nextCarapace - GetTime()
 	if stage == 1 or nextCarapaceCD > cd then
 		self:CDBar(args.spellId, cd)
@@ -131,7 +146,7 @@ end
 
 function mod:BarnacleBash(args)
 	barnacleBashCount = barnacleBashCount + 1
-	local cd = stage == 1 and (barnacleBashCount % 2 == 0 and 15 or 30) or 15
+	local cd = stage == 1 and (barnacleBashCount % 2 == 0 and 15 or 30) or barnacleBashCount == 2 and 15 or 26 -- Stage 1: Alternate 15, 30..; Stage 2: 12.5, 15, 26
 	local nextCarapaceCD = nextCarapace - GetTime()
 	if stage == 1 or nextCarapaceCD > cd then
 		self:CDBar(args.spellId, cd)
@@ -149,15 +164,17 @@ function mod:HardenedCarapaceRemoved(args)
 	self:PlaySound("stages", "long")
 
 	arcingAzeriteCount = 1
+	barnacleBashCount = 1
+	upsurgeCount = 1
 
 	self:StopBar(298056) -- Upsurge
 	self:StopBar(296725) -- Barnacle Bash
-	self:StopBar(296662) -- Rippling Wave
+	self:StopBar(CL.count:format(self:SpellName(296662), ripplingWaveCount)) -- Rippling Wave
 	self:StopBar(296569) -- Coral Growth
 	self:StopBar(297397) -- Briny Bubble
 
-	self:CDBar(296725, 12.5) -- Barnacle Bash
-	self:CDBar(298056, 17.6) -- Upsurge
+	self:CDBar(296725, 13.4) -- Barnacle Bash
+	self:CDBar(298056, 17.4) -- Upsurge
 	self:Bar(-20096, 20.5) -- Arcing Azerite
 	self:Bar(297397, 38.6) -- Briny Bubble
 
@@ -166,144 +183,172 @@ function mod:HardenedCarapaceRemoved(args)
 end
 
 do
-	local playerListGreen, playerListOrange, playerListPurple, isOnMe, scheduled = {}, {}, {}, 0, nil
+	local playerListGreen, playerListOrange, playerListPurple, isOnMe, scheduled = {}, {}, {}, 0, false
 
-	local function announce(self)
+	local function announce()
+		local self = mod
 		if isOnMe == 1 then -- Green
-			local playerName = UnitName("player")
+			local playerName = self:UnitName("player")
 			local playersInTable = #playerListGreen
-			local linkedPlayer = nil
+			local linkedPlayer = ""
 			for i = 1, playersInTable do
-				if playerListGreen[i] ~= playerName then
-					linkedPlayer = playerListGreen[i]
-					break
+				if playerListGreen[i][1] ~= playerName then
+					linkedPlayer = ("|T13700%d:0|t%s"):format(playerListGreen[i][2], self:ColorName(playerListGreen[i][1]))
+				else
+					self:Say(-20096, CL.count_rticon:format(self:SpellName(-20096), isOnMe, playerListGreen[i][2]))
 				end
 			end
-			self:Message2(-20096, "blue", CL.link:format(self:ColorName(linkedPlayer)), 296938)
+			self:PersonalMessage(-20096, false, CL.link:format(linkedPlayer), 296938)
 			self:PlaySound(-20096, "warning")
-			self:Flash(-20096)
+			self:Flash(-20096, 296938)
 		elseif isOnMe == 2 then -- Orange
-			local playerName = UnitName("player")
+			local playerName = self:UnitName("player")
 			local playersInTable = #playerListOrange
-			local linkedPlayer = nil
+			local linkedPlayer = ""
 			for i = 1, playersInTable do
-				if playerListOrange[i] ~= playerName then
-					linkedPlayer = playerListOrange[i]
-					break
+				if playerListOrange[i][1] ~= playerName then
+					linkedPlayer = ("|T13700%d:0|t%s"):format(playerListOrange[i][2], self:ColorName(playerListOrange[i][1]))
+				else
+					self:Say(-20096, CL.count_rticon:format(self:SpellName(-20096), isOnMe, playerListOrange[i][2]))
 				end
 			end
-			self:Message2(-20096, "blue", CL.link:format(self:ColorName(linkedPlayer)), 296939)
+			self:PersonalMessage(-20096, false, CL.link:format(linkedPlayer), 296939)
 			self:PlaySound(-20096, "warning")
-			self:Flash(-20096)
+			self:Flash(-20096, 296939)
 		elseif isOnMe == 3 then -- Purple
-			local playerName = UnitName("player")
+			local playerName = self:UnitName("player")
 			local playersInTable = #playerListPurple
-			local linkedPlayer = nil
+			local linkedPlayer = ""
 			for i = 1, playersInTable do
-				if playerListPurple[i] ~= playerName then
-					linkedPlayer = playerListPurple[i]
-					break
+				if playerListPurple[i][1] ~= playerName then
+					linkedPlayer = ("|T13700%d:0|t%s"):format(playerListPurple[i][2], self:ColorName(playerListPurple[i][1]))
+				else
+					self:Say(-20096, CL.count_rticon:format(self:SpellName(-20096), isOnMe, playerListPurple[i][2]))
 				end
 			end
-			self:Message2(-20096, "blue", CL.link:format(self:ColorName(linkedPlayer)), 296940)
+			self:PersonalMessage(-20096, false, CL.link:format(linkedPlayer), 296940)
 			self:PlaySound(-20096, "warning")
-			self:Flash(-20096)
+			self:Flash(-20096, 296940)
 		elseif not self:CheckOption(-20096, "ME_ONLY") then
-			local iconGreen = "|T"..GetSpellTexture(296938)..":15:15:0:0:64:64:4:60:4:60|t"
-			local iconOrange = "|T"..GetSpellTexture(296939)..":15:15:0:0:64:64:4:60:4:60|t"
-			local iconPurple = "|T"..GetSpellTexture(296940)..":15:15:0:0:64:64:4:60:4:60|t"
 			local messageText = ""
-			local playersInTable = #playerListGreen
 
-			for i = 1, playersInTable do
-				messageText = messageText..self:ColorName(playerListGreen[i])
-				if i == 1 then -- Add icon
-					messageText = messageText..iconGreen
+			local playersInTable = #playerListGreen
+			if playersInTable > 0 then
+				if playerListGreen[2] then
+					local player1 = ("|T13700%d:0|t%s"):format(playerListGreen[1][2], self:ColorName(playerListGreen[1][1]))
+					local player2 = ("|T13700%d:0|t%s"):format(playerListGreen[2][2], self:ColorName(playerListGreen[2][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296938), player1, player2)
+				else
+					local player1 = ("|T13700%d:0|t%s"):format(playerListGreen[1][2], self:ColorName(playerListGreen[1][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296938), player1, "")
 				end
 			end
+
 			playersInTable = #playerListOrange
-			for i = 1, playersInTable do
-				if i == 1 then -- Add icon
-					messageText = messageText..", "..self:ColorName(playerListOrange[i])..iconOrange
+			if playersInTable > 0 then
+				if playerListOrange[2] then
+					local player1 = ("|T13700%d:0|t%s"):format(playerListOrange[1][2], self:ColorName(playerListOrange[1][1]))
+					local player2 = ("|T13700%d:0|t%s"):format(playerListOrange[2][2], self:ColorName(playerListOrange[2][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296939), player1, player2)
 				else
-					messageText = messageText..self:ColorName(playerListOrange[i])
+					local player1 = ("|T13700%d:0|t%s"):format(playerListOrange[1][2], self:ColorName(playerListOrange[1][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296939), player1, "")
 				end
 			end
+
 			playersInTable = #playerListPurple
-			for i = 1, playersInTable do
-				if i == 1 then
-					messageText = messageText..", "..self:ColorName(playerListPurple[i])..iconPurple
+			if playersInTable > 0 then
+				if playerListPurple[2] then
+					local player1 = ("|T13700%d:0|t%s"):format(playerListPurple[1][2], self:ColorName(playerListPurple[1][1]))
+					local player2 = ("|T13700%d:0|t%s"):format(playerListPurple[2][2], self:ColorName(playerListPurple[2][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296940), player1, player2)
 				else
-					messageText = messageText..self:ColorName(playerListPurple[i])
+					local player1 = ("|T13700%d:0|t%s"):format(playerListPurple[1][2], self:ColorName(playerListPurple[1][1]))
+					messageText = messageText .. L.linkText:format(GetSpellTexture(296940), player1, "")
 				end
 			end
+
 			self:Message2(-20096, "yellow", CL.other:format(self:SpellName(-20096), messageText))
 			self:PlaySound(-20096, "alert")
 		end
 
 		if self:GetOption(arcingAzeriteMarker) then
-			if #playerListGreen == 2 then
-				if raidList[playerListGreen[1]] < raidList[playerListGreen[2]] then
-					SetRaidTarget(playerListGreen[1], 1) -- Star
-					SetRaidTarget(playerListGreen[2], 4) -- Triangle
-				else
-					SetRaidTarget(playerListGreen[2], 1) -- Star
-					SetRaidTarget(playerListGreen[1], 4) -- Triangle
+			-- Green
+			if playerListGreen[1] then
+				SetRaidTarget(playerListGreen[1][1], playerListGreen[1][2])
+				if playerListGreen[2] then
+					SetRaidTarget(playerListGreen[2][1], playerListGreen[2][2])
 				end
-			elseif playerListGreen[1] then -- Only prio melee icon
-				SetRaidTarget(playerListGreen[1], 1)
 			end
-			if #playerListOrange == 2 then
-				if raidList[playerListOrange[1]] < raidList[playerListOrange[2]] then
-					SetRaidTarget(playerListOrange[1], 2) -- Circle
-					SetRaidTarget(playerListOrange[2], 7) -- Cross
-				else
-					SetRaidTarget(playerListOrange[2], 2) -- Circle
-					SetRaidTarget(playerListOrange[1], 7) -- Cross
+			-- Orange
+			if playerListOrange[1] then
+				SetRaidTarget(playerListOrange[1][1], playerListOrange[1][2])
+				if playerListOrange[2] then
+					SetRaidTarget(playerListOrange[2][1], playerListOrange[2][2])
 				end
-			elseif playerListOrange[1] then -- Only prio melee icon
-				SetRaidTarget(playerListOrange[1], 2) -- Circle
 			end
-			if #playerListPurple == 2 then
-				if raidList[playerListPurple[1]] < raidList[playerListPurple[2]] then
-					SetRaidTarget(playerListPurple[1], 3) -- Diamond
-					SetRaidTarget(playerListPurple[2], 6) -- Moon
-				else
-					SetRaidTarget(playerListPurple[2], 3) -- Diamond
-					SetRaidTarget(playerListPurple[1], 6) -- Moon
+			-- Purple
+			if playerListPurple[1] then
+				SetRaidTarget(playerListPurple[1][1], playerListPurple[1][2])
+				if playerListPurple[2] then
+					SetRaidTarget(playerListPurple[2][1], playerListPurple[2][2])
 				end
-			elseif playerListPurple[1] then -- Only prio melee icon
-				SetRaidTarget(playerListPurple[1], 3) -- Diamond
 			end
 		end
 
-		scheduled = nil
+		scheduled = false
 		isOnMe = 0
-		wipe(playerListGreen)
-		wipe(playerListOrange)
-		wipe(playerListPurple)
+		playerListGreen, playerListOrange, playerListPurple = {}, {}, {}
 	end
 
 	function mod:ArcingAzeriteApplied(args)
 		if args.spellId == 296938 or args.spellId == 296941 then -- Green
-			playerListGreen[#playerListGreen+1] = args.destName
+			playerListGreen[#playerListGreen+1] = {args.destName, 1}
+			if #playerListGreen == 2 then
+				if raidList[playerListGreen[1][1]] < raidList[playerListGreen[2][1]] then
+					playerListGreen[1][2] = 1 -- Star
+					playerListGreen[2][2] = 4 -- Triangle
+				else
+					playerListGreen[2][2] = 1 -- Star
+					playerListGreen[1][2] = 4 -- Triangle
+				end
+			end
 			if self:Me(args.destGUID) then
 				isOnMe = 1
 			end
 		elseif args.spellId == 296939 or args.spellId == 296942 then -- Orange
-			playerListOrange[#playerListOrange+1] = args.destName
+			playerListOrange[#playerListOrange+1] = {args.destName, 2}
+			if #playerListOrange == 2 then
+				if raidList[playerListOrange[1][1]] < raidList[playerListOrange[2][1]] then
+					playerListOrange[1][2] = 2 -- Circle
+					playerListOrange[2][2] = 7 -- Cross
+				else
+					playerListOrange[2][2] = 2 -- Circle
+					playerListOrange[1][2] = 7 -- Cross
+				end
+			end
 			if self:Me(args.destGUID) then
 				isOnMe = 2
 			end
 		elseif args.spellId == 296940 or args.spellId == 296943 then -- Purple
-			playerListPurple[#playerListPurple+1] = args.destName
+			playerListPurple[#playerListPurple+1] = {args.destName, 3}
+			if #playerListPurple == 2 then
+				if raidList[playerListPurple[1][1]] < raidList[playerListPurple[2][1]] then
+					playerListPurple[1][2] = 3 -- Diamond
+					playerListPurple[2][2] = 6 -- Moon
+				else
+					playerListPurple[2][2] = 3 -- Diamond
+					playerListPurple[1][2] = 6 -- Moon
+				end
+			end
 			if self:Me(args.destGUID) then
 				isOnMe = 3
 			end
 		end
 		if not scheduled then
+			scheduled = true
 			arcingAzeriteCount = arcingAzeriteCount + 1
-			scheduled = self:ScheduleTimer(announce, 0.1, self)
+			self:SimpleTimer(announce, 0.1)
 			if arcingAzeriteCount == 2 then
 				self:Bar(-20096, 34)
 			end
@@ -324,13 +369,29 @@ function mod:HardenedCarapaceApplied(args)
 		self:PlaySound("stages", "long")
 
 		barnacleBashCount = 1
+		upsurgeCount = 1
+		ripplingWaveCount = 1
 
 		self:StopBar(296725) -- Barnacle Bash
 		self:StopBar(297397) -- Crushing Depths
 
 		self:CDBar(296725, 10.9) -- Barnacle Bash
 		self:CDBar(298056, 12.9) -- Upsurge
-		self:Bar(296662, 18.9) -- Rippling Wave
+		self:Bar(296662, 18.9, CL.count:format(self:SpellName(296662), ripplingWaveCount)) -- Rippling Wave
 		self:Bar(297397, 40.9) -- Briny Bubble
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 2 then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
 	end
 end

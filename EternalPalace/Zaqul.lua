@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Za'qul, Herald of Ny'alotha", 2164, 2349)
 if not mod then return end
 mod:RegisterEnableMob(150859) -- Za'qul
 mod.engageId = 2293
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -31,6 +31,7 @@ function mod:GetOptions()
 	return {
 		-- General
 		"stages",
+		"berserk",
 		298192, -- Dark Beyond
 		292971, -- Hysteria
 		{295444, "TANK"}, -- Mind Tether
@@ -52,6 +53,8 @@ function mod:GetOptions()
 		[304733] = CL.stage:format(3),
 		[303971] = CL.stage:format(4),
 		[295814] = CL.mythic,
+	},{
+		[301141] = self:SpellName(285205), -- Crushing Grasp (Tentacle)
 	}
 end
 
@@ -80,6 +83,8 @@ function mod:OnBossEnable()
 
 	-- Stage 4
 	self:Log("SPELL_CAST_START", "DarkPulse", 303971)
+	self:Log("SPELL_AURA_APPLIED", "MindFracture", 296084)
+
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 298192) -- Dark Beyond
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 298192)
@@ -87,7 +92,6 @@ function mod:OnBossEnable()
 
 	-- Mythic
 	self:Log("SPELL_CAST_START", "PsychoticSplit", 295814)
-
 end
 
 function mod:OnEngage()
@@ -96,7 +100,8 @@ function mod:OnEngage()
 	self:CDBar(295444, 5.5) -- Mind Tether
 	self:CDBar(292963, 14.2) -- Dread
 	self:CDBar(294535, 20) -- Portal of Madness
-	self:CDBar(301141, 30.5) -- Crushing Grasp
+	self:CDBar(301141, 30.5, self:SpellName(285205)) -- Crushing Grasp (Tentacle)
+	self:Berserk(600)
 end
 
 --------------------------------------------------------------------------------
@@ -124,7 +129,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		elseif stage == 4 then
 			self:Message2(299702, "yellow")
 			self:PlaySound(299702, "alert")
-			self:Bar(299702, 84)
+			self:Bar(299702, 87)
 		end
 	elseif spellId == 295361 then -- Cancel All Phases (Encounter Reset) (Stage 4 start) Alternative: Energy Tracker-296465
 		stage = 4
@@ -135,12 +140,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(304733) -- Delirium's Descent
 
 		self:CDBar(296018, 15) -- Manic Dread
-		self:Bar(299702, 84) -- Portal of Madness
+		self:Bar(299702, 20.6) -- Dark Passage
 		self:Bar(292996, 34) -- Maddening Eruption
-		self:CDBar(301141, 30.5) -- Crushing Grasp
+		self:CDBar(301141, 30.5, self:SpellName(285205)) -- Crushing Grasp (Tentacle)
 
 		if self:Mythic() then
-			self:Bar(295814, 45) -- Psychotic Split
+			self:Bar(295814, 75) -- Psychotic Split
 		else
 			self:Bar(303971, 75) -- Dark Pulse
 		end
@@ -167,20 +172,20 @@ end
 
 -- Stage 1
 function mod:MindTether(args)
-	self:CDBar(args.spellId, 48.5)
+	self:CDBar(args.spellId, stage == 4 and 81 or 48.5)
 end
 
 function mod:MindTetherApplied(args) -- XXX Make it better perhaps? this is very simple atm.
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(292971, CL.link:format(args.sourceName))
-		self:PlaySound(292971, "alert")
+		self:Message2(295444, "blue", CL.link:format(args.sourceName))
+		self:PlaySound(295444, "alert")
 	end
 end
 
-function mod:CrushingGrasp(args)
-	self:Message2(args.spellId, "orange")
+function mod:CrushingGrasp(args) -- Tentacle
+	self:Message2(args.spellId, "orange", self:SpellName(285205))
 	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, 31.5)
+	self:CDBar(args.spellId, 31.5, self:SpellName(285205))
 	--self:CastBar(args.spellId, 8) XXX Mythic has 3 casts, figure out a clever way if needed
 end
 
@@ -233,7 +238,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("292996", nil, true) then -- Maddening Eruption
 		self:Message2(292996, "cyan")
 		self:PlaySound(292996, "info")
-		self:CDBar(292996, stage == 4 and 90.5 or 60)
+		self:CDBar(292996, stage == 4 and (self:Mythic() and 65 or 90.5) or 60)
 		self:CDBar(295099, 25) -- Punctured Darkness
 	end
 end
@@ -261,6 +266,13 @@ end
 function mod:DarkPulse(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
+end
+function mod:MindFracture()
+	if self:Mythic() then
+		self:Bar(295814, 75)
+	else
+		self:Bar(303971, 75)
+	end
 end
 
 do

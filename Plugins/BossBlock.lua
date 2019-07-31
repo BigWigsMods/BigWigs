@@ -262,6 +262,7 @@ do
 		[688] = true, -- Argus kill
 		[875] = true, -- Killing King Rastakhan
 		[876] = true, -- Entering Battle of Dazar'alor
+		[886] = true, -- Queen Azshara defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)

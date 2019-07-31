@@ -263,6 +263,8 @@ local function updateProfile()
 		font.icon.animFade:SetStartDelay(db.displaytime)
 		font.animFade:SetDuration(db.fadetime)
 		font.icon.animFade:SetDuration(db.fadetime)
+		font.icon:SetSize(db.fontSize, db.fontSize)
+		font:SetHeight(db.fontSize)
 		font:SetFont(media:Fetch(FONT, db.fontName), db.fontSize, flags)
 	end
 end
@@ -346,7 +348,6 @@ plugin.pluginOptions.args.more = {
 				CENTER = L.center,
 				RIGHT = L.right,
 			},
-			width = "half",
 			style = "radio",
 			order = 3,
 		},
@@ -502,24 +503,21 @@ do
 		BWMessageFrame:Show()
 
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
+		local slotIcon = slot.icon
 		slot:SetText(text)
 		slot:SetTextColor(r, g, b, 1)
-		slot:SetHeight(slot:GetStringHeight())
 
 		if icon then
-			local h = slot:GetHeight()
-			slot.icon:SetWidth(h)
-			slot.icon:SetHeight(h)
-			slot.icon:SetTexture(icon)
-			slot.icon.anim:Stop()
-			slot.icon:Show()
-			slot.icon.anim:Play()
+			slotIcon:SetTexture(icon)
+			slotIcon.anim:Stop()
+			slotIcon:Show()
+			slotIcon.anim:Play()
 		else
-			slot.icon:Hide()
+			slotIcon:Hide()
 		end
 		slot.anim:Stop()
 		slot:SetAlpha(1)
-		slot.icon:SetAlpha(1)
+		slotIcon:SetAlpha(1)
 		slot.elapsed = 0
 		slot.anim:SetScript("OnUpdate", bounceAnimation)
 		slot:Show()

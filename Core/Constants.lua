@@ -27,6 +27,7 @@ end
 -- Toggles that should actually be shown in the interface options
 local listToggles = { "BAR", "FLASH", "MESSAGE", "ICON", "SAY", "SAY_COUNTDOWN", "PROXIMITY", "ALTPOWER", "VOICE", "INFOBOX" }
 local roleToggles = { "TANK", "HEALER", "TANK_HEALER", "DISPEL" }
+-- NOTE: The toggle "OFF" is also valid for entirely disabling an option by default
 
 local used = nil
 function BigWigs:RegisterOption(key, name, desc)
@@ -133,13 +134,17 @@ local function replaceIdWithDescription(msg)
 	end
 end
 
-function BigWigs:GetBossOptionDetails(module, bossOption)
-	local customBossOptions = BigWigs:GetCustomBossOptions()
-	local option = bossOption
-	local t = type(option)
-	if t == "table" then option = option[1]; t = type(option) end
+function BigWigs:GetBossOptionDetails(module, option)
+	local optionType = type(option)
+	if optionType == "table" then
+		option = option[1]
+		optionType = type(option)
+	end
 
-	if t == "string" then
+	local alternativeName = module.altNames and module.altNames[option]
+
+	if optionType == "string" then
+		local customBossOptions = BigWigs:GetCustomBossOptions()
 		if customBossOptions[option] then
 			return option, customBossOptions[option][1], customBossOptions[option][2], customBossOptions[option][4]
 		else
@@ -185,9 +190,9 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			elseif type(icon) == "string" and not icon:find("\\", nil, true) then
 				icon = "Interface\\Icons\\" .. icon
 			end
-			return option, title, description, icon
+			return option, title, description, icon, alternativeName
 		end
-	elseif t == "number" then
+	elseif optionType == "number" then
 		if option > 0 then
 			local spellName, _, icon = GetSpellInfo(option)
 			if not spellName then
@@ -200,7 +205,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 				desc = option
 			end
 			local roleDesc = getRoleStrings(module, option)
-			return option, spellName, roleDesc..desc, icon
+			return option, spellName, roleDesc..desc, icon, alternativeName
 		else
 			-- This is an EncounterJournal ID
 			local tbl = C_EncounterJournal_GetSectionInfo(-option)
@@ -214,7 +219,7 @@ function BigWigs:GetBossOptionDetails(module, bossOption)
 			end
 
 			local roleDesc = getRoleStrings(module, option)
-			return option, title, roleDesc..description, abilityIcon or false
+			return option, title, roleDesc..description, abilityIcon or false, alternativeName
 		end
 	end
 end

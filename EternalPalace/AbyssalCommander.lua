@@ -6,7 +6,13 @@ local mod, CL = BigWigs:NewBoss("Abyssal Commander Sivara", 2164, 2352)
 if not mod then return end
 mod:RegisterEnableMob(151881) -- Abyssal Commander Sivara
 mod.engageId = 2298
---mod.respawnTime = 31
+mod.respawnTime = 30
+
+--------------------------------------------------------------------------------
+-- Locals
+--
+
+local markList = {}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -14,7 +20,8 @@ mod.engageId = 2298
 
 function mod:GetOptions()
 	return {
-		{294726, "FLASH", "PULSE"}, -- Chimeric Marks
+		"berserk",
+		{294726, "FLASH", "PULSE", "INFOBOX"}, -- Chimeric Marks
 		295332, -- Crushing Reverberation
 		{-20300, "SAY_COUNTDOWN"}, -- Frostvenom Tipped
 		296551, -- Overwhelming Barrage
@@ -27,6 +34,8 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ToxicBrandApplied", 294715)
 	self:Log("SPELL_AURA_APPLIED", "FrostMarkApplied", 294711)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "MarkAppliedDose", 294715, 294711)
+	self:Log("SPELL_AURA_REMOVED", "MarkRemoved", 294715, 294711)
 	self:Log("SPELL_CAST_START", "CrushingReverberation", 295332)
 	self:Log("SPELL_AURA_APPLIED", "FrostvenomTippedApplied", 300701, 300705) -- Rimefrost, Septic Taint
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FrostvenomTippedApplied", 300701, 300705)
@@ -42,37 +51,64 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	markList = {}
 	self:CDBar(295332, 11) -- Crushing Reverberation
-	self:Bar(-20006, 16) -- Overflow
+	self:Bar(-20006, self:Mythic() and 19 or 16) -- Overflow
 	self:Bar(296551, 40) -- Overwhelming Barrage
-	self:Bar(295601, 53) -- Frostshock Bolts
-	self:Bar(295791, 70) -- Inversion
+	self:CDBar(295601, 50) -- Frostshock Bolts
+	if not self:LFR() then
+		self:CDBar(295791, 70) -- Inversion
+	end
+	self:Berserk(self:Easy() and 390 or 360)
+	self:OpenInfo(294726, self:SpellName(294726)) -- Chimeric Marks
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:ToxicBrandApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(294726, nil, args.spellName, args.spellId)
-		self:PlaySound(294726, "alarm")
-		self:Flash(294726, args.spellId)
+do
+	local prev = 0
+	function mod:ToxicBrandApplied(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 3 then
+				self:PersonalMessage(294726, nil, args.spellName, args.spellId)
+				self:PlaySound(294726, "alarm")
+				self:Flash(294726, args.spellId)
+			end
+		end
 	end
 end
 
-function mod:FrostMarkApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(294726, nil, args.spellName, args.spellId)
-		self:PlaySound(294726, "alarm")
-		self:Flash(294726, args.spellId)
+do
+	local prev = 0
+	function mod:FrostMarkApplied(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 3 then
+				self:PersonalMessage(294726, nil, args.spellName, args.spellId)
+				self:PlaySound(294726, "alarm")
+				self:Flash(294726, args.spellId)
+			end
+		end
 	end
+end
+
+function mod:MarkAppliedDose(args)
+	markList[args.destName] = args.amount
+	self:SetInfoByTable(294726, markList)
+end
+
+function mod:MarkRemoved(args)
+	markList[args.destName] = nil
+	self:SetInfoByTable(294726, markList)
 end
 
 function mod:CrushingReverberation(args)
 	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 23)
+	self:CDBar(args.spellId, self:Mythic() and 29 or 23) -- XXX review all dificulties for what causes the variance
 end
 
 function mod:FrostvenomTippedApplied(args)
@@ -107,11 +143,11 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(-20006, "alarm")
 			self:Say(-20006, args.spellName)
-			self:SayCountdown(-20006, 7)
+			self:SayCountdown(-20006, self:Mythic() and 6 or 7)
 			self:Flash(-20006)
 		end
 		if #playerList == 1 then
-			self:CDBar(-20006, 30) -- XXX Check if this is always the case: 16.8, 33, 40, 40, 30, 30, 35, 30
+			self:CDBar(-20006, self:Mythic() and 40 or 30) -- XXX Check if this is always the case: 16.8, 33, 40, 40, 30, 30, 35, 30
 		end
 		self:TargetsMessage(-20006, "yellow", playerList)
 	end
@@ -125,7 +161,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 295601 then -- Frostshock Bolts
-		self:Bar(spellId, 80)
+		self:CDBar(spellId, 80) -- XXX as low as 75?
 	end
 end
 

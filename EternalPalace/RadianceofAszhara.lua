@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Radiance of Azshara", 2164, 2353)
 if not mod then return end
 mod:RegisterEnableMob(152364) -- Radiance of Azshara
 mod.engageId = 2305
---mod.respawnTime = 31
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -14,18 +14,20 @@ mod.engageId = 2305
 
 local stage = 1
 local nextAncientTempest = nil
-local unshackledPowerCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local arcaneBombMarker = mod:AddMarkerOption(false, "player", 1, 296737, 1, 2, 3, 4) -- Arcane Bomb
 function mod:GetOptions()
 	return {
-		{296546, "TANK"}, -- Tide Fist
+		"berserk",
+		{296566, "TANK"}, -- Tide Fist
 		296428, -- Arcanado Burst
 		296459, -- Squall Trap
 		{296737, "SAY", "SAY_COUNTDOWN"}, -- Arcane Bomb
+		arcaneBombMarker,
 		296894, -- Unshackled Power
 		295916, -- Ancient Tempest
 		296701, -- Gale Buffet
@@ -36,7 +38,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "TideFistStart", 296546)
+	self:Log("SPELL_CAST_START", "TideFistStart", 296566)
 	self:Log("SPELL_AURA_APPLIED", "TideFistApplied", 296566)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Arcanado Burst, Power Gain (Ancient Tempest Over)
 	self:Log("SPELL_CAST_START", "SquallTrap", 296459)
@@ -49,15 +51,15 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	unshackledPowerCount = 1
-	nextAncientTempest = GetTime() + 96
+	nextAncientTempest = GetTime() + 95.5
 
 	self:CDBar(296428, 6) -- Arcanado Burst
 	self:CDBar(296737, 7) -- Arcane Bomb
 	self:CDBar(296894, 10) -- Unshackled Power
-	self:CDBar(296546, 15) -- Tide Fist
+	self:CDBar(296566, 15) -- Tide Fist
 	self:CDBar(296459, 85) -- Squall Trap
-	self:CDBar(295916, 96) -- Ancient Tempest
+	self:CDBar(295916, 95.5) -- Ancient Tempest
+	self:Berserk(self:Mythic() and 540 or 720)
 end
 
 --------------------------------------------------------------------------------
@@ -67,7 +69,7 @@ end
 function mod:TideFistStart(args)
 	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
-	local cd = 18
+	local cd = 20
 	local nextAncientTempestCD = nextAncientTempest - GetTime()
 	if nextAncientTempestCD > cd then
 		self:CDBar(args.spellId, cd)
@@ -75,8 +77,8 @@ function mod:TideFistStart(args)
 end
 
 function mod:TideFistApplied(args)
-	self:TargetMessage2(296546, "purple", args.destName)
-	self:PlaySound(296546, "alert", args.destName)
+	self:TargetMessage2(args.spellId, "purple", args.destName)
+	self:PlaySound(args.spellId, "alert", args.destName)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
@@ -95,13 +97,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(296701) -- Gale Buffet
 
 		stage = 1
-		unshackledPowerCount = 1
 		nextAncientTempest = GetTime() + 96
 
 		self:CDBar(296428, 6) -- Arcanado Burst
 		self:CDBar(296737, 7) -- Arcane Bomb
 		self:CDBar(296894, 10) -- Unshackled Power
-		self:CDBar(296546, 15.2) -- Tide Fist
+		self:CDBar(296566, 15.2) -- Tide Fist
 		self:CDBar(296459, 85) -- Squall Trap
 		self:CDBar(295916, 96) -- Ancient Tempest
 	end
@@ -113,12 +114,14 @@ function mod:SquallTrap(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList, playerIcons = mod:NewTargetList(), {}
 	function mod:ArcaneBombApplied(args)
-		playerList[#playerList+1] = args.destName
+		local count = #playerList+1
+		playerList[count] = args.destName
+		playerIcons[count] = count
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, self:Mythic() and 4 or 10)
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+			self:SayCountdown(args.spellId, self:Mythic() and 4 or 10, count)
 			self:PlaySound(args.spellId, "alert")
 		end
 		if #playerList == 1 then
@@ -128,10 +131,16 @@ do
 				self:Bar(args.spellId, cd)
 			end
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList)
+		if self:GetOption(arcaneBombMarker) then
+			SetRaidTarget(args.destName, #playerList)
+		end
+		self:TargetsMessage(args.spellId, "yellow", playerList, 4, nil, nil, nil, playerIcons)
 	end
 
 	function mod:ArcaneBombRemoved(args)
+		if self:GetOption(arcaneBombMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
@@ -142,8 +151,7 @@ end
 function mod:UnshackledPower(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	unshackledPowerCount = unshackledPowerCount + 1
-	local cd = unshackledPowerCount == 3 and 9 or 17
+	local cd = 18
 	local nextAncientTempestCD = nextAncientTempest - GetTime()
 	if nextAncientTempestCD > cd then
 		self:CDBar(args.spellId, cd)
@@ -159,7 +167,7 @@ function mod:AncientTempest(args)
 	self:StopBar(296428) -- Arcanado Burst
 	self:StopBar(296737) -- Arcane Bomb
 	self:StopBar(296894) -- Unshackled Power
-	self:StopBar(296546) -- Tide Fist
+	self:StopBar(296566) -- Tide Fist
 
 	self:CDBar(296737, 7) -- Arcane Bomb
 	self:CDBar(296701, 26) -- Gale Buffet
@@ -168,5 +176,5 @@ end
 function mod:GaleBuffet(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, 23)
+	self:CDBar(args.spellId, self:Mythic() and 22.2 or 23)
 end

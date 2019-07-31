@@ -19,7 +19,7 @@ L.already_registered  = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) 
 L.officialRelease  = "Estás usando la versión oficial de BigWigs %s (%s)"
 L.alphaRelease  = "Estás usando la VERSION ALPHA de BigWigs %s (%s)"
 L.sourceCheckout  = "Estás usando la versión de BigWigs %s directamente del repositorio."
-L.getNewRelease  = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo fácilmente con el cliente de Twitch. También puedes actualizarlo manualmente desde curse.com o wowinterface.com."
+L.getNewRelease  = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo fácilmente con el cliente de Twitch. También puedes actualizarlo manualmente desde curseforge.com o wowinterface.com."
 L.warnTwoReleases  = "Tu BigWigs está 2 versiones desfasado! Tu versión puede tener fallos, faltarle características, o temporizadores incorrectos. Es muy recomendable que lo actualices."
 L.warnSeveralReleases  = "|cffff0000Tu BigWigs está desfasado %d actualizaciones!! Te recomendamos MUCHÍSIMO que lo actualices cuanto antes para prevenir problemas de sincronización con otros jugadores!|r"
 
@@ -37,6 +37,7 @@ L.missingAddOn  = "Tenga en cuenta que esta zona requiere el plugin |cFF436EEE%s
 L.disabledAddOn  = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores no se mostraran."
 
 L.removeAddon  = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
+L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 -- Media.lua
 L.Beware = "Cuidado (Algalon)"
@@ -81,7 +82,7 @@ L.slashDescRange  = "|cFFFED000/range:|r Abre el indicador de rango."
 L.slashDescVersion  = "|cFFFED000/bwv:|r Realiza un chequeo de versiónes de BigWigs."
 L.slashDescConfig  = "|cFFFED000/bw:|r Abre la configuración de BigWigs."
 
-L.gitHubDesc  = "BigWigs es de código abierto alojado en GitHub. Siempre estamos buscando gente para ayudarnos y cualquiera es bienvenido para inspeccionar nuestro código, hacer contribuciones y reportar errores. BigWigs es tan genial a día de hoy en gran parte por la gran comunidad de WoW que nos ayuda.\n\n|cFF33FF99Ahora nuestra API está documentada y puede leerla libremente en el wiki de GitHub.|r"
+L.gitHubDesc  = "BigWigs es de código abierto alojado en GitHub. Siempre estamos buscando gente para ayudarnos y cualquiera es bienvenido para inspeccionar nuestro código, hacer contribuciones y reportar errores. BigWigs es tan genial a día de hoy en gran parte por la gran comunidad de WoW que nos ayuda."
 
 L.BAR  = "Barras"
 L.MESSAGE  = "Mensajes"
