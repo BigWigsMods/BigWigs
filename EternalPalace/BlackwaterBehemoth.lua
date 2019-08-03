@@ -31,7 +31,7 @@ function mod:GetOptions()
 		{298428, "TANK"}, -- Feeding Frenzy
 		292159, -- Toxic Spine
 		292270, -- Shock Pulse
-		{301494, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Piercing Barb
+		{301494, "SAY", "SAY_COUNTDOWN", "FLASH", "ICON"}, -- Piercing Barb
 		292083, -- Cavitation
 		301180, -- Slipstream
 	}
@@ -53,6 +53,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShockPulse", 292270)
 	self:Log("SPELL_CAST_SUCCESS", "PiercingBarb", 301494)
 	self:Log("SPELL_AURA_APPLIED", "PiercingBarbApplied", 301494)
+	self:Log("SPELL_AURA_REMOVED", "PiercingBarbRemoved", 301494)
 
 	self:Log("SPELL_AURA_APPLIED", "SlipstreamApplied", 301180)
 	self:Log("SPELL_CAST_START", "Cavitation", 292083)
@@ -168,11 +169,19 @@ end
 function mod:PiercingBarbApplied(args)
 	self:TargetMessage2(args.spellId, "red", args.destName)
 	self:PlaySound(args.spellId, "warning", nil, args.destName)
+	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 6)
 	end
+end
+
+function mod:PiercingBarbRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+	self:PrimaryIcon(args.spellId)
 end
 
 function mod:Cavitation(args)
