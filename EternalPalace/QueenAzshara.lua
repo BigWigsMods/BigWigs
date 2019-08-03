@@ -93,6 +93,8 @@ function mod:GetOptions()
 		{300743, "TANK"}, -- Void Touched
 		303982, -- Nether Portal
 		301431, -- Overload
+		{300866, "FLASH"}, -- Essence of Azeroth
+		300877,
 		300478, -- Divide and Conquer
 	},{
 		["stages"] = "general",
@@ -174,8 +176,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "VoidTouchedApplied", 300743)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidTouchedApplied", 300743)
 	self:Log("SPELL_CAST_START", "Overload", 301431)
+	self:Log("SPELL_AURA_APPLIED", "EssenceofAzerothApplied", 300866)
+	self:Log("SPELL_AURA_REMOVED", "EssenceofAzerothRemoved", 300866)
+	self:Log("SPELL_AURA_APPLIED", "SystemShockApplied", 300877)
 
 	-- Ground Effects
+	self:Log("SPELL_AURA_APPLIED", "NetherPortalDamage", 303981) -- Nether Portal
+	self:Log("SPELL_PERIODIC_DAMAGE", "NetherPortalDamage", 303981)
+	self:Log("SPELL_PERIODIC_MISSED", "NetherPortalDamage", 303981)
+
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 297907) -- Cursed Heart
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 297907)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 297907)
@@ -703,6 +712,42 @@ function mod:Overload(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, self:Mythic() and 55 or 45)
+end
+
+function mod:EssenceofAzerothApplied(args)
+	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alert", nil, args.destName)
+		self:Flash(args.spellId)
+		self:TargetBar(args.spellId, 25, args.destName)
+	end
+end
+
+function mod:EssenceofAzerothRemoved(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(args.spellId, args.destName)
+	end
+end
+
+function mod:SystemShockApplied(args)
+	self:TargetMessage2(args.spellId, "cyan", args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
+	end
+end
+
+do
+	local prev = 0
+	function mod:NetherPortalDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 2 then
+				prev = t
+				self:PlaySound(303982, "alarm")
+				self:PersonalMessage(303982, "underyou")
+			end
+		end
+	end
 end
 
 do
