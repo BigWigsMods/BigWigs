@@ -153,23 +153,25 @@ end
 --
 
 do
+	local trackerHider = CreateFrame("Frame")
+	trackerHider:Hide()
 	local unregisteredEvents = {}
 	local function KillEvent(frame, event)
 		-- The user might be running an addon that permanently unregisters one of these events.
 		-- Let's check that before we go re-registering that event and screwing with that addon.
-		if frame:IsEventRegistered(event) then
-			frame:UnregisterEvent(event)
+		if trackerHider.IsEventRegistered(frame, event) then
+			trackerHider.UnregisterEvent(frame, event)
 			unregisteredEvents[event] = true
 		end
 	end
 	local function RestoreEvent(frame, event)
 		if unregisteredEvents[event] then
-			frame:RegisterEvent(event)
+			trackerHider.RegisterEvent(frame, event)
 			unregisteredEvents[event] = nil
 		end
 	end
 
-	local restoreObjectiveTracker = false
+	local restoreObjectiveTracker = nil
 	function plugin:BigWigs_OnBossEngage()
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
@@ -193,18 +195,17 @@ do
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "0")
 		end
+		-- Undo damage by ElvUI (This frame makes the Objective Tracker protected)
+		if type(ObjectiveTrackerFrame.AutoHider) == "table" and trackerHider.GetParent(ObjectiveTrackerFrame.AutoHider) == ObjectiveTrackerFrame then
+			trackerHider.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
+		end
 		-- Never hide when tracking achievements or in Mythic+
 		local _, _, diff = GetInstanceInfo()
-		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8
-		and ObjectiveTrackerFrame and ObjectiveTrackerFrame:IsShown() and not ObjectiveTrackerFrame.collapsed then
-			restoreObjectiveTracker = true
-			ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:Click()
-			local _, id = PlaySound(856, nil, false)
-			if id then -- Sounds might not even be enabled
-				StopSound(id - 1) -- Stop the click sound
-				StopSound(id)
+		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
+			restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
+			if restoreObjectiveTracker then
+				trackerHider.SetParent(ObjectiveTrackerFrame, trackerHider)
 			end
-			ObjectiveTrackerFrame.HeaderMenu:SetAlpha(0)
 		end
 	end
 
@@ -232,14 +233,8 @@ do
 			SetCVar("showQuestTrackingTooltips", "1")
 		end
 		if restoreObjectiveTracker then
-			restoreObjectiveTracker = false
-			ObjectiveTrackerFrame.HeaderMenu.MinimizeButton:Click()
-			local _, id = PlaySound(856, nil, false)
-			if id then -- Sounds might not even be enabled
-				StopSound(id - 1) -- Stop the click sound
-				StopSound(id)
-			end
-			ObjectiveTrackerFrame.HeaderMenu:SetAlpha(1)
+			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
+			restoreObjectiveTracker = nil
 		end
 	end
 end
