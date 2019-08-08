@@ -121,7 +121,6 @@ globals = {
 	"CombatLogGetCurrentEventInfo",
 	"CombatLog_String_GetIcon",
 	"CreateFrame",
-	"C_CVar",
 	"C_RaidLocks",
 	"C_Scenario",
 	"C_Spell",
@@ -246,4 +245,7 @@ globals = {
 	"UnitPowerMax",
 	"UnitRace",
 	"UnitSetRole",
+
+	"GetCVar",
+	"SetCVar",
 }
