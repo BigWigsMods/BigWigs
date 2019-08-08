@@ -9,7 +9,6 @@ install: luarocks install --local luacheck
 before_script:
  - lua gen_option_values.lua
  - /home/travis/.luarocks/bin/luacheck . -q
-script: curl -s https://raw.githubusercontent.com/BigWigsMods/packager/master/release.sh | bash
 
 notifications:
   email:
