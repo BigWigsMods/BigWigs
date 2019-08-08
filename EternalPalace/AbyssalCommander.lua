@@ -100,6 +100,10 @@ end
 function mod:MarkAppliedDose(args)
 	markList[args.destName] = args.amount
 	self:SetInfoByTable(294726, markList)
+	if args.amount > 2 and self:Me(args.destGUID) then
+		self:StackMessage(294726, args.destName, args.amount, "blue", nil, args.spellName, args.spellId)
+		self:PlaySound(294726, "alarm")
+	end
 end
 
 function mod:MarkRemoved(args)
