@@ -11,7 +11,7 @@ local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local names = {}
 local descriptions = {}
 
-local GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal_GetSectionInfo = GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal.GetSectionInfo
+local GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal_GetSectionInfo = GetSpellInfo, GetSpellTexture, GetSpellDescription, function(...) return ... end
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
 
 -- Option bitflags

@@ -28,7 +28,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetSubZoneText = GetSubZoneText
-local SetCVar = C_CVar.SetCVar
+local SetCVar = SetCVar
 
 -------------------------------------------------------------------------------
 -- Options
@@ -127,7 +127,7 @@ function plugin:OnPluginEnable()
 		SetCVar("Sound_EnableSFX", "1")
 	end
 	if self.db.profile.blockTooltipQuests then
-		SetCVar("showQuestTrackingTooltips", "1")
+		--SetCVar("showQuestTrackingTooltips", "1")
 	end
 
 	if IsEncounterInProgress() then -- Just assume we logged into an encounter after a DC
@@ -136,16 +136,6 @@ function plugin:OnPluginEnable()
 
 	self:RegisterEvent("CINEMATIC_START")
 	self:RegisterEvent("PLAY_MOVIE")
-	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
-	self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
-
-	-- XXX temp 8.1.5
-	for id in next, BigWigs.db.global.watchedMovies do
-		if type(id) == "string" then
-			BigWigs.db.global.watchedMovies[id] = nil
-		end
-	end
-	BigWigs.db.global.watchedMovies[-593] = nil -- Auchindoun temp reset
 end
 
 -------------------------------------------------------------------------------
@@ -193,7 +183,7 @@ do
 			SetCVar("Sound_EnableSFX", "0")
 		end
 		if self.db.profile.blockTooltipQuests then
-			SetCVar("showQuestTrackingTooltips", "0")
+			--SetCVar("showQuestTrackingTooltips", "0")
 		end
 		-- Undo damage by ElvUI (This frame makes the Objective Tracker protected)
 		if type(ObjectiveTrackerFrame.AutoHider) == "table" and trackerHider.GetParent(ObjectiveTrackerFrame.AutoHider) == ObjectiveTrackerFrame then
@@ -230,7 +220,7 @@ do
 			SetCVar("Sound_EnableSFX", "1")
 		end
 		if self.db.profile.blockTooltipQuests then
-			SetCVar("showQuestTrackingTooltips", "1")
+			--SetCVar("showQuestTrackingTooltips", "1")
 		end
 		if restoreObjectiveTracker then
 			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
@@ -310,50 +300,6 @@ do
 		[-1358] = true, -- Battle of Dazar'alor, after killing 1st boss, Bwonsamdi (Horde side only)
 		--[-1364] = true, -- Battle of Dazar'alor, Jaina stage 1 intermission (unskippable)
 	}
-
-	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
-	function plugin:SiegeOfOrgrimmarCinematics()
-		local hasItem
-		for i = 105930, 105935 do -- Vision of Time items
-			local count = GetItemCount(i)
-			if count > 0 then hasItem = true break end -- Item is found in our inventory
-		end
-		if hasItem and not self.SiegeOfOrgrimmarCinematicsFrame then
-			local tbl = {[149370] = true, [149371] = true, [149372] = true, [149373] = true, [149374] = true, [149375] = true}
-			self.SiegeOfOrgrimmarCinematicsFrame = CreateFrame("Frame")
-			-- frame:UNIT_SPELLCAST_SUCCEEDED:player:Cast-GUID:149371:
-			self.SiegeOfOrgrimmarCinematicsFrame:SetScript("OnEvent", function(_, _, _, _, spellId)
-				if tbl[spellId] and plugin:IsEnabled() then
-					plugin:UnregisterEvent("CINEMATIC_START")
-					plugin:ScheduleTimer("RegisterEvent", 10, "CINEMATIC_START")
-				end
-			end)
-			self.SiegeOfOrgrimmarCinematicsFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-		end
-	end
-
-	-- Cinematic skipping hack to workaround specific toys that create cinematics.
-	function plugin:ToyCheck()
-		local toys = { -- Classed as items not toys
-			133542, -- Tosselwrench's Mega-Accurate Simulation Viewfinder
-		}
-		for i = 1, #toys do
-			if PlayerHasToy(toys[i]) and not self.toysFrame then
-				local tbl = {
-					[201179] = true -- Deathwing Simulator
-				}
-				self.toysFrame = CreateFrame("Frame")
-				-- frame:UNIT_SPELLCAST_SUCCEEDED:player:Cast-GUID:149371:
-				self.toysFrame:SetScript("OnEvent", function(_, _, _, _, spellId)
-					if tbl[spellId] and plugin:IsEnabled() then
-						plugin:UnregisterEvent("CINEMATIC_START")
-						plugin:ScheduleTimer("RegisterEvent", 5, "CINEMATIC_START")
-					end
-				end)
-				self.toysFrame:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-			end
-		end
-	end
 
 	function plugin:CINEMATIC_START()
 		if self.db.profile.blockMovies then

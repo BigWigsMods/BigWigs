@@ -10,7 +10,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 163
+local BIGWIGS_VERSION = 1
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -647,11 +647,6 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	bwFrame:RegisterEvent("RAID_INSTANCE_WELCOME")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-	--bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
-
-	-- Role Updating
-	--bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-	--RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
@@ -730,9 +725,9 @@ function mod:ADDON_LOADED(addon)
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
 	if self.isSoundOn ~= false then -- Only if sounds are enabled
-		local num = tonumber(C_CVar.GetCVar("Sound_NumChannels")) or 0
+		local num = tonumber(GetCVar("Sound_NumChannels")) or 0
 		if num < 64 then
-			C_CVar.SetCVar("Sound_NumChannels", "64") -- Blizzard keeps screwing with addon sound priority so we force this minimum
+			SetCVar("Sound_NumChannels", "64") -- Blizzard keeps screwing with addon sound priority so we force this minimum
 		end
 	end
 
@@ -1015,105 +1010,6 @@ bwFrame:SetScript("OnEvent", function(_, event, ...)
 end)
 bwFrame:RegisterEvent("ADDON_LOADED")
 bwFrame:RegisterEvent("UPDATE_FLOATING_CHAT_WINDOWS")
-
-do
-	-- Role Updating
-	local prev = 0
-	function mod:PLAYER_REGEN_ENABLED()
-		bwFrame:UnregisterEvent("PLAYER_REGEN_ENABLED")
-		self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
-	end
-	function mod:ACTIVE_TALENT_GROUP_CHANGED()
-		if IsInGroup() then
-			if IsPartyLFG() then return end
-
-			local tree = GetSpecialization()
-			if not tree then return end -- No spec selected
-
-			local role = GetSpecializationRole(tree)
-			if role and UnitGroupRolesAssigned("player") ~= role then
-				if InCombatLockdown() or UnitAffectingCombat("player") then
-					bwFrame:RegisterEvent("PLAYER_REGEN_ENABLED")
-					return
-				end
-				-- ACTIVE_TALENT_GROUP_CHANGED fires twice when changing spec, leaving the talent tree, and entering the new tree. We throttle this to prevent a double role chat message.
-				-- It should only fire once when joining a group (triggered from GROUP_ROSTER_UPDATE)
-				-- This will fail when logging in/reloading in a group because GetSpecializationRole is nil since WoW v7 when GROUP_ROSTER_UPDATE fires
-				-- However, your role seems to be saved internally and preserved, so is this really an issue?
-				local t = GetTime()
-				if (t-prev) > 2 then
-					prev = t
-					UnitSetRole("player", role)
-				end
-			end
-		end
-	end
-end
-
--- Merged LFG_ProposalTime addon by Freebaser
-do
-	local prev
-	function mod:LFG_PROPOSAL_SHOW()
-		if not prev then
-			local timerBar = CreateFrame("StatusBar", nil, LFGDungeonReadyPopup)
-			timerBar:SetPoint("TOP", LFGDungeonReadyPopup, "BOTTOM", 0, -5)
-			local tex = timerBar:CreateTexture()
-			tex:SetTexture(137012) -- Interface\\TargetingFrame\\UI-StatusBar
-			timerBar:SetStatusBarTexture(tex)
-			timerBar:SetSize(190, 9)
-			timerBar:SetStatusBarColor(1, 0.1, 0)
-			timerBar:SetMinMaxValues(0, 40)
-			timerBar:Show()
-
-			local bg = timerBar:CreateTexture(nil, "BACKGROUND")
-			bg:SetAllPoints(timerBar)
-			bg:SetColorTexture(0, 0, 0, 0.7)
-
-			local spark = timerBar:CreateTexture(nil, "OVERLAY")
-			spark:SetTexture(130877) -- Interface\\CastingBar\\UI-CastingBar-Spark
-			spark:SetSize(32, 32)
-			spark:SetBlendMode("ADD")
-			spark:SetPoint("LEFT", tex, "RIGHT", -15, 0)
-
-			local border = timerBar:CreateTexture(nil, "OVERLAY")
-			border:SetTexture(130874) -- Interface\\CastingBar\\UI-CastingBar-Border
-			border:SetSize(256, 64)
-			border:SetPoint("TOP", timerBar, 0, 28)
-
-			timerBar.text = timerBar:CreateFontString(nil, "OVERLAY", "GameFontHighlight")
-			timerBar.text:SetPoint("CENTER", timerBar, "CENTER")
-
-			self.LFG_PROPOSAL_SHOW = function()
-				prev = GetTime() + 40
-				-- Play in Master for those that have SFX off or very low.
-				-- Using false as third arg to avoid the "only one of each sound at a time" throttle.
-				-- Only play via the "Master" channel if we have sounds turned on
-				if (BigWigs and BigWigs:GetPlugin("Sounds") and BigWigs:GetPlugin("Sounds").db.profile.sound) or self.isSoundOn ~= false then
-					local _, id = PlaySound(8960, "Master", false) -- SOUNDKIT.READY_CHECK
-					if id then
-						StopSound(id-1) -- Should work most of the time to stop the blizz sound
-					end
-				end
-			end
-			self:LFG_PROPOSAL_SHOW()
-
-			timerBar:SetScript("OnUpdate", function(f)
-				local timeLeft = prev - GetTime()
-				if timeLeft > 0 then
-					f:SetValue(timeLeft)
-					f.text:SetFormattedText("BigWigs: %.1f", timeLeft)
-				end
-			end)
-
-			-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
-			-- local name, addon = ...
-			-- if BigWigsLoader then
-			-- 	BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
-			-- end
-			public:SendMessage("BigWigs_FrameCreated", timerBar, "QueueTimer")
-		end
-	end
-end
 
 function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then

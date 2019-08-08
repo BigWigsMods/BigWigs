@@ -11,7 +11,6 @@ local acr = LibStub("AceConfigRegistry-3.0")
 local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local adbo = LibStub("AceDBOptions-3.0")
-local lds = LibStub("LibDualSpec-1.0")
 
 local loader = BigWigsLoader
 local API = BigWigsAPI
@@ -209,7 +208,6 @@ do
 
 		acOptions.args.general.args.profileOptions = adbo:GetOptionsTable(BigWigs.db)
 		acOptions.args.general.args.profileOptions.order = 1
-		lds:EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)
 		acd:SetDefaultSize("BigWigs", 858, 660)

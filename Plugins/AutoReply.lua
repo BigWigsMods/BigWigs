@@ -27,10 +27,11 @@ plugin.displayName = L.autoReply
 local curDiff = 0
 local curModule = nil
 local throttle, throttleBN, friendlies = {}, {}, {}
-local hogger = EJ_GetEncounterInfo(464)
+local hogger = "XXX_HOGGER"
 local healthPools, healthPoolNames = {}, {}
 local timer = nil
 
+local GetDifficultyInfo = function(...) return ... end
 -------------------------------------------------------------------------------
 -- Options
 --

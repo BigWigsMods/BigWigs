@@ -19,7 +19,6 @@ do
 end
 
 local adb = LibStub("AceDB-3.0")
-local lds = LibStub("LibDualSpec-1.0")
 
 local L = BigWigsAPI:GetLocale("BigWigs")
 local CL = BigWigsAPI:GetLocale("BigWigs: Common")
@@ -312,7 +311,6 @@ do
 			},
 		}
 		local db = adb:New("BigWigs3DB", defaults, true)
-		lds:EnhanceDatabase(db, "BigWigs3DB")
 
 		db.RegisterCallback(mod, "OnProfileChanged", profileUpdate)
 		db.RegisterCallback(mod, "OnProfileCopied", profileUpdate)
@@ -524,7 +522,7 @@ function core:GetPlugin(moduleName, silent)
 end
 
 do
-	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, C_EncounterJournal.GetSectionInfo
+	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, function(...) return ... end
 	local C = core.C -- Set from Constants.lua
 	local standardFlag = C.BAR + C.CASTBAR + C.MESSAGE + C.ICON + C.SOUND + C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY + C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX
 	local defaultToggles = setmetatable({
