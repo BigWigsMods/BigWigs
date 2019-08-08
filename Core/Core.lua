@@ -432,7 +432,7 @@ end
 --
 
 do
-	local EJ_GetEncounterInfo = EJ_GetEncounterInfo
+	local EJ_GetEncounterInfo = function(...) return ... end
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
 	local bossMeta = { __index = bossPrototype, __metatable = false }
 	function core:NewBoss(moduleName, zoneId, journalId, instanceId)
