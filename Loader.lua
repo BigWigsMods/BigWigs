@@ -647,11 +647,11 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	bwFrame:RegisterEvent("RAID_INSTANCE_WELCOME")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
+	--bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
 
 	-- Role Updating
-	bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-	RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
+	--bwFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+	--RolePollPopup:UnregisterEvent("ROLE_POLL_BEGIN")
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
