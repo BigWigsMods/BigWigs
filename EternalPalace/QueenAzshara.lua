@@ -718,10 +718,11 @@ end
 
 function mod:EssenceofAzerothApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(303982, false, CL.custom_sec:format(L.you_die, 25))
+		local t = self:Mythic() and 25 or 40
+		self:PersonalMessage(303982, false, CL.custom_sec:format(L.you_die, t))
 		self:PlaySound(args.spellId, "alert", nil, args.destName)
 		self:Flash(args.spellId)
-		self:Bar(args.spellId, 25, L.you_die)
+		self:Bar(args.spellId, t, L.you_die)
 	else
 		self:TargetMessage2(args.spellId, "yellow", args.destName)
 	end
