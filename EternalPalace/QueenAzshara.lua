@@ -48,6 +48,7 @@ if L then
 	L.fails_message = "%s (%d Sanction stack fails)"
 	L.reversal = "Reversal"
 	L.greater_reversal = "Reversal (Greater)"
+	L.you_die = "You die"
 end
 
 --------------------------------------------------------------------------------
@@ -93,8 +94,8 @@ function mod:GetOptions()
 		{300743, "TANK"}, -- Void Touched
 		303982, -- Nether Portal
 		301431, -- Overload
-		{300866, "FLASH"}, -- Essence of Azeroth
-		300877,
+		{300866, "ME_ONLY", "FLASH", "COUNTDOWN"}, -- Essence of Azeroth
+		300877, -- System Shock
 		300478, -- Divide and Conquer
 	},{
 		["stages"] = "general",
@@ -109,8 +110,9 @@ function mod:GetOptions()
 		[300768] = -20361, -- Stage Four: My Palace Is a Prison
 		[300478] = "mythic",
 	},{
-		[297371] = L.reversal, -- Reversal of Fortune
-		[297372] = L.greater_reversal, -- Greater Reversal of Fortune
+		[297371] = L.reversal, -- Reversal of Fortune (Reversal)
+		[297372] = L.greater_reversal, -- Greater Reversal of Fortune (Reversal (Greater))
+		[300866] = L.you_die, -- Essence of Azeroth (You die)
 	}
 end
 
@@ -715,17 +717,19 @@ function mod:Overload(args)
 end
 
 function mod:EssenceofAzerothApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
 	if self:Me(args.destGUID) then
+		self:PersonalMessage(303982, false, CL.custom_sec:format(L.you_die, 25))
 		self:PlaySound(args.spellId, "alert", nil, args.destName)
 		self:Flash(args.spellId)
-		self:TargetBar(args.spellId, 25, args.destName)
+		self:Bar(args.spellId, 25, L.you_die)
+	else
+		self:TargetMessage2(args.spellId, "yellow", args.destName)
 	end
 end
 
 function mod:EssenceofAzerothRemoved(args)
 	if self:Me(args.destGUID) then
-		self:StopBar(args.spellId, args.destName)
+		self:StopBar(L.you_die)
 	end
 end
 
