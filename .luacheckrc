@@ -246,6 +246,7 @@ globals = {
 	"UnitRace",
 	"UnitSetRole",
 
+	"GetBuildInfo",
 	"GetCVar",
 	"SetCVar",
 	"UnitIsEnemy",

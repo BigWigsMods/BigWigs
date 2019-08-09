@@ -1,4 +1,9 @@
 
+if GetBuildInfo() ~= "1.13.2" then
+	print("|cFF33FF99BigWigs|r: You're trying to run the Classic version of BigWigs on a live server.")
+	return
+end
+
 local API = {}
 
 --------------------------------------------------------------------------------

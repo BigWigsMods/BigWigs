@@ -1,4 +1,9 @@
 
+if GetBuildInfo() ~= "1.13.2" then
+	print("|cFF33FF99BigWigs|r: You're trying to run the Classic version of BigWigs on a live server.")
+	return
+end
+
 local L = BigWigsAPI:GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
@@ -832,6 +837,20 @@ do
 		BigWigs_TrialOfValor = "BigWigs_Legion",
 		BigWigs_SiegeOfZuldazar = "BigWigs",
 		FS_Core = "Abandoned", -- abandoned addon breaking the load order
+
+		-- Classic Cleanse
+		BigWigs_Azeroth = "BigWigs",
+		BigWigs_BattleOfDazaralor = "BigWigs",
+		BigWigs_BurningCrusade = "BigWigs",
+		BigWigs_Cataclysm = "BigWigs",
+		BigWigs_Classic = "BigWigs",
+		BigWigs_CrucibleOfStorms = "BigWigs",
+		BigWigs_EternalPalace = "BigWigs",
+		BigWigs_Legion = "BigWigs",
+		BigWigs_MistsOfPandaria = "BigWigs",
+		BigWigs_Uldir = "BigWigs",
+		BigWigs_WarlordsOfDraenor = "BigWigs",
+		BigWigs_WrathOfTheLichKing = "BigWigs",
 	}
 	local delayedMessages = {}
 
@@ -871,7 +890,7 @@ do
 		--frFR = "French (frFR)",
 	}
 	if locales[L] then
-		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
+		--delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
 	end
 
 	CTimerAfter(11, function()
