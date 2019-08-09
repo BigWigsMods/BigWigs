@@ -3,7 +3,7 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Magmadar", 409, 1520)
+local mod, CL = BigWigs:NewBoss("Magmadar", 409)
 if not mod then return end
 mod:RegisterEnableMob(11982)
 mod.toggleOptions = {19408, 19451, 19428}
