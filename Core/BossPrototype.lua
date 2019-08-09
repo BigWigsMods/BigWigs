@@ -366,8 +366,7 @@ end
 do
 	local missingArgument = "Missing required argument when adding a listener to %q."
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
-	local invalidId = "Module %q tried to register an invalid spell id (%s) to event %q."
-	local multipleRegistration = "Module %q registered the event %q with spell id %q multiple times."
+	local multipleRegistration = "Module %q registered the event %q with spell name %q multiple times."
 
 	function boss:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, ...)
 		if eventMap[self][event][msg] then
@@ -444,12 +443,12 @@ do
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
 					local m = eventMap[self][event]
-					if m and (m[spellId] or m["*"]) then
-						local func = m[spellId] or m["*"]
+					if m and (m[spellName] or m["*"]) then
+						local func = m[spellName] or m["*"]
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
-						args.time, args.spellId, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = time, spellId, spellName, extraSpellId, amount, amount
+						args.time, args.spellName, args.extraSpellId, args.extraSpellName, args.amount = time, spellName, extraSpellId, amount, amount
 						if type(func) == "function" then
 							func(args)
 						else
@@ -470,14 +469,12 @@ do
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self][event] then eventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
-			local id = select(i, ...)
-			if (type(id) == "number" and GetSpellInfo(id)) or id == "*" then
-				if eventMap[self][event][id] then
-					core:Print(format(multipleRegistration, self.moduleName, event, id))
+			local spellName = select(i, ...)
+			if type(spellName) == "string" then
+				if eventMap[self][event][spellName] then
+					core:Print(format(multipleRegistration, self.moduleName, event, spellName))
 				end
-				eventMap[self][event][id] = func
-			else
-				core:Print(format(invalidId, self.moduleName, tostring(id), event))
+				eventMap[self][event][spellName] = func
 			end
 		end
 		allowedEvents[event] = true
@@ -490,8 +487,8 @@ do
 	function boss:RemoveLog(event, ...)
 		if not event then core:Print(format(missingArgument, self.moduleName)) return end
 		for i = 1, select("#", ...) do
-			local id = select(i, ...)
-			eventMap[self][event][id] = nil
+			local spellName = select(i, ...)
+			eventMap[self][event][spellName] = nil
 		end
 	end
 	--- Register a callback for UNIT_DIED.
