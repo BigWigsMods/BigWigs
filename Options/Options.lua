@@ -1065,13 +1065,6 @@ end
 do
 	local expansionHeader = {
 		"Classic",
-		"BurningCrusade",
-		"WrathOfTheLichKing",
-		"Cataclysm",
-		"MistsOfPandaria",
-		"WarlordsOfDraenor",
-		"Legion",
-		"BattleForAzeroth"
 	}
 
 	local statusTable = {}
@@ -1104,7 +1097,7 @@ do
 		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= "BigWigs_BattleForAzeroth" and GetAddOnEnableState(playerName, value) == 0 then
+		elseif value:match("^BigWigs_") and value ~= "BigWigs_Classic" and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
