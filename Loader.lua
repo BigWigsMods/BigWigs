@@ -15,7 +15,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 1
+local BIGWIGS_VERSION = 2
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -97,21 +97,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 
 do
 	local c = "BigWigs_Classic"
-	local bc = "BigWigs_BurningCrusade"
-	local wotlk = "BigWigs_WrathOfTheLichKing"
-	local cata = "BigWigs_Cataclysm"
-	local mop = "BigWigs_MistsOfPandaria"
-	local wod = "BigWigs_WarlordsOfDraenor"
-	local l = "BigWigs_Legion"
-	local bfa = "BigWigs_BattleForAzeroth"
 	local lw_c = "LittleWigs_Classic"
-	local lw_bc = "LittleWigs_BurningCrusade"
-	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
-	local lw_cata = "LittleWigs_Cataclysm"
-	local lw_mop = "LittleWigs_MistsOfPandaria"
-	local lw_wod = "LittleWigs_WarlordsOfDraenor"
-	local lw_l = "LittleWigs_Legion"
-	local lw_bfa = "LittleWigs_BattleForAzeroth"
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -587,41 +573,41 @@ end
 -- Various temporary printing stuff
 do
 	local old = {
-		BigWigs_Ulduar = "BigWigs_WrathOfTheLichKing",
-		BigWigs_Yogg_Brain = "BigWigs_WrathOfTheLichKing",
-		BigWigs_TheEye = "BigWigs_BurningCrusade",
-		BigWigs_Sunwell = "BigWigs_BurningCrusade",
-		BigWigs_SSC = "BigWigs_BurningCrusade",
-		BigWigs_Outland = "BigWigs_BurningCrusade",
-		BigWigs_Northrend = "BigWigs_WrathOfTheLichKing",
-		BigWigs_Naxxramas = "BigWigs_WrathOfTheLichKing",
-		BigWigs_MC = "BigWigs_Classic",
-		BigWigs_Karazhan = "BigWigs_BurningCrusade",
-		BigWigs_Hyjal = "BigWigs_BurningCrusade",
-		BigWigs_Coliseum = "BigWigs_WrathOfTheLichKing",
-		BigWigs_Citadel = "BigWigs_WrathOfTheLichKing",
-		BigWigs_LK_Valkyr_Marker = "BigWigs_WrathOfTheLichKing",
-		BigWigs_BWL = "BigWigs_Classic",
-		BigWigs_BlackTemple = "BigWigs_BurningCrusade",
-		BigWigs_AQ20 = "BigWigs_Classic",
-		BigWigs_AQ40 = "BigWigs_Classic",
-		BigWigs_Baradin = "BigWigs_Cataclysm",
-		BigWigs_Bastion = "BigWigs_Cataclysm",
-		BigWigs_Blackwing = "BigWigs_Cataclysm",
-		BigWigs_DragonSoul = "BigWigs_Cataclysm",
-		BigWigs_Firelands = "BigWigs_Cataclysm",
-		BigWigs_Throne = "BigWigs_Cataclysm",
-		bigwigs_zonozzicons = "BigWigs_Cataclysm",
-		BigWigs_EndlessSpring = "BigWigs_MistsOfPandaria",
-		BigWigs_HeartOfFear = "BigWigs_MistsOfPandaria",
-		BigWigs_Mogushan = "BigWigs_MistsOfPandaria",
-		BigWigs_Pandaria = "BigWigs_MistsOfPandaria",
-		BigWigs_SiegeOfOrgrimmar = "BigWigs_MistsOfPandaria",
-		BigWigs_ThroneOfThunder = "BigWigs_MistsOfPandaria",
-		BigWigs_Draenor = "BigWigs_WarlordsOfDraenor",
-		BigWigs_Highmaul = "BigWigs_WarlordsOfDraenor",
-		BigWigs_BlackrockFoundry = "BigWigs_WarlordsOfDraenor",
-		BigWigs_HellfireCitadel = "BigWigs_WarlordsOfDraenor",
+		BigWigs_Ulduar = "BigWigs",
+		BigWigs_Yogg_Brain = "BigWigs",
+		BigWigs_TheEye = "BigWigs",
+		BigWigs_Sunwell = "BigWigs",
+		BigWigs_SSC = "BigWigs",
+		BigWigs_Outland = "BigWigs",
+		BigWigs_Northrend = "BigWigs",
+		BigWigs_Naxxramas = "BigWigs",
+		BigWigs_MC = "BigWigs",
+		BigWigs_Karazhan = "BigWigs",
+		BigWigs_Hyjal = "BigWigs",
+		BigWigs_Coliseum = "BigWigs",
+		BigWigs_Citadel = "BigWigs",
+		BigWigs_LK_Valkyr_Marker = "BigWigs",
+		BigWigs_BWL = "BigWigs",
+		BigWigs_BlackTemple = "BigWigs",
+		BigWigs_AQ20 = "BigWigs",
+		BigWigs_AQ40 = "BigWigs",
+		BigWigs_Baradin = "BigWigs",
+		BigWigs_Bastion = "BigWigs",
+		BigWigs_Blackwing = "BigWigs",
+		BigWigs_DragonSoul = "BigWigs",
+		BigWigs_Firelands = "BigWigs",
+		BigWigs_Throne = "BigWigs",
+		bigwigs_zonozzicons = "BigWigs",
+		BigWigs_EndlessSpring = "BigWigs",
+		BigWigs_HeartOfFear = "BigWigs",
+		BigWigs_Mogushan = "BigWigs",
+		BigWigs_Pandaria = "BigWigs",
+		BigWigs_SiegeOfOrgrimmar = "BigWigs",
+		BigWigs_ThroneOfThunder = "BigWigs",
+		BigWigs_Draenor = "BigWigs",
+		BigWigs_Highmaul = "BigWigs",
+		BigWigs_BlackrockFoundry = "BigWigs",
+		BigWigs_HellfireCitadel = "BigWigs",
 		LittleWigs_ShadoPanMonastery = "LittleWigs",
 		LittleWigs_ScarletHalls = "LittleWigs",
 		LittleWigs_ScarletMonastery = "LittleWigs",
@@ -657,13 +643,13 @@ do
 		BigWigs_Voice_Overwatch = "BigWigs_Countdown_Overwatch",
 		BigWigs_AutoReply = "BigWigs",
 		BigWigs_AutoReply2 = "BigWigs",
-		BigWigs_Antorus = "BigWigs_Legion",
-		BigWigs_ArgusInvasionPoints = "BigWigs_Legion",
-		BigWigs_BrokenIsles = "BigWigs_Legion",
-		BigWigs_Nighthold = "BigWigs_Legion",
-		BigWigs_Nightmare = "BigWigs_Legion",
-		BigWigs_TombOfSargeras = "BigWigs_Legion",
-		BigWigs_TrialOfValor = "BigWigs_Legion",
+		BigWigs_Antorus = "BigWigs",
+		BigWigs_ArgusInvasionPoints = "BigWigs",
+		BigWigs_BrokenIsles = "BigWigs",
+		BigWigs_Nighthold = "BigWigs",
+		BigWigs_Nightmare = "BigWigs",
+		BigWigs_TombOfSargeras = "BigWigs",
+		BigWigs_TrialOfValor = "BigWigs",
 		BigWigs_SiegeOfZuldazar = "BigWigs",
 		FS_Core = "Abandoned", -- abandoned addon breaking the load order
 
@@ -806,9 +792,9 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "20190808032050" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "8.2.12" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
-	local DBMdotReleaseRevision = "20190807000000" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20190808155720" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "1.13.0" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotReleaseRevision = "20190808000000" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
@@ -823,22 +809,6 @@ do
 			timer = CTimerNewTicker(3.3, sendMsg, 1)
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
-			--if BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM then
-			--	-- If there are people with newer versions than us, suddenly we've upgraded!
-			--	local rev, dotRev = tonumber(revision), tonumber(DBMdotRevision)
-			--	if rev and displayVersion and rev ~= 99999 and rev > dotRev and not displayVersion:find("alpha", nil, true) then -- Failsafes
-			--		if not prevUpgradedUser then
-			--			prevUpgradedUser = sender
-			--		elseif prevUpgradedUser ~= sender then
-			--			DBMdotRevision = revision -- Update our local rev with the highest possible rev found.
-			--			DBMdotReleaseRevision = releaseRevision -- Update our release rev with the highest found, this should be the same for alpha users and latest release users.
-			--			DBMdotDisplayVersion = displayVersion -- Update to the latest display version.
-			--			-- Re-send the addon message.
-			--			if timer then timer:Cancel() end
-			--			timer = CTimerNewTicker(1, sendMsg, 1)
-			--		end
-			--	end
-			--end
 		end
 	end
 	function mod:BigWigs_CoreOptionToggled(_, key, value)
@@ -1051,13 +1021,13 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and zoneAddon ~= "BigWigs_BattleForAzeroth" then
+		if zoneAddon and zoneAddon ~= "BigWigs_Classic" then
 			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
-				sysprint(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 15)
+				--sysprint(msg)
+				--RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 15)
 			end
 		end
 	end
@@ -1073,7 +1043,6 @@ do
 			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED_NEW_AREA()
-			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
 			ResetVersionWarning()
