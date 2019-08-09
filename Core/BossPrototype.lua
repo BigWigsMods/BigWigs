@@ -368,54 +368,6 @@ do
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 	local multipleRegistration = "Module %q registered the event %q with spell name %q multiple times."
 
-	function boss:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, ...)
-		if eventMap[self][event][msg] then
-			self[eventMap[self][event][msg]](self, msg, ...)
-		else
-			for emote, func in next, eventMap[self][event] do
-				if find(msg, emote, nil, true) or find(msg, emote) then -- Preserve backwards compat by leaving in the 2nd check
-					self[func](self, msg, ...)
-				end
-			end
-		end
-	end
-	--- [DEPRECATED] Register a callback for CHAT_MSG_RAID_BOSS_EMOTE that matches text.
-	-- @param func callback function, passed (module, message, sender, language, channel, target, [standard CHAT_MSG args]...)
-	-- @param ... any number of strings to match
-	function boss:Emote(func, ...)
-		if not func then core:Print(format(missingArgument, self.moduleName)) return end
-		if not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
-		if not eventMap[self].CHAT_MSG_RAID_BOSS_EMOTE then eventMap[self].CHAT_MSG_RAID_BOSS_EMOTE = {} end
-		for i = 1, select("#", ...) do
-			eventMap[self]["CHAT_MSG_RAID_BOSS_EMOTE"][(select(i, ...))] = func
-		end
-		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
-	end
-
-	function boss:CHAT_MSG_MONSTER_YELL(event, msg, ...)
-		if eventMap[self][event][msg] then
-			self[eventMap[self][event][msg]](self, msg, ...)
-		else
-			for yell, func in next, eventMap[self][event] do
-				if find(msg, yell, nil, true) or find(msg, yell) then -- Preserve backwards compat by leaving in the 2nd check
-					self[func](self, msg, ...)
-				end
-			end
-		end
-	end
-	--- [DEPRECATED] Register a callback for CHAT_MSG_MONSTER_YELL that matches text.
-	-- @param func callback function, passed (module, message, sender, language, channel, target, [standard CHAT_MSG args]...)
-	-- @param ... any number of strings to match
-	function boss:Yell(func, ...)
-		if not func then core:Print(format(missingArgument, self.moduleName)) return end
-		if not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
-		if not eventMap[self].CHAT_MSG_MONSTER_YELL then eventMap[self].CHAT_MSG_MONSTER_YELL = {} end
-		for i = 1, select("#", ...) do
-			eventMap[self]["CHAT_MSG_MONSTER_YELL"][(select(i, ...))] = func
-		end
-		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	end
-
 	local args = {}
 	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 	bossUtilityFrame:SetScript("OnEvent", function()
@@ -1439,33 +1391,6 @@ do
 	-- @return boolean
 	function boss:CheckOption(key, flag)
 		return checkFlag(self, key, C[flag])
-	end
-end
-
--------------------------------------------------------------------------------
--- AltPower.
--- @section AltPower
---
-
---- Open the "Alternate Power" display.
--- @param key the option key to check
--- @param title the title of the window, either a spell id or string
--- @string[opt] sorting "ZA" for descending sort, "AZ" or nil for ascending sort
--- @bool[opt] sync if true, queries values from other players (for use if phasing prevents reliable updates)
-function boss:OpenAltPower(key, title, sorting, sync)
-	if checkFlag(self, key, C.ALTPOWER) then
-		self:SendMessage("BigWigs_ShowAltPower", self, type(title) == "number" and spells[title] or title, sorting == "ZA" and sorting or "AZ", sync)
-	end
-	if sync then
-		self:SendMessage("BigWigs_StartSyncingPower", self)
-	end
-end
-
---- Close the "Alternate Power" display.
--- @param[opt] key the option key to check ("altpower" if nil)
-function boss:CloseAltPower(key)
-	if checkFlag(self, key or "altpower", C.ALTPOWER) then
-		self:SendMessage("BigWigs_HideAltPower", self)
 	end
 end
 
