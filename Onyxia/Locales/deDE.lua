@@ -1,31 +1,16 @@
-local L = BigWigs:NewBossLocale("Lucifron", "deDE")
-if not L then return end
+local L = BigWigs:NewBossLocale("Onyxia", "deDE")
 if L then
-	--L.mc_bar = "MC: %s"
+	L.name = "Onyxia"
+
+	L.phase = "Phasen"
+	L.phase_desc = "Warnt, wenn ein Phasenwechsel bevorsteht."
+	L.phase2_message = "Phase 2 - Onyxia hebt ab!"
+	L.phase3_message = "Phase 3 - Onyxia landet!"
+
+	L.phase1_trigger = "Was für ein Zufall"
+	L.phase2_trigger = "Diese sinnlose Anstrengung langweilt mich"
+	L.phase3_trigger = "Mir scheint, dass Ihr noch eine Lektion braucht"
+
+	L.deepbreath_message = "Tiefer Atem!"
+	L.fear_message = "Furcht!"
 end
-
-L = BigWigs:NewBossLocale("Majordomo Executus", "deDE")
-if L then
-	L.disabletrigger = "Haltet ein, Sterbliche"
-	--L.power_next = "Next Power"
-end
-
-L = BigWigs:NewBossLocale("Ragnaros ", "deDE")
-if L then
-	L.submerge_trigger = "KOMMT HERBEI, MEINE DIENER"
-	L.engage_trigger = "NUN ZU EUCH, INSEKTEN"
-
-	--L.knockback_message = "Knockback!"
-	--L.knockback_bar = "Knockback"
-
-	L.submerge = "Untertauchen"
-	L.submerge_desc = "Warnt, wenn Ragnaros untertaucht."
-	L.submerge_message = "Ragnaros untergetaucht für 90 sek!"
-	L.submerge_bar = "Untertauchen"
-
-	L.emerge = "Auftauchen"
-	L.emerge_desc = "Warnt, wenn Ragnaros auftaucht."
-	L.emerge_message = "Ragnaros aufgetaucht! Untertauchen in 3 min!"
-	L.emerge_bar = "Auftauchen"
-end
-

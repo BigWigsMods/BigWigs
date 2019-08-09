@@ -1,0 +1,32 @@
+## Interface: 11302
+
+## Title: BigWigs [|cffeda55fOnyxia|r]
+## Title-zhCN: BigWigs [|cffeda55fOnyxia|r]
+## Title-zhTW: BigWigs [|cffeda55fOnyxia|r]
+## Title-deDE: BigWigs [|cffeda55fOnyxia|r]
+## Title-frFR: BigWigs [|cffeda55fOnyxia|r]
+## Title-itIT: BigWigs [|cffeda55fOnyxia|r]
+## Title-koKR: BigWigs [|cffeda55fOnyxia|r]
+## Title-ruRU: BigWigs [|cffeda55fOnyxia|r]
+## Title-ptBR: BigWigs [|cffeda55fOnyxia|r]
+## Title-esES: BigWigs [|cffeda55fOnyxia|r]
+## Title-esMX: BigWigs [|cffeda55fOnyxia|r]
+## Notes: BigWigs Onyxia Modules
+## Notes-zhCN: BigWigs Onyxia Modules
+## Notes-zhTW: BigWigs Onyxia Modules
+## Notes-deDE: BigWigs Onyxia Modules
+## Notes-frFR: BigWigs Onyxia Modules
+## Notes-itIT: BigWigs Onyxia Modules
+## Notes-koKR: BigWigs Onyxia Modules
+## Notes-ruRU: BigWigs Onyxia Modules
+## Notes-ptBR: BigWigs Onyxia Modules
+## Notes-esES: BigWigs Onyxia Modules
+## Notes-esMX: BigWigs Onyxia Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 249
+
+modules.xml

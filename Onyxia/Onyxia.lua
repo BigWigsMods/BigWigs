@@ -2,7 +2,7 @@
 -- Locals
 --
 
-local mod = BigWigs:NewBoss("Onyxia", 249, 1651)
+local mod = BigWigs:NewBoss("Onyxia", 249)
 if not mod then return end
 mod:RegisterEnableMob(10184)
 mod.toggleOptions = {"phase", {17086, "FLASH"}, 18431, 18435}
@@ -14,6 +14,8 @@ mod.engageId = 1084
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.name = "Onyxia"
+
 	L.phase = "Phases"
 	L.phase_desc = "Warn for phase changes."
 	L.phase2_message = "Phase 2 incoming!"
@@ -32,12 +34,15 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+function mod:OnRegister()
+	self.displayName = L.name
+end
+
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "Fear", 18431)
-	self:Log("SPELL_CAST_START", "DeepBreath", 17086, 18351, 18564, 18576, 18584, 18596, 18609, 18617)
-	self:Log("SPELL_CAST_START", "FlameBreath", 18435)
-	self:Yell("Phase2", L["phase2_trigger"])
-	self:Yell("Phase3", L["phase3_trigger"])
+	self:Log("SPELL_CAST_START", "Fear", self:SpellName(18431))
+	self:Log("SPELL_CAST_START", "DeepBreath", self:SpellName(17086))
+	self:Log("SPELL_CAST_START", "FlameBreath", self:SpellName(18435))
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
 --------------------------------------------------------------------------------
@@ -45,7 +50,7 @@ end
 --
 
 function mod:Fear(args)
-	self:Message(args.spellId, "yellow", nil, L["fear_message"])
+	self:Message(18431, "yellow", nil, L["fear_message"])
 end
 
 function mod:DeepBreath()
@@ -55,14 +60,13 @@ function mod:DeepBreath()
 end
 
 function mod:FlameBreath(args)
-	self:Message(args.spellId, "red", "Alert")
+	self:Message(18435, "red", "Alert")
 end
 
-function mod:Phase2()
-	self:Message("phase", "green", nil, L["phase2_message"], false)
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if msg:find(L.phase2_trigger, nil, true)
+		self:Message("phase", "green", nil, L["phase2_message"], false)
+	elseif msg:find(L.phase3_trigger, nil, true)
+		self:Message("phase", "green", nil, L["phase3_message"], false)
+	end
 end
-
-function mod:Phase3()
-	self:Message("phase", "green", nil, L["phase3_message"], false)
-end
-

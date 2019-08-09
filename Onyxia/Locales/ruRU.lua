@@ -1,31 +1,17 @@
-local L = BigWigs:NewBossLocale("Lucifron", "ruRU")
-if not L then return end
+local L = BigWigs:NewBossLocale("Onyxia", "ruRU")
 if L then
-	L.mc_bar = "КР: %s"
+	L.name = "Ониксия"
+
+	L.phase = "Фазы"
+	L.phase_desc = "Сообщать о смене фаз."
+	L.phase2_message = "Фаза 2 - Ониксия взлетает!"
+	L.phase3_message = "Фаза 3 - Ониксия приземляется!"
+
+	L.phase1_trigger = "Вот это сюрприз."
+	L.phase2_trigger = "Эта бессмысленная возня вгоняет меня в тоску. Я сожгу вас всех!"
+	L.phase3_trigger = "Похоже, вам требуется преподать еще один урок, смертные!"
+
+	L.deepbreath_message = "Огненное дыхание!"
+
+	L.fear_message = "Страх через 1.5 сек!"
 end
-
-L = BigWigs:NewBossLocale("Majordomo Executus", "ruRU")
-if L then
-	--L.disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!"
-	--L.power_next = "Next Power"
-end
-
-L = BigWigs:NewBossLocale("Ragnaros ", "ruRU")
-if L then
-	L.submerge_trigger = "ПРИБЫВАЙТЕ ЕЩЕ"
-	L.engage_trigger = "Тогда получите ещё!"
-
-	L.knockback_message = "Сбивание с ног!"
-	L.knockback_bar = "Массовое cбивание с ног"
-
-	L.submerge = "Погружение Рагнароса"
-	L.submerge_desc = "Предупреждать о погружении Рагнароса и появлении сыновей пламени"
-	L.submerge_message = "Раграрос погрузился на 90 секунд. Появляются сыновья пламени!"
-	L.submerge_bar = "Рагнарос появляется"
-
-	L.emerge = "Всплытие Рагнароса"
-	L.emerge_desc = "Предупреждать о всплытии Рагнароса"
-	L.emerge_message = "Рагнарос появился, 3 минуты до погружения!"
-	L.emerge_bar = "Рагнарос погрузился"
-end
-

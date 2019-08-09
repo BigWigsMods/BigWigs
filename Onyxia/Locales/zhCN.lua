@@ -1,31 +1,16 @@
-local L = BigWigs:NewBossLocale("Lucifron", "zhCN")
-if not L then return end
+local L = BigWigs:NewBossLocale("Onyxia", "zhCN")
 if L then
-	L.mc_bar = "控制：%s"
+	L.name = "奥妮克希亚"
+
+	L.phase = "阶段"
+	L.phase_desc = "当阶段转换时发出警报。"
+	L.phase2_message = "即将 第二阶段！"
+	L.phase3_message = "即将 第三阶段！"
+
+	L.phase1_trigger = "真是走运。通常我必须离开窝才能找到食物。"
+	L.phase2_trigger = "这毫无意义的行动让我很厌烦。我会从上空把你们都烧成灰！"
+	L.phase3_trigger = "看起来需要再给你一次教训，凡人！"
+
+	L.deepbreath_message = "即将 深呼吸！"
+	L.fear_message = "即将 恐惧！"
 end
-
-L = BigWigs:NewBossLocale("Majordomo Executus", "zhCN")
-if L then
-	L.disabletrigger = "不……不可能！等一下……我投降！我投降！"
-	L.power_next = "下一能量"
-end
-
-L = BigWigs:NewBossLocale("Ragnaros ", "zhCN")
-if L then
-	L.engage_trigger = "现在轮到你们了"
-	L.submerge_trigger = "出现吧，我的奴仆"
-
-	L.knockback_message = "群体击退！"
-	L.knockback_bar = "群体击退"
-
-	L.submerge = "消失"
-	L.submerge_desc = "当拉格纳罗斯消失时发出警报。"
-	L.submerge_message = "拉格纳罗斯消失90秒！"
-	L.submerge_bar = "消失"
-
-	L.emerge = "出现"
-	L.emerge_desc = "当拉格纳罗斯出现时发出警报。"
-	L.emerge_message = "拉格纳罗斯已经激活，3分钟后消失！"
-	L.emerge_bar = "出现"
-end
-

@@ -1,31 +1,17 @@
-local L = BigWigs:NewBossLocale("Lucifron", "frFR")
-if not L then return end
+local L = BigWigs:NewBossLocale("Onyxia", "frFR")
 if L then
-	L.mc_bar = "CM : %s"
+	L.name = "Onyxia"
+
+	L.phase = "Phases"
+	L.phase_desc = "Prévient quand la rencontre change de phase."
+	L.phase2_message = "65% - Arrivée de la phase 2 !"
+	L.phase3_message = "40% - Arrivée de la phase 3 !"
+
+	L.phase1_trigger = "Quelle chance !"
+	L.phase2_trigger = "un seul coup !"
+	L.phase3_trigger = "Il semble que vous ayez besoin d'une autre leçon, mortels !"
+
+	L.deepbreath_message = "Arrivée d'une grande inspiration !"
+
+	L.fear_message = "Peur dans 1,5 sec. !"
 end
-
-L = BigWigs:NewBossLocale("Majordomo Executus", "frFR")
-if L then
-	L.disabletrigger = "Impossible ! Arrêtez votre attaque, mortels... Je me rends ! Je me rends !"
-	--L.power_next = "Next Power"
-end
-
-L = BigWigs:NewBossLocale("Ragnaros ", "frFR")
-if L then
-	L.submerge_trigger = "VENEZ, MES SERVITEURS"
-	L.engage_trigger = "ET MAINTENANT"
-
-	L.knockback_message = "Projection de zone !"
-	L.knockback_bar = "Projection de zone"
-
-	L.submerge = "Immersion"
-	L.submerge_desc = "Préviens quand Ragnaros plonge et l'arrivée des Fils des flammes."
-	L.submerge_message = "Ragnaros intouchable pendant 90 sec. Arrivée des Fils des flammes !"
-	L.submerge_bar = "Départ de Ragnaros"
-
-	L.emerge = "Émergence"
-	L.emerge_desc = "Préviens quand Ragnaros émerge."
-	L.emerge_message = "Ragnaros en surface, 3 min. avant immersion !"
-	L.emerge_bar = "Retour de Ragnaros"
-end
-

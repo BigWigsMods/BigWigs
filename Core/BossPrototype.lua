@@ -49,21 +49,21 @@ local updateData = function(module)
 	myGUID = UnitGUID("player")
 	hasVoice = BigWigsAPI:HasVoicePack()
 
-	local tree = GetSpecialization()
-	if tree then
-		myRole = GetSpecializationRole(tree)
-		myDamagerRole = nil
-		if myRole == "DAMAGER" then
-			myDamagerRole = "MELEE"
-			local _, class = UnitClass("player")
-			if
-				class == "MAGE" or class == "WARLOCK" or (class == "HUNTER" and tree ~= 3) or (class == "DRUID" and tree == 1) or
-				(class == "PRIEST" and tree == 3) or (class == "SHAMAN" and tree == 1)
-			then
-				myDamagerRole = "RANGED"
-			end
-		end
-	end
+	--local tree = GetSpecialization()
+	--if tree then
+	--	myRole = GetSpecializationRole(tree)
+	--	myDamagerRole = nil
+	--	if myRole == "DAMAGER" then
+	--		myDamagerRole = "MELEE"
+	--		local _, class = UnitClass("player")
+	--		if
+	--			class == "MAGE" or class == "WARLOCK" or (class == "HUNTER" and tree ~= 3) or (class == "DRUID" and tree == 1) or
+	--			(class == "PRIEST" and tree == 3) or (class == "SHAMAN" and tree == 1)
+	--		then
+	--			myDamagerRole = "RANGED"
+	--		end
+	--	end
+	--end
 
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
