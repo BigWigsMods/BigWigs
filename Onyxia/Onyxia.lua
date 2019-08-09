@@ -64,9 +64,9 @@ function mod:FlameBreath(args)
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
-	if msg:find(L.phase2_trigger, nil, true)
+	if msg:find(L.phase2_trigger, nil, true) then
 		self:Message("phase", "green", nil, L["phase2_message"], false)
-	elseif msg:find(L.phase3_trigger, nil, true)
+	elseif msg:find(L.phase3_trigger, nil, true) then
 		self:Message("phase", "green", nil, L["phase3_message"], false)
 	end
 end
