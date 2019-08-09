@@ -248,4 +248,5 @@ globals = {
 
 	"GetCVar",
 	"SetCVar",
+	"UnitIsEnemy",
 }
