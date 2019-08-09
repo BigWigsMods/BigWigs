@@ -26,8 +26,8 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_CAST_SUCCESS", "MagicReflection", 20619)
-	self:Log("SPELL_CAST_SUCCESS", "DamageShield", 21075)
+	self:Log("SPELL_CAST_SUCCESS", "MagicReflection", self:SpellName(20619))
+	self:Log("SPELL_CAST_SUCCESS", "DamageShield", self:SpellName(21075))
 
 	self:Yell("Win", L.disabletrigger)
 end
@@ -41,16 +41,16 @@ end
 --
 
 function mod:MagicReflection(args)
-	self:Bar(args.spellId, 10)
-	self:Message(args.spellId, "red", "Info")
-	self:Bar(args.spellId, 30, L.power_next, "ability_warlock_improvedsoulleech")
-	self:DelayedMessage(args.spellId, 25, "orange", CL.custom_sec:format(L.power_next, 5))
+	self:Bar(20619, 10)
+	self:Message(20619, "red", "Info")
+	self:Bar(20619, 30, L.power_next, "ability_warlock_improvedsoulleech")
+	self:DelayedMessage(20619, 25, "orange", CL.custom_sec:format(L.power_next, 5))
 end
 
 function mod:DamageShield(args)
-	self:Bar(args.spellId, 10)
-	self:Message(args.spellId, "red", "Info")
-	self:Bar(args.spellId, 30, L.power_next, "ability_warlock_improvedsoulleech")
-	self:DelayedMessage(args.spellId, 25, "orange", CL.custom_sec:format(L.power_next, 5))
+	self:Bar(21075, 10)
+	self:Message(21075, "red", "Info")
+	self:Bar(21075, 30, L.power_next, "ability_warlock_improvedsoulleech")
+	self:DelayedMessage(21075, 25, "orange", CL.custom_sec:format(L.power_next, 5))
 end
 

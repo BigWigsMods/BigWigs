@@ -15,9 +15,9 @@ mod.toggleOptions = {19714, 23138, 19715}
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_CAST_SUCCESS", "Blink", 23138)
-	self:Log("SPELL_CAST_SUCCESS", "MagicGrounding", 19714)
-	self:Log("SPELL_CAST_SUCCESS", "Counterspell", 19715)
+	self:Log("SPELL_CAST_SUCCESS", "Blink", self:SpellName(23138))
+	self:Log("SPELL_CAST_SUCCESS", "MagicGrounding", self:SpellName(19714))
+	self:Log("SPELL_CAST_SUCCESS", "Counterspell", self:SpellName(19715))
 
 	self:Death("Win", 12264)
 end
@@ -31,17 +31,17 @@ end
 --
 
 function mod:Blink(args)
-	self:Bar(args.spellId, 45)
-	self:Message(args.spellId, "red")
+	self:Bar(23138, 45)
+	self:Message(23138, "red")
 end
 
 function mod:MagicGrounding(args)
 	-- Self buff
-	self:Message(args.spellId, "orange", self:Dispeller("magic", true) and "Alarm", CL.onboss:format(args.spellName))
+	self:Message(19714, "orange", self:Dispeller("magic", true) and "Alarm", CL.onboss:format(args.spellName))
 end
 
 function mod:Counterspell(args)
-	self:CDBar(args.spellId, 15) -- 15-19
-	self:Message(args.spellId, "yellow", "Info")
+	self:CDBar(19715, 15) -- 15-19
+	self:Message(19715, "yellow", "Info")
 end
 

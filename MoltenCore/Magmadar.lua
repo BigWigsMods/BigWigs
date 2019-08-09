@@ -15,9 +15,9 @@ mod.toggleOptions = {19408, 19451, 19428}
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_CAST_SUCCESS", "Panic", 19408)
-	self:Log("SPELL_CAST_SUCCESS", "Enrage", 19451)
-	self:Log("SPELL_AURA_APPLIED", "Conflagration", 19428)
+	self:Log("SPELL_CAST_SUCCESS", "Panic", self:SpellName(19408))
+	self:Log("SPELL_CAST_SUCCESS", "Enrage", self:SpellName(19451))
+	self:Log("SPELL_AURA_APPLIED", "Conflagration", self:SpellName(19428))
 
 	self:Death("Win", 11982)
 end
@@ -32,18 +32,18 @@ end
 --
 
 function mod:Panic(args)
-	self:CDBar(args.spellId, 31) -- 31-38
-	self:Message(args.spellId, "green")
+	self:CDBar(19408, 31) -- 31-38
+	self:Message(19408, "green")
 end
 
 function mod:Enrage(args)
-	self:Bar(args.spellId, 8, CL.cast:format(args.spellName))
-	self:Message(args.spellId, "yellow", "Info")
+	self:Bar(19451, 8, CL.cast:format(args.spellName))
+	self:Message(19451, "yellow", "Info")
 end
 
 function mod:Conflagration(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "blue", "Alert", CL.underyou:format(args.spellName))
+		self:Message(19428, "blue", "Alert", CL.underyou:format(args.spellName))
 	end
 end
 

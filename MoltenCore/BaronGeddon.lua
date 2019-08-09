@@ -15,10 +15,10 @@ mod.toggleOptions = {{20475, "FLASH", "ICON", "PROXIMITY", "SAY"}, 19695, 20478}
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_AURA_APPLIED", "LivingBomb", 20475)
-	self:Log("SPELL_AURA_REMOVED", "LivingBombRemoved", 20475)
-	self:Log("SPELL_CAST_SUCCESS", "Inferno", 19695)
-	self:Log("SPELL_CAST_SUCCESS", "Armageddon", 20478)
+	self:Log("SPELL_AURA_APPLIED", "LivingBomb", self:SpellName(20475))
+	self:Log("SPELL_AURA_REMOVED", "LivingBombRemoved", self:SpellName(20475))
+	self:Log("SPELL_CAST_SUCCESS", "Inferno", self:SpellName(19695))
+	self:Log("SPELL_CAST_SUCCESS", "Armageddon", self:SpellName(20478))
 
 	self:Death("Win", 12056)
 end
@@ -29,28 +29,28 @@ end
 
 function mod:LivingBomb(args)
 	if self:Me(args.destGUID) then
-		self:Flash(args.spellId)
-		self:OpenProximity(args.spellId, 9)
-		self:Say(args.spellId)
+		self:Flash(20475)
+		self:OpenProximity(20475, 9)
+		self:Say(20475)
 	else
-		self:OpenProximity(args.spellId, 9, args.destName)
+		self:OpenProximity(20475, 9, args.destName)
 	end
-	self:TargetMessage(args.spellId, args.destName, "blue", "Alarm")
-	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetBar(args.spellId, 8, args.destName)
+	self:TargetMessage(20475, args.destName, "blue", "Alarm")
+	self:PrimaryIcon(20475, args.destName)
+	self:TargetBar(20475, 8, args.destName)
 end
 
 function mod:LivingBombRemoved(args)
-	self:CloseProximity(args.spellId)
+	self:CloseProximity(20475)
 end
 
 function mod:Inferno(args)
-	self:Message(args.spellId, "red", "Long")
-	self:Bar(args.spellId, 8)
+	self:Message(19695, "red", "Long")
+	self:Bar(19695, 8)
 end
 
 function mod:Armageddon(args)
-	self:Bar(args.spellId, 8)
-	self:Message(args.spellId, "orange")
+	self:Bar(20478, 8)
+	self:Message(20478, "orange")
 end
 

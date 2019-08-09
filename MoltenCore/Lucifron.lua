@@ -25,9 +25,9 @@ L = mod:GetLocale()
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_CAST_SUCCESS", "ImpendingDoom", 19702)
-	self:Log("SPELL_CAST_SUCCESS", "LucifronsCurse", 19703)
-	self:Log("SPELL_AURA_APPLIED", "MindControl", 20604)
+	self:Log("SPELL_CAST_SUCCESS", "ImpendingDoom", self:SpellName(19702))
+	self:Log("SPELL_CAST_SUCCESS", "LucifronsCurse", self:SpellName(19703))
+	self:Log("SPELL_AURA_APPLIED", "MindControl", self:SpellName(20604))
 
 	self:Death("Win", 12118)
 end
@@ -42,18 +42,18 @@ end
 --
 
 function mod:ImpendingDoom(args)
-	self:CDBar(args.spellId, 20)
-	self:Message(args.spellId, "red")
+	self:CDBar(19702, 20)
+	self:Message(19702, "red")
 end
 
 function mod:LucifronsCurse(args)
-	self:Bar(args.spellId, 20)
-	self:Message(args.spellId, "yellow")
+	self:Bar(19703, 20)
+	self:Message(19703, "yellow")
 end
 
 function mod:MindControl(args)
-	self:Bar(args.spellId, 15, L.mc_bar:format(args.destName))
-	self:TargetMessage(args.spellId, args.destName, "yellow")
-	self:PrimaryIcon(args.spellId, args.destName)
+	self:Bar(20604, 15, L.mc_bar:format(args.destName))
+	self:TargetMessage(20604, args.destName, "yellow")
+	self:PrimaryIcon(20604, args.destName)
 end
 

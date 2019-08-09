@@ -50,7 +50,7 @@ function mod:OnBossEnable()
 
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_CAST_SUCCESS", "Knockback", 20566)
+	self:Log("SPELL_CAST_SUCCESS", "Knockback", self:SpellName(20566))
 
  	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
 	self:Death("Win", 11502)
@@ -73,8 +73,8 @@ end
 --
 
 function mod:Knockback(args)
-	self:Message(args.spellId, "red", nil, L.knockback_message)
-	self:Bar(args.spellId, 28, L.knockback_bar)
+	self:Message(20566, "red", nil, L.knockback_message)
+	self:Bar(20566, 28, L.knockback_bar)
 end
 
 function mod:Emerge()
