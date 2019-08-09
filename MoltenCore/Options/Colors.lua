@@ -2,7 +2,7 @@
 BigWigs:AddColors("Lucifron", {
 	[19702] = "red",
 	[19703] = "yellow",
-	[20604] = {"yellow","blue"},
+	[20604] = {"blue","yellow"},
 })
 
 BigWigs:AddColors("Magmadar", {
@@ -12,7 +12,7 @@ BigWigs:AddColors("Magmadar", {
 })
 
 BigWigs:AddColors("Gehennas", {
-	[19716] = {"yellow","orange"},
+	[19716] = {"orange","yellow"},
 	[19717] = "blue",
 })
 
@@ -34,12 +34,12 @@ BigWigs:AddColors("Sulfuron Harbinger", {
 })
 
 BigWigs:AddColors("Majordomo Executus", {
-	[20619] = {"red","orange"},
-	[21075] = {"red","orange"},
+	[20619] = {"orange","red"},
+	[21075] = {"orange","red"},
 })
 
-BigWigs:AddColors("Ragnaros ", {
+BigWigs:AddColors("Ragnaros", {
 	[20566] = "red",
-	["emerge"] = {"yellow","green","orange"},
-	["submerge"] = {"yellow","orange"},
+	["emerge"] = {"green","orange","yellow"},
+	["submerge"] = {"orange","yellow"},
 })

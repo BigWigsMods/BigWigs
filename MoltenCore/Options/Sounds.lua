@@ -23,7 +23,7 @@ BigWigs:AddSounds("Majordomo Executus", {
 	[21075] = "Info",
 })
 
-BigWigs:AddSounds("Ragnaros ", {
+BigWigs:AddSounds("Ragnaros", {
 	["emerge"] = {"Alarm","Long"},
 	["submerge"] = {"Alarm","Long"},
 })
