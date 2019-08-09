@@ -277,7 +277,7 @@ do
 	}
 end
 
--- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigsIconDB, BigWigsLoader, BigWigsOptions, ChatFrame_ImportAllListsToHash, ChatTypeInfo, CreateFrame, CUSTOM_CLASS_COLORS, DEFAULT_CHAT_FRAME, error
+-- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigsClassicDB, BigWigsIconClassicDB, BigWigsLoader, BigWigsOptions, ChatFrame_ImportAllListsToHash, ChatTypeInfo, CreateFrame, CUSTOM_CLASS_COLORS, DEFAULT_CHAT_FRAME, error
 -- GLOBALS: GetAddOnEnableState, GetAddOnInfo, GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetTime, GRAY_FONT_COLOR, hash_SlashCmdList, InCombatLockdown
 -- GLOBALS: IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
 -- GLOBALS: LibStub, LoadAddOn, message, PlaySound, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, StopSound
@@ -658,74 +658,40 @@ function mod:ADDON_LOADED(addon)
 	C_ChatInfo.RegisterAddonMessagePrefix("D4") -- DBM
 
 	-- LibDBIcon setup
-	if type(BigWigsIconDB) ~= "table" then
-		BigWigsIconDB = {}
+	if type(BigWigsIconClassicDB) ~= "table" then
+		BigWigsIconClassicDB = {}
 	end
-	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
+	ldbi:Register("BigWigs", dataBroker, BigWigsIconClassicDB)
 
-	if BigWigs3DB then
+	if BigWigsClassicDB then
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
-		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
+		if BigWigsClassicDB.profileKeys and BigWigsClassicDB.profiles then
 			local name = UnitName("player")
 			local realm = GetRealmName()
-			if name and realm and BigWigs3DB.profileKeys[name.." - "..realm] then
-				local key = BigWigs3DB.profiles[BigWigs3DB.profileKeys[name.." - "..realm]]
+			if name and realm and BigWigsClassicDB.profileKeys[name.." - "..realm] then
+				local key = BigWigsClassicDB.profiles[BigWigsClassicDB.profileKeys[name.." - "..realm]]
 				if key then
 					self.isFakingDBM = key.fakeDBMVersion
 					self.isShowingZoneMessages = key.showZoneMessages
 				end
-				if BigWigs3DB.namespaces and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles and BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[name.." - "..realm]] then
-					self.isSoundOn = BigWigs3DB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigs3DB.profileKeys[name.." - "..realm]].sound
+				if BigWigsClassicDB.namespaces and BigWigsClassicDB.namespaces.BigWigs_Plugins_Sounds and BigWigsClassicDB.namespaces.BigWigs_Plugins_Sounds.profiles and BigWigsClassicDB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigsClassicDB.profileKeys[name.." - "..realm]] then
+					self.isSoundOn = BigWigsClassicDB.namespaces.BigWigs_Plugins_Sounds.profiles[BigWigsClassicDB.profileKeys[name.." - "..realm]].sound
 				end
 			end
 		end
 		-- Cleanup function.
 		-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
-		if BigWigs3DB.namespaces then
-			for k,v in next, BigWigs3DB.namespaces do
-				if k:find("BigWigs_Bosses_", nil, true) and (not next(v) or not BigWigs3DB.wipe80) then -- XXX temp boss DB wipe for 8.0.1
-					BigWigs3DB.namespaces[k] = nil
+		if BigWigsClassicDB.namespaces then
+			for k,v in next, BigWigsClassicDB.namespaces do
+				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
+					BigWigsClassicDB.namespaces[k] = nil
 				end
-				-- XXX start temp 8.0.1 color conversion
-				if k == "BigWigs_Plugins_Colors" then
-					for profiles, profileList in next, v do
-						for name, tbl in next, profileList do
-							if tbl["Positive"] then
-								tbl["green"] = tbl["Positive"]
-								tbl["Positive"] = nil
-							end
-							if tbl["Personal"] then
-								tbl["blue"] = tbl["Personal"]
-								tbl["Personal"] = nil
-							end
-							if tbl["Important"] then
-								tbl["red"] = tbl["Important"]
-								tbl["Important"] = nil
-							end
-							if tbl["Urgent"] then
-								tbl["orange"] = tbl["Urgent"]
-								tbl["Urgent"] = nil
-							end
-							if tbl["Neutral"] then
-								tbl["cyan"] = tbl["Neutral"]
-								tbl["Neutral"] = nil
-							end
-							if tbl["Attention"] then
-								tbl["yellow"] = tbl["Attention"]
-								tbl["Attention"] = nil
-							end
-						end
-					end
-				end
-				-- XXX end temp 8.0.1 color conversion
 			end
 		end
-		BigWigs3DB.wipe80 = true -- XXX temp boss DB wipe for 8.0.1
-		if not BigWigs3DB.discord or BigWigs3DB.discord < 15 then
-			BigWigs3DB.discord = (BigWigs3DB.discord or 0) + 1
+		if not BigWigsClassicDB.discord or BigWigsClassicDB.discord < 15 then
+			BigWigsClassicDB.discord = (BigWigsClassicDB.discord or 0) + 1
 			CTimerAfter(11, function() sysprint("We are now on Discord: https://discord.gg/jGveg85") end)
 		end
-		BigWigs3DB.fPrint = nil -- XXX temp 7.3.5
 	end
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
@@ -750,7 +716,7 @@ function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 	self:ZONE_CHANGED_NEW_AREA()
 
 	-- Break timer restoration
-	if BigWigs3DB and BigWigs3DB.breakTime then
+	if BigWigsClassicDB and BigWigsClassicDB.breakTime then
 		loadAndEnableCore()
 	end
 end
@@ -1196,7 +1162,7 @@ do
 					end
 				end
 			elseif enableZones[id] == "world" then
-				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
+				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigsClassicDB or not BigWigsClassicDB.breakTime) then
 					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
 				end
 				bwFrame:RegisterEvent("UNIT_TARGET")

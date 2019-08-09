@@ -165,8 +165,8 @@ end
 --
 
 function plugin:OnPluginEnable()
-	if not BigWigsStatsDB then
-		BigWigsStatsDB = {}
+	if not BigWigsStatsClassicDB then
+		BigWigsStatsClassicDB = {}
 	end
 
 	if self.db.profile.enabled then
@@ -205,7 +205,7 @@ do
 			activeDurations[module.journalId] = GetTime()
 
 			if diff and difficultyTable[diff] then
-				local sDB = BigWigsStatsDB
+				local sDB = BigWigsStatsClassicDB
 				if not sDB[id] then sDB[id] = {} end
 				if not sDB[id][module.journalId] then sDB[id][module.journalId] = {} end
 				sDB = sDB[id][module.journalId]
@@ -249,7 +249,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 
 		local diff = module:Difficulty()
 		if difficultyTable[diff] then
-			local sDB = BigWigsStatsDB[module.instanceId][module.journalId][difficultyTable[diff]]
+			local sDB = BigWigsStatsClassicDB[module.instanceId][module.journalId][difficultyTable[diff]]
 			if self.db.profile.saveKills then
 				sDB.kills = sDB.kills and sDB.kills + 1 or 1
 			end
@@ -278,7 +278,7 @@ function plugin:BigWigs_OnBossWipe(event, module)
 
 			local diff = module:Difficulty()
 			if difficultyTable[diff] and self.db.profile.saveWipes then
-				local sDB = BigWigsStatsDB[module.instanceId][module.journalId][difficultyTable[diff]]
+				local sDB = BigWigsStatsClassicDB[module.instanceId][module.journalId][difficultyTable[diff]]
 				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
 			end
 

@@ -310,7 +310,7 @@ do
 				watchedMovies = {},
 			},
 		}
-		local db = adb:New("BigWigs3DB", defaults, true)
+		local db = adb:New("BigWigsClassicDB", defaults, true)
 
 		db.RegisterCallback(mod, "OnProfileChanged", profileUpdate)
 		db.RegisterCallback(mod, "OnProfileCopied", profileUpdate)

@@ -47,13 +47,13 @@ local acOptions = {
 					name = L.minimapIcon,
 					desc = L.minimapToggle,
 					order = 13,
-					get = function() return not BigWigsIconDB.hide end,
+					get = function() return not BigWigsIconClassicDB.hide end,
 					set = function(_, v)
 						if v then
-							BigWigsIconDB.hide = nil
+							BigWigsIconClassicDB.hide = nil
 							ldbi:Show("BigWigs")
 						else
-							BigWigsIconDB.hide = true
+							BigWigsIconClassicDB.hide = true
 							ldbi:Hide("BigWigs")
 						end
 					end,
@@ -849,7 +849,7 @@ local function populateToggleOptions(widget, module)
 
 	local id = module.instanceId
 
-	local sDB = BigWigsStatsDB
+	local sDB = BigWigsStatsClassicDB
 	if module.journalId and id and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][module.journalId] then
 		sDB = sDB[id][module.journalId]
 

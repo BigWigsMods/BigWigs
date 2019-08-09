@@ -1451,12 +1451,12 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_PluginComm")
 	self:RegisterMessage("DBM_AddonMessage")
 
-	local tbl = BigWigs3DB.breakTime
+	local tbl = BigWigsClassicDB.breakTime
 	if tbl then -- Break time present, resume it
 		local prevTime, seconds, nick, isDBM = tbl[1], tbl[2], tbl[3], tbl[4]
 		local curTime = time()
 		if curTime-prevTime > seconds then
-			BigWigs3DB.breakTime = nil
+			BigWigsClassicDB.breakTime = nil
 		else
 			startBreak(seconds-(curTime-prevTime), nick, isDBM, true)
 		end
@@ -1934,7 +1934,7 @@ do
 			end
 			if seconds == 0 then
 				timerTbl = nil
-				BigWigs3DB.breakTime = nil
+				BigWigsClassicDB.breakTime = nil
 				BigWigs:Print(L.breakStopped:format(nick))
 				plugin:SendMessage("BigWigs_StopBar", plugin, L.breakBar)
 				plugin:SendMessage("BigWigs_StopBreak", plugin, seconds, nick, isDBM, reboot)
@@ -1943,7 +1943,7 @@ do
 		end
 
 		if not reboot then
-			BigWigs3DB.breakTime = {time(), seconds, nick, isDBM}
+			BigWigsClassicDB.breakTime = {time(), seconds, nick, isDBM}
 		end
 
 		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "BigWigs", nick))
@@ -1954,7 +1954,7 @@ do
 			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "orange", 134062),
 			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "red", 134062),
 			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Sound", plugin, nil, "Long"),
-			plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
+			plugin:ScheduleTimer(function() BigWigsClassicDB.breakTime = nil timerTbl = nil end, seconds)
 		}
 		if seconds > 119 then -- 2min
 			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "yellow", 134062)
