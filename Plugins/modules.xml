@@ -3,7 +3,6 @@
 
 <Include file="Locales\locales.xml"/>
 
-<Script file="AltPower.lua"/>
 <Script file="AutoReply.lua"/>
 <Script file="Colors.lua"/>
 <Script file="Sound.lua"/>
