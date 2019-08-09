@@ -12,6 +12,7 @@
 <Script file="Majordomo.lua"/>
 <Script file="Ragnaros.lua"/>
 
+<Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>
 
 </Ui>
