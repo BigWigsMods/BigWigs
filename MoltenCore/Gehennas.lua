@@ -6,11 +6,17 @@
 local mod, CL = BigWigs:NewBoss("Gehennas", 409)
 if not mod then return end
 mod:RegisterEnableMob(12259)
-mod.toggleOptions = {19716, {19717, "FLASH"}}
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		19716, -- Gehennas' Curse
+		{19717, "FLASH"}, -- Rain of Fire
+	}
+end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")

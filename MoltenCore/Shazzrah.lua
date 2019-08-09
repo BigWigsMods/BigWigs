@@ -6,11 +6,18 @@
 local mod, CL = BigWigs:NewBoss("Shazzrah", 409)
 if not mod then return end
 mod:RegisterEnableMob(12264)
-mod.toggleOptions = {19714, 23138, 19715}
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		19714, -- Magic Grounding
+		23138, -- Gate of Shazzrah
+		19715, -- Counterspell
+	}
+end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")

@@ -6,11 +6,18 @@
 local mod = BigWigs:NewBoss("Baron Geddon", 409)
 if not mod then return end
 mod:RegisterEnableMob(12056)
-mod.toggleOptions = {{20475, "FLASH", "ICON", "PROXIMITY", "SAY"}, 19695, 20478}
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		{20475, "FLASH", "ICON", "PROXIMITY", "SAY"}, -- Living Bomb
+		19695, -- Inferno
+		20478, -- Armageddon
+	}
+end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
@@ -53,4 +60,3 @@ function mod:Armageddon(args)
 	self:Bar(20478, 8)
 	self:Message(20478, "orange")
 end
-

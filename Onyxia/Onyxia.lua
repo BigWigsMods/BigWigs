@@ -5,7 +5,6 @@
 local mod = BigWigs:NewBoss("Onyxia", 249)
 if not mod then return end
 mod:RegisterEnableMob(10184)
-mod.toggleOptions = {"phase", {17086, "FLASH"}, 18431, 18435}
 mod.engageId = 1084
 
 --------------------------------------------------------------------------------
@@ -36,6 +35,15 @@ L = mod:GetLocale()
 
 function mod:OnRegister()
 	self.displayName = L.name
+end
+
+function mod:GetOptions()
+	return {
+		"phase",
+		{17086, "FLASH"}, -- Breath
+		18431, -- Bellowing Roar
+		18435, -- Flame Breath
+	}
 end
 
 function mod:OnBossEnable()

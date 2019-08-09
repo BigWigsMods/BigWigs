@@ -6,7 +6,6 @@
 local mod, CL = BigWigs:NewBoss("Ragnaros", 409)
 if not mod then return end
 mod:RegisterEnableMob(11502)
-mod.toggleOptions = {"submerge", "emerge", 20566}
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -43,6 +42,14 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		"submerge",
+		"emerge",
+		20566, -- Wrath of Ragnaros
+	}
+end
 
 function mod:OnBossEnable()
 	--self:Yell("Engage", L.engage_trigger)

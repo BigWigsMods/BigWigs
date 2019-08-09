@@ -6,11 +6,18 @@
 local mod, CL = BigWigs:NewBoss("Magmadar", 409)
 if not mod then return end
 mod:RegisterEnableMob(11982)
-mod.toggleOptions = {19408, 19451, 19428}
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		19408, -- Panic
+		19451, -- Enrage
+		19428, -- Conflagration
+	}
+end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")

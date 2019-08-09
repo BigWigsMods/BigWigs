@@ -6,7 +6,6 @@
 local mod, CL = BigWigs:NewBoss("Majordomo Executus", 409)
 if not mod then return end
 mod:RegisterEnableMob(12018, 11663, 11664)
-mod.toggleOptions = {20619, 21075}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -22,6 +21,13 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		20619, -- Magic Reflection
+		21075, -- Damage Shield
+	}
+end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")

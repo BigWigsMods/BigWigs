@@ -6,7 +6,6 @@
 local mod = BigWigs:NewBoss("Lucifron", 409)
 if not mod then return end
 mod:RegisterEnableMob(12118)
-mod.toggleOptions = {19702, 19703, {20604, "ICON"}}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -21,6 +20,14 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
+
+function mod:GetOptions()
+	return {
+		19702, -- Impending Doom
+		19703, -- Lucifron's Curse
+		{20604, "ICON"}, -- Dominate Mind
+	}
+end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
