@@ -22,5 +22,5 @@ if L then
 	L.reversal = "命運逆轉"
 	L.greater_reversal = "強效命運逆轉"
 	L.you_die = "你將死亡"
-	L.you_die_message = "你將在%s秒後死亡"
+	L.you_die_message = "你將在%d秒後死亡"
 end
