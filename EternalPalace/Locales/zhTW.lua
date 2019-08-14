@@ -21,5 +21,5 @@ if L then
 	L.fails_message = "%s（%d制裁堆疊失誤）"
 	L.reversal = "命運逆轉"
 	L.greater_reversal = "強效命運逆轉"
-	L.you_die = "你要死啦！"
+	L.you_die = "你將死亡"
 end
