@@ -10,7 +10,7 @@
 <Script file="Zaqul.lua"/>
 <Script file="QueenAzshara.lua"/>
 
-<!-- <Include file="Locales\locales.xml"/> -->
+<Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>
 
 </Ui>

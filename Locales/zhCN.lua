@@ -17,7 +17,7 @@ L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将不被显示。"
-L.alternativeName = "%s （|cFF436EEE%s|r）"
+L.alternativeName = "%s（|cFF436EEE%s|r）"
 
 L.activeBossModules = "激活首领模块："
 L.advanced = "高级选项"
