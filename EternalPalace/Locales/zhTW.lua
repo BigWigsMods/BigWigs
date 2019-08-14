@@ -4,6 +4,11 @@ if L then
 	--L.stage3_early = "Za'qul tears open the pathway to Delirium Realm!"  -- Yell is 14.5s before the actual cast start
 end
 
+L = BigWigs:NewBossLocale("Lady Ashvane", "zhTW")
+if L then
+	L.linkText = "|T%d:15:15:0:0:64:64:4:60:4:60|t（%s+%s） "
+end
+
 L = BigWigs:NewBossLocale("Queen Azshara", "zhTW")
 if L then
 	--L[299249] = "%s (Soak Orbs)"
@@ -16,4 +21,5 @@ if L then
 	--L.fails_message = "%s (%d Sanction stack fails)"
 	--L.reversal = "Reversal"
 	--L.greater_reversal = "Reversal (Greater)"
+	--L.you_die = "You die"
 end

@@ -4,6 +4,11 @@ if L then
 	L.stage3_early = "扎库尔撕开了通往谵妄领域的通路！"  -- Yell is 14.5s before the actual cast start
 end
 
+L = BigWigs:NewBossLocale("Lady Ashvane", "zhCN")
+if L then
+	L.linkText = "|T%d:15:15:0:0:64:64:4:60:4:60|t（%s+%s） "
+end
+
 L = BigWigs:NewBossLocale("Queen Azshara", "zhCN")
 if L then
 	L[299249] = "%s（吸收宝珠）"
@@ -16,4 +21,5 @@ if L then
 	L.fails_message = "%s（%d制裁堆叠失败）"
 	L.reversal = "逆转"
 	L.greater_reversal = "逆转（强力）"
+	--L.you_die = "You die"
 end
