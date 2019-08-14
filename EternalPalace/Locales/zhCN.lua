@@ -19,7 +19,7 @@ if L then
 	L[299253] = "%s（站定不动）"
 	L.hulk_killed = "%s已击杀 - %.1f秒"
 	L.fails_message = "%s（%d制裁堆叠失误）"
-	L.reversal = "强力命运逆转"
+	L.reversal = "命运逆转"
 	L.greater_reversal = "强力命运逆转"
 	L.you_die = "你将死亡"
 	L.you_die_message = "你将在%d秒后死亡"
