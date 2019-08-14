@@ -22,4 +22,5 @@ if L then
 	L.reversal = "逆转"
 	L.greater_reversal = "逆转（强力）"
 	--L.you_die = "You die"
+	--L.you_die_message = "You will die in %s sec"
 end
