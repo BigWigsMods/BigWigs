@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Za'qul, Herald of Ny'alotha", "zhCN")
 if not L then return end
 if L then
-	L.stage3_early = "扎库尔撕开了通往谵妄领域的通路！"  -- Yell is 14.5s before the actual cast start
+	L.stage3_early = "扎库尔把你拽进了恐惧领域！"  -- Yell is 14.5s before the actual cast start
 end
 
 L = BigWigs:NewBossLocale("Lady Ashvane", "zhCN")
@@ -18,9 +18,9 @@ if L then
 	L[299252] = "%s（保持移动）"
 	L[299253] = "%s（站定不动）"
 	L.hulk_killed = "%s已击杀 - %.1f秒"
-	L.fails_message = "%s（%d制裁堆叠失败）"
-	L.reversal = "逆转"
-	L.greater_reversal = "逆转（强力）"
-	--L.you_die = "You die"
-	--L.you_die_message = "You will die in %s sec"
+	L.fails_message = "%s（%d制裁堆叠失误）"
+	L.reversal = "强力命运逆转"
+	L.greater_reversal = "强力命运逆转"
+	L.you_die = "你将死亡"
+	L.you_die_message = "你将在%s秒后死亡"
 end
