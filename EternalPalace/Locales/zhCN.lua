@@ -18,8 +18,8 @@ if L then
 	L[299252] = "%s（保持移动）"
 	L[299253] = "%s（站定不动）"
 	L.hulk_killed = "%s已击杀 - %.1f秒"
-	L.fails_message = "%s（%d制裁堆叠失败）"
-	L.reversal = "逆转"
-	L.greater_reversal = "逆转（强力）"
-	--L.you_die = "You die"
+	L.fails_message = "%s（%d制裁堆叠失误）"
+	L.reversal = "强力命运逆转"
+	L.greater_reversal = "强力命运逆转"
+	L.you_die = "你将死亡"
 end
