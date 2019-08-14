@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Za'qul, Herald of Ny'alotha", "zhTW")
 if not L then return end
 if L then
-	--L.stage3_early = "Za'qul tears open the pathway to Delirium Realm!"  -- Yell is 14.5s before the actual cast start
+	L.stage3_early = "札奎爾撕開了一條通往狂亂領域的通道！"  -- Yell is 14.5s before the actual cast start
 end
 
 L = BigWigs:NewBossLocale("Lady Ashvane", "zhTW")
@@ -11,16 +11,16 @@ end
 
 L = BigWigs:NewBossLocale("Queen Azshara", "zhTW")
 if L then
-	--L[299249] = "%s (Soak Orbs)"
-	--L[299251] = "%s (Avoid Orbs)"
-	--L[299254] = "%s (Hug Others)"
-	--L[299255] = "%s (Avoid Everyone)"
-	--L[299252] = "%s (Keep Moving)"
-	--L[299253] = "%s (Stand Still)"
-	--L.hulk_killed = "%s killed - %.1f sec"
-	--L.fails_message = "%s (%d Sanction stack fails)"
-	--L.reversal = "Reversal"
-	--L.greater_reversal = "Reversal (Greater)"
-	--L.you_die = "You die"
-	--L.you_die_message = "You will die in %s sec"
+	L[299249] = "%s（吃球）"
+	L[299251] = "%s（躲球）"
+	L[299254] = "%s（集合）"
+	L[299255] = "%s（躲人）"
+	L[299252] = "%s（移動）"
+	L[299253] = "%s（別動）"
+	L.hulk_killed = "%s擊殺，用時%.1f秒"
+	L.fails_message = "%s（%d制裁堆疊失誤）"
+	L.reversal = "命運逆轉"
+	L.greater_reversal = "強效命運逆轉"
+	L.you_die = "你將死亡"
+	L.you_die_message = "你將在%d秒後死亡"
 end
