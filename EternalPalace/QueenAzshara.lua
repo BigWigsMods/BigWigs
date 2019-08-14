@@ -49,6 +49,7 @@ if L then
 	L.reversal = "Reversal"
 	L.greater_reversal = "Reversal (Greater)"
 	L.you_die = "You die"
+	L.you_die_message = "You will die in %s sec"
 end
 
 --------------------------------------------------------------------------------
@@ -719,7 +720,7 @@ end
 function mod:EssenceofAzerothApplied(args)
 	if self:Me(args.destGUID) then
 		local t = self:Mythic() and 25 or 40
-		self:PersonalMessage(303982, false, CL.custom_sec:format(L.you_die, t))
+		self:PersonalMessage(303982, false, L.you_die_message:format(t))
 		self:PlaySound(args.spellId, "alert", nil, args.destName)
 		self:Flash(args.spellId)
 		self:Bar(args.spellId, t, L.you_die)
