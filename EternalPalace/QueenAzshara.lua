@@ -25,6 +25,7 @@ local portalCount = 1
 local hulkCollection = {}
 local drainedSoulList = {}
 local hiddenDrainedSoulList = {}
+local soulDuration = 110
 local fails = 0
 local hulkKillTime = 0
 local burstCount = 1
@@ -201,6 +202,7 @@ function mod:OnEngage()
 	hulkCollection = {}
 	drainedSoulList = {}
 	hiddenDrainedSoulList = {}
+	soulDuration = self:LFR() and 60 or 110
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	self:RegisterEvent("UNIT_FLAGS")
 
@@ -215,7 +217,7 @@ function mod:OnEngage()
 		local _, _, _, tarInstanceId = UnitPosition(unit)
 		local name = self:UnitName(unit)
 		if name and tarInstanceId == 2164 and not self:Tank(unit) then
-			drainedSoulList[name] = {0, 0, 110}
+			drainedSoulList[name] = {0, 0, soulDuration}
 		end
 	end
 	self:SetInfoBarsByTable(298569, drainedSoulList, true) -- Drained Soul
@@ -399,10 +401,10 @@ end
 
 function mod:DrainedSoulApplied(args)
 	if not drainedSoulList[args.destName] then
-		drainedSoulList[args.destName] = {args.amount or 1, GetTime()+110, 110}
+		drainedSoulList[args.destName] = {args.amount or 1, GetTime()+soulDuration, soulDuration}
 	else
 		drainedSoulList[args.destName][1] = args.amount or 1
-		drainedSoulList[args.destName][2] = GetTime()+110
+		drainedSoulList[args.destName][2] = GetTime()+soulDuration
 	end
 	self:SetInfoBarsByTable(args.spellId, drainedSoulList, true)
 	if self:Me(args.destGUID) then
