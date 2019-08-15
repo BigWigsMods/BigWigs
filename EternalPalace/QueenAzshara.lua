@@ -24,6 +24,7 @@ local detonationCount = 1
 local portalCount = 1
 local hulkCollection = {}
 local drainedSoulList = {}
+local hiddenDrainedSoulList = {}
 local fails = 0
 local hulkKillTime = 0
 local burstCount = 1
@@ -199,7 +200,9 @@ function mod:OnEngage()
 	detonationCount = 1
 	hulkCollection = {}
 	drainedSoulList = {}
+	hiddenDrainedSoulList = {}
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:RegisterEvent("UNIT_FLAGS")
 
 	self:CDBar(297937, 14.2) -- Painful Memories
 	self:CDBar(298121, 18.5) -- Lightning Orbs
@@ -234,6 +237,23 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		self:PlaySound(-20480, "long")
 		hulkKillTime = GetTime()
 		self:CDBar(-20480, self:Mythic() and 63 or self:Easy() and 84 or 59, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
+	end
+end
+
+function mod:UNIT_FLAGS(_, unit) -- Hide dead people
+	local name = self:UnitName(unit)
+	if UnitIsDead(unit) then
+		if drainedSoulList[name] then
+			hiddenDrainedSoulList[name] = drainedSoulList[name]
+			drainedSoulList[name] = nil
+			self:SetInfoBarsByTable(298569, drainedSoulList, true)
+		end
+	else
+		if hiddenDrainedSoulList[name] then
+			drainedSoulList[name] = hiddenDrainedSoulList[name]
+			hiddenDrainedSoulList[name] = nil
+			self:SetInfoBarsByTable(298569, drainedSoulList, true)
+		end
 	end
 end
 
@@ -397,9 +417,15 @@ end
 function mod:DrainedSoulRemoved(args)
 	if self:Tank(args.destName) then
 		drainedSoulList[args.destName] = nil
+		hiddenDrainedSoulList[args.destName] = nil
 	else
-		drainedSoulList[args.destName][1] = 0
-		drainedSoulList[args.destName][2] = 0
+		if hiddenDrainedSoulList[args.destName] then -- Support for Mythic, you keep the debuff after death
+			hiddenDrainedSoulList[args.destName][1] = 0
+			hiddenDrainedSoulList[args.destName][2] = 0
+		else
+			drainedSoulList[args.destName][1] = 0
+			drainedSoulList[args.destName][2] = 0
+		end
 	end
 	self:SetInfoBarsByTable(args.spellId, drainedSoulList, true)
 end
