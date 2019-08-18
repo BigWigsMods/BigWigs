@@ -44,7 +44,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DesensitizingStingApplied", 298156)
 	self:Log("SPELL_CAST_SUCCESS", "IncubationFluid", 298242)
 	self:Log("SPELL_AURA_APPLIED", "IncubationFluidApplied", 298306)
-	self:Log("SPELL_CAST_START", "ArcingCurrent", 305048, 305857)
+	self:Log("SPELL_CAST_START", "ArcingCurrent", 305857, 307167) -- Mythic, Others (LFR/Normal/Heroic)
 	self:RegisterEvent("RAID_BOSS_WHISPER") -- Arcing Current
 
 	-- Adds
