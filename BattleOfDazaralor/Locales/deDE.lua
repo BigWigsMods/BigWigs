@@ -24,7 +24,7 @@ end
 L = BigWigs:NewBossLocale("Jadefire Masters Horde", "deDE")
 if L then
 	L.custom_on_fixate_plates = "Fixieren-Symbol über gegnerischen Namensplaketten"
-	L.custom_on_fixate_plates_desc = "Zeige ein Symbol üner der Namensplakette des Gengners, welcher dich fixiert.\nBenötigt das Verwenden von gegnerischen Namensplaketten. Dieses Feature wird zur Zeit nur von KuiNameplates unterstützt."
+	L.custom_on_fixate_plates_desc = "Zeigt ein Symbol an der Namensplakette des Dich fixierenden Ziels an.\nBenötigt die Verwendung gegnerischer Namensplaketten. Diese Funktion wird derzeit nur von KuiNameplates unterstützt."
 
 	L.absorb = "Absorbtion"
 	L.absorb_text = "%s (|cff%s%.0f%%|r)"
@@ -37,7 +37,7 @@ end
 L = BigWigs:NewBossLocale("Jadefire Masters Alliance", "deDE")
 if L then
 	L.custom_on_fixate_plates = "Fixieren-Symbol über gegnerischen Namensplaketten"
-	L.custom_on_fixate_plates_desc = "Zeige ein Symbol üner der Namensplakette des Gengners, welcher dich fixiert.\nBenötigt das Verwenden von gegnerischen Namensplaketten. Dieses Feature wird zur Zeit nur von KuiNameplates unterstützt."
+	L.custom_on_fixate_plates_desc = "Zeigt ein Symbol an der Namensplakette des Dich fixierenden Ziels an.\nBenötigt die Verwendung gegnerischer Namensplaketten. Diese Funktion wird derzeit nur von KuiNameplates unterstützt."
 
 	L.absorb = "Absorbtion"
 	L.absorb_text = "%s (|cff%s%.0f%%|r)"
