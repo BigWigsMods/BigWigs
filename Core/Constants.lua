@@ -203,6 +203,10 @@ function BigWigs:GetBossOptionDetails(module, option)
 			if not desc then
 				BigWigs:Error(("No spell description was returned for id %d!"):format(option))
 				desc = option
+			else
+				while desc:find("\r\n$") do
+					desc = desc:gsub("\r\n$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
+				end
 			end
 			local roleDesc = getRoleStrings(module, option)
 			return option, spellName, roleDesc..desc, icon, alternativeName
