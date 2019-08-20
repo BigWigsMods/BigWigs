@@ -11,16 +11,23 @@ end
 
 L = BigWigs:NewBossLocale("Queen Azshara", "frFR")
 if L then
-	--L[299249] = "%s (Soak Orbs)"
-	--L[299251] = "%s (Avoid Orbs)"
-	--L[299254] = "%s (Hug Others)"
-	--L[299255] = "%s (Avoid Everyone)"
-	--L[299252] = "%s (Keep Moving)"
-	--L[299253] = "%s (Stand Still)"
+	--L[299249] = "SOAK Orbs"
+	--L[299251] = "AVOID Orbs"
+	--L[299254] = "HUG Others"
+	--L[299255] = "Stand ALONE"
+	--L[299252] = "Keep MOVING"
+	--L[299253] = "Stand STILL"
+	--L.hugSay = "HUG %s"
+	--L.avoidSay = "AVOID %s"
+	--L.yourDecree = "Decree: %s"
+	--L.yourDecree2 = "Decree: %s & %s"
 	--L.hulk_killed = "%s killed - %.1f sec"
 	--L.fails_message = "%s (%d Sanction stack fails)"
 	--L.reversal = "Reversal"
 	--L.greater_reversal = "Reversal (Greater)"
 	--L.you_die = "You die"
 	--L.you_die_message = "You will die in %d sec"
+
+	--L.custom_off_repeating_decree_chat = "Repeating Decree Chat"
+	--L.custom_off_repeating_decree_chat_desc = "Spam the words 'HUG me' in yell chat, or 'AVOID me' in say chat, while you have |cff71d5ff[Queen's Decree]|r. Maybe they'll help you if they see the chat bubble."
 end

@@ -11,16 +11,23 @@ end
 
 L = BigWigs:NewBossLocale("Queen Azshara", "zhTW")
 if L then
-	L[299249] = "%s（吃球）"
-	L[299251] = "%s（躲球）"
-	L[299254] = "%s（集合）"
-	L[299255] = "%s（躲人）"
-	L[299252] = "%s（移動）"
-	L[299253] = "%s（別動）"
+	L[299249] = "吃球"
+	L[299251] = "躲球"
+	L[299254] = "集合"
+	L[299255] = "躲人"
+	L[299252] = "移動"
+	L[299253] = "別動"
+	--L.hugSay = "HUG %s"
+	--L.avoidSay = "AVOID %s"
+	--L.yourDecree = "Decree: %s"
+	--L.yourDecree2 = "Decree: %s & %s"
 	L.hulk_killed = "%s擊殺，用時%.1f秒"
 	L.fails_message = "%s（%d制裁堆疊失誤）"
 	L.reversal = "命運逆轉"
 	L.greater_reversal = "強效命運逆轉"
 	L.you_die = "你將死亡"
 	L.you_die_message = "你將在%d秒後死亡"
+
+	--L.custom_off_repeating_decree_chat = "Repeating Decree Chat"
+	--L.custom_off_repeating_decree_chat_desc = "Spam the words 'HUG me' in yell chat, or 'AVOID me' in say chat, while you have |cff71d5ff[Queen's Decree]|r. Maybe they'll help you if they see the chat bubble."
 end
