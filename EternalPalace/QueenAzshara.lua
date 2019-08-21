@@ -1,9 +1,3 @@
---------------------------------------------------------------------------------
--- Todo:
--- Adds in stage 2
--- Improve stage 3
--- All of Stage 4
--- Would we need Proximity for some spells? Static Shock/Lone Decree?
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -443,7 +437,7 @@ function mod:DrainedSoulApplied(args)
 	self:SetInfoBarsByTable(args.spellId, drainedSoulList, true)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		if amount % 2 == 0 or amount > 6 then
+		if amount % 2 == 0 or amount > 5 then
 			self:StackMessage(args.spellId, args.destName, amount, "blue")
 			if amount > 3 then
 				self:PlaySound(args.spellId, amount > 6 and "warning" or "alarm", nil, args.destName)
@@ -668,7 +662,8 @@ function mod:ArcaneMasteryApplied(args)
 	self:Bar(297371, self:Mythic() and 55.8 or 56, L.reversal) -- Reversal of Fortune
 	self:Bar(300519, 67.8, CL.count:format(self:SpellName(300519), detonationCount)) -- Arcane Detonation
 	self:StartDevotedTimer(23) -- Azshara's Devoted
-	self:StartIndomitableTimer(93.5) -- Azshara's Indomitable
+	local indomitable = self:Mythic() and 103.5 or 93.5
+	self:StartIndomitableTimer(indomitable) -- Azshara's Indomitable
 	if self:Mythic() then
 		self:Bar(300478, 33) -- Divide and Conquer
 	end
@@ -733,7 +728,12 @@ function mod:ArcaneDetonation(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, self:Mythic() and 4 or self:Heroic() and 5 or 6, CL.count:format(args.spellName, detonationCount)) -- Mythic 4s, Heroic 5s, Normal/LFR 6s
 	detonationCount = detonationCount + 1
-	self:CDBar(args.spellId, 75, CL.count:format(args.spellName, detonationCount))
+	if self:Mythic() and stage == 3  and detonationCount < 4 then
+		local cd = detonationCount == 2 and 70 or 50 -- 59, 70, 50 / Stage end
+		self:CDBar(args.spellId, cd, CL.count:format(args.spellName, detonationCount))
+	elseif stage == 2 or not self:Mythic() then
+		self:CDBar(args.spellId, 75, CL.count:format(args.spellName, detonationCount))
+	end
 end
 
 do
