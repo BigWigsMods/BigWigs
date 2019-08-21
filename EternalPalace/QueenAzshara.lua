@@ -141,6 +141,7 @@ do
 	end
 
 	function mod:OnBossEnable()
+		self:Log("SPELL_CAST_SUCCESS", "AddsSpawn", 181113) -- Encounter Spawn
 		self:RegisterEvent("RAID_BOSS_WHISPER")
 		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
@@ -277,6 +278,19 @@ function mod:UNIT_FLAGS(_, unit) -- Hide dead people
 			hiddenDrainedSoulList[name] = nil
 			self:SetInfoBarsByTable(298569, drainedSoulList, true)
 		end
+	end
+end
+
+-- XXX patch 8.2.5
+function mod:AddsSpawn(args)
+	if self:MobId(args.sourceGUID) == 153064 then -- Overzealous Hulk
+		BigWigs:Print("Hulk Smash")
+	elseif self:MobId(args.sourceGUID) == 154240 then -- Azshara's Devoted
+		BigWigs:Print("Devoted")
+	elseif self:MobId(args.sourceGUID) == 155354 then -- Azshara's Indomitable
+		BigWigs:Print("Indomitable")
+	elseif self:MobId(args.sourceGUID) == 154565 then -- Loyal Myrmidon
+		BigWigs:Print("Myrmidon")
 	end
 end
 
