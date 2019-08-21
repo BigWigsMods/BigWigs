@@ -123,7 +123,12 @@ end
 local function replaceIdWithDescription(msg)
 	local id = tonumber(msg)
 	if id > 0 then
-		return GetSpellDescription(id) or BigWigs:Print(("No spell description found for boss option using id %d."):format(id))
+		local desc = GetSpellDescription(id)
+		if desc then
+			return desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
+		else
+			BigWigs:Print(("No spell description found for boss option using id %d."):format(id))
+		end
 	else
 		local tbl = C_EncounterJournal_GetSectionInfo(-id)
 		if not tbl then
@@ -204,9 +209,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 				BigWigs:Error(("No spell description was returned for id %d!"):format(option))
 				desc = option
 			else
-				while desc:find("\r\n$") do
-					desc = desc:gsub("\r\n$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
-				end
+				desc = desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
 			end
 			local roleDesc = getRoleStrings(module, option)
 			return option, spellName, roleDesc..desc, icon, alternativeName
