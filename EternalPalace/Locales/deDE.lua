@@ -17,10 +17,10 @@ if L then
 	L[299255] = "Allein stehen"
 	L[299252] = "Laufen"
 	L[299253] = "Stehen"
-	--L.hugSay = "HUG %s"
-	--L.avoidSay = "AVOID %s"
-	--L.yourDecree = "Decree: %s"
-	--L.yourDecree2 = "Decree: %s & %s"
+	L.hugSay = "UMARME %s"
+	L.avoidSay = "MEIDE %s"
+	L.yourDecree = "Erlass: %s"
+	L.yourDecree2 = "Erlass: %s & %s"
 	L.hulk_killed = "%s getötet - %.1f Sek"
 	L.fails_message = "%s (%d Sanktion Fehler-Stapel)"
 	L.reversal = "Wendung"
@@ -28,6 +28,6 @@ if L then
 	L.you_die = "Du stirbst"
 	L.you_die_message = "Du stirbst in %d Sek"
 
-	--L.custom_off_repeating_decree_chat = "Repeating Decree Chat"
-	--L.custom_off_repeating_decree_chat_desc = "Spam the words 'HUG me' in yell chat, or 'AVOID me' in say chat, while you have |cff71d5ff[Queen's Decree]|r. Maybe they'll help you if they see the chat bubble."
+	L.custom_off_repeating_decree_chat = "Wiederholte Erlass Ansage"
+	L.custom_off_repeating_decree_chat_desc = "Spammt während |cff71d5ff[Erlass der Königin]|r 'UMARME mich' im Schreien-Chat, oder 'MEIDE mich' im Sagen-Chat. So können Mitspieler besser helfen."
 end
