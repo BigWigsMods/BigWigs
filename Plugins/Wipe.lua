@@ -48,7 +48,7 @@ plugin.pluginOptions = {
 				plugin.db.profile[info[#info]] = media:List(SOUND)[value]
 			end,
 			values = media:List(SOUND),
-			width = "double",
+			width = 2,
 			itemControl = "DDI-Sound",
 		},
 		spacer = {

@@ -2,18 +2,6 @@
 local BigWigs = BigWigs
 local options = {}
 
-local colorize = nil
-do
-	local r, g, b
-	colorize = setmetatable({}, { __index =
-		function(self, key)
-			if not r then r, g, b = GameFontNormal:GetTextColor() end
-			self[key] = ("|cff%02x%02x%02x%s|r"):format(r * 255, g * 255, b * 255, key)
-			return self[key]
-		end
-	})
-end
-
 local C = BigWigs.C
 
 local L = BigWigsAPI:GetLocale("BigWigs")
@@ -28,6 +16,8 @@ local lds = LibStub("LibDualSpec-1.0")
 local loader = BigWigsLoader
 local API = BigWigsAPI
 options.SendMessage = loader.SendMessage
+
+local bwTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
 
 local colorModule
 local soundModule
@@ -173,19 +163,36 @@ local acOptions = {
 					order = 50,
 					width = "full",
 				},
-				gitHubTitle = {
+				gitHubDesc = {
 					type = "description",
-					name = "\n\n|cFFFED000GitHub:|r  |cFF74BBFBgithub.com/BigWigsMods|r  |cFFFED000Discord:|r  |cFF74BBFBdiscord.gg/jGveg85|r",
-					fontSize = "large",
+					name = "\n".. L.gitHubDesc .."\n",
+					fontSize = "medium",
 					order = 51,
 					width = "full",
 				},
-				gitHubDesc = {
-					type = "description",
-					name = "\n".. L.gitHubDesc,
-					fontSize = "medium",
+				discord = {
+					type = "input",
+					get = function() return "discord.gg/jGveg85" end,
+					set = function() end,
+					name = "Discord",
 					order = 52,
-					width = "full",
+					width = 0.75,
+				},
+				github = {
+					type = "input",
+					get = function() return "github.com/BigWigsMods" end,
+					set = function() end,
+					name = "GitHub",
+					order = 53,
+					width = 0.95,
+				},
+				curseforge = {
+					type = "input",
+					get = function() return "curseforge.com/wow/addons/big-wigs" end,
+					set = function() end,
+					name = "CurseForge",
+					order = 54,
+					width = 1.32,
 				},
 			},
 		},
@@ -298,7 +305,8 @@ local function masterOptionToggled(self, event, value)
 		module.db.profile[key] = value or false
 	else
 		if value then
-			module.db.profile[key] = module.toggleDefaults[key]
+			-- If an option is disabled by default using the "OFF" toggle flag, then when we turn it on, we want all the default flags on also
+			module.db.profile[key] = module.toggleDisabled and module.toggleDisabled[key] or module.toggleDefaults[key]
 		else
 			module.db.profile[key] = 0
 		end
@@ -313,6 +321,9 @@ local function masterOptionToggled(self, event, value)
 			scrollFrame:PerformLayout()
 		end
 	end
+
+	-- After :SetValue so it's not overwritten
+	self.text:SetTextColor(1, 0.82, 0)
 end
 
 local function slaveOptionToggled(self, event, value)
@@ -326,21 +337,25 @@ local function slaveOptionToggled(self, event, value)
 		module.db.profile[key] = module.db.profile[key] - flag
 	end
 	master:SetValue(getMasterOption(master))
+
+	-- After :SetValue so it's not overwritten
+	master.text:SetTextColor(1, 0.82, 0)
+	self.text:SetTextColor(1, 0.82, 0)
 end
 
 local function slaveOptionMouseOver(self, event, value)
-	GameTooltip:SetOwner(self.frame, "ANCHOR_TOP")
-	GameTooltip:AddLine(self:GetUserData("desc"), 1, 1, 1, true)
-	GameTooltip:Show()
+	bwTooltip:SetOwner(self.frame, "ANCHOR_TOP")
+	bwTooltip:AddLine(self:GetUserData("desc"), 1, 1, 1, true)
+	bwTooltip:Show()
 end
 
 local function slaveOptionMouseLeave()
-	GameTooltip:Hide()
+	bwTooltip:Hide()
 end
 
 local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 	local toggle = AceGUI:Create("CheckBox")
-	toggle:SetLabel(colorize[label])
+	toggle:SetLabel(label)
 	-- Flags to have at half width
 	if flag == C.PULSE or flag == C.CASTBAR then
 		toggle:SetRelativeWidth(0.5)
@@ -363,6 +378,7 @@ local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 	toggle:SetCallback("OnEnter", slaveOptionMouseOver)
 	toggle:SetCallback("OnLeave", slaveOptionMouseLeave)
 	toggle:SetValue(getSlaveOption(toggle))
+	toggle.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
 	return toggle
 end
 
@@ -396,7 +412,7 @@ local function hasOptionFlag(dbKey, module, key)
 end
 
 local function advancedToggles(dbKey, module, check)
-	local dbv = module.toggleDefaults[dbKey]
+	local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
 	local advancedOptions = {}
 
 	if bit.band(dbv, C.MESSAGE) == C.MESSAGE then
@@ -494,18 +510,17 @@ local advancedTabs = {
 }
 
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 	local back = AceGUI:Create("Button")
 	back:SetText(L.back)
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
 		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
 	end)
-	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(colorize[name])
-	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
-	check:SetTriState(true)
 
+	local check = AceGUI:Create("CheckBox")
+	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
+	check:SetTriState(true)
 	check:SetFullWidth(true)
 	check:SetDescription(desc)
 	check:SetUserData("key", dbKey)
@@ -515,12 +530,17 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetUserData("option", bossOption)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
+	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
+	if icon then
+		check:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
+	end
 
 	-- Create role-specific secondary checkbox
 	local roleRestrictionCheckbox = nil
 	for i, key in next, BigWigs:GetRoleOptions() do
 		local flag = C[key]
-		if bit.band(module.toggleDefaults[dbKey], flag) == flag then
+		local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
+		if bit.band(dbv, flag) == flag then
 			local roleName, roleDesc = BigWigs:GetOptionDetails(key)
 			roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check)
 		end
@@ -592,16 +612,20 @@ local function buttonClicked(widget)
 end
 
 local function flagOnEnter(widget)
-	GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-	GameTooltip:SetText(widget:GetUserData("tooltipText"), 1, 1, 1, true)
-	GameTooltip:Show()
+	bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+	bwTooltip:SetText(widget:GetUserData("tooltipText"), 1, 1, 1, true)
+	bwTooltip:Show()
+end
+
+local function flagOnLeave()
+	bwTooltip:Hide()
 end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
-	local dbKey, name, desc, icon = BigWigs:GetBossOptionDetails(module, bossOption)
+	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 
 	local check = AceGUI:Create("CheckBox")
-	check:SetLabel(colorize[name])
+	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
 	check:SetTriState(true)
 	check:SetRelativeWidth(0.85)
 	check:SetUserData("key", dbKey)
@@ -611,6 +635,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetDescription(desc)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
+	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
 	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 
 	local spellId = nil
@@ -646,17 +671,18 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local flagIcons = {}
 	local showFlags = {
 		"TANK_HEALER", "TANK", "HEALER", "DISPEL",
-		"EMPHASIZE", "ME_ONLY", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
+		"EMPHASIZE", "ME_ONLY", "ME_ONLY_EMPHASIZE", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
 		"PROXIMITY", "INFOBOX", "ALTPOWER",
 	}
-	for _, key in next, showFlags do
+	for i = 1, #showFlags do
+		local key = showFlags[i]
 		if hasOptionFlag(dbKey, module, key) and (key ~= "SAY_COUNTDOWN" or not hasOptionFlag(dbKey, module, "SAY")) then -- don't show both SAY and SAY_COUNTDOWN
 			local icon = AceGUI:Create("Icon")
 			icon:SetWidth(16)
 			icon:SetImageSize(16, 16)
 			icon:SetUserData("tooltipText", L[key])
 			icon:SetCallback("OnEnter", flagOnEnter)
-			icon:SetCallback("OnLeave", GameTooltip_Hide)
+			icon:SetCallback("OnLeave", flagOnLeave)
 
 			-- 337497 = Interface/LFGFrame/UI-LFG-ICON-PORTRAITROLES, 521749 = Interface/EncounterJournal/UI-EJ-Icons
 			if key == "TANK" then
@@ -671,7 +697,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 				icon1:SetImageSize(16, 16)
 				icon1:SetUserData("tooltipText", L[key])
 				icon1:SetCallback("OnEnter", flagOnEnter)
-				icon1:SetCallback("OnLeave", GameTooltip_Hide)
+				icon1:SetCallback("OnLeave", flagOnLeave)
 				icon1.frame:SetParent(check.frame)
 				icon1.frame:Show()
 				flagIcons[#flagIcons+1] = icon1
@@ -681,8 +707,8 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			elseif key == "DISPEL" then
 				icon:SetImage(521749, 0.8984375, 0.9765625, 0.09375, 0.40625)
 			-- elseif key == "INTERRUPT" then -- just incase :p EJ interrupt icon
-			-- 	icon:SetImage(521749, 0.7734375	0.8515625	0.09375	0.40625)
-			elseif key == "EMPHASIZE" then
+			-- 	icon:SetImage(521749, 0.7734375, 0.8515625, 0.09375, 0.40625)
+			elseif key == "EMPHASIZE" or key == "ME_ONLY_EMPHASIZE" then
 				icon:SetImage(521749, 0.6484375, 0.7265625, 0.09375, 0.40625)
 			else
 				icon:SetImage(icons[key])
@@ -1064,16 +1090,15 @@ do
 		end
 	end
 
-	local GameTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
 	local function onControlEnter(widget)
-		GameTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		GameTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
-		GameTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
-		GameTooltip:Show()
+		bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+		bwTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
+		bwTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
+		bwTooltip:Show()
 	end
 
 	local function onControlLeave()
-		GameTooltip:Hide()
+		bwTooltip:Hide()
 	end
 
 	local function onTreeGroupSelected(widget, event, value)

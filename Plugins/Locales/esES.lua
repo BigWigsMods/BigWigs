@@ -23,10 +23,6 @@ L.blockEmotes = "Bloquear emotes del centro de la pantalla"
 L.blockEmotesDesc = [=[Algunos jefes muestran emotes para ciertas habilidades, estos mensajes son demasiado largos y descriptivos. Intentamos acortarlos, y ajustarlos para que no interfieran con el juego, y que no te digan específicamente que tienes que hacer.
 
 Ten en cuenta: Los emotes de Jefe seguirán siendo visibles en el chat si deseas leerlos.]=]
-L.blockGarrison = "Bloquear ventanas emergentes de ciudadela"
-L.blockGarrisonDesc = [=[Las ventanas emergentes de ciudadela muestran varias cosas, pero principalmente cuando un seguidor a completado una misión.
-
-Estas ventanas pueden cubrir partes críticas de tu interfaz durante un encuentro, así que recomendamos bloquearlas.]=]
 L.blockGuildChallenge = "Bloquear ventanas emergentes de hermandad"
 L.blockGuildChallengeDesc = [=[Los logros de hermandad muestran ventanas emergentes, principalmente cuando un grupo de tu hermandad completa una mazmorra heroica o un desafío.
 
@@ -283,6 +279,12 @@ L.textDesc = "Ya sea para mostrar u ocultar el texto que se muestra en las barra
 
 L.disableSfx = "Deshabilitar efectos de sonido"
 L.disableSfxDesc = "La opción de 'Efectos de Sonido' en las opciones de sonido de WoW se desactivará, luego se vovlerá a activar cuando el encuentro con el jefe finalice. Esto puede ayudarte a concentrarte en los sonidos de avisos de BigWigs."
+--L.blockTooltipQuests = "Block tooltip quest objectives"
+--L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
+--L.blockFollowerMission = "Bloquear ventanas emergentes de ciudadela" -- Rename to follower mission
+--L.blockFollowerMissionDesc = "Las ventanas emergentes de ciudadela muestran varias cosas, pero principalmente cuando un seguidor a completado una misión.\n\nEstas ventanas pueden cubrir partes críticas de tu interfaz durante un encuentro, así que recomendamos bloquearlas."
+--L.blockObjectiveTracker = "Hide quest tracker"
+--L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space.\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Puerto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)

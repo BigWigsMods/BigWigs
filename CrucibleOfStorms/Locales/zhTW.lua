@@ -22,6 +22,10 @@ if L then
 	L.void = "虛無" -- Unstable Resonance: Void
 	L.ocean = "海洋" -- Unstable Resonance: Ocean
 	L.storm = "風暴" -- Unstable Resonance: Storm
-	L.custom_on_repeating_resonance_say = "重複不穩定的共鳴喊話"
-	L.custom_on_repeating_resonance_say_desc = "在不穩定的共鳴期間，每秒重複喊話 {rt3}{rt5}{rt6} 標記（虛無、海洋以及風暴）。"
+
+	L.custom_on_repeating_resonance_yell = "重複力量聖物的喊話"
+	L.custom_on_repeating_resonance_yell_desc = "在不穩定共鳴的期間，每秒重複喊話你所持有的聖物。"
+
+	L.custom_off_repeating_resonance_say = "重複不穩定共鳴的喊話"
+	L.custom_off_repeating_resonance_say_desc = "在不穩定共鳴的期間，每秒重複喊話 {rt3}{rt5}{rt6} 標記（虛無、海洋以及風暴）。"
 end

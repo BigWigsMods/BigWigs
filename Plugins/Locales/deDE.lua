@@ -23,10 +23,6 @@ L.blockEmotes = "Hinweise in der Bildschirmmitte blockieren"
 L.blockEmotesDesc = [=[Einige Bosse zeigen sehr lange und ungenaue Hinweise für spezielle Fähigkeiten an. BigWigs versucht kürzere und passendere Mitteilungen zu erstellen, die den Spielfluss weniger beeinflussen.
 
 Hinweis: Bossmitteilungen werden weiterhin im Chat sichtbar sein und können dort gelesen werden.]=]
-L.blockGarrison = "Popups der Garnison blockieren"
-L.blockGarrisonDesc = [=[Popups der Garnison zeigen hauptsächlich abgeschlossene Missionen von Anhängern an.
-
-Da diese Popups während des Bosskampfes ablenken und das Interface überdecken können, sollten sie blockiert werden.]=]
 L.blockGuildChallenge = "Popups von Gildenherausforderungen blockieren"
 L.blockGuildChallengeDesc = [=[Popups von Gildenherausforderungen zeigen hauptsächlich den Abschluss eines heroischen Dungeons oder des Herausforderungsmodus an.
 
@@ -283,6 +279,12 @@ L.textDesc = "Text in den Leisten anzeigen oder verstecken."
 
 L.disableSfx = "Soundeffekte deaktivieren"
 L.disableSfxDesc = "Die Option 'Soundeffekte' im WoW Soundmenü wird deaktiviert und erst nach dem Bosskampf wieder aktiviert. Dies kann helfen sich auf die BigWigs Sounds zu konzentrieren."
+L.blockTooltipQuests = "Questziele im Tooltip blockieren"
+L.blockTooltipQuestsDesc = "Wenn zum Abschluss einer Quest ein Boss getötet werden muss, wird der Fortschritt normalerweise im MouseOver-Tooltip mit '0/1 abgeschlossen' angezeigt. Dieser Fortschritt wird im Kampf versteckt, damit der Tooltip nicht zu groß wird."
+L.blockFollowerMission = "Popups der Anhänger blockieren"
+L.blockFollowerMissionDesc = "Popups der Anhänger zeigen hauptsächlich abgeschlossene Missionen von Anhängern an.\n\nDa diese Popups während des Bosskampfes ablenken und das Interface überdecken können, sollten sie blockiert werden."
+L.blockObjectiveTracker = "Questverfolgung ausblenden"
+L.blockObjectiveTrackerDesc = "Die Liste mit verfolgten Quests wird im Bosskampf ausgeblendet um Anzeigeplatz zu sparen.\n\nDies passiert NICHT in Mythic+ oder beim Verfolgen eines Erfolges."
 
 L.subzone_grand_bazaar = "Der Große Basar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Der Hafen von Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)

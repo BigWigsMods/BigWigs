@@ -22,7 +22,10 @@ if L then
 	L.void = "虚空" -- Unstable Resonance: Void
 	L.ocean = "海洋" -- Unstable Resonance: Ocean
 	L.storm = "风暴" -- Unstable Resonance: Storm
-	L.custom_on_repeating_resonance_say = "重复动荡共鸣喊话"
-	L.custom_on_repeating_resonance_say_desc = "在聊天中重复喊话 {rt3}{rt5}{rt6}（虚空、海洋和风暴）图标，以在动荡共鸣期间避免爆炸。"
-end
 
+	L.custom_on_repeating_resonance_yell = "重复能量圣物喊话"
+	L.custom_on_repeating_resonance_yell_desc = "当动荡共鸣期间时持有能量圣物时重复喊话。"
+
+	L.custom_off_repeating_resonance_say = "重复动荡共鸣喊话"
+	L.custom_off_repeating_resonance_say_desc = "在聊天中重复喊话 {rt3}{rt5}{rt6}（虚空、海洋和风暴）图标，以在动荡共鸣期间避免爆炸。"
+end

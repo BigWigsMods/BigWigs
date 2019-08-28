@@ -310,16 +310,24 @@ do
 	local function sortFunc(x,y)
 		local px, py = sortingTbl[x] or -1, sortingTbl[y] or -1
 		if px == py then
-			return x > y
+			return x < y
 		else
 			return px > py
 		end
 	end
+	local function sortFuncReverse(x,y)
+		local px, py = sortingTbl[x] or -1, sortingTbl[y] or -1
+		if px == py then
+			return x < y
+		else
+			return px < py
+		end
+	end
 	local tsort = table.sort
 	local colors = plugin:GetColoredNameTable()
-	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl)
+	function plugin:BigWigs_SetInfoBoxTable(_, _, tbl, reverseOrder)
 		sortingTbl = tbl
-		tsort(nameList, sortFunc)
+		tsort(nameList, reverseOrder and sortFuncReverse or sortFunc)
 		local line = 1
 		for i = 1, 5 do
 			local n = nameList[i]
@@ -340,16 +348,39 @@ do
 		local px, py = sortingTbl[x] and sortingTbl[x][1] or -1, sortingTbl[y] and sortingTbl[y][1] or -1
 		if px == py then
 			if px == -1 then
-				return x > y
+				return x < y
 			else
-				return sortingTbl[x][3] > sortingTbl[y][3]
+				return sortingTbl[x][2] < sortingTbl[y][2]
 			end
 		else
 			return px > py
 		end
 	end
+	local function sortBarsReverseFunc(x,y)
+		local px, py = sortingTbl[x] and sortingTbl[x][1], sortingTbl[y] and sortingTbl[y][1]
+		if px == py then
+			if px then -- Have data
+				if sortingTbl[x][2] == sortingTbl[y][2] then
+					return x < y -- Expiration is the same, sort by name
+				else
+					return sortingTbl[x][2] < sortingTbl[y][2] -- Sory by expiration
+				end
+			else
+				return x < y -- No data, sort by name
+			end
+		elseif px == 0 or not py then
+			-- Special case, always place 0 stacks first when in reverse
+			-- Also always place entries with data before entries without (px has data in this case)
+			return true
+		elseif not px then
+			return false -- Always place entries with data before entries without (py has data in this case)
+		else
+			return sortingTbl[x][2] < sortingTbl[y][2]
+		end
+	end
 	local next = next
 	local Timer = C_Timer.After
+	local GetTime = GetTime
 	local reschedule = false
 	local function update()
 		if next(sortingTbl) then
@@ -359,21 +390,20 @@ do
 			return
 		end
 
+		local t = GetTime()
 		for i = 1, 5 do
 			local n = nameList[i]
 			local result = sortingTbl[n]
 			if result then
-				local t = result[3] + 0.1
-				result[3] = t
-				local duration = result[2]
-				local remaining = duration - t
-				plugin:BigWigs_SetInfoBoxBar(nil, nil, i*2, remaining/duration)
+				local endTime = result[2]
+				local remaining = endTime - t
+				plugin:BigWigs_SetInfoBoxBar(nil, nil, i*2, remaining/result[3])
 			end
 		end
 	end
-	function plugin:BigWigs_SetInfoBoxTableWithBars(_, _, tbl)
+	function plugin:BigWigs_SetInfoBoxTableWithBars(_, _, tbl, reverseOrder)
 		sortingTbl = tbl
-		tsort(nameList, sortBarsFunc)
+		tsort(nameList, reverseOrder and sortBarsReverseFunc or sortBarsFunc)
 		local line = 1
 		for i = 1, 5 do
 			local n = nameList[i]

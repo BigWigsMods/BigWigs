@@ -18,7 +18,7 @@ L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) alr
 L.officialRelease = "You are running an official release of BigWigs %s (%s)"
 L.alphaRelease = "You are running an ALPHA RELEASE of BigWigs %s (%s)"
 L.sourceCheckout = "You are running a source checkout of BigWigs %s directly from the repository."
-L.getNewRelease = "Your BigWigs is old (/bwv) but you can easily update it using the Twitch Client. Alternatively, you can update manually from curse.com or wowinterface.com."
+L.getNewRelease = "Your BigWigs is old (/bwv) but you can easily update it using the Twitch Client. Alternatively, you can update manually from curseforge.com or wowinterface.com."
 L.warnTwoReleases = "Your BigWigs is 2 releases out of date! Your version may have bugs, missing features, or completely incorrect timers. It is strongly recommended you update."
 L.warnSeveralReleases = "|cffff0000Your BigWigs is %d releases out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
 
@@ -36,6 +36,7 @@ L.missingAddOn = "Please note that this zone requires the |cFF436EEE%s|r plugin 
 L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
 
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
+L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 -- Media.lua
 L.Beware = "Beware (Algalon)"
@@ -80,7 +81,7 @@ L.slashDescRange = "|cFFFED000/range:|r Opens the range indicator."
 L.slashDescVersion = "|cFFFED000/bwv:|r Performs a BigWigs version check."
 L.slashDescConfig = "|cFFFED000/bw:|r Opens the BigWigs configuration."
 
-L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.\n\n|cFF33FF99Our API is now documented and freely readable on the GitHub wiki.|r"
+L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out."
 
 L.BAR = "Bars"
 L.MESSAGE = "Messages"

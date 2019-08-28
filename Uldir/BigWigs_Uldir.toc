@@ -1,11 +1,11 @@
-## Interface: 80100
+## Interface: 80200
 
 ## Title: BigWigs [|cffeda55fUldir|r]
 ## Title-deDE: BigWigs [|cffeda55fUldir|r]
 ## Title-esES: BigWigs [|cffeda55fUldir|r]
 ## Title-esMX: BigWigs [|cffeda55fUldir|r]
 ## Title-frFR: BigWigs [|cffeda55fUldir|r]
-## Title-ruRU: BigWigs [|cffeda55fUldir|r]
+## Title-ruRU: BigWigs [|cffeda55fУльдир|r]
 ## Title-zhCN: BigWigs [|cffeda55f奥迪尔|r]
 ## Title-zhTW: BigWigs [|cffeda55f奧迪爾|r]
 ## Title-itIT: BigWigs [|cffeda55fUldir|r]
@@ -16,7 +16,7 @@
 ## Notes-esES: BigWigs Módulos de Uldir.
 ## Notes-esMX: BigWigs Módulos de Uldir.
 ## Notes-frFR: Modules BigWigs concernant Uldir.
-## Notes-ruRU: BigWigs Uldir Modules
+## Notes-ruRU: BigWigs модули Ульдира
 ## Notes-zhCN: BigWigs 奥迪尔模块。
 ## Notes-zhTW: BigWigs 奧迪爾模組。
 ## Notes-itIT: BigWigs Uldir Modules

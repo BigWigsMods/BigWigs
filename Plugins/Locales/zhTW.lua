@@ -23,10 +23,6 @@ L.blockEmotes = "封鎖畫面中央表情訊息"
 L.blockEmotesDesc = [=[某些首領施放某些技能時會顯示表情，此類訊息過於冗長及不直觀。我們嘗試提供的訊息更精簡、不會影響遊戲體驗和不會指示玩家要做什麼。
 
 請注意：若你想看首領表情，首領表情仍然會顯示於聊天視窗。]=]
-L.blockGarrison = "封鎖要塞彈出訊息"
-L.blockGarrisonDesc = [=[要塞彈出訊息顯示幾種資訊，其中最主要的是追隨者任務完成。
-
-這些彈出訊息有可能在首領戰鬥中遮蓋你的介面中重要的部份，因此我們建議封鎖這些彈出訊息。]=]
 L.blockGuildChallenge = "封鎖公會挑戰彈出訊息"
 L.blockGuildChallengeDesc = [=[公會挑戰彈出訊息顯示幾種資訊，其中最主要的是你的公會中有小隊完成了一場英雄地城或挑戰地城。
 
@@ -275,18 +271,24 @@ L.iconPosition = "圖示位置"
 L.iconPositionDesc = "選擇將圖示置於計時條的哪一側。"
 L.visibleBarLimit = "最大可見數量"
 L.visibleBarLimitDesc = "設定同時於螢幕上可見的計時條之最大數量。"
---L.textDesc = "Whether to show or hide the text displayed on the bars."
+L.textDesc = "是否顯示或隱藏計時條上的文字。"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
 
---L.disableSfx = "Disable sound effects"
---L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
+L.disableSfx = "禁用音效"
+L.disableSfxDesc = "關閉魔獸世界的音效選項中的「音效」部份，然後在首領戰之後恢復。這可以幫助您專注在BigWigs的警告音效。"
+L.blockTooltipQuests = "滑鼠提示不顯示任務資訊"
+L.blockTooltipQuestsDesc = "當你在進行擊殺某首領的任務時，滑鼠提示指向首領會顯示「0/1 完成」，導致滑鼠提示框變得很大，啟用這項功能可以避免這個情況。"
+L.blockFollowerMission = "封鎖要塞彈出訊息"
+L.blockFollowerMissionDesc = "要塞會彈出訊息，其中最主要的是追隨者任務完成的提示。\n\n這些彈出訊息有可能在首領戰鬥中遮蓋你的介面中重要的部份，因此我們建議封鎖這些彈出訊息。"
+L.blockObjectiveTracker = "隱藏任務追蹤"
+--L.blockObjectiveTrackerDesc = "在首領戰期間隱藏任務追蹤列表，使你的畫面能夠淨空。\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
 
---L.subzone_grand_bazaar = "Grand Bazaar" -- Battle of Dazar'alor raid (Battle for Azeroth)
---L.subzone_port_of_zandalar = "Port of Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
---L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
+L.subzone_grand_bazaar = "大市集" -- Battle of Dazar'alor raid (Battle for Azeroth)
+L.subzone_port_of_zandalar = "贊達拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
+L.subzone_eastern_transept = "東穿堂" -- Auchindoun dungeon (Warlords of Draenor)
 
 -----------------------------------------------------------------------
 -- Colors.lua

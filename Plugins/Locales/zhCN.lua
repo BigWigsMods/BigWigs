@@ -8,8 +8,8 @@ L.sizeDesc = "通常通过拖动锚点设置尺寸。如果需要一个精确的
 
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
-L.Alarm = "警报"
-L.Alert = "报警"
+L.Alarm = "警示"
+L.Alert = "警告"
 L.align = "对齐"
 L.alignText = "文本对齐"
 L.alignTime = "时间对齐"
@@ -23,10 +23,6 @@ L.blockEmotes = "屏蔽屏幕中央表情"
 L.blockEmotesDesc = [=[一些首领某些技能会显示表情，这些信息会两种方式显示并有太长的描述。尝试让它们小一些，更紧凑的消息不会影响游戏过程，并且不会告诉你具体做什么。
 
 请注意：首领表情仍将在聊天窗口显示如果你需要看它们的话。]=]
-L.blockGarrison = "屏蔽要塞弹出窗口"
-L.blockGarrisonDesc = [=[要塞弹出窗口会显示一些事情，但主要是追随者任务已经完成。
-
-这些弹出窗口会在首领战斗时覆盖在你重要的用户界面之上，所以建议屏蔽它们。]=]
 L.blockGuildChallenge = "屏蔽公会挑战弹出窗口"
 L.blockGuildChallengeDesc = [=[公会挑战弹出窗口会显示一些事情，主要是公会的队伍完成了英雄地下城或挑战模式地下城。
 
@@ -112,7 +108,7 @@ L.left = "左"
 L.localTimer = "本地"
 L.lock = "锁定"
 L.lockDesc = "锁定显示窗口，防止被移动和缩放。"
-L.Long = "长计时"
+L.Long = "长响"
 L.messages = "信息"
 L.modifier = "修改"
 L.modifierDesc = "按住选定的修改键以启用计时条点击操作。"
@@ -283,6 +279,12 @@ L.textDesc = "显示或隐藏计时条上的文本。"
 
 L.disableSfx = "禁用音效"
 L.disableSfxDesc = "魔兽世界声音选项中的“音效”选项将被关闭，当首领战斗结束后会重新打开。这可以帮助集中注意力放在 BigWigs 警报音效上。"
+L.blockTooltipQuests = "屏蔽提示任务物品"
+L.blockTooltipQuestsDesc = "当需要因任务击杀首领时，通常在鼠标悬停在首领上会显示为“0/1 完成”的提示。此功能将在战斗中将其隐藏以防止提示变得非常大。"
+L.blockFollowerMission = "屏蔽追随者任务弹出窗口"
+L.blockFollowerMissionDesc = "追随者任务弹出窗口会显示一些事情，但主要是追随者任务已经完成。\n\n这些弹出窗口会在首领战斗时覆盖在你重要的用户界面之上，所以建议屏蔽它们。"
+L.blockObjectiveTracker = "隐藏任务追踪器"
+L.blockObjectiveTrackerDesc = "任务追踪器将在首领战斗中隐藏以给屏幕空出更多空间。\n\n此功能在史诗钥石或追踪成就时无效。"
 
 L.subzone_grand_bazaar = "百商集市" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "赞达拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)

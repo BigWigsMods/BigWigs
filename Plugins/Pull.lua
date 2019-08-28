@@ -85,7 +85,7 @@ do
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
-				width = "double",
+				width = 2,
 				itemControl = "DDI-Sound",
 			},
 			spacer2 = {
@@ -101,7 +101,7 @@ do
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
-				width = "double",
+				width = 2,
 				itemControl = "DDI-Sound",
 			},
 			endPullSound = {
@@ -111,7 +111,7 @@ do
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
-				width = "double",
+				width = 2,
 				itemControl = "DDI-Sound",
 			},
 			voice = {
@@ -119,7 +119,7 @@ do
 				type = "select",
 				values = function() return BigWigsAPI:GetCountdownList() end,
 				order = 5,
-				width = "double",
+				width = 2,
 			},
 			spacer3 = {
 				type = "description",

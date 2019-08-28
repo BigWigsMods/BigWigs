@@ -1,11 +1,11 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhTW")
 if not L then return end
 
-L.getNewRelease = "你的 BigWigs 已過期（/bwv）但是可以使用 Twitch 客戶端簡單升級。另外，也可以從 curse.com 或 wowinterface.com 手動升級。"
+L.getNewRelease = "你的 BigWigs 已過期（/bwv）但是可以使用 Twitch 客戶端簡單升級。另外，也可以從 curseforge.com 或 wowinterface.com 手動升級。"
 L.warnTwoReleases = "你的 BigWigs 已過期2個發行版！你的版本可能有錯誤，功能缺失或不正確的計時器。所以強烈建議你升級。"
 L.warnSeveralReleases = "|cffff0000你的 BigWigs 已過期%d發行版！！我們「強烈」建議你更新，以防止把問題同步給其他玩家！|r"
 
-L.gitHubDesc = "BigWigs 是一個在 GitHub 上的開源軟體。我們一直在尋找新的朋友幫助我們和歡迎任何人檢測我們的代碼，做出貢獻和提交錯誤報告。BigWigs 今天的偉大很大程度上一部分因為偉大的魔獸世界社區幫助我們。\n\n|cFF33FF99我們的 API 現在已在 GitHub 維基記錄並且可以自由讀取。|r"
+L.gitHubDesc = "BigWigs 是一個在 GitHub 上的開源軟體。我們一直在尋找新的朋友幫助我們和歡迎任何人檢測我們的代碼，做出貢獻和提交錯誤報告。BigWigs 今天的偉大很大程度上一部分因為偉大的魔獸世界社區幫助我們。"
 
 L.options = "選項"
 L.raidBosses = "團隊首領"
@@ -17,6 +17,7 @@ L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，計時器將不被顯示。"
+L.alternativeName = "%s（|cFF436EEE%s|r）"
 
 L.activeBossModules = "啟動首領模組："
 L.advanced = "進階選項"
@@ -29,7 +30,6 @@ L.ALTPOWER_desc = "玩家在一些首領戰鬥中會使用替代能量機制。�
 L.back = "<< 返回"
 L.BAR = "計時條"
 L.BAR_desc = "在適當時會為首領技能顯示計時條。如果你想隱藏此技能的計時條，停用此選項。"
-
 L.berserk = "狂暴"
 L.berserk_desc = "為首領狂暴顯示計時條及警報。"
 L.best = "最快："
@@ -124,8 +124,8 @@ L.CASTBAR = "施法條"
 L.CASTBAR_desc = "施法條會在某些首領戰場合出現，通常用來提醒即將到來的重要技能。如果想隱藏施法條，請禁用此選項。"
 L.SAY_COUNTDOWN = "倒數報數"
 L.SAY_COUNTDOWN_desc = "聊天泡泡十分醒目，利用此特性，BigWigs 以倒數計時的說話消息來提醒附近的人技能即將到期。"
---L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
---L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
+L.ME_ONLY_EMPHASIZE = "強調 (只有我)"
+L.ME_ONLY_EMPHASIZE_desc = "啟用後會強調所有只施放在你的技能相關的訊息，使它們更大和更容易看到。"
 
 -- Media.lua
 L.Beware = "當心（艾爾加隆）"

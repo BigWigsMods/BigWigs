@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("The Restless Cabal", 2096, 2328)
 if not mod then return end
 mod:RegisterEnableMob(144755, 144754) -- Zaxasj the Speaker, Fa'thuul the Feared
 mod.engageId = 2269
---mod.respawnTime = 31
+mod.respawnTime = 20
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -73,7 +73,7 @@ function mod:GetOptions()
 		-- Fa'thuul the Feared
 		{282384, "TANK"}, -- Shear Mind
 		282407, -- Void Crash
-		{282432, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Crushing Doubt
+		{282432, "SAY", "SAY_COUNTDOWN", "FLASH", "ME_ONLY_EMPHASIZE"}, -- Crushing Doubt
 		crushingDoubtMarker,
 		eldritchAbominationMarker,
 		287876, -- Enveloping Darkness
@@ -154,7 +154,7 @@ function mod:OnEngage()
 		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss3")
 	end
 	if self:Mythic() then
-		self:Berserk(510)
+		self:Berserk(570)
 	else
 		self:Berserk(780)
 	end
@@ -455,7 +455,7 @@ function mod:EldritchRevelation()
 end
 
 function mod:WitnesstheEnd(args)
-	if not mobCollector[args.sourceGUID] then
+	if self:GetOption(eldritchAbominationMarker) and not mobCollector[args.sourceGUID] then
 		eldritchCount = eldritchCount + 1
 		mobCollector[args.sourceGUID] = true
 		eldritchList[args.sourceGUID] = (eldritchCount % 3) + 3 -- 3, 4, 5

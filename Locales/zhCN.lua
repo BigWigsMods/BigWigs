@@ -1,11 +1,11 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
-L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 Twitch 客户端简单升级。另外，也可以从 curse.com 或 wowinterface.com 手动升级。"
+L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 Twitch 客户端简单升级。另外，也可以从 curseforge.com 或 wowinterface.com 手动升级。"
 L.warnTwoReleases = "你的 BigWigs 已过期2个发行版！你的版本可能有错误，功能缺失或不正确的计时器。所以强烈建议你升级。"
 L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期%d发行版！！我们*强烈*建议你更新，以防止把问题同步给其他玩家！|r"
 
-L.gitHubDesc = "BigWigs 是一个在 GitHub 上的开源软件。我们一直在寻找新的朋友帮助我们和欢迎任何人检测我们的代码，做出贡献和提交错误报告。BigWigs 今天的伟大很大程度上一部分因为伟大的魔兽世界社区帮助我们。\n\n|cFF33FF99我们的 API 现在已在 GitHub 维基记录并且可以自由读取。|r"
+L.gitHubDesc = "BigWigs 是一个在 GitHub 上的开源软件。我们一直在寻找新的朋友帮助我们和欢迎任何人检测我们的代码，做出贡献和提交错误报告。BigWigs 今天的伟大很大程度上一部分因为伟大的魔兽世界社区帮助我们。"
 
 L.options = "选项"
 L.raidBosses = "团队首领"
@@ -17,6 +17,7 @@ L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将不被显示。"
+L.alternativeName = "%s（|cFF436EEE%s|r）"
 
 L.activeBossModules = "激活首领模块："
 L.advanced = "高级选项"

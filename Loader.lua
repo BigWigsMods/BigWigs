@@ -10,7 +10,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 146
+local BIGWIGS_VERSION = 166
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
 
@@ -165,6 +165,7 @@ do
 		[1861] = bfa, -- Uldir
 		[2070] = bfa, -- Battle Of Dazar'alor
 		[2096] = bfa, -- Crucible of Storms
+		[2164] = bfa, -- The Eternal Palace
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -259,6 +260,7 @@ do
 		[1771] = lw_bfa, -- Tol Dagor
 		[1841] = lw_bfa, -- Underrot
 		[1862] = lw_bfa, -- Waycrest Manor
+		[2097] = lw_bfa, -- Operation: Mechagon
 	}
 
 	public.zoneTblWorld = {
@@ -326,7 +328,7 @@ local function loadAddons(tbl)
 end
 
 local function loadZone(zone)
-	if not zone then return end
+	if not loadOnZone[zone] then return end
 	loadAddons(loadOnZone[zone])
 end
 
@@ -834,6 +836,7 @@ do
 		BigWigs_TombOfSargeras = "BigWigs_Legion",
 		BigWigs_TrialOfValor = "BigWigs_Legion",
 		BigWigs_SiegeOfZuldazar = "BigWigs",
+		FS_Core = "Abandoned", -- abandoned addon breaking the load order
 	}
 	local delayedMessages = {}
 
@@ -960,9 +963,9 @@ end
 
 do
 	-- This is a crapfest mainly because DBM's actual handling of versions is a crapfest, I'll try explain how this works...
-	local DBMdotRevision = "20190424195909" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
-	local DBMdotDisplayVersion = "8.1.20" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
-	local DBMdotReleaseRevision = "20190424000000" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20190821200328" -- The changing version of the local client, changes with every alpha revision using an SVN keyword.
+	local DBMdotDisplayVersion = "8.2.15" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration. Unless they fuck up their release and leave the alpha text in it.
+	local DBMdotReleaseRevision = "20190821000000" -- This is manually changed by them every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
@@ -1286,7 +1289,9 @@ do
 			end
 		else
 			bwFrame:UnregisterEvent("UNIT_TARGET")
-			if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
+			if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player")
+			and (not BigWigsOptions or not BigWigsOptions:IsOpen()) -- Not if the GUI is open
+			and (not BigWigsAnchor or (not next(BigWigsAnchor.bars) and not next(BigWigsEmphasizeAnchor.bars))) then -- Not if bars are showing
 				BigWigs:Disable() -- Alive in a non-enable zone, disable
 			end
 			if disabledZones and disabledZones[id] then -- We have content for the zone but it is disabled in the addons menu

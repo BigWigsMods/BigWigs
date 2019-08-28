@@ -9,5 +9,6 @@
 <Include file="Uldir\modules.xml"/>
 <Include file="BattleOfDazaralor\modules.xml"/>
 <Include file="CrucibleOfStorms\modules.xml"/>
+<Include file="EternalPalace\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
