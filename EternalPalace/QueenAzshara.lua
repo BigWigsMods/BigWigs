@@ -41,6 +41,7 @@ if L then
 	L[299252] = "Keep MOVING"
 	L[299253] = "Stand STILL"
 	L.hugSay = "HUG %s"
+	L.hugNoMoveSay = "HUG %s, I can't move"
 	L.avoidSay = "AVOID %s"
 	L.yourDecree = "Decree: %s"
 	L.yourDecree2 = "Decree: %s & %s"
@@ -624,13 +625,25 @@ do
 			end
 			if args.spellId == 299254 then -- Stand Together!
 				self:Yell2(299250, args.spellName)
-				if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then
-					decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.hugSay:format(args.destName), "YELL")
+				if #debuffs == 1 then
+					if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then
+						decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.hugSay:format(args.destName), "YELL")
+					end
+				elseif debuffs[1] == L[299253] then -- Stay!
+					if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then -- Stand Together! & Stay!
+						if decreeTimer then self:CancelTimer(decreeTimer) end
+						decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.hugNoMoveSay:format(args.destName), "YELL")
+					end
 				end
 			elseif args.spellId == 299255 then -- Stand Alone!
 				self:Say(299250, args.spellName)
 				if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then
 					decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.avoidSay:format(args.destName), "SAY")
+				end
+			elseif args.spellId == 299253 and debuffs[1] == L[299254] then -- Stay! & Stand Together!
+				if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then
+					if decreeTimer then self:CancelTimer(decreeTimer) end
+					decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.hugNoMoveSay:format(args.destName), "YELL")
 				end
 			end
 		end

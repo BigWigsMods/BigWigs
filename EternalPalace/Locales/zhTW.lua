@@ -18,6 +18,7 @@ if L then
 	L[299252] = "移動"
 	L[299253] = "別動"
 	L.hugSay = "靠近%s"
+	--L.hugNoMoveSay = "HUG %s, I can't move"
 	L.avoidSay = "避開%s"
 	L.yourDecree = "赦令：%s"
 	L.yourDecree2 = "赦令：%s和%s"

@@ -18,6 +18,7 @@ if L then
 	--L[299252] = "Keep MOVING"
 	--L[299253] = "Stand STILL"
 	--L.hugSay = "HUG %s"
+	--L.hugNoMoveSay = "HUG %s, I can't move"
 	--L.avoidSay = "AVOID %s"
 	--L.yourDecree = "Decree: %s"
 	--L.yourDecree2 = "Decree: %s & %s"
