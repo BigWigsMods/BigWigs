@@ -29,6 +29,7 @@ plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetSubZoneText = GetSubZoneText
 local SetCVar = C_CVar.SetCVar
+local CheckElv = nil
 
 -------------------------------------------------------------------------------
 -- Options
@@ -139,6 +140,8 @@ function plugin:OnPluginEnable()
 	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
 	self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
 
+	CheckElv(self)
+
 	-- XXX temp 8.1.5
 	for id in next, BigWigs.db.global.watchedMovies do
 		if type(id) == "string" then
@@ -171,6 +174,19 @@ do
 		end
 	end
 
+	function CheckElv(self)
+		-- Undo damage by ElvUI (This frame makes the Objective Tracker protected)
+		if type(ObjectiveTrackerFrame.AutoHider) == "table" and trackerHider.GetParent(ObjectiveTrackerFrame.AutoHider) == ObjectiveTrackerFrame then
+			if InCombatLockdown() or UnitAffectingCombat("player") then
+				self:RegisterEvent("PLAYER_REGEN_ENABLED", function()
+					trackerHider.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
+				end)
+			else
+				trackerHider.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
+			end
+		end
+	end
+
 	local restoreObjectiveTracker = nil
 	function plugin:BigWigs_OnBossEngage()
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
@@ -195,10 +211,8 @@ do
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "0")
 		end
-		-- Undo damage by ElvUI (This frame makes the Objective Tracker protected)
-		if type(ObjectiveTrackerFrame.AutoHider) == "table" and trackerHider.GetParent(ObjectiveTrackerFrame.AutoHider) == ObjectiveTrackerFrame then
-			trackerHider.SetParent(ObjectiveTrackerFrame.AutoHider, (CreateFrame("Frame")))
-		end
+
+		CheckElv(self)
 		-- Never hide when tracking achievements or in Mythic+
 		local _, _, diff = GetInstanceInfo()
 		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then

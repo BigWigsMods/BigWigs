@@ -184,7 +184,7 @@ function mod:FreneticCharge()
 end
 
 function mod:FreneticChargeApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chargeCounter))
+	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chargeCounter-1)) -- Target is after _start spell so adjust count in the warning
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")

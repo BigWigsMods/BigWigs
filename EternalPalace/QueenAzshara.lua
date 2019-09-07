@@ -1,9 +1,3 @@
---------------------------------------------------------------------------------
--- Todo:
--- Adds in stage 2
--- Improve stage 3
--- All of Stage 4
--- Would we need Proximity for some spells? Static Shock/Lone Decree?
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -33,6 +27,7 @@ local piercingCount = 1
 local myrmidonCount = 1
 local portalTimersMythic = {26.6, 50.3, 43, 56}
 local piercingTimersMythic = {51.6, 56, 49}
+local overloadCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -47,6 +42,7 @@ if L then
 	L[299252] = "Keep MOVING"
 	L[299253] = "Stand STILL"
 	L.hugSay = "HUG %s"
+	L.hugNoMoveSay = "HUG %s, I can't move"
 	L.avoidSay = "AVOID %s"
 	L.yourDecree = "Decree: %s"
 	L.yourDecree2 = "Decree: %s & %s"
@@ -376,9 +372,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(CL.stage:format(4))
 		portalCount = 1
 		piercingCount = 1
+		overloadCount = 1
 
 		self:Bar(300743, self:Mythic() and 12.5 or 12) -- Void Touched
-		self:Bar(301431, self:Mythic() and 14.2 or 17) -- Overload
+		self:Bar(301431, self:Mythic() and 14.2 or 17, CL.count:format(self:SpellName(301431), overloadCount)) -- Overload
 		self:Bar(303982, self:Mythic() and portalTimersMythic[portalCount] or 24) -- Nether Portal
 		self:Bar(300768, self:Mythic() and 51.6 or 44) -- Piercing Gaze
 		self:Bar(299094, self:Mythic() and 72.8 or 68.5) -- Beckon
@@ -443,7 +440,7 @@ function mod:DrainedSoulApplied(args)
 	self:SetInfoBarsByTable(args.spellId, drainedSoulList, true)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		if amount % 2 == 0 or amount > 6 then
+		if amount % 2 == 0 or amount > 5 then
 			self:StackMessage(args.spellId, args.destName, amount, "blue")
 			if amount > 3 then
 				self:PlaySound(args.spellId, amount > 6 and "warning" or "alarm", nil, args.destName)
@@ -630,13 +627,25 @@ do
 			end
 			if args.spellId == 299254 then -- Stand Together!
 				self:Yell2(299250, args.spellName)
-				if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then
-					decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.hugSay:format(args.destName), "YELL")
+				if #debuffs == 1 then
+					if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then
+						decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.hugSay:format(args.destName), "YELL")
+					end
+				elseif debuffs[1] == L[299253] then -- Stay!
+					if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then -- Stand Together! & Stay!
+						if decreeTimer then self:CancelTimer(decreeTimer) end
+						decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.hugNoMoveSay:format(args.destName), "YELL")
+					end
 				end
 			elseif args.spellId == 299255 then -- Stand Alone!
 				self:Say(299250, args.spellName)
 				if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then
 					decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.avoidSay:format(args.destName), "SAY")
+				end
+			elseif args.spellId == 299253 and debuffs[1] == L[299254] then -- Stay! & Stand Together!
+				if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then
+					if decreeTimer then self:CancelTimer(decreeTimer) end
+					decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.hugNoMoveSay:format(args.destName), "YELL")
 				end
 			end
 		end
@@ -668,7 +677,8 @@ function mod:ArcaneMasteryApplied(args)
 	self:Bar(297371, self:Mythic() and 55.8 or 56, L.reversal) -- Reversal of Fortune
 	self:Bar(300519, 67.8, CL.count:format(self:SpellName(300519), detonationCount)) -- Arcane Detonation
 	self:StartDevotedTimer(23) -- Azshara's Devoted
-	self:StartIndomitableTimer(93.5) -- Azshara's Indomitable
+	local indomitable = self:Mythic() and 103.5 or 93.5
+	self:StartIndomitableTimer(indomitable) -- Azshara's Indomitable
 	if self:Mythic() then
 		self:Bar(300478, 33) -- Divide and Conquer
 	end
@@ -733,7 +743,12 @@ function mod:ArcaneDetonation(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, self:Mythic() and 4 or self:Heroic() and 5 or 6, CL.count:format(args.spellName, detonationCount)) -- Mythic 4s, Heroic 5s, Normal/LFR 6s
 	detonationCount = detonationCount + 1
-	self:CDBar(args.spellId, 75, CL.count:format(args.spellName, detonationCount))
+	if self:Mythic() and stage == 3  and detonationCount < 4 then
+		local cd = detonationCount == 2 and 70 or 50 -- 59, 70, 50 / Stage end
+		self:CDBar(args.spellId, cd, CL.count:format(args.spellName, detonationCount))
+	elseif stage == 2 or not self:Mythic() then
+		self:CDBar(args.spellId, 75, CL.count:format(args.spellName, detonationCount))
+	end
 end
 
 do
@@ -795,9 +810,10 @@ function mod:VoidTouchedApplied(args)
 end
 
 function mod:Overload(args)
-	self:Message2(args.spellId, "red")
+	self:Message2(args.spellId, "red", CL.count:format(args.spellName, overloadCount))
 	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, self:Mythic() and 55 or 45)
+	overloadCount = overloadCount + 1
+	self:CDBar(args.spellId, self:Mythic() and 55 or 45, CL.count:format(args.spellName, overloadCount))
 end
 
 function mod:EssenceofAzerothApplied(args)

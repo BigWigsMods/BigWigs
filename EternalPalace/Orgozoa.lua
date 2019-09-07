@@ -15,6 +15,7 @@ mod.respawnTime = 30
 local stage = 1
 local nextIchorTime = 0
 local arcingCount = 1
+local incubationAppliedCount = 0
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -66,6 +67,7 @@ end
 function mod:OnEngage()
 	stage = 1
 	arcingCount = 1
+	incubationAppliedCount = 0
 
 	self:CDBar(298156, 3.5) -- Desensitizing Sting
 	self:CDBar(298242, 17.5) -- Incubation Fluid
@@ -91,6 +93,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	elseif spellId == 298689 then -- Absorb Fluids
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "green", CL.intermission, false)
+		incubationAppliedCount = 0 -- Resets
 
 		self:StopBar(298156) -- Desensitizing Sting
 		self:StopBar(298242) -- Incubation Fluid
@@ -125,6 +128,7 @@ function mod:IncubationFluid(args)
 end
 
 function mod:IncubationFluidApplied(args)
+	incubationAppliedCount = incubationAppliedCount + 1
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(298156)
 		self:PlaySound(298156, "alarm")
@@ -133,8 +137,8 @@ end
 
 function mod:ArcingCurrent(args)
 	self:Message2(305048, "red", CL.count:format(args.spellName, arcingCount))
-	if self:Mythic() then
-		-- Sound for everyone on mythic, but only the 1 target on non-Mythic
+	if self:Mythic() and incubationAppliedCount > 10 then
+		-- Sound for everyone on mythic when there more than 10 debuffs, but only the 1 target on non-Mythic
 		self:PlaySound(305048, "warning")
 	end
 	self:StopBar(CL.count:format(args.spellName, arcingCount))
@@ -145,7 +149,7 @@ end
 function mod:RAID_BOSS_WHISPER(_, msg)
 	if msg:find("298413", nil, true) then -- Arcing Current
 		self:PersonalMessage(305048)
-		if not self:Mythic() then
+		if not self:Mythic() or incubationAppliedCount < 11 then
 			self:PlaySound(305048, "warning")
 			self:Say(305048)
 		end

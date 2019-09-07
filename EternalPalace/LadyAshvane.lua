@@ -61,6 +61,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(unit)
+	return UnitCanAttack("player", unit)
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RipplingWave", 296662)
 	self:Log("SPELL_AURA_APPLIED", "BrinyBubbleApplied", 302989, 297397) -- Normal, etc
