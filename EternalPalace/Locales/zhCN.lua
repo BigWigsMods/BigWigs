@@ -18,7 +18,7 @@ if L then
 	L[299252] = "保持移动"
 	L[299253] = "站定不动"
 	L.hugSay = "靠近 %s"
-	--L.hugNoMoveSay = "HUG %s, I can't move"
+	L.hugNoMoveSay = "靠近 %s，我无法移动"
 	L.avoidSay = "远离 %s"
 	L.yourDecree = "法令：%s"
 	L.yourDecree2 = "法令：%s 和 %s"
