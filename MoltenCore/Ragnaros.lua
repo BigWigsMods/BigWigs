@@ -28,13 +28,13 @@ if L then
 
 	L.submerge = "Submerge"
 	L.submerge_desc = "Warn for Ragnaros' submerge."
-	L.submerge_icon = "misc_arrowdown"
+	L.submerge_icon = "spell_fire_volcano"
 	L.submerge_message = "Ragnaros down for 90 sec!"
 	L.submerge_bar = "Submerge"
 
 	L.emerge = "Emerge"
 	L.emerge_desc = "Warn for Ragnaros' emerge."
-	L.emerge_icon = "misc_arrowlup"
+	L.emerge_icon = "spell_fire_volcano"
 	L.emerge_message = "Ragnaros emerged, 3 mins until submerge!"
 	L.emerge_bar = "Emerge"
 end
@@ -64,8 +64,8 @@ end
 
 function mod:OnEngage()
 	sonsdead = 0
-	self:Bar("submerge", 180, L.submerge_bar, "misc_arrowdown")
-	self:Message("submerge", "yellow", nil, CL.custom_min:format(L.submerge, 3), "misc_arrowdown")
+	self:Bar("submerge", 180, L.submerge_bar, "spell_fire_volcano")
+	self:Message("submerge", "yellow", nil, CL.custom_min:format(L.submerge, 3), "spell_fire_volcano")
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
 	self:DelayedMessage("submerge", 120, "yellow", CL.custom_min:format(L.submerge, 1))
 	self:DelayedMessage("submerge", 150, "yellow", CL.custom_sec:format(L.submerge, 30))
@@ -84,8 +84,8 @@ end
 
 function mod:Emerge()
 	sonsdead = 10 -- Block this firing again if sons are killed after he emerges
-	self:Message("emerge", "yellow", "Long", L.emerge_message, "misc_arrowlup")
-	self:Bar("submerge", 180, L.submerge_bar, "misc_arrowdown")
+	self:Message("emerge", "yellow", "Long", L.emerge_message, "spell_fire_volcano")
+	self:Bar("submerge", 180, L.submerge_bar, "spell_fire_volcano")
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
 	self:DelayedMessage("submerge", 120, "yellow", CL.custom_min:format(L.submerge, 1))
 	self:DelayedMessage("submerge", 150, "yellow", CL.custom_sec:format(L.submerge, 30))
@@ -96,8 +96,8 @@ end
 function mod:Submerge()
 	sonsdead = 0 -- reset counter
 	self:StopBar(L.knockback_bar)
-	self:Message("submerge", "yellow", "Long", L.submerge_message, "misc_arrowdown")
-	self:Bar("emerge", 90, L.emerge_bar, "misc_arrowlup")
+	self:Message("submerge", "yellow", "Long", L.submerge_message, "spell_fire_volcano")
+	self:Bar("emerge", 90, L.emerge_bar, "spell_fire_volcano")
 	self:DelayedMessage("emerge", 30, "yellow", CL.custom_sec:format(L.emerge, 60))
 	self:DelayedMessage("emerge", 60, "yellow", CL.custom_sec:format(L.emerge, 30))
 	self:DelayedMessage("emerge", 80, "orange", CL.custom_sec:format(L.emerge, 10), false, "Alarm")
