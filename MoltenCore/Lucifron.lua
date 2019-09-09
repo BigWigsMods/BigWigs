@@ -6,6 +6,7 @@
 local mod = BigWigs:NewBoss("Lucifron", 409)
 if not mod then return end
 mod:RegisterEnableMob(12118)
+mod.engageId = 663
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,8 +31,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_CAST_SUCCESS", "ImpendingDoom", self:SpellName(19702))
 	self:Log("SPELL_CAST_SUCCESS", "LucifronsCurse", self:SpellName(19703))
 	self:Log("SPELL_AURA_APPLIED", "MindControl", self:SpellName(20604))

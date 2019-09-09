@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Majordomo Executus", 409)
 if not mod then return end
 mod:RegisterEnableMob(12018, 11663, 11664)
+mod.engageId = 671
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,8 +31,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_CAST_SUCCESS", "MagicReflection", self:SpellName(20619))
 	self:Log("SPELL_CAST_SUCCESS", "DamageShield", self:SpellName(21075))
 

@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Shazzrah", 409)
 if not mod then return end
 mod:RegisterEnableMob(12264)
+mod.engageId = 667
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -20,8 +21,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_CAST_SUCCESS", "Blink", self:SpellName(23138))
 	self:Log("SPELL_CAST_SUCCESS", "MagicGrounding", self:SpellName(19714))
 	self:Log("SPELL_CAST_SUCCESS", "Counterspell", self:SpellName(19715))

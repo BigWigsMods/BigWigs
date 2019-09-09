@@ -6,6 +6,7 @@
 local mod = BigWigs:NewBoss("Baron Geddon", 409)
 if not mod then return end
 mod:RegisterEnableMob(12056)
+mod.engageId = 668
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -20,8 +21,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "LivingBomb", self:SpellName(20475))
 	self:Log("SPELL_AURA_REMOVED", "LivingBombRemoved", self:SpellName(20475))
 	self:Log("SPELL_CAST_SUCCESS", "Inferno", self:SpellName(19695))

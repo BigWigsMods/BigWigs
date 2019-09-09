@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Ragnaros", 409)
 if not mod then return end
 mod:RegisterEnableMob(11502)
+mod.engageId = 672
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -52,14 +53,11 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	--self:Yell("Engage", L.engage_trigger)
-	--self:Yell("Submerge", L.submerge_trigger)
-
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:Yell("Engage", L.engage_trigger)
+	self:Yell("Submerge", L.submerge_trigger)
 
 	self:Log("SPELL_CAST_SUCCESS", "Knockback", self:SpellName(20566))
 
- 	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1")
 	self:Death("Win", 11502)
 	self:Death("SonDeaths", 12143)
 end
@@ -119,12 +117,3 @@ function mod:SonDeaths()
 		self:CancelDelayedMessage(CL.custom_sec:format(L.emerge, 5))
 	end
 end
-
-function mod:UNIT_TARGETABLE_CHANGED(_, unit)
-	if UnitCanAttack("player", unit) then
-		self:Emerge()
-	else
-		self:Submerge()
-	end
-end
-

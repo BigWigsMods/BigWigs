@@ -214,7 +214,7 @@ function boss:Enable(isWipe)
 		enabledModules[#enabledModules+1] = self
 
 		if self.engageId then
-			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
+			--self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage") -- Not on classic
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
 		end
 		local _, class = UnitClass("player")

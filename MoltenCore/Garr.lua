@@ -6,6 +6,7 @@
 local mod = BigWigs:NewBoss("Garr", 409)
 if not mod then return end
 mod:RegisterEnableMob(12057)
+mod.engageId = 666
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -18,8 +19,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_CAST_SUCCESS", "Pulse", self:SpellName(19492))
 
 	self:Death("Win", 12057)

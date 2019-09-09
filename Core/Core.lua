@@ -100,10 +100,8 @@ function mod:ENCOUNTER_START(_, id)
 		if module.engageId == id then
 			if not module.enabled then
 				module:Enable()
-				if UnitGUID("boss1") then -- Only if _START fired after IEEU
-					module:Engage()
-				end
 			end
+			module:Engage()
 		end
 	end
 end

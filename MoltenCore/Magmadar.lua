@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Magmadar", 409)
 if not mod then return end
 mod:RegisterEnableMob(11982)
+mod.engageId = 664
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -20,8 +21,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_CAST_SUCCESS", "Panic", self:SpellName(19408))
 	self:Log("SPELL_CAST_SUCCESS", "Enrage", self:SpellName(19451))
 	self:Log("SPELL_AURA_APPLIED", "Conflagration", self:SpellName(19428))
