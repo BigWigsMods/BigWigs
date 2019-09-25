@@ -730,10 +730,10 @@ function mod:CrystallineShield(args)
 end
 
 function mod:GreaterReversalOfFortune(args)
-	self:PlaySound(spellId, "long")
-	self:Message2(spellId, "cyan", L.greater_reversal)
-	self:CastBar(spellId, 30, L.greater_reversal)
-	self:CDBar(spellId, self:Mythic() and (stage == 4 and 81 or 90) or 70, L.greater_reversal)
+	self:PlaySound(args.spellId, "long")
+	self:Message2(args.spellId, "cyan", L.greater_reversal)
+	self:CastBar(args.spellId, 30, L.greater_reversal)
+	self:CDBar(args.spellId, self:Mythic() and (stage == 4 and 81 or 90) or 70, L.greater_reversal)
 end
 
 -- Stage 4
