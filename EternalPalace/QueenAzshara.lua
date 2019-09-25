@@ -16,7 +16,6 @@ mod.respawnTime = 20
 local stage = 1
 local detonationCount = 1
 local portalCount = 1
-local hulkCollection = {}
 local drainedSoulList = {}
 local hiddenDrainedSoulList = {}
 local soulDuration = 110
@@ -100,7 +99,7 @@ function mod:GetOptions()
 		297372, -- Greater Reversal of Fortune
 		300768, -- Piercing Gaze
 		{300743, "TANK"}, -- Void Touched
-		303982, -- Nether Portal
+		303986, -- Nether Portal
 		301431, -- Overload
 		{300866, "ME_ONLY", "FLASH", "COUNTDOWN"}, -- Essence of Azeroth
 		300877, -- System Shock
@@ -137,7 +136,7 @@ do
 	end
 
 	function mod:OnBossEnable()
-		self:Log("SPELL_CAST_SUCCESS", "AddsSpawn", 181113) -- Encounter Spawn
+		self:Log("SPELL_CAST_SUCCESS", "AddsSpawn", 181089) -- Encounter Event (They used the wrong spell and implemented it weirdly)
 		self:RegisterEvent("RAID_BOSS_WHISPER")
 		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4", "boss5")
@@ -181,20 +180,23 @@ do
 		self:Log("SPELL_AURA_APPLIED_DOSE", "Sanction", 299276) -- Sanction
 
 		-- Stage 2
+		self:Log("SPELL_CAST_SUCCESS", "ReversalOfFortune", 297371)
 		self:Log("SPELL_AURA_APPLIED", "ArcaneMasteryApplied", 300502)
 		self:Log("SPELL_AURA_APPLIED", "ArcaneVulnerabilityApplied", 302999)
 		self:Log("SPELL_AURA_APPLIED_DOSE", "ArcaneVulnerabilityApplied", 302999)
 		self:Log("SPELL_CAST_SUCCESS", "ArcaneJolt", 304475)
 
 		self:Log("SPELL_CAST_START", "ArcaneDetonation", 300519)
-		self:Log("SPELL_AURA_APPLIED", "ArcaneBurstApplied", 303657)
+		self:Log("SPELL_CAST_SUCCESS", "ArcaneBurstApplied", 303657)
 		self:Log("SPELL_AURA_REMOVED", "ArcaneBurstRemoved", 303657)
 
 		-- Stage 3
 		self:Log("SPELL_AURA_APPLIED", "StaticShock", 300492)
 		self:Log("SPELL_AURA_APPLIED", "CrystallineShield", 300620)
+		self:Log("SPELL_CAST_SUCCESS", "GreaterReversalOfFortune", 297372)
 
 		-- Stage 4
+		self:Log("SPELL_CAST_SUCCESS", "NetherPortal", 303986)
 		self:Log("SPELL_CAST_SUCCESS", "PiercingGaze", 300768)
 		self:Log("SPELL_CAST_SUCCESS", "VoidTouchedSuccess", 300743)
 		self:Log("SPELL_AURA_APPLIED", "VoidTouchedApplied", 300743)
@@ -220,10 +222,8 @@ do
 		stage = 1
 		portalCount = 1
 		detonationCount = 1
-		hulkCollection = {}
 		drainedSoulList = {}
 		hiddenDrainedSoulList = {}
-		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 		self:RegisterEvent("UNIT_FLAGS")
 
 		self:CDBar(297937, 14.2) -- Painful Memories
@@ -236,7 +236,7 @@ do
 			self:CDBar(-20480, 27.5, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
 		else
 			self:Bar(298787, 65) -- Arcane Orbs
-			self:CDBar(-20480, 35, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
+			self:CDBar(-20480, self:Easy() and 41 or 35, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
 		end
 
 		initInfoBox(self)
@@ -248,17 +248,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	local unit, guid = self:GetBossId(153064) -- Overzealous Hulk
-	if unit and not hulkCollection[guid] then
-		hulkCollection[guid] = true
-		self:Message2(-20480, "cyan", self:SpellName(-20480), "achievement_boss_nagabruteboss")
-		self:PlaySound(-20480, "long")
-		hulkKillTime = GetTime()
-		self:CDBar(-20480, self:Mythic() and 63 or self:Easy() and 84 or 59, nil, "achievement_boss_nagabruteboss") -- Overzealous Hulk
-	end
-end
 
 function mod:UNIT_FLAGS(_, unit) -- Hide dead people
 	local name = self:UnitName(unit)
@@ -277,16 +266,31 @@ function mod:UNIT_FLAGS(_, unit) -- Hide dead people
 	end
 end
 
--- XXX patch 8.2.5
-function mod:AddsSpawn(args)
-	if self:MobId(args.sourceGUID) == 153064 then -- Overzealous Hulk
-		BigWigs:Print("Hulk Smash")
-	elseif self:MobId(args.sourceGUID) == 154240 then -- Azshara's Devoted
-		BigWigs:Print("Devoted")
-	elseif self:MobId(args.sourceGUID) == 155354 then -- Azshara's Indomitable
-		BigWigs:Print("Indomitable")
-	elseif self:MobId(args.sourceGUID) == 154565 then -- Loyal Myrmidon
-		BigWigs:Print("Myrmidon")
+do
+	local prev = 0
+	function mod:AddsSpawn(args)
+		if args.time - prev > 2 then
+			prev = args.time
+			if self:MobId(args.sourceGUID) == 153064 then -- Overzealous Hulk
+				self:Message2(-20480, "cyan", self:SpellName(-20480), "achievement_boss_nagabruteboss")
+				self:PlaySound(-20480, "long")
+				hulkKillTime = GetTime()
+				self:CDBar(-20480, self:Mythic() and 63 or self:Easy() and 85 or 59, nil, "achievement_boss_nagabruteboss")
+			elseif self:MobId(args.sourceGUID) == 154240 then -- Azshara's Devoted
+				self:Message2(-20408, "yellow", self:SpellName(-20408), "inv_misc_nagamale")
+				self:PlaySound(-20408, "long")
+			elseif self:MobId(args.sourceGUID) == 155354 then -- Azshara's Indomitable
+				self:Message2(-20410, "yellow", self:SpellName(-20410), "achievement_boss_nagacentaur")
+				self:PlaySound(-20410, "long")
+			elseif self:MobId(args.sourceGUID) == 154565 then -- Loyal Myrmidon
+				self:Message2(-20355, "yellow", self:SpellName(-20355), "inv_misc_nagamale")
+				self:PlaySound(-20355, "long")
+				myrmidonCount = myrmidonCount + 1
+				if myrmidonCount < 4 then -- only 3 Myrmidons spawn maximum in Mythic, more in other difficulties unconfirmed
+					self:CDBar(-20355, myrmidonCount == 3 and 50 or 60, nil, "inv_misc_nagamale")
+				end
+			end
+		end
 	end
 end
 
@@ -310,20 +314,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 297371 then -- Reversal of Fortune
-		self:PlaySound(spellId, "long")
-		self:Message2(spellId, "cyan", L.reversal)
-		self:CastBar(spellId, 30, L.reversal)
-		self:CDBar(spellId, 80, L.reversal)
-	elseif spellId == 297372 then -- Greater Reversal of Fortune
-		self:PlaySound(spellId, "long")
-		self:Message2(spellId, "cyan", L.greater_reversal)
-		self:CastBar(spellId, 30, L.greater_reversal)
-		self:CDBar(spellId, self:Mythic() and (stage == 4 and 81 or 90) or 70, L.greater_reversal)
-	elseif spellId == 303629 then -- Arcane Burst
-		burstCount = burstCount + 1
-		self:Bar(303657, self:Mythic() and (burstCount == 3 and 60 or 45) or 70)
-	elseif spellId == 302034 then -- Adjure // 2nd Intermission Start / Stage 3
+	if spellId == 302034 then -- Adjure // 2nd Intermission Start / Stage 3
 		stage = 3
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "green", CL.intermission, false)
@@ -331,8 +322,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 
 		self:ScheduleTimer("EndIntermission", 27) -- To display fails/notify stage 3 starts
 
-		self:CancelIndomitableTimer()
-		self:CancelDevotedTimer()
+		self:StopBar(-20410) -- Azshara's Indomitable
+		self:StopBar(-20408) -- Azshara's Devoted
 
 		self:StopBar(304475) -- Arcane Jolt
 		self:StopBar(299094) -- Beckon
@@ -345,7 +336,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		myrmidonCount = 1
 
 		self:Bar(299250, 4) -- Decrees
-		self:StartMyrmidonTimer(30)
+		self:CDBar(-20355, 30, nil, "inv_misc_nagamale") -- Loyal Myrmidon
 		self:Bar("stages", 34.3, CL.active, "achievement_boss_seawitch") -- Sisters attackable
 		self:Bar(304475, self:Mythic() and 31 or 36) -- Arcane Jolt
 		self:Bar(301078, 45.5) -- Charged Spear
@@ -362,7 +353,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:PlaySound("stages", "long")
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
 
-		self:CancelMyrmidonTimer()
+		self:StopBar(-20355) -- Loyal Myrmidon
 		self:StopBar(304475) -- Arcane Jolt
 		self:StopBar(299094) -- Beckon
 		self:StopBar(303657) -- Arcane Burst
@@ -376,45 +367,18 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 
 		self:Bar(300743, self:Mythic() and 12.5 or 12) -- Void Touched
 		self:Bar(301431, self:Mythic() and 14.2 or 17, CL.count:format(self:SpellName(301431), overloadCount)) -- Overload
-		self:Bar(303982, self:Mythic() and portalTimersMythic[portalCount] or 24) -- Nether Portal
+		self:Bar(303986, self:Mythic() and portalTimersMythic[portalCount] or 24) -- Nether Portal
 		self:Bar(300768, self:Mythic() and 51.6 or 44) -- Piercing Gaze
 		self:Bar(299094, self:Mythic() and 72.8 or 68.5) -- Beckon
 		self:Bar(297372, 64, L.greater_reversal) -- Greater Reversal of Fortune
 		if self:Mythic() then
 			self:Bar(300478, 39.2) -- Divide and Conquer
 		end
-	elseif spellId == 303982 then -- Nether Portal
-		self:Message2(303982, "yellow")
-		self:PlaySound(303982, "alert")
-		portalCount = portalCount + 1
-		self:Bar(303982, self:Mythic() and portalTimersMythic[portalCount] or portalCount == 2 and 40 or portalCount == 3 and 44 or 35) -- XXX Make a Table for more data
 	end
 end
 function mod:EndIntermission()
 	self:Message2("stages", "cyan", L.fails_message:format(CL.stage:format(stage), fails), false)
 	self:PlaySound("stages", "long")
-end
-
-do
-	local timersTable = {}
-	function mod:StartMyrmidonTimer(t)
-		if myrmidonCount < 4 then -- only 3 Myrmidons spawn maximum in Mythic, more in other difficulties unconfirmed
-			self:CDBar(-20355, t, nil, "inv_misc_nagamale") -- Loyal Myrmidon
-			myrmidonCount = myrmidonCount + 1
-			timersTable = {
-				self:ScheduleTimer("Message2", t, -20355, "yellow", nil, "inv_misc_nagamale"),
-				self:ScheduleTimer("PlaySound", t, -20355, "long"),
-				self:ScheduleTimer("StartMyrmidonTimer", t, myrmidonCount == 3 and 50 or 60),
-			}
-		end
-	end
-
-	function mod:CancelMyrmidonTimer()
-		for i = 1, #timersTable do
-			self:CancelTimer(timersTable[i])
-		end
-		self:StopBar(-20355) -- Loyal Myrmidon
-	end
 end
 
 -- General
@@ -664,6 +628,13 @@ function mod:Sanction(args)
 end
 
 -- Stage 2
+function mod:ReversalOfFortune(args)
+	self:PlaySound(args.spellId, "long")
+	self:Message2(args.spellId, "cyan", L.reversal)
+	self:CastBar(args.spellId, 30, L.reversal)
+	self:CDBar(args.spellId, 80, L.reversal)
+end
+
 function mod:ArcaneMasteryApplied(args)
 	stage = 2
 	self:PlaySound("stages", "long")
@@ -676,47 +647,10 @@ function mod:ArcaneMasteryApplied(args)
 	self:Bar(303657, self:Mythic() and 43 or 40) -- Arcane Burst
 	self:Bar(297371, self:Mythic() and 55.8 or 56, L.reversal) -- Reversal of Fortune
 	self:Bar(300519, self:Mythic() and 67.8 or 62.9, CL.count:format(self:SpellName(300519), detonationCount)) -- Arcane Detonation
-	self:StartDevotedTimer(23) -- Azshara's Devoted
-	local indomitable = self:Mythic() and 103.5 or 93.5
-	self:StartIndomitableTimer(indomitable) -- Azshara's Indomitable
+	self:Bar(-20408, 23, nil, "inv_misc_nagamale") -- Azshara's Devoted
+	self:Bar(-20410, self:Mythic() and 103.5 or 93.5, nil, "achievement_boss_nagacentaur") -- Azshara's Indomitable
 	if self:Mythic() then
 		self:Bar(300478, 33) -- Divide and Conquer
-	end
-end
-
-do
-	local timersTable = {}
-	function mod:StartDevotedTimer(t)
-		self:Bar(-20408, t, nil, "inv_misc_nagamale") -- Azshara's Devoted
-		timersTable = {
-			self:ScheduleTimer("Message2", t, -20408, "yellow", nil, "inv_misc_nagamale"),
-			self:ScheduleTimer("PlaySound", t, -20408, "long"),
-		}
-	end
-
-	function mod:CancelDevotedTimer()
-		for i = 1, #timersTable do
-			self:CancelTimer(timersTable[i])
-		end
-		self:StopBar(-20408) -- Azshara's Devoted
-	end
-end
-
-do
-	local timersTable = {}
-	function mod:StartIndomitableTimer(t)
-		self:Bar(-20410, t, nil, "achievement_boss_nagacentaur") -- Azshara's Indomitable
-		timersTable = {
-			self:ScheduleTimer("Message2", t, -20410, "yellow", nil, "achievement_boss_nagacentaur"),
-			self:ScheduleTimer("PlaySound", t, -20410, "long"),
-		}
-	end
-
-	function mod:CancelIndomitableTimer()
-		for i = 1, #timersTable do
-			self:CancelTimer(timersTable[i])
-		end
-		self:StopBar(-20410) -- Azshara's Indomitable
 	end
 end
 
@@ -755,6 +689,10 @@ do
 	local playerList = mod:NewTargetList()
 	function mod:ArcaneBurstApplied(args)
 		playerList[#playerList+1] = args.destName
+		if #playerList == 1 then
+			burstCount = burstCount + 1
+			self:Bar(303657, self:Mythic() and (burstCount == 3 and 60 or 45) or 70)
+		end
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, self:Mythic() and 15 or 30)
@@ -791,7 +729,21 @@ function mod:CrystallineShield(args)
 	self:PlaySound(args.spellId, "long", nil, args.destName)
 end
 
+function mod:GreaterReversalOfFortune(args)
+	self:PlaySound(spellId, "long")
+	self:Message2(spellId, "cyan", L.greater_reversal)
+	self:CastBar(spellId, 30, L.greater_reversal)
+	self:CDBar(spellId, self:Mythic() and (stage == 4 and 81 or 90) or 70, L.greater_reversal)
+end
+
 -- Stage 4
+function mod:NetherPortal(args)
+	self:Message2(args.spellId, "yellow")
+	self:PlaySound(args.spellId, "alert")
+	portalCount = portalCount + 1
+	self:Bar(args.spellId, self:Mythic() and portalTimersMythic[portalCount] or portalCount == 2 and 40 or portalCount == 3 and 44 or 35) -- XXX Make a Table for more data
+end
+
 function mod:PiercingGaze(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
@@ -819,7 +771,7 @@ end
 function mod:EssenceofAzerothApplied(args)
 	if self:Me(args.destGUID) then
 		local t = self:Mythic() and 25 or 40
-		self:PersonalMessage(303982, false, L.you_die_message:format(t))
+		self:PersonalMessage(args.spellId, false, L.you_die_message:format(t))
 		self:PlaySound(args.spellId, "alert", nil, args.destName)
 		self:Flash(args.spellId)
 		self:Bar(args.spellId, t, L.you_die)
@@ -848,8 +800,8 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				self:PlaySound(303982, "alarm")
-				self:PersonalMessage(303982, "underyou")
+				self:PlaySound(303986, "alarm")
+				self:PersonalMessage(303986, "underyou")
 			end
 		end
 	end
