@@ -2158,6 +2158,16 @@ function boss:BarTimeLeft(text)
 end
 
 -------------------------------------------------------------------------------
+-- Nameplate bars.
+-- @section nameplatebars
+--
+
+function boss:NameplateBar(key, length, guid, text, icon)
+	local msg = text or spells[key]
+	self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], guid)
+end
+
+-------------------------------------------------------------------------------
 -- Icons.
 -- @section icons
 --

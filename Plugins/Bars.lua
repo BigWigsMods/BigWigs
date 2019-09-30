@@ -1519,6 +1519,7 @@ do
 			end
 		end
 		currentBarStyler = newBarStyler
+		self.currentBarStyler = currentBarStyler
 
 		rearrangeBars(normalAnchor)
 		rearrangeBars(emphasizeAnchor)
