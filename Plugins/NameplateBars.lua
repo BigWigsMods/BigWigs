@@ -54,11 +54,11 @@ function plugin:OnPluginEnable()
 end
 
 candy:RegisterCallback("LibCandyBar_Stop", function(_, bar)
-    local guid, key = bar:Get("bigwigs:guid"), bar:Get("bigwigs:key")
-    if guid and key then
+    local guid = bar:Get("bigwigs:guid")
+    if guid then
 		barsPlugin.currentBarStyler.BarStopped(bar)
-        bars[guid][key] = nil
-		timers[guid][key] = nil
+        bars[guid][bar:GetLabel()] = nil
+		timers[guid][bar:GetLabel()] = nil
         if not next(bars[guid]) then
             bars[guid] = nil
 			timers[guid] = nil
@@ -101,7 +101,7 @@ function plugin:StartBar(key, guid, time, text, icon, expirationTime)
 		bar:SetFill(db.fill)
         bar:SetDuration(expirationTime and expirationTime - GetTime() or time)
         bar:Start(time)
-		bar:Set("bigwigs:key", guid)
+		bar:Set("bigwigs:key", key)
         bar:Set("bigwigs:guid", guid)
 		barsPlugin.currentBarStyler.ApplyStyle(bar)
         bars[guid][text] = bar
