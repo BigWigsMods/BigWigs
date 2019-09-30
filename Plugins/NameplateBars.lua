@@ -41,7 +41,6 @@ local plugin = BigWigs:NewPlugin("NameplateBars")
 if not plugin then return end
 
 local bars = {}
-local timers = {}
 
 function plugin:OnPluginEnable()
 	colors = BigWigs:GetPlugin("Colors")
@@ -58,13 +57,11 @@ candy:RegisterCallback("LibCandyBar_Stop", function(_, bar)
     if guid then
 		barsPlugin.currentBarStyler.BarStopped(bar)
         bars[guid][bar:GetLabel()] = nil
-		timers[guid][bar:GetLabel()] = nil
         if not next(bars[guid]) then
             bars[guid] = nil
-			timers[guid] = nil
-        end
-		-- TODO delete from table when bars are not active
-		plugin:RearrangeBars(guid)
+        else
+			plugin:RearrangeBars(guid)
+		end
     end
 end)
 
@@ -110,34 +107,24 @@ function plugin:StartBar(key, guid, time, text, icon, expirationTime)
 end
 
 function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, guid)
-    if not timers[guid] then timers[guid] = {} end
-    timers[guid][text] = {
-		key = key,
-        duration = time,
-        expirationTime = GetTime() + time,
-        text = text,
-		icon = icon,
-    }
     self:StartBar(key, guid, time, text, icon)
     self:RearrangeBars(guid)
 end
 
 function plugin:BigWigs_StopNameplateBar(_, module, text, guid)
-    if not timers[guid] or not timers[guid][text] then return end
-    timers[guid][text] = nil
+    if not bars[guid] or not bars[guid][text] then return end
 	bars[guid][text]:Stop()
-	bars[guid][text] = nil
     self:RearrangeBars(guid)
 end
 
 do
-    local function order(timers)
+    local function order(bars)
         local barTexts = {}
-        for text, _ in pairs(timers) do
+        for text, _ in pairs(bars) do
             barTexts[#barTexts+1] = text
         end
         table.sort(barTexts, function(a, b)
-            return timers[a].expirationTime < timers[b].expirationTime
+            return bars[a].remaining < bars[b].remaining
         end)
         return barTexts
     end
@@ -147,8 +134,8 @@ do
 		if not unit then return end
         local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
         local unitBars = bars[guid]
-        if nameplate and unitBars and timers[guid] then
-            local sorted = order(timers[guid])
+        if nameplate and unitBars and bars[guid] then
+            local sorted = order(bars[guid])
             for i, text in ipairs(sorted) do
                 local bar = unitBars[text]
                 bar:ClearAllPoints()
@@ -161,10 +148,12 @@ end
 
 function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
     local guid = UnitGUID(unit)
-    local unitTimers = timers[guid]
-    if not unitTimers then return end
-    for text, timer in next, unitTimers do
-        self:StartBar(timer.key, guid, timer.duration, timer.text, timer.icon, timer.expirationTime)
+    local unitBars = bars[guid]
+    if not unitBars then return end
+    for text, bar in next, unitBars do
+		local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
+		bar:Show()
+        bar:SetParent(nameplate)
     end
     self:RearrangeBars(guid)
 end
@@ -175,7 +164,8 @@ function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
     if not unitBars then return end
 
     for _, bar in next, unitBars do
-        bar:Stop()
+        bar:SetParent(nil)
+		bar:Hide()
+		bar:ClearAllPoints()
     end
-    bars[guid] = nil
 end
