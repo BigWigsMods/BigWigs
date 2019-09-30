@@ -4,13 +4,9 @@ local colors, barsPlugin
 
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 local STATUSBAR = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
+local UnitGUID, UnitIsPlayer = UnitGUID, UnitIsPlayer
 
---------------------------------------------------------------------------------
--- Module Declaration
---
-
--- TEMP
-local findTargetByGUID
+local findUnitByGUID
 do
 	local unitTable = {
 		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
@@ -19,23 +15,20 @@ do
 		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
 	}
 	local unitTableCount = #unitTable
-	findTargetByGUID = function(id)
-		local isNumber = type(id) == "number"
+	findUnitByGUID = function(id)
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
 			local guid = UnitGUID(unit)
-			--if not guid then return end -- no more nameplates
 			if guid and not UnitIsPlayer(unit) then
-				if isNumber then
-					local _, _, _, _, _, mobId = strsplit("-", guid)
-					guid = tonumber(mobId)
-				end
 				if guid == id then return unit end
 			end
 		end
 	end
 end
--- end TEMP
+
+--------------------------------------------------------------------------------
+-- Module Declaration
+--
 
 local plugin = BigWigs:NewPlugin("NameplateBars")
 if not plugin then return end
@@ -66,7 +59,7 @@ candy:RegisterCallback("LibCandyBar_Stop", function(_, bar)
 end)
 
 function plugin:StartBar(key, guid, time, text, icon, expirationTime)
-    local unit = findTargetByGUID(guid)
+    local unit = findUnitByGUID(guid)
     local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
     if nameplate then
 		local db = barsPlugin.db.profile
@@ -130,7 +123,7 @@ do
     end
 
     function plugin:RearrangeBars(guid)
-        local unit = findTargetByGUID(guid)
+        local unit = findUnitByGUID(guid)
 		if not unit then return end
         local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
         local unitBars = bars[guid]
