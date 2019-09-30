@@ -6,6 +6,8 @@ local FONT = media.MediaType and media.MediaType.FONT or "font"
 local STATUSBAR = media.MediaType and media.MediaType.STATUSBAR or "statusbar"
 local UnitGUID, UnitIsPlayer = UnitGUID, UnitIsPlayer
 
+local db
+
 local findUnitByGUID
 do
 	local unitTable = {
@@ -35,6 +37,23 @@ if not plugin then return end
 
 local bars = {}
 
+local function barStopped(_, bar)
+	local guid = bar:Get("bigwigs:guid")
+	if guid then
+		barsPlugin.currentBarStyler.BarStopped(bar)
+		bars[guid][bar:GetLabel()] = nil
+		if not next(bars[guid]) then
+			bars[guid] = nil
+		else
+			plugin:RearrangeBars(guid)
+		end
+	end
+end
+
+local function updateProfile()
+	db = barsPlugin.db.profile
+end
+
 function plugin:OnPluginEnable()
 	colors = BigWigs:GetPlugin("Colors")
 	barsPlugin = BigWigs:GetPlugin("Bars")
@@ -43,52 +62,21 @@ function plugin:OnPluginEnable()
     self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
     self:RegisterMessage("BigWigs_StartNameplateBar")
     self:RegisterMessage("BigWigs_StopNameplateBar")
+
+	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	updateProfile()
 end
 
-candy:RegisterCallback("LibCandyBar_Stop", function(_, bar)
-    local guid = bar:Get("bigwigs:guid")
-    if guid then
-		barsPlugin.currentBarStyler.BarStopped(bar)
-        bars[guid][bar:GetLabel()] = nil
-        if not next(bars[guid]) then
-            bars[guid] = nil
-        else
-			plugin:RearrangeBars(guid)
-		end
-    end
-end)
-
-function plugin:EmphasizeBar(bar, start)
-	local db = barsPlugin.db.profile
-	barsPlugin.currentBarStyler.BarStopped(bar)
-	if start or db.emphasizeRestart then
-		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
-	end
-	local module = bar:Get("bigwigs:module")
-	local key = bar:Get("bigwigs:option")
-
-	local flags = nil
-	if db.monochrome and db.outline ~= "NONE" then
-		flags = "MONOCHROME," .. db.outline
-	elseif db.monochrome then
-		flags = "MONOCHROME"
-	elseif db.outline ~= "NONE" then
-		flags = db.outline
-	end
-	local f = media:Fetch(FONT, db.fontName)
-	bar.candyBarLabel:SetFont(f, db.fontSizeEmph, flags)
-	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
-
-	bar:SetColor(colors:GetColor("barEmphasized", module, key))
-	-- bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
-	-- bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
-	barsPlugin.currentBarStyler.ApplyStyle(bar)
-	bar:Set("bigwigs:emphasized", true)
+function plugin:OnRegister()
+	candy.RegisterCallback(self, "LibCandyBar_Stop", barStopped)
 end
+
+
+--------------------------------------------------------------------------------
+-- Bar creation
+--
 
 local function barUpdateFunc(bar)
-	local db = barsPlugin.db.profile
-
 	if bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") then
 		plugin:EmphasizeBar(bar)
 		plugin:SendMessage("BigWigs_BarEmphasized", plugin, bar)
@@ -99,7 +87,6 @@ function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, guid
 	local unit = findUnitByGUID(guid)
 	local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
 	if nameplate then
-		local db = barsPlugin.db.profile
 		if not bars[guid] then bars[guid] = {} end
 		local width = nameplate:GetWidth()
 		local bar = bars[guid][text] or candy:New(media:Fetch(STATUSBAR, db.texture), width, 16)
@@ -140,11 +127,42 @@ function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, guid
     self:RearrangeBars(guid)
 end
 
+function plugin:EmphasizeBar(bar, start)
+	barsPlugin.currentBarStyler.BarStopped(bar)
+	if start or db.emphasizeRestart then
+		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
+	end
+	local module = bar:Get("bigwigs:module")
+	local key = bar:Get("bigwigs:option")
+
+	local flags = nil
+	if db.monochrome and db.outline ~= "NONE" then
+		flags = "MONOCHROME," .. db.outline
+	elseif db.monochrome then
+		flags = "MONOCHROME"
+	elseif db.outline ~= "NONE" then
+		flags = db.outline
+	end
+	local f = media:Fetch(FONT, db.fontName)
+	bar.candyBarLabel:SetFont(f, db.fontSizeEmph, flags)
+	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
+
+	bar:SetColor(colors:GetColor("barEmphasized", module, key))
+	-- bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
+	-- bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
+	barsPlugin.currentBarStyler.ApplyStyle(bar)
+	bar:Set("bigwigs:emphasized", true)
+end
+
 function plugin:BigWigs_StopNameplateBar(_, module, text, guid)
     if not bars[guid] or not bars[guid][text] then return end
 	bars[guid][text]:Stop()
     self:RearrangeBars(guid)
 end
+
+--------------------------------------------------------------------------------
+-- Bar anchoring and sorting
+--
 
 do
     local function order(bars)
