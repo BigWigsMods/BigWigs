@@ -737,11 +737,18 @@ function mod:GreaterReversalOfFortune(args)
 end
 
 -- Stage 4
-function mod:NetherPortal(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
-	portalCount = portalCount + 1
-	self:Bar(args.spellId, self:Mythic() and portalTimersMythic[portalCount] or portalCount == 2 and 40 or portalCount == 3 and 44 or 35) -- XXX Make a Table for more data
+do
+	local prev = 0
+	function mod:NetherPortal(args)
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			self:Message2(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "alert")
+			portalCount = portalCount + 1
+			self:Bar(args.spellId, self:Mythic() and portalTimersMythic[portalCount] or portalCount == 2 and 40 or portalCount == 3 and 44 or 35) -- XXX Make a Table for more data
+		end
+	end
 end
 
 function mod:PiercingGaze(args)
