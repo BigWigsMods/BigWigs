@@ -1862,12 +1862,13 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, uni
 	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), db.BigWigsAnchor_width, db.BigWigsAnchor_height)
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
 	bar:Set("bigwigs:module", module)
-	bar:Set("bigwigs:anchor", normalAnchor)
 	bar:Set("bigwigs:option", key)
 	if unitGUID then
 		bar:Set("bigwigs:unitGUID", unitGUID)
 		if not nameplateBars[unitGUID] then nameplateBars[unitGUID] = {} end
 		nameplateBars[unitGUID][text] = bar
+	else
+		bar:Set("bigwigs:anchor", normalAnchor)
 	end
 	bar:SetColor(colors:GetColor("barColor", module, key))
 	bar:SetTextColor(colors:GetColor("barText", module, key))
