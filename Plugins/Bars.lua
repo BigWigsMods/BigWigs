@@ -1869,13 +1869,13 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, uni
 		nameplateBars[unitGUID][text] = bar
 	else
 		bar:Set("bigwigs:anchor", normalAnchor)
+		normalAnchor.bars[bar] = true
 	end
 	bar:SetColor(colors:GetColor("barColor", module, key))
 	bar:SetTextColor(colors:GetColor("barText", module, key))
 	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
 	bar.candyBarLabel:SetJustifyH(db.alignText)
 	bar.candyBarDuration:SetJustifyH(db.alignTime)
-	normalAnchor.bars[bar] = true
 
 	local flags = nil
 	if db.monochrome and db.outline ~= "NONE" then
