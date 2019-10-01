@@ -63,6 +63,7 @@ local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local nameplateBars = {}
 local empUpdate = nil -- emphasize updater frame
+local nameplateEmpUpdate = nil
 local rearrangeBars
 local rearrangeNameplateBars
 
@@ -1320,6 +1321,9 @@ local function barStopped(event, bar)
 		nameplateBars[unitGUID][bar:GetLabel()] = nil
 		if not next(nameplateBars[unitGUID]) then
 			nameplateBars[unitGUID] = nil
+			if not next(nameplateBars) then
+				nameplateEmpUpdate:Stop()
+			end
 		else
 			rearrangeNameplateBars(unitGUID)
 		end
@@ -1917,6 +1921,8 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, uni
 	-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
 	if bar:Get("bigwigs:emphasized") then
 		self:SendMessage("BigWigs_BarEmphasized", self, bar)
+	elseif unitGUID then
+		nameplateEmpUpdate:Play()
 	end
 end
 
@@ -1926,7 +1932,9 @@ end
 
 do
 	local dirty = nil
-	empUpdate = CreateFrame("Frame"):CreateAnimationGroup()
+	local frame = CreateFrame("Frame")
+	empUpdate = frame:CreateAnimationGroup()
+	nameplateEmpUpdate = frame:CreateAnimationGroup()
 	empUpdate:SetScript("OnLoop", function()
 		for k in next, normalAnchor.bars do
 			if k.remaining < db.emphasizeTime and not k:Get("bigwigs:emphasized") then
@@ -1940,6 +1948,8 @@ do
 			rearrangeBars(emphasizeAnchor)
 			dirty = nil
 		end
+	end)
+	nameplateEmpUpdate:SetScript("OnLoop", function()
 		for guid, bars in next, nameplateBars do
 			for _, bar in next, bars do
 				if bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") then
@@ -1949,8 +1959,11 @@ do
 		end
 	end)
 	empUpdate:SetLooping("REPEAT")
+	nameplateEmpUpdate:SetLooping("REPEAT")
 
 	local anim = empUpdate:CreateAnimation()
+	anim:SetDuration(0.2)
+	anim = nameplateEmpUpdate:CreateAnimation()
 	anim:SetDuration(0.2)
 end
 
