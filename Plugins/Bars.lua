@@ -1310,7 +1310,7 @@ end
 
 local function barStopped(event, bar)
 	local a = bar:Get("bigwigs:anchor")
-	local unitGUID = bar:get("bigwigs:unitGUID")
+	local unitGUID = bar:Get("bigwigs:unitGUID")
 	if a and a.bars and a.bars[bar] then
 		currentBarStyler.BarStopped(bar)
 		a.bars[bar] = nil
