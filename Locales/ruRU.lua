@@ -126,6 +126,8 @@ L.SAY_COUNTDOWN = "Отсчет в /сказать"
 L.SAY_COUNTDOWN_desc = "Облачка чата легко заметить. BigWigs будет производить отсчет в /сказать, чтобы оповестить рядом стоящих игроков об окончании времени способности на Вас."
 L.ME_ONLY_EMPHASIZE = "Выделить (только для себя)"
 L.ME_ONLY_EMPHASIZE_desc = "С включенной опцией все сообщения, связанные с данной способностью будут выделенны ТОЛЬКО тогда, когда использованы на Вас, становясь более заметными."
+-- L.NAMEPLATEBAR = "Nameplate Bars"
+-- L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
 
 -- Media.lua
 L.Beware = "Берегитесь (Алгалон)"

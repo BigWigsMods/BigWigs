@@ -2114,7 +2114,7 @@ do
 			return
 		end
 		local textType = type(text)
-		if checkFlag(self, key, C.BAR) then -- TODO change flag to NAMEPLATEBAR
+		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], false, guid)
 		end
@@ -2130,7 +2130,7 @@ do
 			return
 		end
 		local textType = type(text)
-		if checkFlag(self, key, C.BAR) then -- TODO change flag to NAMEPLATEBAR
+		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)
 		end
