@@ -66,6 +66,7 @@ local empUpdate = nil -- emphasize updater frame
 local nameplateEmpUpdate = nil
 local rearrangeBars
 local rearrangeNameplateBars
+local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local clickHandlers = {}
 
@@ -504,8 +505,10 @@ plugin.defaultDB = {
 	BigWigsEmphasizeAnchor_width = 320,
 	BigWigsEmphasizeAnchor_height = 22,
 	nameplateWidth = 150,
-	autoNameplateWidth = true,
+	nameplateAutoWidth = true,
 	nameplateHeight = 16,
+	nameplateOffsetY = 30,
+	nameplateGrowUp = true,
 	nameplateEmphasizeMultiplier = 1,
 	spacing = 1,
 	visibleBarLimit = 100,
@@ -1146,7 +1149,7 @@ do
 						softMax = 500,
 						step = 1,
 						width = 1.6,
-						disabled = function() return db.autoNameplateWidth end,
+						disabled = function() return db.nameplateAutoWidth end,
 					},
 					nameplateHeight = {
 						type = "range",
@@ -1157,11 +1160,27 @@ do
 						step = 1,
 						width = 1.6,
 					},
-					autoNameplateWidth = {
+					nameplateAutoWidth = {
 						type = "toggle",
-						name = L.autoNameplateWidth,
-						desc = L.autoNameplateWidthDesc,
+						name = L.nameplateAutoWidth,
+						desc = L.nameplateAutoWidthDesc,
 						order = 3,
+						width = 1.6,
+					},
+					nameplateOffsetY = {
+						type = "range",
+						name = L.nameplateOffsetY,
+						desc = L.nameplateOffsetYDesc,
+						order = 4,
+						min = 0,
+						max = 400,
+						width = 1.6,
+					},
+					nameplateGrowUp = {
+						type = "toggle",
+						name = L.growingUpwards,
+						desc = L.growingUpwardsDesc,
+						order = 5,
 						width = 1.6,
 					},
 				},
@@ -1330,17 +1349,19 @@ do
 	rearrangeNameplateBars = function(guid)
 		local unit = findUnitByGUID(guid)
 		if not unit then return end
-		local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
+		local nameplate = GetNamePlateForUnit(unit)
 		local unitBars = nameplateBars[guid]
 		if unitBars then
 			local sorted = getOrder(nameplateBars[guid])
-			local offset = 30 -- TODO make configurable
+			local offset = db.nameplateOffsetY
+			local barPoint = db.nameplateGrowUp and "BOTTOM" or "TOP"
+			local nameplatePoint = db.nameplateGrowUp and "TOP" or "BOTTOM"
 			for i, text in ipairs(sorted) do
 				local bar = unitBars[text]
 				bar:ClearAllPoints()
 				bar:SetParent(nameplate)
-				bar:SetPoint("BOTTOM", nameplate, "TOP", 0, offset)
-				offset = offset + bar:GetHeight()
+				bar:SetPoint(barPoint, nameplate, nameplatePoint, 0, db.nameplateGrowUp and offset or -offset)
+				offset = offset + db.spacing + bar:GetHeight()
 			end
 		end
 	end
@@ -1903,10 +1924,10 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, uni
 	local width, height
 	if unitGUID then
 		width, height = db.nameplateWidth, db.nameplateHeight
-		if db.autoNameplateWidth then
+		if db.nameplateAutoWidth then
 			local unit = findUnitByGUID(unitGUID)
 			if unit then
-				local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
+				local nameplate = GetNamePlateForUnit(unit)
 				width = nameplate:GetWidth()
 			end
 		end
@@ -2196,7 +2217,7 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
     local unitBars = nameplateBars[guid]
     if not unitBars then return end
     for text, bar in next, unitBars do
-		local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
+		local nameplate = GetNamePlateForUnit(unit)
 		bar:Show()
         bar:SetParent(nameplate)
     end

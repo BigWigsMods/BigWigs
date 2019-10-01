@@ -52,8 +52,10 @@ L.style = "모양"
 L.bigWigsBarStyleName_Default = "기본"
 
 -- L.nameplateBars = "Nameplate Bars"
--- L.autoNameplateWidth = "Match width of nameplate"
--- L.autoNameplateWidthDesc = "Sets the width of nameplate bars to the with of their parent nameplate."
+-- L.nameplateAutoWidth = "Match width of nameplate"
+-- L.nameplateAutoWidthDesc = "Sets the width of nameplate bars to the with of their parent nameplate."
+-- L.nameplateOffsetY = "Y Offset"
+-- L.nameplateOffsetYDesc = "Offset from the top of the nameplate for upwards bars and the bottom of the nameplate for downwards bars."
 
 L.clickableBars = "클릭 가능한 바"
 L.clickableBarsDesc = "BigWigs 바는 기본적으로 클릭을 무시합니다. 이 방법으로 커서가 바 위에 있을 때도 바 뒤의 물건을 대상 지정할 수 있고 바 뒤에 있는 대상에게 광역 주문을 사용할 수 있으며, 카메라 각도를 변경하는 등의 동작을 가능하게 합니다. |cffff4411클릭 가능한 바를 활성화하면 이런 동작들이 더이상 작동하지 않습니다.|r 당신이 바를 마우스 클릭하면 바가 클릭을 차단합니다.\n"
