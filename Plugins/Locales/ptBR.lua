@@ -51,6 +51,10 @@ L.bars = "Barras"
 L.style = "Estilo"
 L.bigWigsBarStyleName_Default = "Padrão"
 
+-- L.nameplateBars = "Nameplate Bars"
+-- L.autoNameplateWidth = "Match width of nameplate"
+-- L.autoNameplateWidthDesc = "Sets the width of nameplate bars to the with of their parent nameplate."
+
 L.clickableBars = "Barras clicáveis"
 L.clickableBarsDesc = "As barras do BigWigs são clicáveis por padrão. Desta forma você pode mirar em objetos e lançar feitiços AoE através delas, trocar o ângulo da câmera, e assim sucessivamente, sem precisar do cursor estar em cima das barras. |cffff4411Se habilitar as barras clicáveis, isto deixará de funcionar.|r As barras interceptarão qualquer clique do mouse feito nelas."
 L.interceptMouseDesc = "Ativa as barras para receber cliques do mouse."

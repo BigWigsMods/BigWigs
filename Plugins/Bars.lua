@@ -503,6 +503,10 @@ plugin.defaultDB = {
 	BigWigsAnchor_height = 16,
 	BigWigsEmphasizeAnchor_width = 320,
 	BigWigsEmphasizeAnchor_height = 22,
+	nameplateWidth = 150,
+	autoNameplateWidth = true,
+	nameplateHeight = 16,
+	nameplateEmphasizeMultiplier = 1,
 	spacing = 1,
 	visibleBarLimit = 100,
 	visibleBarLimitEmph = 100,
@@ -1129,10 +1133,43 @@ do
 					},
 				},
 			},
+			nameplateBars = {
+				name = L.nameplateBars,
+				type = "group",
+				order = 4,
+				args = {
+					nameplateWidth = {
+						type = "range",
+						name = L.width,
+						order = 1,
+						min = 100,
+						softMax = 500,
+						step = 1,
+						width = 1.6,
+						disabled = function() return db.autoNameplateWidth end,
+					},
+					nameplateHeight = {
+						type = "range",
+						name = L.height,
+						order = 2,
+						min = 8,
+						softMax = 50,
+						step = 1,
+						width = 1.6,
+					},
+					autoNameplateWidth = {
+						type = "toggle",
+						name = L.autoNameplateWidth,
+						desc = L.autoNameplateWidthDesc,
+						order = 3,
+						width = 1.6,
+					},
+				},
+			},
 			clicking = {
 				name = L.clickableBars,
 				type = "group",
-				order = 4,
+				order = 5,
 				childGroups = "tab",
 				get = function(i) return plugin.db.profile[i[#i]] end,
 				set = function(i, value)
@@ -1863,7 +1900,20 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, uni
 	else
 		self:StopSpecificBar(nil, module, text)
 	end
-	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), db.BigWigsAnchor_width, db.BigWigsAnchor_height)
+	local width, height
+	if unitGUID then
+		width, height = db.nameplateWidth, db.nameplateHeight
+		if db.autoNameplateWidth then
+			local unit = findUnitByGUID(unitGUID)
+			if unit then
+				local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
+				width = nameplate:GetWidth()
+			end
+		end
+	else
+		width, height = db.BigWigsAnchor_width, db.BigWigsAnchor_height
+	end
+	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), width, height)
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:option", key)
@@ -1968,7 +2018,8 @@ do
 end
 
 function plugin:EmphasizeBar(bar, start)
-	if db.emphasizeMove and not bar:Get("bigwigs:unitGUID") then
+	local isNameplateBar = bar:Get("bigwigs:unitGUID")
+	if db.emphasizeMove and not isNameplateBar then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
@@ -1993,8 +2044,13 @@ function plugin:EmphasizeBar(bar, start)
 	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
-	bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
-	bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
+	if isNameplateBar then
+		bar:SetWidth(bar:GetWidth() * db.emphasizeMultiplier)
+		bar:SetHeight(bar:GetHeight() * db.emphasizeMultiplier)
+	else
+		bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
+		bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
+	end
 	currentBarStyler.ApplyStyle(bar)
 	bar:Set("bigwigs:emphasized", true)
 end
