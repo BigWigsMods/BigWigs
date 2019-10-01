@@ -1975,6 +1975,7 @@ end
 do
 	local badBar = "Attempted to start bar '%q' without a valid time."
 	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
+	local badNameplateBar = "Attempted to start nameplate bar %q without a valid unitGUID."
 	local newBar = "New timer for '%q' at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 
 	--- Display a bar.
@@ -2102,6 +2103,38 @@ do
 			end
 		end
 	end
+
+	function boss:NameplateBar(key, length, guid, text, icon)
+		if type(length) ~= "number" or length == 0 then
+			core:Print(format(badBar, key))
+			return
+		end
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBar, key))
+			return
+		end
+		local textType = type(text)
+		if checkFlag(self, key, C.BAR) then -- TODO change flag to NAMEPLATEBAR
+			local msg = type(text) == "string" and text or spells[text or key]
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], false, guid)
+		end
+	end
+
+	function boss:NameplateCDBar(key, length, guid, text, icon)
+		if type(length) ~= "number" or length == 0 then
+			core:Print(format(badBar, key))
+			return
+		end
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBar, key))
+			return
+		end
+		local textType = type(text)
+		if checkFlag(self, key, C.BAR) then -- TODO change flag to NAMEPLATEBAR
+			local msg = type(text) == "string" and text or spells[text or key]
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)
+		end
+	end
 end
 
 --- Stop a bar.
@@ -2155,16 +2188,6 @@ function boss:BarTimeLeft(text)
 		return bars:GetBarTimeLeft(self, type(text) == "number" and spells[text] or text)
 	end
 	return 0
-end
-
--------------------------------------------------------------------------------
--- Nameplate bars.
--- @section nameplatebars
---
-
-function boss:NameplateBar(key, length, guid, text, icon)
-	local msg = text or spells[key]
-	self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], guid)
 end
 
 -------------------------------------------------------------------------------

@@ -27,6 +27,26 @@ do
 	})
 end
 
+local findUnitByGUID = nil
+do
+	local unitTable = {
+		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
+		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
+		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
+		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
+	}
+	local unitTableCount = #unitTable
+	findUnitByGUID = function(id)
+		for i = 1, unitTableCount do
+			local unit = unitTable[i]
+			local guid = UnitGUID(unit)
+			if guid and not UnitIsPlayer(unit) then
+				if guid == id then return unit end
+			end
+		end
+	end
+end
+
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bars
 
@@ -41,8 +61,10 @@ local next = next
 local tremove = tremove
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
+local nameplateBars = {}
 local empUpdate = nil -- emphasize updater frame
 local rearrangeBars
+local rearrangeNameplateBars
 
 local clickHandlers = {}
 
@@ -1254,12 +1276,53 @@ do
 	end
 end
 
+do
+	-- returns table of bar texts ordered by time remaining
+	local function getOrder(bars)
+		local barTexts = {}
+		for text, _ in pairs(bars) do
+			barTexts[#barTexts+1] = text
+		end
+		table.sort(barTexts, function(a, b)
+			return bars[a].remaining < bars[b].remaining
+		end)
+		return barTexts
+	end
+
+	rearrangeNameplateBars = function(guid)
+		local unit = findUnitByGUID(guid)
+		if not unit then return end
+		local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
+		local unitBars = nameplateBars[guid]
+		if unitBars then
+			local sorted = getOrder(nameplateBars[guid])
+			local offset = 30 -- TODO make configurable
+			for i, text in ipairs(sorted) do
+				local bar = unitBars[text]
+				bar:ClearAllPoints()
+				bar:SetParent(nameplate)
+				bar:SetPoint("BOTTOM", nameplate, "TOP", 0, offset)
+				offset = offset + bar:GetHeight()
+			end
+		end
+	end
+end
+
 local function barStopped(event, bar)
 	local a = bar:Get("bigwigs:anchor")
+	local unitGUID = bar:get("bigwigs:unitGUID")
 	if a and a.bars and a.bars[bar] then
 		currentBarStyler.BarStopped(bar)
 		a.bars[bar] = nil
 		rearrangeBars(a)
+	elseif unitGUID then
+		currentBarStyler.BarStopped(bar)
+		nameplateBars[unitGUID][bar:GetLabel()] = nil
+		if not next(nameplateBars[unitGUID]) then
+			nameplateBars[unitGUID] = nil
+		else
+			rearrangeNameplateBars(unitGUID)
+		end
 	end
 end
 
@@ -1447,6 +1510,10 @@ function plugin:OnPluginEnable()
 	self:RefixClickIntercepts()
 	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
 
+	-- Nameplate bars
+	self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+	self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
+
 	-- custom bars
 	self:RegisterMessage("BigWigs_PluginComm")
 	self:RegisterMessage("DBM_AddonMessage")
@@ -1534,34 +1601,50 @@ end
 -- Pausing bars
 --
 
-function plugin:PauseBar(_, module, text)
-	if not normalAnchor then return end
-	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Pause()
-			return
+function plugin:PauseBar(_, module, text, unitGUID)
+	if not unitGUID then
+		if not normalAnchor then return end
+		for k in next, normalAnchor.bars do
+			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+				k:Pause()
+				return
+			end
 		end
-	end
-	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Pause()
-			return
+		for k in next, emphasizeAnchor.bars do
+			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+				k:Pause()
+				return
+			end
+		end
+	else
+		if not nameplateBars[unitGUID] then return end
+		local bar = nameplateBars[unitGUID][text]
+		if bar:Get("bigwigs:module") == module then
+			bar:Pause()
 		end
 	end
 end
 
-function plugin:ResumeBar(_, module, text)
-	if not normalAnchor then return end
-	for k in next, normalAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Resume()
-			return
+function plugin:ResumeBar(_, module, text, unitGUID)
+	if not unitGUID then
+		if not normalAnchor then return end
+		for k in next, normalAnchor.bars do
+			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+				k:Resume()
+				return
+			end
 		end
-	end
-	for k in next, emphasizeAnchor.bars do
-		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-			k:Resume()
-			return
+		for k in next, emphasizeAnchor.bars do
+			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+				k:Resume()
+				return
+			end
+		end
+	else
+		if not nameplateBars[unitGUID] then return end
+		local bar = nameplateBars[unitGUID][text]
+		if bar:Get("bigwigs:module") == module then
+			bar:Resume()
 		end
 	end
 end
@@ -1584,6 +1667,14 @@ function plugin:StopSpecificBar(_, module, text)
 	end
 end
 
+function plugin:StopNameplateBar(_, module, text, guid)
+	if not nameplateBars[guid] then return end
+	local bar = nameplateBars[guid][text]
+	if bar and bar:Get("bigwigs:module") == module then
+		bar:Stop()
+	end
+end
+
 function plugin:StopModuleBars(_, module)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
@@ -1596,23 +1687,37 @@ function plugin:StopModuleBars(_, module)
 			k:Stop()
 		end
 	end
+	for _, bars in next, nameplateBars do
+		for _, bar in next, bars do
+			if bar:Get("bigwigs:module") == module then
+				bar:Stop()
+			end
+		end
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Bar utility functions
 --
 
-function plugin:GetBarTimeLeft(module, text)
-	if normalAnchor then
-		for k in next, normalAnchor.bars do
-			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-				return k.remaining
+function plugin:GetBarTimeLeft(module, text, guid)
+	if not guid then
+		if normalAnchor then
+			for k in next, normalAnchor.bars do
+				if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+					return k.remaining
+				end
+			end
+			for k in next, emphasizeAnchor.bars do
+				if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+					return k.remaining
+				end
 			end
 		end
-		for k in next, emphasizeAnchor.bars do
-			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
-				return k.remaining
-			end
+	elseif nameplateBars[guid] then
+		local bar = nameplateBars[guid][text]
+		if bar and bar:Get("bigwigs:module") == module then
+			return bar.remaining
 		end
 	end
 	return 0
@@ -1747,14 +1852,23 @@ end
 -- Start bars
 --
 
-function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
+function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, unitGUID)
 	if not text then text = "" end
-	self:StopSpecificBar(nil, module, text)
+	if unitGUID then
+		self:StopNameplateBar(nil, module, text, unitGUID)
+	else
+		self:StopSpecificBar(nil, module, text)
+	end
 	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), db.BigWigsAnchor_width, db.BigWigsAnchor_height)
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:anchor", normalAnchor)
 	bar:Set("bigwigs:option", key)
+	if unitGUID then
+		bar:Set("bigwigs:unitGUID", unitGUID)
+		if not nameplateBars[unitGUID] then nameplateBars[unitGUID] = {} end
+		nameplateBars[unitGUID][text] = bar
+	end
 	bar:SetColor(colors:GetColor("barColor", module, key))
 	bar:SetTextColor(colors:GetColor("barText", module, key))
 	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
@@ -1781,7 +1895,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar:SetIcon(db.icon and icon or nil)
 	bar:SetIconPosition(db.iconPosition)
 	bar:SetFill(db.fill)
-	if db.interceptMouse and not db.onlyInterceptOnKeypress then
+	if db.interceptMouse and not db.onlyInterceptOnKeypress and not unitGUID then
 		refixClickOnBar(true, bar)
 	end
 
@@ -1791,7 +1905,11 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 		bar:Start() -- Don't fire :Start twice when emphasizeRestart is on
 		currentBarStyler.ApplyStyle(bar)
 	end
-	rearrangeBars(bar:Get("bigwigs:anchor"))
+	if unitGUID then
+		rearrangeNameplateBars(unitGUID)
+	else
+		rearrangeBars(bar:Get("bigwigs:anchor"))
+	end
 
 	self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, isApprox)
 	-- Check if :EmphasizeBar(bar) was run and trigger the callback.
@@ -1821,6 +1939,13 @@ do
 			rearrangeBars(emphasizeAnchor)
 			dirty = nil
 		end
+		for guid, bars in next, nameplateBars do
+			for _, bar in next, bars do
+				if bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") then
+					plugin:EmphasizeBar(bar)
+				end
+			end
+		end
 	end)
 	empUpdate:SetLooping("REPEAT")
 
@@ -1829,7 +1954,7 @@ do
 end
 
 function plugin:EmphasizeBar(bar, start)
-	if db.emphasizeMove then
+	if db.emphasizeMove and not bar:Get("bigwigs:unitGUID") then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
@@ -1990,6 +2115,34 @@ function plugin:BigWigs_PluginComm(_, msg, seconds, sender)
 			startBreak(seconds, sender)
 		end
 	end
+end
+
+-------------------------------------------------------------------------------
+-- Nameplate bar management
+--
+
+function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
+    local guid = UnitGUID(unit)
+    local unitBars = nameplateBars[guid]
+    if not unitBars then return end
+    for text, bar in next, unitBars do
+		local nameplate = C_NamePlate.GetNamePlateForUnit(unit)
+		bar:Show()
+        bar:SetParent(nameplate)
+    end
+    rearrangeNameplateBars(guid)
+end
+
+function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
+    local guid = UnitGUID(unit)
+    local unitBars = nameplateBars[guid]
+    if not unitBars then return end
+
+    for _, bar in next, unitBars do
+        bar:SetParent(nil)
+		bar:Hide()
+		bar:ClearAllPoints()
+    end
 end
 
 -------------------------------------------------------------------------------
