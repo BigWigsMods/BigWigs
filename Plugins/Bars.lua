@@ -27,26 +27,6 @@ do
 	})
 end
 
-local findUnitByGUID = nil
-do
-	local unitTable = {
-		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
-		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
-		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
-		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
-	}
-	local unitTableCount = #unitTable
-	findUnitByGUID = function(id)
-		for i = 1, unitTableCount do
-			local unit = unitTable[i]
-			local guid = UnitGUID(unit)
-			if guid and not UnitIsPlayer(unit) then
-				if guid == id then return unit end
-			end
-		end
-	end
-end
-
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bars
 
@@ -66,9 +46,30 @@ local empUpdate = nil -- emphasize updater frame
 local nameplateEmpUpdate = nil
 local rearrangeBars
 local rearrangeNameplateBars
+local UnitGUID = UnitGUID
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local clickHandlers = {}
+
+local findUnitByGUID = nil
+do
+	local unitTable = {
+		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
+		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
+		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
+		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
+	}
+	local unitTableCount = #unitTable
+	findUnitByGUID = function(id)
+		for i = 1, unitTableCount do
+			local unit = unitTable[i]
+			local guid = UnitGUID(unit)
+			if guid == id then
+				return unit
+			end
+		end
+	end
+end
 
 --------------------------------------------------------------------------------
 -- Bar styles setup
