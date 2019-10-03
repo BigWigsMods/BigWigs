@@ -2176,10 +2176,10 @@ do
 	end
 
 	--- Get the time left for a running nameplate bar.
-	-- @param text the bar text
 	-- @param guid nameplate unit's guid
+	-- @param text the bar text
 	-- @return the remaining duration in seconds or 0
-	function boss:NameplateBarTimeLeft(guid, text)
+	function boss:NameplateBarTimeLeft(text, guid)
 		if type(guid) ~= "string" then
 			core:Print(format(badNameplateBarTimeLeft, text))
 		end
