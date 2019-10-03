@@ -34,7 +34,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MagicReflection", self:SpellName(20619))
 	self:Log("SPELL_CAST_SUCCESS", "DamageShield", self:SpellName(21075))
 
-	self:Yell("Win", L.disabletrigger)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
 
 function mod:VerifyEnable(unit)
@@ -44,6 +44,12 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if msg:find(L.disabletrigger, nil, true) then
+		self:Win()
+	end
+end
 
 function mod:MagicReflection(args)
 	self:Bar(20619, 10)

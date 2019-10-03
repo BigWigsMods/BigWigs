@@ -53,8 +53,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Yell("Engage", L.engage_trigger)
-	self:Yell("Submerge", L.submerge_trigger)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:Log("SPELL_CAST_SUCCESS", "Knockback", self:SpellName(20566))
 
@@ -76,6 +75,14 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if msg:find(L.engage_trigger, nil, true) then
+		self:Engage()
+	elseif msg:find(L.submerge_trigger, nil, true) then
+		self:Submerge()
+	end
+end
 
 function mod:Knockback(args)
 	self:Message(20566, "red", nil, L.knockback_message)
