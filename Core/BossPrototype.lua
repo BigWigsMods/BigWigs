@@ -1975,7 +1975,9 @@ end
 do
 	local badBar = "Attempted to start bar '%q' without a valid time."
 	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
-	local badNameplateBar = "Attempted to start nameplate bar '%q' without a valid unitGUID."
+	local badNameplateBarStart = "Attempted to start nameplate bar '%q' without a valid unitGUID."
+	local badNameplateBarStop = "Attempted to stop nameplate bar '%q' without a valid unitGUID."
+	local badNameplateBarTimeLeft = "Attempted to get time left of nameplate bar '%q' without a valid unitGUID."
 	local newBar = "New timer for '%q' at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 
 	--- Display a bar.
@@ -2104,13 +2106,20 @@ do
 		end
 	end
 
+	--- Display a nameplate bar.
+	-- Indicates an unreliable duration by prefixing the time with "~"
+	-- @param key the option key
+	-- @number length the bar duration in seconds
+	-- @string guid Anchor to a unit's nameplate by GUID
+	-- @param[opt] text the bar text (if nil, key is used)
+	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:NameplateBar(key, length, guid, text, icon)
 		if type(length) ~= "number" or length == 0 then
 			core:Print(format(badBar, key))
 			return
 		end
 		if type(guid) ~= "string" then
-			core:Print(format(badNameplateBar, key))
+			core:Print(format(badNameplateBarStart, key))
 			return
 		end
 		local textType = type(text)
@@ -2120,13 +2129,19 @@ do
 		end
 	end
 
+	--- Display a nameplate cooldown bar.
+	-- @param key the option key
+	-- @number length the bar duration in seconds
+	-- @string guid Anchor to a unit's nameplate by GUID
+	-- @param[opt] text the bar text (if nil, key is used)
+	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:NameplateCDBar(key, length, guid, text, icon)
 		if type(length) ~= "number" or length == 0 then
 			core:Print(format(badBar, key))
 			return
 		end
 		if type(guid) ~= "string" then
-			core:Print(format(badNameplateBar, key))
+			core:Print(format(badNameplateBarStart, key))
 			return
 		end
 		local textType = type(text)
@@ -2134,6 +2149,45 @@ do
 			local msg = type(text) == "string" and text or spells[text or key]
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)
 		end
+	end
+
+	--- Pause a nameplate bar.
+	-- @param key the option key
+	-- @param guid nameplate unit's guid
+	-- @param[opt] text the bar text
+	function boss:PauseNameplateBar(key, guid, text)
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarStop, key))
+		end
+		local msg = text or spells[key]
+		self:SendMessage("BigWigs_PauseBar", self, msg, guid)
+	end
+
+	--- Resume a paused nameplate bar.
+	-- @param key the option key
+	-- @param guid nameplate unit's guid
+	-- @param[opt] text the bar text
+	function boss:ResumeNameplateBar(key, guid, text)
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarStart, key))
+		end
+		local msg = text or spells[key]
+		self:SendMessage("BigWigs_ResumeBar", self, msg, guid)
+	end
+
+	--- Get the time left for a running nameplate bar.
+	-- @param text the bar text
+	-- @param guid nameplate unit's guid
+	-- @return the remaining duration in seconds or 0
+	function boss:NameplateBarTimeLeft(guid, text)
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarTimeLeft, text))
+		end
+		local bars = core:GetPlugin("Bars")
+		if bars then
+			return bars:GetBarTimeLeft(self, type(text) == "number" and spells[text] or text, guid)
+		end
+		return 0
 	end
 end
 
