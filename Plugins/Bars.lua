@@ -2213,27 +2213,27 @@ end
 --
 
 function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
-    local guid = UnitGUID(unit)
-    local unitBars = nameplateBars[guid]
-    if not unitBars then return end
-    for text, bar in next, unitBars do
+	local guid = UnitGUID(unit)
+	local unitBars = nameplateBars[guid]
+	if not unitBars then return end
+	for text, bar in next, unitBars do
 		local nameplate = GetNamePlateForUnit(unit)
 		bar:Show()
-        bar:SetParent(nameplate)
-    end
-    rearrangeNameplateBars(guid)
+		bar:SetParent(nameplate)
+	end
+	rearrangeNameplateBars(guid)
 end
 
 function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
-    local guid = UnitGUID(unit)
-    local unitBars = nameplateBars[guid]
-    if not unitBars then return end
+	local guid = UnitGUID(unit)
+	local unitBars = nameplateBars[guid]
+	if not unitBars then return end
 
-    for _, bar in next, unitBars do
-        bar:SetParent(nil)
+	for _, bar in next, unitBars do
+		bar:SetParent(nil)
 		bar:Hide()
 		bar:ClearAllPoints()
-    end
+	end
 end
 
 -------------------------------------------------------------------------------
