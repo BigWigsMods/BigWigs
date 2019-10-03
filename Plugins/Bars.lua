@@ -1983,7 +1983,13 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, uni
 		currentBarStyler.ApplyStyle(bar)
 	end
 	if unitGUID then
-		rearrangeNameplateBars(unitGUID)
+		local unit = findUnitByGUID(unitGUID)
+		if unit then
+			rearrangeNameplateBars(unitGUID)
+		else
+			bar:Hide()
+			bar:SetParent(nil)
+		end
 	else
 		rearrangeBars(bar:Get("bigwigs:anchor"))
 	end
@@ -2233,7 +2239,6 @@ function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
 	for _, bar in next, unitBars do
 		bar:SetParent(nil)
 		bar:Hide()
-		bar:ClearAllPoints()
 	end
 end
 
