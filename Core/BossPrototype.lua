@@ -1975,7 +1975,7 @@ end
 do
 	local badBar = "Attempted to start bar '%q' without a valid time."
 	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
-	local badNameplateBar = "Attempted to start nameplate bar %q without a valid unitGUID."
+	local badNameplateBar = "Attempted to start nameplate bar '%q' without a valid unitGUID."
 	local newBar = "New timer for '%q' at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 
 	--- Display a bar.
