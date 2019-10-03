@@ -2054,7 +2054,11 @@ function plugin:EmphasizeBar(bar, start)
 	end
 	currentBarStyler.BarStopped(bar)
 	if start or db.emphasizeRestart then
+		local paused = bar.paused
 		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
+		if paused then
+			bar:Pause()
+		end
 	end
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
