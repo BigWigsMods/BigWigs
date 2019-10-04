@@ -2189,6 +2189,17 @@ do
 		end
 		return 0
 	end
+
+	--- Stop a nameplate bar.
+	-- @param text the bar text, or a spellId which is converted into the spell name and used
+	-- @string guid nameplate unit's guid
+	function boss:StopNameplateBar(text, guid)
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarStop, text))
+		end
+		local msg = type(text) == "number" and spells[text] or text
+		self:SendMessage("BigWigs_StopBar", self, msg, guid)
+	end
 end
 
 --- Stop a bar.
