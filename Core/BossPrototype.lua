@@ -2125,7 +2125,7 @@ do
 		local textType = type(text)
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], false, guid)
+			self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], false, guid)
 		end
 	end
 
@@ -2147,7 +2147,7 @@ do
 		local textType = type(text)
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)
+			self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)
 		end
 	end
 
@@ -2160,7 +2160,7 @@ do
 			core:Print(format(badNameplateBarStop, key))
 		end
 		local msg = text or spells[key]
-		self:SendMessage("BigWigs_PauseBar", self, msg, guid)
+		self:SendMessage("BigWigs_PauseNameplateBar", self, msg, guid)
 	end
 
 	--- Resume a paused nameplate bar.
@@ -2172,7 +2172,7 @@ do
 			core:Print(format(badNameplateBarStart, key))
 		end
 		local msg = text or spells[key]
-		self:SendMessage("BigWigs_ResumeBar", self, msg, guid)
+		self:SendMessage("BigWigs_ResumeNameplateBar", self, msg, guid)
 	end
 
 	--- Get the time left for a running nameplate bar.
@@ -2185,7 +2185,7 @@ do
 		end
 		local bars = core:GetPlugin("Bars")
 		if bars then
-			return bars:GetBarTimeLeft(self, type(text) == "number" and spells[text] or text, guid)
+			return bars:GetNameplateBarTimeLeft(self, type(text) == "number" and spells[text] or text, guid)
 		end
 		return 0
 	end
@@ -2198,7 +2198,7 @@ do
 			core:Print(format(badNameplateBarStop, text))
 		end
 		local msg = type(text) == "number" and spells[text] or text
-		self:SendMessage("BigWigs_StopBar", self, msg, guid)
+		self:SendMessage("BigWigs_StopNameplateBar", self, msg, guid)
 	end
 end
 
