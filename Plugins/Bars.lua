@@ -1400,6 +1400,7 @@ local function barStopped(event, bar)
 		nameplateBars[unitGUID][text].bar = nil
 		if not bar:Get("bigwigs:offscreen") then
 			nameplateCascadeDelete(unitGUID, text)
+			rearrangeNameplateBars(unitGUID)
 		end
 	end
 end
