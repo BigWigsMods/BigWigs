@@ -1382,7 +1382,7 @@ local function nameplateCascadeDelete(guid, text)
 end
 
 local function createDeletionTimer(barInfo)
-	return C_Timer.NewTimer(barInfo.expires - GetTime(), function()
+	return C_Timer.NewTimer(barInfo.exp - GetTime(), function()
 		nameplateCascadeDelete(barInfo.unitGUID, barInfo.text)
 	end)
 end
@@ -1709,7 +1709,7 @@ function plugin:PauseNameplateBar(_, module, text, unitGUID)
 		else
 			barInfo.deletionTimer:Cancel()
 		end
-		barInfo.remaining = barInfo.expires - GetTime()
+		barInfo.remaining = barInfo.exp - GetTime()
 	end
 end
 
@@ -1733,7 +1733,7 @@ function plugin:ResumeNameplateBar(_, module, text, unitGUID)
 	local barInfo = nameplateBars[unitGUID] and nameplateBars[unitGUID][text]
 	if barInfo and barInfo.paused then
 		barInfo.paused = false
-		barInfo.expires = GetTime() + barInfo.remaining
+		barInfo.exp = GetTime() + barInfo.remaining
 		if barInfo.bar then
 			barInfo.bar:Resume()
 		else
@@ -1826,6 +1826,8 @@ function plugin:GetNameplateBarTimeLeft(module, text, guid)
 		local bar = barInfo and barInfo.bar
 		if bar and bar:Get("bigwigs:module") == module then
 			return bar.remaining
+		else
+			return barInfo.paused and barInfo.remaining or barInfo.exp - GetTime()
 		end
 	end
 	return 0
@@ -2048,7 +2050,7 @@ function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, isAp
 		key = key,
 		text = text,
 		time = time,
-		expires = GetTime() + time,
+		exp = GetTime() + time,
 		icon = icon,
 		isApprox = isApprox,
 		unitGUID = unitGUID,
@@ -2303,7 +2305,7 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 			local nameplate = GetNamePlateForUnit(unit)
 			width = nameplate:GetWidth()
 		end
-		local time = barInfo.paused and barInfo.remaining or barInfo.expires - GetTime()
+		local time = barInfo.paused and barInfo.remaining or barInfo.exp - GetTime()
 		local bar = plugin:CreateBar(
 			barInfo.module,
 			barInfo.key,
