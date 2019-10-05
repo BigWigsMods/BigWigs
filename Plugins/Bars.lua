@@ -1768,7 +1768,7 @@ function plugin:StopNameplateBar(_, module, text, guid)
 		if barInfo.bar then
 			barInfo.bar:Stop()
 		else
-			barInfo.deletionTimer:Stop()
+			barInfo.deletionTimer:Cancel()
 			nameplateCascadeDelete(guid, text)
 		end
 	end
@@ -1792,7 +1792,7 @@ function plugin:StopModuleBars(_, module)
 				if barInfo.bar then
 					barInfo.bar:Stop()
 				else
-					barInfo.deletionTimer:Stop()
+					barInfo.deletionTimer:Cancel()
 					nameplateCascadeDelete(barInfo.unitGUID, barInfo.text)
 				end
 			end
