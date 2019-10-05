@@ -2314,9 +2314,6 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 		barInfo.bar = bar
 		barInfo.deletionTimer:Cancel()
 		barInfo.deletionTimer = nil
-		if db.emphasize and bar.remaining < db.emphasizeTime then
-			self:EmphasizeBar(bar, true)
-		end
 		bar:Start(barInfo.time)
 		if barInfo.paused then
 			bar:Pause()
