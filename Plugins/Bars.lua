@@ -510,7 +510,6 @@ plugin.defaultDB = {
 	nameplateHeight = 16,
 	nameplateOffsetY = 30,
 	nameplateGrowUp = true,
-	nameplateEmphasizeMultiplier = 1,
 	spacing = 1,
 	visibleBarLimit = 100,
 	visibleBarLimitEmph = 100,
