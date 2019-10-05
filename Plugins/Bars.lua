@@ -2145,6 +2145,7 @@ function plugin:EmphasizeBar(bar, start)
 	if unitGUID then
 		bar:SetWidth(bar:GetWidth() * db.emphasizeMultiplier)
 		bar:SetHeight(bar:GetHeight() * db.emphasizeMultiplier)
+		rearrangeNameplateBars(unitGUID)
 	else
 		bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
 		bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
