@@ -1357,15 +1357,11 @@ do
 			local barPoint = db.nameplateGrowUp and "BOTTOM" or "TOP"
 			local nameplatePoint = db.nameplateGrowUp and "TOP" or "BOTTOM"
 			for i, text in ipairs(sorted) do
-				local barInfo = unitBars[text]
-				local bar = barInfo and barInfo.bar
-				if bar then
-					bar:ClearAllPoints()
-					bar:SetParent(nameplate)
-					bar:SetPoint(barPoint, nameplate, nameplatePoint, 0, db.nameplateGrowUp and offset or -offset)
-					offset = offset + db.spacing + bar:GetHeight()
-				end
-			end
+				local bar = unitBars[text].bar
+				bar:ClearAllPoints()
+				bar:SetParent(nameplate)
+				bar:SetPoint(barPoint, nameplate, nameplatePoint, 0, db.nameplateGrowUp and offset or -offset)
+				offset = offset + db.spacing + bar:GetHeight()			end
 		end
 	end
 end
@@ -1668,7 +1664,6 @@ do
 			end
 		end
 		currentBarStyler = newBarStyler
-		self.currentBarStyler = currentBarStyler
 
 		rearrangeBars(normalAnchor)
 		rearrangeBars(emphasizeAnchor)
