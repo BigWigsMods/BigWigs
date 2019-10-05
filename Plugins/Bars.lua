@@ -2042,10 +2042,6 @@ function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, isAp
 	if not text then text = "" end
 	self:StopNameplateBar(nil, module, text, unitGUID)
 
-	local bar = self:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
-
-	local startDuration = nil
-
 	if not nameplateBars[unitGUID] then nameplateBars[unitGUID] = {} end
 	local barInfo = {
 		module = module,
@@ -2056,26 +2052,25 @@ function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, isAp
 		icon = icon,
 		isApprox = isApprox,
 		unitGUID = unitGUID,
-		bar = bar,
 	}
 	nameplateBars[unitGUID][text] = barInfo
 
 	local unit = findUnitByGUID(unitGUID)
 	if unit then
+		local bar = self:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
+		barInfo.bar = bar
+		bar:Start()
 		rearrangeNameplateBars(unitGUID)
+		self:SendMessage("BigWigs_NameplateBarCreated", self, bar, module, key, text, time, icon, isApprox, unitGUID)
+		-- Check if :EmphasizeBar(bar) was run and trigger the callback.
+		-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
+		if bar:Get("bigwigs:emphasized") then
+			self:SendMessage("BigWigs_BarEmphasized", self, bar)
+		else
+			nameplateEmpUpdate:Play()
+		end
 	else
 		barInfo.deletionTimer = createDeletionTimer(barInfo)
-	end
-
-	bar:Start(startDuration)
-
-	self:SendMessage("BigWigs_NameplateBarCreated", self, bar, module, key, text, time, icon, isApprox, unitGUID)
-	-- Check if :EmphasizeBar(bar) was run and trigger the callback.
-	-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
-	if bar:Get("bigwigs:emphasized") then
-		self:SendMessage("BigWigs_BarEmphasized", self, bar)
-	else
-		nameplateEmpUpdate:Play()
 	end
 end
 
@@ -2302,7 +2297,7 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 	local guid = UnitGUID(unit)
 	local unitBars = nameplateBars[guid]
 	if not unitBars then return end
-	for text, barInfo in next, unitBars do
+	for _, barInfo in next, unitBars do
 		local width, height = db.nameplateWidth, db.nameplateHeight
 		if db.nameplateAutoWidth then
 			local nameplate = GetNamePlateForUnit(unit)
