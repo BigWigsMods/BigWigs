@@ -2099,6 +2099,8 @@ do
 				local bar = barInfo.bar
 				if bar and bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") then
 					plugin:EmphasizeBar(bar)
+					rearrangeNameplateBars(bar:Get("bigwigs:unitGUID"))
+					plugin:SendMessage("BigWigs_BarEmphasized", plugin, bar)
 				end
 			end
 		end
@@ -2145,7 +2147,6 @@ function plugin:EmphasizeBar(bar, start)
 	if unitGUID then
 		bar:SetWidth(bar:GetWidth() * db.emphasizeMultiplier)
 		bar:SetHeight(bar:GetHeight() * db.emphasizeMultiplier)
-		rearrangeNameplateBars(unitGUID)
 	else
 		bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
 		bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
