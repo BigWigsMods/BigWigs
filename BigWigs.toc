@@ -19,7 +19,7 @@
 ## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
 ## X-Website: https://github.com/BigWigsMods
 ## X-Curse-Project-ID: 2382
-# X-WoWI-ID: 5086
+## X-WoWI-ID: 5086
 
 ## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibChatAnims, LibDualSpec-1.0
 ## SavedVariables: BigWigsClassicDB, BigWigsIconClassicDB, BigWigsStatsClassicDB, BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
