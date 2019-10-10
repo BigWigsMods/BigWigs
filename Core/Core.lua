@@ -200,7 +200,13 @@ do
 		end
 	end
 	function core:RegisterEnableMob(module, ...) add(module.moduleName, enablemobs, ...) end
-	function core:GetEnableMobs() return enablemobs end
+	function core:GetEnableMobs()
+		local t = {}
+		for k,v in next, enablemobs do
+			t[k] = v
+		end
+		return t
+	end
 end
 
 -------------------------------------------------------------------------------
