@@ -13,6 +13,7 @@ mod.engageId = 672
 --
 
 local sonsdead = 0
+local timer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -63,6 +64,7 @@ end
 
 function mod:OnEngage()
 	sonsdead = 0
+	timer = nil
 	self:Bar("submerge", 180, L.submerge_bar, "spell_fire_volcano")
 	self:Message("submerge", "yellow", nil, CL.custom_min:format(L.submerge, 3), "spell_fire_volcano")
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
@@ -91,6 +93,7 @@ end
 
 function mod:Emerge()
 	sonsdead = 10 -- Block this firing again if sons are killed after he emerges
+	timer = nil
 	self:Message("emerge", "yellow", "Long", L.emerge_message, "spell_fire_volcano")
 	self:Bar("submerge", 180, L.submerge_bar, "spell_fire_volcano")
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
@@ -109,6 +112,7 @@ function mod:Submerge()
 	self:DelayedMessage("emerge", 60, "yellow", CL.custom_sec:format(L.emerge, 30))
 	self:DelayedMessage("emerge", 80, "orange", CL.custom_sec:format(L.emerge, 10), false, "Alarm")
 	self:DelayedMessage("emerge", 85, "orange", CL.custom_sec:format(L.emerge, 5), false, "Alarm")
+	timer = self:ScheduleTimer("Emerge", 90)
 end
 
 function mod:SonDeaths()
@@ -117,10 +121,12 @@ function mod:SonDeaths()
 		self:Message("emerge", "green", nil, CL.add_killed:format(sonsdead, 8), "spell_fire_elemental_totem")
 	end
 	if sonsdead == 8 then
+		self:CancelTimer(timer)
 		self:StopBar(L.emerge_bar)
 		self:CancelDelayedMessage(CL.custom_sec:format(L.emerge, 60))
 		self:CancelDelayedMessage(CL.custom_sec:format(L.emerge, 30))
 		self:CancelDelayedMessage(CL.custom_sec:format(L.emerge, 10))
 		self:CancelDelayedMessage(CL.custom_sec:format(L.emerge, 5))
+		self:Emerge()
 	end
 end
