@@ -25,6 +25,7 @@ move-folders:
     BigWigs/BattleOfDazaralor: BigWigs_BattleOfDazaralor
     BigWigs/CrucibleOfStorms: BigWigs_CrucibleOfStorms
     BigWigs/EternalPalace: BigWigs_EternalPalace
+    BigWigs/Nyalotha: BigWigs_Nyalotha
 
 ignore:
   - .luacheckrc

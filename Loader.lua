@@ -166,6 +166,7 @@ do
 		[2070] = bfa, -- Battle Of Dazar'alor
 		[2096] = bfa, -- Crucible of Storms
 		[2164] = bfa, -- The Eternal Palace
+		[2217] = bfa, -- Ny'alotha, the Waking City
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
