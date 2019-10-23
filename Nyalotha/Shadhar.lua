@@ -26,8 +26,8 @@ local stage = 1
 
 function mod:GetOptions()
 	return {
-		{307476, "TANK"}, -- Crush
-		{307478, "TANK_HEALER"}, -- Dissolve
+		{307471, "TANK"}, -- Crush
+		{307472, "TANK_HEALER"}, -- Dissolve
 		312528, -- Volatile Breath
 		312529, -- Bubbling Breath
 		312530, -- Entropic Breath
@@ -37,7 +37,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "CrushStart", 307471)
+	--self:Log("SPELL_CAST_START", "CrushStart", 307471)
 	self:Log("SPELL_CAST_SUCCESS", "CrushSuccess", 307471)
 	self:Log("SPELL_AURA_APPLIED", "DissolveApplied", 307472)
 	self:Log("SPELL_CAST_START", "VolatileBreath", 312528)
