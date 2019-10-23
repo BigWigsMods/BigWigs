@@ -11,7 +11,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Il'gynoth, Corruption Reborn", 2217, 2374)
 if not mod then return end
 mod:RegisterEnableMob(158328, 105393) -- l'gynoth <Corruption Reborn>, Il'gynoth <The Heart of Corruption>
-mod.engageId = 	2345
+mod.engageId = 2345
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------

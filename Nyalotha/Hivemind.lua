@@ -11,7 +11,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("The Hivemind", 2217, 2372)
 if not mod then return end
 mod:RegisterEnableMob(157253, 157254) -- Ka'zir, Tek'ris
-mod.engageId = 	2333
+mod.engageId = 2333
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------

@@ -11,7 +11,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Maut", 2217, 2365)
 if not mod then return end
 mod:RegisterEnableMob(156523) -- Maut
-mod.engageId = 	2327
+mod.engageId = 2327
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------

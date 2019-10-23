@@ -11,7 +11,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Wrathion", 2217, 2368)
 if not mod then return end
 mod:RegisterEnableMob(156523) -- Wrathion
-mod.engageId = 	2329
+mod.engageId = 2329
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
