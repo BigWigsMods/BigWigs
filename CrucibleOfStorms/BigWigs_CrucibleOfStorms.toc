@@ -1,4 +1,4 @@
-## Interface: 80200
+## Interface: 80205
 
 ## Title: BigWigs [|cffeda55fCrucible of Storms|r]
 ## Title-deDE: BigWigs [|cffeda55fCrucible of Storms|r]

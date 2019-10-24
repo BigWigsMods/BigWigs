@@ -195,6 +195,13 @@ function boss:IsEnabled()
 	return self.enabled
 end
 
+--- Module engaged check.
+-- A module is either engaged in combat or not.
+-- @return true or nil
+function boss:IsEngaged()
+	return self.isEngaged
+end
+
 function boss:Initialize() core:RegisterBossModule(self) end
 function boss:Enable(isWipe)
 	if not self.enabled then
@@ -649,7 +656,7 @@ do
 	-- noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
 	function boss:CheckForEncounterEngage(noEngage)
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
-		if not self.isEngaged and hasBoss then
+		if not self:IsEngaged() and hasBoss then
 			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
 			local module = core:GetEnableMobs()[self:MobId(guid)]
 			local modType = type(module)
@@ -666,7 +673,7 @@ do
 						break
 					end
 				end
-				if not self.isEngaged then self:Disable() end
+				if not self:IsEngaged() then self:Disable() end
 			end
 		end
 	end
@@ -674,14 +681,14 @@ do
 	-- Query boss units to update engage status.
 	function boss:CheckBossStatus()
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
-		if not hasBoss and self.isEngaged then
+		if not hasBoss and self:IsEngaged() then
 			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
 			self:ScheduleTimer(wipeCheck, 6, self)
-		elseif not self.isEngaged and hasBoss then
+		elseif not self:IsEngaged() and hasBoss then
 			if debug then dbg(self, ":CheckBossStatus Engage called.") end
 			self:CheckForEncounterEngage()
 		end
-		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self.isEngaged).." hasBoss = "..tostring(hasBoss)) end
+		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self:IsEngaged()).." hasBoss = "..tostring(hasBoss)) end
 	end
 end
 
