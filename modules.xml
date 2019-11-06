@@ -7,5 +7,6 @@
 
 <Include file="MoltenCore\modules.xml"/>
 <Include file="Onyxia\modules.xml"/>
+<Include file="World\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>

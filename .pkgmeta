@@ -21,6 +21,7 @@ move-folders:
     BigWigs/Plugins: BigWigs_Plugins
     BigWigs/Onyxia: BigWigs_Onyxia
     BigWigs/MoltenCore: BigWigs_MoltenCore
+    BigWigs/World: BigWigs_World
 
 ignore:
   - .luacheckrc

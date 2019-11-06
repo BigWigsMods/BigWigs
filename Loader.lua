@@ -106,6 +106,8 @@ do
 		[509] = c, -- Ruins of Ahn'Qiraj
 		[531] = c, -- Ahn'Qiraj Temple
 		[249] = c, -- Onyxia's Lair
+		[-1447] = c, -- Azshara
+		[-1419] = c, -- Blasted Lands
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -118,11 +120,8 @@ do
 	}
 
 	public.zoneTblWorld = {
-		--[-104] = -101, [-100] = -101, -- Outland
-		--[-376] = -424, [-379] = -424, [-504] = -424, [-507] = -424, [-554] = -424, -- Pandaria
-		--[-542] = -572, [-543] = -572, [-534] = -572, -- Draenor
-		--[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
-		--[-942] = -947, -- Azeroth/BfA
+		[-1447] = -1447, -- Azshara
+		[-1419] = -1419, -- Blasted Lands
 	}
 end
 
