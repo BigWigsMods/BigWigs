@@ -1,4 +1,4 @@
 
 BigWigs:AddSounds("Azuregos", {
-	[22067] = {"long","info"},
+	[22067] = {"info","long"},
 })
