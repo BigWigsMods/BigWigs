@@ -31,7 +31,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		313973, -- Searing Breath
-		{306163, "SAY", "SAY_COUNTDOWN"}, -- Incineration
+		{306163, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Incineration
 		306289, -- Gale Blast
 		306735, -- Burning Cataclysm
 		307013, -- Burning Madness
