@@ -11,7 +11,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Wrathion", 2217, 2368)
 if not mod then return end
 mod:RegisterEnableMob(156523) -- Wrathion
-mod.engageId = 	2329
+mod.engageId = 2329
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
@@ -49,7 +49,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "IncinerationRemoved", 306163)
 	self:Log("SPELL_CAST_START", "GaleBlast", 306289)
 	self:Log("SPELL_CAST_START", "BurningCataclysm", 306735)
-	self:Log("SPELL_CAST_SUCCESS", "BurningCataclysmSuccess", 306735)
 
 	self:Log("SPELL_CAST_SUCCESS", "SmokeandMirrors", 306995)
 	self:Log("SPELL_AURA_REMOVED", "SmokeandMirrorsRemoved", 306995)
@@ -64,7 +63,7 @@ function mod:OnEngage()
 	self:Bar(313973, 8.5) -- Searing Breath
 	self:Bar(306163, 33, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
 	self:Bar(306735, 70) -- Burning Cataclysm
-	self:Bar(306995, 184) -- Smoke and Mirrors
+	self:Bar("stages", 184, CL.stage:format(2), 306995) -- Smoke and Mirrors
 end
 
 --------------------------------------------------------------------------------
@@ -149,7 +148,7 @@ function mod:SmokeandMirrors(args)
 	self:PlaySound("stages", "long")
 end
 
-function mod:SmokeandMirrors(args)
+function mod:SmokeandMirrorsRemoved(args)
 	stage = 1
 	self:Message2("stages", "cyan", CL.stage:format(1), false)
 	self:PlaySound("stages", "long")
@@ -158,5 +157,5 @@ function mod:SmokeandMirrors(args)
 	self:Bar(313973, 8.5) -- Searing Breath
 	self:Bar(306163, 33, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
 	self:Bar(306735, 70) -- Burning Cataclysm
-	self:Bar(306995, 184) -- Smoke and Mirrors
+	self:Bar("stages", 184, CL.stage:format(2), 306995) -- Smoke and Mirrors
 end
