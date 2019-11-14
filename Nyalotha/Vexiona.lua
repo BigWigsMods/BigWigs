@@ -11,7 +11,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Vexiona", 2217, 2370)
 if not mod then return end
 mod:RegisterEnableMob(157354) -- Vexiona
-mod.engageId = 	2336
+mod.engageId = 2336
 --mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
@@ -138,7 +138,7 @@ end
 
 do
 	local playerList = mod:NewTargetList()
-	function mod:CursedBloodApplied(args)
+	function mod:EncroachingShadowsApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
@@ -154,7 +154,7 @@ do
 
 	function mod:EncroachingShadowsRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(297397)
+			self:CancelSayCountdown(args.spellId)
 		end
 	end
 end
