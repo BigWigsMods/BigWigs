@@ -24,6 +24,15 @@ local decimatorCount = 1
 local lastPower = 0
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.killed = "%s killed"
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
