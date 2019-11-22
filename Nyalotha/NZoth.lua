@@ -79,7 +79,6 @@ do
 	function mod:GiftofNzothApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 20)
 			self:PlaySound(args.spellId, "warning")
 		end
