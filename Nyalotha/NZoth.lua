@@ -44,8 +44,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "GiftofNzothApplied", 298156)
-	self:Log("SPELL_AURA_REMOVED", "GiftofNzothRemoved", 298156)
+	self:Log("SPELL_AURA_APPLIED", "GiftofNzothApplied", 313609)
+	self:Log("SPELL_AURA_REMOVED", "GiftofNzothRemoved", 313609)
 	self:Log("SPELL_AURA_SUCCESS", "MindWrackSuccess", 316711)
 	self:Log("SPELL_AURA_APPLIED", "MindWrackApplied", 316711)
 	self:Log("SPELL_AURA_SUCCESS", "CreepingAnquishSuccess", 310184)

@@ -45,6 +45,7 @@ function mod:GetOptions()
 		-- Tek'ris
 		308227, -- Accelerated Evolution
 		307968, -- Nullification Blast
+		307232, -- Echoing Void
 	}
 end
 
