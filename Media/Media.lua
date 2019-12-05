@@ -28,14 +28,14 @@ do
 	media:Register(SOUND, "BigWigs: Alarm", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Alarm.ogg")
 
 	-- Ingame sounds that DBM uses for DBM converts
-	media:Register(SOUND, "BigWigs: [DBM] ".. L.FlagTaken, C_RaidLocks and 569200 or "Sound\\Spells\\PVPFlagTaken.ogg")
-	media:Register(SOUND, "BigWigs: [DBM] ".. L.Beware, C_RaidLocks and 543587 or "Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.ogg")
-	media:Register(SOUND, "BigWigs: [DBM] ".. L.Destruction, C_RaidLocks and 553193 or "Sound\\Creature\\KilJaeden\\KILJAEDEN02.ogg")
-	media:Register(SOUND, "BigWigs: [DBM] ".. L.RunAway, C_RaidLocks and 552035 or "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.ogg")
+	--media:Register(SOUND, "BigWigs: [DBM] ".. L.FlagTaken, C_RaidLocks and 569200 or "Sound\\Spells\\PVPFlagTaken.ogg")
+	--media:Register(SOUND, "BigWigs: [DBM] ".. L.Beware, C_RaidLocks and 543587 or "Sound\\Creature\\AlgalonTheObserver\\UR_Algalon_BHole01.ogg")
+	--media:Register(SOUND, "BigWigs: [DBM] ".. L.Destruction, C_RaidLocks and 553193 or "Sound\\Creature\\KilJaeden\\KILJAEDEN02.ogg")
+	--media:Register(SOUND, "BigWigs: [DBM] ".. L.RunAway, C_RaidLocks and 552035 or "Sound\\Creature\\HoodWolf\\HoodWolfTransformPlayer01.ogg")
 
 	-- Ingame sounds used by Blizzard
 	media:Register(SOUND, "BigWigs: Raid Warning", C_RaidLocks and 567397 or "Sound\\Interface\\RaidWarning.ogg")
-	media:Register(SOUND, "BigWigs: Raid Boss Whisper", C_RaidLocks and 876098 or "Sound\\Interface\\UI_RaidBossWhisperWarning.ogg")
+	--media:Register(SOUND, "BigWigs: Raid Boss Whisper", C_RaidLocks and 876098 or "Sound\\Interface\\UI_RaidBossWhisperWarning.ogg")
 
 	-- Victory
 	media:Register(SOUND, "BigWigs: Victory", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Victory.ogg")
