@@ -777,7 +777,7 @@ end
 
 function mod:EssenceofAzerothApplied(args)
 	if self:Me(args.destGUID) then
-		local _, _, duration = self:UnitDebuff("player", args.spellName)
+		local _, _, duration = self:UnitDebuff("player", args.spellId)
 		local t = type(duration) == "number" and duration or self:Mythic() and 25 or 40
 		self:PersonalMessage(args.spellId, false, L.you_die_message:format(t))
 		self:PlaySound(args.spellId, "alert", nil, args.destName)
