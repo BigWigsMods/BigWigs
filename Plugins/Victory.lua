@@ -20,7 +20,7 @@ local PlaySoundFile = PlaySoundFile
 
 plugin.defaultDB = {
 	soundName = "BigWigs: Victory",
-	blizzMsg = true,
+	--blizzMsg = true,
 	bigwigsMsg = false,
 }
 
@@ -32,13 +32,13 @@ plugin.pluginOptions = {
 	set = function(i, value)
 		local n = i[#i]
 		plugin.db.profile[n] = value
-		if n == "blizzMsg" then
-			if value then
-				BossBanner:RegisterEvent("BOSS_KILL")
-			else
-				BossBanner:UnregisterEvent("BOSS_KILL")
-			end
-		end
+		--if n == "blizzMsg" then
+		--	if value then
+		--		BossBanner:RegisterEvent("BOSS_KILL")
+		--	else
+		--		BossBanner:UnregisterEvent("BOSS_KILL")
+		--	end
+		--end
 	end,
 	args = {
 		heading = {
@@ -79,13 +79,13 @@ plugin.pluginOptions = {
 					order = 1,
 					width = "full",
 				},
-				blizzMsg = {
-					type = "toggle",
-					name = L.victoryMessageBlizzard,
-					desc = L.victoryMessageBlizzardDesc,
-					order = 2,
-					width = "full",
-				},
+				--blizzMsg = {
+				--	type = "toggle",
+				--	name = L.victoryMessageBlizzard,
+				--	desc = L.victoryMessageBlizzardDesc,
+				--	order = 2,
+				--	width = "full",
+				--},
 			},
 		},
 	},
@@ -96,9 +96,9 @@ plugin.pluginOptions = {
 --
 
 function plugin:OnPluginEnable()
-	if not self.db.profile.blizzMsg then
-		BossBanner:UnregisterEvent("BOSS_KILL")
-	end
+	--if not self.db.profile.blizzMsg then
+	--	BossBanner:UnregisterEvent("BOSS_KILL")
+	--end
 	self:RegisterMessage("BigWigs_OnBossWin")
 	self:RegisterMessage("BigWigs_VictorySound")
 end
