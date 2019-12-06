@@ -214,7 +214,7 @@ function mod:VoidEruption(args)
 end
 
 function mod:ChargedBonds()
-	self:Bar(313227, 11)
+	self:Bar(310019, 11)
 end
 
 do
@@ -232,7 +232,7 @@ do
 	function mod:ChargedBondsRemoved(args)
 		if self:Me(args.destGUID) then
 			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
-			self:PlaySound(args.spellId, "cyan")
+			self:PlaySound(args.spellId, "info")
 		end
 	end
 end
