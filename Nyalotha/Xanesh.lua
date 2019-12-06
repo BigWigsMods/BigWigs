@@ -101,7 +101,7 @@ function mod:AbyssalStrikeStart(args)
 end
 
 function mod:AbyssalStrikeApplied(args)
-	self:StackMessage(args.spellId, args.destName, amount, "purple")
+	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	self:PlaySound(args.spellId, "alert", nil, args.destName)
 end
 
