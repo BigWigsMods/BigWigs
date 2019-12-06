@@ -41,7 +41,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage 1
-		{306819, "TANK"}, -- Nullifying Strike
+		{311551, "TANK"}, -- Nullifying Strike
 		"essences", -- Void/Vita Essences (Mythic: +Nightmare)
 		306732, -- Vita Empowered
 		306273, -- Unstable Vita
@@ -53,7 +53,7 @@ function mod:GetOptions()
 		-- Stage 2
 		{313213, "TANK_HEALER"}, -- Decaying Strike
 		310003, -- Void Eruption
-		{313227, "SAY", "FLASH"}, -- Charged Bonds
+		{310019, "SAY", "FLASH"}, -- Charged Bonds
 		-- Mythic
 		312996, -- Nightmare Empowered
 		{313077, "SAY", "FLASH"}, -- Unstable Nightmare
@@ -61,7 +61,7 @@ function mod:GetOptions()
 		315252, -- Dread Inferno
 	},{
 		["stages"] = "general",
-		[306819] = CL.stage:format(1),
+		[311551] = CL.stage:format(1),
 		[313213] = CL.stage:format(2),
 		[312996] = CL.mythic,
 	}
@@ -114,10 +114,10 @@ end
 -- Event Handlers
 --
 
-function mod:NullifyingStrikeStart(args)
-	self:Message2(args.spellId, "purple")
-	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, 17)
+function mod:NullifyingStrikeStart()
+	self:Message2(311551, "purple")
+	self:PlaySound(311551, "alarm")
+	self:Bar(311551, 17)
 end
 
 function mod:NullifyingStrikeApplied(args)
