@@ -1,4 +1,4 @@
-## Interface: 80200
+## Interface: 80300
 
 ## Title: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-deDE: BigWigs [|cffeda55fNy'alotha, the Waking City|r]

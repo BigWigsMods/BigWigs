@@ -1,4 +1,4 @@
-## Interface: 80205
+## Interface: 80300
 
 ## Title: BigWigs [|cffeda55fPlugins|r]
 ## Title-zhCN: BigWigs [|cffeda55f插件|r]
