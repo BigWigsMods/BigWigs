@@ -49,7 +49,7 @@ L.chatMessages = "Mensajes de chat"
 L.classColors = "Colores de clase"
 L.classColorsDesc = "Colorea el nombre de los jugadores según su clase"
 L.clickableBars = "Barras clicables"
-L.clickableBarsDesc = [=[Las barras de BigWigs bars son clicables por defecto. De esta forma puedes targetear objetos o lanzar hechizos AoE detrás de ellos, cambia el ángulo de la cámara, y así sucesivamente, mientras tu cursos está encima de las barras. |cffff4411Si habilitas las barras clicables, esto dejará de funcionar.|r Las barras interceptarán cualquier clic de ratón que hagas en ellas.
+L.clickableBarsDesc = [=[Por defecto, se puede hacer clic a través de las barras de BigWigs. De esta manera puedes seleccionar objetos, lanzar hechizos AoE, cambiar el ángulo de la cámara, etc., mientras tu cursor está encima de las mismas. |cffff4411Si activas esta opción ya no se comportarán de esta forma.|r Las barras interceptarán los clics que hagas en ellas.
 ]=]
 L.close = "Cerrar"
 L.closeButton = "Boton cerrar"
