@@ -1,11 +1,11 @@
-## Interface: 80200
+## Interface: 80300
 
 ## Title: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-deDE: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-esES: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-esMX: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-frFR: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
-## Title-ruRU: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
+## Title-ruRU: BigWigs [|cffeda55fНи'алота, Неспящий Город|r]
 ## Title-zhCN: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-zhTW: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-itIT: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
@@ -16,7 +16,7 @@
 ## Notes-esES: BigWigs Ny'alotha, the Waking City Modules
 ## Notes-esMX: BigWigs Ny'alotha, the Waking City Modules
 ## Notes-frFR: BigWigs Ny'alotha, the Waking City Modules
-## Notes-ruRU: BigWigs Ny'alotha, the Waking City Modules
+## Notes-ruRU: BigWigs модули Неспящего Города Ни'алоты
 ## Notes-zhCN: BigWigs Ny'alotha, the Waking City Modules
 ## Notes-zhTW: BigWigs Ny'alotha, the Waking City Modules
 ## Notes-itIT: BigWigs Ny'alotha, the Waking City Modules

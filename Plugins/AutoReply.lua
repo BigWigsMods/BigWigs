@@ -298,9 +298,9 @@ do
 			local trimmedPlayer = Ambiguate(sender, "none")
 			if not UnitInRaid(trimmedPlayer) and not UnitInParty(trimmedPlayer) and (not throttle[sender] or GetTime() - throttle[sender] > 30) then
 				throttle[sender] = GetTime()
-				local _, characterName = BNGetGameAccountInfoByGUID(guid)
+				local isBnetFriend = C_BattleNet.GetGameAccountInfoByGUID(guid)
 				local msg
-				if characterName or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
+				if isBnetFriend or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
 					friendlies[sender] = true
 					msg = CreateResponse(self.db.profile.mode)
 					if not timer and self.db.profile.exitCombat == 4 then
@@ -322,12 +322,13 @@ do
 			if not throttleBN[bnSenderID] or GetTime() - throttleBN[bnSenderID] > 30 then
 				throttleBN[bnSenderID] = GetTime()
 				local index = BNGetFriendIndex(bnSenderID)
-				local gameAccs = BNGetNumFriendGameAccounts(index)
+				local gameAccs = C_BattleNet.GetFriendNumGameAccounts(index)
 				for i=1, gameAccs do
-					local _, player, game, server = BNGetFriendGameAccountInfo(index, i)
-					if game == "WoW" then
-						if server ~= GetRealmName() then
-							player = player .. "-" .. server
+					local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(index, i)
+					if gameAccountInfo.clientProgram == "WoW" then
+						local player = gameAccountInfo.characterName
+						if gameAccountInfo.realmName ~= GetRealmName() then
+							player = player .. "-" .. gameAccountInfo.realmName
 						end
 						if UnitInRaid(player) or UnitInParty(player) then
 							return
