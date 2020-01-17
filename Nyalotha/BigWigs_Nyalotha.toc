@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-frFR: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-ruRU: BigWigs [|cffeda55fНи'алота, Неспящий Город|r]
-## Title-zhCN: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
+## Title-zhCN: BigWigs [|cffeda55f尼奥罗萨，觉醒之城|r]
 ## Title-zhTW: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-itIT: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-ptBR: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Ny'alotha, the Waking City Modules
 ## Notes-frFR: BigWigs Ny'alotha, the Waking City Modules
 ## Notes-ruRU: BigWigs модули Неспящего Города Ни'алоты
-## Notes-zhCN: BigWigs Ny'alotha, the Waking City Modules
+## Notes-zhCN: BigWigs 尼奥罗萨，觉醒之城模块。
 ## Notes-zhTW: BigWigs Ny'alotha, the Waking City Modules
 ## Notes-itIT: BigWigs Ny'alotha, the Waking City Modules
 ## Notes-ptBR: BigWigs Ny'alotha, the Waking City Modules
