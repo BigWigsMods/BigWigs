@@ -1,7 +1,7 @@
-if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- TODO:
---
+-- - Confirm Volatile Eruption and Accelerated Evolution working, spells might've got hidden
+-- - Add icons to empowered adds (IEEU?)
 --
 
 --------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ mod.engageId = 2333
 -- Locals
 --
 local acidicAqirCount = 1
-local acidicAqirTimers = {15.0, 30.0, 40.0, 20.0, 25.0, 35.0, 30.0, 100.5, 30.0, 40.0, 20.0, 25.0, 35.0, 30.0}
+local acidicAqirTimers = {19.5, 30.0, 40.0, 20.0, 25.0, 35.0, 30.0, 100.5, 30.0, 40.0, 20.0, 25.0, 35.0, 30.0}
 
 local mindNumbingNovaCount = 1
 local mindNumbingNovaTimers = {10.0, 50.0, 40.0, 45.0, 45.0, 100.5, 50.0, 40.0, 45.0, 45.0}
@@ -38,14 +38,16 @@ function mod:GetOptions()
 		-- General
 		307201, -- Ka'zir's Hivemind Control
 		307213, -- Tek'ris's Hivemind Control
+		313672, -- Acid Pool
+		307569, -- Dark Reconstitution
 		-- Ka'zir
-		308178, -- Volatile Eruption
+		314583, -- Volatile Eruption
 		310340, -- Spawn Acidic Aqir
 		313652, -- Mind-Numbing Nova
 		-- Tek'ris
 		308227, -- Accelerated Evolution
 		307968, -- Nullification Blast
-		307232, -- Echoing Void
+		{307232, "PROXIMITY"}, -- Echoing Void
 	}
 end
 
@@ -53,6 +55,7 @@ function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_CAST_START", "KazirsHivemindControl", 307201)
 	self:Log("SPELL_CAST_START", "TekrissHivemindControl", 307213)
+	self:Log("SPELL_CAST_START", "DarkReconstitution", 307569)
 
 	-- Ka'zir
 	self:Log("SPELL_CAST_START", "VolatileEruption", 308178)
@@ -63,6 +66,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "AcceleratedEvolution", 308227)
 	self:Log("SPELL_CAST_START", "NullificationBlast", 307968)
 	self:Log("SPELL_CAST_START", "EchoingVoid", 307232)
+	self:Log("SPELL_CAST_SUCCESS", "EchoingVoidSuccess", 307232)
+
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 313672) -- Acid Pool
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 313672)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 313672)
 end
 
 function mod:OnEngage()
@@ -73,8 +81,8 @@ function mod:OnEngage()
 
 	self:Bar(310340, acidicAqirTimers[acidicAqirCount]) -- Spawn Acidic Aqir
 	self:Bar(313652, mindNumbingNovaTimers[mindNumbingNovaCount]) -- Mind-Numbing Nova
-	self:Bar(313652, nullificationBlastTimers[nullificationBlastCount]) -- Mind-Numbing Nova
-	self:Bar(313652, echoingVoidTimers[echoingVoidCount]) -- Mind-Numbing Nova
+	self:Bar(307968, nullificationBlastTimers[nullificationBlastCount]) -- Nullification Blast
+	self:Bar(307232, echoingVoidTimers[echoingVoidCount]) -- Echoing Void
 end
 
 --------------------------------------------------------------------------------
@@ -94,9 +102,22 @@ function mod:TekrissHivemindControl(args)
 	self:Bar(307201, 70) -- Ka'zir's Hivemind Control
 end
 
+do
+	local prev = 0
+	function mod:DarkReconstitution(args)
+		local t = args.time
+		if t-prev > 10 then -- prevent message on kill
+			prev = t
+			self:Message2(args.spellId, "red")
+			self:PlaySound(args.spellId, "info")
+			self:Bar(args.spellId, 10)
+		end
+	end
+end
+
 function mod:VolatileEruption(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "warning")
+	self:Message2(314583, "red")
+	self:PlaySound(314583, "warning")
 end
 
 function mod:SpawnAcidicAqir(args)
@@ -135,4 +156,24 @@ function mod:EchoingVoid(args)
 	self:PlaySound(args.spellId, "alert")
 	echoingVoidCount = echoingVoidCount + 1
 	self:Bar(args.spellId, echoingVoidTimers[echoingVoidCount])
+	self:OpenProximity(args.spellId, 4)
+	self:CastBar(args.spellId, 4)
+end
+
+function mod:EchoingVoidSuccess(args)
+	self:CloseProximity(args.spellId)
+end
+
+do
+	local prev = 0
+	function mod:GroundDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 1.5 then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
+	end
 end
