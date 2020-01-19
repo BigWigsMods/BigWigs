@@ -262,6 +262,7 @@ do
 		[1841] = lw_bfa, -- Underrot
 		[1862] = lw_bfa, -- Waycrest Manor
 		[2097] = lw_bfa, -- Operation: Mechagon
+		[2212] = lw_bfa, -- Horrific Vision of Orgrimmar
 	}
 
 	public.zoneTblWorld = {
