@@ -357,9 +357,9 @@ local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(label)
 	-- Flags to have at half width
-	if flag == C.PULSE or flag == C.CASTBAR then
+	if flag == C.PULSE then
 		toggle:SetRelativeWidth(0.5)
-	elseif flag == C.ME_ONLY or flag == C.ME_ONLY_EMPHASIZE then
+	elseif flag == C.ME_ONLY or flag == C.ME_ONLY_EMPHASIZE or flag == C.CASTBAR then
 		toggle:SetRelativeWidth(0.4)
 	else
 		toggle:SetRelativeWidth(0.3)
@@ -431,6 +431,7 @@ local function advancedToggles(dbKey, module, check)
 		-- Bars
 		advancedOptions[7] = getSlaveToggle(L.BAR, L.BAR_desc, dbKey, module, C.BAR, check)
 		advancedOptions[8] = getSlaveToggle(L.CASTBAR, L.CASTBAR_desc, dbKey, module, C.CASTBAR, check)
+		advancedOptions[9] = getSlaveToggle(L.NAMEPLATEBAR, L.NAMEPLATEBAR_desc, dbKey, module, C.NAMEPLATEBAR, check)
 		--
 	end
 

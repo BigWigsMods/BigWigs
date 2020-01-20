@@ -120,6 +120,7 @@ globals = {
 	"CreateFrame",
 	"C_BattleNet",
 	"C_CVar",
+	"C_NamePlate",
 	"C_RaidLocks",
 	"C_Scenario",
 	"C_Spell",

@@ -126,10 +126,11 @@ L.SAY_COUNTDOWN = "Dire le compte à rebours"
 L.SAY_COUNTDOWN_desc = "Les bulles de discussion sont faciles à repérer. BigWigs utilisera plusieurs messages en compte à rebours pour avertir les personnes proches qu'une technique vous affectant est sur le point de disparaitre."
 L.ME_ONLY_EMPHASIZE = "Mise en évidence (sur moi)"
 L.ME_ONLY_EMPHASIZE_desc = "L'activation de cette option mettra en évidence tous les messages associés à cette technique UNIQUEMENT si vous en êtes la cible, les rendant plus grands et plus visibles."
+-- L.NAMEPLATEBAR = "Nameplate Bars"
+-- L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
 
 -- Media.lua
 L.Beware = "Attention (Algalon)"
 L.FlagTaken = "Drapeau pris (JcJ)"
 L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
-

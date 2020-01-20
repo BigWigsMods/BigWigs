@@ -125,6 +125,8 @@ L.SAY_COUNTDOWN = "Say Countdown"
 L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
 L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
 L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
+L.NAMEPLATEBAR = "Nameplate Bars"
+L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
 
 L.advanced = "Advanced options"
 L.back = "<< Back"
@@ -143,4 +145,3 @@ L.mythic = "Mythic"
 L.wipes = "Wipes:"
 L.kills = "Kills:"
 L.best = "Best:"
-
