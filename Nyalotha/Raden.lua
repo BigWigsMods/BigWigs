@@ -40,7 +40,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage 1
-		{311551, "TANK"}, -- Nullifying Strike
+		{306819, "TANK"}, -- Nullifying Strike
 		"essences", -- Void/Vita Essences (Mythic: +Nightmare)
 		306732, -- Vita Empowered
 		306273, -- Unstable Vita
@@ -60,7 +60,7 @@ function mod:GetOptions()
 		315252, -- Dread Inferno
 	},{
 		["stages"] = "general",
-		[311551] = CL.stage:format(1),
+		[306819] = CL.stage:format(1),
 		[313213] = CL.stage:format(2),
 		[312996] = CL.mythic,
 	}
@@ -114,9 +114,9 @@ end
 --
 
 function mod:NullifyingStrikeStart()
-	self:Message2(311551, "purple")
-	self:PlaySound(311551, "alarm")
-	self:Bar(311551, 17)
+	self:Message2(args.spellId, "purple")
+	self:PlaySound(args.spellId, "alarm")
+	self:Bar(args.spellId, 17)
 end
 
 function mod:NullifyingStrikeApplied(args)
