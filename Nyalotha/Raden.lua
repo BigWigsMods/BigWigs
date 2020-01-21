@@ -113,7 +113,7 @@ end
 -- Event Handlers
 --
 
-function mod:NullifyingStrikeStart()
+function mod:NullifyingStrikeStart(args)
 	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 17)
