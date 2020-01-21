@@ -68,8 +68,8 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NullifyingStrikeStart", 306819)
-	self:Log("SPELL_AURA_APPLIED", "NullifyingStrikeApplied", 311551)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "NullifyingStrikeApplied", 311551)
+	self:Log("SPELL_AURA_APPLIED", "NullifyingStrikeApplied", 306819)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "NullifyingStrikeApplied", 306819)
 	self:Log("SPELL_CAST_SUCCESS", "Essences", 306090, 306168, 312750) -- Draw Vita, Void, Nightmare
 
 	-- Vita
