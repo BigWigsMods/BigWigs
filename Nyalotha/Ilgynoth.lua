@@ -109,6 +109,7 @@ do
 			local t = GetTime()
 			if t-prev > 2 then
 				stage = 2
+				prev = t
 				self:Message2("stages", "cyan", CL.stage:format(stage), false)
 				self:PlaySound("stages", "long")
 				self:StopBar(309961) -- Eye of N'Zoth
