@@ -41,6 +41,7 @@ local gazeCount = 1
 local cursedBloodMarker = mod:AddMarkerOption(false, "player", 1, 313759, 1, 2, 3) -- Cursed Blood
 function mod:GetOptions()
 	return {
+		"stages",
 		309961, -- Eye of N'Zoth
 		311401, -- Touch of the Corruptor
 		310433, -- Corruptor's Gaze
@@ -60,8 +61,8 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "EyeofNZoth", 309961)
 	self:Log("SPELL_CAST_START", "TouchoftheCorruptor", 311401)
-	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 268074)
-	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 268074)
+	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 315094)
+	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 315094)
 
 	if self:GetOption("custom_on_fixate_plates") then
 		self:ShowPlates()
