@@ -106,7 +106,7 @@ do
 			gazeCount = gazeCount + 1
 			self:CDBar(spellId, 32, CL.count:format(self:SpellName(310433), gazeCount))
 		elseif spellId == 110470 then -- Reduce Parry and Block Chance 100% / Intermission Start
-			local t = args.time
+			local t = GetTime()
 			if t-prev > 2 then
 				stage = 2
 				self:Message2("stages", "cyan", CL.stage:format(stage), false)
