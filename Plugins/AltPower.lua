@@ -26,7 +26,7 @@ local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 plugin.displayName = L.altPowerTitle
 
-local powerList, sortedUnitList, roleColoredList = nil, nil, nil
+local powerList, powerMaxList, sortedUnitList, roleColoredList = nil, nil, nil, nil
 local unitList = nil
 local maxPlayers = 0
 local display, updater = nil, nil
@@ -35,6 +35,7 @@ local inTestMode = nil
 local sortDir = nil
 local repeatSync = nil
 local syncPowerList = nil
+local syncPowerMaxList = nil
 local UpdateDisplay
 local tsort, min = table.sort, math.min
 local UnitPower, IsInGroup = UnitPower, IsInGroup
@@ -46,9 +47,15 @@ local roleIcons = {
 	["NONE"] = "",
 }
 
-local function colorize(power)
+local function colorize(power, powerMax)
 	if power == -1 then return 0, 255 end
-	local ratio = power/100*510
+	if not powerMax or powerMax == 0 then
+		powerMax = 100
+		if power > powerMax then
+			powerMax = power
+		end
+	end
+	local ratio = power/powerMax*510
 	local r, g = min(ratio, 255), min(510-ratio, 255)
 	if sortDir == "AZ" then -- red to green
 		return r, g
@@ -319,10 +326,11 @@ do
 
 			if repeatSync then
 				syncPowerList = {}
+				syncPowerMaxList = {}
 			end
 			maxPlayers = players
 			unitList = IsInRaid() and plugin:GetRaidList() or plugin:GetPartyList()
-			powerList, sortedUnitList, roleColoredList = {}, {}, {}
+			powerList, powerMaxList, sortedUnitList, roleColoredList = {}, {}, {}, {}
 
 			local UnitClass, UnitGroupRolesAssigned = UnitClass, UnitGroupRolesAssigned
 			local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
@@ -451,7 +459,7 @@ function plugin:Test()
 	unitList = self:GetRaidList()
 	for i = 1, db.expanded and 25 or 10 do
 		local power = 100-(i*(db.expanded and 4 or 10))
-		local r, g = colorize(power)
+		local r, g = colorize(power, 100)
 		display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, unitList[i])
 	end
 	display.title:SetText(L.altPowerTitle)
@@ -476,13 +484,15 @@ do
 			local unit = unitList[i]
 			-- If we don't have sync data (players not using BigWigs) use whatever (potentially incorrect) data Blizz gives us.
 			powerList[unit] = syncPowerList and syncPowerList[unit] or UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
+			powerMaxList[unit] = syncPowerMaxList and syncPowerMaxList[unit] or UnitPowerMax(unit, 10) -- Enum.PowerType.Alternate = 10
 		end
 		tsort(sortedUnitList, sortTbl)
 		for i = 1, db.expanded and 25 or 10 do
 			local unit = sortedUnitList[i]
 			if unit then
 				local power = powerList[unit]
-				local r, g = colorize(power)
+				local powerMax = powerMaxList[unit]
+				local r, g = colorize(power, powerMax)
 				display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, roleColoredList[unit])
 			else
 				display.text[i]:SetText("")
@@ -532,7 +542,7 @@ function plugin:Close()
 		end
 	end
 
-	powerList, sortedUnitList, roleColoredList, syncPowerList = nil, nil, nil, nil
+	powerList, powerMaxList, sortedUnitList, roleColoredList, syncPowerList, syncPowerMaxList = nil, nil, nil, nil, nil, nil
 	unitList, opener, inTestMode = nil, nil, nil
 end
 
@@ -544,11 +554,17 @@ end
 
 do
 	local power = -1
+	local powerMax = -1
 	local function sendPower()
 		local newPower = UnitPower("player", 10) -- Enum.PowerType.Alternate = 10
+		local newPowerMax = UnitPowerMax("player", 10) -- Enum.PowerType.Alternate = 10
 		if newPower ~= power then
 			power = newPower
 			plugin:Sync("AltPower", newPower)
+		end
+		if newPowerMax ~= powerMax then
+			powerMax = newPowerMax
+			plugin:Sync("AltPowerMax", newPowerMax)
 		end
 	end
 
@@ -570,6 +586,7 @@ do
 			repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
 			if display and display:IsShown() then
 				syncPowerList = {}
+				syncPowerMaxList = {}
 			else
 				self:RegisterEvent("GROUP_ROSTER_UPDATE", "RosterUpdateForHiddenDisplay")
 			end
@@ -584,6 +601,17 @@ do
 					local unit = unitList[i]
 					if sender == self:UnitName(unit) then
 						syncPowerList[unit] = curPower
+						break
+					end
+				end
+			end
+		elseif msg == "AltPowerMax" then
+			local curPowerMax = tonumber(amount)
+			if curPowerMax then
+				for i = 1, maxPlayers do
+					local unit = unitList[i]
+					if sender == self:UnitName(unit) then
+						syncPowerMaxList[unit] = curPowerMax
 						break
 					end
 				end
