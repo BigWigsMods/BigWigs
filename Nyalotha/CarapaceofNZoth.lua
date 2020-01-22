@@ -138,7 +138,7 @@ end
 function mod:MadnessBomb(args)
 	self:Bar(306973, stage == 1 and 26.6 or stage == 2 and 33.3 or 22.2)
 	if stage == 2 then -- on NPCs only in stage 2, so no TargetsMessage needed
-		self:Message2(args.spellId, "yellow")
+		self:Message2(306973, "yellow")
 	end
 end
 
