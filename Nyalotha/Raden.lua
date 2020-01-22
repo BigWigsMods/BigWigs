@@ -106,7 +106,7 @@ function mod:OnEngage()
 	voidEruptionCount = 1
 
 	self:Bar("essences", 10, CL.count:format(L.essences, essenceCount), L.essences_icon) -- Essences (1)
-	--self:Bar(306819, 17) -- Nullifying Strike
+	self:Bar(306819, 15.8) -- Nullifying Strike
 end
 
 --------------------------------------------------------------------------------
@@ -136,7 +136,7 @@ do
 			self:Message2("essences", "red", CL.incoming:format(CL.count:format(L.essences, essenceCount)), false)
 			self:PlaySound("essences", "warning")
 			essenceCount = essenceCount + 1
-			self:Bar("essences", 46, CL.count:format(L.essences, essenceCount), L.essences_icon)
+			self:Bar("essences", 55.5, CL.count:format(L.essences, essenceCount), L.essences_icon)
 		end
 	end
 end
@@ -184,7 +184,7 @@ function mod:VoidCollapse(args)
 end
 
 function mod:VoidHunterDeath(args)
-	self:StopBar(306881, 11)
+	self:StopBar(306881)
 end
 
 -- Stage 2
@@ -193,6 +193,10 @@ function mod:Ruin()
 	self:PlaySound("stages", "long")
 	self:Message2("stages", "cyan", CL.stage:format(stage), false)
 	voidEruptionCount = 1
+
+	self:Bar(313213, 6) -- Decaying Strike
+	self:Bar(310003, 12.1) -- Void Eruption
+	self:Bar(310019, 4.8) -- Charged Bonds
 end
 
 function mod:DecayingStrikeStart(args)
@@ -210,7 +214,7 @@ function mod:VoidEruption(args)
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, voidEruptionCount))
 	self:PlaySound(args.spellId, "alert")
 	voidEruptionCount = voidEruptionCount + 1
-	self:Bar(args.spellId, voidEruptionCount % 2 == 0 and 20 or 25, CL.count:format(args.spellName, voidEruptionCount))
+	self:Bar(args.spellId, 19.4, CL.count:format(args.spellName, voidEruptionCount))
 end
 
 function mod:ChargedBonds()
