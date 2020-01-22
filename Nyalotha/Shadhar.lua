@@ -170,6 +170,7 @@ do
 	function mod:UmbralMantle(args)
 		local t = args.time
 		if t-prev > 1.5 then
+			prev = t
 			self:Message2(args.spellId, "orange")
 			self:PlaySound(args.spellId, "alarm")
 			self:Bar(args.spellId, 20)
