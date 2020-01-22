@@ -132,6 +132,7 @@ do
 	function mod:Essences(args)
 		local t = args.time
 		if t-prev > 2 then
+			prev = t
 			self:Message2("essences", "red", CL.incoming:format(CL.count:format(L.essences, essenceCount)), false)
 			self:PlaySound("essences", "warning")
 			essenceCount = essenceCount + 1
