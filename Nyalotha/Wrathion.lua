@@ -55,14 +55,14 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	nextCataclysm = GetTime() + 70
+	nextCataclysm = GetTime() + 60
 	incinerationCount = 1
 	cataclysmCount = 1
 
-	self:Bar(313973, 8.5) -- Searing Breath
-	self:Bar(306163, 33, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
-	self:Bar(306735, 70) -- Burning Cataclysm
-	self:Bar("stages", 184, CL.stage:format(2), 306995) -- Smoke and Mirrors
+	self:Bar(313973, 7.1) -- Searing Breath
+	self:Bar(306163, 14.2, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
+	self:Bar(306735, 60) -- Burning Cataclysm
+	self:Bar("stages", 160, CL.stage:format(2), 306995) -- Smoke and Mirrors
 end
 
 --------------------------------------------------------------------------------
@@ -75,8 +75,8 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		self:PlaySound(306735, "alert")
 		cataclysmCount = cataclysmCount + 1
 		if cataclysmCount < 3 then -- Casted 2x before stage 2
-			nextCataclysm = GetTime() + 90
-			self:Bar(306735, 90)
+			nextCataclysm = GetTime() + 77.7
+			self:Bar(306735, 77.7)
 		end
 	elseif msg:find("307013", nil, true) then -- Burning Madness
 		self:Message2(307013, "red")
@@ -88,8 +88,8 @@ end
 function mod:SearingBreath(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	if nextCataclysm > GetTime() + 8.5 then
-		self:Bar(args.spellId, 8.5) -- XX Why is it delayed to 14s sometimes?
+	if nextCataclysm > GetTime() + 7.3 then
+		self:Bar(args.spellId, 7.3) -- XX Why is it delayed to 14s sometimes?
 	end
 end
 
@@ -102,8 +102,8 @@ end
 
 function mod:IncinerationSuccess(args)
 	incinerationCount = incinerationCount + 1
-	if nextCataclysm > GetTime() + 47.4 then
-		self:Bar(306163, 47.4, CL.count:format(args.spellName, incinerationCount))
+	if nextCataclysm > GetTime() + 24.3 then
+		self:Bar(306163, 24.3, CL.count:format(args.spellName, incinerationCount))
 	end
 end
 
@@ -135,9 +135,9 @@ end
 function mod:BurningCataclysm(args)
 	self:CastBar(args.spellId, 8)
 	if cataclysmCount < 3 then -- Stage 2 isn't coming yet, so start bars
-		self:Bar(306289, 18) -- Gale Blast
-		self:Bar(306163, 26.5, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
-		self:Bar(313973, 30.5) -- Searing Breath
+		--self:Bar(306289, 18) -- Gale Blast
+		self:Bar(306163, 24.1, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
+		self:Bar(313973, 26.8) -- Searing Breath
 	end
 end
 
@@ -153,8 +153,8 @@ function mod:SmokeandMirrorsRemoved(args)
 	self:PlaySound("stages", "long")
 	incinerationCount = 1
 
-	self:Bar(313973, 8.5) -- Searing Breath
-	self:Bar(306163, 33, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
-	self:Bar(306735, 70) -- Burning Cataclysm
-	self:Bar("stages", 184, CL.stage:format(2), 306995) -- Smoke and Mirrors
+	self:Bar(306163, 10.2, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
+	self:Bar(313973, 14.1) -- Searing Breath
+	self:Bar(306735, 50) -- Burning Cataclysm
+	self:Bar("stages", 160, CL.stage:format(2), 306995) -- Smoke and Mirrors
 end
