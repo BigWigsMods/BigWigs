@@ -102,13 +102,13 @@ do
 		if power > lastPower then -- safety
 			powerPerSec = power - lastPower
 			local nextBreath = math.ceil((100 - power) / powerPerSec)
-			self:Bar(breathId, nextBreath)
+			self:Bar(breathId, nextBreath) -- SetOption:306928,306930,306929:::
 		end
 	end
 
 	function mod:StartBreathBar(spellId)
 		breathId = spellId
-		self:Bar(breathId, math.ceil(100 / powerPerSec))
+		self:Bar(breathId, math.ceil(100 / powerPerSec)) -- SetOption:306928,306930,306929:::
 	end
 end
 
