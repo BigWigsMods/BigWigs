@@ -200,7 +200,13 @@ do
 		end
 	end
 	function core:RegisterEnableMob(module, ...) add(module.moduleName, enablemobs, ...) end
-	function core:GetEnableMobs() return enablemobs end
+	function core:GetEnableMobs()
+		local t = {}
+		for k,v in next, enablemobs do
+			t[k] = v
+		end
+		return t
+	end
 end
 
 -------------------------------------------------------------------------------
@@ -526,7 +532,7 @@ end
 do
 	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, C_EncounterJournal.GetSectionInfo
 	local C = core.C -- Set from Constants.lua
-	local standardFlag = C.BAR + C.CASTBAR + C.MESSAGE + C.ICON + C.SOUND + C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY + C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX
+	local standardFlag = C.BAR + C.CASTBAR + C.MESSAGE + C.ICON + C.SOUND + C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY + C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX + C.NAMEPLATEBAR
 	local defaultToggles = setmetatable({
 		berserk = C.BAR + C.MESSAGE + C.SOUND,
 		proximity = C.PROXIMITY,

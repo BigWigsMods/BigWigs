@@ -41,10 +41,35 @@ local next = next
 local tremove = tremove
 local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
+local nameplateBars = {}
 local empUpdate = nil -- emphasize updater frame
+local nameplateEmpUpdate = nil
 local rearrangeBars
+local rearrangeNameplateBars
+local UnitGUID = UnitGUID
+local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local clickHandlers = {}
+
+local findUnitByGUID = nil
+do
+	local unitTable = {
+		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
+		"nameplate11", "nameplate12", "nameplate13", "nameplate14", "nameplate15", "nameplate16", "nameplate17", "nameplate18", "nameplate19", "nameplate20",
+		"nameplate21", "nameplate22", "nameplate23", "nameplate24", "nameplate25", "nameplate26", "nameplate27", "nameplate28", "nameplate29", "nameplate30",
+		"nameplate31", "nameplate32", "nameplate33", "nameplate34", "nameplate35", "nameplate36", "nameplate37", "nameplate38", "nameplate39", "nameplate40",
+	}
+	local unitTableCount = #unitTable
+	findUnitByGUID = function(id)
+		for i = 1, unitTableCount do
+			local unit = unitTable[i]
+			local guid = UnitGUID(unit)
+			if guid == id then
+				return unit
+			end
+		end
+	end
+end
 
 --------------------------------------------------------------------------------
 -- Bar styles setup
@@ -480,6 +505,11 @@ plugin.defaultDB = {
 	BigWigsAnchor_height = 16,
 	BigWigsEmphasizeAnchor_width = 320,
 	BigWigsEmphasizeAnchor_height = 22,
+	nameplateWidth = 150,
+	nameplateAutoWidth = true,
+	nameplateHeight = 16,
+	nameplateOffsetY = 30,
+	nameplateGrowUp = true,
 	spacing = 1,
 	visibleBarLimit = 100,
 	visibleBarLimitEmph = 100,
@@ -1106,10 +1136,59 @@ do
 					},
 				},
 			},
+			nameplateBars = {
+				name = L.nameplateBars,
+				type = "group",
+				order = 4,
+				args = {
+					nameplateWidth = {
+						type = "range",
+						name = L.width,
+						order = 1,
+						min = 100,
+						softMax = 500,
+						step = 1,
+						width = 1.6,
+						disabled = function() return db.nameplateAutoWidth end,
+					},
+					nameplateHeight = {
+						type = "range",
+						name = L.height,
+						order = 2,
+						min = 8,
+						softMax = 50,
+						step = 1,
+						width = 1.6,
+					},
+					nameplateAutoWidth = {
+						type = "toggle",
+						name = L.nameplateAutoWidth,
+						desc = L.nameplateAutoWidthDesc,
+						order = 3,
+						width = 1.6,
+					},
+					nameplateOffsetY = {
+						type = "range",
+						name = L.nameplateOffsetY,
+						desc = L.nameplateOffsetYDesc,
+						order = 4,
+						min = 0,
+						max = 400,
+						width = 1.6,
+					},
+					nameplateGrowUp = {
+						type = "toggle",
+						name = L.growingUpwards,
+						desc = L.growingUpwardsDesc,
+						order = 5,
+						width = 1.6,
+					},
+				},
+			},
 			clicking = {
 				name = L.clickableBars,
 				type = "group",
-				order = 4,
+				order = 5,
 				childGroups = "tab",
 				get = function(i) return plugin.db.profile[i[#i]] end,
 				set = function(i, value)
@@ -1254,12 +1333,70 @@ do
 	end
 end
 
+do
+	-- returns table of bar texts ordered by time remaining
+	local function getOrder(bars)
+		local barTexts = {}
+		for text, _ in pairs(bars) do
+			barTexts[#barTexts+1] = text
+		end
+		table.sort(barTexts, function(a, b)
+			return bars[a].bar.remaining < bars[b].bar.remaining
+		end)
+		return barTexts
+	end
+
+	rearrangeNameplateBars = function(guid)
+		local unit = findUnitByGUID(guid)
+		if not unit then return end
+		local nameplate = GetNamePlateForUnit(unit)
+		local unitBars = nameplateBars[guid]
+		if unitBars then
+			local sorted = getOrder(nameplateBars[guid])
+			local offset = db.nameplateOffsetY
+			local barPoint = db.nameplateGrowUp and "BOTTOM" or "TOP"
+			local nameplatePoint = db.nameplateGrowUp and "TOP" or "BOTTOM"
+			for i, text in ipairs(sorted) do
+				local bar = unitBars[text].bar
+				bar:ClearAllPoints()
+				bar:SetParent(nameplate)
+				bar:SetPoint(barPoint, nameplate, nameplatePoint, 0, db.nameplateGrowUp and offset or -offset)
+				offset = offset + db.spacing + bar:GetHeight()			end
+		end
+	end
+end
+
+local function nameplateCascadeDelete(guid, text)
+	nameplateBars[guid][text] = nil
+	if not next(nameplateBars[guid]) then
+		nameplateBars[guid] = nil
+		if not next(nameplateBars) then
+			nameplateEmpUpdate:Stop()
+		end
+	end
+end
+
+local function createDeletionTimer(barInfo)
+	return C_Timer.NewTimer(barInfo.exp - GetTime(), function()
+		nameplateCascadeDelete(barInfo.unitGUID, barInfo.text)
+	end)
+end
+
 local function barStopped(event, bar)
 	local a = bar:Get("bigwigs:anchor")
+	local unitGUID = bar:Get("bigwigs:unitGUID")
 	if a and a.bars and a.bars[bar] then
 		currentBarStyler.BarStopped(bar)
 		a.bars[bar] = nil
 		rearrangeBars(a)
+	elseif unitGUID then
+		currentBarStyler.BarStopped(bar)
+		local text = bar:GetLabel()
+		nameplateBars[unitGUID][text].bar = nil
+		if not bar:Get("bigwigs:offscreen") then
+			nameplateCascadeDelete(unitGUID, text)
+			rearrangeNameplateBars(unitGUID)
+		end
 	end
 end
 
@@ -1432,9 +1569,13 @@ function plugin:OnPluginEnable()
 	updateProfile()
 
 	self:RegisterMessage("BigWigs_StartBar")
+	self:RegisterMessage("BigWigs_StartNameplateBar")
 	self:RegisterMessage("BigWigs_PauseBar", "PauseBar")
+	self:RegisterMessage("BigWigs_PauseNameplateBar", "PauseNameplateBar")
 	self:RegisterMessage("BigWigs_ResumeBar", "ResumeBar")
+	self:RegisterMessage("BigWigs_ResumeNameplateBar", "ResumeNameplateBar")
 	self:RegisterMessage("BigWigs_StopBar", "StopSpecificBar")
+	self:RegisterMessage("BigWigs_StopNameplateBar", "StopNameplateBar")
 	self:RegisterMessage("BigWigs_StopBars", "StopModuleBars")
 	self:RegisterMessage("BigWigs_OnBossDisable", "StopModuleBars")
 	self:RegisterMessage("BigWigs_OnBossWipe", "StopModuleBars")
@@ -1446,6 +1587,10 @@ function plugin:OnPluginEnable()
 
 	self:RefixClickIntercepts()
 	self:RegisterEvent("MODIFIER_STATE_CHANGED", "RefixClickIntercepts")
+
+	-- Nameplate bars
+	self:RegisterEvent("NAME_PLATE_UNIT_ADDED")
+	self:RegisterEvent("NAME_PLATE_UNIT_REMOVED")
 
 	-- custom bars
 	self:RegisterMessage("BigWigs_PluginComm")
@@ -1549,6 +1694,19 @@ function plugin:PauseBar(_, module, text)
 	end
 end
 
+function plugin:PauseNameplateBar(_, module, text, unitGUID)
+	local barInfo = nameplateBars[unitGUID] and nameplateBars[unitGUID][text]
+	if barInfo and not barInfo.paused then
+		barInfo.paused = true
+		if barInfo.bar then
+			barInfo.bar:Pause()
+		else
+			barInfo.deletionTimer:Cancel()
+		end
+		barInfo.remaining = barInfo.exp - GetTime()
+	end
+end
+
 function plugin:ResumeBar(_, module, text)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
@@ -1562,6 +1720,20 @@ function plugin:ResumeBar(_, module, text)
 			k:Resume()
 			return
 		end
+	end
+end
+
+function plugin:ResumeNameplateBar(_, module, text, unitGUID)
+	local barInfo = nameplateBars[unitGUID] and nameplateBars[unitGUID][text]
+	if barInfo and barInfo.paused then
+		barInfo.paused = false
+		barInfo.exp = GetTime() + barInfo.remaining
+		if barInfo.bar then
+			barInfo.bar:Resume()
+		else
+			barInfo.deletionTimer = createDeletionTimer(barInfo)
+		end
+		barInfo.remaining = nil
 	end
 end
 
@@ -1583,6 +1755,19 @@ function plugin:StopSpecificBar(_, module, text)
 	end
 end
 
+function plugin:StopNameplateBar(_, module, text, guid)
+	if not nameplateBars[guid] then return end
+	local barInfo = nameplateBars[guid][text]
+	if barInfo and barInfo.module == module then
+		if barInfo.bar then
+			barInfo.bar:Stop()
+		else
+			barInfo.deletionTimer:Cancel()
+			nameplateCascadeDelete(guid, text)
+		end
+	end
+end
+
 function plugin:StopModuleBars(_, module)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
@@ -1593,6 +1778,18 @@ function plugin:StopModuleBars(_, module)
 	for k in next, emphasizeAnchor.bars do
 		if k:Get("bigwigs:module") == module then
 			k:Stop()
+		end
+	end
+	for _, bars in next, nameplateBars do
+		for _, barInfo in next, bars do
+			if barInfo.module == module then
+				if barInfo.bar then
+					barInfo.bar:Stop()
+				else
+					barInfo.deletionTimer:Cancel()
+					nameplateCascadeDelete(barInfo.unitGUID, barInfo.text)
+				end
+			end
 		end
 	end
 end
@@ -1612,6 +1809,19 @@ function plugin:GetBarTimeLeft(module, text)
 			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 				return k.remaining
 			end
+		end
+	end
+	return 0
+end
+
+function plugin:GetNameplateBarTimeLeft(module, text, guid)
+	if nameplateBars[guid] then
+		local barInfo = nameplateBars[guid][text]
+		local bar = barInfo and barInfo.bar
+		if bar and bar:Get("bigwigs:module") == module then
+			return bar.remaining
+		else
+			return barInfo.paused and barInfo.remaining or barInfo.exp - GetTime()
 		end
 	end
 	return 0
@@ -1746,21 +1956,38 @@ end
 -- Start bars
 --
 
-function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
-	if not text then text = "" end
-	self:StopSpecificBar(nil, module, text)
-	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), db.BigWigsAnchor_width, db.BigWigsAnchor_height)
+function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
+	local width, height
+	if unitGUID then
+		width, height = db.nameplateWidth, db.nameplateHeight
+		if db.nameplateAutoWidth then
+			local unit = findUnitByGUID(unitGUID)
+			if unit then
+				local nameplate = GetNamePlateForUnit(unit)
+				width = nameplate:GetWidth()
+			end
+		end
+	else
+		width, height = db.BigWigsAnchor_width, db.BigWigsAnchor_height
+	end
+	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), width, height)
 	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
 	bar:Set("bigwigs:module", module)
-	bar:Set("bigwigs:anchor", normalAnchor)
 	bar:Set("bigwigs:option", key)
+	if unitGUID then
+		bar:Set("bigwigs:unitGUID", unitGUID)
+	else
+		bar:Set("bigwigs:anchor", normalAnchor)
+		normalAnchor.bars[bar] = true
+	end
+	bar:SetIcon(db.icon and icon or nil)
+	bar:SetLabel(text)
+	bar:SetDuration(time, isApprox)
 	bar:SetColor(colors:GetColor("barColor", module, key))
 	bar:SetTextColor(colors:GetColor("barText", module, key))
 	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
 	bar.candyBarLabel:SetJustifyH(db.alignText)
 	bar.candyBarDuration:SetJustifyH(db.alignTime)
-	normalAnchor.bars[bar] = true
-
 	local flags = nil
 	if db.monochrome and db.outline ~= "NONE" then
 		flags = "MONOCHROME," .. db.outline
@@ -1773,23 +2000,30 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	bar.candyBarLabel:SetFont(f, db.fontSize, flags)
 	bar.candyBarDuration:SetFont(f, db.fontSize, flags)
 
-	bar:SetLabel(text)
-	bar:SetDuration(time, isApprox)
 	bar:SetTimeVisibility(db.time)
 	bar:SetLabelVisibility(db.text)
-	bar:SetIcon(db.icon and icon or nil)
 	bar:SetIconPosition(db.iconPosition)
 	bar:SetFill(db.fill)
-	if db.interceptMouse and not db.onlyInterceptOnKeypress then
+
+	if db.interceptMouse and not db.onlyInterceptOnKeypress and not unitGUID then
 		refixClickOnBar(true, bar)
 	end
 
 	if db.emphasize and time < db.emphasizeTime then
 		self:EmphasizeBar(bar, true)
 	else
-		bar:Start() -- Don't fire :Start twice when emphasizeRestart is on
 		currentBarStyler.ApplyStyle(bar)
 	end
+
+	return bar
+end
+
+function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
+	if not text then text = "" end
+	self:StopSpecificBar(nil, module, text)
+
+	local bar = self:CreateBar(module, key, text, time, icon, isApprox)
+	bar:Start()
 	rearrangeBars(bar:Get("bigwigs:anchor"))
 
 	self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, isApprox)
@@ -1800,13 +2034,51 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 	end
 end
 
+function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, isApprox, unitGUID)
+	if not text then text = "" end
+	self:StopNameplateBar(nil, module, text, unitGUID)
+
+	if not nameplateBars[unitGUID] then nameplateBars[unitGUID] = {} end
+	local barInfo = {
+		module = module,
+		key = key,
+		text = text,
+		time = time,
+		exp = GetTime() + time,
+		icon = icon,
+		isApprox = isApprox,
+		unitGUID = unitGUID,
+	}
+	nameplateBars[unitGUID][text] = barInfo
+
+	local unit = findUnitByGUID(unitGUID)
+	if unit then
+		local bar = self:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
+		barInfo.bar = bar
+		bar:Start()
+		rearrangeNameplateBars(unitGUID)
+		self:SendMessage("BigWigs_NameplateBarCreated", self, bar, module, key, text, time, icon, isApprox, unitGUID)
+		-- Check if :EmphasizeBar(bar) was run and trigger the callback.
+		-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
+		if bar:Get("bigwigs:emphasized") then
+			self:SendMessage("BigWigs_BarEmphasized", self, bar)
+		else
+			nameplateEmpUpdate:Play()
+		end
+	else
+		barInfo.deletionTimer = createDeletionTimer(barInfo)
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Emphasize
 --
 
 do
 	local dirty = nil
-	empUpdate = CreateFrame("Frame"):CreateAnimationGroup()
+	local frame = CreateFrame("Frame")
+	empUpdate = frame:CreateAnimationGroup()
+	nameplateEmpUpdate = frame:CreateAnimationGroup()
 	empUpdate:SetScript("OnLoop", function()
 		for k in next, normalAnchor.bars do
 			if k.remaining < db.emphasizeTime and not k:Get("bigwigs:emphasized") then
@@ -1821,21 +2093,40 @@ do
 			dirty = nil
 		end
 	end)
+	nameplateEmpUpdate:SetScript("OnLoop", function()
+		for guid, bars in next, nameplateBars do
+			for _, barInfo in next, bars do
+				local bar = barInfo.bar
+				if bar and bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") then
+					plugin:EmphasizeBar(bar)
+					rearrangeNameplateBars(bar:Get("bigwigs:unitGUID"))
+					plugin:SendMessage("BigWigs_BarEmphasized", plugin, bar)
+				end
+			end
+		end
+	end)
 	empUpdate:SetLooping("REPEAT")
+	nameplateEmpUpdate:SetLooping("REPEAT")
 
 	local anim = empUpdate:CreateAnimation()
+	anim:SetDuration(0.2)
+	anim = nameplateEmpUpdate:CreateAnimation()
 	anim:SetDuration(0.2)
 end
 
 function plugin:EmphasizeBar(bar, start)
-	if db.emphasizeMove then
+	local unitGUID = bar:Get("bigwigs:unitGUID")
+	if db.emphasizeMove and not unitGUID then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
 	end
 	currentBarStyler.BarStopped(bar)
-	if start or db.emphasizeRestart then
+	if not start and db.emphasizeRestart then
 		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
+		if unitGUID then
+			nameplateBars[unitGUID][bar:GetLabel()].time = bar.remaining
+		end
 	end
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
@@ -1853,8 +2144,13 @@ function plugin:EmphasizeBar(bar, start)
 	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
-	bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
-	bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
+	if unitGUID then
+		bar:SetWidth(bar:GetWidth() * db.emphasizeMultiplier)
+		bar:SetHeight(bar:GetHeight() * db.emphasizeMultiplier)
+	else
+		bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
+		bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
+	end
 	currentBarStyler.ApplyStyle(bar)
 	bar:Set("bigwigs:emphasized", true)
 end
@@ -1987,6 +2283,56 @@ function plugin:BigWigs_PluginComm(_, msg, seconds, sender)
 			startCustomBar(seconds, sender)
 		elseif msg == "Break" then
 			startBreak(seconds, sender)
+		end
+	end
+end
+
+-------------------------------------------------------------------------------
+-- Nameplate bar management
+--
+
+function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
+	local guid = UnitGUID(unit)
+	local unitBars = nameplateBars[guid]
+	if not unitBars then return end
+	for _, barInfo in next, unitBars do
+		local width, height = db.nameplateWidth, db.nameplateHeight
+		if db.nameplateAutoWidth then
+			local nameplate = GetNamePlateForUnit(unit)
+			width = nameplate:GetWidth()
+		end
+		local time = barInfo.paused and barInfo.remaining or barInfo.exp - GetTime()
+		local bar = plugin:CreateBar(
+			barInfo.module,
+			barInfo.key,
+			barInfo.text,
+			time,
+			barInfo.icon,
+			barInfo.isApprox,
+			barInfo.unitGUID
+		)
+		bar:SetSize(width, height)
+		barInfo.bar = bar
+		barInfo.deletionTimer:Cancel()
+		barInfo.deletionTimer = nil
+		bar:Start(barInfo.time)
+		if barInfo.paused then
+			bar:Pause()
+		end
+	end
+	rearrangeNameplateBars(guid)
+end
+
+function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
+	local guid = UnitGUID(unit)
+	local unitBars = nameplateBars[guid]
+	if not unitBars then return end
+
+	for _, barInfo in next, unitBars do
+		barInfo.bar:Set("bigwigs:offscreen", true)
+		barInfo.bar:Stop()
+		if not barInfo.paused then
+			barInfo.deletionTimer = createDeletionTimer(barInfo)
 		end
 	end
 end

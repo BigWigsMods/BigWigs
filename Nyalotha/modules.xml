@@ -1,0 +1,20 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Wrathion.lua"/>
+<Script file="Maut.lua"/>
+<Script file="Skitra.lua"/>
+<Script file="Xanesh.lua"/>
+<Script file="Hivemind.lua"/>
+<Script file="Shadhar.lua"/>
+<Script file="Drestagath.lua"/>
+<Script file="Vexiona.lua"/>
+<Script file="Raden.lua"/>
+<Script file="Ilgynoth.lua"/>
+<Script file="CarapaceofNZoth.lua"/>
+<Script file="NZoth.lua"/>
+
+<!-- <Include file="Locales\locales.xml"/> -->
+<Include file="Options\options.xml"/>
+
+</Ui>

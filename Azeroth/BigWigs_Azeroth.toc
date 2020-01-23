@@ -1,4 +1,4 @@
-## Interface: 80200
+## Interface: 80300
 
 ## Title: BigWigs [|cffeda55fAzeroth|r]
 ## Title-deDE: BigWigs [|cffeda55fAzeroth|r]

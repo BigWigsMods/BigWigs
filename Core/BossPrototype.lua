@@ -195,6 +195,13 @@ function boss:IsEnabled()
 	return self.enabled
 end
 
+--- Module engaged check.
+-- A module is either engaged in combat or not.
+-- @return true or nil
+function boss:IsEngaged()
+	return self.isEngaged
+end
+
 function boss:Initialize() core:RegisterBossModule(self) end
 function boss:Enable(isWipe)
 	if not self.enabled then
@@ -649,7 +656,7 @@ do
 	-- noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
 	function boss:CheckForEncounterEngage(noEngage)
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
-		if not self.isEngaged and hasBoss then
+		if not self:IsEngaged() and hasBoss then
 			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
 			local module = core:GetEnableMobs()[self:MobId(guid)]
 			local modType = type(module)
@@ -666,7 +673,7 @@ do
 						break
 					end
 				end
-				if not self.isEngaged then self:Disable() end
+				if not self:IsEngaged() then self:Disable() end
 			end
 		end
 	end
@@ -674,14 +681,14 @@ do
 	-- Query boss units to update engage status.
 	function boss:CheckBossStatus()
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
-		if not hasBoss and self.isEngaged then
+		if not hasBoss and self:IsEngaged() then
 			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
 			self:ScheduleTimer(wipeCheck, 6, self)
-		elseif not self.isEngaged and hasBoss then
+		elseif not self:IsEngaged() and hasBoss then
 			if debug then dbg(self, ":CheckBossStatus Engage called.") end
 			self:CheckForEncounterEngage()
 		end
-		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self.isEngaged).." hasBoss = "..tostring(hasBoss)) end
+		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self:IsEngaged()).." hasBoss = "..tostring(hasBoss)) end
 	end
 end
 
@@ -1975,6 +1982,9 @@ end
 do
 	local badBar = "Attempted to start bar '%q' without a valid time."
 	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
+	local badNameplateBarStart = "Attempted to start nameplate bar '%q' without a valid unitGUID."
+	local badNameplateBarStop = "Attempted to stop nameplate bar '%q' without a valid unitGUID."
+	local badNameplateBarTimeLeft = "Attempted to get time left of nameplate bar '%q' without a valid unitGUID."
 	local newBar = "New timer for '%q' at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 
 	--- Display a bar.
@@ -2101,6 +2111,101 @@ do
 				self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
 			end
 		end
+	end
+
+	--- Display a nameplate bar.
+	-- Indicates an unreliable duration by prefixing the time with "~"
+	-- @param key the option key
+	-- @number length the bar duration in seconds
+	-- @string guid Anchor to a unit's nameplate by GUID
+	-- @param[opt] text the bar text (if nil, key is used)
+	-- @param[opt] icon the bar icon (spell id or texture name)
+	function boss:NameplateBar(key, length, guid, text, icon)
+		if type(length) ~= "number" or length == 0 then
+			core:Print(format(badBar, key))
+			return
+		end
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarStart, key))
+			return
+		end
+		local textType = type(text)
+		if checkFlag(self, key, C.NAMEPLATEBAR) then
+			local msg = type(text) == "string" and text or spells[text or key]
+			self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], false, guid)
+		end
+	end
+
+	--- Display a nameplate cooldown bar.
+	-- @param key the option key
+	-- @number length the bar duration in seconds
+	-- @string guid Anchor to a unit's nameplate by GUID
+	-- @param[opt] text the bar text (if nil, key is used)
+	-- @param[opt] icon the bar icon (spell id or texture name)
+	function boss:NameplateCDBar(key, length, guid, text, icon)
+		if type(length) ~= "number" or length == 0 then
+			core:Print(format(badBar, key))
+			return
+		end
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarStart, key))
+			return
+		end
+		local textType = type(text)
+		if checkFlag(self, key, C.NAMEPLATEBAR) then
+			local msg = type(text) == "string" and text or spells[text or key]
+			self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)
+		end
+	end
+
+	--- Pause a nameplate bar.
+	-- @param key the option key
+	-- @param guid nameplate unit's guid
+	-- @param[opt] text the bar text
+	function boss:PauseNameplateBar(key, guid, text)
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarStop, key))
+		end
+		local msg = text or spells[key]
+		self:SendMessage("BigWigs_PauseNameplateBar", self, msg, guid)
+	end
+
+	--- Resume a paused nameplate bar.
+	-- @param key the option key
+	-- @param guid nameplate unit's guid
+	-- @param[opt] text the bar text
+	function boss:ResumeNameplateBar(key, guid, text)
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarStart, key))
+		end
+		local msg = text or spells[key]
+		self:SendMessage("BigWigs_ResumeNameplateBar", self, msg, guid)
+	end
+
+	--- Get the time left for a running nameplate bar.
+	-- @param guid nameplate unit's guid
+	-- @param text the bar text
+	-- @return the remaining duration in seconds or 0
+	function boss:NameplateBarTimeLeft(text, guid)
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarTimeLeft, text))
+		end
+		local bars = core:GetPlugin("Bars")
+		if bars then
+			return bars:GetNameplateBarTimeLeft(self, type(text) == "number" and spells[text] or text, guid)
+		end
+		return 0
+	end
+
+	--- Stop a nameplate bar.
+	-- @param text the bar text, or a spellId which is converted into the spell name and used
+	-- @string guid nameplate unit's guid
+	function boss:StopNameplateBar(text, guid)
+		if type(guid) ~= "string" then
+			core:Print(format(badNameplateBarStop, text))
+		end
+		local msg = type(text) == "number" and spells[text] or text
+		self:SendMessage("BigWigs_StopNameplateBar", self, msg, guid)
 	end
 end
 

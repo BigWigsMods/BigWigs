@@ -126,6 +126,8 @@ L.SAY_COUNTDOWN = "倒數報數"
 L.SAY_COUNTDOWN_desc = "聊天泡泡十分醒目，利用此特性，BigWigs 以倒數計時的說話消息來提醒附近的人技能即將到期。"
 L.ME_ONLY_EMPHASIZE = "強調 (只有我)"
 L.ME_ONLY_EMPHASIZE_desc = "啟用後會強調所有只施放在你的技能相關的訊息，使它們更大和更容易看到。"
+-- L.NAMEPLATEBAR = "Nameplate Bars"
+-- L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
 
 -- Media.lua
 L.Beware = "當心（艾爾加隆）"
