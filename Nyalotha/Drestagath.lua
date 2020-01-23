@@ -108,7 +108,7 @@ function mod:UNIT_POWER_UPDATE(_, unit)
 	if power > 80 then
 		self:Message2(308941, "cyan", CL.soon:format(CL.count:format(self:SpellName(308941), throesCount))) -- Throes of Agony
 		self:PlaySound(308941, "info")
-		self:UnregisterUnitEvent(event, unit)
+		self:UnregisterUnitEvent("UNIT_POWER_UPDATE", unit)
 	end
 end
 
