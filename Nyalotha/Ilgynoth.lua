@@ -29,10 +29,8 @@ end
 --
 
 local stage = 1
---local organsKilled = 0
 local touchCount = 1
 local gazeCount = 1
---local cursedBloodCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -79,7 +77,6 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	--organsKilled = 0
 	gazeCount = 1
 	touchCount = 1
 
@@ -105,7 +102,7 @@ do
 			self:Message2(spellId, "orange", CL.count:format(self:SpellName(310433), gazeCount))
 			gazeCount = gazeCount + 1
 			self:CDBar(spellId, 32, CL.count:format(self:SpellName(310433), gazeCount))
-		elseif spellId == 110470 then -- Reduce Parry and Block Chance 100% / Intermission Start
+		elseif spellId == 110470 then -- Reduce Parry and Block Chance 100% / Stage 2 Start
 			local t = GetTime()
 			if t-prev > 2 then
 				stage = 2
@@ -116,16 +113,16 @@ do
 				self:StopBar(CL.count:format(self:SpellName(311401), touchCount)) -- Touch of the Corruptor
 				self:StopBar(CL.count:format(self:SpellName(310433), gazeCount)) -- Corruptor's Gaze
 			end
-		elseif spellId == 311577 then -- Damaged Organ
+		elseif spellId == 312204 then -- Il'gynoth's Morass / Stage 1 Start
 			stage = 1
 			gazeCount = 1
 			touchCount = 1
-			--organsKilled = organsKilled + 1
 			self:Message2("stages", "cyan", CL.stage:format(stage), false)
 			self:PlaySound("stages", "long")
-			self:Bar(309961, 10.3) -- Eye of N'Zoth
-			self:Bar(310433, 16.5, CL.count:format(self:SpellName(310433), gazeCount)) -- Corruptor's Gaze
-			self:Bar(311401, 52.9, CL.count:format(self:SpellName(311401), touchCount)) -- Touch of the Corruptor
+
+			self:Bar(309961, 6.1) -- Eye of N'Zoth
+			self:Bar(310433, 12.2, CL.count:format(self:SpellName(310433), gazeCount)) -- Corruptor's Gaze
+			self:Bar(311401, 48.8, CL.count:format(self:SpellName(311401), touchCount)) -- Touch of the Corruptor
 		end
 	end
 end
