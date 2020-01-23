@@ -191,7 +191,7 @@ function mod:EntropicMantle(args)
 	self:StopBar(306448) -- Umbral Mantle
 	self:StopBar(306928) -- Umbral Breath
 	self:StartBreathBar(306930) -- Entropic Breath
-	self:Bar(307358, 12.5) -- Debilitating Spit
+	self:Bar(306953, 10.5, CL.count:format(self:SpellName(306953), spitCount)) -- Debilitating Spit
 	self:CDBar(-21311, 15.4, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
 end
 
@@ -200,7 +200,7 @@ function mod:NoxiousMantle(args)
 	self:PlaySound("stages", "long")
 	self:StopBar(306930) -- Entropic Breath
 	self:StartBreathBar(306929) -- Bubbling Breath
-	self:Bar(307358, 11.5) -- Debilitating Spit
+	self:Bar(306953, 11, CL.count:format(self:SpellName(306953), spitCount)) -- Debilitating Spit
 	self:CDBar(-21311, 21, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
 end
 
