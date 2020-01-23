@@ -72,7 +72,6 @@ end
 
 function mod:OnEngage()
 	acidicAqirCount = 1
-	mindNumbingNovaCount = 1
 	nullificationBlastCount = 1
 	echoingVoidCount = 1
 
