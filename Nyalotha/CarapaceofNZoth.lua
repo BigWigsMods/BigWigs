@@ -97,7 +97,7 @@ end
 
 function mod:OnEngage()
 	stage = 1
-	--self:Berserk(721) -- To be confirmed, PTR heroic
+	self:Berserk(601) -- Heroic
 	self:Bar(306973, 5) -- Madness Bomb
 	self:CDBar(-20565, 10, nil, "INV_EyeofNzothPet") -- Gaze of Madness
 	self:Bar(306988, 16) -- Adaptive Membrane
