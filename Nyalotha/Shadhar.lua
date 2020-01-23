@@ -18,7 +18,10 @@ mod.engageId = 2335
 --
 
 local crushAndDissolveCount = 1
+local spitCount = 1
+local fixateCount = 1
 local lastPower = 0
+local oldPowerPerSec = 1
 local breathId = 306928
 
 --------------------------------------------------------------------------------
@@ -29,7 +32,7 @@ function mod:GetOptions()
 	return {
 		--[[ General ]]--
 		"stages",
-		307358, -- Debilitating Spit
+		306953, -- Debilitating Spit
 		{318078, "SAY"}, -- Fixate
 
 		--[[ Crush and Dissolve ]]--
@@ -59,7 +62,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "boss1")
-	self:Log("SPELL_CAST_SUCCESS", "DebilitatingSpit", 307358)
+	self:Log("SPELL_CAST_SUCCESS", "DebilitatingSpit", 306953)
 	self:Log("SPELL_CAST_SUCCESS", "Fixate", 318078)
 
 	self:Log("SPELL_CAST_START", "CrushAndDissolveStart", 307476, 307478)
@@ -84,32 +87,34 @@ end
 
 function mod:OnEngage()
 	crushAndDissolveCount = 1
+	spitCount = 1
+	fixateCount = 1
 	lastPower = 0
-	breathId = 306928
+	oldPowerPerSec = 4
+	self:StartBreathBar(306928)
 	self:Bar(306448, 5) -- Umbral Mantle
 	self:Bar(-21311, 15.5, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
-	self:Bar(318078, 32) -- Fixate
+	self:Bar(318078, 31) -- Fixate
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-do
-	local powerPerSec = 1
-	function mod:UNIT_POWER_UPDATE(_, unit)
-		local power = UnitPower(unit)
-		if power > lastPower then -- safety
-			powerPerSec = power - lastPower
-			local nextBreath = math.ceil((100 - power) / powerPerSec)
-			self:Bar(breathId, nextBreath) -- SetOption:306928,306930,306929:::
-		end
+function mod:UNIT_POWER_UPDATE(_, unit)
+	local power = UnitPower(unit)
+	local powerPerSec = power - lastPower
+	lastPower = power
+	if powerPerSec > oldPowerPerSec then
+		oldPowerPerSec = powerPerSec
+		local nextBreath = math.ceil((100 - power) / powerPerSec)
+		self:Bar(breathId, nextBreath) -- SetOption:306928,306930,306929:::
 	end
+end
 
-	function mod:StartBreathBar(spellId)
-		breathId = spellId
-		self:Bar(breathId, math.ceil(100 / powerPerSec)) -- SetOption:306928,306930,306929:::
-	end
+function mod:StartBreathBar(spellId)
+	breathId = spellId
+	self:Bar(breathId, math.ceil(100 / oldPowerPerSec)) -- SetOption:306928,306930,306929:::
 end
 
 do
@@ -118,24 +123,26 @@ do
 		local _, stacks = self:UnitDebuff(args.destName, args.spellId)
 		if stacks > 3 then
 			playerList[#playerList+1] = args.destName
-			if #playerList == 1 then
-				self:Bar(args.spellId, 30.3)
-			end
 			if (self:Healer() and #playerList == 1) or (not self:Healer() and self:Me(args.destName)) then
 				self:PlaySound(args.spellId, "info")
 			end
-			self:TargetsMessage(args.spellId, "yellow", playerList)
+			self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, spitCount))
+			if #playerList == 1 then
+				spitCount = spitCount + 1
+				self:Bar(args.spellId, 30.3, CL.count:format(args.spellName, spitCount))
+			end
 		end
 	end
 end
 
 function mod:Fixate(args)
-	self:TargetMessage2(args.spellId, "red", args.destName)
+	self:TargetMessage2(args.spellId, "red", args.destName, CL.count:format(args.spellName, fixateCount))
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:Say(args.spellId)
 	end
-	self:Bar(args.spellId, 31)
+	fixateCount = fixateCount + 1
+	self:Bar(args.spellId, 31, CL.count:format(args.spellName, fixateCount))
 end
 
 function mod:CrushAndDissolveStart(args)
@@ -143,7 +150,7 @@ function mod:CrushAndDissolveStart(args)
 	self:CastBar(args.spellId == 307476 and 307471 or 307472, 2.5, CL.count:format(args.spellName, crushAndDissolveCount))
 	crushAndDissolveCount = crushAndDissolveCount + 1
 	if crushAndDissolveCount % 3 == 1 then
-		self:Bar(-21311, 23, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
+		self:CDBar(-21311, 20, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
 	end
 end
 
@@ -184,8 +191,8 @@ function mod:EntropicMantle(args)
 	self:StopBar(306448) -- Umbral Mantle
 	self:StopBar(306928) -- Umbral Breath
 	self:StartBreathBar(306930) -- Entropic Breath
-	self:Bar(307358, 10.5) -- Debilitating Spit
-	self:Bar(-21311, 15.4, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
+	self:Bar(307358, 12.5) -- Debilitating Spit
+	self:CDBar(-21311, 15.4, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
 end
 
 function mod:NoxiousMantle(args)
@@ -194,7 +201,7 @@ function mod:NoxiousMantle(args)
 	self:StopBar(306930) -- Entropic Breath
 	self:StartBreathBar(306929) -- Bubbling Breath
 	self:Bar(307358, 11.5) -- Debilitating Spit
-	self:Bar(-21311, 15.4, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
+	self:CDBar(-21311, 21, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
 end
 
 function mod:FrenzyApplied(args)
