@@ -138,7 +138,7 @@ function mod:BurningCataclysm(args)
 	if cataclysmCount < 3 then -- Stage 2 isn't coming yet, so start bars
 		self:Bar(306289, 60) -- Gale Blast
 		self:Bar(306163, 24.1, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
-		self:Bar(313973, 26.8) -- Searing Breath
+		self:Bar(305978, 26.8) -- Searing Breath
 	end
 end
 
@@ -155,7 +155,7 @@ function mod:SmokeandMirrorsRemoved(args)
 	incinerationCount = 1
 
 	self:Bar(306163, 10.2, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
-	self:Bar(313973, 14.1) -- Searing Breath
+	self:Bar(305978, 14.1) -- Searing Breath
 	self:Bar(306289, 45) -- Gale Blast
 	self:Bar(306735, 50) -- Burning Cataclysm
 	self:Bar("stages", 160, CL.stage:format(2), 306995) -- Smoke and Mirrors
