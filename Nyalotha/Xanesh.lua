@@ -1,9 +1,4 @@
 --------------------------------------------------------------------------------
--- TODO:
---
---
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -11,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Dark Inquisitor Xanesh", 2217, 2377)
 if not mod then return end
 mod:RegisterEnableMob(156575) -- Dark Inquisitor Xanesh
 mod.engageId = 2328
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -59,10 +54,10 @@ function mod:OnEngage()
 	flayCount = 1
 	tormentCount = 1
 
-	self:Bar(306319, 12, CL.count:format(self:SpellName(306319), flayCount)) -- Soul Flay (1)
-	self:Bar(306208, 20.5, CL.count:format(self:SpellName(306208), tormentCount)) -- Torment (1)
+	self:CDBar(306319, 16.9, CL.count:format(self:SpellName(306319), flayCount)) -- Soul Flay (1)
+	self:CDBar(306208, 20.5, CL.count:format(self:SpellName(306208), tormentCount)) -- Torment (1)
 	self:Bar(311551, 30) -- Abyssal Strike
-	self:Bar(312336, 51, CL.count:format(self:SpellName(312336), ritualCount)) -- Void Ritual (1)
+	self:Bar(312336, 61, CL.count:format(self:SpellName(312336), ritualCount)) -- Void Ritual (1)
 end
 
 --------------------------------------------------------------------------------
@@ -74,7 +69,7 @@ function mod:VoidRitualStart(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, ritualCount))
 	ritualCount = ritualCount + 1
-	self:Bar(args.spellId, 80, CL.count:format(args.spellName, ritualCount))
+	self:Bar(args.spellId, 95.5, CL.count:format(args.spellName, ritualCount))
 end
 
 do
@@ -105,10 +100,11 @@ function mod:AbyssalStrikeApplied(args)
 end
 
 function mod:SoulFlayStart(args)
+	self:StopBar(CL.count:format(args.spellName, flayCount))
 	self:Message2(args.spellId, "yellow",  CL.count:format(args.spellName, flayCount))
 	self:PlaySound(args.spellId, "alert")
 	flayCount = flayCount + 1
-	self:Bar(args.spellId, 46.5, CL.count:format(args.spellName, flayCount))
+	self:CDBar(args.spellId, 60, CL.count:format(args.spellName, flayCount))
 end
 
 function mod:SoulFlayAddStart(args)
@@ -123,10 +119,11 @@ function mod:SoulFlayApplied(args)
 end
 
 function mod:Torment(args)
+	self:StopBar(CL.count:format(args.spellName, tormentCount))
 	self:Message2(args.spellId, "yellow",  CL.count:format(args.spellName, tormentCount))
 	self:PlaySound(args.spellId, "long")
 	tormentCount = tormentCount + 1
-	self:Bar(args.spellId, tormentCount % 2 == 0 and 50.5 or 30.5, CL.count:format(args.spellName, tormentCount))
+	self:CDBar(args.spellId, tormentCount % 2 == 0 and 65.5 or 30.5, CL.count:format(args.spellName, tormentCount))
 end
 
 do
