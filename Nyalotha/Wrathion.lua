@@ -29,7 +29,7 @@ local cataclysmCount = 1
 function mod:GetOptions()
 	return {
 		"stages",
-		313973, -- Searing Breath
+		305978, -- Searing Breath
 		{306163, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Incineration
 		306289, -- Gale Blast
 		306735, -- Burning Cataclysm
@@ -40,7 +40,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Burning Cataclysm, Burning Madness
 
-	self:Log("SPELL_CAST_START", "SearingBreath", 313973)
+	self:Log("SPELL_CAST_START", "SearingBreath", 305978)
 	self:Log("SPELL_AURA_APPLIED", "SearingArmorApplied", 306015) -- Searing Armor
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingArmorApplied", 306015) -- Searing Armor
 	self:Log("SPELL_CAST_SUCCESS", "IncinerationSuccess", 306111)
@@ -59,9 +59,10 @@ function mod:OnEngage()
 	incinerationCount = 1
 	cataclysmCount = 1
 
-	self:Bar(313973, 7.1) -- Searing Breath
+	self:Bar(305978, 7.1) -- Searing Breath
 	self:Bar(306163, 14.2, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
-	self:Bar(306735, 60) -- Burning Cataclysm
+	self:Bar(306289, 48) -- Gale Blast
+	self:Bar(306735, 53) -- Burning Cataclysm
 	self:Bar("stages", 160, CL.stage:format(2), 306995) -- Smoke and Mirrors
 end
 
@@ -81,7 +82,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	elseif msg:find("307013", nil, true) then -- Burning Madness
 		self:Message2(307013, "red")
 		self:PlaySound(307013, "warning")
-		self:CastBar(307013, 5.8)
+		self:CastBar(307013, 8)
 	end
 end
 
@@ -96,7 +97,7 @@ end
 function mod:SearingArmorApplied(args)
 	if self:Me(args.destGUID) or (self:Tank() and self:Tank(args.destName)) then
 		local amount = args.amount or 1
-		self:StackMessage(313973, args.destName, amount, "purple", self:Tank() and (amount > 1 and "Warning") or not self:Tank() and "Warning") -- Warning sound for non-tanks, 2+ stacks warning for tanks
+		self:StackMessage(305978, args.destName, amount, "purple", self:Tank() and (amount > 1 and "Warning") or not self:Tank() and "Warning") -- Warning sound for non-tanks, 2+ stacks warning for tanks
 	end
 end
 
@@ -135,7 +136,7 @@ end
 function mod:BurningCataclysm(args)
 	self:CastBar(args.spellId, 8)
 	if cataclysmCount < 3 then -- Stage 2 isn't coming yet, so start bars
-		--self:Bar(306289, 18) -- Gale Blast
+		self:Bar(306289, 60) -- Gale Blast
 		self:Bar(306163, 24.1, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
 		self:Bar(313973, 26.8) -- Searing Breath
 	end
@@ -155,6 +156,7 @@ function mod:SmokeandMirrorsRemoved(args)
 
 	self:Bar(306163, 10.2, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
 	self:Bar(313973, 14.1) -- Searing Breath
+	self:Bar(306289, 45) -- Gale Blast
 	self:Bar(306735, 50) -- Burning Cataclysm
 	self:Bar("stages", 160, CL.stage:format(2), 306995) -- Smoke and Mirrors
 end
