@@ -72,6 +72,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DissolveApplied", 307472)
 
 	self:Log("SPELL_CAST_START", "Breath", 306928, 306930, 306929) -- Umbral, Entropic, Bubbling Breath
+	self:Log("SPELL_CAST_SUCCESS", "BreathSuccess", 306928, 306930, 306929) -- Umbral, Entropic, Bubbling Breath
 
 	self:Log("SPELL_AURA_APPLIED", "UmbralMantle", 306448)
 
@@ -120,17 +121,14 @@ end
 do
 	local playerList = mod:NewTargetList()
 	function mod:DebilitatingSpit(args)
-		local _, stacks = self:UnitDebuff(args.destName, args.spellId)
-		if stacks > 3 then
-			playerList[#playerList+1] = args.destName
-			if (self:Healer() and #playerList == 1) or (not self:Healer() and self:Me(args.destName)) then
-				self:PlaySound(args.spellId, "info")
-			end
-			self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, spitCount))
-			if #playerList == 1 then
-				spitCount = spitCount + 1
-				self:Bar(args.spellId, 30.3, CL.count:format(args.spellName, spitCount))
-			end
+		playerList[#playerList+1] = args.destName
+		if (self:Healer() and #playerList == 1) or (not self:Healer() and self:Me(args.destName)) then
+			self:PlaySound(args.spellId, "info")
+		end
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, spitCount))
+		if #playerList == 1 then
+			spitCount = spitCount + 1
+			self:Bar(args.spellId, 30.3, CL.count:format(args.spellName, spitCount))
 		end
 	end
 end
@@ -169,6 +167,10 @@ end
 function mod:Breath(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
+	self:CastBar(args.spellId, args.spellId == 306928 and 4 or args.spellId == 306930 and 0.5 or 306929)
+end
+
+function mod:BreathSuccess(args)
 	self:StartBreathBar(args.spellId)
 end
 
