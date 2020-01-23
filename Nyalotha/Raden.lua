@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Timers after absorbing orbs
@@ -41,7 +40,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage 1
-		{311551, "TANK"}, -- Nullifying Strike
+		{306819, "TANK"}, -- Nullifying Strike
 		"essences", -- Void/Vita Essences (Mythic: +Nightmare)
 		306732, -- Vita Empowered
 		306273, -- Unstable Vita
@@ -61,7 +60,7 @@ function mod:GetOptions()
 		315252, -- Dread Inferno
 	},{
 		["stages"] = "general",
-		[311551] = CL.stage:format(1),
+		[306819] = CL.stage:format(1),
 		[313213] = CL.stage:format(2),
 		[312996] = CL.mythic,
 	}
@@ -69,8 +68,8 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NullifyingStrikeStart", 306819)
-	self:Log("SPELL_AURA_APPLIED", "NullifyingStrikeApplied", 311551)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "NullifyingStrikeApplied", 311551)
+	self:Log("SPELL_AURA_APPLIED", "NullifyingStrikeApplied", 306819)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "NullifyingStrikeApplied", 306819)
 	self:Log("SPELL_CAST_SUCCESS", "Essences", 306090, 306168, 312750) -- Draw Vita, Void, Nightmare
 
 	-- Vita
@@ -107,17 +106,17 @@ function mod:OnEngage()
 	voidEruptionCount = 1
 
 	self:Bar("essences", 10, CL.count:format(L.essences, essenceCount), L.essences_icon) -- Essences (1)
-	--self:Bar(306819, 17) -- Nullifying Strike
+	self:Bar(306819, 15.8) -- Nullifying Strike
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:NullifyingStrikeStart()
-	self:Message2(311551, "purple")
-	self:PlaySound(311551, "alarm")
-	self:Bar(311551, 17)
+function mod:NullifyingStrikeStart(args)
+	self:Message2(args.spellId, "purple")
+	self:PlaySound(args.spellId, "alarm")
+	self:Bar(args.spellId, 17)
 end
 
 function mod:NullifyingStrikeApplied(args)
@@ -133,10 +132,11 @@ do
 	function mod:Essences(args)
 		local t = args.time
 		if t-prev > 2 then
+			prev = t
 			self:Message2("essences", "red", CL.incoming:format(CL.count:format(L.essences, essenceCount)), false)
 			self:PlaySound("essences", "warning")
 			essenceCount = essenceCount + 1
-			self:Bar("essences", 46, CL.count:format(L.essences, essenceCount), L.essences_icon)
+			self:Bar("essences", 55.5, CL.count:format(L.essences, essenceCount), L.essences_icon)
 		end
 	end
 end
@@ -184,7 +184,7 @@ function mod:VoidCollapse(args)
 end
 
 function mod:VoidHunterDeath(args)
-	self:StopBar(306881, 11)
+	self:StopBar(306881)
 end
 
 -- Stage 2
@@ -193,6 +193,10 @@ function mod:Ruin()
 	self:PlaySound("stages", "long")
 	self:Message2("stages", "cyan", CL.stage:format(stage), false)
 	voidEruptionCount = 1
+
+	self:Bar(313213, 6) -- Decaying Strike
+	self:Bar(310003, 12.1) -- Void Eruption
+	self:Bar(310019, 4.8) -- Charged Bonds
 end
 
 function mod:DecayingStrikeStart(args)
@@ -210,7 +214,7 @@ function mod:VoidEruption(args)
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, voidEruptionCount))
 	self:PlaySound(args.spellId, "alert")
 	voidEruptionCount = voidEruptionCount + 1
-	self:Bar(args.spellId, voidEruptionCount % 2 == 0 and 20 or 25, CL.count:format(args.spellName, voidEruptionCount))
+	self:Bar(args.spellId, 19.4, CL.count:format(args.spellName, voidEruptionCount))
 end
 
 function mod:ChargedBonds()

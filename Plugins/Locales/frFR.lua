@@ -50,6 +50,12 @@ L.bars = "Barres"
 L.style = "Style"
 L.bigWigsBarStyleName_Default = "Défaut"
 
+-- L.nameplateBars = "Nameplate Bars"
+-- L.nameplateAutoWidth = "Match width of nameplate"
+-- L.nameplateAutoWidthDesc = "Sets the width of nameplate bars to the with of their parent nameplate."
+-- L.nameplateOffsetY = "Y Offset"
+-- L.nameplateOffsetYDesc = "Offset from the top of the nameplate for upwards bars and the bottom of the nameplate for downwards bars."
+
 L.clickableBars = "Barres cliquables"
 L.clickableBarsDesc = "Par défaut, les barres de BigWigs ignorent la souris. Vous pouvez ainsi cibler ou lancer des sorts de zone derrière elles, changer l'angle de la caméra, ... tandis que votre curseur survole les barres. |cffff4411Si vous activez ceci, tout cela ne sera plus d'application.|r Les barres intercepteront tout clic que vous effectuez sur elles.\n"
 L.interceptMouseDesc = "Permet aux barres de recevoir les clics de la souris."

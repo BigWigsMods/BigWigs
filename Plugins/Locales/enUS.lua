@@ -50,6 +50,12 @@ L.bars = "Bars"
 L.style = "Style"
 L.bigWigsBarStyleName_Default = "Default"
 
+L.nameplateBars = "Nameplate Bars"
+L.nameplateAutoWidth = "Match width of nameplate"
+L.nameplateAutoWidthDesc = "Sets the width of nameplate bars to the with of their parent nameplate."
+L.nameplateOffsetY = "Y Offset"
+L.nameplateOffsetYDesc = "Offset from the top of the nameplate for upwards bars and the bottom of the nameplate for downwards bars."
+
 L.clickableBars = "Clickable Bars"
 L.clickableBarsDesc = "BigWigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
 L.interceptMouseDesc = "Enables bars to receive mouse clicks."
