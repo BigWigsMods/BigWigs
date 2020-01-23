@@ -12,22 +12,19 @@ local mod, CL = BigWigs:NewBoss("The Hivemind", 2217, 2372)
 if not mod then return end
 mod:RegisterEnableMob(157253, 157254) -- Ka'zir, Tek'ris
 mod.engageId = 2333
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 local acidicAqirCount = 1
-local acidicAqirTimers = {19.5, 30.0, 40.0, 20.0, 25.0, 35.0, 30.0, 100.5, 30.0, 40.0, 20.0, 25.0, 35.0, 30.0}
-
-local mindNumbingNovaCount = 1
-local mindNumbingNovaTimers = {10.0, 50.0, 40.0, 45.0, 45.0, 100.5, 50.0, 40.0, 45.0, 45.0}
+local acidicAqirTimers = {56.3, 65.0, 60.0, 62.5, 62.5, 62.5, 62.5} -- Heroic
 
 local nullificationBlastCount = 1
-local nullificationBlastTimers = {27.0, 28.0, 45.0, 25.0, 25.0, 32.0, 18.0, 25.0, 82.5, 28.0, 45.0, 25.0, 25.0, 32.0}
+local nullificationBlastTimers = {26.3, 27.5, 23.8, 50.0, 25.0, 25.0, 26.3, 25.1, 24.9, 30.0, 25.0, 25.0, 25.0, 24.9, 25.0, 25.0}
 
 local echoingVoidCount = 1
-local echoingVoidTimers = {64.0, 16.0, 40.0, 45.0, 95.0, 84.5, 16.0, 40.0, 45.0}
+local echoingVoidTimers = {33.9, 66.1, 37.5, 72.6, 65.0, 68.7, 68.8, 13.8}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -80,7 +77,7 @@ function mod:OnEngage()
 	echoingVoidCount = 1
 
 	self:Bar(310340, acidicAqirTimers[acidicAqirCount]) -- Spawn Acidic Aqir
-	self:Bar(313652, mindNumbingNovaTimers[mindNumbingNovaCount]) -- Mind-Numbing Nova
+	self:Bar(313652, 15) -- Mind-Numbing Nova
 	self:Bar(307968, nullificationBlastTimers[nullificationBlastCount]) -- Nullification Blast
 	self:Bar(307232, echoingVoidTimers[echoingVoidCount]) -- Echoing Void
 end
@@ -92,14 +89,14 @@ end
 function mod:KazirsHivemindControl(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
-	self:Bar(307213, 70) -- Tek'ris's Hivemind Control
+	self:Bar(307213, 93.5) -- Tek'ris's Hivemind Control
 end
 
 
 function mod:TekrissHivemindControl(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
-	self:Bar(307201, 70) -- Ka'zir's Hivemind Control
+	self:Bar(307201, 93.5) -- Ka'zir's Hivemind Control
 end
 
 do
@@ -135,8 +132,7 @@ function mod:MindNumbingNovaStart(args)
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
-	mindNumbingNovaCount = mindNumbingNovaCount + 1
-	self:Bar(args.spellId, mindNumbingNovaTimers[mindNumbingNovaCount])
+	self:Bar(args.spellId, 15)
 end
 
 function mod:AcceleratedEvolution(args)
