@@ -39,6 +39,7 @@ local anguishCount = 1
 local evokeAnguishTimers = {13, 46.2, 32.0, 30.4, 35.3, 35.3}
 local harvesterCount = 1
 local harvesterTimers = {15.5, 25, 45, 	31, 4, 31.8, 4, 30, 4}
+local mindgraspCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -142,7 +143,8 @@ function mod:OnEngage()
 	synapticShockCounter = 0
 	shatteredPsycheCount = 1
 	mindwrackCount = 1
-	mindGateCount = 1
+	mindgateCount = 1
+	mindgraspCount = 1
 end
 
 --------------------------------------------------------------------------------
@@ -167,8 +169,8 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			if self:Tank() then
 				self:NameplateBar(316711, 3, guid) -- Mindwrack
 			end
-			self:Message2(args.spellId, "yellow", CL.count:format(self:SpellName(-21491), harvesterCount), "achievement_boss_heraldofnzoth")
-			self:PlaySound(args.spellId, "info")
+			self:Message2(-21491, "yellow", CL.count:format(self:SpellName(-21491), harvesterCount), "achievement_boss_heraldofnzoth")
+			self:PlaySound(-21491, "info")
 			harvesterCount = harvesterCount + 1
 			self:Bar(-21491, harvesterTimers[harvesterCount], CL.count:format(self:SpellName(-21491), harvesterCount), "achievement_boss_heraldofnzoth") -- Thought Harvester
 		end
@@ -250,12 +252,12 @@ do
 			prev = t
 			self:StopBar(CL.count:format(self:SpellName(310184), creepingAnguishCount)) -- Creeping Anguish
 			self:StopBar(CL.count:format(self:SpellName(313184), synapticShockCounter), psychusName) -- Synaptic Shock
-			self:StopBar(CL.count:format(self:SpellName(315927), paranoiaCount))
+			self:StopBar(CL.count:format(self:SpellName(315927), paranoiaCount)) -- Paranoia
 
 			self:Message2(args.spellId, "green", CL.count:format(args.spellName, shatteredPsycheCount))
 			self:PlaySound(args.spellId, "long")
-			shatteredPsycheCount = shatteredPsycheCount + 1
 			self:CastBar(args.spellId, 30, CL.count:format(args.spellName, shatteredPsycheCount))
+			shatteredPsycheCount = shatteredPsycheCount + 1
 
 			creepingAnguishCount = 0
 			synapticShockCounter = 0
@@ -294,14 +296,14 @@ function mod:ShatteredPsycheRemoved()
 		self:Bar(315772, 7.1) -- Mindgrasp
 		self:Bar(318449, 35.5, CL.count:format(self:SpellName(318449), eternalTormentCount)) -- Eternal Torment
 		self:Bar(315927, 47.3, CL.count:format(self:SpellName(315927), paranoiaCount)) -- Paranoia
-		self:Bar(316463, 68, CL.count:format(self:SpellName(310184), mindgateCount)) -- Mindgate
+		self:Bar(316463, 68, CL.count:format(self:SpellName(316463), mindgateCount)) -- Mindgate
 	end
 end
 
 function mod:Mindgrasp(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, mindgraspCount))
 	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 12)
+	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, mindgraspCount))
 end
 
 function mod:Paranoia(args)
@@ -343,13 +345,13 @@ function mod:EternalTorment(args)
 end
 
 function mod:Mindgate(args)
-	self:Message2(args.spellId, "green", CL.count:format(args.spellName, mindGateCount))
+	self:Message2(args.spellId, "green", CL.count:format(args.spellName, mindgateCount))
 	self:PlaySound(args.spellId, "long")
-	if mindGateCount == 1 then
+	if mindgateCount == 1 then
 		self:Bar(312866, 31.5) -- Cataclysmic Flames
 	end
-	mindGateCount = mindGateCount + 1
-	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, mindGateCount))
+	mindgateCount = mindgateCount + 1
+	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, mindgateCount))
 end
 
 function mod:CataclysmicFlames(args)
@@ -360,7 +362,7 @@ end
 
 function mod:VoidLash(args)
 	self:Message2(args.spellId, "purple")
-	self:PlaySound(args.spellId, "alart")
+	self:PlaySound(args.spellId, "alert")
 	self:NameplateBar(args.spellId, 23, args.sourceGUID)
 end
 
