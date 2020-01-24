@@ -73,6 +73,57 @@ local valid_methods = {
 for k in next, color_methods do valid_methods[k] = true end
 for k in next, sound_methods do valid_methods[k] = true end
 
+local log_events = {
+	["SWING_DAMAGE"] = true,
+	["SWING_MISSED"] = true,
+	["RANGE_DAMAGE"] = true,
+	["RANGE_MISSED"] = true,
+	["SPELL_ABSORBED"] = true,
+	["SPELL_AURA_APPLIED"] = true,
+	["SPELL_AURA_APPLIED_DOSE"] = true,
+	["SPELL_AURA_BROKEN"] = true,
+	["SPELL_AURA_BROKEN_SPELL"] = true,
+	["SPELL_AURA_REFRESH"] = true,
+	["SPELL_AURA_REMOVED"] = true,
+	["SPELL_AURA_REMOVED_DOSE"] = true,
+	["SPELL_CAST_FAILED"] = true,
+	["SPELL_CAST_START"] = true,
+	["SPELL_CAST_SUCCESS"] = true,
+	["SPELL_CREATE"] = true,
+	["SPELL_DAMAGE"] = true,
+	["SPELL_DISPEL"] = true,
+	["SPELL_DISPEL_FAILED"] = true,
+	["SPELL_DRAIN"] = true,
+	["SPELL_DURABILITY_DAMAGE"] = true,
+	["SPELL_DURABILITY_DAMAGE_ALL"] = true,
+	["SPELL_ENERGIZE"] = true,
+	["SPELL_EXTRA_ATTACKS"] = true,
+	["SPELL_HEAL"] = true,
+	["SPELL_INSTAKILL"] = true,
+	["SPELL_INTERRUPT"] = true,
+	["SPELL_LEECH"] = true,
+	["SPELL_MISSED"] = true,
+	["SPELL_RESURRECT"] = true,
+	["SPELL_STOLEN"] = true,
+	["SPELL_SUMMON"] = true,
+	["SPELL_PERIODIC_DAMAGE"] = true,
+	["SPELL_PERIODIC_DRAIN"] = true,
+	["SPELL_PERIODIC_ENERGIZE"] = true,
+	["SPELL_PERIODIC_HEAL"] = true,
+	["SPELL_PERIODIC_LEECH"] = true,
+	["SPELL_PERIODIC_MISSED"] = true,
+	["SPELL_BUILDING_DAMAGE"] = true,
+	["SPELL_BUILDING_HEAL"] = true,
+	["ENVIRONMENTAL_DAMAGE"] = true,
+	["DAMAGE_SHIELD"] = true,
+	["DAMAGE_SHIELD_MISSED"] = true,
+	["DAMAGE_SPLIT"] = true,
+	["PARTY_KILL"] = true,
+	["UNIT_DIED"] = true,
+	["UNIT_DESTROYED"] = true,
+	["UNIT_DISSIPATES"] = true,
+}
+
 -- Set an exit code if we show an error.
 local exit_code = 0
 local error, warn
@@ -450,6 +501,9 @@ local function parseLua(file)
 		-- that was entered when a message function is called.
 		local event, callback, spells = line:match("self:Log%(\"(.-)\"%s*,%s*(.-)%s*,%s*([^)]*)%)")
 		if event then
+			if not log_events[event] then
+				error(string.format("    %s:%d: Invalid Log event \"%s\"", file_name, n, event))
+			end
 			if callback ~= "nil" then
 				callback = unquote(callback)
 			else
