@@ -133,8 +133,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-
-	self:Message2("stages", "cyan", "test")
 	wipe(mobCollector)
 	wipe(corruptedMindCount)
 
