@@ -167,6 +167,7 @@ do
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, spitCount))
 		if #playerList == 1 then
+			self:StopBar(CL.count:format(args.spellName, spitCount))
 			spitCount = spitCount + 1
 			self:Bar(args.spellId, 30.3, CL.count:format(args.spellName, spitCount))
 		end
