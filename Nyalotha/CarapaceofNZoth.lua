@@ -133,7 +133,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 			self:Message2("stages", "cyan", CL.stage:format(3), false)
 			self:PlaySound("stages", "long")
 			--self:Bar(-21069, 22.2, nil, 315673) -- Thrashing Tentacle
-			self:StartThrashingTentacleTimer(26)
+			self:StartThrashingTentacleTimer(32)
 			self:Bar(313039, 54) -- Infinite Darkness
 		end
 	elseif spellId == 315673 then -- Thrashing Tentacle, Blizz removed this for live servers - maybe it comes back?
@@ -256,8 +256,9 @@ function mod:InfiniteDarkness(args)
 end
 
 function mod:StartThrashingTentacleTimer(t)
-	self:Bar(-21069, t, nil, 315673)
+	self:CDBar(-21069, t, nil, 315673)
 	self:ScheduleTimer("Message2", t, -21069, "red", CL.incoming:format(self:SpellName(-21069)), 315673)
+	self:ScheduleTimer("CastBar", t, -21069, 6, 304077, 272713) -- Tentacle Slam
 	self:ScheduleTimer("PlaySound", t, -21069, "alert")
 	self:ScheduleTimer("StartThrashingTentacleTimer", t, 20)
 end
