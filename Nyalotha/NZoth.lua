@@ -239,6 +239,7 @@ function mod:SynapticShockApplied(args)
 end
 
 function mod:SynapticShockRemoved(args)
+	self:StopBar(CL.count:format(args.spellName, synapticShockCounter), psychusName)
 	synapticShockCounter = 0
 end
 
@@ -358,10 +359,17 @@ function mod:CataclysmicFlames(args)
 	self:Bar(args.spellId, 24.3)
 end
 
-function mod:VoidLash(args)
-	self:Message2(args.spellId, "purple")
-	self:PlaySound(args.spellId, "alert")
-	self:NameplateBar(args.spellId, 23, args.sourceGUID)
+do
+	local prev = 0
+	function mod:VoidLash(args)
+		local t = args.time
+		if t-prev > 2 then -- 2 Tentacles are up in the same wave, cast within 1s
+			prev = t
+			self:Message2(args.spellId, "purple")
+			self:PlaySound(args.spellId, "alert")
+			self:CDBar(args.spellId, 23)
+		end
+	end
 end
 
 function mod:TumultuousBurst(args)
@@ -381,7 +389,7 @@ function mod:CorruptedMind(args)
 		end
 	end
 	corruptedMindCount[args.sourceGUID] = corruptedMindCount[args.sourceGUID] + 1
-	self:NameplateBar(args.spellId, 5, args.sourceGUID, CL.count:format(args.spellName, corruptedMindCount[args.sourceGUID]))
+	self:NameplateBar(args.spellId, 5, args.sourceGUID)
 end
 
 function mod:CorruptedMindApplied(args)
