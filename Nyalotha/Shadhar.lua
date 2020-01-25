@@ -25,6 +25,16 @@ local oldPowerPerSec = 1
 local breathId = 306928
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.custom_on_stop_timers = "Always show ability bars"
+	L.custom_on_stop_timers_desc = "Shad'har randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -32,6 +42,7 @@ function mod:GetOptions()
 	return {
 		--[[ General ]]--
 		"stages",
+		"custom_on_stop_timers",
 		306953, -- Debilitating Spit
 		{318078, "SAY"}, -- Fixate
 
@@ -84,6 +95,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 314736) -- Bubbling Overflow
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 314736)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 314736)
+
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
 
 function mod:OnEngage()
@@ -101,6 +114,33 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local abilitysToPause = {
+		[306928] = true, -- Umbral Breath
+		[306930] = true, -- Entropic Breath
+		[306929] = true, -- Bubbling Breath
+		[306953] = true, -- Debilitating Spit
+		[-21311] = true, -- Crush and Dissolve
+	}
+
+	local castPattern = CL.cast:gsub("%%s", ".+")
+
+	local function stopAtZeroSec(bar)
+		if bar.remaining < 0.15 then -- Pause at 0.0
+			bar:SetDuration(0.01) -- Make the bar look full
+			bar:Start()
+			bar:Pause()
+			bar:SetTimeVisibility(false)
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, _, key, text)
+		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
+			bar:AddUpdateFunction(stopAtZeroSec)
+		end
+	end
+end
 
 function mod:UNIT_POWER_UPDATE(_, unit)
 	local power = UnitPower(unit)
@@ -145,6 +185,10 @@ end
 
 function mod:CrushAndDissolveStart(args)
 	self:StopBar(CL.count:format(self:SpellName(-21311), crushAndDissolveCount))
+	self:Message2(args.spellId == 307476 and 307471 or 307472, args.spellId == 307476 and "purple" or "cyan", CL.casting:format(args.spellName))
+	if self:Tank() then
+		self:PlaySound(args.spellId, "alarm")
+	end
 	self:CastBar(args.spellId == 307476 and 307471 or 307472, 2.5, CL.count:format(args.spellName, crushAndDissolveCount))
 	crushAndDissolveCount = crushAndDissolveCount + 1
 	if crushAndDissolveCount % 3 == 1 then
@@ -155,7 +199,7 @@ end
 function mod:CrushApplied(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	self:PlaySound(args.spellId, "alarm")
+	self:PlaySound(args.spellId, "info")
 end
 
 function mod:DissolveApplied(args)
@@ -167,7 +211,7 @@ end
 function mod:Breath(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
-	self:CastBar(args.spellId, args.spellId == 306928 and 4 or args.spellId == 306930 and 0.5 or 306929)
+	self:CastBar(args.spellId, args.spellId == 306930 and 0.5 or 4)
 end
 
 function mod:BreathSuccess(args)
