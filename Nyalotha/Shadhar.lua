@@ -187,7 +187,7 @@ function mod:CrushAndDissolveStart(args)
 	self:StopBar(CL.count:format(self:SpellName(-21311), crushAndDissolveCount))
 	self:Message2(args.spellId == 307476 and 307471 or 307472, args.spellId == 307476 and "purple" or "cyan", CL.casting:format(args.spellName))
 	if self:Tank() then
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId == 307476 and 307471 or 307472, "alarm")
 	end
 	self:CastBar(args.spellId == 307476 and 307471 or 307472, 2.5, CL.count:format(args.spellName, crushAndDissolveCount))
 	crushAndDissolveCount = crushAndDissolveCount + 1
