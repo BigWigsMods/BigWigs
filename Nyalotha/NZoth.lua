@@ -19,7 +19,7 @@ mod.engageId = 2344
 
 local mobCollector = {}
 local stage = 1
-local shatteredPsycheCount = 1
+local ShatteredEgoCount = 1
 local psychusName = nil
 local mindwrackCount = 0
 local synapticShockCounter = 0
@@ -27,8 +27,8 @@ local creepingAnguishCount = 1
 local mindgateCount = 1
 local paranoiaCount = 1
 local paranoiaTimers = {
-	{51.1, 56.8, 48.7}, -- After first Shattered Psyche
-	{47.3, 56.0, 63.6}, -- After second Shattered Psyche
+	{51.1, 56.8, 48.7}, -- After first Shattered Ego
+	{47.3, 56.0, 63.6}, -- After second Shattered Ego
 }
 local eternalTormentCount = 1
 local eternalTormentTimers = {35.5, 56.5, 30, 20}
@@ -38,7 +38,7 @@ local glareTimers = {40.7, 67.2, 35.4}
 local anguishCount = 1
 local evokeAnguishTimers = {13, 46.2, 32.0, 30.4, 35.3, 35.3}
 local harvesterCount = 1
-local harvesterTimers = {15.5, 25, 45, 	31, 4, 31.8, 4, 30, 4}
+local harvesterTimers = {15.5, 25, 45, 31, 4, 31.8, 4, 30, 4}
 local mindgraspCount = 1
 
 --------------------------------------------------------------------------------
@@ -50,7 +50,7 @@ if L then
 	L.realm_switch = "Realm Switched" -- When you leave the Mind of N'zoth
 
 	L.custom_on_repeating_paranoia_say = "Repeating Paranoia Say"
-	L.custom_on_repeating_paranoia_say_desc = "Spam a say message in chat to be avoided while you have paranoia"
+	L.custom_on_repeating_paranoia_say_desc = "Spam a say message in chat to be avoided while you have paranoia."
 	L.custom_on_repeating_paranoia_say_icon = 315927
 end
 
@@ -64,11 +64,11 @@ function mod:GetOptions()
 		"stages",
 		{313609, "SAY_COUNTDOWN"}, -- Gift of N'zoth
 		-- Stage 1
-		316711, -- Mind Wrack
+		316711, -- Mindwrack
 		310184, -- Creeping Anquish
 		309991, -- Anguish
 		313184, -- Synaptic Shock
-		312155, -- Shattered Psyche
+		312155, -- Shattered Ego
 		-- Stage 2
 		315772, -- Mindgrasp
 		{315927, "SAY"}, -- Paranoia
@@ -84,6 +84,16 @@ function mod:GetOptions()
 		317102, -- Evoke Anguish
 		-21491, -- Thought Harvester
 		317066, -- Harvest Thoughts
+	}, {
+		["stages"] = CL.general,
+		[313609] = -20936, -- Sanity
+		[316711] = -21273, -- Psychus
+		[315772] = -21485, -- N'Zoth
+		[312866] = 315772, -- Mindgate
+		[309698] = -21286, -- Basher Tentacle
+		[313400] = -21441, -- Corruptor Tentacle
+		[318976] = -20767, -- Stage Three: Convergence
+		[-21491] = -21491, -- Thought Harvester
 	}
 end
 
@@ -100,12 +110,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SynapticShockApplied", 313184)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SynapticShockApplied", 313184)
 	self:Log("SPELL_AURA_REMOVED", "SynapticShockRemoved", 313184)
-	self:Log("SPELL_AURA_APPLIED", "ShatteredPsyche", 312155)
+	self:Log("SPELL_AURA_APPLIED", "ShatteredEgo", 312155)
 	self:Log("SPELL_AURA_APPLIED", "InfinitysToll", 319346)
 
 
 	-- Stage 2
-	self:Log("SPELL_AURA_REMOVED", "ShatteredPsycheRemoved", 312155)
+	self:Log("SPELL_AURA_REMOVED", "ShatteredEgoRemoved", 312155)
 	self:Log("SPELL_CAST_START", "Mindgrasp", 315772)
 	self:Log("SPELL_CAST_START", "Paranoia", 315927)
 	self:Log("SPELL_AURA_APPLIED", "ParanoiaApplied", 316541, 316542) -- Applied in order of pairs 1, 1, 2, 2, 3, 3
@@ -139,7 +149,7 @@ function mod:OnEngage()
 	stage = 1
 	creepingAnguishCount = 1
 	synapticShockCounter = 0
-	shatteredPsycheCount = 1
+	ShatteredEgoCount = 1
 	mindwrackCount = 1
 	mindgateCount = 1
 	mindgraspCount = 1
@@ -157,9 +167,9 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		local mobId = self:MobId(guid)
 		if mobId == 158376 and not mobCollector[guid] then -- Psychus
 			mobCollector[guid] = true
-			mindwrackCount = 1
+			mindwrackCount = 0
 
-			self:CDBar(316711, 7.3, CL.count:format(self:SpellName(316711), mindwrackCount)) -- Mindwrack
+			self:CDBar(316711, 7.3, CL.count:format(self:SpellName(316711), (mindwrackCount%3)+1)) -- Mindwrack
 			self:Bar(310184, 12.1, CL.count:format(self:SpellName(310184), creepingAnguishCount)) -- Creeping Anquish
 		elseif mobId == 162933 and not mobCollector[guid] then -- Thought Harvester
 			mobCollector[guid] = true
@@ -205,7 +215,7 @@ function mod:Mindwrack(args)
 			end
 		end
 		mindwrackCount = mindwrackCount + 1
-		self:CDBar(args.spellId, 6, CL.count:format(args.spellName, mindwrackCount))
+		self:CDBar(args.spellId, 6, CL.count:format(args.spellName, (mindwrackCount%3)+1)) -- Only show 1-3 for interrupts
 	elseif self:Tank() then -- Warn tanks about casts in stage 3 with nameplate bars
 		self:Message2(args.spellId, "red")
 		self:PlaySound(args.spellId, "alarm")
@@ -245,7 +255,7 @@ end
 
 do
 	local prev = 0
-	function mod:ShatteredPsyche(args)
+	function mod:ShatteredEgo(args)
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
@@ -253,10 +263,10 @@ do
 			self:StopBar(CL.count:format(self:SpellName(313184), synapticShockCounter), psychusName) -- Synaptic Shock
 			self:StopBar(CL.count:format(self:SpellName(315927), paranoiaCount)) -- Paranoia
 
-			self:Message2(args.spellId, "green", CL.count:format(args.spellName, shatteredPsycheCount))
+			self:Message2(args.spellId, "green", CL.count:format(args.spellName, ShatteredEgoCount))
 			self:PlaySound(args.spellId, "long")
-			self:CastBar(args.spellId, 30, CL.count:format(args.spellName, shatteredPsycheCount))
-			shatteredPsycheCount = shatteredPsycheCount + 1
+			self:CastBar(args.spellId, 30, CL.count:format(args.spellName, ShatteredEgoCount))
+			ShatteredEgoCount = ShatteredEgoCount + 1
 
 			creepingAnguishCount = 0
 			synapticShockCounter = 0
@@ -283,10 +293,10 @@ function mod:ShatteredPsycheRemoved()
 		eternalTormentCount = 1
 
 		-- XXX Add Timer Bar
-		self:Bar(315772, 12) -- Mindgrasp
+		self:Bar(315772, 7.1) -- Mindgrasp
 		self:Bar(318449, 35.5, CL.count:format(self:SpellName(318449), eternalTormentCount)) -- Eternal Torment
 		self:Bar(315927, paranoiaTimers[mindgateCount][paranoiaCount], CL.count:format(self:SpellName(315927), paranoiaCount)) -- Paranoia
-		self:Bar(316463, 68, CL.count:format(self:SpellName(310184), mindgateCount)) -- Mindgate
+		self:Bar(316463, 68, CL.count:format(self:SpellName(316463), mindgateCount)) -- Mindgate
 	elseif stage == 2 and mindgateCount == 2 then -- Stun restart bars only the first time, second time starts stage 3
 		paranoiaCount = 1
 		eternalTormentCount = 1
@@ -306,6 +316,7 @@ function mod:Mindgrasp(args)
 end
 
 function mod:Paranoia(args)
+	paranoiaCount = paranoiaCount + 1
 	self:Bar(args.spellId, paranoiaTimers[mindgateCount][paranoiaCount], CL.count:format(args.spellName, paranoiaCount))
 end
 
@@ -349,8 +360,8 @@ function mod:Mindgate(args)
 	if mindgateCount == 1 then
 		self:Bar(312866, 31.5) -- Cataclysmic Flames
 	end
-	mindgateCount = mindgateCount + 1
 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, mindgateCount))
+	mindgateCount = mindgateCount + 1
 end
 
 function mod:CataclysmicFlames(args)
