@@ -19,10 +19,10 @@ mod.engageId = 2344
 
 local mobCollector = {}
 local stage = 1
-local ShatteredEgoCount = 1
+local shatteredEgoCount = 1
 local psychusName = nil
 local mindwrackCount = 0
-local synapticShockCounter = 0
+local synapticShockCount = 0
 local creepingAnguishCount = 1
 local mindgateCount = 1
 local paranoiaCount = 1
@@ -148,8 +148,8 @@ function mod:OnEngage()
 
 	stage = 1
 	creepingAnguishCount = 1
-	synapticShockCounter = 0
-	ShatteredEgoCount = 1
+	synapticShockCount = 0
+	shatteredEgoCount = 1
 	mindwrackCount = 1
 	mindgateCount = 1
 	mindgraspCount = 1
@@ -241,16 +241,16 @@ end
 function mod:SynapticShockApplied(args)
 	local amount = args.amount or 1
 	psychusName = args.destName
-	self:StopBar(CL.count:format(args.spellName, synapticShockCounter), psychusName)
+	self:StopBar(CL.count:format(args.spellName, synapticShockCount), psychusName)
 	self:StackMessage(args.spellId, args.destName, amount, "green")
 	self:PlaySound(args.spellId, "info")
-	synapticShockCounter = amount
-	self:TargetBar(args.spellId, 20, psychusName, CL.count:format(args.spellName, synapticShockCounter))
+	synapticShockCount = amount
+	self:TargetBar(args.spellId, 20, psychusName, CL.count:format(args.spellName, synapticShockCount))
 end
 
 function mod:SynapticShockRemoved(args)
-	self:StopBar(CL.count:format(args.spellName, synapticShockCounter), psychusName)
-	synapticShockCounter = 0
+	self:StopBar(CL.count:format(args.spellName, synapticShockCount), psychusName)
+	synapticShockCount = 0
 end
 
 do
@@ -260,16 +260,16 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:StopBar(CL.count:format(self:SpellName(310184), creepingAnguishCount)) -- Creeping Anguish
-			self:StopBar(CL.count:format(self:SpellName(313184), synapticShockCounter), psychusName) -- Synaptic Shock
+			self:StopBar(CL.count:format(self:SpellName(313184), synapticShockCount), psychusName) -- Synaptic Shock
 			self:StopBar(CL.count:format(self:SpellName(315927), paranoiaCount)) -- Paranoia
 
-			self:Message2(args.spellId, "green", CL.count:format(args.spellName, ShatteredEgoCount))
+			self:Message2(args.spellId, "green", CL.count:format(args.spellName, shatteredEgoCount))
 			self:PlaySound(args.spellId, "long")
-			self:CastBar(args.spellId, 30, CL.count:format(args.spellName, ShatteredEgoCount))
-			ShatteredEgoCount = ShatteredEgoCount + 1
+			self:CastBar(args.spellId, 30, CL.count:format(args.spellName, shatteredEgoCount))
+			shatteredEgoCount = shatteredEgoCount + 1
 
 			creepingAnguishCount = 0
-			synapticShockCounter = 0
+			synapticShockCount = 0
 		end
 	end
 end
