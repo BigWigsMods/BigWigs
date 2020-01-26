@@ -134,10 +134,10 @@ do
 	local prev = 0
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		if spellId == 307043 then -- Dark Gateway
-			self:Message2(spellId, "cyan")
-			self:PlaySound(spellId, "info")
+			self:Message2(307057, "cyan")
+			self:PlaySound(307057, "info")
 			if nextStageTwoTime < GetTime() + 33 then
-				self:Bar(spellId, 33)
+				self:Bar(307057, 33)
 			end
 		elseif spellId == 307116 then -- Stage 2 // Power of the Chosen
 			-- XXX This spell is casted a few seconds after stage 2 starts, more reliable than energy to start the Decimator bar
