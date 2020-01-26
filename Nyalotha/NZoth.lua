@@ -72,7 +72,7 @@ function mod:GetOptions()
 		312155, -- Shattered Ego
 		-- Stage 2
 		315772, -- Mindgrasp
-		{315927, "SAY"}, -- Paranoia
+		{315927, "SAY", "PROXIMITY"}, -- Paranoia
 		"custom_on_repeating_paranoia_say",
 		318449, -- Eternal Torment
 		316463, -- Mindgate
@@ -318,16 +318,37 @@ function mod:Mindgrasp(args)
 end
 
 do
-	local firstParanoiaTargetGUID, lastParanoiaName = nil, nil
+	local firstParanoiaTargetGUID, lastParanoiaName, mateName = nil, nil, nil
+	local proxList, isOnMe, isCasting = {}, nil, nil
+
+	local function updateProximity(self)
+		if isCasting then -- spread during cast
+			self:OpenProximity(315927, 5)
+		elseif isOnMe and mateName then -- stand with mate
+			self:OpenProximity(315927, 5, mateName, true)
+		elseif #proxList > 0 then -- avoid Paranoias
+			self:OpenProximity(315927, 5, proxList)
+		else -- no more Paranoias, so we're done
+			self:CloseProximity(315927)
+		end
+	end
+
 	function mod:Paranoia(args)
+		wipe(proxList)
+		isOnMe = nil
+		mateName = nil
+		isCasting = true
 		firstParanoiaTargetGUID = nil
 		paranoiaCount = paranoiaCount + 1
 		self:Bar(args.spellId, paranoiaTimers[shatteredEgoCount-1][paranoiaCount], CL.count:format(args.spellName, paranoiaCount))
+		updateProximity(self)
 	end
 
 	local sayTimer, paranoiaFallbackTimer = nil, nil
 	function mod:ParanoiaApplied(args)
+		isCasting = false
 		if self:Me(args.destGUID) then
+			isOnMe = true
 			self:Say(315927, args.spellName, true)
 			self:PlaySound(315927, "warning")
 			if self:GetOption("custom_on_repeating_paranoia_say") then
@@ -344,8 +365,10 @@ do
 		elseif args.spellId == 316541 and firstParanoiaTargetGUID then -- Paranoia 2
 			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
 				self:Message2(315927, "blue", CL.link:format(self:ColorName(lastParanoiaName)))
+				mateName = lastParanoiaName
 			elseif self:Me(firstParanoiaTargetGUID) then -- We got 1st debuff so this is our mate
 				self:Message2(315927, "blue", CL.link:format(self:ColorName(args.destName)))
+				mateName = args.destName
 			end
 			firstParanoiaTargetGUID = nil
 			if paranoiaFallbackTimer then -- We printed above, so cancel this
@@ -362,6 +385,10 @@ do
 			end
 			firstParanoiaTargetGUID = nil
 		end
+
+		proxList[#proxList+1] = args.destName
+
+		updateProximity(self)
 	end
 
 	function mod:ParanoiaRemoved(args)
@@ -373,6 +400,10 @@ do
 				sayTimer = nil
 			end
 		end
+
+		tDeleteItem(proxList, args.destName)
+
+		updateProximity(self)
 	end
 end
 
