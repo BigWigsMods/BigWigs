@@ -62,6 +62,7 @@ function mod:GetOptions()
 	return {
 		-- General
 		"stages",
+		"altpower",
 		{313609, "SAY_COUNTDOWN"}, -- Gift of N'zoth
 		-- Stage 1
 		316711, -- Mindwrack
@@ -143,6 +144,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:OpenAltPower("altpower", -21056) -- Sanity
 	wipe(mobCollector)
 	wipe(corruptedMindCount)
 

@@ -96,6 +96,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:OpenAltPower("altpower", -21056) -- Sanity
 	stage = 1
 	self:Berserk(601) -- Heroic
 	self:Bar(306973, 5) -- Madness Bomb
