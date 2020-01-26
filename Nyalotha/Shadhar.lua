@@ -210,6 +210,7 @@ function mod:DissolveApplied(args)
 end
 
 function mod:Breath(args)
+	self:StopBar(args.spellId)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, args.spellId == 306930 and 0.5 or 4)
