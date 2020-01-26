@@ -315,16 +315,16 @@ function mod:Mindgrasp(args)
 	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, mindgraspCount))
 end
 
-function mod:Paranoia(args)
-	paranoiaCount = paranoiaCount + 1
-	self:Bar(args.spellId, paranoiaTimers[mindgateCount][paranoiaCount], CL.count:format(args.spellName, paranoiaCount))
-end
-
 do
-	local sayTimer = nil
-	local playerList = mod:NewTargetList()
+	local firstParanoiaTargetGUID, lastParanoiaName = nil, nil
+	function mod:Paranoia(args)
+		firstParanoiaTargetGUID = nil
+		paranoiaCount = paranoiaCount + 1
+		self:Bar(args.spellId, paranoiaTimers[mindgateCount][paranoiaCount], CL.count:format(args.spellName, paranoiaCount))
+	end
+
+	local sayTimer, paranoiaFallbackTimer = nil, nil
 	function mod:ParanoiaApplied(args)
-		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(315927, args.spellName, true)
 			self:PlaySound(315927, "warning")
@@ -332,7 +332,34 @@ do
 				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, args.spellName, "SAY")
 			end
 		end
-		self:TargetsMessage(315927, "yellow", playerList)
+
+		if args.spellId == 316542 then -- 1st paranoia - save data, print on 2nd
+			firstParanoiaTargetGUID = args.destGUID
+			lastParanoiaName = args.destName
+			if self:Me(args.destGUID) then -- fallback if the last event is missing
+				paranoiaFallbackTimer = self:ScheduleTimer("Message2", 0.1, 315927, "blue", CL.link:format("|cffff0000???"))
+			end
+		elseif args.spellId == 316541 and firstParanoiaTargetGUID then -- Paranoia 2
+			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
+				self:Message2(315927, "blue", CL.link:format(self:ColorName(lastParanoiaName)))
+			elseif self:Me(firstParanoiaTargetGUID) then -- We got 1st debuff so this is our mate
+				self:Message2(315927, "blue", CL.link:format(self:ColorName(args.destName)))
+			end
+			firstParanoiaTargetGUID = nil
+			if paranoiaFallbackTimer then -- We printed above, so cancel this
+				self:CancelTimer(paranoiaFallbackTimer)
+				paranoiaFallbackTimer = nil
+			end
+		else -- One of them immuned, so no proper linked message
+			if self:Me(args.destGUID) or self:Me(firstParanoiaTargetGUID) then
+				self:Message2(315927, "blue", CL.link:format("|cffff00ff???"))
+				if paranoiaFallbackTimer then -- We printed above, so cancel this
+					self:CancelTimer(paranoiaFallbackTimer)
+					paranoiaFallbackTimer = nil
+				end
+			end
+			firstParanoiaTargetGUID = nil
+		end
 	end
 
 	function mod:ParanoiaRemoved(args)
