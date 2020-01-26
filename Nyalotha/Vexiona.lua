@@ -59,6 +59,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(unit)
+	return UnitCanAttack("player", unit)
+end
+
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Dark Gateway, Power of the Chosen
 
