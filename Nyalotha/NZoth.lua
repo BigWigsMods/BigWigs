@@ -211,7 +211,7 @@ function mod:Mindwrack(args)
 	if stage < 3 then -- Cannot interrupt in stage 3
 		local canDo, ready = self:Interrupter(args.sourceGUID)
 		if canDo then
-			self:Message2(args.spellId, "red", CL.count:format(args.spellName, mindwrackCount))
+			self:Message2(args.spellId, "red", CL.count:format(args.spellName, (mindwrackCount%3)+1))
 			if ready then
 				self:PlaySound(args.spellId, "alarm")
 			end
@@ -270,7 +270,7 @@ do
 			self:CastBar(args.spellId, 30, CL.count:format(args.spellName, shatteredEgoCount))
 			shatteredEgoCount = shatteredEgoCount + 1
 
-			creepingAnguishCount = 0
+			creepingAnguishCount = 1
 			synapticShockCount = 0
 		end
 	end
@@ -297,7 +297,7 @@ function mod:ShatteredEgoRemoved()
 		-- XXX Add Timer Bar
 		self:Bar(315772, 7.1) -- Mindgrasp
 		self:Bar(318449, 35.5, CL.count:format(self:SpellName(318449), eternalTormentCount)) -- Eternal Torment
-		self:Bar(315927, paranoiaTimers[mindgateCount][paranoiaCount], CL.count:format(self:SpellName(315927), paranoiaCount)) -- Paranoia
+		self:Bar(315927, paranoiaTimers[shatteredEgoCount-1][paranoiaCount], CL.count:format(self:SpellName(315927), paranoiaCount)) -- Paranoia
 		self:Bar(316463, 68, CL.count:format(self:SpellName(316463), mindgateCount)) -- Mindgate
 	elseif stage == 2 and mindgateCount == 2 then -- Stun restart bars only the first time, second time starts stage 3
 		paranoiaCount = 1
@@ -322,7 +322,7 @@ do
 	function mod:Paranoia(args)
 		firstParanoiaTargetGUID = nil
 		paranoiaCount = paranoiaCount + 1
-		self:Bar(args.spellId, paranoiaTimers[mindgateCount][paranoiaCount], CL.count:format(args.spellName, paranoiaCount))
+		self:Bar(args.spellId, paranoiaTimers[shatteredEgoCount-1][paranoiaCount], CL.count:format(args.spellName, paranoiaCount))
 	end
 
 	local sayTimer, paranoiaFallbackTimer = nil, nil
