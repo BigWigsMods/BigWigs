@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Il'gynoth, Corruption Reborn", 2217, 2374)
 if not mod then return end
 mod:RegisterEnableMob(158328) -- l'gynoth <Corruption Reborn>
 mod.engageId = 2345
---mod.respawnTime = 30
+mod.respawnTime = 35
 
 --------------------------------------------------------------------------------
 -- Localization
