@@ -393,6 +393,7 @@ do
 
 	function mod:ParanoiaRemoved(args)
 		if self:Me(args.destGUID) then
+			isOnMe = nil
 			self:Message2(315927, "green", CL.removed:format(args.spellName))
 			self:PlaySound(315927, "info")
 			if sayTimer then
