@@ -282,7 +282,7 @@ function mod:InfinitysToll(args)
 end
 
 -- Stage 2
-function mod:ShatteredPsycheRemoved()
+function mod:ShatteredEgoRemoved()
 	if stage == 1 then -- Stage 2 Starting
 		stage = 2
 		self:Message2("stages", "cyan", CL.stage:format(stage), false)
