@@ -9,9 +9,9 @@
 
 local mod, CL = BigWigs:NewBoss("N'Zoth, the Corruptor", 2217, 2375)
 if not mod then return end
-mod:RegisterEnableMob(158041) -- N'Zoth, the Corruptor
+mod:RegisterEnableMob(158041, 158376) -- N'Zoth, the Corruptor
 mod.engageId = 2344
---mod.respawnTime = 30
+mod.respawnTime = 49
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -99,7 +99,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "GiftofNzothApplied", 313609)
 	self:Log("SPELL_AURA_REMOVED", "GiftofNzothRemoved", 313609)
@@ -144,7 +143,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:OpenAltPower("altpower", -21056) -- Sanity
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:OpenAltPower("altpower", -21056, "ZA") -- Sanity
 	wipe(mobCollector)
 	wipe(corruptedMindCount)
 
@@ -461,7 +461,6 @@ function mod:CorruptedMind(args)
 		end
 	end
 	corruptedMindCount[args.sourceGUID] = corruptedMindCount[args.sourceGUID] + 1
-	self:NameplateBar(args.spellId, 5, args.sourceGUID)
 end
 
 function mod:CorruptedMindApplied(args)
