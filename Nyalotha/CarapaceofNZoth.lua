@@ -96,6 +96,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:OpenAltPower("altpower", -21056) -- Sanity
 	stage = 1
 	self:Berserk(601) -- Heroic
 	self:Bar(306973, 5) -- Madness Bomb
@@ -121,16 +122,25 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 45313 and stage == 3 then -- Blizz Stage 3 start (good old Anchor Here)
-		stage = 4
-		self:Message2("stages", "cyan", CL.stage:format(3), false)
-		self:PlaySound("stages", "long")
-		self:Bar(-20565, 22.2, nil, 315673) -- Thrashing Tentacle
-		self:Bar(313039, 54) -- Infinite Darkness
-	elseif spellId == 315673 then -- Thrashing Tentacle
+	if spellId == 45313 then -- Anchor Here
+		if stage == 1 then
+			stage = 2
+		elseif stage == 2 then
+			stage = 3 -- Stage 2.5
+			self:CDBar(307092, 4) -- Occipital Blast, mostly a guess
+			self:CDBar(315947, 15.5) -- Mandible Slam
+		elseif stage == 3 then
+			stage = 4 -- Blizz Stage 3
+			self:Message2("stages", "cyan", CL.stage:format(3), false)
+			self:PlaySound("stages", "long")
+			--self:Bar(-21069, 22.2, nil, 315673) -- Thrashing Tentacle
+			self:StartThrashingTentacleTimer(32)
+			self:Bar(313039, 54) -- Infinite Darkness
+		end
+	elseif spellId == 315673 then -- Thrashing Tentacle, Blizz removed this for live servers - maybe it comes back?
 		self:Message2(-21069, "red", nil, 315673)
 		self:PlaySound(-21069, "alert")
-		self:Bar(-21069, 27.8, nil, 315673)
+		self:Bar(-21069, 20, nil, 315673)
 	end
 end
 
@@ -160,7 +170,7 @@ end
 
 function mod:MadnessBombRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CloseProximity()
+		self:CloseProximity(args.spellId)
 	end
 end
 
@@ -178,7 +188,7 @@ end
 function mod:BlackScar(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	if amount > 1 and not self:Me(args.destGUID) then
+	if amount > 1 then
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -191,28 +201,22 @@ function mod:BreedMadness(args)
 end
 
 --[[  Stage Two: Subcutaneous Tunnel ]]--
-function mod:Synthesis(args)
-	if stage == 1 then
-			stage = 2
-			lastSynthesisMsg = 100 -- Random large number
-			self:Message2("stages", "cyan", CL.stage:format(2), false)
-			self:PlaySound("stages", "long")
-			self:StopBar(-20565) -- Gaze of Madness
-			self:StopBar(-20560) -- Growth-Covered Tentacle
-			self:StopBar(315947) -- Mandible Slam
-			self:Bar(306988, 31.2) -- Adaptive Membrane
-			self:Bar(306973, 43.3) -- Madness Bomb
-	end
+function mod:Synthesis(args) -- this is earlier than the Anchor here
+		lastSynthesisMsg = 100 -- Random large number
+		self:Message2("stages", "cyan", CL.stage:format(2), false)
+		self:PlaySound("stages", "long")
+		self:StopBar(-20565) -- Gaze of Madness
+		self:StopBar(-20560) -- Growth-Covered Tentacle
+		self:StopBar(315947) -- Mandible Slam
+		self:Bar(306988, 31.2) -- Adaptive Membrane
+		self:Bar(306973, 43.3) -- Madness Bomb
 end
 
 function mod:SynthesisRemoved(args)
 	local amount = args.amount or 0
 	if amount < 1 then
-		stage = 3
 		self:Message2("stages", "green", CL.over:format(args.spellName), args.spellId)
 		self:PlaySound("stages", "info")
-		self:CDBar(307092, 4) -- Occipital Blast, mostly a guess
-		self:CDBar(315947, 15.5) -- Mandible Slam
 	elseif amount % 3 == 0 or lastSynthesisMsg-amount > 3 or amount < 4 then
 		lastSynthesisMsg = amount -- Events can be skipped, so this is our fallback
 		self:StackMessage(args.spellId, args.destName, amount, "green")
@@ -250,4 +254,12 @@ function mod:InfiniteDarkness(args)
 	self:Message2(args.spellId, "red", CL.incoming:format(args.spellName))
 	self:CastBar(args.spellId, 2.5)
 	self:Bar(args.spellId, 54)
+end
+
+function mod:StartThrashingTentacleTimer(t)
+	self:CDBar(-21069, t, nil, 315673)
+	self:ScheduleTimer("Message2", t, -21069, "red", CL.incoming:format(self:SpellName(-21069)), 315673)
+	self:ScheduleTimer("CastBar", t, -21069, 6, 304077, 272713) -- Tentacle Slam
+	self:ScheduleTimer("PlaySound", t, -21069, "alert")
+	self:ScheduleTimer("StartThrashingTentacleTimer", t, 20)
 end

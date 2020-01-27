@@ -54,6 +54,7 @@ BigWigs:AddColors("Orgozoa", {
 	[298465] = "cyan",
 	[298548] = "cyan",
 	[305048] = {"blue","red"},
+	[305057] = "cyan",
 	["stages"] = {"cyan","green"},
 })
 
@@ -94,6 +95,9 @@ BigWigs:AddColors("Za'qul, Herald of Ny'alotha", {
 
 BigWigs:AddColors("Queen Azshara", {
 	[-20480] = "cyan",
+	[-20410] = "yellow",
+	[-20408] = "yellow",
+	[-20355] = "yellow",
 	[297371] = "cyan",
 	[297372] = "cyan",
 	[297907] = "blue",
@@ -112,16 +116,19 @@ BigWigs:AddColors("Queen Azshara", {
 	[299250] = {"blue","cyan"},
 	[300074] = "orange",
 	[300428] = "cyan",
+	[300478] = "orange",
 	[300492] = {"blue","yellow"},
 	[300519] = "red",
 	[300620] = {"blue","yellow"},
 	[300743] = {"blue","purple"},
 	[300768] = "orange",
+	[300866] = {"blue","yellow"},
+	[300877] = {"blue","cyan"},
 	[301078] = {"blue","yellow"},
 	[301431] = "red",
 	[302999] = "blue",
 	[303657] = {"blue","yellow"},
-	[303982] = "yellow",
+	[303986] = {"blue","yellow"},
 	[304475] = "cyan",
 	["stages"] = {"cyan","green"},
 })

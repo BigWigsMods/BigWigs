@@ -54,6 +54,7 @@ BigWigs:AddSounds("Orgozoa", {
 	[298465] = "info",
 	[298548] = "long",
 	[305048] = "warning",
+	[305057] = "info",
 	["stages"] = "long",
 })
 
@@ -93,7 +94,10 @@ BigWigs:AddSounds("Za'qul, Herald of Ny'alotha", {
 })
 
 BigWigs:AddSounds("Queen Azshara", {
-	[-20480] = "long",
+	[-20480] = {"info","long"},
+	[-20410] = "long",
+	[-20408] = "long",
+	[-20355] = "long",
 	[297371] = "long",
 	[297372] = "long",
 	[297907] = "alarm",
@@ -112,16 +116,19 @@ BigWigs:AddSounds("Queen Azshara", {
 	[299250] = {"alarm","long"},
 	[300074] = "alarm",
 	[300428] = "info",
+	[300478] = "warning",
 	[300492] = "alert",
 	[300519] = "warning",
 	[300620] = "long",
 	[300743] = {"alert","warning"},
 	[300768] = "long",
+	[300866] = "alert",
+	[300877] = "alarm",
 	[301078] = "alert",
 	[301431] = "warning",
 	[302999] = "alarm",
 	[303657] = "warning",
-	[303982] = "alert",
+	[303986] = {"alarm","alert"},
 	[304475] = "info",
 	["stages"] = "long",
 })

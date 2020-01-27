@@ -735,7 +735,7 @@ do
 	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
 
 	--- Fetches a unit id by scanning boss units 1 to 5 only.
-	-- @param guid Either the GUID or the mob/npc id of the boss unit to find
+	-- @param id Either the GUID or the mob/npc id of the boss unit to find
 	-- @return unit id if found, nil otherwise
 	-- @return guid if found, nil otherwise
 	function boss:GetBossId(id)

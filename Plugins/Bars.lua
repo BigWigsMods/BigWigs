@@ -2009,12 +2009,6 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 		refixClickOnBar(true, bar)
 	end
 
-	if db.emphasize and time < db.emphasizeTime then
-		self:EmphasizeBar(bar, true)
-	else
-		currentBarStyler.ApplyStyle(bar)
-	end
-
 	return bar
 end
 
@@ -2024,6 +2018,11 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 
 	local bar = self:CreateBar(module, key, text, time, icon, isApprox)
 	bar:Start()
+	if db.emphasize and time < db.emphasizeTime then
+		self:EmphasizeBar(bar, true)
+	else
+		currentBarStyler.ApplyStyle(bar)
+	end
 	rearrangeBars(bar:Get("bigwigs:anchor"))
 
 	self:SendMessage("BigWigs_BarCreated", self, bar, module, key, text, time, icon, isApprox)
@@ -2056,6 +2055,11 @@ function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, isAp
 		local bar = self:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 		barInfo.bar = bar
 		bar:Start()
+		if db.emphasize and time < db.emphasizeTime then
+			self:EmphasizeBar(bar, true)
+		else
+			currentBarStyler.ApplyStyle(bar)
+		end
 		rearrangeNameplateBars(unitGUID)
 		self:SendMessage("BigWigs_NameplateBarCreated", self, bar, module, key, text, time, icon, isApprox, unitGUID)
 		-- Check if :EmphasizeBar(bar) was run and trigger the callback.

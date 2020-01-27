@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Wrathion", 2217, 2368)
 if not mod then return end
 mod:RegisterEnableMob(156818) -- Wrathion
 mod.engageId = 2329
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -114,7 +114,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 8)
+			self:SayCountdown(args.spellId, 6)
 			self:Flash(args.spellId)
 			self:PlaySound(args.spellId, "warning")
 		end
