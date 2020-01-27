@@ -48,7 +48,7 @@ function mod:GetOptions()
 		306733, -- Void Empowered
 		306603, -- Unstable Void
 		306866, -- Call Void Hunter
-		306881, -- Void Collapse
+		{306881, "SAY", "SAY_COUNTDOWN"}, -- Void Collapse
 		-- Stage 2
 		{313213, "TANK_HEALER"}, -- Decaying Strike
 		310003, -- Void Eruption
@@ -82,6 +82,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "UnstableVoid", 306603)
 	self:Log("SPELL_CAST_START", "CallVoidHunter", 306866)
 	self:Log("SPELL_CAST_START", "VoidCollapse", 306881)
+	self:Log("SPELL_CAST_SUCCESS", "VoidCollapseSuccess", 306881)
 	self:Death("VoidHunterDeath", 157366) -- Void Hunter
 
 	-- Stage 2
@@ -177,14 +178,36 @@ function mod:CallVoidHunter(args)
 	self:PlaySound(args.spellId, "alert")
 end
 
-function mod:VoidCollapse(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, 11)
-end
+do
+	local tarGuid = nil
+	local function printTarget(self, name, guid)
+		tarGuid = guid
+		if self:Me(guid) then
+			self:Yell2(306881)
+			self:YellCountdown(306881, 3.5, nil, 2)
+		end
+		self:TargetMessage2(306881, "red", name)
+	end
 
-function mod:VoidHunterDeath(args)
-	self:StopBar(306881)
+	function mod:VoidCollapse(args)
+		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
+		self:PlaySound(args.spellId, "alarm")
+		self:Bar(args.spellId, 11)
+	end
+
+	function mod:VoidCollapseSuccess()
+		tarGuid = nil
+	end
+
+	function mod:VoidHunterDeath()
+		self:StopBar(306881)
+		if tarGuid then
+			if self:Me(tarGuid) then
+				self:CancelYellCountdown(306881)
+			end
+			tarGuid = nil
+		end
+	end
 end
 
 -- Stage 2
