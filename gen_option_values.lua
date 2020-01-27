@@ -69,6 +69,12 @@ local valid_methods = {
 	SetInfo = "INFOBOX",
 	SetInfoBar = "INFOBOX",
 	CloseInfo = "INFOBOX",
+	NameplateBar = "NAMEPLATEBAR",
+	NameplateCDBar = "NAMEPLATEBAR",
+	PauseNameplateBar = "NAMEPLATEBAR",
+	ResumeNameplateBar = "NAMEPLATEBAR",
+	NameplateBarTimeLeft = "NAMEPLATEBAR",
+	StopNameplateBar = "NAMEPLATEBAR",
 }
 for k in next, color_methods do valid_methods[k] = true end
 for k in next, sound_methods do valid_methods[k] = true end
