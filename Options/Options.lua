@@ -1281,7 +1281,15 @@ do
 		testing:SetCallback("OnEnter", onControlEnter)
 		testing:SetCallback("OnLeave", onControlLeave)
 
-		bw:AddChildren(anchors, testing)
+		local testingNameplate = AceGUI:Create("Button")
+		testingNameplate:SetText(L.testNameplateBarsBtn)
+		testingNameplate:SetUserData("desc", L.testNameplateBarsBtn_desc)
+		testingNameplate:SetRelativeWidth(0.5)
+		testingNameplate:SetCallback("OnClick", BigWigs.TestNameplate)
+		testingNameplate:SetCallback("OnEnter", onControlEnter)
+		testingNameplate:SetCallback("OnLeave", onControlLeave)
+
+		bw:AddChildren(anchors, testing, testingNameplate)
 
 		local tabs = AceGUI:Create("TabGroup")
 		tabs:SetLayout("Flow")
