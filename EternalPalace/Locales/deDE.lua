@@ -18,7 +18,7 @@ if L then
 	L[299252] = "Laufen"
 	L[299253] = "Stehen"
 	L.hugSay = "UMARME %s"
-	--L.hugNoMoveSay = "HUG %s, I can't move"
+	L.hugNoMoveSay = "UMARME %s, bin bewegungsunfähig"
 	L.avoidSay = "MEIDE %s"
 	L.yourDecree = "Erlass: %s"
 	L.yourDecree2 = "Erlass: %s & %s"
