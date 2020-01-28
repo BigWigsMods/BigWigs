@@ -18,7 +18,7 @@ end
 
 L = BigWigs:NewBossLocale("Drest'agath", "zhCN")
 if L then
-	L.adds_desc = "德雷阿佳丝之眼、触须和喉的警报和消息。"
+	L.adds_desc = "德雷阿佳丝之眼、触须和喉警报和消息。"
 
 	L.eye_killed = "眼已击杀！"
 	L.tentacle_killed = "触须已击杀！"
