@@ -94,6 +94,7 @@ end
 function mod:OnEngage()
 	stage = 1
 	decimatorCount = 1
+	lastPower = 0
 
 	self:Bar(307020, 5.7) -- Twilight Breath
 	self:Bar(307359, 10) -- Despair
