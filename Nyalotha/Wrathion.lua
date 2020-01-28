@@ -111,7 +111,7 @@ end
 
 function mod:IncinerationStart(args)
 	self:StopBar(CL.count:format(args.spellName, incinerationCount))
-	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(args.spellName, incinerationCount)))
+	self:Message2(306163, "yellow", CL.incoming:format(CL.count:format(args.spellName, incinerationCount)))
 	incinerationCount = incinerationCount + 1
 	if not self:Mythic() and nextCataclysm > GetTime() + 24.3 then -- only 1 Incineration per Cataclysm in Mythic
 		self:Bar(306163, 24.3, CL.count:format(args.spellName, incinerationCount))
