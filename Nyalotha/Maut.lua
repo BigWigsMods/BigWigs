@@ -35,7 +35,8 @@ function mod:GetOptions()
 		-- Stage 1
 		{310129, "TANK"}, -- Shadow Claws
 		{308872, "TANK"}, -- Dark Offering
-		{307806, "SAY"}, -- Devour Magic
+		{307806, "SAY", "SAY_COUNTDOWN"}, -- Devour Magic
+		307586, -- Devoured Abyss
 		308044, -- Stygian Annihilation
 		308903, -- Dark Manifestation
 		305663, -- Black Wings
@@ -43,6 +44,10 @@ function mod:GetOptions()
 		-- Stage 2
 		305722, -- Obsidian Destruction
 		{314993, "SAY"}, -- Drain Essence
+	}, {
+		[310129] = CL.stage:format(1),
+		[314337] = CL.mythic,
+		[305722] = CL.stage:format(2),
 	}
 end
 
@@ -54,11 +59,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DarkOffering", 308872)
 	self:Log("SPELL_AURA_APPLIED", "DevourMagic", 307806)
 	self:Log("SPELL_CAST_START", "StygianAnnihilationStart", 308044)
-	--self:Log("SPELL_CAST_SUCCESS", "StygianAnnihilationEnd", 308044)
+	self:Log("SPELL_CAST_SUCCESS", "StygianAnnihilationSuccess", 308044)
 	self:Log("SPELL_CAST_START", "DarkManifestation", 308903)
 	self:Log("SPELL_CAST_START", "BlackWings", 305663)
 	--- Mythic
 	self:Log("SPELL_CAST_START", "AncientCurse", 314337)
+	self:Log("SPELL_AURA_REMOVED", "AncientCurseRemoved", 315025)
 
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "ObsidianDestruction", 305722)
@@ -106,19 +112,44 @@ function mod:DevourMagic(args)
 		self:PersonalMessage(args.spellId)
 		self:Say(args.spellId)
 		self:TargetBar(args.spellId, 6, args.destName)
+		self:SayCountdown(args.spellId, 6)
 		self:PlaySound(args.spellId, "warning", nil, args.destName)
 	end
 end
 
-function mod:StygianAnnihilationStart(args)
-	self:Message2(args.spellId, "red")
-	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 5)
+do
+	local devouredAbyss, devouredAbyssCheck = mod:SpellName(307586), nil
+
+	local function checkForDevouredAbyss(self)
+		if UnitIsDead("player") then
+			-- Nothing
+		elseif not self:UnitDebuff("player", 307586) then -- Devoured Abyss
+			self:Message2(307586, "blue", CL.no:format(devouredAbyss))
+			self:PlaySound(307586, "warning")
+			devouredAbyssCheck = self:ScheduleTimer(checkForDevouredAbyss, 1.5, self)
+		else
+			self:Message2(307586, "green", CL.you:format(devouredAbyss))
+		end
+		devouredAbyssCheck = nil
+	end
+
+	function mod:StygianAnnihilationStart(args)
+		self:Message2(args.spellId, "red")
+		self:PlaySound(args.spellId, "long")
+		self:CastBar(args.spellId, 5)
+		if not devouredAbyssCheck then
+			devouredAbyssCheck = self:ScheduleTimer(checkForDevouredAbyss, 2.5, self)
+		end
+	end
+
+	function mod:StygianAnnihilationSuccess(args)
+		if devouredAbyssCheck then
+			self:CancelTimer(devouredAbyssCheck)
+			devouredAbyssCheck = nil
+		end
+	end
 end
 
---function mod:StygianAnnihilationEnd(args)
---	self:Bar(args.spellId, 0)
---end
 
 function mod:DarkManifestation(args)
 	self:Message2(args.spellId, "yellow")
@@ -137,6 +168,13 @@ function mod:AncientCurse(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, 50)
+end
+
+function mod:AncientCurseRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message2(314337, "green", CL.removed:format(args.spellName))
+		self:PlaySound(314337, "info")
+	end
 end
 
 -- Stage 2
@@ -169,9 +207,9 @@ do
 		self:CDBar(308903, 12.1) -- Dark Manifestation
 		self:CDBar(305663, 19.4) -- Black Wings
 		self:CDBar(308044, 40) -- Stygian Annihilation
-		--if self:Mythic() then
-		--	self:CDBar(314337, 0) -- Ancient Curse
-		--end
+		if self:Mythic() then
+			self:CDBar(314337, 18) -- Ancient Curse
+		end
 	end
 end
 
@@ -184,4 +222,3 @@ function mod:DrainEssence(args)
 		self:PlaySound(args.spellId, "warning", nil, args.destName)
 	end
 end
-
