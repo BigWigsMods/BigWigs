@@ -9,9 +9,9 @@
 
 local mod, CL = BigWigs:NewBoss("N'Zoth, the Corruptor", 2217, 2375)
 if not mod then return end
-mod:RegisterEnableMob(158041) -- N'Zoth, the Corruptor
+mod:RegisterEnableMob(158041, 158376) -- N'Zoth, the Corruptor
 mod.engageId = 2344
---mod.respawnTime = 30
+mod.respawnTime = 49
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -99,7 +99,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "GiftofNzothApplied", 313609)
 	self:Log("SPELL_AURA_REMOVED", "GiftofNzothRemoved", 313609)
@@ -144,7 +143,8 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:OpenAltPower("altpower", -21056) -- Sanity
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
+	self:OpenAltPower("altpower", -21056, "ZA") -- Sanity
 	wipe(mobCollector)
 	wipe(corruptedMindCount)
 
@@ -297,7 +297,9 @@ function mod:ShatteredEgoRemoved()
 		-- XXX Add Timer Bar
 		self:Bar(315772, 7.1) -- Mindgrasp
 		self:Bar(318449, 35.5, CL.count:format(self:SpellName(318449), eternalTormentCount)) -- Eternal Torment
-		self:Bar(315927, paranoiaTimers[shatteredEgoCount-1][paranoiaCount], CL.count:format(self:SpellName(315927), paranoiaCount)) -- Paranoia
+		if paranoiaTimers[shatteredEgoCount-1] then -- XXX fixme
+			self:Bar(315927, paranoiaTimers[shatteredEgoCount-1][paranoiaCount], CL.count:format(self:SpellName(315927), paranoiaCount)) -- Paranoia
+		end
 		self:Bar(316463, 68, CL.count:format(self:SpellName(316463), mindgateCount)) -- Mindgate
 	elseif stage == 2 and mindgateCount == 2 then -- Stun restart bars only the first time, second time starts stage 3
 		paranoiaCount = 1
@@ -340,7 +342,9 @@ do
 		isCasting = true
 		firstParanoiaTargetGUID = nil
 		paranoiaCount = paranoiaCount + 1
-		self:Bar(args.spellId, paranoiaTimers[shatteredEgoCount-1][paranoiaCount], CL.count:format(args.spellName, paranoiaCount))
+		if paranoiaTimers[shatteredEgoCount-1] then -- XXX fixme
+			self:Bar(args.spellId, paranoiaTimers[shatteredEgoCount-1][paranoiaCount], CL.count:format(args.spellName, paranoiaCount))
+		end
 		updateProximity(self)
 	end
 
@@ -412,7 +416,15 @@ function mod:EternalTorment(args)
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, eternalTormentCount))
 	self:PlaySound(args.spellId, "alert")
 	eternalTormentCount = eternalTormentCount + 1
-	self:Bar(args.spellId, stage == 3 and (eternalTormentCount == 2 and (72.5 or eternalTormentCount % 2 == 1 and 11 or 24)) or eternalTormentTimers[eternalTormentCount], CL.count:format(args.spellName, eternalTormentCount))
+	if stage == 3 then
+		if eternalTormentCount % 2 == 1 then -- 3,5,7,etc
+			self:Bar(args.spellId, 11, CL.count:format(args.spellName, eternalTormentCount))
+		else
+			self:Bar(args.spellId, eternalTormentCount == 2 and 72.5 or 24, CL.count:format(args.spellName, eternalTormentCount))
+		end
+	else
+		self:Bar(args.spellId, eternalTormentTimers[eternalTormentCount], CL.count:format(args.spellName, eternalTormentCount))
+	end
 end
 
 function mod:Mindgate(args)
@@ -461,7 +473,6 @@ function mod:CorruptedMind(args)
 		end
 	end
 	corruptedMindCount[args.sourceGUID] = corruptedMindCount[args.sourceGUID] + 1
-	self:NameplateBar(args.spellId, 5, args.sourceGUID)
 end
 
 function mod:CorruptedMindApplied(args)
