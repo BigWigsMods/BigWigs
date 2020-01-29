@@ -193,12 +193,12 @@ do
 
 	function mod:UNIT_AURA(_, unit)
 		local name, stack = self:UnitDebuff(unit, 313255)
-		if stack and stack > 0 then
+		if stack ~= lastStack then
 			if stack < lastStack then
 				self:Message2(313255, "green", CL.removed:format(name))
 				self:PlaySound(313255, "info")
-			end
-			if (stack % 10 == 0 or (stack > 40 and stack % 3 == 1)) and stack > lastWarn then -- 10, 20, 30, 40, 43, 46, 49
+				lastWarn = stack
+			elseif (stack % 10 == 0 or (stack > 40 and stack % 3 == 1)) and stack > lastWarn then -- 10, 20, 30, 40, 43, 46, 49
 				self:StackMessage(313255, self:UnitName(unit), stack, "blue", stack > 20 and "warning")
 				if stack == 40 then
 					self:Flash(313255)
