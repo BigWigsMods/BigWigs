@@ -193,7 +193,7 @@ do
 
 	function mod:UNIT_AURA(_, unit)
 		local name, stack = self:UnitDebuff(unit, 313255)
-		if stack ~= lastStack then
+		if stack and stack ~= lastStack then
 			if stack < lastStack then
 				self:Message2(313255, "green", CL.removed:format(name))
 				self:PlaySound(313255, "info")
