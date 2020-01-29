@@ -218,7 +218,7 @@ function mod:TwilightDecimator(args)
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, decimatorCount))
 	decimatorCount = decimatorCount + 1
 	if decimatorCount < 4 or (self:Mythic() and stage == 3) then
-		self:Bar(args.spellId, 12.1, CL.count:format(args.spellName, decimatorCount))
+		self:Bar(args.spellId, stage == 3 and 18.5 or 12.1, CL.count:format(args.spellName, decimatorCount))
 	end
 end
 
@@ -230,21 +230,27 @@ function mod:TheVoidUnleashed(args)
 	self:StopBar(CL.stage:format(2))
 	self:StopBar(307359) -- Despair
 	self:StopBar(307057) -- Dark Gateway
-	self:CDBar(307639, 16.5) -- Heart of Darkness
-	self:Bar(310323, 30.3) -- Desolation
+
+	decimatorCount = 1
+
+	self:CDBar(307639, self:Mythic() and 18.2 or 16.5) -- Heart of Darkness
+	self:Bar(310323, self:Mythic() and 34.1 or 30.3) -- Desolation
+	if self:Mythic() then
+		self:Bar(315762, 9.6, CL.count:format(self:SpellName(315762), decimatorCount))
+	end
 end
 
 function mod:HeartofDarkness(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 31.5)
+	self:Bar(args.spellId, self:Mythic() and 33 or 31.5)
 	self:CastBar(args.spellId, 4)
 end
 
 function mod:DesolationApplied(args)
 	self:TargetMessage2(args.spellId, "yellow", args.destName)
 	self:PlaySound(args.spellId, "warning", args.destName)
-	self:Bar(args.spellId, 32.5)
+	self:Bar(args.spellId, self:Mythic() and 33 or 32.5)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 5)
