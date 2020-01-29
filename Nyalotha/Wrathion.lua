@@ -168,7 +168,7 @@ function mod:SmokeandMirrorsRemoved(args)
 end
 
 do
-	local lastStack = 0
+	local lastStack, lastWarn = 0, 0
 
 	function mod:CreepingMadness(args)
 		if self:Me(args.destGUID) then
@@ -177,6 +177,7 @@ do
 			self:Bar(args.spellId, 140, CL.over:format(args.spellName))
 
 			lastStack = 0
+			lastWarn = 0
 			self:RegisterUnitEvent("UNIT_AURA", nil, "player") -- Having APPLIED_DOSE events would be too easy to track Slow
 		end
 	end
@@ -192,16 +193,17 @@ do
 
 	function mod:UNIT_AURA(_, unit)
 		local name, stack = self:UnitDebuff(unit, 313255)
-		if stack then
+		if stack and stack > 0 then
 			if stack < lastStack then
 				self:Message2(313255, "green", CL.removed:format(name))
 				self:PlaySound(313255, "info")
 			end
-			if stack % 10 == 0 or (stack > 40 and stack % 3 == 1) then -- 10, 20, 30, 40, 43, 46, 49
+			if (stack % 10 == 0 or (stack > 40 and stack % 3 == 1)) and stack > lastWarn then -- 10, 20, 30, 40, 43, 46, 49
 				self:StackMessage(313255, self:UnitName(unit), stack, "blue", stack > 20 and "warning")
 				if stack == 40 then
 					self:Flash(313255)
 				end
+				lastWarn = stack
 			end
 			lastStack = stack
 		end
