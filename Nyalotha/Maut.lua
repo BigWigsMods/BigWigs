@@ -59,7 +59,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "DarkOffering", 308872)
 	self:Log("SPELL_AURA_APPLIED", "DevourMagic", 307806)
 	self:Log("SPELL_CAST_START", "StygianAnnihilationStart", 308044)
-	self:Log("SPELL_CAST_SUCCESS", "StygianAnnihilationSuccess", 308044)
+	--self:Log("SPELL_CAST_SUCCESS", "StygianAnnihilationSuccess", 308044)
 	self:Log("SPELL_CAST_START", "DarkManifestation", 308903)
 	self:Log("SPELL_CAST_START", "BlackWings", 305663)
 	--- Mythic
@@ -118,36 +118,34 @@ function mod:DevourMagic(args)
 end
 
 do
-	local devouredAbyss, devouredAbyssCheck = mod:SpellName(307586), nil
+	local abyssCount = 0
 
-	local function checkForDevouredAbyss(self)
-		if UnitIsDead("player") then
-			-- Nothing
-		elseif not self:UnitDebuff("player", 307586) then -- Devoured Abyss
-			self:Message2(307586, "blue", CL.no:format(devouredAbyss))
-			self:PlaySound(307586, "warning")
-			devouredAbyssCheck = self:ScheduleTimer(checkForDevouredAbyss, 1.5, self)
-		else
-			self:Message2(307586, "green", CL.you:format(devouredAbyss))
+	local function checkForDevouredAbyss()
+		abyssCount = abyssCount + 1
+		if abyssCount < 4 then
+			if UnitIsDead("player") then
+				-- Nothing
+			elseif not mod:UnitDebuff("player", 307586) then -- Devoured Abyss
+				mod:Message2(307586, "blue", CL.no:format(mod:SpellName(307586)))
+				mod:PlaySound(307586, "warning")
+				mod:SimpleTimer(checkForDevouredAbyss, 1.5)
+			else
+				mod:Message2(307586, "green", CL.you:format(mod:SpellName(307586)))
+			end
 		end
-		devouredAbyssCheck = nil
 	end
 
 	function mod:StygianAnnihilationStart(args)
 		self:Message2(args.spellId, "red")
 		self:PlaySound(args.spellId, "long")
 		self:CastBar(args.spellId, 5)
-		if not devouredAbyssCheck then
-			devouredAbyssCheck = self:ScheduleTimer(checkForDevouredAbyss, 2.5, self)
-		end
+		abyssCount = 0
+		self:SimpleTimer(checkForDevouredAbyss, 2.5)
 	end
 
-	function mod:StygianAnnihilationSuccess(args)
-		if devouredAbyssCheck then
-			self:CancelTimer(devouredAbyssCheck)
-			devouredAbyssCheck = nil
-		end
-	end
+	--function mod:StygianAnnihilationSuccess(args)
+	--	self:Bar(args.spellId, 0)
+	--end
 end
 
 
