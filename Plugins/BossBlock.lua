@@ -120,8 +120,7 @@ plugin.pluginOptions = {
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossEngage")
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
+	self:RegisterMessage("BigWigs_EncounterEnd")
 
 	-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
 	if self.db.profile.disableSfx then
@@ -224,7 +223,7 @@ do
 		end
 	end
 
-	function plugin:BigWigs_OnBossWin()
+	function plugin:BigWigs_EncounterEnd()
 		if self.db.profile.blockEmotes then
 			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
