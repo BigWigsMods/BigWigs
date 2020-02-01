@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Il'gynoth, Corruption Reborn", 2217, 2374)
 if not mod then return end
 mod:RegisterEnableMob(158328) -- l'gynoth <Corruption Reborn>
 mod.engageId = 2345
-mod.respawnTime = 35
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,6 +31,7 @@ end
 local stage = 1
 local touchCount = 1
 local gazeCount = 1
+local cursedBloodCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -40,6 +41,7 @@ local cursedBloodMarker = mod:AddMarkerOption(false, "player", 1, 313759, 1, 2, 
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 		309961, -- Eye of N'Zoth
 		311401, -- Touch of the Corruptor
 		310433, -- Corruptor's Gaze
@@ -48,6 +50,7 @@ function mod:GetOptions()
 		"custom_on_fixate_plates",
 		{313759, "FLASH", "SAY"}, -- Cursed Blood
 		cursedBloodMarker,
+		{318383, "SAY"}, -- Absorbing Charge
 	}, {
 		[309961] = "general",
 		[313759] = "mythic",
@@ -55,7 +58,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1", "boss2", "boss3", "boss4")
 
 	self:Log("SPELL_CAST_START", "EyeofNZoth", 309961)
 	self:Log("SPELL_CAST_START", "TouchoftheCorruptor", 311401)
@@ -71,18 +74,25 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 310322)
 
 	-- Mythic
+	self:Log("SPELL_CAST_SUCCESS", "CursedBlood", 314396)
 	self:Log("SPELL_AURA_APPLIED", "CursedBloodApplied", 313759)
 	self:Log("SPELL_AURA_REMOVED", "CursedBloodRemoved", 313759)
+	self:Log("SPELL_CAST_START", "AbsorbingCharge", 318383)
 end
 
 function mod:OnEngage()
 	stage = 1
 	gazeCount = 1
 	touchCount = 1
+	cursedBloodCount = 1
 
 	self:Bar(309961, 5.5) -- Eye of N'Zoth
 	self:Bar(310433, 12.5, CL.count:format(self:SpellName(310433), gazeCount)) -- Corruptor's Gaze
 	self:Bar(311401, 47.5, CL.count:format(self:SpellName(311401), touchCount)) -- Touch of the Corruptor
+	if self:Mythic() then
+		self:Bar(313759, 20, CL.count:format(self:SpellName(313759), cursedBloodCount)) -- Cursed Blood
+	end
+	self:Berserk(600)
 end
 
 function mod:OnBossDisable()
@@ -112,6 +122,10 @@ do
 				self:StopBar(309961) -- Eye of N'Zoth
 				self:StopBar(CL.count:format(self:SpellName(311401), touchCount)) -- Touch of the Corruptor
 				self:StopBar(CL.count:format(self:SpellName(310433), gazeCount)) -- Corruptor's Gaze
+
+				if self:Mythic() then
+					self:Bar(318383, 8.4) -- Absorbing Charge
+				end
 			end
 		elseif spellId == 312204 then -- Il'gynoth's Morass / Stage 1 Start
 			stage = 1
@@ -170,6 +184,11 @@ do
 end
 
 -- Mythic
+function mod:CursedBlood(args)
+	cursedBloodCount = cursedBloodCount + 1
+	self:Bar(313759, 45, CL.count:format(args.spellName, cursedBloodCount))
+end
+
 do
 	local playerList = mod:NewTargetList()
 	function mod:CursedBloodApplied(args)
@@ -179,7 +198,7 @@ do
 			self:Flash(args.spellId)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList)
+		self:TargetsMessage(args.spellId, "yellow", playerList, CL.count:format(args.spellName, cursedBloodCount-1))
 		if self:GetOption(cursedBloodMarker) then
 			SetRaidTarget(args.destName, #playerList)
 		end
@@ -190,4 +209,25 @@ do
 			SetRaidTarget(args.destName, 0)
 		end
 	end
+end
+
+do
+	local function printTarget(self, name, guid)
+		if self:Me(guid) then
+			self:PersonalMessage(318383)
+			self:Say(318383)
+			self:PlaySound(318383, "alarm")
+		else
+			self:TargetMessage2(318383, "red", name)
+		end
+	end
+
+	function mod:AbsorbingCharge(args)
+		self:Bar(args.spellId, 18.3)
+		self:GetUnitTarget(printTarget, 0.1, args.sourceGUID)
+	end
+end
+
+function mod:ClottedCorruptionDeath()
+	self:StopBar(318383)
 end
