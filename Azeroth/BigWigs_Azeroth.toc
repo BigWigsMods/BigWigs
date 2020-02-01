@@ -12,7 +12,7 @@
 ## Title-ptBR: BigWigs [|cffeda55fAzeroth|r]
 ## Title-koKR: BigWigs [|cffeda55fAzeroth|r]
 ## Notes: BigWigs Azeroth Modules
-## Notes-deDE: BigWigs Azeroth Modules
+## Notes-deDE: BigWigs Azeroth Module
 ## Notes-esES: BigWigs Azeroth Modules
 ## Notes-esMX: BigWigs Azeroth Modules
 ## Notes-frFR: Modules BigWigs concernant Azeroth.
