@@ -65,7 +65,7 @@ function mod:GetOptions()
 		"altpower",
 		{313609, "SAY_COUNTDOWN"}, -- Gift of N'zoth
 		-- Stage 1
-		316711, -- Mindwrack
+		{316711, "NAMEPLATEBAR"}, -- Mindwrack
 		310184, -- Creeping Anquish
 		309991, -- Anguish
 		313184, -- Synaptic Shock
@@ -84,7 +84,7 @@ function mod:GetOptions()
 		318976, -- Stupefying Glare
 		317102, -- Evoke Anguish
 		-21491, -- Thought Harvester
-		317066, -- Harvest Thoughts
+		{317066, "NAMEPLATEBAR"}, -- Harvest Thoughts
 	}, {
 		["stages"] = CL.general,
 		[313609] = -20936, -- Sanity
