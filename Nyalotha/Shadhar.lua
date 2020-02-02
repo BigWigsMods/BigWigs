@@ -198,7 +198,7 @@ end
 function mod:Hungry(args)
 	local amount = args.amount or 1
 	if amount % 2 == 1 or amount > 6 then
-		self:Message2(args.spellId, "orange", CL.count:format(args.SpellName, amount))
+		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, amount))
 		if amount > 6 then
 			self:PlaySound(args.spellId, "alarm")
 		end
