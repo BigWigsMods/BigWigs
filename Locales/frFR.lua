@@ -7,6 +7,8 @@ L.warnSeveralReleases = "|cffff0000Votre BigWigs est %d versions derrière la pl
 
 L.gitHubDesc = "BigWigs est un logiciel open source hébergé sur GitHub. Nous sommes toujours à la recherche de nouvelles personnes pour nous aider et tout le monde est le bienvenu pour inspecter notre code, effectuer des contributions et soumettre des rapports de bogues. BigWigs existe en grande partie grâce à l'aide précieuse de la communauté de WoW."
 
+--L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
+
 L.options = "Options"
 L.raidBosses = "Boss de raid"
 L.dungeonBosses = "Boss de donjon"

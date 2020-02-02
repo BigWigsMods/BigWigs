@@ -236,6 +236,7 @@ do
 		end
 	end
 
+	local blockPrint = false
 	function core:Test()
 		if not callbackRegistered then
 			LibStub("LibCandyBar-3.0").RegisterCallback(core, "LibCandyBar_Stop", barStopped)
@@ -254,6 +255,15 @@ do
 		messages[spell] = icon
 
 		core:SendMessage("BigWigs_StartBar", core, spell, spell, time, icon)
+
+		local guid = UnitGUID("target")
+		if guid then
+			if not blockPrint then
+				blockPrint = true
+				core:Print(L.testNameplate)
+			end
+			core:SendMessage("BigWigs_StartNameplateBar", core, spell, spell, time, icon, false, guid)
+		end
 	end
 end
 

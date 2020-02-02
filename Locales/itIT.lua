@@ -7,6 +7,8 @@ if not L then return end
 
 --L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out."
 
+--L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
+
 --L.options = "Options"
 --L.raidBosses = "Raid Bosses"
 --L.dungeonBosses = "Dungeon Bosses"
