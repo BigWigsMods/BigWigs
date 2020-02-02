@@ -79,7 +79,7 @@ function mod:GetOptions()
 		312866, -- Cataclysmic Flames
 		{309698, "TANK"}, -- Void Lash
 		310042, -- Tumultuous Burst
-		{313400, "NAMEPLATEBAR"}, -- Corrupted Mind
+		313400, -- Corrupted Mind
 		-- Stage 3
 		318976, -- Stupefying Glare
 		317102, -- Evoke Anguish
