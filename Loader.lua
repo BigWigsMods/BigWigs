@@ -123,6 +123,7 @@ do
 		[544] = bc, -- Magtheridon's Lair
 		[534] = bc, -- The Battle for Mount Hyjal
 		[564] = bc, -- Black Temple
+		[560] = bc, -- The Escape from Durnholde
 		--[[ BigWigs: Wrath of the Lich King ]]--
 		[533] = wotlk, -- Naxxramas
 		[616] = wotlk, -- The Eye of Eternity
