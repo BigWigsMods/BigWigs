@@ -254,19 +254,9 @@ do
 		messages[spell] = icon
 
 		core:SendMessage("BigWigs_StartBar", core, spell, spell, time, icon)
-	end
 
-	function core:TestNameplate()
 		local guid = UnitGUID("target")
 		if not guid then return end
-
-		local _, _, offset, numSpells = GetSpellTabInfo(2) -- Main spec
-		local index = random(offset + 1, offset + 1 + numSpells)
-		local spell = GetSpellBookItemName(index, "spell")
-		local icon = GetSpellBookItemTexture(index, "spell")
-
-		local time = random(11, 30)
-		messages[spell] = icon
 
 		core:SendMessage("BigWigs_StartNameplateBar", core, spell, spell, time, icon, false, guid)
 	end
