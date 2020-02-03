@@ -164,7 +164,7 @@ end
 
 function mod:BlackWings(args)
 	self:Message2(args.spellId, "orange")
-	--self:PlaySound(args.spellId, "alarm")
+	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 30.4)
 end
 
