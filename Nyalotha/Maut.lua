@@ -58,6 +58,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowWounds", 307399)
 	self:Log("SPELL_CAST_START", "DarkOffering", 308872)
 	self:Log("SPELL_AURA_APPLIED", "DevourMagic", 307806)
+	self:Log("SPELL_AURA_REMOVED", "DevourMagicRemoved", 307806)
 	self:Log("SPELL_CAST_START", "StygianAnnihilationStart", 308044)
 	--self:Log("SPELL_CAST_SUCCESS", "StygianAnnihilationSuccess", 308044)
 	self:Log("SPELL_CAST_START", "DarkManifestation", 308903)
@@ -114,6 +115,12 @@ function mod:DevourMagic(args)
 		self:TargetBar(args.spellId, 6, args.destName)
 		self:SayCountdown(args.spellId, 6)
 		self:PlaySound(args.spellId, "warning", nil, args.destName)
+	end
+end
+
+function mod:DevourMagicRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
