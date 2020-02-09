@@ -273,6 +273,8 @@ do
 		[875] = true, -- Killing King Rastakhan
 		[876] = true, -- Entering Battle of Dazar'alor
 		[886] = true, -- Queen Azshara defeat
+		[927] = true, -- Wrathion introduction to Carapace of N'Zoth
+		[926] = true, -- N'Zoth defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
@@ -324,6 +326,7 @@ do
 		},
 		[-1358] = true, -- Battle of Dazar'alor, after killing 1st boss, Bwonsamdi (Horde side only)
 		--[-1364] = true, -- Battle of Dazar'alor, Jaina stage 1 intermission (unskippable)
+		[-1597] = true, -- N'Zoth defeat
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
