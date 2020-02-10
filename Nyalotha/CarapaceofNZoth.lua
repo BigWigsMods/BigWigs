@@ -137,10 +137,10 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("INV_MISC_MONSTERHORN_04", nil, true) then -- Growth-Covered Tentacle -- xxx event for mythic??
-		self:Message2(-20560, "red", CL.count:format(self:SpellName(-20560)), "INV_MISC_MONSTERHORN_04")
+		self:Message2(-20560, "red", CL.count:format(self:SpellName(-20560), tentacleCount), "INV_MISC_MONSTERHORN_04")
 		self:PlaySound(-20560, "info")
 		tentacleCount = tentacleCount + 1
-		self:Bar(-20560, 60, CL.count:format(self:SpellName(-20560)), "INV_MISC_MONSTERHORN_04")
+		self:Bar(-20560, 60, CL.count:format(self:SpellName(-20560), tentacleCount), "INV_MISC_MONSTERHORN_04")
 	elseif msg:find("INV_EyeofNzothPet", nil, true) then -- Gaze of Madness
 		self:Message2(-20565, "red", CL.count:format(self:SpellName(-20565)), "INV_EyeofNzothPet")
 		self:PlaySound(-20565, "alert")
