@@ -43,6 +43,7 @@ local madnessBombCount = 1
 local tentacleCount = 1
 local gazeofMadnessCount = 1
 local eternalDarknessCount = 1
+local trashingTentacleCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
