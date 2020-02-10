@@ -657,7 +657,7 @@ end
 
 function mod:CorruptedMindApplied(args)
 	if self:Me(args.destGUID) or self:Dispeller("magic") then
-		self:TargetMessage2(args.spellId, args.destName, "orange")
+		self:TargetMessage2(args.spellId, "orange", args.destName)
 		self:PlaySound(args.spellId, "alert", args.destName)
 	end
 end
