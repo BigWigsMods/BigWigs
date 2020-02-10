@@ -264,6 +264,7 @@ do
 		[1862] = lw_bfa, -- Waycrest Manor
 		[2097] = lw_bfa, -- Operation: Mechagon
 		[2212] = lw_bfa, -- Horrific Vision of Orgrimmar
+		[2213] = lw_bfa, -- Horrific Vision of Stormwind
 	}
 
 	public.zoneTblWorld = {
