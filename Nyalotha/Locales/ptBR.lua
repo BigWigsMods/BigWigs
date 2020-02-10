@@ -57,4 +57,3 @@ if L then
 	-- L.laser_left = "Lasers (Left)"
 	-- L.laser_right = "Lasers (Right)"
 end
-end
