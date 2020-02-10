@@ -335,7 +335,7 @@ do
 			end
 			mindwrackCount = mindwrackCount + 1
 			self:CDBar(args.spellId, 6, CL.count:format(args.spellName, (mindwrackCount%3)+1)) -- Only show 1-3 for interrupts
-		elseif self:Tank() stage > 2 then -- Warn tanks about casts in stage 3 with nameplate bars
+		elseif self:Tank() and stage > 2 then -- Warn tanks about casts in stage 3 with nameplate bars
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
