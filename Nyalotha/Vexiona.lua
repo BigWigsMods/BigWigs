@@ -126,6 +126,7 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 		self:Bar(307057, 3.9) -- Dark Gateway
 		self:Bar(307020, 5) -- Twilight Breath
 		self:Bar(307359, 10) -- Despair
+		nextStageTwoTime = GetTime() + 80
 		self:CDBar("stages", 80, CL.stage:format(2), 315762) -- Twilight Decimator
 	end
 	lastPower = power
@@ -137,7 +138,7 @@ do
 		if spellId == 307043 then -- Dark Gateway
 			self:Message2(307057, "cyan")
 			self:PlaySound(307057, "info")
-			if nextStageTwoTime < GetTime() + 33 then
+			if nextStageTwoTime > GetTime() + 33 then
 				self:Bar(307057, 33)
 			end
 		elseif spellId == 307116 then -- Stage 2 // Power of the Chosen
@@ -175,13 +176,13 @@ end
 function mod:TwilightBreath(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	if nextStageTwoTime < GetTime() + 17 then
+	if nextStageTwoTime > GetTime() + 17 then
 		self:Bar(args.spellId, 17)
 	end
 end
 
 function mod:DespairSuccess(args)
-	if nextStageTwoTime < GetTime() + 35.3 then
+	if nextStageTwoTime > GetTime() + 35.3 then
 		self:Bar(args.spellId, 35.3)
 	end
 end
