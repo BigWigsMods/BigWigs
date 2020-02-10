@@ -142,10 +142,10 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		tentacleCount = tentacleCount + 1
 		self:Bar(-20560, 60, CL.count:format(self:SpellName(-20560), tentacleCount), "INV_MISC_MONSTERHORN_04")
 	elseif msg:find("INV_EyeofNzothPet", nil, true) then -- Gaze of Madness
-		self:Message2(-20565, "red", CL.count:format(self:SpellName(-20565)), "INV_EyeofNzothPet")
+		self:Message2(-20565, "red", CL.count:format(self:SpellName(-20565), gazeofMadnessCount), "INV_EyeofNzothPet")
 		self:PlaySound(-20565, "alert")
 		gazeofMadnessCount = gazeofMadnessCount + 1
-		self:Bar(-20565, self:Mythic() and 65.12 or 58, CL.count:format(self:SpellName(-20565)), "INV_EyeofNzothPet")
+		self:Bar(-20565, self:Mythic() and 65.12 or 58, CL.count:format(self:SpellName(-20565), gazeofMadnessCount), "INV_EyeofNzothPet")
 	end
 end
 
