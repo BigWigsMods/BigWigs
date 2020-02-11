@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Razorgore the Untamed", "zhTW")
 if not L then return end
 if L then
+	--L.bossName = "Razorgore the Untamed"
 	L.start_trigger = "入侵者"
 	L.start_message = "狂野的拉佐格爾進入戰鬥！45秒後小怪出現！"
 	L.start_soon = "5 秒後小兵出現！"
@@ -13,8 +14,34 @@ if L then
 	L.phase2_message = "已摧毀所有龍蛋"
 end
 
+L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "zhTW")
+if L then
+	--L.bossName = "Vaelastrasz the Corrupt"
+end
+
+L = BigWigs:NewBossLocale("Broodlord Lashlayer", "zhTW")
+if L then
+	--L.bossName = "Broodlord Lashlayer"
+end
+
+L = BigWigs:NewBossLocale("Firemaw", "zhTW")
+if L then
+	--L.bossName = "Firemaw"
+end
+
+L = BigWigs:NewBossLocale("Ebonroc", "zhTW")
+if L then
+	--L.bossName = "Ebonroc"
+end
+
+L = BigWigs:NewBossLocale("Flamegor", "zhTW")
+if L then
+	--L.bossName = "Flamegor"
+end
+
 L = BigWigs:NewBossLocale("Chromaggus", "zhTW")
 if L then
+	--L.bossName = "Chromaggus"
 	L.breath = "吐息警報"
 	L.breath_desc = "當克洛瑪古斯吐息時發出警報"
 
@@ -23,8 +50,9 @@ if L then
 	L.debuffs_warning = "4/5 減益， 5層後將%s！"
 end
 
-L = BigWigs:NewBossLocale("Nefarian ", "zhTW")
+L = BigWigs:NewBossLocale("NefarianBWL", "zhTW")
 if L then
+	--L.bossName = "Nefarian"
 	L.landing_soon_trigger = "幹得好，我的手下。"
 	L.landing_trigger = "燃燒吧！你這個"
 	L.zerg_trigger = "^不可能"

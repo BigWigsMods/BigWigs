@@ -9,6 +9,16 @@ mod:SetAllowWin(true)
 mod.engageId = 615
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Flamegor"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -18,6 +28,10 @@ function mod:GetOptions()
 		22539, -- Shadow Flame
 		23342, -- Frenzy
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

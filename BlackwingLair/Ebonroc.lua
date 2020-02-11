@@ -9,6 +9,16 @@ mod:SetAllowWin(true)
 mod.engageId = 614
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Ebonroc"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -18,6 +28,10 @@ function mod:GetOptions()
 		22539, -- Shadow Flame
 		{23340, "ICON"}, -- Shadow of Ebonroc
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

@@ -9,6 +9,16 @@ mod:SetAllowWin(true)
 mod.engageId = 612
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Broodlord Lashlayer"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -16,6 +26,10 @@ function mod:GetOptions()
 	return {
 		{24573, "ICON"}, -- Mortal Strike
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

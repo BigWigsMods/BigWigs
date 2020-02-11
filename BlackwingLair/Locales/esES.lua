@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Razorgore the Untamed", "esES") or BigWigs:NewBossLocale("Razorgore the Untamed", "esMX")
 if not L then return end
 if L then
+	L.bossName = "Sangrevaja el Indomable"
 	--L.start_trigger = "Intruders have breached"
 	--L.start_message = "Razorgore engaged! Mobs in 45sec!"
 	--L.start_soon = "Mob Spawn in 5sec!"
@@ -13,8 +14,34 @@ if L then
 	--L.phase2_message = "All eggs destroyed, Razorgore loose!"
 end
 
+L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "esES") or BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "esMX")
+if L then
+	L.bossName = "Vaelastrasz el Corrupto"
+end
+
+L = BigWigs:NewBossLocale("Broodlord Lashlayer", "esES") or BigWigs:NewBossLocale("Broodlord Lashlayer", "esMX")
+if L then
+	L.bossName = "Señor de linaje Capazote"
+end
+
+L = BigWigs:NewBossLocale("Firemaw", "esES") or BigWigs:NewBossLocale("Firemaw", "esMX")
+if L then
+	L.bossName = "Faucefogo"
+end
+
+L = BigWigs:NewBossLocale("Ebonroc", "esES") or BigWigs:NewBossLocale("Ebonroc", "esMX")
+if L then
+	L.bossName = "Ebanorroca"
+end
+
+L = BigWigs:NewBossLocale("Flamegor", "esES") or BigWigs:NewBossLocale("Flamegor", "esMX")
+if L then
+	L.bossName = "Flamagor"
+end
+
 L = BigWigs:NewBossLocale("Chromaggus", "esES") or BigWigs:NewBossLocale("Chromaggus", "esMX")
 if L then
+	--L.bossName = "Chromaggus"
 	--L.breath = "Breaths"
 	--L.breath_desc = "Warn for Breaths."
 
@@ -22,8 +49,9 @@ if L then
 	--L.debuffs_warning = "4/5 debuffs, %s on 5th!"
 end
 
-L = BigWigs:NewBossLocale("Nefarian ", "esES") or BigWigs:NewBossLocale("Nefarian ", "esMX")
+L = BigWigs:NewBossLocale("NefarianBWL", "esES") or BigWigs:NewBossLocale("NefarianBWL", "esMX")
 if L then
+	--L.bossName = "Nefarian"
 	--L.landing_soon_trigger = "Well done, my minions"
 	--L.landing_trigger = "BURN! You wretches"
 	--L.zerg_trigger = "Impossible! Rise my"

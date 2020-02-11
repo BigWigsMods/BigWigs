@@ -1,6 +1,7 @@
 local L = BigWigs:NewBossLocale("Razorgore the Untamed", "itIT")
 if not L then return end
 if L then
+	--L.bossName = "Razorgore the Untamed"
 	--L.start_trigger = "Intruders have breached"
 	--L.start_message = "Razorgore engaged! Mobs in 45sec!"
 	--L.start_soon = "Mob Spawn in 5sec!"
@@ -13,8 +14,34 @@ if L then
 	--L.phase2_message = "All eggs destroyed, Razorgore loose!"
 end
 
+L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "itIT")
+if L then
+	--L.bossName = "Vaelastrasz the Corrupt"
+end
+
+L = BigWigs:NewBossLocale("Broodlord Lashlayer", "itIT")
+if L then
+	--L.bossName = "Broodlord Lashlayer"
+end
+
+L = BigWigs:NewBossLocale("Firemaw", "itIT")
+if L then
+	--L.bossName = "Firemaw"
+end
+
+L = BigWigs:NewBossLocale("Ebonroc", "itIT")
+if L then
+	--L.bossName = "Ebonroc"
+end
+
+L = BigWigs:NewBossLocale("Flamegor", "itIT")
+if L then
+	--L.bossName = "Flamegor"
+end
+
 L = BigWigs:NewBossLocale("Chromaggus", "itIT")
 if L then
+	--L.bossName = "Chromaggus"
 	--L.breath = "Breaths"
 	--L.breath_desc = "Warn for Breaths."
 
@@ -22,8 +49,9 @@ if L then
 	--L.debuffs_warning = "4/5 debuffs, %s on 5th!"
 end
 
-L = BigWigs:NewBossLocale("Nefarian ", "itIT")
+L = BigWigs:NewBossLocale("NefarianBWL", "itIT")
 if L then
+	--L.bossName = "Nefarian"
 	--L.landing_soon_trigger = "Well done, my minions"
 	--L.landing_trigger = "BURN! You wretches"
 	--L.zerg_trigger = "Impossible! Rise my"

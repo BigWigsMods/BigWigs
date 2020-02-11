@@ -14,6 +14,8 @@ mod.engageId = 617
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bossName = "Nefarian"
+
 	L.landing_soon_trigger = "Well done, my minions"
 	L.landing_trigger = "BURN! You wretches"
 	L.zerg_trigger = "Impossible! Rise my"
@@ -83,6 +85,10 @@ function mod:GetOptions()
 		"classcall",
 		"otherwarn"
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

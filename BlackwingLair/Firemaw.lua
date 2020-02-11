@@ -9,6 +9,16 @@ mod:SetAllowWin(true)
 mod.engageId = 613
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Firemaw"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -17,6 +27,10 @@ function mod:GetOptions()
 		23339, -- Wing Buffet
 		22539, -- Shadow Flame
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

@@ -9,6 +9,16 @@ mod:SetAllowWin(true)
 mod.engageId = 611
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Vaelastrasz the Corrupt"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -16,6 +26,10 @@ function mod:GetOptions()
 	return {
 		{18173, "ICON"}, -- Burning Adrenaline
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

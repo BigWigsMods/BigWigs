@@ -33,6 +33,8 @@ local icons = {
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bossName = "Chromaggus"
+
 	L.breath = "Breaths"
 	L.breath_desc = "Warn for Breaths."
 
@@ -56,6 +58,10 @@ function mod:GetOptions()
 		"debuffs",
 		--"vulnerability",
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

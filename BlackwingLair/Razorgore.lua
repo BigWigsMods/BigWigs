@@ -20,6 +20,8 @@ local eggs = 0
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bossName = "Razorgore the Untamed"
+
 	L.start_trigger = "Intruders have breached"
 	L.start_message = "Razorgore engaged! Mobs in 45sec!"
 	L.start_soon = "Mob Spawn in 5sec!"
@@ -45,6 +47,10 @@ function mod:GetOptions()
 		"eggs",
 		"stages",
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()
