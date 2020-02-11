@@ -46,6 +46,10 @@ function mod:GetOptions()
 		306953, -- Debilitating Spit
 		{318078, "SAY"}, -- Fixate
 
+		--[[ Mythic ]]--
+		312328, -- Hungry
+		312099, -- Tasty Morsel
+
 		--[[ Crush and Dissolve ]]--
 		{-21311, "TANK_HEALER"}, -- Crush and Dissolve
 		{307471, "TANK"}, -- Crush
@@ -64,6 +68,7 @@ function mod:GetOptions()
 		306942, -- Frenzy
 	}, {
 		["stages"] = CL.general,
+		[312328] = CL.mythic,
 		[-21311] = -21311, -- Crush and Dissolve
 		[306448] = -21246,-- Stage One: Shadowy Carapace
 		[306930] = -21247,-- Stage Two: Void-tinged Carapace
@@ -75,6 +80,11 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "boss1")
 	self:Log("SPELL_CAST_SUCCESS", "DebilitatingSpit", 306953)
 	self:Log("SPELL_CAST_SUCCESS", "Fixate", 318078)
+
+	self:Log("SPELL_AURA_APPLIED", "Hungry", 312328)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "Hungry", 312328)
+	self:Log("SPELL_AURA_APPLIED", "TastyMorsel", 312099)
+	self:Log("SPELL_AURA_REMOVED", "TastyMorselRemoved", 312099)
 
 	self:Log("SPELL_CAST_START", "CrushAndDissolveStart", 307476, 307478)
 	self:Log("SPELL_AURA_APPLIED", "CrushApplied", 307471)
@@ -108,7 +118,7 @@ function mod:OnEngage()
 	self:StartBreathBar(306928)
 	self:Bar(306448, 5) -- Umbral Mantle
 	self:Bar(-21311, 15.5, CL.count:format(self:SpellName(-21311), crushAndDissolveCount), "inv_pet_voidhound") -- Crush and Dissolve
-	self:Bar(318078, 31) -- Fixate
+	self:Bar(318078, self:Mythic() and 16 or 31, CL.count:format(self:SpellName(318078), fixateCount)) -- Fixate
 end
 
 --------------------------------------------------------------------------------
@@ -175,13 +185,40 @@ do
 end
 
 function mod:Fixate(args)
+	self:StopBar(CL.count:format(args.spellName, fixateCount))
 	self:TargetMessage2(args.spellId, "red", args.destName, CL.count:format(args.spellName, fixateCount))
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:Say(args.spellId)
 	end
 	fixateCount = fixateCount + 1
-	self:Bar(args.spellId, 31, CL.count:format(args.spellName, fixateCount))
+	self:Bar(args.spellId, self:Mythic() and 16 or 31, CL.count:format(args.spellName, fixateCount))
+end
+
+function mod:Hungry(args)
+	local amount = args.amount or 1
+	if amount % 2 == 1 or amount > 6 then
+		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, amount))
+		if amount > 6 then
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+end
+
+function mod:TastyMorsel(args)
+	self:TargetMessage2(args.spellId, "green", args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "long")
+		self:TargetBar(args.spellId, 15, args.destName)
+	end
+end
+
+function mod:TastyMorselRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "info")
+		self:StopBar(args.spellId, args.destName)
+	end
 end
 
 function mod:CrushAndDissolveStart(args)

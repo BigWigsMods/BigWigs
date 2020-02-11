@@ -69,6 +69,12 @@ local valid_methods = {
 	SetInfo = "INFOBOX",
 	SetInfoBar = "INFOBOX",
 	CloseInfo = "INFOBOX",
+	NameplateBar = "NAMEPLATEBAR",
+	NameplateCDBar = "NAMEPLATEBAR",
+	PauseNameplateBar = "NAMEPLATEBAR",
+	ResumeNameplateBar = "NAMEPLATEBAR",
+	NameplateBarTimeLeft = "NAMEPLATEBAR",
+	StopNameplateBar = "NAMEPLATEBAR",
 }
 for k in next, color_methods do valid_methods[k] = true end
 for k in next, sound_methods do valid_methods[k] = true end
@@ -122,6 +128,24 @@ local log_events = {
 	["UNIT_DIED"] = true,
 	["UNIT_DESTROYED"] = true,
 	["UNIT_DISSIPATES"] = true,
+}
+
+local args_keys = {
+	time = true,
+	sourceGUID = true,
+	sourceName = true,
+	sourceFlags = true,
+	sourceRaidFlags = true,
+	destGUID = true,
+	destName = true,
+	destFlags = true,
+	destRaidFlags = true,
+	spellId = true,
+	spellName = true,
+	extraSpellId = true,
+	extraSpellName = true,
+	amount = true,
+	mobId = true,
 }
 
 -- Set an exit code if we show an error.
@@ -578,6 +602,13 @@ local function parseLua(file)
 				end
 			else
 				rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+			end
+		end
+
+		--- Check callback args
+		for key in string.gmatch(line, "[^%w]*args%.([%w]+)[^%w]*") do
+			if not args_keys[key] then
+				error(string.format("    %s:%d: Invalid args key \"%s\"", file_name, n, key))
 			end
 		end
 

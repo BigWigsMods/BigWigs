@@ -7,6 +7,8 @@ L.warnSeveralReleases = "|cffff0000你的 BigWigs 已過期%d發行版！！我�
 
 L.gitHubDesc = "BigWigs 是一個在 GitHub 上的開源軟體。我們一直在尋找新的朋友幫助我們和歡迎任何人檢測我們的代碼，做出貢獻和提交錯誤報告。BigWigs 今天的偉大很大程度上一部分因為偉大的魔獸世界社區幫助我們。"
 
+--L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
+
 L.options = "選項"
 L.raidBosses = "團隊首領"
 L.dungeonBosses = "地城首領"

@@ -325,7 +325,8 @@ do
 				local gameAccs = C_BattleNet.GetFriendNumGameAccounts(index)
 				for i=1, gameAccs do
 					local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(index, i)
-					if gameAccountInfo.clientProgram == "WoW" then
+					-- Play on retail and get a whisper from Classic, seems to lack realmName, WoW 8.3
+					if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.realmName and gameAccountInfo.characterName then
 						local player = gameAccountInfo.characterName
 						if gameAccountInfo.realmName ~= GetRealmName() then
 							player = player .. "-" .. gameAccountInfo.realmName

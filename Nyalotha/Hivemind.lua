@@ -18,18 +18,31 @@ mod.respawnTime = 30
 -- Locals
 --
 local acidicAqirCount = 1
-local acidicAqirTimers = {56.3, 65.0, 60.0, 62.5, 62.5, 62.5, 62.5} -- Heroic
-
 local nullificationBlastCount = 1
-local nullificationBlastTimers = {26.3, 27.5, 23.8, 50.0, 25.0, 25.0, 26.3, 25.1, 24.9, 30.0, 25.0, 25.0, 25.0, 24.9, 25.0, 25.0}
-
 local echoingVoidCount = 1
-local echoingVoidTimers = {33.9, 66.1, 37.5, 72.6, 65.0, 68.7, 68.8, 13.8}
+local bossesTogether = true
+local ravagerGUID = nil
+local droneGUID = nil
+
+local timersHeroic = {
+	[310340] = {56.3, 65.0, 60.0, 62.5, 62.5, 62.5, 62.5}, -- Spawn Acidic Aqir
+	[307968] = {26.3, 27.5, 23.8, 50.0, 25.0, 25.0, 26.3, 25.1, 24.9, 30.0, 25.0, 25.0, 25.0, 24.9, 25.0, 25.0}, -- Nullification Blast
+	[307232] = {33.9, 66.1, 37.5, 72.6, 65.0, 68.7, 68.8, 13.8}, -- Echoing Void
+}
+local timersMythic = {
+	[310340] = {45.0, 52.0, 48.0, 50.0, 50.0, 50.0, 50.0, 52.0, 48.0}, -- Spawn Acidic Aqir
+	[307968] = {22.0, 20.0, 20.0, 40.0, 20.0, 20.0, 21.0, 20.0, 20.0, 24.1, 19.9, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 30.0}, -- Nullification Blast
+	[307232] = {27.0, 53.0, 30.0, 58.0, 52.0, 55.0, 66.0, 44.0} -- Echoing Void
+}
+
+local timers = mod:Mythic() and timersMythic or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local ravagerMarker = mod:AddMarkerOption(true, "npc", 8, -21209, 8) -- Aqir Ravager
+local droneMarker = mod:AddMarkerOption(true, "npc", 8, -20725, 8) -- Thought Harvester
 function mod:GetOptions()
 	return {
 		-- General
@@ -37,14 +50,20 @@ function mod:GetOptions()
 		307213, -- Tek'ris's Hivemind Control
 		313672, -- Acid Pool
 		307569, -- Dark Reconstitution
+		ravagerMarker,
+		droneMarker,
 		-- Ka'zir
 		314583, -- Volatile Eruption
 		310340, -- Spawn Acidic Aqir
 		313652, -- Mind-Numbing Nova
 		-- Tek'ris
-		308227, -- Accelerated Evolution
+		307637, -- Accelerated Evolution
 		307968, -- Nullification Blast
 		{307232, "PROXIMITY"}, -- Echoing Void
+	},{
+		[307201] = "general",
+		[314583] = self:SpellName(-20710), -- Ka'zir
+		[307637] = self:SpellName(-20713), -- Ka'zir
 	}
 end
 
@@ -56,11 +75,13 @@ function mod:OnBossEnable()
 
 	-- Ka'zir
 	self:Log("SPELL_CAST_START", "VolatileEruption", 308178)
+	self:Log("SPELL_CAST_SUCCESS", "VolatileEruptionSuccess", 308178)
 	self:Log("SPELL_CAST_START", "SpawnAcidicAqir", 310340)
 	self:Log("SPELL_CAST_START", "MindNumbingNovaStart", 313652)
 
 	-- Tek'ris
 	self:Log("SPELL_CAST_START", "AcceleratedEvolution", 308227)
+	self:Log("SPELL_CAST_SUCCESS", "AcceleratedEvolutionSuccess", 308227)
 	self:Log("SPELL_CAST_START", "NullificationBlast", 307968)
 	self:Log("SPELL_CAST_START", "EchoingVoid", 307232)
 	self:Log("SPELL_CAST_SUCCESS", "EchoingVoidSuccess", 307232)
@@ -74,28 +95,62 @@ function mod:OnEngage()
 	acidicAqirCount = 1
 	nullificationBlastCount = 1
 	echoingVoidCount = 1
+	bossesTogether = true
+	ravagerGUID = nil
+	droneGUID = nil
+	timers = mod:Mythic() and timersMythic or timersHeroic
 
-	self:Bar(310340, acidicAqirTimers[acidicAqirCount]) -- Spawn Acidic Aqir
-	self:Bar(313652, 15) -- Mind-Numbing Nova
-	self:Bar(307968, nullificationBlastTimers[nullificationBlastCount]) -- Nullification Blast
-	self:Bar(307232, echoingVoidTimers[echoingVoidCount]) -- Echoing Void
+	self:Bar(310340, timers[310340][acidicAqirCount], CL.count:format(self:SpellName(310340), acidicAqirCount)) -- Spawn Acidic Aqir
+	self:Bar(313652, self:Mythic() and 12 or 15) -- Mind-Numbing Nova
+	self:Bar(307968, timers[307968][nullificationBlastCount]) -- Nullification Blast
+	self:Bar(307637, self:Mythic() and 15 or 21.5) -- Accelerated Evolution
+	self:Bar(307232, timers[307232][echoingVoidCount], CL.count:format(self:SpellName(307232), echoingVoidCount)) -- Echoing Void
+	self:Bar(314583, self:Mythic() and 85 or 107) -- Volatile Eruption
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+do
+	local prev = nil
+	function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT(event)
+		for i = 1, 5 do
+			local unit = ("boss%d"):format(i)
+			local guid = UnitGUID(unit)
+			--local mobId = self:MobId(guid) -- They both have the same mob ID of 157255
+			if guid then
+				if guid == ravagerGUID then -- Aqir Ravager
+					ravagerGUID = nil
+					self:UnregisterEvent(event)
+					if self:GetOption(ravagerMarker) then
+						SetRaidTarget(unit, 8)
+					end
+				elseif guid == droneGUID then -- Aqir Drone
+					droneGUID = nil
+					self:UnregisterEvent(event)
+					if self:GetOption(droneMarker) then
+						SetRaidTarget(unit, 8)
+					end
+				end
+			end
+		end
+	end
+end
+
 function mod:KazirsHivemindControl(args)
+	bossesTogether = false
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
-	self:Bar(307213, 93.5) -- Tek'ris's Hivemind Control
+	self:Bar(307213, self:Mythic() and 74.5 or 93.5) -- Tek'ris's Hivemind Control
 end
 
 
 function mod:TekrissHivemindControl(args)
+	bossesTogether = true
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
-	self:Bar(307201, 93.5) -- Ka'zir's Hivemind Control
+	self:Bar(307201, self:Mythic() and 74.5 or 93.5) -- Ka'zir's Hivemind Control
 end
 
 do
@@ -114,13 +169,20 @@ end
 function mod:VolatileEruption(args)
 	self:Message2(314583, "red")
 	self:PlaySound(314583, "warning")
+	self:CDBar(314583, self:Mythic() and 148 or 185)
+end
+
+function mod:VolatileEruptionSuccess(args)
+	droneGUID = args.destGUID
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 end
 
 function mod:SpawnAcidicAqir(args)
+	self:StopBar(CL.count:format(args.spellName, acidicAqirCount))
 	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "alarm")
+	self:PlaySound(args.spellId, "info")
 	acidicAqirCount = acidicAqirCount + 1
-	self:Bar(args.spellId, acidicAqirTimers[acidicAqirCount])
+	self:Bar(args.spellId, timers[args.spellId][acidicAqirCount], CL.count:format(args.spellName, acidicAqirCount))
 end
 
 function mod:MindNumbingNovaStart(args)
@@ -128,29 +190,37 @@ function mod:MindNumbingNovaStart(args)
 	if canDo then
 		self:Message2(args.spellId, "yellow")
 		if ready then
-			self:PlaySound(args.spellId, "alarm")
+			self:PlaySound(args.spellId, "long")
 		end
 	end
-	self:Bar(args.spellId, 15)
+	self:Bar(args.spellId, self:Mythic() and 12 or 15)
 end
 
 function mod:AcceleratedEvolution(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+	self:Message2(307637, "yellow")
+	self:PlaySound(307637, "alert")
+	self:CDBar(307637, self:Mythic() and 147 or 181)
+end
+
+function mod:AcceleratedEvolutionSuccess(args)
+	ravagerGUID = args.destGUID
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 end
 
 function mod:NullificationBlast(args)
 	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alarm")
+	if bossesTogether then
+		self:PlaySound(args.spellId, "alert")
+	end
 	nullificationBlastCount = nullificationBlastCount + 1
-	self:Bar(args.spellId, nullificationBlastTimers[nullificationBlastCount])
+	self:Bar(args.spellId, timers[args.spellId][nullificationBlastCount])
 end
 
 function mod:EchoingVoid(args)
 	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "warning")
 	echoingVoidCount = echoingVoidCount + 1
-	self:Bar(args.spellId, echoingVoidTimers[echoingVoidCount])
+	self:Bar(args.spellId, timers[args.spellId][echoingVoidCount], CL.count:format(args.spellName, acidicAqirCount))
 	self:OpenProximity(args.spellId, 4)
 	self:CastBar(args.spellId, 4)
 end

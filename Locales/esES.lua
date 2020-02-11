@@ -14,6 +14,7 @@ L.warmup  = "Calentamiento"
 L.warmup_desc  = "Tiempo hasta que el combate con el jefe comience."
 
 L.already_registered  = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) ya existe ese módulo en BigWigs, pero sin embargo está intentando registrarlo de nuevo. Esto normalmente ocurre cuando tienes varias copias de este módulo en tu carpeta de addons posiblemente por una actualización fallida. Es recomendable que borres la carpeta de BigWigs y lo reinstales por completo."
+--L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
 
 -- Loader / Options.lua
 L.officialRelease  = "Estás usando la versión oficial de BigWigs %s (%s)"

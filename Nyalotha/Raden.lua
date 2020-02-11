@@ -11,7 +11,7 @@ local mod, CL = BigWigs:NewBoss("Ra-den the Despoiled", 2217, 2364)
 if not mod then return end
 mod:RegisterEnableMob(156866) -- Ra-den
 mod.engageId = 2331
---mod.respawnTime = 30
+mod.respawnTime = 15
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -57,7 +57,8 @@ function mod:GetOptions()
 		312996, -- Nightmare Empowered
 		{313077, "SAY", "FLASH"}, -- Unstable Nightmare
 		314484, -- Call Night Terror
-		315252, -- Dread Inferno
+		{315252, "SAY"}, -- Dread Inferno
+		{316065, "FLASH"}, -- Corrupted Existence
 	},{
 		["stages"] = "general",
 		[306819] = CL.stage:format(1),
@@ -99,6 +100,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "UnstableNightmareApplied", 313077)
 	self:Log("SPELL_CAST_START", "CallNightTerrorStart", 314484)
 	self:Log("SPELL_AURA_APPLIED", "DreadInfernoFixate", 315252)
+	self:Log("SPELL_CAST_SUCCESS", "CorruptedExistenceSuccess", 317276)
+	self:Log("SPELL_AURA_APPLIED", "CorruptedExistenceApplied", 316065)
 end
 
 function mod:OnEngage()
@@ -176,6 +179,7 @@ end
 function mod:CallVoidHunter(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
+	self:CDBar(306881, 7) -- Void Collapse
 end
 
 do
@@ -220,6 +224,9 @@ function mod:Ruin()
 	self:Bar(313213, 6) -- Decaying Strike
 	self:Bar(310003, 12.1) -- Void Eruption
 	self:Bar(310019, 4.8) -- Charged Bonds
+	if self:Mythic() then
+		self:Bar(316065, 2.8)
+	end
 end
 
 function mod:DecayingStrikeStart(args)
@@ -289,7 +296,24 @@ end
 
 function mod:DreadInfernoFixate(args)
 	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm", args.destName)
+	end
+end
+
+function mod:CorruptedExistenceSuccess(args)
+	self:Bar(316065, 12.1)
+end
+
+do
+	local playerList = mod:NewTargetList()
+	function mod:CorruptedExistenceApplied(args)
+		playerList[#playerList+1] = args.destName
+		if self:Me(args.destGUID) then
+			self:Flash(args.spellId)
+			self:PlaySound(args.spellId, "warning")
+		end
+		self:TargetsMessage(args.spellId, "cyan", playerList)
 	end
 end

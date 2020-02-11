@@ -34,6 +34,11 @@ function mod:GetOptions()
 		306289, -- Gale Blast
 		306735, -- Burning Cataclysm
 		307013, -- Burning Madness
+		313250, -- Creeping Madness
+		{313255, "FLASH"}, -- Slow
+	}, {
+		["stages"] = CL.general,
+		[313250] = CL.mythic,
 	}
 end
 
@@ -43,7 +48,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SearingBreath", 305978)
 	self:Log("SPELL_AURA_APPLIED", "SearingArmorApplied", 306015) -- Searing Armor
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingArmorApplied", 306015) -- Searing Armor
-	self:Log("SPELL_CAST_SUCCESS", "IncinerationSuccess", 306111)
+	self:Log("SPELL_CAST_START", "IncinerationStart", 306111)
 	self:Log("SPELL_AURA_APPLIED", "IncinerationApplied", 306163)
 	self:Log("SPELL_AURA_REMOVED", "IncinerationRemoved", 306163)
 	self:Log("SPELL_CAST_START", "GaleBlast", 306289)
@@ -51,6 +56,9 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_SUCCESS", "SmokeandMirrors", 306995)
 	self:Log("SPELL_AURA_REMOVED", "SmokeandMirrorsRemoved", 306995)
+
+	self:Log("SPELL_AURA_APPLIED", "CreepingMadness", 313250)
+	self:Log("SPELL_AURA_REMOVED", "CreepingMadnessRemoved", 313250)
 end
 
 function mod:OnEngage()
@@ -60,9 +68,9 @@ function mod:OnEngage()
 	cataclysmCount = 1
 
 	self:Bar(305978, 7.1) -- Searing Breath
-	self:Bar(306163, 14.2, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
-	self:Bar(306289, 48) -- Gale Blast
-	self:Bar(306735, 53) -- Burning Cataclysm
+	self:CDBar(306163, self:Mythic() and 28 or 8, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration, this can vary (a lot)
+	self:Bar(306289, self:Mythic() and 46 or 48) -- Gale Blast
+	self:Bar(306735, self:Mythic() and 59 or 53) -- Burning Cataclysm
 	self:Bar("stages", 160, CL.stage:format(2), 306995) -- Smoke and Mirrors
 end
 
@@ -101,30 +109,28 @@ function mod:SearingArmorApplied(args)
 	end
 end
 
-function mod:IncinerationSuccess(args)
+function mod:IncinerationStart(args)
+	self:StopBar(CL.count:format(args.spellName, incinerationCount))
+	self:Message2(306163, "yellow", CL.incoming:format(CL.count:format(args.spellName, incinerationCount)))
 	incinerationCount = incinerationCount + 1
-	if nextCataclysm > GetTime() + 24.3 then
+	if not self:Mythic() and nextCataclysm > GetTime() + 24.3 then -- only 1 Incineration per Cataclysm in Mythic
 		self:Bar(306163, 24.3, CL.count:format(args.spellName, incinerationCount))
 	end
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:IncinerationApplied(args)
-		playerList[#playerList+1] = args.destName
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 6)
-			self:Flash(args.spellId)
-			self:PlaySound(args.spellId, "warning")
-		end
-		self:TargetsMessage(args.spellId, "orange", playerList, CL.count:format(args.spellName, incinerationCount-1))
+function mod:IncinerationApplied(args)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 6)
+		self:Flash(args.spellId)
+		self:PlaySound(args.spellId, "warning")
+		self:TargetMessage2(args.spellId, "blue", args.destName)
 	end
+end
 
-	function mod:IncinerationRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
-		end
+function mod:IncinerationRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
@@ -136,9 +142,9 @@ end
 function mod:BurningCataclysm(args)
 	self:CastBar(args.spellId, 8)
 	if cataclysmCount < 3 then -- Stage 2 isn't coming yet, so start bars
-		self:Bar(306289, 60) -- Gale Blast
-		self:Bar(306163, 24.1, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
+		self:Bar(306163, self:Mythic() and 44 or 24.1, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
 		self:Bar(305978, 26.8) -- Searing Breath
+		self:Bar(306289, 60) -- Gale Blast
 	end
 end
 
@@ -154,9 +160,52 @@ function mod:SmokeandMirrorsRemoved(args)
 	self:PlaySound("stages", "long")
 	incinerationCount = 1
 
-	self:Bar(306163, 10.2, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
+	self:Bar(306163, self:Mythic() and 29 or 10.2, CL.count:format(self:SpellName(306163), incinerationCount)) -- Incineration
 	self:Bar(305978, 14.1) -- Searing Breath
 	self:Bar(306289, 45) -- Gale Blast
-	self:Bar(306735, 50) -- Burning Cataclysm
+	self:Bar(306735, self:Mythic() and 60 or 50) -- Burning Cataclysm
 	self:Bar("stages", 160, CL.stage:format(2), 306995) -- Smoke and Mirrors
+end
+
+do
+	local lastStack, lastWarn = 0, 0
+
+	function mod:CreepingMadness(args)
+		if self:Me(args.destGUID) then
+			self:Message2(args.spellId, "blue")
+			self:PlaySound(args.spellId, "info")
+			self:Bar(args.spellId, 140, CL.over:format(args.spellName))
+
+			lastStack = 0
+			lastWarn = 0
+			self:RegisterUnitEvent("UNIT_AURA", nil, "player") -- Having APPLIED_DOSE events would be too easy to track Slow
+		end
+	end
+
+	function mod:CreepingMadnessRemoved(args)
+		if self:Me(args.destGUID) then
+			self:Message2(args.spellId, "green", CL.over:format(args.spellName))
+			self:PlaySound(args.spellId, "info")
+
+			self:UnregisterUnitEvent("UNIT_AURA", "player")
+		end
+	end
+
+	function mod:UNIT_AURA(_, unit)
+		local name, stack = self:UnitDebuff(unit, 313255)
+		if stack and stack ~= lastStack then
+			if stack < lastStack then
+				self:Message2(313255, "green", CL.removed:format(name))
+				self:PlaySound(313255, "info")
+				lastWarn = stack
+			elseif (stack % 10 == 0 or (stack > 40 and stack % 3 == 1)) and stack > lastWarn then -- 10, 20, 30, 40, 43, 46, 49
+				self:StackMessage(313255, self:UnitName(unit), stack, "blue", stack > 20 and "warning")
+				if stack == 40 then
+					self:Flash(313255)
+				end
+				lastWarn = stack
+			end
+			lastStack = stack
+		end
+	end
 end

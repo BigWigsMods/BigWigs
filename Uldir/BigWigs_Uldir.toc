@@ -12,7 +12,7 @@
 ## Title-ptBR: BigWigs [|cffeda55fUldir|r]
 ## Title-koKR: BigWigs [|cffeda55fUldir|r]
 ## Notes: BigWigs Uldir Modules
-## Notes-deDE: BigWigs Uldir Modules
+## Notes-deDE: BigWigs Uldir Module
 ## Notes-esES: BigWigs Módulos de Uldir.
 ## Notes-esMX: BigWigs Módulos de Uldir.
 ## Notes-frFR: Modules BigWigs concernant Uldir.

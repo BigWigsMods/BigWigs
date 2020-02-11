@@ -1,7 +1,7 @@
 ## Interface: 80300
 
 ## Title: BigWigs [|cffeda55fThe Eternal Palace|r]
-## Title-deDE: BigWigs [|cffeda55fThe Eternal Palace|r]
+## Title-deDE: BigWigs [|cffeda55fDer Ewige Palast|r]
 ## Title-esES: BigWigs [|cffeda55fThe Eternal Palace|r]
 ## Title-esMX: BigWigs [|cffeda55fThe Eternal Palace|r]
 ## Title-frFR: BigWigs [|cffeda55fThe Eternal Palace|r]
@@ -12,7 +12,7 @@
 ## Title-ptBR: BigWigs [|cffeda55fThe Eternal Palace|r]
 ## Title-koKR: BigWigs [|cffeda55fThe Eternal Palace|r]
 ## Notes: BigWigs The Eternal Palace Modules
-## Notes-deDE: BigWigs The Eternal Palace Modules
+## Notes-deDE: BigWigs Der Ewige Palast Module
 ## Notes-esES: BigWigs The Eternal Palace Modules
 ## Notes-esMX: BigWigs The Eternal Palace Modules
 ## Notes-frFR: BigWigs The Eternal Palace Modules
