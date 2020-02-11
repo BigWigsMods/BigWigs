@@ -181,6 +181,17 @@ boss.worldBoss = nil
 -- @within Enable triggers
 boss.otherMenu = nil
 
+--- Allow a module to activate the "win" functionality of BigWigs.
+-- When a boss is defeated, this boolean will allow a module to "win" even if it doesn't have a valid journal ID.
+-- @within Enable triggers
+function boss:SetAllowWin(bool)
+	if bool then
+		self.allowWin = true
+	else
+		self.allowWin = nil
+	end
+end
+
 --- Check if a module option is enabled.
 -- This is a wrapper around the self.db.profile[key] table.
 -- @return boolean or number, depending on option type
@@ -926,7 +937,7 @@ end
 function boss:EncounterEnd(event, id, name, diff, size, status)
 	if self.engageId == id and self.enabled then
 		if status == 1 then
-			if self.journalId then
+			if self.journalId or self.allowWin then
 				self:Win() -- Official boss module
 			else
 				self:Disable() -- Custom external boss module
