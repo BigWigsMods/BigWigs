@@ -2,17 +2,24 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Vaelastrasz the Corrupt", 469, 1530)
+local mod = BigWigs:NewBoss("Vaelastrasz the Corrupt", 469)
 if not mod then return end
 mod:RegisterEnableMob(13020)
-mod.toggleOptions = {{18173, "ICON"}}
+mod:SetAllowWin(true)
+mod.engageId = 611
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+function mod:GetOptions()
+	return {
+		{18173, "ICON"}, -- Burning Adrenaline
+	}
+end
+
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Adrenaline", 18173)
+	self:Log("SPELL_AURA_APPLIED", "Adrenaline", self:SpellName(18173))
 
 	self:Death("Win", 13020)
 end
@@ -22,8 +29,8 @@ end
 --
 
 function mod:Adrenaline(args)
-	self:TargetMessage(args.spellId, args.destName, "yellow", "Alarm")
-	self:PrimaryIcon(args.spellId, args.destName)
-	self:TargetBar(args.spellId, 20, args.destName, 67729, args.spellId) -- Explode
+	self:TargetMessage(18173, args.destName, "yellow", "Alarm")
+	self:PrimaryIcon(18173, args.destName)
+	self:TargetBar(18173, 20, args.destName, 67729, 18173) -- Explode
 end
 

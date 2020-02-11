@@ -2,24 +2,27 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Broodlord Lashlayer", 469, 1531)
+local mod = BigWigs:NewBoss("Broodlord Lashlayer", 469)
 if not mod then return end
 mod:RegisterEnableMob(12017)
-mod.toggleOptions = {{40220, "ICON"}}
+mod:SetAllowWin(true)
+mod.engageId = 612
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "MortalStrike", 24573)
-	self:Log("SPELL_AURA_REMOVED", "MortalStrikeOver", 24573)
-
-	self:Death("Win", 12017)
+function mod:GetOptions()
+	return {
+		{40220, "ICON"}, -- Mortal Strike
+	}
 end
 
-function mod:OnEngage()
+function mod:OnBossEnable()
+	self:Log("SPELL_AURA_APPLIED", "MortalStrike", self:SpellName(24573))
+	self:Log("SPELL_AURA_REMOVED", "MortalStrikeOver", self:SpellName(24573))
 
+	self:Death("Win", 12017)
 end
 
 --------------------------------------------------------------------------------

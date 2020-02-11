@@ -2,12 +2,36 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Chromaggus", 469, 1535)
+local mod, CL = BigWigs:NewBoss("Chromaggus", 469)
 if not mod then return end
 mod:RegisterEnableMob(14020)
+mod:SetAllowWin(true)
+mod.engageId = 616
+
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local barcount = 2
 local debuffCount = 0
+local icons = {
+	[self:SpellName(23170)] = 23170,
+	[self:SpellName(23154)] = 23154,
+	[self:SpellName(23155)] = 23155,
+	[self:SpellName(23169)] = 23169,
+	[self:SpellName(23153)] = 23153,
+	[self:SpellName(23310)] = 23310,
+	[self:SpellName(23313)] = 23313,
+	[self:SpellName(23315)] = 23315,
+	[self:SpellName(23308)] = 23308,
+	[self:SpellName(23187)] = 23187,
+	[self:SpellName(23312)] = 23312,
+	[self:SpellName(23314)] = 23314,
+	[self:SpellName(23316)] = 23316,
+	[self:SpellName(23309)] = 23309,
+	[self:SpellName(23189)] = 23189,
+	[self:SpellName(33551)] = 33551,
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,16 +67,26 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
 
-	self:Log("SPELL_AURA_APPLIED", "Enrage", 23128)
-	self:Log("SPELL_AURA_APPLIED", "Frenzy", 23537)
-	self:Log("SPELL_AURA_APPLIED", "Debuffs", 23170, 23154, 23155, 23169, 23153) -- Brood Affliction: Bronze, Black, Red, Green, Blue
-	self:Log("SPELL_AURA_REMOVED", "DebuffsRemoved", 23170, 23154, 23155, 23169, 23153) -- Brood Affliction: Bronze, Black, Red, Green, Blue
+	self:Log("SPELL_AURA_APPLIED", "Enrage", self:SpellName(23128))
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", self:SpellName(23537))
+	self:Log("SPELL_AURA_APPLIED", "Debuffs",
+		self:SpellName(23170),
+		self:SpellName(23154),
+		self:SpellName(23155),
+		self:SpellName(23169),
+		self:SpellName(23153)) -- Brood Affliction: Bronze, Black, Red, Green, Blue
+	self:Log("SPELL_AURA_REMOVED", "DebuffsRemoved",
+		self:SpellName(23170),
+		self:SpellName(23154),
+		self:SpellName(23155),
+		self:SpellName(23169),
+		self:SpellName(23153)) -- Brood Affliction: Bronze, Black, Red, Green, Blue
 	self:Log("SPELL_CAST_START", "Breath",
-		23310, 23312, -- Time Lapse
-		23313, 23314, 33551, -- Corrosive Acid
-		23315, 23316, -- Ignite Flesh
-		23308, 23309, -- Incinerate
-		23187, 23189 -- Frost Burn
+		self:SpellName(23310), self:SpellName(23312), -- Time Lapse
+		self:SpellName(23313), self:SpellName(23314), self:SpellName(33551), -- Corrosive Acid
+		self:SpellName(23315), self:SpellName(23316), -- Ignite Flesh
+		self:SpellName(23308), self:SpellName(23309), -- Incinerate
+		self:SpellName(23187), self:SpellName(23189) -- Frost Burn
 	)
 
 	self:Death("Win", 14020)
@@ -61,7 +95,6 @@ end
 function mod:OnEngage()
 	barcount = 2
 	debuffCount = 0
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", "FrenzySoon", "boss1")
 
 	local b1 = CL.count:format(self:SpellName(18617), 1) -- Breath (1)
 	local b2 = CL.count:format(self:SpellName(18617), 2) -- Breath (2)
@@ -76,23 +109,22 @@ end
 --
 
 function mod:Enrage(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(23128, "yellow")
 end
 
 function mod:Frenzy(args)
-	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "boss1")
-	self:Message(args.spellId, "red", nil, "20% - ".. args.spellName)
+	self:Message(23537, "red", nil, "20% - ".. args.spellName)
 end
 
 function mod:Debuffs(args)
 	if self:Me(args.destGUID) then
 		debuffCount = debuffCount + 1
 		if debuffCount == 3 then
-			self:Message("debuffs", "red", "Alarm", L.debuffs_message, args.spellId)
+			self:Message("debuffs", "red", "Alarm", L.debuffs_message, icons[args.spellName] or false)
 		elseif debuffCount == 4 then
-			self:Message("debuffs", "orange", "Warning", L.debuffs_warning:format(self:SpellName(605)), args.spellId) -- 605 = Mind Control
+			self:Message("debuffs", "orange", "Warning", L.debuffs_warning:format(self:SpellName(605)), icons[args.spellName] or false) -- 605 = Mind Control
 		elseif debuffCount == 5 then
-			self:Message("debuffs", "orange", "Warning", 605, args.spellId) -- 605 = Mind Control
+			self:Message("debuffs", "orange", "Warning", 605, icons[args.spellName] or false) -- 605 = Mind Control
 		end
 	end
 end
@@ -112,18 +144,10 @@ function mod:Breath(args)
 		self:StopBar(CL.count:format(self:SpellName(18617), 2)) -- Breath (2)
 	end
 
-	self:Bar("breath", 2, CL.cast:format(args.spellName), args.spellId)
-	self:Message("breath", "yellow", nil, CL.casting:format(args.spellName), args.spellId)
+	self:Bar("breath", 2, CL.cast:format(args.spellName), icons[args.spellName])
+	self:Message("breath", "yellow", nil, CL.casting:format(args.spellName), icons[args.spellName])
 	self:DelayedMessage("breath", 50, "red", CL.custom_sec:format(args.spellName, 10))
-	self:Bar("breath", 60, args.spellId)
-end
-
-function mod:FrenzySoon(event, unitId)
-	local hp = UnitHealth(unitId) / UnitHealthMax(unitId)
-	if hp < 0.25 then -- Frenzy at 20%
-		self:UnregisterUnitEvent(event, unitId)
-		self:Message(23537, "cyan", nil, CL.soon:format(self:SpellName(23537)), false)
-	end
+	self:Bar("breath", 60, icons[args.spellName])
 end
 
 --function mod:CHAT_MSG_MONSTER_EMOTE(msg)

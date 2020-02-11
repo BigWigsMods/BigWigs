@@ -2,10 +2,11 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Nefarian ", 469, 1536) -- Space is intentional to prevent conflict with Nefarian from BWD
+local mod, CL = BigWigs:NewBoss("NefarianBWL", 469)
 if not mod then return end
 mod:RegisterEnableMob(11583, 10162) -- Nefarian, Lord Victor Nefarius
-mod.toggleOptions = {22539, 22686, "classcall", "otherwarn"}
+mod:SetAllowWin(true)
+mod.engageId = 617
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -64,24 +65,38 @@ local warnpairs = {
 	[L.zerg_trigger] = {L.zerg_warning},
 }
 local warnTable = {
-	[23414] = L.warnrogue,
-	[23398] = L.warndruid,
-	[23397] = L.warnwarrior,
-	[23401] = L.warnpriest,
-	[23418] = L.warnpaladin,
-	[204813] = L.warndemonhunter,
+	[self:SpellName(23414)] = L.warnrogue,
+	[self:SpellName(23398)] = L.warndruid,
+	[self:SpellName(23397)] = L.warnwarrior,
+	[self:SpellName(23401)] = L.warnpriest,
+	[self:SpellName(23418)] = L.warnpaladin,
 }
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "Fear", 22686)
-	self:Log("SPELL_CAST_START", "ShadowFlame", 22539)
+function mod:GetOptions()
+	return {
+		22539, -- Shadow Flame
+		22686, -- Bellowing Roar
+		"classcall",
+		"otherwarn"
+	}
+end
 
-	-- Rogue, Druid, Warrior, Priest, Paladin, Demon Hunter
-	self:Log("SPELL_AURA_APPLIED", "ClassCall", 23414, 23398, 23397, 23401, 23418, 204813)
+function mod:OnBossEnable()
+	self:Log("SPELL_CAST_START", "Fear", self:SpellName(22686))
+	self:Log("SPELL_CAST_START", "ShadowFlame", self:SpellName(22539))
+
+	-- Rogue, Druid, Warrior, Priest, Paladin
+	self:Log("SPELL_AURA_APPLIED", "ClassCall",
+		self:SpellName(23414),
+		self:SpellName(23398),
+		self:SpellName(23397),
+		self:SpellName(23401),
+		self:SpellName(23418)
+	)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
@@ -93,15 +108,15 @@ end
 --
 
 function mod:Fear(args)
-	self:DelayedMessage(args.spellId, 26, "orange", CL.custom_sec:format(args.spellName, 5))
-	self:CDBar(args.spellId, 32)
-	self:Message(args.spellId, "red", "Alert")
-	self:Bar(args.spellId, 1.5, CL.cast:format(args.spellName))
+	self:DelayedMessage(22686, 26, "orange", CL.custom_sec:format(args.spellName, 5))
+	self:CDBar(22686, 32)
+	self:Message(22686, "red", "Alert")
+	self:Bar(22686, 1.5, CL.cast:format(args.spellName))
 end
 
 function mod:ShadowFlame(args)
-	self:Message(args.spellId, "yellow", "Alert")
-	self:Bar(args.spellId, 2, CL.cast:format(args.spellName))
+	self:Message(22539, "yellow", "Alert")
+	self:Bar(22539, 2, CL.cast:format(args.spellName))
 end
 
 do
@@ -112,7 +127,7 @@ do
 			prev = t
 			self:Bar("classcall", 30, L.classcall_bar, "Spell_Shadow_Charm")
 			self:DelayedMessage("classcall", 27, "green", L.classcall_warning)
-			self:Message("classcall", "red", nil, warnTable[args.spellId], "Spell_Shadow_Charm")
+			self:Message("classcall", "red", nil, warnTable[args.spellName], "Spell_Shadow_Charm")
 		end
 	end
 end

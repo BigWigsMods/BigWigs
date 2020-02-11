@@ -2,10 +2,15 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Razorgore the Untamed", 469, 1529)
+local mod = BigWigs:NewBoss("Razorgore the Untamed", 469)
 if not mod then return end
 mod:RegisterEnableMob(12435, 12557) -- Razorgore, Grethok the Controller
-mod.toggleOptions = {14515, {23023, "ICON"}, "eggs", "stages"}
+mod:SetAllowWin(true)
+mod.engageId = 610
+
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local eggs = 0
 
@@ -33,13 +38,22 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+function mod:GetOptions()
+	return {
+		14515, -- Dominate Mind
+		{23023, "ICON"}, -- Conflagration
+		"eggs",
+		"stages",
+	}
+end
+
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "DominateMind", 14515)
-	self:Log("SPELL_AURA_APPLIED", "Conflagration", 23023)
-	self:Log("SPELL_AURA_REMOVED", "ConflagrationOver", 23023)
-	self:Log("SPELL_CAST_SUCCESS", "Phase2", 23040)
-	self:Log("SPELL_CAST_SUCCESS", "DestroyEgg", 19873)
-	self:Yell("Engage", L.start_trigger)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Log("SPELL_AURA_APPLIED", "DominateMind", self:SpellName(14515))
+	self:Log("SPELL_AURA_APPLIED", "Conflagration", self:SpellName(23023))
+	self:Log("SPELL_AURA_REMOVED", "ConflagrationOver", self:SpellName(23023))
+	self:Log("SPELL_CAST_SUCCESS", "Phase2", self:SpellName(23040))
+	self:Log("SPELL_CAST_SUCCESS", "DestroyEgg", self:SpellName(19873))
 end
 
 function mod:OnEngage()
@@ -53,8 +67,14 @@ end
 -- Event Handlers
 --
 
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if msg:find(L.start_trigger, nil, true) then
+		self:Engage()
+	end
+end
+
 function mod:DominateMind(args)
-	self:TargetMessage(args.spellId, args.destName, "red", "Alert")
+	self:TargetMessage(14515, args.destName, "red", "Alert")
 end
 
 function mod:DestroyEgg()
@@ -70,13 +90,13 @@ function mod:Phase2()
 end
 
 function mod:Conflagration(args)
-	self:TargetMessage(args.spellId, args.destName, "orange", "Info")
-	self:TargetBar(args.spellId, 10, args.destName)
-	self:PrimaryIcon(args.spellId, args.destName)
+	self:TargetMessage(23023, args.destName, "orange", "Info")
+	self:TargetBar(23023, 10, args.destName)
+	self:PrimaryIcon(23023, args.destName)
 end
 
 function mod:ConflagrationOver(args)
-	self:StopBar(args.spellId, args.destName)
-	self:PrimaryIcon(args.spellId)
+	self:StopBar(23023, args.destName)
+	self:PrimaryIcon(23023)
 end
 
