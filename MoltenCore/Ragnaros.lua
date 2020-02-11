@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Ragnaros", 409)
 if not mod then return end
 mod:RegisterEnableMob(11502)
+mod:SetAllowWin(true)
 mod.engageId = 672
 
 --------------------------------------------------------------------------------

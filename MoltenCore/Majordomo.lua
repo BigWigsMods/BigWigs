@@ -6,6 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Majordomo Executus", 409)
 if not mod then return end
 mod:RegisterEnableMob(12018, 11663, 11664)
+mod:SetAllowWin(true)
 mod.engageId = 671
 
 --------------------------------------------------------------------------------

@@ -6,6 +6,7 @@
 local mod = BigWigs:NewBoss("Lucifron", 409)
 if not mod then return end
 mod:RegisterEnableMob(12118)
+mod:SetAllowWin(true)
 mod.engageId = 663
 
 --------------------------------------------------------------------------------

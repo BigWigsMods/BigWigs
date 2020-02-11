@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Onyxia", 249)
 if not mod then return end
 mod:RegisterEnableMob(10184)
+mod:SetAllowWin(true)
 mod.engageId = 1084
 
 --------------------------------------------------------------------------------
