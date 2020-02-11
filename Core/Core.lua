@@ -227,24 +227,27 @@ do
 		end
 	end
 
+	local lastSpell = 1
+	local lastTest = 1
 	function core:Test()
 		if not callbackRegistered then
 			LibStub("LibCandyBar-3.0").RegisterCallback(core, "LibCandyBar_Stop", barStopped)
 			callbackRegistered = true
 		end
 
-		local spell, icon
-		local _, _, offset, numSpells = GetSpellTabInfo(2) -- Main spec
-		for i = offset + 1, offset + numSpells do
-			spell = GetSpellBookItemName(i, "spell")
-			icon = GetSpellBookItemTexture(i, "spell")
-			if not messages[spell] then break end
+		local msg = CL.count:format(L.test, lastTest)
+		local icon = GetSpellTexture(lastSpell)
+		while not icon or icon == 136235 do -- 136235 = samwise
+			lastSpell = lastSpell + 1
+			icon = GetSpellTexture(lastSpell)
 		end
+		lastSpell = lastSpell + 1
+		lastTest = lastTest + 1
 
 		local time = random(11, 30)
-		messages[spell] = icon
+		messages[msg] = icon
 
-		core:SendMessage("BigWigs_StartBar", core, spell, spell, time, icon)
+		core:SendMessage("BigWigs_StartBar", core, msg, msg, time, icon)
 	end
 end
 
