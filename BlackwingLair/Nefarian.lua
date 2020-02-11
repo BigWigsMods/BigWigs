@@ -65,11 +65,11 @@ local warnpairs = {
 	[L.zerg_trigger] = {L.zerg_warning},
 }
 local warnTable = {
-	[self:SpellName(23414)] = L.warnrogue,
-	[self:SpellName(23398)] = L.warndruid,
-	[self:SpellName(23397)] = L.warnwarrior,
-	[self:SpellName(23401)] = L.warnpriest,
-	[self:SpellName(23418)] = L.warnpaladin,
+	[mod:SpellName(23414)] = L.warnrogue,
+	[mod:SpellName(23398)] = L.warndruid,
+	[mod:SpellName(23397)] = L.warnwarrior,
+	[mod:SpellName(23401)] = L.warnpriest,
+	[mod:SpellName(23418)] = L.warnpaladin,
 }
 
 --------------------------------------------------------------------------------
