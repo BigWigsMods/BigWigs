@@ -14,7 +14,7 @@ mod.engageId = 612
 
 function mod:GetOptions()
 	return {
-		{40220, "ICON"}, -- Mortal Strike
+		{24573, "ICON"}, -- Mortal Strike
 	}
 end
 
@@ -30,12 +30,12 @@ end
 --
 
 function mod:MortalStrike(args)
-	self:TargetMessage(40220, args.destName, "yellow")
-	self:PrimaryIcon(40220, args.destName)
-	self:TargetBar(40220, 5, args.destName)
+	self:TargetMessage(24573, args.destName, "yellow")
+	self:PrimaryIcon(24573, args.destName)
+	self:TargetBar(24573, 5, args.destName)
 end
 
 function mod:MortalStrikeOver()
-	self:PrimaryIcon(40220)
+	self:PrimaryIcon(24573)
 end
 

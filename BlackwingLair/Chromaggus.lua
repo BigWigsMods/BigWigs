@@ -25,12 +25,6 @@ local icons = {
 	[mod:SpellName(23315)] = 23315,
 	[mod:SpellName(23308)] = 23308,
 	[mod:SpellName(23187)] = 23187,
-	[mod:SpellName(23312)] = 23312,
-	[mod:SpellName(23314)] = 23314,
-	[mod:SpellName(23316)] = 23316,
-	[mod:SpellName(23309)] = 23309,
-	[mod:SpellName(23189)] = 23189,
-	[mod:SpellName(33551)] = 33551,
 }
 
 --------------------------------------------------------------------------------
@@ -69,24 +63,26 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "Enrage", self:SpellName(23128))
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", self:SpellName(23537))
-	self:Log("SPELL_AURA_APPLIED", "Debuffs",
+	self:Log("SPELL_AURA_APPLIED", "Debuffs", -- Brood Affliction: Bronze, Black, Red, Green, Blue
 		self:SpellName(23170),
 		self:SpellName(23154),
 		self:SpellName(23155),
 		self:SpellName(23169),
-		self:SpellName(23153)) -- Brood Affliction: Bronze, Black, Red, Green, Blue
-	self:Log("SPELL_AURA_REMOVED", "DebuffsRemoved",
+		self:SpellName(23153)
+	)
+	self:Log("SPELL_AURA_REMOVED", "DebuffsRemoved", -- Brood Affliction: Bronze, Black, Red, Green, Blue
 		self:SpellName(23170),
 		self:SpellName(23154),
 		self:SpellName(23155),
 		self:SpellName(23169),
-		self:SpellName(23153)) -- Brood Affliction: Bronze, Black, Red, Green, Blue
+		self:SpellName(23153)
+	)
 	self:Log("SPELL_CAST_START", "Breath",
-		self:SpellName(23310), self:SpellName(23312), -- Time Lapse
-		self:SpellName(23313), self:SpellName(23314), self:SpellName(33551), -- Corrosive Acid
-		self:SpellName(23315), self:SpellName(23316), -- Ignite Flesh
-		self:SpellName(23308), self:SpellName(23309), -- Incinerate
-		self:SpellName(23187), self:SpellName(23189) -- Frost Burn
+		self:SpellName(23310), -- Time Lapse
+		self:SpellName(23313), -- Corrosive Acid
+		self:SpellName(23315), -- Ignite Flesh
+		self:SpellName(23308), -- Incinerate
+		self:SpellName(23187) -- Frost Burn
 	)
 
 	self:Death("Win", 14020)
