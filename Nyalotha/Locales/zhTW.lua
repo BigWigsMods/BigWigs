@@ -15,9 +15,9 @@ if L then
 	L.adds_desc = "替卓雷阿葛斯的肢體顯示警告和訊息。"
 	-- L.adds_icon = "achievement_nzothraid_drestagath"
 
-	L.eye_killed = "卓雷阿葛斯之眼擊殺！"
-	L.tentacle_killed = "卓雷阿葛斯觸手擊殺！"
-	L.maw_killed = "卓雷阿葛斯之口擊殺！"
+	L.eye_killed = "眼已擊殺！"
+	L.tentacle_killed = "觸手擊殺！"
+	L.maw_killed = "口已擊殺！"
 end
 
 L = BigWigs:NewBossLocale("Il'gynoth, Corruption Reborn", "zhTW")
@@ -39,8 +39,8 @@ end
 
 L = BigWigs:NewBossLocale("Carapace of N'Zoth", "zhTW")
 if L then
-	-- L.player_membrane = "Player Membrane" -- In stage 3
-	-- L.boss_membrane = "Boss Membrane" -- In stage 3
+	L.player_membrane = "玩家胞膜" -- In stage 3
+	L.boss_membrane = "首領胞膜" -- In stage 3
 end
 
 L = BigWigs:NewBossLocale("N'Zoth, the Corruptor", "zhTW")
@@ -51,7 +51,7 @@ if L then
 	L.custom_on_repeating_paranoia_say_desc = "當你中了妄念時每秒重覆喊話，避免你的搭擋以外的人靠近你。"
 	-- L.custom_on_repeating_paranoia_say_icon = 315927
 
-	-- L.gateway_yell = "Warning: Chamber of Heart compromised. Hostile forces inbound." -- Yelled by MOTHER to trigger mythic only stage
+	L.gateway_yell = "警告：心之室已遭到入侵。敵對勢力出現。" -- Yelled by MOTHER to trigger mythic only stage
 	L.gateway_open = "傳送門開啟！"
 
 	L.laser_left = "左轉射線"
