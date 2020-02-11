@@ -52,7 +52,7 @@ if L then
 	-- L.custom_on_repeating_paranoia_say_icon = 315927
 
 	-- L.gateway_yell = "Warning: Chamber of Heart compromised. Hostile forces inbound." -- Yelled by MOTHER to trigger mythic only stage
-	-L.gateway_open = "傳送門開啟！"
+	L.gateway_open = "傳送門開啟！"
 
 	L.laser_left = "左轉射線"
 	L.laser_right = "右轉射線"
