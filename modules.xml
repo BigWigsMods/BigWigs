@@ -6,6 +6,7 @@
 <Include file="Options\modules.xml"/>
 
 <Include file="MoltenCore\modules.xml"/>
+<Include file="BlackwingLair\modules.xml"/>
 <Include file="Onyxia\modules.xml"/>
 <Include file="World\modules.xml"/>
 <!--@end-do-not-package@-->

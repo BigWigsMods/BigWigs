@@ -1,0 +1,15 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Razorgore.lua"/>
+<Script file="Vaelastrasz.lua"/>
+<Script file="Broodlord.lua"/>
+<Script file="Firemaw.lua"/>
+<Script file="Ebonroc.lua"/>
+<Script file="Flamegor.lua"/>
+<Script file="Chromaggus.lua"/>
+<Script file="Nefarian.lua"/>
+
+<Include file="Options\options.xml"/>
+
+</Ui>
