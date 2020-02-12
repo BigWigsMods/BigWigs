@@ -47,7 +47,7 @@ if L then
 	L.realm_switch = "领域已转换" -- When you leave the Mind of N'zoth
 
 	L.custom_on_repeating_paranoia_say = "重复妄念喊话"
-	L.custom_on_repeating_paranoia_say_desc = "当你中了妄念后避免在聊天中重复喊话。"
+	L.custom_on_repeating_paranoia_say_desc = "当你中了妄念后在聊天中重复喊话避免闲杂人等靠近。"
 
 	L.gateway_yell = "警告：心之秘室被侵入。出现敌对实体。" -- Yelled by MOTHER to trigger mythic only stage
 	L.gateway_open = "传送门打开！"
