@@ -128,7 +128,7 @@ end
 local function shouldReallyEnable(unit, moduleName, mobId, sync)
 	local module = bosses[moduleName]
 	if not module or module.enabled then return end
-	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId)) then
+	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId, GetBestMapForUnit("player"))) then
 		enableBossModule(module, sync)
 	end
 end
