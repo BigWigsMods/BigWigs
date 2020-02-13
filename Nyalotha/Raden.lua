@@ -67,6 +67,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(_, _, mapArtID)
+	return mapArtID == 1591 -- Prevent enabling unless on the same area as Ra-den (Can see him from Vexiona)
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NullifyingStrikeStart", 306819)
 	self:Log("SPELL_AURA_APPLIED", "NullifyingStrikeApplied", 306819)
