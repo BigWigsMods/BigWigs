@@ -45,6 +45,6 @@ end
 function mod:Adrenaline(args)
 	self:TargetMessage(18173, args.destName, "yellow", "Alarm")
 	self:PrimaryIcon(18173, args.destName)
-	self:TargetBar(18173, 20, args.destName, 67729, 18173) -- Explode
+	self:TargetBar(18173, 20, args.destName, 25698, 18173) -- Explode
 end
 

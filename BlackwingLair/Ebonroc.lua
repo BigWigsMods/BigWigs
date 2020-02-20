@@ -66,12 +66,12 @@ end
 
 function mod:Curse(args)
 	self:TargetMessage(23340, args.destName, "yellow")
-	self:TargetBar(23340, 8, args.destName, 107905, 23340) -- Shadow
+	self:TargetBar(23340, 8, args.destName)
 	self:PrimaryIcon(23340, args.destName)
 end
 
 function mod:CurseRemoved(args)
-	self:StopBar(107905, args.destName) -- Shadow
+	self:StopBar(23340, args.destName) -- Shadow
 	self:PrimaryIcon(23340)
 end
 

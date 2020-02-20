@@ -100,8 +100,8 @@ function mod:OnEngage()
 
 	local b1 = CL.count:format(self:SpellName(18617), 1) -- Breath (1)
 	local b2 = CL.count:format(self:SpellName(18617), 2) -- Breath (2)
-	self:Bar("breath", 30, b1, 212812) -- INV_Misc_QuestionMark / icon 134400
-	self:Bar("breath", 60, b2, 212812)
+	self:Bar("breath", 30, b1, 25675) -- INV_Misc_QuestionMark / icon 134400
+	self:Bar("breath", 60, b2, 25675)
 	self:DelayedMessage("breath", 20, "green", CL.custom_sec:format(b1, 10))
 	self:DelayedMessage("breath", 50, "green", CL.custom_sec:format(b2, 10))
 end
