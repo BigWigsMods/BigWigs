@@ -48,13 +48,13 @@ function mod:GetOptions()
 		307116, -- Power of the Chosen
 		307639, -- Heart of Darkness
 		{310323, "SAY", "SAY_COUNTDOWN"}, -- Desolation
-		309882, -- Brutal Smash
+		315932, -- Brutal Smash
 	},{
 		["stages"] = "general",
 		[307314] = CL.stage:format(1),
 		[315762] = CL.stage:format(2),
 		[307639] = CL.stage:format(3),
-		[309882] = "mythic",
+		[315932] = "mythic",
 	}
 end
 
@@ -88,7 +88,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 307343)
 
 	-- Mythic
-	self:Log("SPELL_CAST_START", "BrutalSmash", 309882)
+	self:Log("SPELL_CAST_START", "BrutalSmash", 315932)
 end
 
 function mod:OnEngage()
