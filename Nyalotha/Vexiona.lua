@@ -82,6 +82,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "TheVoidUnleashed", 307453)
 	self:Log("SPELL_CAST_START", "HeartofDarkness", 307639)
 	self:Log("SPELL_AURA_APPLIED", "DesolationApplied", 310323)
+	self:Log("SPELL_AURA_REMOVED", "DesolationRemoved", 310323)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 307343) -- Shadowy Residue
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 307343)
@@ -253,8 +254,14 @@ function mod:DesolationApplied(args)
 	self:PlaySound(args.spellId, "warning", args.destName)
 	self:Bar(args.spellId, self:Mythic() and 33 or 32.5)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 5)
+		self:Yell2(args.spellId)
+		self:YellCountdown(args.spellId, 5)
+	end
+end
+
+function mod:DesolationRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelYellCountdown(args.spellId)
 	end
 end
 
