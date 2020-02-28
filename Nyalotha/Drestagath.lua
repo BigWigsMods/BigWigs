@@ -21,6 +21,7 @@ local throesCount = 1
 local crashCount = 1
 local muttersCount = 1
 local glareCount = 1
+local seedCounter = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -80,6 +81,7 @@ function mod:OnEngage()
 	crashCount = 1
 	muttersCount = 1
 	glareCount = 1
+	seedCounter = 1
 
 	self:Bar(310329, 15, CL.count:format(self:SpellName(310329), crashCount)) -- Entropic Crash
 	self:Bar(310358, 30, CL.count:format(self:SpellName(310358), muttersCount)) -- Mutterings of Insanity
@@ -129,9 +131,10 @@ function mod:VoidGrip(args)
 end
 
 function mod:VolatileSeed(args)
-	self:TargetMessage2(args.spellId, "purple", args.destName)
+	self:TargetMessage2(args.spellId, "purple", args.destName, CL.count:format(args.spellName, seedCounter))
 	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, 17)
+	seedCounter = seedCounter + 1
+	self:Bar(args.spellId, 17, CL.count:format(args.spellName, seedCounter))
 	self:TargetBar(args.spellId, 10, args.destName)
 	if self:Me(args.destGUID) then
 		self:SayCountdown(args.spellId, 10)
