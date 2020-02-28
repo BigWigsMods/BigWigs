@@ -20,6 +20,7 @@ mod.respawnTime = 30
 local essenceCount = 1
 local stage = 1
 local voidEruptionCount = 1
+local unstableVoidCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -112,6 +113,7 @@ function mod:OnEngage()
 	essenceCount = 1
 	stage = 1
 	voidEruptionCount = 1
+	unstableVoidCount = 0
 
 	self:Bar("essences", 10, CL.count:format(L.essences, essenceCount), L.essences_icon) -- Essences (1)
 	self:Bar(306819, 15.8) -- Nullifying Strike
@@ -171,12 +173,14 @@ end
 
 -- Void
 function mod:VoidEmpowered(args)
+	unstableVoidCount = 0
 	self:Message2(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:UnstableVoid(args)
-	self:Message2(args.spellId, "orange")
+	unstableVoidCount = unstableVoidCount + 1
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, unstableVoidCount))
 	self:PlaySound(args.spellId, "alarm")
 end
 
