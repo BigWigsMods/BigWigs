@@ -9,6 +9,9 @@ L.gitHubDesc = "BigWigs est un logiciel open source hébergé sur GitHub. Nous s
 
 --L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
 
+--L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
+--L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
+
 L.options = "Options"
 L.raidBosses = "Boss de raid"
 L.dungeonBosses = "Boss de donjon"

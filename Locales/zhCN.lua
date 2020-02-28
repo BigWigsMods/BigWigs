@@ -9,6 +9,9 @@ L.gitHubDesc = "BigWigs 是一个在 GitHub 上的开源软件。我们一直在
 
 L.testNameplate = "已检测到目标，在目标姓名板上创建一个测试姓名板条。"
 
+--L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
+--L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
+
 L.options = "选项"
 L.raidBosses = "团队首领"
 L.dungeonBosses = "地下城首领"

@@ -9,6 +9,9 @@ L.gitHubDesc = "BigWigs 是一個在 GitHub 上的開源軟體。我們一直在
 
 --L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
 
+--L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
+--L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
+
 L.options = "選項"
 L.raidBosses = "團隊首領"
 L.dungeonBosses = "地城首領"

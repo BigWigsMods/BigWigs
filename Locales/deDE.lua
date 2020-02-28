@@ -9,6 +9,9 @@ L.gitHubDesc = "BigWigs ist Open-Source-Software auf GitHub. Wir sind immer auf 
 
 L.testNameplate = "Ziel erkannt, erstelle Test Leiste über Namensplakette des Ziels."
 
+--L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
+--L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
+
 L.options = "Optionen"
 L.raidBosses = "Schlachtzugsbosse"
 L.dungeonBosses = "Dungeonbosse"

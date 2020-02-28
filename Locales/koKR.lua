@@ -17,6 +17,8 @@ L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%s|r)|1은
 --L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
 
 -- Loader / Options.lua
+--L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
+--L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
 L.officialRelease = "당신은 BigWigs %s (%s)의 공식 배포 버전을 실행 중입니다"
 L.alphaRelease = "당신은 BigWigs %s (%s)의 알파 버전을 실행 중입니다"
 L.sourceCheckout = "당신은 저장소로부터 직접 가져온 BigWigs %s의 소스를 실행 중입니다."

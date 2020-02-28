@@ -1,4 +1,13 @@
 
+if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
+	local L = BigWigsAPI:GetLocale("BigWigs")
+	print(L.classicWarning1)
+	print(L.classicWarning2)
+	BasicMessageDialog.Text:SetText(L.classicWarning1)
+	BasicMessageDialog:Show()
+	return
+end
+
 local L = BigWigsAPI:GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
