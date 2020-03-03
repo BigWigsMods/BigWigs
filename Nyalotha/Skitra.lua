@@ -18,7 +18,7 @@ mod.engageId = 2334
 --
 
 local phsycheCount = 1
-local nextStageWarning = 83
+local nextStageWarning = 69
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -52,7 +52,7 @@ end
 
 function mod:OnEngage()
 	phsycheCount = 1
-	nextStageWarning = 83
+	nextStageWarning = 69
 
 	self:Bar(307950, 12.5, CL.count:format(self:SpellName(307950), phsycheCount)) -- Shred Psyche
 	self:Bar(313239, 31.5) -- Images of Absolution
@@ -68,8 +68,8 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then
 		self:Message2("stages", "green", CL.soon:format(self:SpellName(307725)), false)
-		nextStageWarning = nextStageWarning - 20
-		if nextStageWarning < 20 then
+		nextStageWarning = nextStageWarning - 30
+		if nextStageWarning < 30 then
 			self:UnregisterUnitEvent(event, unit)
 		end
 	end
