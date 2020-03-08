@@ -68,7 +68,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then
 		self:Message2("stages", "green", CL.soon:format(self:SpellName(307725)), false)
-		nextStageWarning = nextStageWarning - 30
+		nextStageWarning = nextStageWarning - 33
 		if nextStageWarning < 30 then
 			self:UnregisterUnitEvent(event, unit)
 		end
