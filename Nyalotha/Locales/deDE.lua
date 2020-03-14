@@ -51,7 +51,7 @@ if L then
 	L.custom_on_repeating_paranoia_say_desc = "Spammt eine Nachricht im Sagen-Chat, damit anderen Dich während Paranoia meiden."
 	-- L.custom_on_repeating_paranoia_say_icon = 315927
 
-	-- L.gateway_yell = "Warning: Chamber of Heart compromised. Hostile forces inbound." -- Yelled by MOTHER to trigger mythic only stage
+	L.gateway_yell = "Warnung: Herzkammer kompromittiert. Feindliche Kräfte dringen ein." -- Yelled by MOTHER to trigger mythic only stage
 	L.gateway_open = "Tor geöffnet!"
 
 	L.laser_left = "Laser (Links)"
