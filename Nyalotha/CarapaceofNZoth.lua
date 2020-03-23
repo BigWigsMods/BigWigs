@@ -221,6 +221,7 @@ end
 
 function mod:MadnessBombRemoved(args)
 	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 		self:CloseProximity(args.spellId)
 	end
 end
@@ -340,6 +341,7 @@ end
 
 function mod:InsanityBombRemoved(args)
 	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 		self:CloseProximity(args.spellId)
 	end
 end
