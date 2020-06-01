@@ -509,11 +509,19 @@ local function parseLua(file)
 			local success, result = pcall(loadstring("return " .. toggle_options))
 			if success then
 				for _, opt in next, result do
+					local flags = true
 					if type(opt) == "table" then
+						flags = {}
+						for i=2, #opt do
+							flags[opt[i]] = true
+						end
 						opt = opt[1]
 					end
 					if opt then -- marker option vars will be nil
-						option_keys[opt] = true
+						if default_options[opt] then
+							flags = default_options[opt]
+						end
+						option_keys[opt] = flags
 					end
 				end
 			end
