@@ -3,6 +3,8 @@
 
 local loadstring = loadstring or load -- 5.2 compat
 
+local opt = {}
+
 local modules = {}
 local module_colors = {}
 local module_sounds = {}
@@ -165,6 +167,10 @@ else
 		exit_code = 1
 	end
 	warn = print
+end
+local function print(...)
+	if opt.quiet then return end
+	_G.print(...)
 end
 
 
@@ -461,8 +467,16 @@ end
 
 -- Read boss module file and parse it for colors and sounds.
 local function parseLua(file)
+	local file_name = file:match(".*/(.*)$") or file
+	if opt.quiet then
+		file_name = file
+	end
+
 	local f = io.open(file, "r")
-	if not f then return end
+	if not f then
+		error(string.format("    \"%s\" not found!", file_name))
+		return
+	end
 
 	local data = f:read("*all")
 	f:close()
@@ -482,8 +496,6 @@ local function parseLua(file)
 		lines[#lines+1] = line
 	end
 	data = nil
-
-	local file_name = file:match(".*/(.*)$") or file
 
 	local options, option_keys = {}, {}
 	local methods, registered_methods = {Win=true}, {}
@@ -775,19 +787,31 @@ end
 
 -- aaaaaand start
 local start_path = "modules.xml"
-if arg and arg[1] then
-	local path = arg[1]:gsub("\\", "/")
-	local is_file = path:sub(-4) == ".lua"
-	if path:sub(-1) ~= "/" and not is_file then
-		path = path .. "/"
-	end
-	path = path:gsub("^./", "")
-	if is_file then
-		start_path = path
-	else
-		start_path = path .. start_path
+
+-- simple arg parser
+if arg then
+	for k, v in ipairs(arg) do
+		if string.sub(v, 1, 1) == "-" then
+			v = string.match(v, "^[-]+(.+)$")
+			if v == "q" or v == "quiet" then
+				opt.quiet = true
+			end
+		else
+			local path = arg[1]:gsub("\\", "/")
+			local is_file = path:sub(-4) == ".lua"
+			if path:sub(-1) ~= "/" and not is_file then
+				path = path .. "/"
+			end
+			path = path:gsub("^./", "")
+			if is_file then
+				start_path = path
+			else
+				start_path = path .. start_path
+			end
+		end
 	end
 end
+
 parse(start_path)
 
 os.exit(exit_code)
