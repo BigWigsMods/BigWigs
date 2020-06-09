@@ -377,6 +377,7 @@ end
 do
 	local missingArgument = "Missing required argument when adding a listener to %q."
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
+	local invalidId = "Module %q tried to register an invalid spell id (%s) to event %q."
 	local multipleRegistration = "Module %q registered the event %q with spell name %q multiple times."
 
 	local args = {}
@@ -433,12 +434,15 @@ do
 		if not eventMap[self][event] then eventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local spellName = select(i, ...)
-			if type(spellName) == "string" then
-				if eventMap[self][event][spellName] then
-					core:Print(format(multipleRegistration, self.moduleName, event, spellName))
-				end
-				eventMap[self][event][spellName] = func
+			if type(spellName) == "number" then
+				local spell = self:SpellName(spellName)
+				if not spell then core:Print(format(invalidId, self.moduleName, spellName, event)) return end
+				spellName = spell
 			end
+			if eventMap[self][event][spellName] then
+				core:Print(format(multipleRegistration, self.moduleName, event, spellName))
+			end
+			eventMap[self][event][spellName] = func
 		end
 		allowedEvents[event] = true
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
