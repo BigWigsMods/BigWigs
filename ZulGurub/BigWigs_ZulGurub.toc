@@ -1,0 +1,32 @@
+## Interface: 11304
+
+## Title: BigWigs [|cffeda55fZul'Gurub|r]
+## Title-deDE: BigWigs [|cffeda55fZul'Gurub|r]
+## Title-esES: BigWigs [|cffeda55fZul'Gurub|r]
+## Title-esMX: BigWigs [|cffeda55fZul'Gurub|r]
+## Title-frFR: BigWigs [|cffeda55fZul'Gurub|r]
+## Title-itIT: BigWigs [|cffeda55fZul'Gurub|r]
+## Title-koKR: BigWigs [|cffeda55f줄구룹|r]
+## Title-ptBR: BigWigs [|cffeda55fZul'Gurub|r]
+## Title-ruRU: BigWigs [|cffeda55fЗул'Гуруб|r]
+## Title-zhCN: BigWigs [|cffeda55f祖尔格拉布|r]
+## Title-zhTW: Big Wigs [|cffeda55f祖爾格拉布|r]
+## Notes: BigWigs Zul'Gurub Modules
+## Notes-deDE: BigWigs Zul'Gurub Modules
+## Notes-esES: BigWigs Zul'Gurub Modules
+## Notes-esMX: BigWigs Zul'Gurub Modules
+## Notes-frFR: BigWigs Zul'Gurub Modules
+## Notes-itIT: BigWigs Zul'Gurub Modules
+## Notes-koKR: BigWigs Zul'Gurub Modules
+## Notes-ptBR: BigWigs Zul'Gurub Modules
+## Notes-ruRU: BigWigs Zul'Gurub Modules
+## Notes-zhCN: BigWigs Zul'Gurub Modules
+## Notes-zhTW: BigWigs 祖爾格拉布模組
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 309
+
+modules.xml

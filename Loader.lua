@@ -103,6 +103,7 @@ do
 		--[[ BigWigs: Classic ]]--
 		[409] = c, -- Molten Core
 		[469] = c, -- Blackwing Lair
+		[309] = c, -- Zul'Gurub
 		[509] = c, -- Ruins of Ahn'Qiraj
 		[531] = c, -- Ahn'Qiraj Temple
 		[249] = c, -- Onyxia's Lair

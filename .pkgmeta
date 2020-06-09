@@ -23,6 +23,7 @@ move-folders:
     BigWigs/MoltenCore: BigWigs_MoltenCore
     BigWigs/World: BigWigs_World
     BigWigs/BlackwingLair: BigWigs_BlackwingLair
+    BigWigs/ZulGurub: BigWigs_ZulGurub
 
 ignore:
   - .luacheckrc
