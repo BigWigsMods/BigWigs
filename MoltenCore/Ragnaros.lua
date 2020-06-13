@@ -111,7 +111,7 @@ function mod:Knockback(args)
 end
 
 function mod:PullRP()
-	self:Message("pull_rp", "white", nil, L.pull_rp_message)
+	self:Message("pull_rp", "cyan", nil, L.pull_rp_message)
 	self:Bar("pull_rp", 73, L.pull_rp_bar, L.pull_rp_icon)
 end
 

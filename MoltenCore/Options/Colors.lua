@@ -40,7 +40,7 @@ BigWigs:AddColors("Majordomo Executus", {
 
 BigWigs:AddColors("Ragnaros", {
 	[20566] = "red",
-	["pull_rp"] = "white",
+	["pull_rp"] = "cyan",
 	["emerge"] = {"green","orange","yellow"},
 	["submerge"] = {"orange","yellow"},
 })
