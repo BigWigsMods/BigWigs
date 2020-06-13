@@ -2,7 +2,7 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Vaelastrasz the Corrupt", 469)
+local mod, CL = BigWigs:NewBoss("Vaelastrasz the Corrupt", 469)
 if not mod then return end
 mod:RegisterEnableMob(13020)
 mod:SetAllowWin(true)
