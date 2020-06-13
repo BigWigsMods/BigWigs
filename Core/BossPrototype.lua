@@ -28,7 +28,6 @@ end
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = function(...) return ... end, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter
 local format, find, gsub, band, tremove, wipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
@@ -45,25 +44,52 @@ local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
 local myGUID, myRole, myDamagerRole = nil, nil, nil
 local myGroupGUIDs = {}
 local solo = false
+
+local talentRoles = {
+	DRUID = { "DAMAGER","TANK", "HEALER" },
+	HUNTER = { "DAMAGER", "DAMAGER", "DAMAGER" },
+	MAGE = { "DAMAGER", "DAMAGER", "DAMAGER" },
+	PALADIN = { "HEALER", "TANK", "DAMAGER" },
+	PRIEST = { "HEALER", "HEALER", "DAMAGER" },
+	ROGUE = { "DAMAGER", "DAMAGER", "DAMAGER" },
+	SHAMAN = { "DAMAGER", "DAMAGER", "HEALER" },
+	WARLOCK = { "DAMAGER", "DAMAGER", "DAMAGER" },
+	WARRIOR = { "DAMAGER", "DAMAGER", "TANK" },
+}
+
 local updateData = function(module)
 	myGUID = UnitGUID("player")
 	hasVoice = BigWigsAPI:HasVoicePack()
+	myRole = nil
+	myDamagerRole = nil
 
-	--local tree = GetSpecialization()
-	--if tree then
-	--	myRole = GetSpecializationRole(tree)
-	--	myDamagerRole = nil
-	--	if myRole == "DAMAGER" then
-	--		myDamagerRole = "MELEE"
-	--		local _, class = UnitClass("player")
-	--		if
-	--			class == "MAGE" or class == "WARLOCK" or (class == "HUNTER" and tree ~= 3) or (class == "DRUID" and tree == 1) or
-	--			(class == "PRIEST" and tree == 3) or (class == "SHAMAN" and tree == 1)
-	--		then
-	--			myDamagerRole = "RANGED"
-	--		end
-	--	end
-	--end
+	local _, class = UnitClass("player")
+	local spent = 0
+	for tree = 1, 3 do
+		local _, _, pointsSpent = GetTalentTabInfo(tree)
+		if pointsSpent > spent then
+			spent = pointsSpent
+			myRole = talentRoles[class][tree]
+			if class == "DRUID" and myRole == "TANK" then
+				-- Check for some bear talents, they should have atleast one maxed, right?
+				local feralInstinct = _, _, _, _, GetTalentInfo(tree, 3)
+				local thickHide = _, _, _, _, GetTalentInfo(tree, 5)
+				local primalFury = _, _, _, _, GetTalentInfo(tree, 12)
+				if feralInstinct < 5 and thickHide < 5 and primalFury < 2 then
+					myRole = "DAMAGER"
+				end
+			end
+			if myRole == "DAMAGER" then
+				myDamagerRole = "MELEE"
+				if
+					class == "MAGE" or class == "HUNTER" or class == "PRIEST" or class == "WARLOCK" or
+					(class == "DRUID" and tree == 1) or (class == "SHAMAN" and tree == 1)
+				then
+					myDamagerRole = "RANGED"
+				end
+			end
+		end
+	end
 
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
@@ -1183,32 +1209,23 @@ end
 -- @return boolean
 function boss:Tank(unit)
 	if unit then
-		return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
-	else
-		return myRole == "TANK"
+		return GetPartyAssignment("MAINTANK", unit)
 	end
+	return myRole == "TANK"
 end
 
 --- Check if your talent tree role is HEALER.
 -- @string[opt="player"] unit check if the chosen role of another unit is set to HEALER.
 -- @return boolean
-function boss:Healer(unit)
-	if unit then
-		return UnitGroupRolesAssigned(unit) == "HEALER"
-	else
-		return myRole == "HEALER"
-	end
+function boss:Healer()
+	return myRole == "HEALER"
 end
 
 --- Check if your talent tree role is DAMAGER.
 -- @string[opt="player"] unit check if the chosen role of another unit is set to DAMAGER.
 -- @return boolean
-function boss:Damager(unit)
-	if unit then
-		return UnitGroupRolesAssigned(unit) == "DAMAGER"
-	else
-		return myDamagerRole
-	end
+function boss:Damager()
+	return myDamagerRole
 end
 
 petUtilityFrame:SetScript("OnEvent", function()
@@ -1218,43 +1235,30 @@ end)
 
 do
 	local offDispel, defDispel = {}, {}
-	local _, class = UnitClass("player")
-	local function petCanDispel()
-		if class == "HUNTER" then
-			return IsSpellKnown(264266, true) -- Nature's Grace (Stag)
-				or IsSpellKnown(264265, true) -- Spirit Shock (Spirit Beast)
-				or IsSpellKnown(264264, true) -- Nether Shock (Nether Ray)
-				or IsSpellKnown(264263, true) -- Sonic Blast (Bat)
-				or IsSpellKnown(264262, true) -- Soothing Water (Water Strider)
-				or IsSpellKnown(264056, true) -- Spore Cloud (Sporebat)
-				or IsSpellKnown(264055, true) -- Serenity Dust (Moth)
-				or IsSpellKnown(264028, true) -- Chi-Ji's Tranquility (Crane)
-		end
-	end
 	function UpdateDispelStatus()
 		offDispel, defDispel = {}, {}
-		if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(278326) or IsSpellKnown(19505, true) or petCanDispel() then
-			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Devour Magic (Warlock Felhunter), Hunter pet
+		if IsSpellKnown(19801) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(370) or IsSpellKnown(8012) or IsSpellKnown(19505, true) or IsSpellKnown(19731, true) or IsSpellKnown(19734, true) or IsSpellKnown(19736, true) then
+			-- Tranquilizing Shot (Hunter), Dispel Magic r1/r2 (Priest), Purge r1/r2 (Shaman), Devour Magic r1/r2/r3/r4 (Warlock Felhunter)
 			offDispel.magic = true
 		end
-		if IsSpellKnown(2908) or petCanDispel() then
-			-- Soothe (Druid), Hunter pet
+		if IsSpellKnown(19801) then
+			-- Tranquilizing Shot (Hunter)
 			offDispel.enrage = true
 		end
-		if IsSpellKnown(527) or IsSpellKnown(77130) or IsSpellKnown(115450) or IsSpellKnown(4987) or IsSpellKnown(88423) then -- XXX Add DPS priest mass dispel?
-			-- Purify (Heal Priest), Purify Spirit (Heal Shaman), Detox (Heal Monk), Cleanse (Heal Paladin), Nature's Cure (Heal Druid)
+		if IsSpellKnown(4987) or IsSpellKnown(527) or IsSpellKnown(988) then
+			-- Cleanse (Paladin), Dispel Magic r1/r2 (Priest)
 			defDispel.magic = true
 		end
-		if IsSpellKnown(527) or IsSpellKnown(213634) or IsSpellKnown(115450) or IsSpellKnown(218164) or IsSpellKnown(4987) or IsSpellKnown(213644) then
-			-- Purify (Heal Priest), Purify Disease (Shadow Priest), Detox (Heal Monk), Detox (DPS Monk), Cleanse (Heal Paladin), Cleanse Toxins (DPS Paladin)
+		if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or IsSpellKnown(2870) or IsSpellKnown(8170) then
+			-- Purify (Paladin), Cleanse (Paladin), Cure Disease (Priest), Abolish Disease (Priest), Cure Disease (Shaman), Disease Cleansing Totem (Shaman)
 			defDispel.disease = true
 		end
-		if IsSpellKnown(88423) or IsSpellKnown(115450) or IsSpellKnown(218164) or IsSpellKnown(4987) or IsSpellKnown(2782) or IsSpellKnown(213644) then
-			-- Nature's Cure (Heal Druid), Detox (Heal Monk), Detox (DPS Monk), Cleanse (Heal Paladin), Remove Corruption (DPS Druid), Cleanse Toxins (DPS Paladin)
+		if IsSpellKnown(2893) or IsSpellKnown(8946) or IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(526) or IsSpellKnown(8166) then
+			-- Abolish Poison (Druid), Cure Poison (Druid), Purify (Paladin), Cleanse (Paladin), Cure Poison (Shaman), Poison Cleansing Totem (Shaman)
 			defDispel.poison = true
 		end
-		if IsSpellKnown(88423) or IsSpellKnown(2782) or IsSpellKnown(77130) or IsSpellKnown(51886) or IsSpellKnown(475) then
-			-- Nature's Cure (Heal Druid), Remove Corruption (DPS Druid), Purify Spirit (Heal Shaman), Cleanse Spirit (DPS Shaman), Remove Curse (Mage)
+		if IsSpellKnown(2782) or IsSpellKnown(475) then
+			-- Remove Curse (Druid), Remove Lesser Curse (Mage)
 			defDispel.curse = true
 		end
 	end
@@ -1278,23 +1282,17 @@ do
 	local GetSpellCooldown = GetSpellCooldown
 	local canInterrupt = false
 	local spellList = {
-		106839, -- Skull Bash (Druid)
-		78675, -- Solar Beam (Druid-Balance)
-		116705, -- Spear Hand Strike (Monk)
-		147362, -- Counter Shot (Hunter)
-		187707, -- Muzzle (Hunter-Survival)
-		57994, -- Wind Shear (Shaman)
-		47528, -- Mind Freeze (Death Knight)
-		96231, -- Rebuke (Paladin)
-		15487, -- Silence (Priest)
+		-- 16979, -- Feral Charge (Druid)
 		2139, -- Counterspell (Mage)
-		1766, -- Kick (Rogue)
-		6552, -- Pummel (Warrior)
-		183752, -- Disrupt (Demon Hunter)
+		15487, -- Silence (Priest)
+		1769, 1768, 1767, 1766, -- Kick (Rogue)
+		10414, 10413, 10412, 8046, 8045, 8044, 8042, -- Earth Shock (Shaman)
+		6554, 6552, -- Pummel (Warrior)
+		-- 1672, 1671, 72, -- Shield Bash (Warrior)
 	}
 	function UpdateInterruptStatus()
-		if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
-			canInterrupt = 19647
+		if IsSpellKnown(19244, true) or IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
+			canInterrupt = GetSpellInfo(19647)
 			return
 		end
 		canInterrupt = false
