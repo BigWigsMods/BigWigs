@@ -54,6 +54,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+    "pull_rp",
 		"submerge",
 		"emerge",
 		20566, -- Wrath of Ragnaros
