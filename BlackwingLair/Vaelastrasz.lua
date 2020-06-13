@@ -16,13 +16,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.bossName = "Vaelastrasz the Corrupt"
 
-	L.pull_rp = "RP timer"
-	L.pull_rp_desc = "Timer for the RP after engaging the boss"
-	L.pull_rp_icon = "spell_fire_lavaspawn"
-	L.pull_rp_message = "Pull RP started, engaging in ~43s"
-	L.pull_rp_bar = "Encounter starting"
-
-	L.pull_rp_trigger = "Too late, friends!"
+	L.warmup_trigger = "Too late, friends!"
+	L.warmup_message = "RP started, engaging in ~43s"
 end
 L = mod:GetLocale()
 
@@ -32,7 +27,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"pull_rp",
+		"warmup",
 		{18173, "ICON"}, -- Burning Adrenaline
 	}
 end
@@ -53,9 +48,11 @@ end
 -- Event Handlers
 --
 
-function mod:PullRP()
-	self:Message("pull_rp", "cyan", nil, L.pull_rp_message)
-	self:Bar("pull_rp", 43, L.pull_rp_bar)
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if msg:find(L.warmup_trigger, nil, true) then
+		self:Message("warmup", "cyan", nil, L.warmup_message)
+		self:Bar("warmup", 43, CL.active)
+	end
 end
 
 function mod:Adrenaline(args)
