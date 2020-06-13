@@ -12,6 +12,8 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local adbo = LibStub("AceDBOptions-3.0")
 
+local C_EncounterJournal_GetSectionInfo = function(...) return ... end
+
 local loader = BigWigsLoader
 local API = BigWigsAPI
 options.SendMessage = loader.SendMessage
@@ -641,7 +643,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 		if dbKey < 0 then
 			-- the "why did you use an ej id instead of the spell directly" check
 			-- headers and other non-spell entries don't load async
-			local info = C_EncounterJournal.GetSectionInfo(-dbKey)
+			local info = C_EncounterJournal_GetSectionInfo(-dbKey)
 			if info.spellID > 0 then
 				spellId = info.spellID
 			end
@@ -799,7 +801,7 @@ do
 						link = spellLink
 					end
 				else
-					local tbl = C_EncounterJournal.GetSectionInfo(-o)
+					local tbl = C_EncounterJournal_GetSectionInfo(-o)
 					if not tbl or not tbl.link then
 						BigWigs:Error(("Failed to fetch the link for journal id (-)%d, tell the authors."):format(-o))
 					else
