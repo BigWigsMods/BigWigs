@@ -1346,6 +1346,33 @@ do
 	end
 end
 
+do
+	local COMBATLOG_OBJECT_REACTION_HOSTILE = COMBATLOG_OBJECT_REACTION_HOSTILE
+	local COMBATLOG_OBJECT_REACTION_FRIENDLY = COMBATLOG_OBJECT_REACTION_FRIENDLY
+	local COMBATLOG_OBJECT_CONTROL_PLAYER = COMBATLOG_OBJECT_CONTROL_PLAYER
+
+	--- Check if the unit is flagged as hostile.
+	-- @string flags unit bit flags
+	-- @return boolean, if the unit is hostile
+	function boss:Hostile(flags)
+		return band(flags, COMBATLOG_OBJECT_REACTION_HOSTILE) == COMBATLOG_OBJECT_REACTION_HOSTILE
+	end
+
+	--- Check if the unit is flagged as friendly.
+	-- @string flags unit bit flags
+	-- @return boolean, if the unit is friendly
+	function boss:Friendly(flags)
+		return band(flags, COMBATLOG_OBJECT_REACTION_FRIENDLY) == COMBATLOG_OBJECT_REACTION_FRIENDLY
+	end
+
+	--- Check if the unit is flagged as a player.
+	-- @string flags unit bit flags
+	-- @return boolean, if the unit is a player
+	function boss:Player(flags)
+		return band(flags, COMBATLOG_OBJECT_CONTROL_PLAYER) == COMBATLOG_OBJECT_CONTROL_PLAYER
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Option flag check
 -- @section toggles
