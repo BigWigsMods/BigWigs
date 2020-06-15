@@ -129,6 +129,7 @@ local dbg = function(self, msg) print(format("[DBG:%s] %s", self.displayName, ms
 
 local metaMap = {__index = function(self, key) self[key] = {} return self[key] end}
 local eventMap = setmetatable({}, metaMap)
+local unfilteredEventSpells = setmetatable({}, metaMap)
 local unitEventMap = setmetatable({}, metaMap)
 local widgetEventMap = setmetatable({}, metaMap)
 local icons = setmetatable({}, {__index =
@@ -313,6 +314,7 @@ function boss:Disable(isWipe)
 
 		-- Empty the event maps for this module
 		eventMap[self] = nil
+		unfilteredEventSpells[self] = nil
 		unitEventMap[self] = nil
 		widgetEventMap[self] = nil
 		allowedEvents = {}
@@ -407,6 +409,7 @@ do
 	local multipleRegistration = "Module %q registered the event %q with spell name %q multiple times."
 
 	local args = {}
+	local COMBATLOG_OBJECT_TYPE_PLAYER = COMBATLOG_OBJECT_TYPE_PLAYER
 	local CombatLogGetCurrentEventInfo = CombatLogGetCurrentEventInfo
 	bossUtilityFrame:SetScript("OnEvent", function()
 		local time, event, _, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags, destRaidFlags, spellId, spellName, _, extraSpellId, amount = CombatLogGetCurrentEventInfo()
@@ -435,6 +438,10 @@ do
 					local m = eventMap[self][event]
 					if m and (m[spellName] or m["*"]) then
 						local func = m[spellName] or m["*"]
+						-- By default we only care about non-player spells (exempting "*")
+						if band(sourceFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and m[spellName] and (not unfilteredEventSpells[self][event] or not unfilteredEventSpells[self][event][spellName]) then
+							return
+						end
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
 						args.sourceGUID, args.sourceName, args.sourceFlags, args.sourceRaidFlags = sourceGUID, sourceName, sourceFlags, sourceRaidFlags
 						args.destGUID, args.destName, args.destFlags, args.destRaidFlags = destGUID, destName, destFlags, destRaidFlags
@@ -458,7 +465,10 @@ do
 		if not event or not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if type(func) ~= "function" and not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self][event] then eventMap[self][event] = {} end
-		for i = 1, select("#", ...) do
+		local numSpells = select("#", ...)
+		local nofilter = select(numSpells, ...) == true
+		if nofilter then numSpells = numSpells - 1 end
+		for i = 1, numSpells do
 			local spellName = select(i, ...)
 			if type(spellName) == "number" then
 				local spell = self:SpellName(spellName)
@@ -469,6 +479,10 @@ do
 				core:Print(format(multipleRegistration, self.moduleName, event, spellName))
 			end
 			eventMap[self][event][spellName] = func
+			if nofilter then
+				if not unfilteredEventSpells[self][event] then unfilteredEventSpells[self][event] = {} end
+				unfilteredEventSpells[self][event][spellName] = true
+			end
 		end
 		allowedEvents[event] = true
 		bossUtilityFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
