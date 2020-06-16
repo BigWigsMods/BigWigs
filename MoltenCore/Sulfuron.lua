@@ -23,8 +23,6 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SulfuronHeal", self:SpellName(19775))
 	self:Log("SPELL_CAST_SUCCESS", "Inspire", self:SpellName(19779))
-
-	self:Death("Win", 12098)
  end
 
 --------------------------------------------------------------------------------

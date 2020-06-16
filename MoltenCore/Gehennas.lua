@@ -23,8 +23,6 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Curse", self:SpellName(19716))
 	self:Log("SPELL_AURA_APPLIED", "Fire", self:SpellName(19717))
-
-	self:Death("Win", 12259)
 end
 
 --------------------------------------------------------------------------------

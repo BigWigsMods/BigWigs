@@ -28,8 +28,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Inferno", self:SpellName(19695))
 	self:Log("SPELL_CAST_SUCCESS", "Armageddon", self:SpellName(20478))
 	self:Log("SPELL_CAST_SUCCESS", "IgniteMana", self:SpellName(19659))
-
-	self:Death("Win", 12056)
 end
 
 --------------------------------------------------------------------------------

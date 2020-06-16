@@ -64,7 +64,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Knockback", self:SpellName(20566))
 	self:Log("SPELL_CAST_START", "Warmup", self:SpellName(19774))
 
-	self:Death("Win", 11502)
 	self:Death("SonDeaths", 12143)
 	self:Death("MajordomoDeath", 12018)
 end

@@ -20,7 +20,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Death("Win", 11988)
  end
 
 --------------------------------------------------------------------------------

@@ -21,8 +21,6 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Pulse", self:SpellName(19492))
-
-	self:Death("Win", 12057)
 end
 
 --------------------------------------------------------------------------------

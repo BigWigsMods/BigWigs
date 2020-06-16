@@ -25,8 +25,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Panic", self:SpellName(19408))
 	self:Log("SPELL_CAST_SUCCESS", "Enrage", self:SpellName(19451))
 	self:Log("SPELL_AURA_APPLIED", "Conflagration", self:SpellName(19428))
-
-	self:Death("Win", 11982)
 end
 
 function mod:OnEngage()

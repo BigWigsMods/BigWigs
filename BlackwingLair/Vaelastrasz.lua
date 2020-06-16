@@ -40,8 +40,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:Log("SPELL_AURA_APPLIED", "Adrenaline", self:SpellName(18173))
-
-	self:Death("Win", 13020)
 end
 
 --------------------------------------------------------------------------------

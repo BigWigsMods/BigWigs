@@ -35,8 +35,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ImpendingDoom", self:SpellName(19702))
 	self:Log("SPELL_CAST_SUCCESS", "LucifronsCurse", self:SpellName(19703))
 	self:Log("SPELL_AURA_APPLIED", "MindControl", self:SpellName(20604))
-
-	self:Death("Win", 12118)
 end
 
 function mod:OnEngage()

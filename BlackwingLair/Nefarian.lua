@@ -105,8 +105,6 @@ function mod:OnBossEnable()
 	)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-
-	self:Death("Win", 11583)
 end
 
 --------------------------------------------------------------------------------

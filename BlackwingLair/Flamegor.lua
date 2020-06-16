@@ -39,11 +39,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShadowFlame", self:SpellName(22539))
 	self:Log("SPELL_AURA_APPLIED", "Enrage", self:SpellName(23342))
 	self:Log("SPELL_DISPEL", "EnrageRemoved", "*")
-
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-
-	self:Death("Win", 11981)
 end
 
 function mod:OnEngage()
