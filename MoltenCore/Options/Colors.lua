@@ -20,6 +20,7 @@ BigWigs:AddColors("Baron Geddon", {
 	[19695] = "red",
 	[20475] = "blue",
 	[20478] = "orange",
+	[19659] = {"orange", "red"},
 })
 
 BigWigs:AddColors("Shazzrah", {
