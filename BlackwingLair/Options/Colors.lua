@@ -7,6 +7,7 @@ BigWigs:AddColors("Razorgore the Untamed", {
 })
 
 BigWigs:AddColors("Vaelastrasz the Corrupt", {
+	["warmup"] = "cyan",
 	[18173] = {"yellow","blue"},
 })
 
