@@ -1,47 +1,47 @@
 
 BigWigs:AddColors("Razorgore the Untamed", {
-	[14515] = {"red","blue"},
+	[14515] = {"blue","red"},
 	[23023] = {"blue","orange"},
 	["eggs"] = "green",
-	["stages"] = {"red","orange"},
+	["stages"] = {"orange","red"},
 })
 
 BigWigs:AddColors("Vaelastrasz the Corrupt", {
+	[18173] = {"blue","yellow"},
 	["warmup"] = "cyan",
-	[18173] = {"yellow","blue"},
 })
 
 BigWigs:AddColors("Broodlord Lashlayer", {
-	[40220] = {"yellow","blue"},
+	[24573] = {"blue","yellow"},
 })
 
 BigWigs:AddColors("Firemaw", {
 	[22539] = "red",
-	[23339] = {"red","orange"},
+	[23339] = {"orange","red"},
 })
 
 BigWigs:AddColors("Ebonroc", {
 	[22539] = "red",
-	[23339] = {"red","orange"},
-	[23340] = {"yellow","blue"},
+	[23339] = {"orange","red"},
+	[23340] = {"blue","yellow"},
 })
 
 BigWigs:AddColors("Flamegor", {
 	[22539] = "red",
-	[23339] = {"red","orange"},
+	[23339] = {"orange","red"},
 	[23342] = "orange",
 })
 
 BigWigs:AddColors("Chromaggus", {
 	[23128] = "yellow",
-	[23537] = {"red","cyan"},
-	["breath"] = {"yellow","red","green"},
-	["debuffs"] = {"red","orange"},
+	[23537] = "red",
+	["breath"] = {"green","red","yellow"},
+	["debuffs"] = {"orange","red"},
 })
 
-BigWigs:AddColors("Nefarian ", {
+BigWigs:AddColors("NefarianBWL", {
 	[22539] = "yellow",
-	[22686] = {"red","orange"},
-	["classcall"] = {"red","green"},
+	[22686] = {"orange","red"},
+	["classcall"] = {"green","red"},
 	["otherwarn"] = "red",
 })

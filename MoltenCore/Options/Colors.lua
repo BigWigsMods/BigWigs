@@ -17,10 +17,10 @@ BigWigs:AddColors("Gehennas", {
 })
 
 BigWigs:AddColors("Baron Geddon", {
+	[19659] = {"orange","red"},
 	[19695] = "red",
 	[20475] = "blue",
 	[20478] = "orange",
-	[19659] = {"orange", "red"},
 })
 
 BigWigs:AddColors("Shazzrah", {
@@ -41,7 +41,7 @@ BigWigs:AddColors("Majordomo Executus", {
 
 BigWigs:AddColors("Ragnaros", {
 	[20566] = "red",
-	["warmup"] = "cyan",
 	["emerge"] = {"green","orange","yellow"},
 	["submerge"] = {"orange","yellow"},
+	["warmup"] = "cyan",
 })

@@ -12,7 +12,7 @@ BigWigs:AddSounds("Chromaggus", {
 	["debuffs"] = {"Alarm","Warning"},
 })
 
-BigWigs:AddSounds("Nefarian ", {
+BigWigs:AddSounds("NefarianBWL", {
 	[22539] = "Alert",
 	[22686] = "Alert",
 })
