@@ -115,11 +115,7 @@ end
 function mod:MajordomoDeath()
 	-- it takes exactly 10 seconds for combat to start after Majodromo dies, while
 	-- the time between starting the RP/summon and killing Majordomo varies
-	local remaining = self:BarTimeLeft("warmup")
-	if remaining ~= 10 then
-		self:StopBar("warmup")
-		self:Bar("warmup", 10, CL.active, L.warmup_icon)
-	end
+	self:Bar("warmup", 10, CL.active, L.warmup_icon)
 end
 
 function mod:Emerge()
