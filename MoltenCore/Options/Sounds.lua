@@ -11,7 +11,7 @@ BigWigs:AddSounds("Gehennas", {
 BigWigs:AddSounds("Baron Geddon", {
 	[19695] = "Long",
 	[20475] = "Alarm",
-	[19659] = "Alarm",
+	[19659] = "Alert",
 })
 
 BigWigs:AddSounds("Shazzrah", {
