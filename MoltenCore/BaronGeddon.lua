@@ -67,5 +67,5 @@ function mod:IgniteMana(args)
 	-- first cast takes 7-19s, so we skip that
 	self:Bar(19659, 27)
 	self:Message(19659, "orange")
-	self:DelayedMessage(19659, 22, "red", CL.custom_sec:format(self:SpellName(19659), 5), false, "Alarm")
+	self:DelayedMessage(19659, 22, "red", CL.custom_sec:format(self:SpellName(19659), 5), false, "Alert")
 end
