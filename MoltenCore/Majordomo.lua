@@ -28,7 +28,7 @@ function mod:GetOptions()
 	return {
 		20619, -- Magic Reflection
 		21075, -- Damage Shield
-		20534, -- Teleport
+		{20534, "TANK"}, -- Teleport
 	}
 end
 
