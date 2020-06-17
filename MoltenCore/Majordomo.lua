@@ -45,7 +45,7 @@ function mod:VerifyEnable(unit)
 end
 
 function mod:OnEngage()
-	self:Bar(20534, 20)
+	self:Bar(20534, 20) -- Teleport
 end
 
 --------------------------------------------------------------------------------
