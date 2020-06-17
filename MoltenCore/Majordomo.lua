@@ -28,12 +28,14 @@ function mod:GetOptions()
 	return {
 		20619, -- Magic Reflection
 		21075, -- Damage Shield
+		20534, -- Teleport
 	}
 end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MagicReflection", self:SpellName(20619))
 	self:Log("SPELL_CAST_SUCCESS", "DamageShield", self:SpellName(21075))
+	self:Log("SPELL_CAST_SUCCESS", "Teleport", self:SpellName(20534))
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 end
@@ -66,3 +68,6 @@ function mod:DamageShield(args)
 	self:DelayedMessage(21075, 25, "orange", CL.custom_sec:format(L.power_next, 5))
 end
 
+function mod:Teleport(args)
+	self:Bar(20534, 25) -- 25-30
+end
