@@ -44,6 +44,10 @@ function mod:VerifyEnable(unit)
 	return (UnitIsEnemy(unit, "player") and UnitCanAttack(unit, "player")) and true or false
 end
 
+function mod:OnEngage()
+	self:Bar(20534, 20)
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -69,5 +73,5 @@ function mod:DamageShield(args)
 end
 
 function mod:Teleport(args)
-	self:Bar(20534, 25) -- 25-30
+	self:CDBar(20534, 25) -- 25-30
 end
