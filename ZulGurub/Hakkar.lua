@@ -72,5 +72,5 @@ function mod:CauseInsanity(args)
 end
 
 function mod:CauseInsanityRemoved(args)
-	self:StopBar(24327, L.mc_bar:format(args.destName))
+	self:StopBar(L.mc_bar:format(args.destName))
 end

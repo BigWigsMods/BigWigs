@@ -76,7 +76,7 @@ end
 
 function mod:GreatHealStop(args)
 	if args.extraSpellName == self:SpellName(23954) then
-		self:StopBar(23954, CL.cast:format(args.extraSpellName))
+		self:StopBar(CL.cast:format(args.extraSpellName))
 		self:Message2(23954, "green", CL.interrupted:format(args.extraSpellName))
 	end
 end

@@ -60,7 +60,7 @@ end
 
 function mod:HolyFireStop(args)
 	if args.extraSpellName == self:SpellName(23860) then
-		self:StopBar(23860, CL.cast:format(args.extraSpellName))
+		self:StopBar(CL.cast:format(args.extraSpellName))
 	end
 end
 
