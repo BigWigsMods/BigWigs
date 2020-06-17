@@ -37,7 +37,7 @@ end
 --
 
 function mod:Blink(args)
-	self:Bar(23138, 41)
+	self:CDBar(23138, 41) -- 41-50
 	self:Message(23138, "red")
 end
 
