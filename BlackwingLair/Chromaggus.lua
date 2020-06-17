@@ -65,8 +65,6 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
-
 	self:Log("SPELL_AURA_APPLIED", "Enrage", self:SpellName(23128))
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", self:SpellName(23537))
 	self:Log("SPELL_AURA_APPLIED", "Debuffs", -- Brood Affliction: Bronze, Black, Red, Green, Blue
@@ -90,8 +88,6 @@ function mod:OnBossEnable()
 		self:SpellName(23308), -- Incinerate
 		self:SpellName(23187) -- Frost Burn
 	)
-
-	self:Death("Win", 14020)
 end
 
 function mod:OnEngage()

@@ -25,8 +25,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Blink", self:SpellName(23138))
 	self:Log("SPELL_CAST_SUCCESS", "MagicGrounding", self:SpellName(19714))
 	self:Log("SPELL_CAST_SUCCESS", "Counterspell", self:SpellName(19715))
-
-	self:Death("Win", 12264)
 end
 
 function mod:OnEngage()

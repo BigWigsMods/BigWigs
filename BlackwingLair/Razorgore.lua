@@ -92,7 +92,6 @@ end
 
 function mod:Phase2()
 	self:Message("stages", "red", nil, L.phase2_message, false)
-	self:Death("Win", 12435) -- Register after p2 to prevent false positives
 end
 
 function mod:Conflagration(args)

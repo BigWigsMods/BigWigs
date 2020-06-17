@@ -1,0 +1,19 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Jeklik.lua"/>
+<Script file="Venoxis.lua"/>
+<Script file="Marli.lua"/>
+<Script file="Thekal.lua"/>
+<Script file="Arlokk.lua"/>
+<Script file="Hakkar.lua"/>
+
+<Script file="Mandokir.lua"/>
+<Script file="Jindo.lua"/>
+<Script file="Gahzranka.lua"/>
+<Script file="EdgeOfMadness.lua"/>
+
+<Include file="Locales\locales.xml"/>
+<Include file="Options\options.xml"/>
+
+</Ui>

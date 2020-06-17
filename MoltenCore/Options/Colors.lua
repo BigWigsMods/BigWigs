@@ -17,6 +17,7 @@ BigWigs:AddColors("Gehennas", {
 })
 
 BigWigs:AddColors("Baron Geddon", {
+	[19659] = {"orange","red"},
 	[19695] = "red",
 	[20475] = "blue",
 	[20478] = "orange",
@@ -42,4 +43,5 @@ BigWigs:AddColors("Ragnaros", {
 	[20566] = "red",
 	["emerge"] = {"green","orange","yellow"},
 	["submerge"] = {"orange","yellow"},
+	["warmup"] = "cyan",
 })

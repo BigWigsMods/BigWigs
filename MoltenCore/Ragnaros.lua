@@ -5,7 +5,7 @@
 
 local mod, CL = BigWigs:NewBoss("Ragnaros", 409)
 if not mod then return end
-mod:RegisterEnableMob(11502)
+mod:RegisterEnableMob(11502, 12018)
 mod:SetAllowWin(true)
 mod.engageId = 672
 
@@ -22,6 +22,9 @@ local timer = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.warmup_icon = "spell_fire_lavaspawn"
+	L.warmup_message = "RP started, engaging in ~73s"
+
 	L.engage_trigger = "NOW FOR YOU,"
 	L.submerge_trigger = "COME FORTH,"
 
@@ -48,6 +51,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
+		"warmup",
 		"submerge",
 		"emerge",
 		20566, -- Wrath of Ragnaros
@@ -58,14 +62,24 @@ function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 
 	self:Log("SPELL_CAST_SUCCESS", "Knockback", self:SpellName(20566))
+	self:Log("SPELL_CAST_START", "Warmup", self:SpellName(19774))
 
-	self:Death("Win", 11502)
 	self:Death("SonDeaths", 12143)
+	self:Death("MajordomoDeath", 12018)
+end
+
+function mod:VerifyEnable(unit, mobId)
+	if mobId == 11502 then
+		return true
+	elseif mobId == 12018 then
+		return not UnitCanAttack(unit, "player")
+	end
 end
 
 function mod:OnEngage()
 	sonsdead = 0
 	timer = nil
+	self:Bar(20566, 27, L.knockback_bar) -- guesstimate for the first wrath
 	self:Bar("submerge", 180, L.submerge_bar, "spell_fire_volcano")
 	self:Message("submerge", "yellow", nil, CL.custom_min:format(L.submerge, 3), "spell_fire_volcano")
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
@@ -92,11 +106,23 @@ function mod:Knockback(args)
 	self:Bar(20566, 28, L.knockback_bar)
 end
 
+function mod:Warmup()
+	self:Message("warmup", "cyan", nil, L.warmup_message)
+	self:Bar("warmup", 73, CL.active, L.warmup_icon)
+end
+
+function mod:MajordomoDeath()
+	-- it takes exactly 10 seconds for combat to start after Majodromo dies, while
+	-- the time between starting the RP/summon and killing Majordomo varies
+	self:Bar("warmup", 10, CL.active, L.warmup_icon)
+end
+
 function mod:Emerge()
 	sonsdead = 10 -- Block this firing again if sons are killed after he emerges
 	timer = nil
-	self:Message("emerge", "yellow", "Long", L.emerge_message, "spell_fire_volcano")
+	self:Bar(20566, 27, L.knockback_bar) -- guesstimate for the first wrath after emerging
 	self:Bar("submerge", 180, L.submerge_bar, "spell_fire_volcano")
+	self:Message("emerge", "yellow", "Long", L.emerge_message, "spell_fire_volcano")
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
 	self:DelayedMessage("submerge", 120, "yellow", CL.custom_min:format(L.submerge, 1))
 	self:DelayedMessage("submerge", 150, "yellow", CL.custom_sec:format(L.submerge, 30))
