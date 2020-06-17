@@ -44,4 +44,5 @@ BigWigs:AddColors("NefarianBWL", {
 	[22686] = {"orange","red"},
 	["classcall"] = {"green","red"},
 	["otherwarn"] = "red",
+	["add"] = "green"
 })
