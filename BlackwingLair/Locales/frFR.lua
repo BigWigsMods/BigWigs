@@ -60,8 +60,6 @@ if L then
 	L.triggerwarlock = "Démonistes, vous ne devriez pas jouer"
 	L.triggerhunter = "Ah, les chasseurs et les stupides"
 	L.triggermage = "Les mages aussi"
-	L.triggerdeathknight = "Chevalier de la mort"
-	--L.triggermonk = "Monks"
 
 	L.landing_soon_warning = "Nefarian atterit dans 10 sec. !"
 	L.landing_warning = "Nefarian atterit !"
@@ -77,9 +75,6 @@ if L then
 	L.warnrogue = "Voleurs - Téléportés et immobilisés !"
 	L.warnpaladin = "Paladins - Bénédiction de protection !"
 	L.warnmage = "Mages - Arrivée des métamorphoses !"
-	--L.warndeathknight = "Death Knights - Death Grip"
-	--L.warnmonk = "Monks - Stuck Rolling"
-	--L.warndemonhunter = "Demon Hunters - Blinded"
 
 	L.classcall_bar = "Appel des classes"
 
@@ -88,5 +83,8 @@ if L then
 
 	L.otherwarn = "Atterissage et zerg"
 	L.otherwarn_desc = "Préviens quand les Zergs arrivent et quand Nefarian atterit."
+
+	-- L.add = "Phase 1 Drakonids"
+	-- L.add_desc = "Counts the number of adds killed in Phase 1 before Nefarian lands."
 end
 

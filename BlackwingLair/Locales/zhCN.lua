@@ -61,8 +61,6 @@ if L then
 	L.triggerwarlock = "^术士"
 	L.triggerhunter = "^猎人"
 	L.triggermage = "^你们也是法师"
-	L.triggerdeathknight = "^死亡骑士"
-	L.triggermonk = "武僧"
 
 	L.landing_soon_warning = "奈法利安将在10秒后降落！"
 	L.landing_warning = "奈法利安已降落！"
@@ -78,9 +76,6 @@ if L then
 	L.warnrogue = "盗贼 - 被传送和麻痹！"
 	L.warnpaladin = "圣骑士 - BOSS受到保护祝福，物理攻击无效！"
 	L.warnmage = "法师 - 变形术发动，注意解除！"
-	L.warndeathknight = "死亡骑士 - 死亡之握！"
-	L.warnmonk = "武僧 - 翻滚！"
-	L.warndemonhunter = "恶魔猎手 - 致盲！"
 
 	L.classcall_bar = "职业点名"
 
@@ -89,5 +84,8 @@ if L then
 
 	L.otherwarn = "其他警报"
 	L.otherwarn_desc = "降落与骨龙群出现时发出警报"
+
+	-- L.add = "Phase 1 Drakonids"
+	-- L.add_desc = "Counts the number of adds killed in Phase 1 before Nefarian lands."
 end
 

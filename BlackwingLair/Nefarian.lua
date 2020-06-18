@@ -9,6 +9,13 @@ mod:SetAllowWin(true)
 mod.engageId = 617
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local adds_dead = 0
+local total_adds = 42 -- this could be a magic number in the message function, but I like the faux-const better
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -24,8 +31,6 @@ if L then
 	L.triggerwarlock = "Warlocks"
 	L.triggerhunter = "Hunters" -- Hunters and your annoying pea-shooters!
 	L.triggermage = "Mages"
-	L.triggerdeathknight = "Death Knights" -- Death Knights... get over here!
-	L.triggermonk = "Monks"
 
 	L.landing_soon_warning = "Nefarian landing in 10 seconds!"
 	L.landing_warning = "Nefarian is landing!"
@@ -41,9 +46,6 @@ if L then
 	L.warnrogue = "Rogues - Ported and rooted!"
 	L.warnpaladin = "Paladins - Blessing of Protection!"
 	L.warnmage = "Mages - Incoming polymorphs!"
-	L.warndeathknight = "Death Knights - Death Grip"
-	L.warnmonk = "Monks - Stuck Rolling"
-	L.warndemonhunter = "Demon Hunters - Blinded"
 
 	L.classcall_bar = "Class call"
 
@@ -52,6 +54,9 @@ if L then
 
 	L.otherwarn = "Landing and Zerg"
 	L.otherwarn_desc = "Landing and Zerg warnings."
+
+	L.add = "Phase 1 Drakonids"
+	L.add_desc = "Counts the number of adds killed in Phase 1 before Nefarian lands."
 end
 L = mod:GetLocale()
 
@@ -60,8 +65,6 @@ local warnpairs = {
 	[L.triggerwarlock] = {L.warnwarlock, true},
 	[L.triggerhunter] = {L.warnhunter, true}, -- No event
 	[L.triggermage] = {L.warnmage, true},
-	[L.triggerdeathknight] = {L.warndeathknight, true}, -- No event
-	[L.triggermonk] = {L.warnmonk, true},
 	[L.landing_soon_trigger] = {L.landing_soon_warning},
 	[L.landing_trigger] = {L.landing_warning},
 	[L.zerg_trigger] = {L.zerg_warning},
@@ -83,7 +86,8 @@ function mod:GetOptions()
 		22539, -- Shadow Flame
 		22686, -- Bellowing Roar
 		"classcall",
-		"otherwarn"
+		"otherwarn",
+		"add"
 	}
 end
 
@@ -105,6 +109,12 @@ function mod:OnBossEnable()
 	)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+
+	self:Death("AddDied", 14264, 14263, 14261, 14265, 14262, 14302) --Red, Bronze, Blue, Black, Green, Chromatic
+end
+
+function mod:OnEngage()
+	adds_dead = 0
 end
 
 --------------------------------------------------------------------------------
@@ -155,3 +165,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	end
 end
 
+function mod:AddDied(args)
+	adds_dead = adds_dead + 1
+	self:Message("add", "green", nil, CL.add_killed:format(adds_dead, total_adds), "INV_Misc_Head_Dragon_Black")
+end

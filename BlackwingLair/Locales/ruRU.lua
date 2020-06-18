@@ -60,8 +60,6 @@ if L then
 	L.triggerwarlock = "Варлоки, вы должны играть!"
 	L.triggerhunter = "Охотники и ваше раздражение"
 	L.triggermage = "Маги так же%?"
-	L.triggerdeathknight = "Рыцари смерти! Сюда!"
-	--L.triggermonk = "Monks"
 
 	L.landing_soon_warning = "Нефариан приземлится через 10 секунд!"
 	L.landing_warning = "Нефариан ПРИЗЕМЛЯЕТСЯ!"
@@ -77,8 +75,6 @@ if L then
 	L.warnrogue = "Разбойники - точите свои клинки!"
 	L.warnpaladin = "Паладины - улучшайте защиту!"
 	L.warnmage = "Маги - используйте превращение!"
-	--L.warnmonk = "Monks - Stuck Rolling"
-	--L.warndemonhunter = "Demon Hunters - Blinded"
 
 	L.classcall_bar = "Классовый вызов"
 
@@ -87,5 +83,8 @@ if L then
 
 	L.otherwarn = "Приземление и зерг"
 	L.otherwarn_desc = "Предупреждать об опасности приземления и зерга."
+
+	-- L.add = "Phase 1 Drakonids"
+	-- L.add_desc = "Counts the number of adds killed in Phase 1 before Nefarian lands."
 end
 
