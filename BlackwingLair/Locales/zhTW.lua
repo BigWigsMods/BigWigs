@@ -84,5 +84,8 @@ if L then
 
 	L.otherwarn = "其他警報"
 	L.otherwarn_desc = "降落及龍獸出現時發出警報"
+
+	-- L.add = "Phase 1 Drakonids"
+	-- L.add_desc = "Counts the number of adds killed in Phase 1 before Nefarian lands."
 end
 

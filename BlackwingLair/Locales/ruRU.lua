@@ -83,5 +83,8 @@ if L then
 
 	L.otherwarn = "Приземление и зерг"
 	L.otherwarn_desc = "Предупреждать об опасности приземления и зерга."
+
+	-- L.add = "Phase 1 Drakonids"
+	-- L.add_desc = "Counts the number of adds killed in Phase 1 before Nefarian lands."
 end
 
