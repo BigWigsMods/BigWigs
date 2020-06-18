@@ -84,7 +84,7 @@ if L then
 	L.otherwarn = "기타 경고"
 	L.otherwarn_desc = "착지와 소환에 대한 경고"
 
-	-- L.add = "Phase 1 Drakonids"
-	-- L.add_desc = "Counts the number of adds killed in Phase 1 before Nefarian lands."
+	-- L.add = "Drakonid deaths"
+	-- L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
 

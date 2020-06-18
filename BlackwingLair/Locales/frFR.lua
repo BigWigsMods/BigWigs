@@ -84,7 +84,7 @@ if L then
 	L.otherwarn = "Atterissage et zerg"
 	L.otherwarn_desc = "Préviens quand les Zergs arrivent et quand Nefarian atterit."
 
-	-- L.add = "Phase 1 Drakonids"
-	-- L.add_desc = "Counts the number of adds killed in Phase 1 before Nefarian lands."
+	-- L.add = "Drakonid deaths"
+	-- L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
 

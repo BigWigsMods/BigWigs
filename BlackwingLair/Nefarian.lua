@@ -58,8 +58,8 @@ if L then
 	L.otherwarn = "Landing and Zerg"
 	L.otherwarn_desc = "Landing and Zerg warnings."
 
-	L.add = "Phase 1 Drakonids"
-	L.add_desc = "Counts the number of adds killed in Phase 1 before Nefarian lands."
+	L.add = "Drakonid deaths"
+	L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
 L = mod:GetLocale()
 
