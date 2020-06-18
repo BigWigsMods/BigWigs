@@ -69,9 +69,84 @@ local valid_methods = {
 	SetInfo = "INFOBOX",
 	SetInfoBar = "INFOBOX",
 	CloseInfo = "INFOBOX",
+	NameplateBar = "NAMEPLATEBAR",
+	NameplateCDBar = "NAMEPLATEBAR",
+	PauseNameplateBar = "NAMEPLATEBAR",
+	ResumeNameplateBar = "NAMEPLATEBAR",
+	NameplateBarTimeLeft = "NAMEPLATEBAR",
+	StopNameplateBar = "NAMEPLATEBAR",
 }
 for k in next, color_methods do valid_methods[k] = true end
 for k in next, sound_methods do valid_methods[k] = true end
+
+local log_events = {
+	["SWING_DAMAGE"] = true,
+	["SWING_MISSED"] = true,
+	["RANGE_DAMAGE"] = true,
+	["RANGE_MISSED"] = true,
+	["SPELL_ABSORBED"] = true,
+	["SPELL_AURA_APPLIED"] = true,
+	["SPELL_AURA_APPLIED_DOSE"] = true,
+	["SPELL_AURA_BROKEN"] = true,
+	["SPELL_AURA_BROKEN_SPELL"] = true,
+	["SPELL_AURA_REFRESH"] = true,
+	["SPELL_AURA_REMOVED"] = true,
+	["SPELL_AURA_REMOVED_DOSE"] = true,
+	["SPELL_CAST_FAILED"] = true,
+	["SPELL_CAST_START"] = true,
+	["SPELL_CAST_SUCCESS"] = true,
+	["SPELL_CREATE"] = true,
+	["SPELL_DAMAGE"] = true,
+	["SPELL_DISPEL"] = true,
+	["SPELL_DISPEL_FAILED"] = true,
+	["SPELL_DRAIN"] = true,
+	["SPELL_DURABILITY_DAMAGE"] = true,
+	["SPELL_DURABILITY_DAMAGE_ALL"] = true,
+	["SPELL_ENERGIZE"] = true,
+	["SPELL_EXTRA_ATTACKS"] = true,
+	["SPELL_HEAL"] = true,
+	["SPELL_INSTAKILL"] = true,
+	["SPELL_INTERRUPT"] = true,
+	["SPELL_LEECH"] = true,
+	["SPELL_MISSED"] = true,
+	["SPELL_RESURRECT"] = true,
+	["SPELL_STOLEN"] = true,
+	["SPELL_SUMMON"] = true,
+	["SPELL_PERIODIC_DAMAGE"] = true,
+	["SPELL_PERIODIC_DRAIN"] = true,
+	["SPELL_PERIODIC_ENERGIZE"] = true,
+	["SPELL_PERIODIC_HEAL"] = true,
+	["SPELL_PERIODIC_LEECH"] = true,
+	["SPELL_PERIODIC_MISSED"] = true,
+	["SPELL_BUILDING_DAMAGE"] = true,
+	["SPELL_BUILDING_HEAL"] = true,
+	["ENVIRONMENTAL_DAMAGE"] = true,
+	["DAMAGE_SHIELD"] = true,
+	["DAMAGE_SHIELD_MISSED"] = true,
+	["DAMAGE_SPLIT"] = true,
+	["PARTY_KILL"] = true,
+	["UNIT_DIED"] = true,
+	["UNIT_DESTROYED"] = true,
+	["UNIT_DISSIPATES"] = true,
+}
+
+local args_keys = {
+	time = true,
+	sourceGUID = true,
+	sourceName = true,
+	sourceFlags = true,
+	sourceRaidFlags = true,
+	destGUID = true,
+	destName = true,
+	destFlags = true,
+	destRaidFlags = true,
+	spellId = true,
+	spellName = true,
+	extraSpellId = true,
+	extraSpellName = true,
+	amount = true,
+	mobId = true,
+}
 
 -- Set an exit code if we show an error.
 local exit_code = 0
@@ -434,11 +509,19 @@ local function parseLua(file)
 			local success, result = pcall(loadstring("return " .. toggle_options))
 			if success then
 				for _, opt in next, result do
+					local flags = true
 					if type(opt) == "table" then
+						flags = {}
+						for i=2, #opt do
+							flags[opt[i]] = true
+						end
 						opt = opt[1]
 					end
 					if opt then -- marker option vars will be nil
-						option_keys[opt] = true
+						if default_options[opt] then
+							flags = default_options[opt]
+						end
+						option_keys[opt] = flags
 					end
 				end
 			end
@@ -450,6 +533,9 @@ local function parseLua(file)
 		-- that was entered when a message function is called.
 		local event, callback, spells = line:match("self:Log%(\"(.-)\"%s*,%s*(.-)%s*,%s*([^)]*)%)")
 		if event then
+			if not log_events[event] then
+				error(string.format("    %s:%d: Invalid Log event \"%s\"", file_name, n, event))
+			end
 			if callback ~= "nil" then
 				callback = unquote(callback)
 			else
@@ -524,6 +610,13 @@ local function parseLua(file)
 				end
 			else
 				rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+			end
+		end
+
+		--- Check callback args
+		for key in string.gmatch(line, "[^%w]*args%.([%w]+)[^%w]*") do
+			if not args_keys[key] then
+				error(string.format("    %s:%d: Invalid args key \"%s\"", file_name, n, key))
 			end
 		end
 
