@@ -53,14 +53,14 @@ end
 L = BigWigs:NewBossLocale("NefarianBWL", "zhCN")
 if L then
 	L.bossName = "奈法利安"
-	L.landing_soon_trigger = "干得好，我的手下。"
-	L.landing_trigger = "燃烧吧！"
-	L.zerg_trigger = "^不可能"
+	L.landing_soon_trigger = "干得好，我的手下。凡人的勇气开始消退了！现在，让我们看看他们如何应对黑石塔的真正主人的力量！！！"
+	L.landing_trigger = "燃烧吧！你们这些悲惨的家伙！燃烧吧！"
+	L.zerg_trigger = "不可能！出现吧，我的仆人！再次为你们的主人效力！"
 
 	L.triggershamans = "^萨满祭司"
-	L.triggerwarlock = "^术士"
-	L.triggerhunter = "^猎人"
-	L.triggermage = "^你们也是法师"
+	L.triggerwarlock = "术士们，不要随便去尝试那些你们根本不理解的法术。看到后果了吧？"
+	L.triggerhunter = "猎人们，还有你们那些讨厌的玩具枪！"
+	L.triggermage = "你们也是法师？小心别玩火自焚……"
 
 	L.landing_soon_warning = "奈法利安将在10秒后降落！"
 	L.landing_warning = "奈法利安已降落！"
