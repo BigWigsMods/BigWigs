@@ -1,27 +1,27 @@
 ## Interface: 11304
 
 ## Title: BigWigs [|cffeda55fMolten Core|r]
+## Title-deDE: BigWigs [|cffeda55fGeschmolzener Kern|r]
+## Title-esES: BigWigs [|cffeda55fNúcleo de Magma|r]
+## Title-esMX: BigWigs [|cffeda55fNúcleo de Magma|r]
+## Title-frFR: BigWigs [|cffeda55fCœur du Magma|r]
+## Title-itIT: BigWigs [|cffeda55fNucleo Ardente|r]
+## Title-koKR: BigWigs [|cffeda55f화산 심장부|r]
+## Title-ptBR: BigWigs [|cffeda55fNúcleo Derretido|r]
+## Title-ruRU: BigWigs [|cffeda55fОгненные Недра|r]
 ## Title-zhCN: BigWigs [|cffeda55f熔火之心|r]
-## Title-zhTW: BigWigs [|cffeda55fMolten Core|r]
-## Title-deDE: BigWigs [|cffeda55fMolten Core|r]
-## Title-frFR: BigWigs [|cffeda55fMolten Core|r]
-## Title-itIT: BigWigs [|cffeda55fMolten Core|r]
-## Title-koKR: BigWigs [|cffeda55fMolten Core|r]
-## Title-ruRU: BigWigs [|cffeda55fMolten Core|r]
-## Title-ptBR: BigWigs [|cffeda55fMolten Core|r]
-## Title-esES: BigWigs [|cffeda55fMolten Core|r]
-## Title-esMX: BigWigs [|cffeda55fMolten Core|r]
+## Title-zhTW: BigWigs [|cffeda55f熔火之心|r]
 ## Notes: BigWigs Molten Core Modules
-## Notes-zhCN: 熔火之心模块。
-## Notes-zhTW: BigWigs Molten Core Modules
 ## Notes-deDE: BigWigs Molten Core Modules
+## Notes-esES: BigWigs Molten Core Modules
+## Notes-esMX: BigWigs Molten Core Modules
 ## Notes-frFR: BigWigs Molten Core Modules
 ## Notes-itIT: BigWigs Molten Core Modules
 ## Notes-koKR: BigWigs Molten Core Modules
-## Notes-ruRU: BigWigs Molten Core Modules
 ## Notes-ptBR: BigWigs Molten Core Modules
-## Notes-esES: BigWigs Molten Core Modules
-## Notes-esMX: BigWigs Molten Core Modules
+## Notes-ruRU: BigWigs Molten Core Modules
+## Notes-zhCN: 熔火之心模块。
+## Notes-zhTW: BigWigs Molten Core Modules
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
