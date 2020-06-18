@@ -1,7 +1,7 @@
 ## Interface: 11304
 
 ## Title: BigWigs [|cffeda55fOnyxia|r]
-## Title-zhCN: BigWigs [|cffeda55fOnyxia|r]
+## Title-zhCN: BigWigs [|cffeda55f奥妮克希亚|r]
 ## Title-zhTW: BigWigs [|cffeda55fOnyxia|r]
 ## Title-deDE: BigWigs [|cffeda55fOnyxia|r]
 ## Title-frFR: BigWigs [|cffeda55fOnyxia|r]
@@ -12,7 +12,7 @@
 ## Title-esES: BigWigs [|cffeda55fOnyxia|r]
 ## Title-esMX: BigWigs [|cffeda55fOnyxia|r]
 ## Notes: BigWigs Onyxia Modules
-## Notes-zhCN: BigWigs Onyxia Modules
+## Notes-zhCN: 奥妮克希亚模块。
 ## Notes-zhTW: BigWigs Onyxia Modules
 ## Notes-deDE: BigWigs Onyxia Modules
 ## Notes-frFR: BigWigs Onyxia Modules

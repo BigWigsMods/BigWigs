@@ -1,7 +1,7 @@
 ## Interface: 11304
 
 ## Title: BigWigs [|cffeda55fBlackwing Lair|r]
-## Title-zhCN: BigWigs [|cffeda55fBlackwing Lair|r]
+## Title-zhCN: BigWigs [|cffeda55f黑翼之巢|r]
 ## Title-zhTW: BigWigs [|cffeda55fBlackwing Lair|r]
 ## Title-deDE: BigWigs [|cffeda55fBlackwing Lair|r]
 ## Title-frFR: BigWigs [|cffeda55fBlackwing Lair|r]
@@ -12,7 +12,7 @@
 ## Title-esES: BigWigs [|cffeda55fBlackwing Lair|r]
 ## Title-esMX: BigWigs [|cffeda55fBlackwing Lair|r]
 ## Notes: BigWigs Blackwing Lair Modules
-## Notes-zhCN: BigWigs Blackwing Lair Modules
+## Notes-zhCN: BigWigs 黑翼之巢模块。
 ## Notes-zhTW: BigWigs Blackwing Lair Modules
 ## Notes-deDE: BigWigs Blackwing Lair Modules
 ## Notes-frFR: BigWigs Blackwing Lair Modules
