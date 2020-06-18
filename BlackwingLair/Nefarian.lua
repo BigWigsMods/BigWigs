@@ -12,6 +12,9 @@ mod.engageId = 617
 -- Locals
 --
 
+local warnpairs = nil
+local warnTable = nil
+
 local adds_dead = 0
 local total_adds = 42 -- this could be a magic number in the message function, but I like the faux-const better
 
@@ -60,23 +63,6 @@ if L then
 end
 L = mod:GetLocale()
 
-local warnpairs = {
-	[L.triggershamans] = {L.warnshaman, true},
-	[L.triggerwarlock] = {L.warnwarlock, true},
-	[L.triggerhunter] = {L.warnhunter, true}, -- No event
-	[L.triggermage] = {L.warnmage, true},
-	[L.landing_soon_trigger] = {L.landing_soon_warning},
-	[L.landing_trigger] = {L.landing_warning},
-	[L.zerg_trigger] = {L.zerg_warning},
-}
-local warnTable = {
-	[mod:SpellName(23414)] = L.warnrogue,
-	[mod:SpellName(23398)] = L.warndruid,
-	[mod:SpellName(23397)] = L.warnwarrior,
-	[mod:SpellName(23401)] = L.warnpriest,
-	[mod:SpellName(23418)] = L.warnpaladin,
-}
-
 --------------------------------------------------------------------------------
 -- Initialization
 --
@@ -93,6 +79,23 @@ end
 
 function mod:OnRegister()
 	self.displayName = L.bossName
+
+	warnpairs = {
+		[L.triggershamans] = {L.warnshaman, true},
+		[L.triggerwarlock] = {L.warnwarlock, true},
+		[L.triggerhunter] = {L.warnhunter, true}, -- No event
+		[L.triggermage] = {L.warnmage, true},
+		[L.landing_soon_trigger] = {L.landing_soon_warning},
+		[L.landing_trigger] = {L.landing_warning},
+		[L.zerg_trigger] = {L.zerg_warning},
+	}
+	warnTable = {
+		[mod:SpellName(23414)] = L.warnrogue,
+		[mod:SpellName(23398)] = L.warndruid,
+		[mod:SpellName(23397)] = L.warnwarrior,
+		[mod:SpellName(23401)] = L.warnpriest,
+		[mod:SpellName(23418)] = L.warnpaladin,
+	}
 end
 
 function mod:OnBossEnable()

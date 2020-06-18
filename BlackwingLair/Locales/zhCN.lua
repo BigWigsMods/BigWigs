@@ -54,7 +54,7 @@ L = BigWigs:NewBossLocale("NefarianBWL", "zhCN")
 if L then
 	L.bossName = "奈法利安"
 	L.landing_soon_trigger = "干得好，我的手下。"
-	L.landing_trigger = "燃烧吧！你这个"
+	L.landing_trigger = "燃烧吧！"
 	L.zerg_trigger = "^不可能"
 
 	L.triggershamans = "^萨满祭司"
