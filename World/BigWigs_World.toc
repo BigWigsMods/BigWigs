@@ -1,12 +1,12 @@
 ## Interface: 11304
 
 ## Title: BigWigs [|cffeda55fWorld|r]
-## Title-deDE: BigWigs [|cffeda55f世界首领|r]
+## Title-deDE: BigWigs [|cffeda55fWorld|r]
 ## Title-esES: BigWigs [|cffeda55fWorld|r]
 ## Title-esMX: BigWigs [|cffeda55fWorld|r]
 ## Title-frFR: BigWigs [|cffeda55fWorld|r]
 ## Title-ruRU: BigWigs [|cffeda55fWorld|r]
-## Title-zhCN: BigWigs [|cffeda55fWorld|r]
+## Title-zhCN: BigWigs [|cffeda55f世界首领|r]
 ## Title-zhTW: BigWigs [|cffeda55fWorld|r]
 ## Title-itIT: BigWigs [|cffeda55fWorld|r]
 ## Title-ptBR: BigWigs [|cffeda55fWorld|r]
