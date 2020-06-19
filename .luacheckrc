@@ -147,6 +147,7 @@ globals = {
 	"GetPartyAssignment",
 	"GetPlayerFacing",
 	"GetProfessionInfo",
+	"GetRaidRosterInfo",
 	"GetRaidTargetIndex",
 	"GetRealmName",
 	"GetRealZoneText",
