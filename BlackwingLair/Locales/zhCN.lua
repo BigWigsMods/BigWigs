@@ -85,7 +85,7 @@ if L then
 	L.otherwarn = "其他警报"
 	L.otherwarn_desc = "降落与骨龙群出现时发出警报"
 
-	-- L.add = "Drakonid deaths"
-	-- L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
+	L.add = "龙兽数"
+	L.add_desc = "通报奈法利安落地之前在第1阶段击杀龙兽的数量。"
 end
 
