@@ -1,6 +1,8 @@
 local L = BigWigs:NewBossLocale("Azuregos", "esES") or BigWigs:NewBossLocale("Azuregos", "esMX")
 if not L then return end
 if L then
+	L.bossName = "Azuregos"
+
 	--L.teleport = "Teleport Alert"
 	--L.teleport_desc = "Warn for teleport."
 	--L.teleport_trigger = "Come, little ones"
@@ -9,6 +11,8 @@ end
 
 L = BigWigs:NewBossLocale("Lord Kazzak", "esES") or BigWigs:NewBossLocale("Lord Kazzak", "esMX")
 if L then
+	L.bossName = "Lord Kazzak"
+
 	--L.supreme = "Supreme Alert"
 	--L.supreme_desc = "Warn for Supreme Mode"
 	--L.engage_trigger = "For the Legion! For Kil'Jaeden!"

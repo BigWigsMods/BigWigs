@@ -15,6 +15,8 @@ mod.worldBoss = 6109
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bossName = "Azuregos"
+
 	L.teleport = "Teleport Alert"
 	L.teleport_desc = "Warn for teleport."
 	L.teleport_trigger = "Come, little ones"
@@ -31,6 +33,10 @@ function mod:GetOptions()
 		22067, -- Reflection
 		"teleport",
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

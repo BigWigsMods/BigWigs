@@ -1,6 +1,8 @@
 local L = BigWigs:NewBossLocale("Azuregos", "zhTW")
 if not L then return end
 if L then
+	L.bossName = "艾索雷葛斯"
+
 	L.teleport = "傳送警報"
 	L.teleport_desc = "傳送警報"
 	L.teleport_trigger = "來吧，小子。面對我！"
@@ -9,6 +11,8 @@ end
 
 L = BigWigs:NewBossLocale("Lord Kazzak", "zhTW")
 if L then
+	L.bossName = "卡札克"
+
 	L.supreme = "無敵警報"
 	L.supreme_desc = "無敵警報"
 	L.engage_trigger = "為了軍團！為了基爾加德！"
