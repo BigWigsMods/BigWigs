@@ -29,6 +29,7 @@ end
 
 function mod:OnEngage()
 	self:Bar(19715, 10.7) -- Counterspell
+	self:Bar(23138, 30)   -- Blink
 end
 
 --------------------------------------------------------------------------------
@@ -36,7 +37,7 @@ end
 --
 
 function mod:Blink(args)
-	self:Bar(23138, 45)
+	self:CDBar(23138, 41) -- 41-50
 	self:Message(23138, "red")
 end
 

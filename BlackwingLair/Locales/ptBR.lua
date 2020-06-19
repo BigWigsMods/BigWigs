@@ -60,8 +60,6 @@ if L then
 	--L.triggerwarlock = "Warlocks"
 	--L.triggerhunter = "Hunters"
 	--L.triggermage = "Mages"
-	--L.triggerdeathknight = "Death Knights"
-	--L.triggermonk = "Monks"
 
 	--L.landing_soon_warning = "Nefarian landing in 10 seconds!"
 	--L.landing_warning = "Nefarian is landing!"
@@ -77,9 +75,6 @@ if L then
 	--L.warnrogue = "Rogues - Ported and rooted!"
 	--L.warnpaladin = "Paladins - Blessing of Protection!"
 	--L.warnmage = "Mages - Incoming polymorphs!"
-	--L.warndeathknight = "Death Knights - Death Grip"
-	--L.warnmonk = "Monks - Stuck Rolling"
-	--L.warndemonhunter = "Demon Hunters - Blinded"
 
 	--L.classcall_bar = "Class call"
 
@@ -88,5 +83,8 @@ if L then
 
 	--L.otherwarn = "Landing and Zerg"
 	--L.otherwarn_desc = "Landing and Zerg warnings."
+
+	-- L.add = "Drakonid deaths"
+	-- L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
 

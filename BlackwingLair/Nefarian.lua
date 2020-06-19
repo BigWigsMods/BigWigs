@@ -9,6 +9,16 @@ mod:SetAllowWin(true)
 mod.engageId = 617
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local warnpairs = nil
+local warnTable = nil
+
+local adds_dead = 0
+local total_adds = 42 -- this could be a magic number in the message function, but I like the faux-const better
+
+--------------------------------------------------------------------------------
 -- Localization
 --
 
@@ -24,8 +34,6 @@ if L then
 	L.triggerwarlock = "Warlocks"
 	L.triggerhunter = "Hunters" -- Hunters and your annoying pea-shooters!
 	L.triggermage = "Mages"
-	L.triggerdeathknight = "Death Knights" -- Death Knights... get over here!
-	L.triggermonk = "Monks"
 
 	L.landing_soon_warning = "Nefarian landing in 10 seconds!"
 	L.landing_warning = "Nefarian is landing!"
@@ -41,9 +49,6 @@ if L then
 	L.warnrogue = "Rogues - Ported and rooted!"
 	L.warnpaladin = "Paladins - Blessing of Protection!"
 	L.warnmage = "Mages - Incoming polymorphs!"
-	L.warndeathknight = "Death Knights - Death Grip"
-	L.warnmonk = "Monks - Stuck Rolling"
-	L.warndemonhunter = "Demon Hunters - Blinded"
 
 	L.classcall_bar = "Class call"
 
@@ -52,27 +57,11 @@ if L then
 
 	L.otherwarn = "Landing and Zerg"
 	L.otherwarn_desc = "Landing and Zerg warnings."
+
+	L.add = "Drakonid deaths"
+	L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
 L = mod:GetLocale()
-
-local warnpairs = {
-	[L.triggershamans] = {L.warnshaman, true},
-	[L.triggerwarlock] = {L.warnwarlock, true},
-	[L.triggerhunter] = {L.warnhunter, true}, -- No event
-	[L.triggermage] = {L.warnmage, true},
-	[L.triggerdeathknight] = {L.warndeathknight, true}, -- No event
-	[L.triggermonk] = {L.warnmonk, true},
-	[L.landing_soon_trigger] = {L.landing_soon_warning},
-	[L.landing_trigger] = {L.landing_warning},
-	[L.zerg_trigger] = {L.zerg_warning},
-}
-local warnTable = {
-	[mod:SpellName(23414)] = L.warnrogue,
-	[mod:SpellName(23398)] = L.warndruid,
-	[mod:SpellName(23397)] = L.warnwarrior,
-	[mod:SpellName(23401)] = L.warnpriest,
-	[mod:SpellName(23418)] = L.warnpaladin,
-}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -83,12 +72,30 @@ function mod:GetOptions()
 		22539, -- Shadow Flame
 		22686, -- Bellowing Roar
 		"classcall",
-		"otherwarn"
+		"otherwarn",
+		"add"
 	}
 end
 
 function mod:OnRegister()
 	self.displayName = L.bossName
+
+	warnpairs = {
+		[L.triggershamans] = {L.warnshaman, true},
+		[L.triggerwarlock] = {L.warnwarlock, true},
+		[L.triggerhunter] = {L.warnhunter, true}, -- No event
+		[L.triggermage] = {L.warnmage, true},
+		[L.landing_soon_trigger] = {L.landing_soon_warning},
+		[L.landing_trigger] = {L.landing_warning},
+		[L.zerg_trigger] = {L.zerg_warning},
+	}
+	warnTable = {
+		[mod:SpellName(23414)] = L.warnrogue,
+		[mod:SpellName(23398)] = L.warndruid,
+		[mod:SpellName(23397)] = L.warnwarrior,
+		[mod:SpellName(23401)] = L.warnpriest,
+		[mod:SpellName(23418)] = L.warnpaladin,
+	}
 end
 
 function mod:OnBossEnable()
@@ -105,6 +112,12 @@ function mod:OnBossEnable()
 	)
 
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+
+	self:Death("AddDied", 14264, 14263, 14261, 14265, 14262, 14302) --Red, Bronze, Blue, Black, Green, Chromatic
+end
+
+function mod:OnEngage()
+	adds_dead = 0
 end
 
 --------------------------------------------------------------------------------
@@ -155,3 +168,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	end
 end
 
+function mod:AddDied(args)
+	adds_dead = adds_dead + 1
+	self:Message("add", "green", nil, CL.add_killed:format(adds_dead, total_adds), "INV_Misc_Head_Dragon_Black")
+end

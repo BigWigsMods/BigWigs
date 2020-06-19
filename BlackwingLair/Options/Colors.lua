@@ -42,6 +42,7 @@ BigWigs:AddColors("Chromaggus", {
 BigWigs:AddColors("NefarianBWL", {
 	[22539] = "yellow",
 	[22686] = {"orange","red"},
+	["add"] = "green",
 	["classcall"] = {"green","red"},
 	["otherwarn"] = "red",
 })

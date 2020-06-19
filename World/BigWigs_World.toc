@@ -1,7 +1,7 @@
 ## Interface: 11304
 
 ## Title: BigWigs [|cffeda55fWorld|r]
-## Title-deDE: BigWigs [|cffeda55fWorld|r]
+## Title-deDE: BigWigs [|cffeda55f世界首领|r]
 ## Title-esES: BigWigs [|cffeda55fWorld|r]
 ## Title-esMX: BigWigs [|cffeda55fWorld|r]
 ## Title-frFR: BigWigs [|cffeda55fWorld|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs World Boss Modules
 ## Notes-frFR: BigWigs World Boss Modules
 ## Notes-ruRU: BigWigs World Boss Modules
-## Notes-zhCN: BigWigs World Boss Modules
+## Notes-zhCN: 世界首领模块。
 ## Notes-zhTW: BigWigs World Boss Modules
 ## Notes-itIT: BigWigs World Boss Modules
 ## Notes-ptBR: BigWigs World Boss Modules

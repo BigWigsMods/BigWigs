@@ -7,7 +7,7 @@ BigWigs:AddColors("High Priestess Jeklik", {
 
 BigWigs:AddColors("High Priest Venoxis", {
 	[23860] = "yellow",
-	[23861] = "yellow",
+	[23861] = {"green","yellow"},
 	[23895] = "orange",
 })
 
