@@ -1,7 +1,7 @@
 ## Interface: 11304
 
 ## Title: BigWigs [|cffeda55fMolten Core|r]
-## Title-zhCN: BigWigs [|cffeda55f熔火之心|r]
+## Title-zhCN: BigWigs [|cffeda55fMolten Core|r]
 ## Title-zhTW: BigWigs [|cffeda55fMolten Core|r]
 ## Title-deDE: BigWigs [|cffeda55fMolten Core|r]
 ## Title-frFR: BigWigs [|cffeda55fMolten Core|r]
@@ -12,7 +12,7 @@
 ## Title-esES: BigWigs [|cffeda55fMolten Core|r]
 ## Title-esMX: BigWigs [|cffeda55fMolten Core|r]
 ## Notes: BigWigs Molten Core Modules
-## Notes-zhCN: 熔火之心模块。
+## Notes-zhCN: BigWigs Molten Core Modules
 ## Notes-zhTW: BigWigs Molten Core Modules
 ## Notes-deDE: BigWigs Molten Core Modules
 ## Notes-frFR: BigWigs Molten Core Modules

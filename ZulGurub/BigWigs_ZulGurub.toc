@@ -20,7 +20,7 @@
 ## Notes-koKR: BigWigs Zul'Gurub Modules
 ## Notes-ptBR: BigWigs Zul'Gurub Modules
 ## Notes-ruRU: BigWigs Zul'Gurub Modules
-## Notes-zhCN: BigWigs 祖尔格拉布模块。
+## Notes-zhCN: BigWigs Zul'Gurub Modules
 ## Notes-zhTW: BigWigs 祖爾格拉布模組
 
 ## LoadOnDemand: 1
