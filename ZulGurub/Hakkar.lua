@@ -39,7 +39,7 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "BloodSiphon", 24324)
+	self:Log("SPELL_CAST_SUCCESS", "BloodSiphon", 24322)
 	self:Log("SPELL_AURA_APPLIED", "CauseInsanity", 24327)
 	self:Log("SPELL_AURA_REMOVED", "CauseInsanityRemoved", 24327)
 end
