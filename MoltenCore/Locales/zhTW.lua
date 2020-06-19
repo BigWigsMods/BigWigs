@@ -10,7 +10,7 @@ if L then
 	L.power_next = "下一能量"
 end
 
-L = BigWigs:NewBossLocale("Ragnaros ", "zhTW")
+L = BigWigs:NewBossLocale("Ragnaros", "zhTW")
 if L then
 	L.engage_trigger = "現在輪到你們了"
 	L.submerge_trigger = "出現吧，我的奴僕"
