@@ -22,6 +22,8 @@ local timer = nil
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bossName = "Ragnaros"
+
 	L.warmup_icon = "spell_fire_lavaspawn"
 	L.warmup_message = "RP started, engaging in ~73s"
 
@@ -56,6 +58,10 @@ function mod:GetOptions()
 		"emerge",
 		20566, -- Wrath of Ragnaros
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

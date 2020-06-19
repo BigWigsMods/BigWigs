@@ -1,17 +1,58 @@
 local L = BigWigs:NewBossLocale("Lucifron", "itIT")
 if not L then return end
 if L then
+	L.bossName = "Lucifron"
+
 	--L.mc_bar = "MC: %s"
+end
+
+L = BigWigs:NewBossLocale("Magmadar", "itIT")
+if L then
+	L.bossName = "Magmadar"
+end
+
+L = BigWigs:NewBossLocale("Gehennas", "itIT")
+if L then
+	L.bossName = "Gehennas"
+end
+
+L = BigWigs:NewBossLocale("Garr", "itIT")
+if L then
+	L.bossName = "Garr"
+end
+
+L = BigWigs:NewBossLocale("Baron Geddon", "itIT")
+if L then
+	L.bossName = "Barone Geddon"
+end
+
+L = BigWigs:NewBossLocale("Shazzrah", "itIT")
+if L then
+	L.bossName = "Shazzrah"
+end
+
+L = BigWigs:NewBossLocale("Sulfuron Harbinger", "itIT")
+if L then
+	L.bossName = "Sulfuron l'Araldo"
+end
+
+L = BigWigs:NewBossLocale("Golemagg the Incinerator", "itIT")
+if L then
+	L.bossName = "Golemagg il Crematore"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Executus", "itIT")
 if L then
+	L.bossName = "Maggiordomo Executus"
+
 	--L.disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!"
 	--L.power_next = "Next Power"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "itIT")
 if L then
+	L.bossName = "Ragnaros"
+
 	--L.engage_trigger = "NOW FOR YOU,"
 	--L.submerge_trigger = "COME FORTH,"
 

@@ -1,17 +1,58 @@
 local L = BigWigs:NewBossLocale("Lucifron", "deDE")
 if not L then return end
 if L then
+	L.bossName = "Lucifron"
+
 	--L.mc_bar = "MC: %s"
+end
+
+L = BigWigs:NewBossLocale("Magmadar", "deDE")
+if L then
+	L.bossName = "Magmadar"
+end
+
+L = BigWigs:NewBossLocale("Gehennas", "deDE")
+if L then
+	L.bossName = "Gehennas"
+end
+
+L = BigWigs:NewBossLocale("Garr", "deDE")
+if L then
+	L.bossName = "Garr"
+end
+
+L = BigWigs:NewBossLocale("Baron Geddon", "deDE")
+if L then
+	L.bossName = "Baron Geddon"
+end
+
+L = BigWigs:NewBossLocale("Shazzrah", "deDE")
+if L then
+	L.bossName = "Shazzrah"
+end
+
+L = BigWigs:NewBossLocale("Sulfuron Harbinger", "deDE")
+if L then
+	L.bossName = "Sulfuronherold"
+end
+
+L = BigWigs:NewBossLocale("Golemagg the Incinerator", "deDE")
+if L then
+	L.bossName = "Golemagg der Verbrenner"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Executus", "deDE")
 if L then
+	L.bossName = "Majordomus Exekutus"
+
 	L.disabletrigger = "Haltet ein, Sterbliche"
 	--L.power_next = "Next Power"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "deDE")
 if L then
+	L.bossName = "Ragnaros"
+
 	L.submerge_trigger = "KOMMT HERBEI, MEINE DIENER"
 	L.engage_trigger = "NUN ZU EUCH, INSEKTEN"
 
@@ -20,7 +61,7 @@ if L then
 
 	L.submerge = "Untertauchen"
 	L.submerge_desc = "Warnt, wenn Ragnaros untertaucht."
-	L.submerge_message = "Ragnaros untergetaucht für 90 sek!"
+	L.submerge_message = "Ragnaros untergetaucht fï¿½r 90 sek!"
 	L.submerge_bar = "Untertauchen"
 
 	L.emerge = "Auftauchen"

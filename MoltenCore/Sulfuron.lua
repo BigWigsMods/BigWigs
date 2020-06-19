@@ -10,6 +10,16 @@ mod:SetAllowWin(true)
 mod.engageId = 669
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Sulfuron Harbinger"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -18,6 +28,10 @@ function mod:GetOptions()
 		19779, -- Inspire
 		19775, -- Dark Mending
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()
