@@ -10,7 +10,7 @@ if L then
 	--L.power_next = "Next Power"
 end
 
-L = BigWigs:NewBossLocale("Ragnaros ", "koKR")
+L = BigWigs:NewBossLocale("Ragnaros", "koKR")
 if L then
 	L.submerge_trigger = "나의 종들아"
 	L.engage_trigger = "이제 너희"
