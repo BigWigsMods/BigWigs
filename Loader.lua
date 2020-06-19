@@ -107,17 +107,30 @@ do
 		[509] = c, -- Ruins of Ahn'Qiraj
 		[531] = c, -- Ahn'Qiraj Temple
 		[249] = c, -- Onyxia's Lair
+		[533] = c, -- Naxxramas
 		[-1447] = c, -- Azshara
 		[-1419] = c, -- Blasted Lands
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
+		[34] = lw_c, --	The Stockade
 		[36] = lw_c, -- Deadmines
-		--[1001] = lw_c, -- Scarlet Halls
-		--[1004] = lw_c, -- Scarlet Monastery
-
-		--[859] = lw_cata, -- Zul'Gurub
-		--[1358] = lw_wod, -- Upper Blackrock Spire
+		[43] = lw_c, --	Wailing Caverns
+		[47] = lw_c, --	Razorfen Kraul
+		[48] = lw_c, --	Blackfathom Deeps
+		[70] = lw_c, --	Uldaman
+		[90] = lw_c, --	Gnomeregan
+		[109] = lw_c, -- Sunken Temple
+		[129] = lw_c, -- Razorfen Downs
+		[189] = lw_c, -- Scarlet Monastery
+		[209] = lw_c, -- Zul'Farrak
+		[229] = lw_c, -- Blackrock Spire
+		[230] = lw_c, -- Blackrock Depths
+		[289] = lw_c, -- Scholomance
+		[329] = lw_c, -- Stratholme
+		[349] = lw_c, -- Maraudon
+		[389] = lw_c, -- Ragefire Chasm
+		[429] = lw_c, -- Dire Maul
 	}
 
 	public.zoneTblWorld = {
