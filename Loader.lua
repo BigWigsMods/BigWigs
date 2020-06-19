@@ -111,13 +111,27 @@ do
 		[-1419] = c, -- Blasted Lands
 
 		--[[ LittleWigs: Classic ]]--
-		[33] = lw_c, -- Shadowfang Keep
-		[36] = lw_c, -- Deadmines
-		--[1001] = lw_c, -- Scarlet Halls
-		--[1004] = lw_c, -- Scarlet Monastery
+		[33] = lw_c, --	Shadowfang Keep
+		[34] = lw_c, --	The Stockade
+		[36] = lw_c, --	The Deadmines
+		[43] = lw_c, --	Wailing Caverns
+		[47] = lw_c, --	Razorfen Kraul
+		[48] = lw_c, --	Blackfathom Deeps
+		[70] = lw_c, --	Uldaman
+		[90] = lw_c, --	Gnomeregan
+		[109] = lw_c, --	The Temple of Atal'Hakkar
+		[129] = lw_c, --	Razorfen Downs
+		[209] = lw_c, --	Zul'Farrak
+		[229] = lw_c, --	Blackrock Spire
+		[230] = lw_c, --	Blackrock Depths
+		[329] = lw_c, --	Stratholme
+		[349] = lw_c, --	Maraudon
+		[389] = lw_c, --	Ragefire Chasm
+		[429] = lw_c, --	Dire Maul
+		[1001] = lw_c, --	Scarlet Halls
+		[1004] = lw_c, --	Scarlet Monastery
+		[1007] = lw_c, --	Scholomance
 
-		--[859] = lw_cata, -- Zul'Gurub
-		--[1358] = lw_wod, -- Upper Blackrock Spire
 	}
 
 	public.zoneTblWorld = {
