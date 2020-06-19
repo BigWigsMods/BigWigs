@@ -15,6 +15,8 @@ mod.worldBoss = 12397
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bossName = "Lord Kazzak"
+	
 	L.supreme = "Supreme Alert"
 	L.supreme_desc = "Warn for Supreme Mode"
 	L.engage_trigger = "For the Legion! For Kil'Jaeden!"
@@ -34,6 +36,10 @@ function mod:GetOptions()
 	return {
 		"supreme",
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()
