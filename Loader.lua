@@ -115,22 +115,22 @@ do
 		[34] = lw_c, --	The Stockade
 		[36] = lw_c, --	The Deadmines
 		[43] = lw_c, --	Wailing Caverns
+		[44] = lw_c, --	Scarlet Monastery
 		[47] = lw_c, --	Razorfen Kraul
 		[48] = lw_c, --	Blackfathom Deeps
 		[70] = lw_c, --	Uldaman
 		[90] = lw_c, --	Gnomeregan
 		[109] = lw_c, --	The Temple of Atal'Hakkar
 		[129] = lw_c, --	Razorfen Downs
+		[189] = lw_c, --	Scarlet Monastery
 		[209] = lw_c, --	Zul'Farrak
 		[229] = lw_c, --	Blackrock Spire
 		[230] = lw_c, --	Blackrock Depths
+		[289] = lw_c, --	Scholomance
 		[329] = lw_c, --	Stratholme
 		[349] = lw_c, --	Maraudon
 		[389] = lw_c, --	Ragefire Chasm
 		[429] = lw_c, --	Dire Maul
-		[1001] = lw_c, --	Scarlet Halls
-		[1004] = lw_c, --	Scarlet Monastery
-		[1007] = lw_c, --	Scholomance
 
 	}
 
