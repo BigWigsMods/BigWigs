@@ -110,6 +110,11 @@ do
 		[533] = c, -- Naxxramas
 		[-1447] = c, -- Azshara
 		[-1419] = c, -- Blasted Lands
+		[-947] = c, -- Azeroth (Fake)
+		[-1425] = c, -- The Hinterlands
+		[-1431] = c, -- Duskwood
+		[-1440] = c, -- Ashenvale
+		[-1444] = c, -- Feralas
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -136,6 +141,7 @@ do
 	public.zoneTblWorld = {
 		[-1447] = -1447, -- Azshara
 		[-1419] = -1419, -- Blasted Lands
+		[-1425] = -947, [-1431] = -947, [-1440] = -947, [-1444] = -947, -- Azeroth
 	}
 end
 

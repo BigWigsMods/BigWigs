@@ -3,6 +3,10 @@
 
 <Script file="Azuregos.lua"/>
 <Script file="Kazzak.lua"/>
+<Script file="Emeriss.lua"/>
+<Script file="Lethon.lua"/>
+<Script file="Taerar.lua"/>
+<Script file="Ysondre.lua"/>
 
 <Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>
