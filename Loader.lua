@@ -108,9 +108,9 @@ do
 		[531] = c, -- Ahn'Qiraj Temple
 		[249] = c, -- Onyxia's Lair
 		[533] = c, -- Naxxramas
+		[-947] = c, -- Azeroth (Fake)
 		[-1447] = c, -- Azshara
 		[-1419] = c, -- Blasted Lands
-		[-947] = c, -- Azeroth (Fake)
 		[-1425] = c, -- The Hinterlands
 		[-1431] = c, -- Duskwood
 		[-1440] = c, -- Ashenvale
@@ -139,9 +139,7 @@ do
 	}
 
 	public.zoneTblWorld = {
-		[-1447] = -1447, -- Azshara
-		[-1419] = -1419, -- Blasted Lands
-		[-1425] = -947, [-1431] = -947, [-1440] = -947, [-1444] = -947, -- Azeroth
+		[-1447] = -947, [-1419] = -947, [-1425] = -947, [-1431] = -947, [-1440] = -947, [-1444] = -947, -- Azeroth
 	}
 end
 

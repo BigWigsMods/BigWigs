@@ -27,7 +27,7 @@
 ## Dependencies: BigWigs
 
 ## X-Category: Raid
-## X-BigWigs-ExtraMenu: -1447, -1419, -947
+## X-BigWigs-ExtraMenu: -947
 ## X-BigWigs-LoadOn-WorldBoss: -1447, 6109, -1419, 12397, -1440, 14889, -1425, 14888, -1431, 14890, -1444, 14887
 
 modules.xml

@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Azuregos", -1447)
 if not mod then return end
 mod:RegisterEnableMob(6109)
-mod.otherMenu = -1447
+mod.otherMenu = -947
 mod.worldBoss = 6109
 
 --------------------------------------------------------------------------------
