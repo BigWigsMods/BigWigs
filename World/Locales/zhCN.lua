@@ -13,14 +13,9 @@ L = BigWigs:NewBossLocale("Lord Kazzak", "zhCN")
 if L then
 	L.bossName = "卡扎克"
 
-	L.supreme = "无敌警报"
-	L.supreme_desc = "无敌警报"
 	L.engage_trigger = "为了燃烧军团！为了基尔加丹！"
-	L.engage_message = "卡扎克已激活 - 3分钟后无敌！"
-	L.supreme1min = "1分钟后无敌！"
-	L.supreme30sec = "30秒后无敌！"
-	L.supreme10sec = "10秒后无敌！"
-	L.bartext = "无敌模式"
+
+	L.supreme_mode = "无敌模式"
 end
 
 local L = BigWigs:NewBossLocale("Emeriss", "zhCN")

@@ -13,14 +13,9 @@ L = BigWigs:NewBossLocale("Lord Kazzak", "ptBR")
 if L then
 	L.bossName = "Lorde Kazzak"
 
-	--L.supreme = "Supreme Alert"
-	--L.supreme_desc = "Warn for Supreme Mode"
-	--L.engage_trigger = "For the Legion! For Kil'Jaeden!"
-	--L.engage_message = "Lord Kazzak engaged, 3mins until Supreme!"
-	--L.supreme1min = "Supreme mode in 1 minute!"
-	--L.supreme30sec = "Supreme mode in 30 seconds!"
-	--L.supreme10sec = "Supreme mode in 10 seconds!"
-	--L.bartext = "Supreme mode"
+	-- L.engage_trigger = "For the Legion! For Kil'Jaeden!"
+
+	-- L.supreme_mode = "Supreme Mode"
 end
 
 local L = BigWigs:NewBossLocale("Emeriss", "ptBR")

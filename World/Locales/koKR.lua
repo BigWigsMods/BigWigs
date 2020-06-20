@@ -13,14 +13,9 @@ L = BigWigs:NewBossLocale("Lord Kazzak", "koKR")
 if L then
 	L.bossName = "군주 카자크"
 
-	L.supreme = "무적 경고"
-	L.supreme_desc = "무적 모드에 대한 경고"
 	L.engage_trigger = "군단을 위하여! 킬제덴을 위하여!" --CHECK
-	L.engage_message = "카쟈크 전투 개시, 3분 후 무적!"
-	L.supreme1min = "무적 모드 - 1 분전!"
-	L.supreme30sec = "무적 모드 - 30 초전!"
-	L.supreme10sec = "무적 모드 - 10 초전!"
-	L.bartext = "무적 모드"
+
+	L.supreme_mode = "무적 모드"
 end
 
 local L = BigWigs:NewBossLocale("Emeriss", "koKR")

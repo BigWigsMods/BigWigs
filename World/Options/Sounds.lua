@@ -3,6 +3,10 @@ BigWigs:AddSounds("Azuregos", {
 	[22067] = {"info","long"},
 })
 
+BigWigs:AddSounds("Lord Kazzak", {
+	[21056] = "alert",
+})
+
 BigWigs:AddSounds("Emeriss", {
 	[24814] = "info",
 	[24818] = "warning",

@@ -5,7 +5,8 @@ BigWigs:AddColors("Azuregos", {
 })
 
 BigWigs:AddColors("Lord Kazzak", {
-	["supreme"] = {"orange","red","yellow"},
+	[21056] = {"blue","yellow"},
+	[21063] = {"blue","orange"},
 })
 
 BigWigs:AddColors("Emeriss", {
