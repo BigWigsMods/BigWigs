@@ -2081,15 +2081,16 @@ do
 
 	--- Display a variable-length learning bar. Uses a CDBar internally
 	-- @param key the option key
-	-- @number phase the current phase, between 1 and 4 (or higher)
+	-- @number phase the current phase, between 1 and 4. Defaults to 4
 	-- phase = 1 indicates it's the first bar after a pull
 	-- phase = 2 or 3 indicates it's the first bar on Phase 2 or Phase 3
 	-- phase >= 4 indicates it's a regular bar and to use shortest interval in-between two regular casts.
-	-- You should use 1 inside `OnEngage` and then 2-4 on cast callbacks accordingly (usually 4)
+	-- You should use 1 inside `OnEngage` and 4 (or none) on cast callbacks.
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:AIBar(key, phase, text, icon)
 		if not self["aiBar"..key] then self["aiBar"..key] = {} end
+		if not phase then phase = 4 end
 
 		local length = 0
 		if phase >= 4 then
