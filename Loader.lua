@@ -115,7 +115,6 @@ do
 		[34] = lw_c, --	The Stockade
 		[36] = lw_c, --	The Deadmines
 		[43] = lw_c, --	Wailing Caverns
-		[44] = lw_c, --	Scarlet Monastery
 		[47] = lw_c, --	Razorfen Kraul
 		[48] = lw_c, --	Blackfathom Deeps
 		[70] = lw_c, --	Uldaman
