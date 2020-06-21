@@ -2078,6 +2078,79 @@ do
 			end
 		end
 	end
+
+	--- Display a variable-length learning bar. Uses a CDBar internally
+	-- @param key the option key
+	-- @number phase the current phase, between 1 and 4 (or higher)
+	-- phase = 1 indicates it's the first bar after a pull
+	-- phase = 2 or 3 indicates it's the first bar on Phase 2 or Phase 3
+	-- phase >= 4 indicates it's a regular bar and to use shortest interval in-between two regular casts.
+	-- You should use 1 inside `OnEngage` and then 2-4 on cast callbacks accordingly (usually 4)
+	-- @param[opt] text the bar text (if nil, key is used)
+	-- @param[opt] icon the bar icon (spell id or texture name)
+	function boss:AIBar(key, phase, text, icon)
+		if not self["aiBar"..key] then self["aiBar"..key] = {} end
+
+		local length = 0
+		if phase >= 4 then
+			-- Regular bar behavior.
+			local newPhase = false
+			for i = 1, 3 do
+				--Check for any phase timers that are strings, if a string it means last cast of this ability was first case of a given stage
+				if self["aiBar"..key]["phase"..i.."Interval"] and type(self["aiBar"..key]["phase"..i.."Interval"]) == "string" then
+					-- This is first cast of a spell after the pull, we need to calculate the interval
+					self["aiBar"..key]["phase"..i.."Interval"] = tonumber(self["aiBar"..key]["phase"..i.."Interval"])
+					self["aiBar"..key]["phase"..i.."Interval"] = GetTime() - self["aiBar"..key]["phase"..i.."Interval"]
+					-- We have generated a `phase#Interval`!
+					-- TODO: persist this value so that over restarts and wiped the AI Bar already remembers it
+					if debug then dbg(self, "AI Bar learned the first interval for current phase of "..key..": "..self["aiBar"..key]["phase"..i.."Interval"]) end
+					newPhase = true
+				end
+			end
+
+			if self["aiBar"..key].lastCast and not newPhase then
+				-- We have a GetTime() on the last cast and it's not affected by a phase change
+				local timeLastCast = GetTime() - self["aiBar"..key].lastCast -- Get time between current cast and last cast
+				if timeLastCast > 4 then
+					-- Prevent infinite loop cpu hang. Plus anything shorter than 5 seconds doesn't need a bar
+					if not self["aiBar"..key].lowestSeenCast or (self["aiBar"..key].lowestSeenCast and self["aiBar"..key].lowestSeenCast > timeLastCast) then
+						-- Always use lowest-seen interval for a bar
+						self["aiBar"..key].lowestSeenCast = timeLastCast
+						if debug then dbg(self, "AI Bar learned a new lowest interval of "..self["aiBar"..key].lowestSeenCast) end
+					end
+				end
+			end
+
+			self["aiBar"..key].lastCast = GetTime()
+			if self["aiBar"..key].lowestSeenCast then
+				-- Always use lowest seen cast for timer
+				length = self["aiBar"..key].lowestSeenCast
+			else
+				-- Don't start the first bar, since it's usually on a different interval
+				return
+			end
+		else
+			-- First AI Bar after the pull or after a phase change
+			if self["aiBar"..key]["phase"..phase.."Interval"] and type(self["aiBar"..key]["phase"..phase.."Interval"]) == "number" then
+				-- We already have a previous cast interval for this bar and phase
+				-- Check if new interval is shorter than the previously learned one by scanning remaining time on existing bar
+				local msg = type(key) == "number" and spells[key] or text
+				local remaining = boss:BarTimeLeft(msg)
+				if remaining > 0.2 then
+					self["aiBar"..key]["phase"..phase.."Interval"] = self["aiBar"..key]["phase"..phase.."Interval"] - remaining
+						if debug then dbg(self, "AI timer learned a lower first timer for current phase of "..self["aiBar"..key]["phase"..phase.."Interval"]) end
+				end
+
+				length = self["aiBar"..key]["phase"..phase.."Interval"]
+			else
+				-- No interval recorded yet, set it to GetTime(), cast as a string
+				self["aiBar"..key]["phase"..phase.."Interval"] = tostring(GetTime())
+				return -- Exit and await the first cast
+			end
+		end
+
+		boss:CDBar(key, length, text, icon)
+	end
 end
 
 --- Stop a bar.
