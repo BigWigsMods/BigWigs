@@ -257,7 +257,7 @@ function plugin:BigWigs_OnBossWin()
 end
 
 function plugin:BigWigs_OnBossEngage(_, module)
-	if module and module.journalId then
+	if module and module.allowWin then
 		local soundName = self.db.profile.engageSound
 		if soundName ~= "None" then
 			local sound = media:Fetch(SOUND, soundName, true)
