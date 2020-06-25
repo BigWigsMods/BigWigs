@@ -132,3 +132,13 @@ L.Beware = "当心（奥尔加隆）"
 L.FlagTaken = "夺旗（PvP）"
 L.Destruction = "毁灭（基尔加丹）"
 L.RunAway = "快跑吧小姑娘，快跑……（大灰狼）"
+
+-- Statistics
+-- L.statistics = "Statistics"
+-- L.dungeon = "Dungeon"
+-- L.raid = "Raid"
+-- L.raid20 = "Raid 20"
+-- L.raid40 = "Raid 40"
+-- L.wipes = "Wipes:"
+-- L.kills = "Kills:"
+-- L.best = "Best:"

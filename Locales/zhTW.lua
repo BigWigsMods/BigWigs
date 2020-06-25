@@ -133,3 +133,13 @@ L.Beware = "當心（艾爾加隆）"
 L.FlagTaken = "奪旗（PvP）"
 L.Destruction = "毀滅（基爾加丹）"
 L.RunAway = "快逃啊小女孩，快逃……（大野狼）"
+
+-- Statistics
+-- L.statistics = "Statistics"
+-- L.dungeon = "Dungeon"
+-- L.raid = "Raid"
+-- L.raid20 = "Raid 20"
+-- L.raid40 = "Raid 40"
+-- L.wipes = "Wipes:"
+-- L.kills = "Kills:"
+-- L.best = "Best:"

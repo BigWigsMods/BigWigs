@@ -194,6 +194,11 @@ function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
 -- @within Enable triggers
 boss.engageId = nil
 
+--- A unique identifier for a dungeon boss, usually the boss's ID
+-- Used by the `Statistics` plugin, since dungeon bosses do not have an `engageId`
+-- @within Enable triggers
+boss.dungeonBoss = nil
+
 --- The time in seconds before the boss respawns after a wipe.
 -- Used by the `Respawn` plugin to show a bar for the respawn time.
 -- @within Enable triggers

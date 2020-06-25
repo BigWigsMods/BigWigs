@@ -133,3 +133,12 @@ L.FlagTaken = "Drapeau pris (JcJ)"
 L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
 
+-- Statistics
+-- L.statistics = "Statistics"
+-- L.dungeon = "Dungeon"
+-- L.raid = "Raid"
+-- L.raid20 = "Raid 20"
+-- L.raid40 = "Raid 40"
+-- L.wipes = "Wipes:"
+-- L.kills = "Kills:"
+-- L.best = "Best:"

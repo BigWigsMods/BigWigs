@@ -132,3 +132,13 @@ L.Beware = "Берегитесь (Алгалон)"
 L.FlagTaken = "Взятие флага (PvP)"
 L.Destruction = "Разрушение (Кил'джеден)"
 L.RunAway = "Беги, малышка, беги (Злой и страшный серый волк)"
+
+-- Statistics
+-- L.statistics = "Statistics"
+-- L.dungeon = "Dungeon"
+-- L.raid = "Raid"
+-- L.raid20 = "Raid 20"
+-- L.raid40 = "Raid 40"
+-- L.wipes = "Wipes:"
+-- L.kills = "Kills:"
+-- L.best = "Best:"

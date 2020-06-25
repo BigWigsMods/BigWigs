@@ -132,3 +132,13 @@ L.Beware = "Hütet Euch (Algalon)"
 L.FlagTaken = "Flagge aufgenommen (PvP)"
 L.Destruction = "Zerstörung (Kil'jaeden)"
 L.RunAway = "Lauf kleines Mädchen, lauf (Der große böse Wolf)"
+
+-- Statistics
+-- L.statistics = "Statistics"
+-- L.dungeon = "Dungeon"
+-- L.raid = "Raid"
+-- L.raid20 = "Raid 20"
+-- L.raid40 = "Raid 40"
+-- L.wipes = "Wipes:"
+-- L.kills = "Kills:"
+-- L.best = "Best:"

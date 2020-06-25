@@ -850,10 +850,11 @@ local function populateToggleOptions(widget, module)
 	scrollFrame:PauseLayout()
 
 	local id = module.instanceId
+	local bossId = module.engageId or module.dungeonId
 
 	local sDB = BigWigsStatsClassicDB
-	if module.journalId and id and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][module.journalId] then
-		sDB = sDB[id][module.journalId]
+	if bossId and id and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][bossId] then
+		sDB = sDB[id][bossId]
 
 		if next(sDB) then -- Create statistics table
 			local statGroup = AceGUI:Create("InlineGroup")
@@ -867,25 +868,12 @@ local function populateToggleOptions(widget, module)
 			statistics:SetText("")
 			statGroup:AddChild(statistics)
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.lfr)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.normal)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.heroic)
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(L.mythic)
-			statGroup:AddChild(statistics)
+			for k,_ in pairs(sDB) do
+				statistics = AceGUI:Create("Label")
+				statistics:SetWidth(100)
+				statistics:SetText(L[k])
+				statGroup:AddChild(statistics)
+			end
 
 			statistics = AceGUI:Create("Label")
 			statistics:SetFullWidth(true)
@@ -897,25 +885,12 @@ local function populateToggleOptions(widget, module)
 			statistics:SetText(L.wipes)
 			statGroup:AddChild(statistics)
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.LFR and sDB.LFR.wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.normal and sDB.normal.wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.heroic and sDB.heroic.wipes or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.mythic and sDB.mythic.wipes or "-")
-			statGroup:AddChild(statistics)
+			for _,v in pairs(sDB) do
+				statistics = AceGUI:Create("Label")
+				statistics:SetWidth(100)
+				statistics:SetText(v and v.wipes or "-")
+				statGroup:AddChild(statistics)
+			end
 
 			statistics = AceGUI:Create("Label")
 			statistics:SetFullWidth(true)
@@ -927,25 +902,12 @@ local function populateToggleOptions(widget, module)
 			statistics:SetText(L.kills)
 			statGroup:AddChild(statistics)
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.LFR and sDB.LFR.kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.normal and sDB.normal.kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.heroic and sDB.heroic.kills or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.mythic and sDB.mythic.kills or "-")
-			statGroup:AddChild(statistics)
+			for _,v in pairs(sDB) do
+				statistics = AceGUI:Create("Label")
+				statistics:SetWidth(100)
+				statistics:SetText(v and v.kills or "-")
+				statGroup:AddChild(statistics)
+			end
 
 			statistics = AceGUI:Create("Label")
 			statistics:SetFullWidth(true)
@@ -957,46 +919,39 @@ local function populateToggleOptions(widget, module)
 			statistics:SetText(L.best)
 			statGroup:AddChild(statistics)
 
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.LFR and sDB.LFR.best and SecondsToTime(sDB.LFR.best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.normal and sDB.normal.best and SecondsToTime(sDB.normal.best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.heroic and sDB.heroic.best and SecondsToTime(sDB.heroic.best) or "-")
-			statGroup:AddChild(statistics)
-
-			statistics = AceGUI:Create("Label")
-			statistics:SetWidth(100)
-			statistics:SetText(sDB.mythic and sDB.mythic.best and SecondsToTime(sDB.mythic.best) or "-")
-			statGroup:AddChild(statistics)
+			for _,v in pairs(sDB) do
+				statistics = AceGUI:Create("Label")
+				statistics:SetWidth(100)
+				statistics:SetText(v and v.best and SecondsToTime(v.best) or "-")
+				statGroup:AddChild(statistics)
+			end
 		end -- End statistics table
 	end
 
 	if module.SetupOptions then module:SetupOptions() end
-	for i, option in next, module.toggleOptions do
-		local o = option
-		if type(o) == "table" then o = option[1] end
-		if module.optionHeaders and module.optionHeaders[o] then
-			local header = AceGUI:Create("Heading")
-			header:SetText(module.optionHeaders[o])
-			header:SetFullWidth(true)
-			scrollFrame:AddChild(header)
+	if module.toggleOptions then
+		-- prevent bosses with no options from breaking the rendering of other elements
+		-- this is usually an issue with dungeon bosses
+		for i, option in next, module.toggleOptions do
+			local o = option
+			if type(o) == "table" then o = option[1] end
+			if module.optionHeaders and module.optionHeaders[o] then
+				local header = AceGUI:Create("Heading")
+				header:SetText(module.optionHeaders[o])
+				header:SetFullWidth(true)
+				scrollFrame:AddChild(header)
+			end
+			scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
 		end
-		scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
+
+		local list = AceGUI:Create("Button")
+		list:SetFullWidth(true)
+		list:SetText(L.listAbilities)
+		list:SetUserData("module", module)
+		list:SetCallback("OnClick", listAbilitiesInChat)
+		scrollFrame:AddChild(list)
 	end
-	local list = AceGUI:Create("Button")
-	list:SetFullWidth(true)
-	list:SetText(L.listAbilities)
-	list:SetUserData("module", module)
-	list:SetCallback("OnClick", listAbilitiesInChat)
-	scrollFrame:AddChild(list)
+
 	scrollFrame:SetScroll(0)
 	scrollFrame:ResumeLayout()
 	scrollFrame:PerformLayout()
@@ -1055,7 +1010,7 @@ local function onZoneShow(treeWidget, id)
 	for i = 1, #zoneSort do
 		local name = zoneSort[i]
 		local m = BigWigs:GetBossModule(name)
-		if m:IsEnabled() and m.journalId then
+		if m:IsEnabled() and m.engageId or m.dungeonId then
 			index = i
 			break
 		end
