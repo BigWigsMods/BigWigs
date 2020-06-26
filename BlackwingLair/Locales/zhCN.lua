@@ -17,6 +17,7 @@ end
 L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "zhCN")
 if L then
 	L.bossName = "堕落的瓦拉斯塔兹"
+        L.warmup_message = "大约 43秒 后战斗开始"
 end
 
 L = BigWigs:NewBossLocale("Broodlord Lashlayer", "zhCN")
