@@ -175,7 +175,7 @@ do
 
 				local best = sDB[difficultyTable[diff]].best
 				if self.db.profile.showBar and best then
-					self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, 134377) -- 237538 = "Interface\\Icons\\inv_misc_pocketwatch_02"
+					self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, 136106) -- 136106 = "Interface\\Icons\\spell_nature_timestop"
 				end
 			end
 

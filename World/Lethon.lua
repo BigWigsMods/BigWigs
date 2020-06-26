@@ -135,10 +135,10 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	if self:MobId(UnitGUID(unit)) == 14889 then
 		local hp = UnitHealth(unit)
 		if hp < warnHP then -- 80, 55, 30
-			if hp > warnHP-25 then -- avoid multiple messages when joining mid-fight
+			warnHP = warnHP - 25
+			if hp > warnHP then -- avoid multiple messages when joining mid-fight
 				self:Message2(24811, "cyan", CL.soon:format(self:SpellName(24811)), false)
 			end
-			warnHP = warnHP - 25
 			if warnHP < 30 then
 				self:UnregisterUnitEvent(event, "target", "focus")
 			end
