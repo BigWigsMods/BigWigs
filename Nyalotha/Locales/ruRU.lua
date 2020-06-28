@@ -12,7 +12,7 @@ end
 
 L = BigWigs:NewBossLocale("Drest'agath", "ruRU")
 if L then
-	-L.adds_desc = "Предупреждения и сообщения для Ока, Щупальца и Пасти Дест'агат."
+	L.adds_desc = "Предупреждения и сообщения для Ока, Щупальца и Пасти Дест'агат."
 	-- L.adds_icon = "achievement_nzothraid_drestagath"
 
 	L.eye_killed = "Око убито!"
