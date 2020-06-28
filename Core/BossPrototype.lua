@@ -71,10 +71,10 @@ local updateData = function(module)
 			spent = pointsSpent
 			myRole = talentRoles[class][tree]
 			if class == "DRUID" and myRole == "TANK" then
-				-- Check for some bear talents, they should have atleast one maxed, right?
-				local feralInstinct = _, _, _, _, GetTalentInfo(tree, 3)
-				local thickHide = _, _, _, _, GetTalentInfo(tree, 5)
-				local primalFury = _, _, _, _, GetTalentInfo(tree, 12)
+				-- Check for some bear talents, they should have at least one maxed, right?
+				local _, _, _, _, feralInstinct = GetTalentInfo(tree, 3)
+				local _, _, _, _, thickHide = GetTalentInfo(tree, 5)
+				local _, _, _, _, primalFury = GetTalentInfo(tree, 12)
 				if feralInstinct < 5 and thickHide < 5 and primalFury < 2 then
 					myRole = "DAMAGER"
 				end
