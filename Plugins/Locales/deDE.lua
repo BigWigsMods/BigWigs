@@ -250,8 +250,8 @@ L.everyoneElse = "Jeden"
 
 L.autoReplyBasic = "Ich befinde mich in einem Bosskampf."
 L.autoReplyNormal = "Ich kämpfe gerade gegen '%s'."
-L.autoReplyAdvanced = "Ich kämpfe gerade gegen '%s' (%s) und %d/%d Spieler sind noch am Leben."
-L.autoReplyExtreme = "Ich kämpfe gerade gegen '%s' (%s) und %d/%d Spieler sind noch am Leben: %s"
+L.autoReplyAdvanced = "Ich kämpfe gerade gegen '%s' und %d/%d Spieler sind noch am Leben."
+L.autoReplyExtreme = "Ich kämpfe gerade gegen '%s' und %d/%d Spieler sind noch am Leben: %s"
 
 L.autoReplyLeftCombatBasic = "Ich befinde mich nicht mehr im Bosskampf."
 L.autoReplyLeftCombatNormalWin = "Ich habe gegen '%s' gewonnen."

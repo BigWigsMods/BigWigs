@@ -34,8 +34,8 @@ L.everyoneElse = "Todos os outros"
 
 L.autoReplyBasic = "Estou ocupado lutando contra um Chefe."
 L.autoReplyNormal = "Estou ocupado lutando com '%s'."
-L.autoReplyAdvanced = "Estou ocupado lutando com '%s' (%s) e %d/%d pessoas estão vivas."
-L.autoReplyExtreme = "Estou ocupado lutando com '%s' (%s) e %d/%d pessoas estão vivas: %s"
+L.autoReplyAdvanced = "Estou ocupado lutando com '%s' e %d/%d pessoas estão vivas."
+L.autoReplyExtreme = "Estou ocupado lutando com '%s' e %d/%d pessoas estão vivas: %s"
 
 L.autoReplyLeftCombatBasic = "Não estou mais lutando contra um Chefe."
 L.autoReplyLeftCombatNormalWin = "Eu venci '%s'."
