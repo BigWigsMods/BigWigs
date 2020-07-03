@@ -20,8 +20,8 @@
 ## Notes-koKR: BigWigs Ahn'Qiraj Temple Modules
 ## Notes-ptBR: BigWigs Ahn'Qiraj Temple Modules
 ## Notes-ruRU: BigWigs Ahn'Qiraj Temple Modules
-## Notes-zhCN: BigWigs Ahn'Qiraj Temple Modules
-## Notes-zhTW: BigWigs Ahn'Qiraj Temple Modules
+## Notes-zhCN: BigWigs 安其拉神殿模块。
+## Notes-zhTW: BigWigs 安其拉神廟模組。
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
