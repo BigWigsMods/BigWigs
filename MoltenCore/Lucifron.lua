@@ -15,6 +15,8 @@ mod.engageId = 663
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bossName = "Lucifron"
+
 	L.mc_bar = "MC: %s"
 end
 L = mod:GetLocale()
@@ -29,6 +31,10 @@ function mod:GetOptions()
 		19703, -- Lucifron's Curse
 		{20604, "ICON"}, -- Dominate Mind
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

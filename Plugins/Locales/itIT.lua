@@ -250,8 +250,8 @@ L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in
 
 --L.autoReplyBasic = "I'm busy in combat with a boss encounter."
 --L.autoReplyNormal = "I'm busy in combat with '%s'."
---L.autoReplyAdvanced = "I'm busy in combat with '%s' (%s) and %d/%d people are alive."
---L.autoReplyExtreme = "I'm busy in combat with '%s' (%s) and %d/%d people are alive: %s"
+--L.autoReplyAdvanced = "I'm busy in combat with '%s' and %d/%d people are alive."
+--L.autoReplyExtreme = "I'm busy in combat with '%s' and %d/%d people are alive: %s"
 
 --L.autoReplyLeftCombatBasic = "I am no longer in combat with a boss encounter."
 --L.autoReplyLeftCombatNormalWin = "I won against '%s'."

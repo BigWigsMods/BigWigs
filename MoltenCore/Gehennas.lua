@@ -10,6 +10,16 @@ mod:SetAllowWin(true)
 mod.engageId = 665
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Gehennas"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -18,6 +28,10 @@ function mod:GetOptions()
 		19716, -- Gehennas' Curse
 		{19717, "FLASH"}, -- Rain of Fire
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

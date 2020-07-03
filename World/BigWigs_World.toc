@@ -1,33 +1,33 @@
 ## Interface: 11304
 
 ## Title: BigWigs [|cffeda55fWorld|r]
-## Title-deDE: BigWigs [|cffeda55f世界首领|r]
+## Title-deDE: BigWigs [|cffeda55fWorld|r]
 ## Title-esES: BigWigs [|cffeda55fWorld|r]
 ## Title-esMX: BigWigs [|cffeda55fWorld|r]
 ## Title-frFR: BigWigs [|cffeda55fWorld|r]
-## Title-ruRU: BigWigs [|cffeda55fWorld|r]
-## Title-zhCN: BigWigs [|cffeda55fWorld|r]
-## Title-zhTW: BigWigs [|cffeda55fWorld|r]
 ## Title-itIT: BigWigs [|cffeda55fWorld|r]
-## Title-ptBR: BigWigs [|cffeda55fWorld|r]
 ## Title-koKR: BigWigs [|cffeda55fWorld|r]
+## Title-ptBR: BigWigs [|cffeda55fWorld|r]
+## Title-ruRU: BigWigs [|cffeda55fWorld|r]
+## Title-zhCN: BigWigs [|cffeda55f世界首领|r]
+## Title-zhTW: BigWigs [|cffeda55fWorld|r]
 ## Notes: BigWigs World Boss Modules
 ## Notes-deDE: BigWigs World Boss Modules
 ## Notes-esES: BigWigs World Boss Modules
 ## Notes-esMX: BigWigs World Boss Modules
 ## Notes-frFR: BigWigs World Boss Modules
+## Notes-itIT: BigWigs World Boss Modules
+## Notes-koKR: BigWigs World Boss Modules
+## Notes-ptBR: BigWigs World Boss Modules
 ## Notes-ruRU: BigWigs World Boss Modules
 ## Notes-zhCN: 世界首领模块。
 ## Notes-zhTW: BigWigs World Boss Modules
-## Notes-itIT: BigWigs World Boss Modules
-## Notes-ptBR: BigWigs World Boss Modules
-## Notes-koKR: BigWigs World Boss Modules
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
 
 ## X-Category: Raid
-## X-BigWigs-ExtraMenu: -1447, -1419
-## X-BigWigs-LoadOn-WorldBoss: -1447, 6109, -1419, 12397
+## X-BigWigs-ExtraMenu: -947
+## X-BigWigs-LoadOn-WorldBoss: -1447, 6109, -1419, 12397, -1440, 14889, -1425, 14888, -1431, 14890, -1444, 14887
 
 modules.xml

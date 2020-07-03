@@ -15,6 +15,8 @@ mod.engageId = 671
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bossName = "Majordomo Executus"
+
 	L.disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!"
 	L.power_next = "Next Power"
 end
@@ -30,6 +32,10 @@ function mod:GetOptions()
 		21075, -- Damage Shield
 		{20534, "TANK"}, -- Teleport
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

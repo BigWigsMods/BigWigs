@@ -250,8 +250,8 @@ L.everyoneElse = "所有人"
 
 L.autoReplyBasic = "正處於首領戰的戰鬥中。"
 L.autoReplyNormal = "正在與「%s」戰鬥。"
-L.autoReplyAdvanced = "正在與「%s」（%s）戰鬥，尚有%d／%d人存活。"
-L.autoReplyExtreme = "正在與「%s」（%s）戰鬥，尚有%d／%d人存活：%s"
+L.autoReplyAdvanced = "正在與「%s」戰鬥，尚有%d／%d人存活。"
+L.autoReplyExtreme = "正在與「%s」戰鬥，尚有%d／%d人存活：%s"
 
 L.autoReplyLeftCombatBasic = "已結束首領戰。"
 L.autoReplyLeftCombatNormalWin = "已擊敗「%s」。"

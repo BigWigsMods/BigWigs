@@ -34,8 +34,8 @@ L.everyoneElse = "그 외 모두"
 
 L.autoReplyBasic = "우두머리와 전투하느라 바쁩니다."
 L.autoReplyNormal = "'%s'와(과) 전투하느라 바쁩니다."
-L.autoReplyAdvanced = "'%s' (%s)와(과) 전투하느라 바쁩니다.현재 %d/%d 명이 생존 중입니다."
-L.autoReplyExtreme = "'%s' (%s)와(과) 전투하느라 바쁩니다.현재 %d/%d 명이 생존 중입니다: %s"
+L.autoReplyAdvanced = "'%s'와(과) 전투하느라 바쁩니다.현재 %d/%d 명이 생존 중입니다."
+L.autoReplyExtreme = "'%s'와(과) 전투하느라 바쁩니다.현재 %d/%d 명이 생존 중입니다: %s"
 
 L.autoReplyLeftCombatBasic = "더이상 우두머리와 싸우고 있지 않습니다."
 L.autoReplyLeftCombatNormalWin = "'%s'에게 승리하였습니다."

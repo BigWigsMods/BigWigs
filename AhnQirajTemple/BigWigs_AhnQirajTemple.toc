@@ -1,0 +1,32 @@
+## Interface: 11305
+
+## Title: BigWigs [|cffeda55fAhn'Qiraj Temple|r]
+## Title-deDE: BigWigs [|cffeda55fTempel von Ahn'Qiraj|r]
+## Title-esES: BigWigs [|cffeda55fTemplo de Ahn'Qiraj|r]
+## Title-esMX: BigWigs [|cffeda55fTemplo de Ahn'Qiraj|r]
+## Title-frFR: BigWigs [|cffeda55fTemple d’Ahn’Qiraj|r]
+## Title-itIT: BigWigs [|cffeda55fTempio di Ahn'qiraj|r]
+## Title-koKR: BigWigs [|cffeda55f안퀴라즈 사원|r]
+## Title-ptBR: BigWigs [|cffeda55fTemplo de Ahn'Qiraj|r]
+## Title-ruRU: BigWigs [|cffeda55fХрам Ан'Киража|r]
+## Title-zhCN: BigWigs [|cffeda55f安其拉神殿|r]
+## Title-zhTW: BigWigs [|cffeda55f安其拉神廟|r]
+## Notes: BigWigs Ahn'Qiraj Temple Modules
+## Notes-deDE: BigWigs Ahn'Qiraj Temple Modules
+## Notes-esES: BigWigs Ahn'Qiraj Temple Modules
+## Notes-esMX: BigWigs Ahn'Qiraj Temple Modules
+## Notes-frFR: BigWigs Ahn'Qiraj Temple Modules
+## Notes-itIT: BigWigs Ahn'Qiraj Temple Modules
+## Notes-koKR: BigWigs Ahn'Qiraj Temple Modules
+## Notes-ptBR: BigWigs Ahn'Qiraj Temple Modules
+## Notes-ruRU: BigWigs Ahn'Qiraj Temple Modules
+## Notes-zhCN: BigWigs Ahn'Qiraj Temple Modules
+## Notes-zhTW: BigWigs Ahn'Qiraj Temple Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 531
+
+modules.xml

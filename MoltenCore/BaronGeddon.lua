@@ -10,6 +10,16 @@ mod:SetAllowWin(true)
 mod.engageId = 668
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Baron Geddon"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -20,6 +30,10 @@ function mod:GetOptions()
 		20478, -- Armageddon
 		19659, -- Ignite Mana
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

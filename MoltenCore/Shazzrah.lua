@@ -10,6 +10,16 @@ mod:SetAllowWin(true)
 mod.engageId = 667
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Shazzrah"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -19,6 +29,10 @@ function mod:GetOptions()
 		23138, -- Gate of Shazzrah
 		19715, -- Counterspell
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

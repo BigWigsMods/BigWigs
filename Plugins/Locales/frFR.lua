@@ -33,8 +33,8 @@ L.everyoneElse = "Tout le reste"
 
 L.autoReplyBasic = "Je suis occupé à combattre un boss."
 L.autoReplyNormal = "Je suis occupé à combattre '%s'."
-L.autoReplyAdvanced = "Je suis occupé à combattre '%s' (%s). %d/%d joueurs en vie."
-L.autoReplyExtreme = "Je suis occupé à combattre '%s' (%s). %d/%d joueurs en vie : %s"
+L.autoReplyAdvanced = "Je suis occupé à combattre '%s'. %d/%d joueurs en vie."
+L.autoReplyExtreme = "Je suis occupé à combattre '%s'. %d/%d joueurs en vie : %s"
 
 L.autoReplyLeftCombatBasic = "Je ne suis plus en combat avec un boss."
 L.autoReplyLeftCombatNormalWin = "J'ai terrassé '%s'."

@@ -24,6 +24,8 @@ move-folders:
     BigWigs/World: BigWigs_World
     BigWigs/BlackwingLair: BigWigs_BlackwingLair
     BigWigs/ZulGurub: BigWigs_ZulGurub
+    BigWigs/AhnQirajRuins: BigWigs_AhnQirajRuins
+    BigWigs/AhnQirajTemple: BigWigs_AhnQirajTemple
 
 ignore:
   - .luacheckrc

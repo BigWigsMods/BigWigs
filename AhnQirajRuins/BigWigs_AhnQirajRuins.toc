@@ -1,0 +1,32 @@
+## Interface: 11305
+
+## Title: BigWigs [|cffeda55fRuins of Ahn'Qiraj|r]
+## Title-deDE: BigWigs [|cffeda55fRuinen von Ahn'Qiraj|r]
+## Title-esES: BigWigs [|cffeda55fRuinas de Ahn'Qiraj|r]
+## Title-esMX: BigWigs [|cffeda55fRuinas de Ahn'Qiraj|r]
+## Title-frFR: BigWigs [|cffeda55fRuines d'Ahn'Qiraj|r]
+## Title-itIT: BigWigs [|cffeda55fRovine di Ahn'qiraj|r]
+## Title-koKR: BigWigs [|cffeda55f안퀴라즈 폐허|r]
+## Title-ptBR: BigWigs [|cffeda55fRuínas de Ahn'Qiraj	|r]
+## Title-ruRU: BigWigs [|cffeda55fРуины Ан'Киража|r]
+## Title-zhCN: BigWigs [|cffeda55f安其拉废墟|r]
+## Title-zhTW: BigWigs [|cffeda55f安其拉廢墟|r]
+## Notes: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-deDE: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-esES: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-esMX: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-frFR: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-itIT: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-koKR: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-ptBR: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-ruRU: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-zhCN: BigWigs Ruins of Ahn'Qiraj Modules
+## Notes-zhTW: BigWigs Ruins of Ahn'Qiraj Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 509
+
+modules.xml

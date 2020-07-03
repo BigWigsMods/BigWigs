@@ -10,6 +10,16 @@ mod:SetAllowWin(true)
 mod.engageId = 664
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:NewLocale("enUS", true)
+if L then
+	L.bossName = "Magmadar"
+end
+L = mod:GetLocale()
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -19,6 +29,10 @@ function mod:GetOptions()
 		19451, -- Enrage
 		19428, -- Conflagration
 	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
 end
 
 function mod:OnBossEnable()

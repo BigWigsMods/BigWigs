@@ -1,17 +1,58 @@
 local L = BigWigs:NewBossLocale("Lucifron", "frFR")
 if not L then return end
 if L then
+	L.bossName = "Lucifron"
+
 	L.mc_bar = "CM : %s"
+end
+
+L = BigWigs:NewBossLocale("Magmadar", "frFR")
+if L then
+	L.bossName = "Magmadar"
+end
+
+L = BigWigs:NewBossLocale("Gehennas", "frFR")
+if L then
+	L.bossName = "Gehennas"
+end
+
+L = BigWigs:NewBossLocale("Garr", "frFR")
+if L then
+	L.bossName = "Garr"
+end
+
+L = BigWigs:NewBossLocale("Baron Geddon", "frFR")
+if L then
+	L.bossName = "Baron Geddon"
+end
+
+L = BigWigs:NewBossLocale("Shazzrah", "frFR")
+if L then
+	L.bossName = "Shazzrah"
+end
+
+L = BigWigs:NewBossLocale("Sulfuron Harbinger", "frFR")
+if L then
+	L.bossName = "Messager de Sulfuron"
+end
+
+L = BigWigs:NewBossLocale("Golemagg the Incinerator", "frFR")
+if L then
+	L.bossName = "Golemagg l’Incinérateur"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Executus", "frFR")
 if L then
+	L.bossName = "Chambellan Executus"
+
 	L.disabletrigger = "Impossible ! Arrêtez votre attaque, mortels... Je me rends ! Je me rends !"
 	--L.power_next = "Next Power"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "frFR")
 if L then
+	L.bossName = "Ragnaros"
+
 	L.submerge_trigger = "VENEZ, MES SERVITEURS"
 	L.engage_trigger = "ET MAINTENANT"
 
