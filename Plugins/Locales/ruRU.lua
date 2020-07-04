@@ -17,11 +17,11 @@ L.altPowerTitle = "Энергия"
 L.background = "Фон"
 L.backgroundDesc = "Показать или скрыть фон."
 L.bars = "Полосы"
--- L.nameplateBars = "Nameplate Bars"
--- L.nameplateAutoWidth = "Match width of nameplate"
--- L.nameplateAutoWidthDesc = "Sets the width of nameplate bars to the with of their parent nameplate."
--- L.nameplateOffsetY = "Y Offset"
--- L.nameplateOffsetYDesc = "Offset from the top of the nameplate for upwards bars and the bottom of the nameplate for downwards bars."
+L.nameplateBars = "Полосы неймплейтов"
+L.nameplateAutoWidth = "Умещать в ширину неймплейта"
+L.nameplateAutoWidthDesc = "Устанавливает ширину полосы неймплейта в соответствии неймплейта, к которому он привязан."
+L.nameplateOffsetY = "Смещение по Y"
+L.nameplateOffsetYDesc = "Для растущих вверх полос - смещение от верха неймплейта. Для растущих полос вниз - смещение от низа неймплейта."
 L.bestTimeBar = "Лучшее время"
 L.bigWigsBarStyleName_Default = "По умолчанию"
 L.blockEmotes = "Скрыть эмоции посередине экрана"
@@ -253,10 +253,10 @@ L.autoReplyFinalReply = "Также отвечать при выходе из б
 L.guildAndFriends = "Гильдия и Друзья"
 L.everyoneElse = "Все остальные"
 
-L.autoReplyBasic = "В настоящее время я в бою с боссом."
-L.autoReplyNormal = "В настоящее время я в бою с '%s'."
-L.autoReplyAdvanced = "В настоящее время я в бою с '%s' (%s), %d/%d игроков живо."
-L.autoReplyExtreme = "В настоящее время я в бою с '%s' (%s), %d/%d игроков живо: %s"
+L.autoReplyBasic = "Сейчас я в бою с боссом."
+L.autoReplyNormal = "Сейчас я в бою с '%s'."
+L.autoReplyAdvanced = "Сейчас я в бою с '%s' (%s), %d/%d игроков живо."
+L.autoReplyExtreme = "Сейчас я в бою с '%s' (%s), %d/%d игроков живо: %s"
 
 L.autoReplyLeftCombatBasic = "Я больше не в бою с боссом."
 L.autoReplyLeftCombatNormalWin = "Я победил '%s'."
@@ -276,24 +276,24 @@ L.iconPosition = "Позиция Иконки"
 L.iconPositionDesc = "Выберите, где на полосе будет находиться иконка."
 L.visibleBarLimit = "Лимит отображаемых полос"
 L.visibleBarLimitDesc = "Установить максимальное количество полос, отображаемых единовременно."
---L.textDesc = "Whether to show or hide the text displayed on the bars."
+L.textDesc = "Показать или скрыть текст на полосах."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
 
---L.disableSfx = "Disable sound effects"
---L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
---L.blockTooltipQuests = "Block tooltip quest objectives"
---L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
---L.blockFollowerMission = "Скрыть уведомления гарнизона" -- Rename to follower mission
---L.blockFollowerMissionDesc = "Всплывающие сообщения гарнизона показывают в основном уведомление о выполнении соратником задания.\n\nЭти уведомления могут скрыть важные части вашего интерфейса в течении боя с боссом, поэтому мы рекомендуем скрыть их."
---L.blockObjectiveTracker = "Hide quest tracker"
---L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space.\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
+L.disableSfx = "Отключение звуковых эффектов"
+L.disableSfxDesc = "Во время боя с боссом звуковые эффекты будут выключены для того чтобы помочь вам сконцентрироваться на звуках предупреждений BigWigs. После выхода из боя звуки будут включены обратно."
+L.blockTooltipQuests = "Заблокировать цели квестов в подсказке"
+L.blockTooltipQuestsDesc = "Когда вам требуется убить босса для квеста, подсказка показывает обычно \"0/1 выполнено\", при наведении мышкой на босса. Эта опция скрывает список целей других игроков, чтобы подсказка не разрослась слишком высоко."
+L.blockFollowerMission = "Скрыть уведомления заданий соратников"
+L.blockFollowerMissionDesc = "Всплывающие сообщения соратников показывают в основном уведомление о выполнении задания.\n\nЭти уведомления могут скрыть важные части вашего интерфейса в течении боя с боссом, поэтому мы рекомендуем скрыть их."
+L.blockObjectiveTracker = "Скрыть панель отслеживания квестов"
+L.blockObjectiveTrackerDesc = "Панель отслеживания квестов будет скрыта во время боя с боссом чтобы освободить место на экране.\n\nЭтого НЕ случится если вы находитесь в эпохальном+ подземельи или отслеживаете достижение."
 
 L.subzone_grand_bazaar = "Большой базар" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Порт Зандалара" -- Battle of Dazar'alor raid (Battle for Azeroth)
---L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
+L.subzone_eastern_transept = "Восточный трансепт" -- Auchindoun dungeon (Warlords of Draenor)
 
 -----------------------------------------------------------------------
 -- Colors.lua
