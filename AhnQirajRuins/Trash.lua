@@ -30,10 +30,11 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{26556, "PROXIMITY", "SAY"},
-		8269, -- Frenzy
-		8732, -- Thunderclap
+		{26556, "PROXIMITY", "SAY"}, -- Plague
 		24340, -- Meteor
+		26555, -- Shadow Storm
+		8732, -- Thunderclap
+		8269, -- Frenzy
 		{25698, "FLASH"}, -- Explode
 		"guard",
 		"warrior",
@@ -48,16 +49,19 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Plague", 26556)
 	self:Log("SPELL_AURA_REFRESH", "Plague", 26556)
 	self:Log("SPELL_AURA_REMOVED", "PlagueRemoved", 26556)
-	self:Log("SPELL_AURA_APPLIED", "Frenzy", 8269)
-	self:Log("SPELL_AURA_APPLIED", "Explode", 25698)
-
-	self:Log("SPELL_DAMAGE", "Thunderclap", 8732)
-	self:Log("SPELL_MISSED", "Thunderclap", 8732)
 
 	self:Log("SPELL_DAMAGE", "Meteor", 24340)
 	self:Log("SPELL_MISSED", "Meteor", 24340)
 
-	-- XXX shadowstorm (aoe shadow bolt) is missing?
+	-- XXX Shadow Storm has no (miss) event?
+	self:Log("SPELL_DAMAGE", "ShadowStorm", 26555)
+	self:Log("SPELL_MISSED", "ShadowStorm", 26555)
+
+	self:Log("SPELL_DAMAGE", "Thunderclap", 8732)
+	self:Log("SPELL_MISSED", "Thunderclap", 8732)
+
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", 8269)
+	self:Log("SPELL_AURA_APPLIED", "Explode", 25698)
 
 	self:Log("SPELL_SUMMON", "SummonAnubisathSwarmguard", 17430)
 	self:Log("SPELL_SUMMON", "SummonAnubisathWarrior", 17431)
@@ -83,6 +87,39 @@ function mod:PlagueRemoved(args)
 	end
 end
 
+do
+	local prev = 0
+	function mod:Meteor(args)
+		local t = GetTime()
+		if t-prev > 12 then
+			prev = t
+			self:Message2(24340, "cyan")
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:ShadowStorm(args)
+		local t = GetTime()
+		if t-prev > 5 then
+			prev = t
+			self:Message2(26555, "yellow")
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:Thunderclap(args)
+		local t = GetTime()
+		if t-prev > 10 then
+			prev = t
+			self:Message2(8732, "cyan")
+		end
+	end
+end
+
 function mod:Frenzy(args)
 	self:Message2(8269, "red")
 	self:PlaySound(8269, "long")
@@ -93,28 +130,6 @@ function mod:Explode(args)
 	self:PlaySound(25698, "long")
 	self:Bar(25698, 6) -- Duration is 7s but it expires after 6s
 	self:Flash(25698)
-end
-
-do
-	local prev = 0
-	function mod:Thunderclap(args)
-		local t = GetTime()
-		if t-prev > 12 then
-			prev = t
-			self:Message2(8732, "cyan")
-		end
-	end
-end
-
-do
-	local prev = 0
-	function mod:Meteor(args)
-		local t = GetTime()
-		if t-prev > 12 then
-			prev = t
-			self:Message2(24340, "cyan")
-		end
-	end
 end
 
 function mod:SummonAnubisathSwarmguard(args)
