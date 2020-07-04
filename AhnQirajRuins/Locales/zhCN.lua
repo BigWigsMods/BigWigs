@@ -8,8 +8,8 @@ local L = BigWigs:NewBossLocale("General Rajaxx", "zhCN")
 if L then
 	L.bossName = "拉贾克斯将军"
 
-	L.wave = "波数警报"
-	L.wave_desc = "每波的大概警报"
+	L.wave = "来袭警报"
+	L.wave_desc = "当新一批敌人来袭时发出警报。"
 
 	L.wave_trigger1a = "它们来了。尽量别被它们干掉，新兵。"
 	L.wave_trigger1b = "记得"
@@ -20,7 +20,7 @@ if L then
 	L.wave_trigger7 = "范达尔！你的死期到了！藏到翡翠梦境里去吧，祈祷我们永远都找不到你！"
 	L.wave_trigger8 = "无礼的蠢货！我会亲自要了你们的命！"
 
-	L.wave_message = "挥动敌人(%d)"
+	L.wave_message = "来袭敌人（%d）"
 end
 
 local L = BigWigs:NewBossLocale("Moam", "zhCN")

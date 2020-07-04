@@ -37,8 +37,8 @@ if L then
 	L.freeze_warn3 = "维希度斯冻住了！"
 	L.freeze_warn4 = "开始碎了 - 继续！"
 	L.freeze_warn5 = "快裂开了 - 加油！"
-	L.freeze_warn_melee = ">%d<物理攻击 - 还需>%d<下！"
-	L.freeze_warn_frost = ">%d<冰霜攻击 - 还需>%d<下！"
+	L.freeze_warn_melee = "%d物理攻击 - 还需%d下！"
+	L.freeze_warn_frost = "%d冰霜攻击 - 还需%d下！"
 end
 
 local L = BigWigs:NewBossLocale("Princess Huhuran", "zhCN")
@@ -77,8 +77,8 @@ L = BigWigs:NewBossLocale("C'Thun", "zhCN")
 if L then
 	L.bossName = "克苏恩"
 
-	-- L.tentacle = "Tentacles"
-	L.tentacle_desc = "触须警报"
+	L.tentacle = "触须"
+	L.tentacle_desc = "触须警报。"
 
 	L.giant = "巨眼警报"
 	L.giant_desc = "巨眼警报。"
