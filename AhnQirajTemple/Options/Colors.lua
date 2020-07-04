@@ -61,9 +61,12 @@ BigWigs:AddColors("C'Thun", {
 
 BigWigs:AddColors("Ahn'Qiraj Trash", {
 	[8269] = "red",
+	[24573] = "purple",
 	[25051] = {"blue","yellow"},
 	[25698] = "orange",
+	[25778] = {"blue","orange"},
 	[26554] = "cyan",
+	[26555] = "yellow",
 	[26556] = {"blue","yellow"},
 	[26558] = "cyan",
 	["guard"] = "green",

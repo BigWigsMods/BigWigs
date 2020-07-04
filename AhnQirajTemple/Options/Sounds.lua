@@ -37,6 +37,6 @@ BigWigs:AddSounds("Ouro", {
 })
 
 BigWigs:AddSounds("Ahn'Qiraj Trash", {
-	[8269] = "Long",
-	[25698] = "Alert",
+	[8269] = "long",
+	[25698] = "alert",
 })

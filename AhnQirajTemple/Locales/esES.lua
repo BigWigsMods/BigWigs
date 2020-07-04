@@ -107,6 +107,8 @@ end
 
 L = BigWigs:NewBossLocale("Ahn'Qiraj Trash", "esES") or BigWigs:NewBossLocale("Ahn'Qiraj Trash", "esMX")
 if L then
+	L.anubisath = "Anubisath"
+	L.sentinel = "Centinela Anubisath"
 	L.defender = "Defensor Anubisath"
 	L.crawler = "Reptador de la colmena Vekniss"
 end

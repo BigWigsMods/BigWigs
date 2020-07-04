@@ -107,6 +107,8 @@ end
 
 L = BigWigs:NewBossLocale("Ahn'Qiraj Trash", "koKR")
 if L then
+	L.anubisath = "아누비사스"
+	L.sentinel = "아누비사스 파수병"
 	L.defender = "아누비사스 문지기"
 	L.crawler = "집게발 베크니스"
 end
