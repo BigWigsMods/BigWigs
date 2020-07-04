@@ -56,16 +56,14 @@ if L then
 	L.bossName = "奥罗"
 
 	L.engage_message = "奥罗已进入战斗！90秒后可能下潜！"
-	L.possible_submerge_bar = "可能下潜"
 
-	L.emergeannounce = "奥罗已出现！"
+	L.emerge = "出现"
 	L.emergewarn = "15秒后可能下潜！"
 	L.emergewarn2 = "15秒后奥罗下潜！"
 	L.emergebartext = "奥罗下潜"
 
-	L.submergeannounce = "奥罗已下潜！"
-	L.submergewarn = "5秒后奥罗出现！"
-	L.submergebartext = "奥罗出现"
+	L.submerge = "消失"
+	L.possible_submerge_bar = "可能下潜"
 
 	L.scarab = "甲虫消失"
 	L.scarab_desc = "当甲虫消失时发出警报。"

@@ -18,18 +18,16 @@ if L then
 	L.bossName = "Ouro"
 
 	L.engage_message = "Ouro engaged! Possible Submerge in 90sec!"
-	L.possible_submerge_bar = "Possible submerge"
 
-	L.emergeannounce = "Ouro has emerged!"
+	L.emerge = "Emerge"
+	L.emerge_icon = "spell_nature_earthquake" -- misc_arrowlup
 	L.emergewarn = "15 sec to possible submerge!"
-	L.emergewarn2 = "15 sec to Ouro sumberge!"
+	L.emergewarn2 = "15 sec to Ouro submerge!"
 	L.emergebartext = "Ouro submerge"
 
 	L.submerge = "Submerge"
-	L.emberge = "Emerge"
-	L.submergeannounce = "Ouro has submerged!"
-	L.submergewarn = "5 seconds until Ouro Emerges!"
-	L.submergebartext = "Ouro Emerge"
+	L.submerge_icon = "spell_nature_earthquake" -- misc_arrowdown
+	L.possible_submerge_bar = "Possible submerge"
 
 	L.scarab = "Scarab Despawn"
 	L.scarab_desc = "Warn for Scarab Despawn."
@@ -79,8 +77,8 @@ end
 function mod:PossibleSubmerge()
 	self:DelayedMessage("stages", 75, "red", L.emergewarn)
 	self:DelayedMessage("stages", 165, "red", L.emergewarn2)
-	self:Bar("stages", 90, L.possible_submerge_bar, "misc_arrowdown")
-	self:Bar("stages", 180, L.emergebartext, "misc_arrowdown")
+	self:Bar("stages", 90, L.possible_submerge_bar, L.submerge_icon)
+	self:Bar("stages", 180, L.emergebartext, L.submerge_icon)
 end
 
 function mod:Sweep(args)
@@ -116,9 +114,9 @@ function mod:SummonOuroMounds() -- Submerge
 	self:StopBar(26103) -- Sweep
 	self:StopBar(26102) -- Sand Blast
 
-	self:Message2("stages", "red", L.submerge, "misc_arrowdown")
-	self:DelayedMessage("stages", 25, "red", CL.custom_sec:format(L.emberge, 5))
-	self:Bar("stages", 30, L.emberge, "misc_arrowlup")
+	self:Message2("stages", "red", L.submerge, L.submerge_icon)
+	self:DelayedMessage("stages", 25, "red", CL.custom_sec:format(L.emerge, 5))
+	self:Bar("stages", 30, L.emerge, L.emerge_icon)
 end
 
 do
@@ -128,7 +126,7 @@ do
 		if t-prev > 5 then
 			prev = t
 
-			self:Message2("stages", "red", L.emberge, "misc_arrowlup")
+			self:Message2("stages", "red", L.emerge, L.emerge_icon)
 			self:PossibleSubmerge()
 
 			-- Sweep

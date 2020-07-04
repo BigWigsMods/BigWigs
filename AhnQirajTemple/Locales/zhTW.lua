@@ -56,16 +56,14 @@ if L then
 	L.bossName = "奧羅"
 
 	-- L.engage_message = "Ouro engaged! Possible Submerge in 90sec!"
-	-- L.possible_submerge_bar = "Possible submerge"
 
-	-- L.emergeannounce = "Ouro has emerged!"
+	L.emerge = "出現"
 	-- L.emergewarn = "15 sec to possible submerge!"
 	-- L.emergewarn2 = "15 sec to Ouro sumberge!"
 	-- L.emergebartext = "Ouro submerge"
 
-	-- L.submergeannounce = "Ouro has submerged!"
-	-- L.submergewarn = "5 seconds until Ouro Emerges!"
-	-- L.submergebartext = "Ouro Emerge"
+	L.submerge = "消失"
+	-- L.possible_submerge_bar = "Possible submerge"
 
 	-- L.scarab = "Scarab Despawn"
 	-- L.scarab_desc = "Warn for Scarab Despawn."
