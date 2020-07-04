@@ -1,10 +1,10 @@
-local L = BigWigs:NewBossLocale("Kurinnaxx", "esMX") or BigWigs:NewBossLocale("Kurinnaxx", "esMX")
+local L = BigWigs:NewBossLocale("Kurinnaxx", "esES") or BigWigs:NewBossLocale("Kurinnaxx", "esMX")
 if not L then return end
 if L then
 	L.bossName = "Kurinnaxx"
 end
 
-local L = BigWigs:NewBossLocale("General Rajaxx", "esMX") or BigWigs:NewBossLocale("General Rajaxx", "esMX")
+local L = BigWigs:NewBossLocale("General Rajaxx", "esES") or BigWigs:NewBossLocale("General Rajaxx", "esMX")
 if L then
 	L.bossName = "General Rajaxx"
 
@@ -23,12 +23,12 @@ if L then
 	-- L.wave_message = "Wave (%d/8)"
 end
 
-local L = BigWigs:NewBossLocale("Moam", "esMX") or BigWigs:NewBossLocale("Moam", "esMX")
+local L = BigWigs:NewBossLocale("Moam", "esES") or BigWigs:NewBossLocale("Moam", "esMX")
 if L then
 	L.bossName = "Moam"
 end
 
-local L = BigWigs:NewBossLocale("Buru the Gorger", "esMX") or BigWigs:NewBossLocale("Buru the Gorger", "esMX")
+local L = BigWigs:NewBossLocale("Buru the Gorger", "esES") or BigWigs:NewBossLocale("Buru the Gorger", "esMX")
 if L then
 	L.bossName = "Buru el Manducador"
 
@@ -41,15 +41,15 @@ if L then
 	L.bossName = "Ayamiss el Cazador"
 end
 
-local L = BigWigs:NewBossLocale("Ossirian the Unscarred", "esMX") or BigWigs:NewBossLocale("Ossirian the Unscarred", "esMX")
+local L = BigWigs:NewBossLocale("Ossirian the Unscarred", "esES") or BigWigs:NewBossLocale("Ossirian the Unscarred", "esMX")
 if L then
 	L.bossName = "Osirio el Sinmarcas"
 
 	L.debuff = "Debilidad"
-	--L.debuff_desc = "Warn for various weakness types."
+	-- L.debuff_desc = "Warn for various weakness types."
 end
 
-local L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "esMX") or BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "esMX")
+local L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "esES") or BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "esMX")
 if L then
 	L.guardian = "Guardián Anubisath"
 end

@@ -62,4 +62,8 @@ end
 local L = BigWigs:NewBossLocale("Edge of Madness", "deDE")
 if L then
 	L.bossName = "Rand des Wahnsinns"
+	L.grilek = "Gri'lek"
+	L.hazzarah = "Hazza'rah"
+	L.renataki = "Renataki"
+	L.wushoolay = "Wushoolay"
 end

@@ -2,6 +2,7 @@ local L = BigWigs:NewBossLocale("Razorgore the Untamed", "koKR")
 if not L then return end
 if L then
 	L.bossName = "폭군 서슬송곳니"
+
 	L.start_trigger = "침입자들이 들어왔다! 어떤 희생이 있더라도 알을 반드시 수호하라!"
 	L.start_message = "폭군 서슬송곳니 전투 시작"
 	L.start_soon = "몹 소환 5초전!"
@@ -17,6 +18,9 @@ end
 L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "koKR")
 if L then
 	L.bossName = "타락한 밸라스트라즈"
+
+	-- L.warmup_trigger = "Too late, friends!"
+	-- L.warmup_message = "RP started, engaging in ~43s"
 end
 
 L = BigWigs:NewBossLocale("Broodlord Lashlayer", "koKR")
@@ -42,16 +46,18 @@ end
 L = BigWigs:NewBossLocale("Chromaggus", "koKR")
 if L then
 	L.bossName = "크로마구스"
+
 	L.breath = "브레스 경고"
 	L.breath_desc = "브레스에 대한 경고"
 
-	--L.debuffs_message = "3/5 debuffs, carefull!"
-	--L.debuffs_warning = "4/5 debuffs, %s on 5th!"
+	-- L.debuffs_message = "3/5 debuffs, carefull!"
+	-- L.debuffs_warning = "4/5 debuffs, %s on 5th!"
 end
 
 L = BigWigs:NewBossLocale("NefarianBWL", "koKR")
 if L then
 	L.bossName = "네파리안"
+
 	L.landing_soon_trigger = "적들의 사기가 떨어지고 있다"
 	L.landing_trigger = "불타라! 활활!"
 	L.zerg_trigger = "말도 안 돼! 일어나라!"

@@ -46,7 +46,7 @@ if L then
 	L.bossName = "Ossirian l'Indomito"
 
 	L.debuff = "Debolezza"
-	--L.debuff_desc = "Warn for various weakness types."
+	-- L.debuff_desc = "Warn for various weakness types."
 end
 
 local L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "itIT")

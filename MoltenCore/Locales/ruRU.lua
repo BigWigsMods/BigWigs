@@ -45,16 +45,18 @@ L = BigWigs:NewBossLocale("Majordomo Executus", "ruRU")
 if L then
 	L.bossName = "Мажордом Экзекутус"
 
-	--L.disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!"
-	--L.power_next = "Next Power"
+	-- L.disabletrigger = "Impossible! Stay your attack, mortals... I submit! I submit!"
+	-- L.power_next = "Next Power"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "ruRU")
 if L then
 	L.bossName = "Рагнарос"
 
-	L.submerge_trigger = "ПРИБЫВАЙТЕ ЕЩЕ"
+	-- L.warmup_message = "RP started, engaging in ~73s"
+
 	L.engage_trigger = "Тогда получите ещё!"
+	L.submerge_trigger = "ПРИБЫВАЙТЕ ЕЩЕ"
 
 	L.knockback_message = "Сбивание с ног!"
 	L.knockback_bar = "Массовое cбивание с ног"

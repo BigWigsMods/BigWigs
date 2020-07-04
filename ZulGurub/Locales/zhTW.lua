@@ -18,12 +18,12 @@ end
 
 local L = BigWigs:NewBossLocale("High Priestess Mar'li", "zhTW")
 if L then
-	L.bossName = "哈卡萊安魂者"
+	L.bossName = "高階女祭司瑪俐"
 end
 
 local L = BigWigs:NewBossLocale("High Priest Thekal", "zhTW")
 if L then
-	L.bossName = "古拉巴什食腐者"
+	L.bossName = "高階祭司塞卡爾"
 	-- L.lorkhan = "Zealot Lor'Khan"
 	-- L.zath = "Zealot Zath"
 
@@ -32,7 +32,7 @@ end
 
 local L = BigWigs:NewBossLocale("High Priestess Arlokk", "zhTW")
 if L then
-	L.bossName = "哈卡萊先知"
+	L.bossName = "高階祭司阿洛克"
 end
 
 local L = BigWigs:NewBossLocale("Hakkar", "zhTW")
@@ -49,7 +49,7 @@ end
 
 local L = BigWigs:NewBossLocale("Jin'do the Hexxer", "zhTW")
 if L then
-	L.bossName = "妖術師金度"
+	L.bossName = "『妖術師』金度"
 
 	L.brain_wash_message = "控制圖騰"
 end

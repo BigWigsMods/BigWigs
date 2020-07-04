@@ -33,12 +33,12 @@ end
 
 L = BigWigs:NewBossLocale("Sulfuron Harbinger", "koKR")
 if L then
-	L.bossName = "설퍼론 사자"
+	L.bossName = "설퍼론 선구자"
 end
 
 L = BigWigs:NewBossLocale("Golemagg the Incinerator", "koKR")
 if L then
-	L.bossName = "G초열의 골레마그"
+	L.bossName = "초열의 골레마그"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Executus", "koKR")
@@ -46,15 +46,17 @@ if L then
 	L.bossName = "청지기 이그젝큐투스"
 
 	L.disabletrigger = "이럴 수가! 그만! 제발 그만! 내가 졌다! 내가 졌어!"
-	--L.power_next = "Next Power"
+	-- L.power_next = "Next Power"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "koKR")
 if L then
 	L.bossName = "라그나로스"
 
-	L.submerge_trigger = "나의 종들아"
+	-- L.warmup_message = "RP started, engaging in ~73s"
+
 	L.engage_trigger = "이제 너희"
+	L.submerge_trigger = "나의 종들아"
 
 	L.knockback_message = "광역 튕겨냄!"
 	L.knockback_bar = "광역 튕겨냄"

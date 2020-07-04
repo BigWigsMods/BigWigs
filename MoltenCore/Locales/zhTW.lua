@@ -38,7 +38,7 @@ end
 
 L = BigWigs:NewBossLocale("Golemagg the Incinerator", "zhTW")
 if L then
-	L.bossName = "焚化者古雷曼格"
+	L.bossName = "『焚化者』古雷曼格"
 end
 
 L = BigWigs:NewBossLocale("Majordomo Executus", "zhTW")
@@ -52,6 +52,8 @@ end
 L = BigWigs:NewBossLocale("Ragnaros", "zhTW")
 if L then
 	L.bossName = "拉格納羅斯"
+
+	-- L.warmup_message = "RP started, engaging in ~73s"
 
 	L.engage_trigger = "現在輪到你們了"
 	L.submerge_trigger = "出現吧，我的奴僕"

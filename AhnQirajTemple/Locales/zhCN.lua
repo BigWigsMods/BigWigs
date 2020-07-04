@@ -83,6 +83,7 @@ if L then
 
 	L.weakened = "虚弱警报"
 	L.weakened_desc = "虚弱状态警报。"
+
 	L.weakenedtrigger = "%s的力量被削弱了！"
 
 	L.weakened_msg = "克苏恩已虚弱持续45秒"

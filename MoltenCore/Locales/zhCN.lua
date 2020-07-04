@@ -52,7 +52,7 @@ end
 L = BigWigs:NewBossLocale("Ragnaros", "zhCN")
 if L then
 	L.bossName = "拉格纳罗斯"
-	
+
 	L.warmup_message = "大约 73 秒后战斗开始"
 
 	L.engage_trigger = "现在轮到你们了"

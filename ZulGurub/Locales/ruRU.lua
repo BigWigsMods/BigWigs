@@ -49,7 +49,7 @@ end
 
 local L = BigWigs:NewBossLocale("Jin'do the Hexxer", "ruRU")
 if L then
-	L.bossName = "Мастер проклятий Джин'до"
+	L.bossName = "Проклинатель Джин'до"
 
 	L.brain_wash_message = "Зомбирующего тотема"
 end

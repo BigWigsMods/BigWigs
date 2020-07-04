@@ -38,7 +38,7 @@ end
 
 local L = BigWigs:NewBossLocale("Ayamiss the Hunter", "deDE")
 if L then
-	L.bossName = "Ayamiss der Jäger"
+	L.bossName = "Ayamiss die Jägerin"
 end
 
 local L = BigWigs:NewBossLocale("Ossirian the Unscarred", "deDE")
@@ -46,7 +46,7 @@ if L then
 	L.bossName = "Ossirian der Narbenlose"
 
 	L.debuff = "Schwäche"
-	--L.debuff_desc = "Warn for various weakness types."
+	-- L.debuff_desc = "Warn for various weakness types."
 end
 
 local L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "deDE")

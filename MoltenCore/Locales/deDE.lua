@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.bossName = "Lucifron"
 
-	--L.mc_bar = "MC: %s"
+	-- L.mc_bar = "MC: %s"
 end
 
 L = BigWigs:NewBossLocale("Magmadar", "deDE")
@@ -46,18 +46,20 @@ if L then
 	L.bossName = "Majordomus Exekutus"
 
 	L.disabletrigger = "Haltet ein, Sterbliche"
-	--L.power_next = "Next Power"
+	-- L.power_next = "Next Power"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "deDE")
 if L then
 	L.bossName = "Ragnaros"
 
-	L.submerge_trigger = "KOMMT HERBEI, MEINE DIENER"
-	L.engage_trigger = "NUN ZU EUCH, INSEKTEN"
+	-- L.warmup_message = "RP started, engaging in ~73s"
 
-	--L.knockback_message = "Knockback!"
-	--L.knockback_bar = "Knockback"
+	L.engage_trigger = "NUN ZU EUCH, INSEKTEN"
+	L.submerge_trigger = "KOMMT HERBEI, MEINE DIENER"
+
+	-- L.knockback_message = "Knockback!"
+	-- L.knockback_bar = "Knockback"
 
 	L.submerge = "Untertauchen"
 	L.submerge_desc = "Warnt, wenn Ragnaros untertaucht."

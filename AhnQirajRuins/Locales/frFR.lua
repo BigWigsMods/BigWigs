@@ -38,7 +38,7 @@ end
 
 local L = BigWigs:NewBossLocale("Ayamiss the Hunter", "frFR")
 if L then
-	L.bossName = "Ayamiss il Cacciatore"
+	L.bossName = "Ayamiss le Chasseur"
 end
 
 local L = BigWigs:NewBossLocale("Ossirian the Unscarred", "frFR")

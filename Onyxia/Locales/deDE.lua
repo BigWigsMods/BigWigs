@@ -7,7 +7,7 @@ if L then
 	L.phase2_message = "Phase 2 - Onyxia hebt ab!"
 	L.phase3_message = "Phase 3 - Onyxia landet!"
 
-	L.phase1_trigger = "Was für ein Zufall"
+	L.phase1_trigger = "Was fÃ¼r ein Zufall"
 	L.phase2_trigger = "Diese sinnlose Anstrengung langweilt mich"
 	L.phase3_trigger = "Mir scheint, dass Ihr noch eine Lektion braucht"
 

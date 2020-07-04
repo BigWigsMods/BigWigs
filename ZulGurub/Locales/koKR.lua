@@ -23,7 +23,7 @@ end
 
 local L = BigWigs:NewBossLocale("High Priest Thekal", "koKR")
 if L then
-	L.bossName = "H대사제 데칼"
+	L.bossName = "대사제 데칼"
 	L.lorkhan = "광신도 로르칸"
 	L.zath = "광신도 자스"
 
@@ -49,7 +49,7 @@ end
 
 local L = BigWigs:NewBossLocale("Jin'do the Hexxer", "koKR")
 if L then
-	L.bossName = "주술사 진도"
+	L.bossName = "사술사 진도"
 
 	L.brain_wash_message = "세뇌의 토템"
 end

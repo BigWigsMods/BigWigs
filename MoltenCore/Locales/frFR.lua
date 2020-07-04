@@ -46,15 +46,17 @@ if L then
 	L.bossName = "Chambellan Executus"
 
 	L.disabletrigger = "Impossible ! Arrêtez votre attaque, mortels... Je me rends ! Je me rends !"
-	--L.power_next = "Next Power"
+	-- L.power_next = "Next Power"
 end
 
 L = BigWigs:NewBossLocale("Ragnaros", "frFR")
 if L then
 	L.bossName = "Ragnaros"
 
-	L.submerge_trigger = "VENEZ, MES SERVITEURS"
+	-- L.warmup_message = "RP started, engaging in ~73s"
+
 	L.engage_trigger = "ET MAINTENANT"
+	L.submerge_trigger = "VENEZ, MES SERVITEURS"
 
 	L.knockback_message = "Projection de zone !"
 	L.knockback_bar = "Projection de zone"

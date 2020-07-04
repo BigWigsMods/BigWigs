@@ -30,7 +30,7 @@ end
 
 local L = BigWigs:NewBossLocale("Buru the Gorger", "zhTW")
 if L then
-	L.bossName = "吞咽者布魯"
+	L.bossName = "『暴食者』布魯"
 
 	-- L.fixate = "Fixate"
 	-- L.fixate_desc = "Fixate on a target, ignoring threat from other attackers."
@@ -38,12 +38,12 @@ end
 
 local L = BigWigs:NewBossLocale("Ayamiss the Hunter", "zhTW")
 if L then
-	L.bossName = "高階祭司耶克里克"
+	L.bossName = "『狩獵者』阿亞米斯"
 end
 
 local L = BigWigs:NewBossLocale("Ossirian the Unscarred", "zhTW")
 if L then
-	L.bossName = "無疤者奧斯里安"
+	L.bossName = "『無疤者』奧斯里安"
 
 	L.debuff = "虛弱警報"
 	L.debuff_desc = "無疤者奧斯里安受到虛弱效果影響時發出警報"

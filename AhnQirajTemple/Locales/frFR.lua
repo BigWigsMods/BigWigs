@@ -83,6 +83,7 @@ if L then
 
 	-- L.weakened = "Weakened Alert"
 	-- L.weakened_desc = "Warn for Weakened State"
+
 	L.weakenedtrigger = "%s est affaibli !"
 
 	-- L.weakened_msg = "C'Thun is weakened for 45 sec"

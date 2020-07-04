@@ -12,6 +12,5 @@ if L then
 	L.phase3_trigger = "Похоже, вам требуется преподать еще один урок, смертные!"
 
 	L.deepbreath_message = "Огненное дыхание!"
-
 	L.fear_message = "Страх через 1.5 сек!"
 end

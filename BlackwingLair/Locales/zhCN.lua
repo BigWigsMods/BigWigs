@@ -2,6 +2,7 @@ local L = BigWigs:NewBossLocale("Razorgore the Untamed", "zhCN")
 if not L then return end
 if L then
 	L.bossName = "狂野的拉佐格尔"
+
 	L.start_trigger = "入侵者"
 	L.start_message = "狂野的拉佐格尔进入战斗！45秒后小怪出现！"
 	L.start_soon = "5秒后小怪出现！"
@@ -17,7 +18,9 @@ end
 L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "zhCN")
 if L then
 	L.bossName = "堕落的瓦拉斯塔兹"
-        L.warmup_message = "大约 43秒 后战斗开始"
+
+	-- L.warmup_trigger = "Too late, friends!"
+	L.warmup_message = "大约 43秒 后战斗开始"
 end
 
 L = BigWigs:NewBossLocale("Broodlord Lashlayer", "zhCN")
@@ -43,10 +46,10 @@ end
 L = BigWigs:NewBossLocale("Chromaggus", "zhCN")
 if L then
 	L.bossName = "克洛玛古斯"
+
 	L.breath = "吐息警报"
 	L.breath_desc = "吐息警报"
 
-	L.debuffs = "{23174} （{605}）" -- 多彩变形 （统御意志）
 	L.debuffs_message = "3/5 减益，注意！"
 	L.debuffs_warning = "4/5 减益， 5层后将%s！"
 end
@@ -54,6 +57,7 @@ end
 L = BigWigs:NewBossLocale("NefarianBWL", "zhCN")
 if L then
 	L.bossName = "奈法利安"
+
 	L.landing_soon_trigger = "干得好，我的手下。"
 	L.landing_trigger = "燃烧吧！"
 	L.zerg_trigger = "^不可能"

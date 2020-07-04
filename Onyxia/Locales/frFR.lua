@@ -12,6 +12,5 @@ if L then
 	L.phase3_trigger = "Il semble que vous ayez besoin d'une autre leçon, mortels !"
 
 	L.deepbreath_message = "Arrivée d'une grande inspiration !"
-
 	L.fear_message = "Peur dans 1,5 sec. !"
 end
