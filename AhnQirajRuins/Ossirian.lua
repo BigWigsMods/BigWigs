@@ -43,6 +43,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self.displayName = L.bossName
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Weakness", 25181, 25177, 25178, 25180, 25183)
 	self:Log("SPELL_AURA_REMOVED", "WeaknessRemoved", 25181, 25177, 25178, 25180, 25183)
