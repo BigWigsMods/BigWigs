@@ -27,6 +27,8 @@ local icons = {
 
 local L = mod:NewLocale("enUS", true)
 if L then
+	L.bossName = "Ossirian the Unscarred"
+
 	L.debuff = "Weakness"
 	L.debuff_desc = "Warn for various weakness types."
 end
