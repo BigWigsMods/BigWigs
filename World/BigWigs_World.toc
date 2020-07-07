@@ -1,4 +1,4 @@
-## Interface: 11304
+## Interface: 11305
 
 ## Title: BigWigs [|cffeda55fWorld|r]
 ## Title-deDE: BigWigs [|cffeda55fWorld|r]
