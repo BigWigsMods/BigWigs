@@ -19,7 +19,7 @@ L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "zhCN")
 if L then
 	L.bossName = "堕落的瓦拉斯塔兹"
 
-	-- L.warmup_trigger = "Too late, friends!"
+	L.warmup_trigger = "太晚了，朋友们！奈法利安的堕落力量已经生效……我无法……控制自己。"
 	L.warmup_message = "大约 43秒 后战斗开始"
 end
 
