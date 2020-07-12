@@ -7,10 +7,10 @@ L.warnSeveralReleases = "|cffff0000你的 BigWigs 已過期%d發行版！！我�
 
 L.gitHubDesc = "BigWigs 是一個在 GitHub 上的開源軟體。我們一直在尋找新的朋友幫助我們和歡迎任何人檢測我們的代碼，做出貢獻和提交錯誤報告。BigWigs 今天的偉大很大程度上一部分因為偉大的魔獸世界社區幫助我們。"
 
---L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
+L.testNameplate = "檢測到目標，在目標名條上創建一個測試計時條。"
 
---L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
---L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
+L.classicWarning1 = "|cFF33FF99BigWigs|r：你在經典版魔獸世界使用了正式版的 BigWigs，這是錯誤的版本。"
+L.classicWarning2 = "|cFF33FF99BigWigs|r：請安裝經典版的 BigWigs。"
 
 L.options = "選項"
 L.raidBosses = "團隊首領"
