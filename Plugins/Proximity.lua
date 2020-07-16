@@ -96,21 +96,12 @@ do
 		end
 
 		local items	= {
-			--[5] = 37727, -- Ruby Acorn
-			--[8] = 63427, -- Worgsaw
-			--[11] = 33278, -- Burning Torch
-			--[13] = 32321, -- Sparrowhawk Net
+			[8] = 8149, -- Voodoo Charm
 			[18] = 14530, -- Heavy Runecloth Bandage
 			[23] = 21519, -- Mistletoe
-			--[28] = 31463, -- Zezzak's Shard
-			--[33] = 34191, -- Handful of Snowflakes
+			[28] = 13289, -- Egan's Blaster
+			[33] = 955, -- Scroll of Intellect
 			[38] = 18904, -- Zorbin's Ultra-Shrinker
-			--[43] = 34471, -- Vial of the Sunwell
-			--[48] = 32698, -- Wrangling Rope
-			--[53] = 116139, -- Haunting Memento
-			--[63] = 32825, -- Soul Cannon
-			--[73] = 41265, -- Eyesore Blaster
-			--[83] = 35278, -- Reinforced Net
 		}
 		for range, item in next, items do
 			ranges[range] = function(unit)
