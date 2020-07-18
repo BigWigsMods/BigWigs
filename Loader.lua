@@ -108,6 +108,7 @@ do
 	local wod = "BigWigs_WarlordsOfDraenor"
 	local l = "BigWigs_Legion"
 	local bfa = "BigWigs_BattleForAzeroth"
+	local s = "BigWigs__Shadowlands"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -116,6 +117,7 @@ do
 	local lw_wod = "LittleWigs_WarlordsOfDraenor"
 	local lw_l = "LittleWigs_Legion"
 	local lw_bfa = "LittleWigs_BattleForAzeroth"
+	local lw_s = "LittleWigs_Shadowlands"
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -274,6 +276,15 @@ do
 		[2097] = lw_bfa, -- Operation: Mechagon
 		[2212] = lw_bfa, -- Horrific Vision of Orgrimmar
 		[2213] = lw_bfa, -- Horrific Vision of Stormwind
+		--[[ LittleWigs: Shadowlands ]]--
+		[2284] = lw_s, -- Sanguine Depths
+		[2285] = lw_s, -- Spires of Ascension
+		[2286] = lw_s, -- The Necrotic Wake
+		[2287] = lw_s, -- Halls of Atonement
+		[2289] = lw_s, -- Plaguefall
+		[2290] = lw_s, -- Mists of Tirna Scithe
+		[2291] = lw_s, -- De Other Side
+		[2293] = lw_s, -- Theater of Pain
 	}
 
 	public.zoneTblWorld = {
