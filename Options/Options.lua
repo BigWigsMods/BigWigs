@@ -1152,7 +1152,7 @@ do
 			local defaultHeader
 			if value == "bigwigs" then
 				defaultHeader = toc > 90000 and "BigWigs_Shadowlands" or "BigWigs_BattleForAzeroth" -- XXX Fix after Beta
-				for i = 1, 8 do
+				for i = 1, toc > 90000 and 9 or 8 do -- XXX Fix after Beta
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
