@@ -1,0 +1,18 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Shriekwing.lua"/>
+<Script file="Altimor.lua"/>
+<Script file="HungeringDestroyer.lua"/>
+<Script file="Xymox.lua"/>
+<Script file="SunKingsSalvation.lua"/>
+<Script file="InervaDarkvein.lua"/>
+<Script file="TheCouncilofBlood.lua"/>
+<Script file="Sludgefist.lua"/>
+<Script file="StonebornGenerals.lua"/>
+<Script file="Denathrius.lua"/>
+
+<!-- <Include file="Locales\locales.xml"/> -->
+<!-- <Include file="Options\options.xml"/> -->
+
+</Ui>

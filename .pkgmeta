@@ -26,6 +26,7 @@ move-folders:
     BigWigs/CrucibleOfStorms: BigWigs_CrucibleOfStorms
     BigWigs/EternalPalace: BigWigs_EternalPalace
     BigWigs/Nyalotha: BigWigs_Nyalotha
+    BigWigs/CastleNathria: BigWigs_CastleNathria
 
 ignore:
   - .luacheckrc

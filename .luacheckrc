@@ -141,6 +141,7 @@ globals = {
 	"GetAddOnInfo",
 	"GetAddOnMetadata",
 	"GetAddOnOptionalDependencies",
+	"GetBuildInfo",
 	"GetDifficultyInfo",
 	"GetFramesRegisteredForEvent",
 	"GetGossipActiveQuests",
