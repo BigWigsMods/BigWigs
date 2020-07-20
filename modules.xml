@@ -11,5 +11,6 @@
 <Include file="CrucibleOfStorms\modules.xml"/>
 <Include file="EternalPalace\modules.xml"/>
 <Include file="Nyalotha\modules.xml"/>
+<Include file="CastleNathria\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
