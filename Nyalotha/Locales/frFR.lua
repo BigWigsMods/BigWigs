@@ -1,46 +1,46 @@
 local L = BigWigs:NewBossLocale("Maut", "frFR")
 if not L then return end
 if L then
-	-- L.stage2_over = "Stage 2 Over - %.1f sec"
+	L.stage2_over = "Fin de la phase 2 - %.1f sec"
 end
 
 L = BigWigs:NewBossLocale("Shad'har the Insatiable", "frFR")
 if L then
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Shad'har randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Toujours montrer la barre des sorts"
+	L.custom_on_stop_timers_desc = "Shad'har utilise un sort aléatoire parmis ceux qui sont up. Quand cette option est activée, les barres des sorts up restent à l'écran."
 end
 
 L = BigWigs:NewBossLocale("Drest'agath", "frFR")
 if L then
-	-- L.adds_desc = "Warnings and Messages for the Eye, Tentacle and Maw of Drest'agath."
-	-- L.adds_icon = "achievement_nzothraid_drestagath"
+	L.adds_desc = "Avertissements et Messages pour les Yeux, les tentacules et les gueules de Drest'agath."
+	L.adds_icon = "achievement_nzothraid_drestagath"
 
-	-- L.eye_killed = "Eye Killed!"
-	-- L.tentacle_killed = "Tentacle Killed!"
-	-- L.maw_killed = "Maw Killed!"
+	L.eye_killed = "Oeil mort !"
+	L.tentacle_killed = "Tentacule morte!"
+	L.maw_killed = "Gueule morte !"
 end
 
 L = BigWigs:NewBossLocale("Il'gynoth, Corruption Reborn", "frFR")
 if L then
-	-- L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
-	-- L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "Icon attaché sur les Nameplates énemies"
+	L.custom_on_fixate_plates_desc = "Montre un icone sur la cible qui est sur vous.\nLes nameplates énemies sont recquises. Supporté seulement avec KuiNameplates."
 end
 
 L = BigWigs:NewBossLocale("Vexiona", "frFR")
 if L then
-	-- L.killed = "%s killed"
+	L.killed = "%s tué"
 end
 
 L = BigWigs:NewBossLocale("Ra-den the Despoiled", "frFR")
 if L then
-	-- L.essences = "Essences"
-	-- L.essences_desc = "Ra-den periodically draws essences from other realms. Essences that reach Ra-den empower him with energy of that type."
+	L.essences = "Essences"
+	L.essences_desc = "Ra-den fait régulièrement pop des essences. Les essences qui touchent Ra-den le buff en accord avec le type de l'essence."
 end
 
 L = BigWigs:NewBossLocale("Carapace of N'Zoth", "frFR")
 if L then
-	-- L.player_membrane = "Player Membrane" -- In stage 3
-	-- L.boss_membrane = "Boss Membrane" -- In stage 3
+	L.player_membrane = "Membrane sur Joueur" -- In stage 3
+	L.boss_membrane = "Membrane sur Boss" -- In stage 3
 end
 
 L = BigWigs:NewBossLocale("N'Zoth, the Corruptor", "frFR")
