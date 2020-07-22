@@ -46,8 +46,8 @@ function mod:OnBossEnable()
 	-- Shade of Kael'thas
 	self:Log("SPELL_AURA_APPLIED", "ReflectionofGuiltApplied", 323402)
 	self:Log("SPELL_CAST_START", "FieryStrike", 326455)
-	self:Log("SPELL_AURA_APPLIED", "BurningRemnantsApplied", 332295)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningRemnantsApplied", 332295)
+	self:Log("SPELL_AURA_APPLIED", "BurningRemnantsApplied", 326456)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningRemnantsApplied", 326456)
 	self:Log("SPELL_CAST_START", "EmberBlast", 325877)
 	self:Log("SPELL_CAST_START", "BlazingSurge", 329518, 329509) -- XXX Check which is used
 
@@ -57,8 +57,8 @@ function mod:OnBossEnable()
 
 	-- Ministers of Vice
 	self:Log("SPELL_CAST_START", "VanquishingStrike", 326455)
-	self:Log("SPELL_AURA_APPLIED", "VanquishedApplied", 332295)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "VanquishedApplied", 332295)
+	self:Log("SPELL_AURA_APPLIED", "VanquishedApplied", 325442)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "VanquishedApplied", 325442)
 	self:Log("SPELL_CAST_START", "ConcussiveSmash", 325506)
 	self:Log("SPELL_AURA_APPLIED", "CrimsonTormentApplied", 326586)
 	self:Log("SPELL_CAST_START", "ReturntoStone", 333145)
