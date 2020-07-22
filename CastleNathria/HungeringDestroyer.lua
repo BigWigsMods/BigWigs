@@ -22,7 +22,7 @@ function mod:GetOptions()
 		{329298, "SAY"}, -- Gluttonous Miasma
 		334522, -- Consume
 		329758, -- Expunge
-		{334266, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Volatile Ejection
+		{334064, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Volatile Ejection
 		329455, -- Desolate
 		{329774, "TANK"}, -- Overwhelm
 		{332295, "TANK"}, -- Growing Hunger
@@ -103,7 +103,7 @@ do
 	end
 end
 
-function mod:Desolate(args)
+function mod:Overwhelm(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	--self:Bar(args.spellId, 25.5)
