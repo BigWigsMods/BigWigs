@@ -55,5 +55,5 @@ if L then
 	L.gateway_open = "Portail ouvert !"
 
 	L.laser_left = "Lasers (Gauche)"
-	L.laser_right = "Lasers (Right)"
+	L.laser_right = "Lasers (Droite)"
 end
