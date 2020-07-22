@@ -45,15 +45,15 @@ end
 
 L = BigWigs:NewBossLocale("N'Zoth, the Corruptor", "frFR")
 if L then
-	-- L.realm_switch = "Realm Switched" -- When you leave the Mind of N'zoth
+	-- L.realm_switch = "Changement de royaume" -- When you leave the Mind of N'zoth
 
-	-- L.custom_on_repeating_paranoia_say = "Repeating Paranoia Say"
-	-- L.custom_on_repeating_paranoia_say_desc = "Spam a say message in chat to be avoided while you have paranoia."
+	-- L.custom_on_repeating_paranoia_say = "Spamming paranoia dire."
+	-- L.custom_on_repeating_paranoia_say_desc = "Spam un message en dire pour être éviter lors de la paranoia."
 	-- L.custom_on_repeating_paranoia_say_icon = 315927
 
 	L.gateway_yell = "Alerte. Des entités hostiles approchent de la chambre du Cœur." -- Yelled by MOTHER to trigger mythic only stage
-	-- L.gateway_open = "Gateway Open!"
+	L.gateway_open = "Portail ouvert !"
 
-	-- L.laser_left = "Lasers (Left)"
-	-- L.laser_right = "Lasers (Right)"
+	L.laser_left = "Lasers (Gauche)"
+	L.laser_right = "Lasers (Right)"
 end
