@@ -152,7 +152,7 @@ function mod:UnconscionableGuiltApplied(args)
 	self:PlaySound(args.spellId, "alarm", nil, args.destName)
 end
 
-function mod:Condem(args)
+function mod:Condemn(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
 		self:Message2(args.spellId, "yellow")
