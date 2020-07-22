@@ -287,7 +287,7 @@ local function dumpValues(path, name, options_table)
 	end
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
-		f = assert(io.open(file, "w"))
+		f = assert(io.open(file, "wb"))
 		f:write(data)
 		f:close()
 		warn("    Updated " .. file)
