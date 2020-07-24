@@ -19,8 +19,8 @@ mod.engageId = 2399
 
 function mod:GetOptions()
 	return {
-		{331209, "SAY"}, -- Hateful Gaze
-		331211, -- Heedless Charge
+		{331209, "ICON", "SAY" ,"SAY_COUNTDOWN"}, -- Hateful Gaze
+		331212, -- Heedless Charge
 		331314, -- Stunned Impact
 		{335491, "SAY"}, -- Chain Link
 		332318, -- Destructive Stomp
@@ -33,8 +33,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "HatefulGaze", 331209)
-	self:Log("SPELL_CAST_SUCCESS", "HeedlessCharge", 331211)
+	self:Log("SPELL_AURA_APPLIED", "HatefulGazeApplied", 331209)
+	self:Log("SPELL_AURA_REMOVED", "HatefulGazeRemoved", 331209)
+	self:Log("SPELL_CAST_SUCCESS", "HeedlessCharge", 331212)
 	self:Log("SPELL_AURA_APPLIED", "StunnedImpact", 331314)
 	self:Log("SPELL_CAST_SUCCESS", "ChainLink", 335292, 335468, 335779, 335491) -- one of those might work (placing my bet on USCS though)
 	self:Log("SPELL_AURA_APPLIED", "ChainLinkApplied", 335293)
@@ -56,15 +57,24 @@ end
 -- Event Handlers
 --
 
-function mod:HatefulGaze(args)
+function mod:HatefulGazeApplied(args)
 	self:TargetMessage2(args.spellId, "yellow", args.destName)
 
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 6)
 	end
 
+	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetBar(args.spellId, 6, args.destName)
+end
+
+function mod:HatefulGazeRemoved(args)
+	self:PrimaryIcon(args.spellId)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 function mod:HeedlessCharge(args)
