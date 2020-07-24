@@ -293,9 +293,11 @@ local function dumpValues(path, name, options_table)
 	end
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
-		f = assert(io.open(file, "wb"))
-		f:write(data)
-		f:close()
+		if not opt.dryrun then
+			f = assert(io.open(file, "wb"))
+			f:write(data)
+			f:close()
+		end
 		warn("    Updated " .. file)
 	end
 end
@@ -795,6 +797,9 @@ if arg then
 			v = string.match(v, "^[-]+(.+)$")
 			if v == "q" or v == "quiet" then
 				opt.quiet = true
+			end
+			if v == "n" or v == "dry-run" then
+				opt.dryrun = true
 			end
 		else
 			local path = arg[1]:gsub("\\", "/")
