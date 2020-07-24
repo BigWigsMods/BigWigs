@@ -297,8 +297,10 @@ local function dumpValues(path, name, options_table)
 			f = assert(io.open(file, "wb"))
 			f:write(data)
 			f:close()
+			warn("    Updated " .. file)
+		else
+			warn("    Updated " .. file .. " (skipped)")
 		end
-		warn("    Updated " .. file)
 	end
 end
 
