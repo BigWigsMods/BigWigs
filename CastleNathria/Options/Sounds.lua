@@ -5,7 +5,7 @@ BigWigs:AddSounds("Hungering Destroyer", {
 	[329758] = "warning",
 	[329774] = "alert",
 	[332295] = "alert",
-	[334064] = "warning",
+	[334266] = "warning",
 	[334522] = "long",
 })
 
@@ -27,21 +27,25 @@ BigWigs:AddSounds("Sun King's Salvation", {
 })
 
 BigWigs:AddSounds("Lady Inerva Darkvein", {
+	[325005] = "warning",
 	[325064] = "long",
 	[325379] = "alert",
 	[325382] = "alarm",
 	[325713] = "alarm",
-	[325769] = "warning",
+	[325769] = "info",
 	[325936] = "alarm",
-	[331550] = "alert",
 	[331573] = "alarm",
 	[332664] = "alarm",
+	[334017] = "alert",
+	[338750] = "long",
 })
 
 BigWigs:AddSounds("Sludgefist", {
 	[331209] = "warning",
 	[331314] = "info",
 	[332318] = "long",
+	[332362] = "info",
 	[332687] = "info",
+	[335361] = "alarm",
 	[335491] = {"alert","long"},
 })

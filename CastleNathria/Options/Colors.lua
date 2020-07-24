@@ -5,7 +5,7 @@ BigWigs:AddColors("Hungering Destroyer", {
 	[329758] = "red",
 	[329774] = "yellow",
 	[332295] = {"blue","purple"},
-	[334064] = {"blue","orange"},
+	[334266] = "orange",
 	[334522] = "orange",
 })
 
@@ -27,22 +27,26 @@ BigWigs:AddColors("Sun King's Salvation", {
 })
 
 BigWigs:AddColors("Lady Inerva Darkvein", {
+	[325005] = "red",
 	[325064] = "orange",
 	[325379] = "purple",
 	[325382] = {"blue","purple"},
 	[325713] = "blue",
-	[325769] = "red",
+	[325769] = "orange",
 	[325936] = {"blue","yellow"},
-	[331550] = "yellow",
 	[331573] = {"blue","yellow"},
 	[332664] = {"blue","yellow"},
+	[334017] = "yellow",
+	[338750] = "cyan",
 })
 
 BigWigs:AddColors("Sludgefist", {
 	[331209] = {"blue","yellow"},
-	[331211] = "red",
+	[331212] = "red",
 	[331314] = "red",
 	[332318] = "orange",
+	[332362] = "purple",
 	[332687] = "yellow",
+	[335361] = "blue",
 	[335491] = {"blue","orange"},
 })
