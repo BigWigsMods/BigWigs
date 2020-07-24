@@ -24,10 +24,10 @@ function mod:GetOptions()
 		331314, -- Stunned Impact
 		{335491, "SAY"}, -- Chain Link
 		332318, -- Destructive Stomp
-		-- TODO: Falling Debris (USCS?)
+		332362, -- Falling Debris
 		332687, -- Colossal Roar
 		{335470, "SAY"}, -- Chain Slam
-		-- TODO: Stonequake, slow+dmg on player - can be avoided?
+		335361, -- Stonequake
 		"berserk",
 	}
 end
@@ -39,8 +39,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ChainLink", 335292, 335468, 335779, 335491) -- one of those might work (placing my bet on USCS though)
 	self:Log("SPELL_AURA_APPLIED", "ChainLinkApplied", 335293)
 	self:Log("SPELL_CAST_START", "DestructiveStomp", 332318)
+	self:Log("SPELL_CAST_SUCCESS", "FallingDebris", 332362, 332660, 332552) -- one of those might work (placing my bet on 332660)
 	self:Log("SPELL_CAST_SUCCESS", "ColossalRoar", 332687)
 	self:Log("SPELL_AURA_APPLIED", "ChainSlam", 335470)
+
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 335361) -- Stonequake
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 335361)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 335361)
 end
 
 function mod:OnEngage()
@@ -74,7 +79,6 @@ end
 
 do
 	local prev = 0
-
 	function mod:ChainLink(args)
 		local t = args.time
 		if t-prev > 2 then
@@ -98,6 +102,19 @@ function mod:DestructiveStomp(args)
 	self:Bar(args.spellId, 4)
 end
 
+do
+	local prev = 0
+	function mod:FallingDebris(args)
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			self:Message2(332362, "purple")
+			self:PlaySound(332362, "info")
+			--self:Bar(args.spellId, duration)
+		end
+	end
+end
+
 function mod:ColossalRoar(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "info")
@@ -108,5 +125,19 @@ function mod:ChainSlam(args)
 		self:TargetMessage2(335491, "blue", args.destName)
 		self:PlaySound(335491, "long")
 		self:Say(335491)
+	end
+end
+
+do
+	local prev = 0
+	function mod:GroundDamage(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 2 then
+				prev = t
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
+			end
+		end
 	end
 end
