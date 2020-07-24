@@ -87,7 +87,7 @@ do
 	local vialCount = 0
 
 	local function printBottleMessage(self)
-		self:Message2(325769, "orange", L.times:format(bottlesCount, self:SpellName(325769)))
+		self:Message2(325769, "orange", L.times:format(vialCount, self:SpellName(325769)))
 		vialCount = 0
 	end
 
