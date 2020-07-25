@@ -90,7 +90,7 @@ end
 -- Event Handlers
 --
 local function checkIfSkipped(self, t)
-	if self:BarTimeLeft(CL.count:format(self:SpellName(335361), stoneQuakeCount)) == 0 then
+	if self:CheckOption(335361, "BAR") and self:BarTimeLeft(CL.count:format(self:SpellName(335361), stoneQuakeCount)) == 0 then
 		self:Message2(335361, "cyan", L.skipped:format(CL.count:format(self:SpellName(335361), stoneQuakeCount)))
 		stoneQuakeCount = stoneQuakeCount + 1
 		self:CDBar(335361, t, CL.count:format(self:SpellName(335361), stoneQuakeCount))
