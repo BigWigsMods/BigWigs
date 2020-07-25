@@ -107,8 +107,8 @@ do
 				self:Message2(335361, "cyan", CL.count:format(self:SpellName(335361), stoneQuakeCount))
 				self:PlaySound(335361, "long")
 				stoneQuakeCount = stoneQuakeCount + 1
-				self:CDBar(335361, 10, CL.count:format(self:SpellName(335361), stoneQuakeCount)) -- 35
-				self:ScheduleTimer(checkIfSkipped, 12, self, 26) -- if skipped CD is ~ 64 from last one -- 38
+				self:CDBar(335361, 35, CL.count:format(self:SpellName(335361), stoneQuakeCount))
+				self:ScheduleTimer(checkIfSkipped, 38, self, 26) -- if skipped CD is ~ 64 from last one
 			end
 		elseif spellId == 332362 then -- Falling Falling
 			self:Message2(332362, "yellow")
