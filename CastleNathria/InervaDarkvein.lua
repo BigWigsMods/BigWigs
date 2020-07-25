@@ -67,7 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 325713, 325718) -- Lingering Anima 2x XXX Check what ID is correct
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 325713, 325718)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 325713, 325718)
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
 function mod:OnEngage()
