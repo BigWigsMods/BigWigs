@@ -174,7 +174,7 @@ do
 		if onMe and not self:Me(args.destGUID) then
 			self:Message2(args.spellId, "blue", CL.link:format(self:ColorName(args.destName)))
 			self:PlaySound(args.spellId, "info") -- Already gave a warning sound for the pre-debuff
-		elseif self:Me(args.destGUID) then
+		elseif not onMe and self:Me(args.destGUID) then
 			self:Message2(args.spellId, "blue", CL.link:format(self:ColorName(mainTarget)))
 			self:PlaySound(args.spellId, "warning")
 		end
@@ -206,24 +206,24 @@ function mod:ColossalRoar(args)
 	self:Bar(args.spellId, timers[args.spellId][colossalRoarCount], CL.count:format(args.spellName, colossalRoarCount))
 end
 
-	function mod:ChainSlamApplied(args)
-		self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chainSlamCount))
-		self:SecondaryIcon(args.spellId, args.destName)
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 4)
-			self:PlaySound(args.spellId, "warning")
-		end
-		chainSlamCount = chainSlamCount + 1
-		--self:Bar(args.spellId, 34, CL.count:format(args.spellName, chainSlamCount))
+function mod:ChainSlamApplied(args)
+	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chainSlamCount))
+	self:SecondaryIcon(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 4)
+		self:PlaySound(args.spellId, "warning")
 	end
+	chainSlamCount = chainSlamCount + 1
+	--self:Bar(args.spellId, 34, CL.count:format(args.spellName, chainSlamCount))
+end
 
-	function mod:ChainSlamRemoved(args)
-		self:SecondaryIcon(args.spellId)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
-		end
+function mod:ChainSlamRemoved(args)
+	self:SecondaryIcon(args.spellId)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
+end
 
 do
 	local prev = 0
