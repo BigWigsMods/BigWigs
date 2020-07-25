@@ -42,11 +42,11 @@ BigWigs:AddColors("Lady Inerva Darkvein", {
 
 BigWigs:AddColors("Sludgefist", {
 	[331209] = {"blue","yellow"},
-	[331212] = "red",
 	[331314] = "red",
 	[332318] = "orange",
-	[332362] = "purple",
+	[332362] = "yellow",
 	[332687] = "yellow",
-	[335361] = "blue",
-	[335491] = {"blue","orange"},
+	[335293] = {"blue","yellow"},
+	[335361] = {"blue","cyan"},
+	[335470] = {"blue","yellow"},
 })

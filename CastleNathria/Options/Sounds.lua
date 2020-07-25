@@ -44,8 +44,9 @@ BigWigs:AddSounds("Sludgefist", {
 	[331209] = "warning",
 	[331314] = "info",
 	[332318] = "long",
-	[332362] = "info",
+	[332362] = "alarm",
 	[332687] = "info",
-	[335361] = "alarm",
-	[335491] = {"alert","long"},
+	[335293] = {"info","warning"},
+	[335361] = {"alarm","long"},
+	[335470] = "warning",
 })
