@@ -60,7 +60,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ChainThisOneRemoved", 335270) -- Pre chain debuff
 	self:Log("SPELL_AURA_APPLIED", "ChainLinkApplied", 335293)
 	self:Log("SPELL_CAST_START", "DestructiveStomp", 332318)
-	self:Log("SPELL_CAST_SUCCESS", "FallingDebris", 332362, 332660, 332552) -- one of those might work (placing my bet on 332660)
 	self:Log("SPELL_CAST_SUCCESS", "ColossalRoar", 332687)
 	self:Log("SPELL_AURA_APPLIED", "ChainSlamApplied", 335470)
 	self:Log("SPELL_AURA_REMOVED", "ChainSlamRemoved", 335470)
@@ -79,7 +78,7 @@ function mod:OnEngage()
 	stoneQuakeCount = 1
 
 	self:Bar(335293, 6, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
-	self:CDBar(332362, 11) -- Falling Falling
+	self:CDBar(332362, 11) -- Falling Debris
 	self:Bar(335361, 14.5, CL.count:format(self:SpellName(335361), stoneQuakeCount)) -- Stonequake
 	self:Bar(332318, timers[332318][destructiveStompCount], CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	self:Bar(335470, 37, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
@@ -110,7 +109,7 @@ do
 				self:CDBar(335361, 35, CL.count:format(self:SpellName(335361), stoneQuakeCount))
 				self:ScheduleTimer(checkIfSkipped, 38, self, 26) -- if skipped CD is ~ 64 from last one
 			end
-		elseif spellId == 332362 then -- Falling Falling
+		elseif spellId == 332362 then -- Falling Debris
 			self:Message2(332362, "yellow")
 			self:PlaySound(332362, "alarm")
 			self:CDBar(332362, 11) -- XXX Delayed sometimes due to other casts/charge/stun
@@ -187,16 +186,6 @@ function mod:DestructiveStomp(args)
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, destructiveStompCount))
 	destructiveStompCount = destructiveStompCount + 1
 	self:Bar(args.spellId, timers[args.spellId][destructiveStompCount], CL.count:format(args.spellName, destructiveStompCount))
-end
-
-do
-	local prev = 0
-	function mod:FallingDebris(args)
-		local t = args.time
-		if t-prev > 2 then
-			prev = t
-		end
-	end
 end
 
 function mod:ColossalRoar(args)
