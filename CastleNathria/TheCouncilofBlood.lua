@@ -23,7 +23,7 @@ mod.engageId = 2412
 function mod:GetOptions()
 	return {
 		--[[ Castellan Niklaus ]]--
-		{328334, "SAY"},
+		{328334, "SAY"}, -- Tactical Advance
 		335776, -- Unyielding Shield
 		334948, -- Unstoppable Charge
 		330965, -- Castellan's Cadre
