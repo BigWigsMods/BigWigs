@@ -48,7 +48,7 @@ function mod:GetOptions()
 		[328334] = -22147, -- Castellan Niklaus
 		[327773] = -22148, -- Baroness Frieda
 		[327497] = -22149, -- Lord Stavros
-		[328495] = -22146, -- Intermission: The Danse Macabre
+		[330848] = -22146, -- Intermission: The Danse Macabre
 	}
 end
 
