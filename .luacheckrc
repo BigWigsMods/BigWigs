@@ -224,7 +224,7 @@ globals = {
 	"UnitHealth",
 	"UnitHealthMax",
 	"UnitInParty",
-	"UnitInPhase",
+	"UnitInPhase", -- XXX remove after beta
 	"UnitInRaid",
 	"UnitInVehicle",
 	"UnitIsConnected",
@@ -237,6 +237,7 @@ globals = {
 	"UnitIsUnit",
 	"UnitLevel",
 	"UnitName",
+	"UnitPhaseReason",
 	"UnitPlayerControlled",
 	"UnitPosition",
 	"UnitPower",
