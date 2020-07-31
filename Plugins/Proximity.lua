@@ -78,7 +78,7 @@ local OnOptionToggled = nil -- Function invoked when the proximity option is tog
 -- GLOBALS: BigWigs CUSTOM_CLASS_COLORS GameTooltip GameFontNormalHuge RAID_CLASS_COLORS SLASH_BigWigs_Proximity1 SLASH_BigWigs_Proximity2 UIParent
 
 -- XXX Fix after Beta
-UnitInPhase = UnitInPhase or function() return true end
+UnitInPhase = UnitInPhase or function(unit) return not UnitPhaseReason(unit) end
 
 --------------------------------------------------------------------------------
 -- Range Checking
