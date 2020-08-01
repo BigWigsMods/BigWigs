@@ -149,7 +149,7 @@ end
 do
 	local guid = nil
 	function mod:UNIT_AURA(_, unit)
-		local debuffName = UnitDebuff(unit, self:SpellName(336235)) -- Dark Descent
+		local debuffName = self:UnitDebuff(unit, self:SpellName(336235)) -- Dark Descent
 		local unitName = self:UnitName(unit)
 		if debuffName then
 			guid = UnitGUID(unitName)
