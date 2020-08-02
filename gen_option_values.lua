@@ -294,10 +294,14 @@ local function dumpValues(path, name, options_table)
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
 		if not opt.dryrun then
-			f = assert(io.open(file, "wb"))
-			f:write(data)
-			f:close()
-			warn("    Updated " .. file)
+			f = io.open(file, "wb")
+			if not f then
+				error(string.format("    %s: File not found!", file))
+			else
+				f:write(data)
+				f:close()
+				warn("    Updated " .. file)
+			end
 		else
 			warn("    Updated " .. file .. " (skipped)")
 		end
@@ -308,7 +312,6 @@ local function dump(module_dir)
 	if not next(modules) then return end
 
 	local path = module_dir .. "Options/"
-	-- assert(os.execute("mkdir -p \"" .. path .. "\"")) -- XXX Remove this
 
 	dumpValues(path, "Colors", module_colors)
 	dumpValues(path, "Sounds", module_sounds)
