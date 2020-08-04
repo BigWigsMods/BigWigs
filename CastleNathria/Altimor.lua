@@ -172,7 +172,7 @@ do
 			self:Flash(335114)
 		end
 		if self:GetOption(sinseekerMarker) then
-			SetRaidTarget(335114, count)
+			SetRaidTarget(args.destName, count)
 		end
 		self:TargetsMessage(335114, "orange", playerList, 3, CL.count:format(self:SpellName(335114), sinseekerCount-1), nil, 2, playerIcons) -- Debuffs are very delayed
 	end
