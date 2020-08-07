@@ -14,9 +14,13 @@ mod.engageId = 2406
 --
 
 local cognitionOnMe = nil
-local bottleTimers = {28.5, 36, 20, 24}
+local bottleTimers = {28.5, 36, 20, 24, 26.8, 10.8, 14.9, 18.3, 17.4, 18.3, 28.5, 36.9, 36.5}
 local bottleCount = 1
 local anima = {}
+local concentrateAnimaCount = 1
+local mobCollector = {}
+local conjuredManifestationList = {}
+local conjuredManifestationCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,16 +39,23 @@ if L then
 	L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
 	L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
 	L.anima_tracking_icon = "achievement_boss_darkanimus"
+
+	L.custom_on_stop_timers = "Always show ability bars"
+	L.custom_on_stop_timers_desc = "Just for testing right now"
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local sharedSufferingMarker = mod:AddMarkerOption(false, "player", 1, 324983, 1, 2, 3) -- Shared Suffering
+local concentrateAnimaMarker = mod:AddMarkerOption(false, "player", 8, 332664, 8, 7, 6, 5) -- Concentrate Anima
+local conjuredManifestationMarker = mod:AddMarkerOption(true, "npc", 8, -22295, 8, 7, 6, 5) -- Conjured Manifestation
 function mod:GetOptions()
 	return {
 		"custom_off_experimental",
 		{"anima_tracking", "INFOBOX"},
+		"custom_on_stop_timers",
 		338750, -- Enable Container
 		325379, -- Expose Desires
 		325936, -- Shared Cognition
@@ -52,8 +63,11 @@ function mod:GetOptions()
 		325769, -- Bottled Anima
 		325713, -- Lingering Anima
 		325064, -- Sins and Suffering
-		325005, -- Shared Suffering
-		{332664, "SAY", "SAY_COUNTDOWN", "PROXIMITY"}, -- Concentrate Anima -- say, countdown, proximity
+		{324983, "SAY"}, -- Shared Suffering
+		sharedSufferingMarker,
+		{332664, "SAY", "SAY_COUNTDOWN", "PROXIMITY"}, -- Concentrate Anima
+		concentrateAnimaMarker,
+		conjuredManifestationMarker,
 		{331573, "ME_ONLY"}, -- Unconscionable Guilt
 		334017, -- Condemn
 	}, {
@@ -71,6 +85,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedDesiresApplied", 325382)
 	--self:Log("SPELL_CAST_SUCCESS", "BottledAnima", 325769) -- see USCS
 	self:Log("SPELL_AURA_APPLIED", "SinsandSuffering", 325064)
+	self:Log("SPELL_AURA_APPLIED", "SharedSufferingApplied", 324983)
+	self:Log("SPELL_AURA_REMOVED", "SharedSufferingRemoved", 324983)
+
 	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnimaApplied", 332664)
 	self:Log("SPELL_AURA_REMOVED", "ConcentrateAnimaRemoved", 332664)
 	self:Log("SPELL_AURA_APPLIED", "UnconscionableGuiltApplied", 331573)
@@ -82,26 +99,70 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 325713, 325718)
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:RegisterEvent("UPDATE_UI_WIDGET", "WIDGET") -- need to fix BossPrototype implementation before using mod:RegisterWidgetEvent
+
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
 
 function mod:OnEngage()
+	mobCollector = {}
+	conjuredManifestationList = {}
+	conjuredManifestationCount = 1
 	cognitionOnMe = nil
 	bottleCount = 1
+	concentrateAnimaCount = 1
 	wipe(anima)
 
+	self:Bar(325379, 12) -- Expose Desires
 	self:Bar(325064, 18) -- Sins and Suffering
-	self:Bar(325005, 23) -- Shared Suffering
+	self:Bar(324983, 23) -- Shared Suffering
 	self:Bar(325769, bottleTimers[bottleCount]) -- Bottled Anima
-	self:Bar(332664, 56) -- Concentrate Anima
+	self:Bar(332664, 56, CL.count:format(self:SpellName(332664), concentrateAnimaCount)) -- Concentrate Anima
 
 	if self:GetOption("custom_off_experimental") then
 		self:OpenInfo("anima_tracking", L.anima_tracking)
+	end
+
+	if self:GetOption(conjuredManifestationMarker) then
+		self:RegisterTargetEvents("ConjuredManifestationMarker")
 	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local abilitysToPause = {
+		[325064] = true, -- Sins and Suffering
+		[324983] = true, -- Shared Suffering
+		[325769] = true, -- Bottled Anima
+		[332664] = true, -- Concentrate Anima
+	}
+
+	local castPattern = CL.cast:gsub("%%s", ".+")
+
+	local function stopAtZeroSec(bar)
+		if bar.remaining < 0.15 then -- Pause at 0.0
+			bar:SetDuration(0.01) -- Make the bar look full
+			bar:Start()
+			bar:Pause()
+			bar:SetTimeVisibility(false)
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, _, key, text)
+		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
+			bar:AddUpdateFunction(stopAtZeroSec)
+		end
+	end
+end
+
+function mod:ConjuredManifestationMarker(event, unit, guid)
+	if self:MobId(guid) == 170197 and conjuredManifestationList[guid] then -- Conjured Manifestation
+		SetRaidTarget(unit, conjuredManifestationList[guid])
+		conjuredManifestationList[guid] = nil
+	end
+end
 
 do
 
@@ -203,10 +264,6 @@ do
 				self:PlaySound(325769, "info")
 				self:CDBar(325769, bottleTimers[bottleCount] or 20)
 			end
-		elseif spellId == 325005 then -- Shared Suffering
-			self:Message2(spellId, "red")
-			self:PlaySound(spellId, "warning")
-			self:Bar(spellId, 26.8)
 		elseif spellId == 338750 then -- Enable Container
 			self:Message2(spellId, "cyan")
 			self:PlaySound(spellId, "long")
@@ -266,22 +323,59 @@ function mod:SinsandSuffering(args)
 end
 
 do
-	local playerList, proxList, isOnMe = mod:NewTargetList(), {}, nil
+	local playerList, playerIcons = mod:NewTargetList(), {}
+	function mod:SharedSufferingApplied(args)
+		local count = #playerIcons+1
+		playerList[count] = args.destName
+		playerIcons[count] = count
+		if count == 1 then
+			self:Bar(args.spellId, 26.8)
+		end
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+			self:PlaySound(args.spellId, "warning")
+		end
+		if self:GetOption(sharedSufferingMarker) then
+			SetRaidTarget(args.destName, count)
+		end
+
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, nil, nil, nil, playerIcons)
+	end
+
+	function mod:SharedSufferingRemoved(args)
+		if self:GetOption(sharedSufferingMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
+	end
+end
+
+do
+	local playerList, proxList, isOnMe, playerIcons = mod:NewTargetList(), {}, nil, {}
 	function mod:ConcentrateAnimaApplied(args)
-		proxList[#proxList+1] = args.destName
-		playerList[#playerList+1] = args.destName
+		local count = #playerList+1
+		local icon = 9-count -- 8, 7, 6, 5
+		proxList[count] = args.destName
+		playerList[count] = args.destName
+		playerIcons[count] = icon
 		if #playerList == 1 then
-			self:Bar(args.spellId, 36)
+			self:StopBar(CL.count:format(args.spellName, concentrateAnimaCount))
+			concentrateAnimaCount = concentrateAnimaCount + 1
+			self:Bar(args.spellId, 36, CL.count:format(args.spellName, concentrateAnimaCount))
+			conjuredManifestationList = {}
+			conjuredManifestationCount = 1
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = true
 			self:PlaySound(args.spellId, "alarm")
-			self:Say(args.spellId)
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, icon, icon))
 			self:SayCountdown(args.spellId, 10)
 			self:OpenProximity(args.spellId, 8)
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList)
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, nil, nil, nil, playerIcons)
 
+		if self:GetOption(concentrateAnimaMarker) then
+			SetRaidTarget(args.destName, icon)
+		end
 		if not isOnMe then
 			self:OpenProximity(args.spellId, 8, proxList)
 		end
@@ -302,6 +396,10 @@ do
 				self:OpenProximity(args.spellId, 8, proxList)
 			end
 		end
+
+		if self:GetOption(concentrateAnimaMarker) then
+			SetRaidTarget(args.destName, 0)
+		end
 	end
 end
 
@@ -317,6 +415,18 @@ function mod:Condemn(args)
 		self:Message2(args.spellId, "yellow")
 		if ready then
 			self:PlaySound(args.spellId, "alert")
+		end
+	end
+	if self:GetOption(conjuredManifestationMarker) and not mobCollector[args.sourceGUID] then
+		mobCollector[args.sourceGUID] = true
+		conjuredManifestationList[args.sourceGUID] = (8 - (conjuredManifestationCount % 4) + 1) -- 8, 7, 6, 5
+		conjuredManifestationCount = conjuredManifestationCount + 1
+		for k, v in pairs(conjuredManifestationList) do
+			local unit = self:GetUnitIdByGUID(k)
+			if unit then
+				SetRaidTarget(unit, conjuredManifestationList[k])
+				conjuredManifestationList[k] = nil
+			end
 		end
 	end
 end
