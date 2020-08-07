@@ -233,7 +233,7 @@ do
 		if self:Me(args.destGUID) then
 			cognitionOnMe = true
 			self:PlaySound(args.spellId, "alarm")
-			self:TargetBar(args.spellId, args.destName, 21)
+			self:TargetBar(args.spellId, 21, args.destName)
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList)
 	end

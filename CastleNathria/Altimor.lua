@@ -317,7 +317,7 @@ do
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 12)
 			self:Flash(args.spellId)
-			self:TargetBar(args.spellId, args.destName, 12)
+			self:TargetBar(args.spellId, 12, args.destName)
 		end
 		self:TargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, petrifyingHowlCount-1), nil, 1) -- Travel time on debuffs?
 	end
