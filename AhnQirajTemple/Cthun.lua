@@ -175,7 +175,7 @@ function mod:CThunP2Start()
 		self:CancelTimer(timerCheckTarget)
 
 		self:DelayedMessage("tentacle", timeP2Tentacle + timeP2Offset -.1, "red", L.tentacleParty, L.tentacle_icon) -- Tentacle party
-		self:DelayedMessage("tentacle", timeP2Tentacle + timeP2Offset - 5, "orange", CL.custom_sec:format(L.tentacles, 5)) -- Tentacles in 5 sec
+		self:DelayedMessage("tentacle", timeP2Tentacle + timeP2Offset - 5, "orange", CL.custom_sec:format(L.tentacle, 5)) -- Tentacles in 5 sec
 		self:Bar("tentacle", timeP2Tentacle + timeP2Offset, L.tentacleParty, L.tentacle_icon) -- Tentacle party
 
 		-- Giant eye warnings seem off now, possibly changed or broken by Blizz
@@ -196,7 +196,7 @@ function mod:CThunWeakened()
 
 	-- cancel tentacle timers
 	self:CancelDelayedMessage(L.tentacleParty) -- Tentacle party
-	self:CancelDelayedMessage(CL.custom_sec:format(L.tentacles, 5)) -- Tentacles in 5 sec
+	self:CancelDelayedMessage(CL.custom_sec:format(L.tentacle, 5)) -- Tentacles in 5 sec
 	self:StopBar(L.tentacleParty)
 
 	--self:CancelDelayedMessage(L["giant1"])
@@ -277,7 +277,7 @@ function mod:Tentacles()
 	end
 	self:Bar("tentacle", tentacletime, L.tentacleParty, L.tentacle_icon) -- Tentacle party
 	self:DelayedMessage("tentacle", tentacletime -.1, "red", L.tentacleParty, L.tentacle_icon) -- Tentacle party
-	self:DelayedMessage("tentacle", tentacletime -5, "orange", CL.custom_sec:format(L.tentacles, 5)) -- Tentacles in 5 sec
+	self:DelayedMessage("tentacle", tentacletime -5, "orange", CL.custom_sec:format(L.tentacle, 5)) -- Tentacles in 5 sec
 end
 
 function mod:DarkGlare()
