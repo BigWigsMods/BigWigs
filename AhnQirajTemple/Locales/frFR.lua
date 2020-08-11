@@ -26,11 +26,11 @@ if L then
 	-- L.freeze = "Freezing States"
 	-- L.freeze_desc = "Warn for the different frozen states."
 
-	L.freeze_trigger1 = "%s commence à ralentir !"
-	L.freeze_trigger2 = "%s est gelé !"
-	L.freeze_trigger3 = "%s est congelé !"
-	L.freeze_trigger4 = "%s commence à se briser !"
-	L.freeze_trigger5 = "%s semble prêt à se briser !"
+	L.freeze_trigger1 = "commence à ralentir !"
+	L.freeze_trigger2 = "est gelé !"
+	L.freeze_trigger3 = "est congelé !"
+	L.freeze_trigger4 = "commence à se briser !"
+	L.freeze_trigger5 = "semble prêt à se briser !"
 
 	-- L.freeze_warn1 = "First freeze phase!"
 	-- L.freeze_warn2 = "Second freeze phase!"

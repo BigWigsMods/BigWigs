@@ -26,11 +26,11 @@ if L then
 	-- L.freeze = "Freezing States"
 	-- L.freeze_desc = "Warn for the different frozen states."
 
-	L.freeze_trigger1 = "的速度慢下來了！"
-	L.freeze_trigger2 = "凍住了！"
-	L.freeze_trigger3 = "變成了堅硬的固體！"
-	L.freeze_trigger4 = "開始碎裂了！"
-	L.freeze_trigger5 = "馬上就要碎裂的樣子！"
+	L.freeze_trigger1 = "開始變慢了！"
+	L.freeze_trigger2 = "開始結冰了！"
+	L.freeze_trigger3 = "被牢牢凍住了！"
+	L.freeze_trigger4 = "開始爆裂！"
+	L.freeze_trigger5 = "看來準備粉碎了！"
 
 	-- L.freeze_warn1 = "First freeze phase!"
 	-- L.freeze_warn2 = "Second freeze phase!"

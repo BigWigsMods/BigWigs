@@ -26,11 +26,11 @@ if L then
 	-- L.freeze = "Freezing States"
 	-- L.freeze_desc = "Warn for the different frozen states."
 
-	-- L.freeze_trigger1 = "%s begins to slow!"
-	-- L.freeze_trigger2 = "%s is freezing up!"
-	-- L.freeze_trigger3 = "%s is frozen solid!"
-	-- L.freeze_trigger4 = "%s begins to crack!"
-	-- L.freeze_trigger5 = "%s looks ready to shatter!"
+	-- L.freeze_trigger1 = "begins to slow!"
+	-- L.freeze_trigger2 = "is freezing up!"
+	-- L.freeze_trigger3 = "is frozen solid!"
+	-- L.freeze_trigger4 = "begins to crack!"
+	-- L.freeze_trigger5 = "looks ready to shatter!"
 
 	-- L.freeze_warn1 = "First freeze phase!"
 	-- L.freeze_warn2 = "Second freeze phase!"

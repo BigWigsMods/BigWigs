@@ -24,11 +24,11 @@ if L then
 	L.freeze_desc = "Warn for the different frozen states."
 	L.freeze_icon = "spell_frost_glacier"
 
-	L.freeze_trigger1 = "%s begins to slow!"
-	L.freeze_trigger2 = "%s is freezing up!"
-	L.freeze_trigger3 = "%s is frozen solid!"
-	L.freeze_trigger4 = "%s begins to crack!"
-	L.freeze_trigger5 = "%s looks ready to shatter!"
+	L.freeze_trigger1 = "begins to slow!"
+	L.freeze_trigger2 = "is freezing up!"
+	L.freeze_trigger3 = "is frozen solid!"
+	L.freeze_trigger4 = "begins to crack!"
+	L.freeze_trigger5 = "looks ready to shatter!"
 
 	L.freeze_warn1 = "First freeze phase!"
 	L.freeze_warn2 = "Second freeze phase!"
@@ -114,18 +114,18 @@ do
 end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
-	if msg == L.freeze_trigger1 then
+	if msg:find(L.freeze_trigger1) then
 		self:Message2("freeze", "cyan", L.freeze_warn1, L.freeze_icon)
-	elseif msg == L.freeze_trigger2 then
+	elseif msg:find(L.freeze_trigger2) then
 		self:Message2("freeze", "cyan", L.freeze_warn2, L.freeze_icon)
-	elseif msg == L.freeze_trigger3 then
+	elseif msg:find(L.freeze_trigger3) then
 		swingCount = 0
 		self:Message2("freeze", "red", L.freeze_warn3, L.freeze_icon)
 		self:Bar("freeze", 30, L.freeze_warn3, L.freeze_icon)
 		self:ScheduleTimer("OnWipe", 27) -- Reset the frostCount
-	elseif msg == L.freeze_trigger4 then
+	elseif msg:find(L.freeze_trigger4) then
 		self:Message2("freeze", "orange", L.freeze_warn4, L.freeze_icon)
-	elseif msg == L.freeze_trigger5 then
+	elseif msg:find(L.freeze_trigger5) then
 		self:Message2("freeze", "red", L.freeze_warn5, L.freeze_icon)
 	end
 end

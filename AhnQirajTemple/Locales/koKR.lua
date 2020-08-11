@@ -26,11 +26,11 @@ if L then
 	-- L.freeze = "Freezing States"
 	-- L.freeze_desc = "Warn for the different frozen states."
 
-	L.freeze_trigger1 = "%s|1이;가; 느려지기 시작했습니다!" -- CHECK
-	L.freeze_trigger2 = "%s|1이;가; 얼어붙고 있습니다!" -- CHECK
-	L.freeze_trigger3 = "%s|1이;가; 단단하게 얼었습니다!" -- CHECK
-	L.freeze_trigger4 = "%s|1이;가; 분해되기 시작합니다!" -- CHECK
-	L.freeze_trigger5 = "%s|1이;가; 부서질 것 같습니다!" -- CHECK
+	L.freeze_trigger1 = "느려지기 시작했습니다!" -- CHECK
+	L.freeze_trigger2 = "얼어붙고 있습니다!" -- CHECK
+	L.freeze_trigger3 = "단단하게 얼었습니다!" -- CHECK
+	L.freeze_trigger4 = "분해되기 시작합니다!" -- CHECK
+	L.freeze_trigger5 = "부서질 것 같습니다!" -- CHECK
 
 	-- L.freeze_warn1 = "First freeze phase!"
 	-- L.freeze_warn2 = "Second freeze phase!"
