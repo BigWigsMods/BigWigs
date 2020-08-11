@@ -56,7 +56,7 @@ function mod:MortalWound(args)
 end
 
 function mod:SummonWorm()
-	self:Message2("worm", "orange")
+	self:Message2("worm", "orange", L.worm, L.worm_icon)
 	self:PlaySound("worm", "info")
 end
 
