@@ -5,7 +5,7 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Sludgefist", 2296, 2394)
 if not mod then return end
-mod:RegisterEnableMob(164407)
+mod:RegisterEnableMob(164407) -- Sludgefist
 mod.engageId = 2399
 mod.respawnTime = 15
 
@@ -43,15 +43,19 @@ function mod:GetOptions()
 		331314, -- Stunned Impact
 		{335293, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Chain Link
 		332318, -- Destructive Stomp
-		332362, -- Falling Debris
+		332660, -- Falling Debris
 		332687, -- Colossal Roar
 		{335470, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Chain Slam
 		335361, -- Stonequake
+		341307, -- Fractured Debris
+	},{
+		[331209] = "general",
+		[341307] = "mythic",
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "HatefulGazeApplied", 331209)
 	self:Log("SPELL_AURA_REMOVED", "HatefulGazeRemoved", 331209)
 	self:Log("SPELL_AURA_APPLIED", "StunnedImpactApplied", 331314)
@@ -78,11 +82,15 @@ function mod:OnEngage()
 	stoneQuakeCount = 1
 
 	self:Bar(335293, 6, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
-	self:CDBar(332362, 11) -- Falling Debris
 	self:Bar(335361, 14.5, CL.count:format(self:SpellName(335361), stoneQuakeCount)) -- Stonequake
 	self:Bar(332318, timers[332318][destructiveStompCount], CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	self:Bar(335470, 37, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
 	self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
+	if self:Mythic() then
+		--self:CDBar(341307, 11) -- Fractured Debris
+	else
+		self:CDBar(332660, 11) -- Falling Debris
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -110,9 +118,13 @@ do
 				self:ScheduleTimer(checkIfSkipped, 38, self, 26) -- if skipped CD is ~ 64 from last one
 			end
 		elseif spellId == 332362 then -- Falling Debris
-			self:Message2(332362, "yellow")
-			self:PlaySound(332362, "alarm")
-			self:CDBar(332362, 11) -- XXX Delayed sometimes due to other casts/charge/stun
+			self:Message2(332660, "yellow")
+			self:PlaySound(332660, "alarm")
+			self:CDBar(332660, 11) -- XXX Delayed sometimes due to other casts/charge/stun
+		elseif spellId == 341307 then -- Fractured Debris
+			self:Message2(341307, "yellow")
+			self:PlaySound(341307, "alarm")
+			--self:CDBar(341307, 11)
 		end
 	end
 end
@@ -138,7 +150,7 @@ end
 function mod:StunnedImpactApplied(args)
 	self:Message2(args.spellId, "red", CL.on:format(args.spellName, args.destName))
 	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, 8)
+	self:Bar(args.spellId, 4)
 end
 
 function mod:StunnedImpactRemoved(args)
