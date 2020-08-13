@@ -26,7 +26,7 @@ local ExsanguinatStacksOnMe = nil
 local stageOver = nil
 local shriekCount = 1
 local echoCount = 1
-local descentCount = 1
+local scentOfBloodCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -38,8 +38,8 @@ function mod:GetOptions()
 		-- Stage One - Thirst for Blood
 		328897, -- Exsanguinated
 		{328857, "TANK"}, -- Exsanguinating Bite
-		340322, -- Sanguine Feast
-		{336233, "SAY", "SAY_COUNTDOWN"}, -- Dark Descent
+		--340322, -- Sanguine Feast
+		{342074, "SAY", "SAY_COUNTDOWN"}, -- Scent of Blood
 		330711, -- Earsplitting Shriek
 		340324, -- Sanguine Ichor
 		336345, -- Echo Screech
@@ -62,7 +62,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ExsanguinatedApplied", 328897)
 	self:Log("SPELL_AURA_REMOVED", "ExsanguinatedRemoved", 328897)
 	self:Log("SPELL_CAST_START", "ExsanguinatingBite", 328857)
-	self:Log("SPELL_CAST_SUCCESS", "SanguineFeast", 340322)
+	-- self:Log("SPELL_CAST_SUCCESS", "SanguineFeast", 340322)
 	-- self:Log("SPELL_AURA_APPLIED", "DarkDescentApplied", 336235)
 	-- self:Log("SPELL_AURA_REMOVED", "DarkDescentRemoved", 336235)
 	self:Log("SPELL_CAST_START", "EarsplittingShriek", 330711)
@@ -81,10 +81,10 @@ end
 
 function mod:OnEngage()
 	self:CDBar(328857, 6) -- Exsanguinating Bite
-	self:CDBar(340322, 11) -- Sanguine Feast
+	--self:CDBar(340322, 11) -- Sanguine Feast
 	self:CDBar(330711, 21, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:CDBar(336345, 31.1, CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
-	self:CDBar(336233, 42.5, CL.count:format(self:SpellName(336233), descentCount)) -- Dark Descent
+	self:CDBar(342074, 42.5, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
 end
 
 --------------------------------------------------------------------------------
@@ -94,8 +94,8 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 336233 then -- Dark Descent
 		self:RegisterEvent("UNIT_AURA")
-		descentCount = descentCount + 1
-		self:CDBar(336233, 42.5, CL.count:format(self:SpellName(336233), descentCount)) -- Dark Descent
+		scentOfBloodCount = scentOfBloodCount + 1
+		self:CDBar(342074, 42.5, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
 	end
 end
 
@@ -124,10 +124,10 @@ function mod:ExsanguinatingBite(args)
 	self:CDBar(args.spellId, 11) -- Delay if Earsplitting Shriek will delay it?
 end
 
-function mod:SanguineFeast(args)
-	self:Message2(args.spellId, "red")
-	self:CDBar(args.spellId, 11) -- Delay if Earsplitting Shriek will delay it?
-end
+-- function mod:SanguineFeast(args)
+-- 	self:Message2(args.spellId, "red")
+-- 	self:CDBar(args.spellId, 11) -- Delay if Earsplitting Shriek will delay it?
+-- end
 
 -- XXX Currently missing CLUE events, tracking with UNIT_AURA
 -- 	function mod:DarkDescentApplied(args)
@@ -149,17 +149,17 @@ end
 do
 	local guid = nil
 	function mod:UNIT_AURA(_, unit)
-		local debuffName = self:UnitDebuff(unit, self:SpellName(336235)) -- Dark Descent
+		local debuffName = self:UnitDebuff(unit, self:SpellName(342074)) -- Dark Descent
 		local unitName = self:UnitName(unit)
 		if debuffName then
 			guid = UnitGUID(unitName)
 
 			if self:Me(guid) then
-				self:Say(336233) -- Dark Descent
-				self:SayCountdown(336233, 8) -- Dark Descent
-				self:PlaySound(336233, "warning") -- Dark Descent
+				self:Say(342074) -- Dark Descent
+				self:SayCountdown(342074, 8) -- Dark Descent
+				self:PlaySound(342074, "warning") -- Dark Descent
 			end
-			self:TargetMessage2(336233, "yellow", unitName, CL.count:format(self:SpellName(336233), descentCount-1)) -- Dark Descent
+			self:TargetMessage2(342074, "yellow", unitName, CL.count:format(self:SpellName(342074), scentOfBloodCount-1)) -- Dark Descent
 			self:UnregisterEvent("UNIT_AURA")
 		end
 	end
@@ -217,10 +217,10 @@ function mod:BloodgorgeRemoved(args)
 	descentCount = 1
 
 	self:CDBar(328857, 6) -- Exsanguinating Bite
-	self:CDBar(340322, 11) -- Sanguine Feast
+	--self:CDBar(340322, 11) -- Sanguine Feast
 	self:CDBar(330711, 21, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:CDBar(336345, 31.1, CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
-	self:CDBar(336233, 42.5, CL.count:format(self:SpellName(336233), descentCount)) -- Dark Descent
+	self:CDBar(342074, 42.5, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
 end
 
 do
