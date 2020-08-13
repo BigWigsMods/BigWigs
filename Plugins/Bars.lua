@@ -1832,6 +1832,7 @@ end
 --
 
 local function barClicked(bar, button)
+	if not plugin.db.profile[button] then return end
 	for action, enabled in next, plugin.db.profile[button] do
 		if enabled then clickHandlers[action](bar) end
 	end
