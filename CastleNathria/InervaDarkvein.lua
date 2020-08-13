@@ -5,7 +5,7 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Lady Inerva Darkvein", 2296, 2420)
 if not mod then return end
-mod:RegisterEnableMob(167517) -- Lady Inerva Darkvein
+mod:RegisterEnableMob(165521) -- Lady Inerva Darkvein
 mod.engageId = 2406
 --mod.respawnTime = 30
 
@@ -50,7 +50,7 @@ end
 
 local sharedSufferingMarker = mod:AddMarkerOption(false, "player", 1, 324983, 1, 2, 3) -- Shared Suffering
 local concentrateAnimaMarker = mod:AddMarkerOption(false, "player", 8, 332664, 8, 7, 6, 5) -- Concentrate Anima
-local conjuredManifestationMarker = mod:AddMarkerOption(true, "npc", 8, -22295, 8, 7, 6, 5) -- Conjured Manifestation
+local conjuredManifestationMarker = mod:AddMarkerOption(true, "npc", 8, -22618, 8, 7, 6, 5) -- Conjured Manifestation
 function mod:GetOptions()
 	return {
 		"custom_off_experimental",
@@ -69,11 +69,11 @@ function mod:GetOptions()
 		concentrateAnimaMarker,
 		conjuredManifestationMarker,
 		{331573, "ME_ONLY"}, -- Unconscionable Guilt
-		334017, -- Condemn
+		331550, -- Condemn
 	}, {
 		[338750] = "general",
-		[331573] = -22293,
-		[331550] = -22295,
+		[331573] = self:SpellName(-22293),
+		[331550] = self:SpellName(-22295),
 	}
 end
 
@@ -92,7 +92,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ConcentrateAnimaRemoved", 332664)
 	self:Log("SPELL_AURA_APPLIED", "UnconscionableGuiltApplied", 331573)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "UnconscionableGuiltApplied", 331573)
-	self:Log("SPELL_CAST_START", "Condemn", 334017)
+	self:Log("SPELL_CAST_START", "Condemn", 331550)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 325713, 325718) -- Lingering Anima 2x XXX Check what ID is correct
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 325713, 325718)
