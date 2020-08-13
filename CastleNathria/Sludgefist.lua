@@ -30,6 +30,9 @@ local timers = {
 
 local L = mod:GetLocale()
 if L then
+	L.isLinkedWith = "%s is linked with %s"
+	L.yourLink = "You are linked with %s"
+
 	L.skipped = "%s skipped"
 end
 
@@ -37,11 +40,13 @@ end
 -- Initialization
 --
 
+local chainLinkMarker = mod:AddMarkerOption(false, "player", 1, 335293, 1, 2) -- Chain Link
 function mod:GetOptions()
 	return {
 		{331209, "SAY" ,"SAY_COUNTDOWN"}, -- Hateful Gaze
 		331314, -- Stunned Impact
-		{335293, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Chain Link
+		{335293, "SAY", "SAY_COUNTDOWN"}, -- Chain Link
+		chainLinkMarker,
 		332318, -- Destructive Stomp
 		332660, -- Falling Debris
 		332687, -- Colossal Roar
@@ -60,9 +65,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "HatefulGazeRemoved", 331209)
 	self:Log("SPELL_AURA_APPLIED", "StunnedImpactApplied", 331314)
 	self:Log("SPELL_AURA_REMOVED", "StunnedImpactRemoved", 331314)
-	self:Log("SPELL_AURA_APPLIED", "ChainThisOneApplied", 335270) -- Pre chain debuff
-	self:Log("SPELL_AURA_REMOVED", "ChainThisOneRemoved", 335270) -- Pre chain debuff
-	self:Log("SPELL_AURA_APPLIED", "ChainLinkApplied", 335293)
+	self:Log("SPELL_AURA_APPLIED", "ChainThemApplied", 342420, 342419) -- Pre chain debuff
+	self:Log("SPELL_AURA_REMOVED", "ChainThemRemoved", 342420, 342419) -- Pre chain debuff
+	--self:Log("SPELL_AURA_APPLIED", "ChainLinkApplied", 335293)
 	self:Log("SPELL_CAST_START", "DestructiveStomp", 332318)
 	self:Log("SPELL_CAST_SUCCESS", "ColossalRoar", 332687)
 	self:Log("SPELL_AURA_APPLIED", "ChainSlamApplied", 335470)
@@ -158,36 +163,43 @@ function mod:StunnedImpactRemoved(args)
 end
 
 do
-	local mainTarget, onMe = nil, nil
-	function mod:ChainThisOneApplied(args)
-		onMe = nil
-		mainTarget = args.destName
-		self:TargetMessage2(335293, "yellow", args.destName, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
-		self:PrimaryIcon(335293, args.destName)
-		if self:Me(args.destGUID) then
-			onMe = true
-			self:PlaySound(335293, "warning") -- Chain Link
-			self:Say(335293) -- Chain Link
-			self:SayCountdown(335293, 5) -- Chain Link
+	local firstTarget, onMe = nil, nil
+	function mod:ChainThemApplied(args)
+		if firstTarget then -- Warn and reset stuff
+			if onMe or self:Me(args.destGUID) then -- Personal warning with whom you are linked with
+				self:Message2(335293, "blue", L.yourLink:format(onMe and self:ColorName(args.destName) or self:ColorName(firstTarget)))
+				self:PlaySound(335293, "warning") -- Chain Link
+				self:Say(335293) -- Chain Link
+				self:SayCountdown(335293, 6) -- Chain Link
+			else
+				self:Message2(335293, "yellow", CL.count:format(L.isLinkedWith:format(self:ColorName(firstTarget), self:ColorName(args.destName)), chainLinkCount))
+			end
+			chainLinkCount = chainLinkCount + 1
+			firstTarget = nil
+			onMe = nil
+			self:Bar(335293, 22.5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
+			if self:GetOption(chainLinkMarker) then
+				SetRaidTarget(args.destName, 2)
+			end
+		else
+			if self:GetOption(chainLinkMarker) then
+				SetRaidTarget(args.destName, 1)
+			end
+			firstTarget = args.destName
+			if self:Me(args.destGUID) then
+				onMe = true
+			end
 		end
-		chainLinkCount = chainLinkCount + 1
-		self:Bar(335293, 22.5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
 	end
 
-	function mod:ChainThisOneRemoved(args)
-		self:PrimaryIcon(335293)
+	function mod:ChainThemRemoved(args)
+		firstTarget = nil
 		if self:Me(args.destGUID) then
+			onMe = nil
 			self:CancelSayCountdown(335293) -- Chain Link
 		end
-	end
-
-	function mod:ChainLinkApplied(args)
-		if onMe and not self:Me(args.destGUID) then
-			self:Message2(args.spellId, "blue", CL.link:format(self:ColorName(args.destName)))
-			self:PlaySound(args.spellId, "info") -- Already gave a warning sound for the pre-debuff
-		elseif not onMe and self:Me(args.destGUID) then
-			self:Message2(args.spellId, "blue", CL.link:format(self:ColorName(mainTarget)))
-			self:PlaySound(args.spellId, "warning")
+		if self:GetOption(chainLinkMarker) then
+			SetRaidTarget(args.destName, 0)
 		end
 	end
 end
