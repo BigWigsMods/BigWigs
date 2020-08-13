@@ -214,7 +214,7 @@ function mod:BloodgorgeRemoved(args)
 
 	shriekCount = 1
 	echoCount = 1
-	descentCount = 1
+	scentOfBloodCount = 1
 
 	self:CDBar(328857, 6) -- Exsanguinating Bite
 	--self:CDBar(340322, 11) -- Sanguine Feast
