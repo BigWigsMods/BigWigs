@@ -123,15 +123,21 @@ function mod:EarsplittingShriek(args)
 	self:CDBar(args.spellId, 45, CL.count:format(args.spellName, shriekCount))
 end
 
-function mod:ScentofBloodApplied(args)
-	if self:Me(args.destGUID) then
-		self:Say(342074)
-		self:SayCountdown(342074, 8)
-		self:PlaySound(342074, "warning")
+do
+	local playerList = mod:NewTargetList()
+	function mod:ScentofBloodApplied(args)
+		playerList[#playerList+1] = args.destName
+		if self:Me(args.destGUID) then
+			self:Say(342074)
+			self:SayCountdown(342074, 8)
+			self:PlaySound(342074, "warning")
+		end
+		if #playerList == 1 then
+			scentOfBloodCount = scentOfBloodCount + 1
+			self:Bar(342074, 42.5, CL.count:format(self:SpellName(342074), scentOfBloodCount))
+		end
+		self:TargetsMessage(342074, "yellow", playerList, nil, CL.count:format(self:SpellName(342074), scentOfBloodCount-1))
 	end
-	self:TargetMessage2(342074, "yellow", CL.count:format(self:SpellName(342074), scentOfBloodCount))
-	scentOfBloodCount = scentOfBloodCount + 1
-	self:Bar(342074, 42.5, CL.count:format(self:SpellName(342074), scentOfBloodCount))
 end
 
 function mod:ScentofBloodRemoved(args)
@@ -157,7 +163,7 @@ function mod:Bloodgorge(args)
 	self:StopBar(CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:StopBar(CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
 
-	self:CDBar("stages", 45, CL.intermission) -- 5s Cast, 40s Intermission/Stage 2
+	self:CDBar("stages", 45, CL.intermission, args.spellId) -- 5s Cast, 40s Intermission/Stage 2
 	stageOver = args.time + 45
 	self:CDBar(329362, 7.4) -- Dark Sonar
 end
@@ -176,7 +182,7 @@ function mod:SonarShriek(args)
 end
 
 function mod:BloodgorgeRemoved(args)
-	self:Message2("stages", "green", CL.stage:format(1), nil)
+	self:Message2("stages", "green", CL.stage:format(1), false)
 	self:PlaySound("stages", "info")
 
 	shriekCount = 1
