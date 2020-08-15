@@ -53,7 +53,7 @@ function mod:GetOptions()
 
 		--[[ Margore ]]--
 		{334971, "TANK"}, -- Jagged Claws
-		{334945, "SAY", "SAY_COUNTDOWN", "PROXIMITY", "ICON"}, -- Vicious Lunge
+		{334945, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Vicious Lunge
 
 		--[[ Bargast ]]--
 		{334797, "TANK_HEALER"}, -- Rip Soul
@@ -154,6 +154,7 @@ end
 --[[ Huntsman Altimor ]]--
 
 function mod:Sinseeker(args)
+	self:StopBar(CL.count:format(args.spellName, sinseekerCount))
 	self:Message2(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, sinseekerCount)))
 	sinseekerCount = sinseekerCount + 1
 	self:CDBar(args.spellId, 51, CL.count:format(args.spellName, sinseekerCount))
@@ -186,7 +187,7 @@ end
 function mod:Spreadshot(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 12.2) -- XXX Still needs checking
+	self:Bar(args.spellId, 12.2)
 end
 
 --[[ Margore ]]--
@@ -205,9 +206,6 @@ end
 
 function mod:ViciousLungeApplied(args)
 	self:TargetMessage2(args.spellId, "orange", args.destName, CL.count:format(args.spellName, bloodyThrashCount))
-	if not self:Mythic() then -- You want to help soak in Mythic
-		self:OpenProximity(args.spellId, 6, args.destName, true)
-	end
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
@@ -219,7 +217,6 @@ function mod:ViciousLungeApplied(args)
 end
 
 function mod:ViciousLungeRemoved(args)
-	self:CloseProximity(args.spellId)
 	self:PrimaryIcon(args.spellId)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
