@@ -42,6 +42,9 @@ if L then
 
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Just for testing right now"
+
+	L.bottles = "Bottles"
+	L.sins = "Sins"
 end
 
 --------------------------------------------------------------------------------
@@ -56,51 +59,67 @@ function mod:GetOptions()
 		"custom_off_experimental",
 		{"anima_tracking", "INFOBOX"},
 		"custom_on_stop_timers",
-		338750, -- Enable Container
-		325379, -- Expose Desires
-		325936, -- Shared Cognition
+		331870, -- Focus Anima
+		-- Container of Desire
+		{325379, "TANK"}, -- Expose Desires
 		325382, -- Warped Desires
+		325936, -- Shared Cognition
+		-- Container of Bottled Anima
 		325769, -- Bottled Anima
 		325713, -- Lingering Anima
-		325064, -- Sins and Suffering
+		-- Container of Sin
 		{324983, "SAY"}, -- Shared Suffering
 		sharedSufferingMarker,
+		-- Container of Concentrated Anima
 		{332664, "SAY", "SAY_COUNTDOWN", "PROXIMITY"}, -- Concentrate Anima
 		concentrateAnimaMarker,
 		conjuredManifestationMarker,
 		{331573, "ME_ONLY"}, -- Unconscionable Guilt
 		331550, -- Condemn
 	}, {
-		[338750] = "general",
-		[331573] = self:SpellName(-22293),
-		[331550] = self:SpellName(-22295),
+		[331870] = "general",
+		[325379] = -22571, -- Container of Desire
+		[325769] = -22592, -- Container of Bottled Anima
+		[324983] = -22599, -- Container of Sin
+		[332664] = -22567, -- Container of Concentrated Anima
+	},{
+		[325769] = L.bottles, -- Bottled Anima (Bottles)
+		[324983] = L.sins, -- Shared Suffering (Sins)
+		[332664] = CL.adds, -- Concentrate Anima (Adds)
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("UPDATE_UI_WIDGET", "WIDGET") -- need to fix BossPrototype implementation before using mod:RegisterWidgetEvent
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
+
+	-- General
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+
+	-- Container of Desire
 	self:Log("SPELL_CAST_START", "ExposeDesires", 325379)
-	self:Log("SPELL_AURA_APPLIED", "SharedCognitionApplied", 325936)
-	self:Log("SPELL_AURA_REMOVED", "SharedCognitionRemoved", 325936)
 	self:Log("SPELL_AURA_APPLIED", "WarpedDesiresApplied", 325382)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedDesiresApplied", 325382)
+	self:Log("SPELL_AURA_APPLIED", "SharedCognitionApplied", 325936)
+	self:Log("SPELL_AURA_REMOVED", "SharedCognitionRemoved", 325936)
+
+	-- Container of Bottled Anima
 	--self:Log("SPELL_CAST_SUCCESS", "BottledAnima", 325769) -- see USCS
-	self:Log("SPELL_AURA_APPLIED", "SinsandSuffering", 325064)
+
+	-- Container of Sin
 	self:Log("SPELL_AURA_APPLIED", "SharedSufferingApplied", 324983)
 	self:Log("SPELL_AURA_REMOVED", "SharedSufferingRemoved", 324983)
 
+	-- Container of Concentrated Anima
 	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnimaApplied", 332664)
 	self:Log("SPELL_AURA_REMOVED", "ConcentrateAnimaRemoved", 332664)
 	self:Log("SPELL_AURA_APPLIED", "UnconscionableGuiltApplied", 331573)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "UnconscionableGuiltApplied", 331573)
 	self:Log("SPELL_CAST_START", "Condemn", 331550)
 
-	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 325713, 325718) -- Lingering Anima 2x XXX Check what ID is correct
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 325713, 325718)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 325713, 325718)
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	self:RegisterEvent("UPDATE_UI_WIDGET", "WIDGET") -- need to fix BossPrototype implementation before using mod:RegisterWidgetEvent
-
-	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 325713) -- Lingering Anima
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 325713)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 325713)
 end
 
 function mod:OnEngage()
@@ -113,10 +132,9 @@ function mod:OnEngage()
 	wipe(anima)
 
 	self:Bar(325379, 12) -- Expose Desires
-	self:Bar(325064, 18) -- Sins and Suffering
-	self:Bar(324983, 23) -- Shared Suffering
-	self:Bar(325769, bottleTimers[bottleCount]) -- Bottled Anima
-	self:Bar(332664, 56, CL.count:format(self:SpellName(332664), concentrateAnimaCount)) -- Concentrate Anima
+	self:Bar(324983, 23, L.sins) -- Shared Suffering
+	self:Bar(325769, bottleTimers[bottleCount], L.bottles) -- Bottled Anima
+	self:Bar(332664, 56, CL.count:format(CL.adds, concentrateAnimaCount)) -- Concentrate Anima
 
 	if self:GetOption("custom_off_experimental") then
 		self:OpenInfo("anima_tracking", L.anima_tracking)
@@ -251,7 +269,7 @@ do
 	local vialCount = 0
 
 	local function printBottleMessage(self)
-		self:Message2(325769, "orange", L.times:format(vialCount, self:SpellName(325769)))
+		self:Message2(325769, "orange", L.times:format(vialCount, L.bottles))
 		vialCount = 0
 	end
 
@@ -262,12 +280,12 @@ do
 				bottleCount = bottleCount + 1 -- amount of cast
 				self:ScheduleTimer(printBottleMessage, 0.1, self)
 				self:PlaySound(325769, "info")
-				self:CDBar(325769, bottleTimers[bottleCount] or 20)
+				self:CDBar(325769, bottleTimers[bottleCount] or 20, L.bottles)
 			end
 		elseif spellId == 338750 then -- Enable Container
-			self:Message2(spellId, "cyan")
-			self:PlaySound(spellId, "long")
-			self:Bar(spellId, 100)
+			self:Message2(331870, "cyan")
+			self:PlaySound(331870, "long")
+			self:Bar(331870, 100)
 		end
 	end
 end
@@ -278,6 +296,12 @@ function mod:ExposeDesires(args)
 		self:PlaySound(args.spellId, "alert")
 	end
 	self:CDBar(args.spellId, 8.5)
+end
+
+function mod:WarpedDesiresApplied(args)
+	local amount = args.amount or 1
+	self:StackMessage(args.spellId, args.destName, amount, "purple")
+	self:PlaySound(args.spellId, "alarm")
 end
 
 do
@@ -303,23 +327,10 @@ do
 	end
 end
 
-function mod:WarpedDesiresApplied(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	self:PlaySound(args.spellId, "alarm")
-	--self:Bar(args.spellId, 25.5)
-end
-
 function mod:BottledAnima(args)
-	--self:Message2(args.spellId, "red")
+	--self:Message2(args.spellId, "red", L.bottles)
 	--self:PlaySound(args.spellId, "warning")
-	--self:Bar(args.spellId, 25.5)
-end
-
-function mod:SinsandSuffering(args)
-	self:Message2(args.spellId, "orange")
-	self:PlaySound(args.spellId, "long")
-	self:Bar(args.spellId, 26.8)
+	--self:Bar(args.spellId, 25.5, L.bottles)
 end
 
 do
@@ -329,17 +340,17 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if count == 1 then
-			self:Bar(args.spellId, 26.8)
+			self:Bar(args.spellId, 26.8, L.sins)
 		end
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+			self:Say(args.spellId, CL.count_rticon:format(L.sins, count, count))
 			self:PlaySound(args.spellId, "warning")
 		end
 		if self:GetOption(sharedSufferingMarker) then
 			SetRaidTarget(args.destName, count)
 		end
 
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3, nil, nil, nil, playerIcons)
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.sins, nil, nil, playerIcons)
 	end
 
 	function mod:SharedSufferingRemoved(args)
@@ -358,9 +369,9 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = icon
 		if #playerList == 1 then
-			self:StopBar(CL.count:format(args.spellName, concentrateAnimaCount))
+			self:StopBar(CL.count:format(CL.adds, concentrateAnimaCount))
 			concentrateAnimaCount = concentrateAnimaCount + 1
-			self:Bar(args.spellId, 36, CL.count:format(args.spellName, concentrateAnimaCount))
+			self:Bar(args.spellId, 36, CL.count:format(CL.adds, concentrateAnimaCount))
 			conjuredManifestationList = {}
 			conjuredManifestationCount = 1
 		end
@@ -438,8 +449,8 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				self:PlaySound(325713, "alarm")
-				self:PersonalMessage(325713, "underyou")
+				self:PlaySound(args.spellId, "alarm")
+				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end
 	end
