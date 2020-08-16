@@ -1,5 +1,13 @@
 if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
+-- TODO:
+-- -- Chain Link linked with message
+-- -- Timers after Destructive Impact reset?
+-- -- Mythic Fractured Boulder + Impact cast/land bars
+-- -- Gruesome rage message
+-- -- Vengeful Rage (mythic) message
+
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -17,61 +25,57 @@ local colossalRoarCount = 1
 local chainLinkCount = 1
 local hatefullGazeCount = 1
 local chainSlamCount = 1
-local stoneQuakeCount = 1
+local seismicShiftCount = 1
 
 local timers = {
 	[332318] = {22.5, 23, 45, 22.5, 45, 22.5, 45, 22.5, 45.0, 23.1, 41.4}, -- Destructive Stomp
 	[332687] = {0, 30.5, 37, 30.5, 37.0, 30.5, 37, 31, 36.5, 30.5, 33.1, 30.1}, -- Colossal Roar
+	[340817] = {18.5, 25.5, 30, 13.5, 25, 30} -- Seismic Shift
 }
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:GetLocale()
-if L then
-	L.isLinkedWith = "%s is linked with %s"
-	L.yourLink = "You are linked with %s"
-
-	L.skipped = "%s skipped"
-end
+-- local L = mod:GetLocale()
+-- if L then
+-- 	L.isLinkedWith = "%s is linked with %s"
+-- 	L.yourLink = "You are linked with %s"
+-- end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-local chainLinkMarker = mod:AddMarkerOption(false, "player", 1, 335293, 1, 2) -- Chain Link
 function mod:GetOptions()
 	return {
 		{331209, "SAY" ,"SAY_COUNTDOWN"}, -- Hateful Gaze
-		331314, -- Stunned Impact
-		{335293, "SAY", "SAY_COUNTDOWN"}, -- Chain Link
-		chainLinkMarker,
+		331314, -- Destructive Impact
+		335293, -- Chain Link
 		332318, -- Destructive Stomp
-		332660, -- Falling Debris
+		335361, -- Stonequake
 		332687, -- Colossal Roar
 		{335470, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Chain Slam
-		335361, -- Stonequake
-		341307, -- Fractured Debris
+		340817, -- Seismic Shift
 	},{
 		[331209] = "general",
-		[341307] = "mythic",
+		[340817] = "mythic",
 	}
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "HatefulGazeApplied", 331209)
 	self:Log("SPELL_AURA_REMOVED", "HatefulGazeRemoved", 331209)
-	self:Log("SPELL_AURA_APPLIED", "StunnedImpactApplied", 331314)
-	self:Log("SPELL_AURA_REMOVED", "StunnedImpactRemoved", 331314)
+	self:Log("SPELL_AURA_APPLIED", "DestructiveImpactApplied", 331314)
+	self:Log("SPELL_AURA_REMOVED", "DestructiveImpactRemoved", 331314)
 	self:Log("SPELL_AURA_APPLIED", "ChainThemApplied", 342420, 342419) -- Pre chain debuff
-	self:Log("SPELL_AURA_REMOVED", "ChainThemRemoved", 342420, 342419) -- Pre chain debuff
-	--self:Log("SPELL_AURA_APPLIED", "ChainLinkApplied", 335293)
 	self:Log("SPELL_CAST_START", "DestructiveStomp", 332318)
 	self:Log("SPELL_CAST_SUCCESS", "ColossalRoar", 332687)
 	self:Log("SPELL_AURA_APPLIED", "ChainSlamApplied", 335470)
 	self:Log("SPELL_AURA_REMOVED", "ChainSlamRemoved", 335470)
+
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "SeismicShiftApplied", 340817)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 335361) -- Stonequake
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 335361)
@@ -84,57 +88,23 @@ function mod:OnEngage()
 	chainLinkCount = 1
 	hatefullGazeCount = 1
 	chainSlamCount = 1
-	stoneQuakeCount = 1
+	seismicShiftCount = 1
 
-	self:Bar(335293, 6, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
-	self:Bar(335361, 14.5, CL.count:format(self:SpellName(335361), stoneQuakeCount)) -- Stonequake
+	self:Bar(335293, 5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
 	self:Bar(332318, timers[332318][destructiveStompCount], CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	self:Bar(335470, 37, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
 	self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 	if self:Mythic() then
-		--self:CDBar(341307, 11) -- Fractured Debris
-	else
-		self:CDBar(332660, 11) -- Falling Debris
+		self:CDBar(340817, timers[340817][seismicShiftCount], CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Seismic Shift
 	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-local function checkIfSkipped(self, t)
-	if self:CheckOption(335361, "BAR") and self:BarTimeLeft(CL.count:format(self:SpellName(335361), stoneQuakeCount)) == 0 then
-		self:Message2(335361, "cyan", L.skipped:format(CL.count:format(self:SpellName(335361), stoneQuakeCount)))
-		stoneQuakeCount = stoneQuakeCount + 1
-		self:CDBar(335361, t, CL.count:format(self:SpellName(335361), stoneQuakeCount))
-	end
-end
-
-do
-	local prev = 0
-	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-		if spellId == 335433 then -- Stonequake
-			local t = GetTime()
-			if t-prev > 2 then
-				prev = t
-				self:Message2(335361, "cyan", CL.count:format(self:SpellName(335361), stoneQuakeCount))
-				self:PlaySound(335361, "long")
-				stoneQuakeCount = stoneQuakeCount + 1
-				self:CDBar(335361, 35, CL.count:format(self:SpellName(335361), stoneQuakeCount))
-				self:ScheduleTimer(checkIfSkipped, 38, self, 26) -- if skipped CD is ~ 64 from last one
-			end
-		elseif spellId == 332362 then -- Falling Debris
-			self:Message2(332660, "yellow")
-			self:PlaySound(332660, "alarm")
-			self:CDBar(332660, 11) -- XXX Delayed sometimes due to other casts/charge/stun
-		elseif spellId == 341307 then -- Fractured Debris
-			self:Message2(341307, "yellow")
-			self:PlaySound(341307, "alarm")
-			--self:CDBar(341307, 11)
-		end
-	end
-end
 
 function mod:HatefulGazeApplied(args)
+	self:StopBar(CL.count:format(args.spellName, hatefullGazeCount))
 	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, hatefullGazeCount))
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
@@ -152,59 +122,35 @@ function mod:HatefulGazeRemoved(args)
 	end
 end
 
-function mod:StunnedImpactApplied(args)
+function mod:DestructiveImpactApplied(args)
 	self:Message2(args.spellId, "red", CL.on:format(args.spellName, args.destName))
 	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, 4)
+	self:Bar(args.spellId, 12)
 end
 
-function mod:StunnedImpactRemoved(args)
+function mod:DestructiveImpactRemoved(args)
 	self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 end
 
 do
-	local firstTarget, onMe = nil, nil
-	function mod:ChainThemApplied(args)
-		if firstTarget then -- Warn and reset stuff
-			if onMe or self:Me(args.destGUID) then -- Personal warning with whom you are linked with
-				self:Message2(335293, "blue", L.yourLink:format(onMe and self:ColorName(args.destName) or self:ColorName(firstTarget)))
-				self:PlaySound(335293, "warning") -- Chain Link
-				self:Say(335293) -- Chain Link
-				self:SayCountdown(335293, 6) -- Chain Link
-			else
-				self:Message2(335293, "yellow", CL.count:format(L.isLinkedWith:format(self:ColorName(firstTarget), self:ColorName(args.destName)), chainLinkCount))
-			end
+	local prev = 0
+	function mod:ChainThemApplied(args) -- XXX Linked with X messages, perhaps targetsmessage in non-mythic if not targetted?
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			CL.count:format(CL.count:format(self:SpellName(335293), chainLinkCount))
+			self:Message2(335293, "yellow", CL.count:format(self:SpellName(335293), chainLinkCount))
 			chainLinkCount = chainLinkCount + 1
-			firstTarget = nil
-			onMe = nil
-			self:Bar(335293, 22.5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
-			if self:GetOption(chainLinkMarker) then
-				SetRaidTarget(args.destName, 2)
-			end
-		else
-			if self:GetOption(chainLinkMarker) then
-				SetRaidTarget(args.destName, 1)
-			end
-			firstTarget = args.destName
-			if self:Me(args.destGUID) then
-				onMe = true
-			end
+			self:CDBar(335293, 69, CL.count:format(self:SpellName(335293), chainLinkCount))
 		end
-	end
-
-	function mod:ChainThemRemoved(args)
-		firstTarget = nil
 		if self:Me(args.destGUID) then
-			onMe = nil
-			self:CancelSayCountdown(335293) -- Chain Link
-		end
-		if self:GetOption(chainLinkMarker) then
-			SetRaidTarget(args.destName, 0)
+			self:PlaySound(335293, "warning")
 		end
 	end
 end
 
 function mod:DestructiveStomp(args)
+	self:StopBar(CL.count:format(args.spellName, destructiveStompCount))
 	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, destructiveStompCount))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, destructiveStompCount))
@@ -213,6 +159,7 @@ function mod:DestructiveStomp(args)
 end
 
 function mod:ColossalRoar(args)
+	self:StopBar(CL.count:format(args.spellName, colossalRoarCount))
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, colossalRoarCount))
 	self:PlaySound(args.spellId, "info")
 	colossalRoarCount = colossalRoarCount + 1
@@ -220,6 +167,7 @@ function mod:ColossalRoar(args)
 end
 
 function mod:ChainSlamApplied(args)
+	self:StopBar(CL.count:format(args.spellName, chainSlamCount))
 	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chainSlamCount))
 	self:SecondaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
@@ -228,13 +176,28 @@ function mod:ChainSlamApplied(args)
 		self:PlaySound(args.spellId, "warning")
 	end
 	chainSlamCount = chainSlamCount + 1
-	--self:Bar(args.spellId, 34, CL.count:format(args.spellName, chainSlamCount))
+	self:Bar(args.spellId, 69, CL.count:format(args.spellName, chainSlamCount))
 end
 
 function mod:ChainSlamRemoved(args)
 	self:SecondaryIcon(args.spellId)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+do
+	local prev = 0
+	function mod:SeismicShiftApplied(args)
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			self:StopBar(CL.count:format(args.spellName, seismicShiftCount))
+			self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, seismicShiftCount))
+			seismicShiftCount = seismicShiftCount + 1
+			self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(args.spellName, seismicShiftCount))
+			self:PlaySound(args.spellId, "long")
+		end
 	end
 end
 
