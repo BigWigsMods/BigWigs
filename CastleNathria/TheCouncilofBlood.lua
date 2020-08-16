@@ -128,7 +128,7 @@ end
 
 function mod:BossDeath(args)
 	bossesKilled = bossesKilled + 1
-	self:Message2("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3))
+	self:Message2("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
 	if args.mobId == 166969 then
 		friedaAlive = false
 	elseif args.mobId == 166970 then
@@ -163,10 +163,14 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage2(328334, "orange", name)
-		if self:Me(guid) then
-			self:Say(328334)
-			self:PlaySound(328334, "warning")
+		if UnitIsPlayer(name) then -- Targets a bunny a lot of times
+			self:TargetMessage2(328334, "orange", name)
+			if self:Me(guid) then
+				self:Say(328334)
+				self:PlaySound(328334, "warning")
+			end
+		else
+			self:Message2(328334, "orange")
 		end
 	end
 
@@ -233,12 +237,19 @@ function mod:AnimaFountain(args)
 	self:CDBar(args.spellId, 34)
 end
 
-function mod:ScarletLetter(args)
-	self:TargetMessage2(331706, "red", args.destName)
-	self:PlaySound(331706, "long")
-	self:CDBar(331706, 30.5)
-	if self:Me(args.destGUID) then
-		self:Say(331706)
+
+do
+	local function printTarget(self, name, guid)
+		self:TargetMessage2(331706, "red", name)
+		if self:Me(guid) then
+			self:Say(331706)
+		end
+	end
+
+	function mod:ScarletLetter(args)
+		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
+		self:PlaySound(331706, "long")
+		self:CDBar(331706, 30.5)
 	end
 end
 
