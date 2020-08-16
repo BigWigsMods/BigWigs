@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Lady Inerva Darkvein", 2296, 2420)
 if not mod then return end
 mod:RegisterEnableMob(165521) -- Lady Inerva Darkvein
 mod.engageId = 2406
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -61,7 +61,7 @@ function mod:GetOptions()
 		"custom_on_stop_timers",
 		331870, -- Focus Anima
 		-- Container of Desire
-		{325379, "TANK"}, -- Expose Desires
+		{341621, "TANK"}, -- Expose Desires
 		325382, -- Warped Desires
 		325936, -- Shared Cognition
 		-- Container of Bottled Anima
@@ -97,7 +97,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Container of Desire
-	self:Log("SPELL_CAST_START", "ExposeDesires", 325379)
+	self:Log("SPELL_CAST_START", "ExposeDesires", 341621)
 	self:Log("SPELL_AURA_APPLIED", "WarpedDesiresApplied", 325382)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedDesiresApplied", 325382)
 	self:Log("SPELL_AURA_APPLIED", "SharedCognitionApplied", 325936)
@@ -107,12 +107,14 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "BottledAnima", 325769) -- see USCS
 
 	-- Container of Sin
+	self:RegisterEvent("RAID_BOSS_WHISPER")
+	self:RegisterMessage("BigWigs_BossComm") -- Early Shared Suffering Warnings
 	self:Log("SPELL_AURA_APPLIED", "SharedSufferingApplied", 324983)
 	self:Log("SPELL_AURA_REMOVED", "SharedSufferingRemoved", 324983)
 
 	-- Container of Concentrated Anima
-	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnimaApplied", 332664)
-	self:Log("SPELL_AURA_REMOVED", "ConcentrateAnimaRemoved", 332664)
+	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnimaApplied", 332664, 340477) -- Concentrated Anima, Highly Concentrated Anima
+	self:Log("SPELL_AURA_REMOVED", "ConcentrateAnimaRemoved", 332664, 340477)
 	self:Log("SPELL_AURA_APPLIED", "UnconscionableGuiltApplied", 331573)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "UnconscionableGuiltApplied", 331573)
 	self:Log("SPELL_CAST_START", "Condemn", 331550)
@@ -131,7 +133,7 @@ function mod:OnEngage()
 	concentrateAnimaCount = 1
 	wipe(anima)
 
-	self:Bar(325379, 12) -- Expose Desires
+	self:Bar(341621, 12) -- Expose Desires
 	self:Bar(324983, 23, L.sins) -- Shared Suffering
 	self:Bar(325769, bottleTimers[bottleCount], L.bottles) -- Bottled Anima
 	self:Bar(332664, 56, CL.count:format(CL.adds, concentrateAnimaCount)) -- Concentrate Anima
@@ -334,26 +336,50 @@ function mod:BottledAnima(args)
 end
 
 do
-	local playerList, playerIcons = mod:NewTargetList(), {}
-	function mod:SharedSufferingApplied(args)
-		local count = #playerIcons+1
-		playerList[count] = args.destName
-		playerIcons[count] = count
-		if count == 1 then
-			self:Bar(args.spellId, 26.8, L.sins)
+	local playerList, onMe = {}, nil
+	local function addPlayerToList(self, name)
+		if not tContains(playerList, name) then
+			local count = #playerList+1
+			playerList[count] = name
+			self:TargetsMessage(324983, "yellow", self:ColorName(playerList), 3, L.sins, nil, 4)
+			if self:GetOption(sharedSufferingMarker) then
+				SetRaidTarget(name, count)
+			end
+			if count == 1 then
+				self:Bar(324983, 26.8, L.sins)
+			end
 		end
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(L.sins, count, count))
-			self:PlaySound(args.spellId, "warning")
-		end
-		if self:GetOption(sharedSufferingMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+	end
 
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.sins, nil, nil, playerIcons)
+	function mod:RAID_BOSS_WHISPER(_, msg)
+		if msg:find("325005", nil, true) then -- Shared Suffering
+			onMe = true
+			self:Say(324983, L.sins)
+			self:PlaySound(324983, "warning")
+			self:Sync("SharedSufferingTarget")
+		end
+	end
+
+	function mod:BigWigs_BossComm(_, msg, _, name)
+		if msg == "SharedSufferingTarget" then
+			addPlayerToList(self, name)
+		end
+	end
+
+	function mod:SharedSufferingApplied(args)
+		addPlayerToList(self, args.destName)
+		if self:Me(args.destGUID) and not onMe then
+			onMe = true
+			self:Say(324983, L.sins)
+			self:PlaySound(324983, "warning")
+		end
 	end
 
 	function mod:SharedSufferingRemoved(args)
+		if self:Me(args.destGUID) then
+			onMe = false
+		end
+		playerList = {}
 		if self:GetOption(sharedSufferingMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
@@ -371,24 +397,24 @@ do
 		if #playerList == 1 then
 			self:StopBar(CL.count:format(CL.adds, concentrateAnimaCount))
 			concentrateAnimaCount = concentrateAnimaCount + 1
-			self:Bar(args.spellId, 36, CL.count:format(CL.adds, concentrateAnimaCount))
+			self:Bar(332664, 36, CL.count:format(CL.adds, concentrateAnimaCount))
 			conjuredManifestationList = {}
 			conjuredManifestationCount = 1
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:PlaySound(args.spellId, "alarm")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, icon, icon))
-			self:SayCountdown(args.spellId, 10)
-			self:OpenProximity(args.spellId, 8)
+			self:PlaySound(332664, "alarm")
+			self:Say(332664, CL.count_rticon:format(args.spellName, icon, icon))
+			self:SayCountdown(332664, 10)
+			self:OpenProximity(332664, 8)
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, nil, nil, nil, playerIcons)
+		self:TargetsMessage(332664, "yellow", playerList, nil, nil, nil, nil, playerIcons)
 
 		if self:GetOption(concentrateAnimaMarker) then
 			SetRaidTarget(args.destName, icon)
 		end
 		if not isOnMe then
-			self:OpenProximity(args.spellId, 8, proxList)
+			self:OpenProximity(332664, 8, proxList)
 		end
 	end
 
@@ -396,15 +422,15 @@ do
 		tDeleteItem(proxList, args.destName)
 		if self:Me(args.destGUID) then
 			isOnMe = nil
-			self:CancelSayCountdown(args.spellId)
-			self:CloseProximity(args.spellId)
+			self:CancelSayCountdown(332664)
+			self:CloseProximity(332664)
 		end
 
 		if not isOnMe then
 			if #proxList == 0 then
-				self:CloseProximity(args.spellId)
+				self:CloseProximity(332664)
 			else
-				self:OpenProximity(args.spellId, 8, proxList)
+				self:OpenProximity(332664, 8, proxList)
 			end
 		end
 
