@@ -87,7 +87,7 @@ function mod:GetOptions()
 		-- High Torturer Darithos
 		{328889, "SAY", "PROXIMITY"}, -- Greater Castigation
 		-- Mythic
-		338600,  -- Cloak of Flames
+		337859,  -- Cloak of Flames
 	},{
 		["stages"] = "general",
 		[326455] = -21966, -- Shade of Kael'thas
@@ -120,7 +120,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "VanquishedApplied", 325442)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VanquishedApplied", 325442)
 	self:Log("SPELL_CAST_START", "ConcussiveSmash", 325506)
-	self:Death("RockboundVanquisherDeath", 165764) -- Essence Font
+	self:Death("RockboundVanquisherDeath", 165764) -- Rockbound Vanquisher
 	self:Log("SPELL_AURA_APPLIED", "CrimsonFlurryApplied", 326583)
 	self:Log("SPELL_CAST_START", "ReturntoStone", 333145)
 	self:Log("SPELL_CAST_START", "VulgarBrand", 333002)
@@ -136,8 +136,8 @@ function mod:OnBossEnable()
 	self:Death("DarithosDeath", 168973) -- High Torturer Darithos
 
 	-- Mythic
-	self:Log("SPELL_AURA_APPLIED", "CloakofFlamesApplied", 338600)
-	self:Log("SPELL_AURA_REMOVED", "CloakofFlamesRemoved", 338600)
+	self:Log("SPELL_AURA_APPLIED", "CloakofFlamesApplied", 337859)
+	self:Log("SPELL_AURA_REMOVED", "CloakofFlamesRemoved", 337859)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 328579) -- Smoldering Remnants
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 328579)
@@ -170,7 +170,7 @@ function mod:OnEngage()
 	end
 
 	-- if self:Mythic() then
-	-- 	self:Bar(338600, 5.5, CL.count:format(self:SpellName(338600), cloakofFlamesCount)) -- Cloak of Flames
+	-- 	self:Bar(337859, 79.5, CL.count:format(self:SpellName(337859), cloakofFlamesCount)) -- Cloak of Flames
 	-- end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -221,7 +221,7 @@ function mod:UNIT_HEALTH(event, unit)
 	end
 end
 
-function mod:ConjuredManifestationMarker(event, unit, guid)
+function mod:SunKingsSalvationMarker(event, unit, guid)
 	if self:GetOption(vileOccultistMarker) and self:MobId(guid) == 165763 and not mobCollector[guid] then -- Vile Occultist
 		vileOccultistMarkCount = vileOccultistMarkCount + 1
 		local icon = 9 - (vileOccultistMarkCount % 6 + 1) -- 8, 7, 5, 6, 4, 3
@@ -302,7 +302,7 @@ do
 	local castEnd = 0
 	function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, destName)
 		if msg:find("325873", nil, true) then -- Ember Blast
-			self:TargetMessage2(325877, "orange", destName, CL.count:format(self:SpellName(325877), emberBlastCount-1))
+			self:TargetMessage2(325877, "orange", destName, CL.count:format(self:SpellName(325877), emberBlastCount))
 			local guid = UnitGUID(destName)
 			if self:Me(guid) then
 				self:PlaySound(325877, "warning")
@@ -339,7 +339,7 @@ function mod:EyesonTarget(args)
 end
 
 function mod:ReflectionofGuiltRemoved()
-	self:Message2("stages", "green", CL.killed:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider") -- Shade of Kael'thas
+	self:Message2("stages", "green", CL.removed:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider") -- Shade of Kael'thas
 	self:PlaySound("stages", "long")
 	self:StopBar(326455) -- Fiery Strike
 	self:StopBar(CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
@@ -487,7 +487,7 @@ function mod:CloakofFlamesApplied(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakofFlamesCount))
 	cloakofFlamesCount = cloakofFlamesCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, cloakofFlamesCount))
+	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, cloakofFlamesCount))
 end
 
 function mod:CloakofFlamesRemoved(args)
