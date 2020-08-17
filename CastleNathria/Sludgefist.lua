@@ -37,11 +37,10 @@ local timers = {
 -- Localization
 --
 
--- local L = mod:GetLocale()
--- if L then
--- 	L.isLinkedWith = "%s is linked with %s"
--- 	L.yourLink = "You are linked with %s"
--- end
+local L = mod:GetLocale()
+if L then
+	L.yourLink = "You are linked with %s"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -133,18 +132,42 @@ function mod:DestructiveImpactRemoved(args)
 end
 
 do
-	local prev = 0
-	function mod:ChainThemApplied(args) -- XXX Linked with X messages, perhaps targetsmessage in non-mythic if not targetted?
-		local t = args.time
-		if t-prev > 2 then
-			prev = t
-			CL.count:format(CL.count:format(self:SpellName(335293), chainLinkCount))
+	local scheduled, mainChainSet, secondChainSet, myLink, myPartner = nil, {}, {}, nil, nil
+	function mod:ChainLinkMessage()
+		if myLink then
+			self:Message2(335293, "blue", L.yourLink:format(self:ColorName(myPartner) or self:ColorName(secondChainSet[myLink])))
+		end
+		scheduled = nil
+		mainChainSet = {}
+		secondChainSet = {}
+		myLink = nil
+		myPartner = nil
+	end
+
+	function mod:ChainThemApplied(args)
+		if self:Me(args.destGUID) then
+			self:PlaySound(335293, "warning")
+		end
+		if args.spellId == 342420 then -- mainChainSet
+			mainChainSet[#mainChainSet+1] = args.destName
+			if self:Me(args.destGUID) then
+				myLink = #mainChainSet
+			end
+		elseif args.spellId == 342419 then -- secondChainSet
+			secondChainSet[#secondChainSet+1] = args.destName
+			if self:Me(args.destGUID) then
+				myLink = #secondChainSet
+				myPartner = mainChainSet[#secondChainSet]
+			end
+		end
+		if not scheduled then
+			scheduled = self:ScheduleTimer("ChainLinkMessage", 0.1)
+		end
+		if #mainChainSet == 1 then
+			self:StopBar(CL.count:format(CL.count:format(self:SpellName(335293), chainLinkCount)))
 			self:Message2(335293, "yellow", CL.count:format(self:SpellName(335293), chainLinkCount))
 			chainLinkCount = chainLinkCount + 1
 			self:CDBar(335293, 69, CL.count:format(self:SpellName(335293), chainLinkCount))
-		end
-		if self:Me(args.destGUID) then
-			self:PlaySound(335293, "warning")
 		end
 	end
 end
