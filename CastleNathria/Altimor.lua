@@ -308,14 +308,12 @@ do
 	local playerList = mod:NewTargetList()
 	function mod:PetrifyingHowlApplied(args)
 		playerList[#playerList+1] = args.destName
-		if #playerList == 1 then
-		end
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 8)
 			self:Flash(args.spellId)
-			self:TargetBar(args.spellId, args.destName, 8)
+			self:TargetBar(args.spellId, 8, args.destName)
 		end
 		self:TargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, petrifyingHowlCount-1), nil, 1) -- Travel time on debuffs?
 	end
