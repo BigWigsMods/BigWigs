@@ -3,7 +3,7 @@ if not IsTestBuild() then return end
 -- TODO:
 -- -- Mythic: Dancing Fever
 -- -- Stop/start bars during a dance? does it delay it or just keep the CD counting down?
---
+-- -- Translate boss emotes for the dance
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -26,6 +26,15 @@ local bossesKilled = 0
 local stavrosAlive = true
 local friedaAlive = true
 local niklausAlive = true
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -71,6 +80,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("RAID_BOSS_EMOTE")
 	self:Death("BossDeath", 166969, 166970, 166971) -- Baroness Frieda, Lord Stavros, Castellan Niklaus
 
 	--[[ Castellan Niklaus ]]--
@@ -125,6 +135,11 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:RAID_BOSS_EMOTE(event, msg, npcname)
+	if msg:find(L.macabre_start_emote, nil, true) then -- Dance Macabre start
+		self:CastBar(330959, 7) -- Dance Macabre
+	end
+end
 
 function mod:BossDeath(args)
 	bossesKilled = bossesKilled + 1
