@@ -506,6 +506,7 @@ local function parseLua(file)
 
 	local options, option_keys = {}, {}
 	local methods, registered_methods = {Win=true}, {}
+	local event_callbacks = {}
 	local current_func = nil
 	local rep = {}
 	for n, line in ipairs(lines) do
@@ -563,10 +564,18 @@ local function parseLua(file)
 			if not options[callback] then
 				options[callback] = {}
 			end
+			if not event_callbacks[event] then
+				event_callbacks[event] = {}
+			end
 			for _, v in next, strsplit(spells) do
 				v = tonumber(v)
 				if not contains(options[callback], v) then
 					table.insert(options[callback], v)
+				end
+				if not contains(event_callbacks[event], v) then
+					table.insert(event_callbacks[event], v)
+				else
+					error(string.format("    %s:%d: Registered Log event \"%s\" with spell id \"%d\" multiple times", file_name, n, event, v))
 				end
 			end
 			if not next(options[callback]) then
