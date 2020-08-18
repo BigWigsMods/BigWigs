@@ -5,7 +5,7 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Sire Denathrius", 2296, 2424)
 if not mod then return end
-mod:RegisterEnableMob(168938, 168156) -- Sire Denathrius, Remornia
+mod:RegisterEnableMob(167406) -- Sire Denathrius
 mod.engageId = 2407
 --mod.respawnTime = 30
 
@@ -18,6 +18,16 @@ local intermission = nil
 local nextStageWarning = 73
 local burdenTracker = {}
 local burdenStacksOnMe = 0
+local cleansingPainCount = 1
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+-- local L = mod:GetLocale()
+-- if L then
+-- 	L.countx = "|cFFFFFFFF%dx %d stack|r"
+-- end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -46,7 +56,7 @@ function mod:GetOptions()
 		335873, -- Rancor
 		329181, -- Wracking Pain
 		333932, -- Hand of Destruction
-		330137, -- Massacre
+		330042, -- Massacre
 		-- Stage Three: Indignation
 		{332585, "TANK"}, -- Scorn
 		332619, -- Shattering Pain
@@ -73,6 +83,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BurdenofSinStacks", 326699)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "BurdenofSinRemoved", 326699)
 	self:Log("SPELL_CAST_START", "CleansingPain", 326707)
+	self:Log("SPELL_CAST_SUCCESS", "CleansingPainSuccess", 326707)
 	self:Log("SPELL_AURA_APPLIED", "BloodPriceApplied", 326851)
 	self:Log("SPELL_AURA_APPLIED", "NightHunterApplied", 327796)
 	self:Log("SPELL_AURA_REMOVED", "NightHunterRemoved", 327796)
@@ -83,16 +94,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "MarchofthePenitentRemoved", 328276)
 
 	-- Stage Two: The Crimson Chorus
-	self:Log("SPELL_AURA_APPLIED", "BloodboundApplied", 330580)
-	self:Log("SPELL_AURA_APPLIED", "CarnageApplied", 326699)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "CarnageApplied", 326699)
+	self:Log("SPELL_CAST_SUCCESS", "BegintheChorus", 329697)
+	self:Log("SPELL_AURA_APPLIED", "CarnageApplied", 329906)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "CarnageApplied", 329906)
 	self:Log("SPELL_AURA_APPLIED", "ImpaleApplied", 329951)
 	self:Log("SPELL_AURA_REMOVED", "ImpaleRemoved", 329951)
 	self:Log("SPELL_CAST_START", "WrackingPain", 329181)
 	self:Log("SPELL_AURA_APPLIED", "WrackingPainApplied", 329181)
-	self:Log("SPELL_AURA_APPLIED", "WrackingPainApplied", 329181)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "WrackingPainApplied", 329181)
 	self:Log("SPELL_CAST_START", "HandofDestruction", 333932)
-	self:Log("SPELL_CAST_SUCCESS", "Massacre", 330137)
+	self:Log("SPELL_CAST_SUCCESS", "Massacre", 330042)
 
 	-- Stage Three: Indignation
 	self:Log("SPELL_AURA_APPLIED", "RemorniaApplied", 330871)
@@ -117,19 +128,19 @@ function mod:OnEngage()
 
 	burdenTracker = {}
 	burdenStacksOnMe = 0
+	cleansingPainCount = 1
+	self:Bar(326707, 5, CL.count:format(self:SpellName(326707), cleansingPainCount)) -- Cleansing Pain
+	self:Bar(326851, 24.5) -- Blood Price
+	self:Bar(327796, 12) -- Night Hunter
+	self:Bar(327122, 53) -- Ravage
 
-	-- self:Bar(326707, 25) -- Cleansing Pain
-	-- self:Bar(326851, 25) -- Blood Price
-	-- self:Bar(327796, 25) -- Night Hunter
-	-- self:Bar(327122, 25) -- Ravage
-
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:UNIT_HEALTH_FREQUENT(event, unit)
+function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then -- Stage changes at 70% and 40%
 		local nextStage = stage == 1 and CL.intermission or CL.stage:format(stage + 1)
@@ -182,11 +193,13 @@ do
 end
 
 function mod:CleansingPain(args)
-	self:Message2(args.spellId, "purple")
-	if self:Tank() then
-		self:PlaySound(args.spellId, "alert")
-	end
-	-- self:Bar(args.spellId, 25)
+	self:Message2(args.spellId, "purple", CL.count:format(args.spellName, cleansingPainCount))
+	self:PlaySound(args.spellId, "alert")
+end
+
+function mod:CleansingPainSuccess(args)
+	cleansingPainCount = cleansingPainCount + 1
+	self:Bar(args.spellId, 25, CL.count:format(args.spellName, cleansingPainCount))
 end
 
 do
@@ -209,7 +222,7 @@ do
 		end
 		if not scheduled then
 			scheduled = self:ScheduleTimer("BloodPriceWarning", 0.1)
-			--self:Bar(args.spellId, 20)
+			self:Bar(args.spellId, 58)
 		end
 	end
 end
@@ -228,7 +241,7 @@ do
 		if count == 1 then
 			self:CastBar(args.spellId, 6)
 			self:PlaySound(args.spellId, "warning")
-			--self:Bar(args.spellId, 20)
+			self:Bar(args.spellId, 26)
 		end
 		if self:GetOption(nightHunterMarker) then
 			SetRaidTarget(args.destName, count)
@@ -249,7 +262,7 @@ function mod:Ravage(args)
 	self:Message2(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, 6)
-	-- self:Bar(args.spellId, 25)
+	self:Bar(args.spellId, 58)
 end
 
 -- Intermission: March of the Penitent
@@ -261,7 +274,7 @@ function mod:MarchofthePenitentApplied(args)
 		self:PlaySound("stages", "long")
 		self:CastBar("stages", 15, CL.intermission, 328276) -- March of the Penitent icon
 
-		self:StopBar(326707) -- Cleansing Pain
+		self:StopBar(CL.count:format(self:SpellName(326707), cleansingPainCount)) -- Cleansing Pain
 		self:StopBar(326851) -- Blood Price
 		self:StopBar(327796) -- Night Hunter
 		self:StopBar(327122) -- Ravage
@@ -273,8 +286,10 @@ function mod:MarchofthePenitentRemoved(args)
 end
 
 -- Stage Two: The Crimson Chorus
-function mod:BloodboundApplied(args)
-	self:Message2("stages", "green", CL.spawned:format(self:SpellName(-22162)), false)
+function mod:BegintheChorus(args)
+		--	"<179.27 00:11:34> [BigWigs_Message] Sire Denathrius#stages#Stage 2#green#false#false", -- [6887]
+	self:Message2("stages", "green", CL.stage:format(stage), false)
+	self:PlaySound("stages", "long")
 end
 
 function mod:CarnageApplied(args)
@@ -295,9 +310,9 @@ do
 			self:SayCountdown(args.spellId, 6, count)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, nil, playerIcons)
+		self:TargetsMessage(args.spellId, "orange", playerList, 3, nil, nil, 2, playerIcons) -- debuffs are late
 		if count == 1 then
-			--self:Bar(args.spellId, 20)
+			self:Bar(args.spellId, 20)
 		end
 		if self:GetOption(impaleMarker) then
 			SetRaidTarget(args.destName, count)
@@ -317,7 +332,7 @@ end
 function mod:WrackingPain(args)
 	self:Message2(args.spellId, "yellow", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
-	-- self:Bar(args.spellId, 25)
+	self:Bar(args.spellId, 19.5)
 end
 
 function mod:WrackingPainApplied(args)
@@ -331,13 +346,13 @@ function mod:HandofDestruction(args)
 	self:Message2(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 6)
-	-- self:Bar(args.spellId, 25)
+	self:Bar(args.spellId, 44)
 end
 
 function mod:Massacre(args)
 	self:Message2(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
-	-- self:Bar(args.spellId, 25)
+	self:Bar(args.spellId, 50)
 end
 
 -- Stage Three: Indignation
