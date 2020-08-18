@@ -29,7 +29,7 @@ if L then
 	L.freeze_trigger1 = "的速度慢下来了！"
 	L.freeze_trigger2 = "冻结了！"
 	L.freeze_trigger3 = "变成了坚硬的固体！"
-	L.freeze_trigger4 = "突然裂开了！"
+	L.freeze_trigger4 = "开始出现裂缝！"
 	L.freeze_trigger5 = "看起来就要碎裂了！"
 
 	L.freeze_warn1 = "第一冻结阶段！"
