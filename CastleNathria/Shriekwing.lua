@@ -1,12 +1,8 @@
 if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- TODO:
--- -- Check how often we want to warm for Exsanguinated stacks
--- -- Delay Exsanguinating Bite timer when needed
--- -- Delay Sanguine Feast timer when needed
--- -- Replace Dark Descent debuff tracking with CLUE events when they are in
--- -- Check timers after intermission
 -- -- Respawn timer (was very short on beta, will it stay?)
+-- -- Deadly Descent warnings?
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -23,10 +19,20 @@ mod.engageId = 2398
 --
 
 local ExsanguinatStacksOnMe = nil
-local stageOver = nil
 local shriekCount = 1
 local echoCount = 1
 local scentOfBloodCount = 1
+local sonarShriekCount = 1
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.pickup_lantern = "%s picked up the lantern!" -- Blood Lantern
+	L.dropped_lantern = "Lantern dropped by %s!"
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -46,10 +52,13 @@ function mod:GetOptions()
 		328921, -- Bloodgorge
 		329362, -- Dark Sonar
 		340047, -- Sonar Shriek
+		341684, -- The Blood Lantern
+		341489, -- Bloodlight
 	}, {
 		["stages"] = "general",
 		[328897] = -22101, -- Stage One - Thirst for Blood
 		[328921] = -22102, -- Stage Two - Terror of Castle Nathria
+		[341684] = "mythic", -- Mythic
 	}
 end
 
@@ -70,6 +79,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SonarShriek", 340047)
 	self:Log("SPELL_AURA_REMOVED", "BloodgorgeRemoved", 328921)
 
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "TheBloodLanternApplied", 341684)
+	self:Log("SPELL_AURA_REMOVED", "TheBloodLanternRemoved", 341684)
+	self:Log("SPELL_AURA_APPLIED", "BloodlightApplied", 341489)
+	self:Log("SPELL_AURA_REMOVED", "BloodlightRemoved", 341489)
+
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 340324) -- Sanguine Ichor
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 340324)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 340324)
@@ -79,11 +94,13 @@ function mod:OnEngage()
 	shriekCount = 1
 	echoCount = 1
 	scentOfBloodCount = 1
+	sonarShriekCount = 1
 
-	self:CDBar(328857, 6) -- Exsanguinating Bite
-	self:CDBar(330711, 21, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
-	self:CDBar(336345, 31.1, CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
-	self:CDBar(342074, 42.5, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
+	self:CDBar(328857, 8) -- Exsanguinating Bite
+	self:CDBar(330711, 13, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
+	self:CDBar(342074, 20.4, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
+	self:CDBar(336345, 29.5, CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
+	self:CDBar(328921, 101) -- Bloodgorge
 end
 
 --------------------------------------------------------------------------------
@@ -112,7 +129,7 @@ end
 function mod:ExsanguinatingBite(args)
 	self:Message2(args.spellId, "purple")
 	self:PlaySound(args.spellId, "info")
-	self:CDBar(args.spellId, 11) -- Delay if Earsplitting Shriek will delay it?
+	self:CDBar(args.spellId, 17)
 end
 
 function mod:EarsplittingShriek(args)
@@ -120,7 +137,9 @@ function mod:EarsplittingShriek(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, shriekCount))
 	shriekCount = shriekCount + 1
-	self:CDBar(args.spellId, 45, CL.count:format(args.spellName, shriekCount))
+	if shriekCount < 4 then -- Only 3 each stage 1
+		self:Bar(args.spellId, 34.2, CL.count:format(args.spellName, shriekCount))
+	end
 end
 
 do
@@ -134,7 +153,9 @@ do
 		end
 		if #playerList == 1 then
 			scentOfBloodCount = scentOfBloodCount + 1
-			self:Bar(342074, 42.5, CL.count:format(self:SpellName(342074), scentOfBloodCount))
+			if scentOfBloodCount < 3 then -- Only 2 each stage 1
+				self:Bar(342074, 42.5, CL.count:format(self:SpellName(342074), scentOfBloodCount))
+			end
 		end
 		self:TargetsMessage(342074, "yellow", playerList, nil, CL.count:format(self:SpellName(342074), scentOfBloodCount-1))
 	end
@@ -150,7 +171,9 @@ function mod:EchoScreech(args)
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, echoCount))
 	self:PlaySound(args.spellId, "alert")
 	echoCount = echoCount + 1
-	self:CDBar(args.spellId, 42, CL.count:format(args.spellName, echoCount))
+	if echoCount < 3 then -- Only 2 each stage 1
+		self:CDBar(args.spellId, 42.5, CL.count:format(args.spellName, echoCount))
+	end
 end
 
 -- Stage Two - Terror of Castle Nathria
@@ -163,9 +186,11 @@ function mod:Bloodgorge(args)
 	self:StopBar(CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:StopBar(CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
 
+	sonarShriekCount = 1
+
 	self:CDBar("stages", 45, CL.intermission, args.spellId) -- 5s Cast, 40s Intermission/Stage 2
-	stageOver = args.time + 45
-	self:CDBar(329362, 7.4) -- Dark Sonar
+	self:CDBar(329362, 7.3) -- Dark Sonar
+	self:CDBar(340047, 18.3, CL.count:format(self:SpellName(340047), sonarShriekCount)) -- Sonar Shriek
 end
 
 function mod:DarkSonar(args)
@@ -174,10 +199,11 @@ function mod:DarkSonar(args)
 end
 
 function mod:SonarShriek(args)
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, sonarShriekCount))
 	self:PlaySound(args.spellId, "warning")
-	if stageOver - args.time > 6.1 then
-		self:CDBar(args.spellId, 6.1)
+	sonarShriekCount = sonarShriekCount + 1
+	if sonarShriekCount > 4 then -- cast 3 times in intermission
+		self:CDBar(args.spellId, 9.7, CL.count:format(args.spellName, sonarShriekCount))
 	end
 end
 
@@ -185,14 +211,47 @@ function mod:BloodgorgeRemoved(args)
 	self:Message2("stages", "green", CL.stage:format(1), false)
 	self:PlaySound("stages", "info")
 
+	self:StopBar(CL.count:format(self:SpellName(340047), sonarShriekCount)) -- Earsplitting Shriek
+
 	shriekCount = 1
 	echoCount = 1
 	scentOfBloodCount = 1
 
-	self:CDBar(328857, 6) -- Exsanguinating Bite
-	self:CDBar(330711, 21, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
-	self:CDBar(336345, 31.1, CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
-	self:CDBar(342074, 42.5, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
+	self:CDBar(328857, 8.5) -- Exsanguinating Bite
+	self:CDBar(330711, 12.2, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
+	self:CDBar(342074, 18.4, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
+	self:CDBar(336345, 28.5, CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
+	self:CDBar(328921, 101) -- Bloodgorge
+end
+
+-- Mythic
+function mod:TheBloodLanternApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "warning")
+	else
+		self:Message2(args.spellId, "green", L.pickup_lantern:format(args.destName))
+		self:PlaySound(args.spellId, "info")
+	end
+end
+
+function mod:TheBloodLanternRemoved(args)
+	self:Message2(args.spellId, "red", L.dropped_lantern:format(args.destName))
+	self:PlaySound(args.spellId, "info")
+end
+
+function mod:BloodlightApplied(args)
+	if self:Me(args.destGUID) then
+		self:Message2(args.spellId, "green", CL.you:format(args.spellName))
+		self:PlaySound(args.spellId, "info")
+	end
+end
+
+function mod:BloodlightRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message2(args.spellId, "cyan", CL.removed:format(args.spellName))
+		self:PlaySound(args.spellId, "info")
+	end
 end
 
 do
