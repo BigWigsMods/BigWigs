@@ -1,8 +1,8 @@
 if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- TODO:
--- -- Respawn timer (was very short on beta, will it stay?)
 -- -- Deadly Descent warnings?
+-- -- Stack warnings for Bloodlight
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -12,7 +12,7 @@ local mod, CL = BigWigs:NewBoss("Shriekwing", 2296, 2393)
 if not mod then return end
 mod:RegisterEnableMob(164406) -- Shriekwing
 mod.engageId = 2398
---mod.respawnTime = 30
+mod.respawnTime = 5
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -23,6 +23,7 @@ local shriekCount = 1
 local echoCount = 1
 local scentOfBloodCount = 1
 local sonarShriekCount = 1
+local blindSwipeCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -97,12 +98,13 @@ function mod:OnEngage()
 	echoCount = 1
 	scentOfBloodCount = 1
 	sonarShriekCount = 1
+	blindSwipeCount = 1
 
 	self:CDBar(328857, 8) -- Exsanguinating Bite
-	--self:CDBar(343005, 8) -- Blind Swipe
 	self:CDBar(330711, 13, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
-	self:CDBar(342074, 20.4, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Echolocation
-	self:CDBar(342863, 29.5, CL.count:format(self:SpellName(336345), echoCount)) -- Echoing Screech
+	self:CDBar(342074, 19.5, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Echolocation
+	self:CDBar(343005, 20.5,  CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
+	self:CDBar(342863, 29.5, CL.count:format(self:SpellName(342863), echoCount)) -- Echoing Screech
 	self:CDBar(328921, 101) -- Bloodgorge
 end
 
@@ -179,13 +181,22 @@ function mod:EchoingScreech(args)
 	end
 end
 
+function mod:BlindSwipe(args)
+	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, blindSwipeCount))
+	self:PlaySound(args.spellId, "alert")
+	blindSwipeCount = blindSwipeCount + 1
+	if blindSwipeCount < 3 then -- Only 2 each stage 1
+		self:CDBar(args.spellId, 42.5, CL.count:format(args.spellName, blindSwipeCount))
+	end
+end
+
 -- Stage Two - Terror of Castle Nathria
 function mod:Bloodgorge(args)
 	self:Message2(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
 
 	self:StopBar(328857) -- Exsanguinating Bite
-	self:StopBar(343005) -- Blind Swipe
+	self:StopBar(CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
 	self:StopBar(CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Echolocation
 	self:StopBar(CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:StopBar(CL.count:format(self:SpellName(342863), echoCount)) -- Echoing Screech
@@ -211,12 +222,6 @@ function mod:SonarShriek(args)
 	end
 end
 
-function mod:BlindSwipe(args)
-	self:Message2(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
-	--self:CDBar(args.spellId, 20)
-end
-
 function mod:BloodgorgeRemoved(args)
 	self:Message2("stages", "green", CL.stage:format(1), false)
 	self:PlaySound("stages", "info")
@@ -226,11 +231,12 @@ function mod:BloodgorgeRemoved(args)
 	shriekCount = 1
 	echoCount = 1
 	scentOfBloodCount = 1
+	blindSwipeCount = 1
 
 	self:CDBar(328857, 8.5) -- Exsanguinating Bite
-	--self:CDBar(343005, 8) -- Blind Swipe
 	self:CDBar(330711, 12.2, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:CDBar(342074, 18.4, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Echolocation
+	self:CDBar(343005, 19.5, CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
 	self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoCount)) -- Echoing Screech
 	self:CDBar(328921, 101) -- Bloodgorge
 end
