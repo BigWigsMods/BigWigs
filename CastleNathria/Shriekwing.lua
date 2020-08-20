@@ -42,12 +42,13 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage One - Thirst for Blood
-		328897, -- Exsanguinated
-		{328857, "TANK"}, -- Exsanguinating Bite
 		330711, -- Earsplitting Shriek
 		340324, -- Sanguine Ichor
-		{342074, "SAY", "SAY_COUNTDOWN"}, -- Scent of Blood
-		336345, -- Echo Screech
+		{342074, "SAY", "SAY_COUNTDOWN"}, -- Echolocation
+		342863, -- Echoing Screech
+		{328857, "TANK"}, -- Exsanguinating Bite
+		328897, -- Exsanguinated
+		343005, -- Blind Swipe
 		-- Stage Two - Terror of Castle Nathria
 		328921, -- Bloodgorge
 		329362, -- Dark Sonar
@@ -69,9 +70,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExsanguinatedRemoved", 328897)
 	self:Log("SPELL_CAST_START", "ExsanguinatingBite", 328857)
 	self:Log("SPELL_CAST_START", "EarsplittingShriek", 330711)
-	self:Log("SPELL_AURA_APPLIED", "ScentofBloodApplied", 342077)
-	self:Log("SPELL_AURA_REMOVED", "ScentofBloodRemoved", 342077)
-	self:Log("SPELL_CAST_START", "EchoScreech", 336345)
+	self:Log("SPELL_AURA_APPLIED", "EcholocationApplied", 342077)
+	self:Log("SPELL_AURA_REMOVED", "EcholocationRemoved", 342077)
+	self:Log("SPELL_CAST_START", "EchoingScreech", 342863)
+	self:Log("SPELL_CAST_START", "BlindSwipe", 343005)
 
 	-- Stage Two - Terror of Castle Nathria
 	self:Log("SPELL_CAST_START", "Bloodgorge", 328921)
@@ -97,9 +99,10 @@ function mod:OnEngage()
 	sonarShriekCount = 1
 
 	self:CDBar(328857, 8) -- Exsanguinating Bite
+	--self:CDBar(343005, 8) -- Blind Swipe
 	self:CDBar(330711, 13, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
-	self:CDBar(342074, 20.4, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
-	self:CDBar(336345, 29.5, CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
+	self:CDBar(342074, 20.4, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Echolocation
+	self:CDBar(342863, 29.5, CL.count:format(self:SpellName(336345), echoCount)) -- Echoing Screech
 	self:CDBar(328921, 101) -- Bloodgorge
 end
 
@@ -144,7 +147,7 @@ end
 
 do
 	local playerList = mod:NewTargetList()
-	function mod:ScentofBloodApplied(args)
+	function mod:EcholocationApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(342074)
@@ -161,13 +164,13 @@ do
 	end
 end
 
-function mod:ScentofBloodRemoved(args)
+function mod:EcholocationRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(342074)
 	end
 end
 
-function mod:EchoScreech(args)
+function mod:EchoingScreech(args)
 	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, echoCount))
 	self:PlaySound(args.spellId, "alert")
 	echoCount = echoCount + 1
@@ -182,9 +185,10 @@ function mod:Bloodgorge(args)
 	self:PlaySound(args.spellId, "long")
 
 	self:StopBar(328857) -- Exsanguinating Bite
-	self:StopBar(CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
+	self:StopBar(343005) -- Blind Swipe
+	self:StopBar(CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Echolocation
 	self:StopBar(CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
-	self:StopBar(CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
+	self:StopBar(CL.count:format(self:SpellName(342863), echoCount)) -- Echoing Screech
 
 	sonarShriekCount = 1
 
@@ -207,6 +211,12 @@ function mod:SonarShriek(args)
 	end
 end
 
+function mod:BlindSwipe(args)
+	self:Message2(args.spellId, "yellow")
+	self:PlaySound(args.spellId, "alert")
+	--self:CDBar(args.spellId, 20)
+end
+
 function mod:BloodgorgeRemoved(args)
 	self:Message2("stages", "green", CL.stage:format(1), false)
 	self:PlaySound("stages", "info")
@@ -218,9 +228,10 @@ function mod:BloodgorgeRemoved(args)
 	scentOfBloodCount = 1
 
 	self:CDBar(328857, 8.5) -- Exsanguinating Bite
+	--self:CDBar(343005, 8) -- Blind Swipe
 	self:CDBar(330711, 12.2, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
-	self:CDBar(342074, 18.4, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Scent of Blood
-	self:CDBar(336345, 28.5, CL.count:format(self:SpellName(336345), echoCount)) -- Echo Screech
+	self:CDBar(342074, 18.4, CL.count:format(self:SpellName(342074), scentOfBloodCount)) -- Echolocation
+	self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoCount)) -- Echoing Screech
 	self:CDBar(328921, 101) -- Bloodgorge
 end
 
