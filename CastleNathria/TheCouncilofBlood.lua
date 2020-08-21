@@ -69,13 +69,14 @@ function mod:GetOptions()
 		330848, -- Wrong Moves
 
 		--[[ Mythic ]]--
-		-- Spell for Dancing Fever?
+		{342859, "SAY", "SAY_COUNTDOWN"},
 	}, {
 		["stages"] = "general",
 		[328334] = -22147, -- Castellan Niklaus
 		[327773] = -22148, -- Baroness Frieda
 		[327497] = -22149, -- Lord Stavros
 		[330959] = -22146, -- Intermission: The Danse Macabre
+		[342859] = "mythic",
 	}
 end
 
@@ -114,6 +115,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DanseMacabre", 330959)
 	self:Log("SPELL_AURA_APPLIED", "WrongMovesApplied", 330848)
 	self:Log("SPELL_AURA_REMOVED", "WrongMovesRemoved", 330848)
+
+	--[[ Mythic ]]--
+	self:Log("SPELL_AURA_APPLIED", "DancingFeverApplied", 342859)
+	self:Log("SPELL_AURA_REMOVED", "DancingFeverRemoved", 342859)
 end
 
 function mod:OnEngage()
@@ -175,7 +180,6 @@ function mod:BossDeath(args)
 end
 
 --[[ Castellan Niklaus ]]--
-
 do
 	local function printTarget(self, name, guid)
 		if UnitIsPlayer(name) then -- Targets a bunny a lot of times
@@ -257,7 +261,7 @@ do
 	local function printTarget(self, name, guid)
 		self:TargetMessage2(331706, "red", name)
 		if self:Me(guid) then
-			self:Say(331706)
+			self:Yell2(331706)
 		end
 	end
 
@@ -271,13 +275,13 @@ end
 function mod:ScarletLetterApplied(args)
 	self:TargetBar(args.spellId, 8, args.destName)
 	if self:Me(args.destGUID) then
-		self:SayCountdown(args.spellId, 8)
+		self:YellCountdown(args.spellId, 8)
 	end
 end
 
 function mod:ScarletLetterRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelYellCountdown(args.spellId)
 	end
 end
 
@@ -398,5 +402,21 @@ end
 function mod:WrongMovesRemoved(args)
 	if self:Me(args.destGUID) then
 		self:StopBar(args.spellId, args.destName)
+	end
+end
+
+--[[ Mythic ]]--
+function mod:DancingFeverApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:Say(args.spellId, nil, true)
+		self:SayCountdown(args.spellId, 5)
+		self:PlaySound(args.spellId, "warning")
+	end
+end
+
+function mod:DancingFeverRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
