@@ -1,7 +1,7 @@
 if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- TODO:
--- -- Fix timers and stage transitions a lot better
+-- -- Fallback if yells are not detected for stage changes
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -14,6 +14,26 @@ mod.engageId = 2405
 mod.respawnTime = 27
 
 --------------------------------------------------------------------------------
+-- Locals
+--
+
+local stage = 1
+local dimensionalTearCount = 1
+local spiritCount = 1
+local seedCount = 1
+local annihilateCount = 1
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
+	L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -21,6 +41,7 @@ local dimensionalTearMarker = mod:AddMarkerOption(false, "player", 1, 328437, 1,
 function mod:GetOptions()
 	return {
 		-- General
+		"stages",
 		{328437, "SAY", "SAY_COUNTDOWN"}, -- Dimensional Tear
 		dimensionalTearMarker,
 		{325236, "TANK", "SAY_COUNTDOWN"}, -- Glyph of Destruction
@@ -32,6 +53,7 @@ function mod:GetOptions()
 		327902, -- Fixate
 		327414, -- Possesion
 		340788, -- Seeds of Extinction
+		329107, -- Extinction
 		340860, -- Withering Touch
 		328789, -- Edge of Annihilation
 	},{
@@ -41,7 +63,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "DimensionalTear", 328437)
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+
+	self:Log("SPELL_CAST_SUCCESS", "DimensionalTear", 328437, 342310)
 	self:Log("SPELL_AURA_APPLIED", "DimensionalTearApplied", 328448, 328468)
 	self:Log("SPELL_AURA_REMOVED", "DimensionalTearRemoved", 328448, 328468)
 	self:Log("SPELL_CAST_SUCCESS", "GlyphofDestruction", 325361)
@@ -55,32 +79,77 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FleetingSpirits", 327887, 340758) -- Crystal of Phantasms, Fleeting Spirits // First wave, Others
 	self:Log("SPELL_AURA_APPLIED", "Fixate", 327902)
 	self:Log("SPELL_AURA_APPLIED", "PossesionApplied", 327414)
-	self:Log("SPELL_CAST_START", "SeedsofExtinction", 329770, 340788)
+	self:Log("SPELL_CAST_START", "SeedsofExtinction", 329770, 340788) -- Root of Extinction, Seeds of Extinction // First wave, Others
+	self:Log("SPELL_CAST_START", "Extinction", 329107)
 	self:Log("SPELL_AURA_APPLIED", "WitheringTouchApplied", 340860)
 	self:Log("SPELL_CAST_START", "EdgeofAnnihilation", 328789)
 end
 
 function mod:OnEngage()
-	self:Bar(325399, 6.5) -- Hyperlight Spark
+	stage = 1
+	dimensionalTearCount = 1
+	spiritCount = 1
+	seedCount = 1
+	annihilateCount = 1
+	self:Bar(325399, 5.5) -- Hyperlight Spark
 	self:Bar(326271, 11) -- Stasis Trap
-	self:Bar(328437, 15.2) -- Dimensional Tear
-	self:Bar(335013, 20) -- Rift Blast
+	self:Bar(328437, 17, CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
+	self:Bar(335013, 21) -- Rift Blast
 	self:Bar(325236, 31) -- Glyph of Destruction
-	self:Bar(340758, 33) -- Fleeting Spirit
+	self:Bar(340758, 27, CL.count:format(self:SpellName(340758), spiritCount)) -- Fleeting Spirit
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
+	if msg:find(L.stage2_yell) then
+		self:StopBar(326271) -- Stasis Trap
+		self:StopBar(CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
+		self:StopBar(CL.count:format(self:SpellName(340758), spiritCount)) -- Fleeting Spirit
+
+		stage = 2
+		self:Message2("stages", "green", CL.stage:format(stage), false)
+		self:PlaySound("stages", "info")
+
+		dimensionalTearCount = 1
+		spiritCount = 1
+		seedCount = 1
+
+		self:CDBar(326271, 10) -- Stasis Trap
+		self:CDBar(328437, 14, CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
+		self:CDBar(340788, 16, CL.count:format(self:SpellName(340788), seedCount)) -- Seeds of Extinction
+	elseif msg:find(L.stage3_yell) then
+		self:StopBar(326271) -- Stasis Trap
+		self:StopBar(CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
+		self:StopBar(CL.count:format(self:SpellName(340788), seedCount)) -- Seeds of Extinction
+
+		stage = 3
+		self:Message2("stages", "green", CL.stage:format(stage), false)
+		self:PlaySound("stages", "info")
+
+		dimensionalTearCount = 1
+		spiritCount = 1
+		seedCount = 1
+		annihilateCount = 1
+
+		self:CDBar(326271, 10) -- Stasis Trap
+		self:CDBar(328437, 16, CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
+		self:CDBar(328789, 28, CL.count:format(self:SpellName(328789), annihilateCount)) -- Annihilate
+	end
+end
+
 do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:DimensionalTear(args)
-		self:CDBar(args.spellId, 40)
+		self:StopBar(CL.count:format(self:SpellName(328437), dimensionalTearCount))
+		dimensionalTearCount = dimensionalTearCount + 1
+		self:CDBar(328437, 41.3, CL.count:format(self:SpellName(328437), dimensionalTearCount))
 	end
 
 	function mod:DimensionalTearApplied(args)
-		local count = #playerIcons+1
+		local count = #playerList+1
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
@@ -136,14 +205,15 @@ end
 function mod:HyperlightSpark(args)
 	self:Message2(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 20)
+	self:CDBar(args.spellId, 15.8)
 end
 
 -- The Relics of Castle Nathria
 function mod:FleetingSpirits(args)
-	self:Message2(340758, "cyan")
+	self:Message2(340758, "cyan", CL.count:format(self:SpellName(340758), spiritCount))
 	self:PlaySound(340758, "long")
-	self:CDBar(340758, 35)
+	spiritCount = spiritCount + 1
+	self:CDBar(340758, 41.5, CL.count:format(self:SpellName(340758), spiritCount))
 end
 
 function mod:Fixate(args)
@@ -162,11 +232,14 @@ do
 end
 
 function mod:SeedsofExtinction(args)
-	self:StopBar(340758) -- Fleeting Spirits
-	self:Message2(340788, "cyan")
+	self:Message2(340788, "cyan", CL.count:format(self:SpellName(340788), seedCount))
 	self:PlaySound(340788, "long")
-	self:CastBar(340788, 20)
-	self:Bar(340788, 45)
+	seedCount = seedCount + 1
+	self:Bar(340788, 41.5, CL.count:format(self:SpellName(340788), seedCount))
+end
+
+function mod:Extinction(args)
+	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, seedCount-1))
 end
 
 function mod:WitheringTouchApplied(args)
@@ -177,9 +250,9 @@ function mod:WitheringTouchApplied(args)
 end
 
 function mod:EdgeofAnnihilation(args)
-	self:StopBar(329834) -- Seeds of Extinction
-	self:Message2(args.spellId, "orange")
+	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, annihilateCount))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 10)
-	self:CDBar(args.spellId, 40)
+	self:CastBar(args.spellId, 10, CL.count:format(args.spellName, annihilateCount))
+	annihilateCount = annihilateCount + 1
+	self:CDBar(args.spellId, 82, CL.count:format(args.spellName, annihilateCount))
 end
