@@ -635,7 +635,8 @@ do
 end
 
 -------------------------------------------------------------------------------
--- Engage / wipe checking + unit scanning
+-- Engage/wipe checking and unit scanning
+-- @section unit_scanning
 --
 
 do
@@ -1551,6 +1552,7 @@ end
 --- Open the "Info Box" display.
 -- @param key the option key to check
 -- @string title the title of the window
+-- @bool[opt] TEMP
 function boss:OpenInfo(key, title, TEMP)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_ShowInfoBox", self, title, TEMP)
@@ -2194,8 +2196,8 @@ do
 	end
 
 	--- Get the time left for a running nameplate bar.
-	-- @param guid nameplate unit's guid
 	-- @param text the bar text
+	-- @param guid nameplate unit's guid
 	-- @return the remaining duration in seconds or 0
 	function boss:NameplateBarTimeLeft(text, guid)
 		if type(guid) ~= "string" then
