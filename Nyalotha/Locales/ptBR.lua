@@ -1,59 +1,59 @@
 local L = BigWigs:NewBossLocale("Maut", "ptBR")
 if not L then return end
 if L then
-	-- L.stage2_over = "Stage 2 Over - %.1f sec"
+	L.stage2_over = "Estágio 2 Acabou - %.1f seg"
 end
 
-L = BigWigs:NewBossLocale("Shad'har the Insatiable", "ptBR")
+L = BigWigs:NewBossLocale("Shad'har, o Insaciável", "ptBR")
 if L then
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Shad'har randomizes which off-cooldown ability she uses next. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Sempre mostrar barras de habilidades"
+	L.custom_on_stop_timers_desc = "Shad'har é aleatória nas habilidades fora de recarga que ela usará a seguir. Quando esta opção estiver habilitada, as barras para essas habilidades permanecerão na sua tela."
 end
 
 L = BigWigs:NewBossLocale("Drest'agath", "ptBR")
 if L then
-	-- L.adds_desc = "Warnings and Messages for the Eye, Tentacle and Maw of Drest'agath."
-	-- L.adds_icon = "achievement_nzothraid_drestagath"
+	L.adds_desc = "Mensagens e Alertas para o Olho, Tentáculos e Gorja de Drest'agath."
+	L.adds_icon = "achievement_nzothraid_drestagath"
 
-	-- L.eye_killed = "Eye Killed!"
-	-- L.tentacle_killed = "Tentacle Killed!"
-	-- L.maw_killed = "Maw Killed!"
+	L.eye_killed = "Olho morto!"
+	L.tentacle_killed = "Tentáculo morto!"
+	L.maw_killed = "Gorja morta!"
 end
 
-L = BigWigs:NewBossLocale("Il'gynoth, Corruption Reborn", "ptBR")
+L = BigWigs:NewBossLocale("Il'gynoth, a Corrupção Reencarnada", "ptBR")
 if L then
-	-- L.custom_on_fixate_plates = "Fixate icon on Enemy Nameplate"
-	-- L.custom_on_fixate_plates_desc = "Show an icon on the target nameplate that is fixating on you.\nRequires the use of Enemy Nameplates. This feature is currently only supported by KuiNameplates."
+	L.custom_on_fixate_plates = "Fixar ícone na barra de identificação do inimigo"
+	L.custom_on_fixate_plates_desc = "Mostra um ícone na barra de identificação do alvo que está fixando em você.\nRequer o uso de barras de identificação inimigas. Essa função só é suportada pelo addon KuiNameplates."
 end
 
 L = BigWigs:NewBossLocale("Vexiona", "ptBR")
 if L then
-	-- L.killed = "%s killed"
+	L.killed = "%s morto"
 end
 
-L = BigWigs:NewBossLocale("Ra-den the Despoiled", "ptBR")
+L = BigWigs:NewBossLocale("Ra-den, o Espoliado", "ptBR")
 if L then
-	-- L.essences = "Essences"
-	-- L.essences_desc = "Ra-den periodically draws essences from other realms. Essences that reach Ra-den empower him with energy of that type."
+	L.essences = "Essências"
+	L.essences_desc = "Ra-den periodicamente coleta essências de outros reinos. Essências que chegam até Ra-den deixam ele mais forte com a energia daquele tipo."
 end
 
-L = BigWigs:NewBossLocale("Carapace of N'Zoth", "ptBR")
+L = BigWigs:NewBossLocale("Carapaça de N'Zoth", "ptBR")
 if L then
-	-- L.player_membrane = "Player Membrane" -- In stage 3
-	-- L.boss_membrane = "Boss Membrane" -- In stage 3
+	L.player_membrane = "Membrana do Jogador" -- In stage 3
+	L.boss_membrane = "Membrana do Chefe" -- In stage 3
 end
 
-L = BigWigs:NewBossLocale("N'Zoth, the Corruptor", "ptBR")
+L = BigWigs:NewBossLocale("N'Zoth, o Corruptor", "ptBR")
 if L then
-	-- L.realm_switch = "Realm Switched" -- When you leave the Mind of N'zoth
+	L.realm_switch = "Reino Trocado" -- When you leave the Mind of N'zoth
 
-	-- L.custom_on_repeating_paranoia_say = "Repeating Paranoia Say"
-	-- L.custom_on_repeating_paranoia_say_desc = "Spam a say message in chat to be avoided while you have paranoia."
-	-- L.custom_on_repeating_paranoia_say_icon = 315927
+	L.custom_on_repeating_paranoia_say = "Dizer repetitivamente a paranoia"
+	L.custom_on_repeating_paranoia_say_desc = "Spama uma mensagem no chat para ser evitado enquanto estiver com paranoia."
+	L.custom_on_repeating_paranoia_say_icon = 315927
 
-	-- L.gateway_yell = "Warning: Chamber of Heart compromised. Hostile forces inbound." -- Yelled by MOTHER to trigger mythic only stage
-	-- L.gateway_open = "Gateway Open!"
+	L.gateway_yell = "Alerta: Câmara do Coração comprometida. Forças hostis se aproximando." -- Yelled by MOTHER to trigger mythic only stage
+	L.gateway_open = "Portão Aberto!"
 
-	-- L.laser_left = "Lasers (Left)"
-	-- L.laser_right = "Lasers (Right)"
+	L.laser_left = "Lasers (Esquerda)"
+	L.laser_right = "Lasers (Direita)"
 end
