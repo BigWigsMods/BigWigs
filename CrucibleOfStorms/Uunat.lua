@@ -196,9 +196,9 @@ function mod:OnEngage()
 	end
 
 	if self:CheckOption(-19055, "INFOBOX") then
-		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1", "boss2", "boss3", "boss4")
+		self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1", "boss2", "boss3", "boss4")
 	else
-		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+		self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 	end
 	if self:GetOption(mindbenderMarker) then
 		self:RegisterTargetEvents("MinderbenderMarker")
@@ -305,7 +305,7 @@ do
 		end
 	end
 
-	function mod:UNIT_HEALTH_FREQUENT(event, unit)
+	function mod:UNIT_HEALTH(event, unit)
 		if unit == "boss1" then -- Check stage changes
 			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 			if hp < nextStageWarning then -- Intermission at 70% & 45%

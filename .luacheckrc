@@ -224,7 +224,6 @@ globals = {
 	"UnitHealth",
 	"UnitHealthMax",
 	"UnitInParty",
-	"UnitInPhase", -- XXX remove after beta
 	"UnitInRaid",
 	"UnitInVehicle",
 	"UnitIsConnected",

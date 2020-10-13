@@ -113,7 +113,7 @@ function mod:OnEngage()
 	end
 
 	self:OpenProximity(272404, 5) -- Oblivion Sphere
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -128,7 +128,7 @@ function mod:UNIT_TARGETABLE_CHANGED(_, unit)
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(event, unit)
+function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then -- Intermission at 66% & 33%
 		self:Message2("stages", "green", CL.soon:format(CL.stage:format(2)), false)

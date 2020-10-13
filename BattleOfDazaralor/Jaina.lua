@@ -203,7 +203,7 @@ function mod:OnEngage()
 	self:CDBar(287626, 23) -- Grasp of Frost
 	self:CDBar(285459, 60, CL.count:format(self:SpellName(285459), ringofIceCount)) -- Ring of Ice
 
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 
 	self:Berserk(self:Mythic() and 720 or 900)
 end
@@ -245,7 +245,7 @@ do
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(event, unit)
+function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then -- Intermission at 60% & 30%
 		self:Message2("stages", "green", CL.soon:format(CL.intermission), false)

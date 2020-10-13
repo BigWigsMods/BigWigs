@@ -78,14 +78,14 @@ function mod:OnEngage()
 		self:Bar(275189, 25, CL.count:format(self:SpellName(275189), arteriesCount)) -- Hardened Arteries
 		self:Bar(275205, 25) -- Enlarged Heart
 	end
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:UNIT_HEALTH_FREQUENT(event, unit)
+function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 38 then -- Intermission at 35%
 		self:Message2("stages", "green", CL.soon:format(CL.intermission), false)

@@ -116,7 +116,7 @@ function mod:OnEngage()
 	self:CDBar("bloodhexer", self:Mythic() and 73 or 50, CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
 	self:CDBar("crusher", self:Mythic() and 70 or 75, CL.soon:format(L.crusher_msg), L.crusher_icon)
 
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -153,7 +153,7 @@ function mod:DecayingFleshMark(_, unit, guid)
 	end
 end
 
-function mod:UNIT_HEALTH_FREQUENT(event, unit)
+function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 43 then -- 40% Transition
 		local nextStage = stage + 1

@@ -238,14 +238,14 @@ function mod:OnEngage()
 	if self:GetOption("custom_off_sparkbot_marker") then
 		self:RegisterTargetEvents("sparkBotMark")
 	end
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:UNIT_HEALTH_FREQUENT(event, unit)
+function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 43 then -- Evasive Maneuvers! at 40%
 		self:Message2("stages", "green", CL.soon:format(CL.stage:format(2)), false)

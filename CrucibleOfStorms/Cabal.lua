@@ -151,7 +151,7 @@ function mod:OnEngage()
 		self:RegisterTargetEvents("EldritchMarker")
 	end
 	if self:CheckOption(-18970, "INFOBOX") then
-		self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss3")
+		self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss3")
 	end
 	if self:Mythic() then
 		self:Berserk(570)
@@ -225,7 +225,7 @@ do
 		end
 	end
 
-	function mod:UNIT_HEALTH_FREQUENT(event, unit)
+	function mod:UNIT_HEALTH(event, unit)
 		local guid = UnitGUID(unit)
 		if self:MobId(guid) == 145491 then -- Ocean Rune
 			shieldActive = true

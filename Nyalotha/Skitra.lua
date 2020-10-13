@@ -57,14 +57,14 @@ function mod:OnEngage()
 	self:Bar(307950, 12.5, CL.count:format(self:SpellName(307950), phsycheCount)) -- Shred Psyche
 	self:Bar(313239, 31.5) -- Images of Absolution
 
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:UNIT_HEALTH_FREQUENT(event, unit)
+function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then
 		self:Message2("stages", "green", CL.soon:format(self:SpellName(307725)), false)
