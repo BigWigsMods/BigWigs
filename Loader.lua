@@ -684,6 +684,9 @@ function mod:ADDON_LOADED(addon)
 	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
 	C_ChatInfo.RegisterAddonMessagePrefix("D4") -- DBM
 
+	-- Blizzard Countdown
+	bwFrame:RegisterEvent("START_TIMER")
+
 	-- LibDBIcon setup
 	if type(BigWigsIconDB) ~= "table" then
 		BigWigsIconDB = {}
@@ -1182,6 +1185,11 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 			public:SendMessage("DBM_AddonMessage", sender, dbmPrefix, arg1, arg2, arg3, arg4)
 		end
 	end
+end
+
+function mod:START_TIMER(timerType, timeSeconds, totalTime)
+	loadAndEnableCore()
+	public:SendMessage("BigWigs_BlizzTimer", timerType, timeSeconds, totalTime)
 end
 
 local ResetVersionWarning

@@ -41,6 +41,10 @@ do
 		startPullSound = "BigWigs: Long",
 		endPullSound = "BigWigs: Alarm",
 		voice = voiceMap[GetLocale()] or "English: Amy",
+		blizzCountdownBar = true,
+		blizzCountdownPVP = true,
+		blizzCountdownCM = true,
+		blizzCountdownPlayer = true,
 	}
 end
 
@@ -134,6 +138,39 @@ do
 				order = 6,
 				width = "full",
 			},
+			blizzCountdownHeader = {
+				type = "header",
+				name = L.blizzCountdown,
+				order = 7,
+			},
+			blizzCountdownBar = {
+				type = "toggle",
+				name = L.blizzCountdownBar,
+				desc = L.blizzCountdownBardesc,
+				order = 8,
+				width = "full",
+			},
+			blizzCountdownPVP = {
+				type = "toggle",
+				name = L.blizzCountdownPVP,
+				desc = L.blizzCountdownPVPdesc,
+				order = 9,
+				width = "full",
+			},
+			blizzCountdownCM = {
+				type = "toggle",
+				name = L.blizzCountdownCM,
+				desc = L.blizzCountdownCMdesc,
+				order = 10,
+				width = "full",
+			},
+			blizzCountdownPlayer = {
+				type = "toggle",
+				name = L.blizzCountdownPlayer,
+				desc = L.blizzCountdownPlayerdesc,
+				order = 11,
+				width = "full",
+			},
 		},
 	}
 end
@@ -150,6 +187,8 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
 
 	self:RegisterMessage("BigWigs_OnBossEngage")
+
+	self:RegisterMessage("BigWigs_BlizzTimer")
 end
 
 -------------------------------------------------------------------------------
@@ -264,6 +303,35 @@ function plugin:BigWigs_OnBossEngage(_, module)
 			if sound then
 				PlaySoundFile(sound, "Master")
 			end
+		end
+	end
+end
+
+do
+	local typeToOption = {
+		[TIMER_TYPE_PVP] = "blizzCountdownPVP",
+		[TIMER_TYPE_CHALLENGE_MODE] = "blizzCountdownCM",
+		[TIMER_TYPE_PLAYER_COUNTDOWN] = "blizzCountdownPlayer",
+	}
+
+	local function killBlizzTimer()
+		-- Killing the first non-free timer
+		-- The Blizzard UI is maintaining that list, so it should be the most recent one
+		for _,timer in pairs(TimerTracker.timerList) do
+			if not timer.isFree then
+				FreeTimerTrackerTimer(timer)
+				break
+			end
+		end
+	end
+
+	function plugin:BigWigs_BlizzTimer(_, timerType, timeSeconds, totalTime)
+		if self.db.profile.blizzCountdownBar then
+			self:SendMessage("BigWigs_StartBar", self, nil, L.countdownBar, timeSeconds, 134377) -- 134377 = inv_misc_pocketwatch_02
+		end
+
+		if typeToOption[timerType] and not self.db.profile[typeToOption[timerType]] then
+			BigWigsLoader.CTimerAfter(0, killBlizzTimer) -- 1 frame to avoid race condition
 		end
 	end
 end

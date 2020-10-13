@@ -296,6 +296,17 @@ L.pullIn = "Pull in %d sec"
 L.sendPull = "Sending a pull timer to BigWigs and DBM users."
 L.wrongPullFormat = "Must be between 1 and 60 seconds. A correct example is: /pull 5"
 
+L.blizzCountdown = "Blizzard Big Number Countdown"
+L.blizzCountdownBar = "Show bar"
+L.blizzCountdownBardesc = "Display a BigWigs bar when a Blizzard Countdown is started"
+L.blizzCountdownPVP = "Show Blizzard Countdown for PvP"
+L.blizzCountdownPVPdesc = "Display the default Blizzard-style big number countdown for PvP. Uncheck to hide"
+L.blizzCountdownCM = "Show Blizzard Countdown for Mythic+"
+L.blizzCountdownCMdesc = "Display the default Blizzard-style big number countdown for Mythic+. Uncheck to hide"
+L.blizzCountdownPlayer = "Show Blizzard Countdown from players"
+L.blizzCountdownPlayerdesc = "Display the default Blizzard-style big number countdown when players use /countdown. Uncheck to hide"
+L.countdownBar = "Countdown"
+
 -----------------------------------------------------------------------
 -- RaidIcon.lua
 --
