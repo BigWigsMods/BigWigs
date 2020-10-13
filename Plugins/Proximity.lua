@@ -67,7 +67,7 @@ local GameTooltip = CreateFrame("GameTooltip", "BigWigsProximityTooltip", UIPare
 local UnitPosition, GetPlayerFacing = UnitPosition, GetPlayerFacing
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
 local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown
-local UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitInPhase = UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitInPhase
+local UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitPhaseReason = UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitPhaseReason
 local min, cos, sin, format = math.min, math.cos, math.sin, string.format
 local tinsert, tconcat = table.insert, table.concat
 local next, type, tonumber, wipe = next, type, tonumber, wipe
@@ -76,9 +76,6 @@ local piDoubled = 6.2831853071796
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
 
 -- GLOBALS: BigWigs CUSTOM_CLASS_COLORS GameTooltip GameFontNormalHuge RAID_CLASS_COLORS SLASH_BigWigs_Proximity1 SLASH_BigWigs_Proximity2 UIParent
-
--- XXX Fix after Beta
-UnitInPhase = UnitInPhase or function(unit) return not UnitPhaseReason(unit) end
 
 --------------------------------------------------------------------------------
 -- Range Checking
@@ -366,7 +363,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if mapId == tarMapId and range < activeRangeSquaredTwoFive and UnitInPhase(n) then
+			if mapId == tarMapId and range < activeRangeSquaredTwoFive and not UnitPhaseReason(n) then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
@@ -405,7 +402,7 @@ do
 		for i = 1, maxPlayers do
 			local n = unitList[i]
 			local _, _, _, tarMapId = UnitPosition(n)
-			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
+			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and not UnitPhaseReason(n) then
 				anyoneClose = anyoneClose + 1
 				if anyoneClose < 6 then
 					local player = plugin:UnitName(n)
@@ -587,7 +584,7 @@ do
 			local dx = unitX - srcX
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
-			if mapId == tarMapId and range < activeRangeSquaredTwoFive and UnitInPhase(n) then
+			if mapId == tarMapId and range < activeRangeSquaredTwoFive and not UnitPhaseReason(n) then
 				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
@@ -627,7 +624,7 @@ do
 		for i = 1, maxPlayers do
 			local n = unitList[i]
 			local _, _, _, tarMapId = UnitPosition(n)
-			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
+			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and not UnitPhaseReason(n) then
 				anyoneClose = anyoneClose + 1
 			end
 		end
