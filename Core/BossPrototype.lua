@@ -555,6 +555,13 @@ do
 	function boss:RegisterUnitEvent(event, func, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
+		if event == "UNIT_HEALTH_FREQUENT" then
+			-- pre-shadowlands compat for old modules
+			if not func then
+				func = event
+			end
+			event = "UNIT_HEALTH"
+		end
 		if (not func and not self[event]) or (func and not self[func]) then core:Print(format(noFunc, self.moduleName, func or event)) return end
 		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
@@ -574,6 +581,7 @@ do
 	function boss:UnregisterUnitEvent(event, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
+		if event == "UNIT_HEALTH_FREQUENT" then event = "UNIT_HEALTH" end -- pre-shadowlands compat for old modules
 		if not unitEventMap[self][event] then return end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
