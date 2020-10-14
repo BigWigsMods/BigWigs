@@ -1194,6 +1194,28 @@ function boss:Solo()
 	return solo
 end
 
+do
+	local GetOptions = C_GossipInfo.GetOptions
+	local SelectOption = C_GossipInfo.SelectOption
+	--- Request the gossip options of the selected NPC
+	-- @return table
+	function boss:GetGossipOptions()
+		local tbl = GetOptions()
+		if tbl[1] then
+			return tbl
+		end
+	end
+
+	--- Select a specific NPC gossip option
+	-- @number optionNumber The number of the specific option to be selected
+	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
+	-- @return args
+	function boss:SelectGossipOption(optionNumber, skipConfirmDialogBox)
+		SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+	end
+
+end
+
 -------------------------------------------------------------------------------
 -- Group checking
 -- @section group
