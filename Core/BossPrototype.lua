@@ -316,6 +316,7 @@ function boss:Disable(isWipe)
 		self.missing = nil
 		self.isWiping = nil
 		self.isEngaged = nil
+		self.throttled = nil
 
 		self:CancelAllTimers()
 
@@ -1192,6 +1193,22 @@ end
 -- @return boolean
 function boss:Solo()
 	return solo
+end
+
+-- Returns true if true has not been returned within rate seconds for the key, otherwise false.
+-- @param key the option key
+-- @number rate time, in seconds, that must pass before the function can be run again
+-- @number[opt] current time. GetTime will be used otherwise.
+-- @return boolean
+function boss:Throttle(key, rate, time)
+	if not self.throttled then self.throttled = {} end
+	local prev = self.throttled[key]
+	local t = time or GetTime()
+	if not prev or t - prev > rate then
+		self.throttled[key] = t
+		return true
+	end
+	return false
 end
 
 -------------------------------------------------------------------------------
