@@ -10,13 +10,10 @@ jobs:
       - name: Checkout addon
         uses: actions/checkout@v2
 
-      - name: Install luacheck
-        run: |
-          sudo apt-get install luarocks
-          sudo luarocks install luacheck
-
       - name: Run luacheck
-        run: luacheck . -q
+        uses: BigWigsMods/actions/luacheck@master
+        with:
+          args: -q
 
       - name: Lint boss modules
         if: always()
