@@ -13,7 +13,7 @@ jobs:
       - name: Install luacheck
         run: |
           sudo apt-get install luarocks
-          sudo luarocks install luacheck lanes
+          sudo luarocks install luacheck
 
       - name: Run luacheck
         run: luacheck . -q
