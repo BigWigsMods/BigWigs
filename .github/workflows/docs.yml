@@ -41,5 +41,7 @@ jobs:
           unix2dos -q -n PluginPrototype.md wiki/PluginPrototype.md
           unix2dos -q -n BossPrototype.md wiki/BossPrototype.md
           cd wiki
+          git config user.name "${GITHUB_ACTOR}"
+          git config user.email "<>"
           git commit -am "Update API docs from ${GITHUB_SHA:0:7}"
           git push
