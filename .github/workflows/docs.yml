@@ -1,0 +1,45 @@
+name: Generate docs
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - Core/BossPrototype.lua
+      - Core/PluginPrototype.lua
+
+jobs:
+  ldoc:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout BigWigs
+        uses: actions/checkout@v2
+        with:
+          path: BigWigs
+
+      - name: Checkout BigWigs.wiki
+        uses: actions/checkout@v2
+        with:
+          repository: BigWigsMods/BigWigs.wiki
+          path: wiki
+
+      - name: Install ldoc
+        run: |
+          sudo apt-get install luarocks
+          sudo luarocks install ldoc
+
+      - name: ldoc PluginPrototype
+        run: ldoc --fatalwarnings -q -x md -l BigWigs -p BigWigs BigWigs/Core/PluginPrototype.lua && echo "OK"
+
+      - name: ldoc BossPrototype
+        if: always()
+        run: ldoc --fatalwarnings -q -x md -l BigWigs -p BigWigs BigWigs/Core/BossPrototype.lua && echo "OK"
+
+      - name: Update wiki
+        run: |
+          unix2dos -q -n PluginPrototype.md wiki/PluginPrototype.md
+          unix2dos -q -n BossPrototype.md wiki/BossPrototype.md
+          cd wiki
+          git commit -am "Update API docs from ${GITHUB_SHA:0:7}"
+          git push
