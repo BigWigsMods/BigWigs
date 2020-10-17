@@ -29,7 +29,6 @@ move-folders:
 
 ignore:
   - .luacheckrc
-  - .travis.yml
   - gen_option_values.lua
   - ldoc.ltp
   - ISSUE_TEMPLATE.md
