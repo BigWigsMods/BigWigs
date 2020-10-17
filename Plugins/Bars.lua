@@ -329,7 +329,7 @@ do
 		end
 
 		if not bd.tukiborder then
-			local border = CreateFrame("Frame", nil, bd)
+			local border = CreateFrame("Frame", nil, bd, "BackdropTemplate")
 			if C then
 				border:SetInside(bd, 1, 1)
 			else
@@ -345,7 +345,7 @@ do
 		end
 
 		if not bd.tukoborder then
-			local border = CreateFrame("Frame", nil, bd)
+			local border = CreateFrame("Frame", nil, bd, "BackdropTemplate")
 			if C then
 				border:SetOutside(bd, 1, 1)
 			else
