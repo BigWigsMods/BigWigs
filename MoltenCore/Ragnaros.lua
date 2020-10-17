@@ -113,7 +113,7 @@ function mod:Knockback(args)
 end
 
 function mod:Warmup()
-	self:Message("warmup", "cyan", nil, L.warmup_message)
+	self:Message("warmup", "cyan", nil, L.warmup_message, false)
 	self:Bar("warmup", 73, CL.active, L.warmup_icon)
 end
 
