@@ -289,7 +289,7 @@ local function dumpValues(path, name, options_table)
 		end
 	end
 	if data == "" then
-		data = "-- Don't error because I'm empty, please."
+		data = "-- Don't error because I'm empty, please.\r\n"
 	end
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
