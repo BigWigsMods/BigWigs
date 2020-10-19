@@ -14,7 +14,7 @@ L.warmup  = "Calentamiento"
 L.warmup_desc  = "Tiempo hasta que el combate con el jefe comience."
 
 L.already_registered  = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) ya existe ese módulo en BigWigs, pero sin embargo está intentando registrarlo de nuevo. Esto normalmente ocurre cuando tienes varias copias de este módulo en tu carpeta de addons posiblemente por una actualización fallida. Es recomendable que borres la carpeta de BigWigs y lo reinstales por completo."
---L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
+L.testNameplate = "Objetivo detectado, creando una barra test en la placa de nombre sobre la placa de nombre del objetivo."
 
 -- Loader / Options.lua
 L.classicWarning1 = "|cFF33FF99BigWigs|r: Estás usando la versión incorrecta de BigWigs en un servidor classic"
@@ -129,8 +129,8 @@ L.SAY_COUNTDOWN = "Decir cuenta atrás"
 L.SAY_COUNTDOWN_desc = "Las burbujas de chat son fáciles de detectar. BigWigs usará múltiples mensajes de cuenta atrás para alertar a los que estén cerca que una habilidad en ti está a punto de expirar."
 L.ME_ONLY_EMPHASIZE = "Enfatizar (sólo en mi)"
 L.ME_ONLY_EMPHASIZE_desc = "Habilitar esto enfatizará cualquier mensaje asociado con esta habilidad SOLO si se lanza sobre ti, mostrandolo más grande y visible."
--- L.NAMEPLATEBAR = "Nameplate Bars"
--- L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
+L.NAMEPLATEBAR = "Placas de nombre"
+L.NAMEPLATEBAR_desc = "Las barras algunas veces están pegadas a las placas de nombre cuando más de un npc castea el mismo hechizo. Si esta habilidad está acompañada por una barra de placa de nombre que quieres ocultar, deshabilita esta opción."
 
 L.advanced  = "Opciones avanzadas"
 L.back  = "<< Volver"
