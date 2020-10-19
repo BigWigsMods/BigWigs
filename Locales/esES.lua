@@ -17,8 +17,8 @@ L.already_registered  = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) 
 --L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate."
 
 -- Loader / Options.lua
---L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
---L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
+L.classicWarning1 = "|cFF33FF99BigWigs|r: Estás usando la versión incorrecta de BigWigs en un servidor classic"
+L.classicWarning2 = "|cFF33FF99BigWigs|r: Por favor instala la versión para classic de BigWigs."
 L.officialRelease  = "Estás usando la versión oficial de BigWigs %s (%s)"
 L.alphaRelease  = "Estás usando la VERSION ALPHA de BigWigs %s (%s)"
 L.sourceCheckout  = "Estás usando la versión de BigWigs %s directamente del repositorio."
