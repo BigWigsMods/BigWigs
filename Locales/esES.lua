@@ -129,7 +129,7 @@ L.SAY_COUNTDOWN = "Decir cuenta atrás"
 L.SAY_COUNTDOWN_desc = "Las burbujas de chat son fáciles de detectar. BigWigs usará múltiples mensajes de cuenta atrás para alertar a los que estén cerca que una habilidad en ti está a punto de expirar."
 L.ME_ONLY_EMPHASIZE = "Enfatizar (sólo en mi)"
 L.ME_ONLY_EMPHASIZE_desc = "Habilitar esto enfatizará cualquier mensaje asociado con esta habilidad SOLO si se lanza sobre ti, mostrandolo más grande y visible."
-L.NAMEPLATEBAR = "Placas de nombre"
+L.NAMEPLATEBAR = "Barras en placas de nombre"
 L.NAMEPLATEBAR_desc = "Las barras algunas veces están pegadas a las placas de nombre cuando más de un npc castea el mismo hechizo. Si esta habilidad está acompañada por una barra de placa de nombre que quieres ocultar, deshabilita esta opción."
 
 L.advanced  = "Opciones avanzadas"
