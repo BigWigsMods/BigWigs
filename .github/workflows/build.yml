@@ -6,6 +6,11 @@ on:
       - master
     tags:
       - '*'
+    paths-ignore:
+      - '.github/**'
+      - '.luacheckrc'
+      - 'ldoc.ltp'
+      - 'gen_option_values.lua'
 
 jobs:
   build:
