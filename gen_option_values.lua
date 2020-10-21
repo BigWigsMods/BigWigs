@@ -449,8 +449,6 @@ end
 
 -- Read modules.xml and return a table of boss module file paths.
 local function parseXML(file)
-	print(string.format("Checking %s", file))
-
 	local f = io.open(file, "r")
 	if not f then
 		error("    File not found!")
@@ -774,6 +772,60 @@ local function parseLua(file)
 	end
 end
 
+local function parseLocale(file_name)
+	local f = io.open(file_name, "r")
+	if not f then
+		error(string.format("    \"%s\" not found!", file_name))
+		return
+	end
+
+	local file_locale = file_name:match("Locales/(.-)%.lua$")
+
+	local data = f:read("*all")
+	f:close()
+
+	local n = 0
+	for line in data:gmatch("(.-)\r?\n") do
+		n = n + 1
+
+		local module_name, module_locale
+		if file_locale == "esES" then
+			-- El español es muy especial
+			local module_name2, module_locale2
+			module_name, module_locale, module_name2, module_locale2 = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%) or BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+			if module_name then
+				-- Make sure both NewBossLocale calls match
+				if module_name ~= module_name2 then
+					error(string.format("    %s:%d: Module name mismatch! %q != %q", file_name, n, module_name, module_name2))
+				end
+				if module_locale2 ~= "esMX" then
+					error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, module_locale, "esMX"))
+				end
+			end
+		else
+			module_name, module_locale = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+		end
+
+		if module_name then
+			if module_locale ~= file_locale then
+				error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, module_locale, file_locale))
+			end
+			if not contains(modules, module_name) then
+				error(string.format("    %s:%d: Invalid module name %q", file_name, n, module_name))
+			end
+		end
+	end
+end
+
+-- Read files from locales.xml to check NewBossLocale lines.
+local function parseLocales(files)
+	-- Run the results of parseXML.
+	for _, f in next, files do
+		f = f:gsub("\\", "/")
+		parseLocale(f)
+	end
+end
+
 local function parse(file)
 	if type(file) == "table" then
 		-- Run the results of parseXML.
@@ -784,10 +836,6 @@ local function parse(file)
 		if #file > 0 then
 			dump(file[1]:match(".*/") or "")
 		end
-		-- Reset!
-		modules = {}
-		module_colors = {}
-		module_sounds = {}
 	elseif file then
 		file = file:gsub("\\", "/")
 		if string.match(file, "%.lua$") then
@@ -795,7 +843,13 @@ local function parse(file)
 			parseLua(file)
 		elseif string.match(file, "modules%.xml$") then
 			-- Scan module includes for lua files.
+			print(string.format("Checking %s", file))
+			modules = {}
+			module_colors = {}
+			module_sounds = {}
 			parse(parseXML(file))
+		elseif string.match(file, "locales%.xml$") then
+			parseLocales(parseXML(file))
 		end
 	end
 end
