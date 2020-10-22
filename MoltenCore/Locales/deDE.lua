@@ -63,7 +63,7 @@ if L then
 
 	L.submerge = "Untertauchen"
 	L.submerge_desc = "Warnt, wenn Ragnaros untertaucht."
-	L.submerge_message = "Ragnaros untergetaucht f�r 90 sek!"
+	L.submerge_message = "Ragnaros untergetaucht für 90 sek!"
 	L.submerge_bar = "Untertauchen"
 
 	L.emerge = "Auftauchen"
