@@ -22,6 +22,7 @@
 ## Notes-itIT: BigWigs The Eternal Palace Modules
 ## Notes-ptBR: BigWigs The Eternal Palace Modules
 ## Notes-koKR: BigWigs The Eternal Palace Modules
+## Version: @project-version@
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

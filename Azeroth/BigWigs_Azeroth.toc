@@ -22,6 +22,7 @@
 ## Notes-itIT: BigWigs Azeroth Modules
 ## Notes-ptBR: BigWigs Azeroth Modules
 ## Notes-koKR: BigWigs Azeroth Modules
+## Version: @project-version@
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

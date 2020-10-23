@@ -22,6 +22,7 @@
 ## Notes-itIT: BigWigs Uldir Modules
 ## Notes-ptBR: BigWigs Uldir Modules
 ## Notes-koKR: BigWigs Uldir Modules
+## Version: @project-version@
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
