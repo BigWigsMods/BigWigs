@@ -68,6 +68,9 @@ end
 function mod:OnEngage()
 	self:PossibleSubmerge()
 	self:Message2("stages", "yellow", L.engage_message, false)
+
+	self:CDBar(26103, 22.7) -- Sweep
+	self:CDBar(26102, 24.3) -- Sand Blast
 end
 
 --------------------------------------------------------------------------------
@@ -153,4 +156,3 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		end
 	end
 end
-
