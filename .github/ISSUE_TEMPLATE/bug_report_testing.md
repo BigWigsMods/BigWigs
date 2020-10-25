@@ -1,8 +1,8 @@
 ---
-name: Issue for PTR/testing
+name: Issue for PTR or Beta testing content
 about: Create a report to help us improve upcoming content
 title: ''
-labels: PTR
+labels: ptr/beta
 assignees: ''
 ---
 

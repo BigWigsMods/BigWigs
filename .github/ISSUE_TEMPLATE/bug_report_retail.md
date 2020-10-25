@@ -2,7 +2,7 @@
 name: Issue for Retail
 about: Create a report to help us improve current content
 title: ''
-labels: Battle for Azeroth
+labels: retail
 assignees: ''
 ---
 
