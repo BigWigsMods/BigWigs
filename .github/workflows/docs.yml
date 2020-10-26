@@ -26,7 +26,7 @@ jobs:
 
       - name: Install ldoc
         run: |
-          sudo apt-get install luarocks
+          sudo apt-get install luarocks dos2unix
           sudo luarocks install ldoc
 
       - name: ldoc PluginPrototype
