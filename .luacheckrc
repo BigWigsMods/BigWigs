@@ -103,6 +103,7 @@ globals = {
 	"BigWigsLoader",
 	"BigWigsOptions",
 	"BigWigsStatsDB",
+	"BigWigsKrosusFirstBeamWasLeft", -- Legion/Nighthold/Krosus.lua
 	"BNGetFriendIndex",
 	"BNIsSelf",
 	"BNSendWhisper",
@@ -154,6 +155,7 @@ globals = {
 	"GetPlayerFacing",
 	"GetProfessionInfo",
 	"GetProfessions",
+	"GetRaidRosterInfo", -- Classic/AQ40/Cthun.lua
 	"GetRaidTargetIndex",
 	"GetRealmName",
 	"GetRealZoneText",
@@ -223,6 +225,8 @@ globals = {
 	"UnitIsCorpse",
 	"UnitIsDead",
 	"UnitIsDeadOrGhost",
+	"UnitIsEnemy", -- Multiple old modules
+	"UnitIsFriend", -- MoP/SiegeOfOrgrimmar/TheFallenProtectors.lua
 	"UnitIsGroupAssistant",
 	"UnitIsGroupLeader",
 	"UnitIsPlayer",
@@ -234,6 +238,13 @@ globals = {
 	"UnitPosition",
 	"UnitPower",
 	"UnitPowerMax",
+	"UnitPowerType", -- Multiple old modules
 	"UnitRace",
 	"UnitSetRole",
+	"UnitThreatSituation", -- Cataclysm/Bastion/Sinestra.lua
+	-- Legion/TombOfSargeras/Kiljaeden.lua
+	"GetTrackingInfo",
+	"SetTracking",
+	"GetNumTrackingTypes",
+	"Minimap",
 }
