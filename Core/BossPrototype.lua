@@ -1135,10 +1135,15 @@ do
 			end
 		else
 			for i = 1, 100 do
-				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+				local name, _, stack, auraType, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
 
 				if not spellId then
 					return
+				elseif not spell then
+					local desiredType = ...
+					if auraType == desiredType then
+						return name, stack, duration, expirationTime
+					end
 				elseif spellId == spell then
 					return name, stack, duration, expirationTime, value
 				end
@@ -1176,10 +1181,15 @@ do
 			end
 		else
 			for i = 1, 100 do
-				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+				local name, _, stack, auraType, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
 
 				if not spellId then
 					return
+				elseif not spell then
+					local desiredType = ...
+					if auraType == desiredType then
+						return name, stack, duration, expirationTime
+					end
 				elseif spellId == spell then
 					return name, stack, duration, expirationTime, value
 				end
