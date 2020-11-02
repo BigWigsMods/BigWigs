@@ -14,7 +14,7 @@ L.warmup  = "Calentamiento"
 L.warmup_desc  = "Tiempo hasta que el combate con el jefe comience."
 
 L.already_registered  = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) ya existe ese módulo en BigWigs, pero sin embargo está intentando registrarlo de nuevo. Esto normalmente ocurre cuando tienes varias copias de este módulo en tu carpeta de addons posiblemente por una actualización fallida. Es recomendable que borres la carpeta de BigWigs y lo reinstales por completo."
-L.testNameplate = "Objetivo detectado, creando una barra test en la placa de nombre sobre la placa de nombre del objetivo."
+L.testNameplate = "Objetivo detectado, creando una barra test en la placa de nombre sobre la placa de nombre del objetivo. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
 
 -- Loader / Options.lua
 L.classicWarning1 = "|cFF33FF99BigWigs|r: Estás usando la versión incorrecta de BigWigs en un servidor classic"
@@ -85,7 +85,7 @@ L.slashDescRange  = "|cFFFED000/range:|r Abre el indicador de rango."
 L.slashDescVersion  = "|cFFFED000/bwv:|r Realiza un chequeo de versiónes de BigWigs."
 L.slashDescConfig  = "|cFFFED000/bw:|r Abre la configuración de BigWigs."
 
-L.gitHubDesc  = "BigWigs es de código abierto alojado en GitHub. Siempre estamos buscando gente para ayudarnos y cualquiera es bienvenido para inspeccionar nuestro código, hacer contribuciones y reportar errores. BigWigs es tan genial a día de hoy en gran parte por la gran comunidad de WoW que nos ayuda."
+L.gitHubDesc  = "|cFF33FF99BigWigs es de código abierto alojado en GitHub. Siempre estamos buscando gente para ayudarnos y cualquiera es bienvenido para inspeccionar nuestro código, hacer contribuciones y reportar errores. BigWigs es tan genial a día de hoy en gran parte por la gran comunidad de WoW que nos ayuda.|r"
 
 L.BAR  = "Barras"
 L.MESSAGE  = "Mensajes"
