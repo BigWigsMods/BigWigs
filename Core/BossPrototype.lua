@@ -28,7 +28,7 @@ end
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter
 local format, find, gsub, band, tremove, wipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
@@ -150,6 +150,19 @@ local spells = setmetatable({}, {__index =
 		end
 		self[key] = value
 		return value
+	end
+})
+local bossNames = setmetatable({}, {__index =
+	function(self, key)
+		local name = EJ_GetEncounterInfo(key)
+		if name then
+			self[key] = name
+			return name
+		else
+			core:Print(format("An invalid boss name id (%d) is being used in a boss module.", key))
+			self[key] = ""
+			return ""
+		end
 	end
 })
 
@@ -1073,10 +1086,18 @@ function boss:MobId(guid)
 	return tonumber(id) or 1
 end
 
---- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal entries (C_EncounterJournal.GetSectionInfo).
+--- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).
+-- @number spellIdOrSectionId The spell id or the journal-based section id (as a negative number)
 -- @return spell name
-function boss:SpellName(spellId)
-	return spells[spellId]
+function boss:SpellName(spellIdOrSectionId)
+	return spells[spellIdOrSectionId]
+end
+
+--- Get a localized boss name from a journal-based encounter id. (EJ_GetEncounterInfo)
+-- @number journalEncounterId The journal-based encounter id
+-- @return localized boss name
+function boss:BossName(journalEncounterId)
+	return bossNames[journalEncounterId]
 end
 
 --- Check if a GUID is you.
@@ -1208,18 +1229,26 @@ do
 	local GetOptions = C_GossipInfo.GetOptions
 	local SelectOption = C_GossipInfo.SelectOption
 	--- Request the gossip options of the selected NPC
-	-- @return table
+	-- @return a separate string for every selectable text option
 	function boss:GetGossipOptions()
-		local tbl = GetOptions()
-		if tbl[1] then
-			return tbl
+		local gossipTbl = GetOptions()
+		if gossipTbl[2] then
+			local tbl = {}
+			for i = 1, #gossipTbl do
+				local text = gossipTbl[i].name
+				if text then
+					tbl[#tbl+1] = text
+				end
+			end
+			return tbl[1], tbl[2], tbl[3], tbl[4], tbl[5] -- This is fine
+		elseif gossipTbl[1] then
+			return gossipTbl[1].name
 		end
 	end
 
 	--- Select a specific NPC gossip option
 	-- @number optionNumber The number of the specific option to be selected
 	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
-	-- @return args
 	function boss:SelectGossipOption(optionNumber, skipConfirmDialogBox)
 		SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
 	end
