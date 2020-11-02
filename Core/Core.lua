@@ -236,7 +236,7 @@ do
 		end
 	end
 
-	local blockPrint = false
+	local lastNamePlateBar = 0
 	local lastSpell = 1
 	local lastTest = 1
 	function core:Test()
@@ -261,11 +261,12 @@ do
 
 		local guid = UnitGUID("target")
 		if guid then
-			if not blockPrint then
-				blockPrint = true
+			local t = GetTime()
+			if (t - lastNamePlateBar) > 25 then
+				lastNamePlateBar = t
 				core:Print(L.testNameplate)
+				core:SendMessage("BigWigs_StartNameplateBar", core, msg, msg, 25, icon, false, guid)
 			end
-			core:SendMessage("BigWigs_StartNameplateBar", core, msg, msg, time, icon, false, guid)
 		end
 	end
 end
