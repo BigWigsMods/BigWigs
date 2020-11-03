@@ -438,7 +438,7 @@ do
 	--- [DEPRECATED] Register a callback for CHAT_MSG_MONSTER_YELL that matches text.
 	-- @param func callback function, passed (module, message, sender, language, channel, target, [standard CHAT_MSG args]...)
 	-- @param ... any number of strings to match
-	function boss:Yell(func, ...)
+	function boss:BossYell(func, ...)
 		if not func then core:Print(format(missingArgument, self.moduleName)) return end
 		if not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
 		if not eventMap[self].CHAT_MSG_MONSTER_YELL then eventMap[self].CHAT_MSG_MONSTER_YELL = {} end
