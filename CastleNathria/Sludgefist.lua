@@ -1,4 +1,4 @@
-if not IsTestBuild() then return end
+
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Chain Link linked with message

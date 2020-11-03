@@ -1,4 +1,4 @@
-if not IsTestBuild() then return end
+
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Fallback if yells are not detected for stage changes

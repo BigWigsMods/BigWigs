@@ -1,4 +1,4 @@
-if not IsTestBuild() then return end
+
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Wicked Blade targets

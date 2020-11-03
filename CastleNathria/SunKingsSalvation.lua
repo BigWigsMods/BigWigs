@@ -1,4 +1,4 @@
-if not IsTestBuild() then return end
+
 --------------------------------------------------------------------------------
 -- TODO
 -- -- Mark the Essence Font with the same marker the Vile Occultist was marked with (SPELL_SUMMON events for GUIDs)
