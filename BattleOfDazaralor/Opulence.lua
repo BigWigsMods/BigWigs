@@ -651,7 +651,7 @@ function mod:CoinShowerApplied(args)
 	self:TargetBar(args.spellId, 10, args.destName)
 	self:CDBar(args.spellId, 30.5)
 	if self:Me(args.destGUID) then
-		self:Yell2(args.spellId)
+		self:Yell(args.spellId)
 		self:YellCountdown(args.spellId, 10)
 	end
 end

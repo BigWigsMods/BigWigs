@@ -590,7 +590,7 @@ do
 				self:SimpleTimer(announce, 0.1)
 			end
 			if args.spellId == 299254 then -- Stand Together!
-				self:Yell2(299250, args.spellName)
+				self:Yell(299250, args.spellName)
 				if #debuffs == 1 then
 					if self:GetOption("custom_off_repeating_decree_chat") and not self:LFR() then
 						decreeTimer = self:ScheduleRepeatingTimer(SendChatMessage, 2, L.hugSay:format(args.destName), "YELL")

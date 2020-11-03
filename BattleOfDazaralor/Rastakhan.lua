@@ -202,7 +202,7 @@ do
 		self:PlaySound(284686, "alarm")
 		if self:Me(guid) then
 			self:Flash(284686)
-			self:Yell2(284686)
+			self:Yell(284686)
 			self:YellCountdown(284686, 5)
 		end
 	end

@@ -393,7 +393,7 @@ function mod:BloodFeastSuccess(args)
 	self:TargetMessage2(args.spellId, "red", args.destName)
 	self:StopBar(args.spellId)
 	if self:Me(args.destGUID) then
-		self:Yell2(args.spellId)
+		self:Yell(args.spellId)
 		self:YellCountdown(args.spellId, self:Mythic() and 6 or 10)
 	end
 	self:CDBar(args.spellId, 46.3)

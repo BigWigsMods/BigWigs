@@ -254,7 +254,7 @@ function mod:DesolationApplied(args)
 	self:PlaySound(args.spellId, "warning", args.destName)
 	self:Bar(args.spellId, self:Mythic() and 33 or 32.5)
 	if self:Me(args.destGUID) then
-		self:Yell2(args.spellId)
+		self:Yell(args.spellId)
 		self:YellCountdown(args.spellId, 5)
 	end
 end

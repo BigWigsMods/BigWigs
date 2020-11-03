@@ -261,7 +261,7 @@ do
 	local function printTarget(self, name, guid)
 		self:TargetMessage2(331706, "red", name)
 		if self:Me(guid) then
-			self:Yell2(331706)
+			self:Yell(331706)
 		end
 	end
 
@@ -341,10 +341,10 @@ do
 		elseif args.spellId == 331637 and firstDarkRecitalTargetGUID then -- 2nd Dark Recital Target
 			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
 				self:Message2(331634, "blue", CL.link:format(self:ColorName(lastDarkRecitalName)))
-				self:Yell2(331634, lastDarkRecitalName, true)
+				self:Yell(331634, lastDarkRecitalName, true)
 			elseif self:Me(firstDarkRecitalTargetGUID) then -- We got 1st debuff so this is our partner
 				self:Message2(331634, "blue", CL.link:format(self:ColorName(args.destName)))
-				self:Yell2(331634, args.destName, true)
+				self:Yell(331634, args.destName, true)
 			end
 			firstDarkRecitalTargetGUID = nil
 			if darkRecitalFallbackTimer then -- We printed above, so cancel this

@@ -195,7 +195,7 @@ do
 	local function printTarget(self, name, guid)
 		tarGuid = guid
 		if self:Me(guid) then
-			self:Yell2(306881)
+			self:Yell(306881)
 			self:YellCountdown(306881, 3.5, nil, 2)
 		end
 		self:TargetMessage2(306881, "red", name)
