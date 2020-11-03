@@ -2445,7 +2445,7 @@ end
 -- @param key the option key
 -- @param msg the message to yell (if nil, key is used)
 -- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
-function boss:Yell2(key, msg, directPrint) -- XXX fixme
+function boss:Yell(key, msg, directPrint)
 	if not checkFlag(self, key, C.SAY) then return end
 	if directPrint then
 		SendChatMessage(msg, "YELL")
