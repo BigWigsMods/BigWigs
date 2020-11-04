@@ -26,20 +26,18 @@ jobs:
 
       - name: Install ldoc
         run: |
-          sudo apt-get install luarocks dos2unix
+          sudo apt-get install luarocks
           sudo luarocks install ldoc
 
       - name: ldoc PluginPrototype
-        run: ldoc --fatalwarnings -q -x md -l BigWigs -p BigWigs BigWigs/Core/PluginPrototype.lua && echo "OK"
+        run: ldoc --fatalwarnings -q -x md -l BigWigs -p BigWigs BigWigs/Core/PluginPrototype.lua && cp -av PluginPrototype.md wiki/
 
       - name: ldoc BossPrototype
         if: always()
-        run: ldoc --fatalwarnings -q -x md -l BigWigs -p BigWigs BigWigs/Core/BossPrototype.lua && echo "OK"
+        run: ldoc --fatalwarnings -q -x md -l BigWigs -p BigWigs BigWigs/Core/BossPrototype.lua && cp -av BossPrototype.md wiki/
 
       - name: Update wiki
         run: |
-          unix2dos -q -n PluginPrototype.md wiki/PluginPrototype.md
-          unix2dos -q -n BossPrototype.md wiki/BossPrototype.md
           cd wiki
           git config user.name "${GITHUB_ACTOR}"
           git config user.email "<>"
