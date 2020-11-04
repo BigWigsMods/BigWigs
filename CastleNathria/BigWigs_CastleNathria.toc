@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fCastle Nathria|r]
 ## Title-frFR: BigWigs [|cffeda55fCastle Nathria|r]
 ## Title-ruRU: BigWigs [|cffeda55fCastle Nathria|r]
-## Title-zhCN: BigWigs [|cffeda55fCastle Nathria|r]
+## Title-zhCN: BigWigs [|cffeda55f纳斯利亚堡|r]
 ## Title-zhTW: BigWigs [|cffeda55fCastle Nathria|r]
 ## Title-itIT: BigWigs [|cffeda55fCastle Nathria|r]
 ## Title-ptBR: BigWigs [|cffeda55fCastle Nathria|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Castle Nathria Modules
 ## Notes-frFR: BigWigs Castle Nathria Modules
 ## Notes-ruRU: BigWigs Castle Nathria Modules
-## Notes-zhCN: BigWigs Castle Nathria Modules
+## Notes-zhCN: BigWigs 纳斯利亚堡模块。
 ## Notes-zhTW: BigWigs Castle Nathria Modules
 ## Notes-itIT: BigWigs Castle Nathria Modules
 ## Notes-ptBR: BigWigs Castle Nathria Modules

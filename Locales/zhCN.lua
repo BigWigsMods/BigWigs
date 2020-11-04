@@ -7,7 +7,7 @@ L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期%d发行版！！我�
 
 L.gitHubDesc = "|cFF33FF99BigWigs 是一个在 GitHub 上的开源软件。我们一直在寻找新的朋友帮助我们和欢迎任何人检测我们的代码，做出贡献和提交错误报告。BigWigs 今天的伟大很大程度上一部分因为伟大的魔兽世界社区帮助我们。|r"
 
-L.testNameplate = "已检测到目标，在目标姓名板上创建一个测试姓名板条。 |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
+L.testNameplate = "已检测到目标，在目标姓名板上创建一个测试姓名板条。 |cFF33FF99此功能很少用到，当与多个首领/增援战斗时通常一个计时条并且需要保持追踪冷却施放相同的法术。|r"
 
 L.classicWarning1 = "|cFF33FF99BigWigs|r：你在经典怀旧服务器上正在使用错误版本的 BigWigs。"
 L.classicWarning2 = "|cFF33FF99BigWigs|r：请安装经典怀旧版本 BigWigs。"
@@ -111,7 +111,7 @@ L.TANK_HEALER_desc = "有些技能只对坦克和治疗重要。如想看到这�
 L.test = "测试"
 L.testBarsBtn = "创建测试计时条"
 L.testBarsBtn_desc = "创建一个测试计时条以便于测试当前显示设置。"
-L.toggleAnchorsBtn = "切换锚点"
+L.toggleAnchorsBtn = "切换移动锚点"
 L.toggleAnchorsBtn_desc = "切换显示或隐藏全部锚点。"
 L.tooltipHint = "|cffeda55f右击|r打开选项。"
 L.upToDate = "已更新："
