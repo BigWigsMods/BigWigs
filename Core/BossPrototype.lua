@@ -1859,7 +1859,7 @@ do
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name)
 	-- @bool[opt] alwaysPlaySound if true, play the sound even if player is not you
-	function boss:TargetMessage(key, player, color, sound, text, icon, alwaysPlaySound)
+	function boss:TargetMessageOld(key, player, color, sound, text, icon, alwaysPlaySound)
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
