@@ -223,11 +223,8 @@ end
 
 -- Removes some things that break simple comma splitting.
 local function clean(str)
-	str = str:gsub(":Dispeller%b()", "")
-	str = str:gsub(":format%b()", "")
-	str = str:gsub("UnitBuff%b()", "UnitBuff")
-	str = str:gsub("UnitDebuff%b()", "UnitDebuff")
-	str = str:gsub("UnitIsUnit%b()", "UnitIsUnit")
+	-- :Dispeller() || :format() || UnitIsUnit()
+	str = str:gsub("(:?%a+)%b()", "%1")
 	return str
 end
 
