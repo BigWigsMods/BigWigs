@@ -9,7 +9,6 @@ on:
     paths-ignore:
       - '.github/**'
       - 'ldoc.ltp'
-      - 'gen_option_values.lua'
 
 jobs:
   build:
