@@ -2034,7 +2034,7 @@ do
 	-- @string player the player name
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
-	function boss:TargetMessage2(key, color, player, text, icon)
+	function boss:TargetMessage(key, color, player, text, icon)
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
