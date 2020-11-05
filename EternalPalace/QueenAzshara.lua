@@ -517,7 +517,7 @@ function mod:ChargedSpear(args)
 end
 
 function mod:ChargedSpearApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
 	self:PlaySound(args.spellId, "alert", nil, args.destName)
 	if self:Me(args.destGUID) then
 		self:Flash(args.spellId)
@@ -716,7 +716,7 @@ end
 
 -- Stage 3
 function mod:StaticShock(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alert", nil, args.destName)
 		self:Flash(args.spellId)
@@ -725,7 +725,7 @@ function mod:StaticShock(args)
 end
 
 function mod:CrystallineShield(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
 	self:PlaySound(args.spellId, "long", nil, args.destName)
 end
 
@@ -784,7 +784,7 @@ function mod:EssenceofAzerothApplied(args)
 		self:Flash(args.spellId)
 		self:Bar(args.spellId, t, L.you_die)
 	else
-		self:TargetMessage2(args.spellId, "yellow", args.destName)
+		self:TargetMessage(args.spellId, "yellow", args.destName)
 	end
 end
 
@@ -795,7 +795,7 @@ function mod:EssenceofAzerothRemoved(args)
 end
 
 function mod:SystemShockApplied(args)
-	self:TargetMessage2(args.spellId, "cyan", args.destName)
+	self:TargetMessage(args.spellId, "cyan", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end

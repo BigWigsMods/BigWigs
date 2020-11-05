@@ -296,13 +296,13 @@ end
 
 function mod:CracklingLightningApplied(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage2(args.spellId, "yellow", args.destName)
+		self:TargetMessage(args.spellId, "yellow", args.destName)
 		self:PlaySound(args.spellId, "warning")
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 4)
 		self:OpenProximity(args.spellId, 6)
 	elseif self:IsSisterOnPlatform() then
-		self:TargetMessage2(args.spellId, "yellow", args.destName)
+		self:TargetMessage(args.spellId, "yellow", args.destName)
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -373,7 +373,7 @@ end
 
 function mod:TemptingSongApplied(args)
 	if self:IsBrotherOnPlatform() or stage == 2 then
-		self:TargetMessage2(args.spellId, "red", args.destName)
+		self:TargetMessage(args.spellId, "red", args.destName)
 		self:PlaySound(args.spellId, "warning", nil, args.destName)
 	end
 end
@@ -454,7 +454,7 @@ function mod:IreoftheDeep(args)
 end
 
 function mod:StormsWailApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, stormsWailCount))
+	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, stormsWailCount))
 	local duration = self:Easy() and 13 or 10
 	self:TargetBar(args.spellId, duration, args.destName, CL.count:format(args.spellName, stormsWailCount))
 	if self:Me(args.destGUID) then
@@ -466,7 +466,7 @@ function mod:StormsWailApplied(args)
 end
 
 function mod:StormsWailSecondaryApplied(args)
-	self:TargetMessage2(285350, "yellow", args.destName)
+	self:TargetMessage(285350, "yellow", args.destName)
 	local duration = self:Easy() and 13 or 10
 	self:TargetBar(285350, duration, args.destName)
 	if self:Me(args.destGUID) then

@@ -186,7 +186,7 @@ end
 
 function mod:Fixate(args)
 	self:StopBar(CL.count:format(args.spellName, fixateCount))
-	self:TargetMessage2(args.spellId, "red", args.destName, CL.count:format(args.spellName, fixateCount))
+	self:TargetMessage(args.spellId, "red", args.destName, CL.count:format(args.spellName, fixateCount))
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:Say(args.spellId)
@@ -206,7 +206,7 @@ function mod:Hungry(args)
 end
 
 function mod:TastyMorsel(args)
-	self:TargetMessage2(args.spellId, "green", args.destName)
+	self:TargetMessage(args.spellId, "green", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "long")
 		self:TargetBar(args.spellId, 15, args.destName)

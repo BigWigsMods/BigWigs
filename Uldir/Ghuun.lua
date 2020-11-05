@@ -253,7 +253,7 @@ do
 			if self:Me(args.destGUID) then
 				castOnMe = true
 			end
-			self:TargetMessage2(272506, "orange", args.destName)
+			self:TargetMessage(272506, "orange", args.destName)
 		end
 		self:StopBar(272506)
 		self:CDBar(272506, self:Mythic() and (stage == 3 and 27 or 44) or stage == 1 and 26 or stage == 2 and 15.9 or 13.4)
@@ -390,7 +390,7 @@ end
 
 function mod:BloodFeastSuccess(args)
 	self:PlaySound(args.spellId, "alert", nil, args.destName)
-	self:TargetMessage2(args.spellId, "red", args.destName)
+	self:TargetMessage(args.spellId, "red", args.destName)
 	self:StopBar(args.spellId)
 	if self:Me(args.destGUID) then
 		self:Yell(args.spellId)

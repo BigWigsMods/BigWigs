@@ -58,7 +58,7 @@ do
 			self:Say(277047)
 			self:PlaySound(277047, "warning")
 		end
-		self:TargetMessage2(277047, "yellow", player)
+		self:TargetMessage(277047, "yellow", player)
 	end
 	function mod:CorruptingGaze(args)
 		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)

@@ -308,7 +308,7 @@ do
 		local count = #playerList
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:TargetMessage2(282135, "blue", args.destName, CL.count_icon:format(args.spellName, count, count))
+			self:TargetMessage(282135, "blue", args.destName, CL.count_icon:format(args.spellName, count, count))
 			self:PlaySound(282135, "warning")
 			self:Say(282135, CL.count_rticon:format(args.spellName, count, count))
 			self:Flash(282135, count)

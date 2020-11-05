@@ -244,7 +244,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 end
 
 function mod:PuncturedDarkness(args)
-	self:TargetMessage2(args.spellId, "green", args.destName)
+	self:TargetMessage(args.spellId, "green", args.destName)
 	self:PlaySound(args.spellId, "long", args.destName)
 	self:TargetBar(args.spellId, 20, args.destName)
 end

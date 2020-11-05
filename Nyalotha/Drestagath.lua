@@ -131,7 +131,7 @@ function mod:VoidGrip(args)
 end
 
 function mod:VolatileSeed(args)
-	self:TargetMessage2(args.spellId, "purple", args.destName, CL.count:format(args.spellName, seedCounter))
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, seedCounter))
 	self:PlaySound(args.spellId, "alarm")
 	seedCounter = seedCounter + 1
 	self:Bar(args.spellId, 17, CL.count:format(args.spellName, seedCounter))

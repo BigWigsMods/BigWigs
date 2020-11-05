@@ -66,7 +66,7 @@ function mod:CrushingSlam(args)
 end
 
 function mod:CrushingSlamSuccess(args)
-	self:TargetMessage2(args.spellId, "purple", args.destName)
+	self:TargetMessage(args.spellId, "purple", args.destName)
 	self:PlaySound(args.spellId, "warning")
 end
 

@@ -287,7 +287,7 @@ function mod:Crystalize(args)
 end
 
 function mod:CrystalizeApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, crystalizeCount-1))
+	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, crystalizeCount-1))
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 5)
@@ -402,7 +402,7 @@ do
 			self:Say(334009, 47482) -- Leap
 			self:PlaySound(334009, "warning")
 		end
-		self:TargetMessage2(334009, "red", player, CL.count:format(self:SpellName(334009), reverberatingLeapCount-1))
+		self:TargetMessage(334009, "red", player, CL.count:format(self:SpellName(334009), reverberatingLeapCount-1))
 	end
 
 	function mod:ReverberatingLeap(args)
@@ -454,7 +454,7 @@ do
 end
 
 function mod:VolatileAnimaApplied(args)
-	self:TargetMessage2(args.spellId, "cyan", args.destName)
+	self:TargetMessage(args.spellId, "cyan", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alert")
 	end
@@ -473,7 +473,7 @@ do
 end
 
 function mod:RavenousFeast(args)
-	self:TargetMessage2(args.spellId, "red", args.destName)
+	self:TargetMessage(args.spellId, "red", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 	end

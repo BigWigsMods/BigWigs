@@ -176,7 +176,7 @@ function mod:GlyphofDestruction(args)
 end
 
 function mod:GlyphofDestructionApplied(args)
-	self:TargetMessage2(args.spellId, "purple", args.destName)
+	self:TargetMessage(args.spellId, "purple", args.destName)
 	self:PlaySound(args.spellId, "warning")
 	self:TargetBar(args.spellId, 8, args.destName)
 	if self:Me(args.destGUID) then

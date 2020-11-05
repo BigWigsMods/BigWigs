@@ -302,7 +302,7 @@ do
 	local castEnd = 0
 	function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, destName)
 		if msg:find("325873", nil, true) then -- Ember Blast
-			self:TargetMessage2(325877, "orange", destName, CL.count:format(self:SpellName(325877), emberBlastCount))
+			self:TargetMessage(325877, "orange", destName, CL.count:format(self:SpellName(325877), emberBlastCount))
 			local guid = UnitGUID(destName)
 			if self:Me(guid) then
 				self:PlaySound(325877, "warning")

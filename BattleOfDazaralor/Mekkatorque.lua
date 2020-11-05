@@ -378,7 +378,7 @@ do
 
 	function mod:ShrunkApplied(args)
 		if self:Me(args.destGUID) then
-			self:TargetMessage2(args.spellId, "blue", args.destName)
+			self:TargetMessage(args.spellId, "blue", args.destName)
 			self:PlaySound(args.spellId, "alert")
 			if not shrunkTimer and self:GetOption("custom_on_repeating_shrunk_say") and not self:LFR() then
 				SendChatMessage(args.spellName, "SAY")

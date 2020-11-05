@@ -213,7 +213,7 @@ end
 
 function mod:EssenceShearApplied(args)
 	if self:Tank(args.destName) then
-		self:TargetMessage2(273282, "red", args.destName)
+		self:TargetMessage(273282, "red", args.destName)
 		self:PlaySound(273282, "alarm", nil, args.destName)
 	end
 end

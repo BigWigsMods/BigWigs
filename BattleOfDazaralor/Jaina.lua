@@ -363,7 +363,7 @@ do
 				SetRaidTarget(args.destName, count)
 			end
 		else -- 1 target (tank)
-			self:TargetMessage2(args.spellId, "yellow", args.destName)
+			self:TargetMessage(args.spellId, "yellow", args.destName)
 			self:PrimaryIcon(args.spellId, args.destName)
 			if self:Me(args.destGUID) then
 				self:Say(args.spellId)
@@ -474,7 +474,7 @@ function mod:SiegebreakerBlastSucces(args)
 end
 
 function mod:SiegebreakerBlastApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
 	self:PlaySound(args.spellId, "alert", nil, args.destName)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetBar(args.spellId, 8, args.destName)

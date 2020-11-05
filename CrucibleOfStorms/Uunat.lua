@@ -338,7 +338,7 @@ do
 	end
 
 	function mod:UmbralShellApplied(args)
-		self:TargetMessage2(args.spellId, "cyan", args.destName)
+		self:TargetMessage(args.spellId, "cyan", args.destName)
 		self:PlaySound(args.spellId, "info", nil, args.destName)
 		if self:CheckOption(-19055, "INFOBOX") then
 			absorbActive = true
@@ -404,13 +404,13 @@ do
 
 	function mod:CustodyoftheDeepApplied(args)
 		if self:Me(args.destGUID) then
-			self:TargetMessage2(args.spellId, "green", args.destName)
+			self:TargetMessage(args.spellId, "green", args.destName)
 			self:PlaySound(args.spellId, "info")
 		end
 	end
 
 	function mod:StormofAnnihilationApplied(args)
-		self:TargetMessage2(args.spellId, "cyan", args.destName)
+		self:TargetMessage(args.spellId, "cyan", args.destName)
 		self:PlaySound(args.spellId, "long", nil, args.destName)
 		self:CastBar(args.spellId, 15)
 	end
@@ -423,7 +423,7 @@ function mod:TouchoftheEndSuccess(args)
 end
 
 function mod:TouchoftheEndApplied(args)
-	self:TargetMessage2(args.spellId, "purple", args.destName)
+	self:TargetMessage(args.spellId, "purple", args.destName)
 	self:PlaySound(args.spellId, "alarm", nil, args.destName)
 end
 
@@ -626,7 +626,7 @@ function mod:InsatiableTormentSuccess(args)
 end
 
 function mod:InsatiableTormentApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, insatiableTormentCount-1)) -- count-1 due to Success being before applied
+	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, insatiableTormentCount-1)) -- count-1 due to Success being before applied
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId, 143924) -- Leech
 		self:PlaySound(args.spellId, "warning")

@@ -104,7 +104,7 @@ do
 			self:Say(288959)
 			self:PlaySound(288959, "warning")
 		end
-		self:TargetMessage2(288959, "yellow", player)
+		self:TargetMessage(288959, "yellow", player)
 	end
 	function mod:SpectralCharge(args)
 		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
@@ -116,7 +116,7 @@ function mod:Impale(args)
 		self:Say(args.spellId)
 	end
 	self:PlaySound(args.spellId, "long")
-	self:TargetMessage2(args.spellId, "red", args.destName)
+	self:TargetMessage(args.spellId, "red", args.destName)
 	self:TargetBar(args.spellId, 15, args.destName)
 end
 
@@ -133,7 +133,7 @@ function mod:BwonsamdisPact(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 	end
-	self:TargetMessage2(args.spellId, "orange", args.destName)
+	self:TargetMessage(args.spellId, "orange", args.destName)
 end
 
 function mod:BwonsamdisKnife(args)

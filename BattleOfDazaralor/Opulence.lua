@@ -430,7 +430,7 @@ do
 	local prev = 0
 	function mod:ChaoticDisplacement(args)
 		if self:Me(args.destGUID) then
-			self:TargetMessage2(args.spellId, "blue", args.destName, L.swap, args.spellId)
+			self:TargetMessage(args.spellId, "blue", args.destName, L.swap, args.spellId)
 			self:CastBar(args.spellId, 6, CL.you:format(self:SpellName(L.swap)))
 			self:PlaySound(args.spellId, "info")
 		end
@@ -531,7 +531,7 @@ end
 function mod:JewelApplied(args)
 	jewelTracker[self:UnitName(args.destName)] = args.spellId
 	if self:Me(args.destGUID) then
-		self:TargetMessage2(-19494, "blue", args.destName, args.spellName, args.spellId)
+		self:TargetMessage(-19494, "blue", args.destName, args.spellName, args.spellId)
 		self:PlaySound(-19494, "long")
 	end
 	self:UpdateGemRoomInfoBox()
@@ -559,7 +559,7 @@ function mod:CritBuffApplied(args)
 	local _, _, _, expires = self:UnitDebuff(args.destName, args.spellId)
 	critBuffTracker[args.destName] = expires
 
-	self:TargetMessage2(284645, "green", args.destName, args.spellName, args.spellId)
+	self:TargetMessage(284645, "green", args.destName, args.spellName, args.spellId)
 	if self:Me(args.destGUID) then
 		self:Say(284645, args.spellId)
 	end
@@ -645,7 +645,7 @@ do
 end
 
 function mod:CoinShowerApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
 	self:PlaySound(args.spellId, "alert", nil, args.destName)
 	self:PrimaryIcon(args.spellId, args.destName)
 	self:TargetBar(args.spellId, 10, args.destName)

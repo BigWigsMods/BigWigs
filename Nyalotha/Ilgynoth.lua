@@ -218,7 +218,7 @@ do
 			self:Say(318383)
 			self:PlaySound(318383, "alarm")
 		else
-			self:TargetMessage2(318383, "red", name)
+			self:TargetMessage(318383, "red", name)
 		end
 	end
 

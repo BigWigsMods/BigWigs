@@ -189,7 +189,7 @@ function mod:Interupted(args)
 end
 
 function mod:AquaLance(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alert", nil, args.destName)
 		self:Flash(args.spellId)

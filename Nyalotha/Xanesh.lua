@@ -127,7 +127,7 @@ do
 end
 
 function mod:DarkAscensionApplied(args)
-	self:TargetMessage2(args.spellId, "red", args.destName)
+	self:TargetMessage(args.spellId, "red", args.destName)
 	self:PlaySound(args.spellId, "warning", args.destName)
 end
 

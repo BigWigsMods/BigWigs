@@ -657,7 +657,7 @@ end
 
 function mod:CorruptedMindApplied(args)
 	if self:Me(args.destGUID) or self:Dispeller("magic") then
-		self:TargetMessage2(args.spellId, "orange", args.destName)
+		self:TargetMessage(args.spellId, "orange", args.destName)
 		self:PlaySound(args.spellId, "alert", args.destName)
 	end
 end
@@ -769,7 +769,7 @@ end
 
 -- Mythic
 function mod:EventHorizon(args)
-	self:TargetMessage2(args.spellId, "orange", args.destName, CL.count:format(args.spellName, eventHorizonCount))
+	self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(args.spellName, eventHorizonCount))
 	if self:Me(args.destGUID) or self:Tank() then
 		self:PlaySound(args.spellId, "warning")
 	end

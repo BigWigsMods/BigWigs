@@ -189,7 +189,7 @@ function mod:DespairSuccess(args)
 end
 
 function mod:DespairApplied(args)
-	self:TargetMessage2(args.spellId, "red", args.destName)
+	self:TargetMessage(args.spellId, "red", args.destName)
 	if self:Me(args.destGUID) or self:Healer() then
 		self:PlaySound(args.spellId, "warning")
 	end
@@ -250,7 +250,7 @@ function mod:HeartofDarkness(args)
 end
 
 function mod:DesolationApplied(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
 	self:PlaySound(args.spellId, "warning", args.destName)
 	self:Bar(args.spellId, self:Mythic() and 33 or 32.5)
 	if self:Me(args.destGUID) then

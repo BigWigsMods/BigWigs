@@ -247,7 +247,7 @@ do
 	end
 
 	function mod:UmbralShellApplied(args)
-		self:TargetMessage2(args.spellId, "orange", args.destName, CL.count:format(args.spellName, umbralShellCount))
+		self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(args.spellName, umbralShellCount))
 		self:PlaySound(args.spellId, "alarm")
 		if self:CheckOption(-18970, "INFOBOX") then
 			absorbActive = true
@@ -314,7 +314,7 @@ do
 end
 
 function mod:PowerOverwhelming(args)
-	self:TargetMessage2(args.spellId, "red", args.destName)
+	self:TargetMessage(args.spellId, "red", args.destName)
 	self:PlaySound(args.spellId, "warning")
 end
 
@@ -351,7 +351,7 @@ function mod:AphoticBlastRemoved(args)
 end
 
 function mod:AgentofDemise(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 	end
@@ -366,7 +366,7 @@ function mod:CerebralAssault(args)
 end
 
 function mod:DarkHerald(args)
-	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, darkHeraldCount)) -- Count - 1 since applied is after Success
+	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, darkHeraldCount)) -- Count - 1 since applied is after Success
 	self:PlaySound(args.spellId, "alert")
 	self:TargetBar(args.spellId, 10, args.destName, CL.count:format(args.spellName, darkHeraldCount))
 	darkHeraldCount = darkHeraldCount + 1

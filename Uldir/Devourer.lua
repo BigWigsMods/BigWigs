@@ -104,7 +104,7 @@ end
 function mod:MalodorousMiasmaApplied(args)
 	local amount = args.amount or 1
 	if amount == 1 then
-		self:TargetMessage2(args.spellId, "orange", args.destName)
+		self:TargetMessage(args.spellId, "orange", args.destName)
 	else
 		self:StackMessage(args.spellId, args.destName, args.amount, "orange")
 	end
@@ -127,7 +127,7 @@ end
 function mod:PutridParoxysmApplied(args)
 	local amount = args.amount or 1
 	if amount == 1 then
-		self:TargetMessage2(args.spellId, "orange", args.destName)
+		self:TargetMessage(args.spellId, "orange", args.destName)
 	else
 		self:StackMessage(args.spellId, args.destName, args.amount, "orange")
 	end

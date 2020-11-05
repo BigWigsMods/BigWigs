@@ -131,7 +131,7 @@ function mod:BestialThrow(args)
 end
 
 function mod:BestialThrowTarget(args)
-	self:TargetMessage2(289401, "purple", args.destName)
+	self:TargetMessage(289401, "purple", args.destName)
 	self:PlaySound(289401, "alarm", nil, args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(289401)
@@ -152,7 +152,7 @@ function mod:FerociousRoar(args)
 end
 
 --function mod:VoodooBlast(args)
---	self:TargetMessage2(args.spellId, "orange", args.destName)
+--	self:TargetMessage(args.spellId, "orange", args.destName)
 --	self:PlaySound(args.spellId, "alarm")
 --	if self:Me(args.destGUID) then
 --		self:Say(args.spellId)
@@ -194,7 +194,7 @@ do
 end
 
 function mod:ShadowCore(args)
-	self:TargetMessage2(args.spellId, "green", args.destName, args.spellName)
+	self:TargetMessage(args.spellId, "green", args.destName, args.spellName)
 	if self:Me(args.destGUID) then
 		self:TargetBar(args.spellId, 20, args.destName)
 	end

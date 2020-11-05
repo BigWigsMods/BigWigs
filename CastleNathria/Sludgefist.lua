@@ -104,7 +104,7 @@ end
 
 function mod:HatefulGazeApplied(args)
 	self:StopBar(CL.count:format(args.spellName, hatefullGazeCount))
-	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, hatefullGazeCount))
+	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, hatefullGazeCount))
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:Say(args.spellId)
@@ -191,7 +191,7 @@ end
 
 function mod:ChainSlamApplied(args)
 	self:StopBar(CL.count:format(args.spellName, chainSlamCount))
-	self:TargetMessage2(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chainSlamCount))
+	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chainSlamCount))
 	self:SecondaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)

@@ -205,7 +205,7 @@ function mod:JaggedClawsApplied(args)
 end
 
 function mod:ViciousLungeApplied(args)
-	self:TargetMessage2(args.spellId, "orange", args.destName, CL.count:format(args.spellName, bloodyThrashCount))
+	self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(args.spellName, bloodyThrashCount))
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")

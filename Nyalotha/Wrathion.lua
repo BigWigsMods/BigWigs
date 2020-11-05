@@ -124,7 +124,7 @@ function mod:IncinerationApplied(args)
 		self:SayCountdown(args.spellId, 6)
 		self:Flash(args.spellId)
 		self:PlaySound(args.spellId, "warning")
-		self:TargetMessage2(args.spellId, "blue", args.destName)
+		self:TargetMessage(args.spellId, "blue", args.destName)
 	end
 end
 

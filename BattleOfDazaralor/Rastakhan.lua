@@ -143,7 +143,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 end
 
 function mod:ScorchingDetonationSuccess(args)
-	self:TargetMessage2(args.spellId, "purple", args.destName, CL.count:format(args.spellName, detonationCount))
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, detonationCount))
 	self:PlaySound(args.spellId, "warning", nil, args.destName)
 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, detonationCount))
 	detonationCount = detonationCount + 1
@@ -169,7 +169,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then -- Backup for the scan failing
 			prev = t
-			self:TargetMessage2(290450, "yellow", args.destName)
+			self:TargetMessage(290450, "yellow", args.destName)
 			if self:Me(args.destGUID) then
 				self:PlaySound(290450, "warning")
 				self:Flash(290450)
@@ -180,7 +180,7 @@ do
 
 	local function printTarget(self, name, guid)
 		prev = GetTime()
-		self:TargetMessage2(290450, "yellow", name)
+		self:TargetMessage(290450, "yellow", name)
 		if self:Me(guid) then
 			self:PlaySound(290450, "warning")
 			self:Flash(290450)
@@ -198,7 +198,7 @@ do
 	local tarGuid = nil
 	local function printTarget(self, name, guid)
 		tarGuid = guid
-		self:TargetMessage2(284686, "orange", name)
+		self:TargetMessage(284686, "orange", name)
 		self:PlaySound(284686, "alarm")
 		if self:Me(guid) then
 			self:Flash(284686)
@@ -239,7 +239,7 @@ do
 	local function printTarget(self, name, guid)
 		if warned ~= true then
 			warned = true
-			self:TargetMessage2(284781, "yellow", name)
+			self:TargetMessage(284781, "yellow", name)
 			if self:Me(guid) then
 				self:PlaySound(284781, "warning")
 			end
@@ -254,7 +254,7 @@ do
 	function mod:GrievousAxeApplied(args) -- Fallback
 		if warned ~= true then
 			warned = true
-			self:TargetMessage2(args.spellId, "yellow", args.destName)
+			self:TargetMessage(args.spellId, "yellow", args.destName)
 			if self:Me(args.destGUID) then
 				self:PlaySound(args.spellId, "warning")
 			end
@@ -346,7 +346,7 @@ function mod:DeathsDoorApplied(args)
 		self:Flash(args.spellId)
 		self:SayCountdown(args.spellId, 8)
 	end
-	self:TargetMessage2(args.spellId, "orange", args.destName)
+	self:TargetMessage(args.spellId, "orange", args.destName)
 end
 
 function mod:InevitableEnd(args)

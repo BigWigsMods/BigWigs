@@ -183,7 +183,7 @@ end
 do
 	local function printTarget(self, name, guid)
 		if UnitIsPlayer(name) then -- Targets a bunny a lot of times
-			self:TargetMessage2(328334, "orange", name)
+			self:TargetMessage(328334, "orange", name)
 			if self:Me(guid) then
 				self:Say(328334)
 				self:PlaySound(328334, "warning")
@@ -227,7 +227,7 @@ end
 
 --[[ Baroness Frieda ]]--
 function mod:DrainEssence(args)
-	self:TargetMessage2(327773, "purple", args.destName)
+	self:TargetMessage(327773, "purple", args.destName)
 	self:PlaySound(327773, "alert")
 	self:CDBar(327773, 22.5)
 end
@@ -259,7 +259,7 @@ end
 
 do
 	local function printTarget(self, name, guid)
-		self:TargetMessage2(331706, "red", name)
+		self:TargetMessage(331706, "red", name)
 		if self:Me(guid) then
 			self:Yell(331706)
 		end

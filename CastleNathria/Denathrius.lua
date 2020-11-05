@@ -337,7 +337,7 @@ end
 
 function mod:WrackingPainApplied(args)
 	if self:Tank(args.destName) and self:Tank() then
-		self:TargetMessage2(args.spellId, "purple", args.destName)
+		self:TargetMessage(args.spellId, "purple", args.destName)
 		self:PlaySound(args.spellId, "warning", args.destName)
 	end
 end

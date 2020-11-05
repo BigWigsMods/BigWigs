@@ -277,7 +277,7 @@ end
 
 function mod:BreedMadness(args)
 	if self:Me(args.destGUID) then
-		self:TargetMessage2(args.spellId, "blue", args.destName)
+		self:TargetMessage(args.spellId, "blue", args.destName)
 		self:PlaySound(args.spellId, "info")
 	end
 end

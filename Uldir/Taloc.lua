@@ -147,7 +147,7 @@ end
 do
 	local function printTarget(self, name, guid)
 		self:PlaySound(271895, "alert", nil, name)
-		self:TargetMessage2(271895, "yellow", name)
+		self:TargetMessage(271895, "yellow", name)
 		if self:Me(guid) then
 			self:Say(271895)
 		end
@@ -249,7 +249,7 @@ function mod:EnlargedHeartApplied(args)
 		self:Flash(args.spellId)
 		self:SayCountdown(args.spellId, 6)
 	end
-	self:TargetMessage2(args.spellId, "orange", args.destName)
+	self:TargetMessage(args.spellId, "orange", args.destName)
 	self:TargetBar(args.spellId, 6, args.destName)
 end
 

@@ -77,7 +77,7 @@ function mod:TideFistStart(args)
 end
 
 function mod:TideFistApplied(args)
-	self:TargetMessage2(args.spellId, "purple", args.destName)
+	self:TargetMessage(args.spellId, "purple", args.destName)
 	self:PlaySound(args.spellId, "alert", args.destName)
 end
 

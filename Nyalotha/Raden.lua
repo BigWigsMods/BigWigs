@@ -198,7 +198,7 @@ do
 			self:Yell(306881)
 			self:YellCountdown(306881, 3.5, nil, 2)
 		end
-		self:TargetMessage2(306881, "red", name)
+		self:TargetMessage(306881, "red", name)
 	end
 
 	function mod:VoidCollapse(args)
@@ -244,7 +244,7 @@ function mod:DecayingStrikeStart(args)
 end
 
 function mod:DecayingStrikeApplied(args)
-	self:TargetMessage2(313213, "red", args.destName, args.spellName) -- Decaying Wound
+	self:TargetMessage(313213, "red", args.destName, args.spellName) -- Decaying Wound
 	self:PlaySound(313213, "alarm", nil, args.destName)
 end
 
