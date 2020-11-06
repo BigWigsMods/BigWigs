@@ -1342,27 +1342,14 @@ end)
 
 do
 	local offDispel, defDispel = {}, {}
-	local _, class = UnitClass("player")
-	local function petCanDispel()
-		if class == "HUNTER" then
-			return IsSpellKnown(264266, true) -- Nature's Grace (Stag)
-				or IsSpellKnown(264265, true) -- Spirit Shock (Spirit Beast)
-				or IsSpellKnown(264264, true) -- Nether Shock (Nether Ray)
-				or IsSpellKnown(264263, true) -- Sonic Blast (Bat)
-				or IsSpellKnown(264262, true) -- Soothing Water (Water Strider)
-				or IsSpellKnown(264056, true) -- Spore Cloud (Sporebat)
-				or IsSpellKnown(264055, true) -- Serenity Dust (Moth)
-				or IsSpellKnown(264028, true) -- Chi-Ji's Tranquility (Crane)
-		end
-	end
 	function UpdateDispelStatus()
 		offDispel, defDispel = {}, {}
-		if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(278326) or IsSpellKnown(19505, true) or petCanDispel() then
-			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Devour Magic (Warlock Felhunter), Hunter pet
+		if IsSpellKnown(32375) or IsSpellKnown(528) or IsSpellKnown(370) or IsSpellKnown(30449) or IsSpellKnown(278326) or IsSpellKnown(19505, true) or IsSpellKnown(19801) then
+			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Devour Magic (Warlock Felhunter), Tranquilizing Shot (Hunter)
 			offDispel.magic = true
 		end
-		if IsSpellKnown(2908) or petCanDispel() then
-			-- Soothe (Druid), Hunter pet
+		if IsSpellKnown(2908) or IsSpellKnown(19801) then
+			-- Soothe (Druid), Tranquilizing Shot (Hunter)
 			offDispel.enrage = true
 		end
 		if IsSpellKnown(527) or IsSpellKnown(77130) or IsSpellKnown(115450) or IsSpellKnown(4987) or IsSpellKnown(88423) then -- XXX Add DPS priest mass dispel?
