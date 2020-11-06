@@ -46,18 +46,18 @@ end
 --
 
 function mod:MortalStrike(args)
-	self:TargetMessage2(16856, "purple", args.destName)
+	self:TargetMessage(16856, "purple", args.destName)
 	self:PlaySound(16856, "warning")
 	self:TargetBar(16856, 5, args.destName)
 end
 
 function mod:ThreateningGaze(args)
-	self:TargetMessage2(24314, "yellow", args.destName)
+	self:TargetMessage(24314, "yellow", args.destName)
 	self:PlaySound(24314, "info")
 	self:PrimaryIcon(24314, args.destName)
 end
 
 function mod:Enrage(args)
-	self:TargetMessage2(24318, "red", args.destName)
+	self:TargetMessage(24318, "red", args.destName)
 	self:PlaySound(24318, "alarm")
 end

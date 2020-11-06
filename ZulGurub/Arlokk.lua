@@ -46,18 +46,18 @@ end
 --
 
 function mod:Gouge(args)
-	self:TargetMessage2(12540, "purple", args.destName)
+	self:TargetMessage(12540, "purple", args.destName)
 	self:PlaySound(12540, "warning")
 end
 
 function mod:MarkOfArlokk(args)
-	self:TargetMessage2(24210, "red", args.destName)
+	self:TargetMessage(24210, "red", args.destName)
 	self:PlaySound(24210, "alarm")
 	self:PrimaryIcon(24210, args.destName)
 end
 
 function mod:ShadowWordPain(args)
-	self:TargetMessage2(24212, "orange", args.destName)
+	self:TargetMessage(24212, "orange", args.destName)
 	if self:Dispeller("magic") then
 		self:PlaySound(24212, "alert")
 	end

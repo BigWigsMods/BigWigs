@@ -71,7 +71,7 @@ end
 --
 
 function mod:Druids(args)
-	self:Message2(24795, "cyan", CL.incoming:format(CL.adds), false)
+	self:Message(24795, "cyan", CL.incoming:format(CL.adds), false)
 	self:PlaySound(24795, "long")
 end
 
@@ -95,7 +95,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(24814, "green")
+			self:Message(24814, "green")
 			self:PlaySound(24814, "info")
 			-- self:CDBar(24818, 20)
 		end
@@ -108,7 +108,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		if hp < warnHP then -- 80, 55, 30
 			warnHP = warnHP - 25
 			if hp > warnHP then -- avoid multiple messages when joining mid-fight
-				self:Message2(24795, "cyan", CL.soon:format(CL.adds), false)
+				self:Message(24795, "cyan", CL.soon:format(CL.adds), false)
 			end
 			if warnHP < 30 then
 				self:UnregisterUnitEvent(event, "target", "focus")
@@ -119,7 +119,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg, sender)
 	if msg:find(L.engage_trigger, nil, true) then
-		self:Message2(24818, "yellow", L.custom_start_s:format(sender, self:SpellName(24818), 10), false)
+		self:Message(24818, "yellow", L.custom_start_s:format(sender, self:SpellName(24818), 10), false)
 		self:Bar(24818, 10) -- Noxious Breath
 	end
 end

@@ -104,7 +104,7 @@ function mod:OnEngage()
 	phase2started = nil
 	tentacletime = timeP1Tentacle
 
-	self:Message2("stages", "yellow", L.startwarn, false)
+	self:Message("stages", "yellow", L.startwarn, false)
 
 	self:Bar("tentacle", timeP1TentacleStart, L.tentacleParty, L.tentacle_icon) -- Tentacle party
 	self:DelayedMessage("tentacle", timeP1TentacleStart - 5, "orange", CL.custom_sec:format(L.tentacle, 5)) -- Tentacles in 5 sec
@@ -157,7 +157,7 @@ function mod:CThunP2Start()
 		phase2started = true
 		tentacletime = timeP2Tentacle
 
-		self:Message2("stages", "cyan", L.phase2starting, false)
+		self:Message("stages", "cyan", L.phase2starting, false)
 
 		self:StopBar(L.tentacleParty)
 
@@ -189,7 +189,7 @@ function mod:CThunP2Start()
 end
 
 function mod:CThunWeakened()
-	self:Message2("weakened", "green", L.weakened_msg, L.weakened_icon)
+	self:Message("weakened", "green", L.weakened_msg, L.weakened_icon)
 	self:Bar("weakened", timeWeakened, L.barWeakened, L.weakened_icon)
 	self:DelayedMessage("weakened", timeWeakened - 5, "orange", L.invulnerable2)
 	self:DelayedMessage("weakened", timeWeakened, "red", L.invulnerable1)
@@ -242,12 +242,12 @@ function mod:GroupWarning()
 			if target == guid then
 				local name = self:UnitName(unit)
 				if not IsInRaid() then
-					self:Message2(26029, "red", L.groupwarning:format(1, name), 26029)
+					self:Message(26029, "red", L.groupwarning:format(1, name), 26029)
 				else
 					for i = 1, GetNumGroupMembers() do
 						local n, _, group = GetRaidRosterInfo(i)
 						if name == n then
-							self:Message2(26029, "red", L.groupwarning:format(group, name), 26029)
+							self:Message(26029, "red", L.groupwarning:format(group, name), 26029)
 							break
 						end
 					end

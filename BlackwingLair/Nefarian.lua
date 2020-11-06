@@ -127,12 +127,18 @@ end
 function mod:Fear(args)
 	self:DelayedMessage(22686, 26, "orange", CL.custom_sec:format(args.spellName, 5))
 	self:CDBar(22686, 32)
-	self:Message(22686, "red", "Alert")
+	self:Message(22686, "red")
+	if self:Me(args.destGUID) then
+		self:PlaySound(22686, "alert")
+	end
 	self:Bar(22686, 1.5, CL.cast:format(args.spellName))
 end
 
 function mod:ShadowFlame(args)
-	self:Message(22539, "yellow", "Alert")
+	self:Message(22539, "yellow")
+	if self:Me(args.destGUID) then
+		self:PlaySound(22539, "alert")
+	end
 	self:Bar(22539, 2, CL.cast:format(args.spellName))
 end
 
@@ -144,7 +150,7 @@ do
 			prev = t
 			self:Bar("classcall", 30, L.classcall_bar, "Spell_Shadow_Charm")
 			self:DelayedMessage("classcall", 27, "green", L.classcall_warning)
-			self:Message("classcall", "red", nil, warnTable[args.spellName], "Spell_Shadow_Charm")
+			self:Message("classcall", "red", warnTable[args.spellName], "Spell_Shadow_Charm")
 		end
 	end
 end
@@ -159,9 +165,9 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 			if v[2] then
 				self:Bar("classcall", 30, L.classcall_bar, "Spell_Shadow_Charm")
 				self:DelayedMessage("classcall", 27, "green", L.classcall_warning)
-				self:Message("classcall", "red", nil, v[1], "Spell_Shadow_Charm")
+				self:Message("classcall", "red", v[1], "Spell_Shadow_Charm")
 			else
-				self:Message("otherwarn", "red", nil, v[1], false)
+				self:Message("otherwarn", "red", v[1], false)
 			end
 			return
 		end
@@ -170,5 +176,5 @@ end
 
 function mod:AddDied(args)
 	adds_dead = adds_dead + 1
-	self:Message("add", "green", nil, CL.add_killed:format(adds_dead, total_adds), "INV_Misc_Head_Dragon_Black")
+	self:Message("add", "green", CL.add_killed:format(adds_dead, total_adds), "INV_Misc_Head_Dragon_Black")
 end

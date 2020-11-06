@@ -1,30 +1,30 @@
 
 BigWigs:AddSounds("Magmadar", {
-	[19428] = "Alert",
-	[19451] = "Info",
+	[19428] = "alert",
+	[19451] = "info",
 })
 
 BigWigs:AddSounds("Gehennas", {
-	[19717] = "Alarm",
+	[19717] = "alarm",
 })
 
 BigWigs:AddSounds("Baron Geddon", {
 	[19659] = "Alert",
-	[19695] = "Long",
-	[20475] = "Alarm",
+	[19695] = "long",
+	[20475] = "alarm",
 })
 
 BigWigs:AddSounds("Shazzrah", {
-	[19714] = "Alarm",
-	[19715] = "Info",
+	[19714] = "alarm",
+	[19715] = "info",
 })
 
 BigWigs:AddSounds("Majordomo Executus", {
-	[20619] = "Info",
-	[21075] = "Info",
+	[20619] = "info",
+	[21075] = "info",
 })
 
 BigWigs:AddSounds("Ragnaros", {
-	["emerge"] = {"Alarm","Long"},
-	["submerge"] = {"Alarm","Long"},
+	["emerge"] = {"Alarm","long"},
+	["submerge"] = {"Alarm","long"},
 })

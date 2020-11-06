@@ -47,7 +47,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(_, _, sender, _, _, player)
 	if sender == mod.displayName then
-		self:TargetMessage2("fixate", "yellow", player, L.fixate, L.fixate_icon)
+		self:TargetMessage("fixate", "yellow", player, L.fixate, L.fixate_icon)
 		if UnitIsUnit("player", player) then
 			self:PlaySound("fixate", "alarm")
 		end

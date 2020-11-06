@@ -1,18 +1,18 @@
 
 BigWigs:AddSounds("Razorgore the Untamed", {
-	[14515] = "Alert",
-	[23023] = "Info",
+	[14515] = "alert",
+	[23023] = "info",
 })
 
 BigWigs:AddSounds("Vaelastrasz the Corrupt", {
-	[18173] = "Alarm",
+	[18173] = "alarm",
 })
 
 BigWigs:AddSounds("Chromaggus", {
-	["debuffs"] = {"Alarm","Warning"},
+	["debuffs"] = {"alarm","warning"},
 })
 
 BigWigs:AddSounds("NefarianBWL", {
-	[22539] = "Alert",
-	[22686] = "Alert",
+	[22539] = "alert",
+	[22686] = "alert",
 })

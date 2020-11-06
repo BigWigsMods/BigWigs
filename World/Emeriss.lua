@@ -76,13 +76,13 @@ end
 --
 
 function mod:Corruption(args)
-	self:Message2(24910, "red")
+	self:Message(24910, "red")
 	self:PlaySound(24910, "long")
 	self:Bar(24910, 10)
 end
 
 function mod:VolatileInfection(args)
-	self:TargetMessage2(24928, "orange", args.destName)
+	self:TargetMessage(24928, "orange", args.destName)
 	self:PlaySound(24928, "alert")
 	self:PrimaryIcon(24928, args.destName)
 end
@@ -121,7 +121,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(24814, "green")
+			self:Message(24814, "green")
 			self:PlaySound(24814, "info")
 			-- self:CDBar(24818, 20)
 		end
@@ -134,7 +134,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		if hp < warnHP then -- 80, 55, 30
 			warnHP = warnHP - 25
 			if hp > warnHP then -- avoid multiple messages when joining mid-fight
-				self:Message2(24910, "red", CL.soon:format(self:SpellName(24910)), false)
+				self:Message(24910, "red", CL.soon:format(self:SpellName(24910)), false)
 				self:PlaySound(24910, "alarm")
 			end
 			if warnHP < 30 then
@@ -146,7 +146,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg, sender)
 	if msg:find(L.engage_trigger, nil, true) then
-		self:Message2(24818, "yellow", L.custom_start_s:format(self.displayName, self:SpellName(24818), 10), false)
+		self:Message(24818, "yellow", L.custom_start_s:format(self.displayName, self:SpellName(24818), 10), false)
 		self:Bar(24818, 10) -- Noxious Breath
 	end
 end

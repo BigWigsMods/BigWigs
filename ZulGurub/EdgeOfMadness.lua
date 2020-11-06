@@ -58,21 +58,21 @@ end
 --
 
 function mod:Avatar(args)
-	self:Message2(24646, "orange")
+	self:Message(24646, "orange")
 	self:PlaySound(24646, "alarm")
 end
 
 function mod:Vanish(args)
-	self:Message2(24699, "orange")
+	self:Message(24699, "orange")
 	self:PlaySound(24699, "alert")
 end
 
 function mod:NightmareIllusions(args)
-	self:Message2(24729, "orange")
+	self:Message(24729, "orange")
 	self:PlaySound(24729, "alarm")
 end
 
 function mod:LightningCloud(args)
-	self:Message2(26550, "yellow")
+	self:Message(26550, "yellow")
 	self:PlaySound(26550, "info")
 end

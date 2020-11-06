@@ -64,7 +64,6 @@ end
 
 function mod:MindControl(args)
 	self:Bar(20604, 15, L.mc_bar:format(args.destName))
-	self:TargetMessage(20604, args.destName, "yellow")
+	self:TargetMessage(20604, "yellow", args.destName)
 	self:PrimaryIcon(20604, args.destName)
 end
-

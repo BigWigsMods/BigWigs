@@ -66,14 +66,16 @@ end
 
 function mod:MagicReflection(args)
 	self:Bar(20619, 10)
-	self:Message(20619, "red", "Info")
+	self:Message(20619, "red")
+	self:PlaySound(20619, "info")
 	self:Bar(20619, 30, L.power_next, "ability_warlock_improvedsoulleech")
 	self:DelayedMessage(20619, 25, "orange", CL.custom_sec:format(L.power_next, 5))
 end
 
 function mod:DamageShield(args)
 	self:Bar(21075, 10)
-	self:Message(21075, "red", "Info")
+	self:Message(21075, "red")
+	self:PlaySound(21075, "info")
 	self:Bar(21075, 30, L.power_next, "ability_warlock_improvedsoulleech")
 	self:DelayedMessage(21075, 25, "orange", CL.custom_sec:format(L.power_next, 5))
 end

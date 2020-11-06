@@ -77,13 +77,13 @@ end
 -- Thekal
 
 function mod:MortalCleave(args)
-	self:TargetMessage2(22859, "purple", args.destName)
+	self:TargetMessage(22859, "purple", args.destName)
 	self:TargetBar(22859, 5, args.destName)
 	self:PlaySound(22859, "alarm")
 end
 
 function mod:Silence(args)
-	self:TargetMessage2(22666, "yellow", args.destName)
+	self:TargetMessage(22666, "yellow", args.destName)
 	if self:Dispeller("magic") then
 		self:PlaySound(22666, "alert")
 	end
@@ -92,12 +92,12 @@ end
 -- Lor'Khan
 
 function mod:GreatHeal(args)
-	self:Message2(24208, "red", CL.other:format(args.sourceName, CL.casting:format(args.spellName)))
+	self:Message(24208, "red", CL.other:format(args.sourceName, CL.casting:format(args.spellName)))
 	self:PlaySound(24208, "alert")
 end
 
 function mod:Bloodlust(args)
-	self:Message2(24185, "orange", CL.on:format(args.spellName, args.destName))
+	self:Message(24185, "orange", CL.on:format(args.spellName, args.destName))
 	if self:Dispeller("magic") then
 		self:PlaySound(24185, "alert")
 	end
@@ -106,7 +106,7 @@ end
 -- Zath
 
 function mod:Blind(args)
-	self:TargetMessage2(21060, "purple", args.destName)
+	self:TargetMessage(21060, "purple", args.destName)
 	self:TargetBar(21060, 10, args.destName)
 	if self:Tank() then
 		self:PlaySound(21060, "warning")
@@ -114,7 +114,7 @@ function mod:Blind(args)
 end
 
 function mod:Gouge(args)
-	self:TargetMessage2(12540, "purple", args.destName)
+	self:TargetMessage(12540, "purple", args.destName)
 	self:TargetBar(12540, 4, args.destName)
 	if self:Tank() then
 		self:PlaySound(12540, "warning")
@@ -124,18 +124,18 @@ end
 -- Phase 2
 
 function mod:ForcePunch(args)
-	self:Message2(24189, "orange")
+	self:Message(24189, "orange")
 	if self:Tank() then
 		self:PlaySound(12540, "warning")
 	end
 end
 
 function mod:Tigers(args)
-	self:Message2(24183, "yellow", L.tigers_message)
+	self:Message(24183, "yellow", L.tigers_message)
 	self:PlaySound(24183, "info")
 end
 
 function mod:Enrage(args)
-	self:Message2(8269, "red")
+	self:Message(8269, "red")
 	self:PlaySound(8269, "alarm")
 end

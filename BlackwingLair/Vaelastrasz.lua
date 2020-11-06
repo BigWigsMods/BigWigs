@@ -48,13 +48,16 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.warmup_trigger, nil, true) then
-		self:Message("warmup", "cyan", nil, L.warmup_message, false)
+		self:Message("warmup", "cyan", L.warmup_message, false)
 		self:Bar("warmup", 43, CL.active, "inv_misc_monsterscales_05")
 	end
 end
 
 function mod:Adrenaline(args)
-	self:TargetMessage(18173, args.destName, "yellow", "Alarm")
+	self:TargetMessage(18173, "yellow", args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(18173, "alarm")
+	end
 	self:PrimaryIcon(18173, args.destName)
 	self:TargetBar(18173, 20, args.destName, 25698, 18173) -- Explode
 end

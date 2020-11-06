@@ -63,13 +63,13 @@ function mod:MortalWoundRemoved(args)
 end
 
 function mod:SandTrap()
-	self:Message2(25656, "orange")
+	self:Message(25656, "orange")
 	self:PlaySound(25656, "alert")
 end
 
 function mod:Frenzy(args)
 	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target", "focus")
-	self:Message2(26527, "red", "30% - ", args.spellName)
+	self:Message(26527, "red", "30% - ", args.spellName)
 end
 
 function mod:UNIT_HEALTH_FREQUENT(event, unit)
@@ -77,7 +77,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		local hp = UnitHealth(unit)
 		if hp < 36 then
 			self:UnregisterUnitEvent(event, "target", "focus")
-			self:Message2(26527, "green", CL.soon:format(self:SpellName(26527)), false)
+			self:Message(26527, "green", CL.soon:format(self:SpellName(26527)), false)
 		end
 	end
 end

@@ -57,14 +57,14 @@ end
 --
 
 function mod:BloodSiphon(args)
-	self:Message2(24322, "red")
+	self:Message(24322, "red")
 	self:PlaySound(24322, "long")
 	self:Bar(24322, 90)
 	self:DelayedMessage(24322, 80, "orange", CL.custom_sec:format(args.spellName, 10), nil, "Alarm")
 end
 
 function mod:CauseInsanity(args)
-	self:TargetMessage2(24327, "yellow", args.destName)
+	self:TargetMessage(24327, "yellow", args.destName)
 	self:PlaySound(24327, "info")
 	self:Bar(24327, 10, L.mc_bar:format(args.destName))
 	self:CDBar(24327, 20)

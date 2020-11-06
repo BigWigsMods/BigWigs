@@ -56,12 +56,12 @@ function mod:MortalWound(args)
 end
 
 function mod:SummonWorm()
-	self:Message2("worm", "orange", L.worm, L.worm_icon)
+	self:Message("worm", "orange", L.worm, L.worm_icon)
 	self:PlaySound("worm", "info")
 end
 
 function mod:Entangle(args)
-	self:TargetMessage2(720, "red", args.destName)
+	self:TargetMessage(720, "red", args.destName)
 	self:PlaySound(720, "alert")
 end
 

@@ -1,5 +1,5 @@
 
 BigWigs:AddSounds("Onyxia", {
-	[17086] = "Alarm",
-	[18435] = "Alert",
+	[17086] = "alarm",
+	[18435] = "alert",
 })

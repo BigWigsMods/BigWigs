@@ -63,7 +63,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message("stages", "orange", nil, L.start_message, false)
+	self:Message("stages", "orange", L.start_message, false)
 	self:Bar("stages", 45, L.start_mob, "Spell_Holy_PrayerOfHealing")
 	self:DelayedMessage("stages", 40, "red", L.start_soon)
 	eggs = 0
@@ -80,22 +80,28 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 end
 
 function mod:DominateMind(args)
-	self:TargetMessage(14515, args.destName, "red", "Alert")
+	self:TargetMessage(14515, "red", args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(14515, "alert")
+	end
 end
 
 function mod:DestroyEgg()
 	eggs = eggs + 1
 	if eggs < 30 then
-		self:Message("eggs", "green", nil, L.eggs_message:format(eggs), L.eggs_icon)
+		self:Message("eggs", "green", L.eggs_message:format(eggs), L.eggs_icon)
 	end
 end
 
 function mod:Phase2()
-	self:Message("stages", "red", nil, L.phase2_message, false)
+	self:Message("stages", "red", L.phase2_message, false)
 end
 
 function mod:Conflagration(args)
-	self:TargetMessage(23023, args.destName, "orange", "Info")
+	self:TargetMessage(23023, "orange", args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(23023, "info")
+	end
 	self:TargetBar(23023, 10, args.destName)
 	self:PrimaryIcon(23023, args.destName)
 end

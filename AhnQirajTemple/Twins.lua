@@ -64,7 +64,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message2(800, "yellow")
+			self:Message(800, "yellow")
 			self:PlaySound(800, "info")
 			self:DelayedMessage(800, 20, "orange", CL.custom_sec:format(args.spellName, 10))
 			self:DelayedMessage(800, 25, "red", CL.custom_sec:format(args.spellName, 5))
@@ -79,14 +79,14 @@ do
 		local t = GetTime()
 		if t-prev > 10 then
 			prev = t
-			self:Message2(7393, "red", CL.casting:format(args.spellName))
+			self:Message(7393, "red", CL.casting:format(args.spellName))
 			self:PlaySound(7393, "warning")
 		end
 	end
 end
 
 function mod:MutateBug(args)
-	self:Message2(802, "cyan")
+	self:Message(802, "cyan")
 end
 
 do
@@ -95,7 +95,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 and self:Me(args.destGUID) then
 			prev = t
-			self:Message2(26607, "blue", CL.you:format(args.spellName))
+			self:Message(26607, "blue", CL.you:format(args.spellName))
 			self:PlaySound(26607, "alarm")
 		end
 	end

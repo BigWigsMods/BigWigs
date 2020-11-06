@@ -44,12 +44,12 @@ end
 --
 
 function mod:FrostBreath(args)
-	self:Message2(21099, "yellow")
+	self:Message(21099, "yellow")
 	self:PlaySound(21099, "info")
 	self:CastBar(21099, 2)
 end
 
 function mod:MassiveGeyser(args)
-	self:Message2(22421, "orange")
+	self:Message(22421, "orange")
 	self:PlaySound(22421, "alarm")
 end

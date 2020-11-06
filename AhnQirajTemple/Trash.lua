@@ -111,7 +111,7 @@ do
 		local t = GetTime()
 		if t-prev > 5 then
 			prev = t
-			self:Message2(26555, "yellow")
+			self:Message(26555, "yellow")
 			-- self:Bar(26555, 7)
 		end
 	end
@@ -123,7 +123,7 @@ do
 		local t = GetTime()
 		if t-prev > 5 then
 			prev = t
-			self:Message2(26554, "cyan")
+			self:Message(26554, "cyan")
 			self:Bar(26554, 7)
 		end
 	end
@@ -136,7 +136,7 @@ do
 	function mod:MortalStrike(args)
 		local t = GetTime()
 		if t-prev > 9 then
-			self:Message2(24573, "purple")
+			self:Message(24573, "purple")
 			self:Bar(24573, 11)
 		end
 	end
@@ -148,7 +148,7 @@ do
 		local t = GetTime()
 		if t-prev > 11 then
 			prev = t
-			self:Message2(25778, "orange")
+			self:Message(25778, "orange")
 			self:Bar(25778, 13)
 		end
 	end
@@ -160,7 +160,7 @@ do
 		local t = GetTime()
 		if t-prev > 9 then
 			prev = t
-			self:Message2(25778, "blue")
+			self:Message(25778, "blue")
 			self:Bar(25778, 11)
 		end
 	end
@@ -169,7 +169,7 @@ end
 --[[ Anubisath Defender ]]--
 
 function mod:Plague(args)
-	self:TargetMessage2(26556, "yellow", args.destName)
+	self:TargetMessage(26556, "yellow", args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(26556)
 		self:TargetBar(26556, 40, args.destName)
@@ -190,29 +190,29 @@ do
 		local t = GetTime()
 		if t-prev > 12 then
 			prev = t
-			self:Message2(26558, "cyan")
+			self:Message(26558, "cyan")
 		end
 	end
 end
 
 function mod:Frenzy(args)
-	self:Message2(8269, "red")
+	self:Message(8269, "red")
 	self:PlaySound(8269, "long")
 end
 
 function mod:Explode(args)
-	self:Message2(25698, "orange", CL.casting:format(args.spellName))
+	self:Message(25698, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(25698, "alert")
 	self:Bar(25698, 6) -- Duration is 7s but it expires after 6s
 	self:Flash(25698)
 end
 
 function mod:SummonAnubisathSwarmguard(args)
-	self:Message2("guard", "green", args.spellName, L.guard_icon)
+	self:Message("guard", "green", args.spellName, L.guard_icon)
 end
 
 function mod:SummonAnubisathWarrior(args)
-	self:Message2("warrior", "green", args.spellName, L.warrior_icon)
+	self:Message("warrior", "green", args.spellName, L.warrior_icon)
 end
 
 --[[ Vekniss Hive Crawler ]]--

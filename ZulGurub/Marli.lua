@@ -46,16 +46,16 @@ end
 --
 
 function mod:HatchEggs(args)
-	self:Message2(24083, "yellow")
+	self:Message(24083, "yellow")
 	self:PlaySound(24083, "info")
 end
 
 function mod:DrainLife(args)
-	self:TargetMessage2(24300, "orange", args.destName)
+	self:TargetMessage(24300, "orange", args.destName)
 	self:PlaySound(24300, "alert")
 end
 
 function mod:PoisonBoltVolley(args)
-	self:Message2(24099, "yellow")
+	self:Message(24099, "yellow")
 	self:PlaySound(24099, "alarm")
 end

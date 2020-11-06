@@ -87,7 +87,7 @@ function mod:OnEngage()
 	timer = nil
 	self:Bar(20566, 27, L.knockback_bar) -- guesstimate for the first wrath
 	self:Bar("submerge", 180, L.submerge_bar, "spell_fire_volcano")
-	self:Message("submerge", "yellow", nil, CL.custom_min:format(L.submerge, 3), "spell_fire_volcano")
+	self:Message("submerge", "yellow", CL.custom_min:format(L.submerge, 3), "spell_fire_volcano")
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
 	self:DelayedMessage("submerge", 120, "yellow", CL.custom_min:format(L.submerge, 1))
 	self:DelayedMessage("submerge", 150, "yellow", CL.custom_sec:format(L.submerge, 30))
@@ -108,12 +108,12 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 end
 
 function mod:Knockback(args)
-	self:Message(20566, "red", nil, L.knockback_message)
+	self:Message(20566, "red", L.knockback_message)
 	self:Bar(20566, 28, L.knockback_bar)
 end
 
 function mod:Warmup()
-	self:Message("warmup", "cyan", nil, L.warmup_message, false)
+	self:Message("warmup", "cyan", L.warmup_message, false)
 	self:Bar("warmup", 73, CL.active, L.warmup_icon)
 end
 
@@ -128,7 +128,8 @@ function mod:Emerge()
 	timer = nil
 	self:Bar(20566, 27, L.knockback_bar) -- guesstimate for the first wrath after emerging
 	self:Bar("submerge", 180, L.submerge_bar, "spell_fire_volcano")
-	self:Message("emerge", "yellow", "Long", L.emerge_message, "spell_fire_volcano")
+	self:Message("emerge", "yellow", L.emerge_message, "spell_fire_volcano")
+	self:PlaySound("emerge", "long")
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
 	self:DelayedMessage("submerge", 120, "yellow", CL.custom_min:format(L.submerge, 1))
 	self:DelayedMessage("submerge", 150, "yellow", CL.custom_sec:format(L.submerge, 30))
@@ -139,7 +140,8 @@ end
 function mod:Submerge()
 	sonsdead = 0 -- reset counter
 	self:StopBar(L.knockback_bar)
-	self:Message("submerge", "yellow", "Long", L.submerge_message, "spell_fire_volcano")
+	self:Message("submerge", "yellow", L.submerge_message, "spell_fire_volcano")
+	self:PlaySound("submerge", "long")
 	self:Bar("emerge", 90, L.emerge_bar, "spell_fire_volcano")
 	self:DelayedMessage("emerge", 30, "yellow", CL.custom_sec:format(L.emerge, 60))
 	self:DelayedMessage("emerge", 60, "yellow", CL.custom_sec:format(L.emerge, 30))
@@ -151,7 +153,7 @@ end
 function mod:SonDeaths()
 	sonsdead = sonsdead + 1
 	if sonsdead < 9 then
-		self:Message("emerge", "green", nil, CL.add_killed:format(sonsdead, 8), "spell_fire_elemental_totem")
+		self:Message("emerge", "green", CL.add_killed:format(sonsdead, 8), "spell_fire_elemental_totem")
 	end
 	if sonsdead == 8 then
 		self:CancelTimer(timer)

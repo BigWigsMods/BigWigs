@@ -111,18 +111,21 @@ function mod:Enrage(args)
 end
 
 function mod:Frenzy(args)
-	self:Message(23537, "red", nil, "20% - ".. args.spellName)
+	self:Message(23537, "red", "20% - ".. args.spellName)
 end
 
 function mod:Debuffs(args)
 	if self:Me(args.destGUID) then
 		debuffCount = debuffCount + 1
 		if debuffCount == 3 then
-			self:Message("debuffs", "red", "Alarm", L.debuffs_message, icons[args.spellName] or false)
+			self:Message("debuffs", "red", L.debuffs_message, icons[args.spellName] or false)
+			self:PlaySound("debuffs", "alarm")
 		elseif debuffCount == 4 then
-			self:Message("debuffs", "orange", "Warning", L.debuffs_warning:format(self:SpellName(605)), icons[args.spellName] or false) -- 605 = Mind Control
+			self:Message("debuffs", "orange", L.debuffs_warning:format(self:SpellName(605)), icons[args.spellName] or false) -- 605 = Mind Control
+			self:PlaySound("debuffs", "warning")
 		elseif debuffCount == 5 then
-			self:Message("debuffs", "orange", "Warning", 605, icons[args.spellName] or false) -- 605 = Mind Control
+			self:Message("debuffs", "orange", 605, icons[args.spellName] or false) -- 605 = Mind Control
+			self:PlaySound("debuffs", "warning")
 		end
 	end
 end
@@ -143,7 +146,7 @@ function mod:Breath(args)
 	end
 
 	self:Bar("breath", 2, CL.cast:format(args.spellName), icons[args.spellName])
-	self:Message("breath", "yellow", nil, CL.casting:format(args.spellName), icons[args.spellName])
+	self:Message("breath", "yellow", CL.casting:format(args.spellName), icons[args.spellName])
 	self:DelayedMessage("breath", 50, "red", CL.custom_sec:format(args.spellName, 10))
 	self:Bar("breath", 60, icons[args.spellName])
 end

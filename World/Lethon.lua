@@ -76,7 +76,7 @@ end
 --
 
 function mod:DrawSpirit(args)
-	self:Message2(24811, "cyan")
+	self:Message(24811, "cyan")
 	self:PlaySound(24811, "long")
 	self:Bar(24811, 5, 710) -- 710 = Banish
 end
@@ -92,7 +92,7 @@ do
 			whirlCount = extra
 			-- cast every 5s, announce on the 4th for swapping sides
 			if whirlCount == 4 then
-				self:Message2(24821, "yellow", CL.count:format(self:SpellName(24821), whirlCount))
+				self:Message(24821, "yellow", CL.count:format(self:SpellName(24821), whirlCount))
 				self:PlaySound(24821, "alert")
 				whirlCount = 0
 			end
@@ -128,7 +128,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(24814, "green")
+			self:Message(24814, "green")
 			self:PlaySound(24814, "info")
 			-- self:CDBar(24818, 20)
 		end
@@ -141,7 +141,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		if hp < warnHP then -- 80, 55, 30
 			warnHP = warnHP - 25
 			if hp > warnHP then -- avoid multiple messages when joining mid-fight
-				self:Message2(24811, "cyan", CL.soon:format(self:SpellName(24811)), false)
+				self:Message(24811, "cyan", CL.soon:format(self:SpellName(24811)), false)
 			end
 			if warnHP < 30 then
 				self:UnregisterUnitEvent(event, "target", "focus")
@@ -153,7 +153,7 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(_, msg, sender)
 	if msg:find(L.engage_trigger, nil, true) then
 		whirlCount = 1
-		self:Message2(24818, "yellow", L.custom_start_s:format(sender, self:SpellName(24818), 10), false)
+		self:Message(24818, "yellow", L.custom_start_s:format(sender, self:SpellName(24818), 10), false)
 		self:Bar(24818, 10) -- Noxious Breath
 	end
 end

@@ -49,14 +49,14 @@ end
 --
 
 function mod:Renew(args)
-	self:Message2(23895, "orange", CL.on:format(args.spellName, args.destName))
+	self:Message(23895, "orange", CL.on:format(args.spellName, args.destName))
 	if self:Dispeller("magic", true) then
 		self:PlaySound(23895, "alert")
 	end
 end
 
 function mod:HolyFire(args)
-	self:Message2(23860, "yellow")
+	self:Message(23860, "yellow")
 	self:CastBar(23860, 3.5)
 end
 
@@ -67,7 +67,7 @@ function mod:HolyFireStop(args)
 end
 
 function mod:PoisonCloud(args)
-	self:Message2(23861, "yellow")
+	self:Message(23861, "yellow")
 	self:PlaySound(23861, "info")
 end
 
@@ -77,7 +77,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		if hp < 56 then
 			self:UnregisterUnitEvent(event, "target", "focus")
 			if hp > 50 then -- make sure we're not too late
-				self:Message2(23861, "green", CL.soon:format(self:SpellName(23861)), false)
+				self:Message(23861, "green", CL.soon:format(self:SpellName(23861)), false)
 			end
 		end
 	end

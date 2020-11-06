@@ -47,7 +47,7 @@ end
 --
 
 function mod:Paralyze(args)
-	self:TargetMessage2(25725, "yellow", args.destName)
+	self:TargetMessage(25725, "yellow", args.destName)
 	self:PlaySound(25725, "alarm")
 	self:TargetBar(25725, 10, args.destName, 7812, 25725) -- 7812 = Sacrifice
 	self:PrimaryIcon(25725, args.destName)
@@ -60,7 +60,7 @@ end
 
 function mod:Frenzy(args)
 	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target", "focus")
-	self:Message2(8269, "red")
+	self:Message(8269, "red")
 end
 
 function mod:UNIT_HEALTH_FREQUENT(event, unit)
@@ -68,7 +68,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		local hp = UnitHealth(unit)
 		if hp < 26 then
 			self:UnregisterUnitEvent(event, "target", "focus")
-			self:Message2(8269, "green", CL.soon:format(self:SpellName(8269)), false)
+			self:Message(8269, "green", CL.soon:format(self:SpellName(8269)), false)
 		end
 	end
 end

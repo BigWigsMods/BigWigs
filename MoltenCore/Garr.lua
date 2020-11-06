@@ -44,4 +44,3 @@ end
 function mod:Pulse(args)
 	self:Bar(19492, 18)
 end
-

@@ -61,7 +61,7 @@ end
 --
 
 function mod:TrueFulfillment(args) -- Mind control
-	self:TargetMessage2(785, "yellow", args.destName)
+	self:TargetMessage(785, "yellow", args.destName)
 	self:TargetBar(785, 20, args.destName)
 	self:PrimaryIcon(785, args.destName)
 	lastMC = args.destGUID
@@ -76,16 +76,16 @@ end
 
 function mod:Teleport(args)
 	if self:MobId(args.sourceGUID) == 15263 then -- Filter out his images
-		self:Message2(20449, "red")
+		self:Message(20449, "red")
 	end
 end
 
 function mod:ArcaneExplosion(args)
-	self:Message2(26192, "orange")
+	self:Message(26192, "orange")
 end
 
 function mod:SummonImages()
-	self:Message2("images", "red", L.images, L.images_icon)
+	self:Message("images", "red", L.images, L.images_icon)
 	self:PlaySound("images", "long")
 end
 
@@ -94,7 +94,7 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		local hp = UnitHealth(unit)
 		if (hp < 82 and splitPhase == 1) or (hp < 57 and splitPhase == 2) or (hp < 32 and splitPhase == 3) then
 			splitPhase = splitPhase + 1
-			self:Message2("images", "green", CL.soon:format(self:SpellName(L.images)), false)
+			self:Message("images", "green", CL.soon:format(self:SpellName(L.images)), false)
 			if splitPhase > 3 then
 				self:UnregisterUnitEvent(event, "target", "focus")
 			end

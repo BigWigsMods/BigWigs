@@ -86,18 +86,18 @@ end
 --
 
 function mod:AttackOrder(args)
-	self:TargetMessage2(25471, "yellow", args.destName)
+	self:TargetMessage(25471, "yellow", args.destName)
 	self:TargetBar(25471, 10, args.destName)
 end
 
 function mod:Frenzy(args)
-	self:Message2(25471, "red")
+	self:Message(25471, "red")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	for trigger, text in next, wave_triggers do
 		if msg:find(trigger, nil, true) then
-			self:Message2("wave", "yellow", text, false)
+			self:Message("wave", "yellow", text, false)
 			self:PlaySound("wave", "info")
 			break
 		end

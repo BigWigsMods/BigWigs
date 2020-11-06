@@ -39,7 +39,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message2(25685, "yellow", CL.custom_start_s:format(self.displayName, self:SpellName(25685), 90), false)
+	self:Message(25685, "yellow", CL.custom_start_s:format(self.displayName, self:SpellName(25685), 90), false)
 	self:Bar(25685, 90) -- Energize
 end
 
@@ -49,7 +49,7 @@ end
 
 function mod:Energize(args)
 	-- Adds spawned
-	self:Message2(25685, "yellow")
+	self:Message(25685, "yellow")
 	self:PlaySouund(25685, "long")
 	local duration = 90
 	-- Need to find the mana regen rate because he comes back at 100% regardless
@@ -64,7 +64,7 @@ end
 function mod:EnergizeRemoved(args)
 	self:StopBar(args.destName)
 
-	self:Message2(25685, "yellow", CL.over:format(args.spellName))
+	self:Message(25685, "yellow", CL.over:format(args.spellName))
 	self:PlaySouund(25685, "long")
 	self:Bar(25685, 90)
 end

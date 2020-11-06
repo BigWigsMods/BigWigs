@@ -42,7 +42,7 @@ end
 --
 
 function mod:MortalStrike(args)
-	self:TargetMessage(24573, args.destName, "yellow")
+	self:TargetMessage(24573, "yellow", args.destName)
 	self:PrimaryIcon(24573, args.destName)
 	self:TargetBar(24573, 5, args.destName)
 end

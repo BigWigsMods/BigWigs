@@ -50,22 +50,22 @@ end
 --
 
 function mod:DelusionsOfJindo(args)
-	self:TargetMessage2(24306, "yellow", args.destName)
+	self:TargetMessage(24306, "yellow", args.destName)
 	self:PlaySound(24306, "alarm")
 	self:PrimaryIcon(24306, args.destName)
 end
 
 function mod:Hex(args)
 	if self:Dispeller("magic", nil, 17172) then
-		self:TargetMessage2(17172, "yellow", args.destName)
+		self:TargetMessage(17172, "yellow", args.destName)
 		self:PlaySound(17172, "alert")
 	end
 end
 
 function mod:BrainWashTotem(args)
-	self:Message2(24262, "orange", L.brain_wash_message)
+	self:Message(24262, "orange", L.brain_wash_message)
 end
 
 function mod:HealingWard(args)
-	self:Message2(24309, "red")
+	self:Message(24309, "red")
 end

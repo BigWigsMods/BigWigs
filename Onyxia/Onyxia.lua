@@ -59,23 +59,25 @@ end
 --
 
 function mod:Fear(args)
-	self:Message(18431, "yellow", nil, L["fear_message"])
+	self:Message(18431, "yellow", L["fear_message"])
 end
 
 function mod:DeepBreath()
-	self:Message(17086, "orange", "Alarm", L["deepbreath_message"])
+	self:Message(17086, "orange", L["deepbreath_message"])
+	self:PlaySound(17086, "alarm")
 	self:Bar(17086, 8)
 	self:Flash(17086)
 end
 
 function mod:FlameBreath(args)
-	self:Message(18435, "red", "Alert")
+	self:Message(18435, "red")
+	self:PlaySound(18435, "alert")
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.phase2_trigger, nil, true) then
-		self:Message("phase", "green", nil, L["phase2_message"], false)
+		self:Message("phase", "green", L["phase2_message"], false)
 	elseif msg:find(L.phase3_trigger, nil, true) then
-		self:Message("phase", "green", nil, L["phase3_message"], false)
+		self:Message("phase", "green", L["phase3_message"], false)
 	end
 end

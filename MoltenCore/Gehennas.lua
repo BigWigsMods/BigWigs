@@ -52,7 +52,7 @@ end
 function mod:Fire(args)
 	if self:Me(args.destGUID) then
 		self:Flash(19717)
-		self:Message(19717, "blue", "Alarm", CL.you:format(args.spellName))
+		self:Message(19717, "blue", CL.you:format(args.spellName))
+		self:PlaySound(19717, "alarm")
 	end
 end
-

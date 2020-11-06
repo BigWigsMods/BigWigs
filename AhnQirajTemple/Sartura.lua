@@ -59,18 +59,18 @@ end
 
 function mod:Frenzy(args)
 	self:UnregisterUnitEvent("UNIT_HEALTH_FREQUENT", "target", "focus")
-	self:Message2(8269, "orange", CL.percent:format(25, args.spellName))
+	self:Message(8269, "orange", CL.percent:format(25, args.spellName))
 	self:PlaySound(8269, "long")
 end
 
 function mod:Whirlwind(args)
-	self:Message2(26083, "red")
+	self:Message(26083, "red")
 	self:PlaySound(26083, "alert")
 	self:Bar(26083, 15)
 end
 
 function mod:WhirlwindOver(args)
-	self:Message2(26083, "green",  CL.over:format(args.spellName))
+	self:Message(26083, "green",  CL.over:format(args.spellName))
 end
 
 function mod:UNIT_HEALTH_FREQUENT(event, unit)
@@ -78,12 +78,12 @@ function mod:UNIT_HEALTH_FREQUENT(event, unit)
 		local hp = UnitHealth(unit)
 		if hp < 31 then
 			self:UnregisterUnitEvent(event, "target", "focus")
-			self:Message2(8269, "yellow", CL.soon:format(self:SpellName(8269)), false)
+			self:Message(8269, "yellow", CL.soon:format(self:SpellName(8269)), false)
 		end
 	end
 end
 
 function mod:AddDies()
 	addsLeft = addsLeft - 1
-	self:Message2("stages", "green", CL.add_remaining:format(addsLeft), false)
+	self:Message("stages", "green", CL.add_remaining:format(addsLeft), false)
 end
