@@ -3,40 +3,16 @@ if not L then return end
 if L then
 	L.bossName = "Anub'Rekhan"
 
-	L.starttrigger1 = "Rien qu'une petite bouchée…"
-	L.starttrigger2 = "Oui, courez ! Faites circuler le sang !"
-	L.starttrigger3 = "Nulle part pour s'enfuir."
-	L.engagewarn = "Anub'Rekhan engagé ! Nuée de sauterelles dans ~%d sec. !"
-
-	L.gainendwarn = "Fin de la Nuée de sauterelles !"
-	L.gainnextwarn = "Prochaine Nuée de sauterelles dans ~85 sec."
 	L.gainwarn10sec = "~10 sec. avant la Nuée de sauterelles"
 	L.gainincbar = "~Prochaine Nuée"
-
-	L.castwarn = "Arrivée d'une Nuée de sauterelles !"
 end
 
 L = BigWigs:NewBossLocale("Grand Widow Faerlina", "frFR")
 if L then
 	L.bossName = "Grande veuve Faerlina"
 
-	L.starttrigger1 = "À genoux, vermisseau !"
-	L.starttrigger2 = "Tuez-les au nom du maître !"
-	L.starttrigger3 = "Vous ne pouvez pas m'échapper !"
-	L.starttrigger4 = "Fuyez tant que vous le pouvez !"
-
-	L.startwarn = "Grande veuve Faerlina engagée, 60 sec. avant Frénésie !"
-
-	L.enragewarn15sec = "15 sec. avant Frénésie !"
-	L.enragewarn = "Frénésie !"
-	L.enragewarn2 = "Frénésie imminente !"
-	L.enrageremovewarn = "Frénésie enlevée ! ~60 sec. avant la suivante !"
-
 	L.silencewarn = "Réduite au silence !"
 	L.silencewarn5sec = "Fin du silence dans 5 sec."
-	L.silencebar = "Silence"
-
-	L.rain_message = "Pluie de feu sur VOUS !"
 end
 
 L = BigWigs:NewBossLocale("Gluth", "frFR")
@@ -265,11 +241,9 @@ if L then
 	L.webspraywarn20sec = "Entoilage ! 10 sec. avant les araignées !"
 	L.webspraywarn10sec = "Araignées ! 10 sec. avant le Jet de rets !"
 	L.webspraywarn5sec = "Jet de rets dans 5 sec. !"
-	L.webspraywarn = "Jet de rets ! 40 sec. avant le suivant !"
 	L.enragewarn = "Frénésie !"
 	L.enragesoonwarn = "Frénésie imminente !"
 
-	L.webspraybar = "Jet de rets"
 	L.cocoonbar = "Entoilage"
 	L.spiderbar = "Araignées"
 end

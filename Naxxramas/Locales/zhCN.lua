@@ -3,40 +3,16 @@ if not L then return end
 if L then
 	L.bossName = "阿努布雷坎"
 
-	L.starttrigger1 = "一些小点心……"
-	L.starttrigger2 = "对，跑吧！那样伤口出血就更多了！"
-	L.starttrigger3 = "你们逃不掉的。"
-	L.engagewarn = "阿努布雷坎已激活 - 约%d秒后，虫群风暴！"
-
-	L.gainendwarn = "虫群风暴结束了！"
-	L.gainnextwarn = "约85秒后，下一波虫群风暴。"
 	L.gainwarn10sec = "约10秒后，下一波虫群风暴。"
 	L.gainincbar = "<下一虫群风暴>"
-
-	L.castwarn = "虫群风暴！"
 end
 
 L = BigWigs:NewBossLocale("Grand Widow Faerlina", "zhCN")
 if L then
 	L.bossName = "黑女巫法琳娜"
 
-	L.starttrigger1 = "跪下求饶吧，懦夫！"
-	L.starttrigger2 = "以主人之名，杀了他们！"
-	L.starttrigger3 = "休想从我面前逃掉！"
-	L.starttrigger4 = "逃啊！有本事就逃啊！"
-
-	L.startwarn = "黑女巫法琳娜已激活 - 60秒后，激怒！"
-
-	L.enragewarn15sec = "15秒后，激怒！"
-	L.enragewarn = "激怒！"
-	L.enragewarn2 = "即将 激怒！"
-	L.enrageremovewarn = "激怒已移除 - 约60后，激怒！"
-
 	L.silencewarn = "沉默！延缓了激怒！"
 	L.silencewarn5sec = "5秒后沉默结束！"
-	L.silencebar = "<沉默>"
-
-	L.rain_message = ">你< 火焰之雨！"
 end
 
 L = BigWigs:NewBossLocale("Gluth", "zhCN")
@@ -265,11 +241,9 @@ if L then
 	L.webspraywarn20sec = "蛛网裹体！10秒后小蜘蛛出现！"
 	L.webspraywarn10sec = "小蜘蛛出现！10秒后蛛网喷射！"
 	L.webspraywarn5sec = "蛛网喷射5秒！"
-	L.webspraywarn = "40秒后，蛛网裹体！"
 	L.enragewarn = "激怒！"
 	L.enragesoonwarn = "即将 激怒！"
 
-	L.webspraybar = "<蛛网喷射>"
 	L.cocoonbar = "<蛛网裹体>"
 	L.spiderbar = "<出现 小蜘蛛>"
 end

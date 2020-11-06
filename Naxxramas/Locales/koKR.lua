@@ -3,40 +3,16 @@ if not L then return end
 if L then
 	L.bossName = "아눕레칸"
 
-	L.starttrigger1 = "어디 맛 좀 볼까..."
-	L.starttrigger2 = "그래, 도망쳐! 더 신선한 피가 솟구칠 테니!"
-	L.starttrigger3 = "나가는 길은 없다."
-	L.engagewarn = "아눕레칸 전투시작! 약 %d초 후 첫번째 메뚜기 떼!"
-
-	L.gainendwarn = "메뚜기 떼 종료!"
-	L.gainnextwarn = "약 85초 이내 다음 메뚜기 떼!"
 	L.gainwarn10sec = "10초 이내 메뚜기 떼"
 	L.gainincbar = "다음 메뚜기 떼"
-
-	L.castwarn = "메뚜기 떼 소환!"
 end
 
 L = BigWigs:NewBossLocale("Grand Widow Faerlina", "koKR")
 if L then
 	L.bossName = "귀부인 팰리나"
 
-	L.starttrigger1 = "내 앞에 무릎을 꿇어라, 벌레들아!"
-	L.starttrigger2 = "주인님의 이름으로 처단하라!"
-	L.starttrigger3 = "나에게서 도망칠 수는 없다!"
-	L.starttrigger4 = "두 발이 성할 때 도망쳐라!"
-
-	L.startwarn = "귀부인 팰리나 전투 시작! 60초 후 광기!"
-
-	L.enragewarn15sec = "15초 후 광기!"
-	L.enragewarn = "광기!"
-	L.enragewarn2 = "잠시 후 광기!"
-	L.enrageremovewarn = "광기 사라짐! 약 60초 후 다음 광기"
-
 	L.silencewarn = "침묵!"
 	L.silencewarn5sec = "5초 후 침묵 종료!"
-	L.silencebar = "침묵"
-
-	L.rain_message = "당신은 불의 비!"
 end
 
 L = BigWigs:NewBossLocale("Gluth", "koKR")
@@ -265,11 +241,9 @@ if L then
 	L.webspraywarn20sec = "거미줄 감싸기. 10초 후 거미 소환!"
 	L.webspraywarn10sec = "거미 소환. 10초 후 거미줄 뿌리기!"
 	L.webspraywarn5sec = "5초 후 거미줄 뿌리기!"
-	L.webspraywarn = "거미줄 뿌리기! 다음은 40초 후!"
 	L.enragewarn = "광기!"
 	L.enragesoonwarn = "잠시 후 광기!"
 
-	L.webspraybar = "거미줄 뿌리기"
 	L.cocoonbar = "거미줄 감싸기"
 	L.spiderbar = "거미 소환"
 end

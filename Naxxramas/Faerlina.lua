@@ -2,18 +2,16 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Grand Widow Faerlina", 533)
+local mod, CL = BigWigs:NewBoss("Grand Widow Faerlina", 533)
 if not mod then return end
-mod:RegisterEnableMob(15953, 16506, 16505) -- Faerlina, Worshipper, Follower
+mod:RegisterEnableMob(15953, 16505, 16506) -- Faerlina, Follower, Worshipper
 mod:SetAllowWin(true)
 mod.engageId = 1110
-mod.toggleOptions = {28732, {28794, "FLASHSHAKE"}, 28798, "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local started = nil
 local frenzied = nil
 
 --------------------------------------------------------------------------------
@@ -24,23 +22,8 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.bossName = "Grand Widow Faerlina"
 
-	L.starttrigger1 = "Kneel before me, worm!"
-	L.starttrigger2 = "Slay them in the master's name!"
-	L.starttrigger3 = "You cannot hide from me!"
-	L.starttrigger4 = "Run while you still can!"
-
-	L.startwarn = "Faerlina engaged, 60 sec to frenzy!"
-
-	L.enragewarn15sec = "15 sec to frenzy!"
-	L.enragewarn = "Frenzied!"
-	L.enragewarn2 = "Frenzied Soon!"
-	L.enrageremovewarn = "Frenzy removed! ~60 sec until next!"
-
 	L.silencewarn = "Silenced!"
 	L.silencewarn5sec = "Silence ends in 5 sec"
-	L.silencebar = "Silence"
-
-	L.rain_message = "Fire on YOU!"
 end
 L = mod:GetLocale()
 
@@ -48,66 +31,66 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+function mod:GetOptions()
+	return {
+		28732, -- Widow's Embrace
+		{28794, "FLASH"}, -- Rain of Fire
+		28798, -- Enrage
+	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
+end
+
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "Silence", 28732, 54097)
-	self:Log("SPELL_AURA_APPLIED", "Rain", 28794, 54099)
-	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28798, 54100)
-	self:Death("Win", 15953)
-
-	started = nil
-
-	self:Yell("Engage", L["starttrigger1"], L["starttrigger2"], L["starttrigger3"], L["starttrigger4"])
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Log("SPELL_AURA_APPLIED", "Silence", 28732)
+	self:Log("SPELL_AURA_APPLIED", "Rain", 28794)
+	self:Log("SPELL_AURA_APPLIED", "Frenzy", 28798)
 end
 
 function mod:OnEngage()
-	if not started then
-		self:Message(28798, L["startwarn"], "Urgent")
-		self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
-		local frenzyName = GetSpellInfo(28798)
-		self:Bar(28798, frenzyName, 60, 28798)
-		started = true --If I remember right, we need this as she sometimes uses an engage trigger mid-fight
-		frenzied = nil
-	end
+	frenzied = nil
+	self:Message(28798, "yellow", L.custom_start_s:format(L.bossName, self:SpellName(28798), 60), false)
+	self:DelayedMessage(28798, 45, "red", L.soon:format(self:SpellName(28798)))
+	self:Bar(28798, 60)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:Silence(unit, spellId)
-	if unit ~= self.displayName then return end
+function mod:Silence(args)
 	if not frenzied then
 		-- preemptive, 30s silence
-		self:Message(28732, L["silencewarn"], "Positive", spellId)
-		self:Bar(28732, L["silencebar"], 30, spellId)
-		self:DelayedMessage(28732, 25, L["silencewarn5sec"], "Urgent")
+		self:Message(28732, "green", L.silencewarn)
+		self:Bar(28732, 30, self:SpellName(15487)) -- 15487 = Silence
+		self:DelayedMessage(28732, 25, "orange", L.silencewarn5sec)
 	else
 		-- Reactive enrage removed
-		self:Message(28798, L["enrageremovewarn"], "Positive")
-		self:DelayedMessage(28798, 45, L["enragewarn2"], "Important")
-		local frenzyName = GetSpellInfo(28798)
-		self:Bar(28798, frenzyName, 60, 28798)
+		self:Message(28798, "green", L.removed:format(self:SpellName(28798)))
+		self:DelayedMessage(28798, 45, "red", L.soon:format(self:SpellName(28798)))
+		self:Bar(28798, 60)
 
-		self:Bar(28732, L["silencebar"], 30, spellId)
-		self:DelayedMessage(28732, 25, L["silencewarn5sec"], "Urgent")
+		self:Bar(28732, 30, self:SpellName(15487)) -- 15487 = Silence
+		self:DelayedMessage(28732, 25, "orange", L.silencewarn5sec)
 		frenzied = nil
 	end
 end
 
-function mod:Rain(player)
-	if UnitIsUnit(player, "player") then
-		self:LocalMessage(28794, L["rain_message"], "Personal", 54099, "Alarm")
-		self:FlashShake(28794)
+function mod:Rain(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(28794)
+		self:PlaySound(28794, "alarm")
+		self:Flash(28794)
 	end
 end
 
-function mod:Frenzy(unit, spellId, _, _, spellName)
-	if unit == self.displayName then
-		self:Message(28798, L["enragewarn"], "Urgent", spellId)
-		self:SendMessage("BigWigs_StopBar", self, spellName)
-		self:CancelDelayedMessage(L["enragewarn2"])
-		frenzied = true
-	end
+function mod:Frenzy(args)
+	self:StopBar(28798)
+	self:CancelDelayedMessage(L.soon:format(self:SpellName(28798)))
+
+	frenzied = true
+	self:Message(28798, "orange")
 end
 

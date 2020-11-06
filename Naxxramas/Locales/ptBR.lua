@@ -3,40 +3,16 @@ if not L then return end
 if L then
 	L.bossName = "Anub'Rekhan"
 
-	-- L.starttrigger1 = "Just a little taste..."
-	-- L.starttrigger2 = "Yes, run! It makes the blood pump faster!"
-	-- L.starttrigger3 = "There is no way out."
-	-- L.engagewarn = "Anub'Rekhan engaged! Locust Swarm in ~%d sec"
-
-	-- L.gainendwarn = "Locust Swarm ended!"
-	-- L.gainnextwarn = "Next Locust Swarm in ~85 sec"
 	-- L.gainwarn10sec = "~10 sec until Locust Swarm"
 	-- L.gainincbar = "~Next Locust Swarm"
-
-	-- L.castwarn = "Incoming Locust Swarm!"
 end
 
 L = BigWigs:NewBossLocale("Grand Widow Faerlina", "ptBR")
 if L then
 	L.bossName = "Grã-viúva Faerlina"
 
-	-- L.starttrigger1 = "Kneel before me, worm!"
-	-- L.starttrigger2 = "Slay them in the master's name!"
-	-- L.starttrigger3 = "You cannot hide from me!"
-	-- L.starttrigger4 = "Run while you still can!"
-
-	-- L.startwarn = "Faerlina engaged, 60 sec to frenzy!"
-
-	-- L.enragewarn15sec = "15 sec to frenzy!"
-	-- L.enragewarn = "Frenzied!"
-	-- L.enragewarn2 = "Frenzied Soon!"
-	-- L.enrageremovewarn = "Frenzy removed! ~60 sec until next!"
-
 	-- L.silencewarn = "Silenced!"
 	-- L.silencewarn5sec = "Silence ends in 5 sec"
-	-- L.silencebar = "Silence"
-
-	-- L.rain_message = "Fire on YOU!"
 end
 
 L = BigWigs:NewBossLocale("Gluth", "ptBR")
@@ -218,11 +194,9 @@ if L then
 	-- L.webspraywarn20sec = "Cocoons! Spiders in 10 sec!"
 	-- L.webspraywarn10sec = "Spiders! Spray in 10 sec!"
 	-- L.webspraywarn5sec = "WEB SPRAY in 5 seconds!"
-	-- L.webspraywarn = "Web Spray! 40 sec until next!"
 	-- L.enragewarn = "Frenzy - SQUISH SQUISH SQUISH!"
 	-- L.enragesoonwarn = "Frenzy Soon - Bugsquatters out!"
 
-	-- L.webspraybar = "Web Spray"
 	-- L.cocoonbar = "Cocoons"
 	-- L.spiderbar = "Spiders"
 end

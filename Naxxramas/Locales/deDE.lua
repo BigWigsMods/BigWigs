@@ -3,40 +3,16 @@ if not L then return end
 if L then
 	L.bossName = "Anub'Rekhan"
 
-	L.starttrigger1 = "Nur einmal kosten..."
-	L.starttrigger2 = "Rennt! Das bringt das Blut in Wallung!"
-	L.starttrigger3 = "Es gibt kein Entkommen."
-	L.engagewarn = "Anub'Rekhan angegriffen! Heuschreckenschwarm in ~%d sek!"
-
-	L.gainendwarn = "Heuschreckenschwarm vorbei!"
-	L.gainnextwarn = "Nächster Schwarm in ~85 sek"
 	L.gainwarn10sec = "Heuschreckenschwarm in ~10 sek!"
 	L.gainincbar = "~Nächster Schwarm"
-
-	L.castwarn = "Heuschreckenschwarm!"
 end
 
 L = BigWigs:NewBossLocale("Grand Widow Faerlina", "deDE")
 if L then
 	L.bossName = "Großwitwe Faerlina"
 
-	L.starttrigger1 = "Kniet nieder, Wurm!"
-	L.starttrigger2 = "Tötet sie im Namen des Meisters!"
-	L.starttrigger3 = "Ihr könnt euch nicht vor mir verstecken!"
-	L.starttrigger4 = "Flieht, solange ihr noch könnt."
-
-	L.startwarn = "Großwitwe Faerlina angegriffen! Raserei in 60 sek!"
-
-	L.enragewarn15sec = "Raserei in 15 sek!"
-	L.enragewarn = "Raserei!"
-	L.enragewarn2 = "Raserei bald!"
-	L.enrageremovewarn = "Raserei vorbei! Nächste in ~60 sek!"
-
 	L.silencewarn = "Stille! Raserei verzögert!"
 	L.silencewarn5sec = "Stille endet in 5 sek!"
-	L.silencebar = "Stille"
-
-	L.rain_message = "Feuerregen auf DIR!"
 end
 
 L = BigWigs:NewBossLocale("Gluth", "deDE")
@@ -265,11 +241,9 @@ if L then
 	L.webspraywarn20sec = "Fangnetz! Spinnen in 10 sek!"
 	L.webspraywarn10sec = "Spinnen! Gespinstschauer in 10 sek!"
 	L.webspraywarn5sec = "Gespinstschauer in 5 sek!"
-	L.webspraywarn = "Gespinstschauer! Nächster in 40 sek!"
 	L.enragewarn = "Raserei!"
 	L.enragesoonwarn = "Raserei bald!"
 
-	L.webspraybar = "Gespinstschauer"
 	L.cocoonbar = "Fangnetz"
 	L.spiderbar = "Spinnen"
 end
