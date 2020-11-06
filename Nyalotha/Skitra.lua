@@ -67,7 +67,7 @@ end
 function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then
-		self:Message2("stages", "green", CL.soon:format(self:SpellName(307725)), false)
+		self:Message("stages", "green", CL.soon:format(self:SpellName(307725)), false)
 		nextStageWarning = nextStageWarning - 33
 		if nextStageWarning < 30 then
 			self:UnregisterUnitEvent(event, unit)
@@ -120,13 +120,13 @@ do
 end
 
 function mod:ImagesofAbsolution(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 85)
 end
 
 function mod:IllusionaryProjection(args)
-	self:Message2(args.spellId, "green")
+	self:Message(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
 
 	self:StopBar(CL.count:format(self:SpellName(307950), phsycheCount)) -- Shred Psyche
@@ -141,7 +141,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	local guid = UnitGUID("boss1")
 	if guid then -- Boss 1 can only be Skitra, so the boss has returned
 		self:UnregisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-		self:Message2(307725, "green", CL.over:format(self:SpellName(307725))) -- Illusionary Projection
+		self:Message(307725, "green", CL.over:format(self:SpellName(307725))) -- Illusionary Projection
 		self:PlaySound(307725, "long")
 
 		self:Bar(307950, 15, CL.count:format(self:SpellName(307950), phsycheCount)) -- Shred Psyche

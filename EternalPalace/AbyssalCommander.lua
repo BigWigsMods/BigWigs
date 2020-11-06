@@ -112,7 +112,7 @@ function mod:MarkRemoved(args)
 end
 
 function mod:CrushingReverberation(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, self:Mythic() and 29 or 23) -- XXX review all dificulties for what causes the variance
 end
@@ -130,14 +130,14 @@ end
 
 function mod:FrostvenomTippedRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message2(-20300, "green", CL.removed:format(args.spellName), args.spellId)
+		self:Message(-20300, "green", CL.removed:format(args.spellName), args.spellId)
 		self:PlaySound(-20300, "info")
 		self:CancelSayCountdown(-20300)
 	end
 end
 
 function mod:OverwhelmingBarrage(args)
-	self:Message2(296551, "red",  CL.count:format(self:SpellName(296551), overwhelmingCount))
+	self:Message(296551, "red",  CL.count:format(self:SpellName(296551), overwhelmingCount))
 	self:PlaySound(296551, "warning")
 	overwhelmingCount = overwhelmingCount + 1
 	self:Bar(296551, 40, CL.count:format(self:SpellName(296551), overwhelmingCount))
@@ -188,7 +188,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, destName)
 end
 
 function mod:InversionStart(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 73)
 end

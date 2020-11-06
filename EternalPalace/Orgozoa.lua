@@ -86,13 +86,13 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 298077 then -- Dribbling Ichor
-		self:Message2(298103, "orange")
+		self:Message(298103, "orange")
 		self:PlaySound(298103, "long")
 		nextIchorTime = GetTime() + 85
 		self:CDBar(298103, 85)
 	elseif spellId == 298689 then -- Absorb Fluids
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "green", CL.intermission, false)
+		self:Message("stages", "green", CL.intermission, false)
 		incubationAppliedCount = 0 -- Resets
 
 		self:StopBar(298156) -- Desensitizing Sting
@@ -122,7 +122,7 @@ function mod:DesensitizingStingApplied(args)
 end
 
 function mod:IncubationFluid(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 32)
 end
@@ -136,7 +136,7 @@ function mod:IncubationFluidApplied(args)
 end
 
 function mod:ArcingCurrent(args)
-	self:Message2(305048, "red", CL.count:format(args.spellName, arcingCount))
+	self:Message(305048, "red", CL.count:format(args.spellName, arcingCount))
 	if self:Mythic() and incubationAppliedCount > 10 then
 		-- Sound for everyone on mythic when there more than 10 debuffs, but only the 1 target on non-Mythic
 		self:PlaySound(305048, "warning")
@@ -162,14 +162,14 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(args.spellId, "cyan")
+			self:Message(args.spellId, "cyan")
 			self:PlaySound(args.spellId, "info")
 		end
 	end
 end
 
 function mod:MassiveIncubator(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 20)
 end
@@ -177,7 +177,7 @@ end
 function mod:Interupted(args)
 	if args.extraSpellId == 298548 then -- Massive Incubator // Stage 2 start
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 		self:StopBar(CL.cast:format(args.extraSpellName))
 
 		arcingCount = 1
@@ -207,7 +207,7 @@ end
 function mod:ConductivePulse(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
-		self:Message2(args.spellId, "red")
+		self:Message(args.spellId, "red")
 		if ready then
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -215,13 +215,13 @@ function mod:ConductivePulse(args)
 end
 
 function mod:PowerfulStomp(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 4.5)
 end
 
 function mod:CalloftheTender(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 35)
 end

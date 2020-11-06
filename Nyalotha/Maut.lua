@@ -102,7 +102,7 @@ function mod:ShadowWounds(args)
 end
 
 function mod:DarkOffering(args)
-	self:Message2(args.spellId, "purple") -- XXX only show for tank of target?
+	self:Message(args.spellId, "purple") -- XXX only show for tank of target?
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -132,17 +132,17 @@ do
 			if UnitIsDead("player") then
 				-- Nothing
 			elseif not mod:UnitDebuff("player", 307586) then -- Devoured Abyss
-				mod:Message2(307586, "blue", CL.no:format(mod:SpellName(307586)))
+				mod:Message(307586, "blue", CL.no:format(mod:SpellName(307586)))
 				mod:PlaySound(307586, "warning")
 				mod:SimpleTimer(checkForDevouredAbyss, 1.5)
 			else
-				mod:Message2(307586, "green", CL.you:format(mod:SpellName(307586)))
+				mod:Message(307586, "green", CL.you:format(mod:SpellName(307586)))
 			end
 		end
 	end
 
 	function mod:StygianAnnihilationStart(args)
-		self:Message2(args.spellId, "red")
+		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "long")
 		self:CastBar(args.spellId, 5)
 		self:CDBar(args.spellId, 53.1)
@@ -153,34 +153,34 @@ end
 
 
 function mod:DarkManifestation(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 35.3)
 end
 
 function mod:BlackWings(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 20.7) -- XXX something can delay this by as much as 10 seconds
 end
 
 --- Mythic
 function mod:AncientCurse(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, 50)
 end
 
 function mod:AncientCurseRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message2(314337, "green", CL.removed:format(args.spellName))
+		self:Message(314337, "green", CL.removed:format(args.spellName))
 		self:PlaySound(314337, "info")
 	end
 end
 
 -- Stage 2
 function mod:ObsidianDestruction(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 	self:StopBar(305663) -- Black Wings
 	self:StopBar(310129) -- Shadow Claws
@@ -200,7 +200,7 @@ do
 	end
 
 	function mod:ObsidianDestructionRemoved(args)
-		self:Message2(args.spellId, "cyan", L.stage2_over:format(args.time-prev))
+		self:Message(args.spellId, "cyan", L.stage2_over:format(args.time-prev))
 		self:PlaySound(args.spellId, "long")
 		self:StopBar(314993) -- Drain Essence
 		self:CDBar(310129, 7) -- Shadow Claws

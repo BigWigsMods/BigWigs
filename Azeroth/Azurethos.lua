@@ -58,7 +58,7 @@ end
 --end
 
 function mod:WingBuffet(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "long")
 	if lastBuffet == 0 or (args.time - lastBuffet) > 15 then
 		self:CDBar(args.spellId, 10.8)
@@ -69,7 +69,7 @@ function mod:WingBuffet(args)
 end
 
 function mod:GaleForce(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	if lastGale == 0 or (args.time - lastGale) > 15 then
 		self:CDBar(args.spellId, 19.4)
@@ -80,7 +80,7 @@ function mod:GaleForce(args)
 end
 
 function mod:AzurethosFury(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 	self:Flash(args.spellId)
 	self:CDBar(args.spellId, 45)

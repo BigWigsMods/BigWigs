@@ -67,10 +67,10 @@ end
 
 function mod:BloodShield(args)
 	self:PlaySound(args.spellId, "long")
-	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 end
 
 function mod:BloodshotRage(args)
 	self:PlaySound(args.spellId, "long")
-	self:Message2(args.spellId, "red", CL.other:format(args.spellName, L.dominator))
+	self:Message(args.spellId, "red", CL.other:format(args.spellName, L.dominator))
 end

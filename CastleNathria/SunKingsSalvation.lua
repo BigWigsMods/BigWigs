@@ -213,7 +213,7 @@ end
 function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp > nextStageWarning then -- Stage changes at 40% and 90%
-		self:Message2("stages", "green", CL.soon:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
+		self:Message("stages", "green", CL.soon:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
 		nextStageWarning = nextStageWarning + 50
 		if nextStageWarning > 90 then
 			self:UnregisterUnitEvent(event, unit)
@@ -255,7 +255,7 @@ end
 function mod:ReflectionofGuiltApplied(args)
 	if not shadeUp then
 		shadeUp = true
-		self:Message2("stages", "green", CL.incoming:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
+		self:Message("stages", "green", CL.incoming:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
 		self:PlaySound("stages", "long")
 		self:Bar("stages", 8.75, -21966, "achievement_raid_revendrethraid_kaelthassunstrider") -- Shade of Keal'thas
 
@@ -280,7 +280,7 @@ function mod:ReflectionofGuiltApplied(args)
 end
 
 function mod:FieryStrike(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 7)
 end
@@ -325,7 +325,7 @@ do
 end
 
 function mod:BlazingSurge(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, blazingSurgeCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, blazingSurgeCount))
 	self:PlaySound(args.spellId, "alert")
 	blazingSurgeCount = blazingSurgeCount + 1
 	self:Bar(args.spellId, 20, CL.count:format(args.spellName, blazingSurgeCount))
@@ -339,7 +339,7 @@ function mod:EyesonTarget(args)
 end
 
 function mod:ReflectionofGuiltRemoved()
-	self:Message2("stages", "green", CL.removed:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider") -- Shade of Kael'thas
+	self:Message("stages", "green", CL.removed:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider") -- Shade of Kael'thas
 	self:PlaySound("stages", "long")
 	self:StopBar(326455) -- Fiery Strike
 	self:StopBar(CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
@@ -364,7 +364,7 @@ end
 
 -- Ministers of Vice
 function mod:VanquishingStrike(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 6.3)
 end
@@ -380,7 +380,7 @@ end
 function mod:ConcussiveSmash(args)
 	local count = concussiveSmashCountTable[args.sourceGUID] or 1
 	self:StopBar(CL.count:format(args.spellName, count))
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, count))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, count))
 	self:PlaySound(args.spellId, "alarm")
 	concussiveSmashCountTable[args.sourceGUID] = count + 1
 	self:Bar(args.spellId, 21, CL.count:format(args.spellName, count))
@@ -408,7 +408,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(args.spellId, "cyan")
+			self:Message(args.spellId, "cyan")
 			self:PlaySound(args.spellId, "info")
 		end
 	end
@@ -416,7 +416,7 @@ end
 
 function mod:VulgarBrand(args)
 	if self:Interrupter(args.sourceGUID) then
-		self:Message2(args.spellId, "red")
+		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -441,7 +441,7 @@ end
 
 -- High Torturer Darithos
 function mod:GreaterCastigation(args)
-	self:Message2(328889, "yellow") -- Greater Castigation
+	self:Message(328889, "yellow") -- Greater Castigation
 	self:Bar(328889, 8.5) -- Greater Castigation
 end
 
@@ -483,7 +483,7 @@ end
 
 -- Mythic
 function mod:CloakofFlamesApplied(args)
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, cloakofFlamesCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, cloakofFlamesCount))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakofFlamesCount))
 	cloakofFlamesCount = cloakofFlamesCount + 1
@@ -491,7 +491,7 @@ function mod:CloakofFlamesApplied(args)
 end
 
 function mod:CloakofFlamesRemoved(args)
-	self:Message2(args.spellId, "cyan", CL.removed:format(args.spellName))
+	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
 	self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakofFlamesCount-1)))
 end

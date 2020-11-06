@@ -99,14 +99,14 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 282467 then -- Voodoo Blast
-		self:Message2(282471, "red")
+		self:Message(282471, "red")
 		self:PlaySound(282471, "warning")
 		self:CDBar(282471, 23)
 	end
 end
 
 function mod:DeathKnel(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, deathKnellCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, deathKnellCount))
 	self:PlaySound(args.spellId, "alarm")
 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, deathKnellCount)) -- 1s + 4s Channel
 	deathKnellCount = deathKnellCount + 1
@@ -140,13 +140,13 @@ function mod:BestialThrowTarget(args)
 end
 
 function mod:DeathlySlam(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 29)
 end
 
 function mod:FerociousRoar(args)
-	self:Message2(285994, "red")
+	self:Message(285994, "red")
 	self:PlaySound(285994, "warning")
 	self:Bar(285994, 36.5)
 end
@@ -175,7 +175,7 @@ do
 end
 
 function mod:DeathSpecter(args)
-	self:Message2(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, addCount)))
+	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, addCount)))
 	self:PlaySound(args.spellId, "long")
 	addCount = addCount + 1
 	self:Bar(args.spellId, self:Mythic() and 120 or 60.5, CL.count:format(self:Mythic() and CL.adds or CL.add, addCount))
@@ -187,7 +187,7 @@ do
 		local t = args.time
 		if t-prev > 1.5 then
 			prev = t
-			self:Message2(args.spellId, "yellow")
+			self:Message(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
 		end
 	end
@@ -207,6 +207,6 @@ function mod:ShadowCoreRemoved(args)
 end
 
 function mod:DischargeShadowCore(args)
-	self:Message2(args.spellId, "green")
+	self:Message(args.spellId, "green")
 	self:PlaySound(args.spellId, "info")
 end

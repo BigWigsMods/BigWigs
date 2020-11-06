@@ -112,7 +112,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find(L.stage3_early) then -- No event here, but a spell is cast 4s later as fallback
 		stage = 3
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 
 		self:StopBar(294535) -- Portal of Madness
 
@@ -123,18 +123,18 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 299711 then -- Pick a Portal
 		if stage == 1 then -- Portal of Madness
-			self:Message2(294535, "yellow")
+			self:Message(294535, "yellow")
 			self:PlaySound(294535, "alert")
 			self:Bar(294535, 84)
 		elseif stage == 4 then
-			self:Message2(299702, "yellow")
+			self:Message(299702, "yellow")
 			self:PlaySound(299702, "alert")
 			self:Bar(299702, 87)
 		end
 	elseif spellId == 295361 then -- Cancel All Phases (Encounter Reset) (Stage 4 start) Alternative: Energy Tracker-296465
 		stage = 4
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 
 		self:StopBar(292963) -- Dread
 		self:StopBar(304733) -- Delirium's Descent
@@ -177,13 +177,13 @@ end
 
 function mod:MindTetherApplied(args) -- XXX Make it better perhaps? this is very simple atm.
 	if self:Me(args.destGUID) then
-		self:Message2(295444, "blue", CL.link:format(args.sourceName))
+		self:Message(295444, "blue", CL.link:format(args.sourceName))
 		self:PlaySound(295444, "alert")
 	end
 end
 
 function mod:CrushingGrasp(args) -- Tentacle
-	self:Message2(args.spellId, "orange", self:SpellName(285205))
+	self:Message(args.spellId, "orange", self:SpellName(285205))
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, 31.5, self:SpellName(285205))
 	--self:CastBar(args.spellId, 8) XXX Mythic has 3 casts, figure out a clever way if needed
@@ -205,7 +205,7 @@ end
 function mod:OpeningFearRealm(args)
 	stage = 2
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "cyan", CL.stage:format(stage), false)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:StopBar(294535) -- Portal of Madness
 
 	self:CDBar(292996, 3.5) -- Maddening Eruption
@@ -236,7 +236,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("292996", nil, true) then -- Maddening Eruption
-		self:Message2(292996, "cyan")
+		self:Message(292996, "cyan")
 		self:PlaySound(292996, "info")
 		self:CDBar(292996, stage == 4 and (self:Mythic() and 65 or 90.5) or 60)
 		self:CDBar(295099, 25) -- Punctured Darkness
@@ -253,18 +253,18 @@ end
 function mod:DeliriumsDescent(args)
 	if stage < 3 then -- Stage 3 Emote was not found
 		stage = 3
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 		self:StopBar(294535) -- Portal of Madness
 	end
 
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 35)
 end
 
 -- Stage 4
 function mod:DarkPulse(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 end
 function mod:MindFracture()
@@ -291,6 +291,6 @@ end
 
 -- Mythic
 function mod:PsychoticSplit(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 end

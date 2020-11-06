@@ -104,7 +104,7 @@ function mod:GluttonousMiasmaRemoved(args)
 end
 
 function mod:Consume(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, consumeCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, consumeCount))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 10, CL.count:format(args.spellName, consumeCount)) -- 2s Cast, 8s Channel
 	consumeCount = consumeCount + 1
@@ -113,7 +113,7 @@ end
 
 -- XXX Redo when they add events for the debuff
 -- function mod:Expunge(args)
--- 	self:Message2(args.spellId, "orange", CL.count:format(self:SpellName(329725), expungeCount))
+-- 	self:Message(args.spellId, "orange", CL.count:format(self:SpellName(329725), expungeCount))
 -- 	self:PlaySound(args.spellId, "warning")
 -- 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, expungeCount))
 --	expungeCount = expungeCount + 1
@@ -128,7 +128,7 @@ do
 			local t = GetTime()
 			if t-prev > 10 then
 				prev = t
-				self:Message2(329725, "orange", CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+				self:Message(329725, "orange", CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
 				self:PlaySound(329725, "warning")
 				self:CastBar(329725, 5, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
 				expungeCount = expungeCount + 1
@@ -203,14 +203,14 @@ do
 end
 
 function mod:Desolate(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, desolateCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, desolateCount))
 	self:PlaySound(args.spellId, "alert")
 	desolateCount = desolateCount + 1
 	self:Bar(args.spellId, 60, CL.count:format(args.spellName, desolateCount)) -- Desolate
 end
 
 function mod:Overwhelm(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 11.5)
 end

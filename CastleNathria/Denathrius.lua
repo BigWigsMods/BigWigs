@@ -144,7 +144,7 @@ function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then -- Stage changes at 70% and 40%
 		local nextStage = stage == 1 and CL.intermission or CL.stage:format(stage + 1)
-		self:Message2("stages", "green", CL.soon:format(nextStage), false)
+		self:Message("stages", "green", CL.soon:format(nextStage), false)
 		nextStageWarning = nextStageWarning - 30
 		if nextStageWarning < 30 then
 			self:UnregisterUnitEvent(event, unit)
@@ -153,7 +153,7 @@ function mod:UNIT_HEALTH(event, unit)
 end
 
 function mod:Inevitable(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -186,14 +186,14 @@ do
 		burdenTracker[args.destName] = 0
 		burdenStacksOnMe = 0
 		if self:Me(args.destGUID) then
-			self:Message2(args.spellId, intermission and "green" or "red", CL.removed:format(args.spellName))
+			self:Message(args.spellId, intermission and "green" or "red", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, intermission and "info" or "warning")
 		end
 	end
 end
 
 function mod:CleansingPain(args)
-	self:Message2(args.spellId, "purple", CL.count:format(args.spellName, cleansingPainCount))
+	self:Message(args.spellId, "purple", CL.count:format(args.spellName, cleansingPainCount))
 	self:PlaySound(args.spellId, "alert")
 end
 
@@ -259,7 +259,7 @@ do
 end
 
 function mod:Ravage(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, 6)
 	self:Bar(args.spellId, 58)
@@ -270,7 +270,7 @@ function mod:MarchofthePenitentApplied(args)
 	if stage == 1 then
 		stage = stage + 1
 		intermission = true
-		self:Message2("stages", "green", CL.intermission, false)
+		self:Message("stages", "green", CL.intermission, false)
 		self:PlaySound("stages", "long")
 		self:CastBar("stages", 15, CL.intermission, 328276) -- March of the Penitent icon
 
@@ -288,7 +288,7 @@ end
 -- Stage Two: The Crimson Chorus
 function mod:BegintheChorus(args)
 		--	"<179.27 00:11:34> [BigWigs_Message] Sire Denathrius#stages#Stage 2#green#false#false", -- [6887]
-	self:Message2("stages", "green", CL.stage:format(stage), false)
+	self:Message("stages", "green", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 end
 
@@ -330,7 +330,7 @@ do
 end
 
 function mod:WrackingPain(args)
-	self:Message2(args.spellId, "yellow", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 19.5)
 end
@@ -343,14 +343,14 @@ function mod:WrackingPainApplied(args)
 end
 
 function mod:HandofDestruction(args)
-	self:Message2(args.spellId, "orange", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 6)
 	self:Bar(args.spellId, 44)
 end
 
 function mod:Massacre(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 50)
 end
@@ -358,7 +358,7 @@ end
 -- Stage Three: Indignation
 function mod:RemorniaApplied(args)
 	stage = stage + 1
-	self:Message2("stages", "green", CL.stage:format(stage))
+	self:Message("stages", "green", CL.stage:format(stage))
 	self:PlaySound("stages", "long")
 
 	self:StopBar(329951) -- Impale
@@ -376,7 +376,7 @@ function mod:ScornApplied(args)
 end
 
 function mod:ShatteringPain(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	-- self:Bar(args.spellId, 25)
 end
@@ -418,20 +418,20 @@ do
 end
 
 function mod:SinisterReflection(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	-- self:Bar(args.spellId, 25)
 end
 
 function mod:ReflectionRavage(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, 6)
 	-- self:Bar(args.spellId, 25)
 end
 
 function mod:ReflectionMassacre(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	-- self:Bar(args.spellId, 25)
 end

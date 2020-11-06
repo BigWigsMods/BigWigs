@@ -153,7 +153,7 @@ end
 
 --[[ Stage One: Kaal's Assault ]]--
 function mod:HardenedStoneFormApplied(args)
-	self:Message2(args.spellId, "green")
+	self:Message(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
 end
 
@@ -165,7 +165,7 @@ function mod:HardenedStoneFormRemoved(args)
 	--self:StopBar(CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
 
 	stage = 2
-	self:Message2(args.spellId, "green", CL.stage:format(stage))
+	self:Message(args.spellId, "green", CL.stage:format(stage))
 	self:PlaySound(args.spellId, "long")
 
 	wickedBladeCount = 1
@@ -271,7 +271,7 @@ end
 
 function mod:SerratedSwipe(args)
 	self:StopBar(CL.count:format(args.spellName, serratedSwipeCount))
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, serratedSwipeCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, serratedSwipeCount))
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -310,7 +310,7 @@ end
 
 function mod:PulverizingMeteor(args)
 	self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
 	self:PlaySound(args.spellId, "alert")
 	pulverizingMeteorCount = pulverizingMeteorCount + 1
 end
@@ -324,25 +324,25 @@ end
 
 function mod:AnimaApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.you:format(args.spellName))
+		self:Message(args.spellId, "green", CL.you:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 	end
 end
 
 function mod:StonewrathExhaust(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:ShatteringBlast(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 5)
 end
 
 --[[ Stage Two: Grashaal's Blitz ]]--
 function mod:GraniteFormApplied(args)
-	self:Message2(args.spellId, "green")
+	self:Message(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
 
 	self:StopBar(342256) -- Call Shadow Forces
@@ -362,7 +362,7 @@ function mod:GraniteFormRemoved(args)
 	self:StopBar(343086) -- Ricocheting Shuriken
 
 	stage = 3
-	self:Message2(args.spellId, "green", CL.stage:format(stage))
+	self:Message(args.spellId, "green", CL.stage:format(stage))
 	self:PlaySound(args.spellId, "long")
 
 	wickedBladeCount = 1
@@ -415,7 +415,7 @@ end
 
 function mod:SeismicUpheaval(args)
 	self:StopBar(CL.count:format(args.spellName, seismicUphealvalCount))
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, seismicUphealvalCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, seismicUphealvalCount))
 	self:PlaySound(args.spellId, "long")
 	seismicUphealvalCount = seismicUphealvalCount + 1
 	self:CDBar(args.spellId, 32, CL.count:format(args.spellName, seismicUphealvalCount))
@@ -441,7 +441,7 @@ do
 	end
 
 	function mod:CallShadowForces(args)
-		self:Message2(args.spellId, "cyan")
+		self:Message(args.spellId, "cyan")
 		self:PlaySound(args.spellId, "long")
 		self:CDBar(args.spellId, 62)
 
@@ -466,7 +466,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(args.spellId, "orange")
+			self:Message(args.spellId, "orange")
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -485,7 +485,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(args.spellId, "cyan")
+			self:Message(args.spellId, "cyan")
 			self:PlaySound(args.spellId, "alert")
 		end
 	end

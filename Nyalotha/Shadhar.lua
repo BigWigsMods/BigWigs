@@ -198,7 +198,7 @@ end
 function mod:Hungry(args)
 	local amount = args.amount or 1
 	if amount % 2 == 1 or amount > 6 then
-		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, amount))
+		self:Message(args.spellId, "orange", CL.count:format(args.spellName, amount))
 		if amount > 6 then
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -215,7 +215,7 @@ end
 
 function mod:TastyMorselRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 		self:StopBar(args.spellId, args.destName)
 	end
@@ -223,7 +223,7 @@ end
 
 function mod:CrushAndDissolveStart(args)
 	self:StopBar(CL.count:format(self:SpellName(-21311), crushAndDissolveCount))
-	self:Message2(args.spellId == 307476 and 307471 or 307472, args.spellId == 307476 and "purple" or "cyan", CL.casting:format(args.spellName))
+	self:Message(args.spellId == 307476 and 307471 or 307472, args.spellId == 307476 and "purple" or "cyan", CL.casting:format(args.spellName))
 	if self:Tank() then
 		self:PlaySound(args.spellId == 307476 and 307471 or 307472, "alarm")
 	end
@@ -248,7 +248,7 @@ end
 
 function mod:Breath(args)
 	self:StopBar(args.spellId)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, args.spellId == 306930 and 0.5 or 4)
 end
@@ -263,7 +263,7 @@ do
 		local t = args.time
 		if t-prev > 1.5 then
 			prev = t
-			self:Message2(args.spellId, "orange")
+			self:Message(args.spellId, "orange")
 			self:PlaySound(args.spellId, "alarm")
 			self:Bar(args.spellId, 20)
 		end
@@ -271,7 +271,7 @@ do
 end
 
 function mod:EntropicMantle(args)
-	self:Message2("stages", "cyan", CL.stage:format(2), args.spellId)
+	self:Message("stages", "cyan", CL.stage:format(2), args.spellId)
 	self:PlaySound("stages", "long")
 	self:StopBar(306448) -- Umbral Mantle
 	self:StopBar(306928) -- Umbral Breath
@@ -281,7 +281,7 @@ function mod:EntropicMantle(args)
 end
 
 function mod:NoxiousMantle(args)
-	self:Message2("stages", "cyan", CL.stage:format(3), args.spellId)
+	self:Message("stages", "cyan", CL.stage:format(3), args.spellId)
 	self:PlaySound("stages", "long")
 	self:StopBar(306930) -- Entropic Breath
 	self:StartBreathBar(306929) -- Bubbling Breath
@@ -290,7 +290,7 @@ function mod:NoxiousMantle(args)
 end
 
 function mod:FrenzyApplied(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 

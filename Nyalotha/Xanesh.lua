@@ -105,7 +105,7 @@ function mod:AwakenedMarker(event, unit, guid)
 end
 
 function mod:VoidRitualStart(args)
-	self:Message2(args.spellId, "red",  CL.count:format(args.spellName, ritualCount))
+	self:Message(args.spellId, "red",  CL.count:format(args.spellName, ritualCount))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, ritualCount))
 	ritualCount = ritualCount + 1
@@ -132,7 +132,7 @@ function mod:DarkAscensionApplied(args)
 end
 
 function mod:AbyssalStrikeStart(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, self:Mythic() and 23 or 42.5)
 end
@@ -144,7 +144,7 @@ end
 
 function mod:SoulFlayStart(args)
 	self:StopBar(CL.count:format(args.spellName, flayCount))
-	self:Message2(args.spellId, "yellow",  CL.count:format(args.spellName, flayCount))
+	self:Message(args.spellId, "yellow",  CL.count:format(args.spellName, flayCount))
 	self:PlaySound(args.spellId, "alert")
 	flayCount = flayCount + 1
 	self:CDBar(args.spellId, self:Mythic() and 59 or 60, CL.count:format(args.spellName, flayCount))
@@ -163,7 +163,7 @@ end
 
 function mod:Torment(args)
 	self:StopBar(CL.count:format(args.spellName, tormentCount))
-	self:Message2(args.spellId, "yellow",  CL.count:format(args.spellName, tormentCount))
+	self:Message(args.spellId, "yellow",  CL.count:format(args.spellName, tormentCount))
 	self:PlaySound(args.spellId, "long")
 	tormentCount = tormentCount + 1
 	self:CDBar(args.spellId, tormentCount % 2 == 0 and 65.5 or 30.5, CL.count:format(args.spellName, tormentCount))

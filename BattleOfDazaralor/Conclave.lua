@@ -222,7 +222,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		lastBossKillNextAspect = self:NextAspect()
 		
 		bossesKilled = bossesKilled + 1
-		self:Message2("stages", "cyan", L.killed:format(self:UnitName(unit)), false)
+		self:Message("stages", "cyan", L.killed:format(self:UnitName(unit)), false)
 		self:PlaySound("stages", "info")
 
 		-- Stop bars
@@ -255,19 +255,19 @@ end
 
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find("282107", nil, true) then -- Pa'ku's Wrath
-		self:Message2(282107, "red")
+		self:Message(282107, "red")
 		self:PlaySound(282107, "warning")
 		self:NextWrathCDBar(282107)
 	end
 end
 
 function mod:LoasPact(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 end
 
 function mod:GiftofWind(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 32)
 end
@@ -329,7 +329,7 @@ do
 
 	function mod:CrawlingHexRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message2(282135, "green", CL.removed:format(args.spellName))
+			self:Message(282135, "green", CL.removed:format(args.spellName))
 			self:PlaySound(282135, "info")
 			isOnMe = false
 			self:CancelSayCountdown(282135)
@@ -353,7 +353,7 @@ do
 end
 
 function mod:WildMaul(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 16)
 end
@@ -366,7 +366,7 @@ do
 		local t = args.time
 		if t-prev > 58 then
 			prev = t
-			self:Message2(282155, "cyan") -- Gonk's Wrath
+			self:Message(282155, "cyan") -- Gonk's Wrath
 			self:PlaySound(282155, "info") -- Gonk's Wrath
 			self:NextWrathCDBar(282155)
 		end
@@ -403,10 +403,10 @@ do
 	local function leapWarn(self)
 		if not isOnMe and not mod:CheckOption(282447, "ME_ONLY") then
 			if isNearMe then
-				self:Message2(282447, "orange", CL.near:format(L.leap))
+				self:Message(282447, "orange", CL.near:format(L.leap))
 				self:PlaySound(282447, "alert")
 			else
-				self:Message2(282447, "yellow", L.leap)
+				self:Message(282447, "yellow", L.leap)
 			end
 		end
 		self:NextWrathCDBar(286811)
@@ -419,7 +419,7 @@ do
 	function mod:KimbulsWrathApplied(args)
 		if self:Me(args.destGUID) then
 			isOnMe = true
-			self:Message2(282447, "blue", CL.you:format(L.leap))
+			self:Message(282447, "blue", CL.you:format(L.leap))
 			self:PlaySound(282447, "warning")
 			self:Flash(282447)
 			self:Say(282447, L.leap)
@@ -442,7 +442,7 @@ do
 end
 
 function mod:ThunderingStorm(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	self:CDBar(args.spellId, 18.5)
 end
@@ -476,7 +476,7 @@ do
 
 	function mod:MindWipeRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+			self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
 		if self:GetOption(mindWipeMarker) then

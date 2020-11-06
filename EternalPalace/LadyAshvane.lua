@@ -103,7 +103,7 @@ end
 --
 
 function mod:RipplingWave(args)
-	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, ripplingWaveCount))
+	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, ripplingWaveCount))
 	self:PlaySound(args.spellId, "long")
 	self:StopBar(CL.count:format(args.spellName, ripplingWaveCount)) -- Rippling Wave
 	ripplingWaveCount = ripplingWaveCount + 1
@@ -138,7 +138,7 @@ do
 end
 
 function mod:Upsurge(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	upsurgeCount = upsurgeCount + 1
 	local cd = stage == 1 and (upsurgeCount % 2 == 1 and 30 or 15) or 44 -- Stage 1: 30/15 Alternating, Stage 2 44
@@ -164,7 +164,7 @@ end
 
 function mod:HardenedCarapaceRemoved(args)
 	stage = 2
-	self:Message2("stages", "orange", CL.stage:format(stage), args.spellId)
+	self:Message("stages", "orange", CL.stage:format(stage), args.spellId)
 	self:PlaySound("stages", "long")
 
 	arcingAzeriteCount = 1
@@ -272,7 +272,7 @@ do
 				end
 			end
 
-			self:Message2(-20096, "yellow", CL.other:format(self:SpellName(-20096), messageText))
+			self:Message(-20096, "yellow", CL.other:format(self:SpellName(-20096), messageText))
 			self:PlaySound(-20096, "alert")
 		end
 
@@ -369,7 +369,7 @@ end
 function mod:HardenedCarapaceApplied(args)
 	if stage == 2 then -- Applied on Pull
 		stage = 1
-		self:Message2("stages", "orange", CL.stage:format(stage), args.spellId)
+		self:Message("stages", "orange", CL.stage:format(stage), args.spellId)
 		self:PlaySound("stages", "long")
 
 		barnacleBashCount = 1

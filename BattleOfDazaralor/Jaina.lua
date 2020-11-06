@@ -248,7 +248,7 @@ end
 function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then -- Intermission at 60% & 30%
-		self:Message2("stages", "green", CL.soon:format(CL.intermission), false)
+		self:Message("stages", "green", CL.soon:format(CL.intermission), false)
 		nextStageWarning = nextStageWarning - 30
 		if nextStageWarning < 30 then
 			self:UnregisterUnitEvent(event, unit)
@@ -259,7 +259,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 287282 then -- Arctic Armor // Intermission 1 Start
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "green", CL.intermission, false)
+		self:Message("stages", "green", CL.intermission, false)
 		intermission = true
 		imageCount = 0
 
@@ -277,13 +277,13 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find(L.starbord_ship_emote) then
-		self:Message2(-19690, "yellow", L.starbord_txt, L.ship_icon)
+		self:Message(-19690, "yellow", L.starbord_txt, L.ship_icon)
 		self:PlaySound(-19690, "info")
 		self:StopBar(-19690)
 		self:StopBar(L.starbord_txt)
 		self:CDBar(-19690, 60, L.port_side_txt, L.ship_icon)
 	elseif msg:find(L.port_side_ship_emote) then
-		self:Message2(-19690, "yellow", L.port_side_txt, L.ship_icon)
+		self:Message(-19690, "yellow", L.port_side_txt, L.ship_icon)
 		self:PlaySound(-19690, "info")
 		self:StopBar(-19690)
 		self:StopBar(L.port_side_txt)
@@ -305,7 +305,7 @@ end
 
 function mod:ChillingTouchRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 	end
 	chillingTouchList[args.destName] = 0
@@ -331,7 +331,7 @@ function mod:MarkedTargetApplied(args)
 end
 
 function mod:SetCharge(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 end
 
@@ -385,7 +385,7 @@ function mod:AvalancheRemoved(args)
 end
 
 function mod:TimeWarp(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -403,14 +403,14 @@ do
 end
 
 function mod:FreezingBlast(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	self:CDBar(args.spellId, self:Mythic() and 13.4 or 10)
 end
 
 function mod:RingofIce(args)
 	self:StopBar(CL.count:format(args.spellName, ringofIceCount))
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, ringofIceCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, ringofIceCount))
 	self:PlaySound(args.spellId, "long")
 	ringofIceCount = ringofIceCount + 1
 	self:CDBar(args.spellId, 60, CL.count:format(args.spellName, ringofIceCount))
@@ -428,7 +428,7 @@ function mod:HowlingWindsRemoved(args)
 	burningExplosionCounter = 1
 	local seconds = math.floor((GetTime() - intermissionTime) * 100)/100
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "cyan", L.intermission_stage2:format(seconds), false)
+	self:Message("stages", "cyan", L.intermission_stage2:format(seconds), false)
 
 	self:CDBar(288212, 3.5) -- Broadside
 	self:CDBar(288345, 7) -- Glacial Ray
@@ -493,7 +493,7 @@ function mod:SiegebreakerBlastRemoved(args)
 end
 
 function mod:GlacialRay(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	if self:MobId(args.sourceGUID) == 146409 then -- Jaina
 		self:CDBar(args.spellId, self:Mythic() and 40 or (stage == 3 and 60 or 51.1))
@@ -502,18 +502,18 @@ end
 
 function mod:Icefall(args)
 	if self:MobId(args.sourceGUID) == 146409 then -- Jaina
-		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, icefallCount))
+		self:Message(args.spellId, "orange", CL.count:format(args.spellName, icefallCount))
 		self:PlaySound(args.spellId, "long")
 		icefallCount = icefallCount + 1
 		self:CDBar(args.spellId, self:Mythic() and 37 or (stage == 3 and 62 or 42), CL.count:format(args.spellName, icefallCount))
 	else -- Prismatic Image
-		self:Message2(args.spellId, "orange")
+		self:Message(args.spellId, "orange")
 		self:PlaySound(args.spellId, "long")
 	end
 end
 
 function mod:BurningExplosion(args)
-	self:Message2(args.spellId, "green", CL.count:format(CL.casting:format(args.spellName), burningExplosionCounter))
+	self:Message(args.spellId, "green", CL.count:format(CL.casting:format(args.spellName), burningExplosionCounter))
 	self:PlaySound(args.spellId, "info")
 	self:CastBar(args.spellId, self:Mythic() and 8 or 15, CL.count:format(args.spellName, burningExplosionCounter))
 	burningExplosionCounter = burningExplosionCounter + 1
@@ -522,7 +522,7 @@ end
 -- Intermission: Flash Freeze
 function mod:FlashFreeze(args)
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "green", CL.intermission, false)
+	self:Message("stages", "green", CL.intermission, false)
 	self:StopBar(288212) -- Broadside
 	self:StopBar(288345) -- Glacial Ray
 	self:StopBar(285254) -- Avalanche
@@ -532,7 +532,7 @@ end
 
 function mod:ArcaneBarrage(args)
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "cyan", CL.interrupted:format(self:SpellName(288719)), false) -- Flash Freeze Interrupted
+	self:Message("stages", "cyan", CL.interrupted:format(self:SpellName(288719)), false) -- Flash Freeze Interrupted
 end
 
 function mod:ArcaneBarrageRemoved(args)
@@ -541,7 +541,7 @@ function mod:ArcaneBarrageRemoved(args)
 	icefallCount = 1
 	crystallineDustCount = 1
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "cyan", CL.stage:format(stage), false)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 
 	self:CDBar(288619, 11.5, CL.count:format(self:SpellName(288619), orbofFrostCount)) -- Orb of Frost
 	self:CDBar(288212, 20) -- Broadside
@@ -566,19 +566,19 @@ do
 end
 
 function mod:FrostNova(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 end
 
 function mod:WaterBoltVolley(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 8)
 end
 
 -- Stage 3
 function mod:CrystallineDust(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	crystallineDustCount = crystallineDustCount + 1
 	self:CDBar(args.spellId, crystallineDustCount % 3 == 0 and 21.5 or 15.5)
@@ -586,18 +586,18 @@ end
 
 function mod:OrbofFrost(args)
 	if self:MobId(args.sourceGUID) == 146409 then -- Jaina
-		self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, orbofFrostCount))
+		self:Message(args.spellId, "yellow", CL.count:format(args.spellName, orbofFrostCount))
 		self:PlaySound(args.spellId, "alert")
 		orbofFrostCount = orbofFrostCount + 1
 		self:Bar(args.spellId, 60, CL.count:format(args.spellName, orbofFrostCount))
 	else
-		self:Message2(args.spellId, "yellow")
+		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alert")
 	end
 end
 
 function mod:PrismaticImage(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(args.spellId, self:Mythic() and 41 or 51)
 end
@@ -618,7 +618,7 @@ end
 
 -- Mythic
 function mod:FrozenSiege(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 31)
 end
@@ -627,13 +627,13 @@ function mod:FreezingBloodApplied(args)
 	if self:Me(args.destGUID) then
 		local power = UnitPower("player", 10)
 		if power > 74 then -- 5 players
-			self:Message2(args.spellId, "blue", L.frozenblood_player:format(args.spellName, 5))
+			self:Message(args.spellId, "blue", L.frozenblood_player:format(args.spellName, 5))
 			self:PlaySound(args.spellId, "alarm")
 		elseif power > 49 then -- 3 players
-			self:Message2(args.spellId, "blue", L.frozenblood_player:format(args.spellName, 3))
+			self:Message(args.spellId, "blue", L.frozenblood_player:format(args.spellName, 3))
 			self:PlaySound(args.spellId, "alarm")
 		else
-			self:Message2(args.spellId, "blue", L.frozenblood_player:format(args.spellName, 1))
+			self:Message(args.spellId, "blue", L.frozenblood_player:format(args.spellName, 1))
 		end
 		self:TargetBar(args.spellId, 6, args.destName)
 	end
@@ -651,7 +651,7 @@ do
 		local t = args.time
 		if t-prev > 2  and intermission == false and stage == 1 then -- Alternates 80s after the intermission, but need to avoid triggering the first 5 seconds after it.
 			prev = t
-			self:Message2(args.spellId, "red")
+			self:Message(args.spellId, "red")
 			self:PlaySound(args.spellId, "long")
 			self:CDBar(args.spellId, 80)
 		end
@@ -660,6 +660,6 @@ end
 
 function mod:ImageDeath(args)
 	imageCount = imageCount + 1
-	self:Message2(-19825, "cyan", CL.add_killed:format(imageCount, 5), false)
+	self:Message(-19825, "cyan", CL.add_killed:format(imageCount, 5), false)
 	self:PlaySound(-19825, imageCount == 5 and "long" or "info")
 end

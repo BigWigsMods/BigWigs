@@ -137,12 +137,12 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("INV_MISC_MONSTERHORN_04", nil, true) then -- Growth-Covered Tentacle -- xxx event for mythic??
-		self:Message2(-20560, "red", CL.count:format(self:SpellName(-20560), tentacleCount), "INV_MISC_MONSTERHORN_04")
+		self:Message(-20560, "red", CL.count:format(self:SpellName(-20560), tentacleCount), "INV_MISC_MONSTERHORN_04")
 		self:PlaySound(-20560, "info")
 		tentacleCount = tentacleCount + 1
 		self:Bar(-20560, 60, CL.count:format(self:SpellName(-20560), tentacleCount), "INV_MISC_MONSTERHORN_04")
 	elseif msg:find("INV_EyeofNzothPet", nil, true) then -- Gaze of Madness
-		self:Message2(-20565, "red", CL.count:format(self:SpellName(-20565), gazeofMadnessCount), "INV_EyeofNzothPet")
+		self:Message(-20565, "red", CL.count:format(self:SpellName(-20565), gazeofMadnessCount), "INV_EyeofNzothPet")
 		self:PlaySound(-20565, "alert")
 		gazeofMadnessCount = gazeofMadnessCount + 1
 		self:Bar(-20565, self:Mythic() and 65.12 or 58, CL.count:format(self:SpellName(-20565), gazeofMadnessCount), "INV_EyeofNzothPet")
@@ -166,7 +166,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 			self:CDBar(307809, 22.3, CL.count:format(self:SpellName(307809), eternalDarknessCount)) -- Eternal Darkness
 		elseif stage == 3 then
 			stage = 4 -- Blizz Stage 3
-			self:Message2("stages", "cyan", CL.stage:format(3), false)
+			self:Message("stages", "cyan", CL.stage:format(3), false)
 			self:PlaySound("stages", "long")
 			adaptiveMembraneCount = 1
 			madnessBombCount = 1 -- Reuse this counter for Insanity Bombs
@@ -180,7 +180,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 			self:Bar(313039, 54, CL.count:format(self:SpellName(313039), eternalDarknessCount)) -- Infinite Darkness
 		end
 	elseif spellId == 315673 then -- Thrashing Tentacle, Blizz removed this for live servers - maybe it comes back?
-		self:Message2(-21069, "red", nil, 315673)
+		self:Message(-21069, "red", nil, 315673)
 		self:PlaySound(-21069, "alert")
 		self:Bar(-21069, 20, nil, 315673)
 	end
@@ -189,7 +189,7 @@ end
 --[[  Stage One: Exterior Carapace ]]--
 function mod:MadnessBomb(args)
 	if stage == 2 then -- on NPCs only in stage 2, so no TargetsMessage needed
-		self:Message2(306973, "yellow", CL.count:format(args.spellName, madnessBombCount))
+		self:Message(306973, "yellow", CL.count:format(args.spellName, madnessBombCount))
 	end
 	madnessBombCount = madnessBombCount + 1
 	local cd = nil
@@ -230,9 +230,9 @@ function mod:AdaptiveMembrane(args)
 	local barText = nil
 	if self:Mythic() and stage == 4 then
 		barText = adaptiveMembraneCount % 2 == 0 and L.player_membrane or L.boss_membrane
-		self:Message2(args.spellId, "orange", CL.count:format(barText, adaptiveMembraneCount))
+		self:Message(args.spellId, "orange", CL.count:format(barText, adaptiveMembraneCount))
 	else
-		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, adaptiveMembraneCount))
+		self:Message(args.spellId, "orange", CL.count:format(args.spellName, adaptiveMembraneCount))
 	end
 	self:PlaySound(args.spellId, "alarm")
 	adaptiveMembraneCount = adaptiveMembraneCount + 1
@@ -263,7 +263,7 @@ function mod:AdaptiveMembrane(args)
 end
 
 function mod:MandibleSlam(args)
-	self:Message2(args.spellId, "orange", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:Bar(args.spellId, stage == 1 and (self:Mythic() and 16 or 13) or stage == 3 and 22.2 or 11)
 end
 
@@ -285,7 +285,7 @@ end
 --[[  Stage Two: Subcutaneous Tunnel ]]--
 function mod:Synthesis(args) -- this is earlier than the Anchor here
 		lastSynthesisMsg = 100 -- Random large number
-		self:Message2("stages", "cyan", CL.stage:format(2), false)
+		self:Message("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 		self:StopBar(CL.count:format(self:SpellName(-20565), gazeofMadnessCount)) -- Gaze of Madness
 		self:StopBar(CL.count:format(self:SpellName(-20560), tentacleCount)) -- Growth-Covered Tentacle
@@ -302,7 +302,7 @@ end
 function mod:SynthesisRemoved(args)
 	local amount = args.amount or 0
 	if amount < 1 then
-		self:Message2("stages", "green", CL.over:format(args.spellName), args.spellId)
+		self:Message("stages", "green", CL.over:format(args.spellName), args.spellId)
 		self:PlaySound("stages", "info")
 	elseif amount % 3 == 0 or lastSynthesisMsg-amount > 3 or amount < 4 then
 		lastSynthesisMsg = amount -- Events can be skipped, so this is our fallback
@@ -311,21 +311,21 @@ function mod:SynthesisRemoved(args)
 end
 
 function mod:EternalDarkness(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, eternalDarknessCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, eternalDarknessCount))
 	self:PlaySound(args.spellId, "alert")
 	eternalDarknessCount = eternalDarknessCount + 1
 	self:Bar(args.spellId, self:Mythic() and 20 or 33.3, CL.count:format(args.spellName, eternalDarknessCount))
 end
 
 function mod:OccipitalBlast(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 33.3)
 end
 
 --[[  Stage Three: Locus of Infinite Truths ]]--
 function mod:InsanityBomb(args)
-	self:Message2(306984, "yellow", CL.count:format(args.spellName, madnessBombCount))
+	self:Message(306984, "yellow", CL.count:format(args.spellName, madnessBombCount))
 	madnessBombCount = madnessBombCount + 1
 	self:Bar(306984, 67, CL.count:format(args.spellName, madnessBombCount))
 end
@@ -347,7 +347,7 @@ function mod:InsanityBombRemoved(args)
 end
 
 function mod:InfiniteDarkness(args)
-	self:Message2(args.spellId, "red", CL.incoming:format(CL.count:format(args.spellName, eternalDarknessCount)))
+	self:Message(args.spellId, "red", CL.incoming:format(CL.count:format(args.spellName, eternalDarknessCount)))
 	self:CastBar(args.spellId, 2.5, CL.count:format(args.spellName, eternalDarknessCount))
 	eternalDarknessCount = eternalDarknessCount + 1
 	self:Bar(args.spellId, 54, CL.count:format(args.spellName, eternalDarknessCount))
@@ -355,7 +355,7 @@ end
 
 function mod:StartThrashingTentacleTimer(t)
 	self:CDBar(-21069, t, CL.count:format(self:SpellName(-21069), trashingTentacleCount), 315673)
-	self:ScheduleTimer("Message2", t, -21069, "red", CL.count:format(CL.incoming:format(self:SpellName(-21069)), trashingTentacleCount), 315673)
+	self:ScheduleTimer("Message", t, -21069, "red", CL.count:format(CL.incoming:format(self:SpellName(-21069)), trashingTentacleCount), 315673)
 	self:ScheduleTimer("CastBar", t, -21069, 6, CL.count:format(self:SpellName(304077), trashingTentacleCount), 272713) -- Tentacle Slam
 	self:ScheduleTimer("PlaySound", t, -21069, "alert")
 	trashingTentacleCount = trashingTentacleCount + 1
@@ -368,7 +368,7 @@ function mod:CystGenesis(args)
 		self:StopBar(CL.count:format(self:SpellName(306988), adaptiveMembraneCount)) -- Adaptive Membrane
 
 		stage = 4 -- Stage 3 Blizzard
-		self:Message2("stages", "cyan", CL.stage:format(3), false)
+		self:Message("stages", "cyan", CL.stage:format(3), false)
 		self:PlaySound("stages", "long")
 		madnessBombCount = 1 -- Reuse this counter for Insanity Bombs
 		eternalDarknessCount = 1 -- Reuse this counter for Infinite Darkness
@@ -381,7 +381,7 @@ function mod:CystGenesis(args)
 		self:Bar(306988, self:Mythic() and 11.8 or 38.2, CL.count:format(self:SpellName(306988), adaptiveMembraneCount)) -- Adaptive Membrane
 		self:Bar(313039, self:Mythic() and 9 or 54, CL.count:format(self:SpellName(313039), eternalDarknessCount)) -- Infinite Darkness
 	else
-		self:Message2(args.spellId, "green")
+		self:Message(args.spellId, "green")
 		self:PlaySound(args.spellId, "long")
 	end
 	self:Bar(args.spellId, 120)

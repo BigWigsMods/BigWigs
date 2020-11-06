@@ -67,7 +67,7 @@ end
 --
 
 function mod:TideFistStart(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	local cd = 20
 	local nextAncientTempestCD = nextAncientTempest - GetTime()
@@ -83,7 +83,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 296428 then -- Arcanado Burst
-		self:Message2(spellId, "yellow")
+		self:Message(spellId, "yellow")
 		self:PlaySound(spellId, "alarm")
 		local cd = 10
 		local nextAncientTempestCD = nextAncientTempest - GetTime()
@@ -91,7 +91,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 			self:CDBar(spellId, cd)
 		end
 	elseif spellId == 297121 and stage == 2 then -- Power Gain (Ancient Tempest Over) // Cast on pull so checking for stage
-		self:Message2(295916, "cyan", CL.over:format(self:SpellName(295916)))
+		self:Message(295916, "cyan", CL.over:format(self:SpellName(295916)))
 		self:PlaySound(295916, "long")
 
 		self:StopBar(296701) -- Gale Buffet
@@ -109,7 +109,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 end
 
 function mod:SquallTrap(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 end
 
@@ -143,13 +143,13 @@ do
 		end
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
-			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+			self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 		end
 	end
 end
 
 function mod:UnshackledPower(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	local cd = 18
 	local nextAncientTempestCD = nextAncientTempest - GetTime()
@@ -159,7 +159,7 @@ function mod:UnshackledPower(args)
 end
 
 function mod:AncientTempest(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 
 	stage = 2
@@ -174,7 +174,7 @@ function mod:AncientTempest(args)
 end
 
 function mod:GaleBuffet(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, self:Mythic() and 22.2 or 23)
 end

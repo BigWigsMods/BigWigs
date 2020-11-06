@@ -124,7 +124,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 285645 then -- Spirits of Xuen
-		self:Message2(spellId, "yellow")
+		self:Message(spellId, "yellow")
 		self:PlaySound(spellId, "info")
 		self:CDBar(spellId, 119) -- XXX Need correct info after Ring of Hostility stage
 	end
@@ -132,7 +132,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_EMOTE(_, msg)
 	if msg:find("284374", nil, true) then -- Magma Trap
-		self:Message2(284374, "red", CL.count:format(self:SpellName(284374), trapCount))
+		self:Message(284374, "red", CL.count:format(self:SpellName(284374), trapCount))
 		self:PlaySound(284374, "warning")
 		trapCount = trapCount + 1
 		self:CDBar(284374, 35, CL.count:format(self:SpellName(284374), trapCount))
@@ -143,29 +143,29 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 	local power = UnitPower(unit)
 	if power >= 25 and lastWarnedPower < 25 then
 		lastWarnedPower = 25
-		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(285428)), false) -- Fire from Mist
+		self:Message("stages", "cyan", CL.soon:format(self:SpellName(285428)), false) -- Fire from Mist
 		self:PlaySound("stages", "info")
 	elseif power >= 55 and lastWarnedPower < 55 then
 		lastWarnedPower = 55
-		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(284656)), false) -- Ring of Hostility
+		self:Message("stages", "cyan", CL.soon:format(self:SpellName(284656)), false) -- Ring of Hostility
 		self:PlaySound("stages", "info")
 	elseif power >= 95 and lastWarnedPower < 95  then
 		lastWarnedPower = 95
-		self:Message2("stages", "cyan", CL.soon:format(self:SpellName(-19409)), false) -- The Serpent and the Phoenix
+		self:Message("stages", "cyan", CL.soon:format(self:SpellName(-19409)), false) -- The Serpent and the Phoenix
 		self:PlaySound("stages", "info")
 		self:UnregisterUnitEvent(event, unit)
 	end
 end
 
 function mod:WhirlingJadeStorm(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 45)
 end
 
 function mod:MultiSidedStrike(args)
 	if self:Mythic() or self:Tank() then -- No warnings needed for non-tanks unless it's Mythic
-		self:Message2(282030, "red")
+		self:Message(282030, "red")
 		self:PlaySound(282030, "warning")
 		self:CDBar(282030, self:Mythic() and 73 or 55)
 	end
@@ -277,7 +277,7 @@ do
 
 	function mod:FireShieldRemoved(args)
 		self:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
-		self:Message2(args.spellId, "cyan", CL.removed:format(args.spellName))
+		self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 		--print(maxAbsorb, absorbRemoved, UnitGetTotalAbsorbs("boss2"), UnitGetTotalAbsorbs("boss1"))
 		if castOver == 0 then
@@ -292,7 +292,7 @@ do
 		interruptTime = args.time
 		castOver = GetTime() + 10
 		self:CastBar(args.spellId, 10)
-		self:Message2(args.spellId, "orange")
+		self:Message(args.spellId, "orange")
 		self:PlaySound(args.spellId, "warning")
 		self:SetInfo(286425, 3, L.cast)
 		self:CDBar(args.spellId, 52) -- XXX appears to get lower during the fight
@@ -302,7 +302,7 @@ do
 	function mod:Interupted(args)
 		if args.extraSpellId == 286379 then -- Pyroblast
 			interruptTime = 10 - (math.floor((args.time - interruptTime) * 100)/100)
-			self:Message2(286379, "green", L.interrupted_after:format(args.extraSpellName, self:ColorName(args.sourceName), interruptTime))
+			self:Message(286379, "green", L.interrupted_after:format(args.extraSpellName, self:ColorName(args.sourceName), interruptTime))
 		end
 	end
 
@@ -349,35 +349,35 @@ do
 end
 
 -- function mod:MagmaTrap(args)
-	-- self:Message2(args.spellId, "orange")
+	-- self:Message(args.spellId, "orange")
 	-- self:PlaySound(args.spellId, "alarm")
 -- end
 
 function mod:FirefromMist(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(284656, 95) -- Ring of Hostility
 end
 
 function mod:RingofHostility(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 	-- XXX Stop bars?
 end
 
 function mod:RingofHostilityRemoved(args)
-	self:Message2(args.spellId, "green", CL.over:format(args.spellName))
+	self:Message(args.spellId, "green", CL.over:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(282040, 90) -- Blazing Phoenix
 end
 
 function mod:BlazingPhoenix(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(286396, 16) -- Dragon's Breath
 end
 
 function mod:DragonsBreath(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 end

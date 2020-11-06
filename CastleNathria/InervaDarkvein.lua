@@ -225,10 +225,10 @@ do
 		else
 			if curLevel ~= oldInfo.level then
 				if curLevel > 3 then -- it's full
-					self:Message2("anima_tracking", "cyan", L.full:format(spell.name), spell.icon)
+					self:Message("anima_tracking", "cyan", L.full:format(spell.name), spell.icon)
 					self:StopBar(L.full:format(spell.name))
 				else
-					self:Message2("anima_tracking", "cyan", L.level:format(spell.name, curLevel), spell.icon)
+					self:Message("anima_tracking", "cyan", L.level:format(spell.name, curLevel), spell.icon)
 					self:StopBar(L.level:format(spell.name, oldInfo.level))
 				end
 				local t = GetTime()
@@ -271,7 +271,7 @@ do
 	local vialCount = 0
 
 	local function printBottleMessage(self)
-		self:Message2(325769, "orange", L.times:format(vialCount, L.bottles))
+		self:Message(325769, "orange", L.times:format(vialCount, L.bottles))
 		vialCount = 0
 	end
 
@@ -285,7 +285,7 @@ do
 				self:CDBar(325769, bottleTimers[bottleCount] or 20, L.bottles)
 			end
 		elseif spellId == 338750 then -- Enable Container
-			self:Message2(331870, "cyan")
+			self:Message(331870, "cyan")
 			self:PlaySound(331870, "long")
 			self:Bar(331870, 100)
 		end
@@ -294,7 +294,7 @@ end
 
 function mod:ExposeDesires(args)
 	if self:Tank() or self:Healer() then --or cognitionOnMe then < fai
-		self:Message2(args.spellId, "purple")
+		self:Message(args.spellId, "purple")
 		self:PlaySound(args.spellId, "alert")
 	end
 	self:CDBar(args.spellId, 8.5)
@@ -330,7 +330,7 @@ do
 end
 
 function mod:BottledAnima(args)
-	--self:Message2(args.spellId, "red", L.bottles)
+	--self:Message(args.spellId, "red", L.bottles)
 	--self:PlaySound(args.spellId, "warning")
 	--self:Bar(args.spellId, 25.5, L.bottles)
 end
@@ -449,7 +449,7 @@ end
 function mod:Condemn(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
-		self:Message2(args.spellId, "yellow")
+		self:Message(args.spellId, "yellow")
 		if ready then
 			self:PlaySound(args.spellId, "alert")
 		end

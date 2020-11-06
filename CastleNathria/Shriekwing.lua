@@ -125,20 +125,20 @@ end
 
 function mod:ExsanguinatedRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 		ExsanguinatStacksOnMe = nil
 	end
 end
 
 function mod:ExsanguinatingBite(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 17)
 end
 
 function mod:EarsplittingShriek(args)
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, shriekCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, shriekCount))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, shriekCount))
 	shriekCount = shriekCount + 1
@@ -173,7 +173,7 @@ function mod:EcholocationRemoved(args)
 end
 
 function mod:EchoingScreech(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, echoCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, echoCount))
 	self:PlaySound(args.spellId, "alert")
 	echoCount = echoCount + 1
 	if echoCount < 3 then -- Only 2 each stage 1
@@ -182,7 +182,7 @@ function mod:EchoingScreech(args)
 end
 
 function mod:BlindSwipe(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, blindSwipeCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, blindSwipeCount))
 	self:PlaySound(args.spellId, "alert")
 	blindSwipeCount = blindSwipeCount + 1
 	if blindSwipeCount < 3 then -- Only 2 each stage 1
@@ -192,7 +192,7 @@ end
 
 -- Stage Two - Terror of Castle Nathria
 function mod:Bloodgorge(args)
-	self:Message2(args.spellId, "green")
+	self:Message(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
 
 	self:StopBar(328857) -- Exsanguinating Bite
@@ -209,12 +209,12 @@ function mod:Bloodgorge(args)
 end
 
 function mod:DarkSonar(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:SonarShriek(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, sonarShriekCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, sonarShriekCount))
 	self:PlaySound(args.spellId, "warning")
 	sonarShriekCount = sonarShriekCount + 1
 	if sonarShriekCount > 4 then -- cast 3 times in intermission
@@ -223,7 +223,7 @@ function mod:SonarShriek(args)
 end
 
 function mod:BloodgorgeRemoved(args)
-	self:Message2("stages", "green", CL.stage:format(1), false)
+	self:Message("stages", "green", CL.stage:format(1), false)
 	self:PlaySound("stages", "info")
 
 	self:StopBar(CL.count:format(self:SpellName(340047), sonarShriekCount)) -- Earsplitting Shriek
@@ -247,26 +247,26 @@ function mod:TheBloodLanternApplied(args)
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning")
 	else
-		self:Message2(args.spellId, "green", L.pickup_lantern:format(args.destName))
+		self:Message(args.spellId, "green", L.pickup_lantern:format(args.destName))
 		self:PlaySound(args.spellId, "info")
 	end
 end
 
 function mod:TheBloodLanternRemoved(args)
-	self:Message2(args.spellId, "red", L.dropped_lantern:format(args.destName))
+	self:Message(args.spellId, "red", L.dropped_lantern:format(args.destName))
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:BloodlightApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.you:format(args.spellName))
+		self:Message(args.spellId, "green", CL.you:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 	end
 end
 
 function mod:BloodlightRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "cyan", CL.removed:format(args.spellName))
+		self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 	end
 end

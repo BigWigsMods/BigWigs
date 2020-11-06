@@ -88,7 +88,7 @@ end
 function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 38 then -- Intermission at 35%
-		self:Message2("stages", "green", CL.soon:format(CL.intermission), false)
+		self:Message("stages", "green", CL.soon:format(CL.intermission), false)
 		self:UnregisterUnitEvent(event, unit)
 	end
 end
@@ -126,7 +126,7 @@ end
 
 function mod:CudgelofGore(args)
 	self:PlaySound(args.spellId, "warning")
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, cudgelCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, cudgelCount))
 	self:StopBar(CL.count:format(args.spellName, cudgelCount))
 	self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, cudgelCount))
 	cudgelCount = cudgelCount + 1
@@ -140,7 +140,7 @@ end
 
 function mod:RetrieveCudgel(args)
 	self:PlaySound(args.spellId, "alarm")
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:CDBar(args.spellId, 59)
 end
 
@@ -164,7 +164,7 @@ end
 
 function mod:PoweredDown(args)
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "green", CL.intermission, false)
+	self:Message("stages", "green", CL.intermission, false)
 	self:StopBar(271224) -- Plasma Discharge
 	self:StopBar(271895) -- Sanguine Static
 	self:StopBar(CL.count:format(self:SpellName(271296), cudgelCount)) -- Cudgel of Gore
@@ -193,7 +193,7 @@ end
 function mod:PoweredDownRemoved(args)
 	stage = 2
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "green", CL.stage:format(stage), false)
+	self:Message("stages", "green", CL.stage:format(stage), false)
 
 	arteriesCount = 1
 	cudgelCount = 1
@@ -221,7 +221,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, arteriesCount))
+			self:Message(args.spellId, "yellow", CL.count:format(args.spellName, arteriesCount))
 			self:PlaySound(args.spellId, "alert")
 			arteriesCount = arteriesCount + 1
 			self:CDBar(args.spellId, 60.5, CL.count:format(args.spellName, arteriesCount))

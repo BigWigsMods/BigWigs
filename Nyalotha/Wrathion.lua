@@ -80,7 +80,7 @@ end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("306735", nil, true) then -- Burning Cataclysm
-		self:Message2(306735, "red")
+		self:Message(306735, "red")
 		self:PlaySound(306735, "alert")
 		cataclysmCount = cataclysmCount + 1
 		if cataclysmCount < 3 then -- Casted 2x before stage 2
@@ -88,14 +88,14 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 			self:Bar(306735, 77.7)
 		end
 	elseif msg:find("307013", nil, true) then -- Burning Madness
-		self:Message2(307013, "red")
+		self:Message(307013, "red")
 		self:PlaySound(307013, "warning")
 		self:CastBar(307013, 8)
 	end
 end
 
 function mod:SearingBreath(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	if nextCataclysm > GetTime() + 7.3 then
 		self:Bar(args.spellId, 7.3) -- XX Why is it delayed to 14s sometimes?
@@ -111,7 +111,7 @@ end
 
 function mod:IncinerationStart(args)
 	self:StopBar(CL.count:format(args.spellName, incinerationCount))
-	self:Message2(306163, "yellow", CL.incoming:format(CL.count:format(args.spellName, incinerationCount)))
+	self:Message(306163, "yellow", CL.incoming:format(CL.count:format(args.spellName, incinerationCount)))
 	incinerationCount = incinerationCount + 1
 	if not self:Mythic() and nextCataclysm > GetTime() + 24.3 then -- only 1 Incineration per Cataclysm in Mythic
 		self:Bar(306163, 24.3, CL.count:format(args.spellName, incinerationCount))
@@ -135,7 +135,7 @@ function mod:IncinerationRemoved(args)
 end
 
 function mod:GaleBlast(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -150,13 +150,13 @@ end
 
 function mod:SmokeandMirrors(args)
 	stage = 2
-	self:Message2("stages", "cyan", CL.stage:format(2), false)
+	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
 end
 
 function mod:SmokeandMirrorsRemoved(args)
 	stage = 1
-	self:Message2("stages", "cyan", CL.stage:format(1), false)
+	self:Message("stages", "cyan", CL.stage:format(1), false)
 	self:PlaySound("stages", "long")
 	incinerationCount = 1
 
@@ -172,7 +172,7 @@ do
 
 	function mod:CreepingMadness(args)
 		if self:Me(args.destGUID) then
-			self:Message2(args.spellId, "blue")
+			self:Message(args.spellId, "blue")
 			self:PlaySound(args.spellId, "info")
 			self:Bar(args.spellId, 140, CL.over:format(args.spellName))
 
@@ -184,7 +184,7 @@ do
 
 	function mod:CreepingMadnessRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message2(args.spellId, "green", CL.over:format(args.spellName))
+			self:Message(args.spellId, "green", CL.over:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 
 			self:UnregisterUnitEvent("UNIT_AURA", "player")
@@ -195,7 +195,7 @@ do
 		local name, stack = self:UnitDebuff(unit, 313255)
 		if stack and stack ~= lastStack then
 			if stack < lastStack then
-				self:Message2(313255, "green", CL.removed:format(name))
+				self:Message(313255, "green", CL.removed:format(name))
 				self:PlaySound(313255, "info")
 				lastWarn = stack
 			elseif (stack % 10 == 0 or (stack > 40 and stack % 3 == 1)) and stack > lastWarn then -- 10, 20, 30, 40, 43, 46, 49

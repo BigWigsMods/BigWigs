@@ -122,7 +122,7 @@ end
 
 function mod:UNIT_TARGETABLE_CHANGED(_, unit)
 	if self:MobId(UnitGUID(unit)) == 138324 and not UnitCanAttack("player", unit) then -- Xalzaix
-		self:Message2(276922, "green", L.xalzaix_returned, false)
+		self:Message(276922, "green", L.xalzaix_returned, false)
 		self:StopBar(L.add_blast)
 		self:StopBar(CL.count:format(self:SpellName(279157), voidEchoesCount))
 	end
@@ -131,7 +131,7 @@ end
 function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < nextStageWarning then -- Intermission at 66% & 33%
-		self:Message2("stages", "green", CL.soon:format(CL.stage:format(2)), false)
+		self:Message("stages", "green", CL.soon:format(CL.stage:format(2)), false)
 		nextStageWarning = nextStageWarning - 33
 		if nextStageWarning < 33 then
 			self:UnregisterUnitEvent(event, unit)
@@ -143,7 +143,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 279749 then -- Intermission Start
 		stage = 2
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan",CL.stage:format(stage), false)
+		self:Message("stages", "cyan",CL.stage:format(stage), false)
 
 		self:StopBar(CL.count:format(self:SpellName(272536), ruinCounter)) -- Imminent Ruin
 		self:StopBar(273282) -- Essence Shear
@@ -162,7 +162,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	elseif spellId == 279748 then -- Intermission End
 		stage = 1
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 		self:OpenProximity(272404, 5) -- Oblivion Sphere
 		self:StopBar(CL.intermission)
 
@@ -174,7 +174,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 			self:Bar(276922, 10) -- Living Weapon
 		end
 	elseif spellId == 276905 then -- Living Weapon
-		self:Message2(276922, "orange", CL.spawning:format(self:SpellName(276922)))
+		self:Message(276922, "orange", CL.spawning:format(self:SpellName(276922)))
 		self:PlaySound(276922, "long")
 		voidEchoesCount = 1
 		self:Bar(276922, 60) -- Living Weapon
@@ -197,7 +197,7 @@ end
 do
 	local prev = 0
 	function mod:EssenceShear(args)
-		self:Message2(args.spellId, "purple")
+		self:Message(args.spellId, "purple")
 		self:PlaySound(args.spellId, "alert")
 		if self:MobId(args.sourceGUID) == 134546 then -- Mythrax the Unraveler
 			self:Bar(args.spellId, 20.5)
@@ -221,16 +221,16 @@ end
 function mod:ObliterationBlast(args)
 	self:PlaySound(args.spellId, "alert")
 	if self:MobId(args.sourceGUID) == 138324 then -- Living Weapon
-		self:Message2(args.spellId, "orange", L.add_blast)
+		self:Message(args.spellId, "orange", L.add_blast)
 		self:Bar(args.spellId, 15, L.add_blast)
 	else
-		self:Message2(args.spellId, "orange", L.boss_blast)
+		self:Message(args.spellId, "orange", L.boss_blast)
 		self:Bar(args.spellId, self:Mythic() and 20 or 12.2, L.boss_blast)
 	end
 end
 
 function mod:OblivionSphere(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	if stage == 1 then
 		self:Bar(args.spellId, 15)
@@ -275,7 +275,7 @@ function mod:ImminentRuinRemoved(args)
 end
 
 function mod:XalzaixsAwakening(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 8) -- 2s cast, 6s channel
 
@@ -286,12 +286,12 @@ function mod:XalzaixsAwakening(args)
 end
 
 function mod:OblivionsVeilRemoved(args)
-	self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+	self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:ObliterationBeam(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 7.5) -- 2.5s cast, 5s channel
 
@@ -321,7 +321,7 @@ do
 	end
 
 	function mod:VisionsofMadness(args)
-		self:Message2(args.spellId, "red")
+		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "warning")
 		visionCount = visionCount + 1
 		if visionCount <= 2 then
@@ -336,19 +336,19 @@ do
 end
 
 function mod:EssenceShatter(args)
-	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
 end
 
 -- Mythic
 
 function mod:LivingWeapon(args)
-	self:Message2(args.spellId, "cyan", CL.spawned:format(args.spellName))
+	self:Message(args.spellId, "cyan", CL.spawned:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:VoidEchoes(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, voidEchoesCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, voidEchoesCount))
 	self:PlaySound(args.spellId, "alarm")
 	self:StopBar(CL.count:format(args.spellName, voidEchoesCount))
 	voidEchoesCount = voidEchoesCount + 1

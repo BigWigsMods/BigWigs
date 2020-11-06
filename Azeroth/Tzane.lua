@@ -60,7 +60,7 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:CrushingSlam(args)
-	self:Message2(args.spellId, "purple", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, 23) -- pull:22.7, 23.0, 30.1, 22.8, 26.1
 end
@@ -71,13 +71,13 @@ function mod:CrushingSlamSuccess(args)
 end
 
 function mod:TerrorWail(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(args.spellId, 23) -- pull:11.9, 26.5, 26.1, 22.6, 26.3, 24.3
 end
 
 function mod:CoalescedEssence(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 24) -- pull:8.7, 23.7, 24.9, 26.5, 24.5, 24.3
 end

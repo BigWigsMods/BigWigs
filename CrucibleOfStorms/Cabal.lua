@@ -261,7 +261,7 @@ do
 	end
 
 	function mod:UmbralShellRemoved(args)
-		self:Message2(args.spellId, "cyan", CL.removed:format(CL.count:format(args.spellName, umbralShellCount-1)))
+		self:Message(args.spellId, "cyan", CL.removed:format(CL.count:format(args.spellName, umbralShellCount-1)))
 		self:PlaySound(args.spellId, "info")
 		if self:CheckOption(-18970, "INFOBOX") then
 			absorbActive = false
@@ -280,7 +280,7 @@ do
 			scheduled = mod:ScheduleTimer("CheckRune", 0.1)
 		elseif shieldActive == true then
 			shieldActive = false
-			mod:Message2(282886, "cyan" , CL.over:format(mod:SpellName(282886))) -- Abyssal Collapse
+			mod:Message(282886, "cyan" , CL.over:format(mod:SpellName(282886))) -- Abyssal Collapse
 			mod:PlaySound(282886, "info")
 			mod:StopBar(CL.cast:format(mod:SpellName(282886)))
 			self:UpdateInfoBox()
@@ -289,7 +289,7 @@ do
 
 	function mod:AbyssalCollapseStart(args)
 		castOver = GetTime() + 20
-		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, abyssalCollapseCount))
+		self:Message(args.spellId, "orange", CL.count:format(args.spellName, abyssalCollapseCount))
 		self:PlaySound(args.spellId, "alarm")
 		self:CastBar(args.spellId, 20, CL.count:format(args.spellName, abyssalCollapseCount))
 		self:UpdateInfoBox()
@@ -299,14 +299,14 @@ do
 	function mod:AbyssalCollapseSuccess(args)
 		shieldActive = false
 		castOver = 0
-		self:Message2(args.spellId, "cyan" , CL.over:format(args.spellName)) -- Custody of the Deep
+		self:Message(args.spellId, "cyan" , CL.over:format(args.spellName)) -- Custody of the Deep
 		self:PlaySound(args.spellId, "info") -- Custody of the Deep
 		self:StopBar(CL.cast:format(args.spellName)) -- Custody of the Deep
 		self:UpdateInfoBox()
 	end
 
 	function mod:StormofAnnihilation(args)
-		self:Message2(args.spellId, "orange", CL.count:format(args.spellName, stormofAnnihilationCount))
+		self:Message(args.spellId, "orange", CL.count:format(args.spellName, stormofAnnihilationCount))
 		self:PlaySound(args.spellId, "alarm")
 		self:CastBar(args.spellId, 15, CL.count:format(args.spellName, stormofAnnihilationCount))
 		stormofAnnihilationCount = stormofAnnihilationCount + 1
@@ -324,7 +324,7 @@ do
 		local t = args.time
 		if t-prev > 1 then
 			prev = t
-			self:Message2(args.spellId, "red")
+			self:Message(args.spellId, "red")
 			self:PlaySound(args.spellId, "alert")
 			self:CastBar(args.spellId, 12)
 		end
@@ -358,7 +358,7 @@ function mod:AgentofDemise(args)
 end
 
 function mod:CerebralAssault(args)
-	self:Message2(282589, "red", CL.count:format(args.spellName, cerebralAssaultCount))
+	self:Message(282589, "red", CL.count:format(args.spellName, cerebralAssaultCount))
 	self:PlaySound(282589, "warning")
 	self:CastBar(282589, 6, CL.count:format(args.spellName, cerebralAssaultCount))
 	cerebralAssaultCount = cerebralAssaultCount + 1
@@ -386,7 +386,7 @@ end
 
 function mod:PromisesofPowerRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 	end
 end
@@ -397,7 +397,7 @@ function mod:VisagefromBeyond(args)
 end
 
 function mod:TerrifyingEcho(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, self:Mythic() and 15 or 20)
 end
@@ -413,7 +413,7 @@ function mod:ShearMindApplied(args)
 end
 
 function mod:VoidCrash(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, voidCrashCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, voidCrashCount))
 	self:PlaySound(args.spellId, "alert")
 	voidCrashCount = voidCrashCount + 1
 	self:Bar(args.spellId, 13.3, CL.count:format(args.spellName, voidCrashCount))

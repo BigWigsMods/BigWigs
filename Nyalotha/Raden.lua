@@ -124,7 +124,7 @@ end
 --
 
 function mod:NullifyingStrikeStart(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 17)
 end
@@ -143,7 +143,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2("essences", "red", CL.incoming:format(CL.count:format(L.essences, essenceCount)), false)
+			self:Message("essences", "red", CL.incoming:format(CL.count:format(L.essences, essenceCount)), false)
 			self:PlaySound("essences", "warning")
 			essenceCount = essenceCount + 1
 			self:Bar("essences", 55.5, CL.count:format(L.essences, essenceCount), L.essences_icon)
@@ -153,7 +153,7 @@ end
 
 -- Vita
 function mod:VitaEmpowered(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -167,25 +167,25 @@ function mod:UnstableVitaApplied(args)
 end
 
 function mod:CallCracklingStalkerStart(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 end
 
 -- Void
 function mod:VoidEmpowered(args)
 	unstableVoidCount = 0
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:UnstableVoid(args)
 	unstableVoidCount = unstableVoidCount + 1
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, unstableVoidCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, unstableVoidCount))
 	self:PlaySound(args.spellId, "alarm")
 end
 
 function mod:CallVoidHunter(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(306881, 7) -- Void Collapse
 end
@@ -226,7 +226,7 @@ end
 function mod:Ruin()
 	stage = 2
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "cyan", CL.stage:format(stage), false)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	voidEruptionCount = 1
 
 	self:Bar(313213, 6) -- Decaying Strike
@@ -238,7 +238,7 @@ function mod:Ruin()
 end
 
 function mod:DecayingStrikeStart(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 17)
 end
@@ -249,7 +249,7 @@ function mod:DecayingStrikeApplied(args)
 end
 
 function mod:VoidEruption(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, voidEruptionCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, voidEruptionCount))
 	self:PlaySound(args.spellId, "alert")
 	voidEruptionCount = voidEruptionCount + 1
 	self:Bar(args.spellId, 19.4, CL.count:format(args.spellName, voidEruptionCount))
@@ -273,7 +273,7 @@ do
 
 	function mod:ChargedBondsRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+			self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
 	end
@@ -281,7 +281,7 @@ end
 
 -- Mythic
 function mod:NightmareEmpowered(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -298,7 +298,7 @@ function mod:UnstableNightmareApplied(args)
 end
 
 function mod:CallNightTerrorStart(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 end
 

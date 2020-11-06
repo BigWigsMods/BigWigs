@@ -376,14 +376,14 @@ function mod:Crush(args)
 	if self:MobId(args.sourceGUID) == 145273 and self:GetOption("custom_on_hand_timers") then -- The Hand of In'zashi
 		local text = L.hand_cast:format(args.spellName)
 		if self:IsHandOnPlatform() then
-			self:Message2(283606, "yellow", text)
+			self:Message(283606, "yellow", text)
 			self:PlaySound(283606, "alert")
 		end
 		self:Bar(283606, 15.75, text)
 	elseif self:GetOption("custom_on_bulwark_timers") then  -- Yalat's Bulwark
 		local text = L.bulwark_cast:format(args.spellName)
 		if self:IsBulwarkOnPlatform() then
-			self:Message2(283606, "yellow", text)
+			self:Message(283606, "yellow", text)
 			self:PlaySound(283606, "alert")
 		end
 		bulwarkCrushCount = bulwarkCrushCount + 1
@@ -401,7 +401,7 @@ function mod:ConsumingFlame(args)
 
 		if self:GetOption("custom_on_hand_timers") then
 			if self:IsHandOnPlatform() then
-				self:Message2(args.spellId, "cyan", L.hand_cast:format(L.room:format(handRoomCount)))
+				self:Message(args.spellId, "cyan", L.hand_cast:format(L.room:format(handRoomCount)))
 				self:PlaySound(args.spellId, "long")
 			end
 			self:Bar(283507, 13.3) -- Volatile Charge
@@ -417,7 +417,7 @@ function mod:ConsumingFlame(args)
 
 		if self:GetOption("custom_on_bulwark_timers") then
 			if self:IsBulwarkOnPlatform() then
-				self:Message2(args.spellId, "cyan", L.bulwark_cast:format(L.room:format(bulwarkRoomCount)))
+				self:Message(args.spellId, "cyan", L.bulwark_cast:format(L.room:format(bulwarkRoomCount)))
 				self:PlaySound(args.spellId, "long")
 			end
 			self:Bar(283606, 13.5, L.bulwark_cast:format(self:SpellName(283606))) -- Crush
@@ -476,7 +476,7 @@ end
 function mod:FlamesofPunishment(args)
 	if self:GetOption("custom_on_bulwark_timers") then
 		if self:IsBulwarkOnPlatform() then
-			self:Message2(282939, "red")
+			self:Message(282939, "red")
 			self:PlaySound(282939, "alarm")
 		end
 		self:CastBar(282939, 12)
@@ -486,7 +486,7 @@ end
 
 function mod:PulsequickeningToxin(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "orange", CL.you:format(args.spellName))
+		self:Message(args.spellId, "orange", CL.you:format(args.spellName))
 		self:PlaySound(args.spellId, "alert")
 	end
 end
@@ -520,7 +520,7 @@ do
 
 	function mod:HexOfLethargyRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message2(args.spellId, "green", CL.removed:format(args.spellName))
+			self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 		end
 		if self:GetOption(hexOfLethargyMarker) then
 			SetRaidTarget(args.destName, 0)
@@ -572,11 +572,11 @@ function mod:CritBuffRemoved(args)
 end
 
 function mod:HoardPower(args)
-	--self:Message2(args.spellId, "red")
+	--self:Message(args.spellId, "red")
 	--self:PlaySound(args.spellId, "long")
 	-- XXX TEMP HERE - NO SUCCESS IN LOG?
 	stage = 2
-	self:Message2(args.spellId, "cyan", CL.stage:format(2), false)
+	self:Message(args.spellId, "cyan", CL.stage:format(2), false)
 	self:PlaySound(args.spellId, "info")
 	self:StopBar(L.bulwark_cast:format(self:SpellName(283606))) -- Hand: Crush
 	self:StopBar(L.hand_cast:format(self:SpellName(283606))) -- Bulwark: Crush
@@ -593,7 +593,7 @@ function mod:HoardPower(args)
 end
 
 --function mod:HoardPowerSuccess(args)
---	self:Message2(args.spellId, "cyan", CL.stage:format(2), false)
+--	self:Message(args.spellId, "cyan", CL.stage:format(2), false)
 --	self:PlaySound(args.spellId, "info")
 --	self:StopBar(L.bulwark_cast:format(self:SpellName(283606))) -- Hand: Crush
 --	self:StopBar(L.hand_cast:format(self:SpellName(283606))) -- Bulwark: Crush
@@ -624,7 +624,7 @@ do
 end
 
 function mod:SpiritsofGold(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, spiritsofGoldCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, spiritsofGoldCount))
 	self:PlaySound(args.spellId, "long")
 	spiritsofGoldCount = spiritsofGoldCount + 1
 	self:CDBar(args.spellId, 66, CL.count:format(args.spellName, spiritsofGoldCount))
@@ -637,7 +637,7 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				self:Message2(args.spellId, "orange")
+				self:Message(args.spellId, "orange")
 				self:PlaySound(args.spellId, "alarm")
 			end
 		end
@@ -665,7 +665,7 @@ function mod:CoinShowerRemoved(args)
 end
 
 function mod:WailofGreed(args)
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, wailofGreedCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, wailofGreedCount))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, wailofGreedCount)) -- 2s cast, 10s channel
 	wailofGreedCount = wailofGreedCount + 1
@@ -674,13 +674,13 @@ function mod:WailofGreed(args)
 end
 
 function mod:CoinSweep(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	self:CDBar(args.spellId, 10.9)
 end
 
 function mod:SurgingGold(args)
-	self:Message2(args.spellId, "orange", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
 	self:CastBar(args.spellId, 2.5)
 	self:Bar(args.spellId, 42.5)

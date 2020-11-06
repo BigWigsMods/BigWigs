@@ -122,7 +122,7 @@ function mod:HatefulGazeRemoved(args)
 end
 
 function mod:DestructiveImpactApplied(args)
-	self:Message2(args.spellId, "red", CL.on:format(args.spellName, args.destName))
+	self:Message(args.spellId, "red", CL.on:format(args.spellName, args.destName))
 	self:PlaySound(args.spellId, "info")
 	self:Bar(args.spellId, 12)
 end
@@ -135,7 +135,7 @@ do
 	local scheduled, mainChainSet, secondChainSet, myLink, myPartner = nil, {}, {}, nil, nil
 	function mod:ChainLinkMessage()
 		if myLink then
-			self:Message2(335293, "blue", L.yourLink:format(self:ColorName(myPartner) or self:ColorName(secondChainSet[myLink])))
+			self:Message(335293, "blue", L.yourLink:format(self:ColorName(myPartner) or self:ColorName(secondChainSet[myLink])))
 		end
 		scheduled = nil
 		mainChainSet = {}
@@ -165,7 +165,7 @@ do
 		end
 		if #mainChainSet == 1 then
 			self:StopBar(CL.count:format(CL.count:format(self:SpellName(335293), chainLinkCount)))
-			self:Message2(335293, "yellow", CL.count:format(self:SpellName(335293), chainLinkCount))
+			self:Message(335293, "yellow", CL.count:format(self:SpellName(335293), chainLinkCount))
 			chainLinkCount = chainLinkCount + 1
 			self:CDBar(335293, 69, CL.count:format(self:SpellName(335293), chainLinkCount))
 		end
@@ -174,7 +174,7 @@ end
 
 function mod:DestructiveStomp(args)
 	self:StopBar(CL.count:format(args.spellName, destructiveStompCount))
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, destructiveStompCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, destructiveStompCount))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, destructiveStompCount))
 	destructiveStompCount = destructiveStompCount + 1
@@ -183,7 +183,7 @@ end
 
 function mod:ColossalRoar(args)
 	self:StopBar(CL.count:format(args.spellName, colossalRoarCount))
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, colossalRoarCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, colossalRoarCount))
 	self:PlaySound(args.spellId, "info")
 	colossalRoarCount = colossalRoarCount + 1
 	self:Bar(args.spellId, timers[args.spellId][colossalRoarCount], CL.count:format(args.spellName, colossalRoarCount))
@@ -216,7 +216,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:StopBar(CL.count:format(args.spellName, seismicShiftCount))
-			self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, seismicShiftCount))
+			self:Message(args.spellId, "yellow", CL.count:format(args.spellName, seismicShiftCount))
 			seismicShiftCount = seismicShiftCount + 1
 			self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(args.spellName, seismicShiftCount))
 			self:PlaySound(args.spellId, "long")

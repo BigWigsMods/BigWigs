@@ -109,7 +109,7 @@ do
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		if spellId == 310433 then -- Corruptor's Gaze
 			self:PlaySound(spellId, "long")
-			self:Message2(spellId, "orange", CL.count:format(self:SpellName(310433), gazeCount))
+			self:Message(spellId, "orange", CL.count:format(self:SpellName(310433), gazeCount))
 			gazeCount = gazeCount + 1
 			self:CDBar(spellId, 32, CL.count:format(self:SpellName(310433), gazeCount))
 		elseif spellId == 110470 then -- Reduce Parry and Block Chance 100% / Stage 2 Start
@@ -117,7 +117,7 @@ do
 			if t-prev > 2 then
 				stage = 2
 				prev = t
-				self:Message2("stages", "cyan", CL.stage:format(stage), false)
+				self:Message("stages", "cyan", CL.stage:format(stage), false)
 				self:PlaySound("stages", "long")
 				self:StopBar(309961) -- Eye of N'Zoth
 				self:StopBar(CL.count:format(self:SpellName(311401), touchCount)) -- Touch of the Corruptor
@@ -131,7 +131,7 @@ do
 			stage = 1
 			gazeCount = 1
 			touchCount = 1
-			self:Message2("stages", "cyan", CL.stage:format(stage), false)
+			self:Message("stages", "cyan", CL.stage:format(stage), false)
 			self:PlaySound("stages", "long")
 
 			self:Bar(309961, 6.1) -- Eye of N'Zoth
@@ -142,13 +142,13 @@ do
 end
 
 function mod:EyeofNZoth(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "warning")
 	self:Bar(args.spellId, 17)
 end
 
 function mod:TouchoftheCorruptor(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, touchCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, touchCount))
 	self:PlaySound(args.spellId, "long")
 	touchCount = touchCount + 1
 	self:Bar(args.spellId, 64.5, CL.count:format(args.spellName, touchCount))

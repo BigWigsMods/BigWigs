@@ -148,7 +148,7 @@ end
 
 function mod:BossDeath(args)
 	bossesKilled = bossesKilled + 1
-	self:Message2("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
+	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
 	if args.mobId == 166969 then
 		friedaAlive = false
 	elseif args.mobId == 166970 then
@@ -189,7 +189,7 @@ do
 				self:PlaySound(328334, "warning")
 			end
 		else
-			self:Message2(328334, "orange")
+			self:Message(328334, "orange")
 		end
 	end
 
@@ -200,19 +200,19 @@ do
 end
 
 function mod:UnyieldingShield(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(args.spellId, 20)
 end
 
 function mod:UnstoppableCharge(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 19.7)
 end
 
 function mod:CastellansCadre(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 26.5)
 end
@@ -243,7 +243,7 @@ end
 function mod:BoltOfPower(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
-		self:Message2(args.spellId, "yellow", CL.casting:format(args.spellName))
+		self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 		if ready then
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -251,7 +251,7 @@ function mod:BoltOfPower(args)
 end
 
 function mod:AnimaFountain(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 34)
 end
@@ -286,7 +286,7 @@ function mod:ScarletLetterRemoved(args)
 end
 
 function mod:DredgerServants(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 32)
 end
@@ -294,25 +294,25 @@ end
 --[[ Lord Stavros ]]--
 
 function mod:EvasiveLunge(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 14)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 327724 then -- Waltz of Blood
-		self:Message2(327619, "yellow")
+		self:Message(327619, "yellow")
 		self:PlaySound(327619, "long")
 		self:CDBar(327619, 22) -- Waltz of Blood
 	elseif spellId == 330964 then -- Dancing Fools
-		self:Message2(spellId, "yellow")
+		self:Message(spellId, "yellow")
 		self:PlaySound(spellId, "long")
 		self:CDBar(spellId, 30)
 	end
 end
 
 -- function mod:WaltzOfBlood(args) -- USCS
--- 	self:Message2(args.spellId, "yellow")
+-- 	self:Message(args.spellId, "yellow")
 -- 	self:PlaySound(args.spellId, "long")
 -- 	self:Bar(args.spellId, 22)
 -- end
@@ -322,7 +322,7 @@ do
 	local darkRecitalFallbackTimer = nil
 
 	function mod:DarkRecital(args)
-		self:Message2(args.spellId, "orange")
+		self:Message(args.spellId, "orange")
 		firstDarkRecitalTargetGUID = nil
 		self:Bar(args.spellId, 22)
 	end
@@ -336,14 +336,14 @@ do
 			firstDarkRecitalTargetGUID = args.destGUID
 			lastDarkRecitalName = args.destName
 			if self:Me(args.destGUID) then -- fallback if a partner is missing
-				darkRecitalFallbackTimer = self:ScheduleTimer("Message2", 0.1, 331634, "blue", CL.link:format("|cffff0000???"))
+				darkRecitalFallbackTimer = self:ScheduleTimer("Message", 0.1, 331634, "blue", CL.link:format("|cffff0000???"))
 			end
 		elseif args.spellId == 331637 and firstDarkRecitalTargetGUID then -- 2nd Dark Recital Target
 			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
-				self:Message2(331634, "blue", CL.link:format(self:ColorName(lastDarkRecitalName)))
+				self:Message(331634, "blue", CL.link:format(self:ColorName(lastDarkRecitalName)))
 				self:Yell(331634, lastDarkRecitalName, true)
 			elseif self:Me(firstDarkRecitalTargetGUID) then -- We got 1st debuff so this is our partner
-				self:Message2(331634, "blue", CL.link:format(self:ColorName(args.destName)))
+				self:Message(331634, "blue", CL.link:format(self:ColorName(args.destName)))
 				self:Yell(331634, args.destName, true)
 			end
 			firstDarkRecitalTargetGUID = nil
@@ -353,7 +353,7 @@ do
 			end
 		else -- Missing a partner, alternative message
 			if self:Me(args.destGUID) or self:Me(firstDarkRecitalTargetGUID) then
-				self:Message2(331634, "blue", CL.link:format("|cffff00ff???"))
+				self:Message(331634, "blue", CL.link:format("|cffff00ff???"))
 				if darkRecitalFallbackTimer then -- We printed above, so cancel this
 					self:CancelTimer(darkRecitalFallbackTimer)
 					darkRecitalFallbackTimer = nil
@@ -365,14 +365,14 @@ do
 
 	function mod:DarkRecitalRemoved(args)
 		if self:Me(args.destGUID) then
-			self:Message2(331634, "green", CL.removed:format(args.spellName))
+			self:Message(331634, "green", CL.removed:format(args.spellName))
 			self:PlaySound(331634, "info")
 		end
 	end
 end
 
 -- function mod:DancingFools(args) -- USCS
--- 	self:Message2(args.spellId, "cyan")
+-- 	self:Message(args.spellId, "cyan")
 -- 	self:PlaySound(args.spellId, "info")
 -- 	self:Bar(args.spellId, 30)
 -- end
@@ -385,7 +385,7 @@ do
 		local t = args.time
 		if t-prev > 10 then
 			prev = t
-			self:Message2(args.spellId, "green")
+			self:Message(args.spellId, "green")
 			self:PlaySound(args.spellId, "long")
 		end
 	end
@@ -393,7 +393,7 @@ end
 
 function mod:WrongMovesApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "red", CL.you:format(args.spellName))
+		self:Message(args.spellId, "red", CL.you:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 		self:TargetBar(args.spellId, 30, args.destName)
 	end

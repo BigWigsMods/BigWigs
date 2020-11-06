@@ -190,18 +190,18 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 		local seconds = math.floor((GetTime() - orbDunkTime) * 100)/100
 		if power == 100 and orbsCounter < 3 then
 			orbsCounter = orbsCounter+1
-			self:Message2(-18109, "green", L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
+			self:Message(-18109, "green", L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
 			self:PlaySound(-18109, "long")
 			orbDunkTime = GetTime() + 26 -- Adjust for Reorigination Blast timer
 		elseif power > 60 and orbsCounter < 2 then
 			orbsCounter = orbsCounter+1
-			self:Message2(-18109, "green", L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
+			self:Message(-18109, "green", L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
 			self:PlaySound(-18109, "long")
 			self:Bar(-18109, 12.5, self:Mythic() and L.orb_spawning or L.orb_spawning_side:format(L.left), L.orb_icon) -- Power Matrix
 			orbDunkTime = GetTime() + 12.5 -- Adjust for Spawn timer
 		elseif power > 30 and orbsCounter < 1 then
 			orbsCounter = orbsCounter+1
-			self:Message2(-18109, "green", L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
+			self:Message(-18109, "green", L.orbs_deposited:format(orbsCounter, seconds), L.orb_icon) -- Power Matrix
 			self:PlaySound(-18109, "long")
 			self:Bar(-18109, 12.5, self:Mythic() and L.orb_spawning or L.orb_spawning_side:format(L.right), L.orb_icon) -- Power Matrix
 			orbDunkTime = GetTime() + 12.5 -- Adjust for Spawn timer
@@ -213,7 +213,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 277057 then -- Summon Bursting Boil
 		local spellName = self:SpellName(277007)
 		self:StopBar(CL.count:format(spellName, burstingBoilCount))
-		self:Message2(277007, "red", CL.count:format(spellName, burstingBoilCount))
+		self:Message(277007, "red", CL.count:format(spellName, burstingBoilCount))
 		if not burstingOnMe then
 			self:PlaySound(277007, "warning")
 		else
@@ -228,7 +228,7 @@ end
 -- Stage 1
 function mod:CorruptingBiteApplied()
 	stage = 2
-	self:Message2("stages", "cyan", CL.stage:format(stage), false)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 	waveOfCorruptionCount = 1
 	burstingBoilCount = 1
@@ -248,7 +248,7 @@ do
 	local castOnMe = nil
 	function mod:ExplosiveCorruptionSuccess(args)
 		if self:Mythic() then
-			self:Message2(272506, "orange")
+			self:Message(272506, "orange")
 		elseif args.spellId == 272505 then -- Initial application in stage 3 on heroic
 			if self:Me(args.destGUID) then
 				castOnMe = true
@@ -295,7 +295,7 @@ do
 end
 
 function mod:ThousandMaws(args)
-	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, waveCounter))
+	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, waveCounter))
 	self:PlaySound(args.spellId, "info")
 	waveCounter = waveCounter + 1
 	self:Bar(args.spellId, 25.5, CL.count:format(args.spellName, waveCounter))
@@ -303,25 +303,25 @@ end
 
 function mod:Torment(args)
 	if self:Interrupter(args.sourceGUID) then
-		self:Message2(args.spellId, "yellow")
+		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alert")
 	end
 end
 
 function mod:MassiveSmash(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	self:CDBar(args.spellId, 9.7)
 end
 
 function mod:DarkBargain(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 23)
 end
 
 function mod:DecayingEruption(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	if self:Interrupter() then
 		self:PlaySound(args.spellId, "warning")
 	end
@@ -329,7 +329,7 @@ function mod:DecayingEruption(args)
 end
 
 function mod:ReoriginationBlast(args)
-	self:Message2(args.spellId, "green")
+	self:Message(args.spellId, "green")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 28)
 	if stage == 1 then -- Stage 1 ending
@@ -378,7 +378,7 @@ function mod:GrowingCorruption(args)
 end
 
 function mod:WaveofCorruption(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, waveOfCorruptionCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, waveOfCorruptionCount))
 	self:PlaySound(args.spellId, "alarm")
 	self:StopBar(CL.count:format(args.spellName, waveOfCorruptionCount))
 	waveOfCorruptionCount = waveOfCorruptionCount + 1
@@ -408,7 +408,7 @@ function mod:BloodFeastRemoved(args)
 end
 
 function mod:MindNumbingChatter(args)
-	self:Message2(args.spellId, "orange", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alarm")
 	self:CDBar(args.spellId, 13.5)
 end
@@ -421,7 +421,7 @@ end
 -- Stage 3
 function mod:Collapse(args)
 	stage = 3
-	self:Message2("stages", "cyan", CL.stage:format(stage), false)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
 	self:StopBar(272506) -- Explosive Corruption
@@ -446,14 +446,14 @@ function mod:Collapse(args)
 end
 
 function mod:MalignantGrowth(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	self:StopBar(args.spellId)
 	self:Bar(args.spellId, 25.5)
 end
 
 function mod:GazeofGhuun(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:StopBar(args.spellId)
 	self:Bar(args.spellId, self:Mythic() and 23 or self:Heroic() and 25.9 or 31.6)

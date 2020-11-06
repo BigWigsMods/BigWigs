@@ -157,14 +157,14 @@ function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 	if hp < 43 then -- 40% Transition
 		local nextStage = stage + 1
-		self:Message2("stages", "green", CL.soon:format(CL.stage:format(nextStage)), false)
+		self:Message("stages", "green", CL.soon:format(CL.stage:format(nextStage)), false)
 		self:UnregisterUnitEvent(event, unit)
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 273361 then -- Pool of Darkness
-		self:Message2(spellId, "orange", CL.count:format(self:SpellName(spellId), poolofDarknessCount))
+		self:Message(spellId, "orange", CL.count:format(self:SpellName(spellId), poolofDarknessCount))
 		self:PlaySound(spellId, "info")
 		poolofDarknessCount = poolofDarknessCount + 1
 		self:Bar(spellId, stage == 1 and 31.5 or 15.8, CL.count:format(self:SpellName(spellId), poolofDarknessCount))
@@ -219,7 +219,7 @@ do
 		local t = args.time
 		if t-prev > 1 then
 			prev = t
-			self:Message2(-18530, "cyan", CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
+			self:Message(-18530, "cyan", CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
 		end
 	end
 end
@@ -239,40 +239,40 @@ do
 end
 
 function mod:NazmaniCrusher(args)
-	self:Message2("crusher", "cyan", CL.soon:format(L.crusher_msg), L.crusher_icon)
+	self:Message("crusher", "cyan", CL.soon:format(L.crusher_msg), L.crusher_icon)
 	self:PlaySound("crusher", "long")
 	self:CDBar("crusher", 62.5, CL.soon:format(L.crusher_msg), L.crusher_icon)
 	self:Bar("crusher", 14, CL.spawning:format(L.crusher_msg), L.crusher_icon)
 end
 
 function mod:NazmaniBloodhexer(args)
-	self:Message2("bloodhexer", "cyan", CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
+	self:Message("bloodhexer", "cyan", CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
 	self:PlaySound("bloodhexer", "long")
 	self:CDBar("bloodhexer", 62.5, CL.soon:format(L.bloodhexer_msg), L.bloodhexer_icon)
 	self:Bar("bloodhexer", 14, CL.spawning:format(L.bloodhexer_msg), L.bloodhexer_icon)
 end
 
 function mod:BloodthirstyCrawg(args)
-	self:Message2("crawg", "cyan", CL.soon:format(L.crawg_msg), L.crawg_icon)
+	self:Message("crawg", "cyan", CL.soon:format(L.crawg_msg), L.crawg_icon)
 	self:PlaySound("crawg", "long")
 	self:CDBar("crawg", 42.5, CL.soon:format(L.crawg_msg), L.crawg_icon)
 	self:Bar("crawg", 14, CL.spawning:format(L.crawg_msg), L.crawg_icon)
 end
 
 function mod:ThrummingPulse(args)
-	self:Message2(args.spellId, "yellow", CL.other:format(L.crusher_msg, args.spellName))
+	self:Message(args.spellId, "yellow", CL.other:format(L.crusher_msg, args.spellName))
 	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:CongealBlood(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 end
 
 function mod:Bloodshard(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
-		self:Message2(args.spellId, "orange")
+		self:Message(args.spellId, "orange")
 		if ready then
 			self:PlaySound(args.spellId, "alert")
 		end
@@ -280,7 +280,7 @@ function mod:Bloodshard(args)
 end
 
 function mod:EngorgedBurst(args)
-	self:Message2(args.spellId, "yellow", CL.other:format(L.crawg_msg, args.spellName))
+	self:Message(args.spellId, "yellow", CL.other:format(L.crawg_msg, args.spellName))
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -292,7 +292,7 @@ function mod:LocusofCorruption(args)
 	self:StopBar(273365) -- Dark Revelation
 
 	stage = 2
-	self:Message2("stages", "green", CL.stage:format(stage), false)
+	self:Message("stages", "green", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
 	if self:Tank() then
@@ -355,7 +355,7 @@ do
 		local t = args.time
 		if t-prev > 1 then
 			prev = t
-			self:Message2(-18530, "cyan", CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
+			self:Message(-18530, "cyan", CL.spawning:format(self:SpellName(-18530)), 172884) -- Minion of Zul, spell_shadow_shadowfiend
 		end
 	end
 end

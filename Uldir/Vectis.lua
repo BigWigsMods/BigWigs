@@ -328,7 +328,7 @@ function mod:EvolvingAfflictionApplied(args)
 end
 
 function mod:Contagion(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, contagionCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, contagionCount))
 	self:PlaySound(args.spellId, "alarm")
 	contagionCount = contagionCount + 1
 	local timer = 23.1 -- up to 24.6s
@@ -360,7 +360,7 @@ function mod:GestateRemoved(args)
 end
 
 function mod:Immunosuppression(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, immunosuppressionCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, immunosuppressionCount))
 	self:PlaySound(args.spellId, "alarm")
 	immunosuppressionCount = immunosuppressionCount + 1
 	self:Bar(args.spellId, 9.7, CL.count:format(args.spellName, immunosuppressionCount))
@@ -371,7 +371,7 @@ function mod:PlagueAmalgamDeath()
 end
 
 function mod:Liquefy(args)
-	self:Message2(args.spellId, "cyan", CL.intermission)
+	self:Message(args.spellId, "cyan", CL.intermission)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 33)
 
@@ -384,7 +384,7 @@ function mod:Liquefy(args)
 end
 
 function mod:LiquefyRemoved(args)
-	self:Message2(args.spellId, "cyan", CL.over:format(CL.intermission))
+	self:Message(args.spellId, "cyan", CL.over:format(CL.intermission))
 	self:PlaySound(args.spellId, "info")
 
 	self:CDBar(265178, 8.5) -- Evolving Affliction, up to 10s
@@ -396,7 +396,7 @@ function mod:LiquefyRemoved(args)
 end
 
 function mod:PlagueBomb(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	pathogenBombCount = pathogenBombCount + 1
 	if pathogenBombCount < 3 then

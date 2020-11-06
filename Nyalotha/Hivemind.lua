@@ -140,7 +140,7 @@ end
 
 function mod:KazirsHivemindControl(args)
 	bossesTogether = false
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(307213, self:Mythic() and 74.5 or 93.5) -- Tek'ris's Hivemind Control
 end
@@ -148,7 +148,7 @@ end
 
 function mod:TekrissHivemindControl(args)
 	bossesTogether = true
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(307201, self:Mythic() and 74.5 or 93.5) -- Ka'zir's Hivemind Control
 end
@@ -159,7 +159,7 @@ do
 		local t = args.time
 		if t-prev > 10 then -- prevent message on kill
 			prev = t
-			self:Message2(args.spellId, "red")
+			self:Message(args.spellId, "red")
 			self:PlaySound(args.spellId, "info")
 			self:Bar(args.spellId, 10)
 		end
@@ -167,7 +167,7 @@ do
 end
 
 function mod:VolatileEruption(args)
-	self:Message2(314583, "red")
+	self:Message(314583, "red")
 	self:PlaySound(314583, "warning")
 	self:CDBar(314583, self:Mythic() and 148 or 185)
 end
@@ -179,7 +179,7 @@ end
 
 function mod:SpawnAcidicAqir(args)
 	self:StopBar(CL.count:format(args.spellName, acidicAqirCount))
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "info")
 	acidicAqirCount = acidicAqirCount + 1
 	self:Bar(args.spellId, timers[args.spellId][acidicAqirCount], CL.count:format(args.spellName, acidicAqirCount))
@@ -188,7 +188,7 @@ end
 function mod:MindNumbingNovaStart(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
-		self:Message2(args.spellId, "yellow")
+		self:Message(args.spellId, "yellow")
 		if ready then
 			self:PlaySound(args.spellId, "long")
 		end
@@ -197,7 +197,7 @@ function mod:MindNumbingNovaStart(args)
 end
 
 function mod:AcceleratedEvolution(args)
-	self:Message2(307637, "yellow")
+	self:Message(307637, "yellow")
 	self:PlaySound(307637, "alert")
 	self:CDBar(307637, self:Mythic() and 147 or 181)
 end
@@ -208,7 +208,7 @@ function mod:AcceleratedEvolutionSuccess(args)
 end
 
 function mod:NullificationBlast(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	if bossesTogether then
 		self:PlaySound(args.spellId, "alert")
 	end
@@ -217,7 +217,7 @@ function mod:NullificationBlast(args)
 end
 
 function mod:EchoingVoid(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	echoingVoidCount = echoingVoidCount + 1
 	self:Bar(args.spellId, timers[args.spellId][echoingVoidCount], CL.count:format(args.spellName, acidicAqirCount))

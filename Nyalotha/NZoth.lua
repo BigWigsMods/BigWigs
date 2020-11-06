@@ -236,7 +236,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(event, msg)
 	if msg:find(L.gateway_yell, nil, true) then
-		self:Message2(318091, "cyan", self:SpellName(318091))
+		self:Message(318091, "cyan", self:SpellName(318091))
 		self:PlaySound(318091, "long")
 		voidspawnKilled = nil
 		eternalTormentCount = 1
@@ -277,7 +277,7 @@ do
 				local t = GetTime()
 				if t-prev > 2 then -- 2 Spawn at the same in Mythic
 					prev = t
-					self:Message2(-21491, "yellow", CL.count:format(self:SpellName(-21491), harvesterCount), "achievement_boss_heraldofnzoth")
+					self:Message(-21491, "yellow", CL.count:format(self:SpellName(-21491), harvesterCount), "achievement_boss_heraldofnzoth")
 					self:PlaySound(-21491, "info")
 					harvesterCount = harvesterCount + 1
 					if self:Mythic() then
@@ -291,7 +291,7 @@ do
 				local t = GetTime()
 				if t-prev > 10 then -- 2 Spawn at the same time sometimes
 					prev = t
-					self:Message2(-21286, "yellow", CL.count:format(self:SpellName(-21286), basherCount), "spell_priest_voidtendrils")
+					self:Message(-21286, "yellow", CL.count:format(self:SpellName(-21286), basherCount), "spell_priest_voidtendrils")
 					self:PlaySound(-21286, "long")
 					basherCount = basherCount + 1
 					self:Bar(-21286, self:Mythic() and basherTentacleTimersMythic[basherCount] or basherTentacleTimers[basherCount], CL.count:format(self:SpellName(-21286), basherCount), "spell_priest_voidtendrils")
@@ -328,7 +328,7 @@ do
 			self:StopBar(CL.count:format(args.spellName, (mindwrackCount%3)+1))
 			local canDo, ready = self:Interrupter(args.sourceGUID)
 			if canDo then
-				self:Message2(args.spellId, "red", CL.count:format(args.spellName, (mindwrackCount%3)+1))
+				self:Message(args.spellId, "red", CL.count:format(args.spellName, (mindwrackCount%3)+1))
 				if ready then
 					self:PlaySound(args.spellId, "alarm")
 				end
@@ -339,7 +339,7 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				self:Message2(args.spellId, "red")
+				self:Message(args.spellId, "red")
 				self:PlaySound(args.spellId, "alarm")
 				self:NameplateBar(args.spellId, 8.5, args.sourceGUID)
 			end
@@ -357,7 +357,7 @@ end
 
 function mod:CreepingAnquish(args)
 	if not outside then
-		self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, creepingAnguishCount))
+		self:Message(args.spellId, "yellow", CL.count:format(args.spellName, creepingAnguishCount))
 		self:PlaySound(args.spellId, "alarm")
 		creepingAnguishCount = creepingAnguishCount + 1
 		self:CDBar(args.spellId, 26.8, CL.count:format(args.spellName, creepingAnguishCount))
@@ -393,7 +393,7 @@ do
 			self:StopBar(313960) -- Black Volley
 			self:StopBar(312866) -- Cataclysmic Flames
 
-			self:Message2(312155, "green", CL.count:format(args.spellName, shatteredEgoCount))
+			self:Message(312155, "green", CL.count:format(args.spellName, shatteredEgoCount))
 			self:PlaySound(312155, "long")
 			self:CastBar(312155, 30, CL.count:format(args.spellName, shatteredEgoCount))
 			shatteredEgoCount = shatteredEgoCount + 1
@@ -407,7 +407,7 @@ end
 
 function mod:InfinitysToll(args)
 	if self:Me(args.destGUID) then
-		self:Message2("stages", "green", L.realm_switch, false)
+		self:Message("stages", "green", L.realm_switch, false)
 		self:PlaySound("stages", "info")
 		outside = true
 	end
@@ -437,7 +437,7 @@ function mod:ShatteredEgoRemoved()
 	else
 		if stage == 1 then -- Stage 2 Starting
 			stage = 2
-			self:Message2("stages", "cyan", CL.stage:format(stage), false)
+			self:Message("stages", "cyan", CL.stage:format(stage), false)
 			self:PlaySound("stages", "long")
 
 			mindgateCount = 1
@@ -467,7 +467,7 @@ function mod:ShatteredEgoRemoved()
 end
 
 function mod:Mindgrasp(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, mindgraspCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, mindgraspCount))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, mindgraspCount))
 end
@@ -489,7 +489,7 @@ do
 	end
 
 	function mod:Paranoia(args)
-		self:Message2(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, paranoiaCount)))
+		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, paranoiaCount)))
 		wipe(proxList)
 		isOnMe = nil
 		mateName = nil
@@ -528,14 +528,14 @@ do
 			firstParanoiaTargetGUID = args.destGUID
 			lastParanoiaName = args.destName
 			if self:Me(args.destGUID) then -- fallback if the last event is missing
-				paranoiaFallbackTimer = self:ScheduleTimer("Message2", 0.1, 315927, "blue", CL.link:format("|cffff0000???"))
+				paranoiaFallbackTimer = self:ScheduleTimer("Message", 0.1, 315927, "blue", CL.link:format("|cffff0000???"))
 			end
 		elseif args.spellId == 316541 and firstParanoiaTargetGUID then -- Paranoia 2
 			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
-				self:Message2(315927, "blue", CL.link:format(self:ColorName(lastParanoiaName)))
+				self:Message(315927, "blue", CL.link:format(self:ColorName(lastParanoiaName)))
 				mateName = lastParanoiaName
 			elseif self:Me(firstParanoiaTargetGUID) then -- We got 1st debuff so this is our mate
-				self:Message2(315927, "blue", CL.link:format(self:ColorName(args.destName)))
+				self:Message(315927, "blue", CL.link:format(self:ColorName(args.destName)))
 				mateName = args.destName
 			end
 			firstParanoiaTargetGUID = nil
@@ -545,7 +545,7 @@ do
 			end
 		else -- One of them immuned, so no proper linked message
 			if self:Me(args.destGUID) or self:Me(firstParanoiaTargetGUID) then
-				self:Message2(315927, "blue", CL.link:format("|cffff00ff???"))
+				self:Message(315927, "blue", CL.link:format("|cffff00ff???"))
 				if paranoiaFallbackTimer then -- We printed above, so cancel this
 					self:CancelTimer(paranoiaFallbackTimer)
 					paranoiaFallbackTimer = nil
@@ -562,7 +562,7 @@ do
 	function mod:ParanoiaRemoved(args)
 		if self:Me(args.destGUID) then
 			isOnMe = nil
-			self:Message2(315927, "green", CL.removed:format(args.spellName))
+			self:Message(315927, "green", CL.removed:format(args.spellName))
 			self:PlaySound(315927, "info")
 			if sayTimer then
 				self:CancelTimer(sayTimer)
@@ -577,7 +577,7 @@ do
 end
 
 function mod:EternalTorment(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, eternalTormentCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, eternalTormentCount))
 	self:PlaySound(args.spellId, "alert")
 	eternalTormentCount = eternalTormentCount + 1
 	if self:Mythic() and not shatteredEgo then
@@ -596,7 +596,7 @@ function mod:EternalTorment(args)
 end
 
 function mod:Mindgate(args)
-	self:Message2(args.spellId, "green", CL.count:format(args.spellName, mindgateCount))
+	self:Message(args.spellId, "green", CL.count:format(args.spellName, mindgateCount))
 	self:PlaySound(args.spellId, "long")
 	if mindgateCount == 1 then
 		self:Bar(312866, 31.5) -- Cataclysmic Flames
@@ -609,7 +609,7 @@ end
 
 function mod:CataclysmicFlames(args)
 	if not outside and not shatteredEgo then -- Reduce spam outside and stop when stunned
-		self:Message2(args.spellId, "orange")
+		self:Message(args.spellId, "orange")
 		self:PlaySound(args.spellId, "warning")
 		self:Bar(args.spellId, 24.3)
 	end
@@ -617,7 +617,7 @@ end
 
 function mod:BlackVolley(args)
 	if not outside and not shatteredEgo then -- Reduce spam outside and stop when stunned
-		self:Message2(args.spellId, "cyan")
+		self:Message(args.spellId, "cyan")
 		self:PlaySound(args.spellId, "alert")
 		self:Bar(args.spellId, 20)
 	end
@@ -629,7 +629,7 @@ do
 		local t = args.time
 		if t-prev > 2 then -- 2 Tentacles are up in the same wave, cast within 1s
 			prev = t
-			self:Message2(args.spellId, "purple")
+			self:Message(args.spellId, "purple")
 			self:PlaySound(args.spellId, "alert")
 			self:CDBar(args.spellId, 23)
 		end
@@ -637,7 +637,7 @@ do
 end
 
 function mod:TumultuousBurst(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 end
 
@@ -647,7 +647,7 @@ function mod:CorruptedMind(args)
 	end
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
-		self:Message2(args.spellId, "red", CL.count:format(args.spellName, corruptedMindCount[args.sourceGUID]))
+		self:Message(args.spellId, "red", CL.count:format(args.spellName, corruptedMindCount[args.sourceGUID]))
 		if ready then
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -665,9 +665,9 @@ end
 function mod:Convergence()
 	stage = 3
 	if self:Mythic() then
-		self:Message2("stages", "cyan", CL.stage:format(2), false)
+		self:Message("stages", "cyan", CL.stage:format(2), false)
 	else
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 	end
 	self:PlaySound("stages", "long")
 
@@ -699,7 +699,7 @@ function mod:Convergence()
 end
 
 function mod:EvokeAnguish(args)
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, anguishCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, anguishCount))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 10, CL.count:format(args.spellName, anguishCount))
 	anguishCount = anguishCount + 1
@@ -718,14 +718,14 @@ function mod:StartStupifyingGlareTimer(t)
 	if self:Mythic() then
 		if voidspawnKilled then -- Reversed Order
 			self:Bar(318976, t, CL.count:format(glareCount%2==1 and L.laser_right or L.laser_left, glareCount))
-			self:ScheduleTimer("Message2", t, 318976, "yellow", CL.count:format(glareCount%2==1 and L.laser_right or L.laser_left, glareCount))
+			self:ScheduleTimer("Message", t, 318976, "yellow", CL.count:format(glareCount%2==1 and L.laser_right or L.laser_left, glareCount))
 		else
 			self:Bar(318976, t, CL.count:format(glareCount%2==0 and L.laser_right or L.laser_left, glareCount))
-			self:ScheduleTimer("Message2", t, 318976, "yellow", CL.count:format(glareCount%2==0 and L.laser_right or L.laser_left, glareCount))
+			self:ScheduleTimer("Message", t, 318976, "yellow", CL.count:format(glareCount%2==0 and L.laser_right or L.laser_left, glareCount))
 		end
 	else
 		self:Bar(318976, t, CL.count:format(self:SpellName(318976), glareCount))
-		self:ScheduleTimer("Message2", t, 318976, "yellow", CL.count:format(self:SpellName(318976), glareCount))
+		self:ScheduleTimer("Message", t, 318976, "yellow", CL.count:format(self:SpellName(318976), glareCount))
 	end
 	self:ScheduleTimer("PlaySound", t, 318976, "long")
 	glareCount = glareCount + 1
@@ -746,7 +746,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(args.spellId, "orange")
+			self:Message(args.spellId, "orange")
 			self:PlaySound(args.spellId, "alarm")
 		end
 		self:NameplateBar(args.spellId, self:Mythic() and 30 or 23, args.sourceGUID)
@@ -778,7 +778,7 @@ function mod:EventHorizon(args)
 end
 
 function mod:DarkMatter(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, darkMatterCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, darkMatterCount))
 	self:PlaySound(args.spellId, "alarm")
 	darkMatterCount = darkMatterCount + 1
 	self:Bar(args.spellId, darkMatterCount % 2 == 0 and 60 or 102, CL.count:format(args.spellName, darkMatterCount))
@@ -790,7 +790,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(316970, "yellow", CL.count:format(args.spellName, protocolCount))
+			self:Message(316970, "yellow", CL.count:format(args.spellName, protocolCount))
 			self:PlaySound(316970, "alert")
 			if args.spellId == 316970 then
 				self:CastBar(316970, 8, CL.count:format(args.spellName, protocolCount))
@@ -828,7 +828,7 @@ do
 end
 
 function mod:VoidspawnDeath()
-	self:Message2(318091, "cyan", L.gateway_open)
+	self:Message(318091, "cyan", L.gateway_open)
 	self:PlaySound(318091, "long")
 
 	self:StopBar(CL.count:format(self:SpellName(318196), eventHorizonCount)) -- Event Horizon

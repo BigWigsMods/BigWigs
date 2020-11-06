@@ -109,7 +109,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		self:StopBar(CL.count:format(self:SpellName(340758), spiritCount)) -- Fleeting Spirit
 
 		stage = 2
-		self:Message2("stages", "green", CL.stage:format(stage), false)
+		self:Message("stages", "green", CL.stage:format(stage), false)
 		self:PlaySound("stages", "info")
 
 		dimensionalTearCount = 1
@@ -125,7 +125,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		self:StopBar(CL.count:format(self:SpellName(340788), seedCount)) -- Seeds of Extinction
 
 		stage = 3
-		self:Message2("stages", "green", CL.stage:format(stage), false)
+		self:Message("stages", "green", CL.stage:format(stage), false)
 		self:PlaySound("stages", "info")
 
 		dimensionalTearCount = 1
@@ -191,26 +191,26 @@ function mod:GlyphofDestructionRemoved(args)
 end
 
 function mod:StasisTrap(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 30)
 end
 
 function mod:RiftBlast(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	self:CDBar(args.spellId, 36)
 end
 
 function mod:HyperlightSpark(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 15.8)
 end
 
 -- The Relics of Castle Nathria
 function mod:FleetingSpirits(args)
-	self:Message2(340758, "cyan", CL.count:format(self:SpellName(340758), spiritCount))
+	self:Message(340758, "cyan", CL.count:format(self:SpellName(340758), spiritCount))
 	self:PlaySound(340758, "long")
 	spiritCount = spiritCount + 1
 	self:CDBar(340758, 41.5, CL.count:format(self:SpellName(340758), spiritCount))
@@ -232,7 +232,7 @@ do
 end
 
 function mod:SeedsofExtinction(args)
-	self:Message2(340788, "cyan", CL.count:format(self:SpellName(340788), seedCount))
+	self:Message(340788, "cyan", CL.count:format(self:SpellName(340788), seedCount))
 	self:PlaySound(340788, "long")
 	seedCount = seedCount + 1
 	self:Bar(340788, 41.5, CL.count:format(self:SpellName(340788), seedCount))
@@ -250,7 +250,7 @@ function mod:WitheringTouchApplied(args)
 end
 
 function mod:EdgeofAnnihilation(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, annihilateCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, annihilateCount))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 10, CL.count:format(args.spellName, annihilateCount))
 	annihilateCount = annihilateCount + 1

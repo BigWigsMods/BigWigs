@@ -116,13 +116,13 @@ function mod:UNIT_POWER_FREQUENT(event, unit)
 	local power = UnitPower(unit)
 	if power < lastPower and stage ~= 3 then -- Used 100 Energy, Stage 2 start
 		stage = 2
-		self:Message2("stages", "cyan", CL.stage:format(2), false)
+		self:Message("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 		decimatorCount = 1
 		self:CDBar("stages", 55, CL.stage:format(1), 307057) -- Dark Gateway
 	elseif stage == 2 and power > lastPower then -- Stage 1 starts when energy regen starts again
 		stage = 1
-		self:Message2("stages", "cyan", CL.stage:format(1), false)
+		self:Message("stages", "cyan", CL.stage:format(1), false)
 		self:PlaySound("stages", "long")
 		self:Bar(307057, 3.9) -- Dark Gateway
 		self:Bar(307020, 5) -- Twilight Breath
@@ -137,14 +137,14 @@ do
 	local prev = 0
 	function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		if spellId == 307043 then -- Dark Gateway
-			self:Message2(307057, "cyan")
+			self:Message(307057, "cyan")
 			self:PlaySound(307057, "info")
 			if nextStageTwoTime > GetTime() + 33 then
 				self:Bar(307057, 33)
 			end
 		elseif spellId == 307116 then -- Stage 2 // Power of the Chosen
 			-- XXX This spell is casted a few seconds after stage 2 starts, more reliable than energy to start the Decimator bar
-			self:Message2(307116, "cyan")
+			self:Message(307116, "cyan")
 			self:PlaySound(307116, "info")
 			self:Bar(315762, 10.7, CL.count:format(self:SpellName(315762), decimatorCount))
 		end
@@ -175,7 +175,7 @@ do
 end
 
 function mod:TwilightBreath(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	if nextStageTwoTime > GetTime() + 17 then
 		self:Bar(args.spellId, 17)
@@ -196,25 +196,25 @@ function mod:DespairApplied(args)
 end
 
 function mod:Annihilation(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 13.5)
 end
 
 function mod:AscendantDeath(args)
-	self:Message2("stages", "cyan", L.killed:format(args.destName), false)
+	self:Message("stages", "cyan", L.killed:format(args.destName), false)
 	self:PlaySound("stages", "info")
 	self:StopBar(307403) -- Annihilation
 end
 
 function mod:FanaticalAscension(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
 end
 
 function mod:TwilightDecimator(args)
 	self:StopBar(CL.count:format(args.spellName, decimatorCount))
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, decimatorCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, decimatorCount))
 	self:PlaySound(args.spellId, "warning")
 	self:Flash(args.spellId)
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, decimatorCount))
@@ -226,7 +226,7 @@ end
 
 function mod:TheVoidUnleashed(args)
 	stage = 3
-	self:Message2("stages", "cyan", CL.stage:format(3), false)
+	self:Message("stages", "cyan", CL.stage:format(3), false)
 	self:PlaySound("stages", "long")
 	self:StopBar(CL.stage:format(1))
 	self:StopBar(CL.stage:format(2))
@@ -243,7 +243,7 @@ function mod:TheVoidUnleashed(args)
 end
 
 function mod:HeartofDarkness(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, self:Mythic() and 33 or 31.5)
 	self:CastBar(args.spellId, 4)
@@ -280,7 +280,7 @@ do
 end
 
 function mod:BrutalSmash(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	self:CastBar(args.spellId, 3)
 end

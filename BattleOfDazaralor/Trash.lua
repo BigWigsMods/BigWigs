@@ -91,7 +91,7 @@ do
 end
 
 function mod:BreathOfFire(args)
-	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 	local _, ready = self:Interrupter()
 	if ready then
 		self:PlaySound(args.spellId, "long")
@@ -126,7 +126,7 @@ end
 
 function mod:ThunderingSlam(args)
 	self:PlaySound(args.spellId, "long")
-	self:Message2(args.spellId, "yellow", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 end
 
 function mod:BwonsamdisPact(args)
@@ -139,8 +139,8 @@ end
 function mod:BwonsamdisKnife(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning") -- Only if you were the target, the caster already knows
-		self:Message2(args.spellId, "blue", L.victim:format(self:ColorName(args.sourceName), args.spellName))
+		self:Message(args.spellId, "blue", L.victim:format(self:ColorName(args.sourceName), args.spellName))
 	else
-		self:Message2(args.spellId, "red", L.witness:format(self:ColorName(args.sourceName), self:ColorName(args.destName), args.spellName))
+		self:Message(args.spellId, "red", L.witness:format(self:ColorName(args.sourceName), self:ColorName(args.destName), args.spellName))
 	end
 end

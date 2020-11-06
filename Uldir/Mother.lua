@@ -111,14 +111,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 			nextBeam = self:Mythic() and L.mythic_beams or L.sideLaser
 			self:CDBar(268253, 10, self:Mythic() and L.mythic_beams or L.sideLaser)
 		end
-		self:Message2(spellId, "cyan", CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
+		self:Message(spellId, "cyan", CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
 		self:PlaySound(spellId, "info")
 		self:Bar(spellId, self:Mythic() and 121.5 or 182, CL.count:format(self:SpellName(spellId), room), "ability_mage_firestarter")
 	end
 end
 
 function mod:ClingingCorruption(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	local _, ready = self:Interrupter()
 	if ready then
 		self:PlaySound(args.spellId, "alert")
@@ -139,12 +139,12 @@ function mod:CleansingPurgeFinished(args)
 	elseif self:MobId(args.sourceGUID) == 137023 then -- Room 3
 		room = 3
 	end
-	self:Message2(269051, "red", CL.casting:format(CL.count:format(args.spellName, room)), "ability_mage_firestarter") -- XXX Casting or Activating?
+	self:Message(269051, "red", CL.casting:format(CL.count:format(args.spellName, room)), "ability_mage_firestarter") -- XXX Casting or Activating?
 	self:PlaySound(269051, "alarm")
 end
 
 function mod:SanitizingStrikeStart(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 end
 
@@ -158,7 +158,7 @@ function mod:SanitizingStrikeApplied(args)
 end
 
 function mod:PurifyingFlame(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 23.2)
 end
@@ -178,7 +178,7 @@ do
 end
 
 function mod:WindTunnel(args)
-	self:Message2(267878, "red")
+	self:Message(267878, "red")
 	self:PlaySound(267878, "warning")
 	self:CastBar(267878, 11)
 	self:CDBar(267878, 42.5)
@@ -212,7 +212,7 @@ function mod:UldirDefensiveBeam(args)
 	end
 	self:StopBar(L.sideLaser)
 	self:StopBar(L.upLaser)
-	self:Message2(268253, "yellow", beamType)
+	self:Message(268253, "yellow", beamType)
 	self:PlaySound(268253, "alert")
 	self:CastBar(268253, castTime, beamType)
 	self:CDBar(268253, timer, nextBeam)

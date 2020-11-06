@@ -309,7 +309,7 @@ do
 		if unit == "boss1" then -- Check stage changes
 			local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
 			if hp < nextStageWarning then -- Intermission at 70% & 45%
-				self:Message2("stages", "green", CL.soon:format(CL.intermission), false)
+				self:Message("stages", "green", CL.soon:format(CL.intermission), false)
 				nextStageWarning = nextStageWarning - 25
 				if nextStageWarning < 30 then
 					self:UnregisterUnitEvent(event, unit)
@@ -351,7 +351,7 @@ do
 	end
 
 	function mod:UmbralShellRemoved(args)
-		self:Message2(args.spellId, "cyan", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+		self:Message(args.spellId, "cyan", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
 		self:PlaySound(args.spellId, "info", nil, args.destName)
 		if self:CheckOption(-19055, "INFOBOX") then
 			absorbActive = false
@@ -370,7 +370,7 @@ do
 			scheduled = mod:ScheduleTimer("CheckRune", 0.1)
 		elseif shieldActive == true then
 			shieldActive = false
-			mod:Message2(284809, "cyan" , CL.over:format(mod:SpellName(284809))) -- Abyssal Collapse
+			mod:Message(284809, "cyan" , CL.over:format(mod:SpellName(284809))) -- Abyssal Collapse
 			mod:PlaySound(284809, "info")
 			mod:StopBar(CL.cast:format(mod:SpellName(284809)))
 			if self:CheckOption(-19055, "INFOBOX") then
@@ -382,7 +382,7 @@ do
 	function mod:AbyssalCollapseStart(args)
 		shieldActive = true
 		castOver = GetTime() + 20
-		self:Message2(args.spellId, "cyan")
+		self:Message(args.spellId, "cyan")
 		self:PlaySound(args.spellId, "long")
 		self:CastBar(args.spellId, 20)
 		scheduled = mod:ScheduleTimer("CheckRune", 0.5)
@@ -394,7 +394,7 @@ do
 	function mod:AbyssalCollapseSuccess(args)
 		shieldActive = false
 		castOver = 0
-		self:Message2(args.spellId, "cyan" , CL.over:format(args.spellName))
+		self:Message(args.spellId, "cyan" , CL.over:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 		self:StopBar(CL.cast:format(args.spellName))
 		if self:CheckOption(-19055, "INFOBOX") then
@@ -429,7 +429,7 @@ end
 
 function mod:OblivionTear(args)
 	self:StopBar(args.spellId)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	oblivionTearCount = oblivionTearCount + 1
 	local tearCooldown = 0
@@ -447,7 +447,7 @@ end
 
 function mod:VoidCrash(args)
 	self:StopBar(CL.count:format(args.spellName, voidCrashCount))
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, voidCrashCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, voidCrashCount))
 	self:PlaySound(args.spellId, "alert")
 	voidCrashCount = voidCrashCount + 1
 	self:Bar(args.spellId, 31.6, CL.count:format(args.spellName, voidCrashCount))
@@ -456,7 +456,7 @@ end
 function mod:EyesofNZoth(args)
 	if self:Mythic() and ((eyesCount == maddeningCount+1) and stage == 1) then return end -- Also uses Eye's of N'zoth cast to trigger MAddening Eyes, is this the same outside mythic? XXX
 	self:StopBar(CL.count:format(args.spellName, eyesCount))
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, eyesCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, eyesCount))
 	self:PlaySound(args.spellId, "long")
 	eyesCount = eyesCount + 1
 	self:Bar(args.spellId, stage == 3 and (self:Mythic() and 42.2 or 47) or self:Mythic() and 75 or 33, CL.count:format(args.spellName, eyesCount))
@@ -469,7 +469,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:StopBar(CL.count:format(args.spellName, maddeningCount))
-			self:Message2(args.spellId, "orange", CL.count:format(args.spellName, maddeningCount))
+			self:Message(args.spellId, "orange", CL.count:format(args.spellName, maddeningCount))
 			self:PlaySound(args.spellId, "alarm")
 			self:CastBar(args.spellId, 4.5, CL.count:format(args.spellName, maddeningCount))
 			maddeningCount = maddeningCount + 1
@@ -480,7 +480,7 @@ end
 
 function mod:GiftofNZothObscurity(args)
 	self:StopBar(CL.count:format(args.spellName, giftCount))
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, giftCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, giftCount))
 	self:PlaySound(args.spellId, "warning")
 	giftCount = giftCount + 1
 	self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, giftCount))
@@ -488,7 +488,7 @@ end
 
 function mod:CallUndyingGuardian(args)
 	self:StopBar(CL.count:format(args.spellName, guardianCount))
-	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, guardianCount))
+	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, guardianCount))
 	self:PlaySound(args.spellId, "info")
 	guardianCount = guardianCount + 1
 	self:Bar(args.spellId, stage == 3 and 31.5 or 46.2, CL.count:format(args.spellName, guardianCount))
@@ -497,7 +497,7 @@ end
 
 function mod:VoidShieldApplied(args)
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "green", CL.intermission, false)
+	self:Message("stages", "green", CL.intermission, false)
 	self:Bar("stages", 15.8, CL.intermission, args.spellId)
 
 	-- Stage 1 Bars
@@ -521,7 +521,7 @@ end
 function mod:VoidShieldRemoved(args)
 	stage = stage + 1
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "cyan", CL.stage:format(stage), false)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 
 	oblivionTearCount = 1
 	voidCrashCount = 1
@@ -562,7 +562,7 @@ end
 -- Stage Two: His Dutiful Servants
 function mod:GiftofNZothHysteria(args)
 	self:StopBar(CL.count:format(args.spellName, giftCount))
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, giftCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, giftCount))
 	self:PlaySound(args.spellId, "warning")
 	giftCount = giftCount + 1
 	self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, giftCount))
@@ -576,7 +576,7 @@ do
 			prev = t
 			mindbenderList = {} -- Reset list for marking
 			self:StopBar(CL.count:format(self:SpellName(-19118), mindbenderCount))
-			self:Message2(args.spellId, "yellow", CL.count:format(self:SpellName(-19118), mindbenderCount), 285427) -- Primordial Mindbender, Consume Essence icon
+			self:Message(args.spellId, "yellow", CL.count:format(self:SpellName(-19118), mindbenderCount), 285427) -- Primordial Mindbender, Consume Essence icon
 			self:PlaySound(args.spellId, "long")
 			mindbenderCount = mindbenderCount + 1
 			self:CDBar(-19118, 60.0, CL.count:format(self:SpellName(-19118), mindbenderCount), 285427) -- Primordial Mindbender, Consume Essence icon
@@ -596,7 +596,7 @@ do
 
 		local _, ready = self:Interrupter(args.sourceGUID)
 		if ready then
-			self:Message2(args.spellId, "yellow")
+			self:Message(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
 		end
 	end
@@ -611,7 +611,7 @@ end
 
 function mod:UnknowableTerror(args)
 	self:StopBar(CL.count:format(args.spellName, unknowableTerrorCount))
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, unknowableTerrorCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, unknowableTerrorCount))
 	self:PlaySound(args.spellId, "alarm")
 	self:CastBar(args.spellId, self:Mythic() and 6 or 8, CL.count:format(args.spellName, unknowableTerrorCount))
 	unknowableTerrorCount = unknowableTerrorCount + 1
@@ -635,7 +635,7 @@ end
 
 function mod:GiftofNZothLunacy(args)
 	self:StopBar(CL.count:format(args.spellName, giftCount))
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, giftCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, giftCount))
 	self:PlaySound(args.spellId, "warning")
 	giftCount = giftCount + 1
 	self:Bar(args.spellId, 42.6, CL.count:format(args.spellName, giftCount))
@@ -658,7 +658,7 @@ do
 
 	function mod:UnstableResonanceStart(args)
 		self:StopBar(CL.count:format(args.spellName, unstableResonceCount))
-		self:Message2(args.spellId, "red", CL.count:format(args.spellName, unstableResonceCount))
+		self:Message(args.spellId, "red", CL.count:format(args.spellName, unstableResonceCount))
 		self:PlaySound(args.spellId, "warning")
 		unstableResonceCount = unstableResonceCount + 1
 		nextUnstableResonance = GetTime() + 42
@@ -681,7 +681,7 @@ do
 
 	function mod:UnstableResonanceDebuff(args) -- 293653 Unstable Resonance
 		if self:Me(args.destGUID) then
-			self:Message2(293653, "blue", CL.you_icon:format(debuffNames[args.spellId], debuffMarks[args.spellId]), args.spellId)
+			self:Message(293653, "blue", CL.you_icon:format(debuffNames[args.spellId], debuffMarks[args.spellId]), args.spellId)
 			self:Flash(293653, args.spellId)
 			self:PlaySound(293653, "alarm")
 			if self:GetOption("custom_off_repeating_resonance_say") then
@@ -729,7 +729,7 @@ do
 
 	function mod:UnstableResonanceDebuffRemoved(args) -- 293653 Unstable Resonance
 		if self:Me(args.destGUID) then
-			self:Message2(293653, "green", CL.removed:format(debuffNames[args.spellId]), false)
+			self:Message(293653, "green", CL.removed:format(debuffNames[args.spellId]), false)
 			self:PlaySound(293653, "info")
 			if sayTimer then
 				self:CancelTimer(sayTimer)
@@ -800,7 +800,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(args.spellId, "purple")
+			self:Message(args.spellId, "purple")
 			self:PlaySound(args.spellId, "alert")
 		end
 	end

@@ -97,7 +97,7 @@ end
 --
 
 function mod:DesperateMeasures(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 10)
 end
@@ -108,7 +108,7 @@ do
 		local t = GetTime()
 		if t-prev > 1.5 then
 			prev = t
-			self:Message2(args.spellId, "red")
+			self:Message(args.spellId, "red")
 			self:PlaySound(args.spellId, "alert")
 		end
 	end
@@ -119,27 +119,27 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	local cooldown = self:Mythic() and 30 or 40
 	if msg:find("298050", nil, true) then -- Form Ranks
 		formationCounter = 1
-		self:Message2(298050, "cyan")
+		self:Message(298050, "cyan")
 		self:PlaySound(298050, "info")
 		self:CastBar(298050, 5, CL.count:format(self:SpellName(298050), formationCounter))
 		self:ScheduleTimer("ScheduledFormRanksTimer", 10)
 		self:Bar(301244, cooldown) -- Repeat Performance
 	elseif msg:find("301244", nil, true) then -- Repeat Performance
-		self:Message2(301244, "cyan")
+		self:Message(301244, "cyan")
 		self:PlaySound(301244, "info")
 		self:Bar(297656, cooldown) -- Stand Alone
 	elseif msg:find("297656", nil, true) then -- Stand Alone
 		self:OpenProximity(297656, 3) -- Stand Alone XXX Need to confirm range
-		self:Message2(297656, "cyan")
+		self:Message(297656, "cyan")
 		self:PlaySound(297656, "info")
 		self:Bar(297566, cooldown) -- Deferred Sentence
 	elseif msg:find("297566", nil, true) then -- Deferred Sentence
 		self:CloseProximity(297656) -- Stand Alone
-		self:Message2(297566, "cyan")
+		self:Message(297566, "cyan")
 		self:PlaySound(297566, "info")
 		self:Bar(297585, cooldown) -- Obey or Suffer
 	elseif msg:find("297585", nil, true) then -- Obey or Suffer
-		self:Message2(297585, "cyan")
+		self:Message(297585, "cyan")
 		self:PlaySound(297585, "info")
 		self:Bar(298050, cooldown) -- Form Ranks
 	end
@@ -148,7 +148,7 @@ end
 function mod:ScheduledFormRanksTimer()
 	local maxCount = self:Mythic() and 3 or 4
 	formationCounter = formationCounter + 1
-	self:Message2(298050, "yellow")
+	self:Message(298050, "yellow")
 	self:PlaySound(298050, "alert")
 	self:CastBar(298050, 5, CL.count:format(self:SpellName(298050), formationCounter))
 	if formationCounter < maxCount then
@@ -202,7 +202,7 @@ function mod:FreneticChargeRemoved(args)
 end
 
 function mod:ZealousEruption(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:Bar(args.spellId, 104.5)
 	self:CastBar(args.spellId, 14) -- 4s Cast, 10s Channeling
@@ -243,13 +243,13 @@ function mod:FanaticalVerdictRemoved(args)
 end
 
 function mod:ViolentOutburst(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:Bar(args.spellId, 105.7)
 end
 
 function mod:PotentSpark(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(args.spellId, 92.5)
 end

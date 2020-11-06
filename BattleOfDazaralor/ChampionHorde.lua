@@ -103,7 +103,7 @@ function mod:SacredBladeApplied(args)
 end
 
 function mod:WaveofLight(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, waveofLightCounter))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, waveofLightCounter))
 	self:PlaySound(args.spellId, "alert")
 	waveofLightCounter = waveofLightCounter + 1
 	self:Bar(args.spellId, 11, CL.count:format(args.spellName, waveofLightCounter))
@@ -111,56 +111,56 @@ end
 
 function mod:SealofRetributionApplied(args)
 	if self.isEngaged then -- Casted after boss respawns
-		self:Message2(args.spellId, "cyan")
+		self:Message(args.spellId, "cyan")
 		self:PlaySound(args.spellId, "info")
 		self:CDBar(283933, 51) -- Judgement: Righteousness
 	end
 end
 
 function mod:JudgementRighteousness(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 end
 
 function mod:SealofReckoning(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(284474, 51) -- Judgement: Reckoning
 end
 
 function mod:JudgmentReckoning(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 end
 
 function mod:CalltoArms(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(args.spellId, 100)
 end
 
 function mod:AvengingWrathApplied(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:Penance(args)
 	if self:Interrupter() then
-		self:Message2(args.spellId, "yellow")
+		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
 
 function mod:Heal(args)
 	if self:Interrupter(args.sourceGUID) then
-		self:Message2(args.spellId, "yellow")
+		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "alert")
 	end
 end
 
 function mod:BlindingFaith(args)
 	faithCaster = args.sourceGUID
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar("disorient", 4, L.disorient, L.disorient_icon)
 	self:CDBar(args.spellId, 15)
@@ -187,7 +187,7 @@ do
 end
 
 function mod:PrayerfortheFallen(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, 50)
 end

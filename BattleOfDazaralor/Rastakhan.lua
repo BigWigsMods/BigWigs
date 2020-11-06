@@ -117,7 +117,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 290801 then -- King Rastakhan P2 -> P3 Conversation
 		stage = 3
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 
 		self:StopBar(284933, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
 		self:StopBar(285213) -- Caress of Death
@@ -135,7 +135,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		end
 
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 
 		self:Bar(284933, 20.5, CL.count:format(self:SpellName(284933), toadCount)) -- Plague of Toads
 		self:Bar(287333, 25.5) -- Inevitable End
@@ -151,14 +151,14 @@ function mod:ScorchingDetonationSuccess(args)
 end
 
 function mod:PlagueofToads(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, toadCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, toadCount))
 	self:PlaySound(args.spellId, "alert")
 	toadCount = toadCount + 1
 	self:Bar(args.spellId, stage == 2 and 44 or 20, CL.count:format(args.spellName, toadCount))
 end
 
 function mod:GreaterSerpentTotem(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 	self:Bar(args.spellId, 31.5)
 end
@@ -220,17 +220,17 @@ do
 	function mod:RokaDeath()
 		if tarGuid then
 			if self:Me(tarGuid) then
-				self:Message2(284686, "blue", L.leap_cancelled)
+				self:Message(284686, "blue", L.leap_cancelled)
 				self:CancelYellCountdown(284686)
 			else
-				self:Message2(284686, "green", L.leap_cancelled)
+				self:Message(284686, "green", L.leap_cancelled)
 			end
 		end
 	end
 end
 
 function mod:CrushingLeap(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -266,7 +266,7 @@ function mod:DeathsPresence(args)
 	if stage < 2 then
 		stage = 2
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 		self:StopBar(284781) -- Grievous Axe
 		self:StopBar(290450) -- Seal of Purification
 		self:StopBar(284686) -- Meteor Leap
@@ -304,7 +304,7 @@ function mod:DeathlyWitheringRemoved(args)
 end
 
 function mod:PlagueofFire(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, stage == 3 and 39 or 25.5)
 end
@@ -323,14 +323,14 @@ do
 end
 
 function mod:ZombieDustTotem(args)
-	self:Message2(args.spellId, "cyan", CL.count:format(args.spellName, zombieDustTotemCount))
+	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, zombieDustTotemCount))
 	self:PlaySound(args.spellId, "info")
 	zombieDustTotemCount = zombieDustTotemCount + 1
 	self:Bar(args.spellId, 45, CL.count:format(args.spellName, zombieDustTotemCount))
 end
 
 function mod:CaressofDeath(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 43)
 end
@@ -350,14 +350,14 @@ function mod:DeathsDoorApplied(args)
 end
 
 function mod:InevitableEnd(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, stage == 4 and 62.5 or 52.5)
 	self:CastBar(args.spellId, 6)
 end
 
 function mod:NecroticSmash(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 	self:Bar(args.spellId, 34)
 end

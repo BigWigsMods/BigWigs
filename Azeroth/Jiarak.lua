@@ -55,20 +55,20 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:StormWing(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, firstStorm and 60 or 45) -- pull:11.0, 59.9, 45.2
 	firstStorm = false
 end
 
 function mod:HurricaneCrash(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 	self:Bar(args.spellId, 45)
 end
 
 function mod:MatriarchsCall(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, firstCall and 12 or 45) -- pull:29.2, 12.3, 47.8
 	firstCall = false

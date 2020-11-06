@@ -242,7 +242,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 284993 then -- Move Laminaria to Position // Might want to use Anchor Here 45313
 		stage = 2
-		self:Message2("stages", "cyan", CL.stage:format(2), false)
+		self:Message("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 	end
 end
@@ -275,7 +275,7 @@ end
 -- Sister Katherine
 function mod:ElectricShroud(args)
 	if self:IsSisterOnPlatform() then
-		self:Message2(args.spellId, "red")
+		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "info")
 	end
 	self:CDBar(args.spellId, 35.5)
@@ -283,7 +283,7 @@ end
 
 function mod:VoltaicFlash(args)
 	if self:IsSisterOnPlatform() then
-		self:Message2(args.spellId, "orange")
+		self:Message(args.spellId, "orange")
 		self:PlaySound(args.spellId, "alarm")
 	end
 	self:CDBar(args.spellId, 17)
@@ -315,7 +315,7 @@ function mod:CracklingLightningRemoved(args)
 end
 
 function mod:SisterDeath(args)
-	self:Message2("stages", "cyan", L.killed:format(args.destName), false)
+	self:Message("stages", "cyan", L.killed:format(args.destName), false)
 	self:PlaySound("stages", "long")
 	self:StopBar(287995) -- Electric Shroud
 	self:StopBar(284262) -- Voltaic Flash
@@ -325,7 +325,7 @@ end
 -- Brother Joseph
 function mod:TidalShroud(args)
 	if self:IsBrotherOnPlatform() then
-		self:Message2(args.spellId, "red")
+		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "info")
 	end
 	self:CDBar(args.spellId, 35.5)
@@ -352,7 +352,7 @@ end
 
 function mod:SeasTemptation(args)
 	if self:IsBrotherOnPlatform() then
-		self:Message2(args.spellId, "cyan")
+		self:Message(args.spellId, "cyan")
 		self:PlaySound(args.spellId, "alarm")
 	end
 	self:CDBar(args.spellId, 7)
@@ -361,7 +361,7 @@ end
 function mod:SirenSpawn(args)
 	if self:Mythic() and stage == 2 and not mobCollector[args.sourceGUID] then
 		mobCollector[args.sourceGUID] = true
-		self:Message2(284383, "cyan", CL.incoming:format(CL.count:format(args.sourceName, sirenCount)))
+		self:Message(284383, "cyan", CL.incoming:format(CL.count:format(args.sourceName, sirenCount)))
 		self:PlaySound(284383, "info")
 		sirenCount = sirenCount + 1
 		if sirenCount % 2 == 0 then
@@ -379,7 +379,7 @@ function mod:TemptingSongApplied(args)
 end
 
 function mod:BrotherDeath(args)
-	self:Message2("stages", "cyan", L.killed:format(args.destName), false)
+	self:Message("stages", "cyan", L.killed:format(args.destName), false)
 	self:PlaySound("stages", "long")
 	self:StopBar(286558) -- Tidal Shroud
 	self:StopBar(284362) -- Sea Storm
@@ -388,14 +388,14 @@ end
 
 -- Stage 2
 function mod:CatastrophicTides(args)
-	self:Message2(args.spellId, "red", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 15)
 end
 
 function mod:Interupted(args)
 	if args.extraSpellId == 288696 then -- Catastrophic Tides
-		self:Message2(288696, "green", CL.interrupted:format(args.extraSpellName))
+		self:Message(288696, "green", CL.interrupted:format(args.extraSpellName))
 		self:PlaySound(288696, "info")
 		self:StopBar(CL.cast:format(args.extraSpellName))
 
@@ -439,7 +439,7 @@ do
 		local t = args.time
 		if t-prev > 1.5 then
 			prev = t
-			self:Message2(285118, "orange")
+			self:Message(285118, "orange")
 			self:PlaySound(285118, "alert")
 			self:Bar(285118, self:Mythic() and (stage == 1 and 20 or 17) or 20.6)
 		end
@@ -447,7 +447,7 @@ do
 end
 
 function mod:IreoftheDeep(args)
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, ireCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, ireCount))
 	self:PlaySound(args.spellId, "warning")
 	ireCount = ireCount + 1
 	self:CDBar(args.spellId, self:Mythic() and 32.8 or 32.5, CL.count:format(args.spellName, ireCount))

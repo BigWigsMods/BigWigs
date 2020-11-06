@@ -272,18 +272,18 @@ do
 		if args.time - prev > 2 then
 			prev = args.time
 			if self:MobId(args.sourceGUID) == 153064 then -- Overzealous Hulk
-				self:Message2(-20480, "cyan", self:SpellName(-20480), "achievement_boss_nagabruteboss")
+				self:Message(-20480, "cyan", self:SpellName(-20480), "achievement_boss_nagabruteboss")
 				self:PlaySound(-20480, "long")
 				hulkKillTime = GetTime()
 				self:CDBar(-20480, self:Mythic() and 63 or self:Easy() and 85 or 59, nil, "achievement_boss_nagabruteboss")
 			elseif self:MobId(args.sourceGUID) == 154240 then -- Azshara's Devoted
-				self:Message2(-20408, "yellow", self:SpellName(-20408), "inv_misc_nagamale")
+				self:Message(-20408, "yellow", self:SpellName(-20408), "inv_misc_nagamale")
 				self:PlaySound(-20408, "long")
 			elseif self:MobId(args.sourceGUID) == 155354 then -- Azshara's Indomitable
-				self:Message2(-20410, "yellow", self:SpellName(-20410), "achievement_boss_nagacentaur")
+				self:Message(-20410, "yellow", self:SpellName(-20410), "achievement_boss_nagacentaur")
 				self:PlaySound(-20410, "long")
 			elseif self:MobId(args.sourceGUID) == 154565 then -- Loyal Myrmidon
-				self:Message2(-20355, "yellow", self:SpellName(-20355), "inv_misc_nagamale")
+				self:Message(-20355, "yellow", self:SpellName(-20355), "inv_misc_nagamale")
 				self:PlaySound(-20355, "long")
 				myrmidonCount = myrmidonCount + 1
 				if myrmidonCount < 4 then -- only 3 Myrmidons spawn maximum in Mythic, more in other difficulties unconfirmed
@@ -296,17 +296,17 @@ end
 
 function mod:HulkDeath()
 	local seconds = math.floor((GetTime() - hulkKillTime) * 100)/100
-	self:Message2(-20480, "cyan", L.hulk_killed:format(self:SpellName(-20480), seconds), "achievement_boss_nagabruteboss")
+	self:Message(-20480, "cyan", L.hulk_killed:format(self:SpellName(-20480), seconds), "achievement_boss_nagabruteboss")
 	self:PlaySound(-20480, "info")
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("298787", nil, true) then -- Arcane Orbs
-		self:Message2(298787, "yellow")
+		self:Message(298787, "yellow")
 		self:PlaySound(298787, "alert")
 		self:Bar(298787, 60)
 	elseif msg:find("300522", nil, true) then -- Divides
-		self:Message2(300478, "orange")
+		self:Message(300478, "orange")
 		self:PlaySound(300478, "warning")
 		self:Bar(300478, stage == 4 and 86 or stage == 3 and 59.9 or 65)
 		self:CastBar(300478, stage == 4 and 45 or 30)
@@ -317,7 +317,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 302034 then -- Adjure // 2nd Intermission Start / Stage 3
 		stage = 3
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "green", CL.intermission, false)
+		self:Message("stages", "green", CL.intermission, false)
 		fails = 0
 
 		self:ScheduleTimer("EndIntermission", 27) -- To display fails/notify stage 3 starts
@@ -351,7 +351,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	elseif spellId == 302860 then -- Queen Azshara (Stage 4)
 		stage = 4
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 
 		self:StopBar(-20355) -- Loyal Myrmidon
 		self:StopBar(304475) -- Arcane Jolt
@@ -377,7 +377,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	end
 end
 function mod:EndIntermission()
-	self:Message2("stages", "cyan", L.fails_message:format(CL.stage:format(stage), fails), false)
+	self:Message("stages", "cyan", L.fails_message:format(CL.stage:format(stage), fails), false)
 	self:PlaySound("stages", "long")
 end
 
@@ -388,7 +388,7 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message2(args.spellId, "orange")
+			self:Message(args.spellId, "orange")
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -440,7 +440,7 @@ do
 		local t = GetTime()
 		if t-prev > 1.5 then
 			prev = t
-			self:Message2(args.spellId, "orange")
+			self:Message(args.spellId, "orange")
 			self:PlaySound(args.spellId, "long")
 			self:CDBar(297934, 65) -- Longing
 		end
@@ -450,7 +450,7 @@ do
 		local t = GetTime()
 		if t-prev > 1.5 then
 			prev = t
-			self:Message2(args.spellId, "orange")
+			self:Message(args.spellId, "orange")
 			self:PlaySound(args.spellId, "long")
 			self:CDBar(297937, 20) -- Painful Memories
 		end
@@ -463,7 +463,7 @@ do
 		local t = GetTime()
 		if t-prev > 1.5 then
 			prev = t
-			self:Message2(args.spellId, "red")
+			self:Message(args.spellId, "red")
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -471,7 +471,7 @@ end
 
 -- Aethane
 function mod:LightningOrbs(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 18.5)
 end
@@ -479,7 +479,7 @@ end
 function mod:ChainLightning(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
-		self:Message2(args.spellId, "orange")
+		self:Message(args.spellId, "orange")
 		if ready then
 			self:PlaySound(args.spellId, "alert")
 		end
@@ -487,7 +487,7 @@ function mod:ChainLightning(args)
 end
 
 function mod:ColdBlast(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 11)
 end
@@ -501,7 +501,7 @@ function mod:ColdBlastApplied(args)
 end
 
 function mod:IceShard(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "warning")
 end
 
@@ -528,18 +528,18 @@ end
 
 -- Overzealous Hulk
 function mod:GroundPound(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 end
 
 function mod:Infuriated(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
 -- Queen Azshara
 function mod:Beckon(args)
-	self:Message2(299094, "yellow")
+	self:Message(299094, "yellow")
 	self:CDBar(299094, self:Mythic() and (stage == 1 and 45 or stage == 3 and 35 or stage == 4 and 98 or 80) or (stage > 2 and 70 or 85)) -- XXX Stage 4 unkown timer
 end
 
@@ -554,7 +554,7 @@ end
 
 -- Intermission
 function mod:QueensDecree(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 	self:StopBar(297937) -- Painful Memories
 	self:StopBar(298014) -- Cold Blast
@@ -630,7 +630,7 @@ end
 -- Stage 2
 function mod:ReversalOfFortune(args)
 	self:PlaySound(args.spellId, "long")
-	self:Message2(args.spellId, "cyan", L.reversal)
+	self:Message(args.spellId, "cyan", L.reversal)
 	self:CastBar(args.spellId, 30, L.reversal)
 	self:CDBar(args.spellId, 80, L.reversal)
 end
@@ -638,7 +638,7 @@ end
 function mod:ArcaneMasteryApplied(args)
 	stage = 2
 	self:PlaySound("stages", "long")
-	self:Message2("stages", "cyan", L.fails_message:format(CL.stage:format(stage), fails), false)
+	self:Message("stages", "cyan", L.fails_message:format(CL.stage:format(stage), fails), false)
 	detonationCount = 1
 	burstCount = 1
 
@@ -667,13 +667,13 @@ function mod:ArcaneVulnerabilityApplied(args)
 end
 
 function mod:ArcaneJolt(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 6.1)
 end
 
 function mod:ArcaneDetonation(args)
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, detonationCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, detonationCount))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, self:Mythic() and 4 or self:Heroic() and 5 or 6, CL.count:format(args.spellName, detonationCount)) -- Mythic 4s, Heroic 5s, Normal/LFR 6s
 	detonationCount = detonationCount + 1
@@ -731,7 +731,7 @@ end
 
 function mod:GreaterReversalOfFortune(args)
 	self:PlaySound(args.spellId, "long")
-	self:Message2(args.spellId, "cyan", L.greater_reversal)
+	self:Message(args.spellId, "cyan", L.greater_reversal)
 	self:CastBar(args.spellId, 30, L.greater_reversal)
 	self:CDBar(args.spellId, self:Mythic() and (stage == 4 and 81 or 90) or 70, L.greater_reversal)
 end
@@ -743,7 +743,7 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:Message2(args.spellId, "yellow")
+			self:Message(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
 			portalCount = portalCount + 1
 			self:Bar(args.spellId, self:Mythic() and portalTimersMythic[portalCount] or portalCount == 2 and 40 or portalCount == 3 and 44 or 35) -- XXX Make a Table for more data
@@ -752,7 +752,7 @@ do
 end
 
 function mod:PiercingGaze(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "long")
 	piercingCount = piercingCount + 1
 	self:Bar(args.spellId, self:Mythic() and piercingTimersMythic[piercingCount] or 45)
@@ -769,7 +769,7 @@ function mod:VoidTouchedApplied(args)
 end
 
 function mod:Overload(args)
-	self:Message2(args.spellId, "red", CL.count:format(args.spellName, overloadCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, overloadCount))
 	self:PlaySound(args.spellId, "warning")
 	overloadCount = overloadCount + 1
 	self:CDBar(args.spellId, self:Mythic() and 55 or 45, CL.count:format(args.spellName, overloadCount))

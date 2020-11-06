@@ -155,7 +155,7 @@ end
 
 function mod:Sinseeker(args)
 	self:StopBar(CL.count:format(args.spellName, sinseekerCount))
-	self:Message2(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, sinseekerCount)))
+	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, sinseekerCount)))
 	sinseekerCount = sinseekerCount + 1
 	self:CDBar(args.spellId, 51, CL.count:format(args.spellName, sinseekerCount))
 end
@@ -185,7 +185,7 @@ function mod:HuntsmansMarkRemoved(args)
 end
 
 function mod:Spreadshot(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 12.2)
 end
@@ -224,7 +224,7 @@ function mod:ViciousLungeRemoved(args)
 end
 
 function mod:MargoreDeath()
-	self:Message2("stages", "cyan", L.killed:format(self:SpellName(-22312)), false) -- Margore
+	self:Message("stages", "cyan", L.killed:format(self:SpellName(-22312)), false) -- Margore
 
 	self:StopBar(334971) -- Jagged Claws
 	self:StopBar(CL.count:format(self:SpellName(334945), bloodyThrashCount)) -- Bloody Thrash
@@ -235,7 +235,7 @@ end
 --[[ Bargast ]]--
 
 function mod:RipSoulStart(args)
-	self:Message2(args.spellId, "red", CL.casting:format(CL.count:format(args.spellName, ripSoulCount)))
+	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(args.spellName, ripSoulCount)))
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, 2.5, CL.count:format(args.spellName, ripSoulCount))
 	ripSoulCount = ripSoulCount + 1
@@ -244,19 +244,19 @@ end
 
 function mod:RipSoul(args)
 	if self:Healer() then
-		self:Message2(args.spellId, "green", CL.spawned:format(args.spellName)) -- probably need a better name
+		self:Message(args.spellId, "green", CL.spawned:format(args.spellName)) -- probably need a better name
 		self:PlaySound(args.spellId, "info")
 	end
 end
 
 function mod:DevourSoul(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 end
 
 
 function mod:ShadesOfBargast(args)
-	self:Message2(args.spellId, "green", CL.incoming:format(CL.count:format(args.spellName, shadesOfBargastCount)))
+	self:Message(args.spellId, "green", CL.incoming:format(CL.count:format(args.spellName, shadesOfBargastCount)))
 	self:PlaySound(args.spellId, "long")
 	shadesOfBargastCount = shadesOfBargastCount + 1
 	self:Bar(args.spellId, 60, CL.count:format(args.spellName, shadesOfBargastCount))
@@ -268,7 +268,7 @@ end
 -- 		local t = args.time
 -- 		if t-prev > 10 then
 -- 			prev = t
--- 			self:Message2(args.spellId, "red")
+-- 			self:Message(args.spellId, "red")
 -- 			self:PlaySound(args.spellId, "info")
 -- 			self:CastBar(args.spellId, 6)
 -- 			self:Bar(args.spellId, 36.5)
@@ -281,7 +281,7 @@ end
 -- end
 
 function mod:BargastDeath()
-	self:Message2("stages", "cyan", L.killed:format(self:SpellName(-22311)), false) -- Bargast
+	self:Message("stages", "cyan", L.killed:format(self:SpellName(-22311)), false) -- Bargast
 
 	self:StopBar(CL.count:format(self:SpellName(334797), ripSoulCount)) -- Rip Soul
 	self:StopBar(CL.count:format(self:SpellName(334757), shadesOfBargastCount)) -- Shades Of Bargast
@@ -327,7 +327,7 @@ do
 end
 
 function mod:HecutisDeath()
-	self:Message2("stages", "cyan", L.killed:format(self:SpellName(-22310)), false) -- Hecutis
+	self:Message("stages", "cyan", L.killed:format(self:SpellName(-22310)), false) -- Hecutis
 
 	self:StopBar(CL.count:format(self:SpellName(334852), petrifyingHowlCount)) -- Petrifying Howl
 end

@@ -82,7 +82,7 @@ end
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 301428 then -- Slipstream / Intermission
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "green", CL.intermission, false)
+		self:Message("stages", "green", CL.intermission, false)
 
 		self:StopBar(292159) -- Toxic Spine
 		self:StopBar(301494) -- Piercing Barb
@@ -99,14 +99,14 @@ function mod:DarkestDepthsApplied(args)
 end
 
 function mod:PufferfishDeath(args)
-	self:Message2(292205, "green") -- Bioluminescent Cloud
+	self:Message(292205, "green") -- Bioluminescent Cloud
 	self:PlaySound(292205, "info")
 	--self:CastBar(292205, 20) -- XXX Find out how long it lasts
 end
 
 function mod:BioluminescenceApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.you:format(args.spellName))
+		self:Message(args.spellId, "green", CL.you:format(args.spellName))
 		self:PlaySound(args.spellId, "long")
 	end
 end
@@ -120,7 +120,7 @@ end
 
 function mod:RadiantBiomass(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.you:format(args.spellName))
+		self:Message(args.spellId, "green", CL.you:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 	end
 end
@@ -134,7 +134,7 @@ function mod:FeedingFrenzyApplied(args)
 end
 
 function mod:ToxicSpine(args)
-	self:Message2(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	local timeToIntermission = intermissionTime - GetTime()
 	if stage == 3 or timeToIntermission > 20 then
@@ -150,7 +150,7 @@ function mod:ToxicSpineApplied(args)
 end
 
 function mod:ShockPulse(args)
-	self:Message2(args.spellId, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	local timeToIntermission = intermissionTime - GetTime()
 	if stage == 3 or timeToIntermission > 30 then
@@ -185,7 +185,7 @@ function mod:PiercingBarbRemoved(args)
 end
 
 function mod:Cavitation(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 32)
 end
@@ -194,7 +194,7 @@ function mod:Interupted(args)
 	if args.extraSpellId == 292083 then -- Cavitation // Stage 2/3
 		stage = stage + 1
 		self:PlaySound("stages", "long")
-		self:Message2("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 		self:StopBar(CL.cast:format(args.extraSpellName))
 
 		self:Bar(292159, 8) -- Toxic Spine

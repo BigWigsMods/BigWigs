@@ -99,7 +99,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		muttersCount = muttersCount + 1
 		self:Bar(310358, 51, CL.count:format(self:SpellName(310358), muttersCount))
 	elseif spellId == 310390 then -- Void Glare
-		self:Message2(spellId, "orange", CL.count:format(self:SpellName(310390), glareCount))
+		self:Message(spellId, "orange", CL.count:format(self:SpellName(310390), glareCount))
 		self:PlaySound(spellId, "alert")
 		glareCount = glareCount + 1
 		self:Bar(spellId, 46, CL.count:format(self:SpellName(310390), glareCount))
@@ -109,14 +109,14 @@ end
 function mod:UNIT_POWER_UPDATE(_, unit)
 	local power = UnitPower(unit)
 	if power > 80 then
-		self:Message2(308941, "cyan", CL.soon:format(CL.count:format(self:SpellName(308941), throesCount))) -- Throes of Agony
+		self:Message(308941, "cyan", CL.soon:format(CL.count:format(self:SpellName(308941), throesCount))) -- Throes of Agony
 		self:PlaySound(308941, "info")
 		self:UnregisterUnitEvent("UNIT_POWER_UPDATE", unit)
 	end
 end
 
 function mod:ThroesofAgony(args)
-	self:Message2(args.spellId, "orange", CL.count:format(args.spellName, throesCount))
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, throesCount))
 	self:PlaySound(args.spellId, "long")
 	throesCount = throesCount + 1
 end
@@ -126,7 +126,7 @@ function mod:ThroesofAgonySuccess()
 end
 
 function mod:VoidGrip(args)
-	self:Message2(args.spellId, "red")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -149,7 +149,7 @@ function mod:VolatileSeedRemoved(args)
 end
 
 function mod:EntropicCrash(args)
-	self:Message2(args.spellId, "yellow", CL.count:format(args.spellName, crashCount))
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, crashCount))
 	self:PlaySound(args.spellId, "alert")
 	crashCount = crashCount + 1
 	self:Bar(args.spellId, 45, CL.count:format(args.spellName, crashCount))
@@ -176,14 +176,14 @@ end
 
 function mod:VoidInfusedIchor(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.you:format(args.spellName))
+		self:Message(args.spellId, "green", CL.you:format(args.spellName))
 		self:PlaySound(args.spellId, "warning")
 	end
 end
 
 function mod:VoidInfusedIchorRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message2(args.spellId, "green", CL.over:format(args.spellName))
+		self:Message(args.spellId, "green", CL.over:format(args.spellName))
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -203,16 +203,16 @@ do
 end
 
 function mod:EyeDeath()
-	self:Message2("adds", "cyan", L.eye_killed, false)
+	self:Message("adds", "cyan", L.eye_killed, false)
 	self:PlaySound("adds", "info")
 end
 
 function mod:TentacleDeath()
-	self:Message2("adds", "cyan", L.tentacle_killed, false)
+	self:Message("adds", "cyan", L.tentacle_killed, false)
 	self:PlaySound("adds", "info")
 end
 
 function mod:MawDeath()
-	self:Message2("adds", "cyan", L.maw_killed, false)
+	self:Message("adds", "cyan", L.maw_killed, false)
 	self:PlaySound("adds", "info")
 end

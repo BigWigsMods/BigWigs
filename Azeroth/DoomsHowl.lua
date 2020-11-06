@@ -72,13 +72,13 @@ function mod:BOSS_KILL(_, id)
 end
 
 function mod:ShatteringPulse(args)
-	self:Message2(args.spellId, "purple")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, 20) -- 20-25
 end
 
 function mod:SiegeUp(args)
-	self:Message2(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 	self:StopBar(args.spellName)
 	self:CastBar(args.spellId, 65)
@@ -86,7 +86,7 @@ function mod:SiegeUp(args)
 end
 
 function mod:SiegeUpOver(args)
-	self:Message2(args.spellId, "cyan", CL.over:format(args.spellName))
+	self:Message(args.spellId, "cyan", CL.over:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
 	self:CDBar(args.spellId, 85)
 	self:OpenProximity(271164, 8) -- Mortar Shot
@@ -98,7 +98,7 @@ do
 	local prev = 0
 	function mod:BattleFieldRepair(args)
 		local raidIcon = CombatLog_String_GetIcon(args.sourceRaidFlags)
-		self:Message2(args.spellId, "red", raidIcon .. args.spellName)
+		self:Message(args.spellId, "red", raidIcon .. args.spellName)
 		local t = args.time
 		if t-prev > 0.5 then
 			prev = t
@@ -137,7 +137,7 @@ do
 			local t = GetTime()
 			if t-prev > 0.5 then
 				prev = t
-				self:Message2(spellId, "orange")
+				self:Message(spellId, "orange")
 				self:PlaySound(spellId, "info")
 				self:CDBar(spellId, 12) -- 12-14
 			end
