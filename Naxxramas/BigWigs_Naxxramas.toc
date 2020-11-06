@@ -1,0 +1,32 @@
+﻿## Interface: 11305
+
+## Title: Big igs [|cffeda55fNaxxramas|r]
+## Title-deDE: BigWigs [|cffeda55fNaxxramas|r]
+## Title-esES: BigWigs [|cffeda55fNaxxramas|r]
+## Title-esMX: BigWigs [|cffeda55fNaxxramas|r]
+## Title-frFR: BigWigs [|cffeda55fNaxxramas|r]
+## Title-itIT: BigWigs [|cffeda55fNaxxramas|r]
+## Title-koKR: BigWigs [|cffeda55f낙스라마스|r]
+## Title-ptBR: BigWigs [|cffeda55fNaxxramas|r]
+## Title-ruRU: BigWigs [|cffeda55fНаксрамас|r]
+## Title-zhCN: BigWigs [|cffeda55f纳克萨玛斯|r]
+## Title-zhTW: BigWigs [|cffeda55f納克薩瑪斯|r]
+## Notes: BigWigs Naxxramas Modules
+## Notes-deDE: BigWigs Naxxramas Modules
+## Notes-esES: BigWigs Naxxramas Modules
+## Notes-esMX: BigWigs Naxxramas Modules
+## Notes-frFR: Modules BigWigs concernant Naxxramas
+## Notes-itIT: BigWigs Naxxramas Modules
+## Notes-koKR: BigWigs Naxxramas Modules
+## Notes-ptBR: BigWigs Naxxramas Modules
+## Notes-ruRU: BigWigs Naxxramas Modules
+## Notes-zhCN: BigWigs 纳克萨玛斯模块
+## Notes-zhTW: BigWigs 納克薩瑪斯模組
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 533
+
+modules.xml
