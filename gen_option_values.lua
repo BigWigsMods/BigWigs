@@ -33,7 +33,7 @@ local valid_sounds = {
 }
 local color_methods = {
 	MessageOld = 2,
-	Message2 = 2,
+	Message = 2,
 	TargetMessageOld = 3,
 	TargetMessage = 2,
 	TargetsMessage = 2,

@@ -1753,7 +1753,7 @@ function boss:MessageOld(key, color, sound, text, icon)
 	end
 end
 
-function boss:Message2(key, color, text, icon)
+function boss:Message(key, color, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
 		self:SendMessage("BigWigs_Message", self, key, type(text) == "string" and text or spells[text or key], color, icon ~= false and icons[icon or key], isEmphasized)
