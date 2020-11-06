@@ -3,7 +3,10 @@
 
 local loadstring = loadstring or load -- 5.2 compat
 
+local opt = {}
+
 local modules = {}
+local modules_l = nil
 local module_colors = {}
 local module_sounds = {}
 
@@ -29,18 +32,18 @@ local valid_sounds = {
 	Warning = true, warning = true,
 }
 local color_methods = {
+	MessageOld = 2,
 	Message = 2,
-	Message2 = 2,
-	TargetMessage = 3,
-	TargetMessage2 = 2,
+	TargetMessageOld = 3,
+	TargetMessage = 2,
 	TargetsMessage = 2,
 	StackMessage = 4,
 	DelayedMessage = 3,
 }
 local sound_methods = {
 	PlaySound = 2,
-	Message = 3,
-	TargetMessage = 4,
+	MessageOld = 3,
+	TargetMessageOld = 4,
 	StackMessage = 5,
 	DelayedMessage = 6,
 }
@@ -56,7 +59,7 @@ local valid_methods = {
 	Say = "SAY",
 	SayCountdown = "SAY_COUNTDOWN",
 	CancelSayCountdown = "SAY_COUNTDOWN",
-	Yell2 = "SAY",
+	Yell = "SAY",
 	YellCountdown = "SAY_COUNTDOWN",
 	CancelYellCountdown = "SAY_COUNTDOWN",
 	OpenAltPower = "ALTPOWER",
@@ -166,6 +169,10 @@ else
 	end
 	warn = print
 end
+local function print(...)
+	if opt.quiet then return end
+	_G.print(...)
+end
 
 
 -- Return a table containing the value if value is not a table.
@@ -216,11 +223,8 @@ end
 
 -- Removes some things that break simple comma splitting.
 local function clean(str)
-	str = str:gsub(":Dispeller%b()", "")
-	str = str:gsub(":format%b()", "")
-	str = str:gsub("UnitBuff%b()", "UnitBuff")
-	str = str:gsub("UnitDebuff%b()", "UnitDebuff")
-	str = str:gsub("UnitIsUnit%b()", "UnitIsUnit")
+	-- :Dispeller() || :format() || UnitIsUnit()
+	str = str:gsub("(:?%a+)%b()", "%1")
 	return str
 end
 
@@ -283,27 +287,23 @@ local function dumpValues(path, name, options_table)
 		end
 	end
 	if data == "" then
-		data = "-- Don't error because I'm empty, please."
+		data = "-- Don't error because I'm empty, please.\r\n"
 	end
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
-		f = assert(io.open(file, "w"))
-		f:write(data)
-		f:close()
-		warn("    Updated " .. file)
+		if not opt.dryrun then
+			f = io.open(file, "wb")
+			if not f then
+				error(string.format("    %s: File not found!", file))
+			else
+				f:write(data)
+				f:close()
+				warn("    Updated " .. file)
+			end
+		else
+			warn("    Updated " .. file .. " (skipped)")
+		end
 	end
-end
-
-local function dump(module_dir)
-	if not next(modules) then return end
-
-	local path = module_dir .. "Options/"
-	-- assert(os.execute("mkdir -p \"" .. path .. "\"")) -- XXX Remove this
-
-	dumpValues(path, "Colors", module_colors)
-	dumpValues(path, "Sounds", module_sounds)
-
-	print(string.format("    Parsed %d modules.", #modules))
 end
 
 
@@ -434,35 +434,18 @@ local function checkForAPI(line)
 end
 
 
--- Read modules.xml and return a table of boss module file paths.
-local function parseXML(file)
-	print(string.format("Checking %s", file))
+-- Read boss module file and parse it for colors and sounds.
+local function parseLua(file)
+	local file_name = file:match(".*/(.*)$") or file
+	if opt.quiet then
+		file_name = file
+	end
 
 	local f = io.open(file, "r")
 	if not f then
-		error("    File not found!")
+		error(string.format("    \"%s\" not found!", file_name))
 		return
 	end
-
-	local list = {}
-	-- The includes are relative, so we need to prepend the path of the current
-	-- xml file for opening the file relative to the project root.
-	local path = file:match(".*/") or ""
-
-	for line in f:lines() do
-		local file_name = line:match("^%s*<Include file=\"(.-)\"") or line:match("^%s*<Script file=\"(.-)\"")
-		if file_name then
-			table.insert(list, path .. file_name)
-		end
-	end
-
-	return list
-end
-
--- Read boss module file and parse it for colors and sounds.
-local function parseLua(file)
-	local f = io.open(file, "r")
-	if not f then return end
 
 	local data = f:read("*all")
 	f:close()
@@ -483,10 +466,9 @@ local function parseLua(file)
 	end
 	data = nil
 
-	local file_name = file:match(".*/(.*)$") or file
-
 	local options, option_keys = {}, {}
 	local methods, registered_methods = {Win=true}, {}
+	local event_callbacks = {}
 	local current_func = nil
 	local rep = {}
 	for n, line in ipairs(lines) do
@@ -544,10 +526,18 @@ local function parseLua(file)
 			if not options[callback] then
 				options[callback] = {}
 			end
+			if not event_callbacks[event] then
+				event_callbacks[event] = {}
+			end
 			for _, v in next, strsplit(spells) do
 				v = tonumber(v)
 				if not contains(options[callback], v) then
 					table.insert(options[callback], v)
+				end
+				if not contains(event_callbacks[event], v) then
+					table.insert(event_callbacks[event], v)
+				else
+					error(string.format("    %s:%d: Registered Log event \"%s\" with spell id \"%d\" multiple times", file_name, n, event, v))
 				end
 			end
 			if not next(options[callback]) then
@@ -746,6 +736,81 @@ local function parseLua(file)
 	end
 end
 
+local function parseLocale(file)
+	local file_locale = file:match("Locales/(.-)%.lua$")
+	local file_name = file
+	if not opt.quiet then
+		file_name = "Locales/"..file_locale..".lua"
+	end
+
+	local f = io.open(file, "r")
+	if not f then
+		error(string.format("    \"%s\" not found!", file))
+		return
+	end
+
+	local data = f:read("*all")
+	f:close()
+
+	local n = 0
+	for line in data:gmatch("(.-)\r?\n") do
+		n = n + 1
+
+		local module_name, module_locale
+		if file_locale == "esES" then
+			-- El español es muy especial
+			local module_name2, module_locale2
+			module_name, module_locale, module_name2, module_locale2 = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%) or BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+			if module_name then
+				-- Make sure both NewBossLocale calls match
+				if module_name ~= module_name2 then
+					error(string.format("    %s:%d: Module name mismatch! %q != %q", file_name, n, module_name, module_name2))
+				end
+				if module_locale2 ~= "esMX" then
+					error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, module_locale2, "esMX"))
+				end
+			end
+		else
+			module_name, module_locale = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+		end
+
+		if module_name then
+			if module_locale ~= file_locale then
+				error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, module_locale, file_locale))
+			end
+			if not contains(modules_l, module_name) then
+				error(string.format("    %s:%d: Invalid module name %q", file_name, n, module_name))
+			end
+		end
+	end
+end
+
+
+-- Read modules.xml and return a table of file paths.
+local function parseXML(file)
+	local f = io.open(file, "r")
+	if not f then
+		error("    File not found!")
+		return
+	end
+
+	local list = {}
+	-- The includes are relative, so we need to prepend the path of the current
+	-- xml file for opening the file relative to the project root.
+	local path = file:match(".*/") or ""
+
+	for line in f:lines() do
+		local file_name = line:match("^%s*<Include file=\"(.-)\"") or line:match("^%s*<Script file=\"(.-)\"")
+		if file_name then
+			file = path .. file_name
+			file = file:gsub("\\", "/")
+			table.insert(list, file)
+		end
+	end
+
+	return list
+end
+
 local function parse(file)
 	if type(file) == "table" then
 		-- Run the results of parseXML.
@@ -753,21 +818,36 @@ local function parse(file)
 			parse(f)
 		end
 		-- Write the results.
-		if #file > 0 then
-			dump(file[1]:match(".*/") or "")
+		if #file > 0 and #modules > 0 then
+			local path = (file[1]:match(".*/") or "") .. "Options/"
+			dumpValues(path, "Colors", module_colors)
+			dumpValues(path, "Sounds", module_sounds)
+			print(string.format("    Parsed %d modules.", #modules))
 		end
+		-- Still need you for locales if they're processed from a parent xml file (old style)
+		modules_l = modules
 		-- Reset!
 		modules = {}
 		module_colors = {}
 		module_sounds = {}
 	elseif file then
-		file = file:gsub("\\", "/")
 		if string.match(file, "%.lua$") then
-			-- We have an actual lua file so parse it for sounds!
+			-- We have an actual lua file so parse it!
 			parseLua(file)
 		elseif string.match(file, "modules%.xml$") then
 			-- Scan module includes for lua files.
+			print(string.format("Checking %s", file))
 			parse(parseXML(file))
+		elseif string.match(file, "locales%.xml$") then
+			-- Parse locale files to check NewBossLocale lines.
+			if #modules ~= 0 then
+				-- The locales are in the same xml file as the module files,
+				-- so data hasn't been dumped and reset yet
+				modules_l = modules
+			end
+			for _, f in next, parseXML(file) do
+				parseLocale(f)
+			end
 		end
 	end
 end
@@ -775,19 +855,34 @@ end
 
 -- aaaaaand start
 local start_path = "modules.xml"
-if arg and arg[1] then
-	local path = arg[1]:gsub("\\", "/")
-	local is_file = path:sub(-4) == ".lua"
-	if path:sub(-1) ~= "/" and not is_file then
-		path = path .. "/"
-	end
-	path = path:gsub("^./", "")
-	if is_file then
-		start_path = path
-	else
-		start_path = path .. start_path
+
+-- simple arg parser
+if arg then
+	for k, v in ipairs(arg) do
+		if string.sub(v, 1, 1) == "-" then
+			v = string.match(v, "^[-]+(.+)$")
+			if v == "q" or v == "quiet" then
+				opt.quiet = true
+			end
+			if v == "n" or v == "dry-run" then
+				opt.dryrun = true
+			end
+		else
+			local path = arg[1]:gsub("\\", "/")
+			local is_file = path:sub(-4) == ".lua"
+			if path:sub(-1) ~= "/" and not is_file then
+				path = path .. "/"
+			end
+			path = path:gsub("^./", "")
+			if is_file then
+				start_path = path
+			else
+				start_path = path .. start_path
+			end
+		end
 	end
 end
+
 parse(start_path)
 
 os.exit(exit_code)

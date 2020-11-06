@@ -233,6 +233,13 @@ function boss:IsEnabled()
 	return self.enabled
 end
 
+--- Module engaged check.
+-- A module is either engaged in combat or not.
+-- @return true or nil
+function boss:IsEngaged()
+	return self.isEngaged
+end
+
 function boss:Initialize() core:RegisterBossModule(self) end
 function boss:Enable(isWipe)
 	if not self.enabled then
@@ -407,6 +414,54 @@ do
 	local missingFunction = "%q tried to register a listener to method %q, but it doesn't exist in the module."
 	local invalidId = "Module %q tried to register an invalid spell id (%s) to event %q."
 	local multipleRegistration = "Module %q registered the event %q with spell name %q multiple times."
+
+	function boss:CHAT_MSG_RAID_BOSS_EMOTE(event, msg, ...)
+		if eventMap[self][event][msg] then
+			self[eventMap[self][event][msg]](self, msg, ...)
+		else
+			for emote, func in next, eventMap[self][event] do
+				if find(msg, emote, nil, true) or find(msg, emote) then -- Preserve backwards compat by leaving in the 2nd check
+					self[func](self, msg, ...)
+				end
+			end
+		end
+	end
+	--- [DEPRECATED] Register a callback for CHAT_MSG_RAID_BOSS_EMOTE that matches text.
+	-- @param func callback function, passed (module, message, sender, language, channel, target, [standard CHAT_MSG args]...)
+	-- @param ... any number of strings to match
+	function boss:Emote(func, ...)
+		if not func then core:Print(format(missingArgument, self.moduleName)) return end
+		if not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
+		if not eventMap[self].CHAT_MSG_RAID_BOSS_EMOTE then eventMap[self].CHAT_MSG_RAID_BOSS_EMOTE = {} end
+		for i = 1, select("#", ...) do
+			eventMap[self]["CHAT_MSG_RAID_BOSS_EMOTE"][(select(i, ...))] = func
+		end
+		self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
+	end
+
+	function boss:CHAT_MSG_MONSTER_YELL(event, msg, ...)
+		if eventMap[self][event][msg] then
+			self[eventMap[self][event][msg]](self, msg, ...)
+		else
+			for yell, func in next, eventMap[self][event] do
+				if find(msg, yell, nil, true) or find(msg, yell) then -- Preserve backwards compat by leaving in the 2nd check
+					self[func](self, msg, ...)
+				end
+			end
+		end
+	end
+	--- [DEPRECATED] Register a callback for CHAT_MSG_MONSTER_YELL that matches text.
+	-- @param func callback function, passed (module, message, sender, language, channel, target, [standard CHAT_MSG args]...)
+	-- @param ... any number of strings to match
+	function boss:BossYell(func, ...)
+		if not func then core:Print(format(missingArgument, self.moduleName)) return end
+		if not self[func] then core:Print(format(missingFunction, self.moduleName, func)) return end
+		if not eventMap[self].CHAT_MSG_MONSTER_YELL then eventMap[self].CHAT_MSG_MONSTER_YELL = {} end
+		for i = 1, select("#", ...) do
+			eventMap[self]["CHAT_MSG_MONSTER_YELL"][(select(i, ...))] = func
+		end
+		self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	end
 
 	local args = {}
 	local COMBATLOG_OBJECT_TYPE_PLAYER = COMBATLOG_OBJECT_TYPE_PLAYER
@@ -621,7 +676,8 @@ do
 end
 
 -------------------------------------------------------------------------------
--- Engage / wipe checking + unit scanning
+-- Engage/wipe checking and unit scanning
+-- @section unit_scanning
 --
 
 do
@@ -653,7 +709,7 @@ do
 	-- noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
 	function boss:CheckForEncounterEngage(noEngage)
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
-		if not self.isEngaged and hasBoss then
+		if not self:IsEngaged() and hasBoss then
 			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
 			local module = core:GetEnableMobs()[self:MobId(guid)]
 			local modType = type(module)
@@ -670,7 +726,7 @@ do
 						break
 					end
 				end
-				if not self.isEngaged then self:Disable() end
+				if not self:IsEngaged() then self:Disable() end
 			end
 		end
 	end
@@ -678,14 +734,14 @@ do
 	-- Query boss units to update engage status.
 	function boss:CheckBossStatus()
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
-		if not hasBoss and self.isEngaged then
+		if not hasBoss and self:IsEngaged() then
 			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
 			self:ScheduleTimer(wipeCheck, 6, self)
-		elseif not self.isEngaged and hasBoss then
+		elseif not self:IsEngaged() and hasBoss then
 			if debug then dbg(self, ":CheckBossStatus Engage called.") end
 			self:CheckForEncounterEngage()
 		end
-		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self.isEngaged).." hasBoss = "..tostring(hasBoss)) end
+		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self:IsEngaged()).." hasBoss = "..tostring(hasBoss)) end
 	end
 end
 
@@ -732,7 +788,7 @@ do
 	function boss:GetUnitIdByGUID(id) return findTargetByGUID(id) end
 
 	--- Fetches a unit id by scanning boss units 1 to 5 only.
-	-- @param guid Either the GUID or the mob/npc id of the boss unit to find
+	-- @param id Either the GUID or the mob/npc id of the boss unit to find
 	-- @return unit id if found, nil otherwise
 	-- @return guid if found, nil otherwise
 	function boss:GetBossId(id)
@@ -1050,10 +1106,11 @@ function boss:MobId(guid)
 	return tonumber(id) or 1
 end
 
---- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal entries (C_EncounterJournal.GetSectionInfo).
+--- Get a localized name from an id. Positive ids for spells (GetSpellInfo) and negative ids for journal-based section entries (C_EncounterJournal.GetSectionInfo).
+-- @number spellIdOrSectionId The spell id or the journal-based section id (as a negative number)
 -- @return spell name
-function boss:SpellName(spellId)
-	return spells[spellId]
+function boss:SpellName(spellIdOrSectionId)
+	return spells[spellIdOrSectionId]
 end
 
 --- Check if a GUID is you.
@@ -1112,10 +1169,15 @@ do
 			end
 		else
 			for i = 1, 100 do
-				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
+				local name, _, stack, auraType, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HELPFUL")
 
 				if not spellId then
 					return
+				elseif not spell then
+					local desiredType = ...
+					if auraType == desiredType then
+						return name, stack, duration, expirationTime
+					end
 				elseif spellId == spell then
 					return name, stack, duration, expirationTime, value
 				end
@@ -1153,10 +1215,15 @@ do
 			end
 		else
 			for i = 1, 100 do
-				local name, _, stack, _, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
+				local name, _, stack, auraType, duration, expirationTime, _, _, _, spellId, _, _, _, _, _, value = UnitAura(unit, i, "HARMFUL")
 
 				if not spellId then
 					return
+				elseif not spell then
+					local desiredType = ...
+					if auraType == desiredType then
+						return name, stack, duration, expirationTime
+					end
 				elseif spellId == spell then
 					return name, stack, duration, expirationTime, value
 				end
@@ -1509,6 +1576,7 @@ end
 --- Open the "Info Box" display.
 -- @param key the option key to check
 -- @string title the title of the window
+-- @bool[opt] TEMP
 function boss:OpenInfo(key, title, TEMP)
 	if checkFlag(self, key, C.INFOBOX) then
 		self:SendMessage("BigWigs_ShowInfoBox", self, title, TEMP)
@@ -1609,7 +1677,7 @@ function boss:DelayedMessage(key, delay, color, text, icon, sound)
 	if checkFlag(self, key, C.MESSAGE) then
 		self:CancelDelayedMessage(text or key)
 		if not self.scheduledMessages then self.scheduledMessages = {} end
-		self.scheduledMessages[text or key] = self:ScheduleTimer("Message", delay, key, color, sound, text, icon or false)
+		self.scheduledMessages[text or key] = self:ScheduleTimer("MessageOld", delay, key, color, sound, text, icon or false)
 	end
 end
 
@@ -1619,7 +1687,7 @@ end
 -- @string[opt] sound the message sound
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name)
-function boss:Message(key, color, sound, text, icon)
+function boss:MessageOld(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType = type(text)
 
@@ -1640,7 +1708,7 @@ function boss:Message(key, color, sound, text, icon)
 	end
 end
 
-function boss:Message2(key, color, text, icon)
+function boss:Message(key, color, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
 		self:SendMessage("BigWigs_Message", self, key, type(text) == "string" and text or spells[text or key], color, icon ~= false and icons[icon or key], isEmphasized)
@@ -1746,7 +1814,7 @@ do
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name)
 	-- @bool[opt] alwaysPlaySound if true, play the sound even if player is not you
-	function boss:TargetMessage(key, player, color, sound, text, icon, alwaysPlaySound)
+	function boss:TargetMessageOld(key, player, color, sound, text, icon, alwaysPlaySound)
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
@@ -1921,7 +1989,7 @@ do
 	-- @string player the player name
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
-	function boss:TargetMessage2(key, color, player, text, icon)
+	function boss:TargetMessage(key, color, player, text, icon)
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
@@ -2234,7 +2302,7 @@ end
 -- @param key the option key
 -- @param msg the message to yell (if nil, key is used)
 -- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
-function boss:Yell2(key, msg, directPrint) -- XXX fixme
+function boss:Yell(key, msg, directPrint)
 	if not checkFlag(self, key, C.SAY) then return end
 	if directPrint then
 		SendChatMessage(msg, "YELL")
@@ -2400,7 +2468,7 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message(key, "yellow", nil, format(L.custom_start, name, berserk, seconds / 60), false)
+		self:MessageOld(key, "yellow", nil, format(L.custom_start, name, berserk, seconds / 60), false)
 	end
 
 	-- Half-way to enrage warning.
