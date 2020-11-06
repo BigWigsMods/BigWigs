@@ -32,7 +32,7 @@ local valid_sounds = {
 	Warning = true, warning = true,
 }
 local color_methods = {
-	Message = 2,
+	MessageOld = 2,
 	Message2 = 2,
 	TargetMessageOld = 3,
 	TargetMessage = 2,
@@ -42,7 +42,7 @@ local color_methods = {
 }
 local sound_methods = {
 	PlaySound = 2,
-	Message = 3,
+	MessageOld = 3,
 	TargetMessageOld = 4,
 	StackMessage = 5,
 	DelayedMessage = 6,

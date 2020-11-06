@@ -1722,7 +1722,7 @@ function boss:DelayedMessage(key, delay, color, text, icon, sound)
 	if checkFlag(self, key, C.MESSAGE) then
 		self:CancelDelayedMessage(text or key)
 		if not self.scheduledMessages then self.scheduledMessages = {} end
-		self.scheduledMessages[text or key] = self:ScheduleTimer("Message", delay, key, color, sound, text, icon or false)
+		self.scheduledMessages[text or key] = self:ScheduleTimer("MessageOld", delay, key, color, sound, text, icon or false)
 	end
 end
 
@@ -1732,7 +1732,7 @@ end
 -- @string[opt] sound the message sound
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name)
-function boss:Message(key, color, sound, text, icon)
+function boss:MessageOld(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType = type(text)
 
@@ -2611,7 +2611,7 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 
 	if not noEngageMessage then
 		-- Engage warning with minutes to enrage
-		self:Message(key, "yellow", nil, format(L.custom_start, name, berserk, seconds / 60), false)
+		self:MessageOld(key, "yellow", nil, format(L.custom_start, name, berserk, seconds / 60), false)
 	end
 
 	-- Half-way to enrage warning.

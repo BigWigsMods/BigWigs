@@ -182,7 +182,7 @@ end
 
 function mod:StartDefensiveBeamTimer(timer)
 	self:Bar(275432, timer, CL.count:format(self:SpellName(275432), defensiveBeamCount))
-	self:ScheduleTimer("Message", timer, 275432, "red", nil, CL.incoming:format(self:SpellName(275432), defensiveBeamCount))
+	self:ScheduleTimer("MessageOld", timer, 275432, "red", nil, CL.incoming:format(self:SpellName(275432), defensiveBeamCount))
 	self:ScheduleTimer("PlaySound", timer, 275432, "long")
 	defensiveBeamCount = defensiveBeamCount + 1
 	if timersUldirDefensiveBeam[defensiveBeamCount] then
