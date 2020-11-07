@@ -105,7 +105,7 @@ end
 function mod:SearingArmorApplied(args)
 	if self:Me(args.destGUID) or (self:Tank() and self:Tank(args.destName)) then
 		local amount = args.amount or 1
-		self:StackMessage(305978, args.destName, amount, "purple", self:Tank() and (amount > 1 and "Warning") or not self:Tank() and "Warning") -- Warning sound for non-tanks, 2+ stacks warning for tanks
+		self:StackMessage(305978, args.destName, amount, "purple", self:Tank() and (amount > 1 and "warning") or not self:Tank() and "warning") -- Warning sound for non-tanks, 2+ stacks warning for tanks
 	end
 end
 
