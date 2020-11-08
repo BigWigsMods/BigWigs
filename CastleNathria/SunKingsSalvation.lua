@@ -204,7 +204,7 @@ do
 		local spellId = addType -- SetOption:-21954,-21993,-21952,-21953,-22082:
 
 		self:Bar(spellId, length, CL.count:format(spellName, addWaveCount[spellId]), icon)
-		self:DelayedMessage(spellId, length, "yellow", CL.count:format(spellName, addWaveCount[spellId]), icon, "Info")
+		self:DelayedMessage(spellId, length, "yellow", CL.count:format(spellName, addWaveCount[spellId]), icon, "info")
 		addWaveCount[spellId] = addWaveCount[spellId] + 1
 		addScheduledTimers[spellId] = self:ScheduleTimer("StartAddTimer", length, stage, spellId, addWaveCount[spellId])
 	end

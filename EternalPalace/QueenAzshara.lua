@@ -546,7 +546,7 @@ end
 function mod:RAID_BOSS_WHISPER(_, msg)
 	if msg:find("299094", nil, true) then -- Beckon
 		self:PersonalMessage(299094)
-		self:PlaySound(299094, "Alarm")
+		self:PlaySound(299094, "alarm")
 		self:Flash(299094)
 		self:Say(299094)
 	end
