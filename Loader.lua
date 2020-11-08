@@ -300,16 +300,13 @@ do
 	}
 end
 
--- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigs3DB, BigWigsIconDB, BigWigsLoader, BigWigsOptions, ChatFrame_ImportAllListsToHash, ChatTypeInfo, CreateFrame, CUSTOM_CLASS_COLORS, DEFAULT_CHAT_FRAME, error
--- GLOBALS: GetAddOnEnableState, GetAddOnInfo, GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetTime, GRAY_FONT_COLOR, hash_SlashCmdList, InCombatLockdown
--- GLOBALS: IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
--- GLOBALS: LibStub, LoadAddOn, message, PlaySound, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, StopSound
--- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
--- GLOBALS: SLASH_BigWigsVersion1, wipe
-
 -----------------------------------------------------------------------
 -- Utility
 --
+
+local EnableAddOn, GetAddOnEnableState, GetAddOnInfo, IsAddOnLoaded, LoadAddOn = EnableAddOn, GetAddOnEnableState, GetAddOnInfo, IsAddOnLoaded, LoadAddOn
+local GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned = GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned
+local GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitIsDeadOrGhost, UnitSetRole = GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitIsDeadOrGhost, UnitSetRole
 
 local function IsAddOnEnabled(addon)
 	local character = UnitName("player")
@@ -1361,8 +1358,8 @@ do
 		elseif grouped and not groupType then
 			grouped = nil
 			ResetVersionWarning()
-			wipe(usersVersion)
-			wipe(usersHash)
+			usersVersion = {}
+			usersHash = {}
 			self:ZONE_CHANGED_NEW_AREA()
 		end
 	end
