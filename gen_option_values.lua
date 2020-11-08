@@ -25,11 +25,11 @@ local valid_colors = {
 	purple = true,
 }
 local valid_sounds = {
-	Info = true, info = true,
-	Alert = true, alert = true,
-	Alarm = true, alarm = true,
-	Long = true, long = true,
-	Warning = true, warning = true,
+	info = true,
+	alert = true,
+	alarm = true,
+	long = true,
+	warning = true,
 }
 local color_methods = {
 	MessageOld = 2,
