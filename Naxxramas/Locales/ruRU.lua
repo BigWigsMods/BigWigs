@@ -116,11 +116,10 @@ if L then
 
 	L.mark = "Знак"
 	L.mark_desc = "Предупреждать о знаках."
+
 	L.markbar = "Знак %d"
 	L.markwarn1 = "Знак %d!"
 	L.markwarn2 = "Знак %d через 5 секунд"
-
-	L.dies = "#%d убит"
 
 	L.startwarn = "Четверо всадников вступили в бой! Знак через ~17 секунд"
 end
@@ -272,9 +271,7 @@ end
 L = BigWigs:NewBossLocale("Instructor Razuvious", "ruRU")
 if L then
 	L.bossName = "Инструктор Разувий"
-
-	L.shout_warning = "Разрушительный крик через 5сек!"
-	L.shout_next = "~перезарядка крика"
+	L.understudy = "Ученик рыцаря смерти"
 
 	L.taunt_warning = "Провокация закончится через 5сек!"
 	L.shieldwall_warning = "Преграда из костей закончится через 5сек!"

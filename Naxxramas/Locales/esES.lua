@@ -116,11 +116,10 @@ if L then
 
 	-- L.mark = "Mark"
 	-- L.mark_desc = "Warn for marks."
+
 	-- L.markbar = "Mark %d"
 	-- L.markwarn1 = "Mark %d!"
 	-- L.markwarn2 = "Mark %d in 5 sec"
-
-	-- L.dies = "#%d Killed"
 
 	-- L.startwarn = "The Four Horsemen Engaged! Mark in ~17 sec"
 end
@@ -251,9 +250,7 @@ end
 L = BigWigs:NewBossLocale("Instructor Razuvious", "esES") or BigWigs:NewBossLocale("Instructor Razuvious", "esMX")
 if L then
 	L.bossName = "Instructor Razuvious"
-
-	-- L.shout_warning = "Disrupting Shout in 5sec!"
-	-- L.shout_next = "Shout Cooldown"
+	L.understudy = "Suplente Caballero de la Muerte"
 
 	-- L.taunt_warning = "Taunt ready in 5sec!"
 	-- L.shieldwall_warning = "Barrier gone in 5sec!"

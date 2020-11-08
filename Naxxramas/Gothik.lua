@@ -7,7 +7,13 @@ if not mod then return end
 mod:RegisterEnableMob(16060)
 mod:SetAllowWin(true)
 mod.engageId = 1109
-mod.toggleOptions = {"room", "add", "adddeath", "bosskill"}
+
+--------------------------------------------------------------------------------
+-- Locales
+--
+
+local wave = 0
+local numTrainer, numDK, numRider = 1, 1, 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -67,98 +73,92 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-local wave = 0
-local timeTrainer, timeDK, timeRider = 27, 77, 137
-local numTrainer, numDK, numRider = nil, nil, nil
+function mod:GetOptions()
+	return {
+		"room",
+		"add",
+		"adddeath",
+	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
+end
 
 function mod:OnBossEnable()
-	wave = 0
-	timeTrainer = 27
-	timeDK = 77
-	timeRider = 137
+	self:BossYell("InRoom", L.inroomtrigger)
+	self:Death("Deaths", 16125, 16126) -- DK, Rider
+end
 
-	self:Death("DKDead", 16125)
-	self:Death("RiderDead", 16126)
-	self:Death("Win", 16060)
-	self:Yell("Engage", L["starttrigger1"], L["starttrigger2"])
-	self:Yell("InRoom", L["inroomtrigger"])
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+function mod:OnEngage()
+	self:Message("room", "yellow", L.startwarn, false)
+	self:Bar("room", 270, L.inroombartext, "Spell_Magic_LesserInvisibilty")
+	self:DelayedMessage("room", 90, "yellow", L.warn1)
+	self:DelayedMessage("room", 180, "yellow", L.warn2)
+	self:DelayedMessage("room", 210, "orange", L.warn3)
+	self:DelayedMessage("room", 240, "red", L.warn4)
+	self:DelayedMessage("room", 260, "red", L.warn5)
+
+	wave = 0
+	numTrainer, numDK, numRider = 1, 1, 1
+	self:NewTrainee(27)
+	self:NewDeathknight(77)
+	self:NewRider(137)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:DKDead()
-	self:Message("adddeath", L["dkdiewarn"], "Important")
+function mod:Deaths(args)
+	if args.mobId == 16125 then
+		self:Message("adddeath", "red", L.dkdiewarn, false)
+	elseif args.mobId == 16126 then
+		self:Message("adddeath", "red", L.riderdiewarn, false)
+	end
 end
 
-function mod:RiderDead()
-	self:Message("adddeath", L["riderdiewarn"], "Important")
+function mod:InRoom()
+	self:Message("room", "red", L.inroomwarn, false)
 end
+
+-- Wave timers
 
 local colors = {
-	[L["trawarn"]] = "Attention",
-	[L["dkwarn"]] = "Urgent",
-	[L["riderwarn"]] = "Important",
+	[L.trawarn] = "yellow",
+	[L.dkwarn] = "orange",
+	[L.riderwarn] = "red",
 }
 local function waveWarn(message)
 	wave = wave + 1
 	if wave < 24 then
-		mod:Message("add", L["wave"]:format(wave, message), colors[message])
+		mod:Message("add", colors[message], L.wave:format(wave, message), false) -- SetOption::yellow,orange,red::
 	end
 	if wave == 23 then
-		mod:SendMessage("BigWigs_StopBar", mod, L["trabar"]:format(numTrainer - 1))
-		mod:SendMessage("BigWigs_StopBar", mod, L["dkbar"]:format(numDK - 1))
-		mod:SendMessage("BigWigs_StopBar", mod, L["riderbar"]:format(numRider - 1))
+		mod:StopBar(L.trabar:format(numTrainer - 1))
+		mod:StopBar(L.dkbar:format(numDK - 1))
+		mod:StopBar(L.riderbar:format(numRider - 1))
 		mod:CancelAllTimers()
 	end
 end
 
-local function newTrainee()
-	mod:Bar("add", L["trabar"]:format(numTrainer), timeTrainer, "Ability_Seal")
-	mod:ScheduleTimer(waveWarn, timeTrainer - 3, L["trawarn"])
-	mod:ScheduleTimer(newTrainee, timeTrainer)
+function mod:NewTrainee(timeTrainer)
+	self:Bar("add", timeTrainer, L.trabar:format(numTrainer), "Ability_Seal")
+	self:ScheduleTimer(waveWarn, timeTrainer - 3, L.trawarn)
+	self:ScheduleTimer("NewTrainee", timeTrainer, 20)
 	numTrainer = numTrainer + 1
 end
 
-local function newDeathknight()
-	mod:Bar("add", L["dkbar"]:format(numDK), timeDK, "INV_Boots_Plate_08")
-	mod:ScheduleTimer(waveWarn, timeDK - 3, L["dkwarn"])
-	mod:ScheduleTimer(newDeathknight, timeDK)
+function mod:NewDeathknight(timeDK)
+	self:Bar("add", timeDK, L.dkbar:format(numDK), "INV_Boots_Plate_08")
+	self:ScheduleTimer(waveWarn, timeDK - 3, L.dkwarn)
+	self:ScheduleTimer("NewDeathknight", timeDK, 25)
 	numDK = numDK + 1
 end
 
-local function newRider()
-	mod:Bar("add", L["riderbar"]:format(numRider), timeRider, "Spell_Shadow_DeathPact")
-	mod:ScheduleTimer(waveWarn, timeRider - 3, L["riderwarn"])
-	mod:ScheduleTimer(newRider, timeRider)
+function mod:NewRider(timeRider)
+	self:Bar("add", timeRider, L.riderbar:format(numRider), "Spell_Shadow_DeathPact")
+	self:ScheduleTimer(waveWarn, timeRider - 3, L.riderwarn)
+	self:ScheduleTimer("NewRider", timeRider, 30)
 	numRider = numRider + 1
 end
-
-function mod:OnEngage()
-	self:Message("room", L["startwarn"], "Important")
-	self:Bar("room", L["inroombartext"], 270, "Spell_Magic_LesserInvisibilty")
-	self:DelayedMessage("room", 90, L["warn1"], "Attention")
-	self:DelayedMessage("room", 180, L["warn2"], "Attention")
-	self:DelayedMessage("room", 210, L["warn3"], "Urgent")
-	self:DelayedMessage("room", 240, L["warn4"], "Important")
-	self:DelayedMessage("room", 260, L["warn5"], "Important")
-	numTrainer = 1
-	numDK = 1
-	numRider = 1
-	if self.db.profile.add then
-		newTrainee()
-		newDeathknight()
-		newRider()
-	end
-	-- set the new times
-	timeTrainer = 20
-	timeDK = 25
-	timeRider = 30
-end
-
-function mod:InRoom()
-	self:Message("room", L["inroomwarn"], "Important")
-end
-

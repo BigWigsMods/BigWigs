@@ -116,11 +116,10 @@ if L then
 
 	L.mark = "Marque"
 	L.mark_desc = "Prévient de l'arrivée des marques."
+
 	L.markbar = "Marque %d"
 	L.markwarn1 = "Marque %d !"
 	L.markwarn2 = "Marque %d dans 5 sec."
-
-	L.dies = "#%d éliminé(e)"
 
 	L.startwarn = "Les 4 cavaliers engagés ! Marque dans ~17 sec. !"
 end
@@ -272,9 +271,7 @@ end
 L = BigWigs:NewBossLocale("Instructor Razuvious", "frFR")
 if L then
 	L.bossName = "Instructeur Razuvious"
-
-	L.shout_warning = "Cri perturbant dans 5 sec. !"
-	L.shout_next = "Recharge Cri"
+	L.understudy = "Doublure de chevalier de la mort"
 
 	L.taunt_warning = "Provocation prête dans 5 sec. !"
 	L.shieldwall_warning = "Barrière d'os terminée dans 5 sec. !"

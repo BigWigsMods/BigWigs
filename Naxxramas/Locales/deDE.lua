@@ -120,8 +120,6 @@ if L then
 	L.markwarn1 = "Mal (%d)!"
 	L.markwarn2 = "Mal (%d) in 5 sek!"
 
-	L.dies = "#%d getötet"
-
 	L.startwarn = "Die Vier Reiter angegriffen! Male in ~17 sek."
 end
 
@@ -272,9 +270,7 @@ end
 L = BigWigs:NewBossLocale("Instructor Razuvious", "deDE")
 if L then
 	L.bossName = "Instrukteur Razuvious"
-
-	L.shout_warning = "Unterbrechender Schrei in 5 sek!"
-	L.shout_next = "~Unterbrechender Schrei"
+	L.understudy = "Reservist der Todesritter"
 
 	L.taunt_warning = "Spott bereit in 5 sek!"
 	L.shieldwall_warning = "Knochenbarriere weg in 5 sek!"

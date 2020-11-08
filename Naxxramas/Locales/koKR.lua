@@ -116,11 +116,10 @@ if L then
 
 	L.mark = "징표"
 	L.mark_desc = "징표를 알립니다."
+
 	L.markbar = "징표 (%d)"
 	L.markwarn1 = "징표(%d)!"
 	L.markwarn2 = "5초 후 징표(%d)"
-
-	L.dies = "기사 #%d 처치"
 
 	L.startwarn = "4인의 기병대 전투 시작! 약 17초 이내 징표"
 end
@@ -128,7 +127,6 @@ end
 L = BigWigs:NewBossLocale("Kel'Thuzad", "koKR")
 if L then
 	L.bossName = "켈투자드"
-
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방"
 
 	L.start_trigger = "어둠의 문지기와 하수인, 그리고 병사들이여! 나 켈투자드가 부르니 명을 받들라!"
@@ -272,9 +270,7 @@ end
 L = BigWigs:NewBossLocale("Instructor Razuvious", "koKR")
 if L then
 	L.bossName = "훈련교관 라주비어스"
-
-	L.shout_warning = "5초 후 분열의 외침!"
-	L.shout_next = "분열 대기시간"
+	L.understudy = "죽음의 기사 수습생"
 
 	L.taunt_warning = "5초 후 도발 종료!"
 	L.shieldwall_warning = "5초 후 방패의 벽 종료!"

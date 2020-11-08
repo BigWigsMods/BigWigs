@@ -116,11 +116,10 @@ if L then
 
 	L.mark = "印記"
 	L.mark_desc = "當施放印記時發出警報。"
+
 	L.markbar = "<印記：%d>"
 	L.markwarn1 = "印記%d！"
 	L.markwarn2 = "5秒後，印記%d！"
-
-	L.dies = "#%d死亡！"
 
 	L.startwarn = "四騎士已進入戰鬥 - 約17秒後，印記！"
 end
@@ -272,9 +271,7 @@ end
 L = BigWigs:NewBossLocale("Instructor Razuvious", "zhTW")
 if L then
 	L.bossName = "講師拉祖維斯"
-
-	L.shout_warning = "5秒後，混亂怒吼！"
-	L.shout_next = "混亂怒吼冷卻！"
+	L.understudy = "死亡騎士實習者"
 
 	L.taunt_warning = "5秒後，可以嘲諷！"
 	L.shieldwall_warning = "5秒後，可以骸骨屏障！"
