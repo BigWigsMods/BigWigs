@@ -14,7 +14,7 @@ L.warmup = "Preparar"
 L.warmup_desc = "Tempo até o combate com o chefe começar."
 
 L.already_registered = "|cffff0000ATENÇÃO:|r |cff00ff00%s|r (|cffffff00%s|r) já existe como um módulo do BigWigs, mas as vezes ele tenta registra-lo novamente. Isso normalmente significa que você tem duas cópias deste módulo na sua pasta de addOns devido a alguma falha ao atualizar um addOn. É recomendado que você delete todas as pastas do BigWigs existentes e reinstale-o novamente."
-L.testNameplate = "Alvo detectado, criando uma barra de identificação teste sobre a barra de identificação do alvo. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
+L.testNameplate = "Alvo detectado, criando uma barra de identificação teste sobre a barra de identificação do alvo. |cFF33FF99Essa função é raramente usada, normalmente é somente 1 barra, e é necessária para manter o rastreio de recargas quando lutando com múltiplos chefes/adds que conjuram a mesma magia.|r"
 
 -- Loader / Options.lua
 L.classicWarning1 = "|cFF33FF99BigWigs|r: Você está usando uma versão errada do BigWigs no servidor clássico."
