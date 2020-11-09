@@ -1,6 +1,6 @@
 
 BigWigs:AddSounds("Wrathion", {
-	[305978] = {"alert","Warning"},
+	[305978] = {"alert","warning"},
 	[306163] = "warning",
 	[306289] = "alarm",
 	[306735] = "alert",
