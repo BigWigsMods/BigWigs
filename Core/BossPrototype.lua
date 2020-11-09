@@ -138,11 +138,13 @@ local spells = setmetatable({}, {__index =
 		if key > 0 then
 			value = GetSpellInfo(key)
 			if not value then
+				value = "INVALID"
 				core:Print(format("An invalid spell id (%d) is being used in a boss module.", key))
 			end
 		else
 			local tbl = C_EncounterJournal_GetSectionInfo(-key)
 			if not tbl then
+				value = "INVALID"
 				core:Print(format("An invalid journal id (%d) is being used in a boss module.", key))
 			else
 				value = tbl.title
