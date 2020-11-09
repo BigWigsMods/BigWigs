@@ -671,6 +671,7 @@ function mod:ADDON_LOADED(addon)
 
 	bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 	bwFrame:RegisterEvent("RAID_INSTANCE_WELCOME")
+	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
 
@@ -772,7 +773,7 @@ function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 	self.UPDATE_FLOATING_CHAT_WINDOWS = nil
 
 	self:GROUP_ROSTER_UPDATE()
-	self:ZONE_CHANGED_NEW_AREA()
+	self:PLAYER_ENTERING_WORLD()
 
 	-- Break timer restoration
 	if BigWigs3DB and BigWigs3DB.breakTime then
@@ -1284,7 +1285,7 @@ do
 		end
 	end
 
-	function mod:ZONE_CHANGED_NEW_AREA()
+	function mod:PLAYER_ENTERING_WORLD()
 		-- Zone checking
 		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
 		if instanceType == "none" then
@@ -1342,7 +1343,8 @@ do
 			end
 		end
 	end
-	mod.RAID_INSTANCE_WELCOME = mod.ZONE_CHANGED_NEW_AREA -- Entirely for Onyxia's Lair loading
+	mod.RAID_INSTANCE_WELCOME = mod.PLAYER_ENTERING_WORLD -- For the unproven chance that PLAYER_ENTERING_WORLD fires after a loading screen ends
+	mod.ZONE_CHANGED_NEW_AREA = mod.PLAYER_ENTERING_WORLD -- For world bosses, not useful for raids as it fires after loading has ended
 end
 
 do
@@ -1353,14 +1355,14 @@ do
 			grouped = groupType
 			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
-			self:ZONE_CHANGED_NEW_AREA()
+			self:PLAYER_ENTERING_WORLD()
 			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
 			ResetVersionWarning()
 			usersVersion = {}
 			usersHash = {}
-			self:ZONE_CHANGED_NEW_AREA()
+			self:PLAYER_ENTERING_WORLD()
 		end
 	end
 end
