@@ -1,8 +1,6 @@
-
+if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- TODO:
--- -- Chain Link linked with message
--- -- Timers after Destructive Impact reset?
 -- -- Mythic Fractured Boulder + Impact cast/land bars
 -- -- Gruesome rage message
 -- -- Vengeful Rage (mythic) message
@@ -26,11 +24,12 @@ local chainLinkCount = 1
 local hatefullGazeCount = 1
 local chainSlamCount = 1
 local seismicShiftCount = 1
+local chainLinksApplied = 0
 
 local timers = {
-	[332318] = {22.5, 23, 45, 22.5, 45, 22.5, 45, 22.5, 45.0, 23.1, 41.4}, -- Destructive Stomp
-	[332687] = {0, 30.5, 37, 30.5, 37.0, 30.5, 37, 31, 36.5, 30.5, 33.1, 30.1}, -- Colossal Roar
-	[340817] = {18.5, 25.5, 30, 13.5, 25, 30} -- Seismic Shift
+	[332318] = {18.5, 25.1, 42.6, 25.5, 42.5, 25.5, 45, 22.5, 45.0, 23.1, 41.4}, -- Destructive Stomp
+	[332687] = {0.0, 36.7, 31.3, 36.4, 31.8, 36.3, 31.5, 36.4, 31.8, 36.3, 31.5, 36.3}, -- Colossal Roar
+	[340817] = {18.5, 25.1, 30.6, 11.9, 25.5, 30.2, 12.3, 25.5} -- Seismic Shift
 }
 
 --------------------------------------------------------------------------------
@@ -88,10 +87,11 @@ function mod:OnEngage()
 	hatefullGazeCount = 1
 	chainSlamCount = 1
 	seismicShiftCount = 1
+	chainLinksApplied = 0
 
 	self:Bar(335293, 5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
 	self:Bar(332318, timers[332318][destructiveStompCount], CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
-	self:Bar(335470, 37, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+	self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
 	self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 	if self:Mythic() then
 		self:CDBar(340817, timers[340817][seismicShiftCount], CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Seismic Shift
@@ -128,44 +128,24 @@ function mod:DestructiveImpactApplied(args)
 end
 
 function mod:DestructiveImpactRemoved(args)
+	chainLinksApplied = 0
 	self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 end
 
 do
-	local scheduled, mainChainSet, secondChainSet, myLink, myPartner = nil, {}, {}, nil, nil
-	function mod:ChainLinkMessage()
-		if myLink then
-			self:Message(335293, "blue", L.yourLink:format(self:ColorName(myPartner) or self:ColorName(secondChainSet[myLink])))
-		end
-		scheduled = nil
-		mainChainSet = {}
-		secondChainSet = {}
-		myLink = nil
-		myPartner = nil
-	end
-
+	local playerList = mod:NewTargetList()
 	function mod:ChainThemApplied(args)
+		chainLinksApplied = chainLinksApplied + 1
 		if self:Me(args.destGUID) then
+			local partner = args.sourceName
+			self:Message(335293, "blue", L.yourLink:format(self:ColorName(partner)))
 			self:PlaySound(335293, "warning")
 		end
-		if args.spellId == 342420 then -- mainChainSet
-			mainChainSet[#mainChainSet+1] = args.destName
-			if self:Me(args.destGUID) then
-				myLink = #mainChainSet
-			end
-		elseif args.spellId == 342419 then -- secondChainSet
-			secondChainSet[#secondChainSet+1] = args.destName
-			if self:Me(args.destGUID) then
-				myLink = #secondChainSet
-				myPartner = mainChainSet[#secondChainSet]
-			end
-		end
-		if not scheduled then
-			scheduled = self:ScheduleTimer("ChainLinkMessage", 0.1)
-		end
-		if #mainChainSet == 1 then
+		if chainLinksApplied == 1 then
 			self:StopBar(CL.count:format(CL.count:format(self:SpellName(335293), chainLinkCount)))
-			self:Message(335293, "yellow", CL.count:format(self:SpellName(335293), chainLinkCount))
+			if not self:Mythic() then -- Everyone is chained on Mythic
+				self:Message(335293, "yellow", CL.count:format(self:SpellName(335293), chainLinkCount))
+			end
 			chainLinkCount = chainLinkCount + 1
 			self:CDBar(335293, 69, CL.count:format(self:SpellName(335293), chainLinkCount))
 		end
