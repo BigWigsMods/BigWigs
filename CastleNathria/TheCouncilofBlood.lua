@@ -261,7 +261,7 @@ end
 -- 	local function printTarget(self, name, guid)
 -- 		self:TargetMessage(331706, "red", name)
 -- 		if self:Me(guid) then
--- 			self:Yell2(331706)
+-- 			self:Yell(331706)
 -- 		end
 -- 	end
 --
@@ -342,13 +342,13 @@ do
 		elseif args.spellId == 331637 and firstDarkRecitalTargetGUID then -- 2nd Dark Recital Target
 			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
 				self:Message(331634, "blue", CL.link:format(self:ColorName(lastDarkRecitalName)))
-				self:Yell2(331634, "{rt"..darkrecitalPairCount.."}", true)
+				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
 					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
 				end
 			elseif self:Me(firstDarkRecitalTargetGUID) then -- We got 1st debuff so this is our partner
 				self:Message(331634, "blue", CL.link:format(self:ColorName(args.destName)))
-				self:Yell2(331634, "{rt"..darkrecitalPairCount.."}", true)
+				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
 					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
 				end
