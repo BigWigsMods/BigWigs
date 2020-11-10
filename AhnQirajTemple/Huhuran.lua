@@ -86,7 +86,7 @@ function mod:BerserkApplied(args)
 	self:CancelDelayedMessage(CL.custom_sec:format(berserk, 5))
 	self:CancelDelayedMessage(CL.custom_end:format(self.displayName, berserk))
 
-	self:Message("berserk", "orange", CL.percent:format(30, args.spellName))
+	self:Message("berserk", "orange", CL.percent:format(30, args.spellName), false)
 	self:PlaySound("berserk", "alarm")
 end
 
