@@ -127,34 +127,20 @@ end
 L = BigWigs:NewBossLocale("Kel'Thuzad", "itIT")
 if L then
 	L.bossName = "Kel'Thuzad"
-
-	-- L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber"
+	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Sala di Kel'Thuzad"
 
 	-- L.start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!"
 	-- L.start_warning = "Kel'Thuzad encounter started! ~3min 30sec till he is active!"
-	-- L.start_bar = "Phase 2"
 
-	-- L.phase = "Phase"
-	-- L.phase_desc = "Warn for phases."
 	-- L.phase2_trigger1 = "Pray for mercy!"
 	-- L.phase2_trigger2 = "Scream your dying breath!"
 	-- L.phase2_trigger3 = "The end is upon you!"
 	-- L.phase2_warning = "Phase 2, Kel'Thuzad incoming!"
 	-- L.phase2_bar = "Kel'Thuzad Active!"
-	-- L.phase3_soon_warning = "Phase 3 soon!"
+
 	-- L.phase3_trigger = "Master, I require aid!"
+	-- L.phase3_soon_warning = "Phase 3 soon!"
 	-- L.phase3_warning = "Phase 3, Guardians in ~15 sec!"
-
-	-- L.mc_message = "Mind Control: %s"
-	-- L.mc_warning = "Mind controls soon!"
-	-- L.mc_nextbar = "~Mind Controls"
-
-	-- L.frostblast_bar = "Possible Frost Blast"
-	-- L.frostblast_soon_message = "Possible Frost Blast in ~5 sec!"
-
-	-- L.detonate_other = "Detonate - %s"
-	-- L.detonate_possible_bar = "Possible Detonate"
-	-- L.detonate_warning = "Next Detonate in 5 sec!"
 
 	-- L.guardians = "Guardian Spawns"
 	-- L.guardians_desc = "Warn for incoming Icecrown Guardians in phase 3."
@@ -243,8 +229,6 @@ if L then
 	L.bossName = "Pezzacarne"
 
 	-- L.enragewarn = "5% - Frenzied!"
-	-- L.starttrigger1 = "Patchwerk want to play!"
-	-- L.starttrigger2 = "Kel'thuzad make Patchwerk his avatar of war!"
 end
 
 L = BigWigs:NewBossLocale("Instructor Razuvious", "itIT")
@@ -260,21 +244,16 @@ L = BigWigs:NewBossLocale("Sapphiron", "itIT")
 if L then
 	L.bossName = "Zaffirion"
 
-	-- L.airphase_trigger = "Sapphiron lifts off into the air!"
-	-- L.deepbreath_incoming_message = "Ice Bomb casting in ~14sec!"
-	-- L.deepbreath_incoming_soon_message = "Ice Bomb casting in ~5sec!"
-	-- L.deepbreath_incoming_bar = "Ice Bomb Cast"
-	-- L.deepbreath_trigger = "%s takes a deep breath."
+	-- L.deepbreath_trigger = "%s takes in a deep breath..."
+
+	-- L.air_phase = "Air phase"
+	-- L.ground_phase = "Ground phase"
+
+	-- L.deepbreath = "Ice Bomb"
 	-- L.deepbreath_warning = "Ice Bomb Incoming!"
 	-- L.deepbreath_bar = "Ice Bomb Lands!"
 
-	-- L.lifedrain_message = "Life Drain! Next in ~24sec!"
-	-- L.lifedrain_warn1 = "Life Drain in ~5sec!"
-	-- L.lifedrain_bar = "~Possible Life Drain"
-
 	-- L.icebolt_say = "I'm a Block!"
-
-	-- L.ping_message = "Block - Pinging your location!"
 end
 
 L = BigWigs:NewBossLocale("Thaddius", "itIT")

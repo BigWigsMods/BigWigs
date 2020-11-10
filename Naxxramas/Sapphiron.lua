@@ -2,18 +2,19 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Sapphiron", 533)
+local mod, CL = BigWigs:NewBoss("Sapphiron", 533)
 if not mod then return end
 mod:RegisterEnableMob(15989)
 mod:SetAllowWin(true)
 mod.engageId = 1119
-mod.toggleOptions = {28542, 28524, {28522, "ICON", "SAY", "PING"}, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local breath = 1
+local airTimer
+local targetCheck = nil
+local blockCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,21 +24,18 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.bossName = "Sapphiron"
 
-	L.airphase_trigger = "Sapphiron lifts off into the air!"
-	L.deepbreath_incoming_message = "Ice Bomb casting in ~14sec!"
-	L.deepbreath_incoming_soon_message = "Ice Bomb casting in ~5sec!"
-	L.deepbreath_incoming_bar = "Ice Bomb Cast"
-	L.deepbreath_trigger = "%s takes a deep breath."
+	L.deepbreath_trigger = "%s takes in a deep breath..."
+
+	L.air_phase = "Air phase"
+	L.ground_phase = "Ground phase"
+
+	L.deepbreath = "Ice Bomb"
+	L.deepbreath_icon = 3129 -- Frost Breath
 	L.deepbreath_warning = "Ice Bomb Incoming!"
 	L.deepbreath_bar = "Ice Bomb Lands!"
 
-	L.lifedrain_message = "Life Drain! Next in ~24sec!"
-	L.lifedrain_warn1 = "Life Drain in ~5sec!"
-	L.lifedrain_bar = "~Possible Life Drain"
-
 	L.icebolt_say = "I'm a Block!"
 
-	L.ping_message = "Block - Pinging your location!"
 end
 L = mod:GetLocale()
 
@@ -45,66 +43,109 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+function mod:GetOptions()
+	return {
+		28542, -- Life Drain
+		"deepbreath", -- Ice Bomb (Frost Breath)
+		{28522, "SAY"}, -- Ice Bolt
+		"stages",
+		"berserk",
+	}
+
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
+end
+
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Drain", 28542, 55665)
-	self:Log("SPELL_CAST_SUCCESS", "Breath", 28524, 29318)
+	self:Log("SPELL_CAST_SUCCESS", "LifeDrain", 28542)
 	self:Log("SPELL_AURA_APPLIED", "Icebolt", 28522)
-
-	self:Emote("Airphase", L["airphase_trigger"])
-	self:Emote("Deepbreath", L["deepbreath_trigger"])
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:Log("SPELL_CAST_START", "DeepBreath", 28524)
+	-- self:Emote("DeepBreath", L.deepbreath_trigger)
+	self:Log("SPELL_CAST_SUCCESS", "IceBomb", 28524)
 
 	self:Death("Win", 15989)
 end
 
 function mod:OnEngage()
-	breath = 1
+	blockCount = 0
+	targetCheck = nil
 	self:Berserk(900)
+	self:CDBar(28542, 10) -- Drain Life
+	self:CDBar("stages", 32, L.air_phase, 3129)
+	self:SimpleTimer(function()
+		airTimer = self:ScheduleRepeatingTimer("CheckAirPhase", 0.5)
+	end, 20)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:Airphase()
-	self:CancelDelayedMessage(L["lifedrain_warn1"])
-	self:SendMessage("BigWigs_StopBar", self, L["lifedrain_bar"])
-	--43810 Frost Wyrm, looks like a dragon breathing 'deep breath' :)
-	self:Message(28524, L["deepbreath_incoming_message"], "Attention")
-	self:Bar(28524, L["deepbreath_incoming_bar"], 14, 43810)
-	self:DelayedMessage(28524, 9, L["deepbreath_incoming_soon_message"], "Attention")
-end
-
-function mod:Deepbreath()
-	self:Message(28524, L["deepbreath_warning"], "Attention")
-	self:Bar(28524, L["deepbreath_bar"], 10, 29318)
-end
-
-function mod:Breath(_, spellId, _, _, spellName)
-	breath = breath + 1
-	if breath == 2 then
-		self:Message(28524, spellName, "Important", spellId)
+function mod:LifeDrain(args)
+	self:Message(28542, "yellow")
+	self:CDBar(28542, 23)
+	if self:Dispeller("curse") then
+		self:PlaySound(28542, "alert")
 	end
 end
 
-function mod:Drain(_, spellId)
-	self:Message(28542, L["lifedrain_message"], "Urgent", spellId)
-	self:Bar(28542, L["lifedrain_bar"], 23, spellId)
-	self:DelayedMessage(28542, 18, L["lifedrain_warn1"], "Important")
-end
+function mod:CheckAirPhase()
+	-- No air phase emote in Classic, but Sapphiron drops his target
+	-- Find someone targeting him to get a unit token
+	local boss = self:GetBossId(15989)
+	if not boss then
+		-- No one is targeting the boss? Just reset and bail
+		targetCheck = nil
+		return
+	end
 
-function mod:Icebolt(player, spellId, _, _, spellName)
-	if UnitIsUnit(player, "player") then
-		self:Say(28522, L["icebolt_say"])
-		if bit.band(self.db.profile[(GetSpellInfo(28522))], BigWigs.C.PING) == BigWigs.C.PING then
-			Minimap:PingLocation()
-			BigWigs:Print(L["ping_message"])
-		end
+	if UnitExists(boss.."target") then
+		-- Boss still has a target, reset
+		targetCheck = nil
+	elseif targetCheck then
+		-- Boss has had no target for two iterations, fire the air phase trigger
+		-- (The original module had a 1s delay between scans, not sure if that matters)
+		self:CancelTimer(airTimer)
+		targetCheck = nil
+		self:AirPhase()
 	else
-		self:TargetMessage(28522, spellName, player, "Attention", spellId)
+		-- Boss has no target, check one more time to make sure
+		targetCheck = true
 	end
-	self:PrimaryIcon(28522, player)
 end
 
+function mod:AirPhase()
+	self:StopBar(28542)
+	self:StopBar(L.air_phase)
+
+	self:Message("stages", "cyan", L.air_phase, L.deepbreath_icon)
+	self:PlaySound("stages", "info")
+	self:Bar("deepbreath", 28.5, L.deepbreath_bar, L.deepbreath_icon) -- 28~33, updated on cast
+end
+
+function mod:DeepBreath(args)
+	self:Message("deepbreath", "red", L.deepbreath_warning, L.deepbreath_icon)
+	self:PlaySound("deepbreath", "alarm")
+	self:Bar("deepbreath", 7, L.deepbreath_bar, L.deepbreath_icon)
+
+	self:CDBar("stages", 13, L.ground_phase, 15847) -- 15847 = Tail Sweep
+	self:CDBar(28542, 14.5) -- Drain Life
+	self:ScheduleTimer("CDBar", 13, "stages", 66, L.air_phase, L.deepbreath_icon) -- 65~67
+end
+
+function mod:IceBomb(args)
+	blockCount = 0
+	self:SimpleTimer(function()
+		airTimer = self:ScheduleRepeatingTimer("CheckAirPhase", 0.5)
+	end, 50) -- ~74 until next
+end
+
+function mod:Icebolt(args)
+	blockCount = blockCount + 1
+	self:TargetMessage(28522, "yellow", args.destName, CL.count:format(args.spellName, blockCount))
+	if self:Me(args.destGUID) then
+		self:Say(28522, L.icebolt_say, true)
+	end
+end

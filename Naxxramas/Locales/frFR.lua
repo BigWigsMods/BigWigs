@@ -127,34 +127,20 @@ end
 L = BigWigs:NewBossLocale("Kel'Thuzad", "frFR")
 if L then
 	L.bossName = "Kel'Thuzad"
-
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Appartements de Kel'Thuzad"
 
 	L.start_trigger = "Serviteurs, valets et soldats des ténèbres glaciales ! Répondez à l'appel de Kel'Thuzad !"
 	L.start_warning = "Kel'Thuzad engagé ! ~3 min. 30 sec. avant qu'il ne soit actif !"
-	L.start_bar = "Phase 2"
 
-	L.phase = "Phases"
-	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.phase2_trigger1 = "Faites vos prières !"
 	L.phase2_trigger2 = "Hurlez et expirez !"
 	L.phase2_trigger3 = "Votre fin est proche !"
 	L.phase2_warning = "Phase 2, arrivée de Kel'Thuzad !"
 	L.phase2_bar = "Kel'Thuzad actif !"
-	L.phase3_soon_warning = "Phase 3 imminente !"
+
 	L.phase3_trigger = "Maître, j'ai besoin d'aide !"
+	L.phase3_soon_warning = "Phase 3 imminente !"
 	L.phase3_warning = "Phase 3, gardiens dans ~15 sec. !"
-
-	L.mc_message = "Contrôle mental : %s"
-	L.mc_warning = "Contrôles mentaux imminents !"
-	L.mc_nextbar = "~Contrôles mentaux"
-
-	L.frostblast_bar = "Trait de givre probable"
-	L.frostblast_soon_message = "Trait de givre probable dans ~5 sec. !"
-
-	L.detonate_other = "Détoner mana : %s"
-	L.detonate_possible_bar = "~Prochain Détoner"
-	L.detonate_warning = "Prochain Faire détoner mana dans 5 sec. !"
 
 	L.guardians = "Apparition des gardiens"
 	L.guardians_desc = "Prévient de l'arrivée des gardiens en phase 3."
@@ -228,8 +214,6 @@ if L then
 	L.bossName = "Le Recousu"
 
 	L.enragewarn = "5% - Frénésie !"
-	L.starttrigger1 = "R'cousu veut jouer !"
-	L.starttrigger2 = "R'cousu avatar de guerre pour Kel'Thuzad !"
 end
 
 L = BigWigs:NewBossLocale("Maexxna", "frFR")
@@ -251,21 +235,16 @@ L = BigWigs:NewBossLocale("Sapphiron", "frFR")
 if L then
 	L.bossName = "Saphiron"
 
-	L.airphase_trigger = "Saphiron s'envole !"
-	L.deepbreath_incoming_message = "Incantation d'une Bombe de glace dans ~14 sec. !"
-	L.deepbreath_incoming_soon_message = "Incantation d'une Bombe de glace dans ~5 sec. !"
-	L.deepbreath_incoming_bar = "Incantation Bombe"
-	L.deepbreath_trigger = "%s inspire profondément."
+	L.deepbreath_trigger = "%s prend une grande inspiration…"
+
+	-- L.air_phase = "Air phase"
+	-- L.ground_phase = "Ground phase"
+
+	L.deepbreath = "Bombe de glace"
 	L.deepbreath_warning = "Arrivée d'une Bombe de glace !"
 	L.deepbreath_bar = "Impact Bombe de glace "
 
-	L.lifedrain_message = "Drains de vie ! Prochain dans ~24 sec. !"
-	L.lifedrain_warn1 = "Drains de vie dans 5 sec. !"
-	L.lifedrain_bar = "Prochains Drains de vie"
-
 	L.icebolt_say = "Je suis un bloc !"
-
-	L.ping_message = "Bloc - Indication de votre position aux autres !"
 end
 
 L = BigWigs:NewBossLocale("Instructor Razuvious", "frFR")

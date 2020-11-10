@@ -131,29 +131,16 @@ if L then
 
 	L.start_trigger = "어둠의 문지기와 하수인, 그리고 병사들이여! 나 켈투자드가 부르니 명을 받들라!"
 	L.start_warning = "켈투자드 전투 시작! 약 3분 30초 후 활동!"
-	L.start_bar = "2 단계"
 
-	L.phase = "단계"
-	L.phase_desc = "단계 변경을 알립니다."
 	L.phase2_trigger1 = "자비를 구하라!" -- CHECK
 	L.phase2_trigger2 = "마지막 숨이나 쉬어라!"
 	L.phase2_trigger3 = "최후를 맞이하라!"
 	L.phase2_warning = "2 단계, 켈투자드!"
 	L.phase2_bar = "켈투자드 활동!"
-	L.phase3_soon_warning = "잠시 후 3 단계!"
+
 	L.phase3_trigger = "주인님, 도와주소서!"
+	L.phase3_soon_warning = "잠시 후 3 단계!"
 	L.phase3_warning = "3 단계, 약 15초 이내 수호자 등장!"
-
-	L.mc_message = "정신 지배: %s"
-	L.mc_warning = "정신 지배 대기시간 종료 - 곧 사용!"
-	L.mc_nextbar = "~정배 대기 시간"
-
-	L.frostblast_bar = "냉기 작렬 가능"
-	L.frostblast_soon_message = "약 5초 이내 냉기 작렬 가능!"
-
-	L.detonate_other = "마나 폭발 - %s"
-	L.detonate_possible_bar = "폭발 가능"
-	L.detonate_warning = "약 5초 이내 마나 폭발 가능!"
 
 	L.guardians = "수호자 생성"
 	L.guardians_desc = "3 단계의 수호자 소환을 알립니다."
@@ -227,8 +214,6 @@ if L then
 	L.bossName = "패치워크"
 
 	L.enragewarn = "5% - 광기!"
-	L.starttrigger1 = "패치워크랑 놀아줘!"
-	L.starttrigger2 = "켈투자드님이 패치워크 싸움꾼으로 만들었다."
 end
 
 L = BigWigs:NewBossLocale("Maexxna", "koKR")
@@ -250,21 +235,16 @@ L = BigWigs:NewBossLocale("Sapphiron", "koKR")
 if L then
 	L.bossName = "사피론"
 
-	L.airphase_trigger = "사피론이 공중으로 떠오릅니다!"
-	L.deepbreath_incoming_message = "약 14초 이내 얼음 폭탄 시전!"
-	L.deepbreath_incoming_soon_message = "약 5초 이내 얼음 폭탄 시전!"
-	L.deepbreath_incoming_bar = "얼음 폭탄 시전"
-	L.deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이마십니다."
+	L.deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다."
+
+	-- L.air_phase = "Air phase"
+	-- L.ground_phase = "Ground phase"
+
+	L.deepbreath = "얼음 폭탄"
 	L.deepbreath_warning = "잠시 후 얼음 폭탄!"
 	L.deepbreath_bar = "얼음 폭탄 떨어짐!"
 
-	L.lifedrain_message = "생명력 흡수! 다음은 약 24초 이내!"
-	L.lifedrain_warn1 = "약 5초 이내 생명력 흡수!"
-	L.lifedrain_bar = "~생명력 흡수 가능"
-
 	L.icebolt_say = "저 방패에요!"
-
-	L.ping_message = "방패 - 현재 위치 미니맵에 표시 중!"
 end
 
 L = BigWigs:NewBossLocale("Instructor Razuvious", "koKR")

@@ -127,34 +127,20 @@ end
 L = BigWigs:NewBossLocale("Kel'Thuzad", "ruRU")
 if L then
 	L.bossName = "Кел'Тузад"
-
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Зал Кел'Тузада"
 
 	L.start_trigger = "Соратники слуги солдаты холодной тьмы! Повинуйтесь зову Кел'Тузада!"
 	L.start_warning = "Бой с Кел'Тузадом начинается! ~3 мин 30 сек до выхода босса!"
-	L.start_bar = "Фаза 2"
 
-	L.phase = "Фазы"
-	L.phase_desc = "Предупреждать когда босс входит в новую фазу."
 	L.phase2_trigger1 = "Молите о пощаде!"
 	L.phase2_trigger2 = "Кричите! Кричите изо всех сил!"
 	L.phase2_trigger3 = "Вы уже мертвы!"
 	L.phase2_warning = "Фаза 2 Кел'Тузад просыпается!"
 	L.phase2_bar = "Кел'Тузад активен!"
-	L.phase3_soon_warning = "Скоро Фаза 3!"
+
 	L.phase3_trigger = "Господин мне нужна помощь!"
+	L.phase3_soon_warning = "Скоро Фаза 3!"
 	L.phase3_warning = "Фаза 3 защитники через ~15 секунд!"
-
-	L.mc_message = "Контроль над |3-4(%s)"
-	L.mc_warning = "Скоро контроль разума!"
-	L.mc_nextbar = "~Контроль Разума"
-
-	L.frostblast_bar = "Возможен ледяной взрыв"
-	L.frostblast_soon_message = "Возможный ледяной взрыв через 15 секунд!"
-
-	L.detonate_other = "Взрыв маны на 3-5(%s)"
-	L.detonate_possible_bar = "Возможен взрыв маны"
-	L.detonate_warning = "Следующий взрыв маны через 5 секунд!"
 
 	L.guardians = "Появление стражей"
 	L.guardians_desc = "Сообщать о появлении стражей ледяной короны в третьей фазе."
@@ -228,8 +214,6 @@ if L then
 	L.bossName = "Лоскутик"
 
 	L.enragewarn = "5% - Бешенство!"
-	L.starttrigger1 = "Лоскутик хочет поиграть!"
-	L.starttrigger2 = "Кел'Тузад объявил Лоскутика воплощением войны!"
 end
 
 L = BigWigs:NewBossLocale("Maexxna", "ruRU")
@@ -251,21 +235,16 @@ L = BigWigs:NewBossLocale("Sapphiron", "ruRU")
 if L then
 	L.bossName = "Сапфирон"
 
-	L.airphase_trigger = "%s взмывает в воздух!"
-	L.deepbreath_incoming_message = "Ледяная бомба через 23 секунды!"
-	L.deepbreath_incoming_soon_message = "Ледяная бомба через 5 секунд!"
-	L.deepbreath_incoming_bar = "Каст ледяной бомбы"
 	L.deepbreath_trigger = "%s глубоко вздыхает."
+
+	-- L.air_phase = "Air phase"
+	-- L.ground_phase = "Ground phase"
+
+	L.deepbreath = "Ледяная бомба"
 	L.deepbreath_warning = "Появляется ледяная бомба!"
 	L.deepbreath_bar = "Приземляется ледяная бомба!"
 
-	L.lifedrain_message = "Похищение жизни! Следующее через 24 секунды!"
-	L.lifedrain_warn1 = "Похищение жизни через 5 секунд!"
-	L.lifedrain_bar = "~Возможное похищение жизни"
-
 	L.icebolt_say = "Я в глыбе!"
-
-	L.ping_message = "Глыба - отмечаю положение!"
 end
 
 L = BigWigs:NewBossLocale("Instructor Razuvious", "ruRU")

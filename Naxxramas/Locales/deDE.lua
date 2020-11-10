@@ -116,6 +116,7 @@ if L then
 
 	L.mark = "Male"
 	L.mark_desc = "Warnungen und Timer für die Male."
+
 	L.markbar = "Mal (%d)"
 	L.markwarn1 = "Mal (%d)!"
 	L.markwarn2 = "Mal (%d) in 5 sek!"
@@ -126,34 +127,20 @@ end
 L = BigWigs:NewBossLocale("Kel'Thuzad", "deDE")
 if L then
 	L.bossName = "Kel'Thuzad"
-
-	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemach"
+	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemächer"
 
 	L.start_trigger = "Lakaien, Diener, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!"
 	L.start_warning = "Kel'Thuzad gestartet! ~3:30 min, bis er aktiv wird!"
-	L.start_bar = "Phase 2"
 
-	L.phase = "Phasen"
-	L.phase_desc = "Warnt bei Phasenwechsel."
 	L.phase2_trigger1 = "Betet um Gnade!"
 	L.phase2_trigger2 = "Schreiend werdet ihr diese Welt verlassen!"
 	L.phase2_trigger3 = "Euer Ende ist gekommen!"
 	L.phase2_warning = "Phase 2, Kel'Thuzad kommt!"
 	L.phase2_bar = "Kel'Thuzad aktiv"
-	L.phase3_soon_warning = "Phase 3 bald!"
+
 	L.phase3_trigger = "Meister, ich benötige Beistand."
+	L.phase3_soon_warning = "Phase 3 bald!"
 	L.phase3_warning = "Phase 3, Wächter in ~15 sek!"
-
-	L.mc_message = "Gedankenkontrolle: %s"
-	L.mc_warning = "Gedankenkontrolle bald!"
-	L.mc_nextbar = "~Gedankenkontrolle"
-
-	L.frostblast_bar = "~Frostschlag"
-	L.frostblast_soon_message = "Frostschlag in ~5 sek!"
-
-	L.detonate_other = "Detonierendes Mana: %s"
-	L.detonate_possible_bar = "~Detonierendes Mana"
-	L.detonate_warning = "Detonierendes Mana in 5 sek!"
 
 	L.guardians = "Wächter"
 	L.guardians_desc = "Warnt vor den Wächtern von Eiskrone in Phase 3."
@@ -227,8 +214,6 @@ if L then
 	L.bossName = "Flickwerk"
 
 	L.enragewarn = "5% - Raserei!"
-	L.starttrigger1 = "Flickwerk spielen möchte!"
-	L.starttrigger2 = "Kel’Thuzad macht Flickwerk zu seinem Abgesandten von Krieg!" -- Yes, that's really a ´ instead of a '
 end
 
 L = BigWigs:NewBossLocale("Maexxna", "deDE")
@@ -250,21 +235,16 @@ L = BigWigs:NewBossLocale("Sapphiron", "deDE")
 if L then
 	L.bossName = "Saphiron"
 
-	L.airphase_trigger = "Saphiron erhebt sich in die Lüfte!" -- No %s in deDE, we need the translated name!
-	L.deepbreath_incoming_message = "Frostatem in ~23 sek!"
-	L.deepbreath_incoming_soon_message = "Frostatem in ~5 sek!"
-	L.deepbreath_incoming_bar = "Wirkt Frostatem..."
-	L.deepbreath_trigger = "%s holt tief Luft."
-	L.deepbreath_warning = "Frostatem kommt!"
-	L.deepbreath_bar = "Frostatem landet!"
+	L.deepbreath_trigger = "%s atmet tief ein..."
 
-	L.lifedrain_message = "Lebensentzug! Nächster in ~24 sek!"
-	L.lifedrain_warn1 = "Lebensentzug in ~5 sek!"
-	L.lifedrain_bar = "~Lebensentzug"
+	-- L.air_phase = "Air phase"
+	-- L.ground_phase = "Ground phase"
+
+	L.deepbreath = "Eisbombe"
+	L.deepbreath_warning = "Eisbombe kommt!"
+	L.deepbreath_bar = "Eisbombe landet!"
 
 	L.icebolt_say = "Ich bin ein Eisblock!"
-
-	L.ping_message = "Eisblock - Pinge deine Position!"
 end
 
 L = BigWigs:NewBossLocale("Instructor Razuvious", "deDE")
