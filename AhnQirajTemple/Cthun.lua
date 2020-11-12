@@ -91,6 +91,9 @@ function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_BossComm")
 
 	self:Death("EyeKilled", 15589)
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Death("Win", 15727)
 end
 
 function mod:OnEngage()

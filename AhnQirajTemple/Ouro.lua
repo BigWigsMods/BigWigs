@@ -58,7 +58,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SummonOuroMounds", 26058) -- Submerge
 	self:Log("SPELL_SUMMON", "SummonOuroScarabs", 26060) -- Emerge
 
-	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "target", "focus")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
+	self:Death("Win", 15517)
 end
 
 function mod:OnEngage()
@@ -67,6 +68,8 @@ function mod:OnEngage()
 
 	self:CDBar(26103, 22.7) -- Sweep
 	self:CDBar(26102, 24.3) -- Sand Blast
+
+	self:RegisterUnitEvent("UNIT_HEALTH_FREQUENT", nil, "target", "focus")
 end
 
 --------------------------------------------------------------------------------
