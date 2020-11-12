@@ -148,7 +148,7 @@ function mod:OnEngage()
 	end
 	self.strategy = strategy
 
-	self:Message("stages", "cyan", L.phase1_message)
+	self:Message("stages", "cyan", L.phase1_message, false)
 	self:Throw()
 end
 
