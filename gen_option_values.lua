@@ -386,7 +386,7 @@ local function parseGetOptions(lines, start)
 			chunk = lines[i]
 			break
 		end
-		if lines[i]:match("^%s*},%s*{") then
+		if lines[i]:match("^%s*},%s*{") or lines[i]:match("^%s*},%s*nil,%s*{") then
 			-- we don't want to parse headers (to avoid setfenv) so stop here
 			chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
 			break
@@ -400,7 +400,11 @@ local function parseGetOptions(lines, start)
 		return false, "Something is wrong."
 	end
 
-	local success, result = pcall(loadstring(chunk))
+	local f, err = loadstring(chunk)
+	if err then
+		return false, err
+	end
+	local success, result = pcall(f)
 	if success then
 		local options, option_flags = {}, {}
 		for _, opt in next, result do
