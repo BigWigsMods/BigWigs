@@ -153,7 +153,11 @@ local icons = setmetatable({}, {__index =
 				end
 			end
 		else
-			value = "Interface\\Icons\\" .. key
+			if key:sub(1, 10) == "Interface\\" then
+				value = key
+			else
+				value = "Interface\\Icons\\" .. key
+			end
 		end
 		self[key] = value
 		return value
