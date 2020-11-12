@@ -87,14 +87,14 @@ do
 	display.background = bg
 
 	local xxx1 = display:CreateTexture()
-	xxx1:SetPoint("LEFT", display, "RIGHT")
+	xxx1:SetPoint("TOP", display, "BOTTOM")
 	xxx1:SetColorTexture(0, 0, 0, 0.3)
 	xxx1:SetSize(infoboxWidth, infoboxHeight)
 	xxx1:Hide()
 	display.xxx1 = xxx1
 
 	local xxx2 = display:CreateTexture()
-	xxx2:SetPoint("TOP", display, "BOTTOM")
+	xxx2:SetPoint("LEFT", display, "RIGHT")
 	xxx2:SetColorTexture(0, 0, 0, 0.3)
 	xxx2:SetSize(infoboxWidth, infoboxHeight)
 	xxx2:Hide()
@@ -237,7 +237,7 @@ end
 -- Event Handlers
 --
 
-function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
+function plugin:BigWigs_ShowInfoBox(_, module, title, blocks)
 	if opener then
 		self:Close()
 	end
@@ -249,14 +249,9 @@ function plugin:BigWigs_ShowInfoBox(_, module, title, TEMP)
 	display.title:SetText(title)
 	display:Show()
 
-	if TEMP then
-		display.xxx1:Show()
-		display.xxx2:Show()
-		display.xxx3:Show()
-	else
-		display.xxx1:Hide()
-		display.xxx2:Hide()
-		display.xxx3:Hide()
+	blocks = blocks or 1
+	for i = 1, 3 do
+		display["xxx"..i]:SetShown(blocks > i)
 	end
 end
 
