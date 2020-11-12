@@ -153,20 +153,16 @@ if L then
 
 	L.startwarn = "Loatheb angegriffen! 2 min bis Unausweichliches Schicksal!"
 
-	L.aura_message = "Nekrotische Aura - Dauer 17 sek!"
-	L.aura_warning = "Nekrotische Aura schwindet in 3 sek!"
+	L.doom_5sec_warn = "Unausweichliches Schicksal (%d) in 5 sek!"
+	L.doomtime_bar = "Schicksal alle 15 sek"
+	L.doomtime_warn = "Schicksal: Timer Wechsel in %s sek!"
+	L.doomtime_now = "Unausweichliches Schicksal nun alle 15 sek!"
 
-	L.deathbloom_warning = "Todesblüte in 5 sek!"
+	L.remove_curse = "Flüche bei Loatheb aufgehoben"
 
-	L.doombar = "Unausweichliches Schicksal (%d)"
-	L.doomwarn = "Unausweichliches Schicksal (%d)! %d sek bis zum nächsten."
-	L.doomwarn5sec = "Unausweichliches Schicksal (%d) in 5 sek!"
-	L.doomtimerbar = "Schicksal alle 15 sek"
-	L.doomtimerwarn = "Schicksal: Timer Wechsel in %s sek!"
-	L.doomtimerwarnnow = "Unausweichliches Schicksal nun alle 15 sek!"
+	L.spore_warn = "Spore (%d)!"
 
-	L.sporewarn = "Spore (%d)!"
-	L.sporebar = "Spore (%d)"
+	-- L.corrupted_mind_desc = "Show bar for your own Corrupted Mind debuff."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "deDE")
@@ -177,33 +173,31 @@ if L then
 	L.starttrigger2 = "Ehre unserem Meister!"
 	L.starttrigger3 = "Euer Leben ist verwirkt!"
 	L.startwarn = "Noth angegriffen! Teleport in 90 sek!"
+	L.add_trigger = "Erhebt euch, Soldaten! Erhebt euch und kämpft erneut!"
 
 	L.blink = "Blinzeln"
 	L.blink_desc = "Warnungen und Timer für Blinzeln."
-	L.blinktrigger = "%s blinzelt sich davon!"
-	L.blinkwarn = "Blinzeln!"
-	L.blinkwarn2 = "Blinzeln in ~5 sek!"
-	L.blinkbar = "Blinzeln"
+	L.blink_trigger = "%s blinzelt sich davon!"
+	L.blink_bar = "Blinzeln"
 
 	L.teleport = "Teleport"
 	L.teleport_desc = "Warnungen und Timer für Teleport."
-	L.teleportbar = "Teleport"
-	L.backbar = "Rückteleport"
+	L.teleport_bar = "Teleport"
 	L.teleportwarn = "Teleport! Noth auf dem Balkon!"
 	L.teleportwarn2 = "Teleport in 10 sek!"
-	L.backwarn = "Noth zurück im Raum für %d sek!"
-	L.backwarn2 = "Rückteleport in 10 sek!"
+	L.back_bar = "Rückteleport"
+	L.back_warn = "Noth zurück im Raum für %d sek!"
+	L.back_warn2 = "Rückteleport in 10 sek!"
 
-	L.curseexplosion = "Fluch Explosion!"
-	L.cursewarn = "Fluch! Nächster in ~55 sek."
-	L.curse10secwarn = "Fluch in ~10 sek!"
-	L.cursebar = "Nächster Fluch"
+	L.curse_explosion = "Fluch Explosion!"
+	L.curse_warn = "Fluch! Nächster in ~55 sek."
+	L.curse_10sec_warn = "Fluch in ~10 sek!"
+	L.curse_bar = "Nächster Fluch"
 
 	L.wave = "Wellen"
 	L.wave_desc = "Warnungen und Timer für die Gegnerwellen."
-	L.addtrigger = "Erhebt euch, Soldaten! Erhebt euch und kämpft erneut!"
-	L.wave1bar = "Welle 1"
-	L.wave2bar = "Welle 2"
+	L.wave1_bar = "Welle 1"
+	L.wave2_bar = "Welle 2"
 	L.wave2_message = "Welle 2 in 10 sek!"
 end
 

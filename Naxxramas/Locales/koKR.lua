@@ -153,20 +153,16 @@ if L then
 
 	L.startwarn = "로데브 전투시작!, 2분 후 피할 수 없는 파멸!"
 
-	L.aura_message = "강령술의 오라 - 17초 지속!"
-	L.aura_warning = "3초 후 강령술의 오라 사라짐!"
+	L.doom_5sec_warn = "5초 후 피할 수 없는 파멸 %d!"
+	L.doomtime_bar = "파멸 - 매 15초"
+	L.doomtime_warn = "%s초 후로 피할 수 없는 파멸의 시간변경!"
+	L.doomtime_now = "피할 수 없는 파멸! 지금부터 매 15초마다."
 
-	L.deathbloom_warning = "5초 후 죽음의 꽃!"
+	L.remove_curse = "로데브 저주 헤제 시전!"
 
-	L.doombar = "피할 수 없는 파멸 %d"
-	L.doomwarn = "피할 수 없는 파멸 %d! 다음은 %d초 후!"
-	L.doomwarn5sec = "5초 후 피할 수 없는 파멸 %d!"
-	L.doomtimerbar = "파멸 - 매 15초"
-	L.doomtimerwarn = "%s초 후로 피할 수 없는 파멸의 시간변경!"
-	L.doomtimerwarnnow = "피할 수 없는 파멸! 지금부터 매 15초마다."
+	L.spore_warn = "포자 %d 소환됨!"
 
-	L.sporewarn = "포자 %d 소환됨!"
-	L.sporebar = "포자 소환! %d"
+	L.corrupted_mind_desc = "부패한 정신 디버프에 대한 바를 표시합니다."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "koKR")
@@ -177,33 +173,31 @@ if L then
 	L.starttrigger2 = "주인님께 영광을!"
 	L.starttrigger3 = "너희 생명은 끝이다!"
 	L.startwarn = "역병술사 노스와 전투 시작! 90초 후 순간이동"
+	L.add_trigger = "일어나라,병사들이여! 다시 일어나 싸워라!"
 
 	L.blink = "점멸"
 	L.blink_desc = "점멸을 알립니다."
-	L.blinktrigger = "%s|1이;가; 눈 깜짝할 사이에 도망칩니다!"
-	L.blinkwarn = "점멸! 어그로 초기화!"
-	L.blinkwarn2 = "약 5초 이내 점멸 가능!"
-	L.blinkbar = "점멸"
+	L.blink_trigger = "%s|1이;가; 눈 깜짝할 사이에 도망칩니다!"
+	L.blink_bar = "점멸"
 
 	L.teleport = "순간이동"
 	L.teleport_desc = "순간이동을 알립니다."
-	L.teleportbar = "순간이동!"
-	L.backbar = "방으로 복귀!"
+	L.teleport_bar = "순간이동!"
 	L.teleportwarn = "발코니로 순간이동!"
 	L.teleportwarn2 = "10초 후 순간이동!"
-	L.backwarn = "방으로 복귀! %d 초간 최대한 공격!"
-	L.backwarn2 = "10초 후 방으로 복귀!"
+	L.back_bar = "방으로 복귀!"
+	L.back_warn = "방으로 복귀! %d 초간 최대한 공격!"
+	L.back_warn2 = "10초 후 방으로 복귀!"
 
-	L.curseexplosion = "역병술사의 저주!"
-	L.cursewarn = "저주! 다음 저주 약 55초 이내"
-	L.curse10secwarn = "약 10초 이내 저주"
-	L.cursebar = "다음 저주"
+	L.curse_explosion = "역병술사의 저주!"
+	L.curse_warn = "저주! 다음 저주 약 55초 이내"
+	L.curse_10sec_warn = "약 10초 이내 저주"
+	L.curse_bar = "다음 저주"
 
 	L.wave = "웨이브"
 	L.wave_desc = "웨이브를 알립니다."
-	L.addtrigger = "일어나라,병사들이여! 다시 일어나 싸워라!"
-	L.wave1bar = "웨이브 1"
-	L.wave2bar = "웨이브 2"
+	L.wave1_bar = "웨이브 1"
+	L.wave2_bar = "웨이브 2"
 	L.wave2_message = "10초 이내 웨이브 2"
 end
 

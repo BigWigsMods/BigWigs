@@ -153,20 +153,16 @@ if L then
 
 	-- L.startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!"
 
-	-- L.aura_message = "Necrotic Aura - Duration 17 sec!"
-	-- L.aura_warning = "Aura gone in 3 sec!"
+	-- L.doom_5sec_warn = "Doom %d in 5 sec!"
+	-- L.doomtime_bar = "Doom every 15sec"
+	-- L.doomtime_warn = "Doom timer changes in %s sec!"
+	-- L.doomtime_now = "Doom now happens every 15 sec!"
 
-	-- L.deathbloom_warning = "Bloom in 5 sec!"
+	-- L.remove_curse = "Curses removed on Loatheb"
 
-	-- L.doombar = "Inevitable Doom %d"
-	-- L.doomwarn = "Doom %d! %d sec to next!"
-	-- L.doomwarn5sec = "Doom %d in 5 sec!"
-	-- L.doomtimerbar = "Doom every 15sec"
-	-- L.doomtimerwarn = "Doom timer changes in %s sec!"
-	-- L.doomtimerwarnnow = "Doom now happens every 15 sec!"
+	-- L.spore_warn = "Spore %d!"
 
-	-- L.sporewarn = "Spore %d!"
-	-- L.sporebar = "Summon Spore %d"
+	-- L.corrupted_mind_desc = "Show bar for your own Corrupted Mind debuff."
 end
 
 L = BigWigs:NewBossLocale("Maexxna", "itIT")
@@ -192,33 +188,31 @@ if L then
 	-- L.starttrigger2 = "Glory to the master!"
 	-- L.starttrigger3 = "Your life is forfeit!"
 	-- L.startwarn = "Noth the Plaguebringer engaged! 90 sec till teleport"
+	-- L.add_trigger = "Rise, my soldiers! Rise and fight once more!"
 
 	-- L.blink = "Blink"
 	-- L.blink_desc = "Warnings when Noth blinks."
-	-- L.blinktrigger = "%s blinks away!"
-	-- L.blinkwarn = "Blink!"
-	-- L.blinkwarn2 = "Blink in ~5 sec!"
-	-- L.blinkbar = "Blink"
+	-- L.blink_trigger = "%s blinks away!"
+	-- L.blink_bar = "Blink"
 
 	-- L.teleport = "Teleport"
 	-- L.teleport_desc = "Warnings and bars for teleport."
-	-- L.teleportbar = "Teleport!"
-	-- L.backbar = "Back in room!"
+	-- L.teleport_bar = "Teleport!"
 	-- L.teleportwarn = "Teleport! He's on the balcony!"
 	-- L.teleportwarn2 = "Teleport in 10 sec!"
-	-- L.backwarn = "He's back in the room for %d sec!"
-	-- L.backwarn2 = "10 sec until he's back in the room!"
+	-- L.back_bar = "Back in room!"
+	-- L.back_warn = "He's back in the room for %d sec!"
+	-- L.back_warn2 = "10 sec until he's back in the room!"
 
-	-- L.curseexplosion = "Curse explosion!"
-	-- L.cursewarn = "Curse! next in ~55 sec"
-	-- L.curse10secwarn = "Curse in ~10 sec"
-	-- L.cursebar = "Next Curse"
+	-- L.curse_explosion = "Curse explosion!"
+	-- L.curse_warn = "Curse! next in ~55 sec"
+	-- L.curse_10sec_warn = "Curse in ~10 sec"
+	-- L.curse_bar = "Next Curse"
 
 	-- L.wave = "Waves"
 	-- L.wave_desc = "Alerts for the different waves."
-	-- L.addtrigger = "Rise, my soldiers! Rise and fight once more!"
-	-- L.wave1bar = "Wave 1"
-	-- L.wave2bar = "Wave 2"
+	-- L.wave1_bar = "Wave 1"
+	-- L.wave2_bar = "Wave 2"
 	-- L.wave2_message = "Wave 2 in 10 sec"
 end
 

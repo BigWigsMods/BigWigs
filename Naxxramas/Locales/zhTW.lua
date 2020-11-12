@@ -153,20 +153,16 @@ if L then
 
 	L.startwarn = "憎恨者已進入戰鬥 - 2分鐘後，無可避免的末日！"
 
-	L.aura_message = "亡域光環 - 持續17秒！"
-	L.aura_warning = "3秒後，亡域光環消失！"
+	L.doom_5sec_warn = "5秒後，無可避免的末日%d！"
+	L.doomtime_bar = "<每隔15秒 無可避免的末日>"
+	L.doomtime_warn = "%s秒後改變無可避免的末日發動頻率！"
+	L.doomtime_now = "無可避免的末日現在每隔15秒發動一次！"
 
-	L.deathbloom_warning = "5秒後，死亡之花！"
+	L.remove_curse = "洛斯伯消除了一個詛咒效果"
 
-	L.doombar = "<無可避免的末日：%d>"
-	L.doomwarn = "無可避免的末日%d，%s秒後！"
-	L.doomwarn5sec = "5秒後，無可避免的末日%d！"
-	L.doomtimerbar = "<每隔15秒 無可避免的末日>"
-	L.doomtimerwarn = "%s秒後改變無可避免的末日發動頻率！"
-	L.doomtimerwarnnow = "無可避免的末日現在每隔15秒發動一次！"
+	L.spore_warn = "孢子：>%d<！"
 
-	L.sporewarn = "孢子：>%d<！"
-	L.sporebar = "<孢子：%d>"
+	-- L.corrupted_mind_desc = "Show bar for your own Corrupted Mind debuff."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "zhTW")
@@ -177,33 +173,31 @@ if L then
 	L.starttrigger2 = "榮耀歸於我主!"
 	L.starttrigger3 = "你們終將失去生命!"
 	L.startwarn = "『瘟疫使者』諾斯已進入戰鬥 - 90秒後，傳送！"
+	L.add_trigger = "起來吧，我的戰士們!起來，再為主人盡忠一次!"
 
 	L.blink = "閃現術"
 	L.blink_desc = "當施放閃現術時發出警報。"
-	L.blinktrigger = "%s閃現離開!"
-	L.blinkwarn = "閃現術！停止攻擊！"
-	L.blinkwarn2 = "約5秒後，閃現術！"
-	L.blinkbar = "<閃現術>"
+	L.blink_trigger = "%s閃現離開!"
+	L.blink_bar = "<閃現術>"
 
 	L.teleport = "傳送"
 	L.teleport_desc = "當施放傳送時發出警報。"
-	L.teleportbar = "<傳送>"
-	L.backbar = "<回到房間>"
+	L.teleport_bar = "<傳送>"
 	L.teleportwarn = "傳送！"
 	L.teleportwarn2 = "10秒後，傳送！"
-	L.backwarn = "諾斯回到房間 - %d秒後，傳送！"
-	L.backwarn2 = "10秒後諾斯回到房間！"
+	L.back_bar = "<回到房間>"
+	L.back_warn = "諾斯回到房間 - %d秒後，傳送！"
+	L.back_warn2 = "10秒後諾斯回到房間！"
 
-	L.curseexplosion = "瘟疫使者詛咒！"
-	L.cursewarn = "約55秒後，瘟疫使者詛咒！"
-	L.curse10secwarn = "約10秒後，瘟疫使者詛咒！"
-	L.cursebar = "<下一瘟疫使者詛咒>"
+	L.curse_explosion = "瘟疫使者詛咒！"
+	L.curse_warn = "約55秒後，瘟疫使者詛咒！"
+	L.curse_10sec_warn = "約10秒後，瘟疫使者詛咒！"
+	L.curse_bar = "<下一瘟疫使者詛咒>"
 
 	L.wave = "骷髏"
 	L.wave_desc = "當召喚骷髏時發出警報。"
-	L.addtrigger = "起來吧，我的戰士們!起來，再為主人盡忠一次!"
-	L.wave1bar = "<第一波>"
-	L.wave2bar = "<第二波>"
+	L.wave1_bar = "<第一波>"
+	L.wave2_bar = "<第二波>"
 	L.wave2_message = "10秒後，第二波！"
 end
 

@@ -8,7 +8,6 @@ if not mod then return end
 mod:RegisterEnableMob(15936)
 mod:SetAllowWin(true)
 mod.engageId = 1112
-mod.toggleOptions = {"engage", "teleport", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -28,6 +27,7 @@ if L then
 
 	L.teleport = "Teleport"
 	L.teleport_desc = "Warn for Teleports."
+	L.teleport_icon = "Spell_Arcane_Blink"
 	L.teleport_trigger = "The end is upon you."
 	L.teleport_1min_message = "Teleport in 1 min"
 	L.teleport_30sec_message = "Teleport in 30 sec"
@@ -47,19 +47,31 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+function mod:GetOptions()
+	return {
+		"engage",
+		"teleport",
+	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
+end
+
 function mod:OnBossEnable()
-	self:Yell("Engage", L["starttrigger"], L["starttrigger2"], L["starttrigger3"])
-	self:Yell("Teleport", L["teleport_trigger"])
+	self:BossYell("Teleport", L.teleport_trigger)
+
+	self:BossYell("Engage", L.starttrigger, L.starttrigger2, L.starttrigger3)
 	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 15936)
 end
 
 function mod:OnEngage()
-	self:Message("engage", L["engage_message"], "Important")
-	self:Bar("teleport", L["teleport_bar"], 90, "Spell_Arcane_Blink")
-	self:DelayedMessage("teleport", 30, L["teleport_1min_message"], "Attention")
-	self:DelayedMessage("teleport", 60, L["teleport_30sec_message"], "Urgent")
-	self:DelayedMessage("teleport", 80, L["teleport_10sec_message"], "Important")
+	self:Message("engage", "red", L.engage_message, false)
+	self:Bar("teleport", 90, L.teleport_bar, L.teleport_icon)
+	self:DelayedMessage("teleport", 30, "yellow", L.teleport_1min_message)
+	self:DelayedMessage("teleport", 60, "orange", L.teleport_30sec_message)
+	self:DelayedMessage("teleport", 80, "red", L.teleport_10sec_message)
 end
 
 --------------------------------------------------------------------------------
@@ -67,17 +79,16 @@ end
 --
 
 local function backToRoom()
-	mod:Message("teleport", L["on_floor_message"], "Attention")
-	mod:DelayedMessage("teleport", 60, L["teleport_30sec_message"], "Urgent")
-	mod:DelayedMessage("teleport", 80, L["teleport_10sec_message"], "Important")
-	mod:Bar("teleport", L["teleport_bar"], 90, "Spell_Arcane_Blink")
+	mod:Message("teleport", "yellow", L.on_floor_message, false)
+	mod:DelayedMessage("teleport", 60, "orange", L.teleport_30sec_message)
+	mod:DelayedMessage("teleport", 80, "red", L.teleport_10sec_message)
+	mod:Bar("teleport", 90, L.teleport_bar, L.teleport_icon)
 end
 
 function mod:Teleport()
 	self:ScheduleTimer(backToRoom, 45)
-	self:Message("teleport", L["on_platform_message"], "Attention")
-	self:DelayedMessage("teleport", 15, L["to_floor_30sec_message"], "Urgent")
-	self:DelayedMessage("teleport", 35, L["to_floor_10sec_message"], "Important")
-	self:Bar("teleport", L["back_bar"], 45, "Spell_Magic_LesserInvisibilty")
+	self:Message("teleport", "yellow", L.on_platform_message, false)
+	self:DelayedMessage("teleport", 15, "orange", L.to_floor_30sec_message)
+	self:DelayedMessage("teleport", 35, "red", L.to_floor_10sec_message)
+	self:Bar("teleport", 45, L.back_bar, L.teleport_icon)
 end
-

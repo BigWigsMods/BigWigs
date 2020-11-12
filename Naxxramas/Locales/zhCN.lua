@@ -153,20 +153,16 @@ if L then
 
 	L.startwarn = "洛欧塞布已激活 - 2分钟后，必然的厄运！"
 
-	L.aura_message = "死灵光环 - 持续17秒！"
-	L.aura_warning = "3秒后，死灵光环消失！"
+	L.doom_5sec_warn = "5秒后，必然的厄运%d！"
+	L.doomtime_bar = "<每隔15秒 必然的厄运>"
+	L.doomtime_warn = "%s秒后改变必然的厄运发动频率！"
+	L.doomtime_now = "必然的厄运现在每隔15秒发动一次！"
 
-	L.deathbloom_warning = "5秒后，死亡之花！"
+	L.remove_curse = "洛欧塞布驱散了一个诅咒效果"
 
-	L.doombar = "<必然的厄运：%d>"
-	L.doomwarn = "必然的厄运%d，%d秒后！"
-	L.doomwarn5sec = "5秒后，必然的厄运%d！"
-	L.doomtimerbar = "<每隔15秒 必然的厄运>"
-	L.doomtimerwarn = "%s秒后改变必然的厄运发动频率！"
-	L.doomtimerwarnnow = "必然的厄运现在每隔15秒发动一次！"
+	L.spore_warn = "孢子：>%d<！"
 
-	L.sporewarn = "孢子：>%d<！"
-	L.sporebar = "<孢子：%d>"
+	L.corrupted_mind_desc = "显示你中堕落心灵的计时条."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "zhCN")
@@ -177,33 +173,31 @@ if L then
 	L.starttrigger2 = "荣耀归于我主！"
 	L.starttrigger3 = "我要没收你的生命！"
 	L.startwarn = "药剂师诺斯已激活 - 90秒后，传送！"
+	L.add_trigger = "起来吧，我的战士们！起来，再为主人尽忠一次！"
 
 	L.blink = "闪现术"
 	L.blink_desc = "当施放闪现术时发出警报。"
-	L.blinktrigger = "%s施放了瞬移！"
-	L.blinkwarn = "闪现术！停止攻击！"
-	L.blinkwarn2 = "约5秒后，闪现术！"
-	L.blinkbar = "<闪现术>"
+	L.blink_trigger = "%s施放了瞬移！"
+	L.blink_bar = "<闪现术>"
 
 	L.teleport = "传送"
 	L.teleport_desc = "当施放传送时发出警报。"
-	L.teleportbar = "<传送>"
-	L.backbar = "<回到房间>"
+	L.teleport_bar = "<传送>"
 	L.teleportwarn = "传送！"
 	L.teleportwarn2 = "10秒后，传送！"
-	L.backwarn = "诺斯回到房间 - %d秒后，传送！"
-	L.backwarn2 = "10秒后诺斯回到房间！"
+	L.back_bar = "<回到房间>"
+	L.back_warn = "诺斯回到房间 - %d秒后，传送！"
+	L.back_warn2 = "10秒后诺斯回到房间！"
 
-	L.curseexplosion = "瘟疫使者的诅咒！"
-	L.cursewarn = "约55秒后，瘟疫使者的诅咒！"
-	L.curse10secwarn = "约10秒后，瘟疫使者的诅咒！"
-	L.cursebar = "<下一瘟疫使者的诅咒>"
+	L.curse_explosion = "瘟疫使者的诅咒！"
+	L.curse_warn = "约55秒后，瘟疫使者的诅咒！"
+	L.curse_10sec_warn = "约10秒后，瘟疫使者的诅咒！"
+	L.curse_bar = "<下一瘟疫使者的诅咒>"
 
 	L.wave = "骷髅"
 	L.wave_desc = "当召唤骷髅时发出警报。"
-	L.addtrigger = "起来吧，我的战士们！起来，再为主人尽忠一次！"
-	L.wave1bar = "<第一波>"
-	L.wave2bar = "<第二波>"
+	L.wave1_bar = "<第一波>"
+	L.wave2_bar = "<第二波>"
 	L.wave2_message = "10秒后，第二波！"
 end
 

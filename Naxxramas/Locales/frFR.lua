@@ -153,20 +153,16 @@ if L then
 
 	L.startwarn = "Horreb engagé ! 2 min. avant la 1ère Malédiction inévitable !"
 
-	L.aura_message = "Aura nécrotique pendant 17 sec. !"
-	L.aura_warning = "Fin de l'Aura nécrotique dans 3 sec. !"
+	L.doom_5sec_warn = "Malédiction inévitable %d dans 5 sec. !"
+	L.doomtime_bar = "Malé. toutes les 15 sec."
+	L.doomtime_warn = "Changement du délai des malédictions dans %s sec. !"
+	L.doomtime_now = "La Malédiction inévitable arrive désormais toutes les 15 sec. !"
 
-	L.deathbloom_warning = "Mortelle floraison dans 5 sec. !"
+	L.remove_curse = "Malédictions enlevées sur Loatheb"
 
-	L.doombar = "Malédiction inévitable %d"
-	L.doomwarn = "Malédiction inévitable %d ! Prochaine dans %d sec. !"
-	L.doomwarn5sec = "Malédiction inévitable %d dans 5 sec. !"
-	L.doomtimerbar = "Malé. toutes les 15 sec."
-	L.doomtimerwarn = "Changement du délai des malédictions dans %s sec. !"
-	L.doomtimerwarnnow = "La Malédiction inévitable arrive désormais toutes les 15 sec. !"
+	L.spore_warn = "Spore %d invoquée"
 
-	L.sporewarn = "Spore %d invoquée"
-	L.sporebar = "Invocation de spore %d"
+	-- L.corrupted_mind_desc = "Show bar for your own Corrupted Mind debuff."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "frFR")
@@ -177,33 +173,31 @@ if L then
 	L.starttrigger2 = "Gloire au maître !"
 	L.starttrigger3 = "Vos vies ne valent plus rien !"
 	L.startwarn = "Noth le Porte-peste engagé ! 90 sec. avant téléportation !"
+	L.add_trigger = "Levez-vous, soldats ! Levez-vous et combattez une fois encore !"
 
 	L.blink = "Transfert"
 	L.blink_desc = "Prévient quand Noth utilise son Transfert."
-	L.blinktrigger = "%s se transfère au loin !"
-	L.blinkwarn = "Transfert !"
-	L.blinkwarn2 = "Transfert dans ~5 sec. !"
-	L.blinkbar = "Transfert"
+	L.blink_trigger = "%s se transfère au loin !"
+	L.blink_bar = "Transfert"
 
 	L.teleport = "Téléportation"
 	L.teleport_desc = "Prévient quand Noth se téléporte."
-	L.teleportbar = "Téléportation"
-	L.backbar = "Retour dans la salle !"
+	L.teleport_bar = "Téléportation"
 	L.teleportwarn = "Téléportation ! Il est sur le balcon !"
 	L.teleportwarn2 = "Téléportation dans 10 sec. !"
-	L.backwarn = "De retour dans la salle pendant %d sec. !"
-	L.backwarn2 = "10 sec. avant son retour dans la salle !"
+	L.back_bar = "Retour dans la salle !"
+	L.back_warn = "De retour dans la salle pendant %d sec. !"
+	L.back_warn2 = "10 sec. avant son retour dans la salle !"
 
-	L.curseexplosion = "Explosion des malé. !"
-	L.cursewarn = "Malédictions ! Prochaines dans ~55 sec."
-	L.curse10secwarn = "Malédictions dans ~10 sec."
-	L.cursebar = "Prochaines malédictions"
+	L.curse_explosion = "Explosion des malé. !"
+	L.curse_warn = "Malédictions ! Prochaines dans ~55 sec."
+	L.curse_10sec_warn = "Malédictions dans ~10 sec."
+	L.curse_bar = "Prochaines malédictions"
 
 	L.wave = "Vagues"
 	L.wave_desc = "Prévient de l'arrivée des vagues."
-	L.addtrigger = "Levez-vous, soldats ! Levez-vous et combattez une fois encore !"
-	L.wave1bar = "1ère vague"
-	L.wave2bar = "2ème vague"
+	L.wave1_bar = "1ère vague"
+	L.wave2_bar = "2ème vague"
 	L.wave2_message = "2ème vague dans 10 sec."
 end
 
