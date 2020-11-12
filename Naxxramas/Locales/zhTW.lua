@@ -21,8 +21,7 @@ if L then
 
 	L.startwarn = "古魯斯已進入戰鬥 - 105秒後，殘殺！"
 
-	L.decimatesoonwarn = "即將 殘殺！"
-	L.decimatebartext = "<殘殺>"
+	L.decimate_bar = "<殘殺>"
 end
 
 L = BigWigs:NewBossLocale("Gothik the Harvester", "zhTW")
@@ -79,7 +78,6 @@ if L then
 	L.bossName = "葛羅巴斯"
 
 	L.bomb_message = "突變注射"
-	L.bomb_message_other = "突變注射：>%s<！"
 end
 
 L = BigWigs:NewBossLocale("Heigan the Unclean", "zhTW")
@@ -212,8 +210,6 @@ end
 L = BigWigs:NewBossLocale("Patchwerk", "zhTW")
 if L then
 	L.bossName = "縫補者"
-
-	L.enragewarn = "5 % - 狂亂！"
 end
 
 L = BigWigs:NewBossLocale("Maexxna", "zhTW")
@@ -260,12 +256,6 @@ L = BigWigs:NewBossLocale("Thaddius", "zhTW")
 if L then
 	L.bossName = "泰迪斯"
 
-	L.phase = "階段"
-	L.phase_desc = "當進入不同階段時發出警報。"
-
-	L.throw = "投擲"
-	L.throw_desc = "當主坦克被投擲到對面平台時發出警報。"
-
 	L.trigger_phase1_1 = "斯塔拉格要碾碎你!"
 	L.trigger_phase1_2 = "主人要吃了你!"
 	L.trigger_phase2_1 = "咬碎……你的……骨頭……"
@@ -273,20 +263,34 @@ if L then
 	L.trigger_phase2_3 = "殺……"
 
 	L.polarity_trigger = "你感受到痛苦的滋味了吧……"
-	L.polarity_message = "泰迪斯開始施放兩極移形！"
+
 	L.polarity_warning = "3秒後，兩極移形！"
-	L.polarity_bar = "<兩極移形>"
 	L.polarity_changed = "兩極移形改變！"
 	L.polarity_nochange = "相同兩極移形！"
-
 	L.polarity_first_positive = "你是 >正極<！"
 	L.polarity_first_negative = "你是 >負極<！"
 
 	L.phase1_message = "第一階段"
-	L.phase2_message = "第二階段 - 6分鍾後狂怒！"
+	L.phase2_message = "第二階段 - 5分鍾後狂怒！"
 
-	L.surge_message = "力量澎湃！加大對坦克的治療！"
-
-	L.throw_bar = "<投擲>"
+	L.throw = "投擲"
+	L.throw_desc = "當主坦克被投擲到對面平台時發出警報。"
 	L.throw_warning = "約5秒後，投擲！"
+
+	-- L.polarity_extras = "Additional alerts for Polarity positioning. Make sure to only choose one strategy!"
+
+	-- L.custom_off_charge_RL = "Strategy 1"
+	-- L.custom_off_charge_RL_desc = "|cffff2020Negative|r (-) are LEFT, |cff20ff20Positive|r (+) are RIGHT. Start in front of the boss."
+	-- L.custom_off_charge_LR = "Strategy 2"
+	-- L.custom_off_charge_LR_desc = "|cff20ff20Positive|r (+) are LEFT, |cffff2020Negative|r (-) are RIGHT. Start in front of the boss."
+
+	-- L.custom_off_charge_text = "Text arrows"
+	-- L.custom_off_charge_text_desc = "Show a message with the direction to move when Polarity Shift happens."
+	-- L.custom_off_charge_voice = "Voice alerts"
+	-- L.custom_off_charge_voice_desc = "Play a voice direction when Polarity Shift happens."
+
+	L.warn_left = "<--- 到左邊 <--- 到左邊 <---"
+	L.warn_right = "---> 向右 ---> 向右 --->"
+	L.warn_swap = "^^^^ 交換 ^^^^ 交換 ^^^^"
+	L.warn_stay = "==== 不要動 ==== 不要動 ===="
 end

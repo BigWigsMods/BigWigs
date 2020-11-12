@@ -2,18 +2,11 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Gluth", 533)
+local mod, CL = BigWigs:NewBoss("Gluth", 533)
 if not mod then return end
 mod:RegisterEnableMob(15932)
 mod:SetAllowWin(true)
 mod.engageId = 1108
-mod.toggleOptions = {28371, 54426, "berserk", "bosskill"}
-
---------------------------------------------------------------------------------
--- Locals
---
-
-local enrageTime = 420
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,10 +16,11 @@ local L = mod:NewLocale("enUS", true)
 if L then
 	L.bossName = "Gluth"
 
-	L.startwarn = "Gluth engaged, ~105 sec to decimate!"
+	L.startwarn = "Gluth engaged, ~105 sec to Decimate!"
 
-	L.decimatesoonwarn = "Decimate Soon!"
-	L.decimatebartext = "~Decimate Zombies"
+	L.decimate = 28375 -- Decimate
+	L.decimate_icon = "inv_shield_01"
+	L.decimate_bar = "Decimate Zombies"
 end
 L = mod:GetLocale()
 
@@ -34,40 +28,55 @@ L = mod:GetLocale()
 -- Initialization
 --
 
-function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Frenzy", 28371, 54427)
-	self:Log("SPELL_DAMAGE", "Decimate", 28375, 54426)
-	self:Log("SPELL_MISSED", "Decimate", 28375, 54426)
-	self:Death("Win", 15932)
+function mod:GetOptions()
+	return {
+		28371, -- Frenzy
+		29685, -- Terrifying Roar
+		"decimate", -- Decimate
+		"berserk",
+	}
+end
 
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+function mod:OnRegister()
+	self.displayName = L.bossName
+end
+
+function mod:OnBossEnable()
+	self:Log("SPELL_CAST_SUCCESS", "Frenzy", 28371)
+	self:Log("SPELL_CAST_SUCCESS", "Fear", 29685)
+	self:Log("SPELL_DAMAGE", "Decimate", 28375)
+	self:Log("SPELL_MISSED", "Decimate", 28375)
 end
 
 function mod:OnEngage(diff)
-	enrageTime = diff == 3 and 480 or 420
-	self:Message(54426, L["startwarn"], "Attention")
-	self:Bar(54426, L["decimatebartext"], 105, 54426)
-	self:DelayedMessage(54426, 100, L["decimatesoonwarn"], "Urgent")
-	self:Berserk(enrageTime)
+	self:Berserk(360, true)
+	self:Message("berserk", "yellow", L.startwarn, false)
+	self:CDBar("decimate", 105, L.decimate_bar, L.decimate_icon)
+	self:DelayedMessage("decimate", 100, "orange", CL.soon:format(self:SpellName(28375)), L.decimate_icon)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:Frenzy(_, spellId, _, _, spellName)
-	self:Message(28371, spellName, "Important", spellId)
+function mod:Frenzy(args)
+	self:Message(28371, "red")
+	self:Bar(28371, 9.7)
 end
 
-local last = 0
-function mod:Decimate(_, spellId, _, _, spellName)
-	local time = GetTime()
-	if (time - last) > 5 then
-		last = time
-		self:Message(54426, spellName, "Attention", spellId, "Alert")
-		self:Bar(54426, L["decimatebartext"], 105, spellId)
-		self:DelayedMessage(54426, 100, L["decimatesoonwarn"], "Urgent")
+function mod:Fear(args)
+	self:Message(29685, "red")
+	self:CDBar(29685, 21)
+end
+
+local prev = 0
+function mod:Decimate(args)
+	local t = GetTime()
+	if t-prev > 5 then
+		prev = t
+		self:Message("decimate", "yellow", L.decimate, L.decimate_icon)
+		self:PlaySound("decimate", "alert")
+		self:CDBar("decimate", 105, L.decimate_bar, L.decimate_icon)
+		self:DelayedMessage("decimate", 100, "orange", CL.soon:format(self:SpellName(28375)), L.decimate_icon, "alarm")
 	end
 end
-

@@ -7,7 +7,6 @@ if not mod then return end
 mod:RegisterEnableMob(15931)
 mod:SetAllowWin(true)
 mod.engageId = 1111
-mod.toggleOptions = {{28169, "WHISPER", "ICON", "FLASHSHAKE"}, 28240, "berserk", "bosskill"}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -18,7 +17,6 @@ if L then
 	L.bossName = "Grobbulus"
 
 	L.bomb_message = "Injection"
-	L.bomb_message_other = "%s is Injected!"
 end
 L = mod:GetLocale()
 
@@ -26,33 +24,42 @@ L = mod:GetLocale()
 -- Initialization
 --
 
+function mod:GetOptions()
+	return {
+		{28169, "ICON", "FLASH"}, -- Mutating Injection
+		28240, -- Poison Cloud
+		"berserk",
+	}
+end
+
+function mod:OnRegister()
+	self.displayName = L.bossName
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Inject", 28169)
 	self:Log("SPELL_CAST_SUCCESS", "Cloud", 28240)
-	self:Death("Win", 15931)
-
-	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
-	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
 end
 
 function mod:OnEngage()
-	self:Berserk(540)
+	self:Berserk(720)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:Inject(player, spellId)
-	self:TargetMessage(28169, L["bomb_message"], player, "Personal", spellId, "Alert")
-	if UnitIsUnit(player, "player") then self:FlashShake(28169) end
-	self:Whisper(28169, player, L["bomb_message"])
-	self:Bar(28169, L["bomb_message_other"]:format(player), 10, spellId)
-	self:PrimaryIcon(28169, player)
+function mod:Inject(args)
+	self:TargetMessage(28169, "blue", args.destName, L.bomb_message)
+	if self:Me(args.destGUID) then
+		self:PlaySound(28169, "alert")
+		self:FlashShake(28169)
+	end
+	self:TargetBar(28169, 10, args.destName, L.bomb_message)
+	self:PrimaryIcon(28169, args.destName)
 end
 
-function mod:Cloud(_, spellId, _, _, spellName)
-	self:Message(28240, spellName, "Attention", spellId)
-	self:Bar(28240, spellName, 15, spellId)
+function mod:Cloud(args)
+	self:Message(28240, "yellow")
+	self:CDBar(28240, 16.2) -- sometimes 14.5
 end
-

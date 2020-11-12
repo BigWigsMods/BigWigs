@@ -21,8 +21,7 @@ if L then
 
 	L.startwarn = "글루스 전투 시작! 약 105초 후 좀비 척살!"
 
-	L.decimatesoonwarn = "잠시 후 척살!"
-	L.decimatebartext = "좀비 척살"
+	L.decimate_bar = "좀비 척살"
 end
 
 L = BigWigs:NewBossLocale("Gothik the Harvester", "koKR")
@@ -79,7 +78,6 @@ if L then
 	L.bossName = "그라불루스"
 
 	L.bomb_message = "돌연변이 유발"
-	L.bomb_message_other = "돌연변이 유발: %s!"
 end
 
 L = BigWigs:NewBossLocale("Heigan the Unclean", "koKR")
@@ -212,8 +210,6 @@ end
 L = BigWigs:NewBossLocale("Patchwerk", "koKR")
 if L then
 	L.bossName = "패치워크"
-
-	L.enragewarn = "5% - 광기!"
 end
 
 L = BigWigs:NewBossLocale("Maexxna", "koKR")
@@ -260,12 +256,6 @@ L = BigWigs:NewBossLocale("Thaddius", "koKR")
 if L then
 	L.bossName = "타디우스"
 
-	L.phase = "단계 변경"
-	L.phase_desc = "단계 변경을 알립니다."
-
-	L.throw = "던지기"
-	L.throw_desc = "탱커 위치 교체를 알립니다."
-
 	L.trigger_phase1_1 = "스탈라그, 박살낸다!"
 	L.trigger_phase1_2 = "너 주인님께 바칠꺼야!"
 	L.trigger_phase2_1 = "잡아... 먹어주마..."
@@ -273,20 +263,34 @@ if L then
 	L.trigger_phase2_3 = "죽여주마..."
 
 	L.polarity_trigger = "자, 고통을 느껴봐라..."
-	L.polarity_message = "타디우스 극성 변환 시전!"
+
 	L.polarity_warning = "3초 이내 극성 변환!"
-	L.polarity_bar = "극성 변환"
 	L.polarity_changed = "극성 변경됨!"
 	L.polarity_nochange = "같은 극성!"
-
 	L.polarity_first_positive = "당신은 플러스!"
 	L.polarity_first_negative = "당신은 마이너스!"
 
 	L.phase1_message = "타디우스 1 단계"
-	L.phase2_message = "타디우스 2 단계, 6분 후 격노!"
+	L.phase2_message = "타디우스 2 단계 - 5분 후 격노!"
 
-	L.surge_message = "스탈라그 마력의 쇄도!"
-
-	L.throw_bar = "던지기"
+	L.throw = "던지기"
+	L.throw_desc = "탱커 위치 교체를 알립니다."
 	L.throw_warning = "약 5초 후 던지기!"
+
+	-- L.polarity_extras = "Additional alerts for Polarity positioning. Make sure to only choose one strategy!"
+
+	-- L.custom_off_charge_RL = "Strategy 1"
+	-- L.custom_off_charge_RL_desc = "|cffff2020Negative|r (-) are LEFT, |cff20ff20Positive|r (+) are RIGHT. Start in front of the boss."
+	-- L.custom_off_charge_LR = "Strategy 2"
+	-- L.custom_off_charge_LR_desc = "|cff20ff20Positive|r (+) are LEFT, |cffff2020Negative|r (-) are RIGHT. Start in front of the boss."
+
+	-- L.custom_off_charge_text = "Text arrows"
+	-- L.custom_off_charge_text_desc = "Show a message with the direction to move when Polarity Shift happens."
+	-- L.custom_off_charge_voice = "Voice alerts"
+	-- L.custom_off_charge_voice_desc = "Play a voice direction when Polarity Shift happens."
+
+	L.warn_left = "<--- 왼쪽으로 <--- 왼쪽으로 <---"
+	L.warn_right = "---> 오른쪽으로 ---> 오른쪽으로 --->"
+	L.warn_swap = "^^^^ 방향 전환 ^^^^ 방향 전환 ^^^^"
+	L.warn_stay = "==== 움직 이지마 ==== 움직 이지마 ===="
 end

@@ -21,8 +21,7 @@ if L then
 
 	L.startwarn = "Gluth angegriffen! ~105 sek bis Dezimieren!"
 
-	L.decimatesoonwarn = "Dezimieren bald!"
-	L.decimatebartext = "~Dezimieren"
+	L.decimate_bar = "Dezimieren"
 end
 
 L = BigWigs:NewBossLocale("Gothik the Harvester", "deDE")
@@ -79,7 +78,6 @@ if L then
 	L.bossName = "Grobbulus"
 
 	L.bomb_message = "Injektion"
-	L.bomb_message_other = "%s ist verseucht!"
 end
 
 L = BigWigs:NewBossLocale("Heigan the Unclean", "deDE")
@@ -212,8 +210,6 @@ end
 L = BigWigs:NewBossLocale("Patchwerk", "deDE")
 if L then
 	L.bossName = "Flickwerk"
-
-	L.enragewarn = "5% - Raserei!"
 end
 
 L = BigWigs:NewBossLocale("Maexxna", "deDE")
@@ -260,12 +256,6 @@ L = BigWigs:NewBossLocale("Thaddius", "deDE")
 if L then
 	L.bossName = "Thaddius"
 
-	L.phase = "Phasen"
-	L.phase_desc = "Warnt bei Phasenwechsel."
-
-	L.throw = "Magnetische Anziehung"
-	L.throw_desc = "Warnt, wenn die Tanks die Plattform wechseln."
-
 	L.trigger_phase1_1 = "Stalagg zerquetschen!"
 	L.trigger_phase1_2 = "Verfüttere euch an Meister!"
 	L.trigger_phase2_1 = "Eure... Knochen... zermalmen..."
@@ -273,20 +263,34 @@ if L then
 	L.trigger_phase2_3 = "Töten..."
 
 	L.polarity_trigger = "Jetzt spürt ihr den Schmerz..."
-	L.polarity_message = "Thaddius beginnt Polaritätsveränderung zu wirken!"
+
 	L.polarity_warning = "Polaritätsveränderung in 3 sek!"
-	L.polarity_bar = "Polaritätsveränderung"
 	L.polarity_changed = "Polarität geändert!"
 	L.polarity_nochange = "Selbe Polarität!"
-
 	L.polarity_first_positive = "Du bist POSITIV!"
 	L.polarity_first_negative = "Du bist NEGATIV!"
 
 	L.phase1_message = "Phase 1"
-	L.phase2_message = "Thaddius Phase 2, Berserker in 6 min"
+	L.phase2_message = "Thaddius Phase 2 - Berserker in 5 min"
 
-	L.surge_message = "Kraftsog auf Stalagg!"
-
-	L.throw_bar = "Magnetische Anziehung"
+	L.throw = "Magnetische Anziehung"
+	L.throw_desc = "Warnt, wenn die Tanks die Plattform wechseln."
 	L.throw_warning = "Magnetische Anziehung in ~5 sek!"
+
+	-- L.polarity_extras = "Additional alerts for Polarity positioning. Make sure to only choose one strategy!"
+
+	-- L.custom_off_charge_RL = "Strategy 1"
+	-- L.custom_off_charge_RL_desc = "|cffff2020Negative|r (-) are LEFT, |cff20ff20Positive|r (+) are RIGHT. Start in front of the boss."
+	-- L.custom_off_charge_LR = "Strategy 2"
+	-- L.custom_off_charge_LR_desc = "|cff20ff20Positive|r (+) are LEFT, |cffff2020Negative|r (-) are RIGHT. Start in front of the boss."
+
+	-- L.custom_off_charge_text = "Text arrows"
+	-- L.custom_off_charge_text_desc = "Show a message with the direction to move when Polarity Shift happens."
+	-- L.custom_off_charge_voice = "Voice alerts"
+	-- L.custom_off_charge_voice_desc = "Play a voice direction when Polarity Shift happens."
+
+	L.warn_left = "<--- Nach Links <--- Nach Links <---"
+	L.warn_right = "---> Nach Rechts ---> Nach Rechts --->"
+	L.warn_swap = "^^^^ Seitenwechseln ^^^^ Seitenwechseln ^^^^"
+	L.warn_stay = "==== Nicht Bewegen ==== Nicht Bewegen ===="
 end
