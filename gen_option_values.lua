@@ -47,12 +47,22 @@ local sound_methods = {
 	StackMessage = 5,
 	DelayedMessage = 6,
 }
+local icon_methods = {
+	MessageOld = 5,
+	Message = 4,
+	TargetMessageOld = 6,
+	TargetMessage = 5,
+	TargetsMessage = 6,
+	StackMessage = 7,
+	PersonalMessage = 4,
+	Bar = 4,
+	CDBar = 4,
+	CastBar = 4,
+	TargetBar = 5,
+	Flash = 2,
+}
 local valid_methods = {
-	Bar = true,
-	CDBar = true,
-	CastBar = true, --"CASTBAR",
-	TargetBar = true,
-	PersonalMessage = true,
+	-- CastBar = "CASTBAR",
 	PrimaryIcon = "ICON",
 	SecondaryIcon = "ICON",
 	Flash = "FLASH",
@@ -79,8 +89,16 @@ local valid_methods = {
 	NameplateBarTimeLeft = "NAMEPLATEBAR",
 	StopNameplateBar = "NAMEPLATEBAR",
 }
-for k in next, color_methods do valid_methods[k] = true end
-for k in next, sound_methods do valid_methods[k] = true end
+local function add_valid_methods(t)
+	for k in next, t do
+		if not valid_methods[k] then
+			valid_methods[k] = true
+		end
+	end
+end
+add_valid_methods(color_methods)
+add_valid_methods(sound_methods)
+add_valid_methods(icon_methods)
 
 local log_events = {
 	["SWING_DAMAGE"] = true,
@@ -618,7 +636,7 @@ local function parseLua(file)
 		-- Check for function calls that will trigger a sound, including calls
 		-- delayed with ScheduleTimer.
 		if checkForAPI(line) then
-			local key, sound, color, bitflag = nil, nil, nil, nil
+			local key, sound, color, icon, bitflag = nil, nil, nil, nil, nil
 			local method, args = line:match("%w+:(.-)%(%s*(.+)%s*%)")
 			local offset = 0
 			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
@@ -642,11 +660,24 @@ local function parseLua(file)
 				if method == "PersonalMessage" then
 					color = {"blue"}
 				end
+				local icon_index = icon_methods[method]
+				if icon_index then
+					icon = args[icon_index+offset]
+					-- Make sure methods with a string key set an icon.
+					if type(key) == "string" and key:match('^".*"$') and icon == nil then
+						-- Also check if text is nil or a (formatted)string if the method isn't :Flash
+						local text = args[icon_index+offset-1]
+						if method == "Flash" or (not text or text:match('^".*"$') or text:match(":format")) then
+							error(string.format("    %s:%d: Missing icon! func=%s, key=%s, text=%s, icon=%s", file_name, n, tostring(current_func), key, tostring(text), tostring(icon)))
+						end
+					end
+				end
 				if valid_methods[method] ~= true then
 					bitflag = valid_methods[method]
 				end
 			end
 
+			-- -- SetOption:key:color:sound:
 			-- Handle manually setting the key, color, and sound with a comment. Has to be on the
 			-- same line as the function call. All three values can also be a comma seperated list
 			-- or left empty.
