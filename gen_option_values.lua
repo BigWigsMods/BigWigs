@@ -61,6 +61,11 @@ local icon_methods = {
 	TargetBar = 5,
 	Flash = 2,
 }
+local removed_methods = {
+	Message2 = true,
+	TargetMessage2 = true,
+	Yell2 = true,
+}
 local valid_methods = {
 	-- CastBar = "CASTBAR",
 	PrimaryIcon = "ICON",
@@ -99,6 +104,7 @@ end
 add_valid_methods(color_methods)
 add_valid_methods(sound_methods)
 add_valid_methods(icon_methods)
+add_valid_methods(removed_methods)
 
 local log_events = {
 	["SWING_DAMAGE"] = true,
@@ -643,7 +649,9 @@ local function parseLua(file)
 				method = args:match("^\"(.-)\"")
 				offset = 2
 			end
-			if valid_methods[method] then
+			if removed_methods[method] then
+				error(string.format("    %s:%d: Invalid API method! func=%s, method=%s", file_name, n, tostring(current_func), method))
+			elseif valid_methods[method] then
 				args = strsplit(clean(args))
 				key = unternary(args[1+offset], "(-?%d+)") -- XXX doesn't allow for string keys
 				local sound_index = sound_methods[method]
