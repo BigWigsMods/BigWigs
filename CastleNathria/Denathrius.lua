@@ -358,7 +358,7 @@ end
 -- Stage Three: Indignation
 function mod:RemorniaApplied(args)
 	stage = stage + 1
-	self:Message("stages", "green", CL.stage:format(stage))
+	self:Message("stages", "green", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
 	self:StopBar(329951) -- Impale
