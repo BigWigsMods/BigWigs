@@ -161,8 +161,6 @@ if L then
 	L.remove_curse = "로데브 저주 헤제 시전!"
 
 	L.spore_warn = "포자 %d 소환됨!"
-
-	L.corrupted_mind_desc = "부패한 정신 디버프에 대한 바를 표시합니다."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "koKR")

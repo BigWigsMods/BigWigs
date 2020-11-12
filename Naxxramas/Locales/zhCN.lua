@@ -161,8 +161,6 @@ if L then
 	L.remove_curse = "洛欧塞布驱散了一个诅咒效果"
 
 	L.spore_warn = "孢子：>%d<！"
-
-	L.corrupted_mind_desc = "显示你中堕落心灵的计时条."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "zhCN")

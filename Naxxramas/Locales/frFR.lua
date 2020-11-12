@@ -161,8 +161,6 @@ if L then
 	L.remove_curse = "Malédictions enlevées sur Loatheb"
 
 	L.spore_warn = "Spore %d invoquée"
-
-	-- L.corrupted_mind_desc = "Show bar for your own Corrupted Mind debuff."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "frFR")

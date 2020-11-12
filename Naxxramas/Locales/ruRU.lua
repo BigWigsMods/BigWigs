@@ -161,8 +161,6 @@ if L then
 	-- L.remove_curse = "Curses removed on Loatheb"
 
 	L.spore_warn = "Появляется %d спора"
-
-	-- L.corrupted_mind_desc = "Show bar for your own Corrupted Mind debuff."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "ruRU")

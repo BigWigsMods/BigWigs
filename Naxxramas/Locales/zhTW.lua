@@ -161,8 +161,6 @@ if L then
 	L.remove_curse = "洛斯伯消除了一個詛咒效果"
 
 	L.spore_warn = "孢子：>%d<！"
-
-	-- L.corrupted_mind_desc = "Show bar for your own Corrupted Mind debuff."
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "zhTW")

@@ -15,6 +15,8 @@ mod.engageId = 1115
 local doomTime = 30
 local sporeCount = 1
 local doomCount = 1
+local healerList = {}
+local healerDebuffTime = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -34,10 +36,6 @@ if L then
 	L.remove_curse = "Curses removed on Loatheb"
 
 	L.spore_warn = "Spore (%d)"
-
-	L.corrupted_mind = 29185
-	L.corrupted_mind_desc = "Show bar for your own Corrupted Mind debuff."
-	L.corrupted_mind_icon = 29185
 end
 L = mod:GetLocale()
 
@@ -51,7 +49,7 @@ function mod:GetOptions()
 		29204, -- Inevitable Doom
 		30281, -- Remove Curse
 		29234, -- Summon Spore
-		"corrupted_mind", -- Corrupted Mind
+		{29185, "TANK_HEALER", "INFOBOX"}, -- Corrupted Mind
 	}
 end
 
@@ -75,6 +73,8 @@ function mod:OnEngage()
 	doomTime = 30
 	sporeCount = 1
 	doomCount = 1
+	wipe(healerList)
+	wipe(healerDebuffTime)
 
 	self:Message(29204, "yellow", L.startwarn, false)
 	self:Bar(29204, 120, CL.count:format(self:SpellName(29204), doomCount))
@@ -88,6 +88,9 @@ function mod:OnEngage()
 	self:DelayedMessage(29204, 290, "orange", L.doomtime_warn:format(10))
 	self:DelayedMessage(29204, 295, "red", L.doomtime_warn:format(5))
 	self:DelayedMessage(29204, 300, "red", L.doomtime_now, "Alarm")
+
+	self:OpenInfo(29185, self:SpellName(29185), 2)
+	self:ScheduleTimer("UpdateHealerList", 0.1)
 end
 
 --------------------------------------------------------------------------------
@@ -119,13 +122,44 @@ end
 
 function mod:CorruptedMind(args)
 	if self:Me(args.destGUID) then
-		self:Bar("corrupted_mind", 60, 29185)
+		self:Bar(29185, 60, 29185)
 	end
+	tDeleteItem(healerList, args.destName)
+	healerList[#healerList + 1] = args.destName
+	healerDebuffTime[args.destName] = GetTime() + 60
 end
 
 function mod:CorruptedMindRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message("corrupted_mind", "green", CL.removed:format(args.spellName), 29185)
-		self:PlaySound("corrupted_mind", "info")
+		self:Message(29185, "green", CL.removed:format(args.spellName), 29185)
+		self:PlaySound(29185, "info")
+	end
+end
+
+function mod:UpdateHealerList()
+	if not self:IsEngaged() then return end
+	self:ScheduleTimer("UpdateHealerList", 0.1)
+
+	-- Healer rotation lite
+	local t = GetTime()
+	local line = 1
+	for i = 1, 10 do
+		local player = healerList[i]
+		if player then
+			local remaining = healerDebuffTime[player] - t
+			self:SetInfo(29185, line, self:ColorName(player))
+			if remaining > 0 then
+				self:SetInfo(29185, line + 1, CL.seconds:format(remaining))
+				self:SetInfoBar(29185, line, remaining / 60)
+			else
+				self:SetInfo(29185, line + 1, ("|cff20ff20%s|r"):format(_G.READY))
+				self:SetInfoBar(29185, line, 0)
+			end
+		else
+			self:SetInfo(29185, line, "")
+			self:SetInfo(29185, line + 1, "")
+			self:SetInfoBar(29185, line, 0)
+		end
+		line = line + 2
 	end
 end

@@ -161,8 +161,6 @@ if L then
 	-- L.remove_curse = "Curses removed on Loatheb"
 
 	-- L.spore_warn = "Spore %d!"
-
-	-- L.corrupted_mind_desc = "Show bar for your own Corrupted Mind debuff."
 end
 
 L = BigWigs:NewBossLocale("Maexxna", "ptBR")
