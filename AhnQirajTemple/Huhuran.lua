@@ -31,10 +31,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "WyvernSting", 26180)
 	self:Log("SPELL_AURA_APPLIED", "WyvernStingApplied", 26180)

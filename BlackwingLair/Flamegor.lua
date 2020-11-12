@@ -30,10 +30,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WingBuffet", self:SpellName(23339))
 	self:Log("SPELL_CAST_START", "ShadowFlame", self:SpellName(22539))

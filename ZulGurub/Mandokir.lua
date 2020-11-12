@@ -31,10 +31,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MortalStrike", 16856)
 	self:Log("SPELL_AURA_APPLIED", "ThreateningGaze", 24314)

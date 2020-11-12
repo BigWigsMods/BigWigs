@@ -32,10 +32,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "LivingBomb", self:SpellName(20475))
 	self:Log("SPELL_AURA_REMOVED", "LivingBombRemoved", self:SpellName(20475))

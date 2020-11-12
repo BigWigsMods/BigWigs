@@ -49,10 +49,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:Log("SPELL_AURA_APPLIED", "DominateMind", self:SpellName(14515))

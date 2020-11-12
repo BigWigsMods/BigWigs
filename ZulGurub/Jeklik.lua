@@ -44,10 +44,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Screech", 22884) -- Haven't actually seen Terrifying Screech or Psychic Scream in logs
 	self:Log("SPELL_CAST_START", "GreatHeal", 23954)

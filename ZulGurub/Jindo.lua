@@ -34,10 +34,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DelusionsOfJindo", 24306)
 	self:Log("SPELL_AURA_APPLIED", "Hex", 17172)

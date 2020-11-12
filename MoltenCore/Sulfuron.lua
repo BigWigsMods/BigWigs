@@ -30,10 +30,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SulfuronHeal", self:SpellName(19775))
 	self:Log("SPELL_CAST_SUCCESS", "Inspire", self:SpellName(19779))

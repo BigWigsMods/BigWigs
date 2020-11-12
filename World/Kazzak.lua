@@ -35,10 +35,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "MarkOfKazzak", 21056)
 	self:Log("SPELL_AURA_APPLIED", "TwistedReflection", 21063)

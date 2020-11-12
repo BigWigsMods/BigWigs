@@ -33,10 +33,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "TwinTeleport", 800)
 	self:Log("SPELL_HEAL", "HealBrother", 7393)

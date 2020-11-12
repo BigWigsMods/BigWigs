@@ -54,10 +54,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:BossYell("Teleport", L.teleport_trigger)
 

@@ -47,10 +47,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Shout", 29107)
 	self:Log("SPELL_CAST_SUCCESS", "Taunt", 29060)

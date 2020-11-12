@@ -44,10 +44,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	whirlCount = 0 -- don't want to reset if OnEngage is late
 

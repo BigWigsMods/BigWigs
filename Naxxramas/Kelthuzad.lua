@@ -62,10 +62,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 -- Big evul hack to enable the module when entering Kel'Thuzads chamber.
 function mod:OnRegister()
 	local f = CreateFrame("Frame")

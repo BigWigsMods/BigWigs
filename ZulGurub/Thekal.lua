@@ -50,10 +50,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	-- Thekal
 	self:Log("SPELL_AURA_APPLIED", "MortalCleave", 22859)

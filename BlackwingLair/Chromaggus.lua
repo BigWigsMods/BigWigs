@@ -60,10 +60,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Enrage", self:SpellName(23128))
 	self:Log("SPELL_AURA_APPLIED", "Frenzy", self:SpellName(23537))

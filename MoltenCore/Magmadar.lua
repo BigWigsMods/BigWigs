@@ -31,10 +31,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Panic", self:SpellName(19408))
 	self:Log("SPELL_CAST_SUCCESS", "Enrage", self:SpellName(19451))

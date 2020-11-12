@@ -30,10 +30,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FrostBreath", 21099)
 	self:Log("SPELL_CAST_START", "MassiveGeyser", 22421)

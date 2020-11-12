@@ -44,10 +44,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "NoxiousBreath", 24818)
 	self:Log("SPELL_AURA_APPLIED", "NoxiousBreathApplied", 24818)

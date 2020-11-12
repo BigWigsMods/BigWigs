@@ -50,10 +50,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Mark", 28832, 28833, 28834, 28835) -- Mark of Korth'azz, Mark of Blaumeux, Mark of Mograine, Mark of Zeliek
 	self:Log("SPELL_CAST_START", "Meteor", 28884)

@@ -33,10 +33,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ImpendingDoom", self:SpellName(19702))
 	self:Log("SPELL_CAST_SUCCESS", "LucifronsCurse", self:SpellName(19703))

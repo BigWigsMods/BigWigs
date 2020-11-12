@@ -54,10 +54,6 @@ function mod:GetOptions()
 
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "LifeDrain", 28542)
 	self:Log("SPELL_AURA_APPLIED", "Icebolt", 28522)

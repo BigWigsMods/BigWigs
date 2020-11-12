@@ -34,10 +34,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MagicReflection", self:SpellName(20619))
 	self:Log("SPELL_CAST_SUCCESS", "DamageShield", self:SpellName(21075))

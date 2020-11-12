@@ -125,10 +125,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "StalaggPower", 28134)
 	self:Log("SPELL_CAST_START", "Shift", 28089)

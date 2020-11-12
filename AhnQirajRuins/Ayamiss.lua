@@ -30,10 +30,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Paralyze", 25725)
 	self:Log("SPELL_AURA_REMOVED", "ParalyzeRemoved", 25725)

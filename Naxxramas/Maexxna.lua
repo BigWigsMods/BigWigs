@@ -43,10 +43,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "NecroticPoison", 28776)
 	self:Log("SPELL_AURA_APPLIED", "Cocoon", 28622)

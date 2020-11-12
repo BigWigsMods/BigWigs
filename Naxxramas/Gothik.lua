@@ -81,10 +81,6 @@ function mod:GetOptions()
 	}
 end
 
-function mod:OnRegister()
-	self.displayName = L.bossName
-end
-
 function mod:OnBossEnable()
 	self:BossYell("InRoom", L.inroomtrigger)
 	self:Death("Deaths", 16125, 16126) -- DK, Rider
