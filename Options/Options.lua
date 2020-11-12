@@ -384,18 +384,18 @@ end
 
 local icons = {
 	MESSAGE = 134332, -- Interface\\Icons\\INV_MISC_NOTE_06
-	ME_ONLY = 463836, -- Interface\\Icons\\Priest_spell_leapoffaith_b
+	ME_ONLY = [[Interface\AddOns\BigWigs\Media\Icons\Priest_spell_leapoffaith_b]],
 	SOUND = 130977, -- "Interface\\Common\\VoiceChat-On"
 	ICON = 137008, -- Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_8
 	FLASH = 135849, -- Interface\\Icons\\Spell_Frost_FrostShock
-	PULSE = 135731, -- Interface\\Icons\\Spell_Arcane_Arcane04
+	PULSE = [[Interface\AddOns\BigWigs\Media\Icons\Spell_Arcane_Arcane04]],
 	PROXIMITY = 132181, -- Interface\\Icons\\ability_hunter_pathfinding
-	ALTPOWER = 429383, -- Interface\\Icons\\spell_arcane_invocation
-	INFOBOX = 443374, -- Interface\\Icons\\INV_MISC_CAT_TRINKET05
-	COUNTDOWN = 1035057, -- Interface\\Icons\\Achievement_GarrisonQuests_0005
+	ALTPOWER = [[Interface\AddOns\BigWigs\Media\Icons\spell_arcane_invocation]],
+	INFOBOX = [[Interface\AddOns\BigWigs\Media\Icons\INV_MISC_CAT_TRINKET05]],
+	COUNTDOWN = [[Interface\AddOns\BigWigs\Media\Icons\Achievement_GarrisonQuests_0005]],
 	SAY = 2056011, -- Interface\\Icons\\UI_Chat
 	SAY_COUNTDOWN = 2056011, -- Interface\\Icons\\UI_Chat
-	VOICE = 589118, -- Interface\\Icons\\Warrior_DisruptingShout
+	VOICE = [[Interface\AddOns\BigWigs\Media\Icons\Warrior_DisruptingShout]],
 }
 
 local function hasOptionFlag(dbKey, module, key)
