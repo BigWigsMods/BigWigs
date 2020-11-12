@@ -675,7 +675,7 @@ local function parseLua(file)
 					if type(key) == "string" and key:match('^".*"$') and icon == nil then
 						-- Also check if text is nil or a (formatted)string if the method isn't :Flash
 						local text = args[icon_index+offset-1]
-						if method == "Flash" or (not text or text:match('^".*"$') or text:match(":format")) then
+						if method == "Flash" or (not text or text:match('^".*"$') or text:match(":format") or text:match("C?L%.%a")) then
 							error(string.format("    %s:%d: Missing icon! func=%s, key=%s, text=%s, icon=%s", file_name, n, tostring(current_func), key, tostring(text), tostring(icon)))
 						end
 					end
