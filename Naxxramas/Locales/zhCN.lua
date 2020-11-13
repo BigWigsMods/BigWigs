@@ -269,17 +269,17 @@ if L then
 	L.throw_desc = "当 MT 被投掷到对面平台时发出警报。"
 	L.throw_warning = "约5秒后，投掷！"
 
-	-- L.polarity_extras = "Additional alerts for Polarity positioning. Make sure to only choose one strategy!"
+	L.polarity_extras = "有关极性转化后需要跑位的警报。确保团队中的所有人都使用相同的方案！"
 
-	-- L.custom_off_charge_RL = "Strategy 1"
-	-- L.custom_off_charge_RL_desc = "|cffff2020Negative|r (-) are LEFT, |cff20ff20Positive|r (+) are RIGHT. Start in front of the boss."
-	-- L.custom_off_charge_LR = "Strategy 2"
-	-- L.custom_off_charge_LR_desc = "|cff20ff20Positive|r (+) are LEFT, |cffff2020Negative|r (-) are RIGHT. Start in front of the boss."
+	L.custom_off_charge_RL = "方案 1"
+	L.custom_off_charge_RL_desc = "|cffff2020负极|r (-) 向左, |cff20ff20正极|r (+) 向右。在首领的正前方开始。"
+	L.custom_off_charge_LR = "方案 2"
+	L.custom_off_charge_LR_desc = "|cff20ff20正极|r (+) 向左, |cffff2020负极|r (-) 向右。在首领的正前方开始。"
 
-	-- L.custom_off_charge_text = "Text arrows"
-	-- L.custom_off_charge_text_desc = "Show a message with the direction to move when Polarity Shift happens."
-	-- L.custom_off_charge_voice = "Voice alerts"
-	-- L.custom_off_charge_voice_desc = "Play a voice direction when Polarity Shift happens."
+	L.custom_off_charge_text = "文字箭头"
+	L.custom_off_charge_text_desc = "显示发生极性转化需要移动方向的提示。"
+	L.custom_off_charge_voice = "语音提示"
+	L.custom_off_charge_voice_desc = "发生极性转化需要移动时播放语音提示。"
 
 	L.warn_left = "<--- 向左 <--- 向左 <---"
 	L.warn_right = "---> 向右 ---> 向右 --->"
