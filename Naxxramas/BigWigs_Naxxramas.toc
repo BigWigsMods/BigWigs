@@ -1,6 +1,6 @@
 ﻿## Interface: 11305
 
-## Title: Big igs [|cffeda55fNaxxramas|r]
+## Title: BigWigs [|cffeda55fNaxxramas|r]
 ## Title-deDE: BigWigs [|cffeda55fNaxxramas|r]
 ## Title-esES: BigWigs [|cffeda55fNaxxramas|r]
 ## Title-esMX: BigWigs [|cffeda55fNaxxramas|r]
