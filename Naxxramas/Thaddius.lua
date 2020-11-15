@@ -16,7 +16,7 @@ local addsdead = 0
 local lastCharge = nil
 local shiftTime = nil
 local throwHandle = nil
-local strategy = nil
+local strategy = {}
 
 local ICON_POSITIVE = 135769 -- "Interface\\Icons\\Spell_ChargePositive"
 local ICON_NEGATIVE = 135768 -- "Interface\\Icons\\Spell_ChargeNegative"
@@ -77,12 +77,26 @@ if L then
 	L.throw_warning = "Throw in ~5 sec!"
 
 	-- Simplified BigWigs_ThaddiusArrows
-	L.polarity_extras = "Additional alerts for Polarity positioning. Only enable one strategy!"
+	L.polarity_extras = "Additional alerts for Polarity positioning."
 
-	L.custom_off_charge_RL = "Strategy 1"
+	-- Probably should have just made this a plugin so I could use a radio buttons or a dropdown ~_~
+	L.custom_off_charge_RL = "Position 1"
 	L.custom_off_charge_RL_desc = "|cffff2020Negative (-)|r are LEFT, |cff2020ffPositive (+)|r are RIGHT. Start in front of the boss."
-	L.custom_off_charge_LR = "Strategy 2"
+	L.custom_off_charge_LR = "Position 2"
 	L.custom_off_charge_LR_desc = "|cff2020ffPositive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT. Start in front of the boss."
+
+	L.custom_on_charge_across = "Movement: Run through"
+	L.custom_on_charge_across_desc = "Polarity change moves THROUGH Thaddius, no polarity change DOES NOT MOVE."
+
+	L.custom_off_charge_clockwise = "Movement: Clockwise"
+	L.custom_off_charge_clockwise_desc = "Polarity change moves CLOCKWISE around Thaddius, no polarity change DOES NOT MOVE."
+	L.custom_off_charge_cclockwise = "Movement: Counter-clockwise"
+	L.custom_off_charge_cclockwise_desc = "Polarity change moves COUNTER-CLOCKWISE around Thaddius, no polarity change DOES NOT MOVE."
+
+	L.custom_off_charge_4RL = "Movement: Four camps 1"
+	L.custom_off_charge_4RL_desc = "Polarity change moves RIGHT, no polarity change moves LEFT."
+	L.custom_off_charge_4LR = "Movement: Four camps 2"
+	L.custom_off_charge_4LR_desc = "Polarity change moves LEFT, no polarity change moves RIGHT."
 
 	L.custom_off_charge_text = "Text arrows"
 	L.custom_off_charge_text_desc = "Show an additional message with the direction to move when Polarity Shift happens."
@@ -97,14 +111,19 @@ if L then
 end
 L = mod:GetLocale()
 
-local direction = {
+local DIRECTION_LEFT = { sound = SOUND_LEFT, text = L.warn_left }
+local DIRECTION_RIGHT = { sound = SOUND_RIGHT, text = L.warn_right }
+local DIRECTION_ACROSS = { sound = SOUND_SWAP, text = L.warn_swap }
+local DIRECTION_NONE = { sound = SOUND_STAY, text = L.warn_stay }
+
+local INITIAL_DIRECTION = {
 	{ -- 1
-		[ICON_NEGATIVE] = { sound = SOUND_LEFT, text = L.warn_left },
-		[ICON_POSITIVE] = { sound = SOUND_RIGHT, text = L.warn_right },
+		[ICON_NEGATIVE] = DIRECTION_LEFT,
+		[ICON_POSITIVE] = DIRECTION_RIGHT,
 	},
 	{ -- 2
-		[ICON_POSITIVE] = { sound = SOUND_LEFT, text = L.warn_left },
-		[ICON_NEGATIVE] = { sound = SOUND_RIGHT, text = L.warn_right },
+		[ICON_POSITIVE] = DIRECTION_LEFT,
+		[ICON_NEGATIVE] = DIRECTION_RIGHT,
 	},
 }
 
@@ -121,6 +140,11 @@ function mod:GetOptions()
 		"berserk",
 		"custom_off_charge_RL",
 		"custom_off_charge_LR",
+		"custom_on_charge_across",
+		"custom_off_charge_clockwise",
+		"custom_off_charge_clockwise",
+		"custom_off_charge_4RL",
+		"custom_off_charge_4LR",
 		"custom_off_charge_text",
 		"custom_off_charge_voice",
 	}, {
@@ -145,14 +169,30 @@ function mod:OnEngage()
 	lastCharge = nil
 	shiftTime = nil
 
+	strategy = {}
 	if self:GetOption("custom_off_charge_RL") then
-		strategy = direction[1]
+		strategy.first = INITIAL_DIRECTION[1]
 	elseif self:GetOption("custom_off_charge_LR") then
-		strategy = direction[2]
-	else
-		strategy = nil
+		strategy.first = INITIAL_DIRECTION[2]
 	end
-	self.strategy = strategy
+	if strategy.first then
+		if self:GetOption("custom_on_charge_across") then
+			strategy.change = DIRECTION_ACROSS
+			strategy.nochange = DIRECTION_NONE
+		elseif self:GetOption("custom_off_charge_clockwise") then
+			strategy.change = DIRECTION_LEFT
+			strategy.nochange = DIRECTION_NONE
+		elseif self:GetOption("custom_off_charge_cclockwise") then
+			strategy.change = DIRECTION_RIGHT
+			strategy.nochange = DIRECTION_NONE
+		elseif self:GetOption("custom_off_charge_4RL") then
+			strategy.change = DIRECTION_RIGHT
+			strategy.nochange = DIRECTION_LEFT
+		elseif self:GetOption("custom_off_charge_4LR") then
+			strategy.change = DIRECTION_LEFT
+			strategy.nochange = DIRECTION_RIGHT
+		end
+	end
 
 	self:Message("stages", "cyan", L.phase1_message, false)
 	self:Throw()
@@ -204,7 +244,7 @@ function mod:Phase2()
 end
 
 function mod:PolarityShiftCast(args)
-	self:Message(28089, "orange", CL.incoming:format(args.spellName))
+	self:Message(28089, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(28089, "long")
 	shiftTime = GetTime()
 	self:RegisterUnitEvent("UNIT_AURA", "player")
@@ -236,44 +276,46 @@ function mod:UNIT_AURA(event, unit)
 	end
 	if not newCharge then return end
 
+	shiftTime = nil
+	self:UnregisterUnitEvent(event, unit)
+
 	local icon = newCharge == ICON_POSITIVE and "Spell_ChargePositive" or "Spell_ChargeNegative"
 	if newCharge == lastCharge then
-		if self:GetOption("custom_off_charge_text") then
-			self:Message(28089, "yellow", L.warn_stay, false)
-		end
-		if self:GetOption("custom_off_charge_voice") then
-			PlaySoundFile(SOUND_STAY, "Master")
+		-- No change
+		local info = strategy.nochange
+		if info then
+			if self:GetOption("custom_off_charge_text") then
+				self:Message(28089, "yellow", info.text, false)
+			end
+			if self:GetOption("custom_off_charge_voice") then
+				PlaySoundFile(info.sound, "Master")
+			end
 		end
 		self:Message(28089, "yellow", L.polarity_nochange, icon)
 	else
+		-- Change
+		local text, info
 		local color = newCharge == ICON_POSITIVE and "blue" or "red"
 		if not lastCharge then
 			-- First charge
-			local text = newCharge == ICON_POSITIVE and L.polarity_first_positive or L.polarity_first_negative
-			if strategy then
-				if self:GetOption("custom_off_charge_text") then
-					self:Message(28089, color, strategy[newCharge].text, false) -- SetOption::blue,red::
-				end
-				if self:GetOption("custom_off_charge_voice") then
-					PlaySoundFile(strategy[newCharge].sound, "Master")
-				end
-			end
-			self:Message(28089, color, text, icon) -- SetOption::blue,red::
+			info = strategy.first
+			text = newCharge == ICON_POSITIVE and L.polarity_first_positive or L.polarity_first_negative
 		else
+			info = strategy.change
+			text = L.polarity_changed
+		end
+		if info then
 			if self:GetOption("custom_off_charge_text") then
-				self:Message(28089, color, L.warn_swap, false) -- SetOption::blue,red::
+				self:Message(28089, color, info.text, false) -- SetOption::blue,red::
 			end
 			if self:GetOption("custom_off_charge_voice") then
-				PlaySoundFile(SOUND_SWAP, "Master")
+				PlaySoundFile(info.sound, "Master")
 			end
-			self:Message(28089, color, L.polarity_changed, icon) -- SetOption::blue,red::
-		end
-		if not self:GetOption("custom_off_charge_voice") then
+		elseif not self:GetOption("custom_off_charge_voice") then
 			self:PlaySound(28089, "alert")
 		end
+		self:Message(28089, color, text, icon) -- SetOption::blue,red::
 		self:Flash(28089, icon)
 	end
 	lastCharge = newCharge
-	shiftTime = nil
-	self:UnregisterUnitEvent(event, unit)
 end
