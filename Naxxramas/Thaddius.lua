@@ -17,8 +17,8 @@ local shiftTime = nil
 local throwHandle = nil
 local strategy = nil
 
-local ICON_POSITIVE = "Interface\\Icons\\Spell_ChargePositive"
-local ICON_NEGATIVE = "Interface\\Icons\\Spell_ChargeNegative"
+local ICON_POSITIVE = 135769 -- "Interface\\Icons\\Spell_ChargePositive"
+local ICON_NEGATIVE = 135768 -- "Interface\\Icons\\Spell_ChargeNegative"
 
 local SOUND_LEFT, SOUND_RIGHT, SOUND_SWAP, SOUND_STAY
 do
@@ -207,6 +207,7 @@ function mod:UNIT_AURA(event, unit)
 	end
 	if not newCharge then return end
 
+	local icon = newCharge == ICON_POSITIVE and "Spell_ChargePositive" or "Spell_ChargeNegative"
 	if newCharge == lastCharge then
 		if strategy then
 			if self:GetOption("custom_off_charge_text") then
@@ -216,7 +217,7 @@ function mod:UNIT_AURA(event, unit)
 				PlaySoundFile(SOUND_STAY, "Master")
 			end
 		end
-		self:Message(28089, "yellow", L.polarity_nochange, newCharge)
+		self:Message(28089, "yellow", L.polarity_nochange, icon)
 	else
 		local color = newCharge == ICON_POSITIVE and "blue" or "red"
 		if not lastCharge then
@@ -230,7 +231,7 @@ function mod:UNIT_AURA(event, unit)
 					PlaySoundFile(strategy[newCharge].sound, "Master")
 				end
 			end
-			self:Message(28089, color, text, newCharge) -- SetOption::blue,red::
+			self:Message(28089, color, text, icon) -- SetOption::blue,red::
 		else
 			if strategy then
 				if self:GetOption("custom_off_charge_text") then
@@ -240,12 +241,12 @@ function mod:UNIT_AURA(event, unit)
 					PlaySoundFile(SOUND_SWAP, "Master")
 				end
 			end
-			self:Message(28089, color, L.polarity_changed, newCharge) -- SetOption::blue,red::
+			self:Message(28089, color, L.polarity_changed, icon) -- SetOption::blue,red::
 		end
 		if not strategy or not self:GetOption("custom_off_charge_voice") then
 			self:PlaySound(28089, "alert")
 		end
-		self:Flash(28089, newCharge)
+		self:Flash(28089, icon)
 	end
 	lastCharge = newCharge
 	shiftTime = nil
