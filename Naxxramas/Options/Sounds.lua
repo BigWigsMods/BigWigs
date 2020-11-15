@@ -12,7 +12,7 @@ BigWigs:AddSounds("Gluth", {
 })
 
 BigWigs:AddSounds("Thaddius", {
-	[28089] = "alert",
+	[28089] = {"alert","long"},
 })
 
 BigWigs:AddSounds("Noth the Plaguebringer", {

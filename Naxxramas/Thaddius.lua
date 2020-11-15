@@ -127,11 +127,11 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "StalaggPower", 28134)
-	self:Log("SPELL_CAST_START", "Shift", 28089)
+	self:Log("SPELL_CAST_START", "PolarityShiftCast", 28089)
+	self:Log("SPELL_CAST_SUCCESS", "PolarityShift", 28089)
 
 	self:BossYell("Engage", L.trigger_phase1_1, L.trigger_phase1_2)
 	self:BossYell("Phase2", L.trigger_phase2_1, L.trigger_phase2_2, L.trigger_phase2_3)
-	self:BossYell("Polarity", L.polarity_trigger)
 	self:Death("Win", 15928)
 end
 
@@ -175,15 +175,16 @@ function mod:Phase2()
 	self:Message("stages", "cyan", L.phase2_message, false)
 end
 
-function mod:Polarity()
-	self:DelayedMessage(28089, 27, "orange", L.polarity_warning)
-	self:Bar(28089, 30)
-end
-
-function mod:Shift(args)
+function mod:PolarityShiftCast(args)
 	self:Message(28089, "orange", CL.incoming:format(args.spellName))
+	self:PlaySound(28089, "long")
 	shiftTime = GetTime()
 	self:RegisterUnitEvent("UNIT_AURA", "player")
+end
+
+function mod:PolarityShift(args)
+	self:Bar(28089, 30)
+	self:DelayedMessage(28089, 27, "orange", CL.soon:format(args.spellName))
 end
 
 function mod:UNIT_AURA(event, unit)
