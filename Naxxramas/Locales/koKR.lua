@@ -254,6 +254,8 @@ if L then
 	L.trigger_phase2_2 = "박살을 내주겠다!"
 	L.trigger_phase2_3 = "죽여주마..."
 
+	L.add_death_trigger = "%s|1이;가; 죽습니다."
+	L.overload_trigger = "%s|1이;가; 과부하 상태가 됩니다."
 	L.polarity_trigger = "자, 고통을 느껴봐라..."
 
 	L.polarity_warning = "3초 이내 극성 변환!"

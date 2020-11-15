@@ -254,6 +254,8 @@ if L then
 	L.trigger_phase2_2 = "Euch... zerquetschen!"
 	L.trigger_phase2_3 = "Töten..."
 
+	L.add_death_trigger = "%s stirbt."
+	L.overload_trigger = "%s überlädt!"
 	L.polarity_trigger = "Jetzt spürt ihr den Schmerz..."
 
 	L.polarity_warning = "Polaritätsveränderung in 3 sek!"

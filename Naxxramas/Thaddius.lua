@@ -12,6 +12,7 @@ mod.engageId = 1120
 -- Locals
 --
 
+local addsdead = 0
 local lastCharge = nil
 local shiftTime = nil
 local throwHandle = nil
@@ -57,6 +58,8 @@ if L then
 	L.trigger_phase2_2 = "Break... you!!"
 	L.trigger_phase2_3 = "Kill..."
 
+	L.add_death_trigger = "%s dies."
+	L.overload_trigger = "%s overloads!"
 	L.polarity_trigger = "Now you feel pain..."
 
 	L.polarity_warning = "3 sec to Polarity Shift!"
@@ -131,11 +134,14 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "PolarityShift", 28089)
 
 	self:BossYell("Engage", L.trigger_phase1_1, L.trigger_phase1_2)
+	self:Emote("AddDeath", L.add_death_trigger)
+	self:Emote("PrePhase2", L.overload_trigger)
 	self:BossYell("Phase2", L.trigger_phase2_1, L.trigger_phase2_2, L.trigger_phase2_3)
 	self:Death("Win", 15928)
 end
 
 function mod:OnEngage()
+	addsdead = 0
 	lastCharge = nil
 	shiftTime = nil
 
@@ -167,7 +173,29 @@ function mod:StalaggPower(args)
 	self:Bar(28134, 10)
 end
 
+function mod:AddDeath(msg, sender)
+	addsdead = addsdead + 1
+	self:Message("stages", "yellow", L.mob_killed:format(sender, addsdead, 2), false)
+	if addsdead == 2 then
+		self:CancelTimer(throwHandle)
+		self:StopBar(L.throw)
+	end
+end
+
+do
+	local prev = 0
+	function mod:PrePhase2()
+		local t = GetTime()
+		if t-prev > 2 then
+			prev = t
+			self:Message("stages", "yellow", CL.incoming:format(L.bossName), false)
+			self:Bar("stages", 3, L.bossName, "spell_lightning_lightningbolt01")
+		end
+	end
+end
+
 function mod:Phase2()
+	-- XXX Can remove these if ruRU triggers get updated
 	self:CancelTimer(throwHandle)
 	self:StopBar(L.throw)
 

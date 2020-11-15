@@ -18,7 +18,7 @@ BigWigs:AddColors("Gluth", {
 BigWigs:AddColors("Thaddius", {
 	[28089] = {"blue","orange","red","yellow"},
 	[28134] = "red",
-	["stages"] = "cyan",
+	["stages"] = {"cyan","yellow"},
 	["throw"] = "orange",
 })
 

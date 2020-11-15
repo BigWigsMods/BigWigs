@@ -254,6 +254,8 @@ if L then
 	L.trigger_phase2_2 = "打…碎…你……"
 	L.trigger_phase2_3 = "殺……"
 
+	L.add_death_trigger = "%s死亡了。"
+	L.overload_trigger = "%s超負荷！"
 	L.polarity_trigger = "你感受到痛苦的滋味了吧……"
 
 	L.polarity_warning = "3秒後，兩極移形！"
