@@ -279,8 +279,9 @@ if L then
 	-- L.custom_off_charge_text = "Text arrows"
 	-- L.custom_off_charge_text_desc = "Show an additional message with the direction to move when Polarity Shift happens."
 	-- L.custom_off_charge_voice = "Voice alerts"
-	-- L.custom_off_charge_voice_desc = "Play a speech sound when Polarity Shift happens."
+	-- L.custom_off_charge_voice_desc = "Play a voice alert when Polarity Shift happens."
 
+	-- Translate these to get locale sound files!
 	-- L.warn_left = "<--- GO LEFT <--- GO LEFT <---"
 	-- L.warn_right = "---> GO RIGHT ---> GO RIGHT --->"
 	-- L.warn_swap = "^^^^ SWITCH SIDES ^^^^ SWITCH SIDES ^^^^"

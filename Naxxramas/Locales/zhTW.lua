@@ -272,15 +272,16 @@ if L then
 	-- L.polarity_extras = "Additional alerts for Polarity positioning. Make sure to only choose one strategy!"
 
 	-- L.custom_off_charge_RL = "Strategy 1"
-	-- L.custom_off_charge_RL_desc = "|cffff2020Negative|r (-) are LEFT, |cff20ff20Positive|r (+) are RIGHT. Start in front of the boss."
+	-- L.custom_off_charge_RL_desc = "|cffff2020Negative (-)|r are LEFT, |cff20ff20Positive (+)|r are RIGHT. Start in front of the boss."
 	-- L.custom_off_charge_LR = "Strategy 2"
-	-- L.custom_off_charge_LR_desc = "|cff20ff20Positive|r (+) are LEFT, |cffff2020Negative|r (-) are RIGHT. Start in front of the boss."
+	-- L.custom_off_charge_LR_desc = "|cff20ff20Positive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT. Start in front of the boss."
 
 	-- L.custom_off_charge_text = "Text arrows"
 	-- L.custom_off_charge_text_desc = "Show a message with the direction to move when Polarity Shift happens."
 	-- L.custom_off_charge_voice = "Voice alerts"
-	-- L.custom_off_charge_voice_desc = "Play a voice direction when Polarity Shift happens."
+	-- L.custom_off_charge_voice_desc = "Play a voice alert when Polarity Shift happens."
 
+	-- Translate these to get locale sound files!
 	L.warn_left = "<--- 到左邊 <--- 到左邊 <---"
 	L.warn_right = "---> 向右 ---> 向右 --->"
 	L.warn_swap = "^^^^ 交換 ^^^^ 交換 ^^^^"

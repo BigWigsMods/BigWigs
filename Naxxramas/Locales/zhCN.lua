@@ -272,15 +272,16 @@ if L then
 	L.polarity_extras = "有关极性转化后需要跑位的警报。确保团队中的所有人都使用相同的方案！"
 
 	L.custom_off_charge_RL = "方案 1"
-	L.custom_off_charge_RL_desc = "|cffff2020负极|r (-) 向左, |cff20ff20正极|r (+) 向右。在首领的正前方开始。"
+	L.custom_off_charge_RL_desc = "|cffff2020负极 (-)|r 向左, |cff20ff20正极 (+)|r 向右。在首领的正前方开始。"
 	L.custom_off_charge_LR = "方案 2"
-	L.custom_off_charge_LR_desc = "|cff20ff20正极|r (+) 向左, |cffff2020负极|r (-) 向右。在首领的正前方开始。"
+	L.custom_off_charge_LR_desc = "|cff20ff20正极 (+)|r 向左, |cffff2020负极 (-)|r 向右。在首领的正前方开始。"
 
 	L.custom_off_charge_text = "文字箭头"
 	L.custom_off_charge_text_desc = "显示发生极性转化需要移动方向的提示。"
 	L.custom_off_charge_voice = "语音提示"
 	L.custom_off_charge_voice_desc = "发生极性转化需要移动时播放语音提示。"
 
+	-- Translate these to get locale sound files!
 	L.warn_left = "<--- 向左 <--- 向左 <---"
 	L.warn_right = "---> 向右 ---> 向右 --->"
 	L.warn_swap = "^^^^ 交换 ^^^^ 迅速 ^^^^"
