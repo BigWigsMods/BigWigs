@@ -209,13 +209,11 @@ function mod:UNIT_AURA(event, unit)
 
 	local icon = newCharge == ICON_POSITIVE and "Spell_ChargePositive" or "Spell_ChargeNegative"
 	if newCharge == lastCharge then
-		if strategy then
-			if self:GetOption("custom_off_charge_text") then
-				self:Message(28089, "yellow", L.warn_stay, false)
-			end
-			if self:GetOption("custom_off_charge_voice") then
-				PlaySoundFile(SOUND_STAY, "Master")
-			end
+		if self:GetOption("custom_off_charge_text") then
+			self:Message(28089, "yellow", L.warn_stay, false)
+		end
+		if self:GetOption("custom_off_charge_voice") then
+			PlaySoundFile(SOUND_STAY, "Master")
 		end
 		self:Message(28089, "yellow", L.polarity_nochange, icon)
 	else
@@ -233,17 +231,15 @@ function mod:UNIT_AURA(event, unit)
 			end
 			self:Message(28089, color, text, icon) -- SetOption::blue,red::
 		else
-			if strategy then
-				if self:GetOption("custom_off_charge_text") then
-					self:Message(28089, color, L.warn_swap, false) -- SetOption::blue,red::
-				end
-				if self:GetOption("custom_off_charge_voice") then
-					PlaySoundFile(SOUND_SWAP, "Master")
-				end
+			if self:GetOption("custom_off_charge_text") then
+				self:Message(28089, color, L.warn_swap, false) -- SetOption::blue,red::
+			end
+			if self:GetOption("custom_off_charge_voice") then
+				PlaySoundFile(SOUND_SWAP, "Master")
 			end
 			self:Message(28089, color, L.polarity_changed, icon) -- SetOption::blue,red::
 		end
-		if not strategy or not self:GetOption("custom_off_charge_voice") then
+		if not self:GetOption("custom_off_charge_voice") then
 			self:PlaySound(28089, "alert")
 		end
 		self:Flash(28089, icon)
