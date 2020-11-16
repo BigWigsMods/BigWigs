@@ -18,6 +18,11 @@ local shiftTime = nil
 local throwHandle = nil
 local strategy = {}
 
+local ADDON_PATH = "Interface\\AddOns\\BigWigs_Naxxramas"
+if select(5, GetAddOnInfo("BigWigs_Naxxramas")) == "MISSING" then -- we lod or checkout?
+	ADDON_PATH = "Interface\\AddOns\\BigWigs\\Naxxramas"
+end
+
 local ICON_POSITIVE = 135769 -- "Interface\\Icons\\Spell_ChargePositive"
 local ICON_NEGATIVE = 135768 -- "Interface\\Icons\\Spell_ChargeNegative"
 
@@ -34,14 +39,10 @@ do
 		locale = "enUS"
 	end
 
-	local sound_path = "Interface\\AddOns\\BigWigs_Naxxramas\\Sounds"
-	if select(5, GetAddOnInfo("BigWigs_Naxxramas")) == "MISSING" then -- we lod or checkout?
-		sound_path = "Interface\\AddOns\\BigWigs\\Naxxramas\\Sounds"
-	end
-	SOUND_LEFT = ("%s\\Thaddius-%s-Left.ogg"):format(sound_path, locale)
-	SOUND_RIGHT = ("%s\\Thaddius-%s-Right.ogg"):format(sound_path, locale)
-	SOUND_SWAP = ("%s\\Thaddius-%s-Swap.ogg"):format(sound_path, locale)
-	SOUND_STAY = ("%s\\Thaddius-%s-Stay.ogg"):format(sound_path, locale)
+	SOUND_LEFT = ("%s\\Extras\\Thaddius-%s-Left.ogg"):format(ADDON_PATH, locale)
+	SOUND_RIGHT = ("%s\\Extras\\Thaddius-%s-Right.ogg"):format(ADDON_PATH, locale)
+	SOUND_SWAP = ("%s\\Extras\\Thaddius-%s-Swap.ogg"):format(ADDON_PATH, locale)
+	SOUND_STAY = ("%s\\Extras\\Thaddius-%s-Stay.ogg"):format(ADDON_PATH, locale)
 end
 
 --------------------------------------------------------------------------------
@@ -98,10 +99,12 @@ if L then
 	L.custom_off_charge_4LR = "Movement: Four camps 2"
 	L.custom_off_charge_4LR_desc = "Polarity change moves LEFT, no polarity change moves RIGHT."
 
+	L.custom_off_charge_graphic = "Graphical arrows"
+	L.custom_off_charge_graphic_desc = "Show an arrow graphic."
 	L.custom_off_charge_text = "Text arrows"
-	L.custom_off_charge_text_desc = "Show an additional message with the direction to move when Polarity Shift happens."
+	L.custom_off_charge_text_desc = "Show an additional message."
 	L.custom_off_charge_voice = "Voice alerts"
-	L.custom_off_charge_voice_desc = "Play a voice alert when Polarity Shift happens."
+	L.custom_off_charge_voice_desc = "Play a voice alert."
 
 	-- Translate these to get locale sound files!
 	L.warn_left = "<--- GO LEFT <--- GO LEFT <---"
@@ -111,10 +114,50 @@ if L then
 end
 L = mod:GetLocale()
 
-local DIRECTION_LEFT = { sound = SOUND_LEFT, text = L.warn_left }
-local DIRECTION_RIGHT = { sound = SOUND_RIGHT, text = L.warn_right }
-local DIRECTION_ACROSS = { sound = SOUND_SWAP, text = L.warn_swap }
-local DIRECTION_NONE = { sound = SOUND_STAY, text = L.warn_stay }
+local function ARROW_LEFT()
+	local frame = mod.arrow
+	frame.texture:SetTexture("ADDON_PATH\\Extras\\arrow")
+	frame.texture:SetTexCoord(0, 1, 0, 1)
+	frame:SetPoint("CENTER", -250, 100)
+	frame:Show()
+
+	mod:SimpleTimer(function() frame:Hide() end, 4)
+end
+
+local function ARROW_RIGHT()
+	local frame = mod.arrow
+	frame.texture:SetTexture("ADDON_PATH\\Extras\\arrow")
+	frame.texture:SetTexCoord(1, 0, 0, 1)
+	frame:SetPoint("CENTER", 250, 100)
+	frame:Show()
+
+	mod:SimpleTimer(function() frame:Hide() end, 4)
+end
+
+local function ARROW_SWAP()
+	local frame = mod.arrow
+	frame.texture:SetTexture("ADDON_PATH\\Extras\\straightArrow")
+	frame.texture:SetTexCoord(0, 1, 0, 1)
+	frame:SetPoint("CENTER", 0, 200)
+	frame:Show()
+
+	mod:SimpleTimer(function() frame:Hide() end, 4)
+end
+
+local function ARROW_STAY()
+	-- local frame = mod.arrow
+	-- frame.texture:SetTexture("ADDON_PATH\\Extras\\stop")
+	-- frame.texture:SetTexCoord(0, 1, 0, 1)
+	-- frame:SetPoint("CENTER", 0, 200)
+	-- frame:Show()
+
+	-- mod:SimpleTimer(function() frame:Hide() end, 4)
+end
+
+local DIRECTION_LEFT = { sound = SOUND_LEFT, text = L.warn_left, arrow = ARROW_LEFT }
+local DIRECTION_RIGHT = { sound = SOUND_RIGHT, text = L.warn_right, arrow = ARROW_RIGHT }
+local DIRECTION_ACROSS = { sound = SOUND_SWAP, text = L.warn_swap, arrow = ARROW_SWAP }
+local DIRECTION_NONE = { sound = SOUND_STAY, text = L.warn_stay, arrow = ARROW_STAY }
 
 local INITIAL_DIRECTION = {
 	{ -- 1
@@ -145,11 +188,25 @@ function mod:GetOptions()
 		"custom_off_charge_clockwise",
 		"custom_off_charge_4RL",
 		"custom_off_charge_4LR",
+		"custom_off_charge_graphic",
 		"custom_off_charge_text",
 		"custom_off_charge_voice",
 	}, {
 		["custom_off_charge_RL"] = L.polarity_extras,
 	}
+end
+
+function mod:OnRegister()
+	local frame = CreateFrame("Frame", "BigWigsThaddiusArrow", UIParent)
+	frame:SetFrameStrata("MEDIUM")
+	frame:SetSize(200, 200)
+	frame:SetAlpha(0.6)
+	frame:Hide()
+	self.arrow = frame
+
+	local texture = frame:CreateTexture(nil, "BACKGROUND")
+	texture:SetAllPoints(frame)
+	frame.texture = texture
 end
 
 function mod:OnBossEnable()
@@ -196,6 +253,10 @@ function mod:OnEngage()
 
 	self:Message("stages", "cyan", L.phase1_message, false)
 	self:Throw()
+end
+
+function mod:OnBossDisable()
+	self.arrow:Hide()
 end
 
 --------------------------------------------------------------------------------
@@ -279,23 +340,16 @@ function mod:UNIT_AURA(event, unit)
 	shiftTime = nil
 	self:UnregisterUnitEvent(event, unit)
 
+	local info, text, color
 	local icon = newCharge == ICON_POSITIVE and "Spell_ChargePositive" or "Spell_ChargeNegative"
 	if newCharge == lastCharge then
 		-- No change
-		local info = strategy.nochange
-		if info then
-			if self:GetOption("custom_off_charge_text") then
-				self:Message(28089, "yellow", info.text, false)
-			end
-			if self:GetOption("custom_off_charge_voice") then
-				PlaySoundFile(info.sound, "Master")
-			end
-		end
-		self:Message(28089, "yellow", L.polarity_nochange, icon)
+		info = strategy.nochange
+		color = "yellow"
+		text = L.polarity_nochange
 	else
 		-- Change
-		local text, info
-		local color = newCharge == ICON_POSITIVE and "blue" or "red"
+		color = newCharge == ICON_POSITIVE and "blue" or "red"
 		if not lastCharge then
 			-- First charge
 			info = strategy.first
@@ -304,18 +358,24 @@ function mod:UNIT_AURA(event, unit)
 			info = strategy.change
 			text = L.polarity_changed
 		end
-		if info then
-			if self:GetOption("custom_off_charge_text") then
-				self:Message(28089, color, info.text, false) -- SetOption::blue,red::
-			end
-			if self:GetOption("custom_off_charge_voice") then
-				PlaySoundFile(info.sound, "Master")
-			end
-		elseif not self:GetOption("custom_off_charge_voice") then
+		if not info or not self:GetOption("custom_off_charge_voice") then
 			self:PlaySound(28089, "alert")
 		end
-		self:Message(28089, color, text, icon) -- SetOption::blue,red::
 		self:Flash(28089, icon)
 	end
+
+	if info then
+		if self:GetOption("custom_off_charge_graphic") then
+			info.arrow()
+		end
+		if info.text and self:GetOption("custom_off_charge_text") then
+			self:Message(28089, color, info.text, false) -- SetOption::blue,red::
+		end
+		if self:GetOption("custom_off_charge_voice") then
+			PlaySoundFile(info.sound, "Master")
+		end
+	end
+	self:Message(28089, color, text, icon) -- SetOption::blue,red,yellow::
+
 	lastCharge = newCharge
 end
