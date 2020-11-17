@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 90002
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.

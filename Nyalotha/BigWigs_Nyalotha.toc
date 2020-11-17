@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 90002
 
 ## Title: BigWigs [|cffeda55fNy'alotha, the Waking City|r]
 ## Title-deDE: BigWigs [|cffeda55fNy'alotha, die Erwachte Stadt|r]

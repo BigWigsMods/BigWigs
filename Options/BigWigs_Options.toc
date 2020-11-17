@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 90002
 
 ## Title: BigWigs [|cffeda55fOptions|r]
 ## Title-zhCN: BigWigs [|cffeda55f选项|r]

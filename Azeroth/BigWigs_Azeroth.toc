@@ -1,4 +1,4 @@
-## Interface: 90001
+## Interface: 90002
 
 ## Title: BigWigs [|cffeda55fAzeroth|r]
 ## Title-deDE: BigWigs [|cffeda55fAzeroth|r]
