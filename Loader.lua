@@ -28,9 +28,8 @@ local BIGWIGS_GUILD_VERSION = 0
 local guildWarnMessage = ""
 
 do
-	local _, tbl = ...
-
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
+	local _, tbl = ...
 	local REPO = "REPO"
 	local ALPHA = "ALPHA"
 	local RELEASE = "RELEASE"
@@ -57,9 +56,6 @@ do
 		releaseString = L.alphaRelease:format(BIGWIGS_VERSION, myGitHash)
 	end
 
-	BIGWIGS_RELEASE_STRING = releaseString
-	BIGWIGS_VERSION_STRING = ("%d-%s"):format(BIGWIGS_VERSION, myGitHash)
-
 	-- Format is "V:version^hash^guildVersion^guildName"
 	local isVersionNumber = type(tbl.guildVersion) == "number"
 	local isGuildString = type(tbl.guildName) == "string"
@@ -75,6 +71,9 @@ do
 		versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash, 0, "")
 		versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash, 0, "")
 	end
+
+	BIGWIGS_RELEASE_STRING = releaseString
+	BIGWIGS_VERSION_STRING = ("%d-%s"):format(BIGWIGS_VERSION, myGitHash)
 	-- END: MAGIC PACKAGER VOODOO VERSION STUFF
 end
 
