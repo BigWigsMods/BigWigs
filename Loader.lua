@@ -25,6 +25,7 @@ local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
 local BIGWIGS_GUILD_VERSION = 0
+local guildWarnMessage = ""
 
 do
 	local _, tbl = ...
@@ -60,9 +61,11 @@ do
 	-- Format is "V:version^hash^guildVersion^guildName"
 	local isVersionNumber = type(tbl.guildVersion) == "number"
 	local isGuildString = type(tbl.guildName) == "string"
-	if isVersionNumber and isGuildString and tbl.guildVersion > 0 and tbl.guildName:gsub(" ", "") ~= "" then
+	local isGuildWarnString = type(tbl.guildWarn) == "string"
+	if isVersionNumber and isGuildString and isGuildWarnString and tbl.guildVersion > 0 and tbl.guildName:gsub(" ", "") ~= "" then
 		customGuildName = tbl.guildName
 		BIGWIGS_GUILD_VERSION = tbl.guildVersion
+		guildWarnMessage = tbl.guildWarn
 		versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
 		versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
 	else
@@ -1282,8 +1285,8 @@ do
 			verGuildTimer = CTimerNewTicker(3, function()
 				hasGuildWarned = true
 				verGuildTimer = nil
-				sysprint(tbl.guildWarn)
-				Popup(tbl.guildWarn)
+				sysprint(guildWarnMessage)
+				Popup(guildWarnMessage)
 			end, 1)
 		end
 	end
