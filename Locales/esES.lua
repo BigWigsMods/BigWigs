@@ -22,7 +22,7 @@ L.classicWarning2 = "|cFF33FF99BigWigs|r: Por favor instala la versión para cla
 L.officialRelease  = "Estás usando la versión oficial de BigWigs %s (%s)"
 L.alphaRelease  = "Estás usando la VERSION ALPHA de BigWigs %s (%s)"
 L.sourceCheckout  = "Estás usando la versión de BigWigs %s directamente del repositorio."
-L.getNewRelease  = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo fácilmente con el cliente de Twitch. También puedes actualizarlo manualmente desde curseforge.com o wowinterface.com."
+L.getNewRelease  = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo fácilmente con el cliente de CurseForge. También puedes actualizarlo manualmente desde curseforge.com o wowinterface.com."
 L.warnTwoReleases  = "Tu BigWigs está 2 versiones desfasado! Tu versión puede tener fallos, faltarle características, o temporizadores incorrectos. Es muy recomendable que lo actualices."
 L.warnSeveralReleases  = "|cffff0000Tu BigWigs está desfasado %d actualizaciones!! Te recomendamos MUCHÍSIMO que lo actualices cuanto antes para prevenir problemas de sincronización con otros jugadores!|r"
 

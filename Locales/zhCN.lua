@@ -1,7 +1,7 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
-L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 Twitch 客户端简单升级。另外，也可以从 curseforge.com 或 wowinterface.com 手动升级。"
+L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 CurseForge 客户端简单升级。另外，也可以从 curseforge.com 或 wowinterface.com 手动升级。"
 L.warnTwoReleases = "你的 BigWigs 已过期2个发行版！你的版本可能有错误，功能缺失或不正确的计时器。所以强烈建议你升级。"
 L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期%d发行版！！我们*强烈*建议你更新，以防止把问题同步给其他玩家！|r"
 
