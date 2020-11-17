@@ -624,6 +624,42 @@ end
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
 
+	-- jesus this is so hacky. should probably be "custom_select_" with values as a
+	-- :GetBossOptionDetails return, but this keeps changes to a minimum for now
+	if type(dbKey) == "string" and dbKey:find("^custom_off_select_") then
+		local L = module:GetLocale()
+		local values = { [0] = _G.ADDON_DISABLED }
+		local i = 1
+		local value = L[dbKey.."_value"..i]
+		repeat
+			values[i] = value
+			i = i + 1
+			value = L[dbKey.."_value"..i]
+		until not value
+
+		local dropdown = AceGUI:Create("Dropdown")
+		if desc then
+			-- The label will truncate at ~74 chars, but showing the desc in a tooltip seems awkward
+			dropdown:SetLabel(("%s: |cffffffff%s|r"):format(name, desc))
+		else
+			dropdown:SetLabel(name)
+		end
+		dropdown:SetMultiselect(false)
+		dropdown:SetList(values)
+		dropdown:SetFullWidth(true)
+		dropdown:SetUserData("key", dbKey)
+		dropdown:SetUserData("module", module)
+		dropdown:SetCallback("OnValueChanged", function(widget, _, value)
+			if value == 0 then value = false end
+			local key = widget:GetUserData("key")
+			local module = widget:GetUserData("module")
+			module.db.profile[key] = value or false
+		end)
+		dropdown:SetValue(module.db.profile[dbKey] or 0)
+
+		return dropdown
+	end
+
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
 	check:SetTriState(true)
