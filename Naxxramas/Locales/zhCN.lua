@@ -271,21 +271,31 @@ if L then
 	L.throw_desc = "当 MT 被投掷到对面平台时发出警报。"
 	L.throw_warning = "约5秒后，投掷！"
 
-	L.polarity_extras = "有关极性转化后需要跑位的警报。确保团队中的所有人都使用相同的方案！"
+	L.polarity_extras = "有关极性转化后需要跑位的警报"
 
-	L.custom_off_charge_RL = "方案 1"
-	L.custom_off_charge_RL_desc = "|cffff2020负极 (-)|r 向左, |cff20ff20正极 (+)|r 向右。在首领的正前方开始。"
-	L.custom_off_charge_LR = "方案 2"
-	L.custom_off_charge_LR_desc = "|cff20ff20正极 (+)|r 向左, |cffff2020负极 (-)|r 向右。在首领的正前方开始。"
+	-- L.custom_off_select_charge_position = "First position"
+	-- L.custom_off_select_charge_position_desc = "Where to move to after the first Polarity Shift."
+	L.custom_off_select_charge_position_value1 = "|cffff2020负极(-)|r 向左, |cff20ff20正极(+)|r 向右"
+	L.custom_off_select_charge_position_value2 = "|cff20ff20正极(+)|r 向左, |cffff2020负极(-)|r 向右"
 
+	-- L.custom_off_select_charge_movement = "Movement"
+	-- L.custom_off_select_charge_movement_desc = "The movement strategy your group uses."
+	-- L.custom_off_select_charge_movement_value1 = "Run |cff20ff20THROUGH|r the boss"
+	-- L.custom_off_select_charge_movement_value2 = "Run |cff20ff20CLOCKWISE|r around the boss"
+	-- L.custom_off_select_charge_movement_value3 = "Run |cff20ff20COUNTER-CLOCKWISE|r around the boss"
+	-- L.custom_off_select_charge_movement_value4 = "Four camps 1: Polarity changed moves |cff20ff20RIGHT|r, same polarity moves |cff20ff20LEFT|r"
+	-- L.custom_off_select_charge_movement_value5 = "Four camps 2: Polarity changed moves |cff20ff20LEFT|r, same polarity moves |cff20ff20RIGHT|r"
+
+	-- L.custom_off_charge_graphic = "Graphical arrow"
+	-- L.custom_off_charge_graphic_desc = "Show an arrow graphic."
 	L.custom_off_charge_text = "文字箭头"
-	L.custom_off_charge_text_desc = "显示发生极性转化需要移动方向的提示。"
+	-- L.custom_off_charge_text_desc = "Show an additional message."
 	L.custom_off_charge_voice = "语音提示"
-	L.custom_off_charge_voice_desc = "发生极性转化需要移动时播放语音提示。"
+	-- L.custom_off_charge_voice_desc = "Play a voice alert."
 
 	-- Translate these to get locale sound files!
-	L.warn_left = "<--- 向左 <--- 向左 <---"
-	L.warn_right = "---> 向右 ---> 向右 --->"
-	L.warn_swap = "^^^^ 交换 ^^^^ 迅速 ^^^^"
-	L.warn_stay = "==== 不要动 ==== 不要动 ===="
+	L.left = "<--- 向左 <--- 向左 <---"
+	L.right = "---> 向右 ---> 向右 --->"
+	L.swap = "^^^^ 交换 ^^^^ 迅速 ^^^^"
+	L.stay = "==== 不要动 ==== 不要动 ===="
 end

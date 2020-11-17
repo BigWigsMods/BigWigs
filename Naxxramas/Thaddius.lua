@@ -26,7 +26,7 @@ end
 local ICON_POSITIVE = 135769 -- "Interface\\Icons\\Spell_ChargePositive"
 local ICON_NEGATIVE = 135768 -- "Interface\\Icons\\Spell_ChargeNegative"
 
-local SOUND_LEFT, SOUND_RIGHT, SOUND_SWAP, SOUND_STAY
+local DIRECTION_SOUND = {}
 do
 	local locale = GetLocale()
 	if locale == "zhTW" then locale = "zhCN" end
@@ -39,11 +39,47 @@ do
 		locale = "enUS"
 	end
 
-	SOUND_LEFT = ("%s\\Extras\\Thaddius-%s-Left.ogg"):format(ADDON_PATH, locale)
-	SOUND_RIGHT = ("%s\\Extras\\Thaddius-%s-Right.ogg"):format(ADDON_PATH, locale)
-	SOUND_SWAP = ("%s\\Extras\\Thaddius-%s-Swap.ogg"):format(ADDON_PATH, locale)
-	SOUND_STAY = ("%s\\Extras\\Thaddius-%s-Stay.ogg"):format(ADDON_PATH, locale)
+	DIRECTION_SOUND.left = ("%s\\Extras\\Thaddius-%s-Left.ogg"):format(ADDON_PATH, locale)
+	DIRECTION_SOUND.right = ("%s\\Extras\\Thaddius-%s-Right.ogg"):format(ADDON_PATH, locale)
+	DIRECTION_SOUND.swap = ("%s\\Extras\\Thaddius-%s-Swap.ogg"):format(ADDON_PATH, locale)
+	DIRECTION_SOUND.stay = ("%s\\Extras\\Thaddius-%s-Stay.ogg"):format(ADDON_PATH, locale)
 end
+
+local DIRECTION_ARROW = {
+	left = function()
+		local frame = mod.arrow
+		frame.texture:SetTexture(ADDON_PATH.."\\Extras\\arrow")
+		frame.texture:SetTexCoord(0, 1, 0, 1)
+		frame:SetPoint("CENTER", -250, 100)
+		frame:Show()
+		mod:SimpleTimer(function() frame:Hide() end, 4)
+	end,
+	right = function()
+		local frame = mod.arrow
+		frame.texture:SetTexture(ADDON_PATH.."\\Extras\\arrow")
+		frame.texture:SetTexCoord(1, 0, 0, 1)
+		frame:SetPoint("CENTER", 250, 100)
+		frame:Show()
+		mod:SimpleTimer(function() frame:Hide() end, 4)
+	end,
+	swap = function()
+		local frame = mod.arrow
+		frame.texture:SetTexture(ADDON_PATH.."\\Extras\\straightArrow")
+		frame.texture:SetTexCoord(0, 1, 0, 1)
+		frame:SetPoint("CENTER", 0, 100)
+		frame:Show()
+		mod:SimpleTimer(function() frame:Hide() end, 4)
+	end,
+	stay = function()
+		-- no entry sign 🚫 ?
+	end,
+}
+
+local INITIAL_DIRECTION = {
+	{ [ICON_NEGATIVE] = "left", [ICON_POSITIVE] = "right" }, -- 1
+	{ [ICON_POSITIVE] = "left", [ICON_NEGATIVE] = "right" }, -- 2
+	[false] = {}
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -77,98 +113,36 @@ if L then
 	L.throw_icon = "Ability_Druid_Maul"
 	L.throw_warning = "Throw in ~5 sec!"
 
-	-- Simplified BigWigs_ThaddiusArrows
-	L.polarity_extras = "Additional alerts for Polarity positioning."
+	-- BigWigs_ThaddiusArrows
+	L.polarity_extras = "Additional alerts for Polarity Shift positioning"
 
-	-- Probably should have just made this a plugin so I could use a radio buttons or a dropdown ~_~
-	L.custom_off_charge_RL = "Position 1"
-	L.custom_off_charge_RL_desc = "|cffff2020Negative (-)|r are LEFT, |cff2020ffPositive (+)|r are RIGHT. Start in front of the boss."
-	L.custom_off_charge_LR = "Position 2"
-	L.custom_off_charge_LR_desc = "|cff2020ffPositive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT. Start in front of the boss."
+	L.custom_off_select_charge_position = "First position"
+	L.custom_off_select_charge_position_desc = "Where to move to after the first Polarity Shift."
+	L.custom_off_select_charge_position_value1 = "|cffff2020Negative (-)|r are LEFT, |cff2020ffPositive (+)|r are RIGHT"
+	L.custom_off_select_charge_position_value2 = "|cff2020ffPositive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT"
 
-	L.custom_on_charge_across = "Movement: Run through"
-	L.custom_on_charge_across_desc = "Polarity change moves THROUGH Thaddius, no polarity change DOES NOT MOVE."
+	L.custom_off_select_charge_movement = "Movement"
+	L.custom_off_select_charge_movement_desc = "The movement strategy your group uses."
+	L.custom_off_select_charge_movement_value1 = "Run |cff20ff20THROUGH|r the boss"
+	L.custom_off_select_charge_movement_value2 = "Run |cff20ff20CLOCKWISE|r around the boss"
+	L.custom_off_select_charge_movement_value3 = "Run |cff20ff20COUNTER-CLOCKWISE|r around the boss"
+	L.custom_off_select_charge_movement_value4 = "Four camps 1: Polarity changed moves |cff20ff20RIGHT|r, same polarity moves |cff20ff20LEFT|r"
+	L.custom_off_select_charge_movement_value5 = "Four camps 2: Polarity changed moves |cff20ff20LEFT|r, same polarity moves |cff20ff20RIGHT|r"
 
-	L.custom_off_charge_clockwise = "Movement: Clockwise"
-	L.custom_off_charge_clockwise_desc = "Polarity change moves CLOCKWISE around Thaddius, no polarity change DOES NOT MOVE."
-	L.custom_off_charge_cclockwise = "Movement: Counter-clockwise"
-	L.custom_off_charge_cclockwise_desc = "Polarity change moves COUNTER-CLOCKWISE around Thaddius, no polarity change DOES NOT MOVE."
-
-	L.custom_off_charge_4RL = "Movement: Four camps 1"
-	L.custom_off_charge_4RL_desc = "Polarity change moves RIGHT, no polarity change moves LEFT."
-	L.custom_off_charge_4LR = "Movement: Four camps 2"
-	L.custom_off_charge_4LR_desc = "Polarity change moves LEFT, no polarity change moves RIGHT."
-
-	L.custom_off_charge_graphic = "Graphical arrows"
+	L.custom_off_charge_graphic = "Graphical arrow"
 	L.custom_off_charge_graphic_desc = "Show an arrow graphic."
 	L.custom_off_charge_text = "Text arrows"
 	L.custom_off_charge_text_desc = "Show an additional message."
-	L.custom_off_charge_voice = "Voice alerts"
+	L.custom_off_charge_voice = "Voice alert"
 	L.custom_off_charge_voice_desc = "Play a voice alert."
 
 	-- Translate these to get locale sound files!
-	L.warn_left = "<--- GO LEFT <--- GO LEFT <---"
-	L.warn_right = "---> GO RIGHT ---> GO RIGHT --->"
-	L.warn_swap = "^^^^ SWITCH SIDES ^^^^ SWITCH SIDES ^^^^"
-	L.warn_stay = "==== DON'T MOVE ==== DON'T MOVE ===="
+	L.left = "<--- GO LEFT <--- GO LEFT <---"
+	L.right = "---> GO RIGHT ---> GO RIGHT --->"
+	L.swap = "^^^^ SWITCH SIDES ^^^^ SWITCH SIDES ^^^^"
+	L.stay = "==== DON'T MOVE ==== DON'T MOVE ===="
 end
 L = mod:GetLocale()
-
-local function ARROW_LEFT()
-	local frame = mod.arrow
-	frame.texture:SetTexture("ADDON_PATH\\Extras\\arrow")
-	frame.texture:SetTexCoord(0, 1, 0, 1)
-	frame:SetPoint("CENTER", -250, 100)
-	frame:Show()
-
-	mod:SimpleTimer(function() frame:Hide() end, 4)
-end
-
-local function ARROW_RIGHT()
-	local frame = mod.arrow
-	frame.texture:SetTexture("ADDON_PATH\\Extras\\arrow")
-	frame.texture:SetTexCoord(1, 0, 0, 1)
-	frame:SetPoint("CENTER", 250, 100)
-	frame:Show()
-
-	mod:SimpleTimer(function() frame:Hide() end, 4)
-end
-
-local function ARROW_SWAP()
-	local frame = mod.arrow
-	frame.texture:SetTexture("ADDON_PATH\\Extras\\straightArrow")
-	frame.texture:SetTexCoord(0, 1, 0, 1)
-	frame:SetPoint("CENTER", 0, 200)
-	frame:Show()
-
-	mod:SimpleTimer(function() frame:Hide() end, 4)
-end
-
-local function ARROW_STAY()
-	-- local frame = mod.arrow
-	-- frame.texture:SetTexture("ADDON_PATH\\Extras\\stop")
-	-- frame.texture:SetTexCoord(0, 1, 0, 1)
-	-- frame:SetPoint("CENTER", 0, 200)
-	-- frame:Show()
-
-	-- mod:SimpleTimer(function() frame:Hide() end, 4)
-end
-
-local DIRECTION_LEFT = { sound = SOUND_LEFT, text = L.warn_left, arrow = ARROW_LEFT }
-local DIRECTION_RIGHT = { sound = SOUND_RIGHT, text = L.warn_right, arrow = ARROW_RIGHT }
-local DIRECTION_ACROSS = { sound = SOUND_SWAP, text = L.warn_swap, arrow = ARROW_SWAP }
-local DIRECTION_NONE = { sound = SOUND_STAY, text = L.warn_stay, arrow = ARROW_STAY }
-
-local INITIAL_DIRECTION = {
-	{ -- 1
-		[ICON_NEGATIVE] = DIRECTION_LEFT,
-		[ICON_POSITIVE] = DIRECTION_RIGHT,
-	},
-	{ -- 2
-		[ICON_POSITIVE] = DIRECTION_LEFT,
-		[ICON_NEGATIVE] = DIRECTION_RIGHT,
-	},
-}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -181,32 +155,30 @@ function mod:GetOptions()
 		"throw",
 		"stages",
 		"berserk",
-		"custom_off_charge_RL",
-		"custom_off_charge_LR",
-		"custom_on_charge_across",
-		"custom_off_charge_clockwise",
-		"custom_off_charge_clockwise",
-		"custom_off_charge_4RL",
-		"custom_off_charge_4LR",
+		"custom_off_select_charge_position",
+		"custom_off_select_charge_movement",
 		"custom_off_charge_graphic",
 		"custom_off_charge_text",
 		"custom_off_charge_voice",
 	}, {
-		["custom_off_charge_RL"] = L.polarity_extras,
+		["custom_off_select_charge_position"] = L.polarity_extras,
 	}
 end
 
 function mod:OnRegister()
 	local frame = CreateFrame("Frame", "BigWigsThaddiusArrow", UIParent)
-	frame:SetFrameStrata("MEDIUM")
-	frame:SetSize(200, 200)
+	frame:SetFrameStrata("HIGH")
+	frame:Raise()
+	frame:SetSize(100, 100)
 	frame:SetAlpha(0.6)
-	frame:Hide()
 	self.arrow = frame
 
 	local texture = frame:CreateTexture(nil, "BACKGROUND")
+	texture:SetTexture(ADDON_PATH.."\\Extras\\arrow")
 	texture:SetAllPoints(frame)
 	frame.texture = texture
+
+	frame:Hide()
 end
 
 function mod:OnBossEnable()
@@ -227,31 +199,28 @@ function mod:OnEngage()
 	shiftTime = nil
 
 	strategy = {}
-	if self:GetOption("custom_off_charge_RL") then
-		strategy.first = INITIAL_DIRECTION[1]
-	elseif self:GetOption("custom_off_charge_LR") then
-		strategy.first = INITIAL_DIRECTION[2]
-	end
-	if strategy.first then
-		if self:GetOption("custom_on_charge_across") then
-			strategy.change = DIRECTION_ACROSS
-			strategy.nochange = DIRECTION_NONE
-		elseif self:GetOption("custom_off_charge_clockwise") then
-			strategy.change = DIRECTION_LEFT
-			strategy.nochange = DIRECTION_NONE
-		elseif self:GetOption("custom_off_charge_cclockwise") then
-			strategy.change = DIRECTION_RIGHT
-			strategy.nochange = DIRECTION_NONE
-		elseif self:GetOption("custom_off_charge_4RL") then
-			strategy.change = DIRECTION_RIGHT
-			strategy.nochange = DIRECTION_LEFT
-		elseif self:GetOption("custom_off_charge_4LR") then
-			strategy.change = DIRECTION_LEFT
-			strategy.nochange = DIRECTION_RIGHT
-		end
+	local opt = self:GetOption("custom_off_select_charge_position")
+	strategy.first = INITIAL_DIRECTION[opt]
+
+	opt = self:GetOption("custom_off_select_charge_movement")
+	if opt == 1 then -- through
+		strategy.change = "swap"
+		strategy.nochange = "stay"
+	elseif opt == 2 then -- cw
+		strategy.change = "left"
+		strategy.nochange = "stay"
+	elseif opt == 3 then -- ccw
+		strategy.change = "right"
+		strategy.nochange = "stay"
+	elseif opt == 4 then -- 4r
+		strategy.change = "right"
+		strategy.nochange = "left"
+	elseif opt == 5 then -- 4l
+		strategy.change = "left"
+		strategy.nochange = "right"
 	end
 
-	self:Message("stages", "cyan", L.phase1_message, false)
+	self:Message("stages", "yellow", L.phase1_message, false)
 	self:Throw()
 end
 
@@ -301,7 +270,7 @@ function mod:Phase2()
 	self:StopBar(L.throw)
 
 	self:Berserk(300, true)
-	self:Message("stages", "cyan", L.phase2_message, false)
+	self:Message("stages", "yellow", L.phase2_message, false)
 end
 
 function mod:PolarityShiftCast(args)
@@ -337,14 +306,19 @@ function mod:UNIT_AURA(event, unit)
 	end
 	if not newCharge then return end
 
+	self:PolarityShiftAura(lastCharge, newCharge)
+
+	lastCharge = newCharge
 	shiftTime = nil
 	self:UnregisterUnitEvent(event, unit)
+end
 
-	local info, text, color
+function mod:PolarityShiftAura(lastCharge, newCharge)
+	local direction, color, text
 	local icon = newCharge == ICON_POSITIVE and "Spell_ChargePositive" or "Spell_ChargeNegative"
 	if newCharge == lastCharge then
 		-- No change
-		info = strategy.nochange
+		direction = strategy.nochange
 		color = "yellow"
 		text = L.polarity_nochange
 	else
@@ -352,30 +326,27 @@ function mod:UNIT_AURA(event, unit)
 		color = newCharge == ICON_POSITIVE and "blue" or "red"
 		if not lastCharge then
 			-- First charge
-			info = strategy.first
+			direction = strategy.first[newCharge]
 			text = newCharge == ICON_POSITIVE and L.polarity_first_positive or L.polarity_first_negative
 		else
-			info = strategy.change
+			direction = strategy.change
 			text = L.polarity_changed
 		end
-		if not info or not self:GetOption("custom_off_charge_voice") then
+		if not direction or not self:GetOption("custom_off_charge_voice") then
 			self:PlaySound(28089, "alert")
 		end
 		self:Flash(28089, icon)
 	end
-
-	if info then
+	if direction then
 		if self:GetOption("custom_off_charge_graphic") then
-			info.arrow()
+			DIRECTION_ARROW[direction]()
 		end
-		if info.text and self:GetOption("custom_off_charge_text") then
-			self:Message(28089, color, info.text, false) -- SetOption::blue,red::
+		if self:GetOption("custom_off_charge_text") then
+			self:Message(28089, color, L[direction], false) -- SetOption::blue,red,yellow::
 		end
 		if self:GetOption("custom_off_charge_voice") then
-			PlaySoundFile(info.sound, "Master")
+			PlaySoundFile(DIRECTION_SOUND[direction], "Master")
 		end
 	end
 	self:Message(28089, color, text, icon) -- SetOption::blue,red,yellow::
-
-	lastCharge = newCharge
 end

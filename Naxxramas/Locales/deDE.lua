@@ -271,21 +271,31 @@ if L then
 	L.throw_desc = "Warnt, wenn die Tanks die Plattform wechseln."
 	L.throw_warning = "Magnetische Anziehung in ~5 sek!"
 
-	-- L.polarity_extras = "Additional alerts for Polarity positioning. Make sure to only choose one strategy!"
+	-- L.polarity_extras = "Additional alerts for Polarity Shift positioning"
 
-	-- L.custom_off_charge_RL = "Strategy 1"
-	-- L.custom_off_charge_RL_desc = "|cffff2020Negative (-)|r are LEFT, |cff20ff20Positive (+)|r are RIGHT. Start in front of the boss."
-	-- L.custom_off_charge_LR = "Strategy 2"
-	-- L.custom_off_charge_LR_desc = "|cff20ff20Positive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT. Start in front of the boss."
+	-- L.custom_off_select_charge_position = "First position"
+	-- L.custom_off_select_charge_position_desc = "Where to move to after the first Polarity Shift."
+	-- L.custom_off_select_charge_position_value1 = "|cffff2020Negative (-)|r are LEFT, |cff2020ffPositive (+)|r are RIGHT"
+	-- L.custom_off_select_charge_position_value2 = "|cff2020ffPositive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT"
 
+	-- L.custom_off_select_charge_movement = "Movement"
+	-- L.custom_off_select_charge_movement_desc = "The movement strategy your group uses."
+	-- L.custom_off_select_charge_movement_value1 = "Run |cff20ff20THROUGH|r the boss"
+	-- L.custom_off_select_charge_movement_value2 = "Run |cff20ff20CLOCKWISE|r around the boss"
+	-- L.custom_off_select_charge_movement_value3 = "Run |cff20ff20COUNTER-CLOCKWISE|r around the boss"
+	-- L.custom_off_select_charge_movement_value4 = "Four camps 1: Polarity changed moves |cff20ff20RIGHT|r, same polarity moves |cff20ff20LEFT|r"
+	-- L.custom_off_select_charge_movement_value5 = "Four camps 2: Polarity changed moves |cff20ff20LEFT|r, same polarity moves |cff20ff20RIGHT|r"
+
+	-- L.custom_off_charge_graphic = "Graphical arrow"
+	-- L.custom_off_charge_graphic_desc = "Show an arrow graphic."
 	-- L.custom_off_charge_text = "Text arrows"
-	-- L.custom_off_charge_text_desc = "Show a message with the direction to move when Polarity Shift happens."
-	-- L.custom_off_charge_voice = "Voice alerts"
-	-- L.custom_off_charge_voice_desc = "Play a voice alert when Polarity Shift happens."
+	-- L.custom_off_charge_text_desc = "Show an additional message."
+	-- L.custom_off_charge_voice = "Voice alert"
+	-- L.custom_off_charge_voice_desc = "Play a voice alert."
 
 	-- Translate these to get locale sound files!
-	L.warn_left = "<--- Nach Links <--- Nach Links <---"
-	L.warn_right = "---> Nach Rechts ---> Nach Rechts --->"
-	L.warn_swap = "^^^^ Seitenwechseln ^^^^ Seitenwechseln ^^^^"
-	L.warn_stay = "==== Nicht Bewegen ==== Nicht Bewegen ===="
+	L.left = "<--- Nach Links <--- Nach Links <---"
+	L.right = "---> Nach Rechts ---> Nach Rechts --->"
+	L.swap = "^^^^ Seitenwechseln ^^^^ Seitenwechseln ^^^^"
+	L.stay = "==== Nicht Bewegen ==== Nicht Bewegen ===="
 end
