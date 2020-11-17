@@ -1112,7 +1112,7 @@ do
 		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= (toc > 90001 and "BigWigs_Shadowlands" or "BigWigs_BattleForAzeroth") and GetAddOnEnableState(playerName, value) == 0 then -- XXX Fix after Beta
+		elseif value:match("^BigWigs_") and value ~= (toc > 90002 and "BigWigs_Shadowlands" or "BigWigs_BattleForAzeroth") and GetAddOnEnableState(playerName, value) == 0 then -- XXX Fix after Beta
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
