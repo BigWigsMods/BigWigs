@@ -56,8 +56,10 @@ do
 	elseif releaseType == ALPHA then
 		releaseString = L.alphaRelease:format(BIGWIGS_VERSION, myGitHash)
 	end
+
 	BIGWIGS_RELEASE_STRING = releaseString
 	BIGWIGS_VERSION_STRING = ("%d-%s"):format(BIGWIGS_VERSION, myGitHash)
+
 	-- Format is "V:version^hash^guildVersion^guildName"
 	local isVersionNumber = type(tbl.guildVersion) == "number"
 	local isGuildString = type(tbl.guildName) == "string"
@@ -66,6 +68,7 @@ do
 		customGuildName = tbl.guildName
 		BIGWIGS_GUILD_VERSION = tbl.guildVersion
 		guildWarnMessage = tbl.guildWarn
+		releaseString = L.guildRelease:format(BIGWIGS_GUILD_VERSION, BIGWIGS_VERSION)
 		versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
 		versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
 	else
@@ -1251,7 +1254,7 @@ do
 					Popup(msg)
 					RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 40)
 				else
-					sysprint(L.warnCustom:format(diff))
+					sysprint(L.warnOldBase:format(BIGWIGS_GUILD_VERSION, BIGWIGS_VERSION, diff))
 				end
 			end, 1)
 		elseif warnedReallyOutOfDate > 1 and hasWarned < 2 and not customGuildName then

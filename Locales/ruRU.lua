@@ -1,10 +1,11 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "ruRU")
 if not L then return end
 
+--L.guildRelease = "You are running a guild version %d of BigWigs, based on version %d of the official addon."
 L.getNewRelease = "Ваш BigWigs устарел(/bwv), но вы можете легко его обновить с помощью CurseForge Client. Также, Вы можете обновиться вручную на сайтах curseforge.com или wowinterface.com."
 L.warnTwoReleases = "Ваш BigWigs устарел на две версии! Ваша версию может содержать ошибки, меньше возможностей, а может быть и неправильные таймеры. Крайне рекомендуется обновиться."
 L.warnSeveralReleases = "|cffff0000Ваш BigWigs устарел на %d версий!! ОЧЕНЬ рекомендуется обновиться, чтобы предотвратить ошибки синхронизации с другими игроками!|r"
---L.warnCustom = "You are using a custom/guild version of BigWigs, but your base version is %d releases out of date. This may cause issues."
+--L.warnOldBase = "You are using a guild version %d of BigWigs, but your base version (%d) is %d releases out of date. This may cause issues."
 
 L.gitHubDesc = "|cFF33FF99BigWigs это программное обеспечение с открытым исходным кодом, который размещен на GitHub. Мы всегда ищем новых людей, чтобы помочь нам, и каждый желающий может осмотреть наш код, внести свой вклад и отправить отчеты об ошибках. BigWigs хорош, только благодаря помощи большей части сообщества WoW.|r"
 
