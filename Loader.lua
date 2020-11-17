@@ -1510,10 +1510,10 @@ SlashCmdList.BigWigsVersion = function()
 		return
 	end
 
-	local function coloredNameVersion(name, version, hash, guildVersion, guildName)
+	local function coloredNameVersion(name, version, hash, guildVersion)
 		if not version then
 			version = ""
-		elseif customGuildName and customGuildName == guildName then
+		elseif guildVersion then
 			version = ("|cFFCCCCCC(%d/%d%s)|r"):format(guildVersion, version, hash and "-"..hash or "")
 		else
 			version = ("|cFFCCCCCC(%d%s)|r"):format(version, hash and "-"..hash or "")
@@ -1548,12 +1548,20 @@ SlashCmdList.BigWigsVersion = function()
 		local player = list[i]
 		local usesBossMod = nil
 		if usersVersion[player] then
-			if usersVersion[player] < highestFoundVersion then
-				ugly[#ugly + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player], usersGuildVersion[player], usersGuildName[player])
-			else
-				good[#good + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player], usersGuildVersion[player], usersGuildName[player])
-			end
 			usesBossMod = true
+			if customGuildName == usersGuildName[player] then
+				if usersGuildVersion[player] < highestFoundGuildVersion then
+					ugly[#ugly + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player], usersGuildVersion[player])
+				else
+					good[#good + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player], usersGuildVersion[player])
+				end
+			else
+				if usersVersion[player] < highestFoundVersion then
+					ugly[#ugly + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player])
+				else
+					good[#good + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player])
+				end
+			end
 		end
 		if usersDBM[player] then
 			dbm[#dbm+1] = coloredNameVersion(player, usersDBM[player])
