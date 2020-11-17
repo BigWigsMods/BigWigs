@@ -22,9 +22,13 @@ local ldbi = LibStub("LibDBIcon-1.0")
 
 local BIGWIGS_VERSION = 186
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
-local versionQueryString, versionResponseString = "Q^%d^%s", "V^%d^%s"
+local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
+local customGuildName = false
+local BIGWIGS_GUILD_VERSION = 0
 
 do
+	local _, tbl = ...
+
 	-- START: MAGIC PACKAGER VOODOO VERSION STUFF
 	local REPO = "REPO"
 	local ALPHA = "ALPHA"
@@ -53,9 +57,18 @@ do
 	end
 	BIGWIGS_RELEASE_STRING = releaseString
 	BIGWIGS_VERSION_STRING = ("%d-%s"):format(BIGWIGS_VERSION, myGitHash)
-	-- Format is "V:version-hash"
-	versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash)
-	versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash)
+	-- Format is "V:version^hash^guildVersion^guildName"
+	local isVersionNumber = type(tbl.guildVersion) == "number"
+	local isGuildString = type(tbl.guildName) == "string"
+	if isVersionNumber and isGuildString and tbl.guildVersion > 0 and tbl.guildName:gsub(" ", "") ~= "" then
+		customGuildName = tbl.guildName
+		BIGWIGS_GUILD_VERSION = tbl.guildVersion
+		versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
+		versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash, tbl.guildVersion, tbl.guildName)
+	else
+		versionQueryString = versionQueryString:format(BIGWIGS_VERSION, myGitHash, 0, "")
+		versionResponseString = versionResponseString:format(BIGWIGS_VERSION, myGitHash, 0, "")
+	end
 	-- END: MAGIC PACKAGER VOODOO VERSION STUFF
 end
 
@@ -81,8 +94,11 @@ public.CTimerNewTicker = CTimerNewTicker
 -- Version
 local usersHash = {}
 local usersVersion = {}
+local usersGuildVersion = {}
+local usersGuildName = {}
 local usersDBM = {}
 local highestFoundVersion = BIGWIGS_VERSION
+local highestFoundGuildVersion = BIGWIGS_GUILD_VERSION
 
 -- Loading
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
@@ -1145,10 +1161,10 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 	if channel ~= "RAID" and channel ~= "PARTY" and channel ~= "INSTANCE_CHAT" then
 		return
 	elseif prefix == "BigWigs" then
-		local bwPrefix, bwMsg, extra = strsplit("^", msg)
+		local bwPrefix, bwMsg, extra, guildVersion, guildName = strsplit("^", msg)
 		sender = Ambiguate(sender, "none")
 		if bwPrefix == "V" or bwPrefix == "Q" then
-			self:VersionCheck(bwPrefix, bwMsg, extra, sender)
+			self:VersionCheck(bwPrefix, bwMsg, extra, guildVersion, guildName, sender)
 		elseif bwPrefix == "B" then
 			public:SendMessage("BigWigs_BossComm", bwMsg, extra, sender)
 		elseif bwPrefix == "P" then
@@ -1194,11 +1210,16 @@ do
 	end
 
 	local hasWarned = 0
+	local hasGuildWarned = false
 	local verTimer = nil
+	local verGuildTimer = nil
 	function ResetVersionWarning()
 		hasWarned = 0
+		hasGuildWarned = false
 		if verTimer then verTimer:Cancel() end -- We may have left the group whilst a warning is about to show
+		if verGuildTimer then verGuildTimer:Cancel() end
 		verTimer = nil
+		verGuildTimer = nil
 	end
 
 	local function printOutOfDate(tbl)
@@ -1221,12 +1242,16 @@ do
 				hasWarned = 3
 				verTimer = nil
 				local diff = highestFoundVersion - BIGWIGS_VERSION
-				local msg = L.warnSeveralReleases:format(diff)
-				sysprint(msg)
-				Popup(msg)
-				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 40)
+				if not customGuildName then
+					local msg = L.warnSeveralReleases:format(diff)
+					sysprint(msg)
+					Popup(msg)
+					RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 40)
+				else
+					sysprint(L.warnCustom:format(diff))
+				end
 			end, 1)
-		elseif warnedReallyOutOfDate > 1 and hasWarned < 2 then
+		elseif warnedReallyOutOfDate > 1 and hasWarned < 2 and not customGuildName then
 			if verTimer then verTimer:Cancel() end
 			verTimer = CTimerNewTicker(3, function()
 				hasWarned = 2
@@ -1234,7 +1259,7 @@ do
 				sysprint(L.warnTwoReleases)
 				RaidNotice_AddMessage(RaidWarningFrame, L.warnTwoReleases, {r=1,g=1,b=1}, 20)
 			end, 1)
-		elseif warnedOutOfDate > 1 and hasWarned < 1 then
+		elseif warnedOutOfDate > 1 and hasWarned < 1 and not customGuildName then
 			if verTimer then verTimer:Cancel() end
 			verTimer = CTimerNewTicker(3, function()
 				hasWarned = 1
@@ -1244,7 +1269,26 @@ do
 		end
 	end
 
-	function mod:VersionCheck(prefix, verString, hash, sender)
+	local function printGuildOutOfDate(tbl)
+		if hasGuildWarned then return end
+		local warnedOutOfDate = 0
+		for k,v in next, tbl do
+			if v > BIGWIGS_GUILD_VERSION and usersGuildName[k] == customGuildName then
+				warnedOutOfDate = warnedOutOfDate + 1
+			end
+		end
+		if warnedOutOfDate > 1 and not hasGuildWarned then
+			if verGuildTimer then verGuildTimer:Cancel() end
+			verGuildTimer = CTimerNewTicker(3, function()
+				hasGuildWarned = true
+				verGuildTimer = nil
+				sysprint(tbl.guildWarn)
+				Popup(tbl.guildWarn)
+			end, 1)
+		end
+	end
+
+	function mod:VersionCheck(prefix, verString, hash, guildVerString, guildName, sender)
 		if prefix == "Q" then
 			if timer then timer:Cancel() end
 			timer = CTimerNewTicker(3, sendMsg, 1)
@@ -1255,6 +1299,21 @@ do
 				usersVersion[sender] = version
 				usersHash[sender] = hash
 				if version > highestFoundVersion then highestFoundVersion = version end
+
+				local guildVersion = tonumber(guildVerString)
+				if guildVersion and guildVersion > 0 then
+					usersGuildVersion[sender] = guildVersion
+					usersGuildName[sender] = guildName
+					if customGuildName and customGuildName == guildName then
+						if guildVersion > highestFoundGuildVersion then
+							highestFoundGuildVersion = guildVersion
+						end
+						if guildVersion > BIGWIGS_GUILD_VERSION then
+							printGuildOutOfDate(usersGuildVersion)
+						end
+					end
+				end
+
 				if version > BIGWIGS_VERSION then
 					printOutOfDate(usersVersion)
 				end
@@ -1448,11 +1507,13 @@ SlashCmdList.BigWigsVersion = function()
 		return
 	end
 
-	local function coloredNameVersion(name, version, hash)
+	local function coloredNameVersion(name, version, hash, guildVersion, guildName)
 		if not version then
 			version = ""
+		elseif customGuildName and customGuildName == guildName then
+			version = ("|cFFCCCCCC(%d/%d%s)|r"):format(guildVersion, version, hash and "-"..hash or "")
 		else
-			version = ("|cFFCCCCCC(%s%s)|r"):format(version, hash and "-"..hash or "")
+			version = ("|cFFCCCCCC(%d%s)|r"):format(version, hash and "-"..hash or "")
 		end
 
 		local _, class = UnitClass(name)
@@ -1478,21 +1539,21 @@ SlashCmdList.BigWigsVersion = function()
 	local good = {} -- highest release users
 	local ugly = {} -- old version users
 	local bad = {} -- no boss mod
-	local crazy = {} -- DBM users
+	local dbm = {} -- DBM users
 
 	for i = 1, #list do
 		local player = list[i]
 		local usesBossMod = nil
 		if usersVersion[player] then
 			if usersVersion[player] < highestFoundVersion then
-				ugly[#ugly + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player])
+				ugly[#ugly + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player], usersGuildVersion[player], usersGuildName[player])
 			else
-				good[#good + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player])
+				good[#good + 1] = coloredNameVersion(player, usersVersion[player], usersHash[player], usersGuildVersion[player], usersGuildName[player])
 			end
 			usesBossMod = true
 		end
 		if usersDBM[player] then
-			crazy[#crazy+1] = coloredNameVersion(player, usersDBM[player])
+			dbm[#dbm+1] = coloredNameVersion(player, usersDBM[player])
 			usesBossMod = true
 		end
 		if not usesBossMod then
@@ -1502,7 +1563,7 @@ SlashCmdList.BigWigsVersion = function()
 
 	if #good > 0 then print(L.upToDate, unpack(good)) end
 	if #ugly > 0 then print(L.outOfDate, unpack(ugly)) end
-	if #crazy > 0 then print(L.dbmUsers, unpack(crazy)) end
+	if #dbm > 0 then print(L.dbmUsers, unpack(dbm)) end
 	if #bad > 0 then print(L.noBossMod, unpack(bad)) end
 end
 

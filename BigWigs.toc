@@ -29,5 +29,6 @@ API.lua
 locales.xml
 
 Media\Media.lua
+GuildVersion.lua
 Loader.lua
 modules.xml
