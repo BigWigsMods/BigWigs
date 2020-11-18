@@ -1,4 +1,4 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Common", "esES") or BigWigsAPI:NewLocale("BigWigs: Common", "esMX")
+local L = BigWigsAPI:NewLocale("BigWigs: Common", "esES")
 if not L then return end
 
 L.add = "Esbirro"
