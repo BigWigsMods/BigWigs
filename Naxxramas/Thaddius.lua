@@ -48,30 +48,26 @@ end
 local DIRECTION_ARROW = {
 	left = function()
 		local frame = mod.arrow
-		frame.texture:SetTexture(ADDON_PATH.."\\Extras\\arrow")
+		frame.texture:SetRotation(0)
 		frame.texture:SetTexCoord(0, 1, 0, 1)
 		frame:SetPoint("CENTER", -250, 100)
 		frame:Show()
-		mod:SimpleTimer(function() frame:Hide() end, 4)
+		mod:SimpleTimer(function() mod.arrow:Hide() end, 4)
 	end,
 	right = function()
 		local frame = mod.arrow
-		frame.texture:SetTexture(ADDON_PATH.."\\Extras\\arrow")
+		frame.texture:SetRotation(0)
 		frame.texture:SetTexCoord(1, 0, 0, 1)
 		frame:SetPoint("CENTER", 250, 100)
 		frame:Show()
-		mod:SimpleTimer(function() frame:Hide() end, 4)
+		mod:SimpleTimer(function() mod.arrow:Hide() end, 4)
 	end,
 	swap = function()
 		local frame = mod.arrow
-		frame.texture:SetTexture(ADDON_PATH.."\\Extras\\straightArrow")
-		frame.texture:SetTexCoord(0, 1, 0, 1)
+		frame.texture:SetRotation(math.rad(-70))
 		frame:SetPoint("CENTER", 0, 100)
 		frame:Show()
-		mod:SimpleTimer(function() frame:Hide() end, 4)
-	end,
-	stay = function()
-		-- no entry sign 🚫 ?
+		mod:SimpleTimer(function() mod.arrow:Hide() end, 4)
 	end,
 }
 
