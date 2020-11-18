@@ -358,7 +358,7 @@ local function findCalls(lines, start, local_func, options)
 	local keys = {}
 	local func, if_key = nil, nil
 	for i = start+1, #lines do
-		local line = lines[i]
+		local line = lines[i]:gsub("%s*%-%-.+$", "") -- strip out comments
 		local res = line:match("^%s*function%s+[%w_]+[.:]([%w_]+)%s*%(")
 		if res then
 			func = res
