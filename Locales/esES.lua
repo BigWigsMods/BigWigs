@@ -22,11 +22,11 @@ L.classicWarning2 = "|cFF33FF99BigWigs|r: Por favor instala la versión para cla
 L.officialRelease  = "Estás usando la versión oficial de BigWigs %s (%s)"
 L.alphaRelease  = "Estás usando la VERSION ALPHA de BigWigs %s (%s)"
 L.sourceCheckout  = "Estás usando la versión de BigWigs %s directamente del repositorio."
---L.guildRelease = "You are running a guild version %d of BigWigs, based on version %d of the official addon."
+--L.guildRelease = "You are running version %d of BigWigs made for your guild, based on version %d of the official addon."
 L.getNewRelease  = "Tu BigWigs está desfasado (/bwv) pero puedes actualizarlo fácilmente con el cliente de CurseForge. También puedes actualizarlo manualmente desde curseforge.com o wowinterface.com."
 L.warnTwoReleases  = "Tu BigWigs está 2 versiones desfasado! Tu versión puede tener fallos, faltarle características, o temporizadores incorrectos. Es muy recomendable que lo actualices."
 L.warnSeveralReleases  = "|cffff0000Tu BigWigs está desfasado %d actualizaciones!! Te recomendamos MUCHÍSIMO que lo actualices cuanto antes para prevenir problemas de sincronización con otros jugadores!|r"
---L.warnOldBase = "You are using a guild version %d of BigWigs, but your base version (%d) is %d releases out of date. This may cause issues."
+--L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base version (%d) is %d releases out of date. This may cause issues."
 
 L.tooltipHint  = "|cffeda55fRight-Clic|r para acceder a las opciones."
 L.activeBossModules  = "Módulos de jefes activos:"

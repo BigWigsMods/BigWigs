@@ -22,11 +22,11 @@ L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%s|r)|1은
 L.officialRelease = "당신은 BigWigs %s (%s)의 공식 배포 버전을 실행 중입니다"
 L.alphaRelease = "당신은 BigWigs %s (%s)의 알파 버전을 실행 중입니다"
 L.sourceCheckout = "당신은 저장소로부터 직접 가져온 BigWigs %s의 소스를 실행 중입니다."
---L.guildRelease = "You are running a guild version %d of BigWigs, based on version %d of the official addon."
+--L.guildRelease = "You are running version %d of BigWigs made for your guild, based on version %d of the official addon."
 L.getNewRelease = "당신의 BigWigs는 구버전이지만 (/bwv) CurseForge 클라이언트를 사용해 쉽게 업데이트할 수 있습니다. 또는 curseforge.com이나 wowinterface.com에서 직접 업데이트할 수 있습니다."
 L.warnTwoReleases = "당신의 BigWigs는 최신 버전보다 2번 앞서 배포된 구버전입니다! 당신의 버전은 오류가 있거나, 기능이 누락됐거나, 완전히 틀린 타이머를 가지고 있을 수 있습니다. 업데이트를 강력히 권장합니다."
 L.warnSeveralReleases = "|cffff0000당신의 BigWigs는 최신 버전보다 %d번 앞서 배포된 구버전입니다!! 다른 플레이어와 동기화 문제를 방지하기 위해 업데이트를 강력히 권장합니다!|r"
---L.warnOldBase = "You are using a guild version %d of BigWigs, but your base version (%d) is %d releases out of date. This may cause issues."
+--L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base version (%d) is %d releases out of date. This may cause issues."
 
 L.tooltipHint = "옵션에 접근하려면 |cffeda55f오른쪽 클릭|r하세요."
 L.activeBossModules = "활성화된 우두머리 모듈:"
