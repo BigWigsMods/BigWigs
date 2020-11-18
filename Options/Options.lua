@@ -1151,8 +1151,8 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = toc > 90001 and "BigWigs_Shadowlands" or "BigWigs_BattleForAzeroth" -- XXX Fix after Beta
-				for i = 1, toc > 90001 and 9 or 8 do -- XXX Fix after Beta
+				defaultHeader = toc > 90002 and "BigWigs_Shadowlands" or "BigWigs_BattleForAzeroth" -- XXX Fix after Beta
+				for i = 1, toc > 90002 and 9 or 8 do -- XXX Fix after Beta
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
@@ -1162,9 +1162,9 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = toc > 90001 and "LittleWigs_Shadowlands" or "LittleWigs_BattleForAzeroth" -- XXX Fix after Beta
+				defaultHeader = toc > 90002 and "LittleWigs_Shadowlands" or "LittleWigs_BattleForAzeroth" -- XXX Fix after Beta
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				for i = 1, toc > 90001 and 9 or 8 do -- XXX Fix after Beta
+				for i = 1, toc > 90002 and 9 or 8 do -- XXX Fix after Beta
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
