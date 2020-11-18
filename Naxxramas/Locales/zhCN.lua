@@ -273,25 +273,25 @@ if L then
 
 	L.polarity_extras = "有关极性转化后需要跑位的警报"
 
-	-- L.custom_off_select_charge_position = "First position"
-	-- L.custom_off_select_charge_position_desc = "Where to move to after the first Polarity Shift."
+	L.custom_off_select_charge_position = "起始位置"
+	L.custom_off_select_charge_position_desc = "第一次极性转化后的位置。"
 	L.custom_off_select_charge_position_value1 = "|cffff2020负极(-)|r 向左, |cff20ff20正极(+)|r 向右"
 	L.custom_off_select_charge_position_value2 = "|cff20ff20正极(+)|r 向左, |cffff2020负极(-)|r 向右"
 
-	-- L.custom_off_select_charge_movement = "Movement"
-	-- L.custom_off_select_charge_movement_desc = "The movement strategy your group uses."
-	-- L.custom_off_select_charge_movement_value1 = "Run |cff20ff20THROUGH|r the boss"
-	-- L.custom_off_select_charge_movement_value2 = "Run |cff20ff20CLOCKWISE|r around the boss"
-	-- L.custom_off_select_charge_movement_value3 = "Run |cff20ff20COUNTER-CLOCKWISE|r around the boss"
-	-- L.custom_off_select_charge_movement_value4 = "Four camps 1: Polarity changed moves |cff20ff20RIGHT|r, same polarity moves |cff20ff20LEFT|r"
-	-- L.custom_off_select_charge_movement_value5 = "Four camps 2: Polarity changed moves |cff20ff20LEFT|r, same polarity moves |cff20ff20RIGHT|r"
+	L.custom_off_select_charge_movement = "移动战术"
+	L.custom_off_select_charge_movement_desc = "你团队使用的移动战术。"
+	L.custom_off_select_charge_movement_value1 = "使用战术： |cff20ff20穿过|r BOSS"
+	L.custom_off_select_charge_movement_value2 = "使用战术：在BOSS身边 |cff20ff20顺时针|r 移动"
+	L.custom_off_select_charge_movement_value3 = "使用战术：在BOSS身边 |cff20ff20逆时针|r 移动"
+	L.custom_off_select_charge_movement_value4 = "四点战术 1: 极性转化改变 |cff20ff20向右|r, 极性转化未改变 |cff20ff20向左|r"
+	L.custom_off_select_charge_movement_value5 = "四点战术 2: 极性转化改变 |cff20ff20向左|r, 极性转化未改变 |cff20ff20向右|r"
 
-	-- L.custom_off_charge_graphic = "Graphical arrow"
-	-- L.custom_off_charge_graphic_desc = "Show an arrow graphic."
+	L.custom_off_charge_graphic = "图形箭头"
+	L.custom_off_charge_graphic_desc = "显示图形箭头。"
 	L.custom_off_charge_text = "文字箭头"
-	-- L.custom_off_charge_text_desc = "Show an additional message."
+	L.custom_off_charge_text_desc = "显示文字箭头。"
 	L.custom_off_charge_voice = "语音提示"
-	-- L.custom_off_charge_voice_desc = "Play a voice alert."
+	L.custom_off_charge_voice_desc = "播放语音提示。"
 
 	-- Translate these to get locale sound files!
 	L.left = "<--- 向左 <--- 向左 <---"
