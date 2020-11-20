@@ -83,4 +83,3 @@ L.amount_one = "%dB" -- Miles de millones 1,000,000,000
 L.amount_two = "%dM" -- Millones 1,000,000
 L.amount_three = "%dK" -- Miles 1,000
 L.seconds = "%.1fs" -- 1.1 segundos
--
