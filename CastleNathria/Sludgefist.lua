@@ -1,4 +1,4 @@
-if not IsTestBuild() then return end
+
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Mythic Fractured Boulder + Impact cast/land bars
