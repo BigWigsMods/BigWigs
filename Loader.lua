@@ -1,4 +1,3 @@
-local _,_,_,toc = GetBuildInfo() -- XXX Remove after beta
 
 if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
 	local L = BigWigsAPI:GetLocale("BigWigs")
@@ -1396,7 +1395,7 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and zoneAddon ~= (toc > 90002 and "BigWigs_Shadowlands" or "BigWigs_BattleForAzeroth") then -- XXX Cleanup after beta
+		if zoneAddon and zoneAddon ~= "BigWigs_Shadowlands" then
 			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
