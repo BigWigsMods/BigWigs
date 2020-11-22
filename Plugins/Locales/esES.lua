@@ -1,4 +1,4 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "esES") or BigWigsAPI:NewLocale("BigWigs: Plugins", "esMX")
+local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "esES")
 if not L then return end
 
 L.comma = ", "
