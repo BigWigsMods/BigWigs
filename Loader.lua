@@ -882,6 +882,12 @@ do
 		BigWigs_TrialOfValor = "BigWigs_Legion",
 		BigWigs_SiegeOfZuldazar = "BigWigs",
 		FS_Core = "Abandoned", -- abandoned addon breaking the load order
+		BigWigs_Azeroth = "BigWigs_BattleForAzeroth",
+		BigWigs_BattleOfDazaralor = "BigWigs_BattleForAzeroth",
+		BigWigs_CrucibleOfStorms = "BigWigs_BattleForAzeroth",
+		BigWigs_EternalPalace = "BigWigs_BattleForAzeroth",
+		BigWigs_Nyalotha = "BigWigs_BattleForAzeroth",
+		BigWigs_Uldir = "BigWigs_BattleForAzeroth",
 	}
 	local delayedMessages = {}
 
