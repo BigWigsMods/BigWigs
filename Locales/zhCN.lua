@@ -1,11 +1,11 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
---L.guildRelease = "You are running version %d of BigWigs made for your guild, based on version %d of the official addon."
-L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 CurseForge 客户端简单升级。另外，也可以从 curseforge.com 或 wowinterface.com 手动升级。"
+L.guildRelease = "你正在使用 BigWigs 公会版本%d，基于官方插件版本%d。"
+L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 CurseForge 客户端轻松升级。另外，也可以从 curseforge.com 或 wowinterface.com 手动升级。"
 L.warnTwoReleases = "你的 BigWigs 已过期2个发行版！你的版本可能有错误，功能缺失或不正确的计时器。所以强烈建议你升级。"
 L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期%d发行版！！我们*强烈*建议你更新，以防止把问题同步给其他玩家！|r"
---L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base version (%d) is %d releases out of date. This may cause issues."
+L.warnOldBase = "你正在使用公会版本 BigWigs（%d），但是你的基础版本（%d）%d 发布已过期。这可能出现一些问题。"
 
 L.gitHubDesc = "|cFF33FF99BigWigs 是一个在 GitHub 上的开源软件。我们一直在寻找新的朋友帮助我们和欢迎任何人检测我们的代码，做出贡献和提交错误报告。BigWigs 今天的伟大很大程度上一部分因为伟大的魔兽世界社区帮助我们。|r"
 
