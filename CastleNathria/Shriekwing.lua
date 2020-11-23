@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Deadly Descent warnings?
@@ -22,7 +21,6 @@ local ExsanguinatStacksOnMe = nil
 local shriekCount = 1
 local echoCount = 1
 local scentOfBloodCount = 1
-local sonarShriekCount = 1
 local blindSwipeCount = 1
 
 --------------------------------------------------------------------------------
@@ -53,7 +51,6 @@ function mod:GetOptions()
 		-- Stage Two - Terror of Castle Nathria
 		328921, -- Bloodgorge
 		329362, -- Dark Sonar
-		340047, -- Sonar Shriek
 		341684, -- The Blood Lantern
 		341489, -- Bloodlight
 	}, {
@@ -79,7 +76,6 @@ function mod:OnBossEnable()
 	-- Stage Two - Terror of Castle Nathria
 	self:Log("SPELL_CAST_START", "Bloodgorge", 328921)
 	self:Log("SPELL_CAST_SUCCESS", "DarkSonar", 329362)
-	self:Log("SPELL_CAST_START", "SonarShriek", 340047)
 	self:Log("SPELL_AURA_REMOVED", "BloodgorgeRemoved", 328921)
 
 	-- Mythic
@@ -97,7 +93,6 @@ function mod:OnEngage()
 	shriekCount = 1
 	echoCount = 1
 	scentOfBloodCount = 1
-	sonarShriekCount = 1
 	blindSwipeCount = 1
 
 	self:CDBar(328857, 8) -- Exsanguinating Bite
@@ -201,11 +196,8 @@ function mod:Bloodgorge(args)
 	self:StopBar(CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:StopBar(CL.count:format(self:SpellName(342863), echoCount)) -- Echoing Screech
 
-	sonarShriekCount = 1
-
 	self:CDBar("stages", 45, CL.intermission, args.spellId) -- 5s Cast, 40s Intermission/Stage 2
 	self:CDBar(329362, 7.3) -- Dark Sonar
-	self:CDBar(340047, 18.3, CL.count:format(self:SpellName(340047), sonarShriekCount)) -- Sonar Shriek
 end
 
 function mod:DarkSonar(args)
@@ -213,20 +205,9 @@ function mod:DarkSonar(args)
 	self:PlaySound(args.spellId, "info")
 end
 
-function mod:SonarShriek(args)
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, sonarShriekCount))
-	self:PlaySound(args.spellId, "warning")
-	sonarShriekCount = sonarShriekCount + 1
-	if sonarShriekCount > 4 then -- cast 3 times in intermission
-		self:CDBar(args.spellId, 9.7, CL.count:format(args.spellName, sonarShriekCount))
-	end
-end
-
 function mod:BloodgorgeRemoved(args)
 	self:Message("stages", "green", CL.stage:format(1), false)
 	self:PlaySound("stages", "info")
-
-	self:StopBar(CL.count:format(self:SpellName(340047), sonarShriekCount)) -- Earsplitting Shriek
 
 	shriekCount = 1
 	echoCount = 1
