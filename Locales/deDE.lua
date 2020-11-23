@@ -9,7 +9,7 @@ L.warnOldBase = "Du nutzt eine Gildenversion von BigWigs (%d), aber die Basisver
 
 L.gitHubDesc = "|cFF33FF99BigWigs ist Open-Source-Software auf GitHub. Wir sind immer auf der Suche nach neuen Menschen, die uns helfen, und jeder ist willkommen, unseren Code zu inspizieren, Beiträge zu leisten und Fehlerberichte einzureichen. BigWigs ist hauptsächlich durch die großartige WoW-Gemeinschaft im Laufe der Zeit zu etwas Großem geworden.|r"
 
-L.testNameplate = "Ziel erkannt, erstelle Test Leiste über Namensplakette des Ziels. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
+L.testNameplate = "Ziel erkannt, erstelle Test Leiste über Namensplakette des Ziels. |cFF33FF99Diese Funktion wird selten genutzt, besteht aus 1 Leiste und wird verwendet, wenn mehrere Bosse/Adds die gleichen Zauber wirken.|r"
 
 L.classicWarning1 = "|cFF33FF99BigWigs|r: Du nutzt die falsche Version von BigWigs auf einem Classic Server."
 L.classicWarning2 = "|cFF33FF99BigWigs|r: Bitte Classic Version von BigWigs installieren."
