@@ -26,6 +26,7 @@ move-folders:
     BigWigs/ZulGurub: BigWigs_ZulGurub
     BigWigs/AhnQirajRuins: BigWigs_AhnQirajRuins
     BigWigs/AhnQirajTemple: BigWigs_AhnQirajTemple
+    BigWigs/Naxxramas: BigWigs_Naxxramas
 
 ignore:
   - .luacheckrc

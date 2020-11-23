@@ -597,7 +597,6 @@ do
 		BigWigs_SSC = "BigWigs",
 		BigWigs_Outland = "BigWigs",
 		BigWigs_Northrend = "BigWigs",
-		BigWigs_Naxxramas = "BigWigs",
 		BigWigs_MC = "BigWigs",
 		BigWigs_Karazhan = "BigWigs",
 		BigWigs_Hyjal = "BigWigs",
