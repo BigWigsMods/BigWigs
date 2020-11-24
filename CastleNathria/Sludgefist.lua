@@ -32,7 +32,6 @@ local timers = {
 
 local L = mod:GetLocale()
 if L then
-	L.yourLink = "You are linked with %s"
 end
 
 --------------------------------------------------------------------------------
@@ -136,7 +135,7 @@ do
 		chainLinksApplied = chainLinksApplied + 1
 		if self:Me(args.destGUID) then
 			local partner = args.sourceName
-			self:Message(335293, "blue", L.yourLink:format(self:ColorName(partner)))
+			self:Message(335293, "blue", CL.link:format(self:ColorName(partner)))
 			self:PlaySound(335293, "warning")
 		end
 		if chainLinksApplied == 1 then
