@@ -1,15 +1,15 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "deDE")
 if not L then return end
 
---L.guildRelease = "You are running version %d of BigWigs made for your guild, based on version %d of the official addon."
+L.guildRelease = "Du nutzt Version %d von BigWigs für Deine Gilde, basierend auf Version %d des offiziellen Addons."
 L.getNewRelease = "Dein BigWigs ist veraltet (/bwv), aber du kannst es mit Hilfe des CurseForge Clients einfach aktualisieren. Alternativ kannst du es auch von curseforge.com oder wowinterface.com herunterladen und manuell aktualisieren."
 L.warnTwoReleases = "Dein BigWigs ist 2 Versionen älter als die neueste Version! Deine Version könnte Fehler, fehlende Funktionen oder völlig falsche Timer beinhalten. Es wird dringend empfohlen, BigWigs zu aktualisieren."
 L.warnSeveralReleases = "|cffff0000Dein BigWigs ist um %d Versionen veraltet!! Wir empfehlen dir DRINGEND, BigWigs zu aktualisieren, um Synchronisationsprobleme zwischen dir und anderen Spielern zu verhindern!|r"
---L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base version (%d) is %d releases out of date. This may cause issues."
+L.warnOldBase = "Du nutzt eine Gildenversion von BigWigs (%d), aber die Basisversion (%d) ist seit %d Veröffentlichungen veraltet. Dies kann zu Problemen führen."
 
 L.gitHubDesc = "|cFF33FF99BigWigs ist Open-Source-Software auf GitHub. Wir sind immer auf der Suche nach neuen Menschen, die uns helfen, und jeder ist willkommen, unseren Code zu inspizieren, Beiträge zu leisten und Fehlerberichte einzureichen. BigWigs ist hauptsächlich durch die großartige WoW-Gemeinschaft im Laufe der Zeit zu etwas Großem geworden.|r"
 
-L.testNameplate = "Ziel erkannt, erstelle Test Leiste über Namensplakette des Ziels. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
+L.testNameplate = "Ziel erkannt, erstelle Test Leiste über Namensplakette des Ziels. |cFF33FF99Diese Funktion wird selten genutzt, besteht aus 1 Leiste und wird verwendet, wenn mehrere Bosse/Adds die gleichen Zauber wirken.|r"
 
 L.classicWarning1 = "|cFF33FF99BigWigs|r: Du nutzt die falsche Version von BigWigs auf einem Classic Server."
 L.classicWarning2 = "|cFF33FF99BigWigs|r: Bitte Classic Version von BigWigs installieren."

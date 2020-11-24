@@ -1,9 +1,3 @@
-if not IsTestBuild() then return end
---------------------------------------------------------------------------------
--- TODO:
--- -- Mythic Fractured Boulder + Impact cast/land bars
--- -- Gruesome rage message
--- -- Vengeful Rage (mythic) message
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -49,12 +43,14 @@ function mod:GetOptions()
 	return {
 		{331209, "SAY" ,"SAY_COUNTDOWN"}, -- Hateful Gaze
 		331314, -- Destructive Impact
+		341102, -- Fractured Boulder
 		335293, -- Chain Link
 		332318, -- Destructive Stomp
 		335361, -- Stonequake
 		332687, -- Colossal Roar
 		{335470, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Chain Slam
 		340817, -- Seismic Shift
+		341250, -- Gruesome Rage
 	},{
 		[331209] = "general",
 		[340817] = "mythic",
@@ -71,6 +67,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "ColossalRoar", 332687)
 	self:Log("SPELL_AURA_APPLIED", "ChainSlamApplied", 335470)
 	self:Log("SPELL_AURA_REMOVED", "ChainSlamRemoved", 335470)
+	self:Log("SPELL_AURA_APPLIED", "GruesomeRageApplied", 341250)
 
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "SeismicShiftApplied", 340817)
@@ -125,6 +122,7 @@ function mod:DestructiveImpactApplied(args)
 	self:Message(args.spellId, "red", CL.on:format(args.spellName, args.destName))
 	self:PlaySound(args.spellId, "info")
 	self:Bar(args.spellId, 12)
+	self:CastBar(341102, 3.5) -- Fractured Boulder Landing
 end
 
 function mod:DestructiveImpactRemoved(args)
@@ -172,7 +170,7 @@ end
 function mod:ChainSlamApplied(args)
 	self:StopBar(CL.count:format(args.spellName, chainSlamCount))
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chainSlamCount))
-	self:SecondaryIcon(args.spellId, args.destName)
+	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 4)
@@ -183,25 +181,15 @@ function mod:ChainSlamApplied(args)
 end
 
 function mod:ChainSlamRemoved(args)
-	self:SecondaryIcon(args.spellId)
+	self:PrimaryIcon(args.spellId)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
 end
 
-do
-	local prev = 0
-	function mod:SeismicShiftApplied(args)
-		local t = args.time
-		if t-prev > 2 then
-			prev = t
-			self:StopBar(CL.count:format(args.spellName, seismicShiftCount))
-			self:Message(args.spellId, "yellow", CL.count:format(args.spellName, seismicShiftCount))
-			seismicShiftCount = seismicShiftCount + 1
-			self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(args.spellName, seismicShiftCount))
-			self:PlaySound(args.spellId, "long")
-		end
-	end
+function mod:GruesomeRageApplied(args)
+	self:Message(args.spellId, "yellow")
+	self:PlaySound(args.spellId, "alert")
 end
 
 do
@@ -214,6 +202,22 @@ do
 				self:PlaySound(args.spellId, "alarm")
 				self:PersonalMessage(args.spellId, "underyou")
 			end
+		end
+	end
+end
+
+-- Mythic
+do
+	local prev = 0
+	function mod:SeismicShiftApplied(args)
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			self:StopBar(CL.count:format(args.spellName, seismicShiftCount))
+			self:Message(args.spellId, "yellow", CL.count:format(args.spellName, seismicShiftCount))
+			seismicShiftCount = seismicShiftCount + 1
+			self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(args.spellName, seismicShiftCount))
+			self:PlaySound(args.spellId, "long")
 		end
 	end
 end

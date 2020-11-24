@@ -1,4 +1,4 @@
-local _,_,_,toc = GetBuildInfo() -- XXX Remove after beta
+
 local BigWigs = BigWigs
 local options = {}
 
@@ -1112,7 +1112,7 @@ do
 		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= (toc > 90002 and "BigWigs_Shadowlands" or "BigWigs_BattleForAzeroth") and GetAddOnEnableState(playerName, value) == 0 then -- XXX Fix after Beta
+		elseif value:match("^BigWigs_") and value ~= "BigWigs_Shadowlands" and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
@@ -1151,8 +1151,8 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = toc > 90002 and "BigWigs_Shadowlands" or "BigWigs_BattleForAzeroth" -- XXX Fix after Beta
-				for i = 1, toc > 90002 and 9 or 8 do -- XXX Fix after Beta
+				defaultHeader = "BigWigs_Shadowlands"
+				for i = 1, 9 do
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
@@ -1162,9 +1162,9 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = toc > 90002 and "LittleWigs_Shadowlands" or "LittleWigs_BattleForAzeroth" -- XXX Fix after Beta
+				defaultHeader = "LittleWigs_Shadowlands"
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				for i = 1, toc > 90002 and 9 or 8 do -- XXX Fix after Beta
+				for i = 1, 9 do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),

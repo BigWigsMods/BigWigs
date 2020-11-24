@@ -1,4 +1,3 @@
-local _,_,_,toc = GetBuildInfo() -- XXX Remove after beta
 
 if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
 	local L = BigWigsAPI:GetLocale("BigWigs")
@@ -20,7 +19,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 187
+local BIGWIGS_VERSION = 188
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -862,7 +861,6 @@ do
 		LittleWigs_Stratholme = "LittleWigs",
 		LittleWigs_Storm_Peaks = "LittleWigs",
 		["LittleWigs_Zul'Drak"] = "LittleWigs",
-		LittleWigs_Cataclysm = "LittleWigs",
 		BigWigs_TayakIcons = "BigWigs",
 		BigWigs_PizzaBar = "BigWigs",
 		BigWigs_ShaIcons = "BigWigs",
@@ -870,7 +868,7 @@ do
 		BigWigs_NoPluginWarnings = "BigWigs",
 		LFG_ProposalTime = "BigWigs",
 		CourtOfStarsGossipHelper = "LittleWigs",
-		BigWigs_DispelResist = "",
+		BigWigs_DispelResist = "Abandoned",
 		BigWigs_Voice_HeroesOfTheStorm = "BigWigs_Countdown_HeroesOfTheStorm",
 		BigWigs_Voice_Overwatch = "BigWigs_Countdown_Overwatch",
 		BigWigs_AutoReply = "BigWigs",
@@ -884,6 +882,12 @@ do
 		BigWigs_TrialOfValor = "BigWigs_Legion",
 		BigWigs_SiegeOfZuldazar = "BigWigs",
 		FS_Core = "Abandoned", -- abandoned addon breaking the load order
+		BigWigs_Azeroth = "BigWigs_BattleForAzeroth",
+		BigWigs_BattleOfDazaralor = "BigWigs_BattleForAzeroth",
+		BigWigs_CrucibleOfStorms = "BigWigs_BattleForAzeroth",
+		BigWigs_EternalPalace = "BigWigs_BattleForAzeroth",
+		BigWigs_Nyalotha = "BigWigs_BattleForAzeroth",
+		BigWigs_Uldir = "BigWigs_BattleForAzeroth",
 	}
 	local delayedMessages = {}
 
@@ -1009,9 +1013,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20201117162918" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "9.0.4" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20201117000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20201123192607" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "9.0.5" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20201123000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
@@ -1396,7 +1400,7 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and zoneAddon ~= (toc > 90002 and "BigWigs_Shadowlands" or "BigWigs_BattleForAzeroth") then -- XXX Cleanup after beta
+		if zoneAddon and zoneAddon ~= "BigWigs_Shadowlands" then
 			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
