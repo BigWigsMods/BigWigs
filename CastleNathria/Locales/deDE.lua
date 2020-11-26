@@ -1,13 +1,13 @@
 local L = BigWigs:NewBossLocale("Shriekwing", "deDE")
 if not L then return end
 if L then
-	-- L.pickup_lantern = "%s picked up the lantern!"
-	-- L.dropped_lantern = "Lantern dropped by %s!"
+	L.pickup_lantern = "%s hat die Laterne aufgenommen!"
+	L.dropped_lantern = "Laterne fallengelassen von %s!"
 end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "deDE")
 if L then
-	-- L.killed = "%s Killed"
+	 L.killed = "%s getötet"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "deDE")
@@ -20,31 +20,31 @@ L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "deDE")
 if L then
 	-- L.times = "%dx %s"
 
-	-- L.level = "%s (Level |cffffff00%d|r)"
-	-- L.full = "%s (|cffff0000FULL|r)"
+	L.level = "%s (Stufe |cffffff00%d|r)"
+	L.full = "%s (|cffff0000VOLL|r)"
 
-	-- L.custom_off_experimental = "Enable experimental features"
-	-- L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
+	L.custom_off_experimental = "Experimentelle Funktionen aktivieren"
+	L.custom_off_experimental_desc = "Diese Funktionen wurden |cffff0000nicht getestet|r und können |cffff0000spammen|r."
 
-	-- L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
-	-- L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
+	L.anima_tracking = "Anima Verfolgung |cffff0000(Experimentell)|r"
+	L.anima_tracking_desc = "Nachrichten und Leisten zur Verfolgung der Anima-Level in den Behältern.|n|cffaaff00Tip: Informationsboxen oder Balken nach Belieben deaktivieren."
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
+	L.custom_on_stop_timers_desc = "Derzeit nur zum Testen"
 
-	-- L.bottles = "Bottles"
-	-- L.sins = "Sins"
+	L.bottles = "Behälter"
+	L.sins = "Sünden"
 end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "deDE")
 if L then
 	-- L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
-	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
-	-- L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
+	L.custom_on_repeating_dark_recital = "Wiederholte Dunkler Vortrag Ansage"
+	L.custom_on_repeating_dark_recital_desc = "Gibt wiederholt Chatnachrichten mit den Symbolen {rt1}, {rt2} aus, um den Partner beim Tanzen zu finden."
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "deDE")
 if L then
-	-- L.first_blade = "First Blade"
-	-- L.second_blade = "Second Blade"
+	L.first_blade = "Erste Klinge"
+	L.second_blade = "Zweite Klinge"
 end
