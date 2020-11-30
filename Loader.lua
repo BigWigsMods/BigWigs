@@ -1519,9 +1519,9 @@ SlashCmdList.BigWigsVersion = function()
 		if not version then
 			version = ""
 		elseif guildVersion then
-			version = ("|cFFCCCCCC(%d/%d%s)|r"):format(guildVersion, version, hash and "-"..hash or "")
+			version = ("|cFFCCCCCC(%d/%d%s)|r"):format(guildVersion, version, hash and "-"..hash or "") -- %d because BigWigs versions are always stored as a number
 		else
-			version = ("|cFFCCCCCC(%d%s)|r"):format(version, hash and "-"..hash or "")
+			version = ("|cFFCCCCCC(%s%s)|r"):format(version, hash and "-"..hash or "") -- %s because DBM users are stored as a string
 		end
 
 		local _, class = UnitClass(name)
