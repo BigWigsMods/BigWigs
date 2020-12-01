@@ -1,4 +1,4 @@
-## Interface: 11305
+## Interface: 11306
 
 ## Title: BigWigs [|cffeda55fOptions|r]
 ## Title-zhCN: BigWigs [|cffeda55f选项|r]

@@ -1,4 +1,4 @@
-## Interface: 11305
+## Interface: 11306
 
 ## Title: BigWigs [|cffeda55fZul'Gurub|r]
 ## Title-deDE: BigWigs [|cffeda55fZul'Gurub|r]
