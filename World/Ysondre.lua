@@ -115,7 +115,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg, sender)
 	if msg:find(L.engage_trigger, nil, true) then
-		self:Message(24818, "yellow", L.custom_start_s:format(sender, self:SpellName(24818), 10), false)
+		self:Message(24818, "yellow", CL.custom_start_s:format(sender, self:SpellName(24818), 10), false)
 		self:Bar(24818, 10) -- Noxious Breath
 	end
 end

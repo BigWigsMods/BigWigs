@@ -53,7 +53,7 @@ end
 function mod:OnEngage()
 	self:RegisterEvent("UNIT_HEALTH_FREQUENT")
 
-	self:Message(29484, "yellow", L.custom_start_s:format(L.bossName, self:SpellName(29484), 40), false)
+	self:Message(29484, "yellow", CL.custom_start_s:format(L.bossName, self:SpellName(29484), 40), false)
 	self:Bar(29484, 40)
 	self:DelayedMessage(29484, 10, "yellow", L.webspraywarn30sec)
 	self:DelayedMessage(29484, 20, "yellow", L.webspraywarn20sec)

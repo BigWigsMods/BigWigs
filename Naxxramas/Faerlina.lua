@@ -47,8 +47,8 @@ end
 
 function mod:OnEngage()
 	frenzied = nil
-	self:Message(28798, "yellow", L.custom_start_s:format(L.bossName, self:SpellName(28798), 60), false)
-	self:DelayedMessage(28798, 45, "red", L.soon:format(self:SpellName(28798)))
+	self:Message(28798, "yellow", CL.custom_start_s:format(L.bossName, self:SpellName(28798), 60), false)
+	self:DelayedMessage(28798, 45, "red", CL.soon:format(self:SpellName(28798)))
 	self:Bar(28798, 60)
 end
 
@@ -65,7 +65,7 @@ function mod:Silence(args)
 	else
 		-- Reactive enrage removed
 		self:Message(28798, "green", L.removed:format(self:SpellName(28798)))
-		self:DelayedMessage(28798, 45, "red", L.soon:format(self:SpellName(28798)))
+		self:DelayedMessage(28798, 45, "red", CL.soon:format(self:SpellName(28798)))
 		self:Bar(28798, 60)
 
 		self:Bar(28732, 30, self:SpellName(15487)) -- 15487 = Silence
@@ -84,7 +84,7 @@ end
 
 function mod:Frenzy(args)
 	self:StopBar(28798)
-	self:CancelDelayedMessage(L.soon:format(self:SpellName(28798)))
+	self:CancelDelayedMessage(CL.soon:format(self:SpellName(28798)))
 
 	frenzied = true
 	self:Message(28798, "orange")
