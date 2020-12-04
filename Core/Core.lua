@@ -145,8 +145,14 @@ local function targetSeen(unit, targetModule, mobId, sync)
 end
 
 local function targetCheck(unit, sync)
-	if not UnitName(unit) or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
-	local _, _, _, _, _, mobId = strsplit("-", (UnitGUID(unit)))
+	local name = UnitName(unit)
+	if not name or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
+	local guid = UnitGUID(unit)
+	if not guid then
+		core:Error(("Found unit with name '%s' but no guid, tell the BigWigs authors."):format(name))
+		return
+	end
+	local _, _, _, _, _, mobId = strsplit("-", guid)
 	local id = tonumber(mobId)
 	if id and enablemobs[id] then
 		targetSeen(unit, enablemobs[id], id, sync)
