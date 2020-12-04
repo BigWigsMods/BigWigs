@@ -1596,6 +1596,9 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_PluginComm")
 	self:RegisterMessage("DBM_AddonMessage")
 
+	-- XXX temporary workaround for wow custom font loading issues, start a dummy bar to force load the selected font into memory
+	self:SendMessage("BigWigs_StartBar", self, nil, "test", 0.01, 134376)
+
 	local tbl = BigWigs3DB.breakTime
 	if tbl then -- Break time present, resume it
 		local prevTime, seconds, nick, isDBM = tbl[1], tbl[2], tbl[3], tbl[4]
