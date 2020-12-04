@@ -38,7 +38,7 @@ if L then
 	L.adddeath_desc = "当增援死亡时发出警报。"
 
 	L.starttrigger1 = "你们这些蠢货已经主动步入了陷阱。"
-	L.starttrigger2 = "Teamanare shi rikk mannor rikk lok karkun"
+	L.starttrigger2 = "你们正在挑战一个无比强大的存在。"
 	L.startwarn = "收割者戈提克已激活 - 4:30后，进入房间！"
 
 	L.rider = "冷酷的骑兵"
