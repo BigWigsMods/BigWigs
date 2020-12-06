@@ -225,8 +225,8 @@ if L then
 
 	L.deepbreath_trigger = "%s深深地吸了一口气……"
 
-	-- L.air_phase = "Air phase"
-	-- L.ground_phase = "Ground phase"
+	L.air_phase = "空中阶段"
+	L.ground_phase = "地面阶段"
 
 	L.deepbreath = "寒冰炸弹"
 	L.deepbreath_warning = "即将 寒冰炸弹！"
