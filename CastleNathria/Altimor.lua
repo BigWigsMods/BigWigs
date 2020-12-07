@@ -1,9 +1,3 @@
-
---------------------------------------------------------------------------------
--- TODO:
--- -- Mark Ripped Soul for visibility
--- -- Mark Petrifying Howl targets?
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -28,6 +22,7 @@ local bloodyThrashCount = 1
 local ripSoulCount = 1
 local shadesOfBargastCount = 1
 local petrifyingHowlCount = 1
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,6 +38,7 @@ end
 --
 
 local sinseekerMarker = mod:AddMarkerOption(false, "player", 1, 335114, 1, 2, 3) -- Sinseeker
+local shadesofBargastMarker = mod:AddMarkerOption(false, "npc", 4, 334757, 4, 5) -- Shades of Bargast
 function mod:GetOptions()
 	return {
 		"stages",
@@ -59,6 +55,7 @@ function mod:GetOptions()
 		{334797, "TANK_HEALER"}, -- Rip Soul
 		334884, -- Devour Soul
 		334757, -- Shades of Bargast
+		shadesofBargastMarker,
 		-- 334708, -- Deathly Roar
 
 		--[[ Hecutis ]]--
@@ -120,6 +117,7 @@ function mod:OnEngage()
 	ripSoulCount = 1
 	shadesOfBargastCount = 1
 	petrifyingHowlCount = 1
+	wipe(mobCollector)
 
 	self:Bar(334404, 6.2) -- Spreadshot
 	self:Bar(334971, 11.2) -- Jagged Claws
@@ -254,12 +252,30 @@ function mod:DevourSoul(args)
 	self:PlaySound(args.spellId, "alarm")
 end
 
+do
+	local shadesofBargastMarked = 0
+	function mod:shadesofBargastMarking(event, unit, guid)
+		if self:MobId(guid) == 171557 and not mobCollector[guid] then
+			shadesofBargastMarked = shadesofBargastMarked + 1
+			SetRaidTarget(unit, shadesofBargastMarked+3)
+			mobCollector[guid] = true
+			if shadesofBargastMarked == 2 then
+				self:UnregisterTargetEvents()
+			end
+		end
+	end
 
-function mod:ShadesOfBargast(args)
-	self:Message(args.spellId, "green", CL.incoming:format(CL.count:format(args.spellName, shadesOfBargastCount)))
-	self:PlaySound(args.spellId, "long")
-	shadesOfBargastCount = shadesOfBargastCount + 1
-	self:Bar(args.spellId, 60, CL.count:format(args.spellName, shadesOfBargastCount))
+	function mod:ShadesOfBargast(args)
+		self:Message(args.spellId, "green", CL.incoming:format(CL.count:format(args.spellName, shadesOfBargastCount)))
+		self:PlaySound(args.spellId, "long")
+		shadesOfBargastCount = shadesOfBargastCount + 1
+		self:Bar(args.spellId, 60, CL.count:format(args.spellName, shadesOfBargastCount))
+		if self:GetOption(shadesofBargastMarker) then
+			shadesofBargastMarked = 0
+			self:RegisterTargetEvents("shadesofBargastMarking")
+			self:ScheduleTimer("UnregisterTargetEvents", 10)
+		end
+	end
 end
 
 -- do
