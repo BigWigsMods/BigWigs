@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -18,6 +17,15 @@ local volatileCount = 1
 local consumeCount = 1
 local expungeCount = 1
 local desolateCount = 1
+
+--------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.laser = "Laser" -- Short for Volatile Ejection
+end
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -43,6 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GluttonousMiasmaApplied", 329298)
 	self:Log("SPELL_AURA_REMOVED", "GluttonousMiasmaRemoved", 329298)
 	self:Log("SPELL_CAST_START", "Consume", 334522)
+	self:Log("SPELL_CAST_SUCCESS", "ConsumeSuccess", 334522)
 	-- self:Log("SPELL_AURA_APPLIED", "ExpungeApplied", 329725)
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:RegisterMessage("BigWigs_BossComm") -- Syncing for Volatile Ejection targets
@@ -106,9 +115,13 @@ end
 function mod:Consume(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, consumeCount))
 	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 10, CL.count:format(args.spellName, consumeCount)) -- 2s Cast, 8s Channel
+	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, consumeCount)) -- 4s Cast
 	consumeCount = consumeCount + 1
 	self:Bar(args.spellId, 119, CL.count:format(args.spellName, consumeCount))
+end
+
+function mod:ConsumeSuccess(args)
+	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, consumeCount-1)) -- 6s Channel
 end
 
 -- XXX Redo when they add events for the debuff
@@ -176,7 +189,7 @@ do
 		if msg:find("334064", nil, true) then -- Volatile Ejection
 			self:PlaySound(334266, "warning")
 			self:Flash(334266)
-			self:Say(334266)
+			self:Say(334266, L.laser)
 			self:Sync("VolatileEjectionTarget")
 		end
 	end
