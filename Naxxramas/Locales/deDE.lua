@@ -225,8 +225,8 @@ if L then
 
 	L.deepbreath_trigger = "%s atmet tief ein..."
 
-	-- L.air_phase = "Air phase"
-	-- L.ground_phase = "Ground phase"
+	L.air_phase = "Luftphase"
+	L.ground_phase = "Bodenphase"
 
 	L.deepbreath = "Eisbombe"
 	L.deepbreath_warning = "Eisbombe kommt!"
@@ -271,27 +271,27 @@ if L then
 	L.throw_desc = "Warnt, wenn die Tanks die Plattform wechseln."
 	L.throw_warning = "Magnetische Anziehung in ~5 sek!"
 
-	-- L.polarity_extras = "Additional alerts for Polarity Shift positioning"
+	L.polarity_extras = "Zusätzliche Warnungen für Polaritätsveränderung-Positionierung"
 
-	-- L.custom_off_select_charge_position = "First position"
-	-- L.custom_off_select_charge_position_desc = "Where to move to after the first Polarity Shift."
-	-- L.custom_off_select_charge_position_value1 = "|cffff2020Negative (-)|r are LEFT, |cff2020ffPositive (+)|r are RIGHT"
-	-- L.custom_off_select_charge_position_value2 = "|cff2020ffPositive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT"
+	L.custom_off_select_charge_position = "Erste Position"
+	L.custom_off_select_charge_position_desc = "Einzunehmende Position nach erster Polaritätsveränderung."
+	L.custom_off_select_charge_position_value1 = "|cffff2020Negative (-)|r sind LINKS, |cff2020ffPositive (+)|r sind RECHTS"
+	L.custom_off_select_charge_position_value2 = "|cff2020ffPositive (+)|r sind LINKS, |cffff2020Negative (-)|r sind RECHTS"
 
-	-- L.custom_off_select_charge_movement = "Movement"
-	-- L.custom_off_select_charge_movement_desc = "The movement strategy your group uses."
-	-- L.custom_off_select_charge_movement_value1 = "Run |cff20ff20THROUGH|r the boss"
-	-- L.custom_off_select_charge_movement_value2 = "Run |cff20ff20CLOCKWISE|r around the boss"
-	-- L.custom_off_select_charge_movement_value3 = "Run |cff20ff20COUNTER-CLOCKWISE|r around the boss"
-	-- L.custom_off_select_charge_movement_value4 = "Four camps 1: Polarity changed moves |cff20ff20RIGHT|r, same polarity moves |cff20ff20LEFT|r"
-	-- L.custom_off_select_charge_movement_value5 = "Four camps 2: Polarity changed moves |cff20ff20LEFT|r, same polarity moves |cff20ff20RIGHT|r"
+	L.custom_off_select_charge_movement = "Bewegung"
+	L.custom_off_select_charge_movement_desc = "Die Bewegungsstrategie, welche die Gruppe nutzt."
+	L.custom_off_select_charge_movement_value1 = "Laufe |cff20ff20DURCH|r den Boss"
+	L.custom_off_select_charge_movement_value2 = "Laufe |cff20ff20IM UHRZEIGERSINN|r um den Boss"
+	L.custom_off_select_charge_movement_value3 = "Laufe |cff20ff20GEGEN UHRZEIGERSINN|r um den Boss"
+	L.custom_off_select_charge_movement_value4 = "Vier Camps 1: Geänderte Polarität läuft |cff20ff20RECHTS|r, gleiche Polaritäte läuft |cff20ff20LINKS|r"
+	L.custom_off_select_charge_movement_value5 = "Vier Camps 2: Geänderte Polarität läuft |cff20ff20LINKS|r, gleiche Polaritäte läuft |cff20ff20RECHTS|r"
 
-	-- L.custom_off_charge_graphic = "Graphical arrow"
-	-- L.custom_off_charge_graphic_desc = "Show an arrow graphic."
-	-- L.custom_off_charge_text = "Text arrows"
-	-- L.custom_off_charge_text_desc = "Show an additional message."
-	-- L.custom_off_charge_voice = "Voice alert"
-	-- L.custom_off_charge_voice_desc = "Play a voice alert."
+	L.custom_off_charge_graphic = "Grafischer Pfeil"
+	L.custom_off_charge_graphic_desc = "Zeigt eine Pfeilgrafik an."
+	L.custom_off_charge_text = "Textpfeile"
+	L.custom_off_charge_text_desc = "Zeigt eine zusätzliche Nachricht."
+	L.custom_off_charge_voice = "Sprachwarnung"
+	L.custom_off_charge_voice_desc = "Spielt eine Sprachwarnung ab."
 
 	-- Translate these to get locale sound files!
 	L.left = "<--- Nach Links <--- Nach Links <---"
