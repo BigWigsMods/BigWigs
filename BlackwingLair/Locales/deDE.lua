@@ -90,6 +90,6 @@ if L then
 	L.otherwarn = "Anderes"
 	L.otherwarn_desc = "Warnung, wenn Nefarian landet und seine Diener ruft."
 
-	L.add = "Tote Drakoniden
+	L.add = "Tote Drakoniden"
 	L.add_desc = "Zeigt die Anzahl der getöteten Adds in Phase 1 vor Nefarians Landung an."
 end
