@@ -1,3 +1,6 @@
+--------------------------------------------------------------------------------
+-- TODO:
+-- -- Check sound with Stomp + Shift
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -32,6 +35,11 @@ local timers = {
 
 local L = mod:GetLocale()
 if L then
+	L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+
+	L.custom_off_boulder_impact = "Boulder Impact"
+	L.custom_off_boulder_impact_desc = "Show a bar when the Fractured Boulder lands."
+	L.custom_off_boulder_impact_icon = 341102
 end
 
 --------------------------------------------------------------------------------
@@ -42,7 +50,7 @@ function mod:GetOptions()
 	return {
 		{331209, "SAY" ,"SAY_COUNTDOWN"}, -- Hateful Gaze
 		331314, -- Destructive Impact
-		341102, -- Fractured Boulder
+		"custom_off_boulder_impact",
 		335293, -- Chain Link
 		332318, -- Destructive Stomp
 		335361, -- Stonequake
@@ -86,11 +94,16 @@ function mod:OnEngage()
 	chainLinksApplied = 0
 
 	self:Bar(335293, 5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
-	self:Bar(332318, timers[332318][destructiveStompCount], CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
-	self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
+	if not self:Tank() then
+		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
+	else
+		self:CDBar(331314, 58.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+	end
 	if self:Mythic() then
-		self:CDBar(340817, timers[340817][seismicShiftCount], CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Seismic Shift
+		self:CDBar(340817, timers[340817][seismicShiftCount], CL.count:format(L.stomp_shift, seismicShiftCount)) -- Seismic Shift
+	else
+		self:Bar(332318, timers[332318][destructiveStompCount], CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	end
 end
 
@@ -106,7 +119,11 @@ function mod:HatefulGazeApplied(args)
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 6)
 	end
-	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(args.spellName, hatefullGazeCount))
+	if not self:Tank() then
+		self:CDBar(331314, 6, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+	else
+		self:TargetBar(args.spellId, 6, args.destName, CL.count:format(args.spellName, hatefullGazeCount))
+	end
 	hatefullGazeCount = hatefullGazeCount + 1
 end
 
@@ -121,7 +138,7 @@ function mod:DestructiveImpactApplied(args)
 	self:Message(args.spellId, "red", CL.on:format(args.spellName, args.destName))
 	self:PlaySound(args.spellId, "info")
 	self:Bar(args.spellId, 12)
-	self:CastBar(341102, 3.5) -- Fractured Boulder Landing
+	self:CastBar("custom_off_boulder_impact", 3.5, 341102, 341102) -- Fractured Boulder
 end
 
 function mod:DestructiveImpactRemoved(args)
@@ -155,7 +172,9 @@ function mod:DestructiveStomp(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, destructiveStompCount))
 	destructiveStompCount = destructiveStompCount + 1
-	self:Bar(args.spellId, timers[args.spellId][destructiveStompCount], CL.count:format(args.spellName, destructiveStompCount))
+	if not self:Mythic() then -- Merged with Seismic Shift in Mythic
+		self:Bar(args.spellId, timers[args.spellId][destructiveStompCount], CL.count:format(args.spellName, destructiveStompCount))
+	end
 end
 
 function mod:ColossalRoar(args)
@@ -214,9 +233,13 @@ do
 			prev = t
 			self:StopBar(CL.count:format(args.spellName, seismicShiftCount))
 			self:Message(args.spellId, "yellow", CL.count:format(args.spellName, seismicShiftCount))
-			seismicShiftCount = seismicShiftCount + 1
-			self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(args.spellName, seismicShiftCount))
 			self:PlaySound(args.spellId, "long")
+			seismicShiftCount = seismicShiftCount + 1
+			if seismicShiftCount == 3 or seismicShiftCount == 6 then -- No stomp with these
+				self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(args.spellName, seismicShiftCount))
+			else
+				self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(L.stomp_shift, seismicShiftCount))
+			end
 		end
 	end
 end
