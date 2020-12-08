@@ -5,13 +5,13 @@ BigWigs:AddSounds("Shriekwing", {
 	[328921] = "long",
 	[329362] = "info",
 	[330711] = "long",
-	[340047] = "warning",
 	[340324] = "alarm",
 	[341489] = "info",
 	[341684] = {"info","warning"},
 	[342074] = "warning",
 	[342863] = "alert",
 	[343005] = "alert",
+	[345397] = "alarm",
 	["stages"] = "info",
 })
 
@@ -92,23 +92,23 @@ BigWigs:AddSounds("Lady Inerva Darkvein", {
 })
 
 BigWigs:AddSounds("The Council of Blood", {
-	[327465] = "alert",
 	[327497] = "alarm",
-	[327619] = "long",
-	[327773] = {"alert","info"},
-	[328334] = "warning",
 	[330848] = "info",
 	[330959] = "long",
-	[330964] = "long",
 	[330965] = "info",
-	[330967] = "warning",
-	[330978] = "info",
+	[330978] = "long",
 	[331634] = {"info","warning"},
-	[331706] = "long",
-	[334948] = "long",
-	[335776] = "long",
 	[337110] = "alarm",
-	[342859] = "warning",
+	[346303] = "warning",
+	[346651] = "alarm",
+	[346657] = "warning",
+	[346681] = {"alert","info"},
+	[346690] = "alarm",
+	[346698] = "warning",
+	[346790] = "alarm",
+	[346800] = "long",
+	[346945] = "alarm",
+	[347350] = "warning",
 })
 
 BigWigs:AddSounds("Sludgefist", {
@@ -120,6 +120,7 @@ BigWigs:AddSounds("Sludgefist", {
 	[335361] = "alarm",
 	[335470] = "warning",
 	[340817] = "long",
+	[341250] = "alert",
 })
 
 BigWigs:AddSounds("Stone Legion Generals", {

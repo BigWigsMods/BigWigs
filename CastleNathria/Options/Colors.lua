@@ -5,13 +5,13 @@ BigWigs:AddColors("Shriekwing", {
 	[328921] = "green",
 	[329362] = "cyan",
 	[330711] = "red",
-	[340047] = "orange",
 	[340324] = "blue",
 	[341489] = {"cyan","green"},
 	[341684] = {"blue","green","red"},
 	[342074] = {"blue","yellow"},
-	[342863] = "yellow",
+	[342863] = "cyan",
 	[343005] = "yellow",
+	[345397] = "orange",
 	["stages"] = "green",
 })
 
@@ -94,23 +94,23 @@ BigWigs:AddColors("Lady Inerva Darkvein", {
 })
 
 BigWigs:AddColors("The Council of Blood", {
-	[327465] = "yellow",
 	[327497] = "orange",
-	[327619] = "yellow",
-	[327773] = {"blue","purple"},
-	[328334] = {"blue","orange"},
-	[330848] = "red",
+	[330848] = {"blue","orange"},
 	[330959] = "green",
-	[330964] = "yellow",
 	[330965] = "cyan",
-	[330967] = "blue",
-	[330978] = "cyan",
+	[330978] = "yellow",
 	[331634] = {"blue","green","orange"},
-	[331706] = {"blue","red"},
-	[334948] = "red",
-	[335776] = "yellow",
 	[337110] = "yellow",
-	[342859] = "blue",
+	[346303] = "orange",
+	[346651] = {"blue","cyan"},
+	[346657] = "red",
+	[346681] = {"blue","cyan","orange"},
+	[346690] = "purple",
+	[346698] = "red",
+	[346790] = "purple",
+	[346800] = "yellow",
+	[346945] = "blue",
+	[347350] = {"blue","orange"},
 	["stages"] = "green",
 })
 
@@ -123,6 +123,7 @@ BigWigs:AddColors("Sludgefist", {
 	[335361] = "blue",
 	[335470] = {"blue","yellow"},
 	[340817] = "yellow",
+	[341250] = "yellow",
 })
 
 BigWigs:AddColors("Stone Legion Generals", {
