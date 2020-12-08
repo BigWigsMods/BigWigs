@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -21,6 +20,7 @@ local concentrateAnimaCount = 1
 local mobCollector = {}
 local conjuredManifestationList = {}
 local conjuredManifestationCount = 1
+local enableContainerCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,6 +32,11 @@ if L then
 
 	L.level = "%s (Level |cffffff00%d|r)"
 	L.full = "%s (|cffff0000FULL|r)"
+
+	L.container_active = "Enable Container: %s"
+
+	L.anima_adds = "Concentrate Anima Adds"
+	L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
 
 	L.custom_off_experimental = "Enable experimental features"
 	L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
@@ -72,6 +77,7 @@ function mod:GetOptions()
 		sharedSufferingMarker,
 		-- Container of Concentrated Anima
 		{332664, "SAY", "SAY_COUNTDOWN", "PROXIMITY"}, -- Concentrate Anima
+		"anima_adds",
 		concentrateAnimaMarker,
 		conjuredManifestationMarker,
 		{331573, "ME_ONLY"}, -- Unconscionable Guilt
@@ -131,6 +137,7 @@ function mod:OnEngage()
 	cognitionOnMe = nil
 	bottleCount = 1
 	concentrateAnimaCount = 1
+	enableContainerCount = 1
 	wipe(anima)
 
 	self:Bar(341621, 12) -- Expose Desires
@@ -285,8 +292,20 @@ do
 				self:CDBar(325769, bottleTimers[bottleCount] or 20, L.bottles)
 			end
 		elseif spellId == 338750 then -- Enable Container
-			self:Message(331870, "cyan")
+			local container = nil
+			if enableContainerCount == 1 then
+				container = self:SpellName(341621) -- Exposed Desires
+			elseif enableContainerCount == 2 then
+				container = L.bottles
+			elseif enableContainerCount == 3 then
+				container = L.sins
+			elseif enableContainerCount == 4 then
+				container = CL.adds
+			end
+			local msg = CL.container_active:format(container)
+			self:Message(331870, "cyan", msg)
 			self:PlaySound(331870, "long")
+			enableContainerCount = enableContainerCount + 1
 			self:Bar(331870, 100)
 		end
 	end
@@ -400,6 +419,7 @@ do
 			self:Bar(332664, 36, CL.count:format(CL.adds, concentrateAnimaCount))
 			conjuredManifestationList = {}
 			conjuredManifestationCount = 1
+			self:Bar("anima_adds", 10, CL.spawning:format(CL.adds), 332664) -- Adds Spawning
 		end
 		if self:Me(args.destGUID) then
 			isOnMe = true
