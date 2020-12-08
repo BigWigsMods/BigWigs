@@ -24,7 +24,7 @@ local desolateCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.laser = "Laser" -- Short for Volatile Ejection
+	
 end
 
 --------------------------------------------------------------------------------
@@ -189,7 +189,7 @@ do
 		if msg:find("334064", nil, true) then -- Volatile Ejection
 			self:PlaySound(334266, "warning")
 			self:Flash(334266)
-			self:Say(334266, L.laser)
+			self:Say(334266, CL.laser)
 			self:Sync("VolatileEjectionTarget")
 		end
 	end
