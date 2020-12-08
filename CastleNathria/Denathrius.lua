@@ -1,3 +1,6 @@
+--------------------------------------------------------------------------------
+-- Remornia: Impale target order in say/message
+--
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -41,7 +44,7 @@ function mod:GetOptions()
 		"stages",
 		-- Stage One: Sinners Be Cleansed
 		328936, -- Inevitable
-		326699, -- Burden of Sin
+		{326699, "INFOBOX"}, -- Burden of Sin
 		326707, -- Cleansing Pain
 		326851, -- Blood Price
 		{327796, "SAY", "SAY_COUNTDOWN"}, -- Night Hunter
@@ -135,6 +138,9 @@ function mod:OnEngage()
 	self:Bar(327122, 53) -- Ravage
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
+
+	self:OpenInfo(326699, self:SpellName(326699)) -- Burden of Sin
+	self:SetInfoBarsByTable(326699, burdenTracker, true) -- Burden of Sin
 end
 
 --------------------------------------------------------------------------------
@@ -176,6 +182,7 @@ do
 				scheduled = self:ScheduleTimer("BurdenofSunStackMessage", 0.1)
 			end
 		end
+		self:SetInfoBarsByTable(args.spellId, burdenTracker, true)
 	end
 
 	function mod:BurdenofSinRemoved(args)
@@ -189,6 +196,7 @@ do
 			self:Message(args.spellId, intermission and "green" or "red", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, intermission and "info" or "warning")
 		end
+		self:SetInfoBarsByTable(args.spellId, burdenTracker, true)
 	end
 end
 
