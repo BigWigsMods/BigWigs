@@ -23,8 +23,8 @@ L = BigWigs:NewBossLocale("Viscidus", "deDE")
 if L then
 	L.bossName = "Viscidus"
 
-	-- L.freeze = "Freezing States"
-	-- L.freeze_desc = "Warn for the different frozen states."
+	L.freeze = "Frost-Stati"
+	L.freeze_desc = "Warnungen für die verschiedenen Frost-Stati."
 
 	L.freeze_trigger1 = "wird langsamer!"
 	L.freeze_trigger2 = "friert ein!"
@@ -32,13 +32,13 @@ if L then
 	L.freeze_trigger4 = "geht die Puste aus!" -- CHECK
 	L.freeze_trigger5 = "ist kurz davor, zu zerspringen!"
 
-	-- L.freeze_warn1 = "First freeze phase!"
-	-- L.freeze_warn2 = "Second freeze phase!"
-	-- L.freeze_warn3 = "Viscidus is frozen!"
-	-- L.freeze_warn4 = "Cracking up - keep going!"
-	-- L.freeze_warn5 = "Cracking up - almost there!"
-	-- L.freeze_warn_melee = "%d melee attacks - %d more to go"
-	-- L.freeze_warn_frost = "%d frost attacks - %d more to go"
+	L.freeze_warn1 = "Erste Frostphase!"
+	L.freeze_warn2 = "Zweite Frostphase!"
+	L.freeze_warn3 = "Viscidus ist eingefroren!"
+	L.freeze_warn4 = "Bricht zusammen - macht weiter!"
+	L.freeze_warn5 = "Bricht zusammen - fast geschafft!"
+	L.freeze_warn_melee = "%d Nahkampfattacken - %d weitere nötig"
+	L.freeze_warn_frost = "%d Frostattacken - %d weitere nötig"
 end
 
 local L = BigWigs:NewBossLocale("Princess Huhuran", "deDE")
@@ -55,53 +55,53 @@ L = BigWigs:NewBossLocale("Ouro", "deDE")
 if L then
 	L.bossName = "Ouro"
 
-	-- L.engage_message = "Ouro engaged! Possible Submerge in 90sec!"
+	L.engage_message = "Ouro attackiert! Mögliches Untertauchen in 90 Sek!"
 
 	L.emerge = "Auftauchen"
-	-- L.emergewarn = "15 sec to possible submerge!"
-	-- L.emergewarn2 = "15 sec to Ouro sumberge!"
-	-- L.emergebartext = "Ouro submerge"
+	L.emergewarn = "15 Sek bis möglichem Untertauchen!"
+	L.emergewarn2 = "15 Sek bis Untertauchen von Ouro!"
+	L.emergebartext = "Ouro taucht unter"
 
 	L.submerge = "Untertauchen"
-	-- L.possible_submerge_bar = "Possible submerge"
+	L.possible_submerge_bar = "Mögliches Untertauchen"
 
-	-- L.scarab = "Scarab Despawn"
-	-- L.scarab_desc = "Warn for Scarab Despawn."
-	-- L.scarabdespawn = "Scarabs despawn in 10 Seconds"
-	-- L.scarabbar = "Scarabs despawn"
+	L.scarab = "Verschwinden der Skarabäen"
+	L.scarab_desc = "Vor Verschwinden der Skarabäen warnen."
+	L.scarabdespawn = "Skarabäen verschwinden in 10 Sekunden"
+	L.scarabbar = "Skarabäen verschwinden"
 end
 
 L = BigWigs:NewBossLocale("C'Thun", "deDE")
 if L then
 	L.bossName = "C'Thun"
 
-	-- L.tentacle = "Tentacles"
-	-- L.tentacle_desc = "Warn for Tentacles"
+	L.tentacle = "Tentakel"
+	L.tentacle_desc = "Warnungen für Tentakel"
 
-	-- L.giant = "Giant Eye Alert"
-	-- L.giant_desc = "Warn for Giant Eyes"
+	L.giant = "Riesige Augen"
+	L.giant_desc = "Warnungen für Riesige Augen"
 
-	-- L.weakened = "Weakened Alert"
-	-- L.weakened_desc = "Warn for Weakened State"
+	L.weakened = "Geschwächt"
+	L.weakened_desc = "Warnungen für geschwächten Status"
 
 	L.weakenedtrigger = "%s ist geschwächt!"
 
-	-- L.weakened_msg = "C'Thun is weakened for 45 sec"
-	-- L.invulnerable2 = "Party ends in 5 seconds"
-	-- L.invulnerable1 = "Party over - C'Thun invulnerable"
+	L.weakened_msg = "C'Thun ist für 45 Sek geschwächt"
+	L.invulnerable2 = "Party endet in 5 Sekunden"
+	L.invulnerable1 = "Party ist vorbei - C'Thun unverwundbar"
 
-	-- L.giant3 = "Giant Eye - 10 sec"
-	-- L.giant2 = "Giant Eye - 5 sec"
-	-- L.giant1 = "Giant Eye - Poke it!"
+	L.giant3 = "Riesiges Auge - 10 Sekc"
+	L.giant2 = "Riesiges Auge - 5 Sek"
+	L.giant1 = "Riesiges Auge - Tötet es!"
 
-	-- L.startwarn = "C'Thun engaged! - 45 sec until Dark Glare and Eyes"
+	L.startwarn = "C'Thun attackiert! - 45 Sek bis Dunkles Starren und Augen"
 
-	-- L.tentacleParty = "Tentacle party!"
-	-- L.barWeakened = "C'Thun is weakened!"
-	-- L.barGiant = "Giant Eye!"
+	L.tentacleParty = "Tentakelparty!"
+	L.barWeakened = "C'Thun ist geschwächt!"
+	L.barGiant = "Riesiges Auge!"
 
-	-- L.groupwarning = "Dark Glare on group %s (%s)"
-	-- L.phase2starting = "The Eye is dead! Body incoming!"
+	L.groupwarning = "Dunkles Starren auf Gruppe %s (%s)"
+	L.phase2starting = "Das Auge ist tot! Der Körper ist dran!"
 end
 
 L = BigWigs:NewBossLocale("Ahn'Qiraj Trash", "deDE")
