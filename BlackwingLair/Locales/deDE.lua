@@ -19,8 +19,8 @@ L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "deDE")
 if L then
 	L.bossName = "Vaelastrasz der Verdorbene"
 
-	-- L.warmup_trigger = "Too late, friends!"
-	-- L.warmup_message = "RP started, engaging in ~43s"
+	L.warmup_trigger = "Zu spät, Freunde!"
+	L.warmup_message = "RP gestartet, aktiv in ~43s"
 end
 
 L = BigWigs:NewBossLocale("Broodlord Lashlayer", "deDE")
@@ -50,8 +50,8 @@ if L then
 	L.breath = "Atem"
 	L.breath_desc = "Warnung, wenn Chromaggus seinen Atem wirkt."
 
-	-- L.debuffs_message = "3/5 debuffs, carefull!"
-	-- L.debuffs_warning = "4/5 debuffs, %s on 5th!"
+	L.debuffs_message = "3/5 Debuffs, vorsicht!"
+	L.debuffs_warning = "4/5 Debuffs, %s auf 5th!"
 end
 
 L = BigWigs:NewBossLocale("NefarianBWL", "deDE")
@@ -90,7 +90,6 @@ if L then
 	L.otherwarn = "Anderes"
 	L.otherwarn_desc = "Warnung, wenn Nefarian landet und seine Diener ruft."
 
-	-- L.add = "Drakonid deaths"
-	-- L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
+	L.add = "Tote Drakoniden
+	L.add_desc = "Zeigt die Anzahl der getöteten Adds in Phase 1 vor Nefarians Landung an."
 end
-
