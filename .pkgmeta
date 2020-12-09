@@ -20,13 +20,8 @@ move-folders:
     BigWigs/Core: BigWigs_Core
     BigWigs/Options: BigWigs_Options
     BigWigs/Plugins: BigWigs_Plugins
-    BigWigs/Azeroth: BigWigs_Azeroth
-    BigWigs/Uldir: BigWigs_Uldir
-    BigWigs/BattleOfDazaralor: BigWigs_BattleOfDazaralor
-    BigWigs/CrucibleOfStorms: BigWigs_CrucibleOfStorms
-    BigWigs/EternalPalace: BigWigs_EternalPalace
-    BigWigs/Nyalotha: BigWigs_Nyalotha
     BigWigs/CastleNathria: BigWigs_CastleNathria
+    BigWigs/Shadowlands: BigWigs_Shadowlands
 
 ignore:
   - .luacheckrc

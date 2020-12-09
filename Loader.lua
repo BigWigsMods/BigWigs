@@ -118,6 +118,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[-572]=true, -- Draenor
 	[-619]=true, -- Broken Isles
 	[-947]=true, -- Azeroth
+	[-1647]=true, -- Shadowlands
 }
 
 do
@@ -202,6 +203,7 @@ do
 		[2164] = bfa, -- The Eternal Palace
 		[2217] = bfa, -- Ny'alotha, the Waking City
 		--[[ BigWigs: Shadowlands ]]--
+		[-1647] = s, -- Shadowlands (Fake Menu)
 		[2296] = s, -- Castle Nathria
 
 		--[[ LittleWigs: Classic ]]--
@@ -317,6 +319,7 @@ do
 		[-542] = -572, [-543] = -572, [-534] = -572, -- Draenor
 		[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
 		[-942] = -947, -- Azeroth/BfA
+	    [-1536] = -1647, -- Shadowlands
 	}
 end
 
