@@ -302,7 +302,7 @@ do
 			elseif enableContainerCount == 4 then
 				container = CL.adds
 			end
-			local msg = CL.container_active:format(container)
+			local msg = L.container_active:format(container)
 			self:Message(331870, "cyan", msg)
 			self:PlaySound(331870, "long")
 			enableContainerCount = enableContainerCount + 1
