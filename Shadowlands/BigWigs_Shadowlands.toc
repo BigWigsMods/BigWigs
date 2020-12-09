@@ -1,4 +1,5 @@
 ## Interface: 90002
+
 ## Title: BigWigs [|cffeda55fShadowlands|r]
 ## Title-deDE: BigWigs [|cffeda55fShadowlands|r]
 ## Title-esES: BigWigs [|cffeda55fShadowlands|r]
@@ -21,9 +22,12 @@
 ## Notes-itIT: BigWigs Shadowlands Modules
 ## Notes-ptBR: BigWigs Shadowlands Modules
 ## Notes-koKR: BigWigs Shadowlands Modules
+
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs
+
 ## X-Category: Raid
 ## X-BigWigs-ExtraMenu: -1647
 ## X-BigWigs-LoadOn-WorldBoss: -1536, 167525
+
 modules.xml
