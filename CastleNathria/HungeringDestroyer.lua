@@ -24,7 +24,6 @@ local desolateCount = 1
 
 local L = mod:GetLocale()
 if L then
-	
 end
 
 --------------------------------------------------------------------------------
@@ -70,12 +69,12 @@ function mod:OnEngage()
 	expungeCount = 1
 	desolateCount = 1
 
-	self:Bar(329774, 5.5) -- Overwhelm
-	self:Bar(329298, 4.5, CL.count:format(self:SpellName(329298), miasmaCount)) -- Gluttonous Miasma
-	self:Bar(329298, 10.2, CL.count:format(self:SpellName(329298), volatileCount)) -- Volatile Ejection
-	self:Bar(329455, 22.2, CL.count:format(self:SpellName(329455), desolateCount)) -- Desolate
-	self:Bar(329725, 35, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
-	self:Bar(334522, 111, CL.count:format(self:SpellName(334522), consumeCount)) -- Consume
+	self:Bar(329774, 5) -- Overwhelm
+	self:Bar(329298, 3, CL.count:format(self:SpellName(329298), miasmaCount)) -- Gluttonous Miasma
+	self:Bar(329298, 10, CL.count:format(self:SpellName(329298), volatileCount)) -- Volatile Ejection
+	self:Bar(329455, 22, CL.count:format(self:SpellName(329455), desolateCount)) -- Desolate
+	self:Bar(329725, 32, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+	self:Bar(334522, 89, CL.count:format(self:SpellName(334522), consumeCount)) -- Consume
 
 	-- XXX Expunge tracking
 	self:RegisterEvent("UNIT_AURA")
@@ -117,7 +116,7 @@ function mod:Consume(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, consumeCount)) -- 4s Cast
 	consumeCount = consumeCount + 1
-	self:Bar(args.spellId, 119, CL.count:format(args.spellName, consumeCount))
+	self:Bar(args.spellId, 96, CL.count:format(args.spellName, consumeCount))
 end
 
 function mod:ConsumeSuccess(args)
@@ -202,7 +201,7 @@ do
 
 	function mod:VolatileEjection(args)
 		volatileCount = volatileCount + 1
-		self:Bar(334266, volatileCount == 3 and 12 or 35.5, CL.count:format(self:SpellName(334266), volatileCount))
+		self:Bar(334266, volatileCount % 3 == 1 and 24 or 36, CL.count:format(self:SpellName(334266), volatileCount))
 	end
 
 	function mod:VolatileEjectionSuccess(args)
@@ -219,13 +218,13 @@ function mod:Desolate(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, desolateCount))
 	self:PlaySound(args.spellId, "alert")
 	desolateCount = desolateCount + 1
-	self:Bar(args.spellId, 60, CL.count:format(args.spellName, desolateCount)) -- Desolate
+	self:Bar(args.spellId, desolateCount % 2 == 0 and 36 or 60, CL.count:format(args.spellName, desolateCount)) -- Desolate
 end
 
 function mod:Overwhelm(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 11.5)
+	self:Bar(args.spellId, 12)
 end
 
 function mod:GrowingHungerApplied(args)
