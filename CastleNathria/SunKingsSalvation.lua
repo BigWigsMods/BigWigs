@@ -59,7 +59,7 @@ local addWaveCount = {
 	[-22082] = 1, -- Pestering Fiend
 }
 local addScheduledTimers = {}
-local nextStageWarning = 37
+local nextStageWarning = 42
 local mobCollector = {}
 local iconsInUse = {}
 local vileOccultistMarkCount = 0
@@ -149,6 +149,7 @@ function mod:OnBossEnable()
 	-- High Torturer Darithos
 	self:Log("SPELL_CAST_START", "GreaterCastigation", 328885)
 	self:Log("SPELL_AURA_APPLIED", "GreaterCastigationApplied", 332871) -- Pre-debuff
+	self:Log("SPELL_MISSED", "GreaterCastigationRemoved", 328889) -- Actual Channeled debuff Immune
 	self:Log("SPELL_AURA_REMOVED", "GreaterCastigationRemoved", 328889) -- Actual Channeled debuff
 	self:Death("DarithosDeath", 168973) -- High Torturer Darithos
 
@@ -179,7 +180,7 @@ function mod:OnEngage()
 	addTimers = self:Mythic() and addTimersMythic or addTimersHeroic
 	addScheduledTimers = {}
 	startTime = GetTime()
-	nextStageWarning = 37
+	nextStageWarning = 42
 	mobCollector = {}
 	iconsInUse = {}
 	stage = 1
@@ -237,9 +238,9 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp > nextStageWarning then -- Stage changes at 40% and 90%
+	if hp > nextStageWarning then -- Stage changes at 45% and 90%
 		self:Message("stages", "green", CL.soon:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
-		nextStageWarning = nextStageWarning + 50
+		nextStageWarning = nextStageWarning + 45
 		if nextStageWarning > 90 then
 			self:UnregisterUnitEvent(event, unit)
 		end
@@ -298,16 +299,16 @@ function mod:ReflectionofGuiltApplied(args)
 		blazingSurgeCount = 1
 		emberBlastCount = 1
 
-		self:Bar(326455, 15) -- Fiery Strike
-		self:Bar(325877, 19.1, CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
-		self:Bar(329518, 29.1, CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
+		self:Bar(326455, 13.5) -- Fiery Strike
+		self:Bar(325877, 19.5, CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
+		self:Bar(329518, 29.5, CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 	end
 end
 
 function mod:FieryStrike(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 7)
+	self:CDBar(args.spellId, 8) --6.8~10.6
 end
 
 function mod:BurningRemnantsApplied(args)
@@ -345,7 +346,7 @@ do
 		castEnd = GetTime() + 5
 		self:CastBar(args.spellId, 5, CL.count:format(args.spellName, emberBlastCount))
 		emberBlastCount = emberBlastCount + 1
-		self:Bar(args.spellId, 20, CL.count:format(args.spellName, emberBlastCount))
+		self:Bar(args.spellId, 20.5, CL.count:format(args.spellName, emberBlastCount))
 	end
 end
 
@@ -353,7 +354,7 @@ function mod:BlazingSurge(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, blazingSurgeCount))
 	self:PlaySound(args.spellId, "alert")
 	blazingSurgeCount = blazingSurgeCount + 1
-	self:Bar(args.spellId, 20, CL.count:format(args.spellName, blazingSurgeCount))
+	self:Bar(args.spellId, 19.5, CL.count:format(args.spellName, blazingSurgeCount))
 end
 
 function mod:EyesonTarget(args)
@@ -408,7 +409,7 @@ function mod:ConcussiveSmash(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, count))
 	self:PlaySound(args.spellId, "alarm")
 	concussiveSmashCountTable[args.sourceGUID] = count + 1
-	self:Bar(args.spellId, 21, CL.count:format(args.spellName, count))
+	self:Bar(args.spellId, 19.5, CL.count:format(args.spellName, count))
 end
 
 function mod:RockboundVanquisherDeath(args)
@@ -467,7 +468,7 @@ end
 -- High Torturer Darithos
 function mod:GreaterCastigation(args)
 	self:Message(328889, "yellow") -- Greater Castigation
-	self:Bar(328889, 8.5) -- Greater Castigation
+	self:Bar(328889, 15.5) -- Greater Castigation
 end
 
 do
