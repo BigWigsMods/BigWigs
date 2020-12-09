@@ -97,10 +97,10 @@ function mod:OnEngage()
 
 	self:CDBar(328857, 8) -- Exsanguinating Bite
 	self:CDBar(330711, 13, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
-	--self:CDBar(345397, 20, CL.count:format(self:SpellName(345397), waveofBloodCount)) -- Wave of Blood
+	self:CDBar(345397, 13, CL.count:format(self:SpellName(345397), waveofBloodCount)) -- Wave of Blood
 	self:CDBar(342074, 19.5, CL.count:format(self:SpellName(342074), echolocationCount)) -- Echolocation
 	self:CDBar(343005, 20.5,  CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
-	self:CDBar(342863, 29.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
+	self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
 	self:CDBar(328921, 101) -- Blood Shroud
 end
 
@@ -113,8 +113,8 @@ function mod:EarsplittingShriek(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, shriekCount))
 	shriekCount = shriekCount + 1
-	if shriekCount < 4 then -- Only 3 each stage 1
-		self:Bar(args.spellId, 34.2, CL.count:format(args.spellName, shriekCount))
+	if shriekCount < 3 then -- Only 2 each stage 1
+		self:Bar(args.spellId, 47, CL.count:format(args.spellName, shriekCount))
 	end
 end
 
@@ -133,7 +133,7 @@ do
 				self:Bar(342074, 42.5, CL.count:format(self:SpellName(342074), echolocationCount))
 			end
 		end
-		self:TargetsMessage(342074, "yellow", playerList, nil, CL.count:format(self:SpellName(342074), echolocationCount-1))
+		self:TargetsMessage(342074, "yellow", playerList, nil, CL.count:format(self:SpellName(342074), echolocationCount-1), nil, 2)
 	end
 end
 
@@ -148,7 +148,7 @@ function mod:EchoingScreech(args)
 	self:PlaySound(args.spellId, "alert")
 	echoingScreechCount = echoingScreechCount + 1
 	if echoingScreechCount < 3 then -- Only 2 each stage 1
-		self:CDBar(args.spellId, 42.5, CL.count:format(args.spellName, echoingScreechCount))
+		self:CDBar(args.spellId, 48.5, CL.count:format(args.spellName, echoingScreechCount))
 	end
 end
 
@@ -156,7 +156,9 @@ function mod:WaveofBlood(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, waveofBloodCount))
 	self:PlaySound(args.spellId, "alarm")
 	waveofBloodCount = waveofBloodCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(args.spellName, waveofBloodCount))
+	if waveofBloodCount < 4 then
+		self:Bar(args.spellId, 25, CL.count:format(args.spellName, waveofBloodCount))
+	end
 end
 
 function mod:BlindSwipe(args)
@@ -225,7 +227,7 @@ function mod:BloodShroudRemoved(args)
 	self:CDBar(328857, 8.5) -- Exsanguinating Bite
 	self:CDBar(330711, 12.2, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:CDBar(342074, 18.4, CL.count:format(self:SpellName(342074), echolocationCount)) -- Echolocation
-	--self:CDBar(345397, 20, CL.count:format(self:SpellName(345397), waveofBloodCount)) -- Wave of Blood
+	self:CDBar(345397, 12.2, CL.count:format(self:SpellName(345397), waveofBloodCount)) -- Wave of Blood
 	self:CDBar(343005, 19.5, CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
 	self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
 	self:CDBar(328921, 101) -- Blood Shroud
