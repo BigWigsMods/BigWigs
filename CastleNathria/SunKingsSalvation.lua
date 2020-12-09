@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- TODO
 -- -- Mark the Essence Font with the same marker the Vile Occultist was marked with (SPELL_SUMMON events for GUIDs)
@@ -18,10 +17,27 @@ mod.respawnTime = 30
 --
 
 local startTime = 0
-local addTimers = { -- Heroic Testing
+local addTimersHeroic = { -- Heroic
 	[1] = {
-		[-21954] = {73, 119}, -- Rockbound Vanquishers
-		[-21993] = {65}, -- Bleakwing Assassin
+		[-21954] = {35, 100}, -- Rockbound Vanquishers
+		[-21993] = {54, 144, 281}, -- Bleakwing Assassin
+		[-21952] = {54, 144}, -- Vile Occultists
+		[-21953] = {115}, -- Soul Infusers
+		[-22082] = {54.5, 95.5}, -- Pestering Fiend
+	},
+	[2] = { -- From Reflection of Guilt Removed
+		[-21954] = {69, 134, 199}, -- Rockbound Vanquishers
+		[-21993] = {24, 84, 114, 154, 204, 234, 294, 334}, -- Bleakwing Assassin
+		[-21952] = {114, 184, 324}, -- Vile Occultists
+		[-21953] = {54, 114, 264, 334}, -- Soul Infusers
+		[-22082] = {24, 54, 84, 154, 184, 234, 264, 294}, -- Pestering Fiend
+	},
+}
+
+local addTimersMythic = { -- Mythic
+	[1] = {
+		[-21954] = {33, 92, 152, 212}, -- Rockbound Vanquishers
+		[-21993] = {92, 122, 152, 247}, -- Bleakwing Assassin
 		[-21952] = {99}, -- Vile Occultists
 		[-21953] = {}, -- Soul Infusers
 		[-22082] = {54.5, 95.5}, -- Pestering Fiend
@@ -34,6 +50,7 @@ local addTimers = { -- Heroic Testing
 		[-22082] = {49, 108, 128.5}, -- Pestering Fiend
 	},
 }
+local addTimers = {}
 local addWaveCount = {
 	[-21954] = 1, -- Rockbound Vanquishers
 	[-21993] = 1, -- Bleakwing Assassin
@@ -144,6 +161,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 328579)
 end
 
+function mod:VerifyEnable(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp < 50 then
+		return true
+	end
+end
+
 function mod:OnEngage()
 	addWaveCount = {
 		[-21954] = 1, -- Rockbound Vanquishers
@@ -152,6 +176,7 @@ function mod:OnEngage()
 		[-21953] = 1, -- Soul Infusers
 		[-22082] = 1, -- Pestering Fiend
 	}
+	addTimers = self:Mythic() and addTimersMythic or addTimersHeroic
 	addScheduledTimers = {}
 	startTime = GetTime()
 	nextStageWarning = 37
@@ -169,9 +194,9 @@ function mod:OnEngage()
 		self:StartAddTimer(stage, key, count)
 	end
 
-	-- if self:Mythic() then
-	-- 	self:Bar(337859, 79.5, CL.count:format(self:SpellName(337859), cloakofFlamesCount)) -- Cloak of Flames
-	-- end
+	if self:Mythic() then
+		self:Bar(337859, 62, CL.count:format(self:SpellName(337859), cloakofFlamesCount)) -- Cloak of Flames
+	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 
@@ -487,7 +512,7 @@ function mod:CloakofFlamesApplied(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakofFlamesCount))
 	cloakofFlamesCount = cloakofFlamesCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, cloakofFlamesCount))
+	self:Bar(args.spellId, 60, CL.count:format(args.spellName, cloakofFlamesCount))
 end
 
 function mod:CloakofFlamesRemoved(args)
