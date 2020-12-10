@@ -188,6 +188,7 @@ function mod:OnEngage()
 	blazingSurgeCount = 1
 	emberBlastCount = 1
 	cloakofFlamesCount = 1
+	shadeUp = nil
 
 	self:Bar(328889, 5.5) -- Greater Castigation
 
