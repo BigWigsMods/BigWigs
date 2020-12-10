@@ -94,7 +94,7 @@ function mod:OnEngage()
 	self:CloseProximity("proximity")
 
 	self:Message("stages", "yellow", L.start_warning, false) -- CL.custom_start:format(L.bossName, _G.ACTIVE_PETS, 5)
-	self:Bar("stages", 310, CL.phase:format(2), "Spell_Fire_FelImmolation")
+	self:Bar("stages", 310, CL.phase:format(2), "spell_shadow_chilltouch")
 end
 
 --------------------------------------------------------------------------------
