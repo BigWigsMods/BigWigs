@@ -162,10 +162,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 328579)
 end
 
-function mod:VerifyEnable(unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp < 50 then
-		return true
+function mod:VerifyEnable(unit, mobId)
+	if mobId == 165759 then -- Kael'thas
+		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		if hp < 50 then
+			return true
+		end
 	end
 end
 
