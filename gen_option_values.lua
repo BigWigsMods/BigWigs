@@ -788,7 +788,7 @@ local function parseLua(file)
 			--- Validate keys.
 			for i, k in next, keys do
 				local key = tonumber(k) or unquote(k)
-				if not option_keys[key] then
+				if not option_keys[key] and key ~= "false" then
 					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
 					errors = true
 				elseif bitflag and (type(option_keys[key]) ~= "table" or not option_keys[key][bitflag]) then
