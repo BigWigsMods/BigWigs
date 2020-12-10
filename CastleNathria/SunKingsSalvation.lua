@@ -168,6 +168,8 @@ function mod:VerifyEnable(unit, mobId)
 		if hp < 50 then
 			return true
 		end
+	else
+		return true
 	end
 end
 
