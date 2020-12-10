@@ -43,7 +43,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		--[[ Huntsman Altimor ]]--
-		{335114, "SAY", "FLASH"}, -- Sinseeker
+		{335114, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Sinseeker
 		sinseekerMarker,
 		334404, -- Spreadshot
 
@@ -167,6 +167,7 @@ do
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
 			self:Say(335114, CL.count_rticon:format(self:SpellName(335114), count, count))
+			self:SayCountdown(335114, 5.7, count) -- _applied to damage, varys with distance
 			self:PlaySound(335114, "warning")
 			self:Flash(335114)
 		end
@@ -178,6 +179,10 @@ do
 end
 
 function mod:HuntsmansMarkRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(335114)
+	end
+
 	if self:GetOption(sinseekerMarker) then
 		SetRaidTarget(args.destName, 0)
 	end
