@@ -79,6 +79,7 @@ local essenceFontMarker = mod:AddMarkerOption(false, "npc", 1, -22232, 1, 2, 3, 
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 		{326455, "TANK"}, -- Fiery Strike
 		326456, -- Burning Remnants
 		{325877, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Ember Blast
@@ -208,6 +209,10 @@ function mod:OnEngage()
 
 	if self:GetOption(vileOccultistMarker) or self:GetOption(essenceFontMarker) then
 		self:RegisterTargetEvents("SunKingsSalvationMarker")
+	end
+
+	if not self:Mythic() then
+		self:Berserk(840) -- 14 minutes
 	end
 end
 
