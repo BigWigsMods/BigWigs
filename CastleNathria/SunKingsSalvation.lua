@@ -333,14 +333,14 @@ do
 	local castEnd = 0
 	function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, destName)
 		if msg:find("325873", nil, true) then -- Ember Blast
-			self:TargetMessage(325877, "orange", destName, CL.count:format(self:SpellName(325877), emberBlastCount))
+			self:TargetMessage(325877, "orange", destName, CL.count:format(self:SpellName(325877), emberBlastCount-1))
 			local guid = UnitGUID(destName)
 			if self:Me(guid) then
 				self:PlaySound(325877, "warning")
-				self:Say(325877)
+				self:Yell(325877)
 				self:Flash(325877)
 				local castLeft = castEnd - GetTime()
-				self:SayCountdown(325877, castLeft)
+				self:YellCountdown(325877, castLeft)
 			else
 				self:PlaySound(325877, "alert")
 			end
@@ -348,8 +348,8 @@ do
 	end
 
 	function mod:EmberBlast(args)
-		castEnd = GetTime() + 5
-		self:CastBar(args.spellId, 5, CL.count:format(args.spellName, emberBlastCount))
+		castEnd = GetTime() + 3
+		self:CastBar(args.spellId, 3, CL.count:format(args.spellName, emberBlastCount))
 		emberBlastCount = emberBlastCount + 1
 		self:Bar(args.spellId, 20.5, CL.count:format(args.spellName, emberBlastCount))
 	end
