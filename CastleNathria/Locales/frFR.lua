@@ -33,7 +33,7 @@ if L then
 	L.custom_on_stop_timers_desc = "En cours de test"
 
 	L.bottles = "Bouteilles"
-	L.sins = "Péchés"
+	L.sins = "Vices"
 end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "frFR")
