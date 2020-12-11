@@ -101,6 +101,8 @@ function mod:OnBossEnable()
 
 	--[[ Castellan Niklaus ]]--
 	self:Log("SPELL_CAST_START", "DuelistsRiposte", 346690)
+	self:Log("SPELL_AURA_APPLIED", "DuelistsRiposteApplied", 346690)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "DuelistsRiposteApplied", 346690)
 	self:Log("SPELL_CAST_START", "SummonDutifulAttendant", 346698)
 	self:Log("SPELL_CAST_START", "DredgerServants", 330978)
 	self:Log("SPELL_CAST_START", "CastellansCadre", 330965)
@@ -116,6 +118,8 @@ function mod:OnBossEnable()
 
 	--[[ Lord Stavros ]]--
 	self:Log("SPELL_CAST_START", "EvasiveLunge", 327497)
+	self:Log("SPELL_AURA_APPLIED", "EvasiveLungeApplied", 327610)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "EvasiveLungeApplied", 327610)
 	self:Log("SPELL_CAST_SUCCESS", "DarkRecital", 331634)
 	self:Log("SPELL_AURA_APPLIED", "DarkRecitalApplied", 331637, 331636)
 	self:Log("SPELL_AURA_REMOVED", "DarkRecitalRemoved", 331637, 331636)
@@ -143,13 +147,13 @@ function mod:OnEngage()
 	stavrosAlive = true
 	niklausAlive = true
 
-	self:CDBar(346690, 17) -- Duelist's Riposte
+	self:CDBar(346690, 18.4) -- Duelist's Riposte
 	self:CDBar(346698, 7) -- Summon Dutiful Attendant
 
 	self:CDBar(346651, 14.5) -- Drain Essence
 	self:CDBar(337110, 6) -- Dreadbolt Volley
 
-	self:CDBar(327497, 8.5) -- Evasive Lunge
+	self:CDBar(327497, 8.4) -- Evasive Lunge
 	self:CDBar(331634, 23.8) -- Dark Recital
 
 	if self:Mythic() then
@@ -266,7 +270,11 @@ end
 function mod:DuelistsRiposte(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
-	self:CDBar(args.spellId, 37.5)
+	self:CDBar(args.spellId, bossesKilled == 0 and 21.4 or bossesKilled == 1 and 17 or 9)
+end
+
+function mod:DuelistsRiposteApplied(args)
+	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 end
 
 do
@@ -352,7 +360,17 @@ end
 function mod:EvasiveLunge(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, 18.8)
+	self:Bar(args.spellId, bossesKilled == 0 and 21.4 or bossesKilled == 1 and 17 or 11)
+end
+
+function mod:EvasiveLungeApplied(args)
+	local amount = args.amount or 1
+	if self:Me(args.destGUID) and not self:Tank() then
+		self:StackMessage(327497, args.destName, amount, "blue")
+		self:PlaySound(327497, "alarm")
+	elseif self:Tank() and self:Tank(args.destName) then
+		self:StackMessage(327497, args.destName, amount, "purple")
+	end
 end
 
 do
