@@ -12,8 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "deDE")
 if L then
-	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
-	-- L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
+	L.stage2_yell = "Die Vorfreude auf dieses Relikt bringt mich fast um! Aber wahrscheinlich tötet es eher Euch."
+	L.stage3_yell = "Hoffentlich ist dieser wundersame Gegenstand so tödlich, wie er aussieht!"
 end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "deDE")
@@ -22,6 +22,11 @@ if L then
 
 	L.level = "%s (Stufe |cffffff00%d|r)"
 	L.full = "%s (|cffff0000VOLL|r)"
+	
+	L.container_active = "Behälter aktivieren: %s"
+
+	L.anima_adds = "Konzentrierte Anima Adds"
+	L.anima_adds_desc = "Zeigt einen Timer für die erscheinenden Adds vom Debuff Konzentrierte Anima."
 
 	L.custom_off_experimental = "Experimentelle Funktionen aktivieren"
 	L.custom_off_experimental_desc = "Diese Funktionen wurden |cffff0000nicht getestet|r und können |cffff0000spammen|r."
@@ -38,13 +43,37 @@ end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "deDE")
 if L then
-	-- L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
+	L.macabre_start_emote = "Plätze für den Totentanz einnehmen!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
 	L.custom_on_repeating_dark_recital = "Wiederholte Dunkler Vortrag Ansage"
 	L.custom_on_repeating_dark_recital_desc = "Gibt wiederholt Chatnachrichten mit den Symbolen {rt1}, {rt2} aus, um den Partner beim Tanzen zu finden."
+
+	L.custom_off_select_boss_order = "Tötungsreihenfolge markieren"
+	L.custom_off_select_boss_order_desc = "Markiert die Reihenfolge, in welcher der Schlachtzug die Bosse tötet mit Kreuz {rt7}. Benötigt Schlachtzugsleiter oder Assistent zum Markieren."
+	-- L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
+	-- L.custom_off_select_boss_order_value2 = "Frienda -> Niklaus -> Stavros"
+	-- L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frienda"
+	-- L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frienda"
+	-- L.custom_off_select_boss_order_value5 = "Frienda -> Stavros -> Niklaus"
+	-- L.custom_off_select_boss_order_value6 = "Stavros -> Frienda -> Niklaus"
+end
+
+L = BigWigs:NewBossLocale("Sludgefist", "deDE")
+if L then
+	L.stomp_shift = "Stampfen & Verschiebung" -- Destructive Stomp + Seismic Shift
+
+	L.custom_off_boulder_impact = "Felsbrockeneinschlag"
+	L.custom_off_boulder_impact_desc = "Zeigt eine Leiste wann der Fragmentierte Felsbrocken einschlägt."
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "deDE")
 if L then
 	L.first_blade = "Erste Klinge"
 	L.second_blade = "Zweite Klinge"
+end
+
+L = BigWigs:NewBossLocale("Sire Denathrius", "deDE")
+if L then
+	L.add_spawn = "Blutrote Kabalisten folgen Denathrius' Ruf." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
+
+	L.infobox_stacks = "%d |4Stapel:Stapel;: %d |4Spieler:Spieler;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 end
