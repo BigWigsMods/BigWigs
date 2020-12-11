@@ -1,18 +1,18 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "frFR")
 if not L then return end
 
---L.guildRelease = "You are running version %d of BigWigs made for your guild, based on version %d of the official addon."
+L.guildRelease = "Vous utilisez la version %d de BigWigs spécialement conçue pour votre guilde, basée sur la version %d de l'addon officiel."
 L.getNewRelease = "Votre BigWigs est ancien (/bwv), mais vous pouvez facilement le mettre à jour en utilisant le client CurseForge. Vous pouvez également le mettre à jour à partir de curseforge.com ou wowinterface.com."
 L.warnTwoReleases = "Votre BigWigs est obsolète de 2 versions ! Votre version risque de contenir des bugs, des fonctionnalités manquantes, voire même des délais totalement incorrects. Il est recommandé de faire la mise à jour."
 L.warnSeveralReleases = "|cffff0000Votre BigWigs est %d versions derrière la plus récente !! Il est VIVEMENT recommandé d'effectuer la mise à jour afin d'éviter tout problème de synchronisation avec les autres joueurs !|r"
---L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base version (%d) is %d releases out of date. This may cause issues."
+L.warnOldBase = "Vous utilisez une version guilde de BigWigs (%d), mais votre version de base (%d) est %d releases en retard. Cela peut poser problèmes."
 
 L.gitHubDesc = "|cFF33FF99BigWigs est un logiciel open source hébergé sur GitHub. Nous sommes toujours à la recherche de nouvelles personnes pour nous aider et tout le monde est le bienvenu pour inspecter notre code, effectuer des contributions et soumettre des rapports de bogues. BigWigs existe en grande partie grâce à l'aide précieuse de la communauté de WoW.|r"
 
---L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
+L.testNameplate = "Cible détectée, création d'une barre d'info de test par dessus la barre d'info de la cible. |cFF33FF99Cette fonctionnalité est rarement utilisée : elle se présente habituellement sous la forme d'une seule barre, et est nécessaire pour le bon suivi des temps de recharge lors des combats face à plusieurs monstres qui utilisent le même sort.|r"
 
---L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
---L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
+L.classicWarning1 = "|cFF33FF99BigWigs|r: Vous utilisez la mauvaise version de BigWigs sur un serveur classique."
+L.classicWarning2 = "|cFF33FF99BigWigs|r: Veuillez installer la version classique de BigWigs."
 
 L.options = "Options"
 L.raidBosses = "Boss de raid"
@@ -133,8 +133,8 @@ L.SAY_COUNTDOWN = "Dire le compte à rebours"
 L.SAY_COUNTDOWN_desc = "Les bulles de discussion sont faciles à repérer. BigWigs utilisera plusieurs messages en compte à rebours pour avertir les personnes proches qu'une technique vous affectant est sur le point de disparaitre."
 L.ME_ONLY_EMPHASIZE = "Mise en évidence (sur moi)"
 L.ME_ONLY_EMPHASIZE_desc = "L'activation de cette option mettra en évidence tous les messages associés à cette technique UNIQUEMENT si vous en êtes la cible, les rendant plus grands et plus visibles."
--- L.NAMEPLATEBAR = "Nameplate Bars"
--- L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
+L.NAMEPLATEBAR = "Barres d'info"
+L.NAMEPLATEBAR_desc = "Des barres sont parfois attachées aux barres d'info des unités quand plus d'un monste incantent le même sort. Si cette capacité est accompagnée d'une barre d'info que vous voulez cacher, désactivez cette option."
 
 -- Media.lua
 L.Beware = "Attention (Algalon)"
