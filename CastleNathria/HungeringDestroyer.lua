@@ -43,6 +43,10 @@ function mod:GetOptions()
 		329455, -- Desolate
 		{329774, "TANK"}, -- Overwhelm
 		{332295, "TANK"}, -- Growing Hunger
+	},
+	nil,
+	{
+		[334266] = CL.laser,
 	}
 end
 
