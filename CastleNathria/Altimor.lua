@@ -43,7 +43,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		--[[ Huntsman Altimor ]]--
-		{335114, "SAY", "FLASH"}, -- Sinseeker
+		{335114, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Sinseeker
 		sinseekerMarker,
 		334404, -- Spreadshot
 
@@ -119,10 +119,10 @@ function mod:OnEngage()
 	petrifyingHowlCount = 1
 	wipe(mobCollector)
 
-	self:Bar(334404, 6.2) -- Spreadshot
-	self:Bar(334971, 11.2) -- Jagged Claws
-	self:Bar(334945, 18, CL.count:format(self:SpellName(334945), bloodyThrashCount)) -- Bloody Thrash
-	self:Bar(335114, 51, CL.count:format(self:SpellName(335114), sinseekerCount)) -- Sinseeker
+	self:Bar(334404, 6.5) -- Spreadshot
+	self:Bar(334971, 10) -- Jagged Claws
+	self:Bar(334945, 23.5, CL.count:format(self:SpellName(334945), bloodyThrashCount)) -- Vicious Lunge
+	self:Bar(335114, 28.5, CL.count:format(self:SpellName(335114), sinseekerCount)) -- Sinseeker
 end
 
 --------------------------------------------------------------------------------
@@ -155,7 +155,8 @@ function mod:Sinseeker(args)
 	self:StopBar(CL.count:format(args.spellName, sinseekerCount))
 	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, sinseekerCount)))
 	sinseekerCount = sinseekerCount + 1
-	self:CDBar(args.spellId, 51, CL.count:format(args.spellName, sinseekerCount))
+	local cd = stage == 1 and 51 or stage == 2 and 60 or stage == 3 and 64 or stage == 4 and 24
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, sinseekerCount))
 end
 
 do
@@ -166,6 +167,7 @@ do
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
 			self:Say(335114, CL.count_rticon:format(self:SpellName(335114), count, count))
+			self:SayCountdown(335114, 5.7, count) -- _applied to damage, varys with distance
 			self:PlaySound(335114, "warning")
 			self:Flash(335114)
 		end
@@ -177,6 +179,10 @@ do
 end
 
 function mod:HuntsmansMarkRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(335114)
+	end
+
 	if self:GetOption(sinseekerMarker) then
 		SetRaidTarget(args.destName, 0)
 	end
@@ -185,13 +191,15 @@ end
 function mod:Spreadshot(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 12.2)
+	if stage < 4 then -- spams in p4 every few seconds
+		self:Bar(args.spellId, 12.2)
+	end
 end
 
 --[[ Margore ]]--
 
 function mod:JaggedClaws(args)
-	self:Bar(args.spellId, 20) -- _SUCCESS to _START
+	self:CDBar(args.spellId, 20) -- _SUCCESS to _START
 end
 
 function mod:JaggedClawsApplied(args)
@@ -228,6 +236,7 @@ function mod:MargoreDeath()
 	self:StopBar(CL.count:format(self:SpellName(334945), bloodyThrashCount)) -- Bloody Thrash
 
 	self:Bar("stages", 6, -22311, 334797) -- Bargast, Rip Soul icon
+	self:Bar(335114, 38.5, CL.count:format(self:SpellName(335114), sinseekerCount)) -- Sinseeker
 end
 
 --[[ Bargast ]]--
@@ -237,7 +246,7 @@ function mod:RipSoulStart(args)
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, 2.5, CL.count:format(args.spellName, ripSoulCount))
 	ripSoulCount = ripSoulCount + 1
-	self:Bar(args.spellId, 30.5, CL.count:format(args.spellName, ripSoulCount))
+	self:Bar(args.spellId, 31, CL.count:format(args.spellName, ripSoulCount))
 end
 
 function mod:RipSoul(args)
@@ -269,7 +278,7 @@ do
 		self:Message(args.spellId, "green", CL.incoming:format(CL.count:format(args.spellName, shadesOfBargastCount)))
 		self:PlaySound(args.spellId, "long")
 		shadesOfBargastCount = shadesOfBargastCount + 1
-		self:Bar(args.spellId, 60, CL.count:format(args.spellName, shadesOfBargastCount))
+		self:Bar(args.spellId, 61, CL.count:format(args.spellName, shadesOfBargastCount))
 		if self:GetOption(shadesofBargastMarker) then
 			shadesofBargastMarked = 0
 			self:RegisterTargetEvents("shadesofBargastMarking")
@@ -303,6 +312,7 @@ function mod:BargastDeath()
 	self:StopBar(CL.count:format(self:SpellName(334757), shadesOfBargastCount)) -- Shades Of Bargast
 
 	self:Bar("stages", 6, -22310, 334852) -- Hecutis, Petrifying Howl icon
+	self:Bar(335114, 34, CL.count:format(self:SpellName(335114), sinseekerCount)) -- Sinseeker
 end
 
 --[[ Hecutis ]]--
@@ -346,6 +356,9 @@ function mod:HecutisDeath()
 	self:Message("stages", "cyan", L.killed:format(self:SpellName(-22310)), false) -- Hecutis
 
 	self:StopBar(CL.count:format(self:SpellName(334852), petrifyingHowlCount)) -- Petrifying Howl
+
+	stage = 4
+	self:Bar(335114, 6.5, CL.count:format(self:SpellName(335114), sinseekerCount)) -- Sinseeker
 end
 
 do

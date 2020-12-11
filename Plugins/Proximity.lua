@@ -930,7 +930,7 @@ do
 
 		local text = proxAnchor:CreateFontString(nil, "OVERLAY")
 		text:SetShadowOffset(1, -1)
-		text:SetAllPoints(proxAnchor)
+		text:SetPoint("CENTER", proxAnchor, "CENTER")
 		proxAnchor.text = text
 
 		local rangePulse = proxAnchor:CreateTexture(nil, "ARTWORK")

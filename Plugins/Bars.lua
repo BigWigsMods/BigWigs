@@ -1465,7 +1465,7 @@ do
 		header:SetShadowOffset(1, -1)
 		header:SetTextColor(1,0.82,0,1)
 		header:SetText(title)
-		header:SetAllPoints(display)
+		header:SetPoint("CENTER", display, "CENTER")
 		header:SetJustifyH("CENTER")
 		header:SetJustifyV("MIDDLE")
 		local drag = CreateFrame("Frame", nil, display)

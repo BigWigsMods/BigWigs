@@ -122,6 +122,7 @@ do
 	header:SetShadowOffset(1, -1)
 	header:SetTextColor(1,0.82,0,1)
 	header:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
+	header:SetText(L.infoBox)
 	display.title = header
 
 	display.text = {}

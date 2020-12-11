@@ -10,6 +10,8 @@ local modules_l = nil
 local module_colors = {}
 local module_sounds = {}
 
+local common_locale = nil
+
 local default_options = {
 	altpower = {ALTPOWER = true},
 	infobox = {INFOBOX = true},
@@ -354,6 +356,32 @@ local function add(module_name, option_table, keys, value)
 	end
 end
 
+local function setCommonLocale(path)
+	path = path:match("^(.*)/") or "."
+	local file = path .. "/Core/Locales/common.enUS.lua"
+	local f = io.open(file, "r")
+	if not f then
+		-- module(s) file directly?
+		file = path .. "../Core/Locales/common.enUS.lua"
+		f = io.open(file, "r")
+		if not f then
+			return
+		end
+	end
+
+	local data = f:read("*all")
+	f:close()
+
+	common_locale = {}
+	for line in data:gmatch("(.-)\r?\n") do
+		line = line:gsub("%s*%-%-.*$", "")
+		local key = line:match("L%.(.+) = ")
+		if key then
+			common_locale[key] = true
+		end
+	end
+end
+
 local function findCalls(lines, start, local_func, options)
 	local keys = {}
 	local func, if_key = nil, nil
@@ -494,6 +522,7 @@ local function parseLua(file)
 	end
 	data = nil
 
+	local locale = {}
 	local options, option_keys = {}, {}
 	local methods, registered_methods = {Win=true}, {}
 	local event_callbacks = {}
@@ -502,6 +531,33 @@ local function parseLua(file)
 	for n, line in ipairs(lines) do
 		local comment = line:match("%-%-%s*(.*)") or ""
 		line = line:gsub("%-%-.*$", "") -- strip comments
+
+		-- locale checking
+		do
+			-- save module locale
+			-- multiple definitions on one line
+			if line:match("^%sL.[%w_]+%s*,.+=.+") then -- we're setting things, right?
+				for locale_key in line:gmatch("L%.([%w_]+)%s*,%s*") do
+					locale[locale_key] = true
+				end
+			end
+			local locale_key = line:match("L.([%w_]+)%s*=%s*")
+			if locale_key then
+				locale[locale_key] = true
+			end
+		end
+
+		-- check usage
+		for locale_type, locale_key in line:gmatch("(C?L)%.([%w_]+)") do
+			if locale_type == "CL" then
+				-- CL is only set in the main project
+				if common_locale and not common_locale[locale_key] then
+					error(string.format("    %s:%d: Invalid locale string \"CL.%s\"", file_name, n, locale_key))
+				end
+			elseif locale_type == "L" and not locale[locale_key] then
+				error(string.format("    %s:%d: Invalid locale string \"L.%s\"", file_name, n, locale_key))
+			end
+		end
 
 		--- loadstring the options table
 		if line == "function mod:GetOptions()" or line == "function mod:GetOptions(CL)" then
@@ -732,7 +788,7 @@ local function parseLua(file)
 			--- Validate keys.
 			for i, k in next, keys do
 				local key = tonumber(k) or unquote(k)
-				if not option_keys[key] then
+				if not option_keys[key] and key ~= "false" then
 					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
 					errors = true
 				elseif bitflag and (type(option_keys[key]) ~= "table" or not option_keys[key][bitflag]) then
@@ -926,6 +982,7 @@ if arg then
 	end
 end
 
+setCommonLocale(start_path)
 parse(start_path)
 
 os.exit(exit_code)

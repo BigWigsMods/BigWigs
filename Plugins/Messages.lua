@@ -117,7 +117,7 @@ do
 			header:SetPoint("BOTTOM", display, "TOP", 0, 5)
 			header:SetJustifyV("TOP")
 		else
-			header:SetAllPoints(display)
+			header:SetPoint("CENTER", display, "CENTER")
 			header:SetJustifyV("MIDDLE")
 		end
 		header:SetJustifyH("CENTER")
