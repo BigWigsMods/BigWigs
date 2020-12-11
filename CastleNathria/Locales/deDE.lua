@@ -72,3 +72,10 @@ if L then
 	L.first_blade = "Erste Klinge"
 	L.second_blade = "Zweite Klinge"
 end
+
+L = BigWigs:NewBossLocale("Sire Denathrius", "deDE")
+if L then
+	L.add_spawn = "Blutrote Kabalisten folgen Denathrius' Ruf." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
+
+	L.infobox_stacks = "%d |4Stapel:Stapel;: %d |4Spieler:Spieler;" -- 4 Stacks: 5 players // 1 Stack: 1 player
+end
