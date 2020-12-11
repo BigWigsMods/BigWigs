@@ -239,7 +239,7 @@ function mod:SeedsofExtinction(args)
 end
 
 function mod:Extinction(args)
-	self:CastBar(args.spellId, 12, CL.count:format(args.spellName, seedCount-1))
+	self:CastBar(args.spellId, self:Normal() and 16 or 14, CL.count:format(args.spellName, seedCount-1))
 end
 
 function mod:WitheringTouchApplied(args)
