@@ -188,6 +188,8 @@ end
 
 function mod:BossDeath(args)
 	bossesKilled = bossesKilled + 1
+	if bossesKilled > 2 then return end -- You win at 3
+
 	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
 	if args.mobId == 166969 then -- Frieda
 		friedaAlive = false
