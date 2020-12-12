@@ -13,6 +13,7 @@ mod.respawnTime = 30
 --
 
 local stage = 1
+mod.stage = stage
 local intermission = nil
 local nextStageWarning = 73
 local burdenPlayerTracker = {}
@@ -157,6 +158,7 @@ end
 
 function mod:OnEngage()
 	stage = 1
+	self.stage = stage
 	intermission = nil
 	nextStageWarning = 73
 
@@ -366,6 +368,7 @@ end
 function mod:MarchofthePenitentStart(args)
 	if stage == 1 then
 		stage = stage + 1
+		self.stage = stage
 		intermission = true
 		self:Message("stages", "green", CL.intermission, false)
 		self:PlaySound("stages", "long")
@@ -468,6 +471,7 @@ end
 -- Stage Three: Indignation
 function mod:IndignationSuccess(args)
 	stage = stage + 1
+	self.stage = stage
 	self:Message("stages", "green", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
