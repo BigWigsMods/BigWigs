@@ -60,9 +60,6 @@ end
 L = BigWigs:NewBossLocale("Sludgefist", "deDE")
 if L then
 	L.stomp_shift = "Stampfen & Verschiebung" -- Destructive Stomp + Seismic Shift
-
-	L.custom_off_boulder_impact = "Felsbrockeneinschlag"
-	L.custom_off_boulder_impact_desc = "Zeigt eine Leiste wann der Fragmentierte Felsbrocken einschlägt."
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "deDE")
