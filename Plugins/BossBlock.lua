@@ -141,14 +141,6 @@ function plugin:OnPluginEnable()
 	self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
 
 	CheckElv(self)
-
-	-- XXX temp 8.1.5
-	for id in next, BigWigs.db.global.watchedMovies do
-		if type(id) == "string" then
-			BigWigs.db.global.watchedMovies[id] = nil
-		end
-	end
-	BigWigs.db.global.watchedMovies[-593] = nil -- Auchindoun temp reset
 end
 
 -------------------------------------------------------------------------------
@@ -219,6 +211,8 @@ do
 		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
 			restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
 			if restoreObjectiveTracker then
+				trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
+				trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
 				trackerHider.SetParent(ObjectiveTrackerFrame, trackerHider)
 			end
 		end
@@ -249,6 +243,8 @@ do
 		end
 		if restoreObjectiveTracker then
 			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
+			trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, false)
+			trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, false)
 			restoreObjectiveTracker = nil
 		end
 	end
