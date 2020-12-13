@@ -10,7 +10,7 @@ local mod, CL = BigWigs:NewBoss("Sludgefist", 2296, 2394)
 if not mod then return end
 mod:RegisterEnableMob(164407) -- Sludgefist
 mod.engageId = 2399
-mod.respawnTime = 15
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -36,10 +36,6 @@ local timers = {
 local L = mod:GetLocale()
 if L then
 	L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
-
-	L.custom_off_boulder_impact = "Boulder Impact"
-	L.custom_off_boulder_impact_desc = "Show a bar when the Fractured Boulder lands."
-	L.custom_off_boulder_impact_icon = 341102
 end
 
 --------------------------------------------------------------------------------
@@ -50,17 +46,17 @@ function mod:GetOptions()
 	return {
 		{331209, "SAY" ,"SAY_COUNTDOWN"}, -- Hateful Gaze
 		331314, -- Destructive Impact
-		"custom_off_boulder_impact",
 		335293, -- Chain Link
 		332318, -- Destructive Stomp
 		335361, -- Stonequake
 		332687, -- Colossal Roar
 		{335470, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Chain Slam
+		341102, -- Fractured Boulder
 		340817, -- Seismic Shift
 		341250, -- Gruesome Rage
 	},{
 		[331209] = "general",
-		[340817] = "mythic",
+		[341102] = "mythic",
 	}
 end
 
@@ -95,7 +91,7 @@ function mod:OnEngage()
 
 	self:Bar(335293, 5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
 	self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
-	if not self:Tank() then
+	if self:Tank() then
 		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 	else
 		self:CDBar(331314, 58.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
@@ -119,10 +115,10 @@ function mod:HatefulGazeApplied(args)
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 6)
 	end
-	if not self:Tank() then
-		self:CDBar(331314, 6, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
-	else
+	if self:Tank() then
 		self:TargetBar(args.spellId, 6, args.destName, CL.count:format(args.spellName, hatefullGazeCount))
+	else
+		self:CDBar(331314, 6, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
 	end
 	hatefullGazeCount = hatefullGazeCount + 1
 end
@@ -138,12 +134,18 @@ function mod:DestructiveImpactApplied(args)
 	self:Message(args.spellId, "red", CL.on:format(args.spellName, args.destName))
 	self:PlaySound(args.spellId, "info")
 	self:Bar(args.spellId, 12)
-	self:CastBar("custom_off_boulder_impact", 3.5, 341102, 341102) -- Fractured Boulder
+	if self:Mythic() then
+		self:Bar(341102, 3.5) -- Fractured Boulder
+	end
 end
 
 function mod:DestructiveImpactRemoved(args)
 	chainLinksApplied = 0
-	self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
+	if self:Tank() then
+		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
+	else
+		self:CDBar(331314, 58.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+	end
 end
 
 do

@@ -34,8 +34,8 @@ L.no = "Sans %s"
 L.normal = "Mode normal"
 L.on = "%s sur %s"
 L.onboss = "%s sur le BOSS"
---L.buff_boss = "Buff on BOSS: %s"
---L.buff_other = "Buff on %s: %s"
+L.buff_boss = "Buff sur le BOSS : %s"
+L.buff_other = "Buff sur %s : %s"
 L.other = "%s : %s"
 L.over = "%s terminé"
 L.percent = "%d%% - %s" -- 20% - spell
@@ -75,5 +75,5 @@ L.amount_three = "%dK" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Common ability name replacements
---L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
---L.bomb = "Bomb" -- Used for debuffs that make players explode
+L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.bomb = "Bombe" -- Used for debuffs that make players explode

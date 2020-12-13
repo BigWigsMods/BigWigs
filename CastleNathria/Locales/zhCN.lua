@@ -12,8 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhCN")
 if L then
-	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
-	-- L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
+	L.stage2_yell = "我一直想玩玩这件圣物，都快想疯了！而你们的死，可以填补我多年的空虚。"
+	L.stage3_yell = "如此美妙的东西，如果没有杀伤力就太可惜了！"
 end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "zhCN")
