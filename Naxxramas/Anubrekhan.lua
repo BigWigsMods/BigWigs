@@ -41,7 +41,7 @@ end
 function mod:OnEngage()
 	self:Message(28785, "yellow", CL.custom_start_s:format(L.bossName, self:SpellName(28785), 90), false)
 	self:DelayedMessage(28785, 80, "red", L.gainwarn10sec)
-	self:Bar(28785, L.gainincbar, 90, 28785)
+	self:CDBar(28785, 90, L.gainincbar, 28785)
 end
 
 --------------------------------------------------------------------------------

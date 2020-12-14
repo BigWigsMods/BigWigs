@@ -126,7 +126,7 @@ function mod:TeleportToBalcony()
 	self:StopBar(L.curse_bar)
 
 	self:Message("teleport", "red", L.teleportwarn, false)
-	self:Bar("teleport", L.back_bar, timebalcony, L.teleport_icon)
+	self:Bar("teleport", timebalcony, L.back_bar, L.teleport_icon)
 	self:DelayedMessage("teleport", timebalcony - 10, "orange", L.back_warn2)
 
 	self:Bar("wave", wave1time, L.wave1_bar, "Spell_ChargePositive")
