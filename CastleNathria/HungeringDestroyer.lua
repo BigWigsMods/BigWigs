@@ -17,14 +17,7 @@ local volatileCount = 1
 local consumeCount = 1
 local expungeCount = 1
 local desolateCount = 1
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-if L then
-end
+local overwhelmCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -70,6 +63,7 @@ function mod:OnEngage()
 	consumeCount = 1
 	expungeCount = 1
 	desolateCount = 1
+	overwhelmCount = 1
 
 	self:Bar(329774, 5) -- Overwhelm
 	self:Bar(329298, 3, CL.count:format(self:SpellName(329298), miasmaCount)) -- Gluttonous Miasma
@@ -93,7 +87,9 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count)) 
+			-- XXX Add some kind of health % say / yell messages when you are low, 
+			-- XXX this initial application doesn't change too much and clutters instead of the Laser says.
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if self:GetOption(gluttonousMiasmaMarker) then
@@ -146,7 +142,7 @@ do
 				self:PlaySound(329725, "warning")
 				self:CastBar(329725, 5, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
 				expungeCount = expungeCount + 1
-				self:Bar(329725, 35, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+				self:Bar(329725, expungeCount % 2 == 0 and 36 or 60, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
 			end
 		end
 	end
@@ -226,12 +222,13 @@ end
 function mod:Overwhelm(args)
 	self:TargetMessage(args.spellId, "purple", self:UnitName("boss1target"), CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "warning")
-	self:Bar(args.spellId, 12.6)
+	overwhelmCount = overwhelmCount + 1
+	self:Bar(args.spellId, overwhelmCount % 7 == 1 and 24 or 12) -- Delayed by Consume every 7th
 end
 
 function mod:GrowingHungerApplied(args)
 	local amount = args.amount or 1
-	if amount % 3 == 0 or amount > 5 then -- 3, 6+
+	if amount % 5 == 0 then -- 5, 10... // Generally doesn't go above 5 if you swap on Overwhelm
 		self:StackMessage(args.spellId, args.destName, amount, "purple")
 		self:PlaySound(args.spellId, "alert")
 	end
