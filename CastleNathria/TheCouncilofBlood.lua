@@ -43,6 +43,19 @@ if L then
 	L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frienda"
 	L.custom_off_select_boss_order_value5 = "Frienda -> Stavros -> Niklaus"
 	L.custom_off_select_boss_order_value6 = "Stavros -> Frienda -> Niklaus"
+
+	L.dance_assist = "Dance Assist"
+	L.dance_assist_desc = "Show directional warnings for the dancing stage."
+	L.dance_assist_icon = "misc_arrowlup"
+	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance Forward |T450907:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Dance Right |T450908:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance Down |T450905:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance Left |T450906:0:0:0:0:64:64:4:60:4:60|t"
+	-- These need to match the in-game boss yells
+	L.dance_yell_up = "Forward" -- Prance Forward!
+	L.dance_yell_right = "right" -- Shimmy right!
+	L.dance_yell_down = "down" -- Boogie down!
+	L.dance_yell_left = "left" -- Sashay left!
 end
 
 --------------------------------------------------------------------------------
@@ -81,6 +94,7 @@ function mod:GetOptions()
 
 		--[[ Intermission: The Danse Macabre ]]--
 		330959, -- Danse Macabre
+		"dance_assist",
 		{330848, "ME_ONLY"}, -- Wrong Moves
 
 		--[[ Mythic ]]--
@@ -97,6 +111,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("RAID_BOSS_EMOTE")
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:Death("BossDeath", 166969, 166970, 166971) -- Baroness Frieda, Lord Stavros, Castellan Niklaus
 
 	--[[ Castellan Niklaus ]]--
@@ -187,6 +202,18 @@ end
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find(L.macabre_start_emote, nil, true) then -- Dance Macabre start
 		self:CastBar(330959, 7) -- Dance Macabre
+	end
+end
+
+function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
+	if msg:find(L.dance_yell_up, nil, true) then
+		self:Message("dance_assist", "blue", L.dance_assist_up, false)
+	elseif msg:find(L.dance_yell_right, nil, true) then
+		self:Message("dance_assist", "blue", L.dance_assist_right, false)
+	elseif msg:find(L.dance_yell_down, nil, true) then
+		self:Message("dance_assist", "blue", L.dance_assist_down, false)
+	elseif msg:find(L.dance_yell_left, nil, true) then
+		self:Message("dance_assist", "blue", L.dance_assist_left, false)
 	end
 end
 
@@ -484,7 +511,7 @@ do
 end
 
 function mod:DanseMacabreKill(args)
-		self:CDBar(347350, 32) -- Dancing Fever
+	self:CDBar(347350, 32) -- Dancing Fever
 end
 
 function mod:WrongMovesApplied(args)

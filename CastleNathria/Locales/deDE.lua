@@ -22,7 +22,7 @@ if L then
 
 	L.level = "%s (Stufe |cffffff00%d|r)"
 	L.full = "%s (|cffff0000VOLL|r)"
-	
+
 	L.container_active = "Behälter aktivieren: %s"
 
 	L.anima_adds = "Konzentrierte Anima Adds"
@@ -55,6 +55,18 @@ if L then
 	-- L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frienda"
 	-- L.custom_off_select_boss_order_value5 = "Frienda -> Stavros -> Niklaus"
 	-- L.custom_off_select_boss_order_value6 = "Stavros -> Frienda -> Niklaus"
+
+	--L.dance_assist = "Dance Assist"
+	--L.dance_assist_desc = "Show directional warnings for the dancing stage."
+	--L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance Forward |T450907:0:0:0:0:64:64:4:60:4:60|t"
+	--L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Dance Right |T450908:0:0:0:0:64:64:4:60:4:60|t"
+	--L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance Down |T450905:0:0:0:0:64:64:4:60:4:60|t"
+	--L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance Left |T450906:0:0:0:0:64:64:4:60:4:60|t"
+	-- These need to match the in-game boss yells
+	--L.dance_yell_up = "Forward" -- Prance Forward!
+	--L.dance_yell_right = "right" -- Shimmy right!
+	--L.dance_yell_down = "down" -- Boogie down!
+	--L.dance_yell_left = "left" -- Sashay left!
 end
 
 L = BigWigs:NewBossLocale("Sludgefist", "deDE")
