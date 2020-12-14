@@ -65,12 +65,20 @@ function mod:OnEngage()
 	desolateCount = 1
 	overwhelmCount = 1
 
-	self:Bar(329774, 5) -- Overwhelm
 	self:Bar(329298, 3, CL.count:format(self:SpellName(329298), miasmaCount)) -- Gluttonous Miasma
-	self:Bar(329298, 10, CL.count:format(self:SpellName(329298), volatileCount)) -- Volatile Ejection
-	self:Bar(329455, 22, CL.count:format(self:SpellName(329455), desolateCount)) -- Desolate
-	self:Bar(329725, 32, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
-	self:Bar(334522, 89, CL.count:format(self:SpellName(334522), consumeCount)) -- Consume
+	if self:Easy() then
+		self:Bar(329774, 5.3) -- Overwhelm
+		self:Bar(334266, 10.6, CL.count:format(self:SpellName(334266), volatileCount)) -- Volatile Ejection
+		self:Bar(329455, 23.2, CL.count:format(self:SpellName(329455), desolateCount)) -- Desolate
+		self:Bar(329725, 35.7, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+		self:Bar(334522, 93.7, CL.count:format(self:SpellName(334522), consumeCount)) -- Consume
+	else
+		self:Bar(329774, 5) -- Overwhelm
+		self:Bar(334266, 10, CL.count:format(self:SpellName(334266), volatileCount)) -- Volatile Ejection
+		self:Bar(329455, 22, CL.count:format(self:SpellName(329455), desolateCount)) -- Desolate
+		self:Bar(329725, 32, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+		self:Bar(334522, 89, CL.count:format(self:SpellName(334522), consumeCount)) -- Consume
+	end
 
 	-- XXX Expunge tracking
 	self:RegisterEvent("UNIT_AURA")
