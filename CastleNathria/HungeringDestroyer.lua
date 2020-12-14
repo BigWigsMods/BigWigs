@@ -99,7 +99,7 @@ do
 			miasmaCount = miasmaCount + 1
 		 self:Bar(args.spellId, 24, CL.count:format(args.spellName, miasmaCount))
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, miasmaCount-1), nil, nil, nil, playerIcons)
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, miasmaCount-1), nil, nil, playerIcons)
 	end
 end
 
@@ -114,7 +114,11 @@ function mod:Consume(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, consumeCount)) -- 4s Cast
 	consumeCount = consumeCount + 1
-	self:Bar(args.spellId, 96, CL.count:format(args.spellName, consumeCount))
+	if self:Easy() then
+		self:Bar(args.spellId, 101, CL.count:format(args.spellName, consumeCount))
+	else
+		self:Bar(args.spellId, 96, CL.count:format(args.spellName, consumeCount))
+	end
 end
 
 function mod:ConsumeSuccess(args)
@@ -130,20 +134,19 @@ end
 -- 	self:Bar(args.spellId, 110, CL.count:format(args.spellName, expungeCount)) -- Expunge
 -- end
 
-do
-	local prev = 0
-	function mod:UNIT_AURA(_, unit)
-		local debuffFound = self:UnitDebuff(unit, 329725) -- Expunge
-		if debuffFound then
-			local t = GetTime()
-			if t-prev > 10 then
-				prev = t
-				self:Message(329725, "orange", CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
-				self:PlaySound(329725, "warning")
-				self:CastBar(329725, 5, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
-				expungeCount = expungeCount + 1
-				self:Bar(329725, expungeCount % 2 == 0 and 36 or 60, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
-			end
+function mod:UNIT_AURA(_, unit)
+	local debuffFound = self:UnitDebuff(unit, 329725) -- Expunge
+	if debuffFound then
+		self:UnregisterEvent("UNIT_AURA")
+		self:ScheduleTimer("RegisterEvent", 10, "UNIT_AURA")
+		self:Message(329725, "orange", CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+		self:PlaySound(329725, "warning")
+		self:CastBar(329725, 5, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+		expungeCount = expungeCount + 1
+		if self:Easy() then
+			self:Bar(329725, expungeCount % 2 == 0 and 37.8 or 63, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+		else
+			self:Bar(329725, expungeCount % 2 == 0 and 36 or 60, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
 		end
 	end
 end
@@ -199,7 +202,11 @@ do
 
 	function mod:VolatileEjection(args)
 		volatileCount = volatileCount + 1
-		self:Bar(334266, volatileCount % 3 == 1 and 24 or 36, CL.count:format(CL.laser, volatileCount))
+		if self:Easy() then
+			self:Bar(334266, volatileCount % 3 == 1 and 25.3 or 37.9, CL.count:format(CL.laser, volatileCount))
+		else
+			self:Bar(334266, volatileCount % 3 == 1 and 24 or 36, CL.count:format(CL.laser, volatileCount))
+		end
 	end
 
 	function mod:VolatileEjectionSuccess(args)
@@ -216,14 +223,22 @@ function mod:Desolate(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, desolateCount))
 	self:PlaySound(args.spellId, "alert")
 	desolateCount = desolateCount + 1
-	self:Bar(args.spellId, desolateCount % 2 == 0 and 36 or 60, CL.count:format(args.spellName, desolateCount)) -- Desolate
+	if self:Easy() then
+		self:Bar(args.spellId, desolateCount % 2 == 0 and 37.9 or 63.1, CL.count:format(args.spellName, desolateCount)) -- Desolate
+	else
+		self:Bar(args.spellId, desolateCount % 2 == 0 and 36 or 60, CL.count:format(args.spellName, desolateCount)) -- Desolate
+	end
 end
 
 function mod:Overwhelm(args)
 	self:TargetMessage(args.spellId, "purple", self:UnitName("boss1target"), CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "warning")
 	overwhelmCount = overwhelmCount + 1
-	self:Bar(args.spellId, overwhelmCount % 7 == 1 and 24 or 12) -- Delayed by Consume every 7th
+	if self:Easy() then
+		self:Bar(args.spellId, overwhelmCount % 7 == 1 and 25.2 or 12.6) -- Delayed by Consume every 7th
+	else
+		self:Bar(args.spellId, overwhelmCount % 7 == 1 and 24 or 12) -- Delayed by Consume every 7th
+	end
 end
 
 function mod:GrowingHungerApplied(args)
