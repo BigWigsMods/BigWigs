@@ -44,7 +44,7 @@ function mod:GetOptions()
 		{329774, "TANK"}, -- Overwhelm
 		{332295, "TANK"}, -- Growing Hunger
 	}, nil, {
-		[334266] = CL.laser,
+		[334266] = CL.laser, -- Volatile Ejection (Laser)
 	}
 end
 
@@ -179,7 +179,7 @@ do
 		if not tContains(playerList, name) then
 			local count = #playerList+1
 			playerList[count] = name
-			self:TargetsMessage(334266, "orange", self:ColorName(playerList), self:Mythic() and 5 or 3, nil, nil, 2)
+			self:TargetsMessage(334266, "orange", self:ColorName(playerList), self:Mythic() and 5 or 3, CL.laser, nil, 2)
 			if self:GetOption(volatileEjectionMarker) then
 				SetRaidTarget(name, count+4)
 			end
@@ -203,7 +203,7 @@ do
 
 	function mod:VolatileEjection(args)
 		volatileCount = volatileCount + 1
-		self:Bar(334266, volatileCount % 3 == 1 and 24 or 36, CL.count:format(self:SpellName(334266), volatileCount))
+		self:Bar(334266, volatileCount % 3 == 1 and 24 or 36, CL.count:format(CL.laser, volatileCount))
 	end
 
 	function mod:VolatileEjectionSuccess(args)
@@ -224,9 +224,9 @@ function mod:Desolate(args)
 end
 
 function mod:Overwhelm(args)
-	self:Message(args.spellId, "purple")
-	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 12)
+	self:TargetMessage(args.spellId, "purple", self:UnitName("boss1target"), CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "warning")
+	self:Bar(args.spellId, 12.6)
 end
 
 function mod:GrowingHungerApplied(args)
