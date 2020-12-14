@@ -54,7 +54,7 @@ end
 
 function mod:GainSwarm(args)
 	self:Bar(28785, 20)
-	self:DelayedMessage(28785, 20, "red", L.over:format(args.spellName))
+	self:DelayedMessage(28785, 20, "red", CL.over:format(args.spellName))
 	self:Bar(28785, 85, L.gainincbar)
 	self:DelayedMessage(28785, 75, "red", L.gainwarn10sec)
 end

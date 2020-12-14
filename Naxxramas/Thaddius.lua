@@ -241,7 +241,7 @@ end
 
 function mod:AddDeath(msg, sender)
 	addsdead = addsdead + 1
-	self:Message("stages", "yellow", L.mob_killed:format(sender, addsdead, 2), false)
+	self:Message("stages", "yellow", CL.mob_killed:format(sender, addsdead, 2), false)
 	if addsdead == 2 then
 		self:CancelTimer(throwHandle)
 		self:StopBar(L.throw)

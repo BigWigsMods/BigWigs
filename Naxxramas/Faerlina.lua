@@ -64,7 +64,7 @@ function mod:Silence(args)
 		self:DelayedMessage(28732, 25, "orange", L.silencewarn5sec)
 	else
 		-- Reactive enrage removed
-		self:Message(28798, "green", L.removed:format(self:SpellName(28798)))
+		self:Message(28798, "green", CL.removed:format(self:SpellName(28798)))
 		self:DelayedMessage(28798, 45, "red", CL.soon:format(self:SpellName(28798)))
 		self:Bar(28798, 60)
 
