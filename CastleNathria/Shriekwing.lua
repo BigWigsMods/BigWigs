@@ -173,7 +173,7 @@ function mod:BlindSwipe(args)
 end
 
 function mod:ExsanguinatingBite(args)
-	self:Message(args.spellId, "purple")
+	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
 	self:CDBar(args.spellId, 17)
 end
