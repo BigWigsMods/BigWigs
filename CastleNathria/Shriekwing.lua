@@ -113,7 +113,7 @@ end
 function mod:EarsplittingShriek(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, shriekCount))
 	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, shriekCount))
+	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, shriekCount))
 	shriekCount = shriekCount + 1
 	if shriekCount < 3 then -- 2 in stage 1
 		self:Bar(args.spellId, 47, CL.count:format(args.spellName, shriekCount))
@@ -207,7 +207,7 @@ function mod:BloodShroud(args)
 	self:StopBar(CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
 	self:StopBar(CL.count:format(self:SpellName(345397), waveofBloodCount)) -- Wave of Blood
 
-	shriekCount = shriekCount + 1 -- Reused for intermission Shriek
+	shriekCount = 1 -- Reused for intermission Shriek
 
 	self:CDBar("stages", 39, CL.intermission, args.spellId) -- 5s Cast, 40s Intermission/Stage 2
 	self:CDBar(329362, 7.3) -- Echoing Sonar
