@@ -32,6 +32,7 @@ if L then
 	-- L.custom_on_stop_timers = "Always show ability bars"
 	-- L.custom_on_stop_timers_desc = "Just for testing right now"
 
+	-- L.desires = "Desires"
 	-- L.bottles = "Bottles"
 	-- L.sins = "Sins"
 end

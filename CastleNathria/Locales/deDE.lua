@@ -37,6 +37,7 @@ if L then
 	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Derzeit nur zum Testen"
 
+	-- L.desires = "Desires"
 	L.bottles = "Behälter"
 	L.sins = "Sünden"
 end
