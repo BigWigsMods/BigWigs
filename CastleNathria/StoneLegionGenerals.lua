@@ -8,7 +8,7 @@ mod:RegisterEnableMob(
 	168112, -- General Kaal
 	168113) -- General Grashaal
 mod.engageId = 2417
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -99,7 +99,7 @@ function mod:OnBossEnable()
 	--[[ Stage One: Kaal's Assault ]]--
 	self:Log("SPELL_AURA_APPLIED", "HardenedStoneFormApplied", 329636)
 	self:Log("SPELL_AURA_REMOVED", "HardenedStoneFormRemoved", 329636)
-	self:Log("SPELL_CAST_START", "WickedBlade", 333387)
+	self:Log("SPELL_CAST_START", "WickedBlade", 344230, 333387) -- Normal, Heroic
 	self:Log("SPELL_AURA_APPLIED", "WickedBladeApplied", 333377) -- Wicked Mark
 	self:Log("SPELL_AURA_REMOVED", "WickedBladeRemoved", 333377)
 	self:Log("SPELL_CAST_SUCCESS", "HeartRend", 334765)
@@ -134,7 +134,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	wipe(mobCollector)
+	mobCollector = {}
 	stage = 1
 	wickedBladeCount = 1
 	heartRendCount = 1
@@ -224,7 +224,7 @@ function mod:HardenedStoneFormRemoved(args)
 end
 
 do
-	local playerList, onMe = {}, nil
+	local playerList, onMe = {}, false
 	local function printTarget(self, target, guid)
 		if self:Me(guid) then
 			self:Say(333387, L.first_blade)
@@ -246,10 +246,11 @@ do
 	end
 
 	function mod:WickedBlade(args)
+		playerList = {}
 		self:StopBar(CL.count:format(args.spellName, wickedBladeCount))
-		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
+		self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
 		wickedBladeCount = wickedBladeCount + 1
-		self:Bar(args.spellId, 30.5, CL.count:format(args.spellName, wickedBladeCount))
+		self:Bar(333387, 30.5, CL.count:format(args.spellName, wickedBladeCount))
 	end
 
 	function mod:WickedBladeApplied(args)
@@ -262,12 +263,11 @@ do
 
 	function mod:WickedBladeRemoved(args)
 		if self:Me(args.destGUID) then
-			onMe = nil
+			onMe = false
 		end
 		if self:GetOption(wickedBladeMarker) then
 			SetRaidTarget(args.destName, 0)
 		end
-		playerList = {}
 	end
 end
 
@@ -428,7 +428,7 @@ do
 
 	function mod:ReverberatingEruption(args)
 		self:StopBar(CL.count:format(args.spellName, reverberatingLeapCount))
-		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
+		self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
 		reverberatingLeapCount = reverberatingLeapCount + 1
 		self:CDBar(args.spellId, 32, CL.count:format(args.spellName, reverberatingLeapCount))
 	end
@@ -468,7 +468,7 @@ do
 		self:CDBar(args.spellId, 52, CL.count:format(L.skirmishers, shadowForcesCount))
 
 		if self:GetOption(skirmisherMarker) then
-			wipe(skirmisherMarks)
+			skirmisherMarks = {}
 			self:RegisterTargetEvents("SkirmisherAddMark")
 			self:ScheduleTimer("UnregisterTargetEvents", 10)
 		end
