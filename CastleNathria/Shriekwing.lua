@@ -61,7 +61,7 @@ end
 
 function mod:OnBossEnable()
 	-- Stage One - Thirst for Blood
-	self:Log("SPELL_CAST_START", "EarsplittingShriek", 330711, 345936) -- Stage 1, Stage 2
+	self:Log("SPELL_CAST_START", "EarsplittingShriek", 330711)
 	self:Log("SPELL_AURA_APPLIED", "EcholocationApplied", 342077)
 	self:Log("SPELL_AURA_REMOVED", "EcholocationRemoved", 342077)
 	self:Log("SPELL_CAST_START", "EchoingScreech", 342863)
@@ -111,14 +111,12 @@ end
 --
 
 function mod:EarsplittingShriek(args)
-	self:Message(330711, "red", CL.count:format(args.spellName, shriekCount))
-	self:PlaySound(330711, "long")
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, shriekCount))
+	self:PlaySound(args.spellId, "long")
+	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, shriekCount))
 	shriekCount = shriekCount + 1
 	if shriekCount < 3 then -- 2 in stage 1
-		self:CastBar(330711, 6, CL.count:format(args.spellName, shriekCount))
-		self:Bar(330711, 47, CL.count:format(args.spellName, shriekCount))
-	else
-		self:CastBar(330711, 4, CL.count:format(args.spellName, shriekCount))
+		self:Bar(args.spellId, 47, CL.count:format(args.spellName, shriekCount))
 	end
 end
 
