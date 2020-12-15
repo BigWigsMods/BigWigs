@@ -84,8 +84,8 @@ function mod:BigWigs_Flash(event, module, key)
 	if BigWigs.db.profile.flash then
 		flasher:Stop()
 		if colors then
-			local r, g, b = colors:GetColor("flash", module, key)
-			flashFrame:SetColorTexture(r, g, b, 0.6)
+			local r, g, b, a = colors:GetColor("flash", module, key)
+			flashFrame:SetColorTexture(r, g, b, a)
 		end
 		flashFrame:SetAlpha(0)
 		flashFrame:Show()
