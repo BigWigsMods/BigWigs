@@ -149,7 +149,7 @@ local function targetCheck(unit, sync)
 	if not name or UnitIsCorpse(unit) or UnitIsDead(unit) or UnitPlayerControlled(unit) then return end
 	local guid = UnitGUID(unit)
 	if not guid then
-		core:Error(("Found unit with name '%s' but no guid, tell the BigWigs authors."):format(name))
+		core:Error(("Found unit '%s' with name '%s' but no guid, tell the BigWigs authors."):format(unit, name))
 		return
 	end
 	local _, _, _, _, _, mobId = strsplit("-", guid)
