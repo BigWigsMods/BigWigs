@@ -56,17 +56,17 @@ if L then
 	-- L.custom_off_select_boss_order_value5 = "Frienda -> Stavros -> Niklaus"
 	-- L.custom_off_select_boss_order_value6 = "Stavros -> Frienda -> Niklaus"
 
-	--L.dance_assist = "Dance Assist"
-	--L.dance_assist_desc = "Show directional warnings for the dancing stage."
-	--L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance Forward |T450907:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Dance Right |T450908:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance Down |T450905:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance Left |T450906:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist = "Tanzassistent"
+	L.dance_assist_desc = "Zeigt an, in welche Richtung beim Tanzen gelaufen werden muss."
+	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Tanze vorwärts |T450907:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Tanze nach rechts |T450908:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Tanze nach unten |T450905:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Tanz nach links |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
-	--L.dance_yell_up = "Forward" -- Prance Forward!
-	--L.dance_yell_right = "right" -- Shimmy right!
-	--L.dance_yell_down = "down" -- Boogie down!
-	--L.dance_yell_left = "left" -- Sashay left!
+	L.dance_yell_up = "vorwärts" -- Tänzelt vorwärts!
+	L.dance_yell_right = "rechts" -- Schlenker nach rechts!
+	L.dance_yell_down = "unten" -- Tänzelt nach unten!
+	L.dance_yell_left = "links" -- Gleitet nach links!
 end
 
 L = BigWigs:NewBossLocale("Sludgefist", "deDE")
