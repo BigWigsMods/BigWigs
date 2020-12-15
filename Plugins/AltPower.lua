@@ -352,6 +352,11 @@ do
 	end
 
 	do
+		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
+		-- local addonName, addonTable = ...
+		-- if BigWigsLoader then
+		-- 	BigWigsLoader.RegisterMessage(addonTable, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
+		-- end
 		display = CreateFrame("Frame", "BigWigsAltPower", UIParent)
 		display:SetSize(230, 80)
 		display:SetClampedToScreen(true)
@@ -415,13 +420,6 @@ do
 			self:SetSize(230, db.expanded and 210 or 80)
 			self.expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
 		end)
-
-		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
-		-- local name, addon = ...
-		-- if BigWigsLoader then
-		-- 	BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
-		-- end
-		plugin:SendMessage("BigWigs_FrameCreated", display, "AltPower")
 	end
 
 	-- This module is rarely used, and opened once during an encounter where it is.
@@ -620,3 +618,5 @@ do
 	end
 end
 
+-- We run this last to prevent the AltPower module breaking if some addon listening to this event causes an error
+plugin:SendMessage("BigWigs_FrameCreated", display, "AltPower")
