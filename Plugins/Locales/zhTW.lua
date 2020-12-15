@@ -282,8 +282,14 @@ L.textDesc = "是否顯示或隱藏計時條上的文字。"
 -- BossBlock.lua
 --
 
-L.disableSfx = "禁用音效"
-L.disableSfxDesc = "關閉魔獸世界的音效選項中的「音效」部份，然後在首領戰之後恢復。這可以幫助您專注在BigWigs的警告音效。"
+L.audio = "語音"
+L.music = "音樂"
+L.ambience = "環境音效"
+L.sfx = "音效"
+--L.disableMusic = "Mute music (recommended)"
+--L.disableAmbience = "Mute ambient sounds (recommended)"
+--L.disableSfx = "Mute sound effects (not recommended)"
+L.disableAudioDesc = "關閉魔獸世界的音效選項中的「%s」部份，然後在首領戰之後恢復。這可以幫助您專注在BigWigs的警告音效。"
 L.blockTooltipQuests = "滑鼠提示不顯示任務資訊"
 L.blockTooltipQuestsDesc = "當你在進行擊殺某首領的任務時，滑鼠提示指向首領會顯示「0/1 完成」，導致滑鼠提示框變得很大，啟用這項功能可以避免這個情況。"
 L.blockFollowerMission = "封鎖要塞彈出訊息"
