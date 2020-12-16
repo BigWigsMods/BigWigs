@@ -18,6 +18,8 @@ plugin.defaultDB = {
 	blockTooltipQuests = true,
 	blockObjectiveTracker = true,
 	disableSfx = false,
+	disableMusic = false,
+	disableAmbience = false,
 }
 
 --------------------------------------------------------------------------------
@@ -43,10 +45,10 @@ plugin.pluginOptions = {
 		return plugin.db.profile[info[#info]]
 	end,
 	set = function(info, value)
-		if IsEncounterInProgress() then return end -- Don't allow toggling during an encounter.
 		local entry = info[#info]
 		plugin.db.profile[entry] = value
 	end,
+	disabled = function() return IsEncounterInProgress() end, -- Don't allow toggling during an encounter.
 	args = {
 		heading = {
 			type = "description",
@@ -104,12 +106,31 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 7,
 		},
+		audioHeader = {
+			type = "header",
+			name = L.audio,
+			order = 8,
+		},
+		disableMusic = {
+			type = "toggle",
+			name = L.disableMusic,
+			desc = L.disableAudioDesc:format(L.music),
+			width = "full",
+			order = 9,
+		},
+		disableAmbience = {
+			type = "toggle",
+			name = L.disableAmbience,
+			desc = L.disableAudioDesc:format(L.ambience),
+			width = "full",
+			order = 10,
+		},
 		disableSfx = {
 			type = "toggle",
 			name = L.disableSfx,
-			desc = L.disableSfxDesc,
+			desc = L.disableAudioDesc:format(L.sfx),
 			width = "full",
-			order = 8,
+			order = 11,
 		},
 	},
 }
@@ -129,6 +150,12 @@ function plugin:OnPluginEnable()
 	end
 	if self.db.profile.blockTooltipQuests then
 		SetCVar("showQuestTrackingTooltips", "1")
+	end
+	if self.db.profile.disableMusic then
+		SetCVar("Sound_EnableMusic", "1")
+	end
+	if self.db.profile.disableAmbience then
+		SetCVar("Sound_EnableAmbience", "1")
 	end
 
 	if IsEncounterInProgress() then -- Just assume we logged into an encounter after a DC
@@ -204,6 +231,12 @@ do
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "0")
 		end
+		if self.db.profile.disableMusic then
+			SetCVar("Sound_EnableMusic", "0")
+		end
+		if self.db.profile.disableAmbience then
+			SetCVar("Sound_EnableAmbience", "0")
+		end
 
 		CheckElv(self)
 		-- Never hide when tracking achievements or in Mythic+
@@ -240,6 +273,12 @@ do
 		end
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "1")
+		end
+		if self.db.profile.disableMusic then
+			SetCVar("Sound_EnableMusic", "1")
+		end
+		if self.db.profile.disableAmbience then
+			SetCVar("Sound_EnableAmbience", "1")
 		end
 		if restoreObjectiveTracker then
 			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)

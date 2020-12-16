@@ -282,8 +282,14 @@ L.textDesc = "Text in den Leisten anzeigen oder verstecken."
 -- BossBlock.lua
 --
 
-L.disableSfx = "Soundeffekte deaktivieren"
-L.disableSfxDesc = "Die Option 'Soundeffekte' im WoW Soundmenü wird deaktiviert und erst nach dem Bosskampf wieder aktiviert. Dies kann helfen sich auf die BigWigs Sounds zu konzentrieren."
+L.audio = "Audio"
+L.music = "Musik"
+L.ambience = "Umgebungsgeräusche"
+L.sfx = "Soundeffekte"
+--L.disableMusic = "Mute music (recommended)"
+--L.disableAmbience = "Mute ambient sounds (recommended)"
+--L.disableSfx = "Mute sound effects (not recommended)"
+L.disableAudioDesc = "Die Option '%s' im WoW Soundmenü wird deaktiviert und erst nach dem Bosskampf wieder aktiviert. Dies kann helfen sich auf die BigWigs Sounds zu konzentrieren."
 L.blockTooltipQuests = "Questziele im Tooltip blockieren"
 L.blockTooltipQuestsDesc = "Wenn zum Abschluss einer Quest ein Boss getötet werden muss, wird der Fortschritt normalerweise im MouseOver-Tooltip mit '0/1 abgeschlossen' angezeigt. Dieser Fortschritt wird im Kampf versteckt, damit der Tooltip nicht zu groß wird."
 L.blockFollowerMission = "Popups der Anhänger blockieren"

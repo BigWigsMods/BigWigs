@@ -282,8 +282,14 @@ L.textDesc = "Ya sea para mostrar u ocultar el texto que se muestra en las barra
 -- BossBlock.lua
 --
 
-L.disableSfx = "Deshabilitar efectos de sonido"
-L.disableSfxDesc = "La opción de 'Efectos de Sonido' en las opciones de sonido de WoW se desactivará, luego se vovlerá a activar cuando el encuentro con el jefe finalice. Esto puede ayudarte a concentrarte en los sonidos de avisos de BigWigs."
+L.audio = "Audio"
+L.music = "Música"
+L.ambience = "Sonido ambiental"
+L.sfx = "Efectos de sonido"
+--L.disableMusic = "Mute music (recommended)"
+--L.disableAmbience = "Mute ambient sounds (recommended)"
+--L.disableSfx = "Mute sound effects (not recommended)"
+L.disableAudioDesc = "La opción de '%s' en las opciones de sonido de WoW se desactivará, luego se vovlerá a activar cuando el encuentro con el jefe finalice. Esto puede ayudarte a concentrarte en los sonidos de avisos de BigWigs."
 --L.blockTooltipQuests = "Block tooltip quest objectives"
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
 --L.blockFollowerMission = "Bloquear ventanas emergentes de ciudadela" -- Rename to follower mission

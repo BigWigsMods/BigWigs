@@ -26,7 +26,7 @@ plugin.defaultDB = {
 	barColor = { ["*"] = { ["*"] = { 0.25, 0.33, 0.68, 1 } } },
 	barEmphasized = { ["*"] = { ["*"] = { 1, 0, 0, 1 } } },
 
-	flash = { ["*"] = { ["*"] = { 0, 0, 1 } } },
+	flash = { ["*"] = { ["*"] = { 0, 0, 1, 0.6 } } },
 }
 
 local function copyTable(to, from)
@@ -205,6 +205,7 @@ local colorOptions = {
 				flash = {
 					name = L.flash,
 					type = "color",
+					hasAlpha = true,
 					order = 11,
 				},
 			},

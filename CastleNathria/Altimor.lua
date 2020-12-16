@@ -205,7 +205,8 @@ end
 function mod:JaggedClawsApplied(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	if amount > 1 then
+	local unit = self:GetBossId(165067) -- Margore
+	if amount > 1 and (not unit or not self:Tanking(unit)) then -- Don't want to trust that it will always be a specific unit
 		self:PlaySound(args.spellId, "warning")
 	end
 end

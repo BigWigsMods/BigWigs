@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Fallback if yells are not detected for stage changes
@@ -22,6 +21,8 @@ local dimensionalTearCount = 1
 local spiritCount = 1
 local seedCount = 1
 local annihilateCount = 1
+local sparkCount = 1
+local glyphCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -91,17 +92,21 @@ function mod:OnEngage()
 	spiritCount = 1
 	seedCount = 1
 	annihilateCount = 1
-	self:Bar(325399, 5.5) -- Hyperlight Spark
+	sparkCount = 1
+	glyphCount = 1
+
+	self:Bar(325399, 5.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
 	self:Bar(326271, 11) -- Stasis Trap
 	self:Bar(328437, 17, CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
 	self:Bar(335013, 21) -- Rift Blast
-	self:Bar(325236, 31) -- Glyph of Destruction
+	self:Bar(325236, 31, CL.count:format(self:SpellName(325236), glyphCount)) -- Glyph of Destruction
 	self:Bar(340758, 27, CL.count:format(self:SpellName(340758), spiritCount)) -- Fleeting Spirit
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.stage2_yell) then
 		self:StopBar(326271) -- Stasis Trap
@@ -172,11 +177,13 @@ do
 end
 
 function mod:GlyphofDestruction(args)
-	self:CDBar(325236, 29)
+	self:StopBar(CL.count:format(self:SpellName(325236), glyphCount))
+	glyphCount = glyphCount + 1
+	self:CDBar(325236, 29, CL.count:format(self:SpellName(325236), glyphCount))
 end
 
 function mod:GlyphofDestructionApplied(args)
-	self:TargetMessage(args.spellId, "purple", args.destName)
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, glyphCount-1))
 	self:PlaySound(args.spellId, "warning")
 	self:TargetBar(args.spellId, 8, args.destName)
 	if self:Me(args.destGUID) then
@@ -203,9 +210,10 @@ function mod:RiftBlast(args)
 end
 
 function mod:HyperlightSpark(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, sparkCount))
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 15.8)
+	sparkCount = sparkCount + 1
+	self:CDBar(args.spellId, 15.8, CL.count:format(args.spellName, sparkCount))
 end
 
 -- The Relics of Castle Nathria
@@ -235,7 +243,7 @@ function mod:SeedsofExtinction(args)
 	self:Message(340788, "cyan", CL.count:format(self:SpellName(340788), seedCount))
 	self:PlaySound(340788, "long")
 	seedCount = seedCount + 1
-	self:Bar(340788, 41.5, CL.count:format(self:SpellName(340788), seedCount))
+	self:Bar(340788, seedCount % 2 and 53.3 or 41.3, CL.count:format(self:SpellName(340788), seedCount))
 end
 
 function mod:Extinction(args)
@@ -254,5 +262,5 @@ function mod:EdgeofAnnihilation(args)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 10, CL.count:format(args.spellName, annihilateCount))
 	annihilateCount = annihilateCount + 1
-	self:CDBar(args.spellId, 82, CL.count:format(args.spellName, annihilateCount))
+	self:CDBar(args.spellId, 52, CL.count:format(args.spellName, annihilateCount))
 end

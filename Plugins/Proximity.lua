@@ -854,6 +854,11 @@ end
 
 do
 	local createAnchor = function()
+		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
+		-- local addonName, addonTable = ...
+		-- if BigWigsLoader then
+		-- 	BigWigsLoader.RegisterMessage(addonTable, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
+		-- end
 		proxAnchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
 		proxAnchor:SetWidth(db.width)
 		proxAnchor:SetHeight(db.height)
@@ -1047,12 +1052,10 @@ do
 			end
 		end)
 
-		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
-		-- local name, addon = ...
-		-- if BigWigsLoader then
-		-- 	BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
-		-- end
-		plugin:SendMessage("BigWigs_FrameCreated", proxAnchor, "Proximity")
+		-- We run this on a delay to prevent the Proximity module breaking if some addon listening to this event causes an error
+		BigWigsLoader.CTimerAfter(0, function()
+			plugin:SendMessage("BigWigs_FrameCreated", proxAnchor, "Proximity")
+		end)
 	end
 
 	function plugin:OnPluginEnable()
