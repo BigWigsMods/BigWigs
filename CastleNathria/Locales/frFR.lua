@@ -32,6 +32,7 @@ if L then
 	L.custom_on_stop_timers = "Toujours montrer les barres de techniques"
 	L.custom_on_stop_timers_desc = "En cours de test"
 
+	-- L.desires = "Desires"
 	L.bottles = "Bouteilles"
 	L.sins = "Vices"
 end

@@ -38,7 +38,7 @@ if L then
 	L.custom_on_stop_timers_desc = "Derzeit nur zum Testen"
 
 	L.desires = "Begierden"
-	L.bottles = "Behälter"
+	L.bottles = "Flaschen"
 	L.sins = "Sünden"
 end
 
