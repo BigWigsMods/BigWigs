@@ -328,7 +328,7 @@ end
 
 function mod:PetrifyingHowl(args)
 	petrifyingHowlCount = petrifyingHowlCount + 1
-	self:Bar(args.spellId, 20.5, CL.count:format(args.spellName, petrifyingHowlCount))
+	self:Bar(args.spellId, self:Mythic() and 30 or 20.5, CL.count:format(args.spellName, petrifyingHowlCount))
 end
 
 do
