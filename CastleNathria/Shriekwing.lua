@@ -120,7 +120,7 @@ end
 function mod:EarsplittingShriek(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, shriekCount))
 	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, shriekCount))
+	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, shriekCount))
 	shriekCount = shriekCount + 1
 	if shriekCount < 3 then -- 2 in stage 1
 		self:Bar(args.spellId, 47, CL.count:format(args.spellName, shriekCount))
