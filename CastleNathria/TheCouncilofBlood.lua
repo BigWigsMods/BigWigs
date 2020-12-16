@@ -86,7 +86,7 @@ function mod:GetOptions()
 
 		--[[ Lord Stavros ]]--
 		327497, -- Evasive Lunge
-		{331634, "SAY"}, -- Dark Recital
+		{331634, "SAY", "EMPHASIZE"}, -- Dark Recital
 		"custom_on_repeating_dark_recital",
 		346800, -- Waltz of Blood
 		346303, -- Violent Uproar
