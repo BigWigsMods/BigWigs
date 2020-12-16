@@ -18,6 +18,7 @@ local consumeCount = 1
 local expungeCount = 1
 local desolateCount = 1
 local overwhelmCount = 1
+local miasmaMarkClear = {}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -43,7 +44,6 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GluttonousMiasmaApplied", 329298)
-	self:Log("SPELL_AURA_REMOVED", "GluttonousMiasmaRemoved", 329298)
 	self:Log("SPELL_CAST_START", "Consume", 334522)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumeSuccess", 334522)
 	-- self:Log("SPELL_AURA_APPLIED", "ExpungeApplied", 329725)
@@ -84,6 +84,19 @@ function mod:OnEngage()
 	self:RegisterEvent("UNIT_AURA")
 end
 
+function mod:OnBossDisable()
+	if self:GetOption(gluttonousMiasmaMarker) then
+		for i = 1, #miasmaMarkClear do
+			local n = miasmaMarkClear[i]
+			-- Clearing marks on _REMOVED doesn't work great on this boss
+			-- The second set of marks is applied before the first is removed
+			-- When trying to remove the first set of marks it can clear the second set
+			SetRaidTarget(n, 0)
+		end
+		miasmaMarkClear = {}
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -104,16 +117,12 @@ do
 			SetRaidTarget(args.destName, count)
 		end
 		if count == 1 then
+			miasmaMarkClear = {}
 			miasmaCount = miasmaCount + 1
 		 self:Bar(args.spellId, 24, CL.count:format(args.spellName, miasmaCount))
 		end
+		miasmaMarkClear[count] = args.destName -- For clearing marks OnBossDisable
 		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, miasmaCount-1), nil, nil, playerIcons)
-	end
-end
-
-function mod:GluttonousMiasmaRemoved(args)
-	if self:GetOption(gluttonousMiasmaMarker) then
-		SetRaidTarget(args.destName, 0)
 	end
 end
 
