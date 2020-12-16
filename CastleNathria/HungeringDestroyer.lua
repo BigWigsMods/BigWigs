@@ -28,6 +28,7 @@ local gluttonousMiasmaMarker = mod:AddMarkerOption(false, "player", 1, 329298, 1
 local volatileEjectionMarker = mod:AddMarkerOption(false, "player", 1, 334266, 5, 6, 7, 8) -- Volatile Ejection
 function mod:GetOptions()
 	return {
+		"berserk",
 		{329298, "SAY"}, -- Gluttonous Miasma
 		gluttonousMiasmaMarker,
 		334522, -- Consume
@@ -80,6 +81,11 @@ function mod:OnEngage()
 		self:Bar(334522, 89, CL.count:format(self:SpellName(334522), consumeCount)) -- Consume
 	end
 
+	if self:Mythic() then
+		self:Berserk(420)
+	else
+		self:Berserk(600)
+	end
 	-- XXX Expunge tracking
 	self:RegisterEvent("UNIT_AURA")
 end
@@ -108,8 +114,8 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count)) 
-			-- XXX Add some kind of health % say / yell messages when you are low, 
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+			-- XXX Add some kind of health % say / yell messages when you are low,
 			-- XXX this initial application doesn't change too much and clutters instead of the Laser says.
 			self:PlaySound(args.spellId, "alarm")
 		end
