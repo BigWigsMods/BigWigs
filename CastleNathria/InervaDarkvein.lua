@@ -376,7 +376,8 @@ do
 	end
 
 	function mod:RAID_BOSS_WHISPER(_, msg)
-		if msg:find("325005", nil, true) then -- Shared Suffering
+		--|TInterface\\Icons\\SPELL_SHAMAN_SPECTRALTRANSFORMATION.BLP:20|tYou have been chosen for |cFFFF0000|Hspell:324983|h[Shared Suffering]|h|r!
+		if msg:find("324983", nil, true) then -- Shared Suffering
 			onMe = true
 			self:Say(324983, L.sins)
 			self:PlaySound(324983, "warning")
