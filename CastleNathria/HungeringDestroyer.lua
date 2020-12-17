@@ -18,6 +18,7 @@ local consumeCount = 1
 local expungeCount = 1
 local desolateCount = 1
 local overwhelmCount = 1
+local miasmaMarkClear = {}
 
 --------------------------------------------------------------------------------
 -- Initialization
@@ -27,6 +28,7 @@ local gluttonousMiasmaMarker = mod:AddMarkerOption(false, "player", 1, 329298, 1
 local volatileEjectionMarker = mod:AddMarkerOption(false, "player", 1, 334266, 5, 6, 7, 8) -- Volatile Ejection
 function mod:GetOptions()
 	return {
+		"berserk",
 		{329298, "SAY"}, -- Gluttonous Miasma
 		gluttonousMiasmaMarker,
 		334522, -- Consume
@@ -43,7 +45,6 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GluttonousMiasmaApplied", 329298)
-	self:Log("SPELL_AURA_REMOVED", "GluttonousMiasmaRemoved", 329298)
 	self:Log("SPELL_CAST_START", "Consume", 334522)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumeSuccess", 334522)
 	-- self:Log("SPELL_AURA_APPLIED", "ExpungeApplied", 329725)
@@ -80,8 +81,26 @@ function mod:OnEngage()
 		self:Bar(334522, 89, CL.count:format(self:SpellName(334522), consumeCount)) -- Consume
 	end
 
+	if self:Mythic() then
+		self:Berserk(420)
+	else
+		self:Berserk(600)
+	end
 	-- XXX Expunge tracking
 	self:RegisterEvent("UNIT_AURA")
+end
+
+function mod:OnBossDisable()
+	if self:GetOption(gluttonousMiasmaMarker) then
+		for i = 1, #miasmaMarkClear do
+			local n = miasmaMarkClear[i]
+			-- Clearing marks on _REMOVED doesn't work great on this boss
+			-- The second set of marks is applied before the first is removed
+			-- When trying to remove the first set of marks it can clear the second set
+			SetRaidTarget(n, 0)
+		end
+		miasmaMarkClear = {}
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -95,8 +114,8 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count)) 
-			-- XXX Add some kind of health % say / yell messages when you are low, 
+			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+			-- XXX Add some kind of health % say / yell messages when you are low,
 			-- XXX this initial application doesn't change too much and clutters instead of the Laser says.
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -104,16 +123,12 @@ do
 			SetRaidTarget(args.destName, count)
 		end
 		if count == 1 then
+			miasmaMarkClear = {}
 			miasmaCount = miasmaCount + 1
 		 self:Bar(args.spellId, 24, CL.count:format(args.spellName, miasmaCount))
 		end
+		miasmaMarkClear[count] = args.destName -- For clearing marks OnBossDisable
 		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, miasmaCount-1), nil, nil, playerIcons)
-	end
-end
-
-function mod:GluttonousMiasmaRemoved(args)
-	if self:GetOption(gluttonousMiasmaMarker) then
-		SetRaidTarget(args.destName, 0)
 	end
 end
 

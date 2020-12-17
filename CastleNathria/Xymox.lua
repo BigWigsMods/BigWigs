@@ -84,6 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Extinction", 329107)
 	self:Log("SPELL_AURA_APPLIED", "WitheringTouchApplied", 340860)
 	self:Log("SPELL_CAST_START", "EdgeofAnnihilation", 328789)
+	--self:Log("SPELL_CAST_START", "UnleashPower", 342854)
 end
 
 function mod:OnEngage()
@@ -150,7 +151,7 @@ do
 	function mod:DimensionalTear(args)
 		self:StopBar(CL.count:format(self:SpellName(328437), dimensionalTearCount))
 		dimensionalTearCount = dimensionalTearCount + 1
-		self:CDBar(328437, 41.3, CL.count:format(self:SpellName(328437), dimensionalTearCount))
+		self:CDBar(328437, self:Mythic() and (stage == 3 and 80 or stage == 2 and 51 or 36.5) or 41.3, CL.count:format(self:SpellName(328437), dimensionalTearCount))
 	end
 
 	function mod:DimensionalTearApplied(args)
@@ -179,7 +180,7 @@ end
 function mod:GlyphofDestruction(args)
 	self:StopBar(CL.count:format(self:SpellName(325236), glyphCount))
 	glyphCount = glyphCount + 1
-	self:CDBar(325236, 29, CL.count:format(self:SpellName(325236), glyphCount))
+	self:CDBar(325236, self:Mythic() and 36.5 or 29, CL.count:format(self:SpellName(325236), glyphCount))
 end
 
 function mod:GlyphofDestructionApplied(args)
@@ -200,7 +201,7 @@ end
 function mod:StasisTrap(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 30)
+	self:CDBar(args.spellId, self:Mythic() and (stage == 3 and 36 or 30) or 30)
 end
 
 function mod:RiftBlast(args)
@@ -243,11 +244,11 @@ function mod:SeedsofExtinction(args)
 	self:Message(340788, "cyan", CL.count:format(self:SpellName(340788), seedCount))
 	self:PlaySound(340788, "long")
 	seedCount = seedCount + 1
-	self:Bar(340788, seedCount % 2 and 53.3 or 41.3, CL.count:format(self:SpellName(340788), seedCount))
+	self:Bar(340788, self:Mythic() and (seedCount == 2 and 30 or 51) or seedCount % 2 and 53.3 or 41.3, CL.count:format(self:SpellName(340788), seedCount))
 end
 
 function mod:Extinction(args)
-	self:CastBar(args.spellId, self:Normal() and 16 or 14, CL.count:format(args.spellName, seedCount-1))
+	self:CastBar(args.spellId, self:Normal() and 16 or 12, CL.count:format(args.spellName, seedCount-1))
 end
 
 function mod:WitheringTouchApplied(args)
@@ -258,9 +259,11 @@ function mod:WitheringTouchApplied(args)
 end
 
 function mod:EdgeofAnnihilation(args)
+	self:StopBar(CL.count:format(args.spellName, annihilateCount))
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, annihilateCount))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 10, CL.count:format(args.spellName, annihilateCount))
 	annihilateCount = annihilateCount + 1
-	self:CDBar(args.spellId, 52, CL.count:format(args.spellName, annihilateCount))
+	self:CDBar(args.spellId, self:Mythic() and (annihilateCount == 2 and 32 or 74) or 52, CL.count:format(args.spellName, annihilateCount))
 end
+

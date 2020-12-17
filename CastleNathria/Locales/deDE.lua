@@ -37,8 +37,8 @@ if L then
 	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Derzeit nur zum Testen"
 
-	-- L.desires = "Desires"
-	L.bottles = "Behälter"
+	L.desires = "Begierden"
+	L.bottles = "Flaschen"
 	L.sins = "Sünden"
 end
 
@@ -77,8 +77,13 @@ end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "deDE")
 if L then
-	L.first_blade = "Erste Klinge"
+	L.first_blade = "Erste Klinge" -- Wicked Blade
 	L.second_blade = "Zweite Klinge"
+
+	L.skirmishers = "Scharmützlerinnen" -- Short for Stone Legion Skirmishers
+
+	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
+	L.custom_on_stop_timers_desc = "Derzeit nur zum Testen"
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "deDE")

@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Shriekwing", 2296, 2393)
 if not mod then return end
 mod:RegisterEnableMob(164406) -- Shriekwing
 mod.engageId = 2398
-mod.respawnTime = 5
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -35,6 +35,7 @@ end
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 		-- Stage One - Thirst for Blood
 		330711, -- Earsplitting Shriek
 		340324, -- Sanguine Ichor
@@ -104,6 +105,12 @@ function mod:OnEngage()
 	self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
 	self:CDBar(330711, 48.5, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:CDBar(328921, 105) -- Blood Shroud
+
+	if self:Mythic() then
+		self:Berserk(400)
+	else
+		self:Berserk(550)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -159,7 +166,7 @@ function mod:WaveofBlood(args)
 	self:PlaySound(args.spellId, "alarm")
 	waveofBloodCount = waveofBloodCount + 1
 	if waveofBloodCount < 5 then -- 4 in stage 1
-		self:Bar(args.spellId, 25, CL.count:format(args.spellName, waveofBloodCount))
+		self:Bar(args.spellId, 25.5, CL.count:format(args.spellName, waveofBloodCount))
 	end
 end
 
