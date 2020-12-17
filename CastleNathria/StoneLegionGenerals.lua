@@ -224,40 +224,65 @@ function mod:HardenedStoneFormRemoved(args)
 end
 
 do
-	local playerList, onMe = {}, false
+	local playerList, onMe, firstGUID = {}, false, nil
 	local function printTarget(self, target, guid)
+		if #playerList ~= 0 then -- Compensate for sometimes taking a very long time (0.5s+) to pick a target by using this fallback
+			if not self:Me(guid) and onMe then
+				self:Say(333387, L.second_blade)
+				self:PlaySound(333387, "warning")
+			end
+			if self:GetOption(wickedBladeMarker) then
+				for i = 1, #playerList do
+					local name = playerList[i]
+					SetRaidTarget(name, name == target and 6 or 7)
+				end
+			end
+		else
+			firstGUID = guid
+			playerList[1] = target
+		end
+
 		if self:Me(guid) then
 			self:Say(333387, L.first_blade)
 			self:PlaySound(333387, "warning")
-		elseif onMe then
-			self:Say(333387, L.second_blade)
-			self:PlaySound(333387, "warning")
 		end
-		if self:GetOption(wickedBladeMarker) then
-			for _, player in pairs(playerList) do
-				if player == target then
-					SetRaidTarget(player, 6)
-				else
-					SetRaidTarget(player, 7)
-				end
-			end
-		end
-		self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 	end
 
 	function mod:WickedBlade(args)
 		playerList = {}
+		firstGUID = nil
 		self:StopBar(CL.count:format(args.spellName, wickedBladeCount))
-		self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
+		self:GetNextBossTarget(printTarget, args.sourceGUID, 1)
 		wickedBladeCount = wickedBladeCount + 1
 		self:Bar(333387, 30.5, CL.count:format(args.spellName, wickedBladeCount))
 	end
 
 	function mod:WickedBladeApplied(args)
-		local count = #playerList+1
-		playerList[count] = args.destName
-		if self:Me(args.destGUID) then
-			onMe = true
+		if not firstGUID then -- Compensate for sometimes taking a very long time (0.5s+) to pick a target by using this fallback
+			playerList[#playerList+1] = args.destName
+			if self:Me(args.destGUID) then
+				onMe = true
+				self:Say(333387)
+				self:PlaySound(333387, "warning")
+			end
+			if #playerList == 2 then
+				--if self:GetOption(wickedBladeMarker) then -- Are potentially wrong marks better than potentially no marks?
+				--	SetRaidTarget(playerList[1], 6)
+				--	SetRaidTarget(playerList[2], 7)
+				--end
+				self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
+			end
+		elseif firstGUID and firstGUID ~= args.destGUID then
+			if self:Me(args.destGUID) then
+				self:Say(333387, L.second_blade)
+				self:PlaySound(333387, "warning")
+			end
+			playerList[2] = args.destName
+			if self:GetOption(wickedBladeMarker) then
+				SetRaidTarget(playerList[1], 6)
+				SetRaidTarget(playerList[2], 7)
+			end
+			self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 		end
 	end
 
@@ -428,7 +453,7 @@ do
 
 	function mod:ReverberatingEruption(args)
 		self:StopBar(CL.count:format(args.spellName, reverberatingLeapCount))
-		self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
+		self:GetNextBossTarget(printTarget, args.sourceGUID)
 		reverberatingLeapCount = reverberatingLeapCount + 1
 		self:CDBar(args.spellId, 32, CL.count:format(args.spellName, reverberatingLeapCount))
 	end

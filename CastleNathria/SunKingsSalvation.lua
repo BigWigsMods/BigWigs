@@ -128,7 +128,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BurningRemnantsApplied", 326456)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningRemnantsApplied", 326456)
 	self:Log("SPELL_CAST_START", "EmberBlast", 325877)
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Ember Blast Target
 	self:Log("SPELL_CAST_START", "BlazingSurge", 329518)
 	self:Log("SPELL_AURA_APPLIED", "EyesonTarget", 328479) -- Phoenix Fixate
 	self:Log("SPELL_AURA_REMOVED", "ReflectionofGuiltRemoved", 323402)
@@ -335,25 +334,20 @@ function mod:BurningRemnantsApplied(args)
 end
 
 do
-	local castEnd = 0
-	function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg, _, _, _, destName)
-		if msg:find("325873", nil, true) then -- Ember Blast
-			self:TargetMessage(325877, "orange", destName, CL.count:format(self:SpellName(325877), emberBlastCount-1))
-			local guid = UnitGUID(destName)
-			if self:Me(guid) then
-				self:PlaySound(325877, "warning")
-				self:Yell(325877)
-				self:Flash(325877)
-				local castLeft = castEnd - GetTime()
-				self:YellCountdown(325877, castLeft)
-			else
-				self:PlaySound(325877, "alert")
-			end
+	local function printTarget(self, player, guid)
+		if self:Me(guid) then
+			self:PlaySound(325877, "warning")
+			self:Yell(325877)
+			self:Flash(325877)
+			self:YellCountdown(325877, 3)
+		else
+			self:PlaySound(325877, "alert")
 		end
+		self:TargetMessage(325877, "orange", player, CL.count:format(self:SpellName(325877), emberBlastCount-1))
 	end
 
 	function mod:EmberBlast(args)
-		castEnd = GetTime() + 3
+		self:GetNextBossTarget(printTarget, args.sourceGUID)
 		self:CastBar(args.spellId, 3, CL.count:format(args.spellName, emberBlastCount))
 		emberBlastCount = emberBlastCount + 1
 		self:Bar(args.spellId, 20.5, CL.count:format(args.spellName, emberBlastCount))
