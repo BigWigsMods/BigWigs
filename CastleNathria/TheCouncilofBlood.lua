@@ -144,7 +144,7 @@ function mod:OnBossEnable()
 
 	--[[ Intermission: The Danse Macabre ]]--
 	self:Log("SPELL_CAST_SUCCESS", "DanseMacabre", 330959)
-	self:Log("SPELL_CAST_SUCCESS", "DanseMacabreBegin", 328497)
+	--self:Log("SPELL_CAST_SUCCESS", "DanseMacabreBegin", 328497)
 	self:Log("SPELL_AURA_REMOVED", "DanseMacabreOver", 330959)
 	self:Log("SPELL_AURA_APPLIED", "WrongMovesApplied", 330848)
 
