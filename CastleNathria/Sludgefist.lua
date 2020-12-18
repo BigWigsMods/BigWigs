@@ -18,6 +18,7 @@ local hatefullGazeCount = 1
 local chainSlamCount = 1
 local seismicShiftCount = 1
 local chainLinksApplied = 0
+local fallingRubbleCount = 1
 
 local timers = {
 	[332318] = {18.5, 25.1, 42.6, 25.5, 42.5, 25.5, 45, 22.5, 45.0, 23.1, 41.4}, -- Destructive Stomp
@@ -161,6 +162,7 @@ function mod:DestructiveImpactRemoved(args)
 		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 	else
 		self:CDBar(331314, 58.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+	end
 	-- Update timers to be more exact
 	if self:Mythic() then
 		--self:Bar(340817, 5.5, CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Shift & Stomp
