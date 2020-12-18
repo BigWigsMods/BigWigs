@@ -69,7 +69,7 @@ local concussiveSmashCountTable = {}
 local blazingSurgeCount = 1
 local emberBlastCount = 1
 local cloakofFlamesCount = 1
-local = dmgcloakofFlamesCount = 1
+local dmgcloakofFlamesCount = 1
 
 --------------------------------------------------------------------------------
 -- Initialization
