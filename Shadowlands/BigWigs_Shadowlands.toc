@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fShadowlands|r]
 ## Title-frFR: BigWigs [|cffeda55fShadowlands|r]
 ## Title-ruRU: BigWigs [|cffeda55fShadowlands|r]
-## Title-zhCN: BigWigs [|cffeda55fShadowlands|r]
+## Title-zhCN: BigWigs [|cffeda55f暗影界|r]
 ## Title-zhTW: BigWigs [|cffeda55fShadowlands|r]
 ## Title-itIT: BigWigs [|cffeda55fShadowlands|r]
 ## Title-ptBR: BigWigs [|cffeda55fShadowlands|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Shadowlands Modules
 ## Notes-frFR: BigWigs Shadowlands Modules
 ## Notes-ruRU: BigWigs Shadowlands Modules
-## Notes-zhCN: BigWigs Shadowlands Modules
+## Notes-zhCN: BigWigs 暗影界模块。
 ## Notes-zhTW: BigWigs Shadowlands Modules
 ## Notes-itIT: BigWigs Shadowlands Modules
 ## Notes-ptBR: BigWigs Shadowlands Modules
