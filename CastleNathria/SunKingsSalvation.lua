@@ -106,6 +106,7 @@ function mod:GetOptions()
 		{328889, "SAY", "PROXIMITY"}, -- Greater Castigation
 		-- Mythic
 		337859,  -- Cloak of Flames
+		343026, --- Damage Cloak of Flames
 	},{
 		["stages"] = "general",
 		[326455] = -21966, -- Shade of Kael'thas
@@ -156,6 +157,8 @@ function mod:OnBossEnable()
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "CloakofFlamesApplied", 337859)
 	self:Log("SPELL_AURA_REMOVED", "CloakofFlamesRemoved", 337859)
+	self:Log("SPELL_AURA_APPLIED", "DmgCloakofFlamesApplied", 343026)
+	self:Log("SPELL_AURA_REMOVED", "DmgCloakofFlamesRemoved", 343026)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 328579) -- Smoldering Remnants
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 328579)
@@ -192,6 +195,7 @@ function mod:OnEngage()
 	blazingSurgeCount = 1
 	emberBlastCount = 1
 	cloakofFlamesCount = 1
+	dmgcloakofFlamesCount = 1
 	shadeUp = nil
 
 	self:Bar(328889, 5.5) -- Greater Castigation
@@ -307,10 +311,14 @@ function mod:ReflectionofGuiltApplied(args)
 
 		blazingSurgeCount = 1
 		emberBlastCount = 1
+		dmgcloakofFlamesCount = 1
 
 		self:Bar(326455, 13.5) -- Fiery Strike
 		self:Bar(325877, 19.5, CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 		self:Bar(329518, 29.5, CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
+		if self:Mythic() then
+			self:Bar(343026, 39.5, CL.count:format(self:SpellName(337859), dmgcloakofFlamesCount)) -- Cloak of Flames
+	end
 	end
 end
 
@@ -372,6 +380,7 @@ function mod:ReflectionofGuiltRemoved()
 	self:Message("stages", "green", CL.removed:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider") -- Shade of Kael'thas
 	self:PlaySound("stages", "long")
 	self:StopBar(326455) -- Fiery Strike
+	self:StopBar(CL.count:format(self:SpellName(343026), dmg)) -- Damage Cloak of Flames
 	self:StopBar(CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 	self:StopBar(CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(325877), emberBlastCount-1))) -- Ember Blast
@@ -524,6 +533,20 @@ function mod:CloakofFlamesRemoved(args)
 	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
 	self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakofFlamesCount-1)))
+end
+
+function mod:DmgCloakofFlamesApplied(args)
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, dmgcloakofFlamesCount))
+	self:PlaySound(args.spellId, "warning")
+	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, dmgcloakofFlamesCount))
+	dmgcloakofFlamesCount = dmgcloakofFlamesCount + 1
+	self:Bar(args.spellId, 30, CL.count:format(args.spellName, dmgcloakofFlamesCount))
+end
+
+function mod:DmgCloakofFlamesRemoved(args)
+	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
+	self:PlaySound(args.spellId, "info")
+	self:StopBar(CL.cast:format(CL.count:format(args.spellName, dmgcloakofFlamesCount-1)))
 end
 
 do
