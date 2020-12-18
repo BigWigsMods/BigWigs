@@ -381,7 +381,7 @@ function mod:ReflectionofGuiltRemoved()
 	self:Message("stages", "green", CL.removed:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider") -- Shade of Kael'thas
 	self:PlaySound("stages", "long")
 	self:StopBar(326455) -- Fiery Strike
-	self:StopBar(CL.count:format(self:SpellName(343026), dmg)) -- Damage Cloak of Flames
+	self:StopBar(CL.count:format(self:SpellName(343026), dmgcloakofFlamesCount)) -- Damage Cloak of Flames
 	self:StopBar(CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 	self:StopBar(CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(325877), emberBlastCount-1))) -- Ember Blast
