@@ -24,6 +24,7 @@ local stavrosAlive = true
 local friedaAlive = true
 local niklausAlive = true
 local killOrder = nil
+local dancingFeverCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -160,6 +161,7 @@ function mod:OnEngage()
 	friedaAlive = true
 	stavrosAlive = true
 	niklausAlive = true
+	dancingFeverCount = 1
 
 	self:CDBar(346698, 7.5) -- Summon Dutiful Attendant
 	self:CDBar(346690, 18.5) -- Duelist's Riposte
@@ -171,7 +173,7 @@ function mod:OnEngage()
 	self:CDBar(331634, 24) -- Dark Recital
 
 	if self:Mythic() then
-		self:CDBar(347350, 5) -- Dancing Fever
+		self:CDBar(347350, 5, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 	end
 
 	-- Mark kill order
@@ -310,7 +312,7 @@ end
 function mod:DuelistsRiposte(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
-	self:CDBar(args.spellId, bossesKilled == 0 and 21.5 or bossesKilled == 1 and 17 or 8.6)
+	self:CDBar(args.spellId, self:Mythic() and (bossesKilled == 0 and 18.7 or bossesKilled == 1 and 15 or 7.5) or bossesKilled == 0 and 21.5 or bossesKilled == 1 and 17 or 8.6)
 end
 
 function mod:DuelistsRiposteApplied(args)
@@ -328,7 +330,7 @@ do
 	function mod:SummonDutifulAttendant(args)
 		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "warning")
-		self:CDBar(args.spellId, bossesKilled == 2 and 25.5 or 90)
+		self:CDBar(args.spellId, self:Mythic() and (bossesKilled == 2 and 22.5 or 45) or bossesKilled == 2 and 25.5 or 90)
 		if self:GetOption(dutifulAttendantMarker) then
 			self:RegisterTargetEvents("DutifulAttendantMarking")
 			self:ScheduleTimer("UnregisterTargetEvents", 10)
@@ -339,13 +341,13 @@ end
 function mod:DredgerServants(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
-	self:CDBar(args.spellId, 51)
+	self:CDBar(args.spellId, self:Mythic() and 45 or 51)
 end
 
 function mod:CastellansCadre(args)
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
-	self:CDBar(args.spellId, 51.5)
+	self:CDBar(args.spellId, self:Mythic() and 45 or 51.5)
 end
 
 function mod:SintouchedBlade(args)
@@ -363,21 +365,32 @@ do
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if #playerList == 1 then
-			self:CDBar(args.spellId, 25)
+			self:CDBar(args.spellId, self:Mythic() and 22.5 or 25)
 		end
 		self:TargetsMessage(args.spellId, "cyan", playerList, 3)
 	end
 end
 
-function mod:DreadboltVolley(args)
-	local canDo, ready = self:Interrupter(args.sourceGUID)
-	if canDo then
-		self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
-		if ready then
-			self:PlaySound(args.spellId, "alarm")
+do
+	local prev = 0
+	function mod:DreadboltVolley(args)
+		local canDo, ready = self:Interrupter(args.sourceGUID)
+		if canDo then
+			self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+			if ready then
+				self:PlaySound(args.spellId, "alarm")
+			end
+		end
+		if self:Mythic() and friedaAlive == false then -- Afterimage stuff
+			local t = args.time
+			if t-prev > 15 then -- 3 casts, 3s~ between, only start bar for the first in the set
+				prev = t
+				self:CDBar(args.spellId, 45)
+			end
+		else
+			self:CDBar(args.spellId, 10)
 		end
 	end
-	self:CDBar(args.spellId, 10)
 end
 
 function mod:PridefulEruption(args)
@@ -401,7 +414,7 @@ end
 function mod:EvasiveLunge(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, bossesKilled == 0 and 18.8 or bossesKilled == 1 and 17 or 11)
+	self:Bar(args.spellId, self:Mythic() and (bossesKilled == 0 and 18.8 or bossesKilled == 1 and 15 or 7.5) or bossesKilled == 0 and 18.8 or bossesKilled == 1 and 17 or 11)
 end
 
 function mod:EvasiveLungeApplied(args)
@@ -422,7 +435,11 @@ do
 		self:Message(args.spellId, "orange")
 		firstDarkRecitalTargetGUID = nil
 		darkrecitalPairCount = 0
-		self:Bar(args.spellId, bossesKilled == 0 and 90 or bossesKilled == 1 and 107 or 22.9)
+		if stavrosAlive == false then
+			self:Bar(args.spellId, bossesKilled == 1 and 60 or 37.7)
+		else
+			self:Bar(args.spellId, self:Mythic() and (bossesKilled == 0 and 45 or bossesKilled == 1 and 60 or 22.9) or bossesKilled == 0 and 90 or bossesKilled == 1 and 107 or 22.9)
+		end
 	end
 
 	function mod:DarkRecitalApplied(args)
@@ -483,7 +500,7 @@ end
 function mod:WaltzOfBlood(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "long")
-	self:Bar(args.spellId, 107)
+	self:Bar(args.spellId, 60)
 end
 
 do
@@ -501,7 +518,7 @@ do
 			prev = t
 			self:Message(args.spellId, "orange")
 			self:PlaySound(args.spellId, "warning")
-			self:Bar(args.spellId, 105)
+			self:Bar(args.spellId, 60)
 			if self:GetOption(waltzingVenthyrMarker) then
 				self:RegisterTargetEvents("WaltzingVenthyrMarking")
 				self:ScheduleTimer("UnregisterTargetEvents", 5)
@@ -519,22 +536,35 @@ do
 			prev = t
 			self:Message(args.spellId, "green")
 			self:PlaySound(args.spellId, "long")
+
+			self:PauseBar(346651) -- Drain Essence
+			self:PauseBar(337110) -- Dreadbolt Volley
+			self:PauseBar(346657) -- Prideful Eruption
+			self:PauseBar(327497) -- Evasive Lunge
+			self:PauseBar(331634) -- Dark Recital
+			self:PauseBar(346800) -- Waltz of Blood
+			self:PauseBar(346690) -- Duelist's Riposte
+			self:PauseBar(346698) -- Summon Dutiful Attendant
+			self:PauseBar(330978) -- Dredger Servants
+			self:PauseBar(346303) -- Violent Uproar
+			self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 		end
 	end
 end
 
-function mod:DanseMacabreBegin(args)
-	self:PauseBar(346651) -- Drain Essence
-	self:PauseBar(337110) -- Dreadbolt Volley
-	self:PauseBar(346657) -- Prideful Eruption
-	self:PauseBar(327497) -- Evasive Lunge
-	self:PauseBar(331634) -- Dark Recital
-	self:PauseBar(346800) -- Waltz of Blood
-	self:PauseBar(346690) -- Duelist's Riposte
-	self:PauseBar(346698) -- Summon Dutiful Attendant
-	self:PauseBar(330978) -- Dredger Servants
-	self:PauseBar(346303) -- Violent Uproar
-end
+--function mod:DanseMacabreBegin(args)
+	-- self:PauseBar(346651) -- Drain Essence
+	-- self:PauseBar(337110) -- Dreadbolt Volley
+	-- self:PauseBar(346657) -- Prideful Eruption
+	-- self:PauseBar(327497) -- Evasive Lunge
+	-- self:PauseBar(331634) -- Dark Recital
+	-- self:PauseBar(346800) -- Waltz of Blood
+	-- self:PauseBar(346690) -- Duelist's Riposte
+	-- self:PauseBar(346698) -- Summon Dutiful Attendant
+	-- self:PauseBar(330978) -- Dredger Servants
+	-- self:PauseBar(346303) -- Violent Uproar
+	-- self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
+--end
 
 function mod:DanseMacabreOver(args)
 	self:ResumeBar(346651) -- Drain Essence
@@ -547,6 +577,7 @@ function mod:DanseMacabreOver(args)
 	self:ResumeBar(346698) -- Summon Dutiful Attendant
 	self:ResumeBar(330978) -- Dredger Servants
 	self:ResumeBar(346303) -- Violent Uproar
+	self:ResumeBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 end
 
 function mod:WrongMovesApplied(args)
@@ -565,9 +596,17 @@ do
 			self:PlaySound(args.spellId, "warning")
 		end
 		if #playerList == 1 then
-			self:CDBar(args.spellId, 60)
+			self:StopBar(CL.count:format(args.spellName, dancingFeverCount))
+			dancingFeverCount = dancingFeverCount + 1
+			if dancingFeverCount < 4 then -- It's kinda messy right now, need a more consistent game
+				self:CDBar(args.spellId, dancingFeverCount == 2 and 60 or dancingFeverCount == 3 and 45, CL.count:format(args.spellName, dancingFeverCount))
+			end
+			-- "Dancing Fever-347350-npc:1 = pull:5.0[+4], 60.1[+4], Danse Macabre Begin/23.3, Baroness Frieda Killed/113.0", -- [5]
+			-- "Dancing Fever-347350-npc:1 = pull:5.0[+4], 60.1[+4], Danse Macabre Begin/14.1, 31.7/45.8[+4], Baroness Frieda Killed/62.6, Danse Macabre Begin/96.4, 31.8/128.2/190.8[+4], Castellan Niklaus Killed/81.6", -- [5]
+			-- "Dancing Fever-347350-npc:1 = pull:5.0[+4], 60.1[+4], Danse Macabre Begin/14.1, 31.7/45.8[+4], Baroness Frieda Killed/62.6, Danse Macabre Begin/96.4, 31.8/128.2/190.8[+4], Castellan Niklaus Killed/81.6", -- [5]
+			-- "Dancing Fever-347350-npc:1 = pull:5.0[+4], 60.1[+4], Danse Macabre Begin/15.4, 31.8/47.2[+4], Baroness Frieda Killed/62.5, Danse Macabre Begin/109.9, Castellan Niklaus Killed/121.1", -- [5]
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 5)
+		self:TargetsMessage(args.spellId, "orange", playerList, 5, CL.count:format(args.spellName, dancingFeverCount-1))
 	end
 end
 
