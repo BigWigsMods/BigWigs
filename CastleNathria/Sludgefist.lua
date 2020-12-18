@@ -1,8 +1,4 @@
 --------------------------------------------------------------------------------
--- TODO:
--- -- Check sound with Stomp + Shift
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -26,7 +22,8 @@ local chainLinksApplied = 0
 local timers = {
 	[332318] = {18.5, 25.1, 42.6, 25.5, 42.5, 25.5, 45, 22.5, 45.0, 23.1, 41.4}, -- Destructive Stomp
 	[332687] = {0.0, 36.7, 31.3, 36.4, 31.8, 36.3, 31.5, 36.4, 31.8, 36.3, 31.5, 36.3}, -- Colossal Roar
-	[340817] = {18.5, 25.1, 30.6, 11.9, 25.5, 30.2, 12.3, 25.5} -- Seismic Shift
+	[340817] = {18.5, 25.1, 30.6, 11.9, 25.5, 30.2, 12.3, 25.5, 30.2, 12.3, 25.5, 30.2, 12.3, 25.5}, -- Seismic Shift
+	[341193] = {13.0, 70.9, 70.5, 70.5, 70.5} -- Falling Rubble
 }
 
 --------------------------------------------------------------------------------
@@ -48,6 +45,7 @@ function mod:GetOptions()
 		331314, -- Destructive Impact
 		335293, -- Chain Link
 		332318, -- Destructive Stomp
+		341193, -- Falling Rubble
 		335361, -- Stonequake
 		332687, -- Colossal Roar
 		{335470, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Chain Slam
@@ -61,6 +59,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "HatefulGazeApplied", 331209)
 	self:Log("SPELL_AURA_REMOVED", "HatefulGazeRemoved", 331209)
 	self:Log("SPELL_AURA_APPLIED", "DestructiveImpactApplied", 331314)
@@ -88,6 +87,7 @@ function mod:OnEngage()
 	chainSlamCount = 1
 	seismicShiftCount = 1
 	chainLinksApplied = 0
+	fallingRubbleCount = 1
 
 	self:Bar(335293, 5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
 	self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
@@ -106,6 +106,20 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 341193 then -- Falling Rubble // or spellId == 341103
+		local spellName = self:SpellName(341193)
+		if fallingRubbleCount >= 2 then -- First two dont spawn anything?
+			self:StopBar(CL.count:format(spellName, fallingRubbleCount-2))
+			if fallingRubbleCount ~= 2 then -- skip message
+				self:Message(341193, "yellow", CL.count:format(spellName, fallingRubbleCount-2))
+				self:PlaySound(341193, "long")
+			end
+			self:CDBar(341193, 70.5, CL.count:format(spellName, fallingRubbleCount-1))
+		end
+		fallingRubbleCount = fallingRubbleCount + 1
+	end
+end
 
 function mod:HatefulGazeApplied(args)
 	self:StopBar(CL.count:format(args.spellName, hatefullGazeCount))
@@ -134,8 +148,10 @@ function mod:DestructiveImpactApplied(args)
 	self:Message(args.spellId, "red", CL.on:format(args.spellName, args.destName))
 	self:PlaySound(args.spellId, "info")
 	self:Bar(args.spellId, 12)
+	-- Adjust timers to improve them on a long charge
+	self:Bar(332687, 12, CL.count:format(self:SpellName(332687), colossalRoarCount)) -- Collosal Roar Timer Adjustment
 	if self:Mythic() then
-		self:Bar(341102, 3.5) -- Fractured Boulder
+		self:Bar(341102, 3.5, CL.casting:format(self:SpellName(341102)), 341102) -- Fractured Boulder
 	end
 end
 
@@ -145,7 +161,13 @@ function mod:DestructiveImpactRemoved(args)
 		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 	else
 		self:CDBar(331314, 58.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+	-- Update timers to be more exact
+	if self:Mythic() then
+		--self:Bar(340817, 5.5, CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Shift & Stomp
+	else
+		self:Bar(332318, 18.5, CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	end
+	self:Bar(335470, 29, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
 end
 
 do
