@@ -180,17 +180,16 @@ function mod:BlindSwipe(args)
 end
 
 function mod:ExsanguinatingBite(args)
-	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "info")
+	self:TargetMessage(args.spellId, "purple", self:UnitName("boss1target"), CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, 17)
 end
 
 function mod:ExsanguinatedApplied(args)
-	if self:Me(args.destGUID) then
-		local amount = args.amount or 1
-		if amount % 2 == 0 then
-			self:StackMessage(args.spellId, args.destName, amount, "blue")
-			self:PlaySound(args.spellId, "alert")
+	if self:Tank() and self:Tank(args.destName) then
+		self:StackMessage(args.spellId, args.destName, 10, "purple")
+		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
+			self:PlaySound(args.spellId, "warning") -- Not taunted? Play again.
 		end
 	end
 end
