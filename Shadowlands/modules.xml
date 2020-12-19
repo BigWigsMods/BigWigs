@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Mortanis.lua"/>
+<Script file="Oranomonos.lua"/>
 
 <Include file="Options\options.xml"/>
 
