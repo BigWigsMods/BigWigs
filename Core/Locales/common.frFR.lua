@@ -54,7 +54,7 @@ L.trash = "Trash"
 L.underyou = "%s en dessous de VOUS"
 L.you = "%s sur VOUS"
 L.you_icon = "%s sur |T13700%d:0|tVOUS"
---L.on_group = "%s on GROUP" -- spell on group
+L.on_group = "%s sur le GROUPE" -- spell on group
 
 L.active = "Actif" -- When a boss becomes active, after speech finishes
 
