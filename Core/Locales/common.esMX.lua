@@ -19,6 +19,7 @@ L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
 L.near = "%s cerca de TI"
+--L.on_group = "%s on GROUP" -- spell on group
 
 L.phase = "Fase %d"
 L.stage = "Etapa %d"

@@ -54,6 +54,7 @@ L.trash = "Трэш"
 L.underyou = "%s под ТОБОЙ"
 L.you = "%s на ТЕБЕ"
 L.you_icon = "%s на |T13700%d:0|tТЕБЕ"
+--L.on_group = "%s on GROUP" -- spell on group
 
 L.active = "Активен" -- When a boss becomes active, after speech finishes
 

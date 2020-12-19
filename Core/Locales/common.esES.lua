@@ -54,6 +54,7 @@ L.trash = "Basura"
 L.underyou = "%s debajo de TI"
 L.you = "%s en TI"
 L.you_icon = "%s en |T13700%d:0|tTI"
+--L.on_group = "%s on GROUP" -- spell on group
 
 L.active = "Activo" -- Cuando un jefe se activa, después de que acabe el diálogo
 
