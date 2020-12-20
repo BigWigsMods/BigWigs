@@ -1,7 +1,7 @@
 
 --[[
-See BigWigs/Docs/BarStyles.txt for in-depth information on how to register new
-bar styles from 3rd party addons.
+Visit: https://github.com/BigWigsMods/BigWigs/wiki/Custom-Bar-Styles
+for in-depth information on how to register new bar styles from 3rd party addons.
 ]]
 
 --------------------------------------------------------------------------------

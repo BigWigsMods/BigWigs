@@ -89,6 +89,7 @@ do
 	local errorAlreadyExist = "Trying to register %q as a bar styler, but it already exists."
 	local function noop() end
 	local barStyles = {}
+	-- For more on bar styles, visit: https://github.com/BigWigsMods/BigWigs/wiki/Custom-Bar-Styles
 	function API:RegisterBarStyle(key, styleData)
 		if type(key) ~= "string" then error("Bar style must be a string.") end
 		if type(styleData) ~= "table" then error("Bar style data must be a table.") end
