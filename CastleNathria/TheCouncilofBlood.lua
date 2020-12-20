@@ -63,8 +63,8 @@ end
 -- Initialization
 --
 
-local dutifulAttendantMarker = mod:AddMarkerOption(false, "npc", 8, 346698, 8) -- Summon Dutiful Attendant // TODO Replace npc with Dutiful Attendant from DJ
-local waltzingVenthyrMarker = mod:AddMarkerOption(false, "npc", 8, 346303, 8) -- Violent Uproar // TODO Replace npc with Waltzing Venthyr from DJ
+local dutifulAttendantMarker = mod:AddMarkerOption(false, "npc", 8, -22948, 8) -- Dutiful Attendant
+local waltzingVenthyrMarker = mod:AddMarkerOption(false, "npc", 8, -22653, 8) -- Waltzing Venthyr
 function mod:GetOptions()
 	return {
 		"stages",
