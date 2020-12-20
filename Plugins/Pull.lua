@@ -285,10 +285,14 @@ SlashCmdList.BIGWIGSPULL = function(input)
 			end
 			input = plugin:GetRespawnTimeLeft() + tonumber(s)
 		end
-		local seconds = tonumber(input)
-		if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end
-		if seconds ~= 0 then
-			BigWigs:Print(L.sendPull)
+		if input == "" then
+			input = "10"
+		else
+			local seconds = tonumber(input)
+			if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end
+			if seconds ~= 0 then
+				BigWigs:Print(L.sendPull)
+			end
 		end
 
 		plugin:Sync("Pull", input)
