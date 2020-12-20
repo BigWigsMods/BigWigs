@@ -81,6 +81,10 @@ local SetBarStyle
 BigWigsAPI:RegisterBarStyle("Default", {
 	apiVersion = 1,
 	version = 1,
+	--barSpacing = 1,
+	--barHeight = 16,
+	--fontSizeNormal = 10,
+	--fontSizeEmphasized = 13,
 	--GetSpacing = function(bar) end,
 	--ApplyStyle = function(bar) end,
 	--BarStopped = function(bar) end,

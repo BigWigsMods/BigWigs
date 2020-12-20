@@ -102,7 +102,6 @@ do
 			if not styleData.ApplyStyle then styleData.ApplyStyle = noop end
 			if not styleData.BarStopped then styleData.BarStopped = noop end
 			if not styleData.GetSpacing then styleData.GetSpacing = noop end
-			if not styleData.OnEmphasize then styleData.OnEmphasize = noop end
 			barStyles[key] = styleData
 		end
 	end
