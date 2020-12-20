@@ -1604,7 +1604,7 @@ end
 --
 
 do
-	local errorDeprecated = "One of your addons is trying to register the bar style '%s' using the old method. See https://git.io/JLz1I to learn how to do it correctly."
+	local errorDeprecated = "An addon registered the bar style '%s' using the old method. Visit github.com/BigWigsMods/BigWigs/wiki/Custom-Bar-Styles to learn how to do it correctly."
 	function plugin:RegisterBarStyle(key, styleData)
 		BigWigs:Print(errorDeprecated:format(key))
 		BigWigsAPI:RegisterBarStyle(key, styleData)
