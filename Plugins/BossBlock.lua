@@ -98,6 +98,7 @@ plugin.pluginOptions = {
 			desc = L.blockTooltipQuestsDesc,
 			width = "full",
 			order = 6,
+			disabled = function() return true end, -- XXX Do we want to hack the tooltip?
 		},
 		blockObjectiveTracker = {
 			type = "toggle",
