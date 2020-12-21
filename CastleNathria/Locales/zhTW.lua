@@ -27,7 +27,7 @@ if L then
 	L.custom_off_experimental_desc = "這些功能|cffff0000尚未經過完整測試|r，而且可能造成|cffff0000洗頻|r。"
 
 	L.anima_tracking = "靈魄能量監控|cffff0000（實驗性）|r"
-	-L.anima_tracking_desc = "監控靈魄容器等級的訊息與計時條。|n|cffaaff00提示：你可以依據偏好單獨關閉此提示的訊息盒或計時條。"
+	L.anima_tracking_desc = "監控靈魄容器等級的訊息與計時條。|n|cffaaff00提示：你可以依據偏好單獨關閉此提示的訊息盒或計時條。"
 
 	L.custom_on_stop_timers = "總是顯示計時器"
 	--L.custom_on_stop_timers_desc = "Just for testing right now"
