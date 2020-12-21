@@ -672,7 +672,7 @@ do
 							SetBarStyle(value)
 							local style = BigWigsAPI:GetBarStyle(value)
 							if style then
-								if type(style.barSpacing) == "number" and style.barSpacing > 0 then
+								if type(style.barSpacing) == "number" and style.barSpacing > 0 and style.barSpacing < 101 then
 									db.spacing = style.barSpacing
 								else
 									db.spacing = plugin.defaultDB.spacing
@@ -680,19 +680,19 @@ do
 								rearrangeBars(normalAnchor)
 								rearrangeBars(emphasizeAnchor)
 
-								if type(style.barHeight) == "number" and style.barHeight > 0 then
+								if type(style.barHeight) == "number" and style.barHeight > 0 and style.barHeight < 201 then
 									db.BigWigsAnchor_height = style.barHeight
 									db.BigWigsEmphasizeAnchor_height = style.barHeight * 1.1
 								else
 									db.BigWigsAnchor_height = plugin.defaultDB.BigWigsAnchor_height
 									db.BigWigsEmphasizeAnchor_height = plugin.defaultDB.BigWigsEmphasizeAnchor_height
 								end
-								if type(style.fontSizeNormal) == "number" and style.fontSizeNormal > 0 then
+								if type(style.fontSizeNormal) == "number" and style.fontSizeNormal > 0 and style.fontSizeNormal < 201 then
 									db.fontSize = style.fontSizeNormal
 								else
 									db.fontSize = plugin.defaultDB.fontSize
 								end
-								if type(style.fontSizeEmphasized) == "number" and style.fontSizeEmphasized > 0 then
+								if type(style.fontSizeEmphasized) == "number" and style.fontSizeEmphasized > 0 and style.fontSizeEmphasized < 201 then
 									db.fontSizeEmph = style.fontSizeEmphasized
 								else
 									db.fontSizeEmph = plugin.defaultDB.fontSize
@@ -728,6 +728,7 @@ do
 						order = 6,
 						softMax = 30,
 						min = 0,
+						max = 100,
 						step = 1,
 						width = 2,
 						set = sortBars,
