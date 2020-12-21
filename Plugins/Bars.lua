@@ -85,6 +85,7 @@ BigWigsAPI:RegisterBarStyle("Default", {
 	--barHeight = 16,
 	--fontSizeNormal = 10,
 	--fontSizeEmphasized = 13,
+	--fontOutline = "NONE",
 	--GetSpacing = function(bar) end,
 	--ApplyStyle = function(bar) end,
 	--BarStopped = function(bar) end,
@@ -671,29 +672,37 @@ do
 							SetBarStyle(value)
 							local style = BigWigsAPI:GetBarStyle(value)
 							if style then
-								if style.barSpacing then
+								if type(style.barSpacing) == "number" and style.barSpacing > 0 then
 									db.spacing = style.barSpacing
 								else
-									db.spacing = 1
+									db.spacing = plugin.defaultDB.spacing
 								end
 								rearrangeBars(normalAnchor)
 								rearrangeBars(emphasizeAnchor)
 
-								if style.barHeight then
+								if type(style.barHeight) == "number" and style.barHeight > 0 then
 									db.BigWigsAnchor_height = style.barHeight
 									db.BigWigsEmphasizeAnchor_height = style.barHeight * 1.1
 								else
-									db.BigWigsAnchor_height = 16
-									db.BigWigsEmphasizeAnchor_height = 22
+									db.BigWigsAnchor_height = plugin.defaultDB.BigWigsAnchor_height
+									db.BigWigsEmphasizeAnchor_height = plugin.defaultDB.BigWigsEmphasizeAnchor_height
 								end
-								if style.fontSizeNormal then
+								if type(style.fontSizeNormal) == "number" and style.fontSizeNormal > 0 then
 									db.fontSize = style.fontSizeNormal
-									updateFont()
+								else
+									db.fontSize = plugin.defaultDB.fontSize
 								end
-								if style.fontSizeEmphasized then
+								if type(style.fontSizeEmphasized) == "number" and style.fontSizeEmphasized > 0 then
 									db.fontSizeEmph = style.fontSizeEmphasized
-									updateFont()
+								else
+									db.fontSizeEmph = plugin.defaultDB.fontSize
 								end
+								if type(style.fontOutline) == "string" and (style.fontOutline == "NONE" or style.fontOutline == "OUTLINE" or style.fontOutline == "THICKOUTLINE") then
+									db.outline = style.fontOutline
+								else
+									db.outline = plugin.defaultDB.outline
+								end
+								updateFont()
 
 								for bar in next, normalAnchor.bars do
 									currentBarStyler.BarStopped(bar)
