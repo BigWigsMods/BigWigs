@@ -229,7 +229,7 @@ function mod:BossDeath(args)
 		self:StopBar(337110) --  Dreadbolt Volley
 		self:StopBar(346657) --  Prideful Eruption
 		if self:Mythic() then
-			self:CDBar(337110, 20) -- Start the initial Afterimage Spawn
+			self:CDBar(337110, 20) -- Start the initial Afterimage Spawn.
 		end
 	elseif args.mobId == 166970 then -- Stavros
 		stavrosAlive = false
