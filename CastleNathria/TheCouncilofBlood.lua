@@ -240,8 +240,13 @@ function mod:BossDeath(args)
 		self:StopBar(330978) -- Dredger Servants
 	end
 
-	if self:Mythic() and friedaAlive == false then
-		self:CDBar(337110, 20) -- Start the initial Afterimage Spawn.
+	if self:Mythic() then
+		if friendaAlive == false then
+			self:CDBar(337110, 20) -- Start/Reset the initial Dreadbolt Volley Afterimage Spawn.
+		end
+		if stavrosAlive == false then
+			self:CDBar(331634, 40) -- Start/Reset the initial Dark Recital Afterimage Spawn
+		end
 	end
 
 	if bossesKilled == 1 then
