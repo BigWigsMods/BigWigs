@@ -236,11 +236,19 @@ function mod:BossDeath(args)
 		self:StopBar(327497) -- Evasive Lunge
 		self:StopBar(331634) --  Dark Recital
 		self:StopBar(346800) --  Waltz of Blood
+		if self:Mythic() then
+			self:StopBar(337110)  --Ugly and I'm sure there is a much better way to do this, but when a boss dies it resets the Afterimage timer back to 20 seconds.
+			self:CDBar(337110, 20) -- Start the Afterimage Spawn Timer
+		end
 	elseif args.mobId == 166971 then -- Niklaus
 		niklausAlive = false
 		self:StopBar(346690) -- Duelist's Riposte
 		self:StopBar(346698) -- Summon Dutiful Attendant
 		self:StopBar(330978) -- Dredger Servants
+		if self:Mythic() then
+			self:StopBar(337110)  --Ugly and I'm sure there is a much better way to do this, but when a boss dies it resets the Afterimage timer back to 20 seconds.
+			self:CDBar(337110, 20) -- Start the Afterimage Spawn Timer
+		end
 	end
 	if bossesKilled == 1 then
 		if friedaAlive then
