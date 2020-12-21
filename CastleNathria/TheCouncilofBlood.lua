@@ -241,7 +241,7 @@ function mod:BossDeath(args)
 	end
 
 	if self:Mythic() then
-		if friendaAlive == false then
+		if friedaAlive == false then
 			self:CDBar(337110, 20) -- Start/Reset the initial Dreadbolt Volley Afterimage Spawn.
 		end
 		if stavrosAlive == false then
