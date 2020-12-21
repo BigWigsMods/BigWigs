@@ -2,7 +2,7 @@ local L = BigWigs:NewBossLocale("Shriekwing", "zhTW")
 if not L then return end
 if L then
 	L.pickup_lantern = "%s 撿起了燈籠！"
-	-L.dropped_lantern = "%s 把燈籠丟掉了！"
+	L.dropped_lantern = "%s 把燈籠丟掉了！"
 end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "zhTW")
@@ -12,8 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhTW")
 if L then
-	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
-	-- L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
+	L.stage2_yell = "我想使用這個聖物想得要死，不過死的應該是你。"
+	L.stage3_yell = "希望這個神奇的聖物跟它看起來一樣致命！"
 end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "zhTW")
@@ -46,7 +46,7 @@ if L then
 	L.dance_assist = "跳舞助手"
 	L.dance_assist_desc = "顯示舞步方向的警報。"
 	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t 向前 |T450907:0:0:0:0:64:64:4:60:4:60|t"
-	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t 向右 |T450908:0:0:0:0:64:64:4:6:4:60|t"
+	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t 向右 |T450908:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t 向後 |T450905:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t 向左 |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
