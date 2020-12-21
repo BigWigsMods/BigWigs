@@ -228,26 +228,22 @@ function mod:BossDeath(args)
 		self:StopBar(346651) -- Drain Essence
 		self:StopBar(337110) --  Dreadbolt Volley
 		self:StopBar(346657) --  Prideful Eruption
-		if self:Mythic() then
-			self:CDBar(337110, 20) -- Start the initial Afterimage Spawn.
-		end
 	elseif args.mobId == 166970 then -- Stavros
 		stavrosAlive = false
 		self:StopBar(327497) -- Evasive Lunge
 		self:StopBar(331634) --  Dark Recital
 		self:StopBar(346800) --  Waltz of Blood
-		if self:Mythic() then
-			self:CDBar(337110, 20) -- Start the Afterimage Spawn Timer
-		end
 	elseif args.mobId == 166971 then -- Niklaus
 		niklausAlive = false
 		self:StopBar(346690) -- Duelist's Riposte
 		self:StopBar(346698) -- Summon Dutiful Attendant
 		self:StopBar(330978) -- Dredger Servants
-		if self:Mythic() then
-			self:CDBar(337110, 20) -- Start the Afterimage Spawn Timer
-		end
 	end
+
+	if self:Mythic() and friedaAlive == false then
+		self:CDBar(337110, 20) -- Start the initial Afterimage Spawn.
+	end
+
 	if bossesKilled == 1 then
 		if friedaAlive then
 			--self:CDBar(346651, 15) -- Drain Essence
