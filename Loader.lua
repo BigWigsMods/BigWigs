@@ -85,7 +85,7 @@ local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
-local UnitName = UnitName
+local UnitName, UnitGUID = UnitName, UnitGUID
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetBestMapForUnit = GetBestMapForUnit
@@ -95,6 +95,8 @@ public.SendAddonMessage = SendAddonMessage
 public.SendChatMessage = SendChatMessage
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
+public.UnitName = UnitName
+public.UnitGUID = UnitGUID
 
 -- Version
 local usersHash = {}
@@ -1337,7 +1339,6 @@ end
 do
 	local warnedThisZone = {}
 
-	local UnitGUID = UnitGUID
 	function mod:UNIT_TARGET(unit)
 		local guid = UnitGUID(unit.."target")
 		if guid then

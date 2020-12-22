@@ -26,10 +26,11 @@ do
 end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
-local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
+local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter
+local UnitName, UnitGUID = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID
 local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 local format, find, gsub, band, tremove, wipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
@@ -1147,7 +1148,6 @@ function boss:Me(guid)
 end
 
 do
-	local UnitName = UnitName
 	--- Get the full name of a unit.
 	-- @string unit unit token or name
 	-- @return unit name with the server appended if appropriate
@@ -1159,6 +1159,15 @@ do
 			name = name .."-".. server
 		end
 		return name
+	end
+	--- Get the Globally Unique Identifier of a unit.
+	-- @string unit unit token or name
+	-- @return guid guid of the unit
+	function boss:UnitGUID(unit)
+		local guid = UnitGUID(unit)
+		if guid then
+			return guid
+		end
 	end
 end
 

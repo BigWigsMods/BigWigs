@@ -131,7 +131,7 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 334504 then -- Huntsman's Bond
-		local sourceGUID = UnitGUID(unit)
+		local sourceGUID = self:UnitGUID(unit)
 		if self:MobId(sourceGUID) == 165066 then -- Huntsman Altimor
 			stage = stage + 1
 			if stage == 2 then -- Bargast up

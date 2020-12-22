@@ -46,7 +46,6 @@ local empUpdate = nil -- emphasize updater frame
 local nameplateEmpUpdate = nil
 local rearrangeBars
 local rearrangeNameplateBars
-local UnitGUID = UnitGUID
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local clickHandlers = {}
@@ -63,7 +62,7 @@ do
 	findUnitByGUID = function(id)
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
-			local guid = UnitGUID(unit)
+			local guid = plugin:UnitGUID(unit)
 			if guid == id then
 				return unit
 			end
@@ -2288,7 +2287,7 @@ end
 --
 
 function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
-	local guid = UnitGUID(unit)
+	local guid = plugin:UnitGUID(unit)
 	local unitBars = nameplateBars[guid]
 	if not unitBars then return end
 	for _, barInfo in next, unitBars do
@@ -2320,7 +2319,7 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 end
 
 function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
-	local guid = UnitGUID(unit)
+	local guid = plugin:UnitGUID(unit)
 	local unitBars = nameplateBars[guid]
 	if not unitBars then return end
 

@@ -224,7 +224,7 @@ end
 do
 	local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
 
-	local UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress = UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress
+	local UnitHealth, UnitHealthMax, IsEncounterInProgress = UnitHealth, UnitHealthMax, IsEncounterInProgress
 	local function StoreHealth()
 		if IsEncounterInProgress() then
 			for i = 1, 5 do
@@ -234,7 +234,7 @@ do
 					local maxHealth = UnitHealthMax(unit)
 					local health = rawHealth / maxHealth
 					healthPools[i] = health
-					healthPoolNames[i] = UnitName(unit)
+					healthPoolNames[i] = plugin:UnitName(unit)
 				elseif healthPools[i] then
 					healthPools[i] = nil
 					healthPoolNames[i] = nil
@@ -276,7 +276,7 @@ do
 			for i = 1, 5 do
 				local unit = units[i]
 				local hp = UnitHealth(unit)
-				local name = UnitName(unit)
+				local name = plugin:UnitName(unit)
 				if hp > 0 then
 					hp = hp / UnitHealthMax(unit)
 					if totalHp == "" then

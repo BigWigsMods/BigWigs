@@ -27,7 +27,6 @@ local loader = BigWigsLoader
 core.SendMessage = loader.SendMessage
 
 local customBossOptions = {}
-local pName = UnitName("player")
 
 local mod, bosses, plugins = {}, {}, {}
 local coreEnabled = false
@@ -36,10 +35,13 @@ local coreEnabled = false
 local GetBestMapForUnit = loader.GetBestMapForUnit
 local SendAddonMessage = loader.SendAddonMessage
 local GetInstanceInfo = loader.GetInstanceInfo
+local UnitName = BigWigsLoader.UnitName
+local UnitGUID = BigWigsLoader.UnitGUID
 
 -- Upvalues
 local next, type, setmetatable = next, type, setmetatable
-local UnitGUID = UnitGUID
+
+local pName = UnitName("player")
 
 -------------------------------------------------------------------------------
 -- Event handling
