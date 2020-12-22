@@ -66,7 +66,7 @@ do
 	--- Get the Globally Unique Identifier of a unit.
 	-- @string unit unit token or name
 	-- @return guid guid of the unit
-	function boss:UnitGUID(unit)
+	function plugin:UnitGUID(unit)
 		local guid = UnitGUID(unit)
 		if guid then
 			return guid
