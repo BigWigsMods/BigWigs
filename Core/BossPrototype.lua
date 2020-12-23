@@ -696,7 +696,11 @@ do
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
 		if not self:IsEngaged() and hasBoss then
 			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
-			local module = core:GetEnableMobs()[self:MobId(guid)]
+			local mobId = self:MobId(guid)
+			if self:MobId(UnitGUID("boss1")) == 165759 and UnitGUID("boss2") then -- XXX Kael'thas
+				mobId = self:MobId(UnitGUID("boss2"))
+			end
+			local module = core:GetEnableMobs()[mobId]
 			local modType = type(module)
 			if modType == "string" then
 				if module == self.moduleName then
