@@ -430,7 +430,6 @@ function plugin:OnPluginEnable()
 	colorModule = BigWigs:GetPlugin("Colors", true)
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	self:RegisterMessage("BigWigs_PluginProfileUpdate", updateProfile)
 	updateProfile()
 
 	self:RegisterMessage("BigWigs_Message")
