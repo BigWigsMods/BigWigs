@@ -246,7 +246,7 @@ L.wrongTime = "Ungültige Zeitangabe. <time> kann eine Zahl in Sekunden, ein M:S
 -- AltPower.lua
 --
 
---L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+L.resetAltPowerDesc = "Setzt alle Optionen im Zusammenhang mit Alternative Energie zurück, inklusive der Position des Ankers für Alternative Energie."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -283,7 +283,7 @@ L.iconPositionDesc = "Wähle, wo sich das Symbol auf der Leiste befinden soll."
 L.visibleBarLimit = "Maximale Leistenanzahl"
 L.visibleBarLimitDesc = "Legt die maximale Anzahl der Leisten fest, welche gleichzeitig angezeigt werden."
 L.textDesc = "Text in den Leisten anzeigen oder verstecken."
---L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
+L.resetBarsDesc = "Setzt alle Optionen im Zusammenhang mit Leisten zurück, inklusive der Position der Anker für Leisten."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -293,9 +293,9 @@ L.audio = "Audio"
 L.music = "Musik"
 L.ambience = "Umgebungsgeräusche"
 L.sfx = "Soundeffekte"
---L.disableMusic = "Mute music (recommended)"
---L.disableAmbience = "Mute ambient sounds (recommended)"
---L.disableSfx = "Mute sound effects (not recommended)"
+L.disableMusic = "Musik stummschalten (empfohlen)"
+L.disableAmbience = "Umgebungsgeräusche stummschalten (empfohlen)"
+L.disableSfx = "Soundeffekte stummschalten (nicht empfohlen)"
 L.disableAudioDesc = "Die Option '%s' im WoW Soundmenü wird deaktiviert und erst nach dem Bosskampf wieder aktiviert. Dies kann helfen sich auf die BigWigs Sounds zu konzentrieren."
 L.blockTooltipQuests = "Questziele im Tooltip blockieren"
 L.blockTooltipQuestsDesc = "Wenn zum Abschluss einer Quest ein Boss getötet werden muss, wird der Fortschritt normalerweise im MouseOver-Tooltip mit '0/1 abgeschlossen' angezeigt. Dieser Fortschritt wird im Kampf versteckt, damit der Tooltip nicht zu groß wird."
@@ -335,19 +335,19 @@ L.infoBox = "InfoBox"
 -- Messages.lua
 --
 
---L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.resetMessagesDesc = "Setzt alle Optionen im Zusammenhang mit Nachrichten zurück, inklusive der Position der Anker für Nachrichten."
 
 -----------------------------------------------------------------------
 -- Proximity.lua
 --
 
---L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+L.resetProximityDesc = "Setzt alle Optionen im Zusammenhang mit Nähe zurück, inklusive der Position des Ankers für Nähe."
 
 -----------------------------------------------------------------------
 -- Sound.lua
 --
 
---L.resetSoundDesc = "Resets the above sounds to their defaults."
+L.resetSoundDesc = "Setzt die obigen Sounds auf ihren Standard zurück."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
