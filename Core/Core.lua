@@ -190,31 +190,35 @@ local function zoneChanged()
 	end
 end
 
-do
-	local function add(moduleName, tbl, ...)
-		for i = 1, select("#", ...) do
-			local entry = select(i, ...)
-			local t = type(tbl[entry])
-			if t == "nil" then
-				tbl[entry] = moduleName
-			elseif t == "table" then
-				tbl[entry][#tbl[entry] + 1] = moduleName
-			elseif t == "string" then
-				local tmp = tbl[entry]
-				tbl[entry] = { tmp, moduleName }
+function core:RegisterEnableMob(module, ...)
+	for i = 1, select("#", ...) do
+		local mobId = select(i, ...)
+		if type(mobId) ~= "number" or mobId < 1 then
+			core:Error(("Module %q tried to register the mobId %q, but it wasn't a valid number."):format(module.moduleName, tostring(mobId)))
+		else
+			module.enableMobs[mobId] = true -- Module specific list
+			-- Global list
+			local entryType = type(enablemobs[mobId])
+			if entryType == "nil" then
+				enablemobs[mobId] = module.moduleName
+			elseif entryType == "table" then
+				enablemobs[mobId][#enablemobs[mobId] + 1] = moduleName
+			elseif entryType == "string" then -- Converting from 1 module registered to this mobId, to multiple modules
+				local previousModuleEntry = enablemobs[mobId]
+				enablemobs[mobId] = { previousModuleEntry, module.moduleName }
 			else
-				error(("Unknown type in a enable trigger table at index %d for %q."):format(i, tostring(moduleName)))
+				core:Error(("Unknown type in a enable trigger table at index %d for %q."):format(i, tostring(moduleName)))
 			end
 		end
 	end
-	function core:RegisterEnableMob(module, ...) add(module.moduleName, enablemobs, ...) end
-	function core:GetEnableMobs()
-		local t = {}
-		for k,v in next, enablemobs do
-			t[k] = v
-		end
-		return t
+end
+
+function core:GetEnableMobs()
+	local t = {}
+	for k,v in next, enablemobs do
+		t[k] = v
 	end
+	return t
 end
 
 -------------------------------------------------------------------------------
