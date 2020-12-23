@@ -202,12 +202,12 @@ function core:RegisterEnableMob(module, ...)
 			if entryType == "nil" then
 				enablemobs[mobId] = module.moduleName
 			elseif entryType == "table" then
-				enablemobs[mobId][#enablemobs[mobId] + 1] = moduleName
+				enablemobs[mobId][#enablemobs[mobId] + 1] = module.moduleName
 			elseif entryType == "string" then -- Converting from 1 module registered to this mobId, to multiple modules
 				local previousModuleEntry = enablemobs[mobId]
 				enablemobs[mobId] = { previousModuleEntry, module.moduleName }
 			else
-				core:Error(("Unknown type in a enable trigger table at index %d for %q."):format(i, tostring(moduleName)))
+				core:Error(("Unknown type in a enable trigger table at index %d for %q."):format(i, module.moduleName))
 			end
 		end
 	end
