@@ -680,9 +680,16 @@ do
 		end
 	end
 
+	local function profileUpdate()
+		core:SendMessage("BigWigs_ProfileUpdate")
+	end
+
 	function core:RegisterPlugin(module)
 		if type(module.defaultDB) == "table" then
 			module.db = core.db:RegisterNamespace(module.name, { profile = module.defaultDB } )
+			module.db.RegisterCallback(module, "OnProfileChanged", profileUpdate)
+			module.db.RegisterCallback(module, "OnProfileCopied", profileUpdate)
+			module.db.RegisterCallback(module, "OnProfileReset", profileUpdate)
 		end
 
 		setupOptions(module)
