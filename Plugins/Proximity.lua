@@ -831,17 +831,6 @@ local function updateProfile()
 	plugin:RestyleWindow()
 end
 
-local function resetAnchor()
-	proxAnchor:ClearAllPoints()
-	proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-	db.width = plugin.defaultDB.width
-	db.height = plugin.defaultDB.height
-	proxAnchor:SetWidth(db.width)
-	proxAnchor:SetHeight(db.height)
-	db.posx = nil
-	db.posy = nil
-end
-
 -------------------------------------------------------------------------------
 -- Initialization
 --
@@ -1069,7 +1058,6 @@ do
 		self:RegisterMessage("BigWigs_StartConfigureMode")
 		self:RegisterMessage("BigWigs_StopConfigureMode")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-		self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
 		updateProfile()
 	end
 end
