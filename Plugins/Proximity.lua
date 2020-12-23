@@ -1262,6 +1262,15 @@ do
 					},
 				},
 			},
+			reset = {
+				type = "execute",
+				name = L.resetAll,
+				desc = L.resetProximityDesc,
+				func = function() 
+					plugin.db:ResetProfile()
+				end,
+				order = 9,
+			},
 		},
 	}
 end

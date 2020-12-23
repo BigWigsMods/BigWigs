@@ -151,7 +151,7 @@ local function createOptions()
 		sModule.pluginOptions.args.separator1 = {
 			name = "",
 			type = "description",
-			order = 4,
+			order = 10,
 		}
 		sModule.pluginOptions.args.voice = {
 			name = L.countdownVoice,
@@ -159,7 +159,7 @@ local function createOptions()
 			values = voiceList,
 			get = get,
 			set = set,
-			order = 5,
+			order = 11,
 			width = "full",
 		}
 		sModule.pluginOptions.args.voiceTest = {
@@ -167,7 +167,7 @@ local function createOptions()
 			type = "execute",
 			handler = plugin,
 			func = "TestEmphasize",
-			order = 6,
+			order = 12,
 		}
 
 		-- ability options

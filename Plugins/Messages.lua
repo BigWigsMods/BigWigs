@@ -413,6 +413,18 @@ plugin.pluginOptions.args.more = {
 			step = 0.5,
 			order = 12,
 		},
+		header1 = {
+			type = "header",
+			name = "",
+			order = 13,
+		},
+		reset = {
+			type = "execute",
+			name = L.resetAll,
+			desc = L.resetMessagesDesc,
+			func = function() plugin.db:ResetProfile() end,
+			order = 14,
+		},
 	},
 }
 
@@ -430,6 +442,7 @@ function plugin:OnPluginEnable()
 	colorModule = BigWigs:GetPlugin("Colors", true)
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	self:RegisterMessage("BigWigs_PluginProfileUpdate", updateProfile)
 	updateProfile()
 
 	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)

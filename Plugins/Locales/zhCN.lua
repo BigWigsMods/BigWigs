@@ -75,7 +75,7 @@ L.countWipes = "团灭次数"
 L.createTimeBar = "显示“最快击杀”计时条"
 L.customBarStarted = "自定义计时条“%s”由%s玩家%s发起。"
 L.customRange = "自定义距离指示器"
-L.customSoundDesc = "播放选定的自定义的声音，而不是由模块提供的"
+L.customSoundDesc = "播放选定的自定义的声音，而不是由模块提供的。"
 L.defeated = "%s被击败了！"
 L.disable = "禁用"
 L.disabled = "禁用"
@@ -243,6 +243,12 @@ L.wrongPullFormat = "必须位于1到60秒之间。正确用法：/pull 5"
 L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单位，一个分:秒一对，或分秒。例如，1:20或2M。"
 
 -----------------------------------------------------------------------
+-- AltPower.lua
+--
+
+--L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -277,6 +283,7 @@ L.iconPositionDesc = "选择计时条上图标的位置。"
 L.visibleBarLimit = "可视条限制"
 L.visibleBarLimitDesc = "设定同时可见最大条的数量。"
 L.textDesc = "显示或隐藏计时条上的文本。"
+--L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -323,6 +330,24 @@ L.purpleDesc = "坦克特定技能的警报，例如负面效果叠加。"
 --
 
 L.infoBox = "信息盒"
+
+-----------------------------------------------------------------------
+-- Messages.lua
+--
+
+--L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+
+-----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+--L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+
+-----------------------------------------------------------------------
+-- Sound.lua
+--
+
+--L.resetSoundDesc = "Resets the above sounds to their defaults."
 
 -----------------------------------------------------------------------
 -- Statistics.lua

@@ -75,7 +75,7 @@ L.countWipes = "Contar Wipes"
 L.createTimeBar = "Mostrar barra de 'Mejor tiempo' "
 L.customBarStarted = "Barra personal '%s' lanzada por el jugador %s %s."
 L.customRange = "Indicador de rango personalizado"
-L.customSoundDesc = "Reproduce el sonido seleccionado en lugar de uno suministrado por el módulo"
+L.customSoundDesc = "Reproduce el sonido seleccionado en lugar de uno suministrado por el módulo."
 L.defeated = "%s ha sido derrotado"
 L.disable = "Desactivar"
 L.disabled = "Desactivado"
@@ -243,6 +243,12 @@ L.wrongPullFormat = "Debe ser entre 1 y 60. Un ejemplo sería: /pull 5"
 L.wrongTime = "Tiempo especificado inválido. <time> puede ser bien un número en segundos, un par M:S, o Min. Por ejemplo 5, 1:20 o 2m."
 
 -----------------------------------------------------------------------
+-- AltPower.lua
+--
+
+--L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -277,6 +283,7 @@ L.iconPositionDesc = "Elige dónde en la barra se posicionará el icono."
 L.visibleBarLimit = "Límite de barras visibles"
 L.visibleBarLimitDesc = "Ajusta la máxima cantidad de barras que serán visibles al mismo tiempo."
 L.textDesc = "Ya sea para mostrar u ocultar el texto que se muestra en las barras."
+--L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -323,6 +330,24 @@ L.purpleDesc = "Avisos para habilidades específicas para tanques como acumulaci
 --
 
 L.infoBox = "InfoBox"
+
+-----------------------------------------------------------------------
+-- Messages.lua
+--
+
+--L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+
+-----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+--L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+
+-----------------------------------------------------------------------
+-- Sound.lua
+--
+
+--L.resetSoundDesc = "Resets the above sounds to their defaults."
 
 -----------------------------------------------------------------------
 -- Statistics.lua

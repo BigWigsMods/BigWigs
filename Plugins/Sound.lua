@@ -49,8 +49,8 @@ plugin.pluginOptions = {
 	end,
 	set = function(info, value)
 		local sound = info[#info]
-		PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
 		db.media[sound] = soundList[value]
+		PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
 	end,
 	args = {
 		sound = {
@@ -63,12 +63,23 @@ plugin.pluginOptions = {
 			width = "full",
 			descStyle = "inline",
 		},
+		reset = {
+			type = "execute",
+			name = L.reset,
+			desc = L.resetSoundDesc,
+			func = function()
+				for k in next, plugin.db.profile.media do
+					plugin.db.profile.media[k] = sounds[k]
+				end
+			end,
+			order = 3,
+		},
 		resetAll = {
 			type = "execute",
 			name = L.resetAll,
 			desc = L.resetAllCustomSound,
 			func = function() plugin.db:ResetProfile() end,
-			order = 3,
+			order = 4,
 		},
 	}
 }
@@ -157,6 +168,7 @@ function plugin:OnRegister()
 				if not db[optionName] then db[optionName] = {} end
 				if not db[optionName][name] then db[optionName][name] = {} end
 				db[optionName][name][key] = soundList[value]
+				PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
 				-- We don't cleanup/reset the DB as someone may have a custom global sound but wish to use the default sound on a specific option
 			end,
 			hidden = function(info)

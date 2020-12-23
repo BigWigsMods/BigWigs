@@ -20,6 +20,7 @@ L.altPowerTitle = "보조 자원"
 L.toggleDisplayPrint = "디스플레이가 다음에 표시됩니다. 이 우두머리 전투에서 완전히 비활성하려면 우두머리 전투 옵션에서 끄도록 전환해야 합니다."
 L.disabled = "비활성"
 L.disabledDisplayDesc = "디스플레이를 사용하는 모든 모듈에서 디스플레이를 비활성화합니다."
+--L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -50,6 +51,7 @@ L.autoReplyLeftCombatAdvancedWipe = "'%s'에게 %s 에서 전멸하였습니다.
 L.bars = "바"
 L.style = "모양"
 L.bigWigsBarStyleName_Default = "기본"
+--L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
 
 -- L.nameplateBars = "Nameplate Bars"
 -- L.nameplateAutoWidth = "Match width of nameplate"
@@ -222,6 +224,7 @@ L.infoBox = "정보 상자"
 L.sinkDescription = "이 애드온의 출력을 BigWigs 메시지 디스플레이에 출력합니다. 이 디스플레이는 아이콘과 색상, 그리고 동시에 4개의 메시지 출력을 지원합니다. 새롭게 삽입된 메시지는 사용자에게 알리기 위해 크기가 커졌다가 다시 빠르게 줄어듭니다."
 L.emphasizedSinkDescription = "이 애드온의 출력을 BigWigs 강조 메시지 디스플레이에 출력합니다. 이 디스플레이는 문자와 색상, 그리고 동시에 하나의 메시지 출력을 지원합니다."
 L.emphasizedCountdownSinkDescription = "이 애드온의 출력을 BigWigs 강조 초읽기 메시지 디스플레이에 출력합니다. 이 디스플레이는 문자와 색상, 그리고 동시에 하나의 메시지 출력을 지원합니다."
+--L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 
 L.bwEmphasized = "BigWigs 강조"
 L.messages = "메시지"
@@ -262,6 +265,7 @@ L.soundDelayDesc = "누군가 당신과 가까이 있을 때 BigWigs에 지정�
 
 L.proximity = "근접 디스플레이"
 L.proximity_desc = "이 우두머리 전투에 적절할 때 근접 창을 표시합니다, 자신과 너무 가깝게 서있는 플레이어를 보여줍니다."
+--L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
 
 L.close = "닫기"
 L.closeProximityDesc = "근접 디스플레이를 닫습니다.\n\n모든 우두머리 전투에서 완전히 비활성화하려면, 관련 우두머리 모듈의 옵션에서 '근접' 옵션을 꺼야합니다."
@@ -329,7 +333,8 @@ L.Warning = "경보"
 L.sound = "소리"
 L.soundDesc = "메시지는 소리와 함게 나타날 수 있습니다. 몇몇 사람들은 메시지와 함께 어떤 소리가 재생되는지 배운 후에는 실제 메시지를 읽는 것보다 소리를 듣는 것으로 더 쉽게 찾을 수 있습니다."
 
-L.customSoundDesc = "모듈이 제공한 소리 대신에 선택된 사용자 설정 소리를 재생합니다"
+L.customSoundDesc = "모듈이 제공한 소리 대신에 선택된 사용자 설정 소리를 재생합니다."
+--L.resetSoundDesc = "Resets the above sounds to their defaults."
 L.resetAllCustomSound = "어떤 우두머리 전투 설정에 사용자 설정된 소리가 있다면 이 버튼으로 모두 초기화하고 여기에 정의된 소리를 대신 사용합니다."
 
 -----------------------------------------------------------------------

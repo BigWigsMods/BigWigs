@@ -931,6 +931,18 @@ do
 						end,
 						disabled = function() return not db.icon end,
 					},
+					header3 = {
+						type = "header",
+						name = "",
+						order = 18,
+					},
+					reset = {
+						type = "execute",
+						name = L.resetAll,
+						desc = L.resetBarsDesc,
+						func = function() plugin.db:ResetProfile() end,
+						order = 19,
+					},
 				},
 			},
 			normal = {

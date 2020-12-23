@@ -19,6 +19,7 @@ L.altPowerTitle = "Ressource alternative"
 L.toggleDisplayPrint = "L'affichage sera présent la prochaine fois. Pour le désactiver complètement pour cette rencontre, vous devez le décocher dans les options de la rencontre."
 L.disabled = "Désactivé"
 L.disabledDisplayDesc = "Désactive l'affichage pour tous les modules qui l'utilisent."
+--L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -49,6 +50,7 @@ L.autoReplyLeftCombatAdvancedWipe = "J'ai perdu face à '%s' : %s"
 L.bars = "Barres"
 L.style = "Style"
 L.bigWigsBarStyleName_Default = "Défaut"
+--L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
 
 L.nameplateBars = "Barres d'info des unités"
 L.nameplateAutoWidth = "Même largeur que la barre d'info"
@@ -222,6 +224,7 @@ L.infoBox = "Boîte d'infos"
 L.sinkDescription = "Transmet la sortie de cet addon via l'affichage des messages de BigWigs. Cet affichage supporte les icônes, les couleurs et peut afficher jusqu'à 4 messages à l'écran en même temps. Les messages récemment insérés grandiront et reviendront rapidement à leur taille initiale afin de bien capter l'attention du joueur."
 L.emphasizedSinkDescription = "Transmet la sortie de cet addon via l'affichage des messages mis en évidence de BigWigs. Cet affichage supporte le texte et les couleurs, et ne peut afficher qu'un message à la fois."
 L.emphasizedCountdownSinkDescription = "Dirige la sortie de cet addon vers l'affichage des messages de compte à rebours de BigWigs. Cet affichage supporte le texte et les couleurs, et peut uniquement afficher un message à la fois."
+--L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 
 L.bwEmphasized = "BigWigs en évidence"
 L.messages = "Messages"
@@ -262,6 +265,7 @@ L.soundDelayDesc = "Spécifie combien de temps BigWigs doit attendre entre chaqu
 
 L.proximity = "Affichage de proximité"
 L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
+--L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
 
 L.close = "Fermer"
 L.closeProximityDesc = "Ferme l'affichage de proximité.\n\nPour le désactiver complètement, rendez-vous dans les options du boss et décochez 'Proximité'."
@@ -329,7 +333,8 @@ L.Warning = "Avertissement"
 L.sound = "Son"
 L.soundDesc = "Les messages sont le plus souvent accompagnés de sons. Certaines personnes trouvent plus faciles d'entendre ces sons pour réagir une fois qu'elles ont appris quels sons sont liés à quels messages, plutôt que de lire les messages à chaque fois."
 
-L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module"
+L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module."
+--L.resetSoundDesc = "Resets the above sounds to their defaults."
 L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains paramètres des rencontres de boss, ce bouton les réinitialisera TOUS afin que les sons par défaut soient utilisés à la place."
 
 -----------------------------------------------------------------------

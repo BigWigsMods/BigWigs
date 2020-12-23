@@ -75,7 +75,7 @@ L.countWipes = "Количество поражений"
 L.createTimeBar = "Отображать полосу 'Лучшее время'"
 L.customBarStarted = "Таймер '%s' начат %s игроком %s."
 L.customRange = "Пользовательский радар"
-L.customSoundDesc = "Воспроизводить пользовательский звук, вместо используемого в модуле"
+L.customSoundDesc = "Воспроизводить пользовательский звук, вместо используемого в модуле."
 L.defeated = "%s терпит поражение"
 L.disable = "Отключить"
 L.disabled = "Отключить"
@@ -243,6 +243,12 @@ L.wrongPullFormat = "Должно быть между 1 и 60 секундами
 L.wrongTime = "Неверно указанное время. <время> может быть числом в секундах, М:С парой, или Mm. Например, 5, 1:20 или 2m."
 
 -----------------------------------------------------------------------
+-- AltPower.lua
+--
+
+--L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -277,6 +283,7 @@ L.iconPositionDesc = "Выберите, где на полосе будет на
 L.visibleBarLimit = "Лимит отображаемых полос"
 L.visibleBarLimitDesc = "Установить максимальное количество полос, отображаемых единовременно."
 L.textDesc = "Показать или скрыть текст на полосах."
+--L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -323,6 +330,24 @@ L.purpleDesc = "Оповещение о способностях только д
 --
 
 L.infoBox = "ИнфоБлок"
+
+-----------------------------------------------------------------------
+-- Messages.lua
+--
+
+--L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+
+-----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+--L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+
+-----------------------------------------------------------------------
+-- Sound.lua
+--
+
+--L.resetSoundDesc = "Resets the above sounds to their defaults."
 
 -----------------------------------------------------------------------
 -- Statistics.lua
