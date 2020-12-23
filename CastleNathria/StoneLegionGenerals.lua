@@ -191,7 +191,7 @@ end
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	for i = 1, 5 do
 		local unit = ("boss%d"):format(i)
-		local guid = UnitGUID(unit)
+		local guid = self:UnitGUID(unit)
 		if guid and not mobCollectorGoliath[guid] then
 			mobCollectorGoliath[guid] = true
 			local id = self:MobId(guid)
