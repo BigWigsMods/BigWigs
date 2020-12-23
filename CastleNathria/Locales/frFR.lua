@@ -12,8 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "frFR")
 if L then
-	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
-	-- L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
+	L.stage2_yell = "Oh, celle-là, je meurs d'envie de la voir en action. Mais c'est plutôt vous qui allez mourir."
+	L.stage3_yell = "J'espère que cette petite merveille sera aussi meurtrière qu'elle en a l'air."
 end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "frFR")
@@ -73,4 +73,11 @@ if L then
 
 	L.custom_on_stop_timers = "Toujours montrer les barres de techniques"
 	L.custom_on_stop_timers_desc = "En cours de test"
+end
+
+L = BigWigs:NewBossLocale("Sire Denathrius", "frFR")
+if L then
+	L.add_spawn = "La Cabale cramoisie entend l'appel de Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
+
+	L.infobox_stacks = "%d |4cumul:cumuls; : %d |4joueur:joueurs;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 end
