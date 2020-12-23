@@ -139,8 +139,8 @@ L.primaryDesc = "战斗时使用的第一个团队标记。"
 L.printBestTimeOption = "最快击杀提醒"
 L.printDefeatOption = "击杀时间"
 L.printWipeOption = "团灭时间"
-L.proximity = "近距离显示"
-L.proximity_desc = "显示近距离显示窗口，列出距离你很近的玩家。"
+L.proximity = "近距离"
+L.proximity_desc = "显示近距离窗口，列出距离你很近的玩家。"
 L.proximity_name = "近距离"
 L.proximityTitle = "%d码/%d玩家"
 L.pull = "拉怪"
@@ -246,7 +246,7 @@ L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单�
 -- AltPower.lua
 --
 
---L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+L.resetAltPowerDesc = "重置全部交替能量有关选项，包括交替能量锚点位置。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -283,7 +283,7 @@ L.iconPositionDesc = "选择计时条上图标的位置。"
 L.visibleBarLimit = "可视条限制"
 L.visibleBarLimitDesc = "设定同时可见最大条的数量。"
 L.textDesc = "显示或隐藏计时条上的文本。"
---L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
+L.resetBarsDesc = "重置全部计时条有关选项，包括计时条锚点位置。"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -335,19 +335,19 @@ L.infoBox = "信息盒"
 -- Messages.lua
 --
 
---L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.resetMessagesDesc = "重置全部信息有关选项，包括信息锚点位置。"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
 --
 
---L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+L.resetProximityDesc = "重置全部近距离有关选项，包括近距离锚点位置。"
 
 -----------------------------------------------------------------------
 -- Sound.lua
 --
 
---L.resetSoundDesc = "Resets the above sounds to their defaults."
+L.resetSoundDesc = "重置以上音效为默认。"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
