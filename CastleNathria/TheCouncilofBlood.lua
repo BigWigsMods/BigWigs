@@ -606,15 +606,8 @@ do
 			self:PlaySound(args.spellId, "warning")
 		end
 		if #playerList == 1 then
-			self:StopBar(CL.count:format(args.spellName, dancingFeverCount))
 			dancingFeverCount = dancingFeverCount + 1
-			if dancingFeverCount < 4 then -- It's kinda messy right now, need a more consistent game
-				self:CDBar(args.spellId, dancingFeverCount == 2 and 60 or dancingFeverCount == 3 and 45, CL.count:format(args.spellName, dancingFeverCount))
-			end
-			-- "Dancing Fever-347350-npc:1 = pull:5.0[+4], 60.1[+4], Danse Macabre Begin/23.3, Baroness Frieda Killed/113.0", -- [5]
-			-- "Dancing Fever-347350-npc:1 = pull:5.0[+4], 60.1[+4], Danse Macabre Begin/14.1, 31.7/45.8[+4], Baroness Frieda Killed/62.6, Danse Macabre Begin/96.4, 31.8/128.2/190.8[+4], Castellan Niklaus Killed/81.6", -- [5]
-			-- "Dancing Fever-347350-npc:1 = pull:5.0[+4], 60.1[+4], Danse Macabre Begin/14.1, 31.7/45.8[+4], Baroness Frieda Killed/62.6, Danse Macabre Begin/96.4, 31.8/128.2/190.8[+4], Castellan Niklaus Killed/81.6", -- [5]
-			-- "Dancing Fever-347350-npc:1 = pull:5.0[+4], 60.1[+4], Danse Macabre Begin/15.4, 31.8/47.2[+4], Baroness Frieda Killed/62.5, Danse Macabre Begin/109.9, Castellan Niklaus Killed/121.1", -- [5]
+			self:CDBar(args.spellId, 60, CL.count:format(args.spellName, dancingFeverCount)) -- As of 12/22 NA Reset, Dancing fever is now applied on a consistent minute timer.
 		end
 		self:TargetsMessage(args.spellId, "orange", playerList, 5, CL.count:format(args.spellName, dancingFeverCount-1))
 	end
