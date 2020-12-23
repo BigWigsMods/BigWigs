@@ -702,7 +702,7 @@ do
 				if module == self.moduleName then
 					self:Engage(noEngage == "NoEngage" and noEngage)
 				else
-					self:Disable()
+					--self:Disable() -- XXX temp workaround for KT issue killing all Nathria modules
 				end
 			elseif modType == "table" then
 				for i = 1, #module do
