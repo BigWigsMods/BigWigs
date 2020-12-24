@@ -268,6 +268,15 @@ do
 					},
 				},
 			},
+			reset = {
+				type = "execute",
+				name = L.resetAll,
+				desc = L.resetAltPowerDesc,
+				func = function() 
+					plugin.db:ResetProfile()
+				end,
+				order = 9,
+			},
 		},
 	}
 end
@@ -275,14 +284,6 @@ end
 -------------------------------------------------------------------------------
 -- Initialization
 --
-
-local function resetAnchor()
-	display:ClearAllPoints()
-	display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
-	db.posx = nil
-	db.posy = nil
-	plugin:Contract()
-end
 
 local function updateProfile()
 	db = plugin.db.profile
@@ -301,7 +302,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
 	updateProfile()
 end
 

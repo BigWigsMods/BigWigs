@@ -75,7 +75,7 @@ L.countWipes = "Niederlagen zählen"
 L.createTimeBar = "Bestzeittimer anzeigen"
 L.customBarStarted = "Custombar '%s' wurde von gestartet von %s Nutzer %s."
 L.customRange = "Eigene Reichweitenanzeige"
-L.customSoundDesc = "Den speziell gewählten Sound anstatt des vom Modul bereitgestellten abspielen"
+L.customSoundDesc = "Den speziell gewählten Sound anstatt des vom Modul bereitgestellten abspielen."
 L.defeated = "%s wurde besiegt!"
 L.disable = "Deaktivieren"
 L.disabled = "Deaktivieren"
@@ -243,6 +243,12 @@ L.wrongPullFormat = "Muss zwischen 1 und 60 Sekunden liegen. Beispiel: /pull 5"
 L.wrongTime = "Ungültige Zeitangabe. <time> kann eine Zahl in Sekunden, ein M:S paarung, oder Mm sein. Beispiel: 5, 1:20 or 2m."
 
 -----------------------------------------------------------------------
+-- AltPower.lua
+--
+
+L.resetAltPowerDesc = "Setzt alle Optionen im Zusammenhang mit Alternative Energie zurück, inklusive der Position des Ankers für Alternative Energie."
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -277,6 +283,7 @@ L.iconPositionDesc = "Wähle, wo sich das Symbol auf der Leiste befinden soll."
 L.visibleBarLimit = "Maximale Leistenanzahl"
 L.visibleBarLimitDesc = "Legt die maximale Anzahl der Leisten fest, welche gleichzeitig angezeigt werden."
 L.textDesc = "Text in den Leisten anzeigen oder verstecken."
+L.resetBarsDesc = "Setzt alle Optionen im Zusammenhang mit Leisten zurück, inklusive der Position der Anker für Leisten."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -286,9 +293,9 @@ L.audio = "Audio"
 L.music = "Musik"
 L.ambience = "Umgebungsgeräusche"
 L.sfx = "Soundeffekte"
---L.disableMusic = "Mute music (recommended)"
---L.disableAmbience = "Mute ambient sounds (recommended)"
---L.disableSfx = "Mute sound effects (not recommended)"
+L.disableMusic = "Musik stummschalten (empfohlen)"
+L.disableAmbience = "Umgebungsgeräusche stummschalten (empfohlen)"
+L.disableSfx = "Soundeffekte stummschalten (nicht empfohlen)"
 L.disableAudioDesc = "Die Option '%s' im WoW Soundmenü wird deaktiviert und erst nach dem Bosskampf wieder aktiviert. Dies kann helfen sich auf die BigWigs Sounds zu konzentrieren."
 L.blockTooltipQuests = "Questziele im Tooltip blockieren"
 L.blockTooltipQuestsDesc = "Wenn zum Abschluss einer Quest ein Boss getötet werden muss, wird der Fortschritt normalerweise im MouseOver-Tooltip mit '0/1 abgeschlossen' angezeigt. Dieser Fortschritt wird im Kampf versteckt, damit der Tooltip nicht zu groß wird."
@@ -323,6 +330,24 @@ L.purpleDesc = "Warnungen für tankspezifische Fähigkeiten wie ein stapelnder T
 --
 
 L.infoBox = "InfoBox"
+
+-----------------------------------------------------------------------
+-- Messages.lua
+--
+
+L.resetMessagesDesc = "Setzt alle Optionen im Zusammenhang mit Nachrichten zurück, inklusive der Position der Anker für Nachrichten."
+
+-----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+L.resetProximityDesc = "Setzt alle Optionen im Zusammenhang mit Nähe zurück, inklusive der Position des Ankers für Nähe."
+
+-----------------------------------------------------------------------
+-- Sound.lua
+--
+
+L.resetSoundDesc = "Setzt die obigen Sounds auf ihren Standard zurück."
 
 -----------------------------------------------------------------------
 -- Statistics.lua

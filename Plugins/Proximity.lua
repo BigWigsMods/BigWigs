@@ -67,7 +67,7 @@ local GameTooltip = CreateFrame("GameTooltip", "BigWigsProximityTooltip", UIPare
 local UnitPosition, GetPlayerFacing = UnitPosition, GetPlayerFacing
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
 local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown
-local UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitPhaseReason = UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitPhaseReason
+local UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason = UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason
 local min, cos, sin, format = math.min, math.cos, math.sin, string.format
 local tinsert, tconcat = table.insert, table.concat
 local next, type, tonumber, wipe = next, type, tonumber, wipe
@@ -364,7 +364,7 @@ do
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
 			if mapId == tarMapId and range < activeRangeSquaredTwoFive and not UnitPhaseReason(n) then
-				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
+				if myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
@@ -402,7 +402,7 @@ do
 		for i = 1, maxPlayers do
 			local n = unitList[i]
 			local _, _, _, tarMapId = UnitPosition(n)
-			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and not UnitPhaseReason(n) then
+			if mapId == tarMapId and isInRange(n) and myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) and not UnitPhaseReason(n) then
 				anyoneClose = anyoneClose + 1
 				if anyoneClose < 6 then
 					local player = plugin:UnitName(n)
@@ -541,7 +541,7 @@ do
 		local anyoneClose = 0
 		for i = 1, #proximityPlayerTable do
 			local unit = proximityPlayerTable[i]
-			if isInRange(unit) and myGUID ~= UnitGUID(unit) then
+			if isInRange(unit) and myGUID ~= plugin:UnitGUID(unit) then
 				anyoneClose = anyoneClose + 1
 				local player = plugin:UnitName(unit)
 				tinsert(tooClose, coloredNames[player])
@@ -585,7 +585,7 @@ do
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
 			if mapId == tarMapId and range < activeRangeSquaredTwoFive and not UnitPhaseReason(n) then
-				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
+				if myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
@@ -624,7 +624,7 @@ do
 		for i = 1, maxPlayers do
 			local n = unitList[i]
 			local _, _, _, tarMapId = UnitPosition(n)
-			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and not UnitPhaseReason(n) then
+			if mapId == tarMapId and isInRange(n) and myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) and not UnitPhaseReason(n) then
 				anyoneClose = anyoneClose + 1
 			end
 		end
@@ -829,17 +829,6 @@ local function updateProfile()
 	db = plugin.db.profile
 
 	plugin:RestyleWindow()
-end
-
-local function resetAnchor()
-	proxAnchor:ClearAllPoints()
-	proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-	db.width = plugin.defaultDB.width
-	db.height = plugin.defaultDB.height
-	proxAnchor:SetWidth(db.width)
-	proxAnchor:SetHeight(db.height)
-	db.posx = nil
-	db.posy = nil
 end
 
 -------------------------------------------------------------------------------
@@ -1069,7 +1058,6 @@ do
 		self:RegisterMessage("BigWigs_StartConfigureMode")
 		self:RegisterMessage("BigWigs_StopConfigureMode")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-		self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
 		updateProfile()
 	end
 end
@@ -1262,6 +1250,15 @@ do
 					},
 				},
 			},
+			reset = {
+				type = "execute",
+				name = L.resetAll,
+				desc = L.resetProximityDesc,
+				func = function() 
+					plugin.db:ResetProfile()
+				end,
+				order = 9,
+			},
 		},
 	}
 end
@@ -1345,7 +1342,7 @@ do
 			proxAnchor.ability:SetText(L.customRange)
 		end
 
-		myGUID = UnitGUID("player")
+		myGUID = plugin:UnitGUID("player")
 		activeRange = setRange(range)
 		activeRangeRadius = range * 3 -- activeRange * 3, so we have 3x radius space
 		activeRangeSquared = range*range

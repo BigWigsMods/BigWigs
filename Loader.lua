@@ -19,7 +19,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 198
+local BIGWIGS_VERSION = 199
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -85,7 +85,7 @@ local tooltipFunctions = {}
 local next, tonumber, strsplit = next, tonumber, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
-local UnitName = UnitName
+local UnitName, UnitGUID = UnitName, UnitGUID
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetBestMapForUnit = GetBestMapForUnit
@@ -95,6 +95,8 @@ public.SendAddonMessage = SendAddonMessage
 public.SendChatMessage = SendChatMessage
 public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
+public.UnitName = UnitName
+public.UnitGUID = UnitGUID
 
 -- Version
 local usersHash = {}
@@ -1017,9 +1019,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20201217075343" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "9.0.11" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20201217000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20201222060601" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "9.0.12" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20201221000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
@@ -1337,7 +1339,6 @@ end
 do
 	local warnedThisZone = {}
 
-	local UnitGUID = UnitGUID
 	function mod:UNIT_TARGET(unit)
 		local guid = UnitGUID(unit.."target")
 		if guid then

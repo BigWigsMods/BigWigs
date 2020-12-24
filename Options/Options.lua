@@ -16,6 +16,7 @@ local lds = LibStub("LibDualSpec-1.0")
 local loader = BigWigsLoader
 local API = BigWigsAPI
 options.SendMessage = loader.SendMessage
+local UnitName = loader.UnitName
 
 local bwTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
 

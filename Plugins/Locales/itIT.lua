@@ -75,7 +75,7 @@ L.countWipes = "Numero Fallimenti:"
 L.createTimeBar = "Mostra la barra 'Miglior Tempo'"
 L.customBarStarted = "Barra personalizzata '%s' creata da utente %s - %s."
 L.customRange = "Indicatore di Distanza Personalizzato"
-L.customSoundDesc = "Riproduci il suono personalizzato scelto invece che quelli proposti dal modulo"
+L.customSoundDesc = "Riproduci il suono personalizzato scelto invece che quelli proposti dal modulo."
 L.defeated = "%s è stato sconfitto!"
 L.disable = "Disabilita"
 L.disabled = "Disabilitato"
@@ -243,6 +243,12 @@ L.wrongPullFormat = "Deve essere tra 1 e 60 secondi. Un'esempio corretto è: /pu
 L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in secondi, una coppia M:S , o Mm. Per esempio 5, 1:20 or 2m."
 
 -----------------------------------------------------------------------
+-- AltPower.lua
+--
+
+--L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -277,6 +283,7 @@ L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in
 --L.visibleBarLimit = "Visible bar limit"
 --L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 --L.textDesc = "Whether to show or hide the text displayed on the bars."
+--L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -323,6 +330,24 @@ L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (B
 --
 
 --L.infoBox = "InfoBox"
+
+-----------------------------------------------------------------------
+-- Messages.lua
+--
+
+--L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+
+-----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+--L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+
+-----------------------------------------------------------------------
+-- Sound.lua
+--
+
+--L.resetSoundDesc = "Resets the above sounds to their defaults."
 
 -----------------------------------------------------------------------
 -- Statistics.lua

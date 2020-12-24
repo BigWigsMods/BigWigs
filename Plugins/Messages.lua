@@ -58,12 +58,6 @@ local function hideAnchors()
 	emphasizedCountdownText:GetParent():Hide()
 end
 
-local function resetAnchors()
-	normalAnchor:Reset()
-	emphasizeAnchor:Reset()
-	emphasizeCountdownAnchor:Reset()
-end
-
 do
 	local defaultPositions = {
 		BWMessageAnchor = {"CENTER"},
@@ -79,11 +73,6 @@ do
 		local s = self:GetEffectiveScale()
 		db[self.x] = self:GetLeft() * s
 		db[self.y] = self:GetTop() * s
-	end
-	local function Reset(self)
-		db[self.x] = nil
-		db[self.y] = nil
-		self:RefixPosition()
 	end
 	local function RefixPosition(self)
 		self:ClearAllPoints()
@@ -123,7 +112,6 @@ do
 		header:SetJustifyH("CENTER")
 		display:SetScript("OnDragStart", OnDragStart)
 		display:SetScript("OnDragStop", OnDragStop)
-		display.Reset = Reset
 		display.RefixPosition = RefixPosition
 		display:SetPoint(unpack(defaultPositions[frameName]))
 		display:Hide()
@@ -413,6 +401,18 @@ plugin.pluginOptions.args.more = {
 			step = 0.5,
 			order = 12,
 		},
+		header1 = {
+			type = "header",
+			name = "",
+			order = 13,
+		},
+		reset = {
+			type = "execute",
+			name = L.resetAll,
+			desc = L.resetMessagesDesc,
+			func = function() plugin.db:ResetProfile() end,
+			order = 14,
+		},
 	},
 }
 
@@ -432,7 +432,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
 
-	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_Message")
 	self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)

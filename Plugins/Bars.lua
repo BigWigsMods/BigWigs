@@ -46,7 +46,6 @@ local empUpdate = nil -- emphasize updater frame
 local nameplateEmpUpdate = nil
 local rearrangeBars
 local rearrangeNameplateBars
-local UnitGUID = UnitGUID
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local clickHandlers = {}
@@ -63,7 +62,7 @@ do
 	findUnitByGUID = function(id)
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
-			local guid = UnitGUID(unit)
+			local guid = plugin:UnitGUID(unit)
 			if guid == id then
 				return unit
 			end
@@ -85,6 +84,7 @@ BigWigsAPI:RegisterBarStyle("Default", {
 	--barHeight = 16,
 	--fontSizeNormal = 10,
 	--fontSizeEmphasized = 13,
+	--fontOutline = "NONE",
 	--GetSpacing = function(bar) end,
 	--ApplyStyle = function(bar) end,
 	--BarStopped = function(bar) end,
@@ -671,29 +671,37 @@ do
 							SetBarStyle(value)
 							local style = BigWigsAPI:GetBarStyle(value)
 							if style then
-								if style.barSpacing then
+								if type(style.barSpacing) == "number" and style.barSpacing > 0 and style.barSpacing < 101 then
 									db.spacing = style.barSpacing
 								else
-									db.spacing = 1
+									db.spacing = plugin.defaultDB.spacing
 								end
 								rearrangeBars(normalAnchor)
 								rearrangeBars(emphasizeAnchor)
 
-								if style.barHeight then
+								if type(style.barHeight) == "number" and style.barHeight > 0 and style.barHeight < 201 then
 									db.BigWigsAnchor_height = style.barHeight
 									db.BigWigsEmphasizeAnchor_height = style.barHeight * 1.1
 								else
-									db.BigWigsAnchor_height = 16
-									db.BigWigsEmphasizeAnchor_height = 22
+									db.BigWigsAnchor_height = plugin.defaultDB.BigWigsAnchor_height
+									db.BigWigsEmphasizeAnchor_height = plugin.defaultDB.BigWigsEmphasizeAnchor_height
 								end
-								if style.fontSizeNormal then
+								if type(style.fontSizeNormal) == "number" and style.fontSizeNormal > 0 and style.fontSizeNormal < 201 then
 									db.fontSize = style.fontSizeNormal
-									updateFont()
+								else
+									db.fontSize = plugin.defaultDB.fontSize
 								end
-								if style.fontSizeEmphasized then
+								if type(style.fontSizeEmphasized) == "number" and style.fontSizeEmphasized > 0 and style.fontSizeEmphasized < 201 then
 									db.fontSizeEmph = style.fontSizeEmphasized
-									updateFont()
+								else
+									db.fontSizeEmph = plugin.defaultDB.fontSize
 								end
+								if type(style.fontOutline) == "string" and (style.fontOutline == "NONE" or style.fontOutline == "OUTLINE" or style.fontOutline == "THICKOUTLINE") then
+									db.outline = style.fontOutline
+								else
+									db.outline = plugin.defaultDB.outline
+								end
+								updateFont()
 
 								for bar in next, normalAnchor.bars do
 									currentBarStyler.BarStopped(bar)
@@ -719,6 +727,7 @@ do
 						order = 6,
 						softMax = 30,
 						min = 0,
+						max = 100,
 						step = 1,
 						width = 2,
 						set = sortBars,
@@ -921,6 +930,18 @@ do
 							end
 						end,
 						disabled = function() return not db.icon end,
+					},
+					header3 = {
+						type = "header",
+						name = "",
+						order = 18,
+					},
+					reset = {
+						type = "execute",
+						name = L.resetAll,
+						desc = L.resetBarsDesc,
+						func = function() plugin.db:ResetProfile() end,
+						order = 19,
 					},
 				},
 			},
@@ -1489,13 +1510,6 @@ do
 		display:SetScript("OnDragStart", onDragStart)
 		display:SetScript("OnDragStop", onDragStop)
 		display.bars = {}
-		display.Reset = function(self)
-			db[self.x] = nil
-			db[self.y] = nil
-			db[self.w] = nil
-			db[self.h] = nil
-			self:RefixPosition()
-		end
 		display.RefixPosition = function(self)
 			self:ClearAllPoints()
 			if db[self.x] and db[self.y] then
@@ -1523,11 +1537,6 @@ end
 local function hideAnchors()
 	normalAnchor:Hide()
 	emphasizeAnchor:Hide()
-end
-
-local function resetAnchors()
-	normalAnchor:Reset()
-	emphasizeAnchor:Reset()
 end
 
 local function updateProfile()
@@ -1570,7 +1579,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnPluginDisable", "StopModuleBars")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
-	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 
 	self:RefixClickIntercepts()
@@ -2278,7 +2286,7 @@ end
 --
 
 function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
-	local guid = UnitGUID(unit)
+	local guid = plugin:UnitGUID(unit)
 	local unitBars = nameplateBars[guid]
 	if not unitBars then return end
 	for _, barInfo in next, unitBars do
@@ -2310,7 +2318,7 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 end
 
 function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
-	local guid = UnitGUID(unit)
+	local guid = plugin:UnitGUID(unit)
 	local unitBars = nameplateBars[guid]
 	if not unitBars then return end
 

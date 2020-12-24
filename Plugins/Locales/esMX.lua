@@ -20,6 +20,7 @@ L.altPowerTitle = "PoderAlternativo"
 L.toggleDisplayPrint = "La pantalla mostrará la próxima vez. Para desactivarlo completamente para este encuentro, debes desactivarlo en las opciones del encuentro."
 L.disabled = "Desactivado"
 L.disabledDisplayDesc = "Desactiva la pantalla para todos los módulos que la utilicen."
+--L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -50,6 +51,7 @@ L.autoReplyLeftCombatAdvancedWipe = "Perdí contra '%s' en: %s"
 L.bars = "Barras"
 L.style = "Estilo"
 L.bigWigsBarStyleName_Default = "Por defecto"
+--L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
 
 L.nameplateBars = "Barras de nombres"
 L.nameplateAutoWidth = "Igualar anchura de la placa de nombre"
@@ -223,6 +225,7 @@ L.infoBox = "InfoBox"
 L.sinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs. Esta pantalla soporta iconos, colores y puede mostrar hasta 4 mensajes en la pantalla a la vez. Los mensajes recién insertados crecerán en tamaño y se reducirán de nuevo rápidamente para notificar al usuario."
 L.emphasizedSinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs enfatizada. Esta pantalla admite texto y colores, y sólo puede mostrar un mensaje a la vez."
 L.emphasizedCountdownSinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs enfatizada en la cuenta regresiva. Esta pantalla admite texto y colores, y sólo puede mostrar un mensaje a la vez."
+--L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 
 L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Menajes"
@@ -263,6 +266,7 @@ L.soundDelayDesc = "Especifica el tiempo que BigWigs debería esperar entre cada
 
 L.proximity = "Pantalla de proximidad"
 L.proximity_desc = "Muestra la ventana de proximidad cuando sea apropiado para este encuentro, enumerando los jugadores que están demasiado cerca de ti."
+--L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
 
 L.close = "Cerrar"
 L.closeProximityDesc = "Cierra la ventana de proximidad.\n\nPara deshabilitarla completamente para un encuentro, debes ir a las opciones para ese encuentro module y deshabilitar la opción de 'Proximidad'."
@@ -330,7 +334,8 @@ L.Warning = "Alerta"
 L.sound = "Sonido"
 L.soundDesc = "Los mensajes pueden venir con un sonido. A algunas personas les resulta más fácil escucharlos una vez que han aprendido qué sonido va con cada mensaje, en lugar de leer los mensajes reales."
 
-L.customSoundDesc = "Reproduce el sonido personalizado seleccionado en lugar del suministrado por el módulo"
+L.customSoundDesc = "Reproduce el sonido personalizado seleccionado en lugar del suministrado por el módulo."
+--L.resetSoundDesc = "Resets the above sounds to their defaults."
 L.resetAllCustomSound = "Si has personalizado los sonidos para cualquier encuentro con el jefe, este botón los reajustará TODOS para que se usen los sonidos definidos aquí."
 
 -----------------------------------------------------------------------

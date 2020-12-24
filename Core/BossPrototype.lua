@@ -26,10 +26,11 @@ do
 end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
-local UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitGUID, UnitPosition, UnitIsConnected
+local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter
+local UnitName, UnitGUID = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID
 local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 local format, find, gsub, band, tremove, wipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
@@ -176,7 +177,17 @@ local bossNames = setmetatable({}, {__index =
 
 --- Register the module to enable on mob id.
 -- @number ... Any number of mob ids
-function boss:RegisterEnableMob(...) core:RegisterEnableMob(self, ...) end
+function boss:RegisterEnableMob(...)
+	self.enableMobs = {}
+	core:RegisterEnableMob(self, ...)
+end
+
+--- Check if a specific mob id would enable this module.
+-- @number mobId A singular specific mob id
+-- @return true or nil
+function boss:IsEnableMob(mobId)
+	return self.enableMobs[mobId] 
+end
 
 --- The encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
@@ -687,30 +698,31 @@ do
 		end
 	end
 
+	local bosses = {"boss1", "boss2", "boss3", "boss4", "boss5"}
 	-- Update module engage status from querying boss units.
 	-- Engages modules if boss1-boss5 matches an registered enabled mob,
 	-- disables the module if set as engaged but has no boss match.
 	-- noEngage if set to "NoEngage", the module is prevented from engaging if enabling during a boss fight (after a DC)
 	function boss:CheckForEncounterEngage(noEngage)
-		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
-		if not self:IsEngaged() and hasBoss then
-			local guid = UnitGUID("boss1") or UnitGUID("boss2") or UnitGUID("boss3") or UnitGUID("boss4") or UnitGUID("boss5")
-			local module = core:GetEnableMobs()[self:MobId(guid)]
-			local modType = type(module)
-			if modType == "string" then
-				if module == self.moduleName then
-					self:Engage(noEngage == "NoEngage" and noEngage)
-				else
-					self:Disable()
-				end
-			elseif modType == "table" then
-				for i = 1, #module do
-					if module[i] == self.moduleName then
+		if not self:IsEngaged() then
+			for i = 1, 5 do
+				local boss = bosses[i]
+				local guid = UnitGUID(boss)
+				if guid and UnitHealth(boss) > 0 then
+					local mobId = self:MobId(guid)
+					if self:IsEnableMob(mobId) then
 						self:Engage(noEngage == "NoEngage" and noEngage)
-						break
+						return
+					elseif not self.disableTimer then
+						self.disableTimer = true
+						self:SimpleTimer(function()
+							self.disableTimer = nil
+							if not self:IsEngaged() then
+								self:Disable()
+							end
+						end, 3) -- 3 seconds should be enough time for the IEEU event to enable all the boss frames (fires once per boss frame)
 					end
 				end
-				if not self:IsEngaged() then self:Disable() end
 			end
 		end
 	end
@@ -1147,7 +1159,6 @@ function boss:Me(guid)
 end
 
 do
-	local UnitName = UnitName
 	--- Get the full name of a unit.
 	-- @string unit unit token or name
 	-- @return unit name with the server appended if appropriate
@@ -1159,6 +1170,15 @@ do
 			name = name .."-".. server
 		end
 		return name
+	end
+	--- Get the Globally Unique Identifier of a unit.
+	-- @string unit unit token or name
+	-- @return guid guid of the unit
+	function boss:UnitGUID(unit)
+		local guid = UnitGUID(unit)
+		if guid then
+			return guid
+		end
 	end
 end
 

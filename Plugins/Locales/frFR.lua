@@ -19,6 +19,7 @@ L.altPowerTitle = "Ressource alternative"
 L.toggleDisplayPrint = "L'affichage sera présent la prochaine fois. Pour le désactiver complètement pour cette rencontre, vous devez le décocher dans les options de la rencontre."
 L.disabled = "Désactivé"
 L.disabledDisplayDesc = "Désactive l'affichage pour tous les modules qui l'utilisent."
+L.resetAltPowerDesc = "Réinitialise toutes les options relatives à la ressource alternative, y compris la position de l'ancre."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -49,6 +50,7 @@ L.autoReplyLeftCombatAdvancedWipe = "J'ai perdu face à '%s' : %s"
 L.bars = "Barres"
 L.style = "Style"
 L.bigWigsBarStyleName_Default = "Défaut"
+L.resetBarsDesc = "Réinitialise toutes les options relatives aux barres, y compris la position des ancres des barres."
 
 L.nameplateBars = "Barres d'info des unités"
 L.nameplateAutoWidth = "Même largeur que la barre d'info"
@@ -150,9 +152,9 @@ L.audio = "Audio"
 L.music = "Musique"
 L.ambience = "Ambiance"
 L.sfx = "Effets sonores"
---L.disableMusic = "Mute music (recommended)"
---L.disableAmbience = "Mute ambient sounds (recommended)"
---L.disableSfx = "Mute sound effects (not recommended)"
+L.disableMusic = "Couper la musique (recommandé)"
+L.disableAmbience = "Couper les sons ambiants (recommandé)"
+L.disableSfx = "Couper les effets sonores (non recommandé)"
 L.disableAudioDesc = "L'option '%s' des options de Son de WoW sera désactivé, et ensuite réactivé une fois que la rencontre de boss est terminée. Cela peut vous aider à vous concentrer sur les sons d'alerte de BigWigs."
 L.blockTooltipQuests = "Bloquer les objectifs de quête dans la bulle d'aide"
 L.blockTooltipQuestsDesc = "Quand vous devez tuer un boss pour une quête, cela sera affiché sous la forme '0/1 terminé' dans la bulle d'aide quand vous survolez le boss avec votre souris. Cela sera caché lors du combat face à ce boss pour éviter que sa bulle d'aide ne devienne trop grande."
@@ -222,6 +224,7 @@ L.infoBox = "Boîte d'infos"
 L.sinkDescription = "Transmet la sortie de cet addon via l'affichage des messages de BigWigs. Cet affichage supporte les icônes, les couleurs et peut afficher jusqu'à 4 messages à l'écran en même temps. Les messages récemment insérés grandiront et reviendront rapidement à leur taille initiale afin de bien capter l'attention du joueur."
 L.emphasizedSinkDescription = "Transmet la sortie de cet addon via l'affichage des messages mis en évidence de BigWigs. Cet affichage supporte le texte et les couleurs, et ne peut afficher qu'un message à la fois."
 L.emphasizedCountdownSinkDescription = "Dirige la sortie de cet addon vers l'affichage des messages de compte à rebours de BigWigs. Cet affichage supporte le texte et les couleurs, et peut uniquement afficher un message à la fois."
+L.resetMessagesDesc = "Réinitialise toutes les options relatives aux messages, y compris la position des ancres des messages."
 
 L.bwEmphasized = "BigWigs en évidence"
 L.messages = "Messages"
@@ -262,6 +265,7 @@ L.soundDelayDesc = "Spécifie combien de temps BigWigs doit attendre entre chaqu
 
 L.proximity = "Affichage de proximité"
 L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
+L.resetProximityDesc = "Réinitialise toutes les options relatives à la portée, y compris la position de l'ancre."
 
 L.close = "Fermer"
 L.closeProximityDesc = "Ferme l'affichage de proximité.\n\nPour le désactiver complètement, rendez-vous dans les options du boss et décochez 'Proximité'."
@@ -329,7 +333,8 @@ L.Warning = "Avertissement"
 L.sound = "Son"
 L.soundDesc = "Les messages sont le plus souvent accompagnés de sons. Certaines personnes trouvent plus faciles d'entendre ces sons pour réagir une fois qu'elles ont appris quels sons sont liés à quels messages, plutôt que de lire les messages à chaque fois."
 
-L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module"
+L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module."
+L.resetSoundDesc = "Réinitialise les sons ci-dessous à leurs valeurs par défaut."
 L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains paramètres des rencontres de boss, ce bouton les réinitialisera TOUS afin que les sons par défaut soient utilisés à la place."
 
 -----------------------------------------------------------------------
