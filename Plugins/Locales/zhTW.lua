@@ -246,7 +246,7 @@ L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 �
 -- AltPower.lua
 --
 
---L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+L.resetAltPowerDesc = "重設所有特殊能量自訂選項，包括錨點和位置。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -283,7 +283,7 @@ L.iconPositionDesc = "選擇將圖示置於計時條的哪一側。"
 L.visibleBarLimit = "最大可見數量"
 L.visibleBarLimitDesc = "設定同時於螢幕上可見的計時條之最大數量。"
 L.textDesc = "是否顯示或隱藏計時條上的文字。"
---L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
+L.resetBarsDesc = "重設所有計時條自訂選項，包括錨點和位置。"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -293,16 +293,16 @@ L.audio = "語音"
 L.music = "音樂"
 L.ambience = "環境音效"
 L.sfx = "音效"
---L.disableMusic = "Mute music (recommended)"
---L.disableAmbience = "Mute ambient sounds (recommended)"
---L.disableSfx = "Mute sound effects (not recommended)"
+L.disableMusic = "關閉音樂（推薦）"
+L.disableAmbience = "關閉環境音效（推薦）"
+L.disableSfx = "關閉音效（不推薦）"
 L.disableAudioDesc = "關閉魔獸世界的音效選項中的「%s」部份，然後在首領戰之後恢復。這可以幫助您專注在BigWigs的警告音效。"
 L.blockTooltipQuests = "滑鼠提示不顯示任務資訊"
 L.blockTooltipQuestsDesc = "當你在進行擊殺某首領的任務時，滑鼠提示指向首領會顯示「0/1 完成」，導致滑鼠提示框變得很大，啟用這項功能可以避免這個情況。"
 L.blockFollowerMission = "封鎖要塞彈出訊息"
 L.blockFollowerMissionDesc = "要塞會彈出訊息，其中最主要的是追隨者任務完成的提示。\n\n這些彈出訊息有可能在首領戰鬥中遮蓋你的介面中重要的部份，因此我們建議封鎖這些彈出訊息。"
 L.blockObjectiveTracker = "隱藏任務追蹤"
---L.blockObjectiveTrackerDesc = "在首領戰期間隱藏任務追蹤列表，使你的畫面能夠淨空。\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
+L.blockObjectiveTrackerDesc = "在首領戰期間隱藏任務追蹤列表，使你的畫面能夠淨空。\n\n此功能於傳奇難度+ 或追蹤成就時會自動停用。"
 
 L.subzone_grand_bazaar = "大市集" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "贊達拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -335,19 +335,19 @@ L.infoBox = "訊息盒"
 -- Messages.lua
 --
 
---L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.resetMessagesDesc = "重設所有訊息自訂選項，包括錨點和位置。"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
 --
 
---L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+L.resetProximityDesc = "重設所有玩家雷達自訂選項，包括錨點和位置。"
 
 -----------------------------------------------------------------------
 -- Sound.lua
 --
 
---L.resetSoundDesc = "Resets the above sounds to their defaults."
+L.resetSoundDesc = "將前面的音效設定重設為預設值。"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
