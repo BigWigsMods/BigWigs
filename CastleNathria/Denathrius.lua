@@ -93,18 +93,18 @@ if L then
 
 	L.infobox_stacks = "%d |4Stack:Stacks;: %d |4player:players;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
-	L.custom_on_repeating_nighthunter = "Repeating Night Hunter"
-	L.custom_on_repeating_nighthunter_desc = "Repeating Night Hunter yell messages with icons {rt1}, {rt2}, {rt3} to find your line easier if you have to Soak"
+	L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
+	L.custom_on_repeating_nighthunter_desc = "Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
 
-	L.custom_on_repeating_impale = "Repeating Impale"
-	L.custom_on_repeating_impale_desc = "Repeating Impale say messages with 1, 22, 333, 4444 to know your order you will be hit by."
+	L.custom_on_repeating_impale = "Repeating Impale Say"
+	L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
 
 	L.hymn_stacks = "Nathrian Hymn"
-	L.hym_stacks_desc = "Warnings and Messages for Nathrian Hymn stacks."
+	L.hym_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
 	L.hym_stacks_icon = "70_inscription_vantus_rune_suramar"
 
-	L.ravage_target = "Ravage Target"
-	L.ravage_target_desc = "Cast Bar for until the Ravage Target location is picked in stage 3."
+	L.ravage_target = "Ravage Target Cast Bar"
+	L.ravage_target_desc = "Display a cast bar showing the time until the Ravage Target location is chosen in stage 3."
 end
 
 --------------------------------------------------------------------------------
