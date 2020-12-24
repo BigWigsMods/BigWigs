@@ -251,9 +251,9 @@ function mod:BossDeath(args)
 
 	if bossesKilled == 1 then
 		if friedaAlive then
-			--self:CDBar(346651, 15) -- Drain Essence
+			self:CDBar(346651, 9) -- Drain Essence
 			--self:CDBar(337110, 6) -- Dreadbolt Volley
-			--self:CDBar(346657, 6) -- Prideful Eruption
+			self:CDBar(346657, 38) -- Prideful Eruption
 		end
 		if stavrosAlive then
 			self:CDBar(327497, 10.9) -- Evasive Lunge
@@ -283,9 +283,9 @@ function mod:BossDeath(args)
 		end
 	elseif bossesKilled == 2 then
 		if friedaAlive then
-			--self:CDBar(346651, 15) -- Drain Essence
+			self:CDBar(346651, 9) -- Drain Essence
 			--self:CDBar(337110, 6) -- Dreadbolt Volley
-			--self:CDBar(346657, 6) -- Prideful Eruption
+			self:CDBar(346657, 24) -- Prideful Eruption
 		end
 		if stavrosAlive then
 			self:CDBar(331634, 9.4) -- Dark Recital
@@ -375,7 +375,7 @@ do
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if #playerList == 1 then
-			self:CDBar(args.spellId, self:Mythic() and 22.5 or 25)
+			self:CDBar(args.spellId, self:Mythic() and 22.5 or bossesKilled == 1 and 20 or bossesKilled == 2 and 45 or 25)
 		end
 		self:TargetsMessage(args.spellId, "cyan", playerList, 3)
 	end
@@ -406,7 +406,7 @@ end
 function mod:PridefulEruption(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, 25)
+	self:CDBar(args.spellId, (bossesKilled == 1 and 120 or bossesKilled == 2 and 40)) -- Only have one log and its a bit weird timing with Baroness pushing to 50% as she starts a cast on Heroic.
 end
 
 function mod:SoulSpikes(args)
