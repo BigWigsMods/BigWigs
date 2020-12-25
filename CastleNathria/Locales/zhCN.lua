@@ -23,10 +23,10 @@ if L then
 	L.level = "%s（等级 |cffffff00%d|r）"
 	L.full = "%s（|cffff0000满|r）"
 
-	-- L.container_active = "Enable Container: %s"
+	L.container_active = "启用容器：%s"
 
-	-- L.anima_adds = "Concentrate Anima Adds"
-	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
+	L.anima_adds = "浓缩心能增援"
+	L.anima_adds_desc = "当浓缩心能负面效果刷新增援时显示一个计时器。"
 
 	L.custom_off_experimental = "启用实验性功能"
 	L.custom_off_experimental_desc = "此功能|cffff0000未测试|r并可能|cffff0000刷屏|r。"
@@ -48,14 +48,14 @@ if L then
 	L.custom_on_repeating_dark_recital = "重复黑暗伴舞"
 	L.custom_on_repeating_dark_recital_desc = "重复黑暗伴舞喊话信息使用 {rt1}，{rt2} 图标，和伙伴共舞。"
 
-	-- L.custom_off_select_boss_order = "Mark Boss Kill Order"
-	-- L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
-	-- L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
-	-- L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
-	-- L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
-	-- L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frieda"
-	-- L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
-	-- L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
+	L.custom_off_select_boss_order = "标记首领击杀顺序"
+	L.custom_off_select_boss_order_desc = "使用叉子 {rt7} 标记团队首领击杀顺序。需要权限。"
+	L.custom_off_select_boss_order_value1 = "堡主 -> 男爵 -> 勋爵"
+	L.custom_off_select_boss_order_value2 = "女男爵 -> 堡主 -> 勋爵"
+	L.custom_off_select_boss_order_value3 = "勋爵 -> 堡主 -> 女男爵"
+	L.custom_off_select_boss_order_value4 = "堡主 -> 勋爵 -> 女男爵"
+	L.custom_off_select_boss_order_value5 = "女男爵 -> 勋爵 -> 堡主"
+	L.custom_off_select_boss_order_value6 = "勋爵 -> 女男爵 -> 堡主"
 
 	L.dance_assist = "跳舞助手"
 	L.dance_assist_desc = "显示舞台的定向警报。"
@@ -72,7 +72,7 @@ end
 
 L = BigWigs:NewBossLocale("Sludgefist", "zhCN")
 if L then
-	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+	L.stomp_shift = "踩踏和位移" -- Destructive Stomp + Seismic Shift
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "zhCN")
@@ -80,27 +80,27 @@ if L then
 	L.first_blade = "第一刀"
 	L.second_blade = "第二刀"
 
-	-- L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+	L.skirmishers = "散兵" -- Short for Stone Legion Skirmishers
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	L.custom_on_stop_timers = "总是显示技能条"
+	L.custom_on_stop_timers_desc = "为了马上测试"
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "zhCN")
 if L then
 	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
-	--L.infobox_stacks = "%d |4Stack:Stacks;: %d |4player:players;" -- 4 Stacks: 5 players // 1 Stack: 1 player
+	L.infobox_stacks = "%d 堆叠：%d 玩家" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
-	--L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
-	--L.custom_on_repeating_nighthunter_desc = "Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
+	L.custom_on_repeating_nighthunter = "重复午夜猎手喊话"
+	L.custom_on_repeating_nighthunter_desc = "使用 {rt1}、{rt2}、{rt3} 图标重复午夜猎手技能喊话信息让你找线更容易。"
 
-	--L.custom_on_repeating_impale = "Repeating Impale Say"
-	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
+	L.custom_on_repeating_impale = "重复穿刺说话"
+	L.custom_on_repeating_impale_desc = "使用“1”、“22”、“333”、“4444”重复穿刺技能说话信息让你清楚击中顺序。"
 
-	--L.hymn_stacks = "Nathrian Hymn"
-	--L.hym_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	L.hymn_stacks = "纳斯利亚赞歌"
+	L.hym_stacks_desc = "你的纳斯利亚赞歌当前堆叠层数警报。"
 
-	--L.ravage_target = "Ravage Target Cast Bar"
-	--L.ravage_target_desc = "Display a cast bar showing the time until the Ravage Target location is chosen in stage 3."
+	L.ravage_target = "毁灭目标施放条"
+	L.ravage_target_desc = "在第3阶段显示一个选择破坏目标位置之前的时间施放条。"
 end
