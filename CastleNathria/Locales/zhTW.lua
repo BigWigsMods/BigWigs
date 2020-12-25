@@ -23,6 +23,11 @@ if L then
 	L.level = "%s (等級|cffffff00%d|r)"
 	L.full = "%s (|cffff0000滿了|r)"
 
+	-- L.container_active = "Enable Container: %s"
+
+	-- L.anima_adds = "Concentrate Anima Adds"
+	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
+
 	L.custom_off_experimental = "啟用實驗性功能"
 	L.custom_off_experimental_desc = "這些功能|cffff0000尚未經過完整測試|r，而且可能造成|cffff0000洗頻|r。"
 
@@ -43,6 +48,15 @@ if L then
 	L.custom_on_repeating_dark_recital = "重覆黑暗伴舞喊話"
 	L.custom_on_repeating_dark_recital_desc = "使用 {rt1}、{rt2} 重覆黑暗伴舞喊話，方便你找到你的舞伴。"
 
+	-- L.custom_off_select_boss_order = "Mark Boss Kill Order"
+	-- L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
+	-- L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
+	-- L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
+	-- L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
+	-- L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frieda"
+	-- L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
+	-- L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
+
 	L.dance_assist = "跳舞助手"
 	L.dance_assist_desc = "顯示舞步方向的警報。"
 	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t 向前 |T450907:0:0:0:0:64:64:4:60:4:60|t"
@@ -56,10 +70,20 @@ if L then
 	L.dance_yell_left = "往左搖！"
 end
 
+L = BigWigs:NewBossLocale("Sludgefist", "zhTW")
+if L then
+	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+end
+
 L = BigWigs:NewBossLocale("Stone Legion Generals", "zhTW")
 if L then
 	L.first_blade = "第一刀"
 	L.second_blade = "第二刀"
+
+	-- L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+
+	-- L.custom_on_stop_timers = "Always show ability bars"
+	-- L.custom_on_stop_timers_desc = "Just for testing right now"
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "zhTW")

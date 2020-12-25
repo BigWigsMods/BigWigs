@@ -50,6 +50,12 @@ if L then
 
 	L.custom_off_select_boss_order = "Mark Boss Kill Order"
 	L.custom_off_select_boss_order_desc = "Marque dans quel ordre le raid tuera les boss avec la croix {rt7}. Nécessite d'être assistant ou chef de raid."
+	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
+	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
+	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
+	L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frieda"
+	L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
+	L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
 
 	L.dance_assist = "Assistant danse"
 	L.dance_assist_desc = "Affiche des alertes directionelles pour la phase de danse."
@@ -62,6 +68,11 @@ if L then
 	L.dance_yell_right = "droite" -- On se trémousse à droite ! -or- On se trémousse vers la droite maintenant !
 	L.dance_yell_down = "avant" -- En avant le boogie !
 	L.dance_yell_left = "gauche" -- Déhanché à gauche !
+end
+
+L = BigWigs:NewBossLocale("Sludgefist", "frFR")
+if L then
+	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "frFR")

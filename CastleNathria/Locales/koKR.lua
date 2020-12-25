@@ -23,6 +23,11 @@ if L then
 	-- L.level = "%s (Level |cffffff00%d|r)"
 	-- L.full = "%s (|cffff0000FULL|r)"
 
+	-- L.container_active = "Enable Container: %s"
+
+	-- L.anima_adds = "Concentrate Anima Adds"
+	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
+
 	-- L.custom_off_experimental = "Enable experimental features"
 	-- L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
 
@@ -43,6 +48,15 @@ if L then
 	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
 	-- L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
 
+	-- L.custom_off_select_boss_order = "Mark Boss Kill Order"
+	-- L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
+	L.custom_off_select_boss_order_value1 = "니클라우스 -> 프리에다 -> 스타브로스"
+	L.custom_off_select_boss_order_value2 = "프리에다 -> 니클라우스 -> 스타브로스"
+	L.custom_off_select_boss_order_value3 = "스타브로스 -> 니클라우스 -> 프리에다"
+	L.custom_off_select_boss_order_value4 = "니클라우스 -> 스타브로스 -> 프리에다"
+	L.custom_off_select_boss_order_value5 = "프리에다 -> 스타브로스 -> 니클라우스"
+	L.custom_off_select_boss_order_value6 = "스타브로스 -> 프리에다 -> 니클라우스"
+
 	--L.dance_assist = "Dance Assist"
 	--L.dance_assist_desc = "Show directional warnings for the dancing stage."
 	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t 앞으로 |T450907:0:0:0:0:64:64:4:60:4:60|t"
@@ -56,10 +70,20 @@ if L then
 	L.dance_yell_left = "왼쪽으로" -- Sashay left!
 end
 
+L = BigWigs:NewBossLocale("Sludgefist", "koKR")
+if L then
+	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+end
+
 L = BigWigs:NewBossLocale("Stone Legion Generals", "koKR")
 if L then
 	-- L.first_blade = "First Blade"
 	-- L.second_blade = "Second Blade"
+
+	-- L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+
+	-- L.custom_on_stop_timers = "Always show ability bars"
+	-- L.custom_on_stop_timers_desc = "Just for testing right now"
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "koKR")

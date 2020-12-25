@@ -50,12 +50,12 @@ if L then
 
 	L.custom_off_select_boss_order = "Tötungsreihenfolge markieren"
 	L.custom_off_select_boss_order_desc = "Markiert die Reihenfolge, in welcher der Schlachtzug die Bosse tötet mit Kreuz {rt7}. Benötigt Schlachtzugsleiter oder Assistent zum Markieren."
-	-- L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
-	-- L.custom_off_select_boss_order_value2 = "Frienda -> Niklaus -> Stavros"
-	-- L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frienda"
-	-- L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frienda"
-	-- L.custom_off_select_boss_order_value5 = "Frienda -> Stavros -> Niklaus"
-	-- L.custom_off_select_boss_order_value6 = "Stavros -> Frienda -> Niklaus"
+	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
+	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
+	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
+	L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frieda"
+	L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
+	L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
 
 	L.dance_assist = "Tanzassistent"
 	L.dance_assist_desc = "Zeigt an, in welche Richtung beim Tanzen gelaufen werden muss."
