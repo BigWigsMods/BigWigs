@@ -98,9 +98,13 @@ if L then
 	--L.custom_on_repeating_impale = "Repeating Impale Say"
 	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
 
-	--L.hymn_stacks = "Nathrian Hymn"
-	--L.hym_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	-- L.hymn_stacks = "Nathrian Hymn"
+	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
 
-	--L.ravage_target = "Ravage Target Cast Bar"
-	--L.ravage_target_desc = "Display a cast bar showing the time until the Ravage Target location is chosen in stage 3."
+	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
+	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
+	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+
+	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
+	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
 end
