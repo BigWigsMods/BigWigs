@@ -101,7 +101,7 @@ if L then
 	L.hymn_stacks = "Hymne von Nathria"
 	L.hymn_stacks_desc = "Benachrichtigungen für die aktuelle Stapelanzahl von Hymne von Nathria auf dem Spieler."
 
-	L.ravage_target = "Verheeren Ziel Zauberleiste"
+	L.ravage_target = "Reflexion: Verheeren Ziel Zauberleiste"
 	L.ravage_target_desc = "Zeigt eine Zauberleiste mit der verbleibenden Zeit bis die Reflexion einen Ort für Verheeren anvisiert."
 	L.ravage_targeted = "Verheeren anvisiert" -- Text on the bar for when Ravage picks its location to target in stage 3
 
