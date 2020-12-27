@@ -62,7 +62,7 @@ if L then
 	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Tanze vorwärts |T450907:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Tanze nach rechts |T450908:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Tanze nach unten |T450905:0:0:0:0:64:64:4:60:4:60|t"
-	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Tanz nach links |T450906:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Tanze nach links |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
 	L.dance_yell_up = "vorwärts" -- Tänzelt vorwärts!
 	L.dance_yell_right = "rechts" -- Schlenker nach rechts!
