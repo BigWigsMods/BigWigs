@@ -100,11 +100,16 @@ if L then
 	L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
 
 	L.hymn_stacks = "Nathrian Hymn"
-	L.hym_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
-	L.hym_stacks_icon = "70_inscription_vantus_rune_suramar"
+	L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	L.hymn_stacks_icon = "70_inscription_vantus_rune_suramar"
 
-	L.ravage_target = "Ravage Target Cast Bar"
-	L.ravage_target_desc = "Display a cast bar showing the time until the Ravage Target location is chosen in stage 3."
+	L.ravage_target = "Reflection: Ravage Target Cast Bar"
+	L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
+	L.ravage_target_icon = "spell_shadow_corpseexplode"
+	L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+
+	L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
+	L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
 end
 
 --------------------------------------------------------------------------------
@@ -146,13 +151,13 @@ function mod:GetOptions()
 		fatalFinesseMarker,
 		336008, -- Smoldering Ire
 		332849, -- Reflection: Ravage
+		"ravage_target",
 		333980, -- Reflection: Massacre
 		"hymn_stacks",
 		344776, -- Vengeful Wail
 		balefulShadowsMarker,
 		{338738, "INFOBOX"}, -- Through the Mirror
 		333979, -- Sinister Reflection
-		"ravage_target",
 	},{
 		["stages"] = "general",
 		[328936] = -22016, -- Stage One: Sinners Be Cleansed
@@ -679,6 +684,7 @@ end
 function mod:ReflectionRavage(args)
 	self:Message(args.spellId, "orange", CL.count:format(self:SpellName(332937), ravageCount))
 	self:PlaySound(args.spellId, "alert")
+	self:CastBar("ravage_target", 3, L.ravage_targeted, args.spellId)
 	self:CastBar(args.spellId, 9) -- 6s cast + 3s before he starts it
 	ravageCount = ravageCount + 1
 	self:Bar(333980, 40, CL.count:format(self:SpellName(330068), massacreCount)) -- Massacre // Alternates with Ravage
@@ -781,7 +787,7 @@ do
 		-- Lets show the info
 		local percentOfRaid = mirrorCount/playersAlive
 		local color =  percentOfRaid > 0.6 and "|cffff0000" or "|cff00ff00"
-		local lineText = color.."Mirror: "..mirrorCount.."|r"
+		local lineText = color..L.mirror:format(mirrorCount).."|r"
 		if mirrorOnMe then
 			lineText = "|cff3366ff>>|r"..lineText.."|cff3366ff<<|r"
 		end
@@ -789,7 +795,7 @@ do
 
 		color =  percentOfRaid < 0.6 and "|cffff0000" or "|cff00ff00"
 		local noMirrorCount = playersAlive-mirrorCount
-		lineText = color.."No Mirror: "..noMirrorCount.."|r"
+		lineText = color..L.no_mirror:format(noMirrorCount).."|r"
 		if not mirrorOnMe then
 			lineText = "|cff3366ff>>|r"..lineText.."|cff3366ff<<|r"
 		end
@@ -824,7 +830,7 @@ end
 function mod:SinisterReflection(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar("ravage_target", 3, "Ravage Targeted", args.spellId)
+	self:CastBar("ravage_target", 3, L.ravage_targeted, args.spellId)
 	self:CastBar(args.spellId, 9, CL.count:format(self:SpellName(332937), ravageCount), 332937) -- 6s cast + 3s before he starts it
 	ravageCount = ravageCount + 1
 	self:Bar(args.spellId, 59.7, CL.count:format(args.spellName, ravageCount))
