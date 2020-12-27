@@ -18,7 +18,7 @@ end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "deDE")
 if L then
-	-- L.times = "%dx %s"
+	L.times = "%dx %s"
 
 	L.level = "%s (Stufe |cffffff00%d|r)"
 	L.full = "%s (|cffff0000VOLL|r)"
@@ -50,12 +50,12 @@ if L then
 
 	L.custom_off_select_boss_order = "Tötungsreihenfolge markieren"
 	L.custom_off_select_boss_order_desc = "Markiert die Reihenfolge, in welcher der Schlachtzug die Bosse tötet mit Kreuz {rt7}. Benötigt Schlachtzugsleiter oder Assistent zum Markieren."
-	-- L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
-	-- L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
-	-- L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
-	-- L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frieda"
-	-- L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
-	-- L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
+	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
+	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
+	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
+	L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frieda"
+	L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
+	L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
 
 	L.dance_assist = "Tanzassistent"
 	L.dance_assist_desc = "Zeigt an, in welche Richtung beim Tanzen gelaufen werden muss."
@@ -99,8 +99,12 @@ if L then
 	L.custom_on_repeating_impale_desc = "Gibt wiederholt Chatnachrichten für die Durchbohren Fähigkeit mit '1' oder '22' oder '333' oder '4444' aus, um die Reihenfolge der Angriffe zu verdeutlichen."
 
 	L.hymn_stacks = "Hymne von Nathria"
-	L.hym_stacks_desc = "Benachrichtigungen für die aktuelle Stapelanzahl von Hymne von Nathria auf dem Spieler."
+	L.hymn_stacks_desc = "Benachrichtigungen für die aktuelle Stapelanzahl von Hymne von Nathria auf dem Spieler."
 
 	L.ravage_target = "Verheeren Ziel Zauberleiste"
-	L.ravage_target_desc = "Zeigt eine Zauberleiste mit der verbleibenden Zeit bis zur Auswahl des Zielortes von Verheeren in Phase 3 an."
+	L.ravage_target_desc = "Zeigt eine Zauberleiste mit der verbleibenden Zeit bis die Reflexion einen Ort für Verheeren anvisiert."
+	L.ravage_targeted = "Verheeren anvisiert" -- Text on the bar for when Ravage picks its location to target in stage 3
+
+	L.no_mirror = "Kein Spiegel: %d" -- Player amount that does not have the Through the Mirror
+	L.mirror = "Spiegel: %d" -- Player amount that does have the Through the Mirror
 end
