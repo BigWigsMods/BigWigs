@@ -233,8 +233,6 @@ L.normalMessages = "Normal messages"
 L.emphasizedMessages = "Emphasized messages"
 L.output = "Output"
 
-L.useColors = "Use colors"
-L.useColorsDesc = "Toggles white only messages ignoring coloring."
 L.useIcons = "Use icons"
 L.useIconsDesc = "Show icons next to messages."
 L.classColors = "Class colors"

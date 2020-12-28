@@ -234,8 +234,6 @@ L.normalMessages = "Mensajes normales"
 L.emphasizedMessages = "Mensajes enfatizados"
 L.output = "Resultado"
 
-L.useColors = "Usar colores"
-L.useColorsDesc = "Mostrar mensajes de color blanco ignorando los colores."
 L.useIcons = "Usar íconos"
 L.useIconsDesc = "Mostrar íconos al lado de los mensajes."
 L.classColors = "Colores de clase"

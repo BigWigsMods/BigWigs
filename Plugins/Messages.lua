@@ -34,10 +34,10 @@ local db = nil
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
-local fakeEmphasizeMessageAddon = {}
+local fakePluginForEmphasizedMessages = {}
 
 sink:Embed(plugin)
-sink:Embed(fakeEmphasizeMessageAddon)
+sink:Embed(fakePluginForEmphasizedMessages)
 
 --------------------------------------------------------------------------------
 -- Anchors & Frames
@@ -182,12 +182,11 @@ plugin.defaultDB = {
 	align = "CENTER",
 	fontSize = 20,
 	emphFontSize = 48,
-	usecolors = true,
 	scale = 1,
-	chat = nil,
+	chat = false,
 	useicons = true,
 	classcolor = true, -- XXX non-functional
-	growUpwards = nil,
+	growUpwards = false,
 	emphasizedMessages = {
 		sink20OutputSink = "BigWigsEmphasized",
 	},
@@ -200,7 +199,7 @@ local function updateProfile()
 	db = plugin.db.profile
 
 	plugin:SetSinkStorage(db)
-	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
+	fakePluginForEmphasizedMessages:SetSinkStorage(db.emphasizedMessages)
 
 	if seModule then
 		local flags = nil
@@ -335,7 +334,7 @@ plugin.pluginOptions = {
 			childGroups = "tab",
 			args = {
 				normal = plugin:GetSinkAce3OptionsDataTable(),
-				emphasized = fakeEmphasizeMessageAddon:GetSinkAce3OptionsDataTable(),
+				emphasized = fakePluginForEmphasizedMessages:GetSinkAce3OptionsDataTable(),
 			},
 		},
 	},
@@ -408,12 +407,6 @@ plugin.pluginOptions.args.more = {
 			min = 1,
 			step = 1,
 			width = "full",
-		},
-		usecolors = {
-			type = "toggle",
-			name = L.useColors,
-			desc = L.useColorsDesc,
-			order = 5,
 		},
 		useicons = {
 			type = "toggle",
@@ -645,16 +638,14 @@ function plugin:BigWigs_Message(event, module, key, text, color, icon, emphasize
 	if not text then return end
 
 	local r, g, b = 1, 1, 1 -- Default to white.
-	if db.usecolors then
-		if type(color) == "table" then
-			if color.r and color.g and color.b then
-				r, g, b = color.r, color.g, color.b
-			else
-				r, g, b = unpack(color)
-			end
-		elseif colorModule then
-			r, g, b = colorModule:GetColor(color, module, key)
+	if type(color) == "table" then
+		if color.r and color.g and color.b then
+			r, g, b = color.r, color.g, color.b
+		else
+			r, g, b = unpack(color)
 		end
+	elseif colorModule then
+		r, g, b = colorModule:GetColor(color, module, key)
 	end
 
 	if not db.useicons then icon = nil end
@@ -664,7 +655,7 @@ function plugin:BigWigs_Message(event, module, key, text, color, icon, emphasize
 			text = text:upper()
 			text = text:gsub("(:%d+|)T", "%1t") -- Fix texture paths that need to end in lowercase |t
 		end
-		fakeEmphasizeMessageAddon:Pour(text, r, g, b)
+		fakePluginForEmphasizedMessages:Pour(text, r, g, b)
 	else
 		self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	end

@@ -233,8 +233,6 @@ L.normalMessages = "일반 메시지"
 L.emphasizedMessages = "강조 메시지"
 L.output = "출력"
 
-L.useColors = "색상 사용"
-L.useColorsDesc = "색상을 무시하도록 메시지에 색상 사용을 전환합니다."
 L.useIcons = "아이콘 사용"
 L.useIconsDesc = "메시지 옆에 아이콘을 표시합니다."
 L.classColors = "직업 색상"
