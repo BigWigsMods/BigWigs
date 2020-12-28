@@ -329,7 +329,7 @@ L.purpleDesc = "坦克特定技能的警报，例如负面效果叠加。"
 
 --L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
 --L.countdown = "Countdown"
---L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It can be enabled for any boss ability (in the boss abilities section) if the ability is on a timer, but is rarely enabled by default."
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 --L.countdownAudioHeader = "Spoken Audio Countdown"
 --L.countdownTextHeader = "Visual Text Countdown"
 --L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."

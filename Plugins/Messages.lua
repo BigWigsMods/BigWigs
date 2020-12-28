@@ -311,7 +311,7 @@ plugin.pluginOptions = {
 					type = "range",
 					name = L.fontSize,
 					order = 3,
-					softMax = 72, max = 200, min = 1, step = 1,
+					softMax = 100, max = 200, min = 1, step = 1,
 				},
 				emphUppercase = {
 					type = "toggle",
