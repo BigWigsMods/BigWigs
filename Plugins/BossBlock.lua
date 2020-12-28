@@ -141,9 +141,10 @@ plugin.pluginOptions = {
 --
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_OnBossEngage")
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
+	self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
+	self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
+	self:RegisterMessage("BigWigs_OnBossWin", "OnWinOrWipe")
+	self:RegisterMessage("BigWigs_OnBossWipe", "OnWinOrWipe")
 
 	-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
 	if self.db.profile.disableSfx then
@@ -157,10 +158,6 @@ function plugin:OnPluginEnable()
 	end
 	if self.db.profile.disableAmbience then
 		SetCVar("Sound_EnableAmbience", "1")
-	end
-
-	if IsEncounterInProgress() then -- Just assume we logged into an encounter after a DC
-		self:BigWigs_OnBossEngage()
 	end
 
 	self:RegisterEvent("CINEMATIC_START")
@@ -209,7 +206,9 @@ do
 	end
 
 	local restoreObjectiveTracker = nil
-	function plugin:BigWigs_OnBossEngage()
+	function plugin:OnEngage(event, module)
+		if not module or not module.journalId or module.worldBoss then return end
+
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
@@ -242,7 +241,7 @@ do
 		CheckElv(self)
 		-- Never hide when tracking achievements or in Mythic+
 		local _, _, diff = GetInstanceInfo()
-		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
+		if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
 			restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
 			if restoreObjectiveTracker then
 				trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
@@ -252,7 +251,9 @@ do
 		end
 	end
 
-	function plugin:BigWigs_OnBossWin()
+	function plugin:OnWinOrWipe(event, module)
+		if not module or not module.journalId or module.worldBoss then return end
+
 		if self.db.profile.blockEmotes then
 			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")

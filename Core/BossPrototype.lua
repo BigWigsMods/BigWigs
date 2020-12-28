@@ -912,6 +912,8 @@ do
 				end
 
 				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
+			elseif noEngage == "NoEngage" then
+				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self, difficulty)
 			end
 		end
 	end
