@@ -185,8 +185,7 @@ do
 			else
 				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
 			end
-			local module = BigWigs:GetPlugin("Sounds", true)
-			if timeLeft < 6 and module and module.db.profile.sound then
+			if timeLeft < 6 then
 				self:SendMessage("BigWigs_PlayCountdownNumber", self, timeLeft, self.db.profile.voice)
 			end
 		end
