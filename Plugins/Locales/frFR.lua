@@ -66,7 +66,7 @@ L.modifierDesc = "Maintenez enfoncée la touche modificatrice sélectionnée pou
 L.modifierKey = "Seul. avec touche mod."
 L.modifierKeyDesc = "Permet aux barres de ne pas réagir aux clics de la souris à moins que la touche modificatrice sélectionnée ne soit maintenue enfoncée, cas dans lequel les actions de la souris décrites ci-dessous seront disponibles."
 
---L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
+L.temporaryCountdown = "Active temporairement le compte à rebours sur la technique associée à cette barre."
 L.report = "Rapport"
 L.reportDesc = "Rapporte le statut des barres actuelles dans la discussion de groupe active : la discussion d'instance, de raid, de groupe ou juste le dire, selon ce qui est le plus approprié."
 L.remove = "Enlever"
@@ -205,13 +205,13 @@ L.countdownColor = "Couleur compte à rebours"
 L.countdownVoice = "Voix du compte à rebours"
 L.countdownTest = "Test compte à rebours"
 L.countdownAt = "Compte à rebours à... (secondes)"
---L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
---L.countdown = "Countdown"
---L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
---L.countdownAudioHeader = "Spoken Audio Countdown"
---L.countdownTextHeader = "Visual Text Countdown"
---L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
---L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+L.countdownAt_desc = "Choisissez combien de temps il doit rester sur une technique de boss (en secondes) quand le compte à rebours commence."
+L.countdown = "Compte à rebours"
+L.countdownDesc = "La fonctionnalité de compte à rebours consiste en un compte à rebours audio parlé et un compte à rebours texte visuel. Elle est rarement activée par défaut, mais vous pouvez l'activer pour n'importe quelle technique de boss en vous rendant dans les paramètres spécifiques de la rencontre de boss."
+L.countdownAudioHeader = "Compte à rebours audio parlé"
+L.countdownTextHeader = "Compte à rebours texte visuel"
+L.resetCountdownDesc = "Réinitialise tous les paramètres des comptes à rebours ci-dessus à leurs valeurs par défaut."
+L.resetAllCountdownDesc = "Si vous avez sélectionné des voix de compte à rebours personnalisés dans les paramètres de n'importe quel rencontre de boss, ce bouton va TOUS les réinitialiser et réinitialiser tous les paramètres ci-dessus à leurs valeurs par défaut."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -234,7 +234,7 @@ L.normalMessages = "Messages normaux"
 L.emphasizedMessages = "Messages en évidence"
 L.output = "Sortie"
 L.uppercase = "MAJUSCULE"
---L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.uppercaseDesc = "Tous les messages mis en évidence seront convertis en MAJUSCULES."
 
 L.useIcons = "Utiliser les icônes"
 L.useIconsDesc = "Affiche les icônes à côté des messages."
@@ -325,15 +325,15 @@ L.secondaryDesc = "La seconde icône de cible de raid qu'un script de rencontre 
 --
 
 L.Sounds = "Sons"
---L.oldSounds = "Old Sounds"
+L.oldSounds = "Anciens sons"
 
 L.Alarm = "Alarme"
 L.Info = "Info"
 L.Alert = "Alerte"
 L.Long = "Long"
 L.Warning = "Avertissement"
---L.onyou = "A spell, buff, or debuff is on you"
---L.underyou = "You need to move out of a spell under you"
+L.onyou = "Un sort, amélioration ou affaiblissement est sur vous"
+L.underyou = "Vous devez bouger hors d'un sort qui se trouve en dessous de vous"
 
 L.sound = "Son"
 L.soundDesc = "Les messages sont le plus souvent accompagnés de sons. Certaines personnes trouvent plus faciles d'entendre ces sons pour réagir une fois qu'elles ont appris quels sons sont liés à quels messages, plutôt que de lire les messages à chaque fois."
