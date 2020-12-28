@@ -326,6 +326,12 @@ L.purple = "Púrpura"
 L.purpleDesc = "Avisos para habilidades específicas para tanques como acumulaciones de un debuff en un tanque."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdown = "Countdown"
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 

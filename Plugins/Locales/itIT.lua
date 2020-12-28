@@ -326,6 +326,12 @@ L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (B
 --L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdown = "Countdown"
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 

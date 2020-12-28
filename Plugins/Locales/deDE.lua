@@ -326,6 +326,12 @@ L.purple = "Violett"
 L.purpleDesc = "Warnungen für tankspezifische Fähigkeiten wie ein stapelnder Tankdebuff."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdown = "Countdown"
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 

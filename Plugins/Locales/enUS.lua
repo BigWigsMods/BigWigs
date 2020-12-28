@@ -196,7 +196,7 @@ L.purple = "Purple"
 L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
 L.superEmphasize = "Super Emphasize"
@@ -210,6 +210,7 @@ L.countdownColor = "Countdown color"
 L.countdownVoice = "Countdown voice"
 L.countdownTest = "Test countdown"
 L.countdownAt = "Countdown at... (seconds)"
+L.countdown = "Countdown"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

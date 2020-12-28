@@ -197,7 +197,7 @@ L.purple = "Morado"
 L.purpleDesc = "Advertencias sobre las habilidades específicas de los tanques, como las acumulaciones de efectos negativos en un tanque."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
 L.superEmphasize = "Súper Enfatizar"
@@ -211,6 +211,7 @@ L.countdownColor = "Color de la cuenta regresiva"
 L.countdownVoice = "Voz de la cuenta regresiva"
 L.countdownTest = "Probar una cuenta regresiva"
 L.countdownAt = "Cuenta regresiva en... (segundos)"
+--L.countdown = "Countdown"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

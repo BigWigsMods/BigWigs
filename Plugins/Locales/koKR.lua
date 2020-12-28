@@ -196,7 +196,7 @@ L.resetAllDesc = "우두머리 전투 설정에 사용자 설정 색상을 적�
 --L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
 L.superEmphasize = "특수 강조"
@@ -210,6 +210,7 @@ L.countdownColor = "초읽기 색상"
 L.countdownVoice = "초읽기 음성"
 L.countdownTest = "초읽기 테스트"
 L.countdownAt = "초읽기 시작... (초)"
+--L.countdown = "Countdown"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

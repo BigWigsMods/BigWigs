@@ -196,7 +196,7 @@ L.purple = "Violet"
 L.purpleDesc = "Alertes des techniques spécifiques aux tanks, comme le cumul d'un affaiblissement tank."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
 L.superEmphasize = "Super mise en évidence"
@@ -210,6 +210,7 @@ L.countdownColor = "Couleur compte à rebours"
 L.countdownVoice = "Voix du compte à rebours"
 L.countdownTest = "Test compte à rebours"
 L.countdownAt = "Compte à rebours à... (secondes)"
+--L.countdown = "Countdown"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua

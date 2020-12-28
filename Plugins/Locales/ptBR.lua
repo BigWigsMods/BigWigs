@@ -196,7 +196,7 @@ L.purple = "Roxo"
 L.purpleDesc = "Alertas para habilidades específicas de tanque, como pilhas de efeitos negativos no tanque."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
 L.superEmphasize = "Super enfatizar"
@@ -210,6 +210,7 @@ L.countdownColor = "Cor da contagem regressiva"
 L.countdownVoice = "Voz da contagem regressiva"
 L.countdownTest = "Teste de contagem regressiva"
 L.countdownAt = "Contagem regressiva em... (segundos)"
+--L.countdown = "Countdown"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
