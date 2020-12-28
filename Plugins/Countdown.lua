@@ -209,7 +209,6 @@ do
 				set = function(_, value)
 					local list = media:List(FONT)
 					plugin.db.profile.fontName = list[value]
-					mModule.updateProfile()
 				end,
 			},
 			outline = {
@@ -243,8 +242,6 @@ do
 				name = L.countdownVoice,
 				type = "select",
 				values = voiceList,
-				get = get,
-				set = set,
 				order = 9,
 				width = "full",
 			},
