@@ -19,7 +19,7 @@ local voiceMap = {
 }
 
 plugin.defaultDB = {
-	countdown = true,
+	textEnabled = true,
 	fontName = plugin:GetDefaultFont(),
 	outline = "THICKOUTLINE",
 	fontSize = 48,
@@ -173,16 +173,91 @@ do
 			plugin.db.profile[info[#info]] = value
 		end,
 		args = {
+			heading = {
+				type = "description",
+				name = L.countdownDesc.. "\n\n",
+				order = 0.5,
+				width = "full",
+				fontSize = "medium",
+			},
 			countdownTime = {
 				name = L.countdownAt,
-				type = "range", min = 5, max = 10, step = 1,
+				desc = L.countdownAt_desc,
+				type = "range", min = 3, max = 10, step = 1,
+				order = 0.8,
+				width = 2,
+			},
+			countdownTest = {
+				name = L.countdownTest,
+				type = "execute",
+				handler = plugin,
+				func = "TestCountdown",
 				order = 1,
 			},
-			countdown = {
+			audioSpacer = {
+				type = "description",
+				name = "\n\n",
+				order = 1.1,
+				width = "full",
+				fontSize = "medium",
+			},
+			audioHeader = {
+				type = "header",
+				name = L.countdownAudioHeader,
+				order = 1.5,
+			},
+			voice = {
+				name = L.countdownVoice,
+				type = "select",
+				values = voiceList,
+				order = 1.6,
+				width = "full",
+			},
+			textSpacer = {
+				type = "description",
+				name = "\n\n",
+				order = 1.8,
+				width = "full",
+				fontSize = "medium",
+			},
+			textHeader = {
+				type = "header",
+				name = L.countdownTextHeader,
+				order = 1.9,
+			},
+			textEnabled = {
 				type = "toggle",
 				name = L.textCountdown,
 				desc = L.textCountdownDesc,
 				order = 2,
+				width = "full",
+			},
+			fontName = {
+				type = "select",
+				name = L.font,
+				order = 2.1,
+				values = media:List(FONT),
+				itemControl = "DDI-Font",
+				get = function()
+					for i, v in next, media:List(FONT) do
+						if v == plugin.db.profile.fontName then return i end
+					end
+				end,
+				set = function(_, value)
+					local list = media:List(FONT)
+					plugin.db.profile.fontName = list[value]
+				end,
+				width = 2,
+			},
+			outline = {
+				type = "select",
+				name = L.outline,
+				order = 2.2,
+				values = {
+					NONE = L.none,
+					OUTLINE = L.thin,
+					THICKOUTLINE = L.thick,
+				},
 			},
 			fontColor = {
 				type = "color",
@@ -195,37 +270,11 @@ do
 				end,
 				order = 3,
 			},
-			fontName = {
-				type = "select",
-				name = L.font,
-				order = 4,
-				values = media:List(FONT),
-				itemControl = "DDI-Font",
-				get = function()
-					for i, v in next, media:List(FONT) do
-						if v == plugin.db.profile.fontName then return i end
-					end
-				end,
-				set = function(_, value)
-					local list = media:List(FONT)
-					plugin.db.profile.fontName = list[value]
-				end,
-			},
-			outline = {
-				type = "select",
-				name = L.outline,
-				order = 5,
-				values = {
-					NONE = L.none,
-					OUTLINE = L.thin,
-					THICKOUTLINE = L.thick,
-				},
-			},
 			fontSize = {
 				type = "range",
 				name = L.fontSize,
 				order = 6,
-				softMax = 72, max = 200, min = 1, step = 1,
+				softMax = 100, max = 200, min = 1, step = 1,
 			},
 			monochrome = {
 				type = "toggle",
@@ -233,24 +282,28 @@ do
 				desc = L.monochromeDesc,
 				order = 7,
 			},
-			separator1 = {
+			resetHeader = {
+				type = "header",
 				name = "",
-				type = "description",
 				order = 8,
 			},
-			voice = {
-				name = L.countdownVoice,
-				type = "select",
-				values = voiceList,
-				order = 9,
-				width = "full",
-			},
-			voiceTest = {
-				name = L.countdownTest,
+			reset = {
 				type = "execute",
-				handler = plugin,
-				func = "TestEmphasize",
-				order = 10,
+				name = L.reset,
+				desc = L.resetCountdownDesc,
+				func = function()
+					local restoreCountdowns = plugin.db.profile.Countdown
+					plugin.db:ResetProfile()
+					plugin.db.profile.Countdown = restoreCountdowns
+				end,
+				order = 9,
+			},
+			resetAll = {
+				type = "execute",
+				name = L.resetAll,
+				desc = L.resetAllCountdownDesc,
+				func = function() plugin.db:ResetProfile() end,
+				order = 11,
 			},
 		},
 	}
@@ -333,7 +386,7 @@ do
 		if sound then
 			PlaySoundFile(sound, "Master")
 		end
-		if plugin.db.profile.countdown then
+		if plugin.db.profile.textEnabled then
 			plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", num)
 		end
 		if text and timers[text] then timers[text] = {} end
@@ -360,7 +413,7 @@ do
 			timers[text] = {}
 		end
 	end
-	function plugin:TestEmphasize()
+	function plugin:TestCountdown()
 		local text = "test"
 		self:BigWigs_StopCountdown(nil, self, text)
 		if not timers[text] then timers[text] = {} end
