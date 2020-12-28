@@ -1,62 +1,72 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Common", "deDE")
 if not L then return end
 
-L.add = "Add"
-L.add_killed = "Add getötet (%d/%d)"
-L.add_remaining = "Add getötet, noch %d übrig"
-L.adds = "Adds"
-L.add_spawned = "Add erschienen"
-L.big_add = "Großes Add"
-L.cast = "<Wirkt %s>"
-L.casting = "Wirkt %s"
-L.count = "%s (%d)"
-L.count_icon = "%s (%d|T13700%d:0|t)"
-L.count_rticon = "%s (%d{rt%d})"
-L.custom_end = "%s wird zum %s"
-L.custom_min = "%s in %d Min"
-L.custom_sec = "%s in %d Sek"
-L.custom_start = "%s angegriffen – %s in %d Min"
-L.custom_start_s = "%s angegriffen – %s in %d Sek"
-L.duration = "%s für %s sec"
-L.focus_only = "|cffff0000Warnungen nur für Fokusziel.|r "
-L.general = "Allgemein" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.heroic = "Heroischer Modus"
-L.incoming = "%s steht bevor"
-L.intermission = "Zwischenphase"
-L.interrupted = "%s unterbrochen"
-L.interrupted_by = "%s wurde von %s unterbrochen" -- spell interrupted by player
-L.mob_killed = "%s getötet (%d/%d)"
-L.mob_remaining = "%s getötet, noch %d übrig"
-L.mythic = "Mythischer Modus"
-L.near = "%s in DEINER Nähe"
-L.next_add = "Nächstes Add"
-L.no = "Kein %s"
-L.normal = "Normaler Modus"
-L.on = "%s auf %s"
+-- Prototype.lua common words
+L.you = "%s auf DIR"
+L.you_icon = "%s auf |T13700%d:0|tDIR"
+L.underyou = "%s unter DIR"
+L.other = "%s: %s"
 L.onboss = "%s auf dem BOSS"
 L.buff_boss = "Buff auf BOSS: %s"
 L.buff_other = "Buff auf %s: %s"
-L.other = "%s: %s"
-L.over = "%s vorbei"
-L.percent = "%d%% - %s" -- 20% - spell
+L.on = "%s auf %s"
+L.stack = "%dx %s auf %s"
+L.stackyou = "%dx %s auf DIR"
+L.cast = "<Wirkt %s>"
+L.casting = "Wirkt %s"
+L.soon = "%s bald"
+L.count = "%s (%d)"
+L.count_icon = "%s (%d|T13700%d:0|t)"
+L.count_rticon = "%s (%d{rt%d})"
+L.near = "%s in DEINER Nähe"
+L.on_group = "%s auf GRUPPE"
+
 L.phase = "Phase %d"
+L.stage = "Phase %d"
+L.normal = "Normaler Modus"
+L.heroic = "Heroischer Modus"
+L.mythic = "Mythischer Modus"
+L.active = "Aktiv" -- When a boss becomes active, after speech finishes
+L.general = "Allgemein" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+
+L.duration = "%s für %s Sek"
+L.over = "%s vorbei"
 L.removed = "%s entfernt"
 L.removed_from = "%s wurde von %s entfernt"
 L.removed_by = "%s wurde durch %s entfernt" -- spell removed by player
-L.small_adds = "Kleine Adds"
-L.soon = "%s bald"
+L.incoming = "%s steht bevor"
+L.interrupted = "%s unterbrochen"
+L.interrupted_by = "%s wurde von %s unterbrochen" -- spell interrupted by player
+L.no = "Kein %s"
+L.intermission = "Zwischenphase"
+L.percent = "%d%% - %s" -- 20% - spell
+
+-- Add related
+L.add_spawned = "Add erschienen"
 L.spawned = "%s erschienen"
 L.spawning = "%s entsteht"
-L.stack = "%dx %s auf %s"
-L.stackyou = "%dx %s auf DIR"
-L.stage = "Phase %d"
-L.trash = "Trash"
-L.underyou = "%s unter DIR"
-L.you = "%s auf DIR"
-L.you_icon = "%s auf |T13700%d:0|tDIR"
-L.on_group = "%s auf GRUPPE" -- spell on group
+L.next_add = "Nächstes Add"
+L.add_killed = "Add getötet (%d/%d)"
+L.add_remaining = "Add getötet, noch %d übrig"
+L.add = "Add"
+L.adds = "Adds"
+L.big_add = "Großes Add"
+L.small_adds = "Kleine Adds"
 
-L.active = "Aktiv" -- When a boss becomes active, after speech finishes
+-- Mob related
+L.mob_killed = "%s getötet (%d/%d)"
+L.mob_remaining = "%s getötet, noch %d übrig"
+
+-- Localizers note:
+-- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
+L.custom_start = "%s angegriffen – %s in %d Min"
+L.custom_start_s = "%s angegriffen – %s in %d Sek"
+L.custom_end = "%s wird zum %s"
+L.custom_min = "%s in %d Min"
+L.custom_sec = "%s in %d Sek"
+
+L.focus_only = "|cffff0000Warnungen nur für Fokusziel.|r "
+L.trash = "Trash"
 
 -- Common raid marking locale
 L.marker = "%s markieren"
