@@ -211,7 +211,13 @@ L.countdownColor = "Countdown-Farbe"
 L.countdownVoice = "Countdown-Stimme"
 L.countdownTest = "Countdown testen"
 L.countdownAt = "Countdown ab... (Sekunden)"
+L.countdownAt_desc = "Verbleibende Zeit einer Bossfähigkeit (in Sekunden) wählen, wenn der Countdown beginnt."
 L.countdown = "Countdown"
+L.countdownDesc = "Die Countdown Funktion besteht aus einem gesprochenen Audio-Countdown sowie einem visuellen Text-Coutdown. Sie ist selten standardmäßig aktiviert, aber kann für jede Bossfähigkeit in den jeweiligen Einstellungen der Bosse aktiviert werden."
+L.countdownAudioHeader = "Gesprochener Audio-Countdown"
+L.countdownTextHeader = "Visueller Text-Countdown"
+L.resetCountdownDesc = "Setzt alle obigen Countdown Einstellungen auf ihre Standardwerte zurück."
+L.resetAllCountdownDesc = "Wenn Du veränderte Countdowns für Bossbegegnungen gewählt hast, wird dieser Button ALLE zurücksetzen und die obigen Countdown Einstellungen auf ihre Standardwerte zurücksetzen."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
