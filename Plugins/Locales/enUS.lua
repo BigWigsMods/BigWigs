@@ -196,7 +196,7 @@ L.purple = "Purple"
 L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
 L.superEmphasize = "Super Emphasize"
@@ -210,6 +210,13 @@ L.countdownColor = "Countdown color"
 L.countdownVoice = "Countdown voice"
 L.countdownTest = "Test countdown"
 L.countdownAt = "Countdown at... (seconds)"
+L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+L.countdown = "Countdown"
+L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+L.countdownAudioHeader = "Spoken Audio Countdown"
+L.countdownTextHeader = "Visual Text Countdown"
+L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -232,8 +239,6 @@ L.normalMessages = "Normal messages"
 L.emphasizedMessages = "Emphasized messages"
 L.output = "Output"
 
-L.useColors = "Use colors"
-L.useColorsDesc = "Toggles white only messages ignoring coloring."
 L.useIcons = "Use icons"
 L.useIconsDesc = "Show icons next to messages."
 L.classColors = "Class colors"
@@ -323,12 +328,15 @@ L.secondaryDesc = "The second raid target icon that a encounter script should us
 --
 
 L.Sounds = "Sounds"
+L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarm"
 L.Info = "Info"
 L.Alert = "Alert"
 L.Long = "Long"
 L.Warning = "Warning"
+L.onyou = "A spell, buff, or debuff is on you"
+L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Sound"
 L.soundDesc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages."

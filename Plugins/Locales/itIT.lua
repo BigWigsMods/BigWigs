@@ -222,8 +222,6 @@ L.tooltip = "ToolTip"
 L.tooltipDesc = "Visualizza o nasconde il tooltip dell'abilità nel display di prossimità ed è strettamente legato all'abilità del boss."
 L.uppercase = "TUTTO MAIUSCOLO"
 L.uppercaseDesc = "Converte in Maiuscolo tutto il messaggio"
-L.useColors = "Usa Colori"
-L.useColorsDesc = "Abilita solo messaggi bianchi ignorando i colori"
 L.useIcons = "Usa Icone"
 L.useIconsDesc = "Mostra le icone accanto ai messaggi."
 L.Victory = "Vittoria"
@@ -326,6 +324,18 @@ L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (B
 --L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
@@ -347,7 +357,10 @@ L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (B
 -- Sound.lua
 --
 
+--L.oldSounds = "Old Sounds"
 --L.resetSoundDesc = "Resets the above sounds to their defaults."
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

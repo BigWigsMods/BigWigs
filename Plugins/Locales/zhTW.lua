@@ -222,8 +222,6 @@ L.tooltip = "工具提示"
 L.tooltipDesc = "顯示或隱藏近距離顯示從首領戰鬥技能獲取的法術提示。"
 L.uppercase = "大寫"
 L.uppercaseDesc = "所有超級強調選項相關訊息大寫。"
-L.useColors = "使用彩色訊息"
-L.useColorsDesc = "切換是否只發送單色訊息。"
 L.useIcons = "使用圖示"
 L.useIconsDesc = "訊息旁顯示圖示。"
 L.Victory = "勝利訊息"
@@ -326,6 +324,18 @@ L.purple = "紫色"
 L.purpleDesc = "坦克相關警報，例如對坦減益效果疊加（特定層數換坦的debuff）。"
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
@@ -347,7 +357,10 @@ L.resetProximityDesc = "重設所有玩家雷達自訂選項，包括錨點和�
 -- Sound.lua
 --
 
+--L.oldSounds = "Old Sounds"
 L.resetSoundDesc = "將前面的音效設定重設為預設值。"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

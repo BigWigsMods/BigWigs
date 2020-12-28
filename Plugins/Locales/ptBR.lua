@@ -196,9 +196,10 @@ L.purple = "Roxo"
 L.purpleDesc = "Alertas para habilidades específicas de tanque, como pilhas de efeitos negativos no tanque."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
 L.superEmphasize = "Super enfatizar"
 L.superEmphasizeDesc = "Melhora as mensagens e barras relacionadas a uma habilidade de encontro de chefe específica.\n\nAqui você configura exatamente o que deverá acontecer quando ativar a opção de super enfatizar na sessão avançada para uma habilidade de encontro de chefe.\n\n|cffff4411Nota: Super enfatizar está desabilitado por padrão para todas as habilidades.|r"
 L.uppercase = "MAIÚSCULAS"
@@ -210,6 +211,12 @@ L.countdownColor = "Cor da contagem regressiva"
 L.countdownVoice = "Voz da contagem regressiva"
 L.countdownTest = "Teste de contagem regressiva"
 L.countdownAt = "Contagem regressiva em... (segundos)"
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -232,8 +239,6 @@ L.normalMessages = "Mensagens normais"
 L.emphasizedMessages = "Mensagens enfatizadas"
 L.output = "Saída"
 
-L.useColors = "Usar cores"
-L.useColorsDesc = "Alterna entre mensagens em branco ou coloridas."
 L.useIcons = "Usar ícones"
 L.useIconsDesc = "Exibir ícones ao lado das mensagens."
 L.classColors = "Cores de classe"
@@ -323,12 +328,15 @@ L.secondaryDesc = "O segundo ícone de raide que um script usará."
 --
 
 L.Sounds = "Sons"
+--L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarme"
 L.Info = "Info"
 L.Alert = "Alerta"
 L.Long = "Longo"
 L.Warning = "Aviso"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Som"
 L.soundDesc = "As mensagens podem conter um som. Para algumas pessoas fica mais fácil escutar quando aprendem que tal som aparece com tal mensagem, ao invés de ler a mensagem."

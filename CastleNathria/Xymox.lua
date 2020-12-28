@@ -97,7 +97,9 @@ function mod:OnEngage()
 	glyphCount = 1
 
 	self:Bar(325399, 5.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
-	self:Bar(326271, 11) -- Stasis Trap
+	if not self:Easy() then -- No traps in Normal (and LFR?)
+		self:Bar(326271, 11) -- Stasis Trap
+	end
 	self:Bar(328437, 17, CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
 	self:Bar(335013, 21) -- Rift Blast
 	self:Bar(325236, 31, CL.count:format(self:SpellName(325236), glyphCount)) -- Glyph of Destruction
@@ -199,9 +201,11 @@ function mod:GlyphofDestructionRemoved(args)
 end
 
 function mod:StasisTrap(args)
-	self:Message(args.spellId, "red")
-	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, self:Mythic() and (stage == 3 and 36 or 30) or 30)
+	if not self:Easy() then -- this event triggers in normal but no traps spawn, lets filter anything there
+		self:Message(args.spellId, "red")
+		self:PlaySound(args.spellId, "alert")
+		self:CDBar(args.spellId, self:Mythic() and (stage == 3 and 36 or 30) or 30)
+	end
 end
 
 function mod:RiftBlast(args)

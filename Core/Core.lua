@@ -226,24 +226,27 @@ end
 --
 
 do
-	local callbackRegistered = nil
+	local callbackRegistered = false
 	local messages = {}
-	local colors = {"red", "blue", "orange", "yellow", "green", "cyan", "purple"}
-	local sounds = {"Long", "Info", "Alert", "Alarm", "Warning", false, false, false, false, false}
+	local count = 1
+	local colors = {"green", "cyan", "orange", "yellow", "red", "blue", "blue", "purple"}
+	local sounds = {"Long", "Info", "Alert", "Alarm", "Warning", "onyou", "underyou", false}
 
 	local function barStopped(event, bar)
 		local a = bar:Get("bigwigs:anchor")
 		local key = bar:GetLabel()
 		if a and messages[key] then
-			local color = colors[random(1, #colors)]
-			local sound = sounds[random(1, #sounds)]
-			local emphasized = random(1, 3) == 1
-			if random(1, 4) == 2 then
+			if not colors[count] then count = 1 end
+			local color = colors[count]
+			local sound = sounds[count]
+			local emphasized = count == 5
+			if count == 6 then
 				core:SendMessage("BigWigs_Flash", core, key)
 			end
 			core:Print(L.test .." - ".. color ..": ".. key)
 			core:SendMessage("BigWigs_Message", core, key, color..": "..key, color, messages[key], emphasized)
 			core:SendMessage("BigWigs_Sound", core, key, sound)
+			count = count + 1
 			messages[key] = nil
 		end
 	end

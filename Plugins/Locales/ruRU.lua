@@ -222,8 +222,6 @@ L.tooltip = "Подсказка"
 L.tooltipDesc = "Показывает или скрывает подсказку заклинания в окне близости, если эта способность связана боссом."
 L.uppercase = "БОЛЬШИМИ БУКВАМИ"
 L.uppercaseDesc = "Отображать все сообщения, связанные с настройками супер увеличения, в верхнем регистре"
-L.useColors = "Использовать цвета"
-L.useColorsDesc = "Не раскрашивать сообщения (белый текст)."
 L.useIcons = "Использовать иконки"
 L.useIconsDesc = "Показывать иконку возле сообщения."
 L.Victory = "Победа"
@@ -326,6 +324,18 @@ L.purple = "Фиолетовый"
 L.purpleDesc = "Оповещение о способностях только для танков, например, стаки дебаффа на танке."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
@@ -347,7 +357,10 @@ L.infoBox = "ИнфоБлок"
 -- Sound.lua
 --
 
+--L.oldSounds = "Old Sounds"
 --L.resetSoundDesc = "Resets the above sounds to their defaults."
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

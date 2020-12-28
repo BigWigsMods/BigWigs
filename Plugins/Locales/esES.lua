@@ -222,8 +222,6 @@ L.tooltip = "Tooltip"
 L.tooltipDesc = "Muestra/oculta la descripción del hechizo si la ventana de proximidad esta ligada a una habilidad del jefe."
 L.uppercase = "MAYUSCULAS"
 L.uppercaseDesc = "Mayúsculas en todos los mensajes relacionados con una opción super enfatizada."
-L.useColors = "Usar colores"
-L.useColorsDesc = "Mensajes de color blanco ignorando los colores."
 L.useIcons = "Usar iconos"
 L.useIconsDesc = "Mostrar iconos al lado de mensajes"
 L.Victory = "Victoria"
@@ -326,6 +324,18 @@ L.purple = "Púrpura"
 L.purpleDesc = "Avisos para habilidades específicas para tanques como acumulaciones de un debuff en un tanque."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
@@ -347,7 +357,10 @@ L.infoBox = "InfoBox"
 -- Sound.lua
 --
 
+--L.oldSounds = "Old Sounds"
 --L.resetSoundDesc = "Resets the above sounds to their defaults."
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

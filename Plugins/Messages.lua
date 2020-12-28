@@ -34,10 +34,10 @@ local db = nil
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.messages
 
-local fakeEmphasizeMessageAddon = {}
+local fakePluginForEmphasizedMessages = {}
 
 sink:Embed(plugin)
-sink:Embed(fakeEmphasizeMessageAddon)
+sink:Embed(fakePluginForEmphasizedMessages)
 
 --------------------------------------------------------------------------------
 -- Anchors & Frames
@@ -174,40 +174,44 @@ end
 plugin.defaultDB = {
 	sink20OutputSink = "BigWigs",
 	fontName = plugin:GetDefaultFont(),
-	monochrome = nil,
+	emphFontName = plugin:GetDefaultFont(),
+	monochrome = false,
+	emphMonochrome = false,
 	outline = "THICKOUTLINE",
+	emphOutline = "THICKOUTLINE",
 	align = "CENTER",
 	fontSize = 20,
-	usecolors = true,
+	emphFontSize = 48,
 	scale = 1,
-	chat = nil,
+	chat = false,
 	useicons = true,
 	classcolor = true, -- XXX non-functional
-	growUpwards = nil,
+	growUpwards = false,
 	emphasizedMessages = {
 		sink20OutputSink = "BigWigsEmphasized",
 	},
 	displaytime = 3,
 	fadetime = 2,
+	emphUppercase = true,
 }
 
 local function updateProfile()
 	db = plugin.db.profile
 
 	plugin:SetSinkStorage(db)
-	fakeEmphasizeMessageAddon:SetSinkStorage(db.emphasizedMessages)
+	fakePluginForEmphasizedMessages:SetSinkStorage(db.emphasizedMessages)
 
 	if seModule then
 		local flags = nil
-		if seModule.db.profile.monochrome and seModule.db.profile.outline ~= "NONE" then
-			flags = "MONOCHROME," .. seModule.db.profile.outline
-		elseif seModule.db.profile.monochrome then
+		if db.emphMonochrome and db.emphOutline ~= "NONE" then
+			flags = "MONOCHROME," .. db.emphOutline
+		elseif db.emphMonochrome then
 			flags = "MONOCHROME"
-		elseif seModule.db.profile.outline ~= "NONE" then
-			flags = seModule.db.profile.outline
+		elseif db.emphOutline ~= "NONE" then
+			flags = db.emphOutline
 		end
 
-		emphasizedText:SetFont(media:Fetch(FONT, seModule.db.profile.fontName), seModule.db.profile.fontSize, flags)
+		emphasizedText:SetFont(media:Fetch(FONT, db.emphFontName), db.emphFontSize, flags)
 
 		emphasizedCountdownText:SetFont(media:Fetch(FONT, seModule.db.profile.fontName), seModule.db.profile.fontSize, flags)
 		emphasizedCountdownText:SetTextColor(seModule.db.profile.fontColor.r, seModule.db.profile.fontColor.g, seModule.db.profile.fontColor.b)
@@ -256,7 +260,6 @@ local function updateProfile()
 		font:SetFont(media:Fetch(FONT, db.fontName), db.fontSize, flags)
 	end
 end
-plugin.updateProfile = updateProfile -- XXX temp until the emphasize module is refactored
 
 --------------------------------------------------------------------------------
 -- Options
@@ -267,16 +270,73 @@ plugin.pluginOptions = {
 	name = L.messages,
 	childGroups = "tab",
 	args = {
+		emphasize = {
+			type = "group",
+			name = L.emphasizedMessages,
+			order = 2,
+			get = function(info) return plugin.db.profile[info[#info]] end,
+			set = function(info, value)
+				plugin.db.profile[info[#info]] = value
+				updateProfile()
+			end,
+			args = {
+				emphFontName = {
+					type = "select",
+					name = L.font,
+					order = 1,
+					values = media:List(FONT),
+					itemControl = "DDI-Font",
+					get = function()
+						for i, v in next, media:List(FONT) do
+							if v == plugin.db.profile.emphFontName then return i end
+						end
+					end,
+					set = function(_, value)
+						local list = media:List(FONT)
+						plugin.db.profile.emphFontName = list[value]
+						updateProfile()
+					end,
+				},
+				emphOutline = {
+					type = "select",
+					name = L.outline,
+					order = 2,
+					values = {
+						NONE = L.none,
+						OUTLINE = L.thin,
+						THICKOUTLINE = L.thick,
+					},
+				},
+				emphFontSize = {
+					type = "range",
+					name = L.fontSize,
+					order = 3,
+					softMax = 100, max = 200, min = 1, step = 1,
+				},
+				emphUppercase = {
+					type = "toggle",
+					name = L.uppercase,
+					desc = L.uppercaseDesc,
+					order = 4,
+				},
+				emphMonochrome = {
+					type = "toggle",
+					name = L.monochrome,
+					desc = L.monochromeDesc,
+					order = 5,
+				},
+			},
+		},
 		output = {
 			type = "group",
 			name = L.output,
-			order = 2,
+			order = 3,
 			childGroups = "tab",
 			args = {
 				normal = plugin:GetSinkAce3OptionsDataTable(),
-				emphasized = fakeEmphasizeMessageAddon:GetSinkAce3OptionsDataTable(),
+				emphasized = fakePluginForEmphasizedMessages:GetSinkAce3OptionsDataTable(),
 			},
-		}
+		},
 	},
 }
 plugin.pluginOptions.args.output.args.normal.name = L.normalMessages
@@ -301,7 +361,7 @@ plugin.pluginOptions.args.more = {
 		updateProfile()
 	end,
 	args = {
-		font = {
+		fontName = {
 			type = "select",
 			name = L.font,
 			order = 1,
@@ -347,12 +407,6 @@ plugin.pluginOptions.args.more = {
 			min = 1,
 			step = 1,
 			width = "full",
-		},
-		usecolors = {
-			type = "toggle",
-			name = L.useColors,
-			desc = L.useColorsDesc,
-			order = 5,
 		},
 		useicons = {
 			type = "toggle",
@@ -584,26 +638,24 @@ function plugin:BigWigs_Message(event, module, key, text, color, icon, emphasize
 	if not text then return end
 
 	local r, g, b = 1, 1, 1 -- Default to white.
-	if db.usecolors then
-		if type(color) == "table" then
-			if color.r and color.g and color.b then
-				r, g, b = color.r, color.g, color.b
-			else
-				r, g, b = unpack(color)
-			end
-		elseif colorModule then
-			r, g, b = colorModule:GetColor(color, module, key)
+	if type(color) == "table" then
+		if color.r and color.g and color.b then
+			r, g, b = color.r, color.g, color.b
+		else
+			r, g, b = unpack(color)
 		end
+	elseif colorModule then
+		r, g, b = colorModule:GetColor(color, module, key)
 	end
 
 	if not db.useicons then icon = nil end
 
-	if seModule and emphasized then
-		if seModule.db.profile.upper then
+	if emphasized then
+		if db.emphUppercase then
 			text = text:upper()
 			text = text:gsub("(:%d+|)T", "%1t") -- Fix texture paths that need to end in lowercase |t
 		end
-		fakeEmphasizeMessageAddon:Pour(text, r, g, b)
+		fakePluginForEmphasizedMessages:Pour(text, r, g, b)
 	else
 		self:Pour(text, r, g, b, nil, nil, nil, nil, nil, icon)
 	end

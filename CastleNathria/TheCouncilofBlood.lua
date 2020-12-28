@@ -322,7 +322,15 @@ end
 function mod:DuelistsRiposte(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
-	self:CDBar(args.spellId, self:Mythic() and (bossesKilled == 0 and 18.7 or bossesKilled == 1 and 15 or 7.5) or bossesKilled == 0 and 21.5 or bossesKilled == 1 and 17 or 8.6)
+	local cd = self:Mythic() and 7.5 or 8.5
+	if stavrosAlive then -- 2 tank bosses alive, longer CD
+		if self:Mythic() then
+			cd = bossesKilled == 0 and 18.7 or 15
+		else
+			cd = bossesKilled == 0 and 21.5 or 17
+		end
+	end
+	self:CDBar(args.spellId, cd)
 end
 
 function mod:DuelistsRiposteApplied(args)
@@ -424,7 +432,15 @@ end
 function mod:EvasiveLunge(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, self:Mythic() and (bossesKilled == 0 and 18.8 or bossesKilled == 1 and 15 or 7.5) or bossesKilled == 0 and 18.8 or bossesKilled == 1 and 17 or 11)
+	local cd = self:Mythic() and 7.5 or 11
+	if niklausAlive	then -- 2 tank bosses alive, longer CD
+		if self:Mythic() then
+			cd = bossesKilled == 0 and 18.7 or 15
+		else
+			cd = bossesKilled == 0 and 21.5 or 17
+		end
+	end
+	self:CDBar(args.spellId, cd)
 end
 
 function mod:EvasiveLungeApplied(args)

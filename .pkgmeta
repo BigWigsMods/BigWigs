@@ -27,6 +27,8 @@ ignore:
   - .luacheckrc
   - gen_option_values.lua
   - ldoc.ltp
+  - Media/Sounds/spell_on_you.flac
+  - Media/Sounds/spell_under_you.flac
   - Media/Sounds/Long.wav
   - Media/Sounds/Alarm.wav
   - Media/Sounds/Alert.wav

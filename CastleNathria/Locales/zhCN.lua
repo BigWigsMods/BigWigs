@@ -103,4 +103,8 @@ if L then
 
 	L.ravage_target = "毁灭目标施放条"
 	L.ravage_target_desc = "在第3阶段显示一个选择破坏目标位置之前的时间施放条。"
+	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+
+	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
+	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
 end

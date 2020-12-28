@@ -196,7 +196,7 @@ L.resetAllDesc = "우두머리 전투 설정에 사용자 설정 색상을 적�
 --L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
 L.superEmphasize = "특수 강조"
@@ -210,6 +210,13 @@ L.countdownColor = "초읽기 색상"
 L.countdownVoice = "초읽기 음성"
 L.countdownTest = "초읽기 테스트"
 L.countdownAt = "초읽기 시작... (초)"
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -232,8 +239,6 @@ L.normalMessages = "일반 메시지"
 L.emphasizedMessages = "강조 메시지"
 L.output = "출력"
 
-L.useColors = "색상 사용"
-L.useColorsDesc = "색상을 무시하도록 메시지에 색상 사용을 전환합니다."
 L.useIcons = "아이콘 사용"
 L.useIconsDesc = "메시지 옆에 아이콘을 표시합니다."
 L.classColors = "직업 색상"
@@ -323,12 +328,15 @@ L.secondaryDesc = "우두머리 전투 스크립트가 사용할 두번째 공�
 --
 
 L.Sounds = "소리"
+--L.oldSounds = "Old Sounds"
 
 L.Alarm = "알람"
 L.Info = "정보"
 L.Alert = "경보"
 L.Long = "길게"
-L.Warning = "경보"
+L.Warning = "경고"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 L.sound = "소리"
 L.soundDesc = "메시지는 소리와 함게 나타날 수 있습니다. 몇몇 사람들은 메시지와 함께 어떤 소리가 재생되는지 배운 후에는 실제 메시지를 읽는 것보다 소리를 듣는 것으로 더 쉽게 찾을 수 있습니다."

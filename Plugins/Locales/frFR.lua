@@ -196,7 +196,7 @@ L.purple = "Violet"
 L.purpleDesc = "Alertes des techniques spécifiques aux tanks, comme le cumul d'un affaiblissement tank."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
 L.superEmphasize = "Super mise en évidence"
@@ -210,6 +210,13 @@ L.countdownColor = "Couleur compte à rebours"
 L.countdownVoice = "Voix du compte à rebours"
 L.countdownTest = "Test compte à rebours"
 L.countdownAt = "Compte à rebours à... (secondes)"
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -232,8 +239,6 @@ L.normalMessages = "Messages normaux"
 L.emphasizedMessages = "Messages en évidence"
 L.output = "Sortie"
 
-L.useColors = "Utiliser des couleurs"
-L.useColorsDesc = "Utilise ou non des couleurs dans les messages à la place du blanc unique."
 L.useIcons = "Utiliser les icônes"
 L.useIconsDesc = "Affiche les icônes à côté des messages."
 L.classColors = "Couleurs de classe"
@@ -323,12 +328,15 @@ L.secondaryDesc = "La seconde icône de cible de raid qu'un script de rencontre 
 --
 
 L.Sounds = "Sons"
+--L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarme"
 L.Info = "Info"
 L.Alert = "Alerte"
 L.Long = "Long"
 L.Warning = "Avertissement"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Son"
 L.soundDesc = "Les messages sont le plus souvent accompagnés de sons. Certaines personnes trouvent plus faciles d'entendre ces sons pour réagir une fois qu'elles ont appris quels sons sont liés à quels messages, plutôt que de lire les messages à chaque fois."

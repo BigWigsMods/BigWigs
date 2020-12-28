@@ -912,6 +912,8 @@ do
 				end
 
 				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
+			elseif noEngage == "NoEngage" then
+				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self, difficulty)
 			end
 		end
 	end
@@ -2156,7 +2158,7 @@ do
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 		end
 	end
 
@@ -2194,7 +2196,7 @@ do
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], true)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 		end
 	end
 
@@ -2221,7 +2223,7 @@ do
 				self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 			end
 			if checkFlag(self, key, C.COUNTDOWN) then
-				self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+				self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 			end
 		elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
@@ -2244,7 +2246,7 @@ do
 		if checkFlag(self, key, C.CASTBAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 			if checkFlag(self, key, C.COUNTDOWN) then
-				self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+				self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 			end
 		end
 	end
@@ -2354,13 +2356,13 @@ function boss:StopBar(text, player)
 		if player == pName then
 			msg = format(L.you, msg)
 			self:SendMessage("BigWigs_StopBar", self, msg)
-			self:SendMessage("BigWigs_StopEmphasize", self, msg)
+			self:SendMessage("BigWigs_StopCountdown", self, msg)
 		else
 			self:SendMessage("BigWigs_StopBar", self, format(L.other, msg, gsub(player, "%-.+", "*")))
 		end
 	else
 		self:SendMessage("BigWigs_StopBar", self, msg)
-		self:SendMessage("BigWigs_StopEmphasize", self, msg)
+		self:SendMessage("BigWigs_StopCountdown", self, msg)
 	end
 end
 
@@ -2370,7 +2372,7 @@ end
 function boss:PauseBar(key, text)
 	local msg = text or spells[key]
 	self:SendMessage("BigWigs_PauseBar", self, msg)
-	self:SendMessage("BigWigs_StopEmphasize", self, msg)
+	self:SendMessage("BigWigs_StopCountdown", self, msg)
 end
 
 --- Resume a paused bar.
@@ -2382,7 +2384,7 @@ function boss:ResumeBar(key, text)
 	if checkFlag(self, key, C.COUNTDOWN) then
 		local length = self:BarTimeLeft(msg)
 		if length > 0 then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 		end
 	end
 end

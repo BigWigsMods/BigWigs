@@ -43,11 +43,13 @@ L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not b
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Beware (Algalon)"
 L.FlagTaken = "Flag Taken (PvP)"
 L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
+L.spell_on_you = "BigWigs: Spell on you"
+L.spell_under_you = "BigWigs: Spell under you"
 
 -- Options.lua
 L.options = "Options"

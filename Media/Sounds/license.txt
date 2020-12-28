@@ -1,0 +1,37 @@
+==============================================================================
+Sound File: ability_on_you
+License: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
+License URL: https://creativecommons.org/publicdomain/zero/1.0/
+
+Author: unfa
+Source: https://freesound.org/people/unfa/sounds/215416/
+Modifications: Sound converted to Ogg format.
+==============================================================================
+
+==============================================================================
+Sound File: ability_under_you
+License: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
+License URL: https://creativecommons.org/publicdomain/zero/1.0/
+
+Author: unfa
+Source: https://freesound.org/people/unfa/sounds/240875/
+Modifications: Sound converted to Ogg format.
+==============================================================================
+
+==============================================================================
+Sound File: Victory
+License: All Rights Reserved
+
+Author: BigWigs
+Source: https://github.com/BigWigsMods/BigWigs
+Modifications: Sound converted to Ogg format.
+==============================================================================
+
+==============================================================================
+Sound File: VictoryLong
+License: All Rights Reserved
+
+Author: BigWigs
+Source: https://github.com/BigWigsMods/BigWigs
+Modifications: Sound converted to Ogg format.
+==============================================================================

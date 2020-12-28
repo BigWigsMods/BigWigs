@@ -136,8 +136,10 @@ L.ME_ONLY_EMPHASIZE_desc = "Die Aktivierung dieser Option hebt Nachrichten zu di
 L.NAMEPLATEBAR = "Leisten an Namensplaketten"
 L.NAMEPLATEBAR_desc = "Manchmal werden Leisten an Namensplaketten angezeigt wenn mehr als ein Gegner den gleichen Zauber wirkt. Wenn diese Fähigkeit von einer Leiste an der Namensplakette begleitet wird, die ausgeblendet werden soll, deaktiviere diese Option."
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Hütet Euch (Algalon)"
 L.FlagTaken = "Flagge aufgenommen (PvP)"
 L.Destruction = "Zerstörung (Kil'jaeden)"
 L.RunAway = "Lauf kleines Mädchen, lauf (Der große böse Wolf)"
+--L.spell_on_you = "BigWigs: Spell on you"
+--L.spell_under_you = "BigWigs: Spell under you"

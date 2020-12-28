@@ -222,8 +222,6 @@ L.tooltip = "Tooltip"
 L.tooltipDesc = "Zeigt oder versteckt den Zaubertooltip, wenn die Näheanzeige direkt an eine Bossfähigkeit gebunden ist."
 L.uppercase = "GROSSBUCHSTABEN"
 L.uppercaseDesc = "Schreibt alle Nachrichten in Großbuchstaben, die die zugehörige Option 'Stark hervorheben' aktiviert haben."
-L.useColors = "Farben verwenden"
-L.useColorsDesc = "Wählt, ob Nachrichten farbig oder weiß angezeigt werden."
 L.useIcons = "Symbole verwenden"
 L.useIconsDesc = "Zeigt Symbole neben Nachrichten an."
 L.Victory = "Sieg"
@@ -326,6 +324,18 @@ L.purple = "Violett"
 L.purpleDesc = "Warnungen für tankspezifische Fähigkeiten wie ein stapelnder Tankdebuff."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
@@ -347,7 +357,10 @@ L.resetProximityDesc = "Setzt alle Optionen im Zusammenhang mit Nähe zurück, i
 -- Sound.lua
 --
 
+--L.oldSounds = "Old Sounds"
 L.resetSoundDesc = "Setzt die obigen Sounds auf ihren Standard zurück."
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
