@@ -194,15 +194,6 @@ L.soundDelayDesc = "当有人太靠近你时指定多长时间 BigWigs 重复间
 L.soundDesc = "信息出现时伴随着音效。有些人更容易在听到何种音效后发现何种警报，而不是阅读的实际信息。"
 L.Sounds = "音效"
 L.style = "风格"
-L.superEmphasize = "超级醒目"
-L.superEmphasizeDesc = [=[相关信息或特定首领战斗技能计时条增强。
-
-在这里设置当开启超级醒目位于首领战斗技能高级选项时所应该发生的事件。
-
-|cffff4411注意：超级醒目功能默认情况下所有技能关闭。|r
-]=]
-L.superEmphasizeDisableDesc = "对所有模块禁用超级醒目。"
-L.tempEmphasize = "临时超级醒目计时条及任何信息的持续时间。"
 L.text = "文本"
 L.textCountdown = "倒数文本"
 L.textCountdownDesc = "当倒数时显示可见数字。"
@@ -220,8 +211,6 @@ L.toggleSound = "切换音效"
 L.toggleSoundDesc = "当近距离窗口有其他过近玩家时切换任一或关闭音效。"
 L.tooltip = "提示"
 L.tooltipDesc = "显示或隐藏近距离显示从首领战斗技能获取的法术提示。"
-L.uppercase = "大写"
-L.uppercaseDesc = "所有超级醒目选项相关信息大写。"
 L.useIcons = "使用图标"
 L.useIconsDesc = "消息旁显示图标。"
 L.Victory = "胜利"
@@ -276,6 +265,7 @@ L.spacing = "间隙"
 L.spacingDesc = "更每个改计时条之间间隙。"
 L.emphasizeMultiplier = "尺寸倍数"
 L.emphasizeMultiplierDesc = "如禁用计时条移向醒目锚点，此选项将决定以一般计时条乘以倍数作为醒目计时条的尺寸。"
+--L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 L.iconPosition = "图标位置"
 L.iconPositionDesc = "选择计时条上图标的位置。"
 L.visibleBarLimit = "可视条限制"
@@ -346,6 +336,8 @@ L.infoBox = "信息盒"
 --
 
 L.resetMessagesDesc = "重置全部信息有关选项，包括信息锚点位置。"
+L.uppercase = "大写"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 -----------------------------------------------------------------------
 -- Proximity.lua

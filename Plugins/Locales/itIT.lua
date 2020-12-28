@@ -194,15 +194,6 @@ L.soundDelayDesc = "Specifica per quanto tempo BigWigs dovrebbe aspettare per ri
 L.soundDesc = "I messaggi possono essere visualizzati insieme a dei suoni. Alcuni trovano più semplice associare il suono all'abilità che viene mostrata nel messaggio piuttosto che leggere il messaggio stesso."
 L.Sounds = "Suoni"
 L.style = "Stile"
-L.superEmphasize = "SUPER ENFATIZZAZIONE"
-L.superEmphasizeDesc = [=[Aumenta la visualizzazione di un messaggio o di un timer di un'abilità speciale di un boss..
-
- Qui puoi configurare esattamente cosa deve accadere quando abiliti la SUPER ENFATIZZAZIONE nelle opzioni di un'abilità di un boss.
-
-|cffff4411Attenzione: la SUPER ENFATIZZAZIONE è disattivata di default per tutte le abilità.|r
-]=]
-L.superEmphasizeDisableDesc = "Disabilita la Super Enfatizzazione per tutti i moduli che la usano."
-L.tempEmphasize = "SUPER ENFATIZZA temporaneamente la barra ed ogni messaggio associato alla sua durata."
 L.text = "Testo"
 L.textCountdown = "Testo conto alla rovescia"
 L.textCountdownDesc = "Mostra un conteggio visuale durante il conto alla rovescia."
@@ -220,8 +211,6 @@ L.toggleSound = "Abilita Suono"
 L.toggleSoundDesc = "Abilita quando il monitor di prossimità deve emettere un suono se sei troppo vicino ad altri giocatori."
 L.tooltip = "ToolTip"
 L.tooltipDesc = "Visualizza o nasconde il tooltip dell'abilità nel display di prossimità ed è strettamente legato all'abilità del boss."
-L.uppercase = "TUTTO MAIUSCOLO"
-L.uppercaseDesc = "Converte in Maiuscolo tutto il messaggio"
 L.useIcons = "Usa Icone"
 L.useIconsDesc = "Mostra le icone accanto ai messaggi."
 L.Victory = "Vittoria"
@@ -276,6 +265,7 @@ L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in
 --L.spacingDesc = "Change the space between each bar."
 --L.emphasizeMultiplier = "Size Multiplier"
 --L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+--L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 --L.iconPosition = "Icon Position"
 --L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
 --L.visibleBarLimit = "Visible bar limit"
@@ -346,6 +336,8 @@ L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (B
 --
 
 --L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.uppercase = "TUTTO MAIUSCOLO"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 -----------------------------------------------------------------------
 -- Proximity.lua

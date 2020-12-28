@@ -67,7 +67,7 @@ L.modifierDesc = "Wenn die Modifikatortaste gedrückt gehalten wird, können Kli
 L.modifierKey = "Nur mit Modifikatortaste"
 L.modifierKeyDesc = "Erlaubt nicht-interaktive Leisten solange bis die Modifikatortaste gedrückt gehalten wird und dann die unten aufgeführten Mausaktionen verfügbar werden."
 
-L.tempEmphasize = "Hebt zeitweilig Leisten und zugehörige Nachrichten stark hervor."
+--L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "Ausgeben"
 L.reportDesc = "Gibt den aktuellen Leistenstatus im Instanz-, Schlachtzugs-, Gruppen- oder Sagen-Chat aus."
 L.remove = "Entfernen"
@@ -200,11 +200,6 @@ L.purpleDesc = "Warnungen für tankspezifische Fähigkeiten wie ein stapelnder T
 -- Countdown.lua
 --
 
-L.superEmphasize = "Stark hervorheben"
-L.superEmphasizeDesc = "Verstärkt zugehörige Nachrichten oder Leisten einer bestimmten Begegnung.\n\nHier kannst Du genau bestimmen, was passieren soll, wenn Du in den erweiterten Optionen einer Bossfähigkeit 'Stark hervorheben' aktivierst.\n\n|cffff4411Beachte, dass 'Stark hervorheben' standardmäßig für alle Fähigkeiten deaktiviert ist.|r\n"
-L.uppercase = "GROSSBUCHSTABEN"
-L.uppercaseDesc = "Schreibt alle Nachrichten in Großbuchstaben, die die zugehörige Option 'Stark hervorheben' aktiviert haben."
-L.superEmphasizeDisableDesc = "Deaktiviert starkes Hervorheben für alle Module, die es benutzen."
 L.textCountdown = "Countdown-Text"
 L.textCountdownDesc = "Zeige einen sichtbaren Zähler während eines Countdowns."
 L.countdownColor = "Countdown-Farbe"
@@ -239,6 +234,8 @@ L.messages = "Nachrichten"
 L.normalMessages = "Normale Nachrichten"
 L.emphasizedMessages = "Hervorgehobene Nachrichten"
 L.output = "Ausgabe"
+L.uppercase = "GROSSBUCHSTABEN"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 L.useIcons = "Symbole verwenden"
 L.useIconsDesc = "Zeigt Symbole neben Nachrichten an."

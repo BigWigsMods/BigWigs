@@ -67,7 +67,7 @@ L.modifierDesc = "Segure a tecla de modificação selecionada para ativar o cliq
 L.modifierKey = "Somente com uma tecla de modificação"
 L.modifierKeyDesc = "Permite que as barras sejam clicáveis se estiver com a tecla de modificação pressionada, deste jeito as ações do mouse descritas abaixo estarão disponíveis."
 
-L.tempEmphasize = "Temporariamente enfatiza a barra e as mensagens associadas a ela durante sua duração."
+--L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "Reportar"
 L.reportDesc = "Reporta o status das barras para o chat de grupo ativo; seja em um bate-papo de instância, raide, grupo ou falar, o que for mais adequado."
 L.remove = "Remover"
@@ -199,18 +199,13 @@ L.purpleDesc = "Alertas para habilidades específicas de tanque, como pilhas de 
 -- Countdown.lua
 --
 
---L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
-L.superEmphasize = "Super enfatizar"
-L.superEmphasizeDesc = "Melhora as mensagens e barras relacionadas a uma habilidade de encontro de chefe específica.\n\nAqui você configura exatamente o que deverá acontecer quando ativar a opção de super enfatizar na sessão avançada para uma habilidade de encontro de chefe.\n\n|cffff4411Nota: Super enfatizar está desabilitado por padrão para todas as habilidades.|r"
-L.uppercase = "MAIÚSCULAS"
-L.uppercaseDesc = "Maiúsculas em todas as mensagens relacionadas a opção super enfatizada."
-L.superEmphasizeDisableDesc = "Desabilita super enfatizar para todos os módulos que usam ele."
 L.textCountdown = "Texto de contagem regressiva"
 L.textCountdownDesc = "Mostrar um contador visual durante uma contagem regressiva."
 L.countdownColor = "Cor da contagem regressiva"
 L.countdownVoice = "Voz da contagem regressiva"
 L.countdownTest = "Teste de contagem regressiva"
 L.countdownAt = "Contagem regressiva em... (segundos)"
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
 --L.countdown = "Countdown"
 --L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 --L.countdownAudioHeader = "Spoken Audio Countdown"
@@ -238,6 +233,8 @@ L.messages = "Mensagens"
 L.normalMessages = "Mensagens normais"
 L.emphasizedMessages = "Mensagens enfatizadas"
 L.output = "Saída"
+L.uppercase = "MAIÚSCULAS"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 L.useIcons = "Usar ícones"
 L.useIconsDesc = "Exibir ícones ao lado das mensagens."

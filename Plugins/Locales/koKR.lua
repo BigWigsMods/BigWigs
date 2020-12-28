@@ -67,7 +67,7 @@ L.modifierDesc = "타이머 바위에 클릭 동작을 활성화하려면 선택
 L.modifierKey = "조합 키와 같이 사용할때만"
 L.modifierKeyDesc = "지정된 조합 키가 눌려있지 않다면 바가 클릭을 무시하도록 허용합니다, 아래 설명된 마우스 동작이 사용 가능해집니다."
 
-L.tempEmphasize = "지속 시간과 관련된 바와 메시지를 일시적으로 강조합니다."
+--L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "보고"
 L.reportDesc = "현재 바 상태를 활성화된 그룹 대화에 보고합니다; 인스턴스 대화, 공격대, 파티 또는 일반 대화 중 적절한 채널을 사용합니다."
 L.remove = "제거"
@@ -199,11 +199,6 @@ L.resetAllDesc = "우두머리 전투 설정에 사용자 설정 색상을 적�
 -- Countdown.lua
 --
 
-L.superEmphasize = "특수 강조"
-L.superEmphasizeDesc = "특정 우두머리 전투 능력의 관련 메시지나 바를 증폭시킵니다.\n\n우두머리 전투 능력의 고급 옵션에서 강조 옵션을 사용할 때 여기에 수행해야 될 작업을 정확히 구성하세요.\n\n|cffff4411기본값으로 모든 능력에 강조는 꺼져있다는 걸 참고하세요.|r\n"
-L.uppercase = "대문자"
-L.uppercaseDesc = "강조 옵션에 관련된 모든 메시지를 대문자로 표시합니다."
-L.superEmphasizeDisableDesc = "모든 모듈이 사용하는 강조를 비활성화합니다."
 L.textCountdown = "문자 초읽기"
 L.textCountdownDesc = "초읽기 중에 시각적 카운터를 표시합니다."
 L.countdownColor = "초읽기 색상"
@@ -238,6 +233,8 @@ L.messages = "메시지"
 L.normalMessages = "일반 메시지"
 L.emphasizedMessages = "강조 메시지"
 L.output = "출력"
+L.uppercase = "대문자"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 L.useIcons = "아이콘 사용"
 L.useIconsDesc = "메시지 옆에 아이콘을 표시합니다."

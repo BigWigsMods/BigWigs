@@ -66,7 +66,7 @@ L.modifierDesc = "Maintenez enfoncée la touche modificatrice sélectionnée pou
 L.modifierKey = "Seul. avec touche mod."
 L.modifierKeyDesc = "Permet aux barres de ne pas réagir aux clics de la souris à moins que la touche modificatrice sélectionnée ne soit maintenue enfoncée, cas dans lequel les actions de la souris décrites ci-dessous seront disponibles."
 
-L.tempEmphasize = "Met temporairement en super mise en évidence la barre et ses messages associés pendant sa durée."
+--L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "Rapport"
 L.reportDesc = "Rapporte le statut des barres actuelles dans la discussion de groupe active : la discussion d'instance, de raid, de groupe ou juste le dire, selon ce qui est le plus approprié."
 L.remove = "Enlever"
@@ -199,11 +199,6 @@ L.purpleDesc = "Alertes des techniques spécifiques aux tanks, comme le cumul d'
 -- Countdown.lua
 --
 
-L.superEmphasize = "Super mise en évidence"
-L.superEmphasizeDesc = "Ce module met fortement en évidence les barres ou messages relatifs à une technique de rencontre de boss.\n\nVous pouvez définir ici exactement ce qui doit arriver quand vous cochez une option de super mise en évidence dans la section avancée d'une technique de rencontre de boss.\n\n|cffff4411Notez que la super mise en évidence est désactivée par défaut pour toutes les techniques.|r\n"
-L.uppercase = "MAJUSCULE"
-L.uppercaseDesc = "Met entièrement en majuscules tous les messages relatifs à une option à mettre fortement en évidence."
-L.superEmphasizeDisableDesc = "Désactive la super mise en évidence pour tous les modules qui l'utilisent."
 L.textCountdown = "Texte compte à rebours"
 L.textCountdownDesc = "Affiche un compteur visuel lors des comptes à rebours."
 L.countdownColor = "Couleur compte à rebours"
@@ -238,6 +233,8 @@ L.messages = "Messages"
 L.normalMessages = "Messages normaux"
 L.emphasizedMessages = "Messages en évidence"
 L.output = "Sortie"
+L.uppercase = "MAJUSCULE"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 L.useIcons = "Utiliser les icônes"
 L.useIconsDesc = "Affiche les icônes à côté des messages."

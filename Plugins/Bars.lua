@@ -533,8 +533,8 @@ do
 	local clickOptions = {
 		emphasize = {
 			type = "toggle",
-			name = colorize[L.superEmphasize],
-			desc = L.tempEmphasize,
+			name = colorize[L.countdown],
+			desc = L.temporaryCountdown,
 			descStyle = "inline",
 			order = 1,
 		},

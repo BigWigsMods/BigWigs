@@ -194,15 +194,6 @@ L.soundDelayDesc = "Especifica el tiempo que BigWigs debería esperar entre cada
 L.soundDesc = "Los mensajes podrían llegar con un sonido. A algunas personas les resulta más fácil escucahr. Cuando aprenden que 'tal' sonido va con 'cual' mensaje, en vez de leer dicho mensaje."
 L.Sounds = "Sonidos"
 L.style = "Estilo"
-L.superEmphasize = "Super Enfatizar"
-L.superEmphasizeDesc = [=[Da un aviso mucho más detectable a los mensajes o barras relacionados con una habilidad de un encuentro.
-
-Aquí configuras exactamente que debería ocurrir cuando cambias a activado en la opción de Super Enfatizar en la sección avanzada para una habilidad de un encuentro de un jefe.
-
-|cffff4411Nota: Super Enfatizar está apagado por defecto para todas las habilidades.|r
-]=]
-L.superEmphasizeDisableDesc = "Desactivar Súper Enfatizar para todos los módulos que lo utilicen."
-L.tempEmphasize = "Temporalmente Super Enfatiza la barra y los mensajes asociados para la duración."
 L.text = "Texto"
 L.textCountdown = "Texto de cuenta atrás"
 L.textCountdownDesc = "Muestra un contador visual durante una cuenta atrás"
@@ -220,8 +211,6 @@ L.toggleSound = "Cambiar sonido"
 L.toggleSoundDesc = "Activada o no la ventana de proximidad debería emitir un beep si estás cerca de otro jugador."
 L.tooltip = "Tooltip"
 L.tooltipDesc = "Muestra/oculta la descripción del hechizo si la ventana de proximidad esta ligada a una habilidad del jefe."
-L.uppercase = "MAYUSCULAS"
-L.uppercaseDesc = "Mayúsculas en todos los mensajes relacionados con una opción super enfatizada."
 L.useIcons = "Usar iconos"
 L.useIconsDesc = "Mostrar iconos al lado de mensajes"
 L.Victory = "Victoria"
@@ -276,6 +265,7 @@ L.spacing = "Espaciado"
 L.spacingDesc = "Cambia el espacio entre cada barra."
 L.emphasizeMultiplier = "Multiplicador de tamaño"
 L.emphasizeMultiplierDesc = "Si desactivas las barras moviéndose al anclaje enfatizado, esta opción decidirá que tamaño tendrán las barras enfatizadas multiplicando el tamaño de las barras normales."
+--L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 L.iconPosition = "Posición del icono"
 L.iconPositionDesc = "Elige dónde en la barra se posicionará el icono."
 L.visibleBarLimit = "Límite de barras visibles"
@@ -346,6 +336,8 @@ L.infoBox = "InfoBox"
 --
 
 --L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.uppercase = "MAYUSCULAS"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 -----------------------------------------------------------------------
 -- Proximity.lua
