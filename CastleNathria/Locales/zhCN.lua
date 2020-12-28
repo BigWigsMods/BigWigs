@@ -88,7 +88,7 @@ end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "zhCN")
 if L then
-	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
+	L.add_spawn = "赤红秘法师回应了德纳修斯的召唤。" -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
 	L.infobox_stacks = "%d 堆叠：%d 玩家" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
@@ -103,8 +103,8 @@ if L then
 
 	L.ravage_target = "毁灭目标施放条"
 	L.ravage_target_desc = "在第3阶段显示一个选择破坏目标位置之前的时间施放条。"
-	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	L.ravage_targeted = "毁灭已目标" -- Text on the bar for when Ravage picks its location to target in stage 3
 
-	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
-	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
+	L.no_mirror = "没镜子：%d" -- Player amount that does not have the Through the Mirror
+	L.mirror = "镜子：%d" -- Player amount that does have the Through the Mirror
 end
