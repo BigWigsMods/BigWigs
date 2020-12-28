@@ -2,7 +2,12 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Super Emphasize") -- XXX Countdown
+local oldPlugin = BigWigs:NewPlugin("Super Emphasize") -- XXX temp 9.0.2
+oldPlugin.defaultDB = {
+	Countdown = {},
+}
+
+local plugin = BigWigs:NewPlugin("Countdown")
 if not plugin then return end
 
 local voiceMap = {
@@ -27,7 +32,7 @@ plugin.defaultDB = {
 	fontColor = { r = 1, g = 0, b = 0 },
 	voice = voiceMap[GetLocale()] or "English: Amy",
 	countdownTime = 5,
-	Countdown = {},
+	bossCountdowns = {},
 }
 
 -------------------------------------------------------------------------------
@@ -292,9 +297,9 @@ do
 				name = L.reset,
 				desc = L.resetCountdownDesc,
 				func = function()
-					local restoreCountdowns = plugin.db.profile.Countdown
+					local restoreCountdowns = plugin.db.profile.bossCountdowns
 					plugin.db:ResetProfile()
-					plugin.db.profile.Countdown = restoreCountdowns
+					plugin.db.profile.bossCountdowns = restoreCountdowns
 				end,
 				order = 9,
 			},
@@ -324,19 +329,19 @@ local function createOptions()
 			values = voiceList,
 			get = function(info)
 				local name, key = unpack(info.arg)
-				return plugin.db.profile.Countdown[name] and plugin.db.profile.Countdown[name][key] or plugin.db.profile.voice
+				return plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] or plugin.db.profile.voice
 			end,
 			set = function(info, value)
 				local name, key = unpack(info.arg)
 				if value ~= plugin.db.profile.voice then
-					if not plugin.db.profile.Countdown[name] then plugin.db.profile.Countdown[name] = {} end
-					plugin.db.profile.Countdown[name][key] = value
+					if not plugin.db.profile.bossCountdowns[name] then plugin.db.profile.bossCountdowns[name] = {} end
+					plugin.db.profile.bossCountdowns[name][key] = value
 				else -- clean up
-					if plugin.db.profile.Countdown[name] then
-						plugin.db.profile.Countdown[name][key] = nil
+					if plugin.db.profile.bossCountdowns[name] then
+						plugin.db.profile.bossCountdowns[name][key] = nil
 					end
-					if not next(plugin.db.profile.Countdown[name]) then
-						plugin.db.profile.Countdown[name] = nil
+					if not next(plugin.db.profile.bossCountdowns[name]) then
+						plugin.db.profile.bossCountdowns[name] = nil
 					end
 				end
 			end,
@@ -351,10 +356,10 @@ local function updateProfile()
 	if not BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
 		plugin.db.profile.voice = voiceMap[GetLocale()] or "English: Amy"
 	end
-	for boss, tbl in next, plugin.db.profile.Countdown do
+	for boss, tbl in next, plugin.db.profile.bossCountdowns do
 		for ability, chosenVoice in next, tbl do
 			if not BigWigsAPI:HasCountdown(chosenVoice) then
-				plugin.db.profile.Countdown[boss][ability] = nil
+				plugin.db.profile.bossCountdowns[boss][ability] = nil
 			end
 		end
 	end
@@ -363,6 +368,13 @@ end
 -------------------------------------------------------------------------------
 -- Initialization
 --
+
+function plugin:OnRegister() -- XXX temp 9.0.2
+	if next(oldPlugin.db.profile.Countdown) then
+		plugin.db.profile.bossCountdowns = oldPlugin.db.profile.Countdown
+	end
+	oldPlugin.db:ResetProfile()
+end
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartCountdown")
@@ -381,7 +393,7 @@ end
 do
 	local timers = {}
 	local function printEmph(num, name, key, text)
-		local voice = plugin.db.profile.Countdown[name] and plugin.db.profile.Countdown[name][key] or plugin.db.profile.voice
+		local voice = plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] or plugin.db.profile.voice
 		local sound = BigWigsAPI:GetCountdownSound(voice, num)
 		if sound then
 			PlaySoundFile(sound, "Master")
