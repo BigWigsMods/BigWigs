@@ -136,8 +136,10 @@ L.ME_ONLY_EMPHASIZE_desc = "啟用後會強調所有只施放在你的技能相�
 L.NAMEPLATEBAR = "名條計時條"
 L.NAMEPLATEBAR_desc = "當多個敵方單位施放相同的法術時，在名條上方顯示各自的計時條。如果不想要名條上依附的計時條，請禁用此項。"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "當心（艾爾加隆）"
 L.FlagTaken = "奪旗（PvP）"
 L.Destruction = "毀滅（基爾加丹）"
 L.RunAway = "快逃啊小女孩，快逃……（大野狼）"
+--L.spell_on_you = "BigWigs: Spell on you"
+--L.spell_under_you = "BigWigs: Spell under you"

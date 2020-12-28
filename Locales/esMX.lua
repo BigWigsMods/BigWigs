@@ -44,11 +44,13 @@ L.disabledAddOn  = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores
 L.removeAddon  = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"
 L.FlagTaken = "Bandera tomada (PvP)"
 L.Destruction = "Destrucción (Kil'jaeden)"
 L.RunAway = "Corre pequeña (El Lobo Feroz)"
+--L.spell_on_you = "BigWigs: Spell on you"
+--L.spell_under_you = "BigWigs: Spell under you"
 
 -- Options.lua
 L.options  = "Opciones"

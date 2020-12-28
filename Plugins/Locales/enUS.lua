@@ -323,12 +323,15 @@ L.secondaryDesc = "The second raid target icon that a encounter script should us
 --
 
 L.Sounds = "Sounds"
+L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarm"
 L.Info = "Info"
 L.Alert = "Alert"
 L.Long = "Long"
 L.Warning = "Warning"
+L.onyou = "A spell, buff, or debuff is on you"
+L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Sound"
 L.soundDesc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages."

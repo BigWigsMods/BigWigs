@@ -136,8 +136,10 @@ L.ME_ONLY_EMPHASIZE_desc = "С включенной опцией все сооб
 L.NAMEPLATEBAR = "Полосы неймплейтов"
 L.NAMEPLATEBAR_desc = "Полосы прикрепляются к неймплейтам, когда более чем один моб одновременно применяет одинаковое заклинание. Если вы хотите убрать эти полосы с неймплейтов, выключите данную опцию."
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Берегитесь (Алгалон)"
 L.FlagTaken = "Взятие флага (PvP)"
 L.Destruction = "Разрушение (Кил'джеден)"
 L.RunAway = "Беги, малышка, беги (Злой и страшный серый волк)"
+--L.spell_on_you = "BigWigs: Spell on you"
+--L.spell_under_you = "BigWigs: Spell under you"

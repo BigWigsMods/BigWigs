@@ -324,12 +324,15 @@ L.secondaryDesc = "El segundo ícono de banda que un encuentro debería usar."
 --
 
 L.Sounds = "Sonidos"
+--L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarma"
 L.Info = "Información"
 L.Alert = "Alerta"
 L.Long = "Largo"
 L.Warning = "Alerta"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Sonido"
 L.soundDesc = "Los mensajes pueden venir con un sonido. A algunas personas les resulta más fácil escucharlos una vez que han aprendido qué sonido va con cada mensaje, en lugar de leer los mensajes reales."

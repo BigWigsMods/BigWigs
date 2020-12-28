@@ -323,12 +323,15 @@ L.secondaryDesc = "La seconde icône de cible de raid qu'un script de rencontre 
 --
 
 L.Sounds = "Sons"
+--L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarme"
 L.Info = "Info"
 L.Alert = "Alerte"
 L.Long = "Long"
 L.Warning = "Avertissement"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Son"
 L.soundDesc = "Les messages sont le plus souvent accompagnés de sons. Certaines personnes trouvent plus faciles d'entendre ces sons pour réagir une fois qu'elles ont appris quels sons sont liés à quels messages, plutôt que de lire les messages à chaque fois."

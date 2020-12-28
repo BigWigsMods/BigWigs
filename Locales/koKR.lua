@@ -44,11 +44,13 @@ L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이�
 L.removeAddon = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체되었으므로 제거해주세요."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "조심해라 (알갈론)"
 L.FlagTaken = "깃발 뺏김 (PvP)"
 L.Destruction = "파괴 (킬제덴)"
 L.RunAway = "도망쳐라 꼬마야 달아나라 (커다란 나쁜 늑대)"
+--L.spell_on_you = "BigWigs: Spell on you"
+--L.spell_under_you = "BigWigs: Spell under you"
 
 -- Options.lua
 L.options = "옵션"

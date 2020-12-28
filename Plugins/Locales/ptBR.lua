@@ -323,12 +323,15 @@ L.secondaryDesc = "O segundo ícone de raide que um script usará."
 --
 
 L.Sounds = "Sons"
+--L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarme"
 L.Info = "Info"
 L.Alert = "Alerta"
 L.Long = "Longo"
 L.Warning = "Aviso"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Som"
 L.soundDesc = "As mensagens podem conter um som. Para algumas pessoas fica mais fácil escutar quando aprendem que tal som aparece com tal mensagem, ao invés de ler a mensagem."

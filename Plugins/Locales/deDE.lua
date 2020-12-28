@@ -347,7 +347,10 @@ L.resetProximityDesc = "Setzt alle Optionen im Zusammenhang mit Nähe zurück, i
 -- Sound.lua
 --
 
+--L.oldSounds = "Old Sounds"
 L.resetSoundDesc = "Setzt die obigen Sounds auf ihren Standard zurück."
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

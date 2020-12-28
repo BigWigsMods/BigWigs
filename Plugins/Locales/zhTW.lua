@@ -347,7 +347,10 @@ L.resetProximityDesc = "重設所有玩家雷達自訂選項，包括錨點和�
 -- Sound.lua
 --
 
+--L.oldSounds = "Old Sounds"
 L.resetSoundDesc = "將前面的音效設定重設為預設值。"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

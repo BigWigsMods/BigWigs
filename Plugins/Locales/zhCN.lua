@@ -347,7 +347,10 @@ L.resetProximityDesc = "重置全部近距离有关选项，包括近距离锚�
 -- Sound.lua
 --
 
+--L.oldSounds = "Old Sounds"
 L.resetSoundDesc = "重置以上音效为默认。"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
