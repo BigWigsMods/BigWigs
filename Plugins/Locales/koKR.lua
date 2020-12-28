@@ -330,7 +330,7 @@ L.Alarm = "알람"
 L.Info = "정보"
 L.Alert = "경보"
 L.Long = "길게"
-L.Warning = "경보"
+L.Warning = "경고"
 --L.onyou = "A spell, buff, or debuff is on you"
 --L.underyou = "You need to move out of a spell under you"
 
