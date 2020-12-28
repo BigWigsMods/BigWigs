@@ -99,10 +99,10 @@ if L then
 	L.custom_on_repeating_impale_desc = "使用“1”、“22”、“333”、“4444”重复穿刺技能说话信息让你清楚击中顺序。"
 
 	L.hymn_stacks = "纳斯利亚赞歌"
-	L.hym_stacks_desc = "你的纳斯利亚赞歌当前堆叠层数警报。"
+	L.hymn_stacks_desc = "你的纳斯利亚赞歌当前堆叠层数警报。"
 
-	L.ravage_target = "毁灭目标施放条"
-	L.ravage_target_desc = "在第3阶段显示一个选择破坏目标位置之前的时间施放条。"
+	L.ravage_target = "镜像：毁灭目标施放条"
+	L.ravage_target_desc = "计时条显示时间直到镜像目标位置毁灭。"
 	L.ravage_targeted = "毁灭已目标" -- Text on the bar for when Ravage picks its location to target in stage 3
 
 	L.no_mirror = "没镜子：%d" -- Player amount that does not have the Through the Mirror
