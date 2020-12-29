@@ -12,8 +12,6 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local bottleTimers = {20, 43, 18, 32, 30, 35, 35, 35, 35}
-local bottleCount = 1
 local anima = {}
 local concentrateAnimaCount = 1
 local mobCollector = {}
@@ -31,8 +29,6 @@ if L then
 
 	L.level = "%s (Level |cffffff00%d|r)"
 	L.full = "%s (|cffff0000FULL|r)"
-
-	L.container_active = "Enable Container: %s"
 
 	L.anima_adds = "Concentrate Anima Adds"
 	L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
@@ -139,15 +135,14 @@ function mod:OnEngage()
 	mobCollector = {}
 	conjuredManifestationList = {}
 	conjuredManifestationCount = 1
-	bottleCount = 1
 	concentrateAnimaCount = 1
 	enabledContainer = 0
 	wipe(anima)
 
 	self:Bar(341621, 12, L.desires) -- Expose Desires
 	self:Bar(324983, 23, L.sins) -- Shared Suffering
-	self:Bar(325769, bottleTimers[bottleCount], L.bottles) -- Bottled Anima
-	self:Bar(332664, 54, CL.count:format(CL.adds, concentrateAnimaCount)) -- Concentrate Anima
+	self:Bar(325769, 33, L.bottles) -- Bottled Anima
+	self:Bar(332664, self:Mythic() and 44 or 54, CL.count:format(CL.adds, concentrateAnimaCount)) -- Concentrate Anima
 
 	if self:GetOption("custom_off_experimental") then
 		self:OpenInfo("anima_tracking", L.anima_tracking)
@@ -280,31 +275,34 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 331844 then -- Focus Anima: Desires
-		self:Message(331870, "cyan", L.container_active:format(L.desires))
+		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), L.desires))
 		self:PlaySound(331870, "long")
 		enabledContainer = 1
-		self:Bar(331870, 97) -- She picks the next one 3s early, hidden cast?
+		self:Bar(331870, 97, CL.count:format(CL.other:format(self:SpellName(331870), L.bottles), enabledContainer+1)) -- She picks the next one 3s early, hidden cast?
 	elseif spellId == 331870 then -- Focus Anima: Bottles
-		self:Message(331870, "cyan", L.container_active:format(L.bottles))
+		self:StopBar(CL.count:format(CL.other:format(self:SpellName(331870), L.bottles)))
+		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), L.bottles))
 		self:PlaySound(331870, "long")
 		enabledContainer = 2
-		self:Bar(331870, 97)
+		self:Bar(331870, 97, CL.count:format(CL.other:format(self:SpellName(331870), L.sins), enabledContainer+1))
 	elseif spellId == 331872 then -- Focus Anima: Sins
-		self:Message(331870, "cyan", L.container_active:format(L.sins))
+		self:StopBar(CL.count:format(CL.other:format(self:SpellName(331870), L.sins)))
+		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), L.sins))
 		self:PlaySound(331870, "long")
 		enabledContainer = 3
-		self:Bar(331870, 97)
+		self:Bar(331870, 97, CL.count:format(CL.other:format(self:SpellName(331870), CL.adds), enabledContainer+1))
 	elseif spellId == 331873 then -- Focus Anima: Adds
-		self:Message(331870, "cyan", L.container_active:format(CL.adds))
+		self:StopBar(CL.count:format(CL.other:format(self:SpellName(331870), CL.adds)))
+		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), CL.adds))
 		self:PlaySound(331870, "long")
 		enabledContainer = 4
-		self:StopBar(331870) -- Focus Anima
+		self:StopBar(CL.count:format(self:SpellName(331870), enabledContainer)) -- Focus Anima
 	end
 end
 
 function mod:ExposeDesires(args)
 	self:Message(341621, "purple", CL.casting:format(args.spellName))
-	self:Bar(341621, enabledContainer == 1 and 9.7 or 12.9)
+	self:Bar(341621, enabledContainer == 1 and 9.7 or 12.9, L.desires)
 	if self:Tanking("boss1") or self:Healer() then
 		self:PlaySound(341621, "alert")
 	end
@@ -356,7 +354,7 @@ end
 function mod:BottledAnima(args)
 	self:Message(325769, "orange", L.bottles)
 	self:PlaySound(325769, "info")
-	self:Bar(325769, enabledContainer == 2 and 30 or 45, L.bottles)
+	self:Bar(325769, enabledContainer == 2 and (self:Mythic() and 15 or 30) or (self:Mythic() and 30 or 45), L.bottles)
 end
 
 do
@@ -370,7 +368,7 @@ do
 				SetRaidTarget(name, count)
 			end
 			if count == 1 then
-				self:Bar(324983, enabledContainer == 3 and 35 or 51, L.sins)
+				self:Bar(324983, enabledContainer == 3 and (self:Mythic() and 30 or 35) or 51, L.sins)
 			end
 		end
 	end
@@ -398,6 +396,7 @@ do
 			self:Say(324983, L.sins)
 			self:PlaySound(324983, "warning")
 		end
+		-- 40s until orbs blow up; do we want a timer?
 	end
 
 	function mod:SharedSufferingRemoved(args)
@@ -422,7 +421,7 @@ do
 		if #playerList == 1 then
 			self:StopBar(CL.count:format(CL.adds, concentrateAnimaCount))
 			concentrateAnimaCount = concentrateAnimaCount + 1
-			self:CDBar(332664, enabledContainer == 4 and 51 or 60, CL.count:format(CL.adds, concentrateAnimaCount))
+			self:CDBar(332664, enabledContainer == 4 and (self:Mythic() and 43 or 51) or (self:Mythic() and 65 or 60), CL.count:format(CL.adds, concentrateAnimaCount))
 			conjuredManifestationList = {}
 			conjuredManifestationCount = 1
 			self:Bar("anima_adds", 10, CL.spawning:format(CL.adds), 332664) -- Adds Spawning

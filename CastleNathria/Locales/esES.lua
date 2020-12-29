@@ -73,6 +73,11 @@ end
 L = BigWigs:NewBossLocale("Sludgefist", "esES") or BigWigs:NewBossLocale("Sludgefist", "esMX")
 if L then
 	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+
+	-- L.fun_info = "Damage Info"
+	-- L.fun_info_desc = "Display a message displaying how much health the boss lost during Destructive Impact."
+
+	-- L.health_lost = "Sludgefist went down %.1f%%!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "esES") or BigWigs:NewBossLocale("Stone Legion Generals", "esMX")

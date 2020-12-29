@@ -484,9 +484,10 @@ plugin.defaultDB = {
 	fontName = plugin:GetDefaultFont(),
 	fontSize = 10,
 	fontSizeEmph = 13,
+	fontSizeNameplate = 7,
 	texture = "BantoBar",
 	font = nil,
-	monochrome = nil,
+	monochrome = false,
 	outline = "NONE",
 	growup = true,
 	text = true,
@@ -495,11 +496,11 @@ plugin.defaultDB = {
 	alignTime = "RIGHT",
 	icon = true,
 	iconPosition = "LEFT",
-	fill = nil,
+	fill = false,
 	barStyle = "Default",
 	emphasize = true,
 	emphasizeMove = true,
-	emphasizeGrowup = nil,
+	emphasizeGrowup = false,
 	emphasizeRestart = true,
 	emphasizeTime = 11,
 	emphasizeMultiplier = 1.1,
@@ -515,28 +516,25 @@ plugin.defaultDB = {
 	spacing = 1,
 	visibleBarLimit = 100,
 	visibleBarLimitEmph = 100,
-	interceptMouse = nil,
-	onlyInterceptOnKeypress = nil,
+	interceptMouse = false,
+	onlyInterceptOnKeypress = true,
 	interceptKey = "CTRL",
-	LeftButton = {
-		report = true,
-	},
-	MiddleButton = {
-		remove = true,
-	},
-	RightButton = {
-		emphasize = true,
-	},
+	LeftButton = "report",
+	MiddleButton = "remove",
+	RightButton = "countdown",
 }
 
 do
+	local function shouldDisable() return not plugin.db.profile.interceptMouse end
 	local clickOptions = {
-		emphasize = {
+		countdown = {
 			type = "toggle",
 			name = colorize[L.countdown],
-			desc = L.temporaryCountdown,
+			desc = L.temporaryCountdownDesc,
 			descStyle = "inline",
 			order = 1,
+			width = "full",
+			disabled = shouldDisable,
 		},
 		report = {
 			type = "toggle",
@@ -544,27 +542,26 @@ do
 			desc = L.reportDesc,
 			descStyle = "inline",
 			order = 2,
+			width = "full",
+			disabled = shouldDisable,
 		},
 		remove = {
 			type = "toggle",
 			name = colorize[L.remove],
-			desc = L.removeDesc,
+			desc = L.removeBarDesc,
 			descStyle = "inline",
 			order = 3,
+			width = "full",
+			disabled = shouldDisable,
 		},
 		removeOther = {
 			type = "toggle",
 			name = colorize[L.removeOther],
-			desc = L.removeOtherDesc,
+			desc = L.removeOtherBarDesc,
 			descStyle = "inline",
 			order = 4,
-		},
-		disable = {
-			type = "toggle",
-			name = colorize[L.disable],
-			desc = L.disableDesc,
-			descStyle = "inline",
-			order = 5,
+			width = "full",
+			disabled = shouldDisable,
 		},
 	}
 
@@ -604,7 +601,6 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
-	local function shouldDisable() return not plugin.db.profile.interceptMouse end
 	plugin.pluginOptions = {
 		type = "group",
 		name = L.bars,
@@ -694,7 +690,7 @@ do
 								if type(style.fontSizeEmphasized) == "number" and style.fontSizeEmphasized > 0 and style.fontSizeEmphasized < 201 then
 									db.fontSizeEmph = style.fontSizeEmphasized
 								else
-									db.fontSizeEmph = plugin.defaultDB.fontSize
+									db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
 								end
 								if type(style.fontOutline) == "string" and (style.fontOutline == "NONE" or style.fontOutline == "OUTLINE" or style.fontOutline == "THICKOUTLINE") then
 									db.outline = style.fontOutline
@@ -1206,6 +1202,15 @@ do
 						order = 5,
 						width = 1.6,
 					},
+					fontSizeNameplate = {
+						type = "range",
+						name = L.fontSize,
+						order = 6,
+						max = 200, softMax = 72,
+						min = 1,
+						step = 1,
+						width = 1.6,
+					},
 				},
 			},
 			clicking = {
@@ -1257,32 +1262,29 @@ do
 							return not plugin.db.profile.interceptMouse or not plugin.db.profile.onlyInterceptOnKeypress
 						end,
 					},
-					left = {
+					LeftButton = {
 						type = "group",
 						name = KEY_BUTTON1 or "Left",
 						order = 10,
 						args = clickOptions,
-						disabled = shouldDisable,
-						get = function(info) return plugin.db.profile.LeftButton[info[#info]] end,
-						set = function(info, value) plugin.db.profile.LeftButton[info[#info]] = value end,
+						get = function(info) return plugin.db.profile.LeftButton == info[#info] end,
+						set = function(info, value) plugin.db.profile.LeftButton = value and info[#info] or nil end,
 					},
-					middle = {
+					MiddleButton = {
 						type = "group",
 						name = KEY_BUTTON3 or "Middle",
 						order = 11,
 						args = clickOptions,
-						disabled = shouldDisable,
-						get = function(info) return plugin.db.profile.MiddleButton[info[#info]] end,
-						set = function(info, value) plugin.db.profile.MiddleButton[info[#info]] = value end,
+						get = function(info) return plugin.db.profile.MiddleButton == info[#info] end,
+						set = function(info, value) plugin.db.profile.MiddleButton = value and info[#info] or nil end,
 					},
-					right = {
+					RightButton = {
 						type = "group",
 						name = KEY_BUTTON2 or "Right",
 						order = 12,
 						args = clickOptions,
-						disabled = shouldDisable,
-						get = function(info) return plugin.db.profile.RightButton[info[#info]] end,
-						set = function(info, value) plugin.db.profile.RightButton[info[#info]] = value end,
+						get = function(info) return plugin.db.profile.RightButton == info[#info] end,
+						set = function(info, value) plugin.db.profile.RightButton = value and info[#info] or nil end,
 					},
 				},
 			},
@@ -1384,7 +1386,8 @@ do
 				bar:ClearAllPoints()
 				bar:SetParent(nameplate)
 				bar:SetPoint(barPoint, nameplate, nameplatePoint, 0, db.nameplateGrowUp and offset or -offset)
-				offset = offset + db.spacing + bar:GetHeight()			end
+				offset = offset + db.spacing + bar:GetHeight()
+			end
 		end
 	end
 end
@@ -1434,30 +1437,40 @@ local defaultPositions = {
 
 local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
 local function onDragHandleMouseUp(self) self:GetParent():StopMovingOrSizing() end
-local function onResize(self, width, height)
-	db[self.w] = width
-	db[self.h] = height
-	if self == normalAnchor and not db.emphasizeMove then
-		-- Move is disabled and we are configuring the normal anchor. Make sure to update the emphasized bars also.
-		db[emphasizeAnchor.w] = width * db.emphasizeMultiplier
-		db[emphasizeAnchor.h] = height * db.emphasizeMultiplier
-	end
-	for k in next, self.bars do
-		currentBarStyler.BarStopped(k)
-		if db.emphasizeMove then
-			k:SetSize(width, height) -- Move enabled, set the size no matter which anchor we are configuring
-		elseif self == normalAnchor then
-			-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
-			if k:Get("bigwigs:emphasized") then
-				k:SetSize(db[emphasizeAnchor.w], db[emphasizeAnchor.h])
-			else
-				k:SetSize(width, height)
-			end
+local onResize
+do
+	local throttle = false
+	function onResize(self, width, height)
+		db[self.w] = width
+		db[self.h] = height
+		if self == normalAnchor and not db.emphasizeMove then
+			-- Move is disabled and we are configuring the normal anchor. Make sure to update the emphasized bars also.
+			db[emphasizeAnchor.w] = width * db.emphasizeMultiplier
+			db[emphasizeAnchor.h] = height * db.emphasizeMultiplier
 		end
-		currentBarStyler.ApplyStyle(k)
-		rearrangeBars(self)
+		if not throttle then
+			throttle = true
+			plugin:ScheduleTimer(function()
+				for k in next, self.bars do
+					currentBarStyler.BarStopped(k)
+					if db.emphasizeMove then
+						k:SetSize(db[self.w], db[self.h]) -- Move enabled, set the size no matter which anchor we are configuring
+					elseif self == normalAnchor then
+						-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
+						if k:Get("bigwigs:emphasized") then
+							k:SetSize(db[emphasizeAnchor.w], db[emphasizeAnchor.h])
+						else
+							k:SetSize(db[self.w], db[self.h])
+						end
+					end
+					currentBarStyler.ApplyStyle(k)
+					rearrangeBars(self)
+				end
+				plugin:UpdateGUI() -- Update width/height if GUI is open
+				throttle = false
+			end, 0.1)
+		end
 	end
-	plugin:UpdateGUI() -- Update width/height if GUI is open
 end
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
@@ -1547,6 +1560,16 @@ local function updateProfile()
 		if not media:Fetch(STATUSBAR, db.texture, true) then db.texture = "BantoBar" end
 		SetBarStyle(db.barStyle)
 		plugin:RegisterMessage("DBM_AddonMessage")
+	end
+	-- XXX temp 9.0.2
+	if type(db.LeftButton) ~= "string" then
+		db.LeftButton = "report"
+	end
+	if type(db.MiddleButton) ~= "string" then
+		db.MiddleButton = "remove"
+	end
+	if type(db.RightButton) ~= "string" then
+		db.RightButton = "countdown"
 	end
 end
 
@@ -1821,9 +1844,9 @@ end
 --
 
 local function barClicked(bar, button)
-	if not plugin.db.profile[button] then return end
-	for action, enabled in next, plugin.db.profile[button] do
-		if enabled then clickHandlers[action](bar) end
+	local action = plugin.db.profile[button]
+	if action and clickHandlers[action] then
+		clickHandlers[action](bar)
 	end
 end
 
@@ -1875,8 +1898,8 @@ do
 	end
 end
 
--- Super Emphasize the clicked bar
-clickHandlers.emphasize = function(bar)
+-- Enable countdown on the clicked bar
+clickHandlers.countdown = function(bar)
 	-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
 	plugin:SendMessage("BigWigs_TemporaryCountdown", bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar:GetLabel(), bar.remaining)
 end
@@ -1910,7 +1933,6 @@ end
 
 -- Removes the clicked bar
 clickHandlers.remove = function(bar)
-	plugin:SendMessage("BigWigs_SilenceOption", bar:Get("bigwigs:option"), bar.remaining + 0.3)
 	bar:Stop()
 end
 
@@ -1919,7 +1941,6 @@ clickHandlers.removeOther = function(bar)
 	if normalAnchor then
 		for k in next, normalAnchor.bars do
 			if k ~= bar then
-				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
 			end
 		end
@@ -1927,18 +1948,9 @@ clickHandlers.removeOther = function(bar)
 	if emphasizeAnchor then
 		for k in next, emphasizeAnchor.bars do
 			if k ~= bar then
-				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
 			end
 		end
-	end
-end
-
--- Disables the option that launched this bar
-clickHandlers.disable = function(bar)
-	local m = bar:Get("bigwigs:module")
-	if m and m.db and m.db.profile and bar:Get("bigwigs:option") then
-		m.db.profile[bar:Get("bigwigs:option")] = 0
 	end
 end
 
@@ -1987,8 +1999,13 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 		flags = db.outline
 	end
 	local f = media:Fetch(FONT, db.fontName)
-	bar.candyBarLabel:SetFont(f, db.fontSize, flags)
-	bar.candyBarDuration:SetFont(f, db.fontSize, flags)
+	if unitGUID then
+		bar.candyBarLabel:SetFont(f, db.fontSizeNameplate, flags)
+		bar.candyBarDuration:SetFont(f, db.fontSizeNameplate, flags)
+	else
+		bar.candyBarLabel:SetFont(f, db.fontSize, flags)
+		bar.candyBarDuration:SetFont(f, db.fontSize, flags)
+	end
 
 	bar:SetTimeVisibility(db.time)
 	bar:SetLabelVisibility(db.text)
@@ -2091,9 +2108,8 @@ do
 		for guid, bars in next, nameplateBars do
 			for _, barInfo in next, bars do
 				local bar = barInfo.bar
-				if bar and bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") then
+				if bar and bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") and not bar:Get("bigwigs:unitGUID") then
 					plugin:EmphasizeBar(bar)
-					rearrangeNameplateBars(bar:Get("bigwigs:unitGUID"))
 					plugin:SendMessage("BigWigs_BarEmphasized", plugin, bar)
 				end
 			end
@@ -2109,8 +2125,7 @@ do
 end
 
 function plugin:EmphasizeBar(bar, start)
-	local unitGUID = bar:Get("bigwigs:unitGUID")
-	if db.emphasizeMove and not unitGUID then
+	if db.emphasizeMove then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
@@ -2118,9 +2133,6 @@ function plugin:EmphasizeBar(bar, start)
 	currentBarStyler.BarStopped(bar)
 	if not start and db.emphasizeRestart then
 		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
-		if unitGUID then
-			nameplateBars[unitGUID][bar:GetLabel()].time = bar.remaining
-		end
 	end
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
@@ -2138,13 +2150,8 @@ function plugin:EmphasizeBar(bar, start)
 	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
-	if unitGUID then
-		bar:SetWidth(bar:GetWidth() * db.emphasizeMultiplier)
-		bar:SetHeight(bar:GetHeight() * db.emphasizeMultiplier)
-	else
-		bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
-		bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
-	end
+	bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
+	bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
 	currentBarStyler.ApplyStyle(bar)
 	bar:Set("bigwigs:emphasized", true)
 end

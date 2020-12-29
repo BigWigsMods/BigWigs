@@ -77,10 +77,8 @@ L.customBarStarted = "自定义计时条“%s”由%s玩家%s发起。"
 L.customRange = "自定义距离指示器"
 L.customSoundDesc = "播放选定的自定义的声音，而不是由模块提供的。"
 L.defeated = "%s被击败了！"
-L.disable = "禁用"
 L.disabled = "禁用"
 L.disabledDisplayDesc = "禁用全部模块显示。"
-L.disableDesc = "永久禁用此首领战斗技能计时条选项。"
 L.displayTime = "显示时间"
 L.displayTimeDesc = "以秒计信息显示时间。"
 L.emphasize = "醒目"
@@ -162,9 +160,7 @@ L.raidIconsDescription = [=[可能遇到包含例如炸弹类型的技能指向�
 L.recordBestTime = "记忆最快击杀"
 L.regularBars = "常规计时条"
 L.remove = "移除"
-L.removeDesc = "临时移除计时条和全部相关信息。"
 L.removeOther = "移除其它"
-L.removeOtherDesc = "临时移除所有计时条（除此之外）和全部相关信息。"
 L.report = "报告"
 L.reportDesc = "向当前的频道报告计时条信息。可用频道包括副本、团队、小队、普通，自动选择最适频道。"
 L.requiresLeadOrAssist = "此功能需要团队领袖或助理权限。"
@@ -265,7 +261,9 @@ L.spacing = "间隙"
 L.spacingDesc = "更每个改计时条之间间隙。"
 L.emphasizeMultiplier = "尺寸倍数"
 L.emphasizeMultiplierDesc = "如禁用计时条移向醒目锚点，此选项将决定以一般计时条乘以倍数作为醒目计时条的尺寸。"
---L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
+L.temporaryCountdownDesc = "暂时启用与此计时条关联技能的倒计时。"
+--L.removeBarDesc = "Temporarily removes this bar."
+--L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 L.iconPosition = "图标位置"
 L.iconPositionDesc = "选择计时条上图标的位置。"
 L.visibleBarLimit = "可视条限制"
@@ -317,13 +315,13 @@ L.purpleDesc = "坦克特定技能的警报，例如负面效果叠加。"
 -- Countdown.lua
 --
 
---L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
---L.countdown = "Countdown"
---L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
---L.countdownAudioHeader = "Spoken Audio Countdown"
---L.countdownTextHeader = "Visual Text Countdown"
---L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
---L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+L.countdownAt_desc = "选择倒计时开始时首领技能应剩余多少时间（以秒为单位）。"
+L.countdown = "倒计时"
+L.countdownDesc = "倒数功能包括语音倒计时和可视文字倒计时。默认情况下很少启用它，但是在查看特定的首领战斗设置时，可以为任何首领技能启用它。"
+L.countdownAudioHeader = "语音倒计时"
+L.countdownTextHeader = "可视文字倒计时"
+L.resetCountdownDesc = "重置全部以上倒计时设置为默认。"
+L.resetAllCountdownDesc = "如果为任何首领战斗的设置选择了自定义倒计时声音，此按钮将重置*所有*这些声音并将上述所有倒计时设置重置为默认。"
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -337,7 +335,7 @@ L.infoBox = "信息盒"
 
 L.resetMessagesDesc = "重置全部信息有关选项，包括信息锚点位置。"
 L.uppercase = "大写"
---L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.uppercaseDesc = "全部醒目信息将转换为*大写*。"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -349,10 +347,10 @@ L.resetProximityDesc = "重置全部近距离有关选项，包括近距离锚�
 -- Sound.lua
 --
 
---L.oldSounds = "Old Sounds"
+L.oldSounds = "老式音效"
 L.resetSoundDesc = "重置以上音效为默认。"
---L.onyou = "A spell, buff, or debuff is on you"
---L.underyou = "You need to move out of a spell under you"
+L.onyou = "一个法术，增益或负面效果在你身上"
+L.underyou = "你需要移动出你脚下的法术"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

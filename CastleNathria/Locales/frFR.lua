@@ -73,6 +73,11 @@ end
 L = BigWigs:NewBossLocale("Sludgefist", "frFR")
 if L then
 	L.stomp_shift = "Piétinement & Transfert" -- Destructive Stomp + Seismic Shift
+
+	-- L.fun_info = "Damage Info"
+	L.fun_info_desc = "Affiche un message indiquant combien de vie le boss a perdu durant Impact destructeur."
+
+	L.health_lost = "Fangepoing a perdu %.1f%% !"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "frFR")

@@ -66,15 +66,13 @@ L.modifierDesc = "Hold down the selected modifier key to enable click actions on
 L.modifierKey = "Only with modifier key"
 L.modifierKeyDesc = "Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."
 
-L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
+L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "Report"
 L.reportDesc = "Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."
 L.remove = "Remove"
-L.removeDesc = "Temporarily removes the bar and all associated messages."
+L.removeBarDesc = "Temporarily removes this bar."
 L.removeOther = "Remove other"
-L.removeOtherDesc = "Temporarily removes all other bars (except this one) and associated messages."
-L.disable = "Disable"
-L.disableDesc = "Permanently disables the boss encounter ability option that spawned this bar."
+L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 
 L.emphasizeAt = "Emphasize at... (seconds)"
 L.growingUpwards = "Grow upwards"
