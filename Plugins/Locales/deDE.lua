@@ -67,15 +67,13 @@ L.modifierDesc = "Wenn die Modifikatortaste gedrückt gehalten wird, können Kli
 L.modifierKey = "Nur mit Modifikatortaste"
 L.modifierKeyDesc = "Erlaubt nicht-interaktive Leisten solange bis die Modifikatortaste gedrückt gehalten wird und dann die unten aufgeführten Mausaktionen verfügbar werden."
 
-L.temporaryCountdown = "Vorübergehend Countdown für die mit dieser Leiste verknüpfte Fähigkeit aktivieren."
+L.temporaryCountdownDesc = "Vorübergehend Countdown für die mit dieser Leiste verknüpfte Fähigkeit aktivieren."
 L.report = "Ausgeben"
 L.reportDesc = "Gibt den aktuellen Leistenstatus im Instanz-, Schlachtzugs-, Gruppen- oder Sagen-Chat aus."
 L.remove = "Entfernen"
-L.removeDesc = "Entfernt zeitweilig die Leiste und alle zugehörigen Nachrichten aus der Anzeige."
+--L.removeBarDesc = "Temporarily removes this bar."
 L.removeOther = "Andere entfernen"
-L.removeOtherDesc = "Entfernt zeitweilig alle anderen Leisten (außer der Angeklickten) und zugehörigen Nachrichten aus der Anzeige."
-L.disable = "Deaktivieren"
-L.disableDesc = "Deaktiviert die Option, die diese Leiste erzeugt hat, zukünftig permanent."
+--L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 
 L.emphasizeAt = "Hervorheben bei... (Sekunden)"
 L.growingUpwards = "Nach oben erweitern"

@@ -486,7 +486,7 @@ plugin.defaultDB = {
 	fontSizeEmph = 13,
 	texture = "BantoBar",
 	font = nil,
-	monochrome = nil,
+	monochrome = false,
 	outline = "NONE",
 	growup = true,
 	text = true,
@@ -495,11 +495,11 @@ plugin.defaultDB = {
 	alignTime = "RIGHT",
 	icon = true,
 	iconPosition = "LEFT",
-	fill = nil,
+	fill = false,
 	barStyle = "Default",
 	emphasize = true,
 	emphasizeMove = true,
-	emphasizeGrowup = nil,
+	emphasizeGrowup = false,
 	emphasizeRestart = true,
 	emphasizeTime = 11,
 	emphasizeMultiplier = 1.1,
@@ -515,28 +515,25 @@ plugin.defaultDB = {
 	spacing = 1,
 	visibleBarLimit = 100,
 	visibleBarLimitEmph = 100,
-	interceptMouse = nil,
-	onlyInterceptOnKeypress = nil,
+	interceptMouse = false,
+	onlyInterceptOnKeypress = true,
 	interceptKey = "CTRL",
-	LeftButton = {
-		report = true,
-	},
-	MiddleButton = {
-		remove = true,
-	},
-	RightButton = {
-		emphasize = true,
-	},
+	LeftButton = "report",
+	MiddleButton = "remove",
+	RightButton = "countdown",
 }
 
 do
+	local function shouldDisable() return not plugin.db.profile.interceptMouse end
 	local clickOptions = {
-		emphasize = {
+		countdown = {
 			type = "toggle",
 			name = colorize[L.countdown],
-			desc = L.temporaryCountdown,
+			desc = L.temporaryCountdownDesc,
 			descStyle = "inline",
 			order = 1,
+			width = "full",
+			disabled = shouldDisable,
 		},
 		report = {
 			type = "toggle",
@@ -544,27 +541,26 @@ do
 			desc = L.reportDesc,
 			descStyle = "inline",
 			order = 2,
+			width = "full",
+			disabled = shouldDisable,
 		},
 		remove = {
 			type = "toggle",
 			name = colorize[L.remove],
-			desc = L.removeDesc,
+			desc = L.removeBarDesc,
 			descStyle = "inline",
 			order = 3,
+			width = "full",
+			disabled = shouldDisable,
 		},
 		removeOther = {
 			type = "toggle",
 			name = colorize[L.removeOther],
-			desc = L.removeOtherDesc,
+			desc = L.removeOtherBarDesc,
 			descStyle = "inline",
 			order = 4,
-		},
-		disable = {
-			type = "toggle",
-			name = colorize[L.disable],
-			desc = L.disableDesc,
-			descStyle = "inline",
-			order = 5,
+			width = "full",
+			disabled = shouldDisable,
 		},
 	}
 
@@ -604,7 +600,6 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
-	local function shouldDisable() return not plugin.db.profile.interceptMouse end
 	plugin.pluginOptions = {
 		type = "group",
 		name = L.bars,
@@ -1257,32 +1252,29 @@ do
 							return not plugin.db.profile.interceptMouse or not plugin.db.profile.onlyInterceptOnKeypress
 						end,
 					},
-					left = {
+					LeftButton = {
 						type = "group",
 						name = KEY_BUTTON1 or "Left",
 						order = 10,
 						args = clickOptions,
-						disabled = shouldDisable,
-						get = function(info) return plugin.db.profile.LeftButton[info[#info]] end,
-						set = function(info, value) plugin.db.profile.LeftButton[info[#info]] = value end,
+						get = function(info) return plugin.db.profile.LeftButton == info[#info] end,
+						set = function(info, value) plugin.db.profile.LeftButton = value and info[#info] or nil end,
 					},
-					middle = {
+					MiddleButton = {
 						type = "group",
 						name = KEY_BUTTON3 or "Middle",
 						order = 11,
 						args = clickOptions,
-						disabled = shouldDisable,
-						get = function(info) return plugin.db.profile.MiddleButton[info[#info]] end,
-						set = function(info, value) plugin.db.profile.MiddleButton[info[#info]] = value end,
+						get = function(info) return plugin.db.profile.MiddleButton == info[#info] end,
+						set = function(info, value) plugin.db.profile.MiddleButton = value and info[#info] or nil end,
 					},
-					right = {
+					RightButton = {
 						type = "group",
 						name = KEY_BUTTON2 or "Right",
 						order = 12,
 						args = clickOptions,
-						disabled = shouldDisable,
-						get = function(info) return plugin.db.profile.RightButton[info[#info]] end,
-						set = function(info, value) plugin.db.profile.RightButton[info[#info]] = value end,
+						get = function(info) return plugin.db.profile.RightButton == info[#info] end,
+						set = function(info, value) plugin.db.profile.RightButton = value and info[#info] or nil end,
 					},
 				},
 			},
@@ -1384,7 +1376,8 @@ do
 				bar:ClearAllPoints()
 				bar:SetParent(nameplate)
 				bar:SetPoint(barPoint, nameplate, nameplatePoint, 0, db.nameplateGrowUp and offset or -offset)
-				offset = offset + db.spacing + bar:GetHeight()			end
+				offset = offset + db.spacing + bar:GetHeight()
+			end
 		end
 	end
 end
@@ -1547,6 +1540,16 @@ local function updateProfile()
 		if not media:Fetch(STATUSBAR, db.texture, true) then db.texture = "BantoBar" end
 		SetBarStyle(db.barStyle)
 		plugin:RegisterMessage("DBM_AddonMessage")
+	end
+	-- XXX temp 9.0.2
+	if type(db.LeftButton) ~= "string" then
+		db.LeftButton = "report"
+	end
+	if type(db.MiddleButton) ~= "string" then
+		db.MiddleButton = "remove"
+	end
+	if type(db.RightButton) ~= "string" then
+		db.RightButton = "countdown"
 	end
 end
 
@@ -1821,9 +1824,9 @@ end
 --
 
 local function barClicked(bar, button)
-	if not plugin.db.profile[button] then return end
-	for action, enabled in next, plugin.db.profile[button] do
-		if enabled then clickHandlers[action](bar) end
+	local action = plugin.db.profile[button]
+	if action and clickHandlers[action] then
+		clickHandlers[action](bar)
 	end
 end
 
@@ -1875,8 +1878,8 @@ do
 	end
 end
 
--- Super Emphasize the clicked bar
-clickHandlers.emphasize = function(bar)
+-- Enable countdown on the clicked bar
+clickHandlers.countdown = function(bar)
 	-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
 	plugin:SendMessage("BigWigs_TemporaryCountdown", bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar:GetLabel(), bar.remaining)
 end
@@ -1910,7 +1913,6 @@ end
 
 -- Removes the clicked bar
 clickHandlers.remove = function(bar)
-	plugin:SendMessage("BigWigs_SilenceOption", bar:Get("bigwigs:option"), bar.remaining + 0.3)
 	bar:Stop()
 end
 
@@ -1919,7 +1921,6 @@ clickHandlers.removeOther = function(bar)
 	if normalAnchor then
 		for k in next, normalAnchor.bars do
 			if k ~= bar then
-				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
 			end
 		end
@@ -1927,18 +1928,9 @@ clickHandlers.removeOther = function(bar)
 	if emphasizeAnchor then
 		for k in next, emphasizeAnchor.bars do
 			if k ~= bar then
-				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
 			end
 		end
-	end
-end
-
--- Disables the option that launched this bar
-clickHandlers.disable = function(bar)
-	local m = bar:Get("bigwigs:module")
-	if m and m.db and m.db.profile and bar:Get("bigwigs:option") then
-		m.db.profile[bar:Get("bigwigs:option")] = 0
 	end
 end
 

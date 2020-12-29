@@ -66,15 +66,13 @@ L.modifierDesc = "Maintenez enfoncée la touche modificatrice sélectionnée pou
 L.modifierKey = "Seul. avec touche mod."
 L.modifierKeyDesc = "Permet aux barres de ne pas réagir aux clics de la souris à moins que la touche modificatrice sélectionnée ne soit maintenue enfoncée, cas dans lequel les actions de la souris décrites ci-dessous seront disponibles."
 
-L.temporaryCountdown = "Active temporairement le compte à rebours sur la technique associée à cette barre."
+L.temporaryCountdownDesc = "Active temporairement le compte à rebours sur la technique associée à cette barre."
 L.report = "Rapport"
 L.reportDesc = "Rapporte le statut des barres actuelles dans la discussion de groupe active : la discussion d'instance, de raid, de groupe ou juste le dire, selon ce qui est le plus approprié."
 L.remove = "Enlever"
-L.removeDesc = "Enlève temporairement la barre et les messages qui y sont associés."
+--L.removeBarDesc = "Temporarily removes this bar."
 L.removeOther = "Enlever les autres"
-L.removeOtherDesc = "Enlève temporairement toutes les autres barres et leurs messages associés."
-L.disable = "Désactiver"
-L.disableDesc = "Désactive l'option de la rencontre de boss qui a fait apparaître cette barre."
+--L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 
 L.emphasizeAt = "Mettre en évidence à... (secondes)"
 L.growingUpwards = "Ajouter vers le haut"

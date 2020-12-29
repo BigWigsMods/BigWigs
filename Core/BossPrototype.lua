@@ -1519,36 +1519,6 @@ end
 -- @section toggles
 --
 
--- Option silencer
-local silencedOptions = {}
-do
-	bossUtilityFrame:Hide()
-	BigWigsLoader.RegisterMessage(silencedOptions, "BigWigs_SilenceOption", function(event, key, time)
-		if key ~= nil then -- custom bars have a nil key
-			silencedOptions[key] = time
-			bossUtilityFrame:Show()
-		end
-	end)
-	local total = 0
-	bossUtilityFrame:SetScript("OnUpdate", function(self, elapsed)
-		total = total + elapsed
-		if total >= 0.5 then
-			for k, t in next, silencedOptions do
-				local newT = t - total
-				if newT < 0 then
-					silencedOptions[k] = nil
-				else
-					silencedOptions[k] = newT
-				end
-			end
-			if not next(silencedOptions) then
-				self:Hide()
-			end
-			total = 0
-		end
-	end)
-end
-
 local checkFlag = nil
 do
 	local noDefaultError   = "Module %s uses %q as a toggle option, but it does not exist in the modules default values."
@@ -1560,7 +1530,6 @@ do
 		if key == false then return true end -- Allow optionless abilities
 		if type(key) == "nil" then core:Print(format(nilKeyError, self.moduleName)) return end
 		if type(flag) ~= "number" then core:Print(format(invalidFlagError, self.moduleName, type(flag), tostring(flag))) return end
-		if silencedOptions[key] then return end
 		if type(self.db) ~= "table" then local msg = format(noDBError, self.moduleName) core:Print(msg) error(msg) return end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then
