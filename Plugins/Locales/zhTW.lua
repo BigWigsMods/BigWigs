@@ -194,15 +194,6 @@ L.soundDelayDesc = "當有人太靠近你時指定多長時間 BigWigs 重複間
 L.soundDesc = "訊息出現時伴隨著音效。有些人更容易在聽到何種音效後發現何種警報，而不是閱讀的實際訊息。"
 L.Sounds = "音效"
 L.style = "風格"
-L.superEmphasize = "超級強調"
-L.superEmphasizeDesc = [=[相關訊息或特定首領戰鬥技能計時條增強。
-
-在這裡設定當開啟超級強調位於首領戰鬥技能進階選項時所應該發生的事件。
-
-|cffff4411注意：超級強調功能預設情況下所有技能關閉。|r
-]=]
-L.superEmphasizeDisableDesc = "於所有模組停用超級強調。"
-L.tempEmphasize = "暫時以超級強調顯示此計時條及任何相關的持續時間訊息。"
 L.text = "文字"
 L.textCountdown = "倒數文字"
 L.textCountdownDesc = "於倒數時顯示倒數文字"
@@ -220,8 +211,6 @@ L.toggleSound = "切換音效"
 L.toggleSoundDesc = "當近距離視窗有其他過近玩家時切換任一或關閉聲效。"
 L.tooltip = "工具提示"
 L.tooltipDesc = "顯示或隱藏近距離顯示從首領戰鬥技能獲取的法術提示。"
-L.uppercase = "大寫"
-L.uppercaseDesc = "所有超級強調選項相關訊息大寫。"
 L.useIcons = "使用圖示"
 L.useIconsDesc = "訊息旁顯示圖示。"
 L.Victory = "勝利訊息"
@@ -276,6 +265,7 @@ L.spacing = "間距"
 L.spacingDesc = "更改每個計時條之間的間距"
 L.emphasizeMultiplier = "尺寸倍數"
 L.emphasizeMultiplierDesc = "如果你禁止計時條移動到強調計時條錨點，此選項可以調整一般計時條進入強調倒數後的放大倍率。"
+--L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 L.iconPosition = "圖示位置"
 L.iconPositionDesc = "選擇將圖示置於計時條的哪一側。"
 L.visibleBarLimit = "最大可見數量"
@@ -346,6 +336,8 @@ L.infoBox = "訊息盒"
 --
 
 L.resetMessagesDesc = "重設所有訊息自訂選項，包括錨點和位置。"
+L.uppercase = "大寫"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 -----------------------------------------------------------------------
 -- Proximity.lua

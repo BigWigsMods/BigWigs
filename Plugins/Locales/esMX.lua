@@ -67,7 +67,7 @@ L.modifierDesc = "Presiona la tecla modificadora seleccionada para activar accio
 L.modifierKey = "Solo con una tecla modificadora"
 L.modifierKeyDesc = "Permite hacer clic en las barras a menos que se mantenga pulsada la tecla modificadora especificada, en cuyo caso las acciones del ratón que se describen a continuación estarán disponibles."
 
-L.tempEmphasize = "Temporalmente Super Enfatiza la barra y cualquier mensaje asociado a ella durante la duración."
+--L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "Reportar"
 L.reportDesc = "Informa del estado actual de las barras al grupo de chat activo; ya sea en el chat de la estancia, en la banda, en el grupo o decir, según corresponda."
 L.remove = "Quitar"
@@ -200,11 +200,6 @@ L.purpleDesc = "Advertencias sobre las habilidades específicas de los tanques, 
 -- Countdown.lua
 --
 
-L.superEmphasize = "Súper Enfatizar"
-L.superEmphasizeDesc = "Mejora los mensajes o barras relacionados con una habilidad de un encuentro con el jefe.\n\nAquí se configura exactamente lo que debe suceder cuando se activa la opción de súper enfatizar en la sección avanzada para una habilidad de encuentro con el jefe.\n\n|cffff4411Ten en cuenta que el súper enfatizar está deshabilitado por defecto para todas las habilidades.|r\n"
-L.uppercase = "MAYÚSCULAS"
-L.uppercaseDesc = "Pone en mayúsculas todos los mensajes relacionados con una opción súper enfatizada."
-L.superEmphasizeDisableDesc = "Deshabilitar el súper enfatizar para todos los módulos que lo utilizan."
 L.textCountdown = "Cuenta regresiva de texto"
 L.textCountdownDesc = "Muestra un contador visual durante una cuenta regresiva."
 L.countdownColor = "Color de la cuenta regresiva"
@@ -239,6 +234,8 @@ L.messages = "Menajes"
 L.normalMessages = "Mensajes normales"
 L.emphasizedMessages = "Mensajes enfatizados"
 L.output = "Resultado"
+L.uppercase = "MAYÚSCULAS"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 L.useIcons = "Usar íconos"
 L.useIconsDesc = "Mostrar íconos al lado de los mensajes."

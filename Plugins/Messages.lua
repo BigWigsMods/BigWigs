@@ -480,7 +480,7 @@ function plugin:OnRegister()
 end
 
 function plugin:OnPluginEnable()
-	seModule = BigWigs:GetPlugin("Super Emphasize", true)
+	seModule = BigWigs:GetPlugin("Countdown", true)
 	colorModule = BigWigs:GetPlugin("Colors", true)
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)

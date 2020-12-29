@@ -185,8 +185,7 @@ do
 			else
 				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
 			end
-			local module = BigWigs:GetPlugin("Sounds", true)
-			if timeLeft < 6 and module and module.db.profile.sound then
+			if timeLeft < 6 then
 				self:SendMessage("BigWigs_PlayCountdownNumber", self, timeLeft, self.db.profile.voice)
 			end
 		end
@@ -276,17 +275,8 @@ SlashCmdList.BIGWIGSPULL = function(input)
 	if not plugin:IsEnabled() then BigWigs:Enable() end
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
 	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or ((IsInGroup(2) or not IsInRaid()) and UnitGroupRolesAssigned("player") == "TANK") then -- Solo or leader/assist or tank in LFG/5m
-		local s, respawn = input:match("(%d-) (.*)")
-		if respawn and respawn:lower() == "true" then
-			local bars = BigWigs:GetPlugin("Bars")
-			local respawn = BigWigs:GetPlugin("Respawn")
-			if bars and respawn then
-				input = bars:GetBarTimeLeft(respawn, L.respawn)
-			end
-			input = plugin:GetRespawnTimeLeft() + tonumber(s)
-		end
 		if input == "" then
-			input = "10"
+			input = "10" -- Allow typing /pull to start a 10 second pull timer
 		else
 			local seconds = tonumber(input)
 			if not seconds or seconds < 0 or seconds > 60 then BigWigs:Print(L.wrongPullFormat) return end

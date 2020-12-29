@@ -66,7 +66,7 @@ L.modifierDesc = "Hold down the selected modifier key to enable click actions on
 L.modifierKey = "Only with modifier key"
 L.modifierKeyDesc = "Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."
 
-L.tempEmphasize = "Temporarily Super Emphasizes the bar and any messages associated with it for the duration."
+L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "Report"
 L.reportDesc = "Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."
 L.remove = "Remove"
@@ -199,11 +199,6 @@ L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank de
 -- Countdown.lua
 --
 
-L.superEmphasize = "Super Emphasize"
-L.superEmphasizeDesc = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n"
-L.uppercase = "UPPERCASE"
-L.uppercaseDesc = "Uppercases all messages related to a super emphasized option."
-L.superEmphasizeDisableDesc = "Disable Super Emphasize for all modules that use it."
 L.textCountdown = "Text countdown"
 L.textCountdownDesc = "Show a visual counter during a count down."
 L.countdownColor = "Countdown color"
@@ -231,13 +226,15 @@ L.infoBox = "InfoBox"
 L.sinkDescription = "Route output from this addon through the BigWigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
 L.emphasizedSinkDescription = "Route output from this addon through the BigWigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
 L.emphasizedCountdownSinkDescription = "Route output from this addon through the BigWigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
---L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 
 L.bwEmphasized = "BigWigs Emphasized"
 L.messages = "Messages"
 L.normalMessages = "Normal messages"
 L.emphasizedMessages = "Emphasized messages"
 L.output = "Output"
+L.uppercase = "UPPERCASE"
+L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
 L.useIcons = "Use icons"
 L.useIconsDesc = "Show icons next to messages."
