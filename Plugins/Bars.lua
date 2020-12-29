@@ -484,6 +484,7 @@ plugin.defaultDB = {
 	fontName = plugin:GetDefaultFont(),
 	fontSize = 10,
 	fontSizeEmph = 13,
+	fontSizeNameplate = 7,
 	texture = "BantoBar",
 	font = nil,
 	monochrome = false,
@@ -689,7 +690,7 @@ do
 								if type(style.fontSizeEmphasized) == "number" and style.fontSizeEmphasized > 0 and style.fontSizeEmphasized < 201 then
 									db.fontSizeEmph = style.fontSizeEmphasized
 								else
-									db.fontSizeEmph = plugin.defaultDB.fontSize
+									db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
 								end
 								if type(style.fontOutline) == "string" and (style.fontOutline == "NONE" or style.fontOutline == "OUTLINE" or style.fontOutline == "THICKOUTLINE") then
 									db.outline = style.fontOutline
@@ -1201,6 +1202,15 @@ do
 						order = 5,
 						width = 1.6,
 					},
+					fontSizeNameplate = {
+						type = "range",
+						name = L.fontSize,
+						order = 6,
+						max = 200, softMax = 72,
+						min = 1,
+						step = 1,
+						width = 1.6,
+					},
 				},
 			},
 			clicking = {
@@ -1427,30 +1437,40 @@ local defaultPositions = {
 
 local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
 local function onDragHandleMouseUp(self) self:GetParent():StopMovingOrSizing() end
-local function onResize(self, width, height)
-	db[self.w] = width
-	db[self.h] = height
-	if self == normalAnchor and not db.emphasizeMove then
-		-- Move is disabled and we are configuring the normal anchor. Make sure to update the emphasized bars also.
-		db[emphasizeAnchor.w] = width * db.emphasizeMultiplier
-		db[emphasizeAnchor.h] = height * db.emphasizeMultiplier
-	end
-	for k in next, self.bars do
-		currentBarStyler.BarStopped(k)
-		if db.emphasizeMove then
-			k:SetSize(width, height) -- Move enabled, set the size no matter which anchor we are configuring
-		elseif self == normalAnchor then
-			-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
-			if k:Get("bigwigs:emphasized") then
-				k:SetSize(db[emphasizeAnchor.w], db[emphasizeAnchor.h])
-			else
-				k:SetSize(width, height)
-			end
+local onResize
+do
+	local throttle = false
+	function onResize(self, width, height)
+		db[self.w] = width
+		db[self.h] = height
+		if self == normalAnchor and not db.emphasizeMove then
+			-- Move is disabled and we are configuring the normal anchor. Make sure to update the emphasized bars also.
+			db[emphasizeAnchor.w] = width * db.emphasizeMultiplier
+			db[emphasizeAnchor.h] = height * db.emphasizeMultiplier
 		end
-		currentBarStyler.ApplyStyle(k)
-		rearrangeBars(self)
+		if not throttle then
+			throttle = true
+			plugin:ScheduleTimer(function()
+				for k in next, self.bars do
+					currentBarStyler.BarStopped(k)
+					if db.emphasizeMove then
+						k:SetSize(db[self.w], db[self.h]) -- Move enabled, set the size no matter which anchor we are configuring
+					elseif self == normalAnchor then
+						-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
+						if k:Get("bigwigs:emphasized") then
+							k:SetSize(db[emphasizeAnchor.w], db[emphasizeAnchor.h])
+						else
+							k:SetSize(db[self.w], db[self.h])
+						end
+					end
+					currentBarStyler.ApplyStyle(k)
+					rearrangeBars(self)
+				end
+				plugin:UpdateGUI() -- Update width/height if GUI is open
+				throttle = false
+			end, 0.1)
+		end
 	end
-	plugin:UpdateGUI() -- Update width/height if GUI is open
 end
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
@@ -1979,8 +1999,13 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 		flags = db.outline
 	end
 	local f = media:Fetch(FONT, db.fontName)
-	bar.candyBarLabel:SetFont(f, db.fontSize, flags)
-	bar.candyBarDuration:SetFont(f, db.fontSize, flags)
+	if unitGUID then
+		bar.candyBarLabel:SetFont(f, db.fontSizeNameplate, flags)
+		bar.candyBarDuration:SetFont(f, db.fontSizeNameplate, flags)
+	else
+		bar.candyBarLabel:SetFont(f, db.fontSize, flags)
+		bar.candyBarDuration:SetFont(f, db.fontSize, flags)
+	end
 
 	bar:SetTimeVisibility(db.time)
 	bar:SetLabelVisibility(db.text)
@@ -2083,9 +2108,8 @@ do
 		for guid, bars in next, nameplateBars do
 			for _, barInfo in next, bars do
 				local bar = barInfo.bar
-				if bar and bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") then
+				if bar and bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") and not bar:Get("bigwigs:unitGUID") then
 					plugin:EmphasizeBar(bar)
-					rearrangeNameplateBars(bar:Get("bigwigs:unitGUID"))
 					plugin:SendMessage("BigWigs_BarEmphasized", plugin, bar)
 				end
 			end
@@ -2101,8 +2125,7 @@ do
 end
 
 function plugin:EmphasizeBar(bar, start)
-	local unitGUID = bar:Get("bigwigs:unitGUID")
-	if db.emphasizeMove and not unitGUID then
+	if db.emphasizeMove then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
@@ -2110,9 +2133,6 @@ function plugin:EmphasizeBar(bar, start)
 	currentBarStyler.BarStopped(bar)
 	if not start and db.emphasizeRestart then
 		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
-		if unitGUID then
-			nameplateBars[unitGUID][bar:GetLabel()].time = bar.remaining
-		end
 	end
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
@@ -2130,13 +2150,8 @@ function plugin:EmphasizeBar(bar, start)
 	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
-	if unitGUID then
-		bar:SetWidth(bar:GetWidth() * db.emphasizeMultiplier)
-		bar:SetHeight(bar:GetHeight() * db.emphasizeMultiplier)
-	else
-		bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
-		bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
-	end
+	bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
+	bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
 	currentBarStyler.ApplyStyle(bar)
 	bar:Set("bigwigs:emphasized", true)
 end
