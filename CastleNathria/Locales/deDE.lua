@@ -23,8 +23,6 @@ if L then
 	L.level = "%s (Stufe |cffffff00%d|r)"
 	L.full = "%s (|cffff0000VOLL|r)"
 
-	L.container_active = "Behälter aktivieren: %s"
-
 	L.anima_adds = "Konzentrierte Anima Adds"
 	L.anima_adds_desc = "Zeigt einen Timer für die erscheinenden Adds vom Debuff Konzentrierte Anima."
 
@@ -74,10 +72,10 @@ L = BigWigs:NewBossLocale("Sludgefist", "deDE")
 if L then
 	L.stomp_shift = "Stampfen & Verschiebung" -- Destructive Stomp + Seismic Shift
 
-	-- L.fun_info = "Damage Info"
-	-- L.fun_info_desc = "Display a message displaying how much health the boss lost during Destructive Impact."
+	L.fun_info = "Schadensinfo"
+	L.fun_info_desc = "Zeigt eine Nachricht mit der verlorenen Gesundheit des Bosses während dem Zerstörerischen Einschlag."
 
-	-- L.health_lost = "Sludgefist went down %.1f%%!"
+	L.health_lost = "Schlickfaust hat %.1f%% verloren!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "deDE")
