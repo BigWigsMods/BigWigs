@@ -27,6 +27,9 @@ local timers = {
 	[341193] = {13.0, 70.9, 70.5, 70.5, 70.5} -- Falling Rubble
 }
 
+local healthLost = 0
+local maxHealth = 0
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -34,6 +37,11 @@ local timers = {
 local L = mod:GetLocale()
 if L then
 	L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+
+	L.fun_info = "Damage Info"
+	L.fun_info_desc = "Display a message displaying how much health the boss lost during Destructive Impact."
+
+	L.health_lost = "Sludgefist went down %.1f%%!"
 end
 
 --------------------------------------------------------------------------------
@@ -44,6 +52,7 @@ function mod:GetOptions()
 	return {
 		{331209, "SAY" ,"SAY_COUNTDOWN"}, -- Hateful Gaze
 		331314, -- Destructive Impact
+		"fun_info",
 		335293, -- Chain Link
 		332318, -- Destructive Stomp
 		341193, -- Falling Rubble
@@ -154,6 +163,12 @@ function mod:DestructiveImpactApplied(args)
 	if self:Mythic() then
 		self:Bar(341102, 3.5, CL.casting:format(self:SpellName(341102)), 341102) -- Fractured Boulder
 	end
+	local unit = self:GetUnitIdByGUID(args.destGUID)
+	if unit then
+		maxHealth = UnitHealthMax(unit)
+		healthLost = UnitHealth(unit)
+		local currentHealth = (healthLost/maxHealth) * 100
+	end
 end
 
 function mod:DestructiveImpactRemoved(args)
@@ -163,6 +178,7 @@ function mod:DestructiveImpactRemoved(args)
 	else
 		self:CDBar(331314, 58.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
 	end
+
 	-- Update timers to be more exact
 	if self:Mythic() then
 		--self:Bar(340817, 5.5, CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Shift & Stomp
@@ -170,6 +186,14 @@ function mod:DestructiveImpactRemoved(args)
 		self:Bar(332318, 18.5, CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	end
 	self:Bar(335470, 29, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+
+	local unit = self:GetUnitIdByGUID(args.destGUID)
+	if unit and healthLost ~= 0 then
+		healthLost = healthLost - UnitHealth(unit)
+		local percentHealthLost = (healthLost/maxHealth) * 100
+		self:Message("fun_info", "green", L.health_lost:format(percentHealthLost), "petbattle_health-down")
+		healthLost = 0
+	end
 end
 
 do

@@ -67,15 +67,13 @@ L.modifierDesc = "Presiona la tecla modificadora seleccionada para activar accio
 L.modifierKey = "Solo con una tecla modificadora"
 L.modifierKeyDesc = "Permite hacer clic en las barras a menos que se mantenga pulsada la tecla modificadora especificada, en cuyo caso las acciones del ratón que se describen a continuación estarán disponibles."
 
---L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
+--L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "Reportar"
 L.reportDesc = "Informa del estado actual de las barras al grupo de chat activo; ya sea en el chat de la estancia, en la banda, en el grupo o decir, según corresponda."
 L.remove = "Quitar"
-L.removeDesc = "Quita temporalmente la barra y todos los mensajes asociados."
+--L.removeBarDesc = "Temporarily removes this bar."
 L.removeOther = "Quitar otros"
-L.removeOtherDesc = "Quita temporalmente todas las demás barras (excepto ésta) y los mensajes asociados."
-L.disable = "Deshabilitar"
-L.disableDesc = "Deshabilita permanentemente la opción de la habilidad de encuentro con el jefe que dio origen a esta barra."
+--L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 
 L.emphasizeAt = "Enfatiza en... (segundos)"
 L.growingUpwards = "Crece hacia arriba"

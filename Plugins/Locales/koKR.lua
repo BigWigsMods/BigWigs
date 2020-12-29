@@ -67,15 +67,13 @@ L.modifierDesc = "타이머 바위에 클릭 동작을 활성화하려면 선택
 L.modifierKey = "조합 키와 같이 사용할때만"
 L.modifierKeyDesc = "지정된 조합 키가 눌려있지 않다면 바가 클릭을 무시하도록 허용합니다, 아래 설명된 마우스 동작이 사용 가능해집니다."
 
---L.temporaryCountdown = "Temporarily enable countdown on the ability associated with this bar."
+--L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "보고"
 L.reportDesc = "현재 바 상태를 활성화된 그룹 대화에 보고합니다; 인스턴스 대화, 공격대, 파티 또는 일반 대화 중 적절한 채널을 사용합니다."
 L.remove = "제거"
-L.removeDesc = "일시적으로 바와 모든 관련 메시지를 제거합니다."
+--L.removeBarDesc = "Temporarily removes this bar."
 L.removeOther = "다른 바 제거"
-L.removeOtherDesc = "일시적으로 모든 다른 바와 (이 바를 제외하고) 관련 메시지를 제거합니다."
-L.disable = "비활성화"
-L.disableDesc = "이 바를 생성하는 우두머리 전투 능력 옵션을 영구적으로 비활성합니다."
+--L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 
 L.emphasizeAt = "다음에 강조... (초)"
 L.growingUpwards = "위로 확장"

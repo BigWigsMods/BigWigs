@@ -181,7 +181,7 @@ do
 			heading = {
 				type = "description",
 				name = L.countdownDesc.. "\n\n",
-				order = 0.5,
+				order = 1,
 				width = "full",
 				fontSize = "medium",
 			},
@@ -189,7 +189,7 @@ do
 				name = L.countdownAt,
 				desc = L.countdownAt_desc,
 				type = "range", min = 3, max = 10, step = 1,
-				order = 0.8,
+				order = 2,
 				width = 2,
 			},
 			countdownTest = {
@@ -197,50 +197,50 @@ do
 				type = "execute",
 				handler = plugin,
 				func = "TestCountdown",
-				order = 1,
+				order = 3,
 			},
 			audioSpacer = {
 				type = "description",
 				name = "\n\n",
-				order = 1.1,
+				order = 4,
 				width = "full",
 				fontSize = "medium",
 			},
 			audioHeader = {
 				type = "header",
 				name = L.countdownAudioHeader,
-				order = 1.5,
+				order = 5,
 			},
 			voice = {
 				name = L.countdownVoice,
 				type = "select",
 				values = voiceList,
-				order = 1.6,
+				order = 6,
 				width = "full",
 			},
 			textSpacer = {
 				type = "description",
 				name = "\n\n",
-				order = 1.8,
+				order = 7,
 				width = "full",
 				fontSize = "medium",
 			},
 			textHeader = {
 				type = "header",
 				name = L.countdownTextHeader,
-				order = 1.9,
+				order = 8,
 			},
 			textEnabled = {
 				type = "toggle",
 				name = L.textCountdown,
 				desc = L.textCountdownDesc,
-				order = 2,
+				order = 9,
 				width = "full",
 			},
 			fontName = {
 				type = "select",
 				name = L.font,
-				order = 2.1,
+				order = 10,
 				values = media:List(FONT),
 				itemControl = "DDI-Font",
 				get = function()
@@ -257,7 +257,7 @@ do
 			outline = {
 				type = "select",
 				name = L.outline,
-				order = 2.2,
+				order = 11,
 				values = {
 					NONE = L.none,
 					OUTLINE = L.thin,
@@ -273,24 +273,24 @@ do
 				set = function(info, r, g, b)
 					plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b = r, g, b
 				end,
-				order = 3,
+				order = 12,
 			},
 			fontSize = {
 				type = "range",
 				name = L.fontSize,
-				order = 6,
+				order = 13,
 				softMax = 100, max = 200, min = 1, step = 1,
 			},
 			monochrome = {
 				type = "toggle",
 				name = L.monochrome,
 				desc = L.monochromeDesc,
-				order = 7,
+				order = 14,
 			},
 			resetHeader = {
 				type = "header",
 				name = "",
-				order = 8,
+				order = 15,
 			},
 			reset = {
 				type = "execute",
@@ -301,14 +301,14 @@ do
 					plugin.db:ResetProfile()
 					plugin.db.profile.bossCountdowns = restoreCountdowns
 				end,
-				order = 9,
+				order = 16,
 			},
 			resetAll = {
 				type = "execute",
 				name = L.resetAll,
 				desc = L.resetAllCountdownDesc,
 				func = function() plugin.db:ResetProfile() end,
-				order = 11,
+				order = 17,
 			},
 		},
 	}
@@ -363,18 +363,16 @@ local function updateProfile()
 			end
 		end
 	end
+	-- XXX temp 9.0.2
+	if next(oldPlugin.db.profile.Countdown) then
+		plugin.db.profile.bossCountdowns = oldPlugin.db.profile.Countdown
+	end
+	oldPlugin.db:ResetProfile(nil, true) -- no callbacks
 end
 
 -------------------------------------------------------------------------------
 -- Initialization
 --
-
-function plugin:OnRegister() -- XXX temp 9.0.2
-	if next(oldPlugin.db.profile.Countdown) then
-		plugin.db.profile.bossCountdowns = oldPlugin.db.profile.Countdown
-	end
-	oldPlugin.db:ResetProfile()
-end
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartCountdown")

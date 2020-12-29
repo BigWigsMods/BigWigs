@@ -923,11 +923,11 @@ do
 
 	local L = GetLocale()
 	local locales = {
-		--ruRU = "Russian (ruRU)",
+		ruRU = "Russian (ruRU)",
 		itIT = "Italian (itIT)",
-		--koKR = "Korean (koKR)",
+		koKR = "Korean (koKR)",
 		esES = "Spanish (esES)",
-		esMX = "Spanish (esMX)",
+		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
 		ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
@@ -936,16 +936,19 @@ do
 		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
 	end
 
-	CTimerAfter(11, function()
-		--local _, _, _, _, month, _, year = GetAchievementInfo(10043) -- Mythic Archimonde
-		--if year == 15 and month < 10 then
-		--	sysprint("We're looking for an end-game raider to join our GitHub developer team: goo.gl/aajTfo")
-		--end
-		for _, msg in next, delayedMessages do
-			sysprint(msg)
+	if #delayedMessages > 0 then
+		function mod:LOADING_SCREEN_DISABLED()
+			bwFrame:UnregisterEvent("LOADING_SCREEN_DISABLED")
+			CTimerAfter(15, function()
+				for i = 1, #delayedMessages do
+					sysprint(delayedMessages[i])
+				end
+				delayedMessages = nil
+			end)
+			self.LOADING_SCREEN_DISABLED = nil
 		end
-		delayedMessages = nil
-	end)
+		bwFrame:RegisterEvent("LOADING_SCREEN_DISABLED")
+	end
 end
 
 -----------------------------------------------------------------------
