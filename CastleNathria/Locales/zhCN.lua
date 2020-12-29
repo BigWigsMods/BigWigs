@@ -74,10 +74,10 @@ L = BigWigs:NewBossLocale("Sludgefist", "zhCN")
 if L then
 	L.stomp_shift = "踩踏和位移" -- Destructive Stomp + Seismic Shift
 
-	-- L.fun_info = "Damage Info"
-	-- L.fun_info_desc = "Display a message displaying how much health the boss lost during Destructive Impact."
+	L.fun_info = "伤害信息"
+	L.fun_info_desc = "显示一个毁灭冲击期间损失了多少血量的信息。"
 
-	-- L.health_lost = "Sludgefist went down %.1f%%!"
+	L.health_lost = "泥拳倒下 %.1f%%！"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "zhCN")
