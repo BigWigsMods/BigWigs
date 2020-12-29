@@ -48,7 +48,7 @@ if L then
 	L.custom_on_repeating_dark_recital = "Répéter Sombre Recital"
 	L.custom_on_repeating_dark_recital_desc = "Répéter Sombre Recital en /dire avec les icônes {rt1}, {rt2} pendant la danse."
 
-	L.custom_off_select_boss_order = "Mark Boss Kill Order"
+	L.custom_off_select_boss_order = "Marquage Ordre de kill des boss"
 	L.custom_off_select_boss_order_desc = "Marque dans quel ordre le raid tuera les boss avec la croix {rt7}. Nécessite d'être assistant ou chef de raid."
 	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
 	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
@@ -74,7 +74,7 @@ L = BigWigs:NewBossLocale("Sludgefist", "frFR")
 if L then
 	L.stomp_shift = "Piétinement & Transfert" -- Destructive Stomp + Seismic Shift
 
-	-- L.fun_info = "Damage Info"
+	L.fun_info = "Info des dégâts"
 	L.fun_info_desc = "Affiche un message indiquant combien de vie le boss a perdu durant Impact destructeur."
 
 	L.health_lost = "Fangepoing a perdu %.1f%% !"
