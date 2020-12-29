@@ -71,9 +71,9 @@ L.temporaryCountdownDesc = "Vorübergehend Countdown für die mit dieser Leiste 
 L.report = "Ausgeben"
 L.reportDesc = "Gibt den aktuellen Leistenstatus im Instanz-, Schlachtzugs-, Gruppen- oder Sagen-Chat aus."
 L.remove = "Entfernen"
---L.removeBarDesc = "Temporarily removes this bar."
+L.removeBarDesc = "Entfernt diese Leiste vorübergehend."
 L.removeOther = "Andere entfernen"
---L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
+L.removeOtherBarDesc = "Entfernt vorübergehend alle andere Leisten (außer dieser)."
 
 L.emphasizeAt = "Hervorheben bei... (Sekunden)"
 L.growingUpwards = "Nach oben erweitern"
