@@ -168,7 +168,6 @@ function mod:DestructiveImpactApplied(args)
 		maxHealth = UnitHealthMax(unit)
 		healthLost = UnitHealth(unit)
 		local currentHealth = (healthLost/maxHealth) * 100
-		elogl(currentHealth)
 	end
 end
 
