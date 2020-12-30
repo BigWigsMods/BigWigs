@@ -50,6 +50,8 @@ plugin.displayName = L.countdown
 local PlaySoundFile = PlaySoundFile
 
 local temporaryCountdowns = {}
+local emphasizeCountdownAnchor = nil
+local emphasizedCountdownText = nil
 
 -------------------------------------------------------------------------------
 -- Countdown Registration
@@ -163,12 +165,86 @@ BigWigsAPI:RegisterCountdown("繁體中文: Heroes of the Storm", {
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\5.ogg",
 })
 
+--------------------------------------------------------------------------------
+-- Anchors & Frames
+--
+
+local function showAnchors()
+	emphasizeCountdownAnchor:Show()
+	emphasizedCountdownText:GetParent():Show()
+	emphasizedCountdownText:SetText("5")
+end
+
+local function hideAnchors()
+	emphasizeCountdownAnchor:Hide()
+	emphasizedCountdownText:GetParent():Hide()
+end
+
+do
+	local function OnDragStart(self)
+		self:StartMoving()
+	end
+	local function OnDragStop(self)
+		self:StopMovingOrSizing()
+		--local s = self:GetEffectiveScale()
+		--db[self.x] = self:GetLeft() * s
+		--db[self.y] = self:GetTop() * s
+	end
+	local function RefixPosition(self)
+		self:ClearAllPoints()
+		--if db[self.x] and db[self.y] then
+		--	local s = self:GetEffectiveScale()
+		--	self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
+		--else
+			self:SetPoint("TOP", "RaidWarningFrame", "BOTTOM", 0, -150)
+		--end
+	end
+
+	emphasizeCountdownAnchor = CreateFrame("Frame", "BWEmphasizeCountdownMessageAnchor", UIParent)
+	emphasizeCountdownAnchor:EnableMouse(true)
+	emphasizeCountdownAnchor:SetClampedToScreen(true)
+	emphasizeCountdownAnchor:SetMovable(true)
+	emphasizeCountdownAnchor:RegisterForDrag("LeftButton")
+	emphasizeCountdownAnchor:SetWidth(50)
+	emphasizeCountdownAnchor:SetHeight(50)
+	local bg = emphasizeCountdownAnchor:CreateTexture(nil, "BACKGROUND")
+	bg:SetAllPoints(emphasizeCountdownAnchor)
+	bg:SetColorTexture(0, 0, 0, 0.3)
+	emphasizeCountdownAnchor.background = bg
+	local header = emphasizeCountdownAnchor:CreateFontString()
+	header:SetFont(plugin:GetDefaultFont(12))
+	header:SetShadowOffset(1, -1)
+	header:SetTextColor(1,0.82,0,1)
+	header:SetText(L.textCountdown)
+	header:SetPoint("BOTTOM", emphasizeCountdownAnchor, "TOP", 0, 5)
+	header:SetJustifyV("TOP")
+	header:SetJustifyH("CENTER")
+	emphasizeCountdownAnchor:SetScript("OnDragStart", OnDragStart)
+	emphasizeCountdownAnchor:SetScript("OnDragStop", OnDragStop)
+	emphasizeCountdownAnchor.RefixPosition = RefixPosition
+	emphasizeCountdownAnchor:SetPoint("TOP", "RaidWarningFrame", "BOTTOM", 0, -150)
+	emphasizeCountdownAnchor:Hide()
+end
+
 -------------------------------------------------------------------------------
 -- Options
 --
 
 local function voiceList() -- select values
 	return BigWigsAPI:GetCountdownList()
+end
+
+local function UpdateFont()
+	local flags = nil
+	if plugin.db.profile.monochrome and plugin.db.profile.outline ~= "NONE" then
+		flags = "MONOCHROME," .. plugin.db.profile.outline
+	elseif plugin.db.profile.monochrome then
+		flags = "MONOCHROME"
+	elseif plugin.db.profile.outline ~= "NONE" then
+		flags = plugin.db.profile.outline
+	end
+	emphasizedCountdownText:SetFont(media:Fetch(FONT, plugin.db.profile.fontName), plugin.db.profile.fontSize, flags)
+	emphasizedCountdownText:SetTextColor(plugin.db.profile.fontColor.r, plugin.db.profile.fontColor.g, plugin.db.profile.fontColor.b)
 end
 
 do
@@ -179,6 +255,7 @@ do
 		get = function(info) return plugin.db.profile[info[#info]] end,
 		set = function(info, value)
 			plugin.db.profile[info[#info]] = value
+			UpdateFont()
 		end,
 		args = {
 			heading = {
@@ -254,6 +331,7 @@ do
 				set = function(_, value)
 					local list = media:List(FONT)
 					plugin.db.profile.fontName = list[value]
+					UpdateFont()
 				end,
 				width = 2,
 			},
@@ -271,10 +349,11 @@ do
 				type = "color",
 				name = L.countdownColor,
 				get = function(info)
-					return plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b
+					return plugin.db.profile.fontColor.r, plugin.db.profile.fontColor.g, plugin.db.profile.fontColor.b
 				end,
 				set = function(info, r, g, b)
-					plugin.db.profile[info[#info]].r, plugin.db.profile[info[#info]].g, plugin.db.profile[info[#info]].b = r, g, b
+					plugin.db.profile.fontColor.r, plugin.db.profile.fontColor.g, plugin.db.profile.fontColor.b = r, g, b
+					UpdateFont()
 				end,
 				order = 12,
 			},
@@ -355,6 +434,8 @@ local function createOptions()
 end
 
 local function updateProfile()
+	UpdateFont()
+
 	-- Reset invalid voice selections
 	if not BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
 		plugin.db.profile.voice = voiceMap[GetLocale()] or "English: Amy"
@@ -383,6 +464,9 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_TemporaryCountdown")
 	self:RegisterMessage("BigWigs_PlayCountdownNumber")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+	self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
+	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
+	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 	updateProfile()
 	createOptions()
 end
@@ -390,6 +474,33 @@ end
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local frame = CreateFrame("Frame", "BWEmphasizeCountdownMessageFrame", UIParent)
+	frame:SetFrameStrata("HIGH")
+	frame:SetPoint("CENTER", emphasizeCountdownAnchor, "CENTER")
+	frame:SetWidth(80)
+	frame:SetHeight(80)
+	frame:Hide()
+
+	emphasizedCountdownText = frame:CreateFontString(nil, "OVERLAY")
+	emphasizedCountdownText:SetPoint("CENTER")
+
+	local updater = frame:CreateAnimationGroup()
+	updater:SetScript("OnFinished", function() frame:Hide() end)
+	local anim = updater:CreateAnimation("Alpha")
+	anim:SetFromAlpha(1)
+	anim:SetToAlpha(0)
+	anim:SetDuration(3.5)
+	anim:SetStartDelay(1.5)
+
+	function plugin:BigWigs_EmphasizedCountdownMessage(event, text)
+		emphasizedCountdownText:SetText(text)
+		updater:Stop()
+		frame:Show()
+		updater:Play()
+	end
+end
 
 do
 	local timers = {}
