@@ -50,8 +50,10 @@ plugin.displayName = L.countdown
 local PlaySoundFile = PlaySoundFile
 
 local temporaryCountdowns = {}
-local emphasizeCountdownAnchor = nil
-local emphasizedCountdownText = nil
+local countdownAnchor = nil
+local countdownFrame = nil
+local countdownText = nil
+local inConfigMode = false
 
 -------------------------------------------------------------------------------
 -- Countdown Registration
@@ -170,14 +172,16 @@ BigWigsAPI:RegisterCountdown("繁體中文: Heroes of the Storm", {
 --
 
 local function showAnchors()
-	emphasizeCountdownAnchor:Show()
-	emphasizedCountdownText:GetParent():Show()
-	emphasizedCountdownText:SetText("5")
+	inConfigMode = true
+	countdownAnchor:Show()
+	countdownFrame:Show()
+	countdownText:SetText("5")
 end
 
 local function hideAnchors()
-	emphasizeCountdownAnchor:Hide()
-	emphasizedCountdownText:GetParent():Hide()
+	inConfigMode = false
+	countdownAnchor:Hide()
+	countdownFrame:Hide()
 end
 
 do
@@ -200,30 +204,33 @@ do
 		--end
 	end
 
-	emphasizeCountdownAnchor = CreateFrame("Frame", "BWEmphasizeCountdownMessageAnchor", UIParent)
-	emphasizeCountdownAnchor:EnableMouse(true)
-	emphasizeCountdownAnchor:SetClampedToScreen(true)
-	emphasizeCountdownAnchor:SetMovable(true)
-	emphasizeCountdownAnchor:RegisterForDrag("LeftButton")
-	emphasizeCountdownAnchor:SetWidth(50)
-	emphasizeCountdownAnchor:SetHeight(50)
-	local bg = emphasizeCountdownAnchor:CreateTexture(nil, "BACKGROUND")
-	bg:SetAllPoints(emphasizeCountdownAnchor)
+	countdownAnchor = CreateFrame("Frame", nil, UIParent)
+	countdownAnchor:EnableMouse(true)
+	countdownAnchor:SetClampedToScreen(true)
+	countdownAnchor:SetMovable(true)
+	countdownAnchor:RegisterForDrag("LeftButton")
+	countdownAnchor:SetWidth(80)
+	countdownAnchor:SetHeight(80)
+	countdownAnchor:SetFrameStrata("HIGH")
+	countdownAnchor:SetFixedFrameStrata(true)
+	countdownAnchor:SetFrameLevel(5)
+	countdownAnchor:SetFixedFrameLevel(true)
+	countdownAnchor:SetScript("OnDragStart", OnDragStart)
+	countdownAnchor:SetScript("OnDragStop", OnDragStop)
+	countdownAnchor.RefixPosition = RefixPosition
+	countdownAnchor:SetPoint("TOP", "RaidWarningFrame", "BOTTOM", 0, -150)
+	countdownAnchor:Hide()
+	local bg = countdownAnchor:CreateTexture()
+	bg:SetAllPoints(countdownAnchor)
 	bg:SetColorTexture(0, 0, 0, 0.3)
-	emphasizeCountdownAnchor.background = bg
-	local header = emphasizeCountdownAnchor:CreateFontString()
+	local header = countdownAnchor:CreateFontString()
 	header:SetFont(plugin:GetDefaultFont(12))
 	header:SetShadowOffset(1, -1)
 	header:SetTextColor(1,0.82,0,1)
 	header:SetText(L.textCountdown)
-	header:SetPoint("BOTTOM", emphasizeCountdownAnchor, "TOP", 0, 5)
-	header:SetJustifyV("TOP")
+	header:SetPoint("BOTTOM", countdownAnchor, "TOP", 0, 5)
+	header:SetJustifyV("MIDDLE")
 	header:SetJustifyH("CENTER")
-	emphasizeCountdownAnchor:SetScript("OnDragStart", OnDragStart)
-	emphasizeCountdownAnchor:SetScript("OnDragStop", OnDragStop)
-	emphasizeCountdownAnchor.RefixPosition = RefixPosition
-	emphasizeCountdownAnchor:SetPoint("TOP", "RaidWarningFrame", "BOTTOM", 0, -150)
-	emphasizeCountdownAnchor:Hide()
 end
 
 -------------------------------------------------------------------------------
@@ -243,8 +250,8 @@ local function UpdateFont()
 	elseif plugin.db.profile.outline ~= "NONE" then
 		flags = plugin.db.profile.outline
 	end
-	emphasizedCountdownText:SetFont(media:Fetch(FONT, plugin.db.profile.fontName), plugin.db.profile.fontSize, flags)
-	emphasizedCountdownText:SetTextColor(plugin.db.profile.fontColor.r, plugin.db.profile.fontColor.g, plugin.db.profile.fontColor.b)
+	countdownText:SetFont(media:Fetch(FONT, plugin.db.profile.fontName), plugin.db.profile.fontSize, flags)
+	countdownText:SetTextColor(plugin.db.profile.fontColor.r, plugin.db.profile.fontColor.g, plugin.db.profile.fontColor.b)
 end
 
 do
@@ -476,28 +483,37 @@ end
 --
 
 do
-	local frame = CreateFrame("Frame", "BWEmphasizeCountdownMessageFrame", UIParent)
-	frame:SetFrameStrata("HIGH")
-	frame:SetPoint("CENTER", emphasizeCountdownAnchor, "CENTER")
-	frame:SetWidth(80)
-	frame:SetHeight(80)
-	frame:Hide()
+	local countdownFrame = CreateFrame("Frame", nil, UIParent)
+	countdownFrame:SetFrameStrata("TOOLTIP")
+	countdownFrame:SetFixedFrameStrata(true)
+	countdownFrame:SetFrameLevel(0) -- Behind game tooltip (level 1)
+	countdownFrame:SetFixedFrameLevel(true)
+	countdownFrame:SetPoint("CENTER", countdownAnchor, "CENTER")
+	countdownFrame:SetWidth(80)
+	countdownFrame:SetHeight(80)
+	countdownFrame:Hide()
 
-	emphasizedCountdownText = frame:CreateFontString(nil, "OVERLAY")
-	emphasizedCountdownText:SetPoint("CENTER")
+	countdownText = countdownFrame:CreateFontString()
+	countdownText:SetPoint("CENTER", countdownFrame, "CENTER")
 
-	local updater = frame:CreateAnimationGroup()
-	updater:SetScript("OnFinished", function() frame:Hide() end)
+	local updater = countdownFrame:CreateAnimationGroup()
+	updater:SetScript("OnFinished", function()
+		if inConfigMode then
+			countdownText:SetText("5")
+		else
+			countdownFrame:Hide()
+		end
+	end)
 	local anim = updater:CreateAnimation("Alpha")
 	anim:SetFromAlpha(1)
 	anim:SetToAlpha(0)
-	anim:SetDuration(3.5)
+	anim:SetDuration(3)
 	anim:SetStartDelay(1.5)
 
 	function plugin:BigWigs_EmphasizedCountdownMessage(event, text)
-		emphasizedCountdownText:SetText(text)
+		countdownText:SetText(text)
 		updater:Stop()
-		frame:Show()
+		countdownFrame:Show()
 		updater:Play()
 	end
 end
