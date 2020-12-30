@@ -1901,7 +1901,7 @@ end
 -- Enable countdown on the clicked bar
 clickHandlers.countdown = function(bar)
 	-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
-	plugin:SendMessage("BigWigs_TemporaryCountdown", bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar:GetLabel(), bar.remaining)
+	plugin:SendMessage("BigWigs_StartCountdown", bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), "temp".. bar:GetLabel(), bar.remaining)
 end
 
 -- Report the bar status to the active group type (raid, party, solo)

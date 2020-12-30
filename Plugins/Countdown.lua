@@ -49,7 +49,6 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.countdown
 local PlaySoundFile = PlaySoundFile
 
-local temporaryCountdowns = {}
 local countdownAnchor = nil
 local countdownFrame = nil
 local countdownText = nil
@@ -468,10 +467,7 @@ end
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartCountdown")
 	self:RegisterMessage("BigWigs_StopCountdown")
-	self:RegisterMessage("BigWigs_TemporaryCountdown")
-	self:RegisterMessage("BigWigs_PlayCountdownNumber")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	self:RegisterMessage("BigWigs_EmphasizedCountdownMessage")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
 	updateProfile()
@@ -482,6 +478,7 @@ end
 -- Event Handlers
 --
 
+local latestCountdown = nil
 do
 	countdownFrame = CreateFrame("Frame", nil, UIParent)
 	countdownFrame:SetFrameStrata("FULLSCREEN_DIALOG")
@@ -510,7 +507,8 @@ do
 	anim:SetDuration(3)
 	anim:SetStartDelay(1.5)
 
-	function plugin:BigWigs_EmphasizedCountdownMessage(event, text)
+	function plugin:SetText(text, timer)
+		latestCountdown = timer
 		countdownText:SetText(text)
 		updater:Stop()
 		countdownFrame:Show()
@@ -520,59 +518,40 @@ end
 
 do
 	local timers = {}
-	local function printEmph(num, name, key, text)
-		local voice = plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] or plugin.db.profile.voice
-		local sound = BigWigsAPI:GetCountdownSound(voice, num)
-		if sound then
-			PlaySoundFile(sound, "Master")
-		end
-		if plugin.db.profile.textEnabled then
-			plugin:SendMessage("BigWigs_EmphasizedCountdownMessage", num)
-		end
-		if text and timers[text] then timers[text] = {} end
-	end
-	function plugin:BigWigs_StartCountdown(_, module, key, text, time)
-		if (key and temporaryCountdowns[key]) or (module and module:CheckOption(key, "COUNTDOWN")) then
-			self:BigWigs_StopCountdown(nil, module, text)
-			if time > 1.3 then
-				if not timers[text] then timers[text] = {} end
-				timers[text][1] = module:ScheduleTimer(printEmph, time-1.3, 1, module.name, key, text)
-				for i = 2, self.db.profile.countdownTime do
-					local t = i + 0.3
-					if time <= t then break end
-					timers[text][i] = module:ScheduleTimer(printEmph, time-t, i, module.name, key)
-				end
+	function plugin:BigWigs_StartCountdown(_, module, key, text, time, customVoice, audioOnly)
+		if time > 1.3 then
+			self:BigWigs_StopCountdown(nil, nil, text)
+			local cancelTimer = {false}
+			timers[text] = cancelTimer
+
+			local voice = customVoice or module and module.name and plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
+			for i = 1, self.db.profile.countdownTime do
+				local t = i + 0.3
+				if time <= t then break end
+				self:SimpleTimer(function()
+					if not cancelTimer[1] then
+						local sound = BigWigsAPI:GetCountdownSound(voice, i)
+						if sound then
+							PlaySoundFile(sound, "Master")
+						end
+						if not audioOnly and plugin.db.profile.textEnabled then
+							plugin:SetText(i, cancelTimer)
+						end
+					end
+				end, time-t)
 			end
 		end
 	end
-	function plugin:BigWigs_StopCountdown(_, module, text)
-		if text and timers[text] and #timers[text] > 0 then
-			for i = 1, #timers[text] do
-				module:CancelTimer(timers[text][i])
-			end
-			timers[text] = {}
+	function plugin:BigWigs_StopCountdown(_, _, text)
+		if timers[text] then
+			timers[text][1] = true
 		end
-	end
-	function plugin:TestCountdown()
-		local text = "test"
-		self:BigWigs_StopCountdown(nil, self, text)
-		if not timers[text] then timers[text] = {} end
-		local num = self.db.profile.countdownTime
-		for i = 1, num do
-			timers[text][i] = self:ScheduleTimer(printEmph, num-i, i, nil, nil, i == 1 and text)
+		if latestCountdown == timers[text] then
+			self:SetText("") -- Only clear the text if the cancelled countdown was the last to display something
 		end
 	end
 end
 
-function plugin:BigWigs_TemporaryCountdown(_, module, key, text, time)
-	if not module or not key or text == "" then return end
-	temporaryCountdowns[key] = GetTime() + time
-	self:BigWigs_StartCountdown(nil, module, key, text, time)
-end
-
-function plugin:BigWigs_PlayCountdownNumber(_, _, num, voice)
-	local sound = BigWigsAPI:GetCountdownSound(voice or self.db.profile.voice, num)
-	if sound then
-		PlaySoundFile(sound, "Master")
-	end
+function plugin:TestCountdown()
+	self:SendMessage("BigWigs_StartCountdown", self, nil, "test countdown", 5.5)
 end
