@@ -483,10 +483,10 @@ end
 --
 
 do
-	local countdownFrame = CreateFrame("Frame", nil, UIParent)
-	countdownFrame:SetFrameStrata("TOOLTIP")
+	countdownFrame = CreateFrame("Frame", nil, UIParent)
+	countdownFrame:SetFrameStrata("FULLSCREEN_DIALOG")
 	countdownFrame:SetFixedFrameStrata(true)
-	countdownFrame:SetFrameLevel(0) -- Behind game tooltip (level 1)
+	countdownFrame:SetFrameLevel(0) -- Behind GUI (level 1)
 	countdownFrame:SetFixedFrameLevel(true)
 	countdownFrame:SetPoint("CENTER", countdownAnchor, "CENTER")
 	countdownFrame:SetWidth(80)

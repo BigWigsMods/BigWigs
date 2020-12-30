@@ -570,7 +570,7 @@ do
 	local anim = updater:CreateAnimation("Alpha")
 	anim:SetFromAlpha(1)
 	anim:SetToAlpha(0)
-	anim:SetDuration(3.5)
+	anim:SetDuration(3)
 	anim:SetStartDelay(1.5)
 
 	function plugin:EmphasizedPrint(_, text, r, g, b)
