@@ -77,6 +77,7 @@ plugin.pluginOptions = {
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
+			disabled = function() return true end,
 		},
 		underyou = {
 			type = "select",
@@ -86,6 +87,7 @@ plugin.pluginOptions = {
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
+			disabled = function() return true end,
 		},
 		oldSounds = {
 			type = "header",
