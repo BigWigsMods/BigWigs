@@ -7,7 +7,8 @@ local opt = {}
 
 local modules = {}
 local modules_bosses = {}
-local modules_l = nil
+local modules_locale = {}
+
 local module_colors = {}
 local module_sounds = {}
 
@@ -532,6 +533,7 @@ local function parseLua(file)
 
 	-- `modules` is used output the boss modules in the order they were parsed.
 	table.insert(modules, module_name)
+	modules_locale[module_name] = {}
 
 	-- Split the file into a table
 	local lines = {}
@@ -540,7 +542,7 @@ local function parseLua(file)
 	end
 	data = nil
 
-	local locale = {}
+	local locale = modules_locale[module_name]
 	local options, option_keys = {}, {}
 	local methods, registered_methods = {Win=true}, {}
 	local event_callbacks = {}
@@ -559,7 +561,7 @@ local function parseLua(file)
 					locale[locale_key] = true
 				end
 			end
-			local locale_key = line:match("L.([%w_]+)%s*=%s*")
+			local locale_key = line:match("L.([%w_]+)%s*=") or line:match("L%[\"(.+)\"%]%s*=")
 			if locale_key then
 				locale[locale_key] = true
 			end
@@ -881,34 +883,50 @@ local function parseLocale(file)
 	local data = f:read("*all")
 	f:close()
 
+	local current_module
 	local n = 0
 	for line in data:gmatch("(.-)\r?\n") do
 		n = n + 1
 
-		local module_name, module_locale
+		local module_name, locale
 		if file_locale == "esES" then
 			-- El español es muy especial
-			local module_name2, module_locale2
-			module_name, module_locale, module_name2, module_locale2 = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%) or BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+			local module_name2, locale2
+			module_name, locale, module_name2, locale2 = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%) or BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
 			if module_name then
 				-- Make sure both NewBossLocale calls match
 				if module_name ~= module_name2 then
 					error(string.format("    %s:%d: Module name mismatch! %q != %q", file_name, n, module_name, module_name2))
 				end
-				if module_locale2 ~= "esMX" then
-					error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, module_locale2, "esMX"))
+				if locale2 ~= "esMX" then
+					error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, locale2, "esMX"))
 				end
+				current_module = module_name
 			end
 		else
-			module_name, module_locale = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+			module_name, locale = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+			if module_name then
+				current_module = module_name
+			end
 		end
 
+		-- Check :NewBossLocale calls
 		if module_name then
-			if module_locale ~= file_locale then
-				error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, module_locale, file_locale))
+			if locale ~= file_locale then
+				error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, locale, file_locale))
 			end
-			if not contains(modules_l, module_name) then
+			if not modules_locale[module_name] then
 				error(string.format("    %s:%d: Invalid module name %q", file_name, n, module_name))
+			end
+		end
+
+		-- Check locale strings
+		if modules_locale[current_module] then
+			local key = line:match("^%s*L%.([%w_]+)%s*=") or line:match("^%s*L%[\"(.+)\"%]%s*=")
+			if key then
+				if not modules_locale[current_module][key] then
+					error(string.format("    %s:%d: %s: Invalid locale key %q", file_name, n, current_module, key))
+				end
 			end
 		end
 	end
@@ -953,8 +971,6 @@ local function parse(file)
 			dumpValues(path, "Sounds", module_sounds)
 			print(string.format("    Parsed %d modules.", #modules))
 		end
-		-- Still need you for locales if they're processed from a parent xml file (old style)
-		modules_l = modules
 		-- Reset!
 		modules = {}
 		module_colors = {}
@@ -968,12 +984,6 @@ local function parse(file)
 			print(string.format("Checking %s", file))
 			parse(parseXML(file))
 		elseif string.match(file, "locales%.xml$") then
-			-- Parse locale files to check NewBossLocale lines.
-			if #modules ~= 0 then
-				-- The locales are in the same xml file as the module files,
-				-- so data hasn't been dumped and reset yet
-				modules_l = modules
-			end
 			for _, f in next, parseXML(file) do
 				parseLocale(f)
 			end
