@@ -752,6 +752,11 @@ local function parseLua(file)
 				if valid_methods[method] ~= true then
 					bitflag = valid_methods[method]
 				end
+
+				-- Check for wrong API (Message instead of TargetMessage)
+				if method == "Message" and (args[3] == "destName" or args[3] == "args.destName" or args[3] == "name" or args[3] == "args.sourceName" or args[3] == "sourceName") then
+					error(string.format("    %s:%d: Message text is a player name? func=%s, key=%s, text=%s", file_name, n, tostring(current_func), key, args[3]))
+				end
 			end
 
 			-- -- SetOption:key:color:sound:
