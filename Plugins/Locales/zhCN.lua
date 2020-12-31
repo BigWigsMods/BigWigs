@@ -336,6 +336,8 @@ L.infoBox = "信息盒"
 L.resetMessagesDesc = "重置全部信息有关选项，包括信息锚点位置。"
 L.uppercase = "大写"
 L.uppercaseDesc = "全部醒目信息将转换为*大写*。"
+L.chatMessages = "聊天框体信息"
+L.chatMessagesDesc = "除了显示设置，输出所有 BigWigs 信息到默认聊天框体。"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

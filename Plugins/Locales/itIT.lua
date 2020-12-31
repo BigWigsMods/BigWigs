@@ -336,6 +336,8 @@ L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (B
 --L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 L.uppercase = "TUTTO MAIUSCOLO"
 --L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.chatMessages = "Messaggi Riquadro Chat"
+L.chatMessagesDesc = "Invia tutti i messaggi di BigWigs alla chat oltre che nei settaggi di visualizzazione."
 
 -----------------------------------------------------------------------
 -- Proximity.lua

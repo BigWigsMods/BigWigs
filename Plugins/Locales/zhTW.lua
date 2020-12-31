@@ -323,6 +323,8 @@ L.infoBox = "訊息盒"
 L.resetMessagesDesc = "重設所有訊息自訂選項，包括錨點和位置。"
 L.uppercase = "大寫"
 L.uppercaseDesc = "所有的強調訊息都會被轉換為大寫。"
+L.chatMessages = "聊天框體訊息"
+L.chatMessagesDesc = "除了顯示設定，輸出所有 BigWigs 訊息到預設聊天框體。"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

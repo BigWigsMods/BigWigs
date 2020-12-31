@@ -238,6 +238,8 @@ L.useIcons = "Utiliser les icônes"
 L.useIconsDesc = "Affiche les icônes à côté des messages."
 L.classColors = "Couleurs de classe"
 L.classColorsDesc = "Colore les noms des joueurs selon leur classe."
+L.chatMessages = "Messages de la fenêtre de discussion"
+L.chatMessagesDesc = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal."
 
 L.fontSize = "Taille de la police"
 L.none = "Aucun"

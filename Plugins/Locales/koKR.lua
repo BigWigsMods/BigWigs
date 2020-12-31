@@ -238,6 +238,8 @@ L.useIcons = "아이콘 사용"
 L.useIconsDesc = "메시지 옆에 아이콘을 표시합니다."
 L.classColors = "직업 색상"
 L.classColorsDesc = "플레이어의 이름에 직업 색상을 입힙니다."
+L.chatMessages = "대화 창 메시지"
+L.chatMessagesDesc = "모든 BigWigs 메시지를 표시 설정과 더불어 기본 대화 창에도 출력합니다."
 
 L.fontSize = "글꼴 크기"
 L.none = "안함"

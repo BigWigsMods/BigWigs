@@ -337,6 +337,13 @@ plugin.pluginOptions = {
 					desc = L.monochromeDesc,
 					order = 8,
 				},
+				chat = {
+					type = "toggle",
+					name = L.chatMessages,
+					desc = L.chatMessagesDesc,
+					order = 9,
+					width = "full",
+				},
 			--	classcolor = {
 			--		type = "toggle",
 			--		name = L.classColors,

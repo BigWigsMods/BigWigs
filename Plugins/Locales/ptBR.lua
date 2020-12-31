@@ -238,6 +238,8 @@ L.useIcons = "Usar ícones"
 L.useIconsDesc = "Exibir ícones ao lado das mensagens."
 L.classColors = "Cores de classe"
 L.classColorsDesc = "Colore nomes de jogadores pela classe deles."
+L.chatMessages = "Mensagens no chat"
+L.chatMessagesDesc = "Mostra todas as mensagens na janela de chat padrão além da tela de configuração."
 
 L.fontSize = "Tamanho da fonte"
 L.none = "Nenhum"

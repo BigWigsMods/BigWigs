@@ -238,6 +238,8 @@ L.useIcons = "Use icons"
 L.useIconsDesc = "Show icons next to messages."
 L.classColors = "Class colors"
 L.classColorsDesc = "Colors player names by their class."
+L.chatMessages = "Chat frame messages"
+L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
 
 L.fontSize = "Font size"
 L.none = "None"

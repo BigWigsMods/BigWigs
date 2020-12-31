@@ -239,6 +239,8 @@ L.useIcons = "Symbole verwenden"
 L.useIconsDesc = "Zeigt Symbole neben Nachrichten an."
 L.classColors = "Klassenfarben"
 L.classColorsDesc = "Färbt Spielernamen nach deren Klasse ein."
+L.chatMessages = "Chatfenster-Nachrichten"
+L.chatMessagesDesc = "Gibt alle BigWigs-Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
 
 L.fontSize = "Schriftgröße"
 L.none = "Nichts"

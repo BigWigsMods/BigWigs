@@ -336,6 +336,8 @@ L.infoBox = "InfoBox"
 --L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 L.uppercase = "MAYUSCULAS"
 --L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.chatMessages  = "Mensajes del marco de chat"
+L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de chat por defecto en adición a los ajustes mostrados"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

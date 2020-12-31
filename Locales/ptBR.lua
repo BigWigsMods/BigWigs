@@ -75,8 +75,6 @@ L.listAbilities = "Listar habilidades no chat do grupo"
 
 L.dbmFaker = "Faz de conta que eu estou usando DBM"
 L.dbmFakerDesc = "Se um usuário do DBM tem uma versão que verifica quem está usando DBM, ele irá vê-lo na lista. Útil para guildas que forçam usar o DBM."
-L.chatMessages = "Mensagens no chat"
-L.chatMessagesDesc = "Mostra todas as mensagens na janela de chat padrão além da tela de configuração."
 L.zoneMessages = "Mostrar mensagens da zona atual"
 L.zoneMessagesDesc = "Desativar isso irá parar de mostrar mensagens quando você entra em uma zona que BigWigs possui contadores, mas você não o instalou. Nós recomendamos que você deixe ligado, pois é a única notificação que você vai receber se nós criarmos contadores para uma nova zona que você ache útil."
 L.slashDescTitle = "|cFFFED000Comandos com barra:|r"
