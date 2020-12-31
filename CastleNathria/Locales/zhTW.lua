@@ -103,13 +103,13 @@ if L then
 	L.custom_on_repeating_impale = "重覆刺穿喊話"
 	L.custom_on_repeating_impale_desc = "以「1」、「22」、「333」或「4444」的方式重覆刺穿喊話，使你能清楚明瞭地知道擊中順序。"
 
-	-- L.hymn_stacks = "Nathrian Hymn"
-	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	L.hymn_stacks = "納撒亞讚歌"
+	L.hymn_stacks_desc = "以警報提示你的納撒亞讚歌層數。"
 
 	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
 	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
 	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
 
-	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
-	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
+	L.no_mirror = "沒鏡子：%d" -- Player amount that does not have the Through the Mirror
+	L.mirror = "鏡子：%d" -- Player amount that does have the Through the Mirror
 end
