@@ -25,11 +25,11 @@ L.nameplateOffsetYDesc = "勾選向上成長時，計時條在名條上方的垂
 L.bestTimeBar = "最快時間"
 L.bigWigsBarStyleName_Default = "預設"
 L.blockEmotes = "封鎖畫面中央表情訊息"
-L.blockEmotesDesc = [=[某些首領施放某些技能時會顯示表情，此類訊息過於冗長及不直觀。我們嘗試提供的訊息更精簡、不會影響遊戲體驗和不會指示玩家要做什麼。
+L.blockEmotesDesc = [=[某些首領施放某些技能時會顯示表情，此類訊息過於冗長且不直觀。我們嘗試提供更精簡的訊息，不會影響遊戲體驗，也不會指示玩家要做什麼。
 
 請注意：若你想看首領表情，首領表情仍然會顯示於聊天視窗。]=]
 L.blockGuildChallenge = "封鎖公會挑戰彈出訊息"
-L.blockGuildChallengeDesc = [=[公會挑戰彈出訊息顯示幾種資訊，其中最主要的是你的公會中有小隊完成了一場英雄地城或挑戰地城。
+L.blockGuildChallengeDesc = [=[公會挑戰彈出訊息會顯示幾種資訊，其中最主要的是你的公會中有小隊完成了一場英雄地城或挑戰地城。
 
 這些彈出訊息有可能在首領戰鬥中遮蓋你的介面中重要的部份，因此我們建議封鎖這些彈出訊息。]=]
 L.blockMovies = "封鎖重覆的動畫"
@@ -315,13 +315,13 @@ L.purpleDesc = "坦克相關警報，例如對坦減益效果疊加（特定層�
 -- Countdown.lua
 --
 
---L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
---L.countdown = "Countdown"
---L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
---L.countdownAudioHeader = "Spoken Audio Countdown"
---L.countdownTextHeader = "Visual Text Countdown"
---L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
---L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+L.countdownAt_desc = "選擇開始播報倒數計時的閾值，當首領技能低於此秒數就會開使倒數（以秒為單位）。"
+L.countdown = "倒數"
+--L.countdownDesc = "倒數功能包括語音和文字倒數。預設情況下，此功能很少啟用，但你可以為任何技能單獨啟用， It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+L.countdownAudioHeader = "語音倒數"
+L.countdownTextHeader = "可視文字倒數"
+L.resetCountdownDesc = "重設所有倒數計時自訂選項。"
+--L.resetAllCountdownDesc = "如果你更改了自訂義倒數語音If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -335,7 +335,7 @@ L.infoBox = "訊息盒"
 
 L.resetMessagesDesc = "重設所有訊息自訂選項，包括錨點和位置。"
 L.uppercase = "大寫"
---L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.uppercaseDesc = "所有的強調訊息都會被轉換為大寫。"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -347,10 +347,10 @@ L.resetProximityDesc = "重設所有玩家雷達自訂選項，包括錨點和�
 -- Sound.lua
 --
 
---L.oldSounds = "Old Sounds"
+L.oldSounds = "傳統音效設定"
 L.resetSoundDesc = "將前面的音效設定重設為預設值。"
---L.onyou = "A spell, buff, or debuff is on you"
---L.underyou = "You need to move out of a spell under you"
+L.onyou = "當一個法術或增減益光環施放在你身上時"
+L.underyou = "當你需要離開一個地板技能的範圍時"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
