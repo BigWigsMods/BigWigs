@@ -489,7 +489,7 @@ plugin.defaultDB = {
 	font = nil,
 	monochrome = false,
 	outline = "NONE",
-	growup = true,
+	growup = false,
 	text = true,
 	time = true,
 	alignText = "LEFT",
@@ -1431,8 +1431,8 @@ end
 --
 
 local defaultPositions = {
-	BigWigsAnchor = {"CENTER", "UIParent", "CENTER", 0, -120},
-	BigWigsEmphasizeAnchor = {"TOP", RaidWarningFrame, "BOTTOM", 0, -35}, --Below the Blizzard "Raid Warning" frame
+	BigWigsAnchor = {"CENTER", UIParent, "CENTER", 450, 200},
+	BigWigsEmphasizeAnchor = {"CENTER", UIParent, "CENTER", 0, -100}, --Below the Emphasized Message frame, ish
 }
 
 local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end

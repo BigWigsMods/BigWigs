@@ -75,7 +75,7 @@ function plugin:RestyleWindow()
 		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	else
 		display:ClearAllPoints()
-		display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
+		display:SetPoint("CENTER", UIParent, "CENTER", 450, -160)
 	end
 
 	if db.lock then
