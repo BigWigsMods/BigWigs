@@ -23,7 +23,7 @@ if L then
 	L.level = "%s (等級|cffffff00%d|r)"
 	L.full = "%s (|cffff0000滿了|r)"
 
-	-- L.container_active = "Enable Container: %s"
+	L.container_active = "啟用容器：%s"
 
 	L.anima_adds = "濃縮靈魄增援"
 	L.anima_adds_desc = "替濃縮靈魄減益效果召喚的增援生成顯示計時條。"
@@ -98,10 +98,10 @@ if L then
 	L.infobox_stacks = "%d 堆疊：%d 玩家" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	L.custom_on_repeating_nighthunter = "重覆黑夜獵人喊話"
-	--L.custom_on_repeating_nighthunter_desc = "以 {rt1} or {rt2} or {rt3} 重覆黑夜獵人喊話，Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
+	L.custom_on_repeating_nighthunter_desc = "以 {rt1}、{rt2} 或 {rt3} 重覆黑夜獵人喊話，使需要分攤的人可以更方便地找到你負責分攤的那條線。"
 
-	--L.custom_on_repeating_impale = "Repeating Impale Say"
-	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
+	L.custom_on_repeating_impale = "重覆刺穿喊話"
+	L.custom_on_repeating_impale_desc = "以「1」、「22」、「333」或「4444」的方式重覆刺穿喊話，使你能清楚明瞭地知道擊中順序。"
 
 	-- L.hymn_stacks = "Nathrian Hymn"
 	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
