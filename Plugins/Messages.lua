@@ -17,11 +17,8 @@ local labels = {}
 
 local colorModule = nil
 
-local normalAnchor = nil
-local emphasizeAnchor = nil
-
-local BWMessageFrame = nil
-local emphasizedText = nil
+local normalMessageAnchor, normalMessageFrame = nil, nil
+local emphMessageAnchor, emphMessageFrame, emphMessageText = nil, nil, nil
 
 local labelsPrimaryPoint, labelsSecondaryPoint = nil, nil
 
@@ -34,122 +31,6 @@ local fakePluginForEmphasizedMessages = {}
 
 sink:Embed(plugin)
 sink:Embed(fakePluginForEmphasizedMessages)
-
---------------------------------------------------------------------------------
--- Anchors & Frames
---
-
-local function showAnchors()
-	normalAnchor:Show()
-	emphasizeAnchor:Show()
-end
-
-local function hideAnchors()
-	normalAnchor:Hide()
-	emphasizeAnchor:Hide()
-end
-
-do
-	local defaultPositions = {
-		BWMessageAnchor = {"CENTER"},
-		BWEmphasizeMessageAnchor = {"TOP", "RaidWarningFrame", "BOTTOM", 0, 45},
-	}
-
-	local function OnDragStart(self)
-		self:StartMoving()
-	end
-	local function OnDragStop(self)
-		self:StopMovingOrSizing()
-		local s = self:GetEffectiveScale()
-		db[self.x] = self:GetLeft() * s
-		db[self.y] = self:GetTop() * s
-	end
-	local function RefixPosition(self)
-		self:ClearAllPoints()
-		if db[self.x] and db[self.y] then
-			local s = self:GetEffectiveScale()
-			self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
-		else
-			self:SetPoint(unpack(defaultPositions[self:GetName()]))
-		end
-	end
-
-	local function createAnchor(frameName, title)
-		local display = CreateFrame("Frame", frameName, UIParent)
-		display.x, display.y = frameName .. "_x", frameName .. "_y"
-		display:EnableMouse(true)
-		display:SetClampedToScreen(true)
-		display:SetMovable(true)
-		display:RegisterForDrag("LeftButton")
-		display:SetWidth(200)
-		display:SetHeight(20)
-		local bg = display:CreateTexture(nil, "BACKGROUND")
-		bg:SetAllPoints(display)
-		bg:SetColorTexture(0, 0, 0, 0.3)
-		display.background = bg
-		local header = display:CreateFontString()
-		header:SetFont(plugin:GetDefaultFont(12))
-		header:SetShadowOffset(1, -1)
-		header:SetTextColor(1,0.82,0,1)
-		header:SetText(title)
-		header:SetPoint("CENTER", display, "CENTER")
-		header:SetJustifyV("MIDDLE")
-		header:SetJustifyH("CENTER")
-		display:SetScript("OnDragStart", OnDragStart)
-		display:SetScript("OnDragStop", OnDragStop)
-		display.RefixPosition = RefixPosition
-		display:SetPoint(unpack(defaultPositions[frameName]))
-		display:Hide()
-		return display
-	end
-
-	normalAnchor = createAnchor("BWMessageAnchor", L.messages)
-	emphasizeAnchor = createAnchor("BWEmphasizeMessageAnchor", L.emphasizedMessages)
-
-	BWMessageFrame = CreateFrame("Frame", "BWMessageFrame", UIParent)
-	BWMessageFrame:SetWidth(UIParent:GetWidth())
-	BWMessageFrame:SetHeight(80)
-	BWMessageFrame:SetFrameStrata("HIGH")
-	BWMessageFrame:SetToplevel(true)
-
-	local function FontFinish(self)
-		self:GetParent():Hide()
-		if not labels[1]:IsShown() and not labels[2]:IsShown() and not labels[3]:IsShown() and not labels[4]:IsShown() then
-			BWMessageFrame:Hide()
-		end
-	end
-	local function IconFinish(self)
-		self:GetParent():Hide()
-	end
-
-	for i = 1, 4 do
-		local fs = BWMessageFrame:CreateFontString()
-		fs:SetWidth(0)
-		fs:SetHeight(0)
-		fs.elapsed = 0
-		fs:Hide()
-
-		fs.anim = fs:CreateAnimationGroup()
-		fs.anim:SetScript("OnFinished", FontFinish)
-		fs.animFade = fs.anim:CreateAnimation("Alpha")
-		fs.animFade:SetFromAlpha(1)
-		fs.animFade:SetToAlpha(0)
-
-		local icon = BWMessageFrame:CreateTexture()
-		icon:SetPoint("RIGHT", fs, "LEFT")
-		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
-		icon:Hide()
-		fs.icon = icon
-
-		icon.anim = icon:CreateAnimationGroup()
-		icon.anim:SetScript("OnFinished", IconFinish)
-		icon.animFade = icon.anim:CreateAnimation("Alpha")
-		icon.animFade:SetFromAlpha(1)
-		icon.animFade:SetToAlpha(0)
-
-		labels[i] = fs
-	end
-end
 
 --------------------------------------------------------------------------------
 -- Profile
@@ -166,17 +47,27 @@ plugin.defaultDB = {
 	align = "CENTER",
 	fontSize = 20,
 	emphFontSize = 48,
-	scale = 1,
 	chat = false,
 	useicons = true,
 	classcolor = true, -- XXX non-functional
-	growUpwards = false,
+	growUpwards = true,
 	emphasizedMessages = {
 		sink20OutputSink = "BigWigsEmphasized",
 	},
 	displaytime = 3,
 	fadetime = 2,
 	emphUppercase = true,
+	-- Designed by default to grow up into the errors frame (which should be disabled in the BossBlock plugin in 99% of situations)
+	-- Should not enter the RaidWarningFrame by default (since we grow upwards), which we don't want to block view of
+	-- By order from top to bottom:
+	-- >> UIErrorsFrame (anchored to top of UIParent)
+	-- >> Our message frame (placed at bottom of UIErrorsFrame, growing upwards)
+	-- >> RaidWarningFrame (anchored to bottom of UIErrorsFrame)
+	-- >> RaidBossEmoteFrame (anchored to bottom of RaidWarningFrame)
+	-- 122 (UIErrorsFrame Y position) + 60 (UIErrorsFrame height) = 182
+	-- Worth noting: RaidWarningFrame height = 70 & RaidBossEmoteFrame height = 80
+	normalPosition = {"TOP", "TOP", 0, -182},
+	emphPosition = {"CENTER", "CENTER", 0, 0},
 }
 
 local function updateProfile()
@@ -193,7 +84,7 @@ local function updateProfile()
 	elseif db.emphOutline ~= "NONE" then
 		emphFlags = db.emphOutline
 	end
-	emphasizedText:SetFont(media:Fetch(FONT, db.emphFontName), db.emphFontSize, emphFlags)
+	emphMessageText:SetFont(media:Fetch(FONT, db.emphFontName), db.emphFontSize, emphFlags)
 
 	-- Kill chat outputs
 	if db.sink20OutputSink == "Channel" or db.sink20OutputSink == "ChatFrame" then
@@ -205,18 +96,16 @@ local function updateProfile()
 		db.emphasizedMessages.sink20ScrollArea = nil
 	end
 
-	normalAnchor:RefixPosition()
-	emphasizeAnchor:RefixPosition()
-	BWMessageFrame:ClearAllPoints()
+	normalMessageAnchor:RefixPosition()
+	emphMessageAnchor:RefixPosition()
+	normalMessageFrame:ClearAllPoints()
 	local align = db.align == "CENTER" and "" or db.align
 	if db.growUpwards then
 		labelsPrimaryPoint, labelsSecondaryPoint = "BOTTOM"..align, "TOP"..align
 	else
 		labelsPrimaryPoint, labelsSecondaryPoint = "TOP"..align, "BOTTOM"..align
 	end
-	BWMessageFrame:SetPoint(labelsPrimaryPoint, normalAnchor, labelsSecondaryPoint)
-	BWMessageFrame:SetScale(db.scale)
-	BWMessageFrame:SetWidth(UIParent:GetWidth())
+	normalMessageFrame:SetPoint(labelsPrimaryPoint, normalMessageAnchor, labelsSecondaryPoint)
 
 	local flags = nil
 	if db.monochrome and db.outline ~= "NONE" then
@@ -235,6 +124,131 @@ local function updateProfile()
 		font.icon:SetSize(db.fontSize, db.fontSize)
 		font:SetHeight(db.fontSize)
 		font:SetFont(media:Fetch(FONT, db.fontName), db.fontSize, flags)
+	end
+
+	-- XXX temp 9.0.2
+	db.BWEmphasizeMessageAnchor_y = nil
+	db.BWEmphasizeMessageAnchor_x = nil
+	db.BWMessageAnchor_y = nil
+	db.BWMessageAnchor_x = nil
+	db.BWEmphasizeCountdownMessageAnchor_y = nil
+	db.BWEmphasizeCountdownMessageAnchor_x = nil
+end
+
+--------------------------------------------------------------------------------
+-- Anchors & Frames
+--
+
+local function showAnchors()
+	normalMessageAnchor:Show()
+	emphMessageAnchor:Show()
+end
+
+local function hideAnchors()
+	normalMessageAnchor:Hide()
+	emphMessageAnchor:Hide()
+end
+
+do
+	local function OnDragStart(self)
+		self:StartMoving()
+	end
+	local function OnDragStop(self)
+		self:StopMovingOrSizing()
+		local point, _, relPoint, x, y = self:GetPoint()
+		plugin.db.profile[self.position] = {point, relPoint, x, y}
+	end
+	local function RefixPosition(self)
+		self:ClearAllPoints()
+		local point, relPoint = plugin.db.profile[self.position][1], plugin.db.profile[self.position][2]
+		local x, y = plugin.db.profile[self.position][3], plugin.db.profile[self.position][4]
+		self:SetPoint(point, UIParent, relPoint, x, y)
+	end
+
+	local function createAnchor(position, title, titleSize, width, height, saveHeader)
+		local display = CreateFrame("Frame", nil, UIParent)
+		display:EnableMouse(true)
+		display:SetClampedToScreen(true)
+		display:SetMovable(true)
+		display:RegisterForDrag("LeftButton")
+		display:SetWidth(width)
+		display:SetHeight(height)
+		display:SetFrameStrata("HIGH")
+		display:SetFixedFrameStrata(true)
+		display:SetFrameLevel(5)
+		display:SetFixedFrameLevel(true)
+		display:SetScript("OnDragStart", OnDragStart)
+		display:SetScript("OnDragStop", OnDragStop)
+		display.RefixPosition = RefixPosition
+		local point, relPoint = plugin.defaultDB[position][1], plugin.defaultDB[position][2]
+		local x, y = plugin.defaultDB[position][3], plugin.defaultDB[position][4]
+		display:SetPoint(point, UIParent, relPoint, x, y)
+		display.position = position
+		display:Hide()
+		local bg = display:CreateTexture()
+		bg:SetAllPoints(display)
+		bg:SetColorTexture(0, 0, 0, 0.3)
+		local header = display:CreateFontString()
+		header:SetFont(plugin:GetDefaultFont(titleSize))
+		header:SetShadowOffset(1, -1)
+		header:SetTextColor(1,0.82,0,1)
+		header:SetText(title)
+		header:SetPoint("CENTER", display, "CENTER")
+		header:SetJustifyV("MIDDLE")
+		header:SetJustifyH("CENTER")
+		if saveHeader then
+			display.header = header
+		end
+		return display
+	end
+
+	normalMessageAnchor = createAnchor("normalPosition", L.messages, 12, 200, 20)
+	emphMessageAnchor = createAnchor("emphPosition", L.emphasizedMessages, 48, 650, 80, true)
+
+	normalMessageFrame = CreateFrame("Frame", nil, UIParent)
+	normalMessageFrame:SetWidth(2000)
+	normalMessageFrame:SetHeight(80)
+	normalMessageFrame:SetFrameStrata("FULLSCREEN_DIALOG")
+	normalMessageFrame:SetFixedFrameStrata(true)
+	normalMessageFrame:SetFrameLevel(0) -- Behind GUI (level 1)
+	normalMessageFrame:SetFixedFrameLevel(true)
+
+	local function FontFinish(self)
+		self:GetParent():Hide()
+		if not labels[1]:IsShown() and not labels[2]:IsShown() and not labels[3]:IsShown() and not labels[4]:IsShown() then
+			normalMessageFrame:Hide()
+		end
+	end
+	local function IconFinish(self)
+		self:GetParent():Hide()
+	end
+
+	for i = 1, 4 do
+		local fs = normalMessageFrame:CreateFontString()
+		fs:SetWidth(0)
+		fs:SetHeight(0)
+		fs.elapsed = 0
+		fs:Hide()
+
+		fs.anim = fs:CreateAnimationGroup()
+		fs.anim:SetScript("OnFinished", FontFinish)
+		fs.animFade = fs.anim:CreateAnimation("Alpha")
+		fs.animFade:SetFromAlpha(1)
+		fs.animFade:SetToAlpha(0)
+
+		local icon = normalMessageFrame:CreateTexture()
+		icon:SetPoint("RIGHT", fs, "LEFT")
+		icon:SetTexCoord(0.07, 0.93, 0.07, 0.93)
+		icon:Hide()
+		fs.icon = icon
+
+		icon.anim = icon:CreateAnimationGroup()
+		icon.anim:SetScript("OnFinished", IconFinish)
+		icon.animFade = icon.anim:CreateAnimation("Alpha")
+		icon.animFade:SetFromAlpha(1)
+		icon.animFade:SetToAlpha(0)
+
+		labels[i] = fs
 	end
 end
 
@@ -528,7 +542,7 @@ do
 	end
 
 	function plugin:Print(_, text, r, g, b, _, _, _, _, _, icon)
-		BWMessageFrame:Show()
+		normalMessageFrame:Show()
 
 		local slot = db.growUpwards and getNextSlotUp() or getNextSlotDown()
 		local slotIcon = slot.icon
@@ -554,30 +568,37 @@ do
 end
 
 do
-	local frame = CreateFrame("Frame", "BWEmphasizeMessageFrame", UIParent)
-	frame:SetFrameStrata("HIGH")
-	frame:SetPoint("TOP", emphasizeAnchor, "BOTTOM")
-	frame:SetWidth(UIParent:GetWidth())
-	frame:SetHeight(80)
-	frame:Hide()
+	emphMessageFrame = CreateFrame("Frame", nil, UIParent)
+	emphMessageFrame:SetFrameStrata("FULLSCREEN_DIALOG")
+	emphMessageFrame:SetFixedFrameStrata(true)
+	emphMessageFrame:SetFrameLevel(0) -- Behind GUI (level 1)
+	emphMessageFrame:SetFixedFrameLevel(true)
+	emphMessageFrame:SetPoint("CENTER", emphMessageAnchor, "CENTER")
+	emphMessageFrame:SetWidth(UIParent:GetWidth())
+	emphMessageFrame:SetHeight(80)
+	emphMessageFrame:Hide()
 
-	emphasizedText = frame:CreateFontString(nil, "OVERLAY")
-	emphasizedText:SetPoint("TOP")
+	emphMessageText = emphMessageFrame:CreateFontString()
+	emphMessageText:SetPoint("CENTER", emphMessageFrame, "CENTER")
 
-	local updater = frame:CreateAnimationGroup()
-	updater:SetScript("OnFinished", function() frame:Hide() end)
+	local updater = emphMessageFrame:CreateAnimationGroup()
+	updater:SetScript("OnFinished", function()
+		emphMessageFrame:Hide() -- Show the header again, for config mode
+		emphMessageAnchor.header:Show()
+	end)
 
 	local anim = updater:CreateAnimation("Alpha")
 	anim:SetFromAlpha(1)
 	anim:SetToAlpha(0)
-	anim:SetDuration(3)
-	anim:SetStartDelay(1.5)
+	anim:SetDuration(2)
+	anim:SetStartDelay(1.1)
 
 	function plugin:EmphasizedPrint(_, text, r, g, b)
-		emphasizedText:SetText(text)
-		emphasizedText:SetTextColor(r, g, b)
+		emphMessageAnchor.header:Hide() -- Hide the header, for config mode
+		emphMessageText:SetText(text)
+		emphMessageText:SetTextColor(r, g, b)
 		updater:Stop()
-		frame:Show()
+		emphMessageFrame:Show()
 		updater:Play()
 	end
 end

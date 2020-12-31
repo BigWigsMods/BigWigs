@@ -35,6 +35,7 @@ plugin.defaultDB = {
 	fontColor = { r = 1, g = 0, b = 0 },
 	voice = voiceMap[GetLocale()] or "English: Amy",
 	countdownTime = 5,
+	position = {"TOP", "TOP", 0, -300},
 	bossCountdowns = {},
 }
 
@@ -189,18 +190,14 @@ do
 	end
 	local function OnDragStop(self)
 		self:StopMovingOrSizing()
-		--local s = self:GetEffectiveScale()
-		--db[self.x] = self:GetLeft() * s
-		--db[self.y] = self:GetTop() * s
+		local point, _, relPoint, x, y = self:GetPoint()
+		plugin.db.profile.position = {point, relPoint, x, y}
 	end
 	local function RefixPosition(self)
 		self:ClearAllPoints()
-		--if db[self.x] and db[self.y] then
-		--	local s = self:GetEffectiveScale()
-		--	self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db[self.x] / s, db[self.y] / s)
-		--else
-			self:SetPoint("TOP", "RaidWarningFrame", "BOTTOM", 0, -150)
-		--end
+		local point, relPoint = plugin.db.profile.position[1], plugin.db.profile.position[2]
+		local x, y = plugin.db.profile.position[3], plugin.db.profile.position[4]
+		self:SetPoint(point, UIParent, relPoint, x, y)
 	end
 
 	countdownAnchor = CreateFrame("Frame", nil, UIParent)
@@ -217,7 +214,9 @@ do
 	countdownAnchor:SetScript("OnDragStart", OnDragStart)
 	countdownAnchor:SetScript("OnDragStop", OnDragStop)
 	countdownAnchor.RefixPosition = RefixPosition
-	countdownAnchor:SetPoint("TOP", "RaidWarningFrame", "BOTTOM", 0, -150)
+	local point, relPoint = plugin.defaultDB.position[1], plugin.defaultDB.position[2]
+	local x, y = plugin.defaultDB.position[3], plugin.defaultDB.position[4]
+	countdownAnchor:SetPoint(point, UIParent, relPoint, x, y)
 	countdownAnchor:Hide()
 	local bg = countdownAnchor:CreateTexture()
 	bg:SetAllPoints(countdownAnchor)
@@ -441,6 +440,7 @@ end
 
 local function updateProfile()
 	UpdateFont()
+	countdownAnchor:RefixPosition()
 
 	-- Reset invalid voice selections
 	if not BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
@@ -504,8 +504,8 @@ do
 	local anim = updater:CreateAnimation("Alpha")
 	anim:SetFromAlpha(1)
 	anim:SetToAlpha(0)
-	anim:SetDuration(3)
-	anim:SetStartDelay(1.5)
+	anim:SetDuration(1)
+	anim:SetStartDelay(1.1)
 
 	function plugin:SetText(text, timer)
 		latestCountdown = timer
@@ -530,12 +530,12 @@ do
 				if time <= t then break end
 				self:SimpleTimer(function()
 					if not cancelTimer[1] then
+						if not audioOnly and plugin.db.profile.textEnabled then
+							plugin:SetText(i, cancelTimer)
+						end
 						local sound = BigWigsAPI:GetCountdownSound(voice, i)
 						if sound then
 							PlaySoundFile(sound, "Master")
-						end
-						if not audioOnly and plugin.db.profile.textEnabled then
-							plugin:SetText(i, cancelTimer)
 						end
 					end
 				end, time-t)
@@ -545,9 +545,9 @@ do
 	function plugin:BigWigs_StopCountdown(_, _, text)
 		if timers[text] then
 			timers[text][1] = true
-		end
-		if latestCountdown == timers[text] then
-			self:SetText("") -- Only clear the text if the cancelled countdown was the last to display something
+			if latestCountdown == timers[text] then
+				self:SetText("") -- Only clear the text if the cancelled countdown was the last to display something
+			end
 		end
 	end
 end
