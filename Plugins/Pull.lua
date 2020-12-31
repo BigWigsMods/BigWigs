@@ -164,7 +164,7 @@ do
 			self:CancelTimer(timer)
 			timer = nil
 			if self.db.profile.countType == "emphasized" then
-				self:SendMessage("BigWigs_EmphasizedCountdownMessage", "")
+				self:SendMessage("BigWigs_StopCountdown", self, "pulling time") -- Make the countdown text clear
 			end
 			local soundName = self.db.profile.endPullSound
 			if soundName ~= "None" then
@@ -179,14 +179,10 @@ do
 			BigWigs:Print(L.pullStoppedCombat)
 			self:SendMessage("BigWigs_StopBar", self, L.pull)
 			self:SendMessage("BigWigs_StopPull", self, "COMBAT")
+			self:SendMessage("BigWigs_StopCountdown", self, "pulling time")
 		elseif timeLeft < 11 then
-			if self.db.profile.countType == "emphasized" then
-				self:SendMessage("BigWigs_EmphasizedCountdownMessage", timeLeft)
-			else
+			if self.db.profile.countType ~= "emphasized" then
 				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
-			end
-			if timeLeft < 6 then
-				self:SendMessage("BigWigs_PlayCountdownNumber", self, timeLeft, self.db.profile.voice)
 			end
 		end
 	end
@@ -210,6 +206,7 @@ do
 					BigWigs:Print(L.pullStopped:format(nick))
 					self:SendMessage("BigWigs_StopBar", self, L.pull)
 					self:SendMessage("BigWigs_StopPull", self, nick, isDBM)
+					self:SendMessage("BigWigs_StopCountdown", self, "pulling time")
 					return
 				end
 			end
@@ -222,6 +219,7 @@ do
 				LoggingCombat(isLogging)
 			end
 
+			self:SendMessage("BigWigs_StartCountdown", self, nil, "pulling time", timeLeft, self.db.profile.voice, self.db.profile.countType ~= "emphasized")
 			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
 			self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
 			self:SendMessage("BigWigs_StartPull", self, seconds, nick, isDBM)

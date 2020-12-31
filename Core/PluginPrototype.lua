@@ -5,7 +5,7 @@
 
 local plugin = {}
 local core
-local UnitName, UnitGUID = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID
+local UnitName, UnitGUID, Timer = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.CTimerAfter
 do
 	local _, tbl =...
 	core = tbl.core
@@ -110,6 +110,13 @@ do
 	function plugin:GetPartyList()
 		return partyList
 	end
+end
+
+--- Trigger a function after a specific delay
+-- @param func callback function to trigger after the delay
+-- @number delay how long to wait until triggering the function
+function plugin:SimpleTimer(func, delay)
+	Timer(delay, func)
 end
 
 --- Force the options panel to update.
