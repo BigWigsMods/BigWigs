@@ -712,7 +712,7 @@ local function parseLua(file)
 		-- delayed with ScheduleTimer.
 		if checkForAPI(line) then
 			local key, sound, color, icon, bitflag = nil, nil, nil, nil, nil
-			local method, args = line:match("%w+:(.-)%(%s*(.+)%s*%)")
+			local obj, sugar, method, args = line:match("(%w+)([.:])(.-)%(%s*(.+)%s*%)")
 			local offset = 0
 			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
 				method = args:match("^\"(.-)\"")
@@ -753,6 +753,13 @@ local function parseLua(file)
 					bitflag = valid_methods[method]
 				end
 
+				-- Check for method call typo (API should always be invoked with ":" syntax)
+				-- Note, may need to add a check for using table notation with SimpleTimer or
+				-- such, but local functions are typically used for repeating callbacks
+				if sugar == "." then
+					local call = obj..sugar..method
+					error(string.format("    %s:%d: Invalid API call \"%s\"! func=%s, key=%s", file_name, n, call, tostring(current_func), key))
+				end
 				-- Check for wrong API (Message instead of TargetMessage)
 				if method == "Message" and (args[3] == "destName" or args[3] == "args.destName" or args[3] == "name" or args[3] == "args.sourceName" or args[3] == "sourceName") then
 					error(string.format("    %s:%d: Message text is a player name? func=%s, key=%s, text=%s", file_name, n, tostring(current_func), key, args[3]))
