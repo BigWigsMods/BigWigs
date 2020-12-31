@@ -431,7 +431,7 @@ local function findCalls(lines, start, local_func, options)
 	return #keys > 0 and keys or nil
 end
 
-local function parseGetOptions(lines, start)
+local function parseGetOptions(file_name, lines, start)
 	local chunk = nil
 	for i = start, #lines do
 		if i == start and lines[i]:match("^%s*return {.+}%s*$") then
@@ -440,8 +440,9 @@ local function parseGetOptions(lines, start)
 			break
 		end
 		if lines[i]:match("^%s*},%s*{") or lines[i]:match("^%s*},%s*nil,%s*{") then
-			-- we don't want to parse headers (to avoid setfenv) so stop here
+			-- we don't want to parse headers or altnames (to avoid setfenv) so stop here
 			chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
+			-- TODO string parse the other tables for duplicates
 			break
 		end
 		if lines[i]:match("^%s*end") then
@@ -473,7 +474,11 @@ local function parseGetOptions(lines, start)
 				if default_options[opt] then
 					flags = default_options[opt]
 				end
-				options[opt] = flags
+				if options[opt] then
+					error(string.format("    %s:%d: Duplicate option key \"%s\"", file_name, start, tostring(opt)))
+				else
+					options[opt] = flags
+				end
 			end
 		end
 		return options
@@ -574,7 +579,7 @@ local function parseLua(file)
 
 		--- loadstring the options table
 		if line == "function mod:GetOptions()" or line == "function mod:GetOptions(CL)" then
-			local opts, err = parseGetOptions(lines, n+1)
+			local opts, err = parseGetOptions(file_name, lines, n+1)
 			if not opts then
 				-- rip keys
 				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
