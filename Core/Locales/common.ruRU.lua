@@ -34,8 +34,8 @@ L.no = "Нет %s"
 L.normal = "Обычный режим"
 L.on = "%s на %s"
 L.onboss = "%s на БОССЕ"
---L.buff_boss = "Buff on BOSS: %s"
---L.buff_other = "Buff on %s: %s"
+L.buff_boss = "Бафф на БОССЕ: %s"
+L.buff_other = "Бафф на %s: %s"
 L.other = "%s: %s"
 L.over = "%s завершается"
 --L.percent = "%d%% - %s" -- 20% - spell
@@ -54,14 +54,14 @@ L.trash = "Трэш"
 L.underyou = "%s под ТОБОЙ"
 L.you = "%s на ТЕБЕ"
 L.you_icon = "%s на |T13700%d:0|tТЕБЕ"
---L.on_group = "%s on GROUP" -- spell on group
+L.on_group = "%s на ГРУППЕ" -- spell on group
 
 L.active = "Активен" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
-L.marker = "метка %s"
+L.marker = "Метка %s"
 L.marker_player_desc = "Отмечать игроков, затронутых %s меткой %s, требуется быть помощником или лидером рейда."
-L.marker_npc_desc = "Отмечать %s метрой %s, требуется быть помощником или лидером рейда."
+L.marker_npc_desc = "Отмечать %s меткой %s, требуется быть помощником или лидером рейда."
 
 -- Ability where two players have to move close to each other
 L.link = "Связан с %s"
@@ -76,5 +76,5 @@ L.amount_three = "%dK" -- Thousands 1,000
 L.seconds = "%.1fс" -- 1.1 seconds
 
 -- Common ability name replacements
---L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
---L.bomb = "Bomb" -- Used for debuffs that make players explode
+L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.bomb = "Бомба" -- Used for debuffs that make players explode
