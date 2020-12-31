@@ -6,6 +6,7 @@ local loadstring = loadstring or load -- 5.2 compat
 local opt = {}
 
 local modules = {}
+local modules_bosses = {}
 local modules_l = nil
 local module_colors = {}
 local module_sounds = {}
@@ -507,9 +508,21 @@ local function parseLua(file)
 	f:close()
 
 	-- First, check to make sure this is actually a boss module file.
-	local module_name = data:match("\nlocal mod.*= BigWigs:NewBoss%(\"(.-)\"")
+	local module_name, module_args = data:match("\nlocal mod.*= BigWigs:NewBoss%(\"(.-)\",?%s*([^)]*)")
 	if not module_name then
 		return
+	end
+
+	if module_args ~= "" then
+		local args = strsplit(module_args)
+		local ej_id = tonumber(args[2])
+		if ej_id then
+			if modules_bosses[ej_id] then
+				error(string.format("    %s:%d: Module \"%s\" is using journal id %d, which is already used by module \"%s\"", file_name, 1, module_name, ej_id, modules_bosses[ej_id]))
+			else -- execution isn't stopped, don't overwrite the original module name
+				modules_bosses[ej_id] = module_name
+			end
+		end
 	end
 
 	-- `modules` is used output the boss modules in the order they were parsed.
