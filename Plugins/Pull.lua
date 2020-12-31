@@ -164,7 +164,7 @@ do
 			self:CancelTimer(timer)
 			timer = nil
 			if self.db.profile.countType == "emphasized" then
-				self:SendMessage("BigWigs_StopCountdown", self, "pulling time") -- Make the countdown text clear
+				self:SendMessage("BigWigs_StopCountdown", self, "pulling time") -- Remove the countdown text
 			end
 			local soundName = self.db.profile.endPullSound
 			if soundName ~= "None" then
