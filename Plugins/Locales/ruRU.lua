@@ -85,7 +85,6 @@ L.emphasize = "Увеличение"
 L.emphasizeAt = "Увеличение на... (секунды)"
 L.emphasized = "Увеличенные"
 L.emphasizedBars = "Увеличенные полосы"
-L.emphasizedCountdownSinkDescription = "Пути вывода увеличенных сообщений с обратным отсчетом. Отображение поддерживает текст и цвета, и позволяет вывести одно сообщение за один раз."
 L.emphasizedMessages = "Увеличенные сообщения"
 L.emphasizedSinkDescription = "Пути вывода увеличенных сообщений. Отображение поддерживает текст и цвета, и позволяет вывести одно сообщение за один раз."
 L.enable = "Включить"
@@ -333,6 +332,7 @@ L.infoBox = "ИнфоБлок"
 -- Messages.lua
 --
 
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 L.resetMessagesDesc = "Сбросить все параметры, связанные с сообщениями, включая позиции якорей сообщений."
 L.uppercase = "БОЛЬШИМИ БУКВАМИ"
 L.uppercaseDesc = "Все увеличенные сообщения будут отображаться ЗАГЛАВНЫМИ буквами."

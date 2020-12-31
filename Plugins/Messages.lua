@@ -262,6 +262,124 @@ plugin.pluginOptions = {
 	name = L.messages,
 	childGroups = "tab",
 	args = {
+		general = {
+			type = "group",
+			name = L.general,
+			order = 1,
+			get = function(info) return plugin.db.profile[info[#info]] end,
+			set = function(info, value)
+				plugin.db.profile[info[#info]] = value
+				updateProfile()
+			end,
+			args = {
+				fontName = {
+					type = "select",
+					name = L.font,
+					order = 1,
+					values = media:List(FONT),
+					itemControl = "DDI-Font",
+					get = function()
+						for i, v in next, media:List(FONT) do
+							if v == plugin.db.profile.fontName then return i end
+						end
+					end,
+					set = function(_, value)
+						local list = media:List(FONT)
+						plugin.db.profile.fontName = list[value]
+						updateProfile()
+					end,
+				},
+				outline = {
+					type = "select",
+					name = L.outline,
+					order = 2,
+					values = {
+						NONE = L.none,
+						OUTLINE = L.thin,
+						THICKOUTLINE = L.thick,
+					},
+				},
+				align = {
+					type = "select",
+					name = L.align,
+					values = {
+						LEFT = L.left,
+						CENTER = L.center,
+						RIGHT = L.right,
+					},
+					style = "radio",
+					order = 3,
+				},
+				fontSize = {
+					type = "range",
+					name = L.fontSize,
+					order = 4,
+					max = 200, softMax = 72,
+					min = 1,
+					step = 1,
+					width = "full",
+				},
+				useicons = {
+					type = "toggle",
+					name = L.useIcons,
+					desc = L.useIconsDesc,
+					order = 6,
+				},
+				growUpwards = {
+					type = "toggle",
+					name = L.growingUpwards,
+					desc = L.growingUpwardsDesc,
+					order = 7,
+				},
+				monochrome = {
+					type = "toggle",
+					name = L.monochrome,
+					desc = L.monochromeDesc,
+					order = 8,
+				},
+			--	classcolor = {
+			--		type = "toggle",
+			--		name = L.classColors,
+			--		desc = L.classColorsDesc,
+			--		order = 9,
+			--	},
+				newline1 = {
+					type = "description",
+					name = "\n",
+					order = 10,
+				},
+				displaytime = {
+					type = "range",
+					name = L.displayTime,
+					desc = L.displayTimeDesc,
+					min = 1,
+					max = 30,
+					step = 0.5,
+					order = 11,
+				},
+				fadetime = {
+					type = "range",
+					name = L.fadeTime,
+					desc = L.fadeTimeDesc,
+					min = 1,
+					max = 30,
+					step = 0.5,
+					order = 12,
+				},
+				header1 = {
+					type = "header",
+					name = "",
+					order = 13,
+				},
+				reset = {
+					type = "execute",
+					name = L.resetAll,
+					desc = L.resetMessagesDesc,
+					func = function() plugin.db:ResetProfile() end,
+					order = 14,
+				},
+			},
+		},
 		emphasize = {
 			type = "group",
 			name = L.emphasizedMessages,
@@ -272,10 +390,17 @@ plugin.pluginOptions = {
 				updateProfile()
 			end,
 			args = {
+				heading = {
+					type = "description",
+					name = L.emphasizedDesc.. "\n\n",
+					order = 1,
+					width = "full",
+					fontSize = "medium",
+				},
 				emphFontName = {
 					type = "select",
 					name = L.font,
-					order = 1,
+					order = 2,
 					values = media:List(FONT),
 					itemControl = "DDI-Font",
 					get = function()
@@ -292,7 +417,7 @@ plugin.pluginOptions = {
 				emphOutline = {
 					type = "select",
 					name = L.outline,
-					order = 2,
+					order = 3,
 					values = {
 						NONE = L.none,
 						OUTLINE = L.thin,
@@ -302,20 +427,20 @@ plugin.pluginOptions = {
 				emphFontSize = {
 					type = "range",
 					name = L.fontSize,
-					order = 3,
-					softMax = 100, max = 200, min = 1, step = 1,
-				},
-				emphUppercase = {
-					type = "toggle",
-					name = L.uppercase,
-					desc = L.uppercaseDesc,
 					order = 4,
+					softMax = 100, max = 200, min = 1, step = 1,
 				},
 				emphMonochrome = {
 					type = "toggle",
 					name = L.monochrome,
 					desc = L.monochromeDesc,
 					order = 5,
+				},
+				emphUppercase = {
+					type = "toggle",
+					name = L.uppercase,
+					desc = L.uppercaseDesc,
+					order = 6,
 				},
 			},
 		},
@@ -434,125 +559,6 @@ plugin.pluginOptions.args.output.args.normal.args.Channel = nil
 plugin.pluginOptions.args.output.args.emphasized.args.Channel = nil
 plugin.pluginOptions.args.output.args.normal.args.ChatFrame = nil
 plugin.pluginOptions.args.output.args.emphasized.args.ChatFrame = nil
-
-plugin.pluginOptions.args.more = {
-	type = "group",
-	name = L.general,
-	order = 1,
-	get = function(info) return plugin.db.profile[info[#info]] end,
-	set = function(info, value)
-		plugin.db.profile[info[#info]] = value
-		updateProfile()
-	end,
-	args = {
-		fontName = {
-			type = "select",
-			name = L.font,
-			order = 1,
-			values = media:List(FONT),
-			itemControl = "DDI-Font",
-			get = function()
-				for i, v in next, media:List(FONT) do
-					if v == plugin.db.profile.fontName then return i end
-				end
-			end,
-			set = function(_, value)
-				local list = media:List(FONT)
-				plugin.db.profile.fontName = list[value]
-				updateProfile()
-			end,
-		},
-		outline = {
-			type = "select",
-			name = L.outline,
-			order = 2,
-			values = {
-				NONE = L.none,
-				OUTLINE = L.thin,
-				THICKOUTLINE = L.thick,
-			},
-		},
-		align = {
-			type = "select",
-			name = L.align,
-			values = {
-				LEFT = L.left,
-				CENTER = L.center,
-				RIGHT = L.right,
-			},
-			style = "radio",
-			order = 3,
-		},
-		fontSize = {
-			type = "range",
-			name = L.fontSize,
-			order = 4,
-			max = 200, softMax = 72,
-			min = 1,
-			step = 1,
-			width = "full",
-		},
-		useicons = {
-			type = "toggle",
-			name = L.useIcons,
-			desc = L.useIconsDesc,
-			order = 6,
-		},
-		growUpwards = {
-			type = "toggle",
-			name = L.growingUpwards,
-			desc = L.growingUpwardsDesc,
-			order = 7,
-		},
-		monochrome = {
-			type = "toggle",
-			name = L.monochrome,
-			desc = L.monochromeDesc,
-			order = 8,
-		},
-	--	classcolor = {
-	--		type = "toggle",
-	--		name = L.classColors,
-	--		desc = L.classColorsDesc,
-	--		order = 9,
-	--	},
-		newline1 = {
-			type = "description",
-			name = "\n",
-			order = 10,
-		},
-		displaytime = {
-			type = "range",
-			name = L.displayTime,
-			desc = L.displayTimeDesc,
-			min = 1,
-			max = 30,
-			step = 0.5,
-			order = 11,
-		},
-		fadetime = {
-			type = "range",
-			name = L.fadeTime,
-			desc = L.fadeTimeDesc,
-			min = 1,
-			max = 30,
-			step = 0.5,
-			order = 12,
-		},
-		header1 = {
-			type = "header",
-			name = "",
-			order = 13,
-		},
-		reset = {
-			type = "execute",
-			name = L.resetAll,
-			desc = L.resetMessagesDesc,
-			func = function() plugin.db:ResetProfile() end,
-			order = 14,
-		},
-	},
-}
 
 -------------------------------------------------------------------------------
 -- Initialization

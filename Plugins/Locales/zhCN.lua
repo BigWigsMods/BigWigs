@@ -85,7 +85,6 @@ L.emphasize = "醒目"
 L.emphasizeAt = "…（秒）后醒目"
 L.emphasized = "醒目"
 L.emphasizedBars = "醒目计时条"
-L.emphasizedCountdownSinkDescription = "路线输出从此插件通过 BigWigs 醒目冷却信息显示。此显示支持文本和颜色，一次只能显示一个消息。"
 L.emphasizedMessages = "醒目信息"
 L.emphasizedSinkDescription = "通过此插件输出到 BigWigs 醒目信息显示。此显示支持文本和颜色，每次只可显示一条信息。"
 L.enable = "启用"
@@ -333,6 +332,7 @@ L.infoBox = "信息盒"
 -- Messages.lua
 --
 
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 L.resetMessagesDesc = "重置全部信息有关选项，包括信息锚点位置。"
 L.uppercase = "大写"
 L.uppercaseDesc = "全部醒目信息将转换为*大写*。"
