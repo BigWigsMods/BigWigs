@@ -157,6 +157,7 @@ do
 		self:StopMovingOrSizing()
 		local point, _, relPoint, x, y = self:GetPoint()
 		plugin.db.profile[self.position] = {point, relPoint, x, y}
+		plugin:UpdateGUI() -- Update X/Y if GUI is open.
 	end
 	local function RefixPosition(self)
 		self:ClearAllPoints()
@@ -318,10 +319,102 @@ plugin.pluginOptions = {
 				},
 			},
 		},
+		exactPositioning = {
+			type = "group",
+			name = L.positionExact,
+			order = 3,
+			childGroups = "tab",
+			args = {
+				normalPositioning = {
+					type = "group",
+					name = L.messages,
+					order = 1,
+					inline = true,
+					args = {
+						posx = {
+							type = "range",
+							name = L.positionX,
+							desc = L.positionDesc,
+							min = -2048,
+							max = 2048,
+							step = 1,
+							order = 1,
+							width = "full",
+							get = function()
+								return plugin.db.profile.normalPosition[3]
+							end,
+							set = function(_, value)
+								plugin.db.profile.normalPosition[3] = value
+								normalMessageAnchor:RefixPosition()
+							end,
+						},
+						posy = {
+							type = "range",
+							name = L.positionY,
+							desc = L.positionDesc,
+							min = -2048,
+							max = 2048,
+							step = 1,
+							order = 2,
+							width = "full",
+							get = function()
+								return plugin.db.profile.normalPosition[4]
+							end,
+							set = function(_, value)
+								plugin.db.profile.normalPosition[4] = value
+								normalMessageAnchor:RefixPosition()
+							end,
+						},
+					},
+				},
+				emphPositioning = {
+					type = "group",
+					name = L.emphasizedMessages,
+					order = 2,
+					inline = true,
+					args = {
+						posx = {
+							type = "range",
+							name = L.positionX,
+							desc = L.positionDesc,
+							min = -2048,
+							max = 2048,
+							step = 1,
+							order = 1,
+							width = "full",
+							get = function()
+								return plugin.db.profile.emphPosition[3]
+							end,
+							set = function(_, value)
+								plugin.db.profile.emphPosition[3] = value
+								emphMessageAnchor:RefixPosition()
+							end,
+						},
+						posy = {
+							type = "range",
+							name = L.positionY,
+							desc = L.positionDesc,
+							min = -2048,
+							max = 2048,
+							step = 1,
+							order = 2,
+							width = "full",
+							get = function()
+								return plugin.db.profile.emphPosition[4]
+							end,
+							set = function(_, value)
+								plugin.db.profile.emphPosition[4] = value
+								emphMessageAnchor:RefixPosition()
+							end,
+						},
+					},
+				},
+			},
+		},
 		output = {
 			type = "group",
 			name = L.output,
-			order = 3,
+			order = 4,
 			childGroups = "tab",
 			args = {
 				normal = plugin:GetSinkAce3OptionsDataTable(),
@@ -583,8 +676,8 @@ do
 
 	local updater = emphMessageFrame:CreateAnimationGroup()
 	updater:SetScript("OnFinished", function()
-		emphMessageFrame:Hide() -- Show the header again, for config mode
-		emphMessageAnchor.header:Show()
+		emphMessageFrame:Hide()
+		emphMessageAnchor.header:Show() -- Show the header again, for config mode
 	end)
 
 	local anim = updater:CreateAnimation("Alpha")

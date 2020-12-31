@@ -983,7 +983,7 @@ do
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
-								min = 0,
+								min = -2048,
 								softMax = 2048,
 								step = 1,
 								order = 1,
@@ -993,7 +993,7 @@ do
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
-								min = 0,
+								min = -2048,
 								softMax = 2048,
 								step = 1,
 								order = 2,
@@ -1115,7 +1115,7 @@ do
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
-								min = 0,
+								min = -2048,
 								softMax = 2048,
 								step = 1,
 								order = 1,
@@ -1125,7 +1125,7 @@ do
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
-								min = 0,
+								min = -2048,
 								softMax = 2048,
 								step = 1,
 								order = 2,
@@ -1466,7 +1466,9 @@ do
 					currentBarStyler.ApplyStyle(k)
 					rearrangeBars(self)
 				end
-				plugin:UpdateGUI() -- Update width/height if GUI is open
+				if self:IsMouseOver() then -- Only if we're dragging the drag handle, not sliding the GUI slider
+					plugin:UpdateGUI() -- Update width/height if GUI is open
+				end
 				throttle = false
 			end, 0.1)
 		end
