@@ -85,7 +85,6 @@ L.emphasize = "Enfatizza"
 L.emphasizeAt = "Enfatizza a... (secondi)"
 L.emphasized = "Enfatizzato"
 L.emphasizedBars = "Barre Enfatizzate"
-L.emphasizedCountdownSinkDescription = "Indirizza l'uscita da questo addon verso la visualizzazione del Recupero Messaggi Enfatizzati. Questa visualizzazione supporta testi e colori, e può visualizzare solo un messaggio alla volta."
 L.emphasizedMessages = "Messaggi Enfatizzati"
 L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di BigWigs. Questo metodo supporta testi, colori e può visualizzare un solo messaggio per volta."
 L.enable = "Attiva"
@@ -333,9 +332,12 @@ L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (B
 -- Messages.lua
 --
 
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 --L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 L.uppercase = "TUTTO MAIUSCOLO"
 --L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.chatMessages = "Messaggi Riquadro Chat"
+L.chatMessagesDesc = "Invia tutti i messaggi di BigWigs alla chat oltre che nei settaggi di visualizzazione."
 
 -----------------------------------------------------------------------
 -- Proximity.lua

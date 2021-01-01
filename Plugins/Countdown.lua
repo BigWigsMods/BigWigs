@@ -577,7 +577,7 @@ do
 			local voice = customVoice or module and module.name and plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
 			for i = 1, self.db.profile.countdownTime do
 				local t = i + 0.3
-				if time <= t then break end
+				if time <= t then return end
 				self:SimpleTimer(function()
 					if not cancelTimer[1] then
 						if not audioOnly and plugin.db.profile.textEnabled then

@@ -2075,7 +2075,7 @@ do
 				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
 			end
 		elseif checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
-			local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
+			local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
 			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture, isEmphasized)
 		end
 	end

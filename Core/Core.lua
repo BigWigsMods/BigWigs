@@ -275,12 +275,18 @@ do
 		core:SendMessage("BigWigs_StartBar", core, msg, msg, time, icon)
 
 		local guid = UnitGUID("target")
-		if guid then
-			local t = GetTime()
-			if (t - lastNamePlateBar) > 25 then
-				lastNamePlateBar = t
-				core:Print(L.testNameplate)
-				core:SendMessage("BigWigs_StartNameplateBar", core, msg, msg, 25, icon, false, guid)
+		if guid and UnitCanAttack("player", "target") then
+			for i = 1, 40 do
+				local unit = ("nameplate%d"):format(i)
+				if UnitGUID(unit) == guid then
+					local t = GetTime()
+					if (t - lastNamePlateBar) > 25 then
+						lastNamePlateBar = t
+						core:Print(L.testNameplate)
+						core:SendMessage("BigWigs_StartNameplateBar", core, msg, msg, 25, icon, false, guid)
+					end
+					return
+				end
 			end
 		end
 	end

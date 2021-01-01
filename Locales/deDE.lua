@@ -75,8 +75,6 @@ L.listAbilities = "Fähigkeiten im Chat auflisten"
 
 L.dbmFaker = "Täusche DBM Nutzung vor"
 L.dbmFakerDesc = "Wenn ein DBM-Nutzer eine Versionskontrolle ausführt erscheinst Du in der Liste. Nützlich für Gilden die auf DBM bestehen."
-L.chatMessages = "Chatfenster-Nachrichten"
-L.chatMessagesDesc = "Gibt alle BigWigs-Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
 L.zoneMessages = "Gebietsmeldungen anzeigen"
 L.zoneMessagesDesc = "Wenn Du diese Option deaktivierst, zeigt BigWigs beim Betreten von Gebieten ohne installierte Bossmods keine Meldungen mehr an. Es wird empfohlen, diese Option aktiviert zu lassen, da sie über neu erstellte Timer für neue Gebiete informiert."
 

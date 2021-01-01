@@ -78,7 +78,6 @@ L.emphasize = "強調"
 L.emphasizeAt = "…（秒）後強調"
 L.emphasized = "強調"
 L.emphasizedBars = "強調計時條"
-L.emphasizedCountdownSinkDescription = "以 BigWigs 強調倒數訊息輸出此插件資訊。此訊息支持文字和顏色，同一時間只能顯示一條訊息。"
 L.emphasizedMessages = "強調訊息"
 L.emphasizedSinkDescription = "以 BigWigs 強調訊息輸出此插件資訊。此訊息支持文字和顏色，同一時間只能顯示一條訊息。"
 L.enable = "啟用"
@@ -320,9 +319,12 @@ L.infoBox = "訊息盒"
 -- Messages.lua
 --
 
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 L.resetMessagesDesc = "重設所有訊息自訂選項，包括錨點和位置。"
 L.uppercase = "大寫"
 L.uppercaseDesc = "所有的強調訊息都會被轉換為大寫。"
+L.chatMessages = "聊天框體訊息"
+L.chatMessagesDesc = "除了顯示設定，輸出所有 BigWigs 訊息到預設聊天框體。"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
