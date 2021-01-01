@@ -10,6 +10,11 @@ if L then
 	-- L.killed = "%s Killed"
 end
 
+L = BigWigs:NewBossLocale("Hungering Destroyer", "esES") or BigWigs:NewBossLocale("Hungering Destroyer", "esMX")
+if L then
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+end
+
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "esES") or BigWigs:NewBossLocale("Artificer Xy'mox", "esMX")
 if L then
 	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."

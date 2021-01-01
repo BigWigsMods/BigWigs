@@ -10,6 +10,11 @@ if L then
 	L.killed = "%s 죽음"
 end
 
+L = BigWigs:NewBossLocale("Hungering Destroyer", "koKR")
+if L then
+	L.miasma = "독기" -- Short for Gluttonous Miasma
+end
+
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "koKR")
 if L then
 	L.stage2_yell = "이 유물을 써 보고 싶어서 숨이 멎을 뻔했답니다! 뭐, 당신네는 진짜로 멎겠지만."

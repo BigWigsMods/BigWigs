@@ -10,6 +10,11 @@ if L then
 	 L.killed = "%s getötet"
 end
 
+L = BigWigs:NewBossLocale("Hungering Destroyer", "deDE")
+if L then
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+end
+
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "deDE")
 if L then
 	L.stage2_yell = "Die Vorfreude auf dieses Relikt bringt mich fast um! Aber wahrscheinlich tötet es eher Euch."
