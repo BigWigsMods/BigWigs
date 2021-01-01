@@ -1409,6 +1409,10 @@ local function createDeletionTimer(barInfo)
 end
 
 local function barStopped(event, bar)
+	local countdown = bar:Get("bigwigs:stopcountdown")
+	if countdown then
+		plugin:SendMessage("BigWigs_StopCountdown", plugin, countdown)
+	end
 	local a = bar:Get("bigwigs:anchor")
 	local unitGUID = bar:Get("bigwigs:unitGUID")
 	if a and a.bars and a.bars[bar] then
@@ -1903,7 +1907,9 @@ end
 -- Enable countdown on the clicked bar
 clickHandlers.countdown = function(bar)
 	-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
-	plugin:SendMessage("BigWigs_StartCountdown", bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), "temp".. bar:GetLabel(), bar.remaining)
+	local text = bar:GetLabel()
+	bar:Set("bigwigs:stopcountdown", text)
+	plugin:SendMessage("BigWigs_StartCountdown", plugin, nil, text, bar.remaining)
 end
 
 -- Report the bar status to the active group type (raid, party, solo)
