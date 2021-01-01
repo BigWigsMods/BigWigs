@@ -680,7 +680,7 @@ do
 	emphMessageFrame:SetFrameLevel(0) -- Behind GUI (level 1)
 	emphMessageFrame:SetFixedFrameLevel(true)
 	emphMessageFrame:SetPoint("CENTER", emphMessageAnchor, "CENTER")
-	emphMessageFrame:SetWidth(UIParent:GetWidth())
+	emphMessageFrame:SetWidth(2000)
 	emphMessageFrame:SetHeight(80)
 	emphMessageFrame:Hide()
 
