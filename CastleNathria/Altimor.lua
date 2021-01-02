@@ -43,7 +43,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		--[[ Huntsman Altimor ]]--
-		{335114, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Sinseeker
+		{335114, "SAY", "SAY_COUNTDOWN", "FLASH", "ME_ONLY_EMPHASIZE"}, -- Sinseeker
 		sinseekerMarker,
 		334404, -- Spreadshot
 

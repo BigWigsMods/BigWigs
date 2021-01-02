@@ -517,6 +517,8 @@ end
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartCountdown")
 	self:RegisterMessage("BigWigs_StopCountdown")
+	self:RegisterMessage("BigWigs_OnBossDisable")
+	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
@@ -569,15 +571,18 @@ end
 do
 	local timers = {}
 	function plugin:BigWigs_StartCountdown(_, module, key, text, time, customVoice, audioOnly)
-		if time > 1.3 then
-			self:BigWigs_StopCountdown(nil, nil, text)
+		if module and time > 1.3 then
+			self:BigWigs_StopCountdown(nil, module, text)
+			if not timers[module] then
+				timers[module] = {}
+			end
 			local cancelTimer = {false}
-			timers[text] = cancelTimer
+			timers[module][text] = cancelTimer
 
-			local voice = customVoice or module and module.name and plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
+			local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
 			for i = 1, self.db.profile.countdownTime do
 				local t = i + 0.3
-				if time <= t then break end
+				if time <= t then return end
 				self:SimpleTimer(function()
 					if not cancelTimer[1] then
 						if not audioOnly and plugin.db.profile.textEnabled then
@@ -592,12 +597,24 @@ do
 			end
 		end
 	end
-	function plugin:BigWigs_StopCountdown(_, _, text)
-		if timers[text] then
-			timers[text][1] = true
-			if latestCountdown == timers[text] then
+	function plugin:BigWigs_StopCountdown(_, module, text)
+		local moduleTimers = timers[module]
+		if moduleTimers and moduleTimers[text] then
+			moduleTimers[text][1] = true
+			if latestCountdown == moduleTimers[text] then
 				self:SetText("") -- Only clear the text if the cancelled countdown was the last to display something
 			end
+		end
+	end
+	function plugin:BigWigs_OnBossDisable(_, module)
+		if timers[module] then
+			for _, timer in next, timers[module] do
+				timer[1] = true
+				if latestCountdown == timer then
+					self:SetText("") -- Only clear the text if the cancelled countdown was the last to display something
+				end
+			end
+			timers[module] = nil
 		end
 	end
 end

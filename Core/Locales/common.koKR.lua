@@ -87,4 +87,5 @@ L.seconds = "%.1f초" -- 1.1 seconds
 
 -- Common ability name replacements
 --L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
---L.bomb = "Bomb" -- Used for debuffs that make players explode
+L.bomb = "폭탄" -- Used for debuffs that make players explode
+L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a player

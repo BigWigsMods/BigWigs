@@ -85,7 +85,6 @@ L.emphasize = "Enfatizar"
 L.emphasizeAt = "Enfatizar en... (segundos)"
 L.emphasized = "Enfatizado"
 L.emphasizedBars = "Barras enfatizadas"
-L.emphasizedCountdownSinkDescription = "Redirecciona la salida de este addon al sistema de cuenta atrás enfatizada de BigWigs. Este método de visualización soporta texto y colores, y puede mostrar solo un mensaje cada vez."
 L.emphasizedMessages = "Mensajes enfatizados"
 L.emphasizedSinkDescription = "Guía fuera de este addon siguiendo los mensajes enfatizados mostrados de BigWigs. Estos soportan texto y colores, y solo pueden mostrarse uno a la vez."
 L.enable = "Permitir"
@@ -333,9 +332,12 @@ L.infoBox = "InfoBox"
 -- Messages.lua
 --
 
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 --L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 L.uppercase = "MAYUSCULAS"
 --L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.chatMessages  = "Mensajes del marco de chat"
+L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de chat por defecto en adición a los ajustes mostrados"
 
 -----------------------------------------------------------------------
 -- Proximity.lua

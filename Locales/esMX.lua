@@ -75,8 +75,6 @@ L.listAbilities  = "Listar las habilidades en el chat"
 
 L.dbmFaker  = "Fingir que estoy usando DBM"
 L.dbmFakerDesc  = "Si un usuario de DBM hace un chequeo de versión para ver quien está usando DBM, ellos te verán a ti en la lista. Muy útil para gremios que obligan a usar DBM."
-L.chatMessages  = "Mensajes del marco de chat"
-L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de chat por defecto en adición a los ajustes mostrados"
 L.zoneMessages  = "Mostrar mensajes de la zona"
 L.zoneMessagesDesc  = "Desactivando esto dejará de mostrar mensajes cuando entres en una zona donde BigWigs tenga un módulo, pero no lo tengas instalado. Recomendamos que dejes esto activo, pues será la única notificación que recibirás si creamos módulos nuevos para una zona que encuentres útil"
 

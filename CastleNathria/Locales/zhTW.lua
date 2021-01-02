@@ -10,6 +10,11 @@ if L then
 	L.killed = "已擊殺%s"
 end
 
+L = BigWigs:NewBossLocale("Hungering Destroyer", "zhTW")
+if L then
+	--L.miasma = "Miasma" -- Short for Gluttonous Miasma
+end
+
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhTW")
 if L then
 	L.stage2_yell = "我想使用這個聖物想得要死，不過死的應該是你。"
