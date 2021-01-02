@@ -1045,6 +1045,7 @@ do
 						desc = L.growingUpwardsDesc,
 						order = 3,
 						set = sortBars,
+						disabled = function() return not db.emphasizeMove end, -- Disable when using 1 anchor
 					},
 					emphasizeMove = {
 						type = "toggle",
@@ -1076,7 +1077,7 @@ do
 							db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*value
 							db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*value
 						end,
-						disabled = function() return db.emphasizeMove end,
+						disabled = function() return db.emphasizeMove end, -- Disable when using 2 anchors
 					},
 					emphasizeTime = {
 						type = "range",
@@ -1339,7 +1340,7 @@ do
 			end
 			local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
 			bar:ClearAllPoints()
-			if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
+			if up then
 				if lastBar then -- Growing from a bar
 					bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
 				else -- Growing from the anchor
