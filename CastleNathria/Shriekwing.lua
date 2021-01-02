@@ -39,7 +39,7 @@ function mod:GetOptions()
 		-- Stage One - Thirst for Blood
 		330711, -- Earsplitting Shriek
 		340324, -- Sanguine Ichor
-		{342074, "SAY", "SAY_COUNTDOWN"}, -- Echolocation
+		{342074, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Echolocation
 		342863, -- Echoing Screech
 		345397, -- Wave of Blood
 		343005, -- Blind Swipe

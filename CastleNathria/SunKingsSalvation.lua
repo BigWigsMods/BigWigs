@@ -87,7 +87,7 @@ function mod:GetOptions()
 		{325877, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Ember Blast
 		329518, -- Blazing Surge
 		328579, -- Smoldering Remnants
-		328479, -- Eyes on Target
+		{328479, "ME_ONLY_EMPHASIZE"}, -- Eyes on Target
 		phoenixMarker,
 		-21954, -- Rockbound Vanquisher
 		{325440, "TANK"}, -- Vanquishing Strike

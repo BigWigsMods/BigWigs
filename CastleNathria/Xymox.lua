@@ -43,7 +43,7 @@ function mod:GetOptions()
 	return {
 		-- General
 		"stages",
-		{328437, "SAY", "SAY_COUNTDOWN"}, -- Dimensional Tear
+		{328437, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Dimensional Tear
 		dimensionalTearMarker,
 		{325236, "TANK", "SAY_COUNTDOWN"}, -- Glyph of Destruction
 		326271, -- Stasis Trap
@@ -51,7 +51,7 @@ function mod:GetOptions()
 		325399, -- Hyperlight Spark
 		-- The Relics of Castle Nathria
 		340758, -- Fleeting Spirits
-		327902, -- Fixate
+		{327902, "ME_ONLY_EMPHASIZE"}, -- Fixate
 		327414, -- Possesion
 		340788, -- Seeds of Extinction
 		329107, -- Extinction

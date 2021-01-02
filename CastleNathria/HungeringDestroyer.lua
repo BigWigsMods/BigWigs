@@ -40,9 +40,9 @@ function mod:GetOptions()
 		"berserk",
 		{329298, "SAY"}, -- Gluttonous Miasma
 		gluttonousMiasmaMarker,
-		334522, -- Consume
+		{334522, "EMPHASIZE"}, -- Consume
 		329725, -- Expunge
-		{334266, "SAY", "FLASH"}, -- Volatile Ejection
+		{334266, "SAY", "FLASH", "ME_ONLY_EMPHASIZE"}, -- Volatile Ejection
 		volatileEjectionMarker,
 		329455, -- Desolate
 		{329774, "TANK"}, -- Overwhelm

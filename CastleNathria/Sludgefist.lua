@@ -51,10 +51,10 @@ end
 
 function mod:GetOptions()
 	return {
-		{331209, "SAY" ,"SAY_COUNTDOWN"}, -- Hateful Gaze
+		{331209, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Hateful Gaze
 		331314, -- Destructive Impact
 		"fun_info",
-		335293, -- Chain Link
+		{335293, "ME_ONLY_EMPHASIZE"}, -- Chain Link
 		332318, -- Destructive Stomp
 		341193, -- Falling Rubble
 		335361, -- Stonequake
@@ -202,7 +202,7 @@ do
 		chainLinksApplied = chainLinksApplied + 1
 		if self:Me(args.destGUID) then
 			local partner = args.sourceName
-			self:Message(335293, "blue", CL.link:format(self:ColorName(partner)))
+			self:PersonalMessage(335293, false, CL.link:format(self:ColorName(partner)))
 			self:PlaySound(335293, "warning")
 		end
 		if chainLinksApplied == 1 then
