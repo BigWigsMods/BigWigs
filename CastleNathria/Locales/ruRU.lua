@@ -46,7 +46,7 @@ if L then
 	L.custom_on_stop_timers_desc = "Пока доступно только для тестирования"
 
 	L.desires = "Желания"
-	L.bottles = "Бутыли"
+	L.bottles = "Колбы"
 	L.sins = "Грехи"
 end
 
