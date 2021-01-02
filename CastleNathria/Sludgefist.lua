@@ -23,7 +23,7 @@ local fallingRubbleCount = 1
 local timers = {
 	[332318] = {18.5, 25.1, 42.6, 25.5, 42.5, 25.5, 45, 22.5, 45.0, 23.1, 41.4}, -- Destructive Stomp
 	[332687] = {0.0, 36.7, 31.3, 36.4, 31.8, 36.3, 31.5, 36.4, 31.8, 36.3, 31.5, 36.3}, -- Colossal Roar
-	[340817] = {18.5, 25.1, 30.6, 11.9, 25.5, 30.2, 12.3, 25.5, 30.2, 12.3, 25.5, 30.2, 12.3, 25.5}, -- Seismic Shift
+	[340817] = {18.5, 25.1, 30.6, 11.9, 25.5, 30.2, 12.3, 25.5, 30.2, 12.3, 25.5, 30.2, 12.3, 25.5, 29}, -- Seismic Shift
 	[341193] = {13.0, 70.9, 70.5, 70.5, 70.5} -- Falling Rubble
 }
 
@@ -135,15 +135,16 @@ end
 function mod:HatefulGazeApplied(args)
 	self:StopBar(CL.count:format(args.spellName, hatefullGazeCount))
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, hatefullGazeCount))
+	local duration = self:Mythic() and 4 or 6
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 6)
+		self:SayCountdown(args.spellId, duration)
 	end
 	if self:Tank() then
-		self:TargetBar(args.spellId, 6, args.destName, CL.count:format(args.spellName, hatefullGazeCount))
+		self:TargetBar(args.spellId, duration, args.destName, CL.count:format(args.spellName, hatefullGazeCount))
 	else
-		self:CDBar(331314, 6, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+		self:CDBar(331314, duration, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
 	end
 	hatefullGazeCount = hatefullGazeCount + 1
 end
