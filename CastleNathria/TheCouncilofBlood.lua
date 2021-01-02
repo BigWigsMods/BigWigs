@@ -107,6 +107,8 @@ function mod:GetOptions()
 		[327497] = -22149, -- Lord Stavros
 		[330959] = -22146, -- Intermission: The Danse Macabre
 		[347350] = "mythic",
+	},{
+		[331634] = CL.link,
 	}
 end
 
@@ -478,17 +480,17 @@ do
 			lastDarkRecitalName = args.destName
 			darkrecitalPairCount = darkrecitalPairCount + 1
 			if self:Me(args.destGUID) then -- fallback if a partner is missing
-				darkRecitalFallbackTimer = self:ScheduleTimer("PersonalMessage", 0.1, 331634, false, CL.link:format("|cffff0000???"))
+				darkRecitalFallbackTimer = self:ScheduleTimer("PersonalMessage", 0.1, 331634, false, CL.link_with:format("|cffff0000???"))
 			end
 		elseif args.spellId == 331637 and firstDarkRecitalTargetGUID then -- 2nd Dark Recital Target
 			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
-				self:PersonalMessage(331634, false, CL.link:format(self:ColorName(lastDarkRecitalName)))
+				self:PersonalMessage(331634, false, CL.link_with:format(self:ColorName(lastDarkRecitalName)))
 				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
 					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
 				end
 			elseif self:Me(firstDarkRecitalTargetGUID) then -- We got 1st debuff so this is our partner
-				self:PersonalMessage(331634, false, CL.link:format(self:ColorName(args.destName)))
+				self:PersonalMessage(331634, false, CL.link_with:format(self:ColorName(args.destName)))
 				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
 					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
@@ -501,7 +503,7 @@ do
 			end
 		else -- Missing a partner, alternative message
 			if self:Me(args.destGUID) or self:Me(firstDarkRecitalTargetGUID) then
-				self:PersonalMessage(331634, false, CL.link:format("|cffff00ff???"))
+				self:PersonalMessage(331634, false, CL.link_with:format("|cffff00ff???"))
 				if darkRecitalFallbackTimer then -- We printed above, so cancel this
 					self:CancelTimer(darkRecitalFallbackTimer)
 					darkRecitalFallbackTimer = nil

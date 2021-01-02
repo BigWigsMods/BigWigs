@@ -74,7 +74,8 @@ L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s. Ben
 L.marker_npc_desc = "Markiert %s mit %s. Benötigt Leiter oder Assistent."
 
 -- Ability where two players have to move close to each other
-L.link = "Verbunden mit %s"
+--L.link = "Link"
+L.link_with = "Verbunden mit %s"
 L.link_short = "Verbunden: %s"
 L.link_both = "%s verbunden mit %s"
 L.link_removed = "Verbindung entfernt"

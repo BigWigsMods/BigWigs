@@ -72,7 +72,8 @@ L.marker_player_desc = "Marca jogadores afetados por %s com %s, requer líder ou
 L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente."
 
 -- Ability where two players have to move close to each other
-L.link = "Ligado com %s"
+L.link = "Ligação"
+L.link_with = "Ligado com %s"
 L.link_short = "Ligado: %s"
 L.link_both = "%s ligado com %s"
 L.link_removed = "Ligação removida"

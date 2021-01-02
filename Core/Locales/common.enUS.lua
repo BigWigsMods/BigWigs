@@ -73,7 +73,8 @@ L.marker_player_desc = "Mark players affected by %s with %s, requires promoted o
 L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."
 
 -- Ability where two players have to move close to each other
-L.link = "Linked with %s"
+L.link = "Link"
+L.link_with = "Linked with %s"
 L.link_short = "Linked: %s"
 L.link_both = "%s linked with %s"
 L.link_removed = "Link removed"
