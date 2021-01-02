@@ -29,7 +29,7 @@ if L then
 	-- L.times = "%dx %s"
 
 	L.level = "%s (Уровень |cffffff00%d|r)"
-	L.full = "%s (|cffff0000Полная|r)"
+	L.full = "%s (|cffff0000ПОЛНЫЙ|r)"
 
 	L.container_active = "Активный контейнер: %s"
 
@@ -80,7 +80,7 @@ end
 
 L = BigWigs:NewBossLocale("Sludgefist", "ruRU")
 if L then
-	-- L.stomp_shift = "Топот + Сдвиг" -- Destructive Stomp + Seismic Shift
+	L.stomp_shift = "Топот + Сдвиг" -- Destructive Stomp + Seismic Shift
 
 	L.fun_info = "Информация об уроне"
 	L.fun_info_desc = "Показ сообщения о том сколько босс потерял здоровья за фазу Разрушительного удара."
