@@ -448,6 +448,13 @@ plugin.pluginOptions = {
 					name = L.uppercase,
 					desc = L.uppercaseDesc,
 					order = 6,
+					width = 2,
+					hidden = function() -- Hide this option for CJK languages
+						local loc = GetLocale()
+						if loc == "zhCN" or loc == "zhTW" or loc == "koKR" then
+							return true
+						end
+					end,
 				},
 			},
 		},
