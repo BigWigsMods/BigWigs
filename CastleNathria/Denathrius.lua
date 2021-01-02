@@ -607,7 +607,7 @@ function mod:IndignationSuccess(args)
 	self:StopBar(CL.count:format(self:SpellName(333932), handCount)) -- Hand of Destruction
 	self:StopBar(CL.count:format(self:SpellName(330137), massacreCount)) -- Massacre
 	self:StopBar(CL.count:format(CL.adds, addCount)) -- Adds
-	self:StopBar(CL.stage:format(2)) -- Stage 2
+	self:StopBar(CL.stage:format(3)) -- Stage 3
 
 	handCount = 1
 	shatteringPainCount = 1
