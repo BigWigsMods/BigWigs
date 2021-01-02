@@ -1,8 +1,8 @@
 local L = BigWigs:NewBossLocale("Shriekwing", "koKR")
 if not L then return end
 if L then
-	-- L.pickup_lantern = "%s picked up the lantern!"
-	-- L.dropped_lantern = "Lantern dropped by %s!"
+	 L.pickup_lantern = "%s 이(가) 등불을 들었습니다!"
+	 L.dropped_lantern = " %s 이(가) 등불 떨어트림!"
 end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "koKR")
@@ -26,15 +26,15 @@ end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "koKR")
 if L then
-	-- L.times = "%dx %s"
+	 L.times = "%dx %s"
 
-	-- L.level = "%s (Level |cffffff00%d|r)"
-	-- L.full = "%s (|cffff0000FULL|r)"
+	 L.level = "%s (Level |cffffff00%d|r)"
+	 L.full = "%s (|cffff0000FULL|r)"
 
-	-- L.container_active = "Enable Container: %s"
+	 L.container_active = "활성화된 용기: %s"
 
-	-- L.anima_adds = "Concentrate Anima Adds"
-	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
+	 L.anima_adds = "농축된 령 쫄"
+	 L.anima_adds_desc = "농축된 령 쫄이 언제 생성되는 타이머 표시."
 
 	-- L.custom_off_experimental = "Enable experimental features"
 	-- L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
@@ -45,19 +45,19 @@ if L then
 	-- L.custom_on_stop_timers = "Always show ability bars"
 	-- L.custom_on_stop_timers_desc = "Just for testing right now"
 
-	-- L.desires = "Desires"
-	-- L.bottles = "Bottles"
-	-- L.sins = "Sins"
+	 L.desires = "욕망"
+	 L.bottles = "병에 담긴 령"
+	 L.sins = "죄악"
 end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "koKR")
 if L then
 	L.macabre_start_emote = "죽음의 무도를 위해 자신의 위치에 서야 합니다!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
-	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
-	-- L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
+	 L.custom_on_repeating_dark_recital = "어둠의 무도회 지속적으로 표시"
+	 L.custom_on_repeating_dark_recital_desc = "지속적으로  {rt1}, {rt2}  로 표시를 해서 본인의 짝을 찾을수 있도록 표시."
 
-	-- L.custom_off_select_boss_order = "Mark Boss Kill Order"
-	-- L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
+	 L.custom_off_select_boss_order = "보스 킬 순서 표시"
+	 L.custom_off_select_boss_order_desc = "보스를 잡을 순서를 {rt7} 로 표시. 부공대장 이상의 권한이 필요합니다."
 	L.custom_off_select_boss_order_value1 = "니클라우스 -> 프리에다 -> 스타브로스"
 	L.custom_off_select_boss_order_value2 = "프리에다 -> 니클라우스 -> 스타브로스"
 	L.custom_off_select_boss_order_value3 = "스타브로스 -> 니클라우스 -> 프리에다"
@@ -65,8 +65,8 @@ if L then
 	L.custom_off_select_boss_order_value5 = "프리에다 -> 스타브로스 -> 니클라우스"
 	L.custom_off_select_boss_order_value6 = "스타브로스 -> 프리에다 -> 니클라우스"
 
-	--L.dance_assist = "Dance Assist"
-	--L.dance_assist_desc = "Show directional warnings for the dancing stage."
+	L.dance_assist = "춤 도우미"
+	L.dance_assist_desc = "춤출때 방향 표시."
 	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t 앞으로 |T450907:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t 오른쪽으로 |T450908:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t 밑으로 |T450905:0:0:0:0:64:64:4:60:4:60|t"
@@ -80,20 +80,20 @@ end
 
 L = BigWigs:NewBossLocale("Sludgefist", "koKR")
 if L then
-	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+	 L.stomp_shift = "발구르기 & 지진" -- Destructive Stomp + Seismic Shift
 
-	-- L.fun_info = "Damage Info"
-	-- L.fun_info_desc = "Display a message showing how much health the boss lost during Destructive Impact."
+	 L.fun_info = "데미지 표시"
+	 L.fun_info_desc = "파괴의 충격 중 얼마나 체력을 많이 뺐는가를 메세지로 표시."
 
-	-- L.health_lost = "Sludgefist went down %.1f%%!"
+	 L.health_lost = "진흙주먹이 피 %.1f%% 만큼 깎았습니다!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "koKR")
 if L then
-	-- L.first_blade = "First Blade"
-	-- L.second_blade = "Second Blade"
+	 L.first_blade = "첫번째 칼날"
+	 L.second_blade = "두번째 칼날"
 
-	-- L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+	 L.skirmishers = "척후병" -- Short for Stone Legion Skirmishers
 
 	-- L.custom_on_stop_timers = "Always show ability bars"
 	-- L.custom_on_stop_timers_desc = "Just for testing right now"
@@ -103,7 +103,7 @@ L = BigWigs:NewBossLocale("Sire Denathrius", "koKR")
 if L then
 	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
-	--L.infobox_stacks = "%d |4Stack:Stacks;: %d |4player:players;" -- 4 Stacks: 5 players // 1 Stack: 1 player
+	--L.infobox_stacks = "%d |4중첩:중첩;: %d |4명:명;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	--L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
 	--L.custom_on_repeating_nighthunter_desc = "Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
@@ -118,6 +118,6 @@ if L then
 	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
 	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
 
-	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
-	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
+	 L.no_mirror = "거울 없음: %d" -- Player amount that does not have the Through the Mirror
+	 L.mirror = "거울: %d" -- Player amount that does have the Through the Mirror
 end
