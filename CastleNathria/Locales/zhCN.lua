@@ -12,7 +12,7 @@ end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "zhCN")
 if L then
-	--L.miasma = "Miasma" -- Short for Gluttonous Miasma
+	L.miasma = "瘴气" -- Short for Gluttonous Miasma
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhCN")
