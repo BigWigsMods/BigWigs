@@ -157,7 +157,7 @@ L.disableAudioDesc = "WoW의 소리 설정에서 '%s' 설정이 꺼지고 교전
 L.blockTooltipQuests = "툴팁에서 퀘스트 목표 표시를 숨깁니다."
 L.blockTooltipQuestsDesc = "우두머리를 처치하는 퀘스트를 진행 중인 경우 해당 우두머리에 마우스를 올렸을 때 보통 '0/1 완료' 같은 문구가 툴팁에 표시됩니다. 전투 중에 이 문구들을 숨김으로써 툴팁의 크기가 너무 크게 확장되는 것을 방지합니다."
 L.blockObjectiveTracker = "퀘스트 추적기 숨김"
-L.blockObjectiveTrackerDesc = "보스 전투 중에 퀘스트 추적기를 숨겨서 화면의여유 공간을 넓힙니다. 신화 쐐기돌이나 업적을 추적 중일 때는 숨기지 않습니다."
+L.blockObjectiveTrackerDesc = "보스 전투 중에 퀘스트 추적기를 숨겨서 화면의 여유 공간을 넓힙니다.\n\n신화 쐐기돌이나 업적을 추적 중일 때는 숨기지 않습니다."
 
 L.subzone_grand_bazaar = "대시장" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "잔달라 항구" -- Battle of Dazar'alor raid (Battle for Azeroth)
