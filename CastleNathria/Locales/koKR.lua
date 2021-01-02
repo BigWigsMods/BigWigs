@@ -103,7 +103,7 @@ L = BigWigs:NewBossLocale("Sire Denathrius", "koKR")
 if L then
 	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
-	--L.infobox_stacks = "%d |4중첩:중첩;: %d |4명:명;" -- 4 Stacks: 5 players // 1 Stack: 1 player
+	L.infobox_stacks = "%d 중첩: %d 명" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	--L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
 	--L.custom_on_repeating_nighthunter_desc = "Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
