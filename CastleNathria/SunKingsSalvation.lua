@@ -117,6 +117,8 @@ function mod:GetOptions()
 		[326078] = -22231, -- Infusing Essences
 		[328889] = -22089, -- High Torturer Darithos
 		[338600] = "mythic",
+	},{
+		[328479] = CL.fixate, -- Eyes on Target (Fixate)
 	}
 end
 
@@ -127,14 +129,14 @@ function mod:OnBossEnable()
 	self:Death("EssenceFontDeath", 165778) -- Essence Font
 
 	-- Shade of Kael'thas
-	self:Log("SPELL_AURA_APPLIED", "ReflectionofGuiltApplied", 323402)
+	self:Log("SPELL_AURA_APPLIED", "ReflectionOfGuiltApplied", 323402)
 	self:Log("SPELL_CAST_START", "FieryStrike", 326455)
 	self:Log("SPELL_AURA_APPLIED", "BurningRemnantsApplied", 326456)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningRemnantsApplied", 326456)
 	self:Log("SPELL_CAST_START", "EmberBlast", 325877)
 	self:Log("SPELL_CAST_START", "BlazingSurge", 329518)
-	self:Log("SPELL_AURA_APPLIED", "EyesonTarget", 328479) -- Phoenix Fixate
-	self:Log("SPELL_AURA_REMOVED", "ReflectionofGuiltRemoved", 323402)
+	self:Log("SPELL_AURA_APPLIED", "EyesOnTarget", 328479) -- Phoenix Fixate
+	self:Log("SPELL_AURA_REMOVED", "ReflectionOfGuiltRemoved", 323402)
 
 	-- Ministers of Vice
 	self:Log("SPELL_CAST_START", "VanquishingStrike", 325440)
@@ -143,7 +145,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ConcussiveSmash", 325506)
 	self:Death("RockboundVanquisherDeath", 165764) -- Rockbound Vanquisher
 	self:Log("SPELL_AURA_APPLIED", "CrimsonFlurryApplied", 326583)
-	self:Log("SPELL_CAST_START", "ReturntoStone", 333145)
+	self:Log("SPELL_CAST_START", "ReturnToStone", 333145)
 	self:Log("SPELL_CAST_START", "VulgarBrand", 333002)
 
 	-- Infusing Essences
@@ -158,8 +160,8 @@ function mod:OnBossEnable()
 	self:Death("DarithosDeath", 168973) -- High Torturer Darithos
 
 	-- Mythic
-	self:Log("SPELL_AURA_APPLIED", "CloakofFlamesApplied", 337859, 343026)
-	self:Log("SPELL_AURA_REMOVED", "CloakofFlamesRemoved", 337859, 343026)
+	self:Log("SPELL_AURA_APPLIED", "CloakOfFlamesApplied", 337859, 343026)
+	self:Log("SPELL_AURA_REMOVED", "CloakOfFlamesRemoved", 337859, 343026)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 328579) -- Smoldering Remnants
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 328579)
@@ -296,7 +298,7 @@ function mod:VileOccultistDeath(args)
 end
 
 -- Shade of Kael'thas
-function mod:ReflectionofGuiltApplied(args)
+function mod:ReflectionOfGuiltApplied(args)
 	if not shadeUp then
 		shadeUp = true
 		self:Message("stages", "green", CL.incoming:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
@@ -375,14 +377,14 @@ function mod:BlazingSurge(args)
 	self:Bar(args.spellId, 19.5, CL.count:format(args.spellName, blazingSurgeCount))
 end
 
-function mod:EyesonTarget(args)
+function mod:EyesOnTarget(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
+		self:PersonalMessage(args.spellId, nil, CL.fixate)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
 
-function mod:ReflectionofGuiltRemoved()
+function mod:ReflectionOfGuiltRemoved()
 	self:Message("stages", "green", CL.removed:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider") -- Shade of Kael'thas
 	self:PlaySound("stages", "long")
 	self:StopBar(326455) -- Fiery Strike
@@ -455,7 +457,7 @@ end
 
 do
 	local prev = 0
-	function mod:ReturntoStone(args)
+	function mod:ReturnToStone(args)
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
@@ -533,7 +535,7 @@ function mod:DarithosDeath()
 end
 
 -- Mythic
-function mod:CloakofFlamesApplied(args)
+function mod:CloakOfFlamesApplied(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, cloakofFlamesCount))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakofFlamesCount))
@@ -541,7 +543,7 @@ function mod:CloakofFlamesApplied(args)
 	self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(args.spellName, cloakofFlamesCount))
 end
 
-function mod:CloakofFlamesRemoved(args)
+function mod:CloakOfFlamesRemoved(args)
 	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
 	self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakofFlamesCount-1)))
