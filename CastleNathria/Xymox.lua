@@ -32,6 +32,9 @@ local L = mod:GetLocale()
 if L then
 	L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
 	L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
+	L.tear = "Tear" -- Short for Dimensional Tear
+	L.spirits = "Spirits" -- Short for Fleeting Spirits
+	L.seeds = "Seeds" -- Short for Seeds of Extinction
 end
 
 --------------------------------------------------------------------------------
@@ -56,10 +59,14 @@ function mod:GetOptions()
 		340788, -- Seeds of Extinction
 		329107, -- Extinction
 		340860, -- Withering Touch
-		328789, -- Edge of Annihilation
+		328789, -- Annihilate
 	},{
 		[328437] = "general",
 		[340758] = -22119, -- The Relics of Castle Nathria
+	},{
+		[328437] = L.tear, -- Dimensional Tear (Tear)
+		[340758] = L.spirits, -- Fleeting Spirits (Spirits)
+		[340788] = L.seeds, -- Seeds of Extinction (Seeds)
 	}
 end
 
@@ -83,7 +90,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SeedsofExtinction", 329770, 340788) -- Root of Extinction, Seeds of Extinction // First wave, Others
 	self:Log("SPELL_CAST_START", "Extinction", 329107)
 	self:Log("SPELL_AURA_APPLIED", "WitheringTouchApplied", 340860)
-	self:Log("SPELL_CAST_START", "EdgeofAnnihilation", 328789)
+	self:Log("SPELL_CAST_START", "Annihilate", 328789)
 	--self:Log("SPELL_CAST_START", "UnleashPower", 342854)
 end
 
@@ -100,10 +107,10 @@ function mod:OnEngage()
 	if not self:Easy() then -- No traps in Normal (and LFR?)
 		self:Bar(326271, 11) -- Stasis Trap
 	end
-	self:Bar(328437, 17, CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
+	self:Bar(328437, 17, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 	self:Bar(335013, 21) -- Rift Blast
 	self:Bar(325236, 31, CL.count:format(self:SpellName(325236), glyphCount)) -- Glyph of Destruction
-	self:Bar(340758, 27, CL.count:format(self:SpellName(340758), spiritCount)) -- Fleeting Spirit
+	self:Bar(340758, 27, CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
 end
 
 --------------------------------------------------------------------------------
@@ -113,8 +120,8 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.stage2_yell) then
 		self:StopBar(326271) -- Stasis Trap
-		self:StopBar(CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
-		self:StopBar(CL.count:format(self:SpellName(340758), spiritCount)) -- Fleeting Spirit
+		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
+		self:StopBar(CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
 
 		stage = 2
 		self:Message("stages", "green", CL.stage:format(stage), false)
@@ -125,12 +132,12 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		seedCount = 1
 
 		self:CDBar(326271, 10) -- Stasis Trap
-		self:CDBar(328437, 14, CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
-		self:CDBar(340788, 16, CL.count:format(self:SpellName(340788), seedCount)) -- Seeds of Extinction
+		self:CDBar(328437, 14, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
+		self:CDBar(340788, 16, CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 	elseif msg:find(L.stage3_yell) then
 		self:StopBar(326271) -- Stasis Trap
-		self:StopBar(CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
-		self:StopBar(CL.count:format(self:SpellName(340788), seedCount)) -- Seeds of Extinction
+		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
+		self:StopBar(CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 
 		stage = 3
 		self:Message("stages", "green", CL.stage:format(stage), false)
@@ -142,7 +149,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		annihilateCount = 1
 
 		self:CDBar(326271, 10) -- Stasis Trap
-		self:CDBar(328437, 16, CL.count:format(self:SpellName(328437), dimensionalTearCount)) -- Dimensional Tear
+		self:CDBar(328437, 16, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:CDBar(328789, 28, CL.count:format(self:SpellName(328789), annihilateCount)) -- Annihilate
 	end
 end
@@ -151,9 +158,9 @@ do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 
 	function mod:DimensionalTear(args)
-		self:StopBar(CL.count:format(self:SpellName(328437), dimensionalTearCount))
+		self:StopBar(CL.count:format(L.tear, dimensionalTearCount))
 		dimensionalTearCount = dimensionalTearCount + 1
-		self:CDBar(328437, self:Mythic() and (stage == 3 and 80 or stage == 2 and 51 or 36.5) or 41.3, CL.count:format(self:SpellName(328437), dimensionalTearCount))
+		self:CDBar(328437, self:Mythic() and (stage == 3 and 80 or stage == 2 and 51 or 36.5) or 41.3, CL.count:format(L.tear, dimensionalTearCount))
 	end
 
 	function mod:DimensionalTearApplied(args)
@@ -161,7 +168,7 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
-			self:Say(328437, CL.count_rticon:format(self:SpellName(328437), count, count))
+			self:Say(328437, CL.count_rticon:format(L.tear, count, count))
 			self:SayCountdown(328437, 8)
 			self:PlaySound(328437, "warning")
 		end
@@ -169,7 +176,7 @@ do
 			SetRaidTarget(args.destName, count)
 		end
 
-		self:TargetsMessage(328437, "yellow", playerList, 2, nil, nil, nil, playerIcons)
+		self:TargetsMessage(328437, "yellow", playerList, 2, L.tear, nil, nil, playerIcons)
 	end
 
 	function mod:DimensionalTearRemoved(args)
@@ -225,10 +232,10 @@ end
 
 -- The Relics of Castle Nathria
 function mod:FleetingSpirits(args)
-	self:Message(340758, "cyan", CL.count:format(self:SpellName(340758), spiritCount))
+	self:Message(340758, "cyan", CL.count:format(L.spirits, spiritCount))
 	self:PlaySound(340758, "long")
 	spiritCount = spiritCount + 1
-	self:CDBar(340758, 41.5, CL.count:format(self:SpellName(340758), spiritCount))
+	self:CDBar(340758, 41.5, CL.count:format(L.spirits, spiritCount))
 end
 
 function mod:Fixate(args)
@@ -247,10 +254,10 @@ do
 end
 
 function mod:SeedsofExtinction(args)
-	self:Message(340788, "cyan", CL.count:format(self:SpellName(340788), seedCount))
+	self:Message(340788, "cyan", CL.count:format(L.seeds, seedCount))
 	self:PlaySound(340788, "long")
 	seedCount = seedCount + 1
-	self:Bar(340788, self:Mythic() and (seedCount == 2 and 30 or 51) or seedCount % 2 and 53.3 or 41.3, CL.count:format(self:SpellName(340788), seedCount))
+	self:Bar(340788, self:Mythic() and (seedCount == 2 and 30 or 51) or seedCount % 2 and 53.3 or 41.3, CL.count:format(L.seeds, seedCount))
 end
 
 function mod:Extinction(args)
@@ -264,7 +271,7 @@ function mod:WitheringTouchApplied(args)
 	end
 end
 
-function mod:EdgeofAnnihilation(args)
+function mod:Annihilate(args)
 	self:StopBar(CL.count:format(args.spellName, annihilateCount))
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, annihilateCount))
 	self:PlaySound(args.spellId, "warning")
