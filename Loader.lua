@@ -923,9 +923,9 @@ do
 
 	local L = GetLocale()
 	local locales = {
-		ruRU = "Russian (ruRU)",
+		--ruRU = "Russian (ruRU)",
 		itIT = "Italian (itIT)",
-		koKR = "Korean (koKR)",
+		--koKR = "Korean (koKR)",
 		esES = "Spanish (esES)",
 		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
