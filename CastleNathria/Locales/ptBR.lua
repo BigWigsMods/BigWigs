@@ -19,6 +19,9 @@ L = BigWigs:NewBossLocale("Artificer Xy'mox", "ptBR")
 if L then
 	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
 	-- L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
+	L.tear = "Rasgo" -- Short for Dimensional Tear
+	L.spirits = "Espíritos" -- Short for Fleeting Spirits
+	L.seeds = "Sementes" -- Short for Seeds of Extinction
 end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "ptBR")

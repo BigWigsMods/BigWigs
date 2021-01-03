@@ -12,18 +12,21 @@ end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "zhTW")
 if L then
-	--L.miasma = "Miasma" -- Short for Gluttonous Miasma
+	L.miasma = "瘴氣" -- Short for Gluttonous Miasma
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhTW")
 if L then
 	L.stage2_yell = "我想使用這個聖物想得要死，不過死的應該是你。"
 	L.stage3_yell = "希望這個神奇的聖物跟它看起來一樣致命！"
+	L.tear = "裂口" -- Short for Dimensional Tear
+	L.spirits = "靈魂" -- Short for Fleeting Spirits
+	L.seeds = "種子" -- Short for Seeds of Extinction
 end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "zhTW")
 if L then
-	-- L.times = "%dx %s"
+	L.times = "%d層 %s"
 
 	L.level = "%s (等級|cffffff00%d|r)"
 	L.full = "%s (|cffff0000滿了|r)"
@@ -55,12 +58,12 @@ if L then
 
 	L.custom_off_select_boss_order = "標記擊殺順序"
 	L.custom_off_select_boss_order_desc = "以紅叉 {rt7} 標記首領擊殺順序，需要權限。"
-	L.custom_off_select_boss_order_value1 = "守城將領尼克勞斯 -> 佛蕾妲女爵 -> 史塔沃斯勛爵"
-	L.custom_off_select_boss_order_value2 = "佛蕾妲女爵 -> 守城將領尼克勞斯 -> 史塔沃斯勛爵"
-	L.custom_off_select_boss_order_value3 = "史塔沃斯勛爵 -> 守城將領尼克勞斯 -> 佛蕾妲女爵"
-	L.custom_off_select_boss_order_value4 = "守城將領尼克勞斯 -> 史塔沃斯勛爵 -> 佛蕾妲女爵"
-	L.custom_off_select_boss_order_value5 = "佛蕾妲女爵 -> 史塔沃斯勛爵 -> 守城將領尼克勞斯"
-	L.custom_off_select_boss_order_value6 = "史塔沃斯勛爵 -> 佛蕾妲女爵 -> 守城將領尼克勞斯"
+	L.custom_off_select_boss_order_value1 = "守城將領 -> 佛蕾妲女爵 -> 史塔沃斯"
+	L.custom_off_select_boss_order_value2 = "佛蕾妲女爵 -> 守城將領 -> 史塔沃斯"
+	L.custom_off_select_boss_order_value3 = "史塔沃斯勛爵 -> 守城將領 -> 佛蕾妲女爵"
+	L.custom_off_select_boss_order_value4 = "守城將領 -> 史塔沃斯 -> 佛蕾妲女爵"
+	L.custom_off_select_boss_order_value5 = "佛蕾妲女爵 -> 史塔沃斯 -> 守城將領"
+	L.custom_off_select_boss_order_value6 = "史塔沃斯 -> 佛蕾妲女爵 -> 守城將領"
 
 	L.dance_assist = "跳舞助手"
 	L.dance_assist_desc = "顯示舞步方向的警報。"
@@ -98,7 +101,7 @@ end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "zhTW")
 if L then
-	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
+	L.add_spawn = "赤紅秘術師回應了戴納瑟斯的呼喚。" -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
 	L.infobox_stacks = "%d 堆疊：%d 玩家" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
@@ -111,9 +114,9 @@ if L then
 	L.hymn_stacks = "納撒亞讚歌"
 	L.hymn_stacks_desc = "以警報提示你的納撒亞讚歌層數。"
 
-	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
-	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
-	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	L.ravage_target = "倒影：劫掠目標施法條"
+	L.ravage_target_desc = "顯示倒影指向劫掠目標位置時間的施法條。"
+	L.ravage_targeted = "劫掠鎖定目標" -- Text on the bar for when Ravage picks its location to target in stage 3
 
 	L.no_mirror = "沒鏡子：%d" -- Player amount that does not have the Through the Mirror
 	L.mirror = "鏡子：%d" -- Player amount that does have the Through the Mirror

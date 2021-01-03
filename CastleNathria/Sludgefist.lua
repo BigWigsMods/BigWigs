@@ -66,6 +66,8 @@ function mod:GetOptions()
 	},{
 		[331209] = "general",
 		[341102] = "mythic",
+	},{
+		[335293] = CL.link,
 	}
 end
 
@@ -203,7 +205,7 @@ do
 		chainLinksApplied = chainLinksApplied + 1
 		if self:Me(args.destGUID) then
 			local partner = args.sourceName
-			self:PersonalMessage(335293, false, CL.link:format(self:ColorName(partner)))
+			self:PersonalMessage(335293, false, CL.link_with:format(self:ColorName(partner)))
 			self:PlaySound(335293, "warning")
 		end
 		if chainLinksApplied == 1 then

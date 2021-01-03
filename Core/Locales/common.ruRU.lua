@@ -64,15 +64,16 @@ L.marker_player_desc = "Отмечать игроков, затронутых %s
 L.marker_npc_desc = "Отмечать %s меткой %s, требуется быть помощником или лидером рейда."
 
 -- Ability where two players have to move close to each other
-L.link = "Связан с %s"
+L.link = "Связь"
+L.link_with = "Связан с %s"
 L.link_short = "Связь: %s"
 L.link_both = "%s связан с %s"
 L.link_removed = "Связь прервана"
 
 -- Abbreviated numbers
-L.amount_one = "%dB" -- Billions 1,000,000,000
-L.amount_two = "%dM" -- Millions 1,000,000
-L.amount_three = "%dK" -- Thousands 1,000
+L.amount_one = "%dмлрд" -- Billions 1,000,000,000
+L.amount_two = "%dмлн" -- Millions 1,000,000
+L.amount_three = "%dт" -- Thousands 1,000
 L.seconds = "%.1fс" -- 1.1 seconds
 
 -- Common ability name replacements

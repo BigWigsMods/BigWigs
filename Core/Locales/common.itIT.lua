@@ -64,7 +64,8 @@ L.you_icon = "%s su di |T13700%d:0|tTE"
 --L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."
 
 -- Ability where two players have to move close to each other
---L.link = "Linked with %s"
+L.link = "Vincolo"
+--L.link_with = "Linked with %s"
 --L.link_short = "Linked: %s"
 --L.link_both = "%s linked with %s"
 --L.link_removed = "Link removed"
