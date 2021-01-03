@@ -19,7 +19,7 @@ L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
 L.near = "당신 근처에 %s"
-L.on_group = "파티에 %s " -- spell on group
+L.on_group = "파티에 %s" -- spell on group
 
 L.phase = "%d단계"
 L.stage = "%d단계"
