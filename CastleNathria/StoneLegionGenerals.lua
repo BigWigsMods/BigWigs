@@ -280,8 +280,11 @@ end
 function mod:HardenedStoneFormApplied(args)
 	self:Message(args.spellId, "green", CL.intermission)
 	self:PlaySound(args.spellId, "long")
+
 	intermission = true
 	commandoAddMarks = {}
+	commandoesKilled = 0
+
 	self:StopBar(CL.count:format(self:SpellName(342256), shadowForcesCount)) -- Call Shadow Forces
 	shadowForcesCount = 1
 end
@@ -489,6 +492,7 @@ function mod:GraniteFormApplied(args)
 	self:PlaySound(args.spellId, "long")
 
 	commandoAddMarks = {}
+	commandoesKilled = 0
 	intermission = true
 
 	self:StopBar(CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
