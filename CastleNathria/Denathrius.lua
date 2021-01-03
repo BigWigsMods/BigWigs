@@ -273,11 +273,16 @@ do
 	function mod:Crescendo(args)
 		local t = args.time
 		if t - prev > 0.3 then
+			local throttleFlash = t - prev < 1
+
 			prev = t
 			self:SimpleTimer(function()
 				self:PersonalMessage(336162, "underyou")
 				self:PlaySound(336162, "warning")
-				self:Flash(336162)
+
+				if not throttleFlash then
+					self:Flash(336162)
+				end
 			end, 2)
 		end
 	end
