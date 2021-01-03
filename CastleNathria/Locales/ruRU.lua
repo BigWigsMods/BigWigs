@@ -72,10 +72,10 @@ if L then
 	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Двигайся вниз |T450905:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Двигайся влево |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
-	L.dance_yell_up = "вперед" -- Prance Forward!
-	L.dance_yell_right = "вправо" -- Shimmy right!
-	L.dance_yell_down = "назад" -- Boogie down!
-	L.dance_yell_left = "влево" -- Sashay left!
+	L.dance_yell_up = "вперед" -- "Жете вперед!" -- Prance Forward!
+	L.dance_yell_right = "вправо" -- "Па вправо!" -- Shimmy right!
+	L.dance_yell_down = "назад" -- "Бризе назад!" -- Boogie down!
+	L.dance_yell_left = "влево" -- "Шажок влево!" -- Sashay left!
 end
 
 L = BigWigs:NewBossLocale("Sludgefist", "ruRU")
@@ -103,7 +103,7 @@ L = BigWigs:NewBossLocale("Sire Denathrius", "ruRU")
 if L then
 	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
-	--L.infobox_stacks = "%d |4Stack:Stacks;: %d |4player:players;" -- 4 Stacks: 5 players // 1 Stack: 1 player
+	L.infobox_stacks = "%d |4Стак:Стака:Стаков;: %d |4игрок:игрока:игроков;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	L.custom_on_repeating_nighthunter = "Повторение крика о Ночном охотнике"
 	L.custom_on_repeating_nighthunter_desc = "Спам крика о способности Ночной охотник иконками {rt1}, {rt2} или {rt3} для облегчения поиска линии, которую вы должны перекрывать."
