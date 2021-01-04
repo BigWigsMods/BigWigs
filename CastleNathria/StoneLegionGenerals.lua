@@ -256,7 +256,7 @@ function mod:AddMarkTracker(event, unit, guid)
 	if guid and not mobCollector[guid] then
 		local mobId = self:MobId(guid)
 		if self:GetOption(skirmisherMarker) and skirmisherTracker[guid] then --  Stone Legion Skirmisher
-			SetRaidTarget(unit, skirmisherTracker[guid])
+			self:CustomIcon(skirmisherMarker, unit, skirmisherTracker[guid])
 			mobCollector[guid] = true
 		elseif self:GetOption(commandoMarker) and mobId == 169601 then -- Stone Legion Commando
 			local health = UnitHealth(unit)
@@ -267,7 +267,7 @@ function mod:AddMarkTracker(event, unit, guid)
 					if not commandoAddMarks[i] then
 						mobCollector[guid] = true
 						commandoAddMarks[i] = guid
-						SetRaidTarget(unit, i)
+						self:CustomIcon(commandoMarker, unit, i)
 						return
 					end
 				end
@@ -280,8 +280,11 @@ end
 function mod:HardenedStoneFormApplied(args)
 	self:Message(args.spellId, "green", CL.intermission)
 	self:PlaySound(args.spellId, "long")
+
 	intermission = true
 	commandoAddMarks = {}
+	commandoesKilled = 0
+
 	self:StopBar(CL.count:format(self:SpellName(342256), shadowForcesCount)) -- Call Shadow Forces
 	shadowForcesCount = 1
 end
@@ -316,7 +319,7 @@ do
 			if self:GetOption(wickedBladeMarker) then
 				for i = 1, #playerList do
 					local name = playerList[i]
-					SetRaidTarget(name, name == target and 2 or 3)
+					self:CustomIcon(wickedBladeMarker, name, name == target and 2 or 3)
 				end
 			end
 		else
@@ -349,8 +352,8 @@ do
 			end
 			if #playerList == 2 then
 				--if self:GetOption(wickedBladeMarker) then -- Are potentially wrong marks better than potentially no marks?
-				--	SetRaidTarget(playerList[1], 2)
-				--	SetRaidTarget(playerList[2], 3)
+				--	self:CustomIcon(wickedBladeMarker, playerList[1], 2)
+				--	self:CustomIcon(wickedBladeMarker, playerList[2], 3)
 				--end
 				self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 			end
@@ -360,10 +363,8 @@ do
 				self:PlaySound(333387, "warning")
 			end
 			playerList[2] = args.destName
-			if self:GetOption(wickedBladeMarker) then
-				SetRaidTarget(playerList[1], 2)
-				SetRaidTarget(playerList[2], 3)
-			end
+			self:CustomIcon(wickedBladeMarker, playerList[1], 2)
+			self:CustomIcon(wickedBladeMarker, playerList[2], 3)
 			self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 		end
 	end
@@ -372,9 +373,7 @@ do
 		if self:Me(args.destGUID) then
 			onMe = false
 		end
-		if self:GetOption(wickedBladeMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(wickedBladeMarker, args.destName)
 	end
 end
 
@@ -397,17 +396,13 @@ do
 			self:PlaySound(args.spellId, "alarm")
 		end
 
-		if self:GetOption(heartRendMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(heartRendMarker, args.destName, count)
 
 		self:TargetsMessage(args.spellId, "orange", playerList, 4, CL.count:format(args.spellName, heartRendCount-1), nil, nil, playerIcons)
 	end
 
 	function mod:HeartRendRemoved(args)
-		if self:GetOption(heartRendMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(heartRendMarker, args.destName)
 	end
 end
 
@@ -435,9 +430,7 @@ function mod:CrystalizeApplied(args)
 		self:SayCountdown(args.spellId, 5)
 		self:PlaySound(args.spellId, "warning")
 	end
-	if self:GetOption(crystalizeMarker) then
-		SetRaidTarget(args.destName, 1)
-	end
+	self:CustomIcon(crystalizeMarker, args.destName, 1)
 end
 
 function mod:CrystalizeRemoved(args)
@@ -445,9 +438,7 @@ function mod:CrystalizeRemoved(args)
 		self:CancelSayCountdown(args.spellId)
 	end
 
-	if self:GetOption(crystalizeMarker) then
-		SetRaidTarget(args.destName, 0)
-	end
+	self:CustomIcon(crystalizeMarker, args.destName)
 end
 
 function mod:PulverizingMeteor(args)
@@ -489,6 +480,7 @@ function mod:GraniteFormApplied(args)
 	self:PlaySound(args.spellId, "long")
 
 	commandoAddMarks = {}
+	commandoesKilled = 0
 	intermission = true
 
 	self:StopBar(CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval

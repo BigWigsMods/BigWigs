@@ -183,17 +183,17 @@ function mod:OnEngage()
 	if killOrder == 1 or killOrder == 4 then -- Niklaus first
 		local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 		if boss then
-			SetRaidTarget(boss, 7)
+			self:CustomIcon(killOrder, boss, 7)
 		end
 	elseif killOrder == 2 or killOrder == 5 then -- Frieda First
 		local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 		if boss then
-			SetRaidTarget(boss, 7)
+			self:CustomIcon(killOrder, boss, 7)
 		end
 	elseif killOrder == 3 or killOrder == 6 then -- Stavros First
 		local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 		if boss then
-			SetRaidTarget(boss, 7)
+			self:CustomIcon(killOrder, boss, 7)
 		end
 	end
 end
@@ -270,17 +270,17 @@ function mod:BossDeath(args)
 		if killOrder == 2 or killOrder == 3 then -- Niklaus second
 			local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(killOrder, boss, 7)
 			end
 		elseif killOrder == 1 or killOrder == 6 then -- Frieda second
 			local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(killOrder, boss, 7)
 			end
 		elseif killOrder == 4 or killOrder == 5 then -- Stavros second
 			local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(killOrder, boss, 7)
 			end
 		end
 	elseif bossesKilled == 2 then
@@ -304,17 +304,17 @@ function mod:BossDeath(args)
 		if killOrder == 5 or killOrder == 6 then -- Niklaus last
 			local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(killOrder, boss, 7)
 			end
 		elseif killOrder == 3 or killOrder == 4 then -- Frieda last
 			local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(killOrder, boss, 7)
 			end
 		elseif killOrder == 1 or killOrder == 2 then -- Stavros last
 			local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(killOrder, boss, 7)
 			end
 		end
 	end
@@ -342,7 +342,7 @@ end
 do
 	function mod:DutifulAttendantMarking(event, unit, guid)
 		if self:MobId(guid) == 175992 then -- Dutiful Attendant
-			SetRaidTarget(unit, 8)
+			self:CustomIcon(dutifulAttendantMarker, unit, 8)
 			self:UnregisterTargetEvents()
 		end
 	end
@@ -534,7 +534,7 @@ end
 do
 	function mod:WaltzingVenthyrMarking(event, unit, guid)
 		if self:MobId(guid) == 176026 then -- Dancing Fool (only 1 targetable unit)
-			SetRaidTarget(unit, 8)
+			self:CustomIcon(waltzingVenthyrMarker, unit, 8)
 			self:UnregisterTargetEvents()
 		end
 	end

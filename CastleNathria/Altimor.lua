@@ -171,9 +171,7 @@ do
 			self:PlaySound(335114, "warning")
 			self:Flash(335114)
 		end
-		if self:GetOption(sinseekerMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(sinseekerMarker, args.destName, count)
 		self:TargetsMessage(335114, "orange", playerList, 3, CL.count:format(self:SpellName(335114), sinseekerCount-1), nil, 2, playerIcons) -- Debuffs are very delayed
 	end
 end
@@ -183,9 +181,7 @@ function mod:HuntsmansMarkRemoved(args)
 		self:CancelSayCountdown(335114)
 	end
 
-	if self:GetOption(sinseekerMarker) then
-		SetRaidTarget(args.destName, 0)
-	end
+	self:CustomIcon(sinseekerMarker, args.destName)
 end
 
 function mod:Spreadshot(args)
@@ -267,7 +263,7 @@ do
 	function mod:shadesofBargastMarking(event, unit, guid)
 		if self:MobId(guid) == 171557 and not mobCollector[guid] then
 			shadesofBargastMarked = shadesofBargastMarked + 1
-			SetRaidTarget(unit, shadesofBargastMarked+3)
+			self:CustomIcon(shadesofBargastMarker, unit, shadesofBargastMarked+3)
 			mobCollector[guid] = true
 			if shadesofBargastMarked == 2 then
 				self:UnregisterTargetEvents()

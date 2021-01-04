@@ -430,9 +430,7 @@ do
 			nightHunterCount = nightHunterCount + 1
 			self:Bar(args.spellId, timers[stage][args.spellId][nightHunterCount], CL.count:format(args.spellName, nightHunterCount))
 		end
-		if self:GetOption(nightHunterMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(nightHunterMarker, args.destName, count)
 	end
 
 	function mod:NightHunterRemoved(args)
@@ -445,9 +443,7 @@ do
 		-- if self:Me(args.destGUID) then
 		-- 	self:CancelSayCountdown(args.spellId)
 		-- end
-		if self:GetOption(nightHunterMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(nightHunterMarker, args.destName)
 	end
 end
 
@@ -538,9 +534,7 @@ do
 			impaleCount = impaleCount + 1
 			self:Bar(args.spellId, timers[stage][args.spellId][impaleCount], CL.count:format(args.spellName, impaleCount))
 		end
-		if self:GetOption(impaleMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(impaleMarker, args.destName, count)
 	end
 
 	function mod:ImpaleRemoved(args)
@@ -550,9 +544,7 @@ do
 				sayTimer = nil
 			end
 		end
-		if self:GetOption(impaleMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(impaleMarker, args.destName)
 		-- if self:Me(args.destGUID) then
 		-- 	self:CancelSayCountdown(args.spellId)
 		-- end
@@ -662,15 +654,11 @@ do
 			fatalFinesseCount = fatalFinesseCount + 1
 			self:Bar(args.spellId, timers[stage][args.spellId][fatalFinesseCount], CL.count:format(args.spellName, fatalFinesseCount))
 		end
-		if self:GetOption(fatalFinesseMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(fatalFinesseMarker, args.destName, count)
 	end
 
 	function mod:FatalFinesseRemoved(args)
-		if self:GetOption(fatalFinesseMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(fatalFinesseMarker, args.destName)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 		end
@@ -744,7 +732,7 @@ function mod:VengefulWail(args)
 		for k, v in pairs(balefulShadowsList) do
 			local unit = self:GetUnitIdByGUID(k)
 			if unit then
-				SetRaidTarget(unit, balefulShadowsList[k])
+				self:CustomIcon(balefulShadowsMarker, unit, balefulShadowsList[k])
 				balefulShadowsList[k] = nil
 			end
 		end
@@ -753,7 +741,7 @@ end
 
 function mod:BalefulShadowsMarker(event, unit, guid)
 	if self:MobId(guid) == 175205 and balefulShadowsList[guid] then -- Conjured Manifestation
-		SetRaidTarget(unit, balefulShadowsList[guid])
+		self:CustomIcon(balefulShadowsMarker, unit, balefulShadowsList[guid])
 		balefulShadowsList[guid] = nil
 	end
 end

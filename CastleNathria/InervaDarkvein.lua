@@ -185,7 +185,7 @@ end
 
 function mod:ConjuredManifestationMarker(event, unit, guid)
 	if self:MobId(guid) == 170197 and conjuredManifestationList[guid] then -- Conjured Manifestation
-		SetRaidTarget(unit, conjuredManifestationList[guid])
+		self:CustomIcon(conjuredManifestationMarker, unit, conjuredManifestationList[guid])
 		conjuredManifestationList[guid] = nil
 	end
 end
@@ -364,9 +364,7 @@ do
 			local count = #playerList+1
 			playerList[count] = name
 			self:TargetsMessage(324983, "yellow", self:ColorName(playerList), 3, L.sins, nil, 4)
-			if self:GetOption(sharedSufferingMarker) then
-				SetRaidTarget(name, count)
-			end
+			self:CustomIcon(sharedSufferingMarker, name, count)
 			if count == 1 then
 				self:Bar(324983, enabledContainer == 3 and (self:Mythic() and 30 or 35) or 51, L.sins)
 			end
@@ -404,9 +402,7 @@ do
 			onMe = false
 		end
 		playerList = {}
-		if self:GetOption(sharedSufferingMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(sharedSufferingMarker, args.destName)
 	end
 end
 
@@ -435,9 +431,7 @@ do
 		end
 		self:TargetsMessage(332664, "yellow", playerList, nil, nil, nil, nil, playerIcons)
 
-		if self:GetOption(concentratedAnimaMarker) then
-			SetRaidTarget(args.destName, icon)
-		end
+		self:CustomIcon(concentratedAnimaMarker, args.destName, icon)
 		if not isOnMe then
 			self:OpenProximity(332664, 8, proxList)
 		end
@@ -459,9 +453,7 @@ do
 			end
 		end
 
-		if self:GetOption(concentratedAnimaMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(concentratedAnimaMarker, args.destName)
 	end
 end
 
@@ -486,7 +478,7 @@ function mod:Condemn(args)
 		for k, v in pairs(conjuredManifestationList) do
 			local unit = self:GetUnitIdByGUID(k)
 			if unit then
-				SetRaidTarget(unit, conjuredManifestationList[k])
+				self:CustomIcon(conjuredManifestationMarker, unit, conjuredManifestationList[k])
 				conjuredManifestationList[k] = nil
 			end
 		end

@@ -4,7 +4,7 @@
 ## Title-deDE: BigWigs [|cffeda55fCastle Nathria|r]
 ## Title-esES: BigWigs [|cffeda55fCastle Nathria|r]
 ## Title-esMX: BigWigs [|cffeda55fCastle Nathria|r]
-## Title-frFR: BigWigs [|cffeda55fCastle Nathria|r]
+## Title-frFR: BigWigs [|cffeda55fChâteau Nathria|r]
 ## Title-ruRU: BigWigs [|cffeda55fЗамок Нафрия|r]
 ## Title-zhCN: BigWigs [|cffeda55f纳斯利亚堡|r]
 ## Title-zhTW: BigWigs [|cffeda55f納撒亞城|r]
@@ -15,7 +15,7 @@
 ## Notes-deDE: BigWigs Castle Nathria Modules
 ## Notes-esES: BigWigs Castle Nathria Modules
 ## Notes-esMX: BigWigs Castle Nathria Modules
-## Notes-frFR: BigWigs Castle Nathria Modules
+## Notes-frFR: Modules BigWigs concernant le Château Nathria.
 ## Notes-ruRU: Модуль BigWigs для Замка Нафрия 
 ## Notes-zhCN: BigWigs 纳斯利亚堡模块。
 ## Notes-zhTW: BigWigs 納撒亞城模組。

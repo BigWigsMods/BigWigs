@@ -8,8 +8,8 @@ L.underyou = "당신 밑에 %s"
 L.other = "%s: %s"
 L.onboss = "우두머리에게 %s"
 L.on = "%2$s에게 %1$s"
---L.buff_boss = "Buff on BOSS: %s"
---L.buff_other = "Buff on %s: %s"
+L.buff_boss = "넴드에게 버프: %s"
+L.buff_other = "%s 에게 버프: %s"
 L.stack = "%3$s에게 %1$dx %2$s"
 L.stackyou = "당신에게 %dx %s"
 L.cast = "<시전: %s>"
@@ -19,7 +19,7 @@ L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
 L.near = "당신 근처에 %s"
---L.on_group = "%s on GROUP" -- spell on group
+L.on_group = "파티에 %s" -- spell on group
 
 L.phase = "%d단계"
 L.stage = "%d단계"
@@ -36,7 +36,7 @@ L.removed_from = "%2$s의 %1$s 제거됨"
 L.removed_by = "%2$s|1이;가; %1$s 제거함" -- spell removed by player
 L.incoming = "곧 %s"
 L.interrupted = "%s 시전 방해됨"
---L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
+L.interrupted_by = "%s 를 %s 가 차단!" -- spell interrupted by player
 L.no = "%s 없음"
 L.intermission = "사잇단계"
 --L.percent = "%d%% - %s" -- 20% - spell
@@ -87,6 +87,6 @@ L.amount_three = "%d천" -- Thousands 1,000
 L.seconds = "%.1f초" -- 1.1 seconds
 
 -- Common ability name replacements
---L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.laser = "레이저" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.bomb = "폭탄" -- Used for debuffs that make players explode
 L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a player

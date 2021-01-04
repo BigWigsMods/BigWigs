@@ -29,7 +29,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
-local SendChatMessage, GetInstanceInfo, Timer = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter
+local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
 local UnitName, UnitGUID = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID
 local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 local format, find, gsub, band, tremove, wipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
@@ -2374,7 +2374,7 @@ end
 -- @section icons
 --
 
---- Set the primary (skull by default) raid target icon.
+--- Set the primary (skull by default) raid target icon. No icon will be set if the player already has one on them.
 -- @param key the option key
 -- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:PrimaryIcon(key, player)
@@ -2386,7 +2386,7 @@ function boss:PrimaryIcon(key, player)
 	end
 end
 
---- Set the secondary (cross by default) raid target icon.
+--- Set the secondary (cross by default) raid target icon. No icon will be set if the player already has one on them.
 -- @param key the option key
 -- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:SecondaryIcon(key, player)
@@ -2395,6 +2395,16 @@ function boss:SecondaryIcon(key, player)
 		self:SendMessage("BigWigs_RemoveRaidIcon", 2)
 	else
 		self:SendMessage("BigWigs_SetRaidIcon", player, 2)
+	end
+end
+
+--- Directly set any raid target icon on a player based on a custom option key.
+-- @param key the option key
+-- @string player the player to mark
+-- @number[opt] icon the icon to mark the player with, numbering from 1-8 (if nil, the icon is removed)
+function boss:CustomIcon(key, player, icon)
+	if self:GetOption(key) then
+		SetRaidTarget(player, icon or 0)
 	end
 end
 

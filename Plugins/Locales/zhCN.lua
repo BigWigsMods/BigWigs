@@ -332,7 +332,7 @@ L.infoBox = "信息盒"
 -- Messages.lua
 --
 
---L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+L.emphasizedDesc = "醒目消息的目的是通过在屏幕中间显示一条大消息来引起您的注意。 默认情况下很少启用它，但是在可以在首领模块技能里单独设置，您也可以在[信息]--[输出]--设置[一般信息]到[BigWigs醒目]来提醒所有首领的技能。"
 L.resetMessagesDesc = "重置全部信息有关选项，包括信息锚点位置。"
 L.uppercase = "大写"
 L.uppercaseDesc = "全部醒目信息将转换为*大写*。"

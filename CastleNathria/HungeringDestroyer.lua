@@ -107,7 +107,7 @@ function mod:OnBossDisable()
 			-- Clearing marks on _REMOVED doesn't work great on this boss
 			-- The second set of marks is applied before the first is removed
 			-- When trying to remove the first set of marks it can clear the second set
-			SetRaidTarget(n, 0)
+			self:CustomIcon(gluttonousMiasmaMarker, n)
 		end
 		miasmaMarkClear = {}
 	end
@@ -129,9 +129,7 @@ do
 			-- XXX this initial application doesn't change too much and clutters instead of the Laser says.
 			self:PlaySound(args.spellId, "alarm")
 		end
-		if self:GetOption(gluttonousMiasmaMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
 		if count == 1 then
 			miasmaMarkClear = {}
 			miasmaCount = miasmaCount + 1
@@ -212,9 +210,7 @@ do
 			local count = #playerList+1
 			playerList[count] = name
 			self:TargetsMessage(334266, "orange", self:ColorName(playerList), self:Mythic() and 5 or 3, CL.laser, nil, 2)
-			if self:GetOption(volatileEjectionMarker) then
-				SetRaidTarget(name, count+4)
-			end
+			self:CustomIcon(volatileEjectionMarker, name, count+4)
 		end
 	end
 
@@ -245,7 +241,7 @@ do
 	function mod:VolatileEjectionSuccess(args)
 		if self:GetOption(volatileEjectionMarker) then
 			for _, name in pairs(playerList) do
-				SetRaidTarget(name, 0)
+				self:CustomIcon(volatileEjectionMarker, name)
 			end
 		end
 		playerList = {}

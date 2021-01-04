@@ -97,6 +97,7 @@ public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
 public.UnitName = UnitName
 public.UnitGUID = UnitGUID
+public.SetRaidTarget = SetRaidTarget
 
 -- Version
 local usersHash = {}
@@ -923,13 +924,13 @@ do
 
 	local L = GetLocale()
 	local locales = {
-		ruRU = "Russian (ruRU)",
+		--ruRU = "Russian (ruRU)",
 		itIT = "Italian (itIT)",
-		koKR = "Korean (koKR)",
+		--koKR = "Korean (koKR)",
 		esES = "Spanish (esES)",
 		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
-		ptBR = "Portuguese (ptBR)",
+		--ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
 	}
 	if locales[L] then
