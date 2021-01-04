@@ -67,11 +67,11 @@ L.modifierDesc = "Segure a tecla de modificação selecionada para ativar o cliq
 L.modifierKey = "Somente com uma tecla de modificação"
 L.modifierKeyDesc = "Permite que as barras sejam clicáveis se estiver com a tecla de modificação pressionada, deste jeito as ações do mouse descritas abaixo estarão disponíveis."
 
---L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
+L.temporaryCountdownDesc = "Habilita temporariamente a contagem na habilidade associada a essa barra."
 L.report = "Reportar"
 L.reportDesc = "Reporta o status das barras para o chat de grupo ativo; seja em um bate-papo de instância, raide, grupo ou falar, o que for mais adequado."
 L.remove = "Remover"
-L.removeBarDesc = "Remover temporariamente as barras."
+L.removeBarDesc = "Remove temporariamente as barras."
 L.removeOther = "Remover outro"
 L.removeOtherBarDesc = "Temporariamente remove todas as outras barras (exceto esta)."
 
@@ -267,7 +267,7 @@ L.soundDelayDesc = "Especifique o tempo que BigWigs deverá esperar para repetir
 
 L.proximity = "Exibição de proximidade"
 L.proximity_desc = "Mostra a janela de proximidade quando for apropriada para este encontro, listando os jogadores que estão muito pertos de você."
-L.resetProximityDesc = "Reinicia todas as opçõe relacionadas a proximidade, incluindo a posição de âncora de proximidade."
+L.resetProximityDesc = "Reinicia todas as opções relacionadas a proximidade, incluindo a posição de âncora de proximidade."
 
 L.close = "Fechar"
 L.closeProximityDesc = "Fecha a janela de aproximação.\n\nPara desativa-la completamente para um encontro, tem que ir nas opções deste encontro e desativar a opção de 'Proximidade'."
@@ -350,7 +350,7 @@ L.bossDefeatDurationPrint = "Derrotou '%s' após '%s'"
 L.bossWipeDurationPrint = "Foi derrotado por '%s' após %s"
 L.newBestTime = "Novo recorde!"
 L.bossStatistics = "Estatísticas do chefe."
-L.bossStatsDescription = "Gravar várias estatísticas dos encontros, como o número de vezes que um chefe foi morto, quantas derrotas, tempo total de combate, ou a morte mais rápida. Estas estatísticas podem ser visualizadas na tela de cada chefe, mas estará oculta para chefes que não têm estatísticas gravadas."
+L.bossStatsDescription = "Grava várias estatísticas dos encontros, como o número de vezes que um chefe foi morto, quantas derrotas, tempo total de combate, ou a morte mais rápida. Estas estatísticas podem ser visualizadas na tela de cada chefe, mas estará oculta para chefes que não têm estatísticas gravadas."
 L.enableStats = "Habilitar estatísticas"
 L.chatMessages = "Conversas"
 L.printBestTimeOption = "Notificação de melhor tempo"
