@@ -67,10 +67,10 @@ if L then
 
 	L.dance_assist = "Assistente de Dança"
 	L.dance_assist_desc = "Mostra avisos direcionais para o estágio da dança."
-	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance para Frente |T450907:0:0:0:0:64:64:4:60:4:60|t"
-	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Dance para a Direita |T450908:0:0:0:0:64:64:4:60:4:60|t"
-	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance para Baixo |T450905:0:0:0:0:64:64:4:60:4:60|t"
-	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance para a Esquerda |T450906:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance pra Frente |T450907:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Dance pra Direita |T450908:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance pra Baixo |T450905:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance pra Esquerda |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
 	L.dance_yell_up = "Quadril pra frente!" -- Prance Forward!
 	L.dance_yell_right = "Requebra pra direita!" -- Shimmy right!
