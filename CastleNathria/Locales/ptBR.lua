@@ -1,13 +1,13 @@
 local L = BigWigs:NewBossLocale("Shriekwing", "ptBR")
 if not L then return end
 if L then
-	-- L.pickup_lantern = "%s picked up the lantern!"
-	-- L.dropped_lantern = "Lantern dropped by %s!"
+	L.pickup_lantern = "%s pegou a lanterna!"
+	L.dropped_lantern = "Lanterna derrubada por %s!"
 end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "ptBR")
 if L then
-	-- L.killed = "%s Killed"
+	L.killed = "%s Morto"
 end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "ptBR")
@@ -17,8 +17,8 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "ptBR")
 if L then
-	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
-	-- L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
+	L.stage2_yell = "A ansiedade para usar a relíquia é de matar! Mas o mais certo é que acabe matando você."
+	L.stage3_yell = "Tomara que esse artefato seja tão letal quanto parece!"
 	L.tear = "Rasgo" -- Short for Dimensional Tear
 	L.spirits = "Espíritos" -- Short for Fleeting Spirits
 	L.seeds = "Sementes" -- Short for Seeds of Extinction
@@ -26,38 +26,38 @@ end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "ptBR")
 if L then
-	-- L.times = "%dx %s"
+	L.times = "%dx %s"
 
-	-- L.level = "%s (Level |cffffff00%d|r)"
-	-- L.full = "%s (|cffff0000FULL|r)"
+	L.level = "%s (Nível |cffffff00%d|r)"
+	L.full = "%s (|cffff0000CHEIO|r)"
 
-	-- L.container_active = "Enable Container: %s"
+	L.container_active = "Ativar Contêiner: %s"
 
-	-- L.anima_adds = "Concentrate Anima Adds"
-	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
+	L.anima_adds = "Adds da Ânima Concentrada"
+	L.anima_adds_desc = "Mostra um temporizador para quando os adds surgem dos debuffs de Ânima Concentrada."
 
-	-- L.custom_off_experimental = "Enable experimental features"
-	-- L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
+	L.custom_off_experimental = "Habilitar funcionalidades experimentais"
+	L.custom_off_experimental_desc = "Essas funcionalidades |cffff0000não foram testadas|r e podem causar |cffff0000spam|r."
 
-	-- L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
-	-- L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
+	L.anima_tracking = "Rastreamento de Ânima |cffff0000(Experimental)|r"
+	L.anima_tracking_desc = "Mensagens e barras para rastrear os níveis de ânima nos contêiners.|n|cffaaff00Dica: Você pode desativar a caixa de informação ou as barras, dependendo da sua preferência."
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	L.custom_on_stop_timers = "Sempre mostrar as barras de habilidade"
+	L.custom_on_stop_timers_desc = "Somente para testes por enquanto"
 
-	-- L.desires = "Desires"
-	-- L.bottles = "Bottles"
-	-- L.sins = "Sins"
+	L.desires = "Desejos"
+	L.bottles = "Garrafas"
+	L.sins = "Pecados"
 end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "ptBR")
 if L then
-	-- L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
-	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
-	-- L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
+	L.macabre_start_emote = "Assumam seus postos para a dança macabra!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
+	L.custom_on_repeating_dark_recital = "Repetir Recital Sombrio"
+	L.custom_on_repeating_dark_recital_desc = "Repetir Recital Sombrio diz mensagens com ícones {rt1}, {rt2} para encontrar seu parceiro de dança."
 
-	-- L.custom_off_select_boss_order = "Mark Boss Kill Order"
-	-- L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
+	L.custom_off_select_boss_order = "Marcar ordem de chefes"
+	L.custom_off_select_boss_order_desc = "Marca a ordem que a raide usará pra matar os chefes com uma cruz {rt7}. Requer líder de raide ou assistente para marcar."
 	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
 	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
 	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
@@ -65,59 +65,59 @@ if L then
 	L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
 	L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
 
-	--L.dance_assist = "Dance Assist"
-	--L.dance_assist_desc = "Show directional warnings for the dancing stage."
-	--L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance Forward |T450907:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Dance Right |T450908:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance Down |T450905:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance Left |T450906:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist = "Assistente de Dança"
+	L.dance_assist_desc = "Mostra avisos direcionais para o estágio da dança."
+	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance para Frente |T450907:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Dance para a Direita |T450908:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance para Baixo |T450905:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance para a Esquerda |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
-	--L.dance_yell_up = "Forward" -- Prance Forward!
-	--L.dance_yell_right = "right" -- Shimmy right!
-	--L.dance_yell_down = "down" -- Boogie down!
-	--L.dance_yell_left = "left" -- Sashay left!
+	L.dance_yell_up = "Quadril pra frente!" -- Prance Forward!
+	L.dance_yell_right = "Requebra pra direita!" -- Shimmy right!
+	L.dance_yell_down = "Rebola embaixo!" -- Boogie down!
+	L.dance_yell_left = "Quebra pra esquerda!" -- Sashay left!
 end
 
 L = BigWigs:NewBossLocale("Sludgefist", "ptBR")
 if L then
-	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+	L.stomp_shift = "Pisada & Mudança" -- Destructive Stomp + Seismic Shift
 
-	-- L.fun_info = "Damage Info"
-	-- L.fun_info_desc = "Display a message showing how much health the boss lost during Destructive Impact."
+	L.fun_info = "Informação de Dano"
+	L.fun_info_desc = "Mostra uma mensagem dizendo o quanto de vida o chefe perdeu duarnte o Impacto Destrutivo."
 
-	-- L.health_lost = "Sludgefist went down %.1f%%!"
+	L.health_lost = "Punholodo desmaiou %.1f%%!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "ptBR")
 if L then
-	-- L.first_blade = "First Blade"
-	-- L.second_blade = "Second Blade"
+	L.first_blade = "Primeira Lâmina"
+	L.second_blade = "Segunda Lâmina"
 
-	-- L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+	L.skirmishers = "Escaramuçadores" -- Short for Stone Legion Skirmishers
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	L.custom_on_stop_timers = "Sempre mostrar barras de habilidades"
+	L.custom_on_stop_timers_desc = "Somente para testes por enquanto"
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "ptBR")
 if L then
-	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
+	L.add_spawn = "Cabalistas Carmesim respondem ao chamado de Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
-	--L.infobox_stacks = "%d |4Stack:Stacks;: %d |4player:players;" -- 4 Stacks: 5 players // 1 Stack: 1 player
+	L.infobox_stacks = "%d |4Pilha:Pilhas;: %d |4jogador:jogadores;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
-	--L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
-	--L.custom_on_repeating_nighthunter_desc = "Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
+	L.custom_on_repeating_nighthunter = "Repetir grito de Caçador Noturno"
+	L.custom_on_repeating_nighthunter_desc = "Mensagens gritadas repetitivas para a habilidade Caçador Noturno usando ícones {rt1} ou {rt2} ou {rt3} para encontrar seu alinhamento se você for fazer o soak."
 
-	--L.custom_on_repeating_impale = "Repeating Impale Say"
-	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
+	L.custom_on_repeating_impale = "Repetir dizer Impalado"
+	L.custom_on_repeating_impale_desc = "Dizer mensagens repetitivas para a habilidade Impalar, usando '1' ou '22' ou '333' ou '4444' para deixar claro em qual ordem você será acertado."
 
-	-- L.hymn_stacks = "Nathrian Hymn"
-	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	L.hymn_stacks = "Hino Nathriano"
+	L.hymn_stacks_desc = "Alertas para a quantidade de pilhas de Hino Nathriano que estão em você."
 
-	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
-	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
-	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	L.ravage_target = "Reflexão: Barra de Conjuração no Alvo de Assolar"
+	L.ravage_target_desc = "Uma barra de conjuração mostrando o tempo até a reflexão marcar a localização para Assolar."
+	L.ravage_targeted = "Assolar no Alvo" -- Text on the bar for when Ravage picks its location to target in stage 3
 
-	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
-	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
+	L.no_mirror = "Sem Espelho: %d" -- Player amount that does not have the Through the Mirror
+	L.mirror = "Espelho: %d" -- Player amount that does have the Through the Mirror
 end
