@@ -10,6 +10,7 @@ if not plugin then return end
 --
 
 local lastplayer = {}
+local SetRaidTarget = BigWigsLoader.SetRaidTarget
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local icons = {

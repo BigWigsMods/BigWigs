@@ -97,6 +97,7 @@ public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
 public.UnitName = UnitName
 public.UnitGUID = UnitGUID
+public.SetRaidTarget = SetRaidTarget
 
 -- Version
 local usersHash = {}

@@ -267,20 +267,20 @@ function mod:SunKingsSalvationMarker(event, unit, guid)
 	if self:GetOption(vileOccultistMarker) and self:MobId(guid) == 165763 and not mobCollector[guid] then -- Vile Occultist
 		vileOccultistMarkCount = vileOccultistMarkCount + 1
 		local icon = 9 - (vileOccultistMarkCount % 6 + 1) -- 8, 7, 5, 6, 4, 3
-		SetRaidTarget(unit, icon)
+		self:CustomIcon(vileOccultistMarker, unit, icon)
 		iconsInUse[icon] = guid
 		mobCollector[guid] = true
 	elseif self:GetOption(essenceFontMarker) and self:MobId(guid) == 165778 and not mobCollector[guid] then -- Essence Font
 		for i = 1, 6 do
 			if not iconsInUse[i] then
-				SetRaidTarget(unit, i)
+				self:CustomIcon(essenceFontMarker, unit, i)
 				iconsInUse[i] = guid
 				mobCollector[guid] = true
 			end
 		end
 	elseif self:GetOption(phoenixMarker) and self:MobId(guid) == 168962 and not mobCollector[guid] then -- Phoenix
 		phoenixCount = phoenixCount + 1
-		SetRaidTarget(unit, phoenixCount)
+		self:CustomIcon(phoenixMarker, unit, phoenixCount)
 		mobCollector[guid] = true
 	end
 end

@@ -88,18 +88,14 @@ function mod:RapidGrowthApplied(args)
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
 	end
-	if self:GetOption(rapidGrowthMarker) then
-		rapidGrowthCount = rapidGrowthCount + 1
-		if rapidGrowthCount < 9 then
-			SetRaidTarget(args.destName, rapidGrowthCount)
-		end
+	rapidGrowthCount = rapidGrowthCount + 1
+	if rapidGrowthCount < 9 then
+		self:CustomIcon(rapidGrowthMarker, args.destName, rapidGrowthCount)
 	end
 end
 
 function mod:RapidGrowthRemoved(args)
-	if self:GetOption(rapidGrowthMarker) then
-		SetRaidTarget(args.destName, 0)
-	end
+	self:CustomIcon(rapidGrowthMarker, args.destName)
 end
 
 function mod:ImplantApplied(args)

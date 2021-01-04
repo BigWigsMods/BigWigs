@@ -172,17 +172,13 @@ do
 			self:SayCountdown(328437, 8)
 			self:PlaySound(328437, "warning")
 		end
-		if self:GetOption(dimensionalTearMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(dimensionalTearMarker, args.destName, count)
 
 		self:TargetsMessage(328437, "yellow", playerList, 2, L.tear, nil, nil, playerIcons)
 	end
 
 	function mod:DimensionalTearRemoved(args)
-		if self:GetOption(dimensionalTearMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(dimensionalTearMarker, args.destName)
 	end
 end
 
