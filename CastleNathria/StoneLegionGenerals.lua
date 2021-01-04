@@ -69,9 +69,9 @@ function mod:GetOptions()
 		334765, -- Heart Rend
 		heartRendMarker,
 		{334929, "TANK"}, -- Serrated Swipe
-		{339690, "SAY", "SAY_COUNTDOWN"}, -- Crystalize
+		{339690, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Crystalize
 		crystalizeMarker,
-		342544, -- Pulverizing Meteor
+		{342544, "SAY"}, -- Pulverizing Meteor
 		343063, -- Stone Spike
 		{342733, "FLASH"}, -- Ravenous Feast
 		342985, -- Stonegale Effigy
@@ -85,7 +85,7 @@ function mod:GetOptions()
 		--[[ Stage Two: Grashaal's Blitz ]]--
 		329808, -- Hardened Stone Form
 		{342425, "TANK"}, -- Stone Fist
-		{344496, "SAY"}, -- Reverberating Eruption
+		{344496, "SAY", "ME_ONLY_EMPHASIZE"}, -- Reverberating Eruption
 		334498, -- Seismic Upheaval
 
 		--[[ Mythic ]]--
@@ -231,16 +231,26 @@ do
 	end
 end
 
-function mod:CommandoDeath(args)
-	if intermission then
-		commandoesKilled = commandoesKilled + 1
-		self:Message("stages", "cyan", CL.mob_killed:format(args.destName, commandoesKilled, commandoesNeeded), false)
+do
+	local throttle = false
+	local function Message()
+		throttle = false
+		mod:Message("stages", "cyan", CL.mob_killed:format(mod:SpellName(-22791), commandoesKilled, commandoesNeeded), false) -- Stone Legion Commando
 	end
-	if self:GetOption(commandoMarker) then
-		for i = 8, 5, -1 do -- 8, 7, 6, 5
-			if commandoAddMarks[i] == args.destGUID then
-				commandoAddMarks[i] = nil
-				return
+	function mod:CommandoDeath(args)
+		if intermission then
+			commandoesKilled = commandoesKilled + 1
+			if not throttle then
+				throttle = true
+				self:SimpleTimer(Message, 1.5)
+			end
+		end
+		if self:GetOption(commandoMarker) then
+			for i = 8, 5, -1 do -- 8, 7, 6, 5
+				if commandoAddMarks[i] == args.destGUID then
+					commandoAddMarks[i] = nil
+					return
+				end
 			end
 		end
 	end
@@ -423,29 +433,36 @@ function mod:Crystalize(args)
 	self:CDBar(args.spellId, self:Mythic() and 55 or 60, CL.count:format(args.spellName, crystalizeCount))
 end
 
-function mod:CrystalizeApplied(args)
-	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, crystalizeCount-1))
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 5)
-		self:PlaySound(args.spellId, "warning")
-	end
-	self:CustomIcon(crystalizeMarker, args.destName, 1)
-end
-
-function mod:CrystalizeRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+do
+	local prevGUID = nil
+	function mod:CrystalizeApplied(args)
+		prevGUID = args.destGUID
+		self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, crystalizeCount-1))
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 5)
+			self:PlaySound(args.spellId, "warning")
+		end
+		self:CustomIcon(crystalizeMarker, args.destName, 1)
 	end
 
-	self:CustomIcon(crystalizeMarker, args.destName)
-end
+	function mod:CrystalizeRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
 
-function mod:PulverizingMeteor(args)
-	self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
-	self:PlaySound(args.spellId, "alert")
-	pulverizingMeteorCount = pulverizingMeteorCount + 1
+		self:CustomIcon(crystalizeMarker, args.destName)
+	end
+
+	function mod:PulverizingMeteor(args)
+		if self:Me(prevGUID) then
+			self:Yell(args.spellId, 28884) -- Meteor
+		end
+		self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:PlaySound(args.spellId, "alert")
+		pulverizingMeteorCount = pulverizingMeteorCount + 1
+	end
 end
 
 function mod:StoneSpikeApplied(args)
@@ -524,7 +541,7 @@ do
 			self:Say(344496, 324010) -- Eruption
 			self:PlaySound(344496, "warning")
 		end
-		self:TargetMessage(344496, "red", player, CL.count:format(self:SpellName(344496), reverberatingLeapCount-1))
+		self:TargetMessage(344496, "red", player, CL.count:format(self:SpellName(324010), reverberatingLeapCount-1))
 	end
 
 	function mod:ReverberatingEruption(args)
@@ -559,7 +576,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alert")
 		end
-		self:TargetsMessage(args.spellId, "cyan", playerList)
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, nil, nil, 2) -- Throttle to 2s
 	end
 end
 
