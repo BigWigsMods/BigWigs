@@ -19,7 +19,7 @@ L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
 L.near = "%s perto de VOCÊ"
---L.on_group = "%s on GROUP" -- spell on group
+L.on_group = "%s no GRUPO" -- spell on group
 
 L.phase = "Fase %d"
 L.stage = "Estágio %d"
@@ -85,6 +85,6 @@ L.amount_three = "%dK" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Common ability name replacements
---L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.bomb = "Bomba" -- Used for debuffs that make players explode
 L.fixate = "Fixação" -- Used when a boss or add is chasing/fixated on a player
