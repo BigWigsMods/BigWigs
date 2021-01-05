@@ -574,6 +574,7 @@ do
 			self:PauseBar(346690) -- Duelist's Riposte
 			self:PauseBar(346698) -- Summon Dutiful Attendant
 			self:PauseBar(330978) -- Dredger Servants
+			self:PauseBar(330965) -- Castellans Cadre
 			self:PauseBar(346303) -- Violent Uproar
 			self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 		end
@@ -604,6 +605,7 @@ function mod:DanseMacabreOver(args)
 	self:ResumeBar(346690) -- Duelist's Riposte
 	self:ResumeBar(346698) -- Summon Dutiful Attendant
 	self:ResumeBar(330978) -- Dredger Servants
+	self:ResumeBar(330965) -- Castellans Cadre
 	self:ResumeBar(346303) -- Violent Uproar
 	self:ResumeBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 end
