@@ -41,7 +41,7 @@ BigWigs:AddColors("Hungering Destroyer", {
 })
 
 BigWigs:AddColors("Artificer Xy'mox", {
-	[325236] = {"blue","purple"},
+	[325236] = {"blue","purple","yellow"},
 	[325399] = "yellow",
 	[326271] = "red",
 	[327414] = {"blue","red"},
@@ -129,6 +129,7 @@ BigWigs:AddColors("Sludgefist", {
 	[340817] = "yellow",
 	[341193] = "yellow",
 	[341250] = "yellow",
+	["fun_info"] = "green",
 })
 
 BigWigs:AddColors("Stone Legion Generals", {
@@ -153,13 +154,14 @@ BigWigs:AddColors("Stone Legion Generals", {
 	[342985] = "cyan",
 	[343063] = "blue",
 	[344496] = {"blue","red"},
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Sire Denathrius", {
 	[-22131] = "yellow",
 	[326699] = {"blue","green","red"},
 	[326707] = "purple",
-	[326851] = "blue",
+	[326851] = {"blue","red"},
 	[327122] = "orange",
 	[327796] = {"blue","orange"},
 	[327992] = "blue",
@@ -167,13 +169,17 @@ BigWigs:AddColors("Sire Denathrius", {
 	[329181] = {"blue","purple","yellow"},
 	[329906] = "blue",
 	[329951] = {"blue","orange"},
-	[330068] = "red",
+	[330042] = "red",
 	[332585] = {"blue","purple"},
 	[332619] = "orange",
 	[332794] = {"blue","orange"},
 	[332849] = "orange",
 	[333932] = "orange",
+	[333979] = "red",
 	[333980] = "red",
 	[335873] = "blue",
+	[338738] = "green",
+	[344776] = "yellow",
+	["hymn_stacks"] = {"blue","green"},
 	["stages"] = "green",
 })

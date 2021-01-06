@@ -64,7 +64,8 @@ L.marker_player_desc = "Marque les joueurs affectés par %s avec %s. Nécessite 
 L.marker_npc_desc = "Marque %s avec %s. Nécessite d'être assistant ou chef de raid."
 
 -- Ability where two players have to move close to each other
-L.link = "Lié(e) avec %s"
+L.link = "Lien"
+L.link_with = "Lié(e) avec %s"
 L.link_short = "Lié : %s"
 L.link_both = "%s est lié(e) avec %s"
 L.link_removed = "Lien enlevé"
@@ -78,3 +79,4 @@ L.seconds = "%.1fs" -- 1.1 seconds
 -- Common ability name replacements
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.bomb = "Bombe" -- Used for debuffs that make players explode
+L.fixate = "Fixer" -- Used when a boss or add is chasing/fixated on a player

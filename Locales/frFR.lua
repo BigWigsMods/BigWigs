@@ -40,8 +40,6 @@ L.BAR_desc = "Des barres sont affichées pour certaines techniques des rencontre
 L.berserk = "Berserk"
 L.berserk_desc = "Prévient quand le boss devient fou furieux."
 L.best = "Meilleur :"
-L.chatMessages = "Messages de la fenêtre de discussion"
-L.chatMessagesDesc = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal."
 L.colors = "Couleurs"
 L.configure = "Configuration"
 L.COUNTDOWN = "Compte à rebours"
@@ -136,8 +134,10 @@ L.ME_ONLY_EMPHASIZE_desc = "L'activation de cette option mettra en évidence tou
 L.NAMEPLATEBAR = "Barres d'info"
 L.NAMEPLATEBAR_desc = "Des barres sont parfois attachées aux barres d'info des unités quand plus d'un monste incantent le même sort. Si cette capacité est accompagnée d'une barre d'info que vous voulez cacher, désactivez cette option."
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Attention (Algalon)"
 L.FlagTaken = "Drapeau pris (JcJ)"
 L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
+L.spell_on_you = "BigWigs : sort sur vous"
+L.spell_under_you = "BigWigs : sort en dessous de vous"

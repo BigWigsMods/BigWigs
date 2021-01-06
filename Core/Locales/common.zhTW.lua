@@ -3,7 +3,7 @@ if not L then return end
 
 L.add = "增援"
 L.add_killed = "小怪已擊殺（%d/%d）"
-L.add_remaining = "小怪已擊殺，剩餘%d"
+L.add_remaining = "小怪已擊殺，剩餘 %d"
 L.adds = "增援"
 L.add_spawned = "小怪刷新"
 L.big_add = "大型增援"
@@ -26,7 +26,7 @@ L.intermission = "階段轉換"
 L.interrupted = "%s已打斷"
 L.interrupted_by = "%2$s已打斷%1$s" -- spell interrupted by player
 L.mob_killed = "%s已擊殺（%d/%d）"
-L.mob_remaining = "%s已擊殺，%d剩餘"
+L.mob_remaining = "%s已擊殺，剩餘%d"
 L.mythic = "傳奇難度"
 L.near = "%s在你附近"
 L.next_add = "下一波小怪"
@@ -64,7 +64,8 @@ L.marker_player_desc = "標記受到%s影響的玩家為%s，需要權限。"
 L.marker_npc_desc = "標記%s為%s，需要權限。"
 
 -- Ability where two players have to move close to each other
-L.link = "與%s連結"
+L.link = "連結"
+L.link_with = "與%s連結"
 L.link_short = "連結：%s"
 L.link_both = "%s和%s連結"
 L.link_removed = "連結移除"
@@ -76,5 +77,6 @@ L.amount_three = "%d千" -- Thousands 1,000
 L.seconds = "%.1f秒" -- 1.1 seconds
 
 -- Common ability name replacements
---L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
---L.bomb = "Bomb" -- Used for debuffs that make players explode
+L.laser = "雷射" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.bomb = "炸彈" -- Used for debuffs that make players explode
+--L.fixate = "Fixate" -- Used when a boss or add is chasing/fixated on a player

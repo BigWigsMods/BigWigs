@@ -39,11 +39,11 @@ if L then
 	L.custom_off_select_boss_order = "Mark Boss Kill Order"
 	L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
 	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
-	L.custom_off_select_boss_order_value2 = "Frienda -> Niklaus -> Stavros"
-	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frienda"
-	L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frienda"
-	L.custom_off_select_boss_order_value5 = "Frienda -> Stavros -> Niklaus"
-	L.custom_off_select_boss_order_value6 = "Stavros -> Frienda -> Niklaus"
+	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
+	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
+	L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frieda"
+	L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
+	L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
 
 	L.dance_assist = "Dance Assist"
 	L.dance_assist_desc = "Show directional warnings for the dancing stage."
@@ -107,6 +107,8 @@ function mod:GetOptions()
 		[327497] = -22149, -- Lord Stavros
 		[330959] = -22146, -- Intermission: The Danse Macabre
 		[347350] = "mythic",
+	},{
+		[331634] = CL.link,
 	}
 end
 
@@ -181,17 +183,17 @@ function mod:OnEngage()
 	if killOrder == 1 or killOrder == 4 then -- Niklaus first
 		local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 		if boss then
-			SetRaidTarget(boss, 7)
+			self:CustomIcon(false, boss, 7)
 		end
 	elseif killOrder == 2 or killOrder == 5 then -- Frieda First
 		local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 		if boss then
-			SetRaidTarget(boss, 7)
+			self:CustomIcon(false, boss, 7)
 		end
 	elseif killOrder == 3 or killOrder == 6 then -- Stavros First
 		local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 		if boss then
-			SetRaidTarget(boss, 7)
+			self:CustomIcon(false, boss, 7)
 		end
 	end
 end
@@ -268,17 +270,17 @@ function mod:BossDeath(args)
 		if killOrder == 2 or killOrder == 3 then -- Niklaus second
 			local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 1 or killOrder == 6 then -- Frieda second
 			local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 4 or killOrder == 5 then -- Stavros second
 			local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		end
 	elseif bossesKilled == 2 then
@@ -302,17 +304,17 @@ function mod:BossDeath(args)
 		if killOrder == 5 or killOrder == 6 then -- Niklaus last
 			local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 3 or killOrder == 4 then -- Frieda last
 			local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 1 or killOrder == 2 then -- Stavros last
 			local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		end
 	end
@@ -322,7 +324,15 @@ end
 function mod:DuelistsRiposte(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
-	self:CDBar(args.spellId, self:Mythic() and (bossesKilled == 0 and 18.7 or bossesKilled == 1 and 15 or 7.5) or bossesKilled == 0 and 21.5 or bossesKilled == 1 and 17 or 8.6)
+	local cd = self:Mythic() and 7.5 or 8.5
+	if stavrosAlive then -- 2 tank bosses alive, longer CD
+		if self:Mythic() then
+			cd = bossesKilled == 0 and 18.7 or 15
+		else
+			cd = bossesKilled == 0 and 21.5 or 17
+		end
+	end
+	self:CDBar(args.spellId, cd)
 end
 
 function mod:DuelistsRiposteApplied(args)
@@ -332,7 +342,7 @@ end
 do
 	function mod:DutifulAttendantMarking(event, unit, guid)
 		if self:MobId(guid) == 175992 then -- Dutiful Attendant
-			SetRaidTarget(unit, 8)
+			self:CustomIcon(dutifulAttendantMarker, unit, 8)
 			self:UnregisterTargetEvents()
 		end
 	end
@@ -424,7 +434,15 @@ end
 function mod:EvasiveLunge(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, self:Mythic() and (bossesKilled == 0 and 18.8 or bossesKilled == 1 and 15 or 7.5) or bossesKilled == 0 and 18.8 or bossesKilled == 1 and 17 or 11)
+	local cd = self:Mythic() and 7.5 or 11
+	if niklausAlive	then -- 2 tank bosses alive, longer CD
+		if self:Mythic() then
+			cd = bossesKilled == 0 and 18.7 or 15
+		else
+			cd = bossesKilled == 0 and 21.5 or 17
+		end
+	end
+	self:CDBar(args.spellId, cd)
 end
 
 function mod:EvasiveLungeApplied(args)
@@ -462,17 +480,17 @@ do
 			lastDarkRecitalName = args.destName
 			darkrecitalPairCount = darkrecitalPairCount + 1
 			if self:Me(args.destGUID) then -- fallback if a partner is missing
-				darkRecitalFallbackTimer = self:ScheduleTimer("PersonalMessage", 0.1, 331634, false, CL.link:format("|cffff0000???"))
+				darkRecitalFallbackTimer = self:ScheduleTimer("PersonalMessage", 0.1, 331634, false, CL.link_with:format("|cffff0000???"))
 			end
 		elseif args.spellId == 331637 and firstDarkRecitalTargetGUID then -- 2nd Dark Recital Target
 			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
-				self:PersonalMessage(331634, false, CL.link:format(self:ColorName(lastDarkRecitalName)))
+				self:PersonalMessage(331634, false, CL.link_with:format(self:ColorName(lastDarkRecitalName)))
 				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
 					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
 				end
 			elseif self:Me(firstDarkRecitalTargetGUID) then -- We got 1st debuff so this is our partner
-				self:PersonalMessage(331634, false, CL.link:format(self:ColorName(args.destName)))
+				self:PersonalMessage(331634, false, CL.link_with:format(self:ColorName(args.destName)))
 				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
 					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
@@ -485,7 +503,7 @@ do
 			end
 		else -- Missing a partner, alternative message
 			if self:Me(args.destGUID) or self:Me(firstDarkRecitalTargetGUID) then
-				self:PersonalMessage(331634, false, CL.link:format("|cffff00ff???"))
+				self:PersonalMessage(331634, false, CL.link_with:format("|cffff00ff???"))
 				if darkRecitalFallbackTimer then -- We printed above, so cancel this
 					self:CancelTimer(darkRecitalFallbackTimer)
 					darkRecitalFallbackTimer = nil
@@ -516,7 +534,7 @@ end
 do
 	function mod:WaltzingVenthyrMarking(event, unit, guid)
 		if self:MobId(guid) == 176026 then -- Dancing Fool (only 1 targetable unit)
-			SetRaidTarget(unit, 8)
+			self:CustomIcon(waltzingVenthyrMarker, unit, 8)
 			self:UnregisterTargetEvents()
 		end
 	end
@@ -556,6 +574,7 @@ do
 			self:PauseBar(346690) -- Duelist's Riposte
 			self:PauseBar(346698) -- Summon Dutiful Attendant
 			self:PauseBar(330978) -- Dredger Servants
+			self:PauseBar(330965) -- Castellans Cadre
 			self:PauseBar(346303) -- Violent Uproar
 			self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 		end
@@ -586,6 +605,7 @@ function mod:DanseMacabreOver(args)
 	self:ResumeBar(346690) -- Duelist's Riposte
 	self:ResumeBar(346698) -- Summon Dutiful Attendant
 	self:ResumeBar(330978) -- Dredger Servants
+	self:ResumeBar(330965) -- Castellans Cadre
 	self:ResumeBar(346303) -- Violent Uproar
 	self:ResumeBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 end

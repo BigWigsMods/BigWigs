@@ -22,11 +22,11 @@ L.classicWarning2 = "|cFF33FF99BigWigs|r: Por favor, instale a versão do BigWig
 L.officialRelease = "Você está executando uma versão oficial do BigWigs %s (%s)"
 L.alphaRelease = "Você está executando uma versão ALPHA do BigWigs %s (%s)"
 L.sourceCheckout = "Você está executando uma cópia de código do BigWigs %s diretamente do repositório."
---L.guildRelease = "You are running version %d of BigWigs made for your guild, based on version %d of the official addon."
+L.guildRelease = "Você está usando a versão %d do BigWigs feito para sua guilda, baseado na versão %d do addon oficial."
 L.getNewRelease = "Seu BigWigs está desatualizado (/bwv) mas você pode facilmente atualizá-lo usando o CurseForge Client. Como alternativa, você pode atualizar manualmente em curseforge.com ou wowinterface.com."
 L.warnTwoReleases = "Seu BigWigs está 2 versões desatualizado! Sua versão provavelmente contém bugs, faltam funcionalidades, ou possui contadores incorretos. É extremamente recomendado uma atualização."
 L.warnSeveralReleases = "|cffff0000Seu BigWigs está %d versões desatualizado!! Nós recomendamos EXTREMAMENTE a atualização para prevenir problemas de sincronização com outros jogadores!|r"
---L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base version (%d) is %d releases out of date. This may cause issues."
+L.warnOldBase = "Você está usando uma versão de guilda do BigWigs (%d), mas sua versão base (%d) está %d versões desatualizada. Isso pode causar problemas."
 
 L.tooltipHint = "|cffeda55fClique-Direito|r para acessar as opções."
 L.activeBossModules = "Módulos de chefes ativos:"
@@ -44,11 +44,13 @@ L.disabledAddOn = "Você desabilitou o addOn |cFF436EEE%s|r, contadores não ser
 L.removeAddon = "Por favor remova '|cFF436EEE%s|r' porque este foi substituído por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"
 L.FlagTaken = "Bandeira capturada (JvJ)"
 L.Destruction = "Destruição (Kil'jaeden)"
 L.RunAway = "Corra, garotinha! (Lobo Mau)"
+L.spell_on_you = "BigWigs: Feitiço em você"
+L.spell_under_you = "BigWigs: Feitiço debaixo de você"
 
 -- Options.lua
 L.options = "Opções"
@@ -73,8 +75,6 @@ L.listAbilities = "Listar habilidades no chat do grupo"
 
 L.dbmFaker = "Faz de conta que eu estou usando DBM"
 L.dbmFakerDesc = "Se um usuário do DBM tem uma versão que verifica quem está usando DBM, ele irá vê-lo na lista. Útil para guildas que forçam usar o DBM."
-L.chatMessages = "Mensagens no chat"
-L.chatMessagesDesc = "Mostra todas as mensagens na janela de chat padrão além da tela de configuração."
 L.zoneMessages = "Mostrar mensagens da zona atual"
 L.zoneMessagesDesc = "Desativar isso irá parar de mostrar mensagens quando você entra em uma zona que BigWigs possui contadores, mas você não o instalou. Nós recomendamos que você deixe ligado, pois é a única notificação que você vai receber se nós criarmos contadores para uma nova zona que você ache útil."
 L.slashDescTitle = "|cFFFED000Comandos com barra:|r"
@@ -143,7 +143,7 @@ L.dispeller = "|cFFFF0000Alerta para Dispellers apenas.|r "
 
 -- Statistics
 L.statistics = "Estatísticas"
-L.lfr = "LFR"
+L.lfr = "LDR"
 L.normal = "Normal"
 L.heroic = "Heroico"
 L.mythic = "Mítico"

@@ -14,11 +14,11 @@ L.warmup = "준비"
 L.warmup_desc = "우두머리와의 전투가 시작되기 까지 시간입니다."
 
 L.already_registered = "|cffff0000경고:|r |cff00ff00%s|r (|cffffff00%s|r)|1은;는; 이미 BigWigs 내에 모듈로 존재합니다, 하지만 무엇인가 다시 등록하려고 시도했습니다. 이는 일반적으로 몇몇 애드온 업데이터 오류로 인해 애드온 폴더 내에 이 모듈의 사본을 가지고 있다는 것을 의미합니다. 설치된 모든 BigWigs 폴더를 삭제한 후 처음부터 다시 설치하는 것을 권장합니다."
---L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
+L.testNameplate = "대상이 감지되면, 대상의 이름표 위에 임의로 이름표를 하나 만듭니다. |cFF33FF99이 기능은 거의 쓰이지 않고, 바 하나일 때가 많고, 주로 같은 스킬을 시전하는 여러마리의 넴드나 쫄들과 상대할때 그 쿨다운을 체크하기 위해 씁니다.|r"
 
 -- Loader / Options.lua
---L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
---L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
+L.classicWarning1 = "|cFF33FF99BigWigs|r: 클래식 서버에서 잘못된 버젼의 빅윅을 쓰고 있습니다."
+L.classicWarning2 = "|cFF33FF99BigWigs|r: 빅윅 클래식 버젼을 설치하십시오."
 L.officialRelease = "당신은 BigWigs %s (%s)의 공식 배포 버전을 실행 중입니다"
 L.alphaRelease = "당신은 BigWigs %s (%s)의 알파 버전을 실행 중입니다"
 L.sourceCheckout = "당신은 저장소로부터 직접 가져온 BigWigs %s의 소스를 실행 중입니다."
@@ -44,11 +44,13 @@ L.disabledAddOn = "|cFF436EEE%s|r 애드온이 비활성화 중이므로 타이�
 L.removeAddon = "'|cFF436EEE%s|r'|1이;가; '|cFF436EEE%s|r'|1으로;로; 대체되었으므로 제거해주세요."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "조심해라 (알갈론)"
 L.FlagTaken = "깃발 뺏김 (PvP)"
 L.Destruction = "파괴 (킬제덴)"
 L.RunAway = "도망쳐라 꼬마야 달아나라 (커다란 나쁜 늑대)"
+--L.spell_on_you = "BigWigs: Spell on you"
+--L.spell_under_you = "BigWigs: Spell under you"
 
 -- Options.lua
 L.options = "옵션"
@@ -73,8 +75,6 @@ L.listAbilities = "파티/공격대 대화에 능력 나열하기"
 
 L.dbmFaker = "DBM을 사용 중인 것처럼 위장하기"
 L.dbmFakerDesc = "DBM 사용자가 DBM의 버전을 확인하여 누가 DBM을 사용하는지 확인할 때 DBM 사용자 명단에 당신을 표시합니다. DBM 사용을 강제하는 길드에서 유용합니다."
-L.chatMessages = "대화 창 메시지"
-L.chatMessagesDesc = "모든 BigWigs 메시지를 표시 설정과 더불어 기본 대화 창에도 출력합니다."
 L.zoneMessages = "지역 메시지 표시"
 L.zoneMessagesDesc = "비활성하면 설치하지 않았지만 BigWigs에 타이머가 있는 지역에 입장했을 때 메시지 표시를 중지합니다. 당신이 유용하다고 느끼는 새로운 지역에 대한 타이머를 우리가 갑자기 만들었을 때 받을 수 있는 유일한 알림이기 때문에 이 기능을 사용하는 걸 권장합니다."
 
@@ -131,8 +131,8 @@ L.SAY_COUNTDOWN = "카운트 표시"
 L.SAY_COUNTDOWN_desc = "말풍선은 매우 알아보기 쉽습니다. BigWigs는 여러가지 말풍선으로 주위 사람들에게 어떤 능력이 만료된다는 것을 알려줍니다."
 L.ME_ONLY_EMPHASIZE = "강조(나에게 걸렸을 때만)"
 L.ME_ONLY_EMPHASIZE_desc = "이 옵션을 활성화하면 이 능력이 자신에게 영향을 끼칠때 메세지를 더 크고 는에 띄게 표시합니다."
--- L.NAMEPLATEBAR = "Nameplate Bars"
--- L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
+ L.NAMEPLATEBAR = "이름표 바"
+ L.NAMEPLATEBAR_desc = "몹 한마리 이상이 같은 주문을 시전할때 이름표랑 시전바가 붙어있는 경우가 많습니다. 이 능력이 이름표 때문에 보이지 않는다면, 이 옵션을 비활성화 하십시오."
 
 L.advanced = "고급 옵션"
 L.back = "<< 뒤로"

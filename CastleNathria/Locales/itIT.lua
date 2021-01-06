@@ -10,10 +10,18 @@ if L then
 	-- L.killed = "%s Killed"
 end
 
+L = BigWigs:NewBossLocale("Hungering Destroyer", "itIT")
+if L then
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+end
+
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "itIT")
 if L then
 	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
 	-- L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
+	L.tear = "Squarcio" -- Short for Dimensional Tear
+	L.spirits = "Spiriti" -- Short for Fleeting Spirits
+	L.seeds = "Semi" -- Short for Seeds of Extinction
 end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "itIT")
@@ -22,6 +30,11 @@ if L then
 
 	-- L.level = "%s (Level |cffffff00%d|r)"
 	-- L.full = "%s (|cffff0000FULL|r)"
+
+	-- L.container_active = "Enable Container: %s"
+
+	-- L.anima_adds = "Concentrate Anima Adds"
+	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
 
 	-- L.custom_off_experimental = "Enable experimental features"
 	-- L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
@@ -43,6 +56,15 @@ if L then
 	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
 	-- L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
 
+	-- L.custom_off_select_boss_order = "Mark Boss Kill Order"
+	-- L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
+	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
+	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
+	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
+	L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frieda"
+	L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
+	L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
+
 	--L.dance_assist = "Dance Assist"
 	--L.dance_assist_desc = "Show directional warnings for the dancing stage."
 	--L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance Forward |T450907:0:0:0:0:64:64:4:60:4:60|t"
@@ -56,10 +78,25 @@ if L then
 	--L.dance_yell_left = "left" -- Sashay left!
 end
 
+L = BigWigs:NewBossLocale("Sludgefist", "itIT")
+if L then
+	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+
+	-- L.fun_info = "Damage Info"
+	-- L.fun_info_desc = "Display a message showing how much health the boss lost during Destructive Impact."
+
+	-- L.health_lost = "Sludgefist went down %.1f%%!"
+end
+
 L = BigWigs:NewBossLocale("Stone Legion Generals", "itIT")
 if L then
 	-- L.first_blade = "First Blade"
 	-- L.second_blade = "Second Blade"
+
+	-- L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+
+	-- L.custom_on_stop_timers = "Always show ability bars"
+	-- L.custom_on_stop_timers_desc = "Just for testing right now"
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "itIT")
@@ -74,9 +111,13 @@ if L then
 	--L.custom_on_repeating_impale = "Repeating Impale Say"
 	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
 
-	--L.hymn_stacks = "Nathrian Hymn"
-	--L.hym_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	-- L.hymn_stacks = "Nathrian Hymn"
+	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
 
-	--L.ravage_target = "Ravage Target Cast Bar"
-	--L.ravage_target_desc = "Display a cast bar showing the time until the Ravage Target location is chosen in stage 3."
+	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
+	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
+	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+
+	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
+	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
 end

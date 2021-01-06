@@ -1,15 +1,15 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhTW")
 if not L then return end
 
---L.guildRelease = "You are running version %d of BigWigs made for your guild, based on version %d of the official addon."
+L.guildRelease = "你正在使用公會製作的 BigWigs，版本 %d，其基於官方版 %d。"
 L.getNewRelease = "你的 BigWigs 已過期（/bwv）但是可以使用 CurseForge 客戶端簡單升級。另外，也可以從 curseforge.com 或 wowinterface.com 手動升級。"
-L.warnTwoReleases = "你的 BigWigs 已過期2個發行版！你的版本可能有錯誤，功能缺失或不正確的計時器。所以強烈建議你升級。"
-L.warnSeveralReleases = "|cffff0000你的 BigWigs 已過期%d發行版！！我們「強烈」建議你更新，以防止把問題同步給其他玩家！|r"
---L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base version (%d) is %d releases out of date. This may cause issues."
+L.warnTwoReleases = "你的 BigWigs 已過期 2 個發行版！你的版本可能有錯誤，功能缺失或不正確的計時器。所以強烈建議你升級。"
+L.warnSeveralReleases = "|cffff0000你的 BigWigs 已過期 %d 發行版！！我們「強烈」建議你更新，以防止把問題同步給其他玩家！|r"
+L.warnOldBase = "你正在使用公會版 BigWigs（%d），但它所基於的官方版 （%d）是已過時的 %d，可能會導致問題。"
 
 L.gitHubDesc = "|cFF33FF99BigWigs 是一個在 GitHub 上的開源軟體。我們一直在尋找新的朋友幫助我們和歡迎任何人檢測我們的代碼，做出貢獻和提交錯誤報告。BigWigs 今天的偉大很大程度上一部分因為偉大的魔獸世界社區幫助我們。|r"
 
-L.testNameplate = "檢測到目標，在目標名條上創建一個測試計時條。 |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
+L.testNameplate = "檢測到目標，在目標名條上創建一個測試計時條。 |cFF33FF99這個功能相當少用，並且通常一次只會有一條；通常用於分別監視多個目標的同個技能冷卻。|r"
 
 L.classicWarning1 = "|cFF33FF99BigWigs|r：你在經典版魔獸世界使用了正式版的 BigWigs，這是錯誤的版本。"
 L.classicWarning2 = "|cFF33FF99BigWigs|r：請安裝經典版的 BigWigs。"
@@ -40,8 +40,6 @@ L.BAR_desc = "在適當時會為首領技能顯示計時條。如果你想隱藏
 L.berserk = "狂暴"
 L.berserk_desc = "為首領狂暴顯示計時條及警報。"
 L.best = "最快："
-L.chatMessages = "聊天框體訊息"
-L.chatMessagesDesc = "除了顯示設定，輸出所有 BigWigs 訊息到預設聊天框體。"
 L.colors = "顏色"
 L.configure = "配置"
 L.COUNTDOWN = "倒數"
@@ -136,8 +134,10 @@ L.ME_ONLY_EMPHASIZE_desc = "啟用後會強調所有只施放在你的技能相�
 L.NAMEPLATEBAR = "名條計時條"
 L.NAMEPLATEBAR_desc = "當多個敵方單位施放相同的法術時，在名條上方顯示各自的計時條。如果不想要名條上依附的計時條，請禁用此項。"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "當心（艾爾加隆）"
 L.FlagTaken = "奪旗（PvP）"
 L.Destruction = "毀滅（基爾加丹）"
 L.RunAway = "快逃啊小女孩，快逃……（大野狼）"
+L.spell_on_you = "BigWigs: 法術在你身上"
+L.spell_under_you = "BigWigs: 法術在你腳下"

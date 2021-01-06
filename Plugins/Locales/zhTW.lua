@@ -25,23 +25,19 @@ L.nameplateOffsetYDesc = "勾選向上成長時，計時條在名條上方的垂
 L.bestTimeBar = "最快時間"
 L.bigWigsBarStyleName_Default = "預設"
 L.blockEmotes = "封鎖畫面中央表情訊息"
-L.blockEmotesDesc = [=[某些首領施放某些技能時會顯示表情，此類訊息過於冗長及不直觀。我們嘗試提供的訊息更精簡、不會影響遊戲體驗和不會指示玩家要做什麼。
-
-請注意：若你想看首領表情，首領表情仍然會顯示於聊天視窗。]=]
+L.blockEmotesDesc = "某些首領技能施放時會顯示首領表情，此類訊息過於冗長且不直觀。我們嘗試提供更精簡的訊息，不會影響遊戲體驗、也不會指示玩家要做什麼。\n\n請注意：若你想看首領表情，首領表情仍然會顯示於聊天視窗。"
 L.blockGuildChallenge = "封鎖公會挑戰彈出訊息"
-L.blockGuildChallengeDesc = [=[公會挑戰彈出訊息顯示幾種資訊，其中最主要的是你的公會中有小隊完成了一場英雄地城或挑戰地城。
-
-這些彈出訊息有可能在首領戰鬥中遮蓋你的介面中重要的部份，因此我們建議封鎖這些彈出訊息。]=]
+L.blockGuildChallengeDesc = "公會挑戰彈出訊息會顯示幾種資訊，其中最主要的是你的公會中有小隊完成了一場英雄地城或挑戰地城。\n\n這些彈出訊息有可能在首領戰鬥中遮蓋你的介面，使你看不見重要的提示，因此我們建議封鎖這些彈出訊息。"
 L.blockMovies = "封鎖重覆的動畫"
 L.blockMoviesDesc = "首領戰鬥中的動畫只會播放一次（你每部都能看一次）然後就會被封鎖。"
 L.blockSpellErrors = "封鎖施法失敗訊息"
 L.blockSpellErrorsDesc = "如「法術還沒準備好」等顯示於畫面上方的訊息會被封鎖。"
 L.bossBlock = "首領戰訊息封鎖"
 L.bossBlockDesc = "設定首領戰鬥期間可封鎖的訊息。"
-L.bossDefeatDurationPrint = "“%s”已被擊敗，耗時%s。"
+L.bossDefeatDurationPrint = "「%s」已被擊敗，耗時 %s。"
 L.bossStatistics = "首領統計"
-L.bossStatsDescription = "首領戰鬥相關的統計數據，如首領被擊殺數量，團滅次數，戰鬥持續時間，最快的首領擊殺記錄。可以在配置屏幕上查看每個首領的統計數據，沒有首領記錄的統計數據會被隱藏。"
-L.bossWipeDurationPrint = "“%s”戰鬥團滅，用時%s。"
+L.bossStatsDescription = "首領戰鬥相關的統計數據，如首領被擊殺數量、團滅次數、戰鬥持續時間和最快擊殺記錄。你可以在每個首領的頁面查看統計數據，沒有首領記錄的統計數據會被隱藏。"
+L.bossWipeDurationPrint = "「%s」戰鬥團滅，用時 %s。"
 L.breakBar = "休息時間"
 L.breakFinished = "休息時間結束！"
 L.breakMinutes = "休息時間將在 %d 分鐘後結束！"
@@ -54,40 +50,34 @@ L.chatMessages = "聊天訊息"
 L.classColors = "職業顏色"
 L.classColorsDesc = "玩家姓名使用職業顏色。"
 L.clickableBars = "可點擊計時條"
-L.clickableBarsDesc = [=[BigWigs 計時條預設是點擊穿越的。這樣可以選擇目標或使用 AoE 法術攻擊物體，更改鏡頭角度等等，當滑鼠指針劃過計時條。|cffff4411如果啟用可點擊計時條，這些將不能實現。|r計時條將攔截任何滑鼠點擊並阻止相應功能。
-]=]
+L.clickableBarsDesc = "BigWigs 計時條預設是點擊穿越的，在預設情況下，當滑鼠指針劃過計時條時可以點擊到遊戲中的物件，這樣可以選擇目標或使用 AoE 法術攻擊物體，更改鏡頭角度等等。|cffff4411如果啟用可點擊計時條，這些將不能實現。|r計時條將攔截任何滑鼠點擊並阻止相應功能。"
 L.close = "關閉"
 L.closeButton = "關閉按鈕"
 L.closeButtonDesc = "顯示或隱藏關閉按鈕。"
-L.closeProximityDesc = [=[關閉玩家雷達。
-
-要在所有首領戰鬥中停用此功能，你需要到選項的"玩家雷達"中勾選停用。]=]
+L.closeProximityDesc = "關閉玩家雷達。\n\n要在所有首領戰鬥中停用此功能，你需要到選項的「玩家雷達」中勾選停用。"
 L.colors = "顏色"
 L.combatLog = "自動戰鬥記錄"
-L.combatLogDesc = "當拉怪計時器開始到戰鬥結束時自動開始戰鬥記錄。"
+L.combatLogDesc = "從拉怪計時器開始時自動開始戰鬥記錄，戰鬥結束後自動停止。"
 L.countDefeats = "擊敗次數"
-L.countdownAt = "倒數... (秒)"
+L.countdownAt = "倒數…（秒）"
 L.countdownColor = "倒數顏色"
 L.countdownTest = "倒數測試"
 L.countdownType = "倒數類型"
 L.countdownVoice = "倒數音效"
 L.countWipes = "團滅次數"
-L.createTimeBar = "顯示“最快擊敗”計時條"
-L.customBarStarted = "自訂計時條 '%s' 開始於 %s 使用者 %s."
+L.createTimeBar = "顯示「最快擊敗」計時條"
+L.customBarStarted = "自訂計時條「%s」開始於 %s 使用者 %s."
 L.customRange = "自訂距離指示器"
 L.customSoundDesc = "播放選定的自訂的聲音，而不是由模塊提供的。"
 L.defeated = "%s被擊敗了！"
-L.disable = "停用"
 L.disabled = "停用"
 L.disabledDisplayDesc = "停用全部模組顯示。"
-L.disableDesc = "永久停用此首領戰鬥技能計時條選項。"
 L.displayTime = "顯示時間"
 L.displayTimeDesc = "以秒計訊息顯示時間。"
 L.emphasize = "強調"
 L.emphasizeAt = "…（秒）後強調"
 L.emphasized = "強調"
 L.emphasizedBars = "強調計時條"
-L.emphasizedCountdownSinkDescription = "以 BigWigs 強調倒數訊息輸出此插件資訊。此訊息支持文字和顏色，同一時間只能顯示一條訊息。"
 L.emphasizedMessages = "強調訊息"
 L.emphasizedSinkDescription = "以 BigWigs 強調訊息輸出此插件資訊。此訊息支持文字和顏色，同一時間只能顯示一條訊息。"
 L.enable = "啟用"
@@ -151,20 +141,12 @@ L.pullFinishedSoundTitle = "開怪倒數計時器結束時播放音效"
 L.pullStarted = "%s使用者%s發起了開怪倒數計時器。"
 L.pullStopped = "%s取消了開怪計時器。"
 L.pullStoppedCombat = "開怪計時器因為你進入戰鬥而取消。"
-L.raidIconsDesc = [=[團隊中有些首領模塊使用團隊標記來為某些中了特定技能的隊員打上標記。例如類似“炸彈”類或心靈控制的技能。如果你關閉此功能，你將不會給隊員打標記。
-
-|cffff4411只有團隊領袖或被提升為助理時才可以這麼做！|r]=]
-L.raidIconsDescription = [=[可能遇到包含例如炸彈類型的技能指向特定的玩家，玩家被追，或是特定玩家可能有興趣在其他方面。這裡可以自訂團隊圖示來標記這些玩家。
-
-如果只遇到一種技能，很好，只有第一個圖示會被使用。在某些戰鬥中一個圖示不被使用在兩個不同的技能上，任何特定技能在下次總是使用相同圖示。
-
-|cffff4411注意：如果玩家已經被手動標記，BigWigs 將不會改變他的圖示。|r]=]
+L.raidIconsDesc = "某些首領模塊會使用團隊標記圖示來為某些中了特定技能的隊員上標記，例如「炸彈」類或心靈控制的技能。若關閉此功能，你將不會替隊員上標記。\n\n|cffff4411只有團隊領袖或被提升為助理時才可以這麼做！|r"
+L.raidIconsDescription = "某些首領戰可能遇到包括但不限於會波及臨近隊友的炸彈類技能、凝視追趕特定玩家的怪物、或類似被特別關注的點名技能，這裡可以自訂團隊圖示來標記這些玩家。\n\n如果只遇到一種技能，很好，只有第一個圖示會被使用。單場戰鬥中，一個圖示不會被使用在兩個不同的技能上，並且同一個技能在下次總是使用相同圖示。\n\n|cffff4411注意：如果玩家已經被手動標記，BigWigs 將不會改變他的團隊標記。|r"
 L.recordBestTime = "記憶最快擊殺"
 L.regularBars = "常規計時條"
 L.remove = "移除"
-L.removeDesc = "臨時移除計時條和全部相關訊息。"
 L.removeOther = "移除其它"
-L.removeOtherDesc = "臨時移除所有計時條（除此之外）和全部相關訊息。"
 L.report = "報告"
 L.reportDesc = "報告目前計時條狀態到合適的聊天頻道；無論是副本頻道、團隊、隊伍或是說。"
 L.requiresLeadOrAssist = "這個功能需要團隊領隊或助理權限."
@@ -194,15 +176,6 @@ L.soundDelayDesc = "當有人太靠近你時指定多長時間 BigWigs 重複間
 L.soundDesc = "訊息出現時伴隨著音效。有些人更容易在聽到何種音效後發現何種警報，而不是閱讀的實際訊息。"
 L.Sounds = "音效"
 L.style = "風格"
-L.superEmphasize = "超級強調"
-L.superEmphasizeDesc = [=[相關訊息或特定首領戰鬥技能計時條增強。
-
-在這裡設定當開啟超級強調位於首領戰鬥技能進階選項時所應該發生的事件。
-
-|cffff4411注意：超級強調功能預設情況下所有技能關閉。|r
-]=]
-L.superEmphasizeDisableDesc = "於所有模組停用超級強調。"
-L.tempEmphasize = "暫時以超級強調顯示此計時條及任何相關的持續時間訊息。"
 L.text = "文字"
 L.textCountdown = "倒數文字"
 L.textCountdownDesc = "於倒數時顯示倒數文字"
@@ -220,10 +193,6 @@ L.toggleSound = "切換音效"
 L.toggleSoundDesc = "當近距離視窗有其他過近玩家時切換任一或關閉聲效。"
 L.tooltip = "工具提示"
 L.tooltipDesc = "顯示或隱藏近距離顯示從首領戰鬥技能獲取的法術提示。"
-L.uppercase = "大寫"
-L.uppercaseDesc = "所有超級強調選項相關訊息大寫。"
-L.useColors = "使用彩色訊息"
-L.useColorsDesc = "切換是否只發送單色訊息。"
 L.useIcons = "使用圖示"
 L.useIconsDesc = "訊息旁顯示圖示。"
 L.Victory = "勝利訊息"
@@ -237,10 +206,10 @@ L.victorySound = "播放勝利音效"
 L.Warning = "警報"
 L.wipe = "滅團"
 L.wipeSoundTitle = "滅團時播放音效"
-L.wrongBreakFormat = "必須介於1至60分鐘之間。正確用法：/break 5"
-L.wrongCustomBarFormat = "不正確的格式。一個正確的範例是: /raidbar 20 文字"
-L.wrongPullFormat = "必須位於1至60秒之間。正確用法：/pull 5"
-L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如 5, 1:20 或 2m。"
+L.wrongBreakFormat = "必須介於 1 至 60 分鐘之間。正確用法：/break 5"
+L.wrongCustomBarFormat = "不正確的格式。一個正確的範例是：/raidbar 20 文字"
+L.wrongPullFormat = "必須介於 1 至 60 秒之間。正確用法：/pull 5"
+L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 分:秒，或是Mm。例如： 5、1:20 或 2m。"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -261,13 +230,13 @@ L.everyoneElse = "所有人"
 
 L.autoReplyBasic = "正處於首領戰的戰鬥中。"
 L.autoReplyNormal = "正在與「%s」戰鬥。"
-L.autoReplyAdvanced = "正在與「%s」（%s）戰鬥，尚有%d／%d人存活。"
-L.autoReplyExtreme = "正在與「%s」（%s）戰鬥，尚有%d／%d人存活：%s"
+L.autoReplyAdvanced = "正在與「%s」（%s）戰鬥，尚有 %d/%d 人存活。"
+L.autoReplyExtreme = "正在與「%s」（%s）戰鬥，尚有 %d/%d 人存活：%s"
 
 L.autoReplyLeftCombatBasic = "已結束首領戰。"
 L.autoReplyLeftCombatNormalWin = "已擊敗「%s」。"
 L.autoReplyLeftCombatNormalWipe = "在「%s」的戰鬥中滅團。"
-L.autoReplyLeftCombatAdvancedWin = "已擊敗「%s」，尚有%d／%d人存活。"
+L.autoReplyLeftCombatAdvancedWin = "已擊敗「%s」，尚有 %d/%d 人存活。"
 L.autoReplyLeftCombatAdvancedWipe = "在「%s」的戰鬥中滅團：%s"
 
 -----------------------------------------------------------------------
@@ -278,6 +247,9 @@ L.spacing = "間距"
 L.spacingDesc = "更改每個計時條之間的間距"
 L.emphasizeMultiplier = "尺寸倍數"
 L.emphasizeMultiplierDesc = "如果你禁止計時條移動到強調計時條錨點，此選項可以調整一般計時條進入強調倒數後的放大倍率。"
+L.temporaryCountdownDesc = "臨時性地啟用與此技能相關的倒數計時。"
+L.removeBarDesc = "臨時性地移除此計時條。"
+L.removeOtherBarDesc = "臨時性地移除除了此計時條以外的所有計時條。"
 L.iconPosition = "圖示位置"
 L.iconPositionDesc = "選擇將圖示置於計時條的哪一側。"
 L.visibleBarLimit = "最大可見數量"
@@ -326,6 +298,18 @@ L.purple = "紫色"
 L.purpleDesc = "坦克相關警報，例如對坦減益效果疊加（特定層數換坦的debuff）。"
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+L.countdownAt_desc = "選擇開始播報倒數計時的閾值，當首領技能低於此秒數就會開使倒數（以秒為單位）。"
+L.countdown = "倒數"
+L.countdownDesc = "倒數功能包括語音和文字倒數。預設情況下，此功能很少啟用，但你可以為任何技能單獨啟用；在首領模組的技能列表中點擊「>>」，就可以選擇單獨啟用特定技能的倒數。"
+L.countdownAudioHeader = "語音倒數"
+L.countdownTextHeader = "可視文字倒數"
+L.resetCountdownDesc = "重設所有倒數計時自訂選項。"
+L.resetAllCountdownDesc = "如果你更改了特定首領技能的倒數選項，這個按鈕會在重設所有倒數計時自訂選項時，一併將這些設定全部重置。"
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
@@ -335,7 +319,12 @@ L.infoBox = "訊息盒"
 -- Messages.lua
 --
 
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 L.resetMessagesDesc = "重設所有訊息自訂選項，包括錨點和位置。"
+L.uppercase = "大寫"
+L.uppercaseDesc = "所有的強調訊息都會被轉換為大寫。"
+L.chatMessages = "聊天框體訊息"
+L.chatMessagesDesc = "除了顯示設定，輸出所有 BigWigs 訊息到預設聊天框體。"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -347,7 +336,10 @@ L.resetProximityDesc = "重設所有玩家雷達自訂選項，包括錨點和�
 -- Sound.lua
 --
 
+L.oldSounds = "傳統音效設定"
 L.resetSoundDesc = "將前面的音效設定重設為預設值。"
+L.onyou = "當一個法術或增減益光環施放在你身上時（點名）"
+L.underyou = "當你需要離開一個地板技能的範圍時（跑位）"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

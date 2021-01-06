@@ -40,8 +40,6 @@ L.BAR_desc = "Le Barre vengono visualizzate al momento giusto in alcuni combatti
 L.berserk = "Infuriato"
 L.berserk_desc = "Visualizza un timer e un avviso quando il boss si infurierà."
 L.best = "Migliore:"
-L.chatMessages = "Messaggi Riquadro Chat"
-L.chatMessagesDesc = "Invia tutti i messaggi di BigWigs alla chat oltre che nei settaggi di visualizzazione."
 L.colors = "Colori"
 L.configure = "Configura"
 L.COUNTDOWN = "Conto alla rovescia"
@@ -136,8 +134,10 @@ L.zoneMessagesDesc = "Disabilitando questa opzione BigWigs non mostrerà più i 
 -- L.NAMEPLATEBAR = "Nameplate Bars"
 -- L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Attenti! (Algalon)"
 L.FlagTaken = "Cattura Bandiera (PvP)"
 L.Destruction = "Distruzione (Kil'jaeden)"
 L.RunAway = "Scappa ragazzina, scappa!!! (Big Bad Wolf)"
+--L.spell_on_you = "BigWigs: Spell on you"
+--L.spell_under_you = "BigWigs: Spell under you"

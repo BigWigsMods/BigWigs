@@ -21,24 +21,34 @@ local overwhelmCount = 1
 local miasmaMarkClear = {}
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
 local gluttonousMiasmaMarker = mod:AddMarkerOption(false, "player", 1, 329298, 1, 2, 3, 4) -- Gluttonous Miasma
-local volatileEjectionMarker = mod:AddMarkerOption(false, "player", 1, 334266, 5, 6, 7, 8) -- Volatile Ejection
+local volatileEjectionMarker = mod:AddMarkerOption(false, "player", 5, 334266, 5, 6, 7, 8) -- Volatile Ejection
 function mod:GetOptions()
 	return {
 		"berserk",
 		{329298, "SAY"}, -- Gluttonous Miasma
 		gluttonousMiasmaMarker,
-		334522, -- Consume
+		{334522, "EMPHASIZE"}, -- Consume
 		329725, -- Expunge
-		{334266, "SAY", "FLASH"}, -- Volatile Ejection
+		{334266, "SAY", "FLASH", "ME_ONLY_EMPHASIZE"}, -- Volatile Ejection
 		volatileEjectionMarker,
 		329455, -- Desolate
 		{329774, "TANK"}, -- Overwhelm
 		{332295, "TANK"}, -- Growing Hunger
 	}, nil, {
+		[329298] = L.miasma, -- Gluttonous Miasma (Miasma)
 		[334266] = CL.laser, -- Volatile Ejection (Laser)
 	}
 end
@@ -66,7 +76,7 @@ function mod:OnEngage()
 	desolateCount = 1
 	overwhelmCount = 1
 
-	self:Bar(329298, 3, CL.count:format(self:SpellName(329298), miasmaCount)) -- Gluttonous Miasma
+	self:Bar(329298, 3, CL.count:format(L.miasma, miasmaCount)) -- Gluttonous Miasma
 	if self:Easy() then
 		self:Bar(329774, 5.3) -- Overwhelm
 		self:Bar(334266, 10.6, CL.count:format(self:SpellName(334266), volatileCount)) -- Volatile Ejection
@@ -97,7 +107,7 @@ function mod:OnBossDisable()
 			-- Clearing marks on _REMOVED doesn't work great on this boss
 			-- The second set of marks is applied before the first is removed
 			-- When trying to remove the first set of marks it can clear the second set
-			SetRaidTarget(n, 0)
+			self:CustomIcon(gluttonousMiasmaMarker, n)
 		end
 		miasmaMarkClear = {}
 	end
@@ -114,21 +124,19 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
+			self:Say(args.spellId, CL.count_rticon:format(L.miasma, count, count))
 			-- XXX Add some kind of health % say / yell messages when you are low,
 			-- XXX this initial application doesn't change too much and clutters instead of the Laser says.
 			self:PlaySound(args.spellId, "alarm")
 		end
-		if self:GetOption(gluttonousMiasmaMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
 		if count == 1 then
 			miasmaMarkClear = {}
 			miasmaCount = miasmaCount + 1
-		 self:Bar(args.spellId, 24, CL.count:format(args.spellName, miasmaCount))
+		 self:Bar(args.spellId, 24, CL.count:format(L.miasma, miasmaCount))
 		end
 		miasmaMarkClear[count] = args.destName -- For clearing marks OnBossDisable
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, miasmaCount-1), nil, nil, playerIcons)
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.miasma, miasmaCount-1), nil, nil, playerIcons)
 	end
 end
 
@@ -202,9 +210,7 @@ do
 			local count = #playerList+1
 			playerList[count] = name
 			self:TargetsMessage(334266, "orange", self:ColorName(playerList), self:Mythic() and 5 or 3, CL.laser, nil, 2)
-			if self:GetOption(volatileEjectionMarker) then
-				SetRaidTarget(name, count+4)
-			end
+			self:CustomIcon(volatileEjectionMarker, name, count+4)
 		end
 	end
 
@@ -235,7 +241,7 @@ do
 	function mod:VolatileEjectionSuccess(args)
 		if self:GetOption(volatileEjectionMarker) then
 			for _, name in pairs(playerList) do
-				SetRaidTarget(name, 0)
+				self:CustomIcon(volatileEjectionMarker, name)
 			end
 		end
 		playerList = {}

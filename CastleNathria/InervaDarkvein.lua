@@ -12,10 +12,8 @@ mod.respawnTime = 30
 -- Locals
 --
 
-local bottleTimers = {20, 43, 18, 32, 30, 35, 35, 35, 35}
-local bottleCount = 1
 local anima = {}
-local concentrateAnimaCount = 1
+local concentratedAnimaCount = 1
 local mobCollector = {}
 local conjuredManifestationList = {}
 local conjuredManifestationCount = 1
@@ -32,10 +30,8 @@ if L then
 	L.level = "%s (Level |cffffff00%d|r)"
 	L.full = "%s (|cffff0000FULL|r)"
 
-	L.container_active = "Enable Container: %s"
-
-	L.anima_adds = "Concentrate Anima Adds"
-	L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
+	L.anima_adds = "Concentrated Anima Adds"
+	L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrated Anima debuffs."
 
 	L.custom_off_experimental = "Enable experimental features"
 	L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
@@ -57,7 +53,7 @@ end
 --
 
 local sharedSufferingMarker = mod:AddMarkerOption(false, "player", 1, 324983, 1, 2, 3) -- Shared Suffering
-local concentrateAnimaMarker = mod:AddMarkerOption(false, "player", 8, 332664, 8, 7, 6, 5) -- Concentrate Anima
+local concentratedAnimaMarker = mod:AddMarkerOption(false, "player", 8, 332664, 8, 7, 6, 5) -- Concentrated Anima
 local conjuredManifestationMarker = mod:AddMarkerOption(true, "npc", 8, -22618, 8, 7, 6, 5) -- Conjured Manifestation
 function mod:GetOptions()
 	return {
@@ -74,12 +70,12 @@ function mod:GetOptions()
 		325769, -- Bottled Anima
 		325713, -- Lingering Anima
 		-- Container of Sin
-		{324983, "SAY"}, -- Shared Suffering
+		{324983, "SAY", "ME_ONLY_EMPHASIZE"}, -- Shared Suffering
 		sharedSufferingMarker,
 		-- Container of Concentrated Anima
-		{332664, "SAY", "SAY_COUNTDOWN", "PROXIMITY"}, -- Concentrate Anima
+		{332664, "SAY", "SAY_COUNTDOWN", "PROXIMITY"}, -- Concentrated Anima
 		"anima_adds",
-		concentrateAnimaMarker,
+		concentratedAnimaMarker,
 		conjuredManifestationMarker,
 		{331573, "ME_ONLY"}, -- Unconscionable Guilt
 		331550, -- Condemn
@@ -94,7 +90,7 @@ function mod:GetOptions()
 		[341621] = L.desires, -- Expose Desires (Desires)
 		[325769] = L.bottles, -- Bottled Anima (Bottles)
 		[324983] = L.sins, -- Shared Suffering (Sins)
-		[332664] = CL.adds, -- Concentrate Anima (Adds)
+		[332664] = CL.adds, -- Concentrated Anima (Adds)
 	}
 end
 
@@ -124,8 +120,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SharedSufferingRemoved", 324983)
 
 	-- Container of Concentrated Anima
-	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnimaApplied", 332664, 340477) -- Concentrated Anima, Highly Concentrated Anima
-	self:Log("SPELL_AURA_REMOVED", "ConcentrateAnimaRemoved", 332664, 340477)
+	self:Log("SPELL_AURA_APPLIED", "ConcentratedAnimaApplied", 332664, 340477) -- Concentrated Anima, Highly Concentrated Anima
+	self:Log("SPELL_AURA_REMOVED", "ConcentratedAnimaRemoved", 332664, 340477)
 	self:Log("SPELL_AURA_APPLIED", "UnconscionableGuiltApplied", 331573)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "UnconscionableGuiltApplied", 331573)
 	self:Log("SPELL_CAST_START", "Condemn", 331550)
@@ -139,15 +135,14 @@ function mod:OnEngage()
 	mobCollector = {}
 	conjuredManifestationList = {}
 	conjuredManifestationCount = 1
-	bottleCount = 1
-	concentrateAnimaCount = 1
+	concentratedAnimaCount = 1
 	enabledContainer = 0
 	wipe(anima)
 
 	self:Bar(341621, 12, L.desires) -- Expose Desires
 	self:Bar(324983, 23, L.sins) -- Shared Suffering
-	self:Bar(325769, bottleTimers[bottleCount], L.bottles) -- Bottled Anima
-	self:Bar(332664, 54, CL.count:format(CL.adds, concentrateAnimaCount)) -- Concentrate Anima
+	self:Bar(325769, 33, L.bottles) -- Bottled Anima
+	self:Bar(332664, self:Mythic() and 44 or 54, CL.count:format(CL.adds, concentratedAnimaCount)) -- Concentrated Anima
 
 	if self:GetOption("custom_off_experimental") then
 		self:OpenInfo("anima_tracking", L.anima_tracking)
@@ -167,7 +162,7 @@ do
 		[325064] = true, -- Sins and Suffering
 		[324983] = true, -- Shared Suffering
 		[325769] = true, -- Bottled Anima
-		[332664] = true, -- Concentrate Anima
+		[332664] = true, -- Concentrated Anima
 	}
 
 	local castPattern = CL.cast:gsub("%%s", ".+")
@@ -190,7 +185,7 @@ end
 
 function mod:ConjuredManifestationMarker(event, unit, guid)
 	if self:MobId(guid) == 170197 and conjuredManifestationList[guid] then -- Conjured Manifestation
-		SetRaidTarget(unit, conjuredManifestationList[guid])
+		self:CustomIcon(conjuredManifestationMarker, unit, conjuredManifestationList[guid])
 		conjuredManifestationList[guid] = nil
 	end
 end
@@ -201,7 +196,7 @@ do
 		[2380] = {pos = 1, name = "Desires", icon = 325379}, -- Expose Desires
 		[2399] = {pos = 2, name = "Bottles", icon = 325769}, -- Bottled Anima
 		[2400] = {pos = 3, name = "Sins", icon = 325064}, -- Sins and Suffering
-		[2401] = {pos = 4, name = CL.add, icon = 332664}, -- Concentrate Anima
+		[2401] = {pos = 4, name = CL.add, icon = 332664}, -- Concentrated Anima
 	}
 
 	local getStatusBarInfo = C_UIWidgetManager.GetStatusBarWidgetVisualizationInfo
@@ -280,31 +275,34 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 331844 then -- Focus Anima: Desires
-		self:Message(331870, "cyan", L.container_active:format(L.desires))
+		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), L.desires))
 		self:PlaySound(331870, "long")
 		enabledContainer = 1
-		self:Bar(331870, 97) -- She picks the next one 3s early, hidden cast?
+		self:Bar(331870, 97, CL.count:format(CL.other:format(self:SpellName(331870), L.bottles), enabledContainer+1)) -- She picks the next one 3s early, hidden cast?
 	elseif spellId == 331870 then -- Focus Anima: Bottles
-		self:Message(331870, "cyan", L.container_active:format(L.bottles))
+		self:StopBar(CL.count:format(CL.other:format(self:SpellName(331870), L.bottles)))
+		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), L.bottles))
 		self:PlaySound(331870, "long")
 		enabledContainer = 2
-		self:Bar(331870, 97)
+		self:Bar(331870, 97, CL.count:format(CL.other:format(self:SpellName(331870), L.sins), enabledContainer+1))
 	elseif spellId == 331872 then -- Focus Anima: Sins
-		self:Message(331870, "cyan", L.container_active:format(L.sins))
+		self:StopBar(CL.count:format(CL.other:format(self:SpellName(331870), L.sins)))
+		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), L.sins))
 		self:PlaySound(331870, "long")
 		enabledContainer = 3
-		self:Bar(331870, 97)
+		self:Bar(331870, 97, CL.count:format(CL.other:format(self:SpellName(331870), CL.adds), enabledContainer+1))
 	elseif spellId == 331873 then -- Focus Anima: Adds
-		self:Message(331870, "cyan", L.container_active:format(CL.adds))
+		self:StopBar(CL.count:format(CL.other:format(self:SpellName(331870), CL.adds)))
+		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), CL.adds))
 		self:PlaySound(331870, "long")
 		enabledContainer = 4
-		self:StopBar(331870) -- Focus Anima
+		self:StopBar(CL.count:format(self:SpellName(331870), enabledContainer)) -- Focus Anima
 	end
 end
 
 function mod:ExposeDesires(args)
 	self:Message(341621, "purple", CL.casting:format(args.spellName))
-	self:Bar(341621, enabledContainer == 1 and 9.7 or 12.9)
+	self:Bar(341621, enabledContainer == 1 and 9.7 or 12.9, L.desires)
 	if self:Tanking("boss1") or self:Healer() then
 		self:PlaySound(341621, "alert")
 	end
@@ -356,7 +354,7 @@ end
 function mod:BottledAnima(args)
 	self:Message(325769, "orange", L.bottles)
 	self:PlaySound(325769, "info")
-	self:Bar(325769, enabledContainer == 2 and 30 or 45, L.bottles)
+	self:Bar(325769, enabledContainer == 2 and (self:Mythic() and 15 or 30) or (self:Mythic() and 30 or 45), L.bottles)
 end
 
 do
@@ -366,11 +364,9 @@ do
 			local count = #playerList+1
 			playerList[count] = name
 			self:TargetsMessage(324983, "yellow", self:ColorName(playerList), 3, L.sins, nil, 4)
-			if self:GetOption(sharedSufferingMarker) then
-				SetRaidTarget(name, count)
-			end
+			self:CustomIcon(sharedSufferingMarker, name, count)
 			if count == 1 then
-				self:Bar(324983, enabledContainer == 3 and 35 or 51, L.sins)
+				self:Bar(324983, enabledContainer == 3 and (self:Mythic() and 30 or 35) or 51, L.sins)
 			end
 		end
 	end
@@ -398,6 +394,7 @@ do
 			self:Say(324983, L.sins)
 			self:PlaySound(324983, "warning")
 		end
+		-- 40s until orbs blow up; do we want a timer?
 	end
 
 	function mod:SharedSufferingRemoved(args)
@@ -405,24 +402,22 @@ do
 			onMe = false
 		end
 		playerList = {}
-		if self:GetOption(sharedSufferingMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(sharedSufferingMarker, args.destName)
 	end
 end
 
 do
 	local playerList, proxList, isOnMe, playerIcons = mod:NewTargetList(), {}, nil, {}
-	function mod:ConcentrateAnimaApplied(args)
+	function mod:ConcentratedAnimaApplied(args)
 		local count = #playerList+1
 		local icon = 9-count -- 8, 7, 6, 5
 		proxList[count] = args.destName
 		playerList[count] = args.destName
 		playerIcons[count] = icon
 		if #playerList == 1 then
-			self:StopBar(CL.count:format(CL.adds, concentrateAnimaCount))
-			concentrateAnimaCount = concentrateAnimaCount + 1
-			self:CDBar(332664, enabledContainer == 4 and 51 or 60, CL.count:format(CL.adds, concentrateAnimaCount))
+			self:StopBar(CL.count:format(CL.adds, concentratedAnimaCount))
+			concentratedAnimaCount = concentratedAnimaCount + 1
+			self:CDBar(332664, enabledContainer == 4 and (self:Mythic() and 43 or 51) or (self:Mythic() and 65 or 60), CL.count:format(CL.adds, concentratedAnimaCount))
 			conjuredManifestationList = {}
 			conjuredManifestationCount = 1
 			self:Bar("anima_adds", 10, CL.spawning:format(CL.adds), 332664) -- Adds Spawning
@@ -436,15 +431,13 @@ do
 		end
 		self:TargetsMessage(332664, "yellow", playerList, nil, nil, nil, nil, playerIcons)
 
-		if self:GetOption(concentrateAnimaMarker) then
-			SetRaidTarget(args.destName, icon)
-		end
+		self:CustomIcon(concentratedAnimaMarker, args.destName, icon)
 		if not isOnMe then
 			self:OpenProximity(332664, 8, proxList)
 		end
 	end
 
-	function mod:ConcentrateAnimaRemoved(args)
+	function mod:ConcentratedAnimaRemoved(args)
 		tDeleteItem(proxList, args.destName)
 		if self:Me(args.destGUID) then
 			isOnMe = nil
@@ -460,9 +453,7 @@ do
 			end
 		end
 
-		if self:GetOption(concentrateAnimaMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(concentratedAnimaMarker, args.destName)
 	end
 end
 
@@ -487,7 +478,7 @@ function mod:Condemn(args)
 		for k, v in pairs(conjuredManifestationList) do
 			local unit = self:GetUnitIdByGUID(k)
 			if unit then
-				SetRaidTarget(unit, conjuredManifestationList[k])
+				self:CustomIcon(conjuredManifestationMarker, unit, conjuredManifestationList[k])
 				conjuredManifestationList[k] = nil
 			end
 		end

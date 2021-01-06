@@ -3,6 +3,8 @@
 
 <Script file="Mortanis.lua"/>
 <Script file="Oranomonos.lua"/>
+<Script file="NurgashMuckformed.lua"/>
+<Script file="Valinor.lua"/>
 
 <Include file="Options\options.xml"/>
 

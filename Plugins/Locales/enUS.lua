@@ -66,15 +66,13 @@ L.modifierDesc = "Hold down the selected modifier key to enable click actions on
 L.modifierKey = "Only with modifier key"
 L.modifierKeyDesc = "Allows bars to be click-through unless the specified modifier key is held down, at which point the mouse actions described below will be available."
 
-L.tempEmphasize = "Temporarily Super Emphasizes the bar and any messages associated with it for the duration."
+L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "Report"
 L.reportDesc = "Reports the current bars status to the active group chat; either instance chat, raid, party or say, as appropriate."
 L.remove = "Remove"
-L.removeDesc = "Temporarily removes the bar and all associated messages."
+L.removeBarDesc = "Temporarily removes this bar."
 L.removeOther = "Remove other"
-L.removeOtherDesc = "Temporarily removes all other bars (except this one) and associated messages."
-L.disable = "Disable"
-L.disableDesc = "Permanently disables the boss encounter ability option that spawned this bar."
+L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 
 L.emphasizeAt = "Emphasize at... (seconds)"
 L.growingUpwards = "Grow upwards"
@@ -196,20 +194,22 @@ L.purple = "Purple"
 L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
-L.superEmphasize = "Super Emphasize"
-L.superEmphasizeDesc = "Boosts related messages or bars of a specific boss encounter ability.\n\nHere you configure exactly what should happen when you toggle on the Super Emphasize option in the advanced section for a boss encounter ability.\n\n|cffff4411Note that Super Emphasize is off by default for all abilities.|r\n"
-L.uppercase = "UPPERCASE"
-L.uppercaseDesc = "Uppercases all messages related to a super emphasized option."
-L.superEmphasizeDisableDesc = "Disable Super Emphasize for all modules that use it."
 L.textCountdown = "Text countdown"
 L.textCountdownDesc = "Show a visual counter during a count down."
 L.countdownColor = "Countdown color"
 L.countdownVoice = "Countdown voice"
 L.countdownTest = "Test countdown"
 L.countdownAt = "Countdown at... (seconds)"
+L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+L.countdown = "Countdown"
+L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+L.countdownAudioHeader = "Spoken Audio Countdown"
+L.countdownTextHeader = "Visual Text Countdown"
+L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -223,21 +223,23 @@ L.infoBox = "InfoBox"
 
 L.sinkDescription = "Route output from this addon through the BigWigs message display. This display supports icons, colors and can show up to 4 messages on the screen at a time. Newly inserted messages will grow in size and shrink again quickly to notify the user."
 L.emphasizedSinkDescription = "Route output from this addon through the BigWigs Emphasized message display. This display supports text and colors, and can only show one message at a time."
-L.emphasizedCountdownSinkDescription = "Route output from this addon through the BigWigs Emphasized Countdown message display. This display supports text and colors, and can only show one message at a time."
---L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 
 L.bwEmphasized = "BigWigs Emphasized"
 L.messages = "Messages"
 L.normalMessages = "Normal messages"
 L.emphasizedMessages = "Emphasized messages"
+L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 L.output = "Output"
+L.uppercase = "UPPERCASE"
+L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
-L.useColors = "Use colors"
-L.useColorsDesc = "Toggles white only messages ignoring coloring."
 L.useIcons = "Use icons"
 L.useIconsDesc = "Show icons next to messages."
 L.classColors = "Class colors"
 L.classColorsDesc = "Colors player names by their class."
+L.chatMessages = "Chat frame messages"
+L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
 
 L.fontSize = "Font size"
 L.none = "None"
@@ -323,12 +325,15 @@ L.secondaryDesc = "The second raid target icon that a encounter script should us
 --
 
 L.Sounds = "Sounds"
+L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarm"
 L.Info = "Info"
 L.Alert = "Alert"
 L.Long = "Long"
 L.Warning = "Warning"
+L.onyou = "A spell, buff, or debuff is on you"
+L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Sound"
 L.soundDesc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages."

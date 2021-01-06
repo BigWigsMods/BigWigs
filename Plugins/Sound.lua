@@ -10,6 +10,7 @@ if not plugin then return end
 --
 
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
+local BL = BigWigsAPI:GetLocale("BigWigs")
 local media = LibStub("LibSharedMedia-3.0")
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 local soundList = nil
@@ -20,6 +21,8 @@ local sounds = {
 	Alert = "BigWigs: Alert",
 	Alarm = "BigWigs: Alarm",
 	Warning = "BigWigs: Raid Warning",
+	onyou = BL.spell_on_you,
+	underyou = BL.spell_under_you,
 }
 
 --------------------------------------------------------------------------------
@@ -34,6 +37,8 @@ plugin.defaultDB = {
 		Alert = "BigWigs: Alert",
 		Alarm = "BigWigs: Alarm",
 		Warning = "BigWigs: Raid Warning",
+		onyou = BL.spell_on_you,
+		underyou = BL.spell_under_you,
 	},
 }
 
@@ -63,6 +68,78 @@ plugin.pluginOptions = {
 			width = "full",
 			descStyle = "inline",
 		},
+		-- Begin sound dropdowns
+		onyou = {
+			type = "select",
+			name = L.onyou,
+			order = 2,
+			disabled = function() return not db.sound end,
+			values = function() return soundList end,
+			width = "full",
+			itemControl = "DDI-Sound",
+			disabled = function() return true end,
+		},
+		underyou = {
+			type = "select",
+			name = L.underyou,
+			order = 3,
+			disabled = function() return not db.sound end,
+			values = function() return soundList end,
+			width = "full",
+			itemControl = "DDI-Sound",
+			disabled = function() return true end,
+		},
+		oldSounds = {
+			type = "header",
+			name = L.oldSounds,
+			order = 4,
+		},
+		Alarm = {
+			type = "select",
+			name = L.Alarm,
+			order = 5,
+			disabled = function() return not db.sound end,
+			values = function() return soundList end,
+			width = "full",
+			itemControl = "DDI-Sound",
+		},
+		Alert = {
+			type = "select",
+			name = L.Alert,
+			order = 6,
+			disabled = function() return not db.sound end,
+			values = function() return soundList end,
+			width = "full",
+			itemControl = "DDI-Sound",
+		},
+		Info = {
+			type = "select",
+			name = L.Info,
+			order = 7,
+			disabled = function() return not db.sound end,
+			values = function() return soundList end,
+			width = "full",
+			itemControl = "DDI-Sound",
+		},
+		Long = {
+			type = "select",
+			name = L.Long,
+			order = 8,
+			disabled = function() return not db.sound end,
+			values = function() return soundList end,
+			width = "full",
+			itemControl = "DDI-Sound",
+		},
+		Warning = {
+			type = "select",
+			name = L.Warning,
+			order = 9,
+			disabled = function() return not db.sound end,
+			values = function() return soundList end,
+			width = "full",
+			itemControl = "DDI-Sound",
+		},
+		-- End sound dropdowns
 		reset = {
 			type = "execute",
 			name = L.reset,
@@ -72,14 +149,14 @@ plugin.pluginOptions = {
 					plugin.db.profile.media[k] = sounds[k]
 				end
 			end,
-			order = 3,
+			order = 10,
 		},
 		resetAll = {
 			type = "execute",
 			name = L.resetAll,
 			desc = L.resetAllCustomSound,
 			func = function() plugin.db:ResetProfile() end,
-			order = 4,
+			order = 11,
 		},
 	}
 }
@@ -141,15 +218,6 @@ function plugin:OnRegister()
 
 	for k in next, sounds do
 		local n = L[k] or k
-		self.pluginOptions.args[k] = {
-			type = "select",
-			name = n,
-			order = 2,
-			disabled = function() return not db.sound end,
-			values = soundList,
-			width = "full",
-			itemControl = "DDI-Sound",
-		}
 		soundOptions.args[k] = {
 			name = n,
 			get = function(info)

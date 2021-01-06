@@ -40,8 +40,6 @@ L.BAR_desc = "当遇到某些技能时计时条将会适当显示。如果这个
 L.berserk = "狂暴"
 L.berserk_desc = "当首领进入狂暴状态时发出警报。"
 L.best = "最快："
-L.chatMessages = "聊天框体信息"
-L.chatMessagesDesc = "除了显示设置，输出所有 BigWigs 信息到默认聊天框体。"
 L.colors = "颜色"
 L.configure = "配置"
 L.COUNTDOWN = "倒数"
@@ -136,8 +134,10 @@ L.ME_ONLY_EMPHASIZE_desc = "启用此选项将醒目如只作用于自身相关�
 L.NAMEPLATEBAR = "姓名板条"
 L.NAMEPLATEBAR_desc = "当多个怪物施放相同的法术时，有时会在姓名板上附加条。如果此技能要伴随姓名板条隐藏，则禁用此选项。"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "当心（奥尔加隆）"
 L.FlagTaken = "夺旗（PvP）"
 L.Destruction = "毁灭（基尔加丹）"
 L.RunAway = "快跑吧小姑娘，快跑……（大灰狼）"
+L.spell_on_you = "BigWigs：法术在你身上"
+L.spell_under_you = "BigWigs：法术在你脚下"

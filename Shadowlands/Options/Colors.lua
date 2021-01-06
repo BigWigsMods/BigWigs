@@ -15,3 +15,19 @@ BigWigs:AddColors("Oranomonos the Everbranching", {
 	[338856] = "red",
 	[338857] = "orange",
 })
+
+BigWigs:AddColors("Nurgash Muckformed", {
+	[338858] = "purple",
+	[338863] = "red",
+	[338864] = "yellow",
+	[338867] = "orange",
+	[338868] = "red",
+})
+
+BigWigs:AddColors("Valinor", {
+	[327246] = "red",
+	[327255] = {"blue","purple"},
+	[327262] = {"blue","orange"},
+	[327274] = "yellow",
+	[327280] = "cyan",
+})

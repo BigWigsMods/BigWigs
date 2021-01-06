@@ -69,9 +69,9 @@ function mod:GetOptions()
 		334765, -- Heart Rend
 		heartRendMarker,
 		{334929, "TANK"}, -- Serrated Swipe
-		{339690, "SAY", "SAY_COUNTDOWN"}, -- Crystalize
+		{339690, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Crystalize
 		crystalizeMarker,
-		342544, -- Pulverizing Meteor
+		{342544, "SAY"}, -- Pulverizing Meteor
 		343063, -- Stone Spike
 		{342733, "FLASH"}, -- Ravenous Feast
 		342985, -- Stonegale Effigy
@@ -85,7 +85,7 @@ function mod:GetOptions()
 		--[[ Stage Two: Grashaal's Blitz ]]--
 		329808, -- Hardened Stone Form
 		{342425, "TANK"}, -- Stone Fist
-		{344496, "SAY"}, -- Reverberating Eruption
+		{344496, "SAY", "ME_ONLY_EMPHASIZE"}, -- Reverberating Eruption
 		334498, -- Seismic Upheaval
 
 		--[[ Mythic ]]--
@@ -231,16 +231,26 @@ do
 	end
 end
 
-function mod:CommandoDeath(args)
-	if intermission then
-		commandoesKilled = commandoesKilled + 1
-		self:Message("stages", "cyan", CL.mob_killed:format(args.destName, commandoesKilled, commandoesNeeded), false)
+do
+	local throttle = false
+	local function Message()
+		throttle = false
+		mod:Message("stages", "cyan", CL.mob_killed:format(mod:SpellName(-22791), commandoesKilled, commandoesNeeded), false) -- Stone Legion Commando
 	end
-	if self:GetOption(commandoMarker) then
-		for i = 8, 5, -1 do -- 8, 7, 6, 5
-			if commandoAddMarks[i] == args.destGUID then
-				commandoAddMarks[i] = nil
-				return
+	function mod:CommandoDeath(args)
+		if intermission then
+			commandoesKilled = commandoesKilled + 1
+			if not throttle then
+				throttle = true
+				self:SimpleTimer(Message, 1.5)
+			end
+		end
+		if self:GetOption(commandoMarker) then
+			for i = 8, 5, -1 do -- 8, 7, 6, 5
+				if commandoAddMarks[i] == args.destGUID then
+					commandoAddMarks[i] = nil
+					return
+				end
 			end
 		end
 	end
@@ -256,7 +266,7 @@ function mod:AddMarkTracker(event, unit, guid)
 	if guid and not mobCollector[guid] then
 		local mobId = self:MobId(guid)
 		if self:GetOption(skirmisherMarker) and skirmisherTracker[guid] then --  Stone Legion Skirmisher
-			SetRaidTarget(unit, skirmisherTracker[guid])
+			self:CustomIcon(skirmisherMarker, unit, skirmisherTracker[guid])
 			mobCollector[guid] = true
 		elseif self:GetOption(commandoMarker) and mobId == 169601 then -- Stone Legion Commando
 			local health = UnitHealth(unit)
@@ -267,7 +277,7 @@ function mod:AddMarkTracker(event, unit, guid)
 					if not commandoAddMarks[i] then
 						mobCollector[guid] = true
 						commandoAddMarks[i] = guid
-						SetRaidTarget(unit, i)
+						self:CustomIcon(commandoMarker, unit, i)
 						return
 					end
 				end
@@ -280,8 +290,11 @@ end
 function mod:HardenedStoneFormApplied(args)
 	self:Message(args.spellId, "green", CL.intermission)
 	self:PlaySound(args.spellId, "long")
+
 	intermission = true
 	commandoAddMarks = {}
+	commandoesKilled = 0
+
 	self:StopBar(CL.count:format(self:SpellName(342256), shadowForcesCount)) -- Call Shadow Forces
 	shadowForcesCount = 1
 end
@@ -316,7 +329,7 @@ do
 			if self:GetOption(wickedBladeMarker) then
 				for i = 1, #playerList do
 					local name = playerList[i]
-					SetRaidTarget(name, name == target and 2 or 3)
+					self:CustomIcon(wickedBladeMarker, name, name == target and 2 or 3)
 				end
 			end
 		else
@@ -349,8 +362,8 @@ do
 			end
 			if #playerList == 2 then
 				--if self:GetOption(wickedBladeMarker) then -- Are potentially wrong marks better than potentially no marks?
-				--	SetRaidTarget(playerList[1], 2)
-				--	SetRaidTarget(playerList[2], 3)
+				--	self:CustomIcon(wickedBladeMarker, playerList[1], 2)
+				--	self:CustomIcon(wickedBladeMarker, playerList[2], 3)
 				--end
 				self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 			end
@@ -360,10 +373,8 @@ do
 				self:PlaySound(333387, "warning")
 			end
 			playerList[2] = args.destName
-			if self:GetOption(wickedBladeMarker) then
-				SetRaidTarget(playerList[1], 2)
-				SetRaidTarget(playerList[2], 3)
-			end
+			self:CustomIcon(wickedBladeMarker, playerList[1], 2)
+			self:CustomIcon(wickedBladeMarker, playerList[2], 3)
 			self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 		end
 	end
@@ -372,9 +383,7 @@ do
 		if self:Me(args.destGUID) then
 			onMe = false
 		end
-		if self:GetOption(wickedBladeMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(wickedBladeMarker, args.destName)
 	end
 end
 
@@ -397,17 +406,13 @@ do
 			self:PlaySound(args.spellId, "alarm")
 		end
 
-		if self:GetOption(heartRendMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(heartRendMarker, args.destName, count)
 
 		self:TargetsMessage(args.spellId, "orange", playerList, 4, CL.count:format(args.spellName, heartRendCount-1), nil, nil, playerIcons)
 	end
 
 	function mod:HeartRendRemoved(args)
-		if self:GetOption(heartRendMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(heartRendMarker, args.destName)
 	end
 end
 
@@ -428,33 +433,36 @@ function mod:Crystalize(args)
 	self:CDBar(args.spellId, self:Mythic() and 55 or 60, CL.count:format(args.spellName, crystalizeCount))
 end
 
-function mod:CrystalizeApplied(args)
-	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, crystalizeCount-1))
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 5)
-		self:PlaySound(args.spellId, "warning")
-	end
-	if self:GetOption(crystalizeMarker) then
-		SetRaidTarget(args.destName, 1)
-	end
-end
-
-function mod:CrystalizeRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+do
+	local prevGUID = nil
+	function mod:CrystalizeApplied(args)
+		prevGUID = args.destGUID
+		self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, crystalizeCount-1))
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 5)
+			self:PlaySound(args.spellId, "warning")
+		end
+		self:CustomIcon(crystalizeMarker, args.destName, 1)
 	end
 
-	if self:GetOption(crystalizeMarker) then
-		SetRaidTarget(args.destName, 0)
-	end
-end
+	function mod:CrystalizeRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
 
-function mod:PulverizingMeteor(args)
-	self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
-	self:PlaySound(args.spellId, "alert")
-	pulverizingMeteorCount = pulverizingMeteorCount + 1
+		self:CustomIcon(crystalizeMarker, args.destName)
+	end
+
+	function mod:PulverizingMeteor(args)
+		if self:Me(prevGUID) then
+			self:Yell(args.spellId, 28884) -- Meteor
+		end
+		self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:PlaySound(args.spellId, "alert")
+		pulverizingMeteorCount = pulverizingMeteorCount + 1
+	end
 end
 
 function mod:StoneSpikeApplied(args)
@@ -489,6 +497,7 @@ function mod:GraniteFormApplied(args)
 	self:PlaySound(args.spellId, "long")
 
 	commandoAddMarks = {}
+	commandoesKilled = 0
 	intermission = true
 
 	self:StopBar(CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
@@ -532,7 +541,7 @@ do
 			self:Say(344496, 324010) -- Eruption
 			self:PlaySound(344496, "warning")
 		end
-		self:TargetMessage(344496, "red", player, CL.count:format(self:SpellName(344496), reverberatingLeapCount-1))
+		self:TargetMessage(344496, "red", player, CL.count:format(self:SpellName(324010), reverberatingLeapCount-1))
 	end
 
 	function mod:ReverberatingEruption(args)
@@ -567,7 +576,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alert")
 		end
-		self:TargetsMessage(args.spellId, "cyan", playerList)
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, nil, nil, 2) -- Throttle to 2s
 	end
 end
 

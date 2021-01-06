@@ -67,15 +67,13 @@ L.modifierDesc = "Presiona la tecla modificadora seleccionada para activar accio
 L.modifierKey = "Solo con una tecla modificadora"
 L.modifierKeyDesc = "Permite hacer clic en las barras a menos que se mantenga pulsada la tecla modificadora especificada, en cuyo caso las acciones del ratón que se describen a continuación estarán disponibles."
 
-L.tempEmphasize = "Temporalmente Super Enfatiza la barra y cualquier mensaje asociado a ella durante la duración."
+--L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
 L.report = "Reportar"
 L.reportDesc = "Informa del estado actual de las barras al grupo de chat activo; ya sea en el chat de la estancia, en la banda, en el grupo o decir, según corresponda."
 L.remove = "Quitar"
-L.removeDesc = "Quita temporalmente la barra y todos los mensajes asociados."
+--L.removeBarDesc = "Temporarily removes this bar."
 L.removeOther = "Quitar otros"
-L.removeOtherDesc = "Quita temporalmente todas las demás barras (excepto ésta) y los mensajes asociados."
-L.disable = "Deshabilitar"
-L.disableDesc = "Deshabilita permanentemente la opción de la habilidad de encuentro con el jefe que dio origen a esta barra."
+--L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 
 L.emphasizeAt = "Enfatiza en... (segundos)"
 L.growingUpwards = "Crece hacia arriba"
@@ -197,20 +195,22 @@ L.purple = "Morado"
 L.purpleDesc = "Advertencias sobre las habilidades específicas de los tanques, como las acumulaciones de efectos negativos en un tanque."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
-L.superEmphasize = "Súper Enfatizar"
-L.superEmphasizeDesc = "Mejora los mensajes o barras relacionados con una habilidad de un encuentro con el jefe.\n\nAquí se configura exactamente lo que debe suceder cuando se activa la opción de súper enfatizar en la sección avanzada para una habilidad de encuentro con el jefe.\n\n|cffff4411Ten en cuenta que el súper enfatizar está deshabilitado por defecto para todas las habilidades.|r\n"
-L.uppercase = "MAYÚSCULAS"
-L.uppercaseDesc = "Pone en mayúsculas todos los mensajes relacionados con una opción súper enfatizada."
-L.superEmphasizeDisableDesc = "Deshabilitar el súper enfatizar para todos los módulos que lo utilizan."
 L.textCountdown = "Cuenta regresiva de texto"
 L.textCountdownDesc = "Muestra un contador visual durante una cuenta regresiva."
 L.countdownColor = "Color de la cuenta regresiva"
 L.countdownVoice = "Voz de la cuenta regresiva"
 L.countdownTest = "Probar una cuenta regresiva"
 L.countdownAt = "Cuenta regresiva en... (segundos)"
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -224,21 +224,23 @@ L.infoBox = "InfoBox"
 
 L.sinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs. Esta pantalla soporta iconos, colores y puede mostrar hasta 4 mensajes en la pantalla a la vez. Los mensajes recién insertados crecerán en tamaño y se reducirán de nuevo rápidamente para notificar al usuario."
 L.emphasizedSinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs enfatizada. Esta pantalla admite texto y colores, y sólo puede mostrar un mensaje a la vez."
-L.emphasizedCountdownSinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs enfatizada en la cuenta regresiva. Esta pantalla admite texto y colores, y sólo puede mostrar un mensaje a la vez."
 --L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
 
 L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Menajes"
 L.normalMessages = "Mensajes normales"
 L.emphasizedMessages = "Mensajes enfatizados"
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 L.output = "Resultado"
+L.uppercase = "MAYÚSCULAS"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 
-L.useColors = "Usar colores"
-L.useColorsDesc = "Mostrar mensajes de color blanco ignorando los colores."
 L.useIcons = "Usar íconos"
 L.useIconsDesc = "Mostrar íconos al lado de los mensajes."
 L.classColors = "Colores de clase"
 L.classColorsDesc = "Colorea los nombres de los jugadores de acuerdo con su clase."
+L.chatMessages  = "Mensajes del marco de chat"
+L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de chat por defecto en adición a los ajustes mostrados"
 
 L.fontSize = "Tamaño de la fuente"
 L.none = "Ninguno"
@@ -324,12 +326,15 @@ L.secondaryDesc = "El segundo ícono de banda que un encuentro debería usar."
 --
 
 L.Sounds = "Sonidos"
+--L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarma"
 L.Info = "Información"
 L.Alert = "Alerta"
 L.Long = "Largo"
 L.Warning = "Alerta"
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Sonido"
 L.soundDesc = "Los mensajes pueden venir con un sonido. A algunas personas les resulta más fácil escucharlos una vez que han aprendido qué sonido va con cada mensaje, en lugar de leer los mensajes reales."

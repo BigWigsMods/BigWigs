@@ -10,20 +10,26 @@ if L then
 	 L.killed = "%s getötet"
 end
 
+L = BigWigs:NewBossLocale("Hungering Destroyer", "deDE")
+if L then
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+end
+
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "deDE")
 if L then
 	L.stage2_yell = "Die Vorfreude auf dieses Relikt bringt mich fast um! Aber wahrscheinlich tötet es eher Euch."
 	L.stage3_yell = "Hoffentlich ist dieser wundersame Gegenstand so tödlich, wie er aussieht!"
+	L.tear = "Riss" -- Short for Dimensional Tear
+	L.spirits = "Geister" -- Short for Fleeting Spirits
+	L.seeds = "Saaten" -- Short for Seeds of Extinction
 end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "deDE")
 if L then
-	-- L.times = "%dx %s"
+	L.times = "%dx %s"
 
 	L.level = "%s (Stufe |cffffff00%d|r)"
 	L.full = "%s (|cffff0000VOLL|r)"
-
-	L.container_active = "Behälter aktivieren: %s"
 
 	L.anima_adds = "Konzentrierte Anima Adds"
 	L.anima_adds_desc = "Zeigt einen Timer für die erscheinenden Adds vom Debuff Konzentrierte Anima."
@@ -50,19 +56,19 @@ if L then
 
 	L.custom_off_select_boss_order = "Tötungsreihenfolge markieren"
 	L.custom_off_select_boss_order_desc = "Markiert die Reihenfolge, in welcher der Schlachtzug die Bosse tötet mit Kreuz {rt7}. Benötigt Schlachtzugsleiter oder Assistent zum Markieren."
-	-- L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
-	-- L.custom_off_select_boss_order_value2 = "Frienda -> Niklaus -> Stavros"
-	-- L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frienda"
-	-- L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frienda"
-	-- L.custom_off_select_boss_order_value5 = "Frienda -> Stavros -> Niklaus"
-	-- L.custom_off_select_boss_order_value6 = "Stavros -> Frienda -> Niklaus"
+	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
+	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
+	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
+	L.custom_off_select_boss_order_value4 = "Niklaus -> Stavros -> Frieda"
+	L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
+	L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
 
 	L.dance_assist = "Tanzassistent"
 	L.dance_assist_desc = "Zeigt an, in welche Richtung beim Tanzen gelaufen werden muss."
 	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Tanze vorwärts |T450907:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Tanze nach rechts |T450908:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Tanze nach unten |T450905:0:0:0:0:64:64:4:60:4:60|t"
-	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Tanz nach links |T450906:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Tanze nach links |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
 	L.dance_yell_up = "vorwärts" -- Tänzelt vorwärts!
 	L.dance_yell_right = "rechts" -- Schlenker nach rechts!
@@ -73,6 +79,11 @@ end
 L = BigWigs:NewBossLocale("Sludgefist", "deDE")
 if L then
 	L.stomp_shift = "Stampfen & Verschiebung" -- Destructive Stomp + Seismic Shift
+
+	L.fun_info = "Schadensinfo"
+	L.fun_info_desc = "Zeigt eine Nachricht mit der verlorenen Gesundheit des Bosses während dem Zerstörerischen Einschlag."
+
+	L.health_lost = "Schlickfaust hat %.1f%% verloren!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "deDE")
@@ -92,15 +103,19 @@ if L then
 
 	L.infobox_stacks = "%d |4Stapel:Stapel;: %d |4Spieler:Spieler;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
-	--L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
-	--L.custom_on_repeating_nighthunter_desc = "Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
+	L.custom_on_repeating_nighthunter = "Wiederholtes Nachtjäger Schreien"
+	L.custom_on_repeating_nighthunter_desc = "Gibt wiederholt Schrei-Nachrichten für die Nachtjäger Fähigkeit mit den Symbolen {rt1} oder {rt2} oder {rt3} aus, um die Linie zum Abfangen leichter zu finden."
 
-	--L.custom_on_repeating_impale = "Repeating Impale Say"
-	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
+	L.custom_on_repeating_impale = "Wiederholte Durchbohren Ansage"
+	L.custom_on_repeating_impale_desc = "Gibt wiederholt Chatnachrichten für die Durchbohren Fähigkeit mit '1' oder '22' oder '333' oder '4444' aus, um die Reihenfolge der Angriffe zu verdeutlichen."
 
-	--L.hymn_stacks = "Nathrian Hymn"
-	--L.hym_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	L.hymn_stacks = "Hymne von Nathria"
+	L.hymn_stacks_desc = "Benachrichtigungen für die aktuelle Stapelanzahl von Hymne von Nathria auf dem Spieler."
 
-	--L.ravage_target = "Ravage Target Cast Bar"
-	--L.ravage_target_desc = "Display a cast bar showing the time until the Ravage Target location is chosen in stage 3."
+	L.ravage_target = "Reflexion: Verheeren Ziel Zauberleiste"
+	L.ravage_target_desc = "Zeigt eine Zauberleiste mit der verbleibenden Zeit bis die Reflexion einen Ort für Verheeren anvisiert."
+	L.ravage_targeted = "Verheeren anvisiert" -- Text on the bar for when Ravage picks its location to target in stage 3
+
+	L.no_mirror = "Kein Spiegel: %d" -- Player amount that does not have the Through the Mirror
+	L.mirror = "Spiegel: %d" -- Player amount that does have the Through the Mirror
 end

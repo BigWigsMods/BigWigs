@@ -19,7 +19,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 199
+local BIGWIGS_VERSION = 202
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -97,6 +97,7 @@ public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
 public.UnitName = UnitName
 public.UnitGUID = UnitGUID
+public.SetRaidTarget = SetRaidTarget
 
 -- Version
 local usersHash = {}
@@ -322,7 +323,7 @@ do
 		[-542] = -572, [-543] = -572, [-534] = -572, -- Draenor
 		[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
 		[-942] = -947, -- Azeroth/BfA
-		[-1536] = -1647, -- Shadowlands
+		[-1536] = -1647, [-1565] = -1647, [-1525] = -1647, [-1533] = -1647, -- Shadowlands
 	}
 end
 
@@ -927,25 +928,28 @@ do
 		itIT = "Italian (itIT)",
 		--koKR = "Korean (koKR)",
 		esES = "Spanish (esES)",
-		esMX = "Spanish (esMX)",
+		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
-		ptBR = "Portuguese (ptBR)",
+		--ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
 	}
 	if locales[L] then
 		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
 	end
 
-	CTimerAfter(11, function()
-		--local _, _, _, _, month, _, year = GetAchievementInfo(10043) -- Mythic Archimonde
-		--if year == 15 and month < 10 then
-		--	sysprint("We're looking for an end-game raider to join our GitHub developer team: goo.gl/aajTfo")
-		--end
-		for _, msg in next, delayedMessages do
-			sysprint(msg)
+	if #delayedMessages > 0 then
+		function mod:LOADING_SCREEN_DISABLED()
+			bwFrame:UnregisterEvent("LOADING_SCREEN_DISABLED")
+			CTimerAfter(15, function()
+				for i = 1, #delayedMessages do
+					sysprint(delayedMessages[i])
+				end
+				delayedMessages = nil
+			end)
+			self.LOADING_SCREEN_DISABLED = nil
 		end
-		delayedMessages = nil
-	end)
+		bwFrame:RegisterEvent("LOADING_SCREEN_DISABLED")
+	end
 end
 
 -----------------------------------------------------------------------
@@ -1019,9 +1023,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20201222060601" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "9.0.12" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20201221000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20201228030636" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "9.0.15" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20201227000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()

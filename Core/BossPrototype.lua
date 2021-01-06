@@ -29,7 +29,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
-local SendChatMessage, GetInstanceInfo, Timer = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter
+local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
 local UnitName, UnitGUID = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID
 local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 local format, find, gsub, band, tremove, wipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
@@ -912,6 +912,8 @@ do
 				end
 
 				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
+			elseif noEngage == "NoEngage" then
+				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self, difficulty)
 			end
 		end
 	end
@@ -1517,36 +1519,6 @@ end
 -- @section toggles
 --
 
--- Option silencer
-local silencedOptions = {}
-do
-	bossUtilityFrame:Hide()
-	BigWigsLoader.RegisterMessage(silencedOptions, "BigWigs_SilenceOption", function(event, key, time)
-		if key ~= nil then -- custom bars have a nil key
-			silencedOptions[key] = time
-			bossUtilityFrame:Show()
-		end
-	end)
-	local total = 0
-	bossUtilityFrame:SetScript("OnUpdate", function(self, elapsed)
-		total = total + elapsed
-		if total >= 0.5 then
-			for k, t in next, silencedOptions do
-				local newT = t - total
-				if newT < 0 then
-					silencedOptions[k] = nil
-				else
-					silencedOptions[k] = newT
-				end
-			end
-			if not next(silencedOptions) then
-				self:Hide()
-			end
-			total = 0
-		end
-	end)
-end
-
 local checkFlag = nil
 do
 	local noDefaultError   = "Module %s uses %q as a toggle option, but it does not exist in the modules default values."
@@ -1558,7 +1530,6 @@ do
 		if key == false then return true end -- Allow optionless abilities
 		if type(key) == "nil" then core:Print(format(nilKeyError, self.moduleName)) return end
 		if type(flag) ~= "number" then core:Print(format(invalidFlagError, self.moduleName, type(flag), tostring(flag))) return end
-		if silencedOptions[key] then return end
 		if type(self.db) ~= "table" then local msg = format(noDBError, self.moduleName) core:Print(msg) error(msg) return end
 		if type(self.db.profile[key]) ~= "number" then
 			if not self.toggleDefaults[key] then
@@ -2104,7 +2075,7 @@ do
 				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
 			end
 		elseif checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
-			local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
+			local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
 			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture, isEmphasized)
 		end
 	end
@@ -2156,7 +2127,7 @@ do
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 		end
 	end
 
@@ -2194,7 +2165,7 @@ do
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], true)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 		end
 	end
 
@@ -2221,7 +2192,7 @@ do
 				self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 			end
 			if checkFlag(self, key, C.COUNTDOWN) then
-				self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+				self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 			end
 		elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
@@ -2244,7 +2215,7 @@ do
 		if checkFlag(self, key, C.CASTBAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 			if checkFlag(self, key, C.COUNTDOWN) then
-				self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+				self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 			end
 		end
 	end
@@ -2354,13 +2325,13 @@ function boss:StopBar(text, player)
 		if player == pName then
 			msg = format(L.you, msg)
 			self:SendMessage("BigWigs_StopBar", self, msg)
-			self:SendMessage("BigWigs_StopEmphasize", self, msg)
+			self:SendMessage("BigWigs_StopCountdown", self, msg)
 		else
 			self:SendMessage("BigWigs_StopBar", self, format(L.other, msg, gsub(player, "%-.+", "*")))
 		end
 	else
 		self:SendMessage("BigWigs_StopBar", self, msg)
-		self:SendMessage("BigWigs_StopEmphasize", self, msg)
+		self:SendMessage("BigWigs_StopCountdown", self, msg)
 	end
 end
 
@@ -2370,7 +2341,7 @@ end
 function boss:PauseBar(key, text)
 	local msg = text or spells[key]
 	self:SendMessage("BigWigs_PauseBar", self, msg)
-	self:SendMessage("BigWigs_StopEmphasize", self, msg)
+	self:SendMessage("BigWigs_StopCountdown", self, msg)
 end
 
 --- Resume a paused bar.
@@ -2382,7 +2353,7 @@ function boss:ResumeBar(key, text)
 	if checkFlag(self, key, C.COUNTDOWN) then
 		local length = self:BarTimeLeft(msg)
 		if length > 0 then
-			self:SendMessage("BigWigs_StartEmphasize", self, key, msg, length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
 		end
 	end
 end
@@ -2403,7 +2374,7 @@ end
 -- @section icons
 --
 
---- Set the primary (skull by default) raid target icon.
+--- Set the primary (skull by default) raid target icon. No icon will be set if the player already has one on them.
 -- @param key the option key
 -- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:PrimaryIcon(key, player)
@@ -2415,7 +2386,7 @@ function boss:PrimaryIcon(key, player)
 	end
 end
 
---- Set the secondary (cross by default) raid target icon.
+--- Set the secondary (cross by default) raid target icon. No icon will be set if the player already has one on them.
 -- @param key the option key
 -- @string[opt] player the player to mark (if nil, the icon is removed)
 function boss:SecondaryIcon(key, player)
@@ -2424,6 +2395,19 @@ function boss:SecondaryIcon(key, player)
 		self:SendMessage("BigWigs_RemoveRaidIcon", 2)
 	else
 		self:SendMessage("BigWigs_SetRaidIcon", player, 2)
+	end
+end
+
+--- Directly set any raid target icon on a player based on a custom option key.
+-- @param key the option key
+-- @string player the player to mark
+-- @number[opt] icon the icon to mark the player with, numbering from 1-8 (if nil, the icon is removed)
+function boss:CustomIcon(key, player, icon)
+	if key == false or self:GetOption(key) then
+		if solo then -- setting the same icon twice while not in a group removes it
+			SetRaidTarget(player, 0)
+		end
+		SetRaidTarget(player, icon or 0)
 	end
 end
 

@@ -77,17 +77,14 @@ L.customBarStarted = "Barra personal '%s' lanzada por el jugador %s %s."
 L.customRange = "Indicador de rango personalizado"
 L.customSoundDesc = "Reproduce el sonido seleccionado en lugar de uno suministrado por el módulo."
 L.defeated = "%s ha sido derrotado"
-L.disable = "Desactivar"
 L.disabled = "Desactivado"
 L.disabledDisplayDesc = "Desactivar la ventana de proximidad para todos los módulos que la utilizan."
-L.disableDesc = "Desactiva permanentemente la habilidad del encuentro para que no de opción a que reaparezca esta barra"
 L.displayTime = "Muestra la hora"
 L.displayTimeDesc = "Cuanto tiempo mostrará un mensaje, en segundos"
 L.emphasize = "Enfatizar"
 L.emphasizeAt = "Enfatizar en... (segundos)"
 L.emphasized = "Enfatizado"
 L.emphasizedBars = "Barras enfatizadas"
-L.emphasizedCountdownSinkDescription = "Redirecciona la salida de este addon al sistema de cuenta atrás enfatizada de BigWigs. Este método de visualización soporta texto y colores, y puede mostrar solo un mensaje cada vez."
 L.emphasizedMessages = "Mensajes enfatizados"
 L.emphasizedSinkDescription = "Guía fuera de este addon siguiendo los mensajes enfatizados mostrados de BigWigs. Estos soportan texto y colores, y solo pueden mostrarse uno a la vez."
 L.enable = "Permitir"
@@ -162,9 +159,7 @@ Si solo se usa un icono para un encuentro se usará el primario, nunca se usará
 L.recordBestTime = "Recordar muertes más rápidas"
 L.regularBars = "Barras regulares"
 L.remove = "Quitar"
-L.removeDesc = "Temporalmente quita la barra y los mensajes asociados"
 L.removeOther = "Quitar otro"
-L.removeOtherDesc = "Temporalmente quita todas las barras (excepto esta) y los mensajes asociados."
 L.report = "Reportar"
 L.reportDesc = "Reporta el estado actual de las barras al grupo activo de chat; ya sea en el chat de estancia, raid, grupo o decir, según corresponda."
 L.requiresLeadOrAssist = "Esta función requiere ser el líder de banda o ayudante"
@@ -194,15 +189,6 @@ L.soundDelayDesc = "Especifica el tiempo que BigWigs debería esperar entre cada
 L.soundDesc = "Los mensajes podrían llegar con un sonido. A algunas personas les resulta más fácil escucahr. Cuando aprenden que 'tal' sonido va con 'cual' mensaje, en vez de leer dicho mensaje."
 L.Sounds = "Sonidos"
 L.style = "Estilo"
-L.superEmphasize = "Super Enfatizar"
-L.superEmphasizeDesc = [=[Da un aviso mucho más detectable a los mensajes o barras relacionados con una habilidad de un encuentro.
-
-Aquí configuras exactamente que debería ocurrir cuando cambias a activado en la opción de Super Enfatizar en la sección avanzada para una habilidad de un encuentro de un jefe.
-
-|cffff4411Nota: Super Enfatizar está apagado por defecto para todas las habilidades.|r
-]=]
-L.superEmphasizeDisableDesc = "Desactivar Súper Enfatizar para todos los módulos que lo utilicen."
-L.tempEmphasize = "Temporalmente Super Enfatiza la barra y los mensajes asociados para la duración."
 L.text = "Texto"
 L.textCountdown = "Texto de cuenta atrás"
 L.textCountdownDesc = "Muestra un contador visual durante una cuenta atrás"
@@ -220,10 +206,6 @@ L.toggleSound = "Cambiar sonido"
 L.toggleSoundDesc = "Activada o no la ventana de proximidad debería emitir un beep si estás cerca de otro jugador."
 L.tooltip = "Tooltip"
 L.tooltipDesc = "Muestra/oculta la descripción del hechizo si la ventana de proximidad esta ligada a una habilidad del jefe."
-L.uppercase = "MAYUSCULAS"
-L.uppercaseDesc = "Mayúsculas en todos los mensajes relacionados con una opción super enfatizada."
-L.useColors = "Usar colores"
-L.useColorsDesc = "Mensajes de color blanco ignorando los colores."
 L.useIcons = "Usar iconos"
 L.useIconsDesc = "Mostrar iconos al lado de mensajes"
 L.Victory = "Victoria"
@@ -278,6 +260,9 @@ L.spacing = "Espaciado"
 L.spacingDesc = "Cambia el espacio entre cada barra."
 L.emphasizeMultiplier = "Multiplicador de tamaño"
 L.emphasizeMultiplierDesc = "Si desactivas las barras moviéndose al anclaje enfatizado, esta opción decidirá que tamaño tendrán las barras enfatizadas multiplicando el tamaño de las barras normales."
+--L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
+--L.removeBarDesc = "Temporarily removes this bar."
+--L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 L.iconPosition = "Posición del icono"
 L.iconPositionDesc = "Elige dónde en la barra se posicionará el icono."
 L.visibleBarLimit = "Límite de barras visibles"
@@ -326,6 +311,18 @@ L.purple = "Púrpura"
 L.purpleDesc = "Avisos para habilidades específicas para tanques como acumulaciones de un debuff en un tanque."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
@@ -335,7 +332,12 @@ L.infoBox = "InfoBox"
 -- Messages.lua
 --
 
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
 --L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.uppercase = "MAYUSCULAS"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.chatMessages  = "Mensajes del marco de chat"
+L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de chat por defecto en adición a los ajustes mostrados"
 
 -----------------------------------------------------------------------
 -- Proximity.lua
@@ -347,7 +349,10 @@ L.infoBox = "InfoBox"
 -- Sound.lua
 --
 
+--L.oldSounds = "Old Sounds"
 --L.resetSoundDesc = "Resets the above sounds to their defaults."
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

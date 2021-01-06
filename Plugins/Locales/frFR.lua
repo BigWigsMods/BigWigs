@@ -66,15 +66,13 @@ L.modifierDesc = "Maintenez enfoncée la touche modificatrice sélectionnée pou
 L.modifierKey = "Seul. avec touche mod."
 L.modifierKeyDesc = "Permet aux barres de ne pas réagir aux clics de la souris à moins que la touche modificatrice sélectionnée ne soit maintenue enfoncée, cas dans lequel les actions de la souris décrites ci-dessous seront disponibles."
 
-L.tempEmphasize = "Met temporairement en super mise en évidence la barre et ses messages associés pendant sa durée."
+L.temporaryCountdownDesc = "Active temporairement le compte à rebours sur la technique associée à cette barre."
 L.report = "Rapport"
 L.reportDesc = "Rapporte le statut des barres actuelles dans la discussion de groupe active : la discussion d'instance, de raid, de groupe ou juste le dire, selon ce qui est le plus approprié."
 L.remove = "Enlever"
-L.removeDesc = "Enlève temporairement la barre et les messages qui y sont associés."
+L.removeBarDesc = "Enlève temporairement cette barre."
 L.removeOther = "Enlever les autres"
-L.removeOtherDesc = "Enlève temporairement toutes les autres barres et leurs messages associés."
-L.disable = "Désactiver"
-L.disableDesc = "Désactive l'option de la rencontre de boss qui a fait apparaître cette barre."
+L.removeOtherBarDesc = "Enlève temporairement toutes les autres barres (mis à part celle-ci)."
 
 L.emphasizeAt = "Mettre en évidence à... (secondes)"
 L.growingUpwards = "Ajouter vers le haut"
@@ -196,20 +194,22 @@ L.purple = "Violet"
 L.purpleDesc = "Alertes des techniques spécifiques aux tanks, comme le cumul d'un affaiblissement tank."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
-L.superEmphasize = "Super mise en évidence"
-L.superEmphasizeDesc = "Ce module met fortement en évidence les barres ou messages relatifs à une technique de rencontre de boss.\n\nVous pouvez définir ici exactement ce qui doit arriver quand vous cochez une option de super mise en évidence dans la section avancée d'une technique de rencontre de boss.\n\n|cffff4411Notez que la super mise en évidence est désactivée par défaut pour toutes les techniques.|r\n"
-L.uppercase = "MAJUSCULE"
-L.uppercaseDesc = "Met entièrement en majuscules tous les messages relatifs à une option à mettre fortement en évidence."
-L.superEmphasizeDisableDesc = "Désactive la super mise en évidence pour tous les modules qui l'utilisent."
 L.textCountdown = "Texte compte à rebours"
 L.textCountdownDesc = "Affiche un compteur visuel lors des comptes à rebours."
 L.countdownColor = "Couleur compte à rebours"
 L.countdownVoice = "Voix du compte à rebours"
 L.countdownTest = "Test compte à rebours"
 L.countdownAt = "Compte à rebours à... (secondes)"
+L.countdownAt_desc = "Choisissez combien de temps il doit rester sur une technique de boss (en secondes) quand le compte à rebours commence."
+L.countdown = "Compte à rebours"
+L.countdownDesc = "La fonctionnalité de compte à rebours consiste en un compte à rebours audio parlé et un compte à rebours texte visuel. Elle est rarement activée par défaut, mais vous pouvez l'activer pour n'importe quelle technique de boss en vous rendant dans les paramètres spécifiques de la rencontre de boss."
+L.countdownAudioHeader = "Compte à rebours audio parlé"
+L.countdownTextHeader = "Compte à rebours texte visuel"
+L.resetCountdownDesc = "Réinitialise tous les paramètres des comptes à rebours ci-dessus à leurs valeurs par défaut."
+L.resetAllCountdownDesc = "Si vous avez sélectionné des voix de compte à rebours personnalisés dans les paramètres de n'importe quel rencontre de boss, ce bouton va TOUS les réinitialiser et réinitialiser tous les paramètres ci-dessus à leurs valeurs par défaut."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -223,21 +223,23 @@ L.infoBox = "Boîte d'infos"
 
 L.sinkDescription = "Transmet la sortie de cet addon via l'affichage des messages de BigWigs. Cet affichage supporte les icônes, les couleurs et peut afficher jusqu'à 4 messages à l'écran en même temps. Les messages récemment insérés grandiront et reviendront rapidement à leur taille initiale afin de bien capter l'attention du joueur."
 L.emphasizedSinkDescription = "Transmet la sortie de cet addon via l'affichage des messages mis en évidence de BigWigs. Cet affichage supporte le texte et les couleurs, et ne peut afficher qu'un message à la fois."
-L.emphasizedCountdownSinkDescription = "Dirige la sortie de cet addon vers l'affichage des messages de compte à rebours de BigWigs. Cet affichage supporte le texte et les couleurs, et peut uniquement afficher un message à la fois."
 L.resetMessagesDesc = "Réinitialise toutes les options relatives aux messages, y compris la position des ancres des messages."
 
 L.bwEmphasized = "BigWigs en évidence"
 L.messages = "Messages"
 L.normalMessages = "Messages normaux"
 L.emphasizedMessages = "Messages en évidence"
+L.emphasizedDesc = "Le principe d'un message en évidence est d'attirer votre attention en affichant un large message au milieu de votre écran. Il est rarement activé par défaut, mais vous pouvez l'activer pour n'importe quelle technique de boss en vous rendant dans les paramètres spécifiques de la rencontre de boss."
 L.output = "Sortie"
+L.uppercase = "MAJUSCULE"
+L.uppercaseDesc = "Tous les messages mis en évidence seront convertis en MAJUSCULES."
 
-L.useColors = "Utiliser des couleurs"
-L.useColorsDesc = "Utilise ou non des couleurs dans les messages à la place du blanc unique."
 L.useIcons = "Utiliser les icônes"
 L.useIconsDesc = "Affiche les icônes à côté des messages."
 L.classColors = "Couleurs de classe"
 L.classColorsDesc = "Colore les noms des joueurs selon leur classe."
+L.chatMessages = "Messages de la fenêtre de discussion"
+L.chatMessagesDesc = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal."
 
 L.fontSize = "Taille de la police"
 L.none = "Aucun"
@@ -323,12 +325,15 @@ L.secondaryDesc = "La seconde icône de cible de raid qu'un script de rencontre 
 --
 
 L.Sounds = "Sons"
+L.oldSounds = "Anciens sons"
 
 L.Alarm = "Alarme"
 L.Info = "Info"
 L.Alert = "Alerte"
 L.Long = "Long"
 L.Warning = "Avertissement"
+L.onyou = "Un sort, amélioration ou affaiblissement est sur vous"
+L.underyou = "Vous devez bouger hors d'un sort qui se trouve en dessous de vous"
 
 L.sound = "Son"
 L.soundDesc = "Les messages sont le plus souvent accompagnés de sons. Certaines personnes trouvent plus faciles d'entendre ces sons pour réagir une fois qu'elles ont appris quels sons sont liés à quels messages, plutôt que de lire les messages à chaque fois."
