@@ -261,7 +261,7 @@ L.resetBarsDesc = "重設所有計時條自訂選項，包括錨點和位置。"
 -- BossBlock.lua
 --
 
-L.audio = "語音"
+L.audio = "音效"
 L.music = "音樂"
 L.ambience = "環境音效"
 L.sfx = "音效"
@@ -319,7 +319,7 @@ L.infoBox = "訊息盒"
 -- Messages.lua
 --
 
---L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+L.emphasizedDesc = "強調訊息的目的，是通過在螢幕中央顯示巨大的文字訊息，從而引起你的注意。 預設情況下，此功能很少啟用，但你可以為任何技能單獨啟用；；在首領模組的技能列表中點擊「>>」，就可以選擇單獨啟用特定技能的強調訊息。"
 L.resetMessagesDesc = "重設所有訊息自訂選項，包括錨點和位置。"
 L.uppercase = "大寫"
 L.uppercaseDesc = "所有的強調訊息都會被轉換為大寫。"
