@@ -430,7 +430,7 @@ end
 function mod:Crystalize(args)
 	self:StopBar(CL.count:format(args.spellName, crystalizeCount))
 	crystalizeCount = crystalizeCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 55 or 60, CL.count:format(args.spellName, crystalizeCount))
+	self:CDBar(args.spellId, self:Mythic() and 55 or 50, CL.count:format(args.spellName, crystalizeCount))
 end
 
 do
