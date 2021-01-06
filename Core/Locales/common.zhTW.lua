@@ -48,13 +48,13 @@ L.soon = "即將%s"
 L.spawned = "%s已重生"
 L.spawning = "%s出現"
 L.stack = "%3$s %1$d層%2$s"
-L.stackyou = "你 %d層%s"
+L.stackyou = "你：%d層%s"
 L.stage = "階段%d"
 L.trash = "小怪"
 L.underyou = "你腳下：%s"
-L.you = "你 %s"
+L.you = "你：%s"
 L.you_icon = "|T13700%2$d:0|t你 %1$s"
---L.on_group = "%s on GROUP" -- spell on group
+--L.on_group = "團隊：%s" -- spell on group
 
 L.active = "開戰" -- When a boss becomes active, after speech finishes
 
@@ -79,4 +79,4 @@ L.seconds = "%.1f秒" -- 1.1 seconds
 -- Common ability name replacements
 L.laser = "雷射" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.bomb = "炸彈" -- Used for debuffs that make players explode
---L.fixate = "Fixate" -- Used when a boss or add is chasing/fixated on a player
+L.fixate = "鎖定" -- Used when a boss or add is chasing/fixated on a player
