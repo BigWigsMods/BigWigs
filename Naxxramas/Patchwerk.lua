@@ -42,6 +42,6 @@ end
 --
 
 function mod:Frenzy(args)
-	self:Message(28131, "orange", CL.percent(5, args.spellName))
+	self:Message(28131, "orange", CL.percent:format(5, args.spellName))
 	self:PlaySound(28131, "alarm")
 end

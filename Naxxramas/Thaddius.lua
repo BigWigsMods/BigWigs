@@ -178,7 +178,7 @@ function mod:OnRegister()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "StalaggPower", 28134)
+	self:Log("SPELL_AURA_APPLIED", "StalaggPower", 28134)
 	self:Log("SPELL_CAST_START", "PolarityShiftCast", 28089)
 	self:Log("SPELL_CAST_SUCCESS", "PolarityShift", 28089)
 
