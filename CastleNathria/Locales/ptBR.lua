@@ -85,7 +85,7 @@ if L then
 	L.fun_info = "Informação de Dano"
 	L.fun_info_desc = "Mostra uma mensagem dizendo o quanto de vida o chefe perdeu duarnte o Impacto Destrutivo."
 
-	L.health_lost = "Punholodo desmaiou %.1f%%!"
+	L.health_lost = "Punholodo perdeu %.1f%%!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "ptBR")
