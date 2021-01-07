@@ -56,6 +56,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "VoidZone", 28863)
 	self:Log("SPELL_CAST_SUCCESS", "Wrath", 28883)
 	self:Log("SPELL_AURA_APPLIED", "ShieldWall", 29061)
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 
 	self:Death("Deaths", 16063, 16063, 16064, 16065)
 end
