@@ -40,7 +40,7 @@ BigWigs:AddSounds("Hungering Destroyer", {
 })
 
 BigWigs:AddSounds("Artificer Xy'mox", {
-	[325236] = "warning",
+	[325236] = {"alert","warning"},
 	[325399] = "alert",
 	[326271] = "alert",
 	[327902] = "warning",
@@ -163,13 +163,17 @@ BigWigs:AddSounds("Sire Denathrius", {
 	[329181] = {"alert","warning"},
 	[329906] = "alarm",
 	[329951] = "warning",
-	[330068] = "alarm",
+	[330042] = "alarm",
 	[332585] = "alert",
 	[332619] = "alert",
 	[332794] = "warning",
 	[332849] = "alert",
 	[333932] = "warning",
+	[333979] = "warning",
 	[333980] = "alarm",
 	[335873] = "alarm",
+	[338738] = "info",
+	[344776] = "alert",
+	["hymn_stacks"] = {"alert","info"},
 	["stages"] = "long",
 })

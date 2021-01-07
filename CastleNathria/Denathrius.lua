@@ -140,6 +140,7 @@ function mod:GetOptions()
 		"custom_on_repeating_impale",
 		impaleMarker,
 		-22131, -- Crimson Cabalist
+		{336162, "EMPHASIZE"}, -- Crescendo
 		335873, -- Rancor
 		329181, -- Wracking Pain
 		333932, -- Hand of Destruction
@@ -198,6 +199,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WrackingPainApplied", 329181)
 	self:Log("SPELL_CAST_START", "HandofDestruction", 333932)
 	self:Log("SPELL_CAST_SUCCESS", "Massacre", 330042)
+
+	self:Death("Crescendo", 169196, 169470, 173161, 173162, 173163, 173164) -- Crimson Cabalist x2, Lady Sinsear, Lord Evershade, Baron Duskhollow, Countess Gloomveil
 
 	-- Stage Three: Indignation
 	self:Log("SPELL_CAST_SUCCESS", "IndignationSuccess", 326005)
@@ -264,6 +267,21 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local prev = 0
+	function mod:Crescendo(args)
+		local t = args.time
+		if t - prev > 0.3 then
+			prev = t
+
+			self:SimpleTimer(function()
+				self:PersonalMessage(336162, "underyou")
+				self:PlaySound(336162, "warning")
+			end, 2)
+		end
+	end
+end
 
 function mod:RAID_BOSS_EMOTE(_, msg)
 	if msg:find(L.add_spawn, nil, true) then -- Crimson Cabalists spawned

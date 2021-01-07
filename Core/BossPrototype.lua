@@ -2403,7 +2403,10 @@ end
 -- @string player the player to mark
 -- @number[opt] icon the icon to mark the player with, numbering from 1-8 (if nil, the icon is removed)
 function boss:CustomIcon(key, player, icon)
-	if self:GetOption(key) then
+	if key == false or self:GetOption(key) then
+		if solo then -- setting the same icon twice while not in a group removes it
+			SetRaidTarget(player, 0)
+		end
 		SetRaidTarget(player, icon or 0)
 	end
 end

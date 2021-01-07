@@ -5,17 +5,21 @@
 local plugin = BigWigs:NewPlugin("Alt Power")
 if not plugin then return end
 
-plugin.defaultDB = {
-	posx = nil,
-	posy = nil,
-	fontName = plugin:GetDefaultFont(),
-	fontSize = select(2, plugin:GetDefaultFont(12)),
-	fontOutline = "",
-	monochrome = false,
-	expanded = false,
-	disabled = false,
-	lock = false,
-}
+do
+	local name = plugin:GetDefaultFont()
+	local _, size = plugin:GetDefaultFont(12)
+	plugin.defaultDB = {
+		posx = nil,
+		posy = nil,
+		fontName = name,
+		fontSize = size,
+		fontOutline = "",
+		monochrome = false,
+		expanded = false,
+		disabled = false,
+		lock = false,
+	}
+end
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -187,59 +191,6 @@ do
 				order = 6,
 				disabled = disabled,
 			},
-			--[[showHide = {
-				type = "group",
-				name = L.showHide,
-				inline = true,
-				order = 7,
-				get = function(info)
-					local key = info[#info]
-					return db.objects[key]
-				end,
-				set = function(info, value)
-					local key = info[#info]
-					db.objects[key] = value
-					plugin:RestyleWindow()
-				end,
-				args = {
-					title = {
-						type = "toggle",
-						name = L.title,
-						desc = L.titleDesc,
-						order = 1,
-					},
-					background = {
-						type = "toggle",
-						name = L.background,
-						desc = L.backgroundDesc,
-						order = 2,
-					},
-					sound = {
-						type = "toggle",
-						name = L.soundButton,
-						desc = L.soundButtonDesc,
-						order = 3,
-					},
-					close = {
-						type = "toggle",
-						name = L.closeButton,
-						desc = L.closeButtonDesc,
-						order = 4,
-					},
-					ability = {
-						type = "toggle",
-						name = L.abilityName,
-						desc = L.abilityNameDesc,
-						order = 5,
-					},
-					tooltip = {
-						type = "toggle",
-						name = L.tooltip,
-						desc = L.tooltipDesc,
-						order = 6,
-					}
-				},
-			},]]
 			exactPositioning = {
 				type = "group",
 				name = L.positionExact,
