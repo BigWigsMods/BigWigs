@@ -183,17 +183,17 @@ function mod:OnEngage()
 	if killOrder == 1 or killOrder == 4 then -- Niklaus first
 		local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 		if boss then
-			self:CustomIcon(killOrder, boss, 7)
+			self:CustomIcon(false, boss, 7)
 		end
 	elseif killOrder == 2 or killOrder == 5 then -- Frieda First
 		local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 		if boss then
-			self:CustomIcon(killOrder, boss, 7)
+			self:CustomIcon(false, boss, 7)
 		end
 	elseif killOrder == 3 or killOrder == 6 then -- Stavros First
 		local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 		if boss then
-			self:CustomIcon(killOrder, boss, 7)
+			self:CustomIcon(false, boss, 7)
 		end
 	end
 end
@@ -270,17 +270,17 @@ function mod:BossDeath(args)
 		if killOrder == 2 or killOrder == 3 then -- Niklaus second
 			local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 			if boss then
-				self:CustomIcon(killOrder, boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 1 or killOrder == 6 then -- Frieda second
 			local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 			if boss then
-				self:CustomIcon(killOrder, boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 4 or killOrder == 5 then -- Stavros second
 			local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 			if boss then
-				self:CustomIcon(killOrder, boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		end
 	elseif bossesKilled == 2 then
@@ -304,17 +304,17 @@ function mod:BossDeath(args)
 		if killOrder == 5 or killOrder == 6 then -- Niklaus last
 			local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 			if boss then
-				self:CustomIcon(killOrder, boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 3 or killOrder == 4 then -- Frieda last
 			local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 			if boss then
-				self:CustomIcon(killOrder, boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 1 or killOrder == 2 then -- Stavros last
 			local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 			if boss then
-				self:CustomIcon(killOrder, boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		end
 	end
@@ -574,6 +574,7 @@ do
 			self:PauseBar(346690) -- Duelist's Riposte
 			self:PauseBar(346698) -- Summon Dutiful Attendant
 			self:PauseBar(330978) -- Dredger Servants
+			self:PauseBar(330965) -- Castellans Cadre
 			self:PauseBar(346303) -- Violent Uproar
 			self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 		end
@@ -604,6 +605,7 @@ function mod:DanseMacabreOver(args)
 	self:ResumeBar(346690) -- Duelist's Riposte
 	self:ResumeBar(346698) -- Summon Dutiful Attendant
 	self:ResumeBar(330978) -- Dredger Servants
+	self:ResumeBar(330965) -- Castellans Cadre
 	self:ResumeBar(346303) -- Violent Uproar
 	self:ResumeBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 end

@@ -535,7 +535,7 @@ do
 	countdownFrame = CreateFrame("Frame", nil, UIParent)
 	countdownFrame:SetFrameStrata("FULLSCREEN_DIALOG")
 	countdownFrame:SetFixedFrameStrata(true)
-	countdownFrame:SetFrameLevel(0) -- Behind GUI (level 1)
+	countdownFrame:SetFrameLevel(20) -- Behind GUI (level 100)
 	countdownFrame:SetFixedFrameLevel(true)
 	countdownFrame:SetPoint("CENTER", countdownAnchor, "CENTER")
 	countdownFrame:SetWidth(80)
