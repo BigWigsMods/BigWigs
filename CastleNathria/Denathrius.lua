@@ -140,7 +140,7 @@ function mod:GetOptions()
 		"custom_on_repeating_impale",
 		impaleMarker,
 		-22131, -- Crimson Cabalist
-		{336162, "EMPHASIZE", "FLASH"}, -- Crescendo
+		{336162, "EMPHASIZE"}, -- Crescendo
 		335873, -- Rancor
 		329181, -- Wracking Pain
 		333932, -- Hand of Destruction
@@ -273,16 +273,11 @@ do
 	function mod:Crescendo(args)
 		local t = args.time
 		if t - prev > 0.3 then
-			local throttleFlash = t - prev < 1
-
 			prev = t
+
 			self:SimpleTimer(function()
 				self:PersonalMessage(336162, "underyou")
 				self:PlaySound(336162, "warning")
-
-				if not throttleFlash then
-					self:Flash(336162)
-				end
 			end, 2)
 		end
 	end
