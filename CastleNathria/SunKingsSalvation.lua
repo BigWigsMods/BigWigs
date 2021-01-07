@@ -310,6 +310,7 @@ function mod:ReflectionOfGuiltApplied(args)
 			self:CancelDelayedMessage(text)
 			self:StopBar(text)
 		end
+		self:StopBar(CL.count:format(self:SpellName(337859), cloakofFlamesCount)) -- Cloak of Flames
 
 		for key, scheduled in pairs(addScheduledTimers) do -- cancel all scheduled add timers
 			self:CancelTimer(scheduled)
@@ -318,12 +319,12 @@ function mod:ReflectionOfGuiltApplied(args)
 
 		blazingSurgeCount = 1
 		emberBlastCount = 1
+		cloakofFlamesCount = 1
 
 		self:Bar(326455, 13.5) -- Fiery Strike
 		self:Bar(325877, 19.5, CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 		self:Bar(329518, 29.5, CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 
-		cloakofFlamesCount = 1
 		if self:Mythic() then
 			self:Bar(343026, 38.9, CL.count:format(self:SpellName(343026), cloakofFlamesCount))
 		end
