@@ -47,6 +47,7 @@ local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
 local myGUID, myRole, myDamagerRole = nil, nil, nil
 local myGroupGUIDs = {}
 local solo = false
+local debugFunc = nil
 local updateData = function(module)
 	myGUID = UnitGUID("player")
 	hasVoice = BigWigsAPI:HasVoicePack()
@@ -90,14 +91,18 @@ local updateData = function(module)
 			break
 		end
 	end
+	debugFunc = type(TranscriptIgnore) == "table" and TranscriptIgnore.debug and Transcriptor or false
 end
 
 -------------------------------------------------------------------------------
 -- Debug
 --
 
-local debug = false -- Set to true to get (very spammy) debug messages.
-local dbg = function(self, msg) print(format("[DBG:%s] %s", self.displayName, msg)) end
+local dbg = function(...)
+	if debugFunc then
+		debugFunc:AddCustomEvent("BigWigs_Debug", "BigWigs", ...)
+	end
+end
 
 -------------------------------------------------------------------------------
 -- Metatables
@@ -246,7 +251,7 @@ function boss:Enable(isWipe)
 		self.enabled = true
 
 		local isWiping = isWipe == true
-		if debug then dbg(self, isWiping and "Enable() via Wipe()" or "Enable()") end
+		dbg("Enabling module", self.engageId, self.moduleName)
 
 		updateData(self)
 		self.sayCountdowns = {}
@@ -284,7 +289,7 @@ function boss:Disable(isWipe)
 		self.enabled = nil
 
 		local isWiping = isWipe == true
-		if debug then dbg(self, isWiping and "Disable() via Wipe()" or "Disable()") end
+		dbg("Disabling module", "isWipe:", isWiping, self.engageId, self.moduleName)
 		if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 		-- Update enabled modules list
@@ -354,7 +359,7 @@ function boss:Disable(isWipe)
 end
 function boss:Reboot(isWipe)
 	if self.enabled then
-		if debug then dbg(self, ":Reboot()") end
+		dbg("Rebooting module", "isWipe:", isWipe, self.engageId, self.moduleName)
 		if isWipe then
 			-- Devs, in 99% of cases you'll want to use OnBossWipe
 			self:SendMessage("BigWigs_OnBossWipe", self)
@@ -500,7 +505,6 @@ do
 							func(args)
 						else
 							self[func](self, args)
-							if debug then dbg(self, "Firing func: "..func) end
 						end
 					end
 				end
@@ -600,7 +604,6 @@ do
 			end
 			unitEventMap[self][event][unit] = func or event
 			frameTbl[unit]:RegisterUnitEvent(event, unit)
-			if debug then dbg(self, "Adding: "..event..", "..unit) end
 		end
 	end
 	--- Unregister a callback for unit bound events.
@@ -622,7 +625,6 @@ do
 				end
 			end
 			if not keepRegistered then
-				if debug then dbg(self, "Removing: "..event..", "..unit) end
 				frameTbl[unit]:UnregisterEvent(event)
 			end
 		end
@@ -656,7 +658,6 @@ do
 		if type(func) ~= "string" or not self[func] then core:Print(format(noFunc, self.moduleName, tostring(func))) return end
 		if not widgetEventMap[self][id] then widgetEventMap[self][id] = func end
 		self:RegisterEvent("UPDATE_UI_WIDGET")
-		if debug then dbg(self, format("Adding widget event for widget: %d", id)) end
 	end
 	--- Unregister a callback for widget events.
 	-- @number id the widget id to stop listening to
@@ -678,7 +679,7 @@ end
 do
 	local function wipeCheck(module)
 		if not IsEncounterInProgress() then
-			if debug then dbg(module, "IsEncounterInProgress() is nil, wiped.") end
+			dbg(":StartWipeCheck IsEncounterInProgress() is nil, wiped", module.engageId, module.moduleName)
 			module:Wipe()
 		end
 	end
@@ -731,13 +732,14 @@ do
 	function boss:CheckBossStatus()
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
 		if not hasBoss and self:IsEngaged() then
-			if debug then dbg(self, ":CheckBossStatus wipeCheck scheduled.") end
+			dbg(":CheckBossStatus wipeCheck scheduled", self.engageId, self.moduleName)
 			self:ScheduleTimer(wipeCheck, 6, self)
 		elseif not self:IsEngaged() and hasBoss then
-			if debug then dbg(self, ":CheckBossStatus Engage called.") end
+			dbg(":CheckBossStatus called :CheckForEncounterEngage", self.engageId, self.moduleName)
 			self:CheckForEncounterEngage()
+		else
+			dbg(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self.engageId, self.moduleName)
 		end
-		if debug then dbg(self, ":CheckBossStatus called with no result. Engaged = "..tostring(self:IsEngaged()).." hasBoss = "..tostring(hasBoss)) end
 	end
 end
 
@@ -865,14 +867,13 @@ do
 
 	--- Start a repeating timer checking if your group is in combat with a boss.
 	function boss:CheckForEngage()
-		if debug then dbg(self, ":CheckForEngage initiated.") end
 		local go = scan(self)
 		if go then
-			if debug then dbg(self, "Engage scan found active boss entities, transmitting engage sync.") end
+			dbg(":CheckForEngage() scan found active boss entities, calling :Engage", self.engageId, self.moduleName)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 			self:Engage()
 		else
-			if debug then dbg(self, "Engage scan did NOT find any active boss entities. Re-scheduling another engage check in 0.5 seconds.") end
+			dbg(":CheckForEngage() scan found nothing, next scan in 0.5s", self.engageId, self.moduleName)
 			self:ScheduleTimer("CheckForEngage", .5)
 		end
 	end
@@ -887,13 +888,12 @@ do
 	--- Start a repeating timer checking if your group has left combat with a boss.
 	-- @string[opt] first The event name when used as a callback
 	function boss:CheckForWipe(first)
-		if debug then dbg(self, ":CheckForWipe initiated.") end
 		local go = scan(self)
 		if not first and not go then
-			if debug then dbg(self, "Wipe scan found no active boss entities, rebooting module.") end
+			dbg(":CheckForWipe() found nothing active, rebooting module", self.engageId, self.moduleName)
 			self:Wipe()
 		else
-			if debug and not first then dbg(self, "Wipe scan found active boss entities (" .. tostring(go) .. "). Re-scheduling another wipe check in 2 seconds.") end
+			dbg(":CheckForWipe() found active bosses, waiting for next scan in 2s", "Boss:", go, self.engageId, self.moduleName)
 			self:ScheduleTimer("CheckForWipe", 2)
 		end
 	end
@@ -902,7 +902,7 @@ do
 		if not self.isEngaged then
 			self.isEngaged = true
 
-			if debug then dbg(self, ":Engage") end
+			dbg(":Engage", "noEngage:", noEngage, self.engageId, self.moduleName)
 
 			if not noEngage or noEngage ~= "NoEngage" then
 				updateData(self)
@@ -919,7 +919,7 @@ do
 	end
 
 	function boss:Win()
-		if debug then dbg(self, ":Win") end
+		dbg(":Win", self.engageId, self.moduleName)
 		wipe(icons) -- Wipe icon cache
 		wipe(spells)
 		if self.OnWin then self:OnWin() end
@@ -1536,10 +1536,10 @@ do
 				core:Print(format(noDefaultError, self.moduleName, key))
 				return
 			end
-			if debug then
-				core:Print(format(notNumberError, self.moduleName, key, type(self.db.profile[key])))
-				return
-			end
+			--if debug then
+			--	core:Print(format(notNumberError, self.moduleName, key, type(self.db.profile[key])))
+			--	return
+			--end
 			self.db.profile[key] = self.toggleDefaults[key]
 		end
 
