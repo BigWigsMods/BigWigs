@@ -128,7 +128,8 @@ function mod:GetOptions()
 		{326699, "INFOBOX"}, -- Burden of Sin
 		326707, -- Cleansing Pain
 		326851, -- Blood Price
-		{327796, "SAY", "SAY_COUNTDOWN"}, -- Night Hunter
+		{327039, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Feeding Time (Normal mode version of Night Hunter)
+		{327796, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Night Hunter
 		"custom_on_repeating_nighthunter",
 		nightHunterMarker,
 		327122, -- Ravage
@@ -166,6 +167,9 @@ function mod:GetOptions()
 		[329906] = -22059, -- Stage Two: The Crimson Chorus
 		[332585] = -22195,-- Stage Three: Indignation
 		["hymn_stacks"] = "mythic",
+	},{
+		[327039] = CL.normal,
+		[327796] = CL.heroic .."/".. CL.mythic,
 	}
 end
 
@@ -181,6 +185,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CleansingPain", 326707)
 	self:Log("SPELL_CAST_SUCCESS", "CleansingPainSuccess", 326707)
 	self:Log("SPELL_CAST_START", "BloodPriceStart", 326851)
+	self:Log("SPELL_AURA_APPLIED", "FeedingTimeApplied", 327039)
+	self:Log("SPELL_AURA_REMOVED", "FeedingTimeRemoved", 327039)
 	self:Log("SPELL_AURA_APPLIED", "NightHunterApplied", 327796)
 	self:Log("SPELL_AURA_REMOVED", "NightHunterRemoved", 327796)
 	self:Log("SPELL_CAST_START", "Ravage", 327122)
@@ -200,7 +206,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HandofDestruction", 333932)
 	self:Log("SPELL_CAST_SUCCESS", "Massacre", 330042)
 
-	self:Death("Crescendo", 169196, 169470, 173161, 173162, 173163, 173164) -- Crimson Cabalist x2, Lady Sinsear, Lord Evershade, Baron Duskhollow, Countess Gloomveil
+	self:Death("AddDeaths", 169196, 169470, 173161, 173162, 173163, 173164) -- Crimson Cabalist x2, Lady Sinsear, Lord Evershade, Baron Duskhollow, Countess Gloomveil
 
 	-- Stage Three: Indignation
 	self:Log("SPELL_CAST_SUCCESS", "IndignationSuccess", 326005)
@@ -277,15 +283,18 @@ end
 
 do
 	local prev = 0
-	function mod:Crescendo(args)
+	local function crescendoMessage()
+		mod:PersonalMessage(336162, "underyou")
+		mod:PlaySound(336162, "warning")
+	end
+	function mod:AddDeaths(args)
 		local t = args.time
 		if t - prev > 0.3 then
 			prev = t
 
-			self:SimpleTimer(function()
-				self:PersonalMessage(336162, "underyou")
-				self:PlaySound(336162, "warning")
-			end, 2)
+			if not self:Easy() then
+				self:SimpleTimer(crescendoMessage, 2)
+			end
 		end
 	end
 end
@@ -431,6 +440,21 @@ end
 function mod:CleansingPainSuccess(args)
 	cleansingPainCount = cleansingPainCount + 1
 	self:Bar(args.spellId, timers[stage][args.spellId][cleansingPainCount], CL.count:format(args.spellName, cleansingPainCount))
+end
+
+
+function mod:FeedingTimeApplied(args)
+	if self:Me(args.destGUID)then
+		self:PersonalMessage(args.spellId)
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 5)
+	end
+end
+
+function mod:FeedingTimeRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 do
