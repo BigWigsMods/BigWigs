@@ -13,6 +13,10 @@ files["**/Loader.lua"].ignore = {
 	"113/UnitName",
 	"113/SetRaidTarget",
 }
+files["**/Core/BossPrototype.lua"].ignore = {
+	"113/TranscriptIgnore",
+	"113/Transcriptor",
+}
 ignore = {
 	"11/SLASH_.*", -- slash handlers
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
