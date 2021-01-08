@@ -226,6 +226,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SinisterReflection", 333979)
 end
 
+function mod:VerifyEnable(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	if hp > 5 then
+		return true
+	end
+end
+
 function mod:OnEngage()
 	timers = self:Mythic() and timersMythic or timersHeroic
 	stage = 1
