@@ -116,8 +116,6 @@ end
 --
 
 local enablezones, enablemobs = {}, {}
-local monitoring = false
-
 local function enableBossModule(module, sync)
 	if not module.enabled then
 		module:Enable()
@@ -164,30 +162,6 @@ end
 local function updateMouseover() targetCheck("mouseover", true) end
 local function unitTargetChanged(event, target)
 	targetCheck(target .. "target")
-end
-
-local function zoneChanged()
-	local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
-	if instanceType == "none" then
-		local mapId = GetBestMapForUnit("player")
-		if mapId then
-			id = -mapId
-		end
-	end
-	if enablezones[id] then
-		if not monitoring then
-			monitoring = true
-			core.RegisterEvent(mod, "UPDATE_MOUSEOVER_UNIT", updateMouseover)
-			core.RegisterEvent(mod, "UNIT_TARGET", unitTargetChanged)
-			targetCheck("target")
-			targetCheck("mouseover")
-			targetCheck("boss1")
-		end
-	elseif monitoring then
-		monitoring = false
-		core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
-		core.UnregisterEvent(mod, "UNIT_TARGET")
-	end
 end
 
 function core:RegisterEnableMob(module, ...)
@@ -324,12 +298,6 @@ do
 				initModules[i]:Initialize()
 			end
 			initModules = {}
-			-- For LoD users
-			-- ZONE_CHANGED_NEW_AREA > LoadAddOn
-			-- ADDON_LOADED > InitializeModules
-			-- We're in a brand new zone that loaded a new addon and added modules.
-			-- Now force a zone check to be able to enable those modules.
-			zoneChanged()
 		end
 	end
 
@@ -367,33 +335,6 @@ do
 end
 
 do
-	local function EnablePlugins()
-		for _, module in next, plugins do
-			module:Enable()
-		end
-	end
-	function core:Enable()
-		if not coreEnabled then
-			coreEnabled = true
-
-			loader.RegisterMessage(mod, "BigWigs_BossComm", bossComm)
-			core.RegisterEvent(mod, "ZONE_CHANGED_NEW_AREA", zoneChanged)
-			core.RegisterEvent(mod, "ENCOUNTER_START")
-			core.RegisterEvent(mod, "RAID_BOSS_WHISPER")
-
-			if IsLoggedIn() then
-				EnablePlugins()
-			else
-				core.RegisterEvent(mod, "PLAYER_LOGIN", EnablePlugins)
-			end
-
-			zoneChanged()
-			core:SendMessage("BigWigs_CoreEnabled")
-		end
-	end
-end
-
-do
 	local function DisableModules()
 		for _, module in next, bosses do
 			module:Disable()
@@ -402,21 +343,69 @@ do
 			module:Disable()
 		end
 	end
-	function core:Disable()
+	local function DisableCore()
 		if coreEnabled then
 			coreEnabled = false
 
 			loader.UnregisterMessage(mod, "BigWigs_BossComm")
 			core.UnregisterEvent(mod, "ZONE_CHANGED_NEW_AREA")
+			core.UnregisterEvent(mod, "PLAYER_LEAVING_WORLD")
 			core.UnregisterEvent(mod, "ENCOUNTER_START")
 			core.UnregisterEvent(mod, "RAID_BOSS_WHISPER")
+			core.UnregisterEvent(mod, "UPDATE_MOUSEOVER_UNIT")
+			core.UnregisterEvent(mod, "UNIT_TARGET")
 
-			self:CancelAllTimers()
+			core:CancelAllTimers()
 
-			zoneChanged() -- Unregister zone events
+			core:SendMessage("BigWigs_StopConfigureMode")
+			if BigWigsOptions then
+				BigWigsOptions:Close()
+			end
 			DisableModules()
-			monitoring = false
 			core:SendMessage("BigWigs_CoreDisabled")
+		end
+	end
+	local function zoneChanged()
+		-- Not if you released spirit on a world boss or if the GUI is open
+		if not UnitIsDeadOrGhost("player") and (not BigWigsOptions or (not BigWigsOptions:IsOpen() and not BigWigsOptions:InConfigureMode())) then
+			local bars = core:GetPlugin("Bars", true)
+			if bars and not bars:HasActiveBars() then -- Not if bars are showing
+				DisableCore() -- Alive in a non-enable zone, disable
+			end
+		end
+	end
+
+	local function EnablePlugins()
+		for _, module in next, plugins do
+			module:Enable()
+		end
+	end
+	function core:Enable(unit)
+		if not coreEnabled then
+			coreEnabled = true
+
+			loader.RegisterMessage(mod, "BigWigs_BossComm", bossComm)
+			core.RegisterEvent(mod, "ENCOUNTER_START")
+			core.RegisterEvent(mod, "RAID_BOSS_WHISPER")
+			core.RegisterEvent(mod, "UPDATE_MOUSEOVER_UNIT", updateMouseover)
+			core.RegisterEvent(mod, "UNIT_TARGET", unitTargetChanged)
+			core.RegisterEvent(mod, "PLAYER_LEAVING_WORLD", DisableCore) -- Simple disable when leaving instances
+			local _, instanceType = GetInstanceInfo()
+			if instanceType == "none" then -- We don't want to be disabling in instances
+				core.RegisterEvent(mod, "ZONE_CHANGED_NEW_AREA", zoneChanged) -- Special checks for disabling after world bosses
+			end
+
+
+			if IsLoggedIn() then
+				EnablePlugins()
+			else
+				core.RegisterEvent(mod, "PLAYER_LOGIN", EnablePlugins)
+			end
+
+			core:SendMessage("BigWigs_CoreEnabled")
+		end
+		if type(unit) == "string" then
+			targetCheck(unit) -- Mainly for the Loader to tell the core to enable a world boss after loading the world boss addon
 		end
 	end
 end

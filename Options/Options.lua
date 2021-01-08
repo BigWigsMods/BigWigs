@@ -22,7 +22,7 @@ local bwTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, 
 
 local colorModule
 local soundModule
-local isOpen, isPluginOpen
+local configFrame, isPluginOpen
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 
@@ -233,15 +233,19 @@ do
 end
 
 function options:Open()
-	if isOpen then
-		isOpen:Hide()
-	else
+	if not configFrame then
 		options:OpenConfig()
 	end
 end
 
+function options:Close()
+	if configFrame then
+		configFrame:Hide()
+	end
+end
+
 function options:IsOpen()
-	return isOpen
+	return configFrame and true or false
 end
 
 -------------------------------------------------------------------------------
@@ -1293,7 +1297,7 @@ do
 		playerName = UnitName("player")
 
 		local bw = AceGUI:Create("Frame")
-		isOpen = bw
+		configFrame = bw
 		bw:SetTitle("BigWigs")
 		bw:SetStatusText(" "..loader:GetReleaseString())
 		bw:SetWidth(858)
@@ -1304,7 +1308,7 @@ do
 			AceGUI:Release(widget)
 			wipe(statusTable)
 			isPluginOpen = nil
-			isOpen = nil
+			configFrame = nil
 		end)
 
 		local introduction = AceGUI:Create("Label")
