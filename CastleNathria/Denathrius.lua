@@ -170,6 +170,7 @@ function mod:GetOptions()
 	},{
 		[327039] = CL.normal,
 		[327796] = CL.heroic .."/".. CL.mythic,
+		[-22131] = CL.adds,
 	}
 end
 
