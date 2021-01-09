@@ -511,9 +511,9 @@ function mod:MarchofthePenitentStart(args)
 		stage = 2
 		self.stage = stage
 		intermission = true
-		self:Message("stages", "green", CL.intermission, false)
-		self:PlaySound("stages", "long")
-		self:CastBar("stages", 16.5, CL.intermission, 328276) -- 1.5s precast, 15s channel // March of the Penitent icon
+		self:Message(328276, "green", CL.percent:format(70, args.spellName), false)
+		self:PlaySound(328276, "long")
+		self:CastBar(328276, 16.5) -- 1.5s precast, 15s channel
 
 		self:StopBar(CL.count:format(self:SpellName(326707), cleansingPainCount)) -- Cleansing Pain
 		self:StopBar(CL.count:format(self:SpellName(326851), bloodPriceCount)) -- Blood Price
