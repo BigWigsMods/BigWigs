@@ -170,6 +170,7 @@ function mod:GetOptions()
 	},{
 		[327039] = CL.normal,
 		[327796] = CL.heroic .."/".. CL.mythic,
+		[328276] = CL.intermission,
 		[-22131] = CL.adds,
 	}
 end
@@ -513,7 +514,7 @@ function mod:MarchofthePenitentStart(args)
 		intermission = true
 		self:Message(328276, "green", CL.percent:format(70, args.spellName), false)
 		self:PlaySound(328276, "long")
-		self:CastBar(328276, 16.5) -- 1.5s precast, 15s channel
+		self:CastBar(328276, 16.5, CL.intermission) -- 1.5s precast, 15s channel
 
 		self:StopBar(CL.count:format(self:SpellName(326707), cleansingPainCount)) -- Cleansing Pain
 		self:StopBar(CL.count:format(self:SpellName(326851), bloodPriceCount)) -- Blood Price
