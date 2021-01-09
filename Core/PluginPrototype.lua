@@ -82,18 +82,29 @@ do
 		"raid31", "raid32", "raid33", "raid34", "raid35", "raid36", "raid37", "raid38", "raid39", "raid40"
 	}
 	local partyList = {"player", "party1", "party2", "party3", "party4"}
-	local GetNumGroupMembers, IsInRaid = GetNumGroupMembers, IsInRaid
+	local GetNumGroupMembers, IsInRaid, UnitPosition = GetNumGroupMembers, IsInRaid, UnitPosition
 	--- Iterate over your group.
 	-- Automatically uses "party" or "raid" tokens depending on your group type.
+	-- @bool[opt] noInstanceFilter If true then all group units are returned even if they are not in your instance
 	-- @return iterator
-	function plugin:IterateGroup()
+	function plugin:IterateGroup(noInstanceFilter)
+		local _, _, _, instanceId = UnitPosition("player")
 		local num = GetNumGroupMembers() or 0
 		local i = 0
 		local size = num > 0 and num+1 or 2
 		local function iter(t)
 			i = i + 1
 			if i < size then
-				return t[i]
+				if noInstanceFilter then
+					return t[i]
+				else
+					local _, _, _, tarInstanceId = UnitPosition(t[i])
+					if instanceId == tarInstanceId then
+						return t[i]
+					else
+						return iter(t)
+					end
+				end
 			end
 		end
 		return iter, IsInRaid() and raidList or partyList
