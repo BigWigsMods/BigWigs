@@ -288,6 +288,7 @@ function mod:BossDeath(args)
 			self:CDBar(346651, 9) -- Drain Essence
 			--self:CDBar(337110, 6) -- Dreadbolt Volley
 			self:CDBar(346657, 24) -- Prideful Eruption
+			self:CDBar(346681, 35.2) -- Soul Spikes
 		end
 		if stavrosAlive then
 			self:CDBar(331634, 9.4) -- Dark Recital
@@ -422,6 +423,7 @@ end
 function mod:SoulSpikes(args)
 	self:Message(346681, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(346681, "alert")
+	-- self:CDBar(346681, 0)
 end
 
 function mod:SoulSpikesApplied(args)
@@ -568,6 +570,7 @@ do
 			self:PauseBar(346651) -- Drain Essence
 			self:PauseBar(337110) -- Dreadbolt Volley
 			self:PauseBar(346657) -- Prideful Eruption
+			self:PauseBar(346681) -- Soul Spikes
 			self:PauseBar(327497) -- Evasive Lunge
 			self:PauseBar(331634) -- Dark Recital
 			self:PauseBar(346800) -- Waltz of Blood
@@ -585,6 +588,7 @@ end
 	-- self:PauseBar(346651) -- Drain Essence
 	-- self:PauseBar(337110) -- Dreadbolt Volley
 	-- self:PauseBar(346657) -- Prideful Eruption
+	-- self:PauseBar(346681) -- Soul Spikes
 	-- self:PauseBar(327497) -- Evasive Lunge
 	-- self:PauseBar(331634) -- Dark Recital
 	-- self:PauseBar(346800) -- Waltz of Blood
@@ -599,6 +603,7 @@ function mod:DanseMacabreOver(args)
 	self:ResumeBar(346651) -- Drain Essence
 	self:ResumeBar(337110) -- Dreadbolt Volley
 	self:ResumeBar(346657) -- Prideful Eruption
+	self:ResumeBar(346681) -- Soul Spikes
 	self:ResumeBar(327497) -- Evasive Lunge
 	self:ResumeBar(331634) -- Dark Recital
 	self:ResumeBar(346800) -- Waltz of Blood
