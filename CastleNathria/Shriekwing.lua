@@ -260,13 +260,13 @@ function mod:TheBloodLanternApplied(args)
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning")
 	else
-		self:Message(args.spellId, "green", L.pickup_lantern:format(args.destName))
+		self:Message(args.spellId, "green", L.pickup_lantern:format(self:ColorName(args.destName)))
 		self:PlaySound(args.spellId, "info")
 	end
 end
 
 function mod:TheBloodLanternRemoved(args)
-	self:Message(args.spellId, "red", L.dropped_lantern:format(args.destName))
+	self:Message(args.spellId, "red", L.dropped_lantern:format(self:ColorName(args.destName)))
 	self:PlaySound(args.spellId, "info")
 end
 
