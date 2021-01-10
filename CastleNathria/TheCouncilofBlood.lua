@@ -558,8 +558,8 @@ end
 
 --[[ Intermission: The Danse Macabre ]]--
 function mod:DanseMacabreBegins(args)
-	self:Message(args.spellId, "green")
-	self:PlaySound(args.spellId, "long")
+	self:Message(330959, "green") -- Dance Macabre
+	self:PlaySound(330959, "long")
 
 	self:PauseBar(346651) -- Drain Essence
 	self:PauseBar(337110) -- Dreadbolt Volley
