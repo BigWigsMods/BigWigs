@@ -44,11 +44,13 @@ L.disabledAddOn  = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores
 L.removeAddon  = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Cuidado (Algalon)"
 L.FlagTaken = "Bandera tomada (PvP)"
 L.Destruction = "Destrucción (Kil'jaeden)"
 L.RunAway = "Corre pequeña (El Lobo Feroz)"
+--L.spell_on_you = "BigWigs: Spell on you"
+--L.spell_under_you = "BigWigs: Spell under you"
 
 -- Options.lua
 L.options  = "Opciones"
@@ -73,8 +75,6 @@ L.listAbilities  = "Listar las habilidades en el chat"
 
 L.dbmFaker  = "Fingir que estoy usando DBM"
 L.dbmFakerDesc  = "Si un usuario de DBM hace un chequeo de versión para ver quien está usando DBM, ellos te verán a ti en la lista. Muy útil para gremios que obligan a usar DBM."
-L.chatMessages  = "Mensajes del marco de chat"
-L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de chat por defecto en adición a los ajustes mostrados"
 L.zoneMessages  = "Mostrar mensajes de la zona"
 L.zoneMessagesDesc  = "Desactivando esto dejará de mostrar mensajes cuando entres en una zona donde BigWigs tenga un módulo, pero no lo tengas instalado. Recomendamos que dejes esto activo, pues será la única notificación que recibirás si creamos módulos nuevos para una zona que encuentres útil"
 

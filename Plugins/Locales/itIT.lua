@@ -75,19 +75,16 @@ L.countWipes = "Numero Fallimenti:"
 L.createTimeBar = "Mostra la barra 'Miglior Tempo'"
 L.customBarStarted = "Barra personalizzata '%s' creata da utente %s - %s."
 L.customRange = "Indicatore di Distanza Personalizzato"
-L.customSoundDesc = "Riproduci il suono personalizzato scelto invece che quelli proposti dal modulo"
+L.customSoundDesc = "Riproduci il suono personalizzato scelto invece che quelli proposti dal modulo."
 L.defeated = "%s è stato sconfitto!"
-L.disable = "Disabilita"
 L.disabled = "Disabilitato"
 L.disabledDisplayDesc = "Disattiva il monitor per tutti gli scontri che lo usano."
-L.disableDesc = "Disabilita in modo permanente l'abilità del boss che ha generato questa barra."
 L.displayTime = "Tempo di Visualizzazione"
 L.displayTimeDesc = "Per quanto tempo deve essere visualizzato il messaggio, in secondi"
 L.emphasize = "Enfatizza"
 L.emphasizeAt = "Enfatizza a... (secondi)"
 L.emphasized = "Enfatizzato"
 L.emphasizedBars = "Barre Enfatizzate"
-L.emphasizedCountdownSinkDescription = "Indirizza l'uscita da questo addon verso la visualizzazione del Recupero Messaggi Enfatizzati. Questa visualizzazione supporta testi e colori, e può visualizzare solo un messaggio alla volta."
 L.emphasizedMessages = "Messaggi Enfatizzati"
 L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di BigWigs. Questo metodo supporta testi, colori e può visualizzare un solo messaggio per volta."
 L.enable = "Attiva"
@@ -162,9 +159,7 @@ If an encounter only has one ability that is worth marking for, only the first i
 L.recordBestTime = "Ricorda Miglior Tempo"
 L.regularBars = "Barre Normali"
 L.remove = "Rimuovi"
-L.removeDesc = "Rimuove temporaneamente la barra e tutti i messaggi ad essa associati."
 L.removeOther = "Rimuovi le Altre"
-L.removeOtherDesc = "Rimuove temporaneamente tutte le altre barra (tranne questa) e i messaggi ad esse associati."
 L.report = "Riporta"
 L.reportDesc = "Riporta lo status della barra attuale nella finestra attiva di chat; che sia la chat dell'incursione, dell'istanza, del gruppo o del canale Parla, il più appropriato."
 L.requiresLeadOrAssist = "Questa funzione richiede Capo Incursione o Assistente Incursione."
@@ -194,15 +189,6 @@ L.soundDelayDesc = "Specifica per quanto tempo BigWigs dovrebbe aspettare per ri
 L.soundDesc = "I messaggi possono essere visualizzati insieme a dei suoni. Alcuni trovano più semplice associare il suono all'abilità che viene mostrata nel messaggio piuttosto che leggere il messaggio stesso."
 L.Sounds = "Suoni"
 L.style = "Stile"
-L.superEmphasize = "SUPER ENFATIZZAZIONE"
-L.superEmphasizeDesc = [=[Aumenta la visualizzazione di un messaggio o di un timer di un'abilità speciale di un boss..
-
- Qui puoi configurare esattamente cosa deve accadere quando abiliti la SUPER ENFATIZZAZIONE nelle opzioni di un'abilità di un boss.
-
-|cffff4411Attenzione: la SUPER ENFATIZZAZIONE è disattivata di default per tutte le abilità.|r
-]=]
-L.superEmphasizeDisableDesc = "Disabilita la Super Enfatizzazione per tutti i moduli che la usano."
-L.tempEmphasize = "SUPER ENFATIZZA temporaneamente la barra ed ogni messaggio associato alla sua durata."
 L.text = "Testo"
 L.textCountdown = "Testo conto alla rovescia"
 L.textCountdownDesc = "Mostra un conteggio visuale durante il conto alla rovescia."
@@ -220,10 +206,6 @@ L.toggleSound = "Abilita Suono"
 L.toggleSoundDesc = "Abilita quando il monitor di prossimità deve emettere un suono se sei troppo vicino ad altri giocatori."
 L.tooltip = "ToolTip"
 L.tooltipDesc = "Visualizza o nasconde il tooltip dell'abilità nel display di prossimità ed è strettamente legato all'abilità del boss."
-L.uppercase = "TUTTO MAIUSCOLO"
-L.uppercaseDesc = "Converte in Maiuscolo tutto il messaggio"
-L.useColors = "Usa Colori"
-L.useColorsDesc = "Abilita solo messaggi bianchi ignorando i colori"
 L.useIcons = "Usa Icone"
 L.useIconsDesc = "Mostra le icone accanto ai messaggi."
 L.Victory = "Vittoria"
@@ -241,6 +223,12 @@ L.wrongBreakFormat = "Deve essere tra 1 e 60 minuti. Un'esempio corretto è /bre
 L.wrongCustomBarFormat = "Formato non corretto. Un'esempio corretto è: /raidbar 20 testo"
 L.wrongPullFormat = "Deve essere tra 1 e 60 secondi. Un'esempio corretto è: /pull 5"
 L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in secondi, una coppia M:S , o Mm. Per esempio 5, 1:20 or 2m."
+
+-----------------------------------------------------------------------
+-- AltPower.lua
+--
+
+--L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -272,18 +260,28 @@ L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in
 --L.spacingDesc = "Change the space between each bar."
 --L.emphasizeMultiplier = "Size Multiplier"
 --L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+--L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
+--L.removeBarDesc = "Temporarily removes this bar."
+--L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 --L.iconPosition = "Icon Position"
 --L.iconPositionDesc = "Choose where on the bar the icon should be positioned."
 --L.visibleBarLimit = "Visible bar limit"
 --L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 --L.textDesc = "Whether to show or hide the text displayed on the bars."
+--L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
 
---L.disableSfx = "Disable sound effects"
---L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
+L.audio = "Audio"
+L.music = "Musica"
+L.ambience = "Audio ambientale"
+L.sfx = "Effetti audio"
+--L.disableMusic = "Mute music (recommended)"
+--L.disableAmbience = "Mute ambient sounds (recommended)"
+--L.disableSfx = "Mute sound effects (not recommended)"
+--L.disableAudioDesc = "The '%s' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 --L.blockTooltipQuests = "Block tooltip quest objectives"
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
 --L.blockFollowerMission = "Blocca i popup della Guarnigione" -- Rename to follower mission
@@ -313,10 +311,48 @@ L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (B
 --L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
 --L.infoBox = "InfoBox"
+
+-----------------------------------------------------------------------
+-- Messages.lua
+--
+
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.uppercase = "TUTTO MAIUSCOLO"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.chatMessages = "Messaggi Riquadro Chat"
+L.chatMessagesDesc = "Invia tutti i messaggi di BigWigs alla chat oltre che nei settaggi di visualizzazione."
+
+-----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+--L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+
+-----------------------------------------------------------------------
+-- Sound.lua
+--
+
+--L.oldSounds = "Old Sounds"
+--L.resetSoundDesc = "Resets the above sounds to their defaults."
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

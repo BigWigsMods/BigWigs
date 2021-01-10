@@ -5,17 +5,21 @@
 local plugin = BigWigs:NewPlugin("Alt Power")
 if not plugin then return end
 
-plugin.defaultDB = {
-	posx = nil,
-	posy = nil,
-	fontName = plugin:GetDefaultFont(),
-	fontSize = select(2, plugin:GetDefaultFont(12)),
-	fontOutline = "",
-	monochrome = false,
-	expanded = false,
-	disabled = false,
-	lock = false,
-}
+do
+	local name = plugin:GetDefaultFont()
+	local _, size = plugin:GetDefaultFont(12)
+	plugin.defaultDB = {
+		posx = nil,
+		posy = nil,
+		fontName = name,
+		fontSize = size,
+		fontOutline = "",
+		monochrome = false,
+		expanded = false,
+		disabled = false,
+		lock = false,
+	}
+end
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -75,7 +79,7 @@ function plugin:RestyleWindow()
 		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	else
 		display:ClearAllPoints()
-		display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
+		display:SetPoint("CENTER", UIParent, "CENTER", 450, -160)
 	end
 
 	if db.lock then
@@ -187,59 +191,6 @@ do
 				order = 6,
 				disabled = disabled,
 			},
-			--[[showHide = {
-				type = "group",
-				name = L.showHide,
-				inline = true,
-				order = 7,
-				get = function(info)
-					local key = info[#info]
-					return db.objects[key]
-				end,
-				set = function(info, value)
-					local key = info[#info]
-					db.objects[key] = value
-					plugin:RestyleWindow()
-				end,
-				args = {
-					title = {
-						type = "toggle",
-						name = L.title,
-						desc = L.titleDesc,
-						order = 1,
-					},
-					background = {
-						type = "toggle",
-						name = L.background,
-						desc = L.backgroundDesc,
-						order = 2,
-					},
-					sound = {
-						type = "toggle",
-						name = L.soundButton,
-						desc = L.soundButtonDesc,
-						order = 3,
-					},
-					close = {
-						type = "toggle",
-						name = L.closeButton,
-						desc = L.closeButtonDesc,
-						order = 4,
-					},
-					ability = {
-						type = "toggle",
-						name = L.abilityName,
-						desc = L.abilityNameDesc,
-						order = 5,
-					},
-					tooltip = {
-						type = "toggle",
-						name = L.tooltip,
-						desc = L.tooltipDesc,
-						order = 6,
-					}
-				},
-			},]]
 			exactPositioning = {
 				type = "group",
 				name = L.positionExact,
@@ -250,7 +201,7 @@ do
 						type = "range",
 						name = L.positionX,
 						desc = L.positionDesc,
-						min = 0,
+						min = -2048,
 						max = 2048,
 						step = 1,
 						order = 1,
@@ -260,13 +211,22 @@ do
 						type = "range",
 						name = L.positionY,
 						desc = L.positionDesc,
-						min = 0,
+						min = -2048,
 						max = 2048,
 						step = 1,
 						order = 2,
 						width = "full",
 					},
 				},
+			},
+			reset = {
+				type = "execute",
+				name = L.resetAll,
+				desc = L.resetAltPowerDesc,
+				func = function() 
+					plugin.db:ResetProfile()
+				end,
+				order = 9,
 			},
 		},
 	}
@@ -275,14 +235,6 @@ end
 -------------------------------------------------------------------------------
 -- Initialization
 --
-
-local function resetAnchor()
-	display:ClearAllPoints()
-	display:SetPoint("CENTER", UIParent, "CENTER", 300, -80)
-	db.posx = nil
-	db.posy = nil
-	plugin:Contract()
-end
 
 local function updateProfile()
 	db = plugin.db.profile
@@ -301,7 +253,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
 	updateProfile()
 end
 
@@ -352,6 +303,11 @@ do
 	end
 
 	do
+		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
+		-- local addonName, addonTable = ...
+		-- if BigWigsLoader then
+		-- 	BigWigsLoader.RegisterMessage(addonTable, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
+		-- end
 		display = CreateFrame("Frame", "BigWigsAltPower", UIParent)
 		display:SetSize(230, 80)
 		display:SetClampedToScreen(true)
@@ -415,13 +371,6 @@ do
 			self:SetSize(230, db.expanded and 210 or 80)
 			self.expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
 		end)
-
-		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
-		-- local name, addon = ...
-		-- if BigWigsLoader then
-		-- 	BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
-		-- end
-		plugin:SendMessage("BigWigs_FrameCreated", display, "AltPower")
 	end
 
 	-- This module is rarely used, and opened once during an encounter where it is.
@@ -620,3 +569,5 @@ do
 	end
 end
 
+-- We run this last to prevent the AltPower module breaking if some addon listening to this event causes an error
+plugin:SendMessage("BigWigs_FrameCreated", display, "AltPower")

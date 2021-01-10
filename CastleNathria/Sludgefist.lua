@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -7,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Sludgefist", 2296, 2394)
 if not mod then return end
 mod:RegisterEnableMob(164407) -- Sludgefist
 mod.engageId = 2399
-mod.respawnTime = 15
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -19,12 +18,17 @@ local hatefullGazeCount = 1
 local chainSlamCount = 1
 local seismicShiftCount = 1
 local chainLinksApplied = 0
+local fallingRubbleCount = 1
 
 local timers = {
 	[332318] = {18.5, 25.1, 42.6, 25.5, 42.5, 25.5, 45, 22.5, 45.0, 23.1, 41.4}, -- Destructive Stomp
 	[332687] = {0.0, 36.7, 31.3, 36.4, 31.8, 36.3, 31.5, 36.4, 31.8, 36.3, 31.5, 36.3}, -- Colossal Roar
-	[340817] = {18.5, 25.1, 30.6, 11.9, 25.5, 30.2, 12.3, 25.5} -- Seismic Shift
+	[340817] = {18.5, 25.1, 30.6, 11.9, 25.5, 30.2, 12.3, 25.5, 30.2, 12.3, 25.5, 30.2, 12.3, 25.5, 29}, -- Seismic Shift
+	[341193] = {13.0, 70.9, 70.5, 70.5, 70.5} -- Falling Rubble
 }
+
+local healthLost = 0
+local maxHealth = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,6 +36,13 @@ local timers = {
 
 local L = mod:GetLocale()
 if L then
+	L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+
+	L.fun_info = "Damage Info"
+	L.fun_info_desc = "Display a message showing how much health the boss lost during Destructive Impact."
+	L.fun_info_icon = "petbattle_health-down"
+
+	L.health_lost = "Sludgefist went down %.1f%%!"
 end
 
 --------------------------------------------------------------------------------
@@ -40,23 +51,28 @@ end
 
 function mod:GetOptions()
 	return {
-		{331209, "SAY" ,"SAY_COUNTDOWN"}, -- Hateful Gaze
+		{331209, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Hateful Gaze
 		331314, -- Destructive Impact
-		341102, -- Fractured Boulder
-		335293, -- Chain Link
+		"fun_info",
+		{335293, "ME_ONLY_EMPHASIZE"}, -- Chain Link
 		332318, -- Destructive Stomp
+		341193, -- Falling Rubble
 		335361, -- Stonequake
 		332687, -- Colossal Roar
 		{335470, "SAY", "SAY_COUNTDOWN", "ICON"}, -- Chain Slam
+		341102, -- Fractured Boulder
 		340817, -- Seismic Shift
 		341250, -- Gruesome Rage
 	},{
 		[331209] = "general",
-		[340817] = "mythic",
+		[341102] = "mythic",
+	},{
+		[335293] = CL.link,
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "HatefulGazeApplied", 331209)
 	self:Log("SPELL_AURA_REMOVED", "HatefulGazeRemoved", 331209)
 	self:Log("SPELL_AURA_APPLIED", "DestructiveImpactApplied", 331314)
@@ -84,29 +100,54 @@ function mod:OnEngage()
 	chainSlamCount = 1
 	seismicShiftCount = 1
 	chainLinksApplied = 0
+	fallingRubbleCount = 1
 
 	self:Bar(335293, 5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
-	self:Bar(332318, timers[332318][destructiveStompCount], CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
-	self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
+	if self:Tank() then
+		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
+	else
+		self:CDBar(331314, self:Mythic() and 58.5 or 60.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+	end
 	if self:Mythic() then
-		self:CDBar(340817, timers[340817][seismicShiftCount], CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Seismic Shift
+		self:CDBar(340817, timers[340817][seismicShiftCount], CL.count:format(L.stomp_shift, seismicShiftCount)) -- Seismic Shift
+	else
+		self:Bar(332318, timers[332318][destructiveStompCount], CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 341193 then -- Falling Rubble // or spellId == 341103
+		local spellName = self:SpellName(341193)
+		if fallingRubbleCount >= 2 then -- First two dont spawn anything?
+			self:StopBar(CL.count:format(spellName, fallingRubbleCount-2))
+			if fallingRubbleCount ~= 2 then -- skip message
+				self:Message(341193, "yellow", CL.count:format(spellName, fallingRubbleCount-2))
+				self:PlaySound(341193, "long")
+			end
+			self:CDBar(341193, 70.5, CL.count:format(spellName, fallingRubbleCount-1))
+		end
+		fallingRubbleCount = fallingRubbleCount + 1
+	end
+end
 
 function mod:HatefulGazeApplied(args)
 	self:StopBar(CL.count:format(args.spellName, hatefullGazeCount))
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, hatefullGazeCount))
+	local duration = self:Mythic() and 4 or 6
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 6)
+		self:SayCountdown(args.spellId, duration)
 	end
-	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(args.spellName, hatefullGazeCount))
+	if self:Tank() then
+		self:TargetBar(args.spellId, duration, args.destName, CL.count:format(args.spellName, hatefullGazeCount))
+	else
+		self:CDBar(331314, duration, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+	end
 	hatefullGazeCount = hatefullGazeCount + 1
 end
 
@@ -121,12 +162,41 @@ function mod:DestructiveImpactApplied(args)
 	self:Message(args.spellId, "red", CL.on:format(args.spellName, args.destName))
 	self:PlaySound(args.spellId, "info")
 	self:Bar(args.spellId, 12)
-	self:CastBar(341102, 3.5) -- Fractured Boulder Landing
+	-- Adjust timers to improve them on a long charge
+	self:Bar(332687, 12, CL.count:format(self:SpellName(332687), colossalRoarCount)) -- Collosal Roar Timer Adjustment
+	if self:Mythic() then
+		self:Bar(341102, 3.5, CL.casting:format(self:SpellName(341102)), 341102) -- Fractured Boulder
+	end
+	local unit = self:GetUnitIdByGUID(args.destGUID)
+	if unit then
+		maxHealth = UnitHealthMax(unit)
+		healthLost = UnitHealth(unit)
+	end
 end
 
 function mod:DestructiveImpactRemoved(args)
 	chainLinksApplied = 0
-	self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
+	if self:Tank() then
+		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
+	else
+		self:CDBar(331314, self:Mythic() and 58.5 or 60.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+	end
+
+	-- Update timers to be more exact
+	if self:Mythic() then
+		--self:Bar(340817, 5.5, CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Shift & Stomp
+	else
+		self:Bar(332318, 18.5, CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
+	end
+	self:Bar(335470, 29, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+
+	local unit = self:GetUnitIdByGUID(args.destGUID)
+	if unit and healthLost ~= 0 then
+		healthLost = healthLost - UnitHealth(unit)
+		local percentHealthLost = (healthLost/maxHealth) * 100
+		self:Message("fun_info", "green", L.health_lost:format(percentHealthLost), "petbattle_health-down")
+		healthLost = 0
+	end
 end
 
 do
@@ -135,7 +205,7 @@ do
 		chainLinksApplied = chainLinksApplied + 1
 		if self:Me(args.destGUID) then
 			local partner = args.sourceName
-			self:Message(335293, "blue", CL.link:format(self:ColorName(partner)))
+			self:PersonalMessage(335293, false, CL.link_with:format(self:ColorName(partner)))
 			self:PlaySound(335293, "warning")
 		end
 		if chainLinksApplied == 1 then
@@ -155,7 +225,9 @@ function mod:DestructiveStomp(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, destructiveStompCount))
 	destructiveStompCount = destructiveStompCount + 1
-	self:Bar(args.spellId, timers[args.spellId][destructiveStompCount], CL.count:format(args.spellName, destructiveStompCount))
+	if not self:Mythic() then -- Merged with Seismic Shift in Mythic
+		self:Bar(args.spellId, timers[args.spellId][destructiveStompCount], CL.count:format(args.spellName, destructiveStompCount))
+	end
 end
 
 function mod:ColossalRoar(args)
@@ -214,9 +286,13 @@ do
 			prev = t
 			self:StopBar(CL.count:format(args.spellName, seismicShiftCount))
 			self:Message(args.spellId, "yellow", CL.count:format(args.spellName, seismicShiftCount))
-			seismicShiftCount = seismicShiftCount + 1
-			self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(args.spellName, seismicShiftCount))
 			self:PlaySound(args.spellId, "long")
+			seismicShiftCount = seismicShiftCount + 1
+			if seismicShiftCount == 3 or seismicShiftCount == 6 then -- No stomp with these
+				self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(args.spellName, seismicShiftCount))
+			else
+				self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(L.stomp_shift, seismicShiftCount))
+			end
 		end
 	end
 end

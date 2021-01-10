@@ -16,12 +16,13 @@ local lds = LibStub("LibDualSpec-1.0")
 local loader = BigWigsLoader
 local API = BigWigsAPI
 options.SendMessage = loader.SendMessage
+local UnitName = loader.UnitName
 
 local bwTooltip = CreateFrame("GameTooltip", "BigWigsOptionsTooltip", UIParent, "GameTooltipTemplate")
 
 local colorModule
 local soundModule
-local isOpen, isPluginOpen
+local configFrame, isPluginOpen
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 
@@ -71,15 +72,6 @@ local acOptions = {
 					name = L.flashScreen,
 					desc = L.flashScreenDesc,
 					order = 22,
-				},
-				chat = {
-					type = "toggle",
-					name = L.chatMessages,
-					desc = L.chatMessagesDesc,
-					order = 25,
-					width = "full",
-					get = function() return BigWigs:GetPlugin("Messages").db.profile.chat end,
-					set = function(_, v) BigWigs:GetPlugin("Messages").db.profile.chat = v end,
 				},
 				separator3 = {
 					type = "description",
@@ -241,15 +233,19 @@ do
 end
 
 function options:Open()
-	if isOpen then
-		isOpen:Hide()
-	else
+	if not configFrame then
 		options:OpenConfig()
 	end
 end
 
+function options:Close()
+	if configFrame then
+		configFrame:Hide()
+	end
+end
+
 function options:IsOpen()
-	return isOpen
+	return configFrame and true or false
 end
 
 -------------------------------------------------------------------------------
@@ -353,7 +349,7 @@ local function slaveOptionMouseLeave()
 	bwTooltip:Hide()
 end
 
-local function getSlaveToggle(label, desc, key, module, flag, master, icon)
+local function getSlaveToggle(label, desc, key, module, flag, master, icon, ...)
 	local toggle = AceGUI:Create("CheckBox")
 	toggle:SetLabel(label)
 	-- Flags to have at half width
@@ -367,7 +363,11 @@ local function getSlaveToggle(label, desc, key, module, flag, master, icon)
 	toggle:SetHeight(30)
 
 	if icon then
-		toggle:SetImage(icon)
+		if ... then
+			toggle:SetImage(icon, ...)
+		else
+			toggle:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
+		end
 	end
 	toggle:SetUserData("key", key)
 	toggle:SetUserData("desc", desc)
@@ -547,7 +547,18 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 		local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
 		if bit.band(dbv, flag) == flag then
 			local roleName, roleDesc = BigWigs:GetOptionDetails(key)
-			roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check)
+			if key == "TANK" then
+				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, 337497, 0, 0.296875, 0.34375, 0.640625) -- TANK icon
+			elseif key == "HEALER" then
+				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, 337497, 0.3125, 0.609375, 0.015625, 0.3125) -- HEALER icon
+			elseif key == "DISPEL" then
+				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, 521749, 0.8984375, 0.9765625, 0.09375, 0.40625) -- DISPEL icon
+			else
+				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check) -- No icon
+			end
+			roleRestrictionCheckbox:SetDescription(roleDesc)
+			roleRestrictionCheckbox:SetFullWidth(true)
+			roleRestrictionCheckbox:SetUserData("desc", nil) -- Remove tooltip set by getSlaveToggle() function
 		end
 	end
 
@@ -628,6 +639,42 @@ end
 
 local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
+
+	-- jesus this is so hacky. should probably be "custom_select_" with values as a
+	-- :GetBossOptionDetails return, but this keeps changes to a minimum for now
+	if type(dbKey) == "string" and dbKey:find("^custom_off_select_") then
+		local L = module:GetLocale()
+		local values = { [0] = _G.ADDON_DISABLED }
+		local i = 1
+		local value = L[dbKey.."_value"..i]
+		repeat
+			values[i] = value
+			i = i + 1
+			value = L[dbKey.."_value"..i]
+		until not value
+
+		local dropdown = AceGUI:Create("Dropdown")
+		if desc then
+			-- The label will truncate at ~74 chars, but showing the desc in a tooltip seems awkward
+			dropdown:SetLabel(("%s: |cffffffff%s|r"):format(name, desc))
+		else
+			dropdown:SetLabel(name)
+		end
+		dropdown:SetMultiselect(false)
+		dropdown:SetList(values)
+		dropdown:SetFullWidth(true)
+		dropdown:SetUserData("key", dbKey)
+		dropdown:SetUserData("module", module)
+		dropdown:SetCallback("OnValueChanged", function(widget, _, value)
+			if value == 0 then value = false end
+			local key = widget:GetUserData("key")
+			local module = widget:GetUserData("module")
+			module.db.profile[key] = value or false
+		end)
+		dropdown:SetValue(module.db.profile[dbKey] or 0)
+
+		return dropdown
+	end
 
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
@@ -716,7 +763,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			elseif key == "EMPHASIZE" or key == "ME_ONLY_EMPHASIZE" then
 				icon:SetImage(521749, 0.6484375, 0.7265625, 0.09375, 0.40625)
 			else
-				icon:SetImage(icons[key])
+				icon:SetImage(icons[key], 0.07, 0.93, 0.07, 0.93)
 			end
 
 			-- Combine the two SAY options
@@ -1250,7 +1297,7 @@ do
 		playerName = UnitName("player")
 
 		local bw = AceGUI:Create("Frame")
-		isOpen = bw
+		configFrame = bw
 		bw:SetTitle("BigWigs")
 		bw:SetStatusText(" "..loader:GetReleaseString())
 		bw:SetWidth(858)
@@ -1261,7 +1308,7 @@ do
 			AceGUI:Release(widget)
 			wipe(statusTable)
 			isPluginOpen = nil
-			isOpen = nil
+			configFrame = nil
 		end)
 
 		local introduction = AceGUI:Create("Label")

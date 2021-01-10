@@ -54,6 +54,7 @@ L.trash = "Trash"
 L.underyou = "%s sotto di TE"
 L.you = "%s su di TE"
 L.you_icon = "%s su di |T13700%d:0|tTE"
+--L.on_group = "%s on GROUP" -- spell on group
 
 --L.active = "Active" -- When a boss becomes active, after speech finishes
 
@@ -63,7 +64,8 @@ L.you_icon = "%s su di |T13700%d:0|tTE"
 --L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."
 
 -- Ability where two players have to move close to each other
---L.link = "Linked with %s"
+L.link = "Vincolo"
+--L.link_with = "Linked with %s"
 --L.link_short = "Linked: %s"
 --L.link_both = "%s linked with %s"
 --L.link_removed = "Link removed"
@@ -73,3 +75,8 @@ L.you_icon = "%s su di |T13700%d:0|tTE"
 --L.amount_two = "%dM" -- Millions 1,000,000
 --L.amount_three = "%dK" -- Thousands 1,000
 --L.seconds = "%.1fs" -- 1.1 seconds
+
+-- Common ability name replacements
+--L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.bomb = "Bomba" -- Used for debuffs that make players explode
+L.fixate = "Ossessione" -- Used when a boss or add is chasing/fixated on a player

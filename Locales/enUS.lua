@@ -43,11 +43,13 @@ L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not b
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Beware (Algalon)"
 L.FlagTaken = "Flag Taken (PvP)"
 L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
+L.spell_on_you = "BigWigs: Spell on you"
+L.spell_under_you = "BigWigs: Spell under you"
 
 -- Options.lua
 L.options = "Options"
@@ -72,8 +74,6 @@ L.listAbilities = "List abilities in group chat"
 
 L.dbmFaker = "Pretend I'm using DBM"
 L.dbmFakerDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
-L.chatMessages = "Chat frame messages"
-L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
 L.zoneMessages = "Show zone messages"
 L.zoneMessagesDesc = "Disabling this will stop showing messages when you enter a zone that BigWigs has timers for, but you don't have installed. We recommend you leave this turned on as it's the only notification you will get if we suddenly create timers for a new zone that you find useful."
 

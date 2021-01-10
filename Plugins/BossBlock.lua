@@ -18,6 +18,8 @@ plugin.defaultDB = {
 	blockTooltipQuests = true,
 	blockObjectiveTracker = true,
 	disableSfx = false,
+	disableMusic = false,
+	disableAmbience = false,
 }
 
 --------------------------------------------------------------------------------
@@ -27,6 +29,7 @@ plugin.defaultDB = {
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
+local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local GetSubZoneText = GetSubZoneText
 local SetCVar = C_CVar.SetCVar
 local CheckElv = nil
@@ -43,10 +46,10 @@ plugin.pluginOptions = {
 		return plugin.db.profile[info[#info]]
 	end,
 	set = function(info, value)
-		if IsEncounterInProgress() then return end -- Don't allow toggling during an encounter.
 		local entry = info[#info]
 		plugin.db.profile[entry] = value
 	end,
+	disabled = function() return IsEncounterInProgress() end, -- Don't allow toggling during an encounter.
 	args = {
 		heading = {
 			type = "description",
@@ -96,6 +99,7 @@ plugin.pluginOptions = {
 			desc = L.blockTooltipQuestsDesc,
 			width = "full",
 			order = 6,
+			disabled = function() return true end, -- XXX Do we want to hack the tooltip?
 		},
 		blockObjectiveTracker = {
 			type = "toggle",
@@ -104,12 +108,31 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 7,
 		},
+		audioHeader = {
+			type = "header",
+			name = L.audio,
+			order = 8,
+		},
+		disableMusic = {
+			type = "toggle",
+			name = L.disableMusic,
+			desc = L.disableAudioDesc:format(L.music),
+			width = "full",
+			order = 9,
+		},
+		disableAmbience = {
+			type = "toggle",
+			name = L.disableAmbience,
+			desc = L.disableAudioDesc:format(L.ambience),
+			width = "full",
+			order = 10,
+		},
 		disableSfx = {
 			type = "toggle",
 			name = L.disableSfx,
-			desc = L.disableSfxDesc,
+			desc = L.disableAudioDesc:format(L.sfx),
 			width = "full",
-			order = 8,
+			order = 11,
 		},
 	},
 }
@@ -119,9 +142,10 @@ plugin.pluginOptions = {
 --
 
 function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_OnBossEngage")
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
+	self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
+	self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
+	self:RegisterMessage("BigWigs_OnBossWin", "OnWinOrWipe")
+	self:RegisterMessage("BigWigs_OnBossWipe", "OnWinOrWipe")
 
 	-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
 	if self.db.profile.disableSfx then
@@ -130,9 +154,11 @@ function plugin:OnPluginEnable()
 	if self.db.profile.blockTooltipQuests then
 		SetCVar("showQuestTrackingTooltips", "1")
 	end
-
-	if IsEncounterInProgress() then -- Just assume we logged into an encounter after a DC
-		self:BigWigs_OnBossEngage()
+	if self.db.profile.disableMusic then
+		SetCVar("Sound_EnableMusic", "1")
+	end
+	if self.db.profile.disableAmbience then
+		SetCVar("Sound_EnableAmbience", "1")
 	end
 
 	self:RegisterEvent("CINEMATIC_START")
@@ -141,14 +167,6 @@ function plugin:OnPluginEnable()
 	self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
 
 	CheckElv(self)
-
-	-- XXX temp 8.1.5
-	for id in next, BigWigs.db.global.watchedMovies do
-		if type(id) == "string" then
-			BigWigs.db.global.watchedMovies[id] = nil
-		end
-	end
-	BigWigs.db.global.watchedMovies[-593] = nil -- Auchindoun temp reset
 end
 
 -------------------------------------------------------------------------------
@@ -189,7 +207,9 @@ do
 	end
 
 	local restoreObjectiveTracker = nil
-	function plugin:BigWigs_OnBossEngage()
+	function plugin:OnEngage(event, module)
+		if not module or not module.journalId or module.worldBoss then return end
+
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
@@ -212,19 +232,29 @@ do
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "0")
 		end
+		if self.db.profile.disableMusic then
+			SetCVar("Sound_EnableMusic", "0")
+		end
+		if self.db.profile.disableAmbience then
+			SetCVar("Sound_EnableAmbience", "0")
+		end
 
 		CheckElv(self)
 		-- Never hide when tracking achievements or in Mythic+
 		local _, _, diff = GetInstanceInfo()
-		if self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
+		if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
 			restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
 			if restoreObjectiveTracker then
+				trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
+				trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
 				trackerHider.SetParent(ObjectiveTrackerFrame, trackerHider)
 			end
 		end
 	end
 
-	function plugin:BigWigs_OnBossWin()
+	function plugin:OnWinOrWipe(event, module)
+		if not module or not module.journalId or module.worldBoss then return end
+
 		if self.db.profile.blockEmotes then
 			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
@@ -247,8 +277,16 @@ do
 		if self.db.profile.blockTooltipQuests then
 			SetCVar("showQuestTrackingTooltips", "1")
 		end
+		if self.db.profile.disableMusic then
+			SetCVar("Sound_EnableMusic", "1")
+		end
+		if self.db.profile.disableAmbience then
+			SetCVar("Sound_EnableAmbience", "1")
+		end
 		if restoreObjectiveTracker then
 			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
+			trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, false)
+			trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, false)
 			restoreObjectiveTracker = nil
 		end
 	end

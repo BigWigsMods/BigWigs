@@ -1,7 +1,7 @@
 
 --[[
-See BigWigs/Docs/BarStyles.txt for in-depth information on how to register new
-bar styles from 3rd party addons.
+Visit: https://github.com/BigWigsMods/BigWigs/wiki/Custom-Bar-Styles
+for in-depth information on how to register new bar styles from 3rd party addons.
 ]]
 
 --------------------------------------------------------------------------------
@@ -46,7 +46,6 @@ local empUpdate = nil -- emphasize updater frame
 local nameplateEmpUpdate = nil
 local rearrangeBars
 local rearrangeNameplateBars
-local UnitGUID = UnitGUID
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local clickHandlers = {}
@@ -63,7 +62,7 @@ do
 	findUnitByGUID = function(id)
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
-			local guid = UnitGUID(unit)
+			local guid = plugin:UnitGUID(unit)
 			if guid == id then
 				return unit
 			end
@@ -76,20 +75,23 @@ end
 --
 
 local currentBarStyler = nil
+local SetBarStyle
 
-local barStyles = {
-	Default = {
-		apiVersion = 1,
-		version = 1,
-		--GetSpacing = function(bar) end,
-		--ApplyStyle = function(bar) end,
-		--BarStopped = function(bar) end,
-		GetStyleName = function()
-			return L.bigWigsBarStyleName_Default
-		end,
-	},
-}
-local barStyleRegister = {}
+BigWigsAPI:RegisterBarStyle("Default", {
+	apiVersion = 1,
+	version = 1,
+	--barSpacing = 1,
+	--barHeight = 16,
+	--fontSizeNormal = 10,
+	--fontSizeEmphasized = 13,
+	--fontOutline = "NONE",
+	--GetSpacing = function(bar) end,
+	--ApplyStyle = function(bar) end,
+	--BarStopped = function(bar) end,
+	GetStyleName = function()
+		return L.bigWigsBarStyleName_Default
+	end,
+})
 
 do
 	-- !Beautycase styling, based on !Beatycase by Neal "Neave" @ WowI, texture made by Game92 "Aftermathh" @ WowI
@@ -185,14 +187,14 @@ do
 		bar:Set("bigwigs:beautycase:borders", borders)
 	end
 
-	barStyles.BeautyCase = {
+	BigWigsAPI:RegisterBarStyle("BeautyCase", {
 		apiVersion = 1,
 		version = 10,
 		barSpacing = 8,
 		ApplyStyle = styleBar,
 		BarStopped = freeStyle,
 		GetStyleName = function() return "!Beautycase" end,
-	}
+	})
 end
 
 do
@@ -276,7 +278,7 @@ do
 		bar.candyBarDuration:SetPoint("BOTTOMRIGHT", bar.candyBarBar, "TOPRIGHT", -2, 2)
 	end
 
-	barStyles.MonoUI = {
+	BigWigsAPI:RegisterBarStyle("MonoUI", {
 		apiVersion = 1,
 		version = 10,
 		barHeight = 20,
@@ -286,7 +288,7 @@ do
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "MonoUI" end,
-	}
+	})
 end
 
 do
@@ -363,14 +365,14 @@ do
 		bd:Show()
 	end
 
-	barStyles.TukUI = {
+	BigWigsAPI:RegisterBarStyle("TukUI", {
 		apiVersion = 1,
 		version = 10,
 		barSpacing = 7,
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "TukUI" end,
-	}
+	})
 end
 
 do
@@ -463,7 +465,7 @@ do
 		bd:Show()
 	end
 
-	barStyles.ElvUI = {
+	BigWigsAPI:RegisterBarStyle("ElvUI", {
 		apiVersion = 1,
 		version = 10,
 		barSpacing = E and (E.PixelMode and 4 or 8) or 4,
@@ -471,7 +473,7 @@ do
 		ApplyStyle = styleBar,
 		BarStopped = removeStyle,
 		GetStyleName = function() return "ElvUI" end,
-	}
+	})
 end
 
 --------------------------------------------------------------------------------
@@ -482,22 +484,23 @@ plugin.defaultDB = {
 	fontName = plugin:GetDefaultFont(),
 	fontSize = 10,
 	fontSizeEmph = 13,
+	fontSizeNameplate = 7,
 	texture = "BantoBar",
 	font = nil,
-	monochrome = nil,
+	monochrome = false,
 	outline = "NONE",
-	growup = true,
+	growup = false,
 	text = true,
 	time = true,
 	alignText = "LEFT",
 	alignTime = "RIGHT",
 	icon = true,
 	iconPosition = "LEFT",
-	fill = nil,
+	fill = false,
 	barStyle = "Default",
 	emphasize = true,
 	emphasizeMove = true,
-	emphasizeGrowup = nil,
+	emphasizeGrowup = false,
 	emphasizeRestart = true,
 	emphasizeTime = 11,
 	emphasizeMultiplier = 1.1,
@@ -513,28 +516,25 @@ plugin.defaultDB = {
 	spacing = 1,
 	visibleBarLimit = 100,
 	visibleBarLimitEmph = 100,
-	interceptMouse = nil,
-	onlyInterceptOnKeypress = nil,
+	interceptMouse = false,
+	onlyInterceptOnKeypress = true,
 	interceptKey = "CTRL",
-	LeftButton = {
-		report = true,
-	},
-	MiddleButton = {
-		remove = true,
-	},
-	RightButton = {
-		emphasize = true,
-	},
+	LeftButton = "report",
+	MiddleButton = "remove",
+	RightButton = "countdown",
 }
 
 do
+	local function shouldDisable() return not plugin.db.profile.interceptMouse end
 	local clickOptions = {
-		emphasize = {
+		countdown = {
 			type = "toggle",
-			name = colorize[L.superEmphasize],
-			desc = L.tempEmphasize,
+			name = colorize[L.countdown],
+			desc = L.temporaryCountdownDesc,
 			descStyle = "inline",
 			order = 1,
+			width = "full",
+			disabled = shouldDisable,
 		},
 		report = {
 			type = "toggle",
@@ -542,27 +542,26 @@ do
 			desc = L.reportDesc,
 			descStyle = "inline",
 			order = 2,
+			width = "full",
+			disabled = shouldDisable,
 		},
 		remove = {
 			type = "toggle",
 			name = colorize[L.remove],
-			desc = L.removeDesc,
+			desc = L.removeBarDesc,
 			descStyle = "inline",
 			order = 3,
+			width = "full",
+			disabled = shouldDisable,
 		},
 		removeOther = {
 			type = "toggle",
 			name = colorize[L.removeOther],
-			desc = L.removeOtherDesc,
+			desc = L.removeOtherBarDesc,
 			descStyle = "inline",
 			order = 4,
-		},
-		disable = {
-			type = "toggle",
-			name = colorize[L.disable],
-			desc = L.disableDesc,
-			descStyle = "inline",
-			order = 5,
+			width = "full",
+			disabled = shouldDisable,
 		},
 	}
 
@@ -602,7 +601,6 @@ do
 		rearrangeBars(emphasizeAnchor)
 	end
 
-	local function shouldDisable() return not plugin.db.profile.interceptMouse end
 	plugin.pluginOptions = {
 		type = "group",
 		name = L.bars,
@@ -663,35 +661,43 @@ do
 						type = "select",
 						name = L.style,
 						order = 5,
-						values = barStyleRegister,
+						values = function() return BigWigsAPI:GetBarStyleList() end,
 						set = function(info, value)
 							db[info[#info]] = value
-							plugin:SetBarStyle(value)
-							local style = barStyles[value]
+							SetBarStyle(value)
+							local style = BigWigsAPI:GetBarStyle(value)
 							if style then
-								if style.barSpacing then
+								if type(style.barSpacing) == "number" and style.barSpacing > 0 and style.barSpacing < 101 then
 									db.spacing = style.barSpacing
 								else
-									db.spacing = 1
+									db.spacing = plugin.defaultDB.spacing
 								end
 								rearrangeBars(normalAnchor)
 								rearrangeBars(emphasizeAnchor)
 
-								if style.barHeight then
+								if type(style.barHeight) == "number" and style.barHeight > 0 and style.barHeight < 201 then
 									db.BigWigsAnchor_height = style.barHeight
 									db.BigWigsEmphasizeAnchor_height = style.barHeight * 1.1
 								else
-									db.BigWigsAnchor_height = 16
-									db.BigWigsEmphasizeAnchor_height = 22
+									db.BigWigsAnchor_height = plugin.defaultDB.BigWigsAnchor_height
+									db.BigWigsEmphasizeAnchor_height = plugin.defaultDB.BigWigsEmphasizeAnchor_height
 								end
-								if style.fontSizeNormal then
+								if type(style.fontSizeNormal) == "number" and style.fontSizeNormal > 0 and style.fontSizeNormal < 201 then
 									db.fontSize = style.fontSizeNormal
-									updateFont()
+								else
+									db.fontSize = plugin.defaultDB.fontSize
 								end
-								if style.fontSizeEmphasized then
+								if type(style.fontSizeEmphasized) == "number" and style.fontSizeEmphasized > 0 and style.fontSizeEmphasized < 201 then
 									db.fontSizeEmph = style.fontSizeEmphasized
-									updateFont()
+								else
+									db.fontSizeEmph = plugin.defaultDB.fontSizeEmph
 								end
+								if type(style.fontOutline) == "string" and (style.fontOutline == "NONE" or style.fontOutline == "OUTLINE" or style.fontOutline == "THICKOUTLINE") then
+									db.outline = style.fontOutline
+								else
+									db.outline = plugin.defaultDB.outline
+								end
+								updateFont()
 
 								for bar in next, normalAnchor.bars do
 									currentBarStyler.BarStopped(bar)
@@ -717,6 +723,7 @@ do
 						order = 6,
 						softMax = 30,
 						min = 0,
+						max = 100,
 						step = 1,
 						width = 2,
 						set = sortBars,
@@ -920,6 +927,18 @@ do
 						end,
 						disabled = function() return not db.icon end,
 					},
+					header3 = {
+						type = "header",
+						name = "",
+						order = 18,
+					},
+					reset = {
+						type = "execute",
+						name = L.resetAll,
+						desc = L.resetBarsDesc,
+						func = function() plugin.db:ResetProfile() end,
+						order = 19,
+					},
 				},
 			},
 			normal = {
@@ -964,7 +983,7 @@ do
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
-								min = 0,
+								min = -2048,
 								softMax = 2048,
 								step = 1,
 								order = 1,
@@ -974,7 +993,7 @@ do
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
-								min = 0,
+								min = -2048,
 								softMax = 2048,
 								step = 1,
 								order = 2,
@@ -1026,6 +1045,7 @@ do
 						desc = L.growingUpwardsDesc,
 						order = 3,
 						set = sortBars,
+						disabled = function() return not db.emphasizeMove end, -- Disable when using 1 anchor
 					},
 					emphasizeMove = {
 						type = "toggle",
@@ -1057,7 +1077,7 @@ do
 							db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*value
 							db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*value
 						end,
-						disabled = function() return db.emphasizeMove end,
+						disabled = function() return db.emphasizeMove end, -- Disable when using 2 anchors
 					},
 					emphasizeTime = {
 						type = "range",
@@ -1096,7 +1116,7 @@ do
 								type = "range",
 								name = L.positionX,
 								desc = L.positionDesc,
-								min = 0,
+								min = -2048,
 								softMax = 2048,
 								step = 1,
 								order = 1,
@@ -1106,7 +1126,7 @@ do
 								type = "range",
 								name = L.positionY,
 								desc = L.positionDesc,
-								min = 0,
+								min = -2048,
 								softMax = 2048,
 								step = 1,
 								order = 2,
@@ -1183,6 +1203,15 @@ do
 						order = 5,
 						width = 1.6,
 					},
+					fontSizeNameplate = {
+						type = "range",
+						name = L.fontSize,
+						order = 6,
+						max = 200, softMax = 72,
+						min = 1,
+						step = 1,
+						width = 1.6,
+					},
 				},
 			},
 			clicking = {
@@ -1234,32 +1263,29 @@ do
 							return not plugin.db.profile.interceptMouse or not plugin.db.profile.onlyInterceptOnKeypress
 						end,
 					},
-					left = {
+					LeftButton = {
 						type = "group",
 						name = KEY_BUTTON1 or "Left",
 						order = 10,
 						args = clickOptions,
-						disabled = shouldDisable,
-						get = function(info) return plugin.db.profile.LeftButton[info[#info]] end,
-						set = function(info, value) plugin.db.profile.LeftButton[info[#info]] = value end,
+						get = function(info) return plugin.db.profile.LeftButton == info[#info] end,
+						set = function(info, value) plugin.db.profile.LeftButton = value and info[#info] or nil end,
 					},
-					middle = {
+					MiddleButton = {
 						type = "group",
 						name = KEY_BUTTON3 or "Middle",
 						order = 11,
 						args = clickOptions,
-						disabled = shouldDisable,
-						get = function(info) return plugin.db.profile.MiddleButton[info[#info]] end,
-						set = function(info, value) plugin.db.profile.MiddleButton[info[#info]] = value end,
+						get = function(info) return plugin.db.profile.MiddleButton == info[#info] end,
+						set = function(info, value) plugin.db.profile.MiddleButton = value and info[#info] or nil end,
 					},
-					right = {
+					RightButton = {
 						type = "group",
 						name = KEY_BUTTON2 or "Right",
 						order = 12,
 						args = clickOptions,
-						disabled = shouldDisable,
-						get = function(info) return plugin.db.profile.RightButton[info[#info]] end,
-						set = function(info, value) plugin.db.profile.RightButton[info[#info]] = value end,
+						get = function(info) return plugin.db.profile.RightButton == info[#info] end,
+						set = function(info, value) plugin.db.profile.RightButton = value and info[#info] or nil end,
 					},
 				},
 			},
@@ -1314,7 +1340,7 @@ do
 			end
 			local spacing = currentBarStyler.GetSpacing(bar) or db.spacing
 			bar:ClearAllPoints()
-			if up or (db.emphasizeGrowup and bar:Get("bigwigs:emphasized")) then
+			if up then
 				if lastBar then -- Growing from a bar
 					bar:SetPoint("BOTTOMLEFT", lastBar, "TOPLEFT", 0, spacing)
 				else -- Growing from the anchor
@@ -1361,7 +1387,8 @@ do
 				bar:ClearAllPoints()
 				bar:SetParent(nameplate)
 				bar:SetPoint(barPoint, nameplate, nameplatePoint, 0, db.nameplateGrowUp and offset or -offset)
-				offset = offset + db.spacing + bar:GetHeight()			end
+				offset = offset + db.spacing + bar:GetHeight()
+			end
 		end
 	end
 end
@@ -1383,6 +1410,10 @@ local function createDeletionTimer(barInfo)
 end
 
 local function barStopped(event, bar)
+	local countdown = bar:Get("bigwigs:stopcountdown")
+	if countdown then
+		plugin:SendMessage("BigWigs_StopCountdown", plugin, countdown)
+	end
 	local a = bar:Get("bigwigs:anchor")
 	local unitGUID = bar:Get("bigwigs:unitGUID")
 	if a and a.bars and a.bars[bar] then
@@ -1405,36 +1436,48 @@ end
 --
 
 local defaultPositions = {
-	BigWigsAnchor = {"CENTER", "UIParent", "CENTER", 0, -120},
-	BigWigsEmphasizeAnchor = {"TOP", RaidWarningFrame, "BOTTOM", 0, -35}, --Below the Blizzard "Raid Warning" frame
+	BigWigsAnchor = {"CENTER", UIParent, "CENTER", 450, 200},
+	BigWigsEmphasizeAnchor = {"CENTER", UIParent, "CENTER", 0, -100}, --Below the Emphasized Message frame, ish
 }
 
 local function onDragHandleMouseDown(self) self:GetParent():StartSizing("BOTTOMRIGHT") end
 local function onDragHandleMouseUp(self) self:GetParent():StopMovingOrSizing() end
-local function onResize(self, width, height)
-	db[self.w] = width
-	db[self.h] = height
-	if self == normalAnchor and not db.emphasizeMove then
-		-- Move is disabled and we are configuring the normal anchor. Make sure to update the emphasized bars also.
-		db[emphasizeAnchor.w] = width * db.emphasizeMultiplier
-		db[emphasizeAnchor.h] = height * db.emphasizeMultiplier
-	end
-	for k in next, self.bars do
-		currentBarStyler.BarStopped(k)
-		if db.emphasizeMove then
-			k:SetSize(width, height) -- Move enabled, set the size no matter which anchor we are configuring
-		elseif self == normalAnchor then
-			-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
-			if k:Get("bigwigs:emphasized") then
-				k:SetSize(db[emphasizeAnchor.w], db[emphasizeAnchor.h])
-			else
-				k:SetSize(width, height)
-			end
+local onResize
+do
+	local throttle = false
+	function onResize(self, width, height)
+		db[self.w] = width
+		db[self.h] = height
+		if self == normalAnchor and not db.emphasizeMove then
+			-- Move is disabled and we are configuring the normal anchor. Make sure to update the emphasized bars also.
+			db[emphasizeAnchor.w] = width * db.emphasizeMultiplier
+			db[emphasizeAnchor.h] = height * db.emphasizeMultiplier
 		end
-		currentBarStyler.ApplyStyle(k)
-		rearrangeBars(self)
+		if not throttle then
+			throttle = true
+			plugin:ScheduleTimer(function()
+				for k in next, self.bars do
+					currentBarStyler.BarStopped(k)
+					if db.emphasizeMove then
+						k:SetSize(db[self.w], db[self.h]) -- Move enabled, set the size no matter which anchor we are configuring
+					elseif self == normalAnchor then
+						-- Move is disabled and we are configuring the normal anchor. Don't apply normal bar sizes to emphasized bars
+						if k:Get("bigwigs:emphasized") then
+							k:SetSize(db[emphasizeAnchor.w], db[emphasizeAnchor.h])
+						else
+							k:SetSize(db[self.w], db[self.h])
+						end
+					end
+					currentBarStyler.ApplyStyle(k)
+					rearrangeBars(self)
+				end
+				if self:IsMouseOver() then -- Only if we're dragging the drag handle, not sliding the GUI slider
+					plugin:UpdateGUI() -- Update width/height if GUI is open
+				end
+				throttle = false
+			end, 0.1)
+		end
 	end
-	plugin:UpdateGUI() -- Update width/height if GUI is open
 end
 local function onDragStart(self) self:StartMoving() end
 local function onDragStop(self)
@@ -1465,7 +1508,7 @@ do
 		header:SetShadowOffset(1, -1)
 		header:SetTextColor(1,0.82,0,1)
 		header:SetText(title)
-		header:SetAllPoints(display)
+		header:SetPoint("CENTER", display, "CENTER")
 		header:SetJustifyH("CENTER")
 		header:SetJustifyV("MIDDLE")
 		local drag = CreateFrame("Frame", nil, display)
@@ -1487,13 +1530,6 @@ do
 		display:SetScript("OnDragStart", onDragStart)
 		display:SetScript("OnDragStop", onDragStop)
 		display.bars = {}
-		display.Reset = function(self)
-			db[self.x] = nil
-			db[self.y] = nil
-			db[self.w] = nil
-			db[self.h] = nil
-			self:RefixPosition()
-		end
 		display.RefixPosition = function(self)
 			self:ClearAllPoints()
 			if db[self.x] and db[self.y] then
@@ -1523,30 +1559,25 @@ local function hideAnchors()
 	emphasizeAnchor:Hide()
 end
 
-local function resetAnchors()
-	normalAnchor:Reset()
-	emphasizeAnchor:Reset()
-end
-
 local function updateProfile()
 	db = plugin.db.profile
 	normalAnchor:RefixPosition()
 	emphasizeAnchor:RefixPosition()
 	if plugin:IsEnabled() then
 		if not media:Fetch(STATUSBAR, db.texture, true) then db.texture = "BantoBar" end
-		plugin:SetBarStyle(db.barStyle)
+		SetBarStyle(db.barStyle)
 		plugin:RegisterMessage("DBM_AddonMessage")
 	end
-	-- XXX temp cleanup [8.0.1]
-	db.scale = nil
-	db.emphasizeScale = nil
-	if not db.emphasizeMove then
-		db.BigWigsEmphasizeAnchor_width = db.BigWigsAnchor_width*db.emphasizeMultiplier
-		db.BigWigsEmphasizeAnchor_height = db.BigWigsAnchor_height*db.emphasizeMultiplier
+	-- XXX temp 9.0.2
+	if type(db.LeftButton) ~= "string" then
+		db.LeftButton = "report"
 	end
-	db.tempMonoUIReset = nil
-	db.tempSpacingReset = nil
-	db.font = nil
+	if type(db.MiddleButton) ~= "string" then
+		db.MiddleButton = "remove"
+	end
+	if type(db.RightButton) ~= "string" then
+		db.RightButton = "countdown"
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -1558,10 +1589,6 @@ function plugin:OnRegister()
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
-
-	for k, v in next, barStyles do
-		barStyleRegister[k] = v:GetStyleName()
-	end
 end
 
 function plugin:OnPluginEnable()
@@ -1582,7 +1609,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnPluginDisable", "StopModuleBars")
 	self:RegisterMessage("BigWigs_StartConfigureMode", showAnchors)
 	self:RegisterMessage("BigWigs_StopConfigureMode", hideAnchors)
-	self:RegisterMessage("BigWigs_ResetPositions", resetAnchors)
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 
 	self:RefixClickIntercepts()
@@ -1596,6 +1622,9 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_PluginComm")
 	self:RegisterMessage("DBM_AddonMessage")
 
+	-- XXX temporary workaround for wow custom font loading issues, start a dummy bar to force load the selected font into memory
+	self:SendMessage("BigWigs_StartBar", self, nil, "test", 0.01, 134376)
+
 	local tbl = BigWigs3DB.breakTime
 	if tbl then -- Break time present, resume it
 		local prevTime, seconds, nick, isDBM = tbl[1], tbl[2], tbl[3], tbl[4]
@@ -1608,43 +1637,42 @@ function plugin:OnPluginEnable()
 	end
 end
 
+function plugin:OnPluginDisable()
+	for k in next, normalAnchor.bars do
+		k:Stop()
+	end
+	for k in next, emphasizeAnchor.bars do
+		k:Stop()
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Bar styles API
 --
 
 do
-	local currentAPIVersion = 1
-	local errorWrongAPI = "The bar style API version is now %d; the bar style %q needs to be updated for this version of BigWigs."
-	local errorMismatchedData = "The given style data does not seem to be a BigWigs bar styler."
-	local errorAlreadyExist = "Trying to register %q as a bar styler, but it already exists."
+	local errorDeprecated = "An addon registered the bar style '%s' using the old method. Visit github.com/BigWigsMods/BigWigs/wiki/Custom-Bar-Styles to learn how to do it correctly."
 	function plugin:RegisterBarStyle(key, styleData)
-		if type(key) ~= "string" then error(errorMismatchedData) end
-		if type(styleData) ~= "table" then error(errorMismatchedData) end
-		if type(styleData.version) ~= "number" then error(errorMismatchedData) end
-		if type(styleData.apiVersion) ~= "number" then error(errorMismatchedData) end
-		if type(styleData.GetStyleName) ~= "function" then error(errorMismatchedData) end
-		if styleData.apiVersion ~= currentAPIVersion then error(errorWrongAPI:format(currentAPIVersion, key)) end
-		if barStyles[key] and barStyles[key].version == styleData.version then error(errorAlreadyExist:format(key)) end
-		if not barStyles[key] or barStyles[key].version < styleData.version then
-			barStyles[key] = styleData
-			barStyleRegister[key] = styleData:GetStyleName()
-		end
+		BigWigs:Print(errorDeprecated:format(key))
+		BigWigsAPI:RegisterBarStyle(key, styleData)
 	end
 end
 
 do
-	local errorNoStyle = "BigWigs: No style with the ID %q has been registered. Reverting to default style."
-	local function noop() end
-	function plugin:SetBarStyle(style)
-		if type(style) ~= "string" or not barStyles[style] then
-			print(errorNoStyle:format(tostring(style)))
-			style = "Default"
+	function plugin:SetBarStyle(styleName)
+		-- Ask users to select your bar styles. Forcing a selection is deprecated.
+		-- This is to allow users to install multiple styles gracefully, and to encourage authors to use new style entry APIs like `.barHeight` or `.fontSizeNormal`
+		-- Want more style API entries? We're open to suggestions!
+		BigWigs:Print(("SetBarStyle is deprecated, bar style '%s' was not set automatically, you may need to set it yourself."):format(styleName))
+	end
+	local errorNoStyle = "No style with the ID %q has been registered. Reverting to default style."
+	function SetBarStyle(styleName)
+		local style = BigWigsAPI:GetBarStyle(styleName)
+		if not style then
+			BigWigs:Print(errorNoStyle:format(styleName))
+			styleName = "Default"
 		end
-		local newBarStyler = barStyles[style]
-		if not newBarStyler.ApplyStyle then newBarStyler.ApplyStyle = noop end
-		if not newBarStyler.BarStopped then newBarStyler.BarStopped = noop end
-		if not newBarStyler.GetSpacing then newBarStyler.GetSpacing = noop end
-		if not newBarStyler.OnEmphasize then newBarStyler.OnEmphasize = noop end
+		style = BigWigsAPI:GetBarStyle(styleName)
 
 		-- Iterate all running bars
 		if currentBarStyler then
@@ -1652,24 +1680,24 @@ do
 				for bar in next, normalAnchor.bars do
 					currentBarStyler.BarStopped(bar)
 					bar.candyBarBackdrop:Hide()
-					newBarStyler.ApplyStyle(bar)
+					style.ApplyStyle(bar)
 				end
 			end
 			if emphasizeAnchor then
 				for bar in next, emphasizeAnchor.bars do
 					currentBarStyler.BarStopped(bar)
 					bar.candyBarBackdrop:Hide()
-					newBarStyler.ApplyStyle(bar)
+					style.ApplyStyle(bar)
 				end
 			end
 		end
-		currentBarStyler = newBarStyler
+		currentBarStyler = style
 
 		rearrangeBars(normalAnchor)
 		rearrangeBars(emphasizeAnchor)
 
 		if db then
-			db.barStyle = style
+			db.barStyle = styleName
 		end
 	end
 end
@@ -1798,6 +1826,16 @@ end
 -- Bar utility functions
 --
 
+function plugin:HasActiveBars()
+	if next(normalAnchor.bars) then
+		return true
+	end
+	if next(emphasizeAnchor.bars) then
+		return true
+	end
+	return false
+end
+
 function plugin:GetBarTimeLeft(module, text)
 	if normalAnchor then
 		for k in next, normalAnchor.bars do
@@ -1832,9 +1870,9 @@ end
 --
 
 local function barClicked(bar, button)
-	if not plugin.db.profile[button] then return end
-	for action, enabled in next, plugin.db.profile[button] do
-		if enabled then clickHandlers[action](bar) end
+	local action = plugin.db.profile[button]
+	if action and clickHandlers[action] then
+		clickHandlers[action](bar)
 	end
 end
 
@@ -1886,10 +1924,12 @@ do
 	end
 end
 
--- Super Emphasize the clicked bar
-clickHandlers.emphasize = function(bar)
+-- Enable countdown on the clicked bar
+clickHandlers.countdown = function(bar)
 	-- Add 0.2sec here to catch messages for this option triggered when the bar ends.
-	plugin:SendMessage("BigWigs_TempSuperEmphasize", bar:Get("bigwigs:module"), bar:Get("bigwigs:option"), bar:GetLabel(), bar.remaining)
+	local text = bar:GetLabel()
+	bar:Set("bigwigs:stopcountdown", text)
+	plugin:SendMessage("BigWigs_StartCountdown", plugin, nil, text, bar.remaining)
 end
 
 -- Report the bar status to the active group type (raid, party, solo)
@@ -1921,7 +1961,6 @@ end
 
 -- Removes the clicked bar
 clickHandlers.remove = function(bar)
-	plugin:SendMessage("BigWigs_SilenceOption", bar:Get("bigwigs:option"), bar.remaining + 0.3)
 	bar:Stop()
 end
 
@@ -1930,7 +1969,6 @@ clickHandlers.removeOther = function(bar)
 	if normalAnchor then
 		for k in next, normalAnchor.bars do
 			if k ~= bar then
-				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
 			end
 		end
@@ -1938,18 +1976,9 @@ clickHandlers.removeOther = function(bar)
 	if emphasizeAnchor then
 		for k in next, emphasizeAnchor.bars do
 			if k ~= bar then
-				plugin:SendMessage("BigWigs_SilenceOption", k:Get("bigwigs:option"), k.remaining + 0.3)
 				k:Stop()
 			end
 		end
-	end
-end
-
--- Disables the option that launched this bar
-clickHandlers.disable = function(bar)
-	local m = bar:Get("bigwigs:module")
-	if m and m.db and m.db.profile and bar:Get("bigwigs:option") then
-		m.db.profile[bar:Get("bigwigs:option")] = 0
 	end
 end
 
@@ -1998,8 +2027,13 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 		flags = db.outline
 	end
 	local f = media:Fetch(FONT, db.fontName)
-	bar.candyBarLabel:SetFont(f, db.fontSize, flags)
-	bar.candyBarDuration:SetFont(f, db.fontSize, flags)
+	if unitGUID then
+		bar.candyBarLabel:SetFont(f, db.fontSizeNameplate, flags)
+		bar.candyBarDuration:SetFont(f, db.fontSizeNameplate, flags)
+	else
+		bar.candyBarLabel:SetFont(f, db.fontSize, flags)
+		bar.candyBarDuration:SetFont(f, db.fontSize, flags)
+	end
 
 	bar:SetTimeVisibility(db.time)
 	bar:SetLabelVisibility(db.text)
@@ -2102,9 +2136,8 @@ do
 		for guid, bars in next, nameplateBars do
 			for _, barInfo in next, bars do
 				local bar = barInfo.bar
-				if bar and bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") then
+				if bar and bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") and not bar:Get("bigwigs:unitGUID") then
 					plugin:EmphasizeBar(bar)
-					rearrangeNameplateBars(bar:Get("bigwigs:unitGUID"))
 					plugin:SendMessage("BigWigs_BarEmphasized", plugin, bar)
 				end
 			end
@@ -2120,8 +2153,7 @@ do
 end
 
 function plugin:EmphasizeBar(bar, start)
-	local unitGUID = bar:Get("bigwigs:unitGUID")
-	if db.emphasizeMove and not unitGUID then
+	if db.emphasizeMove then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
@@ -2129,9 +2161,6 @@ function plugin:EmphasizeBar(bar, start)
 	currentBarStyler.BarStopped(bar)
 	if not start and db.emphasizeRestart then
 		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
-		if unitGUID then
-			nameplateBars[unitGUID][bar:GetLabel()].time = bar.remaining
-		end
 	end
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
@@ -2149,13 +2178,8 @@ function plugin:EmphasizeBar(bar, start)
 	bar.candyBarDuration:SetFont(f, db.fontSizeEmph, flags)
 
 	bar:SetColor(colors:GetColor("barEmphasized", module, key))
-	if unitGUID then
-		bar:SetWidth(bar:GetWidth() * db.emphasizeMultiplier)
-		bar:SetHeight(bar:GetHeight() * db.emphasizeMultiplier)
-	else
-		bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
-		bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
-	end
+	bar:SetHeight(db.BigWigsEmphasizeAnchor_height)
+	bar:SetWidth(db.BigWigsEmphasizeAnchor_width)
 	currentBarStyler.ApplyStyle(bar)
 	bar:Set("bigwigs:emphasized", true)
 end
@@ -2249,14 +2273,20 @@ do
 
 		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "BigWigs", nick))
 
-		timerTbl = {
-			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "orange", 134062), -- 134062 = "Interface\\Icons\\inv_misc_fork&knife"
-			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "orange", 134062),
-			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "orange", 134062),
-			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "red", 134062),
-			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Sound", plugin, nil, "Long"),
-			plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
-		}
+		timerTbl = {}
+		if seconds > 30 then
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "orange", 134062) -- 134062 = "Interface\\Icons\\inv_misc_fork&knife"
+		end
+		if seconds > 10 then
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "orange", 134062)
+		end
+		if seconds > 5 then
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "orange", 134062)
+		end
+		timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "red", 134062)
+		timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Sound", plugin, nil, "Long")
+		timerTbl[#timerTbl+1] = plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
+
 		if seconds > 119 then -- 2min
 			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "yellow", 134062)
 		end
@@ -2267,8 +2297,10 @@ do
 			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", plugin, nil, L.breakMinutes:format(halfMin), "yellow", 134062)
 		end
 
-		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(seconds/60), "green", 134062)
-		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
+		plugin:SendMessage("BigWigs_Message", plugin, nil, seconds < 61 and L.breakSeconds:format(seconds) or L.breakMinutes:format(seconds/60), "green", 134062)
+		if not reboot then
+			plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
+		end
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, 134062)
 		plugin:SendMessage("BigWigs_StartBreak", plugin, seconds, nick, isDBM, reboot)
 	end
@@ -2297,7 +2329,7 @@ end
 --
 
 function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
-	local guid = UnitGUID(unit)
+	local guid = plugin:UnitGUID(unit)
 	local unitBars = nameplateBars[guid]
 	if not unitBars then return end
 	for _, barInfo in next, unitBars do
@@ -2329,7 +2361,7 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 end
 
 function plugin:NAME_PLATE_UNIT_REMOVED(_, unit)
-	local guid = UnitGUID(unit)
+	local guid = plugin:UnitGUID(unit)
 	local unitBars = nameplateBars[guid]
 	if not unitBars then return end
 

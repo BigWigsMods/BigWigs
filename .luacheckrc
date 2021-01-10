@@ -1,11 +1,21 @@
 std = "lua51"
 max_line_length = false
+codes = true
 exclude_files = {
 	"**/Libs",
 }
 only = {
 	"011", -- syntax
 	"1", -- globals
+}
+files["**/Loader.lua"].ignore = {
+	"113/UnitGUID",
+	"113/UnitName",
+	"113/SetRaidTarget",
+}
+files["**/Core/BossPrototype.lua"].ignore = {
+	"113/TranscriptIgnore",
+	"113/Transcriptor",
 }
 ignore = {
 	"11/SLASH_.*", -- slash handlers
@@ -199,7 +209,6 @@ globals = {
 	"RolePollPopup",
 	"SecondsToTime",
 	"SendChatMessage",
-	"SetRaidTarget",
 	"SlashCmdList",
 	"StopSound",
 	"Tukui",
@@ -215,7 +224,6 @@ globals = {
 	"UnitFactionGroup",
 	"UnitGetTotalAbsorbs",
 	"UnitGroupRolesAssigned",
-	"UnitGUID",
 	"UnitHealth",
 	"UnitHealthMax",
 	"UnitInParty",
@@ -232,7 +240,6 @@ globals = {
 	"UnitIsPlayer",
 	"UnitIsUnit",
 	"UnitLevel",
-	"UnitName",
 	"UnitPhaseReason",
 	"UnitPlayerControlled",
 	"UnitPosition",

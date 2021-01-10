@@ -34,8 +34,8 @@ L.no = "Sans %s"
 L.normal = "Mode normal"
 L.on = "%s sur %s"
 L.onboss = "%s sur le BOSS"
---L.buff_boss = "Buff on BOSS: %s"
---L.buff_other = "Buff on %s: %s"
+L.buff_boss = "Buff sur le BOSS : %s"
+L.buff_other = "Buff sur %s : %s"
 L.other = "%s : %s"
 L.over = "%s terminé"
 L.percent = "%d%% - %s" -- 20% - spell
@@ -54,6 +54,7 @@ L.trash = "Trash"
 L.underyou = "%s en dessous de VOUS"
 L.you = "%s sur VOUS"
 L.you_icon = "%s sur |T13700%d:0|tVOUS"
+L.on_group = "%s sur le GROUPE" -- spell on group
 
 L.active = "Actif" -- When a boss becomes active, after speech finishes
 
@@ -63,7 +64,8 @@ L.marker_player_desc = "Marque les joueurs affectés par %s avec %s. Nécessite 
 L.marker_npc_desc = "Marque %s avec %s. Nécessite d'être assistant ou chef de raid."
 
 -- Ability where two players have to move close to each other
-L.link = "Lié(e) avec %s"
+L.link = "Lien"
+L.link_with = "Lié(e) avec %s"
 L.link_short = "Lié : %s"
 L.link_both = "%s est lié(e) avec %s"
 L.link_removed = "Lien enlevé"
@@ -73,3 +75,8 @@ L.amount_one = "%dB" -- Billions 1,000,000,000
 L.amount_two = "%dM" -- Millions 1,000,000
 L.amount_three = "%dK" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
+
+-- Common ability name replacements
+L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.bomb = "Bombe" -- Used for debuffs that make players explode
+L.fixate = "Fixer" -- Used when a boss or add is chasing/fixated on a player

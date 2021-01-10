@@ -19,6 +19,7 @@ L.altPowerTitle = "Ressource alternative"
 L.toggleDisplayPrint = "L'affichage sera présent la prochaine fois. Pour le désactiver complètement pour cette rencontre, vous devez le décocher dans les options de la rencontre."
 L.disabled = "Désactivé"
 L.disabledDisplayDesc = "Désactive l'affichage pour tous les modules qui l'utilisent."
+L.resetAltPowerDesc = "Réinitialise toutes les options relatives à la ressource alternative, y compris la position de l'ancre."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -49,12 +50,13 @@ L.autoReplyLeftCombatAdvancedWipe = "J'ai perdu face à '%s' : %s"
 L.bars = "Barres"
 L.style = "Style"
 L.bigWigsBarStyleName_Default = "Défaut"
+L.resetBarsDesc = "Réinitialise toutes les options relatives aux barres, y compris la position des ancres des barres."
 
--- L.nameplateBars = "Nameplate Bars"
--- L.nameplateAutoWidth = "Match width of nameplate"
--- L.nameplateAutoWidthDesc = "Sets the width of nameplate bars to the with of their parent nameplate."
--- L.nameplateOffsetY = "Y Offset"
--- L.nameplateOffsetYDesc = "Offset from the top of the nameplate for upwards bars and the bottom of the nameplate for downwards bars."
+L.nameplateBars = "Barres d'info des unités"
+L.nameplateAutoWidth = "Même largeur que la barre d'info"
+L.nameplateAutoWidthDesc = "Force la largeur des barres d'info à être de la même largeur que la barre parente."
+L.nameplateOffsetY = "Décalage Y"
+L.nameplateOffsetYDesc = "Décalage à partir du haut de la barre d'info pour les barres allant vers le haut, à partir du bas de la barre d'info pour les barres allant vers le bas."
 
 L.clickableBars = "Barres cliquables"
 L.clickableBarsDesc = "Par défaut, les barres de BigWigs ignorent la souris. Vous pouvez ainsi cibler ou lancer des sorts de zone derrière elles, changer l'angle de la caméra, ... tandis que votre curseur survole les barres. |cffff4411Si vous activez ceci, tout cela ne sera plus d'application.|r Les barres intercepteront tout clic que vous effectuez sur elles.\n"
@@ -64,15 +66,13 @@ L.modifierDesc = "Maintenez enfoncée la touche modificatrice sélectionnée pou
 L.modifierKey = "Seul. avec touche mod."
 L.modifierKeyDesc = "Permet aux barres de ne pas réagir aux clics de la souris à moins que la touche modificatrice sélectionnée ne soit maintenue enfoncée, cas dans lequel les actions de la souris décrites ci-dessous seront disponibles."
 
-L.tempEmphasize = "Met temporairement en super mise en évidence la barre et ses messages associés pendant sa durée."
+L.temporaryCountdownDesc = "Active temporairement le compte à rebours sur la technique associée à cette barre."
 L.report = "Rapport"
 L.reportDesc = "Rapporte le statut des barres actuelles dans la discussion de groupe active : la discussion d'instance, de raid, de groupe ou juste le dire, selon ce qui est le plus approprié."
 L.remove = "Enlever"
-L.removeDesc = "Enlève temporairement la barre et les messages qui y sont associés."
+L.removeBarDesc = "Enlève temporairement cette barre."
 L.removeOther = "Enlever les autres"
-L.removeOtherDesc = "Enlève temporairement toutes les autres barres et leurs messages associés."
-L.disable = "Désactiver"
-L.disableDesc = "Désactive l'option de la rencontre de boss qui a fait apparaître cette barre."
+L.removeOtherBarDesc = "Enlève temporairement toutes les autres barres (mis à part celle-ci)."
 
 L.emphasizeAt = "Mettre en évidence à... (secondes)"
 L.growingUpwards = "Ajouter vers le haut"
@@ -95,7 +95,7 @@ L.center = "Centre"
 L.right = "Droite"
 L.time = "Temps"
 L.timeDesc = "Affiche ou non le temps restant sur les barres."
---L.textDesc = "Whether to show or hide the text displayed on the bars."
+L.textDesc = "Affiche ou non le texte des barres."
 L.icon = "Icône"
 L.iconDesc = "Affiche ou non les icônes des barres."
 L.iconPosition = "Position de l'icône"
@@ -140,18 +140,24 @@ L.blockEmotes = "Bloquer les émotes du centre de l'écran"
 L.blockEmotesDesc = "Certains boss affichent des émotes pour certaines techniques, des messages qui sont bien trop longs et descriptifs. Nous essayons de produire des messages plus courts et appropriés qui n'interfèrent pas avec votre expérience de jeu et qui ne vous disent pas spécifiquement ce qu'il faut faire.\n\nVeuillez noter que les émotes des boss seront toujours visibles dans la fenêtre de discussion au cas où vous désireriez les lire."
 L.blockMovies = "Bloquer les cinématiques déjà vues"
 L.blockMoviesDesc = "Les cinématiques des rencontres de boss ne seront autorisées à être jouées qu'une seule fois (afin que vous puissiez les voir toutes au moins une fois) et seront ensuite bloquées."
---L.blockFollowerMission = "Bloquer les popups de fief" -- Rename to follower mission
---L.blockFollowerMissionDesc = "Les popups de fief s'affichent de temps en temps, principalement quand un sujet a terminé une mission.\n\nCes popups pouvant cacher des éléments critiques de votre interface pendant les rencontres de boss, nous vous recommandons de les bloquer."
+L.blockFollowerMission = "Bloquer les popups des sujets"
+L.blockFollowerMissionDesc = "Les popups des sujets s'affichent de temps en temps, principalement quand un sujet a terminé une mission.\n\nCes popups pouvant cacher des éléments critiques de votre interface pendant les rencontres de boss, nous vous recommandons de les bloquer."
 L.blockGuildChallenge = "Bloquer les popups de défi de guilde"
 L.blockGuildChallengeDesc = "Les popups de défi de guilde s'affichent de temps en temps, principalement quand un groupe de votre guilde termine un donjon héroïque ou un donjon en mode défi.\n\nCes popups pouvant cacher des éléments critiques de votre interface pendant les rencontres de boss, nous vous recommandons de les bloquer."
 L.blockSpellErrors = "Bloquer les messages de sorts échoués"
 L.blockSpellErrorsDesc = "Les messages tels que \"Le sort n'est pas encore utilisable\" qui s'affichent en haut de l'écran seront bloqués."
---L.disableSfx = "Disable sound effects"
---L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
---L.blockTooltipQuests = "Block tooltip quest objectives"
---L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
---L.blockObjectiveTracker = "Hide quest tracker"
---L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space.\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
+L.audio = "Audio"
+L.music = "Musique"
+L.ambience = "Ambiance"
+L.sfx = "Effets sonores"
+L.disableMusic = "Couper la musique (recommandé)"
+L.disableAmbience = "Couper les sons ambiants (recommandé)"
+L.disableSfx = "Couper les effets sonores (non recommandé)"
+L.disableAudioDesc = "L'option '%s' des options de Son de WoW sera désactivé, et ensuite réactivé une fois que la rencontre de boss est terminée. Cela peut vous aider à vous concentrer sur les sons d'alerte de BigWigs."
+L.blockTooltipQuests = "Bloquer les objectifs de quête dans la bulle d'aide"
+L.blockTooltipQuestsDesc = "Quand vous devez tuer un boss pour une quête, cela sera affiché sous la forme '0/1 terminé' dans la bulle d'aide quand vous survolez le boss avec votre souris. Cela sera caché lors du combat face à ce boss pour éviter que sa bulle d'aide ne devienne trop grande."
+L.blockObjectiveTracker = "Cacher le suivi des quêtes"
+L.blockObjectiveTrackerDesc = "Le suivi des objectifs de quêtes sera caché durant les rencontres de boss pour libérer de la place sur l'écran.\n\nCela ne sera PAS le cas dans les donjons Mythique+ ou si vous suivez un haut fait."
 
 L.subzone_grand_bazaar = "Le Grand bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Port de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -188,20 +194,22 @@ L.purple = "Violet"
 L.purpleDesc = "Alertes des techniques spécifiques aux tanks, comme le cumul d'un affaiblissement tank."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
-L.superEmphasize = "Super mise en évidence"
-L.superEmphasizeDesc = "Ce module met fortement en évidence les barres ou messages relatifs à une technique de rencontre de boss.\n\nVous pouvez définir ici exactement ce qui doit arriver quand vous cochez une option de super mise en évidence dans la section avancée d'une technique de rencontre de boss.\n\n|cffff4411Notez que la super mise en évidence est désactivée par défaut pour toutes les techniques.|r\n"
-L.uppercase = "MAJUSCULE"
-L.uppercaseDesc = "Met entièrement en majuscules tous les messages relatifs à une option à mettre fortement en évidence."
-L.superEmphasizeDisableDesc = "Désactive la super mise en évidence pour tous les modules qui l'utilisent."
 L.textCountdown = "Texte compte à rebours"
 L.textCountdownDesc = "Affiche un compteur visuel lors des comptes à rebours."
 L.countdownColor = "Couleur compte à rebours"
 L.countdownVoice = "Voix du compte à rebours"
 L.countdownTest = "Test compte à rebours"
 L.countdownAt = "Compte à rebours à... (secondes)"
+L.countdownAt_desc = "Choisissez combien de temps il doit rester sur une technique de boss (en secondes) quand le compte à rebours commence."
+L.countdown = "Compte à rebours"
+L.countdownDesc = "La fonctionnalité de compte à rebours consiste en un compte à rebours audio parlé et un compte à rebours texte visuel. Elle est rarement activée par défaut, mais vous pouvez l'activer pour n'importe quelle technique de boss en vous rendant dans les paramètres spécifiques de la rencontre de boss."
+L.countdownAudioHeader = "Compte à rebours audio parlé"
+L.countdownTextHeader = "Compte à rebours texte visuel"
+L.resetCountdownDesc = "Réinitialise tous les paramètres des comptes à rebours ci-dessus à leurs valeurs par défaut."
+L.resetAllCountdownDesc = "Si vous avez sélectionné des voix de compte à rebours personnalisés dans les paramètres de n'importe quel rencontre de boss, ce bouton va TOUS les réinitialiser et réinitialiser tous les paramètres ci-dessus à leurs valeurs par défaut."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -215,20 +223,23 @@ L.infoBox = "Boîte d'infos"
 
 L.sinkDescription = "Transmet la sortie de cet addon via l'affichage des messages de BigWigs. Cet affichage supporte les icônes, les couleurs et peut afficher jusqu'à 4 messages à l'écran en même temps. Les messages récemment insérés grandiront et reviendront rapidement à leur taille initiale afin de bien capter l'attention du joueur."
 L.emphasizedSinkDescription = "Transmet la sortie de cet addon via l'affichage des messages mis en évidence de BigWigs. Cet affichage supporte le texte et les couleurs, et ne peut afficher qu'un message à la fois."
-L.emphasizedCountdownSinkDescription = "Dirige la sortie de cet addon vers l'affichage des messages de compte à rebours de BigWigs. Cet affichage supporte le texte et les couleurs, et peut uniquement afficher un message à la fois."
+L.resetMessagesDesc = "Réinitialise toutes les options relatives aux messages, y compris la position des ancres des messages."
 
 L.bwEmphasized = "BigWigs en évidence"
 L.messages = "Messages"
 L.normalMessages = "Messages normaux"
 L.emphasizedMessages = "Messages en évidence"
+L.emphasizedDesc = "Le principe d'un message en évidence est d'attirer votre attention en affichant un large message au milieu de votre écran. Il est rarement activé par défaut, mais vous pouvez l'activer pour n'importe quelle technique de boss en vous rendant dans les paramètres spécifiques de la rencontre de boss."
 L.output = "Sortie"
+L.uppercase = "MAJUSCULE"
+L.uppercaseDesc = "Tous les messages mis en évidence seront convertis en MAJUSCULES."
 
-L.useColors = "Utiliser des couleurs"
-L.useColorsDesc = "Utilise ou non des couleurs dans les messages à la place du blanc unique."
 L.useIcons = "Utiliser les icônes"
 L.useIconsDesc = "Affiche les icônes à côté des messages."
 L.classColors = "Couleurs de classe"
 L.classColorsDesc = "Colore les noms des joueurs selon leur classe."
+L.chatMessages = "Messages de la fenêtre de discussion"
+L.chatMessagesDesc = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal."
 
 L.fontSize = "Taille de la police"
 L.none = "Aucun"
@@ -256,6 +267,7 @@ L.soundDelayDesc = "Spécifie combien de temps BigWigs doit attendre entre chaqu
 
 L.proximity = "Affichage de proximité"
 L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
+L.resetProximityDesc = "Réinitialise toutes les options relatives à la portée, y compris la position de l'ancre."
 
 L.close = "Fermer"
 L.closeProximityDesc = "Ferme l'affichage de proximité.\n\nPour le désactiver complètement, rendez-vous dans les options du boss et décochez 'Proximité'."
@@ -313,17 +325,21 @@ L.secondaryDesc = "La seconde icône de cible de raid qu'un script de rencontre 
 --
 
 L.Sounds = "Sons"
+L.oldSounds = "Anciens sons"
 
 L.Alarm = "Alarme"
 L.Info = "Info"
 L.Alert = "Alerte"
 L.Long = "Long"
 L.Warning = "Avertissement"
+L.onyou = "Un sort, amélioration ou affaiblissement est sur vous"
+L.underyou = "Vous devez bouger hors d'un sort qui se trouve en dessous de vous"
 
 L.sound = "Son"
 L.soundDesc = "Les messages sont le plus souvent accompagnés de sons. Certaines personnes trouvent plus faciles d'entendre ces sons pour réagir une fois qu'elles ont appris quels sons sont liés à quels messages, plutôt que de lire les messages à chaque fois."
 
-L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module"
+L.customSoundDesc = "Joue le son personnalisé sélectionné au lieu de celui fourni par le module."
+L.resetSoundDesc = "Réinitialise les sons ci-dessous à leurs valeurs par défaut."
 L.resetAllCustomSound = "Si vous avez des sons personnalisés pour certains paramètres des rencontres de boss, ce bouton les réinitialisera TOUS afin que les sons par défaut soient utilisés à la place."
 
 -----------------------------------------------------------------------

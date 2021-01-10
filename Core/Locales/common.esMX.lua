@@ -19,6 +19,7 @@ L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
 L.near = "%s cerca de TI"
+--L.on_group = "%s on GROUP" -- spell on group
 
 L.phase = "Fase %d"
 L.stage = "Etapa %d"
@@ -73,7 +74,8 @@ L.marker_player_desc = "Marca jugadores afectados por %s con %s, requiere ayudan
 L.marker_npc_desc = "Marca %s con %s, requiere ayudante o líder."
 
 -- Ability where two players have to move close to each other
-L.link = "Enlazado con %s"
+L.link = "Enlace"
+L.link_with = "Enlazado con %s"
 L.link_short = "Enlazado: %s"
 L.link_both = "%s enlazado con %s"
 L.link_removed = "Enlace eliminado"
@@ -83,3 +85,8 @@ L.amount_one = "%dB" -- Miles de millones 1,000,000,000
 L.amount_two = "%dM" -- Millones 1,000,000
 L.amount_three = "%dK" -- Miles 1,000
 L.seconds = "%.1fs" -- 1.1 segundos
+
+-- Common ability name replacements
+--L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.bomb = "Bomba" -- Used for debuffs that make players explode
+L.fixate = "Fijar" -- Used when a boss or add is chasing/fixated on a player

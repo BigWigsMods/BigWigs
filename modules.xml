@@ -5,6 +5,7 @@
 <Include file="Plugins\modules.xml"/>
 <Include file="Options\modules.xml"/>
 
+<Include file="Shadowlands\modules.xml"/>
 <Include file="CastleNathria\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>

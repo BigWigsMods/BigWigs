@@ -114,8 +114,8 @@ end
 
 function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossEngage")
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
+	self:RegisterMessage("BigWigs_OnBossWin", "WinOrWipe")
+	self:RegisterMessage("BigWigs_OnBossWipe", "WinOrWipe")
 end
 
 -------------------------------------------------------------------------------
@@ -164,8 +164,8 @@ do
 		end
 	end
 
-	function plugin:BigWigs_OnBossWin(event, module)
-		if not self.db.profile.disabled and module and module.journalId and not module.worldBoss then
+	function plugin:WinOrWipe(event, module)
+		if not self.db.profile.disabled and module and module == curModule then
 			curDiff = 0
 			self:UnregisterEvent("CHAT_MSG_WHISPER")
 			self:UnregisterEvent("CHAT_MSG_BN_WHISPER")
@@ -224,7 +224,7 @@ end
 do
 	local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
 
-	local UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress = UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress
+	local UnitHealth, UnitHealthMax, IsEncounterInProgress = UnitHealth, UnitHealthMax, IsEncounterInProgress
 	local function StoreHealth()
 		if IsEncounterInProgress() then
 			for i = 1, 5 do
@@ -234,7 +234,7 @@ do
 					local maxHealth = UnitHealthMax(unit)
 					local health = rawHealth / maxHealth
 					healthPools[i] = health
-					healthPoolNames[i] = UnitName(unit)
+					healthPoolNames[i] = plugin:UnitName(unit)
 				elseif healthPools[i] then
 					healthPools[i] = nil
 					healthPoolNames[i] = nil
@@ -276,7 +276,7 @@ do
 			for i = 1, 5 do
 				local unit = units[i]
 				local hp = UnitHealth(unit)
-				local name = UnitName(unit)
+				local name = plugin:UnitName(unit)
 				if hp > 0 then
 					hp = hp / UnitHealthMax(unit)
 					if totalHp == "" then
@@ -296,7 +296,14 @@ do
 	function plugin:CHAT_MSG_WHISPER(event, _, sender, _, _, _, flag, _, _, _, _, _, guid)
 		if curDiff > 0 and flag ~= "GM" and flag ~= "DEV" then
 			local trimmedPlayer = Ambiguate(sender, "none")
-			if not UnitInRaid(trimmedPlayer) and not UnitInParty(trimmedPlayer) and (not throttle[sender] or GetTime() - throttle[sender] > 30) then
+			if UnitInRaid(trimmedPlayer) or UnitInParty(trimmedPlayer) then -- Player is in our group
+				local _, _, _, myInstanceId = UnitPosition("player")
+				local _, _, _, tarInstanceId = UnitPosition(trimmedPlayer)
+				if myInstanceId == tarInstanceId then -- Player is also in our instance
+					return
+				end
+			end
+			if not throttle[sender] or (GetTime() - throttle[sender]) > 30 then
 				throttle[sender] = GetTime()
 				local isBnetFriend = C_BattleNet.GetGameAccountInfoByGUID(guid)
 				local msg
@@ -319,20 +326,26 @@ do
 
 	function plugin:CHAT_MSG_BN_WHISPER(event, _, playerName, _, _, _, _, _, _, _, _, _, _, bnSenderID)
 		if curDiff > 0 and not BNIsSelf(bnSenderID) then
-			if not throttleBN[bnSenderID] or GetTime() - throttleBN[bnSenderID] > 30 then
+			if not throttleBN[bnSenderID] or (GetTime() - throttleBN[bnSenderID]) > 30 then
 				throttleBN[bnSenderID] = GetTime()
 				local index = BNGetFriendIndex(bnSenderID)
 				local gameAccs = C_BattleNet.GetFriendNumGameAccounts(index)
 				for i=1, gameAccs do
 					local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(index, i)
-					-- Play on retail and get a whisper from Classic, seems to lack realmName, WoW 8.3
-					if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.realmName and gameAccountInfo.characterName then
-						local player = gameAccountInfo.characterName
-						if gameAccountInfo.realmName ~= GetRealmName() then
-							player = player .. "-" .. gameAccountInfo.realmName
+					local player = gameAccountInfo.characterName
+					local realmName = gameAccountInfo.realmName -- Short name "ServerOne"
+					local realmDisplayName = gameAccountInfo.realmDisplayName -- Full name "Server One"
+					if gameAccountInfo.clientProgram == "WoW" and gameAccountInfo.wowProjectID == 1 and realmName and realmDisplayName and player then
+						if realmDisplayName ~= GetRealmName() then
+							player = player .. "-" .. realmName
 						end
-						if UnitInRaid(player) or UnitInParty(player) then
-							return
+						if UnitInRaid(player) or UnitInParty(player) then -- Player is in our group
+							local _, _, _, myInstanceId = UnitPosition("player")
+							local _, _, _, tarInstanceId = UnitPosition(player)
+							if myInstanceId == tarInstanceId then -- Player is also in our instance
+								throttleBN[bnSenderID] = nil
+								return
+							end
 						end
 					end
 				end
