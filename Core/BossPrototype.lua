@@ -1342,16 +1342,13 @@ do
 		local function iter(t)
 			i = i + 1
 			if i < size then
-				if noInstanceFilter then
-					return t[i]
-				else
+				if not noInstanceFilter then
 					local _, _, _, tarInstanceId = UnitPosition(t[i])
-					if instanceId == tarInstanceId then
-						return t[i]
-					else
+					if instanceId ~= tarInstanceId then
 						return iter(t)
 					end
 				end
+				return t[i]
 			end
 		end
 		return iter, IsInRaid() and raidList or partyList
