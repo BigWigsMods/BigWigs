@@ -145,8 +145,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ViolentUproar", 346303)
 
 	--[[ Intermission: The Danse Macabre ]]--
-	self:Log("SPELL_CAST_SUCCESS", "DanseMacabre", 330959)
-	--self:Log("SPELL_CAST_SUCCESS", "DanseMacabreBegin", 328497)
+	self:Log("SPELL_CAST_SUCCESS", "DanseMacabreBegins", 347376) -- Dance Area Trigger // This is when the NPC's start running to the stage
 	self:Log("SPELL_AURA_REMOVED", "DanseMacabreOver", 330959)
 	self:Log("SPELL_AURA_APPLIED", "WrongMovesApplied", 330848)
 
@@ -558,46 +557,24 @@ do
 end
 
 --[[ Intermission: The Danse Macabre ]]--
-do
-	local prev = 0
-	function mod:DanseMacabre(args)
-		local t = args.time
-		if t-prev > 10 then
-			prev = t
-			self:Message(args.spellId, "green")
-			self:PlaySound(args.spellId, "long")
+function mod:DanseMacabreBegins(args)
+	self:Message(args.spellId, "green")
+	self:PlaySound(args.spellId, "long")
 
-			self:PauseBar(346651) -- Drain Essence
-			self:PauseBar(337110) -- Dreadbolt Volley
-			self:PauseBar(346657) -- Prideful Eruption
-			self:PauseBar(346681) -- Soul Spikes
-			self:PauseBar(327497) -- Evasive Lunge
-			self:PauseBar(331634) -- Dark Recital
-			self:PauseBar(346800) -- Waltz of Blood
-			self:PauseBar(346690) -- Duelist's Riposte
-			self:PauseBar(346698) -- Summon Dutiful Attendant
-			self:PauseBar(330978) -- Dredger Servants
-			self:PauseBar(330965) -- Castellans Cadre
-			self:PauseBar(346303) -- Violent Uproar
-			self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
-		end
-	end
+	self:PauseBar(346651) -- Drain Essence
+	self:PauseBar(337110) -- Dreadbolt Volley
+	self:PauseBar(346657) -- Prideful Eruption
+	self:PauseBar(346681) -- Soul Spikes
+	self:PauseBar(327497) -- Evasive Lunge
+	self:PauseBar(331634) -- Dark Recital
+	self:PauseBar(346800) -- Waltz of Blood
+	self:PauseBar(346690) -- Duelist's Riposte
+	self:PauseBar(346698) -- Summon Dutiful Attendant
+	self:PauseBar(330978) -- Dredger Servants
+	self:PauseBar(330965) -- Castellans Cadre
+	self:PauseBar(346303) -- Violent Uproar
+	self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 end
-
---function mod:DanseMacabreBegin(args)
-	-- self:PauseBar(346651) -- Drain Essence
-	-- self:PauseBar(337110) -- Dreadbolt Volley
-	-- self:PauseBar(346657) -- Prideful Eruption
-	-- self:PauseBar(346681) -- Soul Spikes
-	-- self:PauseBar(327497) -- Evasive Lunge
-	-- self:PauseBar(331634) -- Dark Recital
-	-- self:PauseBar(346800) -- Waltz of Blood
-	-- self:PauseBar(346690) -- Duelist's Riposte
-	-- self:PauseBar(346698) -- Summon Dutiful Attendant
-	-- self:PauseBar(330978) -- Dredger Servants
-	-- self:PauseBar(346303) -- Violent Uproar
-	-- self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
---end
 
 function mod:DanseMacabreOver(args)
 	self:ResumeBar(346651) -- Drain Essence
