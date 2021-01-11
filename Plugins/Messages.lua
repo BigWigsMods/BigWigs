@@ -313,6 +313,7 @@ plugin.pluginOptions = {
 				fontSize = {
 					type = "range",
 					name = L.fontSize,
+					desc = L.fontSizeDesc,
 					order = 4,
 					max = 200, softMax = 72,
 					min = 1,
@@ -434,6 +435,7 @@ plugin.pluginOptions = {
 				emphFontSize = {
 					type = "range",
 					name = L.fontSize,
+					desc = L.fontSizeDesc,
 					order = 4,
 					softMax = 100, max = 200, min = 1, step = 1,
 				},

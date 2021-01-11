@@ -1142,9 +1142,11 @@ do
 			fontSize = {
 				type = "range",
 				name = L.fontSize,
+				desc = L.fontSizeDesc,
 				order = 4,
-				max = 40,
+				max = 200,
 				min = 8,
+				softMax = 40,
 				step = 1,
 				width = "full",
 			},

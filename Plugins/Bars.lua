@@ -966,6 +966,7 @@ do
 					fontSize = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						width = 2,
 						order = 3,
 						max = 200, softMax = 72,
@@ -1090,6 +1091,7 @@ do
 					fontSizeEmph = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						order = 7,
 						max = 200, softMax = 72,
 						min = 1,
@@ -1206,6 +1208,7 @@ do
 					fontSizeNameplate = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						order = 6,
 						max = 200, softMax = 72,
 						min = 1,
