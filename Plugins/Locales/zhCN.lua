@@ -5,7 +5,7 @@ L.comma = "，"
 L.width = "宽度"
 L.height = "高度"
 L.sizeDesc = "通常通过拖动锚点设置尺寸。如果需要一个精确的尺寸，可以使用这个滑动条或者将数值输入到没有最大值的框中。"
---L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
+L.fontSizeDesc = "使用滑块或在框内输入数值可调整字体尺寸，最大数值为200。"
 
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
@@ -229,20 +229,20 @@ L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单�
 -- AltPower.lua
 --
 
---L.altPowerDesc = "The AltPower display will only appear for bosses that apply AltPower to players, which is extremely rare. The display measures the amount of 'Alternative Power' you and your group has, displaying it in a list. To move the display around, please use the test button below."
+L.altPowerDesc = "仅在向玩家应用的首领出现交替能量显示，这极为罕见。将显示您和团队拥有的“交替能量”的数量，在列表中显示。要移动显示，请使用下面的测试按钮。"
 L.resetAltPowerDesc = "重置全部交替能量有关选项，包括交替能量锚点位置。"
---L.test = "Test"
---L.altPowerTestDesc = "Show the 'Alternative Power' display, allowing you to move it, and simulating the power changes you would see on a boss encounter."
---L.yourPowerBar = "Your Power Bar"
---L.barColor = "Bar color"
---L.barTextColor = "Bar text color"
---L.additionalWidth = "Additional Width"
---L.additionalHeight = "Additional Height"
---L.additionalSizeDesc = "Add to the size of the standard display by adjusting this slider, or type the value into the box which has a much higher maximum of 100."
---L.yourPowerTest = "Your Power: %d" -- Your Power: 42
---L.yourAltPower = "Your %s: %d" -- e.g. Your Corruption: 42
---L.player = "Player %d" -- Player 7
---L.disableAltPowerDesc = "Globally disable the AltPower display, it will never show for any boss encounter."
+L.test = "测试"
+L.altPowerTestDesc = "显示“交替能量”，可以移动，并模拟在首领战斗时会看到的能量变化。"
+L.yourPowerBar = "你的能量条"
+L.barColor = "条颜色"
+L.barTextColor = "条文本颜色"
+L.additionalWidth = "附加宽度"
+L.additionalHeight = "附加高度"
+L.additionalSizeDesc = "调整此滑块可增加标准显示的尺寸，或在框内输入数值，最大数值为100。"
+L.yourPowerTest = "你的能量：%d" -- Your Power: 42
+L.yourAltPower = "你的 %s：%d" -- e.g. Your Corruption: 42
+L.player = "玩家 %d" -- Player 7
+L.disableAltPowerDesc = "全局禁用交替能量显示，任何首领战斗不会显示它。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
