@@ -78,11 +78,10 @@ local updateData = function(module)
 	myGroupGUIDs = {}
 	local _, _, _, instanceId = UnitPosition("player")
 	for unit in module:IterateGroup() do
-		local _, _, _, tarInstanceId = UnitPosition(unit)
 		local guid = UnitGUID(unit)
 		if guid then
 			myGroupGUIDs[guid] = true
-			if solo and tarInstanceId == instanceId and myGUID ~= guid and UnitIsConnected(unit) then
+			if solo and myGUID ~= guid and UnitIsConnected(unit) then
 				solo = false
 			end
 		else -- XXX temp

@@ -351,9 +351,8 @@ do
 		-- count the raid size so we can colour accordingly
 		local playersAlive = 0
 		for unit in self:IterateGroup() do
-			local _, _, _, tarInstanceId = UnitPosition(unit)
 			local name = self:UnitName(unit)
-			if name and tarInstanceId == 2296 and not UnitIsDead(unit) then
+			if name and not UnitIsDead(unit) then
 				playersAlive = playersAlive + 1
 			end
 		end
@@ -815,9 +814,8 @@ do
 		-- count the raid size so we can colour accordingly
 		local playersAlive = 0
 		for unit in self:IterateGroup() do
-			local _, _, _, tarInstanceId = UnitPosition(unit)
 			local name = self:UnitName(unit)
-			if name and tarInstanceId == 2296 and not UnitIsDead(unit) then
+			if name and not UnitIsDead(unit) then
 				playersAlive = playersAlive + 1
 			end
 		end
