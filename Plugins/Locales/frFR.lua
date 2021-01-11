@@ -25,15 +25,15 @@ L.resetAltPowerDesc = "Réinitialise toutes les options relatives à la ressourc
 L.test = "Test"
 L.altPowerTestDesc = "Affiche la fenêtre de 'Ressource alternative', vous permettant de la déplacer, et de simuler les changements de ressource que vous verrez dans une rencontre de boss."
 L.yourPowerBar = "Votre barre de puissance"
-L.barColor = "Couleur de barre"
-L.barTextColor = "Couleur du texte de barre"
+L.barColor = "Couleur de la barre"
+L.barTextColor = "Couleur du texte de la barre"
 L.additionalWidth = "Longeur additionnelle"
 L.additionalHeight = "Hauteur additionnelle"
-L.additionalSizeDesc = "Ajoutez de la taille à l'affichage standard à l'aide de ce curseur, ou tapez la valeur dans la saisie ce qui permet d'aller au-delà de 100."
+L.additionalSizeDesc = "Ajoutez de la taille à l'affichage standard à l'aide de ce curseur, ou tapez la valeur dans la saisie ce qui permet d'aller jusqu'à 100."
 L.yourPowerTest = "Votre ressource : %d" -- Your Power: 42
 L.yourAltPower = "Votre %s : %d" -- e.g. Your Corruption: 42
 L.player = "Joueur %d" -- Player 7
-L.disableAltPowerDesc = "Désactive l'affichage de la ressource alternative de manière globale ; elle ne sera jamais affiché sur aucune rencontre de boss."
+L.disableAltPowerDesc = "Désactive l'affichage de la ressource alternative de manière globale ; elle ne sera jamais affichée sur les rencontres de boss."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
