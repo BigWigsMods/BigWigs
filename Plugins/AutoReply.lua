@@ -118,6 +118,12 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossWipe", "WinOrWipe")
 end
 
+function plugin:OnPluginDisable()
+	curModule = nil
+	throttle, throttleBN, friendlies = {}, {}, {}
+	healthPools, healthPoolNames = {}, {}
+end
+
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
