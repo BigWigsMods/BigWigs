@@ -75,7 +75,7 @@ function mod:OnBossEnable()
 
 	-- Stage Two - Terror of Castle Nathria
 	self:Log("SPELL_CAST_START", "EarsplittingShriekIntermission", 345936)
-	self:Log("SPELL_CAST_SUCCESS", "BloodShroud", 328921)
+	self:Log("SPELL_CAST_SUCCESS", "BloodShroud", 343995)
 	self:Log("SPELL_CAST_SUCCESS", "EchoingSonar", 329362)
 	self:Log("SPELL_AURA_REMOVED", "BloodShroudRemoved", 328921)
 
@@ -203,8 +203,8 @@ end
 
 -- Stage Two - Terror of Castle Nathria
 function mod:BloodShroud(args)
-	self:Message(args.spellId, "green")
-	self:PlaySound(args.spellId, "long")
+	self:Message(328921, "green")
+	self:PlaySound(328921, "long")
 
 	self:StopBar(328857) -- Exsanguinating Bite
 	self:StopBar(CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
@@ -215,9 +215,9 @@ function mod:BloodShroud(args)
 
 	shriekCount = 1 -- Reused for intermission Shriek
 
-	self:CDBar("stages", 39, CL.intermission, args.spellId) -- 5s Cast, 40s Intermission/Stage 2
+	self:CDBar("stages", 42.5, CL.intermission, args.spellId)
 	self:CDBar(329362, 7.3) -- Echoing Sonar
-	self:CDBar(345936, 17, CL.count:format(self:SpellName(345936), shriekCount))
+	self:CDBar(345936, 23.5, CL.count:format(self:SpellName(345936), shriekCount))
 end
 
 function mod:EarsplittingShriekIntermission(args)
