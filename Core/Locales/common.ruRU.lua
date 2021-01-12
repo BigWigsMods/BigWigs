@@ -50,8 +50,10 @@ L.add_killed = "Помощник убит (%d/%d)"
 L.add_remaining = "Помощник убит, %d осталось"
 L.add = "Помощник"
 L.adds = "Помощники"
-L.big_add = "Большой помощник"
-L.small_adds = "Маленькие помощники"
+L.big_add = "Большой помощник" -- singular
+L.big_adds = "Большой Помощники" -- plural
+L.small_add = "Маленькие Помощник" -- singular
+L.small_adds = "Маленькие помощники" -- plural
 
 -- Mob related
 L.mob_killed = "%s убит (%d/%d)"

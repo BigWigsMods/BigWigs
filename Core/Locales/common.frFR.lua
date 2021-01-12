@@ -6,7 +6,6 @@ L.add_killed = "Add tué (%d/%d)"
 L.add_remaining = "Add tué, il en reste %d"
 L.adds = "Adds"
 L.add_spawned = "Add apparu"
-L.big_add = "Gros add"
 L.cast = "<%s incanté>"
 L.casting = "%s en incantation"
 L.count = "%s (%d)"
@@ -43,7 +42,6 @@ L.phase = "Phase %d"
 L.removed = "%s enlevé"
 L.removed_from = "%s enlevé de %s"
 L.removed_by = "%s enlevé par %s" -- spell removed by player
-L.small_adds = "Petits adds"
 L.soon = "%s bientôt"
 L.spawned = "%s apparu"
 L.spawning = "Apparition |2 %s"
@@ -55,6 +53,11 @@ L.underyou = "%s en dessous de VOUS"
 L.you = "%s sur VOUS"
 L.you_icon = "%s sur |T13700%d:0|tVOUS"
 L.on_group = "%s sur le GROUPE" -- spell on group
+
+L.big_add = "Gros add" -- singular
+L.big_adds = "Gros adds" -- plural
+L.small_add = "Petite add" -- singular
+L.small_adds = "Petits adds" -- plural
 
 L.active = "Actif" -- When a boss becomes active, after speech finishes
 

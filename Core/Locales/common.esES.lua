@@ -6,7 +6,6 @@ L.add_killed = "Esbirro muerto (%d/%d)"
 L.add_remaining = "Esbirro muerto, %d restantes"
 L.adds = "Esbirros"
 L.add_spawned = "Aparece Esbirro"
-L.big_add = "Esbirro grande"
 L.cast = "<Lanza %s>"
 L.casting = "Lanzando %s"
 L.count = "%s (%d)"
@@ -43,7 +42,6 @@ L.phase = "Fase %d"
 L.removed = "%s eliminado"
 L.removed_from = "%s eliminado de %s"
 L.removed_by = "%s eliminado por %s" -- hechizo eliminado por jugador
-L.small_adds = "Esbirros pequeños"
 L.soon = "%s pronto"
 L.spawned = "%s Apareció"
 L.spawning = "%s aparece"
@@ -55,6 +53,11 @@ L.underyou = "%s debajo de TI"
 L.you = "%s en TI"
 L.you_icon = "%s en |T13700%d:0|tTI"
 --L.on_group = "%s on GROUP" -- spell on group
+
+L.big_add = "Esbirro grande" -- singular
+L.big_adds = "Esbirros grande" -- plural
+L.small_add = "Esbirro pequeños" -- singular
+L.small_adds = "Esbirros pequeños" -- plural
 
 L.active = "Activo" -- Cuando un jefe se activa, después de que acabe el diálogo
 

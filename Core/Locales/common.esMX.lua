@@ -50,8 +50,10 @@ L.add_killed = "Esbirro muerto (%d/%d)"
 L.add_remaining = "Esbirro muerto, %d restantes"
 L.add = "Esbirro"
 L.adds = "Esbirros"
-L.big_add = "Esbirro grande"
-L.small_adds = "Esbirros pequeños"
+L.big_add = "Esbirro grande" -- singular
+L.big_adds = "Esbirros grande" -- plural
+L.small_add = "Esbirro pequeños" -- singular
+L.small_adds = "Esbirros pequeños" -- plural
 
 -- Mob related
 L.mob_killed = "%s muerto (%d/%d)"

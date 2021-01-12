@@ -6,7 +6,6 @@ L.add_killed = "小怪已击杀（%d/%d）"
 L.add_remaining = "小怪已击杀，%d剩余"
 L.adds = "增援"
 L.add_spawned = "小怪刷新"
-L.big_add = "大型增援"
 L.cast = "<施放：%s>"
 L.casting = "正在施放%s"
 L.count = "%s（%d）"
@@ -43,7 +42,6 @@ L.phase = "阶段%d"
 L.removed = "%s移除"
 L.removed_from = "%2$s已移除%1$s"
 L.removed_by = "%s被%s移除" -- spell removed by player
-L.small_adds = "小型增援"
 L.soon = "即将%s"
 L.spawned = "%s重生"
 L.spawning = "%s出现"
@@ -55,6 +53,11 @@ L.underyou = "你脚下：%s"
 L.you = "你 %s"
 L.you_icon = "|T13700%2$d:0|t你 %1$s"
 L.on_group = "队伍 %s" -- spell on group
+
+L.big_add = "大型增援" -- singular
+L.big_adds = "大型增援" -- plural
+L.small_add = "小型增援" -- singular
+L.small_adds = "小型增援" -- plural
 
 L.active = "激活" -- When a boss becomes active, after speech finishes
 

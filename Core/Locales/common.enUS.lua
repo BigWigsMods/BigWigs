@@ -49,8 +49,10 @@ L.add_killed = "Add killed (%d/%d)"
 L.add_remaining = "Add killed, %d remaining"
 L.add = "Add"
 L.adds = "Adds"
-L.big_add = "Big Add"
-L.small_adds = "Small Adds"
+L.big_add = "Big Add" -- singular
+L.big_adds = "Big Adds" -- plural
+L.small_add = "Small Add" -- singular
+L.small_adds = "Small Adds" -- plural
 
 -- Mob related
 L.mob_killed = "%s killed (%d/%d)"

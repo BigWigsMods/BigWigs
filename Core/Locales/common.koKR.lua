@@ -50,8 +50,10 @@ L.add_killed = "추가 몹 처치 (%d/%d)"
 L.add_remaining = "추가 몹 처치, %d 남음"
 L.add = "추가 몹"
 L.adds = "추가 몹들"
-L.big_add = "큰 추가 몹"
-L.small_adds = "작은 추가 몹들"
+L.big_add = "큰 추가 몹" -- singular
+L.big_adds = "큰 추가 몹들" -- plural
+L.small_add = "작은 추가 몹" -- singular
+L.small_adds = "작은 추가 몹들" -- plural
 
 -- Mob related
 L.mob_killed = "%s 처치 (%d/%d)"
