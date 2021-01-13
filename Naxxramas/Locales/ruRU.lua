@@ -254,8 +254,8 @@ if L then
 	L.trigger_phase2_2 = "Растерзаю!!!"
 	L.trigger_phase2_3 = "Убью..."
 
-	-- L.add_death_trigger = "%s dies."
-	-- L.overload_trigger = "%s overloads!"
+	L.add_death_trigger = "%s умирает."
+	L.overload_trigger = "%s перезагружается!"
 	L.polarity_trigger = "Познайте же боль..."
 
 	L.polarity_warning = "3 секунды до сдвига полярности!"

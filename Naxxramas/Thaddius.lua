@@ -261,7 +261,6 @@ do
 end
 
 function mod:Phase2()
-	-- XXX Can remove these if ruRU triggers get updated
 	self:CancelTimer(throwHandle)
 	self:StopBar(L.throw)
 
