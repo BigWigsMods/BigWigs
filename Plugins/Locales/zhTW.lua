@@ -5,7 +5,7 @@ L.comma = "，"
 L.width = "寬度"
 L.height = "高度"
 L.sizeDesc = "通常透過拖動錨點來條整尺寸，如果你需要一個精確的尺寸大小，可以調整這個值，或直接輸入到框中"
---L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
+L.fontSizeDesc = "調整捲動軸以更改字型大小，或在輸入框輸入精確數值，最大可以到 200。"
 
 L.abilityName = "技能名稱"
 L.abilityNameDesc = "在視窗上面顯示或隱藏技能名稱。"
@@ -217,7 +217,7 @@ L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 �
 --
 
 L.altPowerDesc = "只有在有替代能量作用於玩家的首領戰才會顯示，這類首領數量不多，甚至可以說相當罕見；這個框架會顯示你與團隊中擁有的替代能量，其中團隊的替代能量是以清單的方式列出。如果要調整框架，點擊下方的「測試」按鈕。"
-L.resetAltPowerDesc = "重設所有特殊能量自訂選項，包括錨點和位置。"
+L.resetAltPowerDesc = "重設所有替代能量自訂選項，包括錨點和位置。"
 L.test = "測試"
 L.altPowerTestDesc = "顯示「替代能量」框架，使你可以移動它，並演示有替代能量中的戰鬥中會如何顯示。"
 L.yourPowerBar = "你的能量條"
@@ -225,7 +225,7 @@ L.barColor = "能量條顏色"
 L.barTextColor = "能量條文字顏色"
 L.additionalWidth = "延伸寬度"
 L.additionalHeight = "延伸高度"
-L.additionalSizeDesc = "替代能量有一個基本的最小尺寸，調整卷動軸可以增加尺寸；或者輸入精確的數值，最高可以到 100。"
+L.additionalSizeDesc = "替代能量框架有一個基本的最小尺寸，調整卷動軸可以使之增加；或者輸入精確的數值，最高可以到 100。"
 L.yourPowerTest = "你的能量：%d" -- Your Power: 42
 L.yourAltPower = "你的%s：%d" -- e.g. Your Corruption: 42
 L.player = "玩家 %d" -- Player 7
