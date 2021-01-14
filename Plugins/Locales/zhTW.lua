@@ -216,20 +216,20 @@ L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 �
 -- AltPower.lua
 --
 
---L.altPowerDesc = "The AltPower display will only appear for bosses that apply AltPower to players, which is extremely rare. The display measures the amount of 'Alternative Power' you and your group has, displaying it in a list. To move the display around, please use the test button below."
+L.altPowerDesc = "只有在有替代能量作用於玩家的首領戰才會顯示，這類首領數量不多，甚至可以說相當罕見；這個框架會顯示你與團隊中擁有的替代能量，其中團隊的替代能量是以清單的方式列出。如果要調整框架，點擊下方的「測試」按鈕。"
 L.resetAltPowerDesc = "重設所有特殊能量自訂選項，包括錨點和位置。"
---L.test = "Test"
---L.altPowerTestDesc = "Show the 'Alternative Power' display, allowing you to move it, and simulating the power changes you would see on a boss encounter."
---L.yourPowerBar = "Your Power Bar"
---L.barColor = "Bar color"
---L.barTextColor = "Bar text color"
---L.additionalWidth = "Additional Width"
---L.additionalHeight = "Additional Height"
---L.additionalSizeDesc = "Add to the size of the standard display by adjusting this slider, or type the value into the box which has a much higher maximum of 100."
---L.yourPowerTest = "Your Power: %d" -- Your Power: 42
---L.yourAltPower = "Your %s: %d" -- e.g. Your Corruption: 42
---L.player = "Player %d" -- Player 7
---L.disableAltPowerDesc = "Globally disable the AltPower display, it will never show for any boss encounter."
+L.test = "測試"
+L.altPowerTestDesc = "顯示「替代能量」框架，使你可以移動它，並演示有替代能量中的戰鬥中會如何顯示。"
+L.yourPowerBar = "你的能量條"
+L.barColor = "能量條顏色"
+L.barTextColor = "能量條文字顏色"
+L.additionalWidth = "延伸寬度"
+L.additionalHeight = "延伸高度"
+L.additionalSizeDesc = "替代能量有一個基本的最小尺寸，調整卷動軸可以增加尺寸；或者輸入精確的數值，最高可以到 100。"
+L.yourPowerTest = "你的能量：%d" -- Your Power: 42
+L.yourAltPower = "你的%s：%d" -- e.g. Your Corruption: 42
+L.player = "玩家 %d" -- Player 7
+L.disableAltPowerDesc = "全局禁用替代能量框架，啟用此選項將使任何首領戰都不顯示此框架。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
