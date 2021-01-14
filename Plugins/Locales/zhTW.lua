@@ -229,7 +229,7 @@ L.additionalSizeDesc = "替代能量框架有一個基本的最小尺寸，調�
 L.yourPowerTest = "你的能量：%d" -- Your Power: 42
 L.yourAltPower = "你的%s：%d" -- e.g. Your Corruption: 42
 L.player = "玩家 %d" -- Player 7
-L.disableAltPowerDesc = "全局禁用替代能量框架，啟用此選項將使任何首領戰都不顯示此框架。"
+L.disableAltPowerDesc = "全局停用替代能量框架，啟用此選項將使任何首領戰都不顯示此框架。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
