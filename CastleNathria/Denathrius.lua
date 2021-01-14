@@ -132,23 +132,24 @@ function mod:GetOptions()
 		{327796, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Night Hunter
 		"custom_on_repeating_nighthunter",
 		nightHunterMarker,
+		{327227, "EMPHASIZE"}, -- Command: Ravage
 		327122, -- Ravage
 		327992, -- Desolation
 		-- Intermission: March of the Penitent
 		328276, -- March of the Penitent
 		329906, -- Carnage
-		{329951, "SAY", "SAY_COUNTDOWN"}, -- Impale
+		{329951, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Impale
 		"custom_on_repeating_impale",
 		impaleMarker,
 		-22131, -- Crimson Cabalist
-		{336162, "EMPHASIZE"}, -- Crescendo
+		{336162, "FLASH"}, -- Crescendo
 		335873, -- Rancor
 		329181, -- Wracking Pain
 		333932, -- Hand of Destruction
 		330042, -- Massacre
 		-- Stage Three: Indignation
 		{332585, "TANK"}, -- Scorn
-		332619, -- Shattering Pain
+		{332619, "EMPHASIZE"}, -- Shattering Pain
 		{332794, "SAY", "SAY_COUNTDOWN"}, -- Fatal Finesse
 		fatalFinesseMarker,
 		336008, -- Smoldering Ire
@@ -170,6 +171,7 @@ function mod:GetOptions()
 	},{
 		[327039] = CL.normal,
 		[327796] = CL.heroic .."/".. CL.mythic,
+		[327227] = CL.soon:format(self:SpellName(327122)),
 		[328276] = CL.intermission,
 		[-22131] = CL.adds,
 	}
@@ -191,6 +193,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FeedingTimeRemoved", 327039)
 	self:Log("SPELL_AURA_APPLIED", "NightHunterApplied", 327796)
 	self:Log("SPELL_AURA_REMOVED", "NightHunterRemoved", 327796)
+	self:Log("SPELL_CAST_START", "CommandRavage", 327227)
 	self:Log("SPELL_CAST_START", "Ravage", 327122)
 
 	-- Intermission: March of the Penitent
@@ -284,10 +287,15 @@ end
 --
 
 do
-	local prev = 0
+	local prev, prevFlash = 0, 0
 	local function crescendoMessage()
 		mod:PersonalMessage(336162, "underyou")
 		mod:PlaySound(336162, "warning")
+		local t = GetTime()
+		if t-prevFlash > 5 then
+			prevFlash = t
+			mod:Flash(336162)
+		end
 	end
 	function mod:AddDeaths(args)
 		local t = args.time
@@ -495,6 +503,11 @@ do
 		-- end
 		self:CustomIcon(nightHunterMarker, args.destName)
 	end
+end
+
+function mod:CommandRavage(args) -- Pre-warning
+	self:Message(args.spellId, "orange", CL.soon:format(self:SpellName(327122)), 327122)
+	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:Ravage(args)
