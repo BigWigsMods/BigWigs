@@ -155,6 +155,7 @@ do
 						end,
 						width = 1.5,
 						order = 2,
+						disabled = disabled,
 					},
 					lock = {
 						type = "toggle",
@@ -181,6 +182,7 @@ do
 						hasAlpha = true,
 						width = 1.5,
 						order = 5,
+						disabled = disabled,
 					},
 					barTextColor = {
 						type = "color",
@@ -194,6 +196,7 @@ do
 						end,
 						width = 1.5,
 						order = 6,
+						disabled = disabled,
 					},
 					generalHeader = {
 						type = "header",
@@ -212,6 +215,7 @@ do
 						end,
 						hasAlpha = true,
 						order = 8,
+						disabled = disabled,
 					},
 					fontName = {
 						type = "select",
@@ -308,6 +312,12 @@ do
 						name = L.disabled,
 						desc = L.disableAltPowerDesc,
 						order = 18,
+						set = function(_, value)
+							db.disabled = value
+							if value then
+								plugin:Close()
+							end
+						end,
 					},
 				},
 			},
@@ -315,6 +325,7 @@ do
 				type = "group",
 				name = L.positionExact,
 				order = 2,
+				disabled = disabled,
 				args = {
 					posx = {
 						type = "range",
@@ -326,10 +337,10 @@ do
 						order = 1,
 						width = "full",
 						get = function()
-							return plugin.db.profile.position[3]
+							return db.position[3]
 						end,
 						set = function(_, value)
-							plugin.db.profile.position[3] = value
+							db.position[3] = value
 							plugin:RestyleWindow()
 						end,
 					},
@@ -343,10 +354,10 @@ do
 						order = 2,
 						width = "full",
 						get = function()
-							return plugin.db.profile.position[4]
+							return db.position[4]
 						end,
 						set = function(_, value)
-							plugin.db.profile.position[4] = value
+							db.position[4] = value
 							plugin:RestyleWindow()
 						end,
 					},
