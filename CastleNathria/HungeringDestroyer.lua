@@ -130,17 +130,14 @@ end
 function mod:RepeatingSayMessage()
 	scheduledSayMsg = nil
 	if laserOnMe then
-		print("say: laser on me")
 		self:Say(334266, CL.laser)
 	else -- Repeat Health instead
 		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
 		local myIcon = GetRaidTargetIndex("player")
 		local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent, myIcon) or tostring(currentHealthPercent)
 		if currentHealthPercent < 35 then -- Yell
-			print("yell: "..msg)
 			self:Yell(329298, msg, true)
 		elseif currentHealthPercent < 80 then -- Say
-			print("say: "..msg)
 			self:Say(329298, msg, true)
 		end
 	end
