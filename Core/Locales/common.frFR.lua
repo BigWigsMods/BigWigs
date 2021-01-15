@@ -56,7 +56,7 @@ L.on_group = "%s sur le GROUPE" -- spell on group
 
 L.big_add = "Gros add" -- singular
 L.big_adds = "Gros adds" -- plural
-L.small_add = "Petite add" -- singular
+L.small_add = "Petit add" -- singular
 L.small_adds = "Petits adds" -- plural
 
 L.active = "Actif" -- When a boss becomes active, after speech finishes
