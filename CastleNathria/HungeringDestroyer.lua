@@ -19,6 +19,8 @@ local expungeCount = 1
 local desolateCount = 1
 local overwhelmCount = 1
 local miasmaMarkClear = {}
+local scheduledSayMsg = nil
+local laserOnMe = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -27,6 +29,11 @@ local miasmaMarkClear = {}
 local L = mod:GetLocale()
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+
+	L.custom_on_repeating_say = "Repeating Say Messages"
+	L.custom_on_repeating_say_desc = "Repeating say and yell messages for Gluttonous Miasma (Health %) to communicate better what is happening. (requires the say option for Gluttonous Miasma to be enabled)"
+
+	L.currentHealthIcon = "{rt%d} %d {rt%d}"
 end
 
 --------------------------------------------------------------------------------
@@ -39,6 +46,7 @@ function mod:GetOptions()
 	return {
 		"berserk",
 		{329298, "SAY"}, -- Gluttonous Miasma
+		"custom_on_repeating_say",
 		gluttonousMiasmaMarker,
 		{334522, "EMPHASIZE"}, -- Consume
 		329725, -- Expunge
@@ -55,6 +63,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GluttonousMiasmaApplied", 329298)
+	self:Log("SPELL_AURA_REMOVED", "GluttonousMiasmaRemoved", 329298)
 	self:Log("SPELL_CAST_START", "Consume", 334522)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumeSuccess", 334522)
 	-- self:Log("SPELL_AURA_APPLIED", "ExpungeApplied", 329725)
@@ -75,6 +84,7 @@ function mod:OnEngage()
 	expungeCount = 1
 	desolateCount = 1
 	overwhelmCount = 1
+	laserOnMe = false
 
 	self:Bar(329298, 3, CL.count:format(L.miasma, miasmaCount)) -- Gluttonous Miasma
 	if self:Easy() then
@@ -117,6 +127,26 @@ end
 -- Event Handlers
 --
 
+function mod:RepeatingSayMessage()
+	scheduledSayMsg = nil
+	if laserOnMe then
+		print("say: laser on me")
+		self:Say(334266, CL.laser)
+	else -- Repeat Health instead
+		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
+		local myIcon = GetRaidTargetIndex("player")
+		local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent, myIcon) or tostring(currentHealthPercent)
+		if currentHealthPercent < 35 then -- Yell
+			print("yell: "..msg)
+			self:Yell(329298, msg, true)
+		elseif currentHealthPercent < 80 then -- Say
+			print("say: "..msg)
+			self:Say(329298, msg, true)
+		end
+	end
+	scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1)
+end
+
 do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 	function mod:GluttonousMiasmaApplied(args)
@@ -125,18 +155,26 @@ do
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.count_rticon:format(L.miasma, count, count))
-			-- XXX Add some kind of health % say / yell messages when you are low,
-			-- XXX this initial application doesn't change too much and clutters instead of the Laser says.
+			if self:GetOption("custom_on_repeating_say") then
+				scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1)
+			end
 			self:PlaySound(args.spellId, "alarm")
 		end
 		self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
 		if count == 1 then
 			miasmaMarkClear = {}
 			miasmaCount = miasmaCount + 1
-		 self:Bar(args.spellId, 24, CL.count:format(L.miasma, miasmaCount))
+		 	self:Bar(args.spellId, 24, CL.count:format(L.miasma, miasmaCount))
 		end
 		miasmaMarkClear[count] = args.destName -- For clearing marks OnBossDisable
 		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.miasma, miasmaCount-1), nil, nil, playerIcons)
+	end
+
+	function mod:GluttonousMiasmaRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelTimer(scheduledSayMsg)
+			scheduledSayMsg = nil
+		end
 	end
 end
 
@@ -219,6 +257,7 @@ do
 			self:PlaySound(334266, "warning")
 			self:Flash(334266)
 			self:Say(334266, CL.laser)
+			laserOnMe = true
 			self:Sync("VolatileEjectionTarget")
 		end
 	end
@@ -229,7 +268,7 @@ do
 		end
 	end
 
-	function mod:VolatileEjection(args)
+	function mod:VolatileEjection()
 		volatileCount = volatileCount + 1
 		if self:Easy() then
 			self:Bar(334266, volatileCount % 3 == 1 and 25.3 or 37.9, CL.count:format(CL.laser, volatileCount))
@@ -238,13 +277,14 @@ do
 		end
 	end
 
-	function mod:VolatileEjectionSuccess(args)
+	function mod:VolatileEjectionSuccess()
 		if self:GetOption(volatileEjectionMarker) then
 			for _, name in pairs(playerList) do
 				self:CustomIcon(volatileEjectionMarker, name)
 			end
 		end
 		playerList = {}
+		laserOnMe = false
 	end
 end
 
