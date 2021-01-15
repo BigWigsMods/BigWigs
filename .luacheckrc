@@ -248,6 +248,7 @@ globals = {
 	"UnitPowerType", -- Multiple old modules
 	"UnitRace",
 	"UnitSetRole",
+	"UnitSex",
 	"UnitThreatSituation", -- Cataclysm/Bastion/Sinestra.lua
 	-- Legion/TombOfSargeras/Kiljaeden.lua
 	"GetTrackingInfo",
