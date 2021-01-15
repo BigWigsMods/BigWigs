@@ -75,9 +75,9 @@ local timersHeroic = { -- Heroic confirmed
 	},
 	[3] = {
 		-- Fatal Finesse
-		[332794] = {18, 48, 6, 21, 27, 19, 26, 21},
+		[332794] = {10, 48, 6, 21, 27, 19, 26, 21},
 		-- Hand of Destruction (P3)
-		[333932] = {27.7, 90.0, 31.6, 46.3},
+		[333932] = {19.7, 90.0, 31.6, 46.3},
 	}
 }
 
@@ -98,9 +98,9 @@ local timersMythic = {
 	},
 	[3] = {
 		-- Fatal Finesse
-		[332794] = {27.2, 22, 25, 25, 38.5, 33, 13, 12},
+		[332794] = {19.2, 22, 25, 25, 38.5, 33, 13, 12},
 		-- Shattering Pain
-		[332619] = {13.4, 25.5, 21.9, 24.3, 24.3, 25.5, 22, 23, 25},
+		[332619] = {5.4, 25.5, 21.9, 24.3, 24.3, 25.5, 22, 23, 25},
 	}
 }
 
@@ -239,6 +239,7 @@ function mod:OnBossEnable()
 
 	-- Stage Three: Indignation
 	self:Log("SPELL_CAST_SUCCESS", "IndignationSuccess", 326005)
+	self:Log("SPELL_AURA_REMOVED", "IndignationEnd", 326005)
 	self:Log("SPELL_AURA_APPLIED", "ScornApplied", 332585)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ScornApplied", 332585)
 	self:Log("SPELL_CAST_SUCCESS", "ShatteringPain", 332619)
@@ -557,20 +558,18 @@ end
 
 -- Intermission: March of the Penitent
 function mod:MarchofthePenitentStart(args)
-	if stage == 1 then
-		stage = 2
-		self.stage = stage
-		intermission = true
-		self:Message(328276, "green", CL.percent:format(70, args.spellName), false)
-		self:PlaySound(328276, "long")
-		self:Bar(328276, 16.5, CL.intermission) -- 1.5s precast, 15s channel
+	stage = 2
+	self.stage = stage
+	intermission = true
+	self:Message(328276, "green", CL.percent:format(70, args.spellName), false)
+	self:PlaySound(328276, "long")
+	self:Bar(328276, 16.5, CL.intermission) -- 1.5s precast, 15s channel
 
-		self:StopBar(CL.count:format(self:SpellName(326707), cleansingPainCount)) -- Cleansing Pain
-		self:StopBar(CL.count:format(self:SpellName(326851), bloodPriceCount)) -- Blood Price
-		self:StopBar(CL.count:format(self:SpellName(327796), nightHunterCount)) -- Night Hunter
-		self:StopBar(CL.count:format(self:SpellName(327122), ravageCount)) -- Ravage
-		self:StopBar(CL.cast:format(CL.count:format(self:SpellName(327122), ravageCount-1))) -- Casting: Ravage
-	end
+	self:StopBar(CL.count:format(self:SpellName(326707), cleansingPainCount)) -- Cleansing Pain
+	self:StopBar(CL.count:format(self:SpellName(326851), bloodPriceCount)) -- Blood Price
+	self:StopBar(CL.count:format(self:SpellName(327796), nightHunterCount)) -- Night Hunter
+	self:StopBar(CL.count:format(self:SpellName(327122), ravageCount)) -- Ravage
+	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(327122), ravageCount-1))) -- Casting: Ravage
 end
 
 -- Stage Two: The Crimson Chorus
@@ -685,13 +684,8 @@ function mod:Massacre(args)
 end
 
 -- Stage Three: Indignation
-function mod:IndignationSuccess(args)
-	if self:GetOption(balefulShadowsMarker) then
-		self:UnregisterTargetEvents()
-	end
-	stage = 3
-	self.stage = stage
-	self:Message("stages", "green", CL.stage:format(stage), false)
+function mod:IndignationSuccess(args) -- not setting stage yet, incase some spells triggered the second you transition
+	self:Message("stages", "green", CL.stage:format(3), false)
 	self:PlaySound("stages", "long")
 
 	self:StopBar(CL.count:format(self:SpellName(329951), impaleCount)) -- Impale
@@ -700,6 +694,19 @@ function mod:IndignationSuccess(args)
 	self:StopBar(CL.count:format(self:SpellName(330137), massacreCount)) -- Massacre
 	self:StopBar(CL.count:format(CL.adds, addCount)) -- Adds
 	self:StopBar(CL.stage:format(3)) -- Stage 3
+end
+
+function mod:IndignationEnd(args)
+	if self:GetOption(balefulShadowsMarker) then
+		self:UnregisterTargetEvents()
+	end
+	stage = 3
+	self.stage = stage
+
+	-- These spells could have triggered right after the channel started
+	self:StopBar(CL.count:format(self:SpellName(329951), impaleCount)) -- Impale
+	self:StopBar(CL.count:format(self:SpellName(333932), handCount)) -- Hand of Destruction
+	self:StopBar(CL.count:format(self:SpellName(330137), massacreCount)) -- Massacre
 
 	handCount = 1
 	shatteringPainCount = 1
@@ -709,15 +716,15 @@ function mod:IndignationSuccess(args)
 	bloodPriceCount = 1
 	mirrorCount = 0
 
-	self:Bar(332619, self:Mythic() and 13.4 or 14, CL.count:format(CL.knockback, shatteringPainCount)) -- Shattering Pain
+	self:Bar(332619, self:Mythic() and 5.4 or 6, CL.count:format(CL.knockback, shatteringPainCount)) -- Shattering Pain
 	self:Bar(332794, timers[stage][332794][fatalFinesseCount], CL.count:format(self:SpellName(332794), fatalFinesseCount)) -- Fatal Finesse
 
 	if self:Mythic() then
-		self:Bar(326851, 20.6, CL.count:format(self:SpellName(326851), bloodPriceCount)) -- Blood Price
-		self:Bar(333979, 70, CL.count:format(self:SpellName(333979), ravageCount)) -- Sinister Reflection (Reuse ravageCount for Mythic)
+		self:Bar(326851, 12.6, CL.count:format(self:SpellName(326851), bloodPriceCount)) -- Blood Price
+		self:Bar(333979, 62, CL.count:format(self:SpellName(333979), ravageCount)) -- Sinister Reflection (Reuse ravageCount for Mythic)
 		self:OpenInfo(338738, self:SpellName(338738)) -- Through the Mirror
 	else
-		self:Bar(332849, 50, CL.count:format(self:SpellName(332937), ravageCount))
+		self:Bar(332849, 42, CL.count:format(self:SpellName(332937), ravageCount))
 		self:Bar(333932, timers[stage][333932][handCount], CL.count:format(self:SpellName(333932), handCount)) -- Hand of Destruction
 	end
 end
