@@ -197,6 +197,7 @@ function mod:GetOptions()
 		[327227] = CL.soon:format(self:SpellName(327122)),
 		[328276] = CL.intermission,
 		[-22131] = CL.adds,
+		[332619] = CL.knockback,
 	}
 end
 
@@ -708,7 +709,7 @@ function mod:IndignationSuccess(args)
 	bloodPriceCount = 1
 	mirrorCount = 0
 
-	self:Bar(332619, self:Mythic() and 13.4 or 14, CL.count:format(self:SpellName(332619), shatteringPainCount)) -- Shattering Pain
+	self:Bar(332619, self:Mythic() and 13.4 or 14, CL.count:format(CL.knockback, shatteringPainCount)) -- Shattering Pain
 	self:Bar(332794, timers[stage][332794][fatalFinesseCount], CL.count:format(self:SpellName(332794), fatalFinesseCount)) -- Fatal Finesse
 
 	if self:Mythic() then
@@ -730,10 +731,10 @@ function mod:ScornApplied(args)
 end
 
 function mod:ShatteringPain(args)
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, shatteringPainCount))
+	self:Message(args.spellId, "orange", CL.count:format(CL.knockback, shatteringPainCount))
 	self:PlaySound(args.spellId, "warning")
 	shatteringPainCount = shatteringPainCount + 1
-	self:Bar(args.spellId, self:Mythic() and timers[3][args.spellId][shatteringPainCount] or 24, CL.count:format(args.spellName, shatteringPainCount))
+	self:Bar(args.spellId, self:Mythic() and timers[3][args.spellId][shatteringPainCount] or 24, CL.count:format(CL.knockback, shatteringPainCount))
 end
 
 do
