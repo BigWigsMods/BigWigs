@@ -31,7 +31,7 @@ if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
 	L.custom_on_repeating_say = "Repeating Say Messages"
-	L.custom_on_repeating_say_desc = "Repeating say and yell messages for Gluttonous Miasma (Health %) to communicate better what is happening. (requires the say option for Gluttonous Miasma to be enabled)"
+	L.custom_on_repeating_say_desc = "Repeating say and yell messages for Gluttonous Miasma (Health %) to communicate better what is happening."
 
 	L.currentHealthIcon = "{rt%d} %d {rt%d}"
 end
@@ -130,15 +130,15 @@ end
 function mod:RepeatingSayMessage()
 	scheduledSayMsg = nil
 	if laserOnMe then
-		self:Say(334266, CL.laser)
+		self:Say(334266, CL.laser) -- using Laser key here because you dont want to repeat unless it's enabled
 	else -- Repeat Health instead
 		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
 		local myIcon = GetRaidTargetIndex("player")
 		local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent, myIcon) or tostring(currentHealthPercent)
 		if currentHealthPercent < 35 then -- Yell
-			self:Yell(329298, msg, true)
+			self:Yell(false, msg, true)
 		elseif currentHealthPercent < 80 then -- Say
-			self:Say(329298, msg, true)
+			self:Say(false, msg, true)
 		end
 	end
 	scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1)
