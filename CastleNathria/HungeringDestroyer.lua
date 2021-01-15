@@ -141,7 +141,7 @@ function mod:RepeatingSayMessage()
 			self:Say(false, msg, true)
 		end
 	end
-	scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1)
+	scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1.5)
 end
 
 do
@@ -153,7 +153,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.count_rticon:format(L.miasma, count, count))
 			if self:GetOption("custom_on_repeating_say") then
-				scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1)
+				scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1.5)
 			end
 			self:PlaySound(args.spellId, "alarm")
 		end
