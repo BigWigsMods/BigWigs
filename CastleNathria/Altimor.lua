@@ -98,7 +98,6 @@ function mod:OnBossEnable()
 	self:Death("BargastDeath", 169457)
 
 	--[[ Hecutis ]]--
-	self:Log("SPELL_AURA_APPLIED", "CrushingStone", 334860)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushingStone", 334860)
 	self:Log("SPELL_CAST_SUCCESS", "PetrifyingHowl", 334852)
 	self:Log("SPELL_AURA_APPLIED", "PetrifyingHowlApplied", 334852)
@@ -201,8 +200,7 @@ end
 function mod:JaggedClawsApplied(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	local unit = self:GetBossId(165067) -- Margore
-	if amount > 1 and (not unit or not self:Tanking(unit)) then -- Don't want to trust that it will always be a specific unit
+	if amount > 1 then
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -315,9 +313,8 @@ end
 --[[ Hecutis ]]--
 
 function mod:CrushingStone(args)
-	local amount = args.amount or 1
-	if amount % 3 == 1 then -- lets see how fast it stacks
-		self:StackMessage(args.spellId, args.destName, amount, "purple")
+	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+	if args.amount > 2 then
 		self:PlaySound(args.spellId, "info")
 	end
 end
