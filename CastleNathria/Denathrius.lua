@@ -35,6 +35,29 @@ local mobCollector = {}
 local balefulShadowCount = 1
 local mirrorCount = 0
 
+local timersEasy = {
+	[1] = {
+		-- Feeding Time
+		[327039] = {15, 25, 35, 25},
+		-- Cleansing Pain
+		[326707] = {8.7, 26.7, 32.8, 26.7, 34, 26.8}, -- From _success to _start, so timers are adjusted by -3s for the cast time
+	},
+	[2] = {
+		-- Crimson Cabalist // First ones are up from the start
+		[-22131] = {4, 85, 80},
+		-- Impale
+		[329951] = {23, 26.0, 27.0, 23.0, 32.0, 18.0, 39.0, 35.0},
+		 -- Hand of Destruction (P2)
+		[333932] = {42.1, 41.3, 40.1, 56.5, 19.5},
+	},
+	[3] = {
+		-- Fatal Finesse
+		[332794] = {17.5, 24, 25, 29, 22, 34, 22, 26, 32, 28},
+		-- Hand of Destruction (P3)
+		[333932] = {72.6, 76.5, 94.8},
+	}
+}
+
 local timersHeroic = { -- Heroic confirmed
 	[1] = {
 		-- Night Hunter
@@ -81,7 +104,7 @@ local timersMythic = {
 	}
 }
 
-local timers = mod:Mythic() and timersMythic or timersHeroic
+local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or timersEasy
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -245,7 +268,7 @@ function mod:VerifyEnable(unit)
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or timersEasy
 	stage = 1
 	self.stage = stage
 	intermission = nil
@@ -263,7 +286,11 @@ function mod:OnEngage()
 
 	self:Bar(326707, timers[stage][326707][cleansingPainCount], CL.count:format(self:SpellName(326707), cleansingPainCount)) -- Cleansing Pain
 	self:Bar(326851, 23, CL.count:format(self:SpellName(326851), bloodPriceCount)) -- Blood Price
-	self:Bar(327796, timers[stage][327796][nightHunterCount], CL.count:format(self:SpellName(327796), nightHunterCount)) -- Night Hunter
+	if self:Easy() then
+		self:Bar(327039, timers[stage][327039][nightHunterCount], CL.count:format(self:SpellName(327039), nightHunterCount)) -- Feeding Time
+	else
+		self:Bar(327796, timers[stage][327796][nightHunterCount], CL.count:format(self:SpellName(327796), nightHunterCount)) -- Night Hunter
+	end
 	self:Bar(327122, 53, CL.count:format(self:SpellName(327122), ravageCount)) -- Ravage
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -451,12 +478,21 @@ function mod:CleansingPainSuccess(args)
 	self:Bar(args.spellId, timers[stage][args.spellId][cleansingPainCount], CL.count:format(args.spellName, cleansingPainCount))
 end
 
-
-function mod:FeedingTimeApplied(args)
-	if self:Me(args.destGUID)then
-		self:PersonalMessage(args.spellId)
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 5)
+do
+	local prev = 0
+	function mod:FeedingTimeApplied(args)
+		if args.time-prev > 5 then
+			prev = args.time
+			self:Message(args.spellId, "orange", CL.count:format(args.spellName, nightHunterCount))
+			nightHunterCount = nightHunterCount + 1
+			self:Bar(args.spellId, timers[stage][args.spellId][nightHunterCount], CL.count:format(args.spellName, nightHunterCount))
+		end
+		if self:Me(args.destGUID)then
+			self:PersonalMessage(args.spellId)
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 5)
+			self:PlaySound(args.spellId, "warning")
+		end
 	end
 end
 
