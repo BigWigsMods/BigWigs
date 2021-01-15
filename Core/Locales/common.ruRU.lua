@@ -92,3 +92,4 @@ L.seconds = "%.1fс" -- 1.1 seconds
 L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.bomb = "Бомба" -- Used for debuffs that make players explode
 L.fixate = "Сосредоточение внимания" -- Used when a boss or add is chasing/fixated on a player
+--L.knockback = "Knockback" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
