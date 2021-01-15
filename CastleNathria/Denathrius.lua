@@ -542,7 +542,7 @@ do
 end
 
 function mod:CommandRavage(args) -- Pre-warning
-	self:Message(args.spellId, "orange", CL.soon:format(self:SpellName(327122)), 327122)
+	self:Message(args.spellId, "yellow", CL.soon:format(self:SpellName(327122)), 327122)
 	self:PlaySound(args.spellId, "alert")
 end
 
@@ -731,7 +731,7 @@ end
 
 function mod:ShatteringPain(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, shatteringPainCount))
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "warning")
 	shatteringPainCount = shatteringPainCount + 1
 	self:Bar(args.spellId, self:Mythic() and timers[3][args.spellId][shatteringPainCount] or 24, CL.count:format(args.spellName, shatteringPainCount))
 end
@@ -770,7 +770,7 @@ end
 
 function mod:ReflectionRavage(args)
 	self:Message(args.spellId, "orange", CL.count:format(self:SpellName(332937), ravageCount))
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "long")
 	self:CastBar("ravage_target", 3, L.ravage_targeted, args.spellId)
 	self:CastBar(args.spellId, 9) -- 6s cast + 3s before he starts it
 	ravageCount = ravageCount + 1
@@ -779,7 +779,7 @@ end
 
 function mod:ReflectionMassacre(args)
 	self:Message(args.spellId, "red", CL.count:format(self:SpellName(330068), massacreCount))
-	self:PlaySound(args.spellId, "alarm")
+	self:PlaySound(args.spellId, "long")
 	massacreCount = massacreCount + 1
 	self:Bar(332849, 40, CL.count:format(self:SpellName(332937), ravageCount)) -- Ravage // Alternates with Massacre
 end
@@ -821,7 +821,7 @@ function mod:VengefulWail(args)
 	if canDo then
 		self:Message(args.spellId, "yellow")
 		if ready then
-			self:PlaySound(args.spellId, "alert")
+			self:PlaySound(args.spellId, "alarm")
 		end
 	end
 	if self:GetOption(balefulShadowsMarker) and not mobCollector[args.sourceGUID] then
