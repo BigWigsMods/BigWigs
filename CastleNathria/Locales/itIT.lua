@@ -119,3 +119,17 @@ if L then
 	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
 	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
 end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "itIT")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "Moldovaak"
+	L.caramain = "Caramain"
+	L.sindrel = "Sindrel"
+	L.hargitas = "Hargitas"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "Divoratore di Terrore"
+	L.rat = "Ratto di Dimensioni Anormali"
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+end
