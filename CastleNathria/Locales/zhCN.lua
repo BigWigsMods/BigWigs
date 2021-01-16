@@ -31,8 +31,6 @@ if L then
 	L.level = "%s（等级 |cffffff00%d|r）"
 	L.full = "%s（|cffff0000满|r）"
 
-	L.container_active = "启用容器：%s"
-
 	L.anima_adds = "浓缩心能增援"
 	L.anima_adds_desc = "当浓缩心能负面效果刷新增援时显示一个计时器。"
 

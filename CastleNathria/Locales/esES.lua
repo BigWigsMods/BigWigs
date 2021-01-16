@@ -31,8 +31,6 @@ if L then
 	-- L.level = "%s (Level |cffffff00%d|r)"
 	-- L.full = "%s (|cffff0000FULL|r)"
 
-	-- L.container_active = "Enable Container: %s"
-
 	-- L.anima_adds = "Concentrate Anima Adds"
 	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
 

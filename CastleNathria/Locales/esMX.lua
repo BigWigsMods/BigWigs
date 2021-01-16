@@ -31,8 +31,6 @@ if L then
 	L.level = "%s (Nivel |cffffff00%d|r)"
 	L.full = "%s (|cffff0000LLENO|r)"
 
-	L.container_active = "Habilitar contenedor: %s"
-
 	L.anima_adds = "Esbirros de ánima concentrada"
 	L.anima_adds_desc = "Muestra un temporizador cuando los esbirros aparecen del debuff de Ánima Concentrada."
 

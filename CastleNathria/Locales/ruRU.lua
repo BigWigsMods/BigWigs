@@ -31,8 +31,6 @@ if L then
 	L.level = "%s (Уровень |cffffff00%d|r)"
 	L.full = "%s (|cffff0000ПОЛНЫЙ|r)"
 
-	L.container_active = "Активный контейнер: %s"
-
 	L.anima_adds = "Адды Концентрированной Анимы"
 	L.anima_adds_desc = "Показ таймера появления аддов от дебафа Концентрированной Анимы."
 
