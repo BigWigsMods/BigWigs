@@ -31,8 +31,6 @@ if L then
 	L.level = "%s (niveau |cffffff00%d|r)"
 	L.full = "%s (|cffff0000PLEIN|r)"
 
-	L.container_active = "Conteneur actif : %s"
-
 	L.anima_adds = "Adds de l'Anima concentré"
 	L.anima_adds_desc = "Affiche un délai indiquant quand les adds apparaissent des affaiblissements de Anima concentré."
 

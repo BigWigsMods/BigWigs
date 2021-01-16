@@ -31,8 +31,6 @@ if L then
 	 L.level = "%s (Level |cffffff00%d|r)"
 	 L.full = "%s (|cffff0000FULL|r)"
 
-	 L.container_active = "활성화된 용기: %s"
-
 	 L.anima_adds = "농축된 령 쫄"
 	 L.anima_adds_desc = "농축된 령 쫄이 언제 생성되는 타이머 표시."
 

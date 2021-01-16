@@ -31,8 +31,6 @@ if L then
 	L.level = "%s (等級|cffffff00%d|r)"
 	L.full = "%s (|cffff0000滿了|r)"
 
-	L.container_active = "啟用容器：%s"
-
 	L.anima_adds = "濃縮靈魄增援"
 	L.anima_adds_desc = "替濃縮靈魄減益效果召喚的增援生成顯示計時條。"
 
