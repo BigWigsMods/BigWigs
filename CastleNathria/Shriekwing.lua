@@ -17,6 +17,7 @@ local echoingScreechCount = 1
 local echolocationCount = 1
 local blindSwipeCount = 1
 local waveofBloodCount = 1
+local tankList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -89,6 +90,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 340324) -- Sanguine Ichor
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 340324)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 340324)
+
+	if IsEncounterInProgress() then
+		collectTanks(self)
+	end
 end
 
 function mod:OnEngage()
@@ -111,11 +116,22 @@ function mod:OnEngage()
 	else
 		self:Berserk(550)
 	end
+
+	collectTanks(self)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+local function collectTanks(self)
+	tankList = {}
+	for unit in self:IterateGroup() do
+		if self:Tank(unit) then
+			tankList[#tankList + 1] = self:UnitName(unit)
+		end
+	end
+end
 
 function mod:EarsplittingShriek(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, shriekCount))
@@ -179,10 +195,21 @@ function mod:BlindSwipe(args)
 	end
 end
 
-function mod:ExsanguinatingBite(args)
-	self:TargetMessage(args.spellId, "purple", self:UnitName("boss1target"), CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, 17)
+
+do
+	local function findActiveTank(self, unit)
+		for tank in tankList do
+			if self:Tanking(unit, tank) then
+				return tank
+			end
+		end
+	end
+
+	function mod:ExsanguinatingBite(args)
+		self:TargetMessage(args.spellId, "purple", findActiveTank(self, "boss1"), CL.casting:format(args.spellName))
+		self:PlaySound(args.spellId, "warning")
+		self:CDBar(args.spellId, 17)
+	end
 end
 
 function mod:ExsanguinatedApplied(args)
