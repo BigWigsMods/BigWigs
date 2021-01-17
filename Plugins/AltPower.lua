@@ -54,11 +54,11 @@ local UnitPower, IsInGroup = UnitPower, IsInGroup
 local db = nil
 local roleIcons = { -- 337497 = Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES
 	-- INLINE_TANK_ICON="|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:0:19:22:41|t"
-	["TANK"] = "|T337497:16:16:0:0:64:64:0:19:22:41|t",
+	["TANK"] = "|T337497:0:0:0:0:64:64:0:19:22:41|t",
 	-- INLINE_HEALER_ICON="|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:1:20|t"
-	["HEALER"] = "|T337497:16:16:0:0:64:64:20:39:1:20|t",
+	["HEALER"] = "|T337497:0:0:0:0:64:64:20:39:1:20|t",
 	-- INLINE_DAMAGER_ICON="|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:22:41|t"
-	["DAMAGER"] = "|T337497:16:16:0:0:64:64:20:39:22:41|t",
+	["DAMAGER"] = "|T337497:0:0:0:0:64:64:20:39:22:41|t",
 	["NONE"] = "",
 }
 
@@ -105,6 +105,7 @@ function plugin:RestyleWindow()
 	display.bg:SetColorTexture(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
 	display.title:SetFont(font, db.fontSize, flags)
 	display.title:SetTextColor(db.barTextColor[1], db.barTextColor[2], db.barTextColor[3], 1)
+	display.title:SetHeight(16+db.additionalHeight)
 	for i = 1, 26 do
 		display.text[i]:SetFont(font, db.fontSize, flags)
 		display.text[i]:SetSize(115+db.additionalWidth, 16+db.additionalHeight)
@@ -466,13 +467,11 @@ do
 		local bg = display:CreateTexture()
 		bg:SetPoint("BOTTOMLEFT", display, "BOTTOMLEFT")
 		bg:SetPoint("BOTTOMRIGHT", display, "BOTTOMRIGHT")
-		bg:SetPoint("TOPLEFT", display, "TOPLEFT", 0, 20) -- 16 size of close button + 2 close/expand padding + 2 so there's a small gap
 		display.bg = bg
 
 		local close = CreateFrame("Button", nil, display)
 		close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
-		close:SetHeight(16)
-		close:SetWidth(16)
+		close:SetSize(16, 16)
 		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\close")
 		close:SetScript("OnClick", function()
 			if inTestMode then
@@ -485,8 +484,7 @@ do
 
 		local expand = CreateFrame("Button", nil, display)
 		expand:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
-		expand:SetHeight(16)
-		expand:SetWidth(16)
+		expand:SetSize(16, 16)
 		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
 		expand:SetScript("OnClick", function()
 			if db.expanded then
@@ -501,11 +499,14 @@ do
 		header:SetShadowOffset(1, -1)
 		header:SetTextColor(1,0.82,0,1)
 		header:SetPoint("BOTTOM", display, "TOP", 0, 4)
+		header:SetHeight(16)
+		bg:SetPoint("TOP", header, "TOP", 0, 2)
 		display.title = header
 
 		local bar = display:CreateTexture(nil, nil, nil, 1) -- above background
 		bar:SetPoint("LEFT", expand, "RIGHT", 4, 0)
-		bar:SetSize(0,16)
+		bar:SetPoint("BOTTOM", header, "BOTTOM")
+		bar:SetPoint("TOP", header, "TOP")
 		display.bar = bar
 
 		display.text = {}
