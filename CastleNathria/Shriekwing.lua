@@ -61,6 +61,15 @@ function mod:GetOptions()
 	}
 end
 
+local function collectTanks(self)
+	tankList = {}
+	for unit in self:IterateGroup() do
+		if self:Tank(unit) then
+			tankList[#tankList + 1] = self:UnitName(unit)
+		end
+	end
+end
+
 function mod:OnBossEnable()
 	-- Stage One - Thirst for Blood
 	self:Log("SPELL_CAST_START", "EarsplittingShriek", 330711)
@@ -123,15 +132,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-local function collectTanks(self)
-	tankList = {}
-	for unit in self:IterateGroup() do
-		if self:Tank(unit) then
-			tankList[#tankList + 1] = self:UnitName(unit)
-		end
-	end
-end
 
 function mod:EarsplittingShriek(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, shriekCount))
