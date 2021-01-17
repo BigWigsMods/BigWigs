@@ -169,7 +169,7 @@ function mod:GetOptions()
 		335873, -- Rancor
 		329181, -- Wracking Pain
 		333932, -- Hand of Destruction
-		330042, -- Massacre
+		330042, -- Command: Massacre
 		-- Stage Three: Indignation
 		{332585, "TANK"}, -- Scorn
 		{332619, "EMPHASIZE"}, -- Shattering Pain
@@ -233,7 +233,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WrackingPainApplied", 329181)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WrackingPainApplied", 329181)
 	self:Log("SPELL_CAST_START", "HandofDestruction", 333932)
-	self:Log("SPELL_CAST_SUCCESS", "Massacre", 330042)
+	self:Log("SPELL_CAST_SUCCESS", "CommandMassacre", 330042)
 
 	self:Death("AddDeaths", 169196, 169470, 173161, 173162, 173163, 173164) -- Crimson Cabalist x2, Lady Sinsear, Lord Evershade, Baron Duskhollow, Countess Gloomveil
 
@@ -590,7 +590,7 @@ function mod:BegintheChorus(args)
 	self:Bar(329951, timers[stage][329951][impaleCount], CL.count:format(self:SpellName(329951), impaleCount)) -- Impale
 	self:Bar(329181, 15.7, CL.count:format(self:SpellName(329181), wrackingPainCount)) -- Wracking Pain
 	self:Bar(333932, timers[stage][333932][handCount], CL.count:format(self:SpellName(333932), handCount)) -- Hand of Destruction
-	self:Bar(330042, self:Mythic() and 55 or 62, CL.count:format(self:SpellName(330068), massacreCount)) -- Massacre
+	self:Bar(330042, self:Mythic() and 55 or 62, CL.count:format(self:SpellName(330068), massacreCount), 333980) -- Massacre
 	self:Bar("stages", 214, CL.stage:format(3), 338738) -- Stage 3
 
 	balefulShadowsList = {}
@@ -674,12 +674,12 @@ function mod:HandofDestruction(args)
 	self:Bar(args.spellId, timers[stage][args.spellId][handCount], CL.count:format(args.spellName, handCount))
 end
 
-function mod:Massacre(args)
-	self:Message(args.spellId, "red", CL.count:format(self:SpellName(330068), massacreCount))
+function mod:CommandMassacre(args)
+	self:Message(args.spellId, "red", CL.count:format(self:SpellName(330068), massacreCount), 333980)
 	self:PlaySound(args.spellId, "alarm")
 	massacreCount = massacreCount + 1
 	if not self:Mythic() or massacreCount < 5 then -- Only 4 in stage 2 for Mythic
-		self:Bar(args.spellId, self:Mythic() and 44 or 50, CL.count:format(self:SpellName(330068), massacreCount))
+		self:Bar(args.spellId, self:Mythic() and 44 or 50, CL.count:format(self:SpellName(330068), massacreCount), 333980)
 	end
 end
 
