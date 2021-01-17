@@ -78,6 +78,7 @@ L.marker_npc_desc = "Отмечать %s меткой %s, требуется б�
 -- Ability where two players have to move close to each other
 L.link = "Связь"
 L.link_with = "Связан с %s"
+L.link_with_icon = "Связан с |T13700%d:0|t%s"
 L.link_short = "Связь: %s"
 L.link_both = "%s связан с %s"
 L.link_removed = "Связь прервана"

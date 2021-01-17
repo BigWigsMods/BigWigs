@@ -69,6 +69,7 @@ L.small_adds = "Adds Minori" -- plural
 -- Ability where two players have to move close to each other
 L.link = "Vincolo"
 --L.link_with = "Linked with %s"
+--L.link_with_icon = "Linked with |T13700%d:0|t%s"
 --L.link_short = "Linked: %s"
 --L.link_both = "%s linked with %s"
 --L.link_removed = "Link removed"

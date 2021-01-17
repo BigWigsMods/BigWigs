@@ -69,6 +69,7 @@ L.marker_npc_desc = "標記%s為%s，需要權限。"
 -- Ability where two players have to move close to each other
 L.link = "連結"
 L.link_with = "與%s連結"
+L.link_with_icon = "與|T13700%d:0|t%s連結"
 L.link_short = "連結：%s"
 L.link_both = "%s和%s連結"
 L.link_removed = "連結移除"

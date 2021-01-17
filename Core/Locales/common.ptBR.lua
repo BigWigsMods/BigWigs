@@ -76,6 +76,7 @@ L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente."
 -- Ability where two players have to move close to each other
 L.link = "Ligação"
 L.link_with = "Ligado com %s"
+L.link_with_icon = "Ligado com |T13700%d:0|t%s"
 L.link_short = "Ligado: %s"
 L.link_both = "%s ligado com %s"
 L.link_removed = "Ligação removida"

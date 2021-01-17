@@ -70,6 +70,7 @@ L.marker_npc_desc = "Marque %s avec %s. Nécessite d'être assistant ou chef de 
 -- Ability where two players have to move close to each other
 L.link = "Lien"
 L.link_with = (female and "Liée" or "Lié") .." avec %s"
+L.link_with_icon = (female and "Liée" or "Lié") .." avec |T13700%d:0|t%s"
 L.link_short = (female and "Liée" or "Lié") .." : %s"
 L.link_both = "%s est ".. (female and "liée" or "lié") .." avec %s"
 L.link_removed = "Lien enlevé"
