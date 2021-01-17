@@ -243,8 +243,8 @@ function mod:ChainSlamApplied(args)
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chainSlamCount))
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 4)
+		self:Yell(args.spellId)
+		self:YellCountdown(args.spellId, 4)
 		self:PlaySound(args.spellId, "warning")
 	end
 	chainSlamCount = chainSlamCount + 1
@@ -254,7 +254,7 @@ end
 function mod:ChainSlamRemoved(args)
 	self:PrimaryIcon(args.spellId)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelYellCountdown(args.spellId)
 	end
 end
 
