@@ -21,6 +21,7 @@ local overwhelmCount = 1
 local miasmaMarkClear = {}
 local scheduledSayMsg = nil
 local laserOnMe = false
+local miasmaOnMe = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,8 +31,11 @@ local L = mod:GetLocale()
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
-	L.custom_on_repeating_say = "Repeating Health Percent Yell Messages"
-	L.custom_on_repeating_say_desc = "Repeating yell messages for Gluttonous Miasma (Health %) to let others know you require healing when you are below 70% health."
+	L.custom_on_repeating_yell_miasma = "Repeating Health Percent Yell Messages"
+	L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma (Health %) to let others know you require healing when you are below 70% health."
+
+	L.custom_on_repeating_say_laser = "Repeating Say Messages for Volatile Ejection (Laser)"
+	L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection (Laser) incase you moved into chat range for other players."
 
 	L.currentHealth = "%d%%"
 	L.currentHealthIcon = "{rt%d} %d%% {rt%d}"
@@ -47,11 +51,12 @@ function mod:GetOptions()
 	return {
 		"berserk",
 		{329298, "SAY"}, -- Gluttonous Miasma
-		"custom_on_repeating_say",
+		"custom_on_repeating_yell_miasma",
 		gluttonousMiasmaMarker,
 		{334522, "EMPHASIZE"}, -- Consume
 		329725, -- Expunge
 		{334266, "SAY", "FLASH", "ME_ONLY_EMPHASIZE"}, -- Volatile Ejection
+		"custom_on_repeating_say_laser",
 		volatileEjectionMarker,
 		329455, -- Desolate
 		{329774, "TANK"}, -- Overwhelm
@@ -86,6 +91,7 @@ function mod:OnEngage()
 	desolateCount = 1
 	overwhelmCount = 1
 	laserOnMe = false
+	miasmaOnMe = false
 
 	self:Bar(329298, 3, CL.count:format(L.miasma, miasmaCount)) -- Gluttonous Miasma
 	if self:Easy() then
@@ -128,19 +134,21 @@ end
 -- Event Handlers
 --
 
-function mod:RepeatingSayMessage()
+function mod:RepeatingChatMessages()
 	scheduledSayMsg = nil
-	if laserOnMe then
+	if laserOnMe and self:GetOption("custom_on_repeating_say_laser") then
 		self:Say(334266, CL.laser) -- using Laser key here because you dont want to repeat unless it's enabled
-	else -- Repeat Health instead
+	elseif miasmaOnMe and self:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
 		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
-		if currentHealthPercent < 70 then -- Only let players know when you are below 70%
+		if currentHealthPercent < 75 then -- Only let players know when you are below 75%
 			local myIcon = GetRaidTargetIndex("player")
 			local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent, myIcon) or L.currentHealth:format(currentHealthPercent)
 			self:Yell(false, msg, true)
 		end
+	else
+		return -- Nothing had to be repeated, stop repeating
 	end
-	scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1.5)
+	scheduledSayMsg = self:ScheduleTimer("RepeatingChatMessages", 1.5)
 end
 
 do
@@ -150,11 +158,12 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
+			miasmaOnMe = true
 			self:Say(args.spellId, CL.count_rticon:format(L.miasma, count, count))
-			if self:GetOption("custom_on_repeating_say") then
-				scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1.5)
-			end
 			self:PlaySound(args.spellId, "alarm")
+			if not scheduledSayMsg and self:GetOption("custom_on_repeating_yell_miasma") then
+				scheduledSayMsg = self:ScheduleTimer("RepeatingChatMessages", 1.5)
+			end
 		end
 		self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
 		if count == 1 then
@@ -168,8 +177,7 @@ do
 
 	function mod:GluttonousMiasmaRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelTimer(scheduledSayMsg)
-			scheduledSayMsg = nil
+			miasmaOnMe = false
 		end
 	end
 end
@@ -254,6 +262,9 @@ do
 			self:Flash(334266)
 			self:Say(334266, CL.laser)
 			laserOnMe = true
+			if not scheduledSayMsg and self:GetOption("custom_on_repeating_say_laser") then
+				scheduledSayMsg = self:ScheduleTimer("RepeatingChatMessages", 1.5)
+			end
 			self:Sync("VolatileEjectionTarget")
 		end
 	end
