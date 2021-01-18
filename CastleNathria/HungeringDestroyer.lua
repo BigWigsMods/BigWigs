@@ -30,7 +30,7 @@ local L = mod:GetLocale()
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
-	L.custom_on_repeating_say = "Repeating Say Messages"
+	L.custom_on_repeating_say = "Repeating Health Percent Yell Messages"
 	L.custom_on_repeating_say_desc = "Repeating yell messages for Gluttonous Miasma (Health %) to let others know you require healing."
 
 	L.currentHealth = "%d%%"
