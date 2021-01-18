@@ -137,7 +137,7 @@ end
 function mod:RepeatingChatMessages()
 	scheduledSayMsg = nil
 	if laserOnMe and self:GetOption("custom_on_repeating_say_laser") then
-		self:Say(334266, CL.laser) -- using Laser key here because you dont want to repeat unless it's enabled
+		self:Say(false, CL.laser) -- using Laser key here because you dont want to repeat unless it's enabled
 	elseif miasmaOnMe and self:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
 		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
 		if currentHealthPercent < 75 then -- Only let players know when you are below 75%
