@@ -31,7 +31,7 @@ if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
 	L.custom_on_repeating_say = "Repeating Health Percent Yell Messages"
-	L.custom_on_repeating_say_desc = "Repeating yell messages for Gluttonous Miasma (Health %) to let others know you require healing."
+	L.custom_on_repeating_say_desc = "Repeating yell messages for Gluttonous Miasma (Health %) to let others know you require healing when you are below 70% health."
 
 	L.currentHealth = "%d%%"
 	L.currentHealthIcon = "{rt%d} %d%% {rt%d}"
