@@ -9,9 +9,11 @@ only = {
 	"1", -- globals
 }
 files["**/Loader.lua"].ignore = {
+	"113/C_ChatInfo",
+	"113/SendChatMessage",
+	"113/SetRaidTarget",
 	"113/UnitGUID",
 	"113/UnitName",
-	"113/SetRaidTarget",
 }
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/TranscriptIgnore",
@@ -118,7 +120,6 @@ globals = {
 	"BNIsSelf",
 	"BNSendWhisper",
 	"BossBanner",
-	"C_ChatInfo",
 	"C_EncounterJournal",
 	"C_FriendList",
 	"C_GossipInfo",
@@ -208,7 +209,6 @@ globals = {
 	"RaidWarningFrame",
 	"RolePollPopup",
 	"SecondsToTime",
-	"SendChatMessage",
 	"SlashCmdList",
 	"StopSound",
 	"Tukui",
