@@ -11,30 +11,30 @@ L.positionDesc = "Введите в поле или передвиньте як�
 L.width = "Ширина"
 L.height = "Высота"
 L.sizeDesc = "Обычно размеры меняются перемещением якоря. Если Вам необходим точный размер, можете использовать слайдер или ввести значение в поле, максимума нет."
---L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
+L.fontSizeDesc = "Отрегулируйте размер шрифта с помощью ползунка или введите значение вручную в поле, если оно выше 200."
 
 -----------------------------------------------------------------------
 -- AltPower.lua
 --
 
 L.altPowerTitle = "Энергия"
---L.altPowerDesc = "The AltPower display will only appear for bosses that apply AltPower to players, which is extremely rare. The display measures the amount of 'Alternative Power' you and your group has, displaying it in a list. To move the display around, please use the test button below."
+L.altPowerDesc = "Монитор Энергии будет отображаться только для боссов, которые используют 'Дополнительную Энергию' к игрокам, что бывает крайне редко. Монитор измеряет количество 'Дополнительной Энергии', имеющейся у вас и вашей группы, и отображает его в виде списка. Чтобы перемещать монитор, используйте кнопку тестирования ниже."
 L.toggleDisplayPrint = "Монитор будет показан в следующий раз. Чтобы отключить его полностью, уберите галочку в настройках битв."
 L.disabled = "Отключить"
 L.disabledDisplayDesc = "Отключить монитор для всех модулей."
 L.resetAltPowerDesc = "Сбросить все параметры, связанные с Энергией, включая позицию якоря."
---L.test = "Test"
---L.altPowerTestDesc = "Show the 'Alternative Power' display, allowing you to move it, and simulating the power changes you would see on a boss encounter."
---L.yourPowerBar = "Your Power Bar"
---L.barColor = "Bar color"
---L.barTextColor = "Bar text color"
---L.additionalWidth = "Additional Width"
---L.additionalHeight = "Additional Height"
---L.additionalSizeDesc = "Add to the size of the standard display by adjusting this slider, or type the value into the box which has a much higher maximum of 100."
---L.yourPowerTest = "Your Power: %d" -- Your Power: 42
---L.yourAltPower = "Your %s: %d" -- e.g. Your Corruption: 42
---L.player = "Player %d" -- Player 7
---L.disableAltPowerDesc = "Globally disable the AltPower display, it will never show for any boss encounter."
+L.test = "Тест"
+L.altPowerTestDesc = "Показать монитор 'Дополнительной Энергии', позволяя перемещать его, и симулировать изменение энергии как на сражении с боссом."
+L.yourPowerBar = "Ваша полоса Энергии"
+L.barColor = "Цвет полосы"
+L.barTextColor = "Цвет текста полосы"
+L.additionalWidth = "Дополнительная ширина"
+L.additionalHeight = "Дополнительная высота"
+L.additionalSizeDesc = "Увеличьте размер стандартного монитора с помощью ползунка или введите значение вручную в поле, если оно выше 100."
+L.yourPowerTest = "Ваша энергия: %d" -- Your Power: 42
+L.yourAltPower = "%s: %d" -- e.g. Your Corruption: 42
+L.player = "Игрок %d" -- Player 7
+L.disableAltPowerDesc = "Отключить глобально монитор Энергии, он не будет показываться ни для какого сражения."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
