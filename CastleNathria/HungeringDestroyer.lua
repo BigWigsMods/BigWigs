@@ -134,7 +134,7 @@ end
 -- Event Handlers
 --
 
-function mod:RepeatingChatMessages()
+local function RepeatingChatMessages(self)
 	if laserOnMe and self:GetOption("custom_on_repeating_say_laser") then
 		self:Say(false, CL.laser)
 	elseif miasmaOnMe and self:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
@@ -148,7 +148,7 @@ function mod:RepeatingChatMessages()
 		scheduledChatMsg = nil
 		return -- Nothing had to be repeated, stop repeating
 	end
-	scheduledChatMsg = self:ScheduleTimer("RepeatingChatMessages", 1.5)
+	scheduledChatMsg = self:ScheduleTimer(RepeatingChatMessages, 1.5, self)
 end
 
 do
@@ -162,7 +162,7 @@ do
 			self:Say(args.spellId, CL.count_rticon:format(L.miasma, count, count))
 			self:PlaySound(args.spellId, "alarm")
 			if not scheduledChatMsg and self:GetOption("custom_on_repeating_yell_miasma") then
-				scheduledChatMsg = self:ScheduleTimer("RepeatingChatMessages", 1.5)
+				scheduledChatMsg = self:ScheduleTimer(RepeatingChatMessages, 1.5, self)
 			end
 		end
 		self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
@@ -263,7 +263,7 @@ do
 			self:Say(334266, CL.laser)
 			laserOnMe = true
 			if not scheduledChatMsg and self:GetOption("custom_on_repeating_say_laser") then
-				scheduledChatMsg = self:ScheduleTimer("RepeatingChatMessages", 1.5)
+				scheduledChatMsg = self:ScheduleTimer(RepeatingChatMessages, 1.5, self)
 			end
 			self:Sync("VolatileEjectionTarget")
 		end
