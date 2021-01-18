@@ -19,7 +19,7 @@ local expungeCount = 1
 local desolateCount = 1
 local overwhelmCount = 1
 local miasmaMarkClear = {}
-local scheduledChatMsg = nil
+local scheduledChatMsg = false
 local laserOnMe = false
 local miasmaOnMe = false
 
@@ -90,6 +90,7 @@ function mod:OnEngage()
 	expungeCount = 1
 	desolateCount = 1
 	overwhelmCount = 1
+	scheduledChatMsg = false
 	laserOnMe = false
 	miasmaOnMe = false
 
@@ -134,21 +135,21 @@ end
 -- Event Handlers
 --
 
-local function RepeatingChatMessages(self)
-	if laserOnMe and self:GetOption("custom_on_repeating_say_laser") then
-		self:Say(false, CL.laser)
-	elseif miasmaOnMe and self:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
+local function RepeatingChatMessages()
+	if laserOnMe and mod:GetOption("custom_on_repeating_say_laser") then
+		mod:Say(false, CL.laser)
+	elseif miasmaOnMe and mod:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
 		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
 		if currentHealthPercent < 75 then -- Only let players know when you are below 75%
 			local myIcon = GetRaidTargetIndex("player")
 			local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent) or L.currentHealth:format(currentHealthPercent)
-			self:Yell(false, msg, true)
+			mod:Yell(false, msg, true)
 		end
 	else
-		scheduledChatMsg = nil
+		scheduledChatMsg = false
 		return -- Nothing had to be repeated, stop repeating
 	end
-	scheduledChatMsg = self:ScheduleTimer(RepeatingChatMessages, 1.5, self)
+	mod:SimpleTimer(RepeatingChatMessages, 1.5)
 end
 
 do
@@ -159,10 +160,11 @@ do
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
 			miasmaOnMe = true
-			self:Say(args.spellId, CL.count_rticon:format(L.miasma, count, count))
+			self:Yell(args.spellId, CL.count_rticon:format(L.miasma, count, count))
 			self:PlaySound(args.spellId, "alarm")
 			if not scheduledChatMsg and self:GetOption("custom_on_repeating_yell_miasma") then
-				scheduledChatMsg = self:ScheduleTimer(RepeatingChatMessages, 1.5, self)
+				scheduledChatMsg = true
+				self:SimpleTimer(RepeatingChatMessages, 1.5)
 			end
 		end
 		self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
@@ -263,7 +265,8 @@ do
 			self:Say(334266, CL.laser)
 			laserOnMe = true
 			if not scheduledChatMsg and self:GetOption("custom_on_repeating_say_laser") then
-				scheduledChatMsg = self:ScheduleTimer(RepeatingChatMessages, 1.5, self)
+				scheduledChatMsg = true
+				self:SimpleTimer(RepeatingChatMessages, 1.5)
 			end
 			self:Sync("VolatileEjectionTarget")
 		end
