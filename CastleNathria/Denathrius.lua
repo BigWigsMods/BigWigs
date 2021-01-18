@@ -512,11 +512,11 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID)then
-			--self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
-			--self:SayCountdown(args.spellId, 6, count)
-			self:Say(args.spellId, "{rt"..count.."}".."{rt"..count.."}".."{rt"..count.."}", true)
+			--self:YellCountdown(args.spellId, 6, count)
+			self:Yell(args.spellId, CL.count_rticon:format(args.spellName, count, count))
 			if self:GetOption("custom_on_repeating_nighthunter") then
-				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..count.."}".."{rt"..count.."}".."{rt"..count.."}", "YELL")
+				local icon = ("{rt%d}{rt%d}{rt%d}"):format(count, count, count)
+				sayTimer = self:ScheduleRepeatingTimer("Yell", 1.5, false, icon, true)
 			end
 		end
 		self:TargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 3 or 2, CL.count:format(args.spellName, nightHunterCount), nil, nil, playerIcons)
