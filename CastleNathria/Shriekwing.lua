@@ -198,7 +198,8 @@ end
 
 do
 	local function findActiveTank(self, unit)
-		for tank in tankList do
+		for i = 1, #tankList do
+			local tank = tankList[i]
 			if self:Tanking(unit, tank) then
 				return tank
 			end
