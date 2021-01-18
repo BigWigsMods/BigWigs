@@ -19,6 +19,9 @@ local expungeCount = 1
 local desolateCount = 1
 local overwhelmCount = 1
 local miasmaMarkClear = {}
+local scheduledChatMsg = false
+local laserOnMe = false
+local miasmaOnMe = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -27,6 +30,15 @@ local miasmaMarkClear = {}
 local L = mod:GetLocale()
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+
+	L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
+	L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+
+	L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
+	L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
+
+	L.currentHealth = "%d%%"
+	L.currentHealthIcon = "{rt%d}%d%%"
 end
 
 --------------------------------------------------------------------------------
@@ -39,10 +51,12 @@ function mod:GetOptions()
 	return {
 		"berserk",
 		{329298, "SAY"}, -- Gluttonous Miasma
+		"custom_on_repeating_yell_miasma",
 		gluttonousMiasmaMarker,
 		{334522, "EMPHASIZE"}, -- Consume
 		329725, -- Expunge
 		{334266, "SAY", "FLASH", "ME_ONLY_EMPHASIZE"}, -- Volatile Ejection
+		"custom_on_repeating_say_laser",
 		volatileEjectionMarker,
 		329455, -- Desolate
 		{329774, "TANK"}, -- Overwhelm
@@ -55,6 +69,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GluttonousMiasmaApplied", 329298)
+	self:Log("SPELL_AURA_REMOVED", "GluttonousMiasmaRemoved", 329298)
 	self:Log("SPELL_CAST_START", "Consume", 334522)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumeSuccess", 334522)
 	-- self:Log("SPELL_AURA_APPLIED", "ExpungeApplied", 329725)
@@ -75,6 +90,9 @@ function mod:OnEngage()
 	expungeCount = 1
 	desolateCount = 1
 	overwhelmCount = 1
+	scheduledChatMsg = false
+	laserOnMe = false
+	miasmaOnMe = false
 
 	self:Bar(329298, 3, CL.count:format(L.miasma, miasmaCount)) -- Gluttonous Miasma
 	if self:Easy() then
@@ -117,6 +135,23 @@ end
 -- Event Handlers
 --
 
+local function RepeatingChatMessages()
+	if laserOnMe and mod:GetOption("custom_on_repeating_say_laser") then
+		mod:Say(false, CL.laser)
+	elseif miasmaOnMe and mod:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
+		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
+		if currentHealthPercent < 75 then -- Only let players know when you are below 75%
+			local myIcon = GetRaidTargetIndex("player")
+			local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent) or L.currentHealth:format(currentHealthPercent)
+			mod:Yell(false, msg, true)
+		end
+	else
+		scheduledChatMsg = false
+		return -- Nothing had to be repeated, stop repeating
+	end
+	mod:SimpleTimer(RepeatingChatMessages, 1.5)
+end
+
 do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 	function mod:GluttonousMiasmaApplied(args)
@@ -124,19 +159,28 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(L.miasma, count, count))
-			-- XXX Add some kind of health % say / yell messages when you are low,
-			-- XXX this initial application doesn't change too much and clutters instead of the Laser says.
+			miasmaOnMe = true
+			self:Yell(args.spellId, CL.count_rticon:format(L.miasma, count, count))
 			self:PlaySound(args.spellId, "alarm")
+			if not scheduledChatMsg and self:GetOption("custom_on_repeating_yell_miasma") then
+				scheduledChatMsg = true
+				self:SimpleTimer(RepeatingChatMessages, 1.5)
+			end
 		end
 		self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
 		if count == 1 then
 			miasmaMarkClear = {}
 			miasmaCount = miasmaCount + 1
-		 self:Bar(args.spellId, 24, CL.count:format(L.miasma, miasmaCount))
+		 	self:Bar(args.spellId, 24, CL.count:format(L.miasma, miasmaCount))
 		end
 		miasmaMarkClear[count] = args.destName -- For clearing marks OnBossDisable
 		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.miasma, miasmaCount-1), nil, nil, playerIcons)
+	end
+
+	function mod:GluttonousMiasmaRemoved(args)
+		if self:Me(args.destGUID) then
+			miasmaOnMe = false
+		end
 	end
 end
 
@@ -219,6 +263,11 @@ do
 			self:PlaySound(334266, "warning")
 			self:Flash(334266)
 			self:Say(334266, CL.laser)
+			laserOnMe = true
+			if not scheduledChatMsg and self:GetOption("custom_on_repeating_say_laser") then
+				scheduledChatMsg = true
+				self:SimpleTimer(RepeatingChatMessages, 1.5)
+			end
 			self:Sync("VolatileEjectionTarget")
 		end
 	end
@@ -229,7 +278,7 @@ do
 		end
 	end
 
-	function mod:VolatileEjection(args)
+	function mod:VolatileEjection()
 		volatileCount = volatileCount + 1
 		if self:Easy() then
 			self:Bar(334266, volatileCount % 3 == 1 and 25.3 or 37.9, CL.count:format(CL.laser, volatileCount))
@@ -238,13 +287,14 @@ do
 		end
 	end
 
-	function mod:VolatileEjectionSuccess(args)
+	function mod:VolatileEjectionSuccess()
 		if self:GetOption(volatileEjectionMarker) then
 			for _, name in pairs(playerList) do
 				self:CustomIcon(volatileEjectionMarker, name)
 			end
 		end
 		playerList = {}
+		laserOnMe = false
 	end
 end
 
