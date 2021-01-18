@@ -31,7 +31,7 @@ if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
 	L.custom_on_repeating_say = "Repeating Say Messages"
-	L.custom_on_repeating_say_desc = "Repeating say and yell messages for Gluttonous Miasma (Health %) to communicate better what is happening."
+	L.custom_on_repeating_say_desc = "Repeating yell messages for Gluttonous Miasma (Health %) to let others know you require healing."
 
 	L.currentHealth = "%d%%"
 	L.currentHealthIcon = "{rt%d} %d%% {rt%d}"
@@ -134,12 +134,10 @@ function mod:RepeatingSayMessage()
 		self:Say(334266, CL.laser) -- using Laser key here because you dont want to repeat unless it's enabled
 	else -- Repeat Health instead
 		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
-		local myIcon = GetRaidTargetIndex("player")
-		local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent, myIcon) or L.currentHealth:format(currentHealthPercent)
-		if currentHealthPercent < 35 then -- Yell
+		if currentHealthPercent < 70 then -- Only let players know when you are below 70%
+			local myIcon = GetRaidTargetIndex("player")
+			local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent, myIcon) or L.currentHealth:format(currentHealthPercent)
 			self:Yell(false, msg, true)
-		elseif currentHealthPercent < 80 then -- Say
-			self:Say(false, msg, true)
 		end
 	end
 	scheduledSayMsg = self:ScheduleTimer("RepeatingSayMessage", 1.5)
