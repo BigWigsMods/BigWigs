@@ -33,7 +33,8 @@ if L then
 	L.custom_on_repeating_say = "Repeating Say Messages"
 	L.custom_on_repeating_say_desc = "Repeating say and yell messages for Gluttonous Miasma (Health %) to communicate better what is happening."
 
-	L.currentHealthIcon = "{rt%d} %d {rt%d}"
+	L.currentHealth = "%d%%"
+	L.currentHealthIcon = "{rt%d} %d%% {rt%d}"
 end
 
 --------------------------------------------------------------------------------
@@ -134,7 +135,7 @@ function mod:RepeatingSayMessage()
 	else -- Repeat Health instead
 		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
 		local myIcon = GetRaidTargetIndex("player")
-		local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent, myIcon) or tostring(currentHealthPercent)
+		local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent, myIcon) or L.currentHealth:format(currentHealthPercent)
 		if currentHealthPercent < 35 then -- Yell
 			self:Yell(false, msg, true)
 		elseif currentHealthPercent < 80 then -- Say
