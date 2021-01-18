@@ -615,18 +615,16 @@ do
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID)then
-			local msg = ""
-			for i=1, count do
-				msg = msg..count
-			end
-			--self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
 			--self:SayCountdown(args.spellId, 6, count) -- Disabled to keep showing what number charge you are, the countdown makes it confusing
-			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, msg, true)
+			self:Say(args.spellId, CL.count:format(args.spellName, count))
 			if self:GetOption("custom_on_repeating_impale") then
-
-				sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, msg, "SAY")
+				local msg = ""
+				for i=1, count do
+					msg = msg..count -- "333", "22", "1"
+				end
+				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, msg, true)
 			end
+			self:PlaySound(args.spellId, "warning")
 		end
 		self:TargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, impaleCount), nil, 2, playerIcons) -- debuffs are late
 		if count == 1 then
