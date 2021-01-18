@@ -31,14 +31,14 @@ local L = mod:GetLocale()
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
-	L.custom_on_repeating_yell_miasma = "Repeating Health Percent Yell Messages"
-	L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma (Health %) to let others know you require healing when you are below 70% health."
+	L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
+	L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
 
-	L.custom_on_repeating_say_laser = "Repeating Say Messages for Volatile Ejection (Laser)"
-	L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection (Laser) incase you moved into chat range for other players."
+	L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
+	L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
 
 	L.currentHealth = "%d%%"
-	L.currentHealthIcon = "{rt%d} %d%% {rt%d}"
+	L.currentHealthIcon = "{rt%d}%d%%"
 end
 
 --------------------------------------------------------------------------------
@@ -135,17 +135,17 @@ end
 --
 
 function mod:RepeatingChatMessages()
-	scheduledChatMsg = nil
 	if laserOnMe and self:GetOption("custom_on_repeating_say_laser") then
 		self:Say(false, CL.laser)
 	elseif miasmaOnMe and self:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
 		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
 		if currentHealthPercent < 75 then -- Only let players know when you are below 75%
 			local myIcon = GetRaidTargetIndex("player")
-			local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent, myIcon) or L.currentHealth:format(currentHealthPercent)
+			local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent) or L.currentHealth:format(currentHealthPercent)
 			self:Yell(false, msg, true)
 		end
 	else
+		scheduledChatMsg = nil
 		return -- Nothing had to be repeated, stop repeating
 	end
 	scheduledChatMsg = self:ScheduleTimer("RepeatingChatMessages", 1.5)
