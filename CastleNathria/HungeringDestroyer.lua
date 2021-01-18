@@ -155,26 +155,28 @@ end
 do
 	local playerList, playerIcons = mod:NewTargetList(), {}
 	function mod:GluttonousMiasmaApplied(args)
-		local count = #playerList+1
-		playerList[count] = args.destName
-		playerIcons[count] = count
-		if self:Me(args.destGUID) then
-			miasmaOnMe = true
-			self:Yell(args.spellId, CL.count_rticon:format(L.miasma, count, count))
-			self:PlaySound(args.spellId, "alarm")
-			if not scheduledChatMsg and self:GetOption("custom_on_repeating_yell_miasma") then
-				scheduledChatMsg = true
-				self:SimpleTimer(RepeatingChatMessages, 1.5)
+		if self:MobId(args.sourceGUID) == 164261 then -- Boss only, filter trash
+			local count = #playerList+1
+			playerList[count] = args.destName
+			playerIcons[count] = count
+			if self:Me(args.destGUID) then
+				miasmaOnMe = true
+				self:Yell(args.spellId, CL.count_rticon:format(L.miasma, count, count))
+				self:PlaySound(args.spellId, "alarm")
+				if not scheduledChatMsg and self:GetOption("custom_on_repeating_yell_miasma") then
+					scheduledChatMsg = true
+					self:SimpleTimer(RepeatingChatMessages, 1.5)
+				end
 			end
+			self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
+			if count == 1 then
+				miasmaMarkClear = {}
+				miasmaCount = miasmaCount + 1
+				self:Bar(args.spellId, 24, CL.count:format(L.miasma, miasmaCount))
+			end
+			miasmaMarkClear[count] = args.destName -- For clearing marks OnBossDisable
+			self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.miasma, miasmaCount-1), nil, nil, playerIcons)
 		end
-		self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
-		if count == 1 then
-			miasmaMarkClear = {}
-			miasmaCount = miasmaCount + 1
-		 	self:Bar(args.spellId, 24, CL.count:format(L.miasma, miasmaCount))
-		end
-		miasmaMarkClear[count] = args.destName -- For clearing marks OnBossDisable
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.miasma, miasmaCount-1), nil, nil, playerIcons)
 	end
 
 	function mod:GluttonousMiasmaRemoved(args)
