@@ -30,7 +30,7 @@ local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAff
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
-local UnitName, UnitGUID = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID
+local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax
 local UnitDetailedThreatSituation = UnitDetailedThreatSituation
 local format, find, gsub, band, tremove, wipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
@@ -1162,7 +1162,7 @@ end
 do
 	--- Get the full name of a unit.
 	-- @string unit unit token or name
-	-- @return unit name with the server appended if appropriate
+	-- @return name name with the server appended if appropriate
 	function boss:UnitName(unit)
 		local name, server = UnitName(unit)
 		if not name then
@@ -1181,6 +1181,14 @@ do
 			return guid
 		end
 	end
+end
+
+--- Get the health percentage of a unit.
+-- @string unit unit token or name
+-- @return hp health of the unit as a percentage between 0 and 100
+function boss:GetHealth(unit)
+	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+	return hp
 end
 
 do

@@ -98,6 +98,8 @@ public.CTimerNewTicker = CTimerNewTicker
 public.UnitName = UnitName
 public.UnitGUID = UnitGUID
 public.SetRaidTarget = SetRaidTarget
+public.UnitHealth = UnitHealth
+public.UnitHealthMax = UnitHealthMax
 
 -- Version
 local usersHash = {}
