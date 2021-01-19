@@ -163,7 +163,7 @@ do
 				miasmaOnMe = true
 				self:Yell(args.spellId, CL.count_rticon:format(L.miasma, count, count))
 				self:PlaySound(args.spellId, "alarm")
-				if not scheduledChatMsg and self:GetOption("custom_on_repeating_yell_miasma") then
+				if not scheduledChatMsg and not self:LFR() and self:GetOption("custom_on_repeating_yell_miasma") then
 					scheduledChatMsg = true
 					self:SimpleTimer(RepeatingChatMessages, 1.5)
 				end
@@ -266,7 +266,7 @@ do
 			self:Flash(334266)
 			self:Say(334266, CL.laser)
 			laserOnMe = true
-			if not scheduledChatMsg and self:GetOption("custom_on_repeating_say_laser") then
+			if not scheduledChatMsg and not self:LFR() and self:GetOption("custom_on_repeating_say_laser") then
 				scheduledChatMsg = true
 				self:SimpleTimer(RepeatingChatMessages, 1.5)
 			end
