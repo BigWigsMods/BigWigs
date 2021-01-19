@@ -230,7 +230,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 end
 
 function mod:WarpedDesiresApplied(args)
-	self:StackMessage(args.spellId, args.destName, amount, "purple")
+	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	if args.amount > 2 then
 		self:PlaySound(args.spellId, "alarm")
 	end
