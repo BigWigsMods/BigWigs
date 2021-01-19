@@ -14,11 +14,11 @@ L = BigWigs:NewBossLocale("Hungering Destroyer", "deDE")
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
-	--L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
-	--L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+	L.custom_on_repeating_yell_miasma = "Wiederholtes Miasma Gesundheit Schreien"
+	L.custom_on_repeating_yell_miasma_desc = "Gibt wiederholt Schrei-Nachrichten für Gefräßiges Miasma aus, damit Mitspieler merken, wenn Du unter 75% Gesundheit bist."
 
-	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
-	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
+	L.custom_on_repeating_say_laser = "Wiederholte Instabiler Ausstoß Ansage"
+	L.custom_on_repeating_say_laser_desc = "Gibt wiederholt Chatnachrichten für Instabilen Ausstoß aus um beim Annähern an Spieler in Reichweite der Chatnachrichten zu helfen, falls diese die erste Nachricht nicht gelesen haben."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "deDE")
