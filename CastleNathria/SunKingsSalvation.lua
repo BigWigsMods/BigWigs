@@ -170,8 +170,7 @@ end
 
 function mod:VerifyEnable(unit, mobId)
 	if mobId == 165759 then -- Kael'thas
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp < 50 then
+		if self:GetHealth(unit) < 50 then
 			return true
 		end
 	else
@@ -253,8 +252,7 @@ do
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp > nextStageWarning then -- Stage changes at 45% and 90%
+	if self:GetHealth(unit) > nextStageWarning then -- Stage changes at 45% and 90%
 		self:Message("stages", "green", CL.soon:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
 		nextStageWarning = nextStageWarning + 45
 		if nextStageWarning > 90 then

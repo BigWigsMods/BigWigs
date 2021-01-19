@@ -269,10 +269,7 @@ function mod:AddMarkTracker(event, unit, guid)
 			self:CustomIcon(skirmisherMarker, unit, skirmisherTracker[guid])
 			mobCollector[guid] = true
 		elseif self:GetOption(commandoMarker) and mobId == 169601 then -- Stone Legion Commando
-			local health = UnitHealth(unit)
-			local maxHealth = UnitHealthMax(unit)
-			local percentHealth = (health/maxHealth) * 100
-			if percentHealth < 75 then -- They are 72% when they are on the floor, 100% when flying around
+			if self:GetHealth(unit) < 75 then -- They are 72% when they are on the floor, 100% when flying around
 				for i = 8, 5, -1 do -- 8, 7, 6, 5
 					if not commandoAddMarks[i] then
 						mobCollector[guid] = true

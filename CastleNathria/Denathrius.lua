@@ -263,8 +263,7 @@ function mod:OnBossEnable()
 end
 
 function mod:VerifyEnable(unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp > 5 then
+	if self:GetHealth(unit) > 5 then
 		return true
 	end
 end
@@ -352,8 +351,7 @@ function mod:UNIT_HEALTH(event, unit)
 		self:UnregisterUnitEvent(event, unit)
 		return
 	end
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp < nextStageWarning then -- Stage changes at 70% and 40%
+	if self:GetHealth(unit) < nextStageWarning then -- Stage changes at 70% and 40%
 		local nextStage = stage == 1 and CL.intermission or CL.stage:format(stage + 1)
 		self:Message("stages", "green", CL.soon:format(nextStage), false)
 		nextStageWarning = nextStageWarning - 30

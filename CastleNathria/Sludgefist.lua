@@ -27,8 +27,7 @@ local timers = {
 	[341193] = {13.0, 70.9, 70.5, 70.5, 70.5} -- Falling Rubble
 }
 
-local healthLost = 0
-local maxHealth = 0
+local prevHp = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -101,6 +100,7 @@ function mod:OnEngage()
 	seismicShiftCount = 1
 	chainLinksApplied = 0
 	fallingRubbleCount = 1
+	prevHp = 0
 
 	self:Bar(335293, 5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
 	self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
@@ -167,10 +167,9 @@ function mod:DestructiveImpactApplied(args)
 	if self:Mythic() then
 		self:Bar(341102, 3.5, CL.casting:format(self:SpellName(341102)), 341102) -- Fractured Boulder
 	end
-	local unit = self:GetUnitIdByGUID(args.destGUID)
+	local unit = self:GetBossId(args.destGUID)
 	if unit then
-		maxHealth = UnitHealthMax(unit)
-		healthLost = UnitHealth(unit)
+		prevHp = self:GetHealth(unit)
 	end
 end
 
@@ -190,12 +189,11 @@ function mod:DestructiveImpactRemoved(args)
 	end
 	self:Bar(335470, 29, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
 
-	local unit = self:GetUnitIdByGUID(args.destGUID)
-	if unit and healthLost ~= 0 then
-		healthLost = healthLost - UnitHealth(unit)
-		local percentHealthLost = (healthLost/maxHealth) * 100
+	local unit = self:GetBossId(args.destGUID)
+	if unit and prevHp ~= 0 then
+		local percentHealthLost = self:GetHealth(unit) - prevHp
 		self:Message("fun_info", "green", L.health_lost:format(percentHealthLost), "petbattle_health-down")
-		healthLost = 0
+		prevHp = 0
 	end
 end
 

@@ -139,7 +139,7 @@ local function RepeatingChatMessages()
 	if laserOnMe and mod:GetOption("custom_on_repeating_say_laser") then
 		mod:Say(false, CL.laser)
 	elseif miasmaOnMe and mod:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
-		local currentHealthPercent = math.floor((UnitHealth("player") / UnitHealthMax("player")) * 100)
+		local currentHealthPercent = math.floor(self:GetHealth("player"))
 		if currentHealthPercent < 75 then -- Only let players know when you are below 75%
 			local myIcon = GetRaidTargetIndex("player")
 			local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent) or L.currentHealth:format(currentHealthPercent)
