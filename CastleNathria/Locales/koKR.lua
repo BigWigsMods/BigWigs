@@ -128,8 +128,17 @@ if L then
 	L.sindrel = "신드렐"
 	L.hargitas = "하르지타스"
 
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "덩치 큰 가르곤"
+	L.hawkeye = "나스리아 명사수"
+
 	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
 	L.feaster = "공포의 탐식자"
 	L.rat = "비정상적인 크기의 쥐"
 	L.miasma = "독기" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "디플리나"
+	L.dragost = "드래고스트"
+	L.kullan = "쿨란"
 end

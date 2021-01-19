@@ -128,8 +128,17 @@ if L then
 	L.sindrel = "辛德雷尔"
 	L.hargitas = "哈尔基塔司"
 
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "魁梧的加尔贡"
+	L.hawkeye = "纳斯利亚鹰眼射手"
+
 	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
 	L.feaster = "恐惧吞食者"
 	L.rat = "尺寸惊人的老鼠"
 	L.miasma = "瘴气" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "德普莉娜"
+	L.dragost = "德拉苟斯特"
+	L.kullan = "库兰"
 end

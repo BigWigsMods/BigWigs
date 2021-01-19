@@ -128,8 +128,17 @@ if L then
 	--L.sindrel = "Sindrel"
 	--L.hargitas = "Hargitas"
 
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	--L.gargon = "Hulking Gargon"
+	--L.hawkeye = "Nathrian Hawkeye"
+
 	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
 	--L.feaster = "Dread Feaster"
 	--L.rat = "Rat of Unusual Size"
 	L.miasma = "瘴氣" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	--L.deplina = "Deplina"
+	--L.dragost = "Dragost"
+	--L.kullan = "Kullan"
 end
