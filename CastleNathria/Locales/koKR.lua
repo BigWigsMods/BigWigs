@@ -14,11 +14,11 @@ L = BigWigs:NewBossLocale("Hungering Destroyer", "koKR")
 if L then
 	L.miasma = "독기" -- Short for Gluttonous Miasma
 
-	--L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
-	--L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+	L.custom_on_repeating_yell_miasma = "반복적으로 독기 체력 외치기"
+	L.custom_on_repeating_yell_miasma_desc = "독기에 걸렸을때 반복적으로 외침으로써 본인이 체력 75%미만일때 알림."
 
-	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
-	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
+	L.custom_on_repeating_say_laser = "반복적으로 순간 방출 알리기"
+	L.custom_on_repeating_say_laser_desc = "순간 방출 걸렸을때 반복적으로 말을 해서 혹시나 처음 메세지를 보지 못한 사람들에게 알리기."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "koKR")
@@ -89,7 +89,7 @@ if L then
 	 L.fun_info = "데미지 표시"
 	 L.fun_info_desc = "파괴의 충격 중 얼마나 체력을 많이 뺐는가를 메세지로 표시."
 
-	 L.health_lost = "진흙주먹이 피 %.1f%% 만큼 깎았습니다!"
+	 L.health_lost = "진흙주먹의 체력을 %.1f%% 만큼 깎았습니다!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "koKR")
@@ -109,11 +109,11 @@ if L then
 
 	L.infobox_stacks = "%d 중첩: %d 명" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
-	--L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
-	--L.custom_on_repeating_nighthunter_desc = "Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
+	L.custom_on_repeating_nighthunter = "반복적으로 밤의 사냥꾼 외치기"
+	L.custom_on_repeating_nighthunter_desc = "밤의 사냥꾼 능력을 {rt1} 나 {rt2} 나 {rt3} 로 반복적으로 표시해서 맞아줘야 하는 선 찾기 쉽게 하기."
 
-	--L.custom_on_repeating_impale = "Repeating Impale Say"
-	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
+	L.custom_on_repeating_impale = "반복적으로 꿰뚫기 말하기"
+	L.custom_on_repeating_impale_desc = "꿰뚫기에 걸렸을때 '1' 이나 '22' 나 '333' 이나 '4444' 로 계속 말해서 어떤 순서로 맞는지 명확하게 하기."
 
 	-- L.hymn_stacks = "Nathrian Hymn"
 	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
