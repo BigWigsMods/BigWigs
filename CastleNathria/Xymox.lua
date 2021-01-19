@@ -65,7 +65,9 @@ function mod:GetOptions()
 		[340758] = -22119, -- The Relics of Castle Nathria
 	},{
 		[328437] = L.tear, -- Dimensional Tear (Tear)
+		[326271] = CL.traps, -- Stasis Trap (Traps)
 		[340758] = L.spirits, -- Fleeting Spirits (Spirits)
+		[327902] = CL.fixate, -- Fixate (Fixate)
 		[340788] = L.seeds, -- Seeds of Extinction (Seeds)
 	}
 end
@@ -105,7 +107,7 @@ function mod:OnEngage()
 
 	self:Bar(325399, 5.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
 	if not self:Easy() then -- No traps in Normal (and LFR?)
-		self:Bar(326271, 11) -- Stasis Trap
+		self:Bar(326271, 11, CL.traps) -- Stasis Trap
 	end
 	self:Bar(328437, 17, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 	self:Bar(335013, 21) -- Rift Blast
@@ -119,7 +121,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.stage2_yell) then
-		self:StopBar(326271) -- Stasis Trap
+		self:StopBar(CL.traps) -- Stasis Trap
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:StopBar(CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
 
@@ -131,11 +133,11 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		spiritCount = 1
 		seedCount = 1
 
-		self:CDBar(326271, 10) -- Stasis Trap
+		self:CDBar(326271, 10, CL.traps) -- Stasis Trap
 		self:CDBar(328437, 14, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:CDBar(340788, 16, CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 	elseif msg:find(L.stage3_yell) then
-		self:StopBar(326271) -- Stasis Trap
+		self:StopBar(CL.traps) -- Stasis Trap
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:StopBar(CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 
@@ -148,7 +150,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		seedCount = 1
 		annihilateCount = 1
 
-		self:CDBar(326271, 10) -- Stasis Trap
+		self:CDBar(326271, 10, CL.traps) -- Stasis Trap
 		self:CDBar(328437, 16, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:CDBar(328789, 28, CL.count:format(self:SpellName(328789), annihilateCount)) -- Annihilate
 	end
@@ -207,9 +209,9 @@ end
 
 function mod:StasisTrap(args)
 	if not self:Easy() then -- this event triggers in normal but no traps spawn, lets filter anything there
-		self:Message(args.spellId, "red")
+		self:Message(args.spellId, "red", CL.traps)
 		self:PlaySound(args.spellId, "alert")
-		self:CDBar(args.spellId, self:Mythic() and (stage == 3 and 36 or 30) or 30)
+		self:CDBar(args.spellId, self:Mythic() and (stage == 3 and 36 or 30) or 30, CL.traps)
 	end
 end
 
@@ -236,7 +238,7 @@ end
 
 function mod:Fixate(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
+		self:PersonalMessage(args.spellId, nil, CL.fixate)
 		self:PlaySound(args.spellId, "warning")
 	end
 end
