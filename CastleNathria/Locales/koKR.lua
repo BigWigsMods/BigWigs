@@ -109,7 +109,7 @@ if L then
 
 	L.infobox_stacks = "%d 중첩: %d 명" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
-	L.custom_on_repeating_nighthunter = "반복적으로 밤의 사냥꾼 외치기Repeating Night Hunter Yell"
+	L.custom_on_repeating_nighthunter = "반복적으로 밤의 사냥꾼 외치기"
 	L.custom_on_repeating_nighthunter_desc = "밤의 사냥꾼 능력을 {rt1} 나 {rt2} 나 {rt3} 로 반복적으로 표시해서 맞아줘야 하는 선 찾기 쉽게 하기."
 
 	L.custom_on_repeating_impale = "반복적으로 꿰뚫기 말하기"
