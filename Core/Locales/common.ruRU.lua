@@ -94,3 +94,4 @@ L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from
 L.bomb = "Бомба" -- Used for debuffs that make players explode
 L.fixate = "Фиксация" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "Отбрасывание" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.traps = "Ловушки" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
