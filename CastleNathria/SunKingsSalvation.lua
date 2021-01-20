@@ -530,6 +530,7 @@ do
 end
 
 function mod:DarithosDeath()
+	self:CloseProximity(328889)
 	self:StopBar(328889) -- Greater Castigation
 end
 
