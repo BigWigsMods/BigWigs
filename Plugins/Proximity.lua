@@ -43,8 +43,8 @@ local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
-local mute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\mute"
-local unmute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\unmute"
+local mute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\Icons\\mute"
+local unmute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\Icons\\unmute"
 
 local inConfigMode = nil
 local activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = 0, 0, 0, 0
@@ -887,7 +887,7 @@ do
 			customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 			plugin:Close(true)
 		end)
-		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\close")
+		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\Icons\\close")
 		proxAnchor.close = close
 
 		local sound = CreateFrame("Button", nil, proxAnchor)
@@ -1005,7 +1005,7 @@ do
 		proxAnchor.drag = drag
 
 		local tex = drag:CreateTexture(nil, "OVERLAY")
-		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\draghandle")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\Icons\\draghandle")
 		tex:SetWidth(16)
 		tex:SetHeight(16)
 		tex:SetBlendMode("ADD")
