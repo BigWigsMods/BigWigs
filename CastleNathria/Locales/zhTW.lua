@@ -18,7 +18,7 @@ if L then
 	L.custom_on_repeating_yell_miasma_desc = "當你中了貪食瘴氣，會在生命值低於 75% 時持續喊話。"
 
 	L.custom_on_repeating_say_laser = "重覆猛烈噴射說話"
-	L.custom_on_repeating_say_laser_desc = "你被標記為猛烈噴射的目標時重覆發送說話訊息，以便接近你的玩家可以立刻看見並避開。"
+	L.custom_on_repeating_say_laser_desc = "當你你被標記為猛烈噴射的目標時，重覆發送說話訊息，以便接近你的玩家可以立刻看見並避開。"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhTW")
