@@ -248,15 +248,15 @@ L = BigWigs:NewBossLocale("Thaddius", "ruRU")
 if L then
 	L.bossName = "Таддиус"
 
-	L.trigger_phase1_1 = "Сталагг сокрушить вас!"
-	L.trigger_phase1_2 = "Я скормлю вас господину!"
-	L.trigger_phase2_1 = "Я сожру... ваши... кости..."
+	L.trigger_phase1_1 = "Сталагг тебя раздавит!"
+	L.trigger_phase1_2 = "На корм хозяину!"
+	L.trigger_phase2_1 = "Отведайте... своих... костей..."
 	L.trigger_phase2_2 = "Растерзаю!!!"
-	L.trigger_phase2_3 = "Убью..."
+	L.trigger_phase2_3 = "Убей..."
 
 	L.add_death_trigger = "%s умирает."
 	L.overload_trigger = "%s перезагружается!"
-	L.polarity_trigger = "Познайте же боль..."
+	L.polarity_trigger = "Теперь тебе больно..."
 
 	L.polarity_warning = "3 секунды до сдвига полярности!"
 	L.polarity_changed = "Полярность сменилась!"
