@@ -85,7 +85,7 @@ function mod:GetOptions()
 		--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
 		339553, -- Lingering Anima
 		339557, -- Bottled Anima
-		{325382, "TANK"}, -- Warped Desires
+		{339528, "TANK"}, -- Warped Desires
 		{339525, "SAY", "SAY_COUNTDOWN"}, -- Concentrate Anima
 	},{
 		[343322] = L.moldovaak,
@@ -98,7 +98,7 @@ function mod:GetOptions()
 		[340630] = L.rat,
 		[329298] = L.feaster,
 		[339553] = L.deplina,
-		[325382] = L.dragost,
+		[339528] = L.dragost,
 		[339525] = L.kullan,
 	},{
 		[343302] = CL.knockback, -- Granite Wings (Knockback)
@@ -132,7 +132,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 339553)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 339553)
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
-	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedDesiresApplied", 325382)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedDesiresApplied", 339528)
 	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnimaApplied", 339525)
 	self:Log("SPELL_AURA_REMOVED", "ConcentrateAnimaRemoved", 339525)
 end
@@ -167,7 +167,7 @@ end
 
 --[[ Shriekwing -> Huntsman Altimor ]]--
 function mod:Enrage(args)
-	if self:Dispeller("magic", nil, args.spellId) then
+	if self:Dispeller("enrage", nil, args.spellId) then
 		self:Message(args.spellId, "orange", CL.buff_other:format(L.gargon, args.spellName))
 		self:PlaySound(args.spellId, "info")
 	end
@@ -184,6 +184,9 @@ function mod:Rotting(args)
 	if amount % 4 == 0 then
 		if self:Me(args.destGUID) then
 			self:StackMessage(args.spellId, args.destName, amount, "blue")
+			if amount > 11 then
+				self:PlaySound(args.spellId, "info")
+			end
 		elseif (self:Tank() or self:Healer()) and self:Tank(args.destName) then
 			self:StackMessage(args.spellId, args.destName, amount, "purple")
 			if amount > 11 then
