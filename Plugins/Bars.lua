@@ -1524,7 +1524,7 @@ do
 		drag:SetScript("OnMouseUp", onDragHandleMouseUp)
 		drag:SetAlpha(0.5)
 		local tex = drag:CreateTexture(nil, "OVERLAY")
-		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\draghandle")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\draghandle")
 		tex:SetWidth(16)
 		tex:SetHeight(16)
 		tex:SetBlendMode("ADD")
