@@ -79,7 +79,7 @@ function mod:GetOptions()
 		{346790, "TANK"}, -- Sintouched Blade
 
 		--[[ Baroness Frieda ]]--
-		346651, -- Drain Essence
+		{346651, "ME_ONLY"}, -- Drain Essence
 		337110, -- Dreadbolt Volley
 		346657, -- Prideful Eruption
 		346945, -- Manifest Pain
@@ -99,7 +99,7 @@ function mod:GetOptions()
 		{330848, "ME_ONLY"}, -- Wrong Moves
 
 		--[[ Mythic ]]--
-		{347350, "SAY", "SAY_COUNTDOWN"},
+		{347350, "SAY", "SAY_COUNTDOWN"}, -- Dancing Fever
 	}, {
 		["stages"] = "general",
 		[346690] = -22147, -- Castellan Niklaus
