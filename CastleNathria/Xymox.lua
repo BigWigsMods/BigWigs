@@ -25,6 +25,7 @@ local annihilateCount = 1
 local sparkCount = 1
 local glyphCount = 1
 local trapCount = 1
+local lastStaged = 0
 
 local stage3MythicTimers = {
 	[340758] = {34.3, 60, 92.1}, -- Spirits
@@ -114,6 +115,7 @@ function mod:OnEngage()
 	sparkCount = 1
 	glyphCount = 1
 	trapCount = 1
+	lastStaged = 0
 
 	self:Bar(325399, 5.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
 	if not self:Easy() then -- No traps in Normal (and LFR?)
@@ -130,44 +132,58 @@ end
 --
 
 function mod:RAID_BOSS_EMOTE(_, msg)
+	local t = GetTime()
+	local allowTimers = true
+	if t-lastStaged < 20 then
+		-- In Mythic, if the boss started a combo he will finish it with all 3.
+		-- So emote 1 can be before the stage change, while 2 and 3 are after.
+		-- We filter out any new timers and count with this by not allowin timers for 20s after a stage change
+		allowTimers = false
+	end
 	if msg:find("327887", nil, true) then -- Spirits
 		self:Message(340758, "cyan", CL.count:format(L.spirits, spiritCount))
 		self:PlaySound(340758, "long")
-		spiritCount = spiritCount + 1
-		local cd = 42.5
-		if stage == 2 then -- Mythic only
-			cd = 61.2
-		elseif stage == 3 then
-			cd = stage3MythicTimers[340758][spiritCount]
+		if allowTimers then
+			spiritCount = spiritCount + 1
+			local cd = 42.5
+			if stage == 2 then -- Mythic only
+				cd = 61.2
+			elseif stage == 3 then
+				cd = stage3MythicTimers[340758][spiritCount]
+			end
+			self:CDBar(340758, cd, CL.count:format(L.spirits, spiritCount))
 		end
-		self:CDBar(340758, cd, CL.count:format(L.spirits, spiritCount))
 	elseif msg:find("329834", nil, true) then -- Seeds
 		self:Message(340788, "cyan", CL.count:format(L.seeds, seedCount))
 		self:PlaySound(340788, "long")
-		seedCount = seedCount + 1
-		local cd = self:Mythic() and 55.5 or seedCount % 2 and 52 or 43
-		if stage == 3 then -- Mythic only
-			cd = stage3MythicTimers[340788][seedCount]
+		if allowTimers then
+			seedCount = seedCount + 1
+			local cd = self:Mythic() and 55.5 or seedCount % 2 and 52 or 43
+			if stage == 3 then -- Mythic only
+				cd = stage3MythicTimers[340788][seedCount]
+			end
+			self:Bar(340788, cd, CL.count:format(L.seeds, seedCount))
 		end
-		self:Bar(340788, cd, CL.count:format(L.seeds, seedCount))
 	elseif msg:find("328789", nil, true) then -- Annihilate
 		local spellName = self:SpellName(328789)
-		self:StopBar(CL.count:format(spellName, annihilateCount))
 		self:Message(328789, "orange", CL.count:format(spellName, annihilateCount))
 		self:PlaySound(328789, "warning")
 		self:CastBar(328789, 10, CL.count:format(spellName, annihilateCount))
-		annihilateCount = annihilateCount + 1
-		self:CDBar(328789, self:Mythic() and stage3MythicTimers[328789][annihilateCount] or 52, CL.count:format(spellName, annihilateCount))
+		if allowTimers then
+			annihilateCount = annihilateCount + 1
+			self:CDBar(328789, self:Mythic() and stage3MythicTimers[328789][annihilateCount] or 52, CL.count:format(spellName, annihilateCount))
+		end
 	end
 end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.stage2_yell) then
-		self:StopBar(CL.traps) -- Stasis Trap
+		self:StopBar(CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:StopBar(CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
 
 		stage = 2
+		lastStaged = GetTime()
 		self.stage = stage
 		self:Message("stages", "green", CL.stage:format(stage), false)
 		self:PlaySound("stages", "info")
@@ -185,8 +201,9 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 			self:Bar(340758, 27, CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
 		end
 	elseif msg:find(L.stage3_yell) then
-		self:StopBar(CL.traps) -- Stasis Trap
+		self:StopBar(CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
+		self:StopBar(CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
 		self:StopBar(CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 
 		stage = 3
