@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Hungering Destroyer", 2296, 2428)
 if not mod then return end
 mod:RegisterEnableMob(164261) -- Hungering Destroyer
 mod.engageId = 2383
---mod.respawnTime = 30
+mod.respawnTime = 30
 
 --------------------------------------------------------------------------------
 -- Locals
