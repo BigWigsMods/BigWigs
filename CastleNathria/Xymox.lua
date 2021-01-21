@@ -194,7 +194,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		sparkCount = 1
 
 		self:Bar(325399, 6.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
-		self:Bar(326271, 10.5, CL.traps) -- Stasis Trap
+		self:Bar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 		self:Bar(328437, 16.5, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:Bar(340788, 22.3, CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 		if self:Mythic() then
@@ -207,6 +207,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		self:StopBar(CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 
 		stage = 3
+		lastStaged = GetTime()
 		self.stage = stage
 		self:Message("stages", "green", CL.stage:format(stage), false)
 		self:PlaySound("stages", "info")
@@ -218,7 +219,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		sparkCount = 1
 
 		self:Bar(325399, 6.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
-		self:CDBar(326271, 10.5, CL.traps) -- Stasis Trap
+		self:CDBar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 		self:CDBar(328437, 16.5, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:Bar(328789, 28.3, CL.count:format(self:SpellName(328789), annihilateCount)) -- Annihilate
 		if self:Mythic() then
