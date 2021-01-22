@@ -30,11 +30,11 @@ L.barColor = "Cor da barra"
 L.barTextColor = "Cor do texto da barra"
 L.additionalWidth = "Largura adicional"
 L.additionalHeight = "Altura adicional"
-L.additionalSizeDesc = "Adiciona tamanho a janela padrão ao ajustar essa barra deslizante, ou digite o avlor na caixa que tem um limite muito maior de 100."
+L.additionalSizeDesc = "Adiciona tamanho a janela padrão ao ajustar essa barra deslizante, ou digite o valor na caixa que tem um limite muito maior de 100."
 L.yourPowerTest = "Seu Poder: %d" -- Your Power: 42
 L.yourAltPower = "Seu %s: %d" -- e.g. Your Corruption: 42
 L.player = "Jogador %d" -- Player 7
-L.disableAltPowerDesc = "Desativa globalmente a janela de PoderAlt, nunca mais será mostrada encontros de chefes."
+L.disableAltPowerDesc = "Desativa globalmente a janela de PoderAlt, nunca mais será mostrada em encontros de chefes."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
