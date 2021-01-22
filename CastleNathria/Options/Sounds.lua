@@ -183,14 +183,16 @@ BigWigs:AddSounds("Sire Denathrius", {
 })
 
 BigWigs:AddSounds("Castle Nathria Trash", {
-	[325382] = "alarm",
 	[329298] = "alarm",
 	[329989] = "info",
 	[339525] = "alarm",
+	[339528] = "alarm",
 	[339553] = "alarm",
 	[339557] = "info",
 	[340630] = "info",
 	[341352] = "warning",
+	[341441] = "long",
+	[341735] = "alert",
 	[343155] = {"alert","warning"},
 	[343302] = "long",
 	[343316] = "alarm",
