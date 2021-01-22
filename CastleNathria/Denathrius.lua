@@ -38,7 +38,7 @@ local mirrorCount = 0
 local timersEasy = {
 	[1] = {
 		-- Feeding Time
-		[327039] = {15, 25, 35, 25},
+		[327039] = {15, 25, 35, 25, 35},
 		-- Cleansing Pain
 		[326707] = {8.7, 26.7, 32.8, 26.7, 34, 26.8}, -- From _success to _start, so timers are adjusted by -3s for the cast time
 	},
@@ -565,6 +565,7 @@ function mod:MarchofthePenitentStart(args)
 
 	self:StopBar(CL.count:format(self:SpellName(326707), cleansingPainCount)) -- Cleansing Pain
 	self:StopBar(CL.count:format(self:SpellName(326851), bloodPriceCount)) -- Blood Price
+	self:StopBar(CL.count:format(self:SpellName(327039), nightHunterCount)) -- Feeding Time
 	self:StopBar(CL.count:format(self:SpellName(327796), nightHunterCount)) -- Night Hunter
 	self:StopBar(CL.count:format(self:SpellName(327122), ravageCount)) -- Ravage
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(327122), ravageCount-1))) -- Casting: Ravage
