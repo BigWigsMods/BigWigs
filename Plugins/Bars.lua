@@ -1085,7 +1085,7 @@ do
 						name = L.emphasizeAt,
 						order = 6,
 						min = 6,
-						max = 20,
+						max = 30,
 						step = 1,
 					},
 					fontSizeEmph = {
