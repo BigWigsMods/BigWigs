@@ -103,7 +103,9 @@ function mod:OnEngage()
 	prevHp = 0
 
 	self:Bar(335293, 5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
-	self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+	if not self:Easy() then
+		self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+	end
 	if self:Tank() then
 		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 	else
@@ -187,7 +189,9 @@ function mod:DestructiveImpactRemoved(args)
 	else
 		self:Bar(332318, 18.5, CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	end
-	self:Bar(335470, 29, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+	if not self:Easy() then
+		self:Bar(335470, 29, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+	end
 
 	local unit = self:GetBossId(args.destGUID)
 	if unit and prevHp ~= 0 then
