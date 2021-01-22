@@ -137,6 +137,7 @@ if L then
 	--[[ Shriekwing -> Huntsman Altimor ]]--
 	L.gargon = "Bulliger Gargon"
 	L.hawkeye = "Scharfschütze von Nathria"
+	L.overseer = "Zwingeraufseherin"
 
 	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
 	L.feaster = "Schreckensschmauser"

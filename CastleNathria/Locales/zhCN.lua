@@ -137,6 +137,7 @@ if L then
 	--[[ Shriekwing -> Huntsman Altimor ]]--
 	L.gargon = "魁梧的加尔贡"
 	L.hawkeye = "纳斯利亚鹰眼射手"
+	L.overseer = "狗舍监督者"
 
 	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
 	L.feaster = "恐惧吞食者"

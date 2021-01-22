@@ -137,6 +137,7 @@ if L then
 	--[[ Shriekwing -> Huntsman Altimor ]]--
 	L.gargon = "덩치 큰 가르곤"
 	L.hawkeye = "나스리아 명사수"
+	L.overseer = "사육장 감독관"
 
 	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
 	L.feaster = "공포의 탐식자"
