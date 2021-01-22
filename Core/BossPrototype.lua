@@ -2538,42 +2538,33 @@ function boss:CancelYellCountdown(key)
 	end
 end
 
-do
-	local tmp = { -- XXX temp
-		["long"] = "Long",
-		["info"] = "Info",
-		["alert"] = "Alert",
-		["alarm"] = "Alarm",
-		["warning"] = "Warning",
-	}
-	--- Play a sound.
-	-- @param key the option key
-	-- @string sound the sound to play
-	-- @string[opt] voice command to play when using a voice pack
-	-- @param[opt] player either a string or a table of players to prevent playing a sound if ME_ONLY is enabled
-	function boss:PlaySound(key, sound, voice, player)
-		if checkFlag(self, key, C.SOUND) then
-			if player then
-				local meOnly = checkFlag(self, key, C.ME_ONLY)
-				if type(player) == "table" then
-					if meOnly then
-						if player[#player] == cpName then
-							self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
-						end
-					elseif #player == 1 then
-						self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+--- Play a sound.
+-- @param key the option key
+-- @string sound the sound to play
+-- @string[opt] voice command to play when using a voice pack
+-- @param[opt] player either a string or a table of players to prevent playing a sound if ME_ONLY is enabled
+function boss:PlaySound(key, sound, voice, player)
+	if checkFlag(self, key, C.SOUND) then
+		if player then
+			local meOnly = checkFlag(self, key, C.ME_ONLY)
+			if type(player) == "table" then
+				if meOnly then
+					if player[#player] == cpName then
+						self:SendMessage("BigWigs_Sound", self, key, sound)
 					end
-				else
-					if not meOnly or (meOnly and player == pName) then
-						self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
-					end
+				elseif #player == 1 then
+					self:SendMessage("BigWigs_Sound", self, key, sound)
 				end
 			else
-				if hasVoice and checkFlag(self, key, C.VOICE) then
-					self:SendMessage("BigWigs_Voice", self, key, tmp[sound] or sound)
-				else
-					self:SendMessage("BigWigs_Sound", self, key, tmp[sound] or sound)
+				if not meOnly or (meOnly and player == pName) then
+					self:SendMessage("BigWigs_Sound", self, key, sound)
 				end
+			end
+		else
+			if hasVoice and checkFlag(self, key, C.VOICE) then
+				self:SendMessage("BigWigs_Voice", self, key, sound)
+			else
+				self:SendMessage("BigWigs_Sound", self, key, sound)
 			end
 		end
 	end
