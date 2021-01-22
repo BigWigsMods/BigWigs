@@ -266,7 +266,7 @@ end
 
 function mod:ConcentrateAnimaApplied(args)
 	self:TargetMessage(args.spellId, "orange", args.destName)
-	self:TargetBar(spellId, 10, args.destName)
+	self:TargetBar(args.spellId, 10, args.destName)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm")
 		self:Say(args.spellId)
