@@ -24,6 +24,7 @@ local pulverizingMeteorCount = 1
 local reverberatingLeapCount = 1
 local seismicUphealvalCount = 1
 local shadowForcesCount = 1
+local isInfoOpen = false
 
 local mobCollector = {}
 local mobCollectorGoliath = {}
@@ -32,6 +33,7 @@ local skirmisherTracker = {}
 local commandoesKilled = 0
 local commandoesNeeded = 7
 local commandoAddMarks = {}
+local wickedLacerationList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -65,6 +67,7 @@ function mod:GetOptions()
 			--[[ Stage One: Kaal's Assault ]]--
 		329636, -- Hardened Stone Form
 		{333387, "SAY"}, -- Wicked Blade
+		{333913, "INFOBOX"}, -- Wicked Laceration
 		wickedBladeMarker,
 		334765, -- Heart Rend
 		heartRendMarker,
@@ -113,6 +116,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WickedBlade", 344230, 333387) -- Normal, Heroic
 	self:Log("SPELL_AURA_APPLIED", "WickedBladeApplied", 333377) -- Wicked Mark
 	self:Log("SPELL_AURA_REMOVED", "WickedBladeRemoved", 333377)
+	self:Log("SPELL_AURA_APPLIED", "WickedLaceration", 333913)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "WickedLaceration", 333913)
+	self:Log("SPELL_AURA_REMOVED", "WickedLacerationRemoved", 333913)
 	self:Log("SPELL_CAST_START", "HeartRend", 334765)
 	self:Log("SPELL_AURA_APPLIED", "HeartRendApplied", 334765)
 	self:Log("SPELL_AURA_REMOVED", "HeartRendRemoved", 334765)
@@ -158,6 +164,8 @@ function mod:OnEngage()
 	seismicUphealvalCount = 1
 	shadowForcesCount = 1
 	intermission = false
+	wickedLacerationList = {}
+	isInfoOpen = false
 
 	self:Bar(334929, 8.3, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
 	self:Bar(333387, 19, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
@@ -381,6 +389,25 @@ do
 			onMe = false
 		end
 		self:CustomIcon(wickedBladeMarker, args.destName)
+	end
+end
+
+function mod:WickedLaceration(args)
+	if not isInfoOpen then
+		isInfoOpen = true
+		self:OpenInfo(args.spellId, args.spellName)
+	end
+	wickedLacerationList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, wickedLacerationList)
+end
+
+function mod:WickedLacerationRemoved(args)
+	wickedLacerationList[args.destName] = nil
+	if next(wickedLacerationList) then
+		self:SetInfoByTable(args.spellId, wickedLacerationList)
+	elseif isInfoOpen then
+		isInfoOpen = false
+		self:CloseInfo(args.spellId)
 	end
 end
 
