@@ -91,6 +91,7 @@ L.seconds = "%.1f초" -- 1.1 seconds
 
 -- Common ability name replacements
 L.laser = "레이저" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.beam = "광선" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.bomb = "폭탄" -- Used for debuffs that make players explode
 L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a player
 --L.knockback = "Knockback" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters

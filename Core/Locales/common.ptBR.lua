@@ -89,6 +89,7 @@ L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Common ability name replacements
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.beam = "Feixe" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.bomb = "Bomba" -- Used for debuffs that make players explode
 L.fixate = "Fixação" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "Empurrão" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
