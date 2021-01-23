@@ -1983,69 +1983,33 @@ do
 	local tconcat = table.concat
 	local function printTargets(self, key, playerTable, color, text, icon, markers)
 		local playersInTable = #playerTable
-		if playersInTable ~= 0 then
-			local meOnly = checkFlag(self, key, C.ME_ONLY)
-			local msgEnabled = checkFlag(self, key, C.MESSAGE)
-			if meOnly or msgEnabled then -- Allow ME_ONLY messages when normal messages are disabled
-				local textType = type(text)
-				local msg = textType == "string" and text or spells[text or key]
-				local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+		local textType = type(text)
+		local msg = textType == "string" and text or spells[text or key]
+		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
 
+		if playersInTable == 1 and playerTable[1] == cpName then
+			local meEmphasized = band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
+			if not meEmphasized then -- We already did a ME_ONLY_EMPHASIZE print in :TargetsMessage
+				local emphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
 				if markers then
-					local onMe
-					if meOnly then
-						for i = 1, playersInTable do
-							if playerTable[i] == cpName then
-								onMe = markers[i]
-							end
-						end
-					else
-						for i = 1, playersInTable do
-							if playerTable[i] == cpName then
-								onMe = markers[i]
-							end
-							playerTable[i] = markerIcons[markers[i]] .. playerTable[i] -- Only concat icons if ME_ONLY is off
-						end
-					end
-
-					if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
-						local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
-						self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, onMe), "blue", texture, isEmphasized)
-					elseif not meOnly and msgEnabled then
-						local list = tconcat(playerTable, comma, 1, playersInTable)
-						local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
-						self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
-						-- If emphasize is NOT enabled, and message contains your name, and emphasize (me only) IS enabled show a 2nd (emphasized) message
-						if not isEmphasized and onMe and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
-							self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, onMe), "blue", texture, true)
-						end
-					end
+					self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, markers[1]), "blue", texture, emphasized)
 				else
-					local onMe = false
-
-					for i = 1, playersInTable do
-						if playerTable[i] == cpName then
-							onMe = true
-						end
-					end
-
-					if onMe and (meOnly or (msgEnabled and playersInTable == 1)) then
-						local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
-						self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
-					elseif not meOnly and msgEnabled then
-						local list = tconcat(playerTable, comma, 1, playersInTable)
-						local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
-						self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
-						-- If emphasize is NOT enabled, and message contains your name, and emphasize (me only) IS enabled show a 2nd (emphasized) message
-						if not isEmphasized and onMe and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
-							self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, true)
-						end
-					end
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, emphasized)
 				end
 			end
-			wipe(playerTable)
-			if markers then wipe(markers) end
+		else
+			if markers then
+				for i = 1, playersInTable do
+					playerTable[i] = markerIcons[markers[i]] .. playerTable[i]
+				end
+			end
+			local list = tconcat(playerTable, comma, 1, playersInTable)
+			-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
+			local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
+			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
 		end
+		wipe(playerTable)
+		if markers then wipe(markers) end
 	end
 
 	--- Display a target message of multiple players using a table.
@@ -2059,12 +2023,38 @@ do
 	-- @param[opt] markers a table containing the markers that should be attached next to the player names e.g. {1, 2, 3}
 	function boss:TargetsMessage(key, color, playerTable, playerCount, text, icon, customTime, markers)
 		local playersInTable = #playerTable
-		if playersInTable == playerCount then
-			printTargets(self, key, playerTable, color, text, icon, markers)
-		elseif playersInTable == 1 then
-			Timer(customTime or 0.3, function()
+		if band(self.db.profile[key], C.ME_ONLY) == C.ME_ONLY then -- We allow ME_ONLY even if MESSAGE off
+			if playerTable[playersInTable] == cpName and checkFlag(self, key, C.ME_ONLY) then -- Use checkFlag for the role check
+				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
+				local textType = type(text)
+				local msg = textType == "string" and text or spells[text or key]
+				local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+				wipe(playerTable)
+				if markers then
+					wipe(markers)
+					self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, markers[playersInTable]), "blue", texture, isEmphasized)
+				else
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
+				end
+			end
+		elseif checkFlag(self, key, C.MESSAGE) then
+			if playerTable[playersInTable] == cpName and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
+				local textType = type(text)
+				local msg = textType == "string" and text or spells[text or key]
+				local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+				if markers then
+					self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, markers[playersInTable]), "blue", texture, true)
+				else
+					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, true)
+				end
+			end
+			if playersInTable == playerCount then
 				printTargets(self, key, playerTable, color, text, icon, markers)
-			end)
+			elseif playersInTable == 1 then
+				Timer(customTime or 0.3, function()
+					printTargets(self, key, playerTable, color, text, icon, markers)
+				end)
+			end
 		end
 	end
 
@@ -2090,6 +2080,7 @@ do
 				self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
 			end
 		elseif checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
+			-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
 			local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
 			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture, isEmphasized)
 		end
