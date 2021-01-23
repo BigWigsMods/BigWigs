@@ -20,7 +20,7 @@ local desolateCount = 1
 local overwhelmCount = 1
 local miasmaMarkClear = {}
 local scheduledChatMsg = false
-local laserOnMe = false
+local volEjectionOnMe = false
 local miasmaOnMe = false
 local hasPrinted = false
 
@@ -66,7 +66,7 @@ function mod:GetOptions()
 		{332295, "TANK"}, -- Growing Hunger
 	}, nil, {
 		[329298] = L.miasma, -- Gluttonous Miasma (Miasma)
-		[334266] = CL.laser, -- Volatile Ejection (Laser)
+		[334266] = CL.beam, -- Volatile Ejection (Beam)
 	}
 end
 
@@ -101,7 +101,7 @@ function mod:OnEngage()
 	desolateCount = 1
 	overwhelmCount = 1
 	scheduledChatMsg = false
-	laserOnMe = false
+	volEjectionOnMe = false
 	miasmaOnMe = false
 
 	self:Bar(329298, 3, CL.count:format(L.miasma, miasmaCount)) -- Gluttonous Miasma
@@ -129,7 +129,7 @@ function mod:OnEngage()
 end
 
 function mod:OnBossDisable()
-	laserOnMe = false -- Compensate for the boss dieing mid cast
+	volEjectionOnMe = false -- Compensate for the boss dieing mid cast
 	miasmaOnMe = false
 	if self:GetOption(gluttonousMiasmaMarker) then
 		for i = 1, #miasmaMarkClear do
@@ -148,8 +148,8 @@ end
 --
 
 local function RepeatingChatMessages()
-	if laserOnMe and mod:GetOption("custom_on_repeating_say_laser") then
-		mod:Say(false, CL.laser)
+	if volEjectionOnMe and mod:GetOption("custom_on_repeating_say_laser") then
+		mod:Say(false, CL.beam)
 	elseif miasmaOnMe and mod:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
 		local currentHealthPercent = math.floor(mod:GetHealth("player"))
 		if currentHealthPercent < 75 then -- Only let players know when you are below 75%
@@ -267,7 +267,7 @@ do
 		if not tContains(playerList, name) then
 			local count = #playerList+1
 			playerList[count] = name
-			self:TargetsMessage(334266, "orange", self:ColorName(playerList), self:Mythic() and 5 or 3, CL.laser, nil, 2)
+			self:TargetsMessage(334266, "orange", self:ColorName(playerList), self:Mythic() and 5 or 3, CL.beam, nil, 2)
 			self:CustomIcon(volatileEjectionMarker, name, count+4)
 		end
 	end
@@ -276,8 +276,8 @@ do
 		if msg:find("334064", nil, true) then -- Volatile Ejection
 			self:PlaySound(334266, "warning")
 			self:Flash(334266)
-			self:Say(334266, CL.laser)
-			laserOnMe = true
+			self:Say(334266, CL.beam)
+			volEjectionOnMe = true
 			if not scheduledChatMsg and not self:LFR() and self:GetOption("custom_on_repeating_say_laser") then
 				scheduledChatMsg = true
 				self:SimpleTimer(RepeatingChatMessages, 1.5)
@@ -295,9 +295,9 @@ do
 	function mod:VolatileEjection()
 		volatileCount = volatileCount + 1
 		if self:Easy() then
-			self:Bar(334266, volatileCount % 3 == 1 and 25.3 or 37.9, CL.count:format(CL.laser, volatileCount))
+			self:Bar(334266, volatileCount % 3 == 1 and 25.3 or 37.9, CL.count:format(CL.beam, volatileCount))
 		else
-			self:Bar(334266, volatileCount % 3 == 1 and 24 or 36, CL.count:format(CL.laser, volatileCount))
+			self:Bar(334266, volatileCount % 3 == 1 and 24 or 36, CL.count:format(CL.beam, volatileCount))
 		end
 	end
 
@@ -308,7 +308,7 @@ do
 			end
 		end
 		playerList = {}
-		laserOnMe = false
+		volEjectionOnMe = false
 	end
 end
 
