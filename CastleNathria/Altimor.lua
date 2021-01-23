@@ -98,7 +98,6 @@ function mod:OnBossEnable()
 	self:Death("BargastDeath", 169457)
 
 	--[[ Hecutis ]]--
-	self:Log("SPELL_AURA_APPLIED", "CrushingStone", 334860)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushingStone", 334860)
 	self:Log("SPELL_CAST_SUCCESS", "PetrifyingHowl", 334852)
 	self:Log("SPELL_AURA_APPLIED", "PetrifyingHowlApplied", 334852)
@@ -117,7 +116,7 @@ function mod:OnEngage()
 	ripSoulCount = 1
 	shadesOfBargastCount = 1
 	petrifyingHowlCount = 1
-	wipe(mobCollector)
+	mobCollector = {}
 
 	self:Bar(334404, 6.5) -- Spreadshot
 	self:Bar(334971, 10) -- Jagged Claws
@@ -171,9 +170,7 @@ do
 			self:PlaySound(335114, "warning")
 			self:Flash(335114)
 		end
-		if self:GetOption(sinseekerMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(sinseekerMarker, args.destName, count)
 		self:TargetsMessage(335114, "orange", playerList, 3, CL.count:format(self:SpellName(335114), sinseekerCount-1), nil, 2, playerIcons) -- Debuffs are very delayed
 	end
 end
@@ -183,9 +180,7 @@ function mod:HuntsmansMarkRemoved(args)
 		self:CancelSayCountdown(335114)
 	end
 
-	if self:GetOption(sinseekerMarker) then
-		SetRaidTarget(args.destName, 0)
-	end
+	self:CustomIcon(sinseekerMarker, args.destName)
 end
 
 function mod:Spreadshot(args)
@@ -205,8 +200,7 @@ end
 function mod:JaggedClawsApplied(args)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	local unit = self:GetBossId(165067) -- Margore
-	if amount > 1 and (not unit or not self:Tanking(unit)) then -- Don't want to trust that it will always be a specific unit
+	if amount > 1 then
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -267,7 +261,7 @@ do
 	function mod:shadesofBargastMarking(event, unit, guid)
 		if self:MobId(guid) == 171557 and not mobCollector[guid] then
 			shadesofBargastMarked = shadesofBargastMarked + 1
-			SetRaidTarget(unit, shadesofBargastMarked+3)
+			self:CustomIcon(shadesofBargastMarker, unit, shadesofBargastMarked+3)
 			mobCollector[guid] = true
 			if shadesofBargastMarked == 2 then
 				self:UnregisterTargetEvents()
@@ -319,9 +313,8 @@ end
 --[[ Hecutis ]]--
 
 function mod:CrushingStone(args)
-	local amount = args.amount or 1
-	if amount % 3 == 1 then -- lets see how fast it stacks
-		self:StackMessage(args.spellId, args.destName, amount, "purple")
+	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+	if args.amount > 2 then
 		self:PlaySound(args.spellId, "info")
 	end
 end

@@ -13,6 +13,14 @@ end
 L = BigWigs:NewBossLocale("Hungering Destroyer", "ruRU")
 if L then
 	L.miasma = "Миазмы" -- Short for Gluttonous Miasma
+
+	--L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
+	--L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+
+	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
+	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
+
+	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "ruRU")
@@ -30,8 +38,6 @@ if L then
 
 	L.level = "%s (Уровень |cffffff00%d|r)"
 	L.full = "%s (|cffff0000ПОЛНЫЙ|r)"
-
-	L.container_active = "Активный контейнер: %s"
 
 	L.anima_adds = "Адды Концентрированной Анимы"
 	L.anima_adds_desc = "Показ таймера появления аддов от дебафа Концентрированной Анимы."
@@ -120,4 +126,28 @@ if L then
 
 	L.no_mirror = "Без зеркала: %d" -- Player amount that does not have the Through the Mirror
 	L.mirror = "С зеркалом: %d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "ruRU")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "Молдоваак"
+	L.caramain = "Карамейн"
+	L.sindrel = "Синдрел"
+	L.hargitas = "Харгитас"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "Громадный гаргон"
+	L.hawkeye = "Зоркий стрелок из замка Нафрия"
+	L.overseer = "Смотрительница псарни"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "Жуткий обжора"
+	L.rat = "Крыса необычных размеров"
+	L.miasma = "Миазмы" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "Деплина"
+	L.dragost = "Драгост"
+	L.kullan = "Куллан"
 end

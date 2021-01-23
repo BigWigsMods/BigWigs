@@ -79,7 +79,7 @@ function mod:GetOptions()
 		{346790, "TANK"}, -- Sintouched Blade
 
 		--[[ Baroness Frieda ]]--
-		346651, -- Drain Essence
+		{346651, "ME_ONLY"}, -- Drain Essence
 		337110, -- Dreadbolt Volley
 		346657, -- Prideful Eruption
 		346945, -- Manifest Pain
@@ -99,7 +99,7 @@ function mod:GetOptions()
 		{330848, "ME_ONLY"}, -- Wrong Moves
 
 		--[[ Mythic ]]--
-		{347350, "SAY", "SAY_COUNTDOWN"},
+		{347350, "SAY", "SAY_COUNTDOWN"}, -- Dancing Fever
 	}, {
 		["stages"] = "general",
 		[346690] = -22147, -- Castellan Niklaus
@@ -145,8 +145,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ViolentUproar", 346303)
 
 	--[[ Intermission: The Danse Macabre ]]--
-	self:Log("SPELL_CAST_SUCCESS", "DanseMacabre", 330959)
-	--self:Log("SPELL_CAST_SUCCESS", "DanseMacabreBegin", 328497)
+	self:Log("SPELL_CAST_SUCCESS", "DanseMacabreBegins", 347376) -- Dance Area Trigger // This is when the NPC's start running to the stage
 	self:Log("SPELL_AURA_REMOVED", "DanseMacabreOver", 330959)
 	self:Log("SPELL_AURA_APPLIED", "WrongMovesApplied", 330848)
 
@@ -183,17 +182,17 @@ function mod:OnEngage()
 	if killOrder == 1 or killOrder == 4 then -- Niklaus first
 		local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 		if boss then
-			SetRaidTarget(boss, 7)
+			self:CustomIcon(false, boss, 7)
 		end
 	elseif killOrder == 2 or killOrder == 5 then -- Frieda First
 		local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 		if boss then
-			SetRaidTarget(boss, 7)
+			self:CustomIcon(false, boss, 7)
 		end
 	elseif killOrder == 3 or killOrder == 6 then -- Stavros First
 		local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 		if boss then
-			SetRaidTarget(boss, 7)
+			self:CustomIcon(false, boss, 7)
 		end
 	end
 end
@@ -270,17 +269,17 @@ function mod:BossDeath(args)
 		if killOrder == 2 or killOrder == 3 then -- Niklaus second
 			local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 1 or killOrder == 6 then -- Frieda second
 			local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 4 or killOrder == 5 then -- Stavros second
 			local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		end
 	elseif bossesKilled == 2 then
@@ -288,6 +287,7 @@ function mod:BossDeath(args)
 			self:CDBar(346651, 9) -- Drain Essence
 			--self:CDBar(337110, 6) -- Dreadbolt Volley
 			self:CDBar(346657, 24) -- Prideful Eruption
+			self:CDBar(346681, 35.2) -- Soul Spikes
 		end
 		if stavrosAlive then
 			self:CDBar(331634, 9.4) -- Dark Recital
@@ -304,17 +304,17 @@ function mod:BossDeath(args)
 		if killOrder == 5 or killOrder == 6 then -- Niklaus last
 			local boss = self:GetUnitIdByGUID(166971) -- Castellan Niklaus
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 3 or killOrder == 4 then -- Frieda last
 			local boss = self:GetUnitIdByGUID(166969) -- Baroness Frieda
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		elseif killOrder == 1 or killOrder == 2 then -- Stavros last
 			local boss = self:GetUnitIdByGUID(166970) -- Lord Stavros
 			if boss then
-				SetRaidTarget(boss, 7)
+				self:CustomIcon(false, boss, 7)
 			end
 		end
 	end
@@ -342,7 +342,7 @@ end
 do
 	function mod:DutifulAttendantMarking(event, unit, guid)
 		if self:MobId(guid) == 175992 then -- Dutiful Attendant
-			SetRaidTarget(unit, 8)
+			self:CustomIcon(dutifulAttendantMarker, unit, 8)
 			self:UnregisterTargetEvents()
 		end
 	end
@@ -422,6 +422,7 @@ end
 function mod:SoulSpikes(args)
 	self:Message(346681, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(346681, "alert")
+	-- self:CDBar(346681, 0)
 end
 
 function mod:SoulSpikesApplied(args)
@@ -484,16 +485,18 @@ do
 			end
 		elseif args.spellId == 331637 and firstDarkRecitalTargetGUID then -- 2nd Dark Recital Target
 			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
-				self:PersonalMessage(331634, false, CL.link_with:format(self:ColorName(lastDarkRecitalName)))
-				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
+				self:PersonalMessage(331634, false, CL.link_with_icon:format(darkrecitalPairCount, self:ColorName(lastDarkRecitalName)))
+				local icon = ("{rt%d}"):format(darkrecitalPairCount)
+				self:Yell(331634, icon, true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
-					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
+					sayTimer = self:ScheduleRepeatingTimer("Yell", 1.5, false, icon, true)
 				end
 			elseif self:Me(firstDarkRecitalTargetGUID) then -- We got 1st debuff so this is our partner
-				self:PersonalMessage(331634, false, CL.link_with:format(self:ColorName(args.destName)))
-				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
+				self:PersonalMessage(331634, false, CL.link_with_icon:format(darkrecitalPairCount, self:ColorName(args.destName)))
+				local icon = ("{rt%d}"):format(darkrecitalPairCount)
+				self:Yell(331634, icon, true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
-					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
+					sayTimer = self:ScheduleRepeatingTimer("Yell", 1.5, false, icon, true)
 				end
 			end
 			firstDarkRecitalTargetGUID = nil
@@ -534,7 +537,7 @@ end
 do
 	function mod:WaltzingVenthyrMarking(event, unit, guid)
 		if self:MobId(guid) == 176026 then -- Dancing Fool (only 1 targetable unit)
-			SetRaidTarget(unit, 8)
+			self:CustomIcon(waltzingVenthyrMarker, unit, 8)
 			self:UnregisterTargetEvents()
 		end
 	end
@@ -556,54 +559,37 @@ do
 end
 
 --[[ Intermission: The Danse Macabre ]]--
-do
-	local prev = 0
-	function mod:DanseMacabre(args)
-		local t = args.time
-		if t-prev > 10 then
-			prev = t
-			self:Message(args.spellId, "green")
-			self:PlaySound(args.spellId, "long")
+function mod:DanseMacabreBegins(args)
+	self:Message(330959, "green") -- Dance Macabre
+	self:PlaySound(330959, "long")
 
-			self:PauseBar(346651) -- Drain Essence
-			self:PauseBar(337110) -- Dreadbolt Volley
-			self:PauseBar(346657) -- Prideful Eruption
-			self:PauseBar(327497) -- Evasive Lunge
-			self:PauseBar(331634) -- Dark Recital
-			self:PauseBar(346800) -- Waltz of Blood
-			self:PauseBar(346690) -- Duelist's Riposte
-			self:PauseBar(346698) -- Summon Dutiful Attendant
-			self:PauseBar(330978) -- Dredger Servants
-			self:PauseBar(346303) -- Violent Uproar
-			self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
-		end
-	end
+	self:PauseBar(346651) -- Drain Essence
+	self:PauseBar(337110) -- Dreadbolt Volley
+	self:PauseBar(346657) -- Prideful Eruption
+	self:PauseBar(346681) -- Soul Spikes
+	self:PauseBar(327497) -- Evasive Lunge
+	self:PauseBar(331634) -- Dark Recital
+	self:PauseBar(346800) -- Waltz of Blood
+	self:PauseBar(346690) -- Duelist's Riposte
+	self:PauseBar(346698) -- Summon Dutiful Attendant
+	self:PauseBar(330978) -- Dredger Servants
+	self:PauseBar(330965) -- Castellans Cadre
+	self:PauseBar(346303) -- Violent Uproar
+	self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 end
-
---function mod:DanseMacabreBegin(args)
-	-- self:PauseBar(346651) -- Drain Essence
-	-- self:PauseBar(337110) -- Dreadbolt Volley
-	-- self:PauseBar(346657) -- Prideful Eruption
-	-- self:PauseBar(327497) -- Evasive Lunge
-	-- self:PauseBar(331634) -- Dark Recital
-	-- self:PauseBar(346800) -- Waltz of Blood
-	-- self:PauseBar(346690) -- Duelist's Riposte
-	-- self:PauseBar(346698) -- Summon Dutiful Attendant
-	-- self:PauseBar(330978) -- Dredger Servants
-	-- self:PauseBar(346303) -- Violent Uproar
-	-- self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
---end
 
 function mod:DanseMacabreOver(args)
 	self:ResumeBar(346651) -- Drain Essence
 	self:ResumeBar(337110) -- Dreadbolt Volley
 	self:ResumeBar(346657) -- Prideful Eruption
+	self:ResumeBar(346681) -- Soul Spikes
 	self:ResumeBar(327497) -- Evasive Lunge
 	self:ResumeBar(331634) -- Dark Recital
 	self:ResumeBar(346800) -- Waltz of Blood
 	self:ResumeBar(346690) -- Duelist's Riposte
 	self:ResumeBar(346698) -- Summon Dutiful Attendant
 	self:ResumeBar(330978) -- Dredger Servants
+	self:ResumeBar(330965) -- Castellans Cadre
 	self:ResumeBar(346303) -- Violent Uproar
 	self:ResumeBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 end

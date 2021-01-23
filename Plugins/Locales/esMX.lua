@@ -11,16 +11,30 @@ L.positionDesc = "Escriba en el recuadro o mueva el deslizador si necesita un po
 L.width = "Ancho"
 L.height = "Alto"
 L.sizeDesc = "Normalmente se ajusta el tamaño arrastrando el ancla. Si necesitas un tamaño exacto puedes usar este deslizador o escribir el valor en el recuadro, que no tiene un máximo."
+--L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
 
 -----------------------------------------------------------------------
 -- AltPower.lua
 --
 
 L.altPowerTitle = "PoderAlternativo"
+--L.altPowerDesc = "The AltPower display will only appear for bosses that apply AltPower to players, which is extremely rare. The display measures the amount of 'Alternative Power' you and your group has, displaying it in a list. To move the display around, please use the test button below."
 L.toggleDisplayPrint = "La pantalla mostrará la próxima vez. Para desactivarlo completamente para este encuentro, debes desactivarlo en las opciones del encuentro."
 L.disabled = "Desactivado"
 L.disabledDisplayDesc = "Desactiva la pantalla para todos los módulos que la utilicen."
---L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+L.resetAltPowerDesc = "Restablece todas las opciones relacionadas con el Poder Alterno, incluyendo la posición del ancla de este."
+--L.test = "Test"
+--L.altPowerTestDesc = "Show the 'Alternative Power' display, allowing you to move it, and simulating the power changes you would see on a boss encounter."
+--L.yourPowerBar = "Your Power Bar"
+--L.barColor = "Bar color"
+--L.barTextColor = "Bar text color"
+--L.additionalWidth = "Additional Width"
+--L.additionalHeight = "Additional Height"
+--L.additionalSizeDesc = "Add to the size of the standard display by adjusting this slider, or type the value into the box which has a much higher maximum of 100."
+--L.yourPowerTest = "Your Power: %d" -- Your Power: 42
+--L.yourAltPower = "Your %s: %d" -- e.g. Your Corruption: 42
+--L.player = "Player %d" -- Player 7
+--L.disableAltPowerDesc = "Globally disable the AltPower display, it will never show for any boss encounter."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -51,7 +65,7 @@ L.autoReplyLeftCombatAdvancedWipe = "Perdí contra '%s' en: %s"
 L.bars = "Barras"
 L.style = "Estilo"
 L.bigWigsBarStyleName_Default = "Por defecto"
---L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
+L.resetBarsDesc = "Restablece todas las opciones relacionadas con las barras, incluyendo la posición de anclas de este."
 
 L.nameplateBars = "Barras de nombres"
 L.nameplateAutoWidth = "Igualar anchura de la placa de nombre"
@@ -67,13 +81,13 @@ L.modifierDesc = "Presiona la tecla modificadora seleccionada para activar accio
 L.modifierKey = "Solo con una tecla modificadora"
 L.modifierKeyDesc = "Permite hacer clic en las barras a menos que se mantenga pulsada la tecla modificadora especificada, en cuyo caso las acciones del ratón que se describen a continuación estarán disponibles."
 
---L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
+L.temporaryCountdownDesc = "Habilita temporalmente un contador de la habilidad asociada con esta barra"
 L.report = "Reportar"
 L.reportDesc = "Informa del estado actual de las barras al grupo de chat activo; ya sea en el chat de la estancia, en la banda, en el grupo o decir, según corresponda."
 L.remove = "Quitar"
---L.removeBarDesc = "Temporarily removes this bar."
+L.removeBarDesc = "Remueve temporalmente esta barra."
 L.removeOther = "Quitar otros"
---L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
+L.removeOtherBarDesc = "Remueve temporalmente todas las demás barras (excepto ésta)."
 
 L.emphasizeAt = "Enfatiza en... (segundos)"
 L.growingUpwards = "Crece hacia arriba"
@@ -102,8 +116,8 @@ L.iconDesc = "Muestra u oculta los íconos de la barra."
 L.iconPosition = "Posición del ícono"
 L.iconPositionDesc = "Elige en qué lugar de la barra debe posicionarse el ícono."
 L.font = "Fuenta"
-L.restart = "Reiniciar"
-L.restartDesc = "Reinicia las barras enfatizadas para que empiecen desde el principio y cuenten desde 10."
+L.restart = "Restablecer"
+L.restartDesc = "Restablece las barras enfatizadas para que empiecen desde el principio y cuenten desde 10."
 L.fill = "Llenar"
 L.fillDesc = "Llena las barras en lugar de vaciarlas."
 L.spacing = "Espaciado"
@@ -151,9 +165,9 @@ L.audio = "Audio"
 L.music = "Música"
 L.ambience = "Sonido ambiental"
 L.sfx = "Efectos de sonido"
---L.disableMusic = "Mute music (recommended)"
---L.disableAmbience = "Mute ambient sounds (recommended)"
---L.disableSfx = "Mute sound effects (not recommended)"
+L.disableMusic = "Silenciar la música (recomendado)"
+L.disableAmbience = "Silenciar sonidos ambientales (recomendado)"
+L.disableSfx = "Silenciar efectos de sonido (no recomendado)"
 L.disableAudioDesc = "La opción '%s' en las opciones de sonido de WoW será deshabilitada, luego se volverá a habilidad cuando el encuentro con el jefe termina. Esto puede ayudarte a enfocarte en los sonidos de alerta de BigWigs."
 L.blockTooltipQuests = "Bloquea la ventana de información de los objetivos de misiones"
 L.blockTooltipQuestsDesc = "Cuando necesitas matar a un jefe para una misión, normalmente se mostrará como '0/1 completado' en la ventana de información cuando pasas tu mouse sobre el jefe. Esto se esconderá durante el combate con ese jefe para evitar que la ventana de información crezca mucho."
@@ -204,13 +218,13 @@ L.countdownColor = "Color de la cuenta regresiva"
 L.countdownVoice = "Voz de la cuenta regresiva"
 L.countdownTest = "Probar una cuenta regresiva"
 L.countdownAt = "Cuenta regresiva en... (segundos)"
---L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
---L.countdown = "Countdown"
---L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
---L.countdownAudioHeader = "Spoken Audio Countdown"
---L.countdownTextHeader = "Visual Text Countdown"
---L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
---L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+L.countdownAt_desc = "Elige cuánto tiempo le queda a la habilidad del jefe (en segundos) cuando la cuenta regresiva comience."
+L.countdown = "Cuenta regresiva"
+L.countdownDesc = "La característica de la cuenta regresiva implica una cuenta regresiva de audio hablado y una cuenta regresiva de texto visual. Rara vez está activada de forma predeterminada, pero puedes activarla para cualquier habilidad del jefe al mirar la configuración específica del encuentro con el jefe."
+L.countdownAudioHeader = "Cuenta regresiva de audio hablada"
+L.countdownTextHeader = "Cuenta regresiva de texto"
+L.resetCountdownDesc = "Restablece todos los ajustes anteriores de la cuenta regresiva a sus valores predeterminados."
+L.resetAllCountdownDesc = "Si has seleccionado voces de cuenta regresiva personalizadas para cualquier configuración de encuentro con el jefe, este botón restablecerá TODAS ellas, así como todos los ajustes de cuenta regresiva anteriores a sus valores predeterminados."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -224,16 +238,16 @@ L.infoBox = "InfoBox"
 
 L.sinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs. Esta pantalla soporta iconos, colores y puede mostrar hasta 4 mensajes en la pantalla a la vez. Los mensajes recién insertados crecerán en tamaño y se reducirán de nuevo rápidamente para notificar al usuario."
 L.emphasizedSinkDescription = "Dirige la salida de este complemento a través de la pantalla de mensajes de BigWigs enfatizada. Esta pantalla admite texto y colores, y sólo puede mostrar un mensaje a la vez."
---L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.resetMessagesDesc = "Restablece todas las opciones relacionadas con los mensajes, incluyendo la posición de anclas de este."
 
 L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Menajes"
 L.normalMessages = "Mensajes normales"
 L.emphasizedMessages = "Mensajes enfatizados"
---L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+L.emphasizedDesc = "El punto de un mensaje enfatizado es conseguir su atención siendo un mensaje grande en el medio de su pantalla. Rara vez está activado de forma predeterminada, pero puedes activarlo para cualquier habilidad del jefe cuando mires la configuración específica del encuentro con el jefe."
 L.output = "Resultado"
 L.uppercase = "MAYÚSCULAS"
---L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.uppercaseDesc = "Todos los mensajes enfatizados se convertirán en MAYÚSCULAS."
 
 L.useIcons = "Usar íconos"
 L.useIconsDesc = "Mostrar íconos al lado de los mensajes."
@@ -268,7 +282,7 @@ L.soundDelayDesc = "Especifica el tiempo que BigWigs debería esperar entre cada
 
 L.proximity = "Pantalla de proximidad"
 L.proximity_desc = "Muestra la ventana de proximidad cuando sea apropiado para este encuentro, enumerando los jugadores que están demasiado cerca de ti."
---L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+L.resetProximityDesc = "Restablece todas las opciones relacionadas con las proximidad, incluyendo la posición de anclas de este."
 
 L.close = "Cerrar"
 L.closeProximityDesc = "Cierra la ventana de proximidad.\n\nPara deshabilitarla completamente para un encuentro, debes ir a las opciones para ese encuentro module y deshabilitar la opción de 'Proximidad'."
@@ -326,21 +340,21 @@ L.secondaryDesc = "El segundo ícono de banda que un encuentro debería usar."
 --
 
 L.Sounds = "Sonidos"
---L.oldSounds = "Old Sounds"
+L.oldSounds = "Sonidos viejos"
 
 L.Alarm = "Alarma"
 L.Info = "Información"
 L.Alert = "Alerta"
 L.Long = "Largo"
 L.Warning = "Alerta"
---L.onyou = "A spell, buff, or debuff is on you"
---L.underyou = "You need to move out of a spell under you"
+L.onyou = "Una hechizo, efecto o debuff está en ti"
+L.underyou = "Debes moverte fuera del hechizo que está debajo de ti"
 
 L.sound = "Sonido"
 L.soundDesc = "Los mensajes pueden venir con un sonido. A algunas personas les resulta más fácil escucharlos una vez que han aprendido qué sonido va con cada mensaje, en lugar de leer los mensajes reales."
 
 L.customSoundDesc = "Reproduce el sonido personalizado seleccionado en lugar del suministrado por el módulo."
---L.resetSoundDesc = "Resets the above sounds to their defaults."
+L.resetSoundDesc = "Restablece los sonidos anteriores a sus valores predeterminados."
 L.resetAllCustomSound = "Si has personalizado los sonidos para cualquier encuentro con el jefe, este botón los reajustará TODOS para que se usen los sonidos definidos aquí."
 
 -----------------------------------------------------------------------

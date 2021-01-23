@@ -2,20 +2,31 @@
 -- Module Declaration
 --
 
-local plugin = BigWigs:NewPlugin("Alt Power")
+local oldPlugin = BigWigs:NewPlugin("Alt Power") -- XXX temp 9.0.2
+oldPlugin.defaultDB = {}
+
+local plugin = BigWigs:NewPlugin("AltPower")
 if not plugin then return end
 
-plugin.defaultDB = {
-	posx = nil,
-	posy = nil,
-	fontName = plugin:GetDefaultFont(),
-	fontSize = select(2, plugin:GetDefaultFont(12)),
-	fontOutline = "",
-	monochrome = false,
-	expanded = false,
-	disabled = false,
-	lock = false,
-}
+do
+	local name = plugin:GetDefaultFont()
+	local _, size = plugin:GetDefaultFont(12)
+	plugin.defaultDB = {
+		position = {"CENTER", "CENTER", 450, -160},
+		fontName = name,
+		fontSize = size,
+		outline = "NONE",
+		additionalWidth = 0,
+		additionalHeight = 0,
+		barColor = {0.2, 0, 1, 0.5},
+		barTextColor = {1, 0.82, 0},
+		backgroundColor = {0, 0, 0, 0.3},
+		monochrome = false,
+		expanded = false,
+		disabled = false,
+		lock = false,
+	}
+end
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -31,6 +42,7 @@ local unitList = nil
 local maxPlayers = 0
 local display, updater = nil, nil
 local opener = nil
+local currentTitle = nil
 local inTestMode = nil
 local sortDir = nil
 local repeatSync = nil
@@ -40,10 +52,13 @@ local UpdateDisplay
 local tsort, min = table.sort, math.min
 local UnitPower, IsInGroup = UnitPower, IsInGroup
 local db = nil
-local roleIcons = {
-	["TANK"] = INLINE_TANK_ICON,
-	["HEALER"] = INLINE_HEALER_ICON,
-	["DAMAGER"] = INLINE_DAMAGER_ICON,
+local roleIcons = { -- 337497 = Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES
+	-- INLINE_TANK_ICON="|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:0:19:22:41|t"
+	["TANK"] = "|T337497:0:0:0:0:64:64:0:19:22:41|t",
+	-- INLINE_HEALER_ICON="|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:1:20|t"
+	["HEALER"] = "|T337497:0:0:0:0:64:64:20:39:1:20|t",
+	-- INLINE_DAMAGER_ICON="|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:22:41|t"
+	["DAMAGER"] = "|T337497:0:0:0:0:64:64:20:39:22:41|t",
 	["NONE"] = "",
 }
 
@@ -65,51 +80,40 @@ local function colorize(power, powerMax)
 end
 
 function plugin:RestyleWindow()
-	if not display then return end
-
-	local x = db.posx
-	local y = db.posy
-	if x and y then
-		local s = display:GetEffectiveScale()
-		display:ClearAllPoints()
-		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-	else
-		display:ClearAllPoints()
-		display:SetPoint("CENTER", UIParent, "CENTER", 450, -160)
-	end
+	display:ClearAllPoints()
+	local point, relPoint = db.position[1], db.position[2]
+	local x, y = db.position[3], db.position[4]
+	display:SetPoint(point, UIParent, relPoint, x, y)
 
 	if db.lock then
 		display:SetMovable(false)
-		display:RegisterForDrag()
-		display:SetScript("OnDragStart", nil)
-		display:SetScript("OnDragStop", nil)
 	else
 		display:SetMovable(true)
-		display:RegisterForDrag("LeftButton")
-		display:SetScript("OnDragStart", function(f) f:StartMoving() end)
-		display:SetScript("OnDragStop", function(f)
-			f:StopMovingOrSizing()
-			local s = f:GetEffectiveScale()
-			db.posx = f:GetLeft() * s
-			db.posy = f:GetTop() * s
-			plugin:UpdateGUI() -- Update X/Y if GUI is open.
-		end)
 	end
 
 	local font = media:Fetch(FONT, db.fontName)
-	local flags
-	if db.monochrome and db.fontOutline ~= "" then
-		flags = "MONOCHROME," .. db.fontOutline
+	local flags = nil
+	if db.monochrome and db.outline ~= "NONE" then
+		flags = "MONOCHROME," .. db.outline
 	elseif db.monochrome then
 		flags = "MONOCHROME"
-	else
-		flags = db.fontOutline
+	elseif db.outline ~= "NONE" then
+		flags = db.outline
 	end
 
+	display.bar:SetColorTexture(db.barColor[1], db.barColor[2], db.barColor[3], db.barColor[4])
+	display.bg:SetColorTexture(db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4])
 	display.title:SetFont(font, db.fontSize, flags)
-	for i = 1, 25 do
+	display.title:SetTextColor(db.barTextColor[1], db.barTextColor[2], db.barTextColor[3], 1)
+	display.title:SetHeight(16+db.additionalHeight)
+	for i = 1, 26 do
 		display.text[i]:SetFont(font, db.fontSize, flags)
+		display.text[i]:SetSize(115+db.additionalWidth, 16+db.additionalHeight)
 	end
+	-- 240 = 115*2 + (5*2 padding - left and right)
+	-- 210 = 16*13 + (1*2 padding - top and bottom)
+	-- 82 = 16*5 + (1*2 padding - top and bottom)
+	display:SetSize(240+(db.additionalWidth*2), db.expanded and 210+(db.additionalHeight*13) or 82+(db.additionalHeight*5))
 end
 
 -------------------------------------------------------------------------------
@@ -121,6 +125,7 @@ do
 	plugin.pluginOptions = {
 		name = L.altPowerTitle,
 		type = "group",
+		childGroups = "tab",
 		get = function(info)
 			return db[info[#info]]
 		end,
@@ -130,121 +135,198 @@ do
 			plugin:RestyleWindow()
 		end,
 		args = {
-			disabled = {
-				type = "toggle",
-				name = L.disabled,
-				desc = L.disabledDisplayDesc,
-				order = 1,
-			},
-			lock = {
-				type = "toggle",
-				name = L.lock,
-				desc = L.lockDesc,
-				order = 2,
-				disabled = disabled,
-			},
-			font = {
-				type = "select",
-				name = L.font,
-				order = 3,
-				values = media:List(FONT),
-				itemControl = "DDI-Font",
-				get = function()
-					for i, v in next, media:List(FONT) do
-						if v == db.fontName then return i end
-					end
-				end,
-				set = function(_, value)
-					db.fontName = media:List(FONT)[value]
-					plugin:RestyleWindow()
-				end,
-				disabled = disabled,
-			},
-			fontOutline = {
-				type = "select",
-				name = L.outline,
-				order = 4,
-				values = {
-					[""] = L.none,
-					OUTLINE = L.thin,
-					THICKOUTLINE = L.thick,
-				},
-				disabled = disabled,
-			},
-			fontSize = {
-				type = "range",
-				name = L.fontSize,
-				order = 5,
-				max = 200, softMax = 72,
-				min = 1,
-				step = 1,
-				disabled = disabled,
-			},
-			monochrome = {
-				type = "toggle",
-				name = L.monochrome,
-				desc = L.monochromeDesc,
-				order = 6,
-				disabled = disabled,
-			},
-			--[[showHide = {
+			general = {
 				type = "group",
-				name = L.showHide,
-				inline = true,
-				order = 7,
-				get = function(info)
-					local key = info[#info]
-					return db.objects[key]
-				end,
-				set = function(info, value)
-					local key = info[#info]
-					db.objects[key] = value
-					plugin:RestyleWindow()
-				end,
+				name = L.general,
+				order = 1,
 				args = {
-					title = {
-						type = "toggle",
-						name = L.title,
-						desc = L.titleDesc,
+					heading = {
+						type = "description",
+						name = L.altPowerDesc .."\n\n",
 						order = 1,
+						width = "full",
+						fontSize = "medium",
 					},
-					background = {
-						type = "toggle",
-						name = L.background,
-						desc = L.backgroundDesc,
+					test = {
+						type = "execute",
+						name = L.test,
+						desc = L.altPowerTestDesc,
+						func = function() 
+							plugin:Test()
+						end,
+						width = 1.5,
 						order = 2,
+						disabled = disabled,
 					},
-					sound = {
+					lock = {
 						type = "toggle",
-						name = L.soundButton,
-						desc = L.soundButtonDesc,
+						name = L.lock,
+						desc = L.lockDesc,
 						order = 3,
+						disabled = disabled,
 					},
-					close = {
-						type = "toggle",
-						name = L.closeButton,
-						desc = L.closeButtonDesc,
+					barHeader = {
+						type = "header",
+						name = L.yourPowerBar,
 						order = 4,
 					},
-					ability = {
-						type = "toggle",
-						name = L.abilityName,
-						desc = L.abilityNameDesc,
+					barColor = {
+						type = "color",
+						name = L.barColor,
+						get = function(info)
+							return db.barColor[1], db.barColor[2], db.barColor[3], db.barColor[4]
+						end,
+						set = function(info, r, g, b, a)
+							db.barColor = {r, g, b, a}
+							plugin:RestyleWindow()
+						end,
+						hasAlpha = true,
+						width = 1.5,
 						order = 5,
+						disabled = disabled,
 					},
-					tooltip = {
-						type = "toggle",
-						name = L.tooltip,
-						desc = L.tooltipDesc,
+					barTextColor = {
+						type = "color",
+						name = L.barTextColor,
+						get = function(info)
+							return db.barTextColor[1], db.barTextColor[2], db.barTextColor[3]
+						end,
+						set = function(info, r, g, b)
+							db.barTextColor = {r, g, b}
+							plugin:RestyleWindow()
+						end,
+						width = 1.5,
 						order = 6,
-					}
+						disabled = disabled,
+					},
+					generalHeader = {
+						type = "header",
+						name = L.general,
+						order = 7,
+					},
+					backgroundColor = {
+						type = "color",
+						name = L.background,
+						get = function(info)
+							return db.backgroundColor[1], db.backgroundColor[2], db.backgroundColor[3], db.backgroundColor[4]
+						end,
+						set = function(info, r, g, b, a)
+							db.backgroundColor = {r, g, b, a}
+							plugin:RestyleWindow()
+						end,
+						hasAlpha = true,
+						order = 8,
+						disabled = disabled,
+					},
+					fontName = {
+						type = "select",
+						name = L.font,
+						order = 9,
+						values = media:List(FONT),
+						itemControl = "DDI-Font",
+						get = function()
+							for i, v in next, media:List(FONT) do
+								if v == db.fontName then return i end
+							end
+						end,
+						set = function(_, value)
+							db.fontName = media:List(FONT)[value]
+							plugin:RestyleWindow()
+						end,
+						width = 2,
+						disabled = disabled,
+					},
+					monochrome = {
+						type = "toggle",
+						name = L.monochrome,
+						desc = L.monochromeDesc,
+						order = 10,
+						disabled = disabled,
+					},
+					fontSize = {
+						type = "range",
+						name = L.fontSize,
+						desc = L.fontSizeDesc,
+						order = 11,
+						max = 200, softMax = 25,
+						min = 1,
+						step = 1,
+						disabled = disabled,
+					},
+					outline = {
+						type = "select",
+						name = L.outline,
+						order = 12,
+						values = {
+							NONE = L.none,
+							OUTLINE = L.thin,
+							THICKOUTLINE = L.thick,
+						},
+						disabled = disabled,
+					},
+					additionalWidth = {
+						type = "range",
+						name = L.additionalWidth,
+						desc = L.additionalSizeDesc,
+						order = 13,
+						max = 100, softMax = 50,
+						min = 0,
+						step = 1,
+						width = 1.5,
+						disabled = disabled,
+					},
+					additionalHeight = {
+						type = "range",
+						name = L.additionalHeight,
+						desc = L.additionalSizeDesc,
+						order = 14,
+						max = 100, softMax = 20,
+						min = 0,
+						step = 1,
+						width = 1.5,
+						disabled = disabled,
+					},
+					resetHeader = {
+						type = "header",
+						name = "",
+						order = 15,
+					},
+					reset = {
+						type = "execute",
+						name = L.resetAll,
+						desc = L.resetAltPowerDesc,
+						func = function() 
+							plugin:Contract()
+							plugin.db:ResetProfile()
+						end,
+						order = 16,
+					},
+					spacer = {
+						type = "description",
+						name = "\n\n",
+						order = 17,
+						width = "full",
+						fontSize = "medium",
+					},
+					disabled = {
+						type = "toggle",
+						name = L.disabled,
+						desc = L.disableAltPowerDesc,
+						order = 18,
+						set = function(_, value)
+							db.disabled = value
+							if value then
+								plugin:Close()
+							end
+						end,
+					},
 				},
-			},]]
+			},
 			exactPositioning = {
 				type = "group",
 				name = L.positionExact,
-				order = 8,
-				inline = true,
+				order = 2,
+				disabled = disabled,
 				args = {
 					posx = {
 						type = "range",
@@ -255,6 +337,13 @@ do
 						step = 1,
 						order = 1,
 						width = "full",
+						get = function()
+							return db.position[3]
+						end,
+						set = function(_, value)
+							db.position[3] = value
+							plugin:RestyleWindow()
+						end,
 					},
 					posy = {
 						type = "range",
@@ -265,17 +354,15 @@ do
 						step = 1,
 						order = 2,
 						width = "full",
+						get = function()
+							return db.position[4]
+						end,
+						set = function(_, value)
+							db.position[4] = value
+							plugin:RestyleWindow()
+						end,
 					},
 				},
-			},
-			reset = {
-				type = "execute",
-				name = L.resetAll,
-				desc = L.resetAltPowerDesc,
-				func = function() 
-					plugin.db:ResetProfile()
-				end,
-				order = 9,
 			},
 		},
 	}
@@ -287,6 +374,7 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
+	oldPlugin.db:ResetProfile(nil, true) -- XXX temp 9.0.2 // no callbacks
 
 	plugin:RestyleWindow()
 end
@@ -297,9 +385,6 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_HideAltPower", "Close")
 	self:RegisterMessage("BigWigs_OnBossDisable")
 	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
-
-	self:RegisterMessage("BigWigs_StartConfigureMode", "Test")
-	self:RegisterMessage("BigWigs_StopConfigureMode", "Close")
 
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
@@ -357,32 +442,50 @@ do
 		-- if BigWigsLoader then
 		-- 	BigWigsLoader.RegisterMessage(addonTable, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
 		-- end
-		display = CreateFrame("Frame", "BigWigsAltPower", UIParent)
+		display = CreateFrame("Frame", nil, UIParent)
 		display:SetSize(230, 80)
 		display:SetClampedToScreen(true)
 		display:EnableMouse(true)
+		display:SetFrameStrata("MEDIUM")
+		display:SetFixedFrameStrata(true)
+		display:SetFrameLevel(20)
+		display:SetFixedFrameLevel(true)
+		display:RegisterForDrag("LeftButton")
+		display:SetScript("OnDragStart", function(self)
+			if self:IsMovable() then
+				self:StartMoving()
+			end
+		end)
+		display:SetScript("OnDragStop", function(self)
+			self:StopMovingOrSizing()
+			local point, _, relPoint, x, y = self:GetPoint()
+			db.position = {point, relPoint, x, y}
+			plugin:UpdateGUI() -- Update X/Y if GUI is open.
+		end)
 		display:Hide()
 
 		local bg = display:CreateTexture()
-		bg:SetAllPoints(display)
-		bg:SetColorTexture(0, 0, 0, 0.3)
-		display.background = bg
+		bg:SetPoint("BOTTOMLEFT", display, "BOTTOMLEFT")
+		bg:SetPoint("BOTTOMRIGHT", display, "BOTTOMRIGHT")
+		display.bg = bg
 
 		local close = CreateFrame("Button", nil, display)
 		close:SetPoint("BOTTOMRIGHT", display, "TOPRIGHT", -2, 2)
-		close:SetHeight(16)
-		close:SetWidth(16)
-		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\close")
+		close:SetSize(16, 16)
+		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\close")
 		close:SetScript("OnClick", function()
-			BigWigs:Print(L.toggleDisplayPrint)
-			plugin:Close()
+			if inTestMode then
+				plugin:Close()
+			else
+				display:Hide() -- Don't call :Close as that would disable syncing (if enabled)
+				BigWigs:Print(L.toggleDisplayPrint)
+			end
 		end)
 
 		local expand = CreateFrame("Button", nil, display)
 		expand:SetPoint("BOTTOMLEFT", display, "TOPLEFT", 2, 2)
-		expand:SetHeight(16)
-		expand:SetWidth(16)
-		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
+		expand:SetSize(16, 16)
+		expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\arrows_down")
 		expand:SetScript("OnClick", function()
 			if db.expanded then
 				plugin:Contract()
@@ -392,21 +495,29 @@ do
 		end)
 		display.expand = expand
 
-		local header = display:CreateFontString(nil, "OVERLAY")
+		local header = display:CreateFontString()
 		header:SetShadowOffset(1, -1)
 		header:SetTextColor(1,0.82,0,1)
 		header:SetPoint("BOTTOM", display, "TOP", 0, 4)
+		header:SetHeight(16)
+		bg:SetPoint("TOP", header, "TOP", 0, 2)
 		display.title = header
 
+		local bar = display:CreateTexture(nil, nil, nil, 1) -- above background
+		bar:SetPoint("LEFT", expand, "RIGHT", 4, 0)
+		bar:SetPoint("BOTTOM", header, "BOTTOM")
+		bar:SetPoint("TOP", header, "TOP")
+		display.bar = bar
+
 		display.text = {}
-		for i = 1, 25 do
-			local text = display:CreateFontString(nil, "OVERLAY")
+		for i = 1, 26 do
+			local text = display:CreateFontString()
 			text:SetShadowOffset(1, -1)
 			text:SetTextColor(1,0.82,0,1)
 			text:SetSize(115, 16)
 			text:SetJustifyH("LEFT")
 			if i == 1 then
-				text:SetPoint("TOPLEFT", display, "TOPLEFT", 5, 0)
+				text:SetPoint("TOPLEFT", display, "TOPLEFT", 5, -1)
 			elseif i % 2 == 0 then
 				text:SetPoint("LEFT", display.text[i-1], "RIGHT")
 			else
@@ -416,10 +527,6 @@ do
 		end
 
 		display:SetScript("OnEvent", GROUP_ROSTER_UPDATE)
-		display:SetScript("OnShow", function(self)
-			self:SetSize(230, db.expanded and 210 or 80)
-			self.expand:SetNormalTexture(db.expanded and "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_up" or "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
-		end)
 	end
 
 	-- This module is rarely used, and opened once during an encounter where it is.
@@ -438,31 +545,66 @@ do
 
 		opener = module
 		sortDir = sorting
+		currentTitle = title
 		maxPlayers = 0 -- Force an update via GROUP_ROSTER_UPDATE
-		if title then
-			display.title:SetText(title)
-		else
-			display.title:SetText(L.altPowerTitle)
-		end
 		display:Show()
 		GROUP_ROSTER_UPDATE()
 		UpdateDisplay()
 	end
 end
 
-function plugin:Test()
-	self:Close()
+do
+	local classList = {"HUNTER","WARRIOR","ROGUE","MAGE","PRIEST","SHAMAN","WARLOCK","DEMONHUNTER","DEATHKNIGHT","DRUID","MONK","PALADIN"}
+	local roleList = {"DAMAGER","TANK","DAMAGER","DAMAGER","HEALER","HEALER","DAMAGER","TANK","DAMAGER","HEALER","HEALER","DAMAGER"}
+	local function testUpdate()
+		if inTestMode then
+			plugin:SimpleTimer(testUpdate, 3)
+		else
+			return
+		end
 
-	sortDir = "AZ"
-	unitList = self:GetRaidList()
-	for i = 1, db.expanded and 25 or 10 do
-		local power = 100-(i*(db.expanded and 4 or 10))
-		local r, g = colorize(power, 100)
-		display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s", r, g, power, unitList[i])
+		local amount = math.random(1,100)
+		display.bar:SetWidth((amount/100) * (200+(db.additionalWidth*2)))
+		display.title:SetFormattedText(L.yourPowerTest, amount)
+
+		local colorTbl = CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS
+		local sortedUnitListTest, powerListTest = {}, {}
+		local amount = db.expanded and 26 or 10
+		for i = 1, amount do
+			sortedUnitListTest[i] = i
+			powerListTest[i] = math.random(1, 99)
+		end
+		tsort(sortedUnitListTest, function(x,y)
+			local px, py = powerListTest[x], powerListTest[y]
+			if px == py then
+				return x > y
+			else
+				return px > py
+			end
+		end)
+		for i = 1, amount do
+			local unitNumber = sortedUnitListTest[i]
+			local tableSize = #classList
+			local tableEntry = unitNumber % tableSize
+			if tableEntry == 0 then tableEntry = tableSize end
+			local class = classList[tableEntry]
+			local role = roleList[tableEntry]
+			local power = powerListTest[unitNumber]
+			local r, g = colorize(power, 100)
+			local name = (L.player):format(unitNumber)
+			local classColorTbl = class and colorTbl[class] or GRAY_FONT_COLOR
+			display.text[i]:SetFormattedText("|cFF%02x%02x00[%d]|r %s|cFF%02x%02x%02x%s|r", r, g, power, roleIcons[role], classColorTbl.r*255, classColorTbl.g*255, classColorTbl.b*255, name)
+		end
 	end
-	display.title:SetText(L.altPowerTitle)
-	display:Show()
-	inTestMode = true
+	function plugin:Test()
+		if not inTestMode then
+			self:Close()
+
+			display:Show()
+			inTestMode = true
+			testUpdate()
+		end
+	end
 end
 
 do
@@ -484,8 +626,12 @@ do
 			powerList[unit] = syncPowerList and syncPowerList[unit] or UnitPower(unit, 10) -- Enum.PowerType.Alternate = 10
 			powerMaxList[unit] = syncPowerMaxList and syncPowerMaxList[unit] or UnitPowerMax(unit, 10) -- Enum.PowerType.Alternate = 10
 		end
+		local power = UnitPower("player", 10)
+		local percent = power / UnitPowerMax("player", 10)
+		display.bar:SetWidth(percent * (200+(db.additionalWidth*2)))
+		display.title:SetFormattedText(L.yourAltPower, currentTitle, power)
 		tsort(sortedUnitList, sortTbl)
-		for i = 1, db.expanded and 25 or 10 do
+		for i = 1, db.expanded and 26 or 10 do
 			local unit = sortedUnitList[i]
 			if unit then
 				local power = powerList[unit]
@@ -501,24 +647,19 @@ end
 
 function plugin:Expand()
 	db.expanded = true
-	display:SetHeight(210)
-	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_up")
-	if inTestMode then
-		self:Test()
-	else
+	display:SetHeight(210+(db.additionalHeight*13))
+	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\arrows_up")
+	if not inTestMode then
 		UpdateDisplay()
 	end
 end
 
 function plugin:Contract()
 	db.expanded = false
-	display:SetHeight(80)
-	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\arrows_down")
-	for i = 11, 25 do
+	display:SetHeight(82+(db.additionalHeight*5))
+	display.expand:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\arrows_down")
+	for i = 11, 26 do
 		display.text[i]:SetText("")
-	end
-	if inTestMode then
-		self:Test()
 	end
 end
 
@@ -529,19 +670,17 @@ function plugin:Close()
 		repeatSync = nil
 	end
 
-	if display then
-		if updater then self:CancelTimer(updater) end
-		updater = nil
-		display:UnregisterEvent("GROUP_ROSTER_UPDATE")
-		display:Hide()
-		self:UnregisterMessage("BigWigs_PluginComm")
-		for i = 1, 25 do
-			display.text[i]:SetText("")
-		end
+	if updater then self:CancelTimer(updater) end
+	updater = nil
+	display:UnregisterEvent("GROUP_ROSTER_UPDATE")
+	display:Hide()
+	self:UnregisterMessage("BigWigs_PluginComm")
+	for i = 1, 26 do
+		display.text[i]:SetText("")
 	end
 
 	powerList, powerMaxList, sortedUnitList, roleColoredList, syncPowerList, syncPowerMaxList = nil, nil, nil, nil, nil, nil
-	unitList, opener, inTestMode = nil, nil, nil
+	unitList, opener, inTestMode, currentTitle = nil, nil, nil, nil
 end
 
 function plugin:BigWigs_OnBossDisable(_, module)
@@ -582,7 +721,7 @@ do
 		opener = module
 		if not repeatSync then
 			repeatSync = self:ScheduleRepeatingTimer(sendPower, 1)
-			if display and display:IsShown() then
+			if display:IsShown() then
 				syncPowerList = {}
 				syncPowerMaxList = {}
 			else

@@ -211,7 +211,7 @@ do
 	normalMessageFrame:SetHeight(80)
 	normalMessageFrame:SetFrameStrata("FULLSCREEN_DIALOG")
 	normalMessageFrame:SetFixedFrameStrata(true)
-	normalMessageFrame:SetFrameLevel(0) -- Behind GUI (level 1)
+	normalMessageFrame:SetFrameLevel(20) -- Behind GUI (level 100) & behind emphasized messages (level 30)
 	normalMessageFrame:SetFixedFrameLevel(true)
 
 	local function FontFinish(self)
@@ -313,6 +313,7 @@ plugin.pluginOptions = {
 				fontSize = {
 					type = "range",
 					name = L.fontSize,
+					desc = L.fontSizeDesc,
 					order = 4,
 					max = 200, softMax = 72,
 					min = 1,
@@ -434,6 +435,7 @@ plugin.pluginOptions = {
 				emphFontSize = {
 					type = "range",
 					name = L.fontSize,
+					desc = L.fontSizeDesc,
 					order = 4,
 					softMax = 100, max = 200, min = 1, step = 1,
 				},
@@ -684,7 +686,7 @@ do
 	emphMessageFrame = CreateFrame("Frame", nil, UIParent)
 	emphMessageFrame:SetFrameStrata("FULLSCREEN_DIALOG")
 	emphMessageFrame:SetFixedFrameStrata(true)
-	emphMessageFrame:SetFrameLevel(0) -- Behind GUI (level 1)
+	emphMessageFrame:SetFrameLevel(30) -- Behind GUI (level 100)
 	emphMessageFrame:SetFixedFrameLevel(true)
 	emphMessageFrame:SetPoint("CENTER", emphMessageAnchor, "CENTER")
 	emphMessageFrame:SetWidth(2000)

@@ -29,9 +29,11 @@ plugin.defaultDB = {
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
+local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local GetSubZoneText = GetSubZoneText
 local SetCVar = C_CVar.SetCVar
 local CheckElv = nil
+local RestoreAll
 
 -------------------------------------------------------------------------------
 -- Options
@@ -168,6 +170,10 @@ function plugin:OnPluginEnable()
 	CheckElv(self)
 end
 
+function plugin:OnPluginDisable()
+	RestoreAll(self)
+end
+
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -251,9 +257,7 @@ do
 		end
 	end
 
-	function plugin:OnWinOrWipe(event, module)
-		if not module or not module.journalId or module.worldBoss then return end
-
+	function RestoreAll(self)
 		if self.db.profile.blockEmotes then
 			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
 			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
@@ -288,6 +292,11 @@ do
 			trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, false)
 			restoreObjectiveTracker = nil
 		end
+	end
+
+	function plugin:OnWinOrWipe(event, module)
+		if not module or not module.journalId or module.worldBoss then return end
+		RestoreAll(self)
 	end
 end
 

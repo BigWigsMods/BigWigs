@@ -41,7 +41,7 @@ BigWigs:AddColors("Hungering Destroyer", {
 })
 
 BigWigs:AddColors("Artificer Xy'mox", {
-	[325236] = {"blue","purple"},
+	[325236] = {"blue","purple","yellow"},
 	[325399] = "yellow",
 	[326271] = "red",
 	[327414] = {"blue","red"},
@@ -129,6 +129,7 @@ BigWigs:AddColors("Sludgefist", {
 	[340817] = "yellow",
 	[341193] = "yellow",
 	[341250] = "yellow",
+	["fun_info"] = "green",
 })
 
 BigWigs:AddColors("Stone Legion Generals", {
@@ -153,27 +154,55 @@ BigWigs:AddColors("Stone Legion Generals", {
 	[342985] = "cyan",
 	[343063] = "blue",
 	[344496] = {"blue","red"},
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Sire Denathrius", {
 	[-22131] = "yellow",
 	[326699] = {"blue","green","red"},
 	[326707] = "purple",
-	[326851] = "blue",
+	[326851] = {"blue","red"},
+	[327039] = {"blue","orange"},
 	[327122] = "orange",
+	[327227] = "yellow",
 	[327796] = {"blue","orange"},
 	[327992] = "blue",
+	[328276] = "green",
 	[328936] = "cyan",
 	[329181] = {"blue","purple","yellow"},
 	[329906] = "blue",
 	[329951] = {"blue","orange"},
-	[330068] = "red",
+	[330042] = "red",
 	[332585] = {"blue","purple"},
 	[332619] = "orange",
 	[332794] = {"blue","orange"},
 	[332849] = "orange",
 	[333932] = "orange",
+	[333979] = "red",
 	[333980] = "red",
 	[335873] = "blue",
+	[336162] = "blue",
+	[338738] = "green",
+	[344776] = "yellow",
+	["hymn_stacks"] = {"blue","green"},
 	["stages"] = "green",
+})
+
+BigWigs:AddColors("Castle Nathria Trash", {
+	[329298] = {"blue","yellow"},
+	[329989] = "orange",
+	[339525] = {"blue","orange"},
+	[339528] = {"blue","purple"},
+	[339553] = "blue",
+	[339557] = "yellow",
+	[340630] = {"blue","purple"},
+	[341352] = "yellow",
+	[341441] = "red",
+	[341735] = "orange",
+	[343155] = {"orange","red"},
+	[343302] = "orange",
+	[343316] = "yellow",
+	[343320] = "yellow",
+	[343322] = "yellow",
+	[343325] = "yellow",
 })

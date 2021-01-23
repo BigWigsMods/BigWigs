@@ -10,16 +10,30 @@ L.positionExact = "Positionnement exact"
 L.width = "Largeur"
 L.height = "Hauteur"
 L.sizeDesc = "Normalement, la taille peut être définie en tirant sur l'ancre. Si vous avez besoin d'une taille bien précise, vous pouvez utiliser ce slider ou taper la valeur dans la boîte de saisie, qui n'a pas de limite."
+L.fontSizeDesc = "Ajustez la taille de la police à l'aide de ce curseur, ou tapez la valeur dans la saisie ce qui permet d'aller jusqu'à 200."
 
 -----------------------------------------------------------------------
 -- AltPower.lua
 --
 
 L.altPowerTitle = "Ressource alternative"
+L.altPowerDesc = "L'affichage de la Ressource alternative ne s'effectuera que sur les boss qui ajoutent une ressource alternative aux joueurs, ce qui est très rare. L'affichage indique la quantité de 'Ressource alternative' que vous et votre groupe possédez, sous forme de liste. Pour déplacer l'affichage, veuillez utiliser le bouton de test ci-dessous."
 L.toggleDisplayPrint = "L'affichage sera présent la prochaine fois. Pour le désactiver complètement pour cette rencontre, vous devez le décocher dans les options de la rencontre."
 L.disabled = "Désactivé"
 L.disabledDisplayDesc = "Désactive l'affichage pour tous les modules qui l'utilisent."
 L.resetAltPowerDesc = "Réinitialise toutes les options relatives à la ressource alternative, y compris la position de l'ancre."
+L.test = "Test"
+L.altPowerTestDesc = "Affiche la fenêtre de 'Ressource alternative', vous permettant de la déplacer, et de simuler les changements de ressource que vous verrez dans une rencontre de boss."
+L.yourPowerBar = "Votre barre de puissance"
+L.barColor = "Couleur de la barre"
+L.barTextColor = "Couleur du texte de la barre"
+L.additionalWidth = "Longeur additionnelle"
+L.additionalHeight = "Hauteur additionnelle"
+L.additionalSizeDesc = "Ajoutez de la taille à l'affichage standard à l'aide de ce curseur, ou tapez la valeur dans la saisie ce qui permet d'aller jusqu'à 100."
+L.yourPowerTest = "Votre ressource : %d" -- Your Power: 42
+L.yourAltPower = "Votre %s : %d" -- e.g. Your Corruption: 42
+L.player = "Joueur %d" -- Player 7
+L.disableAltPowerDesc = "Désactive l'affichage de la ressource alternative de manière globale ; elle ne sera jamais affichée sur les rencontres de boss."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -70,9 +84,9 @@ L.temporaryCountdownDesc = "Active temporairement le compte à rebours sur la te
 L.report = "Rapport"
 L.reportDesc = "Rapporte le statut des barres actuelles dans la discussion de groupe active : la discussion d'instance, de raid, de groupe ou juste le dire, selon ce qui est le plus approprié."
 L.remove = "Enlever"
---L.removeBarDesc = "Temporarily removes this bar."
+L.removeBarDesc = "Enlève temporairement cette barre."
 L.removeOther = "Enlever les autres"
---L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
+L.removeOtherBarDesc = "Enlève temporairement toutes les autres barres (mis à part celle-ci)."
 
 L.emphasizeAt = "Mettre en évidence à... (secondes)"
 L.growingUpwards = "Ajouter vers le haut"
@@ -229,7 +243,7 @@ L.bwEmphasized = "BigWigs en évidence"
 L.messages = "Messages"
 L.normalMessages = "Messages normaux"
 L.emphasizedMessages = "Messages en évidence"
---L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+L.emphasizedDesc = "Le principe d'un message en évidence est d'attirer votre attention en affichant un large message au milieu de votre écran. Il est rarement activé par défaut, mais vous pouvez l'activer pour n'importe quelle technique de boss en vous rendant dans les paramètres spécifiques de la rencontre de boss."
 L.output = "Sortie"
 L.uppercase = "MAJUSCULE"
 L.uppercaseDesc = "Tous les messages mis en évidence seront convertis en MAJUSCULES."

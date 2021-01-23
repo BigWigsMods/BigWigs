@@ -1,21 +1,27 @@
-local L = BigWigs:NewBossLocale("Shriekwing", "esES") or BigWigs:NewBossLocale("Shriekwing", "esMX")
+local L = BigWigs:NewBossLocale("Shriekwing", "esES")
 if not L then return end
 if L then
 	-- L.pickup_lantern = "%s picked up the lantern!"
 	-- L.dropped_lantern = "Lantern dropped by %s!"
 end
 
-L = BigWigs:NewBossLocale("Huntsman Altimor", "esES") or BigWigs:NewBossLocale("Huntsman Altimor", "esMX")
+L = BigWigs:NewBossLocale("Huntsman Altimor", "esES")
 if L then
 	-- L.killed = "%s Killed"
 end
 
-L = BigWigs:NewBossLocale("Hungering Destroyer", "esES") or BigWigs:NewBossLocale("Hungering Destroyer", "esMX")
+L = BigWigs:NewBossLocale("Hungering Destroyer", "esES")
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+
+	--L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
+	--L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+
+	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
+	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
 end
 
-L = BigWigs:NewBossLocale("Artificer Xy'mox", "esES") or BigWigs:NewBossLocale("Artificer Xy'mox", "esMX")
+L = BigWigs:NewBossLocale("Artificer Xy'mox", "esES")
 if L then
 	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
 	-- L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
@@ -24,14 +30,12 @@ if L then
 	L.seeds = "Semillas" -- Short for Seeds of Extinction
 end
 
-L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "esES") or BigWigs:NewBossLocale("Lady Inerva Darkvein", "esMX")
+L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "esES")
 if L then
 	-- L.times = "%dx %s"
 
 	-- L.level = "%s (Level |cffffff00%d|r)"
 	-- L.full = "%s (|cffff0000FULL|r)"
-
-	-- L.container_active = "Enable Container: %s"
 
 	-- L.anima_adds = "Concentrate Anima Adds"
 	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
@@ -50,7 +54,7 @@ if L then
 	-- L.sins = "Sins"
 end
 
-L = BigWigs:NewBossLocale("The Council of Blood", "esES") or BigWigs:NewBossLocale("The Council of Blood", "esMX")
+L = BigWigs:NewBossLocale("The Council of Blood", "esES")
 if L then
 	-- L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
 	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
@@ -78,7 +82,7 @@ if L then
 	--L.dance_yell_left = "left" -- Sashay left!
 end
 
-L = BigWigs:NewBossLocale("Sludgefist", "esES") or BigWigs:NewBossLocale("Sludgefist", "esMX")
+L = BigWigs:NewBossLocale("Sludgefist", "esES")
 if L then
 	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
 
@@ -88,7 +92,7 @@ if L then
 	-- L.health_lost = "Sludgefist went down %.1f%%!"
 end
 
-L = BigWigs:NewBossLocale("Stone Legion Generals", "esES") or BigWigs:NewBossLocale("Stone Legion Generals", "esMX")
+L = BigWigs:NewBossLocale("Stone Legion Generals", "esES")
 if L then
 	-- L.first_blade = "First Blade"
 	-- L.second_blade = "Second Blade"
@@ -99,7 +103,7 @@ if L then
 	-- L.custom_on_stop_timers_desc = "Just for testing right now"
 end
 
-L = BigWigs:NewBossLocale("Sire Denathrius", "esES") or BigWigs:NewBossLocale("Sire Denathrius", "esMX")
+L = BigWigs:NewBossLocale("Sire Denathrius", "esES")
 if L then
 	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
@@ -120,4 +124,28 @@ if L then
 
 	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
 	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "esES")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "Moldovaak"
+	L.caramain = "Caramain"
+	L.sindrel = "Sindrel"
+	L.hargitas = "Hargitas"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "Gargon descomunal"
+	L.hawkeye = "Ojohalcón de Nathria"
+	L.overseer = "Sobrestante de perrera"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "Descarnador aterrador"
+	L.rat = "Rata de tamaño inusual"
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "Deplina"
+	L.dragost = "Dragost"
+	L.kullan = "Kullan"
 end

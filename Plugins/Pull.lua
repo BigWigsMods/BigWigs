@@ -152,6 +152,13 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossEngage")
 end
 
+function plugin:OnPluginDisable()
+	if isLogging then
+		isLogging = false
+		LoggingCombat(isLogging)
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Event Handlers
 --
@@ -187,6 +194,7 @@ do
 		end
 	end
 	function plugin:StartPull(seconds, nick, isDBM)
+		if IsEncounterInProgress() then return end -- Doesn't make sense to allow this in combat
 		if not IsInGroup() or ((IsInGroup(2) or not IsInRaid()) and UnitGroupRolesAssigned(nick) == "TANK") or UnitIsGroupLeader(nick) or UnitIsGroupAssistant(nick) then
 			local _, _, _, instanceId = UnitPosition("player")
 			local _, _, _, tarInstanceId = UnitPosition(nick)
@@ -270,9 +278,9 @@ end
 --
 
 SlashCmdList.BIGWIGSPULL = function(input)
-	if not plugin:IsEnabled() then BigWigs:Enable() end
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
 	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") or ((IsInGroup(2) or not IsInRaid()) and UnitGroupRolesAssigned("player") == "TANK") then -- Solo or leader/assist or tank in LFG/5m
+		if not plugin:IsEnabled() then BigWigs:Enable() end
 		if input == "" then
 			input = "10" -- Allow typing /pull to start a 10 second pull timer
 		else

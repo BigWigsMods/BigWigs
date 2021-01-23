@@ -13,6 +13,14 @@ end
 L = BigWigs:NewBossLocale("Hungering Destroyer", "deDE")
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+
+	L.custom_on_repeating_yell_miasma = "Wiederholtes Miasma Gesundheit Schreien"
+	L.custom_on_repeating_yell_miasma_desc = "Gibt wiederholt Schrei-Nachrichten für Gefräßiges Miasma aus, damit Mitspieler merken, wenn Du unter 75% Gesundheit bist."
+
+	L.custom_on_repeating_say_laser = "Wiederholte Instabiler Ausstoß Ansage"
+	L.custom_on_repeating_say_laser_desc = "Gibt wiederholt Chatnachrichten für Instabilen Ausstoß aus um beim Annähern an Spieler in Reichweite der Chatnachrichten zu helfen, falls diese die erste Nachricht nicht gelesen haben."
+
+	L.tempPrint = "Es wurde eine Gesundheitsansage für Miasma hinzugefügt. Falls bislang eine WeakAura hierfür verwendet wurde, kann diese gelöscht werden um doppelte Ansagen zu vermeiden."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "deDE")
@@ -118,4 +126,28 @@ if L then
 
 	L.no_mirror = "Kein Spiegel: %d" -- Player amount that does not have the Through the Mirror
 	L.mirror = "Spiegel: %d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "deDE")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "Moldovaak"
+	L.caramain = "Caramain"
+	L.sindrel = "Sindrel"
+	L.hargitas = "Hargitas"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "Bulliger Gargon"
+	L.hawkeye = "Scharfschütze von Nathria"
+	L.overseer = "Zwingeraufseherin"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "Schreckensschmauser"
+	L.rat = "Ungewöhnlich große Ratte"
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "Deplina"
+	L.dragost = "Dragost"
+	L.kullan = "Kullan"
 end

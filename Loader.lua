@@ -19,7 +19,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 201
+local BIGWIGS_VERSION = 207
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -97,6 +97,9 @@ public.CTimerAfter = CTimerAfter
 public.CTimerNewTicker = CTimerNewTicker
 public.UnitName = UnitName
 public.UnitGUID = UnitGUID
+public.SetRaidTarget = SetRaidTarget
+public.UnitHealth = UnitHealth
+public.UnitHealthMax = UnitHealthMax
 
 -- Version
 local usersHash = {}
@@ -379,8 +382,9 @@ local function loadAddons(tbl)
 end
 
 local function loadZone(zone)
-	if not loadOnZone[zone] then return end
-	loadAddons(loadOnZone[zone])
+	if loadOnZone[zone] then
+		loadAddons(loadOnZone[zone])
+	end
 end
 
 local function loadAndEnableCore()
@@ -409,7 +413,7 @@ end
 --
 
 local dataBroker = ldb:NewDataObject("BigWigs",
-	{type = "launcher", label = "BigWigs", icon = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\core-disabled"}
+	{type = "launcher", label = "BigWigs", icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-disabled"}
 )
 
 function dataBroker.OnClick(self, button)
@@ -695,8 +699,7 @@ end
 function mod:ADDON_LOADED(addon)
 	if addon ~= "BigWigs" then return end
 
-	bwFrame:RegisterEvent("ZONE_CHANGED_NEW_AREA")
-	bwFrame:RegisterEvent("RAID_INSTANCE_WELCOME")
+	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
 	bwFrame:RegisterEvent("LFG_PROPOSAL_SHOW")
@@ -735,49 +738,13 @@ function mod:ADDON_LOADED(addon)
 		-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
 		if BigWigs3DB.namespaces then
 			for k,v in next, BigWigs3DB.namespaces do
-				if k:find("BigWigs_Bosses_", nil, true) and (not next(v) or not BigWigs3DB.wipe80) then -- XXX temp boss DB wipe for 8.0.1
+				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
 					BigWigs3DB.namespaces[k] = nil
 				end
-				-- XXX start temp 8.0.1 color conversion
-				if k == "BigWigs_Plugins_Colors" then
-					for profiles, profileList in next, v do
-						for name, tbl in next, profileList do
-							if tbl["Positive"] then
-								tbl["green"] = tbl["Positive"]
-								tbl["Positive"] = nil
-							end
-							if tbl["Personal"] then
-								tbl["blue"] = tbl["Personal"]
-								tbl["Personal"] = nil
-							end
-							if tbl["Important"] then
-								tbl["red"] = tbl["Important"]
-								tbl["Important"] = nil
-							end
-							if tbl["Urgent"] then
-								tbl["orange"] = tbl["Urgent"]
-								tbl["Urgent"] = nil
-							end
-							if tbl["Neutral"] then
-								tbl["cyan"] = tbl["Neutral"]
-								tbl["Neutral"] = nil
-							end
-							if tbl["Attention"] then
-								tbl["yellow"] = tbl["Attention"]
-								tbl["Attention"] = nil
-							end
-						end
-					end
-				end
-				-- XXX end temp 8.0.1 color conversion
 			end
 		end
-		BigWigs3DB.wipe80 = true -- XXX temp boss DB wipe for 8.0.1
-		if not BigWigs3DB.discord or BigWigs3DB.discord < 15 then
-			BigWigs3DB.discord = (BigWigs3DB.discord or 0) + 1
-			CTimerAfter(11, function() sysprint("We are now on Discord: https://discord.gg/jGveg85") end)
-		end
-		BigWigs3DB.fPrint = nil -- XXX temp 7.3.5
+		BigWigs3DB.wipe80 = nil -- XXX temp boss DB wipe for 8.0.1 // removed in 9.0.2
+		BigWigs3DB.discord = nil -- XXX 9.0.2
 	end
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
@@ -800,11 +767,7 @@ function mod:UPDATE_FLOATING_CHAT_WINDOWS()
 
 	self:GROUP_ROSTER_UPDATE()
 	self:PLAYER_ENTERING_WORLD()
-
-	-- Break timer restoration
-	if BigWigs3DB and BigWigs3DB.breakTime then
-		loadAndEnableCore()
-	end
+	self:ZONE_CHANGED()
 end
 
 -- Various temporary printing stuff
@@ -929,7 +892,7 @@ do
 		esES = "Spanish (esES)",
 		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
-		ptBR = "Portuguese (ptBR)",
+		--ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
 	}
 	if locales[L] then
@@ -1022,9 +985,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20201228030636" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "9.0.15" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20201227000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20210119152747" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "9.0.18" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20210119000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
@@ -1341,60 +1304,18 @@ end
 
 do
 	local warnedThisZone = {}
-
-	function mod:UNIT_TARGET(unit)
-		local guid = UnitGUID(unit.."target")
-		if guid then
-			local _, _, _, _, _, mobId = strsplit("-", guid)
-			mobId = tonumber(mobId)
-			local id = mobId and worldBosses[mobId]
-			if id then
-				if loadAndEnableCore() then
-					if BigWigs:IsEnabled() then
-						loadZone(id)
-					else
-						BigWigs:Enable()
-					end
-				end
-			end
-		end
-	end
-
-	function mod:PLAYER_ENTERING_WORLD()
+	function mod:PLAYER_ENTERING_WORLD() -- Raid bosses
 		-- Zone checking
-		local _, instanceType, _, _, _, _, _, id = GetInstanceInfo()
-		if instanceType == "none" then
-			local mapId = GetBestMapForUnit("player")
-			if mapId then
-				id = -mapId -- Use map id for world bosses
-			end
-		end
+		local _, _, _, _, _, _, _, id = GetInstanceInfo()
 
 		-- Module loading
 		if enableZones[id] then
-			if id > 0 then
-				bwFrame:UnregisterEvent("UNIT_TARGET")
-				if loadAndEnableCore() then
-					if BigWigs:IsEnabled() and loadOnZone[id] then
-						loadZone(id)
-					else
-						BigWigs:Enable()
-					end
-				end
-			elseif enableZones[id] == "world" then
-				if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player") and (not BigWigsOptions or not BigWigsOptions:IsOpen()) and (not BigWigs3DB or not BigWigs3DB.breakTime) then
-					BigWigs:Disable() -- Might be leaving an LFR and entering a world enable zone, disable first
-				end
-				bwFrame:RegisterEvent("UNIT_TARGET")
-				self:UNIT_TARGET("player")
+			if loadAndEnableCore() then
+				loadZone(id)
 			end
+		elseif BigWigs3DB and BigWigs3DB.breakTime then -- Break timer restoration
+			loadAndEnableCore()
 		else
-			bwFrame:UnregisterEvent("UNIT_TARGET")
-			if BigWigs and BigWigs:IsEnabled() and not UnitIsDeadOrGhost("player")
-			and (not BigWigsOptions or not BigWigsOptions:IsOpen()) -- Not if the GUI is open
-			and (not BigWigsAnchor or (not next(BigWigsAnchor.bars) and not next(BigWigsEmphasizeAnchor.bars))) then -- Not if bars are showing
-				BigWigs:Disable() -- Alive in a non-enable zone, disable
-			end
 			if disabledZones and disabledZones[id] then -- We have content for the zone but it is disabled in the addons menu
 				local msg = L.disabledAddOn:format(disabledZones[id])
 				sysprint(msg)
@@ -1418,8 +1339,36 @@ do
 			end
 		end
 	end
-	mod.RAID_INSTANCE_WELCOME = mod.PLAYER_ENTERING_WORLD -- For the unproven chance that PLAYER_ENTERING_WORLD fires after a loading screen ends
-	mod.ZONE_CHANGED_NEW_AREA = mod.PLAYER_ENTERING_WORLD -- For world bosses, not useful for raids as it fires after loading has ended
+end
+
+do
+	function mod:UNIT_TARGET(unit)
+		local unitTarget = unit.."target"
+		local guid = UnitGUID(unitTarget)
+		if guid then
+			local _, _, _, _, _, mobId = strsplit("-", guid)
+			mobId = tonumber(mobId)
+			local id = mobId and worldBosses[mobId]
+			if id and loadAndEnableCore() then
+				loadZone(id)
+				BigWigs:Enable(unitTarget)
+			end
+		end
+	end
+	function mod:ZONE_CHANGED() -- For world bosses, not useful for raids as it fires after loading has ended
+		local id = 0
+		local mapId = GetBestMapForUnit("player")
+		if mapId then
+			id = -mapId -- Use map id for world bosses
+		end
+
+		-- Module loading
+		if enableZones[id] == "world" then
+			bwFrame:RegisterEvent("UNIT_TARGET")
+		else
+			bwFrame:UnregisterEvent("UNIT_TARGET")
+		end
+	end
 end
 
 do
@@ -1430,14 +1379,12 @@ do
 			grouped = groupType
 			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
-			self:PLAYER_ENTERING_WORLD()
 			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
 			ResetVersionWarning()
 			usersVersion = {}
 			usersHash = {}
-			self:PLAYER_ENTERING_WORLD()
 		end
 	end
 end
@@ -1458,7 +1405,7 @@ end
 public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 
 function mod:BigWigs_CoreEnabled()
-	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\core-enabled"
+	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-enabled"
 
 	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
 	-- which kills your ability to receive addon comms during the loading process.
@@ -1475,7 +1422,7 @@ end
 public.RegisterMessage(mod, "BigWigs_CoreEnabled")
 
 function mod:BigWigs_CoreDisabled()
-	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\core-disabled"
+	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-disabled"
 end
 public.RegisterMessage(mod, "BigWigs_CoreDisabled")
 

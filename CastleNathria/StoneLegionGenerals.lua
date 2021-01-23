@@ -24,6 +24,7 @@ local pulverizingMeteorCount = 1
 local reverberatingLeapCount = 1
 local seismicUphealvalCount = 1
 local shadowForcesCount = 1
+local isInfoOpen = false
 
 local mobCollector = {}
 local mobCollectorGoliath = {}
@@ -32,6 +33,7 @@ local skirmisherTracker = {}
 local commandoesKilled = 0
 local commandoesNeeded = 7
 local commandoAddMarks = {}
+local wickedLacerationList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -65,13 +67,14 @@ function mod:GetOptions()
 			--[[ Stage One: Kaal's Assault ]]--
 		329636, -- Hardened Stone Form
 		{333387, "SAY"}, -- Wicked Blade
+		{333913, "INFOBOX"}, -- Wicked Laceration
 		wickedBladeMarker,
 		334765, -- Heart Rend
 		heartRendMarker,
 		{334929, "TANK"}, -- Serrated Swipe
-		{339690, "SAY", "SAY_COUNTDOWN"}, -- Crystalize
+		{339690, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Crystalize
 		crystalizeMarker,
-		342544, -- Pulverizing Meteor
+		{342544, "SAY"}, -- Pulverizing Meteor
 		343063, -- Stone Spike
 		{342733, "FLASH"}, -- Ravenous Feast
 		342985, -- Stonegale Effigy
@@ -85,7 +88,7 @@ function mod:GetOptions()
 		--[[ Stage Two: Grashaal's Blitz ]]--
 		329808, -- Hardened Stone Form
 		{342425, "TANK"}, -- Stone Fist
-		{344496, "SAY"}, -- Reverberating Eruption
+		{344496, "SAY", "ME_ONLY_EMPHASIZE"}, -- Reverberating Eruption
 		334498, -- Seismic Upheaval
 
 		--[[ Mythic ]]--
@@ -113,6 +116,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WickedBlade", 344230, 333387) -- Normal, Heroic
 	self:Log("SPELL_AURA_APPLIED", "WickedBladeApplied", 333377) -- Wicked Mark
 	self:Log("SPELL_AURA_REMOVED", "WickedBladeRemoved", 333377)
+	self:Log("SPELL_AURA_APPLIED", "WickedLaceration", 333913)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "WickedLaceration", 333913)
+	self:Log("SPELL_AURA_REMOVED", "WickedLacerationRemoved", 333913)
 	self:Log("SPELL_CAST_START", "HeartRend", 334765)
 	self:Log("SPELL_AURA_APPLIED", "HeartRendApplied", 334765)
 	self:Log("SPELL_AURA_REMOVED", "HeartRendRemoved", 334765)
@@ -158,6 +164,8 @@ function mod:OnEngage()
 	seismicUphealvalCount = 1
 	shadowForcesCount = 1
 	intermission = false
+	wickedLacerationList = {}
+	isInfoOpen = false
 
 	self:Bar(334929, 8.3, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
 	self:Bar(333387, 19, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
@@ -231,16 +239,26 @@ do
 	end
 end
 
-function mod:CommandoDeath(args)
-	if intermission then
-		commandoesKilled = commandoesKilled + 1
-		self:Message("stages", "cyan", CL.mob_killed:format(args.destName, commandoesKilled, commandoesNeeded), false)
+do
+	local throttle = false
+	local function Message()
+		throttle = false
+		mod:Message("stages", "cyan", CL.mob_killed:format(mod:SpellName(-22791), commandoesKilled, commandoesNeeded), false) -- Stone Legion Commando
 	end
-	if self:GetOption(commandoMarker) then
-		for i = 8, 5, -1 do -- 8, 7, 6, 5
-			if commandoAddMarks[i] == args.destGUID then
-				commandoAddMarks[i] = nil
-				return
+	function mod:CommandoDeath(args)
+		if intermission then
+			commandoesKilled = commandoesKilled + 1
+			if not throttle then
+				throttle = true
+				self:SimpleTimer(Message, 1.5)
+			end
+		end
+		if self:GetOption(commandoMarker) then
+			for i = 8, 5, -1 do -- 8, 7, 6, 5
+				if commandoAddMarks[i] == args.destGUID then
+					commandoAddMarks[i] = nil
+					return
+				end
 			end
 		end
 	end
@@ -256,18 +274,15 @@ function mod:AddMarkTracker(event, unit, guid)
 	if guid and not mobCollector[guid] then
 		local mobId = self:MobId(guid)
 		if self:GetOption(skirmisherMarker) and skirmisherTracker[guid] then --  Stone Legion Skirmisher
-			SetRaidTarget(unit, skirmisherTracker[guid])
+			self:CustomIcon(skirmisherMarker, unit, skirmisherTracker[guid])
 			mobCollector[guid] = true
 		elseif self:GetOption(commandoMarker) and mobId == 169601 then -- Stone Legion Commando
-			local health = UnitHealth(unit)
-			local maxHealth = UnitHealthMax(unit)
-			local percentHealth = (health/maxHealth) * 100
-			if percentHealth < 75 then -- They are 72% when they are on the floor, 100% when flying around
+			if self:GetHealth(unit) < 75 then -- They are 72% when they are on the floor, 100% when flying around
 				for i = 8, 5, -1 do -- 8, 7, 6, 5
 					if not commandoAddMarks[i] then
 						mobCollector[guid] = true
 						commandoAddMarks[i] = guid
-						SetRaidTarget(unit, i)
+						self:CustomIcon(commandoMarker, unit, i)
 						return
 					end
 				end
@@ -319,7 +334,7 @@ do
 			if self:GetOption(wickedBladeMarker) then
 				for i = 1, #playerList do
 					local name = playerList[i]
-					SetRaidTarget(name, name == target and 2 or 3)
+					self:CustomIcon(wickedBladeMarker, name, name == target and 2 or 3)
 				end
 			end
 		else
@@ -352,8 +367,8 @@ do
 			end
 			if #playerList == 2 then
 				--if self:GetOption(wickedBladeMarker) then -- Are potentially wrong marks better than potentially no marks?
-				--	SetRaidTarget(playerList[1], 2)
-				--	SetRaidTarget(playerList[2], 3)
+				--	self:CustomIcon(wickedBladeMarker, playerList[1], 2)
+				--	self:CustomIcon(wickedBladeMarker, playerList[2], 3)
 				--end
 				self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 			end
@@ -363,10 +378,8 @@ do
 				self:PlaySound(333387, "warning")
 			end
 			playerList[2] = args.destName
-			if self:GetOption(wickedBladeMarker) then
-				SetRaidTarget(playerList[1], 2)
-				SetRaidTarget(playerList[2], 3)
-			end
+			self:CustomIcon(wickedBladeMarker, playerList[1], 2)
+			self:CustomIcon(wickedBladeMarker, playerList[2], 3)
 			self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 		end
 	end
@@ -375,9 +388,26 @@ do
 		if self:Me(args.destGUID) then
 			onMe = false
 		end
-		if self:GetOption(wickedBladeMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(wickedBladeMarker, args.destName)
+	end
+end
+
+function mod:WickedLaceration(args)
+	if not isInfoOpen then
+		isInfoOpen = true
+		self:OpenInfo(args.spellId, args.spellName)
+	end
+	wickedLacerationList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, wickedLacerationList)
+end
+
+function mod:WickedLacerationRemoved(args)
+	wickedLacerationList[args.destName] = nil
+	if next(wickedLacerationList) then
+		self:SetInfoByTable(args.spellId, wickedLacerationList)
+	elseif isInfoOpen then
+		isInfoOpen = false
+		self:CloseInfo(args.spellId)
 	end
 end
 
@@ -400,17 +430,13 @@ do
 			self:PlaySound(args.spellId, "alarm")
 		end
 
-		if self:GetOption(heartRendMarker) then
-			SetRaidTarget(args.destName, count)
-		end
+		self:CustomIcon(heartRendMarker, args.destName, count)
 
 		self:TargetsMessage(args.spellId, "orange", playerList, 4, CL.count:format(args.spellName, heartRendCount-1), nil, nil, playerIcons)
 	end
 
 	function mod:HeartRendRemoved(args)
-		if self:GetOption(heartRendMarker) then
-			SetRaidTarget(args.destName, 0)
-		end
+		self:CustomIcon(heartRendMarker, args.destName)
 	end
 end
 
@@ -428,36 +454,39 @@ end
 function mod:Crystalize(args)
 	self:StopBar(CL.count:format(args.spellName, crystalizeCount))
 	crystalizeCount = crystalizeCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 55 or 60, CL.count:format(args.spellName, crystalizeCount))
+	self:CDBar(args.spellId, self:Mythic() and 55 or 50, CL.count:format(args.spellName, crystalizeCount))
 end
 
-function mod:CrystalizeApplied(args)
-	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, crystalizeCount-1))
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 5)
-		self:PlaySound(args.spellId, "warning")
-	end
-	if self:GetOption(crystalizeMarker) then
-		SetRaidTarget(args.destName, 1)
-	end
-end
-
-function mod:CrystalizeRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+do
+	local prevGUID = nil
+	function mod:CrystalizeApplied(args)
+		prevGUID = args.destGUID
+		self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, crystalizeCount-1))
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 5)
+			self:PlaySound(args.spellId, "warning")
+		end
+		self:CustomIcon(crystalizeMarker, args.destName, 1)
 	end
 
-	if self:GetOption(crystalizeMarker) then
-		SetRaidTarget(args.destName, 0)
-	end
-end
+	function mod:CrystalizeRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
 
-function mod:PulverizingMeteor(args)
-	self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
-	self:PlaySound(args.spellId, "alert")
-	pulverizingMeteorCount = pulverizingMeteorCount + 1
+		self:CustomIcon(crystalizeMarker, args.destName)
+	end
+
+	function mod:PulverizingMeteor(args)
+		if self:Me(prevGUID) then
+			self:Yell(args.spellId, 28884) -- Meteor
+		end
+		self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:PlaySound(args.spellId, "alert")
+		pulverizingMeteorCount = pulverizingMeteorCount + 1
+	end
 end
 
 function mod:StoneSpikeApplied(args)
@@ -536,7 +565,7 @@ do
 			self:Say(344496, 324010) -- Eruption
 			self:PlaySound(344496, "warning")
 		end
-		self:TargetMessage(344496, "red", player, CL.count:format(self:SpellName(344496), reverberatingLeapCount-1))
+		self:TargetMessage(344496, "red", player, CL.count:format(self:SpellName(324010), reverberatingLeapCount-1))
 	end
 
 	function mod:ReverberatingEruption(args)
@@ -571,7 +600,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alert")
 		end
-		self:TargetsMessage(args.spellId, "cyan", playerList)
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, nil, nil, 2) -- Throttle to 2s
 	end
 end
 

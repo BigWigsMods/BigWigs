@@ -372,6 +372,7 @@ do
 					fontSize = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						order = 13,
 						softMax = 100, max = 200, min = 1, step = 1,
 					},
@@ -535,7 +536,7 @@ do
 	countdownFrame = CreateFrame("Frame", nil, UIParent)
 	countdownFrame:SetFrameStrata("FULLSCREEN_DIALOG")
 	countdownFrame:SetFixedFrameStrata(true)
-	countdownFrame:SetFrameLevel(0) -- Behind GUI (level 1)
+	countdownFrame:SetFrameLevel(20) -- Behind GUI (level 100)
 	countdownFrame:SetFixedFrameLevel(true)
 	countdownFrame:SetPoint("CENTER", countdownAnchor, "CENTER")
 	countdownFrame:SetWidth(80)

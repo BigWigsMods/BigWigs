@@ -170,8 +170,7 @@ end
 
 function mod:VerifyEnable(unit, mobId)
 	if mobId == 165759 then -- Kael'thas
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp < 50 then
+		if self:GetHealth(unit) < 50 then
 			return true
 		end
 	else
@@ -253,8 +252,7 @@ do
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp > nextStageWarning then -- Stage changes at 45% and 90%
+	if self:GetHealth(unit) > nextStageWarning then -- Stage changes at 45% and 90%
 		self:Message("stages", "green", CL.soon:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
 		nextStageWarning = nextStageWarning + 45
 		if nextStageWarning > 90 then
@@ -267,20 +265,20 @@ function mod:SunKingsSalvationMarker(event, unit, guid)
 	if self:GetOption(vileOccultistMarker) and self:MobId(guid) == 165763 and not mobCollector[guid] then -- Vile Occultist
 		vileOccultistMarkCount = vileOccultistMarkCount + 1
 		local icon = 9 - (vileOccultistMarkCount % 6 + 1) -- 8, 7, 5, 6, 4, 3
-		SetRaidTarget(unit, icon)
+		self:CustomIcon(vileOccultistMarker, unit, icon)
 		iconsInUse[icon] = guid
 		mobCollector[guid] = true
 	elseif self:GetOption(essenceFontMarker) and self:MobId(guid) == 165778 and not mobCollector[guid] then -- Essence Font
 		for i = 1, 6 do
 			if not iconsInUse[i] then
-				SetRaidTarget(unit, i)
+				self:CustomIcon(essenceFontMarker, unit, i)
 				iconsInUse[i] = guid
 				mobCollector[guid] = true
 			end
 		end
 	elseif self:GetOption(phoenixMarker) and self:MobId(guid) == 168962 and not mobCollector[guid] then -- Phoenix
 		phoenixCount = phoenixCount + 1
-		SetRaidTarget(unit, phoenixCount)
+		self:CustomIcon(phoenixMarker, unit, phoenixCount)
 		mobCollector[guid] = true
 	end
 end
@@ -310,6 +308,7 @@ function mod:ReflectionOfGuiltApplied(args)
 			self:CancelDelayedMessage(text)
 			self:StopBar(text)
 		end
+		self:StopBar(CL.count:format(self:SpellName(337859), cloakofFlamesCount)) -- Cloak of Flames
 
 		for key, scheduled in pairs(addScheduledTimers) do -- cancel all scheduled add timers
 			self:CancelTimer(scheduled)
@@ -318,12 +317,12 @@ function mod:ReflectionOfGuiltApplied(args)
 
 		blazingSurgeCount = 1
 		emberBlastCount = 1
+		cloakofFlamesCount = 1
 
 		self:Bar(326455, 13.5) -- Fiery Strike
 		self:Bar(325877, 19.5, CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 		self:Bar(329518, 29.5, CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 
-		cloakofFlamesCount = 1
 		if self:Mythic() then
 			self:Bar(343026, 38.9, CL.count:format(self:SpellName(343026), cloakofFlamesCount))
 		end
@@ -531,6 +530,7 @@ do
 end
 
 function mod:DarithosDeath()
+	self:CloseProximity(328889)
 	self:StopBar(328889) -- Greater Castigation
 end
 

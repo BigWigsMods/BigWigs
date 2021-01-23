@@ -966,6 +966,7 @@ do
 					fontSize = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						width = 2,
 						order = 3,
 						max = 200, softMax = 72,
@@ -1090,6 +1091,7 @@ do
 					fontSizeEmph = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						order = 7,
 						max = 200, softMax = 72,
 						min = 1,
@@ -1206,6 +1208,7 @@ do
 					fontSizeNameplate = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						order = 6,
 						max = 200, softMax = 72,
 						min = 1,
@@ -1301,7 +1304,6 @@ do
 	local function barSorter(a, b)
 		return a.remaining < b.remaining and true or false
 	end
-	local tmp = {}
 	rearrangeBars = function(anchor)
 		if not anchor then return end
 		if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
@@ -1313,7 +1315,7 @@ do
 		end
 		if not next(anchor.bars) then return end
 
-		wipe(tmp)
+		local tmp = {}
 		for bar in next, anchor.bars do
 			tmp[#tmp + 1] = bar
 		end
@@ -1521,7 +1523,7 @@ do
 		drag:SetScript("OnMouseUp", onDragHandleMouseUp)
 		drag:SetAlpha(0.5)
 		local tex = drag:CreateTexture(nil, "OVERLAY")
-		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\draghandle")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
 		tex:SetWidth(16)
 		tex:SetHeight(16)
 		tex:SetBlendMode("ADD")
@@ -1634,6 +1636,15 @@ function plugin:OnPluginEnable()
 		else
 			startBreak(seconds-(curTime-prevTime), nick, isDBM, true)
 		end
+	end
+end
+
+function plugin:OnPluginDisable()
+	for k in next, normalAnchor.bars do
+		k:Stop()
+	end
+	for k in next, emphasizeAnchor.bars do
+		k:Stop()
 	end
 end
 
@@ -1816,6 +1827,16 @@ end
 --------------------------------------------------------------------------------
 -- Bar utility functions
 --
+
+function plugin:HasActiveBars()
+	if next(normalAnchor.bars) then
+		return true
+	end
+	if next(emphasizeAnchor.bars) then
+		return true
+	end
+	return false
+end
 
 function plugin:GetBarTimeLeft(module, text)
 	if normalAnchor then
@@ -2254,14 +2275,20 @@ do
 
 		BigWigs:Print(L.breakStarted:format(isDBM and "DBM" or "BigWigs", nick))
 
-		timerTbl = {
-			plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "orange", 134062), -- 134062 = "Interface\\Icons\\inv_misc_fork&knife"
-			plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "orange", 134062),
-			plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "orange", 134062),
-			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "red", 134062),
-			plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Sound", plugin, nil, "Long"),
-			plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
-		}
+		timerTbl = {}
+		if seconds > 30 then
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 30, "BigWigs_Message", plugin, nil, L.breakSeconds:format(30), "orange", 134062) -- 134062 = "Interface\\Icons\\inv_misc_fork&knife"
+		end
+		if seconds > 10 then
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 10, "BigWigs_Message", plugin, nil, L.breakSeconds:format(10), "orange", 134062)
+		end
+		if seconds > 5 then
+			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 5, "BigWigs_Message", plugin, nil, L.breakSeconds:format(5), "orange", 134062)
+		end
+		timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Message", plugin, nil, L.breakFinished, "red", 134062)
+		timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds, "BigWigs_Sound", plugin, nil, "Long")
+		timerTbl[#timerTbl+1] = plugin:ScheduleTimer(function() BigWigs3DB.breakTime = nil timerTbl = nil end, seconds)
+
 		if seconds > 119 then -- 2min
 			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", seconds - 60, "BigWigs_Message", plugin, nil, L.breakMinutes:format(1), "yellow", 134062)
 		end
@@ -2272,8 +2299,10 @@ do
 			timerTbl[#timerTbl+1] = plugin:ScheduleTimer("SendMessage", half + m, "BigWigs_Message", plugin, nil, L.breakMinutes:format(halfMin), "yellow", 134062)
 		end
 
-		plugin:SendMessage("BigWigs_Message", plugin, nil, L.breakMinutes:format(seconds/60), "green", 134062)
-		plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
+		plugin:SendMessage("BigWigs_Message", plugin, nil, seconds < 61 and L.breakSeconds:format(seconds) or L.breakMinutes:format(seconds/60), "green", 134062)
+		if not reboot then
+			plugin:SendMessage("BigWigs_Sound", plugin, nil, "Long")
+		end
 		plugin:SendMessage("BigWigs_StartBar", plugin, nil, L.breakBar, seconds, 134062)
 		plugin:SendMessage("BigWigs_StartBreak", plugin, seconds, nick, isDBM, reboot)
 	end

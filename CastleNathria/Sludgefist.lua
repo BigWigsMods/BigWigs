@@ -27,8 +27,7 @@ local timers = {
 	[341193] = {13.0, 70.9, 70.5, 70.5, 70.5} -- Falling Rubble
 }
 
-local healthLost = 0
-local maxHealth = 0
+local prevHp = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -101,13 +100,16 @@ function mod:OnEngage()
 	seismicShiftCount = 1
 	chainLinksApplied = 0
 	fallingRubbleCount = 1
+	prevHp = 0
 
 	self:Bar(335293, 5, CL.count:format(self:SpellName(335293), chainLinkCount)) -- Chain Link
-	self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+	if not self:Easy() then
+		self:Bar(335470, 29.1, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+	end
 	if self:Tank() then
 		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 	else
-		self:CDBar(331314, 58.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+		self:CDBar(331314, self:Mythic() and 58.5 or 60.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
 	end
 	if self:Mythic() then
 		self:CDBar(340817, timers[340817][seismicShiftCount], CL.count:format(L.stomp_shift, seismicShiftCount)) -- Seismic Shift
@@ -167,10 +169,9 @@ function mod:DestructiveImpactApplied(args)
 	if self:Mythic() then
 		self:Bar(341102, 3.5, CL.casting:format(self:SpellName(341102)), 341102) -- Fractured Boulder
 	end
-	local unit = self:GetUnitIdByGUID(args.destGUID)
+	local unit = self:GetBossId(args.destGUID)
 	if unit then
-		maxHealth = UnitHealthMax(unit)
-		healthLost = UnitHealth(unit)
+		prevHp = self:GetHealth(unit)
 	end
 end
 
@@ -179,7 +180,7 @@ function mod:DestructiveImpactRemoved(args)
 	if self:Tank() then
 		self:Bar(331209, 52.5, CL.count:format(self:SpellName(331209), hatefullGazeCount)) -- Hateful Gaze
 	else
-		self:CDBar(331314, 58.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
+		self:CDBar(331314, self:Mythic() and 58.5 or 60.5, CL.count:format(self:SpellName(331314), hatefullGazeCount)) -- Destructive Impact
 	end
 
 	-- Update timers to be more exact
@@ -188,14 +189,15 @@ function mod:DestructiveImpactRemoved(args)
 	else
 		self:Bar(332318, 18.5, CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	end
-	self:Bar(335470, 29, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+	if not self:Easy() then
+		self:Bar(335470, 29, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
+	end
 
-	local unit = self:GetUnitIdByGUID(args.destGUID)
-	if unit and healthLost ~= 0 then
-		healthLost = healthLost - UnitHealth(unit)
-		local percentHealthLost = (healthLost/maxHealth) * 100
+	local unit = self:GetBossId(args.destGUID)
+	if unit and prevHp ~= 0 then
+		local percentHealthLost = self:GetHealth(unit) - prevHp
 		self:Message("fun_info", "green", L.health_lost:format(percentHealthLost), "petbattle_health-down")
-		healthLost = 0
+		prevHp = 0
 	end
 end
 
@@ -243,8 +245,8 @@ function mod:ChainSlamApplied(args)
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(args.spellName, chainSlamCount))
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 4)
+		self:Yell(args.spellId)
+		self:YellCountdown(args.spellId, 4)
 		self:PlaySound(args.spellId, "warning")
 	end
 	chainSlamCount = chainSlamCount + 1
@@ -254,7 +256,7 @@ end
 function mod:ChainSlamRemoved(args)
 	self:PrimaryIcon(args.spellId)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelYellCountdown(args.spellId)
 	end
 end
 

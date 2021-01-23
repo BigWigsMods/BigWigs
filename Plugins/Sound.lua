@@ -192,7 +192,7 @@ do
 	local C = BigWigs.C
 	local keyTable = {}
 	function plugin:SetSoundOptions(name, key, flags)
-		wipe(keyTable)
+		table.wipe(keyTable)
 		keyTable[1] = name
 		keyTable[2] = key
 		local t = addKey(soundOptions, keyTable)
@@ -281,8 +281,16 @@ end
 --
 
 do
+	local tmp = { -- XXX temp
+		["long"] = "Long",
+		["info"] = "Info",
+		["alert"] = "Alert",
+		["alarm"] = "Alarm",
+		["warning"] = "Warning",
+	}
 	local PlaySoundFile = PlaySoundFile
 	function plugin:BigWigs_Sound(event, module, key, soundName)
+		soundName = tmp[soundName] or soundName
 		if db.sound then
 			local sDb = db[soundName]
 			if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then

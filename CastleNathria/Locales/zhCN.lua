@@ -13,6 +13,14 @@ end
 L = BigWigs:NewBossLocale("Hungering Destroyer", "zhCN")
 if L then
 	L.miasma = "瘴气" -- Short for Gluttonous Miasma
+
+	L.custom_on_repeating_yell_miasma = "重复瘴气生命值喊话"
+	L.custom_on_repeating_yell_miasma_desc = "重复暴食瘴气喊话信息让其他人知道你的生命值低于75%。"
+
+	L.custom_on_repeating_say_laser = "重复不稳定的喷发说话"
+	L.custom_on_repeating_say_laser_desc = "重复不稳定的喷发说话信息来帮助没有看到您的第一条消息的玩家移入聊天范围。"
+
+	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhCN")
@@ -30,8 +38,6 @@ if L then
 
 	L.level = "%s（等级 |cffffff00%d|r）"
 	L.full = "%s（|cffff0000满|r）"
-
-	L.container_active = "启用容器：%s"
 
 	L.anima_adds = "浓缩心能增援"
 	L.anima_adds_desc = "当浓缩心能负面效果刷新增援时显示一个计时器。"
@@ -120,4 +126,28 @@ if L then
 
 	L.no_mirror = "没镜子：%d" -- Player amount that does not have the Through the Mirror
 	L.mirror = "镜子：%d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "zhCN")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "摩多瓦克"
+	L.caramain = "卡拉梅恩"
+	L.sindrel = "辛德雷尔"
+	L.hargitas = "哈尔基塔司"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "魁梧的加尔贡"
+	L.hawkeye = "纳斯利亚鹰眼射手"
+	L.overseer = "狗舍监督者"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "恐惧吞食者"
+	L.rat = "尺寸惊人的老鼠"
+	L.miasma = "瘴气" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "德普莉娜"
+	L.dragost = "德拉苟斯特"
+	L.kullan = "库兰"
 end
