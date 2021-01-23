@@ -849,6 +849,10 @@ do
 		-- 	BigWigsLoader.RegisterMessage(addonTable, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
 		-- end
 		proxAnchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
+		proxAnchor:SetFrameStrata("MEDIUM")
+		proxAnchor:SetFixedFrameStrata(true)
+		proxAnchor:SetFrameLevel(120)
+		proxAnchor:SetFixedFrameLevel(true)
 		proxAnchor:SetWidth(db.width)
 		proxAnchor:SetHeight(db.height)
 		proxAnchor:SetMinResize(100, 30)
@@ -875,7 +879,6 @@ do
 
 		local close = CreateFrame("Button", nil, proxAnchor)
 		close:SetPoint("BOTTOMRIGHT", proxAnchor, "TOPRIGHT", -2, 2)
-		close:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		close:SetHeight(16)
 		close:SetWidth(16)
 		close.tooltipHeader = L.close
@@ -892,7 +895,6 @@ do
 
 		local sound = CreateFrame("Button", nil, proxAnchor)
 		sound:SetPoint("BOTTOMLEFT", proxAnchor, "TOPLEFT", 2, 2)
-		sound:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		sound:SetHeight(16)
 		sound:SetWidth(16)
 		sound.tooltipHeader = L.toggleSound
@@ -994,14 +996,12 @@ do
 
 		local drag = CreateFrame("Frame", nil, proxAnchor)
 		drag.frame = proxAnchor
-		drag:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		drag:SetWidth(16)
 		drag:SetHeight(16)
 		drag:SetPoint("BOTTOMRIGHT", proxAnchor, -1, 1)
 		drag:EnableMouse(true)
 		drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
 		drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
-		drag:SetAlpha(0.5)
 		proxAnchor.drag = drag
 
 		local tex = drag:CreateTexture(nil, "OVERLAY")

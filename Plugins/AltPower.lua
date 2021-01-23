@@ -448,7 +448,7 @@ do
 		display:EnableMouse(true)
 		display:SetFrameStrata("MEDIUM")
 		display:SetFixedFrameStrata(true)
-		display:SetFrameLevel(20)
+		display:SetFrameLevel(125)
 		display:SetFixedFrameLevel(true)
 		display:RegisterForDrag("LeftButton")
 		display:SetScript("OnDragStart", function(self)

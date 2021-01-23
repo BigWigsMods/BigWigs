@@ -210,7 +210,7 @@ do
 	countdownAnchor:SetHeight(80)
 	countdownAnchor:SetFrameStrata("HIGH")
 	countdownAnchor:SetFixedFrameStrata(true)
-	countdownAnchor:SetFrameLevel(5)
+	countdownAnchor:SetFrameLevel(20)
 	countdownAnchor:SetFixedFrameLevel(true)
 	countdownAnchor:SetScript("OnDragStart", OnDragStart)
 	countdownAnchor:SetScript("OnDragStop", OnDragStop)

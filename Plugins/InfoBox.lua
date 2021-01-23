@@ -69,6 +69,10 @@ plugin.defaultDB = {
 do
 	display = CreateFrame("Frame", "BigWigsInfoBox", UIParent)
 	display:SetSize(infoboxWidth, infoboxHeight)
+	display:SetFrameStrata("MEDIUM")
+	display:SetFixedFrameStrata(true)
+	display:SetFrameLevel(130)
+	display:SetFixedFrameLevel(true)
 	display:SetClampedToScreen(true)
 	display:EnableMouse(true)
 	display:SetMovable(true)
