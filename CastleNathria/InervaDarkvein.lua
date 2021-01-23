@@ -137,7 +137,7 @@ function mod:OnEngage()
 	conjuredManifestationCount = 1
 	concentratedAnimaCount = 1
 	enabledContainer = 0
-	wipe(anima)
+	anima = {}
 
 	self:Bar(341621, 12, L.desires) -- Expose Desires
 	self:Bar(324983, 23, L.sins) -- Shared Suffering

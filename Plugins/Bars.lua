@@ -1304,7 +1304,6 @@ do
 	local function barSorter(a, b)
 		return a.remaining < b.remaining and true or false
 	end
-	local tmp = {}
 	rearrangeBars = function(anchor)
 		if not anchor then return end
 		if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
@@ -1316,7 +1315,7 @@ do
 		end
 		if not next(anchor.bars) then return end
 
-		wipe(tmp)
+		local tmp = {}
 		for bar in next, anchor.bars do
 			tmp[#tmp + 1] = bar
 		end

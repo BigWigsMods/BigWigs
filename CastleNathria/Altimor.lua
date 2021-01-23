@@ -116,7 +116,7 @@ function mod:OnEngage()
 	ripSoulCount = 1
 	shadesOfBargastCount = 1
 	petrifyingHowlCount = 1
-	wipe(mobCollector)
+	mobCollector = {}
 
 	self:Bar(334404, 6.5) -- Spreadshot
 	self:Bar(334971, 10) -- Jagged Claws

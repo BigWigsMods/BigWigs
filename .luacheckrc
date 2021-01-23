@@ -91,7 +91,6 @@ globals = {
 	"time",
 	"tinsert",
 	"tremove",
-	"wipe",
 
 	-- framexml
 	"getprinthandler",

@@ -129,7 +129,8 @@ function mod:OnEngage()
 end
 
 function mod:OnBossDisable()
-	laserOnMe = false -- Setting this to false to prevent the repeating say to get stuck
+	laserOnMe = false -- Compensate for the boss dieing mid cast
+	miasmaOnMe = false
 	if self:GetOption(gluttonousMiasmaMarker) then
 		for i = 1, #miasmaMarkClear do
 			local n = miasmaMarkClear[i]

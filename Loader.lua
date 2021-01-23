@@ -738,49 +738,13 @@ function mod:ADDON_LOADED(addon)
 		-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
 		if BigWigs3DB.namespaces then
 			for k,v in next, BigWigs3DB.namespaces do
-				if k:find("BigWigs_Bosses_", nil, true) and (not next(v) or not BigWigs3DB.wipe80) then -- XXX temp boss DB wipe for 8.0.1
+				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
 					BigWigs3DB.namespaces[k] = nil
 				end
-				-- XXX start temp 8.0.1 color conversion
-				if k == "BigWigs_Plugins_Colors" then
-					for profiles, profileList in next, v do
-						for name, tbl in next, profileList do
-							if tbl["Positive"] then
-								tbl["green"] = tbl["Positive"]
-								tbl["Positive"] = nil
-							end
-							if tbl["Personal"] then
-								tbl["blue"] = tbl["Personal"]
-								tbl["Personal"] = nil
-							end
-							if tbl["Important"] then
-								tbl["red"] = tbl["Important"]
-								tbl["Important"] = nil
-							end
-							if tbl["Urgent"] then
-								tbl["orange"] = tbl["Urgent"]
-								tbl["Urgent"] = nil
-							end
-							if tbl["Neutral"] then
-								tbl["cyan"] = tbl["Neutral"]
-								tbl["Neutral"] = nil
-							end
-							if tbl["Attention"] then
-								tbl["yellow"] = tbl["Attention"]
-								tbl["Attention"] = nil
-							end
-						end
-					end
-				end
-				-- XXX end temp 8.0.1 color conversion
 			end
 		end
-		BigWigs3DB.wipe80 = true -- XXX temp boss DB wipe for 8.0.1
-		if not BigWigs3DB.discord or BigWigs3DB.discord < 15 then
-			BigWigs3DB.discord = (BigWigs3DB.discord or 0) + 1
-			CTimerAfter(11, function() sysprint("We are now on Discord: https://discord.gg/jGveg85") end)
-		end
-		BigWigs3DB.fPrint = nil -- XXX temp 7.3.5
+		BigWigs3DB.wipe80 = nil -- XXX temp boss DB wipe for 8.0.1 // removed in 9.0.2
+		BigWigs3DB.discord = nil -- XXX 9.0.2
 	end
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 

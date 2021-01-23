@@ -69,8 +69,8 @@ local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetN
 local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown
 local UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason = UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason
 local min, cos, sin, format = math.min, math.cos, math.sin, string.format
-local tinsert, tconcat = table.insert, table.concat
-local next, type, tonumber, wipe = next, type, tonumber, wipe
+local tinsert, tconcat, wipe = table.insert, table.concat, table.wipe
+local next, type, tonumber = next, type, tonumber
 local piDoubled = 6.2831853071796
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
@@ -1310,7 +1310,7 @@ function plugin:Close(noReopen)
 	activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = setRange(0), 0, 0, 0
 	activeSpellID = nil
 	proximityPlayer = nil
-	wipe(proximityPlayerTable)
+	proximityPlayerTable = {}
 
 	proxTitle:SetFormattedText(L_proximityTitle, 5, 3)
 	proxAnchor.ability:SetFormattedText("|T136015:20:20:-5:0:64:64:4:60:4:60|t%s", L.proximity) -- Interface\\Icons\\spell_nature_chainlightning

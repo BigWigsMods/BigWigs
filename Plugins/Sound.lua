@@ -192,7 +192,7 @@ do
 	local C = BigWigs.C
 	local keyTable = {}
 	function plugin:SetSoundOptions(name, key, flags)
-		wipe(keyTable)
+		table.wipe(keyTable)
 		keyTable[1] = name
 		keyTable[2] = key
 		local t = addKey(soundOptions, keyTable)
