@@ -19,6 +19,8 @@ if L then
 
 	L.custom_on_repeating_say_laser = "重覆猛烈噴射說話"
 	L.custom_on_repeating_say_laser_desc = "當你你被標記為猛烈噴射的目標時，重覆發送說話訊息，以便接近你的玩家可以立刻看見並避開。"
+
+	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhTW")

@@ -19,6 +19,8 @@ if L then
 
 	L.custom_on_repeating_say_laser = "Répéter Expulsion instable en /dire"
 	L.custom_on_repeating_say_laser_desc = "Répète des messages en /dire pour Expulsion instable afin de vous aider quand vous vous déplacez à portée de discussion des joueurs qui n'ont pas vu votre premier message."
+
+	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "frFR")

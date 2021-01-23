@@ -19,6 +19,8 @@ if L then
 
 	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
 	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
+
+	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "ruRU")

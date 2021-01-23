@@ -19,6 +19,8 @@ if L then
 
 	L.custom_on_repeating_say_laser = "Repetir dizer Ejeção Volátil"
 	L.custom_on_repeating_say_laser_desc = "Mensagens ditas repetitivas para Ejeção Volátil, para ajudar os outros a se moverem."
+
+	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "ptBR")
