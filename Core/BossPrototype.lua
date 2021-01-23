@@ -2029,13 +2029,20 @@ do
 				local textType = type(text)
 				local msg = textType == "string" and text or spells[text or key]
 				local texture = icon ~= false and icons[icon or textType == "number" and text or key]
-				wipe(playerTable)
 				if markers then
-					wipe(markers)
 					self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, markers[playersInTable]), "blue", texture, isEmphasized)
 				else
 					self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, isEmphasized)
 				end
+			end
+			if playersInTable == playerCount then
+				wipe(playerTable)
+				if markers then wipe(markers) end
+			elseif playersInTable == 1 then
+				Timer(customTime or 0.3, function()
+					wipe(playerTable)
+					if markers then wipe(markers) end
+				end)
 			end
 		elseif checkFlag(self, key, C.MESSAGE) then
 			if playerTable[playersInTable] == cpName and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
