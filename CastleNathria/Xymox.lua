@@ -197,6 +197,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		self:Bar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 		self:Bar(328437, 16.5, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:Bar(340788, 22.3, CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
+		self:Bar(325236, 25.2, CL.count:format(self:SpellName(325236), glyphCount)) -- Glyph of Destruction
 		if self:Mythic() then
 			self:Bar(340758, 27, CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
 		end
@@ -222,6 +223,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		self:CDBar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 		self:CDBar(328437, 16.5, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:Bar(328789, 28.3, CL.count:format(self:SpellName(328789), annihilateCount)) -- Annihilate
+		self:CDBar(325236, self:Mythic() and 52 or 50, CL.count:format(self:SpellName(325236), glyphCount)) -- Glyph of Destruction
 		if self:Mythic() then
 			self:CDBar(340788, 32.3, CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 			self:Bar(340758, 34.3, CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
