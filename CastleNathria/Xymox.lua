@@ -57,7 +57,7 @@ function mod:GetOptions()
 		"stages",
 		{328437, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Dimensional Tear
 		dimensionalTearMarker,
-		{325236, "TANK", "SAY_COUNTDOWN"}, -- Glyph of Destruction
+		{325236, "TANK_HEALER", "SAY_COUNTDOWN"}, -- Glyph of Destruction
 		326271, -- Stasis Trap
 		335013, -- Rift Blast
 		325399, -- Hyperlight Spark
