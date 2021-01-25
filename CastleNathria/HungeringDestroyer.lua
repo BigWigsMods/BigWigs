@@ -148,6 +148,7 @@ end
 --
 
 local function RepeatingChatMessages()
+	local duration = 1.5
 	if volEjectionOnMe and mod:GetOption("custom_on_repeating_say_laser") then
 		mod:Say(false, CL.beam)
 	elseif miasmaOnMe and mod:GetOption("custom_on_repeating_yell_miasma") then -- Repeat Health instead
@@ -157,11 +158,14 @@ local function RepeatingChatMessages()
 			local msg = myIcon and L.currentHealthIcon:format(myIcon, currentHealthPercent) or L.currentHealth:format(currentHealthPercent)
 			mod:Yell(false, msg, true)
 		end
+		if not mod:Mythic() then
+			duration = 2 -- Slower on non-mythic
+		end
 	else
 		scheduledChatMsg = false
 		return -- Nothing had to be repeated, stop repeating
 	end
-	mod:SimpleTimer(RepeatingChatMessages, 1.5)
+	mod:SimpleTimer(RepeatingChatMessages, duration)
 end
 
 do
@@ -177,7 +181,7 @@ do
 				self:PlaySound(args.spellId, "alarm")
 				if not scheduledChatMsg and not self:LFR() and self:GetOption("custom_on_repeating_yell_miasma") then
 					scheduledChatMsg = true
-					self:SimpleTimer(RepeatingChatMessages, 1.5)
+					self:SimpleTimer(RepeatingChatMessages, 2)
 				end
 			end
 			self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
