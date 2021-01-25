@@ -278,25 +278,24 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), L.desires))
 		self:PlaySound(331870, "long")
 		enabledContainer = 1
-		self:Bar(331870, 97, CL.count:format(CL.other:format(self:SpellName(331870), L.bottles), enabledContainer+1)) -- She picks the next one 3s early, hidden cast?
+		self:Bar(331870, 97, CL.other:format(self:SpellName(331870), L.bottles)) -- She picks the next one 3s early, hidden cast?
 	elseif spellId == 331870 then -- Focus Anima: Bottles
-		self:StopBar(CL.count:format(CL.other:format(self:SpellName(331870), L.bottles)))
+		self:StopBar(CL.other:format(self:SpellName(331870), L.bottles))
 		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), L.bottles))
 		self:PlaySound(331870, "long")
 		enabledContainer = 2
-		self:Bar(331870, 97, CL.count:format(CL.other:format(self:SpellName(331870), L.sins), enabledContainer+1))
+		self:Bar(331870, 97, CL.other:format(self:SpellName(331870), L.sins))
 	elseif spellId == 331872 then -- Focus Anima: Sins
-		self:StopBar(CL.count:format(CL.other:format(self:SpellName(331870), L.sins)))
+		self:StopBar(CL.other:format(self:SpellName(331870), L.sins))
 		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), L.sins))
 		self:PlaySound(331870, "long")
 		enabledContainer = 3
-		self:Bar(331870, 97, CL.count:format(CL.other:format(self:SpellName(331870), CL.adds), enabledContainer+1))
+		self:Bar(331870, 97, CL.other:format(self:SpellName(331870), CL.adds))
 	elseif spellId == 331873 then -- Focus Anima: Adds
-		self:StopBar(CL.count:format(CL.other:format(self:SpellName(331870), CL.adds)))
+		self:StopBar(CL.other:format(self:SpellName(331870), CL.adds))
 		self:Message(331870, "cyan", CL.other:format(self:SpellName(331870), CL.adds))
 		self:PlaySound(331870, "long")
 		enabledContainer = 4
-		self:StopBar(CL.count:format(self:SpellName(331870), enabledContainer)) -- Focus Anima
 	end
 end
 
