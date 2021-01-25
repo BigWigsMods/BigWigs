@@ -197,8 +197,7 @@ end
 function mod:ExsanguinatingBite(args)
 	for i = 1, #tankList do
 		local unit = tankList[i]
-		local _, status = UnitDetailedThreatSituation(unit, "boss1")
-		if status == 1 or status == 3 then
+		if self:TopThreat("boss1", unit) then
 			self:TargetMessage(args.spellId, "purple", self:UnitName(unit), CL.casting:format(args.spellName))
 			break
 		elseif i == #tankList then
