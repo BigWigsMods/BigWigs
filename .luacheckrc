@@ -12,6 +12,7 @@ files["**/Loader.lua"].ignore = {
 	"113/C_ChatInfo",
 	"113/SendChatMessage",
 	"113/SetRaidTarget",
+	"113/UnitDetailedThreatSituation",
 	"113/UnitGUID",
 	"113/UnitName",
 }
@@ -218,7 +219,6 @@ globals = {
 	"UnitCanAttack",
 	"UnitCastingInfo",
 	"UnitClass",
-	"UnitDetailedThreatSituation",
 	"UnitExists",
 	"UnitFactionGroup",
 	"UnitGetTotalAbsorbs",

@@ -100,6 +100,7 @@ public.UnitGUID = UnitGUID
 public.SetRaidTarget = SetRaidTarget
 public.UnitHealth = UnitHealth
 public.UnitHealthMax = UnitHealthMax
+public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
 
 -- Version
 local usersHash = {}
