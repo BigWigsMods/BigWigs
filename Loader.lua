@@ -82,7 +82,7 @@ end
 --
 
 local tooltipFunctions = {}
-local next, tonumber, strsplit = next, tonumber, strsplit
+local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
 local UnitName, UnitGUID = UnitName, UnitGUID
@@ -955,13 +955,20 @@ do
 		end
 	end
 
+	local pcall, geterrorhandler = pcall, geterrorhandler
 	function public:SendMessage(msg, ...)
 		if callbackMap[msg] then
 			for k,v in next, callbackMap[msg] do
 				if type(v) == "function" then
-					v(msg, ...)
+					local success, errorMsg = pcall(v, msg, ...)
+					if not success then
+						geterrorhandler()(("BigWigs: One of your addons caused an error on the %q callback:\n%s"):format(msg, errorMsg))
+					end
 				else
-					k[v](k, msg, ...)
+					local success, errorMsg = pcall(k[v], k, msg, ...)
+					if not success then
+						geterrorhandler()(("BigWigs: One of your addons caused an error on the %q callback:\n%s"):format(msg, errorMsg))
+					end
 				end
 			end
 		end
