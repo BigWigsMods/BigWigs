@@ -103,6 +103,12 @@ if L then
 
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "为了马上测试"
+
+	--L.goliath_short = "Goliath"
+	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+
+	--L.commando_short = "Commando"
+	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "zhCN")

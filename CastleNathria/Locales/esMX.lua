@@ -103,6 +103,12 @@ if L then
 
 	L.custom_on_stop_timers = "Siempre mostrar las barras de habilidad"
 	L.custom_on_stop_timers_desc = "Sólo para pruebas por el momento"
+
+	--L.goliath_short = "Goliath"
+	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+
+	--L.commando_short = "Commando"
+	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "esMX")

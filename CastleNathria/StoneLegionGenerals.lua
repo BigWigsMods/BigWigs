@@ -34,6 +34,7 @@ local commandoesKilled = 0
 local commandoesNeeded = 7
 local commandoAddMarks = {}
 local wickedLacerationList = {}
+local firstGoliath = true
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -48,6 +49,15 @@ if L then
 
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Just for testing right now"
+
+	L.goliath = -23101
+	L.goliath_short = "Goliath"
+	L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_icon = "Ability_deathknight_summongargoyle"
+
+	L.commando = -22791
+	L.commando_short = "Commando"
+	L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
 end
 
 --------------------------------------------------------------------------------
@@ -61,9 +71,10 @@ local skirmisherMarker = mod:AddMarkerOption(false, "npc", 8, -22761, 8, 7, 6) -
 local commandoMarker = mod:AddMarkerOption(false, "npc", 8, -22772, 8, 7, 6, 5) -- Stone Legion Commando
 function mod:GetOptions()
 	return {
-		"stages",
 		"berserk",
 		"custom_on_stop_timers",
+		"goliath",
+		"commando",
 			--[[ Stage One: Kaal's Assault ]]--
 		329636, -- Hardened Stone Form
 		{333387, "SAY"}, -- Wicked Blade
@@ -98,17 +109,22 @@ function mod:GetOptions()
 		340037, -- Volatile Stone Shell
 		342698, -- Volatile Anima Injection
 		commandoMarker,
-	}, {
-		["stages"] = "general",
+	},{
+		["berserk"] = "general",
 		[329636] = -22681, -- Stage One: Kaal's Assault
 		[332406] = "intermission",
 		[329808] = -22718, -- Stage Two: Grashaal's Blitz
 		[342256] = "mythic",
+	},{
+		["goliath"] = L.goliath_short, -- Stone Legion Goliath (Goliath)
+		["commando"] = L.commando_short, -- Stone Legion Commando (Goliath)
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
+
+	self:Log("SPELL_CAST_SUCCESS", "SummonReinforcements", 342255)
 
 	--[[ Stage One: Kaal's Assault ]]--
 	self:Log("SPELL_AURA_APPLIED", "HardenedStoneFormApplied", 329636)
@@ -166,6 +182,8 @@ function mod:OnEngage()
 	intermission = false
 	wickedLacerationList = {}
 	isInfoOpen = false
+	mobCollectorGoliath = {}
+	firstGoliath = true
 
 	self:Bar(334929, 8.3, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
 	self:Bar(333387, 19, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
@@ -204,11 +222,21 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			mobCollectorGoliath[guid] = true
 			local id = self:MobId(guid)
 			if id == 172858 then -- Stone Legion Goliath
-				self:Message("stages", "cyan", CL.spawned:format(self:UnitName(unit)), false)
+				self:Message("goliath", "cyan", CL.spawned:format(L.goliath_short), L.goliath_icon)
 				self:Bar(342733, 18) -- Ravenous Feast
+				self:PlaySound("goliath", "info")
 			end
 		end
 	end
+end
+
+function mod:SummonReinforcements()
+	if not firstGoliath then -- Avoid a message on boss engage since we have a berserk message
+		self:Message("goliath", "cyan", CL.custom_sec:format(L.goliath_short, 10), false)
+	else
+		firstGoliath = false
+	end
+	self:Bar("goliath", 10, L.goliath_short, L.goliath_icon)
 end
 
 do
@@ -243,7 +271,7 @@ do
 	local throttle = false
 	local function Message()
 		throttle = false
-		mod:Message("stages", "cyan", CL.mob_killed:format(mod:SpellName(-22791), commandoesKilled, commandoesNeeded), false) -- Stone Legion Commando
+		mod:Message("commando", "cyan", CL.mob_killed:format(L.commando_short, commandoesKilled, commandoesNeeded), false) -- Stone Legion Commando
 	end
 	function mod:CommandoDeath(args)
 		if intermission then
@@ -295,6 +323,7 @@ end
 function mod:HardenedStoneFormApplied(args)
 	self:Message(args.spellId, "green", CL.intermission)
 	self:PlaySound(args.spellId, "long")
+	self:Bar("goliath", 10, L.goliath_short, L.goliath_icon)
 
 	intermission = true
 	commandoAddMarks = {}
@@ -519,6 +548,7 @@ end
 function mod:GraniteFormApplied(args)
 	self:Message(args.spellId, "green", CL.intermission)
 	self:PlaySound(args.spellId, "long")
+	self:Bar("goliath", 10, L.goliath_short, L.goliath_icon)
 
 	commandoAddMarks = {}
 	commandoesKilled = 0
