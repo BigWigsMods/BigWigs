@@ -255,7 +255,9 @@ end
 function boss:SetStage(stage)
 	if stage > 0 then
 		self.stage = stage
-		self:SendMessage("BigWigs_SetStage", self, stage)
+		if self:IsEngaged() then
+			self:SendMessage("BigWigs_SetStage", self, stage)
+		end
 	end
 end
 
