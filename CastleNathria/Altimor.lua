@@ -11,12 +11,12 @@ mod:RegisterEnableMob(
 	169458) -- Hecutis
 mod.engageId = 2418
 mod.respawnTime = 30
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local stage = 1
 local sinseekerCount = 1
 local bloodyThrashCount = 1
 local ripSoulCount = 1
@@ -110,13 +110,13 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	stage = 1
 	sinseekerCount = 1
 	bloodyThrashCount = 1
 	ripSoulCount = 1
 	shadesOfBargastCount = 1
 	petrifyingHowlCount = 1
 	mobCollector = {}
+	self:SetStage(1)
 
 	self:Bar(334404, 6.5) -- Spreadshot
 	self:Bar(334971, 10) -- Jagged Claws
@@ -132,7 +132,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 334504 then -- Huntsman's Bond
 		local sourceGUID = self:UnitGUID(unit)
 		if self:MobId(sourceGUID) == 165066 then -- Huntsman Altimor
-			stage = stage + 1
+			local stage = self:GetStage() + 1
+			self:SetStage(stage)
 			if stage == 2 then -- Bargast up
 				ripSoulCount = 1
 				shadesOfBargastCount = 1
@@ -150,12 +151,15 @@ end
 
 --[[ Huntsman Altimor ]]--
 
-function mod:Sinseeker(args)
-	self:StopBar(CL.count:format(args.spellName, sinseekerCount))
-	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, sinseekerCount)))
-	sinseekerCount = sinseekerCount + 1
-	local cd = stage == 1 and 51 or stage == 2 and 60 or stage == 3 and 64 or stage == 4 and 24
-	self:Bar(args.spellId, cd, CL.count:format(args.spellName, sinseekerCount))
+do
+	local timers = {51, 60, 64, 24}
+	function mod:Sinseeker(args)
+		self:StopBar(CL.count:format(args.spellName, sinseekerCount))
+		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, sinseekerCount)))
+		sinseekerCount = sinseekerCount + 1
+		local cd = timers[self:GetStage()]
+		self:Bar(args.spellId, cd, CL.count:format(args.spellName, sinseekerCount))
+	end
 end
 
 do
@@ -186,7 +190,7 @@ end
 function mod:Spreadshot(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	if stage < 4 then -- spams in p4 every few seconds
+	if self:GetStage() < 4 then -- spams in p4 every few seconds
 		self:Bar(args.spellId, 12.2)
 	end
 end
@@ -351,7 +355,7 @@ function mod:HecutisDeath()
 
 	self:StopBar(CL.count:format(self:SpellName(334852), petrifyingHowlCount)) -- Petrifying Howl
 
-	stage = 4
+	self:SetStage(4)
 	self:Bar(335114, 6.5, CL.count:format(self:SpellName(335114), sinseekerCount)) -- Sinseeker
 end
 

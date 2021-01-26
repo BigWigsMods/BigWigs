@@ -11,6 +11,7 @@ if not mod then return end
 mod:RegisterEnableMob(165805, 165759, 168973) -- Shade of Kael'thas, Kael'thas, High Torturer Darithos
 mod.engageId = 2402
 mod.respawnTime = 30
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -63,7 +64,6 @@ local nextStageWarning = 42
 local mobCollector = {}
 local iconsInUse = {}
 local vileOccultistMarkCount = 0
-local stage = 1
 local shadeUp = nil
 local concussiveSmashCountTable = {}
 local blazingSurgeCount = 1
@@ -192,18 +192,18 @@ function mod:OnEngage()
 	nextStageWarning = 42
 	mobCollector = {}
 	iconsInUse = {}
-	stage = 1
 	concussiveSmashCountTable = {}
 	blazingSurgeCount = 1
 	emberBlastCount = 1
 	cloakofFlamesCount = 1
 	shadeUp = nil
 	phoenixCount = 0
+	self:SetStage(1)
 
 	self:Bar(328889, 5.5) -- Greater Castigation
 
 	for key,count in pairs(addWaveCount) do
-		self:StartAddTimer(stage, key, count)
+		self:StartAddTimer(1, key, count)
 	end
 
 	if self:Mythic() then
@@ -393,8 +393,9 @@ function mod:ReflectionOfGuiltRemoved()
 	self:CancelSayCountdown(325877) -- Ember Blast
 	self:StopBar(CL.count:format(self:SpellName(343026), cloakofFlamesCount)) -- Cloak of Flames
 
-	stage = stage + 1
+	local stage = self:GetStage() + 1
 	if stage == 3 then return end -- You win
+	self:SetStage(stage)
 	shadeUp = nil
 	addWaveCount = {
 		[-21954] = 1, -- Rockbound Vanquishers

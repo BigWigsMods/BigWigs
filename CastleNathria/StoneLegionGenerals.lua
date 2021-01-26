@@ -9,12 +9,12 @@ mod:RegisterEnableMob(
 	168113) -- General Grashaal
 mod.engageId = 2417
 mod.respawnTime = 30
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local stage = 1
 local intermission = false
 local wickedBladeCount = 1
 local heartRendCount = 1
@@ -170,7 +170,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	stage = 1
 	wickedBladeCount = 1
 	heartRendCount = 1
 	serratedSwipeCount = 1
@@ -184,6 +183,7 @@ function mod:OnEngage()
 	isInfoOpen = false
 	mobCollectorGoliath = {}
 	firstGoliath = true
+	self:SetStage(1)
 
 	self:Bar(334929, 8.3, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
 	self:Bar(333387, 19, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
@@ -337,8 +337,8 @@ function mod:HardenedStoneFormRemoved(args)
 	self:StopBar(CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
 	self:StopBar(CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
 
-	stage = 2
-	self:Message(args.spellId, "green", CL.stage:format(stage))
+	self:SetStage(2)
+	self:Message(args.spellId, "green", CL.stage:format(2))
 	self:PlaySound(args.spellId, "long")
 
 	heartRendCount = 1
@@ -565,8 +565,8 @@ function mod:GraniteFormRemoved(args)
 	self:StopBar(CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
 	self:StopBar(343086) -- Ricocheting Shuriken
 
-	stage = 3
-	self:Message(args.spellId, "green", CL.stage:format(stage))
+	self:SetStage(3)
+	self:Message(args.spellId, "green", CL.stage:format(3))
 	self:PlaySound(args.spellId, "long")
 
 	heartRendCount = 1
@@ -578,7 +578,7 @@ function mod:GraniteFormRemoved(args)
 end
 
 function mod:StoneFist(args)
-	self:Bar(args.spellId, stage == 2 and 20 or 35)
+	self:Bar(args.spellId, self:GetStage() == 2 and 20 or 35)
 end
 
 function mod:StoneFistApplied(args)

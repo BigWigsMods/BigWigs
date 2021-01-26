@@ -14,6 +14,7 @@ mod:RegisterEnableMob(
 	166971) -- Castellan Niklaus
 mod.engageId = 2412
 mod.respawnTime = 30
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -163,6 +164,7 @@ function mod:OnEngage()
 	stavrosAlive = true
 	niklausAlive = true
 	dancingFeverCount = 1
+	self:SetStage(1)
 
 	self:CDBar(346698, 7.5) -- Summon Dutiful Attendant
 	self:CDBar(346690, 18.5) -- Duelist's Riposte
@@ -222,6 +224,7 @@ end
 function mod:BossDeath(args)
 	bossesKilled = bossesKilled + 1
 	if bossesKilled > 2 then return end -- You win at 3
+	self:SetStage(bossesKilled + 1)
 
 	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
 	if args.mobId == 166969 then -- Frieda
