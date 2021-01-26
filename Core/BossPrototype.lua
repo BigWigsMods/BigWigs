@@ -244,6 +244,21 @@ function boss:IsEngaged()
 	return self.isEngaged
 end
 
+--- Check what stage of the encounter the module is set to.
+-- @return number
+function boss:GetStage()
+	return self.stage
+end
+
+--- Set a module to a specific stage of the encounter
+-- @number stage the stage to set the module to
+function boss:SetStage(stage)
+	if stage > 0 then
+		self.stage = stage
+		self:SendMessage("BigWigs_SetStage", self, stage)
+	end
+end
+
 function boss:Initialize() core:RegisterBossModule(self) end
 function boss:Enable(isWipe)
 	if not self.enabled then
