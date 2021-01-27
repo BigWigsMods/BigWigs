@@ -188,8 +188,8 @@ function mod:OnEngage()
 
 	self:Bar(334929, 8.3, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
 	self:Bar(333387, 19, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
-	self:Bar(334765, self:Mythic() and 35.8 or 28.8, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
-	self:Bar(339690, self:Mythic() and 32.5 or 25, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
+	self:Bar(334765, self:Mythic() and 32 or 28.8, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
+	self:Bar(339690, self:Mythic() and 34 or 25, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
 
 	if self:Mythic() then
 		self:Bar(342256, 10.7, CL.count:format(L.skirmishers, shadowForcesCount)) -- Call Shadow Forces
@@ -330,13 +330,15 @@ function mod:HardenedStoneFormApplied(args)
 	commandoAddMarks = {}
 	commandoesKilled = 0
 
-	self:StopBar(CL.count:format(self:SpellName(342256), shadowForcesCount)) -- Call Shadow Forces
+	self:StopBar(CL.count:format(L.skirmishers, shadowForcesCount)) -- Call Shadow Forces
 	shadowForcesCount = 1
 end
 
 function mod:HardenedStoneFormRemoved(args)
 	self:StopBar(CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
 	self:StopBar(CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
+	self:StopBar(CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
+	self:StopBar(CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
 
 	self:SetStage(2)
 	self:Message(args.spellId, "green", CL.stage:format(2))
@@ -344,12 +346,18 @@ function mod:HardenedStoneFormRemoved(args)
 
 	heartRendCount = 1
 	serratedSwipeCount = 1
+	crystalizeCount = 1
+	pulverizingMeteorCount = 1
 	reverberatingLeapCount = 1
 	seismicUphealvalCount = 1
+	wickedBladeCount = 1
 
+	-- XXX Only confirmed these on Mythic with the new timers changes on Jan 26th
 	self:Bar(342425, 14.2) -- Stone Fist
-	self:Bar(344496, 10, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
-	self:Bar(334498, 17, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
+	self:Bar(344496, 33.3, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
+	self:Bar(334498, self:Mythic() and 45.5 or 17, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
+	self:Bar(333387, 26, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
+	self:Bar(339690, 14.8, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
 end
 
 do
@@ -511,7 +519,8 @@ do
 		if self:Me(prevGUID) then
 			self:Yell(args.spellId, CL.meteor) -- Meteor
 		end
-		self:Message(args.spellId, "orange", CL.count:format(CL.meteor, pulverizingMeteorCount))
+		self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
 		self:PlaySound(args.spellId, "alert")
 		pulverizingMeteorCount = pulverizingMeteorCount + 1
 	end
@@ -554,7 +563,7 @@ function mod:GraniteFormApplied(args)
 	intermission = true
 
 	self:StopBar(CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
-	self:StopBar(CL.count:format(self:SpellName(342256), shadowForcesCount)) -- Call Shadow Forces
+	self:StopBar(CL.count:format(L.skirmishers, shadowForcesCount)) -- Call Shadow Forces
 
 	shadowForcesCount = 1
 end
@@ -562,18 +571,30 @@ end
 function mod:GraniteFormRemoved(args)
 	self:StopBar(CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
 	self:StopBar(CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
+	self:StopBar(CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
+	self:StopBar(CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
 	self:StopBar(343086) -- Ricocheting Shuriken
 
 	self:SetStage(3)
 	self:Message(args.spellId, "green", CL.stage:format(3))
 	self:PlaySound(args.spellId, "long")
 
+	--reverberatingLeapCount = 1 -- XXX We dont reset as soaking still is counting up from stage 2 + intermission
 	heartRendCount = 1
 	serratedSwipeCount = 1
+	wickedBladeCount = 1
+	seismicUphealvalCount = 1
+	crystalizeCount = 1
+	pulverizingMeteorCount = 1
 
+	-- XXX Only confirmed these on Mythic with the new timers changes on Jan 26th
+	-- XXX Missing tank abilities
 	self:Bar(334929, 4.4, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
-	self:Bar(334765, 8.8, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
-	self:Bar(334498, 17, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
+	self:Bar(339690, 7.5, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
+	self:Bar(333387, 19.5, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
+	self:Bar(344496, 25.8, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
+	self:Bar(334765, 33, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
+	self:Bar(334498, 39.2, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
 end
 
 function mod:StoneFist(args)
@@ -610,7 +631,7 @@ function mod:SeismicUpheaval(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, seismicUphealvalCount))
 	self:PlaySound(args.spellId, "long")
 	seismicUphealvalCount = seismicUphealvalCount + 1
-	self:CDBar(args.spellId, 29, CL.count:format(args.spellName, seismicUphealvalCount))
+	self:CDBar(args.spellId, self:Mythic() and 26 or 29, CL.count:format(args.spellName, seismicUphealvalCount))
 end
 
 --[[ Mythic ]]--
