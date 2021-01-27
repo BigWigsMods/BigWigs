@@ -264,13 +264,17 @@ function mod:WarpedDesiresApplied(args)
 	end
 end
 
-function mod:ConcentrateAnimaApplied(args)
-	self:TargetMessage(args.spellId, "orange", args.destName)
-	self:TargetBar(args.spellId, 10, args.destName)
-	if self:Me(args.destGUID) then
-		self:PlaySound(args.spellId, "alarm")
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 10)
+do
+	local playerList = mod:NewTargetList()
+	function mod:ConcentrateAnimaApplied(args)
+		playerList[#playerList+1] = args.destName
+		self:TargetsMessage(args.spellId, "orange", playerList)
+		self:TargetBar(args.spellId, 10, args.destName)
+		if self:Me(args.destGUID) then
+			self:PlaySound(args.spellId, "alarm")
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 10)
+		end
 	end
 end
 
