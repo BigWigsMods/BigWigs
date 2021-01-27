@@ -519,8 +519,7 @@ do
 		if self:Me(prevGUID) then
 			self:Yell(args.spellId, CL.meteor) -- Meteor
 		end
-		self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
-		self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:Message(args.spellId, "orange", CL.count:format(CL.meteor, pulverizingMeteorCount))
 		self:PlaySound(args.spellId, "alert")
 		pulverizingMeteorCount = pulverizingMeteorCount + 1
 	end
