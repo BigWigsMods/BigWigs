@@ -118,6 +118,7 @@ function mod:GetOptions()
 	},{
 		["goliath"] = L.goliath_short, -- Stone Legion Goliath (Goliath)
 		["commando"] = L.commando_short, -- Stone Legion Commando (Goliath)
+		[342544] = CL.meteor, -- Pulverizing Meteor (Meteor)
 	}
 end
 
@@ -343,7 +344,6 @@ function mod:HardenedStoneFormRemoved(args)
 
 	heartRendCount = 1
 	serratedSwipeCount = 1
-	pulverizingMeteorCount = 1
 	reverberatingLeapCount = 1
 	seismicUphealvalCount = 1
 
@@ -509,10 +509,9 @@ do
 
 	function mod:PulverizingMeteor(args)
 		if self:Me(prevGUID) then
-			self:Yell(args.spellId, 28884) -- Meteor
+			self:Yell(args.spellId, CL.meteor) -- Meteor
 		end
-		self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
-		self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:Message(args.spellId, "orange", CL.count:format(CL.meteor, pulverizingMeteorCount))
 		self:PlaySound(args.spellId, "alert")
 		pulverizingMeteorCount = pulverizingMeteorCount + 1
 	end
