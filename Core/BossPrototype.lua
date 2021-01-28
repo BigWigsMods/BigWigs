@@ -32,7 +32,7 @@ local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGro
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
 local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax
 local UnitDetailedThreatSituation = BigWigsLoader.UnitDetailedThreatSituation
-local format, find, gsub, band, tremove, wipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
+local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
 local select, type, next, tonumber = select, type, next, tonumber
 local C = core.C
 local pName = UnitName("player")
@@ -173,6 +173,15 @@ local bossNames = setmetatable({}, {__index =
 		end
 	end
 })
+local wipe = function(tbl, orig)
+	if orig then
+		twipe(tbl)
+	else
+		for i = #tbl, 1 do
+			tbl[i] = nil
+		end
+	end
+end
 
 -------------------------------------------------------------------------------
 -- Core module functionality
@@ -936,8 +945,8 @@ do
 
 	function boss:Win()
 		dbg(":Win", self.engageId, self.moduleName)
-		wipe(icons) -- Wipe icon cache
-		wipe(spells)
+		wipe(icons, true) -- Wipe icon cache
+		wipe(spells, true)
 		if self.OnWin then self:OnWin() end
 		self:ScheduleTimer("Disable", 1) -- Delay a little to prevent re-enabling
 		self:SendMessage("BigWigs_OnBossWin", self)
