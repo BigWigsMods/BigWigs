@@ -26,6 +26,7 @@ local friedaAlive = true
 local niklausAlive = true
 local killOrder = nil
 local dancingFeverCount = 1
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -66,6 +67,7 @@ end
 
 local dutifulAttendantMarker = mod:AddMarkerOption(false, "npc", 8, -22948, 8) -- Dutiful Attendant
 local waltzingVenthyrMarker = mod:AddMarkerOption(false, "npc", 8, -22653, 8) -- Waltzing Venthyr
+local afterImageMarker = mod:AddMarkerOption(false, "npc", 8, -22433, 6) -- Afterimage of Baroness Frieda
 function mod:GetOptions()
 	return {
 		"stages",
@@ -100,6 +102,8 @@ function mod:GetOptions()
 		{330848, "ME_ONLY"}, -- Wrong Moves
 
 		--[[ Mythic ]]--
+		-22433, -- Afterimage of Baroness Frieda
+		afterImageMarker,
 		{347350, "SAY", "SAY_COUNTDOWN"}, -- Dancing Fever
 	}, {
 		["stages"] = "general",
@@ -164,6 +168,7 @@ function mod:OnEngage()
 	stavrosAlive = true
 	niklausAlive = true
 	dancingFeverCount = 1
+	mobCollector = {}
 	self:SetStage(1)
 
 	self:CDBar(346698, 7.5) -- Summon Dutiful Attendant
@@ -177,6 +182,7 @@ function mod:OnEngage()
 
 	if self:Mythic() then
 		self:CDBar(347350, 5, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
+		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT") -- Afterimage warnings
 	end
 
 	-- Mark kill order
@@ -202,6 +208,24 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	for i = 1, 5 do
+		local unit = ("boss%d"):format(i)
+		local guid = self:UnitGUID(unit)
+		if guid and not mobCollector[guid] then
+			mobCollector[guid] = true
+			local id = self:MobId(guid)
+			if id == 172803 then -- Afterimage of Baroness Frieda
+				self:Message(-22433, "red", CL.spawned:format(self:SpellName(-22433)), false)
+				self:PlaySound(-22433, "long")
+				if self:GetOption(afterImageMarker) then
+					self:CustomIcon(false, unit, 6)
+				end
+			end
+		end
+	end
+end
 
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find(L.macabre_start_emote, nil, true) then -- Dance Macabre start
@@ -397,20 +421,25 @@ end
 do
 	local prev = 0
 	function mod:DreadboltVolley(args)
-		local canDo, ready = self:Interrupter(args.sourceGUID)
-		if canDo then
-			self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+		if self:Mythic() and friedaAlive == false then -- Afterimage stuff
+			local _, ready = self:Interrupter() -- warn regardless of target/focus
 			if ready then
+				self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 				self:PlaySound(args.spellId, "alarm")
 			end
-		end
-		if self:Mythic() and friedaAlive == false then -- Afterimage stuff
 			local t = args.time
 			if t-prev > 15 then -- 3 casts, 3s~ between, only start bar for the first in the set
 				prev = t
 				self:CDBar(args.spellId, 45)
 			end
-		else
+		else -- Actual Frieda
+			self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+			local canDo, ready = self:Interrupter(args.sourceGUID)
+			if canDo then
+				if ready then
+					self:PlaySound(args.spellId, "alarm")
+				end
+			end
 			self:CDBar(args.spellId, 10)
 		end
 	end
