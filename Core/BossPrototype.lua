@@ -177,7 +177,7 @@ local wipe = function(tbl, orig)
 	if orig then
 		twipe(tbl)
 	else
-		for i = #tbl, 1 do
+		for i = #tbl, 1, -1 do
 			tbl[i] = nil
 		end
 	end
