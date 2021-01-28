@@ -19,6 +19,7 @@ local expungeCount = 1
 local desolateCount = 1
 local overwhelmCount = 1
 local miasmaMarkClear = {}
+local volEjectionList = {}
 local scheduledChatMsg = false
 local volEjectionOnMe = false
 local miasmaOnMe = false
@@ -103,6 +104,7 @@ function mod:OnEngage()
 	scheduledChatMsg = false
 	volEjectionOnMe = false
 	miasmaOnMe = false
+	volEjectionList = {}
 
 	self:Bar(329298, 3, CL.count:format(L.miasma, miasmaCount)) -- Gluttonous Miasma
 	if self:Easy() then
@@ -133,14 +135,21 @@ function mod:OnBossDisable()
 	miasmaOnMe = false
 	if self:GetOption(gluttonousMiasmaMarker) then
 		for i = 1, #miasmaMarkClear do
-			local n = miasmaMarkClear[i]
+			local name = miasmaMarkClear[i]
 			-- Clearing marks on _REMOVED doesn't work great on this boss
 			-- The second set of marks is applied before the first is removed
 			-- When trying to remove the first set of marks it can clear the second set
-			self:CustomIcon(gluttonousMiasmaMarker, n)
+			self:CustomIcon(false, name)
 		end
-		miasmaMarkClear = {}
 	end
+	miasmaMarkClear = {}
+	if self:GetOption(volatileEjectionMarker) then -- Compensate for the boss dieing mid cast
+		for i = 1, #volEjectionList do
+			local name = volEjectionList[i]
+			self:CustomIcon(false, name)
+		end
+	end
+	volEjectionList = {}
 end
 
 --------------------------------------------------------------------------------
@@ -266,12 +275,11 @@ end
 -- end
 
 do
-	local playerList = {}
 	local function addPlayerToList(self, name)
-		if not tContains(playerList, name) then
-			local count = #playerList+1
-			playerList[count] = name
-			self:TargetsMessage(334266, "orange", self:ColorName(playerList), self:Mythic() and 5 or 3, CL.beam, nil, 2)
+		if not tContains(volEjectionList, name) then
+			local count = #volEjectionList+1
+			volEjectionList[count] = name
+			self:TargetsMessage(334266, "orange", self:ColorName(volEjectionList), self:Mythic() and 5 or 3, CL.beam, nil, 2)
 			self:CustomIcon(volatileEjectionMarker, name, count+4)
 		end
 	end
@@ -307,11 +315,12 @@ do
 
 	function mod:VolatileEjectionSuccess()
 		if self:GetOption(volatileEjectionMarker) then
-			for _, name in pairs(playerList) do
-				self:CustomIcon(volatileEjectionMarker, name)
+			for i = 1, #volEjectionList do
+				local name = volEjectionList[i]
+				self:CustomIcon(false, name)
 			end
 		end
-		playerList = {}
+		volEjectionList = {}
 		volEjectionOnMe = false
 	end
 end
