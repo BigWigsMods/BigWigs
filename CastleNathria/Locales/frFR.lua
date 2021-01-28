@@ -104,11 +104,11 @@ if L then
 	L.custom_on_stop_timers = "Toujours montrer les barres de techniques"
 	L.custom_on_stop_timers_desc = "En cours de test"
 
-	--L.goliath_short = "Goliath"
-	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_short = "Goliath"
+	L.goliath_desc = "Affiche des alertes et des délais indiquant quand le Goliath vive-pierre est sur le point d'apparaître."
 
-	--L.commando_short = "Commando"
-	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
+	L.commando_short = "Commando"
+	L.commando_desc = "Affiche des alertes quand un Commando de la Légion de pierre est tué."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "frFR")
