@@ -189,7 +189,7 @@ function mod:OnEngage()
 	}
 	addTimers = self:Mythic() and addTimersMythic or addTimersHeroic
 	addScheduledTimers = {}
-	firstVanquisherExpected = GetTime() + addTimers[-21954][1]
+	firstVanquisherExpected = GetTime() + addTimers[1][-21954][1]
 	nextStageWarning = 42
 	mobCollector = {}
 	iconsInUse = {}
@@ -549,6 +549,13 @@ function mod:DarithosDeath()
 			addScheduledTimers[key] = nil
 		end
 		-- Restart the timers, but with reduced time
+		addWaveCount = {
+			[-21954] = 1, -- Rockbound Vanquishers
+			[-21993] = 1, -- Bleakwing Assassin
+			[-21952] = 1, -- Vile Occultists
+			[-21953] = 1, -- Soul Infusers
+			[-22082] = 1, -- Pestering Fiend
+		}
 		for key,count in pairs(addWaveCount) do
 			self:StartAddTimer(1, key, count, true)
 		end
