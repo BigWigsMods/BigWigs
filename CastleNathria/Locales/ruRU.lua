@@ -14,13 +14,13 @@ L = BigWigs:NewBossLocale("Hungering Destroyer", "ruRU")
 if L then
 	L.miasma = "Миазмы" -- Short for Gluttonous Miasma
 
-	--L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
-	--L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+	L.custom_on_repeating_yell_miasma = "Постоянный /крик о здоровье цели Ненасытные миазмы"
+	L.custom_on_repeating_yell_miasma_desc = "Повторяющиеся сообщения у целей Ненасытные миазмы, чтобы дать другим игрокам знать о том, что уровень здоровья меньше 75%."
 
-	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
-	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
+	L.custom_on_repeating_say_laser = "Постоянные сообщения у целей Нестабильный выброс"
+	L.custom_on_repeating_say_laser_desc = "Повторение сообщений у игроков, отмеченных Нестабильным выбросом, помогающие при движении видеть их тем игрокам, которые изначально не видели первое сообщение."
 
-	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
+	L.tempPrint = "Мы добавили /крики о здоровье целей Ненасытные миазмы. Если вы ранее использовали для этого WeakAuras, вы можете их удалить, чтобы избежать двойных /криков."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "ruRU")
@@ -104,16 +104,16 @@ if L then
 	L.custom_on_stop_timers = "Всегда показывать полосы способностей"
 	L.custom_on_stop_timers_desc = "Пока доступно только для тестирования"
 
-	--L.goliath_short = "Goliath"
-	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_short = "Голиаф"
+	L.goliath_desc = "Показывать предупреждения и таймеры для появления голиафа из Каменного Легиона"
 
-	--L.commando_short = "Commando"
-	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
+	L.commando_short = "Диверсант"
+	L.commando_desc = "Показывать предупреждения, когда диверсант из Каменного Легиона умирает."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "ruRU")
 if L then
-	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
+	L.add_spawn = "Алые кабалисты откликнулись на призыв Денатрия." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
 	L.infobox_stacks = "%d |4Стак:Стака:Стаков;: %d |4игрок:игрока:игроков;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
@@ -126,9 +126,9 @@ if L then
 	L.hymn_stacks = "Гимн Нафрии"
 	L.hymn_stacks_desc = "Оповещать о количестве стаков гимна Нафрии на вас."
 
-	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
-	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
-	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	L.ravage_target = "Полоса заклинания Отражение: Разорение"
+	L.ravage_target_desc = "Полоса заклинания, показывающая время до того как отражение нацелится на место для Разорения."
+	L.ravage_targeted = "Место Разорения выбрано!" -- Text on the bar for when Ravage picks its location to target in stage 3
 
 	L.no_mirror = "Без зеркала: %d" -- Player amount that does not have the Through the Mirror
 	L.mirror = "С зеркалом: %d" -- Player amount that does have the Through the Mirror
