@@ -2046,8 +2046,16 @@ do
 				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
 				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
 			end
-			wipe(playerTable)
-			if markers then wipe(markers) end
+			twipe(playerTable)
+			if markers then twipe(markers) end
+			if next(playerTable) then
+				BigWigs:Error("Functionality error 1. Please tell the BigWigs authors on Discord or GitHub!")
+				wipe(playerTable)
+			end
+			if next(markers) then
+				BigWigs:Error("Functionality error 2. Please tell the BigWigs authors on Discord or GitHub!")
+				wipe(markers)
+			end
 		end
 	end
 
