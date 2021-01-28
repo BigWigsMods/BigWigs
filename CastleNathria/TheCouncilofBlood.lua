@@ -67,7 +67,7 @@ end
 
 local dutifulAttendantMarker = mod:AddMarkerOption(false, "npc", 8, -22948, 8) -- Dutiful Attendant
 local waltzingVenthyrMarker = mod:AddMarkerOption(false, "npc", 8, -22653, 8) -- Waltzing Venthyr
-local afterImageMarker = mod:AddMarkerOption(false, "npc", 8, -22433, 6) -- Afterimage of Baroness Frieda
+local afterImageMarker = mod:AddMarkerOption(false, "npc", 6, -22433, 6) -- Afterimage of Baroness Frieda
 function mod:GetOptions()
 	return {
 		"stages",
@@ -433,9 +433,9 @@ do
 				self:CDBar(args.spellId, 45)
 			end
 		else -- Actual Frieda
-			self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 			local canDo, ready = self:Interrupter(args.sourceGUID)
 			if canDo then
+				self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 				if ready then
 					self:PlaySound(args.spellId, "alarm")
 				end
