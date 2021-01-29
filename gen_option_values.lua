@@ -34,6 +34,7 @@ local valid_sounds = {
 	alarm = true,
 	long = true,
 	warning = true,
+	underyou = true,
 }
 local color_methods = {
 	MessageOld = 2,

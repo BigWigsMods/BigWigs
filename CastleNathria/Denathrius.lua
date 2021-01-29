@@ -317,7 +317,7 @@ do
 	local prev, prevFlash = 0, 0
 	local function crescendoMessage()
 		mod:PersonalMessage(336162, "underyou")
-		mod:PlaySound(336162, "warning")
+		mod:PlaySound(336162, "warning") -- Not using underyou as sound, you're not standing in something
 		local t = GetTime()
 		if t-prevFlash > 5 then
 			prevFlash = t
@@ -791,7 +791,7 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				self:PlaySound(args.spellId, "alarm")
+				self:PlaySound(args.spellId, "underyou")
 				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end
