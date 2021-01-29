@@ -20,7 +20,7 @@ if L then
 	L.custom_on_repeating_say_laser = "Repetir dizer Ejeção Volátil"
 	L.custom_on_repeating_say_laser_desc = "Mensagens ditas repetitivas para Ejeção Volátil, para ajudar os outros a se moverem."
 
-	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
+	L.tempPrint = "Nós adicionamos gritos de vida para o Miasma. Se você antes usava uma WeakAura para isso, você pode querer exclui-la para prevenir gritos duplos."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "ptBR")
@@ -104,11 +104,11 @@ if L then
 	L.custom_on_stop_timers = "Sempre mostrar barras de habilidades"
 	L.custom_on_stop_timers_desc = "Somente para testes por enquanto"
 
-	--L.goliath_short = "Goliath"
-	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_short = "Golias"
+	L.goliath_desc = "Mostra avisos e temporizadores para quando forem surgir os Golias da Legião de Pedra."
 
-	--L.commando_short = "Commando"
-	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
+	L.commando_short = "Comando"
+	L.commando_desc = "Mostra avisos de quando um Comando da Legião de Pedra é morto."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "ptBR")
