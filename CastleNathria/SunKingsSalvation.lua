@@ -537,27 +537,29 @@ function mod:DarithosDeath()
 	self:CloseProximity(328889)
 	self:StopBar(328889) -- Greater Castigation
 
-	local firstVanquisherRemaining = firstVanquisherExpected - GetTime()
-	if firstVanquisherRemaining > firstVanquisherSpawnTime then -- Reduce all to align with the first spawn for the first Vanquisher
-		for key,count in pairs(addWaveCount) do -- Cancel add bars and scheduled messages
-			local text = CL.count:format(self:SpellName(key), count-1)
-			self:CancelDelayedMessage(text)
-			self:StopBar(text)
-		end
-		for key, scheduled in pairs(addScheduledTimers) do -- cancel all scheduled add timers
-			self:CancelTimer(scheduled)
-			addScheduledTimers[key] = nil
-		end
-		-- Restart the timers, but with reduced time
-		addWaveCount = {
-			[-21954] = 1, -- Rockbound Vanquishers
-			[-21993] = 1, -- Bleakwing Assassin
-			[-21952] = 1, -- Vile Occultists
-			[-21953] = 1, -- Soul Infusers
-			[-22082] = 1, -- Pestering Fiend
-		}
-		for key,count in pairs(addWaveCount) do
-			self:StartAddTimer(1, key, count, true)
+	if shadeUp or (self:GetStage() > 1) then -- Why did you keep Darithos alive so long??
+		local firstVanquisherRemaining = firstVanquisherExpected - GetTime()
+		if firstVanquisherRemaining > firstVanquisherSpawnTime then -- Reduce all to align with the first spawn for the first Vanquisher
+			for key,count in pairs(addWaveCount) do -- Cancel add bars and scheduled messages
+				local text = CL.count:format(self:SpellName(key), count-1)
+				self:CancelDelayedMessage(text)
+				self:StopBar(text)
+			end
+			for key, scheduled in pairs(addScheduledTimers) do -- cancel all scheduled add timers
+				self:CancelTimer(scheduled)
+				addScheduledTimers[key] = nil
+			end
+			-- Restart the timers, but with reduced time
+			addWaveCount = {
+				[-21954] = 1, -- Rockbound Vanquishers
+				[-21993] = 1, -- Bleakwing Assassin
+				[-21952] = 1, -- Vile Occultists
+				[-21953] = 1, -- Soul Infusers
+				[-22082] = 1, -- Pestering Fiend
+			}
+			for key,count in pairs(addWaveCount) do
+				self:StartAddTimer(1, key, count, true)
+			end
 		end
 	end
 end
