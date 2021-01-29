@@ -280,7 +280,6 @@ function mod:BossDeath(args)
 	if bossesKilled == 1 then
 		if friedaAlive then
 			self:CDBar(346651, 9) -- Drain Essence
-			--self:CDBar(337110, 6) -- Dreadbolt Volley
 			self:CDBar(346657, 38) -- Prideful Eruption
 		end
 		if stavrosAlive then
@@ -312,7 +311,6 @@ function mod:BossDeath(args)
 	elseif bossesKilled == 2 then
 		if friedaAlive then
 			self:CDBar(346651, 9) -- Drain Essence
-			--self:CDBar(337110, 6) -- Dreadbolt Volley
 			self:CDBar(346657, 24) -- Prideful Eruption
 			self:CDBar(346681, 35.2) -- Soul Spikes
 		end
@@ -377,7 +375,7 @@ do
 	function mod:SummonDutifulAttendant(args)
 		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "warning")
-		self:CDBar(args.spellId, self:Mythic() and (bossesKilled == 2 and 22.5 or 45) or bossesKilled == 2 and 25.5 or 90)
+		self:CDBar(args.spellId, self:Mythic() and (bossesKilled == 2 and 22.5 or 45) or bossesKilled == 2 and 25.5 or 51.5)
 		if self:GetOption(dutifulAttendantMarker) then
 			self:RegisterTargetEvents("DutifulAttendantMarking")
 			self:ScheduleTimer("UnregisterTargetEvents", 10)
@@ -440,7 +438,7 @@ do
 					self:PlaySound(args.spellId, "alarm")
 				end
 			end
-			self:CDBar(args.spellId, 10)
+			self:CDBar(args.spellId, 5.3) -- Spell Lockout?
 		end
 	end
 end
@@ -448,13 +446,14 @@ end
 function mod:PridefulEruption(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, (bossesKilled == 1 and 120 or bossesKilled == 2 and 40)) -- Only have one log and its a bit weird timing with Baroness pushing to 50% as she starts a cast on Heroic.
+	self:CDBar(args.spellId, (bossesKilled == 1 and 120 or bossesKilled == 2 and 41.5)) -- Cooldown with 1 boss killed unconfirmed
+
 end
 
 function mod:SoulSpikes(args)
 	self:Message(346681, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(346681, "alert")
-	-- self:CDBar(346681, 0)
+	self:CDBar(346681, 41.5)
 end
 
 function mod:SoulSpikesApplied(args)
@@ -499,7 +498,7 @@ do
 		if stavrosAlive == false then
 			self:Bar(args.spellId, bossesKilled == 1 and 60 or 37.7)
 		else
-			self:Bar(args.spellId, self:Mythic() and (bossesKilled == 0 and 45 or bossesKilled == 1 and 60 or 22.9) or bossesKilled == 0 and 90 or bossesKilled == 1 and 107 or 22.9)
+			self:Bar(args.spellId, self:Mythic() and (bossesKilled == 0 and 45 or bossesKilled == 1 and 60 or 22.9) or bossesKilled == 0 and 51.5 or bossesKilled == 1 and 69.5 or 22.9)
 		end
 	end
 
