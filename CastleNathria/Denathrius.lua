@@ -317,7 +317,7 @@ do
 	local prev, prevFlash = 0, 0
 	local function crescendoMessage()
 		mod:PersonalMessage(336162, "underyou")
-		mod:PlaySound(336162, "warning") -- Not using underyou as sound, you're not standing in something
+		mod:PlaySound(336162, "underyou")
 		local t = GetTime()
 		if t-prevFlash > 5 then
 			prevFlash = t
