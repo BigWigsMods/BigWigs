@@ -5,7 +5,7 @@ BigWigs:AddSounds("Shriekwing", {
 	[328921] = "long",
 	[329362] = "info",
 	[330711] = "long",
-	[340324] = "alarm",
+	[340324] = "underyou",
 	[341489] = "info",
 	[341684] = {"info","warning"},
 	[342074] = "warning",
@@ -23,7 +23,7 @@ BigWigs:AddSounds("Huntsman Altimor", {
 	[334852] = "warning",
 	[334860] = "info",
 	[334884] = "alarm",
-	[334893] = "alarm",
+	[334893] = "underyou",
 	[334945] = "warning",
 	[334971] = "warning",
 	[335114] = "warning",
@@ -68,7 +68,7 @@ BigWigs:AddSounds("Sun King's Salvation", {
 	[326456] = "alarm",
 	[326583] = "alarm",
 	[328479] = "alarm",
-	[328579] = "alarm",
+	[328579] = "underyou",
 	[328889] = "alarm",
 	[329518] = "alert",
 	[333002] = "alarm",
@@ -82,7 +82,7 @@ BigWigs:AddSounds("Sun King's Salvation", {
 BigWigs:AddSounds("Lady Inerva Darkvein", {
 	[324983] = "warning",
 	[325382] = "alarm",
-	[325713] = "alarm",
+	[325713] = "underyou",
 	[325769] = "info",
 	[325936] = "alarm",
 	[331550] = "alert",
@@ -95,6 +95,7 @@ BigWigs:AddSounds("Lady Inerva Darkvein", {
 })
 
 BigWigs:AddSounds("The Council of Blood", {
+	[-22433] = "long",
 	[327497] = "alarm",
 	[330848] = "info",
 	[330959] = "long",
@@ -110,7 +111,7 @@ BigWigs:AddSounds("The Council of Blood", {
 	[346698] = "warning",
 	[346790] = "alarm",
 	[346800] = "long",
-	[346945] = "alarm",
+	[346945] = "underyou",
 	[347350] = "warning",
 })
 
@@ -120,7 +121,7 @@ BigWigs:AddSounds("Sludgefist", {
 	[332318] = "long",
 	[332687] = "info",
 	[335293] = "warning",
-	[335361] = "alarm",
+	[335361] = "underyou",
 	[335470] = "warning",
 	[340817] = "long",
 	[341193] = "long",
@@ -149,6 +150,7 @@ BigWigs:AddSounds("Stone Legion Generals", {
 	[342985] = "alert",
 	[343063] = "alarm",
 	[344496] = "warning",
+	["goliath"] = "info",
 })
 
 BigWigs:AddSounds("Sire Denathrius", {
@@ -160,7 +162,7 @@ BigWigs:AddSounds("Sire Denathrius", {
 	[327122] = "alert",
 	[327227] = "alert",
 	[327796] = "warning",
-	[327992] = "alarm",
+	[327992] = "underyou",
 	[328276] = "long",
 	[328936] = "info",
 	[329181] = {"alert","warning"},
@@ -174,8 +176,8 @@ BigWigs:AddSounds("Sire Denathrius", {
 	[333932] = "warning",
 	[333979] = "warning",
 	[333980] = "long",
-	[335873] = "alarm",
-	[336162] = "warning",
+	[335873] = "underyou",
+	[336162] = "underyou",
 	[338738] = "info",
 	[344776] = "alarm",
 	["hymn_stacks"] = {"alert","info"},
@@ -187,7 +189,7 @@ BigWigs:AddSounds("Castle Nathria Trash", {
 	[329989] = "info",
 	[339525] = "alarm",
 	[339528] = "alarm",
-	[339553] = "alarm",
+	[339553] = "underyou",
 	[339557] = "info",
 	[340630] = "info",
 	[341352] = "warning",

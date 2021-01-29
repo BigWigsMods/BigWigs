@@ -97,6 +97,7 @@ BigWigs:AddColors("Lady Inerva Darkvein", {
 })
 
 BigWigs:AddColors("The Council of Blood", {
+	[-22433] = "red",
 	[327497] = {"blue","orange","purple"},
 	[330848] = {"blue","orange"},
 	[330959] = "green",
@@ -154,7 +155,8 @@ BigWigs:AddColors("Stone Legion Generals", {
 	[342985] = "cyan",
 	[343063] = "blue",
 	[344496] = {"blue","red"},
-	["stages"] = "cyan",
+	["commando"] = "cyan",
+	["goliath"] = "cyan",
 })
 
 BigWigs:AddColors("Sire Denathrius", {
