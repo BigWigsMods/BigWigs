@@ -2047,14 +2047,22 @@ do
 				self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
 			end
 			twipe(playerTable)
-			if markers then twipe(markers) end
 			if next(playerTable) then
 				BigWigs:Error("Functionality error 1. Please tell the BigWigs authors on Discord or GitHub!")
 				wipe(playerTable)
+				if next(playerTable) then
+					BigWigs:Error("Functionality error 2. Please tell the BigWigs authors on Discord or GitHub!")
+				end
 			end
-			if next(markers) then
-				BigWigs:Error("Functionality error 2. Please tell the BigWigs authors on Discord or GitHub!")
-				wipe(markers)
+			if markers then
+				twipe(markers)
+				if next(markers) then
+					BigWigs:Error("Functionality error 3. Please tell the BigWigs authors on Discord or GitHub!")
+					wipe(markers)
+					if next(markers) then
+						BigWigs:Error("Functionality error 4. Please tell the BigWigs authors on Discord or GitHub!")
+					end
+				end
 			end
 		end
 	end
