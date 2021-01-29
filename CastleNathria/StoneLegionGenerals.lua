@@ -216,18 +216,12 @@ end
 --
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	for i = 1, 5 do
-		local unit = ("boss%d"):format(i)
-		local guid = self:UnitGUID(unit)
-		if guid and not mobCollectorGoliath[guid] then
-			mobCollectorGoliath[guid] = true
-			local id = self:MobId(guid)
-			if id == 172858 then -- Stone Legion Goliath
-				self:Message("goliath", "cyan", CL.spawned:format(L.goliath_short), L.goliath_icon)
-				self:Bar(342733, 18) -- Ravenous Feast
-				self:PlaySound("goliath", "info")
-			end
-		end
+	local _, guid = self:GetBossId(172858) -- Stone Legion Goliath
+	if guid and not mobCollectorGoliath[guid] then
+		mobCollectorGoliath[guid] = true
+		self:Message("goliath", "cyan", CL.spawned:format(L.goliath_short), L.goliath_icon)
+		self:Bar(342733, 18) -- Ravenous Feast
+		self:PlaySound("goliath", "info")
 	end
 end
 

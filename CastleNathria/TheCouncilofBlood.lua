@@ -210,19 +210,13 @@ end
 --
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	for i = 1, 5 do
-		local unit = ("boss%d"):format(i)
-		local guid = self:UnitGUID(unit)
-		if guid and not mobCollector[guid] then
-			mobCollector[guid] = true
-			local id = self:MobId(guid)
-			if id == 172803 then -- Afterimage of Baroness Frieda
-				self:Message(-22433, "red", CL.spawned:format(self:SpellName(-22433)), false)
-				self:PlaySound(-22433, "long")
-				if self:GetOption(afterImageMarker) then
-					self:CustomIcon(false, unit, 6)
-				end
-			end
+	local unit, guid = self:GetBossId(172803) -- Afterimage of Baroness Frieda
+	if guid and not mobCollector[guid] then
+		mobCollector[guid] = true
+		self:Message(-22433, "red", CL.spawned:format(self:SpellName(-22433)), false)
+		self:PlaySound(-22433, "long")
+		if self:GetOption(afterImageMarker) then
+			self:CustomIcon(false, unit, 6)
 		end
 	end
 end
@@ -419,7 +413,7 @@ end
 do
 	local prev = 0
 	function mod:DreadboltVolley(args)
-		if self:Mythic() and friedaAlive == false then -- Afterimage stuff
+		if not friedaAlive and self:Mythic() then -- Afterimage stuff
 			local _, ready = self:Interrupter() -- warn regardless of target/focus
 			if ready then
 				self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
