@@ -358,7 +358,7 @@ do
 			self:PlaySound(325877, "warning")
 			self:Yell(325877)
 			self:Flash(325877)
-			self:YellCountdown(325877, 3)
+			self:YellCountdown(325877, 3, nil, 2)
 		else
 			self:PlaySound(325877, "alert")
 		end
