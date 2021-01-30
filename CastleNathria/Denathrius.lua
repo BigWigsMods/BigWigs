@@ -151,7 +151,7 @@ function mod:GetOptions()
 		326707, -- Cleansing Pain
 		326851, -- Blood Price
 		{327039, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Feeding Time (Normal mode version of Night Hunter)
-		{327796, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Night Hunter
+		{327796, "SAY", "ME_ONLY_EMPHASIZE"}, -- Night Hunter
 		"custom_on_repeating_nighthunter",
 		nightHunterMarker,
 		{327227, "EMPHASIZE"}, -- Command: Ravage
@@ -499,17 +499,26 @@ end
 
 do
 	local playerList, playerIcons = mod:NewTargetList(), {}
-	local sayTimer = nil
+	local timeLeft, icon = 0, 0
+	local function printYell()
+		if timeLeft > 0 then -- We didn't die within the 2 sec initial delay
+			mod:Yell(false, ("{rt%d}{rt%d}{rt%d}%d"):format(icon, icon, icon, timeLeft), true)
+			timeLeft = timeLeft - 1
+			if timeLeft > 0 then
+				mod:SimpleTimer(printYell, 1)
+			end
+		end
+	end
 	function mod:NightHunterApplied(args)
 		local count = #playerList+1
 		playerList[count] = args.destName
 		playerIcons[count] = count
 		if self:Me(args.destGUID)then
-			--self:YellCountdown(args.spellId, 6, count)
 			self:Yell(args.spellId, CL.count_rticon:format(args.spellName, count, count))
 			if self:GetOption("custom_on_repeating_nighthunter") then
-				local icon = ("{rt%d}{rt%d}{rt%d}"):format(count, count, count)
-				sayTimer = self:ScheduleRepeatingTimer("Yell", 1.5, false, icon, true)
+				icon = count
+				timeLeft = 4
+				self:SimpleTimer(printYell, 2)
 			end
 		end
 		self:TargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 3 or 2, CL.count:format(args.spellName, nightHunterCount), nil, nil, playerIcons)
@@ -524,14 +533,8 @@ do
 
 	function mod:NightHunterRemoved(args)
 		if self:Me(args.destGUID) then
-			if sayTimer then
-				self:CancelTimer(sayTimer)
-				sayTimer = nil
-			end
+			timeLeft, icon = 0, 0
 		end
-		-- if self:Me(args.destGUID) then
-		-- 	self:CancelSayCountdown(args.spellId)
-		-- end
 		self:CustomIcon(nightHunterMarker, args.destName)
 	end
 end
