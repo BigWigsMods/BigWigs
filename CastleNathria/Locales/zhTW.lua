@@ -20,7 +20,7 @@ if L then
 	L.custom_on_repeating_say_laser = "重覆猛烈噴射說話"
 	L.custom_on_repeating_say_laser_desc = "當你你被標記為猛烈噴射的目標時，重覆發送說話訊息，以便接近你的玩家可以立刻看見並避開。"
 
-	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
+	L.tempPrint = "我們增加了對瘴氣的大喊。 如果您以前為此使用過WeakAura，則可能需要將其刪除以防止出現兩次大喊。"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhTW")
@@ -104,18 +104,18 @@ if L then
 	L.custom_on_stop_timers = "總是顯示計時器"
 	-- L.custom_on_stop_timers_desc = "Just for testing right now"
 
-	--L.goliath_short = "Goliath"
-	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_short = "巨人"
+	L.goliath_desc = "顯示警告和計時器，指示石源魔軍團巨人何時出現。"
 
-	--L.commando_short = "Commando"
-	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
+	L.commando_short = "特種兵"
+	L.commando_desc = "殺死石源魔軍團特種兵時顯示警告。 "
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "zhTW")
 if L then
 	L.add_spawn = "赤紅秘術師回應了戴納瑟斯的呼喚。" -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
-	L.infobox_stacks = "%d 堆疊：%d 玩家" -- 4 Stacks: 5 players // 1 Stack: 1 player
+	L.infobox_stacks = "%d層：%d玩家" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	L.custom_on_repeating_nighthunter = "重覆黑夜獵人喊話"
 	L.custom_on_repeating_nighthunter_desc = "以 {rt1}、{rt2} 或 {rt3} 重覆黑夜獵人喊話，使需要分攤的人可以更方便地找到你負責分攤的那條線。"
