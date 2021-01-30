@@ -20,7 +20,7 @@ if L then
 	L.custom_on_repeating_say_laser = "重覆猛烈噴射說話"
 	L.custom_on_repeating_say_laser_desc = "當你你被標記為猛烈噴射的目標時，重覆發送說話訊息，以便接近你的玩家可以立刻看見並避開。"
 
-	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
+	L.tempPrint = "我們已經替瘴氣添增加了喊話提示。如果你之前為此使用過 WeakAuras 字符串，可能需要將其刪除以防止出現重覆喊話。"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhTW")
@@ -60,7 +60,7 @@ L = BigWigs:NewBossLocale("The Council of Blood", "zhTW")
 if L then
 	L.macabre_start_emote = "找好位置，準備開始跳死亡之舞！"
 	L.custom_on_repeating_dark_recital = "重覆黑暗伴舞喊話"
-	L.custom_on_repeating_dark_recital_desc = "使用 {rt1}、{rt2} 重覆黑暗伴舞喊話，方便你找到你的舞伴。"
+	L.custom_on_repeating_dark_recital_desc = "使用 {rt1} 和 {rt2} 重覆黑暗伴舞喊話，方便你找到你的舞伴。"
 
 	L.custom_off_select_boss_order = "標記擊殺順序"
 	L.custom_off_select_boss_order_desc = "以紅叉 {rt7} 標記首領擊殺順序，需要權限。"
@@ -104,11 +104,11 @@ if L then
 	L.custom_on_stop_timers = "總是顯示計時器"
 	-- L.custom_on_stop_timers_desc = "Just for testing right now"
 
-	--L.goliath_short = "Goliath"
-	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_short = "巨人"
+	L.goliath_desc = "對即將到來的石源魔軍團巨人顯示警告和計時器。"
 
-	--L.commando_short = "Commando"
-	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
+	L.commando_short = "特種兵"
+	L.commando_desc = "擊殺石源魔軍團特種兵時顯示警告。"
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "zhTW")
