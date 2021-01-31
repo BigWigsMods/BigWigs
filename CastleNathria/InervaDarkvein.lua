@@ -14,7 +14,6 @@ mod.respawnTime = 30
 
 local anima = {}
 local concentratedAnimaCount = 1
-local mobCollector = {}
 local conjuredManifestationList = {}
 local conjuredManifestationCount = 1
 local enabledContainer = 0 -- 1: Desires, 2: Bottles, 3: Sins, 4: Adds
@@ -120,6 +119,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SharedSufferingRemoved", 324983)
 
 	-- Container of Concentrated Anima
+	self:Log("SPELL_CAST_SUCCESS", "ConcentratedAnima", 342320, 342321) -- Lightly Concentrated Anima, Concentrated Anima
 	self:Log("SPELL_AURA_APPLIED", "ConcentratedAnimaApplied", 332664, 340477) -- Concentrated Anima, Highly Concentrated Anima
 	self:Log("SPELL_AURA_REMOVED", "ConcentratedAnimaRemoved", 332664, 340477)
 	self:Log("SPELL_AURA_APPLIED", "UnconscionableGuiltApplied", 331573)
@@ -132,7 +132,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	mobCollector = {}
 	conjuredManifestationList = {}
 	conjuredManifestationCount = 1
 	concentratedAnimaCount = 1
@@ -186,7 +185,6 @@ end
 function mod:ConjuredManifestationMarker(event, unit, guid)
 	if self:MobId(guid) == 170197 and conjuredManifestationList[guid] then -- Conjured Manifestation
 		self:CustomIcon(conjuredManifestationMarker, unit, conjuredManifestationList[guid])
-		conjuredManifestationList[guid] = nil
 	end
 end
 
@@ -316,14 +314,21 @@ function mod:WarpedDesiresApplied(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList = {}
+	local prev = 0
 	function mod:SharedCognitionApplied(args)
+		local t = args.time
+		if t-prev > 3 then
+			prev = t
+			playerList = {}
+		end
+
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 			self:TargetBar(args.spellId, 21, args.destName)
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList)
+		self:NewTargetsMessage(args.spellId, "yellow", playerList)
 	end
 
 	function mod:SharedCognitionRemoved(args)
@@ -357,14 +362,17 @@ function mod:BottledAnima(args)
 end
 
 do
-	local playerList, onMe = {}, nil
+	local playerList, onMe = {}, false
+	local function wipe() playerList = {} end
 	local function addPlayerToList(self, name)
 		if not tContains(playerList, name) then
 			local count = #playerList+1
 			playerList[count] = name
-			self:TargetsMessage(324983, "yellow", self:ColorName(playerList), 3, L.sins, nil, 4)
+			playerList[name] = count -- Set raid marker
+			self:NewTargetsMessage(324983, "yellow", playerList, 3, L.sins, nil, 4)
 			self:CustomIcon(sharedSufferingMarker, name, count)
 			if count == 1 then
+				self:SimpleTimer(wipe, 5)
 				self:Bar(324983, enabledContainer == 3 and (self:Mythic() and 30 or 35) or 51, L.sins)
 			end
 		end
@@ -400,25 +408,29 @@ do
 		if self:Me(args.destGUID) then
 			onMe = false
 		end
-		playerList = {}
 		self:CustomIcon(sharedSufferingMarker, args.destName)
 	end
 end
 
 do
-	local playerList, proxList, isOnMe, playerIcons = mod:NewTargetList(), {}, nil, {}
+	local playerList, proxList = {}, {}
+	function mod:ConcentratedAnima()
+		playerList, proxList = {}, {}
+		conjuredManifestationList = {}
+		conjuredManifestationCount = 1
+		self:StopBar(CL.count:format(CL.adds, concentratedAnimaCount))
+		concentratedAnimaCount = concentratedAnimaCount + 1
+		self:CDBar(332664, enabledContainer == 4 and (self:Mythic() and 43 or 51) or (self:Mythic() and 65 or 60), CL.count:format(CL.adds, concentratedAnimaCount))
+	end
+
+	local isOnMe = false
 	function mod:ConcentratedAnimaApplied(args)
 		local count = #playerList+1
 		local icon = 9-count -- 8, 7, 6, 5
 		proxList[count] = args.destName
 		playerList[count] = args.destName
-		playerIcons[count] = icon
+		playerList[args.destName] = icon -- Set raid marker
 		if #playerList == 1 then
-			self:StopBar(CL.count:format(CL.adds, concentratedAnimaCount))
-			concentratedAnimaCount = concentratedAnimaCount + 1
-			self:CDBar(332664, enabledContainer == 4 and (self:Mythic() and 43 or 51) or (self:Mythic() and 65 or 60), CL.count:format(CL.adds, concentratedAnimaCount))
-			conjuredManifestationList = {}
-			conjuredManifestationCount = 1
 			self:Bar("anima_adds", 10, CL.spawning:format(CL.adds), 332664) -- Adds Spawning
 		end
 		if self:Me(args.destGUID) then
@@ -428,7 +440,7 @@ do
 			self:SayCountdown(332664, 10)
 			self:OpenProximity(332664, 8)
 		end
-		self:TargetsMessage(332664, "yellow", playerList, nil, nil, nil, nil, playerIcons)
+		self:NewTargetsMessage(332664, "yellow", playerList)
 
 		self:CustomIcon(concentratedAnimaMarker, args.destName, icon)
 		if not isOnMe then
@@ -470,15 +482,13 @@ function mod:Condemn(args)
 			self:PlaySound(args.spellId, "alert")
 		end
 	end
-	if self:GetOption(conjuredManifestationMarker) and not mobCollector[args.sourceGUID] then
-		mobCollector[args.sourceGUID] = true
+	if self:GetOption(conjuredManifestationMarker) and not conjuredManifestationList[args.sourceGUID] then
 		conjuredManifestationList[args.sourceGUID] = (8 - (conjuredManifestationCount % 4) + 1) -- 8, 7, 6, 5
 		conjuredManifestationCount = conjuredManifestationCount + 1
-		for k, v in pairs(conjuredManifestationList) do
+		for k, v in next, conjuredManifestationList do
 			local unit = self:GetUnitIdByGUID(k)
 			if unit then
-				self:CustomIcon(conjuredManifestationMarker, unit, conjuredManifestationList[k])
-				conjuredManifestationList[k] = nil
+				self:CustomIcon(conjuredManifestationMarker, unit, v)
 			end
 		end
 	end
