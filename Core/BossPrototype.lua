@@ -2144,10 +2144,18 @@ do
 					end
 				else
 					local startFromEntry = previousAmount+1
-					for i = startFromEntry, playersInTable do
-						playerTable[i] = playerTable[playerTable[i]] .. self:ColorName(playerTable[i])
+					local tbl = {}
+					if playerTable[playerTable[startFromEntry]] then
+						for i = startFromEntry, playersInTable do
+							local name = playerTable[i]
+							tbl[#tbl+1] = markerIcons[playerTable[name]] .. self:ColorName(name)
+						end
+					else
+						for i = startFromEntry, playersInTable do
+							tbl[#tbl+1] = self:ColorName(playerTable[i])
+						end
 					end
-					local list = tconcat(playerTable, comma, startFromEntry, playersInTable)
+					local list = tconcat(tbl, comma, 1, #tbl)
 					-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
 					local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
