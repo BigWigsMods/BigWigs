@@ -42,6 +42,7 @@ local color_methods = {
 	TargetMessageOld = 3,
 	TargetMessage = 2,
 	TargetsMessage = 2,
+	NewTargetsMessage = 2,
 	StackMessage = 4,
 	DelayedMessage = 3,
 }
@@ -58,6 +59,7 @@ local icon_methods = {
 	TargetMessageOld = 6,
 	TargetMessage = 5,
 	TargetsMessage = 6,
+	NewTargetsMessage = 6,
 	StackMessage = 7,
 	PersonalMessage = 4,
 	Bar = 4,
