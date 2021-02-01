@@ -33,6 +33,7 @@ local balefulShadowsList = {}
 local mobCollector = {}
 local balefulShadowCount = 1
 local mirrorCount = 0
+local isMoving = false
 
 local timersEasy = {
 	[1] = {
@@ -159,6 +160,7 @@ function mod:GetOptions()
 		327992, -- Desolation
 		-- Intermission: March of the Penitent
 		328276, -- March of the Penitent
+		-- Stage Two: The Crimson Chorus
 		329906, -- Carnage
 		{329951, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Impale
 		"custom_on_repeating_impale",
@@ -202,6 +204,8 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("RAID_BOSS_EMOTE")
+	self:RegisterEvent("PLAYER_STARTED_MOVING")
+	self:RegisterEvent("PLAYER_STOPPED_MOVING")
 
 	-- Stage One: Sinners Be Cleansed
 	self:Log("SPELL_CAST_SUCCESS", "Inevitable", 328936)
@@ -271,6 +275,7 @@ function mod:OnEngage()
 	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or timersEasy
 	intermission = nil
 	nextStageWarning = 73
+	isMoving = false
 	self:SetStage(1)
 
 	cleansingPainCount = 1
@@ -313,14 +318,21 @@ end
 -- Event Handlers
 --
 
+function mod:PLAYER_STARTED_MOVING()
+	isMoving = true
+end
+function mod:PLAYER_STOPPED_MOVING()
+	isMoving = false
+end
+
 do
 	local prev, prevFlash = 0, 0
 	local function crescendoMessage()
 		mod:PersonalMessage(336162, "underyou")
-		mod:PlaySound(336162, "underyou")
 		local t = GetTime()
-		if t-prevFlash > 5 then
+		if t-prevFlash > 1.5 and not isMoving then
 			prevFlash = t
+			mod:PlaySound(336162, "warning") -- Not using underyou as sound, you're not standing in something
 			mod:Flash(336162)
 		end
 	end
@@ -419,6 +431,7 @@ do
 			burdenStackTable[oldValue] = burdenStackTable[oldValue] - 1
 		end
 		local _, amount = self:UnitDebuff(args.destName, args.spellId) -- no amount in the event, checking ourselves
+		amount = amount or self:Mythic() and 6 or self:Heroic() and 5 or 4 -- Can rarely be nil on engage
 		burdenPlayerTracker[args.destName] = amount
 		burdenStackTable[amount] = burdenStackTable[amount] + 1
 		if self:Me(args.destGUID) then
@@ -581,6 +594,7 @@ function mod:BegintheChorus(args)
 	massacreCount = 1
 	addCount = 1
 	balefulShadowCount = 1
+	ravageCount = 1
 
 	self:Bar(-22131, timers[2][-22131][addCount], CL.count:format(CL.adds, addCount), 329711) -- Adds // Crimson Chorus Icon
 	self:Bar(329951, timers[2][329951][impaleCount], CL.count:format(self:SpellName(329951), impaleCount)) -- Impale
@@ -600,6 +614,8 @@ function mod:CarnageApplied(args)
 	if self:Me(args.destGUID) then
 		self:StackMessage(args.spellId, args.destName, args.amount, "blue")
 		self:PlaySound(args.spellId, "alarm")
+	elseif args.amount and args.amount > 2 and self:Tank() and self:Tank(args.destName) then
+		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
 	end
 end
 
@@ -790,7 +806,7 @@ end
 do
 	local prev = 0
 	function mod:GroundDamage(args)
-		if self:Me(args.destGUID) then
+		if self:Me(args.destGUID) and ravageCount < 3 then -- Reset ravageCount at start of stage 2 so Rancor is not affected
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
