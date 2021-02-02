@@ -62,7 +62,7 @@ function mod:GetOptions()
 		{334860, "TANK_HEALER"}, -- Crushing Stone
 		{334852, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Petrifying Howl
 		334893, -- Stone Shards
-	}, {
+	},{
 		[335114] = -22309, -- Huntsman Altimor
 		[334971] = -22312, -- Margore
 		[334797] = -22311, -- Bargast
@@ -261,7 +261,7 @@ end
 
 do
 	local shadesofBargastMarked = 0
-	function mod:shadesofBargastMarking(event, unit, guid)
+	function mod:ShadesofBargastMarking(event, unit, guid)
 		if self:MobId(guid) == 171557 and not mobCollector[guid] then
 			shadesofBargastMarked = shadesofBargastMarked + 1
 			self:CustomIcon(shadesofBargastMarker, unit, shadesofBargastMarked+3)
@@ -279,7 +279,7 @@ do
 		self:Bar(args.spellId, 61, CL.count:format(args.spellName, shadesOfBargastCount))
 		if self:GetOption(shadesofBargastMarker) then
 			shadesofBargastMarked = 0
-			self:RegisterTargetEvents("shadesofBargastMarking")
+			self:RegisterTargetEvents("ShadesofBargastMarking")
 			self:ScheduleTimer("UnregisterTargetEvents", 10)
 		end
 	end

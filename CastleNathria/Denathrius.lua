@@ -193,12 +193,12 @@ function mod:GetOptions()
 		[332585] = -22195,-- Stage Three: Indignation
 		["hymn_stacks"] = "mythic",
 	},{
-		[327039] = CL.normal,
-		[327796] = CL.heroic .."/".. CL.mythic,
-		[327227] = CL.soon:format(self:SpellName(327122)),
-		[328276] = CL.intermission,
-		[-22131] = CL.adds,
-		[332619] = CL.knockback,
+		[327039] = CL.normal, -- Feeding Time (Normal mode)
+		[327796] = CL.heroic .."/".. CL.mythic, -- Night Hunter (Heroic mode/Mythic mode)
+		[327227] = CL.soon:format(self:SpellName(327122)), -- Command: Ravage (Ravage soon)
+		[328276] = CL.intermission, -- March of the Penitent (Intermission)
+		[-22131] = CL.adds, -- Crimson Cabalist (Adds)
+		[332619] = CL.knockback, -- Shattering Pain (Knockback)
 	}
 end
 
@@ -209,10 +209,10 @@ function mod:OnBossEnable()
 
 	-- Stage One: Sinners Be Cleansed
 	self:Log("SPELL_CAST_SUCCESS", "Inevitable", 328936)
-	self:Log("SPELL_AURA_APPLIED", "BurdenofSinStacks", 326699)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "BurdenofSinStacks", 326699)
-	self:Log("SPELL_AURA_REMOVED_DOSE", "BurdenofSinStacks", 326699)
-	self:Log("SPELL_AURA_REMOVED", "BurdenofSinRemoved", 326699)
+	self:Log("SPELL_AURA_APPLIED", "BurdenOfSinStacks", 326699)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BurdenOfSinStacks", 326699)
+	self:Log("SPELL_AURA_REMOVED_DOSE", "BurdenOfSinStacks", 326699)
+	self:Log("SPELL_AURA_REMOVED", "BurdenOfSinRemoved", 326699)
 	self:Log("SPELL_CAST_START", "CleansingPain", 326707)
 	self:Log("SPELL_CAST_SUCCESS", "CleansingPainSuccess", 326707)
 	self:Log("SPELL_CAST_START", "BloodPriceStart", 326851)
@@ -224,10 +224,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Ravage", 327122)
 
 	-- Intermission: March of the Penitent
-	self:Log("SPELL_CAST_START", "MarchofthePenitentStart", 328117)
+	self:Log("SPELL_CAST_START", "MarchOfThePenitentStart", 328117)
 
 	-- Stage Two: The Crimson Chorus
-	self:Log("SPELL_CAST_SUCCESS", "BegintheChorus", 329697)
+	self:Log("SPELL_CAST_SUCCESS", "BeginTheChorus", 329697)
 	self:Log("SPELL_AURA_APPLIED", "CarnageApplied", 329906)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CarnageApplied", 329906)
 	self:Log("SPELL_AURA_APPLIED", "ImpaleApplied", 329951)
@@ -235,7 +235,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WrackingPain", 329181)
 	self:Log("SPELL_AURA_APPLIED", "WrackingPainApplied", 329181)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WrackingPainApplied", 329181)
-	self:Log("SPELL_CAST_START", "HandofDestruction", 333932)
+	self:Log("SPELL_CAST_START", "HandOfDestruction", 333932)
 	self:Log("SPELL_CAST_SUCCESS", "CommandMassacre", 330042)
 
 	self:Death("AddDeaths", 169196, 169470, 173161, 173162, 173163, 173164) -- Crimson Cabalist x2, Lady Sinsear, Lord Evershade, Baron Duskhollow, Countess Gloomveil
@@ -425,7 +425,7 @@ do
 		scheduled = nil
 	end
 
-	function mod:BurdenofSinStacks(args)
+	function mod:BurdenOfSinStacks(args)
 		local oldValue = burdenPlayerTracker[args.destName]
 		if oldValue then
 			burdenStackTable[oldValue] = burdenStackTable[oldValue] - 1
@@ -443,7 +443,7 @@ do
 		mod:UpdateInfoBox()
 	end
 
-	function mod:BurdenofSinRemoved(args)
+	function mod:BurdenOfSinRemoved(args)
 		if scheduled then
 			self:CancelTimer(scheduled)
 			scheduled = nil
@@ -566,7 +566,7 @@ function mod:Ravage(args)
 end
 
 -- Intermission: March of the Penitent
-function mod:MarchofthePenitentStart(args)
+function mod:MarchOfThePenitentStart(args)
 	self:SetStage(2)
 	intermission = true
 	self:Message(328276, "green", CL.percent:format(70, args.spellName), false)
@@ -582,7 +582,7 @@ function mod:MarchofthePenitentStart(args)
 end
 
 -- Stage Two: The Crimson Chorus
-function mod:BegintheChorus(args)
+function mod:BeginTheChorus(args)
 	intermission = nil
 	self:CloseInfo(326699)
 	self:Message("stages", "green", CL.stage:format(2), false)
@@ -676,7 +676,7 @@ function mod:WrackingPainApplied(args)
 	end
 end
 
-function mod:HandofDestruction(args)
+function mod:HandOfDestruction(args)
 	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, handCount)))
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, handCount))

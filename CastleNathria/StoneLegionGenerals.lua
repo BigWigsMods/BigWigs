@@ -117,7 +117,7 @@ function mod:GetOptions()
 		[342256] = "mythic",
 	},{
 		["goliath"] = L.goliath_short, -- Stone Legion Goliath (Goliath)
-		["commando"] = L.commando_short, -- Stone Legion Commando (Goliath)
+		["commando"] = L.commando_short, -- Stone Legion Commando (Commando)
 		[342544] = CL.meteor, -- Pulverizing Meteor (Meteor)
 	}
 end

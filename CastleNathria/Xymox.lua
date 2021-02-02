@@ -87,9 +87,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DimensionalTear", 328437, 342310)
 	self:Log("SPELL_AURA_APPLIED", "DimensionalTearApplied", 328448, 328468)
 	self:Log("SPELL_AURA_REMOVED", "DimensionalTearRemoved", 328448, 328468)
-	self:Log("SPELL_CAST_START", "GlyphofDestruction", 325361)
-	self:Log("SPELL_AURA_APPLIED", "GlyphofDestructionApplied", 325236)
-	self:Log("SPELL_AURA_REMOVED", "GlyphofDestructionRemoved", 325236)
+	self:Log("SPELL_CAST_START", "GlyphOfDestruction", 325361)
+	self:Log("SPELL_AURA_APPLIED", "GlyphOfDestructionApplied", 325236)
+	self:Log("SPELL_AURA_REMOVED", "GlyphOfDestructionRemoved", 325236)
 	self:Log("SPELL_CAST_SUCCESS", "StasisTrap", 326271)
 	self:Log("SPELL_CAST_START", "RiftBlast", 335013)
 	self:Log("SPELL_CAST_SUCCESS", "HyperlightSpark", 325399)
@@ -263,7 +263,7 @@ do
 	end
 end
 
-function mod:GlyphofDestruction(args)
+function mod:GlyphOfDestruction(args)
 	self:Message(325236, "yellow", CL.count:format(self:SpellName(325236), glyphCount))
 	self:PlaySound(325236, "alert")
 	self:StopBar(CL.count:format(self:SpellName(325236), glyphCount))
@@ -271,7 +271,7 @@ function mod:GlyphofDestruction(args)
 	self:CDBar(325236, self:Mythic() and 36.5 or 29, CL.count:format(self:SpellName(325236), glyphCount))
 end
 
-function mod:GlyphofDestructionApplied(args)
+function mod:GlyphOfDestructionApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, glyphCount-1))
 	self:PlaySound(args.spellId, "warning")
 	self:TargetBar(args.spellId, self:Easy() and 8 or 4, args.destName)
@@ -280,7 +280,7 @@ function mod:GlyphofDestructionApplied(args)
 	end
 end
 
-function mod:GlyphofDestructionRemoved(args)
+function mod:GlyphOfDestructionRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
