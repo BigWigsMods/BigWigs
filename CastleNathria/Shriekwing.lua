@@ -117,8 +117,6 @@ function mod:OnEngage()
 	else
 		self:Berserk(550)
 	end
-
-	self:GROUP_ROSTER_UPDATE()
 end
 
 --------------------------------------------------------------------------------
@@ -197,13 +195,14 @@ function mod:BlindSwipe(args)
 end
 
 function mod:ExsanguinatingBite(args)
+	local bossUnit = self:GetBossId(args.sourceGUID)
 	for i = 1, #tankList do
 		local unit = tankList[i]
-		if self:TopThreat("boss1", unit) then
-			self:TargetMessage(args.spellId, "purple", self:UnitName(unit), CL.casting:format(args.spellName))
+		if bossUnit and self:TopThreat(bossUnit, unit) then
+			self:TargetMessage(args.spellId, "yellow", self:UnitName(unit), CL.casting:format(args.spellName))
 			break
 		elseif i == #tankList then
-			self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
+			self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 		end
 	end
 	self:PlaySound(args.spellId, "warning")
