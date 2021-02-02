@@ -156,7 +156,6 @@ If an encounter only has one ability that is worth marking for, only the first i
 
 |cffff4411Note that if a player has already been marked manually, BigWigs will never change their icon.|r]=]
 L.recordBestTime = "Ricorda Miglior Tempo"
-L.regularBars = "Barre Normali"
 L.remove = "Rimuovi"
 L.removeOther = "Rimuovi le Altre"
 L.report = "Riporta"

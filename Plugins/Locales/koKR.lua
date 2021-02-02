@@ -99,7 +99,6 @@ L.emphasizeMultiplierDesc = "강조 고정기로 이동하는 바가 활성화�
 L.enable = "활성화"
 L.move = "이동"
 L.moveDesc = "강조된 바를 강조 고정기로 이동시킵니다. 이 옵션을 끄면 강조된 바는 단순히 크기 비율과 색상을 변경합니다."
-L.regularBars = "보통 바"
 L.emphasizedBars = "강조된 바"
 L.align = "정렬"
 L.alignText = "문자 정렬"

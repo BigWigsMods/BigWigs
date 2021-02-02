@@ -156,7 +156,6 @@ Si solo se usa un icono para un encuentro se usará el primario, nunca se usará
 
 |cffff4411Nota: Si un jugador ha sido marcado manualmente BigWigs nunca cambiará su icono.|r]=]
 L.recordBestTime = "Recordar muertes más rápidas"
-L.regularBars = "Barras regulares"
 L.remove = "Quitar"
 L.removeOther = "Quitar otro"
 L.report = "Reportar"

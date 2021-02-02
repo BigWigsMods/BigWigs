@@ -99,7 +99,6 @@ L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anc
 L.enable = "Enable"
 L.move = "Move"
 L.moveDesc = "Moves emphasized bars to the Emphasize anchor. If this option is off, emphasized bars will simply change size and color."
-L.regularBars = "Regular bars"
 L.emphasizedBars = "Emphasized bars"
 L.align = "Align"
 L.alignText = "Align Text"

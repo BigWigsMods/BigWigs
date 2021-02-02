@@ -99,7 +99,6 @@ L.emphasizeMultiplierDesc = "Si vous désactivez le déplacement des barres vers
 L.enable = "Activer"
 L.move = "Déplacer"
 L.moveDesc = "Déplace les barres mises en évidence vers l'ancre de mise en évidence. Si cette option est désactivée, les barres mises en évidence changeront simplement d'échelle et de couleur."
-L.regularBars = "Barres normales"
 L.emphasizedBars = "Barres en évidence"
 L.align = "Alignement"
 L.alignText = "Alignement du texte"

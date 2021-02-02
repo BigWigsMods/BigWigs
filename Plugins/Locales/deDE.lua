@@ -100,7 +100,6 @@ L.emphasizeMultiplierDesc = "Wenn das Bewegen der Leisten zu den hervorgehobenen
 L.enable = "Aktiviert"
 L.move = "Bewegen"
 L.moveDesc = "Bewegt hervorgehobene Leisten zum hervorgehobenen Anker. Ist diese Option nicht aktiv, werden hervorgehobene Leisten lediglich in Größe und Farbe geändert."
-L.regularBars = "Normale Leisten"
 L.emphasizedBars = "Hervorgehobene Leisten"
 L.align = "Ausrichtung"
 L.alignText = "Textausrichtung"

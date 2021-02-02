@@ -156,7 +156,6 @@ L.raidIconsDescription = [=[可能遇到包含例如炸弹类型的技能指向�
 
 |cffff4411注意：如果玩家已经被手动标记，BigWigs 将不会改变他的图标。|r]=]
 L.recordBestTime = "记忆最快击杀"
-L.regularBars = "常规计时条"
 L.remove = "移除"
 L.removeOther = "移除其它"
 L.report = "报告"

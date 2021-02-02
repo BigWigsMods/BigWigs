@@ -99,7 +99,6 @@ L.emphasizeMultiplierDesc = "Se você desabilitar as barras movendo-as para a â
 L.enable = "Habilitar"
 L.move = "Mover"
 L.moveDesc = "Move barras enfatizadas para a âncora de Enfatizar. Se esta opção estiver desativada, barras enfatizadas terão apenas sua cor e tamanho alterados."
-L.regularBars = "Barras regulares"
 L.emphasizedBars = "Barras enfatizadas"
 L.align = "Alinhamento"
 L.alignText = "Alinhar texto"
