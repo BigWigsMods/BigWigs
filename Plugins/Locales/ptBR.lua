@@ -241,10 +241,8 @@ L.resetMessagesDesc = "Reinicia todas as opções relacionadas a mensagens, incl
 
 L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Mensagens"
-L.normalMessages = "Mensagens normais"
 L.emphasizedMessages = "Mensagens enfatizadas"
 L.emphasizedDesc = "O objetivo das mensagens enfatizadas é ter a sua atenção, pois ela é uma mensagem grande no meio da tela. Isso é raramente habilitado por padrão, mas você pode habilitar para qualquer habilidade de chefe quando estiver olhando as configurações de habilidades específicas de chefes."
-L.output = "Saída"
 L.uppercase = "MAIÚSCULAS"
 L.uppercaseDesc = "Todas as mensagens enfatizadas serão convertidas para letras MAIÚSCULAS."
 

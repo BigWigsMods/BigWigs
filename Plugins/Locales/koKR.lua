@@ -241,10 +241,8 @@ L.resetMessagesDesc = "위치를 비롯한 메시지에 관련된 모든 설정�
 
 L.bwEmphasized = "BigWigs 강조"
 L.messages = "메시지"
-L.normalMessages = "일반 메시지"
 L.emphasizedMessages = "강조 메시지"
 L.emphasizedDesc = "강조 메시지는 화면의 중앙에 보다 큰 크기의 메시지를 띄움으로써 당신의 주의를 끌게 됩니다. 기본값으로 강조 메시지 기능이 켜져 있는 경우는 드물지만 우두머리 별 설정에서 아무 우두머리 별 능력에 대한 강조 메시지를 켤 수 있습니다."
-L.output = "출력"
 L.uppercase = "대문자"
 L.uppercaseDesc = "모든 강조 메시지들이 대문자로 표시됩니다."
 

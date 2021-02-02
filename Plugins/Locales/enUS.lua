@@ -241,10 +241,8 @@ L.resetMessagesDesc = "Reset all the options related to messages, including the 
 
 L.bwEmphasized = "BigWigs Emphasized"
 L.messages = "Messages"
-L.normalMessages = "Normal messages"
 L.emphasizedMessages = "Emphasized messages"
 L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
-L.output = "Output"
 L.uppercase = "UPPERCASE"
 L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 

@@ -242,10 +242,8 @@ L.resetMessagesDesc = "Setzt alle Optionen im Zusammenhang mit Nachrichten zurü
 
 L.bwEmphasized = "BigWigs Hervorgehoben"
 L.messages = "Nachrichten"
-L.normalMessages = "Normale Nachrichten"
 L.emphasizedMessages = "Hervorgehobene Nachrichten"
 L.emphasizedDesc = "Hervorgehobene Nachrichten dienen dazu die Aufmerksamkeit zu erregen, indem eine große Nachricht in der Bildschirmmitte angezeigt wird. Diese sind selten standardmäßig aktiviert, aber können für jegliche Bossfähigkeiten in den Einstellungen des jeweiligen Bosses aktiviert werden."
-L.output = "Ausgabe"
 L.uppercase = "GROSSBUCHSTABEN"
 L.uppercaseDesc = "Alle hervorgehobenen Nachrichten werden in GROSSBUCHSTABEN konvertiert."
 
