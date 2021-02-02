@@ -328,6 +328,7 @@ end
 do
 	local prev, prevFlash = 0, 0
 	local function crescendoMessage()
+		if UnitIsDead("player") then return end
 		mod:PersonalMessage(336162, "underyou")
 		local t = GetTime()
 		if t-prevFlash > 1.5 and not isMoving then
