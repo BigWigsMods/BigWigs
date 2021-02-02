@@ -2186,7 +2186,7 @@ do
 					local texture = icon ~= false and icons[icon or textType == "number" and text or key]
 					local marker = playerTable[pName]
 					if marker then
-						self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, marker[playersInTable]), "blue", texture, true)
+						self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, marker), "blue", texture, true)
 					else
 						self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, true)
 					end
