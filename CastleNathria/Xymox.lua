@@ -204,7 +204,9 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		sparkCount = 1
 
 		self:Bar(325399, 6.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
-		self:Bar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
+		if not self:Easy() then
+			self:Bar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
+		end
 		self:Bar(328437, 16.5, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:Bar(340788, 22.3, CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 		self:Bar(325236, 25.2, CL.count:format(self:SpellName(325236), glyphCount)) -- Glyph of Destruction
@@ -229,7 +231,9 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		sparkCount = 1
 
 		self:Bar(325399, 6.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
-		self:CDBar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
+		if not self:Easy() then
+			self:CDBar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
+		end
 		self:CDBar(328437, 16.5, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:Bar(328789, 28.3, CL.count:format(self:SpellName(328789), annihilateCount)) -- Annihilate
 		self:CDBar(325236, self:Mythic() and 52 or 50, CL.count:format(self:SpellName(325236), glyphCount)) -- Glyph of Destruction
