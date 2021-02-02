@@ -25,6 +25,7 @@ local sparkCount = 1
 local glyphCount = 1
 local trapCount = 1
 local lastStaged = 0
+local tankList = {}
 
 local stage3MythicTimers = {
 	[340758] = {34.3, 60, 92.1, 78.2}, -- Spirits
@@ -102,6 +103,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Extinction", 329107)
 	self:Log("SPELL_AURA_APPLIED", "WitheringTouchApplied", 340860)
 	--self:Log("SPELL_CAST_START", "Annihilate", 328789)
+
+	self:RegisterEvent("GROUP_ROSTER_UPDATE")
+	self:GROUP_ROSTER_UPDATE()
 end
 
 function mod:OnEngage()
@@ -128,6 +132,15 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
+	tankList = {}
+	for unit in self:IterateGroup() do
+		if self:Tank(unit) then
+			tankList[#tankList+1] = unit
+		end
+	end
+end
 
 function mod:RAID_BOSS_EMOTE(_, msg)
 	local t = GetTime()
@@ -264,7 +277,16 @@ do
 end
 
 function mod:GlyphOfDestruction(args)
-	self:Message(325236, "yellow", CL.count:format(self:SpellName(325236), glyphCount))
+	local bossUnit = self:GetBossId(args.sourceGUID)
+	for i = 1, #tankList do
+		local unit = tankList[i]
+		if bossUnit and self:TopThreat(bossUnit, unit) then
+			self:TargetMessage(325236, "yellow", self:UnitName(unit), CL.casting:format(args.spellName))
+			break
+		elseif i == #tankList then
+			self:Message(325236, "yellow", CL.casting:format(args.spellName))
+		end
+	end
 	self:PlaySound(325236, "alert")
 	self:StopBar(CL.count:format(self:SpellName(325236), glyphCount))
 	glyphCount = glyphCount + 1
