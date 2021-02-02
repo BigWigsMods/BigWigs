@@ -1,6 +1,6 @@
 
 BigWigs:AddColors("Shriekwing", {
-	[328857] = {"blue","purple"},
+	[328857] = {"blue","yellow"},
 	[328897] = {"blue","green","purple"},
 	[328921] = "green",
 	[329362] = "cyan",
