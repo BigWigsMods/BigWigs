@@ -172,7 +172,7 @@ BigWigs:AddColors("Sire Denathrius", {
 	[328276] = "green",
 	[328936] = "cyan",
 	[329181] = {"blue","purple","yellow"},
-	[329906] = "blue",
+	[329906] = {"blue","purple"},
 	[329951] = {"blue","orange"},
 	[330042] = "red",
 	[332585] = {"blue","purple"},

@@ -177,7 +177,7 @@ BigWigs:AddSounds("Sire Denathrius", {
 	[333979] = "warning",
 	[333980] = "long",
 	[335873] = "underyou",
-	[336162] = "underyou",
+	[336162] = "warning",
 	[338738] = "info",
 	[344776] = "alarm",
 	["hymn_stacks"] = {"alert","info"},
