@@ -34,7 +34,7 @@ local commandoesKilled = 0
 local commandoesNeeded = 7
 local commandoAddMarks = {}
 local wickedLacerationList = {}
-local firstGoliath = true
+local firstGoliath = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -183,7 +183,11 @@ function mod:OnEngage()
 	wickedLacerationList = {}
 	isInfoOpen = false
 	mobCollectorGoliath = {}
-	firstGoliath = true
+	if self:Easy() then
+		firstGoliath = false
+	else
+		firstGoliath = true
+	end
 	self:SetStage(1)
 
 	self:Bar(334929, 8.3, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
@@ -220,18 +224,19 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	if guid and not mobCollectorGoliath[guid] then
 		mobCollectorGoliath[guid] = true
 		self:Message("goliath", "cyan", CL.spawned:format(L.goliath_short), L.goliath_icon)
+		self:StopBar(L.goliath_short)
 		self:Bar(342733, 18) -- Ravenous Feast
 		self:PlaySound("goliath", "info")
 	end
 end
 
 function mod:SummonReinforcements()
-	if not firstGoliath then -- Avoid a message on boss engage since we have a berserk message
+	if not firstGoliath then -- Avoid a message on boss engage (only happens on hc/mythic)
 		self:Message("goliath", "cyan", CL.custom_sec:format(L.goliath_short, 10), false)
 	else
 		firstGoliath = false
 	end
-	self:Bar("goliath", 10, L.goliath_short, L.goliath_icon)
+	self:CDBar("goliath", 10, L.goliath_short, L.goliath_icon)
 end
 
 do
