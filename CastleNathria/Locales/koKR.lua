@@ -20,7 +20,7 @@ if L then
 	L.custom_on_repeating_say_laser = "반복적으로 순간 방출 알리기"
 	L.custom_on_repeating_say_laser_desc = "순간 방출 걸렸을때 반복적으로 말을 해서 혹시나 처음 메세지를 보지 못한 사람들에게 알리기."
 
-	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
+	L.tempPrint = "독기에 걸렸을때 체력을 외침으로 알리는 기능을 추가했습니다. 전까진 위크오라를 썼다면. 위크오라를 지워서 두번 외치는일이 없도록 하는게 좋을수도 있습니다."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "koKR")
@@ -42,14 +42,14 @@ if L then
 	 L.anima_adds = "농축된 령 쫄"
 	 L.anima_adds_desc = "농축된 령 쫄이 언제 생성되는 타이머 표시."
 
-	-- L.custom_off_experimental = "Enable experimental features"
-	-- L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
+	 L.custom_off_experimental = "실험적 기능 활성화"
+	 L.custom_off_experimental_desc = "이 기능들은 |cffff0000테스트되지 않았고|r 그렇기에 |cffff0000무분별하게 반복될수 있음|r."
 
-	-- L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
-	-- L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
+	 L.anima_tracking = "령 추적 |cffff0000(실험 중)|r"
+	 L.anima_tracking_desc = "메세지와 바로 령 용기에 있는 령 수치를 추적.|n|cffaaff00팁: 정보 박스나 바를 기호에 따라 비활성화해야 할 수도 있음."
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	 L.custom_on_stop_timers = "항상 능력 바 표시"
+	 L.custom_on_stop_timers_desc = "아직은 실험 단계"
 
 	 L.desires = "욕망"
 	 L.bottles = "병에 담긴 령"
@@ -101,14 +101,14 @@ if L then
 
 	 L.skirmishers = "척후병" -- Short for Stone Legion Skirmishers
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	 L.custom_on_stop_timers = "항상 능력 바 표시"
+	 L.custom_on_stop_timers_desc = "아직은 실험 단계"
 
-	--L.goliath_short = "Goliath"
-	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_short = "거수"
+	L.goliath_desc = "돌 군단 거수가 언제 나오는지 경고와 타이머 표시Show warnings and timers for when the Stone Legion Goliath is going to spawn."
 
-	--L.commando_short = "Commando"
-	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
+	L.commando_short = "특공대원"
+	L.commando_desc = "돌 군단 특공대원이 잡혔을때 경고 표시."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "koKR")
@@ -123,12 +123,12 @@ if L then
 	L.custom_on_repeating_impale = "반복적으로 꿰뚫기 말하기"
 	L.custom_on_repeating_impale_desc = "꿰뚫기에 걸렸을때 '1' 이나 '22' 나 '333' 이나 '4444' 로 계속 말해서 어떤 순서로 맞는지 명확하게 하기."
 
-	-- L.hymn_stacks = "Nathrian Hymn"
-	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	 L.hymn_stacks = "나스리아의 찬가"
+	 L.hymn_stacks_desc = "현재 본인에게 있는 나스리아의 찬가 중첩 갯수 알림."
 
-	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
-	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
-	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	 L.ravage_target = "사악한 환영: 유린 방향 시전바"
+	 L.ravage_target_desc = "사악한 환영이 유린을 어디로 쓸지 결정할때까지의 시간을 표시해주는 시전바."
+	 L.ravage_targeted = "유린 방향 결정" -- Text on the bar for when Ravage picks its location to target in stage 3
 
 	 L.no_mirror = "거울 없음: %d" -- Player amount that does not have the Through the Mirror
 	 L.mirror = "거울: %d" -- Player amount that does have the Through the Mirror
