@@ -49,8 +49,8 @@ L.Beware = "조심해라 (알갈론)"
 L.FlagTaken = "깃발 뺏김 (PvP)"
 L.Destruction = "파괴 (킬제덴)"
 L.RunAway = "도망쳐라 꼬마야 달아나라 (커다란 나쁜 늑대)"
---L.spell_on_you = "BigWigs: Spell on you"
---L.spell_under_you = "BigWigs: Spell under you"
+L.spell_on_you = "BigWigs: 당신에게 주문"
+L.spell_under_you = "BigWigs: 발밑에 바닥"
 
 -- Options.lua
 L.options = "옵션"
