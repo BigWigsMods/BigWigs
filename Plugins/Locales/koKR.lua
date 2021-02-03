@@ -11,7 +11,7 @@ L.positionDesc = "고정기로부터 정확한 위치를 원한다면 상자에 
 L.width = "너비"
 L.height = "높이"
 L.sizeDesc = "보통 고정기를 끌어서 크기를 조정합니다. 정확한 크기를 지정하고 싶다면 슬라이더를 사용하거나 직접 수치를 입력 상자안에 써넣으세요(최대값 제한 없음)."
---L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
+L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직접 수치를 입력 상자안에 써넣으세요 (최대 200)."
 
 -----------------------------------------------------------------------
 -- AltPower.lua
