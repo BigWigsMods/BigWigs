@@ -91,6 +91,9 @@ end
 function mod:VoidZone(args)
 	self:Message(28863, "orange")
 	self:CDBar(28863, 12) -- 11~14
+	if self:Me(args.destGUID) then
+		self:PlaySound(28863, "alarm")
+	end
 end
 
 function mod:Wrath(args)

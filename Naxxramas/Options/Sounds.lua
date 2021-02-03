@@ -37,6 +37,10 @@ BigWigs:AddSounds("Instructor Razuvious", {
 	["shout"] = "Alert",
 })
 
+BigWigs:AddSounds("The Four Horsemen", {
+	[28863] = "alarm",
+})
+
 BigWigs:AddSounds("Sapphiron", {
 	[28542] = "alert",
 	["deepbreath"] = "alarm",
