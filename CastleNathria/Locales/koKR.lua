@@ -105,7 +105,7 @@ if L then
 	 L.custom_on_stop_timers_desc = "아직은 실험 단계"
 
 	L.goliath_short = "거수"
-	L.goliath_desc = "돌 군단 거수가 언제 나오는지 경고와 타이머 표시Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_desc = "돌 군단 거수가 언제 나오는지 경고와 타이머 표시."
 
 	L.commando_short = "특공대원"
 	L.commando_desc = "돌 군단 특공대원이 잡혔을때 경고 표시."
