@@ -6,6 +6,7 @@ L.width = "Ancho"
 L.height = "Alto"
 L.sizeDesc = "Normalmente ajusta el tamaño deslizando por la barra. Si necesitas un tamaño exacto puedes usar este deslizador o teclea el valor dentro de la caja, no tiene máximo."
 --L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 L.abilityName = "Nombre de habilidad"
 L.abilityNameDesc = "Muestra/oculta el nombre de la habilidad encima de la ventana"

@@ -12,6 +12,7 @@ L.width = "Breite"
 L.height = "Höhe"
 L.sizeDesc = "Normalerweise wird die Größe festgelegt, indem Du den Anker bewegst. Falls Du eine exakte Größe benötigst, bewege diesen Schieber oder trage den Wert in das Feld ein. Diese Zahl kann beliebig groß sein."
 L.fontSizeDesc = "Schriftgröße über den Schieberegler oder durch Eingabe eines Wertes in der Box (maximal 200) festlegen."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 -----------------------------------------------------------------------
 -- AltPower.lua

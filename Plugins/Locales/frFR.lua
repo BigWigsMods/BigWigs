@@ -11,6 +11,7 @@ L.width = "Largeur"
 L.height = "Hauteur"
 L.sizeDesc = "Normalement, la taille peut être définie en tirant sur l'ancre. Si vous avez besoin d'une taille bien précise, vous pouvez utiliser ce slider ou taper la valeur dans la boîte de saisie, qui n'a pas de limite."
 L.fontSizeDesc = "Ajustez la taille de la police à l'aide de ce curseur, ou tapez la valeur dans la saisie ce qui permet d'aller jusqu'à 200."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 -----------------------------------------------------------------------
 -- AltPower.lua

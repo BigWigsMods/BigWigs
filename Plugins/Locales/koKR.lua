@@ -12,6 +12,7 @@ L.width = "너비"
 L.height = "높이"
 L.sizeDesc = "보통 고정기를 끌어서 크기를 조정합니다. 정확한 크기를 지정하고 싶다면 슬라이더를 사용하거나 직접 수치를 입력 상자안에 써넣으세요(최대값 제한 없음)."
 L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직접 수치를 입력 상자안에 써넣으세요 (최대 200)."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 -----------------------------------------------------------------------
 -- AltPower.lua

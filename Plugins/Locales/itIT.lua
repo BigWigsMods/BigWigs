@@ -6,6 +6,7 @@ L.comma = ", "
 --L.height = "Height"
 --L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
 --L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 L.abilityName = "Nome dell'Abilità"
 L.abilityNameDesc = "Visualizza o nasconde il nome dell'abilità sopra la finestra"

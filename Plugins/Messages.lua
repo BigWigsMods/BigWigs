@@ -43,11 +43,13 @@ plugin.defaultDB = {
 	emphFontSize = 48,
 	chat = false,
 	useicons = true,
-	classcolor = true, -- XXX non-functional
+	classcolor = true,
 	growUpwards = true,
 	displaytime = 3,
 	fadetime = 2,
 	emphUppercase = true,
+	disabled = false,
+	emphDisabled = false,
 	-- Designed by default to grow up into the errors frame (which should be disabled in the BossBlock plugin in 99% of situations)
 	-- Should not enter the RaidWarningFrame by default (since we grow upwards), which we don't want to block view of
 	-- By order from top to bottom:
@@ -281,6 +283,7 @@ plugin.pluginOptions = {
 						plugin.db.profile.fontName = list[value]
 						updateProfile()
 					end,
+					width = 2,
 				},
 				outline = {
 					type = "select",
@@ -292,26 +295,37 @@ plugin.pluginOptions = {
 						THICKOUTLINE = L.thick,
 					},
 				},
-				align = {
-					type = "select",
-					name = L.align,
-					values = {
-						LEFT = L.left,
-						CENTER = L.center,
-						RIGHT = L.right,
-					},
-					style = "radio",
-					order = 3,
-				},
 				fontSize = {
 					type = "range",
 					name = L.fontSize,
 					desc = L.fontSizeDesc,
-					order = 4,
+					order = 3,
 					max = 200, softMax = 72,
 					min = 10,
 					step = 1,
-					width = "full",
+					width = 2,
+				},
+				monochrome = {
+					type = "toggle",
+					name = L.monochrome,
+					desc = L.monochromeDesc,
+					order = 4,
+				},
+				align = {
+					type = "select",
+					name = L.align,
+					values = {
+						L.left,
+						L.center,
+						L.right,
+					},
+					style = "radio",
+					order = 5,
+					get = function() return plugin.db.profile.align == "LEFT" and 1 or plugin.db.profile.align == "RIGHT" and 3 or 2 end,
+					set = function(_, value)
+						plugin.db.profile.align = value == 1 and "LEFT" or value == 3 and "RIGHT" or "CENTER"
+						updateProfile()
+					end,
 				},
 				useicons = {
 					type = "toggle",
@@ -319,35 +333,17 @@ plugin.pluginOptions = {
 					desc = L.useIconsDesc,
 					order = 6,
 				},
+				classcolor = {
+					type = "toggle",
+					name = L.classColors,
+					desc = L.classColorsDesc,
+					order = 7,
+				},
 				growUpwards = {
 					type = "toggle",
 					name = L.growingUpwards,
 					desc = L.growingUpwardsDesc,
-					order = 7,
-				},
-				monochrome = {
-					type = "toggle",
-					name = L.monochrome,
-					desc = L.monochromeDesc,
 					order = 8,
-				},
-				chat = {
-					type = "toggle",
-					name = L.chatMessages,
-					desc = L.chatMessagesDesc,
-					order = 9,
-					width = "full",
-				},
-			--	classcolor = {
-			--		type = "toggle",
-			--		name = L.classColors,
-			--		desc = L.classColorsDesc,
-			--		order = 9,
-			--	},
-				newline1 = {
-					type = "description",
-					name = "\n",
-					order = 10,
 				},
 				displaytime = {
 					type = "range",
@@ -356,7 +352,7 @@ plugin.pluginOptions = {
 					min = 1,
 					max = 10,
 					step = 0.5,
-					order = 11,
+					order = 9,
 				},
 				fadetime = {
 					type = "range",
@@ -365,19 +361,42 @@ plugin.pluginOptions = {
 					min = 1,
 					max = 10,
 					step = 0.5,
+					order = 10,
+				},
+				newline1 = {
+					type = "description",
+					name = "\n",
+					order = 11,
+				},
+				chat = {
+					type = "toggle",
+					name = L.chatMessages,
+					desc = L.chatMessagesDesc,
 					order = 12,
+					width = 2,
+				},
+				disabled = {
+					type = "toggle",
+					name = L.disabled,
+					--desc = "XXX",
+					order = 13,
+					confirm = function(_, value)
+						if value then
+							return L.disableDesc:format(L.messages)
+						end
+					end,
 				},
 				header1 = {
 					type = "header",
 					name = "",
-					order = 13,
+					order = 14,
 				},
 				reset = {
 					type = "execute",
 					name = L.resetAll,
 					desc = L.resetMessagesDesc,
 					func = function() plugin.db:ResetProfile() end,
-					order = 14,
+					order = 15,
 				},
 			},
 		},
@@ -443,6 +462,17 @@ plugin.pluginOptions = {
 						local loc = GetLocale()
 						if loc == "zhCN" or loc == "zhTW" or loc == "koKR" then
 							return true
+						end
+					end,
+				},
+				emphDisabled = {
+					type = "toggle",
+					name = L.disabled,
+					--desc = "XXX",
+					order = 7,
+					confirm = function(_, value)
+						if value then
+							return L.disableDesc:format(L.emphasizedMessages)
 						end
 					end,
 				},
@@ -704,13 +734,13 @@ do
 
 		if not db.useicons then icon = nil end
 
-		if emphasized then
+		if emphasized and not db.emphDisabled then
 			if db.emphUppercase then
 				text = upper(text)
 				text = gsub(text, "(:%d+|)T", "%1t") -- Fix texture paths that need to end in lowercase |t
 			end
 			self:EmphasizedPrint(nil, text, r, g, b)
-		else
+		elseif not db.disabled then
 			self:Print(nil, text, r, g, b, nil, nil, nil, nil, nil, icon)
 		end
 		if db.chat then
