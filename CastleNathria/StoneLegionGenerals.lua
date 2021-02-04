@@ -9,12 +9,12 @@ mod:RegisterEnableMob(
 	168113) -- General Grashaal
 mod.engageId = 2417
 mod.respawnTime = 30
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local stage = 1
 local intermission = false
 local wickedBladeCount = 1
 local heartRendCount = 1
@@ -24,6 +24,7 @@ local pulverizingMeteorCount = 1
 local reverberatingLeapCount = 1
 local seismicUphealvalCount = 1
 local shadowForcesCount = 1
+local isInfoOpen = false
 
 local mobCollector = {}
 local mobCollectorGoliath = {}
@@ -32,6 +33,8 @@ local skirmisherTracker = {}
 local commandoesKilled = 0
 local commandoesNeeded = 7
 local commandoAddMarks = {}
+local wickedLacerationList = {}
+local firstGoliath = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -46,6 +49,15 @@ if L then
 
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Just for testing right now"
+
+	L.goliath = -23101
+	L.goliath_short = "Goliath"
+	L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_icon = "Ability_deathknight_summongargoyle"
+
+	L.commando = -22791
+	L.commando_short = "Commando"
+	L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
 end
 
 --------------------------------------------------------------------------------
@@ -59,12 +71,14 @@ local skirmisherMarker = mod:AddMarkerOption(false, "npc", 8, -22761, 8, 7, 6) -
 local commandoMarker = mod:AddMarkerOption(false, "npc", 8, -22772, 8, 7, 6, 5) -- Stone Legion Commando
 function mod:GetOptions()
 	return {
-		"stages",
 		"berserk",
 		"custom_on_stop_timers",
+		"goliath",
+		"commando",
 			--[[ Stage One: Kaal's Assault ]]--
 		329636, -- Hardened Stone Form
 		{333387, "SAY"}, -- Wicked Blade
+		{333913, "INFOBOX"}, -- Wicked Laceration
 		wickedBladeMarker,
 		334765, -- Heart Rend
 		heartRendMarker,
@@ -95,17 +109,23 @@ function mod:GetOptions()
 		340037, -- Volatile Stone Shell
 		342698, -- Volatile Anima Injection
 		commandoMarker,
-	}, {
-		["stages"] = "general",
+	},{
+		["berserk"] = "general",
 		[329636] = -22681, -- Stage One: Kaal's Assault
 		[332406] = "intermission",
 		[329808] = -22718, -- Stage Two: Grashaal's Blitz
 		[342256] = "mythic",
+	},{
+		["goliath"] = L.goliath_short, -- Stone Legion Goliath (Goliath)
+		["commando"] = L.commando_short, -- Stone Legion Commando (Commando)
+		[342544] = CL.meteor, -- Pulverizing Meteor (Meteor)
 	}
 end
 
 function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
+
+	self:Log("SPELL_CAST_SUCCESS", "SummonReinforcements", 342255)
 
 	--[[ Stage One: Kaal's Assault ]]--
 	self:Log("SPELL_AURA_APPLIED", "HardenedStoneFormApplied", 329636)
@@ -113,6 +133,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WickedBlade", 344230, 333387) -- Normal, Heroic
 	self:Log("SPELL_AURA_APPLIED", "WickedBladeApplied", 333377) -- Wicked Mark
 	self:Log("SPELL_AURA_REMOVED", "WickedBladeRemoved", 333377)
+	self:Log("SPELL_AURA_APPLIED", "WickedLaceration", 333913)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "WickedLaceration", 333913)
+	self:Log("SPELL_AURA_REMOVED", "WickedLacerationRemoved", 333913)
 	self:Log("SPELL_CAST_START", "HeartRend", 334765)
 	self:Log("SPELL_AURA_APPLIED", "HeartRendApplied", 334765)
 	self:Log("SPELL_AURA_REMOVED", "HeartRendRemoved", 334765)
@@ -148,7 +171,6 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	stage = 1
 	wickedBladeCount = 1
 	heartRendCount = 1
 	serratedSwipeCount = 1
@@ -158,11 +180,20 @@ function mod:OnEngage()
 	seismicUphealvalCount = 1
 	shadowForcesCount = 1
 	intermission = false
+	wickedLacerationList = {}
+	isInfoOpen = false
+	mobCollectorGoliath = {}
+	if self:Easy() then
+		firstGoliath = false
+	else
+		firstGoliath = true
+	end
+	self:SetStage(1)
 
 	self:Bar(334929, 8.3, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
 	self:Bar(333387, 19, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
-	self:Bar(334765, self:Mythic() and 35.8 or 28.8, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
-	self:Bar(339690, self:Mythic() and 32.5 or 25, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
+	self:Bar(334765, self:Mythic() and 32 or 28.8, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
+	self:Bar(339690, self:Mythic() and 34 or 25, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
 
 	if self:Mythic() then
 		self:Bar(342256, 10.7, CL.count:format(L.skirmishers, shadowForcesCount)) -- Call Shadow Forces
@@ -189,18 +220,23 @@ end
 --
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
-	for i = 1, 5 do
-		local unit = ("boss%d"):format(i)
-		local guid = self:UnitGUID(unit)
-		if guid and not mobCollectorGoliath[guid] then
-			mobCollectorGoliath[guid] = true
-			local id = self:MobId(guid)
-			if id == 172858 then -- Stone Legion Goliath
-				self:Message("stages", "cyan", CL.spawned:format(self:UnitName(unit)), false)
-				self:Bar(342733, 18) -- Ravenous Feast
-			end
-		end
+	local _, guid = self:GetBossId(172858) -- Stone Legion Goliath
+	if guid and not mobCollectorGoliath[guid] then
+		mobCollectorGoliath[guid] = true
+		self:Message("goliath", "cyan", CL.spawned:format(L.goliath_short), L.goliath_icon)
+		self:StopBar(L.goliath_short)
+		self:Bar(342733, 18) -- Ravenous Feast
+		self:PlaySound("goliath", "info")
 	end
+end
+
+function mod:SummonReinforcements()
+	if not firstGoliath then -- Avoid a message on boss engage (only happens on hc/mythic)
+		self:Message("goliath", "cyan", CL.custom_sec:format(L.goliath_short, 10), false)
+	else
+		firstGoliath = false
+	end
+	self:CDBar("goliath", 10, L.goliath_short, L.goliath_icon)
 end
 
 do
@@ -235,7 +271,7 @@ do
 	local throttle = false
 	local function Message()
 		throttle = false
-		mod:Message("stages", "cyan", CL.mob_killed:format(mod:SpellName(-22791), commandoesKilled, commandoesNeeded), false) -- Stone Legion Commando
+		mod:Message("commando", "cyan", CL.mob_killed:format(L.commando_short, commandoesKilled, commandoesNeeded), false) -- Stone Legion Commando
 	end
 	function mod:CommandoDeath(args)
 		if intermission then
@@ -269,10 +305,7 @@ function mod:AddMarkTracker(event, unit, guid)
 			self:CustomIcon(skirmisherMarker, unit, skirmisherTracker[guid])
 			mobCollector[guid] = true
 		elseif self:GetOption(commandoMarker) and mobId == 169601 then -- Stone Legion Commando
-			local health = UnitHealth(unit)
-			local maxHealth = UnitHealthMax(unit)
-			local percentHealth = (health/maxHealth) * 100
-			if percentHealth < 75 then -- They are 72% when they are on the floor, 100% when flying around
+			if self:GetHealth(unit) < 75 then -- They are 72% when they are on the floor, 100% when flying around
 				for i = 8, 5, -1 do -- 8, 7, 6, 5
 					if not commandoAddMarks[i] then
 						mobCollector[guid] = true
@@ -290,32 +323,40 @@ end
 function mod:HardenedStoneFormApplied(args)
 	self:Message(args.spellId, "green", CL.intermission)
 	self:PlaySound(args.spellId, "long")
+	self:Bar("goliath", 10, L.goliath_short, L.goliath_icon)
 
 	intermission = true
 	commandoAddMarks = {}
 	commandoesKilled = 0
 
-	self:StopBar(CL.count:format(self:SpellName(342256), shadowForcesCount)) -- Call Shadow Forces
+	self:StopBar(CL.count:format(L.skirmishers, shadowForcesCount)) -- Call Shadow Forces
 	shadowForcesCount = 1
 end
 
 function mod:HardenedStoneFormRemoved(args)
 	self:StopBar(CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
 	self:StopBar(CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
+	self:StopBar(CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
+	self:StopBar(CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
 
-	stage = 2
-	self:Message(args.spellId, "green", CL.stage:format(stage))
+	self:SetStage(2)
+	self:Message(args.spellId, "green", CL.stage:format(2))
 	self:PlaySound(args.spellId, "long")
 
 	heartRendCount = 1
 	serratedSwipeCount = 1
+	crystalizeCount = 1
 	pulverizingMeteorCount = 1
 	reverberatingLeapCount = 1
 	seismicUphealvalCount = 1
+	wickedBladeCount = 1
 
+	-- XXX Only confirmed these on Mythic with the new timers changes on Jan 26th
 	self:Bar(342425, 14.2) -- Stone Fist
-	self:Bar(344496, 10, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
-	self:Bar(334498, 17, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
+	self:Bar(344496, 33.3, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
+	self:Bar(334498, self:Mythic() and 45.5 or 17, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
+	self:Bar(333387, 26, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
+	self:Bar(339690, 14.8, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
 end
 
 do
@@ -384,6 +425,25 @@ do
 			onMe = false
 		end
 		self:CustomIcon(wickedBladeMarker, args.destName)
+	end
+end
+
+function mod:WickedLaceration(args)
+	if not isInfoOpen then
+		isInfoOpen = true
+		self:OpenInfo(args.spellId, args.spellName)
+	end
+	wickedLacerationList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, wickedLacerationList)
+end
+
+function mod:WickedLacerationRemoved(args)
+	wickedLacerationList[args.destName] = nil
+	if next(wickedLacerationList) then
+		self:SetInfoByTable(args.spellId, wickedLacerationList)
+	elseif isInfoOpen then
+		isInfoOpen = false
+		self:CloseInfo(args.spellId)
 	end
 end
 
@@ -456,10 +516,9 @@ do
 
 	function mod:PulverizingMeteor(args)
 		if self:Me(prevGUID) then
-			self:Yell(args.spellId, 28884) -- Meteor
+			self:Yell(args.spellId, CL.meteor) -- Meteor
 		end
-		self:StopBar(CL.count:format(args.spellName, pulverizingMeteorCount))
-		self:Message(args.spellId, "orange", CL.count:format(args.spellName, pulverizingMeteorCount))
+		self:Message(args.spellId, "orange", CL.count:format(CL.meteor, pulverizingMeteorCount))
 		self:PlaySound(args.spellId, "alert")
 		pulverizingMeteorCount = pulverizingMeteorCount + 1
 	end
@@ -495,13 +554,14 @@ end
 function mod:GraniteFormApplied(args)
 	self:Message(args.spellId, "green", CL.intermission)
 	self:PlaySound(args.spellId, "long")
+	self:Bar("goliath", 10, L.goliath_short, L.goliath_icon)
 
 	commandoAddMarks = {}
 	commandoesKilled = 0
 	intermission = true
 
 	self:StopBar(CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
-	self:StopBar(CL.count:format(self:SpellName(342256), shadowForcesCount)) -- Call Shadow Forces
+	self:StopBar(CL.count:format(L.skirmishers, shadowForcesCount)) -- Call Shadow Forces
 
 	shadowForcesCount = 1
 end
@@ -509,22 +569,34 @@ end
 function mod:GraniteFormRemoved(args)
 	self:StopBar(CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
 	self:StopBar(CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
+	self:StopBar(CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
+	self:StopBar(CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
 	self:StopBar(343086) -- Ricocheting Shuriken
 
-	stage = 3
-	self:Message(args.spellId, "green", CL.stage:format(stage))
+	self:SetStage(3)
+	self:Message(args.spellId, "green", CL.stage:format(3))
 	self:PlaySound(args.spellId, "long")
 
+	--reverberatingLeapCount = 1 -- XXX We dont reset as soaking still is counting up from stage 2 + intermission
 	heartRendCount = 1
 	serratedSwipeCount = 1
+	wickedBladeCount = 1
+	seismicUphealvalCount = 1
+	crystalizeCount = 1
+	pulverizingMeteorCount = 1
 
+	-- XXX Only confirmed these on Mythic with the new timers changes on Jan 26th
+	-- XXX Missing tank abilities
 	self:Bar(334929, 4.4, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
-	self:Bar(334765, 8.8, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
-	self:Bar(334498, 17, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
+	self:Bar(339690, 7.5, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
+	self:Bar(333387, 19.5, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
+	self:Bar(344496, 25.8, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
+	self:Bar(334765, 33, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
+	self:Bar(334498, 39.2, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
 end
 
 function mod:StoneFist(args)
-	self:Bar(args.spellId, stage == 2 and 20 or 35)
+	self:Bar(args.spellId, self:GetStage() == 2 and 20 or 35)
 end
 
 function mod:StoneFistApplied(args)
@@ -557,7 +629,7 @@ function mod:SeismicUpheaval(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, seismicUphealvalCount))
 	self:PlaySound(args.spellId, "long")
 	seismicUphealvalCount = seismicUphealvalCount + 1
-	self:CDBar(args.spellId, 29, CL.count:format(args.spellName, seismicUphealvalCount))
+	self:CDBar(args.spellId, self:Mythic() and 26 or 29, CL.count:format(args.spellName, seismicUphealvalCount))
 end
 
 --[[ Mythic ]]--

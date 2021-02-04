@@ -13,6 +13,14 @@ end
 L = BigWigs:NewBossLocale("Hungering Destroyer", "ruRU")
 if L then
 	L.miasma = "Миазмы" -- Short for Gluttonous Miasma
+
+	L.custom_on_repeating_yell_miasma = "Постоянный /крик о здоровье цели Ненасытные миазмы"
+	L.custom_on_repeating_yell_miasma_desc = "Повторяющиеся сообщения у целей Ненасытные миазмы, чтобы дать другим игрокам знать о том, что уровень здоровья меньше 75%."
+
+	L.custom_on_repeating_say_laser = "Постоянные сообщения у целей Нестабильный выброс"
+	L.custom_on_repeating_say_laser_desc = "Повторение сообщений у игроков, отмеченных Нестабильным выбросом, помогающие при движении видеть их тем игрокам, которые изначально не видели первое сообщение."
+
+	L.tempPrint = "Мы добавили /крики о здоровье целей Ненасытные миазмы. Если вы ранее использовали для этого WeakAuras, вы можете их удалить, чтобы избежать двойных /криков."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "ruRU")
@@ -30,8 +38,6 @@ if L then
 
 	L.level = "%s (Уровень |cffffff00%d|r)"
 	L.full = "%s (|cffff0000ПОЛНЫЙ|r)"
-
-	L.container_active = "Активный контейнер: %s"
 
 	L.anima_adds = "Адды Концентрированной Анимы"
 	L.anima_adds_desc = "Показ таймера появления аддов от дебафа Концентрированной Анимы."
@@ -97,11 +103,17 @@ if L then
 
 	L.custom_on_stop_timers = "Всегда показывать полосы способностей"
 	L.custom_on_stop_timers_desc = "Пока доступно только для тестирования"
+
+	L.goliath_short = "Голиаф"
+	L.goliath_desc = "Показывать предупреждения и таймеры для появления голиафа из Каменного Легиона"
+
+	L.commando_short = "Диверсант"
+	L.commando_desc = "Показывать предупреждения, когда диверсант из Каменного Легиона умирает."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "ruRU")
 if L then
-	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
+	L.add_spawn = "Алые кабалисты откликнулись на призыв Денатрия." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
 	L.infobox_stacks = "%d |4Стак:Стака:Стаков;: %d |4игрок:игрока:игроков;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
@@ -114,10 +126,34 @@ if L then
 	L.hymn_stacks = "Гимн Нафрии"
 	L.hymn_stacks_desc = "Оповещать о количестве стаков гимна Нафрии на вас."
 
-	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
-	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
-	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	L.ravage_target = "Полоса заклинания Отражение: Разорение"
+	L.ravage_target_desc = "Полоса заклинания, показывающая время до того как отражение нацелится на место для Разорения."
+	L.ravage_targeted = "Место Разорения выбрано!" -- Text on the bar for when Ravage picks its location to target in stage 3
 
 	L.no_mirror = "Без зеркала: %d" -- Player amount that does not have the Through the Mirror
 	L.mirror = "С зеркалом: %d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "ruRU")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "Молдоваак"
+	L.caramain = "Карамейн"
+	L.sindrel = "Синдрел"
+	L.hargitas = "Харгитас"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "Громадный гаргон"
+	L.hawkeye = "Зоркий стрелок из замка Нафрия"
+	L.overseer = "Смотрительница псарни"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "Жуткий обжора"
+	L.rat = "Крыса необычных размеров"
+	L.miasma = "Миазмы" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "Деплина"
+	L.dragost = "Драгост"
+	L.kullan = "Куллан"
 end

@@ -13,6 +13,14 @@ end
 L = BigWigs:NewBossLocale("Hungering Destroyer", "frFR")
 if L then
 	L.miasma = "Miasme" -- Short for Gluttonous Miasma
+
+	L.custom_on_repeating_yell_miasma = "Répéter Vie sous Miasme en /crier"
+	L.custom_on_repeating_yell_miasma_desc = "Répète des messages en /crier pour Miasme glouton afin d'indiquer aux autres quand vous êtes en dessous de 75% de vie."
+
+	L.custom_on_repeating_say_laser = "Répéter Expulsion instable en /dire"
+	L.custom_on_repeating_say_laser_desc = "Répète des messages en /dire pour Expulsion instable afin de vous aider quand vous vous déplacez à portée de discussion des joueurs qui n'ont pas vu votre premier message."
+
+	L.tempPrint = "Nous avons ajouté les /crier des points de vie durant le Miasme. Si vous utilisiez récemment un WeakAura pour cela, vous devriez l'enlever afin d'éviter les /crier en double."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "frFR")
@@ -30,8 +38,6 @@ if L then
 
 	L.level = "%s (niveau |cffffff00%d|r)"
 	L.full = "%s (|cffff0000PLEIN|r)"
-
-	L.container_active = "Conteneur actif : %s"
 
 	L.anima_adds = "Adds de l'Anima concentré"
 	L.anima_adds_desc = "Affiche un délai indiquant quand les adds apparaissent des affaiblissements de Anima concentré."
@@ -97,6 +103,12 @@ if L then
 
 	L.custom_on_stop_timers = "Toujours montrer les barres de techniques"
 	L.custom_on_stop_timers_desc = "En cours de test"
+
+	L.goliath_short = "Goliath"
+	L.goliath_desc = "Affiche des alertes et des délais indiquant quand le Goliath vive-pierre est sur le point d'apparaître."
+
+	L.commando_short = "Commando"
+	L.commando_desc = "Affiche des alertes quand un Commando de la Légion de pierre est tué."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "frFR")
@@ -121,4 +133,28 @@ if L then
 
 	L.no_mirror = "Sans Miroir : %d" -- Player amount that does not have the Through the Mirror
 	L.mirror = "Miroir : %d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "frFR")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "Moldovaak"
+	L.caramain = "Caramain"
+	L.sindrel = "Sindrel"
+	L.hargitas = "Hargitas"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "Gargon massif"
+	L.hawkeye = "Oeil-de-faucon nathrian"
+	L.overseer = "Surveillante des Chenils"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "Festoyeur de l'effroi"
+	L.rat = "Rat de taille inhabituelle"
+	L.miasma = "Miasme" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "Deplina"
+	L.dragost = "Dragost"
+	L.kullan = "Kullan"
 end

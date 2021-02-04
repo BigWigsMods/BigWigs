@@ -152,6 +152,13 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_OnBossEngage")
 end
 
+function plugin:OnPluginDisable()
+	if isLogging then
+		isLogging = false
+		LoggingCombat(isLogging)
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Event Handlers
 --

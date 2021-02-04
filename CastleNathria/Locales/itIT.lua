@@ -13,6 +13,12 @@ end
 L = BigWigs:NewBossLocale("Hungering Destroyer", "itIT")
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+
+	--L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
+	--L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+
+	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
+	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "itIT")
@@ -30,8 +36,6 @@ if L then
 
 	-- L.level = "%s (Level |cffffff00%d|r)"
 	-- L.full = "%s (|cffff0000FULL|r)"
-
-	-- L.container_active = "Enable Container: %s"
 
 	-- L.anima_adds = "Concentrate Anima Adds"
 	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
@@ -97,6 +101,12 @@ if L then
 
 	-- L.custom_on_stop_timers = "Always show ability bars"
 	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+
+	--L.goliath_short = "Goliath"
+	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+
+	--L.commando_short = "Commando"
+	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "itIT")
@@ -120,4 +130,28 @@ if L then
 
 	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
 	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "itIT")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "Moldovaak"
+	L.caramain = "Caramain"
+	L.sindrel = "Sindrel"
+	L.hargitas = "Hargitas"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "Gargon Gigantesco"
+	L.hawkeye = "Occhiolungo di Nathria"
+	L.overseer = "Sovrintendente dei Serragli"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "Divoratore di Terrore"
+	L.rat = "Ratto di Dimensioni Anormali"
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "Deplina"
+	L.dragost = "Dragost"
+	L.kullan = "Kullan"
 end

@@ -14,6 +14,7 @@ mod:RegisterEnableMob(
 	166971) -- Castellan Niklaus
 mod.engageId = 2412
 mod.respawnTime = 30
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -25,6 +26,7 @@ local friedaAlive = true
 local niklausAlive = true
 local killOrder = nil
 local dancingFeverCount = 1
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -65,6 +67,7 @@ end
 
 local dutifulAttendantMarker = mod:AddMarkerOption(false, "npc", 8, -22948, 8) -- Dutiful Attendant
 local waltzingVenthyrMarker = mod:AddMarkerOption(false, "npc", 8, -22653, 8) -- Waltzing Venthyr
+local afterImageMarker = mod:AddMarkerOption(false, "npc", 6, -22433, 6) -- Afterimage of Baroness Frieda
 function mod:GetOptions()
 	return {
 		"stages",
@@ -79,7 +82,7 @@ function mod:GetOptions()
 		{346790, "TANK"}, -- Sintouched Blade
 
 		--[[ Baroness Frieda ]]--
-		346651, -- Drain Essence
+		{346651, "ME_ONLY"}, -- Drain Essence
 		337110, -- Dreadbolt Volley
 		346657, -- Prideful Eruption
 		346945, -- Manifest Pain
@@ -99,8 +102,10 @@ function mod:GetOptions()
 		{330848, "ME_ONLY"}, -- Wrong Moves
 
 		--[[ Mythic ]]--
-		{347350, "SAY", "SAY_COUNTDOWN"},
-	}, {
+		-22433, -- Afterimage of Baroness Frieda
+		afterImageMarker,
+		{347350, "SAY", "SAY_COUNTDOWN"}, -- Dancing Fever
+	},{
 		["stages"] = "general",
 		[346690] = -22147, -- Castellan Niklaus
 		[346651] = -22148, -- Baroness Frieda
@@ -108,7 +113,7 @@ function mod:GetOptions()
 		[330959] = -22146, -- Intermission: The Danse Macabre
 		[347350] = "mythic",
 	},{
-		[331634] = CL.link,
+		[331634] = CL.link, -- Dark Recital (Link)
 	}
 end
 
@@ -163,6 +168,8 @@ function mod:OnEngage()
 	stavrosAlive = true
 	niklausAlive = true
 	dancingFeverCount = 1
+	mobCollector = {}
+	self:SetStage(1)
 
 	self:CDBar(346698, 7.5) -- Summon Dutiful Attendant
 	self:CDBar(346690, 18.5) -- Duelist's Riposte
@@ -175,6 +182,7 @@ function mod:OnEngage()
 
 	if self:Mythic() then
 		self:CDBar(347350, 5, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
+		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT") -- Afterimage warnings
 	end
 
 	-- Mark kill order
@@ -201,6 +209,18 @@ end
 -- Event Handlers
 --
 
+function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
+	local unit, guid = self:GetBossId(172803) -- Afterimage of Baroness Frieda
+	if guid and not mobCollector[guid] then
+		mobCollector[guid] = true
+		self:Message(-22433, "red", CL.spawned:format(self:SpellName(-22433)), false)
+		self:PlaySound(-22433, "long")
+		if self:GetOption(afterImageMarker) then
+			self:CustomIcon(false, unit, 6)
+		end
+	end
+end
+
 function mod:RAID_BOSS_EMOTE(event, msg, npcname)
 	if msg:find(L.macabre_start_emote, nil, true) then -- Dance Macabre start
 		self:CastBar(330959, 7) -- Dance Macabre
@@ -222,6 +242,7 @@ end
 function mod:BossDeath(args)
 	bossesKilled = bossesKilled + 1
 	if bossesKilled > 2 then return end -- You win at 3
+	self:SetStage(bossesKilled + 1)
 
 	self:Message("stages", "green", CL.mob_killed:format(args.destName, bossesKilled, 3), false)
 	if args.mobId == 166969 then -- Frieda
@@ -253,7 +274,6 @@ function mod:BossDeath(args)
 	if bossesKilled == 1 then
 		if friedaAlive then
 			self:CDBar(346651, 9) -- Drain Essence
-			--self:CDBar(337110, 6) -- Dreadbolt Volley
 			self:CDBar(346657, 38) -- Prideful Eruption
 		end
 		if stavrosAlive then
@@ -285,7 +305,6 @@ function mod:BossDeath(args)
 	elseif bossesKilled == 2 then
 		if friedaAlive then
 			self:CDBar(346651, 9) -- Drain Essence
-			--self:CDBar(337110, 6) -- Dreadbolt Volley
 			self:CDBar(346657, 24) -- Prideful Eruption
 			self:CDBar(346681, 35.2) -- Soul Spikes
 		end
@@ -350,7 +369,7 @@ do
 	function mod:SummonDutifulAttendant(args)
 		self:Message(args.spellId, "red")
 		self:PlaySound(args.spellId, "warning")
-		self:CDBar(args.spellId, self:Mythic() and (bossesKilled == 2 and 22.5 or 45) or bossesKilled == 2 and 25.5 or 90)
+		self:CDBar(args.spellId, self:Mythic() and (bossesKilled == 2 and 22.5 or 45) or bossesKilled == 2 and 25.5 or 51.5)
 		if self:GetOption(dutifulAttendantMarker) then
 			self:RegisterTargetEvents("DutifulAttendantMarking")
 			self:ScheduleTimer("UnregisterTargetEvents", 10)
@@ -394,21 +413,26 @@ end
 do
 	local prev = 0
 	function mod:DreadboltVolley(args)
-		local canDo, ready = self:Interrupter(args.sourceGUID)
-		if canDo then
-			self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+		if not friedaAlive and self:Mythic() then -- Afterimage stuff
+			local _, ready = self:Interrupter() -- warn regardless of target/focus
 			if ready then
+				self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 				self:PlaySound(args.spellId, "alarm")
 			end
-		end
-		if self:Mythic() and friedaAlive == false then -- Afterimage stuff
 			local t = args.time
 			if t-prev > 15 then -- 3 casts, 3s~ between, only start bar for the first in the set
 				prev = t
 				self:CDBar(args.spellId, 45)
 			end
-		else
-			self:CDBar(args.spellId, 10)
+		else -- Actual Frieda
+			local canDo, ready = self:Interrupter(args.sourceGUID)
+			if canDo then
+				self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+				if ready then
+					self:PlaySound(args.spellId, "alarm")
+				end
+			end
+			self:CDBar(args.spellId, 5.3) -- Spell Lockout?
 		end
 	end
 end
@@ -416,13 +440,14 @@ end
 function mod:PridefulEruption(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
-	self:CDBar(args.spellId, (bossesKilled == 1 and 120 or bossesKilled == 2 and 40)) -- Only have one log and its a bit weird timing with Baroness pushing to 50% as she starts a cast on Heroic.
+	self:CDBar(args.spellId, (bossesKilled == 1 and 120 or bossesKilled == 2 and 41.5)) -- Cooldown with 1 boss killed unconfirmed
+
 end
 
 function mod:SoulSpikes(args)
 	self:Message(346681, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(346681, "alert")
-	-- self:CDBar(346681, 0)
+	self:CDBar(346681, 41.5)
 end
 
 function mod:SoulSpikesApplied(args)
@@ -467,7 +492,7 @@ do
 		if stavrosAlive == false then
 			self:Bar(args.spellId, bossesKilled == 1 and 60 or 37.7)
 		else
-			self:Bar(args.spellId, self:Mythic() and (bossesKilled == 0 and 45 or bossesKilled == 1 and 60 or 22.9) or bossesKilled == 0 and 90 or bossesKilled == 1 and 107 or 22.9)
+			self:Bar(args.spellId, self:Mythic() and (bossesKilled == 0 and 45 or bossesKilled == 1 and 60 or 22.9) or bossesKilled == 0 and 51.5 or bossesKilled == 1 and 69.5 or 22.9)
 		end
 	end
 
@@ -485,16 +510,18 @@ do
 			end
 		elseif args.spellId == 331637 and firstDarkRecitalTargetGUID then -- 2nd Dark Recital Target
 			if self:Me(args.destGUID) then -- We got 2nd debuff, so print last name
-				self:PersonalMessage(331634, false, CL.link_with:format(self:ColorName(lastDarkRecitalName)))
-				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
+				self:PersonalMessage(331634, false, CL.link_with_icon:format(darkrecitalPairCount, self:ColorName(lastDarkRecitalName)))
+				local icon = ("{rt%d}"):format(darkrecitalPairCount)
+				self:Yell(331634, icon, true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
-					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
+					sayTimer = self:ScheduleRepeatingTimer("Yell", 1.5, false, icon, true)
 				end
 			elseif self:Me(firstDarkRecitalTargetGUID) then -- We got 1st debuff so this is our partner
-				self:PersonalMessage(331634, false, CL.link_with:format(self:ColorName(args.destName)))
-				self:Yell(331634, "{rt"..darkrecitalPairCount.."}", true)
+				self:PersonalMessage(331634, false, CL.link_with_icon:format(darkrecitalPairCount, self:ColorName(args.destName)))
+				local icon = ("{rt%d}"):format(darkrecitalPairCount)
+				self:Yell(331634, icon, true)
 				if self:GetOption("custom_on_repeating_dark_recital") then
-					sayTimer = self:ScheduleRepeatingTimer(SendChatMessage, 1.5, "{rt"..darkrecitalPairCount.."}", "YELL")
+					sayTimer = self:ScheduleRepeatingTimer("Yell", 1.5, false, icon, true)
 				end
 			end
 			firstDarkRecitalTargetGUID = nil
@@ -622,7 +649,7 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				self:PlaySound(args.spellId, "alarm")
+				self:PlaySound(args.spellId, "underyou")
 				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end

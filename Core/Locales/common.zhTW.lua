@@ -6,7 +6,6 @@ L.add_killed = "小怪已擊殺（%d/%d）"
 L.add_remaining = "小怪已擊殺，剩餘 %d"
 L.adds = "增援"
 L.add_spawned = "小怪出現"
-L.big_add = "大型增援"
 L.cast = "<施放：%s>"
 L.casting = "正在施放：%s"
 L.count = "%s（%d）"
@@ -43,7 +42,6 @@ L.phase = "階段%d"
 L.removed = "%s移除"
 L.removed_from = "%2$s已移除%1$s"
 L.removed_by = "%s被%s移除" -- spell removed by player
-L.small_adds = "小型增援"
 L.soon = "即將：%s"
 L.spawned = "%s已重生"
 L.spawning = "%s出現"
@@ -56,6 +54,11 @@ L.you = "你：%s"
 L.you_icon = "|T13700%2$d:0|t你：%1$s"
 L.on_group = "團隊：%s" -- spell on group
 
+L.big_add = "大型增援" -- singular
+L.big_adds = "大型增援" -- plural
+L.small_add = "小型增援" -- singular
+L.small_adds = "小型增援" -- plural
+
 L.active = "開戰" -- When a boss becomes active, after speech finishes
 
 -- Common raid marking locale
@@ -66,6 +69,7 @@ L.marker_npc_desc = "標記%s為%s，需要權限。"
 -- Ability where two players have to move close to each other
 L.link = "連結"
 L.link_with = "與%s連結"
+L.link_with_icon = "與|T13700%d:0|t%s連結"
 L.link_short = "連結：%s"
 L.link_both = "%s和%s連結"
 L.link_removed = "連結移除"
@@ -78,5 +82,9 @@ L.seconds = "%.1f秒" -- 1.1 seconds
 
 -- Common ability name replacements
 L.laser = "雷射" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.beam = "射線" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.bomb = "炸彈" -- Used for debuffs that make players explode
 L.fixate = "鎖定" -- Used when a boss or add is chasing/fixated on a player
+L.knockback = "擊退" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.traps = "陷阱" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
+L.meteor = "隕石" -- This one will probably only ever be used for actual meteors

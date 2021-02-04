@@ -13,6 +13,14 @@ end
 L = BigWigs:NewBossLocale("Hungering Destroyer", "koKR")
 if L then
 	L.miasma = "독기" -- Short for Gluttonous Miasma
+
+	L.custom_on_repeating_yell_miasma = "반복적으로 독기 체력 외치기"
+	L.custom_on_repeating_yell_miasma_desc = "독기에 걸렸을때 반복적으로 외침으로써 본인이 체력 75%미만일때 알림."
+
+	L.custom_on_repeating_say_laser = "반복적으로 순간 방출 알리기"
+	L.custom_on_repeating_say_laser_desc = "순간 방출 걸렸을때 반복적으로 말을 해서 혹시나 처음 메세지를 보지 못한 사람들에게 알리기."
+
+	L.tempPrint = "독기에 걸렸을때 체력을 외침으로 알리는 기능을 추가했습니다. 전까진 위크오라를 썼다면. 위크오라를 지워서 두번 외치는일이 없도록 하는게 좋을수도 있습니다."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "koKR")
@@ -31,19 +39,17 @@ if L then
 	 L.level = "%s (Level |cffffff00%d|r)"
 	 L.full = "%s (|cffff0000FULL|r)"
 
-	 L.container_active = "활성화된 용기: %s"
-
 	 L.anima_adds = "농축된 령 쫄"
 	 L.anima_adds_desc = "농축된 령 쫄이 언제 생성되는 타이머 표시."
 
-	-- L.custom_off_experimental = "Enable experimental features"
-	-- L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
+	 L.custom_off_experimental = "실험적 기능 활성화"
+	 L.custom_off_experimental_desc = "이 기능들은 |cffff0000테스트되지 않았고|r 그렇기에 |cffff0000무분별하게 반복될수 있음|r."
 
-	-- L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
-	-- L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
+	 L.anima_tracking = "령 추적 |cffff0000(실험 중)|r"
+	 L.anima_tracking_desc = "메세지와 바로 령 용기에 있는 령 수치를 추적.|n|cffaaff00팁: 정보 박스나 바를 기호에 따라 비활성화해야 할 수도 있음."
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	 L.custom_on_stop_timers = "항상 능력 바 표시"
+	 L.custom_on_stop_timers_desc = "아직은 실험 단계"
 
 	 L.desires = "욕망"
 	 L.bottles = "병에 담긴 령"
@@ -85,7 +91,7 @@ if L then
 	 L.fun_info = "데미지 표시"
 	 L.fun_info_desc = "파괴의 충격 중 얼마나 체력을 많이 뺐는가를 메세지로 표시."
 
-	 L.health_lost = "진흙주먹이 피 %.1f%% 만큼 깎았습니다!"
+	 L.health_lost = "진흙주먹의 체력을 %.1f%% 만큼 깎았습니다!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "koKR")
@@ -95,8 +101,14 @@ if L then
 
 	 L.skirmishers = "척후병" -- Short for Stone Legion Skirmishers
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	 L.custom_on_stop_timers = "항상 능력 바 표시"
+	 L.custom_on_stop_timers_desc = "아직은 실험 단계"
+
+	L.goliath_short = "거수"
+	L.goliath_desc = "돌 군단 거수가 언제 나오는지 경고와 타이머 표시."
+
+	L.commando_short = "특공대원"
+	L.commando_desc = "돌 군단 특공대원이 잡혔을때 경고 표시."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "koKR")
@@ -105,19 +117,43 @@ if L then
 
 	L.infobox_stacks = "%d 중첩: %d 명" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
-	--L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
-	--L.custom_on_repeating_nighthunter_desc = "Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
+	L.custom_on_repeating_nighthunter = "반복적으로 밤의 사냥꾼 외치기"
+	L.custom_on_repeating_nighthunter_desc = "밤의 사냥꾼 능력을 {rt1} 나 {rt2} 나 {rt3} 로 반복적으로 표시해서 맞아줘야 하는 선 찾기 쉽게 하기."
 
-	--L.custom_on_repeating_impale = "Repeating Impale Say"
-	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
+	L.custom_on_repeating_impale = "반복적으로 꿰뚫기 말하기"
+	L.custom_on_repeating_impale_desc = "꿰뚫기에 걸렸을때 '1' 이나 '22' 나 '333' 이나 '4444' 로 계속 말해서 어떤 순서로 맞는지 명확하게 하기."
 
-	-- L.hymn_stacks = "Nathrian Hymn"
-	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	 L.hymn_stacks = "나스리아의 찬가"
+	 L.hymn_stacks_desc = "현재 본인에게 있는 나스리아의 찬가 중첩 갯수 알림."
 
-	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
-	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
-	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	 L.ravage_target = "사악한 환영: 유린 방향 시전바"
+	 L.ravage_target_desc = "사악한 환영이 유린을 어디로 쓸지 결정할때까지의 시간을 표시해주는 시전바."
+	 L.ravage_targeted = "유린 방향 결정" -- Text on the bar for when Ravage picks its location to target in stage 3
 
 	 L.no_mirror = "거울 없음: %d" -- Player amount that does not have the Through the Mirror
 	 L.mirror = "거울: %d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "koKR")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "몰도바크"
+	L.caramain = "카라메인"
+	L.sindrel = "신드렐"
+	L.hargitas = "하르지타스"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "덩치 큰 가르곤"
+	L.hawkeye = "나스리아 명사수"
+	L.overseer = "사육장 감독관"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "공포의 탐식자"
+	L.rat = "비정상적인 크기의 쥐"
+	L.miasma = "독기" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "디플리나"
+	L.dragost = "드래고스트"
+	L.kullan = "쿨란"
 end

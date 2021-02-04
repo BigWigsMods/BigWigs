@@ -11,31 +11,33 @@ if not mod then return end
 mod:RegisterEnableMob(165805, 165759, 168973) -- Shade of Kael'thas, Kael'thas, High Torturer Darithos
 mod.engageId = 2402
 mod.respawnTime = 30
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
 --
 
-local startTime = 0
+local firstVanquisherExpected = 0
+local firstVanquisherSpawnTime = 8
 local addTimersHeroic = { -- Heroic
-	[1] = {
-		[-21954] = {35, 100}, -- Rockbound Vanquishers
-		[-21993] = {54, 144, 281}, -- Bleakwing Assassin
-		[-21952] = {54, 144}, -- Vile Occultists
+	[1] = { -- From pull
+		[-21954] = {35, 65}, -- Rockbound Vanquishers
+		[-21993] = {54, 90, 137}, -- Bleakwing Assassin
+		[-21952] = {54, 90}, -- Vile Occultists
 		[-21953] = {115}, -- Soul Infusers
-		[-22082] = {54.5, 95.5}, -- Pestering Fiend
+		[-22082] = {54.5, 41}, -- Pestering Fiend
 	},
 	[2] = { -- From Reflection of Guilt Removed
-		[-21954] = {69, 134, 199}, -- Rockbound Vanquishers
-		[-21993] = {24, 84, 114, 154, 204, 234, 294, 334}, -- Bleakwing Assassin
-		[-21952] = {114, 184, 324}, -- Vile Occultists
-		[-21953] = {54, 114, 264, 334}, -- Soul Infusers
-		[-22082] = {24, 54, 84, 154, 184, 234, 264, 294}, -- Pestering Fiend
+		[-21954] = {69, 65, 65}, -- Rockbound Vanquishers
+		[-21993] = {24, 60, 30, 40, 50, 30, 60, 40}, -- Bleakwing Assassin
+		[-21952] = {114, 70, 140}, -- Vile Occultists
+		[-21953] = {54, 60, 150, 70}, -- Soul Infusers
+		[-22082] = {24, 30, 30, 70, 30, 50, 30, 30}, -- Pestering Fiend
 	},
 }
 
 local addTimersMythic = { -- Mythic
-	[1] = {
+	[1] = { -- From pull
 		[-21954] = {51.7}, -- Rockbound Vanquishers
 		[-21993] = {}, -- Bleakwing Assassin
 		[-21952] = {}, -- Vile Occultists
@@ -43,11 +45,11 @@ local addTimersMythic = { -- Mythic
 		[-22082] = {}, -- Pestering Fiend
 	},
 	[2] = { -- From Reflection of Guilt Removed
-		[-21954] = {3.5, 73.5, 143.5, 213.5}, -- Rockbound Vanquishers
-		[-21993] = {33.7, 143.5, 213.5}, -- Bleakwing Assassin
-		[-21952] = {33.7, 183.7, 218}, -- Vile Occultists
-		[-21953] = {90.7, 190.7}, -- Soul Infusers
-		[-22082] = {53.7, 93.7, 143.5, 213.5}, -- Pestering Fiend
+		[-21954] = {3.5, 70, 70, 70}, -- Rockbound Vanquishers
+		[-21993] = {33.7, 109.8, 70}, -- Bleakwing Assassin
+		[-21952] = {33.7, 150, 34.7}, -- Vile Occultists
+		[-21953] = {90.7, 100}, -- Soul Infusers
+		[-22082] = {53.7, 40, 49.8, 70}, -- Pestering Fiend
 	},
 }
 local addTimers = {}
@@ -63,12 +65,11 @@ local nextStageWarning = 42
 local mobCollector = {}
 local iconsInUse = {}
 local vileOccultistMarkCount = 0
-local stage = 1
 local shadeUp = nil
 local concussiveSmashCountTable = {}
 local blazingSurgeCount = 1
 local emberBlastCount = 1
-local cloakofFlamesCount = 1
+local cloakOfFlamesCount = 1
 local phoenixCount = 0
 
 --------------------------------------------------------------------------------
@@ -170,8 +171,7 @@ end
 
 function mod:VerifyEnable(unit, mobId)
 	if mobId == 165759 then -- Kael'thas
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-		if hp < 50 then
+		if self:GetHealth(unit) < 50 then
 			return true
 		end
 	else
@@ -189,26 +189,26 @@ function mod:OnEngage()
 	}
 	addTimers = self:Mythic() and addTimersMythic or addTimersHeroic
 	addScheduledTimers = {}
-	startTime = GetTime()
+	firstVanquisherExpected = GetTime() + addTimers[1][-21954][1]
 	nextStageWarning = 42
 	mobCollector = {}
 	iconsInUse = {}
-	stage = 1
 	concussiveSmashCountTable = {}
 	blazingSurgeCount = 1
 	emberBlastCount = 1
-	cloakofFlamesCount = 1
+	cloakOfFlamesCount = 1
 	shadeUp = nil
 	phoenixCount = 0
+	self:SetStage(1)
 
 	self:Bar(328889, 5.5) -- Greater Castigation
 
 	for key,count in pairs(addWaveCount) do
-		self:StartAddTimer(stage, key, count)
+		self:StartAddTimer(1, key, count)
 	end
 
 	if self:Mythic() then
-		self:Bar(337859, 62, CL.count:format(self:SpellName(337859), cloakofFlamesCount)) -- Cloak of Flames
+		self:Bar(337859, 62, CL.count:format(self:SpellName(337859), cloakOfFlamesCount)) -- Cloak of Flames
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -235,26 +235,28 @@ do
 			[-22082] = {mod:SpellName(-22082), "ability_warlock_empoweredimp"}, -- Pestering Fiend
 	}
 
-	function mod:StartAddTimer(stage, addType, count)
+	function mod:StartAddTimer(stage, addType, count, reduced)
 		if shadeUp or not addTimers[stage] then return end -- Dont start anything new
 		local timers = addTimers[stage][addType]
 		if not timers[count] then return end
 
 		local time = addTimers[stage][addType][count]
-		local length = floor(time - (GetTime() - startTime))
+		if reduced then
+			local reduceTimerBy = addTimers[1][-21954][1] - firstVanquisherSpawnTime
+			time = time - reduceTimerBy
+		end
 		local spellName, icon = unpack(addStyling[addType])
 		local spellId = addType -- SetOption:-21954,-21993,-21952,-21953,-22082:
 
-		self:Bar(spellId, length, CL.count:format(spellName, addWaveCount[spellId]), icon)
-		self:DelayedMessage(spellId, length, "yellow", CL.count:format(spellName, addWaveCount[spellId]), icon, "info")
+		self:Bar(spellId, time, CL.count:format(spellName, addWaveCount[spellId]), icon)
+		self:DelayedMessage(spellId, time, "yellow", CL.count:format(spellName, addWaveCount[spellId]), icon, "info")
 		addWaveCount[spellId] = addWaveCount[spellId] + 1
-		addScheduledTimers[spellId] = self:ScheduleTimer("StartAddTimer", length, stage, spellId, addWaveCount[spellId])
+		addScheduledTimers[spellId] = self:ScheduleTimer("StartAddTimer", time, stage, spellId, addWaveCount[spellId])
 	end
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	if hp > nextStageWarning then -- Stage changes at 45% and 90%
+	if self:GetHealth(unit) > nextStageWarning then -- Stage changes at 45% and 90%
 		self:Message("stages", "green", CL.soon:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
 		nextStageWarning = nextStageWarning + 45
 		if nextStageWarning > 90 then
@@ -310,7 +312,7 @@ function mod:ReflectionOfGuiltApplied(args)
 			self:CancelDelayedMessage(text)
 			self:StopBar(text)
 		end
-		self:StopBar(CL.count:format(self:SpellName(337859), cloakofFlamesCount)) -- Cloak of Flames
+		self:StopBar(CL.count:format(self:SpellName(337859), cloakOfFlamesCount)) -- Cloak of Flames
 
 		for key, scheduled in pairs(addScheduledTimers) do -- cancel all scheduled add timers
 			self:CancelTimer(scheduled)
@@ -319,14 +321,14 @@ function mod:ReflectionOfGuiltApplied(args)
 
 		blazingSurgeCount = 1
 		emberBlastCount = 1
-		cloakofFlamesCount = 1
+		cloakOfFlamesCount = 1
 
 		self:Bar(326455, 13.5) -- Fiery Strike
 		self:Bar(325877, 19.5, CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 		self:Bar(329518, 29.5, CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 
 		if self:Mythic() then
-			self:Bar(343026, 38.9, CL.count:format(self:SpellName(343026), cloakofFlamesCount))
+			self:Bar(343026, 38.9, CL.count:format(self:SpellName(343026), cloakOfFlamesCount))
 		end
 	end
 end
@@ -356,7 +358,7 @@ do
 			self:PlaySound(325877, "warning")
 			self:Yell(325877)
 			self:Flash(325877)
-			self:YellCountdown(325877, 3)
+			self:YellCountdown(325877, 3, nil, 2)
 		else
 			self:PlaySound(325877, "alert")
 		end
@@ -393,10 +395,11 @@ function mod:ReflectionOfGuiltRemoved()
 	self:StopBar(CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(325877), emberBlastCount-1))) -- Ember Blast
 	self:CancelSayCountdown(325877) -- Ember Blast
-	self:StopBar(CL.count:format(self:SpellName(343026), cloakofFlamesCount)) -- Cloak of Flames
+	self:StopBar(CL.count:format(self:SpellName(343026), cloakOfFlamesCount)) -- Cloak of Flames
 
-	stage = stage + 1
+	local stage = self:GetStage() + 1
 	if stage == 3 then return end -- You win
+	self:SetStage(stage)
 	shadeUp = nil
 	addWaveCount = {
 		[-21954] = 1, -- Rockbound Vanquishers
@@ -405,14 +408,13 @@ function mod:ReflectionOfGuiltRemoved()
 		[-21953] = 1, -- Soul Infusers
 		[-22082] = 1, -- Pestering Fiend
 	}
-	startTime = GetTime()
 	for key,count in pairs(addWaveCount) do
 		self:StartAddTimer(stage, key, count)
 	end
 
-	cloakofFlamesCount = 1
+	cloakOfFlamesCount = 1
 	if self:Mythic() then
-		self:Bar(337859, 34.3, CL.count:format(self:SpellName(337859), cloakofFlamesCount))
+		self:Bar(337859, 34.3, CL.count:format(self:SpellName(337859), cloakOfFlamesCount))
 	end
 end
 
@@ -532,22 +534,47 @@ do
 end
 
 function mod:DarithosDeath()
+	self:CloseProximity(328889)
 	self:StopBar(328889) -- Greater Castigation
+
+	local firstVanquisherRemaining = firstVanquisherExpected - GetTime() -- Always negative if you killed him very late so we dont need a stage check
+	if firstVanquisherRemaining > firstVanquisherSpawnTime then -- Reduce all to align with the first spawn for the first Vanquisher
+		for key,count in pairs(addWaveCount) do -- Cancel add bars and scheduled messages
+			local text = CL.count:format(self:SpellName(key), count-1)
+			self:CancelDelayedMessage(text)
+			self:StopBar(text)
+		end
+		for key, scheduled in pairs(addScheduledTimers) do -- cancel all scheduled add timers
+			self:CancelTimer(scheduled)
+			addScheduledTimers[key] = nil
+		end
+		-- Restart the timers, but with reduced time
+		addWaveCount = {
+			[-21954] = 1, -- Rockbound Vanquishers
+			[-21993] = 1, -- Bleakwing Assassin
+			[-21952] = 1, -- Vile Occultists
+			[-21953] = 1, -- Soul Infusers
+			[-22082] = 1, -- Pestering Fiend
+		}
+		for key,count in pairs(addWaveCount) do
+			self:StartAddTimer(1, key, count, true)
+		end
+	end
 end
 
 -- Mythic
 function mod:CloakOfFlamesApplied(args)
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, cloakofFlamesCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, cloakOfFlamesCount))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakofFlamesCount))
-	cloakofFlamesCount = cloakofFlamesCount + 1
-	self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(args.spellName, cloakofFlamesCount))
+	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakOfFlamesCount))
+	cloakOfFlamesCount = cloakOfFlamesCount + 1
+	self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(args.spellName, cloakOfFlamesCount))
 end
 
 function mod:CloakOfFlamesRemoved(args)
 	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
-	self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakofFlamesCount-1)))
+	self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakOfFlamesCount-1)))
 end
 
 do
@@ -557,7 +584,7 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				self:PlaySound(args.spellId, "alarm")
+				self:PlaySound(args.spellId, "underyou")
 				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end

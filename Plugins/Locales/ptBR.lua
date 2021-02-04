@@ -11,16 +11,31 @@ L.positionDesc = "Digite na caixa ou mova o cursor se precisa posicionamento exa
 L.width = "Largura"
 L.height = "Altura"
 L.sizeDesc = "Normalmente você define o tamanho arrastando a âncora. Se você precisa de um tamanho exato, você pode usar este controle deslizante ou digitar o valor na caixa, que não tem um tamanho máximo."
+L.fontSizeDesc = "Ajusta o tamanho da fonte usando a barra deslizante ou digitando o valor na caixa que tem um limite muito maior de 200."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
 --
 
-L.altPowerTitle = "Poder alternativo"
+L.altPowerTitle = "PoderAlt"
+L.altPowerDesc = "A janela de PoderAlt só vai aparecer pra chefes que aplicam PoderAlt em jogadores, isso é extremamente raro. A janela calcula a quantidade do 'Poder Alternativo' que você e seu grupo tem, mostrando isso em uma lista. Para mover a janela, por favor use o botão de teste abaixo."
 L.toggleDisplayPrint = "Esta exibição será usada da próxima vez. Para desativá-la completamente para esse encontro, você precisa desativar isto nas opções de encontro."
 L.disabled = "Desativado"
 L.disabledDisplayDesc = "Desativa a exibição para todos os módulos que usam ela."
-L.resetAltPowerDesc = "Reinicia todas as opções relacionadas a PoderAlternativo, incluindo a posição de âncora do PoderAlternativo."
+L.resetAltPowerDesc = "Reinicia todas as opções relacionadas a PoderAlt, incluindo a posição de âncora do PoderAlternativo."
+L.test = "Testar"
+L.altPowerTestDesc = "Mostra a janela de 'Poder Alternativo', permitindo que você mova, e simula a mudança de poderes que você veria no encontro de chefe."
+L.yourPowerBar = "Sua barra de poder"
+L.barColor = "Cor da barra"
+L.barTextColor = "Cor do texto da barra"
+L.additionalWidth = "Largura adicional"
+L.additionalHeight = "Altura adicional"
+L.additionalSizeDesc = "Adiciona tamanho a janela padrão ao ajustar essa barra deslizante, ou digite o valor na caixa que tem um limite muito maior de 100."
+L.yourPowerTest = "Seu Poder: %d" -- Your Power: 42
+L.yourAltPower = "Seu %s: %d" -- e.g. Your Corruption: 42
+L.player = "Jogador %d" -- Player 7
+L.disableAltPowerDesc = "Desativa globalmente a janela de PoderAlt, nunca mais será mostrada em encontros de chefes."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -85,7 +100,6 @@ L.emphasizeMultiplierDesc = "Se você desabilitar as barras movendo-as para a â
 L.enable = "Habilitar"
 L.move = "Mover"
 L.moveDesc = "Move barras enfatizadas para a âncora de Enfatizar. Se esta opção estiver desativada, barras enfatizadas terão apenas sua cor e tamanho alterados."
-L.regularBars = "Barras regulares"
 L.emphasizedBars = "Barras enfatizadas"
 L.align = "Alinhamento"
 L.alignText = "Alinhar texto"
@@ -227,10 +241,8 @@ L.resetMessagesDesc = "Reinicia todas as opções relacionadas a mensagens, incl
 
 L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Mensagens"
-L.normalMessages = "Mensagens normais"
 L.emphasizedMessages = "Mensagens enfatizadas"
 L.emphasizedDesc = "O objetivo das mensagens enfatizadas é ter a sua atenção, pois ela é uma mensagem grande no meio da tela. Isso é raramente habilitado por padrão, mas você pode habilitar para qualquer habilidade de chefe quando estiver olhando as configurações de habilidades específicas de chefes."
-L.output = "Saída"
 L.uppercase = "MAIÚSCULAS"
 L.uppercaseDesc = "Todas as mensagens enfatizadas serão convertidas para letras MAIÚSCULAS."
 
