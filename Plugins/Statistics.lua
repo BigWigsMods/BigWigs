@@ -176,6 +176,11 @@ function plugin:OnPluginEnable()
 	end
 end
 
+function plugin:OnPluginDisable()
+	activeDurations = {}
+	healthPools = {}
+end
+
 -------------------------------------------------------------------------------
 -- Event Handlers
 --

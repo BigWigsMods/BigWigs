@@ -11,6 +11,7 @@
 <Script file="Sludgefist.lua"/>
 <Script file="StoneLegionGenerals.lua"/>
 <Script file="Denathrius.lua"/>
+<Script file="Trash.lua"/>
 
 <Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>

@@ -7,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(164406) -- Shriekwing
 mod.engageId = 2398
 mod.respawnTime = 30
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -16,7 +17,8 @@ local shriekCount = 1
 local echoingScreechCount = 1
 local echolocationCount = 1
 local blindSwipeCount = 1
-local waveofBloodCount = 1
+local waveOfBloodCount = 1
+local tankList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -52,7 +54,7 @@ function mod:GetOptions()
 		-- Mythic
 		341684, -- The Blood Lantern
 		341489, -- Bloodlight
-	}, {
+	},{
 		["stages"] = "general",
 		[330711] = -22101, -- Stage One - Thirst for Blood
 		[345936] = -22102, -- Stage Two - Terror of Castle Nathria
@@ -66,7 +68,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EcholocationApplied", 342077)
 	self:Log("SPELL_AURA_REMOVED", "EcholocationRemoved", 342077)
 	self:Log("SPELL_CAST_START", "EchoingScreech", 342863)
-	self:Log("SPELL_CAST_START", "WaveofBlood", 345397)
+	self:Log("SPELL_CAST_START", "WaveOfBlood", 345397)
 	self:Log("SPELL_CAST_START", "BlindSwipe", 343005)
 	self:Log("SPELL_CAST_START", "ExsanguinatingBite", 328857)
 	self:Log("SPELL_AURA_APPLIED", "ExsanguinatedApplied", 328897)
@@ -75,7 +77,7 @@ function mod:OnBossEnable()
 
 	-- Stage Two - Terror of Castle Nathria
 	self:Log("SPELL_CAST_START", "EarsplittingShriekIntermission", 345936)
-	self:Log("SPELL_CAST_SUCCESS", "BloodShroud", 328921)
+	self:Log("SPELL_CAST_SUCCESS", "BloodShroud", 343995)
 	self:Log("SPELL_CAST_SUCCESS", "EchoingSonar", 329362)
 	self:Log("SPELL_AURA_REMOVED", "BloodShroudRemoved", 328921)
 
@@ -89,6 +91,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 340324) -- Sanguine Ichor
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 340324)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 340324)
+
+	self:RegisterEvent("GROUP_ROSTER_UPDATE")
+	self:GROUP_ROSTER_UPDATE()
 end
 
 function mod:OnEngage()
@@ -96,10 +101,11 @@ function mod:OnEngage()
 	echoingScreechCount = 1
 	echolocationCount = 1
 	blindSwipeCount = 1
-	waveofBloodCount = 1
+	waveOfBloodCount = 1
+	self:SetStage(1)
 
 	self:CDBar(328857, 8) -- Exsanguinating Bite
-	self:CDBar(345397, 13, CL.count:format(self:SpellName(345397), waveofBloodCount)) -- Wave of Blood
+	self:CDBar(345397, 13, CL.count:format(self:SpellName(345397), waveOfBloodCount)) -- Wave of Blood
 	self:CDBar(342074, 14.5, CL.count:format(self:SpellName(342074), echolocationCount)) -- Echolocation
 	self:CDBar(343005, 20.5,  CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
 	self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
@@ -116,6 +122,15 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
+	tankList = {}
+	for unit in self:IterateGroup() do
+		if self:Tank(unit) then
+			tankList[#tankList+1] = unit
+		end
+	end
+end
 
 function mod:EarsplittingShriek(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, shriekCount))
@@ -161,12 +176,12 @@ function mod:EchoingScreech(args)
 	end
 end
 
-function mod:WaveofBlood(args)
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, waveofBloodCount))
+function mod:WaveOfBlood(args)
+	self:Message(args.spellId, "orange", CL.count:format(args.spellName, waveOfBloodCount))
 	self:PlaySound(args.spellId, "alarm")
-	waveofBloodCount = waveofBloodCount + 1
-	if waveofBloodCount < 5 then -- 4 in stage 1
-		self:Bar(args.spellId, 25.5, CL.count:format(args.spellName, waveofBloodCount))
+	waveOfBloodCount = waveOfBloodCount + 1
+	if waveOfBloodCount < 5 then -- 4 in stage 1
+		self:Bar(args.spellId, 25.5, CL.count:format(args.spellName, waveOfBloodCount))
 	end
 end
 
@@ -180,7 +195,16 @@ function mod:BlindSwipe(args)
 end
 
 function mod:ExsanguinatingBite(args)
-	self:TargetMessage(args.spellId, "purple", self:UnitName("boss1target"), CL.casting:format(args.spellName))
+	local bossUnit = self:GetBossId(args.sourceGUID)
+	for i = 1, #tankList do
+		local unit = tankList[i]
+		if bossUnit and self:TopThreat(bossUnit, unit) then
+			self:TargetMessage(args.spellId, "yellow", self:UnitName(unit), CL.casting:format(args.spellName))
+			break
+		elseif i == #tankList then
+			self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+		end
+	end
 	self:PlaySound(args.spellId, "warning")
 	self:CDBar(args.spellId, 17)
 end
@@ -203,21 +227,22 @@ end
 
 -- Stage Two - Terror of Castle Nathria
 function mod:BloodShroud(args)
-	self:Message(args.spellId, "green")
-	self:PlaySound(args.spellId, "long")
+	self:SetStage(2)
+	self:Message(328921, "green")
+	self:PlaySound(328921, "long")
 
 	self:StopBar(328857) -- Exsanguinating Bite
 	self:StopBar(CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
 	self:StopBar(CL.count:format(self:SpellName(342074), echolocationCount)) -- Echolocation
 	self:StopBar(CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:StopBar(CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
-	self:StopBar(CL.count:format(self:SpellName(345397), waveofBloodCount)) -- Wave of Blood
+	self:StopBar(CL.count:format(self:SpellName(345397), waveOfBloodCount)) -- Wave of Blood
 
 	shriekCount = 1 -- Reused for intermission Shriek
 
-	self:CDBar("stages", 39, CL.intermission, args.spellId) -- 5s Cast, 40s Intermission/Stage 2
+	self:CDBar("stages", 42.5, CL.intermission, args.spellId)
 	self:CDBar(329362, 7.3) -- Echoing Sonar
-	self:CDBar(345936, 17, CL.count:format(self:SpellName(345936), shriekCount))
+	self:CDBar(345936, 23.5, CL.count:format(self:SpellName(345936), shriekCount))
 end
 
 function mod:EarsplittingShriekIntermission(args)
@@ -236,6 +261,7 @@ function mod:EchoingSonar(args)
 end
 
 function mod:BloodShroudRemoved(args)
+	self:SetStage(1)
 	self:Message("stages", "green", CL.stage:format(1), false)
 	self:PlaySound("stages", "info")
 
@@ -243,11 +269,11 @@ function mod:BloodShroudRemoved(args)
 	echoingScreechCount = 1
 	echolocationCount = 1
 	blindSwipeCount = 1
-	waveofBloodCount = 1
+	waveOfBloodCount = 1
 
 	self:CDBar(328857, 8.5) -- Exsanguinating Bite
 	self:CDBar(342074, 15.5, CL.count:format(self:SpellName(342074), echolocationCount)) -- Echolocation
-	self:CDBar(345397, 12.2, CL.count:format(self:SpellName(345397), waveofBloodCount)) -- Wave of Blood
+	self:CDBar(345397, 12.2, CL.count:format(self:SpellName(345397), waveOfBloodCount)) -- Wave of Blood
 	self:CDBar(343005, 20.5, CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
 	self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
 	self:CDBar(330711, 48.5, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
@@ -294,7 +320,7 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				self:PlaySound(args.spellId, "alarm")
+				self:PlaySound(args.spellId, "underyou")
 				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end

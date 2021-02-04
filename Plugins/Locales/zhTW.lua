@@ -5,6 +5,8 @@ L.comma = "，"
 L.width = "寬度"
 L.height = "高度"
 L.sizeDesc = "通常透過拖動錨點來條整尺寸，如果你需要一個精確的尺寸大小，可以調整這個值，或直接輸入到框中"
+L.fontSizeDesc = "調整捲動軸以更改字型大小，或在輸入框輸入精確數值，最大可以到 200。"
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 L.abilityName = "技能名稱"
 L.abilityNameDesc = "在視窗上面顯示或隱藏技能名稱。"
@@ -117,9 +119,7 @@ L.movieBlocked = "已經看過此動畫，跳過"
 L.newBestTime = "新的最快擊殺！"
 L.none = "無"
 L.normal = "普通"
-L.normalMessages = "一般訊息"
 L.outline = "輪廓"
-L.output = "輸出"
 L.positionDesc = "在框中輸入座標或移動控制條把錨點定位至精確位置。"
 L.positionExact = "精確位置"
 L.positionX = "X 座標"
@@ -144,7 +144,6 @@ L.pullStoppedCombat = "開怪計時器因為你進入戰鬥而取消。"
 L.raidIconsDesc = "某些首領模塊會使用團隊標記圖示來為某些中了特定技能的隊員上標記，例如「炸彈」類或心靈控制的技能。若關閉此功能，你將不會替隊員上標記。\n\n|cffff4411只有團隊領袖或被提升為助理時才可以這麼做！|r"
 L.raidIconsDescription = "某些首領戰可能遇到包括但不限於會波及臨近隊友的炸彈類技能、凝視追趕特定玩家的怪物、或類似被特別關注的點名技能，這裡可以自訂團隊圖示來標記這些玩家。\n\n如果只遇到一種技能，很好，只有第一個圖示會被使用。單場戰鬥中，一個圖示不會被使用在兩個不同的技能上，並且同一個技能在下次總是使用相同圖示。\n\n|cffff4411注意：如果玩家已經被手動標記，BigWigs 將不會改變他的團隊標記。|r"
 L.recordBestTime = "記憶最快擊殺"
-L.regularBars = "常規計時條"
 L.remove = "移除"
 L.removeOther = "移除其它"
 L.report = "報告"
@@ -215,7 +214,20 @@ L.wrongTime = "指定的時間無效。 <time> 可以為一個秒數，一個 �
 -- AltPower.lua
 --
 
-L.resetAltPowerDesc = "重設所有特殊能量自訂選項，包括錨點和位置。"
+L.altPowerDesc = "只有在有替代能量作用於玩家的首領戰才會顯示，這類首領數量不多，甚至可以說相當罕見；這個框架會顯示你與團隊中擁有的替代能量，其中團隊的替代能量是以清單的方式列出。如果要調整框架，點擊下方的「測試」按鈕。"
+L.resetAltPowerDesc = "重設所有替代能量自訂選項，包括錨點和位置。"
+L.test = "測試"
+L.altPowerTestDesc = "顯示「替代能量」框架，使你可以移動它，並演示有替代能量中的戰鬥中會如何顯示。"
+L.yourPowerBar = "你的能量條"
+L.barColor = "能量條顏色"
+L.barTextColor = "能量條文字顏色"
+L.additionalWidth = "延伸寬度"
+L.additionalHeight = "延伸高度"
+L.additionalSizeDesc = "替代能量框架有一個基本的最小尺寸，調整卷動軸可以使之增加；或者輸入精確的數值，最高可以到 100。"
+L.yourPowerTest = "你的能量：%d" -- Your Power: 42
+L.yourAltPower = "你的%s：%d" -- e.g. Your Corruption: 42
+L.player = "玩家 %d" -- Player 7
+L.disableAltPowerDesc = "全局停用替代能量框架，啟用此選項將使任何首領戰都不顯示此框架。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua

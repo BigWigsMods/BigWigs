@@ -12,7 +12,15 @@ end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "esMX")
 if L then
-	L.miasma = "Miasma glotona" -- Short for Gluttonous Miasma
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
+
+	--L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
+	--L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+
+	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
+	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
+
+	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "esMX")
@@ -30,8 +38,6 @@ if L then
 
 	L.level = "%s (Nivel |cffffff00%d|r)"
 	L.full = "%s (|cffff0000LLENO|r)"
-
-	L.container_active = "Habilitar contenedor: %s"
 
 	L.anima_adds = "Esbirros de ánima concentrada"
 	L.anima_adds_desc = "Muestra un temporizador cuando los esbirros aparecen del debuff de Ánima Concentrada."
@@ -97,6 +103,12 @@ if L then
 
 	L.custom_on_stop_timers = "Siempre mostrar las barras de habilidad"
 	L.custom_on_stop_timers_desc = "Sólo para pruebas por el momento"
+
+	--L.goliath_short = "Goliath"
+	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+
+	--L.commando_short = "Commando"
+	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "esMX")
@@ -120,4 +132,28 @@ if L then
 
 	L.no_mirror = "Sin espejo: %d" -- Player amount that does not have the Through the Mirror
 	L.mirror = "Espejo: %d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "esMX")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "Moldovaak"
+	L.caramain = "Caramain"
+	L.sindrel = "Sindrel"
+	L.hargitas = "Hargitas"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "Gargon descomunal"
+	L.hawkeye = "Ojohalcón de Nathria"
+	L.overseer = "Sobrestante de perrera"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "Descarnador aterrador"
+	L.rat = "Rata de tamaño inusual"
+	L.miasma = "Miasma glotona" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "Deplina"
+	L.dragost = "Dragost"
+	L.kullan = "Kullan"
 end

@@ -943,7 +943,7 @@ do
 			},
 			normal = {
 				type = "group",
-				name = L.regularBars,
+				name = L.bars,
 				order = 2,
 				args = {
 					growup = {
@@ -966,6 +966,7 @@ do
 					fontSize = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						width = 2,
 						order = 3,
 						max = 200, softMax = 72,
@@ -1090,6 +1091,7 @@ do
 					fontSizeEmph = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						order = 7,
 						max = 200, softMax = 72,
 						min = 1,
@@ -1206,6 +1208,7 @@ do
 					fontSizeNameplate = {
 						type = "range",
 						name = L.fontSize,
+						desc = L.fontSizeDesc,
 						order = 6,
 						max = 200, softMax = 72,
 						min = 1,
@@ -1301,7 +1304,6 @@ do
 	local function barSorter(a, b)
 		return a.remaining < b.remaining and true or false
 	end
-	local tmp = {}
 	rearrangeBars = function(anchor)
 		if not anchor then return end
 		if anchor == normalAnchor then -- only show the empupdater when there are bars on the normal anchor running
@@ -1313,7 +1315,7 @@ do
 		end
 		if not next(anchor.bars) then return end
 
-		wipe(tmp)
+		local tmp = {}
 		for bar in next, anchor.bars do
 			tmp[#tmp + 1] = bar
 		end
@@ -1498,7 +1500,10 @@ do
 		display:SetResizable(true)
 		display:RegisterForDrag("LeftButton")
 		display:SetMinResize(80, 8)
-		display:SetFrameLevel(20)
+		display:SetFrameStrata("HIGH")
+		display:SetFixedFrameStrata(true)
+		display:SetFrameLevel(title == "BigWigsAnchor" and 10 or 15)
+		display:SetFixedFrameLevel(true)
 		local bg = display:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(display)
 		bg:SetColorTexture(0, 0, 0, 0.3)
@@ -1512,16 +1517,14 @@ do
 		header:SetJustifyH("CENTER")
 		header:SetJustifyV("MIDDLE")
 		local drag = CreateFrame("Frame", nil, display)
-		drag:SetFrameLevel(display:GetFrameLevel() + 10)
 		drag:SetWidth(16)
 		drag:SetHeight(16)
 		drag:SetPoint("BOTTOMRIGHT", display, -1, 1)
 		drag:EnableMouse(true)
 		drag:SetScript("OnMouseDown", onDragHandleMouseDown)
 		drag:SetScript("OnMouseUp", onDragHandleMouseUp)
-		drag:SetAlpha(0.5)
 		local tex = drag:CreateTexture(nil, "OVERLAY")
-		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\draghandle")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
 		tex:SetWidth(16)
 		tex:SetHeight(16)
 		tex:SetBlendMode("ADD")

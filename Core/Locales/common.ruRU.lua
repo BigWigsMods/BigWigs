@@ -50,8 +50,10 @@ L.add_killed = "Помощник убит (%d/%d)"
 L.add_remaining = "Помощник убит, %d осталось"
 L.add = "Помощник"
 L.adds = "Помощники"
-L.big_add = "Большой помощник"
-L.small_adds = "Маленькие помощники"
+L.big_add = "Большой помощник" -- singular
+L.big_adds = "Большие помощники" -- plural
+L.small_add = "Маленький помощник" -- singular
+L.small_adds = "Маленькие помощники" -- plural
 
 -- Mob related
 L.mob_killed = "%s убит (%d/%d)"
@@ -76,6 +78,7 @@ L.marker_npc_desc = "Отмечать %s меткой %s, требуется б�
 -- Ability where two players have to move close to each other
 L.link = "Связь"
 L.link_with = "Связан с %s"
+L.link_with_icon = "Связан с |T13700%d:0|t%s"
 L.link_short = "Связь: %s"
 L.link_both = "%s связан с %s"
 L.link_removed = "Связь прервана"
@@ -88,5 +91,9 @@ L.seconds = "%.1fс" -- 1.1 seconds
 
 -- Common ability name replacements
 L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.beam = "Луч" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.bomb = "Бомба" -- Used for debuffs that make players explode
-L.fixate = "Сосредоточение внимания" -- Used when a boss or add is chasing/fixated on a player
+L.fixate = "Фиксация" -- Used when a boss or add is chasing/fixated on a player
+L.knockback = "Отбрасывание" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.traps = "Ловушки" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
+L.meteor = "Метеор" -- This one will probably only ever be used for actual meteors

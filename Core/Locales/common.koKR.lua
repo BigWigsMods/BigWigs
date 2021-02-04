@@ -39,7 +39,7 @@ L.interrupted = "%s 시전 방해됨"
 L.interrupted_by = "%s 를 %s 가 차단!" -- spell interrupted by player
 L.no = "%s 없음"
 L.intermission = "사잇단계"
---L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - spell
 
 -- Add related
 L.add_spawned = "추가 몹 생성"
@@ -50,8 +50,10 @@ L.add_killed = "추가 몹 처치 (%d/%d)"
 L.add_remaining = "추가 몹 처치, %d 남음"
 L.add = "추가 몹"
 L.adds = "추가 몹들"
-L.big_add = "큰 추가 몹"
-L.small_adds = "작은 추가 몹들"
+L.big_add = "큰 추가 몹" -- singular
+L.big_adds = "큰 추가 몹들" -- plural
+L.small_add = "작은 추가 몹" -- singular
+L.small_adds = "작은 추가 몹들" -- plural
 
 -- Mob related
 L.mob_killed = "%s 처치 (%d/%d)"
@@ -76,6 +78,7 @@ L.marker_npc_desc = "%s|1을;를; %s|1으로;로; 징표 표시합니다, 부공
 -- Ability where two players have to move close to each other
 L.link = "연결"
 L.link_with = "%s|1과;와; 연결됨"
+L.link_with_icon = "|T13700%d:0|t%s|1과;와; 연결됨"
 L.link_short = "연결됨: %s"
 L.link_both = "%s|1과;와; %s|1이;가; 연결됨"
 L.link_removed = "연결 사라짐"
@@ -88,5 +91,9 @@ L.seconds = "%.1f초" -- 1.1 seconds
 
 -- Common ability name replacements
 L.laser = "레이저" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.beam = "광선" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.bomb = "폭탄" -- Used for debuffs that make players explode
 L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a player
+L.knockback = "넉백" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.traps = "덫" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
+L.meteor = "유성" -- This one will probably only ever be used for actual meteors

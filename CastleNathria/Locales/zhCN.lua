@@ -13,6 +13,14 @@ end
 L = BigWigs:NewBossLocale("Hungering Destroyer", "zhCN")
 if L then
 	L.miasma = "瘴气" -- Short for Gluttonous Miasma
+
+	L.custom_on_repeating_yell_miasma = "重复瘴气生命值喊话"
+	L.custom_on_repeating_yell_miasma_desc = "重复暴食瘴气喊话信息让其他人知道你的生命值低于75%。"
+
+	L.custom_on_repeating_say_laser = "重复不稳定的喷发说话"
+	L.custom_on_repeating_say_laser_desc = "重复不稳定的喷发说话信息来帮助没有看到您的第一条消息的玩家移入聊天范围。"
+
+	L.tempPrint = "我们已经替瘴气添增加了大喊提示。如果你之前使用过 WeakAuras 的字符串，可能需要将其删除以防止出现重覆的大喊。"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhCN")
@@ -30,8 +38,6 @@ if L then
 
 	L.level = "%s（等级 |cffffff00%d|r）"
 	L.full = "%s（|cffff0000满|r）"
-
-	L.container_active = "启用容器：%s"
 
 	L.anima_adds = "浓缩心能增援"
 	L.anima_adds_desc = "当浓缩心能负面效果刷新增援时显示一个计时器。"
@@ -58,7 +64,7 @@ if L then
 
 	L.custom_off_select_boss_order = "标记首领击杀顺序"
 	L.custom_off_select_boss_order_desc = "使用叉子 {rt7} 标记团队首领击杀顺序。需要权限。"
-	L.custom_off_select_boss_order_value1 = "堡主 -> 男爵 -> 勋爵"
+	L.custom_off_select_boss_order_value1 = "堡主 -> 女男爵 -> 勋爵"
 	L.custom_off_select_boss_order_value2 = "女男爵 -> 堡主 -> 勋爵"
 	L.custom_off_select_boss_order_value3 = "勋爵 -> 堡主 -> 女男爵"
 	L.custom_off_select_boss_order_value4 = "堡主 -> 勋爵 -> 女男爵"
@@ -97,6 +103,12 @@ if L then
 
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "为了马上测试"
+
+	L.goliath_short = "巨怪"
+	L.goliath_desc = "显示警告和计时器，提示何时会刷新顽石军团巨怪。"
+
+	L.commando_short = "特种兵"
+	L.commando_desc = "当击杀顽石军团特种兵时显示警告。"
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "zhCN")
@@ -120,4 +132,28 @@ if L then
 
 	L.no_mirror = "没镜子：%d" -- Player amount that does not have the Through the Mirror
 	L.mirror = "镜子：%d" -- Player amount that does have the Through the Mirror
+end
+
+L = BigWigs:NewBossLocale("Castle Nathria Trash", "zhCN")
+if L then
+	--[[ Pre Shriekwing ]]--
+	L.moldovaak = "摩多瓦克"
+	L.caramain = "卡拉梅恩"
+	L.sindrel = "辛德雷尔"
+	L.hargitas = "哈尔基塔司"
+
+	--[[ Shriekwing -> Huntsman Altimor ]]--
+	L.gargon = "魁梧的加尔贡"
+	L.hawkeye = "纳斯利亚鹰眼射手"
+	L.overseer = "狗舍监督者"
+
+	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
+	L.feaster = "恐惧吞食者"
+	L.rat = "尺寸惊人的老鼠"
+	L.miasma = "瘴气" -- Short for Gluttonous Miasma
+
+	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
+	L.deplina = "德普莉娜"
+	L.dragost = "德拉苟斯特"
+	L.kullan = "库兰"
 end

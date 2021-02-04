@@ -5,6 +5,8 @@ L.comma = "，"
 L.width = "宽度"
 L.height = "高度"
 L.sizeDesc = "通常通过拖动锚点设置尺寸。如果需要一个精确的尺寸，可以使用这个滑动条或者将数值输入到没有最大值的框中。"
+L.fontSizeDesc = "使用滑块或在框内输入数值可调整字体尺寸，最大数值为200。"
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
@@ -124,9 +126,7 @@ L.movieBlocked = "以前观看过此动画，跳过。"
 L.newBestTime = "新的最快击杀！"
 L.none = "无"
 L.normal = "标准"
-L.normalMessages = "一般信息"
 L.outline = "轮廓"
-L.output = "输出"
 L.positionDesc = "在框中输入或移动滑块精准定位锚点位置。"
 L.positionExact = "精确位置"
 L.positionX = "X 位置"
@@ -157,7 +157,6 @@ L.raidIconsDescription = [=[可能遇到包含例如炸弹类型的技能指向�
 
 |cffff4411注意：如果玩家已经被手动标记，BigWigs 将不会改变他的图标。|r]=]
 L.recordBestTime = "记忆最快击杀"
-L.regularBars = "常规计时条"
 L.remove = "移除"
 L.removeOther = "移除其它"
 L.report = "报告"
@@ -228,7 +227,20 @@ L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单�
 -- AltPower.lua
 --
 
+L.altPowerDesc = "仅在向玩家应用的首领出现交替能量显示，这极为罕见。将显示您和团队拥有的“交替能量”的数量，在列表中显示。要移动显示，请使用下面的测试按钮。"
 L.resetAltPowerDesc = "重置全部交替能量有关选项，包括交替能量锚点位置。"
+L.test = "测试"
+L.altPowerTestDesc = "显示“交替能量”，可以移动，并模拟在首领战斗时会看到的能量变化。"
+L.yourPowerBar = "你的能量条"
+L.barColor = "条颜色"
+L.barTextColor = "条文本颜色"
+L.additionalWidth = "附加宽度"
+L.additionalHeight = "附加高度"
+L.additionalSizeDesc = "调整此滑块可增加标准显示的尺寸，或在框内输入数值，最大数值为100。"
+L.yourPowerTest = "你的能量：%d" -- Your Power: 42
+L.yourAltPower = "你的 %s：%d" -- e.g. Your Corruption: 42
+L.player = "玩家 %d" -- Player 7
+L.disableAltPowerDesc = "全局禁用交替能量显示，任何首领战斗不会显示它。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua

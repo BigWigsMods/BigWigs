@@ -5,6 +5,8 @@ L.comma = ", "
 L.width = "Ancho"
 L.height = "Alto"
 L.sizeDesc = "Normalmente ajusta el tamaño deslizando por la barra. Si necesitas un tamaño exacto puedes usar este deslizador o teclea el valor dentro de la caja, no tiene máximo."
+--L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 L.abilityName = "Nombre de habilidad"
 L.abilityNameDesc = "Muestra/oculta el nombre de la habilidad encima de la ventana"
@@ -124,9 +126,7 @@ L.movieBlocked = "Ya has visto esta cinemática antes, omitiéndola."
 L.newBestTime = "¡Nueva muerte más rápida!"
 L.none = "Ninguno"
 L.normal = "Normal"
-L.normalMessages = "Mensajes normales"
 L.outline = "Contorno"
-L.output = "Salida"
 L.positionDesc = "Introduce o mueve el deslizador si necesitas posicionar de manera precisa desde el anclaje."
 L.positionExact = "Posicionamiento preciso"
 L.positionX = "Posición X"
@@ -157,7 +157,6 @@ Si solo se usa un icono para un encuentro se usará el primario, nunca se usará
 
 |cffff4411Nota: Si un jugador ha sido marcado manualmente BigWigs nunca cambiará su icono.|r]=]
 L.recordBestTime = "Recordar muertes más rápidas"
-L.regularBars = "Barras regulares"
 L.remove = "Quitar"
 L.removeOther = "Quitar otro"
 L.report = "Reportar"
@@ -228,7 +227,20 @@ L.wrongTime = "Tiempo especificado inválido. <time> puede ser bien un número e
 -- AltPower.lua
 --
 
+--L.altPowerDesc = "The AltPower display will only appear for bosses that apply AltPower to players, which is extremely rare. The display measures the amount of 'Alternative Power' you and your group has, displaying it in a list. To move the display around, please use the test button below."
 --L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+--L.test = "Test"
+--L.altPowerTestDesc = "Show the 'Alternative Power' display, allowing you to move it, and simulating the power changes you would see on a boss encounter."
+--L.yourPowerBar = "Your Power Bar"
+--L.barColor = "Bar color"
+--L.barTextColor = "Bar text color"
+--L.additionalWidth = "Additional Width"
+--L.additionalHeight = "Additional Height"
+--L.additionalSizeDesc = "Add to the size of the standard display by adjusting this slider, or type the value into the box which has a much higher maximum of 100."
+--L.yourPowerTest = "Your Power: %d" -- Your Power: 42
+--L.yourAltPower = "Your %s: %d" -- e.g. Your Corruption: 42
+--L.player = "Player %d" -- Player 7
+--L.disableAltPowerDesc = "Globally disable the AltPower display, it will never show for any boss encounter."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua

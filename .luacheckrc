@@ -9,9 +9,12 @@ only = {
 	"1", -- globals
 }
 files["**/Loader.lua"].ignore = {
+	"113/C_ChatInfo",
+	"113/SendChatMessage",
+	"113/SetRaidTarget",
+	"113/UnitDetailedThreatSituation",
 	"113/UnitGUID",
 	"113/UnitName",
-	"113/SetRaidTarget",
 }
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/TranscriptIgnore",
@@ -89,7 +92,6 @@ globals = {
 	"time",
 	"tinsert",
 	"tremove",
-	"wipe",
 
 	-- framexml
 	"getprinthandler",
@@ -118,7 +120,6 @@ globals = {
 	"BNIsSelf",
 	"BNSendWhisper",
 	"BossBanner",
-	"C_ChatInfo",
 	"C_EncounterJournal",
 	"C_FriendList",
 	"C_GossipInfo",
@@ -208,7 +209,6 @@ globals = {
 	"RaidWarningFrame",
 	"RolePollPopup",
 	"SecondsToTime",
-	"SendChatMessage",
 	"SlashCmdList",
 	"StopSound",
 	"Tukui",
@@ -219,7 +219,6 @@ globals = {
 	"UnitCanAttack",
 	"UnitCastingInfo",
 	"UnitClass",
-	"UnitDetailedThreatSituation",
 	"UnitExists",
 	"UnitFactionGroup",
 	"UnitGetTotalAbsorbs",
@@ -248,6 +247,7 @@ globals = {
 	"UnitPowerType", -- Multiple old modules
 	"UnitRace",
 	"UnitSetRole",
+	"UnitSex",
 	"UnitThreatSituation", -- Cataclysm/Bastion/Sinestra.lua
 	-- Legion/TombOfSargeras/Kiljaeden.lua
 	"GetTrackingInfo",

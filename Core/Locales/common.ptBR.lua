@@ -50,8 +50,10 @@ L.add_killed = "Add morto (%d/%d)"
 L.add_remaining = "Add morto, restam %d"
 L.add = "Inimigo adicional"
 L.adds = "Inimigos adicionais"
-L.big_add = "Add Grande"
-L.small_adds = "Adds Pequenos"
+L.big_add = "Add Grande" -- singular
+L.big_adds = "Adds Grande" -- plural
+L.small_add = "Add Pequenos" -- singular
+L.small_adds = "Adds Pequenos" -- plural
 
 -- Mob related
 L.mob_killed = "%s morto (%d/%d)"
@@ -74,6 +76,7 @@ L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente."
 -- Ability where two players have to move close to each other
 L.link = "Ligação"
 L.link_with = "Ligado com %s"
+L.link_with_icon = "Ligado com |T13700%d:0|t%s"
 L.link_short = "Ligado: %s"
 L.link_both = "%s ligado com %s"
 L.link_removed = "Ligação removida"
@@ -86,5 +89,9 @@ L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Common ability name replacements
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.beam = "Feixe" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.bomb = "Bomba" -- Used for debuffs that make players explode
 L.fixate = "Fixação" -- Used when a boss or add is chasing/fixated on a player
+L.knockback = "Empurrão" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.traps = "Armadilhas" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
+L.meteor = "Meteoro" -- This one will probably only ever be used for actual meteors

@@ -611,8 +611,8 @@ spellUpdater:RegisterEvent("SPELL_DATA_LOAD_RESULT")
 
 local function clearPendingUpdates()
 	spellUpdater:SetScript("OnUpdate", nil)
-	wipe(needsUpdate)
-	wipe(needsLayout)
+	needsUpdate = {}
+	needsLayout = {}
 end
 
 local function buttonClicked(widget)
@@ -819,8 +819,11 @@ do
 
 	local function printList(channel, header, list)
 		if #list == 0 then return end
-		if header then output(channel, header, unpack(list))
-		else output(channel, unpack(list)) end
+		if header then
+			output(channel, header, unpack(list))
+		else
+			output(channel, unpack(list))
+		end
 	end
 
 	function listAbilitiesInChat(widget)
@@ -836,7 +839,7 @@ do
 			if module.optionHeaders and module.optionHeaders[o] then
 				-- print what we have so far
 				printList(channel, header, abilities)
-				wipe(abilities)
+				abilities = {}
 				header = module.optionHeaders[o]
 				currentSize = #header
 			end
@@ -878,7 +881,7 @@ do
 			if link then
 				if currentSize + #link + 1 > 255 then
 					printList(channel, header, abilities)
-					wipe(abilities)
+					abilities = {}
 					currentSize = 0
 				end
 				abilities[#abilities + 1] = link
@@ -1306,7 +1309,7 @@ do
 		bw:SetLayout("Flow")
 		bw:SetCallback("OnClose", function(widget)
 			AceGUI:Release(widget)
-			wipe(statusTable)
+			statusTable = {}
 			isPluginOpen = nil
 			configFrame = nil
 		end)

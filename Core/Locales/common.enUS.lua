@@ -49,8 +49,10 @@ L.add_killed = "Add killed (%d/%d)"
 L.add_remaining = "Add killed, %d remaining"
 L.add = "Add"
 L.adds = "Adds"
-L.big_add = "Big Add"
-L.small_adds = "Small Adds"
+L.big_add = "Big Add" -- singular
+L.big_adds = "Big Adds" -- plural
+L.small_add = "Small Add" -- singular
+L.small_adds = "Small Adds" -- plural
 
 -- Mob related
 L.mob_killed = "%s killed (%d/%d)"
@@ -75,6 +77,7 @@ L.marker_npc_desc = "Mark %s with %s, requires promoted or leader."
 -- Ability where two players have to move close to each other
 L.link = "Link"
 L.link_with = "Linked with %s"
+L.link_with_icon = "Linked with |T13700%d:0|t%s"
 L.link_short = "Linked: %s"
 L.link_both = "%s linked with %s"
 L.link_removed = "Link removed"
@@ -87,5 +90,9 @@ L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Common ability name replacements
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.beam = "Beam" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.bomb = "Bomb" -- Used for debuffs that make players explode
 L.fixate = "Fixate" -- Used when a boss or add is chasing/fixated on a player
+L.knockback = "Knockback" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.traps = "Traps" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
+L.meteor = "Meteor" -- This one will probably only ever be used for actual meteors

@@ -43,8 +43,8 @@ local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
-local mute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\mute"
-local unmute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\unmute"
+local mute = "Interface\\AddOns\\BigWigs\\Media\\Icons\\mute"
+local unmute = "Interface\\AddOns\\BigWigs\\Media\\Icons\\unmute"
 
 local inConfigMode = nil
 local activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = 0, 0, 0, 0
@@ -69,8 +69,8 @@ local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetN
 local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown
 local UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason = UnitIsDead, UnitIsUnit, UnitClass, UnitPhaseReason
 local min, cos, sin, format = math.min, math.cos, math.sin, string.format
-local tinsert, tconcat = table.insert, table.concat
-local next, type, tonumber, wipe = next, type, tonumber, wipe
+local tinsert, tconcat, wipe = table.insert, table.concat, table.wipe
+local next, type, tonumber = next, type, tonumber
 local piDoubled = 6.2831853071796
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
@@ -849,6 +849,10 @@ do
 		-- 	BigWigsLoader.RegisterMessage(addonTable, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
 		-- end
 		proxAnchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
+		proxAnchor:SetFrameStrata("MEDIUM")
+		proxAnchor:SetFixedFrameStrata(true)
+		proxAnchor:SetFrameLevel(120)
+		proxAnchor:SetFixedFrameLevel(true)
 		proxAnchor:SetWidth(db.width)
 		proxAnchor:SetHeight(db.height)
 		proxAnchor:SetMinResize(100, 30)
@@ -875,7 +879,6 @@ do
 
 		local close = CreateFrame("Button", nil, proxAnchor)
 		close:SetPoint("BOTTOMRIGHT", proxAnchor, "TOPRIGHT", -2, 2)
-		close:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		close:SetHeight(16)
 		close:SetWidth(16)
 		close.tooltipHeader = L.close
@@ -887,12 +890,11 @@ do
 			customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 			plugin:Close(true)
 		end)
-		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\close")
+		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\close")
 		proxAnchor.close = close
 
 		local sound = CreateFrame("Button", nil, proxAnchor)
 		sound:SetPoint("BOTTOMLEFT", proxAnchor, "TOPLEFT", 2, 2)
-		sound:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		sound:SetHeight(16)
 		sound:SetWidth(16)
 		sound.tooltipHeader = L.toggleSound
@@ -994,18 +996,16 @@ do
 
 		local drag = CreateFrame("Frame", nil, proxAnchor)
 		drag.frame = proxAnchor
-		drag:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		drag:SetWidth(16)
 		drag:SetHeight(16)
 		drag:SetPoint("BOTTOMRIGHT", proxAnchor, -1, 1)
 		drag:EnableMouse(true)
 		drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
 		drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
-		drag:SetAlpha(0.5)
 		proxAnchor.drag = drag
 
 		local tex = drag:CreateTexture(nil, "OVERLAY")
-		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\draghandle")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
 		tex:SetWidth(16)
 		tex:SetHeight(16)
 		tex:SetBlendMode("ADD")
@@ -1142,9 +1142,11 @@ do
 			fontSize = {
 				type = "range",
 				name = L.fontSize,
+				desc = L.fontSizeDesc,
 				order = 4,
-				max = 40,
+				max = 200,
 				min = 8,
+				softMax = 40,
 				step = 1,
 				width = "full",
 			},
@@ -1308,7 +1310,7 @@ function plugin:Close(noReopen)
 	activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = setRange(0), 0, 0, 0
 	activeSpellID = nil
 	proximityPlayer = nil
-	wipe(proximityPlayerTable)
+	proximityPlayerTable = {}
 
 	proxTitle:SetFormattedText(L_proximityTitle, 5, 3)
 	proxAnchor.ability:SetFormattedText("|T136015:20:20:-5:0:64:64:4:60:4:60|t%s", L.proximity) -- Interface\\Icons\\spell_nature_chainlightning

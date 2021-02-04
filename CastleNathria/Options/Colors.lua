@@ -1,6 +1,6 @@
 
 BigWigs:AddColors("Shriekwing", {
-	[328857] = {"blue","purple"},
+	[328857] = {"blue","yellow"},
 	[328897] = {"blue","green","purple"},
 	[328921] = "green",
 	[329362] = "cyan",
@@ -97,6 +97,7 @@ BigWigs:AddColors("Lady Inerva Darkvein", {
 })
 
 BigWigs:AddColors("The Council of Blood", {
+	[-22433] = "red",
 	[327497] = {"blue","orange","purple"},
 	[330848] = {"blue","orange"},
 	[330959] = "green",
@@ -154,7 +155,8 @@ BigWigs:AddColors("Stone Legion Generals", {
 	[342985] = "cyan",
 	[343063] = "blue",
 	[344496] = {"blue","red"},
-	["stages"] = "cyan",
+	["commando"] = "cyan",
+	["goliath"] = "cyan",
 })
 
 BigWigs:AddColors("Sire Denathrius", {
@@ -162,12 +164,15 @@ BigWigs:AddColors("Sire Denathrius", {
 	[326699] = {"blue","green","red"},
 	[326707] = "purple",
 	[326851] = {"blue","red"},
+	[327039] = {"blue","orange"},
 	[327122] = "orange",
+	[327227] = "yellow",
 	[327796] = {"blue","orange"},
 	[327992] = "blue",
+	[328276] = "green",
 	[328936] = "cyan",
 	[329181] = {"blue","purple","yellow"},
-	[329906] = "blue",
+	[329906] = {"blue","purple"},
 	[329951] = {"blue","orange"},
 	[330042] = "red",
 	[332585] = {"blue","purple"},
@@ -178,8 +183,28 @@ BigWigs:AddColors("Sire Denathrius", {
 	[333979] = "red",
 	[333980] = "red",
 	[335873] = "blue",
+	[336162] = "blue",
 	[338738] = "green",
 	[344776] = "yellow",
 	["hymn_stacks"] = {"blue","green"},
 	["stages"] = "green",
+})
+
+BigWigs:AddColors("Castle Nathria Trash", {
+	[329298] = {"blue","yellow"},
+	[329989] = "orange",
+	[339525] = {"blue","orange"},
+	[339528] = {"blue","purple"},
+	[339553] = "blue",
+	[339557] = "yellow",
+	[340630] = {"blue","purple"},
+	[341352] = "yellow",
+	[341441] = "red",
+	[341735] = "orange",
+	[343155] = {"orange","red"},
+	[343302] = "orange",
+	[343316] = "yellow",
+	[343320] = "yellow",
+	[343322] = "yellow",
+	[343325] = "yellow",
 })

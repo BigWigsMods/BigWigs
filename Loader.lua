@@ -19,7 +19,7 @@ local ldbi = LibStub("LibDBIcon-1.0")
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 203
+local BIGWIGS_VERSION = 211
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -82,7 +82,7 @@ end
 --
 
 local tooltipFunctions = {}
-local next, tonumber, strsplit = next, tonumber, strsplit
+local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
 local UnitName, UnitGUID = UnitName, UnitGUID
@@ -98,6 +98,9 @@ public.CTimerNewTicker = CTimerNewTicker
 public.UnitName = UnitName
 public.UnitGUID = UnitGUID
 public.SetRaidTarget = SetRaidTarget
+public.UnitHealth = UnitHealth
+public.UnitHealthMax = UnitHealthMax
+public.UnitDetailedThreatSituation = UnitDetailedThreatSituation
 
 -- Version
 local usersHash = {}
@@ -411,7 +414,7 @@ end
 --
 
 local dataBroker = ldb:NewDataObject("BigWigs",
-	{type = "launcher", label = "BigWigs", icon = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\core-disabled"}
+	{type = "launcher", label = "BigWigs", icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-disabled"}
 )
 
 function dataBroker.OnClick(self, button)
@@ -736,49 +739,13 @@ function mod:ADDON_LOADED(addon)
 		-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
 		if BigWigs3DB.namespaces then
 			for k,v in next, BigWigs3DB.namespaces do
-				if k:find("BigWigs_Bosses_", nil, true) and (not next(v) or not BigWigs3DB.wipe80) then -- XXX temp boss DB wipe for 8.0.1
+				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
 					BigWigs3DB.namespaces[k] = nil
 				end
-				-- XXX start temp 8.0.1 color conversion
-				if k == "BigWigs_Plugins_Colors" then
-					for profiles, profileList in next, v do
-						for name, tbl in next, profileList do
-							if tbl["Positive"] then
-								tbl["green"] = tbl["Positive"]
-								tbl["Positive"] = nil
-							end
-							if tbl["Personal"] then
-								tbl["blue"] = tbl["Personal"]
-								tbl["Personal"] = nil
-							end
-							if tbl["Important"] then
-								tbl["red"] = tbl["Important"]
-								tbl["Important"] = nil
-							end
-							if tbl["Urgent"] then
-								tbl["orange"] = tbl["Urgent"]
-								tbl["Urgent"] = nil
-							end
-							if tbl["Neutral"] then
-								tbl["cyan"] = tbl["Neutral"]
-								tbl["Neutral"] = nil
-							end
-							if tbl["Attention"] then
-								tbl["yellow"] = tbl["Attention"]
-								tbl["Attention"] = nil
-							end
-						end
-					end
-				end
-				-- XXX end temp 8.0.1 color conversion
 			end
 		end
-		BigWigs3DB.wipe80 = true -- XXX temp boss DB wipe for 8.0.1
-		if not BigWigs3DB.discord or BigWigs3DB.discord < 15 then
-			BigWigs3DB.discord = (BigWigs3DB.discord or 0) + 1
-			CTimerAfter(11, function() sysprint("We are now on Discord: https://discord.gg/jGveg85") end)
-		end
-		BigWigs3DB.fPrint = nil -- XXX temp 7.3.5
+		BigWigs3DB.wipe80 = nil -- XXX temp boss DB wipe for 8.0.1 // removed in 9.0.2
+		BigWigs3DB.discord = nil -- XXX 9.0.2
 	end
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
@@ -988,13 +955,20 @@ do
 		end
 	end
 
+	local pcall, geterrorhandler = pcall, geterrorhandler
 	function public:SendMessage(msg, ...)
 		if callbackMap[msg] then
 			for k,v in next, callbackMap[msg] do
 				if type(v) == "function" then
-					v(msg, ...)
+					local success, errorMsg = pcall(v, msg, ...)
+					if not success then
+						geterrorhandler()(("BigWigs: One of your addons caused an error on the %q callback:\n%s"):format(msg, errorMsg))
+					end
 				else
-					k[v](k, msg, ...)
+					local success, errorMsg = pcall(k[v], k, msg, ...)
+					if not success then
+						geterrorhandler()(("BigWigs: One of your addons caused an error on the %q callback:\n%s"):format(msg, errorMsg))
+					end
 				end
 			end
 		end
@@ -1019,9 +993,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20210106043212" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "9.0.16" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20210105000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20210127052658" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "9.0.19" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20210127000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
@@ -1439,7 +1413,7 @@ end
 public.RegisterMessage(mod, "BigWigs_BossModuleRegistered")
 
 function mod:BigWigs_CoreEnabled()
-	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\core-enabled"
+	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-enabled"
 
 	-- Send a version query on enable, should fix issues with joining a group then zoning into an instance,
 	-- which kills your ability to receive addon comms during the loading process.
@@ -1456,7 +1430,7 @@ end
 public.RegisterMessage(mod, "BigWigs_CoreEnabled")
 
 function mod:BigWigs_CoreDisabled()
-	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\core-disabled"
+	dataBroker.icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-disabled"
 end
 public.RegisterMessage(mod, "BigWigs_CoreDisabled")
 
