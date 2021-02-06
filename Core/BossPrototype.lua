@@ -2237,12 +2237,12 @@ end
 --
 
 do
-	local badBar = "Attempted to start bar '%q' without a valid time."
-	local badTargetBar = "Attempted to start target bar '%q' without a valid time."
-	local badNameplateBarStart = "Attempted to start nameplate bar '%q' without a valid unitGUID."
-	local badNameplateBarStop = "Attempted to stop nameplate bar '%q' without a valid unitGUID."
-	local badNameplateBarTimeLeft = "Attempted to get time left of nameplate bar '%q' without a valid unitGUID."
-	local newBar = "New timer for '%q' at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
+	local badBar = "Attempted to start bar %q without a valid time."
+	local badTargetBar = "Attempted to start target bar %q without a valid time."
+	local badNameplateBarStart = "Attempted to start nameplate bar %q without a valid unitGUID."
+	local badNameplateBarStop = "Attempted to stop nameplate bar %q without a valid unitGUID."
+	local badNameplateBarTimeLeft = "Attempted to get time left of nameplate bar %q without a valid unitGUID."
+	local newBar = "New timer for %q at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 
 	--- Display a bar.
 	-- @param key the option key
