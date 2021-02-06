@@ -38,7 +38,7 @@ local isMoving = false
 local timersEasy = {
 	[1] = {
 		-- Feeding Time
-		[327039] = {15, 25, 35, 25, 35},
+		[327039] = {15, 25, 35, 25, 35, 25},
 		-- Cleansing Pain
 		[326707] = {8.7, 26.7, 32.8, 26.7, 34, 26.8}, -- From _success to _start, so timers are adjusted by -3s for the cast time
 	},
