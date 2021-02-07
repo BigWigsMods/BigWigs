@@ -6,7 +6,7 @@ L.width = "宽度"
 L.height = "高度"
 L.sizeDesc = "通常通过拖动锚点设置尺寸。如果需要一个精确的尺寸，可以使用这个滑动条或者将数值输入到没有最大值的框中。"
 L.fontSizeDesc = "使用滑块或在框内输入数值可调整字体尺寸，最大数值为200。"
---L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
+L.disableDesc = "|cffff4411不推荐|r将要禁用“%s”的功能。\n\n确定要这么做吗？"
 
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
