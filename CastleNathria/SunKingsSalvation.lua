@@ -69,7 +69,7 @@ local shadeUp = nil
 local concussiveSmashCountTable = {}
 local blazingSurgeCount = 1
 local emberBlastCount = 1
-local cloakofFlamesCount = 1
+local cloakOfFlamesCount = 1
 local phoenixCount = 0
 
 --------------------------------------------------------------------------------
@@ -196,7 +196,7 @@ function mod:OnEngage()
 	concussiveSmashCountTable = {}
 	blazingSurgeCount = 1
 	emberBlastCount = 1
-	cloakofFlamesCount = 1
+	cloakOfFlamesCount = 1
 	shadeUp = nil
 	phoenixCount = 0
 	self:SetStage(1)
@@ -208,7 +208,7 @@ function mod:OnEngage()
 	end
 
 	if self:Mythic() then
-		self:Bar(337859, 62, CL.count:format(self:SpellName(337859), cloakofFlamesCount)) -- Cloak of Flames
+		self:Bar(337859, 62, CL.count:format(self:SpellName(337859), cloakOfFlamesCount)) -- Cloak of Flames
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -312,7 +312,7 @@ function mod:ReflectionOfGuiltApplied(args)
 			self:CancelDelayedMessage(text)
 			self:StopBar(text)
 		end
-		self:StopBar(CL.count:format(self:SpellName(337859), cloakofFlamesCount)) -- Cloak of Flames
+		self:StopBar(CL.count:format(self:SpellName(337859), cloakOfFlamesCount)) -- Cloak of Flames
 
 		for key, scheduled in pairs(addScheduledTimers) do -- cancel all scheduled add timers
 			self:CancelTimer(scheduled)
@@ -321,14 +321,14 @@ function mod:ReflectionOfGuiltApplied(args)
 
 		blazingSurgeCount = 1
 		emberBlastCount = 1
-		cloakofFlamesCount = 1
+		cloakOfFlamesCount = 1
 
 		self:Bar(326455, 13.5) -- Fiery Strike
 		self:Bar(325877, 19.5, CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 		self:Bar(329518, 29.5, CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 
 		if self:Mythic() then
-			self:Bar(343026, 38.9, CL.count:format(self:SpellName(343026), cloakofFlamesCount))
+			self:Bar(343026, 38.9, CL.count:format(self:SpellName(343026), cloakOfFlamesCount))
 		end
 	end
 end
@@ -395,7 +395,7 @@ function mod:ReflectionOfGuiltRemoved()
 	self:StopBar(CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(325877), emberBlastCount-1))) -- Ember Blast
 	self:CancelSayCountdown(325877) -- Ember Blast
-	self:StopBar(CL.count:format(self:SpellName(343026), cloakofFlamesCount)) -- Cloak of Flames
+	self:StopBar(CL.count:format(self:SpellName(343026), cloakOfFlamesCount)) -- Cloak of Flames
 
 	local stage = self:GetStage() + 1
 	if stage == 3 then return end -- You win
@@ -412,9 +412,9 @@ function mod:ReflectionOfGuiltRemoved()
 		self:StartAddTimer(stage, key, count)
 	end
 
-	cloakofFlamesCount = 1
+	cloakOfFlamesCount = 1
 	if self:Mythic() then
-		self:Bar(337859, 34.3, CL.count:format(self:SpellName(337859), cloakofFlamesCount))
+		self:Bar(337859, 34.3, CL.count:format(self:SpellName(337859), cloakOfFlamesCount))
 	end
 end
 
@@ -564,17 +564,17 @@ end
 
 -- Mythic
 function mod:CloakOfFlamesApplied(args)
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, cloakofFlamesCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, cloakOfFlamesCount))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakofFlamesCount))
-	cloakofFlamesCount = cloakofFlamesCount + 1
-	self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(args.spellName, cloakofFlamesCount))
+	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakOfFlamesCount))
+	cloakOfFlamesCount = cloakOfFlamesCount + 1
+	self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(args.spellName, cloakOfFlamesCount))
 end
 
 function mod:CloakOfFlamesRemoved(args)
 	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
 	self:PlaySound(args.spellId, "info")
-	self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakofFlamesCount-1)))
+	self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakOfFlamesCount-1)))
 end
 
 do

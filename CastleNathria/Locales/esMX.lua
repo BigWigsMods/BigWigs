@@ -7,20 +7,20 @@ end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "esMX")
 if L then
-	-- L.killed = "%s Killed"
+	L.killed = "%s Muerto"
 end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "esMX")
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
-	--L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
-	--L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+	L.custom_on_repeating_yell_miasma = "Repetir alerta de vida de Miasma en /gritar"
+	L.custom_on_repeating_yell_miasma_desc = "Repite en /gritar mensajes para Miasma Glotona for Gluttonous Miasma para que los demás sepan cuando estás por debajo del 75% de salud."
 
-	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
-	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
+	L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
+	L.custom_on_repeating_say_laser_desc = "Repeating en /decir mensajes para for Eyección volátil para ayudar al entrar en el rango de chat de los jugadores que no vieron tu primer mensaje."
 
-	--L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
+	L.tempPrint = "Hemos añadido alertas de /gritar para alertar la salud para Miasma. Si antes usabas un WeakAura para esto, es posible que quieras eliminarla para evitar mensajes repetiros en /gritar."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "esMX")
@@ -91,7 +91,7 @@ if L then
 	L.fun_info = "Información de daño"
 	L.fun_info_desc = "Muestra un mensaje que indica cuánta salud perdió el jefe durante Impacto Destructivo."
 
-	--L.health_lost = "Sludgefist went down %.1f%%!"
+	L.health_lost = "Fangopuño perdió %.1f%%!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "esMX")
@@ -104,16 +104,16 @@ if L then
 	L.custom_on_stop_timers = "Siempre mostrar las barras de habilidad"
 	L.custom_on_stop_timers_desc = "Sólo para pruebas por el momento"
 
-	--L.goliath_short = "Goliath"
-	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_short = "Goliat"
+	L.goliath_desc = "Muestra avisos y temporizadores para cuando el Goliat de la Legión Pétrea está apunto de aparecer."
 
-	--L.commando_short = "Commando"
-	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
+	L.commando_short = "Comando"
+	L.commando_desc = "Muestra avisos cuando un Comando de la Legión Pétrea es eliminado."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "esMX")
 if L then
-	--L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
+	L.add_spawn = "Los Cabalistas Carmesíes responden a la llamada de Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
 
 	L.infobox_stacks = "%d |4Acumulación:Acumulaciones;: %d |4jugador:jugadores;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 

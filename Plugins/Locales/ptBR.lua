@@ -12,6 +12,7 @@ L.width = "Largura"
 L.height = "Altura"
 L.sizeDesc = "Normalmente você define o tamanho arrastando a âncora. Se você precisa de um tamanho exato, você pode usar este controle deslizante ou digitar o valor na caixa, que não tem um tamanho máximo."
 L.fontSizeDesc = "Ajusta o tamanho da fonte usando a barra deslizante ou digitando o valor na caixa que tem um limite muito maior de 200."
+L.disableDesc = "Você está prestes a desabilitar a função '%s' e isso |cffff4411não é recomendado|r.\n\nVocê tem certeza disso?"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -99,7 +100,6 @@ L.emphasizeMultiplierDesc = "Se você desabilitar as barras movendo-as para a â
 L.enable = "Habilitar"
 L.move = "Mover"
 L.moveDesc = "Move barras enfatizadas para a âncora de Enfatizar. Se esta opção estiver desativada, barras enfatizadas terão apenas sua cor e tamanho alterados."
-L.regularBars = "Barras regulares"
 L.emphasizedBars = "Barras enfatizadas"
 L.align = "Alinhamento"
 L.alignText = "Alinhar texto"
@@ -241,10 +241,8 @@ L.resetMessagesDesc = "Reinicia todas as opções relacionadas a mensagens, incl
 
 L.bwEmphasized = "BigWigs enfatizado"
 L.messages = "Mensagens"
-L.normalMessages = "Mensagens normais"
 L.emphasizedMessages = "Mensagens enfatizadas"
 L.emphasizedDesc = "O objetivo das mensagens enfatizadas é ter a sua atenção, pois ela é uma mensagem grande no meio da tela. Isso é raramente habilitado por padrão, mas você pode habilitar para qualquer habilidade de chefe quando estiver olhando as configurações de habilidades específicas de chefes."
-L.output = "Saída"
 L.uppercase = "MAIÚSCULAS"
 L.uppercaseDesc = "Todas as mensagens enfatizadas serão convertidas para letras MAIÚSCULAS."
 

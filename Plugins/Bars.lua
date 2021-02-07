@@ -943,7 +943,7 @@ do
 			},
 			normal = {
 				type = "group",
-				name = L.regularBars,
+				name = L.bars,
 				order = 2,
 				args = {
 					growup = {

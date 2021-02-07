@@ -67,6 +67,11 @@ plugin.pluginOptions = {
 			order = 1,
 			width = "full",
 			descStyle = "inline",
+			confirm = function(_, value)
+				if not value then
+					return L.disableDesc:format(L.Sounds)
+				end
+			end,
 		},
 		-- Begin sound dropdowns
 		onyou = {

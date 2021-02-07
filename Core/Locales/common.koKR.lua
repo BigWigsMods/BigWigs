@@ -39,7 +39,7 @@ L.interrupted = "%s 시전 방해됨"
 L.interrupted_by = "%s 를 %s 가 차단!" -- spell interrupted by player
 L.no = "%s 없음"
 L.intermission = "사잇단계"
---L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - spell
 
 -- Add related
 L.add_spawned = "추가 몹 생성"
@@ -94,6 +94,6 @@ L.laser = "레이저" -- Used for abilities that act like a laser. Usually from 
 L.beam = "광선" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.bomb = "폭탄" -- Used for debuffs that make players explode
 L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a player
---L.knockback = "Knockback" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.knockback = "넉백" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.traps = "덫" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "유성" -- This one will probably only ever be used for actual meteors

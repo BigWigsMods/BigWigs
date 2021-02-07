@@ -51,8 +51,8 @@ L.add_remaining = "Add morto, restam %d"
 L.add = "Inimigo adicional"
 L.adds = "Inimigos adicionais"
 L.big_add = "Add Grande" -- singular
-L.big_adds = "Adds Grande" -- plural
-L.small_add = "Add Pequenos" -- singular
+L.big_adds = "Adds Grandes" -- plural
+L.small_add = "Add Pequeno" -- singular
 L.small_adds = "Adds Pequenos" -- plural
 
 -- Mob related

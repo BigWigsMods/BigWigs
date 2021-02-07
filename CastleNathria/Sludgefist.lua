@@ -66,7 +66,7 @@ function mod:GetOptions()
 		[331209] = "general",
 		[341102] = "mythic",
 	},{
-		[335293] = CL.link,
+		[335293] = CL.link, -- Chain Link (Link)
 	}
 end
 

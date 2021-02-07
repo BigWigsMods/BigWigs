@@ -34,7 +34,8 @@ local commandoesKilled = 0
 local commandoesNeeded = 7
 local commandoAddMarks = {}
 local wickedLacerationList = {}
-local firstGoliath = true
+local firstGoliath = false
+local playerListVolAnima = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -117,7 +118,7 @@ function mod:GetOptions()
 		[342256] = "mythic",
 	},{
 		["goliath"] = L.goliath_short, -- Stone Legion Goliath (Goliath)
-		["commando"] = L.commando_short, -- Stone Legion Commando (Goliath)
+		["commando"] = L.commando_short, -- Stone Legion Commando (Commando)
 		[342544] = CL.meteor, -- Pulverizing Meteor (Meteor)
 	}
 end
@@ -136,7 +137,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WickedLaceration", 333913)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WickedLaceration", 333913)
 	self:Log("SPELL_AURA_REMOVED", "WickedLacerationRemoved", 333913)
-	self:Log("SPELL_CAST_START", "HeartRend", 334765)
+	self:Log("SPELL_CAST_SUCCESS", "HeartRend", 334765)
 	self:Log("SPELL_AURA_APPLIED", "HeartRendApplied", 334765)
 	self:Log("SPELL_AURA_REMOVED", "HeartRendRemoved", 334765)
 	self:Log("SPELL_CAST_START", "SerratedSwipe", 334929)
@@ -183,7 +184,12 @@ function mod:OnEngage()
 	wickedLacerationList = {}
 	isInfoOpen = false
 	mobCollectorGoliath = {}
-	firstGoliath = true
+	playerListVolAnima = {}
+	if self:Easy() then
+		firstGoliath = false
+	else
+		firstGoliath = true
+	end
 	self:SetStage(1)
 
 	self:Bar(334929, 8.3, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
@@ -220,18 +226,19 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	if guid and not mobCollectorGoliath[guid] then
 		mobCollectorGoliath[guid] = true
 		self:Message("goliath", "cyan", CL.spawned:format(L.goliath_short), L.goliath_icon)
+		self:StopBar(L.goliath_short)
 		self:Bar(342733, 18) -- Ravenous Feast
 		self:PlaySound("goliath", "info")
 	end
 end
 
 function mod:SummonReinforcements()
-	if not firstGoliath then -- Avoid a message on boss engage since we have a berserk message
+	if not firstGoliath then -- Avoid a message on boss engage (only happens on hc/mythic)
 		self:Message("goliath", "cyan", CL.custom_sec:format(L.goliath_short, 10), false)
 	else
 		firstGoliath = false
 	end
-	self:Bar("goliath", 10, L.goliath_short, L.goliath_icon)
+	self:CDBar("goliath", 10, L.goliath_short, L.goliath_icon)
 end
 
 do
@@ -401,7 +408,7 @@ do
 				--	self:CustomIcon(wickedBladeMarker, playerList[1], 2)
 				--	self:CustomIcon(wickedBladeMarker, playerList[2], 3)
 				--end
-				self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
+				self:NewTargetsMessage(333387, "orange", playerList, 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 			end
 		elseif firstGUID and firstGUID ~= args.destGUID then
 			if self:Me(args.destGUID) then
@@ -411,7 +418,7 @@ do
 			playerList[2] = args.destName
 			self:CustomIcon(wickedBladeMarker, playerList[1], 2)
 			self:CustomIcon(wickedBladeMarker, playerList[2], 3)
-			self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
+			self:NewTargetsMessage(333387, "orange", playerList, 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 		end
 	end
 
@@ -442,28 +449,29 @@ function mod:WickedLacerationRemoved(args)
 	end
 end
 
-function mod:HeartRend(args)
-	self:StopBar(CL.count:format(args.spellName, heartRendCount))
-	heartRendCount = heartRendCount + 1
-	self:Bar(args.spellId, self:Mythic() and 42.1 or 45, CL.count:format(args.spellName, heartRendCount))
-end
-
 do
-	local playerList, playerIcons = mod:NewTargetList(), {}
+	local playerList = {}
+	function mod:HeartRend(args)
+		playerList = {}
+		self:StopBar(CL.count:format(args.spellName, heartRendCount))
+		heartRendCount = heartRendCount + 1
+		self:Bar(args.spellId, self:Mythic() and 42.1 or 45, CL.count:format(args.spellName, heartRendCount))
+		if self:Dispeller("magic") then
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
 
 	function mod:HeartRendApplied(args)
-		local count = #playerIcons+1
+		local count = #playerList+1
 		playerList[count] = args.destName
-		playerIcons[count] = count
-		if self:Dispeller("magic") and count == 1 then
-			self:PlaySound(args.spellId, "alarm", nil, playerList)
-		elseif self:Me(args.destGUID) and not self:Dispeller("magic") then
+		playerList[args.destName] = count -- Set raid marker
+		if self:Me(args.destGUID) and not self:Dispeller("magic") then
 			self:PlaySound(args.spellId, "alarm")
 		end
 
 		self:CustomIcon(heartRendMarker, args.destName, count)
 
-		self:TargetsMessage(args.spellId, "orange", playerList, 4, CL.count:format(args.spellName, heartRendCount-1), nil, nil, playerIcons)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 4, CL.count:format(args.spellName, heartRendCount-1))
 	end
 
 	function mod:HeartRendRemoved(args)
@@ -636,15 +644,12 @@ function mod:CallShadowForces(args)
 	self:CDBar(args.spellId, 52, CL.count:format(L.skirmishers, shadowForcesCount))
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:VolatileAnimaAppliedInfusion(args)
-		playerList[#playerList+1] = args.destName
-		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "alert")
-		end
-		self:TargetsMessage(args.spellId, "cyan", playerList, nil, nil, nil, 2) -- Throttle to 2s
+function mod:VolatileAnimaAppliedInfusion(args)
+	playerListVolAnima[#playerListVolAnima+1] = args.destName
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alert")
 	end
+	self:NewTargetsMessage(args.spellId, "cyan", playerListVolAnima, nil, nil, nil, 2) -- Throttle to 2s
 end
 
 function mod:VolatileAnimaAppliedInfection(args)

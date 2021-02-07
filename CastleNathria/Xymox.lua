@@ -25,6 +25,8 @@ local sparkCount = 1
 local glyphCount = 1
 local trapCount = 1
 local lastStaged = 0
+local playerListSpirits = {}
+local tankList = {}
 
 local stage3MythicTimers = {
 	[340758] = {34.3, 60, 92.1, 78.2}, -- Spirits
@@ -87,9 +89,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DimensionalTear", 328437, 342310)
 	self:Log("SPELL_AURA_APPLIED", "DimensionalTearApplied", 328448, 328468)
 	self:Log("SPELL_AURA_REMOVED", "DimensionalTearRemoved", 328448, 328468)
-	self:Log("SPELL_CAST_START", "GlyphofDestruction", 325361)
-	self:Log("SPELL_AURA_APPLIED", "GlyphofDestructionApplied", 325236)
-	self:Log("SPELL_AURA_REMOVED", "GlyphofDestructionRemoved", 325236)
+	self:Log("SPELL_CAST_START", "GlyphOfDestruction", 325361)
+	self:Log("SPELL_AURA_APPLIED", "GlyphOfDestructionApplied", 325236)
+	self:Log("SPELL_AURA_REMOVED", "GlyphOfDestructionRemoved", 325236)
 	self:Log("SPELL_CAST_SUCCESS", "StasisTrap", 326271)
 	self:Log("SPELL_CAST_START", "RiftBlast", 335013)
 	self:Log("SPELL_CAST_SUCCESS", "HyperlightSpark", 325399)
@@ -102,6 +104,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Extinction", 329107)
 	self:Log("SPELL_AURA_APPLIED", "WitheringTouchApplied", 340860)
 	--self:Log("SPELL_CAST_START", "Annihilate", 328789)
+
+	self:RegisterEvent("GROUP_ROSTER_UPDATE")
+	self:GROUP_ROSTER_UPDATE()
 end
 
 function mod:OnEngage()
@@ -129,6 +134,15 @@ end
 -- Event Handlers
 --
 
+function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
+	tankList = {}
+	for unit in self:IterateGroup() do
+		if self:Tank(unit) then
+			tankList[#tankList+1] = unit
+		end
+	end
+end
+
 function mod:RAID_BOSS_EMOTE(_, msg)
 	local t = GetTime()
 	local allowTimers = true
@@ -139,6 +153,7 @@ function mod:RAID_BOSS_EMOTE(_, msg)
 		allowTimers = false
 	end
 	if msg:find("327887", nil, true) then -- Spirits
+		playerListSpirits = {}
 		self:Message(340758, "cyan", CL.count:format(L.spirits, spiritCount))
 		self:PlaySound(340758, "long")
 		if allowTimers then
@@ -191,7 +206,9 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		sparkCount = 1
 
 		self:Bar(325399, 6.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
-		self:Bar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
+		if not self:Easy() then
+			self:Bar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
+		end
 		self:Bar(328437, 16.5, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:Bar(340788, 22.3, CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
 		self:Bar(325236, 25.2, CL.count:format(self:SpellName(325236), glyphCount)) -- Glyph of Destruction
@@ -216,7 +233,9 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		sparkCount = 1
 
 		self:Bar(325399, 6.5, CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
-		self:CDBar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
+		if not self:Easy() then
+			self:CDBar(326271, 10.5, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
+		end
 		self:CDBar(328437, 16.5, CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:Bar(328789, 28.3, CL.count:format(self:SpellName(328789), annihilateCount)) -- Annihilate
 		self:CDBar(325236, self:Mythic() and 52 or 50, CL.count:format(self:SpellName(325236), glyphCount)) -- Glyph of Destruction
@@ -228,9 +247,10 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 end
 
 do
-	local playerList, playerIcons = mod:NewTargetList(), {}
+	local playerList = {}
 
 	function mod:DimensionalTear(args)
+		playerList = {}
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount))
 		dimensionalTearCount = dimensionalTearCount + 1
 		local stage = self:GetStage()
@@ -247,7 +267,7 @@ do
 	function mod:DimensionalTearApplied(args)
 		local count = #playerList+1
 		playerList[count] = args.destName
-		playerIcons[count] = count
+		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(328437, CL.count_rticon:format(L.tear, count, count))
 			self:SayCountdown(328437, 8)
@@ -255,7 +275,7 @@ do
 		end
 		self:CustomIcon(dimensionalTearMarker, args.destName, count)
 
-		self:TargetsMessage(328437, "yellow", playerList, 2, L.tear, nil, nil, playerIcons)
+		self:NewTargetsMessage(328437, "yellow", playerList, 2, L.tear)
 	end
 
 	function mod:DimensionalTearRemoved(args)
@@ -263,15 +283,24 @@ do
 	end
 end
 
-function mod:GlyphofDestruction(args)
-	self:Message(325236, "yellow", CL.count:format(self:SpellName(325236), glyphCount))
+function mod:GlyphOfDestruction(args)
+	local bossUnit = self:GetBossId(args.sourceGUID)
+	for i = 1, #tankList do
+		local unit = tankList[i]
+		if bossUnit and self:TopThreat(bossUnit, unit) then
+			self:TargetMessage(325236, "yellow", self:UnitName(unit), CL.casting:format(args.spellName))
+			break
+		elseif i == #tankList then
+			self:Message(325236, "yellow", CL.casting:format(args.spellName))
+		end
+	end
 	self:PlaySound(325236, "alert")
 	self:StopBar(CL.count:format(self:SpellName(325236), glyphCount))
 	glyphCount = glyphCount + 1
 	self:CDBar(325236, self:Mythic() and 36.5 or 29, CL.count:format(self:SpellName(325236), glyphCount))
 end
 
-function mod:GlyphofDestructionApplied(args)
+function mod:GlyphOfDestructionApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, glyphCount-1))
 	self:PlaySound(args.spellId, "warning")
 	self:TargetBar(args.spellId, self:Easy() and 8 or 4, args.destName)
@@ -280,7 +309,7 @@ function mod:GlyphofDestructionApplied(args)
 	end
 end
 
-function mod:GlyphofDestructionRemoved(args)
+function mod:GlyphOfDestructionRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
@@ -326,12 +355,9 @@ function mod:Fixate(args)
 	end
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:PossesionApplied(args)
-		playerList[#playerList+1] = args.destName
-		self:TargetsMessage(args.spellId, "red", playerList)
-	end
+function mod:PossesionApplied(args)
+	playerListSpirits[#playerListSpirits+1] = args.destName
+	self:NewTargetsMessage(args.spellId, "red", playerListSpirits)
 end
 
 -- function mod:SeedsofExtinction(args)

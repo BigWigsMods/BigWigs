@@ -62,7 +62,7 @@ function mod:GetOptions()
 		{334860, "TANK_HEALER"}, -- Crushing Stone
 		{334852, "SAY", "SAY_COUNTDOWN", "FLASH"}, -- Petrifying Howl
 		334893, -- Stone Shards
-	}, {
+	},{
 		[335114] = -22309, -- Huntsman Altimor
 		[334971] = -22312, -- Margore
 		[334797] = -22311, -- Bargast
@@ -152,22 +152,21 @@ end
 --[[ Huntsman Altimor ]]--
 
 do
+	local playerList = {}
 	local timers = {51, 60, 64, 24}
 	function mod:Sinseeker(args)
+		playerList = {}
 		self:StopBar(CL.count:format(args.spellName, sinseekerCount))
 		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(args.spellName, sinseekerCount)))
 		sinseekerCount = sinseekerCount + 1
 		local cd = timers[self:GetStage()]
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, sinseekerCount))
 	end
-end
 
-do
-	local playerList, playerIcons = mod:NewTargetList(), {}
 	function mod:HuntsmansMarkApplied(args)
 		local count = #playerList+1
 		playerList[count] = args.destName
-		playerIcons[count] = count
+		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(335114, CL.count_rticon:format(self:SpellName(335114), count, count))
 			self:SayCountdown(335114, 5.7, count) -- _applied to damage, varys with distance
@@ -175,7 +174,7 @@ do
 			self:Flash(335114)
 		end
 		self:CustomIcon(sinseekerMarker, args.destName, count)
-		self:TargetsMessage(335114, "orange", playerList, 3, CL.count:format(self:SpellName(335114), sinseekerCount-1), nil, 2, playerIcons) -- Debuffs are very delayed
+		self:NewTargetsMessage(335114, "orange", playerList, 3, CL.count:format(self:SpellName(335114), sinseekerCount-1), nil, 2) -- Debuffs are very delayed
 	end
 end
 
@@ -262,7 +261,7 @@ end
 
 do
 	local shadesofBargastMarked = 0
-	function mod:shadesofBargastMarking(event, unit, guid)
+	function mod:ShadesofBargastMarking(event, unit, guid)
 		if self:MobId(guid) == 171557 and not mobCollector[guid] then
 			shadesofBargastMarked = shadesofBargastMarked + 1
 			self:CustomIcon(shadesofBargastMarker, unit, shadesofBargastMarked+3)
@@ -280,7 +279,7 @@ do
 		self:Bar(args.spellId, 61, CL.count:format(args.spellName, shadesOfBargastCount))
 		if self:GetOption(shadesofBargastMarker) then
 			shadesofBargastMarked = 0
-			self:RegisterTargetEvents("shadesofBargastMarking")
+			self:RegisterTargetEvents("ShadesofBargastMarking")
 			self:ScheduleTimer("UnregisterTargetEvents", 10)
 		end
 	end
@@ -323,13 +322,14 @@ function mod:CrushingStone(args)
 	end
 end
 
-function mod:PetrifyingHowl(args)
-	petrifyingHowlCount = petrifyingHowlCount + 1
-	self:Bar(args.spellId, self:Mythic() and 30 or 20.5, CL.count:format(args.spellName, petrifyingHowlCount))
-end
-
 do
-	local playerList = mod:NewTargetList()
+	local playerList = {}
+	function mod:PetrifyingHowl(args)
+		playerList = {}
+		petrifyingHowlCount = petrifyingHowlCount + 1
+		self:Bar(args.spellId, self:Mythic() and 30 or 20.5, CL.count:format(args.spellName, petrifyingHowlCount))
+	end
+
 	function mod:PetrifyingHowlApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
@@ -339,7 +339,7 @@ do
 			self:Flash(args.spellId)
 			self:TargetBar(args.spellId, 8, args.destName)
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, petrifyingHowlCount-1), nil, 1) -- Travel time on debuffs?
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, petrifyingHowlCount-1), nil, 1) -- Travel time on debuffs?
 	end
 
 	function mod:PetrifyingHowlRemoved(args)

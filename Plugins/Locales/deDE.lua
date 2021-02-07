@@ -12,6 +12,7 @@ L.width = "Breite"
 L.height = "Höhe"
 L.sizeDesc = "Normalerweise wird die Größe festgelegt, indem Du den Anker bewegst. Falls Du eine exakte Größe benötigst, bewege diesen Schieber oder trage den Wert in das Feld ein. Diese Zahl kann beliebig groß sein."
 L.fontSizeDesc = "Schriftgröße über den Schieberegler oder durch Eingabe eines Wertes in der Box (maximal 200) festlegen."
+L.disableDesc = "Du bist dabei, das Feature '%s' zu deaktivieren, was |cffff4411nicht empfohlen|r wird.\n\nBist Du sicher, dass Du das tun willst?"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -100,7 +101,6 @@ L.emphasizeMultiplierDesc = "Wenn das Bewegen der Leisten zu den hervorgehobenen
 L.enable = "Aktiviert"
 L.move = "Bewegen"
 L.moveDesc = "Bewegt hervorgehobene Leisten zum hervorgehobenen Anker. Ist diese Option nicht aktiv, werden hervorgehobene Leisten lediglich in Größe und Farbe geändert."
-L.regularBars = "Normale Leisten"
 L.emphasizedBars = "Hervorgehobene Leisten"
 L.align = "Ausrichtung"
 L.alignText = "Textausrichtung"
@@ -242,10 +242,8 @@ L.resetMessagesDesc = "Setzt alle Optionen im Zusammenhang mit Nachrichten zurü
 
 L.bwEmphasized = "BigWigs Hervorgehoben"
 L.messages = "Nachrichten"
-L.normalMessages = "Normale Nachrichten"
 L.emphasizedMessages = "Hervorgehobene Nachrichten"
 L.emphasizedDesc = "Hervorgehobene Nachrichten dienen dazu die Aufmerksamkeit zu erregen, indem eine große Nachricht in der Bildschirmmitte angezeigt wird. Diese sind selten standardmäßig aktiviert, aber können für jegliche Bossfähigkeiten in den Einstellungen des jeweiligen Bosses aktiviert werden."
-L.output = "Ausgabe"
 L.uppercase = "GROSSBUCHSTABEN"
 L.uppercaseDesc = "Alle hervorgehobenen Nachrichten werden in GROSSBUCHSTABEN konvertiert."
 

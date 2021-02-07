@@ -11,6 +11,7 @@ L.width = "Largeur"
 L.height = "Hauteur"
 L.sizeDesc = "Normalement, la taille peut être définie en tirant sur l'ancre. Si vous avez besoin d'une taille bien précise, vous pouvez utiliser ce slider ou taper la valeur dans la boîte de saisie, qui n'a pas de limite."
 L.fontSizeDesc = "Ajustez la taille de la police à l'aide de ce curseur, ou tapez la valeur dans la saisie ce qui permet d'aller jusqu'à 200."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -99,7 +100,6 @@ L.emphasizeMultiplierDesc = "Si vous désactivez le déplacement des barres vers
 L.enable = "Activer"
 L.move = "Déplacer"
 L.moveDesc = "Déplace les barres mises en évidence vers l'ancre de mise en évidence. Si cette option est désactivée, les barres mises en évidence changeront simplement d'échelle et de couleur."
-L.regularBars = "Barres normales"
 L.emphasizedBars = "Barres en évidence"
 L.align = "Alignement"
 L.alignText = "Alignement du texte"
@@ -241,10 +241,8 @@ L.resetMessagesDesc = "Réinitialise toutes les options relatives aux messages, 
 
 L.bwEmphasized = "BigWigs en évidence"
 L.messages = "Messages"
-L.normalMessages = "Messages normaux"
 L.emphasizedMessages = "Messages en évidence"
 L.emphasizedDesc = "Le principe d'un message en évidence est d'attirer votre attention en affichant un large message au milieu de votre écran. Il est rarement activé par défaut, mais vous pouvez l'activer pour n'importe quelle technique de boss en vous rendant dans les paramètres spécifiques de la rencontre de boss."
-L.output = "Sortie"
 L.uppercase = "MAJUSCULE"
 L.uppercaseDesc = "Tous les messages mis en évidence seront convertis en MAJUSCULES."
 

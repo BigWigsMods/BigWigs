@@ -319,6 +319,11 @@ do
 								plugin:Close()
 							end
 						end,
+						confirm = function(_, value)
+							if value then
+								return L.disableDesc:format(L.altPowerTitle)
+							end
+						end,
 					},
 				},
 			},

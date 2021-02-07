@@ -11,30 +11,31 @@ L.positionDesc = "고정기로부터 정확한 위치를 원한다면 상자에 
 L.width = "너비"
 L.height = "높이"
 L.sizeDesc = "보통 고정기를 끌어서 크기를 조정합니다. 정확한 크기를 지정하고 싶다면 슬라이더를 사용하거나 직접 수치를 입력 상자안에 써넣으세요(최대값 제한 없음)."
---L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
+L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직접 수치를 입력 상자안에 써넣으세요 (최대 200)."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
 --
 
 L.altPowerTitle = "보조 자원"
---L.altPowerDesc = "The AltPower display will only appear for bosses that apply AltPower to players, which is extremely rare. The display measures the amount of 'Alternative Power' you and your group has, displaying it in a list. To move the display around, please use the test button below."
+L.altPowerDesc = "보조 자원 항목은 보스가 플레이어에게 보조 자원을 제공하는 매우 드문 보스에서만 발동합니다. 이 디스플레이는 당신과 당신의 파티가 얼만큼의 '보조 자원'이 있는지 리스트로 표시합니다. 이 디스플레이를 옮기려면, 아래의 테스트 버튼을 사용하십시오."
 L.toggleDisplayPrint = "디스플레이가 다음에 표시됩니다. 이 우두머리 전투에서 완전히 비활성하려면 우두머리 전투 옵션에서 끄도록 전환해야 합니다."
 L.disabled = "비활성"
 L.disabledDisplayDesc = "디스플레이를 사용하는 모든 모듈에서 디스플레이를 비활성화합니다."
 L.resetAltPowerDesc = "위치를 비롯한 모든 보조 자원 관련 설정을 초기화합니다."
---L.test = "Test"
---L.altPowerTestDesc = "Show the 'Alternative Power' display, allowing you to move it, and simulating the power changes you would see on a boss encounter."
---L.yourPowerBar = "Your Power Bar"
---L.barColor = "Bar color"
---L.barTextColor = "Bar text color"
---L.additionalWidth = "Additional Width"
---L.additionalHeight = "Additional Height"
---L.additionalSizeDesc = "Add to the size of the standard display by adjusting this slider, or type the value into the box which has a much higher maximum of 100."
---L.yourPowerTest = "Your Power: %d" -- Your Power: 42
---L.yourAltPower = "Your %s: %d" -- e.g. Your Corruption: 42
---L.player = "Player %d" -- Player 7
---L.disableAltPowerDesc = "Globally disable the AltPower display, it will never show for any boss encounter."
+L.test = "시험용"
+L.altPowerTestDesc = "보조 자원 디스플레이를 표시해서 움직일수 있게 하고, 보스 전투에서 주로 어떻게 변화하는지를 보여줍니다."
+L.yourPowerBar = "나의 자원 바"
+L.barColor = "바 색"
+L.barTextColor = "바 이름표 색깔"
+L.additionalWidth = "추가 너비"
+L.additionalHeight = "추가 높이"
+L.additionalSizeDesc = "원래의 디스플레이에서 이 슬라이더로 크기를 추가하거나, 박스에 최대 100까지의 숫자를 입력해서 사이즈를 조절할 수 있습니다."
+L.yourPowerTest = "나의 자원: %d" -- Your Power: 42
+L.yourAltPower = "나의 %s: %d" -- e.g. Your Corruption: 42
+L.player = "플레이어 %d" -- Player 7
+L.disableAltPowerDesc = "전역 옵션으로 보조 자원 디스플레이를 비활성화하여, 어떠한 보스 전투에서도 보이지 않게 합니다."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -99,7 +100,6 @@ L.emphasizeMultiplierDesc = "강조 고정기로 이동하는 바가 활성화�
 L.enable = "활성화"
 L.move = "이동"
 L.moveDesc = "강조된 바를 강조 고정기로 이동시킵니다. 이 옵션을 끄면 강조된 바는 단순히 크기 비율과 색상을 변경합니다."
-L.regularBars = "보통 바"
 L.emphasizedBars = "강조된 바"
 L.align = "정렬"
 L.alignText = "문자 정렬"
@@ -241,10 +241,8 @@ L.resetMessagesDesc = "위치를 비롯한 메시지에 관련된 모든 설정�
 
 L.bwEmphasized = "BigWigs 강조"
 L.messages = "메시지"
-L.normalMessages = "일반 메시지"
 L.emphasizedMessages = "강조 메시지"
 L.emphasizedDesc = "강조 메시지는 화면의 중앙에 보다 큰 크기의 메시지를 띄움으로써 당신의 주의를 끌게 됩니다. 기본값으로 강조 메시지 기능이 켜져 있는 경우는 드물지만 우두머리 별 설정에서 아무 우두머리 별 능력에 대한 강조 메시지를 켤 수 있습니다."
-L.output = "출력"
 L.uppercase = "대문자"
 L.uppercaseDesc = "모든 강조 메시지들이 대문자로 표시됩니다."
 
