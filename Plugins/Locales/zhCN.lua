@@ -227,7 +227,7 @@ L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单�
 -- AltPower.lua
 --
 
-L.altPowerDesc = "仅在向玩家应用的首领出现交替能量显示，这极为罕见。将显示您和团队拥有的“交替能量”，其中团队的交替能量以列表显示。要移动显示，请使用下面的测试按钮。"
+L.altPowerDesc = "仅在向玩家应用的首领出现交替能量显示，这极为罕见。将显示您和团队拥有的“交替能量”，其中团队的交替能量以列表显示。要移动或显示框架，请使用下面的测试按钮。"
 L.resetAltPowerDesc = "重置全部交替能量有关选项，包括交替能量锚点位置。"
 L.test = "测试"
 L.altPowerTestDesc = "显示“交替能量”，可以移动，并模拟在首领战斗时会看到的能量变化。"
@@ -274,7 +274,7 @@ L.emphasizeMultiplier = "尺寸倍数"
 L.emphasizeMultiplierDesc = "如禁用计时条移向醒目锚点，此选项将决定以一般计时条乘以尺寸倍数作为醒目计时条的尺寸。"
 L.temporaryCountdownDesc = "暂时启用与此计时条关联技能的倒计时。"
 L.removeBarDesc = "暂时移除此计时条。"
-L.removeOtherBarDesc = "暂时移除除了这一个之外的其它全部计时条。"
+L.removeOtherBarDesc = "暂时移除这一个之外的其它全部计时条。"
 L.iconPosition = "图标位置"
 L.iconPositionDesc = "选择计时条上图标的位置。"
 L.visibleBarLimit = "可视条限制"
