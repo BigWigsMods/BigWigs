@@ -6,7 +6,7 @@ L.width = "宽度"
 L.height = "高度"
 L.sizeDesc = "通常通过拖动锚点设置尺寸。如果需要一个精确的尺寸，可以使用这个滑动条或者将数值输入到没有最大值的框中。"
 L.fontSizeDesc = "使用滑块或在框内输入数值可调整字体尺寸，最大数值为200。"
-L.disableDesc = "|cffff4411不推荐|r将要禁用“%s”的功能。\n\n确定要这么做吗？"
+L.disableDesc = "将禁用“%s”功能，但|cffff4411不建议|r这么做。\n\n你确定要这么做吗？"
 
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
@@ -29,9 +29,9 @@ L.bigWigsBarStyleName_Default = "默认"
 L.blockEmotes = "屏蔽屏幕中央表情"
 L.blockEmotesDesc = [=[一些首领某些技能会显示表情，这些信息会两种方式显示并有太长的描述。尝试让它们小一些，更紧凑的消息不会影响游戏过程，并且不会告诉你具体做什么。
 
-请注意：首领表情仍将在聊天窗口显示如果你需要看它们的话。]=]
+请注意：如果你要看首领表情，它们仍会显示在聊天窗口。]=]
 L.blockGuildChallenge = "屏蔽公会挑战弹出窗口"
-L.blockGuildChallengeDesc = [=[公会挑战弹出窗口会显示一些事情，主要是公会的队伍完成了英雄地下城或挑战模式地下城。
+L.blockGuildChallengeDesc = [=[公会挑战弹出窗口会显示一些信息，主要是公会的队伍完成了英雄地下城或挑战模式地下城。
 
 这些弹出窗口会在首领战斗时覆盖在你重要的用户界面之上，所以建议屏蔽它们。]=]
 L.blockMovies = "屏蔽重播电影"
@@ -42,7 +42,7 @@ L.bossBlock = "首领屏蔽"
 L.bossBlockDesc = "在首领战斗中可以配置多项屏蔽。"
 L.bossDefeatDurationPrint = "“%s”已被击杀，用时%s。"
 L.bossStatistics = "首领统计"
-L.bossStatsDescription = "首领战斗相关的统计数据，如首领被击杀数量，团灭次数，战斗持续时间，最快的首领击杀记录。可以在配置屏幕上查看每个首领的统计数据，没有首领记录的统计数据会被隐藏。"
+L.bossStatsDescription = "首领战斗相关的统计数据，如首领被击杀数量、团灭次数、战斗持续时间和最快的首领击杀记录。可以在配置屏幕上查看每个首领的统计数据，没有首领记录的统计数据会被隐藏。"
 L.bossWipeDurationPrint = "“%s”战斗团灭，用时%s。"
 L.breakBar = "休息时间"
 L.breakFinished = "休息时间结束！"
@@ -56,14 +56,14 @@ L.chatMessages = "聊天信息"
 L.classColors = "职业颜色"
 L.classColorsDesc = "玩家名称使用职业颜色。"
 L.clickableBars = "可点击计时条"
-L.clickableBarsDesc = [=[BigWigs 计时条预设是点击穿越的。这样可以选择目标或使用 AoE 法术攻击物体，更改镜头角度等等，当鼠标指针划过计时条。|cffff4411如果启用可点击计时条，这些将不能实现。|r计时条将拦截任何鼠标点击并阻止相应功能。
+L.clickableBarsDesc = [=[BigWigs 计时条默认是点击穿越的。这样一来，当鼠标指针划过计时条，你仍然可以选择目标或使用 AoE 法术攻击物体、更改镜头角度等等。|cffff4411如果启用可点击计时条，这些将不能实现。|r计时条将拦截任何鼠标点击并阻止相应功能。
 ]=]
 L.close = "关闭"
 L.closeButton = "关闭按钮"
 L.closeButtonDesc = "显示或隐藏关闭按钮。"
 L.closeProximityDesc = [=[关闭近距离显示。
 
-要完全禁用此任一功能，需进入相对应首领模块选项关闭“近距离”功能。]=]
+这是临时性的关闭，要完全禁用此一功能，需进入相对应首领模块选项关闭“近距离”功能。]=]
 L.colors = "颜色"
 L.combatLog = "自动战斗记录"
 L.combatLogDesc = "当拉怪计时器开始到战斗结束时自动开始战斗记录。"
@@ -129,8 +129,8 @@ L.normal = "标准"
 L.outline = "轮廓"
 L.positionDesc = "在框中输入或移动滑块精准定位锚点位置。"
 L.positionExact = "精确位置"
-L.positionX = "X 位置"
-L.positionY = "Y 位置"
+L.positionX = "X 座标"
+L.positionY = "Y 座标"
 L.primary = "主要"
 L.primaryDesc = "战斗时使用的第一个团队标记。"
 L.printBestTimeOption = "最快击杀提醒"
@@ -227,7 +227,7 @@ L.wrongTime = "指定了无效的时间。 <时间>可以是一个以秒为单�
 -- AltPower.lua
 --
 
-L.altPowerDesc = "仅在向玩家应用的首领出现交替能量显示，这极为罕见。将显示您和团队拥有的“交替能量”的数量，在列表中显示。要移动显示，请使用下面的测试按钮。"
+L.altPowerDesc = "仅在向玩家应用的首领出现交替能量显示，这极为罕见。将显示您和团队拥有的“交替能量”，其中团队的交替能量以列表显示。要移动或显示框架，请使用下面的测试按钮。"
 L.resetAltPowerDesc = "重置全部交替能量有关选项，包括交替能量锚点位置。"
 L.test = "测试"
 L.altPowerTestDesc = "显示“交替能量”，可以移动，并模拟在首领战斗时会看到的能量变化。"
@@ -240,7 +240,7 @@ L.additionalSizeDesc = "调整此滑块可增加标准显示的尺寸，或在�
 L.yourPowerTest = "你的能量：%d" -- Your Power: 42
 L.yourAltPower = "你的 %s：%d" -- e.g. Your Corruption: 42
 L.player = "玩家 %d" -- Player 7
-L.disableAltPowerDesc = "全局禁用交替能量显示，任何首领战斗不会显示它。"
+L.disableAltPowerDesc = "全局禁用交替能量显示，任何首领战斗都不会显示它。"
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -258,7 +258,7 @@ L.autoReplyNormal = "正在与“%s”战斗，很忙。"
 L.autoReplyAdvanced = "正在与“%s”（%s）战斗，%d/%d人存活。"
 L.autoReplyExtreme = "正在与“%s”（%s）战斗，%d/%d人存活：%s"
 
-L.autoReplyLeftCombatBasic = "与首领战斗已结束。"
+L.autoReplyLeftCombatBasic = "首领战斗已结束。"
 L.autoReplyLeftCombatNormalWin = "与“%s”战斗取得了胜利。"
 L.autoReplyLeftCombatNormalWipe = "与“%s”战斗团灭。"
 L.autoReplyLeftCombatAdvancedWin = "与“%s”战斗取得了胜利，%d/%d人存活。"
@@ -268,17 +268,17 @@ L.autoReplyLeftCombatAdvancedWipe = "与“%s”战斗团灭：%s"
 -- Bars.lua
 --
 
-L.spacing = "间隙"
-L.spacingDesc = "更每个改计时条之间间隙。"
+L.spacing = "间距"
+L.spacingDesc = "更每个改计时条之间的间距。"
 L.emphasizeMultiplier = "尺寸倍数"
-L.emphasizeMultiplierDesc = "如禁用计时条移向醒目锚点，此选项将决定以一般计时条乘以倍数作为醒目计时条的尺寸。"
+L.emphasizeMultiplierDesc = "如禁用计时条移向醒目锚点，此选项将决定以一般计时条乘以尺寸倍数作为醒目计时条的尺寸。"
 L.temporaryCountdownDesc = "暂时启用与此计时条关联技能的倒计时。"
 L.removeBarDesc = "暂时移除此计时条。"
-L.removeOtherBarDesc = "暂时移除其它全部计时条（除了这一个）。"
+L.removeOtherBarDesc = "暂时移除这一个之外的其它全部计时条。"
 L.iconPosition = "图标位置"
 L.iconPositionDesc = "选择计时条上图标的位置。"
 L.visibleBarLimit = "可视条限制"
-L.visibleBarLimitDesc = "设定同时可见最大条的数量。"
+L.visibleBarLimitDesc = "设定同时可见计时条的最大数量。"
 L.textDesc = "显示或隐藏计时条上的文本。"
 L.resetBarsDesc = "重置全部计时条有关选项，包括计时条锚点位置。"
 
@@ -293,13 +293,13 @@ L.sfx = "声音效果"
 L.disableMusic = "音乐静音（推荐）"
 L.disableAmbience = "环境音效静音（推荐）"
 L.disableSfx = "声音效果静音（不推荐）"
-L.disableAudioDesc = "魔兽世界声音选项中的“%s”选项将被关闭，当首领战斗结束后会重新打开。这可以帮助集中注意力放在 BigWigs 警报音效上。"
+L.disableAudioDesc = "魔兽世界声音选项中的“%s”选项将被关闭，当首领战斗结束后会重新打开。这有助于将注意力集中在 BigWigs 警报音效上。"
 L.blockTooltipQuests = "屏蔽提示任务物品"
 L.blockTooltipQuestsDesc = "当需要因任务击杀首领时，通常在鼠标悬停在首领上会显示为“0/1 完成”的提示。此功能将在战斗中将其隐藏以防止提示变得非常大。"
 L.blockFollowerMission = "屏蔽追随者任务弹出窗口"
 L.blockFollowerMissionDesc = "追随者任务弹出窗口会显示一些事情，但主要是追随者任务已经完成。\n\n这些弹出窗口会在首领战斗时覆盖在你重要的用户界面之上，所以建议屏蔽它们。"
 L.blockObjectiveTracker = "隐藏任务追踪器"
-L.blockObjectiveTrackerDesc = "任务追踪器将在首领战斗中隐藏以给屏幕空出更多空间。\n\n此功能在史诗钥石或追踪成就时无效。"
+L.blockObjectiveTrackerDesc = "在首领战斗中将任务追踪器隐藏，以给屏幕空出更多空间。\n\n此功能在史诗钥石或追踪成就时无效。"
 
 L.subzone_grand_bazaar = "百商集市" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "赞达拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -361,10 +361,10 @@ L.resetProximityDesc = "重置全部近距离有关选项，包括近距离锚�
 -- Sound.lua
 --
 
-L.oldSounds = "老式音效"
+L.oldSounds = "传统音效"
 L.resetSoundDesc = "重置以上音效为默认。"
 L.onyou = "一个法术，增益或负面效果在你身上"
-L.underyou = "你需要移动出你脚下的法术"
+L.underyou = "你需要移动，离开你脚下的法术范围"
 
 -----------------------------------------------------------------------
 -- Statistics.lua
