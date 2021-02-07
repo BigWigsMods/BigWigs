@@ -25,6 +25,7 @@ local sparkCount = 1
 local glyphCount = 1
 local trapCount = 1
 local lastStaged = 0
+local playerListSpirits = {}
 local tankList = {}
 
 local stage3MythicTimers = {
@@ -152,6 +153,7 @@ function mod:RAID_BOSS_EMOTE(_, msg)
 		allowTimers = false
 	end
 	if msg:find("327887", nil, true) then -- Spirits
+		playerListSpirits = {}
 		self:Message(340758, "cyan", CL.count:format(L.spirits, spiritCount))
 		self:PlaySound(340758, "long")
 		if allowTimers then
@@ -245,9 +247,10 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 end
 
 do
-	local playerList, playerIcons = mod:NewTargetList(), {}
+	local playerList = {}
 
 	function mod:DimensionalTear(args)
+		playerList = {}
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount))
 		dimensionalTearCount = dimensionalTearCount + 1
 		local stage = self:GetStage()
@@ -264,7 +267,7 @@ do
 	function mod:DimensionalTearApplied(args)
 		local count = #playerList+1
 		playerList[count] = args.destName
-		playerIcons[count] = count
+		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(328437, CL.count_rticon:format(L.tear, count, count))
 			self:SayCountdown(328437, 8)
@@ -272,7 +275,7 @@ do
 		end
 		self:CustomIcon(dimensionalTearMarker, args.destName, count)
 
-		self:TargetsMessage(328437, "yellow", playerList, 2, L.tear, nil, nil, playerIcons)
+		self:NewTargetsMessage(328437, "yellow", playerList, 2, L.tear)
 	end
 
 	function mod:DimensionalTearRemoved(args)
@@ -352,12 +355,9 @@ function mod:Fixate(args)
 	end
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:PossesionApplied(args)
-		playerList[#playerList+1] = args.destName
-		self:TargetsMessage(args.spellId, "red", playerList)
-	end
+function mod:PossesionApplied(args)
+	playerListSpirits[#playerListSpirits+1] = args.destName
+	self:NewTargetsMessage(args.spellId, "red", playerListSpirits)
 end
 
 -- function mod:SeedsofExtinction(args)

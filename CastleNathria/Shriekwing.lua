@@ -143,21 +143,26 @@ function mod:EarsplittingShriek(args)
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList = {}
+	local prev = 0
 	function mod:EcholocationApplied(args)
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			playerList = {}
+			echolocationCount = echolocationCount + 1
+			if echolocationCount < 5 then -- 4 in stage 1
+				self:Bar(342074, 23, CL.count:format(self:SpellName(342074), echolocationCount))
+			end
+		end
+
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:Say(342074)
 			self:SayCountdown(342074, self:Mythic() and 6 or 8)
 			self:PlaySound(342074, "warning")
 		end
-		if #playerList == 1 then
-			echolocationCount = echolocationCount + 1
-			if echolocationCount < 5 then -- 4 in stage 1
-				self:Bar(342074, 23, CL.count:format(self:SpellName(342074), echolocationCount))
-			end
-		end
-		self:TargetsMessage(342074, "yellow", playerList, nil, CL.count:format(self:SpellName(342074), echolocationCount-1), nil, 2)
+		self:NewTargetsMessage(342074, "yellow", playerList, nil, CL.count:format(self:SpellName(342074), echolocationCount-1), nil, 2)
 	end
 end
 

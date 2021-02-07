@@ -132,6 +132,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SintouchedBlade", 346790)
 
 	--[[ Baroness Frieda ]]--
+	self:Log("SPELL_CAST_SUCCESS", "DrainEssence", 346654)
 	self:Log("SPELL_AURA_APPLIED", "DrainEssenceApplied", 346651)
 	self:Log("SPELL_CAST_START", "DreadboltVolley", 337110)
 	self:Log("SPELL_CAST_START", "PridefulEruption", 346657)
@@ -397,16 +398,18 @@ end
 
 --[[ Baroness Frieda ]]--
 do
-	local playerList = mod:NewTargetList()
+	local playerList = {}
+	function mod:DrainEssence()
+		playerList = {}
+		self:CDBar(346651, self:Mythic() and 22.5 or bossesKilled == 1 and 20 or bossesKilled == 2 and 45 or 25)
+	end
+
 	function mod:DrainEssenceApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
-		if #playerList == 1 then
-			self:CDBar(args.spellId, self:Mythic() and 22.5 or bossesKilled == 1 and 20 or bossesKilled == 2 and 45 or 25)
-		end
-		self:TargetsMessage(args.spellId, "cyan", playerList, 3)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 3)
 	end
 end
 
