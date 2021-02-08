@@ -631,17 +631,22 @@ end
 
 --[[ Mythic ]]--
 do
-	local playerList = mod:NewTargetList()
+	local playerList = {}
+	local prev = 0
 	function mod:DancingFeverApplied(args)
+		local t = args.time
+		if t-prev > 3 then
+			prev = t
+			playerList = {}
+			dancingFeverCount = dancingFeverCount + 1
+			self:CDBar(args.spellId, 60, CL.count:format(args.spellName, dancingFeverCount))
+		end
+
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 		end
-		if #playerList == 1 then
-			dancingFeverCount = dancingFeverCount + 1
-			self:CDBar(args.spellId, 60, CL.count:format(args.spellName, dancingFeverCount)) -- As of 12/22 NA Reset, Dancing fever is now applied on a consistent minute timer.
-		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 5, CL.count:format(args.spellName, dancingFeverCount-1))
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 5, CL.count:format(args.spellName, dancingFeverCount-1))
 	end
 end
 

@@ -162,7 +162,7 @@ function mod:GetOptions()
 		328276, -- March of the Penitent
 		-- Stage Two: The Crimson Chorus
 		329906, -- Carnage
-		{329951, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Impale
+		{329951, "SAY", "ME_ONLY_EMPHASIZE"}, -- Impale
 		"custom_on_repeating_impale",
 		impaleMarker,
 		-22131, -- Crimson Cabalist
@@ -230,6 +230,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BeginTheChorus", 329697)
 	self:Log("SPELL_AURA_APPLIED", "CarnageApplied", 329906)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CarnageApplied", 329906)
+	self:Log("SPELL_CAST_SUCCESS", "Impale", 329943)
 	self:Log("SPELL_AURA_APPLIED", "ImpaleApplied", 329951)
 	self:Log("SPELL_AURA_REMOVED", "ImpaleRemoved", 329951)
 	self:Log("SPELL_CAST_START", "WrackingPain", 329181)
@@ -490,8 +491,9 @@ end
 do
 	local prev = 0
 	function mod:FeedingTimeApplied(args)
-		if args.time-prev > 5 then
-			prev = args.time
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
 			self:Message(args.spellId, "orange", CL.count:format(args.spellName, nightHunterCount))
 			nightHunterCount = nightHunterCount + 1
 			self:Bar(args.spellId, timers[self:GetStage()][args.spellId][nightHunterCount], CL.count:format(args.spellName, nightHunterCount))
@@ -512,8 +514,9 @@ function mod:FeedingTimeRemoved(args)
 end
 
 do
-	local playerList, playerIcons = mod:NewTargetList(), {}
+	local playerList = {}
 	local timeLeft, icon = 0, 0
+	local prev = 0
 	local function printYell()
 		if timeLeft > 0 then -- We didn't die within the 2 sec initial delay
 			mod:Yell(false, ("{rt%d}{rt%d}{rt%d}%d"):format(icon, icon, icon, timeLeft), true)
@@ -524,9 +527,19 @@ do
 		end
 	end
 	function mod:NightHunterApplied(args)
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			playerList = {}
+			self:PlaySound(args.spellId, "warning")
+			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, nightHunterCount))
+			nightHunterCount = nightHunterCount + 1
+			self:Bar(args.spellId, timers[self:GetStage()][args.spellId][nightHunterCount], CL.count:format(args.spellName, nightHunterCount))
+		end
+
 		local count = #playerList+1
 		playerList[count] = args.destName
-		playerIcons[count] = count
+		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID)then
 			self:Yell(args.spellId, CL.count_rticon:format(args.spellName, count, count))
 			if self:GetOption("custom_on_repeating_nighthunter") then
@@ -535,13 +548,7 @@ do
 				self:SimpleTimer(printYell, 2)
 			end
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 3 or 2, CL.count:format(args.spellName, nightHunterCount), nil, nil, playerIcons)
-		if count == 1 then
-			self:PlaySound(args.spellId, "warning")
-			self:CastBar(args.spellId, 6, CL.count:format(args.spellName, nightHunterCount))
-			nightHunterCount = nightHunterCount + 1
-			self:Bar(args.spellId, timers[self:GetStage()][args.spellId][nightHunterCount], CL.count:format(args.spellName, nightHunterCount))
-		end
+		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 3 or 2, CL.count:format(args.spellName, nightHunterCount-1))
 		self:CustomIcon(nightHunterMarker, args.destName, count)
 	end
 
@@ -621,29 +628,27 @@ function mod:CarnageApplied(args)
 end
 
 do
-	local playerList, playerIcons = mod:NewTargetList(), {}
+	local playerList = {}
 	local sayTimer = nil
+	function mod:Impale(args)
+		playerList = {}
+		impaleCount = impaleCount + 1
+		self:Bar(329951, timers[self:GetStage()][329951][impaleCount], CL.count:format(args.spellName, impaleCount))
+	end
+	local sayMessages = {"1","22","333","4444"}
 	function mod:ImpaleApplied(args)
 		local count = #playerList+1
 		playerList[count] = args.destName
-		playerIcons[count] = count
+		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID)then
-			--self:SayCountdown(args.spellId, 6, count) -- Disabled to keep showing what number charge you are, the countdown makes it confusing
 			self:Say(args.spellId, CL.count:format(args.spellName, count))
 			if self:GetOption("custom_on_repeating_impale") then
-				local msg = ""
-				for i=1, count do
-					msg = msg..count -- "333", "22", "1"
-				end
+				local msg = sayMessages[count]
 				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, msg, true)
 			end
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, impaleCount), nil, 2, playerIcons) -- debuffs are late
-		if count == 1 then
-			impaleCount = impaleCount + 1
-			self:Bar(args.spellId, timers[self:GetStage()][args.spellId][impaleCount], CL.count:format(args.spellName, impaleCount))
-		end
+		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, impaleCount-1), nil, 2) -- debuffs are late
 		self:CustomIcon(impaleMarker, args.destName, count)
 	end
 
@@ -655,9 +660,6 @@ do
 			end
 		end
 		self:CustomIcon(impaleMarker, args.destName)
-		-- if self:Me(args.destGUID) then
-		-- 	self:CancelSayCountdown(args.spellId)
-		-- end
 	end
 end
 
@@ -757,22 +759,27 @@ function mod:ShatteringPain(args)
 end
 
 do
-	local playerList, playerIcons, sphereSpawned = mod:NewTargetList(), {}, nil
+	local playerList, sphereSpawned = {}, false
+	local prev = 0
 	function mod:FatalFinesseApplied(args)
-		sphereSpawned = nil
+		local t = args.time
+		if t-prev > 3 then
+			prev = t
+			playerList = {}
+			sphereSpawned = false
+			fatalFinesseCount = fatalFinesseCount + 1
+			self:Bar(args.spellId, timers[self:GetStage()][args.spellId][fatalFinesseCount], CL.count:format(args.spellName, fatalFinesseCount))
+		end
+
 		local count = #playerList+1
 		playerList[count] = args.destName
-		playerIcons[count] = count
+		playerList[args.destName] = count
 		if self:Me(args.destGUID)then
 			self:Say(args.spellId, CL.count_rticon:format(args.spellName, count, count))
 			self:SayCountdown(args.spellId, 5, count)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, fatalFinesseCount), nil, nil, playerIcons)
-		if count == 1 then
-			fatalFinesseCount = fatalFinesseCount + 1
-			self:Bar(args.spellId, timers[self:GetStage()][args.spellId][fatalFinesseCount], CL.count:format(args.spellName, fatalFinesseCount))
-		end
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, fatalFinesseCount-1))
 		self:CustomIcon(fatalFinesseMarker, args.destName, count)
 	end
 
