@@ -73,6 +73,16 @@ local cloakOfFlamesCount = 1
 local phoenixCount = 0
 
 --------------------------------------------------------------------------------
+-- Localization
+--
+
+local L = mod:GetLocale()
+if L then
+	L.shield_removed = "%s removed after %.1f seconds!"
+	L.shield_remaining = "%s remaining: %s"
+end
+
+--------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -564,18 +574,27 @@ function mod:DarithosDeath()
 end
 
 -- Mythic
-function mod:CloakOfFlamesApplied(args)
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, cloakOfFlamesCount))
-	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakOfFlamesCount))
-	cloakOfFlamesCount = cloakOfFlamesCount + 1
-	self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(args.spellName, cloakOfFlamesCount))
-end
+do
+	local appliedAt = 0
+	function mod:CloakOfFlamesApplied(args)
+		self:Message(args.spellId, "red", CL.count:format(args.spellName, cloakOfFlamesCount))
+		self:PlaySound(args.spellId, "warning")
+		self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakOfFlamesCount))
+		cloakOfFlamesCount = cloakOfFlamesCount + 1
+		self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(args.spellName, cloakOfFlamesCount))
+		appliedAt = args.time
+	end
 
-function mod:CloakOfFlamesRemoved(args)
-	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
-	self:PlaySound(args.spellId, "info")
-	self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakOfFlamesCount-1)))
+	function mod:CloakOfFlamesRemoved(args)
+		local amount = args.amount or 0
+		if amount > 0 then -- Shield blew up
+			self:Message(args.spellId, "red", L.shield_remaining:format(args.spellName, mod:AbbreviateNumber(amount)))
+		else
+			self:Message(args.spellId, "green", L.shield_removed:format(args.spellName, args.time - appliedAt))
+			self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakOfFlamesCount-1)))
+		end
+		self:PlaySound(args.spellId, "info")
+	end
 end
 
 do

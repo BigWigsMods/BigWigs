@@ -10,6 +10,12 @@ if L then
 	L.killed = "已擊殺%s"
 end
 
+L = BigWigs:NewBossLocale("Sun King's Salvation", "zhTW")
+if L then
+	--L.shield_removed = "%s removed after %.1f seconds!"
+	--L.shield_remaining = "%s remaining: %s"
+end
+
 L = BigWigs:NewBossLocale("Hungering Destroyer", "zhTW")
 if L then
 	L.miasma = "瘴氣" -- Short for Gluttonous Miasma
