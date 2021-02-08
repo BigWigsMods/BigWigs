@@ -173,15 +173,6 @@ local bossNames = setmetatable({}, {__index =
 		end
 	end
 })
-local wipe = function(tbl, orig)
-	if orig then
-		twipe(tbl)
-	else
-		for i = #tbl, 1, -1 do
-			tbl[i] = nil
-		end
-	end
-end
 
 -------------------------------------------------------------------------------
 -- Core module functionality
@@ -945,8 +936,8 @@ do
 
 	function boss:Win()
 		dbg(":Win", self.engageId, self.moduleName)
-		wipe(icons, true) -- Wipe icon cache
-		wipe(spells, true)
+		twipe(icons) -- Wipe icon cache
+		twipe(spells)
 		if self.OnWin then self:OnWin() end
 		self:ScheduleTimer("Disable", 1) -- Delay a little to prevent re-enabling
 		self:SendMessage("BigWigs_OnBossWin", self)
@@ -1890,7 +1881,7 @@ do
 	-- @return colored player name, or table containing colored names
 	function boss:ColorName(player)
 		if type(player) == "table" then
-			wipe(tmp)
+			twipe(tmp)
 			for i, v in ipairs(player) do
 				tmp[i] = coloredNames[v]
 			end
@@ -1946,10 +1937,10 @@ do
 			local meOnly = checkFlag(self, key, C.ME_ONLY)
 			local onMe = find(list, pName, nil, true)
 			if not onMe then
-				if not checkFlag(self, key, C.MESSAGE) or meOnly then wipe(player) return end
+				if not checkFlag(self, key, C.MESSAGE) or meOnly then twipe(player) return end
 				if not alwaysPlaySound then sound = nil end
 			else
-				if not checkFlag(self, key, C.MESSAGE) and not meOnly then wipe(player) return end
+				if not checkFlag(self, key, C.MESSAGE) and not meOnly then twipe(player) return end
 			end
 			if meOnly or (onMe and #player == 1) then
 				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
@@ -1965,7 +1956,7 @@ do
 					self:SendMessage("BigWigs_Sound", self, key, sound)
 				end
 			end
-			wipe(player)
+			twipe(player)
 		else
 			if not player then
 				if checkFlag(self, key, C.MESSAGE) then
@@ -2048,22 +2039,8 @@ do
 					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, list), color, texture, isEmphasized)
 				end
 				twipe(playerTable)
-				if next(playerTable) then
-					BigWigs:Error("Functionality error 1. Please tell the BigWigs authors on Discord or GitHub!")
-					wipe(playerTable)
-					if next(playerTable) then
-						BigWigs:Error("Functionality error 2. Please tell the BigWigs authors on Discord or GitHub!")
-					end
-				end
 				if markers then
 					twipe(markers)
-					if next(markers) then
-						BigWigs:Error("Functionality error 3. Please tell the BigWigs authors on Discord or GitHub!")
-						wipe(markers)
-						if next(markers) then
-							BigWigs:Error("Functionality error 4. Please tell the BigWigs authors on Discord or GitHub!")
-						end
-					end
 				end
 			end
 		end
@@ -2092,12 +2069,12 @@ do
 					end
 				end
 				if playersInTable == playerCount then
-					wipe(playerTable)
-					if markers then wipe(markers) end
+					twipe(playerTable)
+					if markers then twipe(markers) end
 				elseif playersInTable == 1 then
 					Timer(customTime or 0.3, function()
-						wipe(playerTable)
-						if markers then wipe(markers) end
+						twipe(playerTable)
+						if markers then twipe(markers) end
 					end)
 				end
 			elseif checkFlag(self, key, C.MESSAGE) then
@@ -2116,6 +2093,16 @@ do
 				elseif playersInTable == 1 then
 					Timer(customTime or 0.3, function()
 						printTargets(self, key, playerTable, color, text, icon, markers)
+					end)
+				end
+			else
+				if playersInTable == playerCount then
+					twipe(playerTable)
+					if markers then twipe(markers) end
+				elseif playersInTable == 1 then
+					Timer(customTime or 0.3, function()
+						twipe(playerTable)
+						if markers then twipe(markers) end
 					end)
 				end
 			end
