@@ -455,7 +455,7 @@ do
 		playerList = {}
 		self:StopBar(CL.count:format(args.spellName, heartRendCount))
 		heartRendCount = heartRendCount + 1
-		self:Bar(args.spellId, self:Mythic() and 42.1 or 45, CL.count:format(args.spellName, heartRendCount))
+		self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, heartRendCount))
 		if self:Dispeller("magic") then
 			self:PlaySound(args.spellId, "alarm")
 		end
