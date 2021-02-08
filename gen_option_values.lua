@@ -44,6 +44,7 @@ local color_methods = {
 	TargetsMessage = 2,
 	NewTargetsMessage = 2,
 	StackMessage = 4,
+	NewStackMessage = 2,
 	DelayedMessage = 3,
 }
 local sound_methods = {
@@ -61,6 +62,7 @@ local icon_methods = {
 	TargetsMessage = 6,
 	NewTargetsMessage = 6,
 	StackMessage = 7,
+	NewStackMessage = 7,
 	PersonalMessage = 4,
 	Bar = 4,
 	CDBar = 4,
@@ -740,7 +742,7 @@ local function parseLua(file)
 				local color_index = color_methods[method]
 				if color_index then
 					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
-					if method:sub(1, 6) == "Target" or method == "StackMessage" or method == "NewTargetsMessage" then -- XXX NewTargetsMessage temp
+					if method:sub(1, 6) == "Target" or method == "StackMessage" or method == "NewStackMessage" or method == "NewTargetsMessage" then -- XXX NewTargetsMessage temp
 						color[#color+1] = "blue" -- used when on the player
 					end
 				end
