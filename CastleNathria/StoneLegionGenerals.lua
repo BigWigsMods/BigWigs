@@ -677,7 +677,7 @@ function mod:RavenousFeast(args)
 		self:PlaySound(342733, "warning")
 		self:Flash(342733)
 	end
-	self:Bar(342733, 18.2) -- Ravenous Feast
+	self:Bar(342733, self:Mythic() and 24.3 or 18.2) -- Ravenous Feast
 end
 
 function mod:StonegaleEffigy(args)
