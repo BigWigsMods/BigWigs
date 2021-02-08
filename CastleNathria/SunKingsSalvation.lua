@@ -152,6 +152,7 @@ function mod:OnBossEnable()
 	-- Infusing Essences
 	self:Log("SPELL_AURA_APPLIED", "DrainedSoul", 339251)
 	self:Log("SPELL_AURA_APPLIED", "InfusersBoonApplied", 326078)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "InfusersBoonApplied", 326078)
 
 	-- High Torturer Darithos
 	self:Log("SPELL_CAST_START", "GreaterCastigation", 328885)
