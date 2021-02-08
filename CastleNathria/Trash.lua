@@ -209,12 +209,12 @@ function mod:Rotting(args)
 	local amount = args.amount or 1
 	if amount % 5 == 0 then
 		if self:Me(args.destGUID) then
-			self:StackMessage(args.spellId, args.destName, amount, "blue")
+			self:NewStackMessage(args.spellId, "blue", args.destName, amount)
 			if amount > 14 then
 				self:PlaySound(args.spellId, "info")
 			end
 		elseif (self:Tank() or self:Dispeller("disease", nil, args.spellId)) and self:Tank(args.destName) then
-			self:StackMessage(args.spellId, args.destName, amount, "purple")
+			self:NewStackMessage(args.spellId, "purple", args.destName, amount, 15)
 			if amount > 14 then
 				self:PlaySound(args.spellId, "info")
 			end
@@ -259,7 +259,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 end
 
 function mod:WarpedDesiresApplied(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 2)
 	if args.amount then -- 2+
 		self:PlaySound(args.spellId, "alarm")
 	end

@@ -604,10 +604,12 @@ end
 
 function mod:StoneFistApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	if amount > 1 then
-		self:PlaySound(args.spellId, "warning")
+	if amount == 1 then
+		self:TargetMessage(args.spellId, "purple", args.destName)
+	else
+		self:NewStackMessage(args.spellId, "purple", args.destName, amount)
 	end
+	self:PlaySound(args.spellId, "warning")
 end
 
 do

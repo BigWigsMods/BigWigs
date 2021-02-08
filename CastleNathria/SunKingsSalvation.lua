@@ -343,11 +343,11 @@ end
 function mod:BurningRemnantsApplied(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) and not self:Tank() then
-		self:StackMessage(args.spellId, args.destName, amount, "blue")
+		self:NewStackMessage(args.spellId, "blue", args.destName, amount)
 		self:PlaySound(args.spellId, "alarm")
 	elseif self:Tank() and self:Tank(args.destName) then
-		self:StackMessage(args.spellId, args.destName, amount, "purple")
-		if amount > 1 then -- 2+
+		self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
+		if amount > 2 then -- 3+
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -428,8 +428,8 @@ end
 
 function mod:VanquishedApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	if amount > 1 then -- 2+
+	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
+	if amount > 2 then
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -481,7 +481,7 @@ end
 -- Infusing Essences
 function mod:InfusersBoonApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "green")
+	self:NewStackMessage(args.spellId, "green", args.destName, amount)
 	self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
 	self:TargetBar(args.spellId, 14, args.destName, CL.count:format(args.spellName, amount))
 	if self:Me(args.destGUID) then

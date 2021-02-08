@@ -421,8 +421,8 @@ do
 		end
 	end
 
-	function mod:BurdenofSinStackMessage()
-		mod:StackMessage(326699, playerName, burdenStacksOnMe, "blue")
+	function mod:BurdenOfSinStackMessage()
+		mod:NewStackMessage(326699, "blue", playerName, burdenStacksOnMe)
 		mod:PlaySound(326699, "alarm")
 		scheduled = nil
 	end
@@ -439,7 +439,7 @@ do
 		if self:Me(args.destGUID) then
 			burdenStacksOnMe = amount
 			if not scheduled then
-				scheduled = self:ScheduleTimer("BurdenofSinStackMessage", 0.1)
+				scheduled = self:ScheduleTimer("BurdenOfSinStackMessage", 0.1)
 			end
 		end
 		mod:UpdateInfoBox()
@@ -466,7 +466,7 @@ do
 		if self:GetStage() == 3 then -- Mythic, Depends on phasing not stacks
 			self:Message(args.spellId, "red")
 		else
-			self:StackMessage(args.spellId, playerName, burdenStackTable[burdenStacksOnMe], "blue")
+			self:NewStackMessage(args.spellId, "blue", playerName, burdenStackTable[burdenStacksOnMe])
 		end
 		self:PlaySound(args.spellId, "alarm")
 		bloodPriceCount = bloodPriceCount + 1
@@ -620,10 +620,10 @@ end
 
 function mod:CarnageApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, args.destName, args.amount, "blue")
+		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
 		self:PlaySound(args.spellId, "alarm")
 	elseif args.amount and args.amount > 2 and self:Tank() and self:Tank(args.destName) then
-		self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
 	end
 end
 
@@ -745,9 +745,11 @@ end
 
 function mod:ScornApplied(args)
 	local amount = args.amount or 1
-	if amount % 3 == 0 or amount > 5 then -- 3, 6+
-		self:StackMessage(args.spellId, args.destName, amount, "purple")
-		self:PlaySound(args.spellId, "alert")
+	if amount == 3 or amount > 5 then -- 3, 6+
+		self:NewStackMessage(args.spellId, "purple", args.destName, amount, 6)
+		if amount > 5 then
+			self:PlaySound(args.spellId, "alert")
+		end
 	end
 end
 
@@ -830,7 +832,7 @@ function mod:HymnApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 2 == 0 and amount > 7 then -- 7+ every 2
-			self:StackMessage("hymn_stacks", args.destName, amount, "blue", nil, args.spellId)
+			self:NewStackMessage("hymn_stacks", "blue", args.destName, amount, 10, args.spellId)
 			self:PlaySound("hymn_stacks", "alert")
 		end
 	end
