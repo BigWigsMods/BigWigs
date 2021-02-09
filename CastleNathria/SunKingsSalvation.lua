@@ -78,8 +78,8 @@ local phoenixCount = 0
 
 local L = mod:GetLocale()
 if L then
-	L.shield_removed = "%s removed after %.1f seconds!"
-	L.shield_remaining = "%s remaining: %s"
+	L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
+	L.shield_remaining = "%s remaining: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
 end
 
 --------------------------------------------------------------------------------
@@ -130,6 +130,7 @@ function mod:GetOptions()
 		[338600] = "mythic",
 	},{
 		[328479] = CL.fixate, -- Eyes on Target (Fixate)
+		[337859] = CL.shield, -- Cloak of Flames (Shield)
 	}
 end
 
@@ -219,7 +220,7 @@ function mod:OnEngage()
 	end
 
 	if self:Mythic() then
-		self:Bar(337859, 62, CL.count:format(self:SpellName(337859), cloakOfFlamesCount)) -- Cloak of Flames
+		self:Bar(337859, 62, CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -323,7 +324,7 @@ function mod:ReflectionOfGuiltApplied(args)
 			self:CancelDelayedMessage(text)
 			self:StopBar(text)
 		end
-		self:StopBar(CL.count:format(self:SpellName(337859), cloakOfFlamesCount)) -- Cloak of Flames
+		self:StopBar(CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
 
 		for key, scheduled in pairs(addScheduledTimers) do -- cancel all scheduled add timers
 			self:CancelTimer(scheduled)
@@ -425,7 +426,7 @@ function mod:ReflectionOfGuiltRemoved()
 
 	cloakOfFlamesCount = 1
 	if self:Mythic() then
-		self:Bar(337859, 34.3, CL.count:format(self:SpellName(337859), cloakOfFlamesCount))
+		self:Bar(337859, 34.3, CL.count:format(CL.shield, cloakOfFlamesCount))
 	end
 end
 
@@ -575,23 +576,24 @@ end
 
 -- Mythic
 do
-	local appliedAt = 0
+	local prevTime, prevAmount = 0, 0
 	function mod:CloakOfFlamesApplied(args)
-		self:Message(args.spellId, "red", CL.count:format(args.spellName, cloakOfFlamesCount))
+		prevTime, prevAmount = args.time, args.amount
+		self:Message(args.spellId, "red", CL.count:format(CL.shield, cloakOfFlamesCount))
 		self:PlaySound(args.spellId, "warning")
-		self:CastBar(args.spellId, 6, CL.count:format(args.spellName, cloakOfFlamesCount))
+		self:CastBar(args.spellId, 6, CL.count:format(CL.shield, cloakOfFlamesCount))
 		cloakOfFlamesCount = cloakOfFlamesCount + 1
-		self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(args.spellName, cloakOfFlamesCount))
-		appliedAt = args.time
+		self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(CL.shield, cloakOfFlamesCount))
 	end
 
 	function mod:CloakOfFlamesRemoved(args)
 		local amount = args.amount or 0
 		if amount > 0 then -- Shield blew up
-			self:Message(args.spellId, "red", L.shield_remaining:format(args.spellName, mod:AbbreviateNumber(amount)))
+			local percentRemaining = amount / prevAmount * 100
+			self:Message(args.spellId, "red", L.shield_remaining:format(CL.shield, self:AbbreviateNumber(amount), percentRemaining))
 		else
-			self:Message(args.spellId, "green", L.shield_removed:format(args.spellName, args.time - appliedAt))
-			self:StopBar(CL.cast:format(CL.count:format(args.spellName, cloakOfFlamesCount-1)))
+			self:Message(args.spellId, "green", L.shield_removed:format(CL.shield, args.time - prevTime))
+			self:StopBar(CL.cast:format(CL.count:format(CL.shield, cloakOfFlamesCount-1)))
 		end
 		self:PlaySound(args.spellId, "info")
 	end

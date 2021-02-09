@@ -12,8 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Sun King's Salvation", "zhTW")
 if L then
-	--L.shield_removed = "%s removed after %.1f seconds!"
-	--L.shield_remaining = "%s remaining: %s"
+	--L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
+	--L.shield_remaining = "%s remaining: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
 end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "zhTW")
