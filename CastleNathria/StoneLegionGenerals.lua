@@ -471,7 +471,7 @@ do
 
 		self:CustomIcon(heartRendMarker, args.destName, count)
 
-		self:NewTargetsMessage(args.spellId, "orange", playerList, 4, CL.count:format(args.spellName, heartRendCount-1))
+		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, heartRendCount-1))
 	end
 
 	function mod:HeartRendRemoved(args)
