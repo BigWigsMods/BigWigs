@@ -47,10 +47,18 @@ local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
 local myGUID, myRole, myDamagerRole = nil, nil, nil
 local myGroupGUIDs = {}
 local solo = false
+local classColorMessages = true
 local debugFunc = nil
 local updateData = function(module)
 	myGUID = UnitGUID("player")
 	hasVoice = BigWigsAPI:HasVoicePack()
+
+	local messages = core:GetPlugin("Messages", true)
+	if messages and not messages.db.profile.classcolor then
+		classColorMessages = false
+	else
+		classColorMessages = true
+	end
 
 	local tree = GetSpecialization()
 	if tree then
@@ -1875,19 +1883,31 @@ do
 		return setmetatable({}, mt)
 	end
 
-	local tmp = {}
 	--- Color a player name based on class.
-	-- @param player the player name, or a table containing a list of names
+	-- @param player The player name, or a table containing a list of names
+	-- @bool[opt] overwrite Ignore whatever the "class color message" feature is set to
 	-- @return colored player name, or table containing colored names
-	function boss:ColorName(player)
-		if type(player) == "table" then
-			twipe(tmp)
-			for i, v in ipairs(player) do
-				tmp[i] = coloredNames[v]
+	function boss:ColorName(player, overwrite)
+		if classColorMessages or overwrite then
+			if type(player) == "table" then
+				local tmp = {}
+				for i = 1, #player do
+					tmp[i] = coloredNames[player[i]]
+				end
+				return tmp
+			else
+				return coloredNames[player]
 			end
-			return tmp
 		else
-			return coloredNames[player]
+			if type(player) == "table" then
+				local tmp = {}
+				for i = 1, #player do
+					tmp[i] = gsub(player[i], "%-.+", "*") -- Replace server names with *
+				end
+				return tmp
+			else
+				return gsub(player, "%-.+", "*") -- Replace server names with *
+			end
 		end
 	end
 
@@ -1907,7 +1927,7 @@ do
 				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
 			elseif not checkFlag(self, key, C.ME_ONLY) then
 				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
-				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
+				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], self:ColorName(player)), color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
 			end
 			if sound then
 				if hasVoice and checkFlag(self, key, C.VOICE) then
@@ -1936,7 +1956,7 @@ do
 				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
 			elseif not checkFlag(self, key, C.ME_ONLY) then
 				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and stack >= emphLimit
-				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], coloredNames[player]), color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
+				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], self:ColorName(player)), color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
 			end
 		end
 	end
@@ -2006,7 +2026,7 @@ do
 				if checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 					local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
 					-- Change color and remove sound (if not alwaysPlaySound) when warning about effects on other players
-					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture, isEmphasized)
+					self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, self:ColorName(player)), color, texture, isEmphasized)
 					if sound then
 						if alwaysPlaySound and hasVoice and checkFlag(self, key, C.VOICE) then
 							self:SendMessage("BigWigs_Voice", self, key, sound)
@@ -2235,7 +2255,7 @@ do
 		elseif checkFlag(self, key, C.MESSAGE) and not checkFlag(self, key, C.ME_ONLY) then
 			-- Don't Emphasize if it's on other people when both EMPHASIZE and ME_ONLY_EMPHASIZE are enabled.
 			local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) ~= C.ME_ONLY_EMPHASIZE
-			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, coloredNames[player]), color, texture, isEmphasized)
+			self:SendMessage("BigWigs_Message", self, key, format(L.other, msg, self:ColorName(player)), color, texture, isEmphasized)
 		end
 	end
 end
@@ -2456,7 +2476,7 @@ do
 		if type(guid) ~= "string" then
 			core:Print(format(badNameplateBarTimeLeft, text))
 		end
-		local bars = core:GetPlugin("Bars")
+		local bars = core:GetPlugin("Bars", true)
 		if bars then
 			return bars:GetNameplateBarTimeLeft(self, type(text) == "number" and spells[text] or text, guid)
 		end
@@ -2521,7 +2541,7 @@ end
 -- @param text the bar text
 -- @return the remaining duration in seconds or 0
 function boss:BarTimeLeft(text)
-	local bars = core:GetPlugin("Bars")
+	local bars = core:GetPlugin("Bars", true)
 	if bars then
 		return bars:GetBarTimeLeft(self, type(text) == "number" and spells[text] or text)
 	end
