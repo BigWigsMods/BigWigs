@@ -1951,12 +1951,13 @@ do
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
 			local emphLimit = noEmphUntil or 0
+			local amount = stack or 1
 			if player == pName then
-				local isEmphasized = (band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE) and stack >= emphLimit
-				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, stack or 1, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
+				local isEmphasized = (band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE) and amount >= emphLimit
+				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, amount, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
 			elseif not checkFlag(self, key, C.ME_ONLY) then
-				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and stack >= emphLimit
-				self:SendMessage("BigWigs_Message", self, key, format(L.stack, stack or 1, textType == "string" and text or spells[text or key], self:ColorName(player)), color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
+				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and amount >= emphLimit
+				self:SendMessage("BigWigs_Message", self, key, format(L.stack, amount, textType == "string" and text or spells[text or key], self:ColorName(player)), color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
 			end
 		end
 	end
