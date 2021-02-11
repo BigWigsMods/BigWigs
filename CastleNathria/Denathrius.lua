@@ -622,7 +622,7 @@ function mod:CarnageApplied(args)
 	if self:Me(args.destGUID) then
 		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
 		self:PlaySound(args.spellId, "alarm")
-	elseif args.amount and args.amount > 2 and self:Tank() and self:Tank(args.destName) then
+	elseif args.amount and args.amount % 2 == 0 and self:Tank() and self:Tank(args.destName) then
 		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
 	end
 end
@@ -674,7 +674,12 @@ end
 
 function mod:WrackingPainApplied(args)
 	if self:Tank(args.destName) and self:Tank() then
-		self:TargetMessage(args.spellId, "purple", args.destName)
+		local amount = args.amount or 1
+		if amount == 1 then
+			self:TargetMessage(args.spellId, "purple", args.destName)
+		else
+			self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+		end
 		self:PlaySound(args.spellId, "warning", args.destName)
 	end
 end
@@ -745,7 +750,7 @@ end
 
 function mod:ScornApplied(args)
 	local amount = args.amount or 1
-	if amount == 3 or amount > 5 then -- 3, 6+
+	if amount % 3 == 0 or (amount > 6 and amount < 12) then -- 3, 6-12, 15/18/21... (throttle)
 		self:NewStackMessage(args.spellId, "purple", args.destName, amount, 6)
 		if amount > 5 then
 			self:PlaySound(args.spellId, "alert")
