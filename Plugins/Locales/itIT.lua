@@ -7,6 +7,7 @@ L.comma = ", "
 --L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
 --L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
 --L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
+--L.transparency = "Transparency"
 
 L.abilityName = "Nome dell'Abilità"
 L.abilityNameDesc = "Visualizza o nasconde il nome dell'abilità sopra la finestra"
@@ -281,6 +282,7 @@ L.wrongTime = "Specificato tempo non valido. <time> può essere sia un numero in
 --L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
 --L.textDesc = "Whether to show or hide the text displayed on the bars."
 --L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
+--L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua

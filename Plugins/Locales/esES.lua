@@ -7,6 +7,7 @@ L.height = "Alto"
 L.sizeDesc = "Normalmente ajusta el tamaño deslizando por la barra. Si necesitas un tamaño exacto puedes usar este deslizador o teclea el valor dentro de la caja, no tiene máximo."
 --L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
 --L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
+--L.transparency = "Transparency"
 
 L.abilityName = "Nombre de habilidad"
 L.abilityNameDesc = "Muestra/oculta el nombre de la habilidad encima de la ventana"
@@ -281,6 +282,7 @@ L.visibleBarLimit = "Límite de barras visibles"
 L.visibleBarLimitDesc = "Ajusta la máxima cantidad de barras que serán visibles al mismo tiempo."
 L.textDesc = "Ya sea para mostrar u ocultar el texto que se muestra en las barras."
 --L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
+--L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua

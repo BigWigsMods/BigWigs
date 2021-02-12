@@ -13,6 +13,7 @@ L.height = "Alto"
 L.sizeDesc = "Normalmente se ajusta el tamaño arrastrando el ancla. Si necesitas un tamaño exacto puedes usar este deslizador o escribir el valor en el recuadro, que no tiene un máximo."
 L.fontSizeDesc = "Ajuste el tamaño de la fuente utilizando el control deslizante o escriba el valor en la casilla que tiene un máximo de 200."
 L.disableDesc = "Está a punto de desactivar la función '%s' que |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacer esto?"
+--L.transparency = "Transparency"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -73,6 +74,7 @@ L.nameplateAutoWidth = "Igualar anchura de la placa de nombre"
 L.nameplateAutoWidthDesc = "Establece el ancho de las barras de nombres con la anchura de la barra de nombre padre."
 L.nameplateOffsetY = "Desplazamiento en Y"
 L.nameplateOffsetYDesc = "Desplazamiento de la parte superior de la placa de nombre para las barras hacia arriba y la parte inferior de la placa de nombre para las barras hacia abajo."
+--L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
 
 L.clickableBars = "Barra cliqueable"
 L.clickableBarsDesc = "Las barras de BigWigs se les puede hacer clic por defecto. De esta manera puedes seleccionar objetos, lanzar hechizos AoE, cambiar el ángulo de la cámara, etc., mientras tu cursor está encima de las mismas. |cffff4411Si activas esta opción ya no se comportarán de esta forma.|r Las barras interceptarán los clics que hagas en ellas.\n"

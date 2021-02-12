@@ -507,9 +507,10 @@ plugin.defaultDB = {
 	BigWigsAnchor_height = 16,
 	BigWigsEmphasizeAnchor_width = 320,
 	BigWigsEmphasizeAnchor_height = 22,
-	nameplateWidth = 150,
+	nameplateWidth = 100,
 	nameplateAutoWidth = true,
-	nameplateHeight = 16,
+	nameplateHeight = 12,
+	nameplateAlpha = 0.7,
 	nameplateOffsetY = 30,
 	nameplateGrowUp = true,
 	spacing = 1,
@@ -1161,13 +1162,20 @@ do
 				name = L.nameplateBars,
 				type = "group",
 				order = 4,
+				set = function(info, value)
+					db[info[#info]] = value
+					if plugin:UnitGUID("target") then
+						plugin:NAME_PLATE_UNIT_REMOVED(nil, "target")
+						plugin:NAME_PLATE_UNIT_ADDED(nil, "target")
+					end
+				end,
 				args = {
 					nameplateWidth = {
 						type = "range",
 						name = L.width,
 						order = 1,
-						min = 100,
-						softMax = 500,
+						min = 75,
+						softMax = 200,
 						step = 1,
 						width = 1.6,
 						disabled = function() return db.nameplateAutoWidth end,
@@ -1195,6 +1203,7 @@ do
 						order = 4,
 						min = 0,
 						max = 400,
+						step = 1,
 						width = 1.6,
 					},
 					nameplateGrowUp = {
@@ -1212,6 +1221,16 @@ do
 						max = 200, softMax = 72,
 						min = 1,
 						step = 1,
+						width = 1.6,
+					},
+					nameplateAlpha = {
+						type = "range",
+						name = L.transparency,
+						desc = L.nameplateAlphaDesc,
+						order = 7,
+						max = 1,
+						min = 0.4,
+						step = 0.1,
 						width = 1.6,
 					},
 				},
@@ -1993,7 +2012,12 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 			local unit = findUnitByGUID(unitGUID)
 			if unit then
 				local nameplate = GetNamePlateForUnit(unit)
-				width = nameplate:GetWidth()
+				local npWidth = nameplate and nameplate:GetWidth() or 110
+				if npWidth < 111 then
+					width = npWidth
+				else
+					width = 110
+				end
 			end
 		end
 	else
@@ -2029,6 +2053,7 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 	if unitGUID then
 		bar.candyBarLabel:SetFont(f, db.fontSizeNameplate, flags)
 		bar.candyBarDuration:SetFont(f, db.fontSizeNameplate, flags)
+		bar:SetAlpha(db.nameplateAlpha)
 	else
 		bar.candyBarLabel:SetFont(f, db.fontSize, flags)
 		bar.candyBarDuration:SetFont(f, db.fontSize, flags)
@@ -2090,7 +2115,6 @@ function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, isAp
 		barInfo.bar = bar
 		bar:Start()
 		rearrangeNameplateBars(unitGUID)
-		self:SendMessage("BigWigs_NameplateBarCreated", self, bar, module, key, text, time, icon, isApprox, unitGUID)
 	else
 		barInfo.deletionTimer = createDeletionTimer(barInfo)
 	end
@@ -2305,11 +2329,6 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 	local unitBars = nameplateBars[guid]
 	if not unitBars then return end
 	for _, barInfo in next, unitBars do
-		local width, height = db.nameplateWidth, db.nameplateHeight
-		if db.nameplateAutoWidth then
-			local nameplate = GetNamePlateForUnit(unit)
-			width = nameplate:GetWidth()
-		end
 		local time = barInfo.paused and barInfo.remaining or barInfo.exp - GetTime()
 		local bar = plugin:CreateBar(
 			barInfo.module,
@@ -2320,7 +2339,6 @@ function plugin:NAME_PLATE_UNIT_ADDED(_, unit)
 			barInfo.isApprox,
 			barInfo.unitGUID
 		)
-		bar:SetSize(width, height)
 		barInfo.bar = bar
 		barInfo.deletionTimer:Cancel()
 		barInfo.deletionTimer = nil

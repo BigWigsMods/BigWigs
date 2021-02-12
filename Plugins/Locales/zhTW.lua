@@ -7,6 +7,7 @@ L.height = "高度"
 L.sizeDesc = "通常透過拖動錨點來條整尺寸，如果你需要一個精確的尺寸大小，可以調整這個值，或直接輸入到框中"
 L.fontSizeDesc = "調整捲動軸以更改字型大小，或在輸入框輸入精確數值，最大可以到 200。"
 L.disableDesc = "即將禁用「%s」的功能，但|cffff4411不建議|r這麼做。\n\n你確定要這麼做嗎？"
+--L.transparency = "Transparency"
 
 L.abilityName = "技能名稱"
 L.abilityNameDesc = "在視窗上面顯示或隱藏技能名稱。"
@@ -268,6 +269,7 @@ L.visibleBarLimit = "最大可見數量"
 L.visibleBarLimitDesc = "設定同時於螢幕上可見的計時條之最大數量。"
 L.textDesc = "是否顯示或隱藏計時條上的文字。"
 L.resetBarsDesc = "重設所有計時條自訂選項，包括錨點和位置。"
+--L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
