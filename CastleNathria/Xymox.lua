@@ -171,7 +171,7 @@ function mod:RAID_BOSS_EMOTE(_, msg)
 		self:PlaySound(340788, "long")
 		if allowTimers then
 			seedCount = seedCount + 1
-			local cd = self:Mythic() and 55.5 or seedCount % 2 and 52 or 43
+			local cd = self:Mythic() and 55.5 or seedCount == 2 and 51 or 41
 			if self:GetStage() == 3 then -- Mythic only
 				cd = stage3MythicTimers[340788][seedCount]
 			end
