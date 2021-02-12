@@ -13,7 +13,7 @@ L.height = "Höhe"
 L.sizeDesc = "Normalerweise wird die Größe festgelegt, indem Du den Anker bewegst. Falls Du eine exakte Größe benötigst, bewege diesen Schieber oder trage den Wert in das Feld ein. Diese Zahl kann beliebig groß sein."
 L.fontSizeDesc = "Schriftgröße über den Schieberegler oder durch Eingabe eines Wertes in der Box (maximal 200) festlegen."
 L.disableDesc = "Du bist dabei, das Feature '%s' zu deaktivieren, was |cffff4411nicht empfohlen|r wird.\n\nBist Du sicher, dass Du das tun willst?"
---L.transparency = "Transparency"
+L.transparency = "Transparenz"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -74,7 +74,7 @@ L.nameplateAutoWidth = "Breite der Namensplaketten verwenden"
 L.nameplateAutoWidthDesc = "Legt die Breite der Leisten auf die Breite der zugehörigen Namensplaketten fest."
 L.nameplateOffsetY = "Y Versatz"
 L.nameplateOffsetYDesc = "Versatz von der Oberkante der Namensplakette bei darüber angezeigten Leisten und von der Unterkante der Namensplakette bei darunter angezeigten Leisten."
---L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
+L.nameplateAlphaDesc = "Legt die Transparenz der Namensplaketten-Leisten fest."
 
 L.clickableBars = "Interaktive Leisten"
 L.clickableBarsDesc = "BigWigs-Leisten sind standardmäßig nicht anklickbar. Dies ermöglicht es, das Ziel zu wechseln, AoE-Zauber zu setzen und die Kameraperspektive zu ändern, während sich die Maus über den Leisten befindet. |cffff4411Die Aktivierung der Interaktiven Leisten verhindert dieses Verhalten.|r Die Leisten werden jeden Mausklick abfangen.\n"
@@ -252,7 +252,7 @@ L.uppercaseDesc = "Alle hervorgehobenen Nachrichten werden in GROSSBUCHSTABEN ko
 L.useIcons = "Symbole verwenden"
 L.useIconsDesc = "Zeigt Symbole neben Nachrichten an."
 L.classColors = "Klassenfarben"
---L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
+L.classColorsDesc = "Teilweise enthalten Nachrichten Spielernamen. Durch Aktivierung dieser Option werden die Namen in Ihrer Klassenfarbe angezeigt."
 L.chatMessages = "Chatfenster-Nachrichten"
 L.chatMessagesDesc = "Gibt alle BigWigs-Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
 
