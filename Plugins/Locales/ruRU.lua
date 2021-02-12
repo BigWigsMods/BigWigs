@@ -252,7 +252,7 @@ L.uppercaseDesc = "Все увеличенные сообщения будут �
 L.useIcons = "Использовать иконки"
 L.useIconsDesc = "Показывать иконку возле сообщения."
 L.classColors = "Окраска по классу"
-L.classColorsDesc = "Имена игроков окрасятся в их класс."
+--L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
 L.chatMessages = "Сообщения в чат"
 L.chatMessagesDesc = "Выводить все сообщения BigWigs в стандартное окно чата в дополнение к настройкам отображения."
 

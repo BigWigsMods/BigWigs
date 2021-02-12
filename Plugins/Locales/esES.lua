@@ -55,7 +55,7 @@ L.bwEmphasized = "BigWigs enfatizado"
 L.center = "Centro"
 L.chatMessages = "Mensajes de chat"
 L.classColors = "Colores de clase"
-L.classColorsDesc = "Colorea el nombre de los jugadores según su clase"
+--L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
 L.clickableBars = "Barras clicables"
 L.clickableBarsDesc = [=[Por defecto, se puede hacer clic a través de las barras de BigWigs. De esta manera puedes seleccionar objetos, lanzar hechizos AoE, cambiar el ángulo de la cámara, etc., mientras tu cursor está encima de las mismas. |cffff4411Si activas esta opción ya no se comportarán de esta forma.|r Las barras interceptarán los clics que hagas en ellas.
 ]=]

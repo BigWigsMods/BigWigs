@@ -55,7 +55,7 @@ L.bwEmphasized = "BigWigs 醒目"
 L.center = "中"
 L.chatMessages = "聊天信息"
 L.classColors = "职业颜色"
-L.classColorsDesc = "玩家名称使用职业颜色。"
+--L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
 L.clickableBars = "可点击计时条"
 L.clickableBarsDesc = [=[BigWigs 计时条默认是点击穿越的。这样一来，当鼠标指针划过计时条，你仍然可以选择目标或使用 AoE 法术攻击物体、更改镜头角度等等。|cffff4411如果启用可点击计时条，这些将不能实现。|r计时条将拦截任何鼠标点击并阻止相应功能。
 ]=]

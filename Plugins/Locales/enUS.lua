@@ -251,7 +251,7 @@ L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 L.useIcons = "Use icons"
 L.useIconsDesc = "Show icons next to messages."
 L.classColors = "Class colors"
-L.classColorsDesc = "Colors player names by their class."
+L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
 L.chatMessages = "Chat frame messages"
 L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
 

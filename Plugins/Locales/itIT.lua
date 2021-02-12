@@ -55,7 +55,7 @@ L.bwEmphasized = "BigWigs Enfatizzato"
 L.center = "Centro"
 L.chatMessages = "Messaggi Chat"
 L.classColors = "Colore delle Classi"
-L.classColorsDesc = "Colora i nomi dei giocatori in base alla loro classe."
+--L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
 L.clickableBars = "Barre Cliccabili"
 L.clickableBarsDesc = [=[Le barre di BigWigs non sono cliccabili di default. In questo modo puoi selezionare o lanciare le abilità anche dietro le barre, cambiare l'angolo della telecamera, e così via, mentre il cursore è su una barra.|cffff4411Se abiliti le Barre Cliccabili, questo non funzionerà più.|r Le barre intercetteranno i click del mouse.
 ]=]
