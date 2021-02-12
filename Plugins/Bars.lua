@@ -508,6 +508,7 @@ plugin.defaultDB = {
 	BigWigsAnchor_height = 16,
 	BigWigsEmphasizeAnchor_width = 320,
 	BigWigsEmphasizeAnchor_height = 22,
+	nameplateBars = true,
 	nameplateWidth = 150,
 	nameplateAutoWidth = true,
 	nameplateHeight = 16,
@@ -1163,10 +1164,15 @@ do
 				type = "group",
 				order = 4,
 				args = {
+					nameplateBars = {
+						type = "toggle",
+						name = L.enable,
+						order = 1,
+					},
 					nameplateWidth = {
 						type = "range",
 						name = L.width,
-						order = 1,
+						order = 2,
 						min = 100,
 						softMax = 500,
 						step = 1,
@@ -1176,7 +1182,7 @@ do
 					nameplateHeight = {
 						type = "range",
 						name = L.height,
-						order = 2,
+						order = 3,
 						min = 8,
 						softMax = 50,
 						step = 1,
@@ -1186,14 +1192,14 @@ do
 						type = "toggle",
 						name = L.nameplateAutoWidth,
 						desc = L.nameplateAutoWidthDesc,
-						order = 3,
+						order = 4,
 						width = 1.6,
 					},
 					nameplateOffsetY = {
 						type = "range",
 						name = L.nameplateOffsetY,
 						desc = L.nameplateOffsetYDesc,
-						order = 4,
+						order = 5,
 						min = 0,
 						max = 400,
 						width = 1.6,
@@ -1202,7 +1208,7 @@ do
 						type = "toggle",
 						name = L.growingUpwards,
 						desc = L.growingUpwardsDesc,
-						order = 5,
+						order = 6,
 						width = 1.6,
 					},
 					fontSizeNameplate = {
@@ -2072,6 +2078,7 @@ function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
 end
 
 function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, isApprox, unitGUID)
+	if not db.nameplateBars then return end
 	if not text then text = "" end
 	self:StopNameplateBar(nil, module, text, unitGUID)
 
