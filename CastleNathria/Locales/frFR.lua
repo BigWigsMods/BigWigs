@@ -1,8 +1,8 @@
 local L = BigWigs:NewBossLocale("Shriekwing", "frFR")
 if not L then return end
 if L then
-	L.pickup_lantern = "%s a ramassé la lanterne !"
-	L.dropped_lantern = "Lanterne posée par %s !"
+	L.pickup_lantern = "%s a ramassé la lanterne !"
+	L.dropped_lantern = "Lanterne posée par %s !"
 end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "frFR")
@@ -12,8 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Sun King's Salvation", "frFR")
 if L then
-	--L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
-	--L.shield_remaining = "%s remaining: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
+	L.shield_removed = "%s enlevé en %.1fs" -- "Shield removed after 1.1s" s = seconds
+	L.shield_remaining = "%s restant : %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
 end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "frFR")

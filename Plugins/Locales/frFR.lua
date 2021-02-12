@@ -11,8 +11,8 @@ L.width = "Largeur"
 L.height = "Hauteur"
 L.sizeDesc = "Normalement, la taille peut être définie en tirant sur l'ancre. Si vous avez besoin d'une taille bien précise, vous pouvez utiliser ce slider ou taper la valeur dans la boîte de saisie, qui n'a pas de limite."
 L.fontSizeDesc = "Ajustez la taille de la police à l'aide de ce curseur, ou tapez la valeur dans la saisie ce qui permet d'aller jusqu'à 200."
---L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
---L.transparency = "Transparency"
+L.disableDesc = "Vous allez désactiver la fonctionnalité '%s', ce qui n'est |cffff4411pas recommandé|r.\n\nÊtes-vous sûr de vouloir faire cela ?"
+L.transparency = "Transparence"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -73,7 +73,7 @@ L.nameplateAutoWidth = "Même largeur que la barre d'info"
 L.nameplateAutoWidthDesc = "Force la largeur des barres d'info à être de la même largeur que la barre parente."
 L.nameplateOffsetY = "Décalage Y"
 L.nameplateOffsetYDesc = "Décalage à partir du haut de la barre d'info pour les barres allant vers le haut, à partir du bas de la barre d'info pour les barres allant vers le bas."
---L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
+L.nameplateAlphaDesc = "Contrôle à quel point les barres d'info des unités sont transparentes."
 
 L.clickableBars = "Barres cliquables"
 L.clickableBarsDesc = "Par défaut, les barres de BigWigs ignorent la souris. Vous pouvez ainsi cibler ou lancer des sorts de zone derrière elles, changer l'angle de la caméra, ... tandis que votre curseur survole les barres. |cffff4411Si vous activez ceci, tout cela ne sera plus d'application.|r Les barres intercepteront tout clic que vous effectuez sur elles.\n"
@@ -251,7 +251,7 @@ L.uppercaseDesc = "Tous les messages mis en évidence seront convertis en MAJUSC
 L.useIcons = "Utiliser les icônes"
 L.useIconsDesc = "Affiche les icônes à côté des messages."
 L.classColors = "Couleurs de classe"
---L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
+L.classColorsDesc = "Les messages comportent parfois des noms de joueurs. L'activation de cette option colorera ces noms selon la classe."
 L.chatMessages = "Messages de la fenêtre de discussion"
 L.chatMessagesDesc = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal."
 
