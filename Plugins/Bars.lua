@@ -43,7 +43,6 @@ local db = nil
 local normalAnchor, emphasizeAnchor = nil, nil
 local nameplateBars = {}
 local empUpdate = nil -- emphasize updater frame
-local nameplateEmpUpdate = nil
 local rearrangeBars
 local rearrangeNameplateBars
 local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
@@ -1399,9 +1398,6 @@ local function nameplateCascadeDelete(guid, text)
 	nameplateBars[guid][text] = nil
 	if not next(nameplateBars[guid]) then
 		nameplateBars[guid] = nil
-		if not next(nameplateBars) then
-			nameplateEmpUpdate:Stop()
-		end
 	end
 end
 
@@ -2093,20 +2089,8 @@ function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, isAp
 		local bar = self:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 		barInfo.bar = bar
 		bar:Start()
-		if db.emphasize and time < db.emphasizeTime then
-			self:EmphasizeBar(bar, true)
-		else
-			currentBarStyler.ApplyStyle(bar)
-		end
 		rearrangeNameplateBars(unitGUID)
 		self:SendMessage("BigWigs_NameplateBarCreated", self, bar, module, key, text, time, icon, isApprox, unitGUID)
-		-- Check if :EmphasizeBar(bar) was run and trigger the callback.
-		-- Bit of a roundabout method to approaching this so that we purposely keep callbacks firing last.
-		if bar:Get("bigwigs:emphasized") then
-			self:SendMessage("BigWigs_BarEmphasized", self, bar)
-		else
-			nameplateEmpUpdate:Play()
-		end
 	else
 		barInfo.deletionTimer = createDeletionTimer(barInfo)
 	end
@@ -2120,7 +2104,6 @@ do
 	local dirty = nil
 	local frame = CreateFrame("Frame")
 	empUpdate = frame:CreateAnimationGroup()
-	nameplateEmpUpdate = frame:CreateAnimationGroup()
 	empUpdate:SetScript("OnLoop", function()
 		for k in next, normalAnchor.bars do
 			if k.remaining < db.emphasizeTime and not k:Get("bigwigs:emphasized") then
@@ -2135,23 +2118,9 @@ do
 			dirty = nil
 		end
 	end)
-	nameplateEmpUpdate:SetScript("OnLoop", function()
-		for guid, bars in next, nameplateBars do
-			for _, barInfo in next, bars do
-				local bar = barInfo.bar
-				if bar and bar.remaining < db.emphasizeTime and not bar:Get("bigwigs:emphasized") and not bar:Get("bigwigs:unitGUID") then
-					plugin:EmphasizeBar(bar)
-					plugin:SendMessage("BigWigs_BarEmphasized", plugin, bar)
-				end
-			end
-		end
-	end)
 	empUpdate:SetLooping("REPEAT")
-	nameplateEmpUpdate:SetLooping("REPEAT")
 
 	local anim = empUpdate:CreateAnimation()
-	anim:SetDuration(0.2)
-	anim = nameplateEmpUpdate:CreateAnimation()
 	anim:SetDuration(0.2)
 end
 
