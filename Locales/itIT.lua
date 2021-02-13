@@ -1,29 +1,29 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "itIT")
 if not L then return end
 
---L.guildRelease = "You are running version %d of BigWigs made for your guild, based on version %d of the official addon."
---L.getNewRelease = "Your BigWigs is old (/bwv) but you can easily update it using the CurseForge Client. Alternatively, you can update manually from curseforge.com or wowinterface.com."
---L.warnTwoReleases = "Your BigWigs is 2 releases out of date! Your version may have bugs, missing features, or completely incorrect timers. It is strongly recommended you update."
---L.warnSeveralReleases = "|cffff0000Your BigWigs is %d releases out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
---L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base version (%d) is %d releases out of date. This may cause issues."
+L.guildRelease = "Stai utilizzando la versione %d di BigWigs creata per la tua Gilda, basata sulla versione %d dell'addon ufficiale."
+L.getNewRelease = "BigWigs non è aggiornato (/bwv) ma puoi farlo semplicemente usando CurseForge Client. In alternativa puoi aggiornarlo manualmente da curseforge.com o wowinterface.com."
+L.warnTwoReleases = "BigWigs è indietro di due versioni! La tua versione può avere dei bug, funzioni mancanti, o timer sbagliati. Ti consigliamo di aggiornare."
+L.warnSeveralReleases = "|cffff0000BigWigs è vecchio di %d versioni!! Ti consigliamo FORTEMENTE di aggiornare per evitare problemi di sincronizzazione con gli altri giocatori!|r"
+L.warnOldBase = "Stai utilizzando una versione di BigWigs per la gilda (%d), ma la tua versione base (%d) è vecchia di %d versioni. Potrebbe avere dei problemi."
 
---L.gitHubDesc = "|cFF33FF99BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.|r"
+L.gitHubDesc = "|cFF33FF99BigWigs è un software open source software in hosting su GitHub. Siamo sempre alla ricerca di nuove persone per aiutarci e tutti sono benvenuti per ispezionare il nostro codice, contribuire allo sviluppo e inviare segnalazioni di bug. BigWigs è grande grazie all'aiuto della community WoW.|r"
 
---L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
+L.testNameplate = "Bersaglio rilevato, creo una barra di test sulla barra del bersaglio. |cFF33FF99Questa funzione è usata raramente, di solito è solo 1 barra, e serve per tracciare i cooldown mentre si combattono più boss/ads che lanciano la stessa magia.|r"
 
---L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
---L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
+L.classicWarning1 = "|cFF33FF99BigWigs|r: Stai usando la versione sbagliata di BigWigs su un server classic."
+L.classicWarning2 = "|cFF33FF99BigWigs|r: Ti preghiamo di installare la versione classic di BigWigs."
 
---L.options = "Options"
---L.raidBosses = "Raid Bosses"
---L.dungeonBosses = "Dungeon Bosses"
+L.options = "Opzioni"
+L.raidBosses = "Boss delle Incursioni"
+L.dungeonBosses = "Boss delle Spedizioni"
 
---L.infobox = "Information Box"
---L.infobox_desc = "Display a box with information related to the encounter."
---L.INFOBOX = L.infobox
---L.INFOBOX_desc = L.infobox_desc
+L.infobox = "Riquadro informazioni"
+L.infobox_desc = "Mostra un riquadro con informazioni sul combattimento."
+L.INFOBOX = L.infobox
+L.INFOBOX_desc = L.infobox_desc
 
---L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
+L.disabledAddOn = "L'addon |cFF436EEE%s|r è disattivata, i timer non saranno mostrati."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 L.activeBossModules = "Moduli dei Combattimenti Attivi:"
@@ -123,21 +123,21 @@ L.wipes = "Fallimenti:"
 L.zoneMessages = "Mostra messaggi di zona"
 L.zoneMessagesDesc = "Disabilitando questa opzione BigWigs non mostrerà più i messaggi per avvisare che esistono moduli con timer/barre ecc. disponibili ma che tu non hai installato. Raccomandiamo di lasciare attiva questa opzione perché è una notifica che vedrai solo quando verranno creati timer e quant'altro per una nuova zona che potresti trovare utile."
 
---L.SOUND = "Sound"
---L.SOUND_desc = "Boss abilities usually play sounds to help you notice them. If you disable this option, none of the sounds attached to it will play."
---L.CASTBAR = "Cast Bars"
---L.CASTBAR_desc = "Cast bars are sometimes shown on certain bosses, usually to bring attention to a critical ability incoming. If this ability is accompanied by a cast bar that you want to hide, disable this option."
---L.SAY_COUNTDOWN = "Say Countdown"
---L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
---L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
---L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
--- L.NAMEPLATEBAR = "Nameplate Bars"
--- L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
+L.SOUND = "Suono"
+L.SOUND_desc = "Le abilità dei boss di solito riproducono dei suoni per aiutarti ad avvertirle. Se disattivi questa opzione nessun suono verrà riprodotto."
+L.CASTBAR = "Barra dei cast"
+L.CASTBAR_desc = "Le barre di cast sono mostrate su alcuni boss, per avvertirti di abilità in arrivo. Se questa abilità è accompagnata da una barra di cast che vuoi nascondere, disattiva questa opzione."
+L.SAY_COUNTDOWN = "Dici il conto alla rovescia"
+L.SAY_COUNTDOWN_desc = "I fumetti delle chat sono facili da vedere. BigWigs scriverà messaggi multipli per mostrare il conto alla rovescia ai tuoi alleati vicini."
+L.ME_ONLY_EMPHASIZE = "Enfatizza (solo per me)"
+L.ME_ONLY_EMPHASIZE_desc = "Se attivo enfatizzerà tutti i messaggi associati a questa abilità SOLO se lanciati su di te, rendendoli più grandi e più visibili."
+L.NAMEPLATEBAR = "Barre dei nomi"
+L.NAMEPLATEBAR_desc = "Le barre sono mostrate vicino alle barre dei nomi se più di un nemico lancia la stessa abilità. Se questa abilità è associata ad una barra dei nomi che vuoi nascondere, disattiva questa opzione."
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Attenti! (Algalon)"
 L.FlagTaken = "Cattura Bandiera (PvP)"
 L.Destruction = "Distruzione (Kil'jaeden)"
 L.RunAway = "Scappa ragazzina, scappa!!! (Big Bad Wolf)"
---L.spell_on_you = "BigWigs: Spell on you"
---L.spell_under_you = "BigWigs: Spell under you"
+L.spell_on_you = "BigWigs: Abilità su di te (Spell on you)"
+L.spell_under_you = "BigWigs: Abilità sotto di te (Spell under you)"
