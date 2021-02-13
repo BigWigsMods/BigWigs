@@ -162,4 +162,9 @@ if L then
 	L.deplina = "Деплина"
 	L.dragost = "Драгост"
 	L.kullan = "Куллан"
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	L.antiquarian = "Зловещий антиквар"
+	L.conservator = "Нафрийский охранитель"
+	L.archivist = "Нафрийский архивариус"
 end

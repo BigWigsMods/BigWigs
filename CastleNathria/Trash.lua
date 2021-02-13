@@ -25,7 +25,12 @@ mod:RegisterEnableMob(
 	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
 	173464, -- Deplina
 	173448, -- Dragost
-	173469 -- Kullan
+	173469, -- Kullan
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	173604, -- Sinister Antiquarian
+	173609, -- Nathrian Conservator
+	173633 -- Nathrian Archivist
 )
 
 --------------------------------------------------------------------------------
@@ -60,6 +65,11 @@ if L then
 	L.deplina = "Deplina"
 	L.dragost = "Dragost"
 	L.kullan = "Kullan"
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	L.antiquarian = "Sinister Antiquarian"
+	L.conservator = "Nathrian Conservator"
+	L.archivist = "Nathrian Archivist"
 end
 
 --------------------------------------------------------------------------------
@@ -91,6 +101,11 @@ function mod:GetOptions()
 		339557, -- Bottled Anima
 		{339528, "TANK"}, -- Warped Desires
 		{339525, "SAY", "SAY_COUNTDOWN"}, -- Concentrate Anima
+
+		--[[ Shriekwing -> Xy'mox ]]--
+		{342770, "EMPHASIZE"}, -- Eradication Seeds
+		{339975, "TANK_HEALER"}, -- Grievous Strike
+		{342752, "HEALER"}, -- Weeping Burden
 	},{
 		[343322] = L.moldovaak,
 		[343320] = L.caramain,
@@ -105,6 +120,9 @@ function mod:GetOptions()
 		[339553] = L.deplina,
 		[339528] = L.dragost,
 		[339525] = L.kullan,
+		[342770] = L.antiquarian,
+		[339975] = L.conservator,
+		[342752] = L.archivist,
 	},{
 		[343302] = CL.knockback, -- Granite Wings (Knockback)
 		[341352] = CL.traps, -- Mastercrafted Gamesman's Snare (Traps)
@@ -144,6 +162,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnima", 339527)
 	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnimaApplied", 339525)
 	self:Log("SPELL_AURA_REMOVED", "ConcentrateAnimaRemoved", 339525)
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	self:Log("SPELL_CAST_SUCCESS", "EradicationSeeds", 342770)
+	self:Log("SPELL_AURA_APPLIED", "GrievousStrikeApplied", 339975)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GrievousStrikeApplied", 339975)
+	self:Log("SPELL_AURA_REMOVED", "GrievousStrikeRemoved", 339975)
+	self:Log("SPELL_CAST_SUCCESS", "WeepingBurden", 342752)
 end
 
 --------------------------------------------------------------------------------
@@ -286,5 +311,59 @@ function mod:ConcentrateAnimaRemoved(args)
 	self:StopBar(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+--[[ Shriekwing -> Xy'mox ]]--
+do
+	local prev = 0
+	function mod:EradicationSeeds(args)
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			self:Message(args.spellId, "orange")
+			self:Bar(args.spellId, 3, CL.explosion)
+			self:PlaySound(args.spellId, "warning")
+		end
+	end
+end
+
+function mod:GrievousStrikeApplied(args)
+	local amount = args.amount or 1
+	if amount == 1 then
+		if self:Tank(args.destName) then
+			self:TargetMessage(args.spellId, "purple", args.destName)
+			self:PlaySound(args.spellId, "long")
+		elseif self:Healer() then
+			self:TargetMessage(args.spellId, "orange", args.destName)
+		end
+	else
+		if self:Tank(args.destName) then
+			self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+			self:PlaySound(args.spellId, "long")
+		elseif self:Healer() then
+			self:NewStackMessage(args.spellId, "orange", args.destName, amount)
+		end
+	end
+end
+
+function mod:GrievousStrikeRemoved(args)
+	if self:Tank(args.destName) then
+		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, args.destName))
+		self:PlaySound(args.spellId, "info")
+	elseif self:Healer() then
+		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, args.destName))
+	end
+end
+
+do
+	local prev = 0
+	function mod:WeepingBurden(args)
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			self:Message(args.spellId, "yellow", CL.on_group:format(args.spellName))
+			self:PlaySound(args.spellId, "alarm")
+		end
 	end
 end

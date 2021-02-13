@@ -160,4 +160,9 @@ if L then
 	L.deplina = "Deplina"
 	L.dragost = "Dragost"
 	L.kullan = "Kullan"
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	L.antiquarian = "Anticuaria siniestra"
+	L.conservator = "Conservador de Nathria"
+	L.archivist = "Archivista de Nathria"
 end

@@ -162,4 +162,9 @@ if L then
 	L.deplina = "德普莉娜"
 	L.dragost = "德拉苟斯特"
 	L.kullan = "库兰"
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	L.antiquarian = "阴险的古董收藏家"
+	L.conservator = "纳斯利亚管理员"
+	L.archivist = "纳斯利亚档案员"
 end
