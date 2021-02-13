@@ -84,6 +84,7 @@ L.link = "Vincolo"
 --L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "Raggio" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.bomb = "Bomba" -- Used for debuffs that make players explode
+L.explosion = "Esplosione" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Ossessione" -- Used when a boss or add is chasing/fixated on a player
 --L.knockback = "Knockback" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.traps = "Trappole" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
