@@ -58,7 +58,7 @@ function mod:GetOptions()
 		"stages",
 		{328437, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Dimensional Tear
 		dimensionalTearMarker,
-		{325236, "TANK_HEALER", "SAY_COUNTDOWN"}, -- Glyph of Destruction
+		{325236, "TANK_HEALER", "SAY", "SAY_COUNTDOWN"}, -- Glyph of Destruction
 		326271, -- Stasis Trap
 		335013, -- Rift Blast
 		325399, -- Hyperlight Spark
@@ -75,10 +75,12 @@ function mod:GetOptions()
 		[340758] = -22119, -- The Relics of Castle Nathria
 	},{
 		[328437] = L.tear, -- Dimensional Tear (Tear)
+		[325236] = CL.bomb, -- Glyph of Destruction (Bomb)
 		[326271] = CL.traps, -- Stasis Trap (Traps)
 		[340758] = L.spirits, -- Fleeting Spirits (Spirits)
 		[327902] = CL.fixate, -- Fixate (Fixate)
 		[340788] = L.seeds, -- Seeds of Extinction (Seeds)
+		[329107] = CL.explosion, -- Extinction (Explosion)
 	}
 end
 
@@ -288,10 +290,10 @@ function mod:GlyphOfDestruction(args)
 	for i = 1, #tankList do
 		local unit = tankList[i]
 		if bossUnit and self:TopThreat(bossUnit, unit) then
-			self:TargetMessage(325236, "yellow", self:UnitName(unit), CL.casting:format(args.spellName))
+			self:TargetMessage(325236, "yellow", self:UnitName(unit), CL.casting:format(CL.bomb))
 			break
 		elseif i == #tankList then
-			self:Message(325236, "yellow", CL.casting:format(args.spellName))
+			self:Message(325236, "yellow", CL.casting:format(CL.bomb))
 		end
 	end
 	self:PlaySound(325236, "alert")
@@ -301,10 +303,11 @@ function mod:GlyphOfDestruction(args)
 end
 
 function mod:GlyphOfDestructionApplied(args)
-	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, glyphCount-1))
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.bomb, glyphCount-1))
 	self:PlaySound(args.spellId, "warning")
-	self:TargetBar(args.spellId, self:Easy() and 8 or 4, args.destName)
+	self:TargetBar(args.spellId, self:Easy() and 8 or 4, args.destName, CL.bomb)
 	if self:Me(args.destGUID) then
+		self:Say(args.spellId, CL.bomb)
 		self:SayCountdown(args.spellId, self:Easy() and 8 or 4)
 	end
 end
@@ -368,7 +371,7 @@ end
 -- end
 
 function mod:Extinction(args)
-	self:CastBar(args.spellId, self:Normal() and 16 or 12, CL.count:format(args.spellName, seedCount-1))
+	self:Bar(args.spellId, self:Easy() and 16 or 12, CL.count:format(CL.explosion, seedCount-1))
 end
 
 function mod:WitheringTouchApplied(args)
