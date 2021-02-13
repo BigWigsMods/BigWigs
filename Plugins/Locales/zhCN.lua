@@ -7,7 +7,7 @@ L.height = "高度"
 L.sizeDesc = "通常通过拖动锚点设置尺寸。如果需要一个精确的尺寸，可以使用这个滑动条或者将数值输入到没有最大值的框中。"
 L.fontSizeDesc = "使用滑块或在框内输入数值可调整字体尺寸，最大数值为200。"
 L.disableDesc = "将禁用“%s”功能，但|cffff4411不建议|r这么做。\n\n你确定要这么做吗？"
---L.transparency = "Transparency"
+L.transparency = "透明度"
 
 L.abilityName = "技能名称"
 L.abilityNameDesc = "在窗口上面显示或隐藏技能名称。"
@@ -55,7 +55,7 @@ L.bwEmphasized = "BigWigs 醒目"
 L.center = "中"
 L.chatMessages = "聊天信息"
 L.classColors = "职业颜色"
---L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
+L.classColorsDesc = "信息有时会包含玩家名称。启用此项将这些名称使用职业颜色。"
 L.clickableBars = "可点击计时条"
 L.clickableBarsDesc = [=[BigWigs 计时条默认是点击穿越的。这样一来，当鼠标指针划过计时条，你仍然可以选择目标或使用 AoE 法术攻击物体、更改镜头角度等等。|cffff4411如果启用可点击计时条，这些将不能实现。|r计时条将拦截任何鼠标点击并阻止相应功能。
 ]=]
@@ -282,7 +282,7 @@ L.visibleBarLimit = "可视条限制"
 L.visibleBarLimitDesc = "设定同时可见计时条的最大数量。"
 L.textDesc = "显示或隐藏计时条上的文本。"
 L.resetBarsDesc = "重置全部计时条有关选项，包括计时条锚点位置。"
---L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
+L.nameplateAlphaDesc = "控制姓名板条的透明度。"
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
