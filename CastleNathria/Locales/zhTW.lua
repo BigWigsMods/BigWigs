@@ -167,4 +167,7 @@ if L then
 	--L.antiquarian = "Sinister Antiquarian"
 	--L.conservator = "Nathrian Conservator"
 	--L.archivist = "Nathrian Archivist"
+
+	--[[ Sludgefist -> Stone Legion Generals ]]--
+	--L.goliath = "Stone Legion Goliath"
 end

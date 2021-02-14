@@ -30,7 +30,10 @@ mod:RegisterEnableMob(
 	--[[ Shriekwing -> Xy'mox ]]--
 	173604, -- Sinister Antiquarian
 	173609, -- Nathrian Conservator
-	173633 -- Nathrian Archivist
+	173633, -- Nathrian Archivist
+
+	--[[ Sludgefist -> Stone Legion Generals ]]--
+	173178 -- Stone Legion Goliath
 )
 
 --------------------------------------------------------------------------------
@@ -38,6 +41,7 @@ mod:RegisterEnableMob(
 --
 
 local castCollector = {}
+local playerListFeast = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -70,6 +74,9 @@ if L then
 	L.antiquarian = "Sinister Antiquarian"
 	L.conservator = "Nathrian Conservator"
 	L.archivist = "Nathrian Archivist"
+
+	--[[ Sludgefist -> Stone Legion Generals ]]--
+	L.goliath = "Stone Legion Goliath"
 end
 
 --------------------------------------------------------------------------------
@@ -106,6 +113,9 @@ function mod:GetOptions()
 		{342770, "EMPHASIZE"}, -- Eradication Seeds
 		{339975, "TANK_HEALER"}, -- Grievous Strike
 		{342752, "HEALER"}, -- Weeping Burden
+
+		--[[ Sludgefist -> Stone Legion Generals ]]--
+		343271, -- Ravenous Feast
 	},{
 		[343322] = L.moldovaak,
 		[343320] = L.caramain,
@@ -123,6 +133,7 @@ function mod:GetOptions()
 		[342770] = L.antiquarian,
 		[339975] = L.conservator,
 		[342752] = L.archivist,
+		[343271] = L.goliath,
 	},{
 		[343302] = CL.knockback, -- Granite Wings (Knockback)
 		[341352] = CL.traps, -- Mastercrafted Gamesman's Snare (Traps)
@@ -132,6 +143,7 @@ end
 
 function mod:OnBossEnable()
 	castCollector = {}
+	playerListFeast = {}
 
 	--[[ General ]]--
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
@@ -169,6 +181,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrievousStrikeApplied", 339975)
 	self:Log("SPELL_AURA_REMOVED", "GrievousStrikeRemoved", 339975)
 	self:Log("SPELL_CAST_SUCCESS", "WeepingBurden", 342752)
+
+	--[[ Sludgefist -> Stone Legion Generals ]]--
+	self:Log("SPELL_CAST_SUCCESS", "RavenousFeast", 343271)
 end
 
 --------------------------------------------------------------------------------
@@ -365,5 +380,14 @@ do
 			self:Message(args.spellId, "yellow", CL.on_group:format(args.spellName))
 			self:PlaySound(args.spellId, "alarm")
 		end
+	end
+end
+
+--[[ Sludgefist -> Stone Legion Generals ]]--
+function mod:RavenousFeast(args)
+	playerListFeast[#playerListFeast+1] = args.destName
+	self:NewTargetsMessage(args.spellId, "orange", playerListFeast)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alarm")
 	end
 end

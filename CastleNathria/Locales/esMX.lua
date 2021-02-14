@@ -167,4 +167,7 @@ if L then
 	L.antiquarian = "Anticuaria siniestra"
 	L.conservator = "Conservador de Nathria"
 	L.archivist = "Archivista de Nathria"
+
+	--[[ Sludgefist -> Stone Legion Generals ]]--
+	L.goliath = "Goliat de la Legión Pétrea"
 end
