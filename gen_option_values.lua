@@ -928,7 +928,7 @@ local function parseLocale(file)
 	if file_locale ~= "enUS" then
 		-- Only reverse check non-boss locales
 		local module_name, L = next(keys)
-		if module_name and module_name:match("^BigWigs:") then
+		if module_name and module_name:match("^BigWigs") then
 			for key in next, modules_locale[module_name] do
 				if L[key] == nil then
 					error(string.format("    %s:%d: %s: Missing locale key %q", file_name, 1, module_name, key))
@@ -964,6 +964,24 @@ local function parseXML(file)
 	return list
 end
 
+local function parseTOC(file)
+	local f = io.open(file, "r")
+	if not f then
+		error("    File not found!")
+		return
+	end
+
+	local list = {}
+	for line in f:lines() do
+		line = line:gsub("\r", ""):gsub("^#.*$", ""):gsub("\\", "/")
+		if line ~= "" then
+			table.insert(list, line)
+		end
+	end
+
+	return list
+end
+
 local function parse(file)
 	if type(file) == "table" then
 		-- Run the results of parseXML.
@@ -993,6 +1011,9 @@ local function parse(file)
 			for _, f in next, parseXML(file) do
 				parseLocale(f)
 			end
+		elseif string.match(file, "%.toc$") then
+			print(string.format("Checking %s", file))
+			parse(parseTOC(file))
 		end
 	end
 end
@@ -1032,7 +1053,8 @@ if arg then
 			end
 		else
 			local path = arg[1]:gsub("\\", "/")
-			local is_file = path:sub(-4) == ".lua"
+			local ext = path:sub(-4)
+			local is_file = ext == ".lua" or ext == ".xml" or ext == ".toc"
 			if path:sub(-1) ~= "/" and not is_file then
 				path = path .. "/"
 			end
