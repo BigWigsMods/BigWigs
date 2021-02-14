@@ -17,4 +17,4 @@ jobs:
 
       - name: Lint boss modules
         if: always()
-        run: lua gen_option_values.lua -n -q
+        run: lua gen_option_values.lua BigWigs.toc -n -q
