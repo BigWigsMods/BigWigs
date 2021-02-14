@@ -370,7 +370,11 @@ do
 			self:PlaySound(325877, "warning")
 			self:Yell(325877)
 			self:Flash(325877)
-			self:YellCountdown(325877, 3, nil, 2)
+			if self:LFR() then
+				self:YellCountdown(325877, 5)
+			else
+				self:YellCountdown(325877, 3, nil, 2)
+			end
 		else
 			self:PlaySound(325877, "alert")
 		end
@@ -379,7 +383,7 @@ do
 
 	function mod:EmberBlast(args)
 		self:GetNextBossTarget(printTarget, args.sourceGUID)
-		self:CastBar(args.spellId, 3, CL.count:format(args.spellName, emberBlastCount))
+		self:CastBar(args.spellId, self:LFR() and 5 or 3, CL.count:format(args.spellName, emberBlastCount))
 		emberBlastCount = emberBlastCount + 1
 		self:Bar(args.spellId, 20.5, CL.count:format(args.spellName, emberBlastCount))
 	end
