@@ -364,10 +364,10 @@ end
 
 function mod:GrievousStrikeRemoved(args)
 	if self:Tank(args.destName) then
-		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, args.destName))
+		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
 		self:PlaySound(args.spellId, "info")
 	elseif self:Healer() then
-		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, args.destName))
+		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
 	end
 end
 
