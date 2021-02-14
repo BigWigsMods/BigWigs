@@ -84,10 +84,10 @@ if L then
 	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Двигайся вниз |T450905:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Двигайся влево |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
-	L.dance_yell_up = "вперед" -- "Жете вперед!" -- Prance Forward!
-	L.dance_yell_right = "вправо" -- "Па вправо!" -- Shimmy right!
-	L.dance_yell_down = "назад" -- "Бризе назад!" -- Boogie down!
-	L.dance_yell_left = "влево" -- "Шажок влево!" -- Sashay left!
+	L.dance_yell_up = "Жете вперед" -- "Жете вперед!" -- Prance Forward!
+	L.dance_yell_right = "Па вправо" -- "Па вправо!" -- Shimmy right!
+	L.dance_yell_down = "Бризе назад" -- "Бризе назад!" -- Boogie down!
+	L.dance_yell_left = "Шажок влево" -- "Шажок влево!" -- Sashay left!
 end
 
 L = BigWigs:NewBossLocale("Sludgefist", "ruRU")
