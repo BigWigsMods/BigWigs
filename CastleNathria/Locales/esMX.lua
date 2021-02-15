@@ -31,8 +31,6 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "esMX")
 if L then
-	L.stage2_yell = "Las ganas de usar la reliquia me están matando! Aunque imagino que os matará a vosotros!"
-	L.stage3_yell = "Espero que esta maravilla sea tan letal como pinta!"
 	L.tear = "Ruptura" -- Short for Dimensional Tear
 	L.spirits = "Espíritus" -- Short for Fleeting Spirits
 	L.seeds = "Semillas" -- Short for Seeds of Extinction

@@ -31,8 +31,6 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "deDE")
 if L then
-	L.stage2_yell = "Die Vorfreude auf dieses Relikt bringt mich fast um! Aber wahrscheinlich tötet es eher Euch."
-	L.stage3_yell = "Hoffentlich ist dieser wundersame Gegenstand so tödlich, wie er aussieht!"
 	L.tear = "Riss" -- Short for Dimensional Tear
 	L.spirits = "Geister" -- Short for Fleeting Spirits
 	L.seeds = "Saaten" -- Short for Seeds of Extinction

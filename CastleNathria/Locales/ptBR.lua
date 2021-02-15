@@ -31,8 +31,6 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "ptBR")
 if L then
-	L.stage2_yell = "A ansiedade para usar a relíquia é de matar! Mas o mais certo é que acabe matando você."
-	L.stage3_yell = "Tomara que esse artefato seja tão letal quanto parece!"
 	L.tear = "Rasgo" -- Short for Dimensional Tear
 	L.spirits = "Espíritos" -- Short for Fleeting Spirits
 	L.seeds = "Sementes" -- Short for Seeds of Extinction

@@ -31,8 +31,6 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhTW")
 if L then
-	L.stage2_yell = "我想使用這個聖物想得要死，不過死的應該是你。"
-	L.stage3_yell = "希望這個神奇的聖物跟它看起來一樣致命！"
 	L.tear = "裂口" -- Short for Dimensional Tear
 	L.spirits = "靈魂" -- Short for Fleeting Spirits
 	L.seeds = "種子" -- Short for Seeds of Extinction

@@ -40,8 +40,6 @@ local stage3MythicTimers = {
 
 local L = mod:GetLocale()
 if L then
-	L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
-	L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
 	L.tear = "Tear" -- Short for Dimensional Tear
 	L.spirits = "Spirits" -- Short for Fleeting Spirits
 	L.seeds = "Seeds" -- Short for Seeds of Extinction
@@ -86,7 +84,7 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("RAID_BOSS_EMOTE") -- Used for Relics
-	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
+	self:Log("SPELL_CAST_SUCCESS", "EncounterEvent", 181089)
 
 	self:Log("SPELL_CAST_SUCCESS", "DimensionalTear", 328437, 342310)
 	self:Log("SPELL_AURA_APPLIED", "DimensionalTearApplied", 328448, 328468)
@@ -191,8 +189,10 @@ function mod:RAID_BOSS_EMOTE(_, msg)
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(_, msg)
-	if msg:find(L.stage2_yell) then
+function mod:EncounterEvent()
+	local prevStage = self:GetStage()
+	local nextStage = prevStage + 1
+	if nextStage == 2 then
 		self:StopBar(CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:StopBar(CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
@@ -217,7 +217,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		if self:Mythic() then
 			self:Bar(340758, 27, CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
 		end
-	elseif msg:find(L.stage3_yell) then
+	elseif nextStage == 3 then
 		self:StopBar(CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:StopBar(CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit

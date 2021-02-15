@@ -29,8 +29,6 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "itIT")
 if L then
-	-- L.stage2_yell = "The anticipation to use this relic is killing me! Though, it will more likely kill you."
-	-- L.stage3_yell = "I hope this wondrous item is as lethal as it looks!"
 	L.tear = "Squarcio" -- Short for Dimensional Tear
 	L.spirits = "Spiriti" -- Short for Fleeting Spirits
 	L.seeds = "Semi" -- Short for Seeds of Extinction
