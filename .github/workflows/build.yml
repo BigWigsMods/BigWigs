@@ -28,7 +28,7 @@ jobs:
 
       - name: Update option files
         if: always()
-        run: lua gen_option_values.lua
+        run: lua gen_option_values.lua BigWigs.toc
 
       - name: Package
         uses: BigWigsMods/packager@master

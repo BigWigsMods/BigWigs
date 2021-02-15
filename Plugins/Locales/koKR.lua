@@ -13,6 +13,7 @@ L.height = "높이"
 L.sizeDesc = "보통 고정기를 끌어서 크기를 조정합니다. 정확한 크기를 지정하고 싶다면 슬라이더를 사용하거나 직접 수치를 입력 상자안에 써넣으세요(최대값 제한 없음)."
 L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직접 수치를 입력 상자안에 써넣으세요 (최대 200)."
 --L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
+--L.transparency = "Transparency"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -73,6 +74,7 @@ L.nameplateAutoWidth = "이름표 너비와 맞추기"
 L.nameplateAutoWidthDesc = "이름표 바의 너비를 해당 이름표의 너비와 맞춥니다."
 L.nameplateOffsetY = "세로 위치 조정"
 L.nameplateOffsetYDesc = "위로 확장을 사용할 경우 이름표의 상단으로부터, 그렇지 않은 경우 이름표의 하단으로부터의 거리입니다."
+--L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
 
 L.clickableBars = "클릭 가능한 바"
 L.clickableBarsDesc = "BigWigs 바는 기본적으로 클릭을 무시합니다. 이 방법으로 커서가 바 위에 있을 때도 바 뒤의 물건을 대상 지정할 수 있고 바 뒤에 있는 대상에게 광역 주문을 사용할 수 있으며, 카메라 각도를 변경하는 등의 동작을 가능하게 합니다. |cffff4411클릭 가능한 바를 활성화하면 이런 동작들이 더이상 작동하지 않습니다.|r 당신이 바를 마우스 클릭하면 바가 클릭을 차단합니다.\n"
@@ -249,7 +251,7 @@ L.uppercaseDesc = "모든 강조 메시지들이 대문자로 표시됩니다."
 L.useIcons = "아이콘 사용"
 L.useIconsDesc = "메시지 옆에 아이콘을 표시합니다."
 L.classColors = "직업 색상"
-L.classColorsDesc = "플레이어의 이름에 직업 색상을 입힙니다."
+--L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
 L.chatMessages = "대화 창 메시지"
 L.chatMessagesDesc = "모든 BigWigs 메시지를 표시 설정과 더불어 기본 대화 창에도 출력합니다."
 

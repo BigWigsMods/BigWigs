@@ -35,6 +35,7 @@ local commandoesNeeded = 7
 local commandoAddMarks = {}
 local wickedLacerationList = {}
 local firstGoliath = false
+local playerListVolAnima = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -136,7 +137,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WickedLaceration", 333913)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WickedLaceration", 333913)
 	self:Log("SPELL_AURA_REMOVED", "WickedLacerationRemoved", 333913)
-	self:Log("SPELL_CAST_START", "HeartRend", 334765)
+	self:Log("SPELL_CAST_SUCCESS", "HeartRend", 334765)
 	self:Log("SPELL_AURA_APPLIED", "HeartRendApplied", 334765)
 	self:Log("SPELL_AURA_REMOVED", "HeartRendRemoved", 334765)
 	self:Log("SPELL_CAST_START", "SerratedSwipe", 334929)
@@ -183,6 +184,7 @@ function mod:OnEngage()
 	wickedLacerationList = {}
 	isInfoOpen = false
 	mobCollectorGoliath = {}
+	playerListVolAnima = {}
 	if self:Easy() then
 		firstGoliath = false
 	else
@@ -406,7 +408,7 @@ do
 				--	self:CustomIcon(wickedBladeMarker, playerList[1], 2)
 				--	self:CustomIcon(wickedBladeMarker, playerList[2], 3)
 				--end
-				self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
+				self:NewTargetsMessage(333387, "orange", playerList, 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 			end
 		elseif firstGUID and firstGUID ~= args.destGUID then
 			if self:Me(args.destGUID) then
@@ -416,7 +418,7 @@ do
 			playerList[2] = args.destName
 			self:CustomIcon(wickedBladeMarker, playerList[1], 2)
 			self:CustomIcon(wickedBladeMarker, playerList[2], 3)
-			self:TargetsMessage(333387, "orange", self:ColorName(playerList), 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
+			self:NewTargetsMessage(333387, "orange", playerList, 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 		end
 	end
 
@@ -447,28 +449,29 @@ function mod:WickedLacerationRemoved(args)
 	end
 end
 
-function mod:HeartRend(args)
-	self:StopBar(CL.count:format(args.spellName, heartRendCount))
-	heartRendCount = heartRendCount + 1
-	self:Bar(args.spellId, self:Mythic() and 42.1 or 45, CL.count:format(args.spellName, heartRendCount))
-end
-
 do
-	local playerList, playerIcons = mod:NewTargetList(), {}
+	local playerList = {}
+	function mod:HeartRend(args)
+		playerList = {}
+		self:StopBar(CL.count:format(args.spellName, heartRendCount))
+		heartRendCount = heartRendCount + 1
+		self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, heartRendCount))
+		if self:Dispeller("magic") then
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
 
 	function mod:HeartRendApplied(args)
-		local count = #playerIcons+1
+		local count = #playerList+1
 		playerList[count] = args.destName
-		playerIcons[count] = count
-		if self:Dispeller("magic") and count == 1 then
-			self:PlaySound(args.spellId, "alarm", nil, playerList)
-		elseif self:Me(args.destGUID) and not self:Dispeller("magic") then
+		playerList[args.destName] = count -- Set raid marker
+		if self:Me(args.destGUID) and not self:Dispeller("magic") then
 			self:PlaySound(args.spellId, "alarm")
 		end
 
 		self:CustomIcon(heartRendMarker, args.destName, count)
 
-		self:TargetsMessage(args.spellId, "orange", playerList, 4, CL.count:format(args.spellName, heartRendCount-1), nil, nil, playerIcons)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, heartRendCount-1))
 	end
 
 	function mod:HeartRendRemoved(args)
@@ -601,10 +604,12 @@ end
 
 function mod:StoneFistApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "purple")
-	if amount > 1 then
-		self:PlaySound(args.spellId, "warning")
+	if amount == 1 then
+		self:TargetMessage(args.spellId, "purple", args.destName)
+	else
+		self:NewStackMessage(args.spellId, "purple", args.destName, amount)
 	end
+	self:PlaySound(args.spellId, "warning")
 end
 
 do
@@ -641,15 +646,12 @@ function mod:CallShadowForces(args)
 	self:CDBar(args.spellId, 52, CL.count:format(L.skirmishers, shadowForcesCount))
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:VolatileAnimaAppliedInfusion(args)
-		playerList[#playerList+1] = args.destName
-		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "alert")
-		end
-		self:TargetsMessage(args.spellId, "cyan", playerList, nil, nil, nil, 2) -- Throttle to 2s
+function mod:VolatileAnimaAppliedInfusion(args)
+	playerListVolAnima[#playerListVolAnima+1] = args.destName
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alert")
 	end
+	self:NewTargetsMessage(args.spellId, "cyan", playerListVolAnima, nil, nil, nil, 2) -- Throttle to 2s
 end
 
 function mod:VolatileAnimaAppliedInfection(args)
@@ -677,7 +679,7 @@ function mod:RavenousFeast(args)
 		self:PlaySound(342733, "warning")
 		self:Flash(342733)
 	end
-	self:Bar(342733, 18.2) -- Ravenous Feast
+	self:Bar(342733, self:Mythic() and 24.3 or 18.2) -- Ravenous Feast
 end
 
 function mod:StonegaleEffigy(args)

@@ -12,6 +12,7 @@ L.height = "Height"
 L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
 L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
 L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
+L.transparency = "Transparency"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -72,6 +73,7 @@ L.nameplateAutoWidth = "Match width of nameplate"
 L.nameplateAutoWidthDesc = "Sets the width of nameplate bars to the with of their parent nameplate."
 L.nameplateOffsetY = "Y Offset"
 L.nameplateOffsetYDesc = "Offset from the top of the nameplate for upwards bars and the bottom of the nameplate for downwards bars."
+L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
 
 L.clickableBars = "Clickable Bars"
 L.clickableBarsDesc = "BigWigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
@@ -249,7 +251,7 @@ L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
 L.useIcons = "Use icons"
 L.useIconsDesc = "Show icons next to messages."
 L.classColors = "Class colors"
-L.classColorsDesc = "Colors player names by their class."
+L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
 L.chatMessages = "Chat frame messages"
 L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
 

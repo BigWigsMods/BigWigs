@@ -202,7 +202,7 @@ end
 
 function mod:JaggedClawsApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "purple")
+	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
 	if amount > 1 then
 		self:PlaySound(args.spellId, "warning")
 	end
@@ -316,7 +316,7 @@ end
 --[[ Hecutis ]]--
 
 function mod:CrushingStone(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 3)
 	if args.amount > 2 then
 		self:PlaySound(args.spellId, "info")
 	end

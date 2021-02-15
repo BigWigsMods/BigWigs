@@ -73,6 +73,11 @@ plugin.pluginOptions = {
 				end
 			end,
 		},
+		newline1 = {
+			type = "description",
+			name = "\n",
+			order = 1.5,
+		},
 		-- Begin sound dropdowns
 		onyou = {
 			type = "select",
@@ -92,6 +97,11 @@ plugin.pluginOptions = {
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
+		},
+		newline2 = {
+			type = "description",
+			name = "\n\n",
+			order = 3.5,
 		},
 		oldSounds = {
 			type = "header",
