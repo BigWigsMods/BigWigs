@@ -25,7 +25,15 @@ mod:RegisterEnableMob(
 	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
 	173464, -- Deplina
 	173448, -- Dragost
-	173469 -- Kullan
+	173469, -- Kullan
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	173604, -- Sinister Antiquarian
+	173609, -- Nathrian Conservator
+	173633, -- Nathrian Archivist
+
+	--[[ Sludgefist -> Stone Legion Generals ]]--
+	173178 -- Stone Legion Goliath
 )
 
 --------------------------------------------------------------------------------
@@ -33,6 +41,7 @@ mod:RegisterEnableMob(
 --
 
 local castCollector = {}
+local playerListFeast = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -60,6 +69,14 @@ if L then
 	L.deplina = "Deplina"
 	L.dragost = "Dragost"
 	L.kullan = "Kullan"
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	L.antiquarian = "Sinister Antiquarian"
+	L.conservator = "Nathrian Conservator"
+	L.archivist = "Nathrian Archivist"
+
+	--[[ Sludgefist -> Stone Legion Generals ]]--
+	L.goliath = "Stone Legion Goliath"
 end
 
 --------------------------------------------------------------------------------
@@ -91,6 +108,14 @@ function mod:GetOptions()
 		339557, -- Bottled Anima
 		{339528, "TANK"}, -- Warped Desires
 		{339525, "SAY", "SAY_COUNTDOWN"}, -- Concentrate Anima
+
+		--[[ Shriekwing -> Xy'mox ]]--
+		{342770, "EMPHASIZE"}, -- Eradication Seeds
+		{339975, "TANK_HEALER"}, -- Grievous Strike
+		{342752, "HEALER"}, -- Weeping Burden
+
+		--[[ Sludgefist -> Stone Legion Generals ]]--
+		343271, -- Ravenous Feast
 	},{
 		[343322] = L.moldovaak,
 		[343320] = L.caramain,
@@ -105,6 +130,10 @@ function mod:GetOptions()
 		[339553] = L.deplina,
 		[339528] = L.dragost,
 		[339525] = L.kullan,
+		[342770] = L.antiquarian,
+		[339975] = L.conservator,
+		[342752] = L.archivist,
+		[343271] = L.goliath,
 	},{
 		[343302] = CL.knockback, -- Granite Wings (Knockback)
 		[341352] = CL.traps, -- Mastercrafted Gamesman's Snare (Traps)
@@ -114,6 +143,7 @@ end
 
 function mod:OnBossEnable()
 	castCollector = {}
+	playerListFeast = {}
 
 	--[[ General ]]--
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
@@ -141,8 +171,19 @@ function mod:OnBossEnable()
 	self:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 	self:Log("SPELL_AURA_APPLIED", "WarpedDesiresApplied", 339528)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WarpedDesiresApplied", 339528)
+	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnima", 339527)
 	self:Log("SPELL_AURA_APPLIED", "ConcentrateAnimaApplied", 339525)
 	self:Log("SPELL_AURA_REMOVED", "ConcentrateAnimaRemoved", 339525)
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	self:Log("SPELL_CAST_SUCCESS", "EradicationSeeds", 342770)
+	self:Log("SPELL_AURA_APPLIED", "GrievousStrikeApplied", 339975)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "GrievousStrikeApplied", 339975)
+	self:Log("SPELL_AURA_REMOVED", "GrievousStrikeRemoved", 339975)
+	self:Log("SPELL_CAST_SUCCESS", "WeepingBurden", 342752)
+
+	--[[ Sludgefist -> Stone Legion Generals ]]--
+	self:Log("SPELL_CAST_SUCCESS", "RavenousFeast", 343271)
 end
 
 --------------------------------------------------------------------------------
@@ -208,12 +249,12 @@ function mod:Rotting(args)
 	local amount = args.amount or 1
 	if amount % 5 == 0 then
 		if self:Me(args.destGUID) then
-			self:StackMessage(args.spellId, args.destName, amount, "blue")
+			self:NewStackMessage(args.spellId, "blue", args.destName, amount)
 			if amount > 14 then
 				self:PlaySound(args.spellId, "info")
 			end
 		elseif (self:Tank() or self:Dispeller("disease", nil, args.spellId)) and self:Tank(args.destName) then
-			self:StackMessage(args.spellId, args.destName, amount, "purple")
+			self:NewStackMessage(args.spellId, "purple", args.destName, amount, 15)
 			if amount > 14 then
 				self:PlaySound(args.spellId, "info")
 			end
@@ -258,17 +299,20 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, castGUID, spellId)
 end
 
 function mod:WarpedDesiresApplied(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 2)
 	if args.amount then -- 2+
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
 
 do
-	local playerList = mod:NewTargetList()
+	local playerList = {}
+	function mod:ConcentrateAnima()
+		playerList = {}
+	end
 	function mod:ConcentrateAnimaApplied(args)
 		playerList[#playerList+1] = args.destName
-		self:TargetsMessage(args.spellId, "orange", playerList)
+		self:NewTargetsMessage(args.spellId, "orange", playerList)
 		self:TargetBar(args.spellId, 10, args.destName)
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
@@ -282,5 +326,68 @@ function mod:ConcentrateAnimaRemoved(args)
 	self:StopBar(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+--[[ Shriekwing -> Xy'mox ]]--
+do
+	local prev = 0
+	function mod:EradicationSeeds(args)
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			self:Message(args.spellId, "orange")
+			self:Bar(args.spellId, 3, CL.explosion)
+			self:PlaySound(args.spellId, "warning")
+		end
+	end
+end
+
+function mod:GrievousStrikeApplied(args)
+	local amount = args.amount or 1
+	if amount == 1 then
+		if self:Tank(args.destName) then
+			self:TargetMessage(args.spellId, "purple", args.destName)
+			self:PlaySound(args.spellId, "long")
+		elseif self:Healer() then
+			self:TargetMessage(args.spellId, "orange", args.destName)
+		end
+	else
+		if self:Tank(args.destName) then
+			self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+			self:PlaySound(args.spellId, "long")
+		elseif self:Healer() then
+			self:NewStackMessage(args.spellId, "orange", args.destName, amount)
+		end
+	end
+end
+
+function mod:GrievousStrikeRemoved(args)
+	if self:Tank(args.destName) then
+		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+		self:PlaySound(args.spellId, "info")
+	elseif self:Healer() then
+		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+	end
+end
+
+do
+	local prev = 0
+	function mod:WeepingBurden(args)
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			self:Message(args.spellId, "yellow", CL.on_group:format(args.spellName))
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+end
+
+--[[ Sludgefist -> Stone Legion Generals ]]--
+function mod:RavenousFeast(args)
+	playerListFeast[#playerListFeast+1] = args.destName
+	self:NewTargetsMessage(args.spellId, "orange", playerListFeast)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alarm")
 	end
 end

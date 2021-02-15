@@ -10,6 +10,12 @@ if L then
 	 L.killed = "%s getötet"
 end
 
+L = BigWigs:NewBossLocale("Sun King's Salvation", "deDE")
+if L then
+	L.shield_removed = "%s entfernt nach %.1fs" -- "Shield removed after 1.1s" s = seconds
+	L.shield_remaining = "%s verbleibend: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
+end
+
 L = BigWigs:NewBossLocale("Hungering Destroyer", "deDE")
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
@@ -25,8 +31,6 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "deDE")
 if L then
-	L.stage2_yell = "Die Vorfreude auf dieses Relikt bringt mich fast um! Aber wahrscheinlich tötet es eher Euch."
-	L.stage3_yell = "Hoffentlich ist dieser wundersame Gegenstand so tödlich, wie er aussieht!"
 	L.tear = "Riss" -- Short for Dimensional Tear
 	L.spirits = "Geister" -- Short for Fleeting Spirits
 	L.seeds = "Saaten" -- Short for Seeds of Extinction
@@ -78,10 +82,10 @@ if L then
 	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Tanze nach unten |T450905:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Tanze nach links |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
-	L.dance_yell_up = "vorwärts" -- Tänzelt vorwärts!
-	L.dance_yell_right = "rechts" -- Schlenker nach rechts!
-	L.dance_yell_down = "unten" -- Tänzelt nach unten!
-	L.dance_yell_left = "links" -- Gleitet nach links!
+	L.dance_yell_up = "Tänzelt vorwärts" -- Tänzelt vorwärts!
+	L.dance_yell_right = "Schlenker nach rechts" -- Schlenker nach rechts!
+	L.dance_yell_down = "Tänzelt nach unten" -- Tänzelt nach unten!
+	L.dance_yell_left = "Gleitet nach links" -- Gleitet nach links!
 end
 
 L = BigWigs:NewBossLocale("Sludgefist", "deDE")
@@ -156,4 +160,12 @@ if L then
 	L.deplina = "Deplina"
 	L.dragost = "Dragost"
 	L.kullan = "Kullan"
+
+	--[[ Shriekwing -> Xy'mox ]]--
+	L.antiquarian = "Finstere Antiquarin"
+	L.conservator = "Konservator von Nathria"
+	L.archivist = "Archivarin von Nathria"
+
+	--[[ Sludgefist -> Stone Legion Generals ]]--
+	L.goliath = "Goliath der Steinlegion"
 end

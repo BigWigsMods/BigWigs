@@ -307,7 +307,7 @@ end
 
 function mod:WarpedDesiresApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "purple")
+	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
 	if amount > 1 and not self:Tanking("boss1") then
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -470,7 +470,7 @@ end
 
 function mod:UnconscionableGuiltApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "yellow")
+	self:NewStackMessage(args.spellId, "yellow", args.destName, amount)
 	self:PlaySound(args.spellId, "alarm", nil, args.destName)
 end
 

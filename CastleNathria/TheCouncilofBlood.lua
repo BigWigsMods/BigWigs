@@ -55,10 +55,10 @@ if L then
 	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance Down |T450905:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance Left |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
-	L.dance_yell_up = "Forward" -- Prance Forward!
-	L.dance_yell_right = "right" -- Shimmy right!
-	L.dance_yell_down = "down" -- Boogie down!
-	L.dance_yell_left = "left" -- Sashay left!
+	L.dance_yell_up = "Prance Forward" -- Prance Forward!
+	L.dance_yell_right = "Shimmy right" -- Shimmy right!
+	L.dance_yell_down = "Boogie down" -- Boogie down!
+	L.dance_yell_left = "Sashay left" -- Sashay left!
 end
 
 --------------------------------------------------------------------------------
@@ -132,6 +132,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SintouchedBlade", 346790)
 
 	--[[ Baroness Frieda ]]--
+	self:Log("SPELL_CAST_SUCCESS", "DrainEssence", 346654)
 	self:Log("SPELL_AURA_APPLIED", "DrainEssenceApplied", 346651)
 	self:Log("SPELL_CAST_START", "DreadboltVolley", 337110)
 	self:Log("SPELL_CAST_START", "PridefulEruption", 346657)
@@ -355,7 +356,7 @@ function mod:DuelistsRiposte(args)
 end
 
 function mod:DuelistsRiposteApplied(args)
-	self:StackMessage(args.spellId, args.destName, args.amount, "purple")
+	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 2)
 end
 
 do
@@ -397,16 +398,18 @@ end
 
 --[[ Baroness Frieda ]]--
 do
-	local playerList = mod:NewTargetList()
+	local playerList = {}
+	function mod:DrainEssence()
+		playerList = {}
+		self:CDBar(346651, self:Mythic() and 22.5 or bossesKilled == 1 and 20 or bossesKilled == 2 and 45 or 25)
+	end
+
 	function mod:DrainEssenceApplied(args)
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
-		if #playerList == 1 then
-			self:CDBar(args.spellId, self:Mythic() and 22.5 or bossesKilled == 1 and 20 or bossesKilled == 2 and 45 or 25)
-		end
-		self:TargetsMessage(args.spellId, "cyan", playerList, 3)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 3)
 	end
 end
 
@@ -452,7 +455,7 @@ end
 
 function mod:SoulSpikesApplied(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "cyan")
+	self:NewStackMessage(args.spellId, "orange", args.destName, amount)
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -474,10 +477,10 @@ end
 function mod:EvasiveLungeApplied(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) and not self:Tank() then
-		self:StackMessage(327497, args.destName, amount, "blue")
+		self:NewStackMessage(327497, "blue", args.destName, amount)
 		self:PlaySound(327497, "alarm")
 	elseif self:Tank() and self:Tank(args.destName) then
-		self:StackMessage(327497, args.destName, amount, "purple")
+		self:NewStackMessage(327497, "purple", args.destName, amount, 2)
 	end
 end
 
@@ -628,17 +631,22 @@ end
 
 --[[ Mythic ]]--
 do
-	local playerList = mod:NewTargetList()
+	local playerList = {}
+	local prev = 0
 	function mod:DancingFeverApplied(args)
+		local t = args.time
+		if t-prev > 3 then
+			prev = t
+			playerList = {}
+			dancingFeverCount = dancingFeverCount + 1
+			self:CDBar(args.spellId, 60, CL.count:format(args.spellName, dancingFeverCount))
+		end
+
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 		end
-		if #playerList == 1 then
-			dancingFeverCount = dancingFeverCount + 1
-			self:CDBar(args.spellId, 60, CL.count:format(args.spellName, dancingFeverCount)) -- As of 12/22 NA Reset, Dancing fever is now applied on a consistent minute timer.
-		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 5, CL.count:format(args.spellName, dancingFeverCount-1))
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 5, CL.count:format(args.spellName, dancingFeverCount-1))
 	end
 end
 
