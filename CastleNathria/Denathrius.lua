@@ -570,7 +570,9 @@ function mod:Ravage(args)
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, ravageCount))
 	ravageCount = ravageCount + 1
-	self:Bar(args.spellId, self:Mythic() and 58.4 or 58, CL.count:format(args.spellName, ravageCount))
+	if ravageCount < 4 then
+		self:Bar(args.spellId, self:Mythic() and 58.4 or 58, CL.count:format(args.spellName, ravageCount))
+	end
 end
 
 -- Intermission: March of the Penitent
@@ -821,7 +823,7 @@ end
 do
 	local prev = 0
 	function mod:GroundDamage(args)
-		if self:Me(args.destGUID) and ravageCount < 3 then -- Reset ravageCount at start of stage 2 so Rancor is not affected
+		if self:Me(args.destGUID) and ravageCount < 4 then -- Reset ravageCount at start of stage 2 so Rancor is not affected
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
