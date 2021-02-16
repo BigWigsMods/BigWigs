@@ -13,7 +13,7 @@ L.height = "Altura"
 L.sizeDesc = "Normalmente você define o tamanho arrastando a âncora. Se você precisa de um tamanho exato, você pode usar este controle deslizante ou digitar o valor na caixa, que não tem um tamanho máximo."
 L.fontSizeDesc = "Ajusta o tamanho da fonte usando a barra deslizante ou digitando o valor na caixa que tem um limite muito maior de 200."
 L.disableDesc = "Você está prestes a desabilitar a função '%s' e isso |cffff4411não é recomendado|r.\n\nVocê tem certeza disso?"
---L.transparency = "Transparency"
+L.transparency = "Transparência"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -74,7 +74,7 @@ L.nameplateAutoWidth = "Combinar a largura da placa de identificação"
 L.nameplateAutoWidthDesc = "Configura a largura da barra de identificação com a largura da barra de identificação pai."
 L.nameplateOffsetY = "Deslocamento Y"
 L.nameplateOffsetYDesc = "Deslocamento de cima da barra de identificação para cima e a de baixo da barra de identificação para baixo das barras."
---L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
+L.nameplateAlphaDesc = "Controla o quão transparente serão as barras de identificação."
 
 L.clickableBars = "Barras clicáveis"
 L.clickableBarsDesc = "As barras do BigWigs são clicáveis por padrão. Desta forma você pode mirar em objetos e lançar feitiços AoE através delas, trocar o ângulo da câmera, e assim sucessivamente, sem precisar do cursor estar em cima das barras. |cffff4411Se habilitar as barras clicáveis, isto deixará de funcionar.|r As barras interceptarão qualquer clique do mouse feito nelas."
@@ -251,7 +251,7 @@ L.uppercaseDesc = "Todas as mensagens enfatizadas serão convertidas para letras
 L.useIcons = "Usar ícones"
 L.useIconsDesc = "Exibir ícones ao lado das mensagens."
 L.classColors = "Cores de classe"
---L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
+L.classColorsDesc = "As mensagens as vezes terão os nomes dos jogadores. Habilitar essa opção irá colorir esses nomes usando as cores de classe."
 L.chatMessages = "Mensagens no chat"
 L.chatMessagesDesc = "Mostra todas as mensagens na janela de chat padrão além da tela de configuração."
 
