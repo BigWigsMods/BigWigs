@@ -174,6 +174,7 @@ function mod:OnBossEnable()
 
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "CloakOfFlamesApplied", 337859, 343026)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", "UnleashedPyroclasmInterrupted", "boss1", "boss2") -- No SPELL_INTERRUPT
 	self:Log("SPELL_AURA_REMOVED", "CloakOfFlamesRemoved", 337859, 343026)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 328579) -- Smoldering Remnants
@@ -580,7 +581,7 @@ end
 
 -- Mythic
 do
-	local prevTime, prevAmount = 0, 0
+	local prevTime, prevAmount, pyroclasmInterrupted = 0, 0, false
 	function mod:CloakOfFlamesApplied(args)
 		prevTime, prevAmount = args.time, args.amount
 		self:Message(args.spellId, "red", CL.count:format(CL.shield, cloakOfFlamesCount))
@@ -588,11 +589,18 @@ do
 		self:CastBar(args.spellId, 6, CL.count:format(CL.shield, cloakOfFlamesCount))
 		cloakOfFlamesCount = cloakOfFlamesCount + 1
 		self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(CL.shield, cloakOfFlamesCount))
+		pyroclasmInterrupted = false
+	end
+
+	function mod:UnleashedPyroclasmInterrupted(_, _, _, spellId)
+		if spellId == 337865 then -- Unleashed Pyroclasm
+			pyroclasmInterrupted = true
+		end
 	end
 
 	function mod:CloakOfFlamesRemoved(args)
 		local amount = args.amount or 0
-		if amount > 0 then -- Shield blew up
+		if not pyroclasmInterrupted then -- Shield wasn't broken
 			local percentRemaining = amount / prevAmount * 100
 			self:Message(args.spellId, "red", L.shield_remaining:format(CL.shield, self:AbbreviateNumber(amount), percentRemaining))
 		else
