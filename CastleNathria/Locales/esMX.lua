@@ -12,8 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Sun King's Salvation", "esMX")
 if L then
-	--L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
-	--L.shield_remaining = "%s remaining: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
+	L.shield_removed = "%s removido después de %.1fs" -- "Shield removed after 1.1s" s = seconds
+	L.shield_remaining = "%s restante: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
 end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "esMX")
@@ -82,10 +82,10 @@ if L then
 	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Baila hacia abajo |T450905:0:0:0:0:64:64:4:60:4:60|t"
 	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Baila a la izquierda |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
-	--L.dance_yell_up = "Prance Forward" -- Prance Forward!
-	--L.dance_yell_right = "Shimmy right" -- Shimmy right!
-	--L.dance_yell_down = "Boogie down" -- Boogie down!
-	--L.dance_yell_left = "Sashay left" -- Sashay left!
+	L.dance_yell_up = "Un paso al frente" -- Prance Forward!
+	L.dance_yell_right = "Hombros a la derecha" -- Shimmy right!
+	L.dance_yell_down = "A bailar" -- Boogie down!
+	L.dance_yell_left = "Chassé a la izquierda" -- Sashay left!
 end
 
 L = BigWigs:NewBossLocale("Sludgefist", "esMX")
