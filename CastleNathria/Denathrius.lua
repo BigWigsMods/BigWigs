@@ -32,6 +32,7 @@ local addCount = 1
 local balefulShadowsList = {}
 local mobCollector = {}
 local balefulShadowCount = 1
+local mirrorList = {}
 local mirrorCount = 0
 local isMoving = false
 
@@ -287,7 +288,6 @@ function mod:OnEngage()
 	balefulShadowsList = {}
 	mobCollector = {}
 	balefulShadowCount = 1
-	mirrorCount = 0
 
 	burdenStackTable = {
 		[0] = 0,
@@ -716,6 +716,12 @@ function mod:IndignationSuccess(args) -- not setting stage yet, incase some spel
 	self:StopBar(CL.count:format(self:SpellName(330137), massacreCount)) -- Massacre
 	self:StopBar(CL.count:format(CL.adds, addCount)) -- Adds
 	self:StopBar(CL.stage:format(3)) -- Stage 3
+
+	if self:Mythic() then
+		mirrorList = {}
+		mirrorCount = 0
+		self:OpenInfo(338738, self:SpellName(338738)) -- Through the Mirror
+	end
 end
 
 function mod:IndignationEnd(args)
@@ -735,7 +741,6 @@ function mod:IndignationEnd(args)
 	massacreCount = 1
 	ravageCount = 1
 	bloodPriceCount = 1
-	mirrorCount = 0
 
 	self:Bar(332619, self:Mythic() and 5.4 or 6, CL.count:format(CL.knockback, shatteringPainCount)) -- Shattering Pain
 	self:Bar(332794, timers[self:GetStage()][332794][fatalFinesseCount], CL.count:format(self:SpellName(332794), fatalFinesseCount)) -- Fatal Finesse
@@ -743,7 +748,6 @@ function mod:IndignationEnd(args)
 	if self:Mythic() then
 		self:Bar(326851, 12.6, CL.count:format(self:SpellName(326851), bloodPriceCount)) -- Blood Price
 		self:Bar(333979, 62, CL.count:format(self:SpellName(333979), ravageCount)) -- Sinister Reflection (Reuse ravageCount for Mythic)
-		self:OpenInfo(338738, self:SpellName(338738)) -- Through the Mirror
 	else
 		self:Bar(332849, 42, CL.count:format(self:SpellName(332937), ravageCount))
 		self:Bar(333932, timers[self:GetStage()][333932][handCount], CL.count:format(self:SpellName(333932), handCount)) -- Hand of Destruction
@@ -930,7 +934,8 @@ do
 			self:Message(args.spellId, "green", CL.you:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
-		if UnitIsPlayer(args.destName) then -- Smoldering Ires also get this buff
+		if UnitIsPlayer(args.destName) and not mirrorList[args.destName] then -- Smoldering Ires also get this buff
+			mirrorList[args.destName] = true
 			mirrorCount = mirrorCount + 1
 			mod:UpdateInfoBoxStage3()
 		end
@@ -942,7 +947,8 @@ do
 			self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
-		if UnitIsPlayer(args.destName) then -- Smoldering Ires also get this buff
+		if UnitIsPlayer(args.destName) and mirrorList[args.destName] then -- Smoldering Ires also get this buff
+			mirrorList[args.destName] = nil
 			mirrorCount = mirrorCount - 1
 			mod:UpdateInfoBoxStage3()
 		end
