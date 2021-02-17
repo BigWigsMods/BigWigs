@@ -603,7 +603,9 @@ function mod:DanseMacabreBegins(args)
 	self:PauseBar(330978) -- Dredger Servants
 	self:PauseBar(330965) -- Castellans Cadre
 	self:PauseBar(346303) -- Violent Uproar
-	self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
+	if self:Mythic() then -- Dancing Fever does not pause but has a timer reset when dancing (Can it go below 60s? Unconfirmed.)
+		self:CDBar(347350, 43, CL.count:format(args.spellName, dancingFeverCount)) -- Dancing Fever
+	end
 end
 
 function mod:DanseMacabreOver(args)
@@ -619,7 +621,6 @@ function mod:DanseMacabreOver(args)
 	self:ResumeBar(330978) -- Dredger Servants
 	self:ResumeBar(330965) -- Castellans Cadre
 	self:ResumeBar(346303) -- Violent Uproar
-	self:ResumeBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 end
 
 function mod:WrongMovesApplied(args)
