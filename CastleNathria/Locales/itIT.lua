@@ -1,30 +1,30 @@
 local L = BigWigs:NewBossLocale("Shriekwing", "itIT")
 if not L then return end
 if L then
-	-- L.pickup_lantern = "%s picked up the lantern!"
-	-- L.dropped_lantern = "Lantern dropped by %s!"
+	L.pickup_lantern = "%s ha raccolto la lanterna!"
+	L.dropped_lantern = "Lantern lasciata da %s!"
 end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "itIT")
 if L then
-	-- L.killed = "%s Killed"
+	L.killed = "%s Ucciso"
 end
 
 L = BigWigs:NewBossLocale("Sun King's Salvation", "itIT")
 if L then
-	--L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
-	--L.shield_remaining = "%s remaining: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
+	L.shield_removed = "%s rimosso dopo %.1fs" -- "Shield removed after 1.1s" s = seconds
+	L.shield_remaining = "%s rimanente: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
 end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "itIT")
 if L then
 	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
-	--L.custom_on_repeating_yell_miasma = "Repeating Miasma Health Yell"
-	--L.custom_on_repeating_yell_miasma_desc = "Repeating yell messages for Gluttonous Miasma to let others know when you are below 75% health."
+	L.custom_on_repeating_yell_miasma = "Urlo ripetitivo della vita per Miasma"
+	L.custom_on_repeating_yell_miasma_desc = "Urla messaggi ripetitivi con Miasma Insaziabile per segnalare agli altri quando sei sotto il 75% di vita."
 
-	--L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
-	--L.custom_on_repeating_say_laser_desc = "Repeating say messages for Volatile Ejection to help when moving into chat range of players that didn't see your first message."
+	L.custom_on_repeating_say_laser = "Messaggio Espulsione Instabile"
+	L.custom_on_repeating_say_laser_desc = "Ripeti messaggi per Espulsione Instabile per aiutare a muovere i giocatori che non hanno visto il primo messaggio."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "itIT")
@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "itIT")
 if L then
 	-- L.times = "%dx %s"
 
-	-- L.level = "%s (Level |cffffff00%d|r)"
-	-- L.full = "%s (|cffff0000FULL|r)"
+	L.level = "%s (Livello |cffffff00%d|r)"
+	L.full = "%s (|cffff0000PIENO|r)"
 
 	-- L.anima_adds = "Concentrate Anima Adds"
 	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
@@ -64,8 +64,8 @@ if L then
 	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
 	-- L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
 
-	-- L.custom_off_select_boss_order = "Mark Boss Kill Order"
-	-- L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
+	L.custom_off_select_boss_order = "Icone ordine di uccisione Boss"
+	L.custom_off_select_boss_order_desc = "Segna l'ordine di uccisione dei boss con croce {rt7}. Richiede capo incursione o assistente per marchiare."
 	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
 	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
 	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
