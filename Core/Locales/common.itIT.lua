@@ -83,6 +83,7 @@ L.link = "Vincolo"
 -- Common ability name replacements
 --L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "Raggio" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
+L.beams = "Raggi" -- Plural of L.beam
 L.bomb = "Bomba" -- Used for debuffs that make players explode
 L.explosion = "Esplosione" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Ossessione" -- Used when a boss or add is chasing/fixated on a player

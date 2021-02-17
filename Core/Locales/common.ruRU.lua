@@ -92,6 +92,7 @@ L.seconds = "%.1fс" -- 1.1 seconds
 -- Common ability name replacements
 L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "Луч" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
+L.beams = "Лучи" -- Plural of L.beam
 L.bomb = "Бомба" -- Used for debuffs that make players explode
 L.explosion = "Взрыв" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Фиксация" -- Used when a boss or add is chasing/fixated on a player
