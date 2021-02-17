@@ -604,7 +604,7 @@ function mod:DanseMacabreBegins(args)
 	self:PauseBar(330965) -- Castellans Cadre
 	self:PauseBar(346303) -- Violent Uproar
 	if self:Mythic() then -- Dancing Fever does not pause but has a timer reset when dancing (Can it go below 60s? Unconfirmed.)
-		self:CDBar(347350, 43, CL.count:format(args.spellName, dancingFeverCount)) -- Dancing Fever
+		self:CDBar(347350, 43, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 	end
 end
 
