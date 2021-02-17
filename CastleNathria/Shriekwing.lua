@@ -108,7 +108,9 @@ function mod:OnEngage()
 	self:CDBar(345397, 13, CL.count:format(self:SpellName(345397), waveOfBloodCount)) -- Wave of Blood
 	self:CDBar(342074, 14.5, CL.count:format(self:SpellName(342074), echolocationCount)) -- Echolocation
 	self:CDBar(343005, 20.5,  CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
-	self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
+	if not self:Easy() then
+		self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
+	end
 	self:CDBar(330711, 48.5, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:CDBar(328921, 105) -- Blood Shroud
 
@@ -280,7 +282,9 @@ function mod:BloodShroudRemoved(args)
 	self:CDBar(342074, 15.5, CL.count:format(self:SpellName(342074), echolocationCount)) -- Echolocation
 	self:CDBar(345397, 12.2, CL.count:format(self:SpellName(345397), waveOfBloodCount)) -- Wave of Blood
 	self:CDBar(343005, 20.5, CL.count:format(self:SpellName(343005), blindSwipeCount)) -- Blind Swipe
-	self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
+	if not self:Easy() then
+		self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
+	end
 	self:CDBar(330711, 48.5, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
 	self:CDBar(328921, 106) -- Blood Shroud
 end
