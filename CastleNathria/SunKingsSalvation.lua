@@ -600,12 +600,12 @@ do
 
 	function mod:CloakOfFlamesRemoved(args)
 		local amount = args.amount or 0
-		if not pyroclasmInterrupted then -- Shield wasn't broken
-			local percentRemaining = amount / prevAmount * 100
-			self:Message(args.spellId, "red", L.shield_remaining:format(CL.shield, self:AbbreviateNumber(amount), percentRemaining))
-		else
+		if pyroclasmInterrupted or amount == 0 then -- Shield Broken
 			self:Message(args.spellId, "green", L.shield_removed:format(CL.shield, args.time - prevTime))
 			self:StopBar(CL.cast:format(CL.count:format(CL.shield, cloakOfFlamesCount-1)))
+		else
+			local percentRemaining = amount / prevAmount * 100
+			self:Message(args.spellId, "red", L.shield_remaining:format(CL.shield, self:AbbreviateNumber(amount), percentRemaining))
 		end
 		self:PlaySound(args.spellId, "info")
 	end
