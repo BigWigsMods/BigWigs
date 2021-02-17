@@ -27,10 +27,8 @@ local GetTime = GetTime
 7. Looking For Raid
 8. Mythic Keystone
 9. 40 Player
-10. nil
 11. Heroic Scenario
 12. Normal Scenario
-13. nil
 14. Normal
 15. Heroic
 16. Mythic
@@ -38,21 +36,31 @@ local GetTime = GetTime
 18. Event
 19. Event
 20. Event Scenario
-21. nil
-22. nil
 23. Mythic
 24. Timewalking
 25. World PvP Scenario
-26. nil
-27. nil
-28. nil
 29. PvEvP Scenario
 30. Event
-31. nil
 32. World PvP Scenario
 33. Timewalking
 34. PvP
-/run for i=1, 40 do print(i..".", (GetDifficultyInfo(i))) end
+38. Normal
+39. Heroic
+40. Mythic
+45. PvP
+147. Normal
+149. Heroic
+150. Normal
+151. Looking For Raid
+152. Visions of N'Zoth
+153. Teeming Island
+167. Torghast
+168. Path of Ascension: Courage
+169. Path of Ascension: Loyalty
+170. Path of Ascension: Wisdom
+171. Path of Ascension: Humility
+172. World Boss
+/run for i=1, 1000 do local n = GetDifficultyInfo(i) if n then print(i..".", n) end end
 ]]--
 
 -------------------------------------------------------------------------------
