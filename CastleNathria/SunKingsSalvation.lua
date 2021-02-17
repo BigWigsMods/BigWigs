@@ -119,8 +119,8 @@ function mod:GetOptions()
 		-- High Torturer Darithos
 		{328889, "SAY", "PROXIMITY"}, -- Greater Castigation
 		-- Mythic
-		337859, -- Cloak of Flames
-		343026, -- Damage Cloak of Flames
+		337859, -- Cloak of Flames // Healing absorb
+		343026, -- Cloak of Flames // Damage absorb
 	},{
 		["stages"] = "general",
 		[326455] = -21966, -- Shade of Kael'thas
@@ -341,7 +341,7 @@ function mod:ReflectionOfGuiltApplied(args)
 		self:Bar(329518, 29.5, CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 
 		if self:Mythic() then
-			self:Bar(343026, 38.9, CL.count:format(self:SpellName(343026), cloakOfFlamesCount))
+			self:Bar(343026, 38.9, CL.count:format(CL.shield, cloakOfFlamesCount))
 		end
 	end
 end
@@ -412,7 +412,7 @@ function mod:ReflectionOfGuiltRemoved()
 	self:StopBar(CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(325877), emberBlastCount-1))) -- Ember Blast
 	self:CancelSayCountdown(325877) -- Ember Blast
-	self:StopBar(CL.count:format(self:SpellName(343026), cloakOfFlamesCount)) -- Cloak of Flames
+	self:StopBar(CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
 
 	local stage = self:GetStage() + 1
 	if stage == 3 then return end -- You win
