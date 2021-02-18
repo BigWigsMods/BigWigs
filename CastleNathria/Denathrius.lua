@@ -934,7 +934,7 @@ do
 			self:Message(args.spellId, "green", CL.you:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
-		if UnitIsPlayer(args.destName) and not mirrorList[args.destName] then -- Smoldering Ires also get this buff
+		if bit.band(args.destFlags, 0x400) == 0x400 and not mirrorList[args.destName] then -- COMBATLOG_OBJECT_TYPE_PLAYER
 			mirrorList[args.destName] = true
 			mirrorCount = mirrorCount + 1
 			mod:UpdateInfoBoxStage3()
@@ -947,7 +947,7 @@ do
 			self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
-		if UnitIsPlayer(args.destName) and mirrorList[args.destName] then -- Smoldering Ires also get this buff
+		if bit.band(args.destFlags, 0x400) == 0x400 and mirrorList[args.destName] then -- COMBATLOG_OBJECT_TYPE_PLAYER
 			mirrorList[args.destName] = nil
 			mirrorCount = mirrorCount - 1
 			mod:UpdateInfoBoxStage3()
