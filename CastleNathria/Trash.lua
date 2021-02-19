@@ -314,7 +314,7 @@ do
 	end
 	function mod:ConcentrateAnimaApplied(args)
 		playerList[#playerList+1] = args.destName
-		self:NewTargetsMessage(args.spellId, "orange", playerList)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 3)
 		self:TargetBar(args.spellId, 10, args.destName)
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
