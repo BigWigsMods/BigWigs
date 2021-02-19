@@ -89,7 +89,7 @@ function mod:GetOptions()
 		{342544, "SAY"}, -- Pulverizing Meteor
 		343063, -- Stone Spike
 		{342733, "FLASH"}, -- Ravenous Feast
-		342985, -- Stonegale Effigy
+		343898, -- Soultaint Effigy
 
 		--[[ Intermission ]]--
 		332406, -- Anima Infusion
@@ -138,6 +138,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WickedLaceration", 333913)
 	self:Log("SPELL_AURA_REMOVED", "WickedLacerationRemoved", 333913)
 	self:Log("SPELL_CAST_SUCCESS", "HeartRend", 334765)
+	self:Log("SPELL_CAST_SUCCESS", "HeartRendSuccess", 334765)
 	self:Log("SPELL_AURA_APPLIED", "HeartRendApplied", 334765)
 	self:Log("SPELL_AURA_REMOVED", "HeartRendRemoved", 334765)
 	self:Log("SPELL_CAST_START", "SerratedSwipe", 334929)
@@ -151,7 +152,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "StonewrathExhaust", 342722)
 	self:Log("SPELL_CAST_START", "ShatteringBlast", 332683)
 	self:Log("SPELL_CAST_SUCCESS", "RavenousFeast", 342732) -- Faster than 342733
-	self:Log("SPELL_AURA_APPLIED", "StonegaleEffigy", 343898)
+	self:Log("SPELL_AURA_APPLIED", "SoultaintEffigy", 343898)
 
 	--[[ Stage Two: Grashaal's Blitz ]]--
 	self:Log("SPELL_AURA_APPLIED", "GraniteFormApplied", 329808)
@@ -450,11 +451,19 @@ end
 
 do
 	local playerList = {}
+	local prevStage, prevCount = 1, 0
 	function mod:HeartRend(args)
 		playerList = {}
-		self:StopBar(CL.count:format(args.spellName, heartRendCount))
-		heartRendCount = heartRendCount + 1
-		self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, heartRendCount))
+		prevStage = self:GetStage()
+		prevCount = heartRendCount
+	end
+
+	function mod:HeartRendSuccess(args)
+		if self:GetStage() == prevStage then -- Only if we didn't transition during cast
+			self:StopBar(CL.count:format(args.spellName, heartRendCount))
+			heartRendCount = heartRendCount + 1
+			self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, heartRendCount))
+		end
 		if self:Dispeller("magic") then
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -470,7 +479,11 @@ do
 
 		self:CustomIcon(heartRendMarker, args.destName, count)
 
-		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, heartRendCount-1))
+		if self:GetStage() ~= prevStage then -- We transitioned during the cast and heartRendCount was reset to 1
+			self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, prevCount))
+		else
+			self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, heartRendCount-1))
+		end
 	end
 
 	function mod:HeartRendRemoved(args)
@@ -680,8 +693,8 @@ function mod:RavenousFeast(args)
 	self:Bar(342733, self:Mythic() and 24.3 or 18.2) -- Ravenous Feast
 end
 
-function mod:StonegaleEffigy(args)
-	self:Message(342985, "cyan")
-	self:PlaySound(342985, "alert")
+function mod:SoultaintEffigy(args)
+	self:Message(args.spellId, "yellow", CL.percent:format(30, args.spellName))
+	self:PlaySound(args.spellId, "alert")
 	self:StopBar(342733) -- Ravenous Feast
 end
