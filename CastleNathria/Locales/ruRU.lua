@@ -104,6 +104,7 @@ if L then
 	L.second_blade = "Второе лезвие"
 
 	L.skirmishers = "Войска" -- Short for Stone Legion Skirmishers
+	L.eruption = "Взрыв" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "Всегда показывать полосы способностей"
 	L.custom_on_stop_timers_desc = "Пока доступно только для тестирования"

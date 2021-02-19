@@ -104,6 +104,7 @@ if L then
 	L.second_blade = "第二刀"
 
 	L.skirmishers = "鬥爭者" -- Short for Stone Legion Skirmishers
+	--L.eruption = "Eruption" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "總是顯示計時器"
 	-- L.custom_on_stop_timers_desc = "Just for testing right now"

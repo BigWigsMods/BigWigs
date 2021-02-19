@@ -47,6 +47,7 @@ if L then
 	L.second_blade = "Second Blade"
 
 	L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+	L.eruption = "Eruption" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Just for testing right now"
@@ -120,6 +121,7 @@ function mod:GetOptions()
 		["goliath"] = L.goliath_short, -- Stone Legion Goliath (Goliath)
 		["commando"] = L.commando_short, -- Stone Legion Commando (Commando)
 		[342544] = CL.meteor, -- Pulverizing Meteor (Meteor)
+		[344496] = L.eruption, -- Reverberating Eruption (Eruption)
 	}
 end
 
@@ -356,7 +358,7 @@ function mod:HardenedStoneFormRemoved(args)
 
 	self:Bar(342425, 23) -- Stone Fist
 	self:Bar(339690, 14.5, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
-	self:Bar(344496, 33, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
+	self:Bar(344496, 33, CL.count:format(L.eruption, reverberatingLeapCount)) -- Reverberating Eruption
 	self:Bar(334498, 45, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
 	self:Bar(333387, 25.5, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
 end
@@ -585,7 +587,7 @@ function mod:GraniteFormRemoved(args)
 	self:StopBar(CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
 	self:StopBar(CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
 	self:StopBar(CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
-	self:StopBar(CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
+	self:StopBar(CL.count:format(L.eruption, reverberatingLeapCount)) -- Reverberating Eruption
 	self:StopBar(343086) -- Ricocheting Shuriken
 
 	self:SetStage(3)
@@ -604,7 +606,7 @@ function mod:GraniteFormRemoved(args)
 	self:Bar(342425, 16) -- Stone Fist
 	self:Bar(339690, 7.5, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
 	self:Bar(333387, 20, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
-	self:Bar(344496, 26, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
+	self:Bar(344496, 26, CL.count:format(L.eruption, reverberatingLeapCount)) -- Reverberating Eruption
 	self:Bar(334765, 33, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
 	self:Bar(334498, 39, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
 end
@@ -626,17 +628,17 @@ end
 do
 	local function printTarget(self, player, guid)
 		if self:Me(guid) then
-			self:Say(344496, 324010) -- Eruption
+			self:Say(344496, L.eruption) -- Eruption
 			self:PlaySound(344496, "warning")
 		end
-		self:TargetMessage(344496, "red", player, CL.count:format(self:SpellName(324010), reverberatingLeapCount-1))
+		self:TargetMessage(344496, "red", player, CL.count:format(L.eruption, reverberatingLeapCount-1))
 	end
 
 	function mod:ReverberatingEruption(args)
-		self:StopBar(CL.count:format(args.spellName, reverberatingLeapCount))
+		self:StopBar(CL.count:format(L.eruption, reverberatingLeapCount))
 		self:GetNextBossTarget(printTarget, args.sourceGUID)
 		reverberatingLeapCount = reverberatingLeapCount + 1
-		self:CDBar(args.spellId, 30, CL.count:format(args.spellName, reverberatingLeapCount))
+		self:CDBar(args.spellId, 30, CL.count:format(L.eruption, reverberatingLeapCount))
 	end
 end
 
