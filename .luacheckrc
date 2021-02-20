@@ -212,6 +212,7 @@ globals = {
 	"SecondsToTime",
 	"SlashCmdList",
 	"StopSound",
+	"TalkingHeadFrame",
 	"Tukui",
 	"UIErrorsFrame",
 	"UIParent",
