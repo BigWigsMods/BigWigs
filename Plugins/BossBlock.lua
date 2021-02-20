@@ -12,6 +12,13 @@ if not plugin then return end
 plugin.defaultDB = {
 	blockEmotes = true,
 	blockMovies = true,
+	blockTalkingHeads = {
+		false, -- Normal & Heroic Dungeons
+		true, -- Mythic & Mythic+ Dungeons
+		true, -- Raids
+		false, -- Timewalking (Dungeons & Raids)
+		true, -- Scenarios
+	},
 	blockGarrison = true,
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
@@ -31,6 +38,7 @@ plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local GetSubZoneText = GetSubZoneText
+local TalkingHeadLineInfo = C_TalkingHead.GetCurrentLineInfo
 local SetCVar = C_CVar.SetCVar
 local CheckElv = nil
 local RestoreAll
@@ -100,7 +108,7 @@ plugin.pluginOptions = {
 			desc = L.blockTooltipQuestsDesc,
 			width = "full",
 			order = 6,
-			disabled = function() return true end, -- XXX Do we want to hack the tooltip?
+			hidden = function() return true end, -- XXX Do we want to hack the tooltip?
 		},
 		blockObjectiveTracker = {
 			type = "toggle",
@@ -109,31 +117,57 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 7,
 		},
+		blockTalkingHeads = {
+			type = "multiselect",
+			name = L.blockTalkingHead,
+			desc = L.blockTalkingHeadDesc,
+			control = "Dropdown",
+			values = {
+				L.blockTalkingHeadDungeons,
+				L.blockTalkingHeadMythics,
+				L.blockTalkingHeadRaids,
+				L.blockTalkingHeadTimewalking,
+				L.blockTalkingHeadScenarios,
+			},
+			get = function(info, entry)
+				return plugin.db.profile[info[#info]][entry]
+			end,
+			set = function(info, entry, value)
+				plugin.db.profile[info[#info]][entry] = value
+			end,
+			width = 2,
+			order = 8,
+		},
+		newline = {
+			type = "description",
+			name = "\n\n",
+			order = 9,
+		},
 		audioHeader = {
 			type = "header",
 			name = L.audio,
-			order = 8,
+			order = 10,
 		},
 		disableMusic = {
 			type = "toggle",
 			name = L.disableMusic,
 			desc = L.disableAudioDesc:format(L.music),
 			width = "full",
-			order = 9,
+			order = 11,
 		},
 		disableAmbience = {
 			type = "toggle",
 			name = L.disableAmbience,
 			desc = L.disableAudioDesc:format(L.ambience),
 			width = "full",
-			order = 10,
+			order = 12,
 		},
 		disableSfx = {
 			type = "toggle",
 			name = L.disableSfx,
 			desc = L.disableAudioDesc:format(L.sfx),
 			width = "full",
-			order = 11,
+			order = 13,
 		},
 	},
 }
@@ -152,9 +186,9 @@ function plugin:OnPluginEnable()
 	if self.db.profile.disableSfx then
 		SetCVar("Sound_EnableSFX", "1")
 	end
-	if self.db.profile.blockTooltipQuests then
-		SetCVar("showQuestTrackingTooltips", "1")
-	end
+	--if self.db.profile.blockTooltipQuests then
+	--	SetCVar("showQuestTrackingTooltips", "1")
+	--end
 	if self.db.profile.disableMusic then
 		SetCVar("Sound_EnableMusic", "1")
 	end
@@ -162,6 +196,7 @@ function plugin:OnPluginEnable()
 		SetCVar("Sound_EnableAmbience", "1")
 	end
 
+	self:RegisterEvent("TALKINGHEAD_REQUESTED")
 	self:RegisterEvent("CINEMATIC_START")
 	self:RegisterEvent("PLAY_MOVIE")
 	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
@@ -234,9 +269,9 @@ do
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "0")
 		end
-		if self.db.profile.blockTooltipQuests then
-			SetCVar("showQuestTrackingTooltips", "0")
-		end
+		--if self.db.profile.blockTooltipQuests then
+		--	SetCVar("showQuestTrackingTooltips", "0")
+		--end
 		if self.db.profile.disableMusic then
 			SetCVar("Sound_EnableMusic", "0")
 		end
@@ -277,9 +312,9 @@ do
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "1")
 		end
-		if self.db.profile.blockTooltipQuests then
-			SetCVar("showQuestTrackingTooltips", "1")
-		end
+		--if self.db.profile.blockTooltipQuests then
+		--	SetCVar("showQuestTrackingTooltips", "1")
+		--end
 		if self.db.profile.disableMusic then
 			SetCVar("Sound_EnableMusic", "1")
 		end
@@ -297,6 +332,55 @@ do
 	function plugin:OnWinOrWipe(event, module)
 		if not module or not module.journalId or module.worldBoss then return end
 		RestoreAll(self)
+	end
+end
+
+do
+	-- Talking Head blocking
+	local known = {
+		-- De Other Side
+		[163828]=true,[163830]=true,[163831]=true,[163822]=true,[163823]=true,[163824]=true,[163834]=true,
+		[163835]=true,[163836]=true,[163837]=true,[163819]=true,[163820]=true,[163821]=true,
+		-- The Necrotic Wake
+		[155159]=true,[155160]=true,[155161]=true,[154899]=true,[162802]=true,
+		[162803]=true,[154900]=true,[155162]=true,[154573]=true,
+		-- Mists of Tirna Scithe
+		[154205]=true,[157818]=true,[157678]=true,[154209]=true,[154206]=true,[154208]=true,[154207]=true,
+		-- Sanguine Depths
+		[157755]=true,[157747]=true,[157748]=true,[153689]=true,[157761]=true,
+		[153690]=true,[157762]=true,[157752]=true,[157672]=true,
+		-- Spires of Ascension
+		[155736]=true,[155737]=true,[155738]=true,[155739]=true,[155740]=true,[155741]=true,[155742]=true,[155743]=true,
+		[155744]=true,[155745]=true,[155746]=true,[155747]=true,[155748]=true,[155749]=true,[155750]=true,[155751]=true,
+		[155752]=true,[155753]=true,[155754]=true,[160654]=true,[155756]=true,[155757]=true,[155758]=true,[155759]=true,
+		-- Theater of Pain
+		[152417]=true,[152416]=true,[152415]=true,[152414]=true,[152410]=true,[152409]=true,[152408]=true,[152505]=true,[154933]=true,
+		[152533]=true,[154937]=true,[152517]=true,[154942]=true,[154943]=true,[154938]=true,[154939]=true,[154940]=true,[154941]=true,
+		-- Plaguefall
+		[152641]=true,[152640]=true,[152639]=true,[152615]=true,[152614]=true,[152638]=true,
+		[152637]=true,[152636]=true,[152635]=true,[153196]=true,[153197]=true,
+	}
+
+	local lookup = {
+		[1] = 1, -- Normal Dungeon
+		[2] = 1, -- Heroic Dungeon
+		[8] = 2, -- Mythic+ Keystone Dungeon
+		[23] = 2, -- Mythic Dungeon
+		[14] = 3, -- Normal Raid
+		[15] = 3, -- Heroic Raid
+		[16] = 3, -- Mythic Raid
+		[17] = 3, -- LFR
+		[24] = 4, -- Timewalking Dungeon
+	}
+	function plugin:TALKINGHEAD_REQUESTED()
+		local _, _, diff = GetInstanceInfo()
+		local entry = lookup[diff]
+		if entry and self.db.profile.blockTalkingHeads[entry] then
+			local _, _, soundKitId = TalkingHeadLineInfo()
+			if known[soundKitId] and TalkingHeadFrame and TalkingHeadFrame:IsShown() then
+				TalkingHeadFrame:Hide()
+			end
+		end
 	end
 end
 
