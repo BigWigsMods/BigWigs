@@ -175,8 +175,8 @@ L.blockTooltipQuestsDesc = "Quando você precisa matar um chefe para uma missão
 L.blockObjectiveTracker = "Esconder rastreador de missão"
 L.blockObjectiveTrackerDesc = "O rastreador de objetivos de missão será escondido durante um encontro de chefe para liberar espaço na tela.\n\nIsso NÃO irá acontecer se você estiver em uma Mítica+ ou estiver rastreando uma conquista."
 
---L.blockTalkingHead = "Block Talking Head"
---L.blockTalkingHeadDesc = "The 'Talking Head' is the NPC dialog box that has an NPC head and NPC chat text at the bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
+--L.blockTalkingHead = "Hide 'Talking Head' NPC dialog popup"
+--L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
 --L.blockTalkingHeadDungeons = "Normal & Heroic Dungeons"
 --L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
 --L.blockTalkingHeadRaids = "Raids"

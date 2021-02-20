@@ -290,8 +290,8 @@ L.blockFollowerMissionDesc = "要塞會彈出訊息，其中最主要的是追�
 L.blockObjectiveTracker = "隱藏任務追蹤"
 L.blockObjectiveTrackerDesc = "在首領戰期間隱藏任務追蹤列表，使你的畫面能夠淨空。\n\n此功能於傳奇難度+ 或追蹤成就時會自動停用。"
 
---L.blockTalkingHead = "Block Talking Head"
---L.blockTalkingHeadDesc = "The 'Talking Head' is the NPC dialog box that has an NPC head and NPC chat text at the bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
+--L.blockTalkingHead = "Hide 'Talking Head' NPC dialog popup"
+--L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
 --L.blockTalkingHeadDungeons = "Normal & Heroic Dungeons"
 --L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
 --L.blockTalkingHeadRaids = "Raids"
