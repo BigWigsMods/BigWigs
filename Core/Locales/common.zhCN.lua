@@ -92,3 +92,4 @@ L.traps = "陷阱" -- Used for abilities that act like traps on the floor e.g. m
 L.meteor = "流星" -- This one will probably only ever be used for actual meteors
 L.shield = "护盾" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "传送" -- A boss/add/etc teleported somewhere
+L.fear = "恐惧" -- For abilities that cause you to flee in fear

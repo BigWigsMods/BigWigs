@@ -101,3 +101,4 @@ L.traps = "Fallen" -- Used for abilities that act like traps on the floor e.g. m
 L.meteor = "Meteor" -- This one will probably only ever be used for actual meteors
 L.shield = "Schild" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "Teleport" -- A boss/add/etc teleported somewhere
+L.fear = "Furcht" -- For abilities that cause you to flee in fear

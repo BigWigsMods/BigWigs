@@ -93,3 +93,4 @@ L.traps = "Pièges" -- Used for abilities that act like traps on the floor e.g. 
 L.meteor = "Météore" -- This one will probably only ever be used for actual meteors
 L.shield = "Bouclier" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "Téléportation" -- A boss/add/etc teleported somewhere
+L.fear = "Peur" -- For abilities that cause you to flee in fear

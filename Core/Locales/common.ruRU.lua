@@ -101,3 +101,4 @@ L.traps = "Ловушки" -- Used for abilities that act like traps on the floo
 L.meteor = "Метеор" -- This one will probably only ever be used for actual meteors
 L.shield = "Щит" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "Телепортация" -- A boss/add/etc teleported somewhere
+L.fear = "Страх" -- For abilities that cause you to flee in fear

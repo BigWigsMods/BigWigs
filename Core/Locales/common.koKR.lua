@@ -101,3 +101,4 @@ L.traps = "덫" -- Used for abilities that act like traps on the floor e.g. move
 L.meteor = "유성" -- This one will probably only ever be used for actual meteors
 L.shield = "보호막" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "순간이동" -- A boss/add/etc teleported somewhere
+L.fear = "공포" -- For abilities that cause you to flee in fear
