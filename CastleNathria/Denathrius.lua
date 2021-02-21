@@ -76,7 +76,7 @@ local timersHeroic = { -- Heroic confirmed
 	},
 	[3] = {
 		-- Fatal Finesse
-		[332794] = {10, 48, 6, 21, 27, 19, 26, 21},
+		[332794] = {10, 48, 6, 21, 27, 19, 26, 21, 40},
 		-- Hand of Destruction (P3)
 		[333932] = {19.7, 90.0, 31.6, 46.3},
 	}
