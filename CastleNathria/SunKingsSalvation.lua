@@ -38,11 +38,11 @@ local addTimersHeroic = { -- Heroic
 
 local addTimersMythic = { -- Mythic
 	[1] = { -- From pull
-		[-21954] = {51.7}, -- Rockbound Vanquishers
-		[-21993] = {}, -- Bleakwing Assassin
-		[-21952] = {}, -- Vile Occultists
-		[-21953] = {}, -- Soul Infusers
-		[-22082] = {}, -- Pestering Fiend
+		[-21954] = {51.7, 60}, -- Rockbound Vanquishers
+		[-21993] = {111.7, 40}, -- Bleakwing Assassin
+		[-21952] = {111.7}, -- Vile Occultists
+		[-21953] = {71.7}, -- Soul Infusers
+		[-22082] = {101.7, 40}, -- Pestering Fiend
 	},
 	[2] = { -- From Reflection of Guilt Removed
 		[-21954] = {3.5, 70, 70, 70}, -- Rockbound Vanquishers
@@ -221,7 +221,7 @@ function mod:OnEngage()
 	end
 
 	if self:Mythic() then
-		self:Bar(337859, 62, CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
+		self:Bar(337859, 81.5, CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -555,7 +555,7 @@ function mod:DarithosDeath()
 	self:StopBar(328889) -- Greater Castigation
 
 	local firstVanquisherRemaining = firstVanquisherExpected - GetTime() -- Always negative if you killed him very late so we dont need a stage check
-	if firstVanquisherRemaining > firstVanquisherSpawnTime then -- Reduce all to align with the first spawn for the first Vanquisher
+	if firstVanquisherRemaining > firstVanquisherSpawnTime then -- Reduce all timers to align with the first spawn for the first Vanquisher
 		for key,count in pairs(addWaveCount) do -- Cancel add bars and scheduled messages
 			local text = CL.count:format(self:SpellName(key), count-1)
 			self:CancelDelayedMessage(text)
@@ -575,6 +575,9 @@ function mod:DarithosDeath()
 		}
 		for key,count in pairs(addWaveCount) do
 			self:StartAddTimer(1, key, count, true)
+		end
+		if self:Mythic() then
+			self:Bar(337859, 38, CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
 		end
 	end
 end
