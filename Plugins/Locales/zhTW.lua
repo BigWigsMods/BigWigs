@@ -290,13 +290,13 @@ L.blockFollowerMissionDesc = "要塞會彈出訊息，其中最主要的是追�
 L.blockObjectiveTracker = "隱藏任務追蹤"
 L.blockObjectiveTrackerDesc = "在首領戰期間隱藏任務追蹤列表，使你的畫面能夠淨空。\n\n此功能於傳奇難度+ 或追蹤成就時會自動停用。"
 
---L.blockTalkingHead = "Hide 'Talking Head' NPC dialog popup"
---L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
---L.blockTalkingHeadDungeons = "Normal & Heroic Dungeons"
---L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
---L.blockTalkingHeadRaids = "Raids"
---L.blockTalkingHeadTimewalking = "Timewalking (Dungeons & Raids)"
---L.blockTalkingHeadScenarios = "Scenarios"
+L.blockTalkingHead = "隱藏 '說話頭像' 的NPC對話彈出"
+L.blockTalkingHeadDesc = "此 '說話頭像' 是個在螢幕中下彈出的對話盒，內含NPC頭像以及NPC談話文字，當NPC說話時|cffff4411有時候|r會顯示。\n\n您可以選擇不同類型的副本，在這些副本中將禁止顯示。\n\n|cFF33FF99請注意:|r\n 1) 此功能將允許NPC聲音繼續播放，因此您仍然可以聽到它。 \n 2) 為了安全起見，只有特定說話的人會被阻檔。 任何特殊的或獨特的，例如一次性任務，都不會被阻檔。 "
+L.blockTalkingHeadDungeons = "普通 & 英雄地城"
+L.blockTalkingHeadMythics = "傳奇 & 傳奇+地城"
+L.blockTalkingHeadRaids = "團隊副本"
+L.blockTalkingHeadTimewalking = "時光漫遊 (地城 & 團隊副本)"
+L.blockTalkingHeadScenarios = "事件"
 
 L.subzone_grand_bazaar = "大市集" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "贊達拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
