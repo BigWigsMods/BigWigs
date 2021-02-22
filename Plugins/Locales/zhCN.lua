@@ -303,12 +303,12 @@ L.blockFollowerMissionDesc = "追随者任务弹出窗口会显示一些事情�
 L.blockObjectiveTracker = "隐藏任务追踪器"
 L.blockObjectiveTrackerDesc = "在首领战斗中将任务追踪器隐藏，以给屏幕空出更多空间。\n\n此功能在史诗钥石或追踪成就时无效。"
 
-L.blockTalkingHead = "隐藏 NPC 说话时弹出的“会话头像”"
-L.blockTalkingHeadDesc = "当 NPC 说话，|cffff4411有时候|r会在屏幕中下方弹出“会话头像”的对话盒，内含 NPC 的头像与台词。\n\n你可以在特定模式的副本中将它设定为禁止显示。\n\n|cFF33FF99请注意：|r\n 1) 此功能只会禁止框体显示，不会禁用 NPC 语音，因此你仍然可以听到 NPC 的对话。 \n 2) 为了安全起见，只有特定对像的会话头像会被阻档；任何特殊或独特的对话（例如一次性任务）都不会被阻档。 "
-L.blockTalkingHeadDungeons = "普通与英雄地城"
-L.blockTalkingHeadMythics = "史诗史诗钥石地城"
-L.blockTalkingHeadRaids = "团队副本"
-L.blockTalkingHeadTimewalking = "时空漫游（地城和团队副本）"
+L.blockTalkingHead = "隐藏 NPC 说话时弹出的“对话头像”"
+L.blockTalkingHeadDesc = "当 NPC 头像和聊天文本在屏幕中央下方的一个弹出的对话盒子称为“对话头像”，|cffff4411有时候|r会在 NPC 讲话时显示。\n\n可以选择不同类型设定为禁止显示。\n\n|cFF33FF99请注意：|r\n 1) 此功能将允许 NPC 语音继续播放所以可以继续听到对话。\n 2) 为了安全起见，只有特定的对话头像会被屏蔽，任何特殊或独特的对话如一次性任务，都不会被屏蔽。 "
+L.blockTalkingHeadDungeons = "普通和英雄地下城"
+L.blockTalkingHeadMythics = "史诗和史诗钥石地下城"
+L.blockTalkingHeadRaids = "团队"
+L.blockTalkingHeadTimewalking = "时空漫游（地下城和团队）"
 L.blockTalkingHeadScenarios = "场景事件"
 
 L.subzone_grand_bazaar = "百商集市" -- Battle of Dazar'alor raid (Battle for Azeroth)
