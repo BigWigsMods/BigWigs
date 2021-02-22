@@ -176,13 +176,13 @@ L.blockTooltipQuestsDesc = "Quand vous devez tuer un boss pour une quête, cela 
 L.blockObjectiveTracker = "Cacher le suivi des quêtes"
 L.blockObjectiveTrackerDesc = "Le suivi des objectifs de quêtes sera caché durant les rencontres de boss pour libérer de la place sur l'écran.\n\nCela ne sera PAS le cas dans les donjons Mythique+ ou si vous suivez un haut fait."
 
---L.blockTalkingHead = "Hide 'Talking Head' NPC dialog popup"
---L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
---L.blockTalkingHeadDungeons = "Normal & Heroic Dungeons"
---L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
---L.blockTalkingHeadRaids = "Raids"
---L.blockTalkingHeadTimewalking = "Timewalking (Dungeons & Raids)"
---L.blockTalkingHeadScenarios = "Scenarios"
+L.blockTalkingHead = "Cacher la boîte de dialogue PNJ 'Talking Head'"
+L.blockTalkingHeadDesc = "Le 'Talking Head' est une boîte de dialogue contenant une tête de PNJ et du dialogue au milieu-bas de votre écran qui |cffff4411parfois|r s'affiche quand un PNJ parle.\n\nVous pouvez choisir dans quels types d'instances cette boîte ne sera pas affichée.\n\n|cFF33FF99Attention :|r\n 1) Cette fonctionnalité permet toujours à la voix du PNJ d'être jouée afin que vous puissiez l'entendre.\n 2) Par sécurité, seules certaines boîtes de dialogue seront bloquées. Les boîtes de dialogue spéciales ou uniques, comme celles des quêtes non répétables, ne seront pas bloquées."
+L.blockTalkingHeadDungeons = "Donjons normaux & héroïques"
+L.blockTalkingHeadMythics = "Donjons mythiques & mythiques+"
+L.blockTalkingHeadRaids = "Raids"
+L.blockTalkingHeadTimewalking = "Marcheurs du temps (donjons & raids)"
+L.blockTalkingHeadScenarios = "Scénarios"
 
 L.subzone_grand_bazaar = "Le Grand bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Port de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
