@@ -22,7 +22,7 @@ L.backgroundDesc = "Visualizza o nasconde il titolo"
 L.bars = "Barre"
 L.nameplateBars = "Barre dei nomi"
 L.nameplateAutoWidth = "Stessa larghezza della barra dei nomi"
--- L.nameplateAutoWidthDesc = "Sets the width of nameplate bars to the with of their parent nameplate."
+L.nameplateAutoWidthDesc = "Imposta la larghezza delle barre del nome alla larghezza della barra corrispondente."
 L.nameplateOffsetY = "Distanza Y"
 L.nameplateOffsetYDesc = "Distanza dal punto superiore della barra dei nomi verso l'alto e dal punto inferiore della barra dei nomi verso il basso."
 L.bestTimeBar = "Migliore"
@@ -282,7 +282,7 @@ L.visibleBarLimit = "Limite barra visibile"
 L.visibleBarLimitDesc = "Scegli il numero massimo di barre che devono essere visibili contemporaneamente."
 L.textDesc = "Mostra o nascondi il testo delle barre."
 L.resetBarsDesc = "Azzera tutte le opzioni delle barre, compresi gli ancoraggi delle barre."
-L.nameplateAlphaDesc = "Regola la trasparenza della la barra dei nomi."
+L.nameplateAlphaDesc = "Regola la trasparenza della barra dei nomi."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
@@ -292,15 +292,15 @@ L.audio = "Audio"
 L.music = "Musica"
 L.ambience = "Audio ambientale"
 L.sfx = "Effetti audio"
---L.disableMusic = "Mute music (recommended)"
---L.disableAmbience = "Mute ambient sounds (recommended)"
---L.disableSfx = "Mute sound effects (not recommended)"
+L.disableMusic = "Togli la musica (raccomandato)"
+L.disableAmbience = "Togli i suoni ambientali (raccomandato)"
+L.disableSfx = "Togli gli effetti sonori (non raccomandato)"
 --L.disableAudioDesc = "The '%s' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
 --L.blockTooltipQuests = "Block tooltip quest objectives"
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
 --L.blockFollowerMission = "Blocca i popup della Guarnigione" -- Rename to follower mission
 --L.blockFollowerMissionDesc = "I popup della Guarnigione appaiono per certe attività, ma principalmente quando un seguace completa una missione.\n\n\Questi popup possono coprire parti critiche o importanti della tua UI durante il combattimento contro un boss, raccomandiamo quindi di bloccarli."
---L.blockObjectiveTracker = "Hide quest tracker"
+L.blockObjectiveTracker = "Nascondi registro missioni"
 --L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space.\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -311,18 +311,18 @@ L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (B
 -- Colors.lua
 --
 
---L.red = "Red"
---L.redDesc = "General encounter warnings."
---L.blue = "Blue"
---L.blueDesc = "Warnings for things that affect you directly such as a debuff being applied to you."
---L.orange = "Orange"
---L.yellow = "Yellow"
---L.green = "Green"
---L.greenDesc = "Warnings for good things that happen such as a debuff being removed from you."
---L.cyan = "Cyan"
---L.cyanDesc = "Warnings for encounter status changes such as advancing to the next stage."
---L.purple = "Purple"
---L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
+L.red = "Rosso"
+L.redDesc = "Avvisi generali di combattimento."
+L.blue = "Blu"
+L.blueDesc = "Avvisi per effetti diretti, come una magia su di te"
+L.orange = "Arancione"
+L.yellow = "Giallo"
+L.green = "Verde"
+L.greenDesc = "Avvisi per effetti benefici, come una magia rimossa da te."
+L.cyan = "Azzurro"
+L.cyanDesc = "Avvisi per modifiche di stato come un cambio di fase."
+L.purple = "Viola"
+L.purpleDesc = "Avvisi per abilità specifiche da difensore come un debuff sul tank."
 
 -----------------------------------------------------------------------
 -- Countdown.lua
@@ -372,6 +372,6 @@ L.chatMessagesDesc = "Invia tutti i messaggi di BigWigs alla chat oltre che nei 
 -- Statistics.lua
 --
 
---L.printHealthOption = "Boss Health"
---L.healthPrint = "Health: %s."
---L.healthFormat = "%s (%.1f%%)"
+L.printHealthOption = "Salute Boss"
+L.healthPrint = "Salute: %s."
+L.healthFormat = "%s (%.1f%%)"
