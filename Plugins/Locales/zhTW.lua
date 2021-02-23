@@ -290,6 +290,14 @@ L.blockFollowerMissionDesc = "要塞會彈出訊息，其中最主要的是追�
 L.blockObjectiveTracker = "隱藏任務追蹤"
 L.blockObjectiveTrackerDesc = "在首領戰期間隱藏任務追蹤列表，使你的畫面能夠淨空。\n\n此功能於傳奇難度+ 或追蹤成就時會自動停用。"
 
+L.blockTalkingHead = "隱藏 NPC 說話時彈出的「會話頭像」"
+L.blockTalkingHeadDesc = "當 NPC 說話，|cffff4411有時候|r會在螢幕中下方彈出「會話頭像」的對話盒，內含 NPC 的頭像與台詞。\n\n你可以在特定模式的副本中將它設定為禁止顯示。\n\n|cFF33FF99請注意：|r\n 1) 此功能只會禁止框體顯示，不會禁用 NPC 語音，因此你仍然可以聽到 NPC 的對話。 \n 2) 為了安全起見，只有特定對像的會話頭像會被阻檔；任何特殊或獨特的對話（例如一次性任務）都不會被阻檔。 "
+L.blockTalkingHeadDungeons = "普通 & 英雄地城"
+L.blockTalkingHeadMythics = "傳奇 & 傳奇+地城"
+L.blockTalkingHeadRaids = "團隊副本"
+L.blockTalkingHeadTimewalking = "時光漫遊（地城 & 團隊副本）"
+L.blockTalkingHeadScenarios = "事件"
+
 L.subzone_grand_bazaar = "大市集" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "贊達拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_eastern_transept = "東穿堂" -- Auchindoun dungeon (Warlords of Draenor)

@@ -2221,9 +2221,10 @@ do
 						self:SendMessage("BigWigs_Message", self, key, format(L.you, msg), "blue", texture, true)
 					end
 				end
-				if playersInTable == playerCount then
+				local playersAddedSinceLastPrint = playersInTable - (playerTable.prevPlayersInTable or 0)
+				if playersAddedSinceLastPrint == playerCount then
 					printTargets(self, key, playerTable, color, text, icon)
-				elseif playersInTable == 1 then
+				elseif playersAddedSinceLastPrint == 1 then
 					Timer(customTime or 0.3, function()
 						printTargets(self, key, playerTable, color, text, icon)
 					end)

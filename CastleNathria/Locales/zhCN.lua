@@ -104,6 +104,7 @@ if L then
 	L.second_blade = "第二刀"
 
 	L.skirmishers = "散兵" -- Short for Stone Legion Skirmishers
+	L.eruption = "震荡爆发" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "为了马上测试"

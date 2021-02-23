@@ -58,6 +58,7 @@ if L then
 	L.dance_yell_up = "Prance Forward" -- Prance Forward!
 	L.dance_yell_right = "Shimmy right" -- Shimmy right!
 	L.dance_yell_down = "Boogie down" -- Boogie down!
+	L.dance_yell_down_2 = L.dance_yell_down -- Needed because of esMX funkyness
 	L.dance_yell_left = "Sashay left" -- Sashay left!
 end
 
@@ -233,7 +234,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 		self:Message("dance_assist", "blue", L.dance_assist_up, false)
 	elseif msg:find(L.dance_yell_right, nil, true) then
 		self:Message("dance_assist", "blue", L.dance_assist_right, false)
-	elseif msg:find(L.dance_yell_down, nil, true) then
+	elseif msg:find(L.dance_yell_down, nil, true) or msg:find(L.dance_yell_down_2, nil, true) then
 		self:Message("dance_assist", "blue", L.dance_assist_down, false)
 	elseif msg:find(L.dance_yell_left, nil, true) then
 		self:Message("dance_assist", "blue", L.dance_assist_left, false)
@@ -603,7 +604,7 @@ function mod:DanseMacabreBegins(args)
 	self:PauseBar(330978) -- Dredger Servants
 	self:PauseBar(330965) -- Castellans Cadre
 	self:PauseBar(346303) -- Violent Uproar
-	if self:Mythic() then -- Dancing Fever does not pause but has a timer reset when dancing (Can it go below 60s? Unconfirmed.)
+	if self:Mythic() then -- Dancing Fever does not pause but has a timer reset when dancing
 		self:CDBar(347350, 43, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 	end
 end

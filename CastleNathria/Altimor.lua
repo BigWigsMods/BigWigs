@@ -133,15 +133,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		local sourceGUID = self:UnitGUID(unit)
 		if self:MobId(sourceGUID) == 165066 then -- Huntsman Altimor
 			local stage = self:GetStage() + 1
-			self:SetStage(stage)
 			if stage == 2 then -- Bargast up
 				ripSoulCount = 1
 				shadesOfBargastCount = 1
+				self:SetStage(2)
 
 				self:Bar(334797, 9.5, CL.count:format(self:SpellName(334797), ripSoulCount)) -- Rip Soul
 				self:Bar(334757, 17.5, CL.count:format(self:SpellName(334757), shadesOfBargastCount)) -- Shades Of Bargast
 			elseif stage == 3 then -- Hecutis up
 				petrifyingHowlCount = 1
+				self:SetStage(3)
 
 				self:Bar(334852, 16.2, CL.count:format(self:SpellName(334852), petrifyingHowlCount)) -- Petrifying Howl
 			end

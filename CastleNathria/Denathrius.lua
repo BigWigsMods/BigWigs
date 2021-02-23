@@ -76,7 +76,7 @@ local timersHeroic = { -- Heroic confirmed
 	},
 	[3] = {
 		-- Fatal Finesse
-		[332794] = {10, 48, 6, 21, 27, 19, 26, 21},
+		[332794] = {10, 48, 6, 21, 27, 19, 26, 21, 40},
 		-- Hand of Destruction (P3)
 		[333932] = {19.7, 90.0, 31.6, 46.3},
 	}
@@ -194,6 +194,7 @@ function mod:GetOptions()
 		[332585] = -22195,-- Stage Three: Indignation
 		["hymn_stacks"] = "mythic",
 	},{
+		[328936] = CL.teleport, -- Inevitable (Teleport)
 		[327039] = CL.normal, -- Feeding Time (Normal mode)
 		[327796] = CL.heroic .."/".. CL.mythic, -- Night Hunter (Heroic mode/Mythic mode)
 		[327227] = CL.soon:format(self:SpellName(327122)), -- Command: Ravage (Ravage soon)
@@ -371,7 +372,7 @@ function mod:UNIT_HEALTH(event, unit)
 end
 
 function mod:Inevitable(args)
-	self:Message(args.spellId, "cyan")
+	self:Message(args.spellId, "cyan", CL.teleport)
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -934,7 +935,7 @@ do
 			self:Message(args.spellId, "green", CL.you:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
-		if UnitIsPlayer(args.destName) and not mirrorList[args.destName] then -- Smoldering Ires also get this buff
+		if bit.band(args.destFlags, 0x400) == 0x400 and not mirrorList[args.destName] then -- COMBATLOG_OBJECT_TYPE_PLAYER
 			mirrorList[args.destName] = true
 			mirrorCount = mirrorCount + 1
 			mod:UpdateInfoBoxStage3()
@@ -947,7 +948,7 @@ do
 			self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
-		if UnitIsPlayer(args.destName) and mirrorList[args.destName] then -- Smoldering Ires also get this buff
+		if bit.band(args.destFlags, 0x400) == 0x400 and mirrorList[args.destName] then -- COMBATLOG_OBJECT_TYPE_PLAYER
 			mirrorList[args.destName] = nil
 			mirrorCount = mirrorCount - 1
 			mod:UpdateInfoBoxStage3()

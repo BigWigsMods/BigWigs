@@ -98,3 +98,5 @@ L.knockback = "Empurrão" -- Used when an abily knocks players away from a certa
 L.traps = "Armadilhas" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Meteoro" -- This one will probably only ever be used for actual meteors
 L.shield = "Escudo" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
+L.teleport = "Teleporte" -- A boss/add/etc teleported somewhere
+L.fear = "Medo" -- For abilities that cause you to flee in fear

@@ -91,3 +91,5 @@ L.knockback = "Contraccolpo" -- Used when an abily knocks players away from a ce
 L.traps = "Trappole" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Meteora" -- This one will probably only ever be used for actual meteors
 L.shield = "Scudo" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
+L.teleport = "Teletrasporto" -- A boss/add/etc teleported somewhere
+L.fear = "Paura" -- For abilities that cause you to flee in fear

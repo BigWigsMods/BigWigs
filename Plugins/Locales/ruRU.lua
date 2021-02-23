@@ -176,6 +176,14 @@ L.blockTooltipQuestsDesc = "Когда вам требуется убить бо
 L.blockObjectiveTracker = "Скрыть панель отслеживания квестов"
 L.blockObjectiveTrackerDesc = "Панель отслеживания квестов будет скрыта во время боя с боссом чтобы освободить место на экране.\n\nЭтого НЕ случится если вы находитесь в эпохальном+ подземелье или отслеживаете достижение."
 
+--L.blockTalkingHead = "Hide 'Talking Head' NPC dialog popup"
+--L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
+--L.blockTalkingHeadDungeons = "Normal & Heroic Dungeons"
+--L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
+--L.blockTalkingHeadRaids = "Raids"
+--L.blockTalkingHeadTimewalking = "Timewalking (Dungeons & Raids)"
+--L.blockTalkingHeadScenarios = "Scenarios"
+
 L.subzone_grand_bazaar = "Большой базар" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Порт Зандалара" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_eastern_transept = "Восточный трансепт" -- Auchindoun dungeon (Warlords of Draenor)

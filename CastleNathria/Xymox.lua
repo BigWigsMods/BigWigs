@@ -289,7 +289,7 @@ function mod:GlyphOfDestruction(args)
 	local bossUnit = self:GetBossId(args.sourceGUID)
 	for i = 1, #tankList do
 		local unit = tankList[i]
-		if bossUnit and self:TopThreat(bossUnit, unit) then
+		if bossUnit and self:Tanking(bossUnit, unit) then
 			self:TargetMessage(325236, "yellow", self:UnitName(unit), CL.casting:format(CL.bomb))
 			break
 		elseif i == #tankList then
