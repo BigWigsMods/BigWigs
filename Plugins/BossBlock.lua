@@ -347,8 +347,8 @@ do
 		-- Mists of Tirna Scithe
 		[154205]=true,[157818]=true,[157678]=true,[154209]=true,[154206]=true,[154208]=true,[154207]=true,
 		-- Sanguine Depths
-		[157755]=true,[157747]=true,[157748]=true,[153689]=true,[157761]=true,
-		[153690]=true,[157762]=true,[157752]=true,[157672]=true,
+		[157755]=true,[157747]=true,[157748]=true,[153689]=true,[157761]=true,[153688]=true,
+		[153690]=true,[157762]=true,[157752]=true,[157672]=true,[157760]=true,
 		-- Spires of Ascension
 		[155736]=true,[155737]=true,[155738]=true,[155739]=true,[155740]=true,[155741]=true,[155742]=true,[155743]=true,
 		[155744]=true,[155745]=true,[155746]=true,[155747]=true,[155748]=true,[155749]=true,[155750]=true,[155751]=true,
