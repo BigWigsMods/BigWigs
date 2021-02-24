@@ -180,7 +180,7 @@ L.blockTalkingHeadDesc = "A 'Cabeça Falante' é um popup de diálogo que tem um
 L.blockTalkingHeadDungeons = "Masmorras Normal & Heróica"
 L.blockTalkingHeadMythics = "Masmorras Míticas & Míticas+"
 L.blockTalkingHeadRaids = "Raides"
-L.blockTalkingHeadTimewalking = "Caminhada-Temporal (Masmorras & Raides)"
+L.blockTalkingHeadTimewalking = "Caminhada Temporal (Masmorras & Raides)"
 L.blockTalkingHeadScenarios = "Cenários"
 
 L.subzone_grand_bazaar = "Grande Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
