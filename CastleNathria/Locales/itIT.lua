@@ -41,7 +41,7 @@ if L then
 	L.level = "%s (Livello |cffffff00%d|r)"
 	L.full = "%s (|cffff0000PIENO|r)"
 
-	-- L.anima_adds = "Concentrate Anima Adds"
+	L.anima_adds = "Adds Animum Concentrato"
 	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
 
 	-- L.custom_off_experimental = "Enable experimental features"
@@ -50,8 +50,8 @@ if L then
 	-- L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
 	-- L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	L.custom_on_stop_timers = "Mostra sempre le barre abilità"
+	L.custom_on_stop_timers_desc = "Solo per il test di adesso"
 
 	-- L.desires = "Desires"
 	-- L.bottles = "Bottles"
@@ -88,30 +88,30 @@ end
 
 L = BigWigs:NewBossLocale("Sludgefist", "itIT")
 if L then
-	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+	L.stomp_shift = "Carica & Spostamento" -- Destructive Stomp + Seismic Shift
 
-	-- L.fun_info = "Damage Info"
-	-- L.fun_info_desc = "Display a message showing how much health the boss lost during Destructive Impact."
+	L.fun_info = "Info sui danni"
+	L.fun_info_desc = "Mostra un messaggio che indica la salute persa dal boss durante Urto Distruttivo."
 
-	-- L.health_lost = "Sludgefist went down %.1f%%!"
+	L.health_lost = "Picchiapoltiglia è sceso del %.1f%%!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "itIT")
 if L then
-	-- L.first_blade = "First Blade"
-	-- L.second_blade = "Second Blade"
+	L.first_blade = "Prima Lama"
+	L.second_blade = "Seconda Lama"
 
-	-- L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+	L.skirmishers = "Schermagliatrici" -- Short for Stone Legion Skirmishers
 	L.eruption = "Eruzione" -- Short for Reverberating Eruption
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	L.custom_on_stop_timers = "Mostra sempre le barre abilità"
+	L.custom_on_stop_timers_desc = "Solo per il test di adesso"
 
-	--L.goliath_short = "Goliath"
-	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_short = "Mastodonte"
+	L.goliath_desc = "Mostra avvisi e timer per la comparsa del Mastodonte della Legione di Pietra."
 
-	--L.commando_short = "Commando"
-	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
+	L.commando_short = "Commando"
+	L.commando_desc = "Mostra avvisi quando viene ucciso un Commando della Legione di Pietra."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "itIT")
