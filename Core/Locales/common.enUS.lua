@@ -17,6 +17,7 @@ L.soon = "%s soon"
 L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
+L.rticon = "%s ({rt%d})"
 L.near = "%s near YOU"
 L.on_group = "%s on GROUP"
 
@@ -28,17 +29,18 @@ L.mythic = "Mythic mode"
 L.active = "Active" -- When a boss becomes active, after speech finishes
 L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
-L.duration = "%s for %s sec"
-L.over = "%s Over"
-L.removed = "%s Removed"
-L.removed_from = "%s Removed From %s"
-L.removed_by = "%s removed by %s" -- spell removed by player
-L.incoming = "%s Incoming"
-L.interrupted = "%s Interrupted"
-L.interrupted_by = "%s interrupted by %s" -- spell interrupted by player
-L.no = "No %s"
+L.duration = "%s for %s sec" -- Spell for 10 seconds
+L.over = "%s Over" -- Spell Over
+L.removed = "%s Removed" -- Spell Removed
+L.removed_from = "%s removed from %s" -- Spell removed from Player
+L.removed_by = "%s removed by %s" -- Spell removed by Player
+L.incoming = "%s Incoming" -- Spell Incoming
+L.interrupted = "%s Interrupted" -- Spell Interrupted
+L.interrupted_by = "%s interrupted by %s" -- Spell interrupted by Player
+L.no = "No %s" -- No Spell
 L.intermission = "Intermission"
-L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - Spell
+L.cancelled = "%s Cancelled" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "Add Spawned"
@@ -95,7 +97,7 @@ L.beams = "Beams" -- Plural of L.beam
 L.bomb = "Bomb" -- Used for debuffs that make players explode
 L.explosion = "Explosion" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Fixate" -- Used when a boss or add is chasing/fixated on a player
-L.knockback = "Knockback" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.knockback = "Knockback" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.traps = "Traps" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Meteor" -- This one will probably only ever be used for actual meteors
 L.shield = "Shield" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
