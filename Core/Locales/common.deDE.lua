@@ -41,7 +41,7 @@ L.interrupted_by = "%s wurde von %s unterbrochen" -- Spell interrupted by Player
 L.no = "Kein %s" -- No Spell
 L.intermission = "Zwischenphase"
 L.percent = "%d%% - %s" -- 20% - Spell
---L.cancelled = "%s Cancelled" -- Spell Cancelled
+L.cancelled = "%s abgebrochen" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "Add erschienen"
@@ -78,7 +78,7 @@ L.marker_player_desc = "Markiert Spieler, die von %s betroffen sind, mit %s. Ben
 L.marker_npc_desc = "Markiert %s mit %s. Benötigt Leiter oder Assistent."
 
 -- Ability where two players have to move close to each other
---L.link = "Link"
+L.link = "Verbindung"
 L.link_with = "Verbunden mit %s"
 L.link_with_icon = "Verbunden mit |T13700%d:0|t%s"
 L.link_short = "Verbunden: %s"
