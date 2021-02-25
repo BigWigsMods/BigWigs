@@ -60,9 +60,9 @@ end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "itIT")
 if L then
-	-- L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
-	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
-	-- L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
+	L.macabre_start_emote = "Ai vostri posti per la Danza Macabra!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
+	L.custom_on_repeating_dark_recital = "Ripetizione per Esibizione Oscura"
+	L.custom_on_repeating_dark_recital_desc = "Messaggi ripetuti per Esibizione Oscura con icone {rt1}, {rt2} per trovare il tuo compagno di ballo."
 
 	L.custom_off_select_boss_order = "Icone ordine di uccisione Boss"
 	L.custom_off_select_boss_order_desc = "Segna l'ordine di uccisione dei boss con croce {rt7}. Richiede capo incursione o assistente per marchiare."
@@ -73,17 +73,17 @@ if L then
 	L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
 	L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
 
-	--L.dance_assist = "Dance Assist"
-	--L.dance_assist_desc = "Show directional warnings for the dancing stage."
-	--L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance Forward |T450907:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Dance Right |T450908:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance Down |T450905:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance Left |T450906:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist = "Assistente Danza"
+	L.dance_assist_desc = "Mostra avvisi direzionali per la fase della danza."
+	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Danza in Avanti |T450907:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Danza a Destra |T450908:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Danza Indietro |T450905:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Danza a Sinistra |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
-	--L.dance_yell_up = "Prance Forward" -- Prance Forward!
-	--L.dance_yell_right = "Shimmy right" -- Shimmy right!
-	--L.dance_yell_down = "Boogie down" -- Boogie down!
-	--L.dance_yell_left = "Sashay left" -- Sashay left!
+	L.dance_yell_up = "Saltelli in avanti" -- Prance Forward!
+	L.dance_yell_right = "Spallucce a destra" -- Shimmy right!
+	L.dance_yell_down = "Via alle danze" -- Boogie down!
+	L.dance_yell_left = "Volteggio a sinistra" -- Sashay left!
 end
 
 L = BigWigs:NewBossLocale("Sludgefist", "itIT")
