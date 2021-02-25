@@ -129,7 +129,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DuelistsRiposteApplied", 346690)
 	self:Log("SPELL_CAST_START", "SummonDutifulAttendant", 346698)
 	self:Log("SPELL_CAST_START", "DredgerServants", 330978)
-	self:Log("SPELL_CAST_START", "CastellansCadre", 330965)
+	self:Log("SPELL_CAST_SUCCESS", "CastellansCadre", 330965)
 	self:Log("SPELL_CAST_START", "SintouchedBlade", 346790)
 
 	--[[ Baroness Frieda ]]--
@@ -604,8 +604,11 @@ function mod:DanseMacabreBegins(args)
 	self:PauseBar(330978) -- Dredger Servants
 	self:PauseBar(330965) -- Castellans Cadre
 	self:PauseBar(346303) -- Violent Uproar
-	if self:Mythic() then -- Dancing Fever does not pause but has a timer reset when dancing
-		self:CDBar(347350, 43, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
+	if self:Mythic() then
+		-- Dancing Fever does not pause but has a timer reset when dancing.
+		-- Pauzing the bar right away so the player can see when the ability will come in line with others.
+		self:CDBar(347350, 5.8, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
+		self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 	end
 end
 
@@ -622,6 +625,7 @@ function mod:DanseMacabreOver(args)
 	self:ResumeBar(330978) -- Dredger Servants
 	self:ResumeBar(330965) -- Castellans Cadre
 	self:ResumeBar(346303) -- Violent Uproar
+	self:ResumeBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
 end
 
 function mod:WrongMovesApplied(args)
