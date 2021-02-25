@@ -176,13 +176,13 @@ L.blockTooltipQuestsDesc = "Wenn zum Abschluss einer Quest ein Boss getötet wer
 L.blockObjectiveTracker = "Questverfolgung ausblenden"
 L.blockObjectiveTrackerDesc = "Die Liste mit verfolgten Quests wird im Bosskampf ausgeblendet um Anzeigeplatz zu sparen.\n\nDies passiert NICHT in Mythic+ oder beim Verfolgen eines Erfolges."
 
---L.blockTalkingHead = "Hide 'Talking Head' NPC dialog popup"
---L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
---L.blockTalkingHeadDungeons = "Normal & Heroic Dungeons"
---L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
---L.blockTalkingHeadRaids = "Raids"
---L.blockTalkingHeadTimewalking = "Timewalking (Dungeons & Raids)"
---L.blockTalkingHeadScenarios = "Scenarios"
+L.blockTalkingHead = "'Sprechende Dialoge' NPC Popup verstecken"
+L.blockTalkingHeadDesc = "Die 'Sprechenden Dialoge' sind Popup Dialogboxen, welche |cffff4411manchmal|r mit dem Kopf des NPCs und einem Chattext in der unteren Mitte des Bildschirms angezeigt werden, während ein NPC spricht.\n\nEs kann festgelegt werden, in welchen Instanztypen diese Dialoge blockiert werden.\n\n|cFF33FF99Bitte beachten:|r\n 1) Diese Funktion behält die NPC Stimme bei, sodass diese gehört werden kann.\n 2) Sicherheitshalber werden nur spezifische Dialoge blockiert. Spezielle oder einmalige Dialoge wie Einmal-Quests werden nicht blockiert."
+L.blockTalkingHeadDungeons = "Normale & Heroische Dungeons"
+L.blockTalkingHeadMythics = "Mythische & Mythisch+ Dungeons"
+L.blockTalkingHeadRaids = "Schlachtzüge"
+L.blockTalkingHeadTimewalking = "Zeitwanderung (Dungeons & Schlachtzüge)"
+L.blockTalkingHeadScenarios = "Szenarien"
 
 L.subzone_grand_bazaar = "Der Große Basar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Der Hafen von Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
