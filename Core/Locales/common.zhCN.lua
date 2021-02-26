@@ -55,7 +55,7 @@ L.interrupted_by = "%2$s已打断%1$s" -- Spell interrupted by Player
 L.no = "缺少%s" -- No Spell
 L.intermission = "阶段转换"
 L.percent = "%d%% - %s" -- 20% - Spell
---L.cancelled = "%s Cancelled" -- Spell Cancelled
+L.cancelled = "%s取消" -- Spell Cancelled
 
 L.big_add = "大型增援" -- singular
 L.big_adds = "大型增援" -- plural
