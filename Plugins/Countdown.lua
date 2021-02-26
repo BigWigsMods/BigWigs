@@ -374,7 +374,7 @@ do
 						name = L.fontSize,
 						desc = L.fontSizeDesc,
 						order = 13,
-						softMax = 100, max = 200, min = 1, step = 1,
+						softMax = 100, max = 200, min = 20, step = 1,
 					},
 					monochrome = {
 						type = "toggle",
@@ -490,24 +490,57 @@ local function createOptions()
 end
 
 local function updateProfile()
+	local db = plugin.db.profile
+
+	if type(db.textEnabled) ~= "boolean" then
+		db.textEnabled = plugin.defaultDB.textEnabled
+	end
+	if type(db.fontName) ~= "string" then
+		db.fontName = plugin.defaultDB.fontName
+	end
+	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
+		db.outline = plugin.defaultDB.outline
+	end
+	if type(db.fontSize) ~= "number" or db.fontSize < 20 or db.fontSize > 200 then
+		db.fontSize = plugin.defaultDB.fontSize
+	end
+	if type(db.monochrome) ~= "boolean" then
+		db.monochrome = plugin.defaultDB.monochrome
+	end
+	if type(db.fontColor) ~= "table"
+	or type(db.fontColor.r) ~= "number" or db.fontColor.r < 0 or db.fontColor.r > 1
+	or type(db.fontColor.g) ~= "number" or db.fontColor.g < 0 or db.fontColor.g > 1
+	or type(db.fontColor.b) ~= "number" or db.fontColor.b < 0 or db.fontColor.b > 1 then
+		db.fontColor = plugin.defaultDB.fontColor
+	end
+	if type(db.voice) ~= "string" then
+		db.voice = plugin.defaultDB.voice
+	end
+	if type(db.countdownTime) ~= "number" or db.countdownTime < 3 or db.countdownTime > 10 then
+		db.countdownTime = plugin.defaultDB.countdownTime
+	end
+	if type(db.position) ~= "table" then
+		db.position = plugin.defaultDB.position
+	end
+	if type(db.bossCountdowns) ~= "table" then
+		db.bossCountdowns = plugin.defaultDB.bossCountdowns
+	end
+
 	UpdateFont()
 	countdownAnchor:RefixPosition()
 
 	-- Reset invalid voice selections
-	if not BigWigsAPI:HasCountdown(plugin.db.profile.voice) then
-		plugin.db.profile.voice = voiceMap[GetLocale()] or "English: Amy"
+	if not BigWigsAPI:HasCountdown(db.voice) then
+		db.voice = voiceMap[GetLocale()] or "English: Amy"
 	end
-	for boss, tbl in next, plugin.db.profile.bossCountdowns do
+	for boss, tbl in next, db.bossCountdowns do
 		for ability, chosenVoice in next, tbl do
 			if not BigWigsAPI:HasCountdown(chosenVoice) then
-				plugin.db.profile.bossCountdowns[boss][ability] = nil
+				db.bossCountdowns[boss][ability] = nil
 			end
 		end
 	end
 	-- XXX temp 9.0.2
-	if next(oldPlugin.db.profile.Countdown) then
-		plugin.db.profile.bossCountdowns = oldPlugin.db.profile.Countdown
-	end
 	oldPlugin.db:ResetProfile(nil, true) -- no callbacks
 end
 
