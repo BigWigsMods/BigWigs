@@ -5,8 +5,8 @@
 local mod, CL = BigWigs:NewBoss("Shriekwing", 2296, 2393)
 if not mod then return end
 mod:RegisterEnableMob(164406) -- Shriekwing
-mod.engageId = 2398
-mod.respawnTime = 30
+mod:SetEncounterID(2398)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------
