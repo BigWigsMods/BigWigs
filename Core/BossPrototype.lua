@@ -204,12 +204,20 @@ end
 --- The encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
 -- @within Enable triggers
-boss.engageId = nil
+function boss:SetEncounterID(encounterId)
+	if type(encounterId) == "number" then
+		self.engageId = encounterId
+	end
+end
 
 --- The time in seconds before the boss respawns after a wipe.
 -- Used by the `Respawn` plugin to show a bar for the respawn time.
 -- @within Enable triggers
-boss.respawnTime = nil
+function boss:SetRespawnTime(seconds)
+	if type(seconds) == "number" then
+		self.respawnTime = seconds
+	end
+end
 
 --- The NPC/mob id of the world boss.
 -- Used to specify that a module is for a world boss, not an instance boss.

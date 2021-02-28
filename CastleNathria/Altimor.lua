@@ -9,8 +9,8 @@ mod:RegisterEnableMob(
 	165067, -- Margore
 	169457, -- Bargast
 	169458) -- Hecutis
-mod.engageId = 2418
-mod.respawnTime = 30
+mod:SetEncounterID(2418)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------

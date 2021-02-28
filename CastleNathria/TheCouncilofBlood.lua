@@ -12,8 +12,8 @@ mod:RegisterEnableMob(
 	166969, -- Baroness Frieda
 	166970, -- Lord Stavros
 	166971) -- Castellan Niklaus
-mod.engageId = 2412
-mod.respawnTime = 30
+mod:SetEncounterID(2412)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------

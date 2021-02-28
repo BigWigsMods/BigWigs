@@ -5,8 +5,8 @@
 local mod, CL = BigWigs:NewBoss("Lady Inerva Darkvein", 2296, 2420)
 if not mod then return end
 mod:RegisterEnableMob(165521) -- Lady Inerva Darkvein
-mod.engageId = 2406
-mod.respawnTime = 30
+mod:SetEncounterID(2406)
+mod:SetRespawnTime(30)
 
 --------------------------------------------------------------------------------
 -- Locals

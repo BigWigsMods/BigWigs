@@ -9,8 +9,8 @@
 local mod, CL = BigWigs:NewBoss("Artificer Xy'mox", 2296, 2418)
 if not mod then return end
 mod:RegisterEnableMob(166644) -- Artificer Xy'mox
-mod.engageId = 2405
-mod.respawnTime = 30
+mod:SetEncounterID(2405)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------

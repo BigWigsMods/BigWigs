@@ -5,8 +5,8 @@
 local mod, CL = BigWigs:NewBoss("Sire Denathrius", 2296, 2424)
 if not mod then return end
 mod:RegisterEnableMob(167406) -- Sire Denathrius
-mod.engageId = 2407
-mod.respawnTime = 30
+mod:SetEncounterID(2407)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------

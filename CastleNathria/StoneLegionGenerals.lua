@@ -7,8 +7,8 @@ if not mod then return end
 mod:RegisterEnableMob(
 	168112, -- General Kaal
 	168113) -- General Grashaal
-mod.engageId = 2417
-mod.respawnTime = 30
+mod:SetEncounterID(2417)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------
