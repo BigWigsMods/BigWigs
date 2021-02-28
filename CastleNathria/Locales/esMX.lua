@@ -84,7 +84,8 @@ if L then
 	-- These need to match the in-game boss yells
 	L.dance_yell_up = "Un paso al frente" -- Prance Forward!
 	L.dance_yell_right = "Hombros a la derecha" -- Shimmy right!
-	L.dance_yell_down = "A bailar" -- Boogie down!
+	L.dance_yell_down = "A bailar" -- Boogie down! // Yelled by Niklaus & Frieda
+	L.dance_yell_down_2 = "A mover las caderas" -- Boogie down! // Yelled by Stavros
 	L.dance_yell_left = "Chassé a la izquierda" -- Sashay left!
 end
 
@@ -104,6 +105,7 @@ if L then
 	L.second_blade = "Segunda cuchilla"
 
 	L.skirmishers = "Comandos" -- Short for Stone Legion Skirmishers
+	L.eruption = "Erupción" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "Siempre mostrar las barras de habilidad"
 	L.custom_on_stop_timers_desc = "Sólo para pruebas por el momento"

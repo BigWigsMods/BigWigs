@@ -12,8 +12,8 @@ mod:RegisterEnableMob(
 	166969, -- Baroness Frieda
 	166970, -- Lord Stavros
 	166971) -- Castellan Niklaus
-mod.engageId = 2412
-mod.respawnTime = 30
+mod:SetEncounterID(2412)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------
@@ -58,6 +58,7 @@ if L then
 	L.dance_yell_up = "Prance Forward" -- Prance Forward!
 	L.dance_yell_right = "Shimmy right" -- Shimmy right!
 	L.dance_yell_down = "Boogie down" -- Boogie down!
+	L.dance_yell_down_2 = L.dance_yell_down -- Needed because of esMX funkyness
 	L.dance_yell_left = "Sashay left" -- Sashay left!
 end
 
@@ -128,11 +129,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DuelistsRiposteApplied", 346690)
 	self:Log("SPELL_CAST_START", "SummonDutifulAttendant", 346698)
 	self:Log("SPELL_CAST_START", "DredgerServants", 330978)
-	self:Log("SPELL_CAST_START", "CastellansCadre", 330965)
+	self:Log("SPELL_CAST_SUCCESS", "CastellansCadre", 330965)
 	self:Log("SPELL_CAST_START", "SintouchedBlade", 346790)
 
 	--[[ Baroness Frieda ]]--
-	self:Log("SPELL_CAST_SUCCESS", "DrainEssence", 346654)
+	self:Log("SPELL_CAST_START", "DrainEssence", 346654)
 	self:Log("SPELL_AURA_APPLIED", "DrainEssenceApplied", 346651)
 	self:Log("SPELL_CAST_START", "DreadboltVolley", 337110)
 	self:Log("SPELL_CAST_START", "PridefulEruption", 346657)
@@ -144,10 +145,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EvasiveLunge", 327497)
 	self:Log("SPELL_AURA_APPLIED", "EvasiveLungeApplied", 327610)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EvasiveLungeApplied", 327610)
-	self:Log("SPELL_CAST_SUCCESS", "DarkRecital", 331634)
+	self:Log("SPELL_CAST_START", "DarkRecital", 331634)
 	self:Log("SPELL_AURA_APPLIED", "DarkRecitalApplied", 331637, 331636)
 	self:Log("SPELL_AURA_REMOVED", "DarkRecitalRemoved", 331637, 331636)
-	self:Log("SPELL_CAST_SUCCESS", "WaltzOfBlood", 346800)
+	self:Log("SPELL_CAST_START", "WaltzOfBlood", 346800)
 	self:Log("SPELL_CAST_START", "ViolentUproar", 346303)
 
 	--[[ Intermission: The Danse Macabre ]]--
@@ -233,7 +234,7 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 		self:Message("dance_assist", "blue", L.dance_assist_up, false)
 	elseif msg:find(L.dance_yell_right, nil, true) then
 		self:Message("dance_assist", "blue", L.dance_assist_right, false)
-	elseif msg:find(L.dance_yell_down, nil, true) then
+	elseif msg:find(L.dance_yell_down, nil, true) or msg:find(L.dance_yell_down_2, nil, true) then
 		self:Message("dance_assist", "blue", L.dance_assist_down, false)
 	elseif msg:find(L.dance_yell_left, nil, true) then
 		self:Message("dance_assist", "blue", L.dance_assist_left, false)
@@ -603,7 +604,12 @@ function mod:DanseMacabreBegins(args)
 	self:PauseBar(330978) -- Dredger Servants
 	self:PauseBar(330965) -- Castellans Cadre
 	self:PauseBar(346303) -- Violent Uproar
-	self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
+	if self:Mythic() then
+		-- Dancing Fever does not pause but has a timer reset when dancing.
+		-- Pauzing the bar right away so the player can see when the ability will come in line with others.
+		self:CDBar(347350, 5.8, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
+		self:PauseBar(347350, CL.count:format(self:SpellName(347350), dancingFeverCount)) -- Dancing Fever
+	end
 end
 
 function mod:DanseMacabreOver(args)

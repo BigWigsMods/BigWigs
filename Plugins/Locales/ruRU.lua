@@ -13,7 +13,7 @@ L.height = "Высота"
 L.sizeDesc = "Обычно размеры меняются перемещением якоря. Если Вам необходим точный размер, можете использовать слайдер или ввести значение в поле, максимума нет."
 L.fontSizeDesc = "Отрегулируйте размер шрифта с помощью ползунка или введите значение вручную в поле, если оно выше 200."
 L.disableDesc = "Вы собираетесь отключить функцию '%s', делать это |cffff4411не рекомендуется|r.\n\nВы уверены, что хотите этого?"
---L.transparency = "Transparency"
+L.transparency = "Прозрачность"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -175,6 +175,14 @@ L.blockTooltipQuests = "Заблокировать цели квестов в п
 L.blockTooltipQuestsDesc = "Когда вам требуется убить босса для квеста, подсказка показывает обычно \"0/1 выполнено\", при наведении мышкой на босса. Эта опция скрывает список целей других игроков, чтобы подсказка не разрослась слишком высоко."
 L.blockObjectiveTracker = "Скрыть панель отслеживания квестов"
 L.blockObjectiveTrackerDesc = "Панель отслеживания квестов будет скрыта во время боя с боссом чтобы освободить место на экране.\n\nЭтого НЕ случится если вы находитесь в эпохальном+ подземелье или отслеживаете достижение."
+
+L.blockTalkingHead = "Скрыть окно диалога 'Говорящая голова'"
+--L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
+L.blockTalkingHeadDungeons = "Обычные и Героические подземелья"
+L.blockTalkingHeadMythics = "Эпохальные подземелья и ключи"
+L.blockTalkingHeadRaids = "Рейды"
+L.blockTalkingHeadTimewalking = "Путешествия во времени (подземелья и рейды)"
+L.blockTalkingHeadScenarios = "Сценарии"
 
 L.subzone_grand_bazaar = "Большой базар" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Порт Зандалара" -- Battle of Dazar'alor raid (Battle for Azeroth)

@@ -104,6 +104,7 @@ if L then
 	L.second_blade = "Zweite Klinge"
 
 	L.skirmishers = "Scharmützlerinnen" -- Short for Stone Legion Skirmishers
+	L.eruption = "Eruption" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Derzeit nur zum Testen"

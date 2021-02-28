@@ -7,8 +7,8 @@ if not mod then return end
 mod:RegisterEnableMob(
 	168112, -- General Kaal
 	168113) -- General Grashaal
-mod.engageId = 2417
-mod.respawnTime = 30
+mod:SetEncounterID(2417)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------
@@ -47,6 +47,7 @@ if L then
 	L.second_blade = "Second Blade"
 
 	L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+	L.eruption = "Eruption" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Just for testing right now"
@@ -89,7 +90,7 @@ function mod:GetOptions()
 		{342544, "SAY"}, -- Pulverizing Meteor
 		343063, -- Stone Spike
 		{342733, "FLASH"}, -- Ravenous Feast
-		342985, -- Stonegale Effigy
+		343898, -- Soultaint Effigy
 
 		--[[ Intermission ]]--
 		332406, -- Anima Infusion
@@ -120,6 +121,7 @@ function mod:GetOptions()
 		["goliath"] = L.goliath_short, -- Stone Legion Goliath (Goliath)
 		["commando"] = L.commando_short, -- Stone Legion Commando (Commando)
 		[342544] = CL.meteor, -- Pulverizing Meteor (Meteor)
+		[344496] = L.eruption, -- Reverberating Eruption (Eruption)
 	}
 end
 
@@ -137,7 +139,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "WickedLaceration", 333913)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "WickedLaceration", 333913)
 	self:Log("SPELL_AURA_REMOVED", "WickedLacerationRemoved", 333913)
-	self:Log("SPELL_CAST_SUCCESS", "HeartRend", 334765)
+	self:Log("SPELL_CAST_START", "HeartRend", 334765)
+	self:Log("SPELL_CAST_SUCCESS", "HeartRendSuccess", 334765)
 	self:Log("SPELL_AURA_APPLIED", "HeartRendApplied", 334765)
 	self:Log("SPELL_AURA_REMOVED", "HeartRendRemoved", 334765)
 	self:Log("SPELL_CAST_START", "SerratedSwipe", 334929)
@@ -151,7 +154,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "StonewrathExhaust", 342722)
 	self:Log("SPELL_CAST_START", "ShatteringBlast", 332683)
 	self:Log("SPELL_CAST_SUCCESS", "RavenousFeast", 342732) -- Faster than 342733
-	self:Log("SPELL_AURA_APPLIED", "StonegaleEffigy", 343898)
+	self:Log("SPELL_AURA_APPLIED", "SoultaintEffigy", 343898)
 
 	--[[ Stage Two: Grashaal's Blitz ]]--
 	self:Log("SPELL_AURA_APPLIED", "GraniteFormApplied", 329808)
@@ -192,10 +195,10 @@ function mod:OnEngage()
 	end
 	self:SetStage(1)
 
-	self:Bar(334929, 8.3, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
-	self:Bar(333387, 19, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
-	self:Bar(334765, self:Mythic() and 32 or 28.8, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
-	self:Bar(339690, self:Mythic() and 34 or 25, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
+	self:Bar(334929, 8.2, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
+	self:Bar(333387, self:Mythic() and 18 or 19, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
+	self:Bar(334765, self:Mythic() and 32.5 or 30, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend // It's either Heart Rend or Crystalize in Mythic
+	self:Bar(339690, self:Mythic() and 32.5 or 25, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
 
 	if self:Mythic() then
 		self:Bar(342256, 10.7, CL.count:format(L.skirmishers, shadowForcesCount)) -- Call Shadow Forces
@@ -353,12 +356,11 @@ function mod:HardenedStoneFormRemoved(args)
 	seismicUphealvalCount = 1
 	wickedBladeCount = 1
 
-	-- XXX Only confirmed these on Mythic with the new timers changes on Jan 26th
-	self:Bar(342425, 14.2) -- Stone Fist
-	self:Bar(344496, 33.3, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
-	self:Bar(334498, self:Mythic() and 45.5 or 17, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
-	self:Bar(333387, 26, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
-	self:Bar(339690, 14.8, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
+	self:Bar(342425, 23) -- Stone Fist
+	self:Bar(339690, 14.5, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
+	self:Bar(344496, 33, CL.count:format(L.eruption, reverberatingLeapCount)) -- Reverberating Eruption
+	self:Bar(334498, 45, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
+	self:Bar(333387, 25.5, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
 end
 
 do
@@ -451,11 +453,19 @@ end
 
 do
 	local playerList = {}
+	local prevStage, prevCount = 1, 0
 	function mod:HeartRend(args)
 		playerList = {}
-		self:StopBar(CL.count:format(args.spellName, heartRendCount))
-		heartRendCount = heartRendCount + 1
-		self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, heartRendCount))
+		prevStage = self:GetStage()
+		prevCount = heartRendCount
+	end
+
+	function mod:HeartRendSuccess(args)
+		if self:GetStage() == prevStage then -- Only if we didn't transition during cast
+			self:StopBar(CL.count:format(args.spellName, heartRendCount))
+			heartRendCount = heartRendCount + 1
+			self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, heartRendCount))
+		end
 		if self:Dispeller("magic") then
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -471,7 +481,11 @@ do
 
 		self:CustomIcon(heartRendMarker, args.destName, count)
 
-		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, heartRendCount-1))
+		if self:GetStage() ~= prevStage then -- We transitioned during the cast and heartRendCount was reset to 1
+			self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, prevCount))
+		else
+			self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, heartRendCount-1))
+		end
 	end
 
 	function mod:HeartRendRemoved(args)
@@ -487,7 +501,7 @@ end
 
 function mod:SerratedSwipeSuccess(args)
 	serratedSwipeCount = serratedSwipeCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 21.9 or 20, CL.count:format(args.spellName, serratedSwipeCount)) -- to _start
+	self:CDBar(args.spellId, 21.9, CL.count:format(args.spellName, serratedSwipeCount)) -- to _start
 end
 
 function mod:Crystalize(args)
@@ -573,14 +587,14 @@ function mod:GraniteFormRemoved(args)
 	self:StopBar(CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
 	self:StopBar(CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
 	self:StopBar(CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
-	self:StopBar(CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
+	self:StopBar(CL.count:format(L.eruption, reverberatingLeapCount)) -- Reverberating Eruption
 	self:StopBar(343086) -- Ricocheting Shuriken
 
 	self:SetStage(3)
 	self:Message(args.spellId, "green", CL.stage:format(3))
 	self:PlaySound(args.spellId, "long")
 
-	--reverberatingLeapCount = 1 -- XXX We dont reset as soaking still is counting up from stage 2 + intermission
+	--reverberatingLeapCount = 1 -- We dont reset as soaking is counting up from stage 2 + intermission
 	heartRendCount = 1
 	serratedSwipeCount = 1
 	wickedBladeCount = 1
@@ -588,18 +602,17 @@ function mod:GraniteFormRemoved(args)
 	crystalizeCount = 1
 	pulverizingMeteorCount = 1
 
-	-- XXX Only confirmed these on Mythic with the new timers changes on Jan 26th
-	-- XXX Missing tank abilities
-	self:Bar(334929, 4.4, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
+	self:Bar(334929, 9, CL.count:format(self:SpellName(334929), serratedSwipeCount)) -- Serrated Swipe
+	self:Bar(342425, 16) -- Stone Fist
 	self:Bar(339690, 7.5, CL.count:format(self:SpellName(339690), crystalizeCount)) -- Crystalize
-	self:Bar(333387, 19.5, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
-	self:Bar(344496, 25.8, CL.count:format(self:SpellName(344496), reverberatingLeapCount)) -- Reverberating Eruption
+	self:Bar(333387, 20, CL.count:format(self:SpellName(333387), wickedBladeCount)) -- Wicked Blade
+	self:Bar(344496, 26, CL.count:format(L.eruption, reverberatingLeapCount)) -- Reverberating Eruption
 	self:Bar(334765, 33, CL.count:format(self:SpellName(334765), heartRendCount)) -- Heart Rend
-	self:Bar(334498, 39.2, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
+	self:Bar(334498, 39, CL.count:format(self:SpellName(334498), seismicUphealvalCount)) -- Seismic Upheaval
 end
 
 function mod:StoneFist(args)
-	self:Bar(args.spellId, self:GetStage() == 2 and 20 or 35)
+	self:CDBar(args.spellId, 19)
 end
 
 function mod:StoneFistApplied(args)
@@ -615,17 +628,17 @@ end
 do
 	local function printTarget(self, player, guid)
 		if self:Me(guid) then
-			self:Say(344496, 324010) -- Eruption
+			self:Say(344496, L.eruption) -- Eruption
 			self:PlaySound(344496, "warning")
 		end
-		self:TargetMessage(344496, "red", player, CL.count:format(self:SpellName(324010), reverberatingLeapCount-1))
+		self:TargetMessage(344496, "red", player, CL.count:format(L.eruption, reverberatingLeapCount-1))
 	end
 
 	function mod:ReverberatingEruption(args)
-		self:StopBar(CL.count:format(args.spellName, reverberatingLeapCount))
+		self:StopBar(CL.count:format(L.eruption, reverberatingLeapCount))
 		self:GetNextBossTarget(printTarget, args.sourceGUID)
 		reverberatingLeapCount = reverberatingLeapCount + 1
-		self:CDBar(args.spellId, 30, CL.count:format(args.spellName, reverberatingLeapCount))
+		self:CDBar(args.spellId, 30, CL.count:format(L.eruption, reverberatingLeapCount))
 	end
 end
 
@@ -634,7 +647,7 @@ function mod:SeismicUpheaval(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, seismicUphealvalCount))
 	self:PlaySound(args.spellId, "long")
 	seismicUphealvalCount = seismicUphealvalCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 26 or 29, CL.count:format(args.spellName, seismicUphealvalCount))
+	self:CDBar(args.spellId, self:Mythic() and 26 or 28, CL.count:format(args.spellName, seismicUphealvalCount))
 end
 
 --[[ Mythic ]]--
@@ -682,8 +695,8 @@ function mod:RavenousFeast(args)
 	self:Bar(342733, self:Mythic() and 24.3 or 18.2) -- Ravenous Feast
 end
 
-function mod:StonegaleEffigy(args)
-	self:Message(342985, "cyan")
-	self:PlaySound(342985, "alert")
+function mod:SoultaintEffigy(args)
+	self:Message(args.spellId, "yellow", CL.percent:format(30, args.spellName))
+	self:PlaySound(args.spellId, "alert")
 	self:StopBar(342733) -- Ravenous Feast
 end

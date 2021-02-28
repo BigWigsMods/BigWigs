@@ -18,6 +18,7 @@ L.soon = "%s скоро"
 L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
+L.rticon = "%s ({rt%d})"
 L.near = "%s возле ТЕБЯ"
 L.on_group = "%s на ГРУППЕ" -- spell on group
 
@@ -29,17 +30,18 @@ L.mythic = "Эпохальный режим"
 L.active = "Активен" -- When a boss becomes active, after speech finishes
 L.general = "Общее" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
-L.duration = "%s для %s сек"
-L.over = "%s завершается"
-L.removed = "%s снято"
-L.removed_from = "%s Снято С %s"
-L.removed_by = "%s был снят %s" -- spell removed by player
-L.incoming = "%s на подходе"
-L.interrupted = "%s прервано"
-L.interrupted_by = "%s прерван %s" -- spell interrupted by player
-L.no = "Нет %s"
+L.duration = "%s для %s сек" -- Spell for 10 seconds
+L.over = "%s завершается" -- Spell Over
+L.removed = "%s снято" -- Spell Removed
+L.removed_from = "%s Снято С %s" -- Spell removed from Player
+L.removed_by = "%s был снят %s" -- Spell removed by Player
+L.incoming = "%s на подходе" -- Spell Incoming
+L.interrupted = "%s прервано" -- Spell Interrupted
+L.interrupted_by = "%s прерван %s" -- Spell interrupted by Player
+L.no = "Нет %s" -- No Spell
 L.intermission = "Перерыв"
-L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - Spell
+L.cancelled = "%s отменено" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "Помощник появился"
@@ -92,10 +94,13 @@ L.seconds = "%.1fс" -- 1.1 seconds
 -- Common ability name replacements
 L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "Луч" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
+L.beams = "Лучи" -- Plural of L.beam
 L.bomb = "Бомба" -- Used for debuffs that make players explode
 L.explosion = "Взрыв" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Фиксация" -- Used when a boss or add is chasing/fixated on a player
-L.knockback = "Отбрасывание" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.knockback = "Отбрасывание" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.traps = "Ловушки" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Метеор" -- This one will probably only ever be used for actual meteors
 L.shield = "Щит" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
+L.teleport = "Телепортация" -- A boss/add/etc teleported somewhere
+L.fear = "Страх" -- For abilities that cause you to flee in fear

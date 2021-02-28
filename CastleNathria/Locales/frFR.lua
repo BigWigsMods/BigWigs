@@ -104,6 +104,7 @@ if L then
 	L.second_blade = "Deuxième rebond"
 
 	L.skirmishers = "Tirailleuses" -- Short for Stone Legion Skirmishers (Tirailleuse de la Légion de pierre)
+	L.eruption = "Éruption" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "Toujours montrer les barres de techniques"
 	L.custom_on_stop_timers_desc = "En cours de test"

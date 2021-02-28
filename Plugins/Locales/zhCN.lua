@@ -303,6 +303,14 @@ L.blockFollowerMissionDesc = "追随者任务弹出窗口会显示一些事情�
 L.blockObjectiveTracker = "隐藏任务追踪器"
 L.blockObjectiveTrackerDesc = "在首领战斗中将任务追踪器隐藏，以给屏幕空出更多空间。\n\n此功能在史诗钥石或追踪成就时无效。"
 
+L.blockTalkingHead = "隐藏 NPC 说话时弹出的“对话头像”"
+L.blockTalkingHeadDesc = "当 NPC 头像和聊天文本在屏幕中央下方的一个弹出的对话盒子称为“对话头像”，|cffff4411有时候|r会在 NPC 讲话时显示。\n\n可以选择不同类型设定为禁止显示。\n\n|cFF33FF99请注意：|r\n 1) 此功能将允许 NPC 语音继续播放所以可以继续听到对话。\n 2) 为了安全起见，只有特定的对话头像会被屏蔽，任何特殊或独特的对话如一次性任务，都不会被屏蔽。 "
+L.blockTalkingHeadDungeons = "普通和英雄地下城"
+L.blockTalkingHeadMythics = "史诗和史诗钥石地下城"
+L.blockTalkingHeadRaids = "团队"
+L.blockTalkingHeadTimewalking = "时空漫游（地下城和团队）"
+L.blockTalkingHeadScenarios = "场景事件"
+
 L.subzone_grand_bazaar = "百商集市" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "赞达拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_eastern_transept = "东侧耳堂" -- Auchindoun dungeon (Warlords of Draenor)

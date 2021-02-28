@@ -5,8 +5,8 @@
 local mod, CL = BigWigs:NewBoss("Lady Inerva Darkvein", 2296, 2420)
 if not mod then return end
 mod:RegisterEnableMob(165521) -- Lady Inerva Darkvein
-mod.engageId = 2406
-mod.respawnTime = 30
+mod:SetEncounterID(2406)
+mod:SetRespawnTime(30)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -110,7 +110,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ChangeOfHeartRemoved", 340452)
 
 	-- Container of Bottled Anima
-	self:Log("SPELL_CAST_SUCCESS", "BottledAnima", 342280, 342281, 342282) -- Bottled Anima, Lingering Anima, Replicating Anima
+	self:Log("SPELL_CAST_START", "BottledAnima", 342280, 342281, 342282) -- Bottled Anima, Lingering Anima, Replicating Anima
 
 	-- Container of Sin
 	self:RegisterEvent("RAID_BOSS_WHISPER")
@@ -119,7 +119,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SharedSufferingRemoved", 324983)
 
 	-- Container of Concentrated Anima
-	self:Log("SPELL_CAST_SUCCESS", "ConcentratedAnima", 342320, 342321) -- Lightly Concentrated Anima, Concentrated Anima
+	self:Log("SPELL_CAST_START", "ConcentratedAnima", 342320, 342321) -- Lightly Concentrated Anima, Concentrated Anima
 	self:Log("SPELL_AURA_APPLIED", "ConcentratedAnimaApplied", 332664, 340477) -- Concentrated Anima, Highly Concentrated Anima
 	self:Log("SPELL_AURA_REMOVED", "ConcentratedAnimaRemoved", 332664, 340477)
 	self:Log("SPELL_AURA_APPLIED", "UnconscionableGuiltApplied", 331573)
@@ -436,11 +436,11 @@ do
 		if self:Me(args.destGUID) then
 			isOnMe = true
 			self:PlaySound(332664, "alarm")
-			self:Say(332664, CL.count_rticon:format(args.spellId == 340477 and CL.big_add or CL.small_add, icon, icon))
-			self:SayCountdown(332664, 10)
+			self:Say(332664, CL.rticon:format(args.spellId == 340477 and CL.big_add or CL.small_add, icon))
+			self:SayCountdown(332664, 10, icon)
 			self:OpenProximity(332664, 8)
 		end
-		self:NewTargetsMessage(332664, "yellow", playerList)
+		self:NewTargetsMessage(332664, "yellow", playerList, CL.adds)
 
 		self:CustomIcon(concentratedAnimaMarker, args.destName, icon)
 		if not isOnMe then

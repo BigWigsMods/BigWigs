@@ -205,8 +205,10 @@ function mod:Stoneskin(args)
 end
 
 function mod:StoneskinApplied(args)
-	self:Message(args.spellId, "orange", CL.buff_other:format(args.destName, args.spellName))
-	self:PlaySound(args.spellId, "warning")
+	if bit.band(args.destFlags, 0x400) == 0 then -- COMBATLOG_OBJECT_TYPE_PLAYER
+		self:Message(args.spellId, "orange", CL.buff_other:format(args.destName, args.spellName))
+		self:PlaySound(args.spellId, "warning")
+	end
 end
 
 function mod:GraniteWings(args)
@@ -312,7 +314,7 @@ do
 	end
 	function mod:ConcentrateAnimaApplied(args)
 		playerList[#playerList+1] = args.destName
-		self:NewTargetsMessage(args.spellId, "orange", playerList)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 3)
 		self:TargetBar(args.spellId, 10, args.destName)
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")

@@ -18,6 +18,7 @@ L.soon = "곧 %s"
 L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
+L.rticon = "%s ({rt%d})"
 L.near = "당신 근처에 %s"
 L.on_group = "파티에 %s" -- spell on group
 
@@ -29,17 +30,18 @@ L.mythic = "신화 난이도"
 L.active = "활성화" -- When a boss becomes active, after speech finishes
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
-L.duration = "%s %s초 남음"
-L.over = "%s 종료"
-L.removed = "%s 제거됨"
-L.removed_from = "%2$s의 %1$s 제거됨"
-L.removed_by = "%2$s|1이;가; %1$s 제거함" -- spell removed by player
-L.incoming = "곧 %s"
-L.interrupted = "%s 시전 방해됨"
-L.interrupted_by = "%s 를 %s 가 차단!" -- spell interrupted by player
-L.no = "%s 없음"
+L.duration = "%s %s초 남음" -- Spell for 10 seconds
+L.over = "%s 종료" -- Spell Over
+L.removed = "%s 제거됨" -- Spell Removed
+L.removed_from = "%2$s의 %1$s 제거됨" -- Spell removed from Player
+L.removed_by = "%2$s|1이;가; %1$s 제거함" -- Spell removed by Player
+L.incoming = "곧 %s" -- Spell Incoming
+L.interrupted = "%s 시전 방해됨" -- Spell Interrupted
+L.interrupted_by = "%s 를 %s 가 차단" -- Spell interrupted by Player
+L.no = "%s 없음" -- No Spell
 L.intermission = "사잇단계"
-L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - Spell
+--L.cancelled = "%s Cancelled" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "추가 몹 생성"
@@ -92,10 +94,13 @@ L.seconds = "%.1f초" -- 1.1 seconds
 -- Common ability name replacements
 L.laser = "레이저" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "광선" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
+L.beams = "광선" -- Plural of L.beam
 L.bomb = "폭탄" -- Used for debuffs that make players explode
 L.explosion = "폭발" -- When the explosion from a bomb-like ability will occur
 L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a player
-L.knockback = "넉백" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.knockback = "넉백" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.traps = "덫" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "유성" -- This one will probably only ever be used for actual meteors
 L.shield = "보호막" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
+L.teleport = "순간이동" -- A boss/add/etc teleported somewhere
+L.fear = "공포" -- For abilities that cause you to flee in fear
