@@ -18,8 +18,8 @@ do
 		outline = "NONE",
 		additionalWidth = 0,
 		additionalHeight = 0,
-		barColor = {0.2, 0, 1, 0.5},
 		barTextColor = {1, 0.82, 0},
+		barColor = {0.2, 0, 1, 0.5},
 		backgroundColor = {0, 0, 0, 0.3},
 		monochrome = false,
 		expanded = false,
@@ -377,22 +377,86 @@ end
 -- Initialization
 --
 
-local function updateProfile()
-	db = plugin.db.profile
-	oldPlugin.db:ResetProfile(nil, true) -- XXX temp 9.0.2 // no callbacks
+do
+	local function updateProfile()
+		db = plugin.db.profile
 
-	plugin:RestyleWindow()
-end
+		if type(db.position) ~= "table" then
+			db.position = plugin.defaultDB.position
+		end
+		if type(db.fontName) ~= "string" then
+			db.fontName = plugin.defaultDB.fontName
+		end
+		if type(db.fontSize) ~= "number" or db.fontSize < 1 or db.fontSize > 200 then
+			db.fontSize = plugin.defaultDB.fontSize
+		end
+		if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
+			db.outline = plugin.defaultDB.outline
+		end
+		if type(db.additionalWidth) ~= "number" or db.additionalWidth < 0 or db.additionalWidth > 100 then
+			db.additionalWidth = plugin.defaultDB.additionalWidth
+		end
+		if type(db.additionalHeight) ~= "number" or db.additionalHeight < 0 or db.additionalHeight > 100 then
+			db.additionalHeight = plugin.defaultDB.additionalHeight
+		end
+		if type(db.barTextColor) ~= "table" then
+			db.barTextColor = plugin.defaultDB.barTextColor
+		end
+		for i = 1, 3 do
+			local n = db.barTextColor[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				db.barTextColor = plugin.defaultDB.barTextColor
+				break
+			end
+		end
+		if type(db.barColor) ~= "table" then
+			db.barColor = plugin.defaultDB.barColor
+		end
+		for i = 1, 4 do
+			local n = db.barColor[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				db.barColor = plugin.defaultDB.barColor
+				break
+			end
+		end
+		if type(db.backgroundColor) ~= "table" then
+			db.backgroundColor = plugin.defaultDB.backgroundColor
+		end
+		for i = 1, 4 do
+			local n = db.backgroundColor[i]
+			if type(n) ~= "number" or n < 0 or n > 1 then
+				db.backgroundColor = plugin.defaultDB.backgroundColor
+				break
+			end
+		end
+		if type(db.monochrome) ~= "boolean" then
+			db.monochrome = plugin.defaultDB.monochrome
+		end
+		if type(db.expanded) ~= "boolean" then
+			db.expanded = plugin.defaultDB.expanded
+		end
+		if type(db.disabled) ~= "boolean" then
+			db.disabled = plugin.defaultDB.disabled
+		end
+		if type(db.lock) ~= "boolean" then
+			db.lock = plugin.defaultDB.lock
+		end
 
-function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_StartSyncingPower")
-	self:RegisterMessage("BigWigs_ShowAltPower")
-	self:RegisterMessage("BigWigs_HideAltPower", "Close")
-	self:RegisterMessage("BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
+		oldPlugin.db:ResetProfile(nil, true) -- XXX temp 9.0.2 // no callbacks
 
-	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-	updateProfile()
+		plugin:RestyleWindow()
+	end
+
+	function plugin:OnPluginEnable()
+		self:RegisterMessage("BigWigs_StartSyncingPower")
+		self:RegisterMessage("BigWigs_ShowAltPower")
+		self:RegisterMessage("BigWigs_HideAltPower", "Close")
+		self:RegisterMessage("BigWigs_OnBossDisable")
+		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
+
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
+	end
 end
 
 function plugin:OnPluginDisable()
