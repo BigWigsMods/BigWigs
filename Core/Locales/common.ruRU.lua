@@ -41,7 +41,7 @@ L.interrupted_by = "%s прерван %s" -- Spell interrupted by Player
 L.no = "Нет %s" -- No Spell
 L.intermission = "Перерыв"
 L.percent = "%d%% - %s" -- 20% - Spell
---L.cancelled = "%s Cancelled" -- Spell Cancelled
+L.cancelled = "%s отменено" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "Помощник появился"

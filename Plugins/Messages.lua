@@ -66,17 +66,65 @@ plugin.defaultDB = {
 local function updateProfile()
 	db = plugin.db.profile
 
-	if db.fontSize < 10 or db.fontSize > 200 then
+	if type(db.fontName) ~= "string" then
+		db.fontName = plugin.defaultDB.fontName
+	end
+	if type(db.emphFontName) ~= "string" then
+		db.emphFontName = plugin.defaultDB.emphFontName
+	end
+	if type(db.monochrome) ~= "boolean" then
+		db.monochrome = plugin.defaultDB.monochrome
+	end
+	if type(db.emphMonochrome) ~= "boolean" then
+		db.emphMonochrome = plugin.defaultDB.emphMonochrome
+	end
+	if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
+		db.outline = plugin.defaultDB.outline
+	end
+	if db.emphOutline ~= "NONE" and db.emphOutline ~= "OUTLINE" and db.emphOutline ~= "THICKOUTLINE" then
+		db.emphOutline = plugin.defaultDB.emphOutline
+	end
+	if db.align ~= "LEFT" and db.align ~= "CENTER" and db.align ~= "RIGHT" then
+		db.align = plugin.defaultDB.align
+	end
+	if type(db.fontSize) ~= "number" or db.fontSize < 10 or db.fontSize > 200 then
 		db.fontSize = plugin.defaultDB.fontSize
 	end
-	if db.emphFontSize < 20 or db.emphFontSize > 200 then
+	if type(db.emphFontSize) ~= "number" or db.emphFontSize < 20 or db.emphFontSize > 200 then
 		db.emphFontSize = plugin.defaultDB.emphFontSize
 	end
-	if db.displaytime < 1 or db.displaytime > 10 then
+	if type(db.chat) ~= "boolean" then
+		db.chat = plugin.defaultDB.chat
+	end
+	if type(db.useicons) ~= "boolean" then
+		db.useicons = plugin.defaultDB.useicons
+	end
+	if type(db.classcolor) ~= "boolean" then
+		db.classcolor = plugin.defaultDB.classcolor
+	end
+	if type(db.growUpwards) ~= "boolean" then
+		db.growUpwards = plugin.defaultDB.growUpwards
+	end
+	if type(db.displaytime) ~= "number" or db.displaytime < 1 or db.displaytime > 10 then
 		db.displaytime = plugin.defaultDB.displaytime
 	end
-	if db.fadetime < 1 or db.fadetime > 10 then
+	if type(db.fadetime) ~= "number" or db.fadetime < 1 or db.fadetime > 10 then
 		db.fadetime = plugin.defaultDB.fadetime
+	end
+	if type(db.emphUppercase) ~= "boolean" then
+		db.emphUppercase = plugin.defaultDB.emphUppercase
+	end
+	if type(db.disabled) ~= "boolean" then
+		db.disabled = plugin.defaultDB.disabled
+	end
+	if type(db.emphDisabled) ~= "boolean" then
+		db.emphDisabled = plugin.defaultDB.emphDisabled
+	end
+	if type(db.normalPosition) ~= "table" then
+		db.normalPosition = plugin.defaultDB.normalPosition
+	end
+	if type(db.emphPosition) ~= "table" then
+		db.emphPosition = plugin.defaultDB.emphPosition
 	end
 
 	local emphFlags = nil

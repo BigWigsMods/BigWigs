@@ -9,8 +9,8 @@
 local mod, CL = BigWigs:NewBoss("Sun King's Salvation", 2296, 2422)
 if not mod then return end
 mod:RegisterEnableMob(165805, 165759, 168973) -- Shade of Kael'thas, Kael'thas, High Torturer Darithos
-mod.engageId = 2402
-mod.respawnTime = 30
+mod:SetEncounterID(2402)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------
