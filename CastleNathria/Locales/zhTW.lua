@@ -104,7 +104,7 @@ if L then
 	L.second_blade = "第二刀"
 
 	L.skirmishers = "鬥爭者" -- Short for Stone Legion Skirmishers
-	--L.eruption = "Eruption" -- Short for Reverberating Eruption
+	L.eruption = "爆發" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "總是顯示計時器"
 	-- L.custom_on_stop_timers_desc = "Just for testing right now"
@@ -150,7 +150,7 @@ if L then
 	--[[ Shriekwing -> Huntsman Altimor ]]--
 	L.gargon = "笨重的石獸"
 	L.hawkeye = "納撒亞追蹤者"
-	--L.overseer = "Kennel Overseer"
+	L.overseer = "養狗場監督者"
 
 	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
 	L.feaster = "噬懼者"
@@ -163,10 +163,10 @@ if L then
 	L.kullan = "庫倫"
 
 	--[[ Shriekwing -> Xy'mox ]]--
-	--L.antiquarian = "Sinister Antiquarian"
-	--L.conservator = "Nathrian Conservator"
-	--L.archivist = "Nathrian Archivist"
+	L.antiquarian = "邪惡的古物收藏家"
+	L.conservator = "納撒亞栽培者"
+	L.archivist = "納撒亞文獻管理員"
 
 	--[[ Sludgefist -> Stone Legion Generals ]]--
-	--L.goliath = "Stone Legion Goliath"
+	L.goliath = "石源魔軍團巨人"
 end
