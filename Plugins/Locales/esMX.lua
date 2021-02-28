@@ -13,7 +13,7 @@ L.height = "Alto"
 L.sizeDesc = "Normalmente se ajusta el tamaño arrastrando el ancla. Si necesitas un tamaño exacto puedes usar este deslizador o escribir el valor en el recuadro, que no tiene un máximo."
 L.fontSizeDesc = "Ajuste el tamaño de la fuente utilizando el control deslizante o escriba el valor en la casilla que tiene un máximo de 200."
 L.disableDesc = "Está a punto de desactivar la función '%s' que |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacer esto?"
---L.transparency = "Transparency"
+L.transparency = "Transparencia"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
@@ -74,7 +74,7 @@ L.nameplateAutoWidth = "Igualar anchura de la placa de nombre"
 L.nameplateAutoWidthDesc = "Establece el ancho de las barras de nombres con la anchura de la barra de nombre padre."
 L.nameplateOffsetY = "Desplazamiento en Y"
 L.nameplateOffsetYDesc = "Desplazamiento de la parte superior de la placa de nombre para las barras hacia arriba y la parte inferior de la placa de nombre para las barras hacia abajo."
---L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
+L.nameplateAlphaDesc = "Controla qué tan transparentes las barras de nombres deben ser."
 
 L.clickableBars = "Barra cliqueable"
 L.clickableBarsDesc = "Las barras de BigWigs se les puede hacer clic por defecto. De esta manera puedes seleccionar objetos, lanzar hechizos AoE, cambiar el ángulo de la cámara, etc., mientras tu cursor está encima de las mismas. |cffff4411Si activas esta opción ya no se comportarán de esta forma.|r Las barras interceptarán los clics que hagas en ellas.\n"
@@ -176,13 +176,13 @@ L.blockTooltipQuestsDesc = "Cuando necesitas matar a un jefe para una misión, n
 L.blockObjectiveTracker = "Ocultar el seguimiento de misión"
 L.blockObjectiveTrackerDesc = "El seguimiento de misión se ocultará durante encuentros de jefes para limpiar el espacio en pantalla.\n\nEsto no sucederá si estás en una mítica + o estás haciendo seguimiento de un logro."
 
---L.blockTalkingHead = "Hide 'Talking Head' NPC dialog popup"
---L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
---L.blockTalkingHeadDungeons = "Normal & Heroic Dungeons"
---L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
---L.blockTalkingHeadRaids = "Raids"
---L.blockTalkingHeadTimewalking = "Timewalking (Dungeons & Raids)"
---L.blockTalkingHeadScenarios = "Scenarios"
+L.blockTalkingHead = "Ocultar la ventana emergente de diálogo 'Cabeza Parlante' del NPC"
+L.blockTalkingHeadDesc = "La 'Cabeza Parlante' es un cuadro de diálogo emergente que tiene una cabeza de NPC y un texto de chat de NPC en la parte media-baja de tu pantalla que |cffff4411en ocasiones|r muestra cuando un NPC está hablando.\n\nPuedes elegir los diferentes tipos de instancias en las que esto debe ser bloqueado para que no se muestre.\n\n|cFF33FF99Ten en cuenta:|r\n 1) Esta característica permitirá que la voz del NPC se continúe reproduciéndo para que puedas seguir escuchándola.\n 2) Por seguridad, sólo se bloquearán cabezas parlantes específicas. Cualquier cosa especial o única, como una búsqueda única, no se bloqueará."
+L.blockTalkingHeadDungeons = "Calabozos Normales & Heroicos"
+L.blockTalkingHeadMythics = "Cabozos Míticos y Míticos+"
+L.blockTalkingHeadRaids = "Bandas"
+L.blockTalkingHeadTimewalking = "Cronoviaje (Calabozos & Bandas)"
+L.blockTalkingHeadScenarios = "Escenarios"
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Puerto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -260,7 +260,7 @@ L.uppercaseDesc = "Todos los mensajes enfatizados se convertirán en MAYÚSCULAS
 L.useIcons = "Usar íconos"
 L.useIconsDesc = "Mostrar íconos al lado de los mensajes."
 L.classColors = "Colores de clase"
---L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
+L.classColorsDesc = "Los mensajes a veces contienen nombres de jugadores. Al activar esta opción, esos nombres serán coloreados con los colores de la clase."
 L.chatMessages  = "Mensajes del marco de chat"
 L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de chat por defecto en adición a los ajustes mostrados"
 

@@ -41,7 +41,7 @@ L.interrupted_by = "%s Interrumpido por %s" -- Spell interrupted by Player
 L.no = "No %s" -- No Spell
 L.intermission = "Interrupción"
 L.percent = "%d%% - %s" -- 20% - Spell
---L.cancelled = "%s Cancelled" -- Spell Cancelled
+L.cancelled = "%s Cancelado" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "Apareció Esbirro"
