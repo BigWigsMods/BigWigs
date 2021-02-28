@@ -9,8 +9,8 @@ mod:RegisterEnableMob(
 	165067, -- Margore
 	169457, -- Bargast
 	169458) -- Hecutis
-mod.engageId = 2418
-mod.respawnTime = 30
+mod:SetEncounterID(2418)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------
@@ -18,11 +18,12 @@ mod:SetStage(1)
 --
 
 local sinseekerCount = 1
-local bloodyThrashCount = 1
+local viciousLungeCount = 1
 local ripSoulCount = 1
 local shadesOfBargastCount = 1
 local petrifyingHowlCount = 1
 local mobCollector = {}
+local lungeTarget = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -111,16 +112,17 @@ end
 
 function mod:OnEngage()
 	sinseekerCount = 1
-	bloodyThrashCount = 1
+	viciousLungeCount = 1
 	ripSoulCount = 1
 	shadesOfBargastCount = 1
 	petrifyingHowlCount = 1
 	mobCollector = {}
+	lungeTarget = nil
 	self:SetStage(1)
 
 	self:Bar(334404, 6.5) -- Spreadshot
 	self:Bar(334971, 10) -- Jagged Claws
-	self:Bar(334945, 23.5, CL.count:format(self:SpellName(334945), bloodyThrashCount)) -- Vicious Lunge
+	self:Bar(334945, 23.5, CL.count:format(self:SpellName(334945), viciousLungeCount)) -- Vicious Lunge
 	self:Bar(335114, 28.5, CL.count:format(self:SpellName(335114), sinseekerCount)) -- Sinseeker
 end
 
@@ -133,15 +135,16 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		local sourceGUID = self:UnitGUID(unit)
 		if self:MobId(sourceGUID) == 165066 then -- Huntsman Altimor
 			local stage = self:GetStage() + 1
-			self:SetStage(stage)
 			if stage == 2 then -- Bargast up
 				ripSoulCount = 1
 				shadesOfBargastCount = 1
+				self:SetStage(2)
 
 				self:Bar(334797, 9.5, CL.count:format(self:SpellName(334797), ripSoulCount)) -- Rip Soul
 				self:Bar(334757, 17.5, CL.count:format(self:SpellName(334757), shadesOfBargastCount)) -- Shades Of Bargast
 			elseif stage == 3 then -- Hecutis up
 				petrifyingHowlCount = 1
+				self:SetStage(3)
 
 				self:Bar(334852, 16.2, CL.count:format(self:SpellName(334852), petrifyingHowlCount)) -- Petrifying Howl
 			end
@@ -209,18 +212,20 @@ function mod:JaggedClawsApplied(args)
 end
 
 function mod:ViciousLungeApplied(args)
-	self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(args.spellName, bloodyThrashCount))
+	lungeTarget = args.destGUID
+	self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(args.spellName, viciousLungeCount))
 	self:PrimaryIcon(args.spellId, args.destName)
-	if self:Me(args.destGUID) then
+	if self:Me(lungeTarget) then
 		self:PlaySound(args.spellId, "warning")
 		self:Yell(args.spellId)
 		self:YellCountdown(args.spellId, 6)
 	end
-	bloodyThrashCount = bloodyThrashCount + 1
-	self:Bar(args.spellId, 25, CL.count:format(args.spellName, bloodyThrashCount))
+	viciousLungeCount = viciousLungeCount + 1
+	self:Bar(args.spellId, 25, CL.count:format(args.spellName, viciousLungeCount))
 end
 
 function mod:ViciousLungeRemoved(args)
+	lungeTarget = nil
 	self:PrimaryIcon(args.spellId)
 	if self:Me(args.destGUID) then
 		self:CancelYellCountdown(args.spellId)
@@ -228,10 +233,18 @@ function mod:ViciousLungeRemoved(args)
 end
 
 function mod:MargoreDeath()
+	if lungeTarget then -- Vicious Lunge
+		self:PrimaryIcon(334945)
+		if self:Me(lungeTarget) then
+			self:CancelYellCountdown(334945)
+			self:Yell(334945, CL.cancelled:format(self:SpellName(334945)), true)
+		end
+	end
+
 	self:Message("stages", "cyan", L.killed:format(self:SpellName(-22312)), false) -- Margore
 
 	self:StopBar(334971) -- Jagged Claws
-	self:StopBar(CL.count:format(self:SpellName(334945), bloodyThrashCount)) -- Bloody Thrash
+	self:StopBar(CL.count:format(self:SpellName(334945), viciousLungeCount)) -- Vicious Lunge
 
 	self:Bar("stages", 6, -22311, 334797) -- Bargast, Rip Soul icon
 	self:Bar(335114, 38.5, CL.count:format(self:SpellName(335114), sinseekerCount)) -- Sinseeker

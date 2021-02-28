@@ -104,6 +104,7 @@ if L then
 	 L.second_blade = "두번째 칼날"
 
 	 L.skirmishers = "척후병" -- Short for Stone Legion Skirmishers
+	L.eruption = "분출" -- Short for Reverberating Eruption
 
 	 L.custom_on_stop_timers = "항상 능력 바 표시"
 	 L.custom_on_stop_timers_desc = "아직은 실험 단계"

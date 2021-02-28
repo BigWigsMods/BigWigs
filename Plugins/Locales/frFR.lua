@@ -176,6 +176,14 @@ L.blockTooltipQuestsDesc = "Quand vous devez tuer un boss pour une quête, cela 
 L.blockObjectiveTracker = "Cacher le suivi des quêtes"
 L.blockObjectiveTrackerDesc = "Le suivi des objectifs de quêtes sera caché durant les rencontres de boss pour libérer de la place sur l'écran.\n\nCela ne sera PAS le cas dans les donjons Mythique+ ou si vous suivez un haut fait."
 
+L.blockTalkingHead = "Cacher la boîte de dialogue PNJ 'Talking Head'"
+L.blockTalkingHeadDesc = "Le 'Talking Head' est une boîte de dialogue contenant une tête de PNJ et du dialogue au milieu-bas de votre écran qui |cffff4411parfois|r s'affiche quand un PNJ parle.\n\nVous pouvez choisir dans quels types d'instances cette boîte ne sera pas affichée.\n\n|cFF33FF99Attention :|r\n 1) Cette fonctionnalité permet toujours à la voix du PNJ d'être jouée afin que vous puissiez l'entendre.\n 2) Par sécurité, seules certaines boîtes de dialogue seront bloquées. Les boîtes de dialogue spéciales ou uniques, comme celles des quêtes non répétables, ne seront pas bloquées."
+L.blockTalkingHeadDungeons = "Donjons normaux & héroïques"
+L.blockTalkingHeadMythics = "Donjons mythiques & mythiques+"
+L.blockTalkingHeadRaids = "Raids"
+L.blockTalkingHeadTimewalking = "Marcheurs du temps (donjons & raids)"
+L.blockTalkingHeadScenarios = "Scénarios"
+
 L.subzone_grand_bazaar = "Le Grand bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Port de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 --L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)

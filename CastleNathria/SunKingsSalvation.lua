@@ -9,8 +9,8 @@
 local mod, CL = BigWigs:NewBoss("Sun King's Salvation", 2296, 2422)
 if not mod then return end
 mod:RegisterEnableMob(165805, 165759, 168973) -- Shade of Kael'thas, Kael'thas, High Torturer Darithos
-mod.engageId = 2402
-mod.respawnTime = 30
+mod:SetEncounterID(2402)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------
@@ -38,11 +38,11 @@ local addTimersHeroic = { -- Heroic
 
 local addTimersMythic = { -- Mythic
 	[1] = { -- From pull
-		[-21954] = {51.7}, -- Rockbound Vanquishers
-		[-21993] = {}, -- Bleakwing Assassin
-		[-21952] = {}, -- Vile Occultists
-		[-21953] = {}, -- Soul Infusers
-		[-22082] = {}, -- Pestering Fiend
+		[-21954] = {51.7, 60}, -- Rockbound Vanquishers
+		[-21993] = {111.7, 40}, -- Bleakwing Assassin
+		[-21952] = {111.7}, -- Vile Occultists
+		[-21953] = {71.7}, -- Soul Infusers
+		[-22082] = {101.7, 40}, -- Pestering Fiend
 	},
 	[2] = { -- From Reflection of Guilt Removed
 		[-21954] = {3.5, 70, 70, 70}, -- Rockbound Vanquishers
@@ -119,8 +119,8 @@ function mod:GetOptions()
 		-- High Torturer Darithos
 		{328889, "SAY", "PROXIMITY"}, -- Greater Castigation
 		-- Mythic
-		337859, -- Cloak of Flames
-		343026, -- Damage Cloak of Flames
+		337859, -- Cloak of Flames // Healing absorb
+		343026, -- Cloak of Flames // Damage absorb
 	},{
 		["stages"] = "general",
 		[326455] = -21966, -- Shade of Kael'thas
@@ -174,6 +174,7 @@ function mod:OnBossEnable()
 
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "CloakOfFlamesApplied", 337859, 343026)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_INTERRUPTED", "UnleashedPyroclasmInterrupted", "boss1", "boss2") -- No SPELL_INTERRUPT
 	self:Log("SPELL_AURA_REMOVED", "CloakOfFlamesRemoved", 337859, 343026)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 328579) -- Smoldering Remnants
@@ -220,7 +221,7 @@ function mod:OnEngage()
 	end
 
 	if self:Mythic() then
-		self:Bar(337859, 62, CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
+		self:Bar(337859, 81.5, CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -340,7 +341,7 @@ function mod:ReflectionOfGuiltApplied(args)
 		self:Bar(329518, 29.5, CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 
 		if self:Mythic() then
-			self:Bar(343026, 38.9, CL.count:format(self:SpellName(343026), cloakOfFlamesCount))
+			self:Bar(343026, 38.9, CL.count:format(CL.shield, cloakOfFlamesCount))
 		end
 	end
 end
@@ -411,7 +412,7 @@ function mod:ReflectionOfGuiltRemoved()
 	self:StopBar(CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(325877), emberBlastCount-1))) -- Ember Blast
 	self:CancelSayCountdown(325877) -- Ember Blast
-	self:StopBar(CL.count:format(self:SpellName(343026), cloakOfFlamesCount)) -- Cloak of Flames
+	self:StopBar(CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
 
 	local stage = self:GetStage() + 1
 	if stage == 3 then return end -- You win
@@ -554,7 +555,7 @@ function mod:DarithosDeath()
 	self:StopBar(328889) -- Greater Castigation
 
 	local firstVanquisherRemaining = firstVanquisherExpected - GetTime() -- Always negative if you killed him very late so we dont need a stage check
-	if firstVanquisherRemaining > firstVanquisherSpawnTime then -- Reduce all to align with the first spawn for the first Vanquisher
+	if firstVanquisherRemaining > firstVanquisherSpawnTime then -- Reduce all timers to align with the first spawn for the first Vanquisher
 		for key,count in pairs(addWaveCount) do -- Cancel add bars and scheduled messages
 			local text = CL.count:format(self:SpellName(key), count-1)
 			self:CancelDelayedMessage(text)
@@ -575,12 +576,15 @@ function mod:DarithosDeath()
 		for key,count in pairs(addWaveCount) do
 			self:StartAddTimer(1, key, count, true)
 		end
+		if self:Mythic() then
+			self:Bar(337859, 38, CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
+		end
 	end
 end
 
 -- Mythic
 do
-	local prevTime, prevAmount = 0, 0
+	local prevTime, prevAmount, pyroclasmInterrupted = 0, 0, false
 	function mod:CloakOfFlamesApplied(args)
 		prevTime, prevAmount = args.time, args.amount
 		self:Message(args.spellId, "red", CL.count:format(CL.shield, cloakOfFlamesCount))
@@ -588,16 +592,23 @@ do
 		self:CastBar(args.spellId, 6, CL.count:format(CL.shield, cloakOfFlamesCount))
 		cloakOfFlamesCount = cloakOfFlamesCount + 1
 		self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(CL.shield, cloakOfFlamesCount))
+		pyroclasmInterrupted = false
+	end
+
+	function mod:UnleashedPyroclasmInterrupted(_, _, _, spellId)
+		if spellId == 337865 then -- Unleashed Pyroclasm
+			pyroclasmInterrupted = true
+		end
 	end
 
 	function mod:CloakOfFlamesRemoved(args)
 		local amount = args.amount or 0
-		if amount > 0 then -- Shield blew up
-			local percentRemaining = amount / prevAmount * 100
-			self:Message(args.spellId, "red", L.shield_remaining:format(CL.shield, self:AbbreviateNumber(amount), percentRemaining))
-		else
+		if pyroclasmInterrupted or amount == 0 then -- Shield Broken
 			self:Message(args.spellId, "green", L.shield_removed:format(CL.shield, args.time - prevTime))
 			self:StopBar(CL.cast:format(CL.count:format(CL.shield, cloakOfFlamesCount-1)))
+		else
+			local percentRemaining = amount / prevAmount * 100
+			self:Message(args.spellId, "red", L.shield_remaining:format(CL.shield, self:AbbreviateNumber(amount), percentRemaining))
 		end
 		self:PlaySound(args.spellId, "info")
 	end

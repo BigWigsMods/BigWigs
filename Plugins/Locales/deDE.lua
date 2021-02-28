@@ -176,6 +176,14 @@ L.blockTooltipQuestsDesc = "Wenn zum Abschluss einer Quest ein Boss getötet wer
 L.blockObjectiveTracker = "Questverfolgung ausblenden"
 L.blockObjectiveTrackerDesc = "Die Liste mit verfolgten Quests wird im Bosskampf ausgeblendet um Anzeigeplatz zu sparen.\n\nDies passiert NICHT in Mythic+ oder beim Verfolgen eines Erfolges."
 
+L.blockTalkingHead = "'Sprechende Dialoge' NPC Popup verstecken"
+L.blockTalkingHeadDesc = "Die 'Sprechenden Dialoge' sind Popup Dialogboxen, welche |cffff4411manchmal|r mit dem Kopf des NPCs und einem Chattext in der unteren Mitte des Bildschirms angezeigt werden, während ein NPC spricht.\n\nEs kann festgelegt werden, in welchen Instanztypen diese Dialoge blockiert werden.\n\n|cFF33FF99Bitte beachten:|r\n 1) Diese Funktion behält die NPC Stimme bei, sodass diese gehört werden kann.\n 2) Sicherheitshalber werden nur spezifische Dialoge blockiert. Spezielle oder einmalige Dialoge wie Einmal-Quests werden nicht blockiert."
+L.blockTalkingHeadDungeons = "Normale & Heroische Dungeons"
+L.blockTalkingHeadMythics = "Mythische & Mythisch+ Dungeons"
+L.blockTalkingHeadRaids = "Schlachtzüge"
+L.blockTalkingHeadTimewalking = "Zeitwanderung (Dungeons & Schlachtzüge)"
+L.blockTalkingHeadScenarios = "Szenarien"
+
 L.subzone_grand_bazaar = "Der Große Basar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Der Hafen von Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_eastern_transept = "Östliches Transept" -- Auchindoun dungeon (Warlords of Draenor)

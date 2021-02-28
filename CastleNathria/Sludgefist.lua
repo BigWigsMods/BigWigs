@@ -5,8 +5,8 @@
 local mod, CL = BigWigs:NewBoss("Sludgefist", 2296, 2394)
 if not mod then return end
 mod:RegisterEnableMob(164407) -- Sludgefist
-mod.engageId = 2399
-mod.respawnTime = 30
+mod:SetEncounterID(2399)
+mod:SetRespawnTime(30)
 
 --------------------------------------------------------------------------------
 -- Locals

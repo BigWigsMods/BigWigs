@@ -18,6 +18,7 @@ L.soon = "%s pronto"
 L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
+L.rticon = "%s ({rt%d})"
 L.near = "%s cerca de TI"
 L.on_group = "%s en GRUPO" -- spell on group
 
@@ -29,17 +30,18 @@ L.mythic = "Modo mítico"
 L.active = "Activo" -- When a boss becomes active, after speech finishes
 L.general = "General" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
-L.duration = "%s durante %s seg"
-L.over = "%s terminado"
-L.removed = "%s Removido"
-L.removed_from = "%s Removido de %s"
-L.removed_by = "%s Removido por %s" -- spell removed by player
-L.incoming = "%s Acercándose"
-L.interrupted = "%s Interrumpido"
-L.interrupted_by = "%s Interrumpido por %s" -- spell interrupted by player
-L.no = "No %s"
+L.duration = "%s durante %s seg" -- Spell for 10 seconds
+L.over = "%s terminado" -- Spell Over
+L.removed = "%s Removido" -- Spell Removed
+L.removed_from = "%s Removido de %s" -- Spell removed from Player
+L.removed_by = "%s Removido por %s" -- Spell removed by Player
+L.incoming = "%s Acercándose" -- Spell Incoming
+L.interrupted = "%s Interrumpido" -- Spell Interrupted
+L.interrupted_by = "%s Interrumpido por %s" -- Spell interrupted by Player
+L.no = "No %s" -- No Spell
 L.intermission = "Interrupción"
-L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - Spell
+--L.cancelled = "%s Cancelled" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "Apareció Esbirro"
@@ -92,10 +94,13 @@ L.seconds = "%.1fs" -- 1.1 segundos
 -- Common ability name replacements
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "Rayo" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
+L.beams = "Rayos" -- Plural of L.beam
 L.bomb = "Bomba" -- Used for debuffs that make players explode
 L.explosion = "Deflagración" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Fijar" -- Used when a boss or add is chasing/fixated on a player
-L.knockback = "Retroceso" -- Used when an abily knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.knockback = "Retroceso" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
 L.traps = "Trampas" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "Meteoro" -- This one will probably only ever be used for actual meteors
 L.shield = "Escudo" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
+L.teleport = "Teletransporte" -- A boss/add/etc teleported somewhere
+L.fear = "Miedo" -- For abilities that cause you to flee in fear

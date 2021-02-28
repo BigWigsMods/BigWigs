@@ -9,8 +9,8 @@
 local mod, CL = BigWigs:NewBoss("Artificer Xy'mox", 2296, 2418)
 if not mod then return end
 mod:RegisterEnableMob(166644) -- Artificer Xy'mox
-mod.engageId = 2405
-mod.respawnTime = 30
+mod:SetEncounterID(2405)
+mod:SetRespawnTime(30)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------
@@ -289,7 +289,7 @@ function mod:GlyphOfDestruction(args)
 	local bossUnit = self:GetBossId(args.sourceGUID)
 	for i = 1, #tankList do
 		local unit = tankList[i]
-		if bossUnit and self:TopThreat(bossUnit, unit) then
+		if bossUnit and self:Tanking(bossUnit, unit) then
 			self:TargetMessage(325236, "yellow", self:UnitName(unit), CL.casting:format(CL.bomb))
 			break
 		elseif i == #tankList then
