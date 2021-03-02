@@ -346,6 +346,7 @@ do
 		[162803]=true,[154900]=true,[155162]=true,[154573]=true,
 		-- Mists of Tirna Scithe
 		[154205]=true,[157818]=true,[157678]=true,[154209]=true,[154206]=true,[154208]=true,[154207]=true,
+		[154211]=true,[157817]=true,[154210]=true,
 		-- Sanguine Depths
 		[157755]=true,[157747]=true,[157748]=true,[153689]=true,[157761]=true,[153688]=true,
 		[153690]=true,[157762]=true,[157752]=true,[157672]=true,[157760]=true,
