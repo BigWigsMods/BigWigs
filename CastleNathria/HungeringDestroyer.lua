@@ -237,6 +237,7 @@ do
 	function mod:ExpungeApplied(args)
 		local t = args.time
 		if t-prev > 5 then
+			prev = t
 			self:Message(args.spellId, "orange", CL.count:format(args.spellName, expungeCount)) -- Expunge
 			self:PlaySound(args.spellId, "warning")
 			self:CastBar(args.spellId, 5, CL.count:format(args.spellName, expungeCount)) -- Expunge
