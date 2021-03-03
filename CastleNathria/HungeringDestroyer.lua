@@ -77,8 +77,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Consume", 334522)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumeSuccess", 334522)
 	self:Log("SPELL_AURA_APPLIED", "ExpungeApplied", 329725)
-	self:RegisterEvent("RAID_BOSS_WHISPER")
-	self:RegisterMessage("BigWigs_BossComm") -- Syncing for Volatile Ejection targets
+	if self:LFR() then -- New combat log event isn't active in LFR
+		self:RegisterEvent("RAID_BOSS_WHISPER")
+		self:RegisterMessage("BigWigs_BossComm") -- Syncing for Volatile Ejection targets
+	else
+		self:Log("SPELL_AURA_APPLIED", "VolatileEjectionApplied", 334064)
+		self:Log("SPELL_AURA_REMOVED", "VolatileEjectionRemoved", 334064)
+	end
 	self:Log("SPELL_CAST_START", "VolatileEjection", 334266)
 	self:Log("SPELL_CAST_SUCCESS", "VolatileEjectionSuccess", 334266)
 	self:Log("SPELL_CAST_START", "Desolate", 329455)
@@ -245,33 +250,35 @@ do
 	end
 end
 
--- XXX Hopefully some debuff is added
--- do
--- 	local playerList = mod:NewTargetList()
--- 	function mod:VolatileEjectionApplied(args)
--- 		playerList[#playerList+1] = args.destName
--- 		if self:Me(args.destGUID) then
--- 			self:Say(args.spellId)
--- 			self:SayCountdown(args.spellId, 4)
--- 			self:Flash(args.spellId)
--- 			self:PlaySound(args.spellId, "warning")
--- 		end
--- 		self:TargetsMessage(args.spellId, "orange", playerList)
--- 	end
---
--- 	function mod:VolatileEjectionRemoved(args)
--- 		if self:Me(args.destGUID) then
--- 			self:CancelSayCountdown(args.spellId)
--- 		end
--- 	end
--- end
-
 do
+	function mod:VolatileEjectionApplied(args)
+		local count = #volEjectionList+1
+		volEjectionList[count] = args.destName
+		self:NewTargetsMessage(334266, "orange", volEjectionList, self:Mythic() and 4 or 3, CL.beam)
+		self:CustomIcon(volatileEjectionMarker, args.destName, count+4)
+		if self:Me(args.destGUID) then
+			self:PlaySound(334266, "warning")
+			self:Flash(334266)
+			self:Say(334266, CL.beam)
+			volEjectionOnMe = true
+			if not scheduledChatMsg and not self:LFR() and self:GetOption("custom_on_repeating_say_laser") then
+				scheduledChatMsg = true
+				self:SimpleTimer(RepeatingChatMessages, 1.5)
+			end
+		end
+	end
+
+	function mod:VolatileEjectionRemoved(args)
+		if self:Me(args.destGUID) then
+			volEjectionOnMe = false
+		end
+	end
+
 	local function addPlayerToList(self, name)
 		if not tContains(volEjectionList, name) then
 			local count = #volEjectionList+1
 			volEjectionList[count] = name
-			self:NewTargetsMessage(334266, "orange", volEjectionList, self:Mythic() and 5 or 3, CL.beam, nil, 2)
+			self:NewTargetsMessage(334266, "orange", volEjectionList, self:Mythic() and 4 or 3, CL.beam, nil, 2)
 			self:CustomIcon(volatileEjectionMarker, name, count+4)
 		end
 	end
