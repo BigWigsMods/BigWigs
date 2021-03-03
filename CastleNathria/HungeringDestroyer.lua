@@ -76,7 +76,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "GluttonousMiasmaRemoved", 329298)
 	self:Log("SPELL_CAST_START", "Consume", 334522)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumeSuccess", 334522)
-	-- self:Log("SPELL_AURA_APPLIED", "ExpungeApplied", 329725)
+	self:Log("SPELL_AURA_APPLIED", "ExpungeApplied", 329725)
 	self:RegisterEvent("RAID_BOSS_WHISPER")
 	self:RegisterMessage("BigWigs_BossComm") -- Syncing for Volatile Ejection targets
 	self:Log("SPELL_CAST_START", "VolatileEjection", 334266)
@@ -126,8 +126,6 @@ function mod:OnEngage()
 	else
 		self:Berserk(600)
 	end
-	-- XXX Expunge tracking
-	self:RegisterEvent("UNIT_AURA")
 end
 
 function mod:OnBossDisable()
@@ -229,28 +227,20 @@ function mod:ConsumeSuccess(args)
 	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, consumeCount-1)) -- 6s Channel
 end
 
--- XXX Redo when they add events for the debuff
--- function mod:Expunge(args)
--- 	self:Message(args.spellId, "orange", CL.count:format(self:SpellName(329725), expungeCount))
--- 	self:PlaySound(args.spellId, "warning")
--- 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, expungeCount))
---	expungeCount = expungeCount + 1
--- 	self:Bar(args.spellId, 110, CL.count:format(args.spellName, expungeCount)) -- Expunge
--- end
-
-function mod:UNIT_AURA(_, unit)
-	local debuffFound = self:UnitDebuff(unit, 329725) -- Expunge
-	if debuffFound then
-		self:UnregisterEvent("UNIT_AURA")
-		self:ScheduleTimer("RegisterEvent", 10, "UNIT_AURA")
-		self:Message(329725, "orange", CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
-		self:PlaySound(329725, "warning")
-		self:CastBar(329725, 5, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
-		expungeCount = expungeCount + 1
-		if self:Easy() then
-			self:Bar(329725, expungeCount % 2 == 0 and 37.8 or 63, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
-		else
-			self:Bar(329725, expungeCount % 2 == 0 and 36 or 60, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+do
+	local prev = 0
+	function mod:ExpungeApplied(args)
+		local t = args.time
+		if t-prev > 5 then
+			self:Message(args.spellId, "orange", CL.count:format(args.spellName, expungeCount)) -- Expunge
+			self:PlaySound(args.spellId, "warning")
+			self:CastBar(args.spellId, 5, CL.count:format(args.spellName, expungeCount)) -- Expunge
+			expungeCount = expungeCount + 1
+			if self:Easy() then
+				self:Bar(args.spellId, expungeCount % 2 == 0 and 37.8 or 63, CL.count:format(args.spellName, expungeCount))
+			else
+				self:Bar(args.spellId, expungeCount % 2 == 0 and 36 or 60, CL.count:format(args.spellName, expungeCount))
+			end
 		end
 	end
 end
