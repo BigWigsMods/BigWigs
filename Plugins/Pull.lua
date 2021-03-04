@@ -142,14 +142,36 @@ end
 -- Initialization
 --
 
-function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_PluginComm")
-	self:RegisterMessage("DBM_AddonMessage")
+do
+	local function updateProfile()
+		local db = plugin.db.profile
 
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
+		for k, v in next, db do
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
+				db[k] = nil
+			elseif type(v) ~= defaultType then
+				db[k] = plugin.defaultDB[k]
+			end
+		end
 
-	self:RegisterMessage("BigWigs_OnBossEngage")
+		if db.countType ~= "normal" and db.countType ~= "emphasized" then
+			db.countType = plugin.defaultDB.countType
+		end
+	end
+
+	function plugin:OnPluginEnable()
+		self:RegisterMessage("BigWigs_PluginComm")
+		self:RegisterMessage("DBM_AddonMessage")
+
+		self:RegisterMessage("BigWigs_OnBossWin")
+		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
+
+		self:RegisterMessage("BigWigs_OnBossEngage")
+
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
+	end
 end
 
 function plugin:OnPluginDisable()

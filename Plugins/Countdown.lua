@@ -497,38 +497,27 @@ do
 	local function updateProfile()
 		local db = plugin.db.profile
 
-		if type(db.textEnabled) ~= "boolean" then
-			db.textEnabled = plugin.defaultDB.textEnabled
+		for k, v in next, db do
+			if type(plugin.defaultDB[k]) == "nil" then
+				db[k] = nil
+			elseif type(v) ~= "boolean" then
+				db[k] = plugin.defaultDB[k]
+			end
 		end
-		if type(db.fontName) ~= "string" then
-			db.fontName = plugin.defaultDB.fontName
-		end
+
 		if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
 			db.outline = plugin.defaultDB.outline
 		end
-		if type(db.fontSize) ~= "number" or db.fontSize < 20 or db.fontSize > 200 then
+		if db.fontSize < 20 or db.fontSize > 200 then
 			db.fontSize = plugin.defaultDB.fontSize
 		end
-		if type(db.monochrome) ~= "boolean" then
-			db.monochrome = plugin.defaultDB.monochrome
-		end
-		if type(db.fontColor) ~= "table"
-		or type(db.fontColor.r) ~= "number" or db.fontColor.r < 0 or db.fontColor.r > 1
+		if type(db.fontColor.r) ~= "number" or db.fontColor.r < 0 or db.fontColor.r > 1
 		or type(db.fontColor.g) ~= "number" or db.fontColor.g < 0 or db.fontColor.g > 1
 		or type(db.fontColor.b) ~= "number" or db.fontColor.b < 0 or db.fontColor.b > 1 then
 			db.fontColor = plugin.defaultDB.fontColor
 		end
-		if type(db.voice) ~= "string" then
-			db.voice = plugin.defaultDB.voice
-		end
-		if type(db.countdownTime) ~= "number" or db.countdownTime < 3 or db.countdownTime > 10 then
+		if db.countdownTime < 3 or db.countdownTime > 10 then
 			db.countdownTime = plugin.defaultDB.countdownTime
-		end
-		if type(db.position) ~= "table" then
-			db.position = plugin.defaultDB.position
-		end
-		if type(db.bossCountdowns) ~= "table" then
-			db.bossCountdowns = plugin.defaultDB.bossCountdowns
 		end
 
 		UpdateFont()

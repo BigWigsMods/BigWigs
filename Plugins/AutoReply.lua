@@ -115,19 +115,25 @@ end
 do
 	local function updateProfile()
 		local db = plugin.db.profile
-		if type(db.disabled) ~= "boolean" then
-			db.disabled = plugin.defaultDB.disabled
+
+		for k, v in next, db do
+			if type(plugin.defaultDB[k]) == "nil" then
+				db[k] = nil
+			elseif type(v) ~= "boolean" then
+				db[k] = plugin.defaultDB[k]
+			end
 		end
-		if type(db.mode) ~= "number" or db.mode < 1 or db.mode > 4 then
+
+		if db.mode < 1 or db.mode > 4 then
 			db.mode = plugin.defaultDB.mode
 		end
-		if type(db.modeOther) ~= "number" or db.modeOther < 1 or db.modeOther > 4 then
+		if db.modeOther < 1 or db.modeOther > 4 then
 			db.modeOther = plugin.defaultDB.modeOther
 		end
-		if type(db.exitCombat) ~= "number" or db.exitCombat < 1 or db.exitCombat > 4 then
+		if db.exitCombat < 1 or db.exitCombat > 4 then
 			db.exitCombat = plugin.defaultDB.exitCombat
 		end
-		if type(db.exitCombatOther) ~= "number" or db.exitCombatOther < 1 or db.exitCombatOther > 4 then
+		if db.exitCombatOther < 1 or db.exitCombatOther > 4 then
 			db.exitCombatOther = plugin.defaultDB.exitCombatOther
 		end
 	end

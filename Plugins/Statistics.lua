@@ -172,15 +172,34 @@ end
 -- Initialization
 --
 
-function plugin:OnPluginEnable()
-	if not BigWigsStatsDB then
+function plugin:OnRegister()
+	if type(BigWigsStatsDB) ~= "table" then
 		BigWigsStatsDB = {}
 	end
+end
 
-	if self.db.profile.enabled then
-		self:RegisterMessage("BigWigs_OnBossEngage")
-		self:RegisterMessage("BigWigs_OnBossWin")
-		self:RegisterMessage("BigWigs_OnBossWipe")
+do
+	local function updateProfile()
+		local db = plugin.db.profile
+
+		for k, v in next, db do
+			if type(plugin.defaultDB[k]) == "nil" then
+				db[k] = nil
+			elseif type(v) ~= "boolean" then
+				db[k] = plugin.defaultDB[k]
+			end
+		end
+	end
+
+	function plugin:OnPluginEnable()
+		if self.db.profile.enabled then
+			self:RegisterMessage("BigWigs_OnBossEngage")
+			self:RegisterMessage("BigWigs_OnBossWin")
+			self:RegisterMessage("BigWigs_OnBossWipe")
+		end
+
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
 	end
 end
 
