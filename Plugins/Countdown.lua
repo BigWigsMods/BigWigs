@@ -498,9 +498,10 @@ do
 		local db = plugin.db.profile
 
 		for k, v in next, db do
-			if type(plugin.defaultDB[k]) == "nil" then
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
 				db[k] = nil
-			elseif type(v) ~= "boolean" then
+			elseif type(v) ~= defaultType then
 				db[k] = plugin.defaultDB[k]
 			end
 		end
