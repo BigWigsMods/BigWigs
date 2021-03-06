@@ -192,11 +192,12 @@ end
 -- @number mobId A singular specific mob id
 -- @return true or nil
 function boss:IsEnableMob(mobId)
-	return self.enableMobs[mobId] 
+	return self.enableMobs[mobId]
 end
 
---- The encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
+--- Set the encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
+-- @number encounterId The encounter id
 -- @within Enable triggers
 function boss:SetEncounterID(encounterId)
 	if type(encounterId) == "number" then
@@ -204,8 +205,9 @@ function boss:SetEncounterID(encounterId)
 	end
 end
 
---- The time in seconds before the boss respawns after a wipe.
+--- Set the time in seconds before the boss respawns after a wipe.
 -- Used by the `Respawn` plugin to show a bar for the respawn time.
+-- @number seconds The respawn time
 -- @within Enable triggers
 function boss:SetRespawnTime(seconds)
 	if type(seconds) == "number" then
