@@ -5,6 +5,7 @@ on:
     branches:
       - master
     paths:
+      - ldoc.ltp
       - Core/BossPrototype.lua
       - Core/PluginPrototype.lua
 

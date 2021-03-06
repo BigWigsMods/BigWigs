@@ -80,12 +80,16 @@ $(escape(ldoc.descript(item)))
 >         local param, sublist = item:subparam(parm)
 >         for p in ldoc.modules.iter(param) do
 >           local name, tp = item:display_name_of(p), item:type_of_param(p)
+>           local desc = escape(item.params.map[p])
+>           if tp ~= "" then desc = "["..tp.."] "..desc end
 >           local def = item:default_of_param(p)
->           if def == true then def = " (_optional_)"
->           elseif def then def = " (*default*: "..def..")"
->           else def = "" end
->           if tp ~= "" then tp = "["..tp.."] " end
- - `$(name)`: $(tp)$(escape(item.params.map[p]))$(def)
+>           if def == true then desc = desc.." (_optional_)"
+>           elseif def then desc = desc.." (*default*: "..def..")" end
+>           if desc ~= "" then
+ - `$(name)`: $(desc)
+>           else
+ - `$(name)`
+>           end
 >         end -- for p
 >       end -- for parm
 >     end -- if params
