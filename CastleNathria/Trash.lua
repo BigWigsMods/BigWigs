@@ -238,7 +238,7 @@ end
 
 function mod:MastercraftedGamesmansSnare(args)
 	self:Message(341352, "yellow", CL.incoming:format(CL.traps))
-	self:PlaySound(341352, "warning")
+	self:PlaySound(341352, "alarm")
 end
 
 function mod:RestoreStone(args)
@@ -345,31 +345,49 @@ do
 	end
 end
 
-function mod:GrievousStrikeApplied(args)
-	local amount = args.amount or 1
-	if amount == 1 then
-		if self:Tank(args.destName) then
-			self:TargetMessage(args.spellId, "purple", args.destName)
-			self:PlaySound(args.spellId, "long")
-		elseif self:Healer() then
-			self:TargetMessage(args.spellId, "orange", args.destName)
-		end
-	else
-		if self:Tank(args.destName) then
-			self:NewStackMessage(args.spellId, "purple", args.destName, amount)
-			self:PlaySound(args.spellId, "long")
-		elseif self:Healer() then
-			self:NewStackMessage(args.spellId, "orange", args.destName, amount)
+do
+	local stacks = {}
+	function mod:GrievousStrikeApplied(args)
+		local amount = args.amount or 1
+		if amount == 1 then
+			-- If this applies at full health then it's instantly removed
+			-- Prevent pointless applied/removed messages by not alerting until 0.2s has passed
+			local spellId, destName, destGUID = args.spellId, args.destName, args.destGUID
+			stacks[destGUID] = true
+			self:SimpleTimer(function()
+				if stacks[destGUID] then
+					stacks[destGUID] = nil
+					if self:Tank(destName) then
+						self:TargetMessage(spellId, "purple", destName)
+						self:PlaySound(spellId, "info")
+					elseif self:Healer() then
+						self:TargetMessage(spellId, "orange", destName)
+					end
+				end
+			end, 0.2)
+		else
+			stacks[args.destGUID] = nil
+			if self:Tank(args.destName) then
+				self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+				if self:Tank() or self:Healer() then
+					self:PlaySound(args.spellId, "info")
+				end
+			elseif self:Healer() then
+				self:NewStackMessage(args.spellId, "orange", args.destName, amount)
+			end
 		end
 	end
-end
 
-function mod:GrievousStrikeRemoved(args)
-	if self:Tank(args.destName) then
-		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
-		self:PlaySound(args.spellId, "info")
-	elseif self:Healer() then
-		self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+	function mod:GrievousStrikeRemoved(args)
+		if stacks[args.destGUID] then
+			stacks[args.destGUID] = nil -- Prevent showing the "removed" warning if it was instantly removed
+		else
+			if self:Tank(args.destName) then
+				self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+			elseif self:Healer() then
+				self:Message(args.spellId, "green", CL.removed_from:format(args.spellName, self:ColorName(args.destName)))
+			end
+		end
 	end
 end
 
