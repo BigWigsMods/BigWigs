@@ -352,14 +352,16 @@ do
 		if amount == 1 then
 			-- If this applies at full health then it's instantly removed
 			-- Prevent pointless applied/removed messages by not alerting until 0.2s has passed
-			local spellId, destName, destGUID = args.spellId, args.destName, args.destGUID
+			local spellId, destName, destGUID = args.spellId, args.destName, args.destGUID -- SetOption:339975:
 			stacks[destGUID] = true
 			self:SimpleTimer(function()
 				if stacks[destGUID] then
 					stacks[destGUID] = nil
 					if self:Tank(destName) then
 						self:TargetMessage(spellId, "purple", destName)
-						self:PlaySound(spellId, "info")
+						if self:Tank() or self:Healer() then
+							self:PlaySound(spellId, "info")
+						end
 					elseif self:Healer() then
 						self:TargetMessage(spellId, "orange", destName)
 					end
