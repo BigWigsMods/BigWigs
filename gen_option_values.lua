@@ -684,14 +684,16 @@ local function parseLua(file)
 			end
 		else
 			res = line:match("%s*local spellId,.+=%s*(.+),")
-			local set_key = comment:match("SetOption:(.-):")
-			if set_key and set_key ~= "" then
-				rep.if_key = {}
-				for k, v in next, strsplit(set_key) do
-					rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
+			if res then
+				local set_key = comment:match("SetOption:(.-):")
+				if set_key and set_key ~= "" then
+					rep.if_key = {}
+					for k, v in next, strsplit(set_key) do
+						rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
+					end
+				else
+					rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
 				end
-			else
-				rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
 			end
 		end
 
