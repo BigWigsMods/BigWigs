@@ -758,6 +758,7 @@ function mod:ADDON_LOADED(addon)
 
 	bwFrame:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
+	bwFrame.UnregisterEvent(UIParent, "TALKINGHEAD_REQUESTED") -- Prevent the event order re-shuffling mid-instance
 end
 
 -- We can't do our addon loading in ADDON_LOADED as the target addons may be registering that
