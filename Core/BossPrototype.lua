@@ -87,15 +87,9 @@ local updateData = function(module)
 	local _, _, _, instanceId = UnitPosition("player")
 	for unit in module:IterateGroup() do
 		local guid = UnitGUID(unit)
-		if guid then
-			myGroupGUIDs[guid] = true
-			if solo and myGUID ~= guid and UnitIsConnected(unit) then
-				solo = false
-			end
-		else -- XXX temp
-			local n = GetNumGroupMembers()
-			BigWigs:Error("Nil GUID for ".. unit ..". ".. tostring(n) .." / ".. tostring((UnitName(unit))) .." / ".. tostring((UnitExists(unit))))
-			break
+		myGroupGUIDs[guid] = true
+		if solo and myGUID ~= guid and UnitIsConnected(unit) then
+			solo = false
 		end
 	end
 	debugFunc = type(TranscriptIgnore) == "table" and TranscriptIgnore.debug and Transcriptor or false
@@ -619,13 +613,6 @@ do
 	function boss:RegisterUnitEvent(event, func, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
-		if event == "UNIT_HEALTH_FREQUENT" then
-			-- pre-shadowlands compat for old modules
-			if not func then
-				func = event
-			end
-			event = "UNIT_HEALTH"
-		end
 		if (not func and not self[event]) or (func and not self[func]) then core:Print(format(noFunc, self.moduleName, func or event)) return end
 		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
@@ -1819,11 +1806,6 @@ end
 function boss:MessageOld(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType = type(text)
-
-		local temp = (icon == false and 0) or (icon ~= false and icon) or (textType == "number" and text) or key
-		if temp == key and type(key) == "string" then
-			core:Print(("Message '%s' doesn't have an icon set."):format(textType == "string" and text or spells[text or key])) -- XXX temp
-		end
 
 		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
 		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)

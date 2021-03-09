@@ -6,9 +6,6 @@ local oldPlugin = BigWigs:NewPlugin("Super Emphasize") -- XXX temp 9.0.2
 oldPlugin.defaultDB = {
 	Countdown = {},
 }
-function oldPlugin:IsSuperEmphasized() -- Old WeakAuras versions
-	return false -- Add a print?
-end
 
 local plugin = BigWigs:NewPlugin("Countdown")
 if not plugin then return end
