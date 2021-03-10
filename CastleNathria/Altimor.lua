@@ -329,9 +329,12 @@ end
 --[[ Hecutis ]]--
 
 function mod:CrushingStone(args)
-	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 3)
-	if args.amount > 2 then
+	local amount = args.amount
+	if amount > 2 and amount < 9 then
+		self:NewStackMessage(args.spellId, "purple", args.destName, amount, amount)
 		self:PlaySound(args.spellId, "info")
+	else
+		self:NewStackMessage(args.spellId, "purple", args.destName, amount, 100)
 	end
 end
 
