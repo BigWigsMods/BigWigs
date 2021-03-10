@@ -36,7 +36,7 @@ end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "itIT")
 if L then
-	-- L.times = "%dx %s"
+	L.times = "%dx %s"
 
 	L.level = "%s (Livello |cffffff00%d|r)"
 	L.full = "%s (|cffff0000PIENO|r)"
@@ -53,9 +53,9 @@ if L then
 	L.custom_on_stop_timers = "Mostra sempre le barre abilità"
 	L.custom_on_stop_timers_desc = "Solo per il test di adesso"
 
-	-- L.desires = "Desires"
-	-- L.bottles = "Bottles"
-	-- L.sins = "Sins"
+	L.desires = "Desideri"
+	L.bottles = "Bottiglie"
+	L.sins = "Peccati"
 end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "itIT")
