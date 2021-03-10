@@ -86,10 +86,10 @@ end
 function mod:GetOptions()
 	return {
 		--[[ Pre Shriekwing ]]--
-		343322, -- Curse of Moldovaak
-		343320, -- Curse of Caramain
-		343325, -- Curse of Sindrel
-		343316, -- Curse of Hargitas
+		{343322, "DISPEL"}, -- Curse of Moldovaak
+		{343320, "DISPEL"}, -- Curse of Caramain
+		{343325, "DISPEL"}, -- Curse of Sindrel
+		{343316, "DISPEL"}, -- Curse of Hargitas
 		343155, -- Stoneskin
 		343302, -- Granite Wings
 
@@ -192,22 +192,25 @@ end
 
 --[[ Pre Shriekwing ]]--
 function mod:Curse(args)
-	self:Message(args.spellId, "yellow", CL.on_group:format(args.spellName))
-	self:PlaySound(args.spellId, "alarm")
+	if self:Dispeller("curse", nil, args.spellId) then
+		self:Message(args.spellId, "yellow", CL.on_group:format(args.spellName))
+	end
 end
 
 function mod:Stoneskin(args)
-	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
-	local _, ready = self:Interrupter()
-	if ready then
-		self:PlaySound(args.spellId, "alert")
+	local canDo, ready = self:Interrupter()
+	if canDo then
+		self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+		if ready then
+			self:PlaySound(args.spellId, "alert")
+		end
 	end
 end
 
 function mod:StoneskinApplied(args)
-	if bit.band(args.destFlags, 0x400) == 0 then -- COMBATLOG_OBJECT_TYPE_PLAYER
+	if bit.band(args.destFlags, 0x400) == 0 and self:Dispeller("magic", true) then -- COMBATLOG_OBJECT_TYPE_PLAYER
 		self:Message(args.spellId, "orange", CL.buff_other:format(args.destName, args.spellName))
-		self:PlaySound(args.spellId, "warning")
+		self:PlaySound(args.spellId, "info")
 	end
 end
 
@@ -359,9 +362,7 @@ do
 					stacks[destGUID] = nil
 					if self:Tank(destName) then
 						self:TargetMessage(spellId, "purple", destName)
-						if self:Tank() or self:Healer() then
-							self:PlaySound(spellId, "info")
-						end
+						self:PlaySound(spellId, "info")
 					elseif self:Healer() then
 						self:TargetMessage(spellId, "orange", destName)
 					end
@@ -371,9 +372,7 @@ do
 			stacks[args.destGUID] = nil
 			if self:Tank(args.destName) then
 				self:NewStackMessage(args.spellId, "purple", args.destName, amount)
-				if self:Tank() or self:Healer() then
-					self:PlaySound(args.spellId, "info")
-				end
+				self:PlaySound(args.spellId, "info")
 			elseif self:Healer() then
 				self:NewStackMessage(args.spellId, "orange", args.destName, amount)
 			end
