@@ -156,7 +156,7 @@ if L then
 	--[[ Huntsman Altimor -> Hungering Destroyer ]]--
 	L.feaster = "Descarnador aterrador"
 	L.rat = "Rata de tamaño inusual"
-	L.miasma = "Miasma glotona" -- Short for Gluttonous Miasma
+	L.miasma = "Miasma" -- Short for Gluttonous Miasma
 
 	--[[ Hungering Destroyer -> Lady Inerva Darkvein ]]--
 	L.deplina = "Deplina"

@@ -1,4 +1,4 @@
-## Interface: 90002
+## Interface: 90005
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
@@ -21,7 +21,7 @@
 ## X-Curse-Project-ID: 2382
 ## X-WoWI-ID: 5086
 
-## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibChatAnims, LibDualSpec-1.0
+## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibChatAnims, LibDualSpec-1.0, Blizzard_TalkingHeadUI
 ## SavedVariables: BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
 
 embeds.xml

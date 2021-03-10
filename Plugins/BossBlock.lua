@@ -176,33 +176,58 @@ plugin.pluginOptions = {
 -- Initialization
 --
 
-function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
-	self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
-	self:RegisterMessage("BigWigs_OnBossWin", "OnWinOrWipe")
-	self:RegisterMessage("BigWigs_OnBossWipe", "OnWinOrWipe")
+do
+	local function updateProfile()
+		local db = plugin.db.profile
 
-	-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
-	if self.db.profile.disableSfx then
-		SetCVar("Sound_EnableSFX", "1")
-	end
-	--if self.db.profile.blockTooltipQuests then
-	--	SetCVar("showQuestTrackingTooltips", "1")
-	--end
-	if self.db.profile.disableMusic then
-		SetCVar("Sound_EnableMusic", "1")
-	end
-	if self.db.profile.disableAmbience then
-		SetCVar("Sound_EnableAmbience", "1")
+		for k, v in next, db do
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
+				db[k] = nil
+			elseif type(v) ~= defaultType then
+				db[k] = plugin.defaultDB[k]
+			end
+		end
+
+		for i = 1, #db.blockTalkingHeads do
+			local n = db.blockTalkingHeads[i]
+			if type(n) ~= "boolean" then
+				db.blockTalkingHeads = plugin.defaultDB.blockTalkingHeads
+				break
+			end
+		end
 	end
 
-	self:RegisterEvent("TALKINGHEAD_REQUESTED")
-	self:RegisterEvent("CINEMATIC_START")
-	self:RegisterEvent("PLAY_MOVIE")
-	self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
-	self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
+	function plugin:OnPluginEnable()
+		self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
+		self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
+		self:RegisterMessage("BigWigs_OnBossWin", "OnWinOrWipe")
+		self:RegisterMessage("BigWigs_OnBossWipe", "OnWinOrWipe")
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
 
-	CheckElv(self)
+		-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
+		if self.db.profile.disableSfx then
+			SetCVar("Sound_EnableSFX", "1")
+		end
+		--if self.db.profile.blockTooltipQuests then
+		--	SetCVar("showQuestTrackingTooltips", "1")
+		--end
+		if self.db.profile.disableMusic then
+			SetCVar("Sound_EnableMusic", "1")
+		end
+		if self.db.profile.disableAmbience then
+			SetCVar("Sound_EnableAmbience", "1")
+		end
+
+		self:RegisterEvent("TALKINGHEAD_REQUESTED")
+		self:RegisterEvent("CINEMATIC_START")
+		self:RegisterEvent("PLAY_MOVIE")
+		self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
+		self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
+
+		CheckElv(self)
+	end
 end
 
 function plugin:OnPluginDisable()
