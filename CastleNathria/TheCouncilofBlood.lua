@@ -591,7 +591,7 @@ end
 function mod:DanseMacabreBegins(args)
 	self:Message(330959, "green") -- Dance Macabre
 	self:PlaySound(330959, "long")
-	self:Bar(330959, 38.8, 305757) -- Dancing
+	self:Bar(330959, 38.8, self:SpellName(305757)) -- 305757 = "Dancing"
 
 	self:PauseBar(346651) -- Drain Essence
 	self:PauseBar(337110) -- Dreadbolt Volley
