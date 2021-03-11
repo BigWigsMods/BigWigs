@@ -107,7 +107,7 @@ function mod:OnEngage()
 	volEjectionList = {}
 
 	self:Bar(329298, 3, CL.count:format(L.miasma, miasmaCount)) -- Gluttonous Miasma
-	if self:LFR()
+	if self:LFR() then
 		self:Bar(329774, 5.6) -- Overwhelm
 		self:Bar(334266, 11.1, CL.count:format(CL.beam, volatileCount)) -- Volatile Ejection
 		self:Bar(329455, 24.5, CL.count:format(self:SpellName(329455), desolateCount)) -- Desolate
