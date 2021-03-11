@@ -107,7 +107,13 @@ function mod:OnEngage()
 	volEjectionList = {}
 
 	self:Bar(329298, 3, CL.count:format(L.miasma, miasmaCount)) -- Gluttonous Miasma
-	if self:Easy() then
+	if self:LFR()
+		self:Bar(329774, 5.6) -- Overwhelm
+		self:Bar(334266, 11.1, CL.count:format(CL.beam, volatileCount)) -- Volatile Ejection
+		self:Bar(329455, 24.5, CL.count:format(self:SpellName(329455), desolateCount)) -- Desolate
+		self:Bar(329725, 35.6, CL.count:format(self:SpellName(329725), expungeCount)) -- Expunge
+		self:Bar(334522, 102.9, CL.count:format(self:SpellName(334522), consumeCount)) -- Consume
+	elseif self:Normal() then
 		self:Bar(329774, 5.3) -- Overwhelm
 		self:Bar(334266, 10.6, CL.count:format(CL.beam, volatileCount)) -- Volatile Ejection
 		self:Bar(329455, 23.2, CL.count:format(self:SpellName(329455), desolateCount)) -- Desolate
@@ -195,11 +201,15 @@ do
 			miasmaPlayerList[args.destName] = count -- Set raid marker
 			if self:Me(args.destGUID) then
 				miasmaOnMe = true
-				self:Yell(args.spellId, CL.count_rticon:format(L.miasma, count, count))
 				self:PlaySound(args.spellId, "alarm")
-				if not scheduledChatMsg and not self:LFR() and self:GetOption("custom_on_repeating_yell_miasma") then
-					scheduledChatMsg = true
-					self:SimpleTimer(RepeatingChatMessages, 2)
+				if not self:LFR() then
+					self:Yell(args.spellId, CL.count_rticon:format(L.miasma, count, count))
+					if not scheduledChatMsg and self:GetOption("custom_on_repeating_yell_miasma") then
+						scheduledChatMsg = true
+						self:SimpleTimer(RepeatingChatMessages, 2)
+					end
+				else
+					self:Yell(args.spellId, L.miasma)
 				end
 			end
 			self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
@@ -219,7 +229,9 @@ function mod:Consume(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, consumeCount)) -- 4s Cast
 	consumeCount = consumeCount + 1
-	if self:Easy() then
+	if self:LFR() then
+		self:Bar(args.spellId, 106, CL.count:format(args.spellName, consumeCount))
+	elseif self:Normal() then
 		self:Bar(args.spellId, 101, CL.count:format(args.spellName, consumeCount))
 	else
 		self:Bar(args.spellId, 96, CL.count:format(args.spellName, consumeCount))
@@ -240,7 +252,9 @@ do
 			self:PlaySound(args.spellId, "warning")
 			self:CastBar(args.spellId, 5, CL.count:format(args.spellName, expungeCount)) -- Expunge
 			expungeCount = expungeCount + 1
-			if self:Easy() then
+			if self:LFR() then
+				self:Bar(args.spellId, expungeCount % 2 == 0 and 40 or 66.7, CL.count:format(args.spellName, expungeCount))
+			elseif self:Normal() then
 				self:Bar(args.spellId, expungeCount % 2 == 0 and 37.8 or 63, CL.count:format(args.spellName, expungeCount))
 			else
 				self:Bar(args.spellId, expungeCount % 2 == 0 and 36 or 60, CL.count:format(args.spellName, expungeCount))
@@ -275,7 +289,9 @@ do
 
 	function mod:VolatileEjection()
 		volatileCount = volatileCount + 1
-		if self:Easy() then
+		if self:LFR() then
+			self:Bar(334266, volatileCount % 3 == 1 and 27.8 or volatileCount % 3 == 2 and 40 or 38.9, CL.count:format(CL.beam, volatileCount))
+		elseif self:Normal() then
 			self:Bar(334266, volatileCount % 3 == 1 and 25.3 or 37.9, CL.count:format(CL.beam, volatileCount))
 		else
 			self:Bar(334266, volatileCount % 3 == 1 and 24 or 36, CL.count:format(CL.beam, volatileCount))
@@ -298,7 +314,9 @@ function mod:Desolate(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, desolateCount))
 	self:PlaySound(args.spellId, "alert")
 	desolateCount = desolateCount + 1
-	if self:Easy() then
+	if self:LFR() then
+		self:Bar(args.spellId, desolateCount % 2 == 0 and 40 or 66.7, CL.count:format(args.spellName, desolateCount)) -- Desolate
+	elseif self:Normal() then
 		self:Bar(args.spellId, desolateCount % 2 == 0 and 37.9 or 63.1, CL.count:format(args.spellName, desolateCount)) -- Desolate
 	else
 		self:Bar(args.spellId, desolateCount % 2 == 0 and 36 or 60, CL.count:format(args.spellName, desolateCount)) -- Desolate
@@ -309,7 +327,9 @@ function mod:Overwhelm(args)
 	self:TargetMessage(args.spellId, "purple", self:UnitName("boss1target"), CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "warning")
 	overwhelmCount = overwhelmCount + 1
-	if self:Easy() then
+	if self:LFR() then
+		self:Bar(args.spellId, overwhelmCount % 7 == 1 and 26.7 or 13.3) -- Delayed by Consume every 7th
+	elseif self:Normal() then
 		self:Bar(args.spellId, overwhelmCount % 7 == 1 and 25.2 or 12.6) -- Delayed by Consume every 7th
 	else
 		self:Bar(args.spellId, overwhelmCount % 7 == 1 and 24 or 12) -- Delayed by Consume every 7th
