@@ -36,12 +36,12 @@ end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "itIT")
 if L then
-	-- L.times = "%dx %s"
+	L.times = "%dx %s"
 
 	L.level = "%s (Livello |cffffff00%d|r)"
 	L.full = "%s (|cffff0000PIENO|r)"
 
-	-- L.anima_adds = "Concentrate Anima Adds"
+	L.anima_adds = "Adds Animum Concentrato"
 	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
 
 	-- L.custom_off_experimental = "Enable experimental features"
@@ -50,19 +50,19 @@ if L then
 	-- L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
 	-- L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	L.custom_on_stop_timers = "Mostra sempre le barre abilità"
+	L.custom_on_stop_timers_desc = "Solo per il test di adesso"
 
-	-- L.desires = "Desires"
-	-- L.bottles = "Bottles"
-	-- L.sins = "Sins"
+	L.desires = "Desideri"
+	L.bottles = "Bottiglie"
+	L.sins = "Peccati"
 end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "itIT")
 if L then
-	-- L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
-	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
-	-- L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
+	L.macabre_start_emote = "Ai vostri posti per la Danza Macabra!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
+	L.custom_on_repeating_dark_recital = "Ripetizione per Esibizione Oscura"
+	L.custom_on_repeating_dark_recital_desc = "Messaggi ripetuti per Esibizione Oscura con icone {rt1}, {rt2} per trovare il tuo compagno di ballo."
 
 	L.custom_off_select_boss_order = "Icone ordine di uccisione Boss"
 	L.custom_off_select_boss_order_desc = "Segna l'ordine di uccisione dei boss con croce {rt7}. Richiede capo incursione o assistente per marchiare."
@@ -73,45 +73,45 @@ if L then
 	L.custom_off_select_boss_order_value5 = "Frieda -> Stavros -> Niklaus"
 	L.custom_off_select_boss_order_value6 = "Stavros -> Frieda -> Niklaus"
 
-	--L.dance_assist = "Dance Assist"
-	--L.dance_assist_desc = "Show directional warnings for the dancing stage."
-	--L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Dance Forward |T450907:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Dance Right |T450908:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Dance Down |T450905:0:0:0:0:64:64:4:60:4:60|t"
-	--L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Dance Left |T450906:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist = "Assistente Danza"
+	L.dance_assist_desc = "Mostra avvisi direzionali per la fase della danza."
+	L.dance_assist_up = "|T450907:0:0:0:0:64:64:4:60:4:60|t Danza in Avanti |T450907:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_right = "|T450908:0:0:0:0:64:64:4:60:4:60|t Danza a Destra |T450908:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_down = "|T450905:0:0:0:0:64:64:4:60:4:60|t Danza Indietro |T450905:0:0:0:0:64:64:4:60:4:60|t"
+	L.dance_assist_left = "|T450906:0:0:0:0:64:64:4:60:4:60|t Danza a Sinistra |T450906:0:0:0:0:64:64:4:60:4:60|t"
 	-- These need to match the in-game boss yells
-	--L.dance_yell_up = "Prance Forward" -- Prance Forward!
-	--L.dance_yell_right = "Shimmy right" -- Shimmy right!
-	--L.dance_yell_down = "Boogie down" -- Boogie down!
-	--L.dance_yell_left = "Sashay left" -- Sashay left!
+	L.dance_yell_up = "Saltelli in avanti" -- Prance Forward!
+	L.dance_yell_right = "Spallucce a destra" -- Shimmy right!
+	L.dance_yell_down = "Via alle danze" -- Boogie down!
+	L.dance_yell_left = "Volteggio a sinistra" -- Sashay left!
 end
 
 L = BigWigs:NewBossLocale("Sludgefist", "itIT")
 if L then
-	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+	L.stomp_shift = "Carica & Spostamento" -- Destructive Stomp + Seismic Shift
 
-	-- L.fun_info = "Damage Info"
-	-- L.fun_info_desc = "Display a message showing how much health the boss lost during Destructive Impact."
+	L.fun_info = "Info sui danni"
+	L.fun_info_desc = "Mostra un messaggio che indica la salute persa dal boss durante Urto Distruttivo."
 
-	-- L.health_lost = "Sludgefist went down %.1f%%!"
+	L.health_lost = "Picchiapoltiglia è sceso del %.1f%%!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "itIT")
 if L then
-	-- L.first_blade = "First Blade"
-	-- L.second_blade = "Second Blade"
+	L.first_blade = "Prima Lama"
+	L.second_blade = "Seconda Lama"
 
-	-- L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+	L.skirmishers = "Schermagliatrici" -- Short for Stone Legion Skirmishers
 	L.eruption = "Eruzione" -- Short for Reverberating Eruption
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	L.custom_on_stop_timers = "Mostra sempre le barre abilità"
+	L.custom_on_stop_timers_desc = "Solo per il test di adesso"
 
-	--L.goliath_short = "Goliath"
-	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
+	L.goliath_short = "Mastodonte"
+	L.goliath_desc = "Mostra avvisi e timer per la comparsa del Mastodonte della Legione di Pietra."
 
-	--L.commando_short = "Commando"
-	--L.commando_desc = "Show warnings when a Stone Legion Commando is killed."
+	L.commando_short = "Commando"
+	L.commando_desc = "Mostra avvisi quando viene ucciso un Commando della Legione di Pietra."
 end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "itIT")
