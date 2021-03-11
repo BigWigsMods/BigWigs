@@ -42,13 +42,13 @@ if L then
 	L.full = "%s (|cffff0000PIENO|r)"
 
 	L.anima_adds = "Adds Animum Concentrato"
-	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
+	--L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
 
-	-- L.custom_off_experimental = "Enable experimental features"
-	-- L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
+	--L.custom_off_experimental = "Enable experimental features"
+	--L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
 
-	-- L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
-	-- L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
+	--L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
+	--L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
 
 	L.custom_on_stop_timers = "Mostra sempre le barre abilità"
 	L.custom_on_stop_timers_desc = "Solo per il test di adesso"
@@ -126,15 +126,15 @@ if L then
 	--L.custom_on_repeating_impale = "Repeating Impale Say"
 	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
 
-	-- L.hymn_stacks = "Nathrian Hymn"
-	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	--L.hymn_stacks = "Nathrian Hymn"
+	--L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
 
-	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
-	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
-	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	--L.ravage_target = "Reflection: Ravage Target Cast Bar"
+	--L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
+	--L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
 
-	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
-	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
+	--L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
+	--L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
 end
 
 L = BigWigs:NewBossLocale("Castle Nathria Trash", "itIT")

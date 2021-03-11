@@ -1,8 +1,8 @@
 local L = BigWigs:NewBossLocale("Shriekwing", "koKR")
 if not L then return end
 if L then
-	 L.pickup_lantern = "%s 이(가) 등불을 들었습니다!"
-	 L.dropped_lantern = " %s 이(가) 등불 떨어트림!"
+	L.pickup_lantern = "%s 이(가) 등불을 들었습니다!"
+	L.dropped_lantern = " %s 이(가) 등불 떨어트림!"
 end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "koKR")
@@ -38,36 +38,36 @@ end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "koKR")
 if L then
-	 L.times = "%dx %s"
+	L.times = "%dx %s"
 
-	 L.level = "%s (Level |cffffff00%d|r)"
-	 L.full = "%s (|cffff0000FULL|r)"
+	L.level = "%s (Level |cffffff00%d|r)"
+	L.full = "%s (|cffff0000FULL|r)"
 
-	 L.anima_adds = "농축된 령 쫄"
-	 L.anima_adds_desc = "농축된 령 쫄이 언제 생성되는 타이머 표시."
+	L.anima_adds = "농축된 령 쫄"
+	L.anima_adds_desc = "농축된 령 쫄이 언제 생성되는 타이머 표시."
 
-	 L.custom_off_experimental = "실험적 기능 활성화"
-	 L.custom_off_experimental_desc = "이 기능들은 |cffff0000테스트되지 않았고|r 그렇기에 |cffff0000무분별하게 반복될수 있음|r."
+	L.custom_off_experimental = "실험적 기능 활성화"
+	L.custom_off_experimental_desc = "이 기능들은 |cffff0000테스트되지 않았고|r 그렇기에 |cffff0000무분별하게 반복될수 있음|r."
 
-	 L.anima_tracking = "령 추적 |cffff0000(실험 중)|r"
-	 L.anima_tracking_desc = "메세지와 바로 령 용기에 있는 령 수치를 추적.|n|cffaaff00팁: 정보 박스나 바를 기호에 따라 비활성화해야 할 수도 있음."
+	L.anima_tracking = "령 추적 |cffff0000(실험 중)|r"
+	L.anima_tracking_desc = "메세지와 바로 령 용기에 있는 령 수치를 추적.|n|cffaaff00팁: 정보 박스나 바를 기호에 따라 비활성화해야 할 수도 있음."
 
-	 L.custom_on_stop_timers = "항상 능력 바 표시"
-	 L.custom_on_stop_timers_desc = "아직은 실험 단계"
+	L.custom_on_stop_timers = "항상 능력 바 표시"
+	L.custom_on_stop_timers_desc = "아직은 실험 단계"
 
-	 L.desires = "욕망"
-	 L.bottles = "병에 담긴 령"
-	 L.sins = "죄악"
+	L.desires = "욕망"
+	L.bottles = "병에 담긴 령"
+	L.sins = "죄악"
 end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "koKR")
 if L then
 	L.macabre_start_emote = "죽음의 무도를 위해 자신의 위치에 서야 합니다!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
-	 L.custom_on_repeating_dark_recital = "어둠의 무도회 지속적으로 표시"
-	 L.custom_on_repeating_dark_recital_desc = "지속적으로  {rt1}, {rt2}  로 표시를 해서 본인의 짝을 찾을수 있도록 표시."
+	L.custom_on_repeating_dark_recital = "어둠의 무도회 지속적으로 표시"
+	L.custom_on_repeating_dark_recital_desc = "지속적으로  {rt1}, {rt2}  로 표시를 해서 본인의 짝을 찾을수 있도록 표시."
 
-	 L.custom_off_select_boss_order = "보스 킬 순서 표시"
-	 L.custom_off_select_boss_order_desc = "보스를 잡을 순서를 {rt7} 로 표시. 부공대장 이상의 권한이 필요합니다."
+	L.custom_off_select_boss_order = "보스 킬 순서 표시"
+	L.custom_off_select_boss_order_desc = "보스를 잡을 순서를 {rt7} 로 표시. 부공대장 이상의 권한이 필요합니다."
 	L.custom_off_select_boss_order_value1 = "니클라우스 -> 프리에다 -> 스타브로스"
 	L.custom_off_select_boss_order_value2 = "프리에다 -> 니클라우스 -> 스타브로스"
 	L.custom_off_select_boss_order_value3 = "스타브로스 -> 니클라우스 -> 프리에다"
@@ -90,24 +90,24 @@ end
 
 L = BigWigs:NewBossLocale("Sludgefist", "koKR")
 if L then
-	 L.stomp_shift = "발구르기 & 지진" -- Destructive Stomp + Seismic Shift
+	L.stomp_shift = "발구르기 & 지진" -- Destructive Stomp + Seismic Shift
 
-	 L.fun_info = "데미지 표시"
-	 L.fun_info_desc = "파괴의 충격 중 얼마나 체력을 많이 뺐는가를 메세지로 표시."
+	L.fun_info = "데미지 표시"
+	L.fun_info_desc = "파괴의 충격 중 얼마나 체력을 많이 뺐는가를 메세지로 표시."
 
-	 L.health_lost = "진흙주먹의 체력을 %.1f%% 만큼 깎았습니다!"
+	L.health_lost = "진흙주먹의 체력을 %.1f%% 만큼 깎았습니다!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "koKR")
 if L then
-	 L.first_blade = "첫번째 칼날"
-	 L.second_blade = "두번째 칼날"
+	L.first_blade = "첫번째 칼날"
+	L.second_blade = "두번째 칼날"
 
-	 L.skirmishers = "척후병" -- Short for Stone Legion Skirmishers
+	L.skirmishers = "척후병" -- Short for Stone Legion Skirmishers
 	L.eruption = "분출" -- Short for Reverberating Eruption
 
-	 L.custom_on_stop_timers = "항상 능력 바 표시"
-	 L.custom_on_stop_timers_desc = "아직은 실험 단계"
+	L.custom_on_stop_timers = "항상 능력 바 표시"
+	L.custom_on_stop_timers_desc = "아직은 실험 단계"
 
 	L.goliath_short = "거수"
 	L.goliath_desc = "돌 군단 거수가 언제 나오는지 경고와 타이머 표시."
@@ -128,15 +128,15 @@ if L then
 	L.custom_on_repeating_impale = "반복적으로 꿰뚫기 말하기"
 	L.custom_on_repeating_impale_desc = "꿰뚫기에 걸렸을때 '1' 이나 '22' 나 '333' 이나 '4444' 로 계속 말해서 어떤 순서로 맞는지 명확하게 하기."
 
-	 L.hymn_stacks = "나스리아의 찬가"
-	 L.hymn_stacks_desc = "현재 본인에게 있는 나스리아의 찬가 중첩 갯수 알림."
+	L.hymn_stacks = "나스리아의 찬가"
+	L.hymn_stacks_desc = "현재 본인에게 있는 나스리아의 찬가 중첩 갯수 알림."
 
-	 L.ravage_target = "사악한 환영: 유린 방향 시전바"
-	 L.ravage_target_desc = "사악한 환영이 유린을 어디로 쓸지 결정할때까지의 시간을 표시해주는 시전바."
-	 L.ravage_targeted = "유린 방향 결정" -- Text on the bar for when Ravage picks its location to target in stage 3
+	L.ravage_target = "사악한 환영: 유린 방향 시전바"
+	L.ravage_target_desc = "사악한 환영이 유린을 어디로 쓸지 결정할때까지의 시간을 표시해주는 시전바."
+	L.ravage_targeted = "유린 방향 결정" -- Text on the bar for when Ravage picks its location to target in stage 3
 
-	 L.no_mirror = "거울 없음: %d" -- Player amount that does not have the Through the Mirror
-	 L.mirror = "거울: %d" -- Player amount that does have the Through the Mirror
+	L.no_mirror = "거울 없음: %d" -- Player amount that does not have the Through the Mirror
+	L.mirror = "거울: %d" -- Player amount that does have the Through the Mirror
 end
 
 L = BigWigs:NewBossLocale("Castle Nathria Trash", "koKR")

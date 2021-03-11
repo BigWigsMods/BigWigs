@@ -1,13 +1,13 @@
 local L = BigWigs:NewBossLocale("Shriekwing", "esES")
 if not L then return end
 if L then
-	-- L.pickup_lantern = "%s picked up the lantern!"
-	-- L.dropped_lantern = "Lantern dropped by %s!"
+	--L.pickup_lantern = "%s picked up the lantern!"
+	--L.dropped_lantern = "Lantern dropped by %s!"
 end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "esES")
 if L then
-	-- L.killed = "%s Killed"
+	--L.killed = "%s Killed"
 end
 
 L = BigWigs:NewBossLocale("Sun King's Salvation", "esES")
@@ -36,36 +36,36 @@ end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "esES")
 if L then
-	-- L.times = "%dx %s"
+	--L.times = "%dx %s"
 
-	-- L.level = "%s (Level |cffffff00%d|r)"
-	-- L.full = "%s (|cffff0000FULL|r)"
+	--L.level = "%s (Level |cffffff00%d|r)"
+	--L.full = "%s (|cffff0000FULL|r)"
 
-	-- L.anima_adds = "Concentrate Anima Adds"
-	-- L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
+	--L.anima_adds = "Concentrate Anima Adds"
+	--L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
 
-	-- L.custom_off_experimental = "Enable experimental features"
-	-- L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
+	--L.custom_off_experimental = "Enable experimental features"
+	--L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
 
-	-- L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
-	-- L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
+	--L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
+	--L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Just for testing right now"
 
-	-- L.desires = "Desires"
-	-- L.bottles = "Bottles"
-	-- L.sins = "Sins"
+	--L.desires = "Desires"
+	--L.bottles = "Bottles"
+	--L.sins = "Sins"
 end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "esES")
 if L then
-	-- L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
-	-- L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
-	-- L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
+	--L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
+	--L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
+	--L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
 
-	-- L.custom_off_select_boss_order = "Mark Boss Kill Order"
-	-- L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
+	--L.custom_off_select_boss_order = "Mark Boss Kill Order"
+	--L.custom_off_select_boss_order_desc = "Mark the order the raid will kill the bosses in with cross {rt7}. Requires raid leader or assist to mark."
 	L.custom_off_select_boss_order_value1 = "Niklaus -> Frieda -> Stavros"
 	L.custom_off_select_boss_order_value2 = "Frieda -> Niklaus -> Stavros"
 	L.custom_off_select_boss_order_value3 = "Stavros -> Niklaus -> Frieda"
@@ -88,24 +88,24 @@ end
 
 L = BigWigs:NewBossLocale("Sludgefist", "esES")
 if L then
-	-- L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
+	--L.stomp_shift = "Stomp & Shift" -- Destructive Stomp + Seismic Shift
 
-	-- L.fun_info = "Damage Info"
-	-- L.fun_info_desc = "Display a message showing how much health the boss lost during Destructive Impact."
+	--L.fun_info = "Damage Info"
+	--L.fun_info_desc = "Display a message showing how much health the boss lost during Destructive Impact."
 
-	-- L.health_lost = "Sludgefist went down %.1f%%!"
+	--L.health_lost = "Sludgefist went down %.1f%%!"
 end
 
 L = BigWigs:NewBossLocale("Stone Legion Generals", "esES")
 if L then
-	-- L.first_blade = "First Blade"
-	-- L.second_blade = "Second Blade"
+	--L.first_blade = "First Blade"
+	--L.second_blade = "Second Blade"
 
-	-- L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
+	--L.skirmishers = "Skirmishers" -- Short for Stone Legion Skirmishers
 	L.eruption = "Erupción" -- Short for Reverberating Eruption
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Just for testing right now"
 
 	--L.goliath_short = "Goliath"
 	--L.goliath_desc = "Show warnings and timers for when the Stone Legion Goliath is going to spawn."
@@ -126,15 +126,15 @@ if L then
 	--L.custom_on_repeating_impale = "Repeating Impale Say"
 	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
 
-	-- L.hymn_stacks = "Nathrian Hymn"
-	-- L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	--L.hymn_stacks = "Nathrian Hymn"
+	--L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
 
-	-- L.ravage_target = "Reflection: Ravage Target Cast Bar"
-	-- L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
-	-- L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	--L.ravage_target = "Reflection: Ravage Target Cast Bar"
+	--L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
+	--L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
 
-	-- L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
-	-- L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
+	--L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
+	--L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
 end
 
 L = BigWigs:NewBossLocale("Castle Nathria Trash", "esES")
