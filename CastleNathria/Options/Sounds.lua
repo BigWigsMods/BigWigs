@@ -198,11 +198,7 @@ BigWigs:AddSounds("Castle Nathria Trash", {
 	[341735] = "alert",
 	[342752] = "alarm",
 	[342770] = "warning",
-	[343155] = {"alert","warning"},
+	[343155] = {"alert","info"},
 	[343271] = "alarm",
 	[343302] = "long",
-	[343316] = "alarm",
-	[343320] = "alarm",
-	[343322] = "alarm",
-	[343325] = "alarm",
 })
