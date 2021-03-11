@@ -77,13 +77,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Consume", 334522)
 	self:Log("SPELL_CAST_SUCCESS", "ConsumeSuccess", 334522)
 	self:Log("SPELL_AURA_APPLIED", "ExpungeApplied", 329725)
-	if self:LFR() then -- New combat log event isn't active in LFR
-		self:RegisterEvent("RAID_BOSS_WHISPER")
-		self:RegisterMessage("BigWigs_BossComm") -- Syncing for Volatile Ejection targets
-	else
-		self:Log("SPELL_AURA_APPLIED", "VolatileEjectionApplied", 334064)
-		self:Log("SPELL_AURA_REMOVED", "VolatileEjectionRemoved", 334064)
-	end
+	self:Log("SPELL_AURA_APPLIED", "VolatileEjectionApplied", 338614, 334064) -- LFR, everything else
+	self:Log("SPELL_AURA_REMOVED", "VolatileEjectionRemoved", 338614, 334064)
 	self:Log("SPELL_CAST_START", "VolatileEjection", 334266)
 	self:Log("SPELL_CAST_SUCCESS", "VolatileEjectionSuccess", 334266)
 	self:Log("SPELL_CAST_START", "Desolate", 329455)
@@ -96,7 +91,7 @@ function mod:OnBossEnable()
 			hasPrinted = true
 			BigWigs:Print(L.tempPrint) -- XXX
 		end
-	end, 2)
+	end, 5)
 end
 
 function mod:OnEngage()
@@ -136,6 +131,7 @@ end
 function mod:OnBossDisable()
 	volEjectionOnMe = false -- Compensate for the boss dieing mid cast
 	miasmaOnMe = false
+
 	if self:GetOption(gluttonousMiasmaMarker) then
 		for i = 1, #miasmaPlayerList do
 			local name = miasmaPlayerList[i]
@@ -146,7 +142,9 @@ function mod:OnBossDisable()
 		end
 	end
 	miasmaPlayerList = {}
-	if self:GetOption(volatileEjectionMarker) then -- Compensate for the boss dieing mid cast
+
+	-- Compensate for the boss dieing mid cast
+	if self:GetOption(volatileEjectionMarker) then
 		for i = 1, #volEjectionList do
 			local name = volEjectionList[i]
 			self:CustomIcon(false, name)
@@ -272,35 +270,6 @@ do
 	function mod:VolatileEjectionRemoved(args)
 		if self:Me(args.destGUID) then
 			volEjectionOnMe = false
-		end
-	end
-
-	local function addPlayerToList(self, name)
-		if not tContains(volEjectionList, name) then
-			local count = #volEjectionList+1
-			volEjectionList[count] = name
-			self:NewTargetsMessage(334266, "orange", volEjectionList, self:Mythic() and 4 or 3, CL.beam, nil, 2)
-			self:CustomIcon(volatileEjectionMarker, name, count+4)
-		end
-	end
-
-	function mod:RAID_BOSS_WHISPER(_, msg)
-		if msg:find("334064", nil, true) then -- Volatile Ejection
-			self:PlaySound(334266, "warning")
-			self:Flash(334266)
-			self:Say(334266, CL.beam)
-			volEjectionOnMe = true
-			if not scheduledChatMsg and not self:LFR() and self:GetOption("custom_on_repeating_say_laser") then
-				scheduledChatMsg = true
-				self:SimpleTimer(RepeatingChatMessages, 1.5)
-			end
-			self:Sync("VolatileEjectionTarget")
-		end
-	end
-
-	function mod:BigWigs_BossComm(_, msg, _, name)
-		if msg == "VolatileEjectionTarget" then
-			addPlayerToList(self, name)
 		end
 	end
 
