@@ -251,7 +251,7 @@ local function UpdateFont()
 end
 
 do
-	local disabled = function() return plugin.db.profile.disabled end
+	local checkTextDisabled = function() return not plugin.db.profile.textEnabled end
 	plugin.pluginOptions = {
 		name = L.countdown,
 		type = "group",
@@ -343,6 +343,7 @@ do
 							UpdateFont()
 						end,
 						width = 2,
+						disabled = checkTextDisabled,
 					},
 					outline = {
 						type = "select",
@@ -353,6 +354,7 @@ do
 							OUTLINE = L.thin,
 							THICKOUTLINE = L.thick,
 						},
+						disabled = checkTextDisabled,
 					},
 					fontColor = {
 						type = "color",
@@ -365,6 +367,7 @@ do
 							UpdateFont()
 						end,
 						order = 12,
+						disabled = checkTextDisabled,
 					},
 					fontSize = {
 						type = "range",
@@ -372,12 +375,14 @@ do
 						desc = L.fontSizeDesc,
 						order = 13,
 						softMax = 100, max = 200, min = 20, step = 1,
+						disabled = checkTextDisabled,
 					},
 					monochrome = {
 						type = "toggle",
 						name = L.monochrome,
 						desc = L.monochromeDesc,
 						order = 14,
+						disabled = checkTextDisabled,
 					},
 					resetHeader = {
 						type = "header",
@@ -408,6 +413,7 @@ do
 				type = "group",
 				name = L.positionExact,
 				order = 2,
+				disabled = checkTextDisabled,
 				args = {
 					posx = {
 						type = "range",
