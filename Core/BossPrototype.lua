@@ -2392,7 +2392,6 @@ do
 	end
 
 	--- Display a nameplate bar.
-	-- Indicates an unreliable duration by prefixing the time with "~"
 	-- @param key the option key
 	-- @number length the bar duration in seconds
 	-- @string guid Anchor to a unit's nameplate by GUID
@@ -2415,6 +2414,7 @@ do
 	end
 
 	--- Display a nameplate cooldown bar.
+	-- Indicates an unreliable duration by prefixing the time with "~"
 	-- @param key the option key
 	-- @number length the bar duration in seconds
 	-- @string guid Anchor to a unit's nameplate by GUID
