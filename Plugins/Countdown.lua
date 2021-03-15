@@ -599,7 +599,7 @@ end
 
 do
 	local timers = {}
-	function plugin:BigWigs_StartCountdown(_, module, key, text, time, customVoice, audioOnly)
+	function plugin:BigWigs_StartCountdown(_, module, key, text, time, customVoice, customStart, audioOnly)
 		if module and time > 1.3 then
 			self:BigWigs_StopCountdown(nil, module, text)
 			if not timers[module] then
@@ -609,7 +609,7 @@ do
 			timers[module][text] = cancelTimer
 
 			local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
-			for i = 1, self.db.profile.countdownTime do
+			for i = 1, customStart or self.db.profile.countdownTime do
 				local t = i + 0.3
 				if time <= t then return end
 				self:SimpleTimer(function()
@@ -649,5 +649,5 @@ do
 end
 
 function plugin:TestCountdown()
-	self:SendMessage("BigWigs_StartCountdown", self, nil, "test countdown", 5.5)
+	self:SendMessage("BigWigs_StartCountdown", self, nil, "test countdown", self.db.profile.countdownTime + 0.5)
 end

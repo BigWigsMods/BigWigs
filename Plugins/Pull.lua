@@ -36,6 +36,7 @@ do
 	}
 	plugin.defaultDB = {
 		countType = "emphasized",
+		countBegin = 5,
 		combatLog = false,
 		engageSound = "None",
 		startPullSound = "BigWigs: Long",
@@ -72,16 +73,22 @@ do
 					emphasized = L.emphasized,
 				},
 			},
+			countBegin = {
+				name = L.countdownBegins,
+				desc = L.countdownBegins_desc,
+				type = "range", min = 5, max = 10, step = 1,
+				order = 2,
+			},
 			spacer1 = {
 				type = "description",
 				name = "\n",
-				order = 1.1,
+				order = 3,
 				width = "full",
 			},
 			engageSound = {
 				type = "select",
 				name = L.engageSoundTitle,
-				order = 2,
+				order = 4,
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
@@ -91,13 +98,13 @@ do
 			spacer2 = {
 				type = "description",
 				name = "\n",
-				order = 2.1,
+				order = 5,
 				width = "full",
 			},
 			startPullSound = {
 				type = "select",
 				name = L.pullStartedSoundTitle,
-				order = 3,
+				order = 6,
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
@@ -107,7 +114,7 @@ do
 			endPullSound = {
 				type = "select",
 				name = L.pullFinishedSoundTitle,
-				order = 4,
+				order = 7,
 				get = soundGet,
 				set = soundSet,
 				values = media:List(SOUND),
@@ -118,20 +125,20 @@ do
 				name = L.countdownVoice,
 				type = "select",
 				values = function() return BigWigsAPI:GetCountdownList() end,
-				order = 5,
+				order = 8,
 				width = 2,
 			},
 			spacer3 = {
 				type = "description",
 				name = "\n",
-				order = 5.1,
+				order = 9,
 				width = "full",
 			},
 			combatLog = {
 				type = "toggle",
 				name = L.combatLog,
 				desc = L.combatLogDesc,
-				order = 6,
+				order = 10,
 				width = "full",
 			},
 		},
@@ -157,6 +164,9 @@ do
 
 		if db.countType ~= "normal" and db.countType ~= "emphasized" then
 			db.countType = plugin.defaultDB.countType
+		end
+		if db.countBegin < 5 or db.countBegin > 10 then
+			db.countBegin = plugin.defaultDB.countBegin
 		end
 	end
 
@@ -209,10 +219,8 @@ do
 			self:SendMessage("BigWigs_StopBar", self, L.pull)
 			self:SendMessage("BigWigs_StopPull", self, "COMBAT")
 			self:SendMessage("BigWigs_StopCountdown", self, "pulling time")
-		elseif timeLeft < 11 then
-			if self.db.profile.countType ~= "emphasized" then
-				self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
-			end
+		elseif timeLeft <= self.db.profile.countBegin and self.db.profile.countType ~= "emphasized" then
+			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
 		end
 	end
 	function plugin:StartPull(seconds, nick, isDBM)
@@ -249,7 +257,7 @@ do
 				LoggingCombat(isLogging)
 			end
 
-			self:SendMessage("BigWigs_StartCountdown", self, nil, "pulling time", timeLeft, self.db.profile.voice, self.db.profile.countType ~= "emphasized")
+			self:SendMessage("BigWigs_StartCountdown", self, nil, "pulling time", timeLeft, self.db.profile.voice, self.db.profile.countBegin, self.db.profile.countType ~= "emphasized")
 			self:SendMessage("BigWigs_Message", self, nil, L.pullIn:format(timeLeft), "yellow")
 			self:SendMessage("BigWigs_StartBar", self, nil, L.pull, seconds, 132337) -- 132337 = "Interface\\Icons\\ability_warrior_charge"
 			self:SendMessage("BigWigs_StartPull", self, seconds, nick, isDBM)

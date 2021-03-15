@@ -330,6 +330,8 @@ L.pullStoppedCombat = "Temporizador de llamado de jefe cancelado porque tu entra
 L.pullIn = "Llamado de jefe en %d seg"
 L.sendPull = "Enviando un temporizador de llamado de jefe para los usuarios de BigWigs y DBM."
 L.wrongPullFormat = "Debe estar entre 1 y 60 segundos. Un ejemplo correcto es: /pull 5"
+--L.countdownBegins = "Begin Countdown"
+--L.countdownBegins_desc = "Elige cuánto tiempo le queda a la habilidad del jefe (en segundos) cuando la cuenta regresiva comience." -- change to 'pull timer' (see english version) and remove this comment
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

@@ -329,6 +329,8 @@ L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.pullIn = "Pull in %d sec"
 L.sendPull = "Sending a pull timer to BigWigs and DBM users."
 L.wrongPullFormat = "Must be between 1 and 60 seconds. A correct example is: /pull 5"
+L.countdownBegins = "Begin Countdown"
+L.countdownBegins_desc = "Choose how much time should be remaining on the pull timer (in seconds) when the countdown begins."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

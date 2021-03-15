@@ -330,6 +330,8 @@ L.pullStoppedCombat = "Délai de pull annulé car vous êtes entré en combat."
 L.pullIn = "Pull dans %d sec."
 L.sendPull = "Envoi d'un délai de pull aux utilisateurs de BigWigs et DBM."
 L.wrongPullFormat = "Doit être compris entre 1 et 60 secondes. Un exemple correct est le suivant : /pull 5"
+--L.countdownBegins = "Begin Countdown"
+--L.countdownBegins_desc = "Choisissez combien de temps il doit rester sur une technique de boss (en secondes) quand le compte à rebours commence." -- change to 'pull timer' (see english version) and remove this comment
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

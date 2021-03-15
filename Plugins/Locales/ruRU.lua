@@ -330,6 +330,8 @@ L.pullStoppedCombat = "Таймер атаки  отменен, поскольк
 L.pullIn = "Атакуем через %d сек"
 L.sendPull = "Отправка таймера атаки пользователям BigWigs и DBM."
 L.wrongPullFormat = "Должно быть между 1 и 60 секундами. Например: /pull 5"
+--L.countdownBegins = "Begin Countdown"
+--L.countdownBegins_desc = "Выберите, сколько времени должно оставаться до способности босса (в секундах), когда начнется обратный отсчет." -- change to 'pull timer' (see english version) and remove this comment
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua

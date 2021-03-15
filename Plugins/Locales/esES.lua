@@ -368,6 +368,13 @@ L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de c
 --L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
 
 -----------------------------------------------------------------------
+-- Pull.lua
+--
+
+--L.countdownBegins = "Begin Countdown"
+--L.countdownBegins_desc = "Choose how much time should be remaining on the pull timer (in seconds) when the countdown begins."
+
+-----------------------------------------------------------------------
 -- Sound.lua
 --
 

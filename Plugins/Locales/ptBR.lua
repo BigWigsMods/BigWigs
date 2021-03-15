@@ -329,6 +329,8 @@ L.pullStoppedCombat = "Temporizador cancelado porque você entrou em combate."
 L.pullIn = "Pull em %d seg"
 L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
 L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
+--L.countdownBegins = "Begin Countdown"
+--L.countdownBegins_desc = "Escolhe quanto tempo deve restar para a habilidade do chefe (em segundos) para começar a contagem." -- change to 'pull timer' (see english version) and remove this comment
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
