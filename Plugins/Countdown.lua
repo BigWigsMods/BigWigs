@@ -11,17 +11,23 @@ local plugin = BigWigs:NewPlugin("Countdown")
 if not plugin then return end
 
 local voiceMap = {
-	deDE = "Deutsch: Heroes of the Storm",
-	esES = "Español: Heroes of the Storm",
-	esMX = "Español: Heroes of the Storm",
-	frFR = "Français: Heroes of the Storm",
-	ruRU = "Русский: Heroes of the Storm",
-	koKR = "한국어: Heroes of the Storm",
-	itIT = "Italiano: Heroes of the Storm",
-	ptBR = "Português: Heroes of the Storm",
-	zhCN = "简体中文: Heroes of the Storm",
-	zhTW = "繁體中文: Heroes of the Storm",
+	deDE = "Deutsch: Default",
+	esES = "Español (es): Default",
+	esMX = "Español (mx): Default",
+	frFR = "Français: Default",
+	ruRU = "Русский: Default",
+	koKR = "한국어: Default",
+	itIT = "Italiano: Default",
+	ptBR = "Português: Default",
+	zhCN = "简体中文: Default",
+	zhTW = "繁體中文: Default",
 }
+local defaultVoice = voiceMap[GetLocale()]
+if defaultVoice then
+	defaultVoice = ("%s (%s)"):format(defaultVoice, FEMALE)
+else
+	defaultVoice = "English: Amy"
+end
 
 plugin.defaultDB = {
 	textEnabled = true,
@@ -30,7 +36,7 @@ plugin.defaultDB = {
 	fontSize = 48,
 	monochrome = false,
 	fontColor = { r = 1, g = 0, b = 0 },
-	voice = voiceMap[GetLocale()] or "English: Amy",
+	voice = defaultVoice,
 	countdownTime = 5,
 	position = {"TOP", "TOP", 0, -300},
 	bossCountdowns = {},
@@ -93,76 +99,27 @@ BigWigsAPI:RegisterCountdown("English: Jim", {
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Jim\\9.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Jim\\10.ogg",
 })
-BigWigsAPI:RegisterCountdown("English: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Deutsch: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\female\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Español: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\female\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Français: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\female\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Русский: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\female\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("한국어: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\female\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Italiano: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\female\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Português: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\female\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("简体中文: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\female\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("繁體中文: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\female\\5.ogg",
-})
+
+for locale, name in next, voiceMap do
+	BigWigsAPI:RegisterCountdown(("%s (%s)"):format(name, _G.MALE), {
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\5.ogg",
+	})
+	if locale == "esMX" then
+		-- never extracted the esMX female announcer voice and it's gone now, so just use esES
+		locale = "esES"
+	end
+	BigWigsAPI:RegisterCountdown(("%s (%s)"):format(name, _G.FEMALE), {
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\5.ogg",
+	})
+end
 
 --------------------------------------------------------------------------------
 -- Anchors & Frames
@@ -529,7 +486,7 @@ do
 
 		-- Reset invalid voice selections
 		if not BigWigsAPI:HasCountdown(db.voice) then
-			db.voice = voiceMap[GetLocale()] or "English: Amy"
+			db.voice = defaultVoice or "English: Amy"
 		end
 		for boss, tbl in next, db.bossCountdowns do
 			for ability, chosenVoice in next, tbl do
