@@ -24,7 +24,7 @@ local voiceMap = {
 }
 local defaultVoice = voiceMap[GetLocale()]
 if defaultVoice then
-	defaultVoice = ("%s (%s)"):format(defaultVoice, FEMALE)
+	defaultVoice = ("%s (%s)"):format(defaultVoice, _G.FEMALE)
 else
 	defaultVoice = "English: Amy"
 end
