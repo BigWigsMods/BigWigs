@@ -100,6 +100,21 @@ BigWigsAPI:RegisterCountdown("English: Jim", {
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Jim\\10.ogg",
 })
 
+BigWigsAPI:RegisterCountdown("English: Default (Male)", {
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\1.ogg",
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\2.ogg",
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\3.ogg",
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\4.ogg",
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\5.ogg",
+})
+BigWigsAPI:RegisterCountdown("English: Default (Female)", {
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\1.ogg",
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\2.ogg",
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\3.ogg",
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\4.ogg",
+	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\5.ogg",
+})
+
 for locale, name in next, voiceMap do
 	BigWigsAPI:RegisterCountdown(("%s (%s)"):format(name, _G.MALE), {
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\1.ogg",
@@ -109,7 +124,7 @@ for locale, name in next, voiceMap do
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\5.ogg",
 	})
 	if locale == "esMX" then
-		-- never extracted the esMX female announcer voice and it's gone now, so just use esES
+		-- never extracted the esMX female announcer and it's gone now, so just use esES
 		locale = "esES"
 	end
 	BigWigsAPI:RegisterCountdown(("%s (%s)"):format(name, _G.FEMALE), {
