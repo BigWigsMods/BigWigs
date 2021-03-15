@@ -330,8 +330,8 @@ L.pullStoppedCombat = "Pull-Timer wurde abgebrochen, weil Du einen Kampf begonne
 L.pullIn = "Pull in %d Sek."
 L.sendPull = "Sende Pull-Timer an BigWigs- und DBM-Nutzer."
 L.wrongPullFormat = "Muss zwischen 1 und 60 Sekunden liegen. Beispiel: /pull 5"
---L.countdownBegins = "Begin Countdown"
---L.countdownBegins_desc = "Verbleibende Zeit einer Bossfähigkeit (in Sekunden) wählen, wenn der Countdown beginnt." -- change to 'pull timer' (see english version) and remove this comment
+L.countdownBegins = "Countdown starten"
+L.countdownBegins_desc = "Verbleibende Zeit des Pulltimers (in Sekunden) wählen, wenn der Countdown beginnt."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
