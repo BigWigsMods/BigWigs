@@ -486,7 +486,7 @@ do
 
 		-- Reset invalid voice selections
 		if not BigWigsAPI:HasCountdown(db.voice) then
-			db.voice = defaultVoice or "English: Amy"
+			db.voice = defaultVoice
 		end
 		for boss, tbl in next, db.bossCountdowns do
 			for ability, chosenVoice in next, tbl do
