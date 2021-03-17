@@ -101,14 +101,14 @@ BigWigsAPI:RegisterCountdown("English: Jim", {
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Jim\\10.ogg",
 })
 
-BigWigsAPI:RegisterCountdown("English: Default (Male)", {
+BigWigsAPI:RegisterCountdown("enUS: Default (Male)", "English: Default (Male)", {
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\1.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\2.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\3.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\4.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\5.ogg",
 })
-BigWigsAPI:RegisterCountdown("English: Default (Female)", {
+BigWigsAPI:RegisterCountdown("enUS: Default (Female)", "English: Default (Female)", {
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\1.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\2.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\3.ogg",
