@@ -2634,7 +2634,8 @@ function boss:SayCountdown(key, seconds, icon, startAt)
 			tbl[2] = tbl[2] - 1
 		end
 	end
-	for i = 1, start do
+	local startOffset = start + 0.2
+	for i = 1.2, startOffset do
 		Timer(seconds-i, printTime)
 	end
 	self.sayCountdowns[key] = tbl
@@ -2678,7 +2679,8 @@ function boss:YellCountdown(key, seconds, icon, startAt)
 			tbl[2] = tbl[2] - 1
 		end
 	end
-	for i = 1, start do
+	local startOffset = start + 0.2
+	for i = 1.2, startOffset do
 		Timer(seconds-i, printTime)
 	end
 	self.sayCountdowns[key] = tbl
