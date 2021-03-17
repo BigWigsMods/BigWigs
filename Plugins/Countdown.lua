@@ -11,20 +11,20 @@ local plugin = BigWigs:NewPlugin("Countdown")
 if not plugin then return end
 
 local voiceMap = {
-	deDE = {"Deutsch","Standard","Männlich","Weiblich"},
-	esES = {"Español (es)","Predeterminado","Masculino","Femenino"},
-	esMX = {"Español (mx)","Predeterminado","Masculino","Femenino"},
-	frFR = {"Français","Défaut","Homme","Femme"},
-	itIT = {"Italiano","Predefinito","Maschio","Femmina"},
-	koKR = {"한국어","기본","남성","여성"},
-	ptBR = {"Português","Padrão","Masculino","Feminino"},
-	ruRU = {"Русский","По умолчанию","Мужской","Женский"},
-	zhCN = {"简体中文","默认","男性","女性"},
-	zhTW = {"繁體中文","預設值","男性","女性"},
+	deDE = {"Deutsch", "Standard", "Männlich", "Weiblich", "%s: %s (%s)"},
+	esES = {"Español (es)", "Predeterminado", "Masculino", "Femenino", "%s: %s (%s)"},
+	esMX = {"Español (mx)", "Predeterminado", "Masculino", "Femenino", "%s: %s (%s)"},
+	frFR = {"Français", "Défaut", "Homme", "Femme", "%s : %s (%s)"},
+	itIT = {"Italiano", "Predefinito", "Maschio", "Femmina", "%s: %s (%s)"},
+	koKR = {"한국어", "기본", "남성", "여성", "%s : %s (%s)"},
+	ptBR = {"Português", "Padrão", "Masculino", "Feminino", "%s: %s (%s)"},
+	ruRU = {"Русский", "По умолчанию", "Мужской", "Женский", "%s: %s (%s)"},
+	zhCN = {"简体中文", "默认", "男性", "女性", "%s:%s(%s)"},
+	zhTW = {"繁體中文", "預設值", "男性", "女性", "%s:%s(%s)"},
 }
 local defaultVoice = voiceMap[GetLocale()]
 if defaultVoice then
-	defaultVoice = ("%s: %s (%s)"):format(defaultVoice[1], defaultVoice[2], defaultVoice[4])
+	defaultVoice = defaultVoice[5]:format(defaultVoice[1], defaultVoice[2], defaultVoice[4])
 else
 	defaultVoice = "English: Amy"
 end
@@ -116,7 +116,7 @@ BigWigsAPI:RegisterCountdown("English: Default (Female)", {
 })
 
 for locale, info in next, voiceMap do
-	BigWigsAPI:RegisterCountdown(("%s: %s (%s)"):format(info[1], info[2], info[3]), {
+	BigWigsAPI:RegisterCountdown(info[5]:format(info[1], info[2], info[3]), {
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\3.ogg",
@@ -127,7 +127,7 @@ for locale, info in next, voiceMap do
 		-- never extracted the esMX female announcer and it's gone now, so just use esES
 		locale = "esES"
 	end
-	BigWigsAPI:RegisterCountdown(("%s: %s (%s)"):format(info[1], info[2], info[4]), {
+	BigWigsAPI:RegisterCountdown(info[5]:format(info[1], info[2], info[4]), {
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\2.ogg",
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\3.ogg",
