@@ -11,6 +11,7 @@ local plugin = BigWigs:NewPlugin("Countdown")
 if not plugin then return end
 
 local voiceMap = {
+	enUS = {"English: Default (%s)", "Male", "Female"},
 	deDE = {"Deutsch: Standard (%s)", "Männlich", "Weiblich"},
 	esES = {"Español (es): Predeterminado (%s)", "Masculino", "Femenino"},
 	esMX = {"Español (mx): Predeterminado (%s)", "Masculino", "Femenino"},
@@ -25,7 +26,7 @@ local voiceMap = {
 local defaultVoice = "English: Amy"
 do
 	local locale = GetLocale()
-	if voiceMap[locale] then
+	if locale ~= "enUS" and voiceMap[locale] then
 		defaultVoice = ("%s: Default (Female)"):format(locale)
 	end
 end
@@ -99,21 +100,6 @@ BigWigsAPI:RegisterCountdown("English: Jim", {
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Jim\\8.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Jim\\9.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Jim\\10.ogg",
-})
-
-BigWigsAPI:RegisterCountdown("enUS: Default (Male)", "English: Default (Male)", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\male\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("enUS: Default (Female)", "English: Default (Female)", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\female\\5.ogg",
 })
 
 for locale, info in next, voiceMap do
