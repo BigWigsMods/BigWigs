@@ -126,12 +126,13 @@ for locale, info in next, voiceMap do
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\4.ogg",
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\5.ogg",
 	})
+
+	id = ("%s: Default (Female)"):format(locale)
+	name = info[5]:format(info[1], info[2], info[4])
 	if locale == "esMX" then
 		-- never extracted the esMX female announcer and it's gone now, so just use esES
 		locale = "esES"
 	end
-	id = ("%s: Default (Female)"):format(locale)
-	name = info[5]:format(info[1], info[2], info[4])
 	BigWigsAPI:RegisterCountdown(id, name, {
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\1.ogg",
 		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\2.ogg",
