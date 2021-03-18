@@ -617,24 +617,26 @@ do
 			if not timers[module] then
 				timers[module] = {}
 			end
+			local count = customStart or self.db.profile.countdownTime
 			local cancelTimer = {false}
 			timers[module][text] = cancelTimer
 
 			local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
-			for i = 1, customStart or self.db.profile.countdownTime do
-				local t = i + 0.3
-				if time <= t then return end
-				self:SimpleTimer(function()
-					if not cancelTimer[1] then
-						if not audioOnly and plugin.db.profile.textEnabled then
-							plugin:SetText(i, cancelTimer)
-						end
-						local sound = BigWigsAPI:GetCountdownSound(voice, i)
-						if sound then
-							PlaySoundFile(sound, "Master")
-						end
+			local function printTime()
+				if not cancelTimer[1] then
+					if not audioOnly and plugin.db.profile.textEnabled then
+						plugin:SetText(count, cancelTimer)
 					end
-				end, time-t)
+					local sound = BigWigsAPI:GetCountdownSound(voice, count)
+					if sound then
+						PlaySoundFile(sound, "Master")
+					end
+					count = count - 1
+				end
+			end
+			local startOffset = count + 0.3
+			for i = 1.3, startOffset do
+				self:SimpleTimer(printTime, time-i)
 			end
 		end
 	end
