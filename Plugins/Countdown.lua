@@ -460,6 +460,55 @@ end
 --
 
 do
+	local LOCALE = GetLocale()
+	local KEY = "%s: Default (Female)"
+	local function check(voice)
+		local lang = voice and voice:match("^(.+): Heroes of the Storm$")
+		if not lang then return end
+
+		if lang == "Español" then
+			-- Try to pick the correct Spanish locale
+			if LOCALE == "esMX" or LOCALE == "esES" then
+				return KEY:format(LOCALE)
+			end
+			return KEY:format(GetCurrentRegion() == 1 and "esMX" or "esES") -- NA or EU
+		end
+
+		for locale, info in next, voiceMap do
+			if info[1]:sub(1, #lang) == lang then
+				return KEY:format(locale)
+			end
+		end
+	end
+
+	local function upgradeDB(sv)
+		if not sv or not sv.profiles then return end
+		for profile, db in next, sv.profiles do
+			local voice = check(db.voice)
+			if voice then
+				db.voice = voice
+			end
+			if db.bossCountdowns then
+				for moduleName, abilities in next, db.bossCountdowns do
+					for k, v in next, abilities do
+						local voice = check(v)
+						if voice then
+							abilities[k] = voice
+						end
+					end
+				end
+			end
+		end
+	end
+
+	function plugin:OnRegister()
+		-- XXX temp 9.0.5
+		upgradeDB(self.db)
+		upgradeDB(BigWigs3DB.namespaces["BigWigs_Plugins_Pull"])
+	end
+end
+
+do
 	local function updateProfile()
 		local db = plugin.db.profile
 
