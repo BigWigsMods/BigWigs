@@ -2645,17 +2645,12 @@ do
 	function boss:SayCountdown(key, seconds, textOrIcon, startAt)
 		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 		local start = startAt or 3
-		local tbl = {false, start}
-		local text
-		if type(textOrIcon) == "number" then
-			text = iconList[textOrIcon]
-		elseif type(textOrIcon) == "string" then
-			text = textOrIcon
-		end
+		local tbl = {false}
+		local text = type(textOrIcon) == "number" and iconList[textOrIcon] or textOrIcon
 		local function printTime()
 			if not tbl[1] then
-				SendChatMessage(text and format("%s %d", text, tbl[2]) or tbl[2], "SAY")
-				tbl[2] = tbl[2] - 1
+				SendChatMessage(text and format("%s %d", text, start) or start, "SAY")
+				start = start - 1
 			end
 		end
 		local startOffset = start + 0.2
@@ -2673,17 +2668,12 @@ do
 	function boss:YellCountdown(key, seconds, textOrIcon, startAt)
 		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
 		local start = startAt or 3
-		local tbl = {false, start}
-		local text
-		if type(textOrIcon) == "number" then
-			text = iconList[textOrIcon]
-		elseif type(textOrIcon) == "string" then
-			text = textOrIcon
-		end
+		local tbl = {false}
+		local text = type(textOrIcon) == "number" and iconList[textOrIcon] or textOrIcon
 		local function printTime()
 			if not tbl[1] then
-				SendChatMessage(text and format("%s %d", text, tbl[2]) or tbl[2], "YELL")
-				tbl[2] = tbl[2] - 1
+				SendChatMessage(text and format("%s %d", text, start) or start, "YELL")
+				start = start - 1
 			end
 		end
 		local startOffset = start + 0.2
