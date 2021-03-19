@@ -23,16 +23,16 @@ local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
 do
 	local voiceMap = {
-		deDE = "Deutsch: Standard (Weiblich)",
-		esES = "Español (es): Predeterminado (Femenino)",
-		esMX = "Español (mx): Predeterminado (Femenino)",
-		frFR = "Français : Défaut (Femme)",
-		itIT = "Italiano: Predefinito (Femmina)",
-		koKR = "한국어 : 기본 (여성)",
-		ptBR = "Português: Padrão (Feminino)",
-		ruRU = "Русский: По умолчанию (Женский)",
-		zhCN = "简体中文:默认(女性)",
-		zhTW = "繁體中文:預設值(女性)",
+		deDE = "deDE: Default (Female)",
+		esES = "esES: Default (Female)",
+		esMX = "esMX: Default (Female)",
+		frFR = "frFR: Default (Female)",
+		itIT = "itIT: Default (Female)",
+		koKR = "koKR: Default (Female)",
+		ptBR = "ptBR: Default (Female)",
+		ruRU = "ruRU: Default (Female)",
+		zhCN = "zhCN: Default (Female)",
+		zhTW = "zhTW: Default (Female)",
 	}
 	plugin.defaultDB = {
 		countType = "emphasized",
