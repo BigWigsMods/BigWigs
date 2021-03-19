@@ -57,6 +57,19 @@ do
 		plugin.db.profile[info[#info]] = media:List(SOUND)[value]
 	end
 
+	local function voiceSorting()
+		local list = BigWigsAPI:GetCountdownList()
+		local sorted = {}
+		for k in next, list do
+			if k ~= L.none then
+				sorted[#sorted + 1] = k
+			end
+		end
+		sort(sorted, function(a, b) return list[a] < list[b] end)
+		tinsert(sorted, 1, L.none)
+		return sorted
+	end
+
 	plugin.pluginOptions = {
 		name = L.pull,
 		type = "group",
@@ -124,7 +137,8 @@ do
 			voice = {
 				name = L.countdownVoice,
 				type = "select",
-				values = function() return BigWigsAPI:GetCountdownList() end,
+				values = BigWigsAPI.GetCountdownList,
+				sorting = voiceSorting,
 				order = 8,
 				width = 2,
 			},

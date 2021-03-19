@@ -196,8 +196,17 @@ end
 -- Options
 --
 
-local function voiceList() -- select values
-	return BigWigsAPI:GetCountdownList()
+local function voiceSorting()
+	local list = BigWigsAPI:GetCountdownList()
+	local sorted = {}
+	for k in next, list do
+		if k ~= L.none then
+			sorted[#sorted + 1] = k
+		end
+	end
+	sort(sorted, function(a, b) return list[a] < list[b] end)
+	tinsert(sorted, 1, L.none)
+	return sorted
 end
 
 local function UpdateFont()
@@ -266,7 +275,8 @@ do
 					voice = {
 						name = L.countdownVoice,
 						type = "select",
-						values = voiceList,
+						values = BigWigsAPI.GetCountdownList,
+						sorting = voiceSorting,
 						order = 6,
 						width = "full",
 					},
@@ -430,7 +440,8 @@ local function createOptions()
 		sModule.soundOptions.args.countdown = {
 			name = "Countdown",
 			type = "select",
-			values = voiceList,
+			values = BigWigsAPI.GetCountdownList,
+			sorting = voiceSorting,
 			get = function(info)
 				local name, key = unpack(info.arg)
 				return plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] or plugin.db.profile.voice
