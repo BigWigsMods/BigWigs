@@ -629,6 +629,9 @@ do
 				timers[module] = {}
 			end
 			local count = customStart or self.db.profile.countdownTime
+			while count >= time do
+				count = count - 1
+			end
 			local cancelTimer = {false}
 			timers[module][text] = cancelTimer
 
