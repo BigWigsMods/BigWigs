@@ -23,16 +23,16 @@ local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
 do
 	local voiceMap = {
-		deDE = "Deutsch: Heroes of the Storm",
-		esES = "Español: Heroes of the Storm",
-		esMX = "Español: Heroes of the Storm",
-		frFR = "Français: Heroes of the Storm",
-		ruRU = "Русский: Heroes of the Storm",
-		koKR = "한국어: Heroes of the Storm",
-		itIT = "Italiano: Heroes of the Storm",
-		ptBR = "Português: Heroes of the Storm",
-		zhCN = "简体中文: Heroes of the Storm",
-		zhTW = "繁體中文: Heroes of the Storm",
+		deDE = "Deutsch: Standard (Weiblich)",
+		esES = "Español (es): Predeterminado (Femenino)",
+		esMX = "Español (mx): Predeterminado (Femenino)",
+		frFR = "Français : Défaut (Femme)",
+		itIT = "Italiano: Predefinito (Femmina)",
+		koKR = "한국어 : 기본 (여성)",
+		ptBR = "Português: Padrão (Feminino)",
+		ruRU = "Русский: По умолчанию (Женский)",
+		zhCN = "简体中文:默认(女性)",
+		zhTW = "繁體中文:預設值(女性)",
 	}
 	plugin.defaultDB = {
 		countType = "emphasized",
