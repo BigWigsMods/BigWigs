@@ -378,6 +378,7 @@ L.countdownBegins_desc = "选择拉怪计时器上倒计开始时应剩余多少
 -- Sound.lua
 --
 
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the '主音量' slider to a level you like."
 L.oldSounds = "传统音效"
 L.resetSoundDesc = "重置以上音效为默认。"
 L.onyou = "一个法术，增益或负面效果在你身上"

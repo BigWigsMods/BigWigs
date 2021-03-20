@@ -350,6 +350,7 @@ L.secondaryDesc = "Das zweite Schlachtzugssymbol, das verwendet wird."
 --
 
 L.Sounds = "Sounds"
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Gesamtlautstärke' slider to a level you like."
 L.oldSounds = "Alte Sounds"
 
 L.Alarm = "Alarm"

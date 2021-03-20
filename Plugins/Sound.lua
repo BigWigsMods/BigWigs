@@ -58,6 +58,13 @@ plugin.pluginOptions = {
 		PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
 	end,
 	args = {
+		heading = {
+			type = "description",
+			name = L.soundsDesc.. "\n\n",
+			order = 0.5,
+			width = "full",
+			fontSize = "medium",
+		},
 		sound = {
 			type = "toggle",
 			name = L.sound,

@@ -350,6 +350,7 @@ L.secondaryDesc = "La seconde icône de cible de raid qu'un script de rencontre 
 --
 
 L.Sounds = "Sons"
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Principal' slider to a level you like."
 L.oldSounds = "Anciens sons"
 
 L.Alarm = "Alarme"

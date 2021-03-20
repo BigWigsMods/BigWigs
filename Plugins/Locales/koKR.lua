@@ -349,6 +349,7 @@ L.secondaryDesc = "우두머리 전투 스크립트가 사용할 두번째 공�
 --
 
 L.Sounds = "소리"
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the '주 음량' slider to a level you like."
 L.oldSounds = "예전 소리들"
 
 L.Alarm = "알람"

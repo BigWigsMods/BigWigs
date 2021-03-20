@@ -350,6 +350,7 @@ L.secondaryDesc = "Вторая метка рейда, которая будет
 --
 
 L.Sounds = "Звуки"
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Общая громкость' slider to a level you like."
 L.oldSounds = "Старые звуки"
 
 L.Alarm = "Тревога"

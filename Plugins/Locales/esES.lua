@@ -378,6 +378,7 @@ L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de c
 -- Sound.lua
 --
 
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Volumen general' slider to a level you like."
 --L.oldSounds = "Old Sounds"
 --L.resetSoundDesc = "Resets the above sounds to their defaults."
 --L.onyou = "A spell, buff, or debuff is on you"

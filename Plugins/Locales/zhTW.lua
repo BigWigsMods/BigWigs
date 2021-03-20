@@ -365,6 +365,7 @@ L.resetProximityDesc = "重設所有玩家雷達自訂選項，包括錨點和�
 -- Sound.lua
 --
 
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the '主音量' slider to a level you like."
 L.oldSounds = "傳統音效設定"
 L.resetSoundDesc = "將前面的音效設定重設為預設值。"
 L.onyou = "當一個法術或增減益光環施放在你身上時（點名）"
