@@ -371,8 +371,8 @@ L.resetProximityDesc = "重置全部近距离有关选项，包括近距离锚�
 -- Pull.lua
 --
 
---L.countdownBegins = "Begin Countdown"
---L.countdownBegins_desc = "选择倒计时开始时首领技能应剩余多少时间（以秒为单位）。" -- change to 'pull timer' (see english version) and remove this comment
+L.countdownBegins = "开始倒计时"
+L.countdownBegins_desc = "选择拉怪计时器上倒计开始时应剩余多少时间（以秒为单位）。"
 
 -----------------------------------------------------------------------
 -- Sound.lua
