@@ -350,7 +350,7 @@ L.secondaryDesc = "Das zweite Schlachtzugssymbol, das verwendet wird."
 --
 
 L.Sounds = "Sounds"
---L.soundsDesc = "BigWigs nutzt den 'Haupt'-Soundkanal um die Sounds wiederzugeben. Wenn die Sounds zu leise oder zu laut sind, kann dies in den WoW Soundoptionen mit dem Schieberegler 'Gesamtlautstärke' angepasst werden.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+L.soundsDesc = "BigWigs nutzt den 'Haupt'-Soundkanal um die Sounds wiederzugeben. Wenn die Sounds zu leise oder zu laut sind, kann dies in den WoW Soundoptionen mit dem Schieberegler 'Gesamtlautstärke' angepasst werden.\n\nFolgend können global die verschiedenen Sounds für spezifische Aktionen konfiguriert, oder zum Deaktivieren auf 'None' gesetzt werden. Wenn der Sound einer spezifischen Bossfähigkeit geändert werden soll, kann dies in den Einstellungen der Bossbegegnung eingestellt werden.\n\n"
 L.oldSounds = "Alte Sounds"
 
 L.Alarm = "Alarm"
