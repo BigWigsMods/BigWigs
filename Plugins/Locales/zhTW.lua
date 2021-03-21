@@ -173,7 +173,6 @@ L.soundButton = "音效按鈕"
 L.soundButtonDesc = "顯示或隱藏音效按鈕。"
 L.soundDelay = "音效延遲"
 L.soundDelayDesc = "當有人太靠近你時指定多長時間 BigWigs 重複間隔等待指定的音效。"
-L.soundDesc = "訊息出現時伴隨著音效。有些人更容易在聽到何種音效後發現何種警報，而不是閱讀的實際訊息。"
 L.Sounds = "音效"
 L.style = "風格"
 L.text = "文字"
@@ -365,7 +364,7 @@ L.countdownBegins_desc = "以秒為單位，選擇在開怪計時器剩餘幾秒
 -- Sound.lua
 --
 
-L.soundsDesc = "BigWigs 使用「主音量」通道播放全部音效。如果你覺得音量過小或過大，打開系統音效設定並調整「主音量」捲動軸至適中。"
+--L.soundsDesc = "BigWigs 使用「主音量」通道播放全部音效。如果你覺得音量過小或過大，打開系統音效設定並調整「主音量」捲動軸至適中。\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
 L.oldSounds = "傳統音效設定"
 L.resetSoundDesc = "將前面的音效設定重設為預設值。"
 L.onyou = "當一個法術或增減益光環施放在你身上時（點名）"

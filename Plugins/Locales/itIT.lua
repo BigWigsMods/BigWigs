@@ -186,7 +186,6 @@ L.soundButton = "Pulsante del Suono"
 L.soundButtonDesc = "Visualizza o nasconde il pulsante del Suono"
 L.soundDelay = "Ritardo del Suono"
 L.soundDelayDesc = "Specifica per quanto tempo BigWigs dovrebbe aspettare per ripetere il suono quando qualcuno è vicino a te."
-L.soundDesc = "I messaggi possono essere visualizzati insieme a dei suoni. Alcuni trovano più semplice associare il suono all'abilità che viene mostrata nel messaggio piuttosto che leggere il messaggio stesso."
 L.Sounds = "Suoni"
 L.style = "Stile"
 L.text = "Testo"
@@ -378,7 +377,7 @@ L.chatMessagesDesc = "Invia tutti i messaggi di BigWigs alla chat oltre che nei 
 -- Sound.lua
 --
 
---L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Volume principale' slider to a level you like."
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Volume principale' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
 --L.oldSounds = "Old Sounds"
 --L.resetSoundDesc = "Resets the above sounds to their defaults."
 --L.onyou = "A spell, buff, or debuff is on you"

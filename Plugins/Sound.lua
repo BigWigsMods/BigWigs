@@ -30,7 +30,6 @@ local sounds = {
 --
 
 plugin.defaultDB = {
-	sound = true,
 	media = {
 		Long = "BigWigs: Long",
 		Info = "BigWigs: Info",
@@ -60,37 +59,16 @@ plugin.pluginOptions = {
 	args = {
 		heading = {
 			type = "description",
-			name = L.soundsDesc.. "\n\n",
-			order = 0.5,
-			width = "full",
-			fontSize = "medium",
-		},
-		sound = {
-			type = "toggle",
-			name = L.sound,
-			desc = L.soundDesc,
-			get = function() return db.sound end,
-			set = function(_, v) db.sound = v end,
+			name = L.soundsDesc,
 			order = 1,
 			width = "full",
-			descStyle = "inline",
-			confirm = function(_, value)
-				if not value then
-					return L.disableDesc:format(L.Sounds)
-				end
-			end,
-		},
-		newline1 = {
-			type = "description",
-			name = "\n",
-			order = 1.5,
+			fontSize = "medium",
 		},
 		-- Begin sound dropdowns
 		onyou = {
 			type = "select",
 			name = L.onyou,
 			order = 2,
-			disabled = function() return not db.sound end,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -100,7 +78,6 @@ plugin.pluginOptions = {
 			type = "select",
 			name = L.underyou,
 			order = 3,
-			disabled = function() return not db.sound end,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -119,7 +96,6 @@ plugin.pluginOptions = {
 			type = "select",
 			name = L.Alarm,
 			order = 5,
-			disabled = function() return not db.sound end,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -128,7 +104,6 @@ plugin.pluginOptions = {
 			type = "select",
 			name = L.Alert,
 			order = 6,
-			disabled = function() return not db.sound end,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -137,7 +112,6 @@ plugin.pluginOptions = {
 			type = "select",
 			name = L.Info,
 			order = 7,
-			disabled = function() return not db.sound end,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -146,7 +120,6 @@ plugin.pluginOptions = {
 			type = "select",
 			name = L.Long,
 			order = 8,
-			disabled = function() return not db.sound end,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -155,7 +128,6 @@ plugin.pluginOptions = {
 			type = "select",
 			name = L.Warning,
 			order = 9,
-			disabled = function() return not db.sound end,
 			values = function() return soundList end,
 			width = "full",
 			itemControl = "DDI-Sound",
@@ -230,6 +202,14 @@ end
 
 local function updateProfile()
 	db = plugin.db.profile
+	for k, v in next, db do
+		local defaultType = type(plugin.defaultDB[k])
+		if defaultType == "nil" then
+			db[k] = nil
+		elseif type(v) ~= defaultType then
+			db[k] = plugin.defaultDB[k]
+		end
+	end
 end
 
 function plugin:OnRegister()
@@ -312,19 +292,17 @@ do
 	local PlaySoundFile = PlaySoundFile
 	function plugin:BigWigs_Sound(event, module, key, soundName)
 		soundName = tmp[soundName] or soundName
-		if db.sound then
-			local sDb = db[soundName]
-			if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
-				local path = db.media[soundName] and media:Fetch(SOUND, db.media[soundName], true) or media:Fetch(SOUND, soundName, true)
-				if path then
-					PlaySoundFile(path, "Master")
-				end
-			else
-				local newSound = sDb[module.name][key]
-				local path = db.media[newSound] and media:Fetch(SOUND, db.media[newSound], true) or media:Fetch(SOUND, newSound, true)
-				if path then
-					PlaySoundFile(path, "Master")
-				end
+		local sDb = db[soundName]
+		if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
+			local path = db.media[soundName] and media:Fetch(SOUND, db.media[soundName], true) or media:Fetch(SOUND, soundName, true)
+			if path then
+				PlaySoundFile(path, "Master")
+			end
+		else
+			local newSound = sDb[module.name][key]
+			local path = db.media[newSound] and media:Fetch(SOUND, db.media[newSound], true) or media:Fetch(SOUND, newSound, true)
+			if path then
+				PlaySoundFile(path, "Master")
 			end
 		end
 	end
