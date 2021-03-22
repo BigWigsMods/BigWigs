@@ -156,6 +156,7 @@ globals = {
 	"GetAddOnMetadata",
 	"GetAddOnOptionalDependencies",
 	"GetBuildInfo",
+	"GetCurrentRegion", -- XXX temp 9.0.5
 	"GetDifficultyInfo",
 	"GetFramesRegisteredForEvent",
 	"GetInstanceInfo",

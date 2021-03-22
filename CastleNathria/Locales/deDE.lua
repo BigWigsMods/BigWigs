@@ -7,7 +7,7 @@ end
 
 L = BigWigs:NewBossLocale("Huntsman Altimor", "deDE")
 if L then
-	 L.killed = "%s getötet"
+	L.killed = "%s getötet"
 end
 
 L = BigWigs:NewBossLocale("Sun King's Salvation", "deDE")

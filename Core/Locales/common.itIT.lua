@@ -55,7 +55,7 @@ L.interrupted_by = "%s interrotto da %s" -- Spell interrupted by Player
 L.no = "Nessun %s" -- No Spell
 L.intermission = "Intermezzo"
 L.percent = "%d%% - %s" -- 20% - Spell
---L.cancelled = "%s Cancelled" -- Spell Cancelled
+L.cancelled = "%s Cancellata" -- Spell Cancelled
 
 L.big_add = "Add Maggiore" -- singular
 L.big_adds = "Adds Maggiori" -- plural

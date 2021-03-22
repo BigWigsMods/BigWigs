@@ -87,15 +87,9 @@ local updateData = function(module)
 	local _, _, _, instanceId = UnitPosition("player")
 	for unit in module:IterateGroup() do
 		local guid = UnitGUID(unit)
-		if guid then
-			myGroupGUIDs[guid] = true
-			if solo and myGUID ~= guid and UnitIsConnected(unit) then
-				solo = false
-			end
-		else -- XXX temp
-			local n = GetNumGroupMembers()
-			BigWigs:Error("Nil GUID for ".. unit ..". ".. tostring(n) .." / ".. tostring((UnitName(unit))) .." / ".. tostring((UnitExists(unit))))
-			break
+		myGroupGUIDs[guid] = true
+		if solo and myGUID ~= guid and UnitIsConnected(unit) then
+			solo = false
 		end
 	end
 	debugFunc = type(TranscriptIgnore) == "table" and TranscriptIgnore.debug and Transcriptor or false
@@ -198,11 +192,12 @@ end
 -- @number mobId A singular specific mob id
 -- @return true or nil
 function boss:IsEnableMob(mobId)
-	return self.enableMobs[mobId] 
+	return self.enableMobs[mobId]
 end
 
---- The encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
+--- Set the encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
+-- @number encounterId The encounter id
 -- @within Enable triggers
 function boss:SetEncounterID(encounterId)
 	if type(encounterId) == "number" then
@@ -210,8 +205,9 @@ function boss:SetEncounterID(encounterId)
 	end
 end
 
---- The time in seconds before the boss respawns after a wipe.
+--- Set the time in seconds before the boss respawns after a wipe.
 -- Used by the `Respawn` plugin to show a bar for the respawn time.
+-- @number seconds The respawn time
 -- @within Enable triggers
 function boss:SetRespawnTime(seconds)
 	if type(seconds) == "number" then
@@ -619,13 +615,6 @@ do
 	function boss:RegisterUnitEvent(event, func, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
-		if event == "UNIT_HEALTH_FREQUENT" then
-			-- pre-shadowlands compat for old modules
-			if not func then
-				func = event
-			end
-			event = "UNIT_HEALTH"
-		end
 		if (not func and not self[event]) or (func and not self[func]) then core:Print(format(noFunc, self.moduleName, func or event)) return end
 		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
@@ -1820,11 +1809,6 @@ function boss:MessageOld(key, color, sound, text, icon)
 	if checkFlag(self, key, C.MESSAGE) then
 		local textType = type(text)
 
-		local temp = (icon == false and 0) or (icon ~= false and icon) or (textType == "number" and text) or key
-		if temp == key and type(key) == "string" then
-			core:Print(("Message '%s' doesn't have an icon set."):format(textType == "string" and text or spells[text or key])) -- XXX temp
-		end
-
 		local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE
 		self:SendMessage("BigWigs_Message", self, key, textType == "string" and text or spells[text or key], color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
 		if sound then
@@ -2410,7 +2394,6 @@ do
 	end
 
 	--- Display a nameplate bar.
-	-- Indicates an unreliable duration by prefixing the time with "~"
 	-- @param key the option key
 	-- @number length the bar duration in seconds
 	-- @string guid Anchor to a unit's nameplate by GUID
@@ -2433,6 +2416,7 @@ do
 	end
 
 	--- Display a nameplate cooldown bar.
+	-- Indicates an unreliable duration by prefixing the time with "~"
 	-- @param key the option key
 	-- @number length the bar duration in seconds
 	-- @string guid Anchor to a unit's nameplate by GUID
@@ -2601,6 +2585,108 @@ function boss:CustomIcon(key, player, icon)
 end
 
 -------------------------------------------------------------------------------
+-- Chat.
+-- @section chat
+--
+
+--- Send a message in SAY. Generally used for abilities where you need to spread out or run away.
+-- @param key the option key
+-- @param msg the message to say (if nil, key is used)
+-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
+function boss:Say(key, msg, directPrint)
+	if not checkFlag(self, key, C.SAY) then return end
+	if directPrint then
+		SendChatMessage(msg, "SAY")
+	else
+		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
+	end
+end
+
+--- Send a message in YELL. Generally used for abilities where you need to group up.
+-- @param key the option key
+-- @param msg the message to yell (if nil, key is used)
+-- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
+function boss:Yell(key, msg, directPrint)
+	if not checkFlag(self, key, C.SAY) then return end
+	if directPrint then
+		SendChatMessage(msg, "YELL")
+	else
+		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "YELL")
+	end
+end
+
+--- Cancel a countdown using say messages.
+-- @param key the option key
+function boss:CancelSayCountdown(key)
+	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
+	local tbl = self.sayCountdowns[key]
+	if tbl then
+		tbl[1] = true
+	end
+end
+
+--- Cancel a countdown using yell messages.
+-- @param key the option key
+function boss:CancelYellCountdown(key)
+	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
+	local tbl = self.sayCountdowns[key]
+	if tbl then
+		tbl[1] = true
+	end
+end
+
+do
+	local iconList = {
+		"{rt1}","{rt2}","{rt3}","{rt4}","{rt5}","{rt6}","{rt7}","{rt8}",
+	}
+	--- Start a countdown using say messages. Generally used for abilities where you need to spread out or run away.
+	-- @param key the option key
+	-- @number seconds the amount of time in seconds until the countdown expires
+	-- @param[opt] textOrIcon Attach additional text to the countdown if passed a text string, attach a raid icon if passed a number [1-8]
+	-- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
+	function boss:SayCountdown(key, seconds, textOrIcon, startAt)
+		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
+		local start = startAt or 3
+		local tbl = {false}
+		local text = type(textOrIcon) == "number" and iconList[textOrIcon] or textOrIcon
+		local function printTime()
+			if not tbl[1] then
+				SendChatMessage(text and format("%s %d", text, start) or start, "SAY")
+				start = start - 1
+			end
+		end
+		local startOffset = start + 0.2
+		for i = 1.2, startOffset do
+			Timer(seconds-i, printTime)
+		end
+		self.sayCountdowns[key] = tbl
+	end
+
+	--- Start a countdown using yell messages. Generally used for abilities where you need to group up.
+	-- @param key the option key
+	-- @number seconds the amount of time in seconds until the countdown expires
+	-- @param[opt] textOrIcon Attach additional text to the countdown if passed a text string, attach a raid icon if passed a number [1-8]
+	-- @number[opt] startAt When to start sending messages in yell, default value is at 3 seconds remaining
+	function boss:YellCountdown(key, seconds, textOrIcon, startAt)
+		if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
+		local start = startAt or 3
+		local tbl = {false}
+		local text = type(textOrIcon) == "number" and iconList[textOrIcon] or textOrIcon
+		local function printTime()
+			if not tbl[1] then
+				SendChatMessage(text and format("%s %d", text, start) or start, "YELL")
+				start = start - 1
+			end
+		end
+		local startOffset = start + 0.2
+		for i = 1.2, startOffset do
+			Timer(seconds-i, printTime)
+		end
+		self.sayCountdowns[key] = tbl
+	end
+end
+
+-------------------------------------------------------------------------------
 -- Misc.
 -- @section misc
 --
@@ -2621,94 +2707,6 @@ function boss:Flash(key, icon)
 	end
 	if checkFlag(self, key, C.PULSE) then
 		self:SendMessage("BigWigs_Pulse", self, key, icons[icon or key])
-	end
-end
-
---- Send a message in SAY. Generally used for abilities where you need to spread out or run away.
--- @param key the option key
--- @param msg the message to say (if nil, key is used)
--- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
-function boss:Say(key, msg, directPrint)
-	if not checkFlag(self, key, C.SAY) then return end
-	if directPrint then
-		SendChatMessage(msg, "SAY")
-	else
-		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
-	end
-end
-
---- Start a countdown using say messages. Generally used for abilities where you need to spread out or run away.
--- @param key the option key
--- @number seconds the amount of time in seconds until the countdown expires
--- @number[opt] icon Add the designated raid icon to the countdown
--- @number[opt] startAt When to start sending messages in say, default value is at 3 seconds remaining
-function boss:SayCountdown(key, seconds, icon, startAt)
-	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
-	local start = startAt or 3
-	local tbl = {false, start}
-	local function printTime()
-		if not tbl[1] then
-			SendChatMessage(icon and format("{rt%d} %d", icon, tbl[2]) or tbl[2], "SAY")
-			tbl[2] = tbl[2] - 1
-		end
-	end
-	for i = 1, start do
-		Timer(seconds-i, printTime)
-	end
-	self.sayCountdowns[key] = tbl
-end
-
---- Cancel a countdown using say messages.
--- @param key the option key
-function boss:CancelSayCountdown(key)
-	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
-	local tbl = self.sayCountdowns[key]
-	if tbl then
-		tbl[1] = true
-	end
-end
-
---- Send a message in YELL. Generally used for abilities where you need to group up.
--- @param key the option key
--- @param msg the message to yell (if nil, key is used)
--- @bool[opt] directPrint if true, skip formatting the message and print the string directly to chat.
-function boss:Yell(key, msg, directPrint)
-	if not checkFlag(self, key, C.SAY) then return end
-	if directPrint then
-		SendChatMessage(msg, "YELL")
-	else
-		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "YELL")
-	end
-end
-
---- Start a countdown using yell messages. Generally used for abilities where you need to group up.
--- @param key the option key
--- @number seconds the amount of time in seconds until the countdown expires
--- @number[opt] icon Add the designated raid icon to the countdown
--- @number[opt] startAt When to start sending messages in yell, default value is at 3 seconds remaining
-function boss:YellCountdown(key, seconds, icon, startAt)
-	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
-	local start = startAt or 3
-	local tbl = {false, start}
-	local function printTime()
-		if not tbl[1] then
-			SendChatMessage(icon and format("{rt%d} %d", icon, tbl[2]) or tbl[2], "YELL")
-			tbl[2] = tbl[2] - 1
-		end
-	end
-	for i = 1, start do
-		Timer(seconds-i, printTime)
-	end
-	self.sayCountdowns[key] = tbl
-end
-
---- Cancel a countdown using yell messages.
--- @param key the option key
-function boss:CancelYellCountdown(key)
-	if not checkFlag(self, key, C.SAY_COUNTDOWN) then return end
-	local tbl = self.sayCountdowns[key]
-	if tbl then
-		tbl[1] = true
 	end
 end
 

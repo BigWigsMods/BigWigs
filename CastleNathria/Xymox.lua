@@ -196,6 +196,7 @@ function mod:EncounterEvent()
 		self:StopBar(CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:StopBar(CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
+		self:StopBar(CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
 
 		self:SetStage(2)
 		lastStaged = GetTime()
@@ -222,6 +223,7 @@ function mod:EncounterEvent()
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount)) -- Dimensional Tear
 		self:StopBar(CL.count:format(L.spirits, spiritCount)) -- Fleeting Spirit
 		self:StopBar(CL.count:format(L.seeds, seedCount)) -- Seeds of Extinction
+		self:StopBar(CL.count:format(self:SpellName(325399), sparkCount)) -- Hyperlight Spark
 
 		self:SetStage(3)
 		lastStaged = GetTime()

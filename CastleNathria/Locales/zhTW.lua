@@ -107,7 +107,7 @@ if L then
 	L.eruption = "爆發" -- Short for Reverberating Eruption
 
 	L.custom_on_stop_timers = "總是顯示計時器"
-	-- L.custom_on_stop_timers_desc = "Just for testing right now"
+	--L.custom_on_stop_timers_desc = "Just for testing right now"
 
 	L.goliath_short = "巨人"
 	L.goliath_desc = "對即將到來的石源魔軍團巨人顯示警告和計時器。"

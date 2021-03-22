@@ -6,25 +6,30 @@ local oldPlugin = BigWigs:NewPlugin("Super Emphasize") -- XXX temp 9.0.2
 oldPlugin.defaultDB = {
 	Countdown = {},
 }
-function oldPlugin:IsSuperEmphasized() -- Old WeakAuras versions
-	return false -- Add a print?
-end
 
 local plugin = BigWigs:NewPlugin("Countdown")
 if not plugin then return end
 
 local voiceMap = {
-	deDE = "Deutsch: Heroes of the Storm",
-	esES = "Español: Heroes of the Storm",
-	esMX = "Español: Heroes of the Storm",
-	frFR = "Français: Heroes of the Storm",
-	ruRU = "Русский: Heroes of the Storm",
-	koKR = "한국어: Heroes of the Storm",
-	itIT = "Italiano: Heroes of the Storm",
-	ptBR = "Português: Heroes of the Storm",
-	zhCN = "简体中文: Heroes of the Storm",
-	zhTW = "繁體中文: Heroes of the Storm",
+	enUS = {"English: Default (%s)", "Male", "Female"},
+	deDE = {"Deutsch: Standard (%s)", "Männlich", "Weiblich"},
+	esES = {"Español (es): Predeterminado (%s)", "Masculino", "Femenino"},
+	esMX = {"Español (mx): Predeterminado (%s)", "Masculino", "Femenino"},
+	frFR = {"Français : Défaut (%s)", "Homme", "Femme"},
+	itIT = {"Italiano: Predefinito (%s)", "Maschio", "Femmina"},
+	koKR = {"한국어 : 기본 (%s)", "남성", "여성"},
+	ptBR = {"Português: Padrão (%s)", "Masculino", "Feminino"},
+	ruRU = {"Русский: По умолчанию (%s)", "Мужской", "Женский"},
+	zhCN = {"简体中文:默认(%s)", "男性", "女性"},
+	zhTW = {"繁體中文:預設值(%s)", "男性", "女性"},
 }
+local defaultVoice = "English: Amy"
+do
+	local locale = GetLocale()
+	if locale ~= "enUS" and voiceMap[locale] then
+		defaultVoice = ("%s: Default (Female)"):format(locale)
+	end
+end
 
 plugin.defaultDB = {
 	textEnabled = true,
@@ -33,7 +38,7 @@ plugin.defaultDB = {
 	fontSize = 48,
 	monochrome = false,
 	fontColor = { r = 1, g = 0, b = 0 },
-	voice = voiceMap[GetLocale()] or "English: Amy",
+	voice = defaultVoice,
 	countdownTime = 5,
 	position = {"TOP", "TOP", 0, -300},
 	bossCountdowns = {},
@@ -96,76 +101,31 @@ BigWigsAPI:RegisterCountdown("English: Jim", {
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Jim\\9.ogg",
 	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Jim\\10.ogg",
 })
-BigWigsAPI:RegisterCountdown("English: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\enUS\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Deutsch: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\deDE\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Español: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\esES\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Français: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\frFR\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Русский: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ruRU\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("한국어: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\koKR\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Italiano: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\itIT\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("Português: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\ptBR\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("简体中文: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhCN\\5.ogg",
-})
-BigWigsAPI:RegisterCountdown("繁體中文: Heroes of the Storm", {
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\1.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\2.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\3.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\4.ogg",
-	"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\zhTW\\5.ogg",
-})
+
+for locale, info in next, voiceMap do
+	local name, male, female = unpack(info)
+
+	BigWigsAPI:RegisterCountdown(("%s: Default (Male)"):format(locale), name:format(male), {
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\male\\5.ogg",
+	})
+
+	local id = ("%s: Default (Female)"):format(locale)
+	if locale == "esMX" then
+		-- never extracted the esMX female announcer and it's gone now, so just use esES
+		locale = "esES"
+	end
+	BigWigsAPI:RegisterCountdown(id, name:format(female), {
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\1.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\2.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\3.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\4.ogg",
+		"Interface\\AddOns\\BigWigs\\Media\\Sounds\\Heroes\\"..locale.."\\female\\5.ogg",
+	})
+end
 
 --------------------------------------------------------------------------------
 -- Anchors & Frames
@@ -236,8 +196,17 @@ end
 -- Options
 --
 
-local function voiceList() -- select values
-	return BigWigsAPI:GetCountdownList()
+local function voiceSorting()
+	local list = BigWigsAPI:GetCountdownList()
+	local sorted = {}
+	for k in next, list do
+		if k ~= L.none then
+			sorted[#sorted + 1] = k
+		end
+	end
+	sort(sorted, function(a, b) return list[a] < list[b] end)
+	tinsert(sorted, 1, L.none)
+	return sorted
 end
 
 local function UpdateFont()
@@ -254,7 +223,7 @@ local function UpdateFont()
 end
 
 do
-	local disabled = function() return plugin.db.profile.disabled end
+	local checkTextDisabled = function() return not plugin.db.profile.textEnabled end
 	plugin.pluginOptions = {
 		name = L.countdown,
 		type = "group",
@@ -306,7 +275,8 @@ do
 					voice = {
 						name = L.countdownVoice,
 						type = "select",
-						values = voiceList,
+						values = BigWigsAPI.GetCountdownList,
+						sorting = voiceSorting,
 						order = 6,
 						width = "full",
 					},
@@ -346,6 +316,7 @@ do
 							UpdateFont()
 						end,
 						width = 2,
+						disabled = checkTextDisabled,
 					},
 					outline = {
 						type = "select",
@@ -356,6 +327,7 @@ do
 							OUTLINE = L.thin,
 							THICKOUTLINE = L.thick,
 						},
+						disabled = checkTextDisabled,
 					},
 					fontColor = {
 						type = "color",
@@ -368,6 +340,7 @@ do
 							UpdateFont()
 						end,
 						order = 12,
+						disabled = checkTextDisabled,
 					},
 					fontSize = {
 						type = "range",
@@ -375,12 +348,14 @@ do
 						desc = L.fontSizeDesc,
 						order = 13,
 						softMax = 100, max = 200, min = 20, step = 1,
+						disabled = checkTextDisabled,
 					},
 					monochrome = {
 						type = "toggle",
 						name = L.monochrome,
 						desc = L.monochromeDesc,
 						order = 14,
+						disabled = checkTextDisabled,
 					},
 					resetHeader = {
 						type = "header",
@@ -411,6 +386,7 @@ do
 				type = "group",
 				name = L.positionExact,
 				order = 2,
+				disabled = checkTextDisabled,
 				args = {
 					posx = {
 						type = "range",
@@ -464,7 +440,8 @@ local function createOptions()
 		sModule.soundOptions.args.countdown = {
 			name = "Countdown",
 			type = "select",
-			values = voiceList,
+			values = BigWigsAPI.GetCountdownList,
+			sorting = voiceSorting,
 			get = function(info)
 				local name, key = unpack(info.arg)
 				return plugin.db.profile.bossCountdowns[name] and plugin.db.profile.bossCountdowns[name][key] or plugin.db.profile.voice
@@ -494,41 +471,80 @@ end
 --
 
 do
+	local LOCALE = GetLocale()
+	local KEY = "%s: Default (Female)"
+	local function check(voice)
+		local lang = voice and voice:match("^(.+): Heroes of the Storm$")
+		if not lang then return end
+
+		if lang == "Español" then
+			-- Try to pick the correct Spanish locale
+			if LOCALE == "esMX" or LOCALE == "esES" then
+				return KEY:format(LOCALE)
+			end
+			return KEY:format(GetCurrentRegion() == 1 and "esMX" or "esES") -- NA or EU
+		end
+
+		for locale, info in next, voiceMap do
+			if info[1]:sub(1, #lang) == lang then
+				return KEY:format(locale)
+			end
+		end
+	end
+
+	local function upgradeDB(sv)
+		if not sv or not sv.profiles then return end
+		for profile, db in next, sv.profiles do
+			local voice = check(db.voice)
+			if voice then
+				db.voice = voice
+			end
+			if db.bossCountdowns then
+				for moduleName, abilities in next, db.bossCountdowns do
+					for k, v in next, abilities do
+						local voice = check(v)
+						if voice then
+							abilities[k] = voice
+						end
+					end
+				end
+			end
+		end
+	end
+
+	function plugin:OnRegister()
+		-- XXX temp 9.0.5
+		upgradeDB(self.db)
+		upgradeDB(BigWigs3DB.namespaces["BigWigs_Plugins_Pull"])
+	end
+end
+
+do
 	local function updateProfile()
 		local db = plugin.db.profile
 
-		if type(db.textEnabled) ~= "boolean" then
-			db.textEnabled = plugin.defaultDB.textEnabled
+		for k, v in next, db do
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
+				db[k] = nil
+			elseif type(v) ~= defaultType then
+				db[k] = plugin.defaultDB[k]
+			end
 		end
-		if type(db.fontName) ~= "string" then
-			db.fontName = plugin.defaultDB.fontName
-		end
+
 		if db.outline ~= "NONE" and db.outline ~= "OUTLINE" and db.outline ~= "THICKOUTLINE" then
 			db.outline = plugin.defaultDB.outline
 		end
-		if type(db.fontSize) ~= "number" or db.fontSize < 20 or db.fontSize > 200 then
+		if db.fontSize < 20 or db.fontSize > 200 then
 			db.fontSize = plugin.defaultDB.fontSize
 		end
-		if type(db.monochrome) ~= "boolean" then
-			db.monochrome = plugin.defaultDB.monochrome
-		end
-		if type(db.fontColor) ~= "table"
-		or type(db.fontColor.r) ~= "number" or db.fontColor.r < 0 or db.fontColor.r > 1
+		if type(db.fontColor.r) ~= "number" or db.fontColor.r < 0 or db.fontColor.r > 1
 		or type(db.fontColor.g) ~= "number" or db.fontColor.g < 0 or db.fontColor.g > 1
 		or type(db.fontColor.b) ~= "number" or db.fontColor.b < 0 or db.fontColor.b > 1 then
 			db.fontColor = plugin.defaultDB.fontColor
 		end
-		if type(db.voice) ~= "string" then
-			db.voice = plugin.defaultDB.voice
-		end
-		if type(db.countdownTime) ~= "number" or db.countdownTime < 3 or db.countdownTime > 10 then
+		if db.countdownTime < 3 or db.countdownTime > 10 then
 			db.countdownTime = plugin.defaultDB.countdownTime
-		end
-		if type(db.position) ~= "table" then
-			db.position = plugin.defaultDB.position
-		end
-		if type(db.bossCountdowns) ~= "table" then
-			db.bossCountdowns = plugin.defaultDB.bossCountdowns
 		end
 
 		UpdateFont()
@@ -536,7 +552,7 @@ do
 
 		-- Reset invalid voice selections
 		if not BigWigsAPI:HasCountdown(db.voice) then
-			db.voice = voiceMap[GetLocale()] or "English: Amy"
+			db.voice = defaultVoice
 		end
 		for boss, tbl in next, db.bossCountdowns do
 			for ability, chosenVoice in next, tbl do
@@ -606,30 +622,35 @@ end
 
 do
 	local timers = {}
-	function plugin:BigWigs_StartCountdown(_, module, key, text, time, customVoice, audioOnly)
+	function plugin:BigWigs_StartCountdown(_, module, key, text, time, customVoice, customStart, audioOnly)
 		if module and time > 1.3 then
 			self:BigWigs_StopCountdown(nil, module, text)
 			if not timers[module] then
 				timers[module] = {}
 			end
+			local count = customStart or self.db.profile.countdownTime
+			while count >= time do
+				count = count - 1
+			end
 			local cancelTimer = {false}
 			timers[module][text] = cancelTimer
 
 			local voice = customVoice or plugin.db.profile.bossCountdowns[module.name] and plugin.db.profile.bossCountdowns[module.name][key] or plugin.db.profile.voice
-			for i = 1, self.db.profile.countdownTime do
-				local t = i + 0.3
-				if time <= t then return end
-				self:SimpleTimer(function()
-					if not cancelTimer[1] then
-						if not audioOnly and plugin.db.profile.textEnabled then
-							plugin:SetText(i, cancelTimer)
-						end
-						local sound = BigWigsAPI:GetCountdownSound(voice, i)
-						if sound then
-							PlaySoundFile(sound, "Master")
-						end
+			local function printTime()
+				if not cancelTimer[1] then
+					if not audioOnly and plugin.db.profile.textEnabled then
+						plugin:SetText(count, cancelTimer)
 					end
-				end, time-t)
+					local sound = BigWigsAPI:GetCountdownSound(voice, count)
+					if sound then
+						PlaySoundFile(sound, "Master")
+					end
+					count = count - 1
+				end
+			end
+			local startOffset = count + 0.3
+			for i = 1.3, startOffset do
+				self:SimpleTimer(printTime, time-i)
 			end
 		end
 	end
@@ -656,5 +677,5 @@ do
 end
 
 function plugin:TestCountdown()
-	self:SendMessage("BigWigs_StartCountdown", self, nil, "test countdown", 5.5)
+	self:SendMessage("BigWigs_StartCountdown", self, nil, "test countdown", self.db.profile.countdownTime + 0.5)
 end

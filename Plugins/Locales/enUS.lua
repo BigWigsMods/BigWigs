@@ -329,6 +329,8 @@ L.pullStoppedCombat = "Pull timer cancelled because you entered combat."
 L.pullIn = "Pull in %d sec"
 L.sendPull = "Sending a pull timer to BigWigs and DBM users."
 L.wrongPullFormat = "Must be between 1 and 60 seconds. A correct example is: /pull 5"
+L.countdownBegins = "Begin Countdown"
+L.countdownBegins_desc = "Choose how much time should be remaining on the pull timer (in seconds) when the countdown begins."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -347,6 +349,7 @@ L.secondaryDesc = "The second raid target icon that a encounter script should us
 --
 
 L.Sounds = "Sounds"
+L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Master Volume' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
 L.oldSounds = "Old Sounds"
 
 L.Alarm = "Alarm"
@@ -358,7 +361,6 @@ L.onyou = "A spell, buff, or debuff is on you"
 L.underyou = "You need to move out of a spell under you"
 
 L.sound = "Sound"
-L.soundDesc = "Messages might come with a sound. Some people find it easier to listen for these after they've learned which sound goes with which message, as opposed to reading the actual messages."
 
 L.customSoundDesc = "Play the selected custom sound instead of the one supplied by the module."
 L.resetSoundDesc = "Resets the above sounds to their defaults."

@@ -91,22 +91,46 @@ end
 -- Initialization
 --
 
-function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_SetRaidIcon")
-	self:RegisterMessage("BigWigs_RemoveRaidIcon")
-	self:RegisterMessage("BigWigs_OnBossDisable")
-	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
+do
+	local function updateProfile()
+		local db = plugin.db.profile
+
+		for k, v in next, db do
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
+				db[k] = nil
+			elseif type(v) ~= defaultType then
+				db[k] = plugin.defaultDB[k]
+			end
+		end
+
+		if db.icon < 1 or db.icon > 8 then
+			db.icon = plugin.defaultDB.icon
+		end
+		if db.secondIcon < 1 or db.secondIcon > 8 then
+			db.secondIcon = plugin.defaultDB.secondIcon
+		end
+	end
+
+	function plugin:OnPluginEnable()
+		self:RegisterMessage("BigWigs_SetRaidIcon")
+		self:RegisterMessage("BigWigs_RemoveRaidIcon")
+		self:RegisterMessage("BigWigs_OnBossDisable")
+		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
+
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
+	end
 end
 
 function plugin:BigWigs_OnBossDisable()
 	if lastplayer[1] then
 		SetRaidTarget(lastplayer[1], 0)
-		lastplayer[1] = nil
 	end
 	if lastplayer[2] then
 		SetRaidTarget(lastplayer[2], 0)
-		lastplayer[2] = nil
 	end
+	lastplayer = {}
 end
 
 -------------------------------------------------------------------------------
@@ -130,4 +154,3 @@ function plugin:BigWigs_RemoveRaidIcon(_, icon)
 	SetRaidTarget(lastplayer[icon or 1], 0)
 	lastplayer[icon or 1] = nil
 end
-

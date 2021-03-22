@@ -95,12 +95,30 @@ plugin.pluginOptions = {
 -- Initialization
 --
 
-function plugin:OnPluginEnable()
-	if not self.db.profile.blizzMsg then
-		BossBanner:UnregisterEvent("BOSS_KILL")
+do
+	local function updateProfile()
+		local db = plugin.db.profile
+
+		for k, v in next, db do
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
+				db[k] = nil
+			elseif type(v) ~= defaultType then
+				db[k] = plugin.defaultDB[k]
+			end
+		end
 	end
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_VictorySound")
+
+	function plugin:OnPluginEnable()
+		if not self.db.profile.blizzMsg then
+			BossBanner:UnregisterEvent("BOSS_KILL")
+		end
+		self:RegisterMessage("BigWigs_OnBossWin")
+		self:RegisterMessage("BigWigs_VictorySound")
+
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
+	end
 end
 
 -------------------------------------------------------------------------------
