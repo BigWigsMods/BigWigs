@@ -377,7 +377,7 @@ L.countdownBegins_desc = "选择拉怪计时器上倒计开始时应剩余多少
 -- Sound.lua
 --
 
---L.soundsDesc = "BigWigs 使用“主音量”通道播放全部音效。如果发现音效过小或过大，打开游戏声音设置并调整“主音量”滑块到所需的级别。\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+L.soundsDesc = "BigWigs 使用“主音量”通道播放全部音效。如果发现音效过小或过大，打开游戏声音设置并调整“主音量”滑块到所需的级别。\n\n下面可以全局配置为特定操作播放的不同音效，或将它们设置为“无”以将其禁用。如果只想更改特定首领技能音效，可以在首领战斗进行设置。\n\n"
 L.oldSounds = "传统音效"
 L.resetSoundDesc = "重置以上音效为默认。"
 L.onyou = "一个法术，增益或负面效果在你身上"
