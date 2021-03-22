@@ -364,7 +364,7 @@ L.countdownBegins_desc = "以秒為單位，選擇在開怪計時器剩餘幾秒
 -- Sound.lua
 --
 
---L.soundsDesc = "BigWigs 使用「主音量」通道播放全部音效。如果你覺得音量過小或過大，打開系統音效設定並調整「主音量」捲動軸至適中。\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+L.soundsDesc = "BigWigs 使用「主音量」通道播放全部音效。如果你覺得音量過小或過大，打開系統音效設定並調整「主音量」捲動軸至適中。\n\n下列選項可以全局設定特定動作播放的提示音效，或設為「None」來停用它們。如果你想更改特定首領技能的提示音效，在首領模組的技能列表中點擊「>>」即可單獨指定。\n\n"
 L.oldSounds = "傳統音效設定"
 L.resetSoundDesc = "將前面的音效設定重設為預設值。"
 L.onyou = "當一個法術或增減益光環施放在你身上時（點名）"
