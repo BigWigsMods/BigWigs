@@ -330,8 +330,8 @@ L.pullStoppedCombat = "Temporizador de llamado de jefe cancelado porque tu entra
 L.pullIn = "Llamado de jefe en %d seg"
 L.sendPull = "Enviando un temporizador de llamado de jefe para los usuarios de BigWigs y DBM."
 L.wrongPullFormat = "Debe estar entre 1 y 60 segundos. Un ejemplo correcto es: /pull 5"
---L.countdownBegins = "Begin Countdown"
---L.countdownBegins_desc = "Elige cuánto tiempo le queda a la habilidad del jefe (en segundos) cuando la cuenta regresiva comience." -- change to 'pull timer' (see english version) and remove this comment
+L.countdownBegins = "Comenzar cuenta regresiva"
+L.countdownBegins_desc = "Elige cuánto tiempo restante debe de quedar en el llamado de jefe (en segundos) cuando la cuenta regresiva comience."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -350,7 +350,7 @@ L.secondaryDesc = "El segundo ícono de banda que un encuentro debería usar."
 --
 
 L.Sounds = "Sonidos"
---L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Volumen general' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+L.soundsDesc = "BigWigs utiliza el canal de sonido 'General' para reproducir todos sus sonidos. Si encuentras que los sonidos son demasiado silenciosos o demasiado fuertes, abre la configuración de sonido de WoW y ajusta el deslizador de 'Volumen general' a un nivel que te guste.\n\nA continuación puedes configurar globalmente los diferentes sonidos que se reproducen para acciones específicas, o ponerlos en 'Ninguno' para desactivarlos. Si sólo quieres cambiar un sonido para una habilidad específica del jefe, puedes hacerlo en la configuración del encuentro con el jefe.\n\n"
 L.oldSounds = "Sonidos viejos"
 
 L.Alarm = "Alarma"
