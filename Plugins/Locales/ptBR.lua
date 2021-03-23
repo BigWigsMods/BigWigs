@@ -329,8 +329,8 @@ L.pullStoppedCombat = "Temporizador cancelado porque você entrou em combate."
 L.pullIn = "Pull em %d seg"
 L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
 L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
---L.countdownBegins = "Begin Countdown"
---L.countdownBegins_desc = "Escolhe quanto tempo deve restar para a habilidade do chefe (em segundos) para começar a contagem." -- change to 'pull timer' (see english version) and remove this comment
+L.countdownBegins = "Iniciar Contagem"
+L.countdownBegins_desc = "Escolhe quanto tempo deve restar de tempo de pull (em segundos) para começar a contagem."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -349,7 +349,7 @@ L.secondaryDesc = "O segundo ícone de raide que um script usará."
 --
 
 L.Sounds = "Sons"
---L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Volume geral' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+L.soundsDesc = "BigWigs usa o canal de som 'Principal' para reproduzir todos os sons. Se você acha que os sons estão muito baixos ou muito altos, abra as configurações de som do WoW e ajuste o 'Volume geral' para um nível que você goste.\n\nAbaixo você pode configurar globalmente os diferentes sons que irão reproduzir para ações específicas, ou configurar eles para 'Nenhum' para desabilita-los. Se você quer mudar somente o som para uma habilidade específica de chefe, isso pode ser feito nas configurações de encontro do chefe.\n\n"
 L.oldSounds = "Sons antigos"
 
 L.Alarm = "Alarme"
