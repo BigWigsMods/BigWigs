@@ -754,6 +754,10 @@ function mod:ADDON_LOADED(addon)
 		if num < 64 then
 			C_CVar.SetCVar("Sound_NumChannels", "64") -- Blizzard keeps screwing with addon sound priority so we force this minimum
 		end
+		num = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
+		if num < 67108864 then
+			C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "67108864") -- Set the cache to the "Small (64MB)" setting as a minimum
+		end
 	end
 
 	bwFrame:UnregisterEvent("ADDON_LOADED")
