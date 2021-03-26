@@ -118,8 +118,6 @@ end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "ptBR")
 if L then
-	L.add_spawn = "Cabalistas Carmesim respondem ao chamado de Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
-
 	L.infobox_stacks = "%d |4Pilha:Pilhas;: %d |4jogador:jogadores;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	L.custom_on_repeating_nighthunter = "Repetir grito de Caçador Noturno"

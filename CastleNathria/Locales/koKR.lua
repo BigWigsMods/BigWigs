@@ -118,8 +118,6 @@ end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "koKR")
 if L then
-	L.add_spawn = "진홍빛 밀사들이 데나트리우스의 부름에 응합니다." -- [RAID_BOSS_EMOTE] 진홍빛 밀사들이 데나트리우스의 부름에 응합니다.#Sire Denathrius#4#true"
-
 	L.infobox_stacks = "%d 중첩: %d 명" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	L.custom_on_repeating_nighthunter = "반복적으로 밤의 사냥꾼 외치기"

@@ -113,8 +113,6 @@ local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or
 
 local L = mod:GetLocale()
 if L then
-	L.add_spawn = "Crimson Cabalists answer the call of Denathrius." -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
-
 	L.infobox_stacks = "%d |4Stack:Stacks;: %d |4player:players;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
@@ -205,7 +203,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("RAID_BOSS_EMOTE")
+	self:Log("SPELL_AURA_APPLIED", "EncounterEvent", 181089) -- Crimson Cabalists spawn
 	self:RegisterEvent("PLAYER_STARTED_MOVING")
 	self:RegisterEvent("PLAYER_STOPPED_MOVING")
 
@@ -351,13 +349,11 @@ do
 	end
 end
 
-function mod:RAID_BOSS_EMOTE(_, msg)
-	if msg:find(L.add_spawn, nil, true) then -- Crimson Cabalists spawned
-		self:Message(-22131, "yellow", CL.incoming:format(CL.count:format(CL.adds, addCount)), 329711) -- Crimson Chorus Icon
-		self:PlaySound(-22131, "alert")
-		addCount = addCount + 1
-		self:Bar(-22131, timers[self:GetStage()][-22131][addCount], CL.count:format(CL.adds, addCount), 329711) -- Crimson Chorus Icon
-	end
+function mod:EncounterEvent(args) -- Crimson Cabalists spawn
+	self:Message(-22131, "yellow", CL.incoming:format(CL.count:format(CL.adds, addCount)), 329711) -- Crimson Chorus Icon
+	self:PlaySound(-22131, "alert")
+	addCount = addCount + 1
+	self:Bar(-22131, timers[self:GetStage()][-22131][addCount], CL.count:format(CL.adds, addCount), 329711) -- Crimson Chorus Icon
 end
 
 function mod:UNIT_HEALTH(event, unit)
