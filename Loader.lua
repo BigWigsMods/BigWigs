@@ -749,15 +749,13 @@ function mod:ADDON_LOADED(addon)
 	end
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
-	if self.isSoundOn ~= false then -- Only if sounds are enabled
-		local num = tonumber(C_CVar.GetCVar("Sound_NumChannels")) or 0
-		if num < 64 then
-			C_CVar.SetCVar("Sound_NumChannels", "64") -- Blizzard keeps screwing with addon sound priority so we force this minimum
-		end
-		num = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
-		if num < 67108864 then
-			C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "67108864") -- Set the cache to the "Small (64MB)" setting as a minimum
-		end
+	local num = tonumber(C_CVar.GetCVar("Sound_NumChannels")) or 0
+	if num < 64 then
+		C_CVar.SetCVar("Sound_NumChannels", "64") -- Blizzard keeps screwing with addon sound priority so we force this minimum
+	end
+	num = tonumber(C_CVar.GetCVar("Sound_MaxCacheSizeInBytes")) or 0
+	if num < 67108864 then
+		C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "67108864") -- Set the cache to the "Small (64MB)" setting as a minimum
 	end
 
 	bwFrame:UnregisterEvent("ADDON_LOADED")
