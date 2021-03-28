@@ -170,7 +170,7 @@ L.errorSpeech = "오류 음성"
 L.disableMusic = "배경음악 끄기 (권장)"
 L.disableAmbience = "환경 소리 끄기 (권장)"
 L.disableSfx = "효과음 끄기 (권장하지 않음)"
---L.disableErrorSpeech = "Mute error speech (recommended)"
+L.disableErrorSpeech = "오류 음성 음소거(권장)"
 L.disableAudioDesc = "WoW의 소리 설정에서 '%s' 설정이 꺼지고 교전이 끝난 후에 다시 켜집니다. BigWigs의 알림 소리에 더 집중하는데 도움이 됩니다."
 L.blockTooltipQuests = "툴팁에서 퀘스트 목표 표시를 숨깁니다."
 L.blockTooltipQuestsDesc = "우두머리를 처치하는 퀘스트를 진행 중인 경우 해당 우두머리에 마우스를 올렸을 때 보통 '0/1 완료' 같은 문구가 툴팁에 표시됩니다. 전투 중에 이 문구들을 숨김으로써 툴팁의 크기가 너무 크게 확장되는 것을 방지합니다."
@@ -261,7 +261,7 @@ L.uppercaseDesc = "모든 강조 메시지들이 대문자로 표시됩니다."
 L.useIcons = "아이콘 사용"
 L.useIconsDesc = "메시지 옆에 아이콘을 표시합니다."
 L.classColors = "직업 색상"
---L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
+L.classColorsDesc = "메세지에 플레이어 이름이 포함될때가 있습니다. 이 옵션을 활성화하면 그 플레이어들의 이름을 직업 색상으로 표시합니다."
 L.chatMessages = "대화 창 메시지"
 L.chatMessagesDesc = "모든 BigWigs 메시지를 표시 설정과 더불어 기본 대화 창에도 출력합니다."
 
@@ -331,8 +331,8 @@ L.pullStoppedCombat = "전투가 이미 시작되었기 때문에 전투 예정 
 L.pullIn = "%d초 후 전투 시작"
 L.sendPull = "BigWigs와 DBM 사용자에게 전투 예정 타이머를 보냅니다."
 L.wrongPullFormat = "1초에서 60초 사이여야 합니다. 올바른 예제: /pull 5"
---L.countdownBegins = "Begin Countdown"
---L.countdownBegins_desc = "초읽기가 몇 초 전부터 시작될 지 선택하세요." -- change to 'pull timer' (see english version) and remove this comment
+L.countdownBegins = "초읽기 시작"
+L.countdownBegins_desc = "전투 시작 초읽기가 몇 초 전부터 시작될 지 선택하세요."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -351,7 +351,7 @@ L.secondaryDesc = "우두머리 전투 스크립트가 사용할 두번째 공�
 --
 
 L.Sounds = "소리"
---L.soundsDesc = "빅윅은 '주 음량' 소리 채널로 모든 소리를 재생합니다. 소리가 너무 작거나 너무 크다면, 와우의 음향 설정에 들어가서 '주 음량' 을 알맞게 조정하십시오.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+L.soundsDesc = "빅윅은 '주 음량' 소리 채널로 모든 소리를 재생합니다. 소리가 너무 작거나 너무 크다면, 와우의 음향 설정에 들어가서 '주 음량' 을 알맞게 조정하십시오.\n\n아래에선 특별한 상황에서 나오는 다양한 소리들을 설정하거나, '없음'으로 설정해서 비활성화 할 수 있습니다. 특성 보스의 능력의 소리만 바꾸고 싶다면, 보스 전투 설정에서 바꾸십시오.\n\n"
 L.oldSounds = "예전 소리들"
 
 L.Alarm = "알람"
