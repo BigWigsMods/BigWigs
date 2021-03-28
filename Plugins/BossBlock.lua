@@ -27,6 +27,7 @@ plugin.defaultDB = {
 	disableSfx = false,
 	disableMusic = false,
 	disableAmbience = false,
+	disableErrorSpeech = false,
 }
 
 --------------------------------------------------------------------------------
@@ -162,12 +163,19 @@ plugin.pluginOptions = {
 			width = "full",
 			order = 12,
 		},
+		disableErrorSpeech = {
+			type = "toggle",
+			name = L.disableErrorSpeech,
+			desc = L.disableAudioDesc:format(L.errorSpeech),
+			width = "full",
+			order = 13,
+		},
 		disableSfx = {
 			type = "toggle",
 			name = L.disableSfx,
 			desc = L.disableAudioDesc:format(L.sfx),
 			width = "full",
-			order = 13,
+			order = 14,
 		},
 	},
 }
@@ -218,6 +226,9 @@ do
 		end
 		if self.db.profile.disableAmbience then
 			SetCVar("Sound_EnableAmbience", "1")
+		end
+		if self.db.profile.disableErrorSpeech then
+			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
 
 		self:RegisterEvent("TALKINGHEAD_REQUESTED")
@@ -303,6 +314,9 @@ do
 		if self.db.profile.disableAmbience then
 			SetCVar("Sound_EnableAmbience", "0")
 		end
+		if self.db.profile.disableErrorSpeech then
+			SetCVar("Sound_EnableErrorSpeech", "0")
+		end
 
 		CheckElv(self)
 		-- Never hide when tracking achievements or in Mythic+
@@ -345,6 +359,9 @@ do
 		end
 		if self.db.profile.disableAmbience then
 			SetCVar("Sound_EnableAmbience", "1")
+		end
+		if self.db.profile.disableErrorSpeech then
+			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
 		if restoreObjectiveTracker then
 			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)
