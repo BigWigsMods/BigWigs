@@ -332,7 +332,7 @@ L.pullIn = "%d초 후 전투 시작"
 L.sendPull = "BigWigs와 DBM 사용자에게 전투 예정 타이머를 보냅니다."
 L.wrongPullFormat = "1초에서 60초 사이여야 합니다. 올바른 예제: /pull 5"
 L.countdownBegins = "초읽기 시작"
-L.countdownBegins_desc = "전투 시작 타이머가 몇 초 전부터 시작될 지 선택하세요." -- change to 'pull timer' (see english version) and remove this comment
+L.countdownBegins_desc = "전투 시작 타이머가 몇 초 전부터 시작될 지 선택하세요." -- 
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
