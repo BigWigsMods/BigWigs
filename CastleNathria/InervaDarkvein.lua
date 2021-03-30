@@ -15,6 +15,7 @@ mod:SetRespawnTime(30)
 local anima = {}
 local concentratedAnimaCount = 1
 local conjuredManifestationList = {}
+local mobCollector = {}
 local conjuredManifestationCount = 1
 local enabledContainer = 0 -- 1: Desires, 2: Bottles, 3: Sins, 4: Adds
 
@@ -133,6 +134,7 @@ end
 
 function mod:OnEngage()
 	conjuredManifestationList = {}
+	mobCollector = {}
 	conjuredManifestationCount = 1
 	concentratedAnimaCount = 1
 	enabledContainer = 0
@@ -482,7 +484,8 @@ function mod:Condemn(args)
 			self:PlaySound(args.spellId, "alert")
 		end
 	end
-	if self:GetOption(conjuredManifestationMarker) and not conjuredManifestationList[args.sourceGUID] then
+	if self:GetOption(conjuredManifestationMarker) and not mobCollector[args.sourceGUID] and not conjuredManifestationList[args.sourceGUID] then
+		mobCollector[args.sourceGUID] = true
 		conjuredManifestationList[args.sourceGUID] = (8 - (conjuredManifestationCount % 4) + 1) -- 8, 7, 6, 5
 		conjuredManifestationCount = conjuredManifestationCount + 1
 		for k, v in next, conjuredManifestationList do
