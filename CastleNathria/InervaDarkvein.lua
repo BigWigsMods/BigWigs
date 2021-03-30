@@ -428,7 +428,7 @@ do
 	local isOnMe = false
 	function mod:ConcentratedAnimaApplied(args)
 		local count = #playerList+1
-		local icon = 9-count -- 8, 7, 6, 5
+		local icon = 9-count -- 8, 7, 6
 		proxList[count] = args.destName
 		playerList[count] = args.destName
 		playerList[args.destName] = icon -- Set raid marker
@@ -486,7 +486,7 @@ function mod:Condemn(args)
 	end
 	if self:GetOption(conjuredManifestationMarker) and not mobCollector[args.sourceGUID] and not conjuredManifestationList[args.sourceGUID] then
 		mobCollector[args.sourceGUID] = true
-		conjuredManifestationList[args.sourceGUID] = (8 - (conjuredManifestationCount % 4) + 1) -- 8, 7 (2 adds per wave)
+		conjuredManifestationList[args.sourceGUID] = 9-conjuredManifestationCount -- 8, 7 (max 2 adds per wave)
 		conjuredManifestationCount = conjuredManifestationCount + 1
 		for k, v in next, conjuredManifestationList do
 			local unit = self:GetUnitIdByGUID(k)
