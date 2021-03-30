@@ -53,8 +53,8 @@ end
 --
 
 local sharedSufferingMarker = mod:AddMarkerOption(false, "player", 1, 324983, 1, 2, 3) -- Shared Suffering
-local concentratedAnimaMarker = mod:AddMarkerOption(false, "player", 8, 332664, 8, 7, 6, 5) -- Concentrated Anima
-local conjuredManifestationMarker = mod:AddMarkerOption(true, "npc", 8, -22618, 8, 7, 6, 5) -- Conjured Manifestation
+local concentratedAnimaMarker = mod:AddMarkerOption(false, "player", 8, 332664, 8, 7, 6) -- Concentrated Anima
+local conjuredManifestationMarker = mod:AddMarkerOption(true, "npc", 8, -22618, 8, 7) -- Conjured Manifestation
 function mod:GetOptions()
 	return {
 		"custom_off_experimental",
@@ -486,7 +486,7 @@ function mod:Condemn(args)
 	end
 	if self:GetOption(conjuredManifestationMarker) and not mobCollector[args.sourceGUID] and not conjuredManifestationList[args.sourceGUID] then
 		mobCollector[args.sourceGUID] = true
-		conjuredManifestationList[args.sourceGUID] = (8 - (conjuredManifestationCount % 4) + 1) -- 8, 7, 6, 5
+		conjuredManifestationList[args.sourceGUID] = (8 - (conjuredManifestationCount % 4) + 1) -- 8, 7 (2 adds per wave)
 		conjuredManifestationCount = conjuredManifestationCount + 1
 		for k, v in next, conjuredManifestationList do
 			local unit = self:GetUnitIdByGUID(k)
