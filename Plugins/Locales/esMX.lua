@@ -151,7 +151,8 @@ L.breakFinished = "El descanso ha terminado!"
 --
 
 L.bossBlock = "Bloque de Jefe"
-L.bossBlockDesc = "Configura las diferentes cosas que puedes bloquear durante un encuentro con el jefe."
+L.bossBlockDesc = "Configura las diferentes cosas que puedes bloquear durante un encuentro con el jefe.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
 L.movieBlocked = "Ya has visto esta cinemática antes, saltándola."
 L.blockEmotes = "Bloquear los emotes de la pantalla central"
 L.blockEmotesDesc = "Algunos jefes muestran emotes para ciertas habilidades, estos mensajes son demasiado largos y descriptivos. Intentamos acortarlos, y ajustarlos para que no interfieran con el juego, y que no te digan específicamente qué tienes que hacer.\n\nTen en cuenta: Los emotes de Jefe seguirán siendo visibles en el chat si deseas leerlos."

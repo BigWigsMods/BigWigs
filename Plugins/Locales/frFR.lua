@@ -151,7 +151,8 @@ L.breakFinished = "Le temps de pause est terminé !"
 --
 
 L.bossBlock = "Bloquages"
-L.bossBlockDesc = "Configure les divers éléments que vous pouvez bloquer durant une rencontre de boss."
+L.bossBlockDesc = "Configure les divers éléments que vous pouvez bloquer durant une rencontre de boss.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
 L.movieBlocked = "Vous avez déjà vu cette cinématique, elle ne sera pas affichée."
 L.blockEmotes = "Bloquer les émotes du centre de l'écran"
 L.blockEmotesDesc = "Certains boss affichent des émotes pour certaines techniques, des messages qui sont bien trop longs et descriptifs. Nous essayons de produire des messages plus courts et appropriés qui n'interfèrent pas avec votre expérience de jeu et qui ne vous disent pas spécifiquement ce qu'il faut faire.\n\nVeuillez noter que les émotes des boss seront toujours visibles dans la fenêtre de discussion au cas où vous désireriez les lire."
