@@ -906,11 +906,13 @@ do
 	if #delayedMessages > 0 then
 		function mod:LOADING_SCREEN_DISABLED()
 			bwFrame:UnregisterEvent("LOADING_SCREEN_DISABLED")
-			CTimerAfter(15, function()
-				for i = 1, #delayedMessages do
-					sysprint(delayedMessages[i])
-				end
-				delayedMessages = nil
+			CTimerAfter(0, function() -- Timers aren't fully functional until 1 frame after loading is done
+				CTimerAfter(15, function()
+					for i = 1, #delayedMessages do
+						sysprint(delayedMessages[i])
+					end
+					delayedMessages = nil
+				end)
 			end)
 			self.LOADING_SCREEN_DISABLED = nil
 		end
