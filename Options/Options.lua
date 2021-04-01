@@ -1137,11 +1137,15 @@ do
 	local GetBestMapForUnit = loader.GetBestMapForUnit
 	local GetMapInfo = loader.GetMapInfo
 
-	local function toggleAnchors()
+	local function toggleAnchors(widget)
 		if not BigWigs:IsEnabled() then BigWigs:Enable() end
 		if options:InConfigureMode() then
+			widget:SetText(L.toggleAnchorsBtnShow)
+			widget:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
 			options:SendMessage("BigWigs_StopConfigureMode")
 		else
+			widget:SetText(L.toggleAnchorsBtnHide)
+			widget:SetUserData("desc", L.toggleAnchorsBtnHide_desc)
 			options:SendMessage("BigWigs_StartConfigureMode")
 		end
 	end
@@ -1321,8 +1325,8 @@ do
 		bw:AddChild(introduction)
 
 		local anchors = AceGUI:Create("Button")
-		anchors:SetText(L.toggleAnchorsBtn)
-		anchors:SetUserData("desc", L.toggleAnchorsBtn_desc)
+		anchors:SetText(L.toggleAnchorsBtnShow)
+		anchors:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
 		anchors:SetRelativeWidth(0.5)
 		anchors:SetCallback("OnClick", toggleAnchors)
 		anchors:SetCallback("OnEnter", onControlEnter)
