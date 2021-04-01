@@ -1137,6 +1137,17 @@ do
 	local GetBestMapForUnit = loader.GetBestMapForUnit
 	local GetMapInfo = loader.GetMapInfo
 
+	local function onControlEnter(widget)
+		bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
+		bwTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
+		bwTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
+		bwTooltip:Show()
+	end
+
+	local function onControlLeave()
+		bwTooltip:Hide()
+	end
+
 	local function toggleAnchors(widget)
 		if not BigWigs:IsEnabled() then BigWigs:Enable() end
 		if options:InConfigureMode() then
@@ -1148,17 +1159,8 @@ do
 			widget:SetUserData("desc", L.toggleAnchorsBtnHide_desc)
 			options:SendMessage("BigWigs_StartConfigureMode")
 		end
-	end
-
-	local function onControlEnter(widget)
-		bwTooltip:SetOwner(widget.frame, "ANCHOR_TOPRIGHT")
-		bwTooltip:SetText(widget.text:GetText(), 1, 0.82, 0, true)
-		bwTooltip:AddLine(widget:GetUserData("desc"), 1, 1, 1, true)
-		bwTooltip:Show()
-	end
-
-	local function onControlLeave()
-		bwTooltip:Hide()
+		onControlLeave()
+		onControlEnter(widget)
 	end
 
 	local function onTreeGroupSelected(widget, event, value)
