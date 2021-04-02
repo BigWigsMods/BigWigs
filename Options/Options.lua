@@ -1327,8 +1327,13 @@ do
 		bw:AddChild(introduction)
 
 		local anchors = AceGUI:Create("Button")
-		anchors:SetText(L.toggleAnchorsBtnShow)
-		anchors:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
+		if self:InConfigureMode() then
+			anchors:SetText(L.toggleAnchorsBtnHide)
+			anchors:SetUserData("desc", L.toggleAnchorsBtnHide_desc)
+		else
+			anchors:SetText(L.toggleAnchorsBtnShow)
+			anchors:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
+		end
 		anchors:SetRelativeWidth(0.5)
 		anchors:SetCallback("OnClick", toggleAnchors)
 		anchors:SetCallback("OnEnter", onControlEnter)
