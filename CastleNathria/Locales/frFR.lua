@@ -118,9 +118,6 @@ end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "frFR")
 if L then
-	-- La Cabale cramoisie entend l'appel de Denathrius. - need to double check real logs, it seems to not match properly
-	L.add_spawn = "La Cabale cramoisie entend" -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
-
 	L.infobox_stacks = "%d |4cumul:cumuls; : %d |4joueur:joueurs;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	L.custom_on_repeating_nighthunter = "Répéter Chasseur nocture en /cri"

@@ -15,6 +15,7 @@ mod:SetRespawnTime(30)
 local anima = {}
 local concentratedAnimaCount = 1
 local conjuredManifestationList = {}
+local mobCollector = {}
 local conjuredManifestationCount = 1
 local enabledContainer = 0 -- 1: Desires, 2: Bottles, 3: Sins, 4: Adds
 
@@ -52,8 +53,8 @@ end
 --
 
 local sharedSufferingMarker = mod:AddMarkerOption(false, "player", 1, 324983, 1, 2, 3) -- Shared Suffering
-local concentratedAnimaMarker = mod:AddMarkerOption(false, "player", 8, 332664, 8, 7, 6, 5) -- Concentrated Anima
-local conjuredManifestationMarker = mod:AddMarkerOption(true, "npc", 8, -22618, 8, 7, 6, 5) -- Conjured Manifestation
+local concentratedAnimaMarker = mod:AddMarkerOption(false, "player", 8, 332664, 8, 7, 6) -- Concentrated Anima
+local conjuredManifestationMarker = mod:AddMarkerOption(true, "npc", 8, -22618, 8, 7) -- Conjured Manifestation
 function mod:GetOptions()
 	return {
 		"custom_off_experimental",
@@ -133,6 +134,7 @@ end
 
 function mod:OnEngage()
 	conjuredManifestationList = {}
+	mobCollector = {}
 	conjuredManifestationCount = 1
 	concentratedAnimaCount = 1
 	enabledContainer = 0
@@ -426,7 +428,7 @@ do
 	local isOnMe = false
 	function mod:ConcentratedAnimaApplied(args)
 		local count = #playerList+1
-		local icon = 9-count -- 8, 7, 6, 5
+		local icon = 9-count -- 8, 7, 6
 		proxList[count] = args.destName
 		playerList[count] = args.destName
 		playerList[args.destName] = icon -- Set raid marker
@@ -482,8 +484,9 @@ function mod:Condemn(args)
 			self:PlaySound(args.spellId, "alert")
 		end
 	end
-	if self:GetOption(conjuredManifestationMarker) and not conjuredManifestationList[args.sourceGUID] then
-		conjuredManifestationList[args.sourceGUID] = (8 - (conjuredManifestationCount % 4) + 1) -- 8, 7, 6, 5
+	if self:GetOption(conjuredManifestationMarker) and not mobCollector[args.sourceGUID] and not conjuredManifestationList[args.sourceGUID] then
+		mobCollector[args.sourceGUID] = true
+		conjuredManifestationList[args.sourceGUID] = 9-conjuredManifestationCount -- 8, 7 (max 2 adds per wave)
 		conjuredManifestationCount = conjuredManifestationCount + 1
 		for k, v in next, conjuredManifestationList do
 			local unit = self:GetUnitIdByGUID(k)

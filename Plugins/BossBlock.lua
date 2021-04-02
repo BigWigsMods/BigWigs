@@ -27,6 +27,7 @@ plugin.defaultDB = {
 	disableSfx = false,
 	disableMusic = false,
 	disableAmbience = false,
+	disableErrorSpeech = false,
 }
 
 --------------------------------------------------------------------------------
@@ -51,6 +52,7 @@ plugin.pluginOptions = {
 	name = L.bossBlock,
 	desc = L.bossBlockDesc,
 	type = "group",
+	childGroups = "tab",
 	get = function(info)
 		return plugin.db.profile[info[#info]]
 	end,
@@ -60,114 +62,132 @@ plugin.pluginOptions = {
 	end,
 	disabled = function() return IsEncounterInProgress() end, -- Don't allow toggling during an encounter.
 	args = {
-		heading = {
-			type = "description",
-			name = L.bossBlockDesc.. "\n\n",
-			order = 0,
-			width = "full",
-			fontSize = "medium",
-		},
-		blockEmotes = {
-			type = "toggle",
-			name = L.blockEmotes,
-			desc = L.blockEmotesDesc,
-			width = "full",
+		general = {
+			type = "group",
+			name = L.general,
 			order = 1,
-		},
-		blockMovies = {
-			type = "toggle",
-			name = L.blockMovies,
-			desc = L.blockMoviesDesc,
-			width = "full",
-			order = 2,
-		},
-		blockGarrison = {
-			type = "toggle",
-			name = L.blockFollowerMission,
-			desc = L.blockFollowerMissionDesc,
-			width = "full",
-			order = 3,
-		},
-		blockGuildChallenge = {
-			type = "toggle",
-			name = L.blockGuildChallenge,
-			desc = L.blockGuildChallengeDesc,
-			width = "full",
-			order = 4,
-		},
-		blockSpellErrors = {
-			type = "toggle",
-			name = L.blockSpellErrors,
-			desc = L.blockSpellErrorsDesc,
-			width = "full",
-			order = 5,
-		},
-		blockTooltipQuests = {
-			type = "toggle",
-			name = L.blockTooltipQuests,
-			desc = L.blockTooltipQuestsDesc,
-			width = "full",
-			order = 6,
-			hidden = function() return true end, -- XXX Do we want to hack the tooltip?
-		},
-		blockObjectiveTracker = {
-			type = "toggle",
-			name = L.blockObjectiveTracker,
-			desc = L.blockObjectiveTrackerDesc,
-			width = "full",
-			order = 7,
-		},
-		blockTalkingHeads = {
-			type = "multiselect",
-			name = L.blockTalkingHead,
-			desc = L.blockTalkingHeadDesc,
-			control = "Dropdown",
-			values = {
-				L.blockTalkingHeadDungeons,
-				L.blockTalkingHeadMythics,
-				L.blockTalkingHeadRaids,
-				L.blockTalkingHeadTimewalking,
-				L.blockTalkingHeadScenarios,
+			args = {
+				heading = {
+					type = "description",
+					name = L.bossBlockDesc,
+					order = 0,
+					width = "full",
+					fontSize = "medium",
+				},
+				blockEmotes = {
+					type = "toggle",
+					name = L.blockEmotes,
+					desc = L.blockEmotesDesc,
+					width = "full",
+					order = 1,
+				},
+				blockMovies = {
+					type = "toggle",
+					name = L.blockMovies,
+					desc = L.blockMoviesDesc,
+					width = "full",
+					order = 2,
+				},
+				blockGarrison = {
+					type = "toggle",
+					name = L.blockFollowerMission,
+					desc = L.blockFollowerMissionDesc,
+					width = "full",
+					order = 3,
+				},
+				blockGuildChallenge = {
+					type = "toggle",
+					name = L.blockGuildChallenge,
+					desc = L.blockGuildChallengeDesc,
+					width = "full",
+					order = 4,
+				},
+				blockSpellErrors = {
+					type = "toggle",
+					name = L.blockSpellErrors,
+					desc = L.blockSpellErrorsDesc,
+					width = "full",
+					order = 5,
+				},
+				blockTooltipQuests = {
+					type = "toggle",
+					name = L.blockTooltipQuests,
+					desc = L.blockTooltipQuestsDesc,
+					width = "full",
+					order = 6,
+					hidden = function() return true end, -- XXX Do we want to hack the tooltip?
+				},
+				blockObjectiveTracker = {
+					type = "toggle",
+					name = L.blockObjectiveTracker,
+					desc = L.blockObjectiveTrackerDesc,
+					width = "full",
+					order = 7,
+				},
+				blockTalkingHeads = {
+					type = "multiselect",
+					name = L.blockTalkingHead,
+					desc = L.blockTalkingHeadDesc,
+					control = "Dropdown",
+					values = {
+						L.blockTalkingHeadDungeons,
+						L.blockTalkingHeadMythics,
+						L.blockTalkingHeadRaids,
+						L.blockTalkingHeadTimewalking,
+						L.blockTalkingHeadScenarios,
+					},
+					get = function(info, entry)
+						return plugin.db.profile[info[#info]][entry]
+					end,
+					set = function(info, entry, value)
+						plugin.db.profile[info[#info]][entry] = value
+					end,
+					width = 2,
+					order = 8,
+				},
 			},
-			get = function(info, entry)
-				return plugin.db.profile[info[#info]][entry]
-			end,
-			set = function(info, entry, value)
-				plugin.db.profile[info[#info]][entry] = value
-			end,
-			width = 2,
-			order = 8,
 		},
-		newline = {
-			type = "description",
-			name = "\n\n",
-			order = 9,
-		},
-		audioHeader = {
-			type = "header",
+		audio = {
+			type = "group",
 			name = L.audio,
-			order = 10,
-		},
-		disableMusic = {
-			type = "toggle",
-			name = L.disableMusic,
-			desc = L.disableAudioDesc:format(L.music),
-			width = "full",
-			order = 11,
-		},
-		disableAmbience = {
-			type = "toggle",
-			name = L.disableAmbience,
-			desc = L.disableAudioDesc:format(L.ambience),
-			width = "full",
-			order = 12,
-		},
-		disableSfx = {
-			type = "toggle",
-			name = L.disableSfx,
-			desc = L.disableAudioDesc:format(L.sfx),
-			width = "full",
-			order = 13,
+			order = 2,
+			args = {
+				heading = {
+					type = "description",
+					name = L.bossBlockAudioDesc,
+					order = 0,
+					width = "full",
+					fontSize = "medium",
+				},
+				disableMusic = {
+					type = "toggle",
+					name = L.disableMusic,
+					desc = L.disableAudioDesc:format(L.music),
+					width = "full",
+					order = 1,
+				},
+				disableAmbience = {
+					type = "toggle",
+					name = L.disableAmbience,
+					desc = L.disableAudioDesc:format(L.ambience),
+					width = "full",
+					order = 2,
+				},
+				disableErrorSpeech = {
+					type = "toggle",
+					name = L.disableErrorSpeech,
+					desc = L.disableAudioDesc:format(L.errorSpeech),
+					width = "full",
+					order = 3,
+				},
+				disableSfx = {
+					type = "toggle",
+					name = L.disableSfx,
+					desc = L.disableAudioDesc:format(L.sfx),
+					width = "full",
+					order = 4,
+				},
+			},
 		},
 	},
 }
@@ -218,6 +238,9 @@ do
 		end
 		if self.db.profile.disableAmbience then
 			SetCVar("Sound_EnableAmbience", "1")
+		end
+		if self.db.profile.disableErrorSpeech then
+			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
 
 		self:RegisterEvent("TALKINGHEAD_REQUESTED")
@@ -303,6 +326,9 @@ do
 		if self.db.profile.disableAmbience then
 			SetCVar("Sound_EnableAmbience", "0")
 		end
+		if self.db.profile.disableErrorSpeech then
+			SetCVar("Sound_EnableErrorSpeech", "0")
+		end
 
 		CheckElv(self)
 		-- Never hide when tracking achievements or in Mythic+
@@ -345,6 +371,9 @@ do
 		end
 		if self.db.profile.disableAmbience then
 			SetCVar("Sound_EnableAmbience", "1")
+		end
+		if self.db.profile.disableErrorSpeech then
+			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
 		if restoreObjectiveTracker then
 			trackerHider.SetParent(ObjectiveTrackerFrame, restoreObjectiveTracker)

@@ -72,7 +72,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:Log("SPELL_AURA_APPLIED", "HuntsmansBondApplied", 334504)
 
 	--[[ Huntsman Altimor ]]--
 	self:Log("SPELL_CAST_START", "Sinseeker", 335114)
@@ -130,25 +130,19 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
-	if spellId == 334504 then -- Huntsman's Bond
-		local sourceGUID = self:UnitGUID(unit)
-		if self:MobId(sourceGUID) == 165066 then -- Huntsman Altimor
-			local stage = self:GetStage() + 1
-			if stage == 2 then -- Bargast up
-				ripSoulCount = 1
-				shadesOfBargastCount = 1
-				self:SetStage(2)
+function mod:HuntsmansBondApplied(args)
+	if self:MobId(args.sourceGUID) == 169457 then -- Bargast
+		ripSoulCount = 1
+		shadesOfBargastCount = 1
+		self:SetStage(2)
 
-				self:Bar(334797, 9.5, CL.count:format(self:SpellName(334797), ripSoulCount)) -- Rip Soul
-				self:Bar(334757, 17.5, CL.count:format(self:SpellName(334757), shadesOfBargastCount)) -- Shades Of Bargast
-			elseif stage == 3 then -- Hecutis up
-				petrifyingHowlCount = 1
-				self:SetStage(3)
+		self:Bar(334797, 9.5, CL.count:format(self:SpellName(334797), ripSoulCount)) -- Rip Soul
+		self:Bar(334757, 17.5, CL.count:format(self:SpellName(334757), shadesOfBargastCount)) -- Shades Of Bargast
+	elseif self:MobId(args.sourceGUID) == 169458 then -- Hecutis
+		petrifyingHowlCount = 1
+		self:SetStage(3)
 
-				self:Bar(334852, 16.2, CL.count:format(self:SpellName(334852), petrifyingHowlCount)) -- Petrifying Howl
-			end
-		end
+		self:Bar(334852, 16.2, CL.count:format(self:SpellName(334852), petrifyingHowlCount)) -- Petrifying Howl
 	end
 end
 

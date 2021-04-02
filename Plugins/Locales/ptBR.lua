@@ -150,7 +150,8 @@ L.breakFinished = "Intervalo acabou!"
 --
 
 L.bossBlock = "Bloqueio de Chefe"
-L.bossBlockDesc = "Configura diversas coisas que você pode bloquear durante um encontro com um chefe."
+L.bossBlockDesc = "Configura diversas coisas que você pode bloquear durante um encontro com um chefe.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
 L.movieBlocked = "Você já viu esta animação anteriormente, pulando ela."
 L.blockEmotes = "Bloqueia frases no meio da tela"
 L.blockEmotesDesc = "Alguns chefes usam frases de efeito para certas habilidades, essas mensagens são muito longas e descritivas. Nós tentamos produzir mensagens menores, mais apropriadas que não interferem com sua jogabilidade, e não te dizem especificamente o que fazer.\n\nObservação: Frases de chefes ainda serão vistas no bate-papo se quiser lê-las."
@@ -166,9 +167,11 @@ L.audio = "Áudio"
 L.music = "Música"
 L.ambience = "Som ambiente"
 L.sfx = "Efeitos sonoros"
+L.errorSpeech = "Sons de erro"
 L.disableMusic = "Desativar música (recomendado)"
 L.disableAmbience = "Desativar sons ambiente (recomendado)"
 L.disableSfx = "Desativar efeitos sonoros (não recomendado)"
+--L.disableErrorSpeech = "Mute error speech (recommended)"
 L.disableAudioDesc = "A opção '%s' do WoW será desligada, e depois será ligado novamente quando a luta contra o chefe acabar. Isso pode ajudar você a focar nos sons de alertas do BigWigs."
 L.blockTooltipQuests = "Bloqueia a dica de objetivos de missões"
 L.blockTooltipQuestsDesc = "Quando você precisa matar um chefe para uma missão, normalmente irá mostrar '0/1 completo' na barra de dica quando você passa o mouse pelo chefe. Isso será escondido quando em combate com o chefe para prevenir que a bara de dica fique muito grande."
@@ -329,8 +332,8 @@ L.pullStoppedCombat = "Temporizador cancelado porque você entrou em combate."
 L.pullIn = "Pull em %d seg"
 L.sendPull = "Enviando contador de pull para usuários BigWigs e DBM."
 L.wrongPullFormat = "Deve estar entre 1 e 60 segundos. Um exemplo correto seria: /pull 5"
---L.countdownBegins = "Begin Countdown"
---L.countdownBegins_desc = "Escolhe quanto tempo deve restar para a habilidade do chefe (em segundos) para começar a contagem." -- change to 'pull timer' (see english version) and remove this comment
+L.countdownBegins = "Iniciar Contagem"
+L.countdownBegins_desc = "Escolhe quanto tempo deve restar de tempo de pull (em segundos) para começar a contagem."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -349,7 +352,7 @@ L.secondaryDesc = "O segundo ícone de raide que um script usará."
 --
 
 L.Sounds = "Sons"
---L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Volume geral' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+L.soundsDesc = "BigWigs usa o canal de som 'Geral' para reproduzir todos os sons. Se você acha que os sons estão muito baixos ou muito altos, abra as configurações de som do WoW e ajuste o 'Volume geral' para um nível que você goste.\n\nAbaixo você pode configurar globalmente os diferentes sons que irão reproduzir para ações específicas, ou configurar eles para 'Nenhum' para desabilita-los. Se você quer mudar somente o som para uma habilidade específica de chefe, isso pode ser feito nas configurações de encontro do chefe.\n\n"
 L.oldSounds = "Sons antigos"
 
 L.Alarm = "Alarme"

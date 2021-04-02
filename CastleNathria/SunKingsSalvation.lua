@@ -146,6 +146,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BurningRemnantsApplied", 326456)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningRemnantsApplied", 326456)
 	self:Log("SPELL_CAST_START", "EmberBlast", 325877)
+	self:Log("SPELL_AURA_APPLIED", "EmberBlastApplied", 325873)
+	self:Log("SPELL_AURA_REMOVED", "EmberBlastRemoved", 325873)
 	self:Log("SPELL_CAST_START", "BlazingSurge", 329518)
 	self:Log("SPELL_AURA_APPLIED", "EyesOnTarget", 328479) -- Phoenix Fixate
 	self:Log("SPELL_AURA_REMOVED", "ReflectionOfGuiltRemoved", 323402)
@@ -365,28 +367,31 @@ function mod:BurningRemnantsApplied(args)
 	end
 end
 
-do
-	local function printTarget(self, player, guid)
-		if self:Me(guid) then
-			self:PlaySound(325877, "warning")
-			self:Yell(325877)
-			self:Flash(325877)
-			if self:LFR() then
-				self:YellCountdown(325877, 5)
-			else
-				self:YellCountdown(325877, 3, nil, 2)
-			end
-		else
-			self:PlaySound(325877, "alert")
-		end
-		self:TargetMessage(325877, "orange", player, CL.count:format(self:SpellName(325877), emberBlastCount-1))
-	end
+function mod:EmberBlast(args)
+	self:CastBar(args.spellId, self:LFR() and 5 or 3, CL.count:format(args.spellName, emberBlastCount))
+	emberBlastCount = emberBlastCount + 1
+	self:Bar(args.spellId, 20.5, CL.count:format(args.spellName, emberBlastCount))
+end
 
-	function mod:EmberBlast(args)
-		self:GetNextBossTarget(printTarget, args.sourceGUID)
-		self:CastBar(args.spellId, self:LFR() and 5 or 3, CL.count:format(args.spellName, emberBlastCount))
-		emberBlastCount = emberBlastCount + 1
-		self:Bar(args.spellId, 20.5, CL.count:format(args.spellName, emberBlastCount))
+function mod:EmberBlastApplied(args)
+	if self:Me(args.destGUID) then
+		self:PlaySound(325877, "warning")
+		self:Yell(325877)
+		self:Flash(325877)
+		if self:LFR() then
+			self:YellCountdown(325877, 5)
+		else
+			self:YellCountdown(325877, 3, nil, 2)
+		end
+	else
+		self:PlaySound(325877, "alert")
+	end
+	self:TargetMessage(325877, "orange", args.destName, CL.count:format(self:SpellName(325877), emberBlastCount-1))
+end
+
+function mod:EmberBlastRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelYellCountdown(325877)
 	end
 end
 
@@ -411,7 +416,6 @@ function mod:ReflectionOfGuiltRemoved()
 	self:StopBar(CL.count:format(self:SpellName(329518), blazingSurgeCount)) -- Blazing Surge
 	self:StopBar(CL.count:format(self:SpellName(325877), emberBlastCount)) -- Ember Blast
 	self:StopBar(CL.cast:format(CL.count:format(self:SpellName(325877), emberBlastCount-1))) -- Ember Blast
-	self:CancelSayCountdown(325877) -- Ember Blast
 	self:StopBar(CL.count:format(CL.shield, cloakOfFlamesCount)) -- Cloak of Flames
 
 	local stage = self:GetStage() + 1

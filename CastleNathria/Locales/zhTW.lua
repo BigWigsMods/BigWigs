@@ -118,8 +118,6 @@ end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "zhTW")
 if L then
-	L.add_spawn = "赤紅秘術師回應了戴納瑟斯的呼喚。" -- [RAID_BOSS_EMOTE] Crimson Cabalists answer the call of Denathrius.#Sire Denathrius#4#true"
-
 	L.infobox_stacks = "%d 堆疊：%d 玩家" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
 	L.custom_on_repeating_nighthunter = "重覆黑夜獵人喊話"
