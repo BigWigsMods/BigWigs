@@ -152,7 +152,7 @@ L.breakFinished = "Die Pause ist vorbei!"
 
 L.bossBlock = "Boss Block"
 L.bossBlockDesc = "Legt fest, was während einer Bossbegegnung blockiert wird.\n\n"
---L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
+L.bossBlockAudioDesc = "Konfiguriert, welche Sounds während Bossbegegnungen stummgeschaltet werden.\n\n"
 L.movieBlocked = "Da Du diese Zwischensequenz bereits gesehen hast, wird sie übersprungen."
 L.blockEmotes = "Hinweise in der Bildschirmmitte blockieren"
 L.blockEmotesDesc = "Einige Bosse zeigen sehr lange und ungenaue Hinweise für spezielle Fähigkeiten an. BigWigs versucht kürzere und passendere Mitteilungen zu erstellen, die den Spielfluss weniger beeinflussen.\n\nHinweis: Bossmitteilungen werden weiterhin im Chat sichtbar sein und können dort gelesen werden."
