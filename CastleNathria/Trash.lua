@@ -197,12 +197,17 @@ function mod:Curse(args)
 	end
 end
 
-function mod:Stoneskin(args)
-	local canDo, ready = self:Interrupter()
-	if canDo then
-		self:Message(args.spellId, "red", CL.casting:format(args.spellName))
-		if ready then
-			self:PlaySound(args.spellId, "alert")
+do
+	local prev = 0
+	function mod:Stoneskin(args)
+		local canDo, ready = self:Interrupter()
+		local t = args.time
+		if canDo and t-prev > 1 then
+			prev = t
+			self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+			if ready then
+				self:PlaySound(args.spellId, "alert")
+			end
 		end
 	end
 end
@@ -214,9 +219,16 @@ function mod:StoneskinApplied(args)
 	end
 end
 
-function mod:GraniteWings(args)
-	self:Message(args.spellId, "orange", CL.casting:format(CL.knockback))
-	self:PlaySound(args.spellId, "long")
+do
+	local prev = 0
+	function mod:GraniteWings(args)
+		local t = args.time
+		if t-prev > 1 then
+			prev = t
+			self:Message(args.spellId, "orange", CL.casting:format(CL.knockback))
+			self:PlaySound(args.spellId, "long")
+		end
+	end
 end
 
 --[[ Shriekwing -> Huntsman Altimor ]]--
