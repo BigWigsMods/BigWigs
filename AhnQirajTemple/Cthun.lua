@@ -227,7 +227,7 @@ function mod:CheckTarget()
 	local unit = self:GetUnitIdByGUID(15589) -- Eye of C'Thun
 	if unit then
 		local unitTarget = unit.."target"
-		local guid = UnitGUID(unitTarget)
+		local guid = self:UnitGUID(unitTarget)
 		if guid then
 			target = guid
 		end
@@ -237,7 +237,7 @@ end
 function mod:GroupWarning()
 	if target then
 		for unit in self:IterateGroup() do
-			local guid = UnitGUID(unit)
+			local guid = self:UnitGUID(unit)
 			if target == guid then
 				local name = self:UnitName(unit)
 				if not IsInRaid() then

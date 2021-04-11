@@ -58,7 +58,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	wipe(understudyIcons)
+	understudyIcons = {}
 	self:CDBar("shout", 25, L.shout, L.shout_icon)
 	self:DelayedMessage("shout", 20, "orange", CL.soon:format(self:SpellName(L.shout)), L.shout_icon, "Alert")
 end

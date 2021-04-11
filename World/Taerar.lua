@@ -106,8 +106,8 @@ do
 end
 
 function mod:UNIT_HEALTH_FREQUENT(event, unit)
-	if self:MobId(UnitGUID(unit)) == 14890 then
-		local hp = UnitHealth(unit)
+	if self:MobId(self:UnitGUID(unit)) == 14890 then
+		local hp = self:UnitHealth(unit)
 		if hp < warnHP then -- 80, 55, 30
 			warnHP = warnHP - 25
 			if hp > warnHP then -- avoid multiple messages when joining mid-fight

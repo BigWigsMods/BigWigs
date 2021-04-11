@@ -69,8 +69,8 @@ function mod:OnEngage()
 	doomTime = 30
 	sporeCount = 1
 	doomCount = 1
-	wipe(healerList)
-	wipe(healerDebuffTime)
+	healerList = {}
+	healerDebuffTime = {}
 
 	self:Message(29204, "yellow", L.startwarn, false)
 	self:Bar(29204, 120, CL.count:format(self:SpellName(29204), doomCount))
