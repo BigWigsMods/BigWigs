@@ -1,5 +1,5 @@
 
-if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
 	print("|cFF33FF99BigWigs|r: You're trying to run the Classic version of BigWigs on a live server.")
 	return
 end
@@ -10,6 +10,9 @@ local bwFrame = CreateFrame("Frame")
 
 local ldb = LibStub("LibDataBroker-1.1")
 local ldbi = LibStub("LibDBIcon-1.0")
+
+public.isClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+public.isBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 
 -----------------------------------------------------------------------
 -- Generate our version variables
@@ -116,16 +119,15 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeZones = { -- Fake zones used as GUI menus
-	[-101]=true, -- Outland
-	[-424]=true, -- Pandaria
-	[-572]=true, -- Draenor
-	[-619]=true, -- Broken Isles
-	[-947]=true, -- Azeroth
+	[-947] = true, -- Azeroth
+	[-1945] = true, -- Outland
 }
 
 do
 	local c = "BigWigs_Classic"
+	local bc = public.isBC and "BigWigs_BurningCrusade"
 	local lw_c = "LittleWigs_Classic"
+	local lw_bc = public.isBC and "LittleWigs_BurningCrusade"
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -143,6 +145,17 @@ do
 		[-1431] = c, -- Duskwood
 		[-1440] = c, -- Ashenvale
 		[-1444] = c, -- Feralas
+		--[[ BigWigs: The Burning Crusade ]]--
+		[-1945] = bc, -- Outland (Fake Menu)
+		[565] = bc, -- Gruul's Lair
+		[532] = bc, -- Karazhan
+		[548] = bc, -- Coilfang: Serpentshrine Cavern
+		[550] = bc, -- Tempest Keep
+		[544] = bc, -- Magtheridon's Lair
+		[534] = bc, -- The Battle for Mount Hyjal
+		[564] = bc, -- Black Temple
+		[560] = bc, -- The Escape from Durnholde
+		[580] = bc, -- The Sunwell
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -164,19 +177,30 @@ do
 		[349] = lw_c, -- Maraudon
 		[389] = lw_c, -- Ragefire Chasm
 		[429] = lw_c, -- Dire Maul
+		--[[ LittleWigs: The Burning Crusade ]]--
+		[540] = lw_bc, -- Hellfire Citadel: The Shattered Halls
+		[542] = lw_bc, -- Hellfire Citadel: The Blood Furnace
+		[543] = lw_bc, -- Hellfire Citadel: Ramparts
+		[546] = lw_bc, -- Coilfang: The Underbog
+		[545] = lw_bc, -- Coilfang: The Steamvault
+		[547] = lw_bc, -- Coilfang: The Slave Pens
+		[553] = lw_bc, -- Tempest Keep: The Botanica
+		[554] = lw_bc, -- Tempest Keep: The Mechanar
+		[552] = lw_bc, -- Tempest Keep: The Arcatraz
+		[556] = lw_bc, -- Auchindoun: Sethekk Halls
+		[555] = lw_bc, -- Auchindoun: Shadow Labyrinth
+		[557] = lw_bc, -- Auchindoun: Mana-Tombs
+		[558] = lw_bc, -- Auchindoun: Auchenai Crypts
+		[269] = lw_bc, -- Opening of the Dark Portal
+		[560] = lw_bc, -- The Escape from Durnholde
+		[585] = lw_bc, -- Magister's Terrace
 	}
 
 	public.zoneTblWorld = {
 		[-1447] = -947, [-1419] = -947, [-1425] = -947, [-1431] = -947, [-1440] = -947, [-1444] = -947, -- Azeroth
+		[-1948] = -1945, [-1944] = -1945, -- Outland
 	}
 end
-
--- GLOBALS: _G, ADDON_LOAD_FAILED, BigWigs, BigWigsClassicDB, BigWigsIconClassicDB, BigWigsLoader, BigWigsOptions, ChatFrame_ImportAllListsToHash, ChatTypeInfo, CreateFrame, CUSTOM_CLASS_COLORS, DEFAULT_CHAT_FRAME, error
--- GLOBALS: GetAddOnEnableState, GetAddOnInfo, GetAddOnMetadata, GetLocale, GetNumGroupMembers, GetRealmName, GetSpecialization, GetSpecializationRole, GetTime, GRAY_FONT_COLOR, hash_SlashCmdList, InCombatLockdown
--- GLOBALS: IsAddOnLoaded, IsAltKeyDown, IsControlKeyDown, IsEncounterInProgress, IsInGroup, IsInRaid, IsLoggedIn, IsPartyLFG, IsSpellKnown, LFGDungeonReadyPopup
--- GLOBALS: LibStub, LoadAddOn, message, PlaySound, print, RAID_CLASS_COLORS, RaidNotice_AddMessage, RaidWarningFrame, RegisterAddonMessagePrefix, RolePollPopup, select, StopSound
--- GLOBALS: tostring, tremove, type, UnitAffectingCombat, UnitClass, UnitGroupRolesAssigned, UnitIsConnected, UnitIsDeadOrGhost, UnitSetRole, unpack, SLASH_BigWigs1, SLASH_BigWigs2
--- GLOBALS: SLASH_BigWigsVersion1, wipe
 
 -----------------------------------------------------------------------
 -- Utility
@@ -432,27 +456,22 @@ do
 		end
 	end
 
-	local currentZone = nil
 	local function iterateWorldBosses(addon, ...)
-		for i = 1, select("#", ...) do
-			local rawZoneOrBoss = select(i, ...)
-			local zoneOrBoss = tonumber(rawZoneOrBoss:trim())
-			if zoneOrBoss then
-				if not currentZone then
-					currentZone = zoneOrBoss
-
+		for i = 1, select("#", ...), 2 do
+			local rawZone, zoneBoss = select(i, ...)
+			local zone, boss = tonumber(rawZone:trim()), tonumber(zoneBoss:trim())
+			if zone and boss then
+				local tbl = GetMapInfo(-zone)
+				if tbl and tbl.name then -- Protect live client from beta client ids
 					-- register the zone for enabling.
-					enableZones[currentZone] = "world"
-
-					if not loadOnZone[currentZone] then loadOnZone[currentZone] = {} end
-					loadOnZone[currentZone][#loadOnZone[currentZone] + 1] = addon
-				else
-					worldBosses[zoneOrBoss] = currentZone
-					currentZone = nil
+					enableZones[zone] = "world"
+					if not loadOnZone[zone] then loadOnZone[zone] = {} end
+					loadOnZone[zone][#loadOnZone[zone] + 1] = addon
+					worldBosses[boss] = zone
 				end
 			else
 				local name = GetAddOnInfo(addon)
-				sysprint(("The zone ID %q from the addon %q was not parsable."):format(tostring(rawZoneOrBoss), name))
+				sysprint(("The zone ID %q and/or world boss ID %q from the addon %q was not parsable."):format(tostring(rawZone), tostring(zoneBoss), name))
 			end
 		end
 	end
@@ -707,7 +726,7 @@ do
 		-- Classic Cleanse
 		BigWigs_Azeroth = "BigWigs",
 		BigWigs_BattleOfDazaralor = "BigWigs",
-		BigWigs_BurningCrusade = "BigWigs",
+		-- BigWigs_BurningCrusade = "BigWigs",
 		BigWigs_Cataclysm = "BigWigs",
 		BigWigs_Classic = "BigWigs",
 		BigWigs_CrucibleOfStorms = "BigWigs",

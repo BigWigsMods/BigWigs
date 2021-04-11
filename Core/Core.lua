@@ -548,7 +548,7 @@ function core:GetPlugin(moduleName, silent)
 end
 
 do
-	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, function() end
+	local GetSpellInfo = GetSpellInfo
 	local C = core.C -- Set from Constants.lua
 	local standardFlag = C.BAR + C.CASTBAR + C.MESSAGE + C.ICON + C.SOUND + C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY + C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX + C.NAMEPLATEBAR
 	local defaultToggles = setmetatable({
@@ -573,9 +573,11 @@ do
 						if not n then core:Error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
 						module.optionHeaders[k] = n or v
 					else
-						local tbl = C_EncounterJournal_GetSectionInfo(-v)
-						if not tbl then core:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
-						module.optionHeaders[k] = tbl and tbl.title or v
+						-- local tbl = C_EncounterJournal.GetSectionInfo(-v)
+						-- if not tbl then core:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
+						local L = module:GetLocale()
+						if not L[v] then core:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
+						module.optionHeaders[k] = L[v] or v
 					end
 				end
 			end
@@ -630,8 +632,10 @@ do
 						if not n then core:Error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					else
-						local tbl = C_EncounterJournal_GetSectionInfo(-v)
-						if not tbl then core:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
+						-- local tbl = C_EncounterJournal_GetSectionInfo(-v)
+						-- if not tbl then core:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
+						local L = module:GetLocale()
+						if not L[v] then core:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					end
 				end

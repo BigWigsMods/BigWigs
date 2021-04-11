@@ -559,10 +559,10 @@ do
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
 					local m = eventMap[self][event]
-					if m and (m[spellName] or m["*"]) then
-						local func = m[spellName] or m["*"]
-						-- By default we only care about non-player spells (exempting "*")
-						if band(sourceFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and m[spellName] and (not unfilteredEventSpells[self][event] or not unfilteredEventSpells[self][event][spellName]) then
+					local func = (m[spellId] or m[spellName] or m["*"])
+					if func then
+						-- Classic: By default we only care about non-player spells (exempting "*")
+						if m[spellName] and band(sourceFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and (not unfilteredEventSpells[self][event] or not unfilteredEventSpells[self][event][spellName]) then
 							return
 						end
 						-- DEVS! Please ask if you need args attached to the table that we've missed out!
@@ -591,19 +591,26 @@ do
 		local nofilter = select(numSpells, ...) == true
 		if nofilter then numSpells = numSpells - 1 end
 		for i = 1, numSpells do
-			local spellName = select(i, ...)
-			if type(spellName) == "number" then
-				local spell = self:SpellName(spellName)
-				if not spell then core:Print(format(invalidId, self.moduleName, spellName, event)) return end
-				spellName = spell
+			local spell = select(i, ...)
+			if type(spell) == "number" then
+				local id = spell
+				if BigWigsLoader.isClassic then
+					spell = GetSpellInfo(spell)
+				elseif not GetSpellInfo(spell) then
+					spell = nil
+				end
+				if not spell then
+					core:Print(format(invalidId, self.moduleName, tostring(id), event))
+					return
+				end
 			end
-			if eventMap[self][event][spellName] then
-				core:Print(format(multipleRegistration, self.moduleName, event, spellName))
+			if eventMap[self][event][spell] then
+				core:Print(format(multipleRegistration, self.moduleName, event, spell))
 			end
-			eventMap[self][event][spellName] = func
+			eventMap[self][event][spell] = func
 			if nofilter then
 				if not unfilteredEventSpells[self][event] then unfilteredEventSpells[self][event] = {} end
-				unfilteredEventSpells[self][event][spellName] = true
+				unfilteredEventSpells[self][event][spell] = true
 			end
 		end
 		allowedEvents[event] = true
@@ -663,6 +670,11 @@ do
 	function boss:RegisterUnitEvent(event, func, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
+		if event == "UNIT_HEALTH" then
+			-- Retail module compat
+			if not func then func = event end
+			event = "UNIT_HEALTH_FREQUENT"
+		end
 		if (not func and not self[event]) or (func and not self[func]) then core:Print(format(noFunc, self.moduleName, func or event)) return end
 		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
@@ -681,6 +693,7 @@ do
 	function boss:UnregisterUnitEvent(event, ...)
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
+		if event == "UNIT_HEALTH" then event = "UNIT_HEALTH_FREQUENT" end -- Retail module compat
 		if not unitEventMap[self][event] then return end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
@@ -1363,31 +1376,31 @@ function boss:Solo()
 end
 
 do
-	local GetOptions = C_GossipInfo.GetOptions
-	local SelectOption = C_GossipInfo.SelectOption
+	local GetOptions = GetGossipOptions
+	local SelectOption = SelectGossipOption
 	--- Request the gossip options of the selected NPC
 	-- @return a separate string for every selectable text option
 	function boss:GetGossipOptions()
-		-- local gossipTbl = GetOptions()
-		-- if gossipTbl[2] then
-		-- 	local tbl = {}
-		-- 	for i = 1, #gossipTbl do
-		-- 		local text = gossipTbl[i].name
-		-- 		if text then
-		-- 			tbl[#tbl+1] = text
-		-- 		end
-		-- 	end
-		-- 	return tbl[1], tbl[2], tbl[3], tbl[4], tbl[5] -- This is fine
-		-- elseif gossipTbl[1] then
-		-- 	return gossipTbl[1].name
-		-- end
+		local gossipTbl = {GetOptions()}
+		if gossipTbl[3] then
+			local tbl = {}
+			for i = 1, #gossipTbl, 2 do
+				local text = gossipTbl[i]
+				if text then
+					tbl[#tbl+1] = text
+				end
+			end
+			return unpack(tbl) -- This is fine
+		elseif gossipTbl[1] then
+			return gossipTbl[1]
+		end
 	end
 
 	--- Select a specific NPC gossip option
 	-- @number optionNumber The number of the specific option to be selected
 	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
 	function boss:SelectGossipOption(optionNumber, skipConfirmDialogBox)
-		-- SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+		SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
 	end
 
 end
