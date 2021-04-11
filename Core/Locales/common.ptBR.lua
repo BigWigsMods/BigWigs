@@ -8,6 +8,8 @@ L.underyou = "%s debaixo de VOCÊ"
 L.other = "%s: %s"
 L.onboss = "%s no CHEFE"
 L.on = "%s em %s"
+L.buff_boss = "Buff no CHEFE: %s"
+L.buff_other = "Buff no %s: %s"
 L.stack = "%dx %s em %s"
 L.stackyou = "%dx %s em VOCÊ"
 L.cast = "<Conjurando %s>"
@@ -16,7 +18,9 @@ L.soon = "%s em breve"
 L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
+L.rticon = "%s ({rt%d})"
 L.near = "%s perto de VOCÊ"
+L.on_group = "%s no GRUPO" -- spell on group
 
 L.phase = "Fase %d"
 L.stage = "Estágio %d"
@@ -26,17 +30,18 @@ L.mythic = "Modo mítico"
 L.active = "Ativo" -- When a boss becomes active, after speech finishes
 L.general = "Geral" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
-L.duration = "%s durante %s seg"
-L.over = "%s Acabou"
-L.removed = "%s Removido"
-L.removed_from = "%s Removido %s"
-L.removed_by = "%s Removido por %s" -- spell removed by player
-L.incoming = "%s Chegando"
-L.interrupted = "%s Interrompido"
-L.interrupted_by = "%s interrompido por %s" -- spell interrupted by player
-L.no = "Sem %s"
+L.duration = "%s durante %s seg" -- Spell for 10 seconds
+L.over = "%s Acabou" -- Spell Over
+L.removed = "%s Removido" -- Spell Removed
+L.removed_from = "%s Removido %s" -- Spell removed from Player
+L.removed_by = "%s Removido por %s" -- Spell removed by Player
+L.incoming = "%s Chegando" -- Spell Incoming
+L.interrupted = "%s Interrompido" -- Spell Interrupted
+L.interrupted_by = "%s interrompido por %s" -- Spell interrupted by Player
+L.no = "Sem %s" -- No Spell
 L.intermission = "Intervalo"
-L.percent = "%d%% - %s" -- 20% - spell
+L.percent = "%d%% - %s" -- 20% - Spell
+L.cancelled = "%s Cancelado" -- Spell Cancelled
 
 -- Add Related
 L.add_spawned = "Add surgiu"
@@ -47,8 +52,10 @@ L.add_killed = "Add morto (%d/%d)"
 L.add_remaining = "Add morto, restam %d"
 L.add = "Inimigo adicional"
 L.adds = "Inimigos adicionais"
-L.big_add = "Add Grande"
-L.small_adds = "Adds Pequenos"
+L.big_add = "Add Grande" -- singular
+L.big_adds = "Adds Grandes" -- plural
+L.small_add = "Add Pequeno" -- singular
+L.small_adds = "Adds Pequenos" -- plural
 
 -- Mob related
 L.mob_killed = "%s morto (%d/%d)"
@@ -69,7 +76,9 @@ L.marker_player_desc = "Marca jogadores afetados por %s com %s, requer líder ou
 L.marker_npc_desc = "Marca %s com %s, requer líder ou assistente."
 
 -- Ability where two players have to move close to each other
-L.link = "Ligado com %s"
+L.link = "Ligação"
+L.link_with = "Ligado com %s"
+L.link_with_icon = "Ligado com |T13700%d:0|t%s"
 L.link_short = "Ligado: %s"
 L.link_both = "%s ligado com %s"
 L.link_removed = "Ligação removida"
@@ -78,4 +87,18 @@ L.link_removed = "Ligação removida"
 L.amount_one = "%dB" -- Billions 1,000,000,000
 L.amount_two = "%dM" -- Millions 1,000,000
 L.amount_three = "%dK" -- Thousands 1,000
---L.seconds = "%.1fs" -- 1.1 seconds
+L.seconds = "%.1fs" -- 1.1 seconds
+
+-- Common ability name replacements
+L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
+L.beam = "Feixe" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
+L.beams = "Feixes" -- Plural of L.beam
+L.bomb = "Bomba" -- Used for debuffs that make players explode
+L.explosion = "Explosão" -- When the explosion from a bomb-like ability will occur
+L.fixate = "Fixação" -- Used when a boss or add is chasing/fixated on a player
+L.knockback = "Empurrão" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
+L.traps = "Armadilhas" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
+L.meteor = "Meteoro" -- This one will probably only ever be used for actual meteors
+L.shield = "Escudo" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
+L.teleport = "Teleporte" -- A boss/add/etc teleported somewhere
+L.fear = "Medo" -- For abilities that cause you to flee in fear

@@ -71,8 +71,26 @@ plugin.pluginOptions = {
 -- Initialization
 --
 
-function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_EncounterEnd")
+do
+	local function updateProfile()
+		local db = plugin.db.profile
+
+		for k, v in next, db do
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
+				db[k] = nil
+			elseif type(v) ~= defaultType then
+				db[k] = plugin.defaultDB[k]
+			end
+		end
+	end
+
+	function plugin:OnPluginEnable()
+		self:RegisterMessage("BigWigs_EncounterEnd")
+
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
+	end
 end
 
 -------------------------------------------------------------------------------

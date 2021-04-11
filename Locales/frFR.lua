@@ -1,11 +1,18 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "frFR")
 if not L then return end
 
-L.getNewRelease = "Votre BigWigs est ancien (/bwv), mais vous pouvez facilement le mettre à jour en utilisant le client Twitch. Vous pouvez également le mettre à jour à partir de curseforge.com ou wowinterface.com."
+L.guildRelease = "Vous utilisez la version %d de BigWigs spécialement conçue pour votre guilde, basée sur la version %d de l'addon officiel."
+L.getNewRelease = "Votre BigWigs est ancien (/bwv), mais vous pouvez facilement le mettre à jour en utilisant le client CurseForge. Vous pouvez également le mettre à jour à partir de curseforge.com ou wowinterface.com."
 L.warnTwoReleases = "Votre BigWigs est obsolète de 2 versions ! Votre version risque de contenir des bugs, des fonctionnalités manquantes, voire même des délais totalement incorrects. Il est recommandé de faire la mise à jour."
 L.warnSeveralReleases = "|cffff0000Votre BigWigs est %d versions derrière la plus récente !! Il est VIVEMENT recommandé d'effectuer la mise à jour afin d'éviter tout problème de synchronisation avec les autres joueurs !|r"
+L.warnOldBase = "Vous utilisez une version guilde de BigWigs (%d), mais votre version de base (%d) est %d releases en retard. Cela peut poser problèmes."
 
-L.gitHubDesc = "BigWigs est un logiciel open source hébergé sur GitHub. Nous sommes toujours à la recherche de nouvelles personnes pour nous aider et tout le monde est le bienvenu pour inspecter notre code, effectuer des contributions et soumettre des rapports de bogues. BigWigs existe en grande partie grâce à l'aide précieuse de la communauté de WoW."
+L.gitHubDesc = "|cFF33FF99BigWigs est un logiciel open source hébergé sur GitHub. Nous sommes toujours à la recherche de nouvelles personnes pour nous aider et tout le monde est le bienvenu pour inspecter notre code, effectuer des contributions et soumettre des rapports de bogues. BigWigs existe en grande partie grâce à l'aide précieuse de la communauté de WoW.|r"
+
+L.testNameplate = "Cible détectée, création d'une barre d'info de test par dessus la barre d'info de la cible. |cFF33FF99Cette fonctionnalité est rarement utilisée : elle se présente habituellement sous la forme d'une seule barre, et est nécessaire pour le bon suivi des temps de recharge lors des combats face à plusieurs monstres qui utilisent le même sort.|r"
+
+L.classicWarning1 = "|cFF33FF99BigWigs|r: Vous utilisez la mauvaise version de BigWigs sur un serveur classique."
+L.classicWarning2 = "|cFF33FF99BigWigs|r: Veuillez installer la version classique de BigWigs."
 
 L.options = "Options"
 L.raidBosses = "Boss de raid"
@@ -33,8 +40,6 @@ L.BAR_desc = "Des barres sont affichées pour certaines techniques des rencontre
 L.berserk = "Berserk"
 L.berserk_desc = "Prévient quand le boss devient fou furieux."
 L.best = "Meilleur :"
-L.chatMessages = "Messages de la fenêtre de discussion"
-L.chatMessagesDesc = "Affiche tous les messages de BigWigs dans la fenêtre de discussion par défaut, en plus de son affichage normal."
 L.colors = "Couleurs"
 L.configure = "Configuration"
 L.COUNTDOWN = "Compte à rebours"
@@ -106,8 +111,10 @@ L.TANK_HEALER_desc = "Certaines techniques sont importantes uniquement pour les 
 L.test = "Test"
 L.testBarsBtn = "Créer une barre de test"
 L.testBarsBtn_desc = "Créée une barre pour que vous puissiez tester vos paramètres d'affichage actuels."
-L.toggleAnchorsBtn = "Afficher/cacher ancres"
-L.toggleAnchorsBtn_desc = "Affiche ou cache toutes les ancres."
+--L.toggleAnchorsBtnShow = "Show Moving Anchors"
+--L.toggleAnchorsBtnHide = "Hide Moving Anchors"
+--L.toggleAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the bars, messages, etc."
+--L.toggleAnchorsBtnHide_desc = "Hide all the moving anchors, locking everything in place."
 L.tooltipHint = "|cffeda55fClic droit|r pour accéder aux options."
 L.upToDate = "À jour :"
 L.VOICE = "Voix"
@@ -126,10 +133,13 @@ L.SAY_COUNTDOWN = "Dire le compte à rebours"
 L.SAY_COUNTDOWN_desc = "Les bulles de discussion sont faciles à repérer. BigWigs utilisera plusieurs messages en compte à rebours pour avertir les personnes proches qu'une technique vous affectant est sur le point de disparaitre."
 L.ME_ONLY_EMPHASIZE = "Mise en évidence (sur moi)"
 L.ME_ONLY_EMPHASIZE_desc = "L'activation de cette option mettra en évidence tous les messages associés à cette technique UNIQUEMENT si vous en êtes la cible, les rendant plus grands et plus visibles."
+L.NAMEPLATEBAR = "Barres d'info"
+L.NAMEPLATEBAR_desc = "Des barres sont parfois attachées aux barres d'info des unités quand plus d'un monste incantent le même sort. Si cette capacité est accompagnée d'une barre d'info que vous voulez cacher, désactivez cette option."
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Attention (Algalon)"
 L.FlagTaken = "Drapeau pris (JcJ)"
 L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Cours petite fille, cours (Le Grand Méchant Loup)"
-
+L.spell_on_you = "BigWigs : sort sur vous"
+L.spell_under_you = "BigWigs : sort en dessous de vous"

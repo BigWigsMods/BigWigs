@@ -8,18 +8,35 @@ L.positionX = "X 위치"
 L.positionY = "Y 위치"
 L.positionExact = "정확한 위치"
 L.positionDesc = "고정기로부터 정확한 위치를 원한다면 상자에 입력하거나 슬라이더를 움직이세요."
---L.width = "Width"
---L.height = "Height"
---L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
+L.width = "너비"
+L.height = "높이"
+L.sizeDesc = "보통 고정기를 끌어서 크기를 조정합니다. 정확한 크기를 지정하고 싶다면 슬라이더를 사용하거나 직접 수치를 입력 상자안에 써넣으세요(최대값 제한 없음)."
+L.fontSizeDesc = "글씨 크기를 슬라이더를 이용해 조정하거나 직접 수치를 입력 상자안에 써넣으세요 (최대 200)."
+L.disableDesc = "'%s' 기능을 비활성화 하려고 하지만 |cffff4411권장하지 않습니다|r.\n\n비활성화 하시겠습니까?"
+L.transparency = "투명도"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
 --
 
 L.altPowerTitle = "보조 자원"
+L.altPowerDesc = "보조 자원 항목은 보스가 플레이어에게 보조 자원을 제공하는 매우 드문 보스에서만 발동합니다. 이 디스플레이는 당신과 당신의 파티가 얼만큼의 '보조 자원'이 있는지 리스트로 표시합니다. 이 디스플레이를 옮기려면, 아래의 테스트 버튼을 사용하십시오."
 L.toggleDisplayPrint = "디스플레이가 다음에 표시됩니다. 이 우두머리 전투에서 완전히 비활성하려면 우두머리 전투 옵션에서 끄도록 전환해야 합니다."
 L.disabled = "비활성"
 L.disabledDisplayDesc = "디스플레이를 사용하는 모든 모듈에서 디스플레이를 비활성화합니다."
+L.resetAltPowerDesc = "위치를 비롯한 모든 보조 자원 관련 설정을 초기화합니다."
+L.test = "시험용"
+L.altPowerTestDesc = "보조 자원 디스플레이를 표시해서 움직일수 있게 하고, 보스 전투에서 주로 어떻게 변화하는지를 보여줍니다."
+L.yourPowerBar = "나의 자원 바"
+L.barColor = "바 색"
+L.barTextColor = "바 이름표 색깔"
+L.additionalWidth = "추가 너비"
+L.additionalHeight = "추가 높이"
+L.additionalSizeDesc = "원래의 디스플레이에서 이 슬라이더로 크기를 추가하거나, 박스에 최대 100까지의 숫자를 입력해서 사이즈를 조절할 수 있습니다."
+L.yourPowerTest = "나의 자원: %d" -- Your Power: 42
+L.yourAltPower = "나의 %s: %d" -- e.g. Your Corruption: 42
+L.player = "플레이어 %d" -- Player 7
+L.disableAltPowerDesc = "전역 옵션으로 보조 자원 디스플레이를 비활성화하여, 어떠한 보스 전투에서도 보이지 않게 합니다."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -34,8 +51,8 @@ L.everyoneElse = "그 외 모두"
 
 L.autoReplyBasic = "우두머리와 전투하느라 바쁩니다."
 L.autoReplyNormal = "'%s'와(과) 전투하느라 바쁩니다."
-L.autoReplyAdvanced = "'%s'와(과) 전투하느라 바쁩니다.현재 %d/%d 명이 생존 중입니다."
-L.autoReplyExtreme = "'%s'와(과) 전투하느라 바쁩니다.현재 %d/%d 명이 생존 중입니다: %s"
+L.autoReplyAdvanced = "'%s' (%s)와(과) 전투하느라 바쁩니다.현재 %d/%d 명이 생존 중입니다."
+L.autoReplyExtreme = "'%s' (%s)와(과) 전투하느라 바쁩니다.현재 %d/%d 명이 생존 중입니다: %s"
 
 L.autoReplyLeftCombatBasic = "더이상 우두머리와 싸우고 있지 않습니다."
 L.autoReplyLeftCombatNormalWin = "'%s'에게 승리하였습니다."
@@ -50,6 +67,14 @@ L.autoReplyLeftCombatAdvancedWipe = "'%s'에게 %s 에서 전멸하였습니다.
 L.bars = "바"
 L.style = "모양"
 L.bigWigsBarStyleName_Default = "기본"
+L.resetBarsDesc = "위치를 비롯한 모든 바 관련 설정을 초기화합니다."
+
+L.nameplateBars = "이름표 바"
+L.nameplateAutoWidth = "이름표 너비와 맞추기"
+L.nameplateAutoWidthDesc = "이름표 바의 너비를 해당 이름표의 너비와 맞춥니다."
+L.nameplateOffsetY = "세로 위치 조정"
+L.nameplateOffsetYDesc = "위로 확장을 사용할 경우 이름표의 상단으로부터, 그렇지 않은 경우 이름표의 하단으로부터의 거리입니다."
+L.nameplateAlphaDesc = "네임플레이트 바의 투명도를 조정합니다."
 
 L.clickableBars = "클릭 가능한 바"
 L.clickableBarsDesc = "BigWigs 바는 기본적으로 클릭을 무시합니다. 이 방법으로 커서가 바 위에 있을 때도 바 뒤의 물건을 대상 지정할 수 있고 바 뒤에 있는 대상에게 광역 주문을 사용할 수 있으며, 카메라 각도를 변경하는 등의 동작을 가능하게 합니다. |cffff4411클릭 가능한 바를 활성화하면 이런 동작들이 더이상 작동하지 않습니다.|r 당신이 바를 마우스 클릭하면 바가 클릭을 차단합니다.\n"
@@ -59,15 +84,13 @@ L.modifierDesc = "타이머 바위에 클릭 동작을 활성화하려면 선택
 L.modifierKey = "조합 키와 같이 사용할때만"
 L.modifierKeyDesc = "지정된 조합 키가 눌려있지 않다면 바가 클릭을 무시하도록 허용합니다, 아래 설명된 마우스 동작이 사용 가능해집니다."
 
-L.tempEmphasize = "지속 시간과 관련된 바와 메시지를 일시적으로 강조합니다."
+L.temporaryCountdownDesc = "일시적으로 해당 바에 대한 초읽기를 활성화합니다."
 L.report = "보고"
 L.reportDesc = "현재 바 상태를 활성화된 그룹 대화에 보고합니다; 인스턴스 대화, 공격대, 파티 또는 일반 대화 중 적절한 채널을 사용합니다."
 L.remove = "제거"
-L.removeDesc = "일시적으로 바와 모든 관련 메시지를 제거합니다."
+L.removeBarDesc = "일시적으로 해당 바를 제거합니다."
 L.removeOther = "다른 바 제거"
-L.removeOtherDesc = "일시적으로 모든 다른 바와 (이 바를 제외하고) 관련 메시지를 제거합니다."
-L.disable = "비활성화"
-L.disableDesc = "이 바를 생성하는 우두머리 전투 능력 옵션을 영구적으로 비활성합니다."
+L.removeOtherBarDesc = "일시적으로 해당 바를 제외한 다른 모든 바를 제거합니다."
 
 L.emphasizeAt = "다음에 강조... (초)"
 L.growingUpwards = "위로 확장"
@@ -79,7 +102,6 @@ L.emphasizeMultiplierDesc = "강조 고정기로 이동하는 바가 활성화�
 L.enable = "활성화"
 L.move = "이동"
 L.moveDesc = "강조된 바를 강조 고정기로 이동시킵니다. 이 옵션을 끄면 강조된 바는 단순히 크기 비율과 색상을 변경합니다."
-L.regularBars = "보통 바"
 L.emphasizedBars = "강조된 바"
 L.align = "정렬"
 L.alignText = "문자 정렬"
@@ -89,7 +111,7 @@ L.center = "중앙"
 L.right = "오른쪽"
 L.time = "시간"
 L.timeDesc = "바에 남은 시간을 표시하거나 숨깁니다."
---L.textDesc = "Whether to show or hide the text displayed on the bars."
+L.textDesc = "바에 문자를 표시하거나 숨깁니다."
 L.icon = "아이콘"
 L.iconDesc = "바 아이콘을 표시하거나 숨깁니다."
 L.iconPosition = "아이콘 위치"
@@ -101,8 +123,8 @@ L.fill = "채우기"
 L.fillDesc = "바를 비우는 대신 채워나갑니다."
 L.spacing = "간격"
 L.spacingDesc = "각 바 사이의 간격을 조절합니다."
---L.visibleBarLimit = "Visible bar limit"
---L.visibleBarLimitDesc = "Set the maximum amount of bars that are visible at the same time."
+L.visibleBarLimit = "표시되는 바의 수"
+L.visibleBarLimitDesc = "동시에 표시할 바의 최대 개수를 설정합니다."
 
 L.localTimer = "지역"
 L.timerFinished = "%s: 타이머 [%s] 종료됨."
@@ -128,28 +150,45 @@ L.breakFinished = "휴식 시간이 끝났습니다!"
 --
 
 L.bossBlock = "우두머리 기능 차단"
-L.bossBlockDesc = "우두머리 전투 중 차단할 수 있는 다양한 기능들을 설정합니다."
+L.bossBlockDesc = "우두머리 전투 중 차단할 수 있는 다양한 기능들을 설정합니다.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
 L.movieBlocked = "이 동영상을 본적이 있으므로 건너뜁니다."
 L.blockEmotes = "화면 중앙의 감정표현 차단"
 L.blockEmotesDesc = "몇몇 우두머리는 특정 능력에 감정표현을 표시합니다, 이 메시지는 너무 길고 설명적입니다. 우리는 게임 플레이를 방해하지 않으면서 당신이 특별한 행동을 하지 않아도 되는, 작고 더 알맞은 메시지를 만들려고 노력합니다.\n\n참고하세요: 우두머리 감정표현를 읽고 싶다면 여전히 대화에서 확인할 수 있습니다."
 L.blockMovies = "반복되는 동영상 차단"
 L.blockMoviesDesc = "우두머리 전투 동영상이 한번만 재생되도록 허용합니다 (각 한번씩 볼수 있도록) 그 후엔 차단됩니다."
---L.blockFollowerMission = "주둔지 알림 차단" -- Rename to follower mission
---L.blockFollowerMissionDesc = "주둔지 알림은 여러가지를 표시하지만 주로 추종자 임무 완료를 표시합니다.\n\n이 알림들은 우두머리 전투 중 UI를 치명적으로 가릴 수 있습니다, 따라서 차단을 권장합니다."
+L.blockFollowerMission = "추종자 임무 알림 차단" -- Rename to follower mission
+L.blockFollowerMissionDesc = "추종자 임무 알림은 여러가지를 표시하지만 주로 모험이 완료되었을 때 표시합니다.\n\n이 알림들은 우두머리 전투 중 UI를 치명적으로 가릴 수 있습니다, 따라서 차단을 권장합니다."
 L.blockGuildChallenge = "길드 도전 알림 차단"
 L.blockGuildChallengeDesc = "길드 도전 알림은 여러가지를 표시하지만 주로 당신의 길드 파티의 영웅 던전이나 도전 모드 던전 완료를 표시합니다.\n\n이 알림들은 우두머리 전투 중 UI를 치명적으로 가릴 수 있습니다, 따라서 차단을 권장합니다."
 L.blockSpellErrors = "주문 실패 메시지 차단"
 L.blockSpellErrorsDesc = "일반적으로 화면 상단에 표시되는 \"마법이 아직 준비되지 않았습니다\" 같은 메시지를 차단합니다."
---L.disableSfx = "Disable sound effects"
---L.disableSfxDesc = "The 'Sound Effects' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
---L.blockTooltipQuests = "Block tooltip quest objectives"
---L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
---L.blockObjectiveTracker = "Hide quest tracker"
---L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space.\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
+L.audio = "음성"
+L.music = "배경음악"
+L.ambience = "환경 소리"
+L.sfx = "효과음"
+L.errorSpeech = "오류 음성"
+L.disableMusic = "배경음악 끄기 (권장)"
+L.disableAmbience = "환경 소리 끄기 (권장)"
+L.disableSfx = "효과음 끄기 (권장하지 않음)"
+L.disableErrorSpeech = "오류 음성 음소거(권장)"
+L.disableAudioDesc = "WoW의 소리 설정에서 '%s' 설정이 꺼지고 교전이 끝난 후에 다시 켜집니다. BigWigs의 알림 소리에 더 집중하는데 도움이 됩니다."
+L.blockTooltipQuests = "툴팁에서 퀘스트 목표 표시를 숨깁니다."
+L.blockTooltipQuestsDesc = "우두머리를 처치하는 퀘스트를 진행 중인 경우 해당 우두머리에 마우스를 올렸을 때 보통 '0/1 완료' 같은 문구가 툴팁에 표시됩니다. 전투 중에 이 문구들을 숨김으로써 툴팁의 크기가 너무 크게 확장되는 것을 방지합니다."
+L.blockObjectiveTracker = "퀘스트 추적기 숨김"
+L.blockObjectiveTrackerDesc = "보스 전투 중에 퀘스트 추적기를 숨겨서 화면의 여유 공간을 넓힙니다.\n\n신화 쐐기돌이나 업적을 추적 중일 때는 숨기지 않습니다."
+
+L.blockTalkingHead = "'말하는 머리' NPC 대사 팝업 숨기기"
+L.blockTalkingHeadDesc = "'말하는 머리' 는 npc머리를 가지고있는 팝업 대화 박스입니다. |cffff4411가끔|r NPC가 대사를 할때 화면 중앙 하단쪽에 표시됩니다.\n\n어떤 경우에 이 기능의 표시 기능을 숨길지 상황을 선택할수 있습니다.\n\n|cFF33FF99주의점:|r\n 1) 이 기능은 npc의 목소리는 끊기지 않고 재생할 것입니다.\n 2) 안전하게 특정 머리들만 안보이게 될 것입니다. 일회성 퀘스트같이 특별한 머리들은 계속 보일 것입니다."
+L.blockTalkingHeadDungeons = "일반 및 명웅 던전"
+L.blockTalkingHeadMythics = "신화 및 쐐기돌 던전"
+L.blockTalkingHeadRaids = "레이드"
+L.blockTalkingHeadTimewalking = "시간여행 (던전 및 레이드)"
+L.blockTalkingHeadScenarios = "시나리오"
 
 L.subzone_grand_bazaar = "대시장" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "잔달라 항구" -- Battle of Dazar'alor raid (Battle for Azeroth)
---L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
+L.subzone_eastern_transept = "동쪽 회랑" -- Auchindoun dungeon (Warlords of Draenor)
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -168,34 +207,36 @@ L.resetDesc = "위의 색상을 기본 색상으로 초기화합니다."
 L.resetAll = "모두 초기화"
 L.resetAllDesc = "우두머리 전투 설정에 사용자 설정 색상을 적용했다면, 이 버튼은 여기에 정의된 색상이 대신 사용되도록 모두 초기화합니다."
 
---L.red = "Red"
---L.redDesc = "General encounter warnings."
---L.blue = "Blue"
---L.blueDesc = "Warnings for things that affect you directly such as a debuff being applied to you."
---L.orange = "Orange"
---L.yellow = "Yellow"
---L.green = "Green"
---L.greenDesc = "Warnings for good things that happen such as a debuff being removed from you."
---L.cyan = "Cyan"
---L.cyanDesc = "Warnings for encounter status changes such as advancing to the next stage."
---L.purple = "Purple"
---L.purpleDesc = "Warnings for tank specific abilities such as stacks of a tank debuff."
+L.red = "빨강"
+L.redDesc = "일반적인 경보"
+L.blue = "파랑"
+L.blueDesc = "나에게 직접적으로 영향을 주는 것들에 대한 경보(예: 나에게 약화 효과가 걸릴 때)."
+L.orange = "주황"
+L.yellow = "노랑"
+L.green = "초록"
+L.greenDesc = "이로운 상황에 대한 경보(예: 나에게 걸린 약화 효과가 제거될 때)."
+L.cyan = "청록"
+L.cyanDesc = "다음 단계로 전환 같은 교전 상태의 변화에 대한 경보."
+L.purple = "보라"
+L.purpleDesc = "방어 전담에 관련된 경보(예: 방어 전담이 걸리는 약화 효과 중첩)."
 
 -----------------------------------------------------------------------
--- Emphasize.lua
+-- Countdown.lua
 --
 
-L.superEmphasize = "특수 강조"
-L.superEmphasizeDesc = "특정 우두머리 전투 능력의 관련 메시지나 바를 증폭시킵니다.\n\n우두머리 전투 능력의 고급 옵션에서 강조 옵션을 사용할 때 여기에 수행해야 될 작업을 정확히 구성하세요.\n\n|cffff4411기본값으로 모든 능력에 강조는 꺼져있다는 걸 참고하세요.|r\n"
-L.uppercase = "대문자"
-L.uppercaseDesc = "강조 옵션에 관련된 모든 메시지를 대문자로 표시합니다."
-L.superEmphasizeDisableDesc = "모든 모듈이 사용하는 강조를 비활성화합니다."
 L.textCountdown = "문자 초읽기"
 L.textCountdownDesc = "초읽기 중에 시각적 카운터를 표시합니다."
 L.countdownColor = "초읽기 색상"
 L.countdownVoice = "초읽기 음성"
 L.countdownTest = "초읽기 테스트"
 L.countdownAt = "초읽기 시작... (초)"
+L.countdownAt_desc = "초읽기가 몇 초 전부터 시작될 지 선택하세요."
+L.countdown = "초읽기"
+L.countdownDesc = "음성과 문자열 초읽기에 관련된 기능입니다. 기본값으로 초읽기 기능이 켜져있는 경우는 드물지만 우두머리 별 설정에서 아무 우두머리 능력에 대한 초읽기를 켤 수 있습니다."
+L.countdownAudioHeader = "음성 초읽기"
+L.countdownTextHeader = "문자 초읽기"
+L.resetCountdownDesc = "위의 모든 초읽기 관련 설정들을 기본값으로 초기화합니다."
+L.resetAllCountdownDesc = "위의 초읽기 관련 설정들은 물론 우두머리 별 설정에서 따로 사용자 지정된 초읽기 음성들 역시 기본값으로 초기화합니다."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -209,20 +250,21 @@ L.infoBox = "정보 상자"
 
 L.sinkDescription = "이 애드온의 출력을 BigWigs 메시지 디스플레이에 출력합니다. 이 디스플레이는 아이콘과 색상, 그리고 동시에 4개의 메시지 출력을 지원합니다. 새롭게 삽입된 메시지는 사용자에게 알리기 위해 크기가 커졌다가 다시 빠르게 줄어듭니다."
 L.emphasizedSinkDescription = "이 애드온의 출력을 BigWigs 강조 메시지 디스플레이에 출력합니다. 이 디스플레이는 문자와 색상, 그리고 동시에 하나의 메시지 출력을 지원합니다."
-L.emphasizedCountdownSinkDescription = "이 애드온의 출력을 BigWigs 강조 초읽기 메시지 디스플레이에 출력합니다. 이 디스플레이는 문자와 색상, 그리고 동시에 하나의 메시지 출력을 지원합니다."
+L.resetMessagesDesc = "위치를 비롯한 메시지에 관련된 모든 설정을 기본값으로 초기화합니다."
 
 L.bwEmphasized = "BigWigs 강조"
 L.messages = "메시지"
-L.normalMessages = "일반 메시지"
 L.emphasizedMessages = "강조 메시지"
-L.output = "출력"
+L.emphasizedDesc = "강조 메시지는 화면의 중앙에 보다 큰 크기의 메시지를 띄움으로써 당신의 주의를 끌게 됩니다. 기본값으로 강조 메시지 기능이 켜져 있는 경우는 드물지만 우두머리 별 설정에서 아무 우두머리 별 능력에 대한 강조 메시지를 켤 수 있습니다."
+L.uppercase = "대문자"
+L.uppercaseDesc = "모든 강조 메시지들이 대문자로 표시됩니다."
 
-L.useColors = "색상 사용"
-L.useColorsDesc = "색상을 무시하도록 메시지에 색상 사용을 전환합니다."
 L.useIcons = "아이콘 사용"
 L.useIconsDesc = "메시지 옆에 아이콘을 표시합니다."
 L.classColors = "직업 색상"
-L.classColorsDesc = "플레이어의 이름에 직업 색상을 입힙니다."
+L.classColorsDesc = "메세지에 플레이어 이름이 포함될때가 있습니다. 이 옵션을 활성화하면 그 플레이어들의 이름을 직업 색상으로 표시합니다."
+L.chatMessages = "대화 창 메시지"
+L.chatMessagesDesc = "모든 BigWigs 메시지를 표시 설정과 더불어 기본 대화 창에도 출력합니다."
 
 L.fontSize = "글꼴 크기"
 L.none = "안함"
@@ -250,6 +292,7 @@ L.soundDelayDesc = "누군가 당신과 가까이 있을 때 BigWigs에 지정�
 
 L.proximity = "근접 디스플레이"
 L.proximity_desc = "이 우두머리 전투에 적절할 때 근접 창을 표시합니다, 자신과 너무 가깝게 서있는 플레이어를 보여줍니다."
+L.resetProximityDesc = "위치를 비롯한 근접에 관련된 모든 설정을 기본값으로 초기화합니다."
 
 L.close = "닫기"
 L.closeProximityDesc = "근접 디스플레이를 닫습니다.\n\n모든 우두머리 전투에서 완전히 비활성화하려면, 관련 우두머리 모듈의 옵션에서 '근접' 옵션을 꺼야합니다."
@@ -289,6 +332,8 @@ L.pullStoppedCombat = "전투가 이미 시작되었기 때문에 전투 예정 
 L.pullIn = "%d초 후 전투 시작"
 L.sendPull = "BigWigs와 DBM 사용자에게 전투 예정 타이머를 보냅니다."
 L.wrongPullFormat = "1초에서 60초 사이여야 합니다. 올바른 예제: /pull 5"
+L.countdownBegins = "초읽기 시작"
+L.countdownBegins_desc = "전투 시작 초읽기가 몇 초 전부터 시작될 지 선택하세요."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -307,17 +352,21 @@ L.secondaryDesc = "우두머리 전투 스크립트가 사용할 두번째 공�
 --
 
 L.Sounds = "소리"
+L.soundsDesc = "빅윅은 '주 음량' 소리 채널로 모든 소리를 재생합니다. 소리가 너무 작거나 너무 크다면, 와우의 음향 설정에 들어가서 '주 음량' 을 알맞게 조정하십시오.\n\n아래에선 특별한 상황에서 나오는 다양한 소리들을 설정하거나, '없음'으로 설정해서 비활성화 할 수 있습니다. 특성 보스의 능력의 소리만 바꾸고 싶다면, 보스 전투 설정에서 바꾸십시오.\n\n"
+L.oldSounds = "예전 소리들"
 
 L.Alarm = "알람"
 L.Info = "정보"
 L.Alert = "경보"
 L.Long = "길게"
-L.Warning = "경보"
+L.Warning = "경고"
+L.onyou = "나에게 적용되는 주문, 강화 효과, 약화 효과"
+L.underyou = "내 밑의 \"바닥\"을 피해야 할 때"
 
 L.sound = "소리"
-L.soundDesc = "메시지는 소리와 함게 나타날 수 있습니다. 몇몇 사람들은 메시지와 함께 어떤 소리가 재생되는지 배운 후에는 실제 메시지를 읽는 것보다 소리를 듣는 것으로 더 쉽게 찾을 수 있습니다."
 
-L.customSoundDesc = "모듈이 제공한 소리 대신에 선택된 사용자 설정 소리를 재생합니다"
+L.customSoundDesc = "모듈이 제공한 소리 대신에 선택된 사용자 설정 소리를 재생합니다."
+L.resetSoundDesc = "소리에 관련된 모든 설정을 기본값으로 초기화합니다."
 L.resetAllCustomSound = "어떤 우두머리 전투 설정에 사용자 설정된 소리가 있다면 이 버튼으로 모두 초기화하고 여기에 정의된 소리를 대신 사용합니다."
 
 -----------------------------------------------------------------------

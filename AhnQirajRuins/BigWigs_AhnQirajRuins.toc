@@ -22,6 +22,7 @@
 ## Notes-ruRU: BigWigs Ruins of Ahn'Qiraj Modules
 ## Notes-zhCN: BigWigs 安其拉废墟模块。
 ## Notes-zhTW: BigWigs 安其拉廢墟模組。
+## Version: @project-version@
 
 ## LoadOnDemand: 1
 ## Dependencies: BigWigs

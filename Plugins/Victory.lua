@@ -20,7 +20,6 @@ local PlaySoundFile = PlaySoundFile
 
 plugin.defaultDB = {
 	soundName = "BigWigs: Victory",
-	--blizzMsg = true,
 	bigwigsMsg = false,
 }
 
@@ -32,13 +31,6 @@ plugin.pluginOptions = {
 	set = function(i, value)
 		local n = i[#i]
 		plugin.db.profile[n] = value
-		--if n == "blizzMsg" then
-		--	if value then
-		--		BossBanner:RegisterEvent("BOSS_KILL")
-		--	else
-		--		BossBanner:UnregisterEvent("BOSS_KILL")
-		--	end
-		--end
 	end,
 	args = {
 		heading = {
@@ -79,13 +71,6 @@ plugin.pluginOptions = {
 					order = 1,
 					width = "full",
 				},
-				--blizzMsg = {
-				--	type = "toggle",
-				--	name = L.victoryMessageBlizzard,
-				--	desc = L.victoryMessageBlizzardDesc,
-				--	order = 2,
-				--	width = "full",
-				--},
 			},
 		},
 	},
@@ -95,12 +80,27 @@ plugin.pluginOptions = {
 -- Initialization
 --
 
-function plugin:OnPluginEnable()
-	--if not self.db.profile.blizzMsg then
-	--	BossBanner:UnregisterEvent("BOSS_KILL")
-	--end
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_VictorySound")
+do
+	local function updateProfile()
+		local db = plugin.db.profile
+
+		for k, v in next, db do
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
+				db[k] = nil
+			elseif type(v) ~= defaultType then
+				db[k] = plugin.defaultDB[k]
+			end
+		end
+	end
+
+	function plugin:OnPluginEnable()
+		self:RegisterMessage("BigWigs_OnBossWin")
+		self:RegisterMessage("BigWigs_VictorySound")
+
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
+	end
 end
 
 -------------------------------------------------------------------------------

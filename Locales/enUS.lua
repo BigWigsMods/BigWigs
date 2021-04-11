@@ -13,14 +13,19 @@ L.warmup = "Warmup"
 L.warmup_desc = "Time until combat with the boss starts."
 
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) already exists as a module in BigWigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any BigWigs folders you have and then reinstall it from scratch."
+L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
 
 -- Loader / Options.lua
+L.classicWarning1 = "|cFF33FF99BigWigs|r: You're using the wrong version of BigWigs on a classic server."
+L.classicWarning2 = "|cFF33FF99BigWigs|r: Please install the classic version of BigWigs."
 L.officialRelease = "You are running an official release of BigWigs %s (%s)"
 L.alphaRelease = "You are running an ALPHA RELEASE of BigWigs %s (%s)"
 L.sourceCheckout = "You are running a source checkout of BigWigs %s directly from the repository."
-L.getNewRelease = "Your BigWigs is old (/bwv) but you can easily update it using the Twitch Client. Alternatively, you can update manually from curseforge.com or wowinterface.com."
+L.guildRelease = "You are running version %d of BigWigs made for your guild, based on version %d of the official addon."
+L.getNewRelease = "Your BigWigs is old (/bwv) but you can easily update it using the CurseForge Client. Alternatively, you can update manually from curseforge.com or wowinterface.com."
 L.warnTwoReleases = "Your BigWigs is 2 releases out of date! Your version may have bugs, missing features, or completely incorrect timers. It is strongly recommended you update."
 L.warnSeveralReleases = "|cffff0000Your BigWigs is %d releases out of date!! We HIGHLY recommend you update to prevent syncing issues with other players!|r"
+L.warnOldBase = "You are using a guild version of BigWigs (%d), but your base version (%d) is %d releases out of date. This may cause issues."
 
 L.tooltipHint = "|cffeda55fRight-Click|r to access options."
 L.activeBossModules = "Active boss modules:"
@@ -38,19 +43,23 @@ L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not b
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "Beware (Algalon)"
 L.FlagTaken = "Flag Taken (PvP)"
 L.Destruction = "Destruction (Kil'jaeden)"
 L.RunAway = "Run Away Little Girl (Big Bad Wolf)"
+L.spell_on_you = "BigWigs: Spell on you"
+L.spell_under_you = "BigWigs: Spell under you"
 
 -- Options.lua
 L.options = "Options"
 L.raidBosses = "Raid Bosses"
 L.dungeonBosses = "Dungeon Bosses"
 L.introduction = "Welcome to BigWigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group."
-L.toggleAnchorsBtn = "Toggle Anchors"
-L.toggleAnchorsBtn_desc = "Toggle showing or hiding of all the anchors."
+L.toggleAnchorsBtnShow = "Show Moving Anchors"
+L.toggleAnchorsBtnHide = "Hide Moving Anchors"
+L.toggleAnchorsBtnShow_desc = "Show all the moving anchors, allowing you to move the bars, messages, etc."
+L.toggleAnchorsBtnHide_desc = "Hide all the moving anchors, locking everything in place."
 L.testBarsBtn = "Create Test Bar"
 L.testBarsBtn_desc = "Creates a bar for you to test your current display settings with."
 L.sound = "Sound"
@@ -67,8 +76,6 @@ L.listAbilities = "List abilities in group chat"
 
 L.dbmFaker = "Pretend I'm using DBM"
 L.dbmFakerDesc = "If a DBM user does a version check to see who's using DBM, they will see you on the list. Useful for guilds that force using DBM."
-L.chatMessages = "Chat frame messages"
-L.chatMessagesDesc = "Outputs all BigWigs messages to the default chat frame in addition to the display setting."
 L.zoneMessages = "Show zone messages"
 L.zoneMessagesDesc = "Disabling this will stop showing messages when you enter a zone that BigWigs has timers for, but you don't have installed. We recommend you leave this turned on as it's the only notification you will get if we suddenly create timers for a new zone that you find useful."
 
@@ -81,7 +88,7 @@ L.slashDescRange = "|cFFFED000/range:|r Opens the range indicator."
 L.slashDescVersion = "|cFFFED000/bwv:|r Performs a BigWigs version check."
 L.slashDescConfig = "|cFFFED000/bw:|r Opens the BigWigs configuration."
 
-L.gitHubDesc = "BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out."
+L.gitHubDesc = "|cFF33FF99BigWigs is open source software hosted on GitHub. We are always looking for new people to help us out and everyone is welcome to inspect our code, make contributions and submit bug reports. BigWigs is as great as it is today largely in part to the great WoW community helping us out.|r"
 
 L.BAR = "Bars"
 L.MESSAGE = "Messages"
@@ -125,6 +132,8 @@ L.SAY_COUNTDOWN = "Say Countdown"
 L.SAY_COUNTDOWN_desc = "Chat bubbles are easy to spot. BigWigs will use multiple say messages counting down to alert people nearby that an ability on you is about to expire."
 L.ME_ONLY_EMPHASIZE = "Emphasize (me only)"
 L.ME_ONLY_EMPHASIZE_desc = "Enabling this will emphasize any messages associated with this ability ONLY if it is casted on you, making them larger and more visible."
+L.NAMEPLATEBAR = "Nameplate Bars"
+L.NAMEPLATEBAR_desc = "Bars are sometimes attached to nameplates when more than one mob casts the same spell. If this ability is accompanied by a nameplate bar that you want to hide, disable this option."
 
 L.advanced = "Advanced options"
 L.back = "<< Back"
@@ -143,4 +152,3 @@ L.mythic = "Mythic"
 L.wipes = "Wipes:"
 L.kills = "Kills:"
 L.best = "Best:"
-

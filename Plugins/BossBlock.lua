@@ -10,14 +10,11 @@ if not plugin then return end
 --
 
 plugin.defaultDB = {
-	blockEmotes = true,
-	blockMovies = true,
-	blockGarrison = true,
-	blockGuildChallenge = true,
 	blockSpellErrors = true,
-	blockTooltipQuests = true,
-	blockObjectiveTracker = true,
 	disableSfx = false,
+	disableMusic = false,
+	disableAmbience = false,
+	disableErrorSpeech = false,
 }
 
 --------------------------------------------------------------------------------
@@ -27,8 +24,11 @@ plugin.defaultDB = {
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
+local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local GetSubZoneText = GetSubZoneText
 local SetCVar = SetCVar
+local CheckElv = nil
+local RestoreAll
 
 -------------------------------------------------------------------------------
 -- Options
@@ -38,77 +38,78 @@ plugin.pluginOptions = {
 	name = L.bossBlock,
 	desc = L.bossBlockDesc,
 	type = "group",
+	childGroups = "tab",
 	get = function(info)
 		return plugin.db.profile[info[#info]]
 	end,
 	set = function(info, value)
-		if IsEncounterInProgress() then return end -- Don't allow toggling during an encounter.
 		local entry = info[#info]
 		plugin.db.profile[entry] = value
 	end,
+	disabled = function() return IsEncounterInProgress() end, -- Don't allow toggling during an encounter.
 	args = {
-		heading = {
-			type = "description",
-			name = L.bossBlockDesc.. "\n\n",
-			order = 0,
-			width = "full",
-			fontSize = "medium",
-		},
-		blockEmotes = {
-			type = "toggle",
-			name = L.blockEmotes,
-			desc = L.blockEmotesDesc,
-			width = "full",
+		general = {
+			type = "group",
+			name = L.general,
 			order = 1,
+			args = {
+				heading = {
+					type = "description",
+					name = L.bossBlockDesc,
+					order = 0,
+					width = "full",
+					fontSize = "medium",
+				},
+				blockSpellErrors = {
+					type = "toggle",
+					name = L.blockSpellErrors,
+					desc = L.blockSpellErrorsDesc,
+					width = "full",
+					order = 5,
+				},
+			},
 		},
-		--blockMovies = {
-		--	type = "toggle",
-		--	name = L.blockMovies,
-		--	desc = L.blockMoviesDesc,
-		--	width = "full",
-		--	order = 2,
-		--},
-		--blockGarrison = {
-		--	type = "toggle",
-		--	name = L.blockFollowerMission,
-		--	desc = L.blockFollowerMissionDesc,
-		--	width = "full",
-		--	order = 3,
-		--},
-		--blockGuildChallenge = {
-		--	type = "toggle",
-		--	name = L.blockGuildChallenge,
-		--	desc = L.blockGuildChallengeDesc,
-		--	width = "full",
-		--	order = 4,
-		--},
-		blockSpellErrors = {
-			type = "toggle",
-			name = L.blockSpellErrors,
-			desc = L.blockSpellErrorsDesc,
-			width = "full",
-			order = 5,
-		},
-		--blockTooltipQuests = {
-		--	type = "toggle",
-		--	name = L.blockTooltipQuests,
-		--	desc = L.blockTooltipQuestsDesc,
-		--	width = "full",
-		--	order = 6,
-		--},
-		--blockObjectiveTracker = {
-		--	type = "toggle",
-		--	name = L.blockObjectiveTracker,
-		--	desc = L.blockObjectiveTrackerDesc,
-		--	width = "full",
-		--	order = 7,
-		--},
-		disableSfx = {
-			type = "toggle",
-			name = L.disableSfx,
-			desc = L.disableSfxDesc,
-			width = "full",
-			order = 8,
+		audio = {
+			type = "group",
+			name = L.audio,
+			order = 2,
+			args = {
+				heading = {
+					type = "description",
+					name = L.bossBlockAudioDesc,
+					order = 0,
+					width = "full",
+					fontSize = "medium",
+				},
+				disableMusic = {
+					type = "toggle",
+					name = L.disableMusic,
+					desc = L.disableAudioDesc:format(L.music),
+					width = "full",
+					order = 1,
+				},
+				disableAmbience = {
+					type = "toggle",
+					name = L.disableAmbience,
+					desc = L.disableAudioDesc:format(L.ambience),
+					width = "full",
+					order = 2,
+				},
+				disableErrorSpeech = {
+					type = "toggle",
+					name = L.disableErrorSpeech,
+					desc = L.disableAudioDesc:format(L.errorSpeech),
+					width = "full",
+					order = 3,
+				},
+				disableSfx = {
+					type = "toggle",
+					name = L.disableSfx,
+					desc = L.disableAudioDesc:format(L.sfx),
+					width = "full",
+					order = 4,
+				},
+			},
 		},
 	},
 }
@@ -117,19 +118,46 @@ plugin.pluginOptions = {
 -- Initialization
 --
 
-function plugin:OnPluginEnable()
-	self:RegisterMessage("BigWigs_OnBossEngage")
-	self:RegisterMessage("BigWigs_OnBossWin")
-	self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossWin")
+do
+	local function updateProfile()
+		local db = plugin.db.profile
 
-	-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
-	if self.db.profile.disableSfx then
-		SetCVar("Sound_EnableSFX", "1")
+		for k, v in next, db do
+			local defaultType = type(plugin.defaultDB[k])
+			if defaultType == "nil" then
+				db[k] = nil
+			elseif type(v) ~= defaultType then
+				db[k] = plugin.defaultDB[k]
+			end
+		end
 	end
 
-	if IsEncounterInProgress() then -- Just assume we logged into an encounter after a DC
-		self:BigWigs_OnBossEngage()
+	function plugin:OnPluginEnable()
+		self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
+		self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
+		self:RegisterMessage("BigWigs_OnBossWin", "OnWinOrWipe")
+		self:RegisterMessage("BigWigs_OnBossWipe", "OnWinOrWipe")
+		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
+		updateProfile()
+
+		-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
+		if self.db.profile.disableSfx then
+			SetCVar("Sound_EnableSFX", "1")
+		end
+		if self.db.profile.disableMusic then
+			SetCVar("Sound_EnableMusic", "1")
+		end
+		if self.db.profile.disableAmbience then
+			SetCVar("Sound_EnableAmbience", "1")
+		end
+		if self.db.profile.disableErrorSpeech then
+			SetCVar("Sound_EnableErrorSpeech", "1")
+		end
 	end
+end
+
+function plugin:OnPluginDisable()
+	RestoreAll(self)
 end
 
 -------------------------------------------------------------------------------
@@ -155,30 +183,49 @@ do
 		end
 	end
 
-	local restoreObjectiveTracker = nil
-	function plugin:BigWigs_OnBossEngage()
-		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
-			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
-			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
-		end
+	function plugin:OnEngage(event, module)
+		if not module or not module.journalId or module.worldBoss then return end
+
 		if self.db.profile.blockSpellErrors then
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "0")
 		end
+		--if self.db.profile.blockTooltipQuests then
+		--	SetCVar("showQuestTrackingTooltips", "0")
+		--end
+		if self.db.profile.disableMusic then
+			SetCVar("Sound_EnableMusic", "0")
+		end
+		if self.db.profile.disableAmbience then
+			SetCVar("Sound_EnableAmbience", "0")
+		end
+		if self.db.profile.disableErrorSpeech then
+			SetCVar("Sound_EnableErrorSpeech", "0")
+		end
 	end
 
-	function plugin:BigWigs_OnBossWin()
-		if self.db.profile.blockEmotes then
-			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
-			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
-		end
+	function RestoreAll(self)
 		if self.db.profile.blockSpellErrors then
 			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "1")
 		end
+		if self.db.profile.disableMusic then
+			SetCVar("Sound_EnableMusic", "1")
+		end
+		if self.db.profile.disableAmbience then
+			SetCVar("Sound_EnableAmbience", "1")
+		end
+		if self.db.profile.disableErrorSpeech then
+			SetCVar("Sound_EnableErrorSpeech", "1")
+		end
+	end
+
+	function plugin:OnWinOrWipe(event, module)
+		if not module or not module.journalId or module.worldBoss then return end
+		RestoreAll(self)
 	end
 end

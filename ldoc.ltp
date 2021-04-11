@@ -80,16 +80,15 @@ $(escape(ldoc.descript(item)))
 >         local param, sublist = item:subparam(parm)
 >         for p in ldoc.modules.iter(param) do
 >           local name, tp = item:display_name_of(p), item:type_of_param(p)
->           if tp ~= '' then tp = ' ['..tp..']' end
- - `$(name)`:$(tp) $(escape(item.params.map[p]))
+>           local desc = escape(item.params.map[p])
+>           if tp ~= "" then desc = "["..tp.."] "..desc end
 >           local def = item:default_of_param(p)
->           if def == true then
-(_optional_)
->           elseif def then
-(*default*: $(def))
->           end
->           if item:readonly(p) then
-**readonly**
+>           if def == true then desc = desc.." (_optional_)"
+>           elseif def then desc = desc.." (*default*: "..def..")" end
+>           if desc ~= "" then
+ - `$(name)`: $(desc)
+>           else
+ - `$(name)`
 >           end
 >         end -- for p
 >       end -- for parm
@@ -133,5 +132,3 @@ $(usage)
 
 >   end -- for item
 > end -- for kind
-
-Last Updated $(ldoc.updatetime)
