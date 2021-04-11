@@ -15,7 +15,7 @@ local GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal_Get
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
 
 -- Option bitflags
-local coreToggles = { "BAR", "MESSAGE", "ICON", "PULSE", "SOUND", "SAY", "PROXIMITY", "FLASH", "ME_ONLY", "EMPHASIZE", "TANK", "HEALER", "TANK_HEALER", "DISPEL", "ALTPOWER", "VOICE", "COUNTDOWN", "INFOBOX", "CASTBAR", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE" }
+local coreToggles = { "BAR", "MESSAGE", "ICON", "PULSE", "SOUND", "SAY", "PROXIMITY", "FLASH", "ME_ONLY", "EMPHASIZE", "TANK", "HEALER", "TANK_HEALER", "DISPEL", "ALTPOWER", "VOICE", "COUNTDOWN", "INFOBOX", "CASTBAR", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "NAMEPLATEBAR" }
 for i, toggle in next, coreToggles do
 	C[toggle] = lshift(1, i - 1)
 	if L[toggle] then
@@ -123,7 +123,12 @@ end
 local function replaceIdWithDescription(msg)
 	local id = tonumber(msg)
 	if id > 0 then
-		return GetSpellDescription(id) or BigWigs:Print(("No spell description found for boss option using id %d."):format(id))
+		local desc = GetSpellDescription(id)
+		if desc then
+			return desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
+		else
+			BigWigs:Print(("No spell description found for boss option using id %d."):format(id))
+		end
 	else
 		local tbl = C_EncounterJournal_GetSectionInfo(-id)
 		if not tbl then
@@ -203,6 +208,8 @@ function BigWigs:GetBossOptionDetails(module, option)
 			if not desc then
 				BigWigs:Error(("No spell description was returned for id %d!"):format(option))
 				desc = option
+			else
+				desc = desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
 			end
 			local roleDesc = getRoleStrings(module, option)
 			return option, spellName, roleDesc..desc, icon, alternativeName

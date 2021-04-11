@@ -1,11 +1,24 @@
 std = "lua51"
 max_line_length = false
+codes = true
 exclude_files = {
 	"**/Libs",
 }
 only = {
 	"011", -- syntax
 	"1", -- globals
+}
+files["**/Loader.lua"].ignore = {
+	"113/C_ChatInfo",
+	"113/SendChatMessage",
+	"113/SetRaidTarget",
+	"113/UnitDetailedThreatSituation",
+	"113/UnitGUID",
+	"113/UnitName",
+}
+files["**/Core/BossPrototype.lua"].ignore = {
+	"113/TranscriptIgnore",
+	"113/Transcriptor",
 }
 ignore = {
 	"11/SLASH_.*", -- slash handlers
@@ -79,7 +92,6 @@ globals = {
 	"time",
 	"tinsert",
 	"tremove",
-	"wipe",
 
 	-- framexml
 	"getprinthandler",
@@ -94,6 +106,7 @@ globals = {
 	"AlertFrame",
 	"Ambiguate",
 	"BasicMessageDialog",
+	"BackdropTemplateMixin",
 	"BigWigs",
 	"BigWigsClassicDB",
 	"BigWigsAnchor",
@@ -111,17 +124,19 @@ globals = {
 	"BNSendWhisper",
 	"C_ChatInfo",
 	"C_FriendList",
+	"C_GossipInfo",
+	"C_Map",
+	"C_NamePlate",
+	"C_Spell",
+	"C_Timer",
+	"C_UIWidgetManager",
 	"ChatFrame_ImportAllListsToHash",
 	"ChatTypeInfo",
 	"CheckInteractDistance",
 	"CinematicFrame_CancelCinematic",
-	"C_Map",
 	"CombatLogGetCurrentEventInfo",
 	"CombatLog_String_GetIcon",
 	"CreateFrame",
-	"C_Spell",
-	"C_Timer",
-	"C_UIWidgetManager",
 	"ElvUI",
 	"EnableAddOn",
 	"FlashClientIcon",
@@ -134,6 +149,9 @@ globals = {
 	"GetAddOnInfo",
 	"GetAddOnMetadata",
 	"GetAddOnOptionalDependencies",
+	"GetBuildInfo",
+	"GetCurrentRegion",
+	"GetCVar",
 	"GetFramesRegisteredForEvent",
 	"GetGossipActiveQuests",
 	"GetGossipAvailableQuests",
@@ -157,6 +175,8 @@ globals = {
 	"GetSpellLink",
 	"GetSpellTexture",
 	"GetSubZoneText",
+	"GetTalentInfo",
+	"GetTalentTabInfo",
 	"GetTime",
 	"InCombatLockdown",
 	"IsAddOnLoaded",
@@ -183,11 +203,10 @@ globals = {
 	"SecondsToTime",
 	"SelectGossipOption",
 	"SendChatMessage",
+	"SetCVar",
 	"SetRaidTarget",
 	"SlashCmdList",
 	"StopSound",
-	"GetTalentInfo",
-	"GetTalentTabInfo",
 	"Tukui",
 	"UIErrorsFrame",
 	"UIParent",
@@ -198,7 +217,6 @@ globals = {
 	"UnitDetailedThreatSituation",
 	"UnitExists",
 	"UnitFactionGroup",
-	"UnitGUID",
 	"UnitHealth",
 	"UnitHealthMax",
 	"UnitInParty",
@@ -208,21 +226,19 @@ globals = {
 	"UnitIsCorpse",
 	"UnitIsDead",
 	"UnitIsDeadOrGhost",
+	"UnitIsEnemy",
+	"UnitIsFriend",
 	"UnitIsGroupAssistant",
 	"UnitIsGroupLeader",
 	"UnitIsPlayer",
 	"UnitIsUnit",
 	"UnitLevel",
-	"UnitName",
 	"UnitPlayerControlled",
 	"UnitPosition",
 	"UnitPower",
 	"UnitPowerMax",
+	"UnitPowerType",
 	"UnitRace",
 	"UnitSetRole",
-
-	"GetBuildInfo",
-	"GetCVar",
-	"SetCVar",
-	"UnitIsEnemy",
+	"UnitSex",
 }

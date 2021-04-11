@@ -1,11 +1,18 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhCN")
 if not L then return end
 
-L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 Twitch 客户端简单升级。另外，也可以从 curseforge.com 或 wowinterface.com 手动升级。"
+L.guildRelease = "你正在使用 BigWigs 公会版本%d，基于官方插件版本%d。"
+L.getNewRelease = "你的 BigWigs 已过期（/bwv）但是可以使用 CurseForge 客户端轻松升级。另外，也可以从 curseforge.com 或 wowinterface.com 手动升级。"
 L.warnTwoReleases = "你的 BigWigs 已过期2个发行版！你的版本可能有错误，功能缺失或不正确的计时器。所以强烈建议你升级。"
 L.warnSeveralReleases = "|cffff0000你的 BigWigs 已过期%d发行版！！我们*强烈*建议你更新，以防止把问题同步给其他玩家！|r"
+L.warnOldBase = "你正在使用公会版本 BigWigs（%d），但是你的基础版本（%d）%d 发布已过期。这可能出现一些问题。"
 
-L.gitHubDesc = "BigWigs 是一个在 GitHub 上的开源软件。我们一直在寻找新的朋友帮助我们和欢迎任何人检测我们的代码，做出贡献和提交错误报告。BigWigs 今天的伟大很大程度上一部分因为伟大的魔兽世界社区帮助我们。"
+L.gitHubDesc = "|cFF33FF99BigWigs 是一个在 GitHub 上的开源软件。我们一直在寻找新的朋友帮助我们和欢迎任何人检测我们的代码，做出贡献和提交错误报告。BigWigs 今天的伟大很大程度上一部分因为伟大的魔兽世界社区帮助我们。|r"
+
+L.testNameplate = "已检测到目标，在目标姓名板上创建一个测试姓名板条。 |cFF33FF99此功能很少用到，当与多个首领/增援战斗时通常一个计时条并且需要保持追踪冷却施放相同的法术。|r"
+
+L.classicWarning1 = "|cFF33FF99BigWigs|r：你在经典怀旧服务器上正在使用错误版本的 BigWigs。"
+L.classicWarning2 = "|cFF33FF99BigWigs|r：请安装经典怀旧版本 BigWigs。"
 
 L.options = "选项"
 L.raidBosses = "团队首领"
@@ -17,7 +24,7 @@ L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将不被显示。"
-L.alternativeName = "%s （|cFF436EEE%s|r）"
+L.alternativeName = "%s（|cFF436EEE%s|r）"
 
 L.activeBossModules = "激活首领模块："
 L.advanced = "高级选项"
@@ -33,8 +40,6 @@ L.BAR_desc = "当遇到某些技能时计时条将会适当显示。如果这个
 L.berserk = "狂暴"
 L.berserk_desc = "当首领进入狂暴状态时发出警报。"
 L.best = "最快："
-L.chatMessages = "聊天框体信息"
-L.chatMessagesDesc = "除了显示设置，输出所有 BigWigs 信息到默认聊天框体。"
 L.colors = "颜色"
 L.configure = "配置"
 L.COUNTDOWN = "倒数"
@@ -106,8 +111,10 @@ L.TANK_HEALER_desc = "有些技能只对坦克和治疗重要。如想看到这�
 L.test = "测试"
 L.testBarsBtn = "创建测试计时条"
 L.testBarsBtn_desc = "创建一个测试计时条以便于测试当前显示设置。"
-L.toggleAnchorsBtn = "切换锚点"
-L.toggleAnchorsBtn_desc = "切换显示或隐藏全部锚点。"
+L.toggleAnchorsBtnShow = "显示移动锚点"
+L.toggleAnchorsBtnHide = "隐藏移动锚点"
+L.toggleAnchorsBtnShow_desc = "显示全部移动锚点，允许移动计时条、信息等。"
+L.toggleAnchorsBtnHide_desc = "隐藏全部移动锚点，锁定一切就位。"
 L.tooltipHint = "|cffeda55f右击|r打开选项。"
 L.upToDate = "已更新："
 L.VOICE = "语音"
@@ -126,9 +133,13 @@ L.SAY_COUNTDOWN = "说话冷却"
 L.SAY_COUNTDOWN_desc = "聊天泡泡很容易被发现。BigWigs 将使用多个说话消息倒计时提醒附近的人身上的技能即将到期。"
 L.ME_ONLY_EMPHASIZE = "醒目（自身）"
 L.ME_ONLY_EMPHASIZE_desc = "启用此选项将醒目如只作用于自身相关技能的任一信息，使它们更大更明显。"
+L.NAMEPLATEBAR = "姓名板条"
+L.NAMEPLATEBAR_desc = "当多个怪物施放相同的法术时，有时会在姓名板上附加条。如果此技能要伴随姓名板条隐藏，则禁用此选项。"
 
--- Media.lua
+-- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
 L.Beware = "当心（奥尔加隆）"
 L.FlagTaken = "夺旗（PvP）"
 L.Destruction = "毁灭（基尔加丹）"
 L.RunAway = "快跑吧小姑娘，快跑……（大灰狼）"
+L.spell_on_you = "BigWigs：法术在你身上"
+L.spell_under_you = "BigWigs：法术在你脚下"

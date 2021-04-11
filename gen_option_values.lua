@@ -6,11 +6,11 @@ local loadstring = loadstring or load -- 5.2 compat
 local opt = {}
 
 local modules = {}
-local modules_l = nil
+local modules_bosses = {}
+local modules_locale = {}
+
 local module_colors = {}
 local module_sounds = {}
-
-local common_locale = nil
 
 local default_options = {
 	altpower = {ALTPOWER = true},
@@ -27,11 +27,12 @@ local valid_colors = {
 	purple = true,
 }
 local valid_sounds = {
-	Info = true, info = true,
-	Alert = true, alert = true,
-	Alarm = true, alarm = true,
-	Long = true, long = true,
-	Warning = true, warning = true,
+	info = true,
+	alert = true,
+	alarm = true,
+	long = true,
+	warning = true,
+	underyou = true,
 }
 local color_methods = {
 	MessageOld = 2,
@@ -39,7 +40,9 @@ local color_methods = {
 	TargetMessageOld = 3,
 	TargetMessage = 2,
 	TargetsMessage = 2,
+	NewTargetsMessage = 2,
 	StackMessage = 4,
+	NewStackMessage = 2,
 	DelayedMessage = 3,
 }
 local sound_methods = {
@@ -55,7 +58,9 @@ local icon_methods = {
 	TargetMessageOld = 6,
 	TargetMessage = 5,
 	TargetsMessage = 6,
+	NewTargetsMessage = 6,
 	StackMessage = 7,
+	NewStackMessage = 7,
 	PersonalMessage = 4,
 	Bar = 4,
 	CDBar = 4,
@@ -356,32 +361,6 @@ local function add(module_name, option_table, keys, value)
 	end
 end
 
-local function setCommonLocale(path)
-	path = path:match("^(.*)/") or "."
-	local file = path .. "/Core/Locales/common.enUS.lua"
-	local f = io.open(file, "r")
-	if not f then
-		-- module(s) file directly?
-		file = path .. "../Core/Locales/common.enUS.lua"
-		f = io.open(file, "r")
-		if not f then
-			return
-		end
-	end
-
-	local data = f:read("*all")
-	f:close()
-
-	common_locale = {}
-	for line in data:gmatch("(.-)\r?\n") do
-		line = line:gsub("%s*%-%-.*$", "")
-		local key = line:match("L%.(.+) = ")
-		if key then
-			common_locale[key] = true
-		end
-	end
-end
-
 local function findCalls(lines, start, local_func, options)
 	local keys = {}
 	local func, if_key = nil, nil
@@ -430,7 +409,7 @@ local function findCalls(lines, start, local_func, options)
 	return #keys > 0 and keys or nil
 end
 
-local function parseGetOptions(lines, start)
+local function parseGetOptions(file_name, lines, start)
 	local chunk = nil
 	for i = start, #lines do
 		if i == start and lines[i]:match("^%s*return {.+}%s*$") then
@@ -439,8 +418,9 @@ local function parseGetOptions(lines, start)
 			break
 		end
 		if lines[i]:match("^%s*},%s*{") or lines[i]:match("^%s*},%s*nil,%s*{") then
-			-- we don't want to parse headers (to avoid setfenv) so stop here
+			-- we don't want to parse headers or altnames (to avoid setfenv) so stop here
 			chunk = table.concat(lines, "\n", start, i-1) .. "\n}"
+			-- TODO string parse the other tables for duplicates
 			break
 		end
 		if lines[i]:match("^%s*end") then
@@ -472,7 +452,11 @@ local function parseGetOptions(lines, start)
 				if default_options[opt] then
 					flags = default_options[opt]
 				end
-				options[opt] = flags
+				if options[opt] then
+					error(string.format("    %s:%d: Duplicate option key \"%s\"", file_name, start, tostring(opt)))
+				else
+					options[opt] = flags
+				end
 			end
 		end
 		return options
@@ -507,13 +491,26 @@ local function parseLua(file)
 	f:close()
 
 	-- First, check to make sure this is actually a boss module file.
-	local module_name = data:match("\nlocal mod.*= BigWigs:NewBoss%(\"(.-)\"")
+	local module_name, module_args = data:match("\nlocal mod.*= BigWigs:NewBoss%(\"(.-)\",?%s*([^)]*)")
 	if not module_name then
 		return
 	end
 
+	if module_args ~= "" then
+		local args = strsplit(module_args)
+		local ej_id = tonumber(args[2])
+		if ej_id then
+			if modules_bosses[ej_id] then
+				error(string.format("    %s:%d: Module \"%s\" is using journal id %d, which is already used by module \"%s\"", file_name, 1, module_name, ej_id, modules_bosses[ej_id]))
+			else -- execution isn't stopped, don't overwrite the original module name
+				modules_bosses[ej_id] = module_name
+			end
+		end
+	end
+
 	-- `modules` is used output the boss modules in the order they were parsed.
 	table.insert(modules, module_name)
+	modules_locale[module_name] = {}
 
 	-- Split the file into a table
 	local lines = {}
@@ -522,7 +519,7 @@ local function parseLua(file)
 	end
 	data = nil
 
-	local locale = {}
+	local locale, common_locale = modules_locale[module_name], modules_locale["BigWigs: Common"]
 	local options, option_keys = {}, {}
 	local methods, registered_methods = {Win=true}, {}
 	local event_callbacks = {}
@@ -536,12 +533,12 @@ local function parseLua(file)
 		do
 			-- save module locale
 			-- multiple definitions on one line
-			if line:match("^%sL.[%w_]+%s*,.+=.+") then -- we're setting things, right?
+			if line:match("^%sL%.[%w_]+%s*,.+=.+") then -- we're setting things, right?
 				for locale_key in line:gmatch("L%.([%w_]+)%s*,%s*") do
 					locale[locale_key] = true
 				end
 			end
-			local locale_key = line:match("L.([%w_]+)%s*=%s*")
+			local locale_key = line:match("L%.([%w_]+)%s*=") or line:match("L%[\"(.+)\"%]%s*=")
 			if locale_key then
 				locale[locale_key] = true
 			end
@@ -561,7 +558,7 @@ local function parseLua(file)
 
 		--- loadstring the options table
 		if line == "function mod:GetOptions()" or line == "function mod:GetOptions(CL)" then
-			local opts, err = parseGetOptions(lines, n+1)
+			local opts, err = parseGetOptions(file_name, lines, n+1)
 			if not opts then
 				-- rip keys
 				error(string.format("    %s:%d: Error parsing GetOptions! %s", file_name, n, err))
@@ -685,6 +682,19 @@ local function parseLua(file)
 			else
 				rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
 			end
+		else
+			res = line:match("%s*local spellId,.+=%s*(.+),")
+			if res then
+				local set_key = comment:match("SetOption:(.-):")
+				if set_key and set_key ~= "" then
+					rep.if_key = {}
+					for k, v in next, strsplit(set_key) do
+						rep.if_key[#rep.if_key+1] = tonumber(v) or string.format("%q", unquote(v)) -- string keys are expected to be quoted
+					end
+				else
+					rep.if_key = unternary(res, "(-?%d+)") -- XXX doesn't allow for string keys
+				end
+			end
 		end
 
 		--- Check callback args
@@ -699,7 +709,7 @@ local function parseLua(file)
 		-- delayed with ScheduleTimer.
 		if checkForAPI(line) then
 			local key, sound, color, icon, bitflag = nil, nil, nil, nil, nil
-			local method, args = line:match("%w+:(.-)%(%s*(.+)%s*%)")
+			local obj, sugar, method, args = line:match("(%w+)([.:])(.-)%(%s*(.+)%s*%)")
 			local offset = 0
 			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
 				method = args:match("^\"(.-)\"")
@@ -717,7 +727,7 @@ local function parseLua(file)
 				local color_index = color_methods[method]
 				if color_index then
 					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
-					if method:sub(1, 6) == "Target" or method == "StackMessage" then
+					if method:sub(1, 6) == "Target" or method == "StackMessage" or method == "NewStackMessage" or method == "NewTargetsMessage" then -- XXX NewTargetsMessage temp
 						color[#color+1] = "blue" -- used when on the player
 					end
 				end
@@ -738,6 +748,18 @@ local function parseLua(file)
 				end
 				if valid_methods[method] ~= true then
 					bitflag = valid_methods[method]
+				end
+
+				-- Check for method call typo (API should always be invoked with ":" syntax)
+				-- Note, may need to add a check for using table notation with SimpleTimer or
+				-- such, but local functions are typically used for repeating callbacks
+				if sugar == "." then
+					local call = obj..sugar..method
+					error(string.format("    %s:%d: Invalid API call \"%s\"! func=%s, key=%s", file_name, n, call, tostring(current_func), key))
+				end
+				-- Check for wrong API (Message instead of TargetMessage)
+				if method == "Message" and (args[3] == "destName" or args[3] == "args.destName" or args[3] == "name" or args[3] == "args.sourceName" or args[3] == "sourceName") then
+					error(string.format("    %s:%d: Message text is a player name? func=%s, key=%s, text=%s", file_name, n, tostring(current_func), key, args[3]))
 				end
 			end
 
@@ -788,12 +810,14 @@ local function parseLua(file)
 			--- Validate keys.
 			for i, k in next, keys do
 				local key = tonumber(k) or unquote(k)
-				if not option_keys[key] and key ~= "false" then
-					error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
-					errors = true
-				elseif bitflag and (type(option_keys[key]) ~= "table" or not option_keys[key][bitflag]) then
-					error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, key))
-					errors = true
+				if key ~= "false" then
+					if not option_keys[key] then
+						error(string.format("    %s:%d: Invalid key! func=%s, key=%s", file_name, n, f, key))
+						errors = true
+					elseif bitflag and (type(option_keys[key]) ~= "table" or not option_keys[key][bitflag]) then
+						error(string.format("    %s:%d: Missing %s flag! func=%s, key=%s", file_name, n, bitflag, f, key))
+						errors = true
+					end
 				end
 				keys[i] = key
 			end
@@ -841,6 +865,7 @@ local function parseLocale(file)
 	if not opt.quiet then
 		file_name = "Locales/"..file_locale..".lua"
 	end
+	file_locale = file_locale:gsub("^.*%.", "")
 
 	local f = io.open(file, "r")
 	if not f then
@@ -851,34 +876,76 @@ local function parseLocale(file)
 	local data = f:read("*all")
 	f:close()
 
+	local keys = {}
+	local current_module
 	local n = 0
 	for line in data:gmatch("(.-)\r?\n") do
 		n = n + 1
 
-		local module_name, module_locale
+		local module_name, locale
 		if file_locale == "esES" then
-			-- El español es muy especial
-			local module_name2, module_locale2
-			module_name, module_locale, module_name2, module_locale2 = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%) or BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+			-- Handle combined es locales
+			local module_name2, locale2
+			module_name, locale, module_name2, locale2 = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%) or BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
 			if module_name then
-				-- Make sure both NewBossLocale calls match
+				-- Check :NewBossLocale args
 				if module_name ~= module_name2 then
 					error(string.format("    %s:%d: Module name mismatch! %q != %q", file_name, n, module_name, module_name2))
 				end
-				if module_locale2 ~= "esMX" then
-					error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, module_locale2, "esMX"))
+				if locale2 ~= "esMX" then
+					error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, locale2, "esMX"))
 				end
 			end
-		else
-			module_name, module_locale = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+		end
+		if not module_name then
+			module_name, locale = line:match("L = BigWigs:NewBossLocale%(\"(.-)\", \"(.-)\"%)")
+			if not module_name then
+				module_name, locale = line:match("L = BigWigsAPI:NewLocale%(\"(.-)\", \"(.-)\"%)")
+			end
+		end
+		if module_name then
+			current_module = module_name
+			keys[module_name] = {}
+			-- Save base keys for non-boss locales
+			if file_locale == "enUS" then
+				modules_locale[module_name] = keys[module_name]
+			end
 		end
 
+		-- Check API args
 		if module_name then
-			if module_locale ~= file_locale then
-				error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, module_locale, file_locale))
+			if locale ~= file_locale then
+				error(string.format("    %s:%d: Invalid locale! %q should be %q", file_name, n, locale, file_locale))
 			end
-			if not contains(modules_l, module_name) then
+			if not modules_locale[module_name] then
 				error(string.format("    %s:%d: Invalid module name %q", file_name, n, module_name))
+			end
+		end
+
+		-- Check that the string exists in enUS
+		if modules_locale[current_module] then
+			local comment, key = line:match("^%s*(%-?%-?)%s*L%.([%w_]+)%s*=")
+			if not key then
+				comment, key = line:match("^%s*(%-?%-?)%s*L%[\"(.+)\"%]%s*=")
+			end
+			if key then
+				keys[current_module][key] = comment == ""
+				if not modules_locale[current_module][key] then
+					error(string.format("    %s:%d: %s: Invalid locale key %q", file_name, n, current_module, key))
+				end
+			end
+		end
+	end
+
+	-- Check that all enUS strings exist in the foreign locale
+	if file_locale ~= "enUS" then
+		-- Only reverse check non-boss locales
+		local module_name, L = next(keys)
+		if module_name and module_name:match("^BigWigs") then
+			for key in next, modules_locale[module_name] do
+				if L[key] == nil then
+					error(string.format("    %s:%d: %s: Missing locale key %q", file_name, 1, module_name, key))
+				end
 			end
 		end
 	end
@@ -910,6 +977,24 @@ local function parseXML(file)
 	return list
 end
 
+local function parseTOC(file)
+	local f = io.open(file, "r")
+	if not f then
+		error("    File not found!")
+		return
+	end
+
+	local list = {}
+	for line in f:lines() do
+		line = line:gsub("\r", ""):gsub("^#.*$", ""):gsub("\\", "/")
+		if line ~= "" then
+			table.insert(list, line)
+		end
+	end
+
+	return list
+end
+
 local function parse(file)
 	if type(file) == "table" then
 		-- Run the results of parseXML.
@@ -923,8 +1008,6 @@ local function parse(file)
 			dumpValues(path, "Sounds", module_sounds)
 			print(string.format("    Parsed %d modules.", #modules))
 		end
-		-- Still need you for locales if they're processed from a parent xml file (old style)
-		modules_l = modules
 		-- Reset!
 		modules = {}
 		module_colors = {}
@@ -938,17 +1021,32 @@ local function parse(file)
 			print(string.format("Checking %s", file))
 			parse(parseXML(file))
 		elseif string.match(file, "locales%.xml$") then
-			-- Parse locale files to check NewBossLocale lines.
-			if #modules ~= 0 then
-				-- The locales are in the same xml file as the module files,
-				-- so data hasn't been dumped and reset yet
-				modules_l = modules
-			end
 			for _, f in next, parseXML(file) do
 				parseLocale(f)
 			end
+		elseif string.match(file, "%.toc$") then
+			print(string.format("Checking %s", file))
+			parse(parseTOC(file))
 		end
 	end
+end
+
+local function setCommonLocale(path)
+	-- For repos other than BigWigs proper, try to load the CL without erroring
+	path = path:match("^(.*)/") or "."
+	local file = path .. "/Core/Locales/common.enUS.lua"
+	local f = io.open(file, "r")
+	if not f then
+		-- module(s) file directly?
+		file = path .. "../Core/Locales/common.enUS.lua"
+		f = io.open(file, "r")
+		if not f then
+			return
+		end
+	end
+	f:close()
+
+	parseLocale(file)
 end
 
 
@@ -968,7 +1066,8 @@ if arg then
 			end
 		else
 			local path = arg[1]:gsub("\\", "/")
-			local is_file = path:sub(-4) == ".lua"
+			local ext = path:sub(-4)
+			local is_file = ext == ".lua" or ext == ".xml" or ext == ".toc"
 			if path:sub(-1) ~= "/" and not is_file then
 				path = path .. "/"
 			end

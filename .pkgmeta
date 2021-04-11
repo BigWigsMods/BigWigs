@@ -6,6 +6,7 @@ externals:
     Libs/LibSharedMedia-3.0: https://repos.wowace.com/wow/libsharedmedia-3-0/trunk/LibSharedMedia-3.0
     Core/Libs/AceTimer-3.0: https://repos.wowace.com/wow/ace3/trunk/AceTimer-3.0
     Core/Libs/AceDB-3.0: https://repos.wowace.com/wow/ace3/trunk/AceDB-3.0
+    Core/Libs/LibDualSpec-1.0: https://repos.wowace.com/wow/libdualspec-1-0
     Core/Libs/LibChatAnims: https://repos.wowace.com/wow/libchatanims/trunk/LibChatAnims
     Plugins/Libs/LibSink-2.0: https://repos.wowace.com/wow/libsink-2-0/trunk/LibSink-2.0
     Plugins/Libs/LibCandyBar-3.0: https://repos.wowace.com/wow/libcandybar-3-0/trunk/LibCandyBar-3.0
@@ -32,8 +33,8 @@ ignore:
   - .luacheckrc
   - gen_option_values.lua
   - ldoc.ltp
-  - ISSUE_TEMPLATE.md
-  - README.md
+  - Media/Sounds/spell_on_you.flac
+  - Media/Sounds/spell_under_you.flac
   - Media/Sounds/Long.wav
   - Media/Sounds/Alarm.wav
   - Media/Sounds/Alert.wav
@@ -44,3 +45,4 @@ ignore:
   - Media/Sounds/Amy/countdown.wav
   - Media/Sounds/David/countdown.wav
   - Media/Sounds/Jim/countdown.wav
+  - Media/Icons/Source

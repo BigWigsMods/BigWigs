@@ -43,8 +43,8 @@ local media = LibStub("LibSharedMedia-3.0")
 local FONT = media.MediaType and media.MediaType.FONT or "font"
 local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
 
-local mute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\mute"
-local unmute = "Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\unmute"
+local mute = "Interface\\AddOns\\BigWigs\\Media\\Icons\\mute"
+local unmute = "Interface\\AddOns\\BigWigs\\Media\\Icons\\unmute"
 
 local inConfigMode = nil
 local activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = 0, 0, 0, 0
@@ -67,10 +67,10 @@ local GameTooltip = CreateFrame("GameTooltip", "BigWigsProximityTooltip", UIPare
 local UnitPosition, GetPlayerFacing = UnitPosition, GetPlayerFacing
 local GetRaidTargetIndex, GetNumGroupMembers, GetTime = GetRaidTargetIndex, GetNumGroupMembers, GetTime
 local IsInRaid, IsInGroup, InCombatLockdown = IsInRaid, IsInGroup, InCombatLockdown
-local UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitInPhase = UnitIsDead, UnitIsUnit, UnitGUID, UnitClass, UnitInPhase
+local UnitIsDead, UnitIsUnit, UnitClass, UnitInPhase = UnitIsDead, UnitIsUnit, UnitClass, UnitInPhase
 local min, cos, sin, format = math.min, math.cos, math.sin, string.format
-local tinsert, tconcat = table.insert, table.concat
-local next, type, tonumber, wipe = next, type, tonumber, wipe
+local tinsert, tconcat, wipe = table.insert, table.concat, table.wipe
+local next, type, tonumber = next, type, tonumber
 local piDoubled = 6.2831853071796
 
 local OnOptionToggled = nil -- Function invoked when the proximity option is toggled on a module.
@@ -250,7 +250,7 @@ function plugin:RestyleWindow()
 		proxAnchor:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
 	else
 		proxAnchor:ClearAllPoints()
-		proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
+		proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 450, -20)
 	end
 end
 
@@ -355,7 +355,7 @@ do
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
 			if mapId == tarMapId and range < activeRangeSquaredTwoFive and UnitInPhase(n) then
-				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
+				if myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
@@ -393,7 +393,7 @@ do
 		for i = 1, maxPlayers do
 			local n = unitList[i]
 			local _, _, _, tarMapId = UnitPosition(n)
-			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
+			if mapId == tarMapId and isInRange(n) and myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
 				anyoneClose = anyoneClose + 1
 				if anyoneClose < 6 then
 					local player = plugin:UnitName(n)
@@ -532,7 +532,7 @@ do
 		local anyoneClose = 0
 		for i = 1, #proximityPlayerTable do
 			local unit = proximityPlayerTable[i]
-			if isInRange(unit) and myGUID ~= UnitGUID(unit) then
+			if isInRange(unit) and myGUID ~= plugin:UnitGUID(unit) then
 				anyoneClose = anyoneClose + 1
 				local player = plugin:UnitName(unit)
 				tinsert(tooClose, coloredNames[player])
@@ -576,7 +576,7 @@ do
 			local dy = unitY - srcY
 			local range = dx * dx + dy * dy
 			if mapId == tarMapId and range < activeRangeSquaredTwoFive and UnitInPhase(n) then
-				if myGUID ~= UnitGUID(n) and not UnitIsDead(n) then
+				if myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) then
 					setDot(dx, dy, blipList[n], width, height, sine, cosine, pixperyard)
 					if range <= activeRangeSquared then
 						anyoneClose = anyoneClose + 1
@@ -615,7 +615,7 @@ do
 		for i = 1, maxPlayers do
 			local n = unitList[i]
 			local _, _, _, tarMapId = UnitPosition(n)
-			if mapId == tarMapId and isInRange(n) and myGUID ~= UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
+			if mapId == tarMapId and isInRange(n) and myGUID ~= plugin:UnitGUID(n) and not UnitIsDead(n) and UnitInPhase(n) then
 				anyoneClose = anyoneClose + 1
 			end
 		end
@@ -822,17 +822,6 @@ local function updateProfile()
 	plugin:RestyleWindow()
 end
 
-local function resetAnchor()
-	proxAnchor:ClearAllPoints()
-	proxAnchor:SetPoint("CENTER", UIParent, "CENTER", 400, 0)
-	db.width = plugin.defaultDB.width
-	db.height = plugin.defaultDB.height
-	proxAnchor:SetWidth(db.width)
-	proxAnchor:SetHeight(db.height)
-	db.posx = nil
-	db.posy = nil
-end
-
 -------------------------------------------------------------------------------
 -- Initialization
 --
@@ -845,7 +834,16 @@ end
 
 do
 	local createAnchor = function()
+		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
+		-- local addonName, addonTable = ...
+		-- if BigWigsLoader then
+		-- 	BigWigsLoader.RegisterMessage(addonTable, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
+		-- end
 		proxAnchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
+		proxAnchor:SetFrameStrata("MEDIUM")
+		proxAnchor:SetFixedFrameStrata(true)
+		proxAnchor:SetFrameLevel(120)
+		proxAnchor:SetFixedFrameLevel(true)
 		proxAnchor:SetWidth(db.width)
 		proxAnchor:SetHeight(db.height)
 		proxAnchor:SetMinResize(100, 30)
@@ -872,7 +870,6 @@ do
 
 		local close = CreateFrame("Button", nil, proxAnchor)
 		close:SetPoint("BOTTOMRIGHT", proxAnchor, "TOPRIGHT", -2, 2)
-		close:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		close:SetHeight(16)
 		close:SetWidth(16)
 		close.tooltipHeader = L.close
@@ -884,12 +881,11 @@ do
 			customProximityOpen, customProximityTarget, customProximityReverse = nil, nil, nil
 			plugin:Close(true)
 		end)
-		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\icons\\close")
+		close:SetNormalTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\close")
 		proxAnchor.close = close
 
 		local sound = CreateFrame("Button", nil, proxAnchor)
 		sound:SetPoint("BOTTOMLEFT", proxAnchor, "TOPLEFT", 2, 2)
-		sound:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		sound:SetHeight(16)
 		sound:SetWidth(16)
 		sound.tooltipHeader = L.toggleSound
@@ -915,13 +911,13 @@ do
 		abilityName:SetFont(plugin:GetDefaultFont(12))
 		abilityName:SetShadowOffset(1, -1)
 		abilityName:SetTextColor(1,0.82,0,1)
-		abilityName:SetFormattedText("|T136015:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName) -- Interface\\Icons\\spell_nature_chainlightning
+		abilityName:SetFormattedText("|T136015:20:20:-5:0:64:64:4:60:4:60|t%s", L.proximity) -- Interface\\Icons\\spell_nature_chainlightning
 		abilityName:SetPoint("BOTTOM", header, "TOP", 0, 4)
 		proxAnchor.ability = abilityName
 
 		local text = proxAnchor:CreateFontString(nil, "OVERLAY")
 		text:SetShadowOffset(1, -1)
-		text:SetAllPoints(proxAnchor)
+		text:SetPoint("CENTER", proxAnchor, "CENTER")
 		proxAnchor.text = text
 
 		local rangePulse = proxAnchor:CreateTexture(nil, "ARTWORK")
@@ -991,18 +987,16 @@ do
 
 		local drag = CreateFrame("Frame", nil, proxAnchor)
 		drag.frame = proxAnchor
-		drag:SetFrameLevel(proxAnchor:GetFrameLevel() + 5) -- place this above everything
 		drag:SetWidth(16)
 		drag:SetHeight(16)
 		drag:SetPoint("BOTTOMRIGHT", proxAnchor, -1, 1)
 		drag:EnableMouse(true)
 		drag:SetScript("OnMouseDown", OnDragHandleMouseDown)
 		drag:SetScript("OnMouseUp", OnDragHandleMouseUp)
-		drag:SetAlpha(0.5)
 		proxAnchor.drag = drag
 
 		local tex = drag:CreateTexture(nil, "OVERLAY")
-		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Textures\\draghandle")
+		tex:SetTexture("Interface\\AddOns\\BigWigs\\Media\\Icons\\draghandle")
 		tex:SetWidth(16)
 		tex:SetHeight(16)
 		tex:SetBlendMode("ADD")
@@ -1038,12 +1032,10 @@ do
 			end
 		end)
 
-		-- USE THIS CALLBACK TO SKIN THIS WINDOW! NO NEED FOR UGLY HAX! E.g.
-		-- local name, addon = ...
-		-- if BigWigsLoader then
-		-- 	BigWigsLoader.RegisterMessage(addon, "BigWigs_FrameCreated", function(event, frame, name) print(name.." frame created.") end)
-		-- end
-		plugin:SendMessage("BigWigs_FrameCreated", proxAnchor, "Proximity")
+		-- We run this on a delay to prevent the Proximity module breaking if some addon listening to this event causes an error
+		BigWigsLoader.CTimerAfter(0, function()
+			plugin:SendMessage("BigWigs_FrameCreated", proxAnchor, "Proximity")
+		end)
 	end
 
 	function plugin:OnPluginEnable()
@@ -1057,7 +1049,6 @@ do
 		self:RegisterMessage("BigWigs_StartConfigureMode")
 		self:RegisterMessage("BigWigs_StopConfigureMode")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
-		self:RegisterMessage("BigWigs_ResetPositions", resetAnchor)
 		updateProfile()
 	end
 end
@@ -1142,9 +1133,11 @@ do
 			fontSize = {
 				type = "range",
 				name = L.fontSize,
+				desc = L.fontSizeDesc,
 				order = 4,
-				max = 40,
+				max = 200,
 				min = 8,
+				softMax = 40,
 				step = 1,
 				width = "full",
 			},
@@ -1232,7 +1225,7 @@ do
 						type = "range",
 						name = L.positionX,
 						desc = L.positionDesc,
-						min = 0,
+						min = -2048,
 						max = 2048,
 						step = 1,
 						order = 1,
@@ -1242,13 +1235,22 @@ do
 						type = "range",
 						name = L.positionY,
 						desc = L.positionDesc,
-						min = 0,
+						min = -2048,
 						max = 2048,
 						step = 1,
 						order = 2,
 						width = "full",
 					},
 				},
+			},
+			reset = {
+				type = "execute",
+				name = L.resetAll,
+				desc = L.resetProximityDesc,
+				func = function()
+					plugin.db:ResetProfile()
+				end,
+				order = 9,
 			},
 		},
 	}
@@ -1299,10 +1301,10 @@ function plugin:Close(noReopen)
 	activeRange, activeRangeRadius, activeRangeSquared, activeRangeSquaredTwoFive = setRange(0), 0, 0, 0
 	activeSpellID = nil
 	proximityPlayer = nil
-	wipe(proximityPlayerTable)
+	proximityPlayerTable = {}
 
 	proxTitle:SetFormattedText(L_proximityTitle, 5, 3)
-	proxAnchor.ability:SetFormattedText("|T136015:20:20:-5:0:64:64:4:60:4:60|t%s", L.abilityName) -- Interface\\Icons\\spell_nature_chainlightning
+	proxAnchor.ability:SetFormattedText("|T136015:20:20:-5:0:64:64:4:60:4:60|t%s", L.proximity) -- Interface\\Icons\\spell_nature_chainlightning
 	-- Just in case we were the last target of configure mode, reset the background color.
 	proxAnchor.background:SetColorTexture(0, 0, 0, 0.3)
 	proxPulseIn:Stop()
@@ -1333,7 +1335,7 @@ do
 			proxAnchor.ability:SetText(L.customRange)
 		end
 
-		myGUID = UnitGUID("player")
+		myGUID = plugin:UnitGUID("player")
 		activeRange = setRange(range)
 		activeRangeRadius = range * 3 -- activeRange * 3, so we have 3x radius space
 		activeRangeSquared = range*range

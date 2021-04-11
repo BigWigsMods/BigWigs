@@ -1,10 +1,13 @@
-local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "esES") or BigWigsAPI:NewLocale("BigWigs: Plugins", "esMX")
+local L = BigWigsAPI:NewLocale("BigWigs: Plugins", "esES")
 if not L then return end
 
 L.comma = ", "
 L.width = "Ancho"
 L.height = "Alto"
 L.sizeDesc = "Normalmente ajusta el tamaño deslizando por la barra. Si necesitas un tamaño exacto puedes usar este deslizador o teclea el valor dentro de la caja, no tiene máximo."
+--L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
+--L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
+--L.transparency = "Transparency"
 
 L.abilityName = "Nombre de habilidad"
 L.abilityNameDesc = "Muestra/oculta el nombre de la habilidad encima de la ventana"
@@ -17,6 +20,11 @@ L.altPowerTitle = "PoderAlternativo"
 L.background = "Fondo"
 L.backgroundDesc = "Muestra/oculta el fondo"
 L.bars = "Barras"
+L.nameplateBars = "Barras en placas de nombre"
+L.nameplateAutoWidth = "Igualar anchura de la placa de nombre"
+L.nameplateAutoWidthDesc = "Pone la anchura de la barra en la placa de nombre con la anchura de la placa de nombre padre."
+-- L.nameplateOffsetY = "Y Offset"
+-- L.nameplateOffsetYDesc = "Offset from the top of the nameplate for upwards bars and the bottom of the nameplate for downwards bars."
 L.bestTimeBar = "Mejor tiempo"
 L.bigWigsBarStyleName_Default = "Por defecto"
 L.blockEmotes = "Bloquear emotes del centro de la pantalla"
@@ -32,7 +40,8 @@ L.blockMoviesDesc = "Los vídeos de un encuentro solo se visionarán una vez (lo
 L.blockSpellErrors = "Bloquear mensajes de hechizos fallidos"
 L.blockSpellErrorsDesc = "Mensajes como \"Ese hechizo no está listo todavía\" que normalmente se muestran arriba de la pantalla serán bloqueados."
 L.bossBlock = "Bloque de Jefe"
-L.bossBlockDesc = "Configura varias cosas que puedes bloquear durante un encuentro."
+L.bossBlockDesc = "Configura varias cosas que puedes bloquear durante un encuentro.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
 L.bossDefeatDurationPrint = "Derrotado '%s' después de %s."
 L.bossStatistics = "Estadísticas de Jefe"
 L.bossStatsDescription = "Registro de estadísticas de Jefes, como el número de veces que ha sido derrotado, cantidad de wipes, tiempo total que duró el combate, o la muerte más rápida. Estas estadísticas se pueden ver en la ventana de configuración de cada jefe, pero permanecerán ocultas en los jefes que no tengan todavía registro de estadísticas."
@@ -47,9 +56,9 @@ L.bwEmphasized = "BigWigs enfatizado"
 L.center = "Centro"
 L.chatMessages = "Mensajes de chat"
 L.classColors = "Colores de clase"
-L.classColorsDesc = "Colorea el nombre de los jugadores según su clase"
+--L.classColorsDesc = "Messages will sometimes contain player names. Enabling this option will color those names using class colors."
 L.clickableBars = "Barras clicables"
-L.clickableBarsDesc = [=[Las barras de BigWigs bars son clicables por defecto. De esta forma puedes targetear objetos o lanzar hechizos AoE detrás de ellos, cambia el ángulo de la cámara, y así sucesivamente, mientras tu cursos está encima de las barras. |cffff4411Si habilitas las barras clicables, esto dejará de funcionar.|r Las barras interceptarán cualquier clic de ratón que hagas en ellas.
+L.clickableBarsDesc = [=[Por defecto, se puede hacer clic a través de las barras de BigWigs. De esta manera puedes seleccionar objetos, lanzar hechizos AoE, cambiar el ángulo de la cámara, etc., mientras tu cursor está encima de las mismas. |cffff4411Si activas esta opción ya no se comportarán de esta forma.|r Las barras interceptarán los clics que hagas en ellas.
 ]=]
 L.close = "Cerrar"
 L.closeButton = "Boton cerrar"
@@ -70,19 +79,16 @@ L.countWipes = "Contar Wipes"
 L.createTimeBar = "Mostrar barra de 'Mejor tiempo' "
 L.customBarStarted = "Barra personal '%s' lanzada por el jugador %s %s."
 L.customRange = "Indicador de rango personalizado"
-L.customSoundDesc = "Reproduce el sonido seleccionado en lugar de uno suministrado por el módulo"
+L.customSoundDesc = "Reproduce el sonido seleccionado en lugar de uno suministrado por el módulo."
 L.defeated = "%s ha sido derrotado"
-L.disable = "Desactivar"
 L.disabled = "Desactivado"
 L.disabledDisplayDesc = "Desactivar la ventana de proximidad para todos los módulos que la utilizan."
-L.disableDesc = "Desactiva permanentemente la habilidad del encuentro para que no de opción a que reaparezca esta barra"
 L.displayTime = "Muestra la hora"
 L.displayTimeDesc = "Cuanto tiempo mostrará un mensaje, en segundos"
 L.emphasize = "Enfatizar"
 L.emphasizeAt = "Enfatizar en... (segundos)"
 L.emphasized = "Enfatizado"
 L.emphasizedBars = "Barras enfatizadas"
-L.emphasizedCountdownSinkDescription = "Redirecciona la salida de este addon al sistema de cuenta atrás enfatizada de BigWigs. Este método de visualización soporta texto y colores, y puede mostrar solo un mensaje cada vez."
 L.emphasizedMessages = "Mensajes enfatizados"
 L.emphasizedSinkDescription = "Guía fuera de este addon siguiendo los mensajes enfatizados mostrados de BigWigs. Estos soportan texto y colores, y solo pueden mostrarse uno a la vez."
 L.enable = "Permitir"
@@ -122,9 +128,7 @@ L.movieBlocked = "Ya has visto esta cinemática antes, omitiéndola."
 L.newBestTime = "¡Nueva muerte más rápida!"
 L.none = "Ninguno"
 L.normal = "Normal"
-L.normalMessages = "Mensajes normales"
 L.outline = "Contorno"
-L.output = "Salida"
 L.positionDesc = "Introduce o mueve el deslizador si necesitas posicionar de manera precisa desde el anclaje."
 L.positionExact = "Posicionamiento preciso"
 L.positionX = "Posición X"
@@ -155,11 +159,8 @@ Si solo se usa un icono para un encuentro se usará el primario, nunca se usará
 
 |cffff4411Nota: Si un jugador ha sido marcado manualmente BigWigs nunca cambiará su icono.|r]=]
 L.recordBestTime = "Recordar muertes más rápidas"
-L.regularBars = "Barras regulares"
 L.remove = "Quitar"
-L.removeDesc = "Temporalmente quita la barra y los mensajes asociados"
 L.removeOther = "Quitar otro"
-L.removeOtherDesc = "Temporalmente quita todas las barras (excepto esta) y los mensajes asociados."
 L.report = "Reportar"
 L.reportDesc = "Reporta el estado actual de las barras al grupo activo de chat; ya sea en el chat de estancia, raid, grupo o decir, según corresponda."
 L.requiresLeadOrAssist = "Esta función requiere ser el líder de banda o ayudante"
@@ -186,18 +187,8 @@ L.soundButton = "Botón de sonido"
 L.soundButtonDesc = "Muestra/oculta el botón de sonido"
 L.soundDelay = "Retardo de sonido"
 L.soundDelayDesc = "Especifica el tiempo que BigWigs debería esperar entre cada repetición de sonido cuando alguien está demasiado cerca de ti."
-L.soundDesc = "Los mensajes podrían llegar con un sonido. A algunas personas les resulta más fácil escucahr. Cuando aprenden que 'tal' sonido va con 'cual' mensaje, en vez de leer dicho mensaje."
 L.Sounds = "Sonidos"
 L.style = "Estilo"
-L.superEmphasize = "Super Enfatizar"
-L.superEmphasizeDesc = [=[Da un aviso mucho más detectable a los mensajes o barras relacionados con una habilidad de un encuentro.
-
-Aquí configuras exactamente que debería ocurrir cuando cambias a activado en la opción de Super Enfatizar en la sección avanzada para una habilidad de un encuentro de un jefe.
-
-|cffff4411Nota: Super Enfatizar está apagado por defecto para todas las habilidades.|r
-]=]
-L.superEmphasizeDisableDesc = "Desactivar Súper Enfatizar para todos los módulos que lo utilicen."
-L.tempEmphasize = "Temporalmente Super Enfatiza la barra y los mensajes asociados para la duración."
 L.text = "Texto"
 L.textCountdown = "Texto de cuenta atrás"
 L.textCountdownDesc = "Muestra un contador visual durante una cuenta atrás"
@@ -215,10 +206,6 @@ L.toggleSound = "Cambiar sonido"
 L.toggleSoundDesc = "Activada o no la ventana de proximidad debería emitir un beep si estás cerca de otro jugador."
 L.tooltip = "Tooltip"
 L.tooltipDesc = "Muestra/oculta la descripción del hechizo si la ventana de proximidad esta ligada a una habilidad del jefe."
-L.uppercase = "MAYUSCULAS"
-L.uppercaseDesc = "Mayúsculas en todos los mensajes relacionados con una opción super enfatizada."
-L.useColors = "Usar colores"
-L.useColorsDesc = "Mensajes de color blanco ignorando los colores."
 L.useIcons = "Usar iconos"
 L.useIconsDesc = "Mostrar iconos al lado de mensajes"
 L.Victory = "Victoria"
@@ -238,6 +225,25 @@ L.wrongPullFormat = "Debe ser entre 1 y 60. Un ejemplo sería: /pull 5"
 L.wrongTime = "Tiempo especificado inválido. <time> puede ser bien un número en segundos, un par M:S, o Min. Por ejemplo 5, 1:20 o 2m."
 
 -----------------------------------------------------------------------
+-- AltPower.lua
+--
+
+--L.altPowerDesc = "The AltPower display will only appear for bosses that apply AltPower to players, which is extremely rare. The display measures the amount of 'Alternative Power' you and your group has, displaying it in a list. To move the display around, please use the test button below."
+--L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
+--L.test = "Test"
+--L.altPowerTestDesc = "Show the 'Alternative Power' display, allowing you to move it, and simulating the power changes you would see on a boss encounter."
+--L.yourPowerBar = "Your Power Bar"
+--L.barColor = "Bar color"
+--L.barTextColor = "Bar text color"
+--L.additionalWidth = "Additional Width"
+--L.additionalHeight = "Additional Height"
+--L.additionalSizeDesc = "Add to the size of the standard display by adjusting this slider, or type the value into the box which has a much higher maximum of 100."
+--L.yourPowerTest = "Your Power: %d" -- Your Power: 42
+--L.yourAltPower = "Your %s: %d" -- e.g. Your Corruption: 42
+--L.player = "Player %d" -- Player 7
+--L.disableAltPowerDesc = "Globally disable the AltPower display, it will never show for any boss encounter."
+
+-----------------------------------------------------------------------
 -- AutoReply.lua
 --
 
@@ -250,8 +256,8 @@ L.everyoneElse = "Todos los demás"
 
 L.autoReplyBasic = "Estoy ocupado combatiendo contra un jefe."
 L.autoReplyNormal = "Estoy ocupado luchando contra '%s'."
-L.autoReplyAdvanced = "Estoy ocupado luchando contra '%s' y %d/%d personas están vivas."
-L.autoReplyExtreme = "Estoy ocupado luchando contra '%s' y %d/%d personas están vivas: %s"
+L.autoReplyAdvanced = "Estoy ocupado luchando contra '%s' (%s) y %d/%d personas están vivas."
+L.autoReplyExtreme = "Estoy ocupado luchando contra '%s' (%s) y %d/%d personas están vivas: %s"
 
 L.autoReplyLeftCombatBasic = "Ya no estoy en combate con ningún jefe."
 L.autoReplyLeftCombatNormalWin = "Gané contra '%s'."
@@ -267,24 +273,45 @@ L.spacing = "Espaciado"
 L.spacingDesc = "Cambia el espacio entre cada barra."
 L.emphasizeMultiplier = "Multiplicador de tamaño"
 L.emphasizeMultiplierDesc = "Si desactivas las barras moviéndose al anclaje enfatizado, esta opción decidirá que tamaño tendrán las barras enfatizadas multiplicando el tamaño de las barras normales."
+--L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
+--L.removeBarDesc = "Temporarily removes this bar."
+--L.removeOtherBarDesc = "Temporarily removes all other bars (except this one)."
 L.iconPosition = "Posición del icono"
 L.iconPositionDesc = "Elige dónde en la barra se posicionará el icono."
 L.visibleBarLimit = "Límite de barras visibles"
 L.visibleBarLimitDesc = "Ajusta la máxima cantidad de barras que serán visibles al mismo tiempo."
 L.textDesc = "Ya sea para mostrar u ocultar el texto que se muestra en las barras."
+--L.resetBarsDesc = "Reset all the options related to bars, including the position of the bar anchors."
+--L.nameplateAlphaDesc = "Control how transparent the nameplate bars should be."
 
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
 
-L.disableSfx = "Deshabilitar efectos de sonido"
-L.disableSfxDesc = "La opción de 'Efectos de Sonido' en las opciones de sonido de WoW se desactivará, luego se vovlerá a activar cuando el encuentro con el jefe finalice. Esto puede ayudarte a concentrarte en los sonidos de avisos de BigWigs."
+L.audio = "Audio"
+L.music = "Música"
+L.ambience = "Sonido ambiental"
+L.sfx = "Efectos de sonido"
+L.errorSpeech = "Sonidos de error"
+--L.disableMusic = "Mute music (recommended)"
+--L.disableAmbience = "Mute ambient sounds (recommended)"
+--L.disableSfx = "Mute sound effects (not recommended)"
+--L.disableErrorSpeech = "Mute error speech (recommended)"
+L.disableAudioDesc = "La opción de '%s' en las opciones de sonido de WoW se desactivará, luego se vovlerá a activar cuando el encuentro con el jefe finalice. Esto puede ayudarte a concentrarte en los sonidos de avisos de BigWigs."
 --L.blockTooltipQuests = "Block tooltip quest objectives"
 --L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
 --L.blockFollowerMission = "Bloquear ventanas emergentes de ciudadela" -- Rename to follower mission
 --L.blockFollowerMissionDesc = "Las ventanas emergentes de ciudadela muestran varias cosas, pero principalmente cuando un seguidor a completado una misión.\n\nEstas ventanas pueden cubrir partes críticas de tu interfaz durante un encuentro, así que recomendamos bloquearlas."
---L.blockObjectiveTracker = "Hide quest tracker"
---L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space.\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
+L.blockObjectiveTracker = "Ocultar seguimiento de misión"
+L.blockObjectiveTrackerDesc = "El seguimiento de misión se ocultará durante encuentros de jefes para limpiar el espacio en pantalla.\n\nEsto NO pasará si estás en una mitica+ o si sigues un logro."
+
+--L.blockTalkingHead = "Hide 'Talking Head' NPC dialog popup"
+--L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
+--L.blockTalkingHeadDungeons = "Normal & Heroic Dungeons"
+--L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
+--L.blockTalkingHeadRaids = "Raids"
+--L.blockTalkingHeadTimewalking = "Timewalking (Dungeons & Raids)"
+--L.blockTalkingHeadScenarios = "Scenarios"
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Puerto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
@@ -308,10 +335,56 @@ L.purple = "Púrpura"
 L.purpleDesc = "Avisos para habilidades específicas para tanques como acumulaciones de un debuff en un tanque."
 
 -----------------------------------------------------------------------
+-- Countdown.lua
+--
+
+--L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
+--L.countdown = "Countdown"
+--L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.countdownAudioHeader = "Spoken Audio Countdown"
+--L.countdownTextHeader = "Visual Text Countdown"
+--L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
+--L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+
+-----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
 L.infoBox = "InfoBox"
+
+-----------------------------------------------------------------------
+-- Messages.lua
+--
+
+--L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+--L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.uppercase = "MAYUSCULAS"
+--L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.chatMessages  = "Mensajes del marco de chat"
+L.chatMessagesDesc  = "Todos los mensajes de salida de BigWigs a la ventana de chat por defecto en adición a los ajustes mostrados"
+
+-----------------------------------------------------------------------
+-- Proximity.lua
+--
+
+--L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+
+-----------------------------------------------------------------------
+-- Pull.lua
+--
+
+--L.countdownBegins = "Begin Countdown"
+--L.countdownBegins_desc = "Choose how much time should be remaining on the pull timer (in seconds) when the countdown begins."
+
+-----------------------------------------------------------------------
+-- Sound.lua
+--
+
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Volumen general' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+--L.oldSounds = "Old Sounds"
+--L.resetSoundDesc = "Resets the above sounds to their defaults."
+--L.onyou = "A spell, buff, or debuff is on you"
+--L.underyou = "You need to move out of a spell under you"
 
 -----------------------------------------------------------------------
 -- Statistics.lua

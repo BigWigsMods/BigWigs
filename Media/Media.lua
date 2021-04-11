@@ -13,6 +13,7 @@ do
 	media:Register(STATUSBAR, "Otravi", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Otravi")
 	media:Register(STATUSBAR, "Smooth", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Smooth")
 	media:Register(STATUSBAR, "Smooth v2", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Smoothv2")
+	media:Register(STATUSBAR, "Smoother", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Smoother")
 	media:Register(STATUSBAR, "Glaze", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Glaze")
 	media:Register(STATUSBAR, "Charcoal", "Interface\\AddOns\\BigWigs\\Media\\Textures\\Charcoal")
 	media:Register(STATUSBAR, "BantoBar", "Interface\\AddOns\\BigWigs\\Media\\Textures\\BantoBar")
@@ -22,6 +23,8 @@ end
 do
 	-- Ours
 	local SOUND = media.MediaType and media.MediaType.SOUND or "sound"
+	--media:Register(SOUND, L.spell_on_you, "Interface\\AddOns\\BigWigs\\Media\\Sounds\\spell_on_you.ogg")
+	media:Register(SOUND, L.spell_under_you, "Interface\\AddOns\\BigWigs\\Media\\Sounds\\spell_under_you.ogg")
 	media:Register(SOUND, "BigWigs: Long", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Long.ogg")
 	media:Register(SOUND, "BigWigs: Info", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Info.ogg")
 	media:Register(SOUND, "BigWigs: Alert", "Interface\\AddOns\\BigWigs\\Media\\Sounds\\Alert.ogg")

@@ -13,7 +13,7 @@
 <Script file="RaidIcon.lua"/>
 <Script file="Proximity.lua"/>
 <Script file="Flash.lua"/>
-<Script file="Emphasize.lua"/>
+<Script file="Countdown.lua"/>
 <Script file="Pull.lua"/>
 <Script file="Statistics.lua"/>
 <Script file="Victory.lua"/>
