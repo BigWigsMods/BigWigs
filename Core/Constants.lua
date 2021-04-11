@@ -11,7 +11,7 @@ local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local names = {}
 local descriptions = {}
 
-local GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal_GetSectionInfo = GetSpellInfo, GetSpellTexture, GetSpellDescription, function(...) return ... end
+local GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal_GetSectionInfo = GetSpellInfo, GetSpellTexture, GetSpellDescription, function() end
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
 
 -- Option bitflags
@@ -182,7 +182,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 					icon = icon + 137000 -- Texture id list for raid icons 1-8 is 137001-137008. Base texture path is Interface\\TARGETINGFRAME\\UI-RaidTargetingIcon_%d
 				else
 					local tbl = C_EncounterJournal_GetSectionInfo(-icon)
-					icon = tbl.abilityIcon
+					icon = tbl and tbl.abilityIcon or false
 				end
 				if not icon then
 					BigWigs:Print(("No icon found for %s using id %d."):format(module.name, L[option .. "_icon"]))

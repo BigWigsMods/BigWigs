@@ -12,7 +12,7 @@ local acd = LibStub("AceConfigDialog-3.0")
 local AceGUI = LibStub("AceGUI-3.0")
 local adbo = LibStub("AceDBOptions-3.0")
 
-local C_EncounterJournal_GetSectionInfo = function(...) return ... end
+local C_EncounterJournal_GetSectionInfo = function() end
 
 local loader = BigWigsLoader
 local API = BigWigsAPI
@@ -680,7 +680,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 			-- the "why did you use an ej id instead of the spell directly" check
 			-- headers and other non-spell entries don't load async
 			local info = C_EncounterJournal_GetSectionInfo(-dbKey)
-			if info.spellID > 0 then
+			if info and info.spellID > 0 then
 				spellId = info.spellID
 			end
 		else

@@ -516,7 +516,7 @@ function core:GetPlugin(moduleName, silent)
 end
 
 do
-	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, function(...) return ... end
+	local GetSpellInfo, C_EncounterJournal_GetSectionInfo = GetSpellInfo, function() end
 	local C = core.C -- Set from Constants.lua
 	local standardFlag = C.BAR + C.CASTBAR + C.MESSAGE + C.ICON + C.SOUND + C.SAY + C.SAY_COUNTDOWN + C.PROXIMITY + C.FLASH + C.ALTPOWER + C.VOICE + C.INFOBOX
 	local defaultToggles = setmetatable({
