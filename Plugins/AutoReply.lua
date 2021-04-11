@@ -31,6 +31,17 @@ local hogger = "XXX_HOGGER"
 local healthPools, healthPoolNames = {}, {}
 local timer = nil
 
+-- Compat
+local BNGetNumFriendGameAccounts = BNGetNumFriendGameAccounts or C_BattleNet.GetFriendNumGameAccounts
+local BNGetGameAccountInfoByGUID = BNGetGameAccountInfoByGUID or function(guid)
+	local gameAccountInfo = C_BattleNet.GetGameAccountInfoByGUID(guid)
+	return true, gameAccountInfo.characterName or "", gameAccountInfo.clientProgram, gameAccountInfo.realmName or ""
+end
+local BNGetFriendGameAccountInfo = BNGetFriendGameAccountInfo or function(friendIndex, accountIndex)
+	local gameAccountInfo = C_BattleNet.GetFriendGameAccountInfo(friendIndex, accountIndex)
+	return	true, gameAccountInfo.characterName or "", gameAccountInfo.clientProgram, gameAccountInfo.realmName or ""
+end
+
 -------------------------------------------------------------------------------
 -- Options
 --

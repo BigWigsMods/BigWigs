@@ -1054,6 +1054,9 @@ do
 	local expansionHeader = {
 		"Classic",
 	}
+	if BigWigsLoader.isBC then
+		expansionHeader[#expansionHeader+1] = "BurningCrusade"
+	end
 
 	local statusTable = {}
 	local playerName = nil
@@ -1130,23 +1133,23 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = "BigWigs_Classic"
-				for i = 1, 1 do
+				defaultHeader = "BigWigs_" .. expansionHeader[#expansionHeader]
+				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
-						text = defaultHeader,
+						text = _G["EXPANSION_NAME"..(i-1)],
 						value = value,
 						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
 					}
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = "LittleWigs_Classic"
+				defaultHeader = "LittleWigs_" .. expansionHeader[#expansionHeader]
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				for i = 1, 1 do
+				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
-						text = defaultHeader,
+						text = _G["EXPANSION_NAME"..(i-1)],
 						value = value,
 						enabled = enabled,
 					}
