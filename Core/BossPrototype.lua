@@ -1368,26 +1368,26 @@ do
 	--- Request the gossip options of the selected NPC
 	-- @return a separate string for every selectable text option
 	function boss:GetGossipOptions()
-		local gossipTbl = GetOptions()
-		if gossipTbl[2] then
-			local tbl = {}
-			for i = 1, #gossipTbl do
-				local text = gossipTbl[i].name
-				if text then
-					tbl[#tbl+1] = text
-				end
-			end
-			return tbl[1], tbl[2], tbl[3], tbl[4], tbl[5] -- This is fine
-		elseif gossipTbl[1] then
-			return gossipTbl[1].name
-		end
+		-- local gossipTbl = GetOptions()
+		-- if gossipTbl[2] then
+		-- 	local tbl = {}
+		-- 	for i = 1, #gossipTbl do
+		-- 		local text = gossipTbl[i].name
+		-- 		if text then
+		-- 			tbl[#tbl+1] = text
+		-- 		end
+		-- 	end
+		-- 	return tbl[1], tbl[2], tbl[3], tbl[4], tbl[5] -- This is fine
+		-- elseif gossipTbl[1] then
+		-- 	return gossipTbl[1].name
+		-- end
 	end
 
 	--- Select a specific NPC gossip option
 	-- @number optionNumber The number of the specific option to be selected
 	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
 	function boss:SelectGossipOption(optionNumber, skipConfirmDialogBox)
-		SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+		-- SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
 	end
 
 end
