@@ -48,7 +48,7 @@ local addTimersMythic = { -- Mythic
 		[-21954] = {3.5, 70, 70, 70}, -- Rockbound Vanquishers
 		[-21993] = {33.7, 109.8, 70}, -- Bleakwing Assassin
 		[-21952] = {33.7, 150, 34.7}, -- Vile Occultists
-		[-21953] = {90.7, 100}, -- Soul Infusers
+		[-21953] = {84.1, 100}, -- Soul Infusers
 		[-22082] = {53.7, 40, 49.8, 70}, -- Pestering Fiend
 	},
 }
@@ -595,7 +595,7 @@ do
 		self:PlaySound(args.spellId, "warning")
 		self:CastBar(args.spellId, 6, CL.count:format(CL.shield, cloakOfFlamesCount))
 		cloakOfFlamesCount = cloakOfFlamesCount + 1
-		self:Bar(args.spellId, shadeUp and 30 or 60, CL.count:format(CL.shield, cloakOfFlamesCount))
+		self:Bar(args.spellId, shadeUp and 30.5 or 60, CL.count:format(CL.shield, cloakOfFlamesCount))
 		pyroclasmInterrupted = false
 	end
 
