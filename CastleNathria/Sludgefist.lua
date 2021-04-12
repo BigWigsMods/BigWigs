@@ -185,14 +185,16 @@ function mod:DestructiveImpactRemoved(args)
 
 	-- Update timers to be more exact
 	if self:Mythic() then
-		--self:Bar(340817, 5.5, CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Shift & Stomp
+		self:Bar(340817, 5.65, CL.count:format(self:SpellName(340817), seismicShiftCount)) -- Seismic Shift
 	else
 		self:Bar(332318, 18.5, CL.count:format(self:SpellName(332318), destructiveStompCount)) -- Destructive Stomp
 	end
 	if not self:Easy() then
 		self:Bar(335470, 29, CL.count:format(self:SpellName(335470), chainSlamCount)) -- Chain Slam
 	end
-
+	if fallingRubbleCount > 2 then -- First 2 dont trigger rubble, update bars after that
+		self:CDBar(341193, 12.5, CL.count:format(self:SpellName(341193), fallingRubbleCount-2)) -- Count is -2 since we ++ the counter even for those that dont trigger rubble
+	end
 	local unit = self:GetBossId(args.destGUID)
 	if unit and prevHp ~= 0 then
 		local percentHealthLost = self:GetHealth(unit) - prevHp
@@ -290,7 +292,7 @@ do
 			self:Message(args.spellId, "yellow", CL.count:format(args.spellName, seismicShiftCount))
 			self:PlaySound(args.spellId, "long")
 			seismicShiftCount = seismicShiftCount + 1
-			if seismicShiftCount == 3 or seismicShiftCount == 6 then -- No stomp with these
+			if seismicShiftCount % 3 == 0 then -- 3, 6, 9, 12: No stomp with these
 				self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(args.spellName, seismicShiftCount))
 			else
 				self:CDBar(args.spellId, timers[args.spellId][seismicShiftCount], CL.count:format(L.stomp_shift, seismicShiftCount))
