@@ -34,7 +34,6 @@ local mobCollector = {}
 
 local L = mod:GetLocale()
 if L then
-	L.macabre_start_emote = "Take your places for the Danse Macabre!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
 	L.custom_on_repeating_dark_recital = "Repeating Dark Recital"
 	L.custom_on_repeating_dark_recital_desc = "Repeating Dark Recital say messages with icons {rt1}, {rt2} to find your partner while dancing."
 
@@ -119,7 +118,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:Death("BossDeath", 166969, 166970, 166971) -- Baroness Frieda, Lord Stavros, Castellan Niklaus
 
@@ -220,12 +218,6 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 		if self:GetOption(afterImageMarker) then
 			self:CustomIcon(false, unit, 6)
 		end
-	end
-end
-
-function mod:RAID_BOSS_EMOTE(event, msg, npcname)
-	if msg:find(L.macabre_start_emote, nil, true) then -- Dance Macabre start
-		self:CastBar(330959, 7) -- Dance Macabre
 	end
 end
 
@@ -592,6 +584,7 @@ function mod:DanseMacabreBegins(args)
 	self:Message(330959, "green") -- Dance Macabre
 	self:PlaySound(330959, "long")
 	self:Bar(330959, 38.8, self:SpellName(305757)) -- 305757 = "Dancing"
+	self:CastBar(330959, 10.2) -- Dance Macabre
 
 	self:PauseBar(346651) -- Drain Essence
 	self:PauseBar(337110) -- Dreadbolt Volley

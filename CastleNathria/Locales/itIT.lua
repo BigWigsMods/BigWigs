@@ -60,7 +60,6 @@ end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "itIT")
 if L then
-	L.macabre_start_emote = "Ai vostri posti per la Danza Macabra!" -- [RAID_BOSS_EMOTE] Take your places for the Danse Macabre!#Dance Controller#4#false"
 	L.custom_on_repeating_dark_recital = "Ripetizione per Esibizione Oscura"
 	L.custom_on_repeating_dark_recital_desc = "Messaggi ripetuti per Esibizione Oscura con icone {rt1}, {rt2} per trovare il tuo compagno di ballo."
 

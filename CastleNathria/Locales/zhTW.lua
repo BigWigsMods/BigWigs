@@ -62,7 +62,6 @@ end
 
 L = BigWigs:NewBossLocale("The Council of Blood", "zhTW")
 if L then
-	L.macabre_start_emote = "找好位置，準備開始跳死亡之舞！"
 	L.custom_on_repeating_dark_recital = "重覆黑暗伴舞喊話"
 	L.custom_on_repeating_dark_recital_desc = "使用 {rt1} 和 {rt2} 重覆黑暗伴舞喊話，方便你找到你的舞伴。"
 
