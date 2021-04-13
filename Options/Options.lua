@@ -1233,7 +1233,7 @@ do
 					treeTbl[i] = {
 						text = _G["EXPANSION_NAME"..(i-1)],
 						value = value,
-						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
+						enabled = (value == "BigWigs_Classic" or GetAddOnEnableState(playerName, value) > 0),
 					}
 					addonNameToHeader[value] = i
 				end
