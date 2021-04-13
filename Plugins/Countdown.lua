@@ -169,9 +169,11 @@ do
 	countdownAnchor:SetWidth(80)
 	countdownAnchor:SetHeight(80)
 	countdownAnchor:SetFrameStrata("HIGH")
-	-- countdownAnchor:SetFixedFrameStrata(true)
 	countdownAnchor:SetFrameLevel(20)
-	-- countdownAnchor:SetFixedFrameLevel(true)
+	if countdownAnchor.SetFixedFrameStrata then
+		countdownAnchor:SetFixedFrameStrata(true)
+		countdownAnchor:SetFixedFrameLevel(true)
+	end
 	countdownAnchor:SetScript("OnDragStart", OnDragStart)
 	countdownAnchor:SetScript("OnDragStop", OnDragStop)
 	countdownAnchor.RefixPosition = RefixPosition
@@ -586,9 +588,11 @@ local latestCountdown = nil
 do
 	countdownFrame = CreateFrame("Frame", nil, UIParent)
 	countdownFrame:SetFrameStrata("FULLSCREEN_DIALOG")
-	-- countdownFrame:SetFixedFrameStrata(true)
+	if countdownFrame.SetFixedFrameStrata then
+		countdownFrame:SetFixedFrameStrata(true)
+		countdownFrame:SetFixedFrameLevel(true)
+	end
 	countdownFrame:SetFrameLevel(20) -- Behind GUI (level 100)
-	-- countdownFrame:SetFixedFrameLevel(true)
 	countdownFrame:SetPoint("CENTER", countdownAnchor, "CENTER")
 	countdownFrame:SetWidth(80)
 	countdownFrame:SetHeight(80)

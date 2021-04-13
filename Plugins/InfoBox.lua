@@ -70,9 +70,11 @@ do
 	display = CreateFrame("Frame", "BigWigsInfoBox", UIParent)
 	display:SetSize(infoboxWidth, infoboxHeight)
 	display:SetFrameStrata("MEDIUM")
-	-- display:SetFixedFrameStrata(true)
 	display:SetFrameLevel(130)
-	-- display:SetFixedFrameLevel(true)
+	if display.SetFixedFrameStrata then
+		display:SetFixedFrameStrata(true)
+		display:SetFixedFrameLevel(true)
+	end
 	display:SetClampedToScreen(true)
 	display:EnableMouse(true)
 	display:SetMovable(true)
