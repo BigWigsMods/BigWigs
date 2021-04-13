@@ -77,6 +77,11 @@ do
 						name = L.printDefeatOption,
 						order = 2,
 					},
+					-- printHealth = {
+					-- 	type = "toggle",
+					-- 	name = L.printHealthOption,
+					-- 	order = 3,
+					-- },
 					printNewBestKill = {
 						type = "toggle",
 						name = L.printBestTimeOption,
@@ -197,6 +202,13 @@ do
 					self:SendMessage("BigWigs_StartBar", self, nil, L.bestTimeBar, best, 136106) -- 136106 = "Interface\\Icons\\spell_nature_timestop"
 				end
 			end
+
+			-- if self.db.profile.printHealth then
+			-- 	healthPools[module.engageId] = {
+			-- 		names = {},
+			-- 		timer = self:ScheduleRepeatingTimer(StoreHealth, 2, module),
+			-- 	}
+			-- end
 		end
 	end
 end

@@ -922,6 +922,40 @@ local function populateToggleOptions(widget, module)
 			scrollFrame:AddChild(statGroup)
 
 			local statistics
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText("")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(_G.RAID)
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(L.lfr)
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(L.normal)
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(L.heroic)
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(L.mythic)
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetFullWidth(true)
+			-- statistics:SetText("")
+			-- statGroup:AddChild(statistics)
 
 			statistics = AceGUI:Create("Label")
 			statistics:SetWidth(100)
@@ -932,6 +966,26 @@ local function populateToggleOptions(widget, module)
 			statistics:SetWidth(100)
 			statistics:SetText(sDB.raid and sDB.raid.wipes or "-")
 			statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.LFR and sDB.LFR.wipes or "-")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.normal and sDB.normal.wipes or "-")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.heroic and sDB.heroic.wipes or "-")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.mythic and sDB.mythic.wipes or "-")
+			-- statGroup:AddChild(statistics)
 
 			statistics = AceGUI:Create("Label")
 			statistics:SetFullWidth(true)
@@ -948,6 +1002,26 @@ local function populateToggleOptions(widget, module)
 			statistics:SetText(sDB.raid and sDB.raid.kills or "-")
 			statGroup:AddChild(statistics)
 
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.LFR and sDB.LFR.kills or "-")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.normal and sDB.normal.kills or "-")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.heroic and sDB.heroic.kills or "-")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.mythic and sDB.mythic.kills or "-")
+			-- statGroup:AddChild(statistics)
+
 			statistics = AceGUI:Create("Label")
 			statistics:SetFullWidth(true)
 			statistics:SetText("")
@@ -962,6 +1036,26 @@ local function populateToggleOptions(widget, module)
 			statistics:SetWidth(100)
 			statistics:SetText(sDB.raid and sDB.raid.best and SecondsToTime(sDB.raid.best) or "-")
 			statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.LFR and sDB.LFR.best and SecondsToTime(sDB.LFR.best) or "-")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.normal and sDB.normal.best and SecondsToTime(sDB.normal.best) or "-")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.heroic and sDB.heroic.best and SecondsToTime(sDB.heroic.best) or "-")
+			-- statGroup:AddChild(statistics)
+
+			-- statistics = AceGUI:Create("Label")
+			-- statistics:SetWidth(100)
+			-- statistics:SetText(sDB.mythic and sDB.mythic.best and SecondsToTime(sDB.mythic.best) or "-")
+			-- statGroup:AddChild(statistics)
 		end -- End statistics table
 	end
 

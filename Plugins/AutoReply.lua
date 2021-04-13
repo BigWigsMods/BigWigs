@@ -56,6 +56,7 @@ do
 			L.autoReplyBasic,
 			L.autoReplyNormal:format(hogger),
 			L.autoReplyAdvanced:format(hogger, 12, 20),
+			-- L.autoReplyExtreme:format(hogger, 12, 20, L.healthFormat:format(hogger, 42)),
 		},
 		width = "full",
 		style = "radio",
@@ -190,6 +191,18 @@ do
 			end
 			return L.autoReplyLeftCombatAdvancedWin:format(curModule.displayName, playersAlive, playersTotal)
 		else
+			-- local totalHp = ""
+			-- for i = 1, 5 do
+			-- 	local hp = healthPools[i]
+			-- 	local name = healthPoolNames[i]
+			-- 	if hp then
+			-- 		if totalHp == "" then
+			-- 			totalHp = L.healthFormat:format(name, hp*100)
+			-- 		else
+			-- 			totalHp = totalHp .. L.comma .. L.healthFormat:format(name, hp*100)
+			-- 		end
+			-- 	end
+			-- end
 			return L.autoReplyLeftCombatNormalWipe:format(curModule.displayName)
 		end
 	end
@@ -252,6 +265,27 @@ do
 end
 
 do
+	-- local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
+
+	-- local UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress = UnitHealth, UnitHealthMax, UnitName, IsEncounterInProgress
+	-- local function StoreHealth()
+	-- 	if IsEncounterInProgress() then
+	-- 		for i = 1, 5 do
+	-- 			local unit = units[i]
+	-- 			local rawHealth = UnitHealth(unit)
+	-- 			if rawHealth > 0 then
+	-- 				local maxHealth = UnitHealthMax(unit)
+	-- 				local health = rawHealth / maxHealth
+	-- 				healthPools[i] = health
+	-- 				healthPoolNames[i] = UnitName(unit)
+	-- 			elseif healthPools[i] then
+	-- 				healthPools[i] = nil
+	-- 				healthPoolNames[i] = nil
+	-- 			end
+	-- 		end
+	-- 	end
+	-- end
+
 	local function CreateResponse(mode)
 		if mode == 2 then
 			return L.autoReplyNormal:format(curModule.displayName) -- In combat with encounterName
@@ -265,6 +299,34 @@ do
 			end
 			-- In combat with encounterName, difficulty, playersAlive
 			return L.autoReplyAdvanced:format(curModule.displayName, playersAlive, playersTotal)
+		-- elseif mode == 4 then
+		-- 	local _, _, _, instanceId = UnitPosition("player")
+		-- 	local playersTotal, playersAlive = 0, 0
+		-- 	for unit in curModule:IterateGroup() do
+		-- 		local _, _, _, tarInstanceId = UnitPosition(unit)
+		-- 		if tarInstanceId == instanceId then
+		-- 			playersTotal = playersTotal + 1
+		-- 			if not UnitIsDeadOrGhost(unit) then
+		-- 				playersAlive = playersAlive + 1
+		-- 			end
+		-- 		end
+		-- 	end
+		-- 	local totalHp = ""
+		-- 	for i = 1, 5 do
+		-- 		local unit = units[i]
+		-- 		local hp = UnitHealth(unit)
+		-- 		local name = UnitName(unit)
+		-- 		if hp > 0 then
+		-- 			hp = hp / UnitHealthMax(unit)
+		-- 			if totalHp == "" then
+		-- 				totalHp = L.healthFormat:format(name, hp*100)
+		-- 			else
+		-- 				totalHp = totalHp .. L.comma .. L.healthFormat:format(name, hp*100)
+		-- 			end
+		-- 		end
+		-- 	end
+		-- 	-- In combat with encounterName, difficulty, playersAlive, bossHealth
+		-- 	return L.autoReplyExtreme:format(curModule.displayName, playersAlive, playersTotal, totalHp)
 		else
 			return L.autoReplyBasic -- In combat
 		end
@@ -287,8 +349,14 @@ do
 				if characterName or IsGuildMember(guid) or C_FriendList.IsFriend(guid) then
 					friendlies[sender] = true
 					msg = CreateResponse(self.db.profile.mode)
+					-- if not timer and self.db.profile.exitCombat == 4 then
+					-- 	timer = self:ScheduleRepeatingTimer(StoreHealth, 2)
+					-- end
 				else
 					msg = CreateResponse(self.db.profile.modeOther)
+					-- if not timer and self.db.profile.exitCombatOther == 4 then
+					-- 	timer = self:ScheduleRepeatingTimer(StoreHealth, 2)
+					-- end
 				end
 				SendChatMessage("[BigWigs] ".. msg, "WHISPER", nil, sender)
 			end
@@ -315,6 +383,9 @@ do
 				end
 				local msg = CreateResponse(self.db.profile.mode)
 				BNSendWhisper(bnSenderID, "[BigWigs] ".. msg)
+				-- if not timer and self.db.profile.exitCombat == 4 then
+				-- 	timer = self:ScheduleRepeatingTimer(StoreHealth, 2)
+				-- end
 			end
 		end
 	end
