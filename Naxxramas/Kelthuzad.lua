@@ -85,6 +85,8 @@ function mod:OnBossEnable()
 	self:BossYell("Phase2", L.phase2_trigger1, L.phase2_trigger2, L.phase2_trigger3)
 	self:BossYell("Phase3", L.phase3_trigger)
 	self:BossYell("Guardians", L.guardians_trigger)
+
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 15990)
 end
 
