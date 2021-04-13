@@ -9,7 +9,7 @@ BigWigs:AddSounds("Gehennas", {
 })
 
 BigWigs:AddSounds("Baron Geddon", {
-	[19659] = "Alert",
+	[19659] = "alert",
 	[19695] = "long",
 	[20475] = "alarm",
 })
@@ -25,6 +25,6 @@ BigWigs:AddSounds("Majordomo Executus", {
 })
 
 BigWigs:AddSounds("Ragnaros", {
-	["emerge"] = {"Alarm","long"},
-	["submerge"] = {"Alarm","long"},
+	["emerge"] = {"alarm","long"},
+	["submerge"] = {"alarm","long"},
 })

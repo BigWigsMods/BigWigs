@@ -34,7 +34,7 @@ BigWigs:AddSounds("Maexxna", {
 })
 
 BigWigs:AddSounds("Instructor Razuvious", {
-	["shout"] = "Alert",
+	["shout"] = "alert",
 })
 
 BigWigs:AddSounds("The Four Horsemen", {
