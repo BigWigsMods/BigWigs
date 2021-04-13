@@ -119,8 +119,12 @@ local enableZones = {} -- contains the zones in which BigWigs will enable
 local disabledZones -- contains the zones in which BigWigs will enable, but the user has disabled the addon
 local worldBosses = {} -- contains the list of world bosses per zone that should enable the core
 local fakeZones = { -- Fake zones used as GUI menus
-	[-947] = true, -- Azeroth
-	[-1945] = true, -- Outland
+	[-1945]=true, -- Outland
+	[-424]=true, -- Pandaria
+	[-572]=true, -- Draenor
+	[-619]=true, -- Broken Isles
+	[-947]=true, -- Azeroth
+	[-1647]=true, -- Shadowlands
 }
 
 do
@@ -570,7 +574,6 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
-	bwFrame:RegisterEvent("RAID_INSTANCE_WELCOME") -- Onyxia
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
@@ -766,16 +769,16 @@ do
 	local L = GetLocale()
 	local locales = {
 		--ruRU = "Russian (ruRU)",
-		itIT = "Italian (itIT)",
+		--itIT = "Italian (itIT)",
 		--koKR = "Korean (koKR)",
-		esES = "Spanish (esES)",
+		--esES = "Spanish (esES)",
 		--esMX = "Spanish (esMX)",
 		--deDE = "German (deDE)",
 		--ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
 	}
 	if locales[L] then
-		-- delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
+		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
 	end
 
 	if #delayedMessages > 0 then
@@ -1142,7 +1145,6 @@ do
 			bwFrame:UnregisterEvent("UNIT_TARGET")
 		end
 	end
-	mod.RAID_INSTANCE_WELCOME = mod.ZONE_CHANGED -- Entirely for Onyxia's Lair loading
 end
 
 do
