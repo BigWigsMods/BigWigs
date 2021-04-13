@@ -1,0 +1,20 @@
+name: Check Classic PR
+
+on: [pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout addon
+        uses: actions/checkout@v2
+
+      - name: Run luacheck
+        uses: BigWigsMods/actions/luacheck@master
+        with:
+          args: -q
+
+      - name: Lint boss modules
+        if: always()
+        run: lua gen_option_values.lua BigWigs.toc -n -q
