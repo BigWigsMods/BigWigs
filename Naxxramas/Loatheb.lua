@@ -83,7 +83,7 @@ function mod:OnEngage()
 	self:DelayedMessage(29204, 270, "yellow", L.doomtime_warn:format(30))
 	self:DelayedMessage(29204, 290, "orange", L.doomtime_warn:format(10))
 	self:DelayedMessage(29204, 295, "red", L.doomtime_warn:format(5))
-	self:DelayedMessage(29204, 300, "red", L.doomtime_now, "Alarm")
+	self:DelayedMessage(29204, 300, "red", L.doomtime_now, "alarm")
 
 	-- Corrupted Mind
 	self:OpenInfo(29185, self:SpellName(29185), 2)

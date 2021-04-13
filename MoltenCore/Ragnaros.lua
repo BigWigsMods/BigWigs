@@ -87,8 +87,8 @@ function mod:OnEngage()
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
 	self:DelayedMessage("submerge", 120, "yellow", CL.custom_min:format(L.submerge, 1))
 	self:DelayedMessage("submerge", 150, "yellow", CL.custom_sec:format(L.submerge, 30))
-	self:DelayedMessage("submerge", 170, "orange", CL.custom_sec:format(L.submerge, 10), false, "Alarm")
-	self:DelayedMessage("submerge", 175, "orange", CL.custom_sec:format(L.submerge, 5), false, "Alarm")
+	self:DelayedMessage("submerge", 170, "orange", CL.custom_sec:format(L.submerge, 10), false, "alarm")
+	self:DelayedMessage("submerge", 175, "orange", CL.custom_sec:format(L.submerge, 5), false, "alarm")
 end
 
 --------------------------------------------------------------------------------
@@ -129,8 +129,8 @@ function mod:Emerge()
 	self:DelayedMessage("submerge", 60, "yellow", CL.custom_min:format(L.submerge, 2))
 	self:DelayedMessage("submerge", 120, "yellow", CL.custom_min:format(L.submerge, 1))
 	self:DelayedMessage("submerge", 150, "yellow", CL.custom_sec:format(L.submerge, 30))
-	self:DelayedMessage("submerge", 170, "orange", CL.custom_sec:format(L.submerge, 10), false, "Alarm")
-	self:DelayedMessage("submerge", 175, "orange", CL.custom_sec:format(L.submerge, 5), false, "Alarm")
+	self:DelayedMessage("submerge", 170, "orange", CL.custom_sec:format(L.submerge, 10), false, "alarm")
+	self:DelayedMessage("submerge", 175, "orange", CL.custom_sec:format(L.submerge, 5), false, "alarm")
 end
 
 function mod:Submerge()
@@ -141,8 +141,8 @@ function mod:Submerge()
 	self:Bar("emerge", 90, L.emerge_bar, "spell_fire_volcano")
 	self:DelayedMessage("emerge", 30, "yellow", CL.custom_sec:format(L.emerge, 60))
 	self:DelayedMessage("emerge", 60, "yellow", CL.custom_sec:format(L.emerge, 30))
-	self:DelayedMessage("emerge", 80, "orange", CL.custom_sec:format(L.emerge, 10), false, "Alarm")
-	self:DelayedMessage("emerge", 85, "orange", CL.custom_sec:format(L.emerge, 5), false, "Alarm")
+	self:DelayedMessage("emerge", 80, "orange", CL.custom_sec:format(L.emerge, 10), false, "alarm")
+	self:DelayedMessage("emerge", 85, "orange", CL.custom_sec:format(L.emerge, 5), false, "alarm")
 	timer = self:ScheduleTimer("Emerge", 90)
 end
 

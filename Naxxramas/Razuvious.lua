@@ -60,7 +60,7 @@ end
 function mod:OnEngage()
 	understudyIcons = {}
 	self:CDBar("shout", 25, L.shout, L.shout_icon)
-	self:DelayedMessage("shout", 20, "orange", CL.soon:format(self:SpellName(L.shout)), L.shout_icon, "Alert")
+	self:DelayedMessage("shout", 20, "orange", CL.soon:format(self:SpellName(L.shout)), L.shout_icon, "alert")
 end
 
 --------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ end
 function mod:Shout(args)
 	self:Message("shout", "red", args.spellName, L.shout_icon)
 	self:CDBar("shout", 25, args.spellName, L.shout_icon)
-	self:DelayedMessage("shout", 20, "orange", CL.soon:format(args.spellName), L.shout_icon, "Alert")
+	self:DelayedMessage("shout", 20, "orange", CL.soon:format(args.spellName), L.shout_icon, "alert")
 end
 
 function mod:Taunt(args)

@@ -45,7 +45,7 @@ function mod:OnEngage()
 
 	self:Bar(24327, 20) -- Cause Insanity
 	self:Bar(24322, 90) -- Blood Siphon
-	self:DelayedMessage(24322, 80, "orange", CL.custom_sec:format(self:SpellName(24322), 10), nil, "Alarm")
+	self:DelayedMessage(24322, 80, "orange", CL.custom_sec:format(self:SpellName(24322), 10), nil, "alarm")
 end
 
 --------------------------------------------------------------------------------
@@ -56,7 +56,7 @@ function mod:BloodSiphon(args)
 	self:Message(24322, "red")
 	self:PlaySound(24322, "long")
 	self:Bar(24322, 90)
-	self:DelayedMessage(24322, 80, "orange", CL.custom_sec:format(args.spellName, 10), nil, "Alarm")
+	self:DelayedMessage(24322, 80, "orange", CL.custom_sec:format(args.spellName, 10), nil, "alarm")
 end
 
 function mod:CauseInsanity(args)
