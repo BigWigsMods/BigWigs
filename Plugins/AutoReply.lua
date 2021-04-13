@@ -27,7 +27,23 @@ plugin.displayName = L.autoReply
 local curDiff = 0
 local curModule = nil
 local throttle, throttleBN, friendlies = {}, {}, {}
-local hogger = "XXX_HOGGER"
+local hogger = "Hogger"
+do
+	local locale = GetLocale()
+	if locale == "frFR" then
+		hogger = "Lardeur"
+	elseif locale == "itIT" then
+		hogger = "Boccalarga"
+	elseif locale == "koKR" then
+		hogger = "들창코"
+	elseif locale == "ruRU" then
+		hogger = "Дробитель"
+	elseif locale == "zhCN" then
+		hogger = "霍格"
+	elseif locale == "zhTW" then
+		hogger = "霍格"
+	end
+end
 local healthPools, healthPoolNames = {}, {}
 local timer = nil
 
