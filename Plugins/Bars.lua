@@ -1516,9 +1516,11 @@ do
 		display:RegisterForDrag("LeftButton")
 		display:SetMinResize(80, 8)
 		display:SetFrameStrata("HIGH")
-		-- display:SetFixedFrameStrata(true)
 		display:SetFrameLevel(title == "BigWigsAnchor" and 10 or 15)
-		-- display:SetFixedFrameLevel(true)
+		if display.SetFixedFrameStrata then
+			display:SetFixedFrameStrata(true)
+			display:SetFixedFrameLevel(true)
+		end
 		local bg = display:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(display)
 		bg:SetColorTexture(0, 0, 0, 0.3)

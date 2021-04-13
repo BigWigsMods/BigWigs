@@ -178,9 +178,11 @@ do
 		display:SetWidth(width)
 		display:SetHeight(height)
 		display:SetFrameStrata("HIGH")
-		-- display:SetFixedFrameStrata(true)
 		display:SetFrameLevel(5)
-		-- display:SetFixedFrameLevel(true)
+		if display.SetFixedFrameStrata then
+			display:SetFixedFrameStrata(true)
+			display:SetFixedFrameLevel(true)
+		end
 		display:SetScript("OnDragStart", OnDragStart)
 		display:SetScript("OnDragStop", OnDragStop)
 		display.RefixPosition = RefixPosition
@@ -213,9 +215,11 @@ do
 	normalMessageFrame:SetWidth(2000)
 	normalMessageFrame:SetHeight(80)
 	normalMessageFrame:SetFrameStrata("FULLSCREEN_DIALOG")
-	-- normalMessageFrame:SetFixedFrameStrata(true)
 	normalMessageFrame:SetFrameLevel(20) -- Behind GUI (level 100) & behind emphasized messages (level 30)
-	-- normalMessageFrame:SetFixedFrameLevel(true)
+	if normalMessageFrame.SetFixedFrameStrata then
+		normalMessageFrame:SetFixedFrameStrata(true)
+		normalMessageFrame:SetFixedFrameLevel(true)
+	end
 
 	local function FontFinish(self)
 		self:GetParent():Hide()
@@ -690,9 +694,11 @@ end
 do
 	emphMessageFrame = CreateFrame("Frame", nil, UIParent)
 	emphMessageFrame:SetFrameStrata("FULLSCREEN_DIALOG")
-	-- emphMessageFrame:SetFixedFrameStrata(true)
 	emphMessageFrame:SetFrameLevel(30) -- Behind GUI (level 100)
-	-- emphMessageFrame:SetFixedFrameLevel(true)
+	if emphMessageFrame.SetFixedFrameStrata then
+		emphMessageFrame:SetFixedFrameStrata(true)
+		emphMessageFrame:SetFixedFrameLevel(true)
+	end
 	emphMessageFrame:SetPoint("CENTER", emphMessageAnchor, "CENTER")
 	emphMessageFrame:SetWidth(2000)
 	emphMessageFrame:SetHeight(80)

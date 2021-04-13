@@ -841,9 +841,11 @@ do
 		-- end
 		proxAnchor = CreateFrame("Frame", "BigWigsProximityAnchor", UIParent)
 		proxAnchor:SetFrameStrata("MEDIUM")
-		-- proxAnchor:SetFixedFrameStrata(true)
 		proxAnchor:SetFrameLevel(120)
-		-- proxAnchor:SetFixedFrameLevel(true)
+		if proxAnchor.SetFixedFrameStrata then
+			proxAnchor:SetFixedFrameStrata(true)
+			proxAnchor:SetFixedFrameLevel(true)
+		end
 		proxAnchor:SetWidth(db.width)
 		proxAnchor:SetHeight(db.height)
 		proxAnchor:SetMinResize(100, 30)
