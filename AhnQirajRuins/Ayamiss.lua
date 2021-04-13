@@ -61,7 +61,7 @@ end
 
 function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 15369 then
-		local hp = self:UnitHealth(unit)
+		local hp = self:GetHealth(unit)
 		if hp < 26 then
 			self:UnregisterUnitEvent(event, "target", "focus")
 			self:Message(8269, "green", CL.soon:format(self:SpellName(8269)), false)

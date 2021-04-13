@@ -69,7 +69,7 @@ end
 
 function mod:UNIT_HEALTH_FREQUENT(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 14507 then
-		local hp = self:UnitHealth(unit)
+		local hp = self:GetHealth(unit)
 		if hp < 56 then
 			self:UnregisterUnitEvent(event, "target", "focus")
 			if hp > 50 then -- make sure we're not too late
