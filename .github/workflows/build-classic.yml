@@ -1,15 +1,19 @@
-name: Package addon
+name: Package Classic addon
 
 on:
   push:
     branches:
-      - master
+      - classic
     tags:
-      - '*'
-      - '!**-classic'
+      - '**-classic'
     paths-ignore:
       - '.github/**'
       - 'ldoc.ltp'
+
+env:
+  CF_API_KEY: ${{ secrets.CF_API_KEY }}
+  WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
+  GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   build:
@@ -30,9 +34,10 @@ jobs:
         if: always()
         run: lua gen_option_values.lua BigWigs.toc
 
-      - name: Package
+      - name: Package Classic
         uses: BigWigsMods/packager@master
-        env:
-          CF_API_KEY: ${{ secrets.CF_API_KEY }}
-          WOWI_API_TOKEN: ${{ secrets.WOWI_API_TOKEN }}
-          GITHUB_OAUTH: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Package BC Classic
+        uses: BigWigsMods/packager@master
+        with:
+          args: -g bc -m .pkgmeta-bc -n "{package-name}-{project-version}-bc" -w 0
