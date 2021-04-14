@@ -1188,12 +1188,12 @@ do
 		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= "BigWigs_Classic" and GetAddOnEnableState(playerName, value) == 0 then
-				local missing = AceGUI:Create("Label")
-				missing:SetText(L.missingAddOn:format(value))
-				missing:SetFontObject(GameFontHighlight)
-				missing:SetFullWidth(true)
-				widget:AddChild(missing)
+		-- elseif value:match("^BigWigs_") and value ~= "BigWigs_Classic" and GetAddOnEnableState(playerName, value) == 0 then
+		-- 		local missing = AceGUI:Create("Label")
+		-- 		missing:SetText(L.missingAddOn:format(value))
+		-- 		missing:SetFontObject(GameFontHighlight)
+		-- 		missing:SetFullWidth(true)
+		-- 		widget:AddChild(missing)
 		elseif value:match("^LittleWigs_") and GetAddOnEnableState(playerName, "LittleWigs") == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format("LittleWigs"))
@@ -1233,7 +1233,7 @@ do
 					treeTbl[i] = {
 						text = _G["EXPANSION_NAME"..(i-1)],
 						value = value,
-						enabled = (value == "BigWigs_Classic" or GetAddOnEnableState(playerName, value) > 0),
+						enabled = true, -- all in one, baby
 					}
 					addonNameToHeader[value] = i
 				end
