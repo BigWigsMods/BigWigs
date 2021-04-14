@@ -4,7 +4,7 @@
 if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("The Tarragrue", 2450, 2435)
 if not mod then return end
-mod:RegisterEnableMob(163538) -- The Tarragrue
+mod:RegisterEnableMob(163538, 152253, 157098) -- The Tarragrue
 mod:SetEncounterID(2423)
 --mod:SetRespawnTime(30)
 --mod:SetStage(1)
@@ -81,10 +81,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Remnants", 352382, 352389, 352398) -- Upper Reaches' Might, Mort'regar's Echoes, Soulforge Heat
 	self:Log("SPELL_CAST_START", "GraspOfDeath", 347668)
 	self:Log("SPELL_AURA_APPLIED", "GraspOfDeathApplied", 347668)
-	self:Log("SPELL_CAST_START", "FuryoftheAgesStart", 347490)
-	self:Log("SPELL_AURA_APPLIED", "FuryoftheAgesApplied", 347490)
-	self:Log("SPELL_AURA_REMOVED", "FuryoftheAgesRemoved", 347490)
+	self:Log("SPELL_CAST_START", "FuryOfTheAgesStart", 347490)
+	self:Log("SPELL_AURA_APPLIED", "FuryOfTheAgesApplied", 347490)
+	self:Log("SPELL_AURA_REMOVED", "FuryOfTheAgesRemoved", 347490)
 	self:Log("SPELL_AURA_APPLIED", "TheJailersGazeApplied", 347369)
+
+	self:RegisterEvent("GROUP_ROSTER_UPDATE")
+	self:GROUP_ROSTER_UPDATE()
 end
 
 function mod:OnEngage()
@@ -133,11 +136,10 @@ function mod:Overpower(args)
 end
 
 function mod:CrushedArmorApplied(args)
-	if self:Tank() and self:Tank(args.destName) then
-		self:NewStackMessage(args.spellId, "purple", args.destName, 10)
-		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
-			self:PlaySound(args.spellId, "warning") -- Not taunted? Play again.
-		end
+	self:TargetMessage(args.spellId, "purple", args.destName)
+	local bossUnit = self:GetBossId(args.sourceGUID)
+	if bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
+		self:PlaySound(args.spellId, "warning") -- Not taunted? Play again.
 	end
 end
 
@@ -208,7 +210,7 @@ do
 	local playerList = {}
 	local prev = 0
 	local soundPlayed = false
-	function mod:PredatorsHowlApplied(args)
+	function mod:PredatorsHowlApplied(args) -- XXX on all players?
 		local t = args.time
 		if t-prev > 5 then
 			prev = t
@@ -248,7 +250,7 @@ function mod:UnshakeableDreadApplied(args)
 	end
 end
 
-function mod:HungeringMist(args)
+function mod:HungeringMist(args) -- XXX Adds?
 	self:Message(args.spellId, "orange", CL.count:format(L.mist, mistCount))
 	self:PlaySound(args.spellId, "alert")
 	--self:CastBar(args.spellId, 5, CL.count:format(L.mist, mistCount))
@@ -256,7 +258,7 @@ function mod:HungeringMist(args)
 	--self:Bar(args.spellId, 33, CL.count:format(L.mist, mistCount))
 end
 
-function mod:RemnantOfForgottenTorments(args)
+function mod:RemnantOfForgottenTorments(args) -- XXX Adds?
 	self:Message(args.spellId, "yellow", CL.count:format(L.remnants, remnantCount))
 	self:PlaySound(args.spellId, "long")
 	remnantCount = remnantCount + 1
@@ -299,14 +301,14 @@ do
 	end
 end
 
-function mod:FuryoftheAgesStart(args)
+function mod:FuryOfTheAgesStart(args)
 	self:Message(args.spellId, "cyan", CL.casting:format(L.enrage))
 	if self:Dispeller("enrage", true) then
 		self:PlaySound(args.spellId, "info")
 	end
 end
 
-function mod:FuryoftheAgesApplied(args)
+function mod:FuryOfTheAgesApplied(args)
 	if self:Dispeller("enrage", true) then
 		self:Message(args.spellId, "orange", CL.buff_boss:format(L.enrage))
 		self:PlaySound(args.spellId, "warning")
@@ -314,7 +316,7 @@ function mod:FuryoftheAgesApplied(args)
 	--self:Bar(args.spellId, 20, L.enrage)
 end
 
-function mod:FuryoftheAgesRemoved(args)
+function mod:FuryOfTheAgesRemoved(args)
 	self:Message(args.spellId, "green", CL.removed_by:format(L.enrage, args.sourceName))
 	if self:Dispeller("enrage", true) then
 		self:PlaySound(args.spellId, "info")
@@ -322,6 +324,6 @@ function mod:FuryoftheAgesRemoved(args)
 end
 
 function mod:TheJailersGazeApplied(args)
-	self:Message(args.spellId, "orange")
+	self:Message(args.spellId, "orange", CL.percent:format(10, args.spellName))
 	self:PlaySound(args.spellId, "long")
 end
