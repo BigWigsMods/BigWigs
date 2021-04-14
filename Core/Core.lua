@@ -467,6 +467,9 @@ do
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
 	local bossMeta = { __index = bossPrototype, __metatable = false }
 	function core:NewBoss(moduleName, zoneId, journalId, instanceId)
+		-- Don't load modules for zones we aren't interested in
+		if not BigWigsLoader.zoneTbl[zoneId] then return end
+
 		if bosses[moduleName] then
 			core:Print(errorAlreadyRegistered:format(moduleName))
 		else

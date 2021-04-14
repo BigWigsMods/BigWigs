@@ -151,6 +151,8 @@ do
 		[-1444] = c, -- Feralas
 		--[[ BigWigs: The Burning Crusade ]]--
 		[-1945] = bc, -- Outland (Fake Menu)
+		[-1944] = bc, -- Hellfire Peninsula
+		[-1948] = bc, -- Shadowmoon Valley
 		[565] = bc, -- Gruul's Lair
 		[532] = bc, -- Karazhan
 		[548] = bc, -- Coilfang: Serpentshrine Cavern
