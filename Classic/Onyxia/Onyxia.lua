@@ -14,7 +14,7 @@ mod.engageId = 1084
 
 local L = mod:NewLocale("enUS", true)
 if L then
-	L.name = "Onyxia"
+	L.bossName = "Onyxia"
 
 	L.phase = "Phases"
 	L.phase_desc = "Warn for phase changes."
@@ -33,10 +33,6 @@ L = mod:GetLocale()
 --------------------------------------------------------------------------------
 -- Initialization
 --
-
-function mod:OnRegister()
-	self.displayName = L.name
-end
 
 function mod:GetOptions()
 	return {

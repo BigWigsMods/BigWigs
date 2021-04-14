@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Onyxia", "deDE")
 if L then
-	L.name = "Onyxia"
+	L.bossName = "Onyxia"
 
 	L.phase = "Phasen"
 	L.phase_desc = "Warnt, wenn ein Phasenwechsel bevorsteht."

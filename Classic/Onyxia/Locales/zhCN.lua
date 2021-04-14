@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Onyxia", "zhCN")
 if L then
-	L.name = "奥妮克希亚"
+	L.bossName = "奥妮克希亚"
 
 	L.phase = "阶段"
 	L.phase_desc = "当阶段转换时发出警报。"

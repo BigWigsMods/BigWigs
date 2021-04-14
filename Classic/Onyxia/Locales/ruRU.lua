@@ -1,6 +1,6 @@
 local L = BigWigs:NewBossLocale("Onyxia", "ruRU")
 if L then
-	L.name = "Ониксия"
+	L.bossName = "Ониксия"
 
 	L.phase = "Фазы"
 	L.phase_desc = "Сообщать о смене фаз."
