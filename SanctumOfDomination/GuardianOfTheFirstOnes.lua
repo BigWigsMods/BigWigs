@@ -47,6 +47,7 @@ function mod:GetOptions()
 		{350734, "TANK"}, -- Obliterate
 		352833, -- Disintegration
 		352660, -- Form Sentry
+		347359, -- Suppression Field
 		{350502, "HEALER"}, -- Threat Neutralization
 	},{
 		[352385] = self:SpellName(-23254), -- Energy Cores
