@@ -5,7 +5,7 @@ if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Painsmith Raznal", 2450, 2443)
 if not mod then return end
 --mod:RegisterEnableMob(164406) -- 
---mod:SetEncounterID(2398)
+mod:SetEncounterID(2430)
 --mod:SetRespawnTime(30)
 --mod:SetStage(1)
 
