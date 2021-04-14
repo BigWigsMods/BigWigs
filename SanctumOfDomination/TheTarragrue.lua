@@ -103,7 +103,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 13 then -- The Jailer's Gaze at 10%
-		self:Message("stages", "green", CL.soon:format(self:SpellName(347369)), false) -- The Jailer's Gaze
+		self:Message(347369, "green", CL.soon:format(self:SpellName(347369))) -- The Jailer's Gaze
 		self:UnregisterUnitEvent(event, unit)
 	end
 end
