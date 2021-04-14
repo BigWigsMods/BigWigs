@@ -14,5 +14,23 @@
 
 <Include file="Classic\Onyxia\modules.xml"/>
 <Include file="Classic\World\modules.xml"/>
+
+<Include file="BurningCrusade\Hyjal\modules.xml"/>
+<Include file="BurningCrusade\Hyjal\locales.xml"/>
+
+<Include file="BurningCrusade\Serpentshrine\modules.xml"/>
+<Include file="BurningCrusade\Serpentshrine\locales.xml"/>
+
+<Include file="BurningCrusade\Outland\modules.xml"/>
+<Include file="BurningCrusade\Outland\locales.xml"/>
+
+<Include file="BurningCrusade\Karazhan\modules.xml"/>
+<Include file="BurningCrusade\Karazhan\locales.xml"/>
+
+<Include file="BurningCrusade\TheEye\modules.xml"/>
+<Include file="BurningCrusade\TheEye\locales.xml"/>
+
+<Include file="BurningCrusade\BlackTemple\modules.xml"/>
+<Include file="BurningCrusade\BlackTemple\locales.xml"/>
 <!--@end-do-not-package@-->
 </Ui>

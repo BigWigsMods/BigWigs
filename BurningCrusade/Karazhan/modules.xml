@@ -1,0 +1,20 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Attumen.lua"/>
+<Script file="Hyakiss.lua"/>
+<Script file="Moroes.lua"/>
+<Script file="Maiden.lua"/>
+<Script file="RomuloJulianne.lua"/>
+<Script file="TheBigBadWolf.lua"/>
+<Script file="WizardofOz.lua"/>
+<Script file="Curator.lua"/>
+<Script file="Terestian.lua"/>
+<Script file="ShadeOfAran.lua"/>
+<Script file="Netherspite.lua"/>
+<Script file="Malchezaar.lua"/>
+<Script file="Nightbane.lua"/>
+
+<Include file="Options\options.xml"/>
+
+</Ui>

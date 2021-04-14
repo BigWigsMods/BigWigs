@@ -1,0 +1,12 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Doomwalker.lua"/>
+<Script file="Gruul.lua"/>
+<Script file="Kazzak.lua"/>
+<Script file="Magtheridon.lua"/>
+<Script file="Maulgar.lua"/>
+
+<Include file="Options\options.xml"/>
+
+</Ui>

@@ -1,0 +1,17 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="Najentus.lua"/>
+<Script file="Supremus.lua"/>
+<Script file="ShadeOfAkama.lua"/>
+<Script file="Teron.lua"/>
+<Script file="Gurtogg.lua"/>
+<Script file="Souls.lua"/>
+<Script file="Shahraz.lua"/>
+<Script file="Council.lua"/>
+<Script file="Illidan.lua"/>
+
+<Include file="Options\options.xml"/>
+
+</Ui>
+
