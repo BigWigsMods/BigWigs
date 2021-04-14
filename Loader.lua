@@ -212,6 +212,7 @@ do
 		--[[ BigWigs: Shadowlands ]]--
 		[-1647] = s, -- Shadowlands (Fake Menu)
 		[2296] = s, -- Castle Nathria
+		[2450] = s, -- Sanctum of Domination
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep

@@ -21,6 +21,7 @@ move-folders:
     BigWigs/Options: BigWigs_Options
     BigWigs/Plugins: BigWigs_Plugins
     BigWigs/CastleNathria: BigWigs_CastleNathria
+    BigWigs/SanctumOfDomination: BigWigs_SanctumOfDomination
     BigWigs/Shadowlands: BigWigs_Shadowlands
 
 ignore:

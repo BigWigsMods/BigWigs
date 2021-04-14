@@ -1,0 +1,33 @@
+## Interface: 90100
+
+## Title: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-deDE: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-esES: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-esMX: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-frFR: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-ruRU: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-zhCN: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-zhTW: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-itIT: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-ptBR: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-koKR: BigWigs [|cffeda55fSanctum of Domination|r]
+## Notes: BigWigs Sanctum of Domination Modules
+## Notes-deDE: BigWigs Sanctum of Domination Modules
+## Notes-esES: BigWigs Sanctum of Domination Modules
+## Notes-esMX: BigWigs Sanctum of Domination Modules
+## Notes-frFR: BigWigs Sanctum of Domination Modules
+## Notes-ruRU: BigWigs Sanctum of Domination Modules
+## Notes-zhCN: BigWigs Sanctum of Domination Modules
+## Notes-zhTW: BigWigs Sanctum of Domination Modules
+## Notes-itIT: BigWigs Sanctum of Domination Modules
+## Notes-ptBR: BigWigs Sanctum of Domination Modules
+## Notes-koKR: BigWigs Sanctum of Domination Modules
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2450
+
+modules.xml

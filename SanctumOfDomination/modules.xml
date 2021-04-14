@@ -1,0 +1,19 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="TheTarragrue.lua"/>
+<Script file="TheEyeOfTheJailer.lua"/>
+<Script file="TheNine.lua"/>
+<Script file="RemnantOfNerzhul.lua"/>
+<Script file="SoulrenderDormazain.lua"/>
+<Script file="PainsmithRaznal.lua"/>
+<Script file="GuardianOfTheFirstOnes.lua"/>
+<Script file="FatescribeRohKalo.lua"/>
+<Script file="KelThuzad.lua"/>
+<Script file="SylvanasWindrunner.lua"/>
+<!--<Script file="Trash.lua"/>-->
+
+<!--<Include file="Locales\locales.xml"/>-->
+<!--<Include file="Options\options.xml"/>-->
+
+</Ui>
