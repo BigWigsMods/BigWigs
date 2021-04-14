@@ -5,14 +5,14 @@
 <Include file="Plugins\modules.xml"/>
 <Include file="Options\modules.xml"/>
 
-<Include file="MoltenCore\modules.xml"/>
-<Include file="BlackwingLair\modules.xml"/>
-<Include file="ZulGurub\modules.xml"/>
-<Include file="AhnQirajRuins\modules.xml"/>
-<Include file="AhnQirajTemple\modules.xml"/>
-<Include file="Naxxramas\modules.xml"/>
+<Include file="Classic\MoltenCore\modules.xml"/>
+<Include file="Classic\BlackwingLair\modules.xml"/>
+<Include file="Classic\ZulGurub\modules.xml"/>
+<Include file="Classic\AhnQirajRuins\modules.xml"/>
+<Include file="Classic\AhnQirajTemple\modules.xml"/>
+<Include file="Classic\Naxxramas\modules.xml"/>
 
-<Include file="Onyxia\modules.xml"/>
-<Include file="World\modules.xml"/>
+<Include file="Classic\Onyxia\modules.xml"/>
+<Include file="Classic\World\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>

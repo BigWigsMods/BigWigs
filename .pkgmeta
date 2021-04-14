@@ -19,14 +19,14 @@ move-folders:
     BigWigs/Core: BigWigs_Core
     BigWigs/Options: BigWigs_Options
     BigWigs/Plugins: BigWigs_Plugins
-    BigWigs/Onyxia: BigWigs_Onyxia
-    BigWigs/MoltenCore: BigWigs_MoltenCore
-    BigWigs/World: BigWigs_World
-    BigWigs/BlackwingLair: BigWigs_BlackwingLair
-    BigWigs/ZulGurub: BigWigs_ZulGurub
-    BigWigs/AhnQirajRuins: BigWigs_AhnQirajRuins
-    BigWigs/AhnQirajTemple: BigWigs_AhnQirajTemple
-    BigWigs/Naxxramas: BigWigs_Naxxramas
+    BigWigs/Classic/Onyxia: BigWigs_Onyxia
+    BigWigs/Classic/MoltenCore: BigWigs_MoltenCore
+    BigWigs/Classic/World: BigWigs_World
+    BigWigs/Classic/BlackwingLair: BigWigs_BlackwingLair
+    BigWigs/Classic/ZulGurub: BigWigs_ZulGurub
+    BigWigs/Classic/AhnQirajRuins: BigWigs_AhnQirajRuins
+    BigWigs/Classic/AhnQirajTemple: BigWigs_AhnQirajTemple
+    BigWigs/Classic/Naxxramas: BigWigs_Naxxramas
 
 ignore:
   - .luacheckrc
