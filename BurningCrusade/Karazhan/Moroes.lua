@@ -7,6 +7,7 @@ if not mod then return end
 --Moroes, Baroness Dorothea Millstipe, Baron Rafe Dreuger, Lady Catriona Von'Indi,
 --Lady Keira Berrybuck, Lord Robin Daris, Lord Crispin Ference
 mod:RegisterEnableMob(15687, 19875, 19874, 19872, 17007, 19876, 19873)
+mod:SetEncounterID(2445)
 
 --------------------------------------------------------------------------------
 -- Localization

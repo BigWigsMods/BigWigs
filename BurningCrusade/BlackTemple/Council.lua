@@ -6,8 +6,8 @@
 local mod, CL = BigWigs:NewBoss("The Illidari Council", 564, 1589)
 if not mod then return end
 mod:RegisterEnableMob(22951, 22952, 22949, 22950) -- Lady Malande, Veras Darkshadow, Gathios the Shatterer, High Nethermancer Zerevor
-mod.engageId = 608
---mod.respawnTime = 0 -- Resets, doesn't respawn
+mod:SetEncounterID(608)
+--mod:SetRespawnTime(0) -- Resets, doesn't respawn
 
 --------------------------------------------------------------------------------
 -- Localization

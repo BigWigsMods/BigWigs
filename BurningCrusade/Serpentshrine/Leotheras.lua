@@ -5,6 +5,7 @@
 local mod, CL = BigWigs:NewBoss("Leotheras the Blind", 548, 1569)
 if not mod then return end
 mod:RegisterEnableMob(21215)
+mod:SetEncounterID(2460)
 
 local beDemon = mod:NewTargetList()
 local demonTimer = nil

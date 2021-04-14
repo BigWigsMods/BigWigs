@@ -5,6 +5,7 @@
 local mod, CL = BigWigs:NewBoss("Prince Malchezaar", 532, 1563)
 if not mod then return end
 mod:RegisterEnableMob(15690)
+mod:SetEncounterID(2453)
 
 local nova = nil
 

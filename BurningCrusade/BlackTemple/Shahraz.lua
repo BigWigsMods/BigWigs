@@ -6,8 +6,8 @@
 local mod = BigWigs:NewBoss("Mother Shahraz", 564, 1588)
 if not mod then return end
 mod:RegisterEnableMob(22947)
-mod.engageId = 607
---mod.respawnTime = 0 -- Resets, doesn't respawn
+mod:SetEncounterID(607)
+--mod:SetRespawnTime(0) -- Resets, doesn't respawn
 
 --------------------------------------------------------------------------------
 -- Locals

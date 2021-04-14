@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Rage Winterchill", 534, 1577)
 if not mod then return end
 mod:RegisterEnableMob(17767)
+mod:SetEncounterID(2468)
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -6,8 +6,8 @@
 local mod = BigWigs:NewBoss("Teron Gorefiend", 564, 1585)
 if not mod then return end
 mod:RegisterEnableMob(22871)
-mod.engageId = 604
---mod.respawnTime = 0 -- Resets, doesn't respawn
+mod:SetEncounterID(604)
+--mod:SetRespawnTime(0) -- Resets, doesn't respawn
 
 --------------------------------------------------------------------------------
 -- Initialization

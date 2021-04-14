@@ -5,6 +5,7 @@
 local mod, CL = BigWigs:NewBoss("Anetheron", 534, 1578)
 if not mod then return end
 mod:RegisterEnableMob(17808)
+mod:SetEncounterID(2469)
 
 --------------------------------------------------------------------------------
 -- Initialization

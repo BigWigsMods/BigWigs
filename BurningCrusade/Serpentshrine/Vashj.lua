@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Lady Vashj", 548, 1572)
 if not mod then return end
 mod:RegisterEnableMob(21212, 22055, 22056, 22009) --Vashj, Coilfang Elite, Coilfang Strider, Tainted Elemental
+mod:SetEncounterID(2463)
 
 local shieldsFaded = 0
 

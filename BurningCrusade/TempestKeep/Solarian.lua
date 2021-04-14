@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("High Astromancer Solarian", 550, 1575)
 if not mod then return end
 mod:RegisterEnableMob(18805)
+mod:SetEncounterID(2466)
 
 --------------------------------------------------------------------------------
 -- Localization

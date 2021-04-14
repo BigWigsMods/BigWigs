@@ -6,8 +6,8 @@
 local mod, CL = BigWigs:NewBoss("Gurtogg Bloodboil", 564, 1586)
 if not mod then return end
 mod:RegisterEnableMob(22948)
-mod.engageId = 605
---mod.respawnTime = 0 -- Resets, doesn't respawn
+mod:SetEncounterID(605)
+--mod:SetRespawnTime(0) -- Resets, doesn't respawn
 
 --------------------------------------------------------------------------------
 -- Locals
