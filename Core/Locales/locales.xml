@@ -3,15 +3,27 @@
 
 <Script file="common.enUS.lua"/>
 <Script file="common.deDE.lua"/>
-<Script file="common.frFR.lua"/>
-<Script file="common.koKR.lua"/>
-<Script file="common.zhCN.lua"/>
-<Script file="common.zhTW.lua"/>
 <Script file="common.esES.lua"/>
 <Script file="common.esMX.lua"/>
-<Script file="common.ruRU.lua"/>
-<Script file="common.ptBR.lua"/>
+<Script file="common.frFR.lua"/>
 <Script file="common.itIT.lua"/>
+<Script file="common.koKR.lua"/>
+<Script file="common.ptBR.lua"/>
+<Script file="common.ruRU.lua"/>
+<Script file="common.zhCN.lua"/>
+<Script file="common.zhTW.lua"/>
+
+<Script file="encounter.enUS.lua"/>
+<Script file="encounter.deDE.lua"/>
+<Script file="encounter.esES.lua"/>
+<Script file="encounter.esMX.lua"/>
+<Script file="encounter.frFR.lua"/>
+<Script file="encounter.itIT.lua"/>
+<Script file="encounter.koKR.lua"/>
+<Script file="encounter.ptBR.lua"/>
+<Script file="encounter.ruRU.lua"/>
+<Script file="encounter.zhCN.lua"/>
+<Script file="encounter.zhTW.lua"/>
 
 </Ui>
 

@@ -465,6 +465,7 @@ end
 
 do
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
+	local errorJournalIdInvalid = "%q is using the invalid journal id of %q."
 	local bossMeta = { __index = bossPrototype, __metatable = false }
 	function core:NewBoss(moduleName, zoneId, journalId, instanceId)
 		-- Don't load modules for zones we aren't interested in
@@ -489,8 +490,20 @@ do
 			bosses[moduleName] = m
 			initModules[#initModules+1] = m
 
-			-- Localized name is set in :RegisterBossModule
-			m.displayName = moduleName
+			if journalId then
+				local name = BigWigsAPI:GetLocale("BigWigs: Encounters")[journalId]
+				if name then
+					m.journalId = journalId
+					m.displayName = name
+				else
+					m.displayName = moduleName
+					core:Print(errorJournalIdInvalid:format(moduleName, journalId))
+				end
+			else
+				-- Localized name is set in :RegisterBossModule
+				m.displayName = moduleName
+			end
+
 			if zoneId > 0 then
 				m.instanceId = zoneId
 			else
