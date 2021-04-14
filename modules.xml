@@ -18,7 +18,7 @@
 <Include file="BurningCrusade\Serpentshrine\modules.xml"/>
 <Include file="BurningCrusade\Outland\modules.xml"/>
 <Include file="BurningCrusade\Karazhan\modules.xml"/>
-<Include file="BurningCrusade\TheEye\modules.xml"/>
+<Include file="BurningCrusade\TempestKeep\modules.xml"/>
 <Include file="BurningCrusade\BlackTemple\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
