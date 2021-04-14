@@ -7,7 +7,7 @@ local mod = BigWigs:NewBoss("Fankriss the Unyielding", 531)
 if not mod then return end
 mod:RegisterEnableMob(15510)
 mod:SetAllowWin(true)
-mod.engageId = 712
+mod:SetEncounterID(712)
 
 --------------------------------------------------------------------------------
 -- Localization

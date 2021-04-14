@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Instructor Razuvious", 533)
 if not mod then return end
 mod:RegisterEnableMob(16061, 16803) -- Instructor Razuvious, Deathknight Understudy
 mod:SetAllowWin(true)
-mod.engageId = 1113
+mod:SetEncounterID(1113)
 
 --------------------------------------------------------------------------------
 -- Locals

@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Maexxna", 533)
 if not mod then return end
 mod:RegisterEnableMob(15952)
 mod:SetAllowWin(true)
-mod.engageId = 1116
+mod:SetEncounterID(1116)
 
 --------------------------------------------------------------------------------
 -- Localization

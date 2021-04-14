@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("C'Thun", 531)
 if not mod then return end
 mod:RegisterEnableMob(15727, 15589) -- C'Thun, Eye of C'Thun
 mod:SetAllowWin(true)
-mod.engageId = 717
+mod:SetEncounterID(717)
 
 local timeP1Tentacle = 45      -- tentacle timers for phase 1
 local timeP1TentacleStart = 45 -- delay for first tentacles from engage onwards

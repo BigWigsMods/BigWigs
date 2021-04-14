@@ -7,7 +7,7 @@ local mod = BigWigs:NewBoss("Gahz'ranka", 309)
 if not mod then return end
 mod:RegisterEnableMob(15114)
 mod:SetAllowWin(true)
-mod.engageId = 790
+mod:SetEncounterID(790)
 
 --------------------------------------------------------------------------------
 -- Localization

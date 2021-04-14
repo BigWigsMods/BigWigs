@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Gothik the Harvester", 533)
 if not mod then return end
 mod:RegisterEnableMob(16060)
 mod:SetAllowWin(true)
-mod.engageId = 1109
+mod:SetEncounterID(1109)
 
 --------------------------------------------------------------------------------
 -- Locales

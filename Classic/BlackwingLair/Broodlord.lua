@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Broodlord Lashlayer", 469)
 if not mod then return end
 mod:RegisterEnableMob(12017)
 mod:SetAllowWin(true)
-mod.engageId = 612
+mod:SetEncounterID(612)
 
 --------------------------------------------------------------------------------
 -- Localization

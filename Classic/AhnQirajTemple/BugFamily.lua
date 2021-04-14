@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Silithid Royalty", 531)
 if not mod then return end
 mod:RegisterEnableMob(15543, 15544, 15511) -- Princess Yauj, Vem, Lord Kri
 mod:SetAllowWin(true)
-mod.engageId = 710
+mod:SetEncounterID(710)
 
 --------------------------------------------------------------------------------
 -- Localization

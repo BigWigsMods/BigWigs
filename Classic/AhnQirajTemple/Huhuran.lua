@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Princess Huhuran", 531)
 if not mod then return end
 mod:RegisterEnableMob(15509)
 mod:SetAllowWin(true)
-mod.engageId = 714
+mod:SetEncounterID(714)
 
 --------------------------------------------------------------------------------
 -- Localization

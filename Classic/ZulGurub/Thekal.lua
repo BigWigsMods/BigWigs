@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("High Priest Thekal", 309)
 if not mod then return end
 mod:RegisterEnableMob(14509, 11347, 11348)
 mod:SetAllowWin(true)
-mod.engageId = 789
+mod:SetEncounterID(789)
 
 --------------------------------------------------------------------------------
 -- Localization

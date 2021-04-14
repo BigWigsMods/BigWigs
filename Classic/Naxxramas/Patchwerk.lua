@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Patchwerk", 533)
 if not mod then return end
 mod:RegisterEnableMob(16028)
 mod:SetAllowWin(true)
-mod.engageId = 1118
+mod:SetEncounterID(1118)
 
 --------------------------------------------------------------------------------
 -- Localization

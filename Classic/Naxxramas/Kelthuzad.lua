@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Kel'Thuzad", 533)
 if not mod then return end
 mod:RegisterEnableMob(15990)
 mod:SetAllowWin(true)
-mod.engageId = 1114
+mod:SetEncounterID(1114)
 
 --------------------------------------------------------------------------------
 -- Locals

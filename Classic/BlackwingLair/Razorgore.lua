@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Razorgore the Untamed", 469)
 if not mod then return end
 mod:RegisterEnableMob(12435, 12557) -- Razorgore, Grethok the Controller
 mod:SetAllowWin(true)
-mod.engageId = 610
+mod:SetEncounterID(610)
 
 --------------------------------------------------------------------------------
 -- Locals

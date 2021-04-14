@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Ouro", 531)
 if not mod then return end
 mod:RegisterEnableMob(15517)
 mod:SetAllowWin(true)
-mod.engageId = 716
+mod:SetEncounterID(716)
 
 --------------------------------------------------------------------------------
 -- Localization

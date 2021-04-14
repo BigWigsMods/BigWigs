@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Thaddius", 533)
 if not mod then return end
 mod:RegisterEnableMob(15928, 15929, 15930) -- Thaddius, Stalagg, Feugen
 mod:SetAllowWin(true)
-mod.engageId = 1120
+mod:SetEncounterID(1120)
 
 --------------------------------------------------------------------------------
 -- Locals

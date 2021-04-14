@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Ossirian the Unscarred", 509)
 if not mod then return end
 mod:RegisterEnableMob(15339)
 mod:SetAllowWin(true)
-mod.engageId = 723
+mod:SetEncounterID(723)
 
 --------------------------------------------------------------------------------
 -- Locals

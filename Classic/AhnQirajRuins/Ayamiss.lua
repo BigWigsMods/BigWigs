@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Ayamiss the Hunter", 509)
 if not mod then return end
 mod:RegisterEnableMob(15369)
 mod:SetAllowWin(true)
-mod.engageId = 722
+mod:SetEncounterID(722)
 
 --------------------------------------------------------------------------------
 -- Localization

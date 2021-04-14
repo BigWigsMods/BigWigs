@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Anub'Rekhan", 533)
 if not mod then return end
 mod:RegisterEnableMob(15956)
 mod:SetAllowWin(true)
-mod.engageId = 1107
+mod:SetEncounterID(1107)
 
 --------------------------------------------------------------------------------
 -- Localization

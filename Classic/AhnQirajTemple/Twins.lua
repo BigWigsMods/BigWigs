@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("The Twin Emperors", 531)
 if not mod then return end
 mod:RegisterEnableMob(15275, 15276) -- Emperor Vek'nilash, Emperor Vek'lor
 mod:SetAllowWin(true)
-mod.engageId = 715
+mod:SetEncounterID(715)
 
 --------------------------------------------------------------------------------
 -- Localization

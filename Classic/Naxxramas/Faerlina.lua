@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Grand Widow Faerlina", 533)
 if not mod then return end
 mod:RegisterEnableMob(15953, 16505, 16506) -- Faerlina, Follower, Worshipper
 mod:SetAllowWin(true)
-mod.engageId = 1110
+mod:SetEncounterID(1110)
 
 --------------------------------------------------------------------------------
 -- Locals

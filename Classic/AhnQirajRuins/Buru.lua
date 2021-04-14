@@ -7,7 +7,7 @@ local mod = BigWigs:NewBoss("Buru the Gorger", 509)
 if not mod then return end
 mod:RegisterEnableMob(15370)
 mod:SetAllowWin(true)
-mod.engageId = 721
+mod:SetEncounterID(721)
 
 --------------------------------------------------------------------------------
 -- Localization

@@ -7,7 +7,7 @@ local mod = BigWigs:NewBoss("Jin'do the Hexxer", 309)
 if not mod then return end
 mod:RegisterEnableMob(11380)
 mod:SetAllowWin(true)
-mod.engageId = 792
+mod:SetEncounterID(792)
 
 --------------------------------------------------------------------------------
 -- Localization

@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Vaelastrasz the Corrupt", 469)
 if not mod then return end
 mod:RegisterEnableMob(13020)
 mod:SetAllowWin(true)
-mod.engageId = 611
+mod:SetEncounterID(611)
 
 --------------------------------------------------------------------------------
 -- Localization

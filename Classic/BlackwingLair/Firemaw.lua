@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Firemaw", 469)
 if not mod then return end
 mod:RegisterEnableMob(11983)
 mod:SetAllowWin(true)
-mod.engageId = 613
+mod:SetEncounterID(613)
 
 --------------------------------------------------------------------------------
 -- Localization

@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("NefarianBWL", 469)
 if not mod then return end
 mod:RegisterEnableMob(11583, 10162) -- Nefarian, Lord Victor Nefarius
 mod:SetAllowWin(true)
-mod.engageId = 617
+mod:SetEncounterID(617)
 
 --------------------------------------------------------------------------------
 -- Locals

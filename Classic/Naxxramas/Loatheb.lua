@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Loatheb", 533)
 if not mod then return end
 mod:RegisterEnableMob(16011)
 mod:SetAllowWin(true)
-mod.engageId = 1115
+mod:SetEncounterID(1115)
 
 --------------------------------------------------------------------------------
 -- Locals

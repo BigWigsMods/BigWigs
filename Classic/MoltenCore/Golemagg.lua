@@ -7,7 +7,7 @@ local mod = BigWigs:NewBoss("Golemagg the Incinerator", 409)
 if not mod then return end
 mod:RegisterEnableMob(11988)
 mod:SetAllowWin(true)
-mod.engageId = 670
+mod:SetEncounterID(670)
 
 --------------------------------------------------------------------------------
 -- Localization

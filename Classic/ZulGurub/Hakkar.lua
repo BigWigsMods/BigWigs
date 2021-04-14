@@ -8,7 +8,7 @@ local mod, CL = BigWigs:NewBoss("Hakkar", 309)
 if not mod then return end
 mod:RegisterEnableMob(14834)
 mod:SetAllowWin(true)
-mod.engageId = 793
+mod:SetEncounterID(793)
 
 --------------------------------------------------------------------------------
 -- Localization

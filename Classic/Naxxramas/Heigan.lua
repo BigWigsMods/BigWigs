@@ -7,7 +7,7 @@ local mod = BigWigs:NewBoss("Heigan the Unclean", 533)
 if not mod then return end
 mod:RegisterEnableMob(15936)
 mod:SetAllowWin(true)
-mod.engageId = 1112
+mod:SetEncounterID(1112)
 
 --------------------------------------------------------------------------------
 -- Localization

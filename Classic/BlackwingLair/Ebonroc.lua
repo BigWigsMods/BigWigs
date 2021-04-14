@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Ebonroc", 469)
 if not mod then return end
 mod:RegisterEnableMob(14601)
 mod:SetAllowWin(true)
-mod.engageId = 614
+mod:SetEncounterID(614)
 
 --------------------------------------------------------------------------------
 -- Localization

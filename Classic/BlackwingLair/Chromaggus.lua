@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Chromaggus", 469)
 if not mod then return end
 mod:RegisterEnableMob(14020)
 mod:SetAllowWin(true)
-mod.engageId = 616
+mod:SetEncounterID(616)
 
 --------------------------------------------------------------------------------
 -- Locals

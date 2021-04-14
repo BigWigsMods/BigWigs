@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Viscidus", 531)
 if not mod then return end
 mod:RegisterEnableMob(15299)
 mod:SetAllowWin(true)
-mod.engageId = 713
+mod:SetEncounterID(713)
 
 local swingCount = -1
 local frostCount = 0

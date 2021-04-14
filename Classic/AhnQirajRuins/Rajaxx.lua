@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("General Rajaxx", 509)
 if not mod then return end
 mod:RegisterEnableMob(15341, 15471) -- General Rajaxx, Lieutenant General Andorov
 mod:SetAllowWin(true)
-mod.engageId = 719
+mod:SetEncounterID(719)
 
 --------------------------------------------------------------------------------
 -- Locals

@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("The Four Horsemen", 533)
 if not mod then return end
 mod:RegisterEnableMob(16062, 16063, 16064, 16065) -- Mograine, Zeliek, Thane, Blaumeux
 mod:SetAllowWin(true)
-mod.engageId = 1121
+mod:SetEncounterID(1121)
 
 --------------------------------------------------------------------------------
 -- Locals

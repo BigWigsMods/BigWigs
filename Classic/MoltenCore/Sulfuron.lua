@@ -7,7 +7,7 @@ local mod = BigWigs:NewBoss("Sulfuron Harbinger", 409)
 if not mod then return end
 mod:RegisterEnableMob(12098)
 mod:SetAllowWin(true)
-mod.engageId = 669
+mod:SetEncounterID(669)
 
 --------------------------------------------------------------------------------
 -- Localization

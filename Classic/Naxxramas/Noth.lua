@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Noth the Plaguebringer", 533)
 if not mod then return end
 mod:RegisterEnableMob(15954)
 mod:SetAllowWin(true)
-mod.engageId = 1117
+mod:SetEncounterID(1117)
 
 --------------------------------------------------------------------------------
 -- Locals

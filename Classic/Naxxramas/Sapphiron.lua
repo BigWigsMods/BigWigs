@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Sapphiron", 533)
 if not mod then return end
 mod:RegisterEnableMob(15989)
 mod:SetAllowWin(true)
-mod.engageId = 1119
+mod:SetEncounterID(1119)
 
 --------------------------------------------------------------------------------
 -- Locals

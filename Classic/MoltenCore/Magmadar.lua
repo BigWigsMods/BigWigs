@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Magmadar", 409)
 if not mod then return end
 mod:RegisterEnableMob(11982)
 mod:SetAllowWin(true)
-mod.engageId = 664
+mod:SetEncounterID(664)
 
 --------------------------------------------------------------------------------
 -- Localization

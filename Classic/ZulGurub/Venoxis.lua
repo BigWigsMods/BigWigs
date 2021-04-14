@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("High Priest Venoxis", 309)
 if not mod then return end
 mod:RegisterEnableMob(14507)
 mod:SetAllowWin(true)
-mod.engageId = 784
+mod:SetEncounterID(784)
 
 --------------------------------------------------------------------------------
 -- Localization

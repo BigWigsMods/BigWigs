@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Grobbulus", 533)
 if not mod then return end
 mod:RegisterEnableMob(15931)
 mod:SetAllowWin(true)
-mod.engageId = 1111
+mod:SetEncounterID(1111)
 
 --------------------------------------------------------------------------------
 -- Localization

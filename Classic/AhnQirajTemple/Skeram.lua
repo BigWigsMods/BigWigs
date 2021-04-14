@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("The Prophet Skeram", 531)
 if not mod then return end
 mod:RegisterEnableMob(15263)
 mod:SetAllowWin(true)
-mod.engageId = 709
+mod:SetEncounterID(709)
 
 local splitPhase = 1
 local lastMC = nil

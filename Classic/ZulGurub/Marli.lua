@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("High Priestess Mar'li", 309)
 if not mod then return end
 mod:RegisterEnableMob(14510)
 mod:SetAllowWin(true)
-mod.engageId = 786
+mod:SetEncounterID(786)
 
 --------------------------------------------------------------------------------
 -- Localization
