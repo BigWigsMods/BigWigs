@@ -18,7 +18,7 @@ public.isBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 22
+local BIGWIGS_VERSION = 23
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -878,9 +878,18 @@ end
 --
 
 do
-	local DBMdotRevision = "20210216221244" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "1.13.69" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20210216000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision         -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion   -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision  -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	if public.isBC then
+		DBMdotRevision = "20210413035920"
+		DBMdotDisplayVersion = "2.5.2"
+		DBMdotReleaseRevision = "20210412000000"
+	else
+		DBMdotRevision = "20210330160413"
+		DBMdotDisplayVersion = "1.13.71"
+		DBMdotReleaseRevision = "20210330000000"
+	end
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
