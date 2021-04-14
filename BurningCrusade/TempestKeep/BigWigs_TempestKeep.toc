@@ -1,0 +1,33 @@
+## Interface: 20501
+
+## Title: BigWigs [|cffeda55fTempest Keep|r]
+## Title-deDE: BigWigs [|cffeda55fFestung der Stürme|r]
+## Title-esES: BigWigs [|cffeda55fEl Castillo de la Tempestad|r]
+## Title-esMX: BigWigs [|cffeda55fEl Castillo de la Tempestad|r]
+## Title-frFR: BigWigs [|cffeda55fDonjon de la Tempête|r]
+## Title-itIT: BigWigs [|cffeda55fForte Tempesta|r]
+## Title-koKR: BigWigs [|cffeda55f폭풍우 요새|r]
+## Title-ptBR: BigWigs [|cffeda55fBastilha da Tormenta|r]
+## Title-ruRU: BigWigs [|cffeda55fКрепость Бурь|r]
+## Title-zhCN: BigWigs [|cffeda55f风暴要塞|r]
+## Title-zhTW: BigWigs [|cffeda55f風暴要塞|r]
+## Notes: BigWigs Tempest Keep Modules
+## Notes-deDE: BigWigs Tempest Keep Modules
+## Notes-esES: BigWigs Tempest Keep Modules
+## Notes-esMX: BigWigs Tempest Keep Modules
+## Notes-frFR: BigWigs Tempest Keep Modules
+## Notes-itIT: BigWigs Tempest Keep Modules
+## Notes-koKR: BigWigs Tempest Keep Modules
+## Notes-ptBR: BigWigs Tempest Keep Modules
+## Notes-ruRU: BigWigs Tempest Keep Modules
+## Notes-zhCN: BigWigs Tempest Keep Modules
+## Notes-zhTW: BigWigs Tempest Keep Modules
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 550
+
+modules.xml

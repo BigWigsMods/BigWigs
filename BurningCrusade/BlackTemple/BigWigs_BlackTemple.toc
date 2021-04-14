@@ -1,0 +1,33 @@
+## Interface: 20501
+
+## Title: BigWigs [|cffeda55fBlack Temple|r]
+## Title-deDE: BigWigs [|cffeda55fDer Schwarze Tempel|r]
+## Title-esES: BigWigs [|cffeda55fTemplo Oscuro|r]
+## Title-esMX: BigWigs [|cffeda55fTemplo Oscuro|r]
+## Title-frFR: BigWigs [|cffeda55fTemple noir|r]
+## Title-itIT: BigWigs [|cffeda55fTempio Nero|r]
+## Title-koKR: BigWigs [|cffeda55f검은 사원|r]
+## Title-ptBR: BigWigs [|cffeda55fTemplo Negro|r]
+## Title-ruRU: BigWigs [|cffeda55fЧерный храм|r]
+## Title-zhCN: BigWigs [|cffeda55f黑暗神殿|r]
+## Title-zhTW: BigWigs [|cffeda55f黑暗神廟|r]
+## Notes: BigWigs Black Temple Modules
+## Notes-deDE: BigWigs Black Temple Modules
+## Notes-esES: Módulos de BigWigs para El Templo Oscuro
+## Notes-esMX: BigWigs Black Temple Modules
+## Notes-frFR: Modules BigWigs concernant le Temple noir
+## Notes-itIT: BigWigs Black Temple Modules
+## Notes-koKR: BigWigs 검은 사원 경고
+## Notes-ptBR: BigWigs Black Temple Modules
+## Notes-ruRU: BigWigs Black Temple Modules
+## Notes-zhCN: BigWigs 黑暗神殿模块
+## Notes-zhTW: BigWigs 黑暗神廟模組
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 564
+
+modules.xml

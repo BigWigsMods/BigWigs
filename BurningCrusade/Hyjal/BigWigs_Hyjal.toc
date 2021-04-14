@@ -1,0 +1,33 @@
+## Interface: 20501
+
+## Title: BigWigs [|cffeda55fThe Battle for Mount Hyjal|r]
+## Title-deDE: BigWigs [|cffeda55fDie Schlacht um den Hyjal|r]
+## Title-esES: BigWigs [|cffeda55fLa Batalla del Monte Hyjal|r]
+## Title-esMX: BigWigs [|cffeda55fLa Batalla del Monte Hyjal|r]
+## Title-frFR: BigWigs [|cffeda55fLa bataille du mont Hyjal|r]
+## Title-itIT: BigWigs [|cffeda55fBattaglia per il Monte Hyjal|r]
+## Title-koKR: BigWigs [|cffeda55f하이잘 산 전투|r]
+## Title-ptBR: BigWigs [|cffeda55fA Batalha pelo Monte Hyjal|r]
+## Title-ruRU: BigWigs [|cffeda55fБитва за гору Хиджал|r]
+## Title-zhCN: BigWigs [|cffeda55f海加尔山之战|r]
+## Title-zhTW: BigWigs [|cffeda55f海加爾山之戰|r]
+## Notes: BigWigs Mount Hyjal Modules
+## Notes-deDE: BigWigs Mount Hyjal Modules
+## Notes-esES: BigWigs Mount Hyjal Modules
+## Notes-esMX: BigWigs Mount Hyjal Modules
+## Notes-frFR: BigWigs Mount Hyjal Modules
+## Notes-itIT: BigWigs Mount Hyjal Modules
+## Notes-koKR: BigWigs Mount Hyjal Modules
+## Notes-ptBR: BigWigs Mount Hyjal Modules
+## Notes-ruRU: BigWigs Mount Hyjal Modules
+## Notes-zhCN: BigWigs Mount Hyjal Modules
+## Notes-zhTW: BigWigs Mount Hyjal Modules
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 534
+
+modules.xml

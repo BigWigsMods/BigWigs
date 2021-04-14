@@ -1,0 +1,35 @@
+## Interface: 20501
+
+## Title: BigWigs [|cffeda55fOutland|r]
+## Title-deDE: BigWigs [|cffeda55fScherbenwelt|r]
+## Title-esES: BigWigs [|cffeda55fTerrallende|r]
+## Title-esMX: BigWigs [|cffeda55fTerrallende|r]
+## Title-frFR: BigWigs [|cffeda55fOutreterre|r]
+## Title-itIT: BigWigs [|cffeda55fTerre Esterne|r]
+## Title-koKR: BigWigs [|cffeda55f아웃랜드|r]
+## Title-ptBR: BigWigs [|cffeda55fTerralém|r]
+## Title-ruRU: BigWigs [|cffeda55fЗапределье|r]
+## Title-zhCN: BigWigs [|cffeda55f外域|r]
+## Title-zhTW: BigWigs [|cffeda55f外域|r]
+## Notes: BigWigs Outland Modules
+## Notes-deDE: BigWigs Scherbenwelt Module
+## Notes-esES: Módulos de BigWigs para Terrallende
+## Notes-esMX: Módulos de BigWigs para Terrallende
+## Notes-frFR: Modules BigWigs concernant l'Outreterre
+## Notes-itIT: Moduli di BigWigs Terre Esterne
+## Notes-koKR: BigWigs 아웃랜드 경고
+## Notes-ptBR: Módulos BigWigs Terralém
+## Notes-ruRU: Модули BigWigs Запределье
+## Notes-zhCN: BigWigs 外域模块
+## Notes-zhTW: BigWigs 外域模組
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-ExtraMenu: -1945
+## X-BigWigs-LoadOn-InstanceId: 544, 565
+## X-BigWigs-LoadOn-WorldBoss: -1944, 18728, -1948, 17711
+
+modules.xml

@@ -27,12 +27,17 @@ move-folders:
     BigWigs/Classic/AhnQirajRuins: BigWigs_AhnQirajRuins
     BigWigs/Classic/AhnQirajTemple: BigWigs_AhnQirajTemple
     BigWigs/Classic/Naxxramas: BigWigs_Naxxramas
+    BigWigs/BurningCrusade/Outland: BigWigs_Outland
+    BigWigs/BurningCrusade/Karazhan: BigWigs_Karazhan
+    BigWigs/BurningCrusade/Serpentshrine: BigWigs_Serpentshrine
+    BigWigs/BurningCrusade/TempestKeep: BigWigs_TempestKeep
+    BigWigs/BurningCrusade/Hyjal: BigWigs_Hyjal
+    BigWigs/BurningCrusade/BlackTemple: BigWigs_BlackTemple
 
 ignore:
   - .luacheckrc
   - gen_option_values.lua
   - ldoc.ltp
-  - BurningCrusade
   - Media/Sounds/spell_on_you.flac
   - Media/Sounds/spell_under_you.flac
   - Media/Sounds/Long.wav

@@ -1,0 +1,33 @@
+## Interface: 20501
+
+## Title: BigWigs [|cffeda55fKarazhan|r]
+## Title-deDE: BigWigs [|cffeda55fKarazhan|r]
+## Title-esES: BigWigs [|cffeda55fKarazhan|r]
+## Title-esMX: BigWigs [|cffeda55fKarazhan|r]
+## Title-frFR: BigWigs [|cffeda55fKarazhan|r]
+## Title-itIT: BigWigs [|cffeda55fKarazhan|r]
+## Title-koKR: BigWigs [|cffeda55f카라잔|r]
+## Title-ptBR: BigWigs [|cffeda55fKarazhan|r]
+## Title-ruRU: BigWigs [|cffeda55fКаражан|r]
+## Title-zhCN: BigWigs [|cffeda55f卡拉赞|r]
+## Title-zhTW: BigWigs [|cffeda55f卡拉贊|r]
+## Notes: BigWigs Karazhan Modules
+## Notes-deDE: BigWigs Karazhan Modules
+## Notes-esES: BigWigs Karazhan Modules
+## Notes-esMX: BigWigs Karazhan Modules
+## Notes-frFR: BigWigs Karazhan Modules
+## Notes-itIT: BigWigs Karazhan Modules
+## Notes-koKR: BigWigs 카라잔 경고
+## Notes-ptBR: BigWigs Karazhan Modules
+## Notes-ruRU: BigWigs Karazhan Modules
+## Notes-zhCN: BigWigs 卡拉赞模块
+## Notes-zhTW: BigWigs 卡拉贊模組
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 532
+
+modules.xml

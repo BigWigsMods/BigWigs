@@ -1,0 +1,33 @@
+## Interface: 20501
+
+## Title: BigWigs [|cffeda55fSerpentshrine Cavern|r]
+## Title-deDE: BigWigs [|cffeda55fHöhle des Schlangenschreins|r]
+## Title-esES: BigWigs [|cffeda55fCaverna Santuario Serpiente|r]
+## Title-esMX: BigWigs [|cffeda55fCaverna Santuario Serpiente|r]
+## Title-frFR: BigWigs [|cffeda55fCaverne du sanctuaire du Serpent|r]
+## Title-itIT: BigWigs [|cffeda55fCaverna di Sacrespire|r]
+## Title-koKR: BigWigs [|cffeda55f불뱀 제단|r]
+## Title-ptBR: BigWigs [|cffeda55fCaverna do Serpentário|r]
+## Title-ruRU: BigWigs [|cffeda55fЗмеиное святилище|r]
+## Title-zhCN: BigWigs [|cffeda55f毒蛇神殿|r]
+## Title-zhTW: BigWigs [|cffeda55f毒蛇神殿洞穴|r]
+## Notes: BigWigs Serpentshrine Cavern Modules
+## Notes-deDE: BigWigs Serpentshrine Cavern Modules
+## Notes-esES: Módulos BigWigs para Caverna Santuario Serpiente
+## Notes-esMX: Módulos BigWigs para Caverna Santuario Serpiente
+## Notes-frFR: Modules BigWigs concernant la Caverne du sanctuaire du Serpent
+## Notes-itIT: BigWigs Serpentshrine Cavern Modules
+## Notes-koKR: BigWigs 불뱀 제단 경고
+## Notes-ptBR: BigWigs Serpentshrine Cavern Modules
+## Notes-ruRU: BigWigs Serpentshrine Cavern Modules
+## Notes-zhCN: BigWigs 毒蛇神殿模块
+## Notes-zhTW: BigWigs 毒蛇神殿洞穴模組
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 548
+
+modules.xml
