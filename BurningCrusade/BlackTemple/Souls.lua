@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Reliquary of Souls", 564, 1587)
 if not mod then return end
 mod:RegisterEnableMob(23420, 23419, 23418) -- Essence of Anger, Essence of Desire, Essence of Suffering
-mod:SetEncounterID(606)
+mod:SetEncounterID(2478)
 mod:SetRespawnTime(11)
 
 --------------------------------------------------------------------------------
