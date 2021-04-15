@@ -34,7 +34,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Howl", 31344)
 	self:Log("SPELL_AURA_APPLIED", "Doom", 31347)
 
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckBossStatus")
+	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
+	self:RegisterEvent("PLAYER_REGEN_ENABLED", "CheckForWipe")
 	self:Death("Win", 17842)
 end
 
