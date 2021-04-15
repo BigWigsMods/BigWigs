@@ -7,6 +7,7 @@ local mod = BigWigs:NewBoss("Mother Shahraz", 564, 1588)
 if not mod then return end
 mod:RegisterEnableMob(22947)
 mod:SetEncounterID(2479)
+mod:SetAllowWin(true)
 --mod:SetRespawnTime(0) -- Resets, doesn't respawn
 
 --------------------------------------------------------------------------------

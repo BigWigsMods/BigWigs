@@ -7,6 +7,7 @@ local mod, CL = BigWigs:NewBoss("Supremus", 564, 1583)
 if not mod then return end
 mod:RegisterEnableMob(22898)
 mod:SetEncounterID(2474)
+mod:SetAllowWin(true)
 --mod:SetRespawnTime(0) -- Resets, doesn't respawn
 
 --------------------------------------------------------------------------------

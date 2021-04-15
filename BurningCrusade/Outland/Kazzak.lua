@@ -5,6 +5,7 @@
 local mod, CL = BigWigs:NewBoss("Doom Lord Kazzak", -1944)
 if not mod then return end
 mod:RegisterEnableMob(18728)
+mod:SetAllowWin(true)
 mod.worldBoss = 18728
 mod.otherMenu = -1945
 

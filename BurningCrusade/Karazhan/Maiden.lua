@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Maiden of Virtue Raid", 532, 1555)
 if not mod then return end
 mod:RegisterEnableMob(16457)
+mod:SetAllowWin(true)
 mod:SetEncounterID(2446)
 
 --------------------------------------------------------------------------------

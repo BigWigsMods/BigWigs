@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Morogrim Tidewalker", 548, 1571)
 if not mod then return end
 mod:RegisterEnableMob(21213)
+mod:SetAllowWin(true)
 mod:SetEncounterID(2462)
 
 local inGrave = mod:NewTargetList()

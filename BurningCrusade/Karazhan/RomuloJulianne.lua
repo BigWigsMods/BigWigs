@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Romulo & Julianne", 532)
 if not mod then return end
 mod:RegisterEnableMob(17533, 17534) --Romulo, Julianne
+mod:SetAllowWin(true)
 mod:SetEncounterID(2447)
 
 --------------------------------------------------------------------------------

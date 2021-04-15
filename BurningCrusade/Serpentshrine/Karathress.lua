@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Fathom-Lord Karathress", 548, 1570)
 if not mod then return end
 mod:RegisterEnableMob(21214, 21966, 21965, 21964) --Karathress, Sharkkis, Tidalvess, Caribdis
+mod:SetAllowWin(true)
 mod:SetEncounterID(2461)
 
 --------------------------------------------------------------------------------

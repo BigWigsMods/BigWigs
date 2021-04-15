@@ -5,6 +5,7 @@
 local mod, CL = BigWigs:NewBoss("Doomwalker", -1948)
 if not mod then return end
 mod:RegisterEnableMob(17711)
+mod:SetAllowWin(true)
 mod.worldBoss = 17711
 mod.otherMenu = -1945
 

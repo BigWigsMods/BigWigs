@@ -5,6 +5,7 @@
 local mod, CL = BigWigs:NewBoss("Gruul the Dragonkiller", 565, 1565)
 if not mod then return end
 mod:RegisterEnableMob(19044)
+mod:SetAllowWin(true)
 mod:SetEncounterID(2456)
 
 --------------------------------------------------------------------------------

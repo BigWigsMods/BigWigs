@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("The Lurker Below", 548, 1568)
 if not mod then return end
 mod:RegisterEnableMob(21217, 21873, 21865) --Lurker, Coilfang Guardian, Coilfang Ambusher
+mod:SetAllowWin(true)
 mod:SetEncounterID(2459)
 
 --------------------------------------------------------------------------------

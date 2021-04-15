@@ -5,6 +5,7 @@
 local mod = BigWigs:NewBoss("Hyakiss the Lurker", 532, 1552)
 if not mod then return end
 mod:RegisterEnableMob(16179)
+mod:SetAllowWin(true)
 -- mod:SetEncounterID(0)
 
 --------------------------------------------------------------------------------
