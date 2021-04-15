@@ -151,7 +151,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 21215 then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		local hp = self:GetHealth(unit)
 		if hp > 15 and hp < 20 then
 			self:MessageOld("image", "orange", nil, L["image_warning"], false)
 			self:UnregisterUnitEvent(event, "target", "focus")

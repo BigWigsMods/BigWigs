@@ -79,7 +79,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 15691 then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		local hp = self:GetHealth(unit)
 		if hp > 15 and hp < 20 then
 			self:MessageOld(30403, "green", nil, CL["soon"]:format(self:SpellName(30403)), false) -- Arcane Infusion
 			self:UnregisterUnitEvent(event, "target", "focus")

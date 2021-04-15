@@ -135,7 +135,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 16524 then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		local hp = self:GetHealth(unit)
 		if hp > 40 and hp < 46 then
 			self:MessageOld("adds", "orange", "alert", L["adds_warning"], false)
 			self:UnregisterUnitEvent(event, "target", "focus")

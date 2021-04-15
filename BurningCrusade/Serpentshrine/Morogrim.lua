@@ -106,7 +106,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 21213 then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		local hp = self:GetHealth(unit)
 		if hp > 25 and hp < 30 then
 			self:MessageOld("globules", "green", nil, L["globules_warning"], false)
 			self:UnregisterUnitEvent(event, "target", "focus")

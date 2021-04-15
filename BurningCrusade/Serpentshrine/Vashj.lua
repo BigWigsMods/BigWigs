@@ -162,7 +162,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 21212 then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		local hp = self:GetHealth(unit)
 		if hp > 70 and hp < 76 then
 			self:MessageOld("phase", "yellow", nil, L["phase2_soon_message"], false)
 			self:UnregisterUnitEvent(event, "target", "focus")

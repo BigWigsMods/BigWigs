@@ -71,7 +71,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 15687 then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		local hp = self:GetHealth(unit)
 		if hp > 30 and hp < 36 then
 			self:MessageOld(37023, "green", "info", CL["soon"]:format(self:SpellName(37023)), false) -- Frenzy
 			self:UnregisterUnitEvent(event, "target", "focus")

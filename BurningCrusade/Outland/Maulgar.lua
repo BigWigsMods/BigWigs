@@ -117,7 +117,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 18831 then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		local hp = self:GetHealth(unit)
 		if hp > 50 and hp < 57 then
 			local flurry = self:SpellName(33232)
 			self:MessageOld(33232, "green", nil, CL["soon"]:format(flurry))

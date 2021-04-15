@@ -164,7 +164,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:MobId(self:UnitGUID(unit)) == 17257 then
-		local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
+		local hp = self:GetHealth(unit)
 		if hp > 30 and hp < 37 then
 			local debris = self:SpellName(36449)
 			self:MessageOld(36449, "green", nil, CL["soon"]:format(debris), false)
