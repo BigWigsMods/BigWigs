@@ -559,7 +559,7 @@ do
 				for i = #enabledModules, 1, -1 do
 					local self = enabledModules[i]
 					local m = eventMap[self][event]
-					local func = (m[spellId] or m[spellName] or m["*"])
+					local func = m and (m[spellId] or m[spellName] or m["*"])
 					if func then
 						-- Classic: By default we only care about non-player spells (exempting "*")
 						if m[spellName] and band(sourceFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and (not unfilteredEventSpells[self][event] or not unfilteredEventSpells[self][event][spellName]) then
