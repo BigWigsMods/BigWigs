@@ -33,6 +33,7 @@ end
 -- Initialization
 --
 
+local threatNeutralizationMarker = mod:AddMarkerOption(false, "player", 1, 350502, 1, 2, 3) -- Threat Neutralization
 function mod:GetOptions()
 	return {
 		-- Energy Cores
@@ -48,7 +49,8 @@ function mod:GetOptions()
 		352833, -- Disintegration
 		352660, -- Form Sentry
 		347359, -- Suppression Field
-		{350502, "HEALER"}, -- Threat Neutralization
+		{350502, "SAY", "SAY_COUNTDOWN"}, -- Threat Neutralization
+		threatNeutralizationMarker,
 	},{
 		[352385] = self:SpellName(-23254), -- Energy Cores
 		[352538] = self:SpellName(-23273), -- The Guardian
@@ -82,6 +84,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "SuppressionField", 347359)
 	self:Log("SPELL_PERIODIC_MISSED", "SuppressionField", 347359)
 	self:Log("SPELL_CAST_SUCCESS", "ThreatNeutralization", 350502)
+	self:Log("SPELL_AURA_APPLIED", "ThreatNeutralizationApplied", 350496)
+
+	self:RegisterEvent("GROUP_ROSTER_UPDATE")
+	self:GROUP_ROSTER_UPDATE()
 end
 
 function mod:OnEngage()
@@ -122,15 +128,15 @@ do
 end
 
 function mod:RadiantEnergyApplied(args)
+	shieldOnYou = true
 	self:Message(args.spellId, "green", CL.you:format(CL.shield))
 	self:PlaySound(args.spellId, "info")
-	shieldOnYou = true
 end
 
 function mod:RadiantEnergyRemoved(args)
+	shieldOnYou = false
 	self:Message(args.spellId, "red", CL.removed:format(CL.shield))
 	self:PlaySound(args.spellId, "info")
-	shieldOnYou = false
 end
 
 function mod:Meltdown(args)
@@ -147,7 +153,7 @@ function mod:PurgingProtocol(args)
 end
 
 function mod:EliminationPattern(args)
-	self:Message(args.spellId, "cyan")
+	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "info")
 	--self:Bar(args.spellId, 17)
 end
@@ -176,11 +182,10 @@ function mod:Shatter(args)
 end
 
 function mod:ShatterApplied(args)
-	if self:Tank() and self:Tank(args.destName) then
-		self:NewStackMessage(args.spellId, "purple", args.destName, 10)
-		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
-			self:PlaySound(args.spellId, "warning") -- Not taunted? Play again.
-		end
+	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
+	local bossUnit = self:GetBossId(args.sourceGUID)
+	if bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
+		self:PlaySound(args.spellId, "warning") -- Not taunted? Play again.
 	end
 end
 
@@ -200,7 +205,7 @@ end
 
 function mod:Disintegration(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.laser, disintergrationCount))
-	self:PlaySound(args.spellId, "alarm")
+	self:PlaySound(args.spellId, "long")
 	disintergrationCount = disintergrationCount + 1
 	--self:Bar(args.spellId, 17, CL.count:format(CL.laser, disintergrationCount))
 end
@@ -231,4 +236,26 @@ function mod:ThreatNeutralization(args)
 	self:PlaySound(args.spellId, "alarm")
 	threatNeutralizationCount = threatNeutralizationCount + 1
 	--self:Bar(args.spellId, 17, CL.count:format(ars.spellName, threatNeutralizationCount))
+end
+
+do
+	local playerList = {}
+	local prev = 0
+	function mod:ThreatNeutralizationApplied(args)
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			playerList = {}
+		end
+		local count = #playerList+1
+		playerList[count] = args.destName
+		playerList[args.destName] = count -- Set raid marker
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 4)
+			self:PlaySound(args.spellId, "warning")
+		end
+		self:NewTargetsMessage(args.spellId, "yellow", playerList)
+		self:CustomIcon(threatNeutralizationMarker, args.destName, count)
+	end
 end
