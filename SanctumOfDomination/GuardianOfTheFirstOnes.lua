@@ -251,11 +251,11 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 4)
-			self:PlaySound(args.spellId, "warning")
+			self:Say(350502)
+			self:SayCountdown(350502, 4)
+			self:PlaySound(350502, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList)
+		self:NewTargetsMessage(350502, "yellow", playerList)
 		self:CustomIcon(threatNeutralizationMarker, args.destName, count)
 	end
 end
