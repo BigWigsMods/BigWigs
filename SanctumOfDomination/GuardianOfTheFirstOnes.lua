@@ -116,7 +116,7 @@ end
 do
 	local prev = 0
 	function mod:UnstableEnergyDamage(args)
-		if shieldOnYou and self:Me(args.destGUID) then -- warn when taking damage without shield
+		if not shieldOnYou and self:Me(args.destGUID) then -- warn when taking damage without shield
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
