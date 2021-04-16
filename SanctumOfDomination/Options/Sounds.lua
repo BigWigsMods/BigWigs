@@ -19,7 +19,7 @@ BigWigs:AddSounds("The Tarragrue", {
 BigWigs:AddSounds("Guardian of the First Ones", {
 	[347359] = "underyou",
 	[350455] = "warning",
-	[350502] = "alarm",
+	[350502] = {"alarm","warning"},
 	[350732] = "warning",
 	[350734] = "alarm",
 	[350735] = "info",
@@ -28,5 +28,5 @@ BigWigs:AddSounds("Guardian of the First Ones", {
 	[352538] = "warning",
 	[352589] = "alert",
 	[352660] = "alert",
-	[352833] = "alarm",
+	[352833] = "long",
 })

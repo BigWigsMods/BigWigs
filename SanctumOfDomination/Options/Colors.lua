@@ -19,10 +19,10 @@ BigWigs:AddColors("The Tarragrue", {
 BigWigs:AddColors("Guardian of the First Ones", {
 	[347359] = "blue",
 	[350455] = "blue",
-	[350502] = "orange",
+	[350502] = {"blue","orange","yellow"},
 	[350732] = {"blue","purple"},
 	[350734] = {"blue","purple"},
-	[350735] = "cyan",
+	[350735] = "purple",
 	[352385] = "cyan",
 	[352394] = {"green","red"},
 	[352538] = "yellow",
