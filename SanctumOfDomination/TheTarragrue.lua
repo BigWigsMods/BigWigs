@@ -4,7 +4,7 @@
 if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("The Tarragrue", 2450, 2435)
 if not mod then return end
-mod:RegisterEnableMob(163538, 152253, 157098) -- The Tarragrue
+mod:RegisterEnableMob(175611) -- The Tarragrue
 mod:SetEncounterID(2423)
 --mod:SetRespawnTime(30)
 --mod:SetStage(1)
@@ -42,11 +42,11 @@ function mod:GetOptions()
 	return {
 		{346985, "TANK"}, -- Overpower
 		{346986, "TANK"}, -- Crushed Armor
-		{347269, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Chains of Eternity
+		{347269, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "ICON"}, -- Chains of Eternity
 		347274, -- Eternal Ruin
-		{347283, "SAY", "SAY_COUNTDOWN"}, -- Predator's Howl
+		{347283, "SAY"}, -- Predator's Howl
 		347286, -- Unshakeable Dread
-		347671, -- Hungering Mist
+		347679, -- Hungering Mist
 		352368, -- Remnant of Forgotten Torments
 		352382, -- Remnant: Upper Reaches' Might
 		352389, -- Remnant: Mort'regar's Echoes
@@ -60,7 +60,7 @@ function mod:GetOptions()
 		[347269] = L.chains, -- Chains of Eternity (Chains)
 		[347283] = L.howl, -- Predator's Howl (Howl)
 		[352368] = L.remnants, -- Remnant of Forgotten Torments (Remnants)
-		[347671] = L.mist, -- Hungering Mist (Mist)
+		[347679] = L.mist, -- Hungering Mist (Mist)
 		[347668] = L.grasp, -- Grasp of Death (Grasp)
 		[347490] = L.enrage, -- Fury of the Ages (Enrage)
 	}
@@ -73,10 +73,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ChainsOfEternityRemoved", 347269)
 	self:Log("SPELL_AURA_APPLIED", "EternalRuinApplied", 347274)
 	self:Log("SPELL_AURA_REMOVED", "EternalRuinRemoved", 347274)
+	self:Log("SPELL_CAST_START", "PredatorsHowl", 347283)
 	self:Log("SPELL_AURA_APPLIED", "PredatorsHowlApplied", 347283)
 	self:Log("SPELL_AURA_REMOVED", "PredatorsHowlRemoved", 347283)
 	self:Log("SPELL_AURA_APPLIED", "UnshakeableDreadApplied", 347286)
-	self:Log("SPELL_CAST_SUCCESS", "HungeringMist", 347671)
+	self:Log("SPELL_CAST_SUCCESS", "HungeringMist", 347679)
 	self:Log("SPELL_CAST_SUCCESS", "RemnantOfForgottenTorments", 352368)
 	self:Log("SPELL_CAST_SUCCESS", "Remnants", 352382, 352389, 352398) -- Upper Reaches' Might, Mort'regar's Echoes, Soulforge Heat
 	self:Log("SPELL_CAST_START", "GraspOfDeath", 347668)
@@ -86,6 +87,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FuryOfTheAgesRemoved", 347490)
 	self:Log("SPELL_AURA_APPLIED", "TheJailersGazeApplied", 347369)
 
+	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "HungeringMistChannel", "boss1")
+
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	self:GROUP_ROSTER_UPDATE()
 end
@@ -93,9 +96,14 @@ end
 function mod:OnEngage()
 	chainsCount = 1
 	howlCount = 1
-	mistCount = 1
 	remnantCount = 1
 	graspCount = 1
+
+	self:Bar(347283, 3.6, CL.count:format(L.howl, howlCount)) -- Predator's Howl
+	self:Bar(347668, 6.23, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
+	self:Bar(346985, 12.3) -- Overpower
+	self:Bar(347269, 17.1, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
+	self:Bar(347679, 24.7, L.mist) -- Hungering Mist
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -132,7 +140,9 @@ function mod:Overpower(args)
 		end
 	end
 	self:PlaySound(args.spellId, "warning")
-	--self:Bar(args.spellId, 17)
+	if self:GetBarTimeLeft(347679) < 28 then -- Mist
+		self:Bar(args.spellId, 28)
+	end
 end
 
 function mod:CrushedArmorApplied(args)
@@ -143,60 +153,62 @@ function mod:CrushedArmorApplied(args)
 	end
 end
 
-do
-	local playerList = {}
-	local prev = 0
-	function mod:ChainsOfEternityApplied(args)
-		local t = args.time
-		if t-prev > 5 then
-			prev = t
-			playerList = {}
-			chainsCount = chainsCount + 1
-			--self:Bar(args.spellId, 23, CL.count:format(L.chains, chainsCount))
-		end
-		playerList[#playerList+1] = args.destName
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count:format(L.chains, chainsCount-1))
-			self:SayCountdown(args.spellId, 8)
-			self:PlaySound(args.spellId, "warning")
-		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
-	end
-end
-
-function mod:ChainsOfEternityRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
-	end
-end
-
--- XXX Temp incase it only hits 1 target, easy to adjust
--- function mod:ChainsOfEternityApplied(args)
--- 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(L.chains, chainsCount))
--- 	self:PrimaryIcon(args.spellId, args.destName)
--- 	if self:Me(args.destGUID) then
--- 		self:Say(args.spellId, CL.count:format(L.chains, chainsCount))
--- 		self:SayCountdown(args.spellId, 8)
--- 		self:PlaySound(args.spellId, "warning")
+-- XXX Temp incase it hits more than 1 target
+-- do
+-- 	local playerList = {}
+-- 	local prev = 0
+-- 	function mod:ChainsOfEternityApplied(args)
+-- 		local t = args.time
+-- 		if t-prev > 5 then
+-- 			prev = t
+-- 			playerList = {}
+-- 			chainsCount = chainsCount + 1
+-- 			--self:Bar(args.spellId, 23, CL.count:format(L.chains, chainsCount))
+-- 		end
+-- 		playerList[#playerList+1] = args.destName
+-- 		if self:Me(args.destGUID) then
+-- 			self:Say(args.spellId, CL.count:format(L.chains, chainsCount-1))
+-- 			self:SayCountdown(args.spellId, 8)
+-- 			self:PlaySound(args.spellId, "warning")
+-- 		end
+-- 		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
 -- 	end
--- 	self:TargetBar(args.spellId, 8, args.destName, CL.count:format(L.chains, chainsCount))
---	chainsCount = chainsCount + 1
--- 	--self:Bar(args.spellId, 69, CL.count:format(L.chains, chainsCount))
 -- end
 
 -- function mod:ChainsOfEternityRemoved(args)
--- 	self:PrimaryIcon(args.spellId)
--- 	self:StopBar(CL.count:format(L.chains, chainsCount), args.destName)
 -- 	if self:Me(args.destGUID) then
 -- 		self:CancelSayCountdown(args.spellId)
 -- 	end
 -- end
 
+function mod:ChainsOfEternityApplied(args)
+	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(L.chains, chainsCount))
+	self:PrimaryIcon(args.spellId, args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId, CL.count:format(L.chains, chainsCount))
+		self:SayCountdown(args.spellId, 8)
+		self:PlaySound(args.spellId, "warning")
+	end
+	self:TargetBar(args.spellId, 8, args.destName, CL.count:format(L.chains, chainsCount))
+	chainsCount = chainsCount + 1
+	if self:GetBarTimeLeft(347679) < 28 then -- Mist -- chainsCount % 2 == 1
+		self:Bar(args.spellId, 27.9, CL.count:format(L.chains, chainsCount))
+	end
+end
+
+function mod:ChainsOfEternityRemoved(args)
+	self:PrimaryIcon(args.spellId)
+	self:StopBar(CL.count:format(L.chains, chainsCount), args.destName)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+end
+
 function mod:EternalRuinApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
-		self:TargetBar(args.spellId, self:Easy() and 12 or 30, args.destName)
+		self:TargetBar(args.spellId, self:LFR() and 6 or self:Normal() and 12 or 30, args.destName)
 	end
 end
 
@@ -208,30 +220,33 @@ end
 
 do
 	local playerList = {}
-	local prev = 0
 	local soundPlayed = false
-	function mod:PredatorsHowlApplied(args) -- XXX on all players?
-		local t = args.time
-		if t-prev > 5 then
-			prev = t
-			playerList = {}
-			soundPlayed = false
-			howlCount = howlCount + 1
-			if self:Dispeller("magic") then
-				soundPlayed = true
-				self:PlaySound(args.spellId, "alarm")
-			end
-			--self:Bar(args.spellId, 23, CL.count:format(L.howl, howlCount))
+
+	function mod:PredatorsHowl(args)
+		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.howl, howlCount)))
+		howlCount = howlCount + 1
+		if self:GetBarTimeLeft(347679) < 25 then -- Mist -- (howlCount-1) % 3 ~= 1
+			self:Bar(args.spellId, 25.6, CL.count:format(L.howl, howlCount))
 		end
+
+		playerList = {}
+		soundPlayed = false
+	end
+
+	function mod:PredatorsHowlApplied(args)
 		playerList[#playerList+1] = args.destName
+		if self:Dispeller("magic") and not soundPlayed then
+			self:PlaySound(args.spellId, "alarm")
+			soundPlayed = true
+		end
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count:format(L.howl, howlCount-1))
-			self:SayCountdown(args.spellId, 21)
-			if soundPlayed == false then -- Only play if we havn't warned yet
+			self:Say(args.spellId, L.howl)
+			if not soundPlayed then
 				self:PlaySound(args.spellId, "alarm")
+				soundPlayed = true
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "red", playerList, self:Mythic() and 10 or self:Heroic() and 5 or self:Normal() and 3 or self:LFR() and 1, CL.count:format(L.howl, howlCount-1))
+		self:NewTargetsMessage(args.spellId, "red", playerList, nil, CL.count:format(L.howl, howlCount-1))
 	end
 end
 
@@ -239,7 +254,6 @@ function mod:PredatorsHowlRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "green", CL.removed:format(L.howl))
 		self:PlaySound(args.spellId, "info")
-		self:CancelSayCountdown(args.spellId)
 	end
 end
 
@@ -250,61 +264,87 @@ function mod:UnshakeableDreadApplied(args)
 	end
 end
 
-function mod:HungeringMist(args) -- XXX Adds?
-	self:Message(args.spellId, "orange", CL.count:format(L.mist, mistCount))
-	self:PlaySound(args.spellId, "alert")
-	--self:CastBar(args.spellId, 5, CL.count:format(L.mist, mistCount))
-	mistCount = mistCount + 1
-	--self:Bar(args.spellId, 33, CL.count:format(L.mist, mistCount))
+function mod:HungeringMist(args)
+	mistCount = 1
+	self:Message(args.spellId, "cyan", L.mist)
+	self:PlaySound(args.spellId, "long")
 end
 
-function mod:RemnantOfForgottenTorments(args) -- XXX Adds?
-	self:Message(args.spellId, "yellow", CL.count:format(L.remnants, remnantCount))
-	self:PlaySound(args.spellId, "long")
-	remnantCount = remnantCount + 1
-	--self:Bar(args.spellId, 33, CL.count:format(L.remnants, remnantCount))
+function mod:HungeringMistChannel(_, _, _, spellId)
+	if spellId == 354080 then
+		self:Message(347679, "yellow", CL.count:format(L.mist, mistCount))
+		self:PlaySound(347679, "info")
+		self:CastBar(347679, 4.8, CL.count:format(L.mist, mistCount)) -- Hungering Mist
+		if mistCount == 3 then
+			graspCount = 1
+			self:Bar(347283, 6.9, CL.count:format(L.howl, howlCount)) -- Predator's Howl
+			self:Bar(346985, 10.6) -- Overpower
+			self:Bar(347668, 13, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
+			self:Bar(352368, 15.4, CL.count:format(L.remnants, remnantCount)) -- Remnants (time to the actual remnants spawn)
+			self:Bar(347490, 17.8, L.enrage)
+			self:Bar(347269, 43.2, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
+			self:Bar(347679, 81.2, L.mist) -- Hungering Mist
+		end
+		mistCount = mistCount + 1
+	end
+end
+
+function mod:RemnantOfForgottenTorments(args)
+	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.remnants, remnantCount)))
+	self:PlaySound(args.spellId, "info")
 end
 
 function mod:Remnants(args)
+	-- 352382 = physical, 352389 = magic, 352398 = fire
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
-	--self:Bar(args.spellId, 33)
-end
-
-function mod:GraspOfDeath(args)
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.grasp, graspCount)))
-	self:PlaySound(args.spellId, "alert")
-	graspCount = graspCount + 1
-	--self:Bar(args.spellId, 33, CL.count:format(L.grasp, graspCount))
+	remnantCount = remnantCount + 1
+	if self:GetBarTimeLeft(347679) < 30 then -- Mist
+		self:Bar(args.spellId, 31, CL.count:format(L.remnants, remnantCount)) -- 30.5 ~ 31.6
+	end
 end
 
 do
 	local playerList = {}
-	local prev = 0
 	local soundPlayed = false
+
+	function mod:GraspOfDeath(args)
+		self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.grasp, graspCount)))
+		self:PlaySound(args.spellId, "alert")
+
+		graspCount = graspCount + 1
+		if self:GetBarTimeLeft(347679) < 30 then -- Mist
+			self:Bar(args.spellId, 30.4, CL.count:format(L.grasp, graspCount))
+		elseif howlCount == 2 then
+			-- The second cast is quick for some reason
+			self:Bar(args.spellId, 13.5, CL.count:format(L.grasp, graspCount))
+		end
+
+		playerList = {}
+		soundPlayed = false
+	end
+
 	function mod:GraspOfDeathApplied(args)
-		local t = args.time
-		if t-prev > 5 then
-			prev = t
-			playerList = {}
-			soundPlayed = false
-			if self:Healer() then
-				soundPlayed = true
+		playerList[#playerList+1] = args.destName
+		if not soundPlayed then
+			if self:Me(args.destGUID) then
+				self:PlaySound(args.spellId, "alarm")
+			elseif self:Healer() then
 				self:PlaySound(args.spellId, "alert")
 			end
-		end
-		playerList[#playerList+1] = args.destName
-		if soundPlayed == false and self:Me(args.destGUID) then -- Only play if we havn't warned yet
-			self:PlaySound(args.spellId, "alarm")
+			soundPlayed = true
 		end
 		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.grasp, graspCount-1))
 	end
 end
 
 function mod:FuryOfTheAgesStart(args)
-	self:Message(args.spellId, "cyan", CL.casting:format(L.enrage))
+	self:Message(args.spellId, "yellow", CL.casting:format(L.enrage))
 	if self:Dispeller("enrage", true) then
 		self:PlaySound(args.spellId, "info")
+	end
+	if self:GetBarTimeLeft(347679) < 46 then -- Mist
+		self:Bar(args.spellId, 46, L.enrage)
 	end
 end
 
@@ -313,7 +353,6 @@ function mod:FuryOfTheAgesApplied(args)
 		self:Message(args.spellId, "orange", CL.buff_boss:format(L.enrage))
 		self:PlaySound(args.spellId, "warning")
 	end
-	--self:Bar(args.spellId, 20, L.enrage)
 end
 
 function mod:FuryOfTheAgesRemoved(args)
@@ -324,6 +363,6 @@ function mod:FuryOfTheAgesRemoved(args)
 end
 
 function mod:TheJailersGazeApplied(args)
-	self:Message(args.spellId, "orange", CL.percent:format(10, args.spellName))
+	self:Message(args.spellId, "red", CL.percent:format(10, args.spellName))
 	self:PlaySound(args.spellId, "long")
 end
