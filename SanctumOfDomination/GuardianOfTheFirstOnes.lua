@@ -1,10 +1,11 @@
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
+
 if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Guardian of the First Ones", 2450, 2446)
 if not mod then return end
-mod:RegisterEnableMob(175731, 176583) -- Guardian of the First Ones, Energy Core
+mod:RegisterEnableMob(175731) -- Guardian of the First Ones
 mod:SetEncounterID(2436)
 --mod:SetRespawnTime(30)
 --mod:SetStage(1)
@@ -16,7 +17,7 @@ mod:SetEncounterID(2436)
 local shieldOnYou = false
 local tankList = {}
 local meltdownCount = 1
-local disintergrationCount = 1
+local purgeCount = 1
 local sentryCount = 1
 local threatNeutralizationCount = 1
 
@@ -43,7 +44,6 @@ function mod:GetOptions()
 		352589, -- Meltdown
 		-- The Guardian
 		352538, -- Purging Protocol
-		{350735, "TANK"}, -- Elimination Pattern
 		{350732, "TANK"}, -- Shatter
 		{350734, "TANK"}, -- Obliterate
 		352833, -- Disintegration
@@ -74,7 +74,6 @@ function mod:OnBossEnable()
 
 	-- The Guardian
 	self:Log("SPELL_CAST_START", "PurgingProtocol", 352538)
-	self:Log("SPELL_CAST_SUCCESS", "EliminationPattern", 350735)
 	self:Log("SPELL_CAST_START", "Shatter", 350732)
 	self:Log("SPELL_AURA_APPLIED", "ShatterApplied", 350732)
 	self:Log("SPELL_CAST_START", "Obliterate", 350734)
@@ -93,14 +92,15 @@ end
 function mod:OnEngage()
 	shieldOnYou = false
 	meltdownCount = 1
-	disintergrationCount = 1
+	purgeCount = 1
 	sentryCount = 1
 	threatNeutralizationCount = 1
 
-	-- self:Bar(350735, 20) -- Elimination Pattern
-	-- self:Bar(352833, 20, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
-	-- self:Bar(352660, 20, CL.count:format(L.sentry, sentryCount)) -- Form Sentry
-	-- self:Bar(350502, 20, CL.count:format(self:SpellName(350502), threatNeutralizationCount)) -- Threat Neutralization
+	self:Bar(352660, 5.6, CL.count:format(L.sentry, sentryCount)) -- Form Sentry
+	self:Bar(352833, 15.8, CL.laser) -- Disintegration
+	self:Bar(350732, 25) -- Shatter
+	self:Bar(350502, 38, CL.count:format(self:SpellName(350502), threatNeutralizationCount)) -- Threat Neutralization
+	self:Bar(352538, 48, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
 end
 
 --------------------------------------------------------------------------------
@@ -109,7 +109,9 @@ end
 
 -- Energy Cores
 function mod:EnergizingLinkApplied(args)
-	self:Message(args.spellId, "cyan", CL.active:format(CL.link))
+	self:StopBar(CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
+
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -128,34 +130,38 @@ do
 end
 
 function mod:RadiantEnergyApplied(args)
-	shieldOnYou = true
-	self:Message(args.spellId, "green", CL.you:format(CL.shield))
-	self:PlaySound(args.spellId, "info")
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "green", CL.you:format(CL.shield))
+		self:PlaySound(args.spellId, "info")
+		shieldOnYou = true
+	end
 end
 
 function mod:RadiantEnergyRemoved(args)
-	shieldOnYou = false
-	self:Message(args.spellId, "red", CL.removed:format(CL.shield))
-	self:PlaySound(args.spellId, "info")
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "red", CL.removed:format(CL.shield))
+		self:PlaySound(args.spellId, "info")
+		shieldOnYou = false
+	end
 end
 
 function mod:Meltdown(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, meltdownCount))
 	self:PlaySound(args.spellId, "alert")
-	self:CastBar(args.spellId, 6, CL.count:format(args.spellName, meltdownCount))
+	self:CastBar(args.spellId, 6)
 	meltdownCount = meltdownCount + 1
+
+	purgeCount = 1
+	self:CDBar(352538, 60, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
+	-- XXX can vary by a few seconds, the cores have 60 energy in heroic
 end
 
 -- The Guardian
 function mod:PurgingProtocol(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, purgeCount))
 	self:PlaySound(args.spellId, "warning")
-end
-
-function mod:EliminationPattern(args)
-	self:Message(args.spellId, "purple")
-	self:PlaySound(args.spellId, "info")
-	--self:Bar(args.spellId, 17)
+	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, purgeCount))
+	purgeCount = purgeCount + 1
 end
 
 function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
@@ -179,6 +185,7 @@ function mod:Shatter(args)
 		end
 	end
 	self:PlaySound(args.spellId, "warning")
+	self:Bar(350734, 3) -- Obliterate
 end
 
 function mod:ShatterApplied(args)
@@ -204,17 +211,16 @@ function mod:Obliterate(args)
 end
 
 function mod:Disintegration(args)
-	self:Message(args.spellId, "red", CL.count:format(CL.laser, disintergrationCount))
+	self:Message(args.spellId, "red", CL.laser)
 	self:PlaySound(args.spellId, "long")
-	disintergrationCount = disintergrationCount + 1
-	--self:Bar(args.spellId, 17, CL.count:format(CL.laser, disintergrationCount))
+	self:CDBar(args.spellId, 25.6, CL.laser) -- 25~30
 end
 
 function mod:FormSentry(args)
 	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.sentry, sentryCount)))
 	self:PlaySound(args.spellId, "alert")
 	sentryCount = sentryCount + 1
-	--self:Bar(args.spellId, 17, CL.count:format(L.sentry, sentryCount))
+	self:CDBar(args.spellId, 25.6, CL.count:format(L.sentry, sentryCount)) -- 25~30
 end
 
 do
@@ -235,7 +241,7 @@ function mod:ThreatNeutralization(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, threatNeutralizationCount))
 	self:PlaySound(args.spellId, "alarm")
 	threatNeutralizationCount = threatNeutralizationCount + 1
-	--self:Bar(args.spellId, 17, CL.count:format(ars.spellName, threatNeutralizationCount))
+	self:CDBar(args.spellId, 32, CL.count:format(args.spellName, threatNeutralizationCount)) -- 32~39
 end
 
 do
