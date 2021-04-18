@@ -78,6 +78,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "PredatorsHowlRemoved", 347283)
 	self:Log("SPELL_AURA_APPLIED", "UnshakeableDreadApplied", 347286)
 	self:Log("SPELL_CAST_SUCCESS", "HungeringMist", 347679)
+	self:Log("SPELL_AURA_APPLIED", "HungeringMistApplied", 354080)
 	self:Log("SPELL_CAST_SUCCESS", "RemnantOfForgottenTorments", 352368)
 	self:Log("SPELL_CAST_SUCCESS", "Remnants", 352382, 352389, 352398) -- Upper Reaches' Might, Mort'regar's Echoes, Soulforge Heat
 	self:Log("SPELL_CAST_START", "GraspOfDeath", 347668)
@@ -86,8 +87,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FuryOfTheAgesApplied", 347490)
 	self:Log("SPELL_AURA_REMOVED", "FuryOfTheAgesRemoved", 347490)
 	self:Log("SPELL_AURA_APPLIED", "TheJailersGazeApplied", 347369)
-
-	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_START", "HungeringMistChannel", "boss1")
 
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	self:GROUP_ROSTER_UPDATE()
@@ -268,7 +267,7 @@ function mod:HungeringMist(args)
 	mistCount = 1
 	self:Message(args.spellId, "cyan", L.mist)
 	self:PlaySound(args.spellId, "long")
-	self:ScheduleTimer("Bar", 19.9, 347679, 76.4, L.mist) -- Hungering Mist
+	self:ScheduleTimer("Bar", 19.9, args.spellId, 76.4, L.mist) -- Hungering Mist
 
 	-- The same people should always be able to get each set of casts, but keep counting for testing
 	-- howlCount = 1
@@ -281,13 +280,11 @@ function mod:HungeringMist(args)
 	self:Bar(347269, 58.3, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
 end
 
-function mod:HungeringMistChannel(_, _, _, spellId)
-	if spellId == 354080 then
-		self:Message(347679, "yellow", CL.count:format(L.mist, mistCount))
-		self:PlaySound(347679, "info")
-		self:CastBar(347679, 4.8, CL.count:format(L.mist, mistCount)) -- Hungering Mist
-		mistCount = mistCount + 1
-	end
+function mod:HungeringMistApplied()
+	self:Message(347679, "yellow", CL.count:format(L.mist, mistCount))
+	self:PlaySound(347679, "info")
+	self:CastBar(347679, 4.8, CL.count:format(L.mist, mistCount)) -- Hungering Mist
+	mistCount = mistCount + 1
 end
 
 function mod:RemnantOfForgottenTorments(args)
