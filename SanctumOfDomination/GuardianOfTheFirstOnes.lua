@@ -39,7 +39,7 @@ end
 -- Initialization
 --
 
-local threatNeutralizationMarker = mod:AddMarkerOption(false, "player", 1, 350502, 1, 2, 3) -- Threat Neutralization
+local threatNeutralizationMarker = mod:AddMarkerOption(false, "player", 1, 350496, 1, 2, 3) -- Threat Neutralization
 function mod:GetOptions()
 	return {
 		-- Energy Cores
@@ -54,7 +54,7 @@ function mod:GetOptions()
 		352833, -- Disintegration
 		352660, -- Form Sentry
 		347359, -- Suppression Field
-		{350502, "SAY", "SAY_COUNTDOWN"}, -- Threat Neutralization
+		{350496, "SAY", "SAY_COUNTDOWN"}, -- Threat Neutralization
 		threatNeutralizationMarker,
 	},{
 		[352385] = self:SpellName(-23254), -- Energy Cores
@@ -65,7 +65,7 @@ function mod:GetOptions()
 		[352394] = CL.shield, -- Radiant Energy (Shield)
 		[352833] = CL.laser, -- Disintegration (Laser)
 		[352660] = L.sentry, -- Form Sentry (Sentry)
-		[352660] = L.bombs, -- Threat Neutralization (Bombs)
+		[350496] = L.bombs, -- Threat Neutralization (Bombs)
 	}
 end
 
@@ -89,7 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SuppressionField", 347359)
 	self:Log("SPELL_PERIODIC_DAMAGE", "SuppressionField", 347359)
 	self:Log("SPELL_PERIODIC_MISSED", "SuppressionField", 347359)
-	self:Log("SPELL_CAST_START", "ThreatNeutralization", 350502)
+	self:Log("SPELL_CAST_START", "ThreatNeutralization", 350496)
 	self:Log("SPELL_AURA_APPLIED", "ThreatNeutralizationApplied", 350496)
 
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
@@ -108,7 +108,7 @@ function mod:OnEngage()
 	self:CDBar(352660, 5.6, CL.count:format(L.sentry, sentryCount)) -- Form Sentry
 	self:CDBar(352833, 15.8, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
 	self:CDBar(350732, 25) -- Shatter
-	self:CDBar(350502, 38, CL.count:format(self:SpellName(350502), threatNeutralizationCount)) -- Threat Neutralization
+	self:CDBar(350496, 38, CL.count:format(CL.bomb, threatNeutralizationCount)) -- Threat Neutralization
 	local purgeTimer = UnitPower("boss1")
 	self:Bar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
 end
@@ -119,7 +119,7 @@ end
 
 do
 	local abilitysToPause = {
-		[350502] = true, -- Threat Neutralization
+		[350496] = true, -- Threat Neutralization
 		[352538] = true, -- Purging Protocol
 		[352660] = true, -- Form Sentry
 		[352833] = true, -- Disintegration
@@ -303,11 +303,11 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(350502)
-			self:SayCountdown(350502, 4)
-			self:PlaySound(350502, "warning")
+			self:Say(args.spellId)
+			self:SayCountdown(args.spellId, 4)
+			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(350502, "yellow", playerList, nil, CL.count:format(CL.bomb, threatNeutralizationCount-1))
+		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(CL.bomb, threatNeutralizationCount-1))
 		self:CustomIcon(threatNeutralizationMarker, args.destName, count)
 	end
 end
