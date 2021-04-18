@@ -28,6 +28,9 @@ local threatNeutralizationCount = 1
 
 local L = mod:GetLocale()
 if L then
+	L.custom_on_stop_timers = "Always show ability bars"
+	L.custom_on_stop_timers_desc = "The Guardian can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+
 	L.sentry = mod:SpellName(298200) -- Form Sentry (Sentry)
 	L.bombs = "Bombs" -- Threat Neutralization (Bombs)
 end
@@ -89,6 +92,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ThreatNeutralization", 350502)
 	self:Log("SPELL_AURA_APPLIED", "ThreatNeutralizationApplied", 350496)
 
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	self:GROUP_ROSTER_UPDATE()
 end
@@ -101,11 +105,11 @@ function mod:OnEngage()
 	sentryCount = 1
 	threatNeutralizationCount = 1
 
-	self:Bar(352660, 5.6, CL.count:format(L.sentry, sentryCount)) -- Form Sentry
-	self:Bar(352833, 15.8, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
-	self:Bar(350732, 25) -- Shatter
-	self:Bar(350502, 38, CL.count:format(self:SpellName(350502), threatNeutralizationCount)) -- Threat Neutralization
-	local purgeTimer = UnitPower("boss1") + 3 -- delayed by second laser
+	self:CDBar(352660, 5.6, CL.count:format(L.sentry, sentryCount)) -- Form Sentry
+	self:CDBar(352833, 15.8, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
+	self:CDBar(350732, 25) -- Shatter
+	self:CDBar(350502, 38, CL.count:format(self:SpellName(350502), threatNeutralizationCount)) -- Threat Neutralization
+	local purgeTimer = UnitPower("boss1")
 	self:Bar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
 end
 
@@ -113,7 +117,34 @@ end
 -- Event Handlers
 --
 
+do
+	local abilitysToPause = {
+		[350502] = true, -- Threat Neutralization
+		[352538] = true, -- Purging Protocol
+		[352660] = true, -- Form Sentry
+		[352833] = true, -- Disintegration
+	}
+
+	local castPattern = CL.cast:gsub("%%s", ".+")
+
+	local function stopAtZeroSec(bar)
+		if bar.remaining < 0.15 then -- Pause at 0.0
+			bar:SetDuration(0.01) -- Make the bar look full
+			bar:Start()
+			bar:Pause()
+			bar:SetTimeVisibility(false)
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, _, key, text)
+		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
+			bar:AddUpdateFunction(stopAtZeroSec)
+		end
+	end
+end
+
 -- Energy Cores
+
 function mod:EnergizingLinkApplied(args)
 	if self:MobId(args.destGUID) == 175731 then -- On the boss
 		self:StopBar(CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
@@ -167,6 +198,7 @@ function mod:Meltdown(args)
 end
 
 -- The Guardian
+
 function mod:PurgingProtocol(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, purgeCount))
 	self:PlaySound(args.spellId, "warning")
