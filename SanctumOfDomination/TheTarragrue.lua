@@ -268,6 +268,17 @@ function mod:HungeringMist(args)
 	mistCount = 1
 	self:Message(args.spellId, "cyan", L.mist)
 	self:PlaySound(args.spellId, "long")
+	self:ScheduleTimer("Bar", 19.9, 347679, 76.4, L.mist) -- Hungering Mist
+
+	-- The same people should always be able to get each set of casts, but keep counting for testing
+	-- howlCount = 1
+	-- graspCount = 1
+	self:Bar(347283, 22, CL.count:format(L.howl, howlCount)) -- Predator's Howl
+	self:Bar(346985, 25.7) -- Overpower
+	self:Bar(347668, 28.1, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
+	self:Bar(352368, 30.5, CL.count:format(L.remnants, remnantCount)) -- Remnants (time to the actual remnants spawn)
+	self:Bar(347490, 32.9, L.enrage)
+	self:Bar(347269, 58.3, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
 end
 
 function mod:HungeringMistChannel(_, _, _, spellId)
@@ -275,16 +286,6 @@ function mod:HungeringMistChannel(_, _, _, spellId)
 		self:Message(347679, "yellow", CL.count:format(L.mist, mistCount))
 		self:PlaySound(347679, "info")
 		self:CastBar(347679, 4.8, CL.count:format(L.mist, mistCount)) -- Hungering Mist
-		if mistCount == 3 then
-			graspCount = 1
-			self:Bar(347283, 6.9, CL.count:format(L.howl, howlCount)) -- Predator's Howl
-			self:Bar(346985, 10.6) -- Overpower
-			self:Bar(347668, 13, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
-			self:Bar(352368, 15.4, CL.count:format(L.remnants, remnantCount)) -- Remnants (time to the actual remnants spawn)
-			self:Bar(347490, 17.8, L.enrage)
-			self:Bar(347269, 43.2, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
-			self:Bar(347679, 81.2, L.mist) -- Hungering Mist
-		end
 		mistCount = mistCount + 1
 	end
 end
@@ -315,8 +316,8 @@ do
 		graspCount = graspCount + 1
 		if self:GetBarTimeLeft(347679) < 30 then -- Mist
 			self:Bar(args.spellId, 30.4, CL.count:format(L.grasp, graspCount))
-		elseif howlCount == 2 then
-			-- The second cast is quick for some reason
+		elseif chainsCount == 2 then
+			-- The second cast is quick for some reason (graspCount gets reset)
 			self:Bar(args.spellId, 13.5, CL.count:format(L.grasp, graspCount))
 		end
 
