@@ -105,7 +105,8 @@ function mod:OnEngage()
 	self:Bar(352833, 15.8, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
 	self:Bar(350732, 25) -- Shatter
 	self:Bar(350502, 38, CL.count:format(self:SpellName(350502), threatNeutralizationCount)) -- Threat Neutralization
-	self:Bar(352538, 48, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
+	local purgeTimer = UnitPower("boss1") + 3 -- delayed by second laser
+	self:Bar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
 end
 
 --------------------------------------------------------------------------------
@@ -114,9 +115,14 @@ end
 
 -- Energy Cores
 function mod:EnergizingLinkApplied(args)
-	self:StopBar(CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
-	self:Message(args.spellId, "cyan", CL.active:format(CL.link))
-	self:PlaySound(args.spellId, "info")
+	if self:MobId(args.destGUID) == 175731 then -- On the boss
+		self:StopBar(CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
+		self:Message(args.spellId, "cyan", CL.onboss:format(CL.link))
+		self:PlaySound(args.spellId, "info")
+		local coreUnit = self:GetBossId(args.sourceGUID)
+		local linkTimer = ceil(UnitPower(coreUnit) / 4) -- 4 energy/s
+		self:Bar(args.spellId, linkTimer, CL.link)
+	end
 end
 
 do
@@ -156,8 +162,8 @@ function mod:Meltdown(args)
 	meltdownCount = meltdownCount + 1
 
 	purgeCount = 1
-	self:CDBar(352538, 60, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
-	-- XXX can vary by a few seconds, the cores have 60 energy in heroic
+	local purgeTimer = UnitPower("boss1") -- 1 energy/s
+	self:CDBar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
 end
 
 -- The Guardian
