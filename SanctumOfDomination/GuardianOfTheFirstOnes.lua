@@ -32,7 +32,6 @@ if L then
 	L.custom_on_stop_timers_desc = "The Guardian can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
 
 	L.sentry = mod:SpellName(298200) -- Form Sentry (Sentry)
-	L.bombs = "Bombs" -- Threat Neutralization (Bombs)
 end
 
 --------------------------------------------------------------------------------
@@ -65,7 +64,7 @@ function mod:GetOptions()
 		[352394] = CL.shield, -- Radiant Energy (Shield)
 		[352833] = CL.laser, -- Disintegration (Laser)
 		[352660] = L.sentry, -- Form Sentry (Sentry)
-		[350496] = L.bombs, -- Threat Neutralization (Bombs)
+		[350496] = CL.bombs, -- Threat Neutralization (Bombs)
 	}
 end
 
@@ -108,7 +107,7 @@ function mod:OnEngage()
 	self:CDBar(352660, 5.6, CL.count:format(L.sentry, sentryCount)) -- Form Sentry
 	self:CDBar(352833, 15.8, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
 	self:CDBar(350732, 25) -- Shatter
-	self:CDBar(350496, 38, CL.count:format(CL.bomb, threatNeutralizationCount)) -- Threat Neutralization
+	self:CDBar(350496, 38, CL.count:format(CL.bombs, threatNeutralizationCount)) -- Threat Neutralization
 	local purgeTimer = UnitPower("boss1")
 	self:Bar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
 end
@@ -284,10 +283,10 @@ do
 end
 
 function mod:ThreatNeutralization(args)
-	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.bombs, threatNeutralizationCount)))
+	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(CL.bombs, threatNeutralizationCount)))
 	self:PlaySound(args.spellId, "alarm")
 	threatNeutralizationCount = threatNeutralizationCount + 1
-	self:CDBar(args.spellId, 32, CL.count:format(L.bombs, threatNeutralizationCount)) -- 32~39
+	self:CDBar(args.spellId, 32, CL.count:format(CL.bombs, threatNeutralizationCount)) -- 32~39
 end
 
 do
