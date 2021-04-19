@@ -88,6 +88,7 @@ L.laser = "雷射" -- Used for abilities that act like a laser. Usually from the
 L.beam = "射線" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "射線" -- Plural of L.beam
 L.bomb = "炸彈" -- Used for debuffs that make players explode
+L.bombs = "炸彈" -- Plural of L.bomb
 L.explosion = "爆炸" -- When the explosion from a bomb-like ability will occur
 L.fixate = "鎖定" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "擊退" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters

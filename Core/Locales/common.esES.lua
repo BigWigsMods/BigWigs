@@ -88,6 +88,7 @@ L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the
 L.beam = "Haz" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "Haces" -- Plural of L.beam
 L.bomb = "Bomba" -- Used for debuffs that make players explode
+L.bombs = "Bombas" -- Plural of L.bomb
 L.explosion = "Deflagración" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Fijar" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "Retroceso" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters

@@ -96,6 +96,7 @@ L.laser = "Лазер" -- Used for abilities that act like a laser. Usually from
 L.beam = "Луч" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "Лучи" -- Plural of L.beam
 L.bomb = "Бомба" -- Used for debuffs that make players explode
+L.bombs = "Бомбы" -- Plural of L.bomb
 L.explosion = "Взрыв" -- When the explosion from a bomb-like ability will occur
 L.fixate = "Фиксация" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "Отбрасывание" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
