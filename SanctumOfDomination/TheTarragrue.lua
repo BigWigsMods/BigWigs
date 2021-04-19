@@ -44,7 +44,7 @@ function mod:GetOptions()
 		{346986, "TANK"}, -- Crushed Armor
 		{347269, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "ICON"}, -- Chains of Eternity
 		347274, -- Eternal Ruin
-		{347283, "SAY"}, -- Predator's Howl
+		{347283, "SAY", "ME_ONLY"}, -- Predator's Howl
 		347286, -- Unshakeable Dread
 		347679, -- Hungering Mist
 		352368, -- Remnant of Forgotten Torments
@@ -80,12 +80,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "HungeringMist", 347679)
 	self:Log("SPELL_AURA_APPLIED", "HungeringMistApplied", 354080)
 	self:Log("SPELL_CAST_SUCCESS", "RemnantOfForgottenTorments", 352368)
-	self:Log("SPELL_CAST_SUCCESS", "Remnants", 352382, 352389, 352398) -- Upper Reaches' Might, Mort'regar's Echoes, Soulforge Heat
-	self:Log("SPELL_CAST_START", "GraspOfDeath", 347668)
+	self:Log("SPELL_CAST_SUCCESS", "RemnantSpawn", 352382, 352389, 352398) -- Upper Reaches' Might, Mort'regar's Echoes, Soulforge Heat
+	self:Log("SPELL_CAST_SUCCESS", "GraspOfDeath", 347668)
 	self:Log("SPELL_AURA_APPLIED", "GraspOfDeathApplied", 347668)
 	self:Log("SPELL_CAST_START", "FuryOfTheAgesStart", 347490)
 	self:Log("SPELL_AURA_APPLIED", "FuryOfTheAgesApplied", 347490)
-	self:Log("SPELL_AURA_REMOVED", "FuryOfTheAgesRemoved", 347490)
+	self:Log("SPELL_DISPEL", "FuryOfTheAgesDispel", "*")
 	self:Log("SPELL_AURA_APPLIED", "TheJailersGazeApplied", 347369)
 
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -103,6 +103,7 @@ function mod:OnEngage()
 	self:Bar(346985, 12.3) -- Overpower
 	self:Bar(347269, 17.1, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
 	self:Bar(347679, 24.7, L.mist) -- Hungering Mist
+	self:Berserk(420) -- Heroic
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -222,14 +223,14 @@ do
 	local soundPlayed = false
 
 	function mod:PredatorsHowl(args)
+		playerList = {}
+		soundPlayed = false
 		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.howl, howlCount)))
 		howlCount = howlCount + 1
 		if self:GetBarTimeLeft(347679) < 25 then -- Mist -- (howlCount-1) % 3 ~= 1
 			self:Bar(args.spellId, 25.6, CL.count:format(L.howl, howlCount))
 		end
-
-		playerList = {}
-		soundPlayed = false
+		self:PlaySound(args.spellId, "alert")
 	end
 
 	function mod:PredatorsHowlApplied(args)
@@ -292,7 +293,7 @@ function mod:RemnantOfForgottenTorments(args)
 	self:PlaySound(args.spellId, "info")
 end
 
-function mod:Remnants(args)
+function mod:RemnantSpawn(args) -- XXX Renames for each one?
 	-- 352382 = physical, 352389 = magic, 352398 = fire
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
@@ -307,8 +308,15 @@ do
 	local soundPlayed = false
 
 	function mod:GraspOfDeath(args)
-		self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.grasp, graspCount)))
-		self:PlaySound(args.spellId, "alert")
+		playerList = {}
+		if self:Healer() then
+			soundPlayed = true
+			self:PlaySound(args.spellId, "alert")
+		else
+			soundPlayed = false
+		end
+
+		self:Message(args.spellId, "red", CL.count:format(L.grasp, graspCount))
 
 		graspCount = graspCount + 1
 		if self:GetBarTimeLeft(347679) < 30 then -- Mist
@@ -317,22 +325,17 @@ do
 			-- The second cast is quick for some reason (graspCount gets reset)
 			self:Bar(args.spellId, 13.5, CL.count:format(L.grasp, graspCount))
 		end
-
-		playerList = {}
-		soundPlayed = false
 	end
 
 	function mod:GraspOfDeathApplied(args)
 		playerList[#playerList+1] = args.destName
-		if not soundPlayed then
-			if self:Me(args.destGUID) then
+		if self:Me(args.destGUID) then
+			if not soundPlayed then
+				soundPlayed = true
 				self:PlaySound(args.spellId, "alarm")
-			elseif self:Healer() then
-				self:PlaySound(args.spellId, "alert")
 			end
-			soundPlayed = true
+			self:PersonalMessage(args.spellId)
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.grasp, graspCount-1))
 	end
 end
 
@@ -347,16 +350,15 @@ function mod:FuryOfTheAgesStart(args)
 end
 
 function mod:FuryOfTheAgesApplied(args)
-	if self:Dispeller("enrage", true) then
+	if bit.band(args.destFlags, 0x400) == 0 and self:Dispeller("enrage", true) then -- COMBATLOG_OBJECT_TYPE_PLAYER
 		self:Message(args.spellId, "orange", CL.buff_boss:format(L.enrage))
 		self:PlaySound(args.spellId, "warning")
 	end
 end
 
-function mod:FuryOfTheAgesRemoved(args)
-	self:Message(args.spellId, "green", CL.removed_by:format(L.enrage, args.sourceName))
-	if self:Dispeller("enrage", true) then
-		self:PlaySound(args.spellId, "info")
+function mod:FuryOfTheAgesDispel(args)
+	if args.extraSpellId == 347490 then -- Fury of the Ages
+		self:Message(347490, "green", CL.removed_by:format(L.enrage, args.sourceName))
 	end
 end
 
