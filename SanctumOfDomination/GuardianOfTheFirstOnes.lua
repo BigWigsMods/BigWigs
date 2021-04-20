@@ -7,8 +7,7 @@ local mod, CL = BigWigs:NewBoss("Guardian of the First Ones", 2450, 2446)
 if not mod then return end
 mod:RegisterEnableMob(175731) -- Guardian of the First Ones
 mod:SetEncounterID(2436)
---mod:SetRespawnTime(30)
---mod:SetStage(1)
+mod:SetRespawnTime(30)
 
 --------------------------------------------------------------------------------
 -- Locals

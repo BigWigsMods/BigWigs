@@ -6,8 +6,7 @@ local mod, CL = BigWigs:NewBoss("The Tarragrue", 2450, 2435)
 if not mod then return end
 mod:RegisterEnableMob(175611) -- The Tarragrue
 mod:SetEncounterID(2423)
---mod:SetRespawnTime(30)
---mod:SetStage(1)
+mod:SetRespawnTime(30)
 
 --------------------------------------------------------------------------------
 -- Locals
