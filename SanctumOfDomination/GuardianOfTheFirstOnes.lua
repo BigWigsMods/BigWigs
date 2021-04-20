@@ -151,7 +151,7 @@ function mod:EnergizingLinkApplied(args)
 		self:PlaySound(args.spellId, "info")
 		local coreUnit = self:GetBossId(args.sourceGUID)
 		local linkTimer = ceil(UnitPower(coreUnit) / 4) -- 4 energy/s
-		self:Bar(args.spellId, linkTimer, CL.link)
+		self:Bar(352589, linkTimer, CL.count:format(self:SpellName(352589), meltdownCount)) -- Meltdown
 	end
 end
 
@@ -192,15 +192,18 @@ function mod:Meltdown(args)
 	meltdownCount = meltdownCount + 1
 
 	purgeCount = 1
-	local purgeTimer = UnitPower("boss1") -- 1 energy/s
-	self:CDBar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
+	local bossUnit = self:GetBossId(175731)
+	if bossUnit then
+		local purgeTimer = UnitPower(bossUnit) -- 1 energy/s
+		self:CDBar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
+	end
 end
 
 -- The Guardian
 
-function mod:PurgingProtocol(args)
+function mod:PurgingProtocol(args) -- XXX rename?
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, purgeCount))
-	self:PlaySound(args.spellId, "warning")
+	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, purgeCount))
 end
 
@@ -217,7 +220,7 @@ function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
 	end
 end
 
-function mod:Shatter(args)
+function mod:Shatter(args) -- XXX figure out a timer when it's more stable?
 	local bossUnit = self:GetBossId(args.sourceGUID)
 	for i = 1, #tankList do
 		local unit = tankList[i]
@@ -233,7 +236,7 @@ function mod:Shatter(args)
 end
 
 function mod:ShatterApplied(args)
-	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
+	self:TargetMessage(args.spellId, "purple", args.destName)
 	local bossUnit = self:GetBossId(args.sourceGUID)
 	if bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
 		self:PlaySound(args.spellId, "warning") -- Not taunted? Play again.
@@ -256,14 +259,14 @@ end
 
 function mod:Disintegration(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.laser, disintergrationCount))
-	self:PlaySound(args.spellId, "long")
+	self:PlaySound(args.spellId, "alert")
 	disintergrationCount = disintergrationCount + 1
 	self:CDBar(args.spellId, 25.4, CL.count:format(CL.laser, disintergrationCount)) -- 25~30
 end
 
 function mod:FormSentry(args)
 	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.sentry, sentryCount)))
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "long")
 	sentryCount = sentryCount + 1
 	self:CDBar(args.spellId, 25.6, CL.count:format(L.sentry, sentryCount)) -- 25~30
 end
@@ -284,7 +287,6 @@ end
 
 function mod:ThreatNeutralization(args)
 	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(CL.bombs, threatNeutralizationCount)))
-	self:PlaySound(args.spellId, "alarm")
 	threatNeutralizationCount = threatNeutralizationCount + 1
 	self:CDBar(args.spellId, 32, CL.count:format(CL.bombs, threatNeutralizationCount)) -- 32~39
 end
