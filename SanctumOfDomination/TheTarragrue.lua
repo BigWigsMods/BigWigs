@@ -44,7 +44,7 @@ function mod:GetOptions()
 		{346986, "TANK"}, -- Crushed Armor
 		{347269, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "ICON"}, -- Chains of Eternity
 		347274, -- Eternal Ruin
-		{347283, "SAY", "ME_ONLY"}, -- Predator's Howl
+		{347283, "SAY", "ME_ONLY", "ME_ONLY_EMPHASIZE"}, -- Predator's Howl
 		347286, -- Unshakeable Dread
 		347679, -- Hungering Mist
 		352368, -- Remnant of Forgotten Torments

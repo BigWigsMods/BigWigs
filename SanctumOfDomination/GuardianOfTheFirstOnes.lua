@@ -45,7 +45,7 @@ function mod:GetOptions()
 		352385, -- Energizing Link
 		350455, -- Unstable Energy
 		352394, -- Radiant Energy
-		352589, -- Meltdown
+		{352589, "EMPHASIZE"}, -- Meltdown
 		-- The Guardian
 		352538, -- Purging Protocol
 		{350732, "TANK"}, -- Shatter
@@ -53,7 +53,7 @@ function mod:GetOptions()
 		352833, -- Disintegration
 		352660, -- Form Sentry
 		347359, -- Suppression Field
-		{350496, "SAY", "SAY_COUNTDOWN"}, -- Threat Neutralization
+		{350496, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Threat Neutralization
 		threatNeutralizationMarker,
 	},{
 		[352385] = self:SpellName(-23254), -- Energy Cores
