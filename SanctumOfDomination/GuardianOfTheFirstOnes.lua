@@ -110,6 +110,7 @@ function mod:OnEngage()
 	self:CDBar(350496, 38, CL.count:format(CL.bombs, threatNeutralizationCount)) -- Threat Neutralization
 	local purgeTimer = UnitPower("boss1")
 	self:Bar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
+	-- XXX In heroic the first cast is (always?) delayed by 3s due to a laser cast
 end
 
 --------------------------------------------------------------------------------
@@ -150,7 +151,7 @@ function mod:EnergizingLinkApplied(args)
 		self:Message(args.spellId, "cyan", CL.onboss:format(CL.link))
 		self:PlaySound(args.spellId, "info")
 		local coreUnit = self:GetBossId(args.sourceGUID)
-		local linkTimer = ceil(UnitPower(coreUnit) / 4) -- 4 energy/s
+		local linkTimer = ceil(UnitPower(coreUnit) / 4) - 1 -- 4 energy/s (first tick immediately)
 		self:Bar(352589, linkTimer, CL.count:format(self:SpellName(352589), meltdownCount)) -- Meltdown
 	end
 end
