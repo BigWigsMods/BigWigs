@@ -18,6 +18,7 @@ local howlCount = 1
 local mistCount = 1
 local remnantCount = 1
 local graspCount = 1
+local nextMist = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -102,6 +103,8 @@ function mod:OnEngage()
 	self:Bar(346985, 12.3) -- Overpower
 	self:Bar(347269, 17.1, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
 	self:Bar(347679, 24.7, L.mist) -- Hungering Mist
+	nextMist = GetTime() + 24.7
+
 	self:Berserk(420) -- Heroic
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -139,7 +142,7 @@ function mod:Overpower(args)
 		end
 	end
 	self:PlaySound(args.spellId, "warning")
-	if self:GetBarTimeLeft(347679) < 28 then -- Mist
+	if nextMist - GetTime() > 28 then
 		self:Bar(args.spellId, 28)
 	end
 end
@@ -190,7 +193,7 @@ function mod:ChainsOfEternityApplied(args)
 	end
 	self:TargetBar(args.spellId, 8, args.destName, CL.count:format(L.chains, chainsCount))
 	chainsCount = chainsCount + 1
-	if self:GetBarTimeLeft(347679) < 28 then -- Mist -- chainsCount % 2 == 1
+	if nextMist - GetTime() > 28 then
 		self:Bar(args.spellId, 27.9, CL.count:format(L.chains, chainsCount))
 	end
 end
@@ -226,7 +229,7 @@ do
 		soundPlayed = false
 		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.howl, howlCount)))
 		howlCount = howlCount + 1
-		if self:GetBarTimeLeft(347679) < 25 then -- Mist -- (howlCount-1) % 3 ~= 1
+		if nextMist - GetTime() > 25 then
 			self:Bar(args.spellId, 25.6, CL.count:format(L.howl, howlCount))
 		end
 		self:PlaySound(args.spellId, "alert")
@@ -268,6 +271,7 @@ function mod:HungeringMist(args)
 	self:Message(args.spellId, "cyan", L.mist)
 	self:PlaySound(args.spellId, "long")
 	self:ScheduleTimer("Bar", 19.9, args.spellId, 76.4, L.mist) -- Hungering Mist
+	nextMist = 96.3
 
 	-- The same people should always be able to get each set of casts, but keep counting for testing
 	-- howlCount = 1
@@ -297,7 +301,7 @@ function mod:RemnantSpawn(args) -- XXX Renames for each one?
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 	remnantCount = remnantCount + 1
-	if self:GetBarTimeLeft(347679) < 30 then -- Mist
+	if nextMist - GetTime() > 30 then
 		self:Bar(args.spellId, 31, CL.count:format(L.remnants, remnantCount)) -- 30.5 ~ 31.6
 	end
 end
@@ -318,10 +322,10 @@ do
 		self:Message(args.spellId, "red", CL.count:format(L.grasp, graspCount))
 
 		graspCount = graspCount + 1
-		if self:GetBarTimeLeft(347679) < 30 then -- Mist
+		if nextMist - GetTime() > 30 then
 			self:Bar(args.spellId, 30.4, CL.count:format(L.grasp, graspCount))
-		elseif chainsCount == 2 then
-			-- The second cast is quick for some reason (graspCount gets reset)
+		elseif chainsCount == 2 then -- graspCount gets reset
+			-- The second cast is quick
 			self:Bar(args.spellId, 13.5, CL.count:format(L.grasp, graspCount))
 		end
 	end
@@ -343,7 +347,7 @@ function mod:FuryOfTheAgesStart(args)
 	if self:Dispeller("enrage", true) then
 		self:PlaySound(args.spellId, "info")
 	end
-	if self:GetBarTimeLeft(347679) < 46 then -- Mist
+	if nextMist - GetTime() > 46 then
 		self:Bar(args.spellId, 46, L.enrage)
 	end
 end
