@@ -7,7 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(
 	175727, 178921, -- Soulrender Dormazain
 	179177, -- Mawsworn Overlord
-	175728, 178922, -- Garrosh Hellscream
+	175728, 178922 -- Garrosh Hellscream
 )
 mod:SetEncounterID(2434)
 mod:SetRespawnTime(30)
