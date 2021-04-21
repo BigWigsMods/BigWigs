@@ -89,6 +89,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "SuppressionField", 347359)
 	self:Log("SPELL_CAST_START", "ThreatNeutralization", 350496)
 	self:Log("SPELL_AURA_APPLIED", "ThreatNeutralizationApplied", 350496)
+	self:Log("SPELL_AURA_REMOVED", "ThreatNeutralizationRemoved", 350496)
 
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -284,21 +285,16 @@ do
 	end
 end
 
-function mod:ThreatNeutralization(args)
-	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(CL.bombs, threatNeutralizationCount)))
-	threatNeutralizationCount = threatNeutralizationCount + 1
-	self:CDBar(args.spellId, 32, CL.count:format(CL.bombs, threatNeutralizationCount)) -- 32~39
-end
-
 do
 	local playerList = {}
-	local prev = 0
+	function mod:ThreatNeutralization(args)
+		playerList = {}
+		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(CL.bombs, threatNeutralizationCount)))
+		threatNeutralizationCount = threatNeutralizationCount + 1
+		self:CDBar(args.spellId, 32, CL.count:format(CL.bombs, threatNeutralizationCount)) -- 32~39
+	end
+
 	function mod:ThreatNeutralizationApplied(args)
-		local t = args.time
-		if t-prev > 5 then
-			prev = t
-			playerList = {}
-		end
 		local count = #playerList+1
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
@@ -310,4 +306,12 @@ do
 		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(CL.bomb, threatNeutralizationCount-1))
 		self:CustomIcon(threatNeutralizationMarker, args.destName, count)
 	end
+end
+
+function mod:ThreatNeutralizationRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+
+	self:CustomIcon(threatNeutralizationMarker, args.destName)
 end
