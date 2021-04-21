@@ -138,6 +138,7 @@ end
 do
 	local playerList = {}
 	local prev = 0
+	local allowed = true
 	function mod:FragmentsOfDestiny(args)
 		-- XXX FIXME
 		-- - Use an icon set, only using available icons
@@ -155,7 +156,11 @@ do
 			self:Say(args.spellId)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList)
+		if allowed then
+			self:NewTargetsMessage(args.spellId, "cyan", playerList)
+			self:SimpleTimer(1, function() allowed = false end)
+			self:SimpleTimer(20, function() allowed = true playerList = {} end)
+		end
 		self:CustomIcon(fragmentsMarker, args.destName, count)
 	end
 end
