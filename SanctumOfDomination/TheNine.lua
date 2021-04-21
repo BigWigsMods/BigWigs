@@ -33,7 +33,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage One: The Unending Voice
-		350542, -- Fragments of Destiny // Note: Placed this first so ordering in bigwigs looks better vs Encounter Journal
+		{350542, "SAY"}, -- Fragments of Destiny // Note: Placed this first so ordering in bigwigs looks better vs Encounter Journal
 		fragmentsMarker,
 		350555, -- Shard of Destiny
 		-- Kyra, The Unending
@@ -52,15 +52,16 @@ function mod:GetOptions()
 		350184, -- Daschla's Mighty Anvil
 		350157, -- Annhylde's Bright Aegis
 		350098, -- Aradne's Falling Strike
-		350109, -- Brynja's Mournful Dirge
-		350039, -- Arthura's Crushing Gaze
+		{350109, "SAY", "SAY_COUNTDOWN"}, -- Brynja's Mournful Dirge
+		{350039, "SAY", "SAY_COUNTDOWN"}, -- Arthura's Crushing Gaze
 		-- Stage Two: The First of the Mawsworn
 		350475, -- Pierce Soul
 		351399, -- Resentment
 		350482, -- Link Essence
+		350687, -- Word of Recall
 	},{
 		["stages"] = "general",
-		[352744] = mod:SpellName(-22877), -- Stage One: The Unending Voice
+		[350542] = mod:SpellName(-22877), -- Stage One: The Unending Voice
 		[350202] = mod:SpellName(-23202), -- Kyra, The Unending
 		[350283] = mod:SpellName(-23203), -- Signe, The Voice
 		[350467] = mod:SpellName(-23206), -- Call of the Val'kyr
@@ -100,10 +101,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BrynjasMournfulDirgeRemoved", 350109)
 	self:Log("SPELL_CAST_SUCCESS", "ArthurasCrushingGaze", 350039)
 	self:Log("SPELL_AURA_APPLIED", "ArthurasCrushingGazeApplied", 350039)
-	self:Log("SPELL_AURA_REMOVED", "ArthurasCrushingGazeRemoved", 350109)
+	self:Log("SPELL_AURA_REMOVED", "ArthurasCrushingGazeRemoved", 350039)
 
 	-- Stage Two: The First of the Mawsworn
-	self:Log("SPELL_CAST_START", "PierceSoul", 350475)
 	self:Log("SPELL_AURA_APPLIED", "PierceSoulApplied", 350475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PierceSoulApplied", 350475)
 	self:Log("SPELL_CAST_SUCCESS", "Resentment", 351399)
@@ -319,7 +319,6 @@ function mod:ArthurasCrushingGazeApplied(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
 		self:Yell(args.spellId)
-		self:Flash(args.spellId)
 		self:YellCountdown(args.spellId, 8)
 	else
 		self:PlaySound(args.spellId, "alert")
