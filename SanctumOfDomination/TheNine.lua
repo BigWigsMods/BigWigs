@@ -5,7 +5,11 @@
 if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("The Nine", 2450, 2439)
 if not mod then return end
-mod:RegisterEnableMob(178738, 178736, 175726) -- Kyra, Signe, Skyja
+mod:RegisterEnableMob(
+	178738, 177095, -- Kyra
+	178736, 177094, -- Signe
+	175726, 177682, 178684 -- Skyja
+)
 mod:SetEncounterID(2429)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -115,6 +119,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:SetStage(1)
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1", "boss2")
 end
 
@@ -124,7 +129,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 23 then -- Stage 2 when the first of 2 bosses reaches 20%
-		self:Message("stages", "green", CL.soon:format(2), false)
+		self:Message("stages", "green", CL.soon:format(CL.stage:format(2)), false)
 		self:UnregisterUnitEvent(event, unit)
 	end
 end
@@ -158,8 +163,7 @@ end
 function mod:FragmentsOfDestinyStacks(args)
 	-- Warn someone that they got an extra stack, or they are the one collecting
 	if self:Me(args.destGUID) then
-		local amount = args.amount or 1
-		self:NewStackMessage(args.spellId, "blue", args.destName, amount)
+		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
