@@ -35,6 +35,16 @@ BigWigs:AddSounds("The Nine", {
 	[351399] = "alert",
 })
 
+BigWigs:AddSounds("Soulrender Dormazain", {
+	[349985] = "alert",
+	[350217] = "alert",
+	[350411] = "long",
+	[350422] = "alarm",
+	[350647] = "warning",
+	[351779] = "alert",
+	[354231] = "info",
+})
+
 BigWigs:AddSounds("Guardian of the First Ones", {
 	[347359] = "underyou",
 	[350455] = "warning",

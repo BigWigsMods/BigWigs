@@ -40,6 +40,18 @@ BigWigs:AddColors("The Nine", {
 	["stages"] = "green",
 })
 
+BigWigs:AddColors("Soulrender Dormazain", {
+	[349985] = "red",
+	[350217] = "yellow",
+	[350411] = "red",
+	[350422] = {"blue","purple"},
+	[350647] = {"blue","orange"},
+	[350650] = {"blue","orange"},
+	[351229] = "yellow",
+	[351779] = "yellow",
+	[354231] = "blue",
+})
+
 BigWigs:AddColors("Guardian of the First Ones", {
 	[347359] = "blue",
 	[350455] = "blue",
