@@ -865,20 +865,48 @@ do
 	}
 	local delayedMessages = {}
 
+	local warning = "The addon '|cffffff00%s|r' is forcing %s to load prematurely, notify the BigWigs authors!"
+	local dontForceLoadList = {
+		BigWigs_Core = true,
+		BigWigs_Plugins = true,
+		BigWigs_Options = true,
+		BigWigs_Shadowlands = true,
+		BigWigs_CastleNathria = true,
+		BigWigs_SanctumOfDomination = true,
+		BigWigs_Classic = true,
+		BigWigs_BurningCrusade = true,
+		BigWigs_WrathOfTheLichKing = true,
+		BigWigs_Cataclysm = true,
+		BigWigs_MistsOfPandaria = true,
+		BigWigs_WarlordsOfDraenor = true,
+		BigWigs_Legion = true,
+		BigWigs_BattleForAzeroth = true,
+		LittleWigs = true,
+		LittleWigs_Classic = true,
+		LittleWigs_BurningCrusade = true,
+		LittleWigs_WrathOfTheLichKing = true,
+		LittleWigs_Cataclysm = true,
+		LittleWigs_MistsOfPandaria = true,
+		LittleWigs_WarlordsOfDraenor = true,
+		LittleWigs_Legion = true,
+		LittleWigs_BattleForAzeroth = true,
+	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
 		if IsAddOnEnabled(i) and not IsAddOnLoadOnDemand(i) then
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
-				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins" or meta == "BigWigs_Options") then
-					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing BigWigs to load prematurely, notify the BigWigs authors!"
+				local addonName = tostring(meta)
+				if dontForceLoadList[addonName] then
+					delayedMessages[#delayedMessages+1] = warning:format(name, addonName)
 				end
 			end
 			for j = 1, select("#", GetAddOnDependencies(i)) do
 				local meta = select(j, GetAddOnDependencies(i))
-				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins" or meta == "BigWigs_Options") then
-					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing BigWigs to load prematurely, notify the BigWigs authors!"
+				local addonName = tostring(meta)
+				if dontForceLoadList[addonName] then
+					delayedMessages[#delayedMessages+1] = warning:format(name, addonName)
 				end
 			end
 		end
