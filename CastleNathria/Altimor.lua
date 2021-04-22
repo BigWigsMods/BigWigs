@@ -150,7 +150,7 @@ end
 
 do
 	local playerList = {}
-	local timers = {51, 60, 64, 24}
+	local timers = {60, 60, 60, 24}
 	function mod:Sinseeker(args)
 		playerList = {}
 		self:StopBar(CL.count:format(args.spellName, sinseekerCount))
