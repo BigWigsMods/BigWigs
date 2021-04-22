@@ -39,7 +39,7 @@ function mod:GetOptions()
 		-- Soulrender Dormazain
 		350217, -- Torment
 		349985, -- Encore of Torment
-		350647, -- Brand of Torment
+		{350647, "SAY"}, -- Brand of Torment
 		{350422, "TANK"}, -- Ruinblade
 		351779, -- Agonizing Spike
 		350650, -- Defiance
@@ -56,8 +56,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Torment", 350217)
 	self:Log("SPELL_CAST_SUCCESS", "EncoreOfTorment", 349985)
 	self:Log("SPELL_AURA_APPLIED", "BrandOfTormentApplied", 350647)
-	--self:Log("SPELL_AURA_APPLIED", "BrandOfTormentApplied", 350647)
 	self:Log("SPELL_AURA_APPLIED", "RuinbladeApplied", 350422)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "RuinbladeApplied", 350422)
 	self:Log("SPELL_CAST_START", "AgonizingSpike", 351779)
 	self:Log("SPELL_AURA_APPLIED", "DefianceApplied", 350650)
 	self:Log("SPELL_CAST_SUCCESS", "Hellscream", 350411)
@@ -152,7 +152,7 @@ function mod:SoulManacles(args)
 end
 
 function mod:RenderedSoul(args)
-	self:Message(args.spellId, "yellow", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "yellow", CL.incoming:format("Soul Splinter"))
 	--self:PlaySound(args.spellId, "long")
 	--self:CastBar(args.spellId, 6)
 end
