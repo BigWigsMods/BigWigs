@@ -49,6 +49,7 @@ function mod:GetOptions()
 		{351827, "SAY", "SAY_COUNTDOWN"}, -- Spreading Misery
 		-- Stage Three: Immediate Extermination
 		348974, -- Immediate Extermination
+		350764, -- Annihilating Glare
 	},{
 		["stages"] = "general",
 		[350803] = mod:SpellName(-22896), -- Stage One: His Gaze Upon You
@@ -68,7 +69,7 @@ function mod:OnBossEnable()
 	-- Stage Two: Double Vision
 	self:Log("SPELL_CAST_SUCCESS", "StygianEjection", 350066)
 	self:Log("SPELL_CAST_SUCCESS", "TitanicDeathGaze", 349028)
-	self:Log("SPELL_CAST_START", " DesolationBeam", 350847)
+	self:Log("SPELL_CAST_START", "DesolationBeam", 350847)
 	self:Log("SPELL_CAST_SUCCESS", "SoulShatter", 350028)
 	self:Log("SPELL_AURA_APPLIED", "SharedSufferingApplied", 351825)
 	self:Log("SPELL_AURA_APPLIED", "SlothfulCorruptionApplied", 350713)
@@ -106,9 +107,9 @@ end
 
 -- Stage One: His Gaze Upon You
 function mod:PiercingLens(args)
-	self:Message(args.spellId, "purple")
-	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 20)
+	self:Message(350803, "purple")
+	self:PlaySound(350803, "alert")
+	--self:Bar(350803), 20)
 end
 
 function mod:Deathlink(args)
@@ -257,7 +258,7 @@ function mod:StygianDarkshieldRemoved(args)
 end
 
 -- Stage Three: Immediate Extermination
-function mod:ImmediateExterminationApplied(args)
+function mod:ImmediateExtermination(args)
 	self:SetStage(3)
 	self:Message("stages", "green", CL.stage:format(3), false)
 	self:PlaySound("stages", "long")
