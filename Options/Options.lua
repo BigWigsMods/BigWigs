@@ -44,6 +44,13 @@ local acOptions = {
 			type = "group",
 			name = "BigWigs",
 			args = {
+				introduction = {
+					type = "description",
+					name = L.introduction,
+					order = 12,
+					fontSize = "medium",
+					width = "full",
+				},
 				minimap = {
 					type = "toggle",
 					name = L.minimapIcon,
@@ -1319,12 +1326,6 @@ do
 			isPluginOpen = nil
 			configFrame = nil
 		end)
-
-		local introduction = AceGUI:Create("Label")
-		introduction:SetText(L.introduction)
-		introduction:SetFontObject(GameFontHighlight)
-		introduction:SetFullWidth(true)
-		bw:AddChild(introduction)
 
 		local anchors = AceGUI:Create("Button")
 		if self:InConfigureMode() then
