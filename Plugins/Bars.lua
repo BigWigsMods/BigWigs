@@ -616,6 +616,45 @@ do
 			end
 		end,
 		args = {
+			anchorsButton = {
+				type = "execute",
+				name = function()
+					local BL = BigWigsAPI:GetLocale("BigWigs")
+					if BigWigsOptions:InConfigureMode() then
+						return BL.toggleAnchorsBtnHide
+					else
+						return BL.toggleAnchorsBtnShow
+					end
+				end,
+				desc = function()
+					local BL = BigWigsAPI:GetLocale("BigWigs")
+					if BigWigsOptions:InConfigureMode() then
+						return BL.toggleAnchorsBtnHide_desc
+					else
+						return BL.toggleAnchorsBtnShow_desc
+					end
+				end,
+				func = function() 
+					if not BigWigs:IsEnabled() then BigWigs:Enable() end
+					if BigWigsOptions:InConfigureMode() then
+						plugin:SendMessage("BigWigs_StopConfigureMode")
+					else
+						plugin:SendMessage("BigWigs_StartConfigureMode")
+					end
+				end,
+				width = 1.5,
+				order = 0.2,
+			},
+			testButton = {
+				type = "execute",
+				name = BigWigsAPI:GetLocale("BigWigs").testBarsBtn,
+				desc = BigWigsAPI:GetLocale("BigWigs").testBarsBtn_desc,
+				func = function() 
+					BigWigs:Test()
+				end,
+				width = 1.5,
+				order = 0.4,
+			},
 			custom = {
 				type = "group",
 				name = L.general,

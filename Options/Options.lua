@@ -51,6 +51,43 @@ local acOptions = {
 					fontSize = "medium",
 					width = "full",
 				},
+				anchorsButton = {
+					type = "execute",
+					name = function()
+						if options:InConfigureMode() then
+							return L.toggleAnchorsBtnHide
+						else
+							return L.toggleAnchorsBtnShow
+						end
+					end,
+					desc = function()
+						if options:InConfigureMode() then
+							return L.toggleAnchorsBtnHide_desc
+						else
+							return L.toggleAnchorsBtnShow_desc
+						end
+					end,
+					func = function() 
+						if not BigWigs:IsEnabled() then BigWigs:Enable() end
+						if options:InConfigureMode() then
+							options:SendMessage("BigWigs_StopConfigureMode")
+						else
+							options:SendMessage("BigWigs_StartConfigureMode")
+						end
+					end,
+					width = 1.5,
+					order = 12.4,
+				},
+				testButton = {
+					type = "execute",
+					name = L.testBarsBtn,
+					desc = L.testBarsBtn_desc,
+					func = function() 
+						BigWigs:Test()
+					end,
+					width = 1.5,
+					order = 12.5,
+				},
 				minimap = {
 					type = "toggle",
 					name = L.minimapIcon,
@@ -1327,28 +1364,28 @@ do
 			configFrame = nil
 		end)
 
-		local anchors = AceGUI:Create("Button")
-		if self:InConfigureMode() then
-			anchors:SetText(L.toggleAnchorsBtnHide)
-			anchors:SetUserData("desc", L.toggleAnchorsBtnHide_desc)
-		else
-			anchors:SetText(L.toggleAnchorsBtnShow)
-			anchors:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
-		end
-		anchors:SetRelativeWidth(0.5)
-		anchors:SetCallback("OnClick", toggleAnchors)
-		anchors:SetCallback("OnEnter", onControlEnter)
-		anchors:SetCallback("OnLeave", onControlLeave)
-
-		local testing = AceGUI:Create("Button")
-		testing:SetText(L.testBarsBtn)
-		testing:SetUserData("desc", L.testBarsBtn_desc)
-		testing:SetRelativeWidth(0.5)
-		testing:SetCallback("OnClick", BigWigs.Test)
-		testing:SetCallback("OnEnter", onControlEnter)
-		testing:SetCallback("OnLeave", onControlLeave)
-
-		bw:AddChildren(anchors, testing)
+		--local anchors = AceGUI:Create("Button")
+		--if self:InConfigureMode() then
+		--	anchors:SetText(L.toggleAnchorsBtnHide)
+		--	anchors:SetUserData("desc", L.toggleAnchorsBtnHide_desc)
+		--else
+		--	anchors:SetText(L.toggleAnchorsBtnShow)
+		--	anchors:SetUserData("desc", L.toggleAnchorsBtnShow_desc)
+		--end
+		--anchors:SetRelativeWidth(0.5)
+		--anchors:SetCallback("OnClick", toggleAnchors)
+		--anchors:SetCallback("OnEnter", onControlEnter)
+		--anchors:SetCallback("OnLeave", onControlLeave)
+		--
+		--local testing = AceGUI:Create("Button")
+		--testing:SetText(L.testBarsBtn)
+		--testing:SetUserData("desc", L.testBarsBtn_desc)
+		--testing:SetRelativeWidth(0.5)
+		--testing:SetCallback("OnClick", BigWigs.Test)
+		--testing:SetCallback("OnEnter", onControlEnter)
+		--testing:SetCallback("OnLeave", onControlLeave)
+		--
+		--bw:AddChildren(anchors, testing)
 
 		local tabs = AceGUI:Create("TabGroup")
 		tabs:SetLayout("Flow")
