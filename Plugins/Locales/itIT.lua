@@ -39,9 +39,6 @@ L.blockMovies = "Blocca filmati già visti"
 L.blockMoviesDesc = "I filmati dei boss (ove presenti) verranno fatti vedere solo la prima volta che si attivano per visualizzarli; dalle volte successive questi video verranno cancellati automaticamente."
 L.blockSpellErrors = "Blocca i messaggi di errore degli incantesimi"
 L.blockSpellErrorsDesc = "Messaggi tipo \"Questo incantesimo non è ancora pronto\" che in genere vengono mostrati in alto nello schermo verranno bloccati."
-L.bossBlock = "Blocco Boss"
-L.bossBlockDesc = "Configura le varie opzioni che puoi bloccare durante gli scontri con i boss.\n\n"
---L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
 L.bossDefeatDurationPrint = "Sconfitto '%s' dopo %s."
 L.bossStatistics = "Statistiche del Boss"
 L.bossStatsDescription = "Tiene il conto di varie statistiche relative ad ogni singolo boss, tipo il numero di volte che è stato sconfitto, il numero di tentativi falliti (wipes), quanto è durato il combattimento, o l'uccisione più veloce. Queste statistiche possono essere viste nella finestra di configurazione di ogni singolo boss, ma saranno nascoste per quei boss di cui non c'é nessuna informazione statistica."
@@ -287,6 +284,10 @@ L.nameplateAlphaDesc = "Regola la trasparenza della barra dei nomi."
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
+
+L.bossBlock = "Blocco Boss"
+L.bossBlockDesc = "Configura le varie opzioni che puoi bloccare durante gli scontri con i boss.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 
 L.audio = "Audio"
 L.music = "Musica"

@@ -39,9 +39,6 @@ L.blockMovies = "Bloquear vídeos repetidos"
 L.blockMoviesDesc = "Los vídeos de un encuentro solo se visionarán una vez (los verás todos una vez) y luego serán bloqueados."
 L.blockSpellErrors = "Bloquear mensajes de hechizos fallidos"
 L.blockSpellErrorsDesc = "Mensajes como \"Ese hechizo no está listo todavía\" que normalmente se muestran arriba de la pantalla serán bloqueados."
-L.bossBlock = "Bloque de Jefe"
-L.bossBlockDesc = "Configura varias cosas que puedes bloquear durante un encuentro.\n\n"
---L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
 L.bossDefeatDurationPrint = "Derrotado '%s' después de %s."
 L.bossStatistics = "Estadísticas de Jefe"
 L.bossStatsDescription = "Registro de estadísticas de Jefes, como el número de veces que ha sido derrotado, cantidad de wipes, tiempo total que duró el combate, o la muerte más rápida. Estas estadísticas se pueden ver en la ventana de configuración de cada jefe, pero permanecerán ocultas en los jefes que no tengan todavía registro de estadísticas."
@@ -287,6 +284,10 @@ L.textDesc = "Ya sea para mostrar u ocultar el texto que se muestra en las barra
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
+
+L.bossBlock = "Bloque de Jefe"
+L.bossBlockDesc = "Configura varias cosas que puedes bloquear durante un encuentro.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 
 L.audio = "Audio"
 L.music = "Música"

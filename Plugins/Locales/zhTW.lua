@@ -35,9 +35,6 @@ L.blockMovies = "封鎖重覆的動畫"
 L.blockMoviesDesc = "首領戰鬥中的動畫只會播放一次（你每部都能看一次）然後就會被封鎖。"
 L.blockSpellErrors = "封鎖施法失敗訊息"
 L.blockSpellErrorsDesc = "如「法術還沒準備好」等顯示於畫面上方的訊息會被封鎖。"
-L.bossBlock = "首領戰訊息封鎖"
-L.bossBlockDesc = "設定首領戰鬥期間要封鎖的訊息。\n\n"
-L.bossBlockAudioDesc = "設定首領戰鬥期間要靜音的音效。\n\n"
 L.bossDefeatDurationPrint = "「%s」已被擊敗，耗時 %s。"
 L.bossStatistics = "首領統計"
 L.bossStatsDescription = "首領戰鬥相關的統計數據，如首領被擊殺數量、團滅次數、戰鬥持續時間和最快擊殺記錄。你可以在每個首領的頁面查看統計數據，沒有首領記錄的統計數據會被隱藏。"
@@ -274,6 +271,10 @@ L.nameplateAlphaDesc = "調整名條計時條的透明度。"
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
+
+L.bossBlock = "首領戰訊息封鎖"
+L.bossBlockDesc = "設定首領戰鬥期間要封鎖的訊息。\n\n"
+L.bossBlockAudioDesc = "設定首領戰鬥期間要靜音的音效。\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 
 L.audio = "音效"
 L.music = "音樂"

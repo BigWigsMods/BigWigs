@@ -152,7 +152,7 @@ L.breakFinished = "Перерыв закончен!"
 
 L.bossBlock = "Фильтр событий"
 L.bossBlockDesc = "Настройте вещи, которые вы хотите скрыть в течении боя с боссом.\n\n"
---L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 L.movieBlocked = "Вы видели этот ролик, пропускаем его."
 L.blockEmotes = "Скрыть эмоции посередине экрана"
 L.blockEmotesDesc = "Некоторые боссы показывают текст для определенных способностей. Эти сообщения и слишком длинные и избыточные. Мы стараемся предоставлять более подходящие сообщения, которые не вмешиваются в ваш геймплей и не говорят вам что конкретно вы должны делать.\n\nОбратите внимание: Эмоции босса всегда будут доступны в чате, если вы захотите их прочитать."

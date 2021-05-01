@@ -152,7 +152,7 @@ L.breakFinished = "El descanso ha terminado!"
 
 L.bossBlock = "Bloque de Jefe"
 L.bossBlockDesc = "Configura las diferentes cosas que puedes bloquear durante un encuentro con el jefe.\n\n"
-L.bossBlockAudioDesc = "Configura qué sonido silenciar durante un encuentro con un jefe.\n\n"
+L.bossBlockAudioDesc = "Configura qué sonido silenciar durante un encuentro con un jefe.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 L.movieBlocked = "Ya has visto esta cinemática antes, saltándola."
 L.blockEmotes = "Bloquear los emotes de la pantalla central"
 L.blockEmotesDesc = "Algunos jefes muestran emotes para ciertas habilidades, estos mensajes son demasiado largos y descriptivos. Intentamos acortarlos, y ajustarlos para que no interfieran con el juego, y que no te digan específicamente qué tienes que hacer.\n\nTen en cuenta: Los emotes de Jefe seguirán siendo visibles en el chat si deseas leerlos."

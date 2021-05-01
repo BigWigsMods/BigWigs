@@ -39,9 +39,6 @@ L.blockMovies = "屏蔽重播电影"
 L.blockMoviesDesc = "首领战斗电影将只允许播放一次（所以可以观看每一个），下次重播将被屏蔽掉。"
 L.blockSpellErrors = "屏蔽法术失败信息"
 L.blockSpellErrorsDesc = "通常在屏幕顶部显示的信息类似于“法术还没有准备好”将被屏蔽掉。"
-L.bossBlock = "首领屏蔽"
-L.bossBlockDesc = "配置在首领战斗中可以多项屏蔽。\n\n"
-L.bossBlockAudioDesc = "配置在首领战斗中哪些音效将被静音。\n\n"
 L.bossDefeatDurationPrint = "“%s”已被击杀，用时%s。"
 L.bossStatistics = "首领统计"
 L.bossStatsDescription = "首领战斗相关的统计数据，如首领被击杀数量、团灭次数、战斗持续时间和最快的首领击杀记录。可以在配置屏幕上查看每个首领的统计数据，没有首领记录的统计数据会被隐藏。"
@@ -287,6 +284,10 @@ L.nameplateAlphaDesc = "控制姓名板条的透明度。"
 -----------------------------------------------------------------------
 -- BossBlock.lua
 --
+
+L.bossBlock = "首领屏蔽"
+L.bossBlockDesc = "配置在首领战斗中可以多项屏蔽。\n\n"
+L.bossBlockAudioDesc = "配置在首领战斗中哪些音效将被静音。\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 
 L.audio = "语音"
 L.music = "音乐"

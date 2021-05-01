@@ -151,7 +151,7 @@ L.breakFinished = "Intervalo acabou!"
 
 L.bossBlock = "Bloqueio de Chefe"
 L.bossBlockDesc = "Configura diversas coisas que você pode bloquear durante um encontro com um chefe.\n\n"
---L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 L.movieBlocked = "Você já viu esta animação anteriormente, pulando ela."
 L.blockEmotes = "Bloqueia frases no meio da tela"
 L.blockEmotesDesc = "Alguns chefes usam frases de efeito para certas habilidades, essas mensagens são muito longas e descritivas. Nós tentamos produzir mensagens menores, mais apropriadas que não interferem com sua jogabilidade, e não te dizem especificamente o que fazer.\n\nObservação: Frases de chefes ainda serão vistas no bate-papo se quiser lê-las."
