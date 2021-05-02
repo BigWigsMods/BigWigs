@@ -615,6 +615,7 @@ do
 				BigWigsEmphasizeAnchor:RefixPosition()
 			end
 		end,
+		order = 1,
 		args = {
 			anchorsButton = {
 				type = "execute",

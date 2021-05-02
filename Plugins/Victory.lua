@@ -40,6 +40,9 @@ plugin.pluginOptions = {
 			end
 		end
 	end,
+	order = 7,
+	icon = 236661,
+	iconCoords = {0.07, 0.93, 0.07, 0.93},
 	args = {
 		heading = {
 			type = "description",

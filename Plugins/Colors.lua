@@ -100,6 +100,7 @@ local colorOptions = {
 	get = get,
 	set = set,
 	inline = true,
+	order = 3,
 	args = {
 		anchorsButton = {
 			type = "execute",

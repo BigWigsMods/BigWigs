@@ -244,7 +244,7 @@ do
 		f:UnregisterEvent("ADDON_LOADED")
 
 		acOptions.args.general.args.profileOptions = adbo:GetOptionsTable(BigWigs.db)
-		acOptions.args.general.args.profileOptions.order = 1
+		acOptions.args.general.args.profileOptions.order = 100
 		lds:EnhanceOptions(acOptions.args.general.args.profileOptions, BigWigs.db)
 
 		acr:RegisterOptionsTable("BigWigs", getOptions, true)

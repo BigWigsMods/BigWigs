@@ -269,6 +269,7 @@ plugin.pluginOptions = {
 		plugin.db.profile[info[#info]] = value
 		updateProfile()
 	end,
+	order = 2,
 	args = {
 		anchorsButton = {
 			type = "execute",

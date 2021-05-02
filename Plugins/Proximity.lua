@@ -1092,6 +1092,7 @@ do
 	plugin.pluginOptions = {
 		name = L.proximity_name,
 		type = "group",
+		order = 13,
 		get = function(info)
 			local key = info[#info]
 			if key == "font" then

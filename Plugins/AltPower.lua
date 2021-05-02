@@ -126,6 +126,7 @@ do
 		name = L.altPowerTitle,
 		type = "group",
 		childGroups = "tab",
+		order = 14,
 		get = function(info)
 			return db[info[#info]]
 		end,
