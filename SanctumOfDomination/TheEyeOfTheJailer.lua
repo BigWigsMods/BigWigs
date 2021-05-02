@@ -21,7 +21,11 @@ local nextStageWarning = 78
 
 local L = mod:GetLocale()
 if L then
-
+	L.chains = "Chains" -- Short for Dragging Chains
+	L.pool = "Pool" -- Spreading Misery
+	L.pools = "Pools" -- Spreading Misery (multiple)
+	L.death_gaze = "Death Gaze" -- Short for Titanic Death Gaze
+	L.corruption = mod:SpellName(172) -- Corruption // Short for Slothful Corruption
 end
 
 --------------------------------------------------------------------------------
@@ -41,12 +45,12 @@ function mod:GetOptions()
 		348074, -- Assailing Lance
 		-- Stage Two: Double Vision
 		349028, -- Titanic Death Gaze
-		{350847, "SAY", "SAY_COUNTDOWN"}, -- Desolation Beam
+		{350847, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Desolation Beam
 		350028, -- Soul Shatter
 		{351825, "TANK"}, -- Shared Suffering
 		350713, -- Slothful Corruption
 		slothfulCorruptionMarker,
-		{351827, "SAY", "SAY_COUNTDOWN"}, -- Spreading Misery
+		{351827, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Spreading Misery
 		-- Stage Three: Immediate Extermination
 		348974, -- Immediate Extermination
 		350764, -- Annihilating Glare
@@ -55,6 +59,13 @@ function mod:GetOptions()
 		[350803] = mod:SpellName(-22896), -- Stage One: His Gaze Upon You
 		[349028] = mod:SpellName(-22897), -- Stage Two: Double Vision
 		[348974] = mod:SpellName(-23375), -- Stage Three: Immediate Extermination
+	},{
+		[349979] = L.chains, -- Dragging Chains (Chains)
+		[349028] = L.death_gaze, -- Titanic Death Gaze (Death Gaze)
+		[350847] = CL.beam, -- Glacial Wrath (Spikes)
+		[350713] = L.corruption, -- Slothful Corruption (Corruption)
+		[351827] = L.pools, -- Spreading Misery (Pools)
+		[350764] = CL.laser, -- Annihilating Glare (Laser)
 	}
 end
 
@@ -71,6 +82,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "TitanicDeathGaze", 349028)
 	self:Log("SPELL_CAST_START", "DesolationBeam", 350847)
 	self:Log("SPELL_CAST_SUCCESS", "SoulShatter", 350028)
+	self:Log("SPELL_AURA_APPLIED", "ShatteredSoulApplied", 354004, 350034)
 	self:Log("SPELL_AURA_APPLIED", "SharedSufferingApplied", 351825)
 	self:Log("SPELL_AURA_APPLIED", "SlothfulCorruptionApplied", 350713)
 	self:Log("SPELL_AURA_REMOVED", "SlothfulCorruptionRemoved", 350713)
@@ -132,10 +144,10 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:Yell(args.spellId, L.chains)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, L.chains)
 		self:CustomIcon(draggingChainsMarker, args.destName, count)
 	end
 
@@ -144,16 +156,18 @@ do
 	end
 end
 
-local function printTarget(self, name, guid)
-	if self:Me(guid) then
-		self:PersonalMessage(348074)
-		self:PlaySound(348074, "alarm")
+do
+	local function printTarget(self, name, guid)
+		if self:Me(guid) then
+			self:PersonalMessage(348074)
+			self:PlaySound(348074, "alarm")
+		end
 	end
-end
 
-function mod:AssailingLance(args)
-	self:GetUnitTarget(printTarget, 0.1, args.sourceGUID)
-	--self:Bar(args.spellId, 42)
+	function mod:AssailingLance(args)
+		self:GetUnitTarget(printTarget, 0.1, args.sourceGUID)
+		--self:Bar(args.spellId, 42)
+	end
 end
 
 -- Stage Two: Double Vision
@@ -164,30 +178,39 @@ function mod:StygianEjection(args)
 end
 
 function mod:TitanicDeathGaze(args)
-	self:Message(args.spellId, "orange")
+	self:Message(args.spellId, "orange", L.death_gaze)
 	self:PlaySound(args.spellId, "alarm")
-	--self:Bar(args.spellId, 42)
+	--self:Bar(args.spellId, 42, L.death_gaze)
 end
 
-local function printTarget(self, name, guid)
-	if self:Me(guid) then
-		self:Say(350847)
-		self:SayCountdown(350847, 6)
-		self:PlaySound(350847, "warning")
+do
+	local function printTarget(self, name, guid)
+		if self:Me(guid) then
+			self:Say(350847, CL.beam)
+			self:SayCountdown(350847, 6)
+			self:PlaySound(350847, "warning")
+		end
+		self:TargetMessage(350847, "red", name, CL.beam)
 	end
-	self:TargetMessage(350847, "red", name)
-end
 
-function mod:DesolationBeam(args)
-	--self:Bar(args.spellId, 42)
-	self:CancelSayCountdown(350847) -- Cancelling incase you can vanish/fd/invis the cast and it re-casts
-	self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
+	function mod:DesolationBeam(args)
+		--self:Bar(args.spellId, 42, CL.beam)
+		self:CancelSayCountdown(350847) -- Cancelling incase you can vanish/fd/invis the cast and it re-casts
+		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
+	end
 end
 
 function mod:SoulShatter(args) -- XXX _SUCCESS on targets?
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	--self:Bar(args.spellId, 20)
+end
+
+function mod:ShatteredSoulApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(350028)
+		self:PlaySound(350028, "warning")
+	end
 end
 
 function mod:SharedSufferingApplied(args)
@@ -215,7 +238,7 @@ do
 			self:PlaySound(args.spellId, "alarm")
 			soundPlayed = true
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, L.corruption)
 		self:CustomIcon(slothfulCorruptionMarker, args.destName, icon)
 	end
 
@@ -232,16 +255,16 @@ do
 		if t-prev > 5 then
 			prev = t
 			playerList = {}
-			--self:Bar(args.spellId, 6.3)
+			--self:Bar(args.spellId, 6.3, L.pools)
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:Say(args.spellId, L.pool)
 			self:SayCountdown(args.spellId, 5)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList)
+		self:NewTargetsMessage(args.spellId, "yellow", playerList, L.pool)
 	end
 
 	function mod:SpreadingMiseryRemoved(args)
@@ -265,8 +288,8 @@ function mod:ImmediateExtermination(args)
 end
 
 function mod:AnnihilatingGlare(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow", CL.laser)
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 5)
-	--self:Bar(args.spellId, 20)
+	self:CastBar(args.spellId, 5, CL.laser)
+	--self:Bar(args.spellId, 20, CL.laser)
 end
