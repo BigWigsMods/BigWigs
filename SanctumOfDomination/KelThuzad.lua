@@ -22,7 +22,9 @@ local tankList = {}
 
 local L = mod:GetLocale()
 if L then
-
+	L.spikes = "Spikes" -- Short for Glacial Spikes
+	L.silence = mod:SpellName(226452) -- Silence
+	L.miasma = "Miasma" -- Short for Necrotic Miasma
 end
 
 --------------------------------------------------------------------------------
@@ -38,9 +40,9 @@ function mod:GetOptions()
 		{355389, "SAY"}, -- Corpse Detonation
 		348071, -- Soul Fracture // Tank hit but spawns Soul Shards for DPS
 		{348978, "TANK"}, -- Soul Exhaustion
-		346459, -- Glacial Wrath // XXX Rename: Spikes?
+		346459, -- Glacial Wrath
 		{346530, "ME_ONLY"}, -- Shatter
-		{347292, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Oblivion's Echo // XXX Rename: Silence?
+		{347292, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Oblivion's Echo
 		{348756, "SAY", "SAY_COUNTDOWN", "FLASH", "ME_ONLY_EMPHASIZE"}, -- Frost Blast
 		-- Stage Two: The Phylactery Opens
 		354289, -- Necrotic Miasma
@@ -57,7 +59,10 @@ function mod:GetOptions()
 		[354289] = mod:SpellName(-22885), -- Stage Two: The Phylactery Opens
 		[354639] = mod:SpellName(-23201) -- Stage Three: The Final Stand
 	},{
-		[355389] = CL.fixate, -- Eyes on Target (Fixate)
+		[355389] = CL.fixate, -- Corpse Detonation (Fixate)
+		[346459] = L.spikes, -- Glacial Wrath (Spikes)
+		[347292] = L.silence, -- Oblivion's Echo (Silence)
+		[354289] = L.miasma, -- Necrotic Miasma (Miasma)
 	}
 end
 
@@ -148,6 +153,7 @@ function mod:SoulExhaustionApplied(args)
 		elseif self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "alarm")
+			self:TargetBar(args.spellId, 60, args.destName)
 		end
 	end
 end
@@ -156,17 +162,18 @@ function mod:SoulExhaustionRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
+		self:StopBar(args.spellId, args.destName)
 	end
 end
 
 function mod:GlacialWrath(args)
-	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "orange", CL.casting:format(L.spikes))
 	self:PlaySound(args.spellId, "alert")
 end
 
 do
 	local playerName = mod:UnitName("player")
-	local stacks = nil
+	local stacks = 1
 	local scheduled = nil
 
 	local function ShatterStackMessage()
@@ -198,11 +205,11 @@ do
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:Say(args.spellId, L.silence)
 			self:SayCountdown(args.spellId, 6)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList)
+		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, L.silence)
 	end
 end
 
@@ -233,7 +240,7 @@ function mod:NecroticMiasmaApplied(args) -- Tune stack numbers
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 2 == 0 and amount > 7 then -- 7+ every 2
-			self:NewStackMessage(args.spellId, "blue", args.destName, amount, 10, args.spellId)
+			self:NewStackMessage(args.spellId, "blue", args.destName, amount, 10, L.miasma)
 			if amount > 9 then
 				self:PlaySound(args.spellId, "alert")
 			end
