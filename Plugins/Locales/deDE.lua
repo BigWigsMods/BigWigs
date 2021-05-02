@@ -152,7 +152,7 @@ L.breakFinished = "Die Pause ist vorbei!"
 
 L.bossBlock = "Boss Block"
 L.bossBlockDesc = "Legt fest, was während einer Bossbegegnung blockiert wird.\n\n"
-L.bossBlockAudioDesc = "Konfiguriert, welche Sounds während Bossbegegnungen stummgeschaltet werden.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
+L.bossBlockAudioDesc = "Konfiguriert, welche Sounds während Bossbegegnungen stummgeschaltet werden.\n\nJede hier |cff808080ausgegraute|r Option wurde in den WoW Soundeinstellungen deaktiviert.\n\n"
 L.movieBlocked = "Da Du diese Zwischensequenz bereits gesehen hast, wird sie übersprungen."
 L.blockEmotes = "Hinweise in der Bildschirmmitte blockieren"
 L.blockEmotesDesc = "Einige Bosse zeigen sehr lange und ungenaue Hinweise für spezielle Fähigkeiten an. BigWigs versucht kürzere und passendere Mitteilungen zu erstellen, die den Spielfluss weniger beeinflussen.\n\nHinweis: Bossmitteilungen werden weiterhin im Chat sichtbar sein und können dort gelesen werden."
