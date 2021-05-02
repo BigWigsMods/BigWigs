@@ -84,7 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "NecroticDestruction", 352293)
 	self:Log("SPELL_CAST_START", "FreezingBlast", 352379)
 	self:Log("SPELL_CAST_START", "GlacialWinds", 355055)
-	self:Log("SPELL_CAST_START", "NecroticObliteration", 355055)
+	self:Log("SPELL_CAST_START", "NecroticObliteration", 352355)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 354198, 354639) -- Howling Blizzard, Deep Freeze
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 354198, 354639)
