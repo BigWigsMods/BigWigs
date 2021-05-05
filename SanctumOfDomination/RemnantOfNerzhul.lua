@@ -180,6 +180,11 @@ function mod:GraspOfMalice(args)
 	--self:Bar(353332, 42)
 end
 
+function mod:Shatter(args)
+	self:Message(args.spellId, "cyan")
+	self:PlaySound(args.spellId, "long")
+end
+
 do
 	local prev = 0
 	function mod:GroundDamage(args)
