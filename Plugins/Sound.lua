@@ -63,7 +63,7 @@ plugin.pluginOptions = {
 		PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
 	end,
 	order = 4,
-	icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\unmute",
+	--icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\unmute",
 	args = {
 		heading = {
 			type = "description",
