@@ -4,7 +4,7 @@
 if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("The Eye of the Jailer", 2450, 2442)
 if not mod then return end
-mod:RegisterEnableMob(179128) -- Eye of the Jailer XXX re-check on ptr
+mod:RegisterEnableMob(179128, 175725, 178946, 178863, 177832) -- Eye of the Jailer XXX re-check on ptr
 mod:SetEncounterID(2433)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
