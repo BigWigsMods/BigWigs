@@ -95,7 +95,9 @@ do
 			end
 		end
 
-		local items	= {
+		local items = {
+			[1] = 90175, -- Gin-Ji Knife Set
+			[3] = 42732, -- Everfrost Razor
 			[5] = 37727, -- Ruby Acorn
 			[8] = 63427, -- Worgsaw
 			[11] = 33278, -- Burning Torch
