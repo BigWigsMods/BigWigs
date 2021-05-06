@@ -23,6 +23,7 @@ local tankList = {}
 local L = mod:GetLocale()
 if L then
 	L.spikes = "Spikes" -- Short for Glacial Spikes
+	L.spike = "Spike"
 	L.silence = mod:SpellName(226452) -- Silence
 	L.miasma = "Miasma" -- Short for Necrotic Miasma
 end
@@ -31,6 +32,8 @@ end
 -- Initialization
 --
 
+
+local glacialWrathMarker = mod:AddMarkerOption(false, "player", 1, 346459, 1, 2, 3, 4, 5) -- Malevolence
 function mod:GetOptions()
 	return {
 		"stages",
@@ -40,7 +43,8 @@ function mod:GetOptions()
 		{355389, "SAY"}, -- Corpse Detonation
 		348071, -- Soul Fracture // Tank hit but spawns Soul Shards for DPS
 		{348978, "TANK"}, -- Soul Exhaustion
-		346459, -- Glacial Wrath
+		{346459, "SAY", "SAY_COUNTDOWN"}, -- Glacial Wrath
+		glacialWrathMarker,
 		{346530, "ME_ONLY"}, -- Shatter
 		{347292, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Oblivion's Echo
 		{348756, "SAY", "SAY_COUNTDOWN", "FLASH", "ME_ONLY_EMPHASIZE"}, -- Frost Blast
@@ -75,6 +79,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SoulExhaustionApplied", 348978)
 	self:Log("SPELL_AURA_REMOVED", "SoulExhaustionRemoved", 348978)
 	self:Log("SPELL_CAST_START", "GlacialWrath", 346459)
+	self:Log("SPELL_AURA_APPLIED", "GlacialWrathApplied", 353808)
+	self:Log("SPELL_AURA_REMOVED", "GlacialWrathRemoved", 353808)
 	self:Log("SPELL_AURA_APPLIED", "ShatterApplied", 346530)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShatterApplied", 346530)
 	self:Log("SPELL_AURA_APPLIED", "OblivionsEchoApplied", 347292)
@@ -170,6 +176,37 @@ function mod:GlacialWrath(args)
 	self:Message(args.spellId, "orange", CL.casting:format(L.spikes))
 	self:PlaySound(args.spellId, "alert")
 end
+
+do
+	local playerList = {}
+	local prev = 0
+	function mod:GlacialWrathApplied(args)
+		local t = args.time -- new set of debuffs
+		if t-prev > 5 then
+			prev = t
+			playerList = {}
+		end
+		local count = #playerList+1
+		local icon = count
+		playerList[count] = args.destName
+		playerList[args.destName] = icon -- Set raid marker
+		if self:Me(args.destGUID) then
+			self:Say(346459, CL.count_rticon:format(L.spike, count, count))
+			self:SayCountdown(346459, 6, count)
+			self:PlaySound(346459, "warning")
+		end
+		self:NewTargetsMessage(346459, "orange", playerList, nil, L.spike)
+		self:CustomIcon(glacialWrathMarker, args.destName, icon)
+	end
+
+	function mod:GlacialWrathRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(346459)
+		end
+		self:CustomIcon(glacialWrathMarker, args.destName)
+	end
+end
+
 
 do
 	local playerName = mod:UnitName("player")
