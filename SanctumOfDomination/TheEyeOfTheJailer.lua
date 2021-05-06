@@ -4,7 +4,7 @@
 if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("The Eye of the Jailer", 2450, 2442)
 if not mod then return end
-mod:RegisterEnableMob(179128, 175725, 178946, 178863, 177832) -- Eye of the Jailer XXX re-check on ptr
+mod:RegisterEnableMob(175725)
 mod:SetEncounterID(2433)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -53,7 +53,7 @@ function mod:GetOptions()
 		{351827, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Spreading Misery
 		-- Stage Three: Immediate Extermination
 		348974, -- Immediate Extermination
-		350764, -- Annihilating Glare
+		351413, -- Annihilating Glare
 	},{
 		["stages"] = "general",
 		[350803] = mod:SpellName(-22896), -- Stage One: His Gaze Upon You
@@ -62,10 +62,10 @@ function mod:GetOptions()
 	},{
 		[349979] = L.chains, -- Dragging Chains (Chains)
 		[349028] = L.death_gaze, -- Titanic Death Gaze (Death Gaze)
-		[350847] = CL.beam, -- Glacial Wrath (Spikes)
+		[350847] = CL.beam, -- Desolation Beam (Beam)
 		[350713] = L.corruption, -- Slothful Corruption (Corruption)
 		[351827] = L.pools, -- Spreading Misery (Pools)
-		[350764] = CL.laser, -- Annihilating Glare (Laser)
+		[351413] = CL.laser, -- Annihilating Glare (Laser)
 	}
 end
 
@@ -80,7 +80,8 @@ function mod:OnBossEnable()
 	-- Stage Two: Double Vision
 	self:Log("SPELL_CAST_SUCCESS", "StygianEjection", 350066)
 	self:Log("SPELL_CAST_SUCCESS", "TitanicDeathGaze", 349028)
-	self:Log("SPELL_CAST_START", "DesolationBeam", 350847)
+	self:Log("SPELL_CAST_START", "DesolationBeamStart", 350847)
+	self:Log("SPELL_CAST_SUCCESS", "DesolationBeam", 350847)
 	self:Log("SPELL_CAST_SUCCESS", "SoulShatter", 350028)
 	self:Log("SPELL_AURA_APPLIED", "ShatteredSoulApplied", 354004, 350034)
 	self:Log("SPELL_AURA_APPLIED", "SharedSufferingApplied", 351825)
@@ -92,7 +93,7 @@ function mod:OnBossEnable()
 
 	-- Stage Three: Immediate Extermination
 	self:Log("SPELL_CAST_START", "ImmediateExtermination", 348974)
-	self:Log("SPELL_CAST_START", "AnnihilatingGlare", 350764)
+	self:Log("SPELL_CAST_START", "AnnihilatingGlare", 351413)
 end
 
 function mod:OnEngage()
@@ -144,7 +145,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Yell(args.spellId, L.chains)
+			--self:Yell(args.spellId, L.chains)
 			self:PlaySound(args.spellId, "warning")
 		end
 		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, L.chains)
@@ -193,11 +194,14 @@ do
 		self:TargetMessage(350847, "red", name, CL.beam)
 	end
 
-	function mod:DesolationBeam(args)
-		--self:Bar(args.spellId, 42, CL.beam)
+	function mod:DesolationBeamStart(args)
 		self:CancelSayCountdown(350847) -- Cancelling incase you can vanish/fd/invis the cast and it re-casts
 		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
 	end
+end
+
+function mod:DesolationBeam(args)
+	self:Bar(args.spellId, 11, CL.beam)
 end
 
 function mod:SoulShatter(args) -- XXX _SUCCESS on targets?
@@ -264,7 +268,7 @@ do
 			self:SayCountdown(args.spellId, 5)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, L.pool)
+		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, L.pool)
 	end
 
 	function mod:SpreadingMiseryRemoved(args)
@@ -290,6 +294,6 @@ end
 function mod:AnnihilatingGlare(args)
 	self:Message(args.spellId, "yellow", CL.laser)
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 5, CL.laser)
-	--self:Bar(args.spellId, 20, CL.laser)
+	self:Bar(args.spellId, 112, CL.laser)
+	self:CastBar(args.spellId, 25, CL.laser) -- 5s cast + 20s channel
 end
