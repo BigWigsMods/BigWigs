@@ -287,7 +287,7 @@ L.nameplateAlphaDesc = "控制姓名板条的透明度。"
 
 L.bossBlock = "首领屏蔽"
 L.bossBlockDesc = "配置在首领战斗中可以多项屏蔽。\n\n"
-L.bossBlockAudioDesc = "配置在首领战斗中哪些音效将被静音。\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
+L.bossBlockAudioDesc = "配置在首领战斗中哪些音效将被静音。\n\n魔兽世界声音选项中已禁用的任意选项在这里将显示为|cff808080灰色|r。\n\n"
 
 L.audio = "语音"
 L.music = "音乐"
