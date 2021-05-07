@@ -274,7 +274,7 @@ L.nameplateAlphaDesc = "調整名條計時條的透明度。"
 
 L.bossBlock = "首領戰訊息封鎖"
 L.bossBlockDesc = "設定首領戰鬥期間要封鎖的訊息。\n\n"
-L.bossBlockAudioDesc = "設定首領戰鬥期間要靜音的音效。\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
+L.bossBlockAudioDesc = "設定首領戰鬥期間要靜音的音效。\n\n如果你已經在系統音效設定裡禁用了某些選項，它們將顯示為|cff808080灰色|r。"
 
 L.audio = "音效"
 L.music = "音樂"
