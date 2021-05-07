@@ -38,7 +38,7 @@ function mod:GetOptions()
 		{353603, "TANK"}, -- Diviner's Probe
 		353931, -- Twist Fate
 		350355, -- Fated Conjunction
-		350568, -- Call of Eternity (Bombs)
+		{350568, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Call of Eternity (Bombs)
 		-- Stage Two: Defying Destiny
 		353149, -- Realignment: Clockwise
 		353150, -- Realignment: Counterclockwise
@@ -60,7 +60,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HeroicDestiny", 351680)
 	self:Log("SPELL_AURA_APPLIED", "HeroicDestinyApplied", 351680)
 	self:Log("SPELL_AURA_REMOVED", "HeroicDestinyApplied", 351680)
-	self:Log("SPELL_AURA_APPLIED", " BurdenOfDestinyApplied", 353432)
+	self:Log("SPELL_AURA_APPLIED", "BurdenOfDestinyApplied", 353432)
 	self:Log("SPELL_CAST_START", "DivinersProbe", 353603)
 	self:Log("SPELL_AURA_APPLIED", "TwistFateApplied", 353931)
 	self:Log("SPELL_CAST_SUCCESS", "FatedConjunction", 350355)
