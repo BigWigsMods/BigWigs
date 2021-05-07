@@ -33,6 +33,7 @@ function mod:GetOptions()
 		350073, -- Torment
 		350388, -- Thermal Lament
 		{350469, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Malevolence (Bombs)
+		malevolenceMarker,
 		350489, -- Lingering Malevolence
 		{349889, "SAY", "SAY_COUNTDOWN"}, -- Blight
 		349890, -- Suffering
@@ -105,21 +106,20 @@ do
 
 	function mod:MalevolenceApplied(args)
 		local count = #playerList+1
-		local icon = count+3
 		playerList[count] = args.destName
-		playerList[args.destName] = icon -- Set raid marker
+		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			local _, _, _, expires = self:UnitDebuff("player", args.spellId)
 			if expires and expires > 0 then
 				local timeLeft = expires - GetTime()
 				self:TargetBar(args.spellId, timeLeft, args.destName)
 				self:Say(args.spellId, CL.bomb)
-				self:SayCountdown(args.spellId, 6)
+				self:SayCountdown(args.spellId, timeLeft)
 				self:PlaySound(args.spellId, "warning")
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.bomb)
-		self:CustomIcon(malevolenceMarker, args.destName, icon)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 100 or 2, CL.bomb)
+		self:CustomIcon(malevolenceMarker, args.destName, count)
 	end
 
 	function mod:MalevolenceRemoved(args)

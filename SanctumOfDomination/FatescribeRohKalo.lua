@@ -5,7 +5,7 @@
 if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Fatescribe Roh-Kalo", 2450, 2447)
 if not mod then return end
-mod:RegisterEnableMob(175730, 178235, 177940, 179390) -- Fatescribe Roh-Kalo x4
+mod:RegisterEnableMob(175730)
 mod:SetEncounterID(2431)
 mod:SetRespawnTime(30)
 --mod:SetStage(1)
@@ -32,12 +32,13 @@ end
 local callOfEternityMarker = mod:AddMarkerOption(false, "player", 1, 350568, 1, 2, 3, 4, 5) -- Call of Eternity
 function mod:GetOptions()
 	return {
+		"berserk",
 		-- Stage One: Scrying Fate
 		{351680, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Heroic Destiny // XXX [Tank] Bomb?
 		353432, -- Burden of Destiny (Fixate)
 		{353603, "TANK"}, -- Diviner's Probe
 		353931, -- Twist Fate
-		350355, -- Fated Conjunction (Beams)
+		350421, -- Fated Conjunction (Beams)
 		{350568, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Call of Eternity (Bombs)
 		-- Stage Two: Defying Destiny
 		353149, -- Realignment: Clockwise
@@ -51,7 +52,7 @@ function mod:GetOptions()
 		[353195] = mod:SpellName(-23486), -- Stage Three: Fated Terminus
 	},{
 		[353432] = CL.fixate, -- Burden of Destiny (Fixate)
-		[350355] = CL.beams, -- Fated Conjunction (Beams)
+		[350421] = CL.beams, -- Fated Conjunction (Beams)
 		[350568] = CL.bombs, -- Call of Eternity (Bombs)
 	}
 end
@@ -64,7 +65,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BurdenOfDestinyApplied", 353432)
 	self:Log("SPELL_CAST_START", "DivinersProbe", 353603)
 	self:Log("SPELL_AURA_APPLIED", "TwistFateApplied", 353931)
-	self:Log("SPELL_CAST_SUCCESS", "FatedConjunction", 350355)
+	self:Log("SPELL_CAST_SUCCESS", "FatedConjunction", 350421)
 	self:Log("SPELL_AURA_APPLIED", "CallOfEternityApplied", 350568, 356065) -- Heroic, Normal
 	self:Log("SPELL_AURA_REMOVED", "CallOfEternityRemoved", 350568, 356065)
 
@@ -78,6 +79,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Berserk(600)
 end
 
 --------------------------------------------------------------------------------
@@ -134,6 +136,7 @@ end
 function mod:FatedConjunction(args)
 	self:Message(args.spellId, "yellow", CL.beams)
 	self:PlaySound(args.spellId, "alert")
+	self:Bar(args.spellId, 8.5, "Beams explode")
 	--self:Bar(args.spellId, 20, CL.beams)
 end
 
@@ -145,7 +148,8 @@ do
 		if t-prev > 5 then
 			prev = t
 			playerList = {}
-			--self:Bar(args.spellId, 20, CL.bombs)
+			self:Bar(350568, 8, "Bombs Explode")
+			self:Bar(350568, 39, CL.bombs)
 		end
 		local count = #playerList+1
 		local icon = count

@@ -5,11 +5,7 @@
 if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Soulrender Dormazain", 2450, 2445)
 if not mod then return end
-mod:RegisterEnableMob(
-	175727, 178921, -- Soulrender Dormazain
-	179177, -- Mawsworn Overlord
-	175728, 178922 -- Garrosh Hellscream
-)
+mod:RegisterEnableMob(175727, 175728) -- Soulrender Dormazain, Garrosh Hellscream
 mod:SetEncounterID(2434)
 mod:SetRespawnTime(30)
 --mod:SetStage(1)
@@ -40,6 +36,7 @@ function mod:GetOptions()
 		350217, -- Torment
 		349985, -- Encore of Torment
 		{350647, "SAY"}, -- Brand of Torment
+		brandOfTormentMarker,
 		{350422, "TANK"}, -- Ruinblade
 		351779, -- Agonizing Spike
 		350650, -- Defiance
@@ -56,6 +53,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Torment", 350217)
 	self:Log("SPELL_CAST_SUCCESS", "EncoreOfTorment", 349985)
 	self:Log("SPELL_AURA_APPLIED", "BrandOfTormentApplied", 350647)
+	self:Log("SPELL_AURA_REMOVED", "BrandOfTormentRemoved", 350647)
 	self:Log("SPELL_AURA_APPLIED", "RuinbladeApplied", 350422)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RuinbladeApplied", 350422)
 	self:Log("SPELL_CAST_START", "AgonizingSpike", 351779)
@@ -111,9 +109,17 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:PlaySound(args.spellId, "warning")
+			self:TargetBar(args.spellId, 16, args.destName)
 		end
 		self:NewTargetsMessage(args.spellId, "orange", playerList)
 		self:CustomIcon(brandOfTormentMarker, args.destName, count)
+	end
+
+	function mod:BrandOfTormentRemoved(args)
+		if self:Me(args.destGUID) then
+			self:StopBar(args.spellId, args.destName)
+		end
+		self:CustomIcon(brandOfTormentMarker, args.destName)
 	end
 end
 
@@ -125,7 +131,7 @@ function mod:RuinbladeApplied(args)
 end
 
 function mod:AgonizingSpike(args)
-	local canDo, ready = self:Interrupter()
+	local canDo, ready = self:Interrupter(args.sourceGUID)
 	if canDo then
 		self:Message(args.spellId, "yellow")
 		if ready then
