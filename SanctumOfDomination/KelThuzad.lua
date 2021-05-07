@@ -16,7 +16,7 @@ mod:SetStage(1)
 
 local tankList = {}
 local mobCollector = {}
-local soulReaverMarks = {}
+local glacialSpikeMarks = {}
 local mindControlled = false
 
 --------------------------------------------------------------------------------
@@ -121,7 +121,7 @@ end
 
 function mod:OnEngage()
 	mobCollector = {}
-	soulReaverMarks = {}
+	glacialSpikeMarks = {}
 	mindControlled = false
 	self:CDBar(347292, 11, L.silence)
 	self:CDBar(346459, 19, L.spikes)
@@ -200,7 +200,7 @@ function mod:GlacialWrath(args)
 	self:Bar(args.spellId, 45, L.spikes)
 
 	mobCollector = {}
-	soulReaverMarks = {}
+	glacialSpikeMarks = {}
 	if self:GetOption(glacialWrathMarker) then
 		self:RegisterTargetEvents("GlacialSpikeMarker")
 		self:ScheduleTimer("UnregisterTargetEvents", 10)
@@ -208,7 +208,7 @@ function mod:GlacialWrath(args)
 end
 
 function mod:GlacialWrathSummon(args)
-	mobCollector[args.destGUID] = tremove(soulReaverMarks, 1)
+	mobCollector[args.destGUID] = tremove(glacialSpikeMarks, 1)
 end
 
 function mod:GlacialSpikeMarker(event, unit, guid)
@@ -245,7 +245,7 @@ do
 			self:CancelSayCountdown(346459)
 		end
 		self:CustomIcon(glacialWrathMarker, args.destName)
-		soulReaverMarks[#soulReaverMarks+1] = playerList[args.destName] -- _REMOVED is more reliable for spike order
+		glacialSpikeMarks[#glacialSpikeMarks+1] = playerList[args.destName] -- _REMOVED is more reliable for spike order
 	end
 end
 
