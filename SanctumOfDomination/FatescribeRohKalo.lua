@@ -37,7 +37,7 @@ function mod:GetOptions()
 		353432, -- Burden of Destiny (Fixate)
 		{353603, "TANK"}, -- Diviner's Probe
 		353931, -- Twist Fate
-		350355, -- Fated Conjunction
+		350355, -- Fated Conjunction (Beams)
 		{350568, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Call of Eternity (Bombs)
 		-- Stage Two: Defying Destiny
 		353149, -- Realignment: Clockwise
@@ -51,6 +51,7 @@ function mod:GetOptions()
 		[353195] = mod:SpellName(-23486), -- Stage Three: Fated Terminus
 	},{
 		[353432] = CL.fixate, -- Burden of Destiny (Fixate)
+		[350355] = CL.beams, -- Fated Conjunction (Beams)
 		[350568] = CL.bombs, -- Call of Eternity (Bombs)
 	}
 end
@@ -59,7 +60,7 @@ function mod:OnBossEnable()
 	-- Stage One: Scrying Fate
 	self:Log("SPELL_CAST_START", "HeroicDestiny", 351680)
 	self:Log("SPELL_AURA_APPLIED", "HeroicDestinyApplied", 351680)
-	self:Log("SPELL_AURA_REMOVED", "HeroicDestinyApplied", 351680)
+	self:Log("SPELL_AURA_REMOVED", "HeroicDestinyRemoved", 351680)
 	self:Log("SPELL_AURA_APPLIED", "BurdenOfDestinyApplied", 353432)
 	self:Log("SPELL_CAST_START", "DivinersProbe", 353603)
 	self:Log("SPELL_AURA_APPLIED", "TwistFateApplied", 353931)
@@ -102,7 +103,7 @@ function mod:HeroicDestinyApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName)
 end
 
-function mod:HeroicDestinyApplied(args)
+function mod:HeroicDestinyRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
@@ -131,9 +132,9 @@ function mod:TwistFateApplied(args)
 end
 
 function mod:FatedConjunction(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow", CL.beams)
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 20)
+	--self:Bar(args.spellId, 20, CL.beams)
 end
 
 do
