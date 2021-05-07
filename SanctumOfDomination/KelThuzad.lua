@@ -44,7 +44,6 @@ function mod:GetOptions()
 		354198, -- Howling Blizzard
 		352530, -- Dark Evocation
 		{355389, "SAY"}, -- Corpse Detonation
-		soulReaverMarker,
 		348071, -- Soul Fracture // Tank hit but spawns Soul Shards for DPS
 		{348978, "TANK"}, -- Soul Exhaustion
 		{346459, "SAY", "SAY_COUNTDOWN"}, -- Glacial Wrath
@@ -59,6 +58,8 @@ function mod:GetOptions()
 		352379, -- Freezing Blast
 		355055, -- Glacial Winds
 		352355, -- Necrotic Obliteration
+		352141, -- Banshee's Cry (Soul Reaver)
+		soulReaverMarker,
 		-- Stage Three: The Final Stand
 		354639, -- Deep Freeze
 	},{
@@ -84,6 +85,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SoulExhaustionApplied", 348978)
 	self:Log("SPELL_AURA_REMOVED", "SoulExhaustionRemoved", 348978)
 	self:Log("SPELL_CAST_START", "GlacialWrath", 346459)
+	self:Log("SPELL_SUMMON", "GlacialWrathSummon", 346459)
 	self:Log("SPELL_AURA_APPLIED", "GlacialWrathApplied", 353808)
 	self:Log("SPELL_AURA_REMOVED", "GlacialWrathRemoved", 353808)
 	self:Log("SPELL_AURA_APPLIED", "ShatterApplied", 346530)
@@ -102,6 +104,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "GlacialWinds", 355055)
 	self:Log("SPELL_CAST_START", "NecroticObliteration", 352355)
 
+	self:Log("SPELL_CAST_START", "BansheesCry", 352141)
+	self:Log("SPELL_SUMMON", "MarchOfTheForsakenSummon", 352094)
+
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 354198, 354639) -- Howling Blizzard, Deep Freeze
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 354198, 354639)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 354198, 354639)
@@ -112,7 +117,6 @@ function mod:OnBossEnable()
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	self:RegisterEvent("UNIT_SPELLCAST_STOP")
 	self:GROUP_ROSTER_UPDATE()
-	self:Death("SoulReaverDeath", 176974) -- Soul Reaver
 end
 
 function mod:OnEngage()
@@ -121,43 +125,11 @@ function mod:OnEngage()
 	mindControlled = false
 	self:CDBar(347292, 11, L.silence)
 	self:CDBar(346459, 19, L.spikes)
-
-	if self:GetOption(soulReaverMarker) then
-		self:RegisterTargetEvents("SoulReaverMarker")
-	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:SoulReaverMarker(event, unit, guid)
-	if self:GetOption(soulReaverMarker) and guid and not mobCollector[guid] then
-		local mobId = self:MobId(guid)
-		if mobId == 176974 then -- Soul Reaver
-			for i = 8, 6, -1 do -- 8, 7, 6
-				if not soulReaverMarks[i] then
-					mobCollector[guid] = true
-					soulReaverMarks[i] = guid
-					self:CustomIcon(soulReaverMarks, unit, i)
-					return
-				end
-			end
-		end
-	end
-end
-
-function mod:SoulReaverDeath(args)
-	if self:GetOption(soulReaverMarker) then
-		for i = 8, 5, -1 do -- 8, 7, 6
-			if soulReaverMarks[i] == args.destGUID then
-				soulReaverMarks[i] = nil
-				return
-			end
-		end
-	end
-end
-
 function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
 	tankList = {}
 	for unit in self:IterateGroup() do
@@ -226,6 +198,24 @@ function mod:GlacialWrath(args)
 	self:Message(args.spellId, "orange", CL.casting:format(L.spikes))
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 45, L.spikes)
+
+	mobCollector = {}
+	soulReaverMarks = {}
+	if self:GetOption(glacialWrathMarker) then
+		self:RegisterTargetEvents("GlacialSpikeMarker")
+		self:ScheduleTimer("UnregisterTargetEvents", 10)
+	end
+end
+
+function mod:GlacialWrathSummon(args)
+	mobCollector[args.destGUID] = tremove(soulReaverMarks, 1)
+end
+
+function mod:GlacialSpikeMarker(event, unit, guid)
+	if self:MobId(guid) == 175861 and mobCollector[guid] then
+		self:CustomIcon(glacialWrathMarker, unit, mobCollector[guid])
+		mobCollector[guid] = nil
+	end
 end
 
 do
@@ -255,6 +245,7 @@ do
 			self:CancelSayCountdown(346459)
 		end
 		self:CustomIcon(glacialWrathMarker, args.destName)
+		soulReaverMarks[#soulReaverMarks+1] = playerList[args.destName] -- _REMOVED is more reliable for spike order
 	end
 end
 
@@ -389,5 +380,38 @@ end
 function mod:ReturnOfTheDamnedRemoved(args)
 	if self:Me(args.destGUID) then
 		mindControlled = false
+	end
+end
+
+function mod:BansheesCry(args)
+	local canDo, ready = self:Interrupter(args.sourceGUID)
+	if canDo then
+		self:Message(args.spellId, "yellow")
+		if ready then
+			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+end
+
+do
+	local scheduled = nil
+	local bossUnits = {"boss1", "boss2", "boss3", "boss4", "boss5", "arena1", "arena2", "arena3"}
+	function mod:SoulReaverMarker()
+		local mark = 8
+		for i = 1, #bossUnits do
+			local unit = bossUnits[i] -- boss5 arena1 arena2 were used
+			if self:MobId(unit) == 176974 then -- Soul Reaver
+				self:CustomIcon(soulReaverMarker, unit, mark)
+				mark = mark - 1
+				if mark < 6 then break end
+			end
+		end
+		scheduled = nil
+	end
+	function mod:MarchOfTheForsakenSummon(args)
+		if not scheduled and self:GetOption(soulReaverMarker) then
+			-- Delayed for IEEU
+			scheduled = self:ScheduleTimer("SoulReaverMarker", 0.3)
+		end
 	end
 end
