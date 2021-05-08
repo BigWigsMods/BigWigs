@@ -2188,15 +2188,17 @@ do
 	anim:SetDuration(0.2)
 end
 
-function plugin:EmphasizeBar(bar, start)
+function plugin:EmphasizeBar(bar, freshBar)
 	if db.emphasizeMove then
 		normalAnchor.bars[bar] = nil
 		emphasizeAnchor.bars[bar] = true
 		bar:Set("bigwigs:anchor", emphasizeAnchor)
 	end
-	currentBarStyler.BarStopped(bar)
-	if not start and db.emphasizeRestart then
-		bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
+	if not freshBar then
+		currentBarStyler.BarStopped(bar) -- Only call BarStopped on bars that have already started (ApplyStyle was called on them first)
+		if db.emphasizeRestart then
+			bar:Start() -- restart the bar -> remaining time is a full length bar again after moving it to the emphasize anchor
+		end
 	end
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
