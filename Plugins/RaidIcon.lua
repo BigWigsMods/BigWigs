@@ -46,8 +46,10 @@ do
 	plugin.pluginOptions = {
 		type = "group",
 		name = L.icons,
+		order = 11,
 		get = get,
 		set = set,
+		--icon = 137003,
 		args = {
 			disabled = {
 				type = "toggle",

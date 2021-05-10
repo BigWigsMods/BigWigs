@@ -27,6 +27,7 @@ plugin.pluginOptions = {
 	name = L.wipe,
 	type = "group",
 	childGroups = "tab",
+	order = 8,
 	get = function(i) return plugin.db.profile[i[#i]] end,
 	set = function(i, value)
 		local n = i[#i]

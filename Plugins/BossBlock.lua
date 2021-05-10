@@ -10,7 +10,20 @@ if not plugin then return end
 --
 
 plugin.defaultDB = {
+	blockEmotes = true,
+	blockMovies = true,
+	blockTalkingHeads = {
+		false, -- Normal & Heroic Dungeons
+		true, -- Mythic & Mythic+ Dungeons
+		true, -- Raids
+		false, -- Timewalking (Dungeons & Raids)
+		true, -- Scenarios
+	},
+	blockGarrison = true,
+	blockGuildChallenge = true,
 	blockSpellErrors = true,
+	blockTooltipQuests = true,
+	blockObjectiveTracker = true,
 	disableSfx = false,
 	disableMusic = false,
 	disableAmbience = false,
@@ -26,7 +39,10 @@ plugin.displayName = L.bossBlock
 local GetBestMapForUnit = BigWigsLoader.GetBestMapForUnit
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local GetSubZoneText = GetSubZoneText
+--local TalkingHeadLineInfo = C_TalkingHead.GetCurrentLineInfo
+local IsEncounterInProgress = IsEncounterInProgress
 local SetCVar = SetCVar
+local GetCVar = GetCVar
 local CheckElv = nil
 local RestoreAll
 
@@ -39,6 +55,7 @@ plugin.pluginOptions = {
 	desc = L.bossBlockDesc,
 	type = "group",
 	childGroups = "tab",
+	order = 10,
 	get = function(info)
 		return plugin.db.profile[info[#info]]
 	end,
@@ -87,6 +104,13 @@ plugin.pluginOptions = {
 					desc = L.disableAudioDesc:format(L.music),
 					width = "full",
 					order = 1,
+					disabled = function()
+						if IsEncounterInProgress() then
+							return true
+						elseif GetCVar("Sound_EnableMusic") == "0" and not plugin.db.profile.disableMusic then
+							return true
+						end
+					end,
 				},
 				disableAmbience = {
 					type = "toggle",
@@ -94,6 +118,13 @@ plugin.pluginOptions = {
 					desc = L.disableAudioDesc:format(L.ambience),
 					width = "full",
 					order = 2,
+					disabled = function()
+						if IsEncounterInProgress() then
+							return true
+						elseif GetCVar("Sound_EnableAmbience") == "0" and not plugin.db.profile.disableAmbience then
+							return true
+						end
+					end,
 				},
 				disableErrorSpeech = {
 					type = "toggle",
@@ -101,6 +132,13 @@ plugin.pluginOptions = {
 					desc = L.disableAudioDesc:format(L.errorSpeech),
 					width = "full",
 					order = 3,
+					disabled = function()
+						if IsEncounterInProgress() then
+							return true
+						elseif GetCVar("Sound_EnableErrorSpeech") == "0" and not plugin.db.profile.disableErrorSpeech then
+							return true
+						end
+					end,
 				},
 				disableSfx = {
 					type = "toggle",
@@ -108,6 +146,13 @@ plugin.pluginOptions = {
 					desc = L.disableAudioDesc:format(L.sfx),
 					width = "full",
 					order = 4,
+					disabled = function()
+						if IsEncounterInProgress() then
+							return true
+						elseif GetCVar("Sound_EnableSFX") == "0" and not plugin.db.profile.disableSfx then
+							return true
+						end
+					end,
 				},
 			},
 		},

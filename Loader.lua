@@ -744,20 +744,43 @@ do
 	}
 	local delayedMessages = {}
 
+	local warning = "The addon '|cffffff00%s|r' is forcing %s to load prematurely, notify the BigWigs authors!"
+	local dontForceLoadList = {
+		BigWigs_Core = true,
+		BigWigs_Plugins = true,
+		BigWigs_Options = true,
+		BigWigs_Onyxia = true,
+		BigWigs_MoltenCore = true,
+		BigWigs_World = true,
+		BigWigs_BlackwingLair = true,
+		BigWigs_ZulGurub = true,
+		BigWigs_AhnQirajRuins = true,
+		BigWigs_AhnQirajTemple = true,
+		BigWigs_Naxxramas = true,
+		BigWigs_Outland = true,
+		BigWigs_Karazhan = true,
+		BigWigs_Serpentshrine = true,
+		BigWigs_TempestKeep = true,
+		BigWigs_Hyjal = true,
+		BigWigs_BlackTemple = true,
+		LittleWigs = true,
+	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
 		if IsAddOnEnabled(i) and not IsAddOnLoadOnDemand(i) then
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
-				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins" or meta == "BigWigs_Options") then
-					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing BigWigs to load prematurely, notify the BigWigs authors!"
+				local addonName = tostring(meta)
+				if dontForceLoadList[addonName] then
+					delayedMessages[#delayedMessages+1] = warning:format(name, addonName)
 				end
 			end
 			for j = 1, select("#", GetAddOnDependencies(i)) do
 				local meta = select(j, GetAddOnDependencies(i))
-				if meta and (meta == "BigWigs_Core" or meta == "BigWigs_Plugins" or meta == "BigWigs_Options") then
-					delayedMessages[#delayedMessages+1] = "The addon '|cffffff00"..name.."|r' is forcing BigWigs to load prematurely, notify the BigWigs authors!"
+				local addonName = tostring(meta)
+				if dontForceLoadList[addonName] then
+					delayedMessages[#delayedMessages+1] = warning:format(name, addonName)
 				end
 			end
 		end

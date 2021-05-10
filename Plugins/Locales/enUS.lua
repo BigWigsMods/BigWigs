@@ -151,7 +151,7 @@ L.breakFinished = "Break time is now over!"
 
 L.bossBlock = "Boss Block"
 L.bossBlockDesc = "Configure the various things you can block during a boss encounter.\n\n"
-L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\n"
+L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 L.movieBlocked = "You've seen this movie before, skipping it."
 L.blockEmotes = "Block middle-screen emotes"
 L.blockEmotesDesc = "Some bosses show emotes for certain abilities, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the gameplay, and don't tell you specifically what to do.\n\nPlease note: Boss emotes will still be visible in chat if you wish to read them."

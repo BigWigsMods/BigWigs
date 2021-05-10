@@ -20,6 +20,7 @@ local PlaySoundFile = PlaySoundFile
 
 plugin.defaultDB = {
 	soundName = "BigWigs: Victory",
+	blizzMsg = true,
 	bigwigsMsg = false,
 }
 
@@ -32,6 +33,9 @@ plugin.pluginOptions = {
 		local n = i[#i]
 		plugin.db.profile[n] = value
 	end,
+	order = 7,
+	--icon = 236661,
+	--iconCoords = {0.07, 0.93, 0.07, 0.93},
 	args = {
 		heading = {
 			type = "description",
