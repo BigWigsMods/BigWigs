@@ -200,8 +200,8 @@ end
 
 function mod:ShatteredSoulApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(350028)
-		self:PlaySound(350028, "warning")
+		self:PersonalMessage(350022)
+		self:PlaySound(350022, "warning")
 	end
 end
 
