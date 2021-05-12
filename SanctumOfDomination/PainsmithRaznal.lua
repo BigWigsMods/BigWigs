@@ -61,8 +61,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "InstrumentApplied", 348978, 355568, 355778) -- Rippling Hammer, Cruciform Axe, Dualblade Scythe
-	self:Log("SPELL_AURA_REMOVED", "InstrumentRemoved", 348978, 355568, 355778)
+	self:Log("SPELL_AURA_APPLIED", "InstrumentApplied", 348508, 355568, 355778) -- Rippling Hammer, Cruciform Axe, Dualblade Scythe
+	self:Log("SPELL_AURA_REMOVED", "InstrumentRemoved", 348508, 355568, 355778)
 	self:Log("SPELL_AURA_APPLIED", "BlackenedArmorApplied", 355786)
 	self:Log("SPELL_CAST_SUCCESS", "SpikedBalls", 352052)
 
@@ -80,7 +80,7 @@ function mod:OnEngage()
 	trapsCount = 1
 	chainsCount = 1
 
-	--self:Bar(348978, 20, CL.count:format(L.hammer, instrumentCount)) -- Hammer
+	--self:Bar(348508, 20, CL.count:format(L.hammer, instrumentCount)) -- Hammer
 	--self:Bar(352052, 20, CL.count:format(self:SpellName(352052),spikedBallsCount)) -- Spiked Balls
 	--self:Bar(348456, 20, CL.count:format(L.traps, trapsCount)) -- Spiked Balls
 	--self:Bar(355505, 20, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
@@ -103,7 +103,7 @@ function mod:UNIT_HEALTH(event, unit)
 end
 
 function mod:InstrumentApplied(args)
-	local equippedWeapon = args.spellId == 348978 and L.hammer or args.spellId == 355568 and L.axe or L.scythe
+	local equippedWeapon = args.spellId == 348508 and L.hammer or args.spellId == 355568 and L.axe or L.scythe
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(equippedWeapon, instrumentCount))
 	self:PrimaryIcon(args.spellId, args.destName)
 	if self:Me(args.destGUID) then
