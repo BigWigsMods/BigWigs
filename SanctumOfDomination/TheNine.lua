@@ -57,7 +57,7 @@ function mod:GetOptions()
 		350467, -- Call of the Val'kyr
 		350031, -- Agatha's Eternal Blade
 		{350184, "SAY", "SAY_COUNTDOWN"}, -- Daschla's Mighty Anvil
-		350157, -- Annhylde's Bright Aegis
+		350158, -- Annhylde's Bright Aegis
 		350098, -- Aradne's Falling Strike
 		{350109, "SAY", "SAY_COUNTDOWN"}, -- Brynja's Mournful Dirge
 		{350039, "SAY", "SAY_COUNTDOWN"}, -- Arthura's Crushing Gaze
@@ -104,7 +104,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CallOfTheValkyr", 350467)
 	--self:Log("SPELL_CAST_SUCCESS", "AgathasEternalBlade", 350031) XXX Use a yell?
 	self:Log("SPELL_CAST_SUCCESS", "DaschlasMightyAnvil", 350184)
-	self:Log("SPELL_CAST_SUCCESS", "DaschlasMightyAnvilApplied", 350184)
+	self:Log("SPELL_AURA_APPLIED", "DaschlasMightyAnvilApplied", 350184)
 	self:Log("SPELL_AURA_APPLIED", "AnnhyldesBrightAegisApplied", 350158)
 	--self:Log("SPELL_CAST_SUCCESS", "AradnesFallingStrike", 350098) XXX Use a yell?
 	self:Log("SPELL_AURA_APPLIED", "BrynjasMournfulDirgeApplied", 350109)
