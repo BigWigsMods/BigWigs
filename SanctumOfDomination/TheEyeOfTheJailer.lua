@@ -44,14 +44,14 @@ function mod:GetOptions()
 		-- Stage Two: Double Vision
 		349028, -- Titanic Death Gaze
 		{350847, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Desolation Beam
-		350028, -- Soul Shatter
+		350022, -- Soul Shatter
 		{351825, "TANK"}, -- Shared Suffering
 		350713, -- Slothful Corruption
 		{351827, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Spreading Misery
 		-- Stage Three: Immediate Extermination
 		348974, -- Immediate Extermination
 		351413, -- Annihilating Glare
-		350604, -- Hopeless Lethargy
+		{350604, "SAY"}, -- Hopeless Lethargy
 		355232, -- Scorn and Ire
 	},{
 		["stages"] = "general",
@@ -85,7 +85,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SharedSufferingApplied", 351825)
 	self:Log("SPELL_CAST_START", "SlothfulCorruption", 351835)
 	self:Log("SPELL_AURA_APPLIED", "SlothfulCorruptionApplied", 350713)
-	self:Log("SPELL_AURA_REMOVED", "SlothfulCorruptionRemoved", 350713)
 
 	self:Log("SPELL_CAST_START", "SpreadingMisery", 350816)
 	self:Log("SPELL_AURA_APPLIED", "SpreadingMiseryApplied", 351827)
@@ -166,15 +165,15 @@ function mod:StygianDarkshieldApplied(args)
 
 	self:Bar(350847, 8.5, CL.beam) -- Desolation Beam
 	self:Bar(351827, 12.6) -- Spreading Misery
-	self:Bar(349030, 17, L.death_gaze) -- Titanic Death Gaze
+	self:Bar(349028, 17, L.death_gaze) -- Titanic Death Gaze
 	self:Bar(350713, 17.5) -- Slothful Corruption
 end
 
 function mod:TitanicDeathGaze(args)
-	self:Message(args.spellId, "orange", CL.casting:format(L.death_gaze))
-	self:PlaySound(args.spellId, "alarm")
-	self:CastBar(args.spellId, 8)
-	self:Bar(args.spellId, 33, L.death_gaze)
+	self:Message(349028, "orange", CL.casting:format(L.death_gaze))
+	self:PlaySound(349028, "alarm")
+	self:CastBar(349028, 8)
+	self:Bar(349028, 33, L.death_gaze)
 end
 
 do
@@ -187,7 +186,7 @@ do
 		self:TargetMessage(350847, "red", name, CL.beam)
 	end
 
-	function mod:DesolationBeamStart(args)
+	function mod:DesolationBeam(args)
 		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
 		self:Bar(args.spellId, 17, CL.beam)
 	end
@@ -213,7 +212,7 @@ end
 
 do
 	local prev = 0
-	function mod:SharedSufferingApplied(args)
+	function mod:SlothfulCorruption(args)
 		local t = args.time
 		if t-prev > 5 then -- Both adds cast it seperately
 			prev = t
