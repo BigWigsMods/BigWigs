@@ -119,9 +119,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "Resentment", 351399)
 	self:Log("SPELL_AURA_APPLIED", "LinkEssence", 350482)
 	self:Log("SPELL_CAST_START", "WordOfRecall", 350687)
-
-	self:RegisterEvent("GROUP_ROSTER_UPDATE")
-	self:GROUP_ROSTER_UPDATE()
 end
 
 function mod:OnEngage()
@@ -147,6 +144,7 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 350745 then -- Maw Power (Set to 00)  [DNT]
 		self:SetStage(2)

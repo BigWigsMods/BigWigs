@@ -38,8 +38,8 @@ end
 -- Initialization
 --
 
-local flameclaspTrapMarker = mod:AddMarkerOption(false, "player", 1, 348456, 1, 2, 3, 4) -- Flameclasp Trap
-local shadowsteelChainsMarker = mod:AddMarkerOption(false, "player", 1, 355505, 1, 2) -- Shadowsteel Chains
+--local flameclaspTrapMarker = mod:AddMarkerOption(false, "player", 1, 348456, 1, 2, 3, 4) -- Flameclasp Trap
+local shadowsteelChainsMarker = mod:AddMarkerOption(false, "player", 1, 355505, 1, 2, 3, 4, 5) -- Shadowsteel Chains
 function mod:GetOptions()
 	return {
 		"stages",
@@ -49,7 +49,7 @@ function mod:GetOptions()
 		355786, -- Blackened Armor
 		352052, -- Spiked Balls
 		{348456, "SAY", "SAY_COUNTDOWN"}, -- Flameclasp Trap
-		flameclaspTrapMarker,
+		--flameclaspTrapMarker,
 		{355505, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Shadowsteel Chains
 		shadowsteelChainsMarker,
 	},{
@@ -62,16 +62,19 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_AURA_APPLIED", "InstrumentApplied", 348508, 355568, 355778) -- Rippling Hammer, Cruciform Axe, Dualblade Scythe
-	self:Log("SPELL_AURA_REMOVED", "InstrumentRemoved", 348508, 355568, 355778)
+	--self:Log("SPELL_AURA_APPLIED", "InstrumentApplied", 348508, 355568, 355778) -- Rippling Hammer, Cruciform Axe, Dualblade Scythe
+	--self:Log("SPELL_AURA_REMOVED", "InstrumentRemoved", 348508, 355568, 355778)
 	self:Log("SPELL_AURA_APPLIED", "BlackenedArmorApplied", 355786)
 	self:Log("SPELL_CAST_SUCCESS", "SpikedBalls", 352052)
 
-	self:Log("SPELL_AURA_APPLIED", "FlameclaspTrapApplied", 348456)
-	self:Log("SPELL_AURA_REMOVED", "FlameclaspTrapRemoved", 348456)
+	--self:Log("SPELL_AURA_APPLIED", "FlameclaspTrapApplied", 348456)
+	--self:Log("SPELL_AURA_REMOVED", "FlameclaspTrapRemoved", 348456)
 
 	self:Log("SPELL_AURA_APPLIED", "ShadowsteelChainsApplied", 355505)
 	self:Log("SPELL_AURA_REMOVED", "ShadowsteelChainsRemoved", 355505)
+
+	self:Log("SPELL_AURA_APPLIED", "ForgeWeapon", 355525)
+	self:Log("SPELL_AURA_REMOVED", "ForgeWeaponOver", 355525)
 end
 
 function mod:OnEngage()
@@ -87,11 +90,68 @@ function mod:OnEngage()
 	--self:Bar(355505, 20, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
+	self:RegisterUnitEvent("UNIT_AURA", nil, "player")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local trapDebuff = false
+	local hammerDebuff = false
+	local scytheDebuff = false
+	local axeDebuff = false
+	function mod:UNIT_AURA(_, unit)
+		local name = self:UnitDebuff(unit, 348456)
+		if name and not trapDebuff then
+			trapDebuff = true
+			self:Say(348456)
+			self:SayCountdown(348456, 5) -- Should be 6 seems to be 5?
+			self:PlaySound(348456, "warning")
+			self:TargetMessage(348456, "blue", self:UnitName("player"))
+		elseif not name and trapDebuff then
+			trapDebuff = false
+			self:CancelSayCountdown(348456)
+		end
+
+		name = self:UnitDebuff(unit, 348508) -- Rippling Hammer
+		if name and not hammerDebuff then
+			hammerDebuff = true
+			self:Say(348508)
+			self:SayCountdown(348508, 6)
+			self:PlaySound(348508, "warning")
+			self:TargetMessage(348508, "blue", self:UnitName("player"))
+		elseif not name and hammerDebuff then
+			hammerDebuff = false
+			self:CancelSayCountdown(348508)
+		end
+
+		name = self:UnitDebuff(unit, 355778) -- Dualblade Scythe
+		if name and not scytheDebuff then
+			scytheDebuff = true
+			self:Say(355778)
+			self:SayCountdown(355778, 6)
+			self:PlaySound(355778, "warning")
+			self:TargetMessage(355778, "blue", self:UnitName("player"))
+		elseif not name and scytheDebuff then
+			scytheDebuff = false
+			self:CancelSayCountdown(355778)
+		end
+
+		name = self:UnitDebuff(unit, 355568) -- Cruciform Axe
+		if name and not axeDebuff then
+			axeDebuff = true
+			self:Say(355568)
+			self:SayCountdown(355568, 6)
+			self:PlaySound(355568, "warning")
+			self:TargetMessage(355568, "blue", self:UnitName("player"))
+		elseif not name and axeDebuff then
+			axeDebuff = false
+			self:CancelSayCountdown(355568)
+		end
+	end
+end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < nextStageWarning then -- Stage changes at 70% and 40%
@@ -103,29 +163,29 @@ function mod:UNIT_HEALTH(event, unit)
 	end
 end
 
-function mod:InstrumentApplied(args)
-	local equippedWeapon = args.spellId == 348508 and L.hammer or args.spellId == 355568 and L.axe or L.scythe
-	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(equippedWeapon, instrumentCount))
-	self:PrimaryIcon(args.spellId, args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId, CL.count:format(equippedWeapon, instrumentCount))
-		self:SayCountdown(args.spellId, 6)
-		self:PlaySound(args.spellId, "warning")
-	else
-		self:PlaySound(args.spellId, "alert")
-	end
-	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(equippedWeapon, instrumentCount))
-	instrumentCount = instrumentCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(equippedWeapon, instrumentCount))
-end
+--function mod:InstrumentApplied(args)
+--	local equippedWeapon = args.spellId == 348508 and L.hammer or args.spellId == 355568 and L.axe or L.scythe
+--	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(equippedWeapon, instrumentCount))
+--	self:PrimaryIcon(args.spellId, args.destName)
+--	if self:Me(args.destGUID) then
+--		self:Say(args.spellId, CL.count:format(equippedWeapon, instrumentCount))
+--		self:SayCountdown(args.spellId, 6)
+--		self:PlaySound(args.spellId, "warning")
+--	else
+--		self:PlaySound(args.spellId, "alert")
+--	end
+--	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(equippedWeapon, instrumentCount))
+--	instrumentCount = instrumentCount + 1
+--	--self:Bar(args.spellId, 20, CL.count:format(equippedWeapon, instrumentCount))
+--end
 
-function mod:InstrumentRemoved(args)
-	self:PrimaryIcon(args.spellId)
-	self:StopBar(CL.count:format(L.hammer, instrumentCount), args.destName)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
-	end
-end
+--function mod:InstrumentRemoved(args)
+--	self:PrimaryIcon(args.spellId)
+--	self:StopBar(CL.count:format(L.hammer, instrumentCount), args.destName)
+--	if self:Me(args.destGUID) then
+--		self:CancelSayCountdown(args.spellId)
+--	end
+--end
 
 function mod:BlackenedArmorApplied(args)
 	if self:Tank() and self:Tank(args.destName) then
@@ -145,36 +205,36 @@ function mod:SpikedBalls(args)
 	--self:Bar(args.spellId, 20, CL.count:format(args.spellName,spikedBallsCount))
 end
 
-do
-	local playerList = {}
-	local prev = 0
-	function mod:FlameclaspTrapApplied(args)
-		local t = args.time -- new set of debuffs
-		if t-prev > 5 then
-			prev = t
-			playerList = {}
-			trapsCount = trapsCount + 1
-		end
-		local count = #playerList+1
-		playerList[count] = args.destName
-		playerList[args.destName] = count -- Set raid marker
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.count_rticon:format(L.trap, count, count))
-			self:SayCountdown(args.spellId, 6, count)
-			self:PlaySound(args.spellId, "warning")
-		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.traps, trapsCount-1))
-		--self:Bar(args.spellId, 20, CL.count:format(CL.traps, trapsCount))
-		self:CustomIcon(flameclaspTrapMarker, args.destName, count)
-	end
-
-	function mod:FlameclaspTrapRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
-		end
-		self:CustomIcon(flameclaspTrapMarker, args.destName)
-	end
-end
+--do
+--	local playerList = {}
+--	local prev = 0
+--	function mod:FlameclaspTrapApplied(args)
+--		local t = args.time -- new set of debuffs
+--		if t-prev > 5 then
+--			prev = t
+--			playerList = {}
+--			trapsCount = trapsCount + 1
+--		end
+--		local count = #playerList+1
+--		playerList[count] = args.destName
+--		playerList[args.destName] = count -- Set raid marker
+--		if self:Me(args.destGUID) then
+--			self:Say(args.spellId, CL.count_rticon:format(L.trap, count, count))
+--			self:SayCountdown(args.spellId, 6, count)
+--			self:PlaySound(args.spellId, "warning")
+--		end
+--		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.traps, trapsCount-1))
+--		--self:Bar(args.spellId, 20, CL.count:format(CL.traps, trapsCount))
+--		--self:CustomIcon(flameclaspTrapMarker, args.destName, count)
+--	end
+--
+--	function mod:FlameclaspTrapRemoved(args)
+--		if self:Me(args.destGUID) then
+--			self:CancelSayCountdown(args.spellId)
+--		end
+--		--self:CustomIcon(flameclaspTrapMarker, args.destName)
+--	end
+--end
 
 do
 	local playerList = {}
@@ -205,4 +265,13 @@ do
 		end
 		self:CustomIcon(shadowsteelChainsMarker, args.destName)
 	end
+end
+
+function mod:ForgeWeapon(args)
+	self:Message("stages", "cyan", CL.intermission, args.spellId)
+	self:Bar("stages", 48, CL.intermission, args.spellId)
+end
+
+function mod:ForgeWeaponOver(args)
+	self:Message("stages", "cyan", CL.over:format(CL.intermission), args.spellId) -- XXX too early?
 end
