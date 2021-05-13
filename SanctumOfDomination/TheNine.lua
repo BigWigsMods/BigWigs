@@ -137,7 +137,7 @@ function mod:OnEngage()
 	self:Bar(350202, 6) -- Unending Strike
 	self:Bar(350342, 12, CL.count:format(self:SpellName(350342), formlessMassCount)) -- Formless Mass
 	self:Bar(350467, 14.6, CL.count:format(self:SpellName(350467), callOfTheValkyrCount)) -- Call of the Val'kyr
-	self:Bar(350286, 47.5, CL.count:format(self:SpellName(350286), songOfDissolutionCount)) -- Song of Dissolution
+	self:Bar(350286, 16, CL.count:format(self:SpellName(350286), songOfDissolutionCount)) -- Song of Dissolution
 	self:Bar(350365, 47.5, CL.count:format(self:SpellName(350365), wingsOfRageCount)) -- Wings of Rage
 	self:Bar(350385, 71.5, CL.count:format(self:SpellName(350385), reverberatingRefrainCount)) -- Reverberating Refrain
 
