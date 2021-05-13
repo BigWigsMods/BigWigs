@@ -50,7 +50,9 @@ function mod:GetOptions()
 		355786, -- Blackened Armor
 		352052, -- Spiked Balls
 		{348456, "SAY", "SAY_COUNTDOWN"}, -- Flameclasp Trap
+		flameclaspTrapMarker,
 		{355505, "SAY", "SAY_COUNTDOWN"}, -- Shadowsteel Chains
+		shadowsteelChainsMarker,
 	},{
 		["stages"] = "general",
 	},{
