@@ -56,10 +56,10 @@ function mod:GetOptions()
 		-- Call of the Val'kyr
 		350467, -- Call of the Val'kyr
 		350031, -- Agatha's Eternal Blade
-		{350184, "SAY", "SAY_COUNTDOWN"}, -- Daschla's Mighty Anvil
+		{350184, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Daschla's Mighty Anvil
 		350158, -- Annhylde's Bright Aegis
 		350098, -- Aradne's Falling Strike
-		{350109, "SAY", "SAY_COUNTDOWN"}, -- Brynja's Mournful Dirge
+		{350109, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Brynja's Mournful Dirge
 		{350039, "SAY", "SAY_COUNTDOWN"}, -- Arthura's Crushing Gaze
 		-- Stage Two: The First of the Mawsworn
 		{350475, "TANK"}, -- Pierce Soul

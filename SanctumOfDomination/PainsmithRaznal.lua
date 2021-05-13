@@ -30,7 +30,6 @@ if L then
 	L.scythe = "Scythe" -- Short for Dualblade Scythe
 
 	L.trap = "Trap" -- Short for Flameclasp Trap
-	L.traps = "Traps" -- Multiple for Flameclasp Trap
 
 	L.chains = "Chains" -- Short for Shadowsteel Chains
 end
@@ -51,7 +50,7 @@ function mod:GetOptions()
 		352052, -- Spiked Balls
 		{348456, "SAY", "SAY_COUNTDOWN"}, -- Flameclasp Trap
 		flameclaspTrapMarker,
-		{355505, "SAY", "SAY_COUNTDOWN"}, -- Shadowsteel Chains
+		{355505, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Shadowsteel Chains
 		shadowsteelChainsMarker,
 	},{
 		["stages"] = "general",
@@ -84,7 +83,7 @@ function mod:OnEngage()
 
 	--self:Bar(348508, 20, CL.count:format(L.hammer, instrumentCount)) -- Hammer
 	--self:Bar(352052, 20, CL.count:format(self:SpellName(352052),spikedBallsCount)) -- Spiked Balls
-	--self:Bar(348456, 20, CL.count:format(L.traps, trapsCount)) -- Spiked Balls
+	--self:Bar(348456, 20, CL.count:format(CL.traps, trapsCount)) -- Spiked Balls
 	--self:Bar(355505, 20, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -164,8 +163,8 @@ do
 			self:SayCountdown(args.spellId, 6, count)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(L.traps, trapsCount-1))
-		--self:Bar(args.spellId, 20, CL.count:format(L.traps, trapsCount))
+		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.traps, trapsCount-1))
+		--self:Bar(args.spellId, 20, CL.count:format(CL.traps, trapsCount))
 		self:CustomIcon(flameclaspTrapMarker, args.destName, count)
 	end
 
