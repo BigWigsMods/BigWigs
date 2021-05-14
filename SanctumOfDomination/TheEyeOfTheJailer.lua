@@ -44,7 +44,7 @@ function mod:GetOptions()
 		-- Stage Two: Double Vision
 		349028, -- Titanic Death Gaze
 		{350847, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Desolation Beam
-		350022, -- Soul Shatter
+		{350022, "ME_ONLY_EMPHASIZE"}, -- Soul Shatter
 		{351825, "TANK"}, -- Shared Suffering
 		350713, -- Slothful Corruption
 		{351827, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Spreading Misery
