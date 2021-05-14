@@ -112,6 +112,10 @@ function mod:OnEngage()
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
+
+	-- XXX testing
+	self:Log("SPELL_CAST_START", "DraggingChainsStart", 349979)
+	self:RegisterMessage("BigWigs_BossComm")
 end
 
 --------------------------------------------------------------------------------
@@ -127,6 +131,22 @@ function mod:UNIT_HEALTH(event, unit)
 		if nextStageWarning < 25 then
 			self:UnregisterUnitEvent(event, unit)
 		end
+	end
+end
+
+do
+	local prev = 0
+	local function printTarget(self, name, guid)
+		self:Sync("Chains", name)
+	end
+	function mod:BigWigs_BossComm(_, msg, extra)
+		if msg == "Chains" and extra and (GetTime()-prev) > 8 then
+			prev = GetTime()
+			self:TargetMessage(349979, "red", "Chains??", extra)
+		end
+	end
+	function mod:DraggingChainsStart(args)
+		self:GetUnitTarget(printTarget, 0.5, args.sourceGUID)
 	end
 end
 
