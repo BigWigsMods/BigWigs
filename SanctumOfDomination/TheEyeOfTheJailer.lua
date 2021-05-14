@@ -39,7 +39,7 @@ function mod:GetOptions()
 		"stages",
 		-- Stage One: His Gaze Upon You
 		350828, -- Deathlink
-		{349979, "SAY"}, -- Dragging Chains
+		349979, -- Dragging Chains
 		348074, -- Assailing Lance
 		-- Stage Two: Double Vision
 		349028, -- Titanic Death Gaze
@@ -51,7 +51,7 @@ function mod:GetOptions()
 		-- Stage Three: Immediate Extermination
 		348974, -- Immediate Extermination
 		351413, -- Annihilating Glare
-		{350604, "SAY"}, -- Hopeless Lethargy
+		{350604, "SAY", "ME_ONLY_EMPHASIZE"}, -- Hopeless Lethargy
 		355232, -- Scorn and Ire
 	},{
 		["stages"] = "general",
@@ -165,12 +165,12 @@ function mod:StygianDarkshieldApplied(args)
 	self:PlaySound("stages", "long")
 
 	self:StopBar(350828) -- Death Link
-	self:StopBar(CL.laser) -- Laser
+	self:StopBar(CL.laser) -- Annihilating Glare
 	self:StopBar(L.slow)
 
-	self:Bar(350847, 8.5, CL.beam) -- Desolation Beam
+	self:Bar(350847, self:Mythic() and 21.1 or 8.5, CL.beam) -- Desolation Beam
 	self:Bar(351827, 12.6, L.pool) -- Spreading Misery
-	self:Bar(349028, 17, L.death_gaze) -- Titanic Death Gaze
+	self:Bar(349028, self:Mythic() and 28.1 or 17, L.death_gaze) -- Titanic Death Gaze
 	self:Bar(350713, 17.5, L.corruption) -- Slothful Corruption
 end
 
@@ -243,8 +243,6 @@ do
 		local t = args.time
 		if t-prev > 5 then -- Both adds cast it seperately
 			prev = t
-			self:Message(351827, "orange", CL.incoming:format(L.pool))
-			self:PlaySound(351827, "alert")
 			self:Bar(351827, 12, L.pool)
 		end
 	end
@@ -252,7 +250,7 @@ end
 
 function mod:SpreadingMiseryApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
+		self:PersonalMessage(args.spellId, nil, L.pool)
 		self:Say(args.spellId, L.pool)
 		self:SayCountdown(args.spellId, 5)
 		self:PlaySound(args.spellId, "warning")
@@ -303,7 +301,7 @@ function mod:AnnihilatingGlare(args)
 	self:Message(args.spellId, "yellow", CL.laser)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 25, CL.laser) -- 5s cast + 20s channel
-	self:Bar(args.spellId, 69, CL.laser)
+	self:Bar(args.spellId, 69, CL.laser) -- XXX acuracy issues on mythic
 end
 
 -- Mythic
@@ -323,7 +321,7 @@ do
 			self:Say(args.spellId, L.slow)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, L.slow)
+		self:NewTargetsMessage(args.spellId, "red", playerList, nil, L.slow)
 	end
 end
 

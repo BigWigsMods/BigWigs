@@ -64,6 +64,7 @@ function mod:GetOptions()
 		347668, -- Grasp of Death
 		347490, -- Fury of the Ages
 		347369, -- The Jailer's Gaze
+		"berserk",
 	},{
 		[346985] = "general",
 	},{
@@ -91,7 +92,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "PredatorsHowlRemoved", 347283)
 	self:Log("SPELL_AURA_APPLIED", "UnshakeableDreadApplied", 347286)
 	self:Log("SPELL_CAST_SUCCESS", "HungeringMist", 347679)
-	self:Log("SPELL_AURA_APPLIED", "HungeringMistApplied", 354080)
+	self:Log("SPELL_CAST_START", "HungeringMistCast", 354080)
 	self:Log("SPELL_CAST_SUCCESS", "RemnantOfForgottenTorments", 352368)
 	self:Log("SPELL_CAST_SUCCESS", "RemnantSpawn", 352382, 352389, 352398) -- Upper Reaches' Might, Mort'regar's Echoes, Soulforge Heat
 	self:Log("SPELL_CAST_SUCCESS", "GraspOfDeath", 347668)
@@ -119,7 +120,9 @@ function mod:OnEngage()
 	self:Bar(347679, 24.7, CL.count:format(L.mist, mistCount)) -- Hungering Mist
 	nextMist = GetTime() + 24.7
 
-	self:Berserk(420) -- Heroic
+	if not self:Mythic() then -- XXX unknown
+		self:Berserk(420) -- Heroic
+	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -168,34 +171,6 @@ function mod:CrushedArmorApplied(args)
 		self:PlaySound(args.spellId, "warning") -- Not taunted? Play again.
 	end
 end
-
--- XXX Temp incase it hits more than 1 target
--- do
--- 	local playerList = {}
--- 	local prev = 0
--- 	function mod:ChainsOfEternityApplied(args)
--- 		local t = args.time
--- 		if t-prev > 5 then
--- 			prev = t
--- 			playerList = {}
--- 			chainsCount = chainsCount + 1
--- 			--self:Bar(args.spellId, 23, CL.count:format(L.chains, chainsCount))
--- 		end
--- 		playerList[#playerList+1] = args.destName
--- 		if self:Me(args.destGUID) then
--- 			self:Say(args.spellId, CL.count:format(L.chains, chainsCount-1))
--- 			self:SayCountdown(args.spellId, 8)
--- 			self:PlaySound(args.spellId, "warning")
--- 		end
--- 		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
--- 	end
--- end
-
--- function mod:ChainsOfEternityRemoved(args)
--- 	if self:Me(args.destGUID) then
--- 		self:CancelSayCountdown(args.spellId)
--- 	end
--- end
 
 function mod:ChainsOfEternityApplied(args)
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(L.chains, chainsCount))
@@ -296,7 +271,7 @@ function mod:HungeringMist(args)
 	self:Bar(347269, 58.3, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
 end
 
-function mod:HungeringMistApplied()
+function mod:HungeringMistCast()
 	self:Message(347679, "yellow", CL.casting:format(CL.count:format(L.mist, mistCastCount)))
 	self:PlaySound(347679, "info")
 	self:CastBar(347679, 4.8, CL.count:format(L.mist, mistCastCount)) -- Hungering Mist
