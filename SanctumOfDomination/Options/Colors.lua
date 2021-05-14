@@ -84,7 +84,7 @@ BigWigs:AddColors("Painsmith Raznal", {
 	[355568] = {"blue","yellow"},
 	[355778] = {"blue","yellow"},
 	[355786] = {"blue","purple"},
-	["stages"] = "green",
+	["stages"] = {"cyan","green"},
 })
 
 BigWigs:AddColors("Guardian of the First Ones", {

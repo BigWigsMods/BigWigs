@@ -82,6 +82,7 @@ BigWigs:AddSounds("Painsmith Raznal", {
 	[355568] = {"alert","warning"},
 	[355778] = {"alert","warning"},
 	[355786] = {"alarm","warning"},
+	["stages"] = {"info","long"},
 })
 
 BigWigs:AddSounds("Guardian of the First Ones", {
