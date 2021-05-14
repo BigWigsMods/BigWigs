@@ -7,7 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(176523) -- Painsmith Raznal
 mod:SetEncounterID(2430)
 mod:SetRespawnTime(30)
---mod:SetStage(1)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -18,6 +18,11 @@ local instrumentCount = 1
 local spikedBallsCount = 1
 local trapsCount = 1
 local chainsCount = 1
+local weaponNames = {
+	[348508] = "hammer",
+	[355568] = "axe",
+	[355778] = "scythe",
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -62,10 +67,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	--self:Log("SPELL_AURA_APPLIED", "InstrumentApplied", 348508, 355568, 355778) -- Rippling Hammer, Cruciform Axe, Dualblade Scythe
-	--self:Log("SPELL_AURA_REMOVED", "InstrumentRemoved", 348508, 355568, 355778)
 	self:Log("SPELL_AURA_APPLIED", "BlackenedArmorApplied", 355786)
-	self:Log("SPELL_CAST_SUCCESS", "SpikedBalls", 352052)
 
 	--self:Log("SPELL_AURA_APPLIED", "FlameclaspTrapApplied", 348456)
 	--self:Log("SPELL_AURA_REMOVED", "FlameclaspTrapRemoved", 348456)
@@ -75,6 +77,8 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "ForgeWeapon", 355525)
 	self:Log("SPELL_AURA_REMOVED", "ForgeWeaponOver", 355525)
+
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
 function mod:OnEngage()
@@ -83,11 +87,12 @@ function mod:OnEngage()
 	spikedBallsCount = 1
 	trapsCount = 1
 	chainsCount = 1
+	self:SetStage(1)
 
-	--self:Bar(348508, 20, CL.count:format(L.hammer, instrumentCount)) -- Hammer
-	--self:Bar(352052, 20, CL.count:format(self:SpellName(352052),spikedBallsCount)) -- Spiked Balls
-	--self:Bar(348456, 20, CL.count:format(CL.traps, trapsCount)) -- Spiked Balls
-	--self:Bar(355505, 20, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
+	self:Bar(355505, 8, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
+	self:Bar(348508, 19, CL.count:format(L.hammer, instrumentCount)) -- Hammer
+	self:Bar(352052, 33, CL.count:format(self:SpellName(352052),spikedBallsCount)) -- Spiked Balls
+	self:Bar(348456, 49, CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 	self:RegisterUnitEvent("UNIT_AURA", nil, "player")
@@ -121,7 +126,6 @@ do
 			self:Say(348508)
 			self:SayCountdown(348508, 6)
 			self:PlaySound(348508, "warning")
-			self:TargetMessage(348508, "blue", self:UnitName("player"))
 		elseif not name and hammerDebuff then
 			hammerDebuff = false
 			self:CancelSayCountdown(348508)
@@ -133,7 +137,6 @@ do
 			self:Say(355778)
 			self:SayCountdown(355778, 6)
 			self:PlaySound(355778, "warning")
-			self:TargetMessage(355778, "blue", self:UnitName("player"))
 		elseif not name and scytheDebuff then
 			scytheDebuff = false
 			self:CancelSayCountdown(355778)
@@ -145,7 +148,6 @@ do
 			self:Say(355568)
 			self:SayCountdown(355568, 6)
 			self:PlaySound(355568, "warning")
-			self:TargetMessage(355568, "blue", self:UnitName("player"))
 		elseif not name and axeDebuff then
 			axeDebuff = false
 			self:CancelSayCountdown(355568)
@@ -156,6 +158,7 @@ end
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < nextStageWarning then -- Stage changes at 70% and 40%
 		self:Message("stages", "green", CL.soon:format(CL.intermission), false)
+		self:PlaySound("stages", "info")
 		nextStageWarning = nextStageWarning - 30
 		if nextStageWarning < 30 then
 			self:UnregisterUnitEvent(event, unit)
@@ -163,29 +166,34 @@ function mod:UNIT_HEALTH(event, unit)
 	end
 end
 
---function mod:InstrumentApplied(args)
---	local equippedWeapon = args.spellId == 348508 and L.hammer or args.spellId == 355568 and L.axe or L.scythe
---	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(equippedWeapon, instrumentCount))
---	self:PrimaryIcon(args.spellId, args.destName)
---	if self:Me(args.destGUID) then
---		self:Say(args.spellId, CL.count:format(equippedWeapon, instrumentCount))
---		self:SayCountdown(args.spellId, 6)
---		self:PlaySound(args.spellId, "warning")
---	else
---		self:PlaySound(args.spellId, "alert")
---	end
---	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(equippedWeapon, instrumentCount))
---	instrumentCount = instrumentCount + 1
---	--self:Bar(args.spellId, 20, CL.count:format(equippedWeapon, instrumentCount))
---end
-
---function mod:InstrumentRemoved(args)
---	self:PrimaryIcon(args.spellId)
---	self:StopBar(CL.count:format(L.hammer, instrumentCount), args.destName)
---	if self:Me(args.destGUID) then
---		self:CancelSayCountdown(args.spellId)
---	end
---end
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 348460 then -- Flameclasp Trap
+		self:Message(348456, "orange", CL.count:format(CL.traps, trapsCount))
+		trapsCount = trapsCount + 1
+		self:Bar(348456, 41, CL.count:format(CL.traps, trapsCount))
+	elseif spellId == 352052 then -- Spiked Balls
+		self:Message(spellId, "red", CL.count:format(self:SpellName(spellId),spikedBallsCount))
+		self:PlaySound(spellId, "alarm")
+		spikedBallsCount = spikedBallsCount + 1
+		self:Bar(spellId, 62, CL.count:format(self:SpellName(spellId), spikedBallsCount))
+	elseif weaponNames[spellId] then -- Hurl weapon
+		-- Target snapshots here, SPELL_CAST_START is too late
+		local name = self:UnitName("boss1target")
+		local equippedWeapon = L[weaponNames[spellId]]
+		self:TargetMessage(spellId, "yellow", name, CL.count(equippedWeapon, instrumentCount))
+		self:PrimaryIcon(spellId, name)
+		self:ScheduleTimer("PrimaryIcon", 6, spellId)
+		if self:Me(self:UnitGUID("boss1target")) then
+			-- Let UNIT_AURA do this, I guess? It's 6s from here to damage,
+			-- so the aura should be applied about now
+		else
+			self:PlaySound(spellId, "alert")
+		end
+		self:TargetBar(spellId, 6, name, CL.count:format(equippedWeapon, instrumentCount))
+		instrumentCount = instrumentCount + 1
+		self:Bar(spellId, 33, CL.count:format(equippedWeapon, instrumentCount))
+	end
+end
 
 function mod:BlackenedArmorApplied(args)
 	if self:Tank() and self:Tank(args.destName) then
@@ -196,13 +204,6 @@ function mod:BlackenedArmorApplied(args)
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
-end
-
-function mod:SpikedBalls(args)
-	self:Message(args.spellId, "red", CL.count:format(args.spellName,spikedBallsCount))
-	self:PlaySound(args.spellId, "alarm")
-	spikedBallsCount = spikedBallsCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(args.spellName,spikedBallsCount))
 end
 
 --do
@@ -245,6 +246,7 @@ do
 			prev = t
 			playerList = {}
 			chainsCount = chainsCount + 1
+			self:Bar(args.spellId, 30, CL.count:format(L.chains, chainsCount))
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
@@ -255,7 +257,6 @@ do
 			self:PlaySound(args.spellId, "warning")
 		end
 		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
-		--self:Bar(args.spellId, 20, CL.count:format(L.chains, chainsCount))
 		self:CustomIcon(shadowsteelChainsMarker, args.destName, count)
 	end
 
@@ -268,10 +269,26 @@ do
 end
 
 function mod:ForgeWeapon(args)
+	self:StopBar(CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
+	self:StopBar(CL.count:format(self:SpellName(352052),spikedBallsCount)) -- Spiked Balls
+	self:StopBar(CL.count:format(L.chains, chainsCount)) -- Chains
+	self:StopBar(CL.count:format(L.hammer, instrumentCount)) -- Hammer
+	self:StopBar(CL.count:format(L.axe, instrumentCount)) -- Axe
+
+	self:SetStage(self:GetStage() + 1)
 	self:Message("stages", "cyan", CL.intermission, args.spellId)
-	self:Bar("stages", 48, CL.intermission, args.spellId)
+	self:PlaySound("stages", "info")
+	self:CDBar("stages", 51.8, CL.intermission, args.spellId) -- 48s Forge Weapon + ~6.8s to jump down
 end
 
 function mod:ForgeWeaponOver(args)
-	self:Message("stages", "cyan", CL.over:format(CL.intermission), args.spellId) -- XXX too early?
+	self:SetStage(self:GetStage() + 1)
+	self:Message("stages", "cyan", CL.soon:format(args.sourceName), false)
+	self:PlaySound("stages", "long")
+
+	self:Bar(355505, 15, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
+	local weapon = self:GetStage() == 3 and 355568 or 355778 -- Axe or Scythe
+	self:Bar(weapon, 24, CL.count:format(L[weapon], instrumentCount)) -- Instruments of Pain
+	self:Bar(352052, 40, CL.count:format(self:SpellName(352052),spikedBallsCount)) -- Spiked Balls
+	self:Bar(348456, 56, CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
 end
