@@ -106,7 +106,10 @@ function mod:OnEngage()
 	stage = 1
 
 	self:CDBar(350828, 9.4) -- Death Link
-	self:Bar(351413, 41.5, CL.laser)
+	self:Bar(351413, 41.5, CL.laser) -- Annihilating Glare
+	-- if self:Mythic() then
+	-- 	self:Bar(350604, 20, L.slow) -- Hopeless Lethargy
+	-- end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -162,17 +165,19 @@ function mod:StygianDarkshieldApplied(args)
 	self:PlaySound("stages", "long")
 
 	self:StopBar(350828) -- Death Link
+	self:StopBar(CL.laser) -- Laser
+	self:StopBar(L.slow)
 
 	self:Bar(350847, 8.5, CL.beam) -- Desolation Beam
-	self:Bar(351827, 12.6) -- Spreading Misery
+	self:Bar(351827, 12.6, L.pool) -- Spreading Misery
 	self:Bar(349028, 17, L.death_gaze) -- Titanic Death Gaze
-	self:Bar(350713, 17.5) -- Slothful Corruption
+	self:Bar(350713, 17.5, L.corruption) -- Slothful Corruption
 end
 
 function mod:TitanicDeathGaze(args)
 	self:Message(349028, "orange", CL.casting:format(L.death_gaze))
 	self:PlaySound(349028, "alarm")
-	self:CastBar(349028, 8)
+	self:CastBar(349028, 8, L.death_gaze)
 	self:Bar(349028, 33, L.death_gaze)
 end
 
@@ -220,7 +225,7 @@ do
 			if self:Healer() then
 				self:PlaySound(350713, "alert")
 			end
-			self:Bar(350713, 25)
+			self:Bar(350713, 25, L.corruption)
 		end
 	end
 end
@@ -240,7 +245,7 @@ do
 			prev = t
 			self:Message(351827, "orange", CL.incoming:format(L.pool))
 			self:PlaySound(351827, "alert")
-			self:Bar(351827, 12)
+			self:Bar(351827, 12, L.pool)
 		end
 	end
 end
@@ -262,9 +267,9 @@ end
 
 function mod:StygianDarkshieldRemoved(args)
 	self:StopBar(CL.beam) -- Desolation Beam
-	self:StopBar(351827) -- Spreading Misery
+	self:StopBar(L.pools) -- Spreading Misery
 	self:StopBar(L.death_gaze) -- Titanic Death Gaze
-	self:StopBar(350713) -- Slothful Corruption
+	self:StopBar(L.corruption) -- Slothful Corruption
 
 	if stage == 2 then
 		self:SetStage(1)
@@ -273,7 +278,10 @@ function mod:StygianDarkshieldRemoved(args)
 		self:PlaySound("stages", "long")
 
 		self:Bar(350828, 20.5) -- Death Link
-		self:Bar(351413, 41.3, CL.laser)
+		self:Bar(351413, 41.3, CL.laser) -- Annihilating Glare
+		-- if self:Mythic() then
+		-- 	self:Bar(350604, 20, L.slow) -- Hopeless Lethargy
+		-- end
 	end
 end
 
@@ -285,7 +293,10 @@ function mod:ImmediateExtermination(args)
 	self:PlaySound("stages", "long")
 
 	self:Bar(350828, 12.4) -- Death Link
-	self:Bar(351413, 40.8, CL.laser)
+	self:Bar(351413, 40.8, CL.laser) -- Annihilating Glare
+	-- if self:Mythic() then
+	-- 	self:Bar(350604, 20, L.slow) -- Hopeless Lethargy
+	-- end
 end
 
 function mod:AnnihilatingGlare(args)
@@ -304,6 +315,7 @@ do
 		if t-prev > 5 then
 			prev = t
 			playerList = {}
+			--self:Bar(args.spellId, 20, L.slow)
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
