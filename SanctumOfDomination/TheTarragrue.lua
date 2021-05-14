@@ -306,7 +306,7 @@ end
 function mod:RemnantOfForgottenTorments(args)
 	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.remnants, remnantCount)))
 	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, 6, CL.spawning:format(L.count:format(L.remnants, remnantCount))) -- Remnants Spawning
+	self:Bar(args.spellId, 6, CL.spawning:format(CL.count:format(L.remnants, remnantCount))) -- Remnants Spawning
 	remnantCount = remnantCount + 1
 	if nextMist - GetTime() > 30 then
 		self:Bar(args.spellId, 31, CL.count:format(L.remnants, remnantCount)) -- 30.5 ~ 31.67
