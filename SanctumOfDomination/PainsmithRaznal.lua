@@ -176,7 +176,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:PlaySound(spellId, "alarm")
 		spikedBallsCount = spikedBallsCount + 1
 		self:Bar(spellId, 62, CL.count:format(self:SpellName(spellId), spikedBallsCount))
-	elseif weaponNames[spellId] then -- Hurl weapon
+	elseif spellId == 348508 or spellId == 355568 or spellId == 355778 then -- Hurl weapons
 		-- Target snapshots here, SPELL_CAST_START is too late
 		local name = self:UnitName("boss1target")
 		local equippedWeapon = L[weaponNames[spellId]]
@@ -287,8 +287,8 @@ function mod:ForgeWeaponOver(args)
 	self:PlaySound("stages", "long")
 
 	self:Bar(355505, 15, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
-	local weapon = self:GetStage() == 3 and 355568 or 355778 -- Axe or Scythe
-	self:Bar(weapon, 24, CL.count:format(L[weapon], instrumentCount)) -- Instruments of Pain
+	local spellId = self:GetStage() == 3 and 355568 or 355778 -- Axe or Scythe
+	self:Bar(spellId, 24, CL.count:format(L[spellId], instrumentCount)) -- Instruments of Pain
 	self:Bar(352052, 40, CL.count:format(self:SpellName(352052),spikedBallsCount)) -- Spiked Balls
 	self:Bar(348456, 56, CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
 end
