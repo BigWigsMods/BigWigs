@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("The Eye of the Jailer", 2450, 2442)
 if not mod then return end
 mod:RegisterEnableMob(175725)
 mod:SetEncounterID(2433)
-mod:SetRespawnTime(30)
+mod:SetRespawnTime(35)
 mod:SetStage(1)
 
 --------------------------------------------------------------------------------
@@ -106,10 +106,10 @@ function mod:OnEngage()
 	stage = 1
 
 	self:CDBar(350828, 9.4) -- Death Link
-	self:Bar(351413, 41.5, CL.laser) -- Annihilating Glare
-	-- if self:Mythic() then
-	-- 	self:Bar(350604, 20, L.slow) -- Hopeless Lethargy
-	-- end
+	self:Bar(351413, self:Mythic() and 25 or 41.5, CL.laser) -- Annihilating Glare
+	if self:Mythic() then
+		self:Bar(350604, 9.7, L.slow) -- Hopeless Lethargy
+	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -172,6 +172,9 @@ function mod:StygianDarkshieldApplied(args)
 	self:Bar(351827, 12.6, L.pool) -- Spreading Misery
 	self:Bar(349028, self:Mythic() and 28.1 or 17, L.death_gaze) -- Titanic Death Gaze
 	self:Bar(350713, 17.5, L.corruption) -- Slothful Corruption
+	if self:Mythic() then
+		self:Bar(355232, 12) -- Scorn and Ire
+	end
 end
 
 function mod:TitanicDeathGaze(args)
@@ -276,10 +279,10 @@ function mod:StygianDarkshieldRemoved(args)
 		self:PlaySound("stages", "long")
 
 		self:Bar(350828, 20.5) -- Death Link
-		self:Bar(351413, 41.3, CL.laser) -- Annihilating Glare
-		-- if self:Mythic() then
-		-- 	self:Bar(350604, 20, L.slow) -- Hopeless Lethargy
-		-- end
+		self:Bar(351413, self:Mythic() and 38 or 41.3, CL.laser) -- Annihilating Glare
+		if self:Mythic() then
+			self:Bar(350604, 12.7, L.slow) -- Hopeless Lethargy
+		end
 	end
 end
 
@@ -291,10 +294,10 @@ function mod:ImmediateExtermination(args)
 	self:PlaySound("stages", "long")
 
 	self:Bar(350828, 12.4) -- Death Link
-	self:Bar(351413, 40.8, CL.laser) -- Annihilating Glare
-	-- if self:Mythic() then
-	-- 	self:Bar(350604, 20, L.slow) -- Hopeless Lethargy
-	-- end
+	self:Bar(351413, self:Mythic() and 28 or 40.8, CL.laser) -- Annihilating Glare
+	if self:Mythic() then
+		self:Bar(350604, 11, L.slow) -- Hopeless Lethargy
+	end
 end
 
 function mod:AnnihilatingGlare(args)
@@ -313,7 +316,7 @@ do
 		if t-prev > 5 then
 			prev = t
 			playerList = {}
-			--self:Bar(args.spellId, 20, L.slow)
+			self:Bar(args.spellId, 20, L.slow)
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
