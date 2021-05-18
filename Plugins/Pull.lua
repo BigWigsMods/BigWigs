@@ -71,14 +71,12 @@ do
 	end
 
 	plugin.pluginOptions = {
-		name = L.pull,
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Pull:20|t ".. L.pull,
 		type = "group",
 		childGroups = "tab",
 		get = function(i) return plugin.db.profile[i[#i]] end,
 		set = function(i, value) plugin.db.profile[i[#i]] = value end,
 		order = 6,
-		--icon = 450905,
-		--iconCoords = {0.07, 0.93, 0.07, 0.93},
 		args = {
 			countType = {
 				type = "select",

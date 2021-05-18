@@ -51,7 +51,7 @@ local RestoreAll
 --
 
 plugin.pluginOptions = {
-	name = L.bossBlock,
+	name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Block:20|t ".. L.bossBlock,
 	desc = L.bossBlockDesc,
 	type = "group",
 	childGroups = "tab",

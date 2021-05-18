@@ -438,8 +438,8 @@ do
 
 	-- Adding core generic toggles
 	core:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, 136224) -- 136224 = "Interface\\Icons\\spell_shadow_unholyfrenzy"
-	core:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, 429383) -- 429383 = "Interface\\Icons\\spell_arcane_invocation"
-	core:RegisterBossOption("infobox", L.infobox, L.infobox_desc, nil, 443374) -- Interface\\Icons\\INV_MISC_CAT_TRINKET05
+	core:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\AltPower")
+	core:RegisterBossOption("infobox", L.infobox, L.infobox_desc, nil, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Info")
 	core:RegisterBossOption("stages", L.stages, L.stages_desc)
 	core:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
 end

@@ -24,7 +24,7 @@ plugin.defaultDB = {
 }
 
 plugin.pluginOptions = {
-	name = L.wipe,
+	name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Wipe:20|t ".. L.wipe,
 	type = "group",
 	childGroups = "tab",
 	order = 8,

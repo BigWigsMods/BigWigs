@@ -45,11 +45,10 @@ do
 	end
 	plugin.pluginOptions = {
 		type = "group",
-		name = L.icons,
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Markers:20|t ".. L.icons,
 		order = 11,
 		get = get,
 		set = set,
-		--icon = 137003,
 		args = {
 			disabled = {
 				type = "toggle",

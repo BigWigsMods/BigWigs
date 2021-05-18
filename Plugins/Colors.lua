@@ -95,7 +95,7 @@ end
 
 local colorOptions = {
 	type = "group",
-	name = L.colors,
+	name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Colors:20|t ".. L.colors,
 	handler = plugin,
 	get = get,
 	set = set,

@@ -473,7 +473,7 @@ end
 --
 
 function plugin:OnRegister()
-	BigWigs:RegisterBossOption("proximity", L.proximity, L.proximity_desc, OnOptionToggled, 132181) -- 132181 = "Interface\\Icons\\ability_hunter_pathfinding"
+	BigWigs:RegisterBossOption("proximity", L.proximity, L.proximity_desc, OnOptionToggled, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Proximity")
 	self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 	updateProfile()
 end
@@ -644,7 +644,7 @@ end
 do
 	local disabled = function() return plugin.db.profile.disabled end
 	plugin.pluginOptions = {
-		name = L.proximity_name,
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Proximity:20|t ".. L.proximity_name,
 		type = "group",
 		order = 13,
 		get = function(info)

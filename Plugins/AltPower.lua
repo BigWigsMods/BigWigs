@@ -52,13 +52,10 @@ local UpdateDisplay
 local tsort, min = table.sort, math.min
 local UnitPower, IsInGroup = UnitPower, IsInGroup
 local db = nil
-local roleIcons = { -- 337497 = Interface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES
-	-- INLINE_TANK_ICON="|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:0:19:22:41|t"
-	["TANK"] = "|T337497:0:0:0:0:64:64:0:19:22:41|t",
-	-- INLINE_HEALER_ICON="|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:1:20|t"
-	["HEALER"] = "|T337497:0:0:0:0:64:64:20:39:1:20|t",
-	-- INLINE_DAMAGER_ICON="|TInterface\\LFGFrame\\UI-LFG-ICON-PORTRAITROLES.blp:16:16:0:0:64:64:20:39:22:41|t"
-	["DAMAGER"] = "|T337497:0:0:0:0:64:64:20:39:22:41|t",
+local roleIcons = {
+	["TANK"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:0|t",
+	["HEALER"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer:0|t",
+	["DAMAGER"] = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Damage:0|t",
 	["NONE"] = "",
 }
 
@@ -123,7 +120,7 @@ end
 do
 	local disabled = function() return plugin.db.profile.disabled end
 	plugin.pluginOptions = {
-		name = L.altPowerTitle,
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\AltPower:20|t ".. L.altPowerTitle,
 		type = "group",
 		childGroups = "tab",
 		order = 14,
