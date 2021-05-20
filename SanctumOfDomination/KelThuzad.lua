@@ -115,7 +115,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "FreezingBlast", 352379)
 	self:Log("SPELL_CAST_START", "GlacialWinds", 355055)
 	self:Log("SPELL_CAST_START", "NecroticObliteration", 352355)
-	self:Death("RemnantDeath", 176929) -- Remnant of Kel'Thuzad#
+	self:Death("RemnantDeath", 176929) -- Remnant of Kel'Thuzad
 
 	self:Log("SPELL_CAST_START", "BansheesCry", 352141)
 	self:Log("SPELL_SUMMON", "MarchOfTheForsakenSummon", 352094)

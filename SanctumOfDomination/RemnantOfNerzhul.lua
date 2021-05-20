@@ -86,7 +86,7 @@ end
 function mod:ThermalLamentApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:NewStackMessage(args.spellId, "blue", args.destName, amount, 3, L.slow)
+		self:NewStackMessage(args.spellId, "blue", args.destName, amount, 3, L.slow) -- Perhaps warn with slow% in the message
 		if amount > 2 then -- 45%+ slow
 			self:PlaySound(args.spellId, "alarm")
 		end
