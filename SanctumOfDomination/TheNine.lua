@@ -14,7 +14,8 @@ mod:SetStage(1)
 -- Locals
 --
 
-local shardOfDestinyCount = 1
+local fragmentMarks = {}
+local fragmentOfDestinyCount = 1
 local callOfTheValkyrCount = 1
 local formlessMassCount = 1
 local wingsOfRageCount = 1
@@ -22,6 +23,7 @@ local songOfDissolutionCount = 1
 local reverberatingRefrainCount = 1
 local kyraAlive = true
 local signeAlive = true
+local stage2Health = mod:Mythic() and 20 or mod:Heroic() and 15 or mod:Normal() and 10 or 5
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,13 +45,17 @@ if L then
 	L.soaks = "Soaks" -- Aradne's Falling Strike
 	L.small_bombs = "Small Bombs" -- Brynja's Mournful Dirge
 	L.recall = "Recall" -- Short for Word of Recall
+
+
+	L.blades_yell = "Fall before my blade!"
+	L.soaks_yell = "You are all outmatched!"
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
-local fragmentsMarker = mod:AddMarkerOption(false, "player", 1, 350542, 1, 2, 3, 4, 5) -- Fragments of Destiny
+local fragmentsMarker = mod:AddMarkerOption(false, "player", 1, 350542, 1, 2, 3) -- Fragments of Destiny
 local formlessMassMarker = mod:AddMarkerOption(false, "npc", 8, 350342, 8) -- Formless Mass
 function mod:GetOptions()
 	return {
@@ -89,7 +95,6 @@ function mod:GetOptions()
 		[350467] = mod:SpellName(-23206), -- Call of the Val'kyr
 		[350475] = mod:SpellName(-22879), -- Stage Two: The First of the Mawsworn
 	},{
-		["stages"] = "general",
 		[350542] = L.fragments, -- Fragments of Destiny (Fragments)
 		[350202] = L.unending_strike, -- Unending Strike ([tank icon] Unending Strike)
 		[350342] = CL.add, -- Formless Mass (Add)
@@ -108,11 +113,14 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Stage One: The Unending Voice
-	self:Log("SPELL_AURA_APPLIED", "FragmentsOfDestiny", 350542)
+	self:Log("SPELL_CAST_START", "FragmentsOfDestiny", 350541)
+	self:Log("SPELL_AURA_APPLIED", "FragmentsOfDestinyApplied", 350542)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FragmentsOfDestinyStacks", 350542)
+	self:Log("SPELL_AURA_REMOVED", "FragmentsOfDestinyRemoved", 350542)
 	self:Log("SPELL_AURA_APPLIED", "ShardOfDestinyAreaEffect", 350555)
 	self:Log("SPELL_PERIODIC_DAMAGE", "ShardOfDestinyAreaEffect", 350555)
 	self:Log("SPELL_PERIODIC_MISSED", "ShardOfDestinyAreaEffect", 350555)
@@ -133,11 +141,11 @@ function mod:OnBossEnable()
 
 	-- Call of the Val'kyr
 	self:Log("SPELL_CAST_START", "CallOfTheValkyr", 350467)
-	--self:Log("SPELL_CAST_SUCCESS", "AgathasEternalBlade", 350031) XXX Use a yell?
+	--self:Log("SPELL_CAST_SUCCESS", "AgathasEternalBlade", 350031) -- Using a yell atm, hopefully an event later...
 	self:Log("SPELL_CAST_SUCCESS", "DaschlasMightyImpact", 350184)
 	self:Log("SPELL_AURA_APPLIED", "DaschlasMightyImpactApplied", 350184)
 	self:Log("SPELL_AURA_APPLIED", "AnnhyldesBrightAegisApplied", 350158)
-	--self:Log("SPELL_CAST_SUCCESS", "AradnesFallingStrike", 350098) XXX Use a yell?
+	--self:Log("SPELL_CAST_SUCCESS", "AradnesFallingStrike", 350098) -- Using a yell atm, hopefully an event later...
 	self:Log("SPELL_AURA_APPLIED", "BrynjasMournfulDirgeApplied", 350109)
 	self:Log("SPELL_AURA_REMOVED", "BrynjasMournfulDirgeRemoved", 350109)
 	self:Log("SPELL_CAST_SUCCESS", "ArthurasCrushingGaze", 350039)
@@ -148,14 +156,18 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "PierceSoulApplied", 350475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PierceSoulApplied", 350475)
 	self:Log("SPELL_CAST_SUCCESS", "Resentment", 351399)
-	self:Log("SPELL_AURA_APPLIED", "LinkEssence", 350482)
+	self:Log("SPELL_CAST_START", "LinkEssence", 350482)
+	self:Log("SPELL_CAST_SUCCESS", "LinkEssenceSuccess", 350482)
+	self:Log("SPELL_AURA_APPLIED", "LinkEssenceApplied", 350482)
 	self:Log("SPELL_CAST_START", "WordOfRecall", 350687)
 end
 
 function mod:OnEngage()
 	self:SetStage(1)
 
-	shardOfDestinyCount = 1
+	stage2Health = self:Mythic() and 20 or self:Heroic() and 15 or self:Normal() and 10 or 5
+	fragmentMarks = {}
+	fragmentOfDestinyCount = 1
 	callOfTheValkyrCount = 1
 	formlessMassCount = 1
 	wingsOfRageCount = 1
@@ -178,6 +190,15 @@ end
 -- Event Handlers
 --
 
+function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
+	if msg:find(L.blades_yell, nil, true) then -- Agatha's Eternal Blade
+		self:Message(350031, "yellow", CL.incoming:format(L.blades))
+	elseif msg:find(L.soaks_yell, nil, true) then -- Aradne's Falling Strike
+		self:Message(350098, "yellow", CL.incoming:format(L.soaks))
+		self:CastBar(350098, 10.2, L.soaks) -- 10.2~10.5, yell is not super reliable :(
+	end
+end
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 350745 then -- Maw Power (Set to 00)  [DNT]
 		self:SetStage(2)
@@ -186,13 +207,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 
 		self:Bar(351399, 6.9) -- Resentment
 		self:Bar(350475, 9.4) -- Pierce Soul
+		self:Bar(350482, 24.4) -- Link Essence
 		self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 		self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
 	end
 end
 
 function mod:UNIT_HEALTH(event, unit)
-	if self:GetHealth(unit) < 23 then -- Stage 2 when the first of 2 bosses reaches 20%
+	if self:GetHealth(unit) < (stage2Health+3) then
 		self:Message("stages", "green", CL.soon:format(CL.stage:format(2)), false)
 		self:UnregisterUnitEvent(event, unit)
 	end
@@ -201,19 +223,15 @@ end
 -- Stage One: The Unending Voice
 do
 	local playerList = {}
-	local prev = 0
 	local allowed = true
 	function mod:FragmentsOfDestiny(args)
-		-- XXX FIXME
-		-- - Use an icon set, only using available icons
-		-- - Re-mark when it jumps to a different player, but not if it is an extra stack if you already had one
-		-- - Dont warn for jumps, only the initial wave of debuffs
-		local t = args.time-- new set of debuffs
-		if t-prev > 5 then
-			prev = t
-			playerList = {}
-			shardOfDestinyCount = shardOfDestinyCount + 1
-		end
+		playerList = {}
+		allowed = true
+		fragmentOfDestinyCount = fragmentOfDestinyCount + 1
+		self:CDBar(350542, 47.5, CL.count:format(L.fragments, fragmentOfDestinyCount))
+	end
+
+	function mod:FragmentsOfDestinyApplied(args)
 		local count = #playerList+1
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
@@ -222,11 +240,18 @@ do
 			self:PlaySound(args.spellId, "warning")
 		end
 		if allowed then
-			self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.fragment, shardOfDestinyCount-1))
+			self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.fragment, fragmentOfDestinyCount-1))
 			self:SimpleTimer(1, function() allowed = false end)
-			self:SimpleTimer(20, function() allowed = true playerList = {} end)
 		end
-		self:CustomIcon(fragmentsMarker, args.destName, count)
+		if self:GetOption(fragmentsMarker) then
+			for i = 1, 3, 1 do -- 1, 2, 3
+				if not fragmentMarks[i] then
+					fragmentMarks[i] = args.destGUID
+					self:CustomIcon(fragmentsMarker, args.destName, i)
+					break
+				end
+			end
+		end
 	end
 end
 
@@ -235,6 +260,18 @@ function mod:FragmentsOfDestinyStacks(args)
 	if self:Me(args.destGUID) then
 		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, nil, L.fragment)
 		self:PlaySound(args.spellId, "alarm")
+	end
+end
+
+function mod:FragmentsOfDestinyRemoved(args)
+	if self:GetOption(fragmentsMarker) then
+		for i = 1, 3, 1 do -- 1, 2, 3
+			if fragmentMarks[i] == args.destGUID then
+				fragmentMarks[i] = nil
+				self:CustomIcon(fragmentsMarker, args.destName, 0)
+				return
+			end
+		end
 	end
 end
 
@@ -437,14 +474,15 @@ end
 
 do
 	local playerList = {}
-	local prev = 0
 	function mod:LinkEssence(args)
-		local t = args.time
-		if t-prev > 5 then
-			prev = t
-			playerList = {}
-			--self:Bar(args.spellId, 6.3)
-		end
+		playerList = {}
+	end
+
+	function mod:LinkEssenceSuccess(args)
+		self:CDBar(args.spellId, 37.5)
+	end
+
+	function mod:LinkEssenceApplied(args)
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
