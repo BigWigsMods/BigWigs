@@ -115,13 +115,11 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:RenderedSoul(t, count)
-		self:Bar(351229, t, CL.count:format(L.souls, count))
-		self:ScheduleTimer("Message", t, 351229, "yellow", CL.count:format(L.souls, count))
-		count = count + 1
-		if count < 3 then -- Waves of 2, 2nd is 5s after first
-			self:ScheduleTimer("RenderedSoul", t, 5, count)
-		end
+function mod:RenderedSoul()
+	self:Bar(351229, 5, CL.count:format(L.souls, 1))
+	self:ScheduleTimer("Message", 5, 351229, "yellow", CL.count:format(L.souls, 1))
+	self:ScheduleTimer("Bar", 5, 351229, 5, CL.count:format(L.souls, 2))
+	self:ScheduleTimer("Message", 10, 351229, "yellow", CL.count:format(L.souls, 2))
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
@@ -129,8 +127,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Message(350217, "yellow", CL.count:format(L.cones, tormentCount))
 		tormentCount = tormentCount + 1
 		self:Bar(350217, timers[350217][tormentCount], CL.count:format(L.cones, tormentCount))
-
-		self:RenderedSoul(5, 1)
+		self:RenderedSoul()
 	end
 end
 
@@ -165,6 +162,9 @@ do
 	end
 
 	function mod:BrandOfTormentRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
 		self:CustomIcon(brandOfTormentMarker, args.destName)
 	end
 end
@@ -179,7 +179,6 @@ function mod:RuinbladeApplied(args)
 	self:NewStackMessage(args.spellId, "purple", args.destName, amount)
 	self:PlaySound(args.spellId, "alarm")
 end
-
 
 do
 	local agonizersMarked = 0
@@ -248,7 +247,7 @@ function mod:Hellscream(args)
 	hellscreamCount = hellscreamCount + 1
 	self:Bar(args.spellId, timers[args.spellId][hellscreamCount], CL.count:format(L.chains, hellscreamCount))
 
-	self:RenderedSoul(5, 1)
+	self:RenderedSoul()
 end
 
 function mod:SoulManacles(args)
