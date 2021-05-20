@@ -26,6 +26,8 @@ local kyraAlive = true
 local signeAlive = true
 local stage2Health = mod:Mythic() and 20 or mod:Heroic() and 15 or mod:Normal() and 10 or 5
 
+local unendingStrikeText = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:0|t"..mod:SpellName(350202)
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -34,19 +36,17 @@ local L = mod:GetLocale()
 if L then
 	L.fragments = "Fragments" -- Short for Fragments of Destiny
 	L.fragment = "Fragment" -- Singular Fragment of Destiny
-	L.unending_strike = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:16:16:0:0:64:64:4:60:4:60|t Unending Strike" -- [tank icon] Unending Strike
-	L.pushback = "Run Away" -- Wings of Rage
+	L.pullin = "Run Away" -- Wings of Rage
 	L.song = "Song" -- Short for Song of Dissolution
-	L.pullin = "Go in" -- Reverberating Refrain
+	L.pushback = "Go in" -- Reverberating Refrain
 	L.valkyr = "Val'kyr" -- Short for Call of the Val'kyr
 	L.blades = "Blades" -- Agatha's Eternal Blade
-	L.big_bomb = "Big Bombs" -- Daschla's Mighty Impact
-	L.big_say = "Big" -- Attached to the countdown
+	L.big_bombs = "Big Bombs" -- Daschla's Mighty Impact
+	L.big_bomb = "Big Bomb" -- Attached to the countdown
 	L.shield = "Shield" -- Annhylde's Bright Aegis
 	L.soaks = "Soaks" -- Aradne's Falling Strike
 	L.small_bombs = "Small Bombs" -- Brynja's Mournful Dirge
 	L.recall = "Recall" -- Short for Word of Recall
-
 
 	L.blades_yell = "Fall before my blade!"
 	L.soaks_yell = "You are all outmatched!"
@@ -61,6 +61,7 @@ local formlessMassMarker = mod:AddMarkerOption(false, "npc", 8, 350342, 8) -- Fo
 function mod:GetOptions()
 	return {
 		"stages",
+		"berserk",
 		-- Stage One: The Unending Voice
 		{350542, "SAY"}, -- Fragments of Destiny // Note: Placed this first so ordering in bigwigs looks better vs Encounter Journal
 		fragmentsMarker,
@@ -97,14 +98,13 @@ function mod:GetOptions()
 		[350475] = mod:SpellName(-22879), -- Stage Two: The First of the Mawsworn
 	},{
 		[350542] = L.fragments, -- Fragments of Destiny (Fragments)
-		[350202] = L.unending_strike, -- Unending Strike ([tank icon] Unending Strike)
 		[350342] = CL.add, -- Formless Mass (Add)
 		[350365] = L.pushback, -- Wings of Rage (Run Away)
 		[350286] = L.song,-- Song of Dissolution (Song)
 		[350385] = L.pullin, -- Reverberating Refrain (Go in)
 		[350467] = L.valkyr, -- Call of the Val'kyr (Val'kyr)
 		[350031] = L.blades, -- Agatha's Eternal Blade (Blades)
-		[350184] = L.big_bomb, -- Daschla's Mighty Impact (Big Bombs)
+		[350184] = L.big_bombs, -- Daschla's Mighty Impact (Big Bombs)
 		[350158] = L.shield, -- Annhylde's Bright Aegis (Shield)
 		[350098] = L.soaks, -- Aradne's Falling Strike (Soaks)
 		[350109] = L.small_bombs, -- Brynja's Mournful Dirge (Small Bombs)
@@ -178,7 +178,7 @@ function mod:OnEngage()
 	kyraAlive = true
 	signeAlive = true
 
-	self:Bar(350202, 6, L.unending_strike) -- Unending Strike
+	self:Bar(350202, 6, unendingStrikeText) -- Unending Strike
 	self:Bar(350342, 12, CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
 	self:Bar(350467, 14.6, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 	self:Bar(350286, 16, CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
@@ -312,7 +312,7 @@ function mod:UnendingStrikeApplied(args)
 	if amount > 4 or (self:Tank() and amount > 3) then -- Tanks swap at 4+, warn others if they havn't
 		self:PlaySound(args.spellId, "alarm")
 	end
-	self:Bar(args.spellId, 6, L.unending_strike) -- to _START
+	self:Bar(args.spellId, 6, unendingStrikeText) -- to _START
 end
 
 do
@@ -357,7 +357,7 @@ end
 
 function mod:KyraDeath(args)
 	kyraAlive = false
-	self:StopBar(L.unending_strike) -- Unending Strike
+	self:StopBar(unendingStrikeText) -- Unending Strike
 	self:StopBar(CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
 	self:StopBar(CL.count:format(L.pullin, wingsOfRageCount)) -- Wings of Rage
 end
@@ -405,16 +405,17 @@ end
 -- end
 
 function mod:DaschlasMightyImpact(args)
-	self:Message(args.spellId, "cyan", L.big_bomb)
+	self:Message(args.spellId, "cyan", L.big_bombs)
 	self:CastBar(args.spellId, 10)
-	table.insert(incomingValkyrList, "|T425955:16:16:0:0:64:64:4:60:4:60|t "..L.big_bomb)
+	table.insert(incomingValkyrList, "|T425955:16:16:0:0:64:64:4:60:4:60|t "..L.big_bombs)
 	mod:UpdateInfoBox()
 end
 
 function mod:DaschlasMightyImpactApplied(args)
 	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, L.big_bomb)
 		self:Say(args.spellId, L.big_bomb)
-		self:SayCountdown(args.spellId, 10, L.big_say) -- Big 3, Big 2, Big 1
+		self:SayCountdown(args.spellId, 10, L.big_bomb) -- Big 3, Big 2, Big 1
 		self:PlaySound(args.spellId, "warning")
 	end
 end
