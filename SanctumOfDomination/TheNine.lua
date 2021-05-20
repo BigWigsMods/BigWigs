@@ -17,6 +17,7 @@ mod:SetStage(1)
 local fragmentMarks = {}
 local fragmentOfDestinyCount = 1
 local callOfTheValkyrCount = 1
+local incomingValkyrList = {}
 local formlessMassCount = 1
 local wingsOfRageCount = 1
 local songOfDissolutionCount = 1
@@ -86,7 +87,7 @@ function mod:GetOptions()
 		{350475, "TANK"}, -- Pierce Soul
 		351399, -- Resentment
 		350482, -- Link Essence
-		350687, -- Word of Recall
+		{350687, "INFOBOX"}, -- Word of Recall
 	},{
 		["stages"] = "general",
 		[350542] = mod:SpellName(-22877), -- Stage One: The Unending Voice
@@ -144,10 +145,10 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "AgathasEternalBlade", 350031) -- Using a yell atm, hopefully an event later...
 	self:Log("SPELL_CAST_SUCCESS", "DaschlasMightyImpact", 350184)
 	self:Log("SPELL_AURA_APPLIED", "DaschlasMightyImpactApplied", 350184)
-	self:Log("SPELL_AURA_APPLIED", "AnnhyldesBrightAegisApplied", 350158)
+	self:Log("SPELL_AURA_APPLIED", "AnnhyldesBrightAegisApplied", 350158) -- This is only the buff on the bosses, no spawn event or yells??
 	--self:Log("SPELL_CAST_SUCCESS", "AradnesFallingStrike", 350098) -- Using a yell atm, hopefully an event later...
-	self:Log("SPELL_AURA_APPLIED", "BrynjasMournfulDirgeApplied", 350109)
-	self:Log("SPELL_AURA_REMOVED", "BrynjasMournfulDirgeRemoved", 350109)
+	self:Log("SPELL_AURA_APPLIED", "BrynjasMournfulDirgeApplied", 350109, 351139) -- Valkyr, Recall
+	self:Log("SPELL_AURA_REMOVED", "BrynjasMournfulDirgeRemoved", 350109, 351139)
 	self:Log("SPELL_CAST_SUCCESS", "ArthurasCrushingGaze", 350039)
 	self:Log("SPELL_AURA_APPLIED", "ArthurasCrushingGazeApplied", 350039)
 	self:Log("SPELL_AURA_REMOVED", "ArthurasCrushingGazeRemoved", 350039)
@@ -169,6 +170,7 @@ function mod:OnEngage()
 	fragmentMarks = {}
 	fragmentOfDestinyCount = 1
 	callOfTheValkyrCount = 1
+	incomingValkyrList = {}
 	formlessMassCount = 1
 	wingsOfRageCount = 1
 	songOfDissolutionCount = 1
@@ -190,12 +192,23 @@ end
 -- Event Handlers
 --
 
+function mod:UpdateInfoBox()
+	for k, v in pairs(incomingValkyrList) do
+		self:SetInfo(350687, (k*2)-1, v) -- 1, 3, 5
+	 end
+end
+
+
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 	if msg:find(L.blades_yell, nil, true) then -- Agatha's Eternal Blade
 		self:Message(350031, "yellow", CL.incoming:format(L.blades))
+		table.insert(incomingValkyrList, "|T1376744:16:16:0:0:64:64:4:60:4:60|t "..L.blades)
+		mod:UpdateInfoBox()
 	elseif msg:find(L.soaks_yell, nil, true) then -- Aradne's Falling Strike
 		self:Message(350098, "yellow", CL.incoming:format(L.soaks))
 		self:CastBar(350098, 10.2, L.soaks) -- 10.2~10.5, yell is not super reliable :(
+		table.insert(incomingValkyrList, "|T2103905:16:16:0:0:64:64:4:60:4:60|t "..L.soaks)
+		mod:UpdateInfoBox()
 	end
 end
 
@@ -381,15 +394,22 @@ function mod:CallOfTheValkyr(args)
 	self:PlaySound(args.spellId, "long")
 	callOfTheValkyrCount = callOfTheValkyrCount +  1
 	self:Bar(args.spellId, 72.9, CL.count:format(L.valkyr, callOfTheValkyrCount))
+	incomingValkyrList = {}
+	if self:GetStage() == 2 then
+		self:OpenInfo(350687, self:SpellName(350687)) -- Word of Recall
+		self:UpdateInfoBox()
+	end
 end
 
--- function mod:AgathasEternalBlade(args)
+-- function mod:AgathasEternalBlade(args) -- Yell
 -- 	self:Message(args.spellId, "cyan")
 -- end
 
 function mod:DaschlasMightyImpact(args)
 	self:Message(args.spellId, "cyan", L.big_bomb)
 	self:CastBar(args.spellId, 10)
+	table.insert(incomingValkyrList, "|T425955:16:16:0:0:64:64:4:60:4:60|t "..L.big_bomb)
+	mod:UpdateInfoBox()
 end
 
 function mod:DaschlasMightyImpactApplied(args)
@@ -405,7 +425,7 @@ function mod:AnnhyldesBrightAegisApplied(args)
 	self:PlaySound(args.spellId, "alarm")
 end
 
--- function mod:AradnesFallingStrike(args)
+-- function mod:AradnesFallingStrike(args) -- Yell
 -- 	self:Message(args.spellId, "cyan")
 -- 	self:CastBar(args.spellId, 8)
 -- end
@@ -413,31 +433,36 @@ end
 do
 	local playerList = {}
 	local prev = 0
+
 	function mod:BrynjasMournfulDirgeApplied(args)
 		local t = args.time
 		if t-prev > 5 then
 			prev = t
 			playerList = {}
-			self:Message(args.spellId, "yellow", L.small_bombs)
+			self:Message(350109, "yellow", L.small_bombs)
+			table.insert(incomingValkyrList, "|T460699:16:16:0:0:64:64:4:60:4:60|t "..L.small_bombs)
+			mod:UpdateInfoBox()
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, L.small_bombs)
-			self:SayCountdown(args.spellId, 6)
-			self:PlaySound(args.spellId, "alarm")
+			self:Say(350109, L.small_bombs)
+			self:SayCountdown(350109, 6)
+			self:PlaySound(350109, "alarm")
 		end
 	end
 
 	function mod:BrynjasMournfulDirgeRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(350109)
 		end
 	end
 end
 
 function mod:ArthurasCrushingGaze(args)
 	self:CastBar(args.spellId, 8, CL.meteor)
+	table.insert(incomingValkyrList, "|T135988:16:16:0:0:64:64:4:60:4:60|t "..CL.meteor)
+	mod:UpdateInfoBox()
 end
 
 function mod:ArthurasCrushingGazeApplied(args)
@@ -497,4 +522,5 @@ function mod:WordOfRecall(args)
 	self:Message(args.spellId, "cyan", CL.count:format(L.recall, callOfTheValkyrCount-1))
 	self:PlaySound(args.spellId, "info")
 	self:Bar(args.spellId, 72, CL.count:format(L.recall, callOfTheValkyrCount))
+	self:ScheduleTimer("CloseInfo", 12, args.spellId) -- Last ability should be done after 10s
 end
