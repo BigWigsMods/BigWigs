@@ -147,7 +147,7 @@ do
 		playerList = {}
 		brandCount = brandCount + 1
 		if brandCount < 4 then -- Comes in waves of 3 sets
-			self:Bar(args.spellId, 17, CL.count:format(L.brands, brandCount))
+			self:Bar(350647, 17, CL.count:format(L.brands, brandCount))
 		end
 	end
 
