@@ -54,7 +54,7 @@ function mod:GetOptions()
 		-- Soulrender Dormazain
 		350217, -- Torment
 		349985, -- Encore of Torment
-		{350647, "SAY", "SAY_COUNTDOWN"}, -- Brand of Torment
+		{350647, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Brand of Torment
 		brandOfTormentMarker,
 		{350422, "TANK"}, -- Ruinblade
 		350615, -- Call Mawsworn

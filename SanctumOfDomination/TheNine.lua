@@ -66,7 +66,7 @@ function mod:GetOptions()
 		"stages",
 		"berserk",
 		-- Stage One: The Unending Voice
-		{350542, "SAY"}, -- Fragments of Destiny // Note: Placed this first so ordering in bigwigs looks better vs Encounter Journal
+		350542, -- Fragments of Destiny // Note: Placed this first so ordering in bigwigs looks better vs Encounter Journal
 		fragmentsMarker,
 		350555, -- Shard of Destiny
 		-- Kyra, The Unending
@@ -121,7 +121,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Stage One: The Unending Voice
-	self:Log("SPELL_CAST_START", "FragmentsOfDestiny", 350541)
+	self:Log("SPELL_CAST_START", "FragmentsOfDestiny", 352744)
 	self:Log("SPELL_AURA_APPLIED", "FragmentsOfDestinyApplied", 350542)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FragmentsOfDestinyStacks", 350542)
 	self:Log("SPELL_AURA_REMOVED", "FragmentsOfDestinyRemoved", 350542)
@@ -185,8 +185,8 @@ function mod:OnEngage()
 	self:Bar(350342, 12, CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
 	self:Bar(350467, 14.6, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 	self:Bar(350286, 16, CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
-	self:Bar(350365, 47.5, CL.count:format(L.pushback, wingsOfRageCount)) -- Wings of Rage
-	self:Bar(350385, 71.5, CL.count:format(L.pullin, reverberatingRefrainCount)) -- Reverberating Refrain
+	self:Bar(350365, 47.5, CL.count:format(L.pullin, wingsOfRageCount)) -- Wings of Rage
+	self:Bar(350385, 71.5, CL.count:format(L.pushback, reverberatingRefrainCount)) -- Reverberating Refrain
 	self:Bar("berserk", 300, L.berserk_stage1, 26662) -- Custom Berserk bar
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss2", "boss3") -- Boss 1: Skyja, Boss 2: Kyra, Boss 3: Signe
 end
@@ -253,7 +253,6 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, L.fragment)
 			self:PlaySound(args.spellId, "warning")
 		end
 		if allowed then
@@ -261,7 +260,7 @@ do
 			self:SimpleTimer(1, function() allowed = false end)
 		end
 		if self:GetOption(fragmentsMarker) then
-			for i = 1, 3, 1 do -- 1, 2, 3
+			for i = 1, 3 do -- 1, 2, 3
 				if not fragmentMarks[i] then
 					fragmentMarks[i] = args.destGUID
 					self:CustomIcon(fragmentsMarker, args.destName, i)
@@ -417,7 +416,7 @@ end
 
 function mod:DaschlasMightyImpact(args)
 	self:Message(args.spellId, "cyan", L.big_bombs)
-	self:CastBar(args.spellId, 10)
+	self:CastBar(args.spellId, 10, L.big_bombs)
 	table.insert(incomingValkyrList, "|T425955:16:16:0:0:64:64:4:60:4:60|t "..L.big_bombs)
 	mod:UpdateInfoBox()
 end
