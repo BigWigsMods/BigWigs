@@ -20,6 +20,8 @@ local formlessMassCount = 1
 local wingsOfRageCount = 1
 local songOfDissolutionCount = 1
 local reverberatingRefrainCount = 1
+local kyraAlive = true
+local signeAlive = true
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -27,7 +29,20 @@ local reverberatingRefrainCount = 1
 
 local L = mod:GetLocale()
 if L then
-
+	L.fragments = "Fragments" -- Short for Fragments of Destiny
+	L.fragment = "Fragment" -- Singular Fragment of Destiny
+	L.unending_strike = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Tank:16:16:0:0:64:64:4:60:4:60|t Unending Strike" -- [tank icon] Unending Strike
+	L.pushback = "Run Away" -- Wings of Rage
+	L.song = "Song" -- Short for Song of Dissolution
+	L.pullin = "Go in" -- Reverberating Refrain
+	L.valkyr = "Val'kyr" -- Short for Call of the Val'kyr
+	L.blades = "Blades" -- Agatha's Eternal Blade
+	L.big_bomb = "Big Bombs" -- Daschla's Mighty Impact
+	L.big_say = "Big" -- Attached to the countdown
+	L.shield = "Shield" -- Annhylde's Bright Aegis
+	L.soaks = "Soaks" -- Aradne's Falling Strike
+	L.small_bombs = "Small Bombs" -- Brynja's Mournful Dirge
+	L.recall = "Recall" -- Short for Word of Recall
 end
 
 --------------------------------------------------------------------------------
@@ -44,19 +59,19 @@ function mod:GetOptions()
 		fragmentsMarker,
 		350555, -- Shard of Destiny
 		-- Kyra, The Unending
-		350202, -- Unending Strike
+		{350202, "TANK_HEALER"}, -- Unending Strike
 		350342, -- Formless Mass
 		formlessMassMarker,
 		350339, -- Siphon Vitality
 		350365, -- Wings of Rage
 		-- Signe, The Voice
 		350283, -- Soulful Blast
-		350286, -- Song of Dissolution
+		{350286, "TANK"}, -- Song of Dissolution
 		350385, -- Reverberating Refrain
 		-- Call of the Val'kyr
 		350467, -- Call of the Val'kyr
 		350031, -- Agatha's Eternal Blade
-		{350184, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Daschla's Mighty Anvil
+		{350184, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Daschla's Mighty Impact
 		350158, -- Annhylde's Bright Aegis
 		350098, -- Aradne's Falling Strike
 		{350109, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Brynja's Mournful Dirge
@@ -73,6 +88,22 @@ function mod:GetOptions()
 		[350283] = mod:SpellName(-23203), -- Signe, The Voice
 		[350467] = mod:SpellName(-23206), -- Call of the Val'kyr
 		[350475] = mod:SpellName(-22879), -- Stage Two: The First of the Mawsworn
+	},{
+		["stages"] = "general",
+		[350542] = L.fragments, -- Fragments of Destiny (Fragments)
+		[350202] = L.unending_strike, -- Unending Strike ([tank icon] Unending Strike)
+		[350342] = CL.add, -- Formless Mass (Add)
+		[350365] = L.pushback, -- Wings of Rage (Run Away)
+		[350286] = L.song,-- Song of Dissolution (Song)
+		[350385] = L.pullin, -- Reverberating Refrain (Go in)
+		[350467] = L.valkyr, -- Call of the Val'kyr (Val'kyr)
+		[350031] = L.blades, -- Agatha's Eternal Blade (Blades)
+		[350184] = L.big_bomb, -- Daschla's Mighty Impact (Big Bombs)
+		[350158] = L.shield, -- Annhylde's Bright Aegis (Shield)
+		[350098] = L.soaks, -- Aradne's Falling Strike (Soaks)
+		[350109] = L.small_bombs, -- Brynja's Mournful Dirge (Small Bombs)
+		[350039] = CL.meteor, -- Arthura's Crushing Gaze (Meteor)
+		[350687] = L.recall, -- Word of Recall (Recall)
 	}
 end
 
@@ -103,8 +134,8 @@ function mod:OnBossEnable()
 	-- Call of the Val'kyr
 	self:Log("SPELL_CAST_START", "CallOfTheValkyr", 350467)
 	--self:Log("SPELL_CAST_SUCCESS", "AgathasEternalBlade", 350031) XXX Use a yell?
-	self:Log("SPELL_CAST_SUCCESS", "DaschlasMightyAnvil", 350184)
-	self:Log("SPELL_AURA_APPLIED", "DaschlasMightyAnvilApplied", 350184)
+	self:Log("SPELL_CAST_SUCCESS", "DaschlasMightyImpact", 350184)
+	self:Log("SPELL_AURA_APPLIED", "DaschlasMightyImpactApplied", 350184)
 	self:Log("SPELL_AURA_APPLIED", "AnnhyldesBrightAegisApplied", 350158)
 	--self:Log("SPELL_CAST_SUCCESS", "AradnesFallingStrike", 350098) XXX Use a yell?
 	self:Log("SPELL_AURA_APPLIED", "BrynjasMournfulDirgeApplied", 350109)
@@ -130,13 +161,15 @@ function mod:OnEngage()
 	wingsOfRageCount = 1
 	songOfDissolutionCount = 1
 	reverberatingRefrainCount = 1
+	kyraAlive = true
+	signeAlive = true
 
-	self:Bar(350202, 6) -- Unending Strike
-	self:Bar(350342, 12, CL.count:format(self:SpellName(350342), formlessMassCount)) -- Formless Mass
-	self:Bar(350467, 14.6, CL.count:format(self:SpellName(350467), callOfTheValkyrCount)) -- Call of the Val'kyr
-	self:Bar(350286, 16, CL.count:format(self:SpellName(350286), songOfDissolutionCount)) -- Song of Dissolution
-	self:Bar(350365, 47.5, CL.count:format(self:SpellName(350365), wingsOfRageCount)) -- Wings of Rage
-	self:Bar(350385, 71.5, CL.count:format(self:SpellName(350385), reverberatingRefrainCount)) -- Reverberating Refrain
+	self:Bar(350202, 6, L.unending_strike) -- Unending Strike
+	self:Bar(350342, 12, CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
+	self:Bar(350467, 14.6, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
+	self:Bar(350286, 16, CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
+	self:Bar(350365, 47.5, CL.count:format(L.pushback, wingsOfRageCount)) -- Wings of Rage
+	self:Bar(350385, 71.5, CL.count:format(L.pullin, reverberatingRefrainCount)) -- Reverberating Refrain
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss2", "boss3") -- Boss 1: Skyja, Boss 2: Kyra, Boss 3: Signe
 end
@@ -153,7 +186,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 
 		self:Bar(351399, 6.9) -- Resentment
 		self:Bar(350475, 9.4) -- Pierce Soul
-		self:Bar(350467, 43.9, CL.count:format(self:SpellName(350467), callOfTheValkyrCount)) -- Call of the Val'kyr
+		self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
+		self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
 	end
 end
 
@@ -184,11 +218,11 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:Say(args.spellId, L.fragment)
 			self:PlaySound(args.spellId, "warning")
 		end
 		if allowed then
-			self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(args.spellName, shardOfDestinyCount-1))
+			self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.fragment, shardOfDestinyCount-1))
 			self:SimpleTimer(1, function() allowed = false end)
 			self:SimpleTimer(20, function() allowed = true playerList = {} end)
 		end
@@ -199,7 +233,7 @@ end
 function mod:FragmentsOfDestinyStacks(args)
 	-- Warn someone that they got an extra stack, or they are the one collecting
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
+		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, nil, L.fragment)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -219,18 +253,17 @@ do
 end
 
 -- Kyra, The Unending
-function mod:UnendingStrike(args) -- XXX Refine with debuff checking for healers
+function mod:UnendingStrike(args)
 	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
-	--self:PlaySound(args.spellId, "alert")
 end
 
-function mod:UnendingStrikeApplied(args)-- XXX Refine with debuff checking for healers
+function mod:UnendingStrikeApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
-	if amount > 2 then
+	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
+	if amount > 4 or (self:Tank() and amount > 3) then -- Tanks swap at 4+, warn others if they havn't
 		self:PlaySound(args.spellId, "alarm")
 	end
-	self:Bar(args.spellId, 6) -- to _START
+	self:Bar(args.spellId, 6, L.unending_strike) -- to _START
 end
 
 do
@@ -242,10 +275,10 @@ do
 	end
 
 	function mod:FormlessMass(args)
-		self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(args.spellName, formlessMassCount)))
+		self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, formlessMassCount)))
 		self:PlaySound(args.spellId, "long")
 		formlessMassCount = formlessMassCount + 1
-		self:Bar(args.spellId, 47.5, CL.count:format(args.spellName, formlessMassCount))
+		self:Bar(args.spellId, 47.5, CL.count:format(CL.add, formlessMassCount))
 		if self:GetOption(formlessMassMarker) then
 			self:RegisterTargetEvents("FormlessMassMarking")
 			self:ScheduleTimer("UnregisterTargetEvents", 10)
@@ -264,68 +297,74 @@ function mod:SiphonVitality(args)
 end
 
 function mod:WingsOfRage(args)
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(args.spellName, wingsOfRageCount)))
+	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.pullin, wingsOfRageCount)))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 9.5) -- 2.5 pre-cast, 7s channel
+	self:CastBar(args.spellId, 9.5, L.pullin) -- 2.5 pre-cast, 7s channel
 	wingsOfRageCount = wingsOfRageCount + 1
-	self:Bar(args.spellId, 72.9, CL.count:format(args.spellName, wingsOfRageCount))
+	if kyraAlive then
+		self:Bar(args.spellId, 72.9, CL.count:format(L.pullin, wingsOfRageCount))
+	end
 end
 
 function mod:KyraDeath(args)
-	self:StopBar(350202) -- Unending Strike
-	self:StopBar(CL.count:format(self:SpellName(350342), formlessMassCount)) -- Formless Mass
-	self:StopBar(CL.count:format(self:SpellName(350365), wingsOfRageCount)) -- Wings of Rage
+	kyraAlive = false
+	self:StopBar(L.unending_strike) -- Unending Strike
+	self:StopBar(CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
+	self:StopBar(CL.count:format(L.pullin, wingsOfRageCount)) -- Wings of Rage
 end
 
 -- Signe, The Voice
 function mod:SongOfDissolution(args)
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, songOfDissolutionCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.song, songOfDissolutionCount))
 	self:PlaySound(args.spellId, "alert")
 	songOfDissolutionCount = songOfDissolutionCount + 1
-	self:CDBar(args.spellId, 20, CL.count:format(args.spellName, songOfDissolutionCount))
+	self:CDBar(args.spellId, 20, CL.count:format(L.song, songOfDissolutionCount))
 end
 
 function mod:ReverberatingRefrain(args)
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(args.spellName, reverberatingRefrainCount)))
+	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.pushback, reverberatingRefrainCount)))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 9.5, CL.count:format(args.spellName, reverberatingRefrainCount)) -- 2.5 pre-cast, 7s channel
+	self:CastBar(args.spellId, 9.5, CL.count:format(L.pushback, reverberatingRefrainCount)) -- 2.5 pre-cast, 7s channel
 	reverberatingRefrainCount = reverberatingRefrainCount + 1
-	self:Bar(args.spellId, 72.9, CL.count:format(args.spellName, reverberatingRefrainCount))
+	if signeAlive then
+		self:Bar(args.spellId, 72.9, CL.count:format(L.pushback, reverberatingRefrainCount))
+	end
 end
 
 
 function mod:SigneDeath(args)
-	self:StopBar(CL.count:format(self:SpellName(350286), songOfDissolutionCount)) -- Song of Dissolution
-	self:StopBar(CL.count:format(self:SpellName(350385), reverberatingRefrainCount)) -- Reverberating Refrain
+	signeAlive = false
+	self:StopBar(CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
+	self:StopBar(CL.count:format(L.pushback, reverberatingRefrainCount)) -- Reverberating Refrain
 end
 
 -- Call of the Val'kyr
 function mod:CallOfTheValkyr(args)
-	self:Message(args.spellId, "orange", CL.incoming:format(CL.count:format(args.spellName, callOfTheValkyrCount)))
+	self:Message(args.spellId, "orange", CL.incoming:format(CL.count:format(L.valkyr, callOfTheValkyrCount)))
 	self:PlaySound(args.spellId, "long")
 	callOfTheValkyrCount = callOfTheValkyrCount +  1
-	self:Bar(args.spellId, 72.9, CL.count:format(args.spellName, callOfTheValkyrCount))
+	self:Bar(args.spellId, 72.9, CL.count:format(L.valkyr, callOfTheValkyrCount))
 end
 
 -- function mod:AgathasEternalBlade(args)
 -- 	self:Message(args.spellId, "cyan")
 -- end
 
-function mod:DaschlasMightyAnvil(args)
-	self:Message(args.spellId, "cyan")
+function mod:DaschlasMightyImpact(args)
+	self:Message(args.spellId, "cyan", L.big_bomb)
 	self:CastBar(args.spellId, 10)
 end
 
-function mod:DaschlasMightyAnvilApplied(args)
+function mod:DaschlasMightyImpactApplied(args)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
-		self:SayCountdown(args.spellId, 10)
+		self:Say(args.spellId, L.big_bomb)
+		self:SayCountdown(args.spellId, 10, L.big_say) -- Big 3, Big 2, Big 1
 		self:PlaySound(args.spellId, "warning")
 	end
 end
 
 function mod:AnnhyldesBrightAegisApplied(args)
-	self:Message(args.spellId, "red", CL.on:format(args.spellName, args.destName))
+	self:Message(args.spellId, "red", CL.on:format(L.shield, args.destName))
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -342,12 +381,12 @@ do
 		if t-prev > 5 then
 			prev = t
 			playerList = {}
-			self:Message(args.spellId, "yellow")
+			self:Message(args.spellId, "yellow", L.small_bombs)
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
+			self:Say(args.spellId, L.small_bombs)
 			self:SayCountdown(args.spellId, 6)
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -361,18 +400,18 @@ do
 end
 
 function mod:ArthurasCrushingGaze(args)
-	self:CastBar(args.spellId, 8)
+	self:CastBar(args.spellId, 8, CL.meteor)
 end
 
 function mod:ArthurasCrushingGazeApplied(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning")
-		self:Yell(args.spellId)
+		self:Yell(args.spellId, CL.meteor)
 		self:YellCountdown(args.spellId, 8)
 	else
 		self:PlaySound(args.spellId, "alert")
 	end
-	self:TargetMessage(args.spellId, "orange", args.destName)
+	self:TargetMessage(args.spellId, "orange", args.destName, CL.meteor)
 end
 
 function mod:ArthurasCrushingGazeRemoved(args)
@@ -416,7 +455,8 @@ do
 end
 
 function mod:WordOfRecall(args)
-	self:Message(args.spellId, "cyan")
+	-- Using call of the Valkyr count as it's linked with that ability
+	self:Message(args.spellId, "cyan", CL.count:format(L.recall, callOfTheValkyrCount-1))
 	self:PlaySound(args.spellId, "info")
-	--self:Bar(args.spellId, 6.3)
+	self:Bar(args.spellId, 72, CL.count:format(L.recall, callOfTheValkyrCount))
 end
