@@ -145,7 +145,7 @@ function mod:OnBossEnable()
 	--self:Log("SPELL_CAST_SUCCESS", "AgathasEternalBlade", 350031) -- Using a yell atm, hopefully an event later...
 	self:Log("SPELL_CAST_SUCCESS", "DaschlasMightyImpact", 350184)
 	self:Log("SPELL_AURA_APPLIED", "DaschlasMightyImpactApplied", 350184)
-	self:Log("SPELL_AURA_APPLIED", "AnnhyldesBrightAegisApplied", 350158) -- This is only the buff on the bosses, no spawn event or yells??
+	self:Log("SPELL_AURA_APPLIED", "AnnhyldesBrightAegisApplied", 350158)
 	--self:Log("SPELL_CAST_SUCCESS", "AradnesFallingStrike", 350098) -- Using a yell atm, hopefully an event later...
 	self:Log("SPELL_AURA_APPLIED", "BrynjasMournfulDirgeApplied", 350109, 351139) -- Valkyr, Recall
 	self:Log("SPELL_AURA_REMOVED", "BrynjasMournfulDirgeRemoved", 350109, 351139)
@@ -433,7 +433,6 @@ end
 do
 	local playerList = {}
 	local prev = 0
-
 	function mod:BrynjasMournfulDirgeApplied(args)
 		local t = args.time
 		if t-prev > 5 then
