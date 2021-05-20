@@ -27,7 +27,7 @@ BigWigs:AddSounds("The Eye of the Jailer", {
 	[350847] = "warning",
 	[351413] = "warning",
 	[351825] = "warning",
-	[351827] = {"alert","warning"},
+	[351827] = "warning",
 	[355232] = {"info","warning"},
 	["stages"] = "long",
 })
@@ -66,9 +66,9 @@ BigWigs:AddSounds("Remnant of Ner'zhul", {
 
 BigWigs:AddSounds("Soulrender Dormazain", {
 	[349985] = "alert",
-	[350217] = "alert",
 	[350411] = "long",
 	[350422] = "alarm",
+	[350615] = "info",
 	[350647] = "warning",
 	[351779] = "alert",
 	[354231] = "info",
