@@ -50,6 +50,9 @@ if L then
 
 	L.blades_yell = "Fall before my blade!"
 	L.soaks_yell = "You are all outmatched!"
+
+	L.berserk_stage1 = "Berserk Stage 1"
+	L.berserk_stage2 = "Berserk Stage 2"
 end
 
 --------------------------------------------------------------------------------
@@ -184,7 +187,7 @@ function mod:OnEngage()
 	self:Bar(350286, 16, CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
 	self:Bar(350365, 47.5, CL.count:format(L.pushback, wingsOfRageCount)) -- Wings of Rage
 	self:Bar(350385, 71.5, CL.count:format(L.pullin, reverberatingRefrainCount)) -- Reverberating Refrain
-
+	self:Bar("berserk", 300, L.berserk_stage1, 26662) -- Custom Berserk bar
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss2", "boss3") -- Boss 1: Skyja, Boss 2: Kyra, Boss 3: Signe
 end
 
@@ -222,6 +225,8 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Bar(350482, 24.4) -- Link Essence
 		self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 		self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
+
+		self:Bar("berserk", 604, L.berserk_stage2, 26662) -- Custom Berserk bar
 	end
 end
 
@@ -360,6 +365,9 @@ function mod:KyraDeath(args)
 	self:StopBar(unendingStrikeText) -- Unending Strike
 	self:StopBar(CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
 	self:StopBar(CL.count:format(L.pullin, wingsOfRageCount)) -- Wings of Rage
+	if not signeAlive then
+		self:StopBar(L.berserk_stage1)
+	end
 end
 
 -- Signe, The Voice
@@ -385,6 +393,9 @@ function mod:SigneDeath(args)
 	signeAlive = false
 	self:StopBar(CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
 	self:StopBar(CL.count:format(L.pushback, reverberatingRefrainCount)) -- Reverberating Refrain
+	if not kyraAlive then
+		self:StopBar(L.berserk_stage1)
+	end
 end
 
 -- Call of the Val'kyr
