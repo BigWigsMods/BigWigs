@@ -23,6 +23,7 @@ local brandCount = 1
 local callMawswornCount = 1
 local ruinbladeCount = 1
 local hellscreamCount = 1
+local chainCount = 3
 local encoreOfTormentCount = 1
 local tormentCount = 1
 
@@ -40,6 +41,9 @@ if L then
 	L.chains = "Chains" -- Hellscream
 	L.chain = "Chain" -- Soul Manacles
 	L.souls = "Souls" -- Rendered Soul
+
+	L.chains_remaining = "%d Chains remaining"
+	L.all_broken = "All Chains broken"
 end
 
 --------------------------------------------------------------------------------
@@ -79,10 +83,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-
-	-- Soulrender Dormazain
-	--self:Log("SPELL_CAST_SUCCESS", "Torment", 351581) -- USSC for the boss cast
+	self:Log("SPELL_CAST_SUCCESS", "Pain", 350766) -- Alternative for Torment
 	self:Log("SPELL_CAST_SUCCESS", "EncoreOfTorment", 349985)
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfTorment", 350648)
 	self:Log("SPELL_AURA_APPLIED", "BrandOfTormentApplied", 350647)
@@ -91,11 +92,15 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "RuinbladeApplied", 350422)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RuinbladeApplied", 350422)
 	self:Log("SPELL_CAST_START", "CallMawsworn", 350615)
-	self:Log("SPELL_SUMMON", "AgonizerSpawn", 346459)
+	self:Log("SPELL_SUMMON", "AgonizerSpawn", 346459, 351351) -- Heroic, Mythic
 	self:Log("SPELL_CAST_START", "AgonizingSpike", 351779)
-	self:Log("SPELL_AURA_APPLIED", "DefianceApplied", 350650)
+	self:Log("SPELL_AURA_APPLIED", "DefianceApplied", 350650) -- Buff they get when reaching Garrosh, not from the Overlord
 	self:Log("SPELL_CAST_START", "Hellscream", 350411)
+	self:Log("SPELL_AURA_REMOVED_DOSE", "WarmongersShacklesRemovedDose", 350415)
+	self:Log("SPELL_AURA_REMOVED", "WarmongersShacklesRemoved", 350415)
 	self:Log("SPELL_AURA_APPLIED", "SoulManacles", 354231)
+
+	-- XXX Ground damage for Vessel and Cones
 end
 
 function mod:OnEngage()
@@ -115,20 +120,32 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-function mod:RenderedSoul()
-	self:Bar(351229, 5, CL.count:format(L.souls, 1))
-	self:ScheduleTimer("Message", 5, 351229, "yellow", CL.count:format(L.souls, 1))
-	self:ScheduleTimer("Bar", 5, 351229, 5, CL.count:format(L.souls, 2))
-	self:ScheduleTimer("Message", 10, 351229, "yellow", CL.count:format(L.souls, 2))
+
+do
+	local prev = 0
+	function mod:RenderedSoul()
+		local t = GetTime()
+		if t-prev > 10 then
+			self:Bar(351229, 5, CL.count:format(L.souls, 1))
+			self:ScheduleTimer("Message", 5, 351229, "yellow", CL.count:format(L.souls, 1))
+			self:ScheduleTimer("Bar", 5, 351229, 5, CL.count:format(L.souls, 2))
+			self:ScheduleTimer("Message", 10, 351229, "yellow", CL.count:format(L.souls, 2))
+		else -- Queue up more
+			local remaining = 10-(t-prev)
+			self:ScheduleTimer("Bar", remaining, 351229, 5, CL.count:format(L.souls, 3))
+			self:ScheduleTimer("Message", remaining+5, 351229, "yellow", CL.count:format(L.souls, 3))
+			self:ScheduleTimer("Bar", remaining+5, 351229, 5, CL.count:format(L.souls, 4))
+			self:ScheduleTimer("Message", remaining+10, 351229, "yellow", CL.count:format(L.souls, 4))
+		end
+		prev = GetTime()
+	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 349873 then -- Boss casting Torment
-		self:Message(350217, "yellow", CL.count:format(L.cones, tormentCount))
-		tormentCount = tormentCount + 1
-		self:Bar(350217, timers[350217][tormentCount], CL.count:format(L.cones, tormentCount))
-		self:RenderedSoul()
-	end
+function mod:Pain(args) -- Boss casting Torment on Garrosh
+	self:Message(350217, "yellow", CL.count:format(L.cones, tormentCount))
+	tormentCount = tormentCount + 1
+	self:Bar(350217, timers[350217][tormentCount], CL.count:format(L.cones, tormentCount))
+	self:RenderedSoul()
 end
 
 function mod:EncoreOfTorment(args)
@@ -136,6 +153,7 @@ function mod:EncoreOfTorment(args)
 	self:PlaySound(args.spellId, "alert")
 	encoreOfTormentCount = encoreOfTormentCount + 1
 	self:Bar(args.spellId, 161.1, CL.count:format(L.dance, encoreOfTormentCount))
+	-- XXX Schedule cast bars for each cone / use remaining events on retail
 end
 
 do
@@ -241,13 +259,23 @@ do
 end
 
 function mod:Hellscream(args)
+	chainCount = 3
 	self:Message(args.spellId, "red", L.chains)
 	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 35, CL.cast:format(L.chains))
+	self:CastBar(args.spellId, self:Mythic() and 25 or 35, L.chains)
 	hellscreamCount = hellscreamCount + 1
 	self:Bar(args.spellId, timers[args.spellId][hellscreamCount], CL.count:format(L.chains, hellscreamCount))
-
 	self:RenderedSoul()
+end
+
+function mod:WarmongersShacklesRemovedDose()
+	chainCount = chainCount - 1
+	self:Message(350411, "green", L.chains_remaining:format(chainCount))
+end
+
+function mod:WarmongersShacklesRemoved()
+	self:Message(350411, "green", CL.interrupted:format(L.chains))
+	self:StopBar(CL.cast:format(L.chains))
 end
 
 function mod:SoulManacles(args)
