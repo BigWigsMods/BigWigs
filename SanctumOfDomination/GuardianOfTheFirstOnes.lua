@@ -40,6 +40,7 @@ end
 local threatNeutralizationMarker = mod:AddMarkerOption(false, "player", 1, 350496, 1, 2, 3) -- Threat Neutralization
 function mod:GetOptions()
 	return {
+		"custom_on_stop_timers",
 		-- Energy Cores
 		352385, -- Energizing Link
 		350455, -- Unstable Energy
