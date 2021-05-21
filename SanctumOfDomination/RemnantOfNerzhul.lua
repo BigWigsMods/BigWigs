@@ -80,7 +80,7 @@ end
 function mod:OnEngage()
 	self:Bar(350676, 12, L.orbs) -- Orbs
 	self:Bar(350469, 21.7, CL.bombs) -- Malevolence
-	self:Bar(355123, 23.5, CL.bombs) -- Grasp of Malice
+	self:Bar(355123, 23.5, L.cones) -- Grasp of Malice
 end
 
 --------------------------------------------------------------------------------
