@@ -50,6 +50,7 @@ function mod:GetOptions()
 		[350676] = L.orbs, -- Orb of Torment (Orbs)
 		[350388] = L.slow, -- Thermal Lament (Slow)
 		[350469] = CL.bombs, -- Malevolence (Bombs)
+		[349890] = CL.beam, -- Suffering (Beam)
 		[355123] = L.cones, -- Grasp of Malice (Cones)
 	}
 end
@@ -78,9 +79,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Bar(350676, 12, L.orbs) -- Orbs
-	self:Bar(350469, 21.7, CL.bombs) -- Malevolence
-	self:Bar(355123, 23.5, L.cones) -- Grasp of Malice
+	self:CDBar(350676, self:Mythic() and 15.6 or 12, L.orbs) -- Orbs
+	self:CDBar(350469, self:Mythic() and 26.7 or 21.7, CL.bombs) -- Malevolence
+	self:CDBar(355123, self:Mythic() and 39 or 23.5, L.cones) -- Grasp of Malice
 end
 
 --------------------------------------------------------------------------------
@@ -151,18 +152,22 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.bomb)
-			self:SayCountdown(args.spellId, 21)
-			self:TargetBar(args.spellId, 21, args.destName, CL.bomb)
-			self:PlaySound(args.spellId, "warning")
+			local _, _, _, expires = self:UnitDebuff("player", args.spellId)
+			if expires and expires > 0 then
+				local timeLeft = expires - GetTime()
+				self:TargetBar(args.spellId, timeLeft, args.destName, CL.bomb)
+				self:Say(args.spellId, CL.bomb)
+				self:SayCountdown(args.spellId, timeLeft)
+				self:PlaySound(args.spellId, "warning")
+			end
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 100 or 2, CL.bomb)
+		self:NewTargetsMessage(args.spellId, "orange", playerList, 2, CL.bomb)
 		self:CustomIcon(malevolenceMarker, args.destName, count)
 	end
 
 	function mod:MalevolenceRemoved(args)
 		if self:Me(args.destGUID) then
-			self:StopBar(args.spellId, args.destName)
+			self:StopBar(CL.bomb, args.destName)
 			self:CancelSayCountdown(args.spellId)
 		end
 		self:CustomIcon(malevolenceMarker, args.destName)
@@ -172,17 +177,16 @@ end
 do
 	local function printTarget(self, name, guid)
 		if self:Me(guid) then
-			self:PersonalMessage(349890)
 			self:PlaySound(349890, "warning")
-			self:SayCountDown(349890, 3, nil, 2)
-		else
-			self:Message(349890, "purple", CL.casting:format(self:SpellName(349890)))
+			self:Say(349890, CL.beam)
+			self:SayCountdown(349890, 3, nil, 2)
 		end
+		self:TargetMessage(349890, "purple", name, CL.beam)
 	end
 
 	function mod:Suffering(args)
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		self:Bar(349890, 17)
+		self:Bar(349890, 17, CL.beam)
 	end
 end
 
