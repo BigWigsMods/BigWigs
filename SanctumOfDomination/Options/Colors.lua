@@ -37,7 +37,7 @@ BigWigs:AddColors("The Nine", {
 	[350039] = {"blue","orange"},
 	[350098] = "yellow",
 	[350109] = "yellow",
-	[350158] = "red",
+	[350158] = {"red","yellow"},
 	[350184] = {"blue","cyan"},
 	[350202] = {"blue","purple"},
 	[350286] = "yellow",
@@ -56,20 +56,20 @@ BigWigs:AddColors("The Nine", {
 })
 
 BigWigs:AddColors("Remnant of Ner'zhul", {
-	[349889] = {"blue","purple"},
 	[349890] = {"blue","purple"},
 	[350073] = "blue",
 	[350388] = "blue",
 	[350469] = {"blue","orange","yellow"},
 	[350489] = "blue",
+	[350676] = "yellow",
 	[351066] = "cyan",
-	[353332] = "yellow",
+	[355123] = "yellow",
 })
 
 BigWigs:AddColors("Soulrender Dormazain", {
 	[349985] = "cyan",
 	[350217] = "yellow",
-	[350411] = "red",
+	[350411] = {"green","red"},
 	[350422] = {"blue","purple"},
 	[350615] = "yellow",
 	[350647] = {"blue","orange"},
@@ -102,6 +102,7 @@ BigWigs:AddColors("Guardian of the First Ones", {
 	[352589] = "orange",
 	[352660] = "yellow",
 	[352833] = "red",
+	[355352] = "red",
 })
 
 BigWigs:AddColors("Fatescribe Roh-Kalo", {

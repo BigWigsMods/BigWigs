@@ -54,14 +54,14 @@ BigWigs:AddSounds("The Nine", {
 })
 
 BigWigs:AddSounds("Remnant of Ner'zhul", {
-	[349889] = "warning",
 	[349890] = {"alarm","warning"},
 	[350073] = "alarm",
-	[350388] = "alarm",
+	[350388] = "info",
 	[350469] = "warning",
 	[350489] = "underyou",
+	[350676] = "alert",
 	[351066] = "long",
-	[353332] = "alert",
+	[355123] = "alert",
 })
 
 BigWigs:AddSounds("Soulrender Dormazain", {
@@ -97,6 +97,7 @@ BigWigs:AddSounds("Guardian of the First Ones", {
 	[352589] = "alert",
 	[352660] = "long",
 	[352833] = "alert",
+	[355352] = "warning",
 })
 
 BigWigs:AddSounds("Fatescribe Roh-Kalo", {
