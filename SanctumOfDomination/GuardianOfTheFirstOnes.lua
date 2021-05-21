@@ -48,8 +48,9 @@ function mod:GetOptions()
 		{352589, "EMPHASIZE"}, -- Meltdown
 		-- The Guardian
 		352538, -- Purging Protocol
-		{350732, "TANK"}, -- Shatter
-		{350734, "TANK"}, -- Obliterate
+		355352, -- Obliterate
+		{350732, "TANK"}, -- Sunder
+		{350734, "TANK"}, -- Smash
 		352833, -- Disintegration
 		352660, -- Form Sentry
 		347359, -- Suppression Field
@@ -80,9 +81,11 @@ function mod:OnBossEnable()
 	-- The Guardian
 	self:Log("SPELL_CAST_START", "PurgingProtocol", 352538)
 	self:Log("SPELL_CAST_SUCCESS", "PurgingProtocolSuccess", 352538)
-	self:Log("SPELL_CAST_START", "Shatter", 350732)
-	self:Log("SPELL_AURA_APPLIED", "ShatterApplied", 350732)
-	self:Log("SPELL_CAST_START", "Obliterate", 350734)
+
+	self:Log("SPELL_CAST_START", "Obliterate", 355352)
+	self:Log("SPELL_CAST_START", "Sunder", 350732)
+	self:Log("SPELL_AURA_APPLIED", "SunderApplied", 350732)
+	self:Log("SPELL_CAST_START", "Smash", 350734)
 	self:Log("SPELL_CAST_START", "Disintegration", 352833)
 	self:Log("SPELL_CAST_START", "FormSentry", 352660)
 	self:Log("SPELL_AURA_APPLIED", "SuppressionField", 347359)
@@ -222,7 +225,12 @@ function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
 	end
 end
 
-function mod:Shatter(args) -- XXX figure out a timer when it's more stable?
+function mod:Obliterate(args)
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "warning")
+end
+
+function mod:Sunder(args)
 	local bossUnit = self:GetBossId(args.sourceGUID)
 	for i = 1, #tankList do
 		local unit = tankList[i]
@@ -234,10 +242,10 @@ function mod:Shatter(args) -- XXX figure out a timer when it's more stable?
 		end
 	end
 	self:PlaySound(args.spellId, "warning")
-	self:Bar(350734, 3) -- Obliterate
+	--self:Bar(350734, 3) -- Smash
 end
 
-function mod:ShatterApplied(args)
+function mod:SunderApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName)
 	local bossUnit = self:GetBossId(args.sourceGUID)
 	if bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
@@ -245,7 +253,7 @@ function mod:ShatterApplied(args)
 	end
 end
 
-function mod:Obliterate(args)
+function mod:Smash(args)
 	local bossUnit = self:GetBossId(args.sourceGUID)
 	for i = 1, #tankList do
 		local unit = tankList[i]
