@@ -110,7 +110,7 @@ function mod:OnEngage()
 
 	self:CDBar(352660, 5.6, CL.count:format(L.sentry, sentryCount)) -- Form Sentry
 	self:CDBar(352833, 15.8, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
-	self:CDBar(350732, 25) -- Shatter
+	self:CDBar(350732, 25) -- Sunder
 	self:CDBar(350496, 38, CL.count:format(CL.bombs, threatNeutralizationCount)) -- Threat Neutralization
 	local purgeTimer = UnitPower("boss1")
 	self:Bar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
@@ -226,7 +226,7 @@ function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
 end
 
 function mod:Obliterate(args)
-	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName)) -- Purple?
 	self:PlaySound(args.spellId, "warning")
 end
 
