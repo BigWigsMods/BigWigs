@@ -14,10 +14,12 @@ mod:SetStage(1)
 -- Locals
 --
 
+local stage = 1
 local fragmentMarks = {}
 local fragmentOfDestinyCount = 1
 local callOfTheValkyrCount = 1
 local incomingValkyrList = {}
+local infoboxAllowed = false
 local formlessMassCount = 1
 local wingsOfRageCount = 1
 local songOfDissolutionCount = 1
@@ -50,6 +52,7 @@ if L then
 
 	L.blades_yell = "Fall before my blade!"
 	L.soaks_yell = "You are all outmatched!"
+	L.shield_yell = "My shield never falters!"
 
 	L.berserk_stage1 = "Berserk Stage 1"
 	L.berserk_stage2 = "Berserk Stage 2"
@@ -59,7 +62,7 @@ end
 -- Initialization
 --
 
-local fragmentsMarker = mod:AddMarkerOption(false, "player", 1, 350542, 1, 2, 3) -- Fragments of Destiny
+local fragmentsMarker = mod:AddMarkerOption(false, "player", 1, 350542, 1, 2, 3, 4) -- Fragments of Destiny
 local formlessMassMarker = mod:AddMarkerOption(false, "npc", 8, 350342, 8) -- Formless Mass
 function mod:GetOptions()
 	return {
@@ -121,7 +124,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Stage One: The Unending Voice
-	self:Log("SPELL_CAST_START", "FragmentsOfDestiny", 352744)
+	self:Log("SPELL_CAST_START", "FragmentsOfDestiny", 352744, 350541) -- Stage 1 (Mythic), Stage 2
 	self:Log("SPELL_AURA_APPLIED", "FragmentsOfDestinyApplied", 350542)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FragmentsOfDestinyStacks", 350542)
 	self:Log("SPELL_AURA_REMOVED", "FragmentsOfDestinyRemoved", 350542)
@@ -135,12 +138,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "UnendingStrikeApplied", 350202)
 	self:Log("SPELL_CAST_START", "FormlessMass", 350342)
 	self:Log("SPELL_CAST_START", "SiphonVitality", 350339)
-	self:Log("SPELL_CAST_START", "WingsOfRage", 350365)
+	self:Log("SPELL_CAST_START", "WingsOfRage", 350365, 352756) -- Stage 1, Stage 2 (Mythic)
 	self:Death("KyraDeath", 177095)
 
 	-- Signe, The Voice
 	self:Log("SPELL_CAST_SUCCESS", "SongOfDissolution", 350286)
-	self:Log("SPELL_CAST_START", "ReverberatingRefrain", 350385)
+	self:Log("SPELL_CAST_START", "ReverberatingRefrain", 350385, 352752) -- Stage 1, Stage 2 (Mythic)
 	self:Death("SigneDeath", 177094)
 
 	-- Call of the Val'kyr
@@ -168,12 +171,14 @@ end
 
 function mod:OnEngage()
 	self:SetStage(1)
+	stage = 1
 
 	stage2Health = self:Mythic() and 20 or self:Heroic() and 15 or self:Normal() and 10 or 5
 	fragmentMarks = {}
 	fragmentOfDestinyCount = 1
 	callOfTheValkyrCount = 1
 	incomingValkyrList = {}
+	infoboxAllowed = false
 	formlessMassCount = 1
 	wingsOfRageCount = 1
 	songOfDissolutionCount = 1
@@ -204,19 +209,31 @@ end
 function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 	if msg:find(L.blades_yell, nil, true) then -- Agatha's Eternal Blade
 		self:Message(350031, "yellow", CL.incoming:format(L.blades))
-		table.insert(incomingValkyrList, "|T1376744:16:16:0:0:64:64:4:60:4:60|t "..L.blades)
-		mod:UpdateInfoBox()
+		if infoboxAllowed then
+			table.insert(incomingValkyrList, "|T1376744:16:16:0:0:64:64:4:60:4:60|t "..L.blades)
+			mod:UpdateInfoBox()
+		end
 	elseif msg:find(L.soaks_yell, nil, true) then -- Aradne's Falling Strike
 		self:Message(350098, "yellow", CL.incoming:format(L.soaks))
 		self:CastBar(350098, 10.2, L.soaks) -- 10.2~10.5, yell is not super reliable :(
-		table.insert(incomingValkyrList, "|T2103905:16:16:0:0:64:64:4:60:4:60|t "..L.soaks)
-		mod:UpdateInfoBox()
+		if infoboxAllowed then
+			table.insert(incomingValkyrList, "|T2103905:16:16:0:0:64:64:4:60:4:60|t "..L.soaks)
+			mod:UpdateInfoBox()
+		end
+	elseif msg:find(L.shield_yell, nil, true) then -- Annhylde's Bright Aegis
+		self:Message(350158, "yellow", CL.incoming:format(L.shield))
+		self:CastBar(350158, 4.2, L.shield)
+		if infoboxAllowed then
+			table.insert(incomingValkyrList, "|T1320371:16:16:0:0:64:64:4:60:4:60|t "..L.shield)
+			mod:UpdateInfoBox()
+		end
 	end
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 350745 then -- Maw Power (Set to 00)  [DNT]
 		self:SetStage(2)
+		stage = 2
 		self:Message("stages", "green", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 
@@ -226,6 +243,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 		self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
 
+		--if self:Mythic() then
+			--self:Bar(11111, 43.9, L.pullin.."[image]") -- Run Away [image]
+			--self:Bar(11111, 43.9, L.pushback.."[image]") -- Go in [image]
+		--end
+
 		self:Bar("berserk", 604, L.berserk_stage2, 26662) -- Custom Berserk bar
 	end
 end
@@ -233,7 +255,7 @@ end
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < (stage2Health+3) then
 		self:Message("stages", "green", CL.soon:format(CL.stage:format(2)), false)
-		self:UnregisterUnitEvent(event, unit)
+		self:UnregisterUnitEvent(event, "boss2", "boss3")
 	end
 end
 
@@ -245,7 +267,7 @@ do
 		playerList = {}
 		allowed = true
 		fragmentOfDestinyCount = fragmentOfDestinyCount + 1
-		self:CDBar(350542, 47.5, CL.count:format(L.fragments, fragmentOfDestinyCount))
+		self:CDBar(350542, self:Mythic() and 37.7 or 47.5, CL.count:format(L.fragments, fragmentOfDestinyCount))
 	end
 
 	function mod:FragmentsOfDestinyApplied(args)
@@ -255,12 +277,12 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 		end
-		if allowed then
+		if allowed then -- Can use _SUCCESS as it's only on the initial players
 			self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.fragment, fragmentOfDestinyCount-1))
 			self:SimpleTimer(1, function() allowed = false end)
 		end
 		if self:GetOption(fragmentsMarker) then
-			for i = 1, 3 do -- 1, 2, 3
+			for i = 1, 4 do -- 1, 2, 3, 4
 				if not fragmentMarks[i] then
 					fragmentMarks[i] = args.destGUID
 					self:CustomIcon(fragmentsMarker, args.destName, i)
@@ -350,13 +372,11 @@ function mod:SiphonVitality(args)
 end
 
 function mod:WingsOfRage(args)
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.pullin, wingsOfRageCount)))
-	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 9.5, L.pullin) -- 2.5 pre-cast, 7s channel
+	self:Message(350365, "red", CL.casting:format(CL.count:format(L.pullin, wingsOfRageCount)))
+	self:PlaySound(350365, "warning")
+	self:CastBar(350365, args.spellId == 352756 and 10 or 9.5, L.pullin) -- 2.5 pre-cast, 7s channel, 3s precast in stage 2???
 	wingsOfRageCount = wingsOfRageCount + 1
-	if kyraAlive then
-		self:Bar(args.spellId, 72.9, CL.count:format(L.pullin, wingsOfRageCount))
-	end
+	self:Bar(350365, 72.9, CL.count:format(L.pullin, wingsOfRageCount))
 end
 
 function mod:KyraDeath(args)
@@ -364,6 +384,8 @@ function mod:KyraDeath(args)
 	self:StopBar(unendingStrikeText) -- Unending Strike
 	self:StopBar(CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
 	self:StopBar(CL.count:format(L.pullin, wingsOfRageCount)) -- Wings of Rage
+	--self:Bar(00000, self:BarTimeLeft(L.pullin.."[image]"), L.pullin)
+	--self:StopBar(L.pullin.."[image]") -- Go in [image]
 	if not signeAlive then
 		self:StopBar(L.berserk_stage1)
 	end
@@ -378,13 +400,11 @@ function mod:SongOfDissolution(args)
 end
 
 function mod:ReverberatingRefrain(args)
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.pushback, reverberatingRefrainCount)))
-	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 9.5, CL.count:format(L.pushback, reverberatingRefrainCount)) -- 2.5 pre-cast, 7s channel
+	self:Message(350385, "red", CL.casting:format(CL.count:format(L.pushback, reverberatingRefrainCount)))
+	self:PlaySound(350385, "warning")
+	self:CastBar(350385, args.spellId == 352752 and 10 or 9.5, CL.count:format(L.pushback, reverberatingRefrainCount)) -- 2.5 pre-cast, 7s channel, 3s precast in stage 2???
 	reverberatingRefrainCount = reverberatingRefrainCount + 1
-	if signeAlive then
-		self:Bar(args.spellId, 72.9, CL.count:format(L.pushback, reverberatingRefrainCount))
-	end
+	self:Bar(350385, 72.9, CL.count:format(L.pushback, reverberatingRefrainCount))
 end
 
 
@@ -392,6 +412,8 @@ function mod:SigneDeath(args)
 	signeAlive = false
 	self:StopBar(CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
 	self:StopBar(CL.count:format(L.pushback, reverberatingRefrainCount)) -- Reverberating Refrain
+	--self:Bar(00000, self:BarTimeLeft(L.pushback.."[image]"), L.pushback)
+	--self:StopBar(L.pushback.."[image]") -- Go in [image]
 	if not kyraAlive then
 		self:StopBar(L.berserk_stage1)
 	end
@@ -404,7 +426,8 @@ function mod:CallOfTheValkyr(args)
 	callOfTheValkyrCount = callOfTheValkyrCount +  1
 	self:Bar(args.spellId, 72.9, CL.count:format(L.valkyr, callOfTheValkyrCount))
 	incomingValkyrList = {}
-	if self:GetStage() == 2 then
+	if stage == 2 then
+		infoboxAllowed = true
 		self:OpenInfo(350687, self:SpellName(350687)) -- Word of Recall
 		self:UpdateInfoBox()
 	end
@@ -414,11 +437,20 @@ end
 -- 	self:Message(args.spellId, "cyan")
 -- end
 
-function mod:DaschlasMightyImpact(args)
-	self:Message(args.spellId, "cyan", L.big_bombs)
-	self:CastBar(args.spellId, 10, L.big_bombs)
-	table.insert(incomingValkyrList, "|T425955:16:16:0:0:64:64:4:60:4:60|t "..L.big_bombs)
-	mod:UpdateInfoBox()
+do
+	local prev = 0
+	function mod:DaschlasMightyImpact(args)
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			self:Message(args.spellId, "cyan", L.big_bombs)
+			self:CastBar(args.spellId, 10, L.big_bombs)
+			if infoboxAllowed then
+				table.insert(incomingValkyrList, "|T425955:16:16:0:0:64:64:4:60:4:60|t "..L.big_bombs)
+				mod:UpdateInfoBox()
+			end
+		end
+	end
 end
 
 function mod:DaschlasMightyImpactApplied(args)
@@ -449,8 +481,10 @@ do
 			prev = t
 			playerList = {}
 			self:Message(350109, "yellow", L.small_bombs)
-			table.insert(incomingValkyrList, "|T460699:16:16:0:0:64:64:4:60:4:60|t "..L.small_bombs)
-			mod:UpdateInfoBox()
+			if infoboxAllowed then
+				table.insert(incomingValkyrList, "|T460699:16:16:0:0:64:64:4:60:4:60|t "..L.small_bombs)
+				mod:UpdateInfoBox()
+			end
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
@@ -470,8 +504,10 @@ end
 
 function mod:ArthurasCrushingGaze(args)
 	self:CastBar(args.spellId, 8, CL.meteor)
-	table.insert(incomingValkyrList, "|T135988:16:16:0:0:64:64:4:60:4:60|t "..CL.meteor)
-	mod:UpdateInfoBox()
+	if infoboxAllowed then
+		table.insert(incomingValkyrList, "|T135988:16:16:0:0:64:64:4:60:4:60|t "..CL.meteor)
+		mod:UpdateInfoBox()
+	end
 end
 
 function mod:ArthurasCrushingGazeApplied(args)
@@ -528,6 +564,7 @@ end
 
 function mod:WordOfRecall(args)
 	-- Using call of the Valkyr count as it's linked with that ability
+	infoboxAllowed = false
 	self:Message(args.spellId, "cyan", CL.count:format(L.recall, callOfTheValkyrCount-1))
 	self:PlaySound(args.spellId, "info")
 	self:Bar(args.spellId, 72, CL.count:format(L.recall, callOfTheValkyrCount))
