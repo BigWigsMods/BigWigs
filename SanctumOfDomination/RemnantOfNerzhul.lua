@@ -23,7 +23,8 @@ if L then
 
 	L.slow = mod:SpellName(31589) -- Slow
 	L.cones = "Cones" -- Grasp of Malice
-	L.orbs = "Orb" -- Orb of Torment
+	L.orbs = "Orbs" -- Orb of Torment
+	L.orb = "Orb" -- Orb of Torment
 end
 
 --------------------------------------------------------------------------------
@@ -36,12 +37,12 @@ function mod:GetOptions()
 		"custom_on_stop_timers",
 		350676, -- Orb of Torment
 		350073, -- Torment
-		350388, -- Thermal Lament
+		350388, -- Sorrowful Procession
 		{350469, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Malevolence
 		malevolenceMarker,
 		350489, -- Lingering Malevolence
 		{349890, "SAY", "SAY_COUNTDOWN"}, -- Suffering
-		353332, -- Grasp of Malice
+		355123, -- Grasp of Malice
 		--350671, -- Aura of Spite
 		351066, -- Shatter
 	},{
@@ -49,7 +50,7 @@ function mod:GetOptions()
 		[350676] = L.orbs, -- Orb of Torment (Orbs)
 		[350388] = L.slow, -- Thermal Lament (Slow)
 		[350469] = CL.bombs, -- Malevolence (Bombs)
-		[353332] = L.cones, -- Grasp of Malice (Cones)
+		[355123] = L.cones, -- Grasp of Malice (Cones)
 	}
 end
 
@@ -57,28 +58,29 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	self:Log("SPELL_AURA_APPLIED", "TormentApplied", 350073)
-	self:Log("SPELL_AURA_APPLIED", "ThermalLamentApplied", 350388)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "ThermalLamentApplied", 350388)
+	self:Log("SPELL_AURA_APPLIED", "SorrowfulProcessionApplied", 350388)
 	self:Log("SPELL_CAST_START", "MalevolenceStart", 350469)
 	self:Log("SPELL_CAST_SUCCESS", "MalevolenceSuccess", 350469)
 	self:Log("SPELL_AURA_APPLIED", "MalevolenceApplied", 350469)
 	self:Log("SPELL_AURA_REMOVED", "MalevolenceRemoved", 350469)
 	self:Log("SPELL_CAST_START", "Suffering", 350894)
 	self:Log("SPELL_AURA_APPLIED", "SufferingApplied", 349890)
-	self:Log("SPELL_CAST_START", "GraspOfMalice", 353332, 355123)
+	self:Log("SPELL_CAST_START", "GraspOfMalice", 355123)
 	--self:Log("SPELL_AURA_APPLIED", "AuraOfSpiteApplied", 350671)
 	--self:Log("SPELL_AURA_APPLIED_DOSE", "AuraOfSpiteApplied", 350671)
-	self:Log("SPELL_CAST_START", "Shatter", 351066, 351067, 351073)
+	self:Log("SPELL_CAST_START", "Shatter", 351066, 351067, 351073) -- 1st, 2nd, 3rd Armor Piece
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 350489) -- Lingering Malevolence
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 350489)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 350489)
 
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
-	self:GROUP_ROSTER_UPDATE()
 end
 
 function mod:OnEngage()
+	self:Bar(350676, 12, L.orbs) -- Orbs
+	self:Bar(350469, 21.7, CL.bombs) -- Malevolence
+	self:Bar(355123, 23.5, CL.bombs) -- Grasp of Malice
 end
 
 --------------------------------------------------------------------------------
@@ -125,13 +127,10 @@ function mod:TormentApplied(args)
 	end
 end
 
-function mod:ThermalLamentApplied(args)
+function mod:SorrowfulProcessionApplied(args)
 	if self:Me(args.destGUID) then
-		local amount = args.amount or 1
-		self:NewStackMessage(args.spellId, "blue", args.destName, amount, 3, L.slow) -- Perhaps warn with slow% in the message
-		if amount > 2 then -- 45%+ slow
-			self:PlaySound(args.spellId, "alarm")
-		end
+		self:PersonalMessage(args.spellId, L.orb)
+		self:PlaySound(args.spellId, "info")
 	end
 end
 
@@ -210,9 +209,9 @@ end
 
 function mod:GraspOfMalice(args)
 	self:StopBar(L.cones)
-	self:Message(353332, "yellow", L.cones)
-	self:PlaySound(353332, "alert")
-	self:CDBar(353332, 20, L.cones)
+	self:Message(args.spellId, "yellow", L.cones)
+	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, 20, L.cones)
 end
 
 function mod:Shatter(args)
