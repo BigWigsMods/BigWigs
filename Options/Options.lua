@@ -456,6 +456,7 @@ local icons = {
 	HEALER = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Role_Healer",
 	EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessage",
 	ME_ONLY_EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessageMeOnly",
+	DISPEL = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Dispel",
 }
 
 local function hasOptionFlag(dbKey, module, key)
@@ -611,7 +612,7 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 			elseif key == "HEALER" then
 				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, icons.HEALER)
 			elseif key == "DISPEL" then
-				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, 521749, 0.8984375, 0.9765625, 0.09375, 0.40625) -- DISPEL icon
+				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, icons.DISPEL)
 			else
 				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check) -- No icon
 			end
@@ -810,10 +811,6 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 				-- first icon, don't bother with SetPoint
 
 				icon:SetImage(icons.HEALER)
-			elseif key == "DISPEL" then -- 521749 = Interface/EncounterJournal/UI-EJ-Icons
-				icon:SetImage(521749, 0.8984375, 0.9765625, 0.09375, 0.40625)
-			-- elseif key == "INTERRUPT" then -- just incase :p EJ interrupt icon
-			-- 	icon:SetImage(521749, 0.7734375, 0.8515625, 0.09375, 0.40625)
 			else
 				if type(icons[key]) == "string" then
 					icon:SetImage(icons[key]) -- custom icon
