@@ -161,6 +161,8 @@ globals = {
 	"GetItemCount",
 	"GetLocale",
 	"GetNumAddOns",
+	"GetNumGossipActiveQuests",
+	"GetNumGossipAvailableQuests",
 	"GetNumGroupMembers",
 	"GetPartyAssignment",
 	"GetPlayerFacing",
