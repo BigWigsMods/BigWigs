@@ -115,6 +115,7 @@ local function replaceIdWithName(msg)
 		local tbl = C_EncounterJournal_GetSectionInfo(-id)
 		if not tbl then
 			BigWigs:Print(("No journal name found for boss option using id %d."):format(id))
+			return msg
 		else
 			return tbl.title
 		end
@@ -128,11 +129,13 @@ local function replaceIdWithDescription(msg)
 			return desc:gsub("[\r\n]+$", "") -- Remove stray CR+LF for e.g. 299250 spells that show another spell in their tooltip which isn't part of GetSpellDescription
 		else
 			BigWigs:Print(("No spell description found for boss option using id %d."):format(id))
+			return msg
 		end
 	else
 		local tbl = C_EncounterJournal_GetSectionInfo(-id)
 		if not tbl then
 			BigWigs:Print(("No journal description found for boss option using id %d."):format(id))
+			return msg
 		else
 			return tbl.description
 		end
