@@ -26,8 +26,6 @@ local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local loader = BigWigsLoader
 core.SendMessage = loader.SendMessage
 
-local customBossOptions = {}
-
 local mod, bosses, plugins = {}, {}, {}
 local coreEnabled = false
 
@@ -424,29 +422,8 @@ function core:Error(msg)
 end
 
 -------------------------------------------------------------------------------
--- API - if anything else is exposed on the BigWigs object, that's a mistake!
--- Well .. except the module API, obviously.
+-- API
 --
-
-do
-	function core:RegisterBossOption(key, name, desc, func, icon)
-		if customBossOptions[key] then
-			error("The custom boss option %q has already been registered."):format(key)
-		end
-		customBossOptions[key] = { name, desc, func, icon }
-	end
-
-	-- Adding core generic toggles
-	core:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, 136224) -- 136224 = "Interface\\Icons\\spell_shadow_unholyfrenzy"
-	core:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\AltPower")
-	core:RegisterBossOption("infobox", L.infobox, L.infobox_desc, nil, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Info")
-	core:RegisterBossOption("stages", L.stages, L.stages_desc)
-	core:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
-end
-
-function core:GetCustomBossOptions()
-	return customBossOptions
-end
 
 do
 	local L = GetLocale()

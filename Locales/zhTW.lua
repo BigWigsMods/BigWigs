@@ -1,6 +1,9 @@
 local L = BigWigsAPI:NewLocale("BigWigs", "zhTW")
 if not L then return end
 
+L.proximity = "玩家雷達"
+L.proximity_desc = "顯示玩家雷達視窗，列出距離你過近的玩家。"
+
 L.guildRelease = "你正在使用公會製作的 BigWigs，版本 %d，其基於官方版 %d。"
 L.getNewRelease = "你的 BigWigs 已過期（/bwv）但是可以使用 CurseForge 客戶端簡單升級。另外，也可以從 curseforge.com 或 wowinterface.com 手動升級。"
 L.warnTwoReleases = "你的 BigWigs 已過期 2 個發行版！你的版本可能有錯誤，功能缺失或不正確的計時器。所以強烈建議你升級。"

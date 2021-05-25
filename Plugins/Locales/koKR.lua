@@ -290,8 +290,6 @@ L.proximity_name = "근접"
 L.soundDelay = "소리 지연"
 L.soundDelayDesc = "누군가 당신과 가까이 있을 때 BigWigs에 지정된 소리의 반복 재생 간격을 지정합니다."
 
-L.proximity = "근접 디스플레이"
-L.proximity_desc = "이 우두머리 전투에 적절할 때 근접 창을 표시합니다, 자신과 너무 가깝게 서있는 플레이어를 보여줍니다."
 L.resetProximityDesc = "위치를 비롯한 근접에 관련된 모든 설정을 기본값으로 초기화합니다."
 
 L.close = "닫기"

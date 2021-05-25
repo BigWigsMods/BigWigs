@@ -291,8 +291,6 @@ L.proximity_name = "Nähe"
 L.soundDelay = "Soundverzögerung"
 L.soundDelayDesc = "Gibt an, wie lange BigWigs zwischen den Soundwiederholungen wartet, wenn jemand zu nahe steht."
 
-L.proximity = "Näherungsanzeige"
-L.proximity_desc = "Zeigt, falls für diese Begegnung relevant, das Näherungsfenster an. Es listet alle Spieler auf, die Dir zu nahe stehen."
 L.resetProximityDesc = "Setzt alle Optionen im Zusammenhang mit Nähe zurück, inklusive der Position des Ankers für Nähe."
 
 L.close = "Schließen"

@@ -139,6 +139,15 @@ local function replaceIdWithDescription(msg)
 	end
 end
 
+local customBossOptions = { -- Adding core generic toggles
+	berserk = {L.berserk, L.berserk_desc, 136224}, -- 136224 = "Interface\\Icons\\spell_shadow_unholyfrenzy"
+	altpower = {L.altpower, L.altpower_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\AltPower"},
+	infobox = {L.infobox, L.infobox_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Info"},
+	proximity = {L.proximity, L.proximity_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Proximity"},
+	stages = {L.stages, L.stages_desc},
+	warmup = {L.warmup, L.warmup_desc},
+}
+
 function BigWigs:GetBossOptionDetails(module, option)
 	local optionType = type(option)
 	if optionType == "table" then
@@ -149,9 +158,8 @@ function BigWigs:GetBossOptionDetails(module, option)
 	local alternativeName = module.altNames and module.altNames[option]
 
 	if optionType == "string" then
-		local customBossOptions = BigWigs:GetCustomBossOptions()
 		if customBossOptions[option] then
-			return option, customBossOptions[option][1], customBossOptions[option][2], customBossOptions[option][4]
+			return option, customBossOptions[option][1], customBossOptions[option][2], customBossOptions[option][3]
 		else
 			local roleDesc = ""
 			if not option:find("^custom_") then
