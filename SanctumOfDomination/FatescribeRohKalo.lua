@@ -97,7 +97,6 @@ function mod:OnEngage()
 	self:SetStage(1)
 	stage = 1
 	realignFateCount = 1
-	unstableFateAppliedCount = 0
 
 	self:Bar(350421, 13.5, CL.beams) -- Fated Conjunction (Beams)
 	--self:Bar(350568, 36, CL.bombs) -- Call of Eternity (Bombs)
