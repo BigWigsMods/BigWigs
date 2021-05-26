@@ -15,7 +15,6 @@ mod:SetStage(1)
 
 local stage = 1
 local realignFateCount = 1
-local unstableFateAppliedCount = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -82,6 +81,8 @@ function mod:OnBossEnable()
 
 	-- Stage Two: Defying Destiny
 	self:Log("SPELL_CAST_START", "RealignFate", 351969)
+	self:Log("SPELL_AURA_APPLIED", "UnstableFateApplied", 353693)
+	self:Log("SPELL_AURA_REMOVED", "RealignFateRemoved", 351969)
 
 	-- Stage Three: Fated Terminus
 	self:Log("SPELL_AURA_APPLIED", "ExtemporaneousFateApplied", 353195)
@@ -228,35 +229,31 @@ do
 			prev = t
 			self:CastBar(353122, 40) -- Darkest Destiny
 		end
-		unstableFateAppliedCount = unstableFateAppliedCount + 1
 	end
 end
 
-function mod:UnstableFateRemoved(args) -- Best way to track it atm
-	unstableFateAppliedCount = unstableFateAppliedCount - 1
-	if unstableFateAppliedCount == 0 then -- next stage
-		if realignFateCount > 3 then -- Stage 3 after 3x Realign Fate
-			stage = 3
-		else
-			stage = 1
-		end
-		self:StopBar(CL.cast:format(self:SpellName(353122))) -- Darkest Destiny
-		self:SetStage(stage)
-		self:Message("stages", "cyan", CL.stage:format(stage), nil)
-		self:PlaySound("stages", "long")
-
-		self:Bar(350421, stage == 3 and 7.3 or 14.5, CL.beams) -- Fated Conjunction (Beams)
-		self:Bar(350568, stage == 3 and 9.7 or 26, CL.bombs) -- Call of Eternity (Bombs)
-		self:Bar(351680, stage == 3 and 23.2 or 36.8, CL.add) -- Heroic Destiny (Add)
-
-		if stage == 3 then
-			self:Bar(353195, 34.9, L.rings) -- Extemporaneous Fate (Rings)
-		end
-
-		--if self:Mythic() and stage == 1 then
-			--self:CDBar(354367, 36, L.runes) -- Grim Portent (Runes)
-		--end
+function mod:RealignFateRemoved(args)
+	if realignFateCount > 3 then -- Stage 3 after 3x Realign Fate
+		stage = 3
+	else
+		stage = 1
 	end
+	self:StopBar(CL.cast:format(self:SpellName(353122))) -- Darkest Destiny
+	self:SetStage(stage)
+	self:Message("stages", "cyan", CL.stage:format(stage), nil)
+	self:PlaySound("stages", "long")
+
+	self:Bar(350421, stage == 3 and 8.3 or 15.5, CL.beams) -- Fated Conjunction (Beams)
+	self:Bar(350568, stage == 3 and 10.7 or 27, CL.bombs) -- Call of Eternity (Bombs)
+	self:Bar(351680, stage == 3 and 24.2 or 37.8, CL.add) -- Heroic Destiny (Add)
+
+	if stage == 3 then
+		self:Bar(353195, 35.9, L.rings) -- Extemporaneous Fate (Rings)
+	end
+
+	--if self:Mythic() and stage == 1 then
+		--self:CDBar(354367, 36, L.runes) -- Grim Portent (Runes)
+	--end
 end
 
 -- Stage Three: Fated Terminus
