@@ -295,7 +295,7 @@ end
 
 -- Intermission: A Monument to our Suffering
 function mod:BansheeShroudApplied()
-	self:Message("stages", "cyan", CL.intermission, nil)
+	self:Message("stages", "cyan", CL.intermission, false)
 	self:PlaySound("stages", "long")
 
 	self:StopBar(CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
@@ -331,7 +331,7 @@ function mod:BansheeFormApplied()
 	if stage < 2 then -- PTR TEMP
 		self:SetStage(2)
 		stage = 2
-		self:Message("stages", "cyan", CL.stage:format(stage), nil)
+		self:Message("stages", "cyan", CL.stage:format(stage), false)
 		self:PlaySound("stages", "long")
 
 		self:StopBar(CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
@@ -440,7 +440,7 @@ end
 function mod:BansheeShroudRemoved()
 	self:SetStage(3)
 	stage = 3
-	self:Message("stages", "cyan", CL.stage:format(stage), nil)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
 	self:StopBar(CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness

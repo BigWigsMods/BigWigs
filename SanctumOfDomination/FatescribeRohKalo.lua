@@ -214,7 +214,7 @@ function mod:RealignFate(args)
 	self:StopBar(L.runes)
 
 	self:SetStage(2)
-	self:Message("stages", "cyan", CL.stage:format(2), nil)
+	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
 	self:Bar(351969, 17, CL.active:format(L.rings), args.spellId) -- 16-18s
 	realignFateCount = realignFateCount + 1
@@ -239,7 +239,7 @@ function mod:RealignFateRemoved(args)
 	end
 	self:StopBar(CL.cast:format(self:SpellName(353122))) -- Darkest Destiny
 	self:SetStage(stage)
-	self:Message("stages", "cyan", CL.stage:format(stage), nil)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
 	self:Bar(350421, stage == 3 and 8.3 or 15.5, CL.beams) -- Fated Conjunction (Beams)
