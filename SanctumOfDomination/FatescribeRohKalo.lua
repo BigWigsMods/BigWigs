@@ -62,6 +62,7 @@ function mod:GetOptions()
 		{350568, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Call of Eternity (Bombs)
 		-- Stage Two: Defying Destiny
 		351969, -- Realign Fate
+		357144, -- Despair
 		353122, -- Darkest Destiny
 		-- Stage Three: Fated Terminus
 		353195, -- Extemporaneous Fate
@@ -99,6 +100,9 @@ function mod:OnBossEnable()
 
 	-- Stage Two: Defying Destiny
 	self:Log("SPELL_CAST_START", "RealignFate", 351969)
+	self:Log("SPELL_CAST_START", "Despair", 357144)
+	self:Death("MonstrosityDeath", 180323) -- Fatespawn Monstrosity
+
 	self:Log("SPELL_AURA_APPLIED", "UnstableFateApplied", 353693)
 	self:Log("SPELL_AURA_REMOVED", "RealignFateRemoved", 351969)
 
@@ -216,7 +220,7 @@ do
 		playerList[args.destName] = icon -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:TargetBar(350568, 8, args.destName, CL.count:format(CL.bomb, callOfEternityCount-1))
-			self:Say(350568, L.count_rticon:format(CL.bomb, callOfEternityCount-1, icon))
+			self:Say(350568, CL.count_rticon:format(CL.bomb, callOfEternityCount-1, icon))
 			self:SayCountdown(350568, 8)
 			self:PlaySound(350568, "warning")
 		end
@@ -247,6 +251,16 @@ function mod:RealignFate(args)
 	realignFateCount = realignFateCount + 1
 end
 
+function mod:Despair(args)
+	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "alert")
+	--self:Bar(args.spellId, 20)
+end
+
+function mod:MonstrosityDeath()
+	self:StopBar(357144) -- Despair
+end
+
 do
 	local prev = 0
 	function mod:UnstableFateApplied(args) -- Best way to track it atm
@@ -259,12 +273,13 @@ do
 end
 
 function mod:RealignFateRemoved(args)
+	self:StopBar(CL.cast:format(self:SpellName(353122))) -- Darkest Destiny
+
 	if realignFateCount > 3 then -- Stage 3 after 3x Realign Fate
 		stage = 3
 	else
 		stage = 1
 	end
-	self:StopBar(CL.cast:format(self:SpellName(353122))) -- Darkest Destiny
 	self:SetStage(stage)
 	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
