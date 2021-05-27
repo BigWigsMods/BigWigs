@@ -144,8 +144,8 @@ local customBossOptions = { -- Adding core generic toggles
 	altpower = {L.altpower, L.altpower_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\AltPower"},
 	infobox = {L.infobox, L.infobox_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Info"},
 	proximity = {L.proximity, L.proximity_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Proximity"},
-	stages = {L.stages, L.stages_desc},
-	warmup = {L.warmup, L.warmup_desc},
+	stages = {L.stages, L.stages_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Stages"},
+	warmup = {L.warmup, L.warmup_desc, "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Warmup"},
 }
 
 function BigWigs:GetBossOptionDetails(module, option)
