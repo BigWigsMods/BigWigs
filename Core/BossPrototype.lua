@@ -412,6 +412,7 @@ function boss:Disable(isWipe)
 		self.isWiping = nil
 		self.isEngaged = nil
 		self.bossTargetChecks = nil
+		self.blockWinFunction = nil
 
 		self:CancelAllTimers()
 
@@ -1000,6 +1001,9 @@ do
 	end
 
 	function boss:Win()
+		 -- Classic modules use both encounter event and death events which can cause double wins. Do this rather than changing and testing every module.
+		if self.blockWinFunction then return end
+		self.blockWinFunction = true
 		dbg(":Win", self.engageId, self.moduleName)
 		twipe(icons) -- Wipe icon cache
 		twipe(spells)
