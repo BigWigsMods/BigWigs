@@ -101,7 +101,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "GlacialWrathRemoved", 353808)
 	self:Log("SPELL_AURA_APPLIED", "ShatterApplied", 346530)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShatterApplied", 346530)
-	self:Log("SPELL_AURA_APPLIED", "OblivionsEcho", 347291, 352997) -- Stage 1, Stage 3
+	self:Log("SPELL_CAST_START", "OblivionsEcho", 347291, 352997) -- Stage 1, Stage 3
 	self:Log("SPELL_AURA_APPLIED", "OblivionsEchoApplied", 347292)
 	self:Log("SPELL_AURA_REMOVED", "OblivionsEchoRemoved", 347292)
 	self:Log("SPELL_AURA_APPLIED", "FrostBlastApplied", 348760)
@@ -363,6 +363,8 @@ function mod:NecroticMiasmaApplied(args)
 end
 
 function mod:NecroticSurgeApplied(args)
+	if not self:IsEngaged() then return end
+
 	self:NewStackMessage(args.spellId, "cyan", args.destName, args.amount)
 	self:PlaySound(args.spellId, "info")
 
@@ -436,7 +438,7 @@ function mod:NecroticSurgeApplied(args)
 		end
 		self:CDBar(347292, oblivionTime, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
 		self:CDBar(348760, frostBlastTime, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
-		self:CDBar(348760, onslaughtTime, 34.8) -- Onslaught of the Damned
+		self:CDBar(352348, onslaughtTime) -- Onslaught of the Damned
 	end
 end
 
