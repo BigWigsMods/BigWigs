@@ -173,11 +173,21 @@ function mod:OnEngage()
 	--self:Bar(349458, 25, CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
 	--self:Bar(347704, 25, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 	--self:Bar(347609, 25, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
+
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_HEALTH(event, unit)
+	if self:GetHealth(unit) < 83 then -- Intermission at 80%
+		self:Message("stages", "green", CL.soon:format(CL.intermission), false)
+		self:PlaySound("stages", "info")
+		self:UnregisterUnitEvent(event, unit)
+	end
+end
 
 -- Stage One: A Cycle of Hatred
 function mod:Windrunner(args)
