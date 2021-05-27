@@ -461,7 +461,7 @@ function mod:NecroticDestruction(args)
 
 	self:SetStage(2)
 	stage = 2
-	if self:GetHealth("boss2") < 34 then -- final stage 2
+	if self:UnitGUID("boss2") and self:GetHealth("boss2") < 34 then -- final stage 2 -- XXX check why this was invalid
 		self:CDBar(355055, 3) -- Glacial Winds
 		self:CDBar(352379, 11) -- Freezing Blast
 	else
@@ -544,7 +544,7 @@ do
 		local mark = 8
 		for i = 1, #bossUnits do
 			local unit = bossUnits[i] -- boss5 arena1 arena2 were used
-			if self:MobId(unit) == 176974 then -- Soul Reaver
+			if self:MobId(self:UnitGUID(unit)) == 176974 then -- Soul Reaver
 				self:CustomIcon(soulReaverMarker, unit, mark)
 				mark = mark - 1
 				if mark < 6 then break end
