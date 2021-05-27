@@ -288,7 +288,7 @@ function mod:ForgeWeaponOver(args)
 
 	self:Bar(355505, 15, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
 	local spellId = self:GetStage() == 3 and 355568 or 355778 -- Axe or Scythe
-	self:Bar(spellId, 24, CL.count:format(L[spellId], instrumentCount)) -- Instruments of Pain
+	self:Bar(spellId, 24, CL.count:format(L[weaponNames[spellId]], instrumentCount)) -- Instruments of Pain
 	self:Bar(352052, 40, CL.count:format(self:SpellName(352052),spikedBallsCount)) -- Spiked Balls
 	self:Bar(348456, 56, CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
 end
