@@ -131,7 +131,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ReturnOfTheDamnedRemoved", 348638)
 
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
-	self:RegisterEvent("UNIT_SPELLCAST_STOP")
 	self:GROUP_ROSTER_UPDATE()
 end
 
@@ -151,7 +150,7 @@ function mod:OnEngage()
 
 
 	self:CDBar(348071, 7.5, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture
-	self:CDBar(347292, 11, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
+	self:CDBar(347292, 10, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
 	self:CDBar(346459, 19, CL.count:format(L.spikes, glacialWrathCount)) -- Glacial Wrath
 	self:CDBar(348760, 43.5, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
 	self:CDBar(352530, 44.5, CL.count:format(self:SpellName(352530), darkEvocationCount)) -- Dark Evocation
@@ -312,7 +311,11 @@ do
 	function mod:OblivionsEcho(args)
 		playerList = {}
 		oblivionsEchoCount = oblivionsEchoCount + 1
-		self:CDBar(347292, stage == 3 and 41.5 or 36.5, CL.count:format(L.silence, oblivionsEchoCount))
+		if stage == 3 then
+			self:CDBar(347292, oblivionsEchoCount % 2 == 0 and 17.1 or 23.3, CL.count:format(L.silence, oblivionsEchoCount))
+		else
+			self:CDBar(347292, 39.1, CL.count:format(L.silence, oblivionsEchoCount)) -- 38-44?
+		end
 	end
 
 	function mod:OblivionsEchoApplied(args)
@@ -367,7 +370,7 @@ function mod:NecroticSurgeApplied(args)
 	self:StopBar(352379) -- Freezing Blast
 	self:StopBar(355055) -- Glacial Winds
 
-	if stage == 3 then
+	if stage == 2 then
 		self:SetStage(1)
 		stage = 1
 		self:CDBar(348071, 9.5, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture
@@ -376,31 +379,64 @@ function mod:NecroticSurgeApplied(args)
 		self:CDBar(348760, 45.3, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast // Sometimes 90s? why?
 
 		-- Standard time if mana is 100
-		local evocationTime = 44.5
-		local blizzardTime = 110 -- XXX Check
+		local evocationTime = 45.4
+		local blizzardTime = 86.2
 
 		local currentMana = UnitPower("boss1")
 		if currentMana then
 			if currentMana == 80 then
-				evocationTime = 21.5
-				blizzardTime = 90 -- XXX Check
+				evocationTime = 46.1
+				blizzardTime = 86.4
 			elseif currentMana == 60 then
 				evocationTime = 11.5
 				blizzardTime = 46.5
 			elseif currentMana == 40 then
+				-- XXX 20 uses these times sometimes? seems like the longer at 20
+				-- the higher the chance evo is used immediately regardless of energy?
+				evocationTime = 3.2
 				blizzardTime = 21.5
-				evocationTime = 90 -- XXX Check
 			elseif currentMana == 20 then
-				blizzardTime = 11.5
 				evocationTime = 46.5
+				blizzardTime = 11.5
 			end
 		end
 		self:CDBar(352530, evocationTime, CL.count:format(self:SpellName(352530), darkEvocationCount)) -- Dark Evocation
 		self:CDBar(354198, blizzardTime, CL.count:format(self:SpellName(354198), blizzardCount)) -- Howling Blizzard
 	else -- Stage 3
-		self:CDBar(347292, 6.5, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
-		self:CDBar(348760, 34.2, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
-		self:CDBar(348760, 34.8) -- Onslaught of the Damned
+		oblivionsEchoCount = 1
+
+		-- oblivion > oblivion > frost blast > onslaught > repeat
+		-- always the same order, but seems to either start at oblivion or frost blast based on energy
+
+		-- Standard time if mana is 100
+		local frostBlastTime = 30.2
+		local onslaughtTime = 33.9
+		local oblivionTime = 5.8
+
+		local currentMana = UnitPower("boss1")
+		if currentMana == 80 then
+			-- XXX Check
+			frostBlastTime = 30.2
+			onslaughtTime = 33.9
+			oblivionTime = 5.8
+		elseif currentMana == 60 then
+			-- XXX Check
+			frostBlastTime = 29.8
+			onslaughtTime = 33.97
+			oblivionTime = 45.8
+		elseif currentMana == 40 then
+			-- XXX Check
+			frostBlastTime = 29.8
+			onslaughtTime = 33.97
+			oblivionTime = 45.8
+		elseif currentMana == 20 then
+			frostBlastTime = 29.8
+			onslaughtTime = 33.97
+			oblivionTime = 45.8
+		end
+		self:CDBar(347292, oblivionTime, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
+		self:CDBar(348760, frostBlastTime, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
+		self:CDBar(348760, onslaughtTime, 34.8) -- Onslaught of the Damned
 	end
 end
 
