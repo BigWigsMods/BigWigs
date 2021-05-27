@@ -15,6 +15,17 @@ mod:SetStage(1)
 
 local stage = 1
 local realignFateCount = 1
+local callOfEternityCount = 1
+local heroicDestinyCount = 1
+local fatedConjunctionCount = 1
+local extemporaneousFateCount = 1
+local grimPortentCount = 1
+
+local timersStageThree = {
+	[350568] = {13, 74.5, 38, 96.5}, -- Call of Eternity
+	[351680] = {24, 40, 40, 40, 36.5, 53.5, 40}, -- Heroic Destiny
+	[350421] = {8.3, 51.3, 53, 32, 72.5, 51.5}, -- Fated Conjunction
+}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -23,7 +34,13 @@ local realignFateCount = 1
 local L = mod:GetLocale()
 if L then
 	L.rings = "Rings"
+	L.rings_active = "Rings Active" -- for when they activate/are movable
 	L.runes = "Runes"
+
+	L.grimportent_countdown = "Countdown"
+	L.grimportent_countdown_icon = 354367 -- Grim Portent
+	L.grimportent_countdown_desc = "Countdown for the players who are Affected by Grim Portent"
+	L.grimportent_countdown_bartext = "Go to rune!"
 end
 
 --------------------------------------------------------------------------------
@@ -49,6 +66,7 @@ function mod:GetOptions()
 		-- Stage Three: Fated Terminus
 		353195, -- Extemporaneous Fate
 		354367, -- Grim Portent
+		{"grimportent_countdown", "COUNTDOWN"},
 		354964, -- Runic Affinity
 	},{
 		[351680] = mod:SpellName(-22926), -- Stage One: Scrying Fate
@@ -89,7 +107,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExtemporaneousFateRemoved", 353195)
 
 	-- Mythic
-	self:Log("SPELL_CAST_START", "GrimPortent", 354367) -- XXX Are there debuffs?
+	self:Log("SPELL_CAST_START", "GrimPortent", 354367)
+	self:Log("SPELL_AURA_APPLIED", "GrimPortentApplied", 354367) -- check correct id's, didnt find any
 	self:Log("SPELL_AURA_APPLIED", "RunicAffinityApplied", 354964)
 end
 
@@ -97,13 +116,18 @@ function mod:OnEngage()
 	self:SetStage(1)
 	stage = 1
 	realignFateCount = 1
+	callOfEternityCount = 1
+	heroicDestinyCount = 1
+	fatedConjunctionCount = 1
+	callOfEternityCount = 1
+	grimPortentCount = 1
 
-	self:Bar(350421, 13.5, CL.beams) -- Fated Conjunction (Beams)
-	--self:Bar(350568, 36, CL.bombs) -- Call of Eternity (Bombs)
-	--self:CDBar(351680, 36, CL.add) -- Heroic Destiny (Add)
+	self:Bar(350421, 13.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
+	--self:Bar(350568, 36, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
+	--self:CDBar(351680, 36, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
 
 	--if self:Mythic() then
-		--self:CDBar(354367, 36, L.runes) -- Grim Portent (Runes)
+		--self:CDBar(354367, 36, CL.count:format(L.runes, grimPortentCount)) -- Grim Portent (Runes)
 	--end
 
 	self:Berserk(600) -- Heroic PTR
@@ -116,27 +140,28 @@ end
 -- Stage One: Scrying Fate
 function mod:HeroicDestiny(args)
 	if self:Tank() then
-		self:Message(args.spellId, "purple", CL.casting:format(CL.add))
+		self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(CL.add, heroicDestinyCount)))
 		self:PlaySound(args.spellId, "alert")
 	end
-	self:CDBar(args.spellId, 36, CL.add) -- 36~40~53s
+	heroicDestinyCount = heroicDestinyCount + 1
+	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][heroicDestinyCount] or 36, CL.count:format(CL.add, heroicDestinyCount))
 end
 
 function mod:HeroicDestinyApplied(args)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId, CL.add)
+		self:Say(args.spellId, CL.count:format(CL.add, heroicDestinyCount-1))
 		self:SayCountdown(args.spellId, 8)
 		self:PlaySound(args.spellId, "warning")
 	end
-	self:TargetBar(args.spellId, 8, args.destName, CL.add)
-	self:TargetMessage(args.spellId, "purple", args.destName, CL.add)
+	self:TargetBar(args.spellId, 8, args.destName, CL.count:format(CL.add, heroicDestinyCount-1))
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.add, heroicDestinyCount-1))
 end
 
 function mod:HeroicDestinyRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
-	self:StopBar(CL.add, args.destName)
+	self:StopBar(CL.count:format(CL.add, heroicDestinyCount-1), args.destName)
 end
 
 function mod:BurdenOfDestinyApplied(args)
@@ -168,18 +193,20 @@ function mod:TwistFateApplied(args)
 end
 
 function mod:FatedConjunction(args)
-	self:Message(args.spellId, "yellow", CL.beams)
+	self:Message(args.spellId, "yellow", CL.count:format(CL.beams, fatedConjunctionCount))
 	self:PlaySound(args.spellId, "alert")
-	self:CastBar(args.spellId, 9.8, CL.beams)
-	--self:Bar(args.spellId, 30, CL.beams)
+	self:CastBar(args.spellId, 9.8, CL.count:format(CL.beams, fatedConjunctionCount))
+	fatedConjunctionCount = fatedConjunctionCount + 1
+	self:Bar(args.spellId, stage == 3 and timersStageThree[args.spellId][fatedConjunctionCount] or 60, CL.count:format(CL.beams, fatedConjunctionCount)) -- XXX stage 1 unconfirmed, but at least 60s it looked like
 end
 
 do
 	local playerList = {}
 	function mod:CallOfEternity(args)
 		playerList = {}
-		self:CastBar(350568, 10, CL.bombs)
-		self:Bar(350568, 39, CL.bombs)
+		self:CastBar(350568, 10, CL.count:format(CL.bombs, callOfEternityCount))
+		callOfEternityCount = callOfEternityCount + 1
+		self:Bar(350568, stage == 3 and timersStageThree[350568][callOfEternityCount] or 39, CL.count:format(CL.bombs, callOfEternityCount))
 	end
 
 	function mod:CallOfEternityApplied(args)
@@ -188,18 +215,18 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = icon -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:TargetBar(350568, 8, args.destName, CL.bomb)
-			self:Say(350568, CL.bomb)
+			self:TargetBar(350568, 8, args.destName, CL.count:format(CL.bomb, callOfEternityCount-1))
+			self:Say(350568, L.count_rticon:format(CL.bomb, callOfEternityCount-1, icon))
 			self:SayCountdown(350568, 8)
 			self:PlaySound(350568, "warning")
 		end
-		self:NewTargetsMessage(350568, "orange", playerList, nil, CL.bomb)
+		self:NewTargetsMessage(350568, "orange", playerList, nil, CL.count:format(CL.bomb, callOfEternityCount-1))
 		self:CustomIcon(callOfEternityMarker, args.destName, icon)
 	end
 
 	function mod:CallOfEternityRemoved(args)
 		if self:Me(args.destGUID) then
-			self:StopBar(CL.bomb, args.destName)
+			self:StopBar(CL.count:format(CL.bomb, callOfEternityCount-1), args.destName)
 			self:CancelSayCountdown(350568)
 		end
 		self:CustomIcon(callOfEternityMarker, args.destName)
@@ -208,15 +235,15 @@ end
 
 -- Stage Two: Defying Destiny
 function mod:RealignFate(args)
-	self:StopBar(CL.bombs)
-	self:StopBar(CL.beams)
-	self:StopBar(CL.add)
+	self:StopBar(CL.count:format(CL.bombs, callOfEternityCount))
+	self:StopBar(CL.count:format(CL.beams, fatedConjunctionCount))
+	self:StopBar(CL.count:format(CL.add, heroicDestinyCount))
 	self:StopBar(L.runes)
 
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
-	self:Bar(351969, 17, CL.active:format(L.rings), args.spellId) -- 16-18s
+	self:Bar(351969, 17, L.rings_active, args.spellId) -- 16-18s
 	realignFateCount = realignFateCount + 1
 end
 
@@ -242,36 +269,55 @@ function mod:RealignFateRemoved(args)
 	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
-	self:Bar(350421, stage == 3 and 8.3 or 15.5, CL.beams) -- Fated Conjunction (Beams)
-	self:Bar(350568, stage == 3 and 10.7 or 27, CL.bombs) -- Call of Eternity (Bombs)
-	self:Bar(351680, stage == 3 and 24.2 or 37.8, CL.add) -- Heroic Destiny (Add)
+	heroicDestinyCount = 1
+	fatedConjunctionCount = 1
+	callOfEternityCount = 1
+
+	self:Bar(350421, stage == 3 and 8.3 or 15.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
+	self:Bar(350568, stage == 3 and 10.7 or 27, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
+	self:Bar(351680, stage == 3 and 24.2 or 37.8, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
 
 	if stage == 3 then
-		self:Bar(353195, 35.9, L.rings) -- Extemporaneous Fate (Rings)
+		extemporaneousFateCount = 1
+		self:Bar(353195, 35.9, CL.count:format(L.rings, extemporaneousFateCount)) -- Extemporaneous Fate (Rings)
 	end
 
 	--if self:Mythic() and stage == 1 then
-		--self:CDBar(354367, 36, L.runes) -- Grim Portent (Runes)
+		--grimPortentCount = 1
+		--self:CDBar(354367, 36, CL.count:format(L.runes, grimPortentCount)) -- Grim Portent (Runes)
 	--end
 end
 
 -- Stage Three: Fated Terminus
 function mod:ExtemporaneousFateApplied(args)
-	self:Message(args.spellId, "orange")
+	self:Message(args.spellId, "orange", CL.count:format(L.rings, extemporaneousFateCount))
 	self:PlaySound(args.spellId, "alert")
-	self:CastBar(args.spellId, 30)
+	self:CastBar(args.spellId, 30, CL.count:format(L.rings, extemporaneousFateCount))
+	extemporaneousFateCount = extemporaneousFateCount + 1
+	self:CDBar(args.spellId, 40, CL.count:format(L.rings, extemporaneousFateCount)) -- XXX 35-50s, maybe table? seemed inconsistent between 2 pulls.
 end
 
 function mod:ExtemporaneousFateRemoved(args)
-	self:Message(args.spellId, "green", CL.removed:format(args.spellName))
-	self:StopBar(CL.cast:format(args.spellName))
+	self:Message(args.spellId, "green", CL.over:format(L.rings)) -- Rings Over
+	self:StopBar(CL.cast:format(CL.count:format(L.rings, extemporaneousFateCount)))
 end
 
 -- Mythic
 function mod:GrimPortent(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow", CL.count:format(L.runes, grimPortentCount))
 	self:PlaySound(args.spellId, "long")
-	self:CastBar(args.spellId, 14) -- XXX if _CAST start is correct players have 14s
+	self:CastBar(args.spellId, 14, CL.count:format(L.runes, grimPortentCount)) -- XXX if _CAST start is correct players have 14s
+	grimPortentCount = grimPortentCount + 1
+	--self:Bar(args.spellId, 40, CL.count:format(L.runes, grimPortentCount))
+end
+
+function mod:GrimPortentApplied(args)
+	if self:Me(args.destGUID) then
+		self:StopBar(CL.cast:format(CL.count:format(L.runes, grimPortentCount))) -- replaced with the grimportent_countdown bar
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "alarm")
+		self:Bar("grimportent_countdown", 12, L.grimportent_countdown_bartext, args.spellId)
+	end
 end
 
 do
