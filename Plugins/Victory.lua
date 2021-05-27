@@ -25,7 +25,7 @@ plugin.defaultDB = {
 }
 
 plugin.pluginOptions = {
-	name = L.Victory,
+	name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Victory:20|t ".. L.Victory,
 	type = "group",
 	childGroups = "tab",
 	get = function(i) return plugin.db.profile[i[#i]] end,
@@ -34,8 +34,6 @@ plugin.pluginOptions = {
 		plugin.db.profile[n] = value
 	end,
 	order = 7,
-	--icon = 236661,
-	--iconCoords = {0.07, 0.93, 0.07, 0.93},
 	args = {
 		heading = {
 			type = "description",

@@ -92,7 +92,7 @@ do
 	}
 
 	plugin.pluginOptions = {
-		name = L.autoReply,
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\AutoReply:20|t ".. L.autoReply,
 		desc = L.autoReplyDesc,
 		type = "group",
 		childGroups = "tab",

@@ -49,7 +49,7 @@ plugin.defaultDB = {
 
 plugin.pluginOptions = {
 	type = "group",
-	name = L.Sounds,
+	name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Sounds:20|t ".. L.Sounds,
 	get = function(info)
 		for i, v in next, soundList do
 			if v == db.media[info[#info]] then
@@ -63,7 +63,6 @@ plugin.pluginOptions = {
 		PlaySoundFile(media:Fetch(SOUND, soundList[value]), "Master")
 	end,
 	order = 4,
-	--icon = "Interface\\AddOns\\BigWigs\\Media\\Icons\\unmute",
 	args = {
 		heading = {
 			type = "description",

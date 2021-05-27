@@ -603,7 +603,7 @@ do
 
 	plugin.pluginOptions = {
 		type = "group",
-		name = L.bars,
+		name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Bars:20|t ".. L.bars,
 		childGroups = "tab",
 		get = function(info)
 			return db[info[#info]]

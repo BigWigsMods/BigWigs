@@ -291,8 +291,6 @@ L.proximity_name = "Proximité"
 L.soundDelay = "Délai du son"
 L.soundDelayDesc = "Spécifie combien de temps BigWigs doit attendre entre chaque répétition du son indiquant qu'au moins une personne est trop proche de vous."
 
-L.proximity = "Affichage de proximité"
-L.proximity_desc = "Affiche la fenêtre de proximité quand cela est approprié pour cette rencontre, indiquant la liste des joueurs qui se trouvent trop près de vous."
 L.resetProximityDesc = "Réinitialise toutes les options relatives à la portée, y compris la position de l'ancre."
 
 L.close = "Fermer"

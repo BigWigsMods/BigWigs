@@ -290,8 +290,6 @@ L.proximity_name = "Proximity"
 L.soundDelay = "Sound delay"
 L.soundDelayDesc = "Specify how long BigWigs should wait between repeating the specified sound when someone is too close to you."
 
-L.proximity = "Proximity display"
-L.proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you."
 L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
 
 L.close = "Close"

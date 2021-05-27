@@ -19,14 +19,12 @@ do
 end
 
 local adb = LibStub("AceDB-3.0")
-local lds = LibStub("LibDualSpec-1.0", true)
+--local lds = LibStub("LibDualSpec-1.0")
 
 local L = BigWigsAPI:GetLocale("BigWigs")
 local CL = BigWigsAPI:GetLocale("BigWigs: Common")
 local loader = BigWigsLoader
 core.SendMessage = loader.SendMessage
-
-local customBossOptions = {}
 
 local mod, bosses, plugins = {}, {}, {}
 local coreEnabled = false
@@ -319,9 +317,7 @@ do
 			},
 		}
 		local db = adb:New("BigWigsClassicDB", defaults, true)
-		if lds then
-			lds:EnhanceDatabase(db, "BigWigs3DB")
-		end
+		--lds:EnhanceDatabase(db, "BigWigs3DB")
 
 		db.RegisterCallback(mod, "OnProfileChanged", profileUpdate)
 		db.RegisterCallback(mod, "OnProfileCopied", profileUpdate)
@@ -424,29 +420,8 @@ function core:Error(msg)
 end
 
 -------------------------------------------------------------------------------
--- API - if anything else is exposed on the BigWigs object, that's a mistake!
--- Well .. except the module API, obviously.
+-- API
 --
-
-do
-	function core:RegisterBossOption(key, name, desc, func, icon)
-		if customBossOptions[key] then
-			error("The custom boss option %q has already been registered."):format(key)
-		end
-		customBossOptions[key] = { name, desc, func, icon }
-	end
-
-	-- Adding core generic toggles
-	core:RegisterBossOption("berserk", L.berserk, L.berserk_desc, nil, 136224) -- 136224 = "Interface\\Icons\\spell_shadow_unholyfrenzy"
-	core:RegisterBossOption("altpower", L.altpower, L.altpower_desc, nil, 429383) -- 429383 = "Interface\\Icons\\spell_arcane_invocation"
-	core:RegisterBossOption("infobox", L.infobox, L.infobox_desc, nil, 443374) -- Interface\\Icons\\INV_MISC_CAT_TRINKET05
-	core:RegisterBossOption("stages", L.stages, L.stages_desc)
-	core:RegisterBossOption("warmup", L.warmup, L.warmup_desc)
-end
-
-function core:GetCustomBossOptions()
-	return customBossOptions
-end
 
 do
 	local L = GetLocale()

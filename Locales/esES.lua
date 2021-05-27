@@ -12,6 +12,8 @@ L.stages = "Fases"
 L.stages_desc = "Habilita funciones relacionadas con varias etapas/fases del jefe como proximidad, barras, etc."
 L.warmup = "Calentamiento"
 L.warmup_desc = "Tiempo hasta que el combate con el jefe comience."
+L.proximity = "Visualizar proximidad"
+L.proximity_desc = "Muestra la ventana de proximidad cuando sea apropidada para este encuentro, lista los jugadores que están demasiado cerca tuya."
 
 L.already_registered = "|cffff0000ATENCIóN:|r |cff00ff00%s|r (|cffffff00%s|r) ya existe ese módulo en BigWigs, pero sin embargo está intentando registrarlo de nuevo. Esto normalmente ocurre cuando tienes varias copias de este módulo en tu carpeta de addons posiblemente por una actualización fallida. Es recomendable que borres la carpeta de BigWigs y lo reinstales por completo."
 L.testNameplate = "Objetivo detectado, creando una barra test en la placa de nombre sobre la placa de nombre del objetivo. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"

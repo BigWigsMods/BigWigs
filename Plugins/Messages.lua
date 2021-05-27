@@ -266,7 +266,7 @@ end
 
 plugin.pluginOptions = {
 	type = "group",
-	name = L.messages,
+	name = "|TInterface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Messages:20|t ".. L.messages,
 	childGroups = "tab",
 	get = function(info) return plugin.db.profile[info[#info]] end,
 	set = function(info, value)

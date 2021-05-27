@@ -11,6 +11,8 @@ L.stages = "Stages"
 L.stages_desc = "Enable functions related to the various stages/phases of the boss like proximity, bars, etc."
 L.warmup = "Warmup"
 L.warmup_desc = "Time until combat with the boss starts."
+L.proximity = "Proximity display"
+L.proximity_desc = "Show the proximity window when appropriate for this encounter, listing players who are standing too close to you."
 
 L.already_registered = "|cffff0000WARNING:|r |cff00ff00%s|r (|cffffff00%s|r) already exists as a module in BigWigs, but something is trying to register it again. This usually means you have two copies of this module in your addons folder due to some addon updater failure. It is recommended that you delete any BigWigs folders you have and then reinstall it from scratch."
 L.testNameplate = "Target detected, creating a test nameplate bar over target nameplate. |cFF33FF99This feature is rarely used, is usually just 1 bar, and is needed to keep track of cooldowns when fighting multiple bosses/ads that cast the same spell.|r"
