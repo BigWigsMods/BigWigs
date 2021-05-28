@@ -121,7 +121,6 @@ end
 
 function mod:OnBossEnable()
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	-- Stage One: The Unending Voice
 	self:Log("SPELL_CAST_START", "FragmentsOfDestiny", 352744, 350541) -- Stage 1 (Mythic), Stage 2
@@ -160,6 +159,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ArthurasCrushingGazeRemoved", 350039)
 
 	-- Stage Two: The First of the Mawsworn
+	self:Log("SPELL_CAST_SUCCESS", "SkyjasAdvance", 350745) -- Stage 2
 	self:Log("SPELL_AURA_APPLIED", "PierceSoulApplied", 350475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PierceSoulApplied", 350475)
 	self:Log("SPELL_CAST_SUCCESS", "Resentment", 351399)
@@ -230,26 +230,24 @@ function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 350745 then -- Maw Power (Set to 00)  [DNT]
-		self:SetStage(2)
-		stage = 2
-		self:Message("stages", "green", CL.stage:format(2), false)
-		self:PlaySound("stages", "long")
+function mod:SkyjasAdvance() -- Stage 2
+	self:SetStage(2)
+	stage = 2
+	self:Message("stages", "green", CL.stage:format(2), false)
+	self:PlaySound("stages", "long")
 
-		self:Bar(351399, 6.9) -- Resentment
-		self:Bar(350475, 9.4) -- Pierce Soul
-		self:Bar(350482, 24.4) -- Link Essence
-		self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
-		self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
+	self:Bar(351399, 6.9) -- Resentment
+	self:Bar(350475, 9.4) -- Pierce Soul
+	self:Bar(350482, 24.4) -- Link Essence
+	self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
+	self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
 
-		--if self:Mythic() then
-			--self:Bar(11111, 43.9, L.pullin.."[image]") -- Run Away [image]
-			--self:Bar(11111, 43.9, L.pushback.."[image]") -- Go in [image]
-		--end
+	--if self:Mythic() then
+		--self:Bar(11111, 43.9, L.pullin.."[image]") -- Run Away [image]
+		--self:Bar(11111, 43.9, L.pushback.."[image]") -- Go in [image]
+	--end
 
-		self:Bar("berserk", 604, L.berserk_stage2, 26662) -- Custom Berserk bar
-	end
+	self:Bar("berserk", 604, L.berserk_stage2, 26662) -- Custom Berserk bar
 end
 
 function mod:UNIT_HEALTH(event, unit)
