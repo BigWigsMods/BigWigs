@@ -292,7 +292,7 @@ do
 
 		self:Bar(355505, 15, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
 		-- Heroic: Hammer -> Axe -> Scythe / Mythic: Axe -> Hammer -> Scythe
-		local spellId = self:GetStage() == 3 and 355778 or self:Mythic() and 348513 or 355568
+		local spellId = self:GetStage() == 3 and 355778 or self:Mythic() and 348508 or 355568
 		self:Bar(spellId, 24, CL.count:format(L[weaponNames[spellId]], instrumentCount)) -- Instruments of Pain
 		self:Bar(352052, self:Mythic() and 6.8 or 40, CL.count:format(self:SpellName(352052), spikedBallsCount)) -- Spiked Balls
 		self:Bar(348456, self:Mythic() and 51.8 or 56, CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
