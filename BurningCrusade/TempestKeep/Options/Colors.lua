@@ -10,6 +10,12 @@ BigWigs:AddColors("Void Reaver", {
 	[34172] = {"blue","yellow"},
 })
 
+BigWigs:AddColors("High Astromancer Solarian", {
+	[42783] = {"blue","yellow"},
+	["phase"] = {"green","red"},
+	["split"] = "red",
+})
+
 BigWigs:AddColors("Kael'thas Sunstrider", {
 	[37018] = {"blue","yellow"},
 	[37027] = {"blue","yellow"},
@@ -19,10 +25,4 @@ BigWigs:AddColors("Kael'thas Sunstrider", {
 	["phase"] = {"green","red","yellow"},
 	["pyro"] = {"green","yellow"},
 	["rebirth"] = {"orange","yellow"},
-})
-
-BigWigs:AddColors("High Astromancer Solarian", {
-	[42783] = {"blue","yellow"},
-	["phase"] = {"green","red"},
-	["split"] = "red",
 })

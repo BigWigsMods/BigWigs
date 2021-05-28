@@ -7,7 +7,7 @@ BigWigs:AddColors("High Warlord Naj'entus", {
 BigWigs:AddColors("Supremus", {
 	[40126] = "yellow",
 	[40265] = "blue",
-	[41951] = {"blue","red"},
+	["fixate"] = {"blue","red"},
 	["stages"] = "cyan",
 })
 

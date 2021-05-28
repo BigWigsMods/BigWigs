@@ -6,7 +6,7 @@ BigWigs:AddSounds("High Warlord Naj'entus", {
 
 BigWigs:AddSounds("Supremus", {
 	[40265] = "alert",
-	[41951] = "warning",
+	["fixate"] = "warning",
 	["stages"] = "info",
 })
 

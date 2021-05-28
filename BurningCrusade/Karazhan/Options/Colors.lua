@@ -4,25 +4,8 @@ BigWigs:AddColors("Attumen the Huntsman Raid", {
 	["phase"] = "red",
 })
 
-BigWigs:AddColors("The Curator Raid", {
-	[30254] = {"green","orange","red","yellow"},
-	[30403] = {"green","red"},
-})
-
 BigWigs:AddColors("Hyakiss the Lurker", {
 	[29896] = {"blue","orange"},
-})
-
-BigWigs:AddColors("Maiden of Virtue Raid", {
-	[29511] = {"orange","red","yellow"},
-	[29522] = {"blue","red"},
-})
-
-BigWigs:AddColors("Prince Malchezaar", {
-	[30843] = {"blue","orange","red","yellow"},
-	[30852] = {"red","yellow"},
-	["infernal"] = {"orange","red"},
-	["phase"] = "green",
 })
 
 BigWigs:AddColors("Moroes Raid", {
@@ -31,17 +14,9 @@ BigWigs:AddColors("Moroes Raid", {
 	[37066] = {"blue","yellow"},
 })
 
-BigWigs:AddColors("Netherspite", {
-	[37063] = "yellow",
-	[38523] = "orange",
-	["phase"] = "red",
-})
-
-BigWigs:AddColors("Nightbane Raid", {
-	[30129] = "blue",
-	[36922] = "green",
-	[37098] = "orange",
-	["phase"] = {"red","yellow"},
+BigWigs:AddColors("Maiden of Virtue Raid", {
+	[29511] = {"orange","red","yellow"},
+	[29522] = {"blue","red"},
 })
 
 BigWigs:AddColors("Romulo & Julianne", {
@@ -49,6 +24,25 @@ BigWigs:AddColors("Romulo & Julianne", {
 	["heal"] = "orange",
 	["phase"] = "green",
 	["poison"] = {"blue","red"},
+})
+
+BigWigs:AddColors("The Big Bad Wolf", {
+	[30753] = {"blue","yellow"},
+})
+
+BigWigs:AddColors("The Crone", {
+	[32337] = "orange",
+	["spawns"] = "yellow",
+})
+
+BigWigs:AddColors("The Curator Raid", {
+	[30254] = {"green","orange","red","yellow"},
+	[30403] = {"green","red"},
+})
+
+BigWigs:AddColors("Terestian Illhoof", {
+	[30115] = {"blue","orange","yellow"},
+	["weak"] = {"red","yellow"},
 })
 
 BigWigs:AddColors("Shade of Aran", {
@@ -59,16 +53,22 @@ BigWigs:AddColors("Shade of Aran", {
 	["pull"] = "yellow",
 })
 
-BigWigs:AddColors("Terestian Illhoof", {
-	[30115] = {"blue","orange","yellow"},
-	["weak"] = {"red","yellow"},
+BigWigs:AddColors("Netherspite", {
+	[37063] = "yellow",
+	[38523] = "orange",
+	["phase"] = "red",
 })
 
-BigWigs:AddColors("The Big Bad Wolf", {
-	[30753] = {"blue","yellow"},
+BigWigs:AddColors("Prince Malchezaar", {
+	[30843] = {"blue","orange","red","yellow"},
+	[30852] = {"red","yellow"},
+	["infernal"] = {"orange","red"},
+	["phase"] = "green",
 })
 
-BigWigs:AddColors("The Crone", {
-	[32337] = "orange",
-	["spawns"] = "yellow",
+BigWigs:AddColors("Nightbane Raid", {
+	[30129] = "blue",
+	[36922] = "green",
+	[37098] = "orange",
+	["phase"] = {"red","yellow"},
 })

@@ -3,9 +3,9 @@ BigWigs:AddSounds("Hydross the Unstable", {
 	["mark"] = "alert",
 })
 
-BigWigs:AddSounds("Fathom-Lord Karathress", {
-	[38330] = "long",
-	["totem"] = "alarm",
+BigWigs:AddSounds("The Lurker Below", {
+	["dive"] = {"alarm","alert"},
+	["spout"] = "alert",
 })
 
 BigWigs:AddSounds("Leotheras the Blind", {
@@ -13,9 +13,9 @@ BigWigs:AddSounds("Leotheras the Blind", {
 	["mindcontrol"] = "alert",
 })
 
-BigWigs:AddSounds("The Lurker Below", {
-	["dive"] = {"alarm","alert"},
-	["spout"] = "alert",
+BigWigs:AddSounds("Fathom-Lord Karathress", {
+	[38330] = "long",
+	["totem"] = "alarm",
 })
 
 BigWigs:AddSounds("Morogrim Tidewalker", {
