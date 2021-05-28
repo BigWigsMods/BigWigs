@@ -14,6 +14,7 @@ mod:SetStage(1)
 --
 
 local stage = 1
+local nextStageWarning = 73
 local realignFateCount = 1
 local callOfEternityCount = 1
 local heroicDestinyCount = 1
@@ -115,10 +116,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GrimPortentApplied", 354365)
 	self:Log("SPELL_AURA_REMOVED", "GrimPortentRemoved", 354365)
 	self:Log("SPELL_AURA_APPLIED", "RunicAffinityApplied", 354964)
+
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 function mod:OnEngage()
 	self:SetStage(1)
+	nextStageWarning = self:Mythic() and 73 or 88
 	stage = 1
 	realignFateCount = 1
 	callOfEternityCount = 1
@@ -127,9 +131,10 @@ function mod:OnEngage()
 	extemporaneousFateCount = 1
 	grimPortentCount = 1
 
-	self:Bar(350421, 13.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
-	--self:Bar(350568, 36, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
-	--self:CDBar(351680, 36, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
+	-- these all can vary by 2s
+	self:CDBar(350421, self:Mythic() and 23.3 or 13.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
+	self:CDBar(350568, self:Mythic() and 11 or 24.4, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
+	self:CDBar(351680, self:Mythic() and 21 or 35.4, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
 
 	if self:Mythic() then
 		self:CDBar(354367, 44, CL.count:format(L.runes, grimPortentCount)) -- Grim Portent (Runes)
@@ -142,6 +147,17 @@ end
 -- Event Handlers
 --
 
+function mod:UNIT_HEALTH(event, unit)
+	if self:GetHealth(unit) < nextStageWarning then -- 85 60 35 in Heroic / 70 45 20 in Mythic?
+		self:Message("stages", "green", CL.soon:format(self:SpellName(351969)), false) -- Realign Fate
+		self:PlaySound("stages", "info")
+		nextStageWarning = nextStageWarning - 25
+		if nextStageWarning < 20 then
+			self:UnregisterUnitEvent(event, unit)
+		end
+	end
+end
+
 -- Stage One: Scrying Fate
 function mod:HeroicDestiny(args)
 	if self:Tank() then
@@ -149,7 +165,7 @@ function mod:HeroicDestiny(args)
 		self:PlaySound(args.spellId, "alert")
 	end
 	heroicDestinyCount = heroicDestinyCount + 1
-	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][heroicDestinyCount] or 36, CL.count:format(CL.add, heroicDestinyCount))
+	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][heroicDestinyCount] or self:Mythic() and 40 or 36, CL.count:format(CL.add, heroicDestinyCount))
 end
 
 function mod:HeroicDestinyApplied(args)
@@ -202,7 +218,7 @@ function mod:FatedConjunction(args)
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, 9.8, CL.count:format(CL.beams, fatedConjunctionCount))
 	fatedConjunctionCount = fatedConjunctionCount + 1
-	self:Bar(args.spellId, stage == 3 and timersStageThree[args.spellId][fatedConjunctionCount] or 60, CL.count:format(CL.beams, fatedConjunctionCount)) -- XXX stage 1 unconfirmed, but at least 60s it looked like
+	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][fatedConjunctionCount] or 60, CL.count:format(CL.beams, fatedConjunctionCount)) -- XXX stage 1 unconfirmed, but at least 60s it looked like
 end
 
 do
@@ -211,7 +227,7 @@ do
 		playerList = {}
 		self:CastBar(350568, 10, CL.count:format(CL.bombs, callOfEternityCount))
 		callOfEternityCount = callOfEternityCount + 1
-		self:Bar(350568, stage == 3 and timersStageThree[350568][callOfEternityCount] or 39, CL.count:format(CL.bombs, callOfEternityCount))
+		self:CDBar(350568, stage == 3 and timersStageThree[350568][callOfEternityCount] or 39, CL.count:format(CL.bombs, callOfEternityCount))
 	end
 
 	function mod:CallOfEternityApplied(args)
@@ -248,7 +264,7 @@ function mod:RealignFate(args)
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
-	self:Bar(351969, 17, L.rings_active, args.spellId) -- 16-18s
+	self:CDBar(351969, 17, L.rings_active, args.spellId) -- 16-18s
 	realignFateCount = realignFateCount + 1
 end
 
@@ -289,19 +305,24 @@ function mod:RealignFateRemoved(args)
 	fatedConjunctionCount = 1
 	callOfEternityCount = 1
 
-	self:Bar(350421, stage == 3 and 8.3 or 15.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
-	self:Bar(350568, stage == 3 and 10.7 or 27, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
-	self:Bar(351680, stage == 3 and 24.2 or 37.8, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
+	if self:Mythic() then
+		self:CDBar(350421, stage == 3 and 8.3 or 15.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
+		self:CDBar(350568, stage == 3 and 10.7 or 16, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
+		self:CDBar(351680, stage == 3 and 24.2 or 25, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
+		if stage == 1 then
+			grimPortentCount = 1
+			self:CDBar(354367, 47, CL.count:format(L.runes, grimPortentCount)) -- Grim Portent (Runes)
+		end
+	else
+		self:CDBar(350421, stage == 3 and 8.3 or 15.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
+		self:CDBar(350568, stage == 3 and 10.7 or 27, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
+		self:CDBar(351680, stage == 3 and 24.2 or 37.8, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
+	end
 
 	if stage == 3 then
 		extemporaneousFateCount = 1
 		self:Bar(353195, 35.9, CL.count:format(L.rings, extemporaneousFateCount)) -- Extemporaneous Fate (Rings)
 	end
-
-	--if self:Mythic() and stage == 1 then
-		--grimPortentCount = 1
-		--self:CDBar(354367, 36, CL.count:format(L.runes, grimPortentCount)) -- Grim Portent (Runes)
-	--end
 end
 
 -- Stage Three: Fated Terminus
@@ -324,7 +345,7 @@ function mod:GrimPortent(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 14, CL.count:format(L.runes, grimPortentCount)) -- XXX if _CAST start is correct players have 14s
 	grimPortentCount = grimPortentCount + 1
-	self:Bar(args.spellId, grimPortentCount == 2 and 28 or 47, CL.count:format(L.runes, grimPortentCount))
+	self:CDBar(args.spellId, grimPortentCount == 2 and 28 or 47, CL.count:format(L.runes, grimPortentCount))
 end
 
 function mod:GrimPortentApplied(args)
