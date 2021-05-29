@@ -1,48 +1,34 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Common", "itIT")
 if not L then return end
 
-L.add = "Add"
-L.add_killed = "Add ucciso (%d/%d)"
-L.add_remaining = "Add ucciso, %d rimasti"
-L.adds = "Adds"
-L.add_spawned = "Add Apparso"
+-- Prototype.lua common words
+L.you = "%s su di TE"
+L.you_icon = "%s su di |T13700%d:0|tTE"
+L.underyou = "%s sotto di TE"
+L.other = "%s: %s"
+L.onboss = "%s sul BOSS"
+L.buff_boss = "Potenziamento sul BOSS: %s"
+L.buff_other = "Potenziamento su %s: %s"
+L.on = "%s su %s"
+L.stack = "%dx %s su %s"
+L.stackyou = "%dx %s su DI TE"
 L.cast = "<Lancio di %s>"
 L.casting = "Lancio di %s"
+L.soon = "%s tra poco"
 L.count = "%s (%d)"
 L.count_icon = "%s (%d|T13700%d:0|t)"
 L.count_rticon = "%s (%d{rt%d})"
 L.rticon = "%s ({rt%d})"
-L.custom_end = "%s diventa %s"
-L.custom_min = "%s in %d min"
-L.custom_sec = "%s in %d sec"
-L.custom_start = "Combattimento con %s iniziato - %s in %d min"
-L.custom_start_s = "Combattimento con %s iniziato - %s in %d sec"
-L.focus_only = "|cffff0000Avviso solo per i bersagli focus.|r "
-L.general = "Generali" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.heroic = "Modalità Eroica"
-L.mob_killed = "%s ucciso (%d/%d)"
-L.mob_remaining = "%s ucciso, %d rimasti"
-L.mythic = "Modalità Mitica"
 L.near = "%s vicino A TE"
-L.next_add = "Prossimo Add"
-L.normal = "Modalità Normale"
-L.on = "%s su %s"
-L.onboss = "%s sul BOSS"
-L.buff_boss = "Potenziamento sul BOSS: %s"
-L.buff_other = "Potenziamento su %s: %s"
-L.other = "%s: %s"
-L.phase = "Fase %d"
-L.soon = "%s tra poco"
-L.spawned = "%s Reinizializzato"
-L.spawning = "Apparizione di %s"
-L.stack = "%dx %s su %s"
-L.stackyou = "%dx %s su DI TE"
-L.stage = "Fase %d"
-L.trash = "Trash"
-L.underyou = "%s sotto di TE"
-L.you = "%s su di TE"
-L.you_icon = "%s su di |T13700%d:0|tTE"
 L.on_group = "%s sul GRUPPO" -- spell on group
+
+L.phase = "Fase %d"
+L.stage = "Fase %d"
+L.normal = "Modalità Normale"
+L.heroic = "Modalità Eroica"
+L.mythic = "Modalità Mitica"
+L.active = "Attivo" -- When a boss becomes active, after speech finishes
+L.general = "Generali" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
 L.duration = "%s per %s sec" -- Spell for 10 seconds
 L.over = "%s Terminato" -- Spell Over
@@ -57,12 +43,34 @@ L.intermission = "Intermezzo"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s Cancellata" -- Spell Cancelled
 
+-- Add related
+L.add_spawned = "Add Apparso"
+L.spawned = "%s Reinizializzato"
+L.spawning = "Apparizione di %s"
+L.next_add = "Prossimo Add"
+L.add_killed = "Add ucciso (%d/%d)"
+L.add_remaining = "Add ucciso, %d rimasti"
+L.add = "Add"
+L.adds = "Adds"
 L.big_add = "Add Maggiore" -- singular
 L.big_adds = "Adds Maggiori" -- plural
 L.small_add = "Add Minore" -- singular
 L.small_adds = "Adds Minori" -- plural
 
-L.active = "Attivo" -- When a boss becomes active, after speech finishes
+-- Mob related
+L.mob_killed = "%s ucciso (%d/%d)"
+L.mob_remaining = "%s ucciso, %d rimasti"
+
+-- Localizers note:
+-- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
+L.custom_start = "Combattimento con %s iniziato - %s in %d min"
+L.custom_start_s = "Combattimento con %s iniziato - %s in %d sec"
+L.custom_end = "%s diventa %s"
+L.custom_min = "%s in %d min"
+L.custom_sec = "%s in %d sec"
+
+L.focus_only = "|cffff0000Avviso solo per i bersagli focus.|r "
+L.trash = "Trash"
 
 -- Common raid marking locale
 L.marker = "Icona bersaglio %s"
