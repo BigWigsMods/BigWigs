@@ -332,7 +332,7 @@ L.pullIn = "Атакуем через %d сек"
 L.sendPull = "Отправка таймера атаки пользователям BigWigs и DBM."
 L.wrongPullFormat = "Должно быть между 1 и 60 секундами. Например: /pull 5"
 --L.countdownBegins = "Begin Countdown"
---L.countdownBegins_desc = "Выберите, сколько времени должно оставаться до способности босса (в секундах), когда начнется обратный отсчет." -- change to 'pull timer' (see english version) and remove this comment
+--L.countdownBegins_desc = "Выберите, сколько времени должно оставаться до способности босса (в секундах), когда начнется обратный отсчет."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -351,7 +351,7 @@ L.secondaryDesc = "Вторая метка рейда, которая будет
 --
 
 L.Sounds = "Звуки"
---L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Общая громкость' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Master Volume' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
 L.oldSounds = "Старые звуки"
 
 L.Alarm = "Тревога"
@@ -397,12 +397,12 @@ L.healthFormat = "%s (%.1f%%)"
 
 L.Victory = "Победа"
 L.victoryHeader = "Настройки действий, которые должны быть выполнены после победы над боссом."
+L.victorySound = "Проигрывать звук победы над боссом"
+L.victoryMessages = "Показывать сообщения о победе над боссом"
 L.victoryMessageBigWigs = "Показывать сообщение BigWigs"
 L.victoryMessageBigWigsDesc = "Сообщение BigWigs - это простая надпись \"босс был побежден\"."
 L.victoryMessageBlizzard = "Показывать сообщение Blizzard"
 L.victoryMessageBlizzardDesc = "Сообщение Blizzard - это очень большая анимация \"босс был побежден\" в центре вашего экрана."
-L.victoryMessages = "Показывать сообщения о победе над боссом"
-L.victorySound = "Проигрывать звук победы над боссом"
 L.defeated = "%s терпит поражение"
 
 -----------------------------------------------------------------------
