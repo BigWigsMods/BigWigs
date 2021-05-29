@@ -418,8 +418,8 @@ plugin.pluginOptions = {
 				},
 				chat = {
 					type = "toggle",
-					name = L.chatMessages,
-					desc = L.chatMessagesDesc,
+					name = L.chatFrameMessages,
+					desc = L.chatFrameMessagesDesc,
 					order = 12,
 					width = 2,
 				},
