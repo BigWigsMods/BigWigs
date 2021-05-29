@@ -41,7 +41,7 @@ L.interrupted_by = "%s 를 %s 가 차단" -- Spell interrupted by Player
 L.no = "%s 없음" -- No Spell
 L.intermission = "사잇단계"
 L.percent = "%d%% - %s" -- 20% - Spell
--- L.cancelled = "%s Cancelled" -- Spell Cancelled
+--L.cancelled = "%s Cancelled" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "추가 몹 생성"

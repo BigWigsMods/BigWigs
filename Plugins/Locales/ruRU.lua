@@ -152,7 +152,7 @@ L.breakFinished = "Перерыв закончен!"
 
 L.bossBlock = "Фильтр событий"
 L.bossBlockDesc = "Настройте вещи, которые вы хотите скрыть в течении боя с боссом.\n\n"
--- L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
+--L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 L.movieBlocked = "Вы видели этот ролик, пропускаем его."
 L.blockEmotes = "Скрыть эмоции посередине экрана"
 L.blockEmotesDesc = "Некоторые боссы показывают текст для определенных способностей. Эти сообщения и слишком длинные и избыточные. Мы стараемся предоставлять более подходящие сообщения, которые не вмешиваются в ваш геймплей и не говорят вам что конкретно вы должны делать.\n\nОбратите внимание: Эмоции босса всегда будут доступны в чате, если вы захотите их прочитать."
@@ -172,7 +172,7 @@ L.errorSpeech = "Сообщения об ошибках"
 L.disableMusic = "Выключить музыку (рекомендуется)"
 L.disableAmbience = "Выключить фоновые звуки (рекомендуется)"
 L.disableSfx = "Выключить звуковые эффекты (не рекомендуется)"
--- L.disableErrorSpeech = "Mute error speech (recommended)"
+--L.disableErrorSpeech = "Mute error speech (recommended)"
 L.disableAudioDesc = "Во время боя с боссом '%s' будут выключены для того чтобы помочь вам сконцентрироваться на звуках предупреждений BigWigs. После выхода из боя звуки будут включены обратно."
 L.blockTooltipQuests = "Заблокировать цели квестов в подсказке"
 L.blockTooltipQuestsDesc = "Когда вам требуется убить босса для квеста, подсказка показывает обычно \"0/1 выполнено\", при наведении мышкой на босса. Эта опция скрывает список целей других игроков, чтобы подсказка не разрослась слишком высоко."
@@ -331,8 +331,8 @@ L.pullStoppedCombat = "Таймер атаки  отменен, поскольк
 L.pullIn = "Атакуем через %d сек"
 L.sendPull = "Отправка таймера атаки пользователям BigWigs и DBM."
 L.wrongPullFormat = "Должно быть между 1 и 60 секундами. Например: /pull 5"
--- L.countdownBegins = "Begin Countdown"
--- L.countdownBegins_desc = "Выберите, сколько времени должно оставаться до способности босса (в секундах), когда начнется обратный отсчет."
+--L.countdownBegins = "Begin Countdown"
+--L.countdownBegins_desc = "Выберите, сколько времени должно оставаться до способности босса (в секундах), когда начнется обратный отсчет."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -351,7 +351,7 @@ L.secondaryDesc = "Вторая метка рейда, которая будет
 --
 
 L.Sounds = "Звуки"
--- L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Master Volume' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Master Volume' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
 L.oldSounds = "Старые звуки"
 
 L.Alarm = "Тревога"
