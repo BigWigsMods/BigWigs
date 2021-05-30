@@ -538,24 +538,29 @@ function mod:BansheesCry(args)
 end
 
 do
-	local scheduled = nil
-	local bossUnits = {"boss1", "boss2", "boss3", "boss4", "boss5", "arena1", "arena2", "arena3"}
-	function mod:SoulReaverMarker()
-		local mark = 8
-		for i = 1, #bossUnits do
-			local unit = bossUnits[i] -- boss5 arena1 arena2 were used
-			if self:MobId(self:UnitGUID(unit)) == 176974 then -- Soul Reaver
-				self:CustomIcon(soulReaverMarker, unit, mark)
-				mark = mark - 1
-				if mark < 6 then break end
+	function mod:SoulReaverMarker(event, unit, guid)
+		if mobCollector[guid] then
+			self:CustomIcon(soulReaverMarker, unit, mobCollector[guid])
+			mobCollector[guid] = nil
+			if not next(mobCollector) then
+				self:UnregisterTargetEvents()
 			end
 		end
-		scheduled = nil
 	end
+
+	local prev = 0
+	local count = 8
 	function mod:MarchOfTheForsakenSummon(args)
-		if not scheduled and self:GetOption(soulReaverMarker) then
-			-- Delayed for IEEU
-			scheduled = self:ScheduleTimer("SoulReaverMarker", 0.3)
+		if not self:GetOption(soulReaverMarker) then return end
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			mobCollector = {}
+			count = 8
+			self:RegisterTargetEvents("SoulReaverMarker")
+			self:ScheduleTimer("UnregisterTargetEvents", 10)
 		end
+		mobCollector[args.destGUID] = count
+		count = count - 1
 	end
 end
