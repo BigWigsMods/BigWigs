@@ -61,6 +61,7 @@ function mod:GetOptions()
 		353931, -- Twist Fate
 		350421, -- Fated Conjunction (Beams)
 		{350568, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Call of Eternity (Bombs)
+		callOfEternityMarker,
 		-- Stage Two: Defying Destiny
 		351969, -- Realign Fate
 		357144, -- Despair
@@ -174,7 +175,7 @@ function mod:HeroicDestinyApplied(args)
 		self:SayCountdown(args.spellId, 8)
 		self:PlaySound(args.spellId, "warning")
 	end
-	self:TargetBar(args.spellId, 8, args.destName, CL.count:format(CL.add, heroicDestinyCount-1))
+	self:Bar(args.spellId, 8, CL.incoming:format(CL.add))
 	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.add, heroicDestinyCount-1))
 end
 
@@ -200,7 +201,8 @@ function mod:AnomalousBlastApplied(args)
 end
 
 function mod:DivinersProbe(args)
-	if self:Tanking("boss1") then
+	local bossUnit = self:GetBossId(args.sourceGUID)
+	if bossUnit and self:Tanking(bossUnit) then
 		self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
 		self:PlaySound(args.spellId, "alert")
 	end
@@ -237,7 +239,7 @@ do
 		playerList[args.destName] = icon -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:TargetBar(350568, 8, args.destName, CL.count:format(CL.bomb, callOfEternityCount-1))
-			self:Say(350568, CL.rticon:format(CL.bomb, icon))
+			self:Say(350568, CL.count_rticon:format(CL.bomb, count, icon))
 			self:SayCountdown(350568, 8)
 			self:PlaySound(350568, "warning")
 		end
@@ -269,8 +271,13 @@ function mod:RealignFate(args)
 end
 
 function mod:Despair(args)
-	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "alert")
+	local canDo, ready = self:Interrupter()
+	if canDo then
+		self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
+		if ready then
+			self:PlaySound(args.spellId, "alert")
+		end
+	end
 	--self:Bar(args.spellId, 20)
 end
 
