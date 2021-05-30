@@ -6,8 +6,8 @@
 ## Title-esMX: BigWigs [|cffeda55fSanctum of Domination|r]
 ## Title-frFR: BigWigs [|cffeda55fSanctum of Domination|r]
 ## Title-ruRU: BigWigs [|cffeda55fSanctum of Domination|r]
-## Title-zhCN: BigWigs [|cffeda55fSanctum of Domination|r]
-## Title-zhTW: BigWigs [|cffeda55fSanctum of Domination|r]
+## Title-zhCN: BigWigs [|cffeda55f统御圣所|r]
+## Title-zhTW: BigWigs [|cffeda55f統御聖所|r]
 ## Title-itIT: BigWigs [|cffeda55fSanctum of Domination|r]
 ## Title-ptBR: BigWigs [|cffeda55fSanctum of Domination|r]
 ## Title-koKR: BigWigs [|cffeda55fSanctum of Domination|r]
@@ -17,8 +17,8 @@
 ## Notes-esMX: BigWigs Sanctum of Domination Modules
 ## Notes-frFR: BigWigs Sanctum of Domination Modules
 ## Notes-ruRU: BigWigs Sanctum of Domination Modules
-## Notes-zhCN: BigWigs Sanctum of Domination Modules
-## Notes-zhTW: BigWigs Sanctum of Domination Modules
+## Notes-zhCN: BigWigs 统御圣所模块。
+## Notes-zhTW: BigWigs 統御聖所模組。
 ## Notes-itIT: BigWigs Sanctum of Domination Modules
 ## Notes-ptBR: BigWigs Sanctum of Domination Modules
 ## Notes-koKR: BigWigs Sanctum of Domination Modules
