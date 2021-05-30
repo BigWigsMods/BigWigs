@@ -77,7 +77,7 @@ L.nameplateOffsetYDesc = "Distanza dal punto superiore della barra dei nomi vers
 L.nameplateAlphaDesc = "Regola la trasparenza della barra dei nomi."
 
 L.clickableBars = "Barre Cliccabili"
---L.clickableBarsDesc = "BigWigs bars are click-through by default. This way you can target objects or launch targetted AoE spells behind them, change the camera angle, and so on, while your cursor is over the bars. |cffff4411If you enable clickable bars, this will no longer work.|r The bars will intercept any mouse clicks you perform on them.\n"
+L.clickableBarsDesc = "Le barre di BigWigs non sono cliccabili di default. In questo modo puoi selezionare o lanciare le abilità anche dietro le barre, cambiare l'angolo della telecamera, e così via, mentre il cursore è su una barra. |cffff4411Se abiliti le Barre Cliccabili, questo non funzionerà più.|r Le barre intercetteranno i click del mouse.\n"
 L.interceptMouseDesc = "Abilita le barre ad intercettare i Click del Mouse"
 L.modifier = "Modificatore"
 L.modifierDesc = "Premi il modificatore selezionato per abilitare i click sulle barre dei timer."
@@ -155,13 +155,13 @@ L.bossBlockDesc = "Configura le varie opzioni che puoi bloccare durante gli scon
 --L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
 L.movieBlocked = "Hai già visto questo video, lo salto."
 L.blockEmotes = "Blocca gli emote a mezzo-schermo"
---L.blockEmotesDesc = "Some bosses show emotes for certain abilities, these messages are both way too long and descriptive. We try to produce smaller, more fitting messages that do not interfere with the gameplay, and don't tell you specifically what to do.\n\nPlease note: Boss emotes will still be visible in chat if you wish to read them."
+L.blockEmotesDesc = "Alcuni boss mostrano delle emote per determinate abilità; questi messaggi sono sia troppo lunghi che troppo descrittivi. Cerchiamo di produrre messaggi più compatti e puliti che non interferiscono con lo svolgimento del gioco, e non dicono specificatamente cosa fare.\n\nNota bene: gli emote dei Boss sono sempre visibili nella chat se vuoi leggerli."
 L.blockMovies = "Blocca filmati già visti"
 L.blockMoviesDesc = "I filmati dei boss (ove presenti) verranno fatti vedere solo la prima volta che si attivano per visualizzarli; dalle volte successive questi video verranno cancellati automaticamente."
---L.blockFollowerMission = "Block follower mission popups"
---L.blockFollowerMissionDesc = "Follower mission popups show for a few things, but mainly when a follower mission is completed.\n\nThese popups can cover up critical parts of your UI during a boss fight, so we recommend blocking them."
+--L.blockFollowerMission = "Blocca i popup della Guarnigione" -- Rename to follower mission
+--L.blockFollowerMissionDesc = "I popup della Guarnigione appaiono per certe attività, ma principalmente quando un seguace completa una missione.\n\n\Questi popup possono coprire parti critiche o importanti della tua UI durante il combattimento contro un boss, raccomandiamo quindi di bloccarli."
 L.blockGuildChallenge = "Blocca i popup delle sfide di Gilda"
---L.blockGuildChallengeDesc = "Guild challenge popups show for a few things, mainly when a group in your guild completes a heroic dungeon or a challenge mode dungeon.\n\nThese popups can cover up critical parts of your UI during a boss fight, so we recommend blocking them."
+L.blockGuildChallengeDesc = "I popup delle Sfide di Gilda vengono mostrati per vari avvisi, principalmente quando la tua gilda completa una spedizione eroica o una spedizione in modalità sfida.\n\nQuesti popup possono coprire parti critiche o importanti della tua UI durante il combattimento contro un boss, raccomandiamo quindi di bloccarli."
 L.blockSpellErrors = "Blocca i messaggi di errore degli incantesimi"
 L.blockSpellErrorsDesc = "Messaggi tipo \"Questo incantesimo non è ancora pronto\" che in genere vengono mostrati in alto nello schermo verranno bloccati."
 L.audio = "Audio"
@@ -294,7 +294,7 @@ L.soundDelayDesc = "Specifica per quanto tempo BigWigs dovrebbe aspettare per ri
 --L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
 
 L.close = "Chiudi"
---L.closeProximityDesc = "Closes the proximity display.\n\nTo disable it completely for any encounter, you have to go into the options for the relevant boss module and toggle the 'Proximity' option off."
+L.closeProximityDesc = "Chiude il Monitor di Prossimità.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità"
 L.lock = "Blocca"
 L.lockDesc = "Blocca il Monitor, impedendo che venga spostato e ridimensionato."
 L.title = "Titolo"
@@ -339,8 +339,8 @@ L.wrongPullFormat = "Deve essere tra 1 e 60 secondi. Un'esempio corretto è: /pu
 --
 
 L.icons = "Icone"
---L.raidIconsDesc = "Some encounter scripts use raid icons to mark players that are of special interest to your group. For example 'bomb'-type effects and mind control. If you turn this off, you won't mark anyone.\n\n|cffff4411Only applies if you're either the group leader or promoted!|r"
---L.raidIconsDescription = "Some encounters might include elements such as bomb-type abilities targetted on a specific player, a player being chased, or a specific player might be of interest in other ways. Here you can customize which raid icons should be used to mark these players.\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, BigWigs will never change their icon.|r"
+L.raidIconsDesc = "Alcuni combattimenti richiedono di evidenziare alcuni giocatori di particolare interesse nell'incontro con dei simboli. Per esempio effetti di tipo 'bomba' o 'controllo della mente'. Se disattivi questa opzione, non metterai nessun simbolo.\n\n|cffff4411Si applica solo quando sei il capogruppo della spedizione o sei stato stato promosso!|r"
+L.raidIconsDescription = "Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, o un giocatore che può essere fondamentale seguire. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, BigWigs will never change their icon.|r"
 L.primary = "Primario"
 L.primaryDesc = "Il primo Simbolo che l'automazione del combattimento dovrebbe usare."
 L.secondary = "Secondario"
@@ -351,7 +351,7 @@ L.secondaryDesc = "Il secondo Simbolo che l'automazione del combattimento dovreb
 --
 
 L.Sounds = "Suoni"
---L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Master Volume' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
+--L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Volume principale' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
 --L.oldSounds = "Old Sounds"
 
 L.Alarm = "Allarme"
