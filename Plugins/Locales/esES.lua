@@ -339,7 +339,6 @@ L.wrongPullFormat = "Debe ser entre 1 y 60. Un ejemplo sería: /pull 5"
 --
 
 L.icons = "Iconos"
-L.raidIconsDesc = "Algunos encuentros usan los iconos de raid para marcar jugadores de interés especial para tu grupo. Por ejemplo los efectos tipo 'bomba' y control mental. Si la cambias a desactivado, no marcarás a nadie.\n\n|cffff4411¡Solo aplica las marcas si eres ayudante o lider!|r"
 L.raidIconsDescription = "Elementos de tipo 'bomba' y simirales en un jugador pueden ser de interes especial. Aqui puedes configurar como se debería marar con iconos algunos pjs.\n\nSi solo se usa un icono para un encuentro se usará el primario, nunca se usará el mismo icono para 2 habilidades distintas, para eso esta el icono secundario.\n\n|cffff4411Nota: Si un jugador ha sido marcado manualmente BigWigs nunca cambiará su icono.|r"
 L.primary = "Primario"
 L.primaryDesc = "El primer objetivo de la raid el cual deberia usar este icono"

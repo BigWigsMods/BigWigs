@@ -53,7 +53,6 @@ do
 			disabled = {
 				type = "toggle",
 				name = L.disabled,
-				desc = L.raidIconsDesc,
 				order = 1,
 			},
 			description = {

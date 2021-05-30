@@ -339,7 +339,6 @@ L.countdownBegins_desc = "Escolhe quanto tempo deve restar de tempo de pull (em 
 --
 
 L.icons = "Ícones"
-L.raidIconsDesc = "Alguns scripts de encontros usam os ícones de raide para marcar jogadores que são de interesse especial para seu grupo. Por exemplo, os efeitos tipo 'bomba' e controle mental. Se esta opção estiver desativada, não marcará nada.\n\n|cffff4411Somente aplicará as marcas se você for assistente ou líder!|r"
 L.raidIconsDescription = "Alguns encontros podem conter elementos de tipo 'bomba' focando em um jogador em especial, um jogador sendo perseguido, ou um jogador específico sendo de interesse em outros sentidos. Aqui você pode configurar quais ícones de raide devem ser usados para marcar esses jogadores.\n\nSe um encontro tem somente uma habilidade que exige marcação, somente o primeiro ícone será usado. Um ícone nunca será usado para duas habilidades diferentes no mesmo encontro, e uma mesma habilidade usará o mesmo ícone todas as vezes.\n\n|cffff4411Note que se um jogador já foi marcado manualmente o BigWigs não mudará seu ícone.|r"
 L.primary = "Primário"
 L.primaryDesc = "O primeiro ícone de raide que um script usará."
