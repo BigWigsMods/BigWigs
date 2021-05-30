@@ -1,4 +1,7 @@
 
+BigWigs:AddSounds("Lucifron", {
+})
+
 BigWigs:AddSounds("Magmadar", {
 	[19428] = "alert",
 	[19451] = "info",
@@ -6,6 +9,9 @@ BigWigs:AddSounds("Magmadar", {
 
 BigWigs:AddSounds("Gehennas", {
 	[19717] = "alarm",
+})
+
+BigWigs:AddSounds("Garr", {
 })
 
 BigWigs:AddSounds("Baron Geddon", {
@@ -17,6 +23,12 @@ BigWigs:AddSounds("Baron Geddon", {
 BigWigs:AddSounds("Shazzrah", {
 	[19714] = "alarm",
 	[19715] = "info",
+})
+
+BigWigs:AddSounds("Sulfuron Harbinger", {
+})
+
+BigWigs:AddSounds("Golemagg the Incinerator", {
 })
 
 BigWigs:AddSounds("Majordomo Executus", {

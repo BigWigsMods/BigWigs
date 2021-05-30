@@ -8,6 +8,18 @@ BigWigs:AddSounds("Vaelastrasz the Corrupt", {
 	[18173] = "alarm",
 })
 
+BigWigs:AddSounds("Broodlord Lashlayer", {
+})
+
+BigWigs:AddSounds("Firemaw", {
+})
+
+BigWigs:AddSounds("Ebonroc", {
+})
+
+BigWigs:AddSounds("Flamegor", {
+})
+
 BigWigs:AddSounds("Chromaggus", {
 	["debuffs"] = {"alarm","warning"},
 })

@@ -8,6 +8,9 @@ BigWigs:AddSounds("General Rajaxx", {
 	["wave"] = "info",
 })
 
+BigWigs:AddSounds("Moam", {
+})
+
 BigWigs:AddSounds("Buru the Gorger", {
 	["fixate"] = "alarm",
 })

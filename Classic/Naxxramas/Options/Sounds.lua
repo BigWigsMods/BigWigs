@@ -19,8 +19,14 @@ BigWigs:AddSounds("Noth the Plaguebringer", {
 	[29213] = "alarm",
 })
 
+BigWigs:AddSounds("Heigan the Unclean", {
+})
+
 BigWigs:AddSounds("Loatheb", {
 	[29185] = "info",
+})
+
+BigWigs:AddSounds("Anub'Rekhan", {
 })
 
 BigWigs:AddSounds("Grand Widow Faerlina", {
@@ -35,6 +41,9 @@ BigWigs:AddSounds("Maexxna", {
 
 BigWigs:AddSounds("Instructor Razuvious", {
 	["shout"] = "alert",
+})
+
+BigWigs:AddSounds("Gothik the Harvester", {
 })
 
 BigWigs:AddSounds("The Four Horsemen", {
