@@ -32,6 +32,8 @@ mod:RegisterEnableMob(
 	173609, -- Nathrian Conservator
 	173633, -- Nathrian Archivist
 
+	165483, -- Court Hierarch
+
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	173178 -- Stone Legion Goliath
 )
@@ -73,6 +75,7 @@ if L then
 	L.antiquarian = "Sinister Antiquarian"
 	L.conservator = "Nathrian Conservator"
 	L.archivist = "Nathrian Archivist"
+	L.hierarch = "Court Hierarch"
 
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	L.goliath = "Stone Legion Goliath"
@@ -112,6 +115,7 @@ function mod:GetOptions()
 		{342770, "EMPHASIZE"}, -- Eradication Seeds
 		{339975, "TANK_HEALER"}, -- Grievous Strike
 		{342752, "HEALER"}, -- Weeping Burden
+		341146, -- Sin bolt volley
 
 		--[[ Sludgefist -> Stone Legion Generals ]]--
 		343271, -- Ravenous Feast
@@ -132,6 +136,7 @@ function mod:GetOptions()
 		[342770] = L.antiquarian,
 		[339975] = L.conservator,
 		[342752] = L.archivist,
+		[341146] = L.hierarch,
 		[343271] = L.goliath,
 	},{
 		[343302] = CL.knockback, -- Granite Wings (Knockback)
@@ -179,6 +184,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrievousStrikeApplied", 339975)
 	self:Log("SPELL_AURA_REMOVED", "GrievousStrikeRemoved", 339975)
 	self:Log("SPELL_CAST_SUCCESS", "WeepingBurden", 342752)
+	self:Log("SPELL_CAST_START", "SinBoltVolley", 341146)
 
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	self:Log("SPELL_CAST_SUCCESS", "RavenousFeast", 343271)
@@ -406,6 +412,21 @@ do
 			prev = t
 			self:Message(args.spellId, "yellow", CL.on_group:format(args.spellName))
 			self:PlaySound(args.spellId, "alarm")
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:SinBoltVolley(args)
+		local canDo, ready = self:Interrupter()
+		local t = args.time
+		if canDo and t-prev > 1 then
+			prev = t
+			self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+			if ready then
+				self:PlaySound(args.spellId, "alert")
+			end
 		end
 	end
 end
