@@ -218,7 +218,7 @@ end
 function mod:FatedConjunction(args)
 	self:Message(args.spellId, "yellow", CL.count:format(CL.beams, fatedConjunctionCount))
 	self:PlaySound(args.spellId, "alert")
-	self:CastBar(args.spellId, 9.8, CL.count:format(CL.beams, fatedConjunctionCount))
+	self:CastBar(args.spellId, 6.8, CL.count:format(CL.beams, fatedConjunctionCount))
 	fatedConjunctionCount = fatedConjunctionCount + 1
 	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][fatedConjunctionCount] or 60, CL.count:format(CL.beams, fatedConjunctionCount)) -- XXX stage 1 unconfirmed, but at least 60s it looked like
 end
