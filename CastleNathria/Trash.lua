@@ -31,7 +31,6 @@ mod:RegisterEnableMob(
 	173604, -- Sinister Antiquarian
 	173609, -- Nathrian Conservator
 	173633, -- Nathrian Archivist
-
 	165483, -- Court Hierarch
 
 	--[[ Sludgefist -> Stone Legion Generals ]]--
@@ -115,7 +114,7 @@ function mod:GetOptions()
 		{342770, "EMPHASIZE"}, -- Eradication Seeds
 		{339975, "TANK_HEALER"}, -- Grievous Strike
 		{342752, "HEALER"}, -- Weeping Burden
-		341146, -- Sin bolt volley
+		341146, -- Sin Bolt Volley
 
 		--[[ Sludgefist -> Stone Legion Generals ]]--
 		343271, -- Ravenous Feast
