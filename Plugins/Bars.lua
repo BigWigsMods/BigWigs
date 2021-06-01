@@ -2413,6 +2413,7 @@ end
 --
 
 local SendAddonMessage = BigWigsLoader.SendAddonMessage
+local isBC = BigWigsLoader.isBC
 do
 	local times
 	SlashCmdList.BIGWIGSRAIDBAR = function(input)
@@ -2432,7 +2433,7 @@ do
 			times[input] = t
 			BigWigs:Print(L.sendCustomBar:format(barText))
 			plugin:Sync("CBar", input)
-			SendAddonMessage("D4C", ("U\t%d\t%s"):format(seconds, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			SendAddonMessage(isBC and "D4BC" or "D4C", ("U\t%d\t%s"):format(seconds, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
 	SLASH_BIGWIGSRAIDBAR1 = "/raidbar"
@@ -2465,7 +2466,7 @@ SlashCmdList.BIGWIGSBREAK = function(input)
 		plugin:Sync("Break", seconds)
 
 		if IsInGroup() then
-			SendAddonMessage("D4C", ("BT\t%d"):format(seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			SendAddonMessage(isBC and "D4BC" or "D4C", ("BT\t%d"):format(seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	else
 		BigWigs:Print(L.requiresLeadOrAssist)

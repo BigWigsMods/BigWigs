@@ -579,7 +579,7 @@ function mod:ADDON_LOADED(addon)
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
-	C_ChatInfo.RegisterAddonMessagePrefix("D4C") -- DBM
+	C_ChatInfo.RegisterAddonMessagePrefix(public.isBC and "D4BC" or "D4C") -- DBM
 
 	-- LibDBIcon setup
 	if type(BigWigsIconClassicDB) ~= "table" then
@@ -917,7 +917,7 @@ do
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
 		if IsInGroup() then
-			SendAddonMessage("D4C", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			SendAddonMessage(public.isBC and "D4BC" or "D4C", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 		timer, prevUpgradedUser = nil, nil
 	end
@@ -969,7 +969,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 			end
 			public:SendMessage("BigWigs_PluginComm", bwMsg, extra, sender)
 		end
-	elseif prefix == "D4C" then
+	elseif prefix == "D4C" or prefix == "D4BC" then
 		local dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
 		sender = Ambiguate(sender, "none")
 		if dbmPrefix == "V" or dbmPrefix == "H" then
@@ -1188,7 +1188,7 @@ do
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
-			SendAddonMessage("D4C", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			SendAddonMessage(public.isBC and "D4BC" or "D4C", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED()
 		elseif grouped and not groupType then
 			grouped = nil
@@ -1221,7 +1221,7 @@ function mod:BigWigs_CoreEnabled()
 	-- which kills your ability to receive addon comms during the loading process.
 	if IsInGroup() then
 		SendAddonMessage("BigWigs", versionQueryString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-		SendAddonMessage("D4C", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+		SendAddonMessage(public.isBC and "D4BC" or "D4C", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
 
 	-- Core is loaded, nil these to force checking BigWigs.db.profile.option

@@ -322,6 +322,7 @@ end
 -- Slash Handler
 --
 
+local isBC = BigWigsLoader.isBC
 SlashCmdList.BIGWIGSPULL = function(input)
 	if IsEncounterInProgress() then BigWigs:Print(L.encounterRestricted) return end -- Doesn't make sense to allow this in combat
 	if not IsInGroup() or UnitIsGroupLeader("player") or UnitIsGroupAssistant("player") then -- Solo or leader/assist
@@ -341,7 +342,7 @@ SlashCmdList.BIGWIGSPULL = function(input)
 		if IsInGroup() then
 			local _, _, _, _, _, _, _, id = GetInstanceInfo()
 			local instanceId = tonumber(id) or 0
-			SendAddonMessage("D4C", ("PT\t%s\t%d"):format(input, instanceId), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			SendAddonMessage(isBC and "D4BC" or "D4C", ("PT\t%s\t%d"):format(input, instanceId), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	else
 		BigWigs:Print(L.requiresLeadOrAssist)
