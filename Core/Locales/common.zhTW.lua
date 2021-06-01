@@ -1,48 +1,34 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Common", "zhTW")
 if not L then return end
 
-L.add = "增援"
-L.add_killed = "小怪已擊殺（%d/%d）"
-L.add_remaining = "小怪已擊殺，剩餘 %d"
-L.adds = "增援"
-L.add_spawned = "小怪出現"
+-- Prototype.lua common words
+L.you = "你：%s"
+L.you_icon = "|T13700%2$d:0|t你：%1$s"
+L.underyou = "你腳下：%s"
+L.other = "%s：%s"
+L.onboss = "首領%s"
+L.buff_boss = "首領增益：%s"
+L.buff_other = "首領增益%s：%s"
+L.on = "%s：%s"
+L.stack = "%3$s：%1$d層%2$s"
+L.stackyou = "你：%d層%s"
 L.cast = "<施放：%s>"
 L.casting = "正在施放：%s"
+L.soon = "即將：%s"
 L.count = "%s（%d）"
 L.count_icon = "%s（%d|T13700%d:0|t）"
 L.count_rticon = "%s（%d{rt%d}）"
 L.rticon = "%s（{rt%d}）"
-L.custom_end = "%s - %s"
-L.custom_min = "%2$d分後%1$s"
-L.custom_sec = "%2$d秒後%1$s"
-L.custom_start = "%1$s參戰 - %3$d分後%2$s"
-L.custom_start_s = "%1$s參戰 - %3$d秒後%2$s"
-L.focus_only = "|cffff0000只限專注目標。|r "
-L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
-L.heroic = "英雄模式"
-L.mob_killed = "%s已擊殺（%d/%d）"
-L.mob_remaining = "%s已擊殺，剩餘 %d"
-L.mythic = "傳奇難度"
 L.near = "%s在你附近"
-L.next_add = "下一波小怪"
-L.normal = "普通模式"
-L.on = "%s：%s"
-L.onboss = "首領%s"
-L.buff_boss = "首領增益：%s"
-L.buff_other = "首領增益%s：%s"
-L.other = "%s：%s"
-L.phase = "階段%d"
-L.soon = "即將：%s"
-L.spawned = "%s已重生"
-L.spawning = "%s出現"
-L.stack = "%3$s：%1$d層%2$s"
-L.stackyou = "你：%d層%s"
-L.stage = "階段%d"
-L.trash = "小怪"
-L.underyou = "你腳下：%s"
-L.you = "你：%s"
-L.you_icon = "|T13700%2$d:0|t你：%1$s"
 L.on_group = "團隊：%s" -- spell on group
+
+L.phase = "階段%d"
+L.stage = "階段%d"
+L.normal = "普通模式"
+L.heroic = "英雄模式"
+L.mythic = "傳奇難度"
+L.active = "開戰" -- When a boss becomes active, after speech finishes
+L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 
 L.duration = "%s持續%s秒" -- Spell for 10 seconds
 L.over = "%s結束" -- Spell Over
@@ -57,12 +43,34 @@ L.intermission = "階段轉換"
 L.percent = "%d%% - %s" -- 20% - Spell
 L.cancelled = "%s取消" -- Spell Cancelled
 
+-- Add related
+L.add_spawned = "小怪出現"
+L.spawned = "%s已重生"
+L.spawning = "%s出現"
+L.next_add = "下一波小怪"
+L.add_killed = "小怪已擊殺（%d/%d）"
+L.add_remaining = "小怪已擊殺，剩餘 %d"
+L.add = "增援"
+L.adds = "增援"
 L.big_add = "大型增援" -- singular
 L.big_adds = "大型增援" -- plural
 L.small_add = "小型增援" -- singular
 L.small_adds = "小型增援" -- plural
 
-L.active = "開戰" -- When a boss becomes active, after speech finishes
+-- Mob related
+L.mob_killed = "%s已擊殺（%d/%d）"
+L.mob_remaining = "%s已擊殺，剩餘 %d"
+
+-- Localizers note:
+-- The default mod:Berserk(600) uses spell ID 26662 to get the Berserk name
+L.custom_start = "%1$s參戰 - %3$d分後%2$s"
+L.custom_start_s = "%1$s參戰 - %3$d秒後%2$s"
+L.custom_end = "%s - %s"
+L.custom_min = "%2$d分後%1$s"
+L.custom_sec = "%2$d秒後%1$s"
+
+L.focus_only = "|cffff0000只限專注目標。|r "
+L.trash = "小怪"
 
 -- Common raid marking locale
 L.marker = "%s標記"

@@ -264,8 +264,8 @@ L.useIcons = "Symbole verwenden"
 L.useIconsDesc = "Zeigt Symbole neben Nachrichten an."
 L.classColors = "Klassenfarben"
 L.classColorsDesc = "Teilweise enthalten Nachrichten Spielernamen. Durch Aktivierung dieser Option werden die Namen in Ihrer Klassenfarbe angezeigt."
-L.chatMessages = "Chatfenster-Nachrichten"
-L.chatMessagesDesc = "Gibt alle BigWigs-Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
+L.chatFrameMessages = "Chatfenster-Nachrichten"
+L.chatFrameMessagesDesc = "Gibt alle BigWigs-Nachrichten im Standard-Chatfenster aus, zusätzlich zu der Einstellung unter 'Ausgabe'."
 
 L.fontSize = "Schriftgröße"
 L.none = "Nichts"
@@ -339,7 +339,6 @@ L.countdownBegins_desc = "Verbleibende Zeit des Pulltimers (in Sekunden) wählen
 --
 
 L.icons = "Symbole"
-L.raidIconsDesc = "Einige Bossmodule benutzen Schlachtzugssymbole, um Spieler zu markieren, die von speziellem Interesse für Deine Gruppe sind. Beispielsweise Bombeneffekte und Gedankenkontrolle. Wenn Du diese Option ausschaltest, markierst Du niemanden mehr.n\n|cffff4411Trifft nur zu, sofern Du Schlachtzugsleiter oder Assistent bist!|r"
 L.raidIconsDescription = "Einige Begegnungen schließen Elemente wie 'Bombenfähigkeiten' ein, die einen bestimmten Spieler zum Ziel haben, ihn verfolgen oder er ist in sonst einer Art und Weise interessant. Hier kannst du bestimmen, welche Schlachtzugs-Symbole benutzt werden sollen, um die Spieler zu markieren.\n\nFalls nur ein Symbol benötigt wird, wird nur das erste benutzt. Ein Symbol wird niemals für zwei verschiedene Fähigkeiten innerhalb einer Begegnung benutzt.\n\n|cffff4411Beachte, dass ein manuell markierter Spieler von BigWigs nicht ummarkiert wird.|r"
 L.primary = "Erstes Symbol"
 L.primaryDesc = "Das erste Schlachtzugssymbol, das verwendet wird."

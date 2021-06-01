@@ -99,6 +99,7 @@ L.texture = "Textura"
 L.emphasize = "Enfatizar"
 L.emphasizeMultiplier = "Multiplicador de Tamanho"
 L.emphasizeMultiplierDesc = "Se você desabilitar as barras movendo-as para a âncora em destaque, esta opção irá decidir qual tamanho as barras em destaque terão, ao se multiplicar o tamanho das barras normais."
+
 L.enable = "Habilitar"
 L.move = "Mover"
 L.moveDesc = "Move barras enfatizadas para a âncora de Enfatizar. Se esta opção estiver desativada, barras enfatizadas terão apenas sua cor e tamanho alterados."
@@ -263,8 +264,8 @@ L.useIcons = "Usar ícones"
 L.useIconsDesc = "Exibir ícones ao lado das mensagens."
 L.classColors = "Cores de classe"
 L.classColorsDesc = "As mensagens as vezes terão os nomes dos jogadores. Habilitar essa opção irá colorir esses nomes usando as cores de classe."
-L.chatMessages = "Mensagens no chat"
-L.chatMessagesDesc = "Mostra todas as mensagens na janela de chat padrão além da tela de configuração."
+L.chatFrameMessages = "Mensagens no chat"
+L.chatFrameMessagesDesc = "Mostra todas as mensagens na janela de chat padrão além da tela de configuração."
 
 L.fontSize = "Tamanho da fonte"
 L.none = "Nenhum"
@@ -338,7 +339,6 @@ L.countdownBegins_desc = "Escolhe quanto tempo deve restar de tempo de pull (em 
 --
 
 L.icons = "Ícones"
-L.raidIconsDesc = "Alguns scripts de encontros usam os ícones de raide para marcar jogadores que são de interesse especial para seu grupo. Por exemplo, os efeitos tipo 'bomba' e controle mental. Se esta opção estiver desativada, não marcará nada.\n\n|cffff4411Somente aplicará as marcas se você for assistente ou líder!|r"
 L.raidIconsDescription = "Alguns encontros podem conter elementos de tipo 'bomba' focando em um jogador em especial, um jogador sendo perseguido, ou um jogador específico sendo de interesse em outros sentidos. Aqui você pode configurar quais ícones de raide devem ser usados para marcar esses jogadores.\n\nSe um encontro tem somente uma habilidade que exige marcação, somente o primeiro ícone será usado. Um ícone nunca será usado para duas habilidades diferentes no mesmo encontro, e uma mesma habilidade usará o mesmo ícone todas as vezes.\n\n|cffff4411Note que se um jogador já foi marcado manualmente o BigWigs não mudará seu ícone.|r"
 L.primary = "Primário"
 L.primaryDesc = "O primeiro ícone de raide que um script usará."

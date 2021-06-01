@@ -2216,13 +2216,12 @@ do
 				else
 					local startFromEntry = previousAmount+1
 					local tbl = {}
-					if playerTable[playerTable[startFromEntry]] then
-						for i = startFromEntry, playersInTable do
-							local name = playerTable[i]
-							tbl[#tbl+1] = markerIcons[playerTable[name]] .. self:ColorName(name)
-						end
-					else
-						for i = startFromEntry, playersInTable do
+					for i = startFromEntry, playersInTable do
+						local name = playerTable[i]
+						local hasMarker = playerTable[name]
+						if hasMarker then
+							tbl[#tbl+1] = markerIcons[hasMarker] .. self:ColorName(name)
+						else
 							tbl[#tbl+1] = self:ColorName(playerTable[i])
 						end
 					end
