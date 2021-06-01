@@ -39,7 +39,7 @@ if L then
 	L.miasma = "Miasma" -- Short for Necrotic Miasma
 
 	L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frostbound Devoted that are fixed on you.\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frostbound Devoted that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
 	L.custom_on_nameplate_fixate_icon = 210130
 end
 
@@ -142,6 +142,10 @@ function mod:OnBossEnable()
 
 	-- self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	-- self:GROUP_ROSTER_UPDATE()
+
+	if self:GetOption("custom_on_nameplate_fixate") then
+		self:ShowPlates()
+	end
 end
 
 function mod:OnEngage()
@@ -164,6 +168,12 @@ function mod:OnEngage()
 	self:CDBar(348760, 43.5, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast 43.8~48.4
 	self:CDBar(352530, 44.5, CL.count:format(self:SpellName(352530), darkEvocationCount)) -- Dark Evocation 44~48
 	self:CDBar(354198, 89, CL.count:format(self:SpellName(354198), blizzardCount)) -- Howling Blizzard
+end
+
+function mod:OnBossDisable()
+	if self:GetOption("custom_on_nameplate_fixate") then
+		self:HidePlates()
+	end
 end
 
 --------------------------------------------------------------------------------
