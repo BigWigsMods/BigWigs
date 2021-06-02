@@ -163,6 +163,7 @@ if L then
 	L.antiquarian = "Зловещий антиквар"
 	L.conservator = "Нафрийский охранитель"
 	L.archivist = "Нафрийский архивариус"
+	L.hierarch = "Придворный иерарх"
 
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	L.goliath = "Голиаф из Каменного легиона"

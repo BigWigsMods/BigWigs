@@ -163,6 +163,7 @@ if L then
 	L.antiquarian = "邪惡的古物收藏家"
 	L.conservator = "納撒亞栽培者"
 	L.archivist = "納撒亞文獻管理員"
+	--L.hierarch = "Court Hierarch"
 
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	L.goliath = "石源魔軍團巨人"
