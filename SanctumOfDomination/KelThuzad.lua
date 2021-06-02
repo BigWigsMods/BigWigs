@@ -329,7 +329,7 @@ do
 	function mod:OblivionsEcho(args)
 		playerList = {}
 		oblivionsEchoCount = oblivionsEchoCount + 1
-		if self.stage == 3 then
+		if self:GetStage() == 3 then
 			self:CDBar(347292, oblivionsEchoCount % 2 == 0 and 17.1 or 23.3, CL.count:format(L.silence, oblivionsEchoCount))
 		else
 			self:CDBar(347292, 39.1, CL.count:format(L.silence, oblivionsEchoCount)) -- 38-44?
@@ -365,7 +365,7 @@ function mod:FrostBlastApplied(args)
 	end
 	self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(CL.meteor, frostBlastCount))
 	frostBlastCount = frostBlastCount + 1
-	self:CDBar(args.spellId, self.stage == 3 and 40.2 or 42.5, CL.count:format(CL.meteor, frostBlastCount))
+	self:CDBar(args.spellId, self:GetStage() == 3 and 40.2 or 42.5, CL.count:format(CL.meteor, frostBlastCount))
 end
 
 function mod:PhylactryApplied(args)
@@ -402,7 +402,7 @@ function mod:NecroticSurgeApplied(args)
 	self:StopBar(352379) -- Freezing Blast
 	self:StopBar(355055) -- Glacial Winds
 
-	if self.stage == 2 then
+	if self:GetStage() == 2 then
 		self:SetStage(1)
 		self:CDBar(348071, self:Mythic() and 5.6 or 9.5, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture
 		self:CDBar(347292, 11, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
@@ -581,7 +581,7 @@ end
 
 function mod:BansheesCry(args)
 	local canDo, ready = self:Interrupter(args.sourceGUID)
-	if canDo and (self.stage == 3 or not inPhylactry) then
+	if canDo and (self:GetStage() == 3 or not inPhylactry) then
 		self:Message(args.spellId, "yellow")
 		if ready then
 			self:PlaySound(args.spellId, "alarm")
