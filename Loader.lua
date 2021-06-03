@@ -15,6 +15,8 @@ local bwFrame = CreateFrame("Frame")
 local ldb = LibStub("LibDataBroker-1.1")
 local ldbi = LibStub("LibDBIcon-1.0")
 
+local strfind = string.find
+
 -----------------------------------------------------------------------
 -- Generate our version variables
 --
@@ -86,6 +88,7 @@ local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
 local UnitName, UnitGUID = UnitName, UnitGUID
+local debugstack = debugstack
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetBestMapForUnit = GetBestMapForUnit
@@ -420,7 +423,16 @@ local dataBroker = ldb:NewDataObject("BigWigs",
 
 function dataBroker.OnClick(self, button)
 	if button == "RightButton" then
-		loadCoreAndOpenOptions()
+		local trace = debugstack(2)
+		if strfind(trace, "LibDBIcon%-1%.0%.lua:%d+>\n?$") then
+			loadCoreAndOpenOptions()
+		else
+			public.stack = trace
+			sysprint("|cFFff0000WARNING!|r")
+			sysprint("One of your addons was prevented from force loading the BigWigs options.")
+			sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+			return
+		end
 	end
 end
 
@@ -1503,7 +1515,18 @@ end
 
 SLASH_BigWigs1 = "/bw"
 SLASH_BigWigs2 = "/bigwigs"
-SlashCmdList.BigWigs = loadCoreAndOpenOptions
+SlashCmdList.BigWigs = function()
+	local trace = debugstack(2)
+	if strfind(trace, "^%[string \"@Interface\\FrameXML\\ChatFrame%.lua") and not strfind(trace, "AddOns", nil, true) then
+		loadCoreAndOpenOptions()
+	else
+		public.stack = trace
+		sysprint("|cFFff0000WARNING!|r")
+		sysprint("One of your addons was prevented from force loading the BigWigs options.")
+		sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+		return
+	end
+end
 
 SLASH_BigWigsVersion1 = "/bwv"
 SlashCmdList.BigWigsVersion = function()
