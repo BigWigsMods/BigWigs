@@ -4,7 +4,7 @@
 if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Sylvanas Windrunner", 2450, 2441)
 if not mod then return end
-mod:RegisterEnableMob(175732) -- Sylvanas Windrunne
+mod:RegisterEnableMob(175732) -- Sylvanas Windrunner
 mod:SetEncounterID(2435)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -13,7 +13,6 @@ mod:SetStage(1)
 -- Locals
 --
 
-local stage = 1
 local windrunnerCount = 1
 local dominationChainsCount = 1
 local veilofDarknessCount = 1
@@ -26,6 +25,10 @@ local bansheesBaneCount = 1
 local bansheeScreamCount = 1
 local razeCount = 1
 local bansheesFuryCount = 1
+local rangerHeartSeekerCount = 1
+local rangersHeartSeekerTimers = {18, 22, 15, 19, 11.6, 4.5, 30, 3, 29.5, 3, 20.2, 3}
+local intermission = false
+local bansheeShroudRemovedCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,6 +38,11 @@ local L = mod:GetLocale()
 if L then
 	L.chains = "Chains" -- Short for Domination Chains
 	L.chain = "Chain" -- Single Domination Chain
+	L.chains_active = "Chains Active"
+	L.chains_active_desc = "Show a bar for when the Chains of Domination activate"
+	L.chains_active_icon = 349458
+	L.chains_active_bartext = "%d Active" -- Chains Active
+
 	L.darkness = "Darkness" -- Short for Veil of Darkness
 	L.arrow = "Arrow" -- Short for Wailing Arrow
 	L.wave = "Wave" -- Short for Haunting Wave
@@ -49,34 +57,31 @@ end
 -- Initialization
 --
 
+local wailingArrowMarker = mod:AddMarkerOption(false, "player", 1, 347609, 1, 2, 3) -- Wailing Arrow
 function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage One: A Cycle of Hatred
 		347504, -- Windrunner
-		347928, -- Withering Fire
 		347807, -- Barbed Arrow
-		348627, -- Desecrating Shot
+		356377, -- Desecrating Shot
 		347670, -- Shadow Dagger
 		{349458, "ME_ONLY_EMPHASIZE"}, -- Domination Chains
+		"chains_active",
 		347704, -- Veil of Darkness
-		{347609, "SAY", "SAY_COUNTDOWN"}, -- Wailing Arrow
+		{347609, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Wailing Arrow
+		wailingArrowMarker,
 		{352650, "TANK"}, -- Ranger's Heartseeker
 		{347607, "TANK"}, -- Banshee's Mark
 		-- Intermission: A Monument to our Suffering
-		348145, -- Rive
+		353417, -- Rive
 		348109, -- Banshee Wail
 		-- Stage Two: The Banshee Queen
 		355540, -- Ruin
 		351869, -- Haunting Wave
-		350865, -- Accursed Might
-		351075, -- Unstoppable Force
-		351109, -- Enflame
-		351092, -- Destabilize
-		{351179, "TANK"}, -- Lashing Strike
-		351180, -- Lashing Wound
+		{351180, "TANK"}, -- Lashing Wound
 		351117, -- Crushing Dread
-		356021, -- Dark Communion
+		351353, -- Summon Decrepit Orbs
 		351939, -- Curse of Lethargy
 		{351672, "TANK"}, -- Fury
 		-- Stage Three: The Freedom of Choice
@@ -97,7 +102,7 @@ function mod:GetOptions()
 		[347704] = L.darkness, -- Veil of Darkness (Darkness)
 		[347609] = L.arrow, -- Wailing Arrow (Arrow)
 		[351117] = L.dread, -- Crushing Dread (Dread)
-		[356021] = L.orbs, -- Dark Communion
+		[351353] = L.orbs, -- Summon Decrepit Orbs
 		[351939] = L.curse, -- Curse of Lethargy (Curse)
 		[353929] = L.pools, -- Banshee's Bane (Pools)
 		[357720] = L.scream, -- Banshee Scream
@@ -107,20 +112,19 @@ end
 function mod:OnBossEnable()
 	-- Stage One: A Cycle of Hatred
 	self:Log("SPELL_AURA_APPLIED", "Windrunner", 347504)
-	self:Log("SPELL_CAST_SUCCESS", "WitheringFire", 347928)
 	self:Log("SPELL_AURA_APPLIED", "BarbedArrowApplied", 347807)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarbedArrowApplied", 347807)
-	self:Log("SPELL_CAST_SUCCESS", "DesecratingShot", 348627)
-	self:Log("SPELL_CAST_SUCCESS", "ShadowDagger", 347670)
+	self:Log("SPELL_DAMAGE", "DesecratingShotDamage", 356377)
 	self:Log("SPELL_AURA_APPLIED", "ShadowDaggerApplied", 347670)
-	self:Log("SPELL_CAST_SUCCESS", "DominationChains", 349458)
+	self:Log("SPELL_CAST_START", "DominationChains", 349458)
 	self:Log("SPELL_AURA_APPLIED", "DominationChainsApplied", 349458)
-	self:Log("SPELL_CAST_START", "VeilOfDarkness", 354142, 347741) -- 1s & 3s cast times
+	self:Log("SPELL_CAST_START", "VeilOfDarkness", 347726) -- Stage 1
 	self:Log("SPELL_AURA_APPLIED", "VeilOfDarknessApplied", 347704)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VeilOfDarknessApplied", 347704)
 	self:Log("SPELL_CAST_START", "WailingArrow", 347609)
 	self:Log("SPELL_AURA_APPLIED", "WailingArrowApplied", 347609)
 	self:Log("SPELL_AURA_REMOVED", "WailingArrowRemoved", 347609)
+	self:Log("SPELL_AURA_APPLIED", "RangersHeartseeker", 352663)
 	self:Log("SPELL_AURA_APPLIED", "RangersHeartseekerApplied", 352650)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RangersHeartseekerApplied", 352650)
 	self:Log("SPELL_AURA_APPLIED", "BansheesMarkApplied", 347607)
@@ -128,29 +132,29 @@ function mod:OnBossEnable()
 
 	-- Intermission: A Monument to our Suffering
 	self:Log("SPELL_AURA_APPLIED", "BansheeShroudApplied", 350857)
-	self:Log("SPELL_CAST_SUCCESS", "Rive", 348145)
+	self:Log("SPELL_CAST_SUCCESS", "Rive", 353417, 353418) -- Both used in Intermission
 	self:Log("SPELL_CAST_SUCCESS", "BansheeWail", 348109)
 
 	-- Stage Two: The Banshee Queen
 	self:Log("SPELL_AURA_APPLIED", "BansheeFormApplied", 348146)
+	self:Log("SPELL_AURA_REMOVED", "BansheeShroudRemoved", 350857)
 	self:Log("SPELL_CAST_START", "Ruin", 355540)
 	self:Log("SPELL_CAST_SUCCESS", "HauntingWave", 351869)
-	self:Log("SPELL_CAST_START", "AccursedMight", 350865)
-	self:Log("SPELL_CAST_START", "UnstoppableForce", 351075)
-	self:Log("SPELL_CAST_START", "Enflame", 351109)
-	self:Log("SPELL_CAST_SUCCESS", "Destabilize", 351092)
-	self:Log("SPELL_AURA_APPLIED", "DestabilizeApplied", 351092)
 	self:Log("SPELL_CAST_START", "LashingStrike", 351179)
 	self:Log("SPELL_AURA_APPLIED", "LashingWoundApplied", 351180)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LashingWoundApplied", 351180)
+	self:Log("SPELL_CAST_SUCCESS", "CrushingDread", 351117)
 	self:Log("SPELL_AURA_APPLIED", "CrushingDreadApplied", 351117)
-	self:Log("SPELL_CAST_START", "DarkCommunion", 356021)
+	self:Death("SouljudgeDeath", 177889) -- Mawforged Souljudge
+	self:Log("SPELL_CAST_START", "SummonDecrepitOrbs", 351353)
+	self:Log("SPELL_CAST_SUCCESS", "CurseOfLethargy", 351939)
 	self:Log("SPELL_AURA_APPLIED", "CurseOfLethargyApplied", 351939)
+	self:Death("SummonerDeath", 177891) -- Mawforged Summoner
 	self:Log("SPELL_AURA_APPLIED", "FuryApplied", 351672)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FuryApplied", 351672)
 
 	-- Stage Three: The Freedom of Choice
-	self:Log("SPELL_AURA_REMOVED", "BansheeShroudRemoved", 350857)
+	self:Log("SPELL_CAST_START", "RaidPortalOribos", 357102)
 	self:Log("SPELL_AURA_APPLIED", "BansheesBaneApplied", 353929)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BansheesBaneApplied", 353929)
 	self:Log("SPELL_CAST_SUCCESS", "BaneArrows", 353972)
@@ -163,16 +167,18 @@ end
 
 function mod:OnEngage()
 	self:SetStage(1)
-	stage = 1
 	windrunnerCount = 1
 	dominationChainsCount = 1
 	veilofDarknessCount = 1
 	wailingArrowCount = 1
+	rangerHeartSeekerCount = 1
+	intermission = false
 
-	--self:Bar(347504, 25, CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
-	--self:Bar(349458, 25, CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
-	--self:Bar(347704, 25, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-	--self:Bar(347609, 25, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
+	self:Bar(352650, rangersHeartSeekerTimers[rangerHeartSeekerCount]) -- Ranger's Heartseeker
+	self:Bar(347504, 7.5, CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
+	self:Bar(349458, 26, CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
+	self:Bar(347704, 48.5, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+	self:Bar(347609, 36.5, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -194,12 +200,9 @@ function mod:Windrunner(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, windrunnerCount))
 	self:PlaySound(args.spellId, "alert")
 	windrunnerCount = windrunnerCount + 1
-	--self:Bar(args.spellId, 25, CL.count:format(args.spellName, windrunnerCount))
-end
-
-function mod:WitheringFire(args)
-	self:Message(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "info")
+	if not intermission then
+		self:Bar(args.spellId, windrunnerCount == 2 and 52 or 50.5, CL.count:format(args.spellName, windrunnerCount))
+	end
 end
 
 function mod:BarbedArrowApplied(args)
@@ -209,15 +212,10 @@ function mod:BarbedArrowApplied(args)
 	end
 end
 
-function mod:DesecratingShot(args)
-	self:Message(args.spellId, "red")
-	self:PlaySound(args.spellId, "alert")
-end
-
-function mod:ShadowDagger(args)
-	self:Message(args.spellId, "orange")
-	if self:Healer() then
-		self:PlaySound(args.spellId, "alert")
+function mod:DesecratingShotDamage(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, "underyou")
+		self:PlaySound(args.spellId, "underyou")
 	end
 end
 
@@ -231,8 +229,11 @@ end
 function mod:DominationChains(args)
 	self:Message(args.spellId, "red", CL.count:format(L.chains, dominationChainsCount))
 	self:PlaySound(args.spellId, "warning")
+	self:Bar("chains_active", 7.2, L.chains_active_bartext:format(CL.count:format(L.chains, dominationChainsCount)), args.spellId) -- Chains (x) Active
 	dominationChainsCount = dominationChainsCount + 1
-	--self:Bar(args.spellId, 20, CL.count:format(L.chains, dominationChainsCount))
+	if not intermission then
+		self:Bar(args.spellId, 52, CL.count:format(L.chains, dominationChainsCount))
+	end
 end
 
 function mod:DominationChainsApplied(args)
@@ -246,92 +247,136 @@ function mod:VeilOfDarkness(args)
 	self:Message(347704, "yellow", CL.count:format(L.darkness, veilofDarknessCount))
 	self:PlaySound(347704, "alert")
 	veilofDarknessCount = veilofDarknessCount + 1
-	--self:Bar(347704, 25, CL.count:format(L.darkness, veilofDarknessCount))
-end
-
-function mod:VeilOfDarknessApplied(args)
-	if self:Me(args.destGUID) then
-		local _, amount = self:UnitDebuff(args.destName, args.spellId) -- Checking amout as it starts with 5 in Heroic & Mythic
-		self:NewStackMessage(args.spellId, "blue", args.destName, amount, nil, L.darkness)
-		self:PlaySound(args.spellId, "warning")
-		-- Proximity 5 yards?
+	if self:GetStage() == 1 and not intermission then
+		self:Bar(347704, 49, CL.count:format(L.darkness, veilofDarknessCount))
+	-- elseif self:GetStage() == 3 then -- XXX No cast currently
+	-- 	self:Bar(347704, 0, CL.count:format(L.darkness, veilofDarknessCount))
 	end
 end
 
-function mod:WailingArrow(args)
-	self:Message(args.spellId, "yellow", CL.count:format(L.arrow, wailingArrowCount))
-	self:PlaySound(args.spellId, "alert")
-	wailingArrowCount = wailingArrowCount + 1
-	--self:Bar(args.spellId, 25, CL.count:format(L.arrow, wailingArrowCount))
-end
-
-function mod:WailingArrowApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.arrow)
-		self:PlaySound(args.spellId, "alarm")
-		self:Say(args.spellId, L.arrow)
-		self:SayCountdown(args.spellId, 3, 2)
+do
+	local prev = 0
+	function mod:VeilOfDarknessApplied(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 2 then
+				prev = t
+				local _, amount = self:UnitDebuff(args.destName, args.spellId) -- Checking amout as it starts with 5 in Heroic & Mythic
+				self:NewStackMessage(args.spellId, "blue", args.destName, amount, nil, L.darkness)
+				self:PlaySound(args.spellId, "warning")
+			end
+		end
 	end
 end
 
-function mod:WailingArrowRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+do
+	function mod:WailingArrow(args)
+		self:Message(args.spellId, "yellow", CL.count:format(L.arrow, wailingArrowCount))
+		self:PlaySound(args.spellId, "alert")
+		wailingArrowCount = wailingArrowCount + 1
+		if not intermission then
+			self:Bar(args.spellId, 34, CL.count:format(L.arrow, wailingArrowCount))
+		end
+	end
+
+	local wailingArrowPlayerCount = 0
+	local myArrow = 0
+	local prev = 0
+	function mod:WailingArrowApplied(args)
+		local t = args.time
+		if t-prev > 15 then -- New set
+			prev = t
+			wailingArrowPlayerCount = 0
+		end
+		wailingArrowPlayerCount = wailingArrowPlayerCount + 1
+		if self:GetStage() == 1 then -- Update the bar with exact timing
+			self:Bar(args.spellId, 6, CL.count:format(L.arrow, wailingArrowCount))
+		elseif self:GetStage() == 3 and wailingArrowPlayerCount == 1 then -- Only the first in stage 3
+			self:Bar(args.spellId, 6, CL.count:format(L.arrow, wailingArrowCount))
+		end
+		self:CustomIcon(wailingArrowMarker, args.destName, wailingArrowPlayerCount)
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId, CL.count:format(L.arrow, wailingArrowPlayerCount))
+			self:PlaySound(args.spellId, "alarm")
+			self:Say(args.spellId, CL.count_rticon:format(L.arrow, wailingArrowPlayerCount, wailingArrowPlayerCount))
+			self:SayCountdown(args.spellId, 9)
+			self:TargetBar(args.spellId, 9, args.destName, CL.count:format(L.arrow, wailingArrowPlayerCount))
+			myArrow = wailingArrowPlayerCount
+		end
+	end
+
+	function mod:WailingArrowRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+			self:StopBar(CL.count:format(L.arrow, wailingArrowPlayerCount), args.destName)
+			self:CustomIcon(wailingArrowMarker, args.destName)
+		end
+	end
+end
+
+function mod:RangersHeartseeker(args)
+	self:Message(352650, "purple", CL.casting:format(args.spellName))
+	if self:Tanking("boss1") then
+		self:PlaySound(352650, "warning")
+	end
+	rangerHeartSeekerCount = rangerHeartSeekerCount + 1
+	if not intermission then
+		self:Bar(352650, rangersHeartSeekerTimers[rangerHeartSeekerCount])
 	end
 end
 
 function mod:RangersHeartseekerApplied(args)
 	local amount = args.amount or 1
-	self:Message(args.spellId, "purple", CL.count:format(args.spellName, amount)) -- Ranger's Heartseeker (1)-(3)
-	if amount == 3 then -- Damage inc
-		self:PlaySound(args.spellId, "warning")
-	end
+	self:Message(args.spellId, "purple", CL.count:format(args.spellName, amount))
 end
 
 function mod:BansheesMarkApplied(args)
-	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
-	self:PlaySound(args.spellId, "alarm")
+	local amount = args.amount or 1
+	if amount > 2 then -- 3 stacks per combo
+		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
+		self:PlaySound(args.spellId, "alarm")
+	end
 end
 
 -- Intermission: A Monument to our Suffering
 function mod:BansheeShroudApplied()
-	self:Message("stages", "cyan", CL.intermission, false)
-	self:PlaySound("stages", "long")
+	if self:GetStage() == 1 and not intermission then
+		self:Message("stages", "cyan", CL.intermission, false)
+		self:PlaySound("stages", "long")
 
-	self:StopBar(CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
-	self:StopBar(CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
-	self:StopBar(CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-	self:StopBar(CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
+		self:StopBar(352650) -- Ranger's Heartseeker
+		self:StopBar(CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
+		self:StopBar(CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
+		self:StopBar(CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:StopBar(CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
 
-	dominationChainsCount = 1
-	riveCount = 1
-	bansheeWailCount = 1
-
-	--self:Bar(349458, 25, CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
-	--self:Bar(348145, 25, CL.count:format(self:SpellName(348145), riveCount)) -- Rive
-	--self:Bar(348109, 25, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
+		intermission = true
+		dominationChainsCount = 1
+		riveCount = 1
+		bansheeWailCount = 1
+	end
 end
 
 function mod:Rive(args)
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, riveCount))
-	self:PlaySound(args.spellId, "alert")
+	self:Message(353417, "red", CL.count:format(args.spellName, riveCount))
+	self:PlaySound(353417, "alert")
 	riveCount = riveCount + 1
-	--self:Bar(args.spellId, 25, CL.count:format(args.spellName, riveCount)
+	if riveCount == 2 then -- Most reliable way to start intermission timers atm...
+		-- Start some timers
+	end
 end
 
 function mod:BansheeWail(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, bansheeWailCount))
 	self:PlaySound(args.spellId, "alarm")
 	bansheeWailCount = bansheeWailCount + 1
-	--self:Bar(args.spellId, 25, CL.count:format(args.spellName, bansheeWailCount)
 end
 
 -- Stage Two: The Banshee Queen
 function mod:BansheeFormApplied()
-	if stage < 2 then -- PTR TEMP
+	if self:GetStage() == 1 then
 		self:SetStage(2)
-		stage = 2
-		self:Message("stages", "cyan", CL.stage:format(stage), false)
+		self:Message("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 
 		self:StopBar(CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
@@ -342,71 +387,42 @@ function mod:BansheeFormApplied()
 		bansheeWailCount = 1
 		ruinCount = 1
 		hauntingWaveCount = 1
-
-		--self:Bar(347704, 25, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-		--self:Bar(348109, 25, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
-		--self:Bar(355540, 25, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
-		--self:Bar(351869, 25, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
+		bansheeShroudRemovedCount = 1
 	end
+end
+
+function mod:BansheeShroudRemoved(args)
+	self:Message("stages", "cyan", CL.removed:format(CL.count:format(args.spellName, bansheeShroudRemovedCount)), args.spellId)
+	self:CDBar("stages", 38, args.spellName, args.spellId)
+	bansheeShroudRemovedCount = bansheeShroudRemovedCount + 1
 end
 
 function mod:Ruin(args)
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(args.spellName, ruinCount)))
 	self:PlaySound(args.spellId, "warning")
 	ruinCount = ruinCount + 1
-	--self:Bar(args.spellId, 25, CL.count:format(args.spellName, ruinCount)
 end
 
 function mod:HauntingWave(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.wave, hauntingWaveCount))
 	self:PlaySound(args.spellId, "alert")
 	hauntingWaveCount = hauntingWaveCount + 1
-	--self:Bar(args.spellId, 25, CL.count:format(L.wave, hauntingWaveCount)
-end
-
-do
-	local prev = 0
-	function mod:AccursedMight(args)
-		local t = args.time
-		if t-prev > 5 then
-			prev = t
-			self:Message(args.spellId, "yellow")
-			self:PlaySound(args.spellId, "alert")
-		end
-	end
-end
-
-function mod:UnstoppableForce(args)
-	self:Message(args.spellId, "orange")
-	self:PlaySound(args.spellId, "alarm")
-end
-
-function mod:Enflame(args)
-	self:Message(args.spellId, "red")
-	self:PlaySound(args.spellId, "alert")
-end
-
-function mod:Destabilize(args)
-	self:Message(args.spellId, "yellow")
-end
-
-function mod:DestabilizeApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
-	end
 end
 
 function mod:LashingStrike(args)
-	self:Message(args.spellId, "purple")
-	self:PlaySound(args.spellId, "alert")
+	self:Bar(351180, 7.5) -- Lashing Wound
 end
 
 function mod:LashingWoundApplied(args)
-	if self:Me(args.destGUID) then -- When to show the other tank?
-		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
+	local amount = args.amount or 1
+	self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+	if amount > 1 then
 		self:PlaySound(args.spellId, "alarm")
 	end
+end
+
+function mod:CrushingDread(args)
+	self:Bar(args.spellId, 11)
 end
 
 function mod:CrushingDreadApplied(args)
@@ -416,9 +432,19 @@ function mod:CrushingDreadApplied(args)
 	end
 end
 
-function mod:DarkCommunion(args)
+function mod:SouljudgeDeath()
+	self:StopBar(351180) -- Lashing Wound
+	self:StopBar(351117) -- Crushing Dread
+end
+
+function mod:SummonDecrepitOrbs(args)
 	self:Message(args.spellId, "orange", L.orbs)
 	self:PlaySound(args.spellId, "long")
+	self:Bar(args.spellId, 16)
+end
+
+function mod:CurseOfLethargy(args)
+	self:Bar(args.spellId, 7.5)
 end
 
 function mod:CurseOfLethargyApplied(args)
@@ -426,6 +452,11 @@ function mod:CurseOfLethargyApplied(args)
 		self:PersonalMessage(args.spellId, L.curse)
 		self:PlaySound(args.spellId, "alarm")
 	end
+end
+
+function mod:SummonerDeath()
+	self:StopBar(351353) -- Summon Decrepit Orbs
+	self:StopBar(351939) -- Curse of Lethargy
 end
 
 function mod:FuryApplied(args)
@@ -437,12 +468,15 @@ function mod:FuryApplied(args)
 end
 
 -- Stage Three: The Freedom of Choice
-function mod:BansheeShroudRemoved()
+function mod:RaidPortalOribos()
 	self:SetStage(3)
-	stage = 3
-	self:Message("stages", "cyan", CL.stage:format(stage), false)
+	self:Message("stages", "cyan", CL.soon:format(CL.stage:format(3)), false)
 	self:PlaySound("stages", "long")
 
+	self:StopBar(351353) -- Summon Decrepit Orbs
+	self:StopBar(351939) -- Curse of Lethargy
+	self:StopBar(351180) -- Lashing Wound
+	self:StopBar(351117) -- Crushing Dread
 	self:StopBar(CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 	self:StopBar(CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 	self:StopBar(CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
@@ -454,6 +488,7 @@ function mod:BansheeShroudRemoved()
 	razeCount = 1
 	bansheesFuryCount = 1
 
+	--self:Bar("stages", 10, CL.stage:format(3), args.spellId)
 	--self:Bar(347704, 25, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 	--self:Bar(347609, 25, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
 	--self:Bar(357720, 25, CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
