@@ -44,7 +44,7 @@ do
 	--@end-alpha@
 
 	-- If we find "@" then we're running from Git directly.
-	if myGitHash:find("@", nil, true) then
+	if strfind(myGitHash, "@", nil, true) then
 		myGitHash = "repo"
 		releaseType = REPO
 	end
@@ -532,7 +532,7 @@ do
 					local slash = tbl[j]:trim():upper()
 					_G["SLASH_"..slash..1] = slash
 					SlashCmdList[slash] = function(text)
-						if name:find("BigWigs", nil, true) then
+						if strfind(name, "BigWigs", nil, true) then
 							-- Attempting to be smart. Only load core & config if it's a BW plugin.
 							loadAndEnableCore()
 							load(BigWigsOptions, "BigWigs_Options")
@@ -752,7 +752,7 @@ function mod:ADDON_LOADED(addon)
 		-- TODO: look into having a way for our boss modules not to create a table when no options are changed.
 		if BigWigs3DB.namespaces then
 			for k,v in next, BigWigs3DB.namespaces do
-				if k:find("BigWigs_Bosses_", nil, true) and not next(v) then
+				if strfind(k, "BigWigs_Bosses_", nil, true) and not next(v) then
 					BigWigs3DB.namespaces[k] = nil
 				end
 			end
@@ -1059,7 +1059,7 @@ do
 			--if BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM then
 			--	-- If there are people with newer versions than us, suddenly we've upgraded!
 			--	local rev, dotRev = tonumber(revision), tonumber(DBMdotRevision)
-			--	if rev and displayVersion and rev ~= 99999 and rev > dotRev and not displayVersion:find("alpha", nil, true) then -- Failsafes
+			--	if rev and displayVersion and rev ~= 99999 and rev > dotRev and not strfind(displayVersion, "alpha", nil, true) then -- Failsafes
 			--		if not prevUpgradedUser then
 			--			prevUpgradedUser = sender
 			--		elseif prevUpgradedUser ~= sender then
@@ -1384,7 +1384,7 @@ do
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
 		if zoneAddon and zoneAddon ~= "BigWigs_Shadowlands" then
-			if zoneAddon:find("LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
+			if strfind(zoneAddon, "LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
