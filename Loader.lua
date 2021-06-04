@@ -423,16 +423,16 @@ local dataBroker = ldb:NewDataObject("BigWigs",
 
 function dataBroker.OnClick(self, button)
 	if button == "RightButton" then
-		local trace = debugstack(2)
-		if strfind(trace, "LibDBIcon%-1%.0%.lua:%d+>\n?$") then
+		--local trace = debugstack(2)
+		--if strfind(trace, "LibDBIcon%-1%.0%.lua:%d+>\n?$") then
 			loadCoreAndOpenOptions()
-		else
-			public.stack = trace
-			sysprint("|cFFff0000WARNING!|r")
-			sysprint("One of your addons was prevented from force loading the BigWigs options.")
-			sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
-			return
-		end
+		--else
+		--	public.stack = trace
+		--	sysprint("|cFFff0000WARNING!|r")
+		--	sysprint("One of your addons was prevented from force loading the BigWigs options.")
+		--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+		--	return
+		--end
 	end
 end
 
