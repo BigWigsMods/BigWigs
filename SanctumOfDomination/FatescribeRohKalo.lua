@@ -123,7 +123,7 @@ end
 
 function mod:OnEngage()
 	self:SetStage(1)
-	nextStageWarning = self:Mythic() and 73 or 88
+	nextStageWarning = 73
 	stage = 1
 	realignFateCount = 1
 	callOfEternityCount = 1
@@ -149,10 +149,10 @@ end
 --
 
 function mod:UNIT_HEALTH(event, unit)
-	if self:GetHealth(unit) < nextStageWarning then -- 85 60 35 in Heroic / 70 45 20 in Mythic?
+	if self:GetHealth(unit) < nextStageWarning then -- 70% and 40%
 		self:Message("stages", "green", CL.soon:format(self:SpellName(351969)), false) -- Realign Fate
 		self:PlaySound("stages", "info")
-		nextStageWarning = nextStageWarning - 25
+		nextStageWarning = nextStageWarning - 30
 		if nextStageWarning < 20 then
 			self:UnregisterUnitEvent(event, unit)
 		end
@@ -299,7 +299,7 @@ end
 function mod:RealignFateRemoved(args)
 	self:StopBar(CL.cast:format(self:SpellName(353122))) -- Darkest Destiny
 
-	if realignFateCount > 3 then -- Stage 3 after 3x Realign Fate
+	if realignFateCount > 2 then -- Stage 3 after 2x Realign Fate
 		stage = 3
 	else
 		stage = 1
