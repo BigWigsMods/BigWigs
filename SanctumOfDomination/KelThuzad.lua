@@ -162,6 +162,7 @@ function mod:OnEngage()
 	frostBlastCount = 1
 	glacialWrathCount = 1
 
+	-- Soul Fracture and Ice Shards can delay casts
 	self:CDBar(348071, 8.5, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture (to _SUCCESS) 8.3~9.9
 	self:CDBar(347292, 10, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo 9.5~11.7
 	self:CDBar(346459, 19.5, CL.count:format(L.spikes, glacialWrathCount)) -- Glacial Wrath 19.3~21.5
@@ -414,70 +415,50 @@ function mod:NecroticSurgeApplied(args)
 
 	if self:GetStage() == 2 then
 		self:SetStage(1)
-		self:CDBar(348071, self:Mythic() and 5.6 or 9.5, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture
-		self:CDBar(347292, 11, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
-		self:CDBar(346459, 19, CL.count:format(L.spikes, glacialWrathCount)) -- Glacial Wrath
-		self:CDBar(348760, 45.3, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast // Sometimes 90s? why?
 
 		-- Standard time if mana is 100
 		local evocationTime = 45.4
 		local blizzardTime = 86.2
 
-		local currentMana = UnitPower("boss1")
-		if currentMana then
-			if currentMana == 80 then
-				evocationTime = 46.1
-				blizzardTime = 86.4
-			elseif currentMana == 60 then
-				evocationTime = 11.5
-				blizzardTime = 46.5
-			elseif currentMana == 40 then
-				-- XXX 20 uses these times sometimes? seems like the longer at 20
-				-- the higher the chance evo is used immediately regardless of energy?
-				evocationTime = 3.2
-				blizzardTime = 21.5
-			elseif currentMana == 20 then
-				evocationTime = 46.5
-				blizzardTime = 11.5
+		local currentMana = UnitPower("boss1") or 0
+		if currentMana == 80 then
+			evocationTime = 46.1
+			blizzardTime = 86.4
+		elseif currentMana == 60 then
+			evocationTime = 11.5
+			blizzardTime = 46.5
+		elseif currentMana == 40 then
+			-- XXX under 5% or so he will only cast ice shards and if held for a period of time (evo cd elapsed?),
+			--     he will follow the 40 energy timings after the remnant regardless of actual energy
+			evocationTime = 3.2
+			blizzardTime = 21.5
+		elseif currentMana == 20 then
+			evocationTime = 46.5
+			blizzardTime = 15.5
+		end
+		self:CDBar(348071, self:Mythic() and 5.6 or 9.5, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture
+		self:CDBar(347292, 11, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
+		if currentMana > 20 then
+			self:CDBar(346459, 19, CL.count:format(L.spikes, glacialWrathCount)) -- Glacial Wrath
+			if currentMana > 40 then
+				self:CDBar(348760, 44, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
 			end
 		end
 		self:CDBar(352530, evocationTime, CL.count:format(self:SpellName(352530), darkEvocationCount)) -- Dark Evocation
 		self:CDBar(354198, blizzardTime, CL.count:format(self:SpellName(354198), blizzardCount)) -- Howling Blizzard
-	else -- Stage 3
+	else
+		-- Stage 3
 		oblivionsEchoCount = 1
-
 		-- oblivion > oblivion > frost blast > onslaught > repeat
-		-- always the same order, but seems to either start at oblivion or frost blast based on energy
-
-		-- Standard time if mana is 100
-		local frostBlastTime = 30.2
-		local onslaughtTime = 33.9
-		local oblivionTime = 5.8
-
+		-- will cast ice shard until he gets to a spell in the rotation that he has enough energy for
 		local currentMana = UnitPower("boss1")
-		if currentMana == 80 then
-			-- XXX Check
-			frostBlastTime = 30.2
-			onslaughtTime = 33.9
-			oblivionTime = 5.8
-		elseif currentMana == 60 then
-			-- XXX Check
-			frostBlastTime = 29.8
-			onslaughtTime = 33.97
-			oblivionTime = 45.8
-		elseif currentMana == 40 then
-			-- XXX Check
-			frostBlastTime = 29.8
-			onslaughtTime = 33.97
-			oblivionTime = 45.8
-		elseif currentMana == 20 then
-			frostBlastTime = 29.8
-			onslaughtTime = 33.97
-			oblivionTime = 45.8
+		if currentMana > 20 then -- costs 40 energy now
+			self:CDBar(347292, 5.8, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
 		end
-		self:CDBar(347292, oblivionTime, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
-		self:CDBar(348760, frostBlastTime, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
-		self:CDBar(352348, onslaughtTime) -- Onslaught of the Damned
+		if currentMana == 20 or currentMana > 40 then
+			self:CDBar(348760, 29.8, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
+		end
+		self:CDBar(352348, 34) -- Onslaught of the Damned
 	end
 end
 
