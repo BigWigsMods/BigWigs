@@ -1517,7 +1517,7 @@ SLASH_BigWigs1 = "/bw"
 SLASH_BigWigs2 = "/bigwigs"
 SlashCmdList.BigWigs = function()
 	local trace = debugstack(2)
-	if strfind(trace, "^%[string \"@Interface\\FrameXML\\ChatFrame%.lua") and not strfind(trace, "AddOns", nil, true) then
+	if strfind(trace, "[string \"*:OnEnterPressed\"]:1: in function <[string \"*:OnEnterPressed\"]:1>", nil, true) then
 		loadCoreAndOpenOptions()
 	else
 		public.stack = trace
