@@ -93,7 +93,7 @@ local timersMythic = {
 		-- Adds
 		[-22131] = {4, 75, 55},
 		-- Impale
-		[329951] = {43, 39, 36, 45},
+		[329951] = {43, 39, 36, 45, 53},
 		 -- Hand of Destruction (P2)
 		[333932] = {38.7, 31.2, 39.5, 44, 45}, -- Reduced by 1 second as the pull in happens earlier
 	},
