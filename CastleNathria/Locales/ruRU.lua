@@ -12,8 +12,8 @@ end
 
 L = BigWigs:NewBossLocale("Sun King's Salvation", "ruRU")
 if L then
-	--L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
-	--L.shield_remaining = "%s remaining: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
+	L.shield_removed = "%s убран спустя after %.1fс" -- "Shield removed after 1.1s" s = seconds
+	L.shield_remaining = "%s : осталось %s (%.1f%%) здоровья" -- "Shield remaining: 2.1K (5.3%)"
 end
 
 L = BigWigs:NewBossLocale("Hungering Destroyer", "ruRU")
@@ -38,7 +38,7 @@ end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "ruRU")
 if L then
-	--L.times = "%dx %s"
+	L.times = "%dx %с"
 
 	L.level = "%s (Уровень |cffffff00%d|r)"
 	L.full = "%s (|cffff0000ПОЛНЫЙ|r)"
