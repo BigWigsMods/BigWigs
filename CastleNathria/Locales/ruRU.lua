@@ -38,7 +38,7 @@ end
 
 L = BigWigs:NewBossLocale("Lady Inerva Darkvein", "ruRU")
 if L then
-	L.times = "%dx %с"
+	L.times = "%dx %s"
 
 	L.level = "%s (Уровень |cffffff00%d|r)"
 	L.full = "%s (|cffff0000ПОЛНЫЙ|r)"
