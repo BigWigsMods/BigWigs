@@ -115,6 +115,7 @@ local highestFoundVersion = BIGWIGS_VERSION
 local highestFoundGuildVersion = BIGWIGS_GUILD_VERSION
 
 -- Loading
+local isMouseDown = false
 local loadOnCoreEnabled = {} -- BigWigs modulepacks that should load when a hostile zone is entered or the core is manually enabled, this would be the default plugins Bars, Messages etc
 local loadOnZone = {} -- BigWigs modulepack that should load on a specific zone
 local loadOnSlash = {} -- BigWigs modulepacks that can load from a chat command
@@ -422,17 +423,17 @@ local dataBroker = ldb:NewDataObject("BigWigs",
 )
 
 function dataBroker.OnClick(self, button)
+	-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
 	if button == "RightButton" then
-		--local trace = debugstack(2)
-		--if strfind(trace, "LibDBIcon%-1%.0%.lua:%d+>\n?$") then
+		if isMouseDown then
 			loadCoreAndOpenOptions()
-		--else
-		--	public.stack = trace
-		--	sysprint("|cFFff0000WARNING!|r")
-		--	sysprint("One of your addons was prevented from force loading the BigWigs options.")
-		--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
-		--	return
-		--end
+		else
+			local trace = debugstack(2)
+			public.mstack = trace
+			sysprint("|cFFff0000WARNING!|r")
+			sysprint("One of your addons was prevented from force loading the BigWigs options.")
+			sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+		end
 	end
 end
 
@@ -713,6 +714,9 @@ end
 function mod:ADDON_LOADED(addon)
 	if addon ~= "BigWigs" then return end
 
+	bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
+	bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
+
 	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bwFrame:RegisterEvent("GROUP_ROSTER_UPDATE")
@@ -774,6 +778,18 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:UnregisterEvent("ADDON_LOADED")
 	self.ADDON_LOADED = nil
 	bwFrame.UnregisterEvent(UIParent, "TALKINGHEAD_REQUESTED") -- Prevent the event order re-shuffling mid-instance
+end
+
+function mod:GLOBAL_MOUSE_DOWN(button)
+	if button == "RightButton" then
+		isMouseDown = true
+	end
+end
+
+function mod:GLOBAL_MOUSE_UP(button)
+	if button == "RightButton" then
+		isMouseDown = false
+	end
 end
 
 -- We can't do our addon loading in ADDON_LOADED as the target addons may be registering that
@@ -1516,6 +1532,7 @@ end
 SLASH_BigWigs1 = "/bw"
 SLASH_BigWigs2 = "/bigwigs"
 SlashCmdList.BigWigs = function()
+	-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
 	local trace = debugstack(2)
 	if strfind(trace, "[string \"*:OnEnterPressed\"]:1: in function <[string \"*:OnEnterPressed\"]:1>", nil, true) then
 		loadCoreAndOpenOptions()
