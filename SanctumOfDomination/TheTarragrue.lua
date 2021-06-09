@@ -301,7 +301,7 @@ end
 
 function mod:RemnantStacks(args)
 	if self:Me(args.destGUID) then
-		local spellId = 352382 -- Physical
+		local spellId = 352382  -- SetOption:352382,352398,352389:
 		local text = L.physical
 		if args.spellId == 352392 then -- Fire
 			spellId = 352398
