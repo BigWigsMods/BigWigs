@@ -33,7 +33,6 @@ local remnantType = {
 local L = mod:GetLocale()
 if L then
 	L.chains = "Chains" -- Chains of Eternity (Chains)
-	L.howl = mod:SpellName(135241) -- Predator's Howl (Howl)
 	L.remnants = "Remnants" -- Remnant of Forgotten Torments (Remnants)
 	L.mist = mod:SpellName(126435) -- Hungering Mist (Mist)
 	L.grasp = mod:SpellName(188080) -- Grasp of Death (Grasp)
@@ -72,7 +71,7 @@ function mod:GetOptions()
 		[346985] = "general",
 	},{
 		[347269] = L.chains, -- Chains of Eternity (Chains)
-		[347283] = L.howl, -- Predator's Howl (Howl)
+		[347283] = CL.fear, -- Predator's Howl (Fear)
 		[352368] = L.remnants, -- Remnant of Forgotten Torments (Remnants)
 		[347679] = L.mist, -- Hungering Mist (Mist)
 		[352382] = L.physical_remnant, -- Remnant: Upper Reaches' Might (Physical Remnant)
@@ -118,7 +117,7 @@ function mod:OnEngage()
 	graspCount = 1
 	mistCount = 1
 
-	self:Bar(347283, self:Mythic() and 5 or 3.6, CL.count:format(L.howl, howlCount)) -- Predator's Howl
+	self:Bar(347283, self:Mythic() and 5 or 3.6, CL.count:format(CL.fear, howlCount)) -- Predator's Howl
 	self:Bar(347668, self:Mythic() and 8 or 6.23, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
 	self:Bar(346985, self:Mythic() and 10 or 12.3) -- Overpower
 	self:Bar(347269, self:Mythic() and 13 or 17.1, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
@@ -221,10 +220,10 @@ do
 	function mod:PredatorsHowl(args)
 		playerList = {}
 		soundPlayed = false
-		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.howl, howlCount)))
+		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(CL.fear, howlCount)))
 		howlCount = howlCount + 1
 		if nextMist - GetTime() > 25 then
-			self:Bar(args.spellId, 25.6, CL.count:format(L.howl, howlCount))
+			self:Bar(args.spellId, 25.6, CL.count:format(CL.fear, howlCount))
 		end
 		self:PlaySound(args.spellId, "alert")
 	end
@@ -236,19 +235,19 @@ do
 			soundPlayed = true
 		end
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, L.howl)
+			self:Say(args.spellId, CL.fear)
 			if not soundPlayed then
 				self:PlaySound(args.spellId, "alarm")
 				soundPlayed = true
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "red", playerList, nil, CL.count:format(L.howl, howlCount-1))
+		self:NewTargetsMessage(args.spellId, "red", playerList, nil, CL.count:format(CL.fear, howlCount-1))
 	end
 end
 
 function mod:PredatorsHowlRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", CL.removed:format(L.howl))
+		self:Message(args.spellId, "green", CL.removed:format(CL.fear))
 		self:PlaySound(args.spellId, "info")
 	end
 end
@@ -268,7 +267,7 @@ function mod:HungeringMist(args)
 	nextMist = 96.3 + GetTime()
 	self:ScheduleTimer("Bar", 19.9, args.spellId, 76.4, CL.count:format(L.mist, mistCount)) -- Hungering Mist
 
-	self:Bar(347283, 22, CL.count:format(L.howl, howlCount)) -- Predator's Howl
+	self:Bar(347283, 22, CL.count:format(CL.fear, howlCount)) -- Predator's Howl
 	self:Bar(346985, 25.7) -- Overpower
 	self:Bar(347668, 28.1, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
 	self:Bar(352368, 24.3, CL.count:format(L.remnants, remnantCount)) -- Remnants
