@@ -38,9 +38,9 @@ local L = mod:GetLocale()
 if L then
 	L.fragments = "Fragments" -- Short for Fragments of Destiny
 	L.fragment = "Fragment" -- Singular Fragment of Destiny
-	L.pullin = "Run Away" -- Wings of Rage
+	L.run_away = "Run Away" -- Wings of Rage
 	L.song = "Song" -- Short for Song of Dissolution
-	L.pushback = "Go in" -- Reverberating Refrain
+	L.go_in = "Go in" -- Reverberating Refrain
 	L.valkyr = "Val'kyr" -- Short for Call of the Val'kyr
 	L.blades = "Blades" -- Agatha's Eternal Blade
 	L.big_bombs = "Big Bombs" -- Daschla's Mighty Impact
@@ -81,7 +81,6 @@ function mod:GetOptions()
 		350339, -- Siphon Vitality
 		350365, -- Wings of Rage
 		-- Signe, The Voice
-		350283, -- Soulful Blast
 		{350286, "TANK"}, -- Song of Dissolution
 		350385, -- Reverberating Refrain
 		-- Call of the Val'kyr
@@ -101,15 +100,15 @@ function mod:GetOptions()
 		["stages"] = "general",
 		[350542] = mod:SpellName(-22877), -- Stage One: The Unending Voice
 		[350202] = mod:SpellName(-23202), -- Kyra, The Unending
-		[350283] = mod:SpellName(-23203), -- Signe, The Voice
+		[350286] = mod:SpellName(-23203), -- Signe, The Voice
 		[350467] = mod:SpellName(-23206), -- Call of the Val'kyr
 		[350475] = mod:SpellName(-22879), -- Stage Two: The First of the Mawsworn
 	},{
 		[350542] = L.fragments, -- Fragments of Destiny (Fragments)
 		[350342] = CL.add, -- Formless Mass (Add)
-		[350365] = L.pushback, -- Wings of Rage (Run Away)
+		[350365] = L.run_away, -- Wings of Rage (Run Away)
 		[350286] = L.song,-- Song of Dissolution (Song)
-		[350385] = L.pullin, -- Reverberating Refrain (Go in)
+		[350385] = L.go_in, -- Reverberating Refrain (Go in)
 		[350467] = L.valkyr, -- Call of the Val'kyr (Val'kyr)
 		[350031] = L.blades, -- Agatha's Eternal Blade (Blades)
 		[350184] = L.big_bombs, -- Daschla's Mighty Impact (Big Bombs)
@@ -192,9 +191,13 @@ function mod:OnEngage()
 	self:Bar(350342, 12, CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
 	self:Bar(350467, 14.6, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 	self:Bar(350286, 16, CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
-	self:Bar(350365, 47.5, CL.count:format(L.pullin, wingsOfRageCount)) -- Wings of Rage
-	self:Bar(350385, 71.5, CL.count:format(L.pushback, reverberatingRefrainCount)) -- Reverberating Refrain
+	self:Bar(350365, 47.5, CL.count:format(L.run_away, wingsOfRageCount)) -- Wings of Rage
+	self:Bar(350385, 71.5, CL.count:format(L.go_in, reverberatingRefrainCount)) -- Reverberating Refrain
 	self:Bar("berserk", 300, L.berserk_stage1, 26662) -- Custom Berserk bar
+
+	if self:Mythic() then
+		self:CDBar(350542, 5, CL.count:format(L.fragments, fragmentOfDestinyCount))
+	end
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss2", "boss3") -- Boss 1: Skyja, Boss 2: Kyra, Boss 3: Signe
 end
 
@@ -241,12 +244,13 @@ function mod:SkyjasAdvance() -- Stage 2
 	self:Bar(351399, 6.9) -- Resentment
 	self:Bar(350475, 9.4) -- Pierce Soul
 	self:Bar(350482, 24.4) -- Link Essence
+	self:CDBar(350542, 13, CL.count:format(L.fragments, fragmentOfDestinyCount))
 	self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 	self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
 
 	if self:Mythic() then
-		self:Bar(350365, 58.5, L.image_special:format(L.pullin)) -- Run Away [Skyra] // Wings of Rage
-		self:Bar(350385, 97, L.image_special:format(L.pushback)) -- Go in [Skyra] //  Reverberating Refrain
+		self:Bar(350365, 58.5, L.image_special:format(L.run_away)) -- Run Away [Skyra] // Wings of Rage
+		self:Bar(350385, 97, L.image_special:format(L.go_in)) -- Go in [Skyra] //  Reverberating Refrain
 	end
 
 	self:Bar("berserk", 604, L.berserk_stage2, 26662) -- Custom Berserk bar
@@ -372,21 +376,21 @@ function mod:SiphonVitality(args)
 end
 
 function mod:WingsOfRage(args)
-	self:Message(350365, "red", CL.casting:format(CL.count:format(L.pullin, wingsOfRageCount)))
+	self:Message(350365, "red", CL.casting:format(CL.count:format(L.run_away, wingsOfRageCount)))
 	self:PlaySound(350365, "warning")
-	self:CastBar(350365, args.spellId == 352756 and 10 or 9.5, L.pullin) -- 2.5 pre-cast, 7s channel, 3s precast in stage 2???
+	self:CastBar(350365, args.spellId == 352756 and 10 or 9.5, L.run_away) -- 2.5 pre-cast, 7s channel, 3s precast in stage 2???
 	wingsOfRageCount = wingsOfRageCount + 1
-	self:Bar(350365, 72.9, CL.count:format(L.pullin, wingsOfRageCount))
+	self:Bar(350365, 72.9, CL.count:format(L.run_away, wingsOfRageCount))
 end
 
 function mod:KyraDeath(args)
 	kyraAlive = false
 	self:StopBar(unendingStrikeText) -- Unending Strike
 	self:StopBar(CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
-	self:StopBar(CL.count:format(L.pullin, wingsOfRageCount)) -- Wings of Rage
+	self:StopBar(CL.count:format(L.run_away, wingsOfRageCount)) -- Wings of Rage
 
-	self:Bar(350365, self:BarTimeLeft(L.image_special:format(L.pullin)), L.pullin) -- Wings of Rage
-	self:StopBar(L.image_special:format(L.pullin)) -- Run Away [Skyra]
+	self:Bar(350365, self:BarTimeLeft(L.image_special:format(L.run_away)), L.run_away) -- Wings of Rage
+	self:StopBar(L.image_special:format(L.run_away)) -- Run Away [Skyra]
 
 	if not signeAlive then
 		self:StopBar(L.berserk_stage1)
@@ -402,21 +406,21 @@ function mod:SongOfDissolution(args)
 end
 
 function mod:ReverberatingRefrain(args)
-	self:Message(350385, "red", CL.casting:format(CL.count:format(L.pushback, reverberatingRefrainCount)))
+	self:Message(350385, "red", CL.casting:format(CL.count:format(L.go_in, reverberatingRefrainCount)))
 	self:PlaySound(350385, "warning")
-	self:CastBar(350385, args.spellId == 352752 and 10 or 9.5, CL.count:format(L.pushback, reverberatingRefrainCount)) -- 2.5 pre-cast, 7s channel, 3s precast in stage 2???
+	self:CastBar(350385, args.spellId == 352752 and 10 or 9.5, CL.count:format(L.go_in, reverberatingRefrainCount)) -- 2.5 pre-cast, 7s channel, 3s precast in stage 2???
 	reverberatingRefrainCount = reverberatingRefrainCount + 1
-	self:Bar(350385, 72.9, CL.count:format(L.pushback, reverberatingRefrainCount))
+	self:Bar(350385, 72.9, CL.count:format(L.go_in, reverberatingRefrainCount))
 end
 
 
 function mod:SigneDeath(args)
 	signeAlive = false
 	self:StopBar(CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
-	self:StopBar(CL.count:format(L.pushback, reverberatingRefrainCount)) -- Reverberating Refrain
+	self:StopBar(CL.count:format(L.go_in, reverberatingRefrainCount)) -- Reverberating Refrain
 
-	self:Bar(350385, self:BarTimeLeft(L.image_special:format(L.pushback)), L.pushback) -- Reverberating Refrain
-	self:StopBar(L.image_special:format(L.pushback)) -- Go in [Skyra]
+	self:Bar(350385, self:BarTimeLeft(L.image_special:format(L.go_in)), L.go_in) -- Reverberating Refrain
+	self:StopBar(L.image_special:format(L.go_in)) -- Go in [Skyra]
 
 	if not kyraAlive then
 		self:StopBar(L.berserk_stage1)
