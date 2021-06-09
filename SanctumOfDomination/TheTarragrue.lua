@@ -62,7 +62,7 @@ function mod:GetOptions()
 		352389, -- Remnant: Mort'regar's Echoes
 		352398, -- Remnant: Soulforge Heat
 		347668, -- Grasp of Death
-		347490, -- Fury of the Ages
+		{347490, "DISPEL"}, -- Fury of the Ages
 		347369, -- The Jailer's Gaze
 		"berserk",
 	},{
@@ -332,7 +332,7 @@ end
 
 function mod:FuryOfTheAgesStart(args)
 	self:Message(args.spellId, "yellow", CL.casting:format(L.enrage))
-	if self:Dispeller("enrage", true) then
+	if self:Dispeller("enrage", true, args.spellId) then
 		self:PlaySound(args.spellId, "info")
 	end
 	if nextMist - GetTime() > 46 then
@@ -341,7 +341,7 @@ function mod:FuryOfTheAgesStart(args)
 end
 
 function mod:FuryOfTheAgesApplied(args)
-	if bit.band(args.destFlags, 0x400) == 0 and self:Dispeller("enrage", true) then -- COMBATLOG_OBJECT_TYPE_PLAYER
+	if bit.band(args.destFlags, 0x400) == 0 and self:Dispeller("enrage", true, args.spellId) then -- COMBATLOG_OBJECT_TYPE_PLAYER
 		self:Message(args.spellId, "orange", CL.buff_boss:format(L.enrage))
 		self:PlaySound(args.spellId, "warning")
 	end
