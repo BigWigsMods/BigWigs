@@ -261,7 +261,7 @@ function mod:HungeringMist(args)
 	self:Message(args.spellId, "cyan", CL.count:format(L.mist, mistCount))
 	self:PlaySound(args.spellId, "long")
 	mistCount = mistCount + 1
-	nextMist = 96.3
+	nextMist = 96.3 + GetTime()
 	self:ScheduleTimer("Bar", 19.9, args.spellId, 76.4, CL.count:format(L.mist, mistCount)) -- Hungering Mist
 
 	self:Bar(347283, 22, CL.count:format(L.howl, howlCount)) -- Predator's Howl
