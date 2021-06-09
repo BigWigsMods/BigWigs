@@ -95,6 +95,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HungeringMistCast", 354080)
 	self:Log("SPELL_CAST_SUCCESS", "RemnantOfForgottenTorments", 352368)
 	self:Log("SPELL_CAST_SUCCESS", "RemnantSpawn", 352382, 352389, 352398) -- Upper Reaches' Might, Mort'regar's Echoes, Soulforge Heat
+	-- XXX Show stack warnings
 	self:Log("SPELL_CAST_SUCCESS", "GraspOfDeath", 347668)
 	self:Log("SPELL_AURA_APPLIED", "GraspOfDeathApplied", 347668)
 	self:Log("SPELL_CAST_START", "FuryOfTheAgesStart", 347490)
@@ -196,8 +197,8 @@ function mod:ChainsOfEternityRemoved(args)
 end
 
 function mod:AnnihilatingSmashApplied(args)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
 		self:TargetBar(args.spellId, self:LFR() and 10 or self:Normal() and 15 or 30, args.destName)
 	end
