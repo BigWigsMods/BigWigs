@@ -280,7 +280,7 @@ function mod:HungeringMistCast()
 	self:Message(347679, "yellow", CL.casting:format(CL.count:format(L.mist, mistCastCount)))
 	self:PlaySound(347679, "info")
 	self:CastBar(347679, 4.8, CL.count:format(L.mist, mistCastCount)) -- Hungering Mist
-	mistCount = mistCount + 1
+	mistCastCount = mistCastCount + 1
 end
 
 function mod:RemnantOfForgottenTorments(args)
