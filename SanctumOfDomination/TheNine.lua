@@ -56,6 +56,8 @@ if L then
 
 	L.berserk_stage1 = "Berserk Stage 1"
 	L.berserk_stage2 = "Berserk Stage 2"
+
+	L.image_special = "%s [Skyja]" -- Stage 2 boss name
 end
 
 --------------------------------------------------------------------------------
@@ -242,10 +244,10 @@ function mod:SkyjasAdvance() -- Stage 2
 	self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 	self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
 
-	--if self:Mythic() then
-		--self:Bar(11111, 43.9, L.pullin.."[image]") -- Run Away [image]
-		--self:Bar(11111, 43.9, L.pushback.."[image]") -- Go in [image]
-	--end
+	if self:Mythic() then
+		self:Bar(350365, 58.5, L.image_special:format(L.pullin)) -- Run Away [Skyra] // Wings of Rage
+		self:Bar(350385, 97, L.image_special:format(L.pushback)) -- Go in [Skyra] //  Reverberating Refrain
+	end
 
 	self:Bar("berserk", 604, L.berserk_stage2, 26662) -- Custom Berserk bar
 end
@@ -382,8 +384,10 @@ function mod:KyraDeath(args)
 	self:StopBar(unendingStrikeText) -- Unending Strike
 	self:StopBar(CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
 	self:StopBar(CL.count:format(L.pullin, wingsOfRageCount)) -- Wings of Rage
-	--self:Bar(00000, self:BarTimeLeft(L.pullin.."[image]"), L.pullin)
-	--self:StopBar(L.pullin.."[image]") -- Go in [image]
+
+	self:Bar(350365, self:BarTimeLeft(L.image_special:format(L.pullin)), L.pullin) -- Wings of Rage
+	self:StopBar(L.image_special:format(L.pullin)) -- Run Away [Skyra]
+
 	if not signeAlive then
 		self:StopBar(L.berserk_stage1)
 	end
@@ -410,8 +414,10 @@ function mod:SigneDeath(args)
 	signeAlive = false
 	self:StopBar(CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
 	self:StopBar(CL.count:format(L.pushback, reverberatingRefrainCount)) -- Reverberating Refrain
-	--self:Bar(00000, self:BarTimeLeft(L.pushback.."[image]"), L.pushback)
-	--self:StopBar(L.pushback.."[image]") -- Go in [image]
+
+	self:Bar(350385, self:BarTimeLeft(L.image_special:format(L.pushback)), L.pushback) -- Reverberating Refrain
+	self:StopBar(L.image_special:format(L.pushback)) -- Go in [Skyra]
+
 	if not kyraAlive then
 		self:StopBar(L.berserk_stage1)
 	end
