@@ -447,11 +447,12 @@ end
 
 do
 	local prev = 0
+	local playerList = {}
 	function mod:DaschlasMightyImpact(args)
 		local t = args.time
 		if t-prev > 5 then
+			playerList = {}
 			prev = t
-			self:Message(args.spellId, "cyan", L.big_bombs)
 			self:CastBar(args.spellId, 10, L.big_bombs)
 			if infoboxAllowed then
 				table.insert(incomingValkyrList, "|T425955:16:16:0:0:64:64:4:60:4:60|t "..L.big_bombs)
@@ -459,14 +460,15 @@ do
 			end
 		end
 	end
-end
 
-function mod:DaschlasMightyImpactApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.big_bomb)
-		self:Say(args.spellId, L.big_bomb)
-		self:SayCountdown(args.spellId, 10, L.big_bomb) -- Big 3, Big 2, Big 1
-		self:PlaySound(args.spellId, "warning")
+	function mod:DaschlasMightyImpactApplied(args)
+		playerList[#playerList+1] = args.destName
+		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, L.big_bomb)
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, L.big_bomb)
+			self:SayCountdown(args.spellId, 10, L.big_bomb) -- Big 3, Big 2, Big 1
+			self:PlaySound(args.spellId, "warning")
+		end
 	end
 end
 
@@ -481,21 +483,18 @@ end
 -- end
 
 do
-	local playerList = {}
 	local prev = 0
 	function mod:BrynjasMournfulDirgeApplied(args)
 		local t = args.time
 		if t-prev > 5 then
 			prev = t
-			playerList = {}
 			self:Message(350109, "yellow", L.small_bombs)
 			if infoboxAllowed then
 				table.insert(incomingValkyrList, "|T460699:16:16:0:0:64:64:4:60:4:60|t "..L.small_bombs)
 				mod:UpdateInfoBox()
 			end
 		end
-		local count = #playerList+1
-		playerList[count] = args.destName
+
 		if self:Me(args.destGUID) then
 			self:Say(350109, L.small_bombs)
 			self:SayCountdown(350109, 6)

@@ -301,17 +301,17 @@ end
 
 function mod:RemnantStacks(args)
 	if self:Me(args.destGUID) then
-		local key = 352382 -- Physical
+		local spellId = 352382 -- Physical
 		local text = L.physical
 		if args.spellId == 352392 then -- Fire
-			key = 352398
+			spellId = 352398
 			text = L.fire
 		elseif args.spellId == 352387 then -- Magic
-			key = 352389
+			spellId = 352389
 			text = L.magic
 		end
-		self:NewStackMessage(key, "blue", args.destName, args.amount, nil, text)
-		self:PlaySound(key, "alarm")
+		self:NewStackMessage(spellId, "blue", args.destName, args.amount, nil, text)
+		self:PlaySound(spellId, "alarm")
 	end
 end
 
