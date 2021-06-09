@@ -42,6 +42,9 @@ if L then
 	L.physical_remnant = "Physical Remnant"
 	L.magic_remnant = "Magic Remnant"
 	L.fire_remnant = "Fire Remnant"
+	L.fire = "Fire"
+	L.magic = "Magic"
+	L.physical = "Physical"
 end
 
 --------------------------------------------------------------------------------
@@ -95,7 +98,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HungeringMistCast", 354080)
 	self:Log("SPELL_CAST_SUCCESS", "RemnantOfForgottenTorments", 352368)
 	self:Log("SPELL_CAST_SUCCESS", "RemnantSpawn", 352382, 352389, 352398) -- Upper Reaches' Might, Mort'regar's Echoes, Soulforge Heat
-	-- XXX Show stack warnings
+	self:Log("SPELL_AURA_APPLIED", "RemnantStacks", 352384, 352392, 352387) -- Physical, Fire, Magic
+	self:Log("SPELL_AURA_APPLIED_DOSE", "RemnantStacks", 352384, 352392, 352387)
 	self:Log("SPELL_CAST_SUCCESS", "GraspOfDeath", 347668)
 	self:Log("SPELL_AURA_APPLIED", "GraspOfDeathApplied", 347668)
 	self:Log("SPELL_CAST_START", "FuryOfTheAgesStart", 347490)
@@ -293,6 +297,22 @@ function mod:RemnantSpawn(args)
 	local remnant = L[remnantType[args.spellId]]
 	self:Message(args.spellId, "cyan", remnant)
 	self:PlaySound(args.spellId, "info")
+end
+
+function mod:RemnantStacks(args)
+	if self:Me(args.destGUID) then
+		local key = 352382 -- Physical
+		local text = L.physical
+		if args.spellId == 352392 then -- Fire
+			key = 352398
+			text = L.fire
+		elseif args.spellId == 352387 then -- Magic
+			key = 352389
+			text = L.magic
+		end
+		self:NewStackMessage(key, "blue", args.destName, args.amount, nil, text)
+		self:PlaySound(key, "alarm")
+	end
 end
 
 do
