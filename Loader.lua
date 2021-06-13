@@ -88,7 +88,7 @@ local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
 local UnitName, UnitGUID = UnitName, UnitGUID
-local debugstack = debugstack
+local debugstack, print = debugstack, print
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetBestMapForUnit = GetBestMapForUnit
@@ -343,6 +343,12 @@ local EnableAddOn, GetAddOnEnableState, GetAddOnInfo, IsAddOnLoaded, LoadAddOn =
 local GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned = GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned
 local GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitIsDeadOrGhost, UnitSetRole = GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitIsDeadOrGhost, UnitSetRole
 
+local reqFuncAddons = {
+	BigWigs_Core = true,
+	BigWigs_Options = true,
+	BigWigs_Plugins = true,
+}
+
 local function IsAddOnEnabled(addon)
 	local character = UnitName("player")
 	return GetAddOnEnableState(character, addon) > 0
@@ -362,6 +368,13 @@ local function load(obj, index)
 			end
 		end
 		loadOnSlash[index] = nil
+	end
+
+	if reqFuncAddons[index] then
+		reqFuncAddons[index] = nil
+		if index == "BigWigs_Core" then
+			reqFuncAddons.BigWigs_Plugins = nil
+		end
 	end
 
 	EnableAddOn(index) -- Make sure it wasn't left disabled for whatever reason
@@ -483,11 +496,6 @@ end
 --
 
 do
-	local reqFuncAddons = {
-		BigWigs_Core = true,
-		BigWigs_Options = true,
-		BigWigs_Plugins = true,
-	}
 	local loadOnInstanceAddons = {} -- Will contain all names of addons with an X-BigWigs-LoadOn-InstanceId directive
 	local loadOnWorldBoss = {} -- Addons that should load when targetting a specific mob
 	local extraMenus = {} -- Addons that contain extra zone menus to appear in the GUI
@@ -712,7 +720,18 @@ do
 end
 
 function mod:ADDON_LOADED(addon)
-	if addon ~= "BigWigs" then return end
+	if addon ~= "BigWigs" then
+		-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
+		if reqFuncAddons[addon] then
+			local trace = debugstack(2)
+			public.lstack = trace
+			sysprint("|cFFff0000WARNING!|r")
+			sysprint("One of your addons is force loading the BigWigs options.")
+			sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+			reqFuncAddons = {}
+		end
+		return
+	end
 
 	bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
 	bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
@@ -775,8 +794,8 @@ function mod:ADDON_LOADED(addon)
 		C_CVar.SetCVar("Sound_MaxCacheSizeInBytes", "67108864") -- Set the cache to the "Small (64MB)" setting as a minimum
 	end
 
-	bwFrame:UnregisterEvent("ADDON_LOADED")
-	self.ADDON_LOADED = nil
+	--bwFrame:UnregisterEvent("ADDON_LOADED")
+	--self.ADDON_LOADED = nil
 	bwFrame.UnregisterEvent(UIParent, "TALKINGHEAD_REQUESTED") -- Prevent the event order re-shuffling mid-instance
 end
 
