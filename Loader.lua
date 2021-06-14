@@ -167,7 +167,6 @@ do
 		[544] = bc, -- Magtheridon's Lair
 		[534] = bc, -- The Battle for Mount Hyjal
 		[564] = bc, -- Black Temple
-		[560] = bc, -- The Escape from Durnholde
 		[580] = bc, -- The Sunwell
 		--[[ BigWigs: Wrath of the Lich King ]]--
 		[533] = wotlk, -- Naxxramas
