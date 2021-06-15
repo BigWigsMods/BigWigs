@@ -118,7 +118,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShadowDaggerApplied", 347670)
 	self:Log("SPELL_CAST_START", "DominationChains", 349458)
 	self:Log("SPELL_AURA_APPLIED", "DominationChainsApplied", 349458)
-	self:Log("SPELL_CAST_START", "VeilOfDarkness", 347726) -- Stage 1
+	self:Log("SPELL_CAST_START", "VeilOfDarkness", 347726, 347741, 354142) -- Stage 1, Stage 2, Stage 3
 	self:Log("SPELL_AURA_APPLIED", "VeilOfDarknessApplied", 347704)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VeilOfDarknessApplied", 347704)
 	self:Log("SPELL_CAST_START", "WailingArrow", 347609)
