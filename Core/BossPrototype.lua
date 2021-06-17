@@ -2569,16 +2569,16 @@ function boss:SecondaryIcon(key, player)
 	end
 end
 
---- Directly set any raid target icon on a player based on a custom option key.
+--- Directly set any raid target icon on a unit based on a custom option key.
 -- @param key the option key
--- @string player the player to mark
+-- @string unit the unit (player/npc) to mark
 -- @number[opt] icon the icon to mark the player with, numbering from 1-8 (if nil, the icon is removed)
-function boss:CustomIcon(key, player, icon)
+function boss:CustomIcon(key, unit, icon)
 	if key == false or self:GetOption(key) then
 		if solo then -- setting the same icon twice while not in a group removes it
-			SetRaidTarget(player, 0)
+			SetRaidTarget(unit, 0)
 		end
-		SetRaidTarget(player, icon or 0)
+		SetRaidTarget(unit, icon or 0)
 	end
 end
 
