@@ -662,9 +662,9 @@ local function parseLua(file)
 		end
 		-- For UNIT functions, record the last spellId checked to use as the key.
 		res = line:match("if (.+) then")
-		if res and line:match("spellId == %d+") then
+		if res and line:match("[^.]spellId == %d+") then
 			rep.if_key = {}
-			for m in res:gmatch("spellId == (%d+)") do
+			for m in res:gmatch("[^.]spellId == (%d+)") do
 				rep.if_key[#rep.if_key+1] = m
 			end
 		end

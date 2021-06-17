@@ -69,7 +69,7 @@ local acOptions = {
 							return L.toggleAnchorsBtnShow_desc
 						end
 					end,
-					func = function() 
+					func = function()
 						if not BigWigs:IsEnabled() then BigWigs:Enable() end
 						if options:InConfigureMode() then
 							options:SendMessage("BigWigs_StopConfigureMode")
@@ -84,7 +84,7 @@ local acOptions = {
 					type = "execute",
 					name = L.testBarsBtn,
 					desc = L.testBarsBtn_desc,
-					func = function() 
+					func = function()
 						BigWigs:Test()
 					end,
 					width = 1.5,
@@ -790,7 +790,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	}
 	for i = 1, #showFlags do
 		local key = showFlags[i]
-		if hasOptionFlag(dbKey, module, key) and (key ~= "SAY_COUNTDOWN" or not hasOptionFlag(dbKey, module, "SAY")) then -- don't show both SAY and SAY_COUNTDOWN
+		if hasOptionFlag(dbKey, module, key) then
 			local icon = AceGUI:Create("Icon")
 			icon:SetWidth(16)
 			icon:SetImageSize(16, 16)
@@ -819,11 +819,6 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 				else
 					icon:SetImage(icons[key], 0.07, 0.93, 0.07, 0.93)
 				end
-			end
-
-			-- Combine the two SAY options
-			if key == "SAY" and hasOptionFlag(dbKey, module, "SAY_COUNTDOWN") then
-				icon:SetUserData("tooltipText", L[key] .. PLAYER_LIST_DELIMITER .. L["SAY_COUNTDOWN"])
 			end
 
 			icon.frame:SetParent(check.frame)
