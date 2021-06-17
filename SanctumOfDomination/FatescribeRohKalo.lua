@@ -17,14 +17,14 @@ local stage = 1
 local nextStageWarning = 73
 local realignFateCount = 1
 local callOfEternityCount = 1
-local heroicDestinyCount = 1
+local invokeDestinyCount = 1
 local fatedConjunctionCount = 1
 local extemporaneousFateCount = 1
 local grimPortentCount = 1
 
 local timersStageThree = {
 	[350568] = {13, 74.5, 38, 96.5}, -- Call of Eternity
-	[351680] = {24, 40, 40, 40, 36.5, 53.5, 40}, -- Heroic Destiny
+	[351680] = {24, 40, 40, 40, 36.5, 53.5, 40}, -- Invoke Destiny
 	[350421] = {8.3, 51.3, 53, 32, 72.5, 51.5}, -- Fated Conjunction
 }
 
@@ -54,7 +54,7 @@ function mod:GetOptions()
 		"stages",
 		"berserk",
 		-- Stage One: Scrying Fate
-		{351680, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Heroic Destiny
+		{351680, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Invoke Destiny
 		353432, -- Burden of Destiny (Fixate)
 		353398, -- Anomalous Blast
 		{353603, "TANK"}, -- Diviner's Probe
@@ -76,7 +76,7 @@ function mod:GetOptions()
 		[351969] = mod:SpellName(-22927), -- Stage Two: Defying Destiny
 		[353195] = mod:SpellName(-23486), -- Stage Three: Fated Terminus
 	},{
-		[351680] = CL.add, -- Heroic Destiny (Add)
+		[351680] = CL.add, -- Invoke Destiny (Add)
 		[353432] = CL.fixate, -- Burden of Destiny (Fixate)
 		[350421] = CL.beams, -- Fated Conjunction (Beams)
 		[350568] = CL.bombs, -- Call of Eternity (Bombs)
@@ -88,9 +88,9 @@ end
 
 function mod:OnBossEnable()
 	-- Stage One: Scrying Fate
-	self:Log("SPELL_CAST_START", "HeroicDestiny", 351680)
-	self:Log("SPELL_AURA_APPLIED", "HeroicDestinyApplied", 351680)
-	self:Log("SPELL_AURA_REMOVED", "HeroicDestinyRemoved", 351680)
+	self:Log("SPELL_CAST_START", "InvokeDestiny", 351680)
+	self:Log("SPELL_AURA_APPLIED", "InvokeDestinyApplied", 351680)
+	self:Log("SPELL_AURA_REMOVED", "InvokeDestinyRemoved", 351680)
 	self:Log("SPELL_AURA_APPLIED", "BurdenOfDestinyApplied", 353432)
 	self:Log("SPELL_AURA_APPLIED", "AnomalousBlastApplied", 353398)
 	self:Log("SPELL_CAST_START", "DivinersProbe", 353603)
@@ -127,7 +127,7 @@ function mod:OnEngage()
 	stage = 1
 	realignFateCount = 1
 	callOfEternityCount = 1
-	heroicDestinyCount = 1
+	invokeDestinyCount = 1
 	fatedConjunctionCount = 1
 	extemporaneousFateCount = 1
 	grimPortentCount = 1
@@ -135,7 +135,7 @@ function mod:OnEngage()
 	-- these all can vary by 2s
 	self:CDBar(350421, self:Mythic() and 23.3 or 13.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
 	self:CDBar(350568, self:Mythic() and 11 or 24.4, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
-	self:CDBar(351680, self:Mythic() and 21 or 35.4, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
+	self:CDBar(351680, self:Mythic() and 21 or 35.4, CL.count:format(CL.add, invokeDestinyCount)) -- Invoke Destiny (Add)
 
 	if self:Mythic() then
 		self:CDBar(354367, 44, CL.count:format(L.runes, grimPortentCount)) -- Grim Portent (Runes)
@@ -160,30 +160,30 @@ function mod:UNIT_HEALTH(event, unit)
 end
 
 -- Stage One: Scrying Fate
-function mod:HeroicDestiny(args)
+function mod:InvokeDestiny(args)
 	if self:Tank() then
-		self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(CL.add, heroicDestinyCount)))
+		self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(CL.add, invokeDestinyCount)))
 		self:PlaySound(args.spellId, "alert")
 	end
-	heroicDestinyCount = heroicDestinyCount + 1
-	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][heroicDestinyCount] or self:Mythic() and 40 or 36, CL.count:format(CL.add, heroicDestinyCount))
+	invokeDestinyCount = invokeDestinyCount + 1
+	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][invokeDestinyCount] or self:Mythic() and 40 or 36, CL.count:format(CL.add, invokeDestinyCount))
 end
 
-function mod:HeroicDestinyApplied(args)
+function mod:InvokeDestinyApplied(args)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId, CL.count:format(CL.add, heroicDestinyCount-1))
+		self:Say(args.spellId, CL.count:format(CL.add, invokeDestinyCount-1))
 		self:SayCountdown(args.spellId, 8)
 		self:PlaySound(args.spellId, "warning")
 	end
 	self:Bar(args.spellId, 8, CL.incoming:format(CL.add))
-	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.add, heroicDestinyCount-1))
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(CL.add, invokeDestinyCount-1))
 end
 
-function mod:HeroicDestinyRemoved(args)
+function mod:InvokeDestinyRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
-	self:StopBar(CL.count:format(CL.add, heroicDestinyCount-1), args.destName)
+	self:StopBar(CL.count:format(CL.add, invokeDestinyCount-1), args.destName)
 end
 
 function mod:BurdenOfDestinyApplied(args)
@@ -260,7 +260,7 @@ end
 function mod:RealignFate(args)
 	self:StopBar(CL.count:format(CL.bombs, callOfEternityCount))
 	self:StopBar(CL.count:format(CL.beams, fatedConjunctionCount))
-	self:StopBar(CL.count:format(CL.add, heroicDestinyCount))
+	self:StopBar(CL.count:format(CL.add, invokeDestinyCount))
 	self:StopBar(L.runes)
 
 	self:SetStage(2)
@@ -308,14 +308,14 @@ function mod:RealignFateRemoved(args)
 	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
 
-	heroicDestinyCount = 1
+	invokeDestinyCount = 1
 	fatedConjunctionCount = 1
 	callOfEternityCount = 1
 
 	if self:Mythic() then
 		self:CDBar(350421, stage == 3 and 8.3 or 15.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
 		self:CDBar(350568, stage == 3 and 10.7 or 16, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
-		self:CDBar(351680, stage == 3 and 24.2 or 25, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
+		self:CDBar(351680, stage == 3 and 24.2 or 25, CL.count:format(CL.add, invokeDestinyCount)) -- Invoke Destiny (Add)
 		if stage == 1 then
 			grimPortentCount = 1
 			self:CDBar(354367, 47, CL.count:format(L.runes, grimPortentCount)) -- Grim Portent (Runes)
@@ -323,7 +323,7 @@ function mod:RealignFateRemoved(args)
 	else
 		self:CDBar(350421, stage == 3 and 8.3 or 15.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
 		self:CDBar(350568, stage == 3 and 10.7 or 27, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
-		self:CDBar(351680, stage == 3 and 24.2 or 37.8, CL.count:format(CL.add, heroicDestinyCount)) -- Heroic Destiny (Add)
+		self:CDBar(351680, stage == 3 and 24.2 or 37.8, CL.count:format(CL.add, invokeDestinyCount)) -- Invoke Destiny (Add)
 	end
 
 	if stage == 3 then
