@@ -198,7 +198,7 @@ local spells = setmetatable({}, {__index =
 })
 local bossNames = setmetatable({}, {__index =
 	function(self, key)
-		local name = EJ_GetEncounterInfo(key)
+		local name = BigWigsAPI:GetLocale("BigWigs: Encounters")[key]
 		if name then
 			self[key] = name
 			return name
