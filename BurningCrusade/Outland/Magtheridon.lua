@@ -62,9 +62,14 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		"escape", "abyssal", "heal",
-		30616, "banish", 36449,
-		"exhaust", "berserk"
+		"escape",
+		"abyssal",
+		"heal",
+		30616, -- Blast Nova
+		"banish",
+		36449, -- Debris
+		"exhaust",
+		"berserk"
 	}
 end
 
@@ -146,7 +151,7 @@ function mod:Start()
 end
 
 function mod:Nova(args)
-	self:MessageOld(args.spellId, "green")
+	self:MessageOld(args.spellId, "green", "warning")
 	self:CDBar(args.spellId, 51)
 	self:Bar(args.spellId, 12, CL["cast"]:format(args.spellName))
 	self:DelayedMessage(args.spellId, 48, "orange", CL["soon"]:format(args.spellName))
