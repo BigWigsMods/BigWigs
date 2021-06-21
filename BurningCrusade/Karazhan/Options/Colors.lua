@@ -63,7 +63,7 @@ BigWigs:AddColors("Prince Malchezaar", {
 	[30843] = {"blue","orange","red","yellow"},
 	[30852] = {"red","yellow"},
 	["infernal"] = {"orange","red"},
-	["phase"] = "green",
+	["phase"] = "cyan",
 })
 
 BigWigs:AddColors("Nightbane Raid", {

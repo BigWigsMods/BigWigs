@@ -42,9 +42,9 @@ BigWigs:AddSounds("Netherspite", {
 })
 
 BigWigs:AddSounds("Prince Malchezaar", {
-	[30843] = "alarm",
-	[30852] = "info",
-	["infernal"] = "alert",
+	[30843] = "warning",
+	[30852] = "alarm",
+	["infernal"] = {"alert","info"},
 })
 
 BigWigs:AddSounds("Nightbane Raid", {

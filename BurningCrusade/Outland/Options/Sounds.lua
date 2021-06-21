@@ -13,6 +13,7 @@ BigWigs:AddSounds("Doom Lord Kazzak", {
 })
 
 BigWigs:AddSounds("Magtheridon", {
+	[30616] = "warning",
 	[36449] = "alert",
 	["banish"] = "info",
 	["escape"] = "long",
