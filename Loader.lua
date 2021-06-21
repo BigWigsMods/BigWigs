@@ -20,7 +20,7 @@ public.isBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 27
+local BIGWIGS_VERSION = 28
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -596,9 +596,9 @@ function mod:ADDON_LOADED(addon)
 		if reqFuncAddons[addon] then
 			local trace = debugstack(2)
 			public.lstack = trace
-			sysprint("|cFFff0000WARNING!|r")
-			sysprint("One of your addons is force loading the BigWigs options.")
-			sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+			--sysprint("|cFFff0000WARNING!|r")
+			--sysprint("One of your addons is force loading the BigWigs options.")
+			--sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
 			reqFuncAddons = {}
 		end
 		return
