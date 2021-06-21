@@ -44,8 +44,10 @@ if L then
 	L.infernal = "Infernos"
 	L.infernal_desc = "Zeige Timerbalken f\195\188r Infernos"
 	L.infernal_bar = "Infernos"
-	L.infernal_warning = "Infernos in 17 Sek!"
+	L.infernal_warning = "Infernos in 20 Sek!"
 	L.infernal_message = "Infernos in 5 Sek!"
+	L.infernal_trigger1 = "sondern vor den Legionen, die ich befehlige"
+	L.infernal_trigger2 = "alle Dimensionen stehen mir offen"
 end
 
 L = BigWigs:NewBossLocale("Moroes Raid", "deDE")

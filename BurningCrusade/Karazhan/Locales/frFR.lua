@@ -43,8 +43,10 @@ if L then
 	L.infernal = "Infernaux"
 	L.infernal_desc = "Affiche le temps de recharge des invocations d'infernaux."
 	L.infernal_bar = "Arrivée d'un infernal"
-	L.infernal_warning = "Arrivée d'un infernal dans 17 sec. !"
+	L.infernal_warning = "Arrivée d'un infernal dans 20 sec. !"
 	L.infernal_message = "Infernal ! Flammes infernales dans 5 sec. !"
+	L.infernal_trigger1 = "Vous n'affrontez pas seulement"
+	L.infernal_trigger2 = "toutes les dimensions me sont"
 end
 
 L = BigWigs:NewBossLocale("Moroes Raid", "frFR")

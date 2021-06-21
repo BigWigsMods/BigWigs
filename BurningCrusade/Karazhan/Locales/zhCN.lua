@@ -43,8 +43,10 @@ if L then
 	L.infernal = "地狱火警报"
 	L.infernal_desc = "显示召唤地狱火冷却时间计时条。"
 	L.infernal_bar = "即将 地狱火"
-	L.infernal_warning = "17秒后，地狱火！"
+	L.infernal_warning = "20秒后，地狱火！"
 	L.infernal_message = "地狱火出现！5秒后发动，地狱烈焰！"
+	L.infernal_trigger1 = "还有我所号令的军团"
+	L.infernal_trigger2 = "所有的世界都向我敞开大门"
 end
 
 L = BigWigs:NewBossLocale("Moroes Raid", "zhCN")

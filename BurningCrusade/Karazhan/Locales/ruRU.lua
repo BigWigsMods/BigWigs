@@ -43,8 +43,10 @@ if L then
 	L.infernal = "Инферналы"
 	L.infernal_desc = "Показывает таймеры призыва Инферналов."
 	L.infernal_bar = "Появление Инфернала"
-	L.infernal_warning = "Появление Инфернала через 17сек!"
+	L.infernal_warning = "Появление Инфернала через 20сек!"
 	L.infernal_message = "Появление Инфернала! Адское Пламя через 5сек!"
+	L.infernal_trigger1 = "но и всем подвластным мне легионам"
+	L.infernal_trigger2 = "Безумие привело вас сюда"
 end
 
 L = BigWigs:NewBossLocale("Moroes Raid", "ruRU")

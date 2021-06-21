@@ -43,8 +43,10 @@ if L then
 	L.infernal = "불지옥"
 	L.infernal_desc = "불지옥 소환에 대한 재사용 대기시간을 표시합니다."
 	L.infernal_bar = "불지옥 등장"
-	L.infernal_warning = "17초 이내 불지옥 등장!"
+	L.infernal_warning = "20초 이내 불지옥 등장!"
 	L.infernal_message = "불지옥 등장! 5초 이내 지옥불!"
+	L.infernal_trigger1 = "너희는 나의 군대와 맞서야 한다"
+	L.infernal_trigger2 = "모든 차원과 실체가 나를 향해 열려 있노라"
 end
 
 L = BigWigs:NewBossLocale("Moroes Raid", "koKR")
