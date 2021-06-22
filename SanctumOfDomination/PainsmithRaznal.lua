@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-if not IsTestBuild() then return end
+
 local mod, CL = BigWigs:NewBoss("Painsmith Raznal", 2450, 2443)
 if not mod then return end
 mod:RegisterEnableMob(176523) -- Painsmith Raznal

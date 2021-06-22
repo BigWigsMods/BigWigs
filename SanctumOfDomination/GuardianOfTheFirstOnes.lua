@@ -2,7 +2,6 @@
 -- Module Declaration
 --
 
-if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Guardian of the First Ones", 2450, 2446)
 if not mod then return end
 mod:RegisterEnableMob(175731) -- Guardian of the First Ones

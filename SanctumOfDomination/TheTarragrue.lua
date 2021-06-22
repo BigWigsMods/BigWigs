@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-if not IsTestBuild() then return end
+
 local mod, CL = BigWigs:NewBoss("The Tarragrue", 2450, 2435)
 if not mod then return end
 mod:RegisterEnableMob(175611) -- The Tarragrue

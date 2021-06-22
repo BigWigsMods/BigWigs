@@ -2,7 +2,6 @@
 -- Module Declaration
 --
 
-if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("The Nine", 2450, 2439)
 if not mod then return end
 mod:RegisterEnableMob(177095, 177094, 175726) -- Kyra, Signe, Skyja

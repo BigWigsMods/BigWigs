@@ -1,7 +1,7 @@
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
-if not IsTestBuild() then return end
+
 local mod, CL = BigWigs:NewBoss("Remnant of Ner'zhul", 2450, 2444)
 if not mod then return end
 mod:RegisterEnableMob(175729, 177117) -- Remnant of Ner'zhul, Orb of Torment

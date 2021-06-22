@@ -2,7 +2,6 @@
 -- Module Declaration
 --
 
-if not IsTestBuild() then return end
 local mod, CL = BigWigs:NewBoss("Soulrender Dormazain", 2450, 2445)
 if not mod then return end
 mod:RegisterEnableMob(175727, 175728) -- Soulrender Dormazain, Garrosh Hellscream
