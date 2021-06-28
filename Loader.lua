@@ -322,6 +322,7 @@ do
 		[2290] = lw_s, -- Mists of Tirna Scithe
 		[2291] = lw_s, -- De Other Side
 		[2293] = lw_s, -- Theater of Pain
+		[2441] = lw_s, -- Tazavesh, the Veiled Market
 	}
 
 	public.zoneTblWorld = {
