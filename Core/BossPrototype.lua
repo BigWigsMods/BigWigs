@@ -1188,7 +1188,7 @@ end
 --- Check if in a Normal difficulty instance.
 -- @return boolean
 function boss:Normal()
-	return difficulty == 1 or difficulty == 3 or difficulty == 4 or difficulty == 14
+	return difficulty == 1 or difficulty == 3 or difficulty == 4 or difficulty == 14 or difficulty == 173
 end
 
 --- Check if in a Looking for Raid or Normal difficulty instance.
@@ -1200,7 +1200,7 @@ end
 --- Check if in a Heroic difficulty instance.
 -- @return boolean
 function boss:Heroic()
-	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15
+	return difficulty == 2 or difficulty == 5 or difficulty == 6 or difficulty == 15 or difficulty == 174
 end
 
 --- Check if in a Mythic or Mythic+ difficulty instance.
