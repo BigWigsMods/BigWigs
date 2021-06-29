@@ -1340,16 +1340,16 @@ SLASH_BigWigs1 = "/bw"
 SLASH_BigWigs2 = "/bigwigs"
 SlashCmdList.BigWigs = function()
 	-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
-	local trace = debugstack(2)
-	if strfind(trace, "[string \"*:OnEnterPressed\"]:1: in function <[string \"*:OnEnterPressed\"]:1>", nil, true) then
+	--local trace = debugstack(2)
+	--if strfind(trace, "[string \"*:OnEnterPressed\"]:1: in function <[string \"*:OnEnterPressed\"]:1>", nil, true) then
 		loadCoreAndOpenOptions()
-	else
-		public.stack = trace
-		sysprint("|cFFff0000WARNING!|r")
-		sysprint("One of your addons was prevented from force loading the BigWigs options.")
-		sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
-		return
-	end
+	--else
+	--	public.stack = trace
+	--	sysprint("|cFFff0000WARNING!|r")
+	--	sysprint("One of your addons was prevented from force loading the BigWigs options.")
+	--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+	--	return
+	--end
 end
 
 SLASH_BigWigsVersion1 = "/bwv"
