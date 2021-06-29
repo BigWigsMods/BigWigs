@@ -263,8 +263,8 @@ do
 		self:Message(355534, "yellow", CL.count:format(L.ember, emberCount))
 		self:PlaySound(355534, "alert")
 		emberCount = emberCount + 1
-		if emberCount < 9 then
-			self:Bar(355534, 6, CL.count:format(L.ember, emberCount))
+		if emberCount < 10 then
+			self:Bar(355534, 5, CL.count:format(L.ember, emberCount))
 		end
 	end
 
@@ -281,7 +281,7 @@ do
 		emberCount = 1
 		self:Bar(355534, 8, CL.count:format(L.ember, emberCount))
 
-		self:Bar("stages", 54.8, CL.intermission, args.spellId) -- 48s Forge Weapon + 6.8s to jump down
+		self:Bar("stages", 51.8, CL.intermission, args.spellId) -- 45s Forge Weapon + 6.8s to jump down
 	end
 
 	function mod:ForgeWeaponOver(args)
