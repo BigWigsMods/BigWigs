@@ -438,15 +438,15 @@ local dataBroker = ldb:NewDataObject("BigWigs",
 function dataBroker.OnClick(self, button)
 	-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
 	if button == "RightButton" then
-		if isMouseDown then
+		--if isMouseDown then
 			loadCoreAndOpenOptions()
-		else
-			local trace = debugstack(2)
-			public.mstack = trace
-			sysprint("|cFFff0000WARNING!|r")
-			sysprint("One of your addons was prevented from force loading the BigWigs options.")
-			sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
-		end
+		--else
+		--	local trace = debugstack(2)
+		--	public.mstack = trace
+		--	sysprint("|cFFff0000WARNING!|r")
+		--	sysprint("One of your addons was prevented from force loading the BigWigs options.")
+		--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+		--end
 	end
 end
 
@@ -722,19 +722,19 @@ end
 function mod:ADDON_LOADED(addon)
 	if addon ~= "BigWigs" then
 		-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
-		if reqFuncAddons[addon] then
-			local trace = debugstack(2)
-			public.lstack = trace
-			sysprint("|cFFff0000WARNING!|r")
-			sysprint("One of your addons is force loading the BigWigs options.")
-			sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
-			reqFuncAddons = {}
-		end
+		--if reqFuncAddons[addon] then
+		--	local trace = debugstack(2)
+		--	public.lstack = trace
+		--	sysprint("|cFFff0000WARNING!|r")
+		--	sysprint("One of your addons is force loading the BigWigs options.")
+		--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+		--	reqFuncAddons = {}
+		--end
 		return
 	end
 
-	bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
-	bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
+	--bwFrame:RegisterEvent("GLOBAL_MOUSE_DOWN")
+	--bwFrame:RegisterEvent("GLOBAL_MOUSE_UP")
 
 	bwFrame:RegisterEvent("ZONE_CHANGED")
 	bwFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
@@ -1552,16 +1552,16 @@ SLASH_BigWigs1 = "/bw"
 SLASH_BigWigs2 = "/bigwigs"
 SlashCmdList.BigWigs = function()
 	-- If you are a dev and need the BigWigs options loaded to do something, please come talk to us on Discord about your use case
-	local trace = debugstack(2)
-	if strfind(trace, "[string \"*:OnEnterPressed\"]:1: in function <[string \"*:OnEnterPressed\"]:1>", nil, true) then
+	--local trace = debugstack(2)
+	--if strfind(trace, "[string \"*:OnEnterPressed\"]:1: in function <[string \"*:OnEnterPressed\"]:1>", nil, true) then
 		loadCoreAndOpenOptions()
-	else
-		public.stack = trace
-		sysprint("|cFFff0000WARNING!|r")
-		sysprint("One of your addons was prevented from force loading the BigWigs options.")
-		sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
-		return
-	end
+	--else
+	--	public.stack = trace
+	--	sysprint("|cFFff0000WARNING!|r")
+	--	sysprint("One of your addons was prevented from force loading the BigWigs options.")
+	--	sysprint("Contact us on the BigWigs Discord about this, it should not be happening.")
+	--	return
+	--end
 end
 
 SLASH_BigWigsVersion1 = "/bwv"
