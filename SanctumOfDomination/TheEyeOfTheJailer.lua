@@ -323,7 +323,7 @@ end
 function mod:AnnihilatingGlare(args)
 	self:Message(args.spellId, "yellow", CL.laser)
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 25, CL.laser) -- 5s cast + 20s channel
+	self:CastBar(args.spellId, 19, CL.laser) -- 4s cast + 15s channel
 	self:Bar(args.spellId, 69, CL.laser) -- XXX acuracy issues on mythic
 end
 
