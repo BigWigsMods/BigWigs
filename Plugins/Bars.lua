@@ -635,7 +635,7 @@ do
 						return BL.toggleAnchorsBtnShow_desc
 					end
 				end,
-				func = function() 
+				func = function()
 					if not BigWigs:IsEnabled() then BigWigs:Enable() end
 					if BigWigsOptions:InConfigureMode() then
 						plugin:SendMessage("BigWigs_StopConfigureMode")
@@ -650,7 +650,7 @@ do
 				type = "execute",
 				name = BigWigsAPI:GetLocale("BigWigs").testBarsBtn,
 				desc = BigWigsAPI:GetLocale("BigWigs").testBarsBtn_desc,
-				func = function() 
+				func = function()
 					BigWigs:Test()
 				end,
 				width = 1.5,
@@ -1125,7 +1125,7 @@ do
 						name = L.emphasizeAt,
 						order = 6,
 						min = 6,
-						max = 20,
+						max = 30,
 						step = 1,
 					},
 					fontSizeEmph = {
