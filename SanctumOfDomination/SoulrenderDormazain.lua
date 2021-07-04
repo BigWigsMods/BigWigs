@@ -32,13 +32,13 @@ local tormentCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.custom_on_nameplate_defiance = "Defiance Nameplate Icon"
-	L.custom_on_nameplate_defiance_desc = "Show an icon on the nameplate of Mawsworn that have Defiance.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
-	L.custom_on_nameplate_defiance_icon = 351773
+	L.custom_off_nameplate_defiance = "Defiance Nameplate Icon"
+	L.custom_off_nameplate_defiance_desc = "Show an icon on the nameplate of Mawsworn that have Defiance.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_off_nameplate_defiance_icon = 351773
 
-	L.custom_on_nameplate_tormented = "Tormented Nameplate Icon"
-	L.custom_on_nameplate_tormented_desc = "Show an icon on the nameplate of Mawsworn that have Tormented.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
-	L.custom_on_nameplate_tormented_icon = 350649
+	L.custom_off_nameplate_tormented = "Tormented Nameplate Icon"
+	L.custom_off_nameplate_tormented_desc = "Show an icon on the nameplate of Mawsworn that have Tormented.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_off_nameplate_tormented_icon = 350649
 
 	L.cones = "Cones" -- Torment
 	L.dance = "Dance" -- Encore of Torment
@@ -66,13 +66,13 @@ function mod:GetOptions()
 		349985, -- Encore of Torment
 		{350647, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Brand of Torment
 		brandOfTormentMarker,
-		"custom_on_nameplate_tormented",
+		"custom_off_nameplate_tormented",
 		{350422, "TANK"}, -- Ruinblade
 		350615, -- Call Mawsworn
 		agonizerMarker,
 		351779, -- Agonizing Spike
 		350650, -- Defiance
-		"custom_on_nameplate_defiance",
+		"custom_off_nameplate_defiance",
 		350411, -- Hellscream
 		354231, -- Soul Manacles
 		351229, -- Rendered Soul
@@ -113,7 +113,7 @@ function mod:OnBossEnable()
 
 	-- XXX Ground damage for Vessel and Cones
 
-	if self:GetOption("custom_on_nameplate_defiance") or self:GetOption("custom_on_nameplate_tormented") then
+	if self:GetOption("custom_off_nameplate_defiance") or self:GetOption("custom_off_nameplate_tormented") then
 		self:ShowPlates()
 	end
 end
@@ -133,7 +133,7 @@ function mod:OnEngage()
 end
 
 function mod:OnBossDisable()
-	if self:GetOption("custom_on_nameplate_defiance") or self:GetOption("custom_on_nameplate_tormented") then
+	if self:GetOption("custom_off_nameplate_defiance") or self:GetOption("custom_off_nameplate_tormented") then
 		self:HidePlates()
 	end
 end
@@ -209,13 +209,13 @@ do
 end
 
 function mod:TormentedApplied(args)
-	if self:GetOption("custom_on_nameplate_tormented") then
+	if self:GetOption("custom_off_nameplate_tormented") then
 		self:AddPlateIcon(args.spellId, args.sourceGUID)
 	end
 end
 
 function mod:TormentedRemoved(args)
-	if self:GetOption("custom_on_nameplate_tormented") then
+	if self:GetOption("custom_off_nameplate_tormented") then
 		self:RemovePlateIcon(args.spellId, args.sourceGUID)
 	end
 end
@@ -281,13 +281,13 @@ function mod:AgonizingSpike(args)
 end
 
 function mod:DefianceApplied(args)
-	if self:GetOption("custom_on_nameplate_defiance") then
+	if self:GetOption("custom_off_nameplate_defiance") then
 		self:AddPlateIcon(args.spellId, args.sourceGUID)
 	end
 end
 
 function mod:DefianceRemoved(args)
-	if self:GetOption("custom_on_nameplate_defiance") then
+	if self:GetOption("custom_off_nameplate_defiance") then
 		self:RemovePlateIcon(args.spellId, args.sourceGUID)
 	end
 end
