@@ -32,6 +32,14 @@ local tormentCount = 1
 
 local L = mod:GetLocale()
 if L then
+	L.custom_on_nameplate_defiance = "Defiance Nameplate Icon"
+	L.custom_on_nameplate_defiance_desc = "Show an icon on the nameplate of Mawsworn that have Defiance.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_defiance_icon = 351773
+
+	L.custom_on_nameplate_tormented = "Tormented Nameplate Icon"
+	L.custom_on_nameplate_tormented_desc = "Show an icon on the nameplate of Mawsworn that have Tormented.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_tormented_icon = 350649
+
 	L.cones = "Cones" -- Torment
 	L.dance = "Dance" -- Encore of Torment
 	L.brands = "Brands" -- Brand of Torment
@@ -54,21 +62,21 @@ local brandOfTormentMarker = mod:AddMarkerOption(false, "player", 1, 350647, 1, 
 local agonizerMarker = mod:AddMarkerOption(false, "npc", 8, -23289, 8, 7, 6, 5) -- Mawsworn Agonizer
 function mod:GetOptions()
 	return {
-		-- Soulrender Dormazain
 		350217, -- Torment
 		349985, -- Encore of Torment
 		{350647, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Brand of Torment
 		brandOfTormentMarker,
+		"custom_on_nameplate_tormented",
 		{350422, "TANK"}, -- Ruinblade
 		350615, -- Call Mawsworn
 		agonizerMarker,
 		351779, -- Agonizing Spike
 		350650, -- Defiance
+		"custom_on_nameplate_defiance",
 		350411, -- Hellscream
 		354231, -- Soul Manacles
 		351229, -- Rendered Soul
 	},{
-		[350217] = mod:SpellName(-22914), -- Soulrender Dormazain
 	},{
 		[350217] = L.cones, -- Torment (Cones)
 		[349985] = L.dance, -- Encore of Torment (Dance)
@@ -87,19 +95,27 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfTorment", 350648)
 	self:Log("SPELL_AURA_APPLIED", "BrandOfTormentApplied", 350647)
 	self:Log("SPELL_AURA_REMOVED", "BrandOfTormentRemoved", 350647)
+	self:Log("SPELL_AURA_APPLIED", "TormentedApplied", 350649)
+	self:Log("SPELL_AURA_REMOVED", "TormentedRemoved", 350649)
 	self:Log("SPELL_CAST_SUCCESS", "Ruinblade", 350422)
 	self:Log("SPELL_AURA_APPLIED", "RuinbladeApplied", 350422)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RuinbladeApplied", 350422)
 	self:Log("SPELL_CAST_START", "CallMawsworn", 350615)
 	self:Log("SPELL_SUMMON", "AgonizerSpawn", 346459, 351351) -- Heroic, Mythic
 	self:Log("SPELL_CAST_START", "AgonizingSpike", 351779)
-	self:Log("SPELL_AURA_APPLIED", "DefianceApplied", 350650) -- Buff they get when reaching Garrosh, not from the Overlord
+	self:Log("SPELL_AURA_APPLIED", "GarroshDefianceApplied", 350650) -- Buff they get when reaching Garrosh, not from the Overlord
+	self:Log("SPELL_AURA_APPLIED", "DefianceApplied", 351773) -- Overlord buff
+	self:Log("SPELL_AURA_REMOVED", "DefianceRemoved", 351773)
 	self:Log("SPELL_CAST_START", "Hellscream", 350411)
 	self:Log("SPELL_AURA_REMOVED_DOSE", "WarmongersShacklesRemovedDose", 350415)
 	self:Log("SPELL_AURA_REMOVED", "WarmongersShacklesRemoved", 350415)
 	self:Log("SPELL_AURA_APPLIED", "SoulManacles", 354231)
 
 	-- XXX Ground damage for Vessel and Cones
+
+	if self:GetOption("custom_on_nameplate_defiance") or self:GetOption("custom_on_nameplate_tormented") then
+		self:ShowPlates()
+	end
 end
 
 function mod:OnEngage()
@@ -114,6 +130,12 @@ function mod:OnEngage()
 	self:Bar(350615, 29.2, CL.count:format(CL.adds, callMawswornCount)) -- Call Mawsworn
 	self:Bar(350411, 81.1, CL.count:format(L.chains, hellscreamCount)) -- Hellscream
 	self:Bar(349985, 132, CL.count:format(L.dance, encoreOfTormentCount)) -- Encore of Torment
+end
+
+function mod:OnBossDisable()
+	if self:GetOption("custom_on_nameplate_defiance") or self:GetOption("custom_on_nameplate_tormented") then
+		self:HidePlates()
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -186,6 +208,18 @@ do
 	end
 end
 
+function mod:TormentedApplied(args)
+	if self:GetOption("custom_on_nameplate_tormented") then
+		self:AddPlateIcon(args.spellId, args.sourceGUID)
+	end
+end
+
+function mod:TormentedRemoved(args)
+	if self:GetOption("custom_on_nameplate_tormented") then
+		self:RemovePlateIcon(args.spellId, args.sourceGUID)
+	end
+end
+
 function mod:Ruinblade(args)
 	ruinbladeCount = ruinbladeCount + 1
 	self:Bar(args.spellId, ruinbladeCount % 4 == 1 and 62.5 or 33)
@@ -246,9 +280,21 @@ function mod:AgonizingSpike(args)
 	end
 end
 
+function mod:DefianceApplied(args)
+	if self:GetOption("custom_on_nameplate_defiance") then
+		self:AddPlateIcon(args.spellId, args.sourceGUID)
+	end
+end
+
+function mod:DefianceRemoved(args)
+	if self:GetOption("custom_on_nameplate_defiance") then
+		self:RemovePlateIcon(args.spellId, args.sourceGUID)
+	end
+end
+
 do
 	local prev = 0
-	function mod:DefianceApplied(args)
+	function mod:GarroshDefianceApplied(args)
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
