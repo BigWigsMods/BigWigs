@@ -216,7 +216,7 @@ do
 end
 
 function mod:StoneskinApplied(args)
-	if bit.band(args.destFlags, 0x400) == 0 and self:Dispeller("magic", true) then -- COMBATLOG_OBJECT_TYPE_PLAYER
+	if not self:Player(args.destFlags) and self:Dispeller("magic", true) then
 		self:Message(args.spellId, "orange", CL.buff_other:format(args.destName, args.spellName))
 		self:PlaySound(args.spellId, "info")
 	end

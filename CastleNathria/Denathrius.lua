@@ -922,7 +922,7 @@ do
 			self:Message(args.spellId, "green", CL.you:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
-		if bit.band(args.destFlags, 0x400) == 0x400 and not mirrorList[args.destName] then -- COMBATLOG_OBJECT_TYPE_PLAYER
+		if self:Player(args.destFlags) and not mirrorList[args.destName] then
 			mirrorList[args.destName] = true
 			mirrorCount = mirrorCount + 1
 			mod:UpdateInfoBoxStage3()
@@ -935,7 +935,7 @@ do
 			self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 			self:PlaySound(args.spellId, "info")
 		end
-		if bit.band(args.destFlags, 0x400) == 0x400 and mirrorList[args.destName] then -- COMBATLOG_OBJECT_TYPE_PLAYER
+		if self:Player(args.destFlags) and mirrorList[args.destName] then
 			mirrorList[args.destName] = nil
 			mirrorCount = mirrorCount - 1
 			mod:UpdateInfoBoxStage3()
