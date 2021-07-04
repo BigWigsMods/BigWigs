@@ -305,8 +305,12 @@ function mod:FragmentsOfDestinyStacks(args)
 end
 
 function mod:FragmentsOfDestinyRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "green", CL.removed:format(L.fragment))
+		self:PlaySound(args.spellId, "info")
+	end
 	if self:GetOption(fragmentsMarker) then
-		for i = 1, 3, 1 do -- 1, 2, 3
+		for i = 1, 4 do -- 1, 2, 3, 4
 			if fragmentMarks[i] == args.destGUID then
 				fragmentMarks[i] = nil
 				self:CustomIcon(fragmentsMarker, args.destName, 0)
