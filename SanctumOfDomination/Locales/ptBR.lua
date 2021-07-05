@@ -24,8 +24,8 @@ L = BigWigs:NewBossLocale("The Nine", "ptBR")
 if L then
 	L.fragments = "Fragmentos" -- Short for Fragments of Destiny
 	L.fragment = "Fragmento" -- Singular Fragment of Destiny
-	--L.run_away = "Run Away" -- Wings of Rage
-	--L.song = "Song" -- Short for Song of Dissolution
+	L.run_away = "Corra pra longe" -- Wings of Rage
+	L.song = "Canção" -- Short for Song of Dissolution
 	--L.go_in = "Go in" -- Reverberating Refrain
 	--L.valkyr = "Val'kyr" -- Short for Call of the Val'kyr
 	--L.blades = "Blades" -- Agatha's Eternal Blade
