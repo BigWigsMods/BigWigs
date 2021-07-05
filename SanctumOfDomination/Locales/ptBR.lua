@@ -1,29 +1,29 @@
 local L = BigWigs:NewBossLocale("The Tarragrue", "ptBR")
 if not L then return end
 if L then
-	--L.chains = "Chains" -- Chains of Eternity (Chains)
-	--L.remnants = "Remnants" -- Remnant of Forgotten Torments (Remnants)
+	L.chains = "Correntes" -- Chains of Eternity (Chains)
+	L.remnants = "Resquícios" -- Remnant of Forgotten Torments (Remnants)
 
-	--L.physical_remnant = "Physical Remnant"
-	--L.magic_remnant = "Magic Remnant"
-	--L.fire_remnant = "Fire Remnant"
-	--L.fire = "Fire"
-	--L.magic = "Magic"
-	--L.physical = "Physical"
+	L.physical_remnant = "Resquício Físico"
+	L.magic_remnant = "Resquício Mágico"
+	L.fire_remnant = "Resquício de Fogo"
+	L.fire = "Fogo"
+	L.magic = "Mágico"
+	L.physical = "Físico"
 end
 
 L = BigWigs:NewBossLocale("The Eye of the Jailer", "ptBR")
 if L then
-	--L.chains = "Chains" -- Short for Dragging Chains
-	--L.pool = "Pool" -- Spreading Misery
-	--L.pools = "Pools" -- Spreading Misery (multiple)
-	--L.death_gaze = "Death Gaze" -- Short for Titanic Death Gaze
+	L.chains = "Correntes" -- Short for Dragging Chains
+	L.pool = "Poça" -- Spreading Misery
+	L.pools = "Poças" -- Spreading Misery (multiple)
+	L.death_gaze = "Mirada da Morte" -- Short for Titanic Death Gaze
 end
 
 L = BigWigs:NewBossLocale("The Nine", "ptBR")
 if L then
-	--L.fragments = "Fragments" -- Short for Fragments of Destiny
-	--L.fragment = "Fragment" -- Singular Fragment of Destiny
+	L.fragments = "Fragmentos" -- Short for Fragments of Destiny
+	L.fragment = "Fragmento" -- Singular Fragment of Destiny
 	--L.run_away = "Run Away" -- Wings of Rage
 	--L.song = "Song" -- Short for Song of Dissolution
 	--L.go_in = "Go in" -- Reverberating Refrain
