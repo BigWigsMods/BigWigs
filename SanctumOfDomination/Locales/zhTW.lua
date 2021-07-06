@@ -118,7 +118,7 @@ if L then
 	L.chains_active_bartext = "%d 啟動" -- Chains Active
 
 	L.custom_on_nameplate_fixate = "憤怒名條圖示"
-	-L.custom_on_nameplate_fixate_desc = "在追擊你的黑暗哨兵名條上顯示追擊圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
+	L.custom_on_nameplate_fixate_desc = "在追擊你的黑暗哨兵名條上顯示追擊圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
 
 	L.chains = "鎖鏈" -- Short for Domination Chains
 	L.chain = "鎖鏈" -- Single Domination Chain
