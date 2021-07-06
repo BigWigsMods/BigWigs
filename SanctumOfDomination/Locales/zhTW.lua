@@ -81,7 +81,7 @@ if L then
 	L.scythe = "雙刃鐮" -- Short for Dualblade Scythe
 	L.trap = "陷阱" -- Short for Flameclasp Trap
 	L.chains = "鎖鏈" -- Short for Shadowsteel Chains
-	L.ember = "餘燼Ember" -- Short for Shadowsteel Ember
+	L.ember = "餘燼" -- Short for Shadowsteel Ember
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "zhTW")
