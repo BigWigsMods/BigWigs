@@ -108,7 +108,7 @@ if L then
 	L.miasma = "Miasma" -- Short for Sinister Miasma
 
 	L.custom_on_nameplate_fixate = "Ícone de placa de identificação para Fixação"
-	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação para quando os Frostbound Devoted estão fixados em você.\n\nRequer o uso de Placas de Identificação Inimigas e um addon suportado  (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação para quando os Devotados Altagelo estão fixados em você.\n\nRequer o uso de Placas de Identificação Inimigas e um addon suportado  (KuiNameplates, Plater)."
 end
 
 L = BigWigs:NewBossLocale("Sylvanas Windrunner", "ptBR")
@@ -118,7 +118,7 @@ if L then
 	L.chains_active_bartext = "%d Ativa" -- Chains Active
 
 	L.custom_on_nameplate_fixate = "Ícone de placa de identificação para Fixação"
-	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação para quando os Dark Sentinels estão fixados em você.\n\nRequer o uso de Placas de Identificação Inimigas e um addon suportado  (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação para quando as Sentinelas Sombrias estão fixadas em você.\n\nRequer o uso de Placas de Identificação Inimigas e um addon suportado  (KuiNameplates, Plater)."
 
 	L.chains = "Correntes" -- Short for Domination Chains
 	L.chain = "Corrente" -- Single Domination Chain
