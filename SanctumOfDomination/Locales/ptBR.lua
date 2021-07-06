@@ -108,7 +108,7 @@ if L then
 	L.miasma = "Miasma" -- Short for Sinister Miasma
 
 	L.custom_on_nameplate_fixate = "Ícone de placa de identificação para Fixação"
-	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação para quando os Devotados Altagelo estão fixados em você.\n\nRequer o uso de Placas de Identificação Inimigas e um addon suportado  (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação para quando os Devotados Atagelo estão fixados em você.\n\nRequer o uso de Placas de Identificação Inimigas e um addon suportado  (KuiNameplates, Plater)."
 end
 
 L = BigWigs:NewBossLocale("Sylvanas Windrunner", "ptBR")
