@@ -25,8 +25,6 @@ if L then
 
 	L.custom_on_repeating_say_laser = "重复不稳定的喷发说话"
 	L.custom_on_repeating_say_laser_desc = "重复不稳定的喷发说话信息来帮助没有看到您的第一条消息的玩家移入聊天范围。"
-
-	L.tempPrint = "我们已经替瘴气添增加了大喊提示。如果你之前使用过 WeakAuras 的字符串，可能需要将其删除以防止出现重覆的大喊。"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "zhCN")

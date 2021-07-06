@@ -25,8 +25,6 @@ if L then
 
 	L.custom_on_repeating_say_laser = "Repetir dizer Ejeção Volátil"
 	L.custom_on_repeating_say_laser_desc = "Mensagens ditas repetitivas para Ejeção Volátil, para ajudar os outros a se moverem."
-
-	L.tempPrint = "Nós adicionamos gritos de vida para o Miasma. Se você antes usava uma WeakAura para isso, você pode querer exclui-la para prevenir gritos duplos."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "ptBR")

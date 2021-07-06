@@ -25,8 +25,6 @@ if L then
 
 	L.custom_on_repeating_say_laser = "Répéter Expulsion instable en /dire"
 	L.custom_on_repeating_say_laser_desc = "Répète des messages en /dire pour Expulsion instable afin de vous aider quand vous vous déplacez à portée de discussion des joueurs qui n'ont pas vu votre premier message."
-
-	L.tempPrint = "Nous avons ajouté les /crier des points de vie durant le Miasme. Si vous utilisiez récemment un WeakAura pour cela, vous devriez l'enlever afin d'éviter les /crier en double."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "frFR")

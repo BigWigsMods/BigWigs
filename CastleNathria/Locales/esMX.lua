@@ -25,8 +25,6 @@ if L then
 
 	L.custom_on_repeating_say_laser = "Repeating Volatile Ejection Say"
 	L.custom_on_repeating_say_laser_desc = "Repeating en /decir mensajes para for Eyección volátil para ayudar al entrar en el rango de chat de los jugadores que no vieron tu primer mensaje."
-
-	L.tempPrint = "Hemos añadido alertas de /gritar para alertar la salud para Miasma. Si antes usabas un WeakAura para esto, es posible que quieras eliminarla para evitar mensajes repetiros en /gritar."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox", "esMX")

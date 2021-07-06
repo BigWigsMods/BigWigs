@@ -23,7 +23,6 @@ local volEjectionList = {}
 local scheduledChatMsg = false
 local volEjectionOnMe = false
 local miasmaOnMe = false
-local hasPrinted = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -41,8 +40,6 @@ if L then
 
 	L.currentHealth = "%d%%"
 	L.currentHealthIcon = "{rt%d}%d%%"
-
-	L.tempPrint = "We've added health yells for Miasma. If you previously used a WeakAura for this, you might want to delete it to prevent double yells."
 end
 
 --------------------------------------------------------------------------------
@@ -85,13 +82,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Overwhelm", 329774)
 	self:Log("SPELL_AURA_APPLIED", "GrowingHungerApplied", 332295)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrowingHungerApplied", 332295)
-
-	self:SimpleTimer(function()
-		if self:Mythic() and not hasPrinted and IsAddOnLoaded("WeakAuras") then
-			hasPrinted = true
-			BigWigs:Print(L.tempPrint) -- XXX
-		end
-	end, 5)
 end
 
 function mod:OnEngage()
