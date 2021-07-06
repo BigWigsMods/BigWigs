@@ -48,7 +48,7 @@ end
 
 L = BigWigs:NewBossLocale("Remnant of Ner'zhul", "zhTW")
 if L then
-	-- L.cones = "Cones" -- Grasp of Malice
+	L.cones = "射線" -- Grasp of Malice; 待定，暫時沒想到更好的
 	L.orbs = "寶珠" -- Orb of Torment
 	L.orb = "寶珠" -- Orb of Torment
 end
@@ -61,7 +61,7 @@ if L then
 	L.custom_off_nameplate_tormented = "烙印名條圖示"
 	L.custom_off_nameplate_tormented_desc = "在受到折磨烙印影響的小怪名條上顯示圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
 
-	-- L.cones = "Cones" -- Torment
+	L.cones = "折磨" -- Torment
 	L.dance = "跳舞" -- Encore of Torment
 	L.brands = "烙印" -- Brand of Torment
 	L.brand = "烙印" -- Single Brand of Torment
@@ -76,9 +76,9 @@ end
 
 L = BigWigs:NewBossLocale("Painsmith Raznal", "zhTW")
 if L then
-	L.hammer = "迴盪錘子" -- Short for Rippling Hammer; 夠短了所以在中文不需要縮寫，想要更短再改，就是錘子頭鐮刀
-	L.axe = "十字斧" -- Short for Cruciform Axe; 夠短了所以在中文不需要縮寫
-	L.scythe = "雙刃鐮" -- Short for Dualblade Scythe; 夠短了所以在中文不需要縮寫
+	L.hammer = "迴盪錘" -- Short for Rippling Hammer; 夠短了所以在中文不需要縮寫，想要更短就是錘子斧頭鐮刀
+	L.axe = "十字斧" -- Short for Cruciform Axe
+	L.scythe = "雙刃鐮" -- Short for Dualblade Scythe
 	L.trap = "陷阱" -- Short for Flameclasp Trap
 	L.chains = "鎖鏈" -- Short for Shadowsteel Chains
 	L.ember = "餘燼Ember" -- Short for Shadowsteel Ember
@@ -92,8 +92,8 @@ end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "zhTW")
 if L then
-	L.rings = "圓環s"
-	L.rings_active = "圓環啟動" -- for when they activate/are movable; 我怎麼感覺叫轉盤更貼切...
+	L.rings = "圓環"
+	L.rings_active = "圓環啟動" -- for when they activate/are movable; 原文叫織機，內文說明描述為圓環，我怎麼感覺叫轉盤更貼切...
 	L.runes = "符文"
 
 	L.grimportent_countdown = "倒數"
@@ -107,29 +107,29 @@ if L then
 	L.spike = "冰刺"
 	L.miasma = "瘴氣" -- Short for Sinister Miasma
 
-	L.custom_on_nameplate_fixate = "追擊名條圖示"
-	L.custom_on_nameplate_fixate_desc = "在對你索命追擊的小怪名條上顯示圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
+	L.custom_on_nameplate_fixate = "索命追擊名條圖示"
+	L.custom_on_nameplate_fixate_desc = "在追擊你的霜縛效忠者名條上顯示圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
 end
 
 L = BigWigs:NewBossLocale("Sylvanas Windrunner", "zhTW")
 if L then
-	L.chains_active = "鎖鏈生效"
-	-- L.chains_active_desc = "Show a bar for when the Chains of Domination activate"
-	-- L.chains_active_bartext = "%d Active" -- Chains Active
+	L.chains_active = "鎖鏈啟動"
+	L.chains_active_desc = "顯示鎖鏈開始鏈住玩家的倒數計時器。"
+	L.chains_active_bartext = "%d 啟動" -- Chains Active
 
-	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Dark Sentinels that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "憤怒名條圖示"
+	-L.custom_on_nameplate_fixate_desc = "在追擊你的黑暗哨兵名條上顯示追擊圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
 
 	L.chains = "鎖鏈" -- Short for Domination Chains
 	L.chain = "鎖鏈" -- Single Domination Chain
 	L.darkness = "黑暗" -- Short for Veil of Darkness
 	L.arrow = "悲鳴箭" -- Short for Wailing Arrow; 夠短了所以在中文不需要縮寫
-	-- L.wave = "Wave" -- Short for Haunting Wave
+	L.wave = "波浪" -- Short for Haunting Wave
 	L.dread = "碎擊" -- Short for Crushing Dread; 可能要改
 	L.orbs = "球" -- Dark Communion; 可能要改
-	L.curse = "組咒" -- Short for Curse of Lethargy
+	L.curse = "詛咒" -- Short for Curse of Lethargy
 	L.pools = "災禍" -- Banshee's Bane
-	L.scream = "Scream" -- Banshee Scream
+	L.scream = "號叫" -- Banshee Scream
 
 	-- L.knife_fling = "Knives out!" -- "Death-touched blades fling out"
 end
