@@ -65,7 +65,7 @@ if L then
 	L.dance = "跳舞" -- Encore of Torment
 	L.brands = "烙印" -- Brand of Torment
 	L.brand = "烙印" -- Single Brand of Torment
-	-- L.spike = "Spike" -- Short for Agonizing Spike
+	L.spike = "尖刺" -- Short for Agonizing Spike; 中文縮寫必要性不大
 	L.chains = "鎖鏈" -- Hellscream
 	L.chain = "鎖鏈" -- Soul Manacles
 	L.souls = "靈魂" -- Rendered Soul
@@ -76,12 +76,12 @@ end
 
 L = BigWigs:NewBossLocale("Painsmith Raznal", "zhTW")
 if L then
-	-- L.hammer = "Hammer" -- Short for Rippling Hammer
-	-- L.axe = "Axe" -- Short for Cruciform Axe
-	-- L.scythe = "Scythe" -- Short for Dualblade Scythe
-	-- L.trap = "Trap" -- Short for Flameclasp Trap
-	-- L.chains = "Chains" -- Short for Shadowsteel Chains
-	-- L.ember = "Ember" -- Short for Shadowsteel Ember
+	L.hammer = "迴盪錘子" -- Short for Rippling Hammer; 夠短了所以在中文不需要縮寫，想要更短再改，就是錘子頭鐮刀
+	L.axe = "十字斧" -- Short for Cruciform Axe; 夠短了所以在中文不需要縮寫
+	L.scythe = "雙刃鐮" -- Short for Dualblade Scythe; 夠短了所以在中文不需要縮寫
+	L.trap = "陷阱" -- Short for Flameclasp Trap
+	L.chains = "鎖鏈" -- Short for Shadowsteel Chains
+	L.ember = "餘燼Ember" -- Short for Shadowsteel Ember
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "zhTW")
@@ -92,23 +92,23 @@ end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "zhTW")
 if L then
-	-- L.rings = "Rings"
-	-- L.rings_active = "Rings Active" -- for when they activate/are movable
-	-- L.runes = "Runes"
+	L.rings = "圓環s"
+	L.rings_active = "圓環啟動" -- for when they activate/are movable; 我怎麼感覺叫轉盤更貼切...
+	L.runes = "符文"
 
-	-- L.grimportent_countdown = "Countdown"
-	-- L.grimportent_countdown_desc = "Countdown for the players who are Affected by Grim Portent"
-	-- L.grimportent_countdown_bartext = "Go to rune!"
+	L.grimportent_countdown = "倒數"
+	L.grimportent_countdown_desc = "為受到恐惡兆的玩家顯示倒數技時。"
+	L.grimportent_countdown_bartext = "去找符文！"
 end
 
 L = BigWigs:NewBossLocale("Kel'Thuzad", "zhTW")
 if L then
-	-- L.spikes = "Spikes" -- Short for Glacial Spikes
-	-- L.spike = "Spike"
-	-- L.miasma = "Miasma" -- Short for Sinister Miasma
+	L.spikes = "冰刺" -- Short for Glacial Spikes; 冰川之怒
+	L.spike = "冰刺"
+	L.miasma = "瘴氣" -- Short for Sinister Miasma
 
-	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frostbound Devoted that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "追擊名條圖示"
+	L.custom_on_nameplate_fixate_desc = "在對你索命追擊的小怪名條上顯示圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
 end
 
 L = BigWigs:NewBossLocale("Sylvanas Windrunner", "zhTW")
