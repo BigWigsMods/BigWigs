@@ -199,6 +199,7 @@ BigWigs:AddColors("Castle Nathria Trash", {
 	[339557] = "yellow",
 	[339975] = {"blue","green","orange","purple"},
 	[340630] = {"blue","purple"},
+	[341146] = "red",
 	[341352] = "yellow",
 	[341441] = "red",
 	[341735] = "orange",
