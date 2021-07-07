@@ -35,15 +35,17 @@ local rangerHeartSeekerCount = 1
 local intermission = false
 local bansheeShroudRemovedCount = 1
 local baneArrowsCount = 1
-local rangersHeartSeekerTimers = {18, 22, 15, 19, 11.6, 4.5, 30, 3, 29.5, 3, 20.2, 3}
+local rangersHeartSeekerTimers = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}
+local windrunnerTimers = {7.5, 51.1, 49.5, 49.0, 53.5}
 local stageThreeTimers = {}
 local stageThreeTimersHeroic = {
-	[354011] = {19.5, 42.5}, -- Bane Arrows
-	[347609] = {49.5, 63.4}, -- Wailing Arrow
-	[354068] = {65.5}, -- Banshee's Fury
-	[353952] = {27.5}, -- Banshee Scream
-	[354147] = {71.5}, -- Raze
-	[353965] = {37, 39.6, 5.9}, -- Banshee's Heartseeker
+	[354011] = {34.2, 76.8, 73.2, 76.7}, -- Bane Arrows
+	[347609] = {78.5, 3, 3, 49.8, 3, 3, 47.6, 3, 3, 49.6, 3, 3}, -- Wailing Arrow
+	[354068] = {22.1, 49.5, 49.3, 53, 47.8}, -- Banshee's Fury
+	[353952] = {98.2, 47.4, 54.9, 52.6}, -- Banshee Scream
+	[354147] = {87.6, 73.6, 72.3}, -- Raze
+	[354142] = {46, 61.4, 51, 58.4}, -- Veil of Darkness
+	[353969] = {40.3, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7}, -- Banshee's Heartseeker
 }
 local stageThreeTimersMythic = {
 	[354011] = {19.5, 42.5}, -- Bane Arrows
@@ -51,7 +53,8 @@ local stageThreeTimersMythic = {
 	[354068] = {65.5}, -- Banshee's Fury
 	[353952] = {27.5}, -- Banshee Scream
 	[354147] = {71.5}, -- Raze
-	[353965] = {37, 39.6, 5.9}, -- Banshee's Heartseeker
+	[354142] = {46, 46, 46}, -- Veil of Darkness
+	[353969] = {37, 39.6, 5.9}, -- Banshee's Heartseeker
 }
 local deathKnivesCount = 1
 local mercilessCount = 1
@@ -73,7 +76,7 @@ if L then
 
 	L.chains = "Chains" -- Short for Domination Chains
 	L.chain = "Chain" -- Single Domination Chain
-	L.darkness = "Darkness" -- Short for Veil of Darkness
+	L.darkness = "Veil" -- Short for Veil of Darkness
 	L.arrow = "Arrow" -- Short for Wailing Arrow
 	L.wave = "Wave" -- Short for Haunting Wave
 	L.dread = "Dread" -- Short for Crushing Dread
@@ -199,7 +202,7 @@ function mod:OnBossEnable()
 	-- Intermission: A Monument to our Suffering
 	self:Log("SPELL_AURA_APPLIED", "BansheeShroudApplied", 350857)
 	self:Log("SPELL_CAST_SUCCESS", "Rive", 353417, 353418) -- Both used in Intermission
-	self:Log("SPELL_CAST_SUCCESS", "BansheeWail", 348109)
+	self:Log("SPELL_CAST_START", "BansheeWail", 348109)
 
 	-- Stage Two: The Banshee Queen
 	self:Log("SPELL_AURA_APPLIED", "BansheeFormApplied", 348146)
@@ -248,10 +251,10 @@ function mod:OnEngage()
 	rangerHeartSeekerCount = 1
 	intermission = false
 
-	self:Bar(352650, rangersHeartSeekerTimers[rangerHeartSeekerCount]) -- Ranger's Heartseeker
 	self:Bar(347504, 7.5, CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
+	self:Bar(352650, 20.5) -- Ranger's Heartseeker
 	self:Bar(349458, 26, CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
-	self:Bar(347704, 48.5, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+	self:Bar(347704, 47, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 	self:Bar(347609, 36.5, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -415,7 +418,7 @@ function mod:Windrunner(args)
 	self:PlaySound(args.spellId, "alert")
 	windrunnerCount = windrunnerCount + 1
 	if not intermission then
-		self:Bar(args.spellId, windrunnerCount == 2 and 52 or 50.5, CL.count:format(args.spellName, windrunnerCount))
+		self:Bar(args.spellId, windrunnerTimers[windrunnerCount] or 49, CL.count:format(args.spellName, windrunnerCount))
 	end
 end
 
@@ -462,9 +465,9 @@ function mod:VeilOfDarkness(args)
 	self:PlaySound(347704, "alert")
 	veilofDarknessCount = veilofDarknessCount + 1
 	if self:GetStage() == 1 and not intermission then
-		self:Bar(347704, 49, CL.count:format(L.darkness, veilofDarknessCount))
+		self:CDBar(347704, 46, CL.count:format(L.darkness, veilofDarknessCount))
 	elseif self:GetStage() == 3 then
-		self:Bar(347704, 55, CL.count:format(L.darkness, veilofDarknessCount))
+		self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount))
 	end
 end
 
@@ -588,6 +591,7 @@ end
 function mod:BansheeWail(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, bansheeWailCount))
 	self:PlaySound(args.spellId, "alarm")
+	-- self:CastBar(args.spellId, 5)
 	bansheeWailCount = bansheeWailCount + 1
 end
 
@@ -721,7 +725,7 @@ function mod:RaidPortalOribos(args)
 	self:Bar("stages", 10, CL.stage:format(3), args.spellId)
 	self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(L.darkness, baneArrowsCount)) -- Bane Arrows
 	self:Bar(353965, stageThreeTimers[353965][rangerHeartSeekerCount]) -- Banshee's Heartseeker
-	self:Bar(347704, 42, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness -- To CHAT_MSG_RAID_BOSS_EMOTE
+	self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 	self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
 	self:Bar(353952, stageThreeTimers[353952][bansheeScreamCount], CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
 	self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
@@ -755,7 +759,7 @@ function mod:BansheesHeartseeker(args)
 		end
 	end
 	rangerHeartSeekerCount = rangerHeartSeekerCount + 1
-	self:Bar(353965, stageThreeTimers[353965][rangerHeartSeekerCount])
+	self:Bar(353965, stageThreeTimers[353969][rangerHeartSeekerCount])
 end
 
 function mod:BansheesFury(args)
