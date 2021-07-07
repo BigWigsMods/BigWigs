@@ -63,7 +63,7 @@ function mod:GetOptions()
 		{350568, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Call of Eternity (Bombs)
 		callOfEternityMarker,
 		-- Stage Two: Defying Destiny
-		351969, -- Realign Fate
+		357739, -- Realign Fate
 		357144, -- Despair
 		353122, -- Darkest Destiny
 		-- Stage Three: Fated Terminus
@@ -73,14 +73,14 @@ function mod:GetOptions()
 		354964, -- Runic Affinity
 	},{
 		[351680] = mod:SpellName(-22926), -- Stage One: Scrying Fate
-		[351969] = mod:SpellName(-22927), -- Stage Two: Defying Destiny
+		[357739] = mod:SpellName(-22927), -- Stage Two: Defying Destiny
 		[353195] = mod:SpellName(-23486), -- Stage Three: Fated Terminus
 	},{
 		[351680] = CL.add, -- Invoke Destiny (Add)
 		[353432] = CL.fixate, -- Burden of Destiny (Fixate)
 		[350421] = CL.beams, -- Fated Conjunction (Beams)
 		[350568] = CL.bombs, -- Call of Eternity (Bombs)
-		[351969] = L.rings, -- Realign Fate (Rings)
+		[357739] = L.rings, -- Realign Fate (Rings)
 		[353195] = L.rings, -- Extemporaneous Fate (Rings)
 		[354367] = L.runes, -- Grim Portent (Runes)
 	}
@@ -101,12 +101,12 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CallOfEternityRemoved", 350568, 356065)
 
 	-- Stage Two: Defying Destiny
-	self:Log("SPELL_CAST_START", "RealignFate", 351969)
+	self:Log("SPELL_AURA_APPLIED", "RealignFateApplied", 357739)
 	self:Log("SPELL_CAST_START", "Despair", 357144)
 	self:Death("MonstrosityDeath", 180323) -- Fatespawn Monstrosity
 
 	self:Log("SPELL_AURA_APPLIED", "UnstableFateApplied", 353693)
-	self:Log("SPELL_AURA_REMOVED", "RealignFateRemoved", 351969)
+	self:Log("SPELL_AURA_REMOVED", "RealignFateRemoved", 357739)
 
 	-- Stage Three: Fated Terminus
 	self:Log("SPELL_AURA_APPLIED", "ExtemporaneousFateApplied", 353195)
@@ -150,7 +150,7 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < nextStageWarning then -- 70% and 40%
-		self:Message("stages", "green", CL.soon:format(self:SpellName(351969)), false) -- Realign Fate
+		self:Message("stages", "green", CL.soon:format(self:SpellName(357739)), false) -- Realign Fate
 		self:PlaySound("stages", "info")
 		nextStageWarning = nextStageWarning - 30
 		if nextStageWarning < 20 then
@@ -257,7 +257,7 @@ do
 end
 
 -- Stage Two: Defying Destiny
-function mod:RealignFate(args)
+function mod:RealignFateApplied(args)
 	self:StopBar(CL.count:format(CL.bombs, callOfEternityCount))
 	self:StopBar(CL.count:format(CL.beams, fatedConjunctionCount))
 	self:StopBar(CL.count:format(CL.add, invokeDestinyCount))
@@ -266,7 +266,7 @@ function mod:RealignFate(args)
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
-	self:CDBar(351969, 17, L.rings_active, args.spellId) -- 16-18s
+	self:CDBar(args.spellId, 17, L.rings_active, args.spellId) -- 16-18s
 	realignFateCount = realignFateCount + 1
 end
 
