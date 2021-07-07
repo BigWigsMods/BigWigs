@@ -13,7 +13,7 @@ mod:SetStage(1)
 -- Locals
 --
 
-local nextStageWarning = 78
+local nextStageWarning = 69
 local stage = 1
 
 --------------------------------------------------------------------------------
@@ -73,7 +73,8 @@ end
 function mod:OnBossEnable()
 	-- Stage One: His Gaze Upon You
 	self:Log("SPELL_CAST_START", "Deathlink", 350828)
-	self:Log("SPELL_AURA_APPLIED", "DraggingChainsApplied", 349979) -- XXX No pre-debuff atm, this is the one after it already hit
+	self:Log("SPELL_AURA_APPLIED", "DraggingChains", 358609)
+	self:Log("SPELL_AURA_APPLIED", "DraggingChainsApplied", 349979)
 	self:Log("SPELL_CAST_START", "AssailingLance", 348074)
 
 	-- Stage Two: Double Vision
@@ -105,17 +106,14 @@ function mod:OnEngage()
 	self:SetStage(1)
 	stage = 1
 
-	self:CDBar(350828, 9.4) -- Death Link
-	self:Bar(351413, self:Mythic() and 25 or 41.5, CL.laser) -- Annihilating Glare
+	self:Bar(350828, 4.5) -- Death Link
+	self:Bar(349979, 11, L.chains) -- Dragging Chains
+	self:Bar(351413, 25, CL.laser) -- Annihilating Glare
 	if self:Mythic() then
 		self:Bar(350604, 9.7, L.slow) -- Hopeless Lethargy
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
-
-	-- XXX testing
-	self:Log("SPELL_CAST_START", "DraggingChainsStart", 349979)
-	self:RegisterMessage("BigWigs_BossComm")
 end
 
 --------------------------------------------------------------------------------
@@ -124,29 +122,13 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	local currentHealth = self:GetHealth(unit)
-	if currentHealth < nextStageWarning then -- Stage changes every 25%
-		local nextStage = currentHealth > 30 and CL.stage:format(2) or CL.stage:format(3) -- Sub 25% is Stage 3
+	if currentHealth < nextStageWarning then -- Intermission at 66% and 33%
+		local nextStage = currentHealth > 30 and CL.stage:format(2) or CL.stage:format(3) -- Sub 33% is Stage 3
 		self:Message("stages", "green", CL.soon:format(nextStage), false)
-		nextStageWarning = nextStageWarning - 25
+		nextStageWarning = nextStageWarning - 33
 		if nextStageWarning < 25 then
 			self:UnregisterUnitEvent(event, unit)
 		end
-	end
-end
-
-do
-	local prev = 0
-	local function printTarget(self, name, guid)
-		self:Sync("Chains", name)
-	end
-	function mod:BigWigs_BossComm(_, msg, extra)
-		if msg == "Chains" and extra and (GetTime()-prev) > 8 then
-			prev = GetTime()
-			self:TargetMessage(349979, "red", "Chains??", extra)
-		end
-	end
-	function mod:DraggingChainsStart(args)
-		self:GetUnitTarget(printTarget, 0.5, args.sourceGUID)
 	end
 end
 
@@ -157,10 +139,17 @@ function mod:Deathlink(args)
 	self:CDBar(args.spellId, 11)
 end
 
-function mod:DraggingChainsApplied(args) -- XXX Is there a pre-debuff?
+function mod:DraggingChains(args)
+	self:TargetMessage(349979, "orange", args.destName, L.chains)
+	self:PlaySound(args.spellId, "alarm")
+	self:Bar(349979, 4.5, 352684) -- 352684 = Dragged
+	self:Bar(349979, 47, L.chains)
+end
+
+function mod:DraggingChainsApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "info")
 	end
 end
 
@@ -186,12 +175,13 @@ function mod:StygianDarkshieldApplied(args)
 
 	self:StopBar(350828) -- Death Link
 	self:StopBar(CL.laser) -- Annihilating Glare
+	self:StopBar(L.chains)
 	self:StopBar(L.slow)
 
 	self:Bar(350847, self:Mythic() and 21.1 or 8.5, CL.beam) -- Desolation Beam
-	self:Bar(351827, 12.6, L.pool) -- Spreading Misery
+	self:Bar(351827, 15, L.pools) -- Spreading Misery
 	self:Bar(349028, self:Mythic() and 28.1 or 17, L.death_gaze) -- Titanic Death Gaze
-	self:Bar(350713, 17.5, L.corruption) -- Slothful Corruption
+	self:Bar(350713, 21, L.corruption) -- Slothful Corruption
 	if self:Mythic() then
 		self:Bar(355232, 12) -- Scorn and Ire
 	end
@@ -266,7 +256,7 @@ do
 		local t = args.time
 		if t-prev > 5 then -- Both adds cast it seperately
 			prev = t
-			self:Bar(351827, 12, L.pool)
+			self:Bar(351827, 12, L.pools)
 		end
 	end
 end
@@ -298,8 +288,9 @@ function mod:StygianDarkshieldRemoved(args)
 		self:Message("stages", "green", CL.stage:format(1), false)
 		self:PlaySound("stages", "long")
 
-		self:Bar(350828, 20.5) -- Death Link
-		self:Bar(351413, self:Mythic() and 38 or 41.3, CL.laser) -- Annihilating Glare
+		self:Bar(350828, 8.3) -- Death Link
+		self:Bar(349979, 16, L.chains) -- Dragging Chains
+		self:Bar(351413, self:Mythic() and 38 or 29, CL.laser) -- Annihilating Glare
 		if self:Mythic() then
 			self:Bar(350604, 12.7, L.slow) -- Hopeless Lethargy
 		end
@@ -313,8 +304,9 @@ function mod:ImmediateExtermination(args)
 	self:Message("stages", "green", CL.stage:format(3), false)
 	self:PlaySound("stages", "long")
 
-	self:Bar(350828, 12.4) -- Death Link
-	self:Bar(351413, self:Mythic() and 28 or 40.8, CL.laser) -- Annihilating Glare
+	self:Bar(350828, 9) -- Death Link
+	self:Bar(349979, 12, L.chains) -- Dragging Chains
+	self:Bar(351413, 26, CL.laser) -- Annihilating Glare
 	if self:Mythic() then
 		self:Bar(350604, 11, L.slow) -- Hopeless Lethargy
 	end
@@ -324,7 +316,7 @@ function mod:AnnihilatingGlare(args)
 	self:Message(args.spellId, "yellow", CL.laser)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 19, CL.laser) -- 4s cast + 15s channel
-	self:Bar(args.spellId, 69, CL.laser) -- XXX acuracy issues on mythic
+	self:Bar(args.spellId, 69, CL.laser)
 end
 
 -- Mythic
