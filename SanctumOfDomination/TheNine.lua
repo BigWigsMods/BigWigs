@@ -282,7 +282,7 @@ do
 		end
 		if allowed then -- Can use _SUCCESS as it's only on the initial players
 			self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.fragment, fragmentOfDestinyCount-1))
-			self:SimpleTimer(1, function() allowed = false end)
+			self:SimpleTimer(function() allowed = false end, 1)
 		end
 		if self:GetOption(fragmentsMarker) then
 			for i = 1, 4 do -- 1, 2, 3, 4
