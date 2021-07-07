@@ -15,7 +15,8 @@ mod:SetRespawnTime(30)
 local timers = {
 	[350411] = {80.5, 162, 132.5, 65.0, 61, 60, 90, 64.5, 60, 63.5}, -- Hellscream _START
 	[350615] = {28.5, 162.5, 60, 97, 60, 100, 60, 101, 60, 97.5}, -- Call Mawsworn _START
-	[350217] = {12, 45.5, 45.5, 74, 45.5, 45.5, 68, 45.5, 45.5, 60, 45.5, 45.5, 80, 45.5, 45.5, 69.5} -- Torment
+	[350217] = {12, 45.5, 45.5, 69.8, 43.9, 44.1, 68, 45.5, 45.5, 60, 45.5, 45.5, 80, 45.5, 45.5, 69.5}, -- Torment
+	[350422] = {10.7, 33, 33, 41, 56, 33, 33, 37}, -- Ruinblade _START (4/5 vary by a few seconds)
 }
 
 local brandCount = 1
@@ -41,7 +42,7 @@ if L then
 	L.custom_off_nameplate_tormented_icon = 350649
 
 	L.cones = "Cones" -- Torment
-	L.dance = "Dance" -- Encore of Torment
+	L.dance = "Dance" -- Tormented Eruptions
 	L.brands = "Brands" -- Brand of Torment
 	L.brand = "Brand" -- Single Brand of Torment
 	L.spike = "Spike" -- Short for Agonizing Spike
@@ -63,7 +64,7 @@ local agonizerMarker = mod:AddMarkerOption(false, "npc", 8, -23289, 8, 7, 6, 5) 
 function mod:GetOptions()
 	return {
 		350217, -- Torment
-		349985, -- Encore of Torment
+		349985, -- Tormented Eruptions
 		{350647, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Brand of Torment
 		brandOfTormentMarker,
 		"custom_off_nameplate_tormented",
@@ -79,7 +80,7 @@ function mod:GetOptions()
 	},{
 	},{
 		[350217] = L.cones, -- Torment (Cones)
-		[349985] = L.dance, -- Encore of Torment (Dance)
+		[349985] = L.dance, -- Tormented Eruptions (Dance)
 		[350647] = L.brands, -- Brand of Torment (Brands)
 		[350615] = CL.adds, -- Call Mawsworn (Adds)
 		[351779] = L.spike, -- Agonizing Spike (Spike)
@@ -90,8 +91,9 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "Pain", 350766) -- Alternative for Torment
-	self:Log("SPELL_CAST_SUCCESS", "EncoreOfTorment", 349985)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "boss2") -- for Pain
+	-- self:Log("SPELL_CAST_SUCCESS", "Pain", 350766) -- Alternative for Torment
+	self:Log("SPELL_CAST_SUCCESS", "TormentedEruptions", 349985)
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfTorment", 350648)
 	self:Log("SPELL_AURA_APPLIED", "BrandOfTormentApplied", 350647)
 	self:Log("SPELL_AURA_REMOVED", "BrandOfTormentRemoved", 350647)
@@ -124,12 +126,14 @@ function mod:OnEngage()
 	hellscreamCount = 1
 	encoreOfTormentCount = 1
 	tormentCount = 1
+	brandCount = 1
 
 	self:Bar(350422, 10.7) -- Ruinblade
 	self:Bar(350217, 12, CL.count:format(L.cones, tormentCount)) -- Torment
-	self:Bar(350615, 29.2, CL.count:format(CL.adds, callMawswornCount)) -- Call Mawsworn
+	self:Bar(350615, 30.3, CL.count:format(CL.adds, callMawswornCount)) -- Call Mawsworn
+	self:Bar(350647, 30.7, CL.count:format(L.brands, brandCount)) -- Brand of Torment
 	self:Bar(350411, 81.1, CL.count:format(L.chains, hellscreamCount)) -- Hellscream
-	self:Bar(349985, 132, CL.count:format(L.dance, encoreOfTormentCount)) -- Encore of Torment
+	self:Bar(349985, 131.5, CL.count:format(L.dance, encoreOfTormentCount)) -- Tormented Eruptions
 end
 
 function mod:OnBossDisable()
@@ -162,6 +166,13 @@ do
 	end
 end
 
+-- XXX Did this use to have a SPELL_CAST_SUCCESS? Wishful thinking?
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 350766 then
+		self:Pain()
+	end
+end
+
 function mod:Pain(args) -- Boss casting Torment on Garrosh
 	self:Message(350217, "yellow", CL.count:format(L.cones, tormentCount))
 	tormentCount = tormentCount + 1
@@ -169,12 +180,15 @@ function mod:Pain(args) -- Boss casting Torment on Garrosh
 	self:RenderedSoul()
 end
 
-function mod:EncoreOfTorment(args)
+function mod:TormentedEruptions(args)
 	self:Message(args.spellId, "cyan", CL.count:format(L.dance, encoreOfTormentCount))
 	self:PlaySound(args.spellId, "alert")
 	encoreOfTormentCount = encoreOfTormentCount + 1
 	self:Bar(args.spellId, 161.1, CL.count:format(L.dance, encoreOfTormentCount))
 	-- XXX Schedule cast bars for each cone / use remaining events on retail
+
+	brandCount = 1
+	self:Bar(350647, 33.09, CL.count:format(L.brands, brandCount))
 end
 
 do
@@ -182,8 +196,8 @@ do
 	function mod:BrandOfTorment(args)
 		playerList = {}
 		brandCount = brandCount + 1
-		if brandCount < 4 then -- Comes in waves of 3 sets
-			self:Bar(350647, 17, CL.count:format(L.brands, brandCount))
+		if brandCount < 7 then -- breaks during dance
+			self:Bar(350647, 15.7, CL.count:format(L.brands, brandCount))
 		end
 	end
 
@@ -194,7 +208,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.count:format(L.brand, brandCount-1))
 			self:PlaySound(args.spellId, "warning")
-			self:SayCountdown(args.spellId, 16)
+			self:SayCountdown(args.spellId, 15)
 		end
 		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(L.brand, brandCount-1))
 		self:CustomIcon(brandOfTormentMarker, args.destName, count)
@@ -222,7 +236,7 @@ end
 
 function mod:Ruinblade(args)
 	ruinbladeCount = ruinbladeCount + 1
-	self:Bar(args.spellId, ruinbladeCount % 4 == 1 and 62.5 or 33)
+	self:Bar(args.spellId, timers[args.spellId][ruinbladeCount] or 33)
 end
 
 function mod:RuinbladeApplied(args)
@@ -255,10 +269,6 @@ do
 		self:PlaySound(args.spellId, "info")
 		callMawswornCount = callMawswornCount + 1
 		self:Bar(args.spellId, timers[args.spellId][callMawswornCount], CL.count:format(CL.adds, callMawswornCount))
-
-		-- Start brand timers
-		brandCount = 1
-		self:Bar(350647, 7.5, CL.count:format(L.brands, brandCount))
 
 		if self:GetOption(agonizerMarker) then
 			agonizersSpawned = 0
