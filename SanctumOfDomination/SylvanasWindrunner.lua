@@ -39,13 +39,13 @@ local rangersHeartSeekerTimers = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0,
 local windrunnerTimers = {7.5, 51.1, 49.5, 49.0, 53.5}
 local stageThreeTimers = {}
 local stageThreeTimersHeroic = {
-	[354011] = {34.2, 76.8, 73.2, 76.7}, -- Bane Arrows
-	[347609] = {78.5, 3, 3, 49.8, 3, 3, 47.6, 3, 3, 49.6, 3, 3}, -- Wailing Arrow
 	[354068] = {22.1, 49.5, 49.3, 53, 47.8}, -- Banshee's Fury
-	[353952] = {98.2, 47.4, 54.9, 52.6}, -- Banshee Scream
-	[354147] = {87.6, 73.6, 72.3}, -- Raze
-	[354142] = {46, 61.4, 51, 58.4}, -- Veil of Darkness
+	[354011] = {34.2, 76.8, 73.2, 76.7}, -- Bane Arrows
 	[353969] = {40.3, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7}, -- Banshee's Heartseeker
+	[354142] = {46, 61.4, 51, 58.4}, -- Veil of Darkness
+	[347609] = {78.5, 3, 3, 49.8, 3, 3, 47.6, 3, 3, 49.6, 3, 3}, -- Wailing Arrow
+	[354147] = {87.6, 73.6, 72.3}, -- Raze
+	[353952] = {98.2, 47.4, 54.9, 52.6}, -- Banshee Scream
 }
 local stageThreeTimersMythic = {
 	[354011] = {19.5, 42.5}, -- Bane Arrows
@@ -239,10 +239,11 @@ function mod:OnBossEnable()
 	if self:Mythic() and self:GetOption("custom_on_nameplate_fixate") then
 		self:ShowPlates()
 	end
+
+	stageThreeTimers = self:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
 end
 
 function mod:OnEngage()
-	stageThreeTimers = self:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
 	self:SetStage(1)
 	windrunnerCount = 1
 	dominationChainsCount = 1
@@ -699,10 +700,6 @@ end
 ---------------------------------------
 
 function mod:RaidPortalOribos(args)
-	self:SetStage(3)
-	self:Message("stages", "cyan", CL.soon:format(CL.stage:format(3)), false)
-	self:PlaySound("stages", "long")
-
 	self:StopBar(L.orbs) -- Summon Decrepit Orbs / Dark Communion
 	self:StopBar(351939) -- Curse of Lethargy
 	self:StopBar(351180) -- Lashing Wound
@@ -712,24 +709,30 @@ function mod:RaidPortalOribos(args)
 	self:StopBar(CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 	self:StopBar(CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 
-	veilofDarknessCount = 1
-	wailingArrowCount = 1
-	bansheeScreamCount = 1
-	razeCount = 1
 	bansheesFuryCount = 1
 	baneArrowsCount = 1
 	rangerHeartSeekerCount = 1 -- Reusing this for Banshee's Heartseeker
+	veilofDarknessCount = 1
+	wailingArrowCount = 1
+	razeCount = 1
+	bansheeScreamCount = 1
 	deathKnivesCount = 1
 	mercilessCount = 1
 
+	self:SetStage(3)
+	self:Message("stages", "cyan", CL.soon:format(CL.stage:format(3)), false)
+	self:PlaySound("stages", "long")
 	self:Bar("stages", 10, CL.stage:format(3), args.spellId)
-	self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(L.darkness, baneArrowsCount)) -- Bane Arrows
-	self:Bar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
-	self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-	self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
-	self:Bar(353952, stageThreeTimers[353952][bansheeScreamCount], CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
-	self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
-	self:Bar(354147, stageThreeTimers[354147][razeCount], CL.count:format(self:SpellName(354147), razeCount)) -- Raze
+
+	self:SimpleTimer(function()
+		self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
+		self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(self:SpellName(354011), baneArrowsCount)) -- Bane Arrows
+		self:CDBar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
+		self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
+		self:Bar(354147, stageThreeTimers[354147][razeCount], CL.count:format(self:SpellName(354147), razeCount)) -- Raze
+		self:Bar(353952, stageThreeTimers[353952][bansheeScreamCount], CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
+	end, 10)
 end
 
 function mod:BansheesBaneApplied(args)
