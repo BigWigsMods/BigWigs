@@ -185,7 +185,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarbedArrowApplied", 347807)
 	self:Log("SPELL_DAMAGE", "DesecratingShotDamage", 356377)
 	self:Log("SPELL_AURA_APPLIED", "ShadowDaggerApplied", 347670)
-	self:Log("SPELL_CAST_START", "DominationChains", 349458)
+	self:Log("SPELL_CAST_START", "DominationChains", 349419)
 	self:Log("SPELL_AURA_APPLIED", "DominationChainsApplied", 349458)
 	self:Log("SPELL_CAST_START", "VeilOfDarkness", 347726, 347741, 354142) -- Stage 1, Stage 2, Stage 3
 	self:Log("SPELL_AURA_APPLIED", "VeilOfDarknessApplied", 347704)
@@ -444,12 +444,12 @@ function mod:ShadowDaggerApplied(args)
 end
 
 function mod:DominationChains(args)
-	self:Message(args.spellId, "red", CL.count:format(L.chains, dominationChainsCount))
-	self:PlaySound(args.spellId, "warning")
+	self:Message(349458, "red", CL.count:format(L.chains, dominationChainsCount))
+	self:PlaySound(349458, "warning")
 	self:Bar("chains_active", 7.2, L.chains_active_bartext:format(CL.count:format(L.chains, dominationChainsCount)), args.spellId) -- Chains (x) Active
 	dominationChainsCount = dominationChainsCount + 1
 	if not intermission then
-		self:Bar(args.spellId, 52, CL.count:format(L.chains, dominationChainsCount))
+		self:CDBar(349458, 54, CL.count:format(L.chains, dominationChainsCount))
 	end
 end
 
