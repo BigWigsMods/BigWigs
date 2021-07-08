@@ -1086,7 +1086,7 @@ do
 		timer, prevUpgradedUser = nil, nil
 	end
 	function mod:DBM_VersionCheck(prefix, sender, revision, releaseRevision, displayVersion)
-		if prefix == "H" and (BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
+		if prefix == "H" and (BigWigs and BigWigs.db and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			if timer then timer:Cancel() end
 			timer = CTimerNewTicker(3.3, sendMsg, 1)
 		elseif prefix == "V" then
