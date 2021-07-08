@@ -36,9 +36,9 @@ if L then
 	L.small_bombs = "Bombas Pequenas" -- Brynja's Mournful Dirge
 	L.recall = "Revocação" -- Short for Word of Recall
 
-	L.blades_yell = "Sejam derrubados pela minha lâmina!"
+	L.blades_yell = "Morram pela minha lâmina!"
 	L.soaks_yell = "Vocês estão em desvantajem!"
-	L.shield_yell = "Meu escudo nunca fraqueja!"
+	L.shield_yell = "Meu escudo jamais estremece!"
 
 	L.berserk_stage1 = "Estágio 1 do Berserk"
 	L.berserk_stage2 = "Estágio 2 do Berserk"
