@@ -1,7 +1,5 @@
 --------------------------------------------------------------------------------
 -- TODO:
--- -- Stage 2
--- -- Sylvanas abilities when weakened
 -- -- Mark Terror Orb with skull (Mythic)
 
 --------------------------------------------------------------------------------
@@ -33,6 +31,7 @@ local razeCount = 1
 local bansheesFuryCount = 1
 local rangerHeartSeekerCount = 1
 local intermission = false
+local bridgeCount = 1
 local bansheeShroudRemovedCount = 1
 local baneArrowsCount = 1
 local rangersHeartSeekerTimers = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}
@@ -116,7 +115,7 @@ function mod:GetOptions()
 		-- Stage Two: The Banshee Queen
 		350857, -- Banshee Shroud
 		355540, -- Ruin
-		351869, -- Haunting Wave
+		352271, -- Haunting Wave
 		{351180, "TANK"}, -- Lashing Wound
 		351117, -- Crushing Dread
 		351353, -- Summon Decrepit Orbs
@@ -158,7 +157,8 @@ function mod:GetOptions()
 		[356021] = L.orbs, -- Dark Communion (Orbs)
 		[351939] = L.curse, -- Curse of Lethargy (Curse)
 		[353929] = L.pools, -- Banshee's Bane (Pools)
-		[357720] = L.scream, -- Banshee Scream
+		[357720] = L.scream, -- Banshee Scream (Scream)
+		[352271] = L.wave, -- Haunting Wave (Wave)
 	}
 end
 
@@ -171,7 +171,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FilthApplied", 351591)
 	self:Log("SPELL_AURA_APPLIED", "ExpulsionApplied", 351562)
 	self:Log("SPELL_AURA_REMOVED", "ExpulsionRemoved", 351562)
-	self:Death("ColossusDeath", 177893) -- Mawforged Colossus
 	self:Log("SPELL_AURA_APPLIED", "BansheesWeaponsApplied", 358185)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BansheesWeaponsApplied", 358185)
 	self:Log("SPELL_CAST_START", "BansheesBlades", 358181)
@@ -206,24 +205,28 @@ function mod:OnBossEnable()
 
 	-- Stage Two: The Banshee Queen
 	self:Log("SPELL_AURA_APPLIED", "BansheeFormApplied", 348146)
+	-- self:Log("SPELL_CAST_SUCCESS", "CreateBridge", 352843, 352842) -- Channel Ice, Call Earth (_CAST not reliable. ideally timers would start in _START)
+	self:Log("SPELL_CREATE", "CreateBridge", 351837, 348148, 351838, 348093, 351840, 351841) -- Channel Ice, Call Earth
 	self:Log("SPELL_AURA_REMOVED", "BansheeShroudRemoved", 350857)
 	self:Log("SPELL_CAST_START", "Ruin", 355540)
-	self:Log("SPELL_CAST_SUCCESS", "HauntingWave", 351869)
+	self:Log("SPELL_INTERRUPT", "RuinInterrupted", "*")
+	self:Log("SPELL_CAST_START", "HauntingWaveStart", 352271)
+	self:Log("SPELL_CAST_SUCCESS", "HauntingWave", 352271)
 	self:Log("SPELL_CAST_START", "LashingStrike", 351179)
 	self:Log("SPELL_AURA_APPLIED", "LashingWoundApplied", 351180)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "LashingWoundApplied", 351180)
 	self:Log("SPELL_CAST_SUCCESS", "CrushingDread", 351117)
 	self:Log("SPELL_AURA_APPLIED", "CrushingDreadApplied", 351117)
-	self:Death("SouljudgeDeath", 177889) -- Mawforged Souljudge
 	self:Log("SPELL_CAST_START", "SummonDecrepitOrbs", 351353)
 	self:Log("SPELL_CAST_SUCCESS", "CurseOfLethargy", 351939)
 	self:Log("SPELL_AURA_APPLIED", "CurseOfLethargyApplied", 351939)
-	self:Death("SummonerDeath", 177891) -- Mawforged Summoner
 	self:Log("SPELL_AURA_APPLIED", "FuryApplied", 351672)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FuryApplied", 351672)
+	self:Death("CommanderDeath", 177889, 177891, 177892, 177893) -- Souljudge, Summoner, Goliath, Colossus
 
 	-- Stage Three: The Freedom of Choice
-	self:Log("SPELL_CAST_START", "RaidPortalOribos", 357102)
+	self:Log("SPELL_CAST_START", "RaidPortalOribosStart", 357102)
+	self:Log("SPELL_CAST_SUCCESS", "RaidPortalOribos", 357102)
 	self:Log("SPELL_AURA_APPLIED", "BansheesBaneApplied", 353929)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BansheesBaneApplied", 353929)
 	self:Log("SPELL_CAST_START", "BaneArrows", 354011)
@@ -303,11 +306,6 @@ function mod:DarkCommunion(args)
 	self:Message(args.spellId, "orange", L.orbs)
 	self:PlaySound(args.spellId, "long")
 	-- self:Bar(args.spellId, 16)
-end
-
-function mod:ColossusDeath(args)
-	self:StopBar(351591) -- Filth
-	self:StopBar(351562) -- Expulsion
 end
 
 function mod:Filth(args)
@@ -462,11 +460,13 @@ function mod:DominationChainsApplied(args)
 end
 
 function mod:VeilOfDarkness(args)
-	self:Message(347704, "yellow", CL.count:format(L.darkness, veilofDarknessCount))
+	self:Message(347704, "orange", CL.count:format(L.darkness, veilofDarknessCount))
 	self:PlaySound(347704, "alert")
 	veilofDarknessCount = veilofDarknessCount + 1
 	if self:GetStage() == 1 and not intermission then
 		self:CDBar(347704, 46, CL.count:format(L.darkness, veilofDarknessCount))
+	elseif self:GetStage() == 2 then
+		self:StopBar(CL.count:format(L.darkness, veilofDarknessCount-1))
 	elseif self:GetStage() == 3 then
 		self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount))
 	end
@@ -583,6 +583,7 @@ end
 function mod:Rive(args)
 	self:Message(353417, "red", CL.count:format(args.spellName, riveCount))
 	self:PlaySound(353417, "alert")
+	self:StopBar(CL.count:format(args.spellName, riveCount))
 	riveCount = riveCount + 1
 	if riveCount == 2 then -- Most reliable way to start intermission timers atm...
 		-- Start some timers
@@ -593,6 +594,7 @@ function mod:BansheeWail(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, bansheeWailCount))
 	self:PlaySound(args.spellId, "alarm")
 	-- self:CastBar(args.spellId, 5)
+	self:StopBar(CL.count:format(args.spellName, bansheeWailCount))
 	bansheeWailCount = bansheeWailCount + 1
 end
 
@@ -615,26 +617,147 @@ function mod:BansheeFormApplied()
 		ruinCount = 1
 		hauntingWaveCount = 1
 		bansheeShroudRemovedCount = 1
+		bridgeCount = 1
+
+		-- Skipping invalidates these and they don't really matter much anyway
+		-- self:CDBar("stages", 47.5, 351837) -- Channel Ice
+		-- self:CDBar(352271, 52, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 	end
 end
 
+function mod:CreateBridge(args)
+	self:StopBar(351837) -- Channel Ice
+	self:StopBar(352842) -- Call Earth
+
+	self:Message("stages", "cyan", args.spellName, args.spellId)
+	self:PlaySound("stages", "info")
+	--[[
+	Ice   -> Wave x5
+	Earth -> Ruin 1 -> Shroud off 1 -> Veil -> Wail
+	Earth -> Wave -> Adds -> Veil [-> Wail (pushing early?)]
+	Ice   -> Adds -> Ruin 2 -> Wave -> Veil [-> Wail (pushing early?)]
+	Ice   -> Wail -> Adds -> Ruin 3 -> Wave -> Veil [-> Wail (pushing early?)]
+	Earth -> Ruin 4 -> Shroud off 2 -> Wave -> Veil -> Wail -> Minor adds
+	Portal
+
+	Timers can vary 2~4s x.x (including Ruin, which should be stable T_T)
+	--]]
+	if bridgeCount == 1 then -- Ice
+		self:CDBar("stages", 32, 352842) -- Call Earth
+		self:CDBar(355540, 35.5, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
+		self:CDBar(350857, 40.4, CL.removed:format(self:SpellName(350857)))-- Banshee Shroud Removed
+	elseif bridgeCount == 2 then -- Earth
+		-- self:CDBar(355540, 3.5, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
+		-- self:CDBar(350857, 8.3, CL.removed:format(self:SpellName(350857))) -- Banshee Shroud Removed
+		self:CDBar(347704, 33.5, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar(348109, 49.8, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
+		self:CDBar("stages", 61.2, 352842) -- Call Earth
+	elseif bridgeCount == 3 then -- Earth
+		self:CDBar(352271, 3.2, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
+		self:CDBar(347704, 26.5, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+    -- self:CDBar("stages", 60, 351837) -- Channel Ice
+	elseif bridgeCount == 4 then -- Ice
+		self:CDBar(352271, 6, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
+		self:CDBar(355540, 11.2, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
+		self:CDBar(347704, 30.4, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+    -- self:CDBar("stages", 60, 351837) -- Channel Ice
+	elseif bridgeCount == 5 then -- Ice
+		self:CDBar(348109, 5.5, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
+		self:CDBar(355540, 11.1, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
+		self:CDBar(352271, 35.2, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
+		self:CDBar(347704, 38.7, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		-- self:CDBar("stages", 60, 352842) -- Call Earth
+	elseif bridgeCount == 6 then -- Earth
+		self:CDBar(355540, 7.1, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
+		self:CDBar(350857, 12.5, CL.removed:format(self:SpellName(350857)))-- Banshee Shroud Removed
+		self:CDBar(352271, 28.7, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
+		self:CDBar(347704, 39.1, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar(348109, 48.5, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
+		self:CDBar("stages", 65.72, CL.stage:format(3), 357102) -- Raid Portal: Oribos
+	end
+	bridgeCount = bridgeCount + 1
+end
+
 function mod:BansheeShroudRemoved(args)
-	self:Message(args.spellId, "cyan", CL.removed:format(CL.count:format(args.spellName, bansheeShroudRemovedCount)), args.spellId)
+	if self:GetStage() == 3 then return end -- ignore after portal cast starts
+	self:StopBar(CL.removed:format(args.spellName))
+
+	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName), args.spellId)
 	self:PlaySound(args.spellId, "info")
-	self:CDBar(args.spellId, 38)
 	bansheeShroudRemovedCount = bansheeShroudRemovedCount + 1
+	if bansheeShroudRemovedCount == 2 then
+		self:Bar(args.spellId, 38)
+		self:CDBar(347670, 8.3) -- Shadow Dagger
+		-- variance is down to <2s by this point, so restart some bars here, second shroud not so much :\
+		self:CDBar(347704, 27.5, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar(348109, 46, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
+	elseif bansheeShroudRemovedCount == 3 then
+		self:Bar(args.spellId, 43)
+		self:CDBar(347670, 5) -- Shadow Dagger
+	end
 end
 
 function mod:Ruin(args)
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(args.spellName, ruinCount)))
 	self:PlaySound(args.spellId, "warning")
+	self:StopBar(CL.count:format(args.spellName, ruinCount))
 	ruinCount = ruinCount + 1
 end
 
-function mod:HauntingWave(args)
+function mod:RuinInterrupted(args)
+	if args.extraSpellId == 355540 then
+		self:Message(355540, "green", CL.interrupted:format(args.extraSpellName))
+		self:PlaySound(355540, "info")
+	end
+end
+
+function mod:HauntingWaveStart(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.wave, hauntingWaveCount))
 	self:PlaySound(args.spellId, "alert")
+	-- correct the bar since it goes to _SUCCESS
+	local remaining = self:BarTimeLeft(args.spellId)
+	if remaining < 2.5 or remaining > 3.5 then
+		self:Bar(args.spellId, 3, CL.count:format(L.wave, hauntingWaveCount))
+	end
+end
+
+function mod:HauntingWave(args)
 	hauntingWaveCount = hauntingWaveCount + 1
+	if hauntingWaveCount < 5 then
+		-- Silly gauntlet at the beginning of the phase
+		self:Bar(args.spellId, 5.5, CL.count:format(L.wave, hauntingWaveCount))
+	else
+		self:StopBar(args.spellId)
+	end
+end
+
+function mod:CommanderDeath(args)
+	if args.mobId == 177889 then -- Mawforged Souljudge
+		self:StopBar(351180) -- Lashing Wound
+		self:StopBar(351117) -- Crushing Dread
+	elseif args.mobId == 177891 then -- Mawforged Summoner
+		self:StopBar(L.orbs) -- Summon Decrepit Orbs / Dark Communion
+		self:StopBar(351939) -- Curse of Lethargy
+	elseif args.mobId == 177893 then -- Mawforged Colossus
+		self:StopBar(351591) -- Filth
+		self:StopBar(351562) -- Expulsion
+	end
+
+	if UnitExists("boss2") and UnitHealth("boss2") > 1 then return end
+	-- After both adds die, Jaina/Thrall will start casting after ~1s?
+	-- with a 5s cast, so reset the bar to 6s and cancel timers.
+	-- What is the window Sylv will still cast things?
+
+	if bridgeCount == 4 then
+		self:CDBar("stages", 6, 351837) -- Channel Ice
+	elseif bridgeCount == 5 then
+		self:CDBar("stages", 6, 351837) -- Channel Ice
+	elseif bridgeCount == 6 then
+		self:CDBar("stages", 6, 352842) -- Call Earth
+	end
+	self:StopBar(CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
+	self:StopBar(CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+	self:StopBar(CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 end
 
 function mod:LashingStrike(args)
@@ -660,11 +783,6 @@ function mod:CrushingDreadApplied(args)
 	end
 end
 
-function mod:SouljudgeDeath()
-	self:StopBar(351180) -- Lashing Wound
-	self:StopBar(351117) -- Crushing Dread
-end
-
 function mod:SummonDecrepitOrbs(args)
 	self:Message(args.spellId, "orange", L.orbs)
 	self:PlaySound(args.spellId, "long")
@@ -682,11 +800,6 @@ function mod:CurseOfLethargyApplied(args)
 	end
 end
 
-function mod:SummonerDeath()
-	self:StopBar(L.orbs) -- Summon Decrepit Orbs / Dark Communion
-	self:StopBar(351939) -- Curse of Lethargy
-end
-
 function mod:FuryApplied(args)
 	local amount = args.amount or 1
 	if amount % 3 == 0 or amount > 10 then
@@ -699,7 +812,10 @@ end
 -- Stage Three: The Freedom of Choice
 ---------------------------------------
 
-function mod:RaidPortalOribos(args)
+function mod:RaidPortalOribosStart(args)
+	self:SetStage(3)
+	-- Adds could still probably cast things... but would she open the portal if the
+	-- big adds are still alive?
 	self:StopBar(L.orbs) -- Summon Decrepit Orbs / Dark Communion
 	self:StopBar(351939) -- Curse of Lethargy
 	self:StopBar(351180) -- Lashing Wound
@@ -709,6 +825,13 @@ function mod:RaidPortalOribos(args)
 	self:StopBar(CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 	self:StopBar(CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 
+	self:Message("stages", "cyan", CL.soon:format(CL.stage:format(3)), false)
+	self:PlaySound("stages", "long")
+	self:Bar("stages", 10, CL.stage:format(3), args.spellId)
+end
+
+function mod:RaidPortalOribos(args)
+	self:SetStage(3)
 	bansheesFuryCount = 1
 	baneArrowsCount = 1
 	rangerHeartSeekerCount = 1 -- Reusing this for Banshee's Heartseeker
@@ -719,20 +842,13 @@ function mod:RaidPortalOribos(args)
 	deathKnivesCount = 1
 	mercilessCount = 1
 
-	self:SetStage(3)
-	self:Message("stages", "cyan", CL.soon:format(CL.stage:format(3)), false)
-	self:PlaySound("stages", "long")
-	self:Bar("stages", 10, CL.stage:format(3), args.spellId)
-
-	self:SimpleTimer(function()
-		self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
-		self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(self:SpellName(354011), baneArrowsCount)) -- Bane Arrows
-		self:CDBar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
-		self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-		self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
-		self:Bar(354147, stageThreeTimers[354147][razeCount], CL.count:format(self:SpellName(354147), razeCount)) -- Raze
-		self:Bar(353952, stageThreeTimers[353952][bansheeScreamCount], CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
-	end, 10)
+	self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
+	self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(self:SpellName(354011), baneArrowsCount)) -- Bane Arrows
+	self:CDBar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
+	self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+	self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
+	self:Bar(354147, stageThreeTimers[354147][razeCount], CL.count:format(self:SpellName(354147), razeCount)) -- Raze
+	self:Bar(353952, stageThreeTimers[353952][bansheeScreamCount], CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
 end
 
 function mod:BansheesBaneApplied(args)
@@ -783,7 +899,7 @@ end
 
 function mod:Raze(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, razeCount))
-	self:PlaySound(args.spellId, "warning")
+	self:PlaySound(args.spellId, "long")
 	razeCount = razeCount + 1
 	self:Bar(args.spellId, stageThreeTimers[args.spellId][razeCount], CL.count:format(args.spellName, razeCount))
 end
