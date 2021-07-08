@@ -724,7 +724,7 @@ function mod:RaidPortalOribos(args)
 
 	self:Bar("stages", 10, CL.stage:format(3), args.spellId)
 	self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(L.darkness, baneArrowsCount)) -- Bane Arrows
-	self:Bar(353965, stageThreeTimers[353965][rangerHeartSeekerCount]) -- Banshee's Heartseeker
+	self:Bar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
 	self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 	self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
 	self:Bar(353952, stageThreeTimers[353952][bansheeScreamCount], CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
