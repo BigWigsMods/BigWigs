@@ -199,7 +199,7 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.rticon:format(L.trap, mark))
 			self:SayCountdown(args.spellId, 5, mark)
-			self:PlaySound(args.spellId, "warning")
+			self:PlaySound(args.spellId, "alert")
 		end
 		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.traps, trapsCount-1))
 		self:CustomIcon(flameclaspTrapMarker, args.destName, mark)
@@ -228,8 +228,8 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 4)
+			self:Say(args.spellId, CL.rticon:format(L.chains, count))
+			self:SayCountdown(args.spellId, 3, count)
 			self:PlaySound(args.spellId, "warning")
 		end
 		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
@@ -268,8 +268,10 @@ do
 		self:Message("stages", "cyan", CL.intermission, args.spellId)
 		self:PlaySound("stages", "info")
 
-		emberCount = 1
-		self:Bar(355534, 8, CL.count:format(L.ember, emberCount))
+		if self:Mythic() then
+			emberCount = 1
+			self:Bar(355534, 8, CL.count:format(L.ember, emberCount))
+		end
 
 		self:Bar("stages", 41.8, CL.intermission, args.spellId) -- 35s Forge Weapon + 6.8s to jump down
 	end
