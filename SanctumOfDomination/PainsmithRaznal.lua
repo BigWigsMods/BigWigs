@@ -229,7 +229,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.rticon:format(L.chains, count))
-			self:SayCountdown(args.spellId, 3, count)
+			self:SayCountdown(args.spellId, 3, count, 2) -- XXX workaround timer going negative
 			self:PlaySound(args.spellId, "warning")
 		end
 		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
