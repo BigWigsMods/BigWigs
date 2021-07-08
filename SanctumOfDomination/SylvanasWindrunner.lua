@@ -37,7 +37,6 @@ local bansheeShroudRemovedCount = 1
 local baneArrowsCount = 1
 local rangersHeartSeekerTimers = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}
 local windrunnerTimers = {7.5, 51.1, 49.5, 49.0, 53.5}
-local stageThreeTimers = {}
 local stageThreeTimersHeroic = {
 	[354068] = {22.1, 49.5, 49.3, 53, 47.8}, -- Banshee's Fury
 	[354011] = {34.2, 76.8, 73.2, 76.7}, -- Bane Arrows
@@ -56,6 +55,7 @@ local stageThreeTimersMythic = {
 	[354142] = {46, 46, 46}, -- Veil of Darkness
 	[353969] = {37, 39.6, 5.9}, -- Banshee's Heartseeker
 }
+local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
 local deathKnivesCount = 1
 local mercilessCount = 1
 
