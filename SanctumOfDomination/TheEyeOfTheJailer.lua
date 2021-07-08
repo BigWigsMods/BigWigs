@@ -141,7 +141,7 @@ end
 
 function mod:DraggingChains(args)
 	self:TargetMessage(349979, "orange", args.destName, L.chains)
-	self:PlaySound(args.spellId, "alarm")
+	self:PlaySound(349979, "alarm")
 	self:Bar(349979, 4.5, 352684) -- 352684 = Dragged
 	self:Bar(349979, 47, L.chains)
 end
