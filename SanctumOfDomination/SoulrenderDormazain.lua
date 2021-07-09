@@ -91,7 +91,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "boss2") -- for Pain
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss2") -- for Pain
 	-- self:Log("SPELL_CAST_SUCCESS", "Pain", 350766) -- Alternative for Torment
 	self:Log("SPELL_CAST_SUCCESS", "TormentedEruptions", 349985)
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfTorment", 350648)
@@ -173,7 +173,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	end
 end
 
-function mod:Pain(args) -- Boss casting Torment on Garrosh
+function mod:Pain() -- Boss casting Torment on Garrosh
 	self:Message(350217, "yellow", CL.count:format(L.cones, tormentCount))
 	tormentCount = tormentCount + 1
 	self:Bar(350217, timers[350217][tormentCount], CL.count:format(L.cones, tormentCount))
