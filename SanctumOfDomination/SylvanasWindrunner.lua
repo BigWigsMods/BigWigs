@@ -31,10 +31,13 @@ local razeCount = 1
 local bansheesFuryCount = 1
 local rangerHeartSeekerCount = 1
 local intermission = false
+local shadowDaggerCount = 1
 local bridgeCount = 1
 local bansheeShroudRemovedCount = 1
 local baneArrowsCount = 1
+
 local rangersHeartSeekerTimers = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}
+local shadowDaggerTimers = {11, 47.9, 49.6, 8.2, 43.7, 49.9}
 local windrunnerTimers = {7.5, 51.1, 49.5, 49.0, 53.5}
 local stageThreeTimersHeroic = {
 	[354068] = {22.1, 49.5, 49.3, 53, 47.8}, -- Banshee's Fury
@@ -55,7 +58,6 @@ local stageThreeTimersMythic = {
 	[353969] = {37, 39.6, 5.9}, -- Banshee's Heartseeker
 }
 local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
-local deathKnivesCount = 1
 local mercilessCount = 1
 
 --------------------------------------------------------------------------------
@@ -227,6 +229,7 @@ function mod:OnBossEnable()
 	-- Stage Three: The Freedom of Choice
 	self:Log("SPELL_CAST_START", "RaidPortalOribosStart", 357102)
 	self:Log("SPELL_CAST_SUCCESS", "RaidPortalOribos", 357102)
+	self:Log("SPELL_CAST_START", "ShadowDaggerP3", 353935) -- weird spell id to use!
 	self:Log("SPELL_AURA_APPLIED", "BansheesBaneApplied", 353929)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BansheesBaneApplied", 353929)
 	self:Log("SPELL_CAST_START", "BaneArrows", 354011)
@@ -253,9 +256,12 @@ function mod:OnEngage()
 	veilofDarknessCount = 1
 	wailingArrowCount = 1
 	rangerHeartSeekerCount = 1
+	shadowDaggerCount = 1
+	bansheeShroudRemovedCount = 1
 	intermission = false
 
 	self:Bar(347504, 7.5, CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
+	self:Bar(347670, 11, CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
 	self:Bar(352650, 20.5) -- Ranger's Heartseeker
 	self:Bar(349458, 26, CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
 	self:Bar(347704, 47, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
@@ -381,10 +387,10 @@ do
 		local t = args.time
 		if t-prev > 5 then
 			prev = t
-			self:Message(args.spellId, "orange", CL.count:format(args.spellName, deathKnivesCount))
+			self:Message(args.spellId, "orange", CL.count:format(args.spellName, shadowDaggerCount))
 			self:Bar(args.spellId, 5, L.knife_fling)
-			deathKnivesCount = deathKnivesCount + 1
-			--self:Bar(args.spellId, 25, CL.count:format(args.spellName, deathKnivesCount))
+			shadowDaggerCount = shadowDaggerCount + 1
+			--self:Bar(args.spellId, 25, CL.count:format(args.spellName, shadowDaggerCount))
 		end
 		if self:Me(args.destGUID)then
 			self:PersonalMessage(args.spellId)
@@ -435,10 +441,31 @@ function mod:DesecratingShotDamage(args)
 	end
 end
 
-function mod:ShadowDaggerApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:PlaySound(args.spellId, "warning")
+do
+	local prev = 0
+	function mod:ShadowDaggerApplied(args)
+		if self:GetStage() < 3 then
+			local t = args.time
+			if t-prev > 5 then
+				prev = t
+				self:Message(args.spellId, "yellow", CL.count:format(args.spellName, shadowDaggerCount))
+				shadowDaggerCount = shadowDaggerCount + 1
+				if self:GetStage() == 1 then
+					self:CDBar(args.spellId, shadowDaggerTimers[shadowDaggerCount] or 49, CL.count:format(args.spellName, shadowDaggerCount))
+				elseif self:GetStage() == 2 and shadowDaggerCount == 2 then
+					-- two casts each shroud removed
+					if bansheeShroudRemovedCount == 2 then
+						self:CDBar(args.spellId, 21, CL.count:format(args.spellName, shadowDaggerCount))
+					elseif bansheeShroudRemovedCount == 3 then
+						self:CDBar(args.spellId, 41.2, CL.count:format(args.spellName, shadowDaggerCount))
+					end
+				end
+			end
+		end
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId)
+			self:PlaySound(args.spellId, "alarm")
+		end
 	end
 end
 
@@ -608,10 +635,12 @@ function mod:BansheeFormApplied()
 		self:Message("stages", "cyan", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 
+		self:StopBar(CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
 		self:StopBar(CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
 		self:StopBar(CL.count:format(self:SpellName(348145), riveCount)) -- Rive
 		self:StopBar(CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 
+		shadowDaggerCount = 1
 		veilofDarknessCount = 1
 		bansheeWailCount = 1
 		ruinCount = 1
@@ -832,6 +861,7 @@ end
 
 function mod:RaidPortalOribos(args)
 	self:SetStage(3)
+	shadowDaggerCount = 1
 	bansheesFuryCount = 1
 	baneArrowsCount = 1
 	rangerHeartSeekerCount = 1 -- Reusing this for Banshee's Heartseeker
@@ -839,9 +869,13 @@ function mod:RaidPortalOribos(args)
 	wailingArrowCount = 1
 	razeCount = 1
 	bansheeScreamCount = 1
-	deathKnivesCount = 1
 	mercilessCount = 1
 
+	if not self:Mythic() then
+		self:CDBar(347670, 50.5, CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger 49.6~52
+	-- else
+	-- 	self:CDBar(358434, 51.5, CL.count:format(self:SpellName(358434), shadowDaggerCount)) -- Death Knives
+	end
 	self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
 	self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(self:SpellName(354011), baneArrowsCount)) -- Bane Arrows
 	self:CDBar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
@@ -849,6 +883,13 @@ function mod:RaidPortalOribos(args)
 	self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
 	self:Bar(354147, stageThreeTimers[354147][razeCount], CL.count:format(self:SpellName(354147), razeCount)) -- Raze
 	self:Bar(353952, stageThreeTimers[353952][bansheeScreamCount], CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
+end
+
+function mod:ShadowDaggerP3(args)
+	self:Message(347670, "yellow", CL.count:format(args.spellName, shadowDaggerCount))
+	self:PlaySound(347670, "alert")
+	shadowDaggerCount = shadowDaggerCount + 1
+	self:CDBar(347670, shadowDaggerCount % 2 == 0 and 77.9 or 79.8, CL.count:format(args.spellName, shadowDaggerCount))
 end
 
 function mod:BansheesBaneApplied(args)
