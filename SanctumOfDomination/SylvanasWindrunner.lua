@@ -17,6 +17,7 @@ mod:SetStage(1)
 -- Locals
 --
 
+local intermission = false
 local windrunnerCount = 1
 local dominationChainsCount = 1
 local veilofDarknessCount = 1
@@ -30,11 +31,11 @@ local bansheeScreamCount = 1
 local razeCount = 1
 local bansheesFuryCount = 1
 local rangerHeartSeekerCount = 1
-local intermission = false
 local shadowDaggerCount = 1
 local bridgeCount = 1
 local bansheeShroudRemovedCount = 1
 local baneArrowsCount = 1
+local mercilessCount = 1
 
 local rangersHeartSeekerTimers = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}
 local shadowDaggerTimers = {11, 47.9, 49.6, 8.2, 43.7, 49.9}
@@ -58,7 +59,6 @@ local stageThreeTimersMythic = {
 	[353969] = {37, 39.6, 5.9}, -- Banshee's Heartseeker
 }
 local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
-local mercilessCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -281,7 +281,7 @@ end
 --
 
 function mod:UNIT_HEALTH(event, unit)
-	if self:GetHealth(unit) < 83 then -- Intermission at 80%
+	if self:GetHealth(unit) < 84.5 then -- Intermission at 83%
 		self:Message("stages", "green", CL.soon:format(CL.intermission), false)
 		self:PlaySound("stages", "info")
 		self:UnregisterUnitEvent(event, unit)
@@ -604,6 +604,9 @@ function mod:BansheeShroudApplied()
 		dominationChainsCount = 1
 		riveCount = 1
 		bansheeWailCount = 1
+
+		self:CDBar(349458, 8.5, L.chains) -- Domination Chains
+		self:CDBar(353417, 21.5) -- Rive
 	end
 end
 
@@ -614,6 +617,8 @@ function mod:Rive(args)
 	riveCount = riveCount + 1
 	if riveCount == 2 then -- Most reliable way to start intermission timers atm...
 		-- Start some timers
+		self:Bar(353417, 30, CL.over:format(args.spellName))
+		self:CDBar(348109, 39) -- Banshee Wail
 	end
 end
 
