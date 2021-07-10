@@ -37,14 +37,16 @@ local bansheeShroudRemovedCount = 1
 local baneArrowsCount = 1
 local mercilessCount = 1
 
+local veilofDarknessTimers = {45.0, 50.0, 48.2, 46.8}
 local rangersHeartSeekerTimers = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}
 local shadowDaggerTimers = {11, 47.9, 49.6, 8.2, 43.7, 49.9}
 local windrunnerTimers = {7.5, 51.1, 49.5, 49.0, 53.5}
+
 local stageThreeTimersHeroic = {
 	[354068] = {22.1, 49.5, 49.3, 53, 47.8}, -- Banshee's Fury
 	[354011] = {34.2, 76.8, 73.2, 76.7}, -- Bane Arrows
 	[353969] = {40.3, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7}, -- Banshee's Heartseeker
-	[354142] = {46, 61.4, 51, 58.4}, -- Veil of Darkness
+	[347704] = {42.7, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
 	[347609] = {78.5, 3, 3, 49.8, 3, 3, 47.6, 3, 3, 49.6, 3, 3}, -- Wailing Arrow
 	[354147] = {87.6, 73.6, 72.3}, -- Raze
 	[353952] = {98.2, 47.4, 54.9, 52.6}, -- Banshee Scream
@@ -55,7 +57,7 @@ local stageThreeTimersMythic = {
 	[354068] = {65.5}, -- Banshee's Fury
 	[353952] = {27.5}, -- Banshee Scream
 	[354147] = {71.5}, -- Raze
-	[354142] = {46, 46, 46}, -- Veil of Darkness
+	[347704] = {46, 46, 46}, -- Veil of Darkness
 	[353969] = {37, 39.6, 5.9}, -- Banshee's Heartseeker
 }
 local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
@@ -188,7 +190,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShadowDaggerApplied", 347670)
 	self:Log("SPELL_CAST_START", "DominationChains", 349419)
 	self:Log("SPELL_AURA_APPLIED", "DominationChainsApplied", 349458)
-	self:Log("SPELL_CAST_START", "VeilOfDarkness", 347726, 347741, 354142) -- Stage 1, Stage 2, Stage 3
+	-- self:Log("SPELL_CAST_START", "VeilOfDarkness", 347726, 347741, 354142) -- Stage 1, Stage 2, Stage 3
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Veil of Darkness
 	self:Log("SPELL_AURA_APPLIED", "VeilOfDarknessApplied", 347704)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VeilOfDarknessApplied", 347704)
 	self:Log("SPELL_CAST_START", "WailingArrow", 347609, 358704) -- Wailing Arrow, Black Arrow (Mythic)
@@ -240,7 +243,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "BansheeScream", 353952)
 	self:Log("SPELL_CAST_START", "Raze", 354147)
 
-	--self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Veil of Darkness stage 3
 
 	if self:Mythic() and self:GetOption("custom_on_nameplate_fixate") then
 		self:ShowPlates()
@@ -264,7 +266,7 @@ function mod:OnEngage()
 	self:Bar(347670, 11, CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
 	self:Bar(352650, 20.5) -- Ranger's Heartseeker
 	self:Bar(349458, 26, CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
-	self:Bar(347704, 47, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+	self:Bar(347704, 44.9, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 	self:Bar(347609, 36.5, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -486,16 +488,21 @@ function mod:DominationChainsApplied(args)
 	end
 end
 
-function mod:VeilOfDarkness(args)
-	self:Message(347704, "orange", CL.count:format(L.darkness, veilofDarknessCount))
-	self:PlaySound(347704, "alert")
-	veilofDarknessCount = veilofDarknessCount + 1
-	if self:GetStage() == 1 and not intermission then
-		self:CDBar(347704, 46, CL.count:format(L.darkness, veilofDarknessCount))
-	elseif self:GetStage() == 2 then
-		self:StopBar(CL.count:format(L.darkness, veilofDarknessCount-1))
-	elseif self:GetStage() == 3 then
-		self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount))
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+	if msg:find("347704") then
+		self:Message(347704, "orange", CL.count:format(L.darkness, veilofDarknessCount))
+		self:PlaySound(347704, "alert")
+		self:CastBar(347704, 6.8)
+		self:StopBar(CL.count:format(L.darkness, veilofDarknessCount))
+		veilofDarknessCount = veilofDarknessCount + 1
+		if self:GetStage() == 1 and not intermission then
+			self:CDBar(347704, veilofDarknessTimers[veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount))
+		elseif self:GetStage() == 2 then
+			-- Started at bridge
+			self:StopBar(CL.count:format(L.darkness, veilofDarknessCount-1))
+		elseif self:GetStage() == 3 then
+			self:Bar(347704, stageThreeTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount))
+		end
 	end
 end
 
@@ -683,29 +690,29 @@ function mod:CreateBridge(args)
 	elseif bridgeCount == 2 then -- Earth
 		-- self:CDBar(355540, 3.5, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		-- self:CDBar(350857, 8.3, CL.removed:format(self:SpellName(350857))) -- Banshee Shroud Removed
-		self:CDBar(347704, 33.5, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar(347704, 31.7, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 		self:CDBar(348109, 49.8, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 		self:CDBar("stages", 61.2, 352842) -- Call Earth
 	elseif bridgeCount == 3 then -- Earth
 		self:CDBar(352271, 3.2, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
-		self:CDBar(347704, 26.5, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-    -- self:CDBar("stages", 60, 351837) -- Channel Ice
+		self:CDBar(347704, 24.6, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar("stages", 36.8, 351837) -- Channel Ice
 	elseif bridgeCount == 4 then -- Ice
 		self:CDBar(352271, 6, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 		self:CDBar(355540, 11.2, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
-		self:CDBar(347704, 30.4, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar(347704, 28.6, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
     -- self:CDBar("stages", 60, 351837) -- Channel Ice
 	elseif bridgeCount == 5 then -- Ice
 		self:CDBar(348109, 5.5, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 		self:CDBar(355540, 11.1, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		self:CDBar(352271, 35.2, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
-		self:CDBar(347704, 38.7, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar(347704, 36.9, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 		-- self:CDBar("stages", 60, 352842) -- Call Earth
 	elseif bridgeCount == 6 then -- Earth
 		self:CDBar(355540, 7.1, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		self:CDBar(350857, 12.5, CL.removed:format(self:SpellName(350857)))-- Banshee Shroud Removed
 		self:CDBar(352271, 28.7, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
-		self:CDBar(347704, 39.1, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar(347704, 37.1, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 		self:CDBar(348109, 48.5, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 		self:CDBar("stages", 65.72, CL.stage:format(3), 357102) -- Raid Portal: Oribos
 	end
@@ -723,7 +730,7 @@ function mod:BansheeShroudRemoved(args)
 		self:Bar(args.spellId, 38)
 		self:CDBar(347670, 8.3) -- Shadow Dagger
 		-- variance is down to <2s by this point, so restart some bars here, second shroud not so much :\
-		self:CDBar(347704, 27.5, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar(347704, 23.3, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 		self:CDBar(348109, 46, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 	elseif bansheeShroudRemovedCount == 3 then
 		self:Bar(args.spellId, 43)
@@ -884,8 +891,8 @@ function mod:RaidPortalOribos(args)
 	self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
 	self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(self:SpellName(354011), baneArrowsCount)) -- Bane Arrows
 	self:CDBar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
-	self:Bar(347704, stageThreeTimers[354142][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-	self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
+	self:Bar(347704, stageThreeTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+	self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(self:SpellName(347609), wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
 	self:Bar(354147, stageThreeTimers[354147][razeCount], CL.count:format(self:SpellName(354147), razeCount)) -- Raze
 	self:Bar(353952, stageThreeTimers[353952][bansheeScreamCount], CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
 end
@@ -949,12 +956,3 @@ function mod:Raze(args)
 	razeCount = razeCount + 1
 	self:Bar(args.spellId, stageThreeTimers[args.spellId][razeCount], CL.count:format(args.spellName, razeCount))
 end
-
--- function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
--- 	if msg:find("347704") and self:GetStage() == 3 then -- Veil of Darkness, other stages have a cast event
--- 		self:Message(347704, "yellow", CL.count:format(L.darkness, veilofDarknessCount))
--- 		self:PlaySound(347704, "alert")
--- 		veilofDarknessCount = veilofDarknessCount + 1
--- 		self:Bar(347704, 55, CL.count:format(L.darkness, veilofDarknessCount))
--- 	end
--- end
