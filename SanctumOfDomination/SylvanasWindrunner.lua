@@ -37,11 +37,12 @@ local bansheeShroudRemovedCount = 1
 local baneArrowsCount = 1
 local mercilessCount = 1
 
-local veilofDarknessTimers = {45.0, 50.0, 48.2, 46.8}
-local rangersHeartSeekerTimers = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}
-local shadowDaggerTimers = {11, 47.9, 49.6, 8.2, 43.7, 49.9}
-local windrunnerTimers = {7.5, 51.1, 49.5, 49.0, 53.5}
-
+local stageOneTimers = {
+	[347504] = {7.5, 51.1, 49.5, 49.0, 53.5}, -- Windrunner
+	[347670] = {11, 47.9, 49.6, 8.2, 43.7, 49.9}, -- Shadow Dagger
+	[352650] = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}, -- Ranger's Heartseeker
+	[347704] = {45.0, 50.0, 48.2, 46.8}, -- Veil of Darkness
+}
 local stageThreeTimersHeroic = {
 	[354068] = {22.1, 49.5, 49.3, 53, 47.8}, -- Banshee's Fury
 	[354011] = {34.2, 76.8, 73.2, 76.7}, -- Bane Arrows
@@ -425,7 +426,7 @@ function mod:Windrunner(args)
 	self:PlaySound(args.spellId, "alert")
 	windrunnerCount = windrunnerCount + 1
 	if not intermission then
-		self:Bar(args.spellId, windrunnerTimers[windrunnerCount] or 49, CL.count:format(args.spellName, windrunnerCount))
+		self:Bar(args.spellId, stageOneTimers[args.spellId][windrunnerCount], CL.count:format(args.spellName, windrunnerCount))
 	end
 end
 
@@ -453,7 +454,7 @@ do
 				self:Message(args.spellId, "yellow", CL.count:format(args.spellName, shadowDaggerCount))
 				shadowDaggerCount = shadowDaggerCount + 1
 				if self:GetStage() == 1 then
-					self:CDBar(args.spellId, shadowDaggerTimers[shadowDaggerCount] or 49, CL.count:format(args.spellName, shadowDaggerCount))
+					self:CDBar(args.spellId, stageOneTimers[args.spellId][shadowDaggerCount], CL.count:format(args.spellName, shadowDaggerCount))
 				elseif self:GetStage() == 2 and shadowDaggerCount == 2 then
 					-- two casts each shroud removed
 					if bansheeShroudRemovedCount == 2 then
@@ -496,7 +497,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		self:StopBar(CL.count:format(L.darkness, veilofDarknessCount))
 		veilofDarknessCount = veilofDarknessCount + 1
 		if self:GetStage() == 1 and not intermission then
-			self:CDBar(347704, veilofDarknessTimers[veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount))
+			self:CDBar(347704, stageOneTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount))
 		elseif self:GetStage() == 2 then
 			-- Started at bridge
 			self:StopBar(CL.count:format(L.darkness, veilofDarknessCount-1))
@@ -576,7 +577,7 @@ function mod:RangersHeartseeker(args)
 	end
 	rangerHeartSeekerCount = rangerHeartSeekerCount + 1
 	if not intermission then
-		self:Bar(352650, rangersHeartSeekerTimers[rangerHeartSeekerCount])
+		self:Bar(352650, stageOneTimers[352650][rangerHeartSeekerCount])
 	end
 end
 
