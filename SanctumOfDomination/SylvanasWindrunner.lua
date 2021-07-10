@@ -267,7 +267,7 @@ function mod:OnEngage()
 	self:Bar(352650, 20.5) -- Ranger's Heartseeker
 	self:Bar(349458, 26, CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
 	self:Bar(347704, 44.9, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-	self:Bar(347609, 36.5, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
+	self:Bar(347609, 36.5, CL.count:format(self:SpellName(347609), wailingArrowCount)) -- Wailing Arrow
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -523,13 +523,14 @@ end
 
 do
 	function mod:WailingArrow(args)
-		self:Message(args.spellId, "yellow", CL.count:format(L.arrow, wailingArrowCount))
+		self:Message(args.spellId, "yellow", CL.count:format(args.spellName, wailingArrowCount))
 		self:PlaySound(args.spellId, "alert")
+		self:StopBar(CL.count:format(args.spellName, wailingArrowCount))
 		wailingArrowCount = wailingArrowCount + 1
 		if not intermission and self:GetStage() == 1 then
-			self:Bar(args.spellId, 34, CL.count:format(L.arrow, wailingArrowCount))
+			self:Bar(args.spellId, 34, CL.count:format(args.spellName, wailingArrowCount))
 		elseif self:GetStage() == 3 then
-			self:Bar(args.spellId, stageThreeTimers[args.spellId][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount))
+			self:Bar(args.spellId, stageThreeTimers[args.spellId][wailingArrowCount], CL.count:format(args.spellName, wailingArrowCount))
 		end
 	end
 
@@ -544,24 +545,24 @@ do
 		end
 		wailingArrowPlayerCount = wailingArrowPlayerCount + 1
 		if self:GetStage() == 1 then -- Update the bar with exact timing
-			self:Bar(args.spellId, 9, CL.count:format(L.arrow, wailingArrowCount))
+			self:Bar(args.spellId, 9, CL.count:format(args.spellName, wailingArrowCount))
 		elseif self:GetStage() == 3 and wailingArrowPlayerCount == 1 then -- Only the first in stage 3
-			self:Bar(args.spellId, 9, CL.count:format(L.arrow, wailingArrowCount))
+			self:Bar(args.spellId, 9, CL.count:format(args.spellName, wailingArrowCount))
 		end
 		self:CustomIcon(wailingArrowMarker, args.destName, wailingArrowPlayerCount)
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, CL.count:format(L.arrow, wailingArrowPlayerCount))
-			self:PlaySound(args.spellId, "alarm")
-			self:Say(args.spellId, CL.count_rticon:format(L.arrow, wailingArrowPlayerCount, wailingArrowPlayerCount))
-			self:SayCountdown(args.spellId, 9)
-			self:TargetBar(args.spellId, 9, args.destName, CL.count:format(L.arrow, wailingArrowPlayerCount))
+			self:PersonalMessage(347609, CL.count:format(L.arrow, wailingArrowPlayerCount))
+			self:PlaySound(347609, "alarm")
+			self:Say(347609, CL.count_rticon:format(L.arrow, wailingArrowPlayerCount, wailingArrowPlayerCount))
+			self:SayCountdown(347609, 9)
+			self:TargetBar(347609, 9, args.destName, CL.count:format(L.arrow, wailingArrowPlayerCount))
 			myArrow = wailingArrowPlayerCount
 		end
 	end
 
 	function mod:WailingArrowRemoved(args)
 		if self:Me(args.destGUID) then
-			self:StopBar(CL.count:format(L.arrow, wailingArrowPlayerCount), args.destName)
+			self:StopBar(CL.count:format(args.spellName, wailingArrowPlayerCount), args.destName)
 			self:CustomIcon(wailingArrowMarker, args.destName)
 			self:CancelSayCountdown(args.spellId)
 		end
@@ -605,7 +606,7 @@ function mod:BansheeShroudApplied()
 		self:StopBar(CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
 		self:StopBar(CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
 		self:StopBar(CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-		self:StopBar(CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
+		self:StopBar(CL.count:format(self:SpellName(347609), wailingArrowCount)) -- Wailing Arrow
 
 		intermission = true
 		dominationChainsCount = 1
