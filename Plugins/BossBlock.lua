@@ -545,7 +545,7 @@ do
 		--[-1364] = true, -- Battle of Dazar'alor, Jaina stage 1 intermission (unskippable)
 		[-1597] = true, -- N'Zoth defeat
 		[-2000] = true, -- Soulrender Dormazain defeat
-		-- [-2002] = true, -- Sylvanas Stage 2 (causes bugs currently)
+		[-2002] = true, -- Sylvanas stage 2
 		[-2004] = true, -- Sylvanas defeat
 	}
 
