@@ -667,10 +667,6 @@ function mod:BansheeFormApplied()
 		hauntingWaveCount = 1
 		bansheeShroudRemovedCount = 1
 		bridgeCount = 1
-
-		-- Skipping invalidates these and they don't really matter much anyway
-		-- self:CDBar("stages", 47.5, 351837) -- Channel Ice
-		-- self:CDBar(352271, 52, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 	end
 end
 
@@ -696,26 +692,21 @@ function mod:CreateBridge(args)
 		self:CDBar(355540, 35.5, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		self:CDBar(350857, 40.4, CL.removed:format(self:SpellName(350857)))-- Banshee Shroud Removed
 	elseif bridgeCount == 2 then -- Earth
-		-- self:CDBar(355540, 3.5, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
-		-- self:CDBar(350857, 8.3, CL.removed:format(self:SpellName(350857))) -- Banshee Shroud Removed
 		self:CDBar(347704, 31.7, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 		self:CDBar(348109, 49.8, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 		self:CDBar("stages", 61.2, 352842) -- Call Earth
 	elseif bridgeCount == 3 then -- Earth
 		self:CDBar(352271, 3.2, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 		self:CDBar(347704, 24.6, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-		self:CDBar("stages", 36.8, 351837) -- Channel Ice
 	elseif bridgeCount == 4 then -- Ice
 		self:CDBar(352271, 6, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 		self:CDBar(355540, 11.2, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		self:CDBar(347704, 28.6, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-    -- self:CDBar("stages", 60, 351837) -- Channel Ice
 	elseif bridgeCount == 5 then -- Ice
 		self:CDBar(348109, 5.5, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 		self:CDBar(355540, 11.1, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		self:CDBar(352271, 35.2, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 		self:CDBar(347704, 36.9, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-		-- self:CDBar("stages", 60, 352842) -- Call Earth
 	elseif bridgeCount == 6 then -- Earth
 		self:CDBar(355540, 7.1, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		self:CDBar(350857, 12.5, CL.removed:format(self:SpellName(350857)))-- Banshee Shroud Removed
