@@ -91,7 +91,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss2") -- for Pain
+	self:RegisterUnitEvent("UNIT_SPELLCAST_CHANNEL_STOP", nil, "boss1") -- for Torment
 	-- self:Log("SPELL_CAST_SUCCESS", "Pain", 350766) -- Alternative for Torment
 	self:Log("SPELL_CAST_SUCCESS", "TormentedEruptions", 349985)
 	self:Log("SPELL_CAST_SUCCESS", "BrandOfTorment", 350648)
@@ -129,7 +129,7 @@ function mod:OnEngage()
 	brandCount = 1
 
 	self:Bar(350422, 10.7) -- Ruinblade
-	self:Bar(350217, 12, CL.count:format(L.cones, tormentCount)) -- Torment
+	self:Bar(350217, 18, CL.count:format(L.cones, tormentCount)) -- Torment
 	self:Bar(350615, 30.3, CL.count:format(CL.adds, callMawswornCount)) -- Call Mawsworn
 	self:Bar(350647, 30.7, CL.count:format(L.brands, brandCount)) -- Brand of Torment
 	self:Bar(350411, 81.1, CL.count:format(L.chains, hellscreamCount)) -- Hellscream
@@ -167,8 +167,9 @@ do
 end
 
 -- XXX Did this use to have a SPELL_CAST_SUCCESS? Wishful thinking?
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 350766 then
+-- XXX SPELL_CAST_SUCCESS not triggering, changing to SPELLCAST_CHANNEL_STOP and adjusted timer.
+function mod:UNIT_SPELLCAST_CHANNEL_STOP(_, _, _, spellId)
+	if spellId == 351194 then -- Channel Torment on Garrosh
 		self:Pain()
 	end
 end
