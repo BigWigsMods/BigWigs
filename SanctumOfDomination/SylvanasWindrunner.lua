@@ -195,8 +195,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "VeilOfDarknessApplied", 347704)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VeilOfDarknessApplied", 347704)
 	self:Log("SPELL_CAST_START", "WailingArrow", 347609, 358704) -- Wailing Arrow, Black Arrow (Mythic)
-	self:Log("SPELL_AURA_APPLIED", "WailingArrowApplied", 347609, 358704)
-	self:Log("SPELL_AURA_REMOVED", "WailingArrowRemoved", 347609, 358704)
+	self:Log("SPELL_AURA_APPLIED", "WailingArrowApplied", 348064, 358705) -- Wailing Arrow, Black Arrow (Mythic)
+	self:Log("SPELL_AURA_REMOVED", "WailingArrowRemoved", 348064, 358705)
 	self:Log("SPELL_AURA_APPLIED", "RangersHeartseeker", 352663)
 	self:Log("SPELL_AURA_APPLIED", "RangersHeartseekerApplied", 352650)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RangersHeartseekerApplied", 352650)
@@ -545,9 +545,9 @@ do
 		end
 		wailingArrowPlayerCount = wailingArrowPlayerCount + 1
 		if self:GetStage() == 1 then -- Update the bar with exact timing
-			self:Bar(args.spellId, 9, CL.count:format(args.spellName, wailingArrowCount))
+			self:Bar(347609, 9, CL.count:format(args.spellName, wailingArrowCount))
 		elseif self:GetStage() == 3 and wailingArrowPlayerCount == 1 then -- Only the first in stage 3
-			self:Bar(args.spellId, 9, CL.count:format(args.spellName, wailingArrowCount))
+			self:Bar(347609, 9, CL.count:format(args.spellName, wailingArrowCount))
 		end
 		self:CustomIcon(wailingArrowMarker, args.destName, wailingArrowPlayerCount)
 		if self:Me(args.destGUID) then
@@ -564,7 +564,7 @@ do
 		if self:Me(args.destGUID) then
 			self:StopBar(CL.count:format(args.spellName, wailingArrowPlayerCount), args.destName)
 			self:CustomIcon(wailingArrowMarker, args.destName)
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(347609)
 		end
 	end
 end
