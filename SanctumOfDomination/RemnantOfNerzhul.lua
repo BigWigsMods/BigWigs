@@ -180,7 +180,10 @@ do
 			self:PlaySound(349890, "warning")
 			self:Say(349890, CL.beam)
 			self:SayCountdown(349890, 3, nil, 2)
+		else			
+			self:PlaySound(349890, "alert")
 		end
+				
 		self:TargetMessage(349890, "purple", name, CL.beam)
 	end
 
