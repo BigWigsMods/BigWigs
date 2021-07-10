@@ -523,10 +523,15 @@ do
 end
 
 do
+	local wailingArrowCastCount = 1
+	local playerList = {}
 	function mod:WailingArrow(args)
-		self:Message(args.spellId, "yellow", CL.count:format(args.spellName, wailingArrowCount))
+		local count = self:GetStage() and wailingArrowCount or wailingArrowCastCount
+		local target = table.remove(playerList, 1)
+		self:Message(args.spellId, "yellow", CL.other:format(CL.count:format(args.spellName, count), target))
 		self:PlaySound(args.spellId, "alert")
 		self:StopBar(CL.count:format(args.spellName, wailingArrowCount))
+		wailingArrowCastCount = wailingArrowCastCount + 1
 		wailingArrowCount = wailingArrowCount + 1
 		if not intermission and self:GetStage() == 1 then
 			self:Bar(args.spellId, 34, CL.count:format(args.spellName, wailingArrowCount))
@@ -536,15 +541,17 @@ do
 	end
 
 	local wailingArrowPlayerCount = 0
-	local myArrow = 0
 	local prev = 0
 	function mod:WailingArrowApplied(args)
 		local t = args.time
 		if t-prev > 15 then -- New set
 			prev = t
 			wailingArrowPlayerCount = 0
+			wailingArrowCastCount = 1
+			playerList = {}
 		end
 		wailingArrowPlayerCount = wailingArrowPlayerCount + 1
+		playerList[wailingArrowPlayerCount] = args.destName
 		if self:GetStage() == 1 then -- Update the bar with exact timing
 			self:Bar(347609, 9, CL.count:format(args.spellName, wailingArrowCount))
 		elseif self:GetStage() == 3 and wailingArrowPlayerCount == 1 then -- Only the first in stage 3
@@ -557,7 +564,6 @@ do
 			self:Say(347609, CL.count_rticon:format(L.arrow, wailingArrowPlayerCount, wailingArrowPlayerCount))
 			self:SayCountdown(347609, 9)
 			self:TargetBar(347609, 9, args.destName, CL.count:format(L.arrow, wailingArrowPlayerCount))
-			myArrow = wailingArrowPlayerCount
 		end
 	end
 
