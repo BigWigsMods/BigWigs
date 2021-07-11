@@ -526,16 +526,17 @@ do
 	local wailingArrowCastCount = 1
 	local playerList = {}
 	function mod:WailingArrow(args)
-		local count = self:GetStage() and wailingArrowCount or wailingArrowCastCount
+		local count = self:GetStage() == 1 and wailingArrowCount or wailingArrowCastCount
 		local target = table.remove(playerList, 1)
 		self:Message(args.spellId, "yellow", CL.other:format(CL.count:format(L.arrow, count), target))
 		self:PlaySound(args.spellId, "alert")
 		self:StopBar(CL.count:format(L.arrow, wailingArrowCount))
 		wailingArrowCastCount = wailingArrowCastCount + 1
-		wailingArrowCount = wailingArrowCount + 1
 		if not intermission and self:GetStage() == 1 then
+			wailingArrowCount = wailingArrowCount + 1
 			self:Bar(args.spellId, 34, CL.count:format(L.arrow, wailingArrowCount))
 		elseif self:GetStage() == 3 and wailingArrowCastCount == 1 then
+			wailingArrowCount = wailingArrowCount + 1
 			self:Bar(args.spellId, stageThreeTimers[args.spellId][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount))
 		end
 	end
