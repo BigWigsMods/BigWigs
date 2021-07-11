@@ -26,7 +26,6 @@ local riveCount = 1
 local bansheeWailCount = 1
 local ruinCount = 1
 local hauntingWaveCount = 1
-local bansheesBaneCount = 1
 local bansheeScreamCount = 1
 local razeCount = 1
 local bansheesFuryCount = 1
@@ -456,7 +455,7 @@ do
 				if self:GetStage() == 1 then
 					self:CDBar(args.spellId, stageOneTimers[args.spellId][shadowDaggerCount], CL.count:format(args.spellName, shadowDaggerCount))
 				elseif self:GetStage() == 2 and shadowDaggerCount == 2 then
-					-- two casts each shroud removed
+					-- two casts each shroud removed (usually)
 					if bansheeShroudRemovedCount == 2 then
 						self:CDBar(args.spellId, 21, CL.count:format(args.spellName, shadowDaggerCount))
 					elseif bansheeShroudRemovedCount == 3 then
@@ -514,9 +513,13 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				local _, amount = self:UnitDebuff(args.destName, args.spellId) -- Checking amout as it starts with 5 in Heroic & Mythic
+				-- Checking amout as it starts with 5 in Heroic & Mythic
+				local _, amount = self:UnitDebuff(args.destName, args.spellId)
 				self:NewStackMessage(args.spellId, "blue", args.destName, amount, nil, L.darkness)
-				self:PlaySound(args.spellId, "warning")
+				if amount > 3 then
+					-- Don't need to blast warning as the debuff bounces around
+					self:PlaySound(args.spellId, "warning")
+				end
 			end
 		end
 	end
@@ -530,24 +533,26 @@ do
 		local target = table.remove(playerList, 1)
 		self:Message(args.spellId, "yellow", CL.other:format(CL.count:format(L.arrow, count), target))
 		self:PlaySound(args.spellId, "alert")
-		self:StopBar(CL.count:format(L.arrow, wailingArrowCount))
 		wailingArrowCastCount = wailingArrowCastCount + 1
 		if not intermission and self:GetStage() == 1 then
+			self:StopBar(CL.count:format(L.arrow, wailingArrowCount))
 			wailingArrowCount = wailingArrowCount + 1
 			self:Bar(args.spellId, 34, CL.count:format(L.arrow, wailingArrowCount))
 		elseif self:GetStage() == 3 and wailingArrowCastCount == 1 then
 			wailingArrowCount = wailingArrowCount + 1
-			self:Bar(args.spellId, stageThreeTimers[args.spellId][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount))
+			self:Bar(args.spellId, stageThreeTimers[args.spellId][wailingArrowCount], L.arrow)
 		end
 	end
 
 	local wailingArrowPlayerCount = 0
+	local myArrow = 0
 	local prev = 0
 	function mod:WailingArrowApplied(args)
 		local t = args.time
 		if t-prev > 15 then -- New set
 			prev = t
 			wailingArrowPlayerCount = 0
+			myArrow = 0
 			wailingArrowCastCount = 1
 			playerList = {}
 		end
@@ -556,10 +561,11 @@ do
 		if self:GetStage() == 1 then -- Update the bar with exact timing
 			self:Bar(347609, 9, CL.count:format(L.arrow, wailingArrowCount))
 		elseif self:GetStage() == 3 and wailingArrowPlayerCount == 1 then -- Only the first in stage 3
-			self:Bar(347609, 9, CL.count:format(L.arrow, wailingArrowCount))
+			self:Bar(347609, 9, L.arrow)
 		end
 		self:CustomIcon(wailingArrowMarker, args.destName, wailingArrowPlayerCount)
 		if self:Me(args.destGUID) then
+			myArrow = wailingArrowPlayerCount
 			self:PersonalMessage(347609, CL.count:format(L.arrow, wailingArrowPlayerCount))
 			self:PlaySound(347609, "alarm")
 			self:Say(347609, CL.count_rticon:format(L.arrow, wailingArrowPlayerCount, wailingArrowPlayerCount))
@@ -570,7 +576,7 @@ do
 
 	function mod:WailingArrowRemoved(args)
 		if self:Me(args.destGUID) then
-			self:StopBar(CL.count:format(L.arrow, wailingArrowPlayerCount), args.destName)
+			self:StopBar(CL.count:format(L.arrow, myArrow), args.destName)
 			self:CustomIcon(wailingArrowMarker, args.destName)
 			self:CancelSayCountdown(347609)
 		end
@@ -678,11 +684,11 @@ function mod:CreateBridge(args)
 	self:Message("stages", "cyan", args.spellName, args.spellId)
 	self:PlaySound("stages", "info")
 	--[[
-	Ice   -> Wave x5
+	Ice   -> Wave x5 (depending on how bugged we are)
 	Earth -> Ruin 1 -> Shroud off 1 -> Veil -> Wail
-	Earth -> Wave -> Adds -> Veil [-> Wail (pushing early?)]
-	Ice   -> Adds -> Ruin 2 -> Wave -> Veil [-> Wail (pushing early?)]
-	Ice   -> Wail -> Adds -> Ruin 3 -> Wave -> Veil [-> Wail (pushing early?)]
+	Earth -> Wave -> Adds -> Veil [-> Wail (pushing early?)] (-> Enrage Ruin)
+	Ice   -> Adds -> Ruin 2 -> Wave -> Veil [-> Wail (pushing early?)] (-> Enrage Ruin)
+	Ice   -> Wail -> Adds -> Ruin 3 -> Wave -> Veil [-> Wail (pushing early?)] (-> Enrage Ruin)
 	Earth -> Ruin 4 -> Shroud off 2 -> Wave -> Veil -> Wail -> Minor adds
 	Portal
 
@@ -854,14 +860,9 @@ end
 ---------------------------------------
 
 function mod:RaidPortalOribosStart(args)
-	self:StopBar(L.orbs) -- Summon Decrepit Orbs / Dark Communion
-	self:StopBar(351939) -- Curse of Lethargy
-	self:StopBar(351180) -- Lashing Wound
-	self:StopBar(351117) -- Crushing Dread
+	self:StopBar(CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 	self:StopBar(CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 	self:StopBar(CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
-	self:StopBar(CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
-	self:StopBar(CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 
 	self:Message("stages", "cyan", CL.soon:format(CL.stage:format(3)), false)
 	self:PlaySound("stages", "long")
