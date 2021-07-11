@@ -145,31 +145,11 @@ function mod:InstrumentRemoved(args)
 end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 348460 then -- Flameclasp Trap
-		--self:Message(348456, "orange", CL.count:format(CL.traps, trapsCount))
-		--trapsCount = trapsCount + 1
-		--self:Bar(348456, 41, CL.count:format(CL.traps, trapsCount))
-	elseif spellId == 352052 then -- Spiked Balls
+	if spellId == 352052 then -- Spiked Balls
 		self:Message(spellId, "red", CL.count:format(self:SpellName(spellId), spikedBallsCount))
 		self:PlaySound(spellId, "alarm")
 		spikedBallsCount = spikedBallsCount + 1
 		self:Bar(spellId, 41.4, CL.count:format(self:SpellName(spellId), spikedBallsCount))
-	elseif spellId == 348508 or spellId == 355568 or spellId == 355778 then -- Hurl weapons
-		-- Target snapshots here, SPELL_CAST_START is too late
-		--local name = self:UnitName("boss1target")
-		--local equippedWeapon = L[weaponNames[spellId]]
-		--self:TargetMessage(spellId, "yellow", name, CL.count(equippedWeapon, instrumentCount))
-		--self:PrimaryIcon(spellId, name)
-		--self:ScheduleTimer("PrimaryIcon", 6, spellId)
-		--if self:Me(self:UnitGUID("boss1target")) then
-		--	-- Let UNIT_AURA do this, I guess? It's 6s from here to damage,
-		--	-- so the aura should be applied about now
-		--else
-		--	self:PlaySound(spellId, "alert")
-		--end
-		--self:TargetBar(spellId, 6, name, CL.count:format(equippedWeapon, instrumentCount))
-		--instrumentCount = instrumentCount + 1
-		--self:Bar(spellId, 33, CL.count:format(equippedWeapon, instrumentCount))
 	end
 end
 
@@ -249,12 +229,17 @@ end
 
 do
 	local emberCount = 0
-	function mod:ShadowsteelEmber(args)
-		self:Message(355534, "yellow", CL.count:format(L.ember, emberCount))
-		self:PlaySound(355534, "alert")
+	function mod:ShadowsteelEmber()
+		if self:Mythic() then
+			self:Message(355534, "yellow", CL.count:format(L.ember, emberCount))
+			self:PlaySound(355534, "alert")
+		end
 		emberCount = emberCount + 1
-		if emberCount < 10 then
+		if emberCount < 9 then
 			self:Bar(355534, 5, CL.count:format(L.ember, emberCount))
+			if not self:Mythic() then
+				self:ScheduleTimer("ShadowsteelEmber", 5)
+			end
 		end
 	end
 
@@ -268,9 +253,10 @@ do
 		self:Message("stages", "cyan", CL.intermission, args.spellId)
 		self:PlaySound("stages", "info")
 
-		if self:Mythic() then
-			emberCount = 1
-			self:Bar(355534, 8, CL.count:format(L.ember, emberCount))
+		emberCount = 1
+		self:Bar(355534, 2, CL.count:format(L.ember, emberCount))
+		if not self:Mythic() then
+			self:ScheduleTimer("ShadowsteelEmber", 2)
 		end
 
 		self:Bar("stages", 41.8, CL.intermission, args.spellId) -- 35s Forge Weapon + 6.8s to jump down
