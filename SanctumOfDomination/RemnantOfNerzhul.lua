@@ -65,6 +65,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MalevolenceSuccess", 350469)
 	self:Log("SPELL_AURA_APPLIED", "MalevolenceApplied", 350469)
 	self:Log("SPELL_AURA_REMOVED", "MalevolenceRemoved", 350469)
+	self:Log("SPELL_AURA_APPLIED", "RattlecageMalevolenceApplied", 355151)
+	self:Log("SPELL_AURA_REMOVED", "RattlecageMalevolenceRemoved", 355151)
 	self:Log("SPELL_CAST_START", "Suffering", 350894)
 	self:Log("SPELL_AURA_APPLIED", "SufferingApplied", 349890)
 	self:Log("SPELL_CAST_START", "GraspOfMalice", 355123)
@@ -202,6 +204,19 @@ do
 			self:CancelSayCountdown(args.spellId)
 		end
 		self:CustomIcon(malevolenceMarker, args.destName)
+	end
+
+	function mod:RattlecageMalevolenceApplied(args)
+		local unit = self:GetBossId(args.destGUID)
+		if unit then
+			local _, _, _, expires = self:UnitDebuff(unit, args.spellId)
+			local timeLeft = expires - GetTime()
+			self:CastBar(350469, timeLeft, CL.bomb)
+		end
+	end
+
+	function mod:RattlecageMalevolenceRemoved(args)
+		self:StopBar(CL.cast:format(CL.bomb))
 	end
 end
 
