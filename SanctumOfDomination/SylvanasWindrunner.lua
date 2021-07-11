@@ -43,22 +43,22 @@ local stageOneTimers = {
 	[347704] = {45.0, 50.0, 48.2, 46.8}, -- Veil of Darkness
 }
 local stageThreeTimersHeroic = {
-	[354068] = {7.5, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
-	[354011] = {19.6, 76.8, 73.2, 76.7}, -- Bane Arrows
-	[353969] = {25.7, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7, 23.2, 10.2}, -- Banshee's Heartseeker
-	[347704] = {28.1, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
-	[347609] = {63.9, 55.8, 53.6, 55.6}, -- Wailing Arrow
-	[354147] = {73, 73.6, 72.3, 81.7}, -- Raze
-	[353952] = {83.6, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
+	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
+	[354011] = {28.7, 76.8, 73.2, 76.7}, -- Bane Arrows
+	[353969] = {34.8, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7, 23.2, 10.2}, -- Banshee's Heartseeker
+	[347704] = {27.2, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
+	[347609] = {73, 55.8, 53.6, 55.6}, -- Wailing Arrow
+	[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
+	[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
 }
 local stageThreeTimersMythic = {
-	[354068] = {7.5, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
-	[354011] = {19.6, 76.8, 73.2, 76.7}, -- Bane Arrows
-	[353969] = {25.7, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7, 23.2, 10.2}, -- Banshee's Heartseeker
-	[347704] = {28.1, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
-	[347609] = {63.9, 55.8, 53.6, 55.6}, -- Wailing Arrow
-	[354147] = {73, 73.6, 72.3, 81.7}, -- Raze
-	[353952] = {83.6, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
+	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
+	[354011] = {28.7, 76.8, 73.2, 76.7}, -- Bane Arrows
+	[353969] = {34.8, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7, 23.2, 10.2}, -- Banshee's Heartseeker
+	[347704] = {27.2, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
+	[347609] = {73, 55.8, 53.6, 55.6}, -- Wailing Arrow
+	[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
+	[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
 }
 local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
 
@@ -232,7 +232,7 @@ function mod:OnBossEnable()
 
 	-- Stage Three: The Freedom of Choice
 	self:Log("SPELL_CAST_START", "RaidPortalOribosStart", 357102)
-	self:Log("SPELL_AURA_REMOVED", "BlasphemyRemoved", 357728)
+	self:Log("SPELL_AURA_REMOVED", "BlasphemySuccess", 357729)
 	self:Log("SPELL_CAST_START", "ShadowDaggerP3", 353935) -- weird spell id to use!
 	self:Log("SPELL_AURA_APPLIED", "BansheesBaneApplied", 353929)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BansheesBaneApplied", 353929)
@@ -869,8 +869,8 @@ function mod:RaidPortalOribosStart(args)
 	self:Bar("stages", 10, CL.stage:format(3), args.spellId)
 end
 
-function mod:BlasphemyRemoved(args)
-	if self:GetStage() < 3 and self:Player(args.destFlags) then -- Use the first player event only
+function mod:BlasphemySuccess()
+	if self:GetStage() < 3 then
 		self:SetStage(3)
 		shadowDaggerCount = 1
 		bansheesFuryCount = 1
@@ -883,15 +883,15 @@ function mod:BlasphemyRemoved(args)
 		mercilessCount = 1
 
 		if not self:Mythic() then
-			self:CDBar(347670, 36, CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger 49.6~52
+			self:CDBar(347670, 45.1, CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger 49.6~52
 		-- else
-		-- 	self:CDBar(358434, 37, CL.count:format(self:SpellName(358434), shadowDaggerCount)) -- Death Knives
+		-- 	self:CDBar(358434, 46.1, CL.count:format(self:SpellName(358434), shadowDaggerCount)) -- Death Knives
 		end
 		self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
 		self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(self:SpellName(354011), baneArrowsCount)) -- Bane Arrows
 		self:CDBar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
 		self:Bar(347704, stageThreeTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-		self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
+		self:Bar(348064, stageThreeTimers[348064][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
 		self:Bar(354147, stageThreeTimers[354147][razeCount], CL.count:format(self:SpellName(354147), razeCount)) -- Raze
 		self:Bar(353952, stageThreeTimers[353952][bansheeScreamCount], CL.count:format(L.scream, bansheeScreamCount)) -- Banshee Scream
 	end
