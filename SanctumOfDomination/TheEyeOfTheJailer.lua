@@ -44,7 +44,7 @@ function mod:GetOptions()
 		-- Stage Two: Double Vision
 		349028, -- Titanic Death Gaze
 		{350847, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Desolation Beam
-		{350022, "ME_ONLY_EMPHASIZE"}, -- Soul Shatter
+		{350022, "ME_ONLY_EMPHASIZE"}, -- Fracture Soul
 		{351825, "TANK"}, -- Shared Suffering
 		350713, -- Slothful Corruption
 		{351827, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Spreading Misery
@@ -81,7 +81,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StygianDarkshieldApplied", 348805)
 	self:Log("SPELL_CAST_START", "TitanicDeathGaze", 349030)
 	self:Log("SPELL_CAST_START", "DesolationBeam", 350847)
-	self:Log("SPELL_CAST_SUCCESS", "SoulShatter", 350022)
+	self:Log("SPELL_CAST_SUCCESS", "FractureSoul", 350022)
 	self:Log("SPELL_AURA_APPLIED", "ShatteredSoulApplied", 350034)
 	self:Log("SPELL_AURA_APPLIED", "SharedSufferingApplied", 351825)
 	self:Log("SPELL_CAST_START", "SlothfulCorruption", 351835)
@@ -105,6 +105,7 @@ end
 function mod:OnEngage()
 	self:SetStage(1)
 	stage = 1
+	nextStageWarning = 69
 
 	self:Bar(350828, 4.5) -- Death Link
 	self:Bar(349979, 11, L.chains) -- Dragging Chains
@@ -122,9 +123,8 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	local currentHealth = self:GetHealth(unit)
-	if currentHealth < nextStageWarning then -- Intermission at 66% and 33%
-		local nextStage = currentHealth > 30 and CL.stage:format(2) or CL.stage:format(3) -- Sub 33% is Stage 3
-		self:Message("stages", "green", CL.soon:format(nextStage), false)
+	if currentHealth < nextStageWarning then -- Stage 2's at 66% and 33%
+		self:Message("stages", "green", CL.soon:format(2), false)
 		nextStageWarning = nextStageWarning - 33
 		if nextStageWarning < 25 then
 			self:UnregisterUnitEvent(event, unit)
@@ -210,7 +210,7 @@ do
 	end
 end
 
-function mod:SoulShatter(args)
+function mod:FractureSoul(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	--self:Bar(args.spellId, 20) -- XXX quite random atm
