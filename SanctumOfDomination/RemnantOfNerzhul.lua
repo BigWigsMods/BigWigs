@@ -81,7 +81,7 @@ function mod:OnEngage()
 	nextShatterWarning = 83
 
 	self:CDBar(350676, 13, L.orbs) -- Orb of Torment
-	self:CDBar(350894, 20.3) -- Suffering
+	self:CDBar(349890, 20.3) -- Suffering
 	self:CDBar(350469, 26, CL.bombs) -- Malevolence 26~49??
 	self:CDBar(355123, 39, L.cones) -- Grasp of Malice 39~65??
 
@@ -94,8 +94,8 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < nextShatterWarning then -- Shatter at 80/60/30
-		self:Message("stages", "green", CL.soon:format(self:SpellName(351066)), false) -- Shatter
-		self:PlaySound("stages", "info")
+		self:Message(351066, "green", CL.soon:format(self:SpellName(351066)), false) -- Shatter
+		self:PlaySound(351066, "info")
 		if nextShatterWarning == 83 then
 			nextShatterWarning = 63
 		elseif nextShatterWarning == 63 then
