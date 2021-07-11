@@ -19,7 +19,7 @@ BigWigs:AddSounds("The Tarragrue", {
 BigWigs:AddSounds("The Eye of the Jailer", {
 	[348074] = "alarm",
 	[349028] = "alarm",
-	[349979] = "alarm",
+	[349979] = {"alarm","info"},
 	[350022] = {"alert","warning"},
 	[350604] = "warning",
 	[350713] = {"alarm","alert"},
@@ -54,13 +54,13 @@ BigWigs:AddSounds("The Nine", {
 })
 
 BigWigs:AddSounds("Remnant of Ner'zhul", {
-	[349890] = {"alarm","warning"},
+	[349890] = {"alarm","alert","warning"},
 	[350073] = "alarm",
 	[350388] = "info",
-	[350469] = "warning",
+	[350469] = {"alert","warning"},
 	[350489] = "underyou",
 	[350676] = "alert",
-	[351066] = "long",
+	[351066] = {"info","long"},
 	[355123] = "alert",
 })
 
@@ -75,7 +75,7 @@ BigWigs:AddSounds("Soulrender Dormazain", {
 })
 
 BigWigs:AddSounds("Painsmith Raznal", {
-	[348456] = "warning",
+	[348456] = "alert",
 	[348508] = {"alert","warning"},
 	[352052] = "alarm",
 	[355505] = "warning",
@@ -145,7 +145,7 @@ BigWigs:AddSounds("Sylvanas Windrunner", {
 	[347504] = "alert",
 	[347607] = "alarm",
 	[347609] = {"alarm","alert"},
-	[347670] = "warning",
+	[347670] = {"alarm","alert"},
 	[347704] = {"alert","warning"},
 	[347807] = "alarm",
 	[348109] = "alarm",
@@ -157,8 +157,8 @@ BigWigs:AddSounds("Sylvanas Windrunner", {
 	[351562] = "warning",
 	[351591] = "warning",
 	[351672] = "alert",
-	[351869] = "alert",
 	[351939] = "alarm",
+	[352271] = "alert",
 	[352650] = "warning",
 	[353417] = "alert",
 	[353929] = "alarm",
@@ -167,14 +167,14 @@ BigWigs:AddSounds("Sylvanas Windrunner", {
 	[354011] = "alert",
 	[354068] = "alert",
 	[354147] = "warning",
-	[355540] = "warning",
+	[355540] = {"info","warning"},
 	[356021] = "long",
 	[356377] = "underyou",
 	[358181] = "warning",
 	[358185] = "alarm",
 	[358434] = "warning",
 	[358588] = "alert",
-	[358704] = {"alarm","alert"},
+	[358704] = "alert",
 	[358711] = "alarm",
 	["stages"] = {"info","long"},
 })
