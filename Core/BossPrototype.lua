@@ -105,6 +105,12 @@ local dbg = function(...)
 	end
 end
 
+function boss:Debug(...)
+	if Transcriptor then
+		Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", ...)
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Metatables
 --
