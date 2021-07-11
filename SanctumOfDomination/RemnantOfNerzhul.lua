@@ -12,6 +12,8 @@ mod:SetRespawnTime(30)
 -- Locals
 --
 
+local nextShatterWarning = 83
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -19,7 +21,7 @@ mod:SetRespawnTime(30)
 local L = mod:GetLocale()
 if L then
 	L.custom_on_stop_timers = "Always show ability bars"
-	L.custom_on_stop_timers_desc = "Remnant of Ner'zhul can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers_desc = "Remnant of Ner'zhul can delay its abilities. Like, everything is random and the timers are meaningless. When this option is enabled, the bars for those abilities will stay on your screen."
 
 	L.slow = mod:SpellName(31589) -- Slow
 	L.cones = "Cones" -- Grasp of Malice
@@ -31,7 +33,7 @@ end
 -- Initialization
 --
 
-local malevolenceMarker = mod:AddMarkerOption(false, "player", 1, 350469, 1, 2, 3, 4, 5) -- Malevolence
+local malevolenceMarker = mod:AddMarkerOption(false, "player", 1, 350469, 1, 2) -- Malevolence
 function mod:GetOptions()
 	return {
 		"custom_on_stop_timers",
@@ -43,7 +45,6 @@ function mod:GetOptions()
 		350489, -- Lingering Malevolence
 		{349890, "SAY", "SAY_COUNTDOWN"}, -- Suffering
 		355123, -- Grasp of Malice
-		--350671, -- Aura of Spite
 		351066, -- Shatter
 	},{
 	},{
@@ -67,8 +68,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Suffering", 350894)
 	self:Log("SPELL_AURA_APPLIED", "SufferingApplied", 349890)
 	self:Log("SPELL_CAST_START", "GraspOfMalice", 355123)
-	--self:Log("SPELL_AURA_APPLIED", "AuraOfSpiteApplied", 350671)
-	--self:Log("SPELL_AURA_APPLIED_DOSE", "AuraOfSpiteApplied", 350671)
 	self:Log("SPELL_CAST_START", "Shatter", 351066, 351067, 351073) -- 1st, 2nd, 3rd Armor Piece
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 350489) -- Lingering Malevolence
@@ -79,19 +78,40 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:CDBar(350676, self:Mythic() and 15.6 or 12, L.orbs) -- Orbs
-	self:CDBar(350469, self:Mythic() and 26.7 or 21.7, CL.bombs) -- Malevolence
-	self:CDBar(355123, self:Mythic() and 39 or 23.5, L.cones) -- Grasp of Malice
+	nextShatterWarning = 83
+
+	self:CDBar(350676, 13, L.orbs) -- Orb of Torment
+	self:CDBar(350894, 20.3) -- Suffering
+	self:CDBar(350469, 26, CL.bombs) -- Malevolence 26~49??
+	self:CDBar(355123, 39, L.cones) -- Grasp of Malice 39~65??
+
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_HEALTH(event, unit)
+	if self:GetHealth(unit) < nextShatterWarning then -- Shatter at 80/60/30
+		self:Message("stages", "green", CL.soon:format(self:SpellName(351066)), false) -- Shatter
+		self:PlaySound("stages", "info")
+		if nextShatterWarning == 83 then
+			nextShatterWarning = 63
+		elseif nextShatterWarning == 63 then
+			nextShatterWarning = 33
+		elseif nextShatterWarning == 33 then
+			self:UnregisterUnitEvent(event, unit)
+		end
+	end
+end
+
 do
 	local abilitysToPause = {
 		[350676] = true, -- Orb of Torment (Orbs)
 		[350469] = true, -- Malevolence (Bombs)
 		[353332] = true, -- Grasp of Malice (Cones)
+		[350894] = true, -- Suffering (Beam)
 	}
 
 	local castPattern = CL.cast:gsub("%%s", ".+")
@@ -117,7 +137,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(L.orbs)
 		self:Message(spellId, "yellow", L.orbs)
 		self:PlaySound(spellId, "alert")
-		self:CDBar(spellId, 50, L.orbs)
+		self:CDBar(spellId, 50, L.orbs) -- ???
+		-- Shatter (Helm), 53.5, Shatter (Gauntlet), 51.1, 48.6, Shatter (Rattlecage), 58.5, 46.1
+		-- Shatter (Helm), 54.7, Shatter (Gauntlet), 74.1, 42.6, Shatter (Rattlecage), 60.8, 52.2
 	end
 end
 
@@ -136,15 +158,23 @@ function mod:SorrowfulProcessionApplied(args)
 end
 
 do
-	local playerList = {}
+	local playerList, onMe = {}, false
 	function mod:MalevolenceStart(args)
 		playerList = {}
+		onMe = false
 		self:Message(args.spellId, "yellow", CL.incoming:format(CL.bombs))
 	end
 
 	function mod:MalevolenceSuccess(args)
 		self:StopBar(CL.bombs)
-		self:CDBar(args.spellId, 36, CL.bombs)
+		self:CDBar(args.spellId, 36, CL.bombs) -- ???
+		-- Shatter (Helm), Shatter (Gauntlet), 49.9, 43.8, 31.7, Shatter (Rattlecage), 46.3, 46.1
+		-- Shatter (Helm), 36.5, Shatter (Gauntlet), 51.1, 38.8, 31.6, Shatter (Rattlecage), 55.9, 43.7
+		self:SimpleTimer(function()
+			if not onMe then
+				self:PlaySound(args.spellId, "alert") -- so alert seems to be the "move around!" sound
+			end
+		end, 0.3)
 	end
 
 	function mod:MalevolenceApplied(args)
@@ -152,6 +182,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
+			onMe = true
 			local _, _, _, expires = self:UnitDebuff("player", args.spellId)
 			if expires and expires > 0 then
 				local timeLeft = expires - GetTime()
@@ -180,16 +211,19 @@ do
 			self:PlaySound(349890, "warning")
 			self:Say(349890, CL.beam)
 			self:SayCountdown(349890, 3, nil, 2)
-		else			
+		else
 			self:PlaySound(349890, "alert")
 		end
-				
+
 		self:TargetMessage(349890, "purple", name, CL.beam)
 	end
 
 	function mod:Suffering(args)
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
 		self:Bar(349890, 17, CL.beam)
+		self:CDBar(349890, 24.4) -- ???
+		-- 32.8, Shatter (Gauntlet), 31.6, 19.5, 24.3, 24.3, 25.6, Shatter (Rattlecage), 28.1, 21.9, 24.3, 21.9
+		-- 28.0, 27.9, 24.4, Shatter (Gauntlet), 26.7, 20.6, 23.1, 26.8, Shatter (Rattlecage), 32.9, 23.1, 24.3, 23.1
 	end
 end
 
@@ -208,17 +242,13 @@ function mod:SufferingApplied(args)
 	end
 end
 
--- function mod:AuraOfSpiteApplied(args)
--- 	local amount = args.amount or 1
--- 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, amount)) -- Aura of Spite (4) // 4 = level/stacks on boss
--- 	self:PlaySound(args.spellId, "info")
--- end
-
 function mod:GraspOfMalice(args)
 	self:StopBar(L.cones)
 	self:Message(args.spellId, "yellow", L.cones)
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 20, L.cones)
+	self:CDBar(args.spellId, 24, L.cones) -- ???
+	-- 31.6, Shatter (Gauntlet), 51.1, 25.5, 23.2, Shatter (Rattlecage), 73.0
+	-- 28.0, Shatter (Gauntlet), 76.6, 21.9, 24.3, Shatter (Rattlecage), 56.0, 46.1
 end
 
 function mod:Shatter(args)
