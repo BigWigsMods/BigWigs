@@ -535,7 +535,7 @@ do
 		wailingArrowCount = wailingArrowCount + 1
 		if not intermission and self:GetStage() == 1 then
 			self:Bar(args.spellId, 34, CL.count:format(L.arrow, wailingArrowCount))
-		elseif self:GetStage() == 3 then
+		elseif self:GetStage() == 3 and wailingArrowCastCount == 1 then
 			self:Bar(args.spellId, stageThreeTimers[args.spellId][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount))
 		end
 	end
