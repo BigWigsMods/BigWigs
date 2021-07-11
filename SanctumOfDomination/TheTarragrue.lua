@@ -117,12 +117,12 @@ function mod:OnEngage()
 	graspCount = 1
 	mistCount = 1
 
-	self:Bar(347283, self:Mythic() and 5 or 3.6, CL.count:format(CL.fear, howlCount)) -- Predator's Howl
-	self:Bar(347668, self:Mythic() and 8 or 6.23, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
-	self:Bar(346985, self:Mythic() and 10 or 12.3) -- Overpower
-	self:Bar(347269, self:Mythic() and 13 or 17.1, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
-	self:Bar(347679, 24.7, CL.count:format(L.mist, mistCount)) -- Hungering Mist
-	nextMist = GetTime() + 24.7
+	self:Bar(347283, 5.7, CL.count:format(CL.fear, howlCount)) -- Predator's Howl
+	self:Bar(347668, 9.2, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
+	self:Bar(346985, 10.5) -- Overpower
+	self:Bar(347269, 14.4, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
+	self:Bar(347679, 24.4, CL.count:format(L.mist, mistCount)) -- Hungering Mist
+	nextMist = GetTime() + 24.4
 
 	if not self:Mythic() then -- XXX unknown
 		self:Berserk(420) -- Heroic
@@ -267,12 +267,12 @@ function mod:HungeringMist(args)
 	nextMist = 96.3 + GetTime()
 	self:ScheduleTimer("Bar", 19.9, args.spellId, 76.4, CL.count:format(L.mist, mistCount)) -- Hungering Mist
 
-	self:Bar(347283, 22, CL.count:format(CL.fear, howlCount)) -- Predator's Howl
-	self:Bar(346985, 25.7) -- Overpower
-	self:Bar(347668, 28.1, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
-	self:Bar(352368, 24.3, CL.count:format(L.remnants, remnantCount)) -- Remnants
-	self:Bar(347490, 32.9, L.enrage)
-	self:Bar(347269, 58.3, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
+	self:Bar(347283, 21.5, CL.count:format(CL.fear, howlCount)) -- Predator's Howl
+	self:Bar(352368, 25.1, CL.count:format(L.remnants, remnantCount)) -- Remnants
+	self:Bar(346985, 26.3) -- Overpower
+	self:Bar(347668, 31.4, CL.count:format(L.grasp, graspCount)) -- Grasp of Death
+	self:Bar(347269, 32.6, CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
+	self:Bar(347490, 34.1, L.enrage) -- Fury of the Ages
 end
 
 function mod:HungeringMistCast()
@@ -330,7 +330,7 @@ do
 		self:Message(args.spellId, "red", CL.count:format(L.grasp, graspCount))
 
 		graspCount = graspCount + 1
-		if nextMist - GetTime() > 30 then
+		if nextMist - GetTime() > 32 then
 			self:CDBar(args.spellId, 26.7, CL.count:format(L.grasp, graspCount)) -- queues
 		elseif mistCount == 1 then -- The second cast is quick (starts at 80 energy)
 			self:Bar(args.spellId, 13.5, CL.count:format(L.grasp, graspCount))
@@ -354,8 +354,8 @@ function mod:FuryOfTheAgesStart(args)
 	if self:Dispeller("enrage", true, args.spellId) then
 		self:PlaySound(args.spellId, "info")
 	end
-	if nextMist - GetTime() > 46 then
-		self:Bar(args.spellId, 46, L.enrage)
+	if nextMist - GetTime() > 36 then
+		self:Bar(args.spellId, 36, L.enrage)
 	end
 end
 
@@ -375,4 +375,12 @@ end
 function mod:TheJailersGazeApplied(args)
 	self:Message(args.spellId, "red", CL.percent:format(10, args.spellName))
 	self:PlaySound(args.spellId, "long")
+
+	self:StopBar(CL.count:format(CL.fear, howlCount)) -- Predator's Howl
+	self:StopBar(CL.count:format(L.remnants, remnantCount)) -- Remnants
+	self:StopBar(3469853) -- Overpower
+	self:StopBar(CL.count:format(L.grasp, graspCount)) -- Grasp of Death
+	self:StopBar(CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
+	self:StopBar(L.enrage) -- Fury of the Ages
+	self:StopBar(CL.count:format(L.mist, mistCount)) -- Hungering Mist
 end
