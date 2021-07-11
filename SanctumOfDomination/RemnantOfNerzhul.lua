@@ -33,7 +33,7 @@ end
 -- Initialization
 --
 
-local malevolenceMarker = mod:AddMarkerOption(false, "player", 1, 350469, 1, 2) -- Malevolence
+local malevolenceMarker = mod:AddMarkerOption(false, "player", 1, 350469, 1, 2, 3) -- Malevolence
 function mod:GetOptions()
 	return {
 		"custom_on_stop_timers",
@@ -161,9 +161,11 @@ end
 
 do
 	local playerList, onMe = {}, false
+	local oldIcon = nil
 	function mod:MalevolenceStart(args)
 		playerList = {}
 		onMe = false
+		oldIcon = nil
 		self:Message(args.spellId, "yellow", CL.incoming:format(CL.bombs))
 	end
 
@@ -212,11 +214,17 @@ do
 			local _, _, _, expires = self:UnitDebuff(unit, args.spellId)
 			local timeLeft = expires - GetTime()
 			self:CastBar(350469, timeLeft, CL.bomb)
+			oldIcon = GetRaidTargetIndex(unit)
+			self:CustomIcon(malevolenceMarker, unit, 3)
 		end
 	end
 
 	function mod:RattlecageMalevolenceRemoved(args)
 		self:StopBar(CL.cast:format(CL.bomb))
+		local unit = self:GetBossId(args.destGUID)
+		if unit then
+			self:CustomIcon(malevolenceMarker, unit, oldIcon)
+		end
 	end
 end
 
