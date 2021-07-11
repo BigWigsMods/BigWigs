@@ -115,7 +115,6 @@ L = BigWigs:NewBossLocale("Sylvanas Windrunner", "itIT")
 if L then
 	-- L.chains_active = "Chains Active"
 	-- L.chains_active_desc = "Show a bar for when the Chains of Domination activate"
-	-- L.chains_active_bartext = "%d Active" -- Chains Active
 
 	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
 	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Dark Sentinels that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."

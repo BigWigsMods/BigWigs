@@ -115,7 +115,6 @@ L = BigWigs:NewBossLocale("Sylvanas Windrunner", "zhCN")
 if L then
 	L.chains_active = "锁链已激活"
 	L.chains_active_desc = "当统御锁链激活时显示计时条。"
-	L.chains_active_bartext = "%d已激活" -- Chains Active
 
 	L.custom_on_nameplate_fixate = "追击姓名板图标"
 	L.custom_on_nameplate_fixate_desc = "黑暗哨兵追击你时在姓名板显示一个图标。\n\n需要使用敌对姓名板和支持姓名板的插件（KuiNameplates，Plater）。"

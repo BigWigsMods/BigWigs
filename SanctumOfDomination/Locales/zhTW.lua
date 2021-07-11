@@ -57,7 +57,7 @@ L = BigWigs:NewBossLocale("Soulrender Dormazain", "zhTW")
 if L then
 	L.custom_off_nameplate_defiance = "反抗名條圖示"
 	L.custom_off_nameplate_defiance_desc = "在獲得反抗效果強化的小怪名條上顯示圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
-	
+
 	L.custom_off_nameplate_tormented = "烙印名條圖示"
 	L.custom_off_nameplate_tormented_desc = "在受到折磨烙印影響的小怪名條上顯示圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
 
@@ -115,7 +115,6 @@ L = BigWigs:NewBossLocale("Sylvanas Windrunner", "zhTW")
 if L then
 	L.chains_active = "鎖鏈啟動"
 	L.chains_active_desc = "顯示鎖鏈開始鏈住玩家的倒數計時器。"
-	L.chains_active_bartext = "%d 啟動" -- Chains Active
 
 	L.custom_on_nameplate_fixate = "憤怒名條圖示"
 	L.custom_on_nameplate_fixate_desc = "在追擊你的黑暗哨兵名條上顯示追擊圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"

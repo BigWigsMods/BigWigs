@@ -115,7 +115,6 @@ L = BigWigs:NewBossLocale("Sylvanas Windrunner", "koKR")
 if L then
 	 L.chains_active = "사슬 활성화"
 	 L.chains_active_desc = "지배의 사슬이 활성화될때를 보여주는 바 표시"
-	 L.chains_active_bartext = "%d 개 활성화" -- Chains Active
 
 	-- L.custom_on_nameplate_fixate = "시선집중 네임플레이트 아이콘"
 	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Dark Sentinels that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."

@@ -115,7 +115,6 @@ L = BigWigs:NewBossLocale("Sylvanas Windrunner", "ptBR")
 if L then
 	L.chains_active = "Correntes Ativas"
 	L.chains_active_desc = "Mostra uma barra para quando as Correntes da Dominação forem ativadas"
-	L.chains_active_bartext = "%d Ativa" -- Chains Active
 
 	L.custom_on_nameplate_fixate = "Ícone de placa de identificação para Fixação"
 	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação para quando as Sentinelas Sombrias estão fixadas em você.\n\nRequer o uso de Placas de Identificação Inimigas e um addon suportado  (KuiNameplates, Plater)."
