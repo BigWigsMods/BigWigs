@@ -39,10 +39,10 @@ local isInfoOpen = false
 local barbedArrowList = {}
 
 local stageOneTimers = {
-	[347504] = {7.5, 51.1, 49.5, 49.0, 53.5}, -- Windrunner
+	[347504] = {7.5, 51.1, 49.5, 49.0, 53.5, 48.7}, -- Windrunner
 	[347670] = {11, 47.9, 49.6, 8.2, 43.7, 49.9}, -- Shadow Dagger
-	[352650] = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}, -- Ranger's Heartseeker
-	[347704] = {45.0, 50.0, 48.2, 46.8}, -- Veil of Darkness
+	[352650] = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1, 4.7, 21.0, 29.22, 3.0}, -- Ranger's Heartseeker
+	[347704] = {45.0, 50.0, 48.2, 46.8, 50.55}, -- Veil of Darkness
 }
 local stageThreeTimersNormal = {
 	[354011] = {31.5, 81.1, 76.5, 80.0}, -- Bane Arrows
@@ -716,11 +716,11 @@ function mod:CreateBridge(args)
 	self:Message("stages", "cyan", args.spellName, args.spellId)
 	self:PlaySound("stages", "info")
 	--[[
-	Ice   -> Wave x5 (depending on how bugged we are)
+	Ice   -> Wave x5
 	Earth -> Ruin 1 -> Shroud off 1 -> Veil -> Wail
-	Earth -> Wave -> Adds -> Veil [-> Wail (pushing early?)] (-> Enrage Ruin)
-	Ice   -> Adds -> Ruin 2 -> Wave -> Veil [-> Wail (pushing early?)] (-> Enrage Ruin)
-	Ice   -> Wail -> Adds -> Ruin 3 -> Wave -> Veil [-> Wail (pushing early?)] (-> Enrage Ruin)
+	Earth -> Wave -> Goliath/Souljudge -> Veil -> Wave -> Enrage Ruin
+	Ice   -> Goliath/Summoner -> Ruin 2 -> Wave -> Veil [-> Wail/Wave (pushing early?)] -> Enrage Ruin
+	Ice   -> Wail -> Souljudge/Summoner -> Ruin 3 -> Wave -> Veil [-> Wail/Wave (pushing early?)] -> Enrage Ruin
 	Earth -> Ruin 4 -> Shroud off 2 -> Wave -> Veil -> Wail -> Minor adds
 	Portal
 
@@ -737,15 +737,19 @@ function mod:CreateBridge(args)
 	elseif bridgeCount == 3 then -- Earth
 		self:CDBar(352271, 3.2, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 		self:CDBar(347704, 24.6, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		self:CDBar(352271, 44.6, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
+		self:CDBar(355540, 52.2, CL.count:format(self:SpellName(355540), ruinCount)) -- Enrage Ruin
 	elseif bridgeCount == 4 then -- Ice
 		self:CDBar(352271, 6, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 		self:CDBar(355540, 11.2, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		self:CDBar(347704, 28.6, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		-- self:CDBar(355540, 52.2, CL.count:format(self:SpellName(355540), ruinCount)) -- Enrage Ruin
 	elseif bridgeCount == 5 then -- Ice
 		self:CDBar(348109, 5.5, CL.count:format(self:SpellName(348109), bansheeWailCount)) -- Banshee Wail
 		self:CDBar(355540, 11.1, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		self:CDBar(352271, 35.2, CL.count:format(L.wave, hauntingWaveCount)) -- Haunting Wave
 		self:CDBar(347704, 36.9, CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
+		-- self:CDBar(355540, 52.2, CL.count:format(self:SpellName(355540), ruinCount)) -- Enrage Ruin
 	elseif bridgeCount == 6 then -- Earth
 		self:CDBar(355540, 7.1, CL.count:format(self:SpellName(355540), ruinCount)) -- Ruin
 		self:CDBar(350857, 12.5, CL.removed:format(self:SpellName(350857)))-- Banshee Shroud Removed
