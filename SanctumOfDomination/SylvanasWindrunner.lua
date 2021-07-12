@@ -235,7 +235,7 @@ function mod:OnBossEnable()
 
 	-- Stage Three: The Freedom of Choice
 	self:Log("SPELL_CAST_START", "RaidPortalOribosStart", 357102)
-	self:Log("SPELL_AURA_REMOVED", "BlasphemySuccess", 357729)
+	self:Log("SPELL_CAST_SUCCESS", "BlasphemySuccess", 357729)
 	self:Log("SPELL_CAST_START", "ShadowDaggerP3", 353935) -- weird spell id to use!
 	self:Log("SPELL_AURA_APPLIED", "BansheesBaneApplied", 353929)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BansheesBaneApplied", 353929)
@@ -439,7 +439,6 @@ function mod:BarbedArrowApplied(args)
 		isInfoOpen = true
 		self:OpenInfo(args.spellId, args.spellName)
 	end
-
 	barbedArrowList[args.destName] = args.amount or 1
 	self:SetInfoByTable(args.spellId, barbedArrowList)
 
