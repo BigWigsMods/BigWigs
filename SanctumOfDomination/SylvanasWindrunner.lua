@@ -57,7 +57,7 @@ local stageThreeTimersHeroic = {
 	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
 	[354011] = {28.7, 76.8, 73.2, 76.7}, -- Bane Arrows
 	[353969] = {34.8, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7, 23.2, 10.2}, -- Banshee's Heartseeker
-	[347704] = {27.2, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
+	[347704] = {39.9, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
 	[347609] = {73, 55.8, 53.6, 55.6}, -- Wailing Arrow
 	[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
 	[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
@@ -716,6 +716,8 @@ function mod:CreateBridge(args)
 	self:Message("stages", "cyan", args.spellName, args.spellId)
 	self:PlaySound("stages", "info")
 	--[[
+	ability.name="Channel Ice" or ability.name="Call Earth" or ability.name="Banshee Shroud" or ability.name="Winds of Icecrown" or (ability.name="Banshee Wail" and type="cast") or (ability.id=347741 and type="cast") or ability.name="Raid Portal: Oribos" or (type="death" and (target.name="Mawforged Goliath" or target.name="Mawforged Souljudge" or target.name="Mawforged Summoner")) or ability.name="Ruin" or ability.name="Banshee Form" or (ability.name="Haunting Wave" and type="cast") or (ability.name="Rive" and type="cast") or (ability.name="Domination Chains" and type="begincast") or (type="interrupt" and stoppedAbility.name="Ruin")
+
 	Ice   -> Wave x5
 	Earth -> Ruin 1 -> Shroud off 1 -> Veil -> Wail
 	Earth -> Wave -> Goliath/Souljudge -> Veil -> Wave -> Enrage Ruin
