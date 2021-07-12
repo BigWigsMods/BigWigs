@@ -35,6 +35,7 @@ local bridgeCount = 1
 local bansheeShroudRemovedCount = 1
 local baneArrowsCount = 1
 local mercilessCount = 1
+local isInfoOpen = false
 local barbedArrowList = {}
 
 local stageOneTimers = {
