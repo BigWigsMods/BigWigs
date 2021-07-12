@@ -44,6 +44,15 @@ local stageOneTimers = {
 	[352650] = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1}, -- Ranger's Heartseeker
 	[347704] = {45.0, 50.0, 48.2, 46.8}, -- Veil of Darkness
 }
+local stageThreeTimersNormal = {
+	[354011] = {31.5, 81.1, 76.5, 80.0}, -- Bane Arrows
+	[353969] = {38.8, 24.2, 47.6, 3.5, 29.9, 15.4, 24.9, 31.4, 15.5, 39.5, 23.2, 10.2}, -- Banshee's Heartseeker
+	[347704] = {44.0, 62.7, 68.4, 60.0, 61.3, 63.6}, -- Veil of Darkness
+	[347609] = {77.4, 57.5, 57.8, 60.0}, -- Wailing Arrow
+	[354147] = {86.4, 76.0, 76.0, 76.0}, -- Raze
+	[353952] = {92.7, 50.0, 54.9, 52.6, 54.6}, -- Banshee Scream
+	[353935] = {47.7, 80.0, 84.6}, -- Shadow Dagger
+	}
 local stageThreeTimersHeroic = {
 	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
 	[354011] = {28.7, 76.8, 73.2, 76.7}, -- Bane Arrows
@@ -52,6 +61,7 @@ local stageThreeTimersHeroic = {
 	[347609] = {73, 55.8, 53.6, 55.6}, -- Wailing Arrow
 	[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
 	[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
+	[353935] = {45.9, 77.4, 79.5, 73.8}, -- Shadow Dagger
 }
 local stageThreeTimersMythic = {
 	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
@@ -62,7 +72,7 @@ local stageThreeTimersMythic = {
 	[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
 	[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
 }
-local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
+local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or mod:Heroic() and stageThreeTimersHeroic or stageThreeTimersNormal
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -250,8 +260,6 @@ function mod:OnBossEnable()
 	if self:Mythic() and self:GetOption("custom_on_nameplate_fixate") then
 		self:ShowPlates()
 	end
-
-	stageThreeTimers = self:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
 end
 
 function mod:OnEngage()
@@ -266,6 +274,7 @@ function mod:OnEngage()
 	intermission = false
 	isInfoOpen = false
 	barbedArrowList = {}
+	stageThreeTimers = self:Mythic() and stageThreeTimersMythic or self:Heroic() and stageThreeTimersHeroic or stageThreeTimersNormal
 
 	self:Bar(347504, stageOneTimers[347504][windrunnerCount], CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
 	self:Bar(347670, stageOneTimers[347670][shadowDaggerCount], CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
@@ -906,11 +915,13 @@ function mod:BlasphemySuccess()
 		mercilessCount = 1
 
 		if not self:Mythic() then
-			self:CDBar(347670, 45.1, CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger 49.6~52
+			self:CDBar(347670, stageThreeTimers[347670][shadowDaggerCount], CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
 		-- else
 		-- 	self:CDBar(358434, 46.1, CL.count:format(self:SpellName(358434), shadowDaggerCount)) -- Death Knives
 		end
-		self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
+		if not self:Easy() then
+			self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
+		end
 		self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(self:SpellName(354011), baneArrowsCount)) -- Bane Arrows
 		self:CDBar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
 		self:Bar(347704, stageThreeTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
@@ -924,7 +935,7 @@ function mod:ShadowDaggerP3(args)
 	self:Message(347670, "yellow", CL.count:format(args.spellName, shadowDaggerCount))
 	self:PlaySound(347670, "alert")
 	shadowDaggerCount = shadowDaggerCount + 1
-	self:CDBar(347670, shadowDaggerCount % 2 == 0 and 77.9 or 79.8, CL.count:format(args.spellName, shadowDaggerCount))
+	self:CDBar(347670, stageThreeTimers[347670][shadowDaggerCount], CL.count:format(args.spellName, shadowDaggerCount))
 end
 
 function mod:BansheesBaneApplied(args)
