@@ -315,7 +315,7 @@ do
 		local t = args.time
 		if t-prev > 40 then
 			prev = t
-			self:Message("stages", "green", L.rings_active)
+			self:Message("stages", "green", L.rings_active, false)
 			self:PlaySound("stages", "info")
 			self:StopBar(L.rings_active)
 			self:CastBar(353122, 40) -- Darkest Destiny
