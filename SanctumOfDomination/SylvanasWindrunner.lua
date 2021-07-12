@@ -651,7 +651,6 @@ function mod:BansheeShroudApplied()
 		riveCount = 1
 		bansheeWailCount = 1
 
-
 		self:CDBar(349458, 8.5, L.chains) -- Domination Chains
 		self:CDBar(353417, 21.5) -- Rive
 	end
