@@ -936,7 +936,7 @@ function mod:ShadowDaggerP3(args)
 	self:Message(347670, "yellow", CL.count:format(args.spellName, shadowDaggerCount))
 	self:PlaySound(347670, "alert")
 	shadowDaggerCount = shadowDaggerCount + 1
-	self:CDBar(347670, shadowDaggerCount % 2 == 0 and 77.9 or 79.8, CL.count:format(args.spellName, shadowDaggerCount))
+	self:CDBar(347670, stageThreeTimers[347670][shadowDaggerCount] CL.count:format(args.spellName, shadowDaggerCount))
 end
 
 function mod:BansheesBaneApplied(args)
