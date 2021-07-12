@@ -71,6 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "InstrumentApplied", 348508, 355568, 355778) -- Rippling Hammer, Cruciform Axe, Dualblade Scythe
 	self:Log("SPELL_AURA_REMOVED", "InstrumentRemoved", 348508, 355568, 355778)
 
+	self:Log("SPELL_AURA_APPLIED", "SpikedBalls", 352052)
 	self:Log("SPELL_AURA_APPLIED", "BlackenedArmorApplied", 355786)
 
 	self:Log("SPELL_CAST_SUCCESS", "FlameclaspTrap", 348456)
@@ -85,8 +86,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ForgeWeaponOver", 355525)
 
 	self:Log("SPELL_SUMMON", "ShadowsteelEmber", 355536)
-
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 end
 
 function mod:OnEngage()
@@ -144,13 +143,11 @@ function mod:InstrumentRemoved(args)
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 352052 then -- Spiked Balls
-		self:Message(spellId, "red", CL.count:format(self:SpellName(spellId), spikedBallsCount))
-		self:PlaySound(spellId, "alarm")
-		spikedBallsCount = spikedBallsCount + 1
-		self:Bar(spellId, 41.4, CL.count:format(self:SpellName(spellId), spikedBallsCount))
-	end
+function mod:SpikedBalls(args)
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, spikedBallsCount))
+	self:PlaySound(args.spellId, "alarm")
+	spikedBallsCount = spikedBallsCount + 1
+	self:Bar(args.spellId, 41.4, CL.count:format(args.spellName, spikedBallsCount))
 end
 
 function mod:BlackenedArmorApplied(args)
