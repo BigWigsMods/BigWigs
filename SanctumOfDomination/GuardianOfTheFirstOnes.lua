@@ -27,14 +27,14 @@ local normalTimers = {
 }
 local heroicTimers = {
 	[350496] = {0, 12, 12, 26, 12}, -- Threat Neutralization (Bombs)
-	[352833] = {7, 39.5}, -- Disintegration
+	[352833] = {6, 40.1}, -- Disintegration
 }
 -- local mythicTimers = {
 -- 	[350496] = {8.2, 12.3, 18.3, 23.2, 18.4, 23.3, 23.1, 18.4, 18.2, 23.2, 24.4, 17.1, 17.1, 24.4, 23.2, 17.1, 17.3, 23.1}, -- Threat Neutralization
 -- 	[352833] = {15.7, 56.2, 33.4, 49.8, 33.1, 44.9, 31.8, 31.7, 25.9, 31.6}, -- Disintegration
 -- }
 
-local timers = mod:Heroic() and heroicTimers or normalTimers
+local timers = not mod:Easy() and heroicTimers or normalTimers
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -124,12 +124,13 @@ function mod:OnEngage()
 	threatNeutralizationCount = 1
 	obliterateCount = 1
 	sunderCount = 1
+	timers = not self:Easy() and heroicTimers or normalTimers
 
 	self:CDBar(352660, 4, L.sentry) -- Form Sentry
-	self:CDBar(352833, 15.8, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
-	self:CDBar(350735, 25) -- Elimination Pattern
-	self:CDBar(350496, 38, CL.count:format(CL.bombs, threatNeutralizationCount)) -- Threat Neutralization
-	local purgeTimer = UnitPower("boss1")
+	self:CDBar(350496, 10, CL.count:format(CL.bombs, threatNeutralizationCount)) -- Threat Neutralization
+	self:CDBar(352833, 16, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
+	self:CDBar(350735, 26) -- Elimination Pattern
+	local purgeTimer = UnitPower("boss1") or 0
 	self:Bar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
 end
 
@@ -181,7 +182,7 @@ do
 
 	function mod:EnergizingLinkApplied(args)
 		if self:MobId(args.destGUID) == 175731 then -- On the boss
-			self:StopBar(CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
+			self:StopBar(CL.cast:format(CL.count:format(self:SpellName(352538), purgeCount))) -- Purging Protocol
 			self:Message(args.spellId, "cyan", CL.onboss:format(CL.link))
 			self:PlaySound(args.spellId, "info")
 			linkedCore = args.sourceGUID
@@ -255,6 +256,9 @@ function mod:PurgingProtocol(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, purgeCount))
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, purgeCount))
+	if purgeCount == 1 then
+		self:StopBar(CL.count:format(args.spellName, purgeCount))
+	end
 
 	-- Ressetting here as he might cast the first spell before the link event is fired
 	-- 150.423	Guardian of the First Ones begins casting Threat Neutralization
