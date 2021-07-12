@@ -19,9 +19,20 @@ local realignFateCount = 1
 local callOfEternityCount = 1
 local invokeDestinyCount = 1
 local fatedConjunctionCount = 1
+local twistFateCount = 1
 local extemporaneousFateCount = 1
 local grimPortentCount = 1
 
+local twistFateTimers = {
+	{6.3, 49.7, 62},
+	{11.3, 49.8, 74.9, 8.5},
+	{52.8, 48.6, 39.7, 30.3},
+}
+-- local twistFateTimersMythic = {
+-- 	{7.3, 28.3,},
+-- 	{},
+-- 	{},
+-- }
 local timersStageThree = {
 	[350568] = {13, 74.5, 38, 96.5}, -- Call of Eternity
 	[351680] = {24, 40, 40, 40, 36.5, 53.5, 40}, -- Invoke Destiny
@@ -94,6 +105,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BurdenOfDestinyApplied", 353432)
 	self:Log("SPELL_AURA_APPLIED", "AnomalousBlastApplied", 353398)
 	self:Log("SPELL_CAST_START", "DivinersProbe", 353603)
+	self:Log("SPELL_CAST_SUCCESS", "TwistFate", 175730)
 	self:Log("SPELL_AURA_APPLIED", "TwistFateApplied", 353931)
 	self:Log("SPELL_CAST_START", "FatedConjunction", 350421)
 	self:Log("SPELL_CAST_START", "CallOfEternity", 350554)
@@ -105,7 +117,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Despair", 357144)
 	self:Death("MonstrosityDeath", 180323) -- Fatespawn Monstrosity
 
-	self:Log("SPELL_AURA_APPLIED", "UnstableFateApplied", 353693)
+	self:Log("SPELL_AURA_APPLIED", "UnstableAccretionApplied", 353693)
 	self:Log("SPELL_AURA_REMOVED", "RealignFateRemoved", 357739)
 
 	-- Stage Three: Fated Terminus
@@ -129,12 +141,14 @@ function mod:OnEngage()
 	callOfEternityCount = 1
 	invokeDestinyCount = 1
 	fatedConjunctionCount = 1
+	twistFateCount = 1
 	extemporaneousFateCount = 1
 	grimPortentCount = 1
 
 	-- these all can vary by 2s
-	self:CDBar(350421, self:Mythic() and 23.3 or 13.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
-	self:CDBar(350568, self:Mythic() and 11 or 24.4, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
+	self:CDBar(353931, self:Mythic() and 7.3 or 6.4, CL.count:format(self:SpellName(353931), twistFateCount)) -- Twist Fate
+	self:CDBar(350421, self:Mythic() and 23.3 or 13.1, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
+	self:CDBar(350568, self:Mythic() and 11 or 24.1, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
 	self:CDBar(351680, self:Mythic() and 21 or 35.4, CL.count:format(CL.add, invokeDestinyCount)) -- Invoke Destiny (Add)
 
 	if self:Mythic() then
@@ -165,8 +179,9 @@ function mod:InvokeDestiny(args)
 		self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(CL.add, invokeDestinyCount)))
 		self:PlaySound(args.spellId, "alert")
 	end
+	self:StopBar(CL.count:format(CL.add, invokeDestinyCount))
 	invokeDestinyCount = invokeDestinyCount + 1
-	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][invokeDestinyCount] or self:Mythic() and 40 or 36, CL.count:format(CL.add, invokeDestinyCount))
+	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][invokeDestinyCount] or 40, CL.count:format(CL.add, invokeDestinyCount)) -- very second cast is usually ~35
 end
 
 function mod:InvokeDestinyApplied(args)
@@ -208,6 +223,13 @@ function mod:DivinersProbe(args)
 	end
 end
 
+function mod:TwistFate(args)
+	self:Message(353931, "orange", CL.count:format(args.spellName, twistFateCount))
+	self:StopBar(CL.count:format(args.spellName, twistFateCount))
+	twistFateCount = twistFateCount + 1
+	self:CDBar(353931, twistFateTimers[realignFateCount][twistFateCount], CL.count:format(args.spellName, twistFateCount))
+end
+
 function mod:TwistFateApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
@@ -219,6 +241,7 @@ function mod:FatedConjunction(args)
 	self:Message(args.spellId, "yellow", CL.count:format(CL.beams, fatedConjunctionCount))
 	self:PlaySound(args.spellId, "alert")
 	self:CastBar(args.spellId, 6.8, CL.count:format(CL.beams, fatedConjunctionCount))
+	self:StopBar(CL.count:format(CL.beams, fatedConjunctionCount))
 	fatedConjunctionCount = fatedConjunctionCount + 1
 	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][fatedConjunctionCount] or 60, CL.count:format(CL.beams, fatedConjunctionCount)) -- XXX stage 1 unconfirmed, but at least 60s it looked like
 end
@@ -228,8 +251,9 @@ do
 	function mod:CallOfEternity(args)
 		playerList = {}
 		self:CastBar(350568, 10, CL.count:format(CL.bombs, callOfEternityCount))
+		self:StopBar(CL.count:format(CL.bombs, callOfEternityCount))
 		callOfEternityCount = callOfEternityCount + 1
-		self:CDBar(350568, stage == 3 and timersStageThree[350568][callOfEternityCount] or 39, CL.count:format(CL.bombs, callOfEternityCount))
+		self:CDBar(350568, stage == 3 and timersStageThree[350568][callOfEternityCount] or 38, CL.count:format(CL.bombs, callOfEternityCount))
 	end
 
 	function mod:CallOfEternityApplied(args)
@@ -266,7 +290,7 @@ function mod:RealignFateApplied(args)
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
-	self:CDBar(args.spellId, 17, L.rings_active, args.spellId) -- 16-18s
+	self:CDBar(args.spellId, 17.5, L.rings_active, args.spellId) -- 16-18s
 	realignFateCount = realignFateCount + 1
 end
 
@@ -287,10 +311,13 @@ end
 
 do
 	local prev = 0
-	function mod:UnstableFateApplied(args) -- Best way to track it atm
+	function mod:UnstableAccretionApplied(args) -- Best way to track it atm
 		local t = args.time
 		if t-prev > 40 then
 			prev = t
+			self:Message("stages", "green", L.rings_active)
+			self:PlaySound("stages", "info")
+			self:StopBar(L.rings_active)
 			self:CastBar(353122, 40) -- Darkest Destiny
 		end
 	end
@@ -311,8 +338,10 @@ function mod:RealignFateRemoved(args)
 	invokeDestinyCount = 1
 	fatedConjunctionCount = 1
 	callOfEternityCount = 1
+	twistFateCount = 1
 
 	if self:Mythic() then
+		self:CDBar(353931, stage == 3 and 53 or 11.1, CL.count:format(self:SpellName(353931), twistFateCount)) -- Twist Fate
 		self:CDBar(350421, stage == 3 and 8.3 or 15.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
 		self:CDBar(350568, stage == 3 and 10.7 or 16, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
 		self:CDBar(351680, stage == 3 and 24.2 or 25, CL.count:format(CL.add, invokeDestinyCount)) -- Invoke Destiny (Add)
@@ -321,8 +350,9 @@ function mod:RealignFateRemoved(args)
 			self:CDBar(354367, 47, CL.count:format(L.runes, grimPortentCount)) -- Grim Portent (Runes)
 		end
 	else
-		self:CDBar(350421, stage == 3 and 8.3 or 15.5, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
-		self:CDBar(350568, stage == 3 and 10.7 or 27, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
+		self:CDBar(353931, stage == 3 and 53 or 11.1, CL.count:format(self:SpellName(353931), twistFateCount)) -- Twist Fate
+		self:CDBar(350421, stage == 3 and 8.3 or 19, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
+		self:CDBar(350568, stage == 3 and 10.7 or 31.6, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
 		self:CDBar(351680, stage == 3 and 24.2 or 37.8, CL.count:format(CL.add, invokeDestinyCount)) -- Invoke Destiny (Add)
 	end
 
