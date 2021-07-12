@@ -35,6 +35,8 @@ local bridgeCount = 1
 local bansheeShroudRemovedCount = 1
 local baneArrowsCount = 1
 local mercilessCount = 1
+local isInfoOpen = false
+local barbedArrowList = {}
 
 local stageOneTimers = {
 	[347504] = {7.5, 51.1, 49.5, 49.0, 53.5}, -- Windrunner
@@ -103,7 +105,7 @@ function mod:GetOptions()
 		"stages",
 		-- Stage One: A Cycle of Hatred
 		347504, -- Windrunner
-		347807, -- Barbed Arrow
+		{347807, "INFOBOX"}, -- Barbed Arrow
 		356377, -- Desecrating Shot
 		347670, -- Shadow Dagger
 		{349458, "ME_ONLY_EMPHASIZE"}, -- Domination Chains
@@ -187,6 +189,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Windrunner", 347504)
 	self:Log("SPELL_AURA_APPLIED", "BarbedArrowApplied", 347807)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarbedArrowApplied", 347807)
+	self:Log("SPELL_AURA_REMOVED", "BarbedArrowRemoved", 347807)
 	self:Log("SPELL_DAMAGE", "DesecratingShotDamage", 356377)
 	self:Log("SPELL_AURA_APPLIED", "ShadowDaggerApplied", 347670)
 	self:Log("SPELL_CAST_START", "DominationChains", 349419)
@@ -261,6 +264,8 @@ function mod:OnEngage()
 	shadowDaggerCount = 1
 	bansheeShroudRemovedCount = 1
 	intermission = false
+	isInfoOpen = false
+	barbedArrowList = {}
 
 	self:Bar(347504, stageOneTimers[347504][windrunnerCount], CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
 	self:Bar(347670, stageOneTimers[347670][shadowDaggerCount], CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
@@ -430,9 +435,27 @@ function mod:Windrunner(args)
 end
 
 function mod:BarbedArrowApplied(args)
+	if not isInfoOpen then
+		isInfoOpen = true
+		self:OpenInfo(args.spellId, args.spellName)
+	end
+
+	barbedArrowList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, barbedArrowList)
+
 	if self:Me(args.destGUID) then
 		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
 		self:PlaySound(args.spellId, "alarm")
+	end
+end
+
+function mod:BarbedArrowRemoved(args)
+	barbedArrowList[args.destName] = nil
+	if next(barbedArrowList) then
+		self:SetInfoByTable(args.spellId, barbedArrowList)
+	elseif isInfoOpen then
+		isInfoOpen = false
+		self:CloseInfo(args.spellId)
 	end
 end
 
@@ -621,6 +644,7 @@ function mod:BansheeShroudApplied()
 		self:StopBar(CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
 		self:StopBar(CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 		self:StopBar(CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
+		self:CloseInfo(347807) -- Barbed Arrow Infobox
 
 		intermission = true
 		dominationChainsCount = 1
