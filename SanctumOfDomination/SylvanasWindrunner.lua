@@ -72,7 +72,7 @@ local stageThreeTimersMythic = {
 	[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
 	[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
 }
-local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or mod:Heroic() and stageThreeTimersHeroic or mod:Normal() and stageThreeTimersNormal
+local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or mod:Heroic() and stageThreeTimersHeroic or stageThreeTimersNormal
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -261,7 +261,7 @@ function mod:OnBossEnable()
 		self:ShowPlates()
 	end
 
-	stageThreeTimers = self:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
+	stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or mod:Heroic() and stageThreeTimersHeroic or stageThreeTimersNormal
 end
 
 function mod:OnEngage()
