@@ -104,7 +104,7 @@ function mod:GetOptions()
 		"stages",
 		-- Stage One: A Cycle of Hatred
 		347504, -- Windrunner
-		{347807, "INFOBOX"} -- Barbed Arrow
+		{347807, "INFOBOX"}, -- Barbed Arrow
 		356377, -- Desecrating Shot
 		347670, -- Shadow Dagger
 		{349458, "ME_ONLY_EMPHASIZE"}, -- Domination Chains
