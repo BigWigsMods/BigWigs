@@ -228,8 +228,8 @@ end
 
 function mod:SoulExhaustionApplied(args)
 	if self:Tank() and self:Tank(args.destName) then
-		local unit = self:GetBossId(args.sourceGUID) -- Check if its always boss1, then we dont have to GetBossId
-		if not self:Me(args.destGUID) and not self:Tanking(unit) then
+		local unit = self:GetBossId(175559) -- Kel'Thuzad
+		if not self:Me(args.destGUID) and unit and not self:Tanking(unit) then
 			self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(args.spellName, soulFractureCount-1))
 			self:PlaySound(args.spellId, "warning", "taunt", args.destName) -- Not taunted? Play warning sound.
 		elseif self:Me(args.destGUID) then
