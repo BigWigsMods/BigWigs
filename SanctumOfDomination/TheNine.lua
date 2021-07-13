@@ -92,7 +92,7 @@ function mod:GetOptions()
 		{350039, "SAY", "SAY_COUNTDOWN"}, -- Arthura's Crushing Gaze
 		-- Stage Two: The First of the Mawsworn
 		{350475, "TANK"}, -- Pierce Soul
-		351399, -- Resentment
+		355294, -- Resentment
 		350482, -- Link Essence
 		{350687, "INFOBOX"}, -- Word of Recall
 	},{
@@ -162,7 +162,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "SkyjasAdvance", 350745) -- Stage 2
 	self:Log("SPELL_AURA_APPLIED", "PierceSoulApplied", 350475)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PierceSoulApplied", 350475)
-	self:Log("SPELL_CAST_SUCCESS", "Resentment", 351399)
+	self:Log("SPELL_CAST_SUCCESS", "Resentment", 355294)
 	self:Log("SPELL_CAST_START", "LinkEssence", 350482)
 	self:Log("SPELL_CAST_SUCCESS", "LinkEssenceSuccess", 350482)
 	self:Log("SPELL_AURA_APPLIED", "LinkEssenceApplied", 350482)
@@ -189,9 +189,9 @@ function mod:OnEngage()
 	self:Bar(350202, 6, unendingStrikeText) -- Unending Strike
 	self:Bar(350342, 12, CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
 	self:Bar(350467, 14.6, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
-	self:Bar(350286, 16, CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
-	self:Bar(350365, 47.5, CL.count:format(L.run_away, wingsOfRageCount)) -- Wings of Rage
-	self:Bar(350385, 71.5, CL.count:format(L.go_in, reverberatingRefrainCount)) -- Reverberating Refrain
+	self:Bar(350286, 16, CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution 14.5-21.9 (same variances in heroic and mythic)
+	self:Bar(350365, 40, CL.count:format(L.run_away, wingsOfRageCount)) -- Wings of Rage 39.3-42.6
+	self:Bar(350385, 61, CL.count:format(L.go_in, reverberatingRefrainCount)) -- Reverberating Refrain 61.1-64.5
 	self:Bar("berserk", 300, L.berserk_stage1, 26662) -- Custom Berserk bar
 
 	if self:Mythic() then
@@ -240,10 +240,10 @@ function mod:SkyjasAdvance() -- Stage 2
 	self:Message("stages", "green", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
 
-	self:Bar(351399, 6.9) -- Resentment
-	self:Bar(350475, 9.4) -- Pierce Soul
+	self:Bar(350475, 9.4) -- Pierce Soul 8.8-12.9
 	self:Bar(350482, 24.4) -- Link Essence
 	self:CDBar(350542, 13, CL.count:format(L.fragments, fragmentOfDestinyCount))
+	self:Bar(351399, 27.5) -- Resentment 27-31
 	self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 	self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
 
@@ -270,7 +270,15 @@ do
 		playerList = {}
 		allowed = true
 		fragmentOfDestinyCount = fragmentOfDestinyCount + 1
-		self:CDBar(350542, self:Mythic() and 37.7 or 47.5, CL.count:format(L.fragments, fragmentOfDestinyCount))
+		if self:Mythic() then
+			if self:Stage() == 1 then
+				self:CDBar(350542, fragmentOfDestinyCount % 2 == 0 and 37.7 or 35, CL.count:format(L.fragments, fragmentOfDestinyCount)) -- 34.1/35.3, 37.7
+			else
+				self:CDBar(350542, 43, CL.count:format(L.fragments, fragmentOfDestinyCount))
+			end
+		else
+			self:CDBar(350542, 47.5, CL.count:format(L.fragments, fragmentOfDestinyCount))
+		end
 	end
 
 	function mod:FragmentsOfDestinyApplied(args)
@@ -549,7 +557,7 @@ end
 function mod:Resentment(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 8.5)
+	self:CDBar(args.spellId, 22)
 end
 
 do
