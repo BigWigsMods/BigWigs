@@ -378,7 +378,7 @@ function mod:TheJailersGazeApplied(args)
 
 	self:StopBar(CL.count:format(CL.fear, howlCount)) -- Predator's Howl
 	self:StopBar(CL.count:format(L.remnants, remnantCount)) -- Remnants
-	self:StopBar(3469853) -- Overpower
+	self:StopBar(346985) -- Overpower
 	self:StopBar(CL.count:format(L.grasp, graspCount)) -- Grasp of Death
 	self:StopBar(CL.count:format(L.chains, chainsCount)) -- Chains of Eternity
 	self:StopBar(L.enrage) -- Fury of the Ages
