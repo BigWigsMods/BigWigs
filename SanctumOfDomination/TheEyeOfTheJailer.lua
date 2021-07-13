@@ -111,7 +111,7 @@ function mod:OnEngage()
 	self:Bar(349979, 11, L.chains) -- Dragging Chains
 	self:Bar(351413, 25, CL.laser) -- Annihilating Glare
 	if self:Mythic() then
-		self:Bar(350604, 9.7, L.slow) -- Hopeless Lethargy
+		self:Bar(350604, 10.5, L.slow) -- Hopeless Lethargy
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -290,9 +290,9 @@ function mod:StygianDarkshieldRemoved(args)
 
 		self:Bar(350828, 8.3) -- Death Link
 		self:Bar(349979, 16, L.chains) -- Dragging Chains
-		self:Bar(351413, self:Mythic() and 38 or 29, CL.laser) -- Annihilating Glare
+		self:Bar(351413, 30, CL.laser) -- Annihilating Glare
 		if self:Mythic() then
-			self:Bar(350604, 12.7, L.slow) -- Hopeless Lethargy
+			self:Bar(350604, 15.5, L.slow) -- Hopeless Lethargy
 		end
 	end
 end
@@ -316,7 +316,7 @@ function mod:AnnihilatingGlare(args)
 	self:Message(args.spellId, "yellow", CL.laser)
 	self:PlaySound(args.spellId, "warning")
 	self:CastBar(args.spellId, 19, CL.laser) -- 4s cast + 15s channel
-	self:Bar(args.spellId, 69, CL.laser)
+	self:Bar(args.spellId, self:Mythic() and 47.4 or 69, CL.laser)
 end
 
 -- Mythic
@@ -328,7 +328,7 @@ do
 		if t-prev > 5 then
 			prev = t
 			playerList = {}
-			self:Bar(args.spellId, 20, L.slow)
+			self:Bar(args.spellId, 47.4, L.slow)
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
