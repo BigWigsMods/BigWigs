@@ -20,7 +20,7 @@ local timersHeroic = {
 }
 
 local timersMythic = {
-	[350411] = {55.5, 164.0, 43.0, 95, 90}, -- Hellscream _START
+	[350411] = {55.5, 164.0, 43.0, 95}, -- Hellscream _START
 	[350615] = {28.5, 162.5, 60, 94, 61, 101}, -- Call Mawsworn _START
 	[350217] = {12, 45.5, 45.5, 65.5, 32, 33, 30, 44, 44, 82.5}, -- Torment
 	[350422] = {10.7, 33, 33, 41, 54, 33, 33, 37, 60, 33, 41.5, 87.6}, -- Ruinblade _START (4/5 vary by a few seconds)
@@ -89,6 +89,7 @@ function mod:GetOptions()
 		350411, -- Hellscream
 		354231, -- Soul Manacles
 		351229, -- Rendered Soul
+		353554, -- Mythic Overlord Spawn Timer
 	},{
 	},{
 		[350217] = L.cones, -- Torment (Cones)
@@ -146,7 +147,7 @@ function mod:OnEngage()
 	self:Bar(350615, timers[350615][callMawswornCount], CL.count:format(CL.adds, callMawswornCount)) -- Call Mawsworn
 	self:Bar(350647, timers[350647][brandCount], CL.count:format(L.brands, brandCount)) -- Brand of Torment
 	self:Bar(350411, timers[350411][hellscreamCount], CL.count:format(L.chains, hellscreamCount)) -- Hellscream
-	self:Bar(349985, timers[349985][encoreOfTormentCount], CL.count:format(L.dance, encoreOfTormentCount)) -- Tormented Eruptions
+	self:Bar(349985, 131.5, CL.count:format(L.dance, encoreOfTormentCount)) -- Tormented Eruptions
 
 end
 
@@ -198,7 +199,7 @@ function mod:TormentedEruptions(args)
 	self:Message(args.spellId, "cyan", CL.count:format(L.dance, encoreOfTormentCount))
 	self:PlaySound(args.spellId, "alert")
 	encoreOfTormentCount = encoreOfTormentCount + 1
-	self:Bar(args.spellId, timers[args.spellId][encoreOfTormentCount], CL.count:format(L.dance, encoreOfTormentCount))
+	self:Bar(args.spellId, 161.5, CL.count:format(L.dance, encoreOfTormentCount))
 	-- XXX Schedule cast bars for each cone / use remaining events on retail
 
 	brandCount = 1
