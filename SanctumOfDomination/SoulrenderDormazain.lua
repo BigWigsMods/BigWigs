@@ -284,6 +284,7 @@ do
 		end
 		if self:Mythic() then
 			self:Bar(353554, 7, L.overlord)
+		end
 	end
 end
 
