@@ -26,6 +26,7 @@ local hellscreamCount = 1
 local chainCount = 3
 local encoreOfTormentCount = 1
 local tormentCount = 1
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -103,7 +104,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "RuinbladeApplied", 350422)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "RuinbladeApplied", 350422)
 	self:Log("SPELL_CAST_START", "CallMawsworn", 350615)
-	self:Log("SPELL_SUMMON", "AgonizerSpawn", 346459, 351351) -- Heroic, Mythic
 	self:Log("SPELL_CAST_START", "AgonizingSpike", 351779)
 	self:Log("SPELL_AURA_APPLIED", "GarroshDefianceApplied", 350650) -- Buff they get when reaching Garrosh, not from the Overlord
 	self:Log("SPELL_AURA_APPLIED", "DefianceApplied", 351773) -- Overlord buff
@@ -127,6 +127,7 @@ function mod:OnEngage()
 	encoreOfTormentCount = 1
 	tormentCount = 1
 	brandCount = 1
+	mobCollector = {}
 
 	self:Bar(350422, 10.7) -- Ruinblade
 	self:Bar(350217, 12, CL.count:format(L.cones, tormentCount)) -- Torment
@@ -247,21 +248,15 @@ end
 
 do
 	local agonizersMarked = 0
-	local agonizersSpawned = 0
-	local agonizerTracker = {}
 	function mod:AgonizerMarking(event, unit, guid)
-		if self:MobId(guid) == 177594 and agonizerTracker[guid] then -- Mawsworn Agonizer
+		if self:MobId(guid) == 177594 and not mobCollector[guid] then -- Mawsworn Agonizer
+			self:CustomIcon(agonizerMarker, unit, 8-agonizersMarked) -- 8, 7, 6, 5
+			mobCollector[guid] = true
 			agonizersMarked = agonizersMarked + 1
-			self:CustomIcon(agonizerMarker, unit, agonizerTracker[guid]) -- 8, 7, 6, 5
 			if agonizersMarked == 4 then -- All 4 marked
 				self:UnregisterTargetEvents()
 			end
 		end
-	end
-
-	function mod:AgonizerSpawn(args)
-		agonizersSpawned = agonizersSpawned + 1
-		agonizerTracker[args.destGUID] = 9-agonizersSpawned -- icon 8, 7, 6... etc
 	end
 
 	function mod:CallMawsworn(args)
@@ -269,11 +264,8 @@ do
 		self:PlaySound(args.spellId, "info")
 		callMawswornCount = callMawswornCount + 1
 		self:Bar(args.spellId, timers[args.spellId][callMawswornCount], CL.count:format(CL.adds, callMawswornCount))
-
 		if self:GetOption(agonizerMarker) then
-			agonizersSpawned = 0
 			agonizersMarked = 0
-			agonizerTracker = {}
 			self:RegisterTargetEvents("AgonizerMarking")
 			self:ScheduleTimer("UnregisterTargetEvents", 20)
 		end
