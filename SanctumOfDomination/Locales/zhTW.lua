@@ -36,9 +36,9 @@ if L then
 	L.small_bombs = "小炸彈" -- Brynja's Mournful Dirge; 待定
 	L.recall = "撤回" -- Short for Word of Recall; 待定，召回、撤回、或者取消？
 
-	--L.blades_yell = "Fall before my blade!"
-	--L.soaks_yell = "You are all outmatched!"
-	--L.shield_yell = "My shield never falters!"
+	L.blades_yell = "死在我的利刃之下！"
+	L.soaks_yell = "你們毫無勝算！"
+	L.shield_yell = "我的盾堅不可摧！"
 
 	L.berserk_stage1 = "狂暴階段一"
 	L.berserk_stage2 = "狂暴階段二"
