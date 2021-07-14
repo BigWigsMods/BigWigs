@@ -243,7 +243,7 @@ function mod:SkyjasAdvance() -- Stage 2
 	self:Bar(350475, 9.4) -- Pierce Soul 8.8-12.9
 	self:Bar(350482, 24.4) -- Link Essence
 	self:CDBar(350542, 13, CL.count:format(L.fragments, fragmentOfDestinyCount))
-	self:Bar(351399, 27.5) -- Resentment 27-31
+	self:Bar(355294, 27.5) -- Resentment 27-31
 	self:Bar(350467, 43.9, CL.count:format(L.valkyr, callOfTheValkyrCount)) -- Call of the Val'kyr
 	self:Bar(350687, 76.5, CL.count:format(L.recall, callOfTheValkyrCount)) -- Word of Recall
 
