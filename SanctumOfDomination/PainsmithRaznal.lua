@@ -74,7 +74,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SpikedBalls", 352052)
 	self:Log("SPELL_AURA_APPLIED", "BlackenedArmorApplied", 355786)
 
-	self:Log("SPELL_CAST_SUCCESS", "FlameclaspTrap", 348456)
 	self:Log("SPELL_AURA_APPLIED", "FlameclaspTrapApplied", 348456)
 	self:Log("SPELL_AURA_REMOVED", "FlameclaspTrapRemoved", 348456)
 
@@ -163,13 +162,15 @@ end
 
 do
 	local playerList = {}
-	function mod:FlameclaspTrap(args)
-		playerList = {}
-		trapsCount = trapsCount + 1
-		self:Bar(args.spellId, 40, CL.count:format(CL.traps, trapsCount))
-	end
-
+	local prev = 0
 	function mod:FlameclaspTrapApplied(args)
+		local t = args.time -- new set of debuffs
+		if t-prev > 5 then
+			prev = t
+			playerList = {}
+			trapsCount = trapsCount + 1
+			self:Bar(args.spellId, 40, CL.count:format(CL.traps, trapsCount))
+		end
 		playerList[#playerList+1] = args.destName
 		local mark = #playerList + 3
 		playerList[args.destName] = mark -- Set raid marker
