@@ -35,7 +35,7 @@ if L then
 	L.scythe = "Scythe" -- Short for Dualblade Scythe
 	L.trap = "Trap" -- Short for Flameclasp Trap
 	L.chains = "Chains" -- Short for Shadowsteel Chains
-	L.ember = "Ember" -- Short for Shadowsteel Ember
+	L.embers = "Embers" -- Short for Shadowsteel Embers
 end
 
 --------------------------------------------------------------------------------
@@ -63,7 +63,7 @@ function mod:GetOptions()
 		[348508] = L.hammer, -- Rippling Hammer (Hammer)
 		[355568] = L.axe, -- Cruciform Axe (Axe)
 		[355778] = L.scythe, -- Dualblade Scythe (Scythe)
-		[355534] = L.ember, -- Shadowsteel Ember (Ember)
+		[355534] = L.embers, -- Shadowsteel Ember (Embers)
 	}
 end
 
@@ -228,11 +228,11 @@ end
 do
 	local emberCount = 0
 	function mod:RepeatEmber()
-		self:Message(355534, "yellow", CL.count:format(L.ember, emberCount))
+		self:Message(355534, "yellow", CL.count:format(L.embers, emberCount))
 		emberCount = emberCount + 1
 		if emberCount < (self:Mythic() and 11 or 9) then
 			self:ScheduleTimer("RepeatEmber", 5)
-			self:Bar(355534, 5, CL.count:format(L.ember, emberCount))
+			self:Bar(355534, 5, CL.count:format(L.embers, emberCount))
 		end
 		self:PlaySound(355534, "alert")
 	end
@@ -248,7 +248,7 @@ do
 		self:PlaySound("stages", "info")
 
 		emberCount = 2 -- First happens instantly on Intermission start
-		self:Bar(355534, 5, CL.count:format(L.ember, emberCount))
+		self:Bar(355534, 5, CL.count:format(L.embers, emberCount))
 		self:ScheduleTimer("RepeatEmber", 5)
 
 		self:Bar("stages", self:Mythic() and 51.8 or 41.8, CL.intermission, args.spellId) -- 35s (45 on Mythic) Forge Weapon + 6.8s to jump down
