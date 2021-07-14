@@ -49,7 +49,7 @@ BigWigs:AddSounds("The Nine", {
 	[350542] = {"alarm","info","warning"},
 	[350555] = "underyou",
 	[350687] = "info",
-	[351399] = "alert",
+	[355294] = "alert",
 	["stages"] = "long",
 })
 
@@ -90,8 +90,7 @@ BigWigs:AddSounds("Guardian of the First Ones", {
 	[347359] = "underyou",
 	[350455] = "warning",
 	[350496] = "warning",
-	[350732] = "warning",
-	[350734] = "alarm",
+	[350732] = {"alarm","warning"},
 	[352385] = "info",
 	[352394] = "info",
 	[352538] = "long",

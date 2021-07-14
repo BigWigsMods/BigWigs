@@ -51,7 +51,7 @@ BigWigs:AddColors("The Nine", {
 	[350542] = {"blue","cyan","green"},
 	[350555] = "blue",
 	[350687] = "cyan",
-	[351399] = "yellow",
+	[355294] = "yellow",
 	["stages"] = "green",
 })
 
@@ -96,7 +96,6 @@ BigWigs:AddColors("Guardian of the First Ones", {
 	[350455] = "blue",
 	[350496] = {"blue","orange","yellow"},
 	[350732] = {"blue","purple"},
-	[350734] = {"blue","purple"},
 	[352385] = "cyan",
 	[352394] = {"green","red"},
 	[352538] = "red",
@@ -114,7 +113,7 @@ BigWigs:AddColors("Fatescribe Roh-Kalo", {
 	[353398] = "blue",
 	[353432] = "blue",
 	[353603] = "purple",
-	[353931] = "blue",
+	[353931] = {"blue","orange"},
 	[354367] = {"blue","yellow"},
 	[354964] = {"blue","orange"},
 	[357144] = "yellow",
