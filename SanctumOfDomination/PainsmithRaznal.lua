@@ -56,7 +56,7 @@ function mod:GetOptions()
 		flameclaspTrapMarker,
 		{355505, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Shadowsteel Chains
 		shadowsteelChainsMarker,
-		{355534}, -- Shadowsteel Ember
+		355534, -- Shadowsteel Ember
 	},{
 		["stages"] = "general",
 	},{
@@ -84,7 +84,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ForgeWeapon", 355525)
 	self:Log("SPELL_AURA_REMOVED", "ForgeWeaponOver", 355525)
 
-	self:Log("SPELL_SUMMON", "ShadowsteelEmber", 355536)
+	--self:Log("SPELL_SUMMON", "ShadowsteelEmber", 355536) -- XXX changed from PTR
 end
 
 function mod:OnEngage()
@@ -227,18 +227,14 @@ end
 
 do
 	local emberCount = 0
-	function mod:ShadowsteelEmber()
-		if self:Mythic() then
-			self:Message(355534, "yellow", CL.count:format(L.ember, emberCount))
-			self:PlaySound(355534, "alert")
-		end
+	function mod:RepeatEmber()
+		self:Message(355534, "yellow", CL.count:format(L.ember, emberCount))
 		emberCount = emberCount + 1
-		if emberCount < 9 then
+		if emberCount < (self:Mythic() and 11 or 9) then
+			self:ScheduleTimer("RepeatEmber", 5)
 			self:Bar(355534, 5, CL.count:format(L.ember, emberCount))
-			if not self:Mythic() then
-				self:ScheduleTimer("ShadowsteelEmber", 5)
-			end
 		end
+		self:PlaySound(355534, "alert")
 	end
 
 	function mod:ForgeWeapon(args)
@@ -251,13 +247,11 @@ do
 		self:Message("stages", "cyan", CL.intermission, args.spellId)
 		self:PlaySound("stages", "info")
 
-		emberCount = 1
-		self:Bar(355534, 2, CL.count:format(L.ember, emberCount))
-		if not self:Mythic() then
-			self:ScheduleTimer("ShadowsteelEmber", 2)
-		end
+		emberCount = 2 -- First happens instantly on Intermission start
+		self:Bar(355534, 5, CL.count:format(L.ember, emberCount))
+		self:ScheduleTimer("RepeatEmber", 5)
 
-		self:Bar("stages", 41.8, CL.intermission, args.spellId) -- 35s Forge Weapon + 6.8s to jump down
+		self:Bar("stages", self:Mythic() and 51.8 or 41.8, CL.intermission, args.spellId) -- 35s (45 on Mythic) Forge Weapon + 6.8s to jump down
 	end
 
 	function mod:ForgeWeaponOver(args)
