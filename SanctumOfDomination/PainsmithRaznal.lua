@@ -261,7 +261,10 @@ do
 	end
 
 	function mod:ForgeWeaponOver(args)
+		instrumentCount = 1
 		spikedBallsCount = 1
+		trapsCount = 1
+		chainsCount = 1
 		self:SetStage(self:GetStage() + 1)
 		self:Message("stages", "cyan", CL.soon:format(args.sourceName), false)
 		self:PlaySound("stages", "long")
