@@ -369,9 +369,9 @@ end
 
 function mod:FrostBlastSuccess(args)
 	frostBlastCount = frostBlastCount + 1
-	if self:Stage() == 1 then
+	if self:GetStage() == 1 then
 		self:CDBar(348760, frostBlastCount == 1 and 42.4 or 76.1, CL.count:format(CL.meteor, frostBlastCount))
-	elseif self:Stage() == 3 and frostBlastCount % 3 ~= 0 then
+	elseif self:GetStage() == 3 and frostBlastCount % 3 ~= 0 then
 		self:CDBar(348760, 15.7, CL.count:format(CL.meteor, frostBlastCount))
 	end
 end
