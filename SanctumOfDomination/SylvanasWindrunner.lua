@@ -523,7 +523,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("347704") then
 		self:Message(347704, "orange", CL.count:format(L.darkness, veilofDarknessCount))
 		self:PlaySound(347704, "alert")
-		self:CastBar(347704, 6.8)
+		self:CastBar(347704, 6.8, L.darkness)
 		self:StopBar(CL.count:format(L.darkness, veilofDarknessCount))
 		veilofDarknessCount = veilofDarknessCount + 1
 		if self:GetStage() == 1 and not intermission then
