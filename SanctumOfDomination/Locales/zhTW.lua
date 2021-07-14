@@ -32,7 +32,7 @@ if L then
 	L.big_bombs = "大炸彈" -- Daschla's Mighty Impact; 待定
 	L.big_bomb = "大炸彈" -- Attached to the countdown; 待定
 	L.shield = "減傷盾" -- Annhylde's Bright Aegis; 待定
-	L.soaks = "接圈" -- Aradne's Falling Strike; 待定，原文是soak，這是習慣用語差異
+	L.soaks = "接圈" -- Aradne's Falling Strike
 	L.small_bombs = "小炸彈" -- Brynja's Mournful Dirge; 待定
 	L.recall = "撤回" -- Short for Word of Recall; 待定，召回、撤回、或者取消？
 
@@ -65,7 +65,7 @@ if L then
 	L.dance = "跳舞" -- Encore of Torment
 	L.brands = "烙印" -- Brand of Torment
 	L.brand = "烙印" -- Single Brand of Torment
-	L.spike = "尖刺" -- Short for Agonizing Spike; 中文縮寫必要性不大
+	L.spike = "尖刺" -- Short for Agonizing Spike
 	L.chains = "鎖鏈" -- Hellscream
 	L.chain = "鎖鏈" -- Soul Manacles
 	L.souls = "靈魂" -- Rendered Soul
@@ -76,7 +76,7 @@ end
 
 L = BigWigs:NewBossLocale("Painsmith Raznal", "zhTW")
 if L then
-	L.hammer = "迴盪錘" -- Short for Rippling Hammer; 夠短了所以在中文不需要縮寫，想要更短就是錘子斧頭鐮刀
+	L.hammer = "迴盪錘" -- Short for Rippling Hammer
 	L.axe = "十字斧" -- Short for Cruciform Axe
 	L.scythe = "雙刃鐮" -- Short for Dualblade Scythe
 	L.trap = "陷阱" -- Short for Flameclasp Trap
@@ -97,7 +97,7 @@ if L then
 	L.runes = "符文"
 
 	L.grimportent_countdown = "倒數"
-	L.grimportent_countdown_desc = "為受到恐惡兆的玩家顯示倒數技時。"
+	L.grimportent_countdown_desc = "為受到恐怖惡兆的玩家顯示倒數技時。"
 	L.grimportent_countdown_bartext = "去找符文！"
 end
 
@@ -122,14 +122,14 @@ if L then
 	L.chains = "鎖鏈" -- Short for Domination Chains
 	L.chain = "鎖鏈" -- Single Domination Chain
 	L.darkness = "黑暗" -- Short for Veil of Darkness
-	L.arrow = "悲鳴箭" -- Short for Wailing Arrow; 夠短了所以在中文不需要縮寫
+	L.arrow = "悲鳴箭" -- Short for Wailing Arrow
 	L.wave = "波浪" -- Short for Haunting Wave
-	L.dread = "碎擊" -- Short for Crushing Dread; 可能要改
+	L.dread = "碎擊" -- Short for Crushing Dread
 	L.orbs = "球" -- Dark Communion; 可能要改
 	L.curse = "詛咒" -- Short for Curse of Lethargy
 	L.pools = "災禍" -- Banshee's Bane
 	L.scream = "號叫" -- Banshee Scream
 
-	-- L.knife_fling = "Knives out!" -- "Death-touched blades fling out"
+	L.knife_fling = "飛刀！" -- "Death-touched blades fling out"; 傳奇模式的死亡利刃射出計時，暫定
 end
 
