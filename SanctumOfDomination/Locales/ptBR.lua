@@ -81,7 +81,7 @@ if L then
 	L.scythe = "Foice" -- Short for Dualblade Scythe
 	L.trap = "Armadilha" -- Short for Flameclasp Trap
 	L.chains = "Correntes" -- Short for Shadowsteel Chains
-	L.ember = "Brasas" -- Short for Shadowsteel Ember
+	L.embers = "Brasas" -- Short for Shadowsteel Embers
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "ptBR")
