@@ -187,6 +187,10 @@ function mod:HowlingBlizzard(args)
 	self:CastBar(args.spellId, 23, CL.count:format(args.spellName, blizzardCount))
 	blizzardCount = blizzardCount + 1
 	self:CDBar(354198, 118.5, CL.count:format(self:SpellName(354198), blizzardCount)) -- Howling Blizzard
+
+	oblivionsEchoCount = 1
+	glacialWrathCount = 1
+	frostBlastCount = 1
 end
 
 function mod:DarkEvocation(args)
