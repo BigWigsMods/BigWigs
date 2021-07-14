@@ -20,7 +20,7 @@ local timersHeroic = {
 }
 
 local timersMythic = {
-	[350411] = {55.5, 164.0, 43.0, 65, 55, 40}, -- Hellscream _START
+	[350411] = {55.5, 164.0, 43.0, 65, 55, 40, 60}, -- Hellscream _START
 	[350615] = {28.5, 162.5, 60, 94, 61, 101}, -- Call Mawsworn _START
 	[350217] = {12, 45.5, 45.5, 65.5, 33, 33, 30, 50, 30}, -- Torment
 	[350422] = {10.7, 33, 33, 41, 54, 33, 33, 37, 60, 33, 41.5, 87.6}, -- Ruinblade _START (4/5 vary by a few seconds)
@@ -148,6 +148,10 @@ function mod:OnEngage()
 	self:Bar(350647, timers[350647][brandCount], CL.count:format(L.brands, brandCount)) -- Brand of Torment
 	self:Bar(350411, timers[350411][hellscreamCount], CL.count:format(L.chains, hellscreamCount)) -- Hellscream
 	self:Bar(349985, 131.5, CL.count:format(L.dance, encoreOfTormentCount)) -- Tormented Eruptions
+
+	if self:Mythic() then
+		self:Berserk(500) --Mythic berserk timing, might be normal/heroic but unknown.
+	end
 
 end
 
