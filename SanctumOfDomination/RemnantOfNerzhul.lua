@@ -13,6 +13,7 @@ mod:SetRespawnTime(50)
 --
 
 local nextShatterWarning = 83
+local prevBombsRemoved = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -201,6 +202,7 @@ do
 	end
 
 	function mod:MalevolenceRemoved(args)
+		prevBombsRemoved = args.time
 		if self:Me(args.destGUID) then
 			self:StopBar(CL.bomb, args.destName)
 			self:CancelSayCountdown(args.spellId)
@@ -284,7 +286,7 @@ do
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) then
 			local t = args.time
-			if t-prev > 2 then
+			if t-prev > 2 and t-prevBombsRemoved > 0.5 then -- Don't warn every time bomb is removed
 				prev = t
 				self:PlaySound(args.spellId, "underyou")
 				self:PersonalMessage(args.spellId, "underyou")
