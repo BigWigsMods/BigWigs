@@ -523,15 +523,17 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("347704") then
 		self:Message(347704, "orange", CL.count:format(L.darkness, veilofDarknessCount))
 		self:PlaySound(347704, "alert")
-		self:CastBar(347704, 6.8, L.darkness)
 		self:StopBar(CL.count:format(L.darkness, veilofDarknessCount))
 		veilofDarknessCount = veilofDarknessCount + 1
 		if self:GetStage() == 1 and not intermission then
+			self:CastBar(347704, 6.8, L.darkness)
 			self:CDBar(347704, stageOneTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount))
 		elseif self:GetStage() == 2 then
+			self:CastBar(347704, 4.8, L.darkness)
 			-- Started at bridge
 			self:StopBar(CL.count:format(L.darkness, veilofDarknessCount-1))
 		elseif self:GetStage() == 3 then
+			self:CastBar(347704, 4.8, L.darkness)
 			self:Bar(347704, stageThreeTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount))
 		end
 	end
@@ -562,7 +564,7 @@ do
 	function mod:WailingArrow(args)
 		local count = self:GetStage() == 1 and wailingArrowCount or wailingArrowCastCount
 		local target = table.remove(playerList, 1)
-		self:Message(args.spellId, "yellow", CL.other:format(CL.count:format(L.arrow, count), target))
+		self:Message(args.spellId, "yellow", CL.other:format(CL.count:format(L.arrow, count), self:ColorName(target)))
 		self:PlaySound(args.spellId, "alert")
 		wailingArrowCastCount = wailingArrowCastCount + 1
 		if not intermission and self:GetStage() == 1 then
@@ -647,6 +649,7 @@ function mod:BansheeShroudApplied()
 		self:Message("stages", "cyan", CL.intermission, false)
 		self:PlaySound("stages", "long")
 
+		self:UnregisterUnitEvent("UNIT_HEALTH", "boss1")
 		self:StopBar(352650) -- Ranger's Heartseeker
 		self:StopBar(CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
 		self:StopBar(CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
