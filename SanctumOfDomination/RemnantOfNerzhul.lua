@@ -84,7 +84,7 @@ function mod:OnEngage()
 	nextShatterWarning = 83
 
 	self:CDBar(350676, 13, L.orbs) -- Orb of Torment
-	self:CDBar(349890, 20.3) -- Suffering
+	self:CDBar(349890, 20.3, CL.beam) -- Suffering
 	self:CDBar(350469, 26, CL.bombs) -- Malevolence 26~49??
 	self:CDBar(355123, 39, L.cones) -- Grasp of Malice 39~65??
 
@@ -245,8 +245,7 @@ do
 
 	function mod:Suffering(args)
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		self:Bar(349890, 17, CL.beam)
-		self:CDBar(349890, 24.4) -- ???
+		self:CDBar(349890, 24.4, CL.beam)
 		-- 32.8, Shatter (Gauntlet), 31.6, 19.5, 24.3, 24.3, 25.6, Shatter (Rattlecage), 28.1, 21.9, 24.3, 21.9
 		-- 28.0, 27.9, 24.4, Shatter (Gauntlet), 26.7, 20.6, 23.1, 26.8, Shatter (Rattlecage), 32.9, 23.1, 24.3, 23.1
 	end
