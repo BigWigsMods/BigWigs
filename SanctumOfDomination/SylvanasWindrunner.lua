@@ -51,7 +51,7 @@ local stageThreeTimersNormal = {
 	[347609] = {77.4, 57.5, 57.8, 60.0}, -- Wailing Arrow
 	[354147] = {86.4, 76.0, 76.0, 76.0}, -- Raze
 	[353952] = {92.7, 50.0, 54.9, 52.6, 54.6}, -- Banshee Scream
-	[353935] = {47.7, 80.0, 84.6}, -- Shadow Dagger
+	[347670] = {47.7, 80.0, 84.6}, -- Shadow Dagger (353935 in stage 3)
 	}
 local stageThreeTimersHeroic = {
 	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
@@ -61,7 +61,7 @@ local stageThreeTimersHeroic = {
 	[347609] = {73, 55.8, 53.6, 55.6}, -- Wailing Arrow
 	[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
 	[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
-	[353935] = {45.9, 77.4, 79.5, 73.8}, -- Shadow Dagger
+	[347670] = {45.9, 77.4, 79.5, 73.8}, -- Shadow Dagger (353935 in stage 3)
 }
 local stageThreeTimersMythic = {
 	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
