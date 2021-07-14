@@ -7,7 +7,7 @@
 ## Title-frFR: BigWigs [|cffeda55fOmbreterre|r]
 ## Title-ruRU: BigWigs [|cffeda55fShadowlands|r]
 ## Title-zhCN: BigWigs [|cffeda55f暗影界|r]
-## Title-zhTW: BigWigs [|cffeda55fShadowlands|r]
+## Title-zhTW: BigWigs [|cffeda55f暗影之境|r]
 ## Title-itIT: BigWigs [|cffeda55fShadowlands|r]
 ## Title-ptBR: BigWigs [|cffeda55fShadowlands|r]
 ## Title-koKR: BigWigs [|cffeda55fShadowlands|r]
@@ -18,7 +18,7 @@
 ## Notes-frFR: Modules BigWigs concernant l'Ombreterre.
 ## Notes-ruRU: BigWigs Shadowlands Modules
 ## Notes-zhCN: BigWigs 暗影界模块。
-## Notes-zhTW: BigWigs Shadowlands Modules
+## Notes-zhTW: BigWigs 暗影之境模組。
 ## Notes-itIT: BigWigs Shadowlands Modules
 ## Notes-ptBR: BigWigs Shadowlands Modules
 ## Notes-koKR: BigWigs Shadowlands Modules
