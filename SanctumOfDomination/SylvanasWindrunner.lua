@@ -54,8 +54,8 @@ local stageThreeTimersNormal = {
 	[347670] = {47.7, 80.0, 84.6}, -- Shadow Dagger (353935 in stage 3)
 	}
 local stageThreeTimersHeroic = {
-	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2}, -- Banshee's Fury
-	[354011] = {28.7, 76.8, 73.2, 76.7}, -- Bane Arrows
+	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2, 57.9}, -- Banshee's Fury
+	[354011] = {28.7, 76.8, 73.2, 76.7, 74.0}, -- Bane Arrows
 	[353969] = {34.8, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7, 23.2, 10.2}, -- Banshee's Heartseeker
 	[347704] = {39, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
 	[347609] = {73, 55.8, 53.6, 55.6}, -- Wailing Arrow
