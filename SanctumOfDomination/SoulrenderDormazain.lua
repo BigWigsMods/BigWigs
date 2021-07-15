@@ -21,7 +21,7 @@ local timersHeroic = {
 
 local timersMythic = {
 	[350411] = {55.5, 164.0, 43.0, 65, 55, 40, 60, 70, 60, 60}, -- Hellscream _START
-	[350615] = {25, 60, 145, 65, 75, 65, 60}, -- Call Mawsworn _START
+	[350615] = {25, 60, 100, 65, 75, 65, 60}, -- Call Mawsworn _START
 	[350217] = {12, 45.5, 45.5, 65.5, 33, 33, 30, 60, 30, 30, 30, 30, 30}, -- Torment
 	[350422] = {10.7, 33, 33, 41, 54, 33, 33, 37, 60, 33, 41.5, 87.6}, -- Ruinblade _START (4/5 vary by a few seconds)
 }
