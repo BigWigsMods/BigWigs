@@ -2834,11 +2834,12 @@ end
 
 --- Start a "berserk" bar and show an engage message.
 -- @number seconds the time before the boss enrages/berserks
--- @bool[opt] noEngageMessage if true, don't display an engage message
+-- @param[opt] noMessages if any value, don't display an engage message. If set to 0, don't display any messages
 -- @string[opt] customBoss set a custom boss name
 -- @string[opt] customBerserk set a custom berserk name (and icon if a spell id), defaults to "Berserk"
 -- @string[opt] customFinalMessage set a custom message to display when the berserk timer finishes
-function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, customFinalMessage)
+-- @string[opt] customBarText set a custom text to display on the Berserk bar
+function boss:Berserk(seconds, noMessages, customBoss, customBerserk, customFinalMessage, customBarText)
 	local name = customBoss or self.displayName
 	local key = "berserk"
 
@@ -2854,22 +2855,24 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 		berserk = customBerserk
 	end
 
-	self:Bar(key, seconds, berserk, icon)
+	self:Bar(key, seconds, customBarText or berserk, icon)
 
-	if not noEngageMessage then
+	if not noMessages then
 		-- Engage warning with minutes to enrage
 		self:MessageOld(key, "yellow", nil, format(L.custom_start, name, berserk, seconds / 60), false)
 	end
 
-	-- Half-way to enrage warning.
-	local half = seconds / 2
-	local m = half % 60
-	local halfMin = (half - m) / 60
-	self:DelayedMessage(key, half + m, "yellow", format(L.custom_min, berserk, halfMin))
+	if noMessages ~= 0 then
+		-- Half-way to enrage warning.
+		local half = seconds / 2
+		local m = half % 60
+		local halfMin = (half - m) / 60
+		self:DelayedMessage(key, half + m, "yellow", format(L.custom_min, berserk, halfMin))
 
-	self:DelayedMessage(key, seconds - 60, "orange", format(L.custom_min, berserk, 1))
-	self:DelayedMessage(key, seconds - 30, "orange", format(L.custom_sec, berserk, 30))
-	self:DelayedMessage(key, seconds - 10, "orange", format(L.custom_sec, berserk, 10))
-	self:DelayedMessage(key, seconds - 5, "orange", format(L.custom_sec, berserk, 5))
-	self:DelayedMessage(key, seconds, "red", customFinalMessage or format(L.custom_end, name, berserk), icon, "Alarm")
+		self:DelayedMessage(key, seconds - 60, "orange", format(L.custom_min, berserk, 1))
+		self:DelayedMessage(key, seconds - 30, "orange", format(L.custom_sec, berserk, 30))
+		self:DelayedMessage(key, seconds - 10, "orange", format(L.custom_sec, berserk, 10))
+		self:DelayedMessage(key, seconds - 5, "orange", format(L.custom_sec, berserk, 5))
+		self:DelayedMessage(key, seconds, "red", customFinalMessage or format(L.custom_end, name, berserk), icon, "Alarm")
+	end
 end
