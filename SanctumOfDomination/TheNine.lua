@@ -271,7 +271,7 @@ do
 		allowed = true
 		fragmentOfDestinyCount = fragmentOfDestinyCount + 1
 		if self:Mythic() then
-			if self:Stage() == 1 then
+			if self:GetStage() == 1 then
 				self:CDBar(350542, fragmentOfDestinyCount % 2 == 0 and 37.7 or 35, CL.count:format(L.fragments, fragmentOfDestinyCount)) -- 34.1/35.3, 37.7
 			else
 				self:CDBar(350542, 43, CL.count:format(L.fragments, fragmentOfDestinyCount))
