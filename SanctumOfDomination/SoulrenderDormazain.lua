@@ -87,6 +87,7 @@ function mod:GetOptions()
 		350411, -- Hellscream
 		354231, -- Soul Manacles
 		351229, -- Rendered Soul
+		"berserk",
 	},{
 	},{
 		[350217] = L.cones, -- Torment (Cones)
@@ -140,7 +141,7 @@ function mod:OnEngage()
 	mobCollector = {}
 
 	if self:Mythic() then
-		self:Berserk(510)
+		self:Berserk(510, true) -- XXX should probably make this entirely silent
 	end
 	self:Bar(350422, timers[350422][ruinbladeCount]) -- Ruinblade
 	self:Bar(350217, timers[350217][tormentCount], CL.count:format(L.cones, tormentCount)) -- Torment
@@ -245,7 +246,7 @@ end
 
 function mod:Ruinblade(args)
 	ruinbladeCount = ruinbladeCount + 1
-	self:Bar(args.spellId, timers[args.spellId][ruinbladeCount] or 33)
+	self:Bar(args.spellId, timers[args.spellId][ruinbladeCount])
 end
 
 function mod:RuinbladeApplied(args)
@@ -331,7 +332,9 @@ function mod:Hellscream(args)
 	hellscreamCount = hellscreamCount + 1
 	local duration = timers[args.spellId][hellscreamCount]
 	self:Bar(args.spellId, duration, CL.count:format(L.chains, hellscreamCount))
-	self:DelayedMessage(args.spellId, duration-10, "red", CL.soon:format(CL.count:format(L.chains, hellscreamCount)), nil, "alarm")
+	if duration then
+		self:DelayedMessage(args.spellId, duration-10, "red", CL.soon:format(CL.count:format(L.chains, hellscreamCount)), nil, "alarm")
+	end
 	self:RenderedSoul()
 end
 
