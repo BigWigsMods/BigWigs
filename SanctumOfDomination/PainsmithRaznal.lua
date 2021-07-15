@@ -146,7 +146,7 @@ function mod:SpikedBalls(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, spikedBallsCount))
 	self:PlaySound(args.spellId, "alarm")
 	spikedBallsCount = spikedBallsCount + 1
-	self:Bar(args.spellId, 41.4, CL.count:format(args.spellName, spikedBallsCount))
+	self:Bar(args.spellId, self:GetStage() > 1 and 48 or 41, CL.count:format(args.spellName, spikedBallsCount))
 end
 
 function mod:BlackenedArmorApplied(args)
