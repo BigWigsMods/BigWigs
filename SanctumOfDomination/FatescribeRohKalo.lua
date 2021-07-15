@@ -243,7 +243,11 @@ function mod:FatedConjunction(args)
 	self:CastBar(args.spellId, 6.8, CL.count:format(CL.beams, fatedConjunctionCount))
 	self:StopBar(CL.count:format(CL.beams, fatedConjunctionCount))
 	fatedConjunctionCount = fatedConjunctionCount + 1
-	self:CDBar(args.spellId, stage == 3 and timersStageThree[args.spellId][fatedConjunctionCount] or 60, CL.count:format(CL.beams, fatedConjunctionCount)) -- XXX stage 1 unconfirmed, but at least 60s it looked like
+	if stage == 3 then
+		self:CDBar(args.spellId, timersStageThree[args.spellId][fatedConjunctionCount], CL.count:format(CL.beams, fatedConjunctionCount))
+	else
+		self:CDBar(args.spellId, fatedConjunctionCount % 2 == 0 and 60.3 or 26.7, CL.count:format(CL.beams, fatedConjunctionCount)) -- 60.4 26.7 26.7
+	end
 end
 
 do
@@ -253,7 +257,7 @@ do
 		self:CastBar(350568, 10, CL.count:format(CL.bombs, callOfEternityCount))
 		self:StopBar(CL.count:format(CL.bombs, callOfEternityCount))
 		callOfEternityCount = callOfEternityCount + 1
-		self:CDBar(350568, stage == 3 and timersStageThree[350568][callOfEternityCount] or 38, CL.count:format(CL.bombs, callOfEternityCount))
+		self:CDBar(350568, stage == 3 and timersStageThree[350568][callOfEternityCount] or 38, CL.count:format(CL.bombs, callOfEternityCount)) -- 38-40
 	end
 
 	function mod:CallOfEternityApplied(args)
@@ -353,7 +357,7 @@ function mod:RealignFateRemoved(args)
 		self:CDBar(353931, stage == 3 and 53 or 11.1, CL.count:format(self:SpellName(353931), twistFateCount)) -- Twist Fate
 		self:CDBar(350421, stage == 3 and 8.3 or 19, CL.count:format(CL.beams, fatedConjunctionCount)) -- Fated Conjunction (Beams)
 		self:CDBar(350568, stage == 3 and 10.7 or 31.6, CL.count:format(CL.bombs, callOfEternityCount)) -- Call of Eternity (Bombs)
-		self:CDBar(351680, stage == 3 and 24.2 or 37.8, CL.count:format(CL.add, invokeDestinyCount)) -- Invoke Destiny (Add)
+		self:CDBar(351680, stage == 3 and 24.2 or 38, CL.count:format(CL.add, invokeDestinyCount)) -- Invoke Destiny (Add)
 	end
 
 	if stage == 3 then
