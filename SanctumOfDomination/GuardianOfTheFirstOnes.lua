@@ -125,7 +125,7 @@ function mod:OnEngage()
 	threatNeutralizationCount = 1
 	obliterateCount = 1
 	sunderCount = 1
-	timers = not self:Easy() and heroicTimers or normalTimers
+	timers = self:Mythic() and mythicTimers or not self:Easy() and heroicTimers or normalTimers
 	beforePurge = true
 
 	self:CDBar(352660, 4, L.sentry) -- Form Sentry
