@@ -20,6 +20,7 @@ local purgeCount = 1
 local threatNeutralizationCount = 1
 local obliterateCount = 1
 local sunderCount = 1
+local beforePurge = true
 
 local normalTimers = {
 	[350496] = {5, 11.8, 24.5, 14.6, 11.8}, -- Threat Neutralization (Bombs)
@@ -29,12 +30,12 @@ local heroicTimers = {
 	[350496] = {0, 12, 12, 26, 12}, -- Threat Neutralization (Bombs)
 	[352833] = {6, 40.1}, -- Disintegration
 }
--- local mythicTimers = {
--- 	[350496] = {8.2, 12.3, 18.3, 23.2, 18.4, 23.3, 23.1, 18.4, 18.2, 23.2, 24.4, 17.1, 17.1, 24.4, 23.2, 17.1, 17.3, 23.1}, -- Threat Neutralization
--- 	[352833] = {15.7, 56.2, 33.4, 49.8, 33.1, 44.9, 31.8, 31.7, 25.9, 31.6}, -- Disintegration
--- }
+local mythicTimers = {
+ 	[350496] = {8.2, 17, 28, 17} -- Threat Neutralization
+ 	[352833] = {6, 40}, -- Disintegration
+}
 
-local timers = not mod:Easy() and heroicTimers or normalTimers
+local timers = mod:Mythic() and mythicTimers or not mod:Easy() and heroicTimers or normalTimers
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -125,6 +126,7 @@ function mod:OnEngage()
 	obliterateCount = 1
 	sunderCount = 1
 	timers = not self:Easy() and heroicTimers or normalTimers
+	beforePurge = true
 
 	self:CDBar(352660, 4, L.sentry) -- Form Sentry
 	self:CDBar(350496, 10, CL.count:format(CL.bombs, threatNeutralizationCount)) -- Threat Neutralization
@@ -267,6 +269,7 @@ function mod:PurgingProtocol(args)
 	threatNeutralizationCount = 1
 	obliterateCount = 1
 	sunderCount = 1
+	beforePurge = false
 end
 
 function mod:PurgingProtocolSuccess(args) -- He can cancel his own cast with the tank combo, increment counter here instead.
@@ -353,9 +356,17 @@ do
 		self:Message(350496, "orange", CL.casting:format(CL.count:format(CL.bombs, threatNeutralizationCount)))
 		self:StopBar(CL.count:format(CL.bombs, threatNeutralizationCount))
 		threatNeutralizationCount = threatNeutralizationCount + 1
-		if meltdownCount > 1 or threatNeutralizationCount == 2 then  -- Only happens 2x before first Link
+
+		if beforePurge then -- First sequence is different than after Energizing Link
+			if threatNeutralizationCount == 2 then
+				self:CDBar(350496, 12, CL.count:format(CL.bombs, threatNeutralizationCount))
+			elseif threatNeutralizationCount == 3 then 
+				self:CDBar(350496, 22, CL.count:format(CL.bombs, threatNeutralizationCount))
+			end
+		else
 			self:CDBar(350496, timers[350496][threatNeutralizationCount], CL.count:format(CL.bombs, threatNeutralizationCount))
 		end
+
 	end
 
 	function mod:ThreatNeutralizationApplied(args)
