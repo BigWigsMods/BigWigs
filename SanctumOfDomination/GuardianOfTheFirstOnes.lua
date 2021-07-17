@@ -13,6 +13,7 @@ mod:SetRespawnTime(30)
 --
 
 local shieldOnYou = false
+local beforePurge = true
 local tankList = {}
 local meltdownCount = 1
 local disintergrationCount = 1
@@ -20,6 +21,7 @@ local purgeCount = 1
 local threatNeutralizationCount = 1
 local obliterateCount = 1
 local sunderCount = 1
+local energizeCount = 0
 
 local normalTimers = {
 	[350496] = {5, 11.8, 24.5, 14.6, 11.8}, -- Threat Neutralization (Bombs)
@@ -29,12 +31,12 @@ local heroicTimers = {
 	[350496] = {0, 12, 12, 26, 12}, -- Threat Neutralization (Bombs)
 	[352833] = {6, 40.1}, -- Disintegration
 }
--- local mythicTimers = {
--- 	[350496] = {8.2, 12.3, 18.3, 23.2, 18.4, 23.3, 23.1, 18.4, 18.2, 23.2, 24.4, 17.1, 17.1, 24.4, 23.2, 17.1, 17.3, 23.1}, -- Threat Neutralization
--- 	[352833] = {15.7, 56.2, 33.4, 49.8, 33.1, 44.9, 31.8, 31.7, 25.9, 31.6}, -- Disintegration
--- }
+local mythicTimers = {
+	[350496] = {0, 17, 29, 17}, -- Threat Neutralization (Bombs)
+	[352833] = {6, 39.1}, -- Disintegration
+}
 
-local timers = not mod:Easy() and heroicTimers or normalTimers
+local timers = mod:Mythic() and mythicTimers or mod:Heroic() and heroicTimers or normalTimers
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -46,6 +48,8 @@ if L then
 	L.custom_on_stop_timers_desc = "The Guardian can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
 
 	L.sentry = mod:SpellName(298200) -- Form Sentry (Sentry)
+
+	L.bomb_missed = "%dx Bombs Missed"
 end
 
 --------------------------------------------------------------------------------
@@ -58,6 +62,7 @@ function mod:GetOptions()
 		"custom_on_stop_timers",
 		-- Energy Cores
 		352385, -- Energizing Link
+		356093, -- Energy Absorption
 		350455, -- Unstable Energy
 		352394, -- Radiant Energy
 		{352589, "EMPHASIZE"}, -- Meltdown
@@ -66,11 +71,13 @@ function mod:GetOptions()
 		350735, -- Elimination Pattern
 		355352, -- Obliterate
 		350732, -- Sunder
+		358301, -- Energy Depletion
 		352833, -- Disintegration
 		352660, -- Form Sentry
 		347359, -- Suppression Field
 		{350496, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Threat Neutralization
 		threatNeutralizationMarker,
+		-- "berserk",
 	},{
 		[352385] = self:SpellName(-23254), -- Energy Cores
 		[352538] = self.displayName, -- The Guardian
@@ -88,7 +95,7 @@ function mod:OnBossEnable()
 	-- Energy Cores
 	self:Log("SPELL_AURA_APPLIED", "EnergizingLinkApplied", 352385)
 	self:Log("SPELL_AURA_REMOVED", "EnergizingLinkRemoved", 352385)
-	self:Log("SPELL_ENERGIZE", "EnergizeCore", 356093)
+	self:Log("SPELL_ENERGIZE", "EnergyAbsorption", 356093) -- from Threat Neutralization
 	self:Log("SPELL_PERIODIC_DAMAGE", "UnstableEnergyDamage", 350455)
 	self:Log("SPELL_PERIODIC_MISSED", "UnstableEnergyDamage", 350455)
 	self:Log("SPELL_AURA_APPLIED", "RadiantEnergyApplied", 352394)
@@ -100,6 +107,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "PurgingProtocolSuccess", 352538)
 
 	self:Log("SPELL_CAST_START", "Obliterate", 355352)
+	self:Log("SPELL_ENERGIZE", "EnergyDepletion", 358301) -- from Obliterate
 	self:Log("SPELL_CAST_START", "Sunder", 350732)
 	self:Log("SPELL_AURA_APPLIED", "SunderApplied", 350732)
 	self:Log("SPELL_CAST_START", "Disintegration", 352833)
@@ -118,17 +126,22 @@ end
 
 function mod:OnEngage()
 	shieldOnYou = false
+	beforePurge = true
 	meltdownCount = 1
 	disintergrationCount = 1
 	purgeCount = 1
 	threatNeutralizationCount = 1
 	obliterateCount = 1
 	sunderCount = 1
-	timers = not self:Easy() and heroicTimers or normalTimers
+	timers = self:Mythic() and mythicTimers or self:Heroic() and heroicTimers or normalTimers
 
-	self:CDBar(352660, 4, L.sentry) -- Form Sentry
-	self:CDBar(350496, 10, CL.count:format(CL.bombs, threatNeutralizationCount)) -- Threat Neutralization
-	self:CDBar(352833, 16, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
+	-- if self:Mythic() then
+	-- 	self:Berserk(361, true) -- Anti-cheese? Weird fight to put a hard enrage on
+	-- end
+
+	self:CDBar(352660, self:Mythic() and 3.5 or 4, L.sentry) -- Form Sentry
+	self:CDBar(350496, self:Mythic() and 8.5 or 10, CL.count:format(CL.bombs, threatNeutralizationCount)) -- Threat Neutralization
+	self:CDBar(352833, 15.8, CL.count:format(CL.laser, disintergrationCount)) -- Disintegration
 	self:CDBar(350735, 26) -- Elimination Pattern
 	local purgeTimer = UnitPower("boss1") or 0
 	self:Bar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
@@ -168,11 +181,15 @@ end
 do
 	local linkedCore = nil
 	local scheduled = nil
-	function mod:SetLinkTimer()
+	function mod:SetLinkTimer(checkCount)
 		local coreUnit = self:GetBossId(linkedCore)
 		if coreUnit then
 			local linkTimer = ceil(UnitPower(coreUnit) / 5) - 1 -- 5 energy/s (first tick immediately)
 			self:CDBar(352589, linkTimer, CL.count:format(self:SpellName(352589), meltdownCount)) -- Meltdown
+		end
+		if self:Mythic() and checkCount and energizeCount < 3 then
+			self:Message(356093, "cyan", L.bomb_missed:format(3 - energizeCount), 358301)
+			-- self:PlaySound(356093, "info")
 		end
 		if scheduled then
 			self:CancelTimer(scheduled)
@@ -187,7 +204,7 @@ do
 			self:PlaySound(args.spellId, "info")
 			linkedCore = args.sourceGUID
 			self:SetLinkTimer()
-			self:CDBar(352660, self:Easy() and 11.7 or 19, L.sentry) -- Form Sentry
+			self:CDBar(352660, self:Mythic() and 18 or self:Heroic() and 19 or 11.7, L.sentry) -- Form Sentry
 			self:CDBar(352833, timers[352833][disintergrationCount], CL.count:format(CL.laser, disintergrationCount)) -- Disintegration 5.5-8s
 			self:CDBar(350735, 28.5) -- Elimination Pattern
 			--self:CDBar(350496, 0, CL.count:format(CL.bombs, threatNeutralizationCount)) -- Threat Neutralization
@@ -200,9 +217,10 @@ do
 		end
 	end
 
-	function mod:EnergizeCore(args)
+	function mod:EnergyAbsorption(args)
+		energizeCount = energizeCount + 1
 		if not scheduled then
-			scheduled = self:ScheduleTimer("SetLinkTimer", 0.1)
+			scheduled = self:ScheduleTimer("SetLinkTimer", 0.2, true)
 		end
 	end
 end
@@ -258,9 +276,13 @@ function mod:PurgingProtocol(args)
 	self:CastBar(args.spellId, 5, CL.count:format(args.spellName, purgeCount))
 	if purgeCount == 1 then
 		self:StopBar(CL.count:format(args.spellName, purgeCount))
+		self:StopBar(CL.count:format(CL.laser, disintergrationCount))
+		self:StopBar(CL.count:format(CL.bombs, threatNeutralizationCount))
+		self:StopBar(350735) -- Elimination Pattern
 	end
 
-	-- Ressetting here as he might cast the first spell before the link event is fired
+	beforePurge = false
+	-- Resetting here as he might cast the first spell before the link event is fired
 	-- 150.423	Guardian of the First Ones begins casting Threat Neutralization
 	-- 150.652	Guardian of the First Ones is afflicted by Energizing Link from Energy Core 2
 	disintergrationCount = 1
@@ -286,6 +308,29 @@ function mod:Obliterate(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, obliterateCount))
 	self:PlaySound(args.spellId, "warning")
 	obliterateCount = obliterateCount + 1
+end
+
+function mod:EnergyDepletion(args)
+	self:Message(args.spellId, "cyan")
+	self:PlaySound(args.spellId, "alarm")
+	-- Update Purging Protocol timer
+	local bossUnit = self:GetBossId(175731)
+	if bossUnit then
+		local purgeTimer = UnitPower(bossUnit) -- 1 energy/s
+		if purgeTimer > 1 then
+			self:CDBar(352538, purgeTimer, CL.count:format(self:SpellName(352538), purgeCount)) -- Purging Protocol
+			-- Cleanup
+			if self:BarTimeLeft(CL.count:format(CL.laser, disintergrationCount)) > purgeTimer then
+				self:StopBar(CL.count:format(CL.laser, disintergrationCount))
+			end
+			if self:BarTimeLeft(CL.count:format(CL.bombs, threatNeutralizationCount)) > purgeTimer then
+				self:StopBar(CL.count:format(CL.bombs, threatNeutralizationCount))
+			end
+			if self:BarTimeLeft(350735) > purgeTimer then
+				self:StopBar(350735) -- Elimination Pattern
+			end
+		end
+	end
 end
 
 function mod:Sunder(args)
@@ -321,8 +366,8 @@ function mod:Disintegration(args)
 	self:PlaySound(args.spellId, "alert")
 	self:StopBar(CL.count:format(CL.laser, disintergrationCount))
 	disintergrationCount = disintergrationCount + 1
-	if meltdownCount > 1 then  -- Only happens once before first Link
-		self:CDBar(args.spellId, timers[args.spellId][disintergrationCount], CL.count:format(CL.laser, disintergrationCount)) -- 25~30
+	if not beforePurge then  -- Only happens once before first Link
+		self:CDBar(args.spellId, timers[args.spellId][disintergrationCount], CL.count:format(CL.laser, disintergrationCount))
 	end
 end
 
@@ -349,11 +394,22 @@ end
 do
 	local playerList = {}
 	function mod:ThreatNeutralization()
+		energizeCount = 0
 		playerList = {}
 		self:Message(350496, "orange", CL.casting:format(CL.count:format(CL.bombs, threatNeutralizationCount)))
 		self:StopBar(CL.count:format(CL.bombs, threatNeutralizationCount))
 		threatNeutralizationCount = threatNeutralizationCount + 1
-		if meltdownCount > 1 or threatNeutralizationCount == 2 then  -- Only happens 2x before first Link
+		if self:Mythic() then
+			if beforePurge then -- First sequence is different
+				if threatNeutralizationCount == 2 then
+					self:CDBar(350496, 12, CL.count:format(CL.bombs, threatNeutralizationCount))
+				elseif threatNeutralizationCount == 3 then
+					self:CDBar(350496, 22, CL.count:format(CL.bombs, threatNeutralizationCount))
+				end
+			else
+				self:CDBar(350496, timers[350496][threatNeutralizationCount], CL.count:format(CL.bombs, threatNeutralizationCount))
+			end
+		elseif not beforePurge or threatNeutralizationCount == 2 then  -- Only happens 2x before first Link
 			self:CDBar(350496, timers[350496][threatNeutralizationCount], CL.count:format(CL.bombs, threatNeutralizationCount))
 		end
 	end
