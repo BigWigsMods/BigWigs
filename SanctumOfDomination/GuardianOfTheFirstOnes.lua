@@ -31,7 +31,7 @@ local heroicTimers = {
 	[352833] = {6, 40.1}, -- Disintegration
 }
 local mythicTimers = {
- 	[350496] = {8.2, 17, 28, 17} -- Threat Neutralization
+ 	[350496] = {8.2, 17, 28, 17}, -- Threat Neutralization
  	[352833] = {6, 40}, -- Disintegration
 }
 
