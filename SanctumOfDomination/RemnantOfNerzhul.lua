@@ -14,6 +14,10 @@ mod:SetRespawnTime(50)
 
 local nextShatterWarning = 83
 local prevBombsRemoved = 0
+local shatterCount = 0
+local malevolenceCount = 1
+local orbOfTormentCount = 1
+local graspOfMaliceCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -82,11 +86,16 @@ end
 
 function mod:OnEngage()
 	nextShatterWarning = 83
+	shatterCount = 0
+	malevolenceCount = 1
+	orbOfTormentCount = 1
+	graspOfMaliceCount = 1
 
-	self:CDBar(350676, 13, L.orbs) -- Orb of Torment
-	self:CDBar(349890, 20.3, CL.beam) -- Suffering
-	self:CDBar(350469, 26, CL.bombs) -- Malevolence 26~49??
-	self:CDBar(355123, 39, L.cones) -- Grasp of Malice 39~65??
+
+	self:CDBar(350676, 13, CL.count:format(L.orbs, orbOfTormentCount)) -- Orb of Torment
+	self:CDBar(349890, 20.3, CL.count:format(self:SpellName(349890), shatterCount)) -- Suffering
+	self:CDBar(350469, 26, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence 26~49??
+	self:CDBar(355123, 39, CL.count:format(L.cones, graspOfMaliceCount)) -- Grasp of Malice 39~65??
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -137,10 +146,11 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 350676 then -- Orb of Torment
+	orbOfTormentCount = orbOfTormentCount + 1
 		self:StopBar(L.orbs)
 		self:Message(spellId, "yellow", L.orbs)
 		self:PlaySound(spellId, "alert")
-		self:CDBar(spellId, 50, L.orbs) -- ???
+		self:CDBar(spellId, self:Mythic() and 40 or 50, CL.count:format(L.orbs, orbOfTormentCount)) -- ???
 		-- Shatter (Helm), 53.5, Shatter (Gauntlet), 51.1, 48.6, Shatter (Rattlecage), 58.5, 46.1
 		-- Shatter (Helm), 54.7, Shatter (Gauntlet), 74.1, 42.6, Shatter (Rattlecage), 60.8, 52.2
 	end
@@ -171,8 +181,9 @@ do
 	end
 
 	function mod:MalevolenceSuccess(args)
-		self:StopBar(CL.bombs)
-		self:CDBar(args.spellId, 36, CL.bombs) -- ???
+		malevolenceCount = malevolenceCount + 1
+		self:StopBar(CL.count:format(CL.bombs, malevolenceCount))
+		self:CDBar(args.spellId, 36, CL.count:format(CL.bombs, malevolenceCount)) -- ???
 		-- Shatter (Helm), Shatter (Gauntlet), 49.9, 43.8, 31.7, Shatter (Rattlecage), 46.3, 46.1
 		-- Shatter (Helm), 36.5, Shatter (Gauntlet), 51.1, 38.8, 31.6, Shatter (Rattlecage), 55.9, 43.7
 		self:SimpleTimer(function()
@@ -244,6 +255,13 @@ do
 	end
 
 	function mod:Suffering(args)
+		local cd = 13
+        if self:BarTimeLeft(CL.bombs) < cd then
+            self:CDBar(350469, cd, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
+        end
+        if self:BarTimeLeft(L.cones) < cd then
+            self:CDBar(355123, cd, CL.count:format(L.cones, graspOfMaliceCount)) -- Grasp of Malice
+        end
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
 		self:CDBar(349890, 24.4, CL.beam)
 		-- 32.8, Shatter (Gauntlet), 31.6, 19.5, 24.3, 24.3, 25.6, Shatter (Rattlecage), 28.1, 21.9, 24.3, 21.9
@@ -267,15 +285,25 @@ function mod:SufferingApplied(args)
 end
 
 function mod:GraspOfMalice(args)
+	graspOfMaliceCount = graspOfMaliceCount + 1
 	self:StopBar(L.cones)
 	self:Message(args.spellId, "yellow", L.cones)
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 24, L.cones) -- ???
+	self:CDBar(args.spellId, self:Mythic() and 30 or 24, CL.count:format(L.cones, graspOfMaliceCount)) -- ???
 	-- 31.6, Shatter (Gauntlet), 51.1, 25.5, 23.2, Shatter (Rattlecage), 73.0
 	-- 28.0, Shatter (Gauntlet), 76.6, 21.9, 24.3, Shatter (Rattlecage), 56.0, 46.1
 end
 
 function mod:Shatter(args)
+	shatterCount = shatterCount + 1
+	if self:Mythic() then
+		self:StopBar(L.orbs)
+		self:CDBar(350676, 35, CL.count:format(L.orbs, orbOfTormentCount)) -- Orb of Torment
+		if shatterCount == 3 then
+        	self:CDBar(350469, 29, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
+        	self:CDBar(355123, 45, L.cones) -- Grasp of Malice
+		end
+	end
 	self:Message(351066, "cyan")
 	self:PlaySound(351066, "long")
 end
