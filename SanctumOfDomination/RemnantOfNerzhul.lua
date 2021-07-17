@@ -91,9 +91,8 @@ function mod:OnEngage()
 	orbOfTormentCount = 1
 	graspOfMaliceCount = 1
 
-
 	self:CDBar(350676, 13, CL.count:format(L.orbs, orbOfTormentCount)) -- Orb of Torment
-	self:CDBar(349890, 20.3, CL.count:format(self:SpellName(349890), shatterCount)) -- Suffering
+	self:CDBar(349890, 20.3, CL.beam) -- Suffering
 	self:CDBar(350469, 26, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
 	self:CDBar(355123, 39, CL.count:format(L.cones, graspOfMaliceCount)) -- Grasp of Malice
 
@@ -251,6 +250,9 @@ do
 	end
 
 	function mod:Suffering(args)
+		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
+		self:CDBar(349890, 24.4, CL.beam)
+
 		local cd = 13
 		if self:BarTimeLeft(CL.bombs) < cd then
 			self:CDBar(350469, cd, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
@@ -258,8 +260,6 @@ do
 		if self:BarTimeLeft(L.cones) < cd then
 			self:CDBar(355123, cd, CL.count:format(L.cones, graspOfMaliceCount)) -- Grasp of Malice
 		end
-		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		self:CDBar(349890, 24.4, CL.beam)
 	end
 end
 
@@ -288,6 +288,8 @@ end
 
 function mod:Shatter(args)
 	shatterCount = shatterCount + 1
+	self:Message(351066, "cyan")
+	self:PlaySound(351066, "long")
 	if self:Mythic() then
 		self:StopBar(L.orbs)
 		self:CDBar(350676, 35, CL.count:format(L.orbs, orbOfTormentCount)) -- Orb of Torment
@@ -296,8 +298,6 @@ function mod:Shatter(args)
 			self:CDBar(355123, 45, L.cones) -- Grasp of Malice
 		end
 	end
-	self:Message(351066, "cyan")
-	self:PlaySound(351066, "long")
 end
 
 do
