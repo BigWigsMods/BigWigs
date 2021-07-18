@@ -254,10 +254,10 @@ do
 		self:CDBar(349890, 24.4, CL.beam)
 
 		local cd = 13
-		if self:BarTimeLeft(CL.bombs) < cd then
+		if self:BarTimeLeft(CL.count:format(CL.bombs, malevolenceCount)) < cd then
 			self:CDBar(350469, cd, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
 		end
-		if self:BarTimeLeft(L.cones) < cd then
+		if self:BarTimeLeft(CL.count:format(L.cones, graspOfMaliceCount)) < cd then
 			self:CDBar(355123, cd, CL.count:format(L.cones, graspOfMaliceCount)) -- Grasp of Malice
 		end
 	end
@@ -295,7 +295,7 @@ function mod:Shatter(args)
 		self:CDBar(350676, 35, CL.count:format(L.orbs, orbOfTormentCount)) -- Orb of Torment
 		if shatterCount == 3 then
 			self:CDBar(350469, 29, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
-			self:CDBar(355123, 45, L.cones) -- Grasp of Malice
+			self:CDBar(355123, 45, CL.count:format(L.cones, graspOfMaliceCount)) -- Grasp of Malice
 		end
 	end
 end
