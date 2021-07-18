@@ -38,11 +38,17 @@ local mercilessCount = 1
 local isInfoOpen = false
 local barbedArrowList = {}
 
-local stageOneTimers = {
+local stageOneTimersHeroic = {
 	[347504] = {7.5, 51.1, 49.5, 49.0, 53.5, 48.7}, -- Windrunner
 	[347670] = {11, 47.9, 49.6, 8.2, 43.7, 49.9}, -- Shadow Dagger
 	[352650] = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1, 4.7, 21.0, 29.22, 3.0}, -- Ranger's Heartseeker
 	[347704] = {45.0, 50.0, 48.2, 46.8, 50.55}, -- Veil of Darkness
+}
+local stageOneTimersMythic = {
+	[347504] = {6.8, 58, 55, 57, 60}, -- Windrunner
+	[347670] = {10, 54, 56, 8.8, 51, 55}, -- Shadow Dagger
+	[352650] = {20.5, 19.9, 16.5, 30.0, 5.9, 32.2, 16.1, 12.0, 26.2, 25.1, 4.7, 21.0, 29.22, 3.0}, -- Ranger's Heartseeker
+	[347704] = {50, 45, 45, 52, 35}, -- Veil of Darkness
 }
 local stageThreeTimersNormal = {
 	[354011] = {31.5, 81.1, 76.5, 80.0}, -- Bane Arrows
@@ -72,6 +78,7 @@ local stageThreeTimersMythic = {
 	[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
 	[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
 }
+local stageOneTimers = mod:Mythic() and stageOneTimersMythic or stageOneTimersHeroic
 local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or mod:Heroic() and stageThreeTimersHeroic or stageThreeTimersNormal
 
 --------------------------------------------------------------------------------
@@ -275,13 +282,14 @@ function mod:OnEngage()
 	isInfoOpen = false
 	barbedArrowList = {}
 	stageThreeTimers = self:Mythic() and stageThreeTimersMythic or self:Heroic() and stageThreeTimersHeroic or stageThreeTimersNormal
+	stageOneTimers = self:Mythic() and stageOneTimersMythic or stageOneTimersHeroic
 
 	self:Bar(347504, stageOneTimers[347504][windrunnerCount], CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
 	self:Bar(347670, stageOneTimers[347670][shadowDaggerCount], CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
 	self:Bar(352650, stageOneTimers[352650][rangerHeartSeekerCount]) -- Ranger's Heartseeker
 	self:Bar(349458, 26, CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
 	self:Bar(347704, stageOneTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
-	self:Bar(347609, 36.5, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
+	self:Bar(347609, self:Mythic() and 33 or 36.5, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -435,6 +443,7 @@ end
 ---------------------------------
 
 function mod:Windrunner(args)
+	self:StopBar(args.spellId)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, windrunnerCount))
 	self:PlaySound(args.spellId, "alert")
 	windrunnerCount = windrunnerCount + 1
@@ -570,7 +579,7 @@ do
 		if not intermission and self:GetStage() == 1 then
 			self:StopBar(CL.count:format(L.arrow, wailingArrowCount))
 			wailingArrowCount = wailingArrowCount + 1
-			self:Bar(args.spellId, 34, CL.count:format(L.arrow, wailingArrowCount))
+			self:Bar(args.spellId, self:Mythic() and 62 or 34, CL.count:format(L.arrow, wailingArrowCount))
 		elseif self:GetStage() == 3 and wailingArrowCastCount == 1 then
 			wailingArrowCount = wailingArrowCount + 1
 			self:Bar(args.spellId, stageThreeTimers[args.spellId][wailingArrowCount], L.arrow)
