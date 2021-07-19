@@ -145,9 +145,9 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 350676 then -- Orb of Torment
-	orbOfTormentCount = orbOfTormentCount + 1
-		self:StopBar(L.orbs)
-		self:Message(spellId, "yellow", L.orbs)
+		self:StopBar(CL.count:format(L.orbs, orbOfTormentCount))
+		self:Message(spellId, "yellow", CL.count:format(L.orbs, orbOfTormentCount))
+		orbOfTormentCount = orbOfTormentCount + 1
 		self:PlaySound(spellId, "alert")
 		self:CDBar(spellId, self:Mythic() and 40 or 50, CL.count:format(L.orbs, orbOfTormentCount))
 	end
@@ -177,15 +177,16 @@ do
 		self:Message(args.spellId, "yellow", CL.incoming:format(CL.bombs))
 	end
 
+	local function onMeSound()
+		if not onMe then
+			mod:PlaySound(350469, "alert") -- so alert seems to be the "move around!" sound
+		end
+	end
 	function mod:MalevolenceSuccess(args)
-		malevolenceCount = malevolenceCount + 1
 		self:StopBar(CL.count:format(CL.bombs, malevolenceCount))
+		malevolenceCount = malevolenceCount + 1
 		self:CDBar(args.spellId, 36, CL.count:format(CL.bombs, malevolenceCount))
-		self:SimpleTimer(function()
-			if not onMe then
-				self:PlaySound(args.spellId, "alert") -- so alert seems to be the "move around!" sound
-			end
-		end, 0.3)
+		self:SimpleTimer(onMeSound, 0.3)
 	end
 
 	function mod:MalevolenceApplied(args)
@@ -279,9 +280,9 @@ function mod:SufferingApplied(args)
 end
 
 function mod:GraspOfMalice(args)
+	self:StopBar(CL.count:format(L.cones, graspOfMaliceCount))
+	self:Message(args.spellId, "yellow", L.cones, graspOfMaliceCount))
 	graspOfMaliceCount = graspOfMaliceCount + 1
-	self:StopBar(L.cones)
-	self:Message(args.spellId, "yellow", L.cones)
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, self:Mythic() and 30 or 24, CL.count:format(L.cones, graspOfMaliceCount))
 end
@@ -291,7 +292,6 @@ function mod:Shatter(args)
 	self:Message(351066, "cyan")
 	self:PlaySound(351066, "long")
 	if self:Mythic() then
-		self:StopBar(L.orbs)
 		self:CDBar(350676, 35, CL.count:format(L.orbs, orbOfTormentCount)) -- Orb of Torment
 		if shatterCount == 3 then
 			self:CDBar(350469, 29, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
