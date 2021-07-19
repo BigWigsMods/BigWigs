@@ -281,7 +281,7 @@ end
 
 function mod:GraspOfMalice(args)
 	self:StopBar(CL.count:format(L.cones, graspOfMaliceCount))
-	self:Message(args.spellId, "yellow", L.cones, graspOfMaliceCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.cones, graspOfMaliceCount))
 	graspOfMaliceCount = graspOfMaliceCount + 1
 	self:PlaySound(args.spellId, "alert")
 	self:CDBar(args.spellId, self:Mythic() and 30 or 24, CL.count:format(L.cones, graspOfMaliceCount))
