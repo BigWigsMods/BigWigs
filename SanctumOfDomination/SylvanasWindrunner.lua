@@ -471,7 +471,7 @@ do
 				soaks = 2
 			end
 			if mercilessCount == 4 or mercilessCount == 6 or mercilessCount == 8 or mercilessCount == 9 then
-				self:Message(args.spellId, "orange", L.count_x:format(barText, L.soaks, mercilessCount))
+				self:Message(args.spellId, "orange", L.count_x:format(L.soaks, soaks, mercilessCount))
 				self:PlaySound(args.spellId, "alert")
 			end
 			mercilessCount = mercilessCount + 1
@@ -483,7 +483,7 @@ do
 				soaks = 2
 			end
 			if mercilessCount == 4 or mercilessCount == 6 or mercilessCount == 8 or mercilessCount == 9 then
-				self:Bar(args.spellId, cd, L.count_x:format(barText, L.soaks, mercilessCount))
+				self:Bar(args.spellId, cd, L.count_x:format(L.soaks, soaks, mercilessCount))
 			end
 		end
 	end
