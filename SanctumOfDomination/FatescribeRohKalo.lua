@@ -273,7 +273,7 @@ function mod:FatedConjunction(args)
 end
 
 function mod:FatedConjunctionSuccess(args)
-	self:Message(args.spellId, "yellow", CL.count:format(CL.beams, fatedConjunctionCount))
+	self:Message(args.spellId, "yellow", CL.count:format(CL.beams, fatedConjunctionCount-1))
 	self:PlaySound(args.spellId, "alert")
 end
 
