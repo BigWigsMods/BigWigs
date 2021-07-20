@@ -82,6 +82,9 @@ if L then
 	-- L.trap = "Trap" -- Short for Flameclasp Trap
 	-- L.chains = "Chains" -- Short for Shadowsteel Chains
 	-- L.embers = "Embers" -- Short for Shadowsteel Embers
+	-- L.adds_embers = "Embers (%d) - Adds Next!"
+	-- L.adds_killed = "Adds killed in %.2fs"
+	-- L.spikes = "Spiked Death" -- Soft enrage spikes
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "itIT")

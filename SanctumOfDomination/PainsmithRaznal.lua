@@ -39,7 +39,7 @@ if L then
 	L.embers = "Embers" -- Short for Shadowsteel Embers
 	L.adds_embers = "Embers (%d) - Adds Next!"
 	L.adds_killed = "Adds killed in %.2fs"
-	L.spikes = "Spiked Death"
+	L.spikes = "Spiked Death" -- Soft enrage spikes
 end
 
 --------------------------------------------------------------------------------
@@ -298,7 +298,7 @@ do
 		if emberCount < 10 then -- Don't show for last on mythic
 			if self:Mythic() and emberCount == 9 then
 				self:Message(355534, "yellow", L.adds_embers:format(emberCount))
-				self:PlaySound(355534, "alarm")
+				self:PlaySound(355534, "info")
 			else
 				self:Message(355534, "yellow", CL.count:format(L.embers, emberCount))
 				self:PlaySound(355534, "alert")
