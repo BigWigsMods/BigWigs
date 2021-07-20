@@ -91,6 +91,8 @@ L = BigWigs:NewBossLocale("Guardian of the First Ones", "ptBR")
 if L then
 	L.custom_on_stop_timers = "Sempre mostrar barras de habilidade"
 	L.custom_on_stop_timers_desc = "O Guardião pode atrasar suas habilidades. Quando essa opção estiver habilitada, as barras para essas habilidades irão permanecer na sua tela."
+
+	-- L.bomb_missed = "%dx Bombs Missed"
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "ptBR")

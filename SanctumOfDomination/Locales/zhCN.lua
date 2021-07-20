@@ -91,6 +91,8 @@ L = BigWigs:NewBossLocale("Guardian of the First Ones", "zhCN")
 if L then
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "卫士可能延迟他的技能。当启用此选项，他的技能条将停留在屏幕上。"
+
+	-- L.bomb_missed = "%dx Bombs Missed"
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "zhCN")

@@ -91,6 +91,8 @@ L = BigWigs:NewBossLocale("Guardian of the First Ones", "itIT")
 if L then
 	--L.custom_on_stop_timers = "Always show ability bars"
 	--L.custom_on_stop_timers_desc = "The Guardian can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+
+	-- L.bomb_missed = "%dx Bombs Missed"
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "itIT")

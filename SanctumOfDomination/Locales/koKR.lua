@@ -91,6 +91,8 @@ L = BigWigs:NewBossLocale("Guardian of the First Ones", "koKR")
 if L then
 	L.custom_on_stop_timers = "능력 바 항상 표시"
 	L.custom_on_stop_timers_desc = "수호자의 능력이 미뤄질수 있습니다. 이 옵션을 킨다면, 그 능력들을 표시하는 바가 화면에 남아있습니다."
+
+	-- L.bomb_missed = "%dx Bombs Missed"
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "koKR")
