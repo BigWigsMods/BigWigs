@@ -104,6 +104,7 @@ if L then
 	L.chain = "Chain" -- Single Domination Chain
 	L.darkness = "Veil" -- Short for Veil of Darkness
 	L.arrow = "Arrow" -- Short for Wailing Arrow
+	L.arrow_done = "DONE" -- Message when the arrow has hit
 	L.wave = "Wave" -- Short for Haunting Wave
 	L.dread = "Dread" -- Short for Crushing Dread
 	L.orbs = "Orbs" -- Dark Communion
@@ -115,6 +116,7 @@ if L then
 	L.knife_fling = "Knives out!" -- "Death-touched blades fling out"
 	L.bridges = "Bridges"
 	L.rive_counter = "%s (%d/9)"
+	L.soaks = "Soaks" -- Merciless
 	L.count_x = "%s (x%d)(%d)"
 	L.shroud_active = "Shroud (%d) - %.1f%%!"
 end
@@ -462,7 +464,6 @@ do
 		local t = args.time
 		if t-prev > 5 then
 			prev = t
-			local barText = "Soaks"
 			local soaks = 1
 			if mercilessCount > 7 then
 				soaks = 4
@@ -470,7 +471,7 @@ do
 				soaks = 2
 			end
 			if mercilessCount == 4 or mercilessCount == 6 or mercilessCount == 8 or mercilessCount == 9 then
-				self:Message(args.spellId, "orange", L.count_x:format(barText, soaks, mercilessCount))
+				self:Message(args.spellId, "orange", L.count_x:format(barText, L.soaks, mercilessCount))
 				self:PlaySound(args.spellId, "alert")
 			end
 			mercilessCount = mercilessCount + 1
@@ -482,7 +483,7 @@ do
 				soaks = 2
 			end
 			if mercilessCount == 4 or mercilessCount == 6 or mercilessCount == 8 or mercilessCount == 9 then
-				self:Bar(args.spellId, cd, L.count_x:format(barText, soaks, mercilessCount))
+				self:Bar(args.spellId, cd, L.count_x:format(barText, L.soaks, mercilessCount))
 			end
 		end
 	end
@@ -680,7 +681,7 @@ do
 
 	function mod:WailingArrowHit(args)
 		if self:Me(args.destGUID) then
-			self:Say(347609, "DONE", true)
+			self:Say(347609, L.arrow_done, true)
 			self:StopBar(CL.you:format(CL.count:format(L.arrow, wailingArrowPlayerCount)))
 			self:StopBar(CL.count:format(L.arrow, wailingArrowPlayerCount), args.destName)
 		end
