@@ -143,7 +143,7 @@ function mod:InstrumentApplied(args)
 	end
 	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(equippedWeapon, instrumentCount))
 	instrumentCount = instrumentCount + 1
-	self:Bar(args.spellId, 20, CL.count:format(equippedWeapon, instrumentCount))
+	self:Bar(args.spellId, self:Mythic() and 20.8 or 24.7, CL.count:format(equippedWeapon, instrumentCount))
 end
 
 function mod:InstrumentRemoved(args)
@@ -225,7 +225,7 @@ do
 			prev = t
 			playerList = {}
 			chainsCount = chainsCount + 1
-			self:Bar(args.spellId, self:GetStage() == 3 and 48 or 40, CL.count:format(L.chains, chainsCount))
+			self:Bar(args.spellId, self:Mythic() and 40 or 48, CL.count:format(L.chains, chainsCount))
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
@@ -326,7 +326,7 @@ do
 		self:Bar(355534, 5, CL.count:format(L.embers, emberCount))
 		self:ScheduleTimer("RepeatEmber", 5)
 
-		self:Bar("stages", self:Mythic() and 51.8 or 41.8, CL.intermission, args.spellId) -- 35s (45 on Mythic) Forge Weapon + 6.8s to jump down
+		self:Bar("stages", self:Mythic() and 50.5 or 40.5, CL.intermission, args.spellId) -- 35s (45 on Mythic) Forge Weapon + 5.5s to jump down
 		if self:Mythic() then
 			self:Bar(355536, 47, CL.adds) -- Summon Shadowsteel Horror
 		end
@@ -345,12 +345,12 @@ do
 
 		if self:Mythic() then
 			self:Bar(355505, 10.7, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
-			self:Bar(352052, self:GetStage() < 3 and 19.7 or 15.8, CL.count:format(self:SpellName(352052), spikedBallsCount)) -- Spiked Balls
-			self:Bar(348456, self:GetStage() < 3 and 38.3 or 34.8, CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
+			self:Bar(352052, self:GetStage() < 3 and 20 or 16, CL.count:format(self:SpellName(352052), spikedBallsCount)) -- Spiked Balls
+			self:Bar(348456, self:GetStage() < 3 and 38.5 or 35, CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
 		else
 			self:Bar(355505, 15, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
 			self:Bar(352052, 26, CL.count:format(self:SpellName(352052), spikedBallsCount)) -- Spiked Balls
-			self:Bar(348456, self:GetStage() == 3 and 48 or 36, CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
+			self:Bar(348456, 48, CL.count:format(CL.traps, trapsCount)) -- Flameclasp Trap
 		end
 		-- Axe -> Hammer -> Scythe
 		local spellId = self:GetStage() == 3 and 355778 or 348508
