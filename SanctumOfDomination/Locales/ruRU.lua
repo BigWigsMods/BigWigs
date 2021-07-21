@@ -82,12 +82,16 @@ if L then
 	 L.trap = "Ловушка" -- Short for Flameclasp Trap
 	 L.chains = "Цепи" -- Short for Shadowsteel Chains
 	 L.embers = "Угли" -- Short for Shadowsteel Embers
+	-- L.adds_embers = "Угли (%d) - Adds Next!" -- Not sure what it means 
+	 L.adds_killed = "Ады убиты за %.2fс"
+	 L.spikes = "Погибель от шипов" -- Soft enrage spikes -- Not sure if there's an official line
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "ruRU")
 if L then
 	L.custom_on_stop_timers = "Всегда показывать полосы заклинаний"
 	L.custom_on_stop_timers_desc = "Стражница может иметь задержку при касте способностей. Если включить, то полосы для этих способностей будут оставаться на Вашем экране."
+	L.bomb_missed = "Мимо бомб: %dx"
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "ruRU")
