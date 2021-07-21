@@ -115,7 +115,7 @@ if L then
 
 	L.knife_fling = "Knives out!" -- "Death-touched blades fling out"
 	L.bridges = "Bridges"
-	L.rive_counter = "%s (%d/9)"
+	L.rive_counter = "%s (%d/%d)"
 	L.soaks = "Soaks" -- Merciless
 	L.count_x = "%s (x%d)(%d)"
 	L.shroud_active = "Shroud (%d) - %.1f%%!"
@@ -756,7 +756,7 @@ function mod:BansheeShroudApplied(args)
 end
 
 function mod:Rive(args)
-	self:Message(353417, "red", L.rive_counter:format(args.spellName, riveCount))
+	self:Message(353417, "red", L.rive_counter:format(args.spellName, riveCount, self:Mythic() and 9 or 8))
 	self:PlaySound(353417, "alert")
 	self:StopBar(CL.count:format(args.spellName, riveCount))
 	riveCount = riveCount + 1
