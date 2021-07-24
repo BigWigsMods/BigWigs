@@ -82,9 +82,9 @@ if L then
 	L.trap = "陷阱" -- Short for Flameclasp Trap
 	L.chains = "鎖鏈" -- Short for Shadowsteel Chains
 	L.embers = "餘燼" -- Short for Shadowsteel Embers
-	-- L.adds_embers = "Embers (%d) - Adds Next!"
-	-- L.adds_killed = "Adds killed in %.2fs"
-	-- L.spikes = "Spiked Death" -- Soft enrage spikes
+	L.adds_embers = "餘燼（%d）：下一波懼魔！"
+	L.adds_killed = "擊殺懼魔，用時%.2f秒"
+	L.spikes = "狂暴時限" -- Soft enrage spikes; 尖刺死線、尖刺軟狂暴時限、軟狂暴時限、狂暴時限，暫時選一個最短的
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "zhTW")
@@ -92,13 +92,13 @@ if L then
 	L.custom_on_stop_timers = "總是顯示計時器"
 	L.custom_on_stop_timers_desc = "守護者的技能可能延遲施放。啟用此選項後，這些技能的計時條會保持顯示。"
 
-	-- L.bomb_missed = "%dx Bombs Missed"
+	L.bomb_missed = "%dx炸彈未擊中" -- 圈沒有去石柱給能量的提示，格式好像不對，可能要修
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "zhTW")
 if L then
 	L.rings = "圓環"
-	L.rings_active = "圓環啟動" -- for when they activate/are movable; 原文叫織機，內文說明描述為圓環，我怎麼感覺叫轉盤更貼切...
+	L.rings_active = "圓環啟動" -- for when they activate/are movable; 原文叫織機，內文說明描述為圓環
 	L.runes = "符文"
 
 	L.grimportent_countdown = "倒數"
@@ -108,7 +108,7 @@ end
 
 L = BigWigs:NewBossLocale("Kel'Thuzad", "zhTW")
 if L then
-	L.spikes = "冰刺" -- Short for Glacial Spikes; 冰川之怒
+	L.spikes = "冰刺" -- Short for Glacial Spikes
 	L.spike = "冰刺"
 	L.miasma = "瘴氣" -- Short for Sinister Miasma
 
@@ -135,6 +135,6 @@ if L then
 	L.pools = "災禍" -- Banshee's Bane
 	L.scream = "號叫" -- Banshee Scream
 
-	L.knife_fling = "飛刀！" -- "Death-touched blades fling out"; 傳奇模式的死亡利刃射出計時，暫定
+	L.knife_fling = "飛刀！" -- "Death-touched blades fling out"; 傳奇模式的死亡利刃射出計時
 end
 
