@@ -4,7 +4,7 @@ if L then
 	L.chains = "鎖鏈" -- Chains of Eternity (Chains)
 	L.remnants = "殘留" -- Remnant of Forgotten Torments (Remnants)
 
-	L.physical_remnant = "物理殘留" -- 待定，可以改成更簡單的「物理球/魔法球/火焰球」
+	L.physical_remnant = "物理殘留"
 	L.magic_remnant = "魔法殘留"
 	L.fire_remnant = "火焰殘留"
 	L.fire = "火焰"
@@ -48,7 +48,7 @@ end
 
 L = BigWigs:NewBossLocale("Remnant of Ner'zhul", "zhTW")
 if L then
-	L.cones = "射線" -- Grasp of Malice; 待定，暫時沒想到更好的
+	L.cones = "射線" -- Grasp of Malic
 	L.orbs = "寶珠" -- Orb of Torment
 	L.orb = "寶珠" -- Orb of Torment
 end
@@ -84,7 +84,7 @@ if L then
 	L.embers = "餘燼" -- Short for Shadowsteel Embers
 	L.adds_embers = "餘燼（%d）：下一波懼魔！"
 	L.adds_killed = "擊殺懼魔，用時%.2f秒"
-	L.spikes = "狂暴時限" -- Soft enrage spikes; 尖刺死線、尖刺軟狂暴時限、軟狂暴時限、狂暴時限，暫時選一個最短的
+	L.spikes = "狂暴時限" -- Soft enrage spikes; 尖刺軟狂暴時限
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "zhTW")
@@ -98,7 +98,7 @@ end
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "zhTW")
 if L then
 	L.rings = "圓環"
-	L.rings_active = "圓環啟動" -- for when they activate/are movable; 原文叫織機，內文說明描述為圓環
+	L.rings_active = "圓環啟動" -- for when they activate/are movable
 	L.runes = "符文"
 
 	L.grimportent_countdown = "倒數"
