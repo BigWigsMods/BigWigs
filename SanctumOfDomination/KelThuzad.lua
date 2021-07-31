@@ -14,7 +14,10 @@ mod:SetStage(1)
 --
 
 local mobCollector = {}
+local glacialSpikeCollector = {}
 local glacialSpikeMarks = {}
+local soulShardMarks = {}
+local soulShardCollector = {}
 local mindControlled = false
 local inPhylactery = false
 local darkEvocationCount = 1
@@ -23,7 +26,60 @@ local soulFractureCount = 1
 local oblivionsEchoCount = 1
 local frostBlastCount = 1
 local glacialWrathCount = 1
-local blizzardStart = 0
+local soulReaverCollector = {}
+local soulReaverCount = 0
+local soulReaverSpawnTime = 0
+local soulReaverMarkScheduler = nil
+
+-- local timersHeroic = { -- XXX Old timers used before hotfix, leaving it in for now to check incase.
+-- 	[100] = { -- Mana on cast_start
+-- 		[347292] = 62, -- Oblivion's Echo
+-- 	},
+-- 	[80] = {
+-- 		[346459] = 118, -- Glacial Wrath
+-- 		[347292] = nil, -- Oblivion's Echo
+-- 	},
+-- 	[60] = {
+-- 		[346459] = nil, -- Glacial Wrath
+-- 		[347292] = 69.7, -- Oblivion's Echo
+-- 		[348760] = 42.5, -- Frost Blast
+-- 	},
+-- 	[40] = {
+-- 		[346459] = 69, -- Glacial Wrath
+-- 		[347292] = 42.5, -- Oblivion's Echo
+-- 		[348760] = nil, -- Frost Blast
+-- 	},
+-- 	[20] = {
+-- 		[346459] = 44.1, -- Glacial Wrath
+-- 		[347292] = nil, -- Oblivion's Echo
+-- 		[348760] = 69.5, -- Frost Blast
+-- 	},
+-- }
+
+-- local timersMythic = {
+-- 	[100] = { -- Mana on cast_start
+-- 		[347292] = 61, -- Oblivion's Echo
+-- 	},
+-- 	[80] = {
+-- 		[346459] = 113, -- Glacial Wrath
+-- 		[347292] = nil, -- Oblivion's Echo
+-- 	},
+-- 	[60] = {
+-- 		[346459] = nil, -- Glacial Wrath
+-- 		[347292] = 69.7, -- Oblivion's Echo
+-- 		[348760] = 39, -- Frost Blast
+-- 	},
+-- 	[40] = {
+-- 		[346459] = 69, -- Glacial Wrath
+-- 		[347292] = 50, -- Oblivion's Echo
+-- 		[348760] = nil, -- Frost Blast
+-- 	},
+-- 	[20] = {
+-- 		[346459] = 50, -- Glacial Wrath
+-- 		[347292] = nil, -- Oblivion's Echo
+-- 		[348760] = 69.5, -- Frost Blast
+-- 	},
+-- }
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -35,6 +91,8 @@ if L then
 	L.spike = "Spike"
 	L.silence = mod:SpellName(226452) -- Silence
 	L.miasma = "Miasma" -- Short for Sinister Miasma
+	L.glacial_winds = "Tornadoes"
+	L.foul_winds = "Pushback"
 
 	L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
 	L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frostbound Devoted that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
@@ -45,6 +103,7 @@ end
 -- Initialization
 --
 
+local soulShardMarker = mod:AddMarkerOption(false, "npc", 8, -23224, 8, 7, 6, 5, 4) -- Soul Shard
 local glacialWrathMarker = mod:AddMarkerOption(false, "player", 1, 346459, 1, 2, 3, 4, 5) -- Glacial Wrath
 local soulReaverMarker = mod:AddMarkerOption(false, "npc", 8, -23435, 8, 7, 6) -- Soul Reaver
 function mod:GetOptions()
@@ -57,6 +116,7 @@ function mod:GetOptions()
 		"custom_on_nameplate_fixate",
 		348071, -- Soul Fracture // Tank hit but spawns Soul Shards for DPS
 		{348978, "TANK"}, -- Soul Exhaustion
+		soulShardMarker,
 		348428, -- Piercing Wail
 		{346459, "SAY", "SAY_COUNTDOWN"}, -- Glacial Wrath
 		glacialWrathMarker,
@@ -89,6 +149,8 @@ function mod:GetOptions()
 		[348760] = CL.meteor, -- Frost Blast (Meteor)
 		[354289] = L.miasma, -- Necrotic Miasma (Miasma)
 		[352293] = self:SpellName(249436), -- Necrotic Destruction (Destruction)
+		[355055] = L.glacial_winds, -- Glacial Winds (Tornadoes)
+		[355127] = L.foul_winds, -- Foul Winds (Pushback)
 	}
 end
 
@@ -101,6 +163,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SoulFractureStart", 348071)
 	self:Log("SPELL_CAST_SUCCESS", "SoulFractureSuccess", 348071)
 	self:Log("SPELL_AURA_APPLIED", "SoulExhaustionApplied", 348978)
+	self:Log("SPELL_CAST_SUCCESS", "SoulShardEvent", 181113)
 	self:Log("SPELL_AURA_REMOVED", "SoulExhaustionRemoved", 348978)
 	self:Log("SPELL_CAST_START", "PiercingWailStart", 348428)
 	self:Log("SPELL_CAST_START", "GlacialWrath", 346459)
@@ -152,7 +215,11 @@ end
 function mod:OnEngage()
 	self:SetStage(1)
 	mobCollector = {}
+	glacialSpikeCollector = {}
 	glacialSpikeMarks = {}
+	soulShardMarks = {}
+	soulShardCollector = {}
+
 	mindControlled = false
 	inPhylactery = false
 
@@ -163,14 +230,14 @@ function mod:OnEngage()
 	frostBlastCount = 1
 	glacialWrathCount = 1
 
-	-- Soul Fracture and Ice Shards delay casts
-	self:CDBar(348071, 13.3, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture (to _SUCCESS)
-	self:CDBar(347292, 15.6, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
+	-- Soul Fracture and Ice Shards can delay casts
+	self:CDBar(348071, self:Mythic() and 10.9 or 13.8, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture
+	self:CDBar(347292, 14.5, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
 	self:CDBar(346459, 24.2, CL.count:format(L.spikes, glacialWrathCount)) -- Glacial Wrath
-	self:CDBar(348760, 47.2, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
-	self:CDBar(352530, 50.0, CL.count:format(self:SpellName(352530), darkEvocationCount)) -- Dark Evocation
-	self:CDBar(354198, 118.5, CL.count:format(self:SpellName(354198), blizzardCount)) -- Howling Blizzard
-	blizzardStart = GetTime() + 118.5 -- 114-118
+	self:CDBar(348760, 48.5, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
+	self:CDBar(352530, 51.4, CL.count:format(self:SpellName(352530), darkEvocationCount)) -- Dark Evocation
+	self:CDBar(354198, 91, CL.count:format(self:SpellName(354198), blizzardCount)) -- Howling Blizzard
+	self:RegisterTargetEvents("MarkUnits")
 end
 
 function mod:OnBossDisable()
@@ -183,6 +250,64 @@ end
 -- Event Handlers
 --
 
+function mod:MarkReavers()
+	for i = 1, #soulReaverCollector do
+		local guid = soulReaverCollector[i].reaverGuid
+		if not mobCollector[guid] then
+			local unit = self:GetUnitIdByGUID(guid)
+			if unit then
+				self:CustomIcon(soulReaverMarker, unit, 9-i)
+				mobCollector[soulReaverCollector[i].reaverGuid] = true
+			end
+		end
+	end
+	soulReaverMarkScheduler = nil
+end
+
+function mod:MarkUnits(event, unit, guid)
+	if not mobCollector[guid] then
+		if soulShardCollector[guid] then
+			self:CustomIcon(soulShardMarker, unit, soulShardCollector[guid])
+			mobCollector[guid] = true
+		end
+		if glacialSpikeCollector[guid] then
+			if glacialSpikeCollector[guid] > 0 then
+				self:CustomIcon(glacialWrathMarker, unit, glacialSpikeCollector[guid])
+			end
+			glacialSpikeCollector[guid] = nil
+			mobCollector[guid] = true
+		end
+		if self:MobId(guid) == 176974 then -- Soulreaver
+			if self:GetStage() == 3 then -- Mark in Order
+				soulReaverCount = soulReaverCount + 1
+				local icon = soulReaverCount % 3 + 1 -- XXX FixME
+				self:CustomIcon(soulReaverMarker, unit, icon)
+				mobCollector[guid] = true
+			elseif self:GetStage() < 3 then -- Mark using logic
+				local tableCount = #soulReaverCollector
+				if soulReaverCollector[guid] then
+					if tableCount > 2 then -- Mark once 3 are found
+						self:MarkReavers()
+					end
+				elseif not soulReaverMarkScheduler then -- Mark anyways after the scheduled timer is gone
+					soulReaverCount = soulReaverCount + 1
+					local icon = 9-(tableCount + soulReaverCount)
+					self:CustomIcon(soulReaverMarker, unit, icon)
+					mobCollector[guid] = true
+				else
+					--local range = self:GetRange(unit) -- XXX Mark based on distance from the units
+					--if range then
+						soulReaverCollector[tableCount+1] = {reaverGuid = guid, reaverRange = 2} --{reaverGuid = guid, reaverRange = range} XXX Range API Needed
+						soulReaverCollector[guid] = true
+						table.sort(soulReaverCollector,function(t1,t2) return t1.reaverRange < t2.reaverRange end)
+						return
+					--end
+				end
+			end
+		end
+	end
+end
+
 -- Stage One: Chains and Ice
 function mod:HowlingBlizzard(args)
 	self:Message(args.spellId, "cyan", CL.casting:format(args.spellName))
@@ -190,18 +315,6 @@ function mod:HowlingBlizzard(args)
 	self:CastBar(args.spellId, 23, CL.count:format(args.spellName, blizzardCount))
 	blizzardCount = blizzardCount + 1
 	self:CDBar(354198, 118.5, CL.count:format(self:SpellName(354198), blizzardCount)) -- Howling Blizzard
-	blizzardStart = GetTime() + 118.5
-
-	self:StopBar(CL.count:format(L.silence, oblivionsEchoCount))
-	self:StopBar(CL.count:format(L.spikes, glacialWrathCount))
-	self:StopBar(CL.count:format(CL.meteor, frostBlastCount))
-	oblivionsEchoCount = 1
-	glacialWrathCount = 1
-	frostBlastCount = 1
-
-	self:CDBar(347292, 37.7, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
-	self:CDBar(346459, 47.5, CL.count:format(L.spikes, glacialWrathCount)) -- Glacial Wrath
-	self:CDBar(348760, 70.4, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
 end
 
 function mod:DarkEvocation(args)
@@ -230,20 +343,14 @@ end
 function mod:SoulFractureStart(args)
 	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(args.spellName, soulFractureCount)))
 	self:PlaySound(args.spellId, "alarm")
-	-- Fix timer
-	self:CDBar(args.spellId, 2.5, CL.count:format(args.spellName, soulFractureCount))
+
+	soulShardMarks = {}
+	soulShardCollector = {}
 end
 
 function mod:SoulFractureSuccess(args)
 	soulFractureCount = soulFractureCount + 1
-	-- need to manually adjust this since it isn't part of the main sequence
-	local castTime = GetTime() + 33.6
-	if castTime < (blizzardStart + 23) and castTime > blizzardStart then
-		local cd = blizzardStart + 23 - GetTime() + 13.4
-		self:CDBar(args.spellId, cd, CL.count:format(args.spellName, soulFractureCount))
-	else
-		self:CDBar(args.spellId, 33.6, CL.count:format(args.spellName, soulFractureCount)) -- 33~ or 40.3+ (delayed by a blizzard/dark evocation?)
-	end
+	self:CDBar(args.spellId, soulFractureCount == 4 and 43.5 or 30.2, CL.count:format(args.spellName, soulFractureCount)) -- to _START XXX Check count 4
 end
 
 function mod:SoulExhaustionApplied(args)
@@ -260,12 +367,24 @@ function mod:SoulExhaustionApplied(args)
 	self:TargetBar(args.spellId, 60, args.destName, CL.count:format(args.spellName, soulFractureCount-1))
 end
 
+function mod:SoulShardEvent(args)
+	if self:GetOption(soulShardMarker) then
+		for i = 8, 4, -1 do -- 8, 7, 6, 5, 4
+			if not soulShardCollector[args.sourceGUID] and not soulShardMarks[i] then
+				soulShardMarks[i] = args.sourceGUID
+				soulShardCollector[args.sourceGUID] = i
+				return
+			end
+		end
+	end
+end
+
 function mod:SoulExhaustionRemoved(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
 	end
-	self:StopBar(args.spellId, args.destName)
+	self:StopBar(CL.count:format(args.spellName, soulFractureCount-1), args.destName)
 end
 
 function mod:PiercingWailStart(args)
@@ -282,25 +401,14 @@ function mod:GlacialWrath(args)
 	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.spikes, glacialWrathCount)))
 	self:PlaySound(args.spellId, "alert")
 	glacialWrathCount = glacialWrathCount + 1
-	-- self:CDBar(args.spellId, 118.6, CL.count:format(L.spikes, glacialWrathCount))
+	self:CDBar(args.spellId, 113, CL.count:format(L.spikes, glacialWrathCount))
 
-	mobCollector = {}
+	glacialSpikeCollector = {}
 	glacialSpikeMarks = {}
-	if self:GetOption(glacialWrathMarker) then
-		self:RegisterTargetEvents("GlacialSpikeMarker")
-		self:ScheduleTimer("UnregisterTargetEvents", 10)
-	end
 end
 
 function mod:GlacialWrathSummon(args)
-	mobCollector[args.destGUID] = tremove(glacialSpikeMarks, 1)
-end
-
-function mod:GlacialSpikeMarker(event, unit, guid)
-	if self:MobId(guid) == 175861 and mobCollector[guid] then
-		self:CustomIcon(glacialWrathMarker, unit, mobCollector[guid])
-		mobCollector[guid] = nil
-	end
+	glacialSpikeCollector[args.destGUID] = tremove(glacialSpikeMarks, 1)
 end
 
 do
@@ -330,7 +438,7 @@ do
 			self:CancelSayCountdown(346459)
 		end
 		self:CustomIcon(glacialWrathMarker, args.destName)
-		glacialSpikeMarks[#glacialSpikeMarks+1] = playerList[args.destName] -- _REMOVED is more reliable for spike order
+		glacialSpikeMarks[#glacialSpikeMarks+1] = playerList[args.destName] or 0 -- _REMOVED is more reliable for spike order
 	end
 end
 
@@ -361,10 +469,7 @@ do
 	function mod:OblivionsEcho(args)
 		playerList = {}
 		oblivionsEchoCount = oblivionsEchoCount + 1
-		local cd = oblivionsEchoCount == 2 and 62 or 40.4
-		if (GetTime() + cd) < blizzardStart then
-			self:CDBar(347292, cd, CL.count:format(L.silence, oblivionsEchoCount))
-		end
+		self:CDBar(347292, oblivionsEchoCount % 2 == 0 and 61.5 or 40.5, CL.count:format(L.silence, oblivionsEchoCount)) -- XXX Need to confirm the (3)+ casts
 	end
 
 	function mod:OblivionsEchoApplied(args)
@@ -393,12 +498,9 @@ end
 function mod:FrostBlastSuccess(args)
 	frostBlastCount = frostBlastCount + 1
 	if self:GetStage() == 1 then
-		local cd = frostBlastCount == 2 and 42.4 or 76.1
-		if (GetTime() + cd) < blizzardStart then
-			self:CDBar(348760, cd, CL.count:format(CL.meteor, frostBlastCount))
-		end
-	elseif self:GetStage() == 3 and frostBlastCount % 3 ~= 0 then
-		self:CDBar(348760, 15.7, CL.count:format(CL.meteor, frostBlastCount))
+		self:CDBar(348760, frostBlastCount % 2 == 0 and 40 or 70, CL.count:format(CL.meteor, frostBlastCount))
+	elseif self:GetStage() == 3 then
+		self:CDBar(348760, 15.8, CL.count:format(CL.meteor, frostBlastCount))
 	end
 end
 
@@ -454,88 +556,57 @@ function mod:VengefulDestruction(args)
 	self:PlaySound(args.spellId, "long")
 	self:CastBar(args.spellId, 45, self:SpellName(249436)) -- Destruction
 
-	-- UNIT_SPELLCAST_SUCCEEDED Events which are 2.5~s faster to do a stage change on:
-	-- ClearAllDebuffs-34098-npc:175559
-	-- Cosmetic Death-351625-npc:175559
-	-- Teleport to Floor-351418-npc:175559
-
 	self:SetStage(2)
-	local remnant = self:GetBossId(176929) -- was only ever boss2, but just to make sure
-	if remnant and self:GetHealth(remnant) < 34 then -- final stage 2
-		-- self:CDBar(352379, 2) -- Freezing Blast
-		-- if self:Mythic() then
-		-- 	self:CDBar(355127, 15) -- Foul Winds
-		-- end
-	else
-		-- self:CDBar(352379, 2) -- Freezing Blast
-		-- if self:Mythic() then
-		-- 	self:CDBar(355127, 15) -- Foul Winds
-		-- end
-	end
+	-- XXX Starts when the first person enters, should we keep this or just ditch it?
+	-- local remnant = self:GetBossId(176929) -- was only ever boss2, but just to make sure
+	-- if remnant and self:GetHealth(remnant) < 34 then -- final stage 2
+	-- 	--self:CDBar(355055, 3, L.glacial_winds) -- Glacial Winds
+	-- 	--self:CDBar(352379, 11) -- Freezing Blast
+	-- 	-- if self:Mythic() then
+	-- 	-- 	self:CDBar(355127, 7, L.foul_winds) -- Foul Winds
+	-- 	-- end
+	-- else
+	-- 	self:CDBar(352379, self:Mythic() and 3 or 7) -- Freezing Blast
+	-- 	if self:Mythic() then
+	-- 		self:CDBar(355127, 7, L.foul_winds) -- Foul Winds
+	-- 	end
+	-- end
 end
 
 function mod:NecroticSurgeApplied(args)
 	if not self:IsEngaged() then return end -- starts with stacks on mythic
-	self:NewStackMessage(args.spellId, "cyan", args.destName, args.amount)
-	self:PlaySound(args.spellId, "info")
-
+	if args.amount and args.amount > 4 then -- Don't show for Stage 3 (Custom message for that)
+		self:NewStackMessage(args.spellId, "cyan", args.destName, args.amount)
+		self:PlaySound(args.spellId, "info")
+	end
 	self:StopBar(CL.cast:format(self:SpellName(249436))) -- Destruction
 	self:StopBar(352379) -- Freezing Blast
-	self:StopBar(355055) -- Glacial Winds
-	self:StopBar(355127) -- Foul Winds
-
+	self:StopBar(L.glacial_winds) -- Glacial Winds
+	self:StopBar(L.foul_winds) -- Foul Winds
 	if self:GetStage() == 2 then
 		self:SetStage(1)
 		soulFractureCount = 1
 		oblivionsEchoCount = 1
 		glacialWrathCount = 1
 		frostBlastCount = 1
+		darkEvocationCount = 1
+		blizzardCount = 1
 
-		local currentMana = UnitPower("boss1") or 0
-
-		-- XXX these need to be checked!
-		-- Standard time if mana is 100
-		local evocationTime = 35.9 -- ✓
-		local blizzardTime = 90.3 -- ✓
-		if currentMana == 80 then
-			evocationTime = 46.1
-			blizzardTime = 86.4
-		elseif currentMana == 60 then
-			evocationTime = 15.8 -- ✓
-			blizzardTime = 51.4 -- ✓
-		elseif currentMana == 40 then
-			evocationTime = 3.2 -- ✓
-			blizzardTime = 25.5 -- ✓
-		elseif currentMana == 20 then
-			evocationTime = 92.1 -- ✓
-			blizzardTime = 16.5 -- ✓
-		end
-
-		--         80        60         40         20         0          100
-		-- Silence -> Spikes -> Meteor  -> Silence -> Meteor -> Blizzard
-		--  61.9      ~118.6     42.4       40.4      ~76.1      118.6
-
-		self:CDBar(348071, 13, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture
+		self:CDBar(348071, 10, CL.count:format(self:SpellName(348071), soulFractureCount)) -- Soul Fracture
 		self:CDBar(347292, 14.5, CL.count:format(L.silence, oblivionsEchoCount)) -- Oblivion's Echo
-		if currentMana > 20 then
-			self:CDBar(346459, 24.7, CL.count:format(L.spikes, glacialWrathCount)) -- Glacial Wrath
-			if currentMana > 40 then
-				self:CDBar(348760, 46.6, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
-			end
-		end
-		self:CDBar(352530, evocationTime, CL.count:format(self:SpellName(352530), darkEvocationCount)) -- Dark Evocation
-		self:CDBar(354198, blizzardTime, CL.count:format(self:SpellName(354198), blizzardCount)) -- Howling Blizzard
-		blizzardStart = GetTime() + blizzardTime
+		self:CDBar(346459, 24.2, CL.count:format(L.spikes, glacialWrathCount)) -- Glacial Wrath
+		self:CDBar(348760, 45.5, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
+		self:CDBar(352530, 35.9, CL.count:format(self:SpellName(352530), darkEvocationCount)) -- Dark Evocation
+		self:CDBar(354198, 89.9, CL.count:format(self:SpellName(354198), blizzardCount)) -- Howling Blizzard
 	else -- Stage 3
-		-- Frost Blast -> Frost Blast -> Frost Blast -> Onslaught
 		frostBlastCount = 1 -- Frost Blast
-		self:CDBar(348760, 8, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
+		self:CDBar(348760, 11.5, CL.count:format(CL.meteor, frostBlastCount)) -- Frost Blast
 		self:CDBar(352348, 48.5) -- Onslaught of the Damned
 	end
 end
 
 function mod:RemnantDeath()
-	self:Message("stages", "green", CL.stage:format(3), false)
+	self:Message("stages", "cyan", CL.stage:format(3), false)
 	self:PlaySound("stages", "info")
 	self:SetStage(3)
 end
@@ -543,23 +614,23 @@ end
 function mod:FreezingBlast(args)
 	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
 		self:Message(args.spellId, "orange")
-		self:CDBar(352379, 7)
 		self:PlaySound(args.spellId, "alarm")
+		self:CDBar(args.spellId, 6.1)
 	end
 end
 
 function mod:GlacialWinds(args)
 	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
-		self:Message(args.spellId, "cyan")
-		self:CDBar(args.spellId, 13.5)
+		self:Message(args.spellId, "cyan", L.glacial_winds)
+		self:CDBar(args.spellId, 13.5, L.glacial_winds)
 		self:PlaySound(args.spellId, "info")
 	end
 end
 
 function mod:FoulWinds(args)
 	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
-		self:Message(args.spellId, "yellow")
-		self:CDBar(args.spellId, 25.5)
+		self:Message(args.spellId, "yellow", L.foul_winds)
+		self:CDBar(args.spellId, 25.5, L.foul_winds)
 		self:PlaySound(args.spellId, "alert")
 	end
 end
@@ -572,14 +643,14 @@ function mod:UndyingWrath(args)
 	end
 
 	self:StopBar(352379) -- Freezing Blast
-	self:StopBar(355055) -- Glacial Winds
-	self:StopBar(355127) -- Foul Winds
+	self:StopBar(L.glacial_winds) -- Glacial Winds
+	self:StopBar(L.foul_winds) -- Foul Winds
 end
 
 function mod:OnslaughtOfTheDamned(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 48.6)
+	--self:CDBar(args.spellId, 48.6) XXX Does it even happen again?
 end
 
 do
@@ -620,29 +691,18 @@ function mod:BansheesCry(args)
 end
 
 do
-	function mod:SoulReaverMarker(event, unit, guid)
-		if mobCollector[guid] then
-			self:CustomIcon(soulReaverMarker, unit, mobCollector[guid])
-			mobCollector[guid] = nil
-			if not next(mobCollector) then
-				self:UnregisterTargetEvents()
-			end
-		end
-	end
-
 	local prev = 0
-	local count = 8
 	function mod:MarchOfTheForsakenSummon(args)
 		if not self:GetOption(soulReaverMarker) then return end
 		local t = args.time
 		if t-prev > 5 then
 			prev = t
-			mobCollector = {}
-			count = 8
-			self:RegisterTargetEvents("SoulReaverMarker")
-			self:ScheduleTimer("UnregisterTargetEvents", 10)
+			soulReaverCollector = {}
+			soulReaverCount = 0
+			soulReaverSpawnTime = GetTime()
+			if not soulReaverMarkScheduler then
+				soulReaverMarkScheduler = self:ScheduleTimer("MarkReavers", 5)
+			end
 		end
-		mobCollector[args.destGUID] = count
-		count = count - 1
 	end
 end
