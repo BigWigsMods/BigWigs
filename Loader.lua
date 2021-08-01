@@ -1508,6 +1508,11 @@ function mod:BigWigs_CoreEnabled()
 	self.isFakingDBM = nil
 	self.isShowingZoneMessages = nil
 	self.isSoundOn = nil
+
+	-- Make sure we've loaded everything. git checkout installs will load core
+	-- immediately, but won't hit loadAndEnableCore until a boss module loads.
+	-- E.g., LoD assets not being available for local, break, and pull bars.
+	loadAddons(loadOnCoreEnabled)
 end
 public.RegisterMessage(mod, "BigWigs_CoreEnabled")
 
