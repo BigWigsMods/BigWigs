@@ -13,6 +13,8 @@ mod:SetRespawnTime(50)
 --
 
 local nextShatterWarning = 83
+local mobCollector = {}
+local orbMarkerIcon = 7
 local prevBombsRemoved = 0
 local shatterCount = 0
 local malevolenceCount = 1
@@ -39,14 +41,18 @@ end
 --
 
 local malevolenceMarker = mod:AddMarkerOption(false, "player", 1, 350469, 1, 2, 3) -- Malevolence
+local malevolenceCageMarker = mod:AddMarkerOption(false, "npc", 8, -23767, 8) -- Rattlecage of Agony
+local orbMarker = mod:AddMarkerOption(false, "npc", 7, 350676, 7, 6, 5, 4) -- Rattlecage of Agony
 function mod:GetOptions()
 	return {
 		"custom_on_stop_timers",
 		350676, -- Orb of Torment
+		orbMarker,
 		350073, -- Torment
 		350388, -- Sorrowful Procession
 		{350469, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Malevolence
 		malevolenceMarker,
+		malevolenceCageMarker,
 		350489, -- Lingering Malevolence
 		{349890, "SAY", "SAY_COUNTDOWN"}, -- Suffering
 		355123, -- Grasp of Malice
@@ -87,6 +93,8 @@ end
 function mod:OnEngage()
 	nextShatterWarning = 83
 	shatterCount = 0
+	mobCollector = {}
+	orbMarkerIcon = 7
 	malevolenceCount = 1
 	orbOfTormentCount = 1
 	graspOfMaliceCount = 1
@@ -121,8 +129,8 @@ do
 	local abilitysToPause = {
 		[350676] = true, -- Orb of Torment (Orbs)
 		[350469] = true, -- Malevolence (Bombs)
-		[353332] = true, -- Grasp of Malice (Cones)
-		[350894] = true, -- Suffering (Beam)
+		[355123] = true, -- Grasp of Malice (Cones)
+		[349890] = true, -- Suffering (Beam)
 	}
 
 	local castPattern = CL.cast:gsub("%%s", ".+")
@@ -143,13 +151,23 @@ do
 	end
 end
 
+function mod:OrbMarking(event, unit, guid)
+	if not mobCollector[guid] and self:MobId(guid) == 177117 then -- Orb of Torment
+		mobCollector[guid] = true
+		self:CustomIcon(orbMarker, unit, orbMarkerIcon)
+		orbMarkerIcon = orbMarkerIcon - 1
+	end
+end
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 350676 then -- Orb of Torment
+		orbMarkerIcon = 7
+		self:RegisterTargetEvents("OrbMarking")
 		self:StopBar(CL.count:format(L.orbs, orbOfTormentCount))
 		self:Message(spellId, "yellow", CL.count:format(L.orbs, orbOfTormentCount))
 		orbOfTormentCount = orbOfTormentCount + 1
 		self:PlaySound(spellId, "alert")
-		self:CDBar(spellId, self:Mythic() and 40 or 50, CL.count:format(L.orbs, orbOfTormentCount))
+		self:CDBar(spellId, self:Mythic() and 32 or 42.5, CL.count:format(L.orbs, orbOfTormentCount))
 	end
 end
 
@@ -169,11 +187,9 @@ end
 
 do
 	local playerList, onMe = {}, false
-	local oldIcon = nil
 	function mod:MalevolenceStart(args)
 		playerList = {}
 		onMe = false
-		oldIcon = nil
 		self:Message(args.spellId, "yellow", CL.incoming:format(CL.bombs))
 	end
 
@@ -182,10 +198,11 @@ do
 			mod:PlaySound(350469, "alert") -- so alert seems to be the "move around!" sound
 		end
 	end
+
 	function mod:MalevolenceSuccess(args)
 		self:StopBar(CL.count:format(CL.bombs, malevolenceCount))
 		malevolenceCount = malevolenceCount + 1
-		self:CDBar(args.spellId, 36, CL.count:format(CL.bombs, malevolenceCount))
+		self:CDBar(args.spellId, shatterCount == 4 and 42 or 32, CL.count:format(CL.bombs, malevolenceCount))
 		self:SimpleTimer(onMeSound, 0.3)
 	end
 
@@ -223,17 +240,12 @@ do
 			local _, _, _, expires = self:UnitDebuff(unit, args.spellId)
 			local timeLeft = expires - GetTime()
 			self:CastBar(350469, timeLeft, CL.bomb)
-			oldIcon = GetRaidTargetIndex(unit)
-			self:CustomIcon(malevolenceMarker, unit, 3)
+			self:CustomIcon(malevolenceCageMarker, unit, 8)
 		end
 	end
 
 	function mod:RattlecageMalevolenceRemoved(args)
 		self:StopBar(CL.cast:format(CL.bomb))
-		local unit = self:GetBossId(args.destGUID)
-		if unit then
-			self:CustomIcon(malevolenceMarker, unit, oldIcon)
-		end
 	end
 end
 
@@ -252,8 +264,7 @@ do
 
 	function mod:Suffering(args)
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		self:CDBar(349890, 24.4, CL.beam)
-
+		self:CDBar(349890, self:Mythic() and 17 or 21.5, CL.beam)
 		local cd = 13
 		if self:BarTimeLeft(CL.count:format(CL.bombs, malevolenceCount)) < cd then
 			self:CDBar(350469, cd, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
@@ -284,18 +295,24 @@ function mod:GraspOfMalice(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.cones, graspOfMaliceCount))
 	graspOfMaliceCount = graspOfMaliceCount + 1
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, self:Mythic() and 30 or 24, CL.count:format(L.cones, graspOfMaliceCount))
+	self:CDBar(args.spellId, shatterCount == 3 and 35 or (self:Mythic() and 30 or 24), CL.count:format(L.cones, graspOfMaliceCount))
 end
 
 function mod:Shatter(args)
 	shatterCount = shatterCount + 1
-	self:Message(351066, "cyan")
+	self:Message(351066, "cyan", CL.count:format(args.spellName, shatterCount))
 	self:PlaySound(351066, "long")
-	if self:Mythic() then
-		self:CDBar(350676, 35, CL.count:format(L.orbs, orbOfTormentCount)) -- Orb of Torment
-		if shatterCount == 3 then
-			self:CDBar(350469, 29, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
-			self:CDBar(355123, 45, CL.count:format(L.cones, graspOfMaliceCount)) -- Grasp of Malice
+	self:CDBar(350676, 32, CL.count:format(L.orbs, orbOfTormentCount)) -- Orb of Torment
+	if shatterCount == 3 then
+		self:CDBar(350469, 29, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
+		self:CDBar(355123, 45, CL.count:format(L.cones, graspOfMaliceCount)) -- Grasp of Malice
+	else
+		local cd = 7
+		if self:BarTimeLeft(CL.count:format(CL.bombs, malevolenceCount)) < cd then
+			self:CDBar(350469, cd, CL.count:format(CL.bombs, malevolenceCount)) -- Malevolence
+		end
+		if self:BarTimeLeft(CL.count:format(L.cones, graspOfMaliceCount)) < cd then
+			self:CDBar(355123, cd, CL.count:format(L.cones, graspOfMaliceCount)) -- Grasp of Malice
 		end
 	end
 end
