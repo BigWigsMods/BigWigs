@@ -94,6 +94,7 @@ globals = {
 	"tremove",
 
 	-- framexml
+	"SlashCmdList",
 	"getprinthandler",
 	"hash_SlashCmdList",
 	"setprinthandler",
@@ -123,7 +124,7 @@ globals = {
 	"C_EncounterJournal",
 	"C_FriendList",
 	"C_GossipInfo",
-	"ChatFrame_ImportAllListsToHash",
+	"ChatFrame_ImportListToHash",
 	"ChatTypeInfo",
 	"CheckInteractDistance",
 	"CinematicFrame_CancelCinematic",
@@ -211,7 +212,6 @@ globals = {
 	"RaidWarningFrame",
 	"RolePollPopup",
 	"SecondsToTime",
-	"SlashCmdList",
 	"StopSound",
 	"TalkingHeadFrame",
 	"Tukui",

@@ -539,8 +539,9 @@ do
 				local tbl = {strsplit(",", meta)}
 				for j=1, #tbl do
 					local slash = tbl[j]:trim():upper()
-					_G["SLASH_"..slash..1] = slash
-					SlashCmdList[slash] = function(text)
+					local slashName = "BIGWIGS"..strsub(slash, 2) -- strip the "/"
+					_G["SLASH_"..slashName.."1"] = slash
+					SlashCmdList[slashName] = function(text)
 						if strfind(name, "BigWigs", nil, true) then
 							-- Attempting to be smart. Only load core & config if it's a BW plugin.
 							loadAndEnableCore()
@@ -549,16 +550,16 @@ do
 						if load(nil, i) then -- Load the addon/plugin
 							-- Call the slash command again, which should have been set by the addon.
 							-- Authors, do NOT delay setting it in OnInitialize/OnEnable/etc.
-							ChatFrame_ImportAllListsToHash()
+							ChatFrame_ImportListToHash(SlashCmdList, hash_SlashCmdList)
 							local func = hash_SlashCmdList[slash]
 							if func then
 								func(text)
-							else
-								-- Addon didn't register the slash command for whatever reason, print the default invalid slash message.
-								local info = ChatTypeInfo["SYSTEM"]
-								DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT_SIMPLE, info.r, info.g, info.b, info.id)
+								return
 							end
 						end
+						-- Addon didn't register the slash command for whatever reason, print the default invalid slash message.
+						local info = ChatTypeInfo["SYSTEM"]
+						DEFAULT_CHAT_FRAME:AddMessage(HELP_TEXT_SIMPLE, info.r, info.g, info.b, info.id)
 					end
 					loadOnSlash[i][j] = slash
 				end
@@ -580,7 +581,7 @@ do
 		end
 
 		if next(loadOnSlash) then
-			ChatFrame_ImportAllListsToHash() -- Add our slashes to the hash.
+			ChatFrame_ImportListToHash(SlashCmdList, hash_SlashCmdList) -- Add our slashes to the hash.
 		end
 	end
 
