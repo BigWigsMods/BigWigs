@@ -123,8 +123,9 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	local currentHealth = self:GetHealth(unit)
-	if currentHealth < nextStageWarning then -- Stage 2's at 66% and 33%
-		self:Message("stages", "green", CL.soon:format(2), false)
+	if currentHealth < nextStageWarning then -- Intermission at 66% and 33%
+		local nextStage = currentHealth > 50 and CL.stage:format(2) or CL.stage:format(3) -- Sub 33% is Stage 3
+		self:Message("stages", "green", CL.soon:format(nextStage), false)
 		nextStageWarning = nextStageWarning - 33
 		if nextStageWarning < 25 then
 			self:UnregisterUnitEvent(event, unit)
