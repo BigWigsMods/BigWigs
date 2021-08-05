@@ -301,7 +301,7 @@ function mod:OnEngage()
 
 	self:Bar(347504, stageOneTimers[347504][windrunnerCount], CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
 	self:Bar(347670, stageOneTimers[347670][shadowDaggerCount], CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
-	self:Bar(352650, stageOneTimers[352650][rangerHeartSeekerCount]) -- Ranger's Heartseeker
+	self:Bar(352650, stageOneTimers[352650][rangerHeartSeekerCount], CL.count:format(self:SpellName(352650), rangerHeartSeekerCount)) -- Ranger's Heartseeker
 	self:Bar(349458, stageOneTimers[349458][dominationChainsCount], CL.count:format(L.chains, dominationChainsCount)) -- Domination Chains
 	self:Bar(347704, stageOneTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 	self:Bar(347609, self:Mythic() and 40.5 or 36.5, CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow
@@ -693,13 +693,14 @@ do
 end
 
 function mod:RangersHeartseeker(args)
-	self:Message(352650, "purple", CL.casting:format(args.spellName))
+	self:StopBar(CL.count:format(args.spellName, rangerHeartSeekerCount))
+	self:Message(352650, "purple", CL.casting:format(CL.count:format(args.spellName, rangerHeartSeekerCount)))
 	if self:Tanking("boss1") then
 		self:PlaySound(352650, "warning")
 	end
 	rangerHeartSeekerCount = rangerHeartSeekerCount + 1
 	if not intermission then
-		self:Bar(352650, stageOneTimers[352650][rangerHeartSeekerCount])
+		self:Bar(352650, stageOneTimers[352650][rangerHeartSeekerCount], CL.count:format(args.spellName, rangerHeartSeekerCount))
 	end
 end
 
@@ -1095,7 +1096,7 @@ function mod:BlasphemySuccess()
 			self:Bar(354068, stageThreeTimers[354068][bansheesFuryCount], CL.count:format(self:SpellName(354068), bansheesFuryCount)) -- Banshee's Fury
 		end
 		self:Bar(354011, stageThreeTimers[354011][baneArrowsCount], CL.count:format(self:SpellName(354011), baneArrowsCount)) -- Bane Arrows
-		self:CDBar(353965, stageThreeTimers[353969][rangerHeartSeekerCount]) -- Banshee's Heartseeker
+		self:CDBar(353965, stageThreeTimers[353969][rangerHeartSeekerCount], CL.count:format(self:SpellName(353965), rangerHeartSeekerCount)) -- Banshee's Heartseeker
 		self:Bar(347704, stageThreeTimers[347704][veilofDarknessCount], CL.count:format(L.darkness, veilofDarknessCount)) -- Veil of Darkness
 		self:Bar(347609, stageThreeTimers[347609][wailingArrowCount], CL.count:format(L.arrow, wailingArrowCount)) -- Wailing Arrow // To _SUCCESS of the first arrow
 		self:Bar(354147, stageThreeTimers[354147][razeCount], CL.count:format(self:SpellName(354147), razeCount)) -- Raze
@@ -1131,14 +1132,15 @@ function mod:BansheesHeartseekerApplied(args)
 end
 
 function mod:BansheesHeartseeker(args)
+	self:StopBar(CL.count:format(args.spellName, rangerHeartSeekerCount))
 	if self:Tank() then
-		self:Message(353965, "purple", CL.casting:format(args.spellName))
+		self:Message(353965, "purple", CL.casting:format(CL.count:format(args.spellName, rangerHeartSeekerCount)))
 		if self:Tanking("boss1") then
 			self:PlaySound(353965, "warning")
 		end
 	end
 	rangerHeartSeekerCount = rangerHeartSeekerCount + 1
-	self:Bar(353965, stageThreeTimers[353969][rangerHeartSeekerCount])
+	self:Bar(353965, stageThreeTimers[353969][rangerHeartSeekerCount], CL.count:format(args.spellName, rangerHeartSeekerCount))
 end
 
 function mod:BansheesFury(args)
