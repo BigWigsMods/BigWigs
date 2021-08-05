@@ -237,7 +237,7 @@ do
 	function mod:RattlecageMalevolenceApplied(args)
 		local unit = self:GetBossId(args.destGUID)
 		if unit then
-			local _, _, _, expires = self:UnitDebuff(unit, args.spellId)
+			local _, _, _, expires = self:UnitBuff(unit, args.spellId)
 			local timeLeft = expires - GetTime()
 			self:CastBar(350469, timeLeft, CL.bomb)
 			self:CustomIcon(malevolenceCageMarker, unit, 8)
