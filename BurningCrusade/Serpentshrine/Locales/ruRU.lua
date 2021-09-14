@@ -11,7 +11,7 @@ if L then
 	L.poison_stance = "Гидросс - ядовитая фаза!"
 	L.water_stance = "Гидросс - ледяная фаза!"
 
-	L.debuff_warn = "Mark at %s%%!"
+	L.debuff_warn = "Метка на %s%%!"
 end
 
 L = BigWigs:NewBossLocale("The Lurker Below", "ruRU")
@@ -73,15 +73,15 @@ if L then
 	L.murloc_desc = "Предупреждение о появлении мурлоков."
 	L.murloc_icon = 42365
 	L.murloc_bar = "~Мурлоки"
-	L.murloc_message = "Incoming Murlocs!"
+	L.murloc_message = "Появление мурлоков!"
 	L.murloc_soon_message = "Появление мурлоков скоро!"
 	L.murloc_engaged = "Начался бой с %s, появление мурлоков через ~40 сек"
 
 	L.globules = "Водяные гранулы"
 	L.globules_desc = "Предупреждение о появлении водяных гранул."
 	L.globules_icon = "INV_Elemental_Primal_Water"
-	L.globules_trigger1 = "Soon it will be finished!"
-	L.globules_trigger2 = "There is nowhere to hide!"
+	L.globules_trigger1 = "Скоро все закончится."
+	L.globules_trigger2 = "Вам не спрятаться!"
 	L.globules_message = "Водяные гранулы!"
 	L.globules_warning = "Водяные гранулы скоро!"
 	L.globules_bar = "Водяные гранулы пропадают"
