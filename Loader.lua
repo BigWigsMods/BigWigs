@@ -767,12 +767,7 @@ do
 		BigWigs_TrialOfValor = "BigWigs",
 		BigWigs_SiegeOfZuldazar = "BigWigs",
 		FS_Core = "Abandoned", -- abandoned addon breaking the load order
-		BigWigs_Azeroth = "BigWigs",
-		BigWigs_BattleOfDazaralor = "BigWigs",
-		BigWigs_CrucibleOfStorms = "BigWigs",
-		BigWigs_EternalPalace = "BigWigs",
 		BigWigs_Nyalotha = "BigWigs",
-		BigWigs_Uldir = "BigWigs",
 
 		-- Classic Cleanse
 		BigWigs_Azeroth = "BigWigs",

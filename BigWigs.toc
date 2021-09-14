@@ -1,5 +1,5 @@
 ## Interface: 11307
-## Interface-BCC: 20501
+## Interface-BCC: 20502
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.

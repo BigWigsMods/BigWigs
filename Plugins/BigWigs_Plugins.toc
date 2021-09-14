@@ -1,5 +1,5 @@
 ## Interface: 11307
-## Interface-BC: 20501
+## Interface-BC: 20502
 
 ## Title: BigWigs [|cffeda55fPlugins|r]
 ## Title-zhCN: BigWigs [|cffeda55f插件|r]

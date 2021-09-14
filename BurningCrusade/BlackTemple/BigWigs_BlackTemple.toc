@@ -1,4 +1,4 @@
-## Interface: 20501
+## Interface: 20502
 
 ## Title: BigWigs [|cffeda55fBlack Temple|r]
 ## Title-deDE: BigWigs [|cffeda55fDer Schwarze Tempel|r]
