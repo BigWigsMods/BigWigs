@@ -1,140 +1,140 @@
 local L = BigWigs:NewBossLocale("The Tarragrue", "esES")
 if not L then return end
 if L then
-	--L.chains = "Chains" -- Chains of Eternity (Chains)
-	--L.remnants = "Remnants" -- Remnant of Forgotten Torments (Remnants)
+	L.chains = "Cadenas" -- Chains of Eternity (Chains)
+	L.remnants = "Remanentes" -- Remnant of Forgotten Torments (Remnants)
 
-	--L.physical_remnant = "Physical Remnant"
-	--L.magic_remnant = "Magic Remnant"
-	--L.fire_remnant = "Fire Remnant"
-	--L.fire = "Fire"
-	--L.magic = "Magic"
-	--L.physical = "Physical"
+	L.physical_remnant = "Remanente Fisico"
+	L.magic_remnant = "Remanente Magico"
+	L.fire_remnant = "Remanente Fuego"
+	L.fire = "Fuego"
+	L.magic = "Magico"
+	L.physical = "Fisico"
 end
 
 L = BigWigs:NewBossLocale("The Eye of the Jailer", "esES")
 if L then
-	--L.chains = "Chains" -- Short for Dragging Chains
-	--L.pool = "Pool" -- Spreading Misery
-	--L.pools = "Pools" -- Spreading Misery (multiple)
-	--L.death_gaze = "Death Gaze" -- Short for Titanic Death Gaze
+	L.chains = "Cadenas" -- Short for Dragging Chains
+	L.pool = "Charco" -- Spreading Misery
+	L.pools = "Charcos" -- Spreading Misery (multiple)
+	L.death_gaze = "Mirada Aniquiladora" -- Short for Titanic Death Gaze
 end
 
 L = BigWigs:NewBossLocale("The Nine", "esES")
 if L then
-	--L.fragments = "Fragments" -- Short for Fragments of Destiny
-	--L.fragment = "Fragment" -- Singular Fragment of Destiny
-	--L.run_away = "Run Away" -- Wings of Rage
-	--L.song = "Song" -- Short for Song of Dissolution
-	--L.go_in = "Go in" -- Reverberating Refrain
-	--L.valkyr = "Val'kyr" -- Short for Call of the Val'kyr
-	--L.blades = "Blades" -- Agatha's Eternal Blade
-	--L.big_bombs = "Big Bombs" -- Daschla's Mighty Impact
-	--L.big_bomb = "Big Bomb" -- Attached to the countdown
-	--L.shield = "Shield" -- Annhylde's Bright Aegis
-	--L.soaks = "Soaks" -- Aradne's Falling Strike
-	--L.small_bombs = "Small Bombs" -- Brynja's Mournful Dirge
-	--L.recall = "Recall" -- Short for Word of Recall
+	L.fragments = "Fragmentos" -- Short for Fragments of Destiny
+	L.fragment = "Fragmento" -- Singular Fragment of Destiny
+	L.run_away = "Corre" -- Wings of Rage
+	L.song = "Cancion" -- Short for Song of Dissolution
+	L.go_in = "Dentro" -- Reverberating Refrain
+	L.valkyr = "Val'kyr" -- Short for Call of the Val'kyr
+	L.blades = "Hojas" -- Agatha's Eternal Blade
+	L.big_bombs = "Bombas grandes" -- Daschla's Mighty Impact
+	L.big_bomb = "Gran Bomba" -- Attached to the countdown
+	L.shield = "Escudo" -- Annhylde's Bright Aegis
+	L.soaks = "Soaks" -- Aradne's Falling Strike
+	L.small_bombs = "Bombas Pequeñas" -- Brynja's Mournful Dirge
+	L.recall = "Palabra de regreso" -- Short for Word of Recall
 
-	--L.blades_yell = "Fall before my blade!"
-	--L.soaks_yell = "You are all outmatched!"
-	--L.shield_yell = "My shield never falters!"
+	L.blades_yell = "¡Cae ante mi espada!"
+	L.soaks_yell = "¡Estais superados!"
+	L.shield_yell = "¡Mi escudo nunca flaquea!"
 
-	--L.berserk_stage1 = "Berserk Stage 1"
-	--L.berserk_stage2 = "Berserk Stage 2"
+	L.berserk_stage1 = "Rabia Fase 1"
+	L.berserk_stage2 = "Rabia Fase 2"
 
-	--L.image_special = "%s [Skyja]" -- Stage 2 boss name
+	L.image_special = "%s [Skyja]" -- Stage 2 boss name
 end
 
 L = BigWigs:NewBossLocale("Remnant of Ner'zhul", "esES")
 if L then
-	-- L.cones = "Cones" -- Grasp of Malice
-	-- L.orbs = "Orbs" -- Orb of Torment
-	-- L.orb = "Orb" -- Orb of Torment
+	L.cones = "Conos" -- Grasp of Malice
+	L.orbs = "Orbes" -- Orb of Torment
+	L.orb = "Orbe" -- Orb of Torment
 end
 
 L = BigWigs:NewBossLocale("Soulrender Dormazain", "esES")
 if L then
-	-- L.custom_off_nameplate_defiance = "Defiance Nameplate Icon"
-	-- L.custom_off_nameplate_defiance_desc = "Show an icon on the nameplate of Mawsworn that have Defiance.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_off_nameplate_defiance = "Icono de placa de nombre de desafio"
+	L.custom_off_nameplate_defiance_desc = "Muestra un icono en la placa de nombre del Agonizador jurafauce que tiene Desafio.\n\nRequiere el uso de Placa de nombre enemigas y un addon de placas de nombres soportado (KuiNameplates, Plater)."
+	
+	L.custom_off_nameplate_tormented = "Icono placa de nombre atormentado"
+	L.custom_off_nameplate_tormented_desc = "Muestra un icono en la placa de nombre del Agonizador jurafauce que tiene Atormentado.\n\nRequiere el uso de Placa de nombre enemigas y un addon de placas de nombres soportado (KuiNameplates, Plater)."
 
-	-- L.custom_off_nameplate_tormented = "Tormented Nameplate Icon"
-	-- L.custom_off_nameplate_tormented_desc = "Show an icon on the nameplate of Mawsworn that have Tormented.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.cones = "Cono" -- Torment
+	L.dance = "Baile" -- Encore of Torment
+	L.brands = "Marcas" -- Brand of Torment
+	L.brand = "Marca" -- Single Brand of Torment
+	L.spike = "Nova" -- Short for Agonizing Spike
+	L.chains = "Cadenas" -- Hellscream
+	L.chain = "Cadena" -- Soul Manacles
+	L.souls = "Almas" -- Rendered Soul
 
-	-- L.cones = "Cones" -- Torment
-	-- L.dance = "Dance" -- Encore of Torment
-	-- L.brands = "Brands" -- Brand of Torment
-	-- L.brand = "Brand" -- Single Brand of Torment
-	-- L.spike = "Spike" -- Short for Agonizing Spike
-	-- L.chains = "Chains" -- Hellscream
-	-- L.chain = "Chain" -- Soul Manacles
-	-- L.souls = "Souls" -- Rendered Soul
-
-	-- L.chains_remaining = "%d Chains remaining"
-	-- L.all_broken = "All Chains broken"
+	L.chains_remaining = "%d Cadenas restantes"
+	L.all_broken = "Todas las cadenas rotas"
 end
 
 L = BigWigs:NewBossLocale("Painsmith Raznal", "esES")
 if L then
-	-- L.hammer = "Hammer" -- Short for Rippling Hammer
-	-- L.axe = "Axe" -- Short for Cruciform Axe
-	-- L.scythe = "Scythe" -- Short for Dualblade Scythe
-	-- L.trap = "Trap" -- Short for Flameclasp Trap
-	-- L.chains = "Chains" -- Short for Shadowsteel Chains
-	-- L.embers = "Embers" -- Short for Shadowsteel Embers
-	-- L.adds_embers = "Embers (%d) - Adds Next!"
-	-- L.adds_killed = "Adds killed in %.2fs"
-	-- L.spikes = "Spiked Death" -- Soft enrage spikes
+	L.hammer = "Martillo" -- Short for Rippling Hammer
+	L.axe = "Hacha" -- Short for Cruciform Axe
+	L.scythe = "Guadaña" -- Short for Dualblade Scythe
+	L.trap = "Trampa" -- Short for Flameclasp Trap
+	L.chains = "Cadenas" -- Short for Shadowsteel Chains
+	L.embers = "Ascuas" -- Short for Shadowsteel Embers
+	L.adds_embers = "Ascuas (%d) - Adds Next!"
+	L.adds_killed = "Adds matados en %.2fs"
+	L.spikes = "Muerte con pinchos" -- Soft enrage spikes
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "esES")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "The Guardian can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Mostrar siempre barra de habilidades"
+	L.custom_on_stop_timers_desc = "The Guardian puede retrasar sus habilidades. Cuendo esta opcion esta activada, las barras de esas habilidades se mantendran en tu pantalla."
 
-	-- L.bomb_missed = "%dx Bombs Missed"
+	L.bomb_missed = "%dx Bombas Falladas"
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "esES")
 if L then
-	-- L.rings = "Rings"
-	-- L.rings_active = "Rings Active" -- for when they activate/are movable
-	-- L.runes = "Runes"
+	L.rings = "Anillos"
+	L.rings_active = "Anillos Activos" -- for when they activate/are movable
+	L.runes = "Runas"
 
-	-- L.grimportent_countdown = "Countdown"
-	-- L.grimportent_countdown_desc = "Countdown for the players who are Affected by Grim Portent"
-	-- L.grimportent_countdown_bartext = "Go to rune!"
+	L.grimportent_countdown = "Cuenta atras"
+	L.grimportent_countdown_desc = "Cuenta atras para los jugadores que estan afectados por Portar Oscuridad"
+	L.grimportent_countdown_bartext = "¡Ve a la runa!"
 end
 
 L = BigWigs:NewBossLocale("Kel'Thuzad", "esES")
 if L then
-	-- L.spikes = "Spikes" -- Short for Glacial Spikes
-	-- L.spike = "Spike"
-	-- L.miasma = "Miasma" -- Short for Sinister Miasma
+	L.spikes = "Pinchos" -- Short for Glacial Spikes
+	L.spike = "Pincho"
+	L.miasma = "Miasma" -- Short for Sinister Miasma
 
-	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frostbound Devoted that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "Icono placa de nombre Fijado"
+	L.custom_on_nameplate_fixate_desc = "Muestra un icono en la placa de nombre del Devoto ligado a la Escarcha que se fija en ti.\n\nRequiere el uso de Placa de nombre enemigas y un addon de placas de nombres soportado (KuiNameplates, Plater)."
 end
 
 L = BigWigs:NewBossLocale("Sylvanas Windrunner", "esES")
 if L then
-	-- L.chains_active = "Chains Active"
-	-- L.chains_active_desc = "Show a bar for when the Chains of Domination activate"
+	L.chains_active = "Cadenas Activas"
+	L.chains_active_desc = "Muestra una barra para cuando Cadenas de Dominacion se activan"
 
-	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Dark Sentinels that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "Icono placa de nombre Fijado"
+	L.custom_on_nameplate_fixate_desc = "Muestra un icono en la placa de nombre del Centinela Oscuro que se fija en ti.\n\nRequiere el uso de Placa de nombre enemigas y un addon de placas de nombres soportado (KuiNameplates, Plater)."
 
-	-- L.chains = "Chains" -- Short for Domination Chains
-	-- L.chain = "Chain" -- Single Domination Chain
-	-- L.darkness = "Darkness" -- Short for Veil of Darkness
-	-- L.arrow = "Arrow" -- Short for Wailing Arrow
-	-- L.wave = "Wave" -- Short for Haunting Wave
-	-- L.dread = "Dread" -- Short for Crushing Dread
-	-- L.orbs = "Orbs" -- Dark Communion
-	-- L.curse = "Curse" -- Short for Curse of Lethargy
-	-- L.pools = "Pools" -- Banshee's Bane
-	-- L.scream = "Scream" -- Banshee Scream
+	L.chains = "Cadenas" -- Short for Domination Chains
+	L.chain = "Cadena" -- Single Domination Chain
+	L.darkness = "Oscuridad" -- Short for Veil of Darkness
+	L.arrow = "Flecha" -- Short for Wailing Arrow
+	L.wave = "Ola" -- Short for Haunting Wave
+	L.dread = "Terror" -- Short for Crushing Dread
+	L.orbs = "Orbes" -- Dark Communion
+	L.curse = "Maldicion" -- Short for Curse of Lethargy
+	L.pools = "Charcos" -- Banshee's Bane
+	L.scream = "Alarido" -- Banshee Scream
 
-	-- L.knife_fling = "Knives out!" -- "Death-touched blades fling out"
+	L.knife_fling = "¡Cuchillas fuera!" -- "Death-touched blades fling out"
 end
 
