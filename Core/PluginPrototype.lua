@@ -124,6 +124,7 @@ end
 -- @param func callback function to trigger after the delay
 -- @number delay how long to wait until triggering the function
 function plugin:SimpleTimer(func, delay)
+	if delay < 0 then return end -- XXX This is a stopgap for BigWigs_StartCountdown going negative if started around 3
 	Timer(delay, func)
 end
 
