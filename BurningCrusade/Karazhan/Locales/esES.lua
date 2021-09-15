@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Attumen the Huntsman Raid", "esES")
+local L = BigWigs:NewBossLocale("Attumen the Huntsman Raid", "esES") or BigWigs:NewBossLocale("Attumen the Huntsman Raid", "esMX")
 if not L then return end
 if L then
 	L.phase = "Fases"
@@ -9,7 +9,7 @@ if L then
 	L.phase3_message = "Fase 3"
 end
 
-L = BigWigs:NewBossLocale("The Curator Raid", "esES")
+L = BigWigs:NewBossLocale("The Curator Raid", "esES") or BigWigs:NewBossLocale("The Curator Raid", "esMX")
 if L then
 	L.engage_trigger = "La colección es solo para los invitados."
 
@@ -18,7 +18,7 @@ if L then
 	L.weaken_fade_warning = "¡Evocación en ~5 seg!"
 end
 
-L = BigWigs:NewBossLocale("Maiden of Virtue Raid", "esES")
+L = BigWigs:NewBossLocale("Maiden of Virtue Raid", "esES") or BigWigs:NewBossLocale("Maiden of Virtue Raid", "esMX")
 if L then
 	L.engage_trigger = "No se tolerará tu comportamiento."
 	L.engage_message = "¡Doncella en combate! Arrepentimiento en ~33 seg"
@@ -27,7 +27,7 @@ if L then
 	L.repentance_warning = "¡Arrepentimiento en breve!"
 end
 
-L = BigWigs:NewBossLocale("Prince Malchezaar", "esES")
+L = BigWigs:NewBossLocale("Prince Malchezaar", "esES") or BigWigs:NewBossLocale("Prince Malchezaar", "esMX")
 if L then
 	L.wipe_bar = "Reaparición"
 
@@ -49,13 +49,13 @@ if L then
 	L.infernal_trigger2 = "todas las dimensiones"
 end
 
-L = BigWigs:NewBossLocale("Moroes Raid", "esES")
+L = BigWigs:NewBossLocale("Moroes Raid", "esES") or BigWigs:NewBossLocale("Moroes Raid", "esMX")
 if L then
 	L.engage_trigger = "Mm, visita inesperada. Hay que hacer los preparativos..."
 	L.engage_message = "%s Activado - Desvanecer en ~35sec!"
 end
 
-L = BigWigs:NewBossLocale("Netherspite", "esES")
+L = BigWigs:NewBossLocale("Netherspite", "esES") or BigWigs:NewBossLocale("Netherspite", "esMX")
 if L then
 	L.phase = "Fases"
 	L.phase_desc = "Avisar cuando Rencor abisal cambia de fase."
@@ -69,7 +69,7 @@ if L then
 	L.voidzone_warn = "¡Zona de vacío (%d)!"
 end
 
-L = BigWigs:NewBossLocale("Nightbane Raid", "esES")
+L = BigWigs:NewBossLocale("Nightbane Raid", "esES") or BigWigs:NewBossLocale("Nightbane Raid", "esMX")
 if L then
 	L.name = "Nocturno"
 
@@ -85,7 +85,7 @@ if L then
 	L.engage_trigger = "¡Necios! ¡Voy a acabar rápidamente con tu sufrimiento!"
 end
 
-L = BigWigs:NewBossLocale("Romulo & Julianne", "esES")
+L = BigWigs:NewBossLocale("Romulo & Julianne", "esES") or BigWigs:NewBossLocale("Romulo & Julianne", "esMX")
 if L then
 	L.name = "Romulo & Julianne"
 
@@ -112,7 +112,7 @@ if L then
 	L.buff2_message = "¡Julianne gana Devoción!"
 end
 
-L = BigWigs:NewBossLocale("Shade of Aran", "esES")
+L = BigWigs:NewBossLocale("Shade of Aran", "esES") or BigWigs:NewBossLocale("Shade of Aran", "esMX")
 if L then
 	L.adds = "Elementales"
 	L.adds_desc = "Avisa de la aparación de los elementales de agua."
@@ -136,7 +136,7 @@ if L then
 	L.pull_bar = "Deflagración Arcana"
 end
 
-L = BigWigs:NewBossLocale("Terestian Illhoof", "esES")
+L = BigWigs:NewBossLocale("Terestian Illhoof", "esES") or BigWigs:NewBossLocale("Terestian Illhoof", "esMX")
 if L then
 	L.engage_trigger = "Ah, justo a tiempo. ¡Los rituales van a empezar!"
 
@@ -148,14 +148,14 @@ if L then
 	L.weak_bar = "~Debilidad finaliza"
 end
 
-L = BigWigs:NewBossLocale("The Big Bad Wolf", "esES")
+L = BigWigs:NewBossLocale("The Big Bad Wolf", "esES") or BigWigs:NewBossLocale("The Big Bad Wolf", "esMX")
 if L then
 	L.name = "El Gran Lobo Malvado"
 
 	L.riding_bar = "%s Corriendo"
 end
 
-L = BigWigs:NewBossLocale("The Crone", "esES")
+L = BigWigs:NewBossLocale("The Crone", "esES") or BigWigs:NewBossLocale("The Crone", "esMX")
 if L then
 	L.name = "La Vieja Bruja"
 

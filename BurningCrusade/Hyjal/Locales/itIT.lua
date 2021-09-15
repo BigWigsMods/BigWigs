@@ -1,17 +1,23 @@
 local L = BigWigs:NewBossLocale("ArchimondeHyjal", "itIT")
 if not L then return end
 if L then
+	--L.engage_trigger = "Your resistance is insignificant."
+	--L.grip_other = "Grip"
+	--L.fear_message = "Fear, next in ~42sec!"
 
+	--L.killable = "Becomes Killable"
 end
 
 L = BigWigs:NewBossLocale("Azgalor", "itIT")
 if L then
-
+	--L.howl_bar = "~Howl"
+	--L.howl_message = "AoE silence"
 end
 
 L = BigWigs:NewBossLocale("Kaz'rogal", "itIT")
 if L then
-
+	--L.mark_bar = "Mark (%d)"
+	--L.mark_warn = "Mark in 5 sec!"
 end
 
 L = BigWigs:NewBossLocale("Hyjal Summit Trash", "itIT")

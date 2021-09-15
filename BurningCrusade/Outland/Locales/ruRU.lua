@@ -14,6 +14,16 @@ end
 L = BigWigs:NewBossLocale("Doom Lord Kazzak", "ruRU")
 if L then
 	L.name = "Владыка Судеб Каззак"
+
+	--L.engage_trigger1 = "The Legion will conquer all!"
+	--L.engage_trigger2 = "All mortals will perish!"
+
+	--L.enrage_warning1 = "%s Engaged - Enrage in 50-60sec"
+	--L.enrage_warning2 = "Enrage soon!"
+	--L.enrage_message = "Enraged for 10sec!"
+	--L.enrage_finished = "Enrage over - Next in 50-60sec"
+	--L.enrage_bar = "~Enrage"
+	--L.enraged_bar = "<Enraged>"
 end
 
 L = BigWigs:NewBossLocale("Gruul the Dragonkiller", "ruRU")

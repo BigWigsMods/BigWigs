@@ -16,7 +16,7 @@ end
 
 L = BigWigs:NewBossLocale("Fathom-Lord Karathress", "frFR")
 if L then
-	L.enrage_trigger = "Gardes, en position ! Nous avons de la visite…"
+	L.enrage_trigger = "Gardes, en position ! Nous avons de la visite…"
 
 	L.totem = "Totem crache-feu"
 	L.totem_desc = "Prévient quand un Totem crache-feu est posé et indique son possesseur."

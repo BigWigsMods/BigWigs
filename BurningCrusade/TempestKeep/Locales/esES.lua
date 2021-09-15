@@ -1,10 +1,10 @@
-local L = BigWigs:NewBossLocale("Void Reaver", "esES")
+local L = BigWigs:NewBossLocale("Void Reaver", "esES") or BigWigs:NewBossLocale("Void Reaver", "esMX")
 if not L then return end
 if L then
 	L.engage_trigger = "¡Alerta! Estáis marcados para exterminación."
 end
 
-L = BigWigs:NewBossLocale("High Astromancer Solarian", "esES")
+L = BigWigs:NewBossLocale("High Astromancer Solarian", "esES") or BigWigs:NewBossLocale("High Astromancer Solarian", "esMX")
 if L then
 	L.engage_trigger = "¡Tal anu'men no sin'dorei!"
 
@@ -30,7 +30,7 @@ if L then
 	L.priest_bar = "Sacerdotes/Solarian"
 end
 
-L = BigWigs:NewBossLocale("Kael'thas Sunstrider", "esES")
+L = BigWigs:NewBossLocale("Kael'thas Sunstrider", "esES") or BigWigs:NewBossLocale("Kael'thas Sunstrider", "esMX")
 if L then
 	L.engage_trigger = "^Energía. Poder."
 	L.engage_message = "Fase 1"
@@ -85,4 +85,3 @@ if L then
 	L.telonicus = "Maestro Ingeriero Telonicus"
 	L.thaladred = "Thaladred el Oscurecedor"
 end
-

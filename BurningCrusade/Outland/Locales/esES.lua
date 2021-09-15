@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Doomwalker", "esES")
+local L = BigWigs:NewBossLocale("Doomwalker", "esES") or BigWigs:NewBossLocale("Doomwalker", "esMX")
 if not L then return end
 if L then
 	L.name = "Caminante del Destino"
@@ -11,7 +11,7 @@ if L then
 	L.earthquake_desc = "Avisar cuando Caminante del Destino utiliza Terremoto."
 end
 
-L = BigWigs:NewBossLocale("Doom Lord Kazzak", "esES")
+L = BigWigs:NewBossLocale("Doom Lord Kazzak", "esES") or BigWigs:NewBossLocale("Doom Lord Kazzak", "esMX")
 if L then
 	L.name = "Señor Apocalíptico Kazzak"
 
@@ -26,7 +26,7 @@ if L then
 	L.enraged_bar = "<Enfurecido>"
 end
 
-L = BigWigs:NewBossLocale("Gruul the Dragonkiller", "esES")
+L = BigWigs:NewBossLocale("Gruul the Dragonkiller", "esES") or BigWigs:NewBossLocale("Gruul the Dragonkiller", "esMX")
 if L then
 	L.engage_trigger = "Venid... y morid."
 	L.engage_message = "¡%s Activado!"
@@ -46,7 +46,7 @@ if L then
 	L.silence_bar = "~Reverberación"
 end
 
-L = BigWigs:NewBossLocale("High King Maulgar", "esES")
+L = BigWigs:NewBossLocale("High King Maulgar", "esES") or BigWigs:NewBossLocale("High King Maulgar", "esMX")
 if L then
 	L.engage_trigger = "¡Los Gronn son el auténtico poder de Terrallende!"
 
@@ -68,7 +68,7 @@ if L then
 	L.priest = "Ciego el Vidente (Sacerdote)"
 end
 
-L = BigWigs:NewBossLocale("Magtheridon", "esES")
+L = BigWigs:NewBossLocale("Magtheridon", "esES") or BigWigs:NewBossLocale("Magtheridon", "esMX")
 if L then
 	L.escape = "Libreación"
 	L.escape_desc = "Cuenta atrás hasta la liberación de Magtheridon.."
@@ -102,4 +102,3 @@ if L then
 	L.debris_trigger = "¡Que tiemblen las paredes de esta prisión"
 	L.debris_message = "¡30% - Escombros!"
 end
-

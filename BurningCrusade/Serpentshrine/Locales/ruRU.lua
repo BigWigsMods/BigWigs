@@ -16,7 +16,23 @@ end
 
 L = BigWigs:NewBossLocale("The Lurker Below", "ruRU")
 if L then
+	--L.engage_warning = "%s Engaged - Possible Dive in 90sec"
 
+	--L.dive = "Dive"
+	--L.dive_desc = "Timers for when The Lurker Below dives."
+	--L.dive_warning = "Possible Dive in %dsec!"
+	--L.dive_bar = "~Dives in"
+	--L.dive_message = "Dives - Back in 60sec"
+
+	--L.spout = "Spout"
+	--L.spout_desc = "Timers for Spout, may not always be accurate."
+	--L.spout_message = "Casting Spout!"
+	--L.spout_warning = "Possible Spout in ~3sec!"
+	--L.spout_bar = "~Spout"
+
+	--L.emerge_warning = "Back in %dsec"
+	--L.emerge_message = "Back - Possible Dive in 90sec"
+	--L.emerge_bar = "Back in"
 end
 
 L = BigWigs:NewBossLocale("Leotheras the Blind", "ruRU")

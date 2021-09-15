@@ -10,8 +10,8 @@ end
 
 L = BigWigs:NewBossLocale("Azgalor", "koKR")
 if L then
-	L. howl_bar = "~침묵 대기시간"
-	L. howl_message = "광역 침묵"
+	L.howl_bar = "~침묵 대기시간"
+	L.howl_message = "광역 침묵"
 end
 
 L = BigWigs:NewBossLocale("Kaz'rogal", "koKR")

@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Hydross the Unstable", "esES")
+local L = BigWigs:NewBossLocale("Hydross the Unstable", "esES") or BigWigs:NewBossLocale("Hydross the Unstable", "esMX")
 if not L then return end
 if L then
 	L.start_trigger = "¡No puedo permitir que interferáis!"
@@ -14,7 +14,7 @@ if L then
 	L.debuff_warn = "¡Marca - %s%%!"
 end
 
-L = BigWigs:NewBossLocale("Fathom-Lord Karathress", "esES")
+L = BigWigs:NewBossLocale("Fathom-Lord Karathress", "esES") or BigWigs:NewBossLocale("Fathom-Lord Karathress", "esMX")
 if L then
 	L.enrage_trigger = "¡Guardias, atención! Tenemos visita..."
 
@@ -27,7 +27,7 @@ if L then
 	L.priest = "Guardia de las profundidades Caribdis"
 end
 
-L = BigWigs:NewBossLocale("Leotheras the Blind", "esES")
+L = BigWigs:NewBossLocale("Leotheras the Blind", "esES") or BigWigs:NewBossLocale("Leotheras the Blind", "esMX")
 if L then
 	L.enrage_trigger = "¡Al fin acaba mi destierro!"
 
@@ -58,7 +58,7 @@ if L then
 	L.whisper_soon = "~Demonios"
 end
 
-L = BigWigs:NewBossLocale("The Lurker Below", "esES")
+L = BigWigs:NewBossLocale("The Lurker Below", "esES") or BigWigs:NewBossLocale("The Lurker Below", "esMX")
 if L then
 	L.engage_warning = "%s Activado - Se sumerge en ~90seg"
 
@@ -79,7 +79,7 @@ if L then
 	L.emerge_bar = "~Vuelve a superficie"
 end
 
-L = BigWigs:NewBossLocale("Morogrim Tidewalker", "esES")
+L = BigWigs:NewBossLocale("Morogrim Tidewalker", "esES") or BigWigs:NewBossLocale("Morogrim Tidewalker", "esMX")
 if L then
 	L.grave_bar = "<Sepultura de agua> "
 	L.grave_nextbar = "~Sepultura de agua"
@@ -100,7 +100,7 @@ if L then
 	L.globules_bar = "Glóbulos"
 end
 
-L = BigWigs:NewBossLocale("Lady Vashj", "esES")
+L = BigWigs:NewBossLocale("Lady Vashj", "esES") or BigWigs:NewBossLocale("Lady Vashj", "esMX")
 if L then
 	L.engage_trigger1 = "No quería rebajarme y tener contacto con vuestra clase, pero no me dejáis elección..."
 	L.engage_trigger2 = "¡Os desprecio, desechos de la superficie!"
@@ -135,4 +135,3 @@ if L then
 	L.barrier_desc = "Avisar cuand caen las Barreras mágicas."
 	L.barrier_down_message = "¡Barrera %d/4 caída!"
 end
-

@@ -15,11 +15,14 @@ if L then
 	L.phase2_trigger = "^Я сольюсь"
 	L.phase2_message = "20% - Фаза 2"
 
+	--L.wrath_other = "Wrath"
+
 	L.split = "Исчезновение"
 	L.split_desc = "Предупреждение о исчезновении и появлении аддов"
 	L.split_trigger1 = "Я навсегда избавлю вас от мании величия!"
 	L.split_trigger2 = "Вы безнадежно слабы!"
-
+	--L.split_bar = "~Next Split"
+	--L.split_warning = "Split in ~7 sec"
 
 	L.agent_warning = "Исчезновение! - Посланники через 6 сек"
 	L.agent_bar = "Посланники"

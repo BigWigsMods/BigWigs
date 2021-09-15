@@ -58,6 +58,7 @@ if L then
 	L.spellshield_message = "Zauberschild auf Krosh!"
 
 	L.summon_message = "Teufelsj\195\164ger wurde beschworen!"
+	--L.summon_bar = "~Felhunter"
 
 	L.whirlwind_message = "Maulgar - Wirbelwind f\195\188r 15sek!"
 	L.whirlwind_warning = "Maulgar angegriffen - Wirbelwind in ~60sek!"

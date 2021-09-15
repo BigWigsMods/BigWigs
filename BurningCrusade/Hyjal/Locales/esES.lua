@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("ArchimondeHyjal", "esES")
+local L = BigWigs:NewBossLocale("ArchimondeHyjal", "esES") or BigWigs:NewBossLocale("ArchimondeHyjal", "esMX")
 if not L then return end
 if L then
 	L.engage_trigger = "Vuestra resistencia es insignificante."
@@ -8,19 +8,19 @@ if L then
 	L.killable = "Becomes Killable"
 end
 
-L = BigWigs:NewBossLocale("Azgalor", "esES")
+L = BigWigs:NewBossLocale("Azgalor", "esES") or BigWigs:NewBossLocale("Azgalor", "esMX")
 if L then
 	L.howl_bar = "~Aullido"
 	L.howl_message = "Silencio de área"
 end
 
-L = BigWigs:NewBossLocale("Kaz'rogal", "esES")
+L = BigWigs:NewBossLocale("Kaz'rogal", "esES") or BigWigs:NewBossLocale("Kaz'rogal", "esMX")
 if L then
 	L.mark_bar = "~Marca (%d)"
 	L.mark_warn = "Marca en 5 seg"
 end
 
-L = BigWigs:NewBossLocale("Hyjal Summit Trash", "esES")
+L = BigWigs:NewBossLocale("Hyjal Summit Trash", "esES") or BigWigs:NewBossLocale("Hyjal Summit Trash", "esMX")
 if L then
 	L.waves = "Oleadas"
 	L.waves_desc = "Avisos aproximados para cada oleada."
