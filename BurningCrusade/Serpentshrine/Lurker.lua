@@ -51,7 +51,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_MISSED", "Whirl", 37363)
 
 	self:RegisterEvent("PLAYER_REGEN_DISABLED", "CheckForEngage")
-	self:Emote("Spout", self.displayName)
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 
 	self:Death("Win", 21217)
 end
@@ -88,14 +88,16 @@ do
 	end
 end
 
-function mod:Spout()
-	self:ScanForLurker()
-	self:CheckForWipe()
-	self:Bar("spout", 20, L["spout_message"], "Spell_Frost_ChillingBlast")
-	self:Bar("spout", 50, L["spout_bar"], "Spell_Frost_ChillingBlast")
-	self:MessageOld("spout", "red", "alert", L["spout_message"], 37433)
-	self:DelayedMessage("spout", 47, "yellow", L["spout_warning"])
-	self:StopBar(37660) -- Whirl
+function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, _, sender)
+	if sender == self.displayName then
+		self:ScanForLurker()
+		self:CheckForWipe()
+		self:Bar("spout", 20, L["spout_message"], "Spell_Frost_ChillingBlast")
+		self:Bar("spout", 50, L["spout_bar"], "Spell_Frost_ChillingBlast")
+		self:MessageOld("spout", "red", "alert", L["spout_message"], 37433)
+		self:DelayedMessage("spout", 47, "yellow", L["spout_warning"])
+		self:StopBar(37660) -- Whirl
+	end
 end
 
 do
