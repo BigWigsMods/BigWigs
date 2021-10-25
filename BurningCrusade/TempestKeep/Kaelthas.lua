@@ -221,7 +221,7 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	elseif msg == L["phase3_trigger"] then
 		phase = 3
 		self:MessageOld("phase", "green", nil, L["phase3_message"], false)
-		self:Bar("phase", 180, L["phase4_bar"], "Spell_ChargePositive")
+		self:Bar("phase", 120, L["phase4_bar"], "Spell_ChargePositive")
 	elseif msg == L["phase4_trigger"] then
 		phase = 4
 		self:MessageOld("phase", "green", nil, L["phase4_message"], false)
