@@ -45,7 +45,7 @@ L = mod:GetLocale()
 
 function mod:GetOptions()
 	return {
-		{42783, "ICON", "PROXIMITY"}, "phase", "split"
+		{33045, "ICON", "PROXIMITY"}, "phase", "split"
 	}
 end
 
@@ -73,18 +73,18 @@ end
 --
 
 function mod:Wrath(args)
-	self:TargetMessageOld(42783, args.destName, "yellow", nil, L["wrath_other"])
-	self:PrimaryIcon(42783, args.destName)
-	self:TargetBar(42783, 6, args.destName, L["wrath_other"])
+	self:TargetMessageOld(args.spellId, args.destName, "yellow", nil, L["wrath_other"])
+	self:PrimaryIcon(args.spellId, args.destName)
+	self:TargetBar(args.spellId, 8, args.destName, L["wrath_other"])
 	if self:Me(args.destGUID) then
-		self:OpenProximity(42783, 10)
+		self:OpenProximity(args.spellId, 10)
 	end
 end
 
 function mod:WrathRemove(args)
-	self:PrimaryIcon(42783)
+	self:PrimaryIcon(args.spellId)
 	if self:Me(args.destGUID) then
-		self:CloseProximity(42783)
+		self:CloseProximity(args.spellId)
 	end
 end
 
