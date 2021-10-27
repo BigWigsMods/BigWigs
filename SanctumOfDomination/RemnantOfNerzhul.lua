@@ -202,7 +202,7 @@ do
 	function mod:MalevolenceSuccess(args)
 		self:StopBar(CL.count:format(CL.bombs, malevolenceCount))
 		malevolenceCount = malevolenceCount + 1
-		self:CDBar(args.spellId, shatterCount == 4 and 42 or 32, CL.count:format(CL.bombs, malevolenceCount))
+		self:CDBar(args.spellId, shatterCount == 3 and 42 or 32, CL.count:format(CL.bombs, malevolenceCount))
 		self:SimpleTimer(onMeSound, 0.3)
 	end
 
