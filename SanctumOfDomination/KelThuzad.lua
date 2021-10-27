@@ -160,8 +160,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DarkEvocation", 352530) -- No _SUCCESS on the channel
 	self:Log("SPELL_AURA_APPLIED", "RelentlessHauntApplied", 355389)
 	self:Log("SPELL_AURA_REMOVED", "RelentlessHauntRemoved", 355389)
-	self:Log("SPELL_CAST_START", "SoulFractureStart", 348071)
-	self:Log("SPELL_CAST_SUCCESS", "SoulFractureSuccess", 348071)
+	self:Log("SPELL_CAST_START", "SoulFractureStart", 362565)
+	self:Log("SPELL_CAST_SUCCESS", "SoulFractureSuccess", 362565)
 	self:Log("SPELL_AURA_APPLIED", "SoulExhaustionApplied", 348978)
 	self:Log("SPELL_CAST_SUCCESS", "SoulShardEvent", 181113)
 	self:Log("SPELL_AURA_REMOVED", "SoulExhaustionRemoved", 348978)
@@ -341,8 +341,8 @@ function mod:RelentlessHauntRemoved(args)
 end
 
 function mod:SoulFractureStart(args)
-	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(args.spellName, soulFractureCount)))
-	self:PlaySound(args.spellId, "alarm")
+	self:Message(348071, "purple", CL.casting:format(CL.count:format(args.spellName, soulFractureCount)))
+	self:PlaySound(348071, "alarm")
 
 	soulShardMarks = {}
 	soulShardCollector = {}
@@ -350,7 +350,7 @@ end
 
 function mod:SoulFractureSuccess(args)
 	soulFractureCount = soulFractureCount + 1
-	self:CDBar(args.spellId, soulFractureCount == 4 and 43.5 or 30.2, CL.count:format(args.spellName, soulFractureCount)) -- to _START XXX Check count 4
+	self:CDBar(348071, soulFractureCount == 4 and 43.5 or 30.2, CL.count:format(args.spellName, soulFractureCount)) -- to _START XXX Check count 4
 end
 
 function mod:SoulExhaustionApplied(args)
