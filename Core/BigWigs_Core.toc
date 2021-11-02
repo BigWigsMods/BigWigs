@@ -1,4 +1,4 @@
-## Interface: 90100
+## Interface: 90105
 
 ## Title: BigWigs [|cffeda55fCore|r]
 ## Title-zhCN: BigWigs [|cffeda55f核心|r]

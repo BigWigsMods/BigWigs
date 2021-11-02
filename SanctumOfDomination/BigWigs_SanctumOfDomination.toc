@@ -1,4 +1,4 @@
-## Interface: 90100
+## Interface: 90105
 
 ## Title: BigWigs [|cffeda55fSanctum of Domination|r]
 ## Title-deDE: BigWigs [|cffeda55fSanktum der Herrschaft|r]
