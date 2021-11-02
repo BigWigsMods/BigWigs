@@ -21,7 +21,7 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 232
+local BIGWIGS_VERSION = 233
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -1075,9 +1075,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20210831171020" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "9.1.12" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20210831000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20211102000000" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "9.1.20" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20211102000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
