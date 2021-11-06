@@ -10,33 +10,33 @@ L.positionExact = "Posizionamento Esatto"
 L.positionDesc = "Scrivi nel riquadro o sposta l'indicatore se devi posizionare esattamente la barra dall'ancoraggio."
 L.width = "Larghezza"
 L.height = "Altezza"
---L.sizeDesc = "Normally you set the size by dragging the anchor. If you need an exact size you can use this slider or type the value into the box, which has no maximum."
---L.fontSizeDesc = "Adjust the font size using the slider or type the value into the box which has a much higher maximum of 200."
---L.disableDesc = "You are about to disable the feature '%s' which is |cffff4411not recommended|r.\n\nAre you sure you want to do this?"
+L.sizeDesc = "In genere regoli la dimesione trascinando l'ancora. Se hai necessità di una dimensione specifica puoi usare la barra slide o digitare i valori nella casella, che non ha valore massimo."
+L.fontSizeDesc = "Regola la dimensione del carattere usando la barra slide o digitando i valori nella casella che ha un valore molto maggiore di 200."
+L.disableDesc = "Stai per disabilitare la funzionalità '%s' che |cffff4411non è consigliato|r.\n\nSei sicuro di questo?"
 L.transparency = "Trasparenza"
 
 -----------------------------------------------------------------------
 -- AltPower.lua
 --
 
-L.altPowerTitle = "AltPower"
---L.altPowerDesc = "The AltPower display will only appear for bosses that apply AltPower to players, which is extremely rare. The display measures the amount of 'Alternative Power' you and your group has, displaying it in a list. To move the display around, please use the test button below."
+L.altPowerTitle = "Potere Alternativo"
+L.altPowerDesc = "Il Potere Alternativo verrà mostrato solo per quei boss che applicano Potere Alternativo ai giocatori, cosa estremamente rara. Il display misura l'ammontare di 'Potere Alternativo' tuo e del tuo gruppo, mostrandolo in una lista. Per muovere il riquadro, usa il pulsante di test qui sotto."
 L.toggleDisplayPrint = "Mostra il monitor per la prossima volta. Per disabilitarlo completamente in questo scontro, devi deselezionarlo dalle opzioni dello scontro specifico."
 L.disabled = "Disabilitato"
 L.disabledDisplayDesc = "Disattiva il monitor per tutti gli scontri che lo usano."
---L.resetAltPowerDesc = "Reset all the options related to AltPower, including the position of the AltPower anchor."
---L.test = "Test"
---L.altPowerTestDesc = "Show the 'Alternative Power' display, allowing you to move it, and simulating the power changes you would see on a boss encounter."
---L.yourPowerBar = "Your Power Bar"
---L.barColor = "Bar color"
---L.barTextColor = "Bar text color"
---L.additionalWidth = "Additional Width"
---L.additionalHeight = "Additional Height"
---L.additionalSizeDesc = "Add to the size of the standard display by adjusting this slider, or type the value into the box which has a much higher maximum of 100."
---L.yourPowerTest = "Your Power: %d" -- Your Power: 42
---L.yourAltPower = "Your %s: %d" -- e.g. Your Corruption: 42
---L.player = "Player %d" -- Player 7
---L.disableAltPowerDesc = "Globally disable the AltPower display, it will never show for any boss encounter."
+L.resetAltPowerDesc = "Reimposta tutte le opzioni relative al Potere Alternativo, compreso il posizionamento dell'ancora di Potere Alternativo."
+L.test = "Test"
+L.altPowerTestDesc = "Mostra il display 'Potere Alternativo', permettendoti di muoverlo, e simuilando i cambiamenti di potere che potresti vedere durante lo scontro con il boss."
+L.yourPowerBar = "La tua Barra Potere"
+L.barColor = "Colore Barra"
+L.barTextColor = "Colore Testo Barra"
+L.additionalWidth = "Profondità addizionale"
+L.additionalHeight = "Altezza Addizionale"
+L.additionalSizeDesc = "Regola la dimensione del displaystandard usando la barra slide o digitando i valori nella casella che ha un valore molto maggiore di 100."
+L.yourPowerTest = "Tuo Potere: %d" -- Tuo Potere: 42
+L.yourAltPower = "Tuo %s: %d" -- esempio: Tua Corruzione: 42
+L.player = "Giocatore %d" -- Giocatore 7
+L.disableAltPowerDesc = "Disabilita totalmente il display del Potere Alternativo, non verrà mai mostrato in nessuno scontro di boss."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -44,7 +44,7 @@ L.disabledDisplayDesc = "Disattiva il monitor per tutti gli scontri che lo usano
 
 L.autoReply = "Risposta automatica"
 L.autoReplyDesc = "Risponde automaticamente ai sussuri durante il combattimento con un boss."
-L.responseType = "Ripo di risposta"
+L.responseType = "Tipo di risposta"
 L.autoReplyFinalReply = "Sussurra anche quando esci dal combattimento"
 L.guildAndFriends = "Gilda e Amici"
 L.everyoneElse = "Tutti gli altri"
@@ -98,7 +98,7 @@ L.growingUpwardsDesc = "Attiva o disattiva il riempimento crescente o decrescent
 L.texture = "Texture"
 L.emphasize = "Enfatizza"
 L.emphasizeMultiplier = "Moltiplicatore di dimensioni"
---L.emphasizeMultiplierDesc = "If you disable the bars moving to the emphasize anchor, this option will decide what size the emphasized bars will be by multiplying the size of the normal bars."
+L.emphasizeMultiplierDesc = "Se disabiliti le barre muovendole dall'ancora di enfatizzazione, questa opzione deciderà la dimensione delle barre enfatizzate moltiplicando la dimensione delle barre normali."
 
 L.enable = "Attiva"
 L.move = "Muovi"
@@ -152,14 +152,14 @@ L.breakFinished = "Il tempo di pausa è finito"
 
 L.bossBlock = "Blocco Boss"
 L.bossBlockDesc = "Configura le varie opzioni che puoi bloccare durante gli scontri con i boss.\n\n"
---L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
+L.bossBlockAudioDesc = "Configura quali audio silenziare durante uno scontro.\n\nQualsiasi opzione che è |cff808080colorata in grigio|r è stata disabilitata nel pannello opzioni suono di WoW.\n\n"
 L.movieBlocked = "Hai già visto questo video, lo salto."
 L.blockEmotes = "Blocca gli emote a mezzo-schermo"
 L.blockEmotesDesc = "Alcuni boss mostrano delle emote per determinate abilità; questi messaggi sono sia troppo lunghi che troppo descrittivi. Cerchiamo di produrre messaggi più compatti e puliti che non interferiscono con lo svolgimento del gioco, e non dicono specificatamente cosa fare.\n\nNota bene: gli emote dei Boss sono sempre visibili nella chat se vuoi leggerli."
 L.blockMovies = "Blocca filmati già visti"
 L.blockMoviesDesc = "I filmati dei boss (ove presenti) verranno fatti vedere solo la prima volta che si attivano per visualizzarli; dalle volte successive questi video verranno cancellati automaticamente."
---L.blockFollowerMission = "Blocca i popup della Guarnigione" -- Rename to follower mission
---L.blockFollowerMissionDesc = "I popup della Guarnigione appaiono per certe attività, ma principalmente quando un seguace completa una missione.\n\n\Questi popup possono coprire parti critiche o importanti della tua UI durante il combattimento contro un boss, raccomandiamo quindi di bloccarli."
+L.blockFollowerMission = "Blocca i popup della Guarnigione" -- Rename to follower mission
+L.blockFollowerMissionDesc = "I popup della Guarnigione appaiono per certe attività, ma principalmente quando un seguace completa una missione.\n\n\Questi popup possono coprire parti critiche o importanti della tua UI durante il combattimento contro un boss, raccomandiamo quindi di bloccarli."
 L.blockGuildChallenge = "Blocca i popup delle sfide di Gilda"
 L.blockGuildChallengeDesc = "I popup delle Sfide di Gilda vengono mostrati per vari avvisi, principalmente quando la tua gilda completa una spedizione eroica o una spedizione in modalità sfida.\n\nQuesti popup possono coprire parti critiche o importanti della tua UI durante il combattimento contro un boss, raccomandiamo quindi di bloccarli."
 L.blockSpellErrors = "Blocca i messaggi di errore degli incantesimi"
@@ -172,24 +172,24 @@ L.errorSpeech = "Messaggi d'errore"
 L.disableMusic = "Togli la musica (raccomandato)"
 L.disableAmbience = "Togli i suoni ambientali (raccomandato)"
 L.disableSfx = "Togli gli effetti sonori (non raccomandato)"
---L.disableErrorSpeech = "Mute error speech (recommended)"
---L.disableAudioDesc = "The '%s' option in WoW's sound options will be turned off, then turned back on when the boss encounter is over. This can help you focus on warning sounds from BigWigs."
---L.blockTooltipQuests = "Block tooltip quest objectives"
---L.blockTooltipQuestsDesc = "When you need to kill a boss for a quest, it will usually show as '0/1 complete' in the tooltip when you place your mouse over the boss. This will be hidden whilst in combat with that boss to prevent the tooltip growing very large."
+L.disableErrorSpeech = "Togli Messaggi d'Errore (raccomandato)"
+L.disableAudioDesc = "L'opzione '%s' nel pannello delle opzioni del suono di WoW's verrà disabilitata, per riabilitarla quando lo scontro con il boss si è concluso.Questo ti aiuta a focalizzarti sui suoni di avviso di BigWigs."
+L.blockTooltipQuests = "Blocca tooltip obbirettivi missione"
+L.blockTooltipQuestsDesc = "Quando devi uccidere un boss per una missione, vedrai qualcosa come '0/1 completato' nel tooltip quando porti il mouse sopra il boss. Questa opzione lo disabilita durante il combattimento, evitando che il tooltip diventi troppo grande."
 L.blockObjectiveTracker = "Nascondi registro missioni"
---L.blockObjectiveTrackerDesc = "The quest objective tracker will be hidden during a boss encounter to clear up screen space.\n\nThis will NOT happen if you are in a mythic+ or are tracking an achievement."
+L.blockObjectiveTrackerDesc = "Il registro delle missioni verrà nascosto durante lo scontro con il boss per liberare spazio sullo schermo.\n\nNON FUNZIONA se ti trovi in una Mitica+ o se strai tracciando un'impresa."
 
---L.blockTalkingHead = "Hide 'Talking Head' NPC dialog popup"
---L.blockTalkingHeadDesc = "The 'Talking Head' is a popup dialog box that has an NPC head and NPC chat text at the middle-bottom of your screen that |cffff4411sometimes|r shows when an NPC is talking.\n\nYou can choose the different types of instances where this should be blocked from showing.\n\n|cFF33FF99Please Note:|r\n 1) This feature will allow the NPC voice to continue playing so you can still hear it.\n 2) For safety, only specific talking heads will be blocked. Anything special or unique, such as a one-time quest, will not be blocked."
---L.blockTalkingHeadDungeons = "Normal & Heroic Dungeons"
---L.blockTalkingHeadMythics = "Mythic & Mythic+ Dungeons"
---L.blockTalkingHeadRaids = "Raids"
---L.blockTalkingHeadTimewalking = "Timewalking (Dungeons & Raids)"
---L.blockTalkingHeadScenarios = "Scenarios"
+L.blockTalkingHead = "Nascondi popup PNG 'Testa Parlante'"
+L.blockTalkingHeadDesc = "La 'Testa Palante' è una finestra popup di dialogo composta dalla testa di un PNG e una finestra di testo nella parte inferiore dello schermo che |cffff4411a volte|r mostra quando un PNG sta parlando.\n\nPuioi scegliere in quale tipo di istanza bloccare la sua comparsa.\n\n|cFF33FF99Nota importante:|r\n 1) Questa funzionalità permetterà sempre al PNG di parlare.\n 2) Solo alcune teste parlanti verranno bloccate. Qualsiasi cosa speciale o unica, come una quest non ripetibile, non verrà bloccata."
+L.blockTalkingHeadDungeons = "Spedizioni Normali & Eroiche"
+L.blockTalkingHeadMythics = "Spedizioni Mitiche & Mitiche+"
+L.blockTalkingHeadRaids = "Incursioni"
+L.blockTalkingHeadTimewalking = "Viaggi nel Tempo (Spedizioni & Incursioni)"
+L.blockTalkingHeadScenarios = "Scenari"
 
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Porto di Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
---L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
+L.subzone_eastern_transept = "Transetto Orientale" -- Auchindoun dungeon (Warlords of Draenor)
 
 -----------------------------------------------------------------------
 -- Colors.lua
@@ -231,13 +231,13 @@ L.countdownColor = "Colore conto alla rovescia"
 L.countdownVoice = "Voce contro alla rovescia"
 L.countdownTest = "Test conto alla rovescia"
 L.countdownAt = "Conto alla rovescia in... (secondi)"
---L.countdownAt_desc = "Choose how much time should be remaining on a boss ability (in seconds) when the countdown begins."
---L.countdown = "Countdown"
---L.countdownDesc = "The countdown feature involves a spoken audio countdown and a visual text countdown. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
---L.countdownAudioHeader = "Spoken Audio Countdown"
---L.countdownTextHeader = "Visual Text Countdown"
---L.resetCountdownDesc = "Resets all the above countdown settings to their defaults."
---L.resetAllCountdownDesc = "If you've selected custom countdown voices for any boss encounter settings, this button will reset ALL of them as well as resetting all the above countdown settings to their defaults."
+L.countdownAt_desc = "Scegli quanto tempo dovrebbe rimanere su un'abilità di un boss (in secondi) quando inizia il conto alla rovescia."
+L.countdown = "Conto alla rovescia"
+L.countdownDesc = "La funzionalità Conto alla rovescia prevede un conteggio scritto e un messaggio audio. Raramente è abilitata come opzione predefinita, ma puoi abilitarla per qualsiasi abilità del boss nelle opzioni specifiche di quel boss."
+L.countdownAudioHeader = "Conto alla Rovescia Audio"
+L.countdownTextHeader = "Conto alla Rovescia Visivo"
+L.resetCountdownDesc = "reimposta tutte le impostazioni dei Conti alla Rovescia alle loro opzioni predefinite."
+L.resetAllCountdownDesc = "Se hai scelto delle voci personalizzate in qualsiasi impostazione dei boss, questo pulsante le cancellerà TUTTE così come tutte le altre modifiche riportandole ai valori predefiniti."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
@@ -251,14 +251,14 @@ L.countdownAt = "Conto alla rovescia in... (secondi)"
 
 L.sinkDescription = "Indirizza l'uscita dei messaggi sul visualizzatore di Messaggi Normali di BigWigs. Questa visualizzazione supporta icone, colori e può visualizzare fino a 4 messaggi sullo schermo. I messaggi più recenti cresceranno in dimensioni per avvertire l'utente."
 L.emphasizedSinkDescription = "Indirizza l'uscita dei messaggi attraverso il visualizzatore di Messaggi ENFATIZZATI di BigWigs. Questo metodo supporta testi, colori e può visualizzare un solo messaggio per volta."
---L.resetMessagesDesc = "Reset all the options related to messages, including the position of the message anchors."
+L.resetMessagesDesc = "Reimposta tutte le opzioni relative ai messaggi, compresa la posizione dei messaggi d'ancoraggio."
 
 L.bwEmphasized = "BigWigs Enfatizzato"
 L.messages = "Messaggi"
 L.emphasizedMessages = "Messaggi Enfatizzati"
---L.emphasizedDesc = "The point of an emphasized message is to get your attention by being a large message in the middle of your screen. It is rarely enabled by default, but you can enable it for any boss ability when looking at the specific boss encounter settings."
+L.emphasizedDesc = "Lo scopo dei messaggi enfatizzati è richiamare la tua attenzione con un messaggio a grandezza maggiore rispetto al siolito. Raramente è abilitata come opzione predefinita, ma puoi abilitarla per qualsiasi abilità del boss nelle opzioni specifiche di quel boss."
 L.uppercase = "TUTTO MAIUSCOLO"
---L.uppercaseDesc = "All emphasized messages will be converted to UPPERCASE."
+L.uppercaseDesc = "Tutti i messaggi enfatizzati verranno convertiti in MAIUSCOLO."
 
 L.useIcons = "Usa Icone"
 L.useIconsDesc = "Mostra le icone accanto ai messaggi."
@@ -291,7 +291,7 @@ L.proximity_name = "Prossimità"
 L.soundDelay = "Ritardo del Suono"
 L.soundDelayDesc = "Specifica per quanto tempo BigWigs dovrebbe aspettare per ripetere il suono quando qualcuno è vicino a te."
 
---L.resetProximityDesc = "Reset all the options related to proximity, including the position of the proximity anchor."
+L.resetProximityDesc = "Reimposta tutte le opzione relative alla prossimità, compreso il posizionamento dell'ancora di prossimità."
 
 L.close = "Chiudi"
 L.closeProximityDesc = "Chiude il Monitor di Prossimità.\n\nPer disabilitarlo completamente per tutti gli incontri, devi andare nelle impostazioni dei singoli combattimenti e disabilitare l'opzione 'Prossimità"
@@ -331,8 +331,8 @@ L.pullStoppedCombat = "Timer ingaggio cancellato perchè è iniziato il combatti
 L.pullIn = "Ingaggio tra %d sec"
 L.sendPull = "Invio di un timer di Ingaggio agli utenti di BigWigs e DBM."
 L.wrongPullFormat = "Deve essere tra 1 e 60 secondi. Un'esempio corretto è: /pull 5"
---L.countdownBegins = "Begin Countdown"
---L.countdownBegins_desc = "Choose how much time should be remaining on the pull timer (in seconds) when the countdown begins."
+L.countdownBegins = "Inizia Conto alla Rovescia"
+L.countdownBegins_desc = "Scegli quanto tempo dovrebbe rimanere al timer di Ingaggio (in secondi) quando inizia il conto alla rovescia."
 
 -----------------------------------------------------------------------
 -- RaidIcon.lua
@@ -350,21 +350,21 @@ L.secondaryDesc = "Il secondo Simbolo che l'automazione del combattimento dovreb
 --
 
 L.Sounds = "Suoni"
---L.soundsDesc = "BigWigs uses the 'Master' sound channel to play all of its sounds. If you find that sounds are too quiet or too loud, open WoW's sound settings and adjust the 'Volume principale' slider to a level you like.\n\nBelow you can globally configure the different sounds that play for specific actions, or set them to 'None' to disable them. If you only want to change a sound for a specific boss ability, that can be done at the boss encounter settings.\n\n"
---L.oldSounds = "Old Sounds"
+L.soundsDesc = "BigWigs usa il canale audio 'Master' per riprodurre tutti i suoni. Se il suono risulta troppo debole o alto, apri le impostazioni audio di WoW e aggiusta il 'Volume principale' ad un livello soddisfacente per te.\n\nSotto puoi configurare globalmente i vari suoni riprodotti per specifiche azioni, o impostare 'Nessuno' per disabilitarli. Se vuoi solo cambiare un suono per un'abilità specifica di un boss, puoi farlo dal pannello opzioni per quel boss
+L.oldSounds = "Vecchi Suoni"
 
 L.Alarm = "Allarme"
 L.Info = "Informazioni"
 L.Alert = "Avvertimento"
 L.Long = "Lungo"
 L.Warning = "Avviso"
---L.onyou = "A spell, buff, or debuff is on you"
---L.underyou = "You need to move out of a spell under you"
+L.onyou = "Un'Incantesimo, un potenziamento o un depotenziamento su di te"
+L.underyou = "Devi muoverti fuori dall'incantesimo sotto di te"
 
 L.sound = "Suono"
 
 L.customSoundDesc = "Riproduci il suono personalizzato scelto invece che quelli proposti dal modulo."
---L.resetSoundDesc = "Resets the above sounds to their defaults."
+L.resetSoundDesc = "Reimposta i suoni precedenti ai loro valori predefiniti."
 L.resetAllCustomSound = "Se hai personalizzzato i suoni per qualsiasi boss, questo pulsante reimposterà TUTTI i suoni predefiniti e quindi verranno usati i suoni definiti qui."
 
 -----------------------------------------------------------------------
