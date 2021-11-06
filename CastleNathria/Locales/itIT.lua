@@ -42,13 +42,13 @@ if L then
 	L.full = "%s (|cffff0000PIENO|r)"
 
 	L.anima_adds = "Adds Animum Concentrato"
-	--L.anima_adds_desc = "Show a timer for when adds spawn from the Concentrate Anima debuffs."
+	L.anima_adds_desc = "Mostra un timer per la comparsa degli Adds di Animum Concentrato."
 
-	--L.custom_off_experimental = "Enable experimental features"
-	--L.custom_off_experimental_desc = "These features are |cffff0000not tested|r and could |cffff0000spam|r."
+	L.custom_off_experimental = "Abilita funzioni sperimentali"
+	L.custom_off_experimental_desc = "Queste funzioni |cffff0000non sono state testate|r e potrebbero creare |cffff0000spam|r."
 
-	--L.anima_tracking = "Anima Tracking |cffff0000(Experimental)|r"
-	--L.anima_tracking_desc = "Messages and Bars to track anima levels in the containers.|n|cffaaff00Tip: You might want to disable the information box or bars, depending your preference."
+	L.anima_tracking = "Tracciamento Animum |cffff0000(Experimental)|r"
+	L.anima_tracking_desc = "Barre e messaggi per i tracciamento dei livelli di animum nei contenitori.|n|cffaaff00Suggerimento: Potresti preferire tenere disabilitati le barre e il box informazioni, dipende dalle tue preferenze personali."
 
 	L.custom_on_stop_timers = "Mostra sempre le barre abilità"
 	L.custom_on_stop_timers_desc = "Solo per il test di adesso"
@@ -115,23 +115,23 @@ end
 
 L = BigWigs:NewBossLocale("Sire Denathrius", "itIT")
 if L then
-	--L.infobox_stacks = "%d |4Stack:Stacks;: %d |4player:players;" -- 4 Stacks: 5 players // 1 Stack: 1 player
+	L.infobox_stacks = "%d |4Accumulo:Accumuli;: %d |4giocatore:giocatori;" -- 4 Stacks: 5 players // 1 Stack: 1 player
 
-	--L.custom_on_repeating_nighthunter = "Repeating Night Hunter Yell"
-	--L.custom_on_repeating_nighthunter_desc = "Repeating yell messages for the Night Hunter ability using icons {rt1} or {rt2} or {rt3} to find your line easier if you have to soak."
+	L.custom_on_repeating_nighthunter = "Ripetizione Urlo Predatore della Notte"
+	L.custom_on_repeating_nighthunter_desc = "Ripete messaggi di urlo per l'abilità Predatore della Notte usando le icone {rt1} o {rt2} o {rt3} per trovare la tuna linea più facilmente se devi assorbire."
 
-	--L.custom_on_repeating_impale = "Repeating Impale Say"
-	--L.custom_on_repeating_impale_desc = "Repeating say messages for the Impale ability using '1' or '22' or '333' or '4444' to make it clear in what order you will be hit."
+	L.custom_on_repeating_impale = "Ripetizione Avviso Impalamento"
+	L.custom_on_repeating_impale_desc = "Ripete i messaggi di chat per l'abilità Impalamento usando '1' o '22' o '333' o '4444' per avvisare l'ordine con cui colpirà."
 
-	--L.hymn_stacks = "Nathrian Hymn"
-	--L.hymn_stacks_desc = "Alerts for the amount of Nathrian Hymn stacks currently on you."
+	L.hymn_stacks = "Inno di Nathria"
+	L.hymn_stacks_desc = "Avviso per gli accumuli di Inno di Nathria presenti su di te."
 
-	--L.ravage_target = "Reflection: Ravage Target Cast Bar"
-	--L.ravage_target_desc = "Cast bar showing the time until the reflection targets a location for Ravage."
-	--L.ravage_targeted = "Ravage Targeted" -- Text on the bar for when Ravage picks its location to target in stage 3
+	L.ravage_target = "Riflesso: Devastazione Barra di Cast del Target"
+	L.ravage_target_desc = "Barra di cast che mostra il tempo mancante prima che Riflesso colpisca con Devastazione."
+	L.ravage_targeted = "Devastazione a Terra" -- Testo sulla barra per quando devastazione raggiunge il suo punto d'impatto in fase 3
 
-	--L.no_mirror = "No Mirror: %d" -- Player amount that does not have the Through the Mirror
-	--L.mirror = "Mirror: %d" -- Player amount that does have the Through the Mirror
+	L.no_mirror = "No Specchio: %d" -- Numero di giocatori che non hanno Attraverso lo Specchio
+	L.mirror = "Specchio: %d" -- Numero di giocatori che hanno Attraverso lo Specchio
 end
 
 L = BigWigs:NewBossLocale("Castle Nathria Trash", "itIT")
