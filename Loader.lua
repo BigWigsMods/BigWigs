@@ -216,6 +216,7 @@ do
 		[-1647] = s, -- Shadowlands (Fake Menu)
 		[2296] = s, -- Castle Nathria
 		[2450] = s, -- Sanctum of Domination
+		[2481] = s, -- Sepulcher of the First Ones
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep

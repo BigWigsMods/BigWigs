@@ -1,0 +1,20 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="SolitaryGuardian.lua"/>
+<Script file="SepulcherOfTheFirstOnes\BigWigs_SepulcherOfTheFirstOnes.toc"/>
+<Script file="SepulcherOfTheFirstOnes\ArtificerXymox.lua"/>
+<Script file="SepulcherOfTheFirstOnes\PrototypePantheon.lua"/>
+<Script file="SepulcherOfTheFirstOnes\Skolex.lua"/>
+<Script file="SepulcherOfTheFirstOnes\Halondrus.lua"/>
+<Script file="SepulcherOfTheFirstOnes\Lihuvim.lua"/>
+<Script file="SepulcherOfTheFirstOnes\AnduinWrynn.lua"/>
+<Script file="SepulcherOfTheFirstOnes\LordsOfDread.lua"/>
+<Script file="SepulcherOfTheFirstOnes\Rygelon.lua"/>
+<Script file="SepulcherOfTheFirstOnes\TheJailer.lua"/>
+<!--<Script file="Trash.lua"/>
+
+<Include file="Locales\locales.xml"/>-->
+<Include file="Options\options.xml"/>
+
+</Ui>
