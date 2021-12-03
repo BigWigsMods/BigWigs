@@ -2,10 +2,10 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Prototype Pantheon", 2460, 2481)
+local mod, CL = BigWigs:NewBoss("Prototype Pantheon", 2481, 2460)
 if not mod then return end
-mod:RegisterEnableMob(0) -- TODO
-mod:SetEncounterID(	2544)
+mod:RegisterEnableMob(1) -- TODO
+mod:SetEncounterID(2544)
 mod:SetRespawnTime(30)
 
 --------------------------------------------------------------------------------

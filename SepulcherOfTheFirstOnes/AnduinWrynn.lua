@@ -2,9 +2,9 @@
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Anduin Wrynn", 2469, 2481)
+local mod, CL = BigWigs:NewBoss("Anduin Wrynn", 2481, 2469)
 if not mod then return end
-mod:RegisterEnableMob(0) -- TODO
+mod:RegisterEnableMob(1) -- TODO
 mod:SetEncounterID(2546)
 mod:SetRespawnTime(30)
 

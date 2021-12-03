@@ -2,19 +2,15 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="SolitaryGuardian.lua"/>
-<Script file="SepulcherOfTheFirstOnes\BigWigs_SepulcherOfTheFirstOnes.toc"/>
-<Script file="SepulcherOfTheFirstOnes\ArtificerXymox.lua"/>
-<Script file="SepulcherOfTheFirstOnes\PrototypePantheon.lua"/>
-<Script file="SepulcherOfTheFirstOnes\Skolex.lua"/>
-<Script file="SepulcherOfTheFirstOnes\Halondrus.lua"/>
-<Script file="SepulcherOfTheFirstOnes\Lihuvim.lua"/>
-<Script file="SepulcherOfTheFirstOnes\AnduinWrynn.lua"/>
-<Script file="SepulcherOfTheFirstOnes\LordsOfDread.lua"/>
-<Script file="SepulcherOfTheFirstOnes\Rygelon.lua"/>
-<Script file="SepulcherOfTheFirstOnes\TheJailer.lua"/>
-<!--<Script file="Trash.lua"/>
+<Script file="ArtificerXymox.lua"/>
+<Script file="PrototypePantheon.lua"/>
+<Script file="Skolex.lua"/>
+<Script file="Halondrus.lua"/>
+<Script file="Lihuvim.lua"/>
+<Script file="AnduinWrynn.lua"/>
+<Script file="LordsOfDread.lua"/>
+<Script file="Rygelon.lua"/>
+<Script file="TheJailer.lua"/>
 
-<Include file="Locales\locales.xml"/>-->
 <Include file="Options\options.xml"/>
-
 </Ui>
