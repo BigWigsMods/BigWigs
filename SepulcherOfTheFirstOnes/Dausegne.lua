@@ -47,7 +47,7 @@ function mod:GetOptions()
 		361513, -- Obliteration Arc
 		363200, -- Disintegration Halo
 		361643, -- Siphon Reservoir
-		--361651, -- Siphoned Barrier XXX Infobox with shield amount?
+		361651, -- Siphoned Barrier XXX Infobox with shield amount?
 		365418, -- Total Dominion
 	},{
 		[361966] = -24104 -- The Fallen Oracle
