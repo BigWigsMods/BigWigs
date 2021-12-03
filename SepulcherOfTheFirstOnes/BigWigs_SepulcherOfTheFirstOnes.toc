@@ -1,0 +1,33 @@
+## Interface: 90105
+
+## Title: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-deDE: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-esES: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-esMX: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-frFR: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-itIT: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-koKR: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-ptBR: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-ruRU: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-zhCN: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-zhTW: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Notes: BigWigs Sepulcher of the First Ones Modules
+## Notes-deDE: BigWigs Sepulcher of the First Ones Modules
+## Notes-esES: BigWigs Sepulcher of the First Ones Modules
+## Notes-esMX: BigWigs Sepulcher of the First Ones Modules
+## Notes-frFR: BigWigs Sepulcher of the First Ones Modules
+## Notes-itIT: BigWigs Sepulcher of the First Ones Modules
+## Notes-koKR: BigWigs Sepulcher of the First Ones Modules
+## Notes-ptBR: BigWigs Sepulcher of the First Ones Modules
+## Notes-ruRU: BigWigs Sepulcher of the First Ones Modules
+## Notes-zhCN: BigWigs Sepulcher of the First Ones Modules
+## Notes-zhTW: BigWigs Sepulcher of the First Ones Modules
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2481
+
+modules.xml

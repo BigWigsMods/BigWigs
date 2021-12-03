@@ -1,0 +1,20 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\FrameXML\UI.xsd">
+
+<Script file="SolitaryGuardian.lua"/>
+<Script file="Dausegne.lua"/>
+<Script file="ArtificerXymox.lua"/>
+<Script file="PrototypePantheon.lua"/>
+<Script file="Lihuvim.lua"/>
+<Script file="Skolex.lua"/>
+<Script file="Halondrus.lua"/>
+<Script file="AnduinWrynn.lua"/>
+<Script file="LordsOfDread.lua"/>
+<Script file="Rygelon.lua"/>
+<Script file="TheJailer.lua"/>
+<!--<Script file="Trash.lua"/>-->
+
+<!-- <Include file="Locales\locales.xml"/> -->
+<Include file="Options\options.xml"/>
+
+</Ui>
