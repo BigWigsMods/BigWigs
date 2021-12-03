@@ -2,6 +2,7 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="SolitaryGuardian.lua"/>
+<Script file="Dausegne.lua"/>
 <Script file="ArtificerXymox.lua"/>
 <Script file="PrototypePantheon.lua"/>
 <Script file="Skolex.lua"/>
