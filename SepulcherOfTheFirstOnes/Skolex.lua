@@ -1,10 +1,11 @@
+if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
 local mod, CL = BigWigs:NewBoss("Skolex, the Insatiable Ravener", 2481, 2465)
 if not mod then return end
-mod:RegisterEnableMob(1) -- TODO
+-- mod:RegisterEnableMob(0) -- TODO
 mod:SetEncounterID(2542)
 mod:SetRespawnTime(30)
 

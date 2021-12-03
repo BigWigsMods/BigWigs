@@ -5,13 +5,16 @@
 <Script file="Dausegne.lua"/>
 <Script file="ArtificerXymox.lua"/>
 <Script file="PrototypePantheon.lua"/>
+<Script file="Lihuvim.lua"/>
 <Script file="Skolex.lua"/>
 <Script file="Halondrus.lua"/>
-<Script file="Lihuvim.lua"/>
 <Script file="AnduinWrynn.lua"/>
 <Script file="LordsOfDread.lua"/>
 <Script file="Rygelon.lua"/>
 <Script file="TheJailer.lua"/>
+<!--<Script file="Trash.lua"/>-->
 
+<!-- <Include file="Locales\locales.xml"/> -->
 <Include file="Options\options.xml"/>
+
 </Ui>
