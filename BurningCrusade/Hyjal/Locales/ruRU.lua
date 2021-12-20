@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("ArchimondeHyjal", "ruRU")
 if not L then return end
 if L then
-	L.engage_trigger = "Ваше сопротивление нас не остановит."
+	L.engage_trigger = "Ваше сопротивление смехотворно."
 	L.grip_other = "Хватка"
 	L.fear_message = "Страх! Следующий через ~ 42сек!"
 
@@ -16,14 +16,14 @@ end
 
 L = BigWigs:NewBossLocale("Kaz'rogal", "ruRU")
 if L then
-	L.mark_bar = "След Матка (%d)"
+	L.mark_bar = "След метка (%d)"
 	L.mark_warn = "Метка через 5 сек!"
 end
 
 L = BigWigs:NewBossLocale("Hyjal Summit Trash", "ruRU")
 if L then
-	--L.waves = "Wave Warnings"
-	--L.waves_desc = "Announce approximate warning messages for the next wave."
+	L.waves = "Wave Warnings"
+	L.waves_desc = "Announce approximate warning messages for the next wave."
 
 	L.ghoul = "Вурдалаков"
 	L.fiend = "Некрорахнидов"
