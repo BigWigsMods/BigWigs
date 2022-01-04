@@ -5,7 +5,7 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Skolex, the Insatiable Ravener", 2481, 2465)
 if not mod then return end
-mod:RegisterEnableMob(183937, 181395) -- Skolex x2, Check which
+mod:RegisterEnableMob(181395) -- Skolex
 mod:SetEncounterID(2542)
 mod:SetRespawnTime(30)
 
@@ -13,6 +13,8 @@ mod:SetRespawnTime(30)
 -- Locals
 --
 
+local tankComboCounter = 1
+local comboCounter = 1
 local flailCount = 1
 local retchCount = 1
 local unendingCount = 1
@@ -50,16 +52,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Rend", 359979)
 	self:Log("SPELL_CAST_START", "Riftmaw", 359975)
 	self:Log("SPELL_CAST_START", "Destroy", 364778)
-
 end
 
 function mod:OnEngage()
+	tankComboCounter = 1
 	flailCount = 1
 	retchCount = 1
 	unendingCount = 1
 
 	self:Bar(359829, 2, CL.count:format(self:SpellName(359829), flailCount)) -- Dust Flail
-	self:Bar(360079, 11) -- Tank Combo
+	self:Bar(360079, 11, CL.count:format(self:SpellName(360079), tankComboCounter)) -- Tank Combo
 	self:Bar(360451, 26, CL.count:format(self:SpellName(360451), retchCount)) -- Retch
 end
 
@@ -69,7 +71,10 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 360079 then -- Tank Combo
-		self:CDBar(360079, 25) -- Tank Combo
+		self:StopBar(CL.count:format(self:SpellName(360079), tankComboCounter))
+		comboCounter = 1
+		tankComboCounter = tankComboCounter + 1
+		self:CDBar(360079, 25, CL.count:format(self:SpellName(360079), tankComboCounter)) -- Tank Combo
 	end
 end
 
@@ -96,13 +101,15 @@ function mod:Retch(args)
 end
 
 function mod:Rend(args)
-	self:Message(args.spellId, "purple")
+	self:Message(args.spellId, "purple", CL.count:format(args.spellName, comboCounter))
 	self:PlaySound(args.spellId, "alarm")
+	comboCounter = comboCounter + 1
 end
 
 function mod:Riftmaw(args)
-	self:Message(args.spellId, "purple")
+	self:Message(args.spellId, "purple", CL.count:format(args.spellName, comboCounter))
 	self:PlaySound(args.spellId, "alarm")
+	comboCounter = comboCounter + 1
 end
 
 function mod:Destroy(args)
