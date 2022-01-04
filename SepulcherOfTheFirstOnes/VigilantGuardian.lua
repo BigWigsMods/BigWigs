@@ -5,7 +5,7 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Vigilant Guardian", 2481, 2458)
 if not mod then return end
-mod:RegisterEnableMob(180773, 184445) -- 2x Vigilant Guardian
+mod:RegisterEnableMob(184522, 180773) -- Vigilant Custodian, Vigilant Guardian
 mod:SetEncounterID(2512)
 mod:SetRespawnTime(30)
 
