@@ -2,11 +2,11 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="VigilantGuardian.lua"/>
-<Script file="Dausegne.lua"/>
+<Script file="Skolex.lua"/>
 <Script file="ArtificerXymox.lua"/>
+<Script file="Dausegne.lua"/>
 <Script file="PrototypePantheon.lua"/>
 <Script file="Lihuvim.lua"/>
-<Script file="Skolex.lua"/>
 <Script file="Halondrus.lua"/>
 <Script file="AnduinWrynn.lua"/>
 <Script file="LordsOfDread.lua"/>
