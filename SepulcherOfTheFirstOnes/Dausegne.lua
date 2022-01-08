@@ -259,7 +259,7 @@ do
 
 		nextTeleport = GetTime() + 110.5
 		if teleportCount < 4 then -- Only 3 teleports before berserk
-			self:Bar(361643, 110.5, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
+			self:Bar(361630, 110.5, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
 		end
 	end
 end
