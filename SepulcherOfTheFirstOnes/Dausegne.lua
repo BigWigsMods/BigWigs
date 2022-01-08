@@ -28,12 +28,14 @@ local nextSiphon = 0
 local L = mod:GetLocale()
 if L then
 	L.staggering_barrage = "Barrage" -- Staggering Barrage
-	L.domination_core = "Core" -- Domination Core
+	L.domination_core = "Add" -- Domination Core
 	L.obliteration_arc = "Arc" -- Obliteration Arc
-	L.disintergration_halo = "Rings" -- Disintegration Halo
-	L.siphon_reservoir = "Siphon" -- Siphon Reservoir
 
-	L.ring_count = "Ring x%d"
+	L.disintergration_halo = "Rings" -- Disintegration Halo
+	L.rings_x = "Rings x%d"
+	L.ring_count = "Ring (%d/%d)"
+
+	L.siphon_reservoir = "Teleport" -- Siphon Reservoir
 	L.absorb_text = "%s (%.0f%%)"
 end
 
@@ -47,7 +49,7 @@ function mod:GetOptions()
 		{361018, "ICON", "SAY_COUNTDOWN", "SAY"}, -- Staggering Barrage
 		359483, -- Domination Core
 		361225, -- Encroaching Dominion
-		363607, -- Domination Bolt
+		--363607, -- Domination Bolt
 		361513, -- Obliteration Arc
 		363200, -- Disintegration Halo
 		361643, -- Siphon Reservoir
@@ -55,10 +57,10 @@ function mod:GetOptions()
 		365418, -- Total Dominion
 	},nil,{
 		[361018] = L.staggering_barrage, -- Staggering Barrage (Barrage)
-		[359483] = L.domination_core, -- Domination Core (Core)
+		[359483] = L.domination_core, -- Domination Core (Add)
 		[361513] = L.obliteration_arc,  -- Obliteration Arc (Arc)
 		[363200] = L.disintergration_halo,  -- Disintegration Halo (Rings)
-		[361643] = L.siphon_reservoir,  -- Siphon Reservoir (Siphon)
+		[361643] = L.siphon_reservoir,  -- Siphon Reservoir (Teleport)
 	}
 end
 
@@ -69,7 +71,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "StaggeringBarrageApplied", 361018)
 	self:Log("SPELL_AURA_REMOVED", "StaggeringBarrageRemoved", 361018)
 	self:Log("SPELL_CAST_START", "DominationCore", 359483)
-	self:Log("SPELL_CAST_START", "DominationBolt", 363607)
+	--self:Log("SPELL_CAST_START", "DominationBolt", 363607)
 	self:Log("SPELL_CAST_START", "ObliterationArc", 361513)
 	--self:Log("SPELL_CAST_SUCCESS", "DisintegrationHalo", 363200) -- XXX Emote
 	self:Log("SPELL_AURA_APPLIED", "SiphonReservoir", 361643)
@@ -81,7 +83,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 361225)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 361225)
 
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Disintegration Halo
+	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Disintegration Halo
 end
 
 function mod:OnEngage()
@@ -93,7 +95,7 @@ function mod:OnEngage()
 	nextSiphon = GetTime() + 72.5
 
 	self:Bar(359483, 6.5, CL.count:format(L.domination_core, coreCount)) -- Domination Core
-	self:Bar(363200, 12.5, CL.count:format(L.disintergration_halo, haloCount)) -- Disintegration Halo (emote at 5, ring at ~13)
+	self:Bar(363200, 12.5, CL.count:format(L.rings_x:format(siphonCount), haloCount)) -- Disintegration Halo (emote at 5, ring at ~13)
 	self:Bar(361513, 15, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
 	self:Bar(361018, 29, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
 	self:Bar(361643, 72.5, CL.count:format(L.siphon_reservoir, siphonCount)) -- Siphon Reservoir
@@ -155,15 +157,15 @@ function mod:DominationCore(args)
 	end
 end
 
-function mod:DominationBolt(args)
-	local canDo, ready = self:Interrupter(args.sourceGUID)
-	if canDo then
-		self:Message(args.spellId, "yellow")
-		if ready then
-			self:PlaySound(args.spellId, "info")
-		end
-	end
-end
+-- function mod:DominationBolt(args)
+-- 	local canDo, ready = self:Interrupter(args.sourceGUID)
+-- 	if canDo then
+-- 		self:Message(args.spellId, "yellow")
+-- 		if ready then
+-- 			self:PlaySound(args.spellId, "info")
+-- 		end
+-- 	end
+-- end
 
 function mod:ObliterationArc(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.obliteration_arc, arcCount))
@@ -175,27 +177,27 @@ function mod:ObliterationArc(args)
 	end
 end
 
--- EMOTE only
--- "Disintegration Halo-365373-npc:Dausegne = pull:5.0, 91.1, 70.1, 55.9, 70.0", -- [1]
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
+function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 	if msg:find("spell:365373") then -- Disintegration Halo
-		self:Message(363200, "orange", CL.soon:format(CL.count:format(L.disintergration_halo, haloCount)))
+		self:Message(363200, "orange", CL.soon:format(CL.count:format(L.rings_x:format(siphonCount), haloCount)))
 		self:PlaySound(363200, "info")
 		-- Start timers for subsequent rings (first after ~8s, then ~6s)
+		self:Bar(363200, 7.5, CL.count:format(L.rings_x:format(siphonCount), haloCount))
 		if haloCount < 3 then -- don't need bars for the spam at the end
 			for i = 2, siphonCount do
-				self:CDBar(363200, 7.5 + (5.5 * i), L.ring_count:format(i))
+				local delay = 7.5 + (5.5 * (i-2))
+				self:ScheduleTimer("Bar", delay, 363200, 5.5, L.ring_count:format(i,siphonCount))
 			end
 		end
 		haloCount = haloCount + 1
 		-- Delayed message for when the first ring triggers (hopefully these get proper events)
 		haloTimer = self:ScheduleTimer(function()
-			self:Message(363200, "orange", CL.count:format(L.disintergration_halo, haloCount-1))
+			self:Message(363200, "orange", CL.count:format(L.rings_x:format(siphonCount), haloCount-1))
 			self:PlaySound(363200, "long")
 			if siphonCount > 1 and haloCount < 3 then -- 2 per rotation, except first
-				self:Bar(363200, 70, CL.count:format(L.disintergration_halo, haloCount))
-			elseif siphonCount == 4 and haloCount == 3 then -- shorter cd, then triggers 6 rings
-				self:Bar(363200, 35, CL.count:format(L.disintergration_halo, haloCount))
+				self:Bar(363200, 70, CL.count:format(L.rings_x:format(siphonCount), haloCount))
+			elseif siphonCount == 4 and haloCount == 3 then -- shorter cd, then triggers infinite rings
+				self:Bar(363200, 35, CL.count:format(L.rings_x:format(666), haloCount))
 			end
 		end, 7.5)
 	end
@@ -203,7 +205,7 @@ end
 
 function mod:SiphonReservoir(args)
 	-- clean up anything we messed up
-	self:StopBar(CL.count:format(L.disintergration_halo, haloCount)) -- Disintegration Halo
+	self:StopBar(CL.count:format(L.rings_x:format(siphonCount), haloCount)) -- Disintegration Halo
 	self:StopBar(CL.count:format(L.domination_core, coreCount)) -- Domination Core
 	self:StopBar(CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
 	self:StopBar(CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
@@ -250,12 +252,13 @@ do
 		coreCount = 1
 		arcCount = 1
 		haloCount = 1
-		siphonCount = 1
 
 		self:Bar(359483, 8, CL.count:format(L.domination_core, coreCount)) -- Domination Core
-		self:Bar(363200, 14, CL.count:format(L.disintergration_halo, haloCount)) -- Disintegration Halo (emote at 6.5 + 7.5 for activation)
+		self:Bar(363200, 14, CL.count:format(L.rings_x:format(siphonCount), haloCount)) -- Disintegration Halo (emote at 6.5 + 7.5 for activation)
 		self:Bar(361513, 16.5, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
 		self:Bar(361018, 30.5, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
+
+		nextSiphon = GetTime() + 110.5
 		self:Bar(361643, 110.5, CL.count:format(L.siphon_reservoir, siphonCount)) -- Siphon Reservoir
 	end
 end
