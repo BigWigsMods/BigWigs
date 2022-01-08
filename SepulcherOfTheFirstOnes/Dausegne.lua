@@ -33,6 +33,7 @@ if L then
 
 	L.disintergration_halo = "Rings" -- Disintegration Halo
 	L.rings_x = "Rings x%d"
+	L.rings_enrage = "Rings (Enrage)"
 	L.ring_count = "Ring (%d/%d)"
 
 	L.siphon_reservoir = "Teleport" -- Siphon Reservoir
@@ -197,7 +198,7 @@ function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 			if siphonCount > 1 and haloCount < 3 then -- 2 per rotation, except first
 				self:Bar(363200, 70, CL.count:format(L.rings_x:format(siphonCount), haloCount))
 			elseif siphonCount == 4 and haloCount == 3 then -- shorter cd, then triggers infinite rings
-				self:Bar(363200, 35, CL.count:format(L.rings_x:format(666), haloCount))
+				self:Bar(363200, 35, CL.count:format(L.rings_enrage, haloCount))
 			end
 		end, 7.5)
 	end
@@ -259,7 +260,9 @@ do
 		self:Bar(361018, 30.5, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
 
 		nextSiphon = GetTime() + 110.5
-		self:Bar(361643, 110.5, CL.count:format(L.siphon_reservoir, siphonCount)) -- Siphon Reservoir
+		if siphonCount < 4 then -- Only 3 siphons before enrage
+			self:Bar(361643, 110.5, CL.count:format(L.siphon_reservoir, siphonCount)) -- Siphon Reservoir
+		end
 	end
 end
 
