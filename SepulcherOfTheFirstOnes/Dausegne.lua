@@ -176,29 +176,41 @@ function mod:ObliterationArc(args)
 	end
 end
 
-function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
-	if msg:find("spell:365373") then -- Disintegration Halo
-		self:Message(363200, "orange", CL.soon:format(CL.count:format(L.rings_x:format(teleportCount), haloCount)))
-		self:PlaySound(363200, "info")
-		-- Start timers for subsequent rings (first after ~8s, then ~6s)
-		self:Bar(363200, 7.5, CL.count:format(L.rings_x:format(teleportCount), haloCount))
-		if haloCount < 3 then -- don't need bars for the spam at the end
-			for i = 2, teleportCount do
-				local delay = 7.5 + (5.5 * (i-2))
-				self:ScheduleTimer("Bar", delay, 363200, 5.5, L.ring_count:format(i,teleportCount))
+do
+	local ringCount = 1
+	function mod:DisintegrationHalo()
+		if ringCount == 1 then
+			if haloCount == 4 then
+				self:Message(363200, "red", L.rings_enrage)
+			else
+				self:Message(363200, "orange", CL.count:format(L.rings_x:format(teleportCount), haloCount-1))
 			end
-		end
-		haloCount = haloCount + 1
-		-- Delayed message for when the first ring triggers (hopefully these get proper events)
-		haloTimer = self:ScheduleTimer(function()
-			self:Message(363200, "orange", CL.count:format(L.rings_x:format(teleportCount), haloCount-1))
 			self:PlaySound(363200, "long")
 			if teleportCount > 1 and haloCount < 3 then -- 2 per rotation, except first
 				self:Bar(363200, 70, CL.count:format(L.rings_x:format(teleportCount), haloCount))
-			elseif teleportCount == 4 and haloCount == 3 then -- shorter cd, then triggers infinite rings
+			elseif teleportCount == 4 and haloCount == 3 then -- enrage, shorter cd, then triggers infinite rings
 				self:Bar(363200, 35, CL.count:format(L.rings_enrage, haloCount))
 			end
-		end, 7.5)
+		-- else
+		-- 	self:PlaySound(363200, "info")
+		end
+		if ringCount < teleportCount and haloCount < 3 then -- skip enrage rings
+			ringCount = ringCount + 1
+			self:CDBar(363200, 5.5, L.ring_count:format(ringCount, teleportCount))
+			haloTimer = self:ScheduleTimer("DisintegrationHalo", 5.5)
+		end
+	end
+
+	function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
+		if msg:find("spell:365373") then -- Disintegration Halo
+			self:Message(363200, "orange", CL.soon:format(CL.count:format(L.rings_x:format(teleportCount), haloCount)))
+			self:PlaySound(363200, "info")
+			self:Bar(363200, 7.5, CL.count:format(L.rings_x:format(teleportCount), haloCount))
+			haloCount = haloCount + 1
+			ringCount = 1
+			-- Delayed handling for when the ring triggers
+			haloTimer = self:ScheduleTimer("DisintegrationHalo", 7.5)
+		end
 	end
 end
 
@@ -211,7 +223,7 @@ function mod:Teleport(args)
 	self:StopBar(CL.count:format(args.spellName, teleportCount)) -- Teleport
 	self:CancelTimer(haloTimer)
 	for i = 2, teleportCount do
-		self:StopBar(L.ring_count:format(i))
+		self:StopBar(L.ring_count:format(i, teleportCount))
 	end
 
 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, teleportCount))
@@ -260,6 +272,8 @@ do
 		nextTeleport = GetTime() + 110.5
 		if teleportCount < 4 then -- Only 3 teleports before berserk
 			self:Bar(361630, 110.5, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
+		else
+			self:Bar(365418, 110.5) -- Total Domination
 		end
 	end
 end
