@@ -33,6 +33,7 @@ end
 
 function mod:GetOptions()
 	return {
+		"berserk",
 		359770, -- Unending Hunger
 		359829, -- Dust Flail
 		360451, -- Retch
@@ -61,8 +62,9 @@ function mod:OnEngage()
 	unendingCount = 1
 
 	self:Bar(359829, 2, CL.count:format(self:SpellName(359829), flailCount)) -- Dust Flail
-	self:Bar(360079, 11, CL.count:format(self:SpellName(360079), tankComboCounter)) -- Tank Combo
-	self:Bar(360451, 26, CL.count:format(self:SpellName(360451), retchCount)) -- Retch
+	self:Bar(360079, 9, CL.count:format(CL.tank_combo, tankComboCounter), 359979) -- Tank Combo
+	self:Bar(360451, 24.5, CL.count:format(self:SpellName(360451), retchCount)) -- Retch
+	self:Berserk(360)
 end
 
 --------------------------------------------------------------------------------
@@ -71,10 +73,10 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 360079 then -- Tank Combo
-		self:StopBar(CL.count:format(self:SpellName(360079), tankComboCounter))
+		self:StopBar(CL.count:format(CL.tank_combo, tankComboCounter))
 		comboCounter = 1
 		tankComboCounter = tankComboCounter + 1
-		self:CDBar(360079, 25, CL.count:format(self:SpellName(360079), tankComboCounter)) -- Tank Combo
+		self:CDBar(360079, 33, CL.count:format(CL.tank_combo, tankComboCounter), 359979) -- Tank Combo
 	end
 end
 
@@ -82,6 +84,17 @@ function mod:UnendingHunger(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, unendingCount))
 	self:PlaySound(args.spellId, "long")
 	unendingCount = unendingCount + 1
+
+	self:StopBar(CL.count:format(self:SpellName(359829), flailCount))
+
+	local nextTankCombo = self:BarTimeLeft(CL.count:format(CL.tank_combo, tankComboCounter)) + 10
+	self:CDBar(360079, nextTankCombo, CL.count:format(CL.tank_combo, tankComboCounter), 359979) -- Tank Combo
+
+	local nextRetch = self:BarTimeLeft(CL.count:format(self:SpellName(360451), retchCount)) + 10 -- XXX Not Always correct, different logic?
+	self:Bar(360451, nextRetch, CL.count:format(self:SpellName(360451), retchCount)) -- Retch
+
+	flailCount = 1
+	self:Bar(359829, 11, CL.count:format(self:SpellName(359829), flailCount)) -- Dust Flail
 end
 
 function mod:DustFlail(args)
@@ -89,7 +102,7 @@ function mod:DustFlail(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, flailCount))
 	self:PlaySound(args.spellId, "alert")
 	flailCount = flailCount + 1
-	self:CDBar(args.spellId, 24.5, CL.count:format(args.spellName, flailCount))
+	self:CDBar(args.spellId, 17, CL.count:format(args.spellName, flailCount))
 end
 
 function mod:Retch(args)
@@ -97,7 +110,7 @@ function mod:Retch(args)
 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, retchCount))
 	self:PlaySound(args.spellId, "info")
 	retchCount = retchCount + 1
-	self:CDBar(args.spellId, 24.5, CL.count:format(args.spellName, retchCount))
+	self:CDBar(args.spellId, 34, CL.count:format(args.spellName, retchCount))
 end
 
 function mod:Rend(args)
