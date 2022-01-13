@@ -1,12 +1,12 @@
 local L = BigWigs:NewBossLocale("High Warlord Naj'entus", "ruRU")
 if not L then return end
 if L then
-	L.start_trigger = "Вы умрете во имя леди Вайш!"
+	L.start_trigger = "Вы умрете – во славу леди Вайш!"
 end
 
 L = BigWigs:NewBossLocale("Supremus", "ruRU")
 if L then
-	L.normal_phase_trigger = "Супремус в гневе ударяет по земле!"
+	L.normal_phase_trigger = "Супремус в гневе бьет по земле!"
 	L.kite_phase_trigger = "Земля начинает раскалываться!"
 	L.normal_phase = "Обычная фаза"
 	L.kite_phase = "Кайт фаза"
