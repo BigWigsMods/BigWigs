@@ -126,7 +126,6 @@ function mod:OnEngage()
 	handCount = 1
 	mobCollector = {}
 	seedCollector = {}
-	ritualistCollector = {}
 
 	self:Bar(365269, 12.5) -- Humbling Strikes
 	self:Bar(360295, 12.5, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
