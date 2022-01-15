@@ -7,7 +7,7 @@ local mod, CL = BigWigs:NewBoss("Artificer Xy'mox v2", 2481, 2470)
 if not mod then return end
 mod:RegisterEnableMob(183501) -- Artificer Xy'mox -- New Model
 mod:SetEncounterID(2553)
-mod:SetRespawnTime(30)
+mod:SetRespawnTime(25)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -19,6 +19,7 @@ local wormholeCount = 1
 local glyphCount = 1
 local sparkCount = 1
 local trapCount = 1
+local nextStageWarning = 77
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,6 +31,7 @@ if L then
 	L.sparknova = "Sparknova" -- Hyperlight Sparknova
 	L.relocation = "Tank Bomb" -- Glyph of Relocation
 	L.wormholes = "Wormholes" -- Interdimensional Wormholes
+	L.wormhole = "Wormhole" -- Interdimensional Wormhole
 	L.rings = "Rings P%d" -- Forerunner Rings // Added P1, P2, P3 etc to help identify what rings
 end
 
@@ -42,7 +44,6 @@ function mod:GetOptions()
 	return {
 		"stages",
 		364465, -- Forerunner Rings
-		363114, -- Ephemeral Supernova
 		364040, -- Hyperlight Ascension
 		364030, -- Debilitating Ray
 		{362721, "SAY", "SAY_COUNTDOWN"}, -- Interdimensional Wormholes
@@ -50,6 +51,15 @@ function mod:GetOptions()
 		{362803, "SAY", "SAY_COUNTDOWN"}, -- Glyph of Relocation
 		362849, -- Hyperlight Sparknova
 		362885, -- Stasis Trap
+		363485, -- Xy Decipherers
+		{365681, "TANK"}, -- System Shock
+		365701, -- Overseer's Orders
+	},nil,{
+		[364465] = L.rings, -- Forerunner Rings (Rings)
+		[362721] = L.wormholes, -- Interdimensional Wormholes (Wormholes)
+		[362803] = L.relocation, -- Glyph of Relocation (Tank Bomb)
+		[362849] = L.sparknova, -- Hyperlight Sparknova (Sparknova)
+		[362885] = L.traps, -- Stasis Trap (Traps)
 	}
 end
 
@@ -68,6 +78,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "GlyphOfRelocationRemoved", 362803)
 	self:Log("SPELL_CAST_START", "HyperlightSparknova", 362849)
 	self:Log("SPELL_CAST_SUCCESS", "StasisTrap", 362885)
+	self:Log("SPELL_CAST_START", "XyDecipherers", 363485)
+	self:Log("SPELL_CAST_SUCCESS", "SystemShock", 365681)
+	self:Log("SPELL_AURA_APPLIED", "SystemShockApplied", 365681)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "SystemShockApplied", 365681)
+	self:Log("SPELL_CAST_START", "OverseersOrders", 365701)
 
 	self:RegisterEvent("GROUP_ROSTER_UPDATE")
 	self:GROUP_ROSTER_UPDATE()
@@ -80,17 +95,31 @@ function mod:OnEngage()
 	glyphCount = 1
 	sparkCount = 1
 	trapCount = 1
+	nextStageWarning = 77
 
-	self:Bar(362721, 8, CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
-	self:Bar(362849, 14, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
-	self:Bar(362885, 21, CL.count:format(L.traps, trapCount)) -- Stasis Trap
-	self:Bar(364465, 26, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
-	self:Bar(362803, 40, CL.count:format(L.relocation, glyphCount)) -- Glyph of Relocation
+	self:Bar(362721, self:Mythic() and 9 or 8, CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
+	self:Bar(362849, self:Mythic() and 15.5 or 14, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
+	self:Bar(362885, self:Mythic() and 23.3 or 21, CL.count:format(L.traps, trapCount)) -- Stasis Trap
+	self:Bar(364465, self:Mythic() and 29 or 26, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
+	self:Bar(362803, self:Mythic() and 44.5 or 40, CL.count:format(L.relocation, glyphCount)) -- Glyph of Relocation
+
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_HEALTH(event, unit)
+	local currentHealth = self:GetHealth(unit)
+	if currentHealth < nextStageWarning then -- Intermission at 75% and 50%
+		self:Message("stages", "green", CL.soon:format(CL.intermission), false)
+		nextStageWarning = nextStageWarning - 25
+		if nextStageWarning < 50 then
+			self:UnregisterUnitEvent(event, unit)
+		end
+	end
+end
 
 function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
 	tankList = {}
@@ -138,7 +167,7 @@ function mod:ForerunnerRings(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.rings:format(self:GetStage()), ringCount))
 	self:PlaySound(args.spellId, "alert")
 	ringCount = ringCount + 1
-	self:Bar(args.spellId, 30, CL.count:format(L.rings:format(self:GetStage()), ringCount))
+	self:Bar(args.spellId, self:Mythic() and 33.3 or 30, CL.count:format(L.rings:format(self:GetStage()), ringCount))
 end
 
 function mod:HyperlightAscension(args)
@@ -168,12 +197,12 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(362721, CL.count_rticon:format(args.spellName, count, count))
-			self:SayCountdown(362721, 8)
+			self:Say(362721, CL.count_rticon:format(L.wormhole, count, count))
+			self:SayCountdown(362721, 8, count)
 			self:PlaySound(362721, "warning")
 		end
 		self:CustomIcon(interdimensionalWormholesMarker, args.destName, count)
-		self:NewTargetsMessage(362721, "yellow", playerList, 2, CL.count:format(L.rings:format(self:GetStage()), wormholeCount-1))
+		self:NewTargetsMessage(362721, "yellow", playerList, 2, CL.count:format(L.wormhole, wormholeCount-1))
 	end
 
 	function mod:InterdimensionalWormholesRemoved(args)
@@ -197,17 +226,21 @@ function mod:GlyphOfRelocation(args)
 end
 
 function mod:GlyphOfRelocationSuccess(args)
+	self:StopBar(CL.count:format(L.relocation, glyphCount)) -- Replacing the last 5 seconds with targetbar, if not a tank
 	glyphCount = glyphCount + 1
-	self:CDBar(362803, 30, CL.count:format(L.relocation, glyphCount))
-	-- XXX Timer for healers to explosion / update timer on applied
+	if self:Tank() then
+		self:CDBar(362803, self:Mythic() and 66.5 or 30, CL.count:format(L.relocation, glyphCount))
+	else
+		self:CDBar(362803, self:Mythic() and 71.5 or 35, CL.count:format(L.relocation, glyphCount))
+	end
 end
 
 function mod:GlyphOfRelocationApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName)
 	self:PlaySound(args.spellId, "warning")
-	self:TargetBar(args.spellId, 5, args.destName)
+	self:TargetBar(args.spellId, 5, args.destName, CL.bomb)
 	if self:Me(args.destGUID) then
-		self:Say(args.spellId)
+		self:Say(args.spellId, CL.bomb)
 		self:SayCountdown(args.spellId, 5)
 	end
 end
@@ -223,7 +256,7 @@ function mod:HyperlightSparknova(args)
 	self:Message(args.spellId, "orange", CL.count:format(L.sparknova, sparkCount))
 	self:PlaySound(args.spellId, "alert")
 	sparkCount = sparkCount + 1
-	self:Bar(args.spellId, 30, CL.count:format(L.sparknova, sparkCount))
+	self:Bar(args.spellId, self:Mythic() and 33.3 or 30, CL.count:format(L.sparknova, sparkCount))
 end
 
 function mod:StasisTrap(args)
@@ -231,5 +264,27 @@ function mod:StasisTrap(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.traps, trapCount))
 	self:PlaySound(args.spellId, "alarm")
 	trapCount = trapCount + 1
-	self:Bar(args.spellId, 30, CL.count:format(L.traps, trapCount))
+	self:Bar(args.spellId, self:Mythic() and 33.3 or 30, CL.count:format(L.traps, trapCount))
+end
+
+function mod:XyDecipherers(args)
+	self:Message(args.spellId, "red")
+	self:PlaySound(args.spellId, "alert")
+	--self:Bar(args.spellId, 30)
+end
+
+function mod:SystemShock(args)
+	self:Message(args.spellId, "purple")
+	self:PlaySound(args.spellId, "alarm")
+	--self:CDBar(args.spellId, 20)
+end
+
+function mod:SystemShockApplied(args)
+	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 2)
+end
+
+function mod:OverseersOrders(args)
+	self:Message(args.spellId, "yellow")
+	self:PlaySound(args.spellId, "alert")
+	--self:CDBar(args.spellId, 20)
 end
