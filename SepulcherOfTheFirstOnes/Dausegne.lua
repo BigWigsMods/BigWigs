@@ -37,6 +37,7 @@ if L then
 	L.ring_count = "Ring (%d/%d)"
 
 	L.absorb_text = "%s (%.0f%%)"
+	L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
 
 --------------------------------------------------------------------------------
@@ -91,13 +92,13 @@ function mod:OnEngage()
 	arcCount = 1
 	haloCount = 1
 	teleportCount = 1
-	nextTeleport = GetTime() + 72.5
+	nextTeleport = GetTime() + 76.5
 
 	self:Bar(359483, 6.5, CL.count:format(L.domination_core, coreCount)) -- Domination Core
 	self:Bar(363200, 12.5, CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo (emote at 5, ring at ~13)
-	self:Bar(361513, 15, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
-	self:Bar(361018, 29, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
-	self:Bar(361630, 72.5, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
+	self:Bar(361513, 15.5, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
+	self:Bar(361018, 30.5, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
+	self:Bar(361630, 76.5, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
 end
 
 --------------------------------------------------------------------------------
@@ -133,7 +134,7 @@ function mod:StaggeringBarrageApplied(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 
 	barrageCount = barrageCount + 1
-	local cd = 35
+	local cd = 36.8
 	if barrageCount < 4 and nextTeleport > GetTime() + cd then -- 3 per rotation, except first
 		self:Bar(361018, cd, CL.count:format(L.staggering_barrage, barrageCount))
 	end
@@ -150,7 +151,7 @@ function mod:DominationCore(args)
 	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.domination_core, coreCount)))
 	self:PlaySound(args.spellId, "long")
 	coreCount = coreCount + 1
-	local cd = coreCount == 2 and 33.5 or 35.5
+	local cd = coreCount == 2 and 35.2 or 38.4
 	if coreCount < 4 and nextTeleport > GetTime() + cd then -- 3 per rotation, except first
 		self:Bar(args.spellId, cd, CL.count:format(L.domination_core, coreCount))
 	end
@@ -170,7 +171,7 @@ function mod:ObliterationArc(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.obliteration_arc, arcCount))
 	self:PlaySound(args.spellId, "alert")
 	arcCount = arcCount + 1
-	local cd = 35
+	local cd = 36.5
 	if arcCount < 4 and nextTeleport > GetTime() + cd then -- 3 per rotation, except first
 		self:Bar(args.spellId, cd, CL.count:format(L.obliteration_arc, arcCount))
 	end
@@ -233,6 +234,7 @@ end
 
 do
 	local timer, maxAbsorb = nil, 0
+	local appliedTime = 0
 	local function updateInfoBox(self)
 		local absorb = UnitGetTotalAbsorbs("boss1")
 		local absorbPercentage = absorb / maxAbsorb
@@ -248,6 +250,7 @@ do
 			maxAbsorb = args.amount
 			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 		end
+		appliedTime = args.time
 	end
 
 	function mod:SiphonedBarrierRemoved(args)
@@ -256,8 +259,7 @@ do
 			self:CancelTimer(timer)
 			timer = nil
 		end
-
-		self:Message(args.spellId, "green", CL.removed:format(args.spellName))
+		self:Message(args.spellId, "green", L.shield_removed:format(args.spellName, args.time - appliedTime))
 		self:PlaySound(args.spellId, "info")
 		barrageCount = 1
 		coreCount = 1
@@ -267,13 +269,13 @@ do
 		self:Bar(359483, 8, CL.count:format(L.domination_core, coreCount)) -- Domination Core
 		self:Bar(363200, 14, CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo (emote at 6.5 + 7.5 for activation)
 		self:Bar(361513, 16.5, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
-		self:Bar(361018, 30.5, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
+		self:Bar(361018, 31.5, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
 
-		nextTeleport = GetTime() + 110.5
+		nextTeleport = GetTime() + 114.5
 		if teleportCount < 4 then -- Only 3 teleports before berserk
-			self:Bar(361630, 110.5, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
+			self:Bar(361630, 114.5, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
 		else
-			self:Bar(365418, 110.5) -- Total Domination
+			self:Bar(365418, 114.5) -- Total Domination
 		end
 	end
 end
