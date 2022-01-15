@@ -32,7 +32,7 @@ function mod:GetOptions()
 		361001, -- Wave of Disintegration
 		364447, -- Dissonance
 		360355, -- Energy Conversion
-		360375, -- Deresolution
+		359610, -- Deresolution
 		360412, -- Exposed Core
 		360162, -- Split Resolution
 		{364881, "SAY", "SAY_COUNTDOWN"}, -- Matter Disolution
@@ -50,8 +50,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "DissonanceApplied", 364447)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "DissonanceApplied", 364447)
 	self:Log("SPELL_CAST_SUCCESS", "EnergyConversion", 360355)
-	self:Log("SPELL_CAST_SUCCESS", "Deresolution", 360375)
-	self:Log("SPELL_AURA_APPLIED", "ExposedCoreApplied", 360412)
+	self:Log("SPELL_AURA_APPLIED", "DeresolutionApplied", 359610)
+	self:Log("SPELL_CAST_START", "ExposedCore", 360412)
 	self:Log("SPELL_CAST_START", "SplitResolution", 360162)
 	self:Log("SPELL_AURA_APPLIED", "MatterDisolutionApplied", 364881)
 	self:Log("SPELL_AURA_REMOVED", "MatterDisolutionRemoved", 364881)
@@ -59,6 +59,11 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:Bar(360412, 120) -- Exposed Core
+	if self:Mythic() then 
+		self:Bar(360162, 47) -- Split Resolution
+		self:Bar(359610, 53) -- Deresolution
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -86,7 +91,9 @@ function mod:UnstableCoreApplied(args)
 end
 
 function mod:UnstableCoreRemoved(args)
-	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
+	end
 end
 
 do
@@ -131,22 +138,22 @@ function mod:EnergyConversion(args)
 	--self:Bar(args.spellId, duration)
 end
 
-function mod:Deresolution(args)
+function mod:DeresolutionApplied(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alarm")
-	--self:Bar(args.spellId, duration)
+	self:Bar(args.spellId, 35)
 end
 
-function mod:ExposedCoreApplied(args)
+function mod:ExposedCore(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, duration)
+	self:Bar(args.spellId, 106)
 end
 
 function mod:SplitResolution(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	--self:Bar(args.spellId, duration)
+	self:Bar(args.spellId, 31)
 end
 
 do
