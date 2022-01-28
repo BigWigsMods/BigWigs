@@ -62,16 +62,16 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:MessageOld("stages", "cyan", "info", L.engaged, false)
-	self:Bar("stages", 13, L.defender, 159241) -- ability_parry / icon 132269
-	self:ScheduleTimer("Bar", 13, "stages", 32, L.defender, 159241)
-	defender = self:ScheduleTimer("RepeaterDefender", 45)
-	self:Bar("stages", 13, L.sorcerer, 193473) -- spell_shadow_siphonmana / icon 136208
-	sorcerer = self:ScheduleTimer("RepeaterSorcerer", 13)
-	self:Bar("stages", 13, L.adds_right, 87219) -- misc_arrowright / icon 450908
-	right = self:ScheduleTimer("RepeaterAddsRight", 13)
-	self:Bar("stages", 28, L.adds_left, 87217) -- misc_arrowleft / icon 450906
-	left = self:ScheduleTimer("RepeaterAddsLeft", 28)
+	--self:MessageOld("stages", "cyan", "info", L.engaged, false)
+	--self:Bar("stages", 13, L.defender, 159241) -- ability_parry / icon 132269
+	--self:ScheduleTimer("Bar", 13, "stages", 32, L.defender, 159241)
+	--defender = self:ScheduleTimer("RepeaterDefender", 45)
+	--self:Bar("stages", 13, L.sorcerer, 193473) -- spell_shadow_siphonmana / icon 136208
+	--sorcerer = self:ScheduleTimer("RepeaterSorcerer", 13)
+	--self:Bar("stages", 13, L.adds_right, 87219) -- misc_arrowright / icon 450908
+	--right = self:ScheduleTimer("RepeaterAddsRight", 13)
+	--self:Bar("stages", 28, L.adds_left, 87217) -- misc_arrowleft / icon 450906
+	--left = self:ScheduleTimer("RepeaterAddsLeft", 28)
 end
 
 --------------------------------------------------------------------------------
