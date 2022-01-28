@@ -4,8 +4,8 @@ BigWigs:AddSounds("Hydross the Unstable", {
 })
 
 BigWigs:AddSounds("The Lurker Below", {
-	["dive"] = {"alarm","alert"},
-	["spout"] = "alert",
+	["dive"] = {"alarm","alert","info","long"},
+	["spout"] = "warning",
 })
 
 BigWigs:AddSounds("Leotheras the Blind", {

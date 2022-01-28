@@ -12,7 +12,6 @@ BigWigs:AddColors("Supremus", {
 })
 
 BigWigs:AddColors("Shade of Akama", {
-	[42023] = "blue",
 	["stages"] = "cyan",
 })
 

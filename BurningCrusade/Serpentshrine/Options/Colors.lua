@@ -7,7 +7,8 @@ BigWigs:AddColors("Hydross the Unstable", {
 })
 
 BigWigs:AddColors("The Lurker Below", {
-	["dive"] = {"green","orange","yellow"},
+	[37478] = "yellow",
+	["dive"] = {"cyan","green","orange","yellow"},
 	["spout"] = {"red","yellow"},
 })
 

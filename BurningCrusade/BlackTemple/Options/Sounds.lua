@@ -11,7 +11,6 @@ BigWigs:AddSounds("Supremus", {
 })
 
 BigWigs:AddSounds("Shade of Akama", {
-	[42023] = "alert",
 	["stages"] = "info",
 })
 
