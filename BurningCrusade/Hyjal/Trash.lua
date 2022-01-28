@@ -82,8 +82,11 @@ function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_OnBossWin")
 
 	self:RegisterEvent("GOSSIP_SHOW")
-	self:RegisterWidgetEvent(500, "UpdateEnemies")
-	self:RegisterWidgetEvent(528, "UpdateWaves")
+--	self:RegisterWidgetEvent(500, "UpdateEnemies")
+	self:RegisterWidgetEvent(3093, "UpdateEnemies")
+	
+--	self:RegisterWidgetEvent(528, "UpdateWaves")
+	self:RegisterWidgetEvent(3121, "UpdateWaves")
 	self:RegisterMessage("BigWigs_BossComm")
 end
 
