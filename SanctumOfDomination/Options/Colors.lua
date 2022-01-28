@@ -67,6 +67,7 @@ BigWigs:AddColors("Remnant of Ner'zhul", {
 })
 
 BigWigs:AddColors("Soulrender Dormazain", {
+	[-23517] = "yellow",
 	[349985] = "cyan",
 	[350217] = "yellow",
 	[350411] = {"green","red"},
@@ -85,9 +86,11 @@ BigWigs:AddColors("Painsmith Raznal", {
 	[352052] = "red",
 	[355505] = {"blue","yellow"},
 	[355534] = "yellow",
+	[355536] = {"green","yellow"},
 	[355568] = {"blue","yellow"},
 	[355778] = {"blue","yellow"},
 	[355786] = {"blue","purple"},
+	[357735] = "red",
 	["stages"] = {"cyan","green"},
 })
 
@@ -103,6 +106,8 @@ BigWigs:AddColors("Guardian of the First Ones", {
 	[352660] = "yellow",
 	[352833] = "red",
 	[355352] = "red",
+	[356093] = "cyan",
+	[358301] = "cyan",
 })
 
 BigWigs:AddColors("Fatescribe Roh-Kalo", {
@@ -142,7 +147,7 @@ BigWigs:AddColors("Kel'Thuzad", {
 	[355127] = "yellow",
 	[355137] = "blue",
 	[355389] = "blue",
-	["stages"] = "green",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Sylvanas Windrunner", {
@@ -159,7 +164,7 @@ BigWigs:AddColors("Sylvanas Windrunner", {
 	[351180] = {"blue","purple"},
 	[351353] = "orange",
 	[351562] = {"blue","orange"},
-	[351591] = {"blue","purple"},
+	[351591] = {"blue","purple","red"},
 	[351672] = {"blue","purple"},
 	[351939] = "blue",
 	[352271] = "yellow",
@@ -173,7 +178,7 @@ BigWigs:AddColors("Sylvanas Windrunner", {
 	[354147] = "red",
 	[355540] = {"green","red"},
 	[356021] = "orange",
-	[356377] = "blue",
+	[356377] = {"blue","yellow"},
 	[358181] = "purple",
 	[358185] = "purple",
 	[358434] = {"blue","orange"},
