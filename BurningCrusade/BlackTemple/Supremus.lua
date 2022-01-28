@@ -134,7 +134,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		self:MessageOld("stages", "cyan", "info", L.kite_phase, false)
 		self:Bar("stages", 60, L.next_phase, "spell_shadow_summoninfernal")
 		if self:GetOption("fixate") > 0 then
-			fixateTimer = self:ScheduleRepeatingEvent("FixateScan", 1)
+			fixateTimer = self:ScheduleRepeatingTimer("FixateScan", 1)
 		end
 	end
 end
