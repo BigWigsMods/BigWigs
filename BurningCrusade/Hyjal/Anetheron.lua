@@ -14,11 +14,15 @@ mod:SetEncounterID(2469)
 
 function mod:GetOptions()
 	return {
-		{31299, "ICON"}, 31306, "berserk"
+		31298, -- Sleep
+		{31299, "ICON"}, -- Inferno
+		31306, -- Swarm
+		"berserk"
 	}
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_CAST_SUCCESS", "Sleep", 31298)
 	self:Log("SPELL_CAST_SUCCESS", "Swarm", 31306)
 	self:Log("SPELL_CAST_START", "Inferno", 31299)
 
@@ -34,6 +38,11 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:Sleep(args)
+	self:MessageOld(args.spellId, "orange", "alert")
+	self:CDBar(args.spellId, 19.5) -- 19.5~45s No idea what causes it to hold it so long.
+end
 
 function mod:Swarm(args)
 	self:MessageOld(args.spellId, "yellow")
