@@ -1,5 +1,6 @@
-if not IsTestBuild() then return end
-
+--------------------------------------------------------------------------------
+-- TODO:
+--
 -- Gloom Bolt: Targetscan and warn targets of incoming damage?
 
 --------------------------------------------------------------------------------

@@ -1,4 +1,3 @@
-if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -60,7 +59,7 @@ end
 
 function mod:OnEngage()
 	self:Bar(360412, 120) -- Exposed Core
-	if self:Mythic() then 
+	if self:Mythic() then
 		self:Bar(360162, 47) -- Split Resolution
 		self:Bar(359610, 53) -- Deresolution
 	end
