@@ -9,8 +9,8 @@
 ## Title-koKR: BigWigs [|cffeda55fSepulcher of the First Ones|r]
 ## Title-ptBR: BigWigs [|cffeda55fSepulcher of the First Ones|r]
 ## Title-ruRU: BigWigs [|cffeda55fSepulcher of the First Ones|r]
-## Title-zhCN: BigWigs [|cffeda55fSepulcher of the First Ones|r]
-## Title-zhTW: BigWigs [|cffeda55fSepulcher of the First Ones|r]
+## Title-zhCN: BigWigs [|cffeda55f初诞者圣墓|r]
+## Title-zhTW: BigWigs [|cffeda55f首創者聖塚|r]
 ## Notes: BigWigs Sepulcher of the First Ones Modules
 ## Notes-deDE: BigWigs Sepulcher of the First Ones Modules
 ## Notes-esES: BigWigs Sepulcher of the First Ones Modules
@@ -20,8 +20,8 @@
 ## Notes-koKR: BigWigs Sepulcher of the First Ones Modules
 ## Notes-ptBR: BigWigs Sepulcher of the First Ones Modules
 ## Notes-ruRU: BigWigs Sepulcher of the First Ones Modules
-## Notes-zhCN: BigWigs Sepulcher of the First Ones Modules
-## Notes-zhTW: BigWigs Sepulcher of the First Ones Modules
+## Notes-zhCN: BigWigs 初诞者圣墓模块。
+## Notes-zhTW: BigWigs 首創者聖塚模組。
 ## Version: @project-version@
 
 ## LoadOnDemand: 1
