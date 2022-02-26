@@ -24,6 +24,9 @@ local unendingCount = 1
 
 local L = mod:GetLocale()
 if L then
+	L.tank_combo = CL.tank_combo
+	L.tank_combo_desc = "Timer for Riftmaw/Rend casts at 100 energy."
+	L.tank_combo_icon = 359979
 end
 
 --------------------------------------------------------------------------------
@@ -33,10 +36,10 @@ end
 function mod:GetOptions()
 	return {
 		"berserk",
-		359770, -- Unending Hunger
+		359770, -- Ravening Burrow
 		359829, -- Dust Flail
 		360451, -- Retch
-		360079, -- Tank Combo
+		"tank_combo", -- Tank Combo
 		359979, -- Rend
 		359975, -- Riftmaw
 		364778, -- Destroy
@@ -46,7 +49,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
-	self:Log("SPELL_CAST_START", "UnendingHunger", 359770)
+	self:Log("SPELL_CAST_START", "RaveningBurrow", 359770)
 	self:Log("SPELL_CAST_START", "DustFlail", 359829)
 	self:Log("SPELL_CAST_START", "Retch", 360451)
 	self:Log("SPELL_CAST_START", "Rend", 359979)
@@ -61,7 +64,7 @@ function mod:OnEngage()
 	unendingCount = 1
 
 	self:Bar(359829, 2, CL.count:format(self:SpellName(359829), flailCount)) -- Dust Flail
-	self:Bar(360079, 9, CL.count:format(CL.tank_combo, tankComboCounter), 359979) -- Tank Combo
+	self:Bar("tank_combo", 9, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
 	self:Bar(360451, 24.5, CL.count:format(self:SpellName(360451), retchCount)) -- Retch
 	self:Berserk(360)
 end
@@ -75,23 +78,22 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(CL.count:format(CL.tank_combo, tankComboCounter))
 		comboCounter = 1
 		tankComboCounter = tankComboCounter + 1
-		self:CDBar(360079, 33, CL.count:format(CL.tank_combo, tankComboCounter), 359979) -- Tank Combo
+		self:CDBar("tank_combo", 33, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
 	end
 end
 
-function mod:UnendingHunger(args)
+function mod:RaveningBurrow(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, unendingCount))
 	self:PlaySound(args.spellId, "long")
 	unendingCount = unendingCount + 1
 
-	self:StopBar(CL.count:format(self:SpellName(359829), flailCount))
-
 	local nextTankCombo = self:BarTimeLeft(CL.count:format(CL.tank_combo, tankComboCounter)) + 10
-	self:CDBar(360079, nextTankCombo, CL.count:format(CL.tank_combo, tankComboCounter), 359979) -- Tank Combo
+	self:CDBar("tank_combo", nextTankCombo, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
 
 	local nextRetch = self:BarTimeLeft(CL.count:format(self:SpellName(360451), retchCount)) + 10 -- XXX Not Always correct, different logic?
 	self:Bar(360451, nextRetch, CL.count:format(self:SpellName(360451), retchCount)) -- Retch
 
+	self:StopBar(CL.count:format(self:SpellName(359829), flailCount)) -- Dust Flail
 	flailCount = 1
 	self:Bar(359829, 11, CL.count:format(self:SpellName(359829), flailCount)) -- Dust Flail
 end

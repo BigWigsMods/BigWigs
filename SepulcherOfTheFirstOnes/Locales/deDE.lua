@@ -60,3 +60,8 @@ if L then
 	L.dire_blasphemy = "Male"
 	L.beacon_of_hope = "Flamme"
 end
+
+L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "deDE")
+if L then
+	-- L.tank_combo_desc = "Timer for Riftmaw/Rend casts at 100 energy."
+end
