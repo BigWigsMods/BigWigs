@@ -1,62 +1,62 @@
 local L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "deDE")
 if not L then return end
 if L then
-	-- L.traps = "Traps" -- Stasis Trap
-	-- L.sparknova = "Sparknova" -- Hyperlight Sparknova
-	-- L.relocation = "Tank Bomb" -- Glyph of Relocation
-	-- L.wormholes = "Wormholes" -- Interdimensional Wormholes
-	-- L.wormhole = "Wormhole" -- Interdimensional Wormhole
-	-- L.rings = "Rings P%d" -- Forerunner Rings // Added P1, P2, P3 etc to help identify what rings
+	L.traps = "Fallen" -- Stasis Trap
+	L.sparknova = "Funkennova" -- Hyperlight Sparknova
+	L.relocation = "Tank Bombe" -- Glyph of Relocation
+	L.wormholes = "Wumrlöcher" -- Interdimensional Wormholes
+	L.wormhole = "Wurmloch" -- Interdimensional Wormhole
+	L.rings = "Ringe P%d" -- Forerunner Rings // Added P1, P2, P3 etc to help identify what rings
 end
 
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "deDE")
 if L then
-	-- L.staggering_barrage = "Barrage" -- Staggering Barrage
-	-- L.domination_core = "Add" -- Domination Core
-	-- L.obliteration_arc = "Arc" -- Obliteration Arc
+	L.staggering_barrage = "Bombardement" -- Staggering Barrage
+	L.domination_core = "Add" -- Domination Core
+	L.obliteration_arc = "Bogen" -- Obliteration Arc
 
-	-- L.disintergration_halo = "Rings" -- Disintegration Halo
-	-- L.rings_x = "Rings x%d"
-	-- L.rings_enrage = "Rings (Enrage)"
-	-- L.ring_count = "Ring (%d/%d)"
+	L.disintergration_halo = "Ringe" -- Disintegration Halo
+	L.rings_x = "Ringe x%d"
+	L.rings_enrage = "Ringe (Berserker)"
+	L.ring_count = "Ring (%d/%d)"
 
-	-- L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
+	L.shield_removed = "%s entfernt nach %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "deDE")
 if L then
-    -- L.necrotic_ritual = "Ritual"
-    -- L.runecarvers_deathtouch = "Deathtouch"
-    -- L.windswept_wings = "Winds"
-    -- L.wild_stampede = "Stampede"
-    -- L.withering_seeds = "Seeds"
-    -- L.hand_of_destruction = "Hand"
+	L.necrotic_ritual = "Ritual"
+	L.runecarvers_deathtouch = "Todesberührung"
+ 	L.windswept_wings = "Stürme"
+ 	L.wild_stampede = "Stampede"
+ 	L.withering_seeds = "Samen"
+ 	L.hand_of_destruction = "Hand"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "deDE")
 if L then
-    -- L.protoform_cascade = "Frontal"
-    -- L.cosmic_shift = "Pushback"
-    -- L.unstable_mote = "Motes"
-    -- L.mote = "Mote"
+	L.protoform_cascade = "Frontal"
+	L.cosmic_shift = "Rückstoß"
+	L.unstable_mote = "Partikel"
+	L.mote = "Partikel"
 
-    -- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-    -- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "Fixieren-Symbol an Namensplaketten"
+	L.custom_on_nameplate_fixate_desc = "Zeigt ein Symbol an der Namensplakette des Dich fixierenden Akquisitionsautomas an.\n\nBenötigt die Nutzung von gegnerischen Namensplaketten sowie ein unterstütztes Addon (KuiNameplates, Plater)."
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "deDE")
 if L then
-    -- L.custom_off_repeating_blasphemy = "Repeating Blasphemy"
-    -- L.custom_off_repeating_blasphemy_desc = "Repeating Blasphemy say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.custom_off_repeating_blasphemy = "Blasphemie wiederholen"
+	L.custom_off_repeating_blasphemy_desc = "Gibt wiederholt Blasphemie Chatnachrichten mit Symbolen {rt1}, {rt3} aus um das entgegengesetzte Mal zu finden."
 
-    -- L.kingsmourne_hungers = "Kingsmourne"
-    -- L.blasphemy = "Marks"
-    -- L.befouled_barrier = "Barrier"
-    -- L.wicked_star = "Star"
-    -- L.domination_word_pain = "DW:Pain"
-    -- L.army_of_the_dead = "Army"
-    -- L.grim_reflections = "Fear Adds"
-    -- L.march_of_the_damned = "Walls"
-    -- L.dire_blasphemy = "Marks"
-    -- L.beacon_of_hope = "Beacon"
+	L.kingsmourne_hungers = "Königsgram"
+	L.blasphemy = "Male"
+	L.befouled_barrier = "Barriere"
+	L.wicked_star = "Stern"
+	L.domination_word_pain = "WdH:Schmerz"
+	L.army_of_the_dead = "Armee"
+	L.grim_reflections = "Furcht Adds"
+	L.march_of_the_damned = "Wände"
+	L.dire_blasphemy = "Male"
+	L.beacon_of_hope = "Flamme"
 end
