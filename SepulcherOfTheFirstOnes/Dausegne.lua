@@ -181,7 +181,7 @@ do
 	function mod:DisintegrationHalo()
 		if ringCount == 1 then
 			if haloCount == 4 then
-				self:Message(363200, "red", L.rings_enrage)
+				self:Message(363200, "orange", L.rings_enrage)
 			else
 				self:Message(363200, "orange", CL.count:format(L.rings_x:format(teleportCount), haloCount-1))
 			end
@@ -189,12 +189,12 @@ do
 			if teleportCount > 1 and haloCount < 3 then -- 2 per rotation, except first
 				self:Bar(363200, 70, CL.count:format(L.rings_x:format(teleportCount), haloCount))
 			elseif teleportCount == 4 and haloCount == 3 then -- enrage, shorter cd, then triggers infinite rings
-				self:Bar(363200, 35, CL.count:format(L.rings_enrage, haloCount))
+				self:Bar(363200, 35, L.rings_enrage)
 			end
 		-- else
 		-- 	self:PlaySound(363200, "info")
 		end
-		if ringCount < teleportCount and haloCount < 3 then -- skip enrage rings
+		if ringCount < teleportCount and haloCount < 4 then -- skip enrage rings
 			ringCount = ringCount + 1
 			self:CDBar(363200, 5.5, L.ring_count:format(ringCount, teleportCount))
 			haloTimer = self:ScheduleTimer("DisintegrationHalo", 5.5)
@@ -203,9 +203,14 @@ do
 
 	function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
 		if msg:find("spell:365373") then -- Disintegration Halo
-			self:Message(363200, "orange", CL.soon:format(CL.count:format(L.rings_x:format(teleportCount), haloCount)))
+			if teleportCount == 4 and haloCount == 3 then
+				self:Message(363200, "orange", CL.soon:format(L.rings_enrage))
+				self:Bar(363200, 7.5, L.rings_enrage)
+			else
+				self:Message(363200, "orange", CL.soon:format(CL.count:format(L.rings_x:format(teleportCount), haloCount)))
+				self:Bar(363200, 7.5, CL.count:format(L.rings_x:format(teleportCount), haloCount))
+			end
 			self:PlaySound(363200, "info")
-			self:Bar(363200, 7.5, CL.count:format(L.rings_x:format(teleportCount), haloCount))
 			haloCount = haloCount + 1
 			ringCount = 1
 			-- Delayed handling for when the ring triggers
