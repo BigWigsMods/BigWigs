@@ -27,10 +27,10 @@ L = BigWigs:NewBossLocale("Prototype Pantheon", "deDE")
 if L then
 	L.necrotic_ritual = "Ritual"
 	L.runecarvers_deathtouch = "Todesberührung"
- 	L.windswept_wings = "Stürme"
- 	L.wild_stampede = "Stampede"
- 	L.withering_seeds = "Samen"
- 	L.hand_of_destruction = "Hand"
+	L.windswept_wings = "Stürme"
+	L.wild_stampede = "Stampede"
+	L.withering_seeds = "Samen"
+	L.hand_of_destruction = "Hand"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "deDE")

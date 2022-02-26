@@ -25,40 +25,40 @@ end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "esES")
 if L then
-    -- L.necrotic_ritual = "Ritual"
-    -- L.runecarvers_deathtouch = "Deathtouch"
-    -- L.windswept_wings = "Winds"
-    -- L.wild_stampede = "Stampede"
-    -- L.withering_seeds = "Seeds"
-    -- L.hand_of_destruction = "Hand"
+	-- L.necrotic_ritual = "Ritual"
+	-- L.runecarvers_deathtouch = "Deathtouch"
+	-- L.windswept_wings = "Winds"
+	-- L.wild_stampede = "Stampede"
+	-- L.withering_seeds = "Seeds"
+	-- L.hand_of_destruction = "Hand"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "esES")
 if L then
-    -- L.protoform_cascade = "Frontal"
-    -- L.cosmic_shift = "Pushback"
-    -- L.unstable_mote = "Motes"
-    -- L.mote = "Mote"
+	-- L.protoform_cascade = "Frontal"
+	-- L.cosmic_shift = "Pushback"
+	-- L.unstable_mote = "Motes"
+	-- L.mote = "Mote"
 
-    -- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-    -- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
+	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "esES")
 if L then
-    -- L.custom_off_repeating_blasphemy = "Repeating Blasphemy"
-    -- L.custom_off_repeating_blasphemy_desc = "Repeating Blasphemy say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	-- L.custom_off_repeating_blasphemy = "Repeating Blasphemy"
+	-- L.custom_off_repeating_blasphemy_desc = "Repeating Blasphemy say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
 
-    -- L.kingsmourne_hungers = "Kingsmourne"
-    -- L.blasphemy = "Marks"
-    -- L.befouled_barrier = "Barrier"
-    -- L.wicked_star = "Star"
-    -- L.domination_word_pain = "DW:Pain"
-    -- L.army_of_the_dead = "Army"
-    -- L.grim_reflections = "Fear Adds"
-    -- L.march_of_the_damned = "Walls"
-    -- L.dire_blasphemy = "Marks"
-    -- L.beacon_of_hope = "Beacon"
+	-- L.kingsmourne_hungers = "Kingsmourne"
+	-- L.blasphemy = "Marks"
+	-- L.befouled_barrier = "Barrier"
+	-- L.wicked_star = "Star"
+	-- L.domination_word_pain = "DW:Pain"
+	-- L.army_of_the_dead = "Army"
+	-- L.grim_reflections = "Fear Adds"
+	-- L.march_of_the_damned = "Walls"
+	-- L.dire_blasphemy = "Marks"
+	-- L.beacon_of_hope = "Beacon"
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "esES")
