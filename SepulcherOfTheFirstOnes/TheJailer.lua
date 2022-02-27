@@ -49,18 +49,18 @@ function mod:GetOptions()
 		362075, -- Domination
 		{366020, "SAY"}, -- Mark of Tyranny
 		362631, -- Chains of Oppression
-		{363893, "SAY"}, -- Martyrdom
+		{363893, "SAY", "SAY_COUNTDOWN"}, -- Martyrdom
 		{362401, "SAY", "SAY_COUNTDOWN"}, -- Torment
 		{360281, "SAY_COUNTDOWN"}, -- Rune of Damnation
 		{"rune_of_damnation_countdown", "COUNTDOWN"},
 		-- Stage Two: Unholy Attunement
 		360373, -- Unholy Attunement
 		359856, -- Shattering Blast
-		366285, -- Rune of Compulsion
+		{366285, "SAY", "SAY_COUNTDOWN"}, -- Rune of Compulsion
 		364488, -- Decimator
 		-- Stage Three: Eternity's End
 		365033, -- Desolation
-		365150, -- Rune of Domination
+		{365150, "SAY", "SAY_COUNTDOWN"}, -- Rune of Domination
 		365212, -- Chains of Anguish
 		365169, -- Defile
 		365810, -- Falling Debris
@@ -274,7 +274,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellName)
+			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 4)
 		end
 		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(args.spellName, runeOfCompulsion-1))
@@ -319,7 +319,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellName)
+			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 6.5)
 		end
 		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(args.spellName, runeOfDominationCount-1))
@@ -348,7 +348,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(365212, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, runeOfDominationCount-1))
+		self:NewTargetsMessage(365212, "yellow", playerList, nil, CL.count:format(args.spellName, runeOfDominationCount-1))
 	end
 
 	function mod:ChainsOfAnguishRemoved(args)
