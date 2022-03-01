@@ -63,6 +63,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_CAST_SUCCESS", "DecipherRelicSuccess", 367711) -- Stage 4
 	self:Log("SPELL_AURA_APPLIED", "DecipherRelic", 363139)
 	self:Log("SPELL_AURA_REMOVED", "DecipherRelicRemoved", 363139)
 	self:Log("SPELL_CAST_SUCCESS", "ForerunnerRings", 364465)
@@ -127,6 +128,34 @@ function mod:GROUP_ROSTER_UPDATE() -- Compensate for quitters (LFR)
 			tankList[#tankList+1] = unit
 		end
 	end
+end
+
+function mod:DecipherRelicSuccess() -- Stage 4
+	self:StopBar(CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
+	self:StopBar(CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
+	self:StopBar(CL.count:format(L.relocation, glyphCount)) -- Glyph of Relocation
+	self:StopBar(CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
+	self:StopBar(CL.count:format(L.traps, trapCount)) -- Stasis Trap
+
+	local stage = self:GetStage() + 1
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
+	self:PlaySound("stages", "info")
+	self:SetStage(stage)
+
+	-- Not resetting traps as they persist throughout the whole fight
+	-- Not resetting wormholes as you get 1 per stage
+	-- wormholeCount = 1
+	-- trapCount = 1
+
+	ringCount = 1
+	glyphCount = 1
+	sparkCount = 1
+
+	self:Bar(362721, 8, CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
+	self:Bar(362849, 14, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
+	self:Bar(362885, 21, CL.count:format(L.traps, trapCount)) -- Stasis Trap
+	self:Bar(364465, 26, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
+	self:Bar(362803, 40, CL.count:format(L.relocation, glyphCount)) -- Glyph of Relocation
 end
 
 function mod:DecipherRelic()
@@ -227,11 +256,7 @@ end
 function mod:GlyphOfRelocationSuccess(args)
 	self:StopBar(CL.count:format(L.relocation, glyphCount)) -- Replacing the last 5 seconds with targetbar, if not a tank
 	glyphCount = glyphCount + 1
-	if self:Tank() then
-		self:CDBar(362803, self:Mythic() and 66.5 or 30, CL.count:format(L.relocation, glyphCount))
-	else
-		self:CDBar(362803, self:Mythic() and 71.5 or 35, CL.count:format(L.relocation, glyphCount))
-	end
+	self:CDBar(362803, self:Mythic() and 66.5 or 59.5, CL.count:format(L.relocation, glyphCount))
 end
 
 function mod:GlyphOfRelocationApplied(args)
