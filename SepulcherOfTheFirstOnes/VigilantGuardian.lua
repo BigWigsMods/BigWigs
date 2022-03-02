@@ -235,11 +235,15 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 10)
+			local _, _, _, expires = self:UnitDebuff("player", args.spellId)
+			if expires and expires > 0 then
+				local timeLeft = expires - GetTime()
+				self:SayCountdown(args.spellId, timeLeft)
+			end
 		else
 			self:PlaySound(args.spellId, "alert")
 		end
-		self:TargetMessage(args.spellId, "orange", args.destName)
+		self:NewTargetsMessage(args.spellId, "yellow", playerList)
 	end
 
 	function mod:MatterDisolutionRemoved(args)
