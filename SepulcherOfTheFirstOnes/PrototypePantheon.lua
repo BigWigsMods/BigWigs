@@ -20,6 +20,7 @@ local seedsCount = 1
 local stormCount = 1
 local projectionCount = 1
 local handCount = 1
+local deathtouchOnMe = false
 local mobCollector = {}
 local seedCollector = {}
 
@@ -119,6 +120,7 @@ function mod:OnEngage()
 	stampedeCount = 1
 	seedsCount = 1
 	stormCount = 1
+	deathtouchOnMe = false
 	projectionCount = 1
 	handCount = 1
 	mobCollector = {}
@@ -144,6 +146,20 @@ function mod:MarkAdds(event, unit, guid)
 			self:CustomIcon(witheringSeedMarker, unit, seedCollector[guid])
 			mobCollector[guid] = true
 		end
+	end
+end
+
+function mod:RAID_BOSS_EMOTE(_, msg)
+	if msg:find("361304", nil, true) then -- Wild Stampede
+		self:StopBar(CL.count:format(L.wild_stampede, stampedeCount))
+		self:Message(361304, "yellow", CL.count:format(L.wild_stampede, stampedeCount))
+		self:PlaySound(361304, "alert")
+		stampedeCount = stampedeCount + 1
+		local cd = self:GetStage() == 3 and 74.7 or 25
+		if self:Mythic() then
+			cd = self:GetStage() == 3 and 33 or 35
+		end
+		self:Bar(361304, cd, CL.count:format(L.wild_stampede, stampedeCount))
 	end
 end
 
@@ -232,6 +248,7 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
+			deathtouchOnMe = true
 			self:PlaySound(args.spellId, "warning")
 		end
 		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount-1))
@@ -240,6 +257,7 @@ do
 
 	function mod:RunecarversDeathtouchRemoved(args)
 		if self:Me(args.destGUID) then
+			deathtouchOnMe = false
 			self:Message(args.spellId, "green", CL.removed:format(L.runecarvers_deathtouch))
 			self:PlaySound(args.spellId, "info")
 		end
@@ -262,14 +280,14 @@ end
 
 function mod:BastionsWardApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", CL.you:format(CL.shield))
-		self:PlaySound(args.spellId, "info")
+		self:Message(args.spellId, deathtouchOnMe and "green" or "red", CL.you:format(CL.shield))
+		self:PlaySound(args.spellId, deathtouchOnMe and "info" or "underyou")
 	end
 end
 
 function mod:BastionsWardRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "red", CL.removed:format(CL.shield))
+		self:Message(args.spellId, deathtouchOnMe and "red" or "green", CL.removed:format(CL.shield))
 		self:PlaySound(args.spellId, "info")
 	end
 end
@@ -308,7 +326,7 @@ do
 	local witheringSeedMarks = {}
 	function mod:WitheringSeeds(args)
 		self:StopBar(CL.count:format(L.withering_seeds, seedsCount))
-		self:Message(args.spellId, "purple", CL.count:format(L.withering_seeds, seedsCount))
+		self:Message(args.spellId, "cyan", CL.count:format(L.withering_seeds, seedsCount))
 		self:PlaySound(args.spellId, "alert")
 		seedsCount = seedsCount + 1
 		self:Bar(args.spellId, self:GetStage() == 3 and 74.2 or 96.2, CL.count:format(L.withering_seeds, seedsCount))
