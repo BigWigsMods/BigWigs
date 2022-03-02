@@ -1,9 +1,4 @@
 --------------------------------------------------------------------------------
--- TODO:
---
--- Gloom Bolt: Targetscan and warn targets of incoming damage?
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -86,6 +81,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("RAID_BOSS_EMOTE") -- Used for Wild Stampede
 	self:Log("SPELL_CAST_START", "Reconstruction", 361300) -- Stage Changes
 	--self:Log("SPELL_CAST_START", "GloomBolt", 364240)
 	self:Log("SPELL_AURA_APPLIED", "GloomBoltApplied", 360259)
@@ -100,7 +96,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "BastionsWardRemoved", 361067)
 	self:Log("SPELL_CAST_SUCCESS", "WindsweptWings", 364941)
 	--self:Log("SPELL_CAST_START", "AnimaBolt", 364241)
-	self:Log("SPELL_CAST_START", "WildStampede", 361304)
+	--self:Log("SPELL_CAST_START", "WildStampede", 361304)
 	self:Log("SPELL_CAST_START", "WitheringSeeds", 361568)
 	self:Log("SPELL_SUMMON", "WitheringSeedsSummon", 361566)
 	self:Log("SPELL_AURA_APPLIED", "Animastorm", 366234)
@@ -128,10 +124,10 @@ function mod:OnEngage()
 	mobCollector = {}
 	seedCollector = {}
 
-	self:Bar(365269, 12.5) -- Humbling Strikes
-	self:Bar(360295, 12.5, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
-	self:Bar(360687, 50.5, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount)) -- Runecarvers Deathtouch
-	self:Bar(364941, 63.5, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
+	self:Bar(365269, 10) -- Humbling Strikes
+	self:Bar(360295, 10, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
+	self:Bar(360687, 47.5, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount)) -- Runecarvers Deathtouch
+	self:Bar(364941, 59, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
 
 	if self:GetOption(witheringSeedMarker) then
 		self:RegisterTargetEvents("MarkAdds")
@@ -141,7 +137,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
 
 function mod:MarkAdds(event, unit, guid)
 	if not mobCollector[guid] then
@@ -181,19 +176,19 @@ do
 			projectionCount = 1
 			handCount = 1
 			if stage == 2 then
-				self:Bar(361304, 12.5, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
-				self:Bar(361568, 26, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
-				self:Bar(366234, 52.5, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
-				self:Bar(361789, 107.5, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
+				self:Bar(361304, 8.9, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
+				self:Bar(361568, 18.5, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
+				self:Bar(366234, 38.5, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
+				self:Bar(361789, 79.9, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			elseif stage == 3 then
-				self:Bar(365269, 34) -- Humbling Strikes
-				self:Bar(360295, 52.5, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
-				self:Bar(360687, 106.5, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount)) -- Runecarvers Deathtouch
-				self:Bar(364941, 53.5, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
-				self:Bar(361304, 34, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
-				self:Bar(361568, 16.5, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
-				self:Bar(366234, 24.5, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
-				self:Bar(361789, 84, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
+				self:Bar(365269, 41) -- Humbling Strikes
+				self:Bar(360295, 134, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
+				self:Bar(360687, 129, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount)) -- Runecarvers Deathtouch
+				self:Bar(364941, 53.1, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
+				self:Bar(361304, 24.5, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
+				self:Bar(361568, 21.3, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
+				self:Bar(366234, 51, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
+				self:Bar(361789, 104.1, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			end
 		end
 	end
@@ -221,7 +216,7 @@ function mod:NecroticRitual(args)
 	self:Message(args.spellId, "purple", CL.count:format(L.necrotic_ritual, necroticRitualCount))
 	self:PlaySound(args.spellId, "alert")
 	necroticRitualCount = necroticRitualCount + 1
-	self:Bar(args.spellId, 71.5, CL.count:format(L.necrotic_ritual, necroticRitualCount))
+	self:Bar(args.spellId, 72.3, CL.count:format(L.necrotic_ritual, necroticRitualCount))
 end
 
 do
@@ -229,7 +224,7 @@ do
 	function mod:RunecarversDeathtouch(args)
 		playerList = {}
 		runecarversDeathtouchCount = runecarversDeathtouchCount + 1
-		self:Bar(360687, 58, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount))
+		self:Bar(360687, 57, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount))
 	end
 
 	function mod:RunecarversDeathtouchApplied(args)
@@ -255,7 +250,7 @@ end
 
 function mod:HumblingStrikes(args)
 	self:Message(365269, "purple", CL.casting:format(args.spellName))
-	self:Bar(365269, self:GetStage() == 3 and 50 or 35.9)
+	self:Bar(365269, self:GetStage() == 3 and 49.8 or 35.5)
 end
 
 function mod:HumblingStrikesApplied(args)
@@ -284,7 +279,7 @@ function mod:WindsweptWings(args)
 	self:Message(args.spellId, "purple", CL.count:format(L.windswept_wings, windsCount))
 	self:PlaySound(args.spellId, "alert")
 	windsCount = windsCount + 1
-	self:Bar(args.spellId, self:GetStage() == 3 and 83.5 or 64.5, CL.count:format(L.windswept_wings, windsCount))
+	self:Bar(args.spellId, self:GetStage() == 3 and 82.9 or 64.5, CL.count:format(L.windswept_wings, windsCount))
 end
 
 -- function mod:AnimaBolt(args)
@@ -297,17 +292,17 @@ end
 -- 	end
 -- end
 
-function mod:WildStampede(args)
-	self:StopBar(CL.count:format(L.wild_stampede, stampedeCount))
-	self:Message(args.spellId, "purple", CL.count:format(L.wild_stampede, stampedeCount))
-	self:PlaySound(args.spellId, "alert")
-	stampedeCount = stampedeCount + 1
-	local cd = self:GetStage() == 3 and 48.5 or (stampedeCount == 2 and 50 or 33)
-	if self:Mythic() then
-		cd = self:GetStage() == 3 and 33 or 35
-	end
-	self:Bar(args.spellId, cd, CL.count:format(L.wild_stampede, stampedeCount))
-end
+-- function mod:WildStampede(args)
+-- 	self:StopBar(CL.count:format(L.wild_stampede, stampedeCount))
+-- 	self:Message(args.spellId, "purple", CL.count:format(L.wild_stampede, stampedeCount))
+-- 	self:PlaySound(args.spellId, "alert")
+-- 	stampedeCount = stampedeCount + 1
+-- 	local cd = self:GetStage() == 3 and 48.5 or (stampedeCount == 2 and 50 or 33)
+-- 	if self:Mythic() then
+-- 		cd = self:GetStage() == 3 and 33 or 35
+-- 	end
+-- 	self:Bar(args.spellId, cd, CL.count:format(L.wild_stampede, stampedeCount))
+-- end
 
 do
 	local witheringSeedMarks = {}
@@ -316,7 +311,7 @@ do
 		self:Message(args.spellId, "purple", CL.count:format(L.withering_seeds, seedsCount))
 		self:PlaySound(args.spellId, "alert")
 		seedsCount = seedsCount + 1
-		self:Bar(args.spellId, self:GetStage() == 3 and 76 or (seedsCount == 2 and 128 or 68), CL.count:format(L.withering_seeds, seedsCount))
+		self:Bar(args.spellId, self:GetStage() == 3 and 74.2 or 96.2, CL.count:format(L.withering_seeds, seedsCount))
 		seedCollector = {}
 		witheringSeedMarks = {}
 	end
@@ -339,7 +334,7 @@ function mod:Animastorm(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, stormCount))
 	self:PlaySound(args.spellId, "alert")
 	stormCount = stormCount + 1
-	self:Bar(args.spellId, self:GetStage() == 3 and 84 or 90.5, CL.count:format(args.spellName, stormCount))
+	self:Bar(args.spellId, self:GetStage() == 3 and 84 or 67.5, CL.count:format(args.spellName, stormCount))
 end
 
 function mod:BurdenOfSinApplied(args)
@@ -374,7 +369,7 @@ do
 end
 
 function mod:WrackingPain(args)
-	--self:Bar(args.spellId, 6)
+	self:Bar(args.spellId, self:GetStage() == 3 and 49.8 or 45)
 end
 
 function mod:WrackingPainApplied(args)
