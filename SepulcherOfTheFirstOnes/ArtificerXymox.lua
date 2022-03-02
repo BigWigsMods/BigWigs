@@ -64,8 +64,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-
 	self:Log("SPELL_CAST_SUCCESS", "DecipherRelicSuccess", 367711) -- Stage 4
 	self:Log("SPELL_AURA_APPLIED", "DecipherRelic", 363139)
 	self:Log("SPELL_AURA_REMOVED", "DecipherRelicRemoved", 363139)
@@ -79,7 +77,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "GlyphOfRelocationSuccess", 362801)
 	self:Log("SPELL_AURA_APPLIED", "GlyphOfRelocationApplied", 362803)
 	self:Log("SPELL_AURA_REMOVED", "GlyphOfRelocationRemoved", 362803)
-	--self:Log("SPELL_CAST_START", "HyperlightSparknova", 362849)
+	self:Log("SPELL_CAST_START", "HyperlightSparknova", 362849)
 	self:Log("SPELL_CAST_SUCCESS", "StasisTrap", 362885)
 	self:Log("SPELL_CAST_START", "XyDecipherers", 363485)
 	self:Log("SPELL_CAST_SUCCESS", "SystemShock", 365681)
@@ -101,7 +99,7 @@ function mod:OnEngage()
 	nextStageWarning = 77
 
 	self:Bar(362721, self:Mythic() and 9 or 8, CL.count:format(L.wormholes, wormholeCount)) -- Dimensional Tear
-	self:Bar(362849, self:Mythic() and 15.5 or 19, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
+	self:Bar(362849, self:Mythic() and 15.5 or 14, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
 	self:Bar(362885, self:Mythic() and 23.3 or 21, CL.count:format(L.traps, trapCount)) -- Stasis Trap
 	self:Bar(364465, self:Mythic() and 29 or 26, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
 	self:Bar(362803, self:Mythic() and 44.5 or 40, L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Glyph of Relocation
@@ -112,12 +110,6 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 362849 then -- Hyperlight Sparknova
-		self:HyperlightSparknova()
-	end
-end
 
 function mod:UNIT_HEALTH(event, unit)
 	local currentHealth = self:GetHealth(unit)
@@ -160,11 +152,11 @@ function mod:DecipherRelicSuccess() -- Stage 4
 	glyphCount = 1
 	sparkCount = 1
 
-	self:Bar(362721, 8, CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
-	self:Bar(362849, 19, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
-	self:Bar(362885, 21, CL.count:format(L.traps, trapCount)) -- Stasis Trap
-	self:Bar(364465, 26, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
-	self:Bar(362803, 40, L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Glyph of Relocation
+	self:Bar(362849, 15.6, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
+	self:Bar(362721, 22.2, CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
+	self:Bar(362885, 23.3, CL.count:format(L.traps, trapCount)) -- Stasis Trap
+	self:Bar(364465, 28.9, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
+	self:Bar(362803, 44.5, L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Glyph of Relocation
 end
 
 function mod:DecipherRelic()
@@ -193,7 +185,7 @@ function mod:DecipherRelicRemoved()
 	sparkCount = 1
 
 	self:Bar(362721, 8, CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
-	self:Bar(362849, 19, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
+	self:Bar(362849, 14, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
 	self:Bar(362885, 21, CL.count:format(L.traps, trapCount)) -- Stasis Trap
 	self:Bar(364465, 26, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
 	self:Bar(362803, 40, L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Glyph of Relocation
@@ -204,12 +196,18 @@ function mod:ForerunnerRings(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.rings:format(self:GetStage()), ringCount))
 	self:PlaySound(args.spellId, "alert")
 	ringCount = ringCount + 1
-	self:Bar(args.spellId, self:Mythic() and 33.3 or 30, CL.count:format(L.rings:format(self:GetStage()), ringCount))
+	self:Bar(args.spellId, self:GetStage() == 4 and 33.3 or 30, CL.count:format(L.rings:format(self:GetStage()), ringCount))
 end
 
-function mod:HyperlightAscension(args)
-	self:Message(args.spellId, "red")
-	self:PlaySound(args.spellId, "warning")
+do
+	local prev = 0
+	function mod:HyperlightAscension(args)
+		if prev + 2 < args.time then
+			prev = args.time
+			self:Message(args.spellId, "red")
+			self:PlaySound(args.spellId, "warning")
+		end
+	end
 end
 
 function mod:DebilitatingRay(args)
@@ -265,7 +263,7 @@ end
 function mod:GlyphOfRelocationSuccess(args)
 	self:StopBar(L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Replacing the last 5 seconds with targetbar, if not a tank
 	glyphCount = glyphCount + 1
-	self:CDBar(362803, self:Mythic() and 66.5 or 60, L.relocation_count:format(L.relocation, self:GetStage(), glyphCount))
+	self:CDBar(362803, self:GetStage() == 4 and 66.5 or 60, L.relocation_count:format(L.relocation, self:GetStage(), glyphCount))
 end
 
 function mod:GlyphOfRelocationApplied(args)
@@ -284,12 +282,12 @@ function mod:GlyphOfRelocationRemoved(args)
 	end
 end
 
-function mod:HyperlightSparknova()
+function mod:HyperlightSparknova(args)
 	self:StopBar(CL.count:format(L.sparknova, sparkCount))
-	self:Message(362849, "orange", CL.count:format(L.sparknova, sparkCount))
-	self:PlaySound(362849, "alert")
+	self:Message(args.spellId, "orange", CL.count:format(L.sparknova, sparkCount))
+	self:PlaySound(args.spellId, "alert")
 	sparkCount = sparkCount + 1
-	self:Bar(362849, self:Mythic() and 33.3 or 30, CL.count:format(L.sparknova, sparkCount))
+	self:Bar(args.spellId, self:GetStage() == 4 and 33.3 or 30, CL.count:format(L.sparknova, sparkCount))
 end
 
 function mod:StasisTrap(args)
@@ -297,19 +295,17 @@ function mod:StasisTrap(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.traps, trapCount))
 	self:PlaySound(args.spellId, "alarm")
 	trapCount = trapCount + 1
-	self:Bar(args.spellId, self:Mythic() and 33.3 or 30, CL.count:format(L.traps, trapCount))
+	self:Bar(args.spellId, self:GetStage() == 4 and 33.3 or 30, CL.count:format(L.traps, trapCount))
 end
 
 function mod:XyDecipherers(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 30)
 end
 
 function mod:SystemShock(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
-	--self:CDBar(args.spellId, 20)
 end
 
 function mod:SystemShockApplied(args)
@@ -319,5 +315,4 @@ end
 function mod:OverseersOrders(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	--self:CDBar(args.spellId, 20)
 end
