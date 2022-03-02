@@ -16,7 +16,7 @@ local tankComboCounter = 1
 local comboCounter = 1
 local flailCount = 1
 local retchCount = 1
-local unendingCount = 1
+local burrowCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -61,7 +61,7 @@ function mod:OnEngage()
 	tankComboCounter = 1
 	flailCount = 1
 	retchCount = 1
-	unendingCount = 1
+	burrowCount = 1
 
 	self:Bar(359829, 2, CL.count:format(self:SpellName(359829), flailCount)) -- Dust Flail
 	self:Bar("tank_combo", 9, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
@@ -78,14 +78,14 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(CL.count:format(CL.tank_combo, tankComboCounter))
 		comboCounter = 1
 		tankComboCounter = tankComboCounter + 1
-		self:CDBar("tank_combo", 33, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
+		self:CDBar("tank_combo", self:Easy() and 36.5 or 33, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
 	end
 end
 
 function mod:RaveningBurrow(args)
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, unendingCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, burrowCount))
 	self:PlaySound(args.spellId, "long")
-	unendingCount = unendingCount + 1
+	burrowCount = burrowCount + 1
 
 	local nextTankCombo = self:BarTimeLeft(CL.count:format(CL.tank_combo, tankComboCounter)) + 10
 	self:CDBar("tank_combo", nextTankCombo, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
@@ -103,7 +103,7 @@ function mod:DustFlail(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, flailCount))
 	self:PlaySound(args.spellId, "alert")
 	flailCount = flailCount + 1
-	self:CDBar(args.spellId, 17, CL.count:format(args.spellName, flailCount))
+	self:CDBar(args.spellId, self:Easy() and 19.5 or 17, CL.count:format(args.spellName, flailCount))
 end
 
 function mod:Retch(args)
