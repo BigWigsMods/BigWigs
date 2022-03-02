@@ -192,7 +192,7 @@ function mod:Reclaim(args)
 	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:StopBar(CL.count:format(L.crushing_prism, prismCount))
-	self:SetopBar(CL.count:format(CL.count:format(self:SpellName(360115), reclaimCount)))
+	self:StopBar(CL.count:format(args.spellName, reclaimCount))
 
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, reclaimCount))
 	self:PlaySound(args.spellId, "long")
@@ -298,6 +298,7 @@ function mod:ReclamationForm(args)
 	beamCount = 1
 	misslesCount = 1
 	prismCount = 1
+	reclaimCount = 1
 
 	self:Bar(361676, stage == 3 and missleTimersP3[misslesCount] or 18, CL.count:format(L.earthbreaker_missiles, misslesCount))
 	if stage == 2 then
@@ -320,7 +321,7 @@ function mod:RelocationFormDone() -- Some timers can still trigger just after _S
 	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:StopBar(CL.count:format(L.crushing_prism, prismCount))
-	self:StopBar(CL.count:format(CL.count:format(self:SpellName(360115), reclaimCount)))
+	self:StopBar(CL.count:format(self:SpellName(360115), reclaimCount))
 
 	misslesCount = 1
 	shatterCount = 1
