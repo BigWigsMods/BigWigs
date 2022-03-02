@@ -1,4 +1,14 @@
 --------------------------------------------------------------------------------
+-- WCL Queries:
+--
+--
+-- Normal: X
+-- Heroic: ✓
+-- Mythic: X
+--
+-- Mote on you warning?
+--
+--------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -26,7 +36,7 @@ local nextSynthesize = 0
 
 local L = mod:GetLocale()
 if L then
-	L.protoform_cascade = "Frontal"
+	L.protoform_cascade = "Circle"
 	L.cosmic_shift = "Pushback"
 	L.unstable_mote = "Motes"
 	L.mote = "Mote"
@@ -56,7 +66,7 @@ function mod:GetOptions()
 		[366012] = "mythic",
 	},{
 		[368027] = CL.tank_combo, -- Resonance (Tank Combo)
-		[364652] = L.protoform_cascade, -- Protoform Cascade (Frontal)
+		[364652] = L.protoform_cascade, -- Protoform Cascade (Circle)
 		[363088] = L.cosmic_shift, -- Cosmic Shift (Pushback)
 		[362601] = L.unstable_mote, -- Unstable Mote (Motes)
 		[363795] = CL.bombs, -- Deconstructing Energy (Bombs)
