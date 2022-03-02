@@ -363,7 +363,7 @@ function mod:DominationsGraspApplied(args)
 
 	--self:Bar(362862, stage == 2 and 4.3 or 2.8, CL.count:format(L.army_of_the_dead, armyCount)) -- Army of the Dead
 	self:Bar(362771, stage == 2 and 12 or 10.5, CL.count:format(self:SpellName(362771), soulReaperCount)) -- Soul Reaper
-	self:Bar("stages", 69, CL.stage(self:GetStage()+1), 363976)
+	self:Bar("stages", 69, CL.stage:format(self:GetStage()+1), 363976)
 	if stage == 2 then -- Intermission 2
 		self:Bar(363233, 4.5, CL.count:format(L.march_of_the_damned, marchCount)) -- March of the Damned
 	end
