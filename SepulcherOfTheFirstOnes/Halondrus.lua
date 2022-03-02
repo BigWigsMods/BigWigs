@@ -41,22 +41,7 @@ local nextStageWarning = 82
 -- Timers
 --
 
-local timers = {
-	[1] = {
-		[367079] = {8, 28, 43.5}, -- Seismic Tremors
-		[361676] = {43.1, 44.1}, -- Earthbreaker Missiles
-		[365297] = {21.1, 28, 43.2} -- Crushing Prism
-	},
-	[2] = {
-		[367079] = {10, 27, 52}, -- Seismic Tremors
-		[361676] = {18, 26.7, 50.7}, -- Earthbreaker Missiles
-		[365297] = {23, 27, 51.5} -- Crushing Prism
-	},
-	[3] = {
-		[361676] = {17, 24.5, 37.2} -- Earthbreaker Missiles
-	},
-}
-
+local missleTimersP3 = {17, 24.5, 37.2, 13} -- Earthbreaker Missiles
 local intermissionTimers = {
 	[364979] = { -- Shatter
 		[1] = {36, 22.1, 0},
@@ -82,6 +67,9 @@ if L then
 	L.earthbreaker_missiles = "Missiles" -- Earthbreaker Missiles
 	L.crushing_prism = "Prisms" -- Crushing Prism
 	L.prism = "Prism"
+
+	L.custom_on_stop_timers = "Always show ability bars"
+	L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
 end
 
 --------------------------------------------------------------------------------
@@ -117,6 +105,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Reclaim", 360115)
+	self:Log("SPELL_AURA_REMOVED", "ReclaimRemoved", 360115)
 	self:Log("SPELL_CAST_START", "SeismicTremors", 367079)
 	self:Log("SPELL_CAST_START", "EarthbreakerMissiles", 361676)
 	self:Log("SPELL_CAST_START", "LightshatterBeam", 360977)
@@ -133,6 +122,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 369207) -- Planetcracker Beam
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 369207)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 369207)
+
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
 
 function mod:OnEngage()
@@ -148,9 +139,9 @@ function mod:OnEngage()
 	intermission = false
 	nextStageWarning = 79.5
 
-	self:Bar(367079, timers[self:GetStage()][367079][seismicTremorsCount], CL.count:format(L.seismic_tremors, seismicTremorsCount))
-	self:Bar(365297, timers[self:GetStage()][365297][prismCount], CL.count:format(L.crushing_prism, prismCount))
-	self:Bar(361676, timers[self:GetStage()][361676][misslesCount], CL.count:format(L.earthbreaker_missiles, misslesCount))
+	self:Bar(367079, 8, CL.count:format(L.seismic_tremors, seismicTremorsCount))
+	self:Bar(365297, 21.1, CL.count:format(L.crushing_prism, prismCount))
+	self:Bar(361676, 43.1, CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:Bar(360115, 61.2, CL.count:format(self:SpellName(360115), reclaimCount))
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -171,12 +162,51 @@ function mod:UNIT_HEALTH(event, unit)
 	end
 end
 
+do
+	local abilitysToPause = {
+		[361676] = true, -- Earthbreaker Missiles
+		[365297] = true, -- Crushing Prism
+		[367079] = true, -- Seismic Tremors
+		[360115] = true, -- Reclaim
+	}
+
+	local castPattern = CL.cast:gsub("%%s", ".+")
+
+	local function stopAtZeroSec(bar)
+		if bar.remaining < 0.15 then -- Pause at 0.0
+			bar:SetDuration(0.01) -- Make the bar look full
+			bar:Start()
+			bar:Pause()
+			bar:SetTimeVisibility(false)
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, _, key, text)
+		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
+			bar:AddUpdateFunction(stopAtZeroSec)
+		end
+	end
+end
+
 function mod:Reclaim(args)
-	self:StopBar(CL.count:format(args.spellName, reclaimCount))
+	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
+	self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
+	self:StopBar(CL.count:format(L.crushing_prism, prismCount))
+	self:SetopBar(CL.count:format(CL.count:format(self:SpellName(360115), reclaimCount)))
+
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, reclaimCount))
 	self:PlaySound(args.spellId, "long")
 	reclaimCount = reclaimCount + 1
-	--self:Bar(args.spellId, 10, CL.count:format(args.spellName, reclaimCount))
+end
+
+function mod:ReclaimRemoved(args)
+	self:Message(args.spellId, "green", CL.removed:format(CL.count:format(args.spellName, reclaimCount)))
+	self:PlaySound(args.spellId, "info")
+
+	self:Bar(367079, 4.5, CL.count:format(L.seismic_tremors, seismicTremorsCount))
+	self:Bar(365297, 8, CL.count:format(L.crushing_prism, prismCount))
+	self:Bar(361676, 11, CL.count:format(L.earthbreaker_missiles, misslesCount))
+	self:Bar(360115, 61.2, CL.count:format(self:SpellName(360115), reclaimCount))
 end
 
 function mod:SeismicTremors(args)
@@ -184,7 +214,7 @@ function mod:SeismicTremors(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:PlaySound(args.spellId, "alert")
 	seismicTremorsCount = seismicTremorsCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][seismicTremorsCount], CL.count:format(L.seismic_tremors, seismicTremorsCount))
+	self:Bar(args.spellId, 26, CL.count:format(L.seismic_tremors, seismicTremorsCount))
 end
 
 function mod:EarthbreakerMissiles(args)
@@ -192,8 +222,10 @@ function mod:EarthbreakerMissiles(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:PlaySound(args.spellId, "alert")
 	misslesCount = misslesCount + 1
-	if not intermission then
-		self:CDBar(args.spellId, timers[self:GetStage()][args.spellId][misslesCount], CL.count:format(L.earthbreaker_missiles, misslesCount))
+	if intermission then
+		self:CDBar(args.spellId, intermissionTimers[args.spellId][relocationFormCount-1][misslesCount], CL.count:format(L.earthbreaker_missiles, misslesCount))
+	else
+		self:CDBar(args.spellId, self:GetStage() == 3 and missleTimersP3[misslesCount] or  26, CL.count:format(L.earthbreaker_missiles, misslesCount))
 	end
 end
 
@@ -223,7 +255,7 @@ do
 			if intermission == true then
 				self:CDBar(args.spellId, intermissionTimers[args.spellId][relocationFormCount-1][prismCount], CL.count:format(L.crushing_prism, prismCount))
 			else
-				self:CDBar(args.spellId, timers[self:GetStage()][args.spellId][prismCount], CL.count:format(L.crushing_prism, prismCount))
+				self:CDBar(args.spellId, 26, CL.count:format(L.crushing_prism, prismCount))
 			end
 		end
 		local count = #playerList+1
@@ -267,10 +299,10 @@ function mod:ReclamationForm(args)
 	misslesCount = 1
 	prismCount = 1
 
-	self:Bar(361676, timers[self:GetStage()][361676][misslesCount], CL.count:format(L.earthbreaker_missiles, misslesCount))
+	self:Bar(361676, stage == 3 and missleTimersP3[misslesCount] or 18, CL.count:format(L.earthbreaker_missiles, misslesCount))
 	if stage == 2 then
-		self:Bar(367079, timers[self:GetStage()][367079][seismicTremorsCount], CL.count:format(L.seismic_tremors, seismicTremorsCount))
-		self:Bar(365297, timers[self:GetStage()][365297][prismCount], CL.count:format(L.crushing_prism, prismCount))
+		self:Bar(367079, 10, CL.count:format(L.seismic_tremors, seismicTremorsCount))
+		self:Bar(365297, 23, CL.count:format(L.crushing_prism, prismCount))
 		self:Bar(360115, 69.4, CL.count:format(self:SpellName(360115), reclaimCount))
 	end
 end
@@ -288,6 +320,7 @@ function mod:RelocationFormDone() -- Some timers can still trigger just after _S
 	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:StopBar(CL.count:format(L.crushing_prism, prismCount))
+	self:StopBar(CL.count:format(CL.count:format(self:SpellName(360115), reclaimCount)))
 
 	misslesCount = 1
 	shatterCount = 1
