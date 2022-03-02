@@ -385,7 +385,7 @@ function mod:ArmyOfTheDead(args)
 	self:PlaySound(args.spellId, "long")
 	armyCount = armyCount + 1
 	if armyCount < 3 then
-		self:Bar(args.spellId, 41.1, CL.count:format(L.army_of_the_dead, armyCount))
+		self:Bar(args.spellId, self:Easy() and 41.1 or 37, CL.count:format(L.army_of_the_dead, armyCount))
 	end
 end
 
