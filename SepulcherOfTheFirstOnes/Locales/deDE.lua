@@ -63,5 +63,5 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "deDE")
 if L then
-	-- L.tank_combo_desc = "Timer for Riftmaw/Rend casts at 100 energy."
+	L.tank_combo_desc = "Timer für die Fähigkeiten Rissschlund/Verwunden bei 100 Energie."
 end
