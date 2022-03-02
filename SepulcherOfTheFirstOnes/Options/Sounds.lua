@@ -55,7 +55,8 @@ BigWigs:AddSounds("Prototype Pantheon", {
 	[360259] = "alarm",
 	[360295] = "alert",
 	[360687] = {"info","warning"},
-	[361067] = "info",
+	[361067] = {"info","underyou"},
+	[361304] = "alert",
 	[361568] = "alert",
 	[361608] = "alarm",
 	[361689] = "alarm",
@@ -78,7 +79,7 @@ BigWigs:AddSounds("Lihuvim, Principal Architect", {
 })
 
 BigWigs:AddSounds("Halondrus the Reclaimer", {
-	[360115] = "long",
+	[360115] = {"info","long"},
 	[360977] = {"alert","warning"},
 	[361676] = "alert",
 	[364979] = "long",

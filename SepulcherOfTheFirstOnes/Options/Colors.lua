@@ -10,7 +10,7 @@ BigWigs:AddColors("Vigilant Guardian", {
 	[360906] = "yellow",
 	[361001] = "orange",
 	[364447] = {"blue","purple"},
-	[364881] = {"blue","orange"},
+	[364881] = {"blue","yellow"},
 	[364962] = "red",
 	[365315] = "yellow",
 	["stages"] = "cyan",
@@ -56,7 +56,8 @@ BigWigs:AddColors("Prototype Pantheon", {
 	[360295] = "purple",
 	[360687] = {"blue","cyan","green"},
 	[361067] = {"green","red"},
-	[361568] = "purple",
+	[361304] = "yellow",
+	[361568] = "cyan",
 	[361608] = "blue",
 	[361689] = {"blue","purple"},
 	[361745] = {"blue","orange"},
@@ -79,7 +80,7 @@ BigWigs:AddColors("Lihuvim, Principal Architect", {
 })
 
 BigWigs:AddColors("Halondrus the Reclaimer", {
-	[360115] = "red",
+	[360115] = {"green","red"},
 	[360977] = {"blue","purple"},
 	[361676] = "yellow",
 	[364979] = "yellow",
