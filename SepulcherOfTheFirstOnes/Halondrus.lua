@@ -103,6 +103,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(unit)
+	return UnitCanAttack("player", unit)
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Reclaim", 360115)
 	self:Log("SPELL_AURA_REMOVED", "ReclaimRemoved", 360115)
