@@ -1,15 +1,19 @@
 
 BigWigs:AddColors("Vigilant Guardian", {
-	[359610] = "red",
+	[359610] = {"blue","red"},
 	[360162] = "orange",
-	[360355] = "yellow",
 	[360403] = {"cyan","green"},
 	[360412] = "orange",
+	[360414] = "purple",
 	[360458] = {"cyan","red"},
+	[360658] = "yellow",
+	[360906] = "yellow",
 	[361001] = "orange",
 	[364447] = {"blue","purple"},
 	[364881] = {"blue","orange"},
 	[364962] = "red",
+	[365315] = "yellow",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Skolex, the Insatiable Ravener", {
@@ -43,7 +47,7 @@ BigWigs:AddColors("Dausegne, the Fallen Oracle", {
 	[361630] = "cyan",
 	[361651] = "green",
 	[361966] = {"blue","purple"},
-	[363200] = {"orange","red"},
+	[363200] = "orange",
 	[365418] = "red",
 })
 
@@ -52,7 +56,6 @@ BigWigs:AddColors("Prototype Pantheon", {
 	[360295] = "purple",
 	[360687] = {"blue","cyan","green"},
 	[361067] = {"green","red"},
-	[361304] = "purple",
 	[361568] = "purple",
 	[361608] = "blue",
 	[361689] = {"blue","purple"},
@@ -72,17 +75,19 @@ BigWigs:AddColors("Lihuvim, Principal Architect", {
 	[363795] = {"blue","orange"},
 	[364652] = "yellow",
 	[366012] = "blue",
+	[368027] = "yellow",
 })
 
 BigWigs:AddColors("Halondrus the Reclaimer", {
-	[359235] = "yellow",
-	[359236] = "yellow",
+	[360115] = "red",
 	[360977] = {"blue","purple"},
 	[361676] = "yellow",
-	[362056] = "yellow",
+	[364979] = "yellow",
 	[365297] = {"blue","green","yellow"},
-	[365976] = "blue",
 	[367079] = "yellow",
+	[368529] = "yellow",
+	[369207] = "blue",
+	["stages"] = {"cyan","green","yellow"},
 })
 
 BigWigs:AddColors("Anduin Wrynn", {
@@ -104,10 +109,53 @@ BigWigs:AddColors("Anduin Wrynn", {
 })
 
 BigWigs:AddColors("Lords of Dread", {
+	[359960] = {"blue","yellow"},
+	[359963] = {"blue","purple"},
+	[360146] = {"blue","orange","yellow"},
+	[360229] = "yellow",
+	[360284] = {"blue","purple"},
+	[360319] = "yellow",
+	[360374] = "red",
+	[360417] = "yellow",
+	[360428] = {"blue","green"},
+	[361913] = "yellow",
+	[362020] = "cyan",
+	[366574] = {"blue","cyan","green"},
 })
 
 BigWigs:AddColors("Rygelon", {
+	[361548] = {"blue","cyan"},
+	[362088] = "blue",
+	[362172] = {"blue","purple"},
+	[362184] = "purple",
+	[362206] = "green",
+	[362207] = {"blue","green"},
+	[362275] = "yellow",
+	[362390] = "yellow",
+	[362798] = "blue",
+	[363109] = "yellow",
+	[363533] = "yellow",
+	[364114] = "yellow",
+	[366379] = "orange",
+	[366606] = "red",
+	[368080] = {"blue","yellow"},
 })
 
 BigWigs:AddColors("The Jailer", {
+	[359856] = "purple",
+	[360281] = {"blue","cyan"},
+	[360373] = "yellow",
+	[362028] = "red",
+	[362075] = {"blue","red"},
+	[362401] = {"blue","yellow"},
+	[362631] = "yellow",
+	[363893] = {"blue","purple"},
+	[364488] = "yellow",
+	[365033] = "red",
+	[365150] = {"blue","cyan"},
+	[365169] = "red",
+	[365212] = {"blue","green","yellow"},
+	[365810] = "orange",
+	[366020] = {"blue","orange"},
+	[366285] = {"blue","cyan"},
 })

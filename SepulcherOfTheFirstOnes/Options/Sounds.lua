@@ -1,15 +1,19 @@
 
 BigWigs:AddSounds("Vigilant Guardian", {
-	[359610] = "alarm",
+	[359610] = {"alarm","warning"},
 	[360162] = "alarm",
-	[360355] = "alert",
 	[360403] = "info",
 	[360412] = "alert",
+	[360414] = "alarm",
 	[360458] = "warning",
+	[360658] = "alert",
+	[360906] = "alert",
 	[361001] = "alert",
 	[364447] = "alarm",
 	[364881] = {"alert","warning"},
 	[364962] = "long",
+	[365315] = "alert",
+	["stages"] = "long",
 })
 
 BigWigs:AddSounds("Skolex, the Insatiable Ravener", {
@@ -52,7 +56,6 @@ BigWigs:AddSounds("Prototype Pantheon", {
 	[360295] = "alert",
 	[360687] = {"info","warning"},
 	[361067] = "info",
-	[361304] = "alert",
 	[361568] = "alert",
 	[361608] = "alarm",
 	[361689] = "alarm",
@@ -71,17 +74,19 @@ BigWigs:AddSounds("Lihuvim, Principal Architect", {
 	[363795] = {"alert","warning"},
 	[364652] = "alert",
 	[366012] = "warning",
+	[368027] = "alert",
 })
 
 BigWigs:AddSounds("Halondrus the Reclaimer", {
-	[359235] = "long",
-	[359236] = "long",
+	[360115] = "long",
 	[360977] = {"alert","warning"},
 	[361676] = "alert",
-	[362056] = "long",
-	[365297] = {"info","warning"},
-	[365976] = "alarm",
+	[364979] = "long",
+	[365297] = {"alarm","info"},
 	[367079] = "alert",
+	[368529] = "long",
+	[369207] = "underyou",
+	["stages"] = "long",
 })
 
 BigWigs:AddSounds("Anduin Wrynn", {
@@ -103,10 +108,52 @@ BigWigs:AddSounds("Anduin Wrynn", {
 })
 
 BigWigs:AddSounds("Lords of Dread", {
+	[359960] = "alarm",
+	[359963] = "warning",
+	[360146] = "alert",
+	[360229] = "alert",
+	[360284] = {"alarm","alert"},
+	[360319] = "alert",
+	[360374] = "long",
+	[360417] = "alert",
+	[361913] = "alert",
+	[362020] = "info",
+	[366574] = {"info","warning"},
 })
 
 BigWigs:AddSounds("Rygelon", {
+	[361548] = "warning",
+	[362088] = "alarm",
+	[362172] = "warning",
+	[362184] = "alert",
+	[362206] = "info",
+	[362207] = {"info","warning"},
+	[362275] = "alert",
+	[362390] = "alert",
+	[362798] = "underyou",
+	[363109] = "alert",
+	[363533] = "alert",
+	[364114] = "alert",
+	[366379] = "alert",
+	[366606] = "alarm",
+	[368080] = "alert",
 })
 
 BigWigs:AddSounds("The Jailer", {
+	[359856] = "alarm",
+	[360281] = "warning",
+	[360373] = "alert",
+	[362028] = "warning",
+	[362075] = "warning",
+	[362401] = "warning",
+	[362631] = "alert",
+	[363893] = "alarm",
+	[364488] = "alert",
+	[365033] = "alert",
+	[365150] = "warning",
+	[365169] = "warning",
+	[365212] = {"alert","info","warning"},
+	[365810] = "alarm",
+	[366020] = "alarm",
+	[366285] = "warning",
 })
