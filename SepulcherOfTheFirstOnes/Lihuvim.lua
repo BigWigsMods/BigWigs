@@ -193,7 +193,7 @@ do
 			self:Say(363795, CL.bomb)
 			self:SayCountdown(363795, 6)
 		else
-			self:PlaySound(363795, "alert")
+			self:PlaySound(363795, "alert", nil, args.destName)
 		end
 		self:TargetsMessage(363795, "orange", playerList, nil, CL.count:format(CL.bomb, deconstructingEnergyCount-1))
 	end
