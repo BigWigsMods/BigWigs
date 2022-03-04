@@ -511,7 +511,7 @@ function mod:FrostBlastApplied(args)
 		self:Flash(args.spellId)
 		self:YellCountdown(args.spellId, 6)
 	else
-		self:PlaySound(args.spellId, "alert")
+		self:PlaySound(args.spellId, "alert", nil, args.destName)
 	end
 	self:TargetMessage(args.spellId, "orange", args.destName, CL.count:format(CL.meteor, frostBlastCount-1))
 end

@@ -189,7 +189,7 @@ function mod:DeresolutionApplied(args)
 		self:Say(args.spellId)
 		self:SayCountdown(args.spellId, 5)
 	else
-		self:PlaySound(args.spellId, "alarm")
+		self:PlaySound(args.spellId, "alarm", nil, args.destName)
 	end
 	self:TargetMessage(args.spellId, "red", args.destName)
 	self:Bar(args.spellId, 35)

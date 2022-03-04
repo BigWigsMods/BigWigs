@@ -139,7 +139,7 @@ function mod:InstrumentApplied(args)
 		self:SayCountdown(args.spellId, 6)
 		self:PlaySound(args.spellId, "warning")
 	else
-		self:PlaySound(args.spellId, "alert")
+		self:PlaySound(args.spellId, "alert", nil, args.destName)
 	end
 	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(equippedWeapon, instrumentCount))
 	instrumentCount = instrumentCount + 1

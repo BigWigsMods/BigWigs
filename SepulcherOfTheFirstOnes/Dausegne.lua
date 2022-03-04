@@ -132,7 +132,7 @@ function mod:StaggeringBarrageApplied(args)
 		self:Yell(args.spellId, L.staggering_barrage)
 		self:YellCountdown(args.spellId, 8)
 	else
-		self:PlaySound(args.spellId, "alert")
+		self:PlaySound(args.spellId, "alert", nil, args.destName)
 	end
 	self:SecondaryIcon(args.spellId, args.destName)
 

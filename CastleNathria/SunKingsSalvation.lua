@@ -384,7 +384,7 @@ function mod:EmberBlastApplied(args)
 			self:YellCountdown(325877, 3, nil, 2)
 		end
 	else
-		self:PlaySound(325877, "alert")
+		self:PlaySound(325877, "alert", nil, args.destName)
 	end
 	self:TargetMessage(325877, "orange", args.destName, CL.count:format(self:SpellName(325877), emberBlastCount-1))
 end

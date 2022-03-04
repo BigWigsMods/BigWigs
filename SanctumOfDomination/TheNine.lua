@@ -534,7 +534,7 @@ function mod:ArthurasCrushingGazeApplied(args)
 		self:Yell(args.spellId, CL.meteor)
 		self:YellCountdown(args.spellId, 8)
 	else
-		self:PlaySound(args.spellId, "alert")
+		self:PlaySound(args.spellId, "alert", nil, args.destName)
 	end
 	self:TargetMessage(args.spellId, "orange", args.destName, CL.meteor)
 end
