@@ -195,6 +195,7 @@ do
 				self:Bar(361304, 8.9, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
 				self:Bar(361568, 18.5, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
 				self:Bar(366234, 38.5, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
+				self:Bar(361689, 69) -- Wracking Pain
 				self:Bar(361789, 79.9, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			elseif stage == 3 then
 				self:Bar(365269, 41) -- Humbling Strikes
@@ -203,6 +204,7 @@ do
 				self:Bar(364941, 53.1, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
 				self:Bar(361304, 24.5, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
 				self:Bar(361568, 21.3, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
+				self:Bar(361689, 41) -- Wracking Pain
 				self:Bar(366234, 51, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
 				self:Bar(361789, 104.1, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			end
@@ -336,10 +338,19 @@ do
 
 	function mod:WitheringSeedsSummon(args)
 		if self:GetOption(witheringSeedMarker) then
-			for i = 1, 4, 1 do -- 1, 2, 3, 4
+			for i = 1, 4 do -- 1, 2, 3, 4
 				if not seedCollector[args.destGUID] and not witheringSeedMarks[i] then
 					witheringSeedMarks[i] = args.destGUID
 					seedCollector[args.destGUID] = i
+					-- summons are after IEEU, so just check boss tokens
+					-- (leaving the normal scanning stuff for now, can probably be removed)
+					for boss = 5, 10 do
+						local unit = ("boss%d"):format(boss)
+						if self:UnitGUID(unit) == args.destGUID then
+							self:CustomIcon(witheringSeedMarker, unit, i)
+							mobCollector[args.destGUID] = true
+						end
+					end
 					return
 				end
 			end
