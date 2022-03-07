@@ -215,6 +215,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 
 		self:Message("stages", "cyan", CL.intermission, false)
 		self:PlaySound("stages", "long")
+		self:Bar("stages", 9.3, CL.intermission, 365216)
 
 		armyCount = 1
 		soulReaperCount = 1
