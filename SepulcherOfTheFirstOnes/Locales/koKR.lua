@@ -35,9 +35,9 @@ end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "koKR")
 if L then
-	 L.protoform_cascade = "전방 조심"
+	 L.protoform_cascade = "구슬 조심"
 	 L.cosmic_shift = "넉백"
-	 L.unstable_mote = "티끌"
+	 L.unstable_mote = "불안정한 티끌"
 	 L.mote = "티끌"
 
 	 L.custom_on_nameplate_fixate = "시선고정 네임플레이트 아이콘"
