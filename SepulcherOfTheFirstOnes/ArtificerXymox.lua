@@ -136,10 +136,10 @@ function mod:UNIT_HEALTH(event, unit)
 		end
 		self:PlaySound("stages", "info")
 		nextStageWarning = nextStageWarning - 25
-		if nextStageWarning < 50 then
-			nextStageWarning = 32
-		elseif nextStageWarning < 10 then
+		if nextStageWarning < 10 then
 			self:UnregisterUnitEvent(event, unit)
+		elseif nextStageWarning < 50 then
+			nextStageWarning = 32
 		end
 	end
 end
