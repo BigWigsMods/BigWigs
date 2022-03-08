@@ -240,7 +240,7 @@ function mod:LightshatterBeam(args)
 end
 
 function mod:LightshatterBeamApplied(args)
-	self:NewStackMessage(360977, "purple", args.destName, CL.beam)
+	self:NewStackMessage(360977, "purple", args.destName, args.amount, nil, CL.beam)
 	if not self:Me(args.destGUID) and not self:Tanking("boss1") then
 		self:PlaySound(360977, "warning")
 	end
