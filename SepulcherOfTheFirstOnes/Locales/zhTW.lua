@@ -1,11 +1,11 @@
 local L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhTW")
 if not L then return end
 if L then
-	-- L.traps = "Traps" -- Stasis Trap
-	-- L.sparknova = "Sparknova" -- Hyperlight Sparknova
-	-- L.relocation = "Tank Bomb" -- Glyph of Relocation
-	-- L.wormholes = "Wormholes" -- Interdimensional Wormholes
-	-- L.wormhole = "Wormhole" -- Interdimensional Wormhole
+	L.traps = "陷阱" -- Stasis Trap
+	-- L.sparknova = "火花新星" -- Hyperlight Sparknova
+	L.relocation = "坦克炸彈" -- Glyph of Relocation
+	L.wormholes = "蟲洞" -- Interdimensional Wormholes
+	L.wormhole = "蟲洞" -- Interdimensional Wormhole
 	-- L.rings = "Rings P%d" -- Forerunner Rings // Added P1, P2, P3 etc to help identify what rings
 end
 
@@ -25,12 +25,12 @@ end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "zhTW")
 if L then
-	-- L.necrotic_ritual = "Ritual"
-	-- L.runecarvers_deathtouch = "Deathtouch"
-	-- L.windswept_wings = "Winds"
-	-- L.wild_stampede = "Stampede"
-	-- L.withering_seeds = "Seeds"
-	-- L.hand_of_destruction = "Hand"
+	L.necrotic_ritual = "死靈儀式"
+	L.runecarvers_deathtouch = "死亡之觸"
+	L.windswept_wings = "疾風"
+	L.wild_stampede = "奔竄"
+	L.withering_seeds = "種子"
+	L.hand_of_destruction = "群拉" -- 毀滅之手群拉
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhTW")
@@ -52,18 +52,18 @@ if L then
 	-- L.kingsmourne_hungers = "Kingsmourne"
 	-- L.blasphemy = "Marks"
 	-- L.befouled_barrier = "Barrier"
-	-- L.wicked_star = "Star"
+	-- L.wicked_star = "星星"
 	-- L.domination_word_pain = "DW:Pain"
 	-- L.army_of_the_dead = "Army"
 	-- L.grim_reflections = "Fear Adds"
 	-- L.march_of_the_damned = "Walls"
 	-- L.dire_blasphemy = "Marks"
-	-- L.beacon_of_hope = "Beacon"
+	-- L.beacon_of_hope = "信標"
 
 	-- L.remnant_active = "Remnant Active"
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
 if L then
-	-- L.tank_combo_desc = "Timer for Riftmaw/Rend casts at 100 energy."
+	-- L.tank_combo_desc = "達到 100 能量時，為撕裂與裂喉顯示施放計時條。"
 end
