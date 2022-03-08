@@ -59,6 +59,8 @@ if L then
 	L.march_of_the_damned = "Wände"
 	L.dire_blasphemy = "Male"
 	L.beacon_of_hope = "Flamme"
+
+	-- L.remnant_active = "Remnant Active"
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "deDE")

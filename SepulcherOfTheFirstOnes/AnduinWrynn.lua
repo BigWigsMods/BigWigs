@@ -90,6 +90,7 @@ if L then
 	L.dire_blasphemy = "Marks"
 	L.beacon_of_hope = "Beacon"
 
+	L.remnant_active = "Remnant Active"
 	L.march_counter = "%s (%d/8)"
 end
 
@@ -193,7 +194,7 @@ function mod:OnEngage()
 	self:Bar(361989, timers[stage][361989][blasphemyCount], CL.count:format(L.blasphemy, blasphemyCount)) -- Blasphemy
 	self:Bar(365295, timers[stage][365295][barrierCount], CL.count:format(L.befouled_barrier, barrierCount)) -- Befouled Barrier
 	self:Bar(362405, timers[stage][362405][kingsmourneHungersCount], CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount)) -- Kingsmourne Hungers
-	self:Bar("stages", 151, CL.intermission, 365216) -- Domination's Grasp Icon
+	self:Bar("stages", self:Easy() and 161 or 151, CL.intermission, 365216) -- Domination's Grasp Icon
 	if self:GetOption(grimReflectionMarker) or self:GetOption(anduinsHopeMarker) then
 		self:RegisterTargetEvents("AddMarker")
 	end
@@ -212,10 +213,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		self:StopBar(CL.count:format(L.befouled_barrier, barrierCount)) -- Befouled Barrier
 		self:StopBar(CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount)) -- Kingsmourne Hungers
 		self:StopBar(CL.count:format(L.grim_reflections, grimReflectionsCount)) -- Grim Reflections
+		self:StopBar(CL.intermission)
 
 		self:Message("stages", "cyan", CL.intermission, false)
 		self:PlaySound("stages", "long")
-		self:Bar("stages", 9.3, CL.intermission, 365216)
+		self:Bar("stages", self:GetStage() == 2 and 10.7 or 9.3, L.remnant_active, 365216)
 
 		armyCount = 1
 		soulReaperCount = 1
@@ -418,7 +420,7 @@ function mod:DominationsGraspRemoved(args)
 		self:Bar(365021, timers[stage][365021][wickedStarCount], CL.count:format(L.wicked_star, wickedStarCount)) -- Wicked Star
 		self:Bar(362405, timers[stage][362405][kingsmourneHungersCount], CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount)) -- Kingsmourne Hungers
 		self:Bar(365295, timers[stage][365295][barrierCount], CL.count:format(L.befouled_barrier, barrierCount)) -- Befouled Barrier
-		self:Bar("stages", 156, CL.intermission, 365216) -- Domination's Grasp Icon
+		self:Bar("stages", self:Easy() and 165 or 156, CL.intermission, 365216) -- Domination's Grasp Icon
 	else -- stage 3
 		self:Bar(361815, 12.5, CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
 		self:Bar(365958, 22.7, CL.count:format(L.dire_blasphemy, hopelessnessCount)) -- Hopelessness
