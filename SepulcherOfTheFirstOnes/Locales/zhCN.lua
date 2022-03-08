@@ -4,9 +4,10 @@ if L then
 	L.traps = "陷阱" -- Stasis Trap
 	L.sparknova = "火花新星" -- Hyperlight Sparknova
 	L.relocation = "坦克炸弹" -- Glyph of Relocation
+	--L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
 	L.wormholes = "虫洞" -- Interdimensional Wormholes
 	L.wormhole = "虫洞" -- Interdimensional Wormhole
-	L.rings = "法环 %d 阶段" -- Forerunner Rings // Added P1, P2, P3 etc to help identify what rings
+	L.rings = "法环 %d 阶段" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "zhCN")

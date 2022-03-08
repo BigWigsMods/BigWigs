@@ -4,9 +4,10 @@ if L then
 	 L.traps = "덫" -- Stasis Trap
 	 L.sparknova = "초광속 불꽃 회오리" -- Hyperlight Sparknova
 	 L.relocation = "탱 폭탄" -- Glyph of Relocation
+	 --L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
 	 L.wormholes = "차원 균열" -- Interdimensional Wormholes
 	 L.wormhole = "차원 균열" -- Interdimensional Wormhole
-	 L.rings = "%d 페이즈 고리" -- Forerunner Rings // Added P1, P2, P3 etc to help identify what rings
+	 L.rings = "%d 페이즈 고리" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "koKR")
@@ -60,7 +61,7 @@ if L then
 	 L.dire_blasphemy = "징표"
 	 L.beacon_of_hope = "봉화"
 
-	 -- L.remnant_active = "Remnant Active"
+	 --L.remnant_active = "Remnant Active"
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "koKR")

@@ -4,9 +4,10 @@ if L then
 	L.traps = "Fallen" -- Stasis Trap
 	L.sparknova = "Funkennova" -- Hyperlight Sparknova
 	L.relocation = "Tank Bombe" -- Glyph of Relocation
+	L.relocation_count = "%s P%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
 	L.wormholes = "Wumrlöcher" -- Interdimensional Wormholes
 	L.wormhole = "Wurmloch" -- Interdimensional Wormhole
-	L.rings = "Ringe P%d" -- Forerunner Rings // Added P1, P2, P3 etc to help identify what rings
+	L.rings = "Ringe P%d" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "deDE")
@@ -60,7 +61,7 @@ if L then
 	L.dire_blasphemy = "Male"
 	L.beacon_of_hope = "Flamme"
 
-	-- L.remnant_active = "Remnant Active"
+	--L.remnant_active = "Remnant Active"
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "deDE")

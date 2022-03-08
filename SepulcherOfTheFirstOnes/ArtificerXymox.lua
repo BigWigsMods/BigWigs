@@ -30,10 +30,10 @@ if L then
 	L.traps = "Traps" -- Stasis Trap
 	L.sparknova = "Sparknova" -- Hyperlight Sparknova
 	L.relocation = "Tank Bomb" -- Glyph of Relocation
-	L.relocation_count = "%s P%d (%d)" -- Tank Bomb (stage)(count)
+	L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
 	L.wormholes = "Wormholes" -- Dimensional Tear
 	L.wormhole = "Wormhole"
-	L.rings = "Rings P%d" -- Forerunner Rings // Added P1, P2, P3 etc to help identify what rings
+	L.rings = "Rings S%d" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 --------------------------------------------------------------------------------

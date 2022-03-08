@@ -4,19 +4,20 @@ if L then
 	L.traps = "陷阱" -- Stasis Trap
 	L.sparknova = "火花新星" -- Hyperlight Sparknova
 	L.relocation = "坦克炸彈" -- Glyph of Relocation
+	--L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
 	L.wormholes = "蟲洞" -- Interdimensional Wormholes
 	L.wormhole = "蟲洞" -- Interdimensional Wormhole
-	L.rings = "第 %d 道環" -- Forerunner Rings // Added P1, P2, P3 etc to help identify what rings
+	L.rings = "第 %d 道環" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "zhTW")
 if L then
 	L.staggering_barrage = "彈幕" -- Staggering Barrage
 	L.domination_core = "小怪" -- Domination Core
-	-- L.obliteration_arc = "Arc" -- Obliteration Arc
+	--L.obliteration_arc = "Arc" -- Obliteration Arc
 
 	L.disintergration_halo = "輝環" -- Disintegration Halo
-	-- L.rings_x = "Rings x%d"
+	--L.rings_x = "Rings x%d"
 	L.rings_enrage = "輝環（軟狂暴）"
 	L.ring_count = "輝環（%d/%d）"
 
@@ -35,19 +36,19 @@ end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhTW")
 if L then
-	-- L.protoform_cascade = "Frontal"
+	--L.protoform_cascade = "Frontal"
 	L.cosmic_shift = "擊退"
 	L.unstable_mote = "微粒"
 	L.mote = "微粒"
 
 	L.custom_on_nameplate_fixate = "鎖定名條圖示"
-	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates, Plater）"。"
+	--L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates, Plater）"。"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhTW")
 if L then
-	-- L.custom_off_repeating_blasphemy = "Repeating Blasphemy"
-	-- L.custom_off_repeating_blasphemy_desc = "Repeating Blasphemy say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	--L.custom_off_repeating_blasphemy = "Repeating Blasphemy"
+	--L.custom_off_repeating_blasphemy_desc = "Repeating Blasphemy say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
 
 	L.kingsmourne_hungers = "王之哀傷"
 	L.blasphemy = "印記"
@@ -60,7 +61,7 @@ if L then
 	L.dire_blasphemy = "印記"
 	L.beacon_of_hope = "信標"
 
-	-- L.remnant_active = "Remnant Active"
+	--L.remnant_active = "Remnant Active"
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
