@@ -27,7 +27,7 @@ BigWigs:AddColors("Skolex, the Insatiable Ravener", {
 
 BigWigs:AddColors("Artificer Xy'mox v2", {
 	[362721] = {"blue","yellow"},
-	[362803] = {"blue","purple","yellow"},
+	[362803] = {"blue","purple"},
 	[362849] = "orange",
 	[362885] = "yellow",
 	[363485] = "red",
@@ -35,7 +35,6 @@ BigWigs:AddColors("Artificer Xy'mox v2", {
 	[364040] = "red",
 	[364465] = "yellow",
 	[365681] = {"blue","purple"},
-	[365701] = "yellow",
 	["stages"] = {"cyan","green"},
 })
 

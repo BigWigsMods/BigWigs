@@ -34,8 +34,7 @@ BigWigs:AddSounds("Artificer Xy'mox v2", {
 	[364030] = "alert",
 	[364040] = "warning",
 	[364465] = "alert",
-	[365681] = "alarm",
-	[365701] = "alert",
+	[365681] = {"alarm","alert"},
 	["stages"] = {"info","long"},
 })
 
