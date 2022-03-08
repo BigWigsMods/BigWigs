@@ -357,7 +357,9 @@ function mod:MassiveBlast(args)
 end
 
 function mod:MassiveBlastApplied(args)
-	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 2)
+	if self:Tank() then
+		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 2)
+	end
 end
 
 -- function mod:OverseersOrders(args)
