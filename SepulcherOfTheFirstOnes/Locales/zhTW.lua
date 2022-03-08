@@ -12,7 +12,7 @@ end
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "zhTW")
 if L then
 	L.staggering_barrage = "彈幕" -- Staggering Barrage
-	-- L.domination_core = "Add" -- Domination Core
+	L.domination_core = "小怪" -- Domination Core
 	-- L.obliteration_arc = "Arc" -- Obliteration Arc
 
 	L.disintergration_halo = "輝環" -- Disintegration Halo
@@ -40,8 +40,8 @@ if L then
 	L.unstable_mote = "微粒"
 	L.mote = "微粒"
 
-	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "鎖定名條圖示"
+	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates, Plater）"。"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhTW")
@@ -53,7 +53,7 @@ if L then
 	L.blasphemy = "印記"
 	L.befouled_barrier = "屏障"
 	L.wicked_star = "星星"
-	-- L.domination_word_pain = "DW:Pain" -- 御言術痛
+	L.domination_word_pain = "御言術痛"
 	L.army_of_the_dead = "大軍"
 	L.grim_reflections = "幻影"
 	L.march_of_the_damned = "影牆"
@@ -65,5 +65,5 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
 if L then
-	-- L.tank_combo_desc = "達到 100 能量時，為撕裂與裂喉顯示施放計時條。"
+	L.tank_combo_desc = "達到 100 能量時，為撕裂與裂喉顯示施放計時條。"
 end
