@@ -4,7 +4,7 @@ if L then
 	L.traps = "陷阱" -- Stasis Trap
 	L.sparknova = "火花新星" -- Hyperlight Sparknova
 	L.relocation = "坦克炸彈" -- Glyph of Relocation
-	--L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
+	L.relocation_count = "坦克炸彈：%d 之 %d" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count) 先用這個試試看
 	L.wormholes = "蟲洞" -- Interdimensional Wormholes
 	L.wormhole = "蟲洞" -- Interdimensional Wormhole
 	L.rings = "第 %d 道環" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
@@ -42,13 +42,13 @@ if L then
 	L.mote = "微粒"
 
 	L.custom_on_nameplate_fixate = "鎖定名條圖示"
-	--L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates, Plater）"。"
+	L.custom_on_nameplate_fixate_desc = "在鎖定你的截獲自主機名條上顯示追擊圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates, Plater）"。"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhTW")
 if L then
-	--L.custom_off_repeating_blasphemy = "Repeating Blasphemy"
-	--L.custom_off_repeating_blasphemy_desc = "Repeating Blasphemy say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.custom_off_repeating_blasphemy = "重覆褻瀆印記喊話"
+	L.custom_off_repeating_blasphemy_desc = "以 {rt1} 和 {rt3} 喊話兩種褻瀆印記，方便你快速地找到相反印記的隊友並消除自身印記。"
 
 	L.kingsmourne_hungers = "王之哀傷"
 	L.blasphemy = "印記"
