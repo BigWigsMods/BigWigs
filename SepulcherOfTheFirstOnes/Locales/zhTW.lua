@@ -42,13 +42,13 @@ if L then
 	L.mote = "微粒"
 
 	L.custom_on_nameplate_fixate = "鎖定名條圖示"
-	L.custom_on_nameplate_fixate_desc = "在鎖定你的截獲自主機名條上顯示追擊圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates, Plater）"。"
+	L.custom_on_nameplate_fixate_desc = "在鎖定你的截獲自主機名條上顯示追擊圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhTW")
 if L then
 	L.custom_off_repeating_blasphemy = "重覆褻瀆印記喊話"
-	L.custom_off_repeating_blasphemy_desc = "以 {rt1} 和 {rt3} 喊話兩種褻瀆印記，方便你快速地找到相反印記的隊友並消除自身印記。"
+	L.custom_off_repeating_blasphemy_desc = "以 {rt1} 和 {rt3} 喊話兩種褻瀆印記，方便你快速地找到相反印記的隊友，並消除自身印記。"
 
 	L.kingsmourne_hungers = "王之哀傷"
 	L.blasphemy = "印記"
