@@ -42,6 +42,7 @@ function mod:GetOptions()
 		"tank_combo", -- Tank Combo
 		359979, -- Rend
 		359975, -- Riftmaw
+		364522, -- Devouring Blood
 		364778, -- Destroy
 	}
 end
@@ -63,10 +64,12 @@ function mod:OnEngage()
 	retchCount = 1
 	burrowCount = 1
 
+	self:Berserk(360)
 	self:Bar(359829, 2, CL.count:format(self:SpellName(359829), flailCount)) -- Dust Flail
 	self:Bar("tank_combo", 9, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
+	self:Bar(364522, 9)
 	self:Bar(360451, 24.5, CL.count:format(self:SpellName(360451), retchCount)) -- Retch
-	self:Berserk(360)
+	self:ScheduleTimer("DevouringBlood", 9) -- no events
 end
 
 --------------------------------------------------------------------------------
@@ -80,6 +83,13 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		tankComboCounter = tankComboCounter + 1
 		self:CDBar("tank_combo", self:Easy() and 36.5 or 33, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
 	end
+end
+
+function mod:DevouringBlood()
+	self:Message(364522, "orange")
+	self:PlaySound(364522, "info")
+	self:Bar(364522, 9)
+	self:ScheduleTimer("DevouringBlood", 9)
 end
 
 function mod:RaveningBurrow(args)
