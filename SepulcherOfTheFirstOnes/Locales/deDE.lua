@@ -1,11 +1,22 @@
-local L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "deDE")
+local L = BigWigs:NewBossLocale("Vigilant Guardian", "deDE")
 if not L then return end
+if L then
+	L.sentry = "Tank Add"
+	L.materium = "Kleine Adds"
+end
+
+L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "deDE")
+if L then
+	L.tank_combo_desc = "Timer für die Fähigkeiten Rissschlund/Verwunden bei 100 Energie."
+end
+
+L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "deDE")
 if L then
 	L.traps = "Fallen" -- Stasis Trap
 	L.sparknova = "Funkennova" -- Hyperlight Sparknova
 	L.relocation = "Tank Bombe" -- Glyph of Relocation
 	L.relocation_count = "%s P%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
-	L.wormholes = "Wumrlöcher" -- Interdimensional Wormholes
+	L.wormholes = "Wurmlöcher" -- Interdimensional Wormholes
 	L.wormhole = "Wurmloch" -- Interdimensional Wormhole
 	L.rings = "Ringe P%d" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
@@ -36,13 +47,24 @@ end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "deDE")
 if L then
-	L.protoform_cascade = "Frontal"
+	L.protoform_cascade = "Kreis"
 	L.cosmic_shift = "Rückstoß"
 	L.unstable_mote = "Partikel"
 	L.mote = "Partikel"
 
 	L.custom_on_nameplate_fixate = "Fixieren-Symbol an Namensplaketten"
 	L.custom_on_nameplate_fixate_desc = "Zeigt ein Symbol an der Namensplakette des Dich fixierenden Akquisitionsautomas an.\n\nBenötigt die Nutzung von gegnerischen Namensplaketten sowie ein unterstütztes Addon (KuiNameplates, Plater)."
+end
+
+L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "deDE")
+if L then
+	L.seismic_tremors = "Partikel + Beben" -- Seismic Tremors
+	L.earthbreaker_missiles = "Geschosse" -- Earthbreaker Missiles
+	L.crushing_prism = "Prismen" -- Crushing Prism
+	L.prism = "Prisma"
+
+	L.custom_on_stop_timers = "Fähigkeiten Leisten immer anzeigen"
+	L.custom_on_stop_timers_desc = "Halondrus kann Fähigkeiten verzögern. Wenn diese Option aktiviert ist, bleiben die Leisten für diese Fähigkeiten bestehen."
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "deDE")
@@ -61,10 +83,11 @@ if L then
 	L.dire_blasphemy = "Male"
 	L.beacon_of_hope = "Flamme"
 
-	--L.remnant_active = "Remnant Active"
+	L.remnant_active = "Überrest aktiv"
 end
 
-L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "deDE")
+L = BigWigs:NewBossLocale("The Jailer", "deDE")
 if L then
-	L.tank_combo_desc = "Timer für die Fähigkeiten Rissschlund/Verwunden bei 100 Energie."
+	L.rune_of_damnation_countdown = "Countdown"
+	L.rune_of_damnation_countdown_desc = "Countdown für Spieler welche von Rune der Verdammnis betroffen sind."
 end
