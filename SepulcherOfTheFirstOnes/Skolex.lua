@@ -88,8 +88,9 @@ end
 function mod:DevouringBlood()
 	self:Message(364522, "orange")
 	self:PlaySound(364522, "info")
-	self:Bar(364522, 9)
-	self:ScheduleTimer("DevouringBlood", 9)
+	local cd = 9 - ((burrowCount - 1) * 0.5) -- -0.5 after each burrow
+	self:Bar(364522, cd)
+	self:ScheduleTimer("DevouringBlood", cd)
 end
 
 function mod:RaveningBurrow(args)
