@@ -4,7 +4,7 @@ if L then
 	L.traps = "陷阱" -- Stasis Trap
 	L.sparknova = "火花新星" -- Hyperlight Sparknova
 	L.relocation = "坦克炸弹" -- Glyph of Relocation
-	--L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
+	L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
 	L.wormholes = "虫洞" -- Interdimensional Wormholes
 	L.wormhole = "虫洞" -- Interdimensional Wormhole
 	L.rings = "法环 %d 阶段" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
@@ -85,3 +85,23 @@ if L then
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "黑伦度斯可能延迟它的技能。启用此选项后,这些技能将保留在您的屏幕上。"
 end
+
+L = BigWigs:NewBossLocale("Rygelon", "zhCN")
+if L then
+	L.celestial_collapse = "类星体" -- Celestial Collapse
+	L.manifest_cosmos = "宇宙核心" -- Manifest Cosmos
+	L.stellar_shroud = "吸收治疗量" -- Stellar Shroud
+end
+
+L = BigWigs:NewBossLocale("Lords of Dread", "zhCN")
+if L then
+	L.unto_darkness = "AoE 阶段"-- Unto Darkness
+	L.cloud_of_carrion = "腐臭" -- Cloud of Carrion
+	L.manifest_shadows = "小怪" -- Manifest Shadows
+	L.leeching_claws = "正面 (玛)" -- Leeching Claws
+	L.infiltration_of_dread = "渗透" -- Infiltration of Dread
+	L.fearful_trepidation = "爆裂恐惧" -- Fearful Trepidation
+	L.slumber_cloud = "迷雾" -- Slumber Cloud
+	L.anguishing_strike = "正面 (金)" -- Anguishing Strike
+end
+
