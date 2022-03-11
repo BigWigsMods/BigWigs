@@ -21,14 +21,15 @@ local shatterSphereCount = 1
 local stellarShroudCount = 1
 local darkQuasarCount = 1
 
-local singularityOnMe = false
-
 --------------------------------------------------------------------------------
 -- Localization
 --
 
 local L = mod:GetLocale()
 if L then
+	L.celestial_collapse = "Quasars" -- Celestial Collapse
+	L.manifest_cosmos = "Cores" -- Manifest Cosmos
+	L.stellar_shroud = "Heal Absorb" -- Stellar Shroud
 end
 
 --------------------------------------------------------------------------------
@@ -38,15 +39,15 @@ end
 local darkEclipseMarker = mod:AddMarkerOption(false, "player", 1, 361548, 1, 2, 3, 4) -- Dark Eclipse
 function mod:GetOptions()
 	return {
-		361548, -- Dark Eclipse
+		{362806, "SAY_COUNTDOWN"}, -- Dark Eclipse
 		darkEclipseMarker,
 		362275, -- Celestial Collapse
 		{362206, "SAY_COUNTDOWN"}, -- Event Horizon
 		362390, -- Manifest Cosmos
 		{362184, "TANK"}, -- Corrupted Strikes
 		{362172, "TANK"}, -- Corrupted Wound
-		363109, -- Celestial Terminator
 		363533, -- Massive Bang
+		364386, -- Gravitational Collapse
 		366606, -- Radiant Plasma
 		362207, -- The Singularity
 		364114, -- Shatter Sphere
@@ -58,24 +59,27 @@ function mod:GetOptions()
 	},{
 		[361548] = -24245, -- Rygelon
 		[362088] = "mythic",
+	},{
+		[362275] = L.celestial_collapse, -- Celestial Collapse
+		[362390] = L.manifest_cosmos, -- Manifest Cosmos
+		[366379] = L.stellar_shroud -- Stellar Shroud
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_SUCCESS", "DarkEclipse", 361548)
-	self:Log("SPELL_AURA_APPLIED", "DarkEclipseApplied", 361548)
-	self:Log("SPELL_AURA_REMOVED", "DarkEclipseRemoved", 361548)
+	self:Log("SPELL_AURA_APPLIED", "DarkEclipseApplied", 362806)
+	self:Log("SPELL_AURA_REMOVED", "DarkEclipseRemoved", 362806)
 	self:Log("SPELL_CAST_START", "CelestialCollapse", 362275)
 	self:Log("SPELL_AURA_APPLIED", "EventHorizonApplied", 362206)
 	self:Log("SPELL_AURA_REMOVED", "EventHorizonRemoved", 362206)
 	self:Log("SPELL_CAST_START", "ManifestCosmos", 362390)
 	self:Log("SPELL_CAST_START", "CorruptedStrikes", 362184)
 	self:Log("SPELL_AURA_APPLIED", "CorruptedWoundApplied", 362172)
-	self:Log("SPELL_CAST_SUCCESS", "CelestialTerminator", 363109)
 	self:Log("SPELL_CAST_START", "MassiveBang", 363533)
+	self:Log("SPELL_CAST_SUCCESS", "MassiveBangSuccess", 363533)
+	self:Log("SPELL_CAST_START", "GravitationalCollapse", 364386)
 	self:Log("SPELL_CAST_START", "RadiantPlasma", 366606)
 	self:Log("SPELL_AURA_APPLIED", "TheSingularityApplied", 362207)
-	self:Log("SPELL_AURA_REMOVED", "TheSingularityRemoved", 362207)
 	self:Log("SPELL_CAST_START", "ShatterSphere", 364114)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 362798) -- Cosmic Radiation
@@ -97,19 +101,19 @@ function mod:OnEngage()
 	manifestCosmosCount = 1
 	celestialTerminatorCount = 1
 	massiveBangCount = 1
+	shatterSphereCount = 1
 
 	stellarShroudCount = 1
 	darkQuasarCount = 1
 
-	--self:Bar(361548, 30, CL.count:format(self:SpellName(361548), darkEclipseCount)) -- Dark Eclipse
-	--self:Bar(362275, 30, CL.count:format(self:SpellName(362275), celestialCollapseCount)) -- Celestial Collapse
-	--self:Bar(362390, 30, CL.count:format(self:SpellName(362390), manifestCosmosCount)) -- Manifest Cosmos
-	--self:Bar(363109, 30, CL.count:format(self:SpellName(363109), celestialTerminatorCount)) -- Celestial Terminator
-	--self:Bar(363533, 30, CL.count:format(self:SpellName(363533), massiveBangCount)) -- Massive Bang
+	self:Bar(362806, 6.2, CL.count:format(self:SpellName(362806), darkEclipseCount)) -- Dark Eclipse
+	self:Bar(362275, 8.6, CL.count:format(L.celestial_collapse, celestialCollapseCount)) -- Celestial Collapse
+	self:Bar(362390, 15.4, CL.count:format(L.manifest_cosmos, manifestCosmosCount)) -- Manifest Cosmos
+	self:Bar(363533, 61, CL.count:format(self:SpellName(363533), massiveBangCount)) -- Massive Bang
 
-	if self:Mythic() then
-		--self:Bar(366379, 30, CL.count:format(self:SpellName(366379), stellarShroudCount)) -- Stellar Shroud
-	end
+	--if self:Mythic() then
+		--self:Bar(366379, 30, CL.count:format(L.stellar_shroud, stellarShroudCount)) -- Stellar Shroud
+	--end
 end
 
 --------------------------------------------------------------------------------
@@ -117,43 +121,51 @@ end
 --
 
 do
-	local playerList = {}
-	function mod:DarkEclipse(args)
-		playerList = {}
-		darkEclipseCount = darkEclipseCount + 1
-		--self:Bar(args.spellId, 30, CL.count:format(args.spellName, darkEclipseCount))
-	end
-
+	local playerList, prev = {}, 0
 	function mod:DarkEclipseApplied(args)
+		local t = args.time
+		if t-prev > 5 then
+			prev = t
+			playerList = {}
+			darkEclipseCount = darkEclipseCount + 1
+			if darkEclipseCount < 6 then -- 5 before a Massive Bang
+				self:Bar(args.spellId, 11, CL.count:format(args.spellName, darkEclipseCount))
+			end
+		end
 		local count = #playerList+1
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
+			self:YellCountdown(args.spellId, 18)
 		end
 		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(args.spellName, darkEclipseCount-1))
 		self:CustomIcon(darkEclipseMarker, args.destName, count)
 	end
 
 	function mod:DarkEclipseRemoved(args)
-		self:CustomIcon(darkEclipseMarker, args.destName, 0)
+	-- Nothing atm
 	end
 end
 
 function mod:CelestialCollapse(args)
-	self:StopBar(CL.count:format(args.spellName, celestialCollapseCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, celestialCollapseCount))
+	self:StopBar(CL.count:format(L.celestial_collapse, celestialCollapseCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.celestial_collapse, celestialCollapseCount))
 	self:PlaySound(args.spellId, "alert")
 	celestialCollapseCount = celestialCollapseCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, celestialCollapseCount))
+	if celestialCollapseCount < 3 then -- 2 before a Massive Bang
+		self:CDBar(args.spellId, 21, CL.count:format(L.celestial_collapse, celestialCollapseCount))
+	end
 end
 
 function mod:EventHorizonApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "green", CL.you:format(args.spellName))
 		self:PlaySound(args.spellId, "info")
-		self:TargetBar(args.spellId, 9, args.destName)
-		self:SayCountdown(args.spellId, 9)
+		self:TargetBar(args.spellId, 5, args.destName)
+		self:SayCountdown(args.spellId, 5)
+		self:CancelYellCountdown(362806) -- Dark Eclipse
+		self:CustomIcon(darkEclipseMarker, args.destName, 0) -- Removing mark here as Dark Eclipse has no good _REMOVED event
 	end
 end
 
@@ -164,18 +176,20 @@ function mod:EventHorizonRemoved(args)
 end
 
 function mod:ManifestCosmos(args)
-	self:StopBar(CL.count:format(args.spellName, manifestCosmosCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, manifestCosmosCount))
+	self:StopBar(CL.count:format(L.manifest_cosmos, manifestCosmosCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.manifest_cosmos, manifestCosmosCount))
 	self:PlaySound(args.spellId, "alert")
 	manifestCosmosCount = manifestCosmosCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, manifestCosmosCount))
+	if celestialCollapseCount < 3 then -- 2 before a Massive Bang
+		self:CDBar(args.spellId, 24.5, CL.count:format(L.manifest_cosmos, manifestCosmosCount))
+	end
 end
 
 function mod:CorruptedStrikes(args)
 	self:StopBar(args.spellName)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 14.5)
+	self:Bar(args.spellId, 6.1)
 end
 
 function mod:CorruptedWoundApplied(args)
@@ -185,39 +199,21 @@ function mod:CorruptedWoundApplied(args)
 	end
 end
 
-function mod:CelestialTerminator(args)
-	self:StopBar(CL.count:format(args.spellName, celestialTerminatorCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, celestialTerminatorCount))
+function mod:MassiveBang(args)
+	self:StopBar(CL.count:format(args.spellName, massiveBangCount))
+	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(args.spellName, massiveBangCount)))
 	self:PlaySound(args.spellId, "alert")
-	celestialTerminatorCount = celestialTerminatorCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, celestialTerminatorCount))
+	self:CastBar(args.spellId, 10, CL.count:format(args.spellName, massiveBangCount))
+	massiveBangCount = massiveBangCount + 1
 end
 
-do
-	local singularityCheck, debuffName = nil, mod:SpellName(362207)
-	local function checkForSingularity()
-		if not singularityOnMe then
-			mod:Message(362207, "blue", CL.no:format(debuffName))
-			mod:PlaySound(362207, "warning")
-			singularityCheck = mod:ScheduleTimer(checkForSingularity, 1.5)
-		end
-	end
+function mod:MassiveBangSuccess(args)
+	self:Bar(364114, 29, CL.count:format(self:SpellName(364114), shatterSphereCount)) -- Shatter Sphere
+end
 
-	function mod:MassiveBang(args)
-		self:StopBar(CL.count:format(args.spellName, massiveBangCount))
-		self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(args.spellName, massiveBangCount)))
-		self:PlaySound(args.spellId, "alert")
-		self:CastBar(args.spellId, 10)
-		massiveBangCount = massiveBangCount + 1
-		--self:Bar(args.spellId, 30, CL.count:format(args.spellName, massiveBangCount))
-		checkForSingularity()
-	end
-
-	function mod:MassiveBangSuccess(args)
-		if singularityCheck then
-			self:CancelTimer(singularityCheck)
-		end
-	end
+function mod:GravitationalCollapse(args)
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "warning")
 end
 
 function mod:RadiantPlasma(args)
@@ -227,15 +223,8 @@ end
 
 function mod:TheSingularityApplied(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", CL.you:format(args.spellName))
+		self:Message(args.spellId, "green")
 		self:PlaySound(args.spellId, "info")
-		singularityOnMe = true
-	end
-end
-
-function mod:TheSingularityRemoved(args)
-	if self:Me(args.destGUID) then
-		singularityOnMe = false
 	end
 end
 
@@ -244,6 +233,19 @@ function mod:ShatterSphere(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, shatterSphereCount))
 	self:PlaySound(args.spellId, "alert")
 	shatterSphereCount = shatterSphereCount + 1
+
+	celestialCollapseCount = 1
+	darkEclipseCount = 1
+	manifestCosmosCount = 1
+
+	self:Bar(362806, 11.0, CL.count:format(self:SpellName(362806), darkEclipseCount)) -- Dark Eclipse
+	self:Bar(362275, 13.4, CL.count:format(L.celestial_collapse, celestialCollapseCount)) -- Celestial Collapse
+	self:Bar(362390, 21.1, CL.count:format(L.manifest_cosmos, manifestCosmosCount)) -- Manifest Cosmos
+	self:Bar(363533, 65.5, CL.count:format(self:SpellName(363533), massiveBangCount)) -- Massive Bang
+
+	--if self:Mythic() then
+		--self:Bar(366379, 30, CL.count:format(L.stellar_shroud, stellarShroudCount)) -- Stellar Shroud
+	--end
 end
 
 do
@@ -273,11 +275,11 @@ function mod:CosmicIrregularityApplied(args)
 end
 
 function mod:StellarShroud(args)
-	self:StopBar(CL.count:format(args.spellName, stellarShroudCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, stellarShroudCount))
+	self:StopBar(CL.count:format(L.stellar_shroud, stellarShroudCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.stellar_shroud, stellarShroudCount))
 	self:PlaySound(args.spellId, "alert")
 	stellarShroudCount = stellarShroudCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, stellarShroudCount))
+	--self:Bar(args.spellId, 30, CL.count:format(L.stellar_shroud, stellarShroudCount))
 end
 
 do
