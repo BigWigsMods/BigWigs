@@ -35,6 +35,10 @@ if L then
 	L.rings_enrage = "Rings (Enrage)"
 	L.ring_count = "Ring (%d/%d)"
 
+	L.custom_on_ring_timers = "Individual Halo Timers"
+	L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+	L.custom_on_ring_timers_icon = 363200
+
 	L.absorb_text = "%s (%.0f%%)"
 	L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
@@ -51,6 +55,7 @@ function mod:GetOptions()
 		361225, -- Encroaching Dominion
 		361513, -- Obliteration Arc
 		363200, -- Disintegration Halo
+		"custom_on_ring_timers",
 		361630, -- Teleport
 		{361651, "INFOBOX"}, -- Siphoned Barrier
 		365418, -- Total Dominion
@@ -70,7 +75,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "StaggeringBarrageRemoved", 361018)
 	self:Log("SPELL_CAST_START", "DominationCore", 359483)
 	self:Log("SPELL_CAST_START", "ObliterationArc", 361513)
-	--self:Log("SPELL_CAST_SUCCESS", "DisintegrationHalo", 363200) -- XXX Emote
+	self:Log("SPELL_CAST_SUCCESS", "DisintegrationHaloSuccess", 362805)
 	self:Log("SPELL_CAST_START", "Teleport", 361630)
 	self:Log("SPELL_AURA_APPLIED", "SiphonedBarrierApplied", 361651)
 	self:Log("SPELL_AURA_REMOVED", "SiphonedBarrierRemoved", 361651)
@@ -79,8 +84,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 361225) -- Encroaching Dominion
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 361225)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 361225)
-
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_WHISPER") -- Disintegration Halo
 end
 
 function mod:OnEngage()
@@ -89,13 +92,13 @@ function mod:OnEngage()
 	arcCount = 1
 	haloCount = 1
 	teleportCount = 1
-	nextTeleport = GetTime() + 76.5
+	nextTeleport = GetTime() + (self:Easy() and 80 or 72.8)
 
-	self:Bar(359483, 6.5, CL.count:format(L.domination_core, coreCount)) -- Domination Core
-	self:Bar(363200, 12.5, CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo (emote at 5, ring at ~13)
-	self:Bar(361513, 15.5, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
-	self:Bar(361018, 30.5, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
-	self:Bar(361630, 76.5, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
+	self:Bar(359483, self:Easy() and 7 or 6.5, CL.count:format(L.domination_core, coreCount)) -- Domination Core
+	self:Bar(363200, self:Easy() and 5.5 or 5, CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo (emote at 5, ring at ~13)
+	self:Bar(361513, self:Easy() and 16.5 or 15, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
+	self:Bar(361018, self:Easy() and 32 or 29, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
+	self:Bar(361630, self:Easy() and 80 or 72.8, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
 end
 
 --------------------------------------------------------------------------------
@@ -137,7 +140,7 @@ function mod:StaggeringBarrageApplied(args)
 	self:SecondaryIcon(args.spellId, args.destName)
 
 	barrageCount = barrageCount + 1
-	local cd = 35
+	local cd = self:Easy() and 38.8 or 35
 	if barrageCount < 4 and nextTeleport > GetTime() + cd then -- 3 per rotation, except first
 		self:Bar(361018, cd, CL.count:format(L.staggering_barrage, barrageCount))
 	end
@@ -154,7 +157,7 @@ function mod:DominationCore(args)
 	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.domination_core, coreCount)))
 	self:PlaySound(args.spellId, "long")
 	coreCount = coreCount + 1
-	local cd = coreCount == 2 and 33.5 or 36.5
+	local cd = self:Easy() and (coreCount == 2 and 37.2 or 40.5) or (coreCount == 2 and 33.5 or 36.5)
 	if coreCount < 4 and nextTeleport > GetTime() + cd then -- 3 per rotation, except first
 		self:Bar(args.spellId, cd, CL.count:format(L.domination_core, coreCount))
 	end
@@ -164,7 +167,7 @@ function mod:ObliterationArc(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.obliteration_arc, arcCount))
 	self:PlaySound(args.spellId, "alert")
 	arcCount = arcCount + 1
-	local cd = 35
+	local cd = self:Easy() and 38.8 or 35
 	if arcCount < 4 and nextTeleport > GetTime() + cd then -- 3 per rotation, except first
 		self:Bar(args.spellId, cd, CL.count:format(L.obliteration_arc, arcCount))
 	end
@@ -180,35 +183,28 @@ do
 				self:Message(363200, "orange", CL.count:format(L.rings_x:format(teleportCount), haloCount-1))
 			end
 			self:PlaySound(363200, "long")
-			if teleportCount > 1 and haloCount < 3 then -- 2 per rotation, except first
-				self:Bar(363200, 70, CL.count:format(L.rings_x:format(teleportCount), haloCount))
-			elseif teleportCount == 4 and haloCount == 3 then -- enrage, shorter cd, then triggers infinite rings
-				self:Bar(363200, 35, L.rings_enrage)
-			end
-		-- else
-		-- 	self:PlaySound(363200, "info")
 		end
-		if ringCount < teleportCount and haloCount < 4 then -- skip enrage rings
+		if ringCount < teleportCount and haloCount < 3 then -- skip enrage rings
 			ringCount = ringCount + 1
 			self:CDBar(363200, 5.5, L.ring_count:format(ringCount, teleportCount))
 			haloTimer = self:ScheduleTimer("DisintegrationHalo", 5.5)
 		end
 	end
 
-	function mod:CHAT_MSG_RAID_BOSS_WHISPER(_, msg)
-		if msg:find("spell:365373") then -- Disintegration Halo
-			if teleportCount == 4 and haloCount == 3 then
-				self:Message(363200, "orange", CL.soon:format(L.rings_enrage))
-				self:Bar(363200, 7.5, L.rings_enrage)
-			else
-				self:Message(363200, "orange", CL.soon:format(CL.count:format(L.rings_x:format(teleportCount), haloCount)))
-				self:Bar(363200, 7.5, CL.count:format(L.rings_x:format(teleportCount), haloCount))
-			end
-			self:PlaySound(363200, "info")
-			haloCount = haloCount + 1
-			ringCount = 1
-			-- Delayed handling for when the ring triggers
-			haloTimer = self:ScheduleTimer("DisintegrationHalo", 7.5)
+	function mod:DisintegrationHaloSuccess(args)
+		self:StopBar(CL.count:format(L.rings_x:format(teleportCount), haloCount))
+		self:Message(363200, "orange", CL.soon:format(CL.count:format(L.rings_x:format(teleportCount), haloCount)))
+		self:PlaySound(363200, "info")
+		haloCount = haloCount + 1
+		ringCount = 1
+		if teleportCount > 1 and haloCount < 3 then -- 2 per rotation, except first
+			self:Bar(363200, self:Easy() and 77.8 or 70, CL.count:format(L.rings_x:format(teleportCount), haloCount))
+		elseif teleportCount == 4 and haloCount == 3 then -- enrage, shorter cd, then triggers infinite rings
+			--self:Bar(363200, 35, CL.count:format(L.rings_enrage, haloCount)) -- Don't need to show do we?
+		end
+		if self:GetOption("custom_on_ring_timers") then
+			self:Bar(363200, 8.5, L.ring_count:format(ringCount, teleportCount))
+			haloTimer = self:ScheduleTimer("DisintegrationHalo", 8.5)
 		end
 	end
 end
@@ -264,16 +260,16 @@ do
 		arcCount = 1
 		haloCount = 1
 
-		self:Bar(359483, 8, CL.count:format(L.domination_core, coreCount)) -- Domination Core
-		self:Bar(363200, 14, CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo (emote at 6.5 + 7.5 for activation)
-		self:Bar(361513, 16.5, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
-		self:Bar(361018, 31.5, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
+		self:Bar(363200, self:Easy() and 7.5 or 7, CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo
+		self:Bar(359483, self:Easy() and 9.3 or 8.5, CL.count:format(L.domination_core, coreCount)) -- Domination Core
+		self:Bar(361513, self:Easy() and 18.7 or 17, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
+		self:Bar(361018, self:Easy() and 34.3 or 31, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
 
-		nextTeleport = GetTime() + 109
+		nextTeleport = GetTime() + (self:Easy() and 121 or 110.2)
 		if teleportCount < 4 then -- Only 3 teleports before berserk
-			self:Bar(361630, 109, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
+			self:Bar(361630, self:Easy() and 121 or 110.2, CL.count:format(self:SpellName(361630), teleportCount)) -- Teleport
 		else
-			self:Bar(365418, 109) -- Total Domination
+			self:Bar(365418, (self:Easy() and 121 or 110.2)) -- Total Domination
 		end
 	end
 end
