@@ -1,5 +1,17 @@
-local L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhTW")
+local L = BigWigs:NewBossLocale("Vigilant Guardian", "zhTW")
 if not L then return end
+if L then
+	-- L.sentry = "Tank Add"
+	-- L.materium = "Small Adds"
+	-- L.shield = "Shield" -- Global locale canidate?
+end
+
+L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
+if L then
+	L.tank_combo_desc = "達到 100 能量時，為撕裂與裂喉顯示施放計時條。"
+end
+
+L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhTW")
 if L then
 	L.traps = "陷阱" -- Stasis Trap
 	L.sparknova = "火花新星" -- Hyperlight Sparknova
@@ -21,6 +33,9 @@ if L then
 	L.rings_enrage = "輝環（軟狂暴）"
 	L.ring_count = "輝環（%d/%d）"
 
+	--L.custom_on_ring_timers = "Individual Halo Timers"
+	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+
 	L.shield_removed = "%s 移除，用時 %.1f 秒" -- "Shield removed after 1.1s" s = seconds
 end
 
@@ -38,11 +53,15 @@ L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhTW")
 if L then
 	--L.protoform_cascade = "Frontal"
 	L.cosmic_shift = "擊退"
+	--L.cosmic_shift_mythic = "Shift: %s"
 	L.unstable_mote = "微粒"
 	L.mote = "微粒"
 
 	L.custom_on_nameplate_fixate = "鎖定名條圖示"
 	L.custom_on_nameplate_fixate_desc = "在鎖定你的截獲自主機名條上顯示追擊圖示。\n\n需要開啟敵方名條，並使用支援此功能的名條插件（如KuiNameplates、Plater）。"
+
+	--L.harmonic = "Push"
+	--L.melodic = "Pull"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhTW")
@@ -62,9 +81,4 @@ if L then
 	L.beacon_of_hope = "信標"
 
 	--L.remnant_active = "Remnant Active"
-end
-
-L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
-if L then
-	L.tank_combo_desc = "達到 100 能量時，為撕裂與裂喉顯示施放計時條。"
 end

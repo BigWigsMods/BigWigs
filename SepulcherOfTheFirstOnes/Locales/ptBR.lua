@@ -1,5 +1,17 @@
-local L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "ptBR")
+local L = BigWigs:NewBossLocale("Vigilant Guardian", "ptBR")
 if not L then return end
+if L then
+	-- L.sentry = "Tank Add"
+	-- L.materium = "Small Adds"
+	-- L.shield = "Shield" -- Global locale canidate?
+end
+
+L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ptBR")
+if L then
+	--L.tank_combo_desc = "Timer for Riftmaw/Rend casts at 100 energy."
+end
+
+L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "ptBR")
 if L then
 	--L.traps = "Traps" -- Stasis Trap
 	--L.sparknova = "Sparknova" -- Hyperlight Sparknova
@@ -21,6 +33,9 @@ if L then
 	--L.rings_enrage = "Rings (Enrage)"
 	--L.ring_count = "Ring (%d/%d)"
 
+	--L.custom_on_ring_timers = "Individual Halo Timers"
+	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+
 	--L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
 
@@ -38,11 +53,15 @@ L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "ptBR")
 if L then
 	--L.protoform_cascade = "Frontal"
 	--L.cosmic_shift = "Pushback"
+	--L.cosmic_shift_mythic = "Shift: %s"
 	--L.unstable_mote = "Motes"
 	--L.mote = "Mote"
 
 	--L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
 	--L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+
+	--L.harmonic = "Push"
+	--L.melodic = "Pull"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "ptBR")
@@ -62,9 +81,4 @@ if L then
 	--L.beacon_of_hope = "Beacon"
 
 	--L.remnant_active = "Remnant Active"
-end
-
-L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ptBR")
-if L then
-	--L.tank_combo_desc = "Timer for Riftmaw/Rend casts at 100 energy."
 end

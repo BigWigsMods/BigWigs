@@ -1,5 +1,17 @@
-local L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhCN")
+local L = BigWigs:NewBossLocale("Vigilant Guardian", "zhCN")
 if not L then return end
+if L then
+	L.sentry = "卫士小怪"
+	L.materium = "小怪"
+	-- L.shield = "Shield" -- Global locale canidate?
+end
+
+L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhCN")
+if L then
+	L.tank_combo_desc = "显示 裂隙之吼/撕裂 满100能量释放的计时器"
+end
+
+L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhCN")
 if L then
 	L.traps = "陷阱" -- Stasis Trap
 	L.sparknova = "火花新星" -- Hyperlight Sparknova
@@ -21,6 +33,9 @@ if L then
 	L.rings_enrage = "光环 (激怒)"
 	L.ring_count = "光环 (%d/%d)"
 
+	--L.custom_on_ring_timers = "Individual Halo Timers"
+	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+
 	L.shield_removed = "%s 在 %.1fs 移除" -- "Shield removed after 1.1s" s = seconds
 end
 
@@ -38,11 +53,15 @@ L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhCN")
 if L then
 	L.protoform_cascade = "正面"
 	L.cosmic_shift = "推开"
+	--L.cosmic_shift_mythic = "Shift: %s"
 	L.unstable_mote = "微粒"
 	L.mote = "微粒"
 
 	L.custom_on_nameplate_fixate = "被征用姓名板图标"
 	L.custom_on_nameplate_fixate_desc = "在征用自动体姓名板上显示你是被征用.\n\n需要使用敌对姓名板和支持姓名板的插件（KuiNameplates，Plater）。"
+
+	--L.harmonic = "Push"
+	--L.melodic = "Pull"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhCN")
@@ -62,17 +81,6 @@ if L then
 	L.beacon_of_hope = "信标"
 
 	L.remnant_active = "剩余活跃"
-end
-
-L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhCN")
-if L then
-	L.tank_combo_desc = "显示 裂隙之吼/撕裂 满100能量释放的计时器"
-end
-
-L = BigWigs:NewBossLocale("Vigilant Guardian", "zhCN")
-if L then
-	L.sentry = "卫士小怪"
-	L.materium = "小怪"
 end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "zhCN")

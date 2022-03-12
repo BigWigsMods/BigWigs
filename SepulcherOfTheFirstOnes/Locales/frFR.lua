@@ -1,5 +1,17 @@
-local L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "frFR")
+local L = BigWigs:NewBossLocale("Vigilant Guardian", "frFR")
 if not L then return end
+if L then
+	-- L.sentry = "Tank Add"
+	-- L.materium = "Small Adds"
+	-- L.shield = "Shield" -- Global locale canidate?
+end
+
+L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "frFR")
+if L then
+	L.tank_combo_desc = "Timer pour les cast de Mâche-faille/Pourfendre à 100 d'energie."
+end
+
+L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "frFR")
 if L then
 	L.traps = "Pièges" -- Stasis Trap
 	L.sparknova = "Nova éclair" -- Hyperlight Sparknova
@@ -21,6 +33,9 @@ if L then
 	L.rings_enrage = "Anneaux (Enragé)"
 	L.ring_count = "Anneau (%d/%d)"
 
+	--L.custom_on_ring_timers = "Individual Halo Timers"
+	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+
 	L.shield_removed = "%s retiré au bout de %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
 
@@ -38,11 +53,15 @@ L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "frFR")
 if L then
 	L.protoform_cascade = "Frontal"
 	L.cosmic_shift = "Poussée"
+	--L.cosmic_shift_mythic = "Shift: %s"
 	L.unstable_mote = "Granules"
 	L.mote = "Granule"
 
 	L.custom_on_nameplate_fixate = "Icône de barre d'unité fixée"
 	L.custom_on_nameplate_fixate_desc = "Affiche une icône sur la barre de nom d'unité des Automas pourvoyeurs qui vous fixent.\n\nNécessite d'avoir activé les barres de noms des unités ennemies et un addon de barres de noms compatible (KuiNameplates, Plater)."
+
+	--L.harmonic = "Push"
+	--L.melodic = "Pull"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "frFR")
@@ -62,9 +81,4 @@ if L then
 	L.beacon_of_hope = "Signal"
 
 	L.remnant_active = "Vestige actif"
-end
-
-L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "frFR")
-if L then
-	L.tank_combo_desc = "Timer pour les cast de Mâche-faille/Pourfendre à 100 d'energie."
 end
