@@ -23,6 +23,7 @@ local handCount = 1
 local deathtouchOnMe = false
 local mobCollector = {}
 local seedCollector = {}
+local worldMarkers = {6,4,3,7,1,2,5,8} -- Marking using world markers order
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -43,8 +44,8 @@ end
 --
 
 local runecarversDeathtouchMarker = mod:AddMarkerOption(false, "player", 1, 360687, 1, 2) -- Runecarver's Deathtouch
-local witheringSeedMarker = mod:AddMarkerOption(true, "npc", 1, 361568, 1, 2, 3, 4) -- Withering Seeds
-local nightHunterMarker = mod:AddMarkerOption(false, "player", 8, 361745, 8, 7, 6, 5) -- Night Hunter
+local witheringSeedMarker = mod:AddMarkerOption(false, "npc", 1, 361568, 1, 2, 3, 4) -- Withering Seeds
+local nightHunterMarker = mod:AddMarkerOption(false, "player", 6, 361745, 6, 4, 3, 7) -- Night Hunter
 function mod:GetOptions()
 	return {
 		360295, -- Necrotic Ritual
@@ -105,7 +106,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BurdenOfSinApplied", 361608)
 	self:Log("SPELL_CAST_START", "SinfulProjection", 364865)
 	self:Log("SPELL_AURA_APPLIED", "SinfulProjectionApplied", 364839)
-	self:Log("SPELL_CAST_SUCCESS", "WrackingPain", 361689)
+	self:Log("SPELL_CAST_SUCCESS", "WrackingPain", 365126)
 	self:Log("SPELL_AURA_APPLIED", "WrackingPainApplied", 361689)
 	self:Log("SPELL_CAST_START", "HandOfDestruction", 361789)
 	self:Log("SPELL_AURA_APPLIED", "NightHunterApplied", 361745)
@@ -126,10 +127,10 @@ function mod:OnEngage()
 	mobCollector = {}
 	seedCollector = {}
 
-	self:Bar(365269, 10) -- Humbling Strikes
-	self:Bar(360295, 10, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
-	self:Bar(360687, 47.5, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount)) -- Runecarvers Deathtouch
-	self:Bar(364941, 59, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
+	self:Bar(365269, self:Mythic() and 10.5 or 10) -- Humbling Strikes
+	self:Bar(360295, self:Mythic() and 13.1 or 10, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
+	self:Bar(360687, self:Mythic() and 42 or 47.5, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount)) -- Runecarvers Deathtouch
+	self:Bar(364941, self:Mythic() and 52.5 or 59, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
 
 	if self:GetOption(witheringSeedMarker) then
 		self:RegisterTargetEvents("MarkAdds")
@@ -157,7 +158,8 @@ function mod:RAID_BOSS_EMOTE(_, msg)
 		stampedeCount = stampedeCount + 1
 		local cd = self:GetStage() == 3 and 74.7 or 25
 		if self:Mythic() then
-			cd = self:GetStage() == 3 and 33 or 35
+			local timersStage2 = {24.7, 28.2, 30.5, 26.3}
+			cd = self:GetStage() == 3 and 33 or timersStage2[stampedeCount]
 		end
 		self:Bar(361304, cd, CL.count:format(L.wild_stampede, stampedeCount))
 	end
@@ -192,21 +194,21 @@ do
 			projectionCount = 1
 			handCount = 1
 			if stage == 2 then
-				self:Bar(361304, 8.9, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
-				self:Bar(361568, 18.5, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
-				self:Bar(366234, 38.5, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
-				self:Bar(361689, 69) -- Wracking Pain
-				self:Bar(361789, 79.9, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
+				self:Bar(361304, self:Mythic() and 24.7 or 8.9, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
+				self:Bar(361568, self:Mythic() and 21.6 or 18.5, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
+				self:Bar(366234, self:Mythic() and 44.3 or 38.5, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
+				self:Bar(361689, self:Mythic() and 55.6 or 55) -- Wracking Pain
+				self:Bar(361789, self:Mythic() and 91.1 or 79.9, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			elseif stage == 3 then
 				self:Bar(365269, 41) -- Humbling Strikes
-				self:Bar(360295, 134, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
+				self:Bar(361689, self:Mythic() and 41.6 or 55) -- Wracking Pain XXX Check other than mythic
+				self:Bar(360295, self:Mythic() and 17.5 or 134, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
 				self:Bar(360687, 129, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount)) -- Runecarvers Deathtouch
-				self:Bar(364941, 53.1, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
-				self:Bar(361304, 24.5, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
-				self:Bar(361568, 21.3, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
-				self:Bar(361689, 41) -- Wracking Pain
+				self:Bar(364941, self:Mythic() and 53.1 or 53.1, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
+				self:Bar(361304, self:Mythic() and 24.5 or 24.5, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
+				self:Bar(361568, self:Mythic() and 17.8 or 21.3, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
 				self:Bar(366234, 51, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
-				self:Bar(361789, 104.1, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
+				self:Bar(361789, self:Mythic() and 109.5 or 104.1, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			end
 		end
 	end
@@ -234,7 +236,8 @@ function mod:NecroticRitual(args)
 	self:Message(args.spellId, "purple", CL.count:format(L.necrotic_ritual, necroticRitualCount))
 	self:PlaySound(args.spellId, "alert")
 	necroticRitualCount = necroticRitualCount + 1
-	self:Bar(args.spellId, 72.3, CL.count:format(L.necrotic_ritual, necroticRitualCount))
+	-- XXX Check stage 3 mythic
+	self:Bar(args.spellId, self:Mythic() and (self:GetStage() == 3 and 0 or 60) or self:Easy() and (necroticRitualCount == 2 and 72.3 or 62.8) or 72.3, CL.count:format(L.necrotic_ritual, necroticRitualCount))
 end
 
 do
@@ -242,7 +245,8 @@ do
 	function mod:RunecarversDeathtouch(args)
 		playerList = {}
 		runecarversDeathtouchCount = runecarversDeathtouchCount + 1
-		self:Bar(360687, 57, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount))
+		-- XXX Check stage 3 mythic
+		self:Bar(360687, self:Mythic() and (self:GetStage() == 3 and 0 or 50) or self:Easy() and (runecarversDeathtouchCount == 3 and 79 or 57) or 57, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount))
 	end
 
 	function mod:RunecarversDeathtouchApplied(args)
@@ -270,7 +274,7 @@ end
 
 function mod:HumblingStrikes(args)
 	self:Message(365269, "purple", CL.casting:format(args.spellName))
-	self:Bar(365269, self:GetStage() == 3 and 49.8 or 35.5)
+	self:Bar(365269, self:Mythic() and (self:GetStage() == 3 and 29.9 or 31.2) or self:GetStage() == 3 and 49.8 or 35.5)
 end
 
 function mod:HumblingStrikesApplied(args)
@@ -331,7 +335,7 @@ do
 		self:Message(args.spellId, "cyan", CL.count:format(L.withering_seeds, seedsCount))
 		self:PlaySound(args.spellId, "alert")
 		seedsCount = seedsCount + 1
-		self:Bar(args.spellId, self:GetStage() == 3 and 74.2 or 96.2, CL.count:format(L.withering_seeds, seedsCount))
+		self:Bar(args.spellId, self:Mythic() and (self:GetStage() == 3 and (seedsCount == 2 and 77.4 or 71.8) or 109.3) or self:GetStage() == 3 and 74.2 or 96.2, CL.count:format(L.withering_seeds, seedsCount))
 		seedCollector = {}
 		witheringSeedMarks = {}
 	end
@@ -363,7 +367,8 @@ function mod:Animastorm(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, stormCount))
 	self:PlaySound(args.spellId, "alert")
 	stormCount = stormCount + 1
-	self:Bar(args.spellId, self:GetStage() == 3 and 84 or 67.5, CL.count:format(args.spellName, stormCount))
+	-- Check stage 3 Mythic
+	self:Bar(args.spellId, self:Mythic() and (self:GetStage() == 3 and 0 or 76.7) or self:GetStage() == 3 and 84 or 67.5, CL.count:format(args.spellName, stormCount))
 end
 
 function mod:BurdenOfSinApplied(args)
@@ -398,7 +403,8 @@ do
 end
 
 function mod:WrackingPain(args)
-	self:Bar(args.spellId, self:GetStage() == 3 and 49.8 or 45)
+	-- To _START
+	self:Bar(361689, self:Mythic() and (self:GetStage() == 3 and 27.9 or 49.1) or self:GetStage() == 3 and 49.8 or 45)
 end
 
 function mod:WrackingPainApplied(args)
@@ -412,7 +418,7 @@ function mod:HandOfDestruction(args)
 	self:Message(args.spellId, "purple", CL.count:format(L.hand_of_destruction, handCount))
 	self:PlaySound(args.spellId, "alert")
 	handCount = handCount + 1
-	self:Bar(args.spellId, 74, CL.count:format(L.hand_of_destruction, handCount))
+	self:Bar(args.spellId, self:Mythic() and (self:GetStage() == 3 and 68.4 or 63.9) or 74, CL.count:format(L.hand_of_destruction, handCount))
 end
 
 do
@@ -426,7 +432,7 @@ do
 			self:CastBar(args.spellId, 8)
 		end
 		local count = #playerList+1
-		local icon = 9-count
+		local icon = worldMarkers[count]
 		playerList[count] = args.destName
 		playerList[args.destName] = icon -- Set raid marker
 		if self:Me(args.destGUID)then
