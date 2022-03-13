@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.sentry = "Tank Add"
 	L.materium = "Kleine Adds"
-	--L.shield = "Shield" -- Global locale canidate?
+	L.shield = "Schild" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "deDE")
@@ -33,8 +33,8 @@ if L then
 	L.rings_enrage = "Ringe (Berserker)"
 	L.ring_count = "Ring (%d/%d)"
 
-	--L.custom_on_ring_timers = "Individual Halo Timers"
-	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+	L.custom_on_ring_timers = "Individuelle Kranz Timer"
+	L.custom_on_ring_timers_desc = "Desintegrationskranz löst Ringe aus. Dies zeigt Leisten für den Bewegungsbeginn jedes Rings. Nutzt die Einstellungen von Desintegrationskranz."
 
 	L.shield_removed = "%s entfernt nach %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
@@ -53,15 +53,15 @@ L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "deDE")
 if L then
 	L.protoform_cascade = "Kreis"
 	L.cosmic_shift = "Rückstoß"
-	--L.cosmic_shift_mythic = "Shift: %s"
+	L.cosmic_shift_mythic = "Verschiebung: %s"
 	L.unstable_mote = "Partikel"
 	L.mote = "Partikel"
 
 	L.custom_on_nameplate_fixate = "Fixieren-Symbol an Namensplaketten"
 	L.custom_on_nameplate_fixate_desc = "Zeigt ein Symbol an der Namensplakette des Dich fixierenden Akquisitionsautomas an.\n\nBenötigt die Nutzung von gegnerischen Namensplaketten sowie ein unterstütztes Addon (KuiNameplates, Plater)."
 
-	--L.harmonic = "Push"
-	--L.melodic = "Pull"
+	L.harmonic = "Drücken"
+	L.melodic = "Ziehen"
 end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "deDE")
@@ -92,6 +92,25 @@ if L then
 	L.beacon_of_hope = "Flamme"
 
 	L.remnant_active = "Überrest aktiv"
+end
+
+L = BigWigs:NewBossLocale("Lords of Dread", "deDE")
+if L then
+	L.unto_darkness = "AoE Phase"-- Unto Darkness
+	L.cloud_of_carrion = "Fäulnis" -- Cloud of Carrion
+	L.manifest_shadows = "Adds" -- Manifest Shadows
+	L.leeching_claws = "Frontal (M)" -- Leeching Claws
+	L.infiltration_of_dread = "Unter uns" -- Infiltration of Dread
+	L.fearful_trepidation = "Furcht" -- Fearful Trepidation
+	L.slumber_cloud = "Wolken" -- Slumber Cloud
+	L.anguishing_strike = "Frontal (K)" -- Anguishing Strike
+end
+
+L = BigWigs:NewBossLocale("Rygelon", "deDE")
+if L then
+	L.celestial_collapse = "Quasare" -- Celestial Collapse
+	L.manifest_cosmos = "Kerne" -- Manifest Cosmos
+	L.stellar_shroud = "Heilung absorbiert" -- Stellar Shroud
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "deDE")
