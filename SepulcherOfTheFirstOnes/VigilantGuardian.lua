@@ -110,6 +110,7 @@ function mod:OnEngage()
 	exposedCoreCount =  1
 	deresolutionCount = 1
 	pneumaticImpactCount = 1
+	shieldOnMe = false
 
 	self:Bar(365315, 5, CL.count:format(L.materium, smallAddCount)) -- Volatile Materium
 	self:Bar(360906, self:Mythic() and 22.5 or 16, CL.count:format(self:SpellName(360906), refractedBlastCount)) -- Refracted Blast
@@ -130,16 +131,16 @@ end
 
 function mod:ForceFieldApplied(args)
 	if self:Me(args.destGUID) then
+		shieldOnMe = true
 		self:Message(args.spellId, "green", CL.you:format(L.shield))
 		self:PlaySound(args.spellId, "info")
-		shieldOnMe = true
 	end
 end
 
 function mod:ForceFieldRemoved(args)
 	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "cyan", CL.removed:format(L.shield))
 		shieldOnMe = false
+		self:Message(args.spellId, "cyan", CL.removed:format(L.shield))
 	end
 end
 
@@ -160,7 +161,7 @@ function mod:PreFabricatedSentry(args)
 	self:StopBar(CL.count:format(L.sentry, tankAddCount))
 	self:Message(args.spellId, "yellow", CL.count:format(L.sentry, tankAddCount))
 	self:PlaySound(args.spellId, "alert")
-	tankAddCount = tankAddCount  + 1
+	tankAddCount = tankAddCount + 1
 	self:Bar(args.spellId, self:Mythic() and 87.5 or 80, CL.count:format(L.sentry, tankAddCount))
 end
 
@@ -217,7 +218,7 @@ function mod:RefractedBlast(args)
 	if self:Mythic() then
 		cd = timers[args.spellId][refractedBlastCount]
 	elseif self:GetStage() < 2 and refractedBlastCount > 3 and refractedBlastCount % 3 == 1 then -- 4, 7, 10...?
-			cd = refractedBlastCount == 4 and 81.5 or 70
+		cd = refractedBlastCount == 4 and 81.5 or 70
 	end
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, smallAddCount))
 end
@@ -316,7 +317,7 @@ do
 				self:SayCountdown(args.spellId, timeLeft)
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil , CL.count:format(args.spellName, matterDisolutionCount-1))
+		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, matterDisolutionCount-1))
 	end
 
 	function mod:MatterDisolutionRemoved(args)
