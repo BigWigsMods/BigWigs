@@ -2,7 +2,7 @@
 BigWigs:AddSounds("Vigilant Guardian", {
 	[359610] = {"alarm","warning"},
 	[360162] = "alarm",
-	[360403] = "info",
+	[360403] = {"info","warning"},
 	[360412] = "alert",
 	[360414] = "alarm",
 	[360458] = "warning",
@@ -10,7 +10,7 @@ BigWigs:AddSounds("Vigilant Guardian", {
 	[360906] = "alert",
 	[361001] = "alert",
 	[364447] = "alarm",
-	[364881] = {"alert","warning"},
+	[364881] = "warning",
 	[364962] = "long",
 	[365315] = "alert",
 	["stages"] = "long",
@@ -23,6 +23,7 @@ BigWigs:AddSounds("Skolex, the Insatiable Ravener", {
 	[359979] = "alarm",
 	[360451] = "info",
 	[364778] = "alert",
+	[366070] = "underyou",
 })
 
 BigWigs:AddSounds("Artificer Xy'mox v2", {
@@ -67,13 +68,14 @@ BigWigs:AddSounds("Prototype Pantheon", {
 })
 
 BigWigs:AddSounds("Lihuvim, Principal Architect", {
+	[360159] = "underyou",
 	[360869] = "alarm",
 	[362622] = {"alarm","warning"},
+	[362659] = "info",
 	[363088] = "alarm",
 	[363130] = "long",
 	[363795] = {"alert","warning"},
 	[364652] = "alert",
-	[366012] = "warning",
 	[368027] = "alert",
 })
 
@@ -110,30 +112,30 @@ BigWigs:AddSounds("Anduin Wrynn", {
 BigWigs:AddSounds("Lords of Dread", {
 	[359960] = "alarm",
 	[359963] = "warning",
+	[360012] = {"info","warning"},
 	[360146] = "alert",
 	[360229] = "alert",
 	[360284] = {"alarm","alert"},
 	[360319] = "alert",
 	[360374] = "long",
-	[360417] = "alert",
+	[360717] = {"alert","long"},
 	[361913] = "alert",
-	[362020] = "info",
-	[366574] = {"info","warning"},
+	[361934] = "info",
 })
 
 BigWigs:AddSounds("Rygelon", {
-	[361548] = "warning",
 	[362088] = "alarm",
 	[362172] = "warning",
 	[362184] = "alert",
 	[362206] = "info",
-	[362207] = {"info","warning"},
+	[362207] = "info",
 	[362275] = "alert",
 	[362390] = "alert",
 	[362798] = "underyou",
-	[363109] = "alert",
+	[362806] = "warning",
 	[363533] = "alert",
 	[364114] = "alert",
+	[364386] = "warning",
 	[366379] = "alert",
 	[366606] = "alarm",
 	[368080] = "alert",

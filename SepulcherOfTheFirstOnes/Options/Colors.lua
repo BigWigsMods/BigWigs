@@ -2,7 +2,7 @@
 BigWigs:AddColors("Vigilant Guardian", {
 	[359610] = {"blue","red"},
 	[360162] = "orange",
-	[360403] = {"cyan","green"},
+	[360403] = {"blue","cyan","green"},
 	[360412] = "orange",
 	[360414] = "purple",
 	[360458] = {"cyan","red"},
@@ -23,6 +23,7 @@ BigWigs:AddColors("Skolex, the Insatiable Ravener", {
 	[359979] = "purple",
 	[360451] = "cyan",
 	[364778] = "yellow",
+	[366070] = "blue",
 })
 
 BigWigs:AddColors("Artificer Xy'mox v2", {
@@ -68,13 +69,14 @@ BigWigs:AddColors("Prototype Pantheon", {
 })
 
 BigWigs:AddColors("Lihuvim, Principal Architect", {
+	[360159] = "blue",
 	[360869] = "blue",
 	[362622] = {"blue","orange"},
+	[362659] = "blue",
 	[363088] = "orange",
 	[363130] = "cyan",
 	[363795] = {"blue","orange"},
 	[364652] = "yellow",
-	[366012] = "blue",
 	[368027] = "yellow",
 })
 
@@ -111,31 +113,30 @@ BigWigs:AddColors("Anduin Wrynn", {
 BigWigs:AddColors("Lords of Dread", {
 	[359960] = {"blue","yellow"},
 	[359963] = {"blue","purple"},
+	[360012] = {"blue","cyan","green"},
 	[360146] = {"blue","orange","yellow"},
 	[360229] = "yellow",
 	[360284] = {"blue","purple"},
 	[360319] = "yellow",
 	[360374] = "red",
-	[360417] = "yellow",
-	[360428] = {"blue","green"},
+	[360717] = {"green","yellow"},
 	[361913] = "yellow",
-	[362020] = "cyan",
-	[366574] = {"blue","cyan","green"},
+	[361934] = "cyan",
 })
 
 BigWigs:AddColors("Rygelon", {
-	[361548] = {"blue","cyan"},
 	[362088] = "blue",
 	[362172] = {"blue","purple"},
 	[362184] = "purple",
 	[362206] = "green",
-	[362207] = {"blue","green"},
+	[362207] = "green",
 	[362275] = "yellow",
 	[362390] = "yellow",
 	[362798] = "blue",
-	[363109] = "yellow",
+	[362806] = {"blue","cyan"},
 	[363533] = "yellow",
 	[364114] = "yellow",
+	[364386] = "red",
 	[366379] = "orange",
 	[366606] = "red",
 	[368080] = {"blue","yellow"},
