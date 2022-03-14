@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "ruRU")
+local L = BigWigs:NewBossLocale("Vigilant Guardian", "ruRU")
 if not L then return end
 if L then
 	L.sentry = "Танк моб"
