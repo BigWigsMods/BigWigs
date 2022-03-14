@@ -106,7 +106,7 @@ if L then
 	L.anguishing_strike = "順劈（金）" -- Anguishing Strike
 end
 
-L = BigWigs:NewBossLocale("Rygelon", "zhCN")
+L = BigWigs:NewBossLocale("Rygelon", "zhTW")
 if L then
 	L.celestial_collapse = "類星體" -- Celestial Collapse
 	L.manifest_cosmos = "核心" -- Manifest Cosmos
