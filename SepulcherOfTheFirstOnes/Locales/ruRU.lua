@@ -1,9 +1,9 @@
 local L = BigWigs:NewBossLocale("Vigilant Guardian", "ruRU")
 if not L then return end
 if L then
-	-- L.sentry = "Tank Add"
-	-- L.materium = "Small Adds"
-	-- L.shield = "Shield" -- Global locale canidate?
+	L.sentry = "Танк моб"
+	L.materium = "Кастер моб"
+	L.shield = "Поле" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
@@ -33,8 +33,8 @@ if L then
 	L.rings_enrage = "Кольца (Исступление)"
 	L.ring_count = "Кольцо (%d/%d)"
 
-	--L.custom_on_ring_timers = "Individual Halo Timers"
-	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+	L.custom_on_ring_timers = "Индивидуальные таймеры для колец"
+	L.custom_on_ring_timers_desc = "\"Ореол дезинтеграции\" создаёт набор колец. Выбрав эту настройку, вам будет показаны полосы для каждой полосы индивидуально. Использует настройки \"Ореол дезинтеграции\"."
 
 	L.shield_removed = "%s убран спустя %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
@@ -53,14 +53,14 @@ L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "ruRU")
 if L then
 	L.protoform_cascade = "Фронтал"
 	L.cosmic_shift = "Отталкивание"
-	--L.cosmic_shift_mythic = "Shift: %s"
+	L.cosmic_shift_mythic = "Сдвиг: %s"
 	L.unstable_mote = "Частицы"
 	L.mote = "Частица"
 	L.custom_on_nameplate_fixate = "Метка для автома-собирателя"
 	L.custom_on_nameplate_fixate_desc = "Показывать метку на автоме, который зафиксировал вас.\n\nТребует включённых индикаторов здоровья врагов и соответствующего аддона (KuiNameplates, Plater)."
 
-	--L.harmonic = "Push"
-	--L.melodic = "Pull"
+	L.harmonic = "Отталкивание"
+	L.melodic = "Притягивание"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "ruRU")
