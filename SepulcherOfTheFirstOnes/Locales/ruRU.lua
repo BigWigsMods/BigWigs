@@ -1,9 +1,10 @@
 local L = BigWigs:NewBossLocale("Vigilant Guardian", "ruRU")
 if not L then return end
 if L then
-	-- L.sentry = "Tank Add"
-	-- L.materium = "Small Adds"
-	-- L.shield = "Shield" -- Global locale canidate?
+<<<<<<< HEAD
+	L.sentry = "Танк моб"
+	L.materium = "Кастер моб"
+	L.shield = "Защитное поле" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
@@ -13,6 +14,8 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "ruRU")
 if L then
+=======
+>>>>>>> dc9a17263 (uncomment)
 	L.traps = "Ловушки" -- Stasis Trap
 	L.sparknova = "Вспышка гиперсвета" -- Hyperlight Sparknova
 	L.relocation = "Стяжка" -- Glyph of Relocation
@@ -33,9 +36,12 @@ if L then
 	L.rings_enrage = "Кольца (Исступление)"
 	L.ring_count = "Кольцо (%d/%d)"
 
-	--L.custom_on_ring_timers = "Individual Halo Timers"
-	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+<<<<<<< HEAD
+	L.custom_on_ring_timers = "Индивидуальные таймеры для колец"
+	L.custom_on_ring_timers_desc = "\"Ореол дезинтеграции\" создаёт набор колец. Выбрав эту настройку, вам будет показаны полосы для каждой полосы индивидуально. Использует настройки \"Ореол дезинтеграции\"."
 
+=======
+>>>>>>> dc9a17263 (uncomment)
 	L.shield_removed = "%s убран спустя %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
 
@@ -53,20 +59,27 @@ L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "ruRU")
 if L then
 	L.protoform_cascade = "Фронтал"
 	L.cosmic_shift = "Отталкивание"
-	--L.cosmic_shift_mythic = "Shift: %s"
+<<<<<<< HEAD
+	L.cosmic_shift_mythic = "Сдвиг: %s"
+=======
+>>>>>>> dc9a17263 (uncomment)
 	L.unstable_mote = "Частицы"
 	L.mote = "Частица"
 	L.custom_on_nameplate_fixate = "Метка для автома-собирателя"
 	L.custom_on_nameplate_fixate_desc = "Показывать метку на автоме, который зафиксировал вас.\n\nТребует включённых индикаторов здоровья врагов и соответствующего аддона (KuiNameplates, Plater)."
+<<<<<<< HEAD
 
-	--L.harmonic = "Push"
-	--L.melodic = "Pull"
+	L.harmonic = "Отталкивание"
+	L.melodic = "Притягивание"
+=======
+>>>>>>> dc9a17263 (uncomment)
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "ruRU")
 if L then
 	L.custom_off_repeating_blasphemy = "Метки кощунства"
 	L.custom_off_repeating_blasphemy_desc = "Повторять метки {rt1} и {rt3} в чат, что бы найти партнёра."
+<<<<<<< HEAD
 
 	L.kingsmourne_hungers = "Клив"
 	L.blasphemy = "Метки"
@@ -80,4 +93,24 @@ if L then
 	L.beacon_of_hope = "Маяк"
 
 	L.remnant_active = "Тень активна"
+=======
+
+	L.kingsmourne_hungers = "Клив"
+	L.blasphemy = "Метки"
+	L.befouled_barrier = "Барьер"
+	L.wicked_star = "Звезда"
+	L.domination_word_pain = "ДОТ"
+	L.army_of_the_dead = "Армия"
+	L.grim_reflections = "Кик ады"
+	L.march_of_the_damned = "Стенки"
+	L.dire_blasphemy = "Метки"
+	L.beacon_of_hope = "Маяк"
+
+	L.remnant_active = "Тень активна"
+end
+
+L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
+if L then
+	L.tank_combo_desc = "Таймер для танковской комбы на 100 энергии."
+>>>>>>> dc9a17263 (uncomment)
 end
