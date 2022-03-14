@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Vigilant Guardian", "ruRU")
+local L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "ruRU")
 if not L then return end
 if L then
 	L.sentry = "Танк моб"
@@ -80,4 +80,9 @@ if L then
 	L.beacon_of_hope = "Маяк"
 
 	L.remnant_active = "Тень активна"
+end
+
+L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
+if L then
+	L.tank_combo_desc = "Таймер для танковской комбы на 100 энергии."
 end
