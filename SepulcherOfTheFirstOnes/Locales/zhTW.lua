@@ -19,7 +19,7 @@ if L then
 	L.relocation_count = "%s（%d 之 %d）" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count) 先用這個試試看
 	L.wormholes = "蟲洞" -- Interdimensional Wormholes
 	L.wormhole = "蟲洞" -- Interdimensional Wormhole
-	L.rings = "第 %d 道環" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
+	L.rings = "第 %d 階段輝環" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "zhTW")
@@ -91,5 +91,30 @@ if L then
 	L.dire_blasphemy = "印記"
 	L.beacon_of_hope = "信標"
 
-	--L.remnant_active = "Remnant Active"
+	L.remnant_active = "墮落之王出現"
+end
+
+L = BigWigs:NewBossLocale("Lords of Dread", "zhTW")
+if L then
+	L.unto_darkness = "AoE 階段"-- Unto Darkness
+	L.cloud_of_carrion = "Carrion" -- Cloud of Carrion
+	L.manifest_shadows = "小怪" -- Manifest Shadows
+	L.leeching_claws = "順劈（瑪）" -- Leeching Claws
+	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
+	L.fearful_trepidation = "驚懼爆發" -- Fearful Trepidation
+	L.slumber_cloud = "雲霧" -- Slumber Cloud
+	L.anguishing_strike = "順劈（金）" -- Anguishing Strike
+end
+
+L = BigWigs:NewBossLocale("Rygelon", "zhCN")
+if L then
+	L.celestial_collapse = "類星體" -- Celestial Collapse
+	L.manifest_cosmos = "核心" -- Manifest Cosmos
+	L.stellar_shroud = "治療吸收" -- Stellar Shroud
+end
+
+L = BigWigs:NewBossLocale("The Jailer", "zhTW")
+if L then
+	L.rune_of_damnation_countdown = "倒數計時"
+	L.rune_of_damnation_countdown_desc = "為受到災罰符文影響的玩家顯示倒數計時。"
 end
