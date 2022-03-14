@@ -53,15 +53,15 @@ L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhCN")
 if L then
 	L.protoform_cascade = "散射"
 	L.cosmic_shift = "击退"
-	--L.cosmic_shift_mythic = "Shift: %s"
+	L.cosmic_shift_mythic = "次数: %s"
 	L.unstable_mote = "微粒"
 	L.mote = "微粒"
 
 	L.custom_on_nameplate_fixate = "被征用姓名板图标"
 	L.custom_on_nameplate_fixate_desc = "在目标是你的自动体的姓名板上显示图标。\n\n需要使用敌对姓名板和支持姓名板的插件（KuiNameplates,Plater）。"
 
-	--L.harmonic = "Push"
-	--L.melodic = "Pull"
+	L.harmonic = "谐波"
+	L.melodic = "旋律"
 end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "zhCN")
@@ -111,4 +111,10 @@ if L then
 	L.celestial_collapse = "类星体" -- Celestial Collapse
 	L.manifest_cosmos = "宇宙核心" -- Manifest Cosmos
 	L.stellar_shroud = "吸收治疗量" -- Stellar Shroud
+end
+
+L = BigWigs:NewBossLocale("The Jailer", "zhCN")
+if L then
+	L.rune_of_damnation_countdown = "倒计时"
+	L.rune_of_damnation_countdown_desc = "给受到咒罚符文影响的玩家倒计时。"
 end
