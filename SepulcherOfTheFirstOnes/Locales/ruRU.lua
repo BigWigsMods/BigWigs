@@ -3,7 +3,7 @@ if not L then return end
 if L then
 	L.sentry = "Танк моб"
 	L.materium = "Кастер моб"
-	L.shield = "Поле" -- Global locale canidate?
+	L.shield = "Защитное поле" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
