@@ -2,6 +2,9 @@ local L = BigWigs:NewBossLocale("Vigilant Guardian", "ruRU")
 if not L then return end
 if L then
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 507cd00d5 (Update ruRU (#1167))
 	L.sentry = "Танк моб"
 	L.materium = "Кастер моб"
 	L.shield = "Защитное поле" -- Global locale canidate?
@@ -37,6 +40,9 @@ if L then
 	L.ring_count = "Кольцо (%d/%d)"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 507cd00d5 (Update ruRU (#1167))
 	L.custom_on_ring_timers = "Индивидуальные таймеры для колец"
 	L.custom_on_ring_timers_desc = "\"Ореол дезинтеграции\" создаёт набор колец. Выбрав эту настройку, вам будет показаны полосы для каждой полосы индивидуально. Использует настройки \"Ореол дезинтеграции\"."
 
@@ -60,9 +66,13 @@ if L then
 	L.protoform_cascade = "Фронтал"
 	L.cosmic_shift = "Отталкивание"
 <<<<<<< HEAD
+<<<<<<< HEAD
 	L.cosmic_shift_mythic = "Сдвиг: %s"
 =======
 >>>>>>> dc9a17263 (uncomment)
+=======
+	L.cosmic_shift_mythic = "Сдвиг: %s"
+>>>>>>> 507cd00d5 (Update ruRU (#1167))
 	L.unstable_mote = "Частицы"
 	L.mote = "Частица"
 	L.custom_on_nameplate_fixate = "Метка для автома-собирателя"
@@ -71,8 +81,11 @@ if L then
 
 	L.harmonic = "Отталкивание"
 	L.melodic = "Притягивание"
+<<<<<<< HEAD
 =======
 >>>>>>> dc9a17263 (uncomment)
+=======
+>>>>>>> 507cd00d5 (Update ruRU (#1167))
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "ruRU")
@@ -113,4 +126,9 @@ L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
 if L then
 	L.tank_combo_desc = "Таймер для танковской комбы на 100 энергии."
 >>>>>>> dc9a17263 (uncomment)
+end
+
+L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
+if L then
+	L.tank_combo_desc = "Таймер для танковской комбы на 100 энергии."
 end
