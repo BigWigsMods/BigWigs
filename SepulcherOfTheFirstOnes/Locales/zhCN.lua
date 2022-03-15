@@ -91,7 +91,7 @@ if L then
 	L.dire_blasphemy = "标记"
 	L.beacon_of_hope = "信标"
 
-	L.remnant_active = "剩余活跃"
+	L.remnant_active = "隕落君王"
 end
 
 L = BigWigs:NewBossLocale("Lords of Dread", "zhCN")
@@ -99,11 +99,11 @@ if L then
 	L.unto_darkness = "AoE 阶段"-- Unto Darkness
 	L.cloud_of_carrion = "腐臭" -- Cloud of Carrion
 	L.manifest_shadows = "小怪" -- Manifest Shadows
-	L.leeching_claws = "正面 (玛)" -- Leeching Claws
-	L.infiltration_of_dread = "渗透" -- Infiltration of Dread
+	L.leeching_claws = "正面順劈 (玛)" -- Leeching Claws
+	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
 	L.fearful_trepidation = "爆裂恐惧" -- Fearful Trepidation
 	L.slumber_cloud = "迷雾" -- Slumber Cloud
-	L.anguishing_strike = "正面 (金)" -- Anguishing Strike
+	L.anguishing_strike = "正面順劈 (金)" -- Anguishing Strike
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhCN")
