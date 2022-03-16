@@ -86,3 +86,23 @@ L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
 if L then
 	L.tank_combo_desc = "Таймер для танковской комбы на 100 энергии."
 end
+
+L = BigWigs:NewBossLocale("The Jailer", "ruRU")
+if L then
+	--L.rune_of_damnation_countdown = "Countdown"
+	--L.rune_of_damnation_countdown_desc = "Countdown for the players who are affected by Rune of Damnation"
+	--L.jump = "Jump In"
+
+	--L.chain = "Chain"
+	--L.rune = "Rune"
+
+	--L.chain_target = "Chaining %s!"
+	--L.chains_remaining = "%d/%d Chains Broken"
+
+	--L.chains_of_oppression = "Pull Chains"
+	--L.unholy_attunement = "Pylons"
+	--L.chains_of_anguish = "Spread Chains"
+	--L.rune_of_damnation = "Knock Runes"
+	--L.rune_of_compulsion = "MC Runes"
+	--L.rune_of_domination = "Heal Runes"
+end

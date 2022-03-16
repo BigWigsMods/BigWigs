@@ -117,4 +117,18 @@ L = BigWigs:NewBossLocale("The Jailer", "zhCN")
 if L then
 	L.rune_of_damnation_countdown = "倒计时"
 	L.rune_of_damnation_countdown_desc = "给受到咒罚符文影响的玩家倒计时。"
+	--L.jump = "Jump In"
+
+	--L.chain = "Chain"
+	--L.rune = "Rune"
+
+	--L.chain_target = "Chaining %s!"
+	--L.chains_remaining = "%d/%d Chains Broken"
+
+	--L.chains_of_oppression = "Pull Chains"
+	--L.unholy_attunement = "Pylons"
+	--L.chains_of_anguish = "Spread Chains"
+	--L.rune_of_damnation = "Knock Runes"
+	--L.rune_of_compulsion = "MC Runes"
+	--L.rune_of_domination = "Heal Runes"
 end

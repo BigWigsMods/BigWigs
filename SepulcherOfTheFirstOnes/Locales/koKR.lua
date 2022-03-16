@@ -82,3 +82,23 @@ if L then
 
 	--L.remnant_active = "Remnant Active"
 end
+
+L = BigWigs:NewBossLocale("The Jailer", "koKR")
+if L then
+	--L.rune_of_damnation_countdown = "Countdown"
+	--L.rune_of_damnation_countdown_desc = "Countdown for the players who are affected by Rune of Damnation"
+	--L.jump = "Jump In"
+
+	--L.chain = "Chain"
+	--L.rune = "Rune"
+
+	--L.chain_target = "Chaining %s!"
+	--L.chains_remaining = "%d/%d Chains Broken"
+
+	--L.chains_of_oppression = "Pull Chains"
+	--L.unholy_attunement = "Pylons"
+	--L.chains_of_anguish = "Spread Chains"
+	--L.rune_of_damnation = "Knock Runes"
+	--L.rune_of_compulsion = "MC Runes"
+	--L.rune_of_domination = "Heal Runes"
+end
