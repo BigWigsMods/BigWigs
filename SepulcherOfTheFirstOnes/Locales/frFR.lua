@@ -83,6 +83,36 @@ if L then
 	L.remnant_active = "Vestige actif"
 end
 
+L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "frFR")
+if L then
+	--L.seismic_tremors = "Motes + Tremors"
+	--L.earthbreaker_missiles = "Missiles"
+	--L.crushing_prism = "Prisms"
+	--L.prism = "Prism"
+
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+end
+
+L = BigWigs:NewBossLocale("Lords of Dread", "frFR")
+if L then
+	--L.unto_darkness = "AoE Phase"
+	--L.cloud_of_carrion = "Carrion"
+	--L.manifest_shadows = "Adds"
+	--L.leeching_claws = "Frontal (M)"
+	--L.infiltration_of_dread = "Among Us"
+	--L.fearful_trepidation = "Fears"
+	--L.slumber_cloud = "Clouds"
+	--L.anguishing_strike = "Frontal (K)"
+end
+
+L = BigWigs:NewBossLocale("Rygelon", "frFR")
+if L then
+	--L.celestial_collapse = "Quasars"
+	--L.manifest_cosmos = "Cores"
+	--L.stellar_shroud = "Heal Absorb"
+end
+
 L = BigWigs:NewBossLocale("The Jailer", "frFR")
 if L then
 	--L.rune_of_damnation_countdown = "Countdown"
