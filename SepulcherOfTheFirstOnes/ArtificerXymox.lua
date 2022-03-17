@@ -27,8 +27,8 @@ local mobCount = {}
 
 local timersMythic = {
 	[1] = {
-		[362803] = {40, 37},  -- Glyph of Relocation
-		[364465] = {28.5, 33},  -- Forerunner Rings
+		[362803] = {40, 37},  -- Glifo de reubicación
+		[364465] = {28.5, 33},  -- Anillos genesíacos
 		[362849] = {15.5, 33, 33}, -- Hyperlight Sparknova
 		[362885] = {23, 33, 33}, -- Stasis Trap
 	},
@@ -58,13 +58,13 @@ local timersMythic = {
 
 local L = mod:GetLocale()
 if L then
-	L.traps = "Traps" -- Stasis Trap
-	L.sparknova = "Sparknova" -- Hyperlight Sparknova
-	L.relocation = "Tank Bomb" -- Glyph of Relocation
+	L.traps = "Trampas de estasis" -- Stasis Trap
+	L.sparknova = "Chispanova de hiperluz" -- Hyperlight Sparknova
+	L.relocation = "Bomba de tanke" -- Glyph of Relocation
 	L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
-	L.wormholes = "Wormholes" -- Dimensional Tear
-	L.wormhole = "Wormhole"
-	L.rings = "Rings S%d" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
+	L.wormholes = "Ruptura dimensional" -- Dimensional Tear
+	L.wormhole = "Ruptura dimensional"
+	L.rings = "Anillos S%d" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 --------------------------------------------------------------------------------
