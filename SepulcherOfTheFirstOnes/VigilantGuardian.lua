@@ -23,7 +23,7 @@ local pneumaticImpactCount = 1
 local shieldOnMe = false
 
 local timersMythic = {
-	[360906] = {22, 20.0, 20.0, 33.8, 31.8, 20.0, 33.5, 20.0}, -- Refracted Blast
+	[360906] = {22, 20.0, 20.0, 33.8, 31.8, 20.0, 33.5, 20.0, 32.4, 20.0}, -- Refracted Blast
 	[359610] = {47.7, 35.2, 49.9, 35.4, 38.9}, -- Deresolution
 	[364881] = {48.5, 31.6, 43.9, 30.5, 30.8, 51.9}, -- Matter Disolution
 	[360162] = {48.2, 31.6 , 49.9, 32.9, 31.6}, -- Split Resolution
@@ -93,6 +93,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "ExposedCoreRemoved", 360412)
 	-- Stage Two: Roll Out, then Transform
 	self:Log("SPELL_AURA_REMOVED", "AncientDefensesRemoved", 360879)
+	self:Log("SPELL_CAST_SUCCESS", "FracturedCore", 364843) -- for mythic stage 2
 	self:Log("SPELL_CAST_START", "SplitResolution", 360162)
 	self:Log("SPELL_CAST_SUCCESS", "MatterDisolution", 364881)
 	self:Log("SPELL_AURA_APPLIED", "MatterDisolutionApplied", 364881)
@@ -214,9 +215,11 @@ function mod:RefractedBlast(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, refractedBlastCount))
 	self:PlaySound(args.spellId, "alert")
 	refractedBlastCount = refractedBlastCount + 1
-	local cd = 15.5
+	local cd = 15.8
 	if self:Mythic() then
-		cd = timers[args.spellId][refractedBlastCount]
+		if self:GetStage() == 1 then
+			cd = timers[args.spellId][refractedBlastCount]
+		end
 	elseif self:GetStage() < 2 and refractedBlastCount > 3 and refractedBlastCount % 3 == 1 then -- 4, 7, 10...?
 		cd = refractedBlastCount == 4 and 81.5 or 70
 	end
@@ -289,12 +292,31 @@ function mod:AncientDefensesRemoved(args)
 	self:Bar(360414, 31.5) -- Pneumatic Impact
 end
 
+function mod:FracturedCore(args)
+	if self:Mythic() then
+		self:StopBar(CL.count:format(self:SpellName(360412), exposedCoreCount)) -- Exposed Core
+		self:StopBar(CL.count:format(self:SpellName(360906), refractedBlastCount)) -- Refracted Blast
+		self:StopBar(CL.count:format(L.sentry, tankAddCount)) -- Pre-Fabricated Sentry
+		self:StopBar(CL.count:format(L.materium, smallAddCount)) -- Volatile Materium
+		self:StopBar(359610)  -- Deresolution
+
+		self:SetStage(2)
+		self:Message("stages", "cyan", CL.stage:format(2), false)
+		self:PlaySound("stages", "long")
+
+		self:CDBar(360906, 6, CL.count:format(self:SpellName(360906), refractedBlastCount)) -- Refracted Blast
+		self:CDBar(360162, 7.5, CL.count:format(args.spellName, splitResolutionCount)) -- Split Resolution
+		self:CDBar(364881, 11.5, CL.count:format(args.spellName, matterDisolutionCount)) -- Matter Dissolution
+		self:CDBar(360414, 25) -- Pneumatic Impact
+	end
+end
+
 function mod:SplitResolution(args)
 	self:StopBar(CL.count:format(args.spellName, splitResolutionCount))
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, splitResolutionCount))
 	self:PlaySound(args.spellId, "alarm")
 	splitResolutionCount = splitResolutionCount + 1
-	self:Bar(args.spellId, self:Mythic() and timers[args.spellId][splitResolutionCount] or 31.5, CL.count:format(args.spellName, splitResolutionCount))
+	self:Bar(args.spellId, (self:Mythic() and self:GetStage() == 1) and timers[args.spellId][splitResolutionCount] or 31.5, CL.count:format(args.spellName, splitResolutionCount))
 end
 
 do
@@ -303,7 +325,7 @@ do
 		self:StopBar(CL.count:format(args.spellName, matterDisolutionCount))
 		playerList = {}
 		matterDisolutionCount = matterDisolutionCount + 1
-		self:Bar(args.spellId, self:Mythic() and timers[args.spellId][matterDisolutionCount] or 20.5, CL.count:format(args.spellName, matterDisolutionCount))
+		self:Bar(args.spellId, (self:Mythic() and self:GetStage() == 1) and timers[args.spellId][matterDisolutionCount] or 20.5, CL.count:format(args.spellName, matterDisolutionCount))
 	end
 
 	function mod:MatterDisolutionApplied(args)
@@ -331,7 +353,7 @@ function mod:PneumaticImpact(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
 	pneumaticImpactCount = pneumaticImpactCount + 1
-	self:Bar(args.spellId, self:Mythic() and timers[args.spellId][matterDisolutionCount] or 30.4)
+	self:Bar(args.spellId, (self:Mythic() and self:GetStage() == 1) and timers[args.spellId][matterDisolutionCount] or 30.4)
 end
 
 function mod:CoreOverload(args)
