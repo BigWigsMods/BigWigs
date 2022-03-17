@@ -127,7 +127,7 @@ if L then
 
 	L.chains_of_oppression = "Ketten zerreißen"
 	L.unholy_attunement = "Pylonen"
-	L.chains_of_anguish = "Keten auseinander"
+	L.chains_of_anguish = "Ketten auseinander"
 	L.rune_of_compulsion = "Übernommene"
 	L.rune_of_domination = "Gruppensoak"
 end
