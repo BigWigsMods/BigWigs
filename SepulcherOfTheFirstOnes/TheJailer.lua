@@ -457,7 +457,7 @@ function mod:UnholyAttunementLast(args)
 
 	self:Message("stages", "cyan", CL.soon:format(CL.stage:format(3)), false)
 	self:PlaySound("stages", "info")
-	self:Bar("stages", 10.5, CL.stage:format(3), 363332)
+	self:Bar("stages", 7.5, CL.stage:format(3), 363332)
 end
 
 function mod:UnbreakableGrasp(args)
