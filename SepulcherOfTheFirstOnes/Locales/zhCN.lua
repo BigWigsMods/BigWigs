@@ -32,10 +32,10 @@ if L then
 	L.rings_x = "光环 x%d"
 	L.rings_enrage = "光环 (激怒)"
 	L.ring_count = "光环 (%d/%d)"
-	
+
 	L.custom_on_ring_timers = "衰变光环计时条"
 	L.custom_on_ring_timers_desc = "使用衰变光环设置：这是显示衰变光环在触发能量环时,开始移动的计时条。"
-	
+
 	L.shield_removed = "%s 在 %.1fs 移除" -- "Shield removed after 1.1s" s = seconds
 end
 
@@ -128,7 +128,6 @@ if L then
 	--L.chains_of_oppression = "Pull Chains"
 	--L.unholy_attunement = "Pylons"
 	--L.chains_of_anguish = "Spread Chains"
-	--L.rune_of_damnation = "Knock Runes"
-	--L.rune_of_compulsion = "MC Runes"
-	--L.rune_of_domination = "Heal Runes"
+	--L.rune_of_compulsion = "Charms"
+	--L.rune_of_domination = "Group Soaks"
 end

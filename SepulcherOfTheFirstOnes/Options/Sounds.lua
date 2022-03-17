@@ -142,20 +142,22 @@ BigWigs:AddSounds("Rygelon", {
 })
 
 BigWigs:AddSounds("The Jailer", {
+	[359809] = "long",
 	[359856] = "alarm",
 	[360281] = "warning",
 	[360373] = "alert",
+	[360562] = "alert",
+	[362012] = "long",
 	[362028] = "warning",
-	[362075] = "warning",
-	[362401] = "warning",
-	[362631] = "alert",
+	[362075] = "alarm",
 	[363893] = "alarm",
-	[364488] = "alert",
 	[365033] = "alert",
 	[365150] = "warning",
 	[365169] = "warning",
 	[365212] = {"alert","info","warning"},
 	[365810] = "alarm",
-	[366020] = "alarm",
+	[366132] = "alarm",
 	[366285] = "warning",
+	[366545] = "warning",
+	["stages"] = "long",
 })

@@ -132,7 +132,6 @@ if L then
 	--L.chains_of_oppression = "Pull Chains"
 	--L.unholy_attunement = "Pylons"
 	--L.chains_of_anguish = "Spread Chains"
-	--L.rune_of_damnation = "Knock Runes"
-	--L.rune_of_compulsion = "MC Runes"
-	--L.rune_of_domination = "Heal Runes"
+	--L.rune_of_compulsion = "Charms"
+	--L.rune_of_domination = "Group Soaks"
 end
