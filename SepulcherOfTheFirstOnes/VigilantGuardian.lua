@@ -298,7 +298,7 @@ function mod:FracturedCore(args)
 		self:StopBar(CL.count:format(self:SpellName(360906), refractedBlastCount)) -- Refracted Blast
 		self:StopBar(CL.count:format(L.sentry, tankAddCount)) -- Pre-Fabricated Sentry
 		self:StopBar(CL.count:format(L.materium, smallAddCount)) -- Volatile Materium
-		self:StopBar(359610)  -- Deresolution
+		self:StopBar(CL.count:format(self:SpellName(359610), deresolutionCount))  -- Deresolution
 
 		self:SetStage(2)
 		self:Message("stages", "cyan", CL.stage:format(2), false)
