@@ -91,7 +91,7 @@ if L then
 	L.dire_blasphemy = "标记"
 	L.beacon_of_hope = "信标"
 
-	L.remnant_active = "隕落君王"
+	L.remnant_active = "陨落君王"
 end
 
 L = BigWigs:NewBossLocale("Lords of Dread", "zhCN")
@@ -99,11 +99,11 @@ if L then
 	L.unto_darkness = "AoE 阶段"-- Unto Darkness
 	L.cloud_of_carrion = "腐臭" -- Cloud of Carrion
 	L.manifest_shadows = "小怪" -- Manifest Shadows
-	L.leeching_claws = "正面順劈 (玛)" -- Leeching Claws
+	L.leeching_claws = "正面顺劈 (玛)" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
 	L.fearful_trepidation = "爆裂恐惧" -- Fearful Trepidation
 	L.slumber_cloud = "迷雾" -- Slumber Cloud
-	L.anguishing_strike = "正面順劈 (金)" -- Anguishing Strike
+	L.anguishing_strike = "正面顺劈 (金)" -- Anguishing Strike
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhCN")
@@ -117,17 +117,17 @@ L = BigWigs:NewBossLocale("The Jailer", "zhCN")
 if L then
 	L.rune_of_damnation_countdown = "倒计时"
 	L.rune_of_damnation_countdown_desc = "给受到咒罚符文影响的玩家倒计时。"
-	--L.jump = "Jump In"
+	L.jump = "跳入"
 
-	--L.chain = "Chain"
-	--L.rune = "Rune"
+	L.chain = "链子"
+	L.rune = "符文"
 
-	--L.chain_target = "Chaining %s!"
-	--L.chains_remaining = "%d/%d Chains Broken"
+	L.chain_target = "锁链 %s!"
+	L.chains_remaining = "%d/%d 锁链碎裂"
 
-	--L.chains_of_oppression = "Pull Chains"
-	--L.unholy_attunement = "Pylons"
-	--L.chains_of_anguish = "Spread Chains"
-	--L.rune_of_compulsion = "Charms"
-	--L.rune_of_domination = "Group Soaks"
+	L.chains_of_oppression = "牵引链"
+	L.unholy_attunement = "晶塔"
+	L.chains_of_anguish = "扩散链"
+	L.rune_of_compulsion = "符咒"
+	L.rune_of_domination = "团队承受"
 end
