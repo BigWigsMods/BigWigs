@@ -19,14 +19,14 @@ if L then
 	L.relocation_count = "%s :阶段%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
 	L.wormholes = "虫洞" -- Interdimensional Wormholes
 	L.wormhole = "虫洞" -- Interdimensional Wormhole
-	L.rings = "法环 %d 阶段" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
+	L.rings = "第 %d 阶段法环" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "zhCN")
 if L then
-	L.staggering_barrage = "弹幕" -- Staggering Barrage
+	L.staggering_barrage = "分摊" -- Staggering Barrage
 	L.domination_core = "小怪" -- Domination Core
-	L.obliteration_arc = "湮灭" -- Obliteration Arc
+	L.obliteration_arc = "弹幕" -- Obliteration Arc
 
 	L.disintergration_halo = "光环" -- Disintegration Halo
 	L.rings_x = "光环 x%d"
@@ -129,5 +129,5 @@ if L then
 	L.unholy_attunement = "晶塔"
 	L.chains_of_anguish = "扩散链"
 	L.rune_of_compulsion = "符咒"
-	L.rune_of_domination = "团队承受"
+	L.rune_of_domination = "团队浸泡" --Group Soaks 暂时按照音译翻译。
 end
