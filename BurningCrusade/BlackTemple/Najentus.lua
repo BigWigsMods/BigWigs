@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("High Warlord Naj'entus", 564, 1582)
 if not mod then return end
 mod:RegisterEnableMob(22887)
-mod:SetEncounterID(2473)
+mod:SetEncounterID(601)
 mod:SetAllowWin(true)
 --mod:SetRespawnTime(0) -- Resets, doesn't respawn
 

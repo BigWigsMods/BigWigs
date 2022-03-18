@@ -7,7 +7,7 @@ if not mod then return end
 --Kael'thas Sunstrider, Thaladred the Darkener, Master Engineer Telonicus, Grand Astromancer Capernian, Lord Sanguinar
 mod:RegisterEnableMob(19622, 20064, 20063, 20062, 20060)
 mod:SetAllowWin(true)
-mod:SetEncounterID(2467)
+mod:SetEncounterID(733)
 
 local MCd = mod:NewTargetList()
 local phase = 1

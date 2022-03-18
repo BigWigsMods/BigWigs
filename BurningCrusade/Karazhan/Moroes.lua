@@ -8,7 +8,7 @@ if not mod then return end
 --Lady Keira Berrybuck, Lord Robin Daris, Lord Crispin Ference
 mod:RegisterEnableMob(15687, 19875, 19874, 19872, 17007, 19876, 19873)
 mod:SetAllowWin(true)
-mod:SetEncounterID(2445)
+mod:SetEncounterID(653)
 
 --------------------------------------------------------------------------------
 -- Localization

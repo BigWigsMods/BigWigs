@@ -7,7 +7,7 @@ if not mod then return end
 --The Crone, Dorothee, Tito, Strawman, Tinhead, Roar
 mod:RegisterEnableMob(18168, 17535, 17548, 17543, 17547, 17546)
 mod:SetAllowWin(true)
-mod:SetEncounterID(2447)
+mod:SetEncounterID(655)
 
 --------------------------------------------------------------------------------
 -- Localization

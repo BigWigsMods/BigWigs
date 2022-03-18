@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Kaz'rogal", 534, 1579)
 if not mod then return end
 mod:RegisterEnableMob(17888)
 mod:SetAllowWin(true)
-mod:SetEncounterID(2470)
+mod:SetEncounterID(620)
 
 local count = 1
 

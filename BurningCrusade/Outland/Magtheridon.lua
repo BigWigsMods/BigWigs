@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Magtheridon", 544, 1566)
 if not mod then return end
 mod:RegisterEnableMob(17257, 17256) --Magtheridon, Hellfire Channeler
 mod:SetAllowWin(true)
-mod:SetEncounterID(2457)
+mod:SetEncounterID(651)
 
 local abycount = 1
 

@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("Attumen the Huntsman Raid", 532, 1553)
 if not mod then return end
 mod:RegisterEnableMob(16152, 16151, 15550)
 mod:SetAllowWin(true)
-mod:SetEncounterID(2444)
+mod:SetEncounterID(652)
 
 --------------------------------------------------------------------------------
 -- Localization

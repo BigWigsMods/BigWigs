@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("Azgalor", 534, 1580)
 if not mod then return end
 mod:RegisterEnableMob(17842)
 mod:SetAllowWin(true)
-mod:SetEncounterID(2471)
+mod:SetEncounterID(621)
 
 --------------------------------------------------------------------------------
 -- Localization

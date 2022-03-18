@@ -6,7 +6,7 @@ local mod = BigWigs:NewBoss("The Big Bad Wolf", 532)
 if not mod then return end
 mod:RegisterEnableMob(17521, 17603) --The Big Bad Wolf, Grandmother
 mod:SetAllowWin(true)
-mod:SetEncounterID(2447)
+mod:SetEncounterID(655)
 
 --------------------------------------------------------------------------------
 -- Localization

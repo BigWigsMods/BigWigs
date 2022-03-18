@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Shade of Akama", 564, 1584)
 if not mod then return end
 mod:RegisterEnableMob(23191, 22841) -- Akama, Shade of Akama
-mod:SetEncounterID(2475)
+mod:SetEncounterID(603)
 mod:SetAllowWin(true)
 mod:SetRespawnTime(120)
 

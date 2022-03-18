@@ -6,7 +6,7 @@
 local mod, CL = BigWigs:NewBoss("Illidan Stormrage", 564, 1590)
 if not mod then return end
 mod:RegisterEnableMob(22917, 23089, 22997) -- Illidan Stormrage, Akama, Flame of Azzinoth
-mod:SetEncounterID(2481)
+mod:SetEncounterID(609)
 mod:SetAllowWin(true)
 mod:SetRespawnTime(10)
 

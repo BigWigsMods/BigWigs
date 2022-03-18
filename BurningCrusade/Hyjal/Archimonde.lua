@@ -6,7 +6,7 @@ local mod, CL = BigWigs:NewBoss("ArchimondeHyjal", 534, 1581)
 if not mod then return end
 mod:RegisterEnableMob(17968)
 mod:SetAllowWin(true)
-mod:SetEncounterID(2472)
+mod:SetEncounterID(622)
 
 --------------------------------------------------------------------------------
 -- Localization
