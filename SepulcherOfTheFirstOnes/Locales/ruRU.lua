@@ -89,49 +89,49 @@ end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "ruRU")
 if L then
-	--L.seismic_tremors = "Motes + Tremors"
-	--L.earthbreaker_missiles = "Missiles"
-	--L.crushing_prism = "Prisms"
-	--L.prism = "Prism"
+	L.seismic_tremors = "Частицы + Толчки"
+	L.earthbreaker_missiles = "Снаряды"
+	L.crushing_prism = "Призмы"
+	L.prism = "Призма"
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Всегда показывать полосы заклинаний"
+	L.custom_on_stop_timers_desc = "Галондрий может откладывать свои способности. Когда эта опция включена, полосы этих способностей будут оставаться на экране."
 end
 
 L = BigWigs:NewBossLocale("Lords of Dread", "ruRU")
 if L then
-	--L.unto_darkness = "AoE Phase"
-	--L.cloud_of_carrion = "Carrion"
-	--L.manifest_shadows = "Adds"
-	--L.leeching_claws = "Frontal (M)"
-	--L.infiltration_of_dread = "Among Us"
-	--L.fearful_trepidation = "Fears"
-	--L.slumber_cloud = "Clouds"
-	--L.anguishing_strike = "Frontal (K)"
+	L.unto_darkness = "АОЕ Фаза"
+	L.cloud_of_carrion = "Рой"
+	L.manifest_shadows = "Ады"
+	L.leeching_claws = "Фронтал (M)"
+	L.infiltration_of_dread = "Амогус"
+	L.fearful_trepidation = "Фир"
+	L.slumber_cloud = "Слип"
+	L.anguishing_strike = "Фронтал (K)"
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "ruRU")
 if L then
-	--L.celestial_collapse = "Quasars"
-	--L.manifest_cosmos = "Cores"
-	--L.stellar_shroud = "Heal Absorb"
+	L.celestial_collapse = "Квазары"
+	L.manifest_cosmos = "Сердечники"
+	L.stellar_shroud = "Абсорб хила"
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "ruRU")
 if L then
-	--L.rune_of_damnation_countdown = "Countdown"
-	--L.rune_of_damnation_countdown_desc = "Countdown for the players who are affected by Rune of Damnation"
-	--L.jump = "Jump In"
+	L.rune_of_damnation_countdown = "Отсчёт"
+	L.rune_of_damnation_countdown_desc = "Отсчёт для игроков, поражённых Руной проклятия"
+	L.jump = "ПРЫГАЙ"
 
-	--L.chain = "Chain"
-	--L.rune = "Rune"
+	L.chain = "Цепи"
+	L.rune = "Руна"
 
-	--L.chain_target = "Chaining %s!"
-	--L.chains_remaining = "%d/%d Chains Broken"
+	L.chain_target = "Цепь с %s!"
+	L.chains_remaining = "%d/%d цепей разорвано"
 
-	--L.chains_of_oppression = "Pull Chains"
-	--L.unholy_attunement = "Pylons"
-	--L.chains_of_anguish = "Spread Chains"
-	--L.rune_of_compulsion = "Charms"
-	--L.rune_of_domination = "Group Soaks"
+	L.chains_of_oppression = "Цепи страдания"
+	L.unholy_attunement = "Пилоны"
+	L.chains_of_anguish = "Spread Chains"
+	L.rune_of_compulsion = "Подчинение"
+	L.rune_of_domination = "Делёжка"
 end
