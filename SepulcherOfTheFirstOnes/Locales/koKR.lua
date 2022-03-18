@@ -82,3 +82,52 @@ if L then
 
 	--L.remnant_active = "Remnant Active"
 end
+
+L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "koKR")
+if L then
+	--L.seismic_tremors = "Motes + Tremors"
+	--L.earthbreaker_missiles = "Missiles"
+	--L.crushing_prism = "Prisms"
+	--L.prism = "Prism"
+
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+end
+
+L = BigWigs:NewBossLocale("Lords of Dread", "koKR")
+if L then
+	--L.unto_darkness = "AoE Phase"
+	--L.cloud_of_carrion = "Carrion"
+	--L.manifest_shadows = "Adds"
+	--L.leeching_claws = "Frontal (M)"
+	--L.infiltration_of_dread = "Among Us"
+	--L.fearful_trepidation = "Fears"
+	--L.slumber_cloud = "Clouds"
+	--L.anguishing_strike = "Frontal (K)"
+end
+
+L = BigWigs:NewBossLocale("Rygelon", "koKR")
+if L then
+	--L.celestial_collapse = "Quasars"
+	--L.manifest_cosmos = "Cores"
+	--L.stellar_shroud = "Heal Absorb"
+end
+
+L = BigWigs:NewBossLocale("The Jailer", "koKR")
+if L then
+	--L.rune_of_damnation_countdown = "Countdown"
+	--L.rune_of_damnation_countdown_desc = "Countdown for the players who are affected by Rune of Damnation"
+	--L.jump = "Jump In"
+
+	--L.chain = "Chain"
+	--L.rune = "Rune"
+
+	--L.chain_target = "Chaining %s!"
+	--L.chains_remaining = "%d/%d Chains Broken"
+
+	--L.chains_of_oppression = "Pull Chains"
+	--L.unholy_attunement = "Pylons"
+	--L.chains_of_anguish = "Spread Chains"
+	--L.rune_of_compulsion = "Charms"
+	--L.rune_of_domination = "Group Soaks"
+end

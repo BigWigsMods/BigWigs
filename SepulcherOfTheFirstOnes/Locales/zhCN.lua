@@ -32,10 +32,10 @@ if L then
 	L.rings_x = "光环 x%d"
 	L.rings_enrage = "光环 (激怒)"
 	L.ring_count = "光环 (%d/%d)"
-	
+
 	L.custom_on_ring_timers = "衰变光环计时条"
 	L.custom_on_ring_timers_desc = "使用衰变光环设置：这是显示衰变光环在触发能量环时,开始移动的计时条。"
-	
+
 	L.shield_removed = "%s 在 %.1fs 移除" -- "Shield removed after 1.1s" s = seconds
 end
 
@@ -91,7 +91,7 @@ if L then
 	L.dire_blasphemy = "标记"
 	L.beacon_of_hope = "信标"
 
-	L.remnant_active = "剩余活跃"
+	L.remnant_active = "隕落君王"
 end
 
 L = BigWigs:NewBossLocale("Lords of Dread", "zhCN")
@@ -99,11 +99,11 @@ if L then
 	L.unto_darkness = "AoE 阶段"-- Unto Darkness
 	L.cloud_of_carrion = "腐臭" -- Cloud of Carrion
 	L.manifest_shadows = "小怪" -- Manifest Shadows
-	L.leeching_claws = "正面 (玛)" -- Leeching Claws
-	L.infiltration_of_dread = "渗透" -- Infiltration of Dread
+	L.leeching_claws = "正面順劈 (玛)" -- Leeching Claws
+	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
 	L.fearful_trepidation = "爆裂恐惧" -- Fearful Trepidation
 	L.slumber_cloud = "迷雾" -- Slumber Cloud
-	L.anguishing_strike = "正面 (金)" -- Anguishing Strike
+	L.anguishing_strike = "正面順劈 (金)" -- Anguishing Strike
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhCN")
@@ -117,4 +117,17 @@ L = BigWigs:NewBossLocale("The Jailer", "zhCN")
 if L then
 	L.rune_of_damnation_countdown = "倒计时"
 	L.rune_of_damnation_countdown_desc = "给受到咒罚符文影响的玩家倒计时。"
+	--L.jump = "Jump In"
+
+	--L.chain = "Chain"
+	--L.rune = "Rune"
+
+	--L.chain_target = "Chaining %s!"
+	--L.chains_remaining = "%d/%d Chains Broken"
+
+	--L.chains_of_oppression = "Pull Chains"
+	--L.unholy_attunement = "Pylons"
+	--L.chains_of_anguish = "Spread Chains"
+	--L.rune_of_compulsion = "Charms"
+	--L.rune_of_domination = "Group Soaks"
 end

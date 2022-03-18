@@ -143,20 +143,23 @@ BigWigs:AddColors("Rygelon", {
 })
 
 BigWigs:AddColors("The Jailer", {
+	[359809] = "yellow",
 	[359856] = "purple",
 	[360281] = {"blue","cyan"},
 	[360373] = "yellow",
+	[360562] = "yellow",
+	[362012] = "red",
 	[362028] = "red",
 	[362075] = {"blue","red"},
-	[362401] = {"blue","yellow"},
-	[362631] = "yellow",
 	[363893] = {"blue","purple"},
-	[364488] = "yellow",
 	[365033] = "red",
 	[365150] = {"blue","cyan"},
-	[365169] = "red",
+	[365169] = "orange",
 	[365212] = {"blue","green","yellow"},
+	[365436] = "orange",
 	[365810] = "orange",
-	[366020] = {"blue","orange"},
+	[366132] = {"blue","orange"},
 	[366285] = {"blue","cyan"},
+	[366545] = {"blue","purple"},
+	["stages"] = "cyan",
 })
