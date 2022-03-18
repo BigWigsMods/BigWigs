@@ -117,4 +117,17 @@ L = BigWigs:NewBossLocale("The Jailer", "deDE")
 if L then
 	L.rune_of_damnation_countdown = "Countdown"
 	L.rune_of_damnation_countdown_desc = "Countdown für Spieler welche von Rune der Verdammnis betroffen sind."
+	L.jump = "Reinspringen"
+
+	L.chain = "Kette"
+	L.rune = "Rune"
+
+	L.chain_target = "Kette auf %s!"
+	L.chains_remaining = "%d/%d Ketten gebrochen"
+
+	L.chains_of_oppression = "Ketten zerreißen"
+	L.unholy_attunement = "Pylonen"
+	L.chains_of_anguish = "Ketten auseinander"
+	L.rune_of_compulsion = "Übernommene"
+	L.rune_of_domination = "Gruppensoak"
 end
