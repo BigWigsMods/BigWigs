@@ -131,7 +131,7 @@ if L then
 
 	L.chains_of_oppression = "Цепи страдания"
 	L.unholy_attunement = "Пилоны"
-	L.chains_of_anguish = "Spread Chains"
+	L.chains_of_anguish = "Цепи"
 	L.rune_of_compulsion = "Подчинение"
 	L.rune_of_domination = "Делёжка"
 end
