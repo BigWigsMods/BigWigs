@@ -19,14 +19,14 @@ if L then
 	L.relocation_count = "%s :阶段%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
 	L.wormholes = "虫洞" -- Interdimensional Wormholes
 	L.wormhole = "虫洞" -- Interdimensional Wormhole
-	L.rings = "法环 %d 阶段" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
+	L.rings = "第 %d 阶段法环" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "zhCN")
 if L then
-	L.staggering_barrage = "弹幕" -- Staggering Barrage
+	L.staggering_barrage = "分担" -- Staggering Barrage
 	L.domination_core = "小怪" -- Domination Core
-	L.obliteration_arc = "湮灭" -- Obliteration Arc
+	L.obliteration_arc = "弹幕" -- Obliteration Arc
 
 	L.disintergration_halo = "光环" -- Disintegration Halo
 	L.rings_x = "光环 x%d"
@@ -51,17 +51,17 @@ end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhCN")
 if L then
-	L.protoform_cascade = "散射"
+	L.protoform_cascade = "炸弹"
 	L.cosmic_shift = "击退"
-	L.cosmic_shift_mythic = "次数: %s"
+	L.cosmic_shift_mythic = "击退: %s"
 	L.unstable_mote = "微粒"
 	L.mote = "微粒"
 
 	L.custom_on_nameplate_fixate = "被征用姓名板图标"
 	L.custom_on_nameplate_fixate_desc = "在目标是你的自动体的姓名板上显示图标。\n\n需要使用敌对姓名板和支持姓名板的插件（KuiNameplates,Plater）。"
 
-	L.harmonic = "谐波"
-	L.melodic = "旋律"
+	L.harmonic = "谐波（推离）"
+	L.melodic = "旋律（拉近)"
 end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "zhCN")
@@ -117,17 +117,17 @@ L = BigWigs:NewBossLocale("The Jailer", "zhCN")
 if L then
 	L.rune_of_damnation_countdown = "倒计时"
 	L.rune_of_damnation_countdown_desc = "给受到咒罚符文影响的玩家倒计时。"
-	--L.jump = "Jump In"
+	L.jump = "跳入"
 
-	--L.chain = "Chain"
-	--L.rune = "Rune"
+	L.chain = "锁链"
+	L.rune = "符文"
 
-	--L.chain_target = "Chaining %s!"
-	--L.chains_remaining = "%d/%d Chains Broken"
+	L.chain_target = "锁链 %s!"
+	L.chains_remaining = "%d/%d 锁链破裂"
 
-	--L.chains_of_oppression = "Pull Chains"
-	--L.unholy_attunement = "Pylons"
-	--L.chains_of_anguish = "Spread Chains"
-	--L.rune_of_compulsion = "Charms"
-	--L.rune_of_domination = "Group Soaks"
+	L.chains_of_oppression = "牵引链"
+	L.unholy_attunement = "晶塔"
+	L.chains_of_anguish = "扩散链"
+	L.rune_of_compulsion = "咒符"
+	L.rune_of_domination = "团队浸泡" --暂时按照Group Soaks音译翻译。
 end
