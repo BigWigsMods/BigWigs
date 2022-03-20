@@ -477,6 +477,28 @@ function mod:MarchOfTheDamned(args)
 end
 
 function mod:BeaconOfHope(args)
+	if stage < 3 then
+		-- Skipped intermission
+		self:StopBar(CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
+		self:StopBar(CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
+		self:StopBar(CL.count:format(L.wicked_star, wickedStarCount)) -- Wicked Star
+		self:StopBar(CL.count:format(L.blasphemy, blasphemyCount)) -- Blasphemy
+		self:StopBar(CL.count:format(L.befouled_barrier, barrierCount)) -- Befouled Barrier
+		self:StopBar(CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount)) -- Kingsmourne Hungers
+		self:StopBar(CL.count:format(L.grim_reflections, grimReflectionsCount)) -- Grim Reflections
+		self:StopBar(CL.intermission)
+
+		stage = 3
+		self:SetStage(stage)
+		hopebreakerCount = 1
+		wickedStarCount = 1
+		hopelessnessCount = 1
+
+		self:Bar(361815, 11.5, CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
+		self:Bar(365958, 21.7, CL.count:format(L.dire_blasphemy, hopelessnessCount)) -- Hopelessness
+		self:Bar(365021, 41.0, CL.count:format(L.wicked_star, wickedStarCount)) -- Wicked Star
+	end
+
 	self:StopBar(CL.count:format(L.beacon_of_hope, beaconCount))
 	self:Message(args.spellId, "green", CL.count:format(L.beacon_of_hope, beaconCount))
 	self:PlaySound(args.spellId, "long")
