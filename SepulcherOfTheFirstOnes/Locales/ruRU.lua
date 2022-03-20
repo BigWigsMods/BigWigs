@@ -8,7 +8,7 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
 if L then
-	L.tank_combo_desc = "Таймер для танковской комбы на 100 энергии."
+	L.tank_combo_desc = "При применении Сколексом комбо из трёх ударов на 100 энергии танки должны сблизиться, чтобы по очереди принимать на себя урон от атак."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "ruRU")
