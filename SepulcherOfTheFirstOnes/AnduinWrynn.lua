@@ -161,7 +161,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SoulReaper", 362771)
 	self:Log("SPELL_CAST_SUCCESS", "ArmyOfTheDead", 362862)
 	self:Log("SPELL_CAST_START", "NecroticDetonation", 363024)
-	self:Log("SPELL_AURA_REMOVED", "DominationsGraspRemoved", 365216)
+	self:Log("SPELL_AURA_REMOVED", "DominationsGraspRemoved", 362505)
 	self:Log("SPELL_CAST_START", "GrimReflections", 365120)
 	self:Log("SPELL_SUMMON", "GrimReflectionsSummon", 365039)
 	self:Log("SPELL_CAST_SUCCESS", "MarchOfTheDamned", 363133)
@@ -217,7 +217,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 
 		self:Message("stages", "cyan", CL.intermission, false)
 		self:PlaySound("stages", "long")
-		self:Bar("stages", self:GetStage() == 2 and 10.7 or 9.3, L.remnant_active, 365216)
+		self:Bar("stages", stage == 2 and 10.7 or 9.3, L.remnant_active, 365216)
 
 		armyCount = 1
 		soulReaperCount = 1
@@ -284,7 +284,7 @@ do
 		self:Message(365021, "cyan", CL.incoming:format(CL.count:format(L.wicked_star, wickedStarCount)))
 		self:PlaySound(365021, "long")
 		wickedStarCount = wickedStarCount + 1
-		self:Bar(365021, self:GetStage() == 3 and 58.5 or timers[stage][365021][wickedStarCount], CL.count:format(L.wicked_star, wickedStarCount))
+		self:Bar(365021, stage == 3 and 58.5 or timers[stage][365021][wickedStarCount], CL.count:format(L.wicked_star, wickedStarCount))
 		starWaveCount = 0
 	end
 
@@ -314,7 +314,7 @@ function mod:Hopebreaker(args)
 	self:Message(361815, "yellow", CL.count:format(self:SpellName(361815), hopebreakerCount))
 	self:PlaySound(361815, "alarm")
 	hopebreakerCount = hopebreakerCount + 1
-	self:Bar(361815, self:GetStage() == 3 and 58.5 or timers[stage][361815][hopebreakerCount], CL.count:format(self:SpellName(361815), hopebreakerCount))
+	self:Bar(361815, stage == 3 and 58.5 or timers[stage][361815][hopebreakerCount], CL.count:format(self:SpellName(361815), hopebreakerCount))
 end
 
 do
@@ -364,11 +364,11 @@ function mod:DominationsGraspApplied(args)
 	self:StopBar(CL.count:format(L.grim_reflections, grimReflectionsCount)) -- Grim Reflections
 
 
-	--self:Bar(362862, stage == 2 and 4.3 or 2.8, CL.count:format(L.army_of_the_dead, armyCount)) -- Army of the Dead
-	self:Bar(362771, stage == 2 and 12 or 10.5, CL.count:format(self:SpellName(362771), soulReaperCount)) -- Soul Reaper
-	self:Bar("stages", 69, CL.stage:format(self:GetStage()+1), 363976)
+	self:Bar(362862, stage == 2 and 9.0 or 7.5, CL.count:format(L.army_of_the_dead, armyCount)) -- Army of the Dead
+	self:Bar(362771, stage == 2 and 10.5 or 14.5, CL.count:format(self:SpellName(362771), soulReaperCount)) -- Soul Reaper
+	self:Bar("stages", 75, CL.stage:format(stage + 1), 363976)
 	if stage == 2 then -- Intermission 2
-		self:Bar(363233, 4.5, CL.count:format(L.march_of_the_damned, marchCount)) -- March of the Damned
+		self:Bar(363233, 9.1, CL.count:format(L.march_of_the_damned, marchCount)) -- March of the Damned
 	end
 end
 
@@ -422,9 +422,9 @@ function mod:DominationsGraspRemoved(args)
 		self:Bar(365295, timers[stage][365295][barrierCount], CL.count:format(L.befouled_barrier, barrierCount)) -- Befouled Barrier
 		self:Bar("stages", self:Easy() and 165 or 156, CL.intermission, 365216) -- Domination's Grasp Icon
 	else -- stage 3
-		self:Bar(361815, 12.5, CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
-		self:Bar(365958, 22.7, CL.count:format(L.dire_blasphemy, hopelessnessCount)) -- Hopelessness
-		self:Bar(365021, 42.0, CL.count:format(L.wicked_star, wickedStarCount)) -- Wicked Star
+		self:Bar(361815, 11.1, CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
+		self:Bar(365958, 21.1, CL.count:format(L.dire_blasphemy, hopelessnessCount)) -- Hopelessness
+		self:Bar(365021, 41.1, CL.count:format(L.wicked_star, wickedStarCount)) -- Wicked Star
 	end
 end
 
