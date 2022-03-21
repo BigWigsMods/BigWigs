@@ -297,22 +297,20 @@ function mod:LightshatterBeam(args)
 	self:Message(args.spellId, "purple", L.lightshatter_beam)
 	self:PlaySound(args.spellId, "alert")
 	beamCount = beamCount + 1
-	if self:Tank() then
-		if beamCount % 2 == 0 then
-			self:CDBar(args.spellId, 4.9, L.lightshatter_beam)
-		else
-			self:CDBar(args.spellId, 7.0, L.lightshatter_beam)
-		end
+	if beamCount % 2 == 0 then
+		self:CDBar(args.spellId, 4.9, L.lightshatter_beam)
+	else
+		self:CDBar(args.spellId, 7.0, L.lightshatter_beam)
 	end
 end
 
 function mod:LightshatterBeamApplied(args)
-	-- if self:Tank() and self:Tank(args.destName) then
+	if self:Tank() then
 		self:NewStackMessage(360977, "purple", args.destName, args.amount, nil, L.lightshatter_beam)
 		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
 			self:PlaySound(360977, "warning")
 		end
-	-- end
+	end
 end
 
 do
