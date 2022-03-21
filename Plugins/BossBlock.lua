@@ -492,6 +492,9 @@ do
 		[927] = true, -- Wrathion introduction to Carapace of N'Zoth
 		[926] = true, -- N'Zoth defeat
 		[952] = true, -- Sylvanas defeat
+		[956] = true, -- Anduin defeat
+		[957] = true, -- Jailer intro
+		[958] = true, -- Jailer defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
