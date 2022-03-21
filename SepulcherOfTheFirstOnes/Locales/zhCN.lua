@@ -71,6 +71,8 @@ if L then
 	L.crushing_prism = "棱镜" -- Crushing Prism
 	L.prism = "棱镜"
 
+	-- L.bomb_dropped = "Bomb dropped"
+
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "黑伦度斯可能延迟它的技能。启用此选项后,这些技能将保留在您的屏幕上。"
 end

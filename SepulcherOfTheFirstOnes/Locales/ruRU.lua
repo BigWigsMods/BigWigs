@@ -93,6 +93,8 @@ if L then
 	L.crushing_prism = "Призмы"
 	L.prism = "Призма"
 
+	-- L.bomb_dropped = "Bomb dropped"
+
 	L.custom_on_stop_timers = "Всегда показывать полосы заклинаний"
 	L.custom_on_stop_timers_desc = "Галондрий может откладывать свои способности. Когда эта опция включена, полосы этих способностей будут оставаться на экране."
 end
