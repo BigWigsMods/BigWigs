@@ -89,6 +89,8 @@ if L then
 	--L.crushing_prism = "Prisms"
 	--L.prism = "Prism"
 
+	-- L.bomb_dropped = "Bomb dropped"
+
 	--L.custom_on_stop_timers = "Always show ability bars"
 	--L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
 end

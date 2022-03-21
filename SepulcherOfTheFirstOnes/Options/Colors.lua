@@ -81,15 +81,18 @@ BigWigs:AddColors("Lihuvim, Principal Architect", {
 })
 
 BigWigs:AddColors("Halondrus the Reclaimer", {
+	[360114] = "blue",
 	[360115] = {"green","red"},
 	[360977] = {"blue","purple"},
 	[361676] = "yellow",
 	[364979] = "yellow",
 	[365297] = {"blue","green","yellow"},
 	[367079] = "yellow",
+	[368363] = "blue",
 	[368529] = "yellow",
+	[368969] = {"blue","green"},
 	[369207] = "blue",
-	["stages"] = {"cyan","green","yellow"},
+	["stages"] = {"cyan","green"},
 })
 
 BigWigs:AddColors("Anduin Wrynn", {
