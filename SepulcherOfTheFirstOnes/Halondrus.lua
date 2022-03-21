@@ -27,7 +27,7 @@ local nextStageWarning = 82
 -- Timers
 --
 
-local missleTimersP3 = {17, 25.1, 36.5, 13} -- Earthbreaker Missiles
+local missleTimersP3 = {17.1, 25.1, 36.5, 13} -- Earthbreaker Missiles
 local intermissionTimersHeroic = {
 	[364979] = { -- Shatter
 		[1] = {36, 22.1, 0},
@@ -230,10 +230,10 @@ function mod:VolatileChargeRemoved(args)
 end
 
 function mod:Reclaim(args)
+	self:StopBar(CL.count:format(args.spellName, reclaimCount))
 	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:StopBar(CL.count:format(L.crushing_prism, prismCount))
-	self:StopBar(CL.count:format(args.spellName, reclaimCount))
 	self:StopBar(L.lightshatter_beam)
 
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, reclaimCount))
@@ -274,7 +274,7 @@ end
 
 function mod:EarthbreakerMissiles(args)
 	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.earthbreaker_missiles, misslesCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:PlaySound(args.spellId, "alert")
 	misslesCount = misslesCount + 1
 	if intermission then
@@ -294,7 +294,7 @@ function mod:EarthbreakerMissiles(args)
 end
 
 function mod:LightshatterBeam(args)
-	self:Message(args.spellId, "purple", CL.count:format(CL.beam, beamCount))
+	self:Message(args.spellId, "purple", L.lightshatter_beam)
 	self:PlaySound(args.spellId, "alert")
 	beamCount = beamCount + 1
 	if self:Tank() then
@@ -308,7 +308,7 @@ end
 
 function mod:LightshatterBeamApplied(args)
 	-- if self:Tank() and self:Tank(args.destName) then
-		self:NewStackMessage(360977, "purple", args.destName, args.amount, nil, CL.beam)
+		self:NewStackMessage(360977, "purple", args.destName, args.amount, nil, L.lightshatter_beam)
 		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
 			self:PlaySound(360977, "warning")
 		end
@@ -325,7 +325,7 @@ do
 			self:StopBar(CL.count:format(L.crushing_prism, prismCount))
 			prismCount = prismCount + 1
 			playerList = {}
-			if intermission == true then
+			if intermission then
 				self:CDBar(args.spellId, intermissionTimers[args.spellId][relocationFormCount-1][prismCount], CL.count:format(L.crushing_prism, prismCount))
 			elseif prismCount <= reclaimCount * 2 then
 				self:CDBar(args.spellId, 26, CL.count:format(L.crushing_prism, prismCount))
@@ -336,7 +336,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
-			self:Say(args.spellId)
+			self:Say(args.spellId, L.prism)
 		end
 		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.crushing_prism, prismCount-1))
 		self:CustomIcon(crushingPrismMarker, args.destName, count)
@@ -429,7 +429,7 @@ function mod:Shatter(args)
 end
 
 function mod:EternityOverdrive(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 end
 
