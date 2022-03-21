@@ -78,7 +78,6 @@ if L then
 	L.grim_reflections = "Adds qui fear"
 	L.march_of_the_damned = "Murs"
 	L.dire_blasphemy = "Marques"
-	L.beacon_of_hope = "Signal"
 
 	L.remnant_active = "Vestige actif"
 end

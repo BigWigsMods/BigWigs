@@ -93,7 +93,7 @@ BigWigs:AddColors("Halondrus the Reclaimer", {
 })
 
 BigWigs:AddColors("Anduin Wrynn", {
-	[361815] = "yellow",
+	[361815] = "orange",
 	[361989] = {"blue","yellow"},
 	[362405] = "red",
 	[362771] = "purple",
@@ -160,6 +160,9 @@ BigWigs:AddColors("The Jailer", {
 	[365810] = "orange",
 	[366132] = {"blue","orange"},
 	[366285] = {"blue","cyan"},
+	[366377] = "red",
 	[366545] = {"blue","purple"},
+	[366776] = "red",
+	[367053] = "red",
 	["stages"] = "cyan",
 })

@@ -158,6 +158,9 @@ BigWigs:AddSounds("The Jailer", {
 	[365810] = "alarm",
 	[366132] = "alarm",
 	[366285] = "warning",
+	[366377] = "alert",
 	[366545] = "warning",
-	["stages"] = "long",
+	[366776] = "alert",
+	[367053] = "alert",
+	["stages"] = {"info","long"},
 })
