@@ -77,7 +77,6 @@ if L then
 	L.grim_reflections = "Кик ады"
 	L.march_of_the_damned = "Стенки"
 	L.dire_blasphemy = "Метки"
-	L.beacon_of_hope = "Маяк"
 
 	L.remnant_active = "Тень активна"
 end

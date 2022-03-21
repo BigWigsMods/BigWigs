@@ -78,7 +78,6 @@ if L then
 	--L.grim_reflections = "Fear Adds"
 	--L.march_of_the_damned = "Walls"
 	--L.dire_blasphemy = "Marks"
-	--L.beacon_of_hope = "Beacon"
 
 	--L.remnant_active = "Remnant Active"
 end

@@ -89,7 +89,6 @@ if L then
 	L.grim_reflections = "黑暗镜像"
 	L.march_of_the_damned = "阶段"
 	L.dire_blasphemy = "标记"
-	L.beacon_of_hope = "信标"
 
 	L.remnant_active = "陨落君王"
 end

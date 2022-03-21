@@ -78,7 +78,6 @@ if L then
 	L.grim_reflections = "공포 쫄"
 	L.march_of_the_damned = "행진"
 	L.dire_blasphemy = "징표"
-	L.beacon_of_hope = "봉화"
 
 	--L.remnant_active = "Remnant Active"
 end

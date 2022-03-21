@@ -89,7 +89,6 @@ if L then
 	L.grim_reflections = "Furcht Adds"
 	L.march_of_the_damned = "Wände"
 	L.dire_blasphemy = "Male"
-	L.beacon_of_hope = "Flamme"
 
 	L.remnant_active = "Überrest aktiv"
 end
