@@ -20,6 +20,8 @@ local concCount = 1
 
 function mod:GetOptions()
 	return {
+		43436, -- Fire Nova Totem
+		43429, -- Consecration
 		43383, -- Spirit Bolts
 		43501, -- Siphon Soul
 		43421, -- Lifebloom
@@ -27,7 +29,7 @@ function mod:GetOptions()
 		43451, -- Holy Light
 		43431, -- Flash Heal
 	}, {
-		[43383] = "general",
+		[43436] = "general",
 		[43421] = 43501, -- Siphon Soul
 	}
 end
