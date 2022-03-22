@@ -18,6 +18,8 @@ local flailCount = 1
 local retchCount = 1
 local burrowCount = 1
 local devouringBloodTimer = nil
+local isInfoOpen = false
+local ephemeraDustList = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -45,6 +47,7 @@ function mod:GetOptions()
 		359975, -- Riftmaw
 		364522, -- Devouring Blood
 		364778, -- Destroy
+		{359778, "INFOBOX"}, -- Ephemera Dust
 		366070, -- Volatile Residue
 	},{
 		[366070] = "mythic",
@@ -64,6 +67,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 366070) -- Volatile Residue
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 366070)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 366070)
+	self:Log("SPELL_AURA_APPLIED", "EphemeraDustApplied", 359778)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "EphemeraDustApplied", 359778)
+	self:Log("SPELL_AURA_REMOVED", "EphemeraDustRemoved", 359778)
 end
 
 function mod:OnEngage()
@@ -71,6 +77,8 @@ function mod:OnEngage()
 	flailCount = 1
 	retchCount = 1
 	burrowCount = 1
+	ephemeraDustList = {}
+	isInfoOpen = false
 
 	self:Bar(359829, 2, CL.count:format(self:SpellName(359829), flailCount)) -- Dust Flail
 	self:Bar("tank_combo", 9, CL.count:format(CL.tank_combo, tankComboCounter), L.tank_combo_icon) -- Tank Combo
@@ -170,5 +178,24 @@ do
 				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end
+	end
+end
+
+function mod:EphemeraDustApplied(args)
+	if not isInfoOpen then
+		isInfoOpen = true
+		self:OpenInfo(args.spellId, args.spellName)
+	end
+	ephemeraDustList[args.destName] = args.amount or 1
+	self:SetInfoByTable(args.spellId, ephemeraDustList)
+end
+
+function mod:EphemeraDustRemoved(args)
+	ephemeraDustList[args.destName] = nil
+	if next(ephemeraDustList) then
+		self:SetInfoByTable(args.spellId, ephemeraDustList)
+	elseif isInfoOpen then
+		isInfoOpen = false
+		self:CloseInfo(args.spellId)
 	end
 end
