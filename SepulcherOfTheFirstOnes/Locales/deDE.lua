@@ -71,7 +71,7 @@ if L then
 	L.crushing_prism = "Prismen" -- Crushing Prism
 	L.prism = "Prisma"
 
-	-- L.bomb_dropped = "Bomb dropped"
+	L.bomb_dropped = "Bombe fallen gelassen"
 
 	L.custom_on_stop_timers = "Fähigkeiten Leisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Halondrus kann Fähigkeiten verzögern. Wenn diese Option aktiviert ist, bleiben die Leisten für diese Fähigkeiten bestehen."
