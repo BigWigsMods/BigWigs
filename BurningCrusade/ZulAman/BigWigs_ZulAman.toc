@@ -1,0 +1,33 @@
+## Interface: 20503
+
+## Title: BigWigs [|cffeda55fZul'Aman|r]
+## Title-deDE: BigWigs [|cffeda55fZul'Aman|r]
+## Title-esES: BigWigs [|cffeda55fZul'Aman|r]
+## Title-esMX: BigWigs [|cffeda55fZul'Aman|r]
+## Title-frFR: BigWigs [|cffeda55fZul'Aman|r]
+## Title-itIT: BigWigs [|cffeda55fZul'Aman|r]
+## Title-koKR: BigWigs [|cffeda55fZul'Aman|r]
+## Title-ptBR: BigWigs [|cffeda55fZul'Aman|r]
+## Title-ruRU: BigWigs [|cffeda55fZul'Aman|r]
+## Title-zhCN: BigWigs [|cffeda55fZul'Aman|r]
+## Title-zhTW: BigWigs [|cffeda55fZul'Aman|r]
+## Notes: BigWigs Zul'Aman Modules
+## Notes-deDE: BigWigs Zul'Aman Modules
+## Notes-esES: BigWigs Zul'Aman Modules
+## Notes-esMX: BigWigs Zul'Aman Modules
+## Notes-frFR: BigWigs Zul'Aman Modules
+## Notes-itIT: BigWigs Zul'Aman Modules
+## Notes-koKR: BigWigs Zul'Aman Modules
+## Notes-ptBR: BigWigs Zul'Aman Modules
+## Notes-ruRU: BigWigs Zul'Aman Modules
+## Notes-zhCN: BigWigs Zul'Aman Modules
+## Notes-zhTW: BigWigs Zul'Aman Modules
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 568
+
+modules.xml

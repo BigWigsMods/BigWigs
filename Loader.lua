@@ -164,6 +164,7 @@ do
 		[544] = bc, -- Magtheridon's Lair
 		[534] = bc, -- The Battle for Mount Hyjal
 		[564] = bc, -- Black Temple
+		[568] = bc, -- Zul'Aman
 		[580] = bc, -- The Sunwell
 
 		--[[ LittleWigs: Classic ]]--

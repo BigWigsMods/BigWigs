@@ -20,5 +20,6 @@
 <Include file="BurningCrusade\Karazhan\modules.xml"/>
 <Include file="BurningCrusade\TempestKeep\modules.xml"/>
 <Include file="BurningCrusade\BlackTemple\modules.xml"/>
+<Include file="BurningCrusade\ZulAman\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>
