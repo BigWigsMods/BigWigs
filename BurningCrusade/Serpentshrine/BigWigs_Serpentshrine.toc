@@ -1,4 +1,4 @@
-## Interface: 20503
+## Interface: 20504
 
 ## Title: BigWigs [|cffeda55fSerpentshrine Cavern|r]
 ## Title-deDE: BigWigs [|cffeda55fHöhle des Schlangenschreins|r]

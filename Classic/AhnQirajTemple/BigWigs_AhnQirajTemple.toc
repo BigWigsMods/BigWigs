@@ -1,5 +1,5 @@
 ## Interface: 11402
-## Interface-BCC: 20503
+## Interface-BCC: 20504
 
 ## Title: BigWigs [|cffeda55fAhn'Qiraj Temple|r]
 ## Title-deDE: BigWigs [|cffeda55fTempel von Ahn'Qiraj|r]

@@ -1,4 +1,4 @@
-## Interface: 20503
+## Interface: 20504
 
 ## Title: BigWigs [|cffeda55fThe Battle for Mount Hyjal|r]
 ## Title-deDE: BigWigs [|cffeda55fDie Schlacht um den Hyjal|r]

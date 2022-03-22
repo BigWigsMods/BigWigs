@@ -1,4 +1,4 @@
-## Interface: 20503
+## Interface: 20504
 
 ## Title: BigWigs [|cffeda55fZul'Aman|r]
 ## Title-deDE: BigWigs [|cffeda55fZul'Aman|r]
