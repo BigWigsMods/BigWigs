@@ -5,6 +5,7 @@ BigWigs:AddColors("Rage Winterchill", {
 })
 
 BigWigs:AddColors("Anetheron", {
+	[31298] = "orange",
 	[31299] = {"blue","green","red"},
 	[31306] = "yellow",
 })

@@ -5,6 +5,7 @@ BigWigs:AddSounds("Rage Winterchill", {
 })
 
 BigWigs:AddSounds("Anetheron", {
+	[31298] = "alert",
 	[31299] = "alert",
 })
 
