@@ -35,7 +35,6 @@ function mod:GetOptions()
 		43303, -- Flame Shock
 		43139, -- Frenzy
 		43302, -- Lightning Totem
-		97499, -- Water Totem
 	}
 end
 
