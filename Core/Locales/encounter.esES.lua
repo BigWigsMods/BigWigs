@@ -1,6 +1,12 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "esES")
 if not L then return end
 
+L[186] = "Akil'zon"
+L[187] = "Nalorakk"
+L[188] = "Jan'alai"
+L[189] = "Halazzi"
+L[190] = "Señor aojador Malacrass"
+L[191] = "Zul'jin"
 L[523] = "Shirrak"
 L[524] = "Exarca Maladaar"
 L[527] = "Guardián vigía Gargolmar"

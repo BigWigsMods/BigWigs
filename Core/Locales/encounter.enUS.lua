@@ -1,5 +1,11 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "enUS")
 
+L[186] = "Akil'zon"
+L[187] = "Nalorakk"
+L[188] = "Jan'alai"
+L[189] = "Halazzi"
+L[190] = "Hex Lord Malacrass"
+L[191] = "Zul'jin"
 L[523] = "Shirrak the Dead Watcher"
 L[524] = "Exarch Maladaar"
 L[527] = "Watchkeeper Gargolmar"

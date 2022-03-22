@@ -1,6 +1,12 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "zhCN")
 if not L then return end
 
+L[186] = "埃基尔松"
+L[187] = "纳洛拉克"
+L[188] = "加亚莱"
+L[189] = "哈尔拉兹"
+L[190] = "妖术领主玛拉卡斯"
+L[191] = "祖尔金"
 L[523] = "死亡观察者希尔拉克"
 L[524] = "大主教玛拉达尔"
 L[527] = "巡视者加戈玛"

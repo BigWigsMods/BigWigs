@@ -1,6 +1,12 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "zhTW")
 if not L then return end
 
+L[186] = "阿奇爾森"
+L[187] = "納羅拉克"
+L[188] = "賈納雷"
+L[189] = "哈拉齊"
+L[190] = "妖術領主瑪拉克雷斯"
+L[191] = "祖爾金"
 L[523] = "死亡看守者辛瑞克"
 L[524] = "瑪拉達爾主教"
 L[527] = "看護者卡爾古瑪"

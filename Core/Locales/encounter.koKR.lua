@@ -1,6 +1,12 @@
 local L = BigWigsAPI:NewLocale("BigWigs: Encounters", "koKR")
 if not L then return end
 
+L[186] = "아킬존"
+L[187] = "날로라크"
+L[188] = "잔알라이"
+L[189] = "할라지"
+L[190] = "사술 군주 말라크라스"
+L[191] = "줄진"
 L[523] = "죽음의 감시인 쉴라크"
 L[524] = "총독 말라다르"
 L[527] = "감시자 가르골마르"
