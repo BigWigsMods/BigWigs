@@ -129,21 +129,26 @@ end
 
 do
 	local playerList = {}
+	local prev = 0
 	function mod:DarkEclipse(args)
 		playerList = {}
 		darkEclipseCount = darkEclipseCount + 1
-		if self:Mythic() then
-			if darkEclipseCount < 4 then -- 3 before a Massive Bang
-					self:Bar(args.spellId, 21.9, CL.count:format(args.spellName, darkEclipseCount))
-			end
-		else
-			if darkEclipseCount < 6 then -- 5 before a Massive Bang
-				self:Bar(args.spellId, 11, CL.count:format(args.spellName, darkEclipseCount))
-			end
+		if darkEclipseCount < 4 then -- 3 before a Massive Bang
+				self:Bar(args.spellId, 21.9, CL.count:format(args.spellName, darkEclipseCount))
 		end
 	end
 
 	function mod:DarkEclipseApplied(args)
+		if not self:Mythic() then -- He only has the _success cast in mythic
+			local t = args.time
+			if t-prev > 5 then
+				playerList = {}
+				darkEclipseCount = darkEclipseCount + 1
+				if darkEclipseCount < 6 then -- 5 before a Massive Bang
+					self:Bar(args.spellId, 11, CL.count:format(args.spellName, darkEclipseCount))
+				end
+			end
+		end
 		local count = #playerList+1
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
