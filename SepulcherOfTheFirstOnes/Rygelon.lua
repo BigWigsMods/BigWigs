@@ -71,7 +71,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DarkEclipse", 362806)
-	self:Log("SPELL_AURA_APPLIED", "DarkEclipseApplied", 362806, 361548)
+	self:Log("SPELL_AURA_APPLIED", "DarkEclipseApplied", 362806, 361548) -- Other, Mythic
 	self:Log("SPELL_AURA_REMOVED", "DarkEclipseRemoved", 362806, 361548)
 	self:Log("SPELL_CAST_START", "CelestialCollapse", 362275)
 	self:Log("SPELL_AURA_APPLIED", "EventHorizonApplied", 362206)
