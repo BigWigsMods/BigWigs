@@ -71,7 +71,7 @@ if L then
 	L.crushing_prism = "稜光" -- Crushing Prism
 	L.prism = "稜光"
 
-	-- L.bomb_dropped = "Bomb dropped"
+	L.bomb_dropped = "炸彈掉落"
 
 	L.custom_on_stop_timers = "總是顯示計時器总是显示技能条"
 	L.custom_on_stop_timers_desc = "哈隆德魯斯的技能可能延遲施放。啟用此選項後，這些技能的計時條會保持顯示。"
@@ -118,17 +118,17 @@ L = BigWigs:NewBossLocale("The Jailer", "zhTW")
 if L then
 	L.rune_of_damnation_countdown = "倒數計時"
 	L.rune_of_damnation_countdown_desc = "為受到災罰符文影響的玩家顯示倒數計時。"
-	--L.jump = "Jump In"
+	L.jump = "跳入"
 
-	--L.chain = "Chain"
-	--L.rune = "Rune"
+	L.chain = "鎖鏈"
+	L.rune = "符文"
 
-	--L.chain_target = "Chaining %s!"
-	--L.chains_remaining = "%d/%d Chains Broken"
+	L.chain_target = "鎖鏈：%s!"
+	L.chains_remaining = "鎖鏈拉斷：%d/%d"
 
-	--L.chains_of_oppression = "Pull Chains"
-	--L.unholy_attunement = "Pylons"
-	--L.chains_of_anguish = "Spread Chains"
-	--L.rune_of_compulsion = "Charms"
-	--L.rune_of_domination = "Group Soaks"
+	L.chains_of_oppression = "壓迫之鏈" -- 這個中文技能名夠短，不需縮寫
+	L.unholy_attunement = "水晶塔"
+	L.chains_of_anguish = "痛苦之鏈" -- 這個中文技能名夠短，不需縮寫
+	L.rune_of_compulsion = "心控"
+	L.rune_of_domination = "團隊分攤"
 end
