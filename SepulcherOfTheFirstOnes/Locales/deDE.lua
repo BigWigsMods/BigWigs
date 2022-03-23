@@ -99,17 +99,17 @@ L = BigWigs:NewBossLocale("Lords of Dread", "deDE")
 if L then
 	L.unto_darkness = "AoE Phase"-- Unto Darkness
 	L.cloud_of_carrion = "Fäulnis" -- Cloud of Carrion
-	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
+	L.empowered_cloud_of_carrion = "Große Fäulnis" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "Adds" -- Manifest Shadows
 	L.leeching_claws = "Frontal (M)" -- Leeching Claws
 	L.infiltration_of_dread = "Unter uns" -- Infiltration of Dread
-	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
+	L.infiltration_removed = "Verräter gefunden in %.1fs" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "Furcht" -- Fearful Trepidation
 	L.slumber_cloud = "Wolken" -- Slumber Cloud
 	L.anguishing_strike = "Frontal (K)" -- Anguishing Strike
 
-	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
-	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
+	L.custom_on_repeating_biting_wound = "Beißende Wunden wiederholen"
+	L.custom_on_repeating_biting_wound_desc = "Gibt wiederholt Beißende Wunden Chatnachrichten mit Symbol {rt7} aus, um es sichtbarer zu machen."
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "deDE")
@@ -117,7 +117,7 @@ if L then
 	L.celestial_collapse = "Quasare" -- Celestial Collapse
 	L.manifest_cosmos = "Kerne" -- Manifest Cosmos
 	L.stellar_shroud = "Heilung absorbiert" -- Stellar Shroud
-	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
+	L.knock = "Rückstoß" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "deDE")
