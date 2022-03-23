@@ -103,12 +103,17 @@ L = BigWigs:NewBossLocale("Lords of Dread", "ruRU")
 if L then
 	L.unto_darkness = "АОЕ Фаза"
 	L.cloud_of_carrion = "Рой"
+	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "Ады"
 	L.leeching_claws = "Фронтал (M)"
 	L.infiltration_of_dread = "Амогус"
+	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "Фир"
 	L.slumber_cloud = "Слип"
 	L.anguishing_strike = "Фронтал (K)"
+
+	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
+	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "ruRU")
@@ -116,6 +121,7 @@ if L then
 	L.celestial_collapse = "Квазары"
 	L.manifest_cosmos = "Сердечники"
 	L.stellar_shroud = "Абсорб хила"
+	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "ruRU")
