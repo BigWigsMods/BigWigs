@@ -130,11 +130,11 @@ end
 do
 	local playerList = {}
 	local prev = 0
-	function mod:DarkEclipse(args)
+	function mod:DarkEclipse(args) -- Mythic only
 		playerList = {}
 		darkEclipseCount = darkEclipseCount + 1
 		if darkEclipseCount < 4 then -- 3 before a Massive Bang
-				self:Bar(args.spellId, 21.9, CL.count:format(args.spellName, darkEclipseCount))
+			self:Bar(args.spellId, 21.9, CL.count:format(args.spellName, darkEclipseCount))
 		end
 	end
 
@@ -146,7 +146,7 @@ do
 				playerList = {}
 				darkEclipseCount = darkEclipseCount + 1
 				if darkEclipseCount < 6 then -- 5 before a Massive Bang
-					self:Bar(args.spellId, 11, CL.count:format(args.spellName, darkEclipseCount))
+					self:Bar(362806, 11, CL.count:format(args.spellName, darkEclipseCount))
 				end
 			end
 		end
