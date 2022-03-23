@@ -99,12 +99,17 @@ L = BigWigs:NewBossLocale("Lords of Dread", "koKR")
 if L then
 	--L.unto_darkness = "AoE Phase"
 	--L.cloud_of_carrion = "Carrion"
+	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
 	--L.manifest_shadows = "Adds"
 	--L.leeching_claws = "Frontal (M)"
 	--L.infiltration_of_dread = "Among Us"
+	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
 	--L.fearful_trepidation = "Fears"
 	--L.slumber_cloud = "Clouds"
 	--L.anguishing_strike = "Frontal (K)"
+
+	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
+	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "koKR")
@@ -112,6 +117,7 @@ if L then
 	--L.celestial_collapse = "Quasars"
 	--L.manifest_cosmos = "Cores"
 	--L.stellar_shroud = "Heal Absorb"
+	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "koKR")

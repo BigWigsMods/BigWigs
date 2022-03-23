@@ -99,12 +99,17 @@ L = BigWigs:NewBossLocale("Lords of Dread", "zhTW")
 if L then
 	L.unto_darkness = "AoE 階段"-- Unto Darkness
 	L.cloud_of_carrion = "Carrion" -- Cloud of Carrion
+	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "小怪" -- Manifest Shadows
 	L.leeching_claws = "順劈（瑪）" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
+	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "驚懼爆發" -- Fearful Trepidation
 	L.slumber_cloud = "雲霧" -- Slumber Cloud
 	L.anguishing_strike = "順劈（金）" -- Anguishing Strike
+
+	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
+	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhTW")
@@ -112,6 +117,7 @@ if L then
 	L.celestial_collapse = "類星體" -- Celestial Collapse
 	L.manifest_cosmos = "核心" -- Manifest Cosmos
 	L.stellar_shroud = "治療吸收" -- Stellar Shroud
+	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "zhTW")
