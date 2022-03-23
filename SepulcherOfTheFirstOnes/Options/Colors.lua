@@ -116,7 +116,7 @@ BigWigs:AddColors("Anduin Wrynn", {
 BigWigs:AddColors("Lords of Dread", {
 	[359960] = {"blue","yellow"},
 	[359963] = {"blue","purple"},
-	[360012] = {"blue","cyan","green"},
+	[360012] = {"blue","cyan","green","orange"},
 	[360146] = {"blue","orange","yellow"},
 	[360229] = "yellow",
 	[360284] = {"blue","purple"},
@@ -142,7 +142,7 @@ BigWigs:AddColors("Rygelon", {
 	[364386] = "red",
 	[366379] = "orange",
 	[366606] = "red",
-	[368080] = {"blue","yellow"},
+	[368080] = {"blue","green","yellow"},
 })
 
 BigWigs:AddColors("The Jailer", {

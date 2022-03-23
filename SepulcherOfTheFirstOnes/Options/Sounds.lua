@@ -115,7 +115,7 @@ BigWigs:AddSounds("Anduin Wrynn", {
 BigWigs:AddSounds("Lords of Dread", {
 	[359960] = "alarm",
 	[359963] = "warning",
-	[360012] = {"info","warning"},
+	[360012] = {"alert","info","warning"},
 	[360146] = "alert",
 	[360229] = "alert",
 	[360284] = {"alarm","alert"},
@@ -141,7 +141,7 @@ BigWigs:AddSounds("Rygelon", {
 	[364386] = "warning",
 	[366379] = "alert",
 	[366606] = "alarm",
-	[368080] = "alert",
+	[368080] = {"alert","info","warning"},
 })
 
 BigWigs:AddSounds("The Jailer", {
