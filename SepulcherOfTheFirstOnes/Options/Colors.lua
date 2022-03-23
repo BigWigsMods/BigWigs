@@ -81,19 +81,22 @@ BigWigs:AddColors("Lihuvim, Principal Architect", {
 })
 
 BigWigs:AddColors("Halondrus the Reclaimer", {
+	[360114] = "blue",
 	[360115] = {"green","red"},
 	[360977] = {"blue","purple"},
-	[361676] = "yellow",
+	[361676] = "orange",
 	[364979] = "yellow",
 	[365297] = {"blue","green","yellow"},
 	[367079] = "yellow",
-	[368529] = "yellow",
+	[368363] = "blue",
+	[368529] = "red",
+	[368969] = {"blue","green"},
 	[369207] = "blue",
-	["stages"] = {"cyan","green","yellow"},
+	["stages"] = {"cyan","green"},
 })
 
 BigWigs:AddColors("Anduin Wrynn", {
-	[361815] = "yellow",
+	[361815] = "orange",
 	[361989] = {"blue","yellow"},
 	[362405] = "red",
 	[362771] = "purple",
@@ -113,7 +116,7 @@ BigWigs:AddColors("Anduin Wrynn", {
 BigWigs:AddColors("Lords of Dread", {
 	[359960] = {"blue","yellow"},
 	[359963] = {"blue","purple"},
-	[360012] = {"blue","cyan","green"},
+	[360012] = {"blue","cyan","green","orange"},
 	[360146] = {"blue","orange","yellow"},
 	[360229] = "yellow",
 	[360284] = {"blue","purple"},
@@ -139,7 +142,7 @@ BigWigs:AddColors("Rygelon", {
 	[364386] = "red",
 	[366379] = "orange",
 	[366606] = "red",
-	[368080] = {"blue","yellow"},
+	[368080] = {"blue","green","yellow"},
 })
 
 BigWigs:AddColors("The Jailer", {
@@ -160,6 +163,9 @@ BigWigs:AddColors("The Jailer", {
 	[365810] = "orange",
 	[366132] = {"blue","orange"},
 	[366285] = {"blue","cyan"},
+	[366377] = "red",
 	[366545] = {"blue","purple"},
+	[366776] = "red",
+	[367053] = "red",
 	["stages"] = "cyan",
 })

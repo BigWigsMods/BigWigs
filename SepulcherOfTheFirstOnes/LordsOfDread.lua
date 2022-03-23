@@ -21,6 +21,11 @@ local slumberCloudCount = 1
 local tankList = {}
 
 local fearTimers = {27.2, 53.5, 29.0, 12.0, 29.2, 49.9, 29.1, 22.1, 58.5, 29.2, 12.8, 29.1, 49.8, 29.2, 23.7} -- 4, 8, 11, 15 are timers from Among Us _End
+local fearCasts = 0
+local empCarrion = false
+local bitesOnMe = false
+local bitesSayTimer = nil
+local nextAmongUs = 0
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -30,20 +35,24 @@ local L = mod:GetLocale()
 if L then
 	L.unto_darkness = "AoE Phase"-- Unto Darkness
 	L.cloud_of_carrion = "Carrion" -- Cloud of Carrion
+	L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "Adds" -- Manifest Shadows
 	L.leeching_claws = "Frontal (M)" -- Leeching Claws
 	L.infiltration_of_dread = "Among Us" -- Infiltration of Dread
+	L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "Fears" -- Fearful Trepidation
 	L.slumber_cloud = "Clouds" -- Slumber Cloud
 	L.anguishing_strike = "Frontal (K)" -- Anguishing Strike
+
+	L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
+	L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
--- MARK 183138 XXX
-local fearfulTrepidationMarker = mod:AddMarkerOption(false, "player", 8, 361745, 1, 2) -- Fearful Trepidation
+local fearfulTrepidationMarker = mod:AddMarkerOption(false, "player", 8, 360146, 1, 2) -- Fearful Trepidation
 function mod:GetOptions()
 	return {
 		360374, -- Rampaging Swarm
@@ -51,6 +60,7 @@ function mod:GetOptions()
 		-- Mal'Ganis
 		360319, -- Unto Darkness
 		360012, -- Cloud of Carrion
+		"custom_on_repeating_biting_wound",
 		361913, -- Manifest Shadows
 		--361923, -- Ravenous Hunger
 		361934, -- Incomplete Form
@@ -84,6 +94,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CloudOfCarrion", 360006)
 	self:Log("SPELL_AURA_APPLIED", "CloudOfCarrionApplied", 360012)
 	self:Log("SPELL_AURA_REMOVED", "CloudOfCarrionRemoved", 360012)
+	self:Log("SPELL_AURA_APPLIED", "BitingWoundsApplied", 364985)
+	self:Log("SPELL_AURA_REMOVED", "BitingWoundsRemoved", 364985)
 	self:Log("SPELL_CAST_START", "ManifestShadows", 361913)
 	--self:Log("SPELL_CAST_START", "RavenousHunger", 361923)
 	self:Log("SPELL_AURA_REMOVED", "IncompleteFormRemoved", 361934)
@@ -113,18 +125,26 @@ function mod:OnEngage()
 	infiltrationOfDreadCount = 1
 	fearfulTrepidationCount = 1
 	slumberCloudCount = 1
+	fearCasts = 0
+	empCarrion = false
+	bitesOnMe = false
 
-	self:Bar(360012, 6, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
-	self:Bar(361913, 12, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
+	self:Bar(360012, self:Mythic() and 7 or 6, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
+	self:Bar(361913, 13, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
 	self:Bar(359960, 15.5, L.leeching_claws) -- Leeching Claws
 	self:Bar(360319, 51, CL.count:format(L.unto_darkness, untoDarknessCount)) -- Unto Darkness
 
 	self:Bar(360284, 8.5, L.anguishing_strike) -- Anguishing Strike
-	self:Bar(360229, 12, CL.count:format(L.slumber_cloud, slumberCloudCount)) -- Slumber Cloud
+	self:Bar(360229, 13, CL.count:format(L.slumber_cloud, slumberCloudCount)) -- Slumber Cloud
 	self:Bar(360146, 25.1, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount)) -- Fearful Trepidation
 	self:Bar(360717, 124, CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount)) -- Infiltration of Dread
+	nextAmongUs = GetTime() + 124
 
-	self:Berserk(600)
+	if self:Mythic() then
+		self:Berserk(540)
+	else
+		self:Berserk(600)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -151,18 +171,37 @@ function mod:SwarmOfDecay()
 	self:Message(360319, "yellow", CL.count:format(L.unto_darkness, untoDarknessCount))
 	self:PlaySound(360319, "alert")
 	untoDarknessCount = untoDarknessCount + 1
+	if self:Mythic() then
+		empCarrion = true
+		self:Bar(360012, 30.5, CL.count:format(L.empowered_cloud_of_carrion, cloudOfCarrionCount))
+		self:Bar(361913, 33.6, CL.count:format(L.manifest_shadows, manifestShadowsCount))
+
+		self:StopBar(CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
+		local cd = fearCasts == 2 and 40 or 28
+		self:Bar(360146, cd, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
+	end
 end
 
 do
 	local playerList = {}
 	local prev = 0
 	function mod:CloudOfCarrion(args)
+		local text = empCarrion and L.empowered_cloud_of_carrion or L.cloud_of_carrion
 		self:StopBar(CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount))
+		self:StopBar(CL.count:format(L.empowered_cloud_of_carrion, cloudOfCarrionCount))
+		self:Message(360012, "orange", CL.casting:format(CL.count:format(text, cloudOfCarrionCount)))
+		self:PlaySound(360012, "alert")
 		playerList = {}
 		prev = args.time
 		cloudOfCarrionCount = cloudOfCarrionCount + 1
-		if cloudOfCarrionCount % 4 ~= 1 then -- Skip 5, 9, 13...
-			self:Bar(360012, cloudOfCarrionCount % 2 == 1 and 51.5 or 21.8, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount))
+		if self:Mythic() then
+			if cloudOfCarrionCount % 2 == 0 then
+				self:Bar(360012, 21.9, CL.count:format(text, cloudOfCarrionCount))
+			end
+		else
+			if cloudOfCarrionCount % 4 ~= 1 then -- Skip 5, 9, 13...
+				self:Bar(360012, cloudOfCarrionCount % 2 == 1 and 51.5 or 21.8, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount))
+			end
 		end
 	end
 
@@ -189,12 +228,32 @@ do
 	end
 end
 
+function mod:BitingWoundsApplied(args)
+	if self:Me(args.destGUID) then
+		if self:GetOption("custom_on_repeating_biting_wound") then
+			self:Say(false, "{rt7}", true)
+			bitesSayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, "{rt7}", true)
+		end
+		bitesOnMe = true
+	end
+end
+
+function mod:BitingWoundsRemoved(args)
+	if self:Me(args.destGUID) then
+		if bitesSayTimer then
+			self:CancelTimer(bitesSayTimer)
+			bitesSayTimer = nil
+		end
+		bitesOnMe = false
+	end
+end
+
 function mod:ManifestShadows(args)
 	self:StopBar(CL.count:format(L.manifest_shadows, manifestShadowsCount))
 	self:Message(args.spellId, "yellow", CL.count:format(L.manifest_shadows, manifestShadowsCount))
 	self:PlaySound(args.spellId, "alert")
 	manifestShadowsCount = manifestShadowsCount + 1
-	if manifestShadowsCount % 2 == 0 then -- Only start a bar for even casts
+	if not self:Mythic() and manifestShadowsCount % 2 == 0 then -- Only start a bar for all even casts
 		self:Bar(args.spellId, 72.5, CL.count:format(L.manifest_shadows, manifestShadowsCount))
 	end
 end
@@ -241,36 +300,79 @@ function mod:OpenedVeinsApplied(args)
 end
 
 -- Kin'tessa
-function mod:InfiltrationOfDread(args)
-	if self:MobId(args.sourceGUID) == 181399 then -- Kin'tessa
-		self:StopBar(CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount))
-		self:Message(args.spellId, "yellow", CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount))
-		self:PlaySound(args.spellId, "alert")
-		infiltrationOfDreadCount = infiltrationOfDreadCount + 1
-	end
-end
-
 do
-	local prev = 0
-	function mod:InfiltrationOfDreadOver(args)
-		if args.time - 10 > prev then
-			prev = args.time
-			self:Message(360717, "green", CL.over:format(CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount-1)))
-			self:PlaySound(360717, "long")
+	local amongUsStart = 0
+	function mod:InfiltrationOfDread(args)
+		if self:MobId(args.sourceGUID) == 181399 then -- Kin'tessa
+			self:StopBar(CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount))
+			self:Message(args.spellId, "yellow", CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount))
+			self:PlaySound(args.spellId, "alert")
+			infiltrationOfDreadCount = infiltrationOfDreadCount + 1
+
+			self:StopBar(CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
+			self:StopBar(CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount))
+			self:StopBar(CL.count:format(L.empowered_cloud_of_carrion, cloudOfCarrionCount))
 
 			self:CDBar(359960, 5, L.leeching_claws) -- Leeching Claws
-			self:CDBar(360012, 7.5, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
-			self:CDBar(361913, 10, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
-			self:CDBar(360319, 51, CL.count:format(L.unto_darkness, untoDarknessCount)) -- Unto Darkness
+			self:Bar(360012, 7.5, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
+			self:Bar(361913, self:Mythic() and 9.5 or 10, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
+			self:Bar(360319, 51, CL.count:format(L.unto_darkness, untoDarknessCount)) -- Unto Darkness
 
-			self:Bar(360229, 5, CL.count:format(L.slumber_cloud, slumberCloudCount)) -- Slumber Cloud
-			self:Bar(360284, 8, L.anguishing_strike) -- Anguishing Strike
-			self:Bar(360146, fearTimers[fearfulTrepidationCount], CL.count:format(L.fearful_trepidation, fearfulTrepidationCount)) -- Fearful Trepidation
-			self:Bar(360717, 124, CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount)) -- Infiltration of Dread
+			self:CDBar(360284, 8, L.anguishing_strike) -- Anguishing Strike
+			self:Bar(360717, 126, CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount)) -- Infiltration of Dread
+			nextAmongUs = GetTime() + 126
+			if self:Mythic() then
+				local cd = 10.7 -- 10.7 on first Among Us
+				if infiltrationOfDreadCount == 3 then -- either short or long
+					cd = fearCasts == 3 and 5 or 22
+				elseif infiltrationOfDreadCount == 4 then -- last one, short or long
+					cd = fearCasts == 3 and 10.5 or 17
+				end
+				self:CDBar(360146, cd, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount)) -- Fearful Trepidation
+				self:Bar(360229, cd == 5 and 7 or 5, CL.count:format(L.slumber_cloud, slumberCloudCount)) -- Slumber Cloud
+			else
+				self:CDBar(360146, fearTimers[fearfulTrepidationCount], CL.count:format(L.fearful_trepidation, fearfulTrepidationCount)) -- Fearful Trepidation
+				self:Bar(360229, 5, CL.count:format(L.slumber_cloud, slumberCloudCount)) -- Slumber Cloud
+			end
+			fearCasts = 0
+			empCarrion = false
+			amongUsStart = args.time
+
+			-- Pauze to show timers once you finish Among Us
+			self:PauseBar(359960, L.leeching_claws) -- Leeching Claws
+			self:PauseBar(360012, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
+			self:PauseBar(361913, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
+			self:PauseBar(360319, CL.count:format(L.unto_darkness, untoDarknessCount)) -- Unto Darkness
+
+			self:PauseBar(360229, CL.count:format(L.slumber_cloud, slumberCloudCount)) -- Slumber Cloud
+			self:PauseBar(360284, L.anguishing_strike) -- Anguishing Strike
+			self:PauseBar(360717, CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount)) -- Infiltration of Dread
+			self:PauseBar(360146, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount)) -- Fearful Trepidation
+		end
+	end
+
+	do
+		local prev = 0
+		function mod:InfiltrationOfDreadOver(args)
+			if args.time - 10 > prev then
+				prev = args.time
+				self:Message(360717, "green", L.infiltration_removed:format(args.time-amongUsStart), "inv_eyeofnzothpet")
+				self:PlaySound(360717, "long")
+
+				-- Resume bars!
+				self:ResumeBar(359960, L.leeching_claws) -- Leeching Claws
+				self:ResumeBar(360012, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
+				self:ResumeBar(361913, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
+				self:ResumeBar(360319, CL.count:format(L.unto_darkness, untoDarknessCount)) -- Unto Darkness
+
+				self:ResumeBar(360229, CL.count:format(L.slumber_cloud, slumberCloudCount)) -- Slumber Cloud
+				self:ResumeBar(360284, L.anguishing_strike) -- Anguishing Strike
+				self:ResumeBar(360717, CL.count:format(L.infiltration_of_dread, infiltrationOfDreadCount)) -- Infiltration of Dread
+				self:ResumeBar(360146, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount)) -- Fearful Trepidation
+			end
 		end
 	end
 end
-
 
 do
 	local playerList = {}
@@ -281,8 +383,15 @@ do
 		self:Message(360146, "yellow", CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
 		self:PlaySound(360146, "alert")
 		fearfulTrepidationCount = fearfulTrepidationCount + 1
-		if fearfulTrepidationCount ~= 4 and fearfulTrepidationCount ~= 8 and fearfulTrepidationCount ~= 11 and fearfulTrepidationCount ~= 15 then
-			self:Bar(360146, fearfulTrepidationCount % 2 == 0 and 50 or 30, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
+		fearCasts = fearCasts + 1
+		if self:Mythic() then
+			if fearfulTrepidationCount ~= 2 or nextAmongUs > GetTime() + 15 then
+				self:Bar(360146, 29.1, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
+			end
+		else
+			if fearfulTrepidationCount ~= 4 and fearfulTrepidationCount ~= 8 and fearfulTrepidationCount ~= 11 and fearfulTrepidationCount ~= 15 then
+				self:Bar(360146, fearfulTrepidationCount % 2 == 0 and 50 or 30, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
+			end
 		end
 	end
 
@@ -292,8 +401,14 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID)then
-			self:Say(args.spellId, CL.count_rticon:format(L.fearful_trepidation, icon, icon))
-			self:SayCountdown(args.spellId, 8, icon)
+			local sayIcon = bitesSayTimer and 7 or nil
+			local sayText = bitesSayTimer and CL.count_rticon:format(L.fearful_trepidation, icon, sayIcon) or nil
+			self:Say(args.spellId, sayText)
+			self:SayCountdown(args.spellId, 8, sayIcon, 5)
+			if bitesSayTimer then
+				self:CancelTimer(bitesSayTimer)
+				bitesSayTimer = nil
+			end
 		end
 		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount-1))
 		self:CustomIcon(fearfulTrepidationMarker, args.destName, icon)
@@ -312,9 +427,14 @@ function mod:SlumberCloud(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.slumber_cloud, slumberCloudCount))
 	self:PlaySound(args.spellId, "alert")
 	slumberCloudCount = slumberCloudCount + 1
-	if slumberCloudCount % 2 == 0 then -- Only start a bar for even casts
-		local cd = slumberCloudCount == 2 and 69.3 or slumberCloudCount == 4 and 73 or slumberCloudCount == 6 and 75 or slumberCloudCount == 8 and 73
-		self:Bar(args.spellId, 72, CL.count:format(L.slumber_cloud, slumberCloudCount))
+	if self:Mythic() then
+		local cd = slumberCloudCount % 3 == 2 and 33 or slumberCloudCount % 3 == 0 and 53 or 0
+		self:Bar(args.spellId, cd, CL.count:format(L.slumber_cloud, slumberCloudCount))
+	else
+		if slumberCloudCount % 2 == 0 then -- Only start a bar for all even casts
+			local cd = slumberCloudCount == 2 and 69.3 or slumberCloudCount == 4 and 73 or slumberCloudCount == 6 and 75 or slumberCloudCount == 8 and 73
+			self:Bar(args.spellId, 72, CL.count:format(L.slumber_cloud, slumberCloudCount))
+		end
 	end
 end
 

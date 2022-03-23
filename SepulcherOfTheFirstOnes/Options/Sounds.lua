@@ -80,13 +80,16 @@ BigWigs:AddSounds("Lihuvim, Principal Architect", {
 })
 
 BigWigs:AddSounds("Halondrus the Reclaimer", {
-	[360115] = {"info","long"},
+	[360114] = "underyou",
+	[360115] = {"alarm","info","long"},
 	[360977] = {"alert","warning"},
 	[361676] = "alert",
 	[364979] = "long",
 	[365297] = {"alarm","info"},
 	[367079] = "alert",
+	[368363] = "underyou",
 	[368529] = "long",
+	[368969] = {"alarm","info"},
 	[369207] = "underyou",
 	["stages"] = "long",
 })
@@ -112,7 +115,7 @@ BigWigs:AddSounds("Anduin Wrynn", {
 BigWigs:AddSounds("Lords of Dread", {
 	[359960] = "alarm",
 	[359963] = "warning",
-	[360012] = {"info","warning"},
+	[360012] = {"alert","info","warning"},
 	[360146] = "alert",
 	[360229] = "alert",
 	[360284] = {"alarm","alert"},
@@ -138,7 +141,7 @@ BigWigs:AddSounds("Rygelon", {
 	[364386] = "warning",
 	[366379] = "alert",
 	[366606] = "alarm",
-	[368080] = "alert",
+	[368080] = {"alert","info","warning"},
 })
 
 BigWigs:AddSounds("The Jailer", {
@@ -158,6 +161,9 @@ BigWigs:AddSounds("The Jailer", {
 	[365810] = "alarm",
 	[366132] = "alarm",
 	[366285] = "warning",
+	[366377] = "alert",
 	[366545] = "warning",
-	["stages"] = "long",
+	[366776] = "alert",
+	[367053] = "alert",
+	["stages"] = {"info","long"},
 })

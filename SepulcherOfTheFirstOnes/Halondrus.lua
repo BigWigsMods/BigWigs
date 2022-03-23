@@ -1,18 +1,4 @@
 --------------------------------------------------------------------------------
--- WCL Queries:
--- (ability.id = 360977 or ability.id = 359235 or ability.id = 359236) and type = "begincast"
--- (ability.id = 361676 or ability.id = 359235 or ability.id = 359236) and type = "begincast"
--- (ability.id = 367079 or ability.id = 359235 or ability.id = 359236) and type = "begincast"
--- (ability.id = 365297 and type = "applydebuff") or ((ability.id = 359235 or ability.id = 359236) and type = "begincast")
--- (ability.id = 360115 or ability.id = 359235 or ability.id = 359236) and type = "begincast"
--- (ability.id = 364979 or ability.id = 359235 or ability.id = 359236) and type = "begincast"
---
--- Normal: X
--- Heroic: X
--- Mythic: X
---
-
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -41,8 +27,8 @@ local nextStageWarning = 82
 -- Timers
 --
 
-local missleTimersP3 = {17, 24.5, 37.2, 13} -- Earthbreaker Missiles
-local intermissionTimers = {
+local missleTimersP3 = {17.1, 25.1, 36.5, 13} -- Earthbreaker Missiles
+local intermissionTimersHeroic = {
 	[364979] = { -- Shatter
 		[1] = {36, 22.1, 0},
 		[2] = {29.9, 24.1, 18.0, 0},
@@ -56,6 +42,21 @@ local intermissionTimers = {
 		[2] = {6.1, 18.1, 26.1},
 	}
 }
+local intermissionTimersMythic = {
+	[364979] = { -- Shatter
+		[1] = {24.5, 22.1, 0},
+		[2] = {18.6, 24.1, 18.0, 0},
+	},
+	[365297] = { -- Crushing Prism
+		[1] = {5.6, 26.0, 14.0, 0},
+		[2] = {13.6, 18.1, 18.1, 0},
+	},
+	[361676] = { -- Earthbreaker Missiles
+		[1] = {10.5, 26.1, 37.7},
+		[2] = {6.1, 18.1, 26.1, 46.3},
+	}
+}
+local intermissionTimers = mod:Mythic() and intermissionTimersMythic or intermissionTimersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -67,6 +68,11 @@ if L then
 	L.earthbreaker_missiles = "Missiles" -- Earthbreaker Missiles
 	L.crushing_prism = "Prisms" -- Crushing Prism
 	L.prism = "Prism"
+	L.ephemeral_fissure = mod:SpellName(192522) -- Fissure
+	L.lightshatter_beam = CL.beam
+
+	L.volatile_charge = CL.bomb
+	L.bomb_dropped = "Bomb dropped"
 
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
@@ -81,13 +87,16 @@ function mod:GetOptions()
 	return {
 		"stages",
 		"custom_on_stop_timers",
+		368969, -- Volatile Charge
 		360115, -- Reclaim XXX Shield tracker
 		367079, -- Seismic Tremors
+		360114, -- Ephemeral Fissure
 		361676, -- Earthbreaker Missiles
 		369207, -- Planetcracker Beam
 		{360977, "TANK"}, -- Lightshatter Beam
 		{365297, "SAY"}, -- Crushing Prism
 		crushingPrismMarker,
+		368363, -- Shattered Prism
 		364979, -- Shatter
 		368529, -- Eternity Overdrive
 	},{
@@ -96,9 +105,11 @@ function mod:GetOptions()
 		[362056] = -23917, -- Stage Two: The Shimmering Cliffs
 		[368529] = -24707, -- Stage Three: A Broken Cycle
 	},{
+		[368969] = L.volatile_charge,
 		[367079] = L.seismic_tremors,
+		[360114] = L.ephemeral_fissure,
 		[361676] = L.earthbreaker_missiles,
-		[360977] = CL.beam,
+		[360977] = L.lightshatter_beam,
 		[365297] = L.crushing_prism,
 	}
 end
@@ -109,6 +120,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Reclaim", 360115)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "ReclaimedDose", 360115)
 	self:Log("SPELL_AURA_REMOVED", "ReclaimRemoved", 360115)
 	self:Log("SPELL_CAST_START", "SeismicTremors", 367079)
 	self:Log("SPELL_CAST_START", "EarthbreakerMissiles", 361676)
@@ -123,9 +135,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Shatter", 364979)
 	self:Log("SPELL_CAST_START", "EternityOverdrive", 368529)
 
-	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 369207) -- Planetcracker Beam
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 369207)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 369207)
+	-- Planetcracker Beam, Shattered Prism, Ephemeral Fissure
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 369207, 368363, 360114)
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 369207, 368363, 360114)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 369207, 368363, 360114)
+
+	self:Log("SPELL_AURA_APPLIED", "VolatileChargeApplied", 368969)
+	self:Log("SPELL_AURA_REMOVED", "VolatileChargeRemoved", 368969)
 
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
@@ -142,10 +158,14 @@ function mod:OnEngage()
 	shatterCount = 1
 	intermission = false
 	nextStageWarning = 79.5
+	intermissionTimers = self:Mythic() and intermissionTimersMythic or intermissionTimersHeroic
 
-	self:Bar(367079, 8, CL.count:format(L.seismic_tremors, seismicTremorsCount))
-	self:Bar(365297, 21.1, CL.count:format(L.crushing_prism, prismCount))
-	self:Bar(361676, 43.1, CL.count:format(L.earthbreaker_missiles, misslesCount))
+	if not self:Easy() then
+		self:CDBar(360977, 8, L.lightshatter_beam) -- Lightshatter Beam
+	end
+	self:Bar(367079, self:Mythic() and 4.9 or 8, CL.count:format(L.seismic_tremors, seismicTremorsCount))
+	self:Bar(365297, self:Mythic() and 17 or 21.1, CL.count:format(L.crushing_prism, prismCount))
+	self:Bar(361676, self:Mythic() and 11 or 43.1, CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:Bar(360115, 61.2, CL.count:format(self:SpellName(360115), reclaimCount))
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
@@ -172,6 +192,7 @@ do
 		[365297] = true, -- Crushing Prism
 		[367079] = true, -- Seismic Tremors
 		[360115] = true, -- Reclaim
+		[360977] = true, -- Lightshattter Beam
 	}
 
 	local castPattern = CL.cast:gsub("%%s", ".+")
@@ -192,25 +213,53 @@ do
 	end
 end
 
+function mod:VolatileChargeApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, L.volatile_charge)
+		self:Bar(args.spellId, 10, CL.explosion)
+		self:PlaySound(args.spellId, "alarm")
+	end
+end
+
+function mod:VolatileChargeRemoved(args)
+	if self:Me(args.destGUID) then
+		self:Message(args.spellId, "green", L.bomb_dropped)
+		self:StopBar(CL.explosion)
+		self:PlaySound(args.spellId, "info")
+	end
+end
+
 function mod:Reclaim(args)
+	self:StopBar(CL.count:format(args.spellName, reclaimCount))
 	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:StopBar(CL.count:format(L.crushing_prism, prismCount))
-	self:StopBar(CL.count:format(args.spellName, reclaimCount))
+	self:StopBar(L.lightshatter_beam)
 
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, reclaimCount))
 	self:PlaySound(args.spellId, "long")
-	reclaimCount = reclaimCount + 1
+	self:CastBar(args.spellId, 4, CL.count:format(args.spellName, reclaimCount))
+end
+
+function mod:ReclaimedDose(args)
+	if args.amount > 2 and args.amount % 2 == 1 then -- ramps every 4, warn every other starting with 3
+		self:Message(args.spellId, "red", ("%dx %s (%d)"):format(args.amount, args.spellName, reclaimCount))
+		self:PlaySound(args.spellId, "alarm")
+	end
 end
 
 function mod:ReclaimRemoved(args)
 	self:Message(args.spellId, "green", CL.removed:format(CL.count:format(args.spellName, reclaimCount)))
 	self:PlaySound(args.spellId, "info")
-
-	self:Bar(367079, 4.5, CL.count:format(L.seismic_tremors, seismicTremorsCount))
-	self:Bar(365297, 8, CL.count:format(L.crushing_prism, prismCount))
-	self:Bar(361676, 11, CL.count:format(L.earthbreaker_missiles, misslesCount))
+	reclaimCount = reclaimCount + 1
 	self:Bar(360115, 61.2, CL.count:format(self:SpellName(360115), reclaimCount))
+
+	if not self:Easy() then
+		self:CDBar(360977, 8, L.lightshatter_beam) -- Lightshatter Beam
+	end
+	self:Bar(367079, 4.5, CL.count:format(L.seismic_tremors, seismicTremorsCount))
+	self:Bar(365297, self:Mythic() and 17 or 8, CL.count:format(L.crushing_prism, prismCount))
+	self:Bar(361676, 11, CL.count:format(L.earthbreaker_missiles, misslesCount))
 end
 
 function mod:SeismicTremors(args)
@@ -218,31 +267,49 @@ function mod:SeismicTremors(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:PlaySound(args.spellId, "alert")
 	seismicTremorsCount = seismicTremorsCount + 1
-	self:Bar(args.spellId, 26, CL.count:format(L.seismic_tremors, seismicTremorsCount))
+	if seismicTremorsCount <= reclaimCount * 2 then
+		self:Bar(args.spellId, self:Mythic() and 27.5 or 26, CL.count:format(L.seismic_tremors, seismicTremorsCount))
+	end
 end
 
 function mod:EarthbreakerMissiles(args)
 	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.earthbreaker_missiles, misslesCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:PlaySound(args.spellId, "alert")
 	misslesCount = misslesCount + 1
 	if intermission then
 		self:CDBar(args.spellId, intermissionTimers[args.spellId][relocationFormCount-1][misslesCount], CL.count:format(L.earthbreaker_missiles, misslesCount))
-	else
-		self:CDBar(args.spellId, self:GetStage() == 3 and missleTimersP3[misslesCount] or  26, CL.count:format(L.earthbreaker_missiles, misslesCount))
+	elseif self:GetStage() == 3 then
+		if misslesCount < (self:Mythic() and 4 or 5) then
+			self:CDBar(args.spellId, missleTimersP3[misslesCount] or 0, CL.count:format(L.earthbreaker_missiles, misslesCount))
+		end
+	elseif self:Mythic() then
+		if misslesCount <= reclaimCount * 2 then
+			self:CDBar(args.spellId, 26, CL.count:format(L.earthbreaker_missiles, misslesCount))
+		end
+	elseif (reclaimCount > 1 or relocationFormCount > 1) and misslesCount <= reclaimCount * 2 then
+		-- only one earthbreaker before the first reclaim in normal/heroic
+		self:CDBar(args.spellId, 26, CL.count:format(L.earthbreaker_missiles, misslesCount))
 	end
 end
 
 function mod:LightshatterBeam(args)
-	self:Message(args.spellId, "purple", CL.count:format(CL.beam, beamCount))
+	self:Message(args.spellId, "purple", L.lightshatter_beam)
 	self:PlaySound(args.spellId, "alert")
 	beamCount = beamCount + 1
+	if beamCount % 2 == 0 then
+		self:CDBar(args.spellId, 4.9, L.lightshatter_beam)
+	else
+		self:CDBar(args.spellId, 7.0, L.lightshatter_beam)
+	end
 end
 
 function mod:LightshatterBeamApplied(args)
-	self:NewStackMessage(360977, "purple", args.destName, args.amount, nil, CL.beam)
-	if not self:Me(args.destGUID) and not self:Tanking("boss1") then
-		self:PlaySound(360977, "warning")
+	if self:Tank() then
+		self:NewStackMessage(360977, "purple", args.destName, args.amount, nil, L.lightshatter_beam)
+		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
+			self:PlaySound(360977, "warning")
+		end
 	end
 end
 
@@ -256,9 +323,9 @@ do
 			self:StopBar(CL.count:format(L.crushing_prism, prismCount))
 			prismCount = prismCount + 1
 			playerList = {}
-			if intermission == true then
+			if intermission then
 				self:CDBar(args.spellId, intermissionTimers[args.spellId][relocationFormCount-1][prismCount], CL.count:format(L.crushing_prism, prismCount))
-			else
+			elseif prismCount <= reclaimCount * 2 then
 				self:CDBar(args.spellId, 26, CL.count:format(L.crushing_prism, prismCount))
 			end
 		end
@@ -267,7 +334,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
-			self:Say(args.spellId)
+			self:Say(args.spellId, L.prism)
 		end
 		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.crushing_prism, prismCount-1))
 		self:CustomIcon(crushingPrismMarker, args.destName, count)
@@ -290,6 +357,7 @@ function mod:ReclamationForm(args)
 	self:SetStage(stage)
 	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long")
+	self:CastBar("stages", 6, CL.cast:format(args.spellName), args.spellId)
 	reclamationFormCount = reclamationFormCount + 1
 	intermission = false
 
@@ -304,29 +372,42 @@ function mod:ReclamationForm(args)
 	prismCount = 1
 	reclaimCount = 1
 
-	self:Bar(361676, stage == 3 and missleTimersP3[misslesCount] or 18, CL.count:format(L.earthbreaker_missiles, misslesCount))
+	if not self:Easy() then
+		self:Bar(360977, 14.1, L.lightshatter_beam) -- Lightshatter Beam
+	end
 	if stage == 2 then
-		self:Bar(367079, 10, CL.count:format(L.seismic_tremors, seismicTremorsCount))
-		self:Bar(365297, 23, CL.count:format(L.crushing_prism, prismCount))
-		self:Bar(360115, 69.4, CL.count:format(self:SpellName(360115), reclaimCount))
+		self:Bar(367079, 10, CL.count:format(L.seismic_tremors, seismicTremorsCount)) -- Seismic Tremors
+		self:Bar(361676, 18, CL.count:format(L.earthbreaker_missiles, misslesCount)) -- Earthbreaker Missiles
+		self:Bar(365297, 23, CL.count:format(L.crushing_prism, prismCount)) -- Crushing Prism
+		self:Bar(360115, 69.4, CL.count:format(self:SpellName(360115), reclaimCount)) -- Reclaim
+	elseif stage == 3 then
+		self:Bar(368529, 7.6) -- Eternity Overdrive
+		self:Bar(361676, missleTimersP3[misslesCount], CL.count:format(L.earthbreaker_missiles, misslesCount)) -- Earthbreaker Missiles
 	end
 end
 
 function mod:RelocationForm(args)
-	self:Message("stages", "yellow", CL.count:format(args.spellName, relocationFormCount), args.spellId)
+	self:Message("stages", "cyan", CL.count:format(CL.intermission, relocationFormCount), args.spellId)
 	self:PlaySound("stages", "long")
-	self:CDBar("stages", relocationFormCount == 1 and 62 or 85, CL.count:format(CL.intermission, relocationFormCount), args.spellId)
+	self:CastBar("stages", 5.5, CL.cast:format(args.spellName), args.spellId)
+	self:CDBar("stages", relocationFormCount == 1 and 62 or 85, CL.stage:format(self:GetStage() + 1), args.spellId)
 	relocationFormCount = relocationFormCount + 1
+
+	self:StopBar(L.lightshatter_beam)
+	-- self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
+	-- self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
+	-- self:StopBar(CL.count:format(L.crushing_prism, prismCount))
+	-- self:StopBar(CL.count:format(self:SpellName(360115), reclaimCount))
 end
 
-function mod:RelocationFormDone() -- Some timers can still trigger just after _START, using _SUCCESS to start bars instead
-	intermission = true
-
+function mod:RelocationFormDone()
+	-- Some timers can still trigger just after _START, using _SUCCESS to start bars instead
 	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:StopBar(CL.count:format(L.crushing_prism, prismCount))
 	self:StopBar(CL.count:format(self:SpellName(360115), reclaimCount))
 
+	intermission = true
 	misslesCount = 1
 	shatterCount = 1
 	prismCount = 1
@@ -340,24 +421,30 @@ function mod:Shatter(args)
 	self:StopBar(CL.count:format(args.spellName, shatterCount))
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, shatterCount))
 	self:PlaySound(args.spellId, "long")
+	self:CastBar(args.spellId, 6, CL.knockback)
 	shatterCount = shatterCount + 1
 	self:Bar(args.spellId, intermissionTimers[args.spellId][relocationFormCount-1][shatterCount], CL.count:format(args.spellName, shatterCount))
 end
 
 function mod:EternityOverdrive(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
 end
 
 do
 	local prev = 0
+	local message = {
+		-- [369207] = CL.beam, -- Planetcracker Beam (Beam)
+		[368363] = L.prism, -- Shattered Prism (Prism)
+		[360114] = L.ephemeral_fissure, -- Ephemeral Fissure (Fissure)
+	}
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) then
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(args.spellId, "underyou")
-				self:PersonalMessage(args.spellId, "underyou")
+				self:PersonalMessage(args.spellId, "underyou", message[args.spellId])
 			end
 		end
 	end

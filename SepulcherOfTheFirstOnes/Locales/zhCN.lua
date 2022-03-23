@@ -71,6 +71,8 @@ if L then
 	L.crushing_prism = "棱镜" -- Crushing Prism
 	L.prism = "棱镜"
 
+	L.bomb_dropped = "炸弹掉落"
+
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "黑伦度斯可能延迟它的技能。启用此选项后,这些技能将保留在您的屏幕上。"
 end
@@ -89,7 +91,6 @@ if L then
 	L.grim_reflections = "黑暗镜像"
 	L.march_of_the_damned = "阶段"
 	L.dire_blasphemy = "标记"
-	L.beacon_of_hope = "信标"
 
 	L.remnant_active = "陨落君王"
 end
@@ -98,12 +99,17 @@ L = BigWigs:NewBossLocale("Lords of Dread", "zhCN")
 if L then
 	L.unto_darkness = "AoE 阶段"-- Unto Darkness
 	L.cloud_of_carrion = "腐臭" -- Cloud of Carrion
+	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "小怪" -- Manifest Shadows
 	L.leeching_claws = "正面顺劈 (玛)" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
+	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "爆裂恐惧" -- Fearful Trepidation
 	L.slumber_cloud = "迷雾" -- Slumber Cloud
 	L.anguishing_strike = "正面顺劈 (金)" -- Anguishing Strike
+
+	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
+	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhCN")
@@ -111,6 +117,7 @@ if L then
 	L.celestial_collapse = "类星体" -- Celestial Collapse
 	L.manifest_cosmos = "宇宙核心" -- Manifest Cosmos
 	L.stellar_shroud = "吸收治疗量" -- Stellar Shroud
+	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "zhCN")

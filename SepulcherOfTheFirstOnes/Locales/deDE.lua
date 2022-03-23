@@ -71,6 +71,8 @@ if L then
 	L.crushing_prism = "Prismen" -- Crushing Prism
 	L.prism = "Prisma"
 
+	L.bomb_dropped = "Bombe fallen gelassen"
+
 	L.custom_on_stop_timers = "Fähigkeiten Leisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Halondrus kann Fähigkeiten verzögern. Wenn diese Option aktiviert ist, bleiben die Leisten für diese Fähigkeiten bestehen."
 end
@@ -89,7 +91,6 @@ if L then
 	L.grim_reflections = "Furcht Adds"
 	L.march_of_the_damned = "Wände"
 	L.dire_blasphemy = "Male"
-	L.beacon_of_hope = "Flamme"
 
 	L.remnant_active = "Überrest aktiv"
 end
@@ -98,12 +99,17 @@ L = BigWigs:NewBossLocale("Lords of Dread", "deDE")
 if L then
 	L.unto_darkness = "AoE Phase"-- Unto Darkness
 	L.cloud_of_carrion = "Fäulnis" -- Cloud of Carrion
+	L.empowered_cloud_of_carrion = "Große Fäulnis" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "Adds" -- Manifest Shadows
 	L.leeching_claws = "Frontal (M)" -- Leeching Claws
 	L.infiltration_of_dread = "Unter uns" -- Infiltration of Dread
+	L.infiltration_removed = "Verräter gefunden in %.1fs" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "Furcht" -- Fearful Trepidation
 	L.slumber_cloud = "Wolken" -- Slumber Cloud
 	L.anguishing_strike = "Frontal (K)" -- Anguishing Strike
+
+	L.custom_on_repeating_biting_wound = "Beißende Wunden wiederholen"
+	L.custom_on_repeating_biting_wound_desc = "Gibt wiederholt Beißende Wunden Chatnachrichten mit Symbol {rt7} aus, um es sichtbarer zu machen."
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "deDE")
@@ -111,6 +117,7 @@ if L then
 	L.celestial_collapse = "Quasare" -- Celestial Collapse
 	L.manifest_cosmos = "Kerne" -- Manifest Cosmos
 	L.stellar_shroud = "Heilung absorbiert" -- Stellar Shroud
+	L.knock = "Rückstoß" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "deDE")
