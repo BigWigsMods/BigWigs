@@ -142,6 +142,7 @@ do
 		if not self:Mythic() then -- He only has the _success cast in mythic
 			local t = args.time
 			if t-prev > 5 then
+				prev = t
 				playerList = {}
 				darkEclipseCount = darkEclipseCount + 1
 				if darkEclipseCount < 6 then -- 5 before a Massive Bang
