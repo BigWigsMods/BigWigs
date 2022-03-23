@@ -52,7 +52,7 @@ end
 -- Initialization
 --
 
-local fearfulTrepidationMarker = mod:AddMarkerOption(false, "player", 8, 361745, 1, 2) -- Fearful Trepidation
+local fearfulTrepidationMarker = mod:AddMarkerOption(false, "player", 8, 360146, 1, 2) -- Fearful Trepidation
 function mod:GetOptions()
 	return {
 		360374, -- Rampaging Swarm
