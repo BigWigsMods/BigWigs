@@ -197,11 +197,11 @@ do
 				self:Bar(361304, self:Mythic() and 24.7 or 8.9, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
 				self:Bar(361568, self:Mythic() and 21.6 or 18.5, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
 				self:Bar(366234, self:Mythic() and 44.3 or 38.5, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
-				self:Bar(361689, self:Mythic() and 55.6 or 55) -- Wracking Pain
+				self:Bar(361689, self:Mythic() and 55.6 or self:Heroic() and 69.5 or 41.5) -- Wracking Pain
 				self:Bar(361789, self:Mythic() and 91.1 or 79.9, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			elseif stage == 3 then
 				self:Bar(365269, 41) -- Humbling Strikes
-				self:Bar(361689, self:Mythic() and 41.6 or 55) -- Wracking Pain XXX Check other than mythic
+				self:Bar(361689, 41.5) -- Wracking Pain
 				self:Bar(360295, self:Mythic() and 17.5 or 134, CL.count:format(L.necrotic_ritual, necroticRitualCount)) -- Necrotic Ritual
 				self:Bar(360687, 129, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount)) -- Runecarvers Deathtouch
 				self:Bar(364941, self:Mythic() and 53.1 or 53.1, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
