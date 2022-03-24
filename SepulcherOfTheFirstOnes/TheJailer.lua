@@ -33,6 +33,7 @@ local timersNormal = {
 		[365436] = { 22.0, 51.0, 69.0, 0, }, -- Torment
 		[363893] = { 40.0, 40.0, 40.0, 40.0, 0, }, -- Martyrdom
 		[362028] = { 48.0, 60.0, 60.0, 0 }, -- Relentless Domination
+		[359809] = { 90, 0 }, -- Chains of Oppression
 	},
 	[2] = {
 		-- from Unholy Attunement
@@ -46,7 +47,7 @@ local timersNormal = {
 		[360562] = { 35.0, 52.0, 42.0, 42.0, 42.0, }, -- Decimator
 		[365169] = { 55.0, 41.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, }, -- Defile
 		[365033] = { 42.0, 60.0, }, -- Desolation
-		[370071] = { 51, 75, }, -- Torment
+		[365436] = { 26.0, 87.0, }, -- Torment
 		[365212] = { 52.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, }, -- Chains of Anguish
 		[365150] = { 63.0, 84.0, }, -- Rune of Domination
 	}
