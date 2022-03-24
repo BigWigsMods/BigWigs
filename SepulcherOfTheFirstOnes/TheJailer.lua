@@ -476,7 +476,11 @@ function mod:UnbreakableGrasp(args)
 	fallingDebrisCount = 1
 
 	self:Bar(360562, timers[3][360562][decimatorCount], CL.count:format(L.decimator, decimatorCount)) -- Decimator
-	self:Bar(365436, timers[3][370071][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
+	if self:Easy() then
+		self:Bar(365436, timers[3][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
+	else
+		self:Bar(365436, timers[3][370071][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
+	end
 	self:Bar(365212, timers[3][365212][chainsOfAnguishCount], CL.count:format(L.chains_of_anguish, chainsOfAnguishCount)) -- Chains of Anguish
 	self:Bar(365150, timers[3][365150][runeOfDominationCount], CL.count:format(L.rune_of_domination, runeOfDominationCount)) -- Rune of Domination
 	if not self:LFR() then
