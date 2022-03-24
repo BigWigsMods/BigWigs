@@ -74,7 +74,7 @@ local timersHeroic = {
 		[365169] = { 33.4, 45.0, 45.0, 52.0, }, -- Defile
 		[365212] = { 37.4, 55.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, }, -- Chains of Anguish
 		[365033] = { 42.4, 60.0, 64.0, }, -- Desolation
-		[370071] = { 51.1, 75, }, -- Torment
+		[365436] = { 51.1, 75, }, -- Torment
 		[365150] = { 71.4, 79.0, }, -- Rune of Domination
 	}
 }
@@ -323,7 +323,7 @@ function mod:Torment(args)
 	self:StopBar(CL.count:format(args.spellName, tormentCount))
 	self:Message(365436, "orange", CL.count:format(args.spellName, tormentCount))
 	tormentCount = tormentCount + 1
-	self:Bar(365436, timers[self:GetStage()][args.spellId][tormentCount], CL.count:format(args.spellName, tormentCount))
+	self:Bar(365436, timers[self:GetStage()][365436][tormentCount], CL.count:format(args.spellName, tormentCount))
 end
 
 do
@@ -476,11 +476,7 @@ function mod:UnbreakableGrasp(args)
 	fallingDebrisCount = 1
 
 	self:Bar(360562, timers[3][360562][decimatorCount], CL.count:format(L.decimator, decimatorCount)) -- Decimator
-	if self:Easy() then
-		self:Bar(365436, timers[3][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
-	else
-		self:Bar(365436, timers[3][370071][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
-	end
+	self:Bar(365436, timers[3][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
 	self:Bar(365212, timers[3][365212][chainsOfAnguishCount], CL.count:format(L.chains_of_anguish, chainsOfAnguishCount)) -- Chains of Anguish
 	self:Bar(365150, timers[3][365150][runeOfDominationCount], CL.count:format(L.rune_of_domination, runeOfDominationCount)) -- Rune of Domination
 	if not self:LFR() then
