@@ -33,6 +33,7 @@ local timersNormal = {
 		[365436] = { 22.0, 51.0, 69.0, 0, }, -- Torment
 		[363893] = { 40.0, 40.0, 40.0, 40.0, 0, }, -- Martyrdom
 		[362028] = { 48.0, 60.0, 60.0, 0 }, -- Relentless Domination
+		[359809] = { 90, 0 }, -- Chains of Oppression
 	},
 	[2] = {
 		-- from Unholy Attunement
@@ -46,7 +47,7 @@ local timersNormal = {
 		[360562] = { 35.0, 52.0, 42.0, 42.0, 42.0, }, -- Decimator
 		[365169] = { 55.0, 41.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, }, -- Defile
 		[365033] = { 42.0, 60.0, }, -- Desolation
-		[370071] = { 51, 75, }, -- Torment
+		[365436] = { 26.0, 87.0, }, -- Torment
 		[365212] = { 52.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, 42.0, }, -- Chains of Anguish
 		[365150] = { 63.0, 84.0, }, -- Rune of Domination
 	}
@@ -73,7 +74,7 @@ local timersHeroic = {
 		[365169] = { 33.4, 45.0, 45.0, 52.0, }, -- Defile
 		[365212] = { 37.4, 55.0, 43.0, 43.0, 43.0, 43.0, 43.0, 43.0, }, -- Chains of Anguish
 		[365033] = { 42.4, 60.0, 64.0, }, -- Desolation
-		[370071] = { 51.1, 75, }, -- Torment
+		[365436] = { 51.1, 75, }, -- Torment
 		[365150] = { 71.4, 79.0, }, -- Rune of Domination
 	}
 }
@@ -322,7 +323,7 @@ function mod:Torment(args)
 	self:StopBar(CL.count:format(args.spellName, tormentCount))
 	self:Message(365436, "orange", CL.count:format(args.spellName, tormentCount))
 	tormentCount = tormentCount + 1
-	self:Bar(365436, timers[self:GetStage()][args.spellId][tormentCount], CL.count:format(args.spellName, tormentCount))
+	self:Bar(365436, timers[self:GetStage()][365436][tormentCount], CL.count:format(args.spellName, tormentCount))
 end
 
 do
@@ -475,7 +476,7 @@ function mod:UnbreakableGrasp(args)
 	fallingDebrisCount = 1
 
 	self:Bar(360562, timers[3][360562][decimatorCount], CL.count:format(L.decimator, decimatorCount)) -- Decimator
-	self:Bar(365436, timers[3][370071][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
+	self:Bar(365436, timers[3][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
 	self:Bar(365212, timers[3][365212][chainsOfAnguishCount], CL.count:format(L.chains_of_anguish, chainsOfAnguishCount)) -- Chains of Anguish
 	self:Bar(365150, timers[3][365150][runeOfDominationCount], CL.count:format(L.rune_of_domination, runeOfDominationCount)) -- Rune of Domination
 	if not self:LFR() then
