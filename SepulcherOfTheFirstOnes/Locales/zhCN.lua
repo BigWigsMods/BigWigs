@@ -117,7 +117,7 @@ if L then
 	L.celestial_collapse = "类星体" -- Celestial Collapse
 	L.manifest_cosmos = "宇宙核心" -- Manifest Cosmos
 	L.stellar_shroud = "吸收治疗量" -- Stellar Shroud
-	L.knock = "击倒" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
+	L.knock = "击退" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "zhCN")
