@@ -108,8 +108,8 @@ if L then
 	L.slumber_cloud = "迷雾" -- Slumber Cloud
 	L.anguishing_strike = "正面顺劈 (金)" -- Anguishing Strike
 
-	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
-	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
+	L.custom_on_repeating_biting_wound = "重复啃噬伤口"
+	L.custom_on_repeating_biting_wound_desc = "重复啃噬伤口:以>说<的方式发送带有图标 {rt7} 的信息,以使其显得更明显"
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhCN")
@@ -117,7 +117,7 @@ if L then
 	L.celestial_collapse = "类星体" -- Celestial Collapse
 	L.manifest_cosmos = "宇宙核心" -- Manifest Cosmos
 	L.stellar_shroud = "吸收治疗量" -- Stellar Shroud
-	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
+	L.knock = "击倒" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "zhCN")
