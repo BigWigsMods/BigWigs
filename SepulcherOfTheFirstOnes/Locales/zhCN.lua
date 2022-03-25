@@ -99,11 +99,11 @@ L = BigWigs:NewBossLocale("Lords of Dread", "zhCN")
 if L then
 	L.unto_darkness = "AoE 阶段"-- Unto Darkness
 	L.cloud_of_carrion = "腐臭" -- Cloud of Carrion
-	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
+	L.empowered_cloud_of_carrion = "强化腐臭" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "小怪" -- Manifest Shadows
 	L.leeching_claws = "正面顺劈 (玛)" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
-	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
+	L.infiltration_removed = "内鬼发现于 %.1fs" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "爆裂恐惧" -- Fearful Trepidation
 	L.slumber_cloud = "迷雾" -- Slumber Cloud
 	L.anguishing_strike = "正面顺劈 (金)" -- Anguishing Strike
@@ -132,9 +132,9 @@ if L then
 	L.chain_target = "锁链 %s!"
 	L.chains_remaining = "%d/%d 锁链碎裂"
 
-	L.chains_of_oppression = "拉链"
+	L.chains_of_oppression = "压迫之链"
 	L.unholy_attunement = "晶塔"
-	L.chains_of_anguish = "扩散链"
-	L.rune_of_compulsion = "咒符"
+	L.chains_of_anguish = "痛苦之链"
+	L.rune_of_compulsion = "心控"
 	L.rune_of_domination = "团队分摊"
 end
