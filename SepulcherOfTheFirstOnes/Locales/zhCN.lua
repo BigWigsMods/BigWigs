@@ -80,7 +80,7 @@ end
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhCN")
 if L then
 	L.custom_off_repeating_blasphemy = "重复渎神之光"
-	L.custom_off_repeating_blasphemy_desc = "以{rt1}和{rt3} 说话两种渎神之光印记,方便你快速地找到相反印记的队友，并消除自身印记"
+	L.custom_off_repeating_blasphemy_desc = "以{rt1}和{rt3} >说<两种渎神之光印记,方便你快速地找到相反印记的队友，并消除自身印记"
 
 	L.kingsmourne_hungers = "王之哀伤"
 	L.blasphemy = "标记"
@@ -99,17 +99,17 @@ L = BigWigs:NewBossLocale("Lords of Dread", "zhCN")
 if L then
 	L.unto_darkness = "AoE 阶段"-- Unto Darkness
 	L.cloud_of_carrion = "腐臭" -- Cloud of Carrion
-	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
+	L.empowered_cloud_of_carrion = "强化腐臭" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "小怪" -- Manifest Shadows
 	L.leeching_claws = "正面顺劈 (玛)" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
-	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
+	L.infiltration_removed = "内鬼发现于 %.1fs" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "爆裂恐惧" -- Fearful Trepidation
 	L.slumber_cloud = "迷雾" -- Slumber Cloud
 	L.anguishing_strike = "正面顺劈 (金)" -- Anguishing Strike
 
-	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
-	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
+	L.custom_on_repeating_biting_wound = "重复啃噬伤口"
+	L.custom_on_repeating_biting_wound_desc = "重复啃噬伤口:以>说<的方式发送带有图标 {rt7} 的信息,以使其显得更明显。"
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhCN")
@@ -117,7 +117,7 @@ if L then
 	L.celestial_collapse = "类星体" -- Celestial Collapse
 	L.manifest_cosmos = "宇宙核心" -- Manifest Cosmos
 	L.stellar_shroud = "吸收治疗量" -- Stellar Shroud
-	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
+	L.knock = "击退" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "zhCN")
@@ -132,9 +132,9 @@ if L then
 	L.chain_target = "锁链 %s!"
 	L.chains_remaining = "%d/%d 锁链碎裂"
 
-	L.chains_of_oppression = "拉链"
+	L.chains_of_oppression = "压迫之链"
 	L.unholy_attunement = "晶塔"
-	L.chains_of_anguish = "扩散链"
-	L.rune_of_compulsion = "咒符"
+	L.chains_of_anguish = "痛苦之链"
+	L.rune_of_compulsion = "心控"
 	L.rune_of_domination = "团队分摊"
 end
