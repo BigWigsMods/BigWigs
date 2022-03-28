@@ -112,6 +112,11 @@ local timersMythic = {
 		[365169] = {55.0, 24.0, 39.0, 40, 0}, -- Defile
 		-- Heals are in mythicSpecialTimers
 	},
+	[4] = {
+		[365436] = {}, -- Torment
+		[360562] = {}, -- Decimator
+		[360281] = {}, -- Rune of Damnation
+	},
 }
 
 local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
