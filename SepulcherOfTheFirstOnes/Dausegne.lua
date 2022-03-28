@@ -93,6 +93,7 @@ function mod:OnEngage()
 	haloCount = 1
 	teleportCount = 1
 	nextTeleport = GetTime() + (self:Easy() and 80 or 72.8)
+	self:SetStage(1)
 
 	self:Bar(359483, self:Easy() and 7 or 6.5, CL.count:format(L.domination_core, coreCount)) -- Domination Core
 	self:Bar(363200, self:Easy() and 5.5 or 5, CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo (emote at 5, ring at ~13)
@@ -253,6 +254,7 @@ do
 			self:CancelTimer(timer)
 			timer = nil
 		end
+		self:SetStage(self:GetStage() + 1)
 		self:Message(args.spellId, "green", L.shield_removed:format(args.spellName, args.time - appliedTime))
 		self:PlaySound(args.spellId, "info")
 		barrageCount = 1
