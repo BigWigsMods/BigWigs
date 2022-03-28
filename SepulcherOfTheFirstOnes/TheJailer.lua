@@ -140,11 +140,11 @@ if L then
 
 	L.relentless_domination = "Domination"
 	L.chains_of_oppression = "Pull Chains"
-	L.unholy_attunement = "Raise Pylons"
+	L.unholy_attunement = "Pylons"
 	L.shattering_blast = "Tank Blast"
 	L.rune_of_compulsion = "Charms"
 	L.desolation = "Azeroth Soak"
-	L.chains_of_anguish = "Tank Chain"
+	L.chains_of_anguish = "Spread Chains"
 	L.chain = "Chain"
 	L.chain_target = "Chaining %s!"
 	L.chains_remaining = "%d/%d Chains Broken"
@@ -166,11 +166,10 @@ if L then
 	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 
 	L.mythic_blood_soak_bar = "Heal Azeroth"
-	L.mythic_blood_soak_bar_p2 = "Heal Deadline"
 	L.mythic_blood_soak_icon = "spell_azerite_essence10"
 
 	L.floors_open = "Floors Open"
-	L.floors_open_desc = "Timer for when floors open up"
+	L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
 end
 
 --------------------------------------------------------------------------------
