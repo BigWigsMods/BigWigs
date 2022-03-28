@@ -126,36 +126,37 @@ if L then
 	L.rune_of_damnation_countdown_desc = "Countdown für Spieler welche von Rune der Verdammnis betroffen sind."
 	L.jump = "Reinspringen"
 
-	--L.relentless_domination = "Domination"
+	L.relentless_domination = "Herrschaft"
 	L.chains_of_oppression = "Ketten zerreißen"
 	L.unholy_attunement = "Pylonen"
-	--L.shattering_blast = "Tank Blast"
-	L.rune_of_compulsion = "Übernommene"
-	--L.desolation = "Azeroth Soak"
+	L.shattering_blast = "Tank Eruption"
+	L.rune_of_compulsion = "Übernahme"
+	L.desolation = "Azeroth-Soak"
 	L.chains_of_anguish = "Ketten auseinander"
 	L.chain = "Kette"
 	L.chain_target = "Kette auf %s!"
 	L.chains_remaining = "%d/%d Ketten gebrochen"
 	L.rune_of_domination = "Gruppensoak"
 
-	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "Letzte %s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
-	-- L.azeroth_health = "Azeroth Health"
-	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+	L.azeroth_health = "Azeroths Lebenskraft"
+	L.azeroth_health_desc = "Azeroths Lebenskraft Warnungen"
 
-	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
-	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+	L.azeroth_new_health_plus = "Azeroths Lebenskraft: +%.1f%% (%d)"
+	L.azeroth_new_health_minus = "Azeroths Lebenskraft: -%.1f%%  (%d)"
 
-	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
-	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+	L.mythic_blood_soak_stage_1 = "Phase 1 Blut-Soak Timer"
+	L.mythic_blood_soak_stage_1_desc = "Zeigt eine Leiste mit guten Zeitpunkten zum Heilen von Azeroth an, genutzt von Echo beim ersten Kill"
+	L.mythic_blood_soak_stage_2 = "Phase 2 Blut-Soak Timer"
+	L.mythic_blood_soak_stage_3 = "Phase 3 Blut-Soak Timer"
 
-	-- L.floors_open = "Floors Open"
-	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+	L.mythic_blood_soak_bar = "Azeroth heilen"
 
-	-- L.mythic_dispel_stage_4 = "Dispel Timers"
-	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
-	-- L.mythic_dispel_bar = "Dispels"
+	L.floors_open = "Boden offen"
+	L.floors_open_desc = "Zeit bis der Boden sich öffnet und Ihr in geöffnete Löcher fallen könnt."
+
+	L.mythic_dispel_stage_4 = "Dispel Timer"
+	L.mythic_dispel_stage_4_desc = "Timer für den Zeitpunkt zum Dispellen in der letzten Phase, genutzt von Echo beim ersten Kill"
+	L.mythic_dispel_bar = "Dispels"
 end
