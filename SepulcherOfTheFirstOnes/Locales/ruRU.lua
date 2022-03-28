@@ -180,15 +180,32 @@ if L then
 	L.rune_of_damnation_countdown_desc = "Отсчёт для игроков, поражённых Руной проклятия"
 	L.jump = "ПРЫГАЙ"
 
-	L.chain = "Цепи"
-	L.rune = "Руна"
-
-	L.chain_target = "Цепь с %s!"
-	L.chains_remaining = "%d/%d цепей разорвано"
-
+	--L.relentless_domination = "Domination"
 	L.chains_of_oppression = "Цепи страдания"
 	L.unholy_attunement = "Пилоны"
-	L.chains_of_anguish = "Цепи"
+	--L.shattering_blast = "Tank Blast"
 	L.rune_of_compulsion = "Подчинение"
+	--L.desolation = "Azeroth Soak"
+	L.chains_of_anguish = "Цепи"
+	L.chain = "Цепи"
+	L.chain_target = "Цепь с %s!"
+	L.chains_remaining = "%d/%d цепей разорвано"
 	L.rune_of_domination = "Делёжка"
+
+	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+
+	-- L.azeroth_health = "Azeroth Health"
+	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+
+	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
+	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+
+	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
+	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
+	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
+	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
+	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+
+	-- L.floors_open = "Floors Open"
+	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
 end
