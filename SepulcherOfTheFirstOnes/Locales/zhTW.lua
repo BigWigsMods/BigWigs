@@ -154,4 +154,8 @@ if L then
 
 	-- L.floors_open = "Floors Open"
 	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+
+	-- L.mythic_dispel_stage_4 = "Dispel Timers"
+	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
+	-- L.mythic_dispel_bar = "Dispels"
 end

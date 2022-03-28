@@ -123,7 +123,7 @@ local mythicSpecialTimers = {
 	[2] = {48.5, 46.5, 53, 34},
 	-- stage3/6:15 -> 7:00.5 -> 7:21 -> 7:54.5 (2x lines) -> 8:33
 	[3] = {45.5, 20.5, 33.5, 38.5},
-	-- Dispel Timers in last stage, from Heal Channel _START
+	-- Dispel Timers in last stage, from Heal Channel Start (_SUCCES)
 	[4] = {40, 30, 29}
 }
 
@@ -170,6 +170,11 @@ if L then
 
 	L.floors_open = "Floors Open"
 	L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+
+	L.mythic_dispel_stage_4 = "Dispel Timers"
+	L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
+	L.mythic_dispel_bar = "Dispels"
+	L.mythic_dispel_icon = "spell_holy_dispelmagic"
 end
 
 --------------------------------------------------------------------------------
@@ -218,6 +223,7 @@ function mod:GetOptions()
 		366374, -- World Crusher
 		366678, -- World Cracker
 		367051, -- World Shatterer
+		"mythic_dispel_stage_4",
 	},{
 		["stages"] = "general",
 		[362028] = -24087, -- Stage One: Origin of Domination
@@ -281,6 +287,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "WorldCrusher", 366374)
 	self:Log("SPELL_CAST_START", "WorldCracker", 366678)
 	self:Log("SPELL_CAST_SUCCESS", "WorldShatterer", 367051)
+
+	-- -- Stage 4
+	self:Log("SPELL_CAST_SUCCESS", "DivertedLifeShield", 368383)
 end
 
 function mod:OnEngage()
@@ -717,9 +726,9 @@ end
 -- Mythic
 function mod:StartSpecialTimer(t)
 	local stage = self:GetStage()
-	local text = L.mythic_blood_soak_bar
-	local icon = L.mythic_blood_soak_icon
-	local spellId = stage == 1 and "mythic_blood_soak_stage_1" or stage == 2 and "mythic_blood_soak_stage_2" or "mythic_blood_soak_stage_3" -- SetOption:"mythic_blood_soak_stage_1","mythic_blood_soak_stage_2","mythic_blood_soak_stage_3":
+	local text = stage == 4 and L.mythic_dispel_bar or L.mythic_blood_soak_bar
+	local icon = stage == 4 and L.mythic_dispel_icon or L.mythic_blood_soak_icon
+	local spellId = stage == 1 and "mythic_blood_soak_stage_1" or stage == 2 and "mythic_blood_soak_stage_2" or stage == 3 and "mythic_blood_soak_stage_3" or "mythic_dispel_stage_4" -- SetOption:"mythic_blood_soak_stage_1","mythic_blood_soak_stage_2","mythic_blood_soak_stage_3","mythic_dispel_stage_4":
 	self:Bar(spellId, t, CL.count:format(text, specialCount), icon)
 	self:DelayedMessage(spellId, t, "yellow", CL.count:format(text, specialCount), icon, "long")
 	specialCount = specialCount + 1
@@ -746,4 +755,26 @@ end
 function mod:WorldShatterer(args)
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
+end
+
+function mod:DivertedLifeShield(args)
+	self:SetStage(4)
+	self:Message("stages", "cyan", CL.stage:format(4), false)
+	self:PlaySound("stages", "long")
+
+	self:StopBar(CL.count:format(L.desolation, desolationCount)) -- Desolation
+	self:StopBar(CL.count:format(L.rune_of_domination, runeOfDominationCount)) -- Rune of Domination
+	self:StopBar(CL.count:format(L.chains_of_anguish, chainsOfAnguishCount)) -- Chains of Anguish
+	self:StopBar(CL.count:format(self:SpellName(365169), defileCount)) -- Defile
+	self:StopBar(CL.count:format(CL.knockback, decimatorCount)) -- Decimator
+	self:StopBar(CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
+
+	if specialTimer then
+		self:CancelTimer(specialTimer)
+		self:CancelDelayedMessage(CL.count:format(L.mythic_blood_soak_bar, specialCount-2))
+		specialTimer = nil
+	end
+
+	specialCount = 1
+	self:StartSpecialTimer(mythicSpecialTimers[4][specialCount]) -- Dispels
 end
