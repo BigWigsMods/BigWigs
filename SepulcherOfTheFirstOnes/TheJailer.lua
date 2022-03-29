@@ -31,6 +31,7 @@ local lastAzerothHealth = 100
 local worldCount = 1
 local specialCount = 1
 local specialTimer = nil
+local meteorCleaveCount = 1
 
 --------------------------------------------------------------------------------
 -- Timers
@@ -113,9 +114,12 @@ local timersMythic = {
 		-- Heals are in mythicSpecialTimers
 	},
 	[4] = {
-		[365436] = {}, -- Torment
-		[360562] = {}, -- Decimator
-		[360281] = {}, -- Rune of Damnation
+		[360281] = {14.5, 28.5, 43.0}, -- Rune of Damnation
+		[360378] = {20.0, 61.0, 44.0}, -- Meteor Cleave
+		[368591] = {12.5}, -- Death Sentence
+		[360562] = {25.0, 31.0, 48.0}, -- Decimator
+		[365436] = {50.0, 24.0, 38.0}, -- Torment
+		-- Dispels are in mythicSpecialTimers
 	},
 }
 
@@ -229,6 +233,9 @@ function mod:GetOptions()
 		366678, -- World Cracker
 		367051, -- World Shatterer
 		"mythic_dispel_stage_4",
+		368383, -- Diverted Life Shield
+		360378, -- Meteor Cleave
+		{368591, "SAY", "SAY_COUNTDOWN"}, -- Death Sentence
 	},{
 		["stages"] = "general",
 		[362028] = -24087, -- Stage One: Origin of Domination
@@ -295,6 +302,10 @@ function mod:OnBossEnable()
 
 	-- -- Stage 4
 	self:Log("SPELL_CAST_SUCCESS", "DivertedLifeShield", 368383)
+	self:Log("SPELL_CAST_START", "MeteorCleave", 360378)
+	self:Log("SPELL_CAST_SUCCESS", "DeathSentence", 363772) -- Initial Debuff
+	self:Log("SPELL_AURA_APPLIED", "DeathSentenceApplied", 368591)
+	self:Log("SPELL_AURA_REMOVED", "DeathSentenceRemoved", 368591)
 end
 
 function mod:OnEngage()
@@ -780,6 +791,43 @@ function mod:DivertedLifeShield(args)
 		specialTimer = nil
 	end
 
+	meteorCleaveCount = 1
+	runeOfDamnationCount = 1
+	decimatorCount = 1
+	tormentCount = 1
+
+	self:Bar(368591, timers[4][368591][1]) -- Death Sentence
+	self:Bar(360378, timers[4][360378][meteorCleaveCount], CL.count:format(self:SpellName(360378), meteorCleaveCount)) -- Meteor Cleave
+	self:Bar(360281, timers[4][360281][runeOfDamnationCount], CL.count:format(CL.bombs, runeOfDamnationCount)) -- Rune of Damnation
+	self:Bar(360562, timers[4][360562][decimatorCount], CL.count:format(CL.knockback, decimatorCount)) -- Decimator
+	self:Bar(365436, timers[4][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
+
 	specialCount = 1
 	self:StartSpecialTimer(mythicSpecialTimers[4][specialCount]) -- Dispels
+end
+
+function mod:MeteorCleave(args)
+	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, meteorCleaveCount))
+	self:PlaySound(args.spellId, "alert")
+	meteorCleaveCount = meteorCleaveCount + 1
+	self:Bar(args.spellId, timers[4][args.spellId][meteorCleaveCount], CL.count:format(args.spellName, meteorCleaveCount))
+end
+
+function mod:DeathSentence(args)
+	self:TargetMessage(368591, "yellow", args.destName)
+end
+
+function mod:DeathSentenceApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 30)
+	end
+end
+
+function mod:DeathSentenceRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
