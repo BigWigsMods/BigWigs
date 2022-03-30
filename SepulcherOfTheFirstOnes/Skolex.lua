@@ -103,12 +103,16 @@ end
 
 function mod:DevouringBlood()
 	self:StopBar(364522)
-	local speedUp = self:Mythic() and 0.75 or 0.5
-	--self:Message(364522, "orange") -- XXX Disabled until we confirm mythic is correct as well
-	--self:PlaySound(364522, "info")
-	local cd = 9 - ((burrowCount - 1) * speedUp) -- speeds up after each burrow
-	self:Bar(364522, cd)
 	self:CancelTimer(devouringBloodTimer)
+
+	self:Message(364522, "orange")
+	self:PlaySound(364522, "info")
+	local cd = 9
+	if not self:Easy() then
+		local speedUp = self:Mythic() and 0.75 or 0.5
+		cd = 9 - ((burrowCount - 1) * speedUp) -- speeds up after each burrow
+	end
+	self:Bar(364522, cd)
 	devouringBloodTimer = self:ScheduleTimer("DevouringBlood", cd)
 end
 

@@ -1,9 +1,9 @@
 local L = BigWigs:NewBossLocale("Vigilant Guardian", "koKR")
 if not L then return end
 if L then
-	-- L.sentry = "Tank Add"
-	-- L.materium = "Small Adds"
-	-- L.shield = "Shield" -- Global locale canidate?
+	 L.sentry = "탱 쫄"
+	 L.materium = "작은 쫄"
+	 L.shield = "역장" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "koKR")
@@ -53,7 +53,7 @@ L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "koKR")
 if L then
 	L.protoform_cascade = "구슬 조심"
 	L.cosmic_shift = "넉백"
-	--L.cosmic_shift_mythic = "Shift: %s"
+	L.cosmic_shift_mythic = "넉백: %s"
 	L.unstable_mote = "불안정한 티끌"
 	L.mote = "티끌"
 
@@ -79,34 +79,34 @@ if L then
 	L.march_of_the_damned = "행진"
 	L.dire_blasphemy = "징표"
 
-	--L.remnant_active = "Remnant Active"
+	L.remnant_active = "잔재 활성화"
 end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "koKR")
 if L then
-	--L.seismic_tremors = "Motes + Tremors"
-	--L.earthbreaker_missiles = "Missiles"
-	--L.crushing_prism = "Prisms"
-	--L.prism = "Prism"
+	L.seismic_tremors = "지진 진동 + 티끌 생성"
+	L.earthbreaker_missiles = "투사체"
+	L.crushing_prism = "분광경"
+	L.prism = "분광경"
 
-	-- L.bomb_dropped = "Bomb dropped"
+	 L.bomb_dropped = "폭탄 떨어트림"
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "항상 능력 바 표시"
+	L.custom_on_stop_timers_desc = "할론드루스의 기술들은 미뤄질수 있습니다. 이 옵션을 활성화하면, 미뤄진 능력들의 바가 화면에 남아있습니다."
 end
 
 L = BigWigs:NewBossLocale("Lords of Dread", "koKR")
 if L then
-	--L.unto_darkness = "AoE Phase"
-	--L.cloud_of_carrion = "Carrion"
-	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
-	--L.manifest_shadows = "Adds"
-	--L.leeching_claws = "Frontal (M)"
-	--L.infiltration_of_dread = "Among Us"
-	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
-	--L.fearful_trepidation = "Fears"
-	--L.slumber_cloud = "Clouds"
-	--L.anguishing_strike = "Frontal (K)"
+	L.unto_darkness = "광역기 페이즈"
+	L.cloud_of_carrion = "부패의 구름"
+	L.empowered_cloud_of_carrion = "아픈 부패의 구름" -- Empowered Cloud of Carrion
+	L.manifest_shadows = "쫄"
+	L.leeching_claws = "전방기 (말가)"
+	L.infiltration_of_dread = "어몽어스"
+	L.infiltration_removed = " %.1f초만에 임포스터 컷!" -- "Imposters found in 1.1s" s = seconds
+	L.fearful_trepidation = "공포"
+	L.slumber_cloud = "수면 구름"
+	L.anguishing_strike = "전방기 (킨테사)"
 
 	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
 	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
@@ -114,27 +114,48 @@ end
 
 L = BigWigs:NewBossLocale("Rygelon", "koKR")
 if L then
-	--L.celestial_collapse = "Quasars"
-	--L.manifest_cosmos = "Cores"
-	--L.stellar_shroud = "Heal Absorb"
-	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
+	L.celestial_collapse = "준항성"
+	L.manifest_cosmos = "핵"
+	L.stellar_shroud = "치유량 흡수"
+	L.knock = "주변 넉백" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "koKR")
 if L then
-	--L.rune_of_damnation_countdown = "Countdown"
-	--L.rune_of_damnation_countdown_desc = "Countdown for the players who are affected by Rune of Damnation"
-	--L.jump = "Jump In"
+	L.rune_of_damnation_countdown = "초읽기"
+	L.rune_of_damnation_countdown_desc = "저주의 룬에 걸린사람들을 위한 초읽기"
+	L.jump = "뛰엇!"
 
-	--L.chain = "Chain"
-	--L.rune = "Rune"
+	--L.relentless_domination = "Domination"
+	L.chains_of_oppression = "고핀 사슬"
+	L.unholy_attunement = "수정탑"
+	--L.shattering_blast = "Tank Blast"
+	L.rune_of_compulsion = "정배 룬"
+	--L.desolation = "Azeroth Soak"
+	L.chains_of_anguish = "산개 사슬"
+	L.chain = "사슬"
+	L.chain_target = " %s 에게 사슬!"
+	L.chains_remaining = "%d/%d 사슬 파괴 완료"
+	L.rune_of_domination = "같이 맞아주기"
 
-	--L.chain_target = "Chaining %s!"
-	--L.chains_remaining = "%d/%d Chains Broken"
+	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
-	--L.chains_of_oppression = "Pull Chains"
-	--L.unholy_attunement = "Pylons"
-	--L.chains_of_anguish = "Spread Chains"
-	--L.rune_of_compulsion = "Charms"
-	--L.rune_of_domination = "Group Soaks"
+	-- L.azeroth_health = "Azeroth Health"
+	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+
+	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
+	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+
+	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
+	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
+	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
+	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
+	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+
+	-- L.floors_open = "Floors Open"
+	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+
+	-- L.mythic_dispel_stage_4 = "Dispel Timers"
+	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
+	-- L.mythic_dispel_bar = "Dispels"
 end
