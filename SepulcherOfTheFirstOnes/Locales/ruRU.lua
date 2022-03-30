@@ -130,36 +130,36 @@ if L then
 	L.rune_of_damnation_countdown_desc = "Отсчёт для игроков, поражённых Руной проклятия"
 	L.jump = "ПРЫГАЙ"
 
-	--L.relentless_domination = "Domination"
+	L.relentless_domination = "Подчинение"
 	L.chains_of_oppression = "Цепи страдания"
 	L.unholy_attunement = "Пилоны"
-	--L.shattering_blast = "Tank Blast"
+	L.shattering_blast = "Выстрел в танка"
 	L.rune_of_compulsion = "Подчинение"
-	--L.desolation = "Azeroth Soak"
+	L.desolation = "Лужа Азерот"
 	L.chains_of_anguish = "Цепи"
 	L.chain = "Цепи"
 	L.chain_target = "Цепь с %s!"
 	L.chains_remaining = "%d/%d цепей разорвано"
 	L.rune_of_domination = "Делёжка"
 
-	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "Ласт %s" -- Final Unholy Attunement/Domination (last spell of a stage) -- Used this exact word to keep gender 
 
-	-- L.azeroth_health = "Azeroth Health"
-	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+	L.azeroth_health = "Хп Азерот"
+	L.azeroth_health_desc = "Предупреждения о здоровье Азерот"
 
-	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
-	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+	L.azeroth_new_health_plus = "Хп Азерот: +%.1f%% (%d)"
+	L.azeroth_new_health_minus = "Хп Азерот: -%.1f%%  (%d)"
 
-	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
-	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+	L.mythic_blood_soak_stage_1 = "Таймеры крови Азерот 1 Фазы"
+	L.mythic_blood_soak_stage_2 = "Таймеры крови Азерот 2 Фазы"
+	L.mythic_blood_soak_stage_3 = "Таймеры крови Азерот 3 Фазы"
+	L.mythic_blood_soak_stage_1_desc = "Показывать полосы с хорошими таймингами, аналогичными первому килу Echo"
+	L.mythic_blood_soak_bar = "Лечить Азерот"
 
-	-- L.floors_open = "Floors Open"
-	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+	L.floors_open = "Открытие пола"
+	L.floors_open_desc = "Время до открытия ячеек на полу, после чего можно будет упасть в пропасть."
 
-	-- L.mythic_dispel_stage_4 = "Dispel Timers"
-	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
-	-- L.mythic_dispel_bar = "Dispels"
+	L.mythic_dispel_stage_4 = "Таймеры диспелов"
+	L.mythic_dispel_stage_4_desc = "Таймеры для диспелов, взятые с первого кила Echo"
+	L.mythic_dispel_bar = "Диспелы"
 end
