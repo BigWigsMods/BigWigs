@@ -149,13 +149,13 @@ if L then
 	L.mythic_blood_soak_stage_1 = "第一階段輸血計時器"
 	L.mythic_blood_soak_stage_2 = "第二階段輸血計時器"
 	L.mythic_blood_soak_stage_3 = "第三階段輸血計時器"
-	L.mythic_blood_soak_stage_1_desc = "顯示輸血計時器，根據 Echo 的首殺所使用的時間軸製作，會在合適的時間點提醒你治療艾澤拉斯。"
+	L.mythic_blood_soak_stage_1_desc = "顯示輸血計時器，根據 Echo 的首殺所使用的時間軸製作，會在適合的時間點提醒你治療艾澤拉斯。"
 	L.mythic_blood_soak_bar = "治療艾澤拉斯"
 
 	L.floors_open = "地板開啟"
 	L.floors_open_desc = "顯示地板打開、可以跳入坑中的計時器。"
 
 	L.mythic_dispel_stage_4 = "驅散計時器"
-	L.mythic_dispel_stage_4_desc = "顯示驅散計時器，根據 Echo 的首殺所使用的時間軸製作，為第四階段的驅散顯示計時器，會在合適的時間點提醒你驅散。"
+	L.mythic_dispel_stage_4_desc = "顯示驅散計時器，根據 Echo 的首殺所使用的時間軸製作，為第四階段的驅散顯示計時器，會在適合的時間點提醒你驅散。"
 	L.mythic_dispel_bar = "驅散"
 end
