@@ -126,36 +126,36 @@ if L then
 	L.rune_of_damnation_countdown_desc = "為受到災罰符文影響的玩家顯示倒數計時。"
 	L.jump = "跳入"
 
-	--L.relentless_domination = "Domination"
+	L.relentless_domination = "統御"
 	L.chains_of_oppression = "壓迫之鏈" -- 這個中文技能名夠短，不需縮寫
 	L.unholy_attunement = "水晶塔"
-	--L.shattering_blast = "Tank Blast"
+	L.shattering_blast = "坦克爆炸"
 	L.rune_of_compulsion = "心控"
-	--L.desolation = "Azeroth Soak"
+	-- L.desolation = "荒蕪" -- NOT YET
 	L.chains_of_anguish = "痛苦之鏈" -- 這個中文技能名夠短，不需縮寫
 	L.chain = "鎖鏈"
 	L.chain_target = "鎖鏈：%s!"
 	L.chains_remaining = "鎖鏈拉斷：%d/%d"
 	L.rune_of_domination = "團隊分攤"
 
-	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "階段四：%s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
-	-- L.azeroth_health = "Azeroth Health"
-	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+	L.azeroth_health = "艾澤拉斯血量"
+	L.azeroth_health_desc = "艾澤拉斯血量警告"
 
-	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
-	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+	L.azeroth_new_health_plus = "艾澤拉斯：+%.1f%% (%d)"
+	L.azeroth_new_health_minus = "艾澤拉斯：-%.1f%%  (%d)"
 
-	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
-	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+	L.mythic_blood_soak_stage_1 = "第一階段輸血計時器"
+	L.mythic_blood_soak_stage_2 = "第二階段輸血計時器"
+	L.mythic_blood_soak_stage_3 = "第三階段輸血計時器"
+	L.mythic_blood_soak_stage_1_desc = "顯示輸血計時器，根據 Echo 的首殺所使用的時間軸製作，會在合適的時間點提醒你治療艾澤拉斯。"
+	L.mythic_blood_soak_bar = "治療艾澤拉斯"
 
-	-- L.floors_open = "Floors Open"
-	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+	L.floors_open = "地板開啟"
+	L.floors_open_desc = "顯示地板打開、可以跳入坑中的計時器。"
 
-	-- L.mythic_dispel_stage_4 = "Dispel Timers"
-	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
-	-- L.mythic_dispel_bar = "Dispels"
+	L.mythic_dispel_stage_4 = "驅散計時器"
+	L.mythic_dispel_stage_4_desc = "顯示驅散計時器，根據 Echo 的首殺所使用的時間軸製作，為第四階段的驅散顯示計時器，會在合適的時間點提醒你驅散。"
+	L.mythic_dispel_bar = "驅散"
 end
