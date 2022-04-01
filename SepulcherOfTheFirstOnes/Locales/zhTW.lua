@@ -80,7 +80,7 @@ end
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhTW")
 if L then
 	L.custom_off_repeating_blasphemy = "重覆褻瀆印記喊話"
-	L.custom_off_repeating_blasphemy_desc = "以 {rt1} 和 {rt3} 喊話兩種褻瀆印記，方便你快速地找到相反印記的隊友，並消除自身印記。"
+	L.custom_off_repeating_blasphemy_desc = "以 {rt1} 和 {rt3} 持續喊話兩種褻瀆印記，方便你快速地找到相反印記的隊友，並消除自身印記。"
 
 	L.kingsmourne_hungers = "王之哀傷"
 	L.blasphemy = "印記"
@@ -98,18 +98,18 @@ end
 L = BigWigs:NewBossLocale("Lords of Dread", "zhTW")
 if L then
 	L.unto_darkness = "AoE 階段"-- Unto Darkness
-	L.cloud_of_carrion = "Carrion" -- Cloud of Carrion
-	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
+	L.cloud_of_carrion = "食腐蟲群" -- Cloud of Carrion
+	L.empowered_cloud_of_carrion = "強化食腐蟲群" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "小怪" -- Manifest Shadows
 	L.leeching_claws = "順劈（瑪）" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
-	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
+	L.infiltration_removed = "抓出內鬼，用時 %.1f 秒" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "驚懼爆發" -- Fearful Trepidation
 	L.slumber_cloud = "雲霧" -- Slumber Cloud
 	L.anguishing_strike = "順劈（金）" -- Anguishing Strike
 
-	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
-	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
+	L.custom_on_repeating_biting_wound = "重覆螫傷喊話"
+	L.custom_on_repeating_biting_wound_desc = "當你中了螫傷，以 {rt7} 持續喊話，使隊友能快速地找到你。"
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhTW")
@@ -117,7 +117,7 @@ if L then
 	L.celestial_collapse = "類星體" -- Celestial Collapse
 	L.manifest_cosmos = "核心" -- Manifest Cosmos
 	L.stellar_shroud = "治療吸收" -- Stellar Shroud
-	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
+	L.knock = "擊退" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "zhTW")
@@ -131,7 +131,7 @@ if L then
 	L.unholy_attunement = "水晶塔"
 	L.shattering_blast = "坦克爆炸"
 	L.rune_of_compulsion = "心控"
-	-- L.desolation = "荒蕪" -- NOT YET
+	L.desolation = "荒寂"
 	L.chains_of_anguish = "痛苦之鏈" -- 這個中文技能名夠短，不需縮寫
 	L.chain = "鎖鏈"
 	L.chain_target = "鎖鏈：%s!"
