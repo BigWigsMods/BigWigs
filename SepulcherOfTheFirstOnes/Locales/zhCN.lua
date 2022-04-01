@@ -8,7 +8,7 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhCN")
 if L then
-	L.tank_combo_desc = "显示 裂隙之吼与撕裂 满100能量释放的计时器"
+	L.tank_combo_desc = "为满100能量释放的裂隙之吼与撕裂显示计时器"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhCN")
