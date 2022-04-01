@@ -8,7 +8,7 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
 if L then
-	L.tank_combo_desc = "達到 100 能量時，為撕裂與裂喉顯示施放計時條。"
+	L.tank_combo_desc = "為達到 100 能量時施放的撕裂與裂喉顯示計時器。"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhTW")
