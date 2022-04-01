@@ -131,14 +131,14 @@ if L then
 	L.unholy_attunement = "晶塔"
 	L.shattering_blast = "坦克炸弹"
 	L.rune_of_compulsion = "心控"
-	--L.desolation = "Azeroth Soak"
+	L.desolation = "荒芜"
 	L.chains_of_anguish = "痛苦之链"
 	L.chain = "锁链"
 	L.chain_target = "锁链 %s!"
 	L.chains_remaining = "%d/%d 锁链碎裂"
 	L.rune_of_domination = "团队分摊"
 
-	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "阶段四：%%s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
 	L.azeroth_health = "艾泽拉斯血量"
 	L.azeroth_health_desc = "艾泽拉斯血量警告"
@@ -149,13 +149,13 @@ if L then
 	L.mythic_blood_soak_stage_1 = "第一阶段输血计时条"
 	L.mythic_blood_soak_stage_2 = "第二阶段输血计时条"
 	L.mythic_blood_soak_stage_3 = "第三阶段输血计时条"
-	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
+	L.mythic_blood_soak_stage_1_desc = "显示输血计时条，根据 Echo 的首杀所使用的时间轴制作，会在合适的时间点提醒你治疗艾泽拉斯。"
 	L.mythic_blood_soak_bar = "治疗艾泽拉斯"
 
 	L.floors_open = "地板开启"
-	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+	L.floors_open_desc = "显示地板打开、可以跳入坑中的计时器。"
 
 	L.mythic_dispel_stage_4 = "驱散计时条"
-	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
+	L.mythic_dispel_stage_4_desc = "显示驱散计时器，根据 Echo 的首杀所使用的时间轴制作，为第四阶段的驱散显示计时器，会在适的时间点提醒你驱散。"
 	L.mythic_dispel_bar = "驱散"
 end
