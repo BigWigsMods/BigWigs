@@ -156,6 +156,6 @@ if L then
 	L.floors_open_desc = "显示地板打开、可以跳入坑中的计时器。"
 
 	L.mythic_dispel_stage_4 = "驱散计时条"
-	L.mythic_dispel_stage_4_desc = "显示驱散计时器，根据 Echo 的首杀所使用的时间轴制作，为第四阶段的驱散显示计时器，会在适的时间点提醒你驱散。"
+	L.mythic_dispel_stage_4_desc = "显示驱散计时器，根据 Echo 的首杀所使用的时间轴制作，为第四阶段的驱散显示计时器，会在合适的时间点提醒你驱散。"
 	L.mythic_dispel_bar = "驱散"
 end
