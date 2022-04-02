@@ -8,7 +8,7 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhCN")
 if L then
-	L.tank_combo_desc = "显示 裂隙之吼/撕裂 满100能量释放的计时器"
+	L.tank_combo_desc = "为满100能量释放的裂隙之吼与撕裂显示计时器"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhCN")
@@ -46,7 +46,7 @@ if L then
 	L.windswept_wings = "啸风"
 	L.wild_stampede = "兽群"
 	L.withering_seeds = "种子"
-	L.hand_of_destruction = "毁灭之手"
+	L.hand_of_destruction = "群拉"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhCN")
@@ -60,8 +60,8 @@ if L then
 	L.custom_on_nameplate_fixate = "被征用姓名板图标"
 	L.custom_on_nameplate_fixate_desc = "在目标是你的自动体的姓名板上显示图标。\n\n需要使用敌对姓名板和支持姓名板的插件（KuiNameplates,Plater）。"
 
-	L.harmonic = "谐波(推离)"
-	L.melodic = "旋律(拉近)"
+	L.harmonic = "谐波 (推离)"
+	L.melodic = "旋律 (拉近)"
 end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "zhCN")
@@ -74,13 +74,13 @@ if L then
 	L.bomb_dropped = "炸弹掉落"
 
 	L.custom_on_stop_timers = "总是显示技能条"
-	L.custom_on_stop_timers_desc = "黑伦度斯可能延迟它的技能。启用此选项后,这些技能将保留在您的屏幕上。"
+	L.custom_on_stop_timers_desc = "黑伦度斯可能延迟它的技能。启用此选项后，这些技能将保留在您的屏幕上。"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhCN")
 if L then
 	L.custom_off_repeating_blasphemy = "重复渎神之光"
-	L.custom_off_repeating_blasphemy_desc = "以{rt1}和{rt3} >说<两种渎神之光印记,方便你快速地找到相反印记的队友，并消除自身印记"
+	L.custom_off_repeating_blasphemy_desc = "以{rt1}和{rt3} 重覆说话两种渎神之光印记，方便你快速地找到相反印记的队友，并消除自身印记。"
 
 	L.kingsmourne_hungers = "王之哀伤"
 	L.blasphemy = "标记"
@@ -103,13 +103,13 @@ if L then
 	L.manifest_shadows = "小怪" -- Manifest Shadows
 	L.leeching_claws = "正面顺劈 (玛)" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
-	L.infiltration_removed = "内鬼发现于 %.1fs" -- "Imposters found in 1.1s" s = seconds
+	L.infiltration_removed = "内鬼发现，用时 %.1f 秒" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "爆裂恐惧" -- Fearful Trepidation
 	L.slumber_cloud = "迷雾" -- Slumber Cloud
 	L.anguishing_strike = "正面顺劈 (金)" -- Anguishing Strike
 
 	L.custom_on_repeating_biting_wound = "重复啃噬伤口"
-	L.custom_on_repeating_biting_wound_desc = "重复啃噬伤口:以>说<的方式发送带有图标 {rt7} 的信息,以使其显得更明显。"
+	L.custom_on_repeating_biting_wound_desc = "以团队标记 {rt7} 重覆说话啃噬伤口，以使其显得更明显。"
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhCN")
@@ -126,36 +126,36 @@ if L then
 	L.rune_of_damnation_countdown_desc = "为受到咒罚符文影响的玩家倒计时。"
 	L.jump = "跳入"
 
-	--L.relentless_domination = "Domination"
+	L.relentless_domination = "统御"
 	L.chains_of_oppression = "压迫之链"
 	L.unholy_attunement = "晶塔"
-	--L.shattering_blast = "Tank Blast"
+	L.shattering_blast = "坦克炸弹"
 	L.rune_of_compulsion = "心控"
-	--L.desolation = "Azeroth Soak"
+	L.desolation = "荒芜"
 	L.chains_of_anguish = "痛苦之链"
 	L.chain = "锁链"
 	L.chain_target = "锁链 %s!"
 	L.chains_remaining = "%d/%d 锁链碎裂"
 	L.rune_of_domination = "团队分摊"
 
-	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "阶段四：%%s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
-	-- L.azeroth_health = "Azeroth Health"
-	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+	L.azeroth_health = "艾泽拉斯血量"
+	L.azeroth_health_desc = "艾泽拉斯血量警告"
 
-	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
-	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+	L.azeroth_new_health_plus = "艾泽拉斯: +%.1f%% (%d)"
+	L.azeroth_new_health_minus = "艾泽拉斯: -%.1f%%  (%d)"
 
-	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
-	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+	L.mythic_blood_soak_stage_1 = "第一阶段输血计时条"
+	L.mythic_blood_soak_stage_2 = "第二阶段输血计时条"
+	L.mythic_blood_soak_stage_3 = "第三阶段输血计时条"
+	L.mythic_blood_soak_stage_1_desc = "显示输血计时条，根据 Echo 的首杀所使用的时间轴制作，会在合适的时间点提醒你治疗艾泽拉斯。"
+	L.mythic_blood_soak_bar = "治疗艾泽拉斯"
 
-	-- L.floors_open = "Floors Open"
-	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+	L.floors_open = "地板开启"
+	L.floors_open_desc = "显示地板打开、可以跳入坑中的计时器。"
 
-	-- L.mythic_dispel_stage_4 = "Dispel Timers"
-	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
-	-- L.mythic_dispel_bar = "Dispels"
+	L.mythic_dispel_stage_4 = "驱散计时条"
+	L.mythic_dispel_stage_4_desc = "显示驱散计时器，根据 Echo 的首杀所使用的时间轴制作，为第四阶段的驱散显示计时器，会在合适的时间点提醒你驱散。"
+	L.mythic_dispel_bar = "驱散"
 end
