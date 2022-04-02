@@ -8,7 +8,7 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
 if L then
-	L.tank_combo_desc = "達到 100 能量時，為撕裂與裂喉顯示施放計時條。"
+	L.tank_combo_desc = "為達到 100 能量時施放的撕裂與裂喉顯示計時器。"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhTW")
@@ -80,7 +80,7 @@ end
 L = BigWigs:NewBossLocale("Anduin Wrynn", "zhTW")
 if L then
 	L.custom_off_repeating_blasphemy = "重覆褻瀆印記喊話"
-	L.custom_off_repeating_blasphemy_desc = "以 {rt1} 和 {rt3} 喊話兩種褻瀆印記，方便你快速地找到相反印記的隊友，並消除自身印記。"
+	L.custom_off_repeating_blasphemy_desc = "以 {rt1} 和 {rt3} 持續喊話兩種褻瀆印記，方便你快速地找到相反印記的隊友，並消除自身印記。"
 
 	L.kingsmourne_hungers = "王之哀傷"
 	L.blasphemy = "印記"
@@ -98,18 +98,18 @@ end
 L = BigWigs:NewBossLocale("Lords of Dread", "zhTW")
 if L then
 	L.unto_darkness = "AoE 階段"-- Unto Darkness
-	L.cloud_of_carrion = "Carrion" -- Cloud of Carrion
-	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
+	L.cloud_of_carrion = "食腐蟲群" -- Cloud of Carrion
+	L.empowered_cloud_of_carrion = "強化食腐蟲群" -- Empowered Cloud of Carrion
 	L.manifest_shadows = "小怪" -- Manifest Shadows
 	L.leeching_claws = "順劈（瑪）" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
-	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
+	L.infiltration_removed = "抓出內鬼，用時 %.1f 秒" -- "Imposters found in 1.1s" s = seconds
 	L.fearful_trepidation = "驚懼爆發" -- Fearful Trepidation
 	L.slumber_cloud = "雲霧" -- Slumber Cloud
 	L.anguishing_strike = "順劈（金）" -- Anguishing Strike
 
-	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
-	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
+	L.custom_on_repeating_biting_wound = "重覆螫傷喊話"
+	L.custom_on_repeating_biting_wound_desc = "當你中了螫傷，以 {rt7} 持續喊話，使隊友能快速地找到你。"
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "zhTW")
@@ -117,7 +117,7 @@ if L then
 	L.celestial_collapse = "類星體" -- Celestial Collapse
 	L.manifest_cosmos = "核心" -- Manifest Cosmos
 	L.stellar_shroud = "治療吸收" -- Stellar Shroud
-	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
+	L.knock = "擊退" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "zhTW")
@@ -126,36 +126,36 @@ if L then
 	L.rune_of_damnation_countdown_desc = "為受到災罰符文影響的玩家顯示倒數計時。"
 	L.jump = "跳入"
 
-	--L.relentless_domination = "Domination"
+	L.relentless_domination = "統御"
 	L.chains_of_oppression = "壓迫之鏈" -- 這個中文技能名夠短，不需縮寫
 	L.unholy_attunement = "水晶塔"
-	--L.shattering_blast = "Tank Blast"
+	L.shattering_blast = "坦克爆炸"
 	L.rune_of_compulsion = "心控"
-	--L.desolation = "Azeroth Soak"
+	L.desolation = "荒寂"
 	L.chains_of_anguish = "痛苦之鏈" -- 這個中文技能名夠短，不需縮寫
 	L.chain = "鎖鏈"
 	L.chain_target = "鎖鏈：%s!"
 	L.chains_remaining = "鎖鏈拉斷：%d/%d"
 	L.rune_of_domination = "團隊分攤"
 
-	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "階段四：%s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
-	-- L.azeroth_health = "Azeroth Health"
-	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+	L.azeroth_health = "艾澤拉斯血量"
+	L.azeroth_health_desc = "艾澤拉斯血量警告"
 
-	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
-	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+	L.azeroth_new_health_plus = "艾澤拉斯：+%.1f%% (%d)"
+	L.azeroth_new_health_minus = "艾澤拉斯：-%.1f%%  (%d)"
 
-	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
-	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+	L.mythic_blood_soak_stage_1 = "第一階段輸血計時器"
+	L.mythic_blood_soak_stage_2 = "第二階段輸血計時器"
+	L.mythic_blood_soak_stage_3 = "第三階段輸血計時器"
+	L.mythic_blood_soak_stage_1_desc = "顯示輸血計時器，根據 Echo 的首殺所使用的時間軸製作，會在適合的時間點提醒你治療艾澤拉斯。"
+	L.mythic_blood_soak_bar = "治療艾澤拉斯"
 
-	-- L.floors_open = "Floors Open"
-	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+	L.floors_open = "地板開啟"
+	L.floors_open_desc = "顯示地板打開、可以跳入坑中的計時器。"
 
-	-- L.mythic_dispel_stage_4 = "Dispel Timers"
-	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
-	-- L.mythic_dispel_bar = "Dispels"
+	L.mythic_dispel_stage_4 = "驅散計時器"
+	L.mythic_dispel_stage_4_desc = "顯示驅散計時器，根據 Echo 的首殺所使用的時間軸製作，為第四階段的驅散顯示計時器，會在適合的時間點提醒你驅散。"
+	L.mythic_dispel_bar = "驅散"
 end
