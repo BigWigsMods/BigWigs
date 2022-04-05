@@ -33,8 +33,8 @@ if L then
 	L.rings_enrage = "후광 (광폭)"
 	L.ring_count = "후광 (%d/%d)"
 
-	--L.custom_on_ring_timers = "Individual Halo Timers"
-	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+	L.custom_on_ring_timers = "개별 후광 타이머"
+	L.custom_on_ring_timers_desc = "분해의 후광은 고리를 한 세트로 생성합니다. 이 옵션은 각각 고리가 언제 퍼지기 시작하는지 보여줍니다. 분해의 후광의 설정을 사용함."
 
 	L.shield_removed = "%s %.1f초 후 제거됨" -- "Shield removed after 1.1s" s = seconds
 end
@@ -60,8 +60,8 @@ if L then
 	L.custom_on_nameplate_fixate = "시선고정 네임플레이트 아이콘"
 	L.custom_on_nameplate_fixate_desc = "본인에게 시선고정된 수집 자동기계의 네임플레이트에 아이콘을 표시합니다.\n\n적 네임플레이트 활성화 및 지원하는 네임플레이트 애드온이 필요함(KuiNameplates, Plater)."
 
-	--L.harmonic = "Push"
-	--L.melodic = "Pull"
+	L.harmonic = "밀기"
+	L.melodic = "당기기"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "koKR")
@@ -138,24 +138,24 @@ if L then
 	L.chains_remaining = "%d/%d 사슬 파괴 완료"
 	L.rune_of_domination = "같이 맞아주기"
 
-	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "이번 페이즈 마지막 %s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
-	-- L.azeroth_health = "Azeroth Health"
-	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+	 L.azeroth_health = "아제로스 체력"
+	 L.azeroth_health_desc = "아제로스 체력 경고"
 
-	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
-	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+	 L.azeroth_new_health_plus = "아제로스 체력: +%.1f%% (%d)"
+	 L.azeroth_new_health_minus = "아제로스 체력: -%.1f%%  (%d)"
 
-	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
-	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+	 L.mythic_blood_soak_stage_1 = "1페이즈 피 흡수 타이밍"
+	 L.mythic_blood_soak_stage_2 = "2페이즈 피 흡수 타이밍"
+	 L.mythic_blood_soak_stage_3 = "3페이즈 피 흡수 타이밍"
+	 L.mythic_blood_soak_stage_1_desc = "아제로스를 힐할수 있는 좋은 타이밍이 언제인지 보이기. 에코가 첫킬 당시 사용."
+	 L.mythic_blood_soak_bar = "아제로스 힐"
 
-	-- L.floors_open = "Floors Open"
-	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+	 L.floors_open = "바닥 열림"
+	 L.floors_open_desc = "떨어질 수 있게 바닥이 다시 열리기까지의 시간."
 
-	-- L.mythic_dispel_stage_4 = "Dispel Timers"
-	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
-	-- L.mythic_dispel_bar = "Dispels"
+	 L.mythic_dispel_stage_4 = "해제 타이머"
+	 L.mythic_dispel_stage_4_desc = "마지막 페이즈에 해제 타이밍- 에코가 첫킬 당시 사용."
+	 L.mythic_dispel_bar = "해제"
 end
