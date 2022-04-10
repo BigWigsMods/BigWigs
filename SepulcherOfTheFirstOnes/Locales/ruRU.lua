@@ -201,9 +201,12 @@ if L then
 	L.azeroth_new_health_minus = "Хп Азерот: -%.1f%%  (%d)"
 
 	L.mythic_blood_soak_stage_1 = "Таймеры крови Азерот 1 Фазы"
-	L.mythic_blood_soak_stage_2 = "Таймеры крови Азерот 2 Фазы"
-	L.mythic_blood_soak_stage_3 = "Таймеры крови Азерот 3 Фазы"
 	L.mythic_blood_soak_stage_1_desc = "Показывать полосы с хорошими таймингами, аналогичными первому килу Echo"
+	L.mythic_blood_soak_stage_2 = "Таймеры крови Азерот 2 Фазы"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_stage_3 = "Таймеры крови Азерот 3 Фазы"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
+	
 	L.mythic_blood_soak_bar = "Лечить Азерот"
 
 	L.floors_open = "Открытие пола"
