@@ -326,6 +326,7 @@ do
 		[2291] = lw_s, -- De Other Side
 		[2293] = lw_s, -- Theater of Pain
 		[2441] = lw_s, -- Tazavesh, the Veiled Market
+		["Affixes"] = lw_s, -- Affixes
 	}
 
 	public.zoneTblWorld = {
@@ -657,6 +658,11 @@ do
 
 					if not menus[id] then menus[id] = true end
 				end
+			elseif type(rawMenu) == "string" then
+				if not loadOnZone[rawMenu] then loadOnZone[rawMenu] = {} end
+				loadOnZone[rawMenu][#loadOnZone[rawMenu] + 1] = addon
+
+				if not menus[rawMenu] then menus[rawMenu] = true end
 			else
 				local name = GetAddOnInfo(addon)
 				sysprint(("The extra menu ID %q from the addon %q was not parsable."):format(tostring(rawMenu), name))

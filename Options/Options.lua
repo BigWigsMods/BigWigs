@@ -1214,8 +1214,12 @@ do
 	local function onTreeGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
 		local zoneId = value:match("\001(-?%d+)$")
+		local stringZoneId = value:match("\001(-?[a-z_A-Z]+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
+		elseif stringZoneId == "Affixes" then
+			-- TODO how to do this better?
+			onZoneShow(widget, stringZoneId)
 		elseif value:match("^BigWigs_") and value ~= "BigWigs_Shadowlands" and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
@@ -1283,7 +1287,9 @@ do
 				local zoneToId, alphabeticalZoneList = {}, {}
 				for k in next, loader:GetZoneMenus() do
 					local zone
-					if k < 0 then
+					if type(k) == "string" then
+						zone = k
+					elseif k < 0 then
 						local tbl = GetMapInfo(-k)
 						if tbl then
 							zone = tbl.name
