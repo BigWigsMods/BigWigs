@@ -1488,7 +1488,13 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		enableZones[id] = "world"
 		worldBosses[module.worldBoss] = id
 	else
-		enableZones[module.instanceId] = true
+		if type(module.instanceId) == 'table' then
+			for _, eachId in ipairs(module.instanceId) do
+				enableZones[eachId] = true
+		  	end
+		else
+			enableZones[module.instanceId] = true
+		end
 	end
 
 	local id = module.otherMenu or module.instanceId or -(module.mapId)

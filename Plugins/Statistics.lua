@@ -235,7 +235,7 @@ do
 	function plugin:BigWigs_OnBossEngage(event, module, diff)
 		local id = module.instanceId
 
-		if module.journalId and id and id > 0 and not module.worldBoss then -- Raid restricted for now
+		if module.journalId and id and type(id) ~= "table" and id > 0 and not module.worldBoss then -- Raid restricted for now
 			activeDurations[module.journalId] = GetTime()
 
 			if diff and difficultyTable[diff] then
