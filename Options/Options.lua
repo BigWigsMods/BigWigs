@@ -1217,8 +1217,7 @@ do
 		local stringZoneId = value:match("\001(-?[a-z_A-Z]+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif stringZoneId == "Affixes" then
-			-- TODO how to do this better?
+		elseif stringZoneId then
 			onZoneShow(widget, stringZoneId)
 		elseif value:match("^BigWigs_") and value ~= "BigWigs_Shadowlands" and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
