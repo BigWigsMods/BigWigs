@@ -124,12 +124,12 @@ do
 					self:PrimaryIcon(41294) -- Fixate
 					self:StopBar(41305) -- Frenzy
 					self:StopBar(41303) -- Soul Drain
-					self:Bar("stages", 40, CL.intermission, 83601) -- spell_holy_borrowedtime / icon 237538
+					self:Bar("stages", 40, CL.intermission, "inv_misc_pocketwatch_01")
 				elseif msg == "Kill2" then
 					self:StopBar(41410) -- Deaden
 					self:StopBar(41431) -- Rune Shield
 					self:StopBar(L.zero_mana) -- Soul Drain
-					self:Bar("stages", 40, CL.intermission, 83601) -- spell_holy_borrowedtime / icon 237538
+					self:Bar("stages", 40, CL.intermission, "inv_misc_pocketwatch_01")
 				end
 			end
 		end

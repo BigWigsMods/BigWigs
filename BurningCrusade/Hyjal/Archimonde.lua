@@ -86,6 +86,5 @@ function mod:ProtectionOfElune()
 	self:PrimaryIcon(32014)
 	self:StopBar(31970) -- Fear
 	-- Use berserk instead of making a toggle option for this.
-	self:Bar("berserk", 36, L["killable"], 149144) -- "achievement_boss_archimonde-"
+	self:Bar("berserk", 36, L["killable"], 31984) -- 31984 = for finger of death spam
 end
-

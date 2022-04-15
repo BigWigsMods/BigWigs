@@ -32,8 +32,8 @@ end
 
 function mod:OnEngage()
 	self:Berserk(600)
-	self:CDBar(40251, 10) -- Shadow of Death
-	self:CDBar(40243, 15.7) -- Crushing Shadows
+	self:CDBar(40251, 12.8) -- Shadow of Death
+	self:CDBar(40243, 16.2) -- Crushing Shadows
 end
 
 --------------------------------------------------------------------------------
@@ -41,22 +41,21 @@ end
 --
 
 function mod:ShadowOfDeath(args)
-	self:Bar(args.spellId, 62)
+	self:CDBar(args.spellId, 32) -- 32-40
 end
 
 function mod:ShadowOfDeathApplied(args)
 	self:TargetMessageOld(args.spellId, args.destName, "red", "warning")
-	-- Used to be 55s, wowhead says 55s, timewalking logs say 30s
-	self:TargetBar(args.spellId, 30, args.destName, 54224) -- 54224 = "Death" / ability_rogue_feigndeath / icon 132293
+	self:TargetBar(args.spellId, 55, args.destName, "ability_rogue_feigndeath")
 	self:PrimaryIcon(args.spellId, args.destName)
 end
 
 function mod:ShadowOfDeathRemoved(args)
-	self:TargetBar(40251, 60, args.destName, 221641) -- 221641 = "Ghost" / achievement_halloween_ghost_01 / icon 236548
+	self:TargetBar(40251, 60, args.destName, "ability_vanish")
 end
 
 function mod:CrushingShadows(args)
-	self:CDBar(args.spellId, 15.7) -- 15-21
+	self:CDBar(args.spellId, 16.2) -- 16-24, shenanigans to skip? some logs have huge variance
 end
 
 do

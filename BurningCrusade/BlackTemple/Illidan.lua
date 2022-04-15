@@ -194,7 +194,7 @@ do
 	function mod:EyeBlast(args)
 		local t = GetTime()
 		if t-prev > 2 then
-			self:MessageOld(args.spellId, "yellow", "info", args.spellName, 224284) -- XXX temp until it has an icon
+			self:MessageOld(args.spellId, "yellow", "info", args.spellName, "spell_fire_felflamebolt")
 		end
 		prev = t -- Continually spams every 1s during the cast
 	end
