@@ -138,7 +138,7 @@ if L then
 	L.chains_remaining = "鎖鏈拉斷：%d/%d"
 	L.rune_of_domination = "團隊分攤"
 
-	L.final = "階段四：%s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "最終%s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
 	L.azeroth_health = "艾澤拉斯血量"
 	L.azeroth_health_desc = "艾澤拉斯血量警告"
