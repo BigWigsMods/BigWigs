@@ -1,9 +1,7 @@
 local L = BigWigs:NewBossLocale("Vigilant Guardian", "frFR")
 if not L then return end
 if L then
-	-- L.sentry = "Tank Add"
-	-- L.materium = "Small Adds"
-	-- L.shield = "Shield" -- Global locale canidate?
+	--L.sentry = "Tank Add"
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "frFR")
@@ -13,7 +11,6 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "frFR")
 if L then
-	L.traps = "Pièges" -- Stasis Trap
 	L.sparknova = "Nova éclair" -- Hyperlight Sparknova
 	L.relocation = "Bombe sur le tank" -- Glyph of Relocation
 	L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
@@ -25,7 +22,6 @@ end
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "frFR")
 if L then
 	L.staggering_barrage = "Barrage" -- Staggering Barrage
-	L.domination_core = "Add" -- Domination Core
 	L.obliteration_arc = "Arc" -- Obliteration Arc
 
 	L.disintergration_halo = "Anneaux" -- Disintegration Halo
@@ -35,8 +31,6 @@ if L then
 
 	--L.custom_on_ring_timers = "Individual Halo Timers"
 	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
-
-	L.shield_removed = "%s retiré au bout de %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "frFR")
@@ -88,6 +82,7 @@ if L then
 	--L.earthbreaker_missiles = "Missiles"
 	--L.crushing_prism = "Prisms"
 	--L.prism = "Prism"
+	L.ephemeral_fissure = "Fissure"
 
 	-- L.bomb_dropped = "Bomb dropped"
 
@@ -100,7 +95,6 @@ if L then
 	--L.unto_darkness = "AoE Phase"
 	--L.cloud_of_carrion = "Carrion"
 	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
-	--L.manifest_shadows = "Adds"
 	--L.leeching_claws = "Frontal (M)"
 	--L.infiltration_of_dread = "Among Us"
 	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds

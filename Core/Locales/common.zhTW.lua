@@ -35,6 +35,7 @@ L.over = "%s結束" -- Spell Over
 L.removed = "%s移除" -- Spell Removed
 L.removed_from = "%2$s已移除%1$s" -- Spell removed from Player
 L.removed_by = "%s被%s移除" -- Spell removed by Player
+L.removed_after = "%s在 %.1f 秒後移除" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "即將：%s" -- Spell Incoming
 L.interrupted = "%s已打斷" -- Spell Interrupted
 L.interrupted_by = "%2$s已打斷%1$s" -- Spell interrupted by Player

@@ -2,8 +2,6 @@ local L = BigWigs:NewBossLocale("Vigilant Guardian", "itIT")
 if not L then return end
 if L then
 	L.sentry = "Add da Tankare"
-	L.materium = "Add Minori"
-	L.shield = "Scudo" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "itIT")
@@ -13,7 +11,6 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "itIT")
 if L then
-	L.traps = "Trappole" -- Stasis Trap
 	L.sparknova = "Nova Scintillante" -- Hyperlight Sparknova
 	L.relocation = "Bomba sul Difensore" -- Glyph of Relocation
 	L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
@@ -25,7 +22,6 @@ end
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "itIT")
 if L then
 	L.staggering_barrage = "Raffica" -- Staggering Barrage
-	L.domination_core = "Add" -- Domination Core
 	L.obliteration_arc = "Arco" -- Obliteration Arc
 
 	L.disintergration_halo = "Anelli" -- Disintegration Halo
@@ -35,8 +31,6 @@ if L then
 
 	L.custom_on_ring_timers = "Timer Individuali Aureola"
 	L.custom_on_ring_timers_desc = "Aureola Disintegrante attiva una serie di anelli, verranno mostrate barre per quando questi anelli inizieranno a muoversi. Usa le impostazioni di Aureola Disintegrante."
-
-	L.shield_removed = "%s rimosso dopo %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "itIT")
@@ -88,6 +82,7 @@ if L then
 	L.earthbreaker_missiles = "Missili"
 	L.crushing_prism = "Prismi"
 	L.prism = "Prisma"
+	L.ephemeral_fissure = "Fessura"
 
 	L.bomb_dropped = "Bomba rilasciata"
 
@@ -100,7 +95,6 @@ if L then
 	L.unto_darkness = "Fase AoE"
 	L.cloud_of_carrion = "Nube Necrotica"
 	L.empowered_cloud_of_carrion = "Nube Potenziata" -- Empowered Cloud of Carrion
-	L.manifest_shadows = "Adds"
 	L.leeching_claws = "Frontale (Mal'Ganis)"
 	L.infiltration_of_dread = "Tra di Noi"
 	L.infiltration_removed = "Impostori trovati in %.1fs" -- "Imposters found in 1.1s" s = seconds

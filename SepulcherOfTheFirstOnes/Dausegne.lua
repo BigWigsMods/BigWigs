@@ -27,7 +27,6 @@ local nextTeleport = 0
 local L = mod:GetLocale()
 if L then
 	L.staggering_barrage = "Barrage" -- Staggering Barrage
-	L.domination_core = "Add" -- Domination Core
 	L.obliteration_arc = "Arc" -- Obliteration Arc
 
 	L.disintergration_halo = "Rings" -- Disintegration Halo
@@ -40,7 +39,6 @@ if L then
 	L.custom_on_ring_timers_icon = 363200
 
 	L.absorb_text = "%s (%.0f%%)"
-	L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
 
 --------------------------------------------------------------------------------
@@ -61,7 +59,7 @@ function mod:GetOptions()
 		365418, -- Total Dominion
 	},nil,{
 		[361018] = L.staggering_barrage, -- Staggering Barrage (Barrage)
-		[359483] = L.domination_core, -- Domination Core (Add)
+		[359483] = CL.add, -- Domination Core (Add)
 		[361513] = L.obliteration_arc,  -- Obliteration Arc (Arc)
 		[363200] = L.disintergration_halo,  -- Disintegration Halo (Rings)
 	}
@@ -95,7 +93,7 @@ function mod:OnEngage()
 	nextTeleport = GetTime() + (self:Easy() and 80 or 72.8)
 	self:SetStage(1)
 
-	self:Bar(359483, self:Easy() and 7 or 6.5, CL.count:format(L.domination_core, coreCount)) -- Domination Core
+	self:Bar(359483, self:Easy() and 7 or 6.5, CL.count:format(CL.add, coreCount)) -- Domination Core
 	self:Bar(363200, self:Easy() and 5.5 or 5, CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo (emote at 5, ring at ~13)
 	self:Bar(361513, self:Easy() and 16.5 or 15, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
 	self:Bar(361018, self:Easy() and 32 or 29, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
@@ -155,12 +153,12 @@ function mod:StaggeringBarrageRemoved(args)
 end
 
 function mod:DominationCore(args)
-	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(L.domination_core, coreCount)))
+	self:Message(args.spellId, "yellow", CL.incoming:format(CL.count:format(CL.add, coreCount)))
 	self:PlaySound(args.spellId, "long")
 	coreCount = coreCount + 1
 	local cd = self:Easy() and (coreCount == 2 and 37.2 or 40.5) or (coreCount == 2 and 33.5 or 36.5)
 	if coreCount < 4 and nextTeleport > GetTime() + cd then -- 3 per rotation, except first
-		self:Bar(args.spellId, cd, CL.count:format(L.domination_core, coreCount))
+		self:Bar(args.spellId, cd, CL.count:format(CL.add, coreCount))
 	end
 end
 
@@ -213,7 +211,7 @@ end
 function mod:Teleport(args)
 	-- clean up anything we messed up
 	self:StopBar(CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo
-	self:StopBar(CL.count:format(L.domination_core, coreCount)) -- Domination Core
+	self:StopBar(CL.count:format(CL.add, coreCount)) -- Domination Core
 	self:StopBar(CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
 	self:StopBar(CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
 	self:StopBar(CL.count:format(args.spellName, teleportCount)) -- Teleport
@@ -255,7 +253,7 @@ do
 			timer = nil
 		end
 		self:SetStage(self:GetStage() + 1)
-		self:Message(args.spellId, "green", L.shield_removed:format(args.spellName, args.time - appliedTime))
+		self:Message(args.spellId, "green", CL.removed_after:format(args.spellName, args.time - appliedTime))
 		self:PlaySound(args.spellId, "info")
 		barrageCount = 1
 		coreCount = 1
@@ -263,7 +261,7 @@ do
 		haloCount = 1
 
 		self:Bar(363200, self:Easy() and 7.5 or 7, CL.count:format(L.rings_x:format(teleportCount), haloCount)) -- Disintegration Halo
-		self:Bar(359483, self:Easy() and 9.3 or 8.5, CL.count:format(L.domination_core, coreCount)) -- Domination Core
+		self:Bar(359483, self:Easy() and 9.3 or 8.5, CL.count:format(CL.add, coreCount)) -- Domination Core
 		self:Bar(361513, self:Easy() and 18.7 or 17, CL.count:format(L.obliteration_arc, arcCount)) -- Obliteration Arc
 		self:Bar(361018, self:Easy() and 34.3 or 31, CL.count:format(L.staggering_barrage, barrageCount)) -- Staggering Barrage
 

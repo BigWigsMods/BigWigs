@@ -2,8 +2,6 @@ local L = BigWigs:NewBossLocale("Vigilant Guardian", "ruRU")
 if not L then return end
 if L then
 	L.sentry = "Танк моб"
-	L.materium = "Кастер моб"
-	L.shield = "Защитное поле" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
@@ -13,7 +11,6 @@ end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "ruRU")
 if L then
-	L.traps = "Ловушки" -- Stasis Trap
 	L.sparknova = "Вспышка гиперсвета" -- Hyperlight Sparknova
 	L.relocation = "Стяжка" -- Glyph of Relocation
 	L.relocation_count = "%s Ф%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
@@ -25,7 +22,6 @@ end
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "ruRU")
 if L then
 	L.staggering_barrage = "Обстрел" -- Staggering Barrage
-	L.domination_core = "Ад" -- Domination Core
 	L.obliteration_arc = "Дуга" -- Obliteration Arc
 
 	L.disintergration_halo = "Кольца" -- Disintegration Halo
@@ -35,8 +31,6 @@ if L then
 
 	L.custom_on_ring_timers = "Индивидуальные таймеры для колец"
 	L.custom_on_ring_timers_desc = "\"Ореол дезинтеграции\" создаёт набор колец. Выбрав эту настройку, вам будет показаны полосы для каждой полосы индивидуально. Использует настройки \"Ореол дезинтеграции\"."
-
-	L.shield_removed = "%s убран спустя %.1fс" -- "Shield removed after 1.1s" s = seconds
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "ruRU")
@@ -92,6 +86,7 @@ if L then
 	L.earthbreaker_missiles = "Снаряды"
 	L.crushing_prism = "Призмы"
 	L.prism = "Призма"
+	L.ephemeral_fissure = "Разлом"
 
 	L.bomb_dropped = "Бомба брошена"
 
@@ -104,7 +99,6 @@ if L then
 	L.unto_darkness = "АОЕ Фаза"
 	L.cloud_of_carrion = "Рой"
 	L.empowered_cloud_of_carrion = "Усиленный рой" -- Empowered Cloud of Carrion
-	L.manifest_shadows = "Ады"
 	L.leeching_claws = "Фронтал (M)"
 	L.infiltration_of_dread = "Амогус"
 	L.infiltration_removed = "Импостер найден спустя %.1fс" -- "Imposters found in 1.1s" s = seconds
@@ -142,7 +136,7 @@ if L then
 	L.chains_remaining = "%d/%d цепей разорвано"
 	L.rune_of_domination = "Делёжка"
 
-	L.final = "Ласт %s" -- Final Unholy Attunement/Domination (last spell of a stage) -- Used this exact word to keep gender 
+	L.final = "Ласт %s" -- Final Unholy Attunement/Domination (last spell of a stage) -- Used this exact word to keep gender
 
 	L.azeroth_health = "Хп Азерот"
 	L.azeroth_health_desc = "Предупреждения о здоровье Азерот"

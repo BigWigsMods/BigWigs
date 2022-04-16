@@ -36,7 +36,6 @@ if L then
 	L.unto_darkness = "AoE Phase"-- Unto Darkness
 	L.cloud_of_carrion = "Carrion" -- Cloud of Carrion
 	L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
-	L.manifest_shadows = "Adds" -- Manifest Shadows
 	L.leeching_claws = "Frontal (M)" -- Leeching Claws
 	L.infiltration_of_dread = "Among Us" -- Infiltration of Dread
 	L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
@@ -79,7 +78,7 @@ function mod:GetOptions()
 	},{
 		[360319] = L.unto_darkness, -- Unto Darkness
 		[366574] = L.cloud_of_carrion, -- Cloud of Carrion
-		[361913] = L.manifest_shadows, -- Manifest Shadows
+		[361913] = CL.adds, -- Manifest Shadows
 		[359960] = L.leeching_claws, -- Leeching Claws
 		[360417] = L.infiltration_of_dread, -- Infiltration of Dread
 		[360146] = L.fearful_trepidation, -- Fearful Trepidation
@@ -130,7 +129,7 @@ function mod:OnEngage()
 	bitesOnMe = false
 
 	self:Bar(360012, self:Mythic() and 7 or 6, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
-	self:Bar(361913, 13, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
+	self:Bar(361913, 13, CL.count:format(CL.adds, manifestShadowsCount)) -- Manifest Shadows
 	self:Bar(359960, 15.5, L.leeching_claws) -- Leeching Claws
 	self:Bar(360319, 51, CL.count:format(L.unto_darkness, untoDarknessCount)) -- Unto Darkness
 
@@ -174,7 +173,7 @@ function mod:SwarmOfDecay()
 	if self:Mythic() then
 		empCarrion = true
 		self:Bar(360012, 30.5, CL.count:format(L.empowered_cloud_of_carrion, cloudOfCarrionCount))
-		self:Bar(361913, 33.6, CL.count:format(L.manifest_shadows, manifestShadowsCount))
+		self:Bar(361913, 33.6, CL.count:format(CL.adds, manifestShadowsCount))
 
 		self:StopBar(CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
 		local cd = fearCasts == 2 and 40 or 28
@@ -249,12 +248,12 @@ function mod:BitingWoundsRemoved(args)
 end
 
 function mod:ManifestShadows(args)
-	self:StopBar(CL.count:format(L.manifest_shadows, manifestShadowsCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.manifest_shadows, manifestShadowsCount))
+	self:StopBar(CL.count:format(CL.adds, manifestShadowsCount))
+	self:Message(args.spellId, "yellow", CL.count:format(CL.adds, manifestShadowsCount))
 	self:PlaySound(args.spellId, "alert")
 	manifestShadowsCount = manifestShadowsCount + 1
 	if not self:Mythic() and manifestShadowsCount % 2 == 0 then -- Only start a bar for all even casts
-		self:Bar(args.spellId, 72.5, CL.count:format(L.manifest_shadows, manifestShadowsCount))
+		self:Bar(args.spellId, 72.5, CL.count:format(CL.adds, manifestShadowsCount))
 	end
 end
 
@@ -315,7 +314,7 @@ do
 
 			self:CDBar(359960, 5, L.leeching_claws) -- Leeching Claws
 			self:Bar(360012, 7.5, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
-			self:Bar(361913, self:Mythic() and 9.5 or 10, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
+			self:Bar(361913, self:Mythic() and 9.5 or 10, CL.count:format(CL.adds, manifestShadowsCount)) -- Manifest Shadows
 			self:Bar(360319, 51, CL.count:format(L.unto_darkness, untoDarknessCount)) -- Unto Darkness
 
 			self:CDBar(360284, 8, L.anguishing_strike) -- Anguishing Strike
@@ -341,7 +340,7 @@ do
 			-- Pauze to show timers once you finish Among Us
 			self:PauseBar(359960, L.leeching_claws) -- Leeching Claws
 			self:PauseBar(360012, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
-			self:PauseBar(361913, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
+			self:PauseBar(361913, CL.count:format(CL.adds, manifestShadowsCount)) -- Manifest Shadows
 			self:PauseBar(360319, CL.count:format(L.unto_darkness, untoDarknessCount)) -- Unto Darkness
 
 			self:PauseBar(360229, CL.count:format(L.slumber_cloud, slumberCloudCount)) -- Slumber Cloud
@@ -362,7 +361,7 @@ do
 				-- Resume bars!
 				self:ResumeBar(359960, L.leeching_claws) -- Leeching Claws
 				self:ResumeBar(360012, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
-				self:ResumeBar(361913, CL.count:format(L.manifest_shadows, manifestShadowsCount)) -- Manifest Shadows
+				self:ResumeBar(361913, CL.count:format(CL.adds, manifestShadowsCount)) -- Manifest Shadows
 				self:ResumeBar(360319, CL.count:format(L.unto_darkness, untoDarknessCount)) -- Unto Darkness
 
 				self:ResumeBar(360229, CL.count:format(L.slumber_cloud, slumberCloudCount)) -- Slumber Cloud

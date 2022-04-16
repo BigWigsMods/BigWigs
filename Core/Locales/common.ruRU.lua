@@ -35,6 +35,7 @@ L.over = "%s завершается" -- Spell Over
 L.removed = "%s снято" -- Spell Removed
 L.removed_from = "%s Снято С %s" -- Spell removed from Player
 L.removed_by = "%s был снят %s" -- Spell removed by Player
+L.removed_after = "%s убран спустя %.1fс" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "%s на подходе" -- Spell Incoming
 L.interrupted = "%s прервано" -- Spell Interrupted
 L.interrupted_by = "%s прерван %s" -- Spell interrupted by Player
