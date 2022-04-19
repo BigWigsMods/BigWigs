@@ -6,6 +6,9 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "esMX")
 if L then
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+
 	--L.tank_combo_desc = "Timer for Riftmaw/Rend casts at 100 energy."
 end
 

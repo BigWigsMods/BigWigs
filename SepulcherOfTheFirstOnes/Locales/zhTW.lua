@@ -6,6 +6,9 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
 if L then
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+
 	L.tank_combo_desc = "為達到 100 能量時施放的撕裂與裂喉顯示計時器。"
 end
 

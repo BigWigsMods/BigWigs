@@ -6,6 +6,9 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
 if L then
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+
 	L.tank_combo_desc = "При применении Сколексом комбо из трёх ударов на 100 энергии танки должны сблизиться, чтобы по очереди принимать на себя урон от атак."
 end
 
