@@ -486,7 +486,11 @@ do
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, CL.count_rticon:format(CL.bomb, icon, icon))
 			self:SayCountdown(args.spellId, 6, icon)
-			self:Bar("rune_of_damnation_countdown", 4.2, L.jump, 360281) -- Jump a bit earlier
+			if self:GetOption("rune_of_damnation_countdown") then -- Show Jumpbar, instead of TargetBar
+				self:Bar("rune_of_damnation_countdown", 5.5, L.jump, 360281) -- Jump a bit earlier
+			else
+				self:TargetBar(args.spellId, 6, args.destName)
+			end
 		end
 		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(CL.bombs, runeOfDamnationCount-1))
 		self:CustomIcon(runeOfDamnationMarker, args.destName, icon)
