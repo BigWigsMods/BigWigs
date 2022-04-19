@@ -56,7 +56,7 @@ local stageOneTimers = mod:Mythic() and stageOneTimersMythic or stageOneTimersHe
 
 local stageThreeTimersNormal = {
 	[354011] = {31.5, 81.1, 76.5, 80.0}, -- Bane Arrows
-	[353969] = {38.8, 24.2, 47.6, 3.5, 29.9, 15.4, 24.9, 31.4, 15.5, 39.5, 23.2, 10.2}, -- Banshee's Heartseeker
+	[353969] = {38.8, 24.2, 47.6, 3.5, 29.9, 15.4, 24.9, 31.4, 15.5, 39.5, 23.2, 10.2, 15.1}, -- Banshee's Heartseeker
 	[347704] = {44.0, 62.7, 68.4, 60.0, 61.3, 63.6}, -- Veil of Darkness
 	[347609] = {77.4, 57.5, 57.8, 60.0}, -- Wailing Arrow
 	[354147] = {86.4, 76.0, 76.0, 76.0}, -- Raze
