@@ -214,12 +214,13 @@ end
 
 do
 	local playerList = {}
+	--(ability.id = 363130 and type = "begincast") or (ability.id = 363130 and type = "removebuff")
 	function mod:DeconstructingEnergy(args)
 		playerList = {}
 		self:StopBar(CL.count:format(CL.bombs, deconstructingEnergyCount))
 		deconstructingEnergyCount = deconstructingEnergyCount + 1
 		if syntesizeCount > 1 and deconstructingEnergyCount < 3 then -- 2 casts per rotation
-			self:Bar(363795, syntesizeCount == 1 and 46.2 or 43.8, CL.count:format(CL.bombs, deconstructingEnergyCount))
+			self:Bar(363795, 38.9, CL.count:format(CL.bombs, deconstructingEnergyCount))
 		end
 	end
 
