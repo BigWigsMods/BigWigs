@@ -1140,7 +1140,9 @@ function mod:BansheesHeartseeker(args)
 		end
 	end
 	rangerHeartSeekerCount = rangerHeartSeekerCount + 1
-	self:Bar(353965, stageThreeTimers[353969][rangerHeartSeekerCount], CL.count:format(args.spellName, rangerHeartSeekerCount))
+	if not self:Mythic() then -- Don't have mythic timers setup, dont spam that we need timers
+		self:Bar(353965, stageThreeTimers[353969][rangerHeartSeekerCount], CL.count:format(args.spellName, rangerHeartSeekerCount))
+	end
 end
 
 function mod:BansheesFury(args)
