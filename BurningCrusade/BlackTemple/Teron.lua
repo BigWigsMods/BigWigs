@@ -46,12 +46,12 @@ end
 
 function mod:ShadowOfDeathApplied(args)
 	self:TargetMessageOld(args.spellId, args.destName, "red", "warning")
-	self:TargetBar(args.spellId, 55, args.destName, "ability_rogue_feigndeath")
+	self:TargetBar(args.spellId, 55, args.destName, nil, "ability_rogue_feigndeath")
 	self:PrimaryIcon(args.spellId, args.destName)
 end
 
 function mod:ShadowOfDeathRemoved(args)
-	self:TargetBar(40251, 60, args.destName, "ability_vanish")
+	self:TargetBar(40251, 60, args.destName, nil, "ability_vanish")
 end
 
 function mod:CrushingShadows(args)
