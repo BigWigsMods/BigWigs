@@ -666,19 +666,28 @@ do
 	local noID = "Module '%s' tried to register/unregister a widget event without specifying a widget id."
 	local noFunc = "Module '%s' tried to register a widget event with the function '%s' which doesn't exist in the module."
 
-	local GetIconAndTextWidgetVisualizationInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo
 	function boss:UPDATE_UI_WIDGET(_, tbl)
 		local id = tbl.widgetID
 		local func = widgetEventMap[self][id]
 		if func then
-			local dataTbl = GetIconAndTextWidgetVisualizationInfo(id)
-			self[func](self, id, dataTbl.text)
+			local typeInfo = UIWidgetManager:GetWidgetTypeInfo(tbl.widgetType)
+			local info = typeInfo and typeInfo.visInfoDataFunction(id)
+			if info then
+				local value = info.text -- Remain compatible with older modules
+				if (not value or value == "") and info.barValue then
+					-- Type 2 (StatusBar) seems to be the most common modern widget we use and
+					-- info.overrideBarText is used for the actual bar text, so pass the bar
+					-- value to the callback for convenience.
+					value = info.barValue
+				end
+				self[func](self, id, value, info)
+			end
 		end
 	end
 
 	--- Register a callback for a widget event for the specified widget id.
 	-- @number id the id of the widget to listen to
-	-- @param func callback function, passed (widgetId, widgetText)
+	-- @param func callback function, passed (widgetId, widgetValue, widgetInfoTable)
 	function boss:RegisterWidgetEvent(id, func)
 		if type(id) ~= "number" then core:Print(format(noID, self.moduleName)) return end
 		if type(func) ~= "string" or not self[func] then core:Print(format(noFunc, self.moduleName, tostring(func))) return end
