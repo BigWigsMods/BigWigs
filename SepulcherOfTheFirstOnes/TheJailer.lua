@@ -195,7 +195,7 @@ if L then
 	L.azeroth_health_desc = "Azeroth Health Warnings"
 
 	L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
-	L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+	L.azeroth_new_health_minus = "Azeroth Health: -%.1f%% (%d)"
 
 	L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
 	L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
@@ -288,7 +288,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UPDATE_UI_WIDGET", "WIDGET")
+	self:RegisterWidgetEvent(3554, "AzerothHealthWidget")
 
 	-- Stage One: Origin of Domination
 	self:Log("SPELL_CAST_START", "RelentlessDomination", 362028)
@@ -384,7 +384,6 @@ end
 
 do
 	local scheduled = nil
-	local getStatusBarInfo = C_UIWidgetManager.GetStatusBarWidgetVisualizationInfo
 	function mod:AzerothHealthMessage()
 		if currentAzerothHealth > lastAzerothHealth and (currentAzerothHealth - lastAzerothHealth) > 3 then
 			local change = currentAzerothHealth - lastAzerothHealth
@@ -397,14 +396,10 @@ do
 		scheduled = nil
 	end
 
-	function mod:WIDGET(event, data)
-		if data.widgetID == 3554 then -- Azeroth Health Widged
-			local info = getStatusBarInfo(data.widgetID)
-			if not info or not info.barValue then return end
-			self:CancelTimer(scheduled)
-			scheduled = self:ScheduleTimer("AzerothHealthMessage", 1.5)
-			currentAzerothHealth = info.barValue
-		end
+	function mod:AzerothHealthWidget(_, value)
+		self:CancelTimer(scheduled)
+		scheduled = self:ScheduleTimer("AzerothHealthMessage", 1.5)
+		currentAzerothHealth = value
 	end
 end
 

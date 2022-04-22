@@ -140,7 +140,6 @@ globals = {
 	"C_Spell",
 	"C_TalkingHead",
 	"C_Timer",
-	"C_UIWidgetManager",
 	"EJ_GetCreatureInfo",
 	"EJ_GetEncounterInfo",
 	"EJ_GetTierInfo",

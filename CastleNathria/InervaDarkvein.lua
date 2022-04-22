@@ -95,7 +95,10 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("UPDATE_UI_WIDGET", "WIDGET") -- need to fix BossPrototype implementation before using mod:RegisterWidgetEvent
+	self:RegisterWidgetEvent(2380, "AnimaWidget") -- Expose Desires
+	self:RegisterWidgetEvent(2399, "AnimaWidget") -- Bottled Anima
+	self:RegisterWidgetEvent(2400, "AnimaWidget") -- Sins and Suffering
+	self:RegisterWidgetEvent(2401, "AnimaWidget") -- Concentrated Anima
 	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 
 	-- General
@@ -189,15 +192,12 @@ function mod:ConjuredManifestationMarker(event, unit, guid)
 end
 
 do
-
 	local widgetIds = {
 		[2380] = {pos = 1, name = "Desires", icon = 325379}, -- Expose Desires
 		[2399] = {pos = 2, name = "Bottles", icon = 325769}, -- Bottled Anima
 		[2400] = {pos = 3, name = "Sins", icon = 325064}, -- Sins and Suffering
 		[2401] = {pos = 4, name = CL.add, icon = 332664}, -- Concentrated Anima
 	}
-
-	local getStatusBarInfo = C_UIWidgetManager.GetStatusBarWidgetVisualizationInfo
 
 	function mod:UpdateAnimaInfoBox(pos, text, time)
 		self:SetInfo("anima_tracking", pos*2-1, text)
@@ -212,15 +212,12 @@ do
 
 	local soundPrev = 0
 
-	function mod:WIDGET(tbl)
+	function mod:AnimaWidget(id, _, info)
 		if not self:GetOption("custom_off_experimental") then return end
 
-		local spell = widgetIds[tbl.widgetID]
-		if not spell then return end
+		if not info.barValue then return end
 
-		local info = getStatusBarInfo(tbl.widgetID)
-		if not info or not info.barValue then return end
-
+		local spell = widgetIds[id]
 		local oldInfo = anima[spell.icon]
 
 		local curLevel = math.floor(info.barValue / (info.barMax / 3)) + 1
