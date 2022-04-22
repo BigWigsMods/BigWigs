@@ -123,7 +123,37 @@ local timersMythic = {
 	},
 }
 
-local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
+local timersLFR = {
+	[1] = {
+		[365436] = {21.9, 51, 69, 0}, -- Torment
+		[363893] = {40, 40, 40, 40, 0}, -- Martyrdom
+		[362028] = {48, 60, 60, 0}, -- Relenting Domination
+		[359809] = {90, 0}, -- Chains of Oppression
+		[360281] = {11, 19, 34, 33.0, 28, 26.0, 0}, -- Rune of Damnation
+	},
+	[2] = {
+		[365436] = {37.0, 59.0, 18.0, 39.0, 39.0, 0}, -- Torment
+		[360562] = {23.0, 65.0, 39.0, 50.0, 0}, -- Decimator
+		[360373] = {196.7, 0}, -- Unholy Attunement
+		[359856] = {30.0, 22.0, 22.0, 28.0, 18.0, 20.0, 22.0, 22.0, 0}, -- Shattering Blast
+		[366285] = {59.0, 48.1, 61.9, 0}, -- Rune of Compulsion
+	},
+	[3] = { -- from a 15:25 kill (6:15 P3) with a few extra extrapolated times
+		[365436] = {46.0, 42.0, 32.0, 10.0}, -- Torment (first sequence is 26, 50, 32, 10; then this repeats)
+		[360562] = {35.0, 52.0, 42.0, 42.0, 45.0, 42.0, 42.0, 46.0, 42.0, 42.0, 46.0, 42.0, 42.0, 46.0}, -- Decimator
+		[365150] = {63.0, 84.0, 45.0, 84.0, 46.0, 84.0, 46.0, 84.0, 46.0, 84.0}, -- Rune of Domination
+		[365212] = {52.0, 42.0, 42.0, 42.0, 45.0, 42.0, 42.0, 46.0, 42.0, 42.0, 46.0, 42.0, 42.0, 46.0}, -- Chains of Anguish
+		[365169] = {47.0, 36.0, 31.0, 43.0, 55.0, 31.0, 37.0, 62.0, 31.0, 37.0, 62.0, 31.0, 37.0, 62.0}, -- Defile
+	},
+}
+
+local timerTable = {
+	[14] = timersNormal,
+	[15] = timersHeroic,
+	[16] = timersMythic,
+	[17] = timersLFR,
+}
+local timers
 
 local mythicSpecialTimers = {
 	-- pull/0:00 -> 0:25 -> 1:11 -> 1:43 -> 2:17
@@ -306,10 +336,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DeathSentence", 363772) -- Initial Debuff
 	self:Log("SPELL_AURA_APPLIED", "DeathSentenceApplied", 368591)
 	self:Log("SPELL_AURA_REMOVED", "DeathSentenceRemoved", 368591)
+	timers = timerTable[mod:Difficulty()] -- make sure something is set, but you're screwed if you reload regardless
 end
 
-function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
+function mod:OnEngage(difficulty)
+	timers = timerTable[difficulty]
 	self:SetStage(1)
 	currentAzerothHealth = 100
 	lastAzerothHealth = 100
@@ -457,7 +488,16 @@ function mod:Torment(args)
 	self:StopBar(CL.count:format(args.spellName, tormentCount))
 	self:Message(365436, "yellow", CL.count:format(args.spellName, tormentCount))
 	tormentCount = tormentCount + 1
-	self:Bar(365436, timers[self:GetStage()][365436][tormentCount], CL.count:format(args.spellName, tormentCount))
+	if self:LFR() and self:GetStage() == 3 then
+		-- four cast cycle with the first two being different
+		local cd = timers[3][365436][(tormentCount - 1) % 4 + 1]
+		if tormentCount == 2 then
+			cd = 50.0
+		end
+		self:Bar(365436, cd, CL.count:format(args.spellName, tormentCount))
+	else
+		self:Bar(365436, timers[self:GetStage()][365436][tormentCount], CL.count:format(args.spellName, tormentCount))
+	end
 end
 
 function mod:TormentApplied(args)
@@ -641,12 +681,12 @@ function mod:UnbreakingGrasp(args)
 	fallingDebrisCount = 1
 
 	self:Bar(360562, timers[3][360562][decimatorCount], CL.count:format(CL.knockback, decimatorCount)) -- Decimator
-	self:Bar(365436, timers[3][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
+	self:Bar(365436, self:LFR() and 26 or timers[3][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
 	self:Bar(365212, timers[3][365212][chainsOfAnguishCount], CL.count:format(L.chains_of_anguish, chainsOfAnguishCount)) -- Chains of Anguish
 	self:Bar(365150, timers[3][365150][runeOfDominationCount], CL.count:format(L.rune_of_domination, runeOfDominationCount)) -- Rune of Domination
+	self:Bar(365169, timers[3][365169][defileCount], CL.count:format(self:SpellName(365169), defileCount)) -- Defile
 	if not self:LFR() then
 		self:Bar(365033, timers[3][365033][desolationCount], CL.count:format(L.desolation, desolationCount)) -- Desolation
-		self:Bar(365169, timers[3][365169][defileCount], CL.count:format(self:SpellName(365169), defileCount)) -- Defile
 	end
 	if self:Mythic() then
 		worldCount = 1
