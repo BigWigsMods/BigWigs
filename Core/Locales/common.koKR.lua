@@ -42,7 +42,7 @@ L.interrupted_by = "%s 를 %s 가 차단" -- Spell interrupted by Player
 L.no = "%s 없음" -- No Spell
 L.intermission = "사잇단계"
 L.percent = "%d%% - %s" -- 20% - Spell
---L.cancelled = "%s Cancelled" -- Spell Cancelled
+L.cancelled = "%s 취소됨" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "추가 몹 생성"
@@ -93,7 +93,7 @@ L.amount_three = "%d천" -- Thousands 1,000
 L.seconds = "%.1f초" -- 1.1 seconds
 
 -- Common ability name replacements
---L.tank_combo = "Tank Combo" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_combo = "탱크 콤보" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "레이저" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "광선" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "광선" -- Plural of L.beam

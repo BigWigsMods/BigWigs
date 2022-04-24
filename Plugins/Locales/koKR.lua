@@ -152,7 +152,7 @@ L.breakFinished = "휴식 시간이 끝났습니다!"
 
 L.bossBlock = "우두머리 기능 차단"
 L.bossBlockDesc = "우두머리 전투 중 차단할 수 있는 다양한 기능들을 설정합니다.\n\n"
---L.bossBlockAudioDesc = "Configure what audio to mute during a boss encounter.\n\nAny option here that is |cff808080greyed out|r has been disabled in WoW's sound options.\n\n"
+L.bossBlockAudioDesc = "우두머리 전투 중 음소거할 음향을 설정합니다. \n\n|cff808080회색|r으로 표시된 옵션들은 WoW의 소리 설정에서 꺼져있습니다.\n\n"
 L.movieBlocked = "이 동영상을 본적이 있으므로 건너뜁니다."
 L.blockEmotes = "화면 중앙의 감정표현 차단"
 L.blockEmotesDesc = "몇몇 우두머리는 특정 능력에 감정표현을 표시합니다, 이 메시지는 너무 길고 설명적입니다. 우리는 게임 플레이를 방해하지 않으면서 당신이 특별한 행동을 하지 않아도 되는, 작고 더 알맞은 메시지를 만들려고 노력합니다.\n\n참고하세요: 우두머리 감정표현를 읽고 싶다면 여전히 대화에서 확인할 수 있습니다."
