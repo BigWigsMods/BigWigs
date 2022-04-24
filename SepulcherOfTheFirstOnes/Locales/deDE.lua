@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "deDE")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Fähigkeiten Leisten immer anzeigen"
+	L.custom_on_stop_timers_desc = "Skolex kann Fähigkeiten verzögern. Wenn diese Option aktiviert ist, bleiben die Leisten für diese Fähigkeiten bestehen."
 
 	L.tank_combo_desc = "Timer für die Fähigkeiten Rissschlund/Verwunden bei 100 Energie."
 end
