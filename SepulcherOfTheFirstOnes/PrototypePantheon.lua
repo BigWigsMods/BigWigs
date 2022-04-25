@@ -112,7 +112,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "NightHunterApplied", 361745)
 	self:Log("SPELL_AURA_REMOVED", "NightHunterRemoved", 361745)
 
-	if self:Mythic() then
+	if IsEncounterInProgress() and self:Mythic() then -- Only if logging in late
 		self:UpdateRolePositions() -- For Marking based on Melee > Ranged priority
 	end
 end
@@ -463,7 +463,7 @@ do
 			playerList = {}
 			self:CastBar(args.spellId, 8)
 			if not scheduled then
-				scheduled = self:ScheduleTimer("MarkPlayers", 0.1)
+				scheduled = self:ScheduleTimer("MarkPlayers", 0.3)
 			end
 		end
 		iconList[#iconList+1] = {player=args.destName, melee=self:Melee(args.destName)}
