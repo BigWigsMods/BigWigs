@@ -449,6 +449,9 @@ do
 				self:Yell(361745, CL.count_rticon:format(self:SpellName(361745), i, icon))
 				self:YellCountdown(361745, 8, icon)
 			end
+			playerList[#playerList+1] = iconList[i].player
+			playerList[iconList[i].player] = icon
+			self:NewTargetsMessage(361745, "orange", playerList, 4)
 			self:CustomIcon(nightHunterMarker, iconList[i].player, icon)
 		end
 	end
@@ -467,8 +470,6 @@ do
 		if #iconList == 4 then
 			self:MarkPlayers()
 		end
-		playerList[#playerList+1] = args.destName
-		self:NewTargetsMessage(args.spellId, "orange", playerList)
 	end
 
 	function mod:NightHunterRemoved(args)
