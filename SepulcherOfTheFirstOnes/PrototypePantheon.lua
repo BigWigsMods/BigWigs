@@ -460,6 +460,7 @@ do
 		local t = args.time
 		if t-prev > 5 then
 			prev = t
+			iconList = {}
 			playerList = {}
 			self:CastBar(args.spellId, 8)
 			if not scheduled then
