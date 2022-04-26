@@ -7,12 +7,12 @@ L.comma = ", "
 L.positionX = "Posizione X"
 L.positionY = "Posizione Y"
 L.positionExact = "Posizionamento Esatto"
-L.positionDesc = "Scrivi nel riquadro o sposta l'indicatore se devi posizionare esattamente la barra dall'ancoraggio."
+L.positionDesc = "Scrivi nel riquadro o sposta l'indicatore se devi posizionare esattamente la barra dell'ancoraggio."
 L.width = "Larghezza"
 L.height = "Altezza"
 L.sizeDesc = "In genere regoli la dimesione trascinando l'ancora. Se hai necessità di una dimensione specifica puoi usare la barra slide o digitare i valori nella casella, che non ha valore massimo."
 L.fontSizeDesc = "Regola la dimensione del carattere usando la barra slide o digitando i valori nella casella che ha un valore molto maggiore di 200."
-L.disableDesc = "Stai per disabilitare la funzionalità '%s' che |cffff4411non è consigliato|r.\n\nSei sicuro di questo?"
+L.disableDesc = "Stai per disabilitare la funzionalità '%s' che |cffff4411non è consigliata|r.\n\nSei sicuro di questo?"
 L.transparency = "Trasparenza"
 
 -----------------------------------------------------------------------
@@ -32,11 +32,11 @@ L.barColor = "Colore Barra"
 L.barTextColor = "Colore Testo Barra"
 L.additionalWidth = "Profondità addizionale"
 L.additionalHeight = "Altezza Addizionale"
-L.additionalSizeDesc = "Regola la dimensione del displaystandard usando la barra slide o digitando i valori nella casella che ha un valore molto maggiore di 100."
+L.additionalSizeDesc = "Regola la dimensione del display predefinito usando la barra slide o digitando i valori nella casella che ha un valore molto maggiore di 100."
 L.yourPowerTest = "Tuo Potere: %d" -- Tuo Potere: 42
 L.yourAltPower = "Tuo %s: %d" -- esempio: Tua Corruzione: 42
 L.player = "Giocatore %d" -- Giocatore 7
-L.disableAltPowerDesc = "Disabilita totalmente il display del Potere Alternativo, non verrà mai mostrato in nessuno scontro di boss."
+L.disableAltPowerDesc = "Disabilita totalmente il display del Potere Alternativo, non verrà mai mostrato in nessuno scontro contro i boss."
 
 -----------------------------------------------------------------------
 -- AutoReply.lua
@@ -84,7 +84,7 @@ L.modifierDesc = "Premi il modificatore selezionato per abilitare i click sulle 
 L.modifierKey = "Solo con il tasto modificatore"
 L.modifierKeyDesc = "Lascia le barre non cliccabili a meno che non sia premuto il tasto modificatore, a questo punto l'azione descritta sotto sarà disponibile."
 
---L.temporaryCountdownDesc = "Temporarily enable countdown on the ability associated with this bar."
+L.temporaryCountdownDesc = "Attiva temporaneamente i tempi di recupero per l'abilità associata a questa barra."
 L.report = "Riporta"
 L.reportDesc = "Riporta lo status della barra attuale nella finestra attiva di chat; che sia la chat dell'incursione, dell'istanza, del gruppo o del canale Parla, il più appropriato."
 L.remove = "Rimuovi"
@@ -124,7 +124,7 @@ L.fill = "Riempi"
 L.fillDesc = "Riempi le barre invece di svuotarle man mano che passano i secondi."
 L.spacing = "Spaziatura"
 L.spacingDesc = "Cambia la distanza tra le barre."
-L.visibleBarLimit = "Limite barra visibile"
+L.visibleBarLimit = "Limite barre visibili"
 L.visibleBarLimitDesc = "Scegli il numero massimo di barre che devono essere visibili contemporaneamente."
 
 L.localTimer = "Locale"
@@ -174,10 +174,10 @@ L.disableAmbience = "Togli i suoni ambientali (raccomandato)"
 L.disableSfx = "Togli gli effetti sonori (non raccomandato)"
 L.disableErrorSpeech = "Togli Messaggi d'Errore (raccomandato)"
 L.disableAudioDesc = "L'opzione '%s' nel pannello delle opzioni del suono di WoW's verrà disabilitata, per riabilitarla quando lo scontro con il boss si è concluso.Questo ti aiuta a focalizzarti sui suoni di avviso di BigWigs."
-L.blockTooltipQuests = "Blocca tooltip obbirettivi missione"
+L.blockTooltipQuests = "Blocca tooltip obbiettivi missione"
 L.blockTooltipQuestsDesc = "Quando devi uccidere un boss per una missione, vedrai qualcosa come '0/1 completato' nel tooltip quando porti il mouse sopra il boss. Questa opzione lo disabilita durante il combattimento, evitando che il tooltip diventi troppo grande."
 L.blockObjectiveTracker = "Nascondi registro missioni"
-L.blockObjectiveTrackerDesc = "Il registro delle missioni verrà nascosto durante lo scontro con il boss per liberare spazio sullo schermo.\n\nNON FUNZIONA se ti trovi in una Mitica+ o se strai tracciando un'impresa."
+L.blockObjectiveTrackerDesc = "Il registro delle missioni verrà nascosto durante lo scontro con il boss per liberare spazio sullo schermo.\n\nNON FUNZIONA se ti trovi in una Mitica+ o se stai tracciando un'impresa."
 
 L.blockTalkingHead = "Nascondi popup PNG 'Testa Parlante'"
 L.blockTalkingHeadDesc = "La 'Testa Palante' è una finestra popup di dialogo composta dalla testa di un PNG e una finestra di testo nella parte inferiore dello schermo che |cffff4411a volte|r mostra quando un PNG sta parlando.\n\nPuioi scegliere in quale tipo di istanza bloccare la sua comparsa.\n\n|cFF33FF99Nota importante:|r\n 1) Questa funzionalità permetterà sempre al PNG di parlare.\n 2) Solo alcune teste parlanti verranno bloccate. Qualsiasi cosa speciale o unica, come una quest non ripetibile, non verrà bloccata."
@@ -219,7 +219,7 @@ L.greenDesc = "Avvisi per effetti benefici, come una magia rimossa da te."
 L.cyan = "Azzurro"
 L.cyanDesc = "Avvisi per modifiche di stato come un cambio di fase."
 L.purple = "Viola"
-L.purpleDesc = "Avvisi per abilità specifiche da difensore come un debuff sul tank."
+L.purpleDesc = "Avvisi per abilità specifiche da difensore come un maleficio sul tank."
 
 -----------------------------------------------------------------------
 -- Countdown.lua
@@ -339,7 +339,7 @@ L.countdownBegins_desc = "Scegli quanto tempo dovrebbe rimanere al timer di Inga
 --
 
 L.icons = "Icone"
-L.raidIconsDescription = "Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, o un giocatore che può essere fondamentale seguire. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori\n\nIf an encounter only has one ability that is worth marking for, only the first icon will be used. One icon will never be used for two different abilities on the same encounter, and any given ability will always use the same icon next time.\n\n|cffff4411Note that if a player has already been marked manually, BigWigs will never change their icon.|r"
+L.raidIconsDescription = "Alcuni combattimenti possono includere elementi come bombe su giocatori specifici, un giocatore inseguito da qualcosa, o un giocatore che può essere fondamentale seguire. Qui puoi personalizzare quali Simboli devono essere applicati sui giocatori\n\nSe uno scontro ha una sola abilità che deve essere marchiata, verrà usata solo la prima icona. Un'icona non verrà mai usata due volte per due abilità differenti nello stesso scontro, e tutte queste abilità useranno la stessa icona negli scontri successivi.\n\n|cffff4411Da segnalare che se un giocatore è stato marchiato manualmente, BigWigs non cambierà mai quell'icona.|r"
 L.primary = "Primario"
 L.primaryDesc = "Il primo Simbolo che l'automazione del combattimento dovrebbe usare."
 L.secondary = "Secondario"
