@@ -61,6 +61,7 @@ BigWigs:AddSounds("Prototype Pantheon", {
 	[361568] = "alert",
 	[361608] = "alarm",
 	[361689] = "alarm",
+	[361745] = "warning",
 	[361789] = "alert",
 	[364839] = {"alert","warning"},
 	[364941] = "alert",
@@ -77,6 +78,7 @@ BigWigs:AddSounds("Lihuvim, Principal Architect", {
 	[363130] = "long",
 	[363795] = {"alert","warning"},
 	[364652] = "alert",
+	[366012] = "warning",
 	[368027] = "alert",
 })
 
