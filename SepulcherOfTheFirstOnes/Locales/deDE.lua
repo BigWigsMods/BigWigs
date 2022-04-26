@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "Stampede"
 	L.withering_seeds = "Samen"
 	L.hand_of_destruction = "Hand"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Markiert mit Priorität für Nahkämpfer bei den ersten Markierungen.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "deDE")
