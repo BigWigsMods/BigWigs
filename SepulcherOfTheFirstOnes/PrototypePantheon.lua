@@ -47,7 +47,6 @@ end
 local runecarversDeathtouchMarker = mod:AddMarkerOption(false, "player", 1, 360687, 1, 2) -- Runecarver's Deathtouch
 local witheringSeedMarker = mod:AddMarkerOption(false, "npc", 1, 361568, 1, 2, 3, 4) -- Withering Seeds
 local nightHunterMarker = mod:AddMarkerOption(false, "player", 6, 361745, 6, 4, 3, 7) -- Night Hunter
-L.custom_off_361745_desc = L.custom_off_361745_desc.." "..L.nighthunter_marks_additional_desc
 function mod:GetOptions()
 	return {
 		360295, -- Necrotic Ritual
@@ -82,6 +81,10 @@ function mod:GetOptions()
 		[361568] = L.withering_seeds,
 		[361789] = L.hand_of_destruction,
 	}
+end
+
+function mod:OnRegister()
+	L.custom_off_361745_desc = L.custom_off_361745_desc.." "..L.nighthunter_marks_additional_desc
 end
 
 function mod:OnBossEnable()
