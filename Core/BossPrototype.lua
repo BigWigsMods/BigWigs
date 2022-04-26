@@ -26,7 +26,8 @@ do
 end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
-local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
+local LibSpec = LibStub("LibSpecialization")
+local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
@@ -44,8 +45,8 @@ local enabledModules, bossTargetScans, unitTargetScans = {}, {}, {}
 local allowedEvents = {}
 local difficulty = 0
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
-local myGUID, myRole, myDamagerRole = nil, nil, nil
-local myGroupGUIDs = {}
+local myGUID, myRole, myRolePosition = nil, nil, nil
+local myGroupGUIDs, myGroupRolePositions = {}, {}
 local solo = false
 local classColorMessages = true
 local debugFunc = nil
@@ -60,21 +61,8 @@ local updateData = function(module)
 		classColorMessages = true
 	end
 
-	local tree = GetSpecialization()
-	if tree then
-		myRole = GetSpecializationRole(tree)
-		myDamagerRole = nil
-		if myRole == "DAMAGER" then
-			myDamagerRole = "MELEE"
-			local _, class = UnitClass("player")
-			if
-				class == "MAGE" or class == "WARLOCK" or (class == "HUNTER" and tree ~= 3) or (class == "DRUID" and tree == 1) or
-				(class == "PRIEST" and tree == 3) or (class == "SHAMAN" and tree == 1)
-			then
-				myDamagerRole = "RANGED"
-			end
-		end
-	end
+	local _, role, position = LibSpec:MySpecialization()
+	myRole, myRolePosition = role, position
 
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
@@ -666,19 +654,28 @@ do
 	local noID = "Module '%s' tried to register/unregister a widget event without specifying a widget id."
 	local noFunc = "Module '%s' tried to register a widget event with the function '%s' which doesn't exist in the module."
 
-	local GetIconAndTextWidgetVisualizationInfo = C_UIWidgetManager.GetIconAndTextWidgetVisualizationInfo
 	function boss:UPDATE_UI_WIDGET(_, tbl)
 		local id = tbl.widgetID
 		local func = widgetEventMap[self][id]
 		if func then
-			local dataTbl = GetIconAndTextWidgetVisualizationInfo(id)
-			self[func](self, id, dataTbl.text)
+			local typeInfo = UIWidgetManager:GetWidgetTypeInfo(tbl.widgetType)
+			local info = typeInfo and typeInfo.visInfoDataFunction(id)
+			if info then
+				local value = info.text -- Remain compatible with older modules
+				if (not value or value == "") and info.barValue then
+					-- Type 2 (StatusBar) seems to be the most common modern widget we use and
+					-- info.overrideBarText is used for the actual bar text, so pass the bar
+					-- value to the callback for convenience.
+					value = info.barValue
+				end
+				self[func](self, id, value, info)
+			end
 		end
 	end
 
 	--- Register a callback for a widget event for the specified widget id.
 	-- @number id the id of the widget to listen to
-	-- @param func callback function, passed (widgetId, widgetText)
+	-- @param func callback function, passed (widgetId, widgetValue, widgetInfoTable)
 	function boss:RegisterWidgetEvent(id, func)
 		if type(id) ~= "number" then core:Print(format(noID, self.moduleName)) return end
 		if type(func) ~= "string" or not self[func] then core:Print(format(noFunc, self.moduleName, tostring(func))) return end
@@ -1393,16 +1390,39 @@ end
 -- Role checking
 -- @section role
 
---- Check if your talent tree role is TANK or MELEE.
--- @return boolean
-function boss:Melee()
-	return myRole == "TANK" or myDamagerRole == "MELEE"
+do
+	local function update(_, _, position, player)
+		myGroupRolePositions[player] = position
+	end
+	LibSpec:Register(BigWigsLoader, update)
 end
 
---- Check if your talent tree role is HEALER or RANGED.
+--- Ask LibSpecialization to update the role positions of everyone in your group.
+-- @string[opt="channel"] channel the specific addon comm channel to use, empty for automatic (recommended).
+function boss:UpdateRolePositions(channel)
+	LibSpec:RequestSpecialization(channel)
+end
+
+--- Check if your talent tree role is MELEE.
+-- @string[opt="playerName"] playerName check if another player is MELEE.
 -- @return boolean
-function boss:Ranged()
-	return myRole == "HEALER" or myDamagerRole == "RANGED"
+function boss:Melee(playerName)
+	if playerName then
+		return myGroupRolePositions[playerName] == "MELEE"
+	else
+		return myRolePosition == "MELEE"
+	end
+end
+
+--- Check if your talent tree role is RANGED.
+-- @string[opt="playerName"] playerName check if another player is RANGED.
+-- @return boolean
+function boss:Ranged(playerName)
+	if playerName then
+		return myGroupRolePositions[playerName] == "RANGED"
+	else
+		return myRolePosition == "RANGED"
+	end
 end
 
 --- Check if your talent tree role is TANK.
@@ -1453,7 +1473,9 @@ function boss:Damager(unit)
 	if unit then
 		return UnitGroupRolesAssigned(unit) == "DAMAGER"
 	else
-		return myDamagerRole
+		if myRole == "DAMAGER" then
+			return myRolePosition
+		end
 	end
 end
 

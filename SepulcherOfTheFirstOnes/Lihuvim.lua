@@ -28,7 +28,6 @@ local unstableMoteCount = 1
 local deconstructingEnergyCount = 1
 local syntesizeCount = 1
 local resonanceCount = 1
-local nextSynthesize = 0
 local shiftOnMe = nil
 
 --------------------------------------------------------------------------------
@@ -82,16 +81,14 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("RAID_BOSS_WHISPER") -- Unstable Mote TEMP
-
 	self:Log("SPELL_CAST_START", "Resonance", 368027)
 	self:Log("SPELL_CAST_START", "ProtoformCascade", 364652)
 	self:Log("SPELL_CAST_START", "CosmicShift", 363088)
 	self:Log("SPELL_CAST_START", "UnstableMote", 362601)
-	--self:Log("SPELL_AURA_APPLIED", "MoteApplied", 362622, 366012) -- Unstable Mote, Terminal Mote XXX Emote for now
-	--self:Log("SPELL_AURA_REMOVED", "MoteRemoved", 362622, 366012)
+	self:Log("SPELL_AURA_APPLIED", "MoteApplied", 362622, 366012) -- Unstable Mote, Terminal Mote
+	self:Log("SPELL_AURA_REMOVED", "MoteRemoved", 362622, 366012)
 	self:Log("SPELL_CAST_SUCCESS", "DeconstructingEnergy", 363676)
-	self:Log("SPELL_AURA_APPLIED", "DeconstructingEnergyApplied", 363795, 363676) -- DPS, TANK?
+	self:Log("SPELL_AURA_APPLIED", "DeconstructingEnergyApplied", 363795, 363676) -- DPS, TANK
 	self:Log("SPELL_AURA_REMOVED", "DeconstructingEnergyRemoved", 363795, 363676)
 	self:Log("SPELL_CAST_START", "Synthesize", 363130)
 	self:Log("SPELL_AURA_REMOVED", "SynthesizeRemoved", 363130)
@@ -113,35 +110,23 @@ function mod:OnEngage()
 	deconstructingEnergyCount = 1
 	syntesizeCount = 1
 	resonanceCount = 1
-	nextSynthesize = GetTime() + 100.7
 
-	self:Bar(364652, 6, CL.count:format(L.protoform_cascade, protoformCascadeCount)) -- Protoform Cascade
+	self:Bar(364652, 5.5, CL.count:format(L.protoform_cascade, protoformCascadeCount)) -- Protoform Cascade
 	self:Bar(362622, 13, CL.count:format(L.unstable_mote, unstableMoteCount)) -- Unstable Mote
-	self:Bar(363795, 21.5, CL.count:format(CL.bombs, deconstructingEnergyCount)) -- Deconstructing Energy
-	self:Bar(363130, self:Mythic() and 26 or 46, CL.count:format(self:SpellName(363130), syntesizeCount)) -- Synthesize
+	self:Bar(363795, 20.5, CL.count:format(CL.bombs, deconstructingEnergyCount)) -- Deconstructing Energy
+	self:Bar(363130, self:Mythic() and 27.5 or 46, CL.count:format(self:SpellName(363130), syntesizeCount)) -- Synthesize
 	if not self:Mythic() then
 		self:Bar(363088, 30, CL.count:format(L.cosmic_shift, cosmicShiftCount)) -- Cosmic Shift
-		self:Bar(368027, 38.7, CL.count:format(CL.tank_combo, resonanceCount)) -- Resonance
+		if self:Heroic() then
+			self:Bar(368027, 38.5, CL.count:format(CL.tank_combo, resonanceCount)) -- Resonance
+		end
 	end
-	if self:Heroic() then
-		self:Berserk(480) -- Heroic
-	elseif self:Mythic() then
-		self:Berserk(600) -- Mythic
-	end
+	self:Berserk(600)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:RAID_BOSS_WHISPER(_, msg)
-	if msg:find("362622", nil, true) then -- Unstable Mote
-		self:PersonalMessage(362622)
-		self:PlaySound(362622, "warning")
-		self:Say(362622, L.mote)
-		self:SayCountdown(362622, 5) -- Terminal Mote is 4s
-	end
-end
 
 function mod:Resonance(args)
 	self:StopBar(CL.count:format(CL.tank_combo, resonanceCount))
@@ -149,7 +134,7 @@ function mod:Resonance(args)
 	self:PlaySound(args.spellId, "alert")
 	resonanceCount = resonanceCount + 1
 	if syntesizeCount > 1 and resonanceCount < 3 then -- 2 casts per rotation
-		self:Bar(args.spellId, 43.7, CL.count:format(CL.tank_combo, resonanceCount))
+		self:Bar(args.spellId, 44.9, CL.count:format(CL.tank_combo, resonanceCount))
 	end
 end
 
@@ -158,8 +143,15 @@ function mod:ProtoformCascade(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.protoform_cascade, protoformCascadeCount))
 	self:PlaySound(args.spellId, "alert")
 	protoformCascadeCount = protoformCascadeCount + 1
-	if syntesizeCount > 1 and protoformCascadeCount < 4 then -- 3 casts per rotation
-		self:Bar(args.spellId, protoformCascadeCount == 2 and 31.6 or 43.8, CL.count:format(L.protoform_cascade, protoformCascadeCount))
+	if self:Easy() then
+		if (syntesizeCount > 1 and protoformCascadeCount < 5) or (syntesizeCount == 1 and protoformCascadeCount < 3) then -- 4 casts per rotation, 2 on first
+			local cd = protoformCascadeCount == 2 and 32.8 or protoformCascadeCount == 3 and 30.3 or 14.5
+			self:Bar(args.spellId, cd, CL.count:format(L.protoform_cascade, protoformCascadeCount))
+		end
+	else
+		if syntesizeCount > 1 and protoformCascadeCount < 3 then -- 2 casts per rotation
+			self:Bar(args.spellId, 71.6, CL.count:format(L.protoform_cascade, protoformCascadeCount))
+		end
 	end
 end
 
@@ -180,8 +172,8 @@ function mod:CosmicShift(args)
 		local text = shiftOnMe == 368738 and L.melodic or L.harmonic
 		barText = CL.count:format(L.cosmic_shift_mythic:format(text), cosmicShiftCount) -- Cosmic Shift
 	end
-	if syntesizeCount > 1 and cosmicShiftCount < 3 then -- 2 casts per rotation, 1 on first
-		self:Bar(args.spellId, 43.8, barText)
+	if syntesizeCount > 1 and cosmicShiftCount < 3 then -- 2 casts per rotation
+		self:Bar(args.spellId, self:Easy() and 23.1 or 38.8 , barText)
 	end
 end
 
@@ -190,27 +182,33 @@ function mod:UnstableMote(args)
 	self:Message(362622, "orange", CL.count:format(L.unstable_mote, unstableMoteCount))
 	self:PlaySound(362622, "alarm")
 	unstableMoteCount = unstableMoteCount + 1
-	if syntesizeCount > 1 and unstableMoteCount < 3 then -- 2 casts per rotation
-		self:Bar(362622, 43.8, CL.count:format(L.unstable_mote, unstableMoteCount))
+	if self:Easy() then
+		if (syntesizeCount > 1 and unstableMoteCount < 4) or (syntesizeCount == 1 and unstableMoteCount < 3) then -- 3 casts per rotation, 2 on firt
+			self:Bar(362622, unstableMoteCount == 2 and 32.8 or 30.3, CL.count:format(L.unstable_mote, unstableMoteCount))
+		end
+	else
+		if syntesizeCount > 1 and unstableMoteCount < 3 then -- 2 casts per rotation
+			self:Bar(362622, 38.8, CL.count:format(L.unstable_mote, unstableMoteCount))
+		end
 	end
 end
 
--- do
--- 	function mod:MoteApplied(args)
--- 		if self:Me(args.destGUID) then
--- 			self:PersonalMessage(args.spellId)
--- 			self:PlaySound(args.spellId, "warning")
--- 			self:Say(args.spellId, L.mote)
--- 			self:SayCountdown(args.spellId, args.spellId == 366012 and 4 or 5) -- Terminal Mote is 4s
--- 		end
--- 	end
+do
+	function mod:MoteApplied(args)
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId)
+			self:PlaySound(args.spellId, "warning")
+			self:Say(args.spellId, L.mote)
+			self:SayCountdown(args.spellId, 4)
+		end
+	end
 
--- 	function mod:MoteRemoved(args)
--- 		if self:Me(args.destGUID) then
--- 			self:CancelSayCountdown(args.spellId)
--- 		end
--- 	end
--- end
+	function mod:MoteRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
+	end
+end
 
 do
 	local playerList = {}
@@ -219,7 +217,7 @@ do
 		self:StopBar(CL.count:format(CL.bombs, deconstructingEnergyCount))
 		deconstructingEnergyCount = deconstructingEnergyCount + 1
 		if syntesizeCount > 1 and deconstructingEnergyCount < 3 then -- 2 casts per rotation
-			self:Bar(363795, syntesizeCount == 1 and 46.2 or 43.8, CL.count:format(CL.bombs, deconstructingEnergyCount))
+			self:Bar(363795, 38.8, CL.count:format(CL.bombs, deconstructingEnergyCount))
 		end
 	end
 
@@ -268,19 +266,19 @@ function mod:SynthesizeRemoved(args)
 	deconstructingEnergyCount = 1
 	resonanceCount = 1
 
-	self:Bar(364652, 36.8, CL.count:format(L.protoform_cascade, protoformCascadeCount)) -- Protoform Cascade
-	self:Bar(362622, 43, CL.count:format(L.unstable_mote, unstableMoteCount)) -- Unstable Mote
+	self:Bar(364652, 36.7, CL.count:format(L.protoform_cascade, protoformCascadeCount)) -- Protoform Cascade
+	self:Bar(362622, 42.8, CL.count:format(L.unstable_mote, unstableMoteCount)) -- Unstable Mote
 	self:Bar(363795, 51.4, CL.count:format(CL.bombs, deconstructingEnergyCount)) -- Deconstructing Energy
-	self:Bar(368027, 74.5, CL.count:format(CL.tank_combo, resonanceCount)) -- Resonance
+	if not self:Easy() then
+		self:Bar(368027, 69.6, CL.count:format(CL.tank_combo, resonanceCount)) -- Resonance
+	end
 	if self:Mythic() then
 		local text = shiftOnMe == 368738 and L.melodic or L.harmonic
-		self:Bar(363088, 60, CL.count:format(L.cosmic_shift_mythic:format(text), cosmicShiftCount)) -- Cosmic Shift
+		self:Bar(363088, 61.1, CL.count:format(L.cosmic_shift_mythic:format(text), cosmicShiftCount)) -- Cosmic Shift
 	else
-		self:Bar(363088, 60, CL.count:format(L.cosmic_shift, cosmicShiftCount)) -- Cosmic Shift
+		self:Bar(363088, 61.1, CL.count:format(L.cosmic_shift, cosmicShiftCount)) -- Cosmic Shift
 	end
-	local syntesizeCD = self:Mythic() and 123 or 133
-	nextSynthesize = GetTime() + syntesizeCD
-	self:Bar(363130, syntesizeCD, CL.count:format(args.spellName, syntesizeCount)) -- Synthesize
+	self:Bar(363130, 121.9, CL.count:format(args.spellName, syntesizeCount)) -- Synthesize
 end
 
 function mod:FixateApplied(args)

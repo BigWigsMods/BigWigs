@@ -1,19 +1,19 @@
 local L = BigWigs:NewBossLocale("Vigilant Guardian", "koKR")
 if not L then return end
 if L then
-	 L.sentry = "탱 쫄"
-	 L.materium = "작은 쫄"
-	 L.shield = "역장" -- Global locale canidate?
+	L.sentry = "탱 쫄"
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "koKR")
 if L then
-	 L.tank_combo_desc = "기력 100일때 균열 아귀/난도질 타이머."
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+
+	L.tank_combo_desc = "기력 100일때 균열 아귀/난도질 타이머."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "koKR")
 if L then
-	L.traps = "덫" -- Stasis Trap
 	L.sparknova = "초광속 불꽃 회오리" -- Hyperlight Sparknova
 	L.relocation = "탱 폭탄" -- Glyph of Relocation
 	--L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
@@ -25,7 +25,6 @@ end
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "koKR")
 if L then
 	L.staggering_barrage = "탄막" -- Staggering Barrage
-	L.domination_core = "쫄" -- Domination Core
 	L.obliteration_arc = "절멸" -- Obliteration Arc
 
 	L.disintergration_halo = "후광" -- Disintegration Halo
@@ -35,8 +34,6 @@ if L then
 
 	L.custom_on_ring_timers = "개별 후광 타이머"
 	L.custom_on_ring_timers_desc = "분해의 후광은 고리를 한 세트로 생성합니다. 이 옵션은 각각 고리가 언제 퍼지기 시작하는지 보여줍니다. 분해의 후광의 설정을 사용함."
-
-	L.shield_removed = "%s %.1f초 후 제거됨" -- "Shield removed after 1.1s" s = seconds
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "koKR")
@@ -47,6 +44,7 @@ if L then
 	L.wild_stampede = "쇄도"
 	L.withering_seeds = "씨앗"
 	L.hand_of_destruction = "파괴의 손"
+	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "koKR")
@@ -88,8 +86,9 @@ if L then
 	L.earthbreaker_missiles = "투사체"
 	L.crushing_prism = "분광경"
 	L.prism = "분광경"
+	L.ephemeral_fissure = "균열"
 
-	 L.bomb_dropped = "폭탄 떨어트림"
+	L.bomb_dropped = "폭탄 떨어트림"
 
 	L.custom_on_stop_timers = "항상 능력 바 표시"
 	L.custom_on_stop_timers_desc = "할론드루스의 기술들은 미뤄질수 있습니다. 이 옵션을 활성화하면, 미뤄진 능력들의 바가 화면에 남아있습니다."
@@ -100,7 +99,6 @@ if L then
 	L.unto_darkness = "광역기 페이즈"
 	L.cloud_of_carrion = "부패의 구름"
 	L.empowered_cloud_of_carrion = "아픈 부패의 구름" -- Empowered Cloud of Carrion
-	L.manifest_shadows = "쫄"
 	L.leeching_claws = "전방기 (말가)"
 	L.infiltration_of_dread = "어몽어스"
 	L.infiltration_removed = " %.1f초만에 임포스터 컷!" -- "Imposters found in 1.1s" s = seconds
@@ -140,22 +138,22 @@ if L then
 
 	L.final = "이번 페이즈 마지막 %s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
-	 L.azeroth_health = "아제로스 체력"
-	 L.azeroth_health_desc = "아제로스 체력 경고"
+	L.azeroth_health = "아제로스 체력"
+	L.azeroth_health_desc = "아제로스 체력 경고"
 
-	 L.azeroth_new_health_plus = "아제로스 체력: +%.1f%% (%d)"
-	 L.azeroth_new_health_minus = "아제로스 체력: -%.1f%%  (%d)"
+	L.azeroth_new_health_plus = "아제로스 체력: +%.1f%% (%d)"
+	L.azeroth_new_health_minus = "아제로스 체력: -%.1f%%  (%d)"
 
-	 L.mythic_blood_soak_stage_1 = "1페이즈 피 흡수 타이밍"
-	 L.mythic_blood_soak_stage_2 = "2페이즈 피 흡수 타이밍"
-	 L.mythic_blood_soak_stage_3 = "3페이즈 피 흡수 타이밍"
-	 L.mythic_blood_soak_stage_1_desc = "아제로스를 힐할수 있는 좋은 타이밍이 언제인지 보이기. 에코가 첫킬 당시 사용."
-	 L.mythic_blood_soak_bar = "아제로스 힐"
+	L.mythic_blood_soak_stage_1 = "1페이즈 피 흡수 타이밍"
+	L.mythic_blood_soak_stage_2 = "2페이즈 피 흡수 타이밍"
+	L.mythic_blood_soak_stage_3 = "3페이즈 피 흡수 타이밍"
+	L.mythic_blood_soak_stage_1_desc = "아제로스를 힐할수 있는 좋은 타이밍이 언제인지 보이기. 에코가 첫킬 당시 사용."
+	L.mythic_blood_soak_bar = "아제로스 힐"
 
-	 L.floors_open = "바닥 열림"
-	 L.floors_open_desc = "떨어질 수 있게 바닥이 다시 열리기까지의 시간."
+	L.floors_open = "바닥 열림"
+	L.floors_open_desc = "떨어질 수 있게 바닥이 다시 열리기까지의 시간."
 
-	 L.mythic_dispel_stage_4 = "해제 타이머"
-	 L.mythic_dispel_stage_4_desc = "마지막 페이즈에 해제 타이밍- 에코가 첫킬 당시 사용."
-	 L.mythic_dispel_bar = "해제"
+	L.mythic_dispel_stage_4 = "해제 타이머"
+	L.mythic_dispel_stage_4_desc = "마지막 페이즈에 해제 타이밍- 에코가 첫킬 당시 사용."
+	L.mythic_dispel_bar = "해제"
 end

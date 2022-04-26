@@ -12,7 +12,6 @@ end
 
 L = BigWigs:NewBossLocale("Sun King's Salvation", "itIT")
 if L then
-	L.shield_removed = "%s rimosso dopo %.1fs" -- "Shield removed after 1.1s" s = seconds
 	L.shield_remaining = "%s rimanente: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
 end
 

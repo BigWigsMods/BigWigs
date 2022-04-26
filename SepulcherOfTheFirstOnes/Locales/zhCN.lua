@@ -2,18 +2,18 @@ local L = BigWigs:NewBossLocale("Vigilant Guardian", "zhCN")
 if not L then return end
 if L then
 	L.sentry = "哨兵"
-	L.materium = "素材"
-	L.shield = "核心" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhCN")
 if L then
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+
 	L.tank_combo_desc = "为满100能量释放的裂隙之吼与撕裂显示计时器"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhCN")
 if L then
-	L.traps = "陷阱" -- Stasis Trap
 	L.sparknova = "火花新星" -- Hyperlight Sparknova
 	L.relocation = "坦克炸弹" -- Glyph of Relocation
 	L.relocation_count = "%s :阶段%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
@@ -25,7 +25,6 @@ end
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "zhCN")
 if L then
 	L.staggering_barrage = "分摊" -- Staggering Barrage
-	L.domination_core = "小怪" -- Domination Core
 	L.obliteration_arc = "弹幕" -- Obliteration Arc
 
 	L.disintergration_halo = "光环" -- Disintegration Halo
@@ -35,8 +34,6 @@ if L then
 
 	L.custom_on_ring_timers = "衰变光环计时条"
 	L.custom_on_ring_timers_desc = "使用衰变光环设置：这是显示衰变光环在触发能量环时,开始移动的计时条。"
-
-	L.shield_removed = "%s 在 %.1fs 移除" -- "Shield removed after 1.1s" s = seconds
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "zhCN")
@@ -47,6 +44,7 @@ if L then
 	L.wild_stampede = "兽群"
 	L.withering_seeds = "种子"
 	L.hand_of_destruction = "群拉"
+	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhCN")
@@ -70,6 +68,7 @@ if L then
 	L.earthbreaker_missiles = "飞弹" -- Earthbreaker Missiles
 	L.crushing_prism = "棱镜" -- Crushing Prism
 	L.prism = "棱镜"
+	L.ephemeral_fissure = "裂隙"
 
 	L.bomb_dropped = "炸弹掉落"
 
@@ -100,7 +99,6 @@ if L then
 	L.unto_darkness = "AoE 阶段"-- Unto Darkness
 	L.cloud_of_carrion = "腐臭" -- Cloud of Carrion
 	L.empowered_cloud_of_carrion = "强化腐臭" -- Empowered Cloud of Carrion
-	L.manifest_shadows = "小怪" -- Manifest Shadows
 	L.leeching_claws = "正面顺劈 (玛)" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
 	L.infiltration_removed = "内鬼发现，用时 %.1f 秒" -- "Imposters found in 1.1s" s = seconds
@@ -138,7 +136,7 @@ if L then
 	L.chains_remaining = "%d/%d 锁链碎裂"
 	L.rune_of_domination = "团队分摊"
 
-	L.final = "阶段四：%%s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "最终%s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
 	L.azeroth_health = "艾泽拉斯血量"
 	L.azeroth_health_desc = "艾泽拉斯血量警告"

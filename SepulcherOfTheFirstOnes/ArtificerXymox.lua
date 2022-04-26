@@ -58,7 +58,6 @@ local timersMythic = {
 
 local L = mod:GetLocale()
 if L then
-	L.traps = "Traps" -- Stasis Trap
 	L.sparknova = "Sparknova" -- Hyperlight Sparknova
 	L.relocation = "Tank Bomb" -- Glyph of Relocation
 	L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
@@ -100,7 +99,7 @@ function mod:GetOptions()
 		[362721] = L.wormholes, -- Dimensional Tear (Wormholes)
 		[362803] = L.relocation, -- Glyph of Relocation (Tank Bomb)
 		[362849] = L.sparknova, -- Hyperlight Sparknova (Sparknova)
-		[362885] = L.traps, -- Stasis Trap (Traps)
+		[362885] = CL.traps, -- Stasis Trap (Traps)
 		[363485] = CL.adds,
 	}
 end
@@ -142,7 +141,7 @@ function mod:OnEngage()
 	end
 	self:Bar(362721, self:Mythic() and 9 or 8, CL.count:format(L.wormholes, wormholeCount)) -- Dimensional Tear
 	self:Bar(362849, self:Mythic() and timersMythic[stage][362849][sparkCount] or 14, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
-	self:Bar(362885, self:Mythic() and timersMythic[stage][362885][trapCount] or 21, CL.count:format(L.traps, trapCount)) -- Stasis Trap
+	self:Bar(362885, self:Mythic() and timersMythic[stage][362885][trapCount] or 21, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 	self:Bar(364465, self:Mythic() and timersMythic[stage][364465][ringCount] or 26, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
 	self:Bar(362803, self:Mythic() and timersMythic[stage][362803][glyphCount] or 40, L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Glyph of Relocation
 
@@ -207,7 +206,7 @@ function mod:DecipherRelicSuccess() -- Stage 4
 	self:StopBar(CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
 	self:StopBar(L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Glyph of Relocation
 	self:StopBar(CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
-	self:StopBar(CL.count:format(L.traps, trapCount)) -- Stasis Trap
+	self:StopBar(CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 
 	local stage = 4
 	self:Message("stages", "cyan", CL.stage:format(stage), false)
@@ -228,7 +227,7 @@ function mod:DecipherRelicSuccess() -- Stage 4
 	end
 	self:Bar(362849, self:Mythic() and timersMythic[stage][362849][sparkCount] or 15.6, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
 	self:Bar(362721, 22.2, CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
-	self:Bar(362885, self:Mythic() and timersMythic[stage][362885][trapCount] or 23.3, CL.count:format(L.traps, trapCount)) -- Stasis Trap
+	self:Bar(362885, self:Mythic() and timersMythic[stage][362885][trapCount] or 23.3, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 	self:Bar(364465, self:Mythic() and timersMythic[stage][364465][ringCount] or 28.9, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
 	self:Bar(362803, self:Mythic() and timersMythic[stage][362803][glyphCount] or 44.5, L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Glyph of Relocation
 end
@@ -240,7 +239,7 @@ function mod:DecipherRelic()
 	self:StopBar(CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
 	self:StopBar(L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Glyph of Relocation
 	self:StopBar(CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
-	self:StopBar(CL.count:format(L.traps, trapCount)) -- Stasis Trap
+	self:StopBar(CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 	if self:GetOption(acolyteMarker) then
 		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "MarkAcolytes")
 	end
@@ -271,7 +270,7 @@ function mod:DecipherRelicRemoved()
 	end
 	self:Bar(362721, 8, CL.count:format(L.wormholes, wormholeCount)) -- Interdimensional Wormholes
 	self:Bar(362849, self:Mythic() and timersMythic[stage][362849][sparkCount] or 14, CL.count:format(L.sparknova, sparkCount)) -- Hyperlight Sparknova
-	self:Bar(362885, self:Mythic() and timersMythic[stage][362885][trapCount] or 21, CL.count:format(L.traps, trapCount)) -- Stasis Trap
+	self:Bar(362885, self:Mythic() and timersMythic[stage][362885][trapCount] or 21, CL.count:format(CL.traps, trapCount)) -- Stasis Trap
 	self:Bar(364465, self:Mythic() and timersMythic[stage][364465][ringCount] or 26, CL.count:format(L.rings:format(self:GetStage()), ringCount)) -- Forerunner Rings
 	self:Bar(362803, self:Mythic() and timersMythic[stage][362803][glyphCount] or 45, L.relocation_count:format(L.relocation, self:GetStage(), glyphCount)) -- Glyph of Relocation
 end
@@ -359,11 +358,11 @@ function mod:HyperlightSparknova(args)
 end
 
 function mod:StasisTrap(args)
-	self:StopBar(CL.count:format(L.traps, trapCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.traps, trapCount))
+	self:StopBar(CL.count:format(CL.traps, trapCount))
+	self:Message(args.spellId, "yellow", CL.count:format(CL.traps, trapCount))
 	self:PlaySound(args.spellId, "alarm")
 	trapCount = trapCount + 1
-	self:Bar(args.spellId, self:Mythic() and timersMythic[self:GetStage()][args.spellId][trapCount] or (self:GetStage() == 4 and 33.3 or 30), CL.count:format(L.traps, trapCount))
+	self:Bar(args.spellId, self:Mythic() and timersMythic[self:GetStage()][args.spellId][trapCount] or (self:GetStage() == 4 and 33.3 or 30), CL.count:format(CL.traps, trapCount))
 end
 
 function mod:RAID_BOSS_EMOTE(_, msg)

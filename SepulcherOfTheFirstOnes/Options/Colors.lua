@@ -78,6 +78,7 @@ BigWigs:AddColors("Lihuvim, Principal Architect", {
 	[363130] = "cyan",
 	[363795] = {"blue","orange"},
 	[364652] = "yellow",
+	[366012] = "blue",
 	[368027] = "yellow",
 })
 

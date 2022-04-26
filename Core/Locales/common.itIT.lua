@@ -35,6 +35,7 @@ L.over = "%s Terminato" -- Spell Over
 L.removed = "%s Rimosso" -- Spell Removed
 L.removed_from = "%s rimosso da %s" -- Spell removed from Player
 L.removed_by = "%s rimosso da %s" -- Spell removed by Player
+L.removed_after = "%s rimosso dopo %.1fs" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "%s Tra Poco" -- Spell Incoming
 L.interrupted = "%s Interrotto" -- Spell Interrupted
 L.interrupted_by = "%s interrotto da %s" -- Spell interrupted by Player
@@ -92,7 +93,7 @@ L.amount_three = "%dk" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Common ability name replacements
---L.tank_combo = "Tank Combo" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_combo = "Combinazione Difensore" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "Raggio" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "Raggi" -- Plural of L.beam

@@ -38,8 +38,6 @@ local timers = timersMythic
 local L = mod:GetLocale()
 if L then
 	L.sentry = "Tank Add"
-	L.materium = "Small Adds"
-	L.shield = "Shield" -- Global locale canidate?
 end
 
 --------------------------------------------------------------------------------
@@ -67,9 +65,9 @@ function mod:GetOptions()
 		[360906] = -23875, -- Stage One: Systems Online!
 		[360162] = -23877, -- Stage Two: Roll Out, then Transform
 	},{
-		[360458] = L.shield, -- Force Field (Shield)
+		[360458] = CL.shield, -- Force Field (Shield)
 		[360658] = L.sentry, -- Pre-Fabricated Sentry (Tank Add)
-		[365315] = L.materium, -- Volatile Materium (Small Adds)
+		[365315] = CL.small_adds, -- Volatile Materium (Small Adds)
 	}
 end
 
@@ -113,7 +111,7 @@ function mod:OnEngage()
 	pneumaticImpactCount = 1
 	shieldOnMe = false
 
-	self:Bar(365315, 5, CL.count:format(L.materium, smallAddCount)) -- Volatile Materium
+	self:Bar(365315, 5, CL.count:format(CL.small_adds, smallAddCount)) -- Volatile Materium
 	self:Bar(360906, self:Mythic() and 22.5 or 16, CL.count:format(self:SpellName(360906), refractedBlastCount)) -- Refracted Blast
 	self:Bar(359610, self:Mythic() and 47 or 37.8, CL.count:format(self:SpellName(359610), deresolutionCount)) -- Deresolution
 	self:Bar(360658, self:Mythic() and 66 or 52, CL.count:format(L.sentry, tankAddCount)) -- Pre-Fabricated Sentry
@@ -133,7 +131,7 @@ end
 function mod:ForceFieldApplied(args)
 	if self:Me(args.destGUID) then
 		shieldOnMe = true
-		self:Message(args.spellId, "green", CL.you:format(L.shield))
+		self:Message(args.spellId, "green", CL.you:format(CL.shield))
 		self:PlaySound(args.spellId, "info")
 	end
 end
@@ -141,7 +139,7 @@ end
 function mod:ForceFieldRemoved(args)
 	if self:Me(args.destGUID) then
 		shieldOnMe = false
-		self:Message(args.spellId, "cyan", CL.removed:format(L.shield))
+		self:Message(args.spellId, "cyan", CL.removed:format(CL.shield))
 	end
 end
 
@@ -203,11 +201,11 @@ do
 end
 
 function mod:VolatileMaterium(args)
-	self:StopBar(CL.count:format(L.materium, smallAddCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.materium, smallAddCount))
+	self:StopBar(CL.count:format(CL.small_adds, smallAddCount))
+	self:Message(args.spellId, "yellow", CL.count:format(CL.small_adds, smallAddCount))
 	self:PlaySound(args.spellId, "alert")
 	smallAddCount = smallAddCount + 1
-	self:CDBar(args.spellId, 60, CL.count:format(L.materium, smallAddCount))
+	self:CDBar(args.spellId, 60, CL.count:format(CL.small_adds, smallAddCount))
 end
 
 function mod:RefractedBlast(args)
@@ -248,7 +246,7 @@ do
 	local shieldCheck = nil
 	local function checkForShield()
 		if not shieldOnMe and not UnitIsDead("player") then
-			mod:Message(360403, "blue", CL.no:format(L.shield))
+			mod:Message(360403, "blue", CL.no:format(CL.shield))
 			mod:PlaySound(360403, "warning")
 			shieldCheck = mod:ScheduleTimer(checkForShield, 1)
 		end
@@ -280,7 +278,7 @@ function mod:AncientDefensesRemoved(args)
 	self:StopBar(CL.count:format(self:SpellName(360412), exposedCoreCount)) -- Exposed Core
 	self:StopBar(CL.count:format(self:SpellName(360906), refractedBlastCount)) -- Refracted Blast
 	self:StopBar(CL.count:format(L.sentry, tankAddCount)) -- Pre-Fabricated Sentry
-	self:StopBar(CL.count:format(L.materium, smallAddCount)) -- Volatile Materium
+	self:StopBar(CL.count:format(CL.small_adds, smallAddCount)) -- Volatile Materium
 
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.stage:format(2), false)
@@ -297,7 +295,7 @@ function mod:FracturedCore(args)
 		self:StopBar(CL.count:format(self:SpellName(360412), exposedCoreCount)) -- Exposed Core
 		self:StopBar(CL.count:format(self:SpellName(360906), refractedBlastCount)) -- Refracted Blast
 		self:StopBar(CL.count:format(L.sentry, tankAddCount)) -- Pre-Fabricated Sentry
-		self:StopBar(CL.count:format(L.materium, smallAddCount)) -- Volatile Materium
+		self:StopBar(CL.count:format(CL.small_adds, smallAddCount)) -- Volatile Materium
 		self:StopBar(CL.count:format(self:SpellName(359610), deresolutionCount))  -- Deresolution
 
 		self:SetStage(2)

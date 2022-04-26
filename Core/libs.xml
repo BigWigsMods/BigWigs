@@ -3,5 +3,6 @@
 <Include file="Libs\AceDB-3.0\AceDB-3.0.xml"/>
 <Script file="Libs\LibDualSpec-1.0\LibDualSpec-1.0.lua"/>
 <Include file="Libs\AceTimer-3.0\AceTimer-3.0.xml"/>
+<Include file="Libs\LibSpecialization\LibSpecialization.xml"/>
 <Include file="Libs\LibChatAnims\LibChatAnims.xml"/>
 </Ui>

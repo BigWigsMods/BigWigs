@@ -78,7 +78,6 @@ local phoenixCount = 0
 
 local L = mod:GetLocale()
 if L then
-	L.shield_removed = "%s removed after %.1fs" -- "Shield removed after 1.1s" s = seconds
 	L.shield_remaining = "%s remaining: %s (%.1f%%)" -- "Shield remaining: 2.1K (5.3%)"
 end
 
@@ -608,7 +607,7 @@ do
 	function mod:CloakOfFlamesRemoved(args)
 		local amount = args.amount or 0
 		if pyroclasmInterrupted or amount == 0 then -- Shield Broken
-			self:Message(args.spellId, "green", L.shield_removed:format(CL.shield, args.time - prevTime))
+			self:Message(args.spellId, "green", CL.removed_after:format(CL.shield, args.time - prevTime))
 			self:StopBar(CL.cast:format(CL.count:format(CL.shield, cloakOfFlamesCount-1)))
 		else
 			local percentRemaining = amount / prevAmount * 100

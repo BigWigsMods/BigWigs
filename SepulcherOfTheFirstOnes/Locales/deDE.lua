@@ -2,18 +2,18 @@ local L = BigWigs:NewBossLocale("Vigilant Guardian", "deDE")
 if not L then return end
 if L then
 	L.sentry = "Tank Add"
-	L.materium = "Kleine Adds"
-	L.shield = "Schild" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "deDE")
 if L then
+	L.custom_on_stop_timers = "Fähigkeiten Leisten immer anzeigen"
+	L.custom_on_stop_timers_desc = "Skolex kann Fähigkeiten verzögern. Wenn diese Option aktiviert ist, bleiben die Leisten für diese Fähigkeiten bestehen."
+
 	L.tank_combo_desc = "Timer für die Fähigkeiten Rissschlund/Verwunden bei 100 Energie."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "deDE")
 if L then
-	L.traps = "Fallen" -- Stasis Trap
 	L.sparknova = "Funkennova" -- Hyperlight Sparknova
 	L.relocation = "Tank Bombe" -- Glyph of Relocation
 	L.relocation_count = "%s P%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
@@ -25,7 +25,6 @@ end
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "deDE")
 if L then
 	L.staggering_barrage = "Bombardement" -- Staggering Barrage
-	L.domination_core = "Add" -- Domination Core
 	L.obliteration_arc = "Bogen" -- Obliteration Arc
 
 	L.disintergration_halo = "Ringe" -- Disintegration Halo
@@ -35,8 +34,6 @@ if L then
 
 	L.custom_on_ring_timers = "Individuelle Kranz Timer"
 	L.custom_on_ring_timers_desc = "Desintegrationskranz löst Ringe aus. Dies zeigt Leisten für den Bewegungsbeginn jedes Rings. Nutzt die Einstellungen von Desintegrationskranz."
-
-	L.shield_removed = "%s entfernt nach %.1fs" -- "Shield removed after 1.1s" s = seconds
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "deDE")
@@ -47,6 +44,7 @@ if L then
 	L.wild_stampede = "Stampede"
 	L.withering_seeds = "Samen"
 	L.hand_of_destruction = "Hand"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Markiert mit Priorität für Nahkämpfer bei den ersten Markierungen.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "deDE")
@@ -70,6 +68,7 @@ if L then
 	L.earthbreaker_missiles = "Geschosse" -- Earthbreaker Missiles
 	L.crushing_prism = "Prismen" -- Crushing Prism
 	L.prism = "Prisma"
+	L.ephemeral_fissure = "Bodenriss"
 
 	L.bomb_dropped = "Bombe fallen gelassen"
 
@@ -100,7 +99,6 @@ if L then
 	L.unto_darkness = "AoE Phase"-- Unto Darkness
 	L.cloud_of_carrion = "Fäulnis" -- Cloud of Carrion
 	L.empowered_cloud_of_carrion = "Große Fäulnis" -- Empowered Cloud of Carrion
-	L.manifest_shadows = "Adds" -- Manifest Shadows
 	L.leeching_claws = "Frontal (M)" -- Leeching Claws
 	L.infiltration_of_dread = "Unter uns" -- Infiltration of Dread
 	L.infiltration_removed = "Verräter gefunden in %.1fs" -- "Imposters found in 1.1s" s = seconds

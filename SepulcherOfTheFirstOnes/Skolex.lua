@@ -27,6 +27,9 @@ local ephemeraDustList = {}
 
 local L = mod:GetLocale()
 if L then
+	L.custom_on_stop_timers = "Always show ability bars"
+	L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+
 	L.tank_combo = CL.tank_combo
 	L.tank_combo_desc = "Timer for Riftmaw/Rend casts at 100 energy."
 	L.tank_combo_icon = 359979
@@ -38,6 +41,7 @@ end
 
 function mod:GetOptions()
 	return {
+		"custom_on_stop_timers",
 		"berserk",
 		359770, -- Ravening Burrow
 		359829, -- Dust Flail
@@ -50,6 +54,7 @@ function mod:GetOptions()
 		{359778, "INFOBOX"}, -- Ephemera Dust
 		366070, -- Volatile Residue
 	},{
+		["custom_on_stop_timers"] = "general",
 		[366070] = "mythic",
 	}
 end
@@ -70,6 +75,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EphemeraDustApplied", 359778)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "EphemeraDustApplied", 359778)
 	self:Log("SPELL_AURA_REMOVED", "EphemeraDustRemoved", 359778)
+
+	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
 end
 
 function mod:OnEngage()
@@ -91,6 +98,31 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+do
+	local abilitysToPause = {
+		["tank_combo"] = true, -- Tank Combo
+		[359829] = true, -- Dust Flail
+		[360451] = true, -- Retch
+	}
+
+	local castPattern = CL.cast:gsub("%%s", ".+")
+
+	local function stopAtZeroSec(bar)
+		if bar.remaining < 0.15 then -- Pause at 0.0
+			bar:SetDuration(0.01) -- Make the bar look full
+			bar:Start()
+			bar:Pause()
+			bar:SetTimeVisibility(false)
+		end
+	end
+
+	function mod:BarCreated(_, _, bar, _, key, text)
+		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
+			bar:AddUpdateFunction(stopAtZeroSec)
+		end
+	end
+end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 360079 then -- Tank Combo

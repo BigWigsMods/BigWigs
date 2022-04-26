@@ -2,18 +2,18 @@ local L = BigWigs:NewBossLocale("Vigilant Guardian", "zhTW")
 if not L then return end
 if L then
 	L.sentry = "哨兵"
-	L.materium = "小怪"
-	L.shield = "核心" -- Global locale canidate?
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
 if L then
+	--L.custom_on_stop_timers = "Always show ability bars"
+	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+
 	L.tank_combo_desc = "為達到 100 能量時施放的撕裂與裂喉顯示計時器。"
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "zhTW")
 if L then
-	L.traps = "陷阱" -- Stasis Trap
 	L.sparknova = "火花新星" -- Hyperlight Sparknova
 	L.relocation = "坦克炸彈" -- Glyph of Relocation
 	L.relocation_count = "%s（%d 之 %d）" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count) 先用這個試試看
@@ -25,7 +25,6 @@ end
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "zhTW")
 if L then
 	L.staggering_barrage = "分攤" -- Staggering Barrage
-	L.domination_core = "小怪" -- Domination Core
 	L.obliteration_arc = "彈幕" -- Obliteration Arc 這個其實更適合叫彈幕，但分攤技能竟然就叫彈幕...
 
 	L.disintergration_halo = "輝環" -- Disintegration Halo
@@ -35,8 +34,6 @@ if L then
 
 	L.custom_on_ring_timers = "瓦解輝環計時器"
 	L.custom_on_ring_timers_desc = "當一組瓦解輝環啟動時，顯示每個輝環開始擴散的計時器。此選項的進階設定直接繼承自瓦解輝環的進階設定。"
-
-	L.shield_removed = "%s 移除，用時 %.1f 秒" -- "Shield removed after 1.1s" s = seconds
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "zhTW")
@@ -47,6 +44,7 @@ if L then
 	L.wild_stampede = "奔竄"
 	L.withering_seeds = "種子"
 	L.hand_of_destruction = "群拉" -- 毀滅之手群拉
+	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhTW")
@@ -70,6 +68,7 @@ if L then
 	L.earthbreaker_missiles = "飛彈" -- Earthbreaker Missiles
 	L.crushing_prism = "稜光" -- Crushing Prism
 	L.prism = "稜光"
+	--L.ephemeral_fissure = "Fissure"
 
 	L.bomb_dropped = "炸彈掉落"
 
@@ -100,7 +99,6 @@ if L then
 	L.unto_darkness = "AoE 階段"-- Unto Darkness
 	L.cloud_of_carrion = "食腐蟲群" -- Cloud of Carrion
 	L.empowered_cloud_of_carrion = "強化食腐蟲群" -- Empowered Cloud of Carrion
-	L.manifest_shadows = "小怪" -- Manifest Shadows
 	L.leeching_claws = "順劈（瑪）" -- Leeching Claws
 	L.infiltration_of_dread = "抓內鬼" -- Infiltration of Dread
 	L.infiltration_removed = "抓出內鬼，用時 %.1f 秒" -- "Imposters found in 1.1s" s = seconds
@@ -138,7 +136,7 @@ if L then
 	L.chains_remaining = "鎖鏈拉斷：%d/%d"
 	L.rune_of_domination = "團隊分攤"
 
-	L.final = "階段四：%s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "最終%s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
 	L.azeroth_health = "艾澤拉斯血量"
 	L.azeroth_health_desc = "艾澤拉斯血量警告"

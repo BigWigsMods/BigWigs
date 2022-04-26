@@ -34,6 +34,7 @@ L.over = "%s Over" -- Spell Over
 L.removed = "%s Removed" -- Spell Removed
 L.removed_from = "%s removed from %s" -- Spell removed from Player
 L.removed_by = "%s removed by %s" -- Spell removed by Player
+L.removed_after = "%s removed after %.1fs" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "%s Incoming" -- Spell Incoming
 L.interrupted = "%s Interrupted" -- Spell Interrupted
 L.interrupted_by = "%s interrupted by %s" -- Spell interrupted by Player

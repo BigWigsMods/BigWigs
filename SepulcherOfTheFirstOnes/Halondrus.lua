@@ -68,10 +68,8 @@ if L then
 	L.earthbreaker_missiles = "Missiles" -- Earthbreaker Missiles
 	L.crushing_prism = "Prisms" -- Crushing Prism
 	L.prism = "Prism"
-	L.ephemeral_fissure = mod:SpellName(192522) -- Fissure
-	L.lightshatter_beam = CL.beam
+	L.ephemeral_fissure = "Fissure"
 
-	L.volatile_charge = CL.bomb
 	L.bomb_dropped = "Bomb dropped"
 
 	L.custom_on_stop_timers = "Always show ability bars"
@@ -105,11 +103,11 @@ function mod:GetOptions()
 		[362056] = -23917, -- Stage Two: The Shimmering Cliffs
 		[368529] = -24707, -- Stage Three: A Broken Cycle
 	},{
-		[368969] = L.volatile_charge,
+		[368969] = CL.bomb,
 		[367079] = L.seismic_tremors,
 		[360114] = L.ephemeral_fissure,
 		[361676] = L.earthbreaker_missiles,
-		[360977] = L.lightshatter_beam,
+		[360977] = CL.beam,
 		[365297] = L.crushing_prism,
 	}
 end
@@ -161,7 +159,7 @@ function mod:OnEngage()
 	intermissionTimers = self:Mythic() and intermissionTimersMythic or intermissionTimersHeroic
 
 	if not self:Easy() then
-		self:CDBar(360977, 8, L.lightshatter_beam) -- Lightshatter Beam
+		self:CDBar(360977, 8, CL.beam) -- Lightshatter Beam
 	end
 	self:Bar(367079, self:Mythic() and 4.9 or 8, CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:Bar(365297, self:Mythic() and 17 or 21.1, CL.count:format(L.crushing_prism, prismCount))
@@ -215,7 +213,7 @@ end
 
 function mod:VolatileChargeApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, L.volatile_charge)
+		self:PersonalMessage(args.spellId, nil, CL.bomb)
 		self:Bar(args.spellId, 10, CL.explosion)
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -234,7 +232,7 @@ function mod:Reclaim(args)
 	self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
 	self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:StopBar(CL.count:format(L.crushing_prism, prismCount))
-	self:StopBar(L.lightshatter_beam)
+	self:StopBar(CL.beam) -- Lightshatter Beam
 
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, reclaimCount))
 	self:PlaySound(args.spellId, "long")
@@ -255,7 +253,7 @@ function mod:ReclaimRemoved(args)
 	self:Bar(360115, 61.2, CL.count:format(self:SpellName(360115), reclaimCount))
 
 	if not self:Easy() then
-		self:CDBar(360977, 8, L.lightshatter_beam) -- Lightshatter Beam
+		self:CDBar(360977, 8, CL.beam) -- Lightshatter Beam
 	end
 	self:Bar(367079, 4.5, CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	self:Bar(365297, self:Mythic() and 17 or 8, CL.count:format(L.crushing_prism, prismCount))
@@ -294,19 +292,19 @@ function mod:EarthbreakerMissiles(args)
 end
 
 function mod:LightshatterBeam(args)
-	self:Message(args.spellId, "purple", L.lightshatter_beam)
+	self:Message(args.spellId, "purple", CL.beam)
 	self:PlaySound(args.spellId, "alert")
 	beamCount = beamCount + 1
 	if beamCount % 2 == 0 then
-		self:CDBar(args.spellId, 4.9, L.lightshatter_beam)
+		self:CDBar(args.spellId, 4.9, CL.beam)
 	else
-		self:CDBar(args.spellId, 7.0, L.lightshatter_beam)
+		self:CDBar(args.spellId, 7.0, CL.beam)
 	end
 end
 
 function mod:LightshatterBeamApplied(args)
 	if self:Tank() then
-		self:NewStackMessage(360977, "purple", args.destName, args.amount, nil, L.lightshatter_beam)
+		self:NewStackMessage(360977, "purple", args.destName, args.amount, nil, CL.beam)
 		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
 			self:PlaySound(360977, "warning")
 		end
@@ -373,7 +371,7 @@ function mod:ReclamationForm(args)
 	reclaimCount = 1
 
 	if not self:Easy() then
-		self:Bar(360977, 14.1, L.lightshatter_beam) -- Lightshatter Beam
+		self:Bar(360977, 14.1, CL.beam) -- Lightshatter Beam
 	end
 	if stage == 2 then
 		self:Bar(367079, 10, CL.count:format(L.seismic_tremors, seismicTremorsCount)) -- Seismic Tremors
@@ -393,7 +391,7 @@ function mod:RelocationForm(args)
 	self:CDBar("stages", relocationFormCount == 1 and 62 or 85, CL.stage:format(self:GetStage() + 1), args.spellId)
 	relocationFormCount = relocationFormCount + 1
 
-	self:StopBar(L.lightshatter_beam)
+	self:StopBar(CL.beam) -- Lightshatter Beam
 	-- self:StopBar(CL.count:format(L.earthbreaker_missiles, misslesCount))
 	-- self:StopBar(CL.count:format(L.seismic_tremors, seismicTremorsCount))
 	-- self:StopBar(CL.count:format(L.crushing_prism, prismCount))
@@ -434,7 +432,6 @@ end
 do
 	local prev = 0
 	local message = {
-		-- [369207] = CL.beam, -- Planetcracker Beam (Beam)
 		[368363] = L.prism, -- Shattered Prism (Prism)
 		[360114] = L.ephemeral_fissure, -- Ephemeral Fissure (Fissure)
 	}
