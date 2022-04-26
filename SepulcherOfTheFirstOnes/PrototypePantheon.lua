@@ -37,6 +37,7 @@ if L then
 	L.wild_stampede = "Stampede"
 	L.withering_seeds = "Seeds"
 	L.hand_of_destruction = "Hand"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
 end
 
 --------------------------------------------------------------------------------
@@ -46,6 +47,7 @@ end
 local runecarversDeathtouchMarker = mod:AddMarkerOption(false, "player", 1, 360687, 1, 2) -- Runecarver's Deathtouch
 local witheringSeedMarker = mod:AddMarkerOption(false, "npc", 1, 361568, 1, 2, 3, 4) -- Withering Seeds
 local nightHunterMarker = mod:AddMarkerOption(false, "player", 6, 361745, 6, 4, 3, 7) -- Night Hunter
+L.custom_off_361745_desc = L.custom_off_361745_desc.." "..L.nighthunter_marks_additional_desc
 function mod:GetOptions()
 	return {
 		360295, -- Necrotic Ritual
