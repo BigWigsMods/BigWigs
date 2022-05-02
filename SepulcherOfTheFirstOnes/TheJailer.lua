@@ -273,17 +273,20 @@ function mod:GetOptions()
 		[365033] = -24252, -- Stage Three: Eternity's End
 		["mythic_blood_soak_stage_1"] = "mythic", -- Stage Three: Eternity's End
 	},{
-		[362028] = L.relentless_domination, -- Domination
-		[362631] = L.chains_of_oppression, -- Chains of Oppression (Pull Chains)
-		[363893] = CL.tank_combo, -- Martyrdom (Tank Combo)
-		[360279] = CL.bombs, -- Rune of Damnation (Bombs)
-		[360373] = L.unholy_attunement, -- Unholy Attunement (Raise Pylons)
-		[359856] = L.shattering_blast, -- Shattering Blast (Tank Blast)
-		[366285] = L.rune_of_compulsion, -- Rune of Compulsion (Charms)
-		[360562] = CL.knockback, -- Decimator (Knockback)
-		[365033] = L.desolation, -- Desolation (Azeroth Soak)
-		[365150] = L.rune_of_domination, -- Rune of Domination (Heal Runes)
-		[365212] = L.chains_of_anguish, -- Chains of Anguish (Tank Chains)
+		[362028] = L.relentless_domination, -- Relentless Domination
+		[359809] = L.chains_of_oppression, -- Chains of Oppression
+		[363893] = CL.tank_combo, -- Martyrdom
+		[360281] = CL.bombs, -- Rune of Damnation
+		[360373] = L.unholy_attunement, -- Unholy Attunement
+		[359856] = L.shattering_blast, -- Shattering Blast
+		[366285] = L.rune_of_compulsion, -- Rune of Compulsion
+		[360562] = CL.knockback, -- Decimator
+		[365033] = L.desolation, -- Desolation
+		[365150] = L.rune_of_domination, -- Rune of Domination
+		[365212] = L.chains_of_anguish, -- Chains of Anguish
+		["mythic_blood_soak_stage_1"] = L.mythic_blood_soak_bar, -- Heal Azeroth
+		["mythic_blood_soak_stage_2"] = L.mythic_blood_soak_bar, -- Heal Azeroth
+		["mythic_blood_soak_stage_3"] = L.mythic_blood_soak_bar, -- Heal Azeroth
 	}
 end
 
