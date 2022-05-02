@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Всегда показывать таймеры"
+	L.custom_on_stop_timers_desc = "Сколекс может задерживать использование своих способностей. Выбрав эту настройку, полосы с этими заклинаниями останутся на вашем экране."
 
 	L.tank_combo_desc = "При применении Сколексом комбо из трёх ударов на 100 энергии танки должны сблизиться, чтобы по очереди принимать на себя урон от атак."
 end
@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "Звери"
 	L.withering_seeds = "Семена"
 	L.hand_of_destruction = "Длань разрушения"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Отмечает игроков с приоритетом мили для первых меток.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "ruRU")
@@ -77,11 +77,6 @@ if L then
 	L.dire_blasphemy = "Метки"
 
 	L.remnant_active = "Тень активна"
-end
-
-L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ruRU")
-if L then
-	L.tank_combo_desc = "Таймер для танковской комбы на 100 энергии."
 end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "ruRU")
