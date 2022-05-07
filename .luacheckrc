@@ -171,6 +171,7 @@ globals = {
 	"GetRaidTargetIndex",
 	"GetRealmName",
 	"GetRealZoneText",
+	"GetServerExpansionLevel",
 	"GetSpellCooldown",
 	"GetSpellDescription",
 	"GetSpellInfo",
