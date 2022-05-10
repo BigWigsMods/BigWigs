@@ -35,6 +35,7 @@ L.over = "%s terminado" -- Spell Over
 L.removed = "%s Removido" -- Spell Removed
 L.removed_from = "%s Removido de %s" -- Spell removed from Player
 L.removed_by = "%s Removido por %s" -- Spell removed by Player
+L.removed_after = "%s removido después de %.1fs" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "%s Acercándose" -- Spell Incoming
 L.interrupted = "%s Interrumpido" -- Spell Interrupted
 L.interrupted_by = "%s Interrumpido por %s" -- Spell interrupted by Player
@@ -92,6 +93,7 @@ L.amount_three = "%dK" -- Miles 1,000
 L.seconds = "%.1fs" -- 1.1 segundos
 
 -- Common ability name replacements
+--L.tank_combo = "Tank Combo" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Láser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "Rayo" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "Rayos" -- Plural of L.beam

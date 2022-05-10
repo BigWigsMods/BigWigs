@@ -35,6 +35,7 @@ L.over = "%s结束" -- Spell Over
 L.removed = "%s移除" -- Spell Removed
 L.removed_from = "%2$s已移除%1$s" -- Spell removed from Player
 L.removed_by = "%s被%s移除" -- Spell removed by Player
+L.removed_after = "%s在%.1f秒后移除" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "即将%s" -- Spell Incoming
 L.interrupted = "%s已打断" -- Spell Interrupted
 L.interrupted_by = "%2$s已打断%1$s" -- Spell interrupted by Player
@@ -45,8 +46,8 @@ L.cancelled = "%s取消" -- Spell Cancelled
 
 -- Add related
 L.add_spawned = "小怪刷新"
-L.spawned = "%s重生"
-L.spawning = "%s出现"
+L.spawned = "%s已刷新"
+L.spawning = "%s刷新"
 L.next_add = "下一波小怪"
 L.add_killed = "小怪已击杀（%d/%d）"
 L.add_remaining = "小怪已击杀，%d剩余"
@@ -92,6 +93,7 @@ L.amount_three = "%d千" -- Thousands 1,000
 L.seconds = "%.1f秒" -- 1.1 seconds
 
 -- Common ability name replacements
+L.tank_combo = "坦克连击" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "激光" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "射线" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "射线" -- Plural of L.beam

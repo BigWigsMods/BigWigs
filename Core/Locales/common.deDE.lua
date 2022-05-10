@@ -35,6 +35,7 @@ L.over = "%s vorbei" -- Spell Over
 L.removed = "%s entfernt" -- Spell Removed
 L.removed_from = "%s wurde von %s entfernt" -- Spell removed from Player
 L.removed_by = "%s wurde durch %s entfernt" -- Spell removed by Player
+L.removed_after = "%s entfernt nach %.1fs" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "%s steht bevor" -- Spell Incoming
 L.interrupted = "%s unterbrochen" -- Spell Interrupted
 L.interrupted_by = "%s wurde von %s unterbrochen" -- Spell interrupted by Player
@@ -92,6 +93,7 @@ L.amount_three = "%dK" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Common ability name replacements
+--L.tank_combo = "Tank Combo" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "Strahl" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "Strahlen" -- Plural of L.beam

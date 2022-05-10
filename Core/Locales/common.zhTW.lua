@@ -35,6 +35,7 @@ L.over = "%s結束" -- Spell Over
 L.removed = "%s移除" -- Spell Removed
 L.removed_from = "%2$s已移除%1$s" -- Spell removed from Player
 L.removed_by = "%s被%s移除" -- Spell removed by Player
+L.removed_after = "%s在 %.1f 秒後移除" -- "Spell removed after 1.1s" (s = seconds)
 L.incoming = "即將：%s" -- Spell Incoming
 L.interrupted = "%s已打斷" -- Spell Interrupted
 L.interrupted_by = "%2$s已打斷%1$s" -- Spell interrupted by Player
@@ -92,6 +93,7 @@ L.amount_three = "%d千" -- Thousands 1,000
 L.seconds = "%.1f秒" -- 1.1 seconds
 
 -- Common ability name replacements
+L.tank_combo = "坦克連擊" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "雷射" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "射線" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "射線" -- Plural of L.beam
