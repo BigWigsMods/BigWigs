@@ -153,9 +153,7 @@ function mod:FireBloom(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId)
 	end
-	if self:GetOption(fireBloomMarker) then
-		SetRaidTarget(args.destName, #playerList)
-	end
+	self:CustomIcon(fireBloomMarker, args.destName, #playerList)
 end
 
 function mod:ShadowSpike(args)

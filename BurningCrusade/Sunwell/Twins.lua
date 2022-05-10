@@ -95,16 +95,20 @@ function mod:GetThreat(mobId, index)
 	local count = 0
 	for unit in self:IterateGroup() do
 		count = count + 1
-		local _, _, scaledPercentage = UnitDetailedThreatSituation(unit, bossUnit)
+		local _, _, scaledPercentage, _, threatValue = self:Tanking(unit, bossUnit)
 		if not threatTable[count] then threatTable[count] = {} end
 		threatTable[count][1] = unit
 		threatTable[count][2] = scaledPercentage or 0
+		threatTable[count][3] = threatValue or 0
 	end
 	for i = count + 1, #threatTable do
 		threatTable[i] = nil
 	end
 
 	sort(threatTable, function(a, b)
+		if a[2] == b[2] then
+			return a[3] > b[3]
+		end
 		return a[2] > b[2]
 	end)
 
