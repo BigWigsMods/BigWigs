@@ -1,0 +1,33 @@
+## Interface: 20504
+
+## Title: BigWigs [|cffeda55fThe Sunwell|r]
+## Title-deDE: BigWigs [|cffeda55fDer Sonnenbrunnen|r]
+## Title-esES: BigWigs [|cffeda55fLa Fuente del Sol|r]
+## Title-esMX: BigWigs [|cffeda55fLa Fuente del Sol|r]
+## Title-frFR: BigWigs [|cffeda55fLe Puits de soleil|r]
+## Title-itIT: BigWigs [|cffeda55fPozzo Solare|r]
+## Title-koKR: BigWigs [|cffeda55f태양샘|r]
+## Title-ptBR: BigWigs [|cffeda55fNascente do Sol|r]
+## Title-ruRU: BigWigs [|cffeda55fСолнечный Колодец|r]
+## Title-zhCN: BigWigs [|cffeda55f太阳之井|r]
+## Title-zhTW: BigWigs [|cffeda55f太陽之井|r]
+## Notes: BigWigs Sunwell Modules
+## Notes-deDE: BigWigs Sunwell Modules
+## Notes-esES: Módulos BigWigs para La Fuente del Sol
+## Notes-esMX: Módulos BigWigs para La Fuente del Sol
+## Notes-frFR: Modules BigWigs concernant le Puits de soleil
+## Notes-itIT: BigWigs Sunwell Modules
+## Notes-koKR: BigWigs Sunwell Modules
+## Notes-ptBR: BigWigs Sunwell Modules
+## Notes-ruRU: Модуль BigWigs Солнечного Колодца
+## Notes-zhCN: BigWigs 太阳之井模块
+## Notes-zhTW: BigWigs 太陽之井高地模組
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 580
+
+modules.xml

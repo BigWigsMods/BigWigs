@@ -21,5 +21,6 @@
 <Include file="BurningCrusade\TempestKeep\modules.xml"/>
 <Include file="BurningCrusade\BlackTemple\modules.xml"/>
 <Include file="BurningCrusade\ZulAman\modules.xml"/>
+<Include file="BurningCrusade\Sunwell\modules.xml"/>
 <!--@end-do-not-package@-->
 </Ui>

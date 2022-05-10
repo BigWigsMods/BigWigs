@@ -34,6 +34,7 @@ move-folders:
     BigWigs/BurningCrusade/Hyjal: BigWigs_Hyjal
     BigWigs/BurningCrusade/BlackTemple: BigWigs_BlackTemple
     BigWigs/BurningCrusade/ZulAman: BigWigs_ZulAman
+    BigWigs/BurningCrusade/Sunwell: BigWigs_Sunwell
 
 ignore:
   - .luacheckrc
