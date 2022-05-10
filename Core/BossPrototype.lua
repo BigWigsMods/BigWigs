@@ -113,7 +113,6 @@ local updateData = function(module)
 	myGroupGUIDs = {}
 	local _, _, _, instanceId = UnitPosition("player")
 	for unit in module:IterateGroup() do
-		local _, _, _, tarInstanceId = UnitPosition(unit)
 		local guid = UnitGUID(unit)
 		myGroupGUIDs[guid] = true
 		if solo and myGUID ~= guid and UnitIsConnected(unit) then
@@ -130,6 +129,12 @@ end
 local dbg = function(...)
 	if debugFunc then
 		debugFunc:AddCustomEvent("BigWigs_Debug", "BigWigs", ...)
+	end
+end
+
+function boss:Debug(...)
+	if Transcriptor then
+		Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", ...)
 	end
 end
 
@@ -2618,16 +2623,16 @@ function boss:SecondaryIcon(key, player)
 	end
 end
 
---- Directly set any raid target icon on a player based on a custom option key.
+--- Directly set any raid target icon on a unit based on a custom option key.
 -- @param key the option key
--- @string player the player to mark
+-- @string unit the unit (player/npc) to mark
 -- @number[opt] icon the icon to mark the player with, numbering from 1-8 (if nil, the icon is removed)
-function boss:CustomIcon(key, player, icon)
+function boss:CustomIcon(key, unit, icon)
 	if key == false or self:GetOption(key) then
 		if solo then -- setting the same icon twice while not in a group removes it
-			SetRaidTarget(player, 0)
+			SetRaidTarget(unit, 0)
 		end
-		SetRaidTarget(player, icon or 0)
+		SetRaidTarget(unit, icon or 0)
 	end
 end
 
@@ -2850,11 +2855,12 @@ end
 
 --- Start a "berserk" bar and show an engage message.
 -- @number seconds the time before the boss enrages/berserks
--- @bool[opt] noEngageMessage if true, don't display an engage message
+-- @param[opt] noMessages if any value, don't display an engage message. If set to 0, don't display any messages
 -- @string[opt] customBoss set a custom boss name
 -- @string[opt] customBerserk set a custom berserk name (and icon if a spell id), defaults to "Berserk"
 -- @string[opt] customFinalMessage set a custom message to display when the berserk timer finishes
-function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, customFinalMessage)
+-- @string[opt] customBarText set a custom text to display on the Berserk bar
+function boss:Berserk(seconds, noMessages, customBoss, customBerserk, customFinalMessage, customBarText)
 	local name = customBoss or self.displayName
 	local key = "berserk"
 
@@ -2870,22 +2876,24 @@ function boss:Berserk(seconds, noEngageMessage, customBoss, customBerserk, custo
 		berserk = customBerserk
 	end
 
-	self:Bar(key, seconds, berserk, icon)
+	self:Bar(key, seconds, customBarText or berserk, icon)
 
-	if not noEngageMessage then
+	if not noMessages then
 		-- Engage warning with minutes to enrage
 		self:MessageOld(key, "yellow", nil, format(L.custom_start, name, berserk, seconds / 60), false)
 	end
 
-	-- Half-way to enrage warning.
-	local half = seconds / 2
-	local m = half % 60
-	local halfMin = (half - m) / 60
-	self:DelayedMessage(key, half + m, "yellow", format(L.custom_min, berserk, halfMin))
+	if noMessages ~= 0 then
+		-- Half-way to enrage warning.
+		local half = seconds / 2
+		local m = half % 60
+		local halfMin = (half - m) / 60
+		self:DelayedMessage(key, half + m, "yellow", format(L.custom_min, berserk, halfMin))
 
-	self:DelayedMessage(key, seconds - 60, "orange", format(L.custom_min, berserk, 1))
-	self:DelayedMessage(key, seconds - 30, "orange", format(L.custom_sec, berserk, 30))
-	self:DelayedMessage(key, seconds - 10, "orange", format(L.custom_sec, berserk, 10))
-	self:DelayedMessage(key, seconds - 5, "orange", format(L.custom_sec, berserk, 5))
-	self:DelayedMessage(key, seconds, "red", customFinalMessage or format(L.custom_end, name, berserk), icon, "alarm")
+		self:DelayedMessage(key, seconds - 60, "orange", format(L.custom_min, berserk, 1))
+		self:DelayedMessage(key, seconds - 30, "orange", format(L.custom_sec, berserk, 30))
+		self:DelayedMessage(key, seconds - 10, "orange", format(L.custom_sec, berserk, 10))
+		self:DelayedMessage(key, seconds - 5, "orange", format(L.custom_sec, berserk, 5))
+		self:DelayedMessage(key, seconds, "red", customFinalMessage or format(L.custom_end, name, berserk), icon, "Alarm")
+	end
 end
