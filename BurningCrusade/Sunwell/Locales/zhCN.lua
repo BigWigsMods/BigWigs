@@ -97,11 +97,11 @@ end
 L = BigWigs:NewBossLocale("The Eredar Twins", "zhCN")
 if L then
 	L.lady = "萨洛拉丝 #3:"
-	L.lock = "士奥蕾塞丝 #2:"
+	L.lock = "奥蕾塞丝 #2:"
 
 	L.threat = "仇恨"
 
-	-- L.custom_on_threat = "Threat InfoBox"
-	-- L.custom_on_threat_desc = "Show second on threat for Grand Warlock Alythess and third on threat for Lady Sacrolash."
+	L.custom_on_threat = "仇恨信息框"
+	L.custom_on_threat_desc = "奥蕾塞丝的仇恨显示在第2，萨洛拉丝显示在第3."
 end
 
