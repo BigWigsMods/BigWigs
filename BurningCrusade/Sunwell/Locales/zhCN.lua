@@ -2,14 +2,14 @@ local L = BigWigs:NewBossLocale("Kil'jaeden", "zhCN")
 if not L then return end
 if L then
 	L.bomb_cast = "即将 千魂之暗！"
-	L.bomb_nextbar = "<可能 千魂之暗>"
+	L.bomb_nextbar = "可能 千魂之暗"
 	L.bomb_warning = "约10秒后，可能千魂之暗！"
 
 	L.orb = "护盾宝珠"
 	L.orb_desc = "当护盾宝珠施放暗影箭时发出警报。"
 	L.orb_shooting = "护盾宝珠 - 暗影箭！"
 
-	L.shield_up = ">蓝龙之盾< 启用！"
+	L.shield_up = "蓝龙之盾 启用！"
 	L.deceiver_dies = "已杀死基尔加丹之手#%d"
 
 	L.blueorb = "蓝龙宝珠"
@@ -45,7 +45,7 @@ if L then
 
 	L.burnresist = "燃烧抵抗"
 	L.burnresist_desc = "当玩家抵抗燃烧攻击发出警报。"
-	L.burn_resist = "燃烧抵抗：>%s<！"
+	L.burn_resist = "燃烧抵抗：%s！"
 end
 
 L = BigWigs:NewBossLocale("M'uru", "zhCN")
@@ -70,7 +70,7 @@ if L then
 	L.portal_message = "5秒后,可能发动传送！"
 
 	L.realm_desc = "当玩家在灵魂世界中发出警报."
-	L.realm_message = "灵魂世界：>%s<!(%d 小队）"
+	L.realm_message = "灵魂世界：%s!(%d 小队）"
 	L.nobody = "没有人"
 
 	L.curse = "诅咒"
@@ -81,13 +81,13 @@ if L then
 
 	L.wild_magic_casting = "狂野魔法（施法时间延长）"
 	L.wild_magic_casting_desc = "当治疗从狂野魔法延长施法时间时发出警报。"
-	L.wild_magic_casting_you = "狂野魔法 - 施法时间延长：>你<！"
-	L.wild_magic_casting_other = "狂野魔法 - 施法时间延长：>%s<!"
+	L.wild_magic_casting_you = "狂野魔法 - 施法时间延长：你！"
+	L.wild_magic_casting_other = "狂野魔法 - 施法时间延长：%s!"
 
 	L.wild_magic_hit = "狂野魔法（降低命中率）"
 	L.wild_magic_hit_desc = "当 MT 受到狂野魔法降低命中率时发出警报。"
-	L.wild_magic_hit_you = "狂野魔法 - 命中率降低：>你<"
-	L.wild_magic_hit_other = "狂野魔法 - 命中率降低：>%s<!"
+	L.wild_magic_hit_you = "狂野魔法 - 命中率降低：你"
+	L.wild_magic_hit_other = "狂野魔法 - 命中率降低：%s!"
 
 	L.wild_magic_threat = "狂野魔法（增加仇恨）"
 	L.wild_magic_threat_desc = "当你受到狂野魔法增加仇恨时发出警报。"
