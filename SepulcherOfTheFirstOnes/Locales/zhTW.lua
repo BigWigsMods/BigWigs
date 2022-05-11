@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "總是顯示計時器"
+	L.custom_on_stop_timers_desc = "史寇雷斯的技能可能延遲施放。啟用此選項後，這些技能的計時條會保持顯示。"
 
 	L.tank_combo_desc = "為達到 100 能量時施放的撕裂與裂喉顯示計時器。"
 end
@@ -72,7 +72,7 @@ if L then
 
 	L.bomb_dropped = "炸彈掉落"
 
-	L.custom_on_stop_timers = "總是顯示計時器总是显示技能条"
+	L.custom_on_stop_timers = "總是顯示計時器"
 	L.custom_on_stop_timers_desc = "哈隆德魯斯的技能可能延遲施放。啟用此選項後，這些技能的計時條會保持顯示。"
 end
 
