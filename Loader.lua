@@ -968,13 +968,13 @@ do
 	local DBMdotDisplayVersion   -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
 	local DBMdotReleaseRevision  -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	if public.isBC then
-		DBMdotRevision = "20220412171229"
-		DBMdotDisplayVersion = "2.5.34"
-		DBMdotReleaseRevision = "20220412000000"
+		DBMdotRevision = "20220511054957"
+		DBMdotDisplayVersion = "2.5.35"
+		DBMdotReleaseRevision = "20220511000000"
 	else
-		DBMdotRevision = "20220419210314"
-		DBMdotDisplayVersion = "1.14.20"
-		DBMdotReleaseRevision = "20220419000000"
+		DBMdotRevision = "20220511054957"
+		DBMdotDisplayVersion = "1.14.21"
+		DBMdotReleaseRevision = "20220511000000"
 	end
 
 	local timer, prevUpgradedUser = nil, nil
