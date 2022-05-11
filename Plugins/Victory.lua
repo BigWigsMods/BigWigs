@@ -21,7 +21,7 @@ local PlaySoundFile = PlaySoundFile
 plugin.defaultDB = {
 	soundName = "BigWigs: Victory",
 	blizzMsg = true,
-	bigwigsMsg = false,
+	bigwigsMsg = true,
 }
 
 plugin.pluginOptions = {
