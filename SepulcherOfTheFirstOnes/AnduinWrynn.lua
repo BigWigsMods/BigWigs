@@ -193,7 +193,9 @@ function mod:OnEngage()
 	grimReflectionCollector = {}
 	mobCollector = {}
 
-	self:Bar(366849, timers[stage][366849][dominationWordCount], CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
+	if self:Healer() then
+		self:Bar(366849, timers[stage][366849][dominationWordCount], CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
+	end
 	self:Bar(361815, timers[stage][361815][hopebreakerCount], CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
 	self:Bar(365021, timers[stage][365021][wickedStarCount], CL.count:format(L.wicked_star, wickedStarCount)) -- Wicked Star
 	self:Bar(361989, timers[stage][361989][blasphemyCount], CL.count:format(L.blasphemy, blasphemyCount)) -- Blasphemy
@@ -348,19 +350,21 @@ do
 	local playerList = {}
 	function mod:DominationWordPainApplied(args)
 		local t = args.time
-		if t-prev > 5 and self:Healer() then
+		if t-prev > 5 then
 			self:StopBar(CL.count:format(L.domination_word_pain, dominationWordCount))
 			playerList = {}
 			prev = t
 			dominationWordCount = dominationWordCount + 1
-			self:Bar(args.spellId, self:Mythic() and timers[stage][args.spellId][dominationWordCount] or 12.5, CL.count:format(L.domination_word_pain, dominationWordCount))
+			if self:Healer() then
+				self:Bar(args.spellId, self:Mythic() and timers[stage][args.spellId][dominationWordCount] or 12.5, CL.count:format(L.domination_word_pain, dominationWordCount))
+			end
 		end
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.domination_word_pain)
 			self:PlaySound(args.spellId, "alarm")
 		elseif self:Healer() then
-			self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.domination_word_pain, dominationWordCount-1))
+			self:NewTargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.domination_word_pain, dominationWordCount-1))
 		end
 	end
 
@@ -463,8 +467,10 @@ function mod:DominationsGraspRemoved(args)
 	hopelessnessCount = 1
 
 	if stage == 2 then
+		if self:Healer() then
+			self:Bar(366849, timers[stage][366849][dominationWordCount], CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
+		end
 		self:Bar(365120, timers[stage][365120][grimReflectionsCount], CL.count:format(L.grim_reflections, grimReflectionsCount)) -- Grim Reflections
-		self:Bar(366849, timers[stage][366849][dominationWordCount], CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
 		self:Bar(361815, timers[stage][361815][hopebreakerCount], CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
 		self:Bar(365021, timers[stage][365021][wickedStarCount], CL.count:format(L.wicked_star, wickedStarCount)) -- Wicked Star
 		self:Bar(362405, timers[stage][362405][kingsmourneHungersCount], CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount)) -- Kingsmourne Hungers
