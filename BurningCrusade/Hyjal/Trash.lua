@@ -84,7 +84,7 @@ function mod:OnBossEnable()
 	self:RegisterEvent("GOSSIP_SHOW")
 --	self:RegisterWidgetEvent(500, "UpdateEnemies")
 	self:RegisterWidgetEvent(3093, "UpdateEnemies")
-	
+
 --	self:RegisterWidgetEvent(528, "UpdateWaves")
 	self:RegisterWidgetEvent(3121, "UpdateWaves")
 	self:RegisterMessage("BigWigs_BossComm")
@@ -128,7 +128,7 @@ end
 
 local function Restart(self, saveNextBoss)
 	self:Reboot()
-	self:Bar("warmup", 300, CL.active, "achievement_bg_returnxflags_def_wsg")
+	self:Bar("warmup", 300, CL.active, "Interface\\AddOns\\BigWigs\\Media\\Icons\\achievement_bg_returnxflags_def_wsg")
 	nextBoss = saveNextBoss
 end
 
