@@ -438,8 +438,13 @@ do
 	local prev = 0
 	local scheduled = nil
 	local function sortMelee(first, second)
-		return first.melee and not second.melee
-	end
+		if first and second then
+		   if (first.melee ~= second.melee) then
+			  return first.melee and not second.melee
+		   end
+		   return first.player < second.player
+		end
+	 end
 
 	function mod:MarkPlayers()
 		if scheduled then
