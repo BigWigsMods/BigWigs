@@ -1507,9 +1507,13 @@ do
 			-- Nature's Cure (Heal Druid), Remove Corruption (DPS Druid), Purify Spirit (Heal Shaman), Cleanse Spirit (DPS Shaman), Remove Curse (Mage)
 			defDispel.curse = true
 		end
+		if IsSpellKnown(1044) or IsSpellKnown(116841) then
+			-- Blessing of Freedom (Paladin), Tiger's Lust (Monk)
+			defDispel.movement = true
+		end
 	end
 	--- Check if you can dispel.
-	-- @string dispelType dispel type (magic, disease, poison, curse)
+	-- @string dispelType dispel type (magic, disease, poison, curse, movement)
 	-- @bool[opt] isOffensive true if dispelling a buff from an enemy (magic), nil if dispelling a friendly
 	-- @param[opt] key module option key to check
 	-- @return boolean
