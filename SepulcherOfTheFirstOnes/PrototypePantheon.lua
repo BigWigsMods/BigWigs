@@ -439,10 +439,10 @@ do
 	local scheduled = nil
 	local function sortMelee(first, second)
 		if first and second then
-		   if (first.melee ~= second.melee) then
-			  return first.melee and not second.melee
-		   end
-		   return first.player < second.player
+			if first.melee ~= second.melee then
+				return first.melee and not second.melee
+			end
+			return first.player < second.player
 		end
 	 end
 
