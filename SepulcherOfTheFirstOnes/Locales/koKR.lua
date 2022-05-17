@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "쇄도"
 	L.withering_seeds = "씨앗"
 	L.hand_of_destruction = "파괴의 손"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
+	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using raidIndex as secondary priority.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "koKR")

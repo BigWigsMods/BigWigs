@@ -45,6 +45,7 @@ if L then
 	L.withering_seeds = "Семена"
 	L.hand_of_destruction = "Длань разрушения"
 	L.nighthunter_marks_additional_desc = "|cFFFF0000Отмечает игроков с приоритетом мили для первых меток.|r"
+	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using raidIndex as secondary priority.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "ruRU")
