@@ -20,7 +20,7 @@ public.isBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 38
+local BIGWIGS_VERSION = 39
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -968,9 +968,9 @@ do
 	local DBMdotDisplayVersion   -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
 	local DBMdotReleaseRevision  -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	if public.isBC then
-		DBMdotRevision = "20220511054957"
-		DBMdotDisplayVersion = "2.5.35"
-		DBMdotReleaseRevision = "20220511000000"
+		DBMdotRevision = "20220517214447"
+		DBMdotDisplayVersion = "2.5.36"
+		DBMdotReleaseRevision = "20220517000000"
 	else
 		DBMdotRevision = "20220511054957"
 		DBMdotDisplayVersion = "1.14.21"
