@@ -335,7 +335,7 @@ do
 			if UnitIsUnit(rest, "player") then
 				self:Message("wild_magic_casting", "green", L.wild_magic_casting_you, L.wild_magic_casting_icon)
 				self:PlaySound("wild_magic_casting", "long")
-			elseif not self:CheckFlag("wild_magic_casting", "ME_ONLY") then -- since we're not using :TargetMessage, check this manually
+			elseif not self:CheckOption("wild_magic_casting", "ME_ONLY") then -- since we're not using :TargetMessage, check this manually
 				self:Message("wild_magic_casting", "yellow", L.wild_magic_casting_other:format(rest), L.wild_magic_casting_icon)
 			end
 
@@ -343,7 +343,7 @@ do
 			if UnitIsUnit(rest, "player") then
 				self:Message("wild_magic_hit", "blue", L.wild_magic_hit_you, L.wild_magic_hit_icon)
 				self:PlaySound("wild_magic_hit", "long")
-			elseif not self:CheckFlag("wild_magic_hit", "ME_ONLY") then -- since we're not using :TargetMessage, check this manually
+			elseif not self:CheckOption("wild_magic_hit", "ME_ONLY") then -- since we're not using :TargetMessage, check this manually
 				self:Message("wild_magic_hit", "yellow", L.wild_magic_hit_other:format(rest), L.wild_magic_hit_icon)
 			end
 
