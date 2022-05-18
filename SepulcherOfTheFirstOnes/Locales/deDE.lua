@@ -44,9 +44,7 @@ if L then
 	L.wild_stampede = "Stampede"
 	L.withering_seeds = "Samen"
 	L.hand_of_destruction = "Hand"
-	L.nighthunter_marks_additional_desc = "|cFFFF0000Markiert mit Priorität für Nahkämpfer bei den ersten Markierungen.|r"
-	-- REPLACE ABOVE WITH NEW TEXT
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group position as secondary priority.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Markiert mit Priorität für Nahkämpfer bei den ersten Markierungen und nutzt ihre Raidgruppen-Position als sekundäre Priorität.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "deDE")
