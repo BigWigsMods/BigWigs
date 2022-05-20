@@ -170,6 +170,7 @@ do
 
 	function mod:ConflagrationStart(args)
 		self:GetUnitTarget(printTarget, 0.3, args.sourceGUID)
+		self:CDBar(args.spellId, 32)
 	end
 end
 
