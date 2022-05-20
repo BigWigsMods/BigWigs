@@ -82,7 +82,7 @@ function mod:BurnApplied(args)
 		self:Say(args.spellId)
 		sayTimer1 = self:ScheduleTimer("Say", 50, args.spellId, 10, true)
 		sayTimer2 = self:ScheduleTimer("Say", 55, args.spellId, 5, true)
-		self:ShowPromixty(args.spellId, 5) -- spread distance is 2 yards
+		self:OpenProximity(args.spellId, 5) -- spread distance is 2 yards
 	end
 end
 
