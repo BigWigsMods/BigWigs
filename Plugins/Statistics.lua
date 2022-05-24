@@ -13,7 +13,7 @@ local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local activeDurations = {}
 local healthPools = {}
 local units = {"boss1", "boss2", "boss3", "boss4", "boss5"}
-local difficultyTable = {[9] = "raid", [148] = "raid", [4] = "raid", [176] = "raid"} -- raid40, raid20, raid25, raid 25 (sunwell)
+local difficultyTable = {[3] = "raid", [9] = "raid", [148] = "raid", [4] = "raid", [176] = "raid"} -- raid10 (karazhan), raid40, raid20, raid25 (black temple), raid 25 (sunwell)
 local SPELL_DURATION_SEC = SPELL_DURATION_SEC -- "%.2f sec"
 local GetTime = GetTime
 
