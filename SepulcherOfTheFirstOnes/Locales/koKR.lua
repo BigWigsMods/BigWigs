@@ -145,9 +145,11 @@ if L then
 	L.azeroth_new_health_minus = "아제로스 체력: -%.1f%%  (%d)"
 
 	L.mythic_blood_soak_stage_1 = "1페이즈 피 흡수 타이밍"
-	L.mythic_blood_soak_stage_2 = "2페이즈 피 흡수 타이밍"
-	L.mythic_blood_soak_stage_3 = "3페이즈 피 흡수 타이밍"
 	L.mythic_blood_soak_stage_1_desc = "아제로스를 힐할수 있는 좋은 타이밍이 언제인지 보이기. 에코가 첫킬 당시 사용."
+	L.mythic_blood_soak_stage_2 = "2페이즈 피 흡수 타이밍"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_stage_3 = "3페이즈 피 흡수 타이밍"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 	L.mythic_blood_soak_bar = "아제로스 힐"
 
 	L.floors_open = "바닥 열림"
