@@ -145,9 +145,11 @@ if L then
 	L.azeroth_new_health_minus = "艾泽拉斯: -%.1f%%  (%d)"
 
 	L.mythic_blood_soak_stage_1 = "第一阶段输血计时条"
-	L.mythic_blood_soak_stage_2 = "第二阶段输血计时条"
-	L.mythic_blood_soak_stage_3 = "第三阶段输血计时条"
 	L.mythic_blood_soak_stage_1_desc = "显示输血计时条，根据 Echo 的首杀所使用的时间轴制作，会在合适的时间点提醒你治疗艾泽拉斯。"
+	L.mythic_blood_soak_stage_2 = "第二阶段输血计时条"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_stage_3 = "第三阶段输血计时条"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 	L.mythic_blood_soak_bar = "治疗艾泽拉斯"
 
 	L.floors_open = "地板开启"
