@@ -47,6 +47,7 @@ function mod:GetOptions()
 		45855, -- Gas Nova
 		{45402, "ICON"}, -- Demonic Vapor
 		{45661, "ICON", "PROXIMITY"}, -- Encapsulate
+		{45866, "TANK"}, -- Corrosion
 		"phase",
 		"breath",
 		"berserk",
@@ -60,6 +61,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "GasNova", 45855)
 	self:Log("SPELL_SUMMON", "SummonDemonicVapor", 45392)
 	self:Log("SPELL_DAMAGE", "Encapsulate", 45661) -- Doesn't function like a normal debuff
+	self:Log("SPELL_AURA_APPLIED", "CorrosionApplied", 45866)
+	self:Log("SPELL_AURA_REMOVED", "CorrosionRemoved", 45866)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE")
 	self:RegisterEvent("CHAT_MSG_MONSTER_YELL")
@@ -132,4 +135,16 @@ function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 		breathCount = 1
 		self:CDBar("breath", 40.5, CL.count:format(L.breath, breathCount), L.breath_icon)
 	end
+end
+
+function mod:CorrosionApplied(args)
+	self:TargetMessageOld(args.spellId, args.destName, "purple")
+	if not self:Me(args.destGUID) and self:Tank() then
+		self:PlaySound(args.spellId, "warning")
+	end
+	self:TargetBar(args.spellId, 10, args.destName)
+end
+
+function mod:CorrosionRemoved(args)
+	self:StopBar(args.spellName, args.destName)
 end
