@@ -145,9 +145,11 @@ if L then
 	L.azeroth_new_health_minus = "艾澤拉斯：-%.1f%%  (%d)"
 
 	L.mythic_blood_soak_stage_1 = "第一階段輸血計時器"
-	L.mythic_blood_soak_stage_2 = "第二階段輸血計時器"
-	L.mythic_blood_soak_stage_3 = "第三階段輸血計時器"
 	L.mythic_blood_soak_stage_1_desc = "顯示輸血計時器，根據 Echo 的首殺所使用的時間軸製作，會在適合的時間點提醒你治療艾澤拉斯。"
+	L.mythic_blood_soak_stage_2 = "第二階段輸血計時器"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_stage_3 = "第三階段輸血計時器"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 	L.mythic_blood_soak_bar = "治療艾澤拉斯"
 
 	L.floors_open = "地板開啟"

@@ -145,9 +145,11 @@ if L then
 	L.azeroth_new_health_minus = "Saúde de Azeroth: -%.1f%%  (%d)"
 
 	L.mythic_blood_soak_stage_1 = "Estágio 1, Temporizadores para soaks de sangue"
-	L.mythic_blood_soak_stage_2 = "Estágio 2, Temporizadores para soaks de sangue"
-	L.mythic_blood_soak_stage_3 = "Estágio 3, Temporizadores para soaks de sangue"
 	L.mythic_blood_soak_stage_1_desc = "Mostra uma barra com temporizadores quando está em um bom momento para curar azeroth, usado pela Echo em sua primeira morte"
+	L.mythic_blood_soak_stage_2 = "Estágio 2, Temporizadores para soaks de sangue"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_stage_3 = "Estágio 3, Temporizadores para soaks de sangue"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 	L.mythic_blood_soak_bar = "Cure Azeroth"
 
 	L.floors_open = "Abertura de chão"

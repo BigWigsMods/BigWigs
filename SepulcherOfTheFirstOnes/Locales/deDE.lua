@@ -147,7 +147,9 @@ if L then
 	L.mythic_blood_soak_stage_1 = "Phase 1 Blut-Soak Timer"
 	L.mythic_blood_soak_stage_1_desc = "Zeigt eine Leiste mit guten Zeitpunkten zum Heilen von Azeroth an, genutzt von Echo beim ersten Kill"
 	L.mythic_blood_soak_stage_2 = "Phase 2 Blut-Soak Timer"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
 	L.mythic_blood_soak_stage_3 = "Phase 3 Blut-Soak Timer"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 
 	L.mythic_blood_soak_bar = "Azeroth heilen"
 
