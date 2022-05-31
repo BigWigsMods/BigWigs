@@ -1487,8 +1487,8 @@ do
 			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Devour Magic (Warlock Felhunter), Tranquilizing Shot (Hunter)
 			offDispel.magic = true
 		end
-		if IsSpellKnown(2908) or IsSpellKnown(19801) then
-			-- Soothe (Druid), Tranquilizing Shot (Hunter)
+		if IsSpellKnown(2908) or IsSpellKnown(19801) or IsSpellKnown(5938) then
+			-- Soothe (Druid), Tranquilizing Shot (Hunter), Shiv (Rogue)
 			offDispel.enrage = true
 		end
 		if IsSpellKnown(527) or IsSpellKnown(77130) or IsSpellKnown(115450) or IsSpellKnown(4987) or IsSpellKnown(88423) then -- XXX Add DPS priest mass dispel?
