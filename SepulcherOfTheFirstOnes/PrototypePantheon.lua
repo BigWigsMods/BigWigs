@@ -37,7 +37,7 @@ if L then
 	L.wild_stampede = "Stampede"
 	L.withering_seeds = "Seeds"
 	L.hand_of_destruction = "Hand"
-	L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group position as secondary priority.|r"
 end
 
 --------------------------------------------------------------------------------
@@ -438,8 +438,13 @@ do
 	local prev = 0
 	local scheduled = nil
 	local function sortMelee(first, second)
-		return first.melee and not second.melee
-	end
+		if first and second then
+			if first.melee ~= second.melee then
+				return first.melee and not second.melee
+			end
+			return first.index < second.index
+		end
+	 end
 
 	function mod:MarkPlayers()
 		if scheduled then
@@ -472,7 +477,7 @@ do
 				scheduled = self:ScheduleTimer("MarkPlayers", 0.3)
 			end
 		end
-		iconList[#iconList+1] = {player=args.destName, melee=self:Melee(args.destName)}
+		iconList[#iconList+1] = {player=args.destName, melee=self:Melee(args.destName), index=UnitInRaid(args.destName) or 99} -- 99 for players not in your raid (or if you have no raid)
 		if #iconList == 4 then
 			self:MarkPlayers()
 		end

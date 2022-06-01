@@ -24,10 +24,8 @@ local grimReflectionsCount = 1
 local marchCount = 1
 local hopelessnessCount = 1
 local wickedStarCount = 1
-local anduinsHopeMarks = {}
 local grimReflectionMarks = {}
 local grimReflectionCollector = {}
-local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Timer Tables
@@ -151,6 +149,7 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 
 	self:Log("SPELL_CAST_START", "KingsmourneHungers", 362405)
+	self:Log("SPELL_CAST_SUCCESS", "KingsmourneHungersSuccess", 362405)
 	self:Log("SPELL_CAST_START", "Blasphemy", 361989)
 	self:Log("SPELL_AURA_APPLIED", "BlasphemyApplied", 361992, 361993) -- Overconfidence, Hopelessness
 	self:Log("SPELL_AURA_REMOVED", "BlasphemyRemoved", 361992, 361993)
@@ -188,56 +187,28 @@ function mod:OnEngage()
 	dominationWordCount = 1
 	wickedStarCount = 1
 
-	anduinsHopeMarks = {}
 	grimReflectionMarks = {}
 	grimReflectionCollector = {}
-	mobCollector = {}
 
-	self:Bar(366849, timers[stage][366849][dominationWordCount], CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
+	if self:Healer() then
+		self:Bar(366849, timers[stage][366849][dominationWordCount], CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
+	end
 	self:Bar(361815, timers[stage][361815][hopebreakerCount], CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
 	self:Bar(365021, timers[stage][365021][wickedStarCount], CL.count:format(L.wicked_star, wickedStarCount)) -- Wicked Star
 	self:Bar(361989, timers[stage][361989][blasphemyCount], CL.count:format(L.blasphemy, blasphemyCount)) -- Blasphemy
 	self:Bar(365295, timers[stage][365295][barrierCount], CL.count:format(L.befouled_barrier, barrierCount)) -- Befouled Barrier
 	self:Bar(362405, timers[stage][362405][kingsmourneHungersCount], CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount)) -- Kingsmourne Hungers
 	self:Bar("stages", self:Easy() and 161 or 151, CL.intermission, 365216) -- Domination's Grasp Icon
-
-	if self:GetOption(grimReflectionMarker) or self:GetOption(anduinsHopeMarker) then
-		self:RegisterTargetEvents("AddMarker")
-	end
-	if self:GetOption(anduinsHopeMarker) then
-		self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
-	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:AddMarker(event, unit, guid)
-	if not guid or mobCollector[guid] then return end
-
-	if grimReflectionCollector[guid] then -- icon order from SPELL_SUMMON
-		mobCollector[guid] = true
-		self:CustomIcon(grimReflectionMarker, unit, grimReflectionCollector[guid])
-		return
-	elseif self:MobId(guid) == 184493 and self:GetOption(anduinsHopeMarker) then -- Anduin's Hope
-		for i = 1, 4 do
-			if not anduinsHopeMarks[i] then
-				mobCollector[guid] = true
-				anduinsHopeMarks[i] = guid
-				self:CustomIcon(anduinsHopeMarker, unit, i)
-				return
-			end
-		end
-	end
-end
-
--- Mark Anduin's Hope from the boss frames
-function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT(event)
-	for boss = 2, 5 do
-		local unit = ("boss%d"):format(boss)
-		local guid = self:UnitGUID(unit)
-		self:AddMarker(event, unit, guid)
+function mod:GrimReflectionMarker(_, unit, guid)
+	if grimReflectionCollector[guid] then
+		self:CustomIcon(grimReflectionMarker, unit, grimReflectionCollector[guid]) -- icon order from SPELL_SUMMON
+		grimReflectionCollector[guid] = nil
 	end
 end
 
@@ -249,7 +220,26 @@ function mod:KingsmourneHungers(args)
 	self:PlaySound(args.spellId, "alert")
 	kingsmourneHungersCount = kingsmourneHungersCount + 1
 	self:Bar(args.spellId, timers[stage][args.spellId][kingsmourneHungersCount], CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount))
-	anduinsHopeMarks = {}
+end
+
+do
+	local timer = nil
+	function mod:HopeMarker()
+		for boss = 2, 5 do
+			local unit = ("boss%d"):format(boss)
+			local guid = self:UnitGUID(unit)
+			if self:MobId(guid) == 184493 then -- Anduin's Hope
+				self:CustomIcon(anduinsHopeMarker, unit, boss - 1)
+			end
+		end
+		timer = nil
+	end
+
+	function mod:KingsmourneHungersSuccess(args)
+		if not timer and self:GetOption(anduinsHopeMarker) then
+			timer = self:ScheduleTimer(0.3, "HopeMarker") -- not valid on IEEU
+		end
+	end
 end
 
 do
@@ -348,19 +338,21 @@ do
 	local playerList = {}
 	function mod:DominationWordPainApplied(args)
 		local t = args.time
-		if t-prev > 5 and self:Healer() then
+		if t-prev > 5 then
 			self:StopBar(CL.count:format(L.domination_word_pain, dominationWordCount))
 			playerList = {}
 			prev = t
 			dominationWordCount = dominationWordCount + 1
-			self:Bar(args.spellId, self:Mythic() and timers[stage][args.spellId][dominationWordCount] or 12.5, CL.count:format(L.domination_word_pain, dominationWordCount))
+			if self:Healer() then
+				self:Bar(args.spellId, self:Mythic() and timers[stage][args.spellId][dominationWordCount] or 12.5, CL.count:format(L.domination_word_pain, dominationWordCount))
+			end
 		end
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PersonalMessage(args.spellId, nil, L.domination_word_pain)
 			self:PlaySound(args.spellId, "alarm")
 		elseif self:Healer() then
-			self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.domination_word_pain, dominationWordCount-1))
+			self:NewTargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.domination_word_pain, dominationWordCount-1))
 		end
 	end
 
@@ -392,6 +384,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		self:StopBar(CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount)) -- Kingsmourne Hungers
 		self:StopBar(CL.count:format(L.grim_reflections, grimReflectionsCount)) -- Grim Reflections
 		self:StopBar(CL.intermission)
+		self:UnregisterTargetEvents()
 
 		self:Message("stages", "cyan", CL.intermission, false)
 		self:PlaySound("stages", "long")
@@ -463,8 +456,14 @@ function mod:DominationsGraspRemoved(args)
 	hopelessnessCount = 1
 
 	if stage == 2 then
+		if self:GetOption(grimReflectionMarker) then
+			self:RegisterTargetEvents("GrimReflectionMarker")
+		end
+
+		if self:Healer() then
+			self:Bar(366849, timers[stage][366849][dominationWordCount], CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
+		end
 		self:Bar(365120, timers[stage][365120][grimReflectionsCount], CL.count:format(L.grim_reflections, grimReflectionsCount)) -- Grim Reflections
-		self:Bar(366849, timers[stage][366849][dominationWordCount], CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
 		self:Bar(361815, timers[stage][361815][hopebreakerCount], CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
 		self:Bar(365021, timers[stage][365021][wickedStarCount], CL.count:format(L.wicked_star, wickedStarCount)) -- Wicked Star
 		self:Bar(362405, timers[stage][362405][kingsmourneHungersCount], CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount)) -- Kingsmourne Hungers
@@ -512,6 +511,7 @@ function mod:BeaconOfHope(args)
 		self:StopBar(CL.count:format(L.kingsmourne_hungers, kingsmourneHungersCount)) -- Kingsmourne Hungers
 		self:StopBar(CL.count:format(L.grim_reflections, grimReflectionsCount)) -- Grim Reflections
 		self:StopBar(CL.intermission)
+		self:UnregisterTargetEvents()
 
 		stage = 3
 		self:SetStage(stage)

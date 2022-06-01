@@ -44,7 +44,7 @@ if L then
 	--L.wild_stampede = "Stampede"
 	--L.withering_seeds = "Seeds"
 	--L.hand_of_destruction = "Hand"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
+	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group group position as secondary priority.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "esMX")
@@ -145,9 +145,11 @@ if L then
 	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
 
 	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
 	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
+	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
+	-- L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
+	-- L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 	-- L.mythic_blood_soak_bar = "Heal Azeroth"
 
 	-- L.floors_open = "Floors Open"

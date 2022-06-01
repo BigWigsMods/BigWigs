@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "Stampede"
 	L.withering_seeds = "Samen"
 	L.hand_of_destruction = "Hand"
-	L.nighthunter_marks_additional_desc = "|cFFFF0000Markiert mit Priorität für Nahkämpfer bei den ersten Markierungen.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Markiert mit Priorität für Nahkämpfer bei den ersten Markierungen und nutzt ihre Raidgruppen-Position als sekundäre Priorität.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "deDE")
@@ -147,7 +147,9 @@ if L then
 	L.mythic_blood_soak_stage_1 = "Phase 1 Blut-Soak Timer"
 	L.mythic_blood_soak_stage_1_desc = "Zeigt eine Leiste mit guten Zeitpunkten zum Heilen von Azeroth an, genutzt von Echo beim ersten Kill"
 	L.mythic_blood_soak_stage_2 = "Phase 2 Blut-Soak Timer"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
 	L.mythic_blood_soak_stage_3 = "Phase 3 Blut-Soak Timer"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 
 	L.mythic_blood_soak_bar = "Azeroth heilen"
 

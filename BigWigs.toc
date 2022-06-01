@@ -1,4 +1,4 @@
-## Interface: 90200
+## Interface: 90205
 
 ## Title: BigWigs
 ## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.

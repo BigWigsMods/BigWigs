@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "zhTW")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "總是顯示計時器"
+	L.custom_on_stop_timers_desc = "史寇雷斯的技能可能延遲施放。啟用此選項後，這些技能的計時條會保持顯示。"
 
 	L.tank_combo_desc = "為達到 100 能量時施放的撕裂與裂喉顯示計時器。"
 end
@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "奔竄"
 	L.withering_seeds = "種子"
 	L.hand_of_destruction = "群拉" -- 毀滅之手群拉
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
+	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group position as secondary priority.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhTW")
@@ -72,7 +72,7 @@ if L then
 
 	L.bomb_dropped = "炸彈掉落"
 
-	L.custom_on_stop_timers = "總是顯示計時器总是显示技能条"
+	L.custom_on_stop_timers = "總是顯示計時器"
 	L.custom_on_stop_timers_desc = "哈隆德魯斯的技能可能延遲施放。啟用此選項後，這些技能的計時條會保持顯示。"
 end
 
@@ -145,9 +145,11 @@ if L then
 	L.azeroth_new_health_minus = "艾澤拉斯：-%.1f%%  (%d)"
 
 	L.mythic_blood_soak_stage_1 = "第一階段輸血計時器"
-	L.mythic_blood_soak_stage_2 = "第二階段輸血計時器"
-	L.mythic_blood_soak_stage_3 = "第三階段輸血計時器"
 	L.mythic_blood_soak_stage_1_desc = "顯示輸血計時器，根據 Echo 的首殺所使用的時間軸製作，會在適合的時間點提醒你治療艾澤拉斯。"
+	L.mythic_blood_soak_stage_2 = "第二階段輸血計時器"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_stage_3 = "第三階段輸血計時器"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 	L.mythic_blood_soak_bar = "治療艾澤拉斯"
 
 	L.floors_open = "地板開啟"

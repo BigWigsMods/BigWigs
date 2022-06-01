@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "Impeto"
 	L.withering_seeds = "Semi"
 	L.hand_of_destruction = "Mano"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
+	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group position as secondary priority.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "itIT")
@@ -145,9 +145,11 @@ if L then
 	L.azeroth_new_health_minus = "Salute di Azeroth: -%.1f%%  (%d)"
 
 	L.mythic_blood_soak_stage_1 = "Timing per gli assorbimenti del Sangue in Fase 1"
-	L.mythic_blood_soak_stage_2 = "Timing per gli assorbimenti del Sangue in Fase 2"
-	L.mythic_blood_soak_stage_3 = "Timing per gli assorbimenti del Sangue in Fase 3"
 	L.mythic_blood_soak_stage_1_desc = "Mostra una barra per illustrare quale è il timing migliore per curare Azeroth, usata dall'Eco dopo la prima uccisione"
+	L.mythic_blood_soak_stage_2 = "Timing per gli assorbimenti del Sangue in Fase 2"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_stage_3 = "Timing per gli assorbimenti del Sangue in Fase 3"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
 	L.mythic_blood_soak_bar = "Cura Azeroth"
 
 	L.floors_open = "Pavimento Aperto"

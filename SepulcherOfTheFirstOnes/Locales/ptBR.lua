@@ -1,159 +1,161 @@
 local L = BigWigs:NewBossLocale("Vigilant Guardian", "ptBR")
 if not L then return end
 if L then
-	--L.sentry = "Tank Add"
+	L.sentry = "Tank Add"
 end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "ptBR")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Sempre mostrar barras de habilidade"
+	L.custom_on_stop_timers_desc = "Skolex pode atrasar suas habilidades. Se esta opção for ativada, as barras para essas habilidades permanecem."
 
-	--L.tank_combo_desc = "Timer for Riftmaw/Rend casts at 100 energy."
+	L.tank_combo_desc = "Temporizador de habilidade para Gorja da Fenda/Dilacerar com 100 de energia."
 end
 
 L = BigWigs:NewBossLocale("Artificer Xy'mox v2", "ptBR")
 if L then
-	--L.sparknova = "Sparknova" -- Hyperlight Sparknova
-	--L.relocation = "Tank Bomb" -- Glyph of Relocation
-	--L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
-	--L.wormholes = "Wormholes" -- Interdimensional Wormholes
-	--L.wormhole = "Wormhole" -- Interdimensional Wormhole
-	--L.rings = "Rings S%d" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
+	L.sparknova = "Nova Centelhante de Hiperluz" -- Hyperlight Sparknova
+	L.relocation = "Tank Bomb" -- Glyph of Relocation
+	L.relocation_count = "%s S%d (%d)" -- Tank Bomb S1 (1) // Tank Bomb (stage)(count)
+	L.wormholes = "Rasgos Dimensionais" -- Interdimensional Wormholes
+	L.wormhole = "Rasgo Dimensional" -- Interdimensional Wormhole
+	L.rings = "Aneis S%d" -- Rings S1 // Forerunner Rings Stage 1/2/3/4
 end
 
 L = BigWigs:NewBossLocale("Dausegne, the Fallen Oracle", "ptBR")
 if L then
-	--L.staggering_barrage = "Barrage" -- Staggering Barrage
-	--L.obliteration_arc = "Arc" -- Obliteration Arc
+	L.staggering_barrage = "Bombardeio Cambaleante" -- Staggering Barrage
+	L.obliteration_arc = "Arco da Obliteração" -- Obliteration Arc
 
-	--L.disintergration_halo = "Rings" -- Disintegration Halo
-	--L.rings_x = "Rings x%d"
-	--L.rings_enrage = "Rings (Enrage)"
-	--L.ring_count = "Ring (%d/%d)"
+	L.disintergration_halo = "Anéis" -- Disintegration Halo
+	L.rings_x = "Anéis x%d"
+	L.rings_enrage = "Anéis (Frenesi)"
+	L.ring_count = "Anel (%d/%d)"
 
-	--L.custom_on_ring_timers = "Individual Halo Timers"
-	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+	L.custom_on_ring_timers = "Temporizador de anel individual"
+	L.custom_on_ring_timers_desc = "Halo Desintegrador aciona um conjunto de anéis, esta opção mostrará barras quando cada um dos anéis começar a se mover. Usa as configurações do Halo Desintegrador."
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "ptBR")
 if L then
-	--L.necrotic_ritual = "Ritual"
-	--L.runecarvers_deathtouch = "Deathtouch"
-	--L.windswept_wings = "Winds"
-	--L.wild_stampede = "Stampede"
-	--L.withering_seeds = "Seeds"
-	--L.hand_of_destruction = "Hand"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers.|r"
+	L.necrotic_ritual = "Ritual Necrótico"
+	L.runecarvers_deathtouch = "Toque Mortal"
+	L.windswept_wings = "Vento"
+	L.wild_stampede = "Debandada"
+	L.withering_seeds = "Sementes"
+	L.hand_of_destruction = "Mão"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Marcando com prioridade jogadores corpo a corpo nas primeiras marcações e usando a posição do grupo de raide como prioridade secundária.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "ptBR")
 if L then
-	--L.protoform_cascade = "Frontal"
-	--L.cosmic_shift = "Pushback"
-	--L.cosmic_shift_mythic = "Shift: %s"
-	--L.unstable_mote = "Motes"
-	--L.mote = "Mote"
+	L.protoform_cascade = "Frontal"
+	L.cosmic_shift = "Recuo"
+	L.cosmic_shift_mythic = "Mudança: %s"
+	L.unstable_mote = "Grânulos"
+	L.mote = "Grânulo"
 
-	--L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	--L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Acquisitions Automa that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "Icone de fixar nas placas de identificação"
+	L.custom_on_nameplate_fixate_desc = "Mostra um ícone na placa de identificação em Automa de Aquisições que estão fixados em você.\n\nRequer o uso de placas de identificação de inimigos e um addon de placas de identificação suportado (KuiNameplates, Plater)."
 
-	--L.harmonic = "Push"
-	--L.melodic = "Pull"
+	L.harmonic = "Empurrão"
+	L.melodic = "Puxão"
 end
 
 L = BigWigs:NewBossLocale("Anduin Wrynn", "ptBR")
 if L then
-	--L.custom_off_repeating_blasphemy = "Repeating Blasphemy"
-	--L.custom_off_repeating_blasphemy_desc = "Repeating Blasphemy say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.custom_off_repeating_blasphemy = "Repetição de Blasfêmia"
+	L.custom_off_repeating_blasphemy_desc = "Repetição de Blasfêmia fala mensagems com ícones {rt1}, {rt3} para encontrar pares para remover seus debuffs."
 
-	--L.kingsmourne_hungers = "Kingsmourne"
-	--L.blasphemy = "Marks"
-	--L.befouled_barrier = "Barrier"
-	--L.wicked_star = "Star"
-	--L.domination_word_pain = "DW:Pain"
-	--L.army_of_the_dead = "Army"
-	--L.grim_reflections = "Fear Adds"
-	--L.march_of_the_damned = "Walls"
-	--L.dire_blasphemy = "Marks"
+	L.kingsmourne_hungers = "Régio Lamento"
+	L.blasphemy = "Marcas"
+	L.befouled_barrier = "Barreira"
+	L.wicked_star = "Estrela"
+	L.domination_word_pain = "PD:Dor"
+	L.army_of_the_dead = "Exército"
+	L.grim_reflections = "Adds de Medo"
+	L.march_of_the_damned = "Paredes"
+	L.dire_blasphemy = "Marcas"
 
-	--L.remnant_active = "Remnant Active"
+	L.remnant_active = "Remanescente ativo"
 end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "ptBR")
 if L then
-	--L.seismic_tremors = "Motes + Tremors"
-	--L.earthbreaker_missiles = "Missiles"
-	--L.crushing_prism = "Prisms"
-	--L.prism = "Prism"
+	L.seismic_tremors = "Grânulos + Tremores"
+	L.earthbreaker_missiles = "Mísseis"
+	L.crushing_prism = "Prismas"
+	L.prism = "Prisma"
 	L.ephemeral_fissure = "Fenda"
 
-	-- L.bomb_dropped = "Bomb dropped"
+	L.bomb_dropped = "Bomba Derrubada"
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Sempre mostrar barras de habilidade"
+	L.custom_on_stop_timers_desc = "Skolex pode atrasar suas habilidades. Se esta opção for ativada, as barras para essas habilidades permanecem."
 end
 
 L = BigWigs:NewBossLocale("Lords of Dread", "ptBR")
 if L then
-	--L.unto_darkness = "AoE Phase"
-	--L.cloud_of_carrion = "Carrion"
-	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
-	--L.leeching_claws = "Frontal (M)"
-	--L.infiltration_of_dread = "Among Us"
-	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
-	--L.fearful_trepidation = "Fears"
-	--L.slumber_cloud = "Clouds"
-	--L.anguishing_strike = "Frontal (K)"
+	L.unto_darkness = "Fase de AOE"
+	L.cloud_of_carrion = "Podridão"
+	L.empowered_cloud_of_carrion = "Grande podridão" -- Empowered Cloud of Carrion
+	L.leeching_claws = "Frontal (M)"
+	L.infiltration_of_dread = "Among Us"
+	L.infiltration_removed = "Impostores encontrados em %.1fs" -- "Imposters found in 1.1s" s = seconds
+	L.fearful_trepidation = "Medos"
+	L.slumber_cloud = "Núvems"
+	L.anguishing_strike = "Frontal (K)"
 
-	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
-	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
+	L.custom_on_repeating_biting_wound = "Repetição de Feridas penetrantes"
+	L.custom_on_repeating_biting_wound_desc = "Repetição de feridas penetrantes fala mensagems com ícone {rt7} para torná-lo mais visível."
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "ptBR")
 if L then
-	--L.celestial_collapse = "Quasars"
-	--L.manifest_cosmos = "Cores"
-	--L.stellar_shroud = "Heal Absorb"
-	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
+	L.celestial_collapse = "Quasares"
+	L.manifest_cosmos = "Núcleos"
+	L.stellar_shroud = "Absorve Cura"
+	L.knock = "Empurrão" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "ptBR")
 if L then
-	--L.rune_of_damnation_countdown = "Countdown"
-	--L.rune_of_damnation_countdown_desc = "Countdown for the players who are affected by Rune of Damnation"
-	--L.jump = "Jump In"
+	L.rune_of_damnation_countdown = "Contagem"
+	L.rune_of_damnation_countdown_desc = "Contagem para jogadores afetados por Runa de Danação"
+	L.jump = "Pule dentro"
 
-	--L.relentless_domination = "Domination"
-	--L.chains_of_oppression = "Pull Chains"
-	--L.unholy_attunement = "Pylons"
-	--L.shattering_blast = "Tank Blast"
-	--L.rune_of_compulsion = "Charms"
-	--L.desolation = "Azeroth Soak"
-	--L.chains_of_anguish = "Spread Chains"
-	--L.chain = "Chain"
-	--L.chain_target = "Chaining %s!"
-	--L.chains_remaining = "%d/%d Chains Broken"
-	--L.rune_of_domination = "Group Soaks"
+	L.relentless_domination = "Dominação"
+	L.chains_of_oppression = "Puxão de Correntes"
+	L.unholy_attunement = "Pilares"
+	L.shattering_blast = "Impacto no Tank"
+	L.rune_of_compulsion = "Enfeitiçar"
+	L.desolation = "Soak de Azeroth"
+	L.chains_of_anguish = "Espalhar Correntes"
+	L.chain = "Corrente"
+	L.chain_target = "Acorrentando %s!"
+	L.chains_remaining = "%d/%d Correntes Quebradas"
+	L.rune_of_domination = "Soak em Grupo"
 
-	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "%s Final" -- Final Unholy Attunement/Domination (last spell of a stage)
 
-	-- L.azeroth_health = "Azeroth Health"
-	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+	L.azeroth_health = "Saúde de Azeroth"
+	L.azeroth_health_desc = "Avisos para Saúde de Azeroth"
 
-	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
-	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+	L.azeroth_new_health_plus = "Saúde de Azeroth: +%.1f%% (%d)"
+	L.azeroth_new_health_minus = "Saúde de Azeroth: -%.1f%%  (%d)"
 
-	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
-	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+	L.mythic_blood_soak_stage_1 = "Estágio 1, Temporizadores para soaks de sangue"
+	L.mythic_blood_soak_stage_1_desc = "Mostra uma barra com temporizadores quando está em um bom momento para curar azeroth, usado pela Echo em sua primeira morte"
+	L.mythic_blood_soak_stage_2 = "Estágio 2, Temporizadores para soaks de sangue"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_stage_3 = "Estágio 3, Temporizadores para soaks de sangue"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_bar = "Cure Azeroth"
 
-	-- L.floors_open = "Floors Open"
-	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+	L.floors_open = "Abertura de chão"
+	L.floors_open_desc = "Tempo até que o chão se abra e você possa cair em buracos abertos."
 
-	-- L.mythic_dispel_stage_4 = "Dispel Timers"
-	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
-	-- L.mythic_dispel_bar = "Dispels"
+	L.mythic_dispel_stage_4 = "Tempos de Dispell"
+	L.mythic_dispel_stage_4_desc = "Temporizadores para quando fazer dispell no último estágio, usado pela Echo em sua primeira morte"
+	L.mythic_dispel_bar = "Dispels"
 end

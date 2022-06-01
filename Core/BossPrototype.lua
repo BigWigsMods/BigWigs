@@ -1487,8 +1487,8 @@ do
 			-- Mass Dispel (Priest), Dispel Magic (Priest), Purge (Shaman), Spellsteal (Mage), Consume Magic (Demon Hunter), Devour Magic (Warlock Felhunter), Tranquilizing Shot (Hunter)
 			offDispel.magic = true
 		end
-		if IsSpellKnown(2908) or IsSpellKnown(19801) then
-			-- Soothe (Druid), Tranquilizing Shot (Hunter)
+		if IsSpellKnown(2908) or IsSpellKnown(19801) or IsSpellKnown(5938) then
+			-- Soothe (Druid), Tranquilizing Shot (Hunter), Shiv (Rogue)
 			offDispel.enrage = true
 		end
 		if IsSpellKnown(527) or IsSpellKnown(77130) or IsSpellKnown(115450) or IsSpellKnown(4987) or IsSpellKnown(88423) then -- XXX Add DPS priest mass dispel?
@@ -1507,9 +1507,13 @@ do
 			-- Nature's Cure (Heal Druid), Remove Corruption (DPS Druid), Purify Spirit (Heal Shaman), Cleanse Spirit (DPS Shaman), Remove Curse (Mage)
 			defDispel.curse = true
 		end
+		if IsSpellKnown(1044) or IsSpellKnown(116841) then
+			-- Blessing of Freedom (Paladin), Tiger's Lust (Monk)
+			defDispel.movement = true
+		end
 	end
 	--- Check if you can dispel.
-	-- @string dispelType dispel type (magic, disease, poison, curse)
+	-- @string dispelType dispel type (magic, disease, poison, curse, movement)
 	-- @bool[opt] isOffensive true if dispelling a buff from an enemy (magic), nil if dispelling a friendly
 	-- @param[opt] key module option key to check
 	-- @return boolean

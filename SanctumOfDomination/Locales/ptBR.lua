@@ -82,9 +82,9 @@ if L then
 	L.trap = "Armadilha" -- Short for Flameclasp Trap
 	L.chains = "Correntes" -- Short for Shadowsteel Chains
 	L.embers = "Brasas" -- Short for Shadowsteel Embers
-	-- L.adds_embers = "Embers (%d) - Adds Next!"
-	-- L.adds_killed = "Adds killed in %.2fs"
-	-- L.spikes = "Spiked Death" -- Soft enrage spikes
+	L.adds_embers = "Brasas (%d) - Inimigos Adicionais A Seguir!"
+	L.adds_killed = "Inimigos Adicionais mortos em %.2fs"
+	L.spikes = "Morte Espinhosa" -- Soft enrage spikes
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "ptBR")
@@ -92,7 +92,7 @@ if L then
 	L.custom_on_stop_timers = "Sempre mostrar barras de habilidade"
 	L.custom_on_stop_timers_desc = "O Guardião pode atrasar suas habilidades. Quando essa opção estiver habilitada, as barras para essas habilidades irão permanecer na sua tela."
 
-	-- L.bomb_missed = "%dx Bombs Missed"
+	L.bomb_missed = "%dx Bombas Perdidas"
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "ptBR")
