@@ -1923,6 +1923,34 @@ function plugin:GetNameplateBarTimeLeft(module, text, guid)
 	return 0
 end
 
+function plugin:SetBarText(module, oldText, newText)
+	if not normalAnchor then return end
+	for k in next, normalAnchor.bars do
+		if k:Get("bigwigs:module") == module and k:GetLabel() == oldText then
+			k:SetLabel(newText)
+		end
+	end
+	for k in next, emphasizeAnchor.bars do
+		if k:Get("bigwigs:module") == module and k:GetLabel() == oldText then
+			k:SetLabel(newText)
+		end
+	end
+end
+
+function plugin:SetBarDuration(module, text, duration)
+	if not normalAnchor then return end
+	for k in next, normalAnchor.bars do
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+			k:SetDuration(duration)
+		end
+	end
+	for k in next, emphasizeAnchor.bars do
+		if k:Get("bigwigs:module") == module and k:GetLabel() == text then
+			k:SetDuration(duration)
+		end
+	end
+end
+
 --------------------------------------------------------------------------------
 -- Clickable bars
 --

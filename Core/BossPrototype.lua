@@ -2594,6 +2594,21 @@ function boss:BarTimeLeft(text)
 	return 0
 end
 
+function boss:SetBarText(oldText, newText)
+	local bars = core:GetPlugin("Bars", true)
+	if bars then
+		bars:SetBarText(self, type(oldText) == "number" and spells[oldText] or oldText,
+								 type(newText) == "number" and spells[newText] or newText)
+	end
+end
+
+function boss:SetBarDuration(text, duration)
+	local bars = core:GetPlugin("Bars", true)
+	if bars then
+		bars:SetBarDuration(self, type(text) == "number" and spells[text] or text, duration)
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Icons.
 -- @section icons
