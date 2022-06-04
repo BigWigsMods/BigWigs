@@ -2594,6 +2594,9 @@ function boss:BarTimeLeft(text)
 	return 0
 end
 
+--- Updates the text for a running bar.
+-- @param oldText the existing bar text before update
+-- @param newText the new bar text after update
 function boss:SetBarText(oldText, newText)
 	local bars = core:GetPlugin("Bars", true)
 	if bars then
@@ -2602,6 +2605,9 @@ function boss:SetBarText(oldText, newText)
 	end
 end
 
+--- Updates the duration for a running bar.
+-- @param text the bar text
+-- @param duration the new bar duration
 function boss:SetBarDuration(text, duration)
 	local bars = core:GetPlugin("Bars", true)
 	if bars then
