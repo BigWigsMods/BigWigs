@@ -2139,12 +2139,12 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 	return bar
 end
 
-function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox)
+function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime)
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)
 
 	local bar = self:CreateBar(module, key, text, time, icon, isApprox)
-	bar:Start()
+	bar:Start(maxTime)
 	if db.emphasize and time < db.emphasizeTime then
 		self:EmphasizeBar(bar, true)
 	else

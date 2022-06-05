@@ -2324,7 +2324,8 @@ do
 	-- @number length the bar duration in seconds
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
-	function boss:Bar(key, length, text, icon)
+	-- @param[opt] maxTime the maximum duration of a bar, if it should not start at full time
+	function boss:Bar(key, length, text, icon, maxTime)
 		if not length then
 			if not self.missing then self.missing = {} end
 			if not self.missing[key] then
@@ -2349,7 +2350,7 @@ do
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], false, maxTime)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
