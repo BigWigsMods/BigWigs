@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "frFR")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Toujours afficher les compétences du boss"
+	L.custom_on_stop_timers_desc = "Il se peut que les timers soient décalés selon le déroulement du combnat. Quand cette option est activée, les compétences utilisées par le boss resteront affichées."
 
 	L.tank_combo_desc = "Timer pour les cast de Mâche-faille/Pourfendre à 100 d'energie."
 end
@@ -32,8 +32,8 @@ if L then
 	L.rings_enrage = "Anneaux (Enragé)"
 	L.ring_count = "Anneau (%d/%d)"
 
-	--L.custom_on_ring_timers = "Individual Halo Timers"
-	--L.custom_on_ring_timers_desc = "Disintegration Halo triggers a set of rings, this will show bars for when each of the rings starts moving. Uses settings from Disintegration Halo."
+	L.custom_on_ring_timers = "Décomptes Individuels de Halo de Désintégration"
+	L.custom_on_ring_timers_desc = "Halo de Désintégration va déclencher un combo d'anneaux. Ainsi des barres seront affichées pour chaque anneau qui apparaîtra."
 end
 
 L = BigWigs:NewBossLocale("Prototype Pantheon", "frFR")
@@ -44,14 +44,14 @@ if L then
 	L.wild_stampede = "Ruée"
 	L.withering_seeds = "Graines"
 	L.hand_of_destruction = "Main"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group position as secondary priority.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Pose des marques sur les joueurs en priorisant les corps à corps et ensuite selon la position des joueurs.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "frFR")
 if L then
 	L.protoform_cascade = "Frontal"
 	L.cosmic_shift = "Poussée"
-	--L.cosmic_shift_mythic = "Shift: %s"
+	L.cosmic_shift_mythic = "Poussée (Mythique): %s"
 	L.unstable_mote = "Granules"
 	L.mote = "Granule"
 
@@ -82,80 +82,80 @@ end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "frFR")
 if L then
-	--L.seismic_tremors = "Motes + Tremors"
-	--L.earthbreaker_missiles = "Missiles"
-	--L.crushing_prism = "Prisms"
-	--L.prism = "Prism"
+	L.seismic_tremors = "Secousses Sismiques"
+	L.earthbreaker_missiles = "Missiles"
+	L.crushing_prism = "Prismes écrasants"
+	L.prism = "Prisme"
 	L.ephemeral_fissure = "Fissure"
 
-	-- L.bomb_dropped = "Bomb dropped"
+	L.bomb_dropped = "Bombe posée"
 
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Toujours afficher les compétences du boss"
+	L.custom_on_stop_timers_desc = "Il se peut que les timers soient décalés selon le déroulement du combnat. Quand cette option est activée, les compétences utilisées par le boss resteront affichées."
 end
 
 L = BigWigs:NewBossLocale("Lords of Dread", "frFR")
 if L then
-	--L.unto_darkness = "AoE Phase"
-	--L.cloud_of_carrion = "Carrion"
-	--L.empowered_cloud_of_carrion = "Big Carrion" -- Empowered Cloud of Carrion
-	--L.leeching_claws = "Frontal (M)"
-	--L.infiltration_of_dread = "Among Us"
-	--L.infiltration_removed = "Imposters found in %.1fs" -- "Imposters found in 1.1s" s = seconds
-	--L.fearful_trepidation = "Fears"
-	--L.slumber_cloud = "Clouds"
-	--L.anguishing_strike = "Frontal (K)"
+	L.unto_darkness = "AoE Phase"
+	L.cloud_of_carrion = "Nuée de charognards"
+	L.empowered_cloud_of_carrion = "Aura de charognards" -- Empowered Cloud of Carrion
+	L.leeching_claws = "Frontal (M)"
+	L.infiltration_of_dread = "Among Us"
+	L.infiltration_removed = "Imposteurs trouvés en %.1fs" -- "Imposters found in 1.1s" s = seconds
+	L.fearful_trepidation = "Fears"
+	L.slumber_cloud = "Nuages"
+	L.anguishing_strike = "Frontal (K)"
 
-	--L.custom_on_repeating_biting_wound = "Repeating Biting Wound"
-	--L.custom_on_repeating_biting_wound_desc = "Repeating Biting Wound say messages with icons {rt7} to make it more visible."
+	L.custom_on_repeating_biting_wound = "Répéter Morsures Béantes
+	L.custom_on_repeating_biting_wound_desc = "Cocher cette option permet d'avoir plus de visibilité si l'on est affecté par le débuff morsures béantes en affichant une {rt7} au dessus de votre tête."
 end
 
 L = BigWigs:NewBossLocale("Rygelon", "frFR")
 if L then
-	--L.celestial_collapse = "Quasars"
-	--L.manifest_cosmos = "Cores"
-	--L.stellar_shroud = "Heal Absorb"
-	--L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
+	L.celestial_collapse = "Quasars"
+	L.manifest_cosmos = "Cores"
+	L.stellar_shroud = "Absorption de soins"
+	L.knock = "Knock" -- Countdown knockbacking other players nearby. Knock 3, Knock 2, Knock 1
 end
 
 L = BigWigs:NewBossLocale("The Jailer", "frFR")
 if L then
-	--L.rune_of_damnation_countdown = "Countdown"
-	--L.rune_of_damnation_countdown_desc = "Countdown for the players who are affected by Rune of Damnation"
-	--L.jump = "Jump In"
+	L.rune_of_damnation_countdown = "Décompte"
+	L.rune_of_damnation_countdown_desc = "Décompte pour les joueurs affectés par la Rune de damnation "
+	L.jump = "Sautes"
 
-	--L.relentless_domination = "Domination"
-	--L.chains_of_oppression = "Pull Chains"
-	--L.unholy_attunement = "Pylons"
-	--L.shattering_blast = "Tank Blast"
-	--L.rune_of_compulsion = "Charms"
-	--L.desolation = "Azeroth Soak"
-	--L.chains_of_anguish = "Spread Chains"
-	--L.chain = "Chain"
-	--L.chain_target = "Chaining %s!"
-	--L.chains_remaining = "%d/%d Chains Broken"
-	--L.rune_of_domination = "Group Soaks"
+	L.relentless_domination = "Domination"
+	L.chains_of_oppression = "Pull Chains"
+	L.unholy_attunement = "Pylones"
+	L.shattering_blast = "Tank Blast"
+	L.rune_of_compulsion = "Charme"
+	L.desolation = "Azeroth Soak"
+	L.chains_of_anguish = "Spread Chaînes"
+	L.chain = "Chaîne"
+	L.chain_target = "Enchaîné (Stacks) %s!"
+	L.chains_remaining = "%d/%d Chaînes Cassées"
+	L.rune_of_domination = "Groupes Soaks"
 
-	--L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
+	L.final = "Final %s" -- Final Unholy Attunement/Domination (last spell of a stage)
 
-	-- L.azeroth_health = "Azeroth Health"
-	-- L.azeroth_health_desc = "Azeroth Health Warnings"
+	L.azeroth_health = "Vie d'Azeroth"
+	L.azeroth_health_desc = "Avertissement vie d'Azeroth"
 
-	-- L.azeroth_new_health_plus = "Azeroth Health: +%.1f%% (%d)"
-	-- L.azeroth_new_health_minus = "Azeroth Health: -%.1f%%  (%d)"
+	L.azeroth_new_health_plus = "Vie d'Azeroth: +%.1f%% (%d)"
+	L.azeroth_new_health_minus = "Vie d'Azeroth: -%.1f%%  (%d)"
 
-	-- L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
-	-- L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
-	-- L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
-	-- L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
-	-- L.mythic_blood_soak_bar = "Heal Azeroth"
+	L.mythic_blood_soak_stage_1 = "Stage 1 Blood Soak timings"
+	L.mythic_blood_soak_stage_1_desc = "Show a bar for timings when healing azeroth is at a good time, used by Echo on their first kill"
+	L.mythic_blood_soak_stage_2 = "Stage 2 Blood Soak timings"
+	L.mythic_blood_soak_stage_2_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_stage_3 = "Stage 3 Blood Soak timings"
+	L.mythic_blood_soak_stage_3_desc = L.mythic_blood_soak_stage_1_desc
+	L.mythic_blood_soak_bar = "Soigner Azeroth"
 
-	-- L.floors_open = "Floors Open"
-	-- L.floors_open_desc = "Time until the floors opens up and you can fall into opened holes."
+	L.floors_open = "Sol Ouvert"
+	L.floors_open_desc = "Affiche le temps restant avant que le sol s'ouvre afin de vous avertir."
 
-	-- L.mythic_dispel_stage_4 = "Dispel Timers"
-	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
-	-- L.mythic_dispel_bar = "Dispels"
+	L.mythic_dispel_stage_4 = "Dispel Timers"
+	L.mythic_dispel_stage_4_desc = "Affiche les timers pour dispell pendant la dernière phase. Utilisé par Echo"
+	L.mythic_dispel_bar = "Dispels"
 end
