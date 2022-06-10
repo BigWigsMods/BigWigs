@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "奔竄"
 	L.withering_seeds = "種子"
 	L.hand_of_destruction = "群拉" -- 毀滅之手群拉
-	L.nighthunter_marks_additional_desc = "|cFFFF0000優先標記近戰，多個近戰則按團隊順序標記。|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000優先標記近戰，多個近戰則按團隊順序排列。|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhTW")
