@@ -82,7 +82,7 @@ end
 
 L = BigWigs:NewBossLocale("Halondrus the Reclaimer", "frFR")
 if L then
-	L.seismic_tremors = "Secousses Sismiques"
+	L.seismic_tremors = "Fissures + Secousses Sismiques"
 	L.earthbreaker_missiles = "Missiles"
 	L.crushing_prism = "Prismes écrasants"
 	L.prism = "Prisme"
@@ -106,7 +106,7 @@ if L then
 	L.slumber_cloud = "Nuages"
 	L.anguishing_strike = "Frontal (K)"
 
-	L.custom_on_repeating_biting_wound = "Répéter Morsures Béantes
+	L.custom_on_repeating_biting_wound = "Répéter Morsures Béantes"
 	L.custom_on_repeating_biting_wound_desc = "Cocher cette option permet d'avoir plus de visibilité si l'on est affecté par le débuff morsures béantes en affichant une {rt7} au dessus de votre tête."
 end
 
