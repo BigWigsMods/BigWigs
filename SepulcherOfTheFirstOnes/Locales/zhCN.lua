@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "兽群"
 	L.withering_seeds = "种子"
 	L.hand_of_destruction = "群拉"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group position as secondary priority.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000优先标记近战，多个近战则按团队顺序排序。|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhCN")
