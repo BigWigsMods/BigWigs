@@ -1,4 +1,4 @@
-local L = BigWigs:NewBossLocale("Le Naphtrémens", "frFR")
+local L = BigWigs:NewBossLocale("The Tarragrue", "frFR")
 if not L then return end
 if L then
 	L.chains = "Chaînes" -- Chains of Eternity (Chains)
@@ -12,7 +12,7 @@ if L then
 	L.physical = "Physique"
 end
 
-L = BigWigs:NewBossLocale("L'œil du Geôlier", "frFR") -- Maybie a Problem of location with the "œ" if problem set it to "oe"
+L = BigWigs:NewBossLocale("The Eye of the Jailer", "frFR")
 if L then
 	L.chains = "Chaînes" -- Short for Dragging Chains
 	L.pool = "Pool" -- Spreading Misery
@@ -20,7 +20,7 @@ if L then
 	L.death_gaze = "Rayon" -- Short for Titanic Death Gaze
 end
 
-L = BigWigs:NewBossLocale("Les Neuf", "frFR")
+L = BigWigs:NewBossLocale("The Nine", "frFR")
 if L then
 	L.fragments = "Fragments" -- Short for Fragments of Destiny
 	L.fragment = "Fragment" -- Singular Fragment of Destiny
@@ -46,14 +46,14 @@ if L then
 	L.image_special = "%s [Skyja]" -- Stage 2 boss name
 end
 
-L = BigWigs:NewBossLocale("Vestige de Ner'zhul", "frFR")
+L = BigWigs:NewBossLocale("Remnant of Ner'zhul", "frFR")
 if L then
 	L.cones = "Cônes" -- Grasp of Malice
 	L.orbs = "Orbes" -- Orb of Torment
 	L.orb = "Orbe" -- Orb of Torment
 end
 
-L = BigWigs:NewBossLocale("Étripeur d'âme Dormazain", "frFR")
+L = BigWigs:NewBossLocale("Soulrender Dormazain", "frFR")
 if L then
 	L.custom_off_nameplate_defiance = "Icône de Résistance"
 	L.custom_off_nameplate_defiance_desc = "Affiche une icône au dessus du Suzerain antrelige si il est affecté par Résistance.\n\nNécessite un addon de Nameplates (KuiNameplates, Plater)."
@@ -87,7 +87,7 @@ if L then
 	L.spikes = "Spiked Death" -- Soft enrage spikes
 end
 
-L = BigWigs:NewBossLocale("Gardien des Fondateurs", "frFR")
+L = BigWigs:NewBossLocale("Guardian of the First Ones", "frFR")
 if L then
 	L.custom_on_stop_timers = "Toujours afficher les barres de compétence"
 	L.custom_on_stop_timers_desc = "Il se peut que les timers soient décalés selon le déroulement du combnat. Quand cette option est activée, les compétences utilisées par le boss resteront affichées."
@@ -95,7 +95,7 @@ if L then
 	L.bomb_missed = "%dx Bombes Râtées"
 end
 
-L = BigWigs:NewBossLocale("Scribe du destin Roh-Kalo", "frFR")
+L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "frFR")
 if L then
 	L.rings = "Anneaux"
 	L.rings_active = "Anneaux Actifs" -- for when they activate/are movable
@@ -116,7 +116,7 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "Affiche une icône au dessus du Fidèle givre-lié si vous êtes sa cible.\n\nNécessite un addon de Nameplates (KuiNameplates, Plater)."
 end
 
-L = BigWigs:NewBossLocale("Sylvanas Coursevent", "frFR")
+L = BigWigs:NewBossLocale("Sylvanas Windrunner", "frFR")
 if L then
 	L.chains_active = "Chaînes Actives"
 	L.chains_active_desc = "Affiche une barre quand les chaînes de domination sont activées"
