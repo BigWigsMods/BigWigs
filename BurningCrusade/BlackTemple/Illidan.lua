@@ -296,7 +296,7 @@ end
 
 function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg == L.warmup_trigger then
-		self:Bar("warmup", 41.5, CL.active, "inv_weapon_glave_01")
+		self:Bar("warmup", 36, CL.active, "inv_weapon_glave_01")
 	end
 end
 
