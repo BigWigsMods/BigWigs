@@ -282,7 +282,7 @@ function mod:UNIT_AURA(_, unit)
 			self:StopBar(41126) -- Flame Burst
 		end
 
-		if self:UnitDebuff(unit, self:SpellName(40695)) then -- Caged
+		if self:UnitDebuff(unit, self:SpellName(40695), 40695) then -- Caged
 			if not isCaged then
 				isCaged = true
 				self:MessageOld(40695, "green", "warning")
