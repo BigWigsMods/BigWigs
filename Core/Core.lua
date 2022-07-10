@@ -33,6 +33,7 @@ local coreEnabled = false
 local GetBestMapForUnit = loader.GetBestMapForUnit
 local SendAddonMessage = loader.SendAddonMessage
 local GetInstanceInfo = loader.GetInstanceInfo
+local GetAffixInfo = loader.GetAffixInfo
 local UnitName = BigWigsLoader.UnitName
 local UnitGUID = BigWigsLoader.UnitGUID
 
@@ -483,6 +484,38 @@ do
 			else
 				m.mapId = -zoneId
 			end
+			return m, CL
+		end
+	end
+
+	function core:NewAffix(moduleName, affixId, zoneIds)
+		if bosses[moduleName] then
+			core:Print(errorAlreadyRegistered:format(moduleName))
+		else
+			local m = setmetatable({
+				name = "BigWigs_Bosses_"..moduleName, -- XXX AceAddon/AceDB backwards compat
+				moduleName = moduleName,
+
+				-- Embed callback handler
+				RegisterMessage = loader.RegisterMessage,
+				UnregisterMessage = loader.UnregisterMessage,
+				SendMessage = loader.SendMessage,
+
+				-- Embed event handler
+				RegisterEvent = core.RegisterEvent,
+				UnregisterEvent = core.UnregisterEvent,
+			}, bossMeta)
+			bosses[moduleName] = m
+			initModules[#initModules+1] = m
+			m.displayName = select(1, GetAffixInfo(affixId))
+			m.affixId = affixId
+			-- TODO localization, this needs to match the ExtraMenu name which is defined in toc, probably need some bigwigs core adjustments to localize it?
+			m.otherMenu = "Affixes"
+
+			if type(zoneIds) == 'table' or zoneIds > 0 then
+				m.instanceId = zoneIds
+			end
+
 			return m, CL
 		end
 	end
