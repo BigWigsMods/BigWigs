@@ -355,7 +355,7 @@ L.oldSounds = "Alte Sounds"
 
 L.Alarm = "Alarm"
 L.Info = "Info"
-L.Alert = "Warnung"
+L.Alert = "Alarmruf"
 L.Long = "Lang"
 L.Warning = "Warnung"
 L.onyou = "Ein Zauber, Stärkungs- oder Schwächungszauber ist auf Dir"
