@@ -101,7 +101,7 @@ local timersMythic = {
 		[360562] = {57.0, 42.5, 33.5, 41.0}, -- Decimator
 		[360373] = {19.0, 45.0, 45.0, 45.0, 42.0}, -- Unholy Attunement
 		[359856] = {35.0, 14.0, 30.0, 15.0, 26.0, 22.0, 26.0, 14.0}, -- Shattering Blast
-		[366285] = {27.0, 50, 50.0, 61.0}, -- Rune of Compulsion
+		[366285] = {27.0, 50, 50.0}, -- Rune of Compulsion
 		-- Heals are in mythicSpecialTimers
 	},
 	[3] = {
