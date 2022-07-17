@@ -182,7 +182,7 @@ do
 	local playerList = {}
 	function mod:Reconstruction(args)
 		local t = args.time
-		if t-prev > 2 then
+		if t-prev > 10 then
 			prev = t
 
 			self:StopBar(365269)

@@ -237,7 +237,7 @@ do
 
 	function mod:KingsmourneHungersSuccess(args)
 		if not timer and self:GetOption(anduinsHopeMarker) then
-			timer = self:ScheduleTimer(0.3, "HopeMarker") -- not valid on IEEU
+			timer = self:ScheduleTimer("HopeMarker", 0.3) -- not valid on IEEU
 		end
 	end
 end
