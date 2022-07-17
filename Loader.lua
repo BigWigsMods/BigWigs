@@ -219,6 +219,7 @@ do
 		[2296] = s, -- Castle Nathria
 		[2450] = s, -- Sanctum of Domination
 		[2481] = s, -- Sepulcher of the First Ones
+		["Raid Affixes"] = s, -- Raid Affixes
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -327,7 +328,7 @@ do
 		[2291] = lw_s, -- De Other Side
 		[2293] = lw_s, -- Theater of Pain
 		[2441] = lw_s, -- Tazavesh, the Veiled Market
-		["Affixes"] = lw_s, -- Affixes
+		["Dungeon Affixes"] = lw_s, -- Dungeon Affixes
 	}
 
 	public.zoneTblWorld = {

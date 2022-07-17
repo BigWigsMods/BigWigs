@@ -450,19 +450,7 @@ do
 		if bosses[moduleName] then
 			core:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = setmetatable({
-				name = "BigWigs_Bosses_"..moduleName, -- XXX AceAddon/AceDB backwards compat
-				moduleName = moduleName,
-
-				-- Embed callback handler
-				RegisterMessage = loader.RegisterMessage,
-				UnregisterMessage = loader.UnregisterMessage,
-				SendMessage = loader.SendMessage,
-
-				-- Embed event handler
-				RegisterEvent = core.RegisterEvent,
-				UnregisterEvent = core.UnregisterEvent,
-			}, bossMeta)
+			local m = createModule("BigWigs_Bosses_"..moduleName, moduleName, bossMeta) -- XXX AceAddon/AceDB backwards compat
 			bosses[moduleName] = m
 			initModules[#initModules+1] = m
 
@@ -488,29 +476,40 @@ do
 		end
 	end
 
-	function core:NewAffix(moduleName, affixId, zoneIds)
+	function core:NewDungeonAffix(moduleName, affixId, zoneIds)
 		if bosses[moduleName] then
 			core:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = setmetatable({
-				name = "BigWigs_Bosses_"..moduleName, -- XXX AceAddon/AceDB backwards compat
-				moduleName = moduleName,
-
-				-- Embed callback handler
-				RegisterMessage = loader.RegisterMessage,
-				UnregisterMessage = loader.UnregisterMessage,
-				SendMessage = loader.SendMessage,
-
-				-- Embed event handler
-				RegisterEvent = core.RegisterEvent,
-				UnregisterEvent = core.UnregisterEvent,
-			}, bossMeta)
+			local m = createModule("BigWigs_Bosses_"..moduleName, moduleName, bossMeta) -- XXX AceAddon/AceDB backwards compat
 			bosses[moduleName] = m
 			initModules[#initModules+1] = m
-			m.displayName = select(1, GetAffixInfo(affixId))
-			m.affixId = affixId
+			if affixId then
+				m.displayName = select(1, GetAffixInfo(affixId))
+				m.affixId = affixId
+			else
+				m.displayName = moduleName
+			end
 			-- TODO localization, this needs to match the ExtraMenu name which is defined in toc, probably need some bigwigs core adjustments to localize it?
-			m.otherMenu = "Affixes"
+			m.otherMenu = "Dungeon Affixes"
+
+			if type(zoneIds) == 'table' or zoneIds > 0 then
+				m.instanceId = zoneIds
+			end
+
+			return m, CL
+		end
+	end
+
+	function core:NewModifiedInstance(moduleName, zoneIds)
+		if bosses[moduleName] then
+			core:Print(errorAlreadyRegistered:format(moduleName))
+		else
+			local m = createModule("BigWigs_Bosses_"..moduleName, moduleName, bossMeta) -- XXX AceAddon/AceDB backwards compat
+			bosses[moduleName] = m
+			initModules[#initModules+1] = m
+			m.displayName = moduleName
+			-- TODO localization, this needs to match the ExtraMenu name which is defined in toc, probably need some bigwigs core adjustments to localize it?
+			m.otherMenu = "Raid Affixes"
 
 			if type(zoneIds) == 'table' or zoneIds > 0 then
 				m.instanceId = zoneIds
@@ -525,25 +524,29 @@ do
 		if plugins[moduleName] then
 			core:Print(errorAlreadyRegistered:format(moduleName))
 		else
-			local m = setmetatable({
-				name = "BigWigs_Plugins_"..moduleName, -- XXX AceAddon/AceDB backwards compat
-				moduleName = moduleName,
-
-				-- Embed callback handler
-				RegisterMessage = loader.RegisterMessage,
-				UnregisterMessage = loader.UnregisterMessage,
-				SendMessage = loader.SendMessage,
-
-				-- Embed event handler
-				RegisterEvent = core.RegisterEvent,
-				UnregisterEvent = core.UnregisterEvent,
-			}, pluginMeta)
+			local m = createModule("BigWigs_Plugins_"..moduleName, moduleName, pluginMeta) -- XXX AceAddon/AceDB backwards compat
 			plugins[moduleName] = m
 			initModules[#initModules+1] = m
 
 			return m, CL
 		end
 	end
+
+	function createModule(name, moduleName, metatable) {
+		return setmetatable({
+			name = name,
+			moduleName = moduleName,
+
+			-- Embed callback handler
+			RegisterMessage = loader.RegisterMessage,
+			UnregisterMessage = loader.UnregisterMessage,
+			SendMessage = loader.SendMessage,
+
+			-- Embed event handler
+			RegisterEvent = core.RegisterEvent,
+			UnregisterEvent = core.UnregisterEvent,
+		}, metatable)
+	}
 end
 
 function core:IterateBossModules()
