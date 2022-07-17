@@ -489,8 +489,7 @@ do
 			else
 				m.displayName = moduleName
 			end
-			-- TODO localization, this needs to match the ExtraMenu name which is defined in toc, probably need some bigwigs core adjustments to localize it?
-			m.otherMenu = "Dungeon Affixes"
+			m.otherMenu = "dungeonAffixes"
 
 			if type(zoneIds) == 'table' or zoneIds > 0 then
 				m.instanceId = zoneIds
@@ -508,8 +507,7 @@ do
 			bosses[moduleName] = m
 			initModules[#initModules+1] = m
 			m.displayName = moduleName
-			-- TODO localization, this needs to match the ExtraMenu name which is defined in toc, probably need some bigwigs core adjustments to localize it?
-			m.otherMenu = "Raid Affixes"
+			m.otherMenu = "raidAffixes"
 
 			if type(zoneIds) == 'table' or zoneIds > 0 then
 				m.instanceId = zoneIds
