@@ -155,3 +155,7 @@ L.mythic = "신화"
 L.wipes = "전멸:"
 L.kills = "처치:"
 L.best = "최고 기록:"
+
+-- Non-instance specific modules
+L.raidAffixes = "Raid Affixes"
+L.dungeonAffixes = "Dungeon Affixes"

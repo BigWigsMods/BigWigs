@@ -155,3 +155,7 @@ L.mythic = "Mítico"
 L.wipes = "Derrotas:"
 L.kills = "Mortes:"
 L.best = "Melhor:"
+
+-- Non-instance specific modules
+L.raidAffixes = "Raid Affixes"
+L.dungeonAffixes = "Dungeon Affixes"
