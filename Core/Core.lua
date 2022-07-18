@@ -127,21 +127,21 @@ local function enableBossModule(module, sync)
 	end
 end
 
-local function shouldReallyEnable(unit, moduleName, mobId, sync)
+local function shouldReallyEnable(unit, moduleName, seenId, sync)
 	local module = bosses[moduleName]
 	if not module or module.enabled then return end
-	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId, GetBestMapForUnit("player"))) then
+	if (not module.VerifyEnable or module:VerifyEnable(unit, seenId, GetBestMapForUnit("player"))) then
 		enableBossModule(module, sync)
 	end
 end
 
-local function targetSeen(unit, targetModule, mobId, sync)
+local function targetSeen(unit, targetModule, seenId, sync)
 	if type(targetModule) == "string" then
-		shouldReallyEnable(unit, targetModule, mobId, sync)
+		shouldReallyEnable(unit, targetModule, seenId, sync)
 	else
 		for i = 1, #targetModule do
 			local module = targetModule[i]
-			shouldReallyEnable(unit, module, mobId, sync)
+			shouldReallyEnable(unit, module, seenId, sync)
 		end
 	end
 end
@@ -155,9 +155,9 @@ local function affixCheck(sync)
 	local affixes = IsChallengeModeActive() and select(2, GetActiveKeystoneInfo())
 	if affixes then
 		for i = 1, #affixes do
-			local id = affixes[i]
-			if id and enableAffixes[id] then
-				targetSeen(nil, enableAffixes[id], id, sync)
+			local affixId = affixes[i]
+			if affixId and enableAffixes[affixId] then
+				targetSeen(nil, enableAffixes[affixId], affixId, sync)
 			end
 		end
 	end
@@ -243,6 +243,7 @@ local function updateMouseover()
 	affixCheck(true)
 	modifiedZoneCheck(true)
 end
+
 local function unitTargetChanged(event, target)
 	targetCheck(target .. "target")
 end
