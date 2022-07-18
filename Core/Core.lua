@@ -111,11 +111,44 @@ function mod:ENCOUNTER_START(_, id)
 end
 
 -------------------------------------------------------------------------------
+-- Module Enablement
+--
+
+local enablezones, enablemobs = {}, {}
+local function enableBossModule(module, sync)
+	if not module.enabled then
+		module:Enable()
+		if sync and not module.worldBoss then
+			module:Sync("Enable", module.moduleName)
+		end
+	end
+end
+
+local function shouldReallyEnable(unit, moduleName, mobId, sync)
+	local module = bosses[moduleName]
+	if not module or module.enabled then return end
+	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId, GetBestMapForUnit("player"))) then
+		enableBossModule(module, sync)
+	end
+end
+
+local function targetSeen(unit, targetModule, mobId, sync)
+	if type(targetModule) == "string" then
+		shouldReallyEnable(unit, targetModule, mobId, sync)
+	else
+		for i = 1, #targetModule do
+			local module = targetModule[i]
+			shouldReallyEnable(unit, module, mobId, sync)
+		end
+	end
+end
+
+-------------------------------------------------------------------------------
 -- Dungeon affix detection
 --
 
 local enableAffixes = {}
-function mod:affixCheck(sync)
+local function affixCheck(sync)
 	local affixes = C_ChallengeMode.IsChallengeModeActive() and select(2, C_ChallengeMode.GetActiveKeystoneInfo())
 	if affixes then
 		for i = 1, #affixes do
@@ -151,35 +184,6 @@ end
 -------------------------------------------------------------------------------
 -- Target monitoring
 --
-
-local enablezones, enablemobs = {}, {}
-local function enableBossModule(module, sync)
-	if not module.enabled then
-		module:Enable()
-		if sync and not module.worldBoss then
-			module:Sync("Enable", module.moduleName)
-		end
-	end
-end
-
-local function shouldReallyEnable(unit, moduleName, mobId, sync)
-	local module = bosses[moduleName]
-	if not module or module.enabled then return end
-	if (not module.VerifyEnable or module:VerifyEnable(unit, mobId, GetBestMapForUnit("player"))) then
-		enableBossModule(module, sync)
-	end
-end
-
-local function targetSeen(unit, targetModule, mobId, sync)
-	if type(targetModule) == "string" then
-		shouldReallyEnable(unit, targetModule, mobId, sync)
-	else
-		for i = 1, #targetModule do
-			local module = targetModule[i]
-			shouldReallyEnable(unit, module, mobId, sync)
-		end
-	end
-end
 
 local function targetCheck(unit, sync)
 	local name = UnitName(unit)
@@ -537,7 +541,7 @@ do
 				m.instanceId = zoneIds
 			end
 
-			core:RegisterEnableAffix(moduleName, affixId)
+			core:RegisterEnableAffix(m, affixId)
 
 			return m, CL
 		end
