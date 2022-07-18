@@ -86,7 +86,8 @@ end
 local tooltipFunctions = {}
 local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
-local GetInstanceInfo, GetBestMapForUnit, GetMapInfo, GetAffixInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo, C_ChallengeMode.GetAffixInfo
+local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
+local GetAffixInfo, IsChallengeModeActive, GetActiveKeystoneInfo = C_ChallengeMode.GetAffixInfo, C_ChallengeMode.IsChallengeModeActive, C_ChallengeMode.GetActiveKeystoneInfo
 local UnitName, UnitGUID = UnitName, UnitGUID
 local debugstack, print = debugstack, print
 

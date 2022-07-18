@@ -34,6 +34,8 @@ local GetBestMapForUnit = loader.GetBestMapForUnit
 local SendAddonMessage = loader.SendAddonMessage
 local GetInstanceInfo = loader.GetInstanceInfo
 local GetAffixInfo = loader.GetAffixInfo
+local IsChallengeModeActive = loader.IsChallengeModeActive
+local GetActiveKeystoneInfo = loader.GetActiveKeystoneInfo
 local UnitName = BigWigsLoader.UnitName
 local UnitGUID = BigWigsLoader.UnitGUID
 
@@ -149,7 +151,7 @@ end
 
 local enableAffixes = {}
 local function affixCheck(sync)
-	local affixes = C_ChallengeMode.IsChallengeModeActive() and select(2, C_ChallengeMode.GetActiveKeystoneInfo())
+	local affixes = IsChallengeModeActive() and select(2, GetActiveKeystoneInfo())
 	if affixes then
 		for i = 1, #affixes do
 			local id = affixes[i]
@@ -202,7 +204,6 @@ end
 
 local function updateMouseover()
 	targetCheck("mouseover", true)
-	-- TODO better to put this elsewhere?
 	affixCheck(true)
 end
 local function unitTargetChanged(event, target)
