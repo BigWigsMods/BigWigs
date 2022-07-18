@@ -189,6 +189,12 @@ function boss:IsEnableMob(mobId)
 	return self.enableMobs[mobId]
 end
 
+--- Register the module to enable on dungeon affix.
+-- @number ... Any number of dungeon affixes
+function boss:RegisterEnableAffix(...)
+	core:RegisterEnableAffix(self, ...)
+end
+
 --- Set the encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
 -- @number encounterId The encounter id

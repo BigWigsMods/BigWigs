@@ -111,6 +111,44 @@ function mod:ENCOUNTER_START(_, id)
 end
 
 -------------------------------------------------------------------------------
+-- Dungeon affix detection
+--
+
+local enableAffixes = {}
+function mod:affixCheck(sync)
+	local affixes = C_ChallengeMode.IsChallengeModeActive() and select(2, C_ChallengeMode.GetActiveKeystoneInfo())
+	if affixes then
+		for i = 1, #affixes do
+			local id = affixes[i]
+			if id and enableAffixes[id] then
+				targetSeen(nil, enableAffixes[id], id, sync)
+			end
+		end
+	end
+end
+
+function core:RegisterEnableAffix(module, ...)
+	for i = 1, select("#", ...) do
+		local affixId = select(i, ...)
+		if type(affixId) ~= "number" or affixId < 1 then
+			core:Error(("Module %q tried to register the affixId %q, but it wasn't a valid number."):format(module.moduleName, tostring(affixId)))
+		else
+			local entryType = type(enableAffixes[affixId])
+			if entryType == "nil" then
+				enableAffixes[affixId] = module.moduleName
+			elseif entryType == "table" then
+				enableAffixes[affixId][#enableAffixes[affixId] + 1] = module.moduleName
+			elseif entryType == "string" then -- Converting from 1 module registered to this affixId, to multiple modules
+				local previousModuleEntry = enableAffixes[affixId]
+				enableAffixes[affixId] = { previousModuleEntry, module.moduleName }
+			else
+				core:Error(("Unknown type in a enable trigger table at index %d for %q."):format(i, module.moduleName))
+			end
+		end
+	end
+end
+
+-------------------------------------------------------------------------------
 -- Target monitoring
 --
 
@@ -158,7 +196,11 @@ local function targetCheck(unit, sync)
 	end
 end
 
-local function updateMouseover() targetCheck("mouseover", true) end
+local function updateMouseover()
+	targetCheck("mouseover", true)
+	-- TODO better to put this elsewhere?
+	affixCheck(true)
+end
 local function unitTargetChanged(event, target)
 	targetCheck(target .. "target")
 end
@@ -495,6 +537,8 @@ do
 				m.instanceId = zoneIds
 			end
 
+			core:RegisterEnableAffix(moduleName, affixId)
+
 			return m, CL
 		end
 	end
@@ -530,7 +574,7 @@ do
 		end
 	end
 
-	function createModule(name, moduleName, metatable) {
+	function createModule(name, moduleName, metatable)
 		return setmetatable({
 			name = name,
 			moduleName = moduleName,
@@ -544,7 +588,7 @@ do
 			RegisterEvent = core.RegisterEvent,
 			UnregisterEvent = core.UnregisterEvent,
 		}, metatable)
-	}
+	end
 end
 
 function core:IterateBossModules()
