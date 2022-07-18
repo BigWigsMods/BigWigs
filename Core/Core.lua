@@ -183,6 +183,41 @@ function core:RegisterEnableAffix(module, ...)
 	end
 end
 
+-------
+-- Modified Instance Detection
+--
+
+local enableModifiedZones = {}
+local function modifiedZoneCheck(sync)
+	local mapId = GetBestMapForUnit("player")
+	if enableModifiedZones[mapId] then
+		if C_ModifiedInstance.GetModifiedInstanceInfoFromMapID(mapId) then
+			targetSeen(nil, enableModifiedZones[mapId], mapId, sync)
+		end
+	end
+end
+
+function core:RegisterModifiedInstance(module, ...)
+	for i = 1, select("#", ...) do
+		local zoneId = select(i, ...)
+		if type(zoneId) ~= "number" or zoneId < 1 then
+			core:Error(("Module %q tried to register the zoneId %q, but it wasn't a valid number."):format(module.moduleName, tostring(zoneId)))
+		else
+			local entryType = type(enableModifiedZones[zoneId])
+			if entryType == "nil" then
+				enableModifiedZones[zoneId] = module.moduleName
+			elseif entryType == "table" then
+				enableModifiedZones[zoneId][#enableModifiedZones[zoneId] + 1] = module.moduleName
+			elseif entryType == "string" then -- Converting from 1 module registered to this zoneId, to multiple modules
+				local previousModuleEntry = enableModifiedZones[zoneId]
+				enableModifiedZones[zoneId] = { previousModuleEntry, module.moduleName }
+			else
+				core:Error(("Unknown type in a enable trigger table at index %d for %q."):format(i, module.moduleName))
+			end
+		end
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Target monitoring
 --
@@ -205,6 +240,7 @@ end
 local function updateMouseover()
 	targetCheck("mouseover", true)
 	affixCheck(true)
+	modifiedZoneCheck(true)
 end
 local function unitTargetChanged(event, target)
 	targetCheck(target .. "target")
@@ -557,8 +593,14 @@ do
 			m.displayName = moduleName
 			m.otherMenu = "raidAffixes"
 
-			if type(zoneIds) == 'table' or zoneIds > 0 then
+			if type(zoneIds) == 'table' then
 				m.instanceId = zoneIds
+				for i = 1, #zoneIds do
+					core:RegisterModifiedInstance(m, zoneIds[i])
+				end
+			elseif zoneIds > 0 then
+				m.instanceId = zoneIds
+				core:RegisterModifiedInstance(m, zoneIds)
 			end
 
 			return m, CL
