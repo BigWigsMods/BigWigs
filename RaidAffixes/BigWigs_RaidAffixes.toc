@@ -28,6 +28,7 @@
 ## Dependencies: BigWigs
 
 ## X-Category: Raid
+## X-BigWigs-ExtraMenu: raidAffixes
 ## X-BigWigs-LoadOn-InstanceId: 2296, 2450, 2481
 
 modules.xml
