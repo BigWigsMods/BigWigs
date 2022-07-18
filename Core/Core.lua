@@ -533,6 +533,7 @@ do
 			if affixId then
 				m.displayName = select(1, GetAffixInfo(affixId))
 				m.affixId = affixId
+				core:RegisterEnableAffix(m, affixId)
 			else
 				m.displayName = moduleName
 			end
@@ -541,8 +542,6 @@ do
 			if type(zoneIds) == 'table' or zoneIds > 0 then
 				m.instanceId = zoneIds
 			end
-
-			core:RegisterEnableAffix(m, affixId)
 
 			return m, CL
 		end
