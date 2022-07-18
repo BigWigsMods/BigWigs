@@ -129,6 +129,8 @@ globals = {
 	"CheckInteractDistance",
 	"CinematicFrame_CancelCinematic",
 	"C_Map",
+	"C_ModifiedInstance",
+	"C_ChallengeMode",
 	"CombatLogGetCurrentEventInfo",
 	"CombatLog_String_GetIcon",
 	"CreateFrame",

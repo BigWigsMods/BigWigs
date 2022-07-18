@@ -530,6 +530,23 @@ do
 	local EJ_GetEncounterInfo = EJ_GetEncounterInfo
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
 	local errorJournalIdInvalid = "%q is using the invalid journal id of %q."
+
+	local function createModule(name, moduleName, metatable)
+		return setmetatable({
+			name = name,
+			moduleName = moduleName,
+
+			-- Embed callback handler
+			RegisterMessage = loader.RegisterMessage,
+			UnregisterMessage = loader.UnregisterMessage,
+			SendMessage = loader.SendMessage,
+
+			-- Embed event handler
+			RegisterEvent = core.RegisterEvent,
+			UnregisterEvent = core.UnregisterEvent,
+		}, metatable)
+	end
+
 	local bossMeta = { __index = bossPrototype, __metatable = false }
 	function core:NewBoss(moduleName, zoneId, journalId, instanceId)
 		if bosses[moduleName] then
@@ -620,22 +637,6 @@ do
 
 			return m, CL
 		end
-	end
-
-	function createModule(name, moduleName, metatable)
-		return setmetatable({
-			name = name,
-			moduleName = moduleName,
-
-			-- Embed callback handler
-			RegisterMessage = loader.RegisterMessage,
-			UnregisterMessage = loader.UnregisterMessage,
-			SendMessage = loader.SendMessage,
-
-			-- Embed event handler
-			RegisterEvent = core.RegisterEvent,
-			UnregisterEvent = core.UnregisterEvent,
-		}, metatable)
 	end
 end
 
