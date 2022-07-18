@@ -36,6 +36,7 @@ local GetInstanceInfo = loader.GetInstanceInfo
 local GetAffixInfo = loader.GetAffixInfo
 local IsChallengeModeActive = loader.IsChallengeModeActive
 local GetActiveKeystoneInfo = loader.GetActiveKeystoneInfo
+local GetModifiedInstanceInfoFromMapID = loader.GetModifiedInstanceInfoFromMapID
 local UnitName = BigWigsLoader.UnitName
 local UnitGUID = BigWigsLoader.UnitGUID
 
@@ -191,7 +192,7 @@ local enableModifiedZones = {}
 local function modifiedZoneCheck(sync)
 	local mapId = GetBestMapForUnit("player")
 	if enableModifiedZones[mapId] then
-		if C_ModifiedInstance.GetModifiedInstanceInfoFromMapID(mapId) then
+		if GetModifiedInstanceInfoFromMapID(mapId) then
 			targetSeen(nil, enableModifiedZones[mapId], mapId, sync)
 		end
 	end

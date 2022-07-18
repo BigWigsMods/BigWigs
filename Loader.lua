@@ -86,7 +86,7 @@ end
 local tooltipFunctions = {}
 local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
-local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
+local GetInstanceInfo, GetBestMapForUnit, GetMapInfo, GetModifiedInstanceInfoFromMapID = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo, C_ModifiedInstance.GetModifiedInstanceInfoFromMapID
 local GetAffixInfo, IsChallengeModeActive, GetActiveKeystoneInfo = C_ChallengeMode.GetAffixInfo, C_ChallengeMode.IsChallengeModeActive, C_ChallengeMode.GetActiveKeystoneInfo
 local UnitName, UnitGUID = UnitName, UnitGUID
 local debugstack, print = debugstack, print
@@ -94,6 +94,7 @@ local debugstack, print = debugstack, print
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetMapInfo = GetMapInfo
+public.GetModifiedInstanceInfoFromMapID = GetModifiedInstanceInfoFromMapID
 public.GetAffixInfo = GetAffixInfo
 public.IsChallengeModeActive = IsChallengeModeActive
 public.GetActiveKeystoneInfo = GetActiveKeystoneInfo
