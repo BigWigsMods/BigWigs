@@ -1287,8 +1287,8 @@ do
 				for k in next, loader:GetZoneMenus() do
 					local zone
 					if type(k) == "string" then
-						-- treat k as a localized string key
-						zone = L[k]
+						-- check if the zone is a localized string key
+						zone = L[k] or k
 					elseif k < 0 then
 						local tbl = GetMapInfo(-k)
 						if tbl then
