@@ -1,3 +1,5 @@
+-- TODO remove on 10.0 prepatch
+local isDragonflight = select(4, GetBuildInfo()) >= 100000
 
 local BigWigs = BigWigs
 local options = {}
@@ -1177,7 +1179,8 @@ do
 		"WarlordsOfDraenor",
 		"Legion",
 		"BattleForAzeroth",
-		"Shadowlands"
+		"Shadowlands",
+		"Dragonflight"
 	}
 
 	local statusTable = {}
@@ -1266,9 +1269,10 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = "LittleWigs_Shadowlands"
+				defaultHeader = isDragonflight and "LittleWigs_Dragonflight" or "LittleWigs_Shadowlands"
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				for i = 1, 9 do
+				local maxExpansionIndex = isDragonflight and 10 or 9
+				for i = 1, maxExpansionIndex do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),

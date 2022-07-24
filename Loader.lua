@@ -152,6 +152,7 @@ do
 	local lw_l = "LittleWigs_Legion"
 	local lw_bfa = "LittleWigs_BattleForAzeroth"
 	local lw_s = "LittleWigs_Shadowlands"
+	local lw_d = "LittleWigs_Dragonflight"
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -326,6 +327,15 @@ do
 		[2291] = lw_s, -- De Other Side
 		[2293] = lw_s, -- Theater of Pain
 		[2441] = lw_s, -- Tazavesh, the Veiled Market
+		--[[ LittleWigs: Dragonflight ]]--
+		[2451] = lw_d, -- Uldaman: Legacy of Tyr
+		[2515] = lw_d, -- The Azure Vault
+		[2516] = lw_d, -- The Nokhud Offensive
+		[2519] = lw_d, -- Neltharus
+		[2520] = lw_d, -- Brackenhide Hollow
+		[2521] = lw_d, -- Ruby Life Pools
+		[2526] = lw_d, -- Taz'algeth Academy
+		[2527] = lw_d, -- Halls of Infusion
 	}
 
 	public.zoneTblWorld = {
