@@ -1298,6 +1298,9 @@ do
 						end
 					else
 						zone = GetRealZoneText(k)
+						if zone == "" then
+							zone = tostring(k)
+						end
 					end
 					if zone then
 						if zoneToId[zone] then
