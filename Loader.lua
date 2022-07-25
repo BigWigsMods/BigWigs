@@ -131,6 +131,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[1716]=true, -- Broken Shore Mage Tower
 	[-947]=true, -- Azeroth
 	[-1647]=true, -- Shadowlands
+	[-1978]=true, -- Dragon Isles
 }
 
 do
@@ -143,6 +144,7 @@ do
 	local l = "BigWigs_Legion"
 	local bfa = "BigWigs_BattleForAzeroth"
 	local s = "BigWigs_Shadowlands"
+	local d = "BigWigs_Dragonflight"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -219,6 +221,9 @@ do
 		[2296] = s, -- Castle Nathria
 		[2450] = s, -- Sanctum of Domination
 		[2481] = s, -- Sepulcher of the First Ones
+		--[[ BigWigs: Dragonflight ]]--
+		[-1978] = d, -- Dragon Isles (Fake Menu)
+		[2522] = d, -- Vault of the Incarnate
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep

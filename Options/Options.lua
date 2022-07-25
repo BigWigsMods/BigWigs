@@ -1217,9 +1217,10 @@ do
 	local function onTreeGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
 		local zoneId = value:match("\001(-?%d+)$")
+		local defaultHeader = isDragonflight and "BigWigs_Dragonflight" or "BigWigs_Shadowlands"
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= "BigWigs_Shadowlands" and GetAddOnEnableState(playerName, value) == 0 then
+		elseif value:match("^BigWigs_") and value ~= defaultHeader and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
@@ -1258,8 +1259,9 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = "BigWigs_Shadowlands"
-				for i = 1, 9 do
+				defaultHeader = isDragonflight and "BigWigs_Dragonflight" or "BigWigs_Shadowlands"
+				local maxExpansionIndex = isDragonflight and 10 or 9
+				for i = 1, maxExpansionIndex do
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
@@ -1270,8 +1272,8 @@ do
 				end
 			elseif value == "littlewigs" then
 				defaultHeader = isDragonflight and "LittleWigs_Dragonflight" or "LittleWigs_Shadowlands"
-				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
 				local maxExpansionIndex = isDragonflight and 10 or 9
+				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
 				for i = 1, maxExpansionIndex do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
