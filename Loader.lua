@@ -132,7 +132,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[1716]=true, -- Broken Shore Mage Tower
 	[-947]=true, -- Azeroth
 	[-1647]=true, -- Shadowlands
-	[-1978]=true, -- Dragon Isles
+	[-1978]=true, -- Dragon Isles TODO verify ID
 }
 
 do
