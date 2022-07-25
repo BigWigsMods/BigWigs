@@ -1,5 +1,4 @@
--- TODO remove on 10.0 prepatch
-local isDragonflight = select(4, GetBuildInfo()) >= 100000
+local isDragonflight = select(4, GetBuildInfo()) >= 100000 -- TODO remove on 10.0 prepatch
 
 local BigWigs = BigWigs
 local options = {}
@@ -1217,10 +1216,10 @@ do
 	local function onTreeGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
 		local zoneId = value:match("\001(-?%d+)$")
-		local defaultHeader = isDragonflight and "BigWigs_Dragonflight" or "BigWigs_Shadowlands"
+		local defaultEnabled = value == "BigWigs_Shadowlands" or (isDragonflight and value == "BigWigs_Dragonflight")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= defaultHeader and GetAddOnEnableState(playerName, value) == 0 then
+		elseif value:match("^BigWigs_") and not defaultEnabled and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
@@ -1263,10 +1262,11 @@ do
 				local maxExpansionIndex = isDragonflight and 10 or 9
 				for i = 1, maxExpansionIndex do
 					local value = "BigWigs_" .. expansionHeader[i]
+					local defaultEnabled = value == "BigWigs_Shadowlands" or (isDragonflight and value == "BigWigs_Dragonflight")
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
-						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
+						enabled = (defaultEnabled or GetAddOnEnableState(playerName, value) > 0),
 					}
 					addonNameToHeader[value] = i
 				end
