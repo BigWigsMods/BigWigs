@@ -1,0 +1,33 @@
+## Interface: 90205
+
+## Title: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-deDE: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-esES: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-esMX: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-frFR: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-ruRU: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-zhCN: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-zhTW: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-itIT: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-ptBR: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-koKR: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Notes: BigWigs Vault of the Incarnates Modules
+## Notes-deDE: BigWigs Vault of the Incarnates Modules
+## Notes-esES: BigWigs Vault of the Incarnates Modules
+## Notes-esMX: BigWigs Vault of the Incarnates Modules
+## Notes-frFR: BigWigs Vault of the Incarnates Modules
+## Notes-ruRU: BigWigs Vault of the Incarnates Modules
+## Notes-zhCN: BigWigs Vault of the Incarnates Modules
+## Notes-zhTW: BigWigs Vault of the Incarnates Modules
+## Notes-itIT: BigWigs Vault of the Incarnates Modules
+## Notes-ptBR: BigWigs Vault of the Incarnates Modules
+## Notes-koKR: BigWigs Vault of the Incarnates Modules
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2522
+
+modules.xml
