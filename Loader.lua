@@ -157,6 +157,7 @@ do
 	local lw_l = "LittleWigs_Legion"
 	local lw_bfa = "LittleWigs_BattleForAzeroth"
 	local lw_s = "LittleWigs_Shadowlands"
+	local lw_affixes = "LittleWigs_Affixes"
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -332,7 +333,8 @@ do
 		[2291] = lw_s, -- De Other Side
 		[2293] = lw_s, -- Theater of Pain
 		[2441] = lw_s, -- Tazavesh, the Veiled Market
-		["dungeonAffixes"] = lw_s, -- Dungeon Affixes
+		--[[ LittleWigs: Affixes ]]--
+		["dungeonAffixes"] = lw_affixes, -- Dungeon Affixes
 	}
 
 	public.zoneTblWorld = {
