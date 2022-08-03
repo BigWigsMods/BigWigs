@@ -204,7 +204,7 @@ BigWigs:AddSounds("Castle Nathria Trash", {
 	[343302] = "long",
 })
 
-BigWigs:AddSounds("Fated Raid", {
+BigWigs:AddSounds("Castle Nathria Affixes", {
 	[369505] = "info",
 	[371254] = "info",
 	[371447] = {"alert","info"},

@@ -166,7 +166,7 @@ if L then
 	L.goliath = "顽石军团巨怪"
 end
 
-L = BigWigs:NewBossLocale("Fated Raid", "zhCN")
+L = BigWigs:NewBossLocale("Castle Nathria Affixes", "zhCN")
 if L then
 	--L.custom_on_bar_icon = "Bar Icon"
 	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."

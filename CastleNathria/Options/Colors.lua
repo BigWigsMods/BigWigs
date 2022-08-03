@@ -214,7 +214,7 @@ BigWigs:AddColors("Castle Nathria Trash", {
 	[343325] = "yellow",
 })
 
-BigWigs:AddColors("Fated Raid", {
+BigWigs:AddColors("Castle Nathria Affixes", {
 	[369505] = {"blue","yellow"},
 	[371254] = "yellow",
 	[371447] = {"green","yellow"},
