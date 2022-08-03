@@ -111,7 +111,6 @@ end
 
 local function checkForAffixes()
 	local unit = mod:GetBossId(bossToCheck[activeBoss])
-	bwLog('unit:', bossToCheck[activeBoss], unit)
 	if unit then
 		if not emitterDetected and mod:UnitBuff(unit, 372419) then -- Fated Power: Reconfiguration Emitter
 			emitterDetected = true
@@ -135,7 +134,6 @@ local function checkForAffixes()
 				-- Not used so far
 		end
 	end
-	bwLog(emitterDetected, chaoticEssenceDetected, creationSparkDetected, protoformBarrierDetected, replicatingEssenceDetected)
 end
 
 function mod:OnBossEngage(_, module, diff)
