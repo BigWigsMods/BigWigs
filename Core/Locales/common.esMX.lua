@@ -72,6 +72,7 @@ L.custom_sec = "%s en %d seg"
 
 L.focus_only = "|cffff0000Alertas solo para objetivo en foco.|r "
 L.trash = "Basura"
+--L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s Marcador"
