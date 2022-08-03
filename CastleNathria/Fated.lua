@@ -26,6 +26,7 @@ mod:RegisterEnableMob(
 -- Locals
 --
 
+local activeBoss = 0
 local emitterDetected = false
 local chaoticEssenceDetected = false
 local creationSparkDetected = false
@@ -133,13 +134,13 @@ function mod:OnBossEngage(_, module, diff)
 
 	bar_icon = self:GetOption("custom_on_bar_icon") and bar_icon_texture or ""
 
-	local boss = self.boss
+	activeBoss = self.boss
 	-- Encounters that need adjustments
-	if boss == 2398 then -- Shriekwing
+	if activeBoss == 2398 then -- Shriekwing
 		self:Log("SPELL_AURA_REMOVED", "ShriekwingBloodShroudRemoved", 328921)
-	elseif boss == 2412 then -- Council
+	elseif activeBoss == 2412 then -- Council
 		self:Log("SPELL_CAST_SUCCESS", "CouncilDanseMacabreBegins", 347376)
-	elseif boss == 2407 then -- Denathrius
+	elseif activeBoss == 2407 then -- Denathrius
 		self:Log("SPELL_CAST_START", "DenathriusMarchOfThePenitentStart", 328117)
 		self:Log("SPELL_CAST_SUCCESS", "DenathriusIndignationSuccess", 326005)
 	end
@@ -153,7 +154,7 @@ function mod:FatedPowerReconfigurationEmitter(args)
 	if emitterDetected == false then
 		emitterDetected = true
 		-- (2407) Denathrius activates later
-		self:Bar(371254, self.boss == 2407 and 25 or 5, bar_icon..CL.count:format(L.emitter, emitterCount))
+		self:Bar(371254, activeBoss == 2407 and 25 or 5, bar_icon..CL.count:format(L.emitter, emitterCount))
 	end
 end
 
