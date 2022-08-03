@@ -26,6 +26,12 @@ mod:RegisterEnableMob(
 -- Locals
 --
 
+local emitterDetected = false
+local chaoticEssenceDetected = false
+local creationSparkDetected = false
+local protoformBarrierDetected = false
+local replicatingEssenceDetected = false
+
 local chaoticDestructionCount = 1
 local creationSparkCount = 1
 local barrierCount = 1
@@ -77,6 +83,13 @@ function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_OnBossEngage", "OnBossEngage")
 	self:RegisterMessage("BigWigs_EncounterEnd", "EncounterEnd")
 
+	-- Affix Detection
+	self:Log("SPELL_AURA_APPLIED", "FatedPowerReconfigurationEmitter", 372419)
+	self:Log("SPELL_AURA_APPLIED", "FatedPowerChaoticEssence", 372642)
+	self:Log("SPELL_AURA_APPLIED", "FatedPowerCreationSpark", 372647)
+	self:Log("SPELL_AURA_APPLIED", "FatedPowerProtoformBarrier", 372418)
+	self:Log("SPELL_AURA_APPLIED", "FatedPowerReplicatingEssence", 372424) -- Unkown right now
+
 	-- Chaotic Destruction
 	self:Log("SPELL_CAST_START", "ChaoticDestruction", 372638)
 	-- Reconfiguration Emitter
@@ -107,6 +120,12 @@ function mod:OnBossEngage(_, module, diff)
 	self.bossModule = module
 	self.boss = module.engageId
 
+	emitterDetected = false
+	chaoticEssenceDetected = false
+	creationSparkDetected = false
+	protoformBarrierDetected = false
+	replicatingEssenceDetected = false
+
 	chaoticDestructionCount = 1
 	creationSparkCount = 1
 	barrierCount = 1
@@ -114,40 +133,56 @@ function mod:OnBossEngage(_, module, diff)
 
 	bar_icon = self:GetOption("custom_on_bar_icon") and bar_icon_texture or ""
 
-	-- Multi-boss engage z.z
 	local boss = self.boss
-	if boss == 2405 or boss == 2399 then
-		-- Xymox / Sludgefist (Chaotic Destruction)
-		self:Bar(372638, 11, bar_icon..CL.count:format(self:SpellName(372638), chaoticDestructionCount))
-
-	elseif boss == 2418 or boss == 2412 or boss == 2407 then
-		-- Huntsman / Council / Denathrius (Reconfiguration Emitter)
-		if boss == 2412 then -- Council
-			self:Log("SPELL_CAST_SUCCESS", "CouncilDanseMacabreBegins", 347376)
-		elseif boss == 2407 then -- Denathrius
-			self:Log("SPELL_CAST_START", "DenathriusMarchOfThePenitentStart", 328117)
-			self:Log("SPELL_CAST_SUCCESS", "DenathriusIndignationSuccess", 326005)
-		end
-
-		self:Bar(371254, boss == 2407 and 25 or 5, bar_icon..CL.count:format(L.emitter, emitterCount))
-
-	elseif boss == 2383 or boss == 2402 then
-		-- Hungering Destroyer / Sun King (Protoform Barrier)
-		self:Bar(371447, 15, bar_icon..CL.count:format(L.barrier, barrierCount))
-
-	elseif boss == 2398 or boss == 2406 or boss == 2417 then
-		-- Shriekwing / Darkvein / SLG (Creation Spark)
-		if boss == 2398 then -- Shriekwing
-			self:Log("SPELL_AURA_REMOVED", "ShriekwingBloodShroudRemoved", 328921)
-		end
-
-		self:Bar(369505, 20, bar_icon..CL.count:format(self:SpellName(369505), creationSparkCount))
+	-- Encounters that need adjustments
+	if boss == 2398 then -- Shriekwing
+		self:Log("SPELL_AURA_REMOVED", "ShriekwingBloodShroudRemoved", 328921)
+	elseif boss == 2412 then -- Council
+		self:Log("SPELL_CAST_SUCCESS", "CouncilDanseMacabreBegins", 347376)
+	elseif boss == 2407 then -- Denathrius
+		self:Log("SPELL_CAST_START", "DenathriusMarchOfThePenitentStart", 328117)
+		self:Log("SPELL_CAST_SUCCESS", "DenathriusIndignationSuccess", 326005)
 	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:FatedPowerReconfigurationEmitter(args)
+	if emitterDetected == false then
+		emitterDetected = true
+		-- (2407) Denathrius activates later
+		self:Bar(371254, self.boss == 2407 and 25 or 5, bar_icon..CL.count:format(L.emitter, emitterCount))
+	end
+end
+
+function mod:FatedPowerChaoticEssence(args)
+	if chaoticEssenceDetected == false then
+		chaoticEssenceDetected = true
+		self:Bar(372638, 11, bar_icon..CL.count:format(self:SpellName(372638), chaoticDestructionCount))
+	end
+end
+
+function mod:FatedPowerCreationSpark(args)
+	if creationSparkDetected == false then
+		creationSparkDetected = true
+		self:Bar(369505, 20, bar_icon..CL.count:format(self:SpellName(369505), creationSparkCount))
+	end
+end
+
+function mod:FatedPowerProtoformBarrier(args)
+	if protoformBarrierDetected == false then
+		protoformBarrierDetected = true
+		self:Bar(371447, 15, bar_icon..CL.count:format(L.barrier, barrierCount))
+	end
+end
+
+function mod:FatedPowerReplicatingEssence(args)
+	if replicatingEssenceDetected == false then
+		replicatingEssenceDetected = true
+	end
+end
 
 function mod:ChaoticDestruction(args)
 	self:Message(args.spellId, "yellow")
@@ -218,6 +253,7 @@ function mod:ShriekwingBloodShroudRemoved()
 end
 
 function mod:CouncilDanseMacabreBegins()
+	-- Should prolly pauze the bars togeher with the others in the encounter
 	self:Bar(371254, self:Mythic() and 42 or 33.6, bar_icon..CL.count:format(L.emitter, emitterCount)) -- Reconfiguration Emitter
 end
 
