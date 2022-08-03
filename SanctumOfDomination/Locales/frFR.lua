@@ -102,7 +102,7 @@ if L then
 	L.runes = "Runes"
 
 	L.grimportent_countdown = "Décompte"
-	L.grimportent_countdown_desc = "Countdown for the players who are Affected by Sombre Présage"
+	L.grimportent_countdown_desc = "Décompte pour les joueurs affectés par Sombre Présage"
 	L.grimportent_countdown_bartext = "Allez sur une Rune !"
 end
 
