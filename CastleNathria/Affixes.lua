@@ -23,6 +23,18 @@ mod:RegisterEnableMob(
 -- Locals
 --
 
+local bossToCheck = {
+	[2398] = 164406, -- Shriekwing
+	[2418] = 165066, -- Huntsman Altimor
+	[2383] = 164261, -- Hungering Destroyer
+	[2405] = 166644, -- Artificer Xy'mox
+	[2402] = 168973, -- High Torturer Darithos
+	[2406] = 165521, -- Lady Inerva Darkvein
+	[2412] = 166971, -- Castellan Niklaus
+	[2399] = 164407, -- Sludgefist
+	[2417] = 168112, -- General Kaal
+	[2407] = 167406, -- Sire Denathrius
+}
 local activeBoss = 0
 local emitterDetected = false
 local chaoticEssenceDetected = false
@@ -97,6 +109,35 @@ function mod:EncounterEnd(_, module, _, _, _, _, status)
 	end
 end
 
+local function checkForAffixes()
+	local unit = mod:GetBossId(bossToCheck[activeBoss])
+	bwLog('unit:', bossToCheck[activeBoss], unit)
+	if unit then
+		if not emitterDetected and mod:UnitBuff(unit, 372419) then -- Fated Power: Reconfiguration Emitter
+			emitterDetected = true
+			-- (2407) Denathrius activates later
+			mod:Bar(371254, activeBoss == 2407 and 25 or 5, bar_icon..CL.count:format(L.emitter, emitterCount))
+		end
+		if not chaoticEssenceDetected and mod:UnitBuff(unit, 372642) then --
+			chaoticEssenceDetected = true
+			mod:Bar(372638, 11, bar_icon..CL.count:format(mod:SpellName(372638), chaoticDestructionCount))
+		end
+		if not creationSparkDetected and mod:UnitBuff(unit, 372647) then --
+			creationSparkDetected = true
+			mod:Bar(369505, 20, bar_icon..CL.count:format(mod:SpellName(369505), creationSparkCount))
+		end
+		if not protoformBarrierDetected and mod:UnitBuff(unit, 372418) then --
+			protoformBarrierDetected = true
+			mod:Bar(371447, 15, bar_icon..CL.count:format(L.barrier, barrierCount))
+		end
+		if not replicatingEssenceDetected and mod:UnitBuff(unit, 372424) then --
+			replicatingEssenceDetected = true
+				-- Not used so far
+		end
+	end
+	bwLog(emitterDetected, chaoticEssenceDetected, creationSparkDetected, protoformBarrierDetected, replicatingEssenceDetected)
+end
+
 function mod:OnBossEngage(_, module, diff)
 	if self.isEngaged then return end
 
@@ -128,43 +169,12 @@ function mod:OnBossEngage(_, module, diff)
 		self:Log("SPELL_CAST_SUCCESS", "DenathriusIndignationSuccess", 326005)
 	end
 
-	self:checkForAffixes()
+	self:SimpleTimer(checkForAffixes, 0.1) -- Delaying for council fights with more than boss1
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
-
-function mod:checkForAffixes()
-	local bosses = {"boss1", "boss2", "boss3", "boss4", "boss5"}
-	for i = 1, 5 do
-		local unit = bosses[i]
-		local exists = UnitExists(unit)
-		if unit then
-			if not emitterDetected and self:UnitBuff(unit, 372419) then -- Fated Power: Reconfiguration Emitter
-				emitterDetected = true
-				-- (2407) Denathrius activates later
-				self:Bar(371254, activeBoss == 2407 and 25 or 5, bar_icon..CL.count:format(L.emitter, emitterCount))
-			end
-			if not chaoticEssenceDetected and self:UnitBuff(unit, 372642) then --
-				chaoticEssenceDetected = true
-				self:Bar(372638, 11, bar_icon..CL.count:format(self:SpellName(372638), chaoticDestructionCount))
-			end
-			if not creationSparkDetected and self:UnitBuff(unit, 372647) then --
-				creationSparkDetected = true
-				self:Bar(369505, 20, bar_icon..CL.count:format(self:SpellName(369505), creationSparkCount))
-			end
-			if not protoformBarrierDetected and self:UnitBuff(unit, 372418) then --
-				protoformBarrierDetected = true
-				self:Bar(371447, 15, bar_icon..CL.count:format(L.barrier, barrierCount))
-			end
-			if not replicatingEssenceDetected and self:UnitBuff(unit, 372424) then --
-				replicatingEssenceDetected = true
-				 -- Not used so far
-			end
-		end
-	end
-end
 
 function mod:ChaoticDestruction(args)
 	self:Message(args.spellId, "yellow")
