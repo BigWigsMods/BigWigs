@@ -165,3 +165,12 @@ if L then
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	L.goliath = "Mastodonte della Legione di Pietra"
 end
+
+L = BigWigs:NewBossLocale("Fated Raid", "itIT")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	L.barrier = "Barriera"
+	--L.emitter = "Interrupt Add"
+end

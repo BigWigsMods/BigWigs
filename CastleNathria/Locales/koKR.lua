@@ -165,3 +165,12 @@ if L then
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	L.goliath = "돌 군단 거수"
 end
+
+L = BigWigs:NewBossLocale("Fated Raid", "koKR")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	L.barrier = "보호막"
+	--L.emitter = "Interrupt Add"
+end
