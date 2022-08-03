@@ -212,7 +212,6 @@ globals = {
 	"RaidWarningFrame",
 	"RolePollPopup",
 	"SecondsToTime",
-	"Spell",
 	"StopSound",
 	"TalkingHeadFrame",
 	"Tukui",

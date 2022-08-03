@@ -72,6 +72,7 @@ L.custom_sec = "%s через %d сек"
 
 L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 L.trash = "Трэш"
+--L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "Метка %s"
