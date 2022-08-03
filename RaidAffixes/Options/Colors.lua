@@ -1,3 +1,0 @@
-
-BigWigs:AddColors("Fated", {
-})

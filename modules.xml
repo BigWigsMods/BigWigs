@@ -9,6 +9,5 @@
 <Include file="CastleNathria\modules.xml"/>
 <Include file="SanctumOfDomination\modules.xml"/>
 <Include file="SepulcherOfTheFirstOnes\modules.xml"/>
-<!--Include file="RaidAffixes\modules.xml"/-->
 <!--@end-do-not-package@-->
 </Ui>

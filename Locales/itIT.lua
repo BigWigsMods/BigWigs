@@ -157,5 +157,4 @@ L.kills = "Uccisioni:"
 L.best = "Migliore:"
 
 -- Non-instance specific modules
-L.raidAffixes = "Raid Affixes"
 L.dungeonAffixes = "Dungeon Affixes"

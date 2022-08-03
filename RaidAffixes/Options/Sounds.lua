@@ -1,3 +1,0 @@
-
-BigWigs:AddSounds("Fated", {
-})

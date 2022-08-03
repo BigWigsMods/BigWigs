@@ -157,5 +157,4 @@ L.kills = "擊殺："
 L.best = "最快："
 
 -- Non-instance specific modules
-L.raidAffixes = "Raid Affixes"
 L.dungeonAffixes = "Dungeon Affixes"
