@@ -1,14 +1,11 @@
--- So the plan here is to only load one instance of the module in the case we
--- have one for each raid with the same module name so the settings are shared
--- until multi-zone stuff is worked out.
-if not C_ModifiedInstance.GetModifiedInstanceInfoFromMapID(2296) then return end
 
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Fated Raid", 2296)
+local mod, CL = BigWigs:NewBoss("Castle Nathria Affixes", 2296)
 if not mod then return end
+mod.displayName = CL.affixes
 mod:RegisterEnableMob(
 	164406, -- Shriekwing
 	165066, 165067, 169457, 169458, -- Huntsman Altimor, Margore, Bargast, Hecutis
@@ -63,13 +60,6 @@ function mod:GetOptions()
 		[371447] = L.barrier, -- Protoform Barrier (Barrier)
 		[371254] = L.emitter, -- Reconfiguration Emitter (Interrupt Add)
 	}
-end
-
-function mod:OnRegister()
-	local name = Spell:CreateFromSpellID(371278) -- Fated Raid
-	name:ContinueOnSpellLoad(function()
-		self.displayName = bar_icon_texture..name:GetSpellName()
-	end)
 end
 
 function mod:OnBossEnable()
