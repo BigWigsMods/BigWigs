@@ -165,3 +165,12 @@ if L then
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	L.goliath = "石源魔軍團巨人"
 end
+
+L = BigWigs:NewBossLocale("Castle Nathria Affixes", "zhTW")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	L.barrier = "屏障"
+	--L.emitter = "Interrupt Add"
+end

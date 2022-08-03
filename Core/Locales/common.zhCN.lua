@@ -72,6 +72,7 @@ L.custom_sec = "%2$d秒后%1$s"
 
 L.focus_only = "|cffff0000只警报焦点目标。|r "
 L.trash = "小怪"
+--L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s标记"
