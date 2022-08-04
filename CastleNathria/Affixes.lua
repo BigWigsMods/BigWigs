@@ -81,6 +81,12 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable()
+	if C_ModifiedInstance.GetModifiedInstanceInfoFromMapID(self.instanceId) then
+			return true
+	end
+end
+
 function mod:OnBossEnable()
 	-- Piggybacking off of actual boss modules
 	self:RegisterMessage("BigWigs_OnBossEngage", "OnBossEngage")
