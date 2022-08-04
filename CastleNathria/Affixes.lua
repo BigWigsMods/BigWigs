@@ -168,6 +168,7 @@ function mod:OnBossEngage(_, module, diff)
 		self:Log("SPELL_AURA_REMOVED", "ShriekwingBloodShroudRemoved", 328921)
 	elseif activeBoss == 2412 then -- Council
 		self:Log("SPELL_CAST_SUCCESS", "CouncilDanseMacabreBegins", 347376)
+		self:Log("SPELL_AURA_REMOVED", "CouncilDanseMacabreOver", 330959)
 	elseif activeBoss == 2407 then -- Denathrius
 		self:Log("SPELL_CAST_START", "DenathriusMarchOfThePenitentStart", 328117)
 		self:Log("SPELL_CAST_SUCCESS", "DenathriusIndignationSuccess", 326005)
@@ -248,8 +249,14 @@ function mod:ShriekwingBloodShroudRemoved()
 end
 
 function mod:CouncilDanseMacabreBegins()
-	-- Should most likely pause the bars together with the other bars during the dances, restart on dance end
-	self:Bar(371254, self:Mythic() and 42 or 33.6, bar_icon..CL.count:format(L.emitter, emitterCount)) -- Reconfiguration Emitter
+	-- Does not pause but has a timer reset when dancing.
+	-- Pausing the bar right away so the player can see when the ability will come in line with others.
+	self:CDBar(371254, 3.2, bar_icon..CL.count:format(L.emitter, emitterCount)) -- Reconfiguration Emitter
+	self:PauseBar(371254, bar_icon..CL.count:format(L.emitter, emitterCount))
+end
+
+function mod:CouncilDanseMacabreOver()
+	self:ResumeBar(371254, bar_icon..CL.count:format(L.emitter, emitterCount)) -- Reconfiguration Emitter
 end
 
 function mod:DenathriusMarchOfThePenitentStart()
