@@ -102,7 +102,6 @@ function mod:OnBossEnable()
 	-- Creation Spark
 	self:Log("SPELL_AURA_APPLIED", "CreationSpark", 369505)
 
-	self.boss = nil
 	self.bossModule = nil
 end
 
@@ -125,21 +124,21 @@ local function checkForAffixes()
 			-- (2407) Denathrius activates later
 			mod:Bar(371254, activeBoss == 2407 and 25 or 5, bar_icon..CL.count:format(L.emitter, emitterCount))
 		end
-		if not chaoticEssenceDetected and mod:UnitBuff(unit, 372642) then --
+		if not chaoticEssenceDetected and mod:UnitBuff(unit, 372642) then -- Fated Power: Chaotic Essence
 			chaoticEssenceDetected = true
 			mod:Bar(372638, 11, bar_icon..CL.count:format(mod:SpellName(372638), chaoticDestructionCount))
 		end
-		if not creationSparkDetected and mod:UnitBuff(unit, 372647) then --
+		if not creationSparkDetected and mod:UnitBuff(unit, 372647) then -- Fated Power: Creation Spark
 			creationSparkDetected = true
 			mod:Bar(369505, 20, bar_icon..CL.count:format(mod:SpellName(369505), creationSparkCount))
 		end
-		if not protoformBarrierDetected and mod:UnitBuff(unit, 372418) then --
+		if not protoformBarrierDetected and mod:UnitBuff(unit, 372418) then -- Fated Power: Protoform Barrier
 			protoformBarrierDetected = true
 			mod:Bar(371447, 15, bar_icon..CL.count:format(L.barrier, barrierCount))
 		end
-		if not replicatingEssenceDetected and mod:UnitBuff(unit, 372424) then --
+		if not replicatingEssenceDetected and mod:UnitBuff(unit, 372424) then -- Fated Power: Replicating Essence
 			replicatingEssenceDetected = true
-				-- Not used so far
+			-- Not used so far
 		end
 	end
 end
@@ -149,7 +148,6 @@ function mod:OnBossEngage(_, module, diff)
 
 	self.isEngaged = true
 	self.bossModule = module
-	self.boss = module.engageId
 
 	emitterDetected = false
 	chaoticEssenceDetected = false
@@ -164,7 +162,7 @@ function mod:OnBossEngage(_, module, diff)
 
 	bar_icon = self:GetOption("custom_on_bar_icon") and bar_icon_texture or ""
 
-	activeBoss = self.boss
+	activeBoss = module.engageId
 	-- Encounters that need adjustments
 	if activeBoss == 2398 then -- Shriekwing
 		self:Log("SPELL_AURA_REMOVED", "ShriekwingBloodShroudRemoved", 328921)
