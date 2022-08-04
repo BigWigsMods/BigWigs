@@ -102,9 +102,11 @@ end
 
 function mod:EncounterEnd(_, module, _, _, _, _, status)
 	if module == self.bossModule then
-		self:Disable()
-		if status == 0 then
-			self:Enable()
+		if status == 1 then
+			self:Disable()
+		elseif status == 0 then
+			self:SendMessage("BigWigs_StopBars", self)
+			self:SimpleTimer(function() self:Reboot(true) end, 5)
 		end
 	end
 end
