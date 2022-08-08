@@ -195,11 +195,13 @@ function mod:ReconfigurationEmitter(args)
 	emitterCount = emitterCount + 1
 	if activeBoss == 2407 then -- Denathrius
 		if self:GetStage() == 1 then
-			self:Bar(args.spellId, 60, CL.count:format(L.emitter, emitterCount))
+			self:Bar(args.spellId, 60, bar_icon..CL.count:format(L.emitter, emitterCount))
 		elseif self:GetStage() == 2 then
-			-- XXX only seen two mythic casts
-			-- first 3 normal/heroic casts are 27 84 85
-			self:Bar(args.spellId, self:Mythic() and 79 or (emitterCount - p2EmitterCount) == 1 and 84 or 85, bar_icon..CL.count:format(L.emitter, emitterCount))
+			local cd = 85
+			if emitterCount - p2EmitterCount == 1 then
+				cd = self:Mythic() and 79 or 84
+			end
+			self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.emitter, emitterCount))
 		elseif self:GetStage() == 3 then
 			self:Bar(args.spellId, 70, bar_icon..CL.count:format(L.emitter, emitterCount))
 		end
