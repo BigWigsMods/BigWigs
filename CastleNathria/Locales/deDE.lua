@@ -171,6 +171,8 @@ if L then
 	--L.custom_on_bar_icon = "Bar Icon"
 	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
 
-	L.barrier = "Barriere"
-	--L.emitter = "Interrupt Add"
+	--L.chaotic_essence = "Essence"
+	L.creation_spark = "Funken"
+	L.protoform_barrier = "Barriere"
+	--L.reconfiguration_emitter = "Interrupt Add"
 end
