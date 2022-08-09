@@ -47,6 +47,8 @@ local chaoticEssenceCount = 1
 local creationSparkCount = 1
 local barrierCount = 1
 local emitterCount = 1
+local stage = 1
+local bridgeCount = 1
 
 local bar_icon_texture = "|A:ui-ej-icon-empoweredraid-large:0:0|a "
 local bar_icon = bar_icon_texture
@@ -166,8 +168,25 @@ function mod:OnBossEngage(_, module, diff)
 	bar_icon = self:GetOption("custom_on_bar_icon") and bar_icon_texture or ""
 
 	-- Encounters that need adjustments
-	-- if activeBoss == 0 then
-	-- end
+	if activeBoss == 2433 then -- The Eye
+		self:Log("SPELL_AURA_APPLIED", "TheEyeStygianDarkshieldApplied", 348805)
+		self:Log("SPELL_AURA_REMOVED", "TheEyeStygianDarkshieldRemoved", 348805)
+	elseif activeBoss == 2430 then -- Painsmith Raznal
+		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+		self:Log("SPELL_AURA_REMOVED", "PainsmithForgeWeaponOver", 355525)
+	elseif activeBoss == 2431 then -- Fatescribe Roh-Kalo
+		self:Log("SPELL_AURA_APPLIED", "FatescribeRealignFateApplied", 357739)
+		self:Log("SPELL_AURA_REMOVED", "FatescribeRealignFateRemoved", 357739)
+	elseif activeBoss == 2422 then -- Kel'Thuzad
+		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+		self:Log("SPELL_AURA_APPLIED", "KelThuzadNecroticSurgeApplied", 352051)
+		self:Log("SPELL_AURA_APPLIED_DOSE", "KelThuzadNecroticSurgeApplied", 352051)
+	elseif activeBoss == 2435 then -- Sylvanas Windrunner
+		stage = 1
+		self:Log("SPELL_AURA_APPLIED", "SylvanasBansheeShroudApplied", 350857)
+		self:Log("SPELL_CREATE", "SylvanasCreateBridge", 348093, 351840, 351841) -- 351837, 348148, 351838
+		self:Log("SPELL_CAST_SUCCESS", "SylvanasBlasphemySuccess", 357729)
+	end
 
 	self:SimpleTimer(checkForAffixes, 0.1) -- Delaying for council fights with more than boss1
 end
@@ -191,7 +210,8 @@ function mod:ReconfigurationEmitter(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.reconfiguration_emitter, emitterCount))
 	self:PlaySound(args.spellId, "info")
 	emitterCount = emitterCount + 1
-	self:Bar(args.spellId, 75, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	-- Fatescribe is longer
+	self:Bar(args.spellId, activeBoss == 2431 and 80 or 75, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 end
 
 function mod:ProtoformBarrierApplied(args)
@@ -228,3 +248,64 @@ do
 end
 
 -- Boss specific timer resetting
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 355555 then -- Painsmith: [DNT] Upstairs
+		self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	elseif spellId == 351625 then -- Kel'Thuzad: Cosmetic Death
+		self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
+end
+
+function mod:TheEyeStygianDarkshieldApplied(args)
+	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+end
+
+function mod:TheEyeStygianDarkshieldRemoved(args)
+	self:CDBar(372634, 3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+end
+
+function mod:PainsmithForgeWeaponOver(args)
+	self:CDBar(372634, 17.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+end
+
+function mod:FatescribeRealignFateApplied(args)
+	self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+end
+
+function mod:FatescribeRealignFateRemoved(args)
+	self:CDBar(372634, 10, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+end
+
+function mod:KelThuzadNecroticSurgeApplied(args)
+	self:Bar(372634, 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+end
+
+function mod:SylvanasBansheeShroudApplied(args)
+	if stage == 1 then
+		stage = 1.5
+		self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+end
+
+function mod:SylvanasCreateBridge(args) -- just earth
+	if stage < 2 then
+		stage = 2
+		bridgeCount = 1
+	end
+	-- only seeing one p2 cast? not sure if triggering the next bridge is full
+	-- resetting the timer after the first or what (the time between bridges is < 60s)
+	if bridgeCount == 1 and not self:Mythic() then
+		self:Bar(372634, args.spellId == 351841 and 11 or 11.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+	if bridgeCount == 2 and self:Mythic() then
+		self:Bar(372634, 7.8, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+	bridgeCount = bridgeCount + 1
+end
+
+function mod:SylvanasBlasphemySuccess()
+	if stage < 3 then
+		stage = 3
+		self:Bar(372634, 26.6, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+end
