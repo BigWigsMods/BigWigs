@@ -187,3 +187,10 @@ BigWigs:AddColors("Sylvanas Windrunner", {
 	[358711] = "blue",
 	["stages"] = {"cyan","green"},
 })
+
+BigWigs:AddColors("Sanctum of Domination Affixes", {
+	[369505] = {"blue","yellow"},
+	[371254] = "yellow",
+	[371447] = {"green","yellow"},
+	[372634] = "yellow",
+})

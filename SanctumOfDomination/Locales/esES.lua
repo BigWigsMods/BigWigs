@@ -57,7 +57,7 @@ L = BigWigs:NewBossLocale("Soulrender Dormazain", "esES")
 if L then
 	L.custom_off_nameplate_defiance = "Icono de placa de nombre de desafio"
 	L.custom_off_nameplate_defiance_desc = "Muestra un icono en la placa de nombre del Agonizador jurafauce que tiene Desafio.\n\nRequiere el uso de Placa de nombre enemigas y un addon de placas de nombres soportado (KuiNameplates, Plater)."
-	
+
 	L.custom_off_nameplate_tormented = "Icono placa de nombre atormentado"
 	L.custom_off_nameplate_tormented_desc = "Muestra un icono en la placa de nombre del Agonizador jurafauce que tiene Atormentado.\n\nRequiere el uso de Placa de nombre enemigas y un addon de placas de nombres soportado (KuiNameplates, Plater)."
 
@@ -138,3 +138,13 @@ if L then
 	L.knife_fling = "¡Cuchillas fuera!" -- "Death-touched blades fling out"
 end
 
+L = BigWigs:NewBossLocale("Sanctum of Domination Affixes", "esES")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	--L.chaotic_essence = "Essence"
+	--L.creation_spark = "Sparks"
+	L.protoform_barrier = "Barrera"
+	--L.reconfiguration_emitter = "Interrupt Add"
+end
