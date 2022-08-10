@@ -82,9 +82,9 @@ if L then
 	L.trap = "陷阱" -- Short for Flameclasp Trap
 	L.chains = "锁链" -- Short for Shadowsteel Chains
 	L.embers = "余烬" -- Short for Shadowsteel Embers
-	-- L.adds_embers = "Embers (%d) - Adds Next!"
-	-- L.adds_killed = "Adds killed in %.2fs"
-	-- L.spikes = "Spiked Death" -- Soft enrage spikes
+	L.adds_embers = "余烬 (%d) - 下一波恐魔!"
+	L.adds_killed = "击杀恐魔，用时 %.2f秒"
+	L.spikes = "狂暴时限" -- Soft enrage spikes
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "zhCN")
@@ -92,7 +92,7 @@ if L then
 	L.custom_on_stop_timers = "总是显示技能条"
 	L.custom_on_stop_timers_desc = "卫士可能延迟他的技能。当启用此选项，他的技能条将停留在屏幕上。"
 
-	-- L.bomb_missed = "%dx Bombs Missed"
+	L.bomb_missed = "%dx 炸弹未击中"
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "zhCN")
@@ -140,11 +140,11 @@ end
 
 L = BigWigs:NewBossLocale("Sanctum of Domination Affixes", "zhCN")
 if L then
-	--L.custom_on_bar_icon = "Bar Icon"
-	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+	L.custom_on_bar_icon = "条形图标"
+	L.custom_on_bar_icon_desc = "显示宿命之力条形图标."
 
-	--L.chaotic_essence = "Essence"
+	L.chaotic_essence = "精华"
 	L.creation_spark = "火花"
 	L.protoform_barrier = "屏障"
-	--L.reconfiguration_emitter = "Interrupt Add"
+	L.reconfiguration_emitter = "打断小怪"
 end
