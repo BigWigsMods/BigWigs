@@ -24,7 +24,7 @@ local sunderCount = 1
 local energizeCount = 0
 
 local normalTimers = {
-	[350496] = {5, 11.8, 24.5, 14.6, 11.8}, -- Threat Neutralization (Bombs)
+	[350496] = {0, 11.5, 11.5, 24.5, 11.5, 11.5}, -- Threat Neutralization (Bombs)
 	[352833] = {18, 32.7}, -- Disintegration
 }
 local heroicTimers = {
