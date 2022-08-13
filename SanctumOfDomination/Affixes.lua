@@ -48,7 +48,6 @@ local creationSparkCount = 1
 local barrierCount = 1
 local emitterCount = 1
 local stage = 1
-local bridgeCount = 1
 
 local bar_icon_texture = "|A:ui-ej-icon-empoweredraid-large:0:0|a "
 local bar_icon = bar_icon_texture
@@ -184,7 +183,7 @@ function mod:OnBossEngage(_, module, diff)
 	elseif activeBoss == 2435 then -- Sylvanas Windrunner
 		stage = 1
 		self:Log("SPELL_AURA_APPLIED", "SylvanasBansheeShroudApplied", 350857)
-		self:Log("SPELL_CREATE", "SylvanasCreateBridge", 348093, 351840, 351841) -- 351837, 348148, 351838
+		self:Log("SPELL_CREATE", "SylvanasCreateBridge", 348093, 351840, 351841, 351837, 348148, 351838)
 		self:Log("SPELL_CAST_SUCCESS", "SylvanasBlasphemySuccess", 357729)
 	end
 
@@ -287,20 +286,28 @@ function mod:SylvanasBansheeShroudApplied(args)
 	end
 end
 
-function mod:SylvanasCreateBridge(args) -- just earth
-	if stage < 2 then
-		stage = 2
-		bridgeCount = 1
+do
+	local bridgeCount = 1
+	function mod:SylvanasCreateBridge()
+		if stage < 2 then
+			stage = 2
+			bridgeCount = 1
+		end
+		if not self:Mythic() then
+			if bridgeCount == 2 then
+				self:Bar(372634, 11.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+			elseif bridgeCount == 5 then
+				self:Bar(372634, 17.2, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+			end
+		else -- Mythic
+			if bridgeCount == 2 then
+				self:Bar(372634, 15.7, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+			elseif bridgeCount == 4 then
+				self:Bar(372634, 7.1, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+			end
+		end
+		bridgeCount = bridgeCount + 1
 	end
-	-- only seeing one p2 cast? not sure if triggering the next bridge is full
-	-- resetting the timer after the first or what (the time between bridges is < 60s)
-	if bridgeCount == 1 and not self:Mythic() then
-		self:Bar(372634, args.spellId == 351841 and 11 or 11.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
-	end
-	if bridgeCount == 2 and self:Mythic() then
-		self:Bar(372634, 7.8, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
-	end
-	bridgeCount = bridgeCount + 1
 end
 
 function mod:SylvanasBlasphemySuccess()
