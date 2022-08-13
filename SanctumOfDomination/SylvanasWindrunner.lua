@@ -618,12 +618,17 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				-- Checking amout as it starts with 5 in Heroic & Mythic
-				local _, amount = self:UnitDebuff(args.destName, args.spellId)
-				self:NewStackMessage(args.spellId, "blue", args.destName, amount, nil, L.darkness)
-				if amount > 3 then
-					-- Don't need to blast warning as the debuff bounces around
-					self:PlaySound(args.spellId, "warning")
+				if self:Easy() then
+					self:PersonalMessage(args.spellId, nil, L.darkness)
+					self:PlaySound(args.spellId, "alarm")
+				else
+					-- Checking amout as it starts with 5 in Heroic & Mythic
+					local _, amount = self:UnitDebuff(args.destName, args.spellId)
+					self:NewStackMessage(args.spellId, "blue", args.destName, amount, nil, L.darkness)
+					if amount > 3 then
+						-- Don't need to blast warning as the debuff bounces around
+						self:PlaySound(args.spellId, "warning")
+					end
 				end
 			end
 		end
@@ -635,7 +640,7 @@ do
 	local playerList = {}
 	function mod:WailingArrow(args)
 		local count = self:Mythic() and wailingArrowCastCount or self:GetStage() == 1 and wailingArrowCount or wailingArrowCastCount
-		local target = table.remove(playerList, 1)
+		local target = table.remove(playerList, 1) or "???"
 		self:Message(args.spellId, "yellow", CL.other:format(CL.count:format(L.arrow, count), self:ColorName(target)))
 		self:PlaySound(args.spellId, "alert")
 		wailingArrowCastCount = wailingArrowCastCount + 1
