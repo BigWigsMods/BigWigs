@@ -39,6 +39,20 @@ local isInfoOpen = false
 local barbedArrowList = {}
 
 local stageOneTimersTable = {
+	[17] = { -- LFR
+		[347504] = {8.2, 62.7, 63.5, 61.2}, -- Windrunner
+		[347670] = {11.8, 59.8, 63.4, 8.4, 55.7}, -- Shadow Dagger
+		[352650] = {21.9, 23.4, 19.8, 19.6, 20.7, 21.4, 23.3, 22.3, 18.3}, -- Ranger's Heartseeker
+		[347704] = {55.3, 60.0, 60.0, 60.0}, -- Veil of Darkness
+		[349458] = {27.9, 65.4, 65.6}, -- Domination Chains
+	},
+	[14] = { -- Normal
+		[347504] = {7.3, 56.7, 55.0, 55.0, 56.6}, -- Windrunner
+		[347670] = {10.6, 54.1, 55.0, 8.0, 49.4, 54.3}, -- Shadow Dagger
+		[352650] = {22.0, 20.5, 34.7, 16.1, 18.1, 23.1, 18.9, 15.7, 21.0, 28.5}, -- Ranger's Heartseeker
+		[347704] = {49.3, 53.3, 54.0, 53.2}, -- Veil of Darkness
+		[349458] = {25.1, 59.7, 55.6, 58.1}, -- Domination Chains
+	},
 	[15] = { -- Heroic
 		[347504] = {7.1, 51.1, 49, 49.0, 53, 47.2}, -- Windrunner
 		[347670] = {10.6, 47.9, 47.7, 7.7, 42.3, 49.7, 46}, -- Shadow Dagger
@@ -54,17 +68,26 @@ local stageOneTimersTable = {
 		[349458] = {29.0, 54.9, 62.6, 53.9}, -- Domination Chains
 	}
 }
-local stageOneTimers = stageOneTimersTable[mod:Difficulty()] or stageOneTimersTable[15]
+local stageOneTimers = stageOneTimersTable[mod:Difficulty()]
 
 local stageThreeTimersTable = {
+	[17] = { -- LFR
+		[354011] = {36.5, 87.9, 88.3, 89.1, 88.2, 89.5}, -- Bane Arrows
+		[353969] = {40.3, 24.1, 55.0, 3.0, 13.3, 25.7, 34.9, 12.2, 34.3, 13.4, 36.1, 12.1, 25.4, 44.7, 3.0, 22.3, 27.4, 20.9, 26.4}, -- Banshee's Heartseeker
+		[347704] = {12.7, 44.9/57.5/76.0, 68.7, 66.3, 67.5, 67.5, 67.3, 67.9}, -- Veil of Darkness
+		[347609] = {86.2, 65.2, 64.9, 66.0, 64.1, 64.8, 65.4}, -- Wailing Arrow
+		[354147] = {95.2, 89.4, 87.0, 91.2}, -- Raze
+		[353952] = {105.9, 63.2, 61.7, 63.5, 61.0, 63.3, 62.4}, -- Banshee Scream
+		[347670] = {55.3, 89.7, 93.3, 87.0, 88.8}, -- Shadow Dagger (353935 in stage 3)
+	},
 	[14] = { -- Normal
-		[354011] = {31.5, 81.1, 76.5, 80.0}, -- Bane Arrows
-		[353969] = {38.8, 24.2, 47.6, 3.5, 29.9, 15.4, 24.9, 31.4, 15.5, 39.5, 23.2, 10.2, 15.1}, -- Banshee's Heartseeker
-		[347704] = {44.0, 62.7, 68.4, 60.0, 61.3, 63.6}, -- Veil of Darkness
-		[347609] = {77.4, 57.5, 57.8, 60.0}, -- Wailing Arrow
-		[354147] = {86.4, 76.0, 76.0, 76.0}, -- Raze
-		[353952] = {92.7, 50.0, 54.9, 52.6, 54.6}, -- Banshee Scream
-		[347670] = {47.7, 80.0, 84.6}, -- Shadow Dagger (353935 in stage 3)
+		[354011] = {27.7, 81.6, 76.6, 79.2, 78.8, 79.8}, -- Bane Arrows
+		[353969] = {41.8, 21.1, 43.2, 4.5, 30.2, 31.1, 15.3, 24.9, 19.7, 34.6, 14.9, 21.9, 30.2, 17.9, 31.5, 18.4, 31.3, 15.7}, -- Banshee's Heartseeker
+		[347704] = {36.9, 64.4, 55.2, 60.0, 60.1, 60.1, 59.8}, -- Veil of Darkness
+		[347609] = {74.0, 57.9, 58.4, 58.1, 57.9, 56.5, 57.7}, -- Wailing Arrow
+		[354147] = {83.0, 78.4, 76.5, 85.0}, -- Raze
+		[353952] = {93.6, 52.1, 55.4, 56.3, 57.9, 60.0, 49.7}, -- Banshee Scream
+		[347670] = {44.8, 80.5, 83.4, 75.7, 87.4, 73.0}, -- Shadow Dagger (353935 in stage 3)
 	},
 	[15] = { -- Heroic
 		[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2, 57.9}, -- Banshee's Fury
@@ -86,7 +109,7 @@ local stageThreeTimersTable = {
 		[353952] = {71.5, 110, 112}, -- Banshee Scream
 	}
 }
-local stageThreeTimers = stageThreeTimersTable[mod:Difficulty()] or stageThreeTimersTable[14]
+local stageThreeTimers = stageThreeTimersTable[mod:Difficulty()]
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -299,8 +322,8 @@ function mod:OnEngage(diff)
 	intermission = false
 	isInfoOpen = false
 	barbedArrowList = {}
-	stageOneTimers = stageOneTimersTable[diff] or stageOneTimersTable[15]
-	stageThreeTimers = stageThreeTimersTable[diff] or stageThreeTimersTable[14]
+	stageOneTimers = stageOneTimersTable[diff]
+	stageThreeTimers = stageThreeTimersTable[diff]
 
 	self:Bar(347504, stageOneTimers[347504][windrunnerCount], CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
 	self:Bar(347670, stageOneTimers[347670][shadowDaggerCount], CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
