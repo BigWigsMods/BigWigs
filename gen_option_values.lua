@@ -908,7 +908,11 @@ local function parseLocale(file)
 		end
 		if module_name then
 			current_module = module_name
-			keys[module_name] = {}
+			if not keys[module_name] then
+				keys[module_name] = {}
+			else
+				error(string.format("    %s:%d: Duplicate module name %q", file_name, n, module_name))
+			end
 			-- Save base keys for non-boss locales
 			if file_locale == "enUS" then
 				modules_locale[module_name] = keys[module_name]
