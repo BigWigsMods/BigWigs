@@ -707,6 +707,15 @@ local function parseLua(file)
 			end
 		end
 
+		--- Check timer args (callback, timer)
+		local method, args = line:match(":(%a+Timer)(%b())")
+		if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" or method == "SimpleTimer" then
+			args = strsplit(args:sub(2, -2))
+			if tonumber(args[1]) then
+				error(string.format("    %s:%d: Invalid args for \":%s\" callback=%s, delay=%s", file_name, n, method, tostring(args[1]), tostring(args[2])))
+			end
+		end
+
 		--- Parse message calls.
 		-- Check for function calls that will trigger a sound, including calls
 		-- delayed with ScheduleTimer.
