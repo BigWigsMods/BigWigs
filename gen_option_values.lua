@@ -745,6 +745,12 @@ local function parseLua(file)
 				end
 				if method == "PersonalMessage" then
 					color = {"blue"}
+					local locale_string = args[2+offset]
+					if (locale_string == "nil" or locale_string == "false") then locale_string = nil end
+					if common_locale and (locale_string and not common_locale[unquote(locale_string)]) then
+						local text = args[3+offset]
+						error(string.format("    %s:%d: Invalid localeString! func=%s, key=%s, localeString=%s, text=%s", file_name, n, tostring(current_func), key, tostring(locale_string), tostring(text)))
+					end
 				end
 				local icon_index = icon_methods[method]
 				if icon_index then
