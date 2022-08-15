@@ -160,3 +160,14 @@ if L then
 	L.mythic_dispel_stage_4_desc = "Timer für den Zeitpunkt zum Dispellen in der letzten Phase, genutzt von Echo beim ersten Kill"
 	L.mythic_dispel_bar = "Dispels"
 end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "deDE")
+if L then
+	L.custom_on_bar_icon = "Leistensymbol"
+	L.custom_on_bar_icon_desc = "Zeigt das Schicksalhafte Schlachtzugssymbol in den Leisten."
+
+	L.chaotic_essence = "Essenz"
+	L.creation_spark = "Funken"
+	L.protoform_barrier = "Barriere"
+	L.reconfiguration_emitter = "Zauber-Add"
+end

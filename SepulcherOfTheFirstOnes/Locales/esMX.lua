@@ -159,3 +159,14 @@ if L then
 	-- L.mythic_dispel_stage_4_desc = "Timers for when to do dispels in the last stage, used by Echo on their first kill"
 	-- L.mythic_dispel_bar = "Dispels"
 end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "esMX")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	--L.chaotic_essence = "Essence"
+	L.creation_spark = "Chiribitas"
+	L.protoform_barrier = "Barrera"
+	--L.reconfiguration_emitter = "Interrupt Add"
+end

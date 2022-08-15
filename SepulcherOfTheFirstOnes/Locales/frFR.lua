@@ -159,3 +159,14 @@ if L then
 	L.mythic_dispel_stage_4_desc = "Affiche les timers pour dispell pendant la dernière phase. Utilisé par Echo"
 	L.mythic_dispel_bar = "Dispels"
 end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "frFR")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	--L.chaotic_essence = "Essence"
+	L.creation_spark = "Etincelles"
+	L.protoform_barrier = "Barrière"
+	--L.reconfiguration_emitter = "Interrupt Add"
+end

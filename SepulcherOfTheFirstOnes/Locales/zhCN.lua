@@ -159,3 +159,14 @@ if L then
 	L.mythic_dispel_stage_4_desc = "显示驱散计时器，根据 Echo 的首杀所使用的时间轴制作，为第四阶段的驱散显示计时器，会在合适的时间点提醒你驱散。"
 	L.mythic_dispel_bar = "驱散"
 end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "zhCN")
+if L then
+	L.custom_on_bar_icon = "条形图标"
+	L.custom_on_bar_icon_desc = "显示宿命之力条形图标."
+
+	L.chaotic_essence = "精华"
+	L.creation_spark = "火花"
+	L.protoform_barrier = "屏障"
+	L.reconfiguration_emitter = "打断小怪"
+end

@@ -159,3 +159,14 @@ if L then
 	L.mythic_dispel_stage_4_desc = "Таймеры для диспелов, взятые с первого кила Echo"
 	L.mythic_dispel_bar = "Диспелы"
 end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "ruRU")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	--L.chaotic_essence = "Essence"
+	L.creation_spark = "Искры"
+	L.protoform_barrier = "Преграда"
+	--L.reconfiguration_emitter = "Interrupt Add"
+end

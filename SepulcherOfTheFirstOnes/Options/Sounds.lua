@@ -176,3 +176,10 @@ BigWigs:AddSounds("The Jailer", {
 	["mythic_dispel_stage_4"] = "long",
 	["stages"] = "long",
 })
+
+BigWigs:AddSounds("Sepulcher of the First Ones Affixes", {
+	[369505] = "info",
+	[371254] = "info",
+	[371447] = {"alert","info"},
+	[372634] = "alarm",
+})

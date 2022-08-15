@@ -159,3 +159,14 @@ if L then
 	L.mythic_dispel_stage_4_desc = "顯示驅散計時器，根據 Echo 的首殺所使用的時間軸製作，為第四階段的驅散顯示計時器，會在適合的時間點提醒你驅散。"
 	L.mythic_dispel_bar = "驅散"
 end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "zhTW")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	--L.chaotic_essence = "Essence"
+	L.creation_spark = "火花"
+	L.protoform_barrier = "屏障"
+	--L.reconfiguration_emitter = "Interrupt Add"
+end
