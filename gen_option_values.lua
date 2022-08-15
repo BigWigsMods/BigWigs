@@ -544,7 +544,7 @@ local function parseLua(file)
 		end
 
 		-- check usage
-		for locale_type, locale_key in line:gmatch("(C?L)%.([%w_]+)") do
+		for locale_type, locale_key, extra in line:gmatch("(C?L)%.([%w_]+)(%(?)") do
 			if locale_type == "CL" then
 				-- CL is only set in the main project
 				if common_locale and not common_locale[locale_key] then
@@ -552,6 +552,10 @@ local function parseLua(file)
 				end
 			elseif locale_type == "L" and not locale[locale_key] then
 				error(string.format("    %s:%d: Invalid locale string \"L.%s\"", file_name, n, locale_key))
+			end
+			-- trying to invoke the string (missing :format)
+			if extra == "(" then
+				error(string.format("    %s:%d: Invalid locale string format \"%s.%s%s\"", file_name, n, locale_type, locale_key, format))
 			end
 		end
 
