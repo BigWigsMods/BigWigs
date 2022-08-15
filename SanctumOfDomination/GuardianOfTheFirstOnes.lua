@@ -233,7 +233,7 @@ do
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(args.spellId, "warning")
-				self:PersonalMessage(args.spellId, CL.no:format(CL.shield))
+				self:PersonalMessage(args.spellId, nil, CL.no:format(CL.shield))
 			end
 		end
 	end

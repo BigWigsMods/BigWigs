@@ -612,7 +612,7 @@ end
 
 function mod:DominationChainsApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.chain)
+		self:PersonalMessage(args.spellId, nil, L.chain)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -702,7 +702,7 @@ do
 		self:CustomIcon(wailingArrowMarker, args.destName, wailingArrowPlayerCount)
 		if self:Me(args.destGUID) then
 			myArrow = wailingArrowPlayerCount
-			self:PersonalMessage(347609, CL.count:format(L.arrow, wailingArrowPlayerCount))
+			self:PersonalMessage(347609, nil, CL.count:format(L.arrow, wailingArrowPlayerCount))
 			self:PlaySound(347609, "alarm")
 			self:Say(347609, CL.count_rticon:format(L.arrow, wailingArrowPlayerCount, wailingArrowPlayerCount))
 			self:SayCountdown(347609, 9)
@@ -1036,7 +1036,7 @@ end
 
 function mod:CrushingDreadApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.dread)
+		self:PersonalMessage(args.spellId, nil, L.dread)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -1064,7 +1064,7 @@ end
 
 function mod:CurseOfLethargyApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.curse)
+		self:PersonalMessage(args.spellId, nil, L.curse)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end

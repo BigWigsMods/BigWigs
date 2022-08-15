@@ -350,7 +350,7 @@ end
 
 function mod:SoulManacles(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.chain)
+		self:PersonalMessage(args.spellId, nil, L.chain)
 		self:PlaySound(args.spellId, "info")
 	end
 end

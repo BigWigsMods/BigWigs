@@ -238,7 +238,7 @@ end
 
 function mod:GloomBoltApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, "blue")
+		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
