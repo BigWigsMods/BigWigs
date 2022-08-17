@@ -275,7 +275,7 @@ end
 function mod:AnduinDominationsGraspRemoved()
 	local stage = self:GetStage()
 	stage = stage + 1
-	self:SetStage(2)
+	self:SetStage(stage)
 	if stage == 2 then
 		self:Bar(371254, 8.6, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 	elseif stage == 3 then
