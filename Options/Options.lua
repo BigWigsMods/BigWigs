@@ -2,6 +2,8 @@
 local BigWigs = BigWigs
 local options = {}
 
+local isWrath = select(4, GetBuildInfo()) >= 30400 -- XXX temp
+
 local C = BigWigs.C
 
 local L = BigWigsAPI:GetLocale("BigWigs")
@@ -1194,8 +1196,11 @@ do
 	local expansionHeader = {
 		"Classic",
 	}
-	if BigWigsLoader.isBC then
+	if BigWigsLoader.isClassic then
 		expansionHeader[#expansionHeader+1] = "BurningCrusade"
+		if isWrath then
+			expansionHeader[#expansionHeader+1] = "WrathOfTheLichKing"
+		end
 	end
 
 	local statusTable = {}
@@ -1234,12 +1239,14 @@ do
 		local zoneId = value:match("\001(-?%d+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		-- elseif value:match("^BigWigs_") and value ~= "BigWigs_Classic" and GetAddOnEnableState(playerName, value) == 0 then
-		-- 		local missing = AceGUI:Create("Label")
-		-- 		missing:SetText(L.missingAddOn:format(value))
-		-- 		missing:SetFontObject(GameFontHighlight)
-		-- 		missing:SetFullWidth(true)
-		-- 		widget:AddChild(missing)
+		-- XXX update when era addons are ready for classic
+		-- elseif value:match("^BigWigs_") and GetAddOnEnableState(playerName, value) == 0 then
+		elseif value == "BigWigs_WrathOfTheLichKing" and GetAddOnEnableState(playerName, value) == 0 then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(L.missingAddOn:format(value))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
 		elseif value:match("^LittleWigs_") and GetAddOnEnableState(playerName, "LittleWigs") == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format("LittleWigs"))

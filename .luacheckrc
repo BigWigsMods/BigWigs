@@ -218,6 +218,7 @@ globals = {
 	"UnitClass",
 	"UnitExists",
 	"UnitFactionGroup",
+	"UnitGroupRolesAssigned",
 	"UnitHealth",
 	"UnitHealthMax",
 	"UnitInParty",

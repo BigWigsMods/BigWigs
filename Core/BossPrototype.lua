@@ -25,9 +25,13 @@ do
 	tbl.bossPrototype = boss
 end
 
+local isClassicEra = BigWigsLoader.isClassicEra
+local isWrath = select(4, GetBuildInfo()) >= 30400 -- XXX temp
+
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = function(_) end, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
+local UnitGroupRolesAssigned = UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
 local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax
 local UnitDetailedThreatSituation = BigWigsLoader.UnitDetailedThreatSituation
@@ -50,7 +54,7 @@ local classColorMessages = true
 local debugFunc = nil
 
 local talentRoles = {
-	DRUID = { "DAMAGER","TANK", "HEALER" },
+	DRUID = { "DAMAGER","DAMAGER", "HEALER" },
 	HUNTER = { "DAMAGER", "DAMAGER", "DAMAGER" },
 	MAGE = { "DAMAGER", "DAMAGER", "DAMAGER" },
 	PALADIN = { "HEALER", "TANK", "DAMAGER" },
@@ -77,29 +81,48 @@ local updateData = function(module)
 
 	local _, class = UnitClass("player")
 	local spent = 0
+	local talentTree = 1
 	for tree = 1, 3 do
 		local _, _, pointsSpent = GetTalentTabInfo(tree)
 		if pointsSpent > spent then
 			spent = pointsSpent
+			talentTree = tree
 			myRole = talentRoles[class][tree]
-			if class == "DRUID" and myRole == "TANK" then
-				-- Check for some bear talents, they should have at least one maxed, right?
-				local _, _, _, _, feralInstinct = GetTalentInfo(tree, 3)
-				local _, _, _, _, thickHide = GetTalentInfo(tree, 5)
-				local _, _, _, _, primalFury = GetTalentInfo(tree, 12)
-				if feralInstinct < 5 and thickHide < 5 and primalFury < 2 then
-					myRole = "DAMAGER"
+			if class == "DRUID" and tree == 2 then -- defaults to DAMAGER
+				if isWrath then
+					-- using the lfg tool?
+					local role = UnitGroupRolesAssigned("player")
+					if role == "TANK" or role == "DAMAGER" then
+						myRole = role
+					else
+						-- Check for bear talents
+						local thickHide = select(5, GetTalentInfo(tree, 1))
+						local survivalInstincts = select(5, GetTalentInfo(tree, 15))
+						local naturalReaction = select(5, GetTalentInfo(tree, 29))
+						if thickHide == 5 and survivalInstincts == 1 and naturalReaction == 5 then
+							myRole = "TANK"
+						end
+					end
+				else
+					-- Check for bear talents
+					local feralInstinct = select(5, GetTalentInfo(tree, 3))
+					local thickHide = select(5, GetTalentInfo(tree, 5))
+					local primalFury = select(5, GetTalentInfo(tree, 12))
+					if feralInstinct == 5 and thickHide >= (isClassicEra and 2 or 5) and primalFury == 2 then
+						myRole = "TANK"
+					end
 				end
 			end
-			if myRole == "DAMAGER" then
-				myDamagerRole = "MELEE"
-				if
-					class == "MAGE" or class == "HUNTER" or class == "PRIEST" or class == "WARLOCK" or
-					(class == "DRUID" and tree == 1) or (class == "SHAMAN" and tree == 1)
-				then
-					myDamagerRole = "RANGED"
-				end
-			end
+		end
+	end
+
+	if myRole == "DAMAGER" then
+		myDamagerRole = "MELEE"
+		if
+			class == "MAGE" or class == "HUNTER" or class == "PRIEST" or class == "WARLOCK" or
+			(class == "DRUID" and talentTree == 1) or (class == "SHAMAN" and talentTree == 1)
+		then
+			myDamagerRole = "RANGED"
 		end
 	end
 
@@ -147,7 +170,15 @@ local eventMap = setmetatable({}, metaMap)
 local unfilteredEventSpells = setmetatable({}, metaMap)
 local unitEventMap = setmetatable({}, metaMap)
 local widgetEventMap = setmetatable({}, metaMap)
-local icons = setmetatable({}, {__index =
+local icons = setmetatable({
+	-- include some retail icons used for generic events
+	["achievement_bg_returnxflags_def_wsg"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\achievement_bg_returnxflags_def_wsg",
+	["misc_arrowdown"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowdown",
+	["misc_arrowleft"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowleft",
+	["misc_arrowlup"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowlup",
+	["misc_arrowright"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\misc_arrowright",
+	["spell_holy_borrowedtime"] = "Interface\\AddOns\\BigWigs\\Media\\Icons\\spell_holy_borrowedtime",
+}, {__index =
 	function(self, key)
 		local value
 		if type(key) == "number" then
@@ -330,7 +361,9 @@ function boss:Enable(isWipe)
 		enabledModules[#enabledModules+1] = self
 
 		if self.engageId then
-			--self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage") -- Not on classic
+			if not isClassicEra then
+				self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
+			end
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
 		end
 		local _, class = UnitClass("player")
@@ -599,7 +632,7 @@ do
 			local spell = select(i, ...)
 			if type(spell) == "number" then
 				local id = spell
-				if BigWigsLoader.isClassic then
+				if isClassicEra then
 					spell = GetSpellInfo(spell)
 				elseif not GetSpellInfo(spell) then
 					spell = nil
@@ -681,15 +714,19 @@ do
 			event = "UNIT_HEALTH_FREQUENT"
 		end
 		if (not func and not self[event]) or (func and not self[func]) then core:Print(format(noFunc, self.moduleName, func or event)) return end
-		if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
-			if not frameTbl[unit] then
-				frameTbl[unit] = CreateFrame("Frame")
-				frameTbl[unit]:SetScript("OnEvent", eventFunc)
+			if isClassicEra and unit:sub(1, 4) == "boss" then -- XXX compat
+				self:RegisterEvent(event, func)
+			else
+				if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
+				if not frameTbl[unit] then
+					frameTbl[unit] = CreateFrame("Frame")
+					frameTbl[unit]:SetScript("OnEvent", eventFunc)
+				end
+				unitEventMap[self][event][unit] = func or event
+				frameTbl[unit]:RegisterUnitEvent(event, unit)
 			end
-			unitEventMap[self][event][unit] = func or event
-			frameTbl[unit]:RegisterUnitEvent(event, unit)
 		end
 	end
 	--- Unregister a callback for unit bound events.
@@ -1219,6 +1256,18 @@ function boss:MythicPlus()
 	return difficulty == 8
 end
 
+--- Check if on a retail server.
+-- @return boolean
+function boss:Retail()
+	return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE
+end
+
+--- Check if on a classic server.
+-- @return number 2 = classic era, 5 = classic, nil if retail
+function boss:Classic()
+	return WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE and WOW_PROJECT_ID
+end
+
 --- Get the mob/npc id from a GUID.
 -- @string guid GUID of a mob/npc
 -- @return mob/npc id
@@ -1473,7 +1522,7 @@ end
 -- @return boolean
 function boss:Tank(unit)
 	if unit then
-		return GetPartyAssignment("MAINTANK", unit)
+		return GetPartyAssignment("MAINTANK", unit) or (isWrath and UnitGroupRolesAssigned(unit) == "TANK")
 	end
 	return myRole == "TANK"
 end
@@ -1500,14 +1549,20 @@ end
 --- Check if your talent tree role is HEALER.
 -- @string[opt="player"] unit check if the chosen role of another unit is set to HEALER.
 -- @return boolean
-function boss:Healer()
+function boss:Healer(unit)
+	if unit then
+		return UnitGroupRolesAssigned(unit) == "HEALER"
+	end
 	return myRole == "HEALER"
 end
 
 --- Check if your talent tree role is DAMAGER.
 -- @string[opt="player"] unit check if the chosen role of another unit is set to DAMAGER.
 -- @return boolean
-function boss:Damager()
+function boss:Damager(unit)
+	if unit then
+		return UnitGroupRolesAssigned(unit) == "DAMAGER"
+	end
 	return myDamagerRole
 end
 
@@ -1520,28 +1575,30 @@ do
 	local offDispel, defDispel = {}, {}
 	function UpdateDispelStatus()
 		offDispel, defDispel = {}, {}
-		if IsSpellKnown(19801) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(370) or IsSpellKnown(8012) or IsSpellKnown(19505, true) or IsSpellKnown(19731, true) or IsSpellKnown(19734, true) or IsSpellKnown(19736, true) then
-			-- Tranquilizing Shot (Hunter), Dispel Magic r1/r2 (Priest), Purge r1/r2 (Shaman), Devour Magic r1/r2/r3/r4 (Warlock Felhunter)
+		-- local shieldslam = isWrath and (IsSpellKnown(47488) or IsSpellKnown(47487) or IsSpellKnown(30356) or IsSpellKnown(25258) or IsSpellKnown(23925) or IsSpellKnown(23924) or IsSpellKnown(23923) or IsSpellKnown(23922))
+		local devourMagic = IsSpellKnown(19505, true) or IsSpellKnown(19731, true) or IsSpellKnown(19734, true) or IsSpellKnown(19736, true) or (isWrath and (IsSpellKnown(27276, true) or IsSpellKnown(27277, true) or IsSpellKnown(48011, true)))
+		if IsSpellKnown(19801) or IsSpellKnown(527) or IsSpellKnown(988) or (isWrath and IsSpellKnown(32375)) or IsSpellKnown(370) or IsSpellKnown(8012) or devourMagic then
+			-- Tranquilizing Shot (Hunter), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W], Purge r1/r2 (Shaman), Devour Magic (Warlock Felhunter)
 			offDispel.magic = true
 		end
 		if IsSpellKnown(19801) then
 			-- Tranquilizing Shot (Hunter)
 			offDispel.enrage = true
 		end
-		if IsSpellKnown(4987) or IsSpellKnown(527) or IsSpellKnown(988) then
-			-- Cleanse (Paladin), Dispel Magic r1/r2 (Priest)
+		if IsSpellKnown(4987) or IsSpellKnown(527) or IsSpellKnown(988) or (isWrath and IsSpellKnown(32375)) then
+			-- Cleanse (Paladin), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W]
 			defDispel.magic = true
 		end
-		if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or IsSpellKnown(2870) or IsSpellKnown(8170) then
-			-- Purify (Paladin), Cleanse (Paladin), Cure Disease (Priest), Abolish Disease (Priest), Cure Disease (Shaman), Disease Cleansing Totem (Shaman)
+		if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or (not isWrath and IsSpellKnown(2870)) or (isWrath and IsSpellKnown(526)) or IsSpellKnown(8170) then
+			-- Purify (Paladin), Cleanse (Paladin), Cure Disease (Priest), Abolish Disease (Priest), Cure Disease (Shaman)[C,BC], Cure Toxins (Shaman)[W], Disease Cleansing Totem (Shaman)
 			defDispel.disease = true
 		end
 		if IsSpellKnown(2893) or IsSpellKnown(8946) or IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(526) or IsSpellKnown(8166) then
-			-- Abolish Poison (Druid), Cure Poison (Druid), Purify (Paladin), Cleanse (Paladin), Cure Poison (Shaman), Poison Cleansing Totem (Shaman)
+			-- Abolish Poison (Druid), Cure Poison (Druid), Purify (Paladin), Cleanse (Paladin), Cure Poison/Toxins (Shaman), Poison Cleansing Totem (Shaman)
 			defDispel.poison = true
 		end
-		if IsSpellKnown(2782) or IsSpellKnown(475) then
-			-- Remove Curse (Druid), Remove Lesser Curse (Mage)
+		if IsSpellKnown(2782) or IsSpellKnown(475) or (isWrath and IsSpellKnown(51886)) then
+			-- Remove Curse (Druid), Remove Lesser Curse (Mage), Cleanse Spirit (Shaman)
 			defDispel.curse = true
 		end
 	end
@@ -1564,15 +1621,26 @@ end
 do
 	local GetSpellCooldown = GetSpellCooldown
 	local canInterrupt = false
-	local spellList = {
+	local spellListClassic = {
 		-- 16979, -- Feral Charge (Druid)
 		2139, -- Counterspell (Mage)
 		15487, -- Silence (Priest)
-		1769, 1768, 1767, 1766, -- Kick (Rogue)
-		10414, 10413, 10412, 8046, 8045, 8044, 8042, -- Earth Shock (Shaman)
+		38768, 1769, 1768, 1767, 1766, -- Kick (Rogue)
+		25454, 10414, 10413, 10412, 8046, 8045, 8044, 8042, -- Earth Shock (Shaman)
 		6554, 6552, -- Pummel (Warrior)
-		-- 1672, 1671, 72, -- Shield Bash (Warrior)
+		-- 29704, 1672, 1671, 72, -- Shield Bash (Warrior)
 	}
+	local spellListWrath = {
+		-- 16979, -- Feral Charge (Druid)
+		2139, -- Counterspell (Mage)
+		15487, -- Silence (Priest)
+		1766, -- Kick (Rogue)
+		6555, -- Pummel (Warrior)
+		-- 72, -- Shield Bash (Warrior)
+		47528, -- Mind Freeze (Death Knight)
+		57994, -- Wind Shear (Shaman)
+	}
+	local spellList = isWrath and spellListWrath or spellListClassic
 	function UpdateInterruptStatus()
 		if IsSpellKnown(19244, true) or IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
 			canInterrupt = GetSpellInfo(19647)

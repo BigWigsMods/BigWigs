@@ -13,8 +13,9 @@ local ldbi = LibStub("LibDBIcon-1.0")
 
 local strfind = string.find
 
-public.isClassic = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-public.isBC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+public.isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
+public.isClassic = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+local isWrath = select(4, GetBuildInfo()) >= 30400 -- XXX temp
 
 -----------------------------------------------------------------------
 -- Generate our version variables
@@ -133,19 +134,23 @@ local fakeZones = { -- Fake zones used as GUI menus
 
 do
 	local c = "BigWigs_Classic"
-	local bc = public.isBC and "BigWigs_BurningCrusade"
+	local bc = public.isClassic and "BigWigs_BurningCrusade"
+	local wotlk = public.isClassic and isWrath and "BigWigs_WrathOfTheLichKing"
 	local lw_c = "LittleWigs_Classic"
-	local lw_bc = public.isBC and "LittleWigs_BurningCrusade"
+	local lw_bc = public.isClassic and "LittleWigs_BurningCrusade"
+	local lw_wotlk = public.isClassic and isWrath and "LittleWigs_WrathOfTheLichKing"
 
 	public.zoneTbl = {
+		-- Shared between Classic and Wrath of the Lich King
+		[533] = wotlk or c, -- Naxxramas
+		[249] = wotlk or c, -- Onyxia's Lair -- XXX is this the same as Naxx, or moved later?
+
 		--[[ BigWigs: Classic ]]--
 		[409] = c, -- Molten Core
 		[469] = c, -- Blackwing Lair
 		[309] = c, -- Zul'Gurub
 		[509] = c, -- Ruins of Ahn'Qiraj
 		[531] = c, -- Ahn'Qiraj Temple
-		[249] = c, -- Onyxia's Lair
-		[533] = c, -- Naxxramas
 		[-947] = c, -- Azeroth (Fake)
 		[-1447] = c, -- Azshara
 		[-1419] = c, -- Blasted Lands
@@ -166,6 +171,14 @@ do
 		[564] = bc, -- Black Temple
 		[568] = bc, -- Zul'Aman
 		[580] = bc, -- The Sunwell
+		--[[ BigWigs: Wrath of the Lich King ]]--
+		[616] = wotlk, -- The Eye of Eternity
+		[603] = wotlk, -- Ulduar
+		[624] = wotlk, -- Vault of Archavon
+		[649] = wotlk, -- Trial of the Crusader
+		[724] = wotlk, -- The Ruby Sanctum
+		[631] = wotlk, -- Icecrown Citadel
+		[615] = wotlk, -- The Obsidian Sanctum
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -204,6 +217,23 @@ do
 		[269] = lw_bc, -- Opening of the Dark Portal
 		[560] = lw_bc, -- The Escape from Durnholde
 		[585] = lw_bc, -- Magister's Terrace
+		--[[ LittleWigs: Wrath of the Lich King ]]--
+		[576] = lw_wotlk, -- The Nexus
+		[578] = lw_wotlk, -- The Oculus
+		[608] = lw_wotlk, -- Violet Hold
+		[595] = lw_wotlk, -- The Culling of Stratholme
+		[619] = lw_wotlk, -- Ahn'kahet: The Old Kingdom
+		[604] = lw_wotlk, -- Gundrak
+		[574] = lw_wotlk, -- Utgarde Keep
+		[575] = lw_wotlk, -- Utgarde Pinnacle
+		[602] = lw_wotlk, -- Halls of Lightning
+		[601] = lw_wotlk, -- Azjol-Nerub
+		[658] = lw_wotlk, -- Pit of Saron
+		[599] = lw_wotlk, -- Halls of Stone
+		[600] = lw_wotlk, -- Drak'Tharon Keep
+		[650] = lw_wotlk, -- Trial of the Champion
+		[668] = lw_wotlk, -- Halls of Reflection
+		[632] = lw_wotlk, -- The Forge of Souls
 	}
 
 	public.zoneTblWorld = {
@@ -614,7 +644,7 @@ function mod:ADDON_LOADED(addon)
 
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
-	C_ChatInfo.RegisterAddonMessagePrefix(public.isBC and "D4BC" or "D4C") -- DBM
+	C_ChatInfo.RegisterAddonMessagePrefix(public.dbmPrefix) -- DBM
 
 	-- LibDBIcon setup
 	if type(BigWigsIconClassicDB) ~= "table" then
@@ -769,20 +799,20 @@ do
 		BigWigs_SiegeOfZuldazar = "BigWigs",
 		FS_Core = "Abandoned", -- abandoned addon breaking the load order
 		BigWigs_Nyalotha = "BigWigs",
-
-		-- Classic Cleanse
-		BigWigs_Azeroth = "BigWigs",
-		BigWigs_BattleOfDazaralor = "BigWigs",
-		BigWigs_BurningCrusade = "BigWigs",
-		BigWigs_Cataclysm = "BigWigs",
-		BigWigs_Classic = "BigWigs",
 		BigWigs_CrucibleOfStorms = "BigWigs",
 		BigWigs_EternalPalace = "BigWigs",
-		BigWigs_Legion = "BigWigs",
-		BigWigs_MistsOfPandaria = "BigWigs",
 		BigWigs_Uldir = "BigWigs",
-		BigWigs_WarlordsOfDraenor = "BigWigs",
-		BigWigs_WrathOfTheLichKing = "BigWigs",
+		BigWigs_Azeroth = "BigWigs",
+		BigWigs_BattleOfDazaralor = "BigWigs",
+
+		-- Classic Cleanse
+		-- BigWigs_Classic = "BigWigs",
+		-- BigWigs_BurningCrusade = "BigWigs",
+		-- BigWigs_WrathOfTheLichKing = "BigWigs",
+		-- BigWigs_Cataclysm = "BigWigs",
+		-- BigWigs_MistsOfPandaria = "BigWigs",
+		-- BigWigs_WarlordsOfDraenor = "BigWigs",
+		-- BigWigs_Legion = "BigWigs",
 	}
 	local delayedMessages = {}
 
@@ -858,11 +888,11 @@ do
 		--@version-bcc@
 		bType = "bcc"
 		--@end-version-bcc@
-		if public.isBC and bType == "c" then
+		if public.isClassic and bType == "c" then
 			delayedMessages[#delayedMessages+1] = "|cFFff0000WARNING!|r You've installed the wrong version of BigWigs."
 			delayedMessages[#delayedMessages+1] = "You are playing on Burning Crusade Classic, but have installed BigWigs for original Classic."
 			delayedMessages[#delayedMessages+1] = "We recommend avoiding unofficial addon updaters, and using the official CurseForge app to avoid such issues."
-		elseif public.isClassic and bType == "bcc" then
+		elseif public.isClassicEra and bType == "bcc" then
 			delayedMessages[#delayedMessages+1] = "|cFFff0000WARNING!|r You've installed the wrong version of BigWigs."
 			delayedMessages[#delayedMessages+1] = "You are playing on Classic, but have installed BigWigs for Burning Crusade Classic."
 			delayedMessages[#delayedMessages+1] = "We recommend avoiding unofficial addon updaters, and using the official CurseForge app to avoid such issues."
@@ -967,20 +997,27 @@ do
 	local DBMdotRevision         -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
 	local DBMdotDisplayVersion   -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
 	local DBMdotReleaseRevision  -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
-	if public.isBC then
-		DBMdotRevision = "20220517214447"
-		DBMdotDisplayVersion = "2.5.36"
-		DBMdotReleaseRevision = "20220517000000"
+	if isWrath then
+		DBMdotRevision = "20220802031754"
+		DBMdotDisplayVersion = "3.4.6"
+		DBMdotReleaseRevision = "20220801000000"
+		public.dbmPrefix = "D4WC"
+	elseif public.isClassic then
+		DBMdotRevision = "20220802031754"
+		DBMdotDisplayVersion = "2.5.42"
+		DBMdotReleaseRevision = "20220801000000"
+		public.dbmPrefix = "D4BC"
 	else
-		DBMdotRevision = "20220511054957"
-		DBMdotDisplayVersion = "1.14.21"
-		DBMdotReleaseRevision = "20220511000000"
+		DBMdotRevision = "20220802031754"
+		DBMdotDisplayVersion = "1.14.26"
+		DBMdotReleaseRevision = "20220801000000"
+		public.dbmPrefix = "D4C"
 	end
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
 		if IsInGroup() then
-			SendAddonMessage(public.isBC and "D4BC" or "D4C", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			SendAddonMessage(public.dbmPrefix, "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 		timer, prevUpgradedUser = nil, nil
 	end
@@ -1032,7 +1069,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 			end
 			public:SendMessage("BigWigs_PluginComm", bwMsg, extra, sender)
 		end
-	elseif prefix == "D4C" or prefix == "D4BC" then
+	elseif prefix == "D4C" or prefix == "D4BC" or prefix == "D4WC" then
 		local dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
 		sender = Ambiguate(sender, "none")
 		if dbmPrefix == "V" or dbmPrefix == "H" then
@@ -1202,7 +1239,7 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and strfind(zoneAddon, "LittleWigs_", nil, true) and public.isBC then
+		if zoneAddon and strfind(zoneAddon, "LittleWigs_", nil, true) and public.isClassic then
 			zoneAddon = "LittleWigs" -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
@@ -1251,7 +1288,7 @@ do
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
-			SendAddonMessage(public.isBC and "D4BC" or "D4C", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			SendAddonMessage(public.dbmPrefix, "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED()
 		elseif grouped and not groupType then
 			grouped = nil
@@ -1284,7 +1321,7 @@ function mod:BigWigs_CoreEnabled()
 	-- which kills your ability to receive addon comms during the loading process.
 	if IsInGroup() then
 		SendAddonMessage("BigWigs", versionQueryString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-		SendAddonMessage(public.isBC and "D4BC" or "D4C", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+		SendAddonMessage(public.dbmPrefix, "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
 
 	-- Core is loaded, nil these to force checking BigWigs.db.profile.option
