@@ -149,7 +149,7 @@ BigWigs:AddSounds("Sylvanas Windrunner", {
 	[347607] = "alarm",
 	[347609] = {"alarm","alert"},
 	[347670] = {"alarm","alert"},
-	[347704] = {"alert","warning"},
+	[347704] = {"alarm","alert","warning"},
 	[347807] = "alarm",
 	[348109] = "alarm",
 	[349458] = {"alarm","warning"},

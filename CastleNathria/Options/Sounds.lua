@@ -208,5 +208,5 @@ BigWigs:AddSounds("Castle Nathria Affixes", {
 	[369505] = "info",
 	[371254] = "info",
 	[371447] = {"alert","info"},
-	[372638] = "alarm",
+	[372634] = "alarm",
 })
