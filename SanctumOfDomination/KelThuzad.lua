@@ -612,7 +612,7 @@ function mod:RemnantDeath()
 end
 
 function mod:FreezingBlast(args)
-	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
+	if GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
 		self:Message(args.spellId, "orange")
 		self:PlaySound(args.spellId, "alarm")
 		self:CDBar(args.spellId, 6.1)
@@ -620,7 +620,7 @@ function mod:FreezingBlast(args)
 end
 
 function mod:GlacialWinds(args)
-	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
+	if GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
 		self:Message(args.spellId, "cyan", L.glacial_winds)
 		self:CDBar(args.spellId, 13.5, L.glacial_winds)
 		self:PlaySound(args.spellId, "info")
@@ -628,7 +628,7 @@ function mod:GlacialWinds(args)
 end
 
 function mod:FoulWinds(args)
-	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
+	if GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
 		self:Message(args.spellId, "yellow", L.foul_winds)
 		self:CDBar(args.spellId, 25.5, L.foul_winds)
 		self:PlaySound(args.spellId, "alert")
@@ -638,7 +638,7 @@ end
 function mod:UndyingWrath(args)
 	self:Message(args.spellId, "red")
 	self:CastBar(args.spellId, 10)
-	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
+	if GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
 		self:PlaySound(args.spellId, "warning")
 	end
 
