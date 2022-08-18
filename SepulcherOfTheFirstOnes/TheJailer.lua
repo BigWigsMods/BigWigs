@@ -523,11 +523,11 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, CL.count_rticon:format(CL.bomb, icon, icon))
-			self:SayCountdown(args.spellId, 6, icon)
-			if self:GetOption("rune_of_damnation_countdown") then -- Show Jumpbar, instead of TargetBar
+			self:SayCountdown(args.spellId, 7, icon)
+			if self:CheckOption("rune_of_damnation_countdown", "BAR") then -- Show Jumpbar, instead of TargetBar
 				self:Bar("rune_of_damnation_countdown", 5.5, L.jump, 360281) -- Jump a bit earlier
 			else
-				self:TargetBar(args.spellId, 6, args.destName)
+				self:TargetBar(args.spellId, 7, args.destName, CL.bomb)
 			end
 		end
 		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(CL.bombs, runeOfDamnationCount-1))
@@ -537,6 +537,7 @@ do
 	function mod:RuneOfDamnationRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
+			self:StopBar(CL.bomb, args.destName)
 			self:StopBar(L.jump)
 		end
 		self:CustomIcon(runeOfDamnationMarker, args.destName)
