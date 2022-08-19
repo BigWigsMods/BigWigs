@@ -124,33 +124,39 @@ function mod:ENCOUNTER_END(_, id, _, _, _, status)
 	end
 end
 
-local function checkForAffixes()
-	local unit = mod:GetBossId(bossToCheck[activeBoss])
-	if not unit then return end
+function mod:CheckForAffixes(count)
+	count = count or 1
+	if count > 3 then return end -- Jailer likes to take his sweet time
 
-	if not emitterDetected and mod:UnitBuff(unit, 372419) then -- Fated Power: Reconfiguration Emitter
-		emitterDetected = true
-		mod:Bar(371254, 5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
-	end
-	if not chaoticEssenceDetected and mod:UnitBuff(unit, 372642) then -- Fated Power: Chaotic Essence
-		chaoticEssenceDetected = true
-		-- Rygelon casts after Massive Bang
-		mod:Bar(372634, activeBoss == 2549 and (mod:Mythic() and 83 or 78) or 11, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
-	end
-	if not creationSparkDetected and mod:UnitBuff(unit, 372647) then -- Fated Power: Creation Spark
-		creationSparkDetected = true
-		if activeBoss ~= 2537 then -- Jailer first cast is at 1s
-			mod:Bar(369505, 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	local unit = self:GetBossId(bossToCheck[activeBoss])
+	if unit then
+		if not emitterDetected and self:UnitBuff(unit, 372419) then -- Fated Power: Reconfiguration Emitter
+			emitterDetected = true
+			self:Bar(371254, 5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		end
+		if not chaoticEssenceDetected and self:UnitBuff(unit, 372642) then -- Fated Power: Chaotic Essence
+			chaoticEssenceDetected = true
+			-- Rygelon casts after Massive Bang
+			self:Bar(372634, activeBoss == 2549 and (self:Mythic() and 83 or 78) or 11, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+		end
+		if not creationSparkDetected and self:UnitBuff(unit, 372647) then -- Fated Power: Creation Spark
+			creationSparkDetected = true
+			if activeBoss ~= 2537 then -- Jailer first cast is at 1s
+				self:Bar(369505, 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+			end
+		end
+		if not protoformBarrierDetected and self:UnitBuff(unit, 372418) then -- Fated Power: Protoform Barrier
+			protoformBarrierDetected = true
+			-- Lords of Dread delays a bit to keep it consistent (~19.3s cast after the 100 energy ability finishes)
+			self:Bar(371447, activeBoss == 2549 and 20 or 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		end
+		if not replicatingEssenceDetected and self:UnitBuff(unit, 372424) then -- Fated Power: Replicating Essence
+			replicatingEssenceDetected = true
 		end
 	end
-	if not protoformBarrierDetected and mod:UnitBuff(unit, 372418) then -- Fated Power: Protoform Barrier
-		protoformBarrierDetected = true
-		-- Lords of Dread delays a bit to keep it consistent (~19.3s cast after the 100 energy ability finishes)
-		mod:Bar(371447, activeBoss == 2549 and 20 or 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
-	end
-	if not replicatingEssenceDetected and mod:UnitBuff(unit, 372424) then -- Fated Power: Replicating Essence
-		replicatingEssenceDetected = true
-		-- Not used so far
+
+	if not emitterDetected and not chaoticEssenceDetected and not creationSparkDetected and not protoformBarrierDetected then
+		self:ScheduleTimer("CheckForAffixes", 0.1, count + 1)
 	end
 end
 
@@ -191,7 +197,7 @@ function mod:OnBossEngage(_, module, diff)
 		-- and cast 0.5s after Diverted Life Shield
 	end
 
-	self:SimpleTimer(checkForAffixes, 0.1) -- Delaying for council fights with more than boss1
+	self:ScheduleTimer("CheckForAffixes", 0.1)
 end
 
 --------------------------------------------------------------------------------
