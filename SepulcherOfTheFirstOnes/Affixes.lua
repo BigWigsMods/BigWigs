@@ -186,6 +186,8 @@ function mod:OnBossEngage(_, module, diff)
 	elseif activeBoss == 2537 then -- The Jailer
 		self:Log("SPELL_CAST_START", "TheJailerFinalRelentlessDomination", 367851)
 		self:Log("SPELL_CAST_SUCCESS", "TheJailerUnbreakingGrasp", 363332)
+		self:Log("SPELL_AURA_APPLIED", "FatedCreationSparkApplied", 370404)
+		self:Log("SPELL_AURA_APPLIED_DOSE", "FatedCreationSparkApplied", 370404)
 		-- and cast 0.5s after Diverted Life Shield
 	end
 
@@ -307,4 +309,63 @@ end
 
 function mod:TheJailerUnbreakingGrasp()
 	self:Bar(369505, self:Mythic() and 13 or 33, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+end
+
+local function getSparkTimeMod(duration)
+	local name, _, stacks, _, _, expirationTime = GetPlayerAuraBySpellID(370404) -- Fated Infusion: Creation Spark
+	if not name then return end
+
+	local sparkRemaining = expirationTime - GetTime()
+	local sparkPercent = mod:Mythic() and 15 or 25 -- only stacks in mythic
+	local sparkMultiplier = 1 - (sparkPercent * math.max(stacks, 1)) / 100
+	if sparkRemaining > duration then
+		duration = duration * sparkMultiplier
+	else
+		duration = sparkRemaining * sparkMultiplier + (duration - sparkRemaining)
+	end
+
+	return duration
+end
+
+function mod:TheJailerRuneOfDamnationApplied(args)
+	if self:Me(args.destGUID) then
+		local duration = getSparkTimeMod(7)
+		if not duration then return end
+
+		self:SimpleTimer(function()
+			local sepulcherMod = BigWigs:GetBossModule("The Jailer")
+			sepulcherMod:CancelSayCountdown(args.spellId)
+			sepulcherMod:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player"))
+			if sepulcherMod:CheckOption("rune_of_damnation_countdown", "BAR") then
+				sepulcherMod:Bar("rune_of_damnation_countdown", duration - 1.5, L.jump, 360281)
+			else
+				sepulcherMod:TargetBar(args.spellId, duration, args.destName, CL.bomb)
+			end
+		end, 0) -- everyone should get the _applied event on the same frame, right? do our adjustments on the next
+	end
+end
+
+function mod:FatedCreationSparkApplied(args)
+	if self:Me(args.destGUID) then
+		local expirationTime = select(6, GetPlayerAuraBySpellID(360281)) -- Rune of Damnation
+		if not expirationTime then return end
+
+		local duration = getSparkTimeMod(expirationTime - GetTime())
+		if not duration then return end
+
+		local sepulcherMod = BigWigs:GetBossModule("The Jailer")
+		sepulcherMod:CancelSayCountdown(args.spellId)
+		if duration > 1.2 then
+			sepulcherMod:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player"), math.min(floor(duration), 3))
+		end
+		if sepulcherMod:CheckOption("rune_of_damnation_countdown", "BAR") then
+			if duration > 1 then
+				sepulcherMod:Bar("rune_of_damnation_countdown", duration - 1.5, L.jump, 360281)
+			else
+				sepulcherMod:StopBar(L.jump)
+			end
+		else
+			sepulcherMod:TargetBar(args.spellId, duration, args.destName, CL.bomb)
+		end
+	end
 end
