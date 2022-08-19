@@ -340,12 +340,12 @@ function mod:TheJailerRuneOfDamnationApplied(args)
 
 		self:SimpleTimer(function()
 			local sepulcherMod = BigWigs:GetBossModule("The Jailer")
-			sepulcherMod:CancelSayCountdown(args.spellId)
-			sepulcherMod:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player"))
+			sepulcherMod:CancelSayCountdown(args.spellId) -- SetOption:false:::
+			sepulcherMod:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player")) -- SetOption:false:::
 			if sepulcherMod:CheckOption("rune_of_damnation_countdown", "BAR") then
-				sepulcherMod:Bar("rune_of_damnation_countdown", duration - 1.5, L.jump, 360281)
+				sepulcherMod:Bar("rune_of_damnation_countdown", duration - 1.5, sepulcherMod.localization.jump, 360281) -- SetOption:false:::
 			else
-				sepulcherMod:TargetBar(args.spellId, duration, args.destName, CL.bomb)
+				sepulcherMod:TargetBar(args.spellId, duration, args.destName, CL.bomb) -- SetOption:false:::
 			end
 		end, 0) -- everyone should get the _applied event on the same frame, right? do our adjustments on the next
 	end
@@ -360,18 +360,18 @@ function mod:FatedCreationSparkApplied(args)
 		if not duration then return end
 
 		local sepulcherMod = BigWigs:GetBossModule("The Jailer")
-		sepulcherMod:CancelSayCountdown(args.spellId)
+		sepulcherMod:CancelSayCountdown(args.spellId) -- SetOption:false:::
 		if duration > 1.2 then
-			sepulcherMod:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player"), math.min(floor(duration), 3))
+			sepulcherMod:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player"), math.min(floor(duration), 3)) -- SetOption:false:::
 		end
 		if sepulcherMod:CheckOption("rune_of_damnation_countdown", "BAR") then
 			if duration > 1 then
-				sepulcherMod:Bar("rune_of_damnation_countdown", duration - 1.5, L.jump, 360281)
+				sepulcherMod:Bar("rune_of_damnation_countdown", duration - 1.5, sepulcherMod.localization.jump, 360281) -- SetOption:false:::
 			else
-				sepulcherMod:StopBar(L.jump)
+				sepulcherMod:StopBar(sepulcherMod.localization.jump) -- SetOption:false:::
 			end
 		else
-			sepulcherMod:TargetBar(args.spellId, duration, args.destName, CL.bomb)
+			sepulcherMod:TargetBar(args.spellId, duration, args.destName, CL.bomb) -- SetOption:false:::
 		end
 	end
 end
