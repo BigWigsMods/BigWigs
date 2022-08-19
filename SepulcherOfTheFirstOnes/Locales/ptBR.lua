@@ -130,6 +130,7 @@ if L then
 	L.shattering_blast = "Impacto no Tank"
 	L.rune_of_compulsion = "Enfeitiçar"
 	L.desolation = "Soak de Azeroth"
+	L.decimator_line = "Decimatore + Linha"
 	L.chains_of_anguish = "Espalhar Correntes"
 	L.chain = "Corrente"
 	L.chain_target = "Acorrentando %s!"

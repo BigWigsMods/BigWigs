@@ -130,6 +130,7 @@ if L then
 	L.shattering_blast = "坦克爆炸"
 	L.rune_of_compulsion = "心控"
 	L.desolation = "荒寂"
+	L.decimator_line = "屠戮者 + 行列"
 	L.chains_of_anguish = "痛苦之鏈" -- 這個中文技能名夠短，不需縮寫
 	L.chain = "鎖鏈"
 	L.chain_target = "鎖鏈：%s!"

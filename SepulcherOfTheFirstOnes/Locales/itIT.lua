@@ -130,6 +130,7 @@ if L then
 	L.shattering_blast = "Esplosione sul Tank"
 	L.rune_of_compulsion = "Ammaliamenti"
 	--L.desolation = "Azeroth Soak"
+	L.decimator_line = "Decimatore + Linea"
 	L.chains_of_anguish = "Distribuire le Catene"
 	L.chain = "Catena"
 	L.chain_target = "Incatenato: %s!"

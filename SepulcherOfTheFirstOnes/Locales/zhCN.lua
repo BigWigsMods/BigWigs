@@ -130,6 +130,7 @@ if L then
 	L.shattering_blast = "坦克炸弹"
 	L.rune_of_compulsion = "心控"
 	L.desolation = "荒芜"
+	L.decimator_line = "屠戮者 + 线"
 	L.chains_of_anguish = "痛苦之链"
 	L.chain = "锁链"
 	L.chain_target = "锁链 %s!"

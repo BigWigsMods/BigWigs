@@ -130,6 +130,7 @@ if L then
 	L.shattering_blast = "Tank Eruption"
 	L.rune_of_compulsion = "Übernahme"
 	L.desolation = "Azeroth-Soak"
+	L.decimator_line = "Dezimierer + Linie"
 	L.chains_of_anguish = "Ketten auseinander"
 	L.chain = "Kette"
 	L.chain_target = "Kette auf %s!"

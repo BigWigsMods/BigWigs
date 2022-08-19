@@ -130,6 +130,7 @@ if L then
 	L.shattering_blast = "Выстрел в танка"
 	L.rune_of_compulsion = "Подчинение"
 	L.desolation = "Лужа Азерот"
+	L.decimator_line = "Дециматор + Линия"
 	L.chains_of_anguish = "Цепи"
 	L.chain = "Цепи"
 	L.chain_target = "Цепь с %s!"

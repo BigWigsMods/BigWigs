@@ -130,6 +130,7 @@ if L then
 	--L.shattering_blast = "Tank Blast"
 	L.rune_of_compulsion = "정배 룬"
 	--L.desolation = "Azeroth Soak"
+	L.decimator_line = "학살 + 선"
 	L.chains_of_anguish = "산개 사슬"
 	L.chain = "사슬"
 	L.chain_target = " %s 에게 사슬!"

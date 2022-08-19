@@ -130,6 +130,7 @@ if L then
 	--L.shattering_blast = "Tank Blast"
 	--L.rune_of_compulsion = "Charms"
 	--L.desolation = "Azeroth Soak"
+	--L.decimator_line = "Decimator + Line"
 	--L.chains_of_anguish = "Spread Chains"
 	--L.chain = "Chain"
 	--L.chain_target = "Chaining %s!"
