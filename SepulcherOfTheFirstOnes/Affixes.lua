@@ -360,9 +360,9 @@ function mod:FatedCreationSparkApplied(args)
 		if not duration then return end
 
 		local sepulcherMod = BigWigs:GetBossModule("The Jailer")
-		sepulcherMod:CancelSayCountdown(args.spellId) -- SetOption:false:::
+		sepulcherMod:CancelSayCountdown(360281) -- SetOption:false:::
 		if duration > 1.2 then
-			sepulcherMod:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player"), math.min(floor(duration), 3)) -- SetOption:false:::
+			sepulcherMod:SayCountdown(360281, duration, GetRaidTargetIndex("player"), math.min(floor(duration), 3)) -- SetOption:false:::
 		end
 		if sepulcherMod:CheckOption("rune_of_damnation_countdown", "BAR") then
 			if duration > 1 then
@@ -371,7 +371,7 @@ function mod:FatedCreationSparkApplied(args)
 				sepulcherMod:StopBar(sepulcherMod.localization.jump) -- SetOption:false:::
 			end
 		else
-			sepulcherMod:TargetBar(args.spellId, duration, args.destName, CL.bomb) -- SetOption:false:::
+			sepulcherMod:TargetBar(360281, duration, args.destName, CL.bomb) -- SetOption:false:::
 		end
 	end
 end
