@@ -44,8 +44,7 @@ if L then
 	L.wild_stampede = "Звери"
 	L.withering_seeds = "Семена"
 	L.hand_of_destruction = "Длань разрушения"
-	L.nighthunter_marks_additional_desc = "|cFFFF0000Отмечает игроков с приоритетом мили для первых меток.|r"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group position as secondary priority.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Отмечает игроков с приоритетом мили для первых меток, вторичний приоритет в соответствии с позицией группы.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "ruRU")
@@ -163,11 +162,11 @@ end
 
 L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "ruRU")
 if L then
-	--L.custom_on_bar_icon = "Bar Icon"
-	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+	L.custom_on_bar_icon = "Иконка полосок"
+	L.custom_on_bar_icon_desc = "Показывать иконку Судьбоносного Рейда на полосках, связанных с афиксом."
 
-	--L.chaotic_essence = "Essence"
+	L.chaotic_essence = "Эссенция"
 	L.creation_spark = "Искры"
 	L.protoform_barrier = "Преграда"
-	--L.reconfiguration_emitter = "Interrupt Add"
+	L.reconfiguration_emitter = "Кик аффикс"
 end

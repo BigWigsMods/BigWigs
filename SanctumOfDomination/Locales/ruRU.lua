@@ -140,11 +140,12 @@ end
 
 L = BigWigs:NewBossLocale("Sanctum of Domination Affixes", "ruRU")
 if L then
-	--L.custom_on_bar_icon = "Bar Icon"
-	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+	L.custom_on_bar_icon = "Иконка полосок"
+	L.custom_on_bar_icon_desc = "Показывать иконку Судьбоносного Рейда на полосках, связанных с афиксом."
 
-	--L.chaotic_essence = "Essence"
+	L.chaotic_essence = "Эссенция"
 	L.creation_spark = "Искры"
 	L.protoform_barrier = "Преграда"
-	--L.reconfiguration_emitter = "Interrupt Add"
+	L.reconfiguration_emitter = "Кик аффикс"
 end
+
