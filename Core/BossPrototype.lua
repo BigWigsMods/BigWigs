@@ -1992,7 +1992,8 @@ do
 	function boss:TargetMessageOld(key, player, color, sound, text, icon, alwaysPlaySound)
 		self:PlaySound(key, sound, nil, not alwaysPlaySound and player)
 		if type(player) == "table" then
-			self:NewTargetsMessage(key, color, player, nil, text, icon)
+			self:NewTargetsMessage(key, color, player, #player, text, icon)
+			twipe(player)
 		else
 			self:TargetMessage(key, color, player, text, icon)
 		end
