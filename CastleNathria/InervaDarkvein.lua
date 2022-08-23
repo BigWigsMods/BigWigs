@@ -415,7 +415,7 @@ do
 			self:SayCountdown(332664, 10, icon)
 			self:OpenProximity(332664, 8)
 		end
-		self:NewTargetsMessage(332664, "yellow", playerList, CL.adds)
+		self:NewTargetsMessage(332664, "yellow", playerList, nil, CL.adds)
 
 		self:CustomIcon(concentratedAnimaMarker, args.destName, icon)
 		if not isOnMe then
