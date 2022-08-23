@@ -2002,9 +2002,13 @@ do
 	-- @param[opt] icon the message icon (spell id or texture name)
 	-- @bool[opt] alwaysPlaySound if true, play the sound even if player is not you
 	function boss:TargetMessageOld(key, player, color, sound, text, icon, alwaysPlaySound)
-		self:TargetMessage(key, color, player, text, icon)
 		self:PlaySound(key, sound, nil, not alwaysPlaySound and player)
-		if type(player) == "table" then twipe(player) end
+		if type(player) == "table" then
+			self:NewTargetsMessage(key, color, player, #player, text, icon)
+			twipe(player)
+		else
+			self:TargetMessage(key, color, player, text, icon)
+		end
 	end
 
 	local markerIcons = {
