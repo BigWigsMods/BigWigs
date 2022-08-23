@@ -1,4 +1,5 @@
-## Interface: 11403
+## Interface: 30400
+## Interface-Classic: 11403
 ## Interface-BCC: 20504
 
 ## Title: BigWigs [|cffeda55fCore|r]
