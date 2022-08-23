@@ -269,7 +269,9 @@ end
 
 -- Boss specific timer resetting
 function mod:LihuvimSynthesize()
-	self:Bar(369505, 39.5, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	if creationSparkDetected then
+		self:Bar(369505, 39.5, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	end
 end
 
 function mod:HalondrusRelocationForm()
@@ -277,7 +279,9 @@ function mod:HalondrusRelocationForm()
 end
 
 function mod:HalondrusReclamationForm()
-	self:Bar(372634, 18.2, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	if chaoticEssenceDetected then
+		self:Bar(372634, 18.2, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
 end
 
 function mod:AnduinDominationsGraspRemoved()
@@ -285,17 +289,23 @@ function mod:AnduinDominationsGraspRemoved()
 	stage = stage + 1
 	self:SetStage(stage)
 	if stage == 2 then
-		self:Bar(371254, 8.6, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		if emitterDetected then
+			self:Bar(371254, 8.6, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		end
 	elseif stage == 3 then
-		self:Bar(371254, self:Mythic() and 11.8 or 18.8, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		if emitterDetected then
+			self:Bar(371254, self:Mythic() and 11.8 or 18.8, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		end
 	end
 end
 
 function mod:LordsOfDreadInfiltrationOfDread(args)
 	if self:MobId(args.sourceGUID) == 181399 then -- Kin'tessa
-		self:Bar(371447, 19.3, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
-		-- Pauze to show timers once you finish Among Us
-		self:PauseBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		if protoformBarrierDetected then
+			self:Bar(371447, 19.3, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+			-- Pauze to show timers once you finish Among Us
+			self:PauseBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		end
 	end
 end
 
@@ -304,17 +314,23 @@ do
 	function mod:LordsOfDreadInfiltrationOfDreadOver(args)
 		if args.time - 10 > prev then
 			prev = args.time
-			self:ResumeBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+			if protoformBarrierDetected then
+				self:ResumeBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+			end
 		end
 	end
 end
 
 function mod:TheJailerFinalRelentlessDomination()
-	self:Bar(369505, self:Mythic() and 13 or 33, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	if creationSparkDetected then
+		self:Bar(369505, self:Mythic() and 13 or 33, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	end
 end
 
 function mod:TheJailerUnbreakingGrasp()
-	self:Bar(369505, self:Mythic() and 13 or 33, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	if creationSparkDetected then
+		self:Bar(369505, self:Mythic() and 13 or 33, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	end
 end
 
 local function getSparkTimeMod(duration)

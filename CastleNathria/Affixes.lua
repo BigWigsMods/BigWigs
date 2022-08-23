@@ -252,25 +252,35 @@ end
 
 -- Boss specific timer resetting
 function mod:ShriekwingBloodShroudRemoved()
-	self:Bar(369505, 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
+	if creationSparkDetected then
+		self:Bar(369505, 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
+	end
 end
 
 function mod:CouncilDanseMacabreBegins()
-	-- Does not pause but has a timer reset when dancing.
-	-- Pausing the bar right away so the player can see when the ability will come in line with others.
-	self:CDBar(371254, 3.2, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
-	self:PauseBar(371254, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	if emitterDetected then
+		-- Does not pause but has a timer reset when dancing.
+		-- Pausing the bar right away so the player can see when the ability will come in line with others.
+		self:CDBar(371254, 3.2, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+		self:PauseBar(371254, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
 end
 
 function mod:CouncilDanseMacabreOver()
-	self:ResumeBar(371254, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	if emitterDetected then
+		self:ResumeBar(371254, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	end
 end
 
 function mod:DenathriusMarchOfThePenitentStart()
-	p2EmitterCount = emitterCount
-	self:Bar(371254, 27, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	if emitterDetected then
+		p2EmitterCount = emitterCount
+		self:Bar(371254, 27, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	end
 end
 
 function mod:DenathriusIndignationSuccess()
-	self:Bar(371254, 29.5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	if emitterDetected then
+		self:Bar(371254, 29.5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	end
 end

@@ -260,11 +260,15 @@ function mod:TheEyeStygianDarkshieldApplied(args)
 end
 
 function mod:TheEyeStygianDarkshieldRemoved(args)
-	self:CDBar(372634, 3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	if chaoticEssenceDetected then
+		self:CDBar(372634, 3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
 end
 
 function mod:PainsmithForgeWeaponOver(args)
-	self:CDBar(372634, 17.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	if chaoticEssenceDetected then
+		self:CDBar(372634, 17.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
 end
 
 function mod:FatescribeRealignFateApplied(args)
@@ -272,11 +276,15 @@ function mod:FatescribeRealignFateApplied(args)
 end
 
 function mod:FatescribeRealignFateRemoved(args)
-	self:CDBar(372634, 10, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	if emitterDetected then
+		self:CDBar(372634, 10, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
 end
 
 function mod:KelThuzadNecroticSurgeApplied(args)
-	self:Bar(372634, 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	if emitterDetected then
+		self:Bar(372634, 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
 end
 
 function mod:SylvanasBansheeShroudApplied(args)
@@ -293,17 +301,19 @@ do
 			stage = 2
 			bridgeCount = 1
 		end
-		if not self:Mythic() then
-			if bridgeCount == 2 then
-				self:Bar(372634, 11.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
-			elseif bridgeCount == 5 then
-				self:Bar(372634, 17.2, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
-			end
-		else -- Mythic
-			if bridgeCount == 2 then
-				self:Bar(372634, 15.7, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
-			elseif bridgeCount == 4 then
-				self:Bar(372634, 7.1, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+		if chaoticEssenceDetected then
+			if not self:Mythic() then
+				if bridgeCount == 2 then
+					self:Bar(372634, 11.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+				elseif bridgeCount == 5 then
+					self:Bar(372634, 17.2, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+				end
+			else -- Mythic
+				if bridgeCount == 2 then
+					self:Bar(372634, 15.7, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+				elseif bridgeCount == 4 then
+					self:Bar(372634, 7.1, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+				end
 			end
 		end
 		bridgeCount = bridgeCount + 1
@@ -313,6 +323,8 @@ end
 function mod:SylvanasBlasphemySuccess()
 	if stage < 3 then
 		stage = 3
-		self:Bar(372634, 26.6, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+		if chaoticEssenceDetected then
+			self:Bar(372634, 26.6, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+		end
 	end
 end
