@@ -34,10 +34,12 @@ jobs:
         if: always()
         run: lua gen_option_values.lua BigWigs.toc
 
-      - name: Package Classic
+      - name: Package Classic Era
         uses: BigWigsMods/packager@master
+        with:
+          args: -g classic
 
-      - name: Package BC Classic
+      - name: Package Classic
         uses: BigWigsMods/packager@master
         with:
           args: -g bcc -m .pkgmeta-bc

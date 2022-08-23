@@ -28,11 +28,15 @@ move-folders:
     BigWigs/Classic/AhnQirajTemple: BigWigs_AhnQirajTemple
     BigWigs/Classic/Naxxramas: BigWigs_Naxxramas
 
+changelog-title: BigWigs
+
 ignore:
   - .luacheckrc
   - gen_option_values.lua
   - ldoc.ltp
   - BurningCrusade
+  - BigWigs_TBC.toc
+  - BigWigs_Wrath.toc
   - Media/Sounds/spell_on_you.flac
   - Media/Sounds/spell_under_you.flac
   - Media/Sounds/Long.wav

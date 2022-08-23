@@ -1,9 +1,4 @@
 
-if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
-	print("|cFF33FF99BigWigs|r: You're trying to run the Classic version of BigWigs on a live server.")
-	return
-end
-
 local API = {}
 local type, next, error = type, next, error
 

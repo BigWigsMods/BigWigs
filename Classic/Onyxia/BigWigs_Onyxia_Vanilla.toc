@@ -1,5 +1,4 @@
 ## Interface: 11403
-## Interface-BCC: 20504
 
 ## Title: BigWigs [|cffeda55fOnyxia|r]
 ## Title-deDE: BigWigs [|cffeda55fOnyxia|r]

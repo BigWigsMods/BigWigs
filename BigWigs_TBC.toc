@@ -1,0 +1,33 @@
+## Interface: 20504
+
+## Title: BigWigs
+## Notes: Modular, lightweight, non-intrusive approach to boss encounter warnings.
+## Notes-deDE: Modulare und einfache Boss Encounter Warnungen.
+## Notes-ruRU: Простой и удобный помощник в битвах с боссами.
+## Notes-zhCN: 团队首领战信息提示插件，带有计时条。
+## Notes-zhTW: 團隊首領戰訊息提示插件，帶有計時條。
+## Notes-koKR: 각종 보스에 대하여 간략하고 시각적으로 경고합니다.
+## Notes-frFR: Approche modulaire, légère et non-intrusive des alertes des rencontres de boss.
+## Notes-esES: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
+## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
+## Notes-itIT: Un approccio modulare, leggero e non intrusivo per gli avvisi ai combattimenti con i boss.
+## Notes-ptBR: Abordagem modular, leve e não intrusiva para avisos em encontros com chefes.
+## Author: Funkydude, Nebula, Elvador, Justwait
+## Version: @project-version@
+
+## X-Category: Raid
+## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
+## X-Website: https://github.com/BigWigsMods
+## X-Curse-Project-ID: 2382
+## X-WoWI-ID: 5086
+
+## OptionalDeps: Ace3, LibCandyBar-3.0, LibSharedMedia-3.0, LibSink-2.0, LibDBIcon-1.0, LibDDI-1.0, LibChatAnims
+## SavedVariables: BigWigsClassicDB, BigWigsIconClassicDB, BigWigsStatsClassicDB, BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
+
+embeds.xml
+API.lua
+locales.xml
+
+Media\Media.lua
+Loader.lua
+modules.xml

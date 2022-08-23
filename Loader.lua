@@ -1,9 +1,4 @@
 
-if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
-	print("|cFF33FF99BigWigs|r: You're trying to run the Classic version of BigWigs on a live server.")
-	return
-end
-
 local L = BigWigsAPI:GetLocale("BigWigs")
 local mod, public = {}, {}
 local bwFrame = CreateFrame("Frame")
@@ -876,27 +871,6 @@ do
 	}
 	if locales[L] then
 		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
-	end
-
-	local myGitHash = "@project-abbreviated-hash@" -- The ZIP packager will replace this with the Git hash.
-	-- If we find "@" then we're running from Git directly.
-	if not strfind(myGitHash, "@", nil, true) then
-		local bType = ""
-		--@version-classic@
-		bType = "c"
-		--@end-version-classic@
-		--@version-bcc@
-		bType = "bcc"
-		--@end-version-bcc@
-		if public.isClassic and bType == "c" then
-			delayedMessages[#delayedMessages+1] = "|cFFff0000WARNING!|r You've installed the wrong version of BigWigs."
-			delayedMessages[#delayedMessages+1] = "You are playing on Burning Crusade Classic, but have installed BigWigs for original Classic."
-			delayedMessages[#delayedMessages+1] = "We recommend avoiding unofficial addon updaters, and using the official CurseForge app to avoid such issues."
-		elseif public.isClassicEra and bType == "bcc" then
-			delayedMessages[#delayedMessages+1] = "|cFFff0000WARNING!|r You've installed the wrong version of BigWigs."
-			delayedMessages[#delayedMessages+1] = "You are playing on Classic, but have installed BigWigs for Burning Crusade Classic."
-			delayedMessages[#delayedMessages+1] = "We recommend avoiding unofficial addon updaters, and using the official CurseForge app to avoid such issues."
-		end
 	end
 
 	if #delayedMessages > 0 then
