@@ -111,16 +111,16 @@ end
 
 function mod:GOSSIP_SHOW()
 	local mobId = self:MobId(self:UnitGUID("npc"))
-	local gossip = self:GetGossipOptions()
+	local gossipTbl = self:GetGossipOptions()
 
-	if gossip and (mobId == 17852 or mobId == 17772) then -- Thrall, Lady Jaina Proudmoore
-		if gossip == L.winterchillGossip then
+	if gossipTbl and (mobId == 17852 or mobId == 17772) then -- Thrall, Lady Jaina Proudmoore
+		if gossipTbl[1] == L.winterchillGossip then
 			self:Sync("SummitNext", "Rage") -- Rage Winterchill is next
-		elseif gossip == L.anetheronGossip then
+		elseif gossipTbl[1] == L.anetheronGossip then
 			self:Sync("SummitNext", "Anetheron") -- Anetheron is next
-		elseif gossip == L.kazrogalGossip then
+		elseif gossipTbl[1] == L.kazrogalGossip then
 			self:Sync("SummitNext", "Kazrogal") -- Kaz'rogal is next
-		elseif gossip == L.azgalorGossip then
+		elseif gossipTbl[1] == L.azgalorGossip then
 			self:Sync("SummitNext", "Azgalor") -- Azgalor is next
 		end
 	end

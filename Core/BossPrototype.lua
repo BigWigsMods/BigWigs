@@ -1436,20 +1436,18 @@ do
 	local GetOptions = GetGossipOptions
 	local SelectOption = SelectGossipOption
 	--- Request the gossip options of the selected NPC
-	-- @return a separate string for every selectable text option
+	-- @return table A table result of all text strings in the form of { result1, result2, result3 }
 	function boss:GetGossipOptions()
-		local gossipTbl = {GetOptions()}
-		if gossipTbl[3] then
-			local tbl = {}
-			for i = 1, #gossipTbl, 2 do
-				local text = gossipTbl[i]
+		local gossipOptions = {GetOptions()}
+		if gossipOptions[1] then
+			local gossipTbl = {}
+			for i = 1, #gossipOptions, 2 do
+				local text = gossipOptions[i]
 				if text then
-					tbl[#tbl+1] = text
+					gossipTbl[#gossipTbl+1] = text
 				end
 			end
-			return unpack(tbl) -- This is fine
-		elseif gossipTbl[1] then
-			return gossipTbl[1]
+			return gossipTbl
 		end
 	end
 
