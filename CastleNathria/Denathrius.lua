@@ -668,7 +668,7 @@ function mod:WrackingPainApplied(args)
 		else
 			self:NewStackMessage(args.spellId, "purple", args.destName, amount)
 		end
-		self:PlaySound(args.spellId, "warning", args.destName)
+		self:PlaySound(args.spellId, "warning", nil, args.destName)
 	end
 end
 
