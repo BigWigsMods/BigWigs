@@ -28,11 +28,11 @@ local bossToCheck = {
 	[2418] = 165066, -- Huntsman Altimor
 	[2383] = 164261, -- Hungering Destroyer
 	[2405] = 166644, -- Artificer Xy'mox
-	[2402] = 168973, -- High Torturer Darithos
+	[2402] = 168973, -- High Torturer Darithos (Sun King's Salvation)
 	[2406] = 165521, -- Lady Inerva Darkvein
-	[2412] = 166971, -- Castellan Niklaus
+	[2412] = 166971, -- Castellan Niklaus (Council of Blood)
 	[2399] = 164407, -- Sludgefist
-	[2417] = 168112, -- General Kaal
+	[2417] = 168112, -- General Kaal (Stone Legion Generals)
 	[2407] = 167406, -- Sire Denathrius
 }
 local activeBoss = nil
@@ -173,6 +173,8 @@ function mod:OnBossEngage(_, module, diff)
 	-- Encounters that need adjustments
 	if activeBoss == 2398 then -- Shriekwing
 		self:Log("SPELL_AURA_REMOVED", "ShriekwingBloodShroudRemoved", 328921)
+	elseif activeBoss == 2402 then -- Sun King's Salvation
+		self:Log("SPELL_AURA_REMOVED", "SunKingReflectionOfGuiltRemoved", 323402)
 	elseif activeBoss == 2412 then -- Council
 		self:Log("SPELL_CAST_SUCCESS", "CouncilDanseMacabreBegins", 347376)
 		self:Log("SPELL_AURA_REMOVED", "CouncilDanseMacabreOver", 330959)
@@ -267,6 +269,17 @@ end
 function mod:ShriekwingBloodShroudRemoved()
 	if creationSparkDetected then
 		self:Bar(369505, 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
+	end
+end
+
+function mod:SunKingReflectionOfGuiltRemoved()
+	-- If the Shade isn't up to summon the second emitter, the cast is delayed 15s
+	if emitterCount == 2 then
+		local text = bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)
+		local remaining = self:BarTimeLeft(text)
+		if remaining > 0 then
+			self:Bar(371254, remaining + 15, text) -- Reconfiguration Emitter
+		end
 	end
 end
 
