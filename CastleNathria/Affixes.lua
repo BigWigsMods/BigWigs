@@ -47,7 +47,7 @@ local chaoticEssenceCount = 1
 local creationSparkCount = 1
 local barrierCount = 1
 local emitterCount = 1
-local p2EmitterCount = 0
+local p2Count = {}
 
 local bar_icon_texture = "|A:ui-ej-icon-empoweredraid-large:0:0|a "
 local bar_icon = bar_icon_texture
@@ -204,17 +204,12 @@ function mod:ReconfigurationEmitter(args)
 	self:PlaySound(args.spellId, "info")
 	emitterCount = emitterCount + 1
 	if activeBoss == 2407 then -- Denathrius
-		if self:GetStage() == 1 then
-			self:Bar(args.spellId, 60, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
-		elseif self:GetStage() == 2 then
-			local cd = 85
-			if emitterCount - p2EmitterCount == 1 then
-				cd = self:Mythic() and 79 or 84
-			end
-			self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
-		elseif self:GetStage() == 3 then
-			self:Bar(args.spellId, 70, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		local stage = self:GetStage()
+		local cd = stage == 3 and 70 or stage == 2 and 85 or 60
+		if stage == 2 and (emitterCount - p2Count[args.spellId]) == 1 then
+			cd = self:Mythic() and 79 or 84
 		end
+		self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 	else
 		self:Bar(args.spellId, 75, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 	end
@@ -226,8 +221,11 @@ function mod:ProtoformBarrierApplied(args)
 	self:Message(args.spellId, "yellow", CL.on:format(CL.count:format(L.protoform_barrier, barrierCount), args.destName))
 	self:PlaySound(args.spellId, "info")
 	barrierCount = barrierCount + 1
-	-- Sludgefist = 2399
-	self:Bar(args.spellId, activeBoss == 2399 and 71 or 60, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	local cd = 60
+	if activeBoss == 2399 then -- Sludgefist
+		cd = self:Mythic() and 68 or 71
+	end
+	self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 end
 
 function mod:ProtoformBarrierRemoved(args)
@@ -245,9 +243,12 @@ do
 			self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 			creationSparkCount = creationSparkCount + 1
 			if activeBoss ~= 2398 or creationSparkCount % 2 == 0 then -- Shriekwing: two per stage one
-				if activeBoss == 2407 then -- Sire Denathrius
+				if activeBoss == 2407 then -- Denathrius
 					local stage = self:GetStage()
-					local cd = stage == 3 and 70 or stage == 2 and 85 or 58 -- strange but consistent?
+					local cd = stage == 3 and 70 or stage == 2 and 85 or 58
+					if stage == 2 and self:Mythic() and (creationSparkCount - p2Count[args.spellId]) == 1 then
+						cd = 80
+					end
 					self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 				else
 					self:Bar(args.spellId, 45, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
@@ -294,10 +295,11 @@ end
 function mod:DenathriusMarchOfThePenitentStart()
 	self:SetStage(2)
 	if emitterDetected then
-		p2EmitterCount = emitterCount
+		p2Count[371254] = emitterCount
 		self:Bar(371254, 27, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
 	end
 	if creationSparkDetected then
+		p2Count[369505] = creationSparkCount
 		self:Bar(369505, 41, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
 	end
 end
