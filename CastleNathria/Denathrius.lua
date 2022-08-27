@@ -419,7 +419,7 @@ do
 	end
 
 	function mod:BurdenOfSinStackMessage()
-		mod:NewStackMessage(326699, "blue", playerName, burdenStacksOnMe)
+		mod:NewStackMessage(326699, "blue", playerName, burdenStacksOnMe, burdenStacksOnMe)
 		mod:PlaySound(326699, "alarm")
 		scheduled = nil
 	end
@@ -463,7 +463,7 @@ do
 		if self:GetStage() == 3 then -- Mythic, Depends on phasing not stacks
 			self:Message(args.spellId, "red")
 		else
-			self:NewStackMessage(args.spellId, "blue", playerName, burdenStackTable[burdenStacksOnMe])
+			self:NewStackMessage(args.spellId, "blue", playerName, burdenStackTable[burdenStacksOnMe], 0)
 		end
 		self:PlaySound(args.spellId, "alarm")
 		bloodPriceCount = bloodPriceCount + 1
@@ -608,10 +608,10 @@ end
 
 function mod:CarnageApplied(args)
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
+		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, 0)
 		self:PlaySound(args.spellId, "alarm")
 	elseif args.amount and args.amount % 2 == 0 and self:Tank() and self:Tank(args.destName) then
-		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
+		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 0)
 	end
 end
 
@@ -666,7 +666,7 @@ function mod:WrackingPainApplied(args)
 		if amount == 1 then
 			self:TargetMessage(args.spellId, "purple", args.destName)
 		else
-			self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+			self:NewStackMessage(args.spellId, "purple", args.destName, amount, amount)
 		end
 		self:PlaySound(args.spellId, "warning", nil, args.destName)
 	end

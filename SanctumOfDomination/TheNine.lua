@@ -307,7 +307,7 @@ end
 function mod:FragmentsOfDestinyStacks(args)
 	-- Warn someone that they got an extra stack, or they are the one collecting
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, nil, L.fragment)
+		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, 0, L.fragment)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end

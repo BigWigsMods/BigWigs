@@ -385,7 +385,7 @@ end
 
 function mod:BurdenOfSinApplied(args)
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
+		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, 0)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end

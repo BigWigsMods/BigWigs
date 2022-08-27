@@ -345,7 +345,7 @@ function mod:ScornAndIreApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 3 or amount > 10 then
-			self:NewStackMessage(355232, "blue", args.destName, amount, nil, args.spellName)
+			self:NewStackMessage(355232, "blue", args.destName, amount, amount, args.spellName)
 			self:PlaySound(355232, amount > 10 and "warning" or "info")
 		end
 	end

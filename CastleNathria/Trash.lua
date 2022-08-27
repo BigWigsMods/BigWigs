@@ -269,7 +269,7 @@ function mod:Rotting(args)
 	local amount = args.amount or 1
 	if amount % 5 == 0 then
 		if self:Me(args.destGUID) then
-			self:NewStackMessage(args.spellId, "blue", args.destName, amount)
+			self:NewStackMessage(args.spellId, "blue", args.destName, amount, 15)
 			if amount > 14 then
 				self:PlaySound(args.spellId, "info")
 			end
@@ -382,10 +382,10 @@ do
 		else
 			stacks[args.destGUID] = nil
 			if self:Tank(args.destName) then
-				self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+				self:NewStackMessage(args.spellId, "purple", args.destName, amount, amount)
 				self:PlaySound(args.spellId, "info")
 			elseif self:Healer() then
-				self:NewStackMessage(args.spellId, "orange", args.destName, amount)
+				self:NewStackMessage(args.spellId, "orange", args.destName, amount, amount)
 			end
 		end
 	end

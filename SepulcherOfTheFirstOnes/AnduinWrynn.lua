@@ -367,7 +367,7 @@ end
 function mod:DarkZealApplied(args)
 	local amount = args.amount or 1
 	if amount % 5 == 0 then -- 5, 10...
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+		self:NewStackMessage(args.spellId, "purple", args.destName, amount, amount)
 		self:PlaySound(args.spellId, "alert")
 	end
 end

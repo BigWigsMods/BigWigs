@@ -449,7 +449,7 @@ do
 	local scheduled = nil
 
 	local function FrozenDestructionStackMessage()
-		mod:NewStackMessage(346530, "blue", playerName, stacks)
+		mod:NewStackMessage(346530, "blue", playerName, stacks, stacks)
 		mod:PlaySound(346530, stacks > 4 and "warning" or "info") -- How many stacks is too much?
 		scheduled = nil
 	end
@@ -531,8 +531,8 @@ end
 function mod:SinisterMiasmaApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		if amount % 3 == 0 and amount > 15 then -- 15+ or every 3
-			self:NewStackMessage(args.spellId, "blue", args.destName, amount, 10, L.miasma)
+		if amount % 3 == 0 or amount > 15 then -- 16+ or every 3
+			self:NewStackMessage(args.spellId, "blue", args.destName, amount, 16, L.miasma)
 			if amount > 15 then
 				self:PlaySound(args.spellId, "alert")
 			end
@@ -576,7 +576,7 @@ end
 function mod:NecroticSurgeApplied(args)
 	if not self:IsEngaged() then return end -- starts with stacks on mythic
 	if args.amount and args.amount > 4 then -- Don't show for Stage 3 (Custom message for that)
-		self:NewStackMessage(args.spellId, "cyan", args.destName, args.amount)
+		self:NewStackMessage(args.spellId, "cyan", args.destName, args.amount, 5)
 		self:PlaySound(args.spellId, "info")
 	end
 	self:StopBar(CL.cast:format(self:SpellName(249436))) -- Destruction

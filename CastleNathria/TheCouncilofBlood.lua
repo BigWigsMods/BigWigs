@@ -448,7 +448,7 @@ end
 
 function mod:SoulSpikesApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "orange", args.destName, amount)
+	self:NewStackMessage(args.spellId, "orange", args.destName, amount, amount)
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -470,7 +470,7 @@ end
 function mod:EvasiveLungeApplied(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) and not self:Tank() then
-		self:NewStackMessage(327497, "blue", args.destName, amount)
+		self:NewStackMessage(327497, "blue", args.destName, amount, amount)
 		self:PlaySound(327497, "alarm")
 	elseif self:Tank() and self:Tank(args.destName) then
 		self:NewStackMessage(327497, "purple", args.destName, amount, 2)

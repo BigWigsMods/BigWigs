@@ -365,7 +365,7 @@ end
 function mod:GrowingHungerApplied(args)
 	local amount = args.amount or 1
 	if amount % 5 == 0 then -- 5, 10... // Generally doesn't go above 5 if you swap on Overwhelm
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+		self:NewStackMessage(args.spellId, "purple", args.destName, amount, 5)
 		self:PlaySound(args.spellId, "alert")
 	end
 end

@@ -251,7 +251,7 @@ end
 
 function mod:RuinbladeApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+	self:NewStackMessage(args.spellId, "purple", args.destName, amount, amount)
 	self:PlaySound(args.spellId, "alarm")
 end
 

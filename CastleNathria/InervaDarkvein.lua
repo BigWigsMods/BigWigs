@@ -445,7 +445,7 @@ end
 
 function mod:UnconscionableGuiltApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "yellow", args.destName, amount)
+	self:NewStackMessage(args.spellId, "yellow", args.destName, amount, amount)
 	self:PlaySound(args.spellId, "alarm", nil, args.destName)
 end
 

@@ -218,7 +218,7 @@ end
 
 function mod:ExsanguinatedApplied(args)
 	if self:Tank() and self:Tank(args.destName) then
-		self:NewStackMessage(args.spellId, "purple", args.destName, 10)
+		self:NewStackMessage(args.spellId, "purple", args.destName, 10, 0)
 		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
 			self:PlaySound(args.spellId, "warning") -- Not taunted? Play again.
 		end

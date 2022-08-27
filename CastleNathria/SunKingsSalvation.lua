@@ -356,7 +356,7 @@ end
 function mod:BurningRemnantsApplied(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) and not self:Tank() then
-		self:NewStackMessage(args.spellId, "blue", args.destName, amount)
+		self:NewStackMessage(args.spellId, "blue", args.destName, amount, amount)
 		self:PlaySound(args.spellId, "alarm")
 	elseif self:Tank() and self:Tank(args.destName) then
 		self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
@@ -500,7 +500,7 @@ end
 -- Infusing Essences
 function mod:InfusersBoonApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "green", args.destName, amount)
+	self:NewStackMessage(args.spellId, "green", args.destName, amount, amount)
 	self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
 	self:TargetBar(args.spellId, 14, args.destName, CL.count:format(args.spellName, amount))
 	if self:Me(args.destGUID) then

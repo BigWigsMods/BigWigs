@@ -620,7 +620,7 @@ function mod:StoneFistApplied(args)
 	if amount == 1 then
 		self:TargetMessage(args.spellId, "purple", args.destName)
 	else
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+		self:NewStackMessage(args.spellId, "purple", args.destName, amount, amount)
 	end
 	self:PlaySound(args.spellId, "warning")
 end
