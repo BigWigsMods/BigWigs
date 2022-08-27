@@ -1966,7 +1966,7 @@ do
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name)
 	function boss:StackMessage(key, player, stack, color, sound, text, icon)
-		self:NewStackMessage(key, color, player, stack, nil, text, icon)
+		self:NewStackMessage(key, color, player, stack, 0, text, icon)
 		self:PlaySound(key, sound)
 	end
 
@@ -1975,19 +1975,18 @@ do
 	-- @string color the message color category
 	-- @string player the player to display
 	-- @number stack the stack count
-	-- @number[opt] noEmphUntil prevent the emphasize function taking effect until this amount of stacks has been reached
+	-- @number noEmphUntil prevent the emphasize function taking effect until this amount of stacks has been reached
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name)
 	function boss:NewStackMessage(key, color, player, stack, noEmphUntil, text, icon)
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
-			local emphLimit = noEmphUntil or 0
 			local amount = stack or 1
 			if player == pName then
-				local isEmphasized = (band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE) and amount >= emphLimit
+				local isEmphasized = (band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE) and amount >= noEmphUntil
 				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, amount, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
 			elseif not checkFlag(self, key, C.ME_ONLY) then
-				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and amount >= emphLimit
+				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and amount >= noEmphUntil
 				self:SendMessage("BigWigs_Message", self, key, format(L.stack, amount, textType == "string" and text or spells[text or key], self:ColorName(player)), color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
 			end
 		end
