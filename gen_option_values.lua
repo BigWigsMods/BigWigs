@@ -749,7 +749,7 @@ local function parseLua(file)
 					if (locale_string == "nil" or locale_string == "false") then locale_string = nil end
 					if common_locale and (locale_string and not common_locale[unquote(locale_string)]) then
 						local text = args[3+offset]
-						error(string.format("    %s:%d: Invalid localeString! func=%s, key=%s, localeString=%s, text=%s", file_name, n, tostring(current_func), key, tostring(locale_string), tostring(text)))
+						error(string.format("    %s:%d: PersonalMessage: Invalid localeString(2)! func=%s, key=%s, localeString=%s, text=%s", file_name, n, tostring(current_func), key, tostring(locale_string), tostring(text)))
 					end
 				end
 				local icon_index = icon_methods[method]
@@ -778,6 +778,14 @@ local function parseLua(file)
 				-- Check for wrong API (Message instead of TargetMessage)
 				if method == "Message" and (args[3] == "destName" or args[3] == "args.destName" or args[3] == "name" or args[3] == "args.sourceName" or args[3] == "sourceName") then
 					error(string.format("    %s:%d: Message text is a player name? func=%s, key=%s, text=%s", file_name, n, tostring(current_func), key, args[3]))
+				end
+				-- Check that noEmphUntil is set
+				if method == "NewStackMessage" and (not args[5] or args[5] == "nil") then
+					error(string.format("    %s:%d: NewStackMessage: Missing noEmphUntil(5)! func=%s, key=%s", file_name, n, tostring(current_func), key))
+				end
+				-- Check that voice wasn't forgotten (like the feature was >.>), passes simple expressions like `self:Dispeller("magic") and "dispel"`
+				if method == "PlaySound" and args[3] and args[3] ~= "nil" and not args[3]:match("^\"(.-)\"$") and not args[3]:match(" and \"(.-)\"$") then
+					error(string.format("    %s:%d: PlaySound: Invalid voice(3)! func=%s, key=%s, voice=%s", file_name, n, tostring(current_func), key, tostring(args[3])))
 				end
 			end
 
