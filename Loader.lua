@@ -16,7 +16,7 @@ local isWrath = select(4, GetBuildInfo()) >= 30400 -- XXX temp
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 41
+local BIGWIGS_VERSION = 42
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
