@@ -42,4 +42,4 @@ jobs:
       - name: Package Classic
         uses: BigWigsMods/packager@master
         with:
-          args: -g bcc -m .pkgmeta-bc
+          args: -g wrath -m .pkgmeta-bc
