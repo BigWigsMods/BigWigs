@@ -776,16 +776,16 @@ local function parseLua(file)
 					error(string.format("    %s:%d: Invalid API call \"%s\"! func=%s, key=%s", file_name, n, call, tostring(current_func), key))
 				end
 				-- Check for wrong API (Message instead of TargetMessage)
-				if method == "Message" and (args[3] == "destName" or args[3] == "args.destName" or args[3] == "name" or args[3] == "args.sourceName" or args[3] == "sourceName") then
+				if method == "Message" and (args[3+offset] == "destName" or args[3+offset] == "args.destName" or args[3+offset] == "name" or args[3+offset] == "args.sourceName" or args[3+offset] == "sourceName") then
 					error(string.format("    %s:%d: Message text is a player name? func=%s, key=%s, text=%s", file_name, n, tostring(current_func), key, args[3]))
 				end
 				-- Check that noEmphUntil is set
-				if method == "StackMessage" and (not args[5] or args[5] == "nil") then
+				if method == "StackMessage" and (not args[5+offset] or args[5+offset] == "nil") then
 					error(string.format("    %s:%d: StackMessage: Missing noEmphUntil(5)! func=%s, key=%s", file_name, n, tostring(current_func), key))
 				end
 				-- Check that voice wasn't forgotten (like the feature was >.>), passes simple expressions like `self:Dispeller("magic") and "dispel"`
-				if method == "PlaySound" and args[3] and args[3] ~= "nil" and not args[3]:match("^\"(.-)\"$") and not args[3]:match(" and \"(.-)\"$") then
-					error(string.format("    %s:%d: PlaySound: Invalid voice(3)! func=%s, key=%s, voice=%s", file_name, n, tostring(current_func), key, tostring(args[3])))
+				if method == "PlaySound" and args[3+offset] and args[3+offset] ~= "nil" and not args[3+offset]:match("^\"(.-)\"$") and not args[3+offset]:match(" and \"(.-)\"$") then
+					error(string.format("    %s:%d: PlaySound: Invalid voice(3)! func=%s, key=%s, voice=%s", file_name, n, tostring(current_func), key, tostring(args[3+offset])))
 				end
 			end
 
