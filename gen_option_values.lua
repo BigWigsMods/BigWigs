@@ -39,17 +39,17 @@ local color_methods = {
 	Message = 2,
 	TargetMessageOld = 3,
 	TargetMessage = 2,
+	TargetsMessageOld = 2,
 	TargetsMessage = 2,
-	NewTargetsMessage = 2,
-	StackMessage = 4,
-	NewStackMessage = 2,
+	StackMessageOld = 4,
+	StackMessage = 2,
 	DelayedMessage = 3,
 }
 local sound_methods = {
 	PlaySound = 2,
 	MessageOld = 3,
 	TargetMessageOld = 4,
-	StackMessage = 5,
+	StackMessageOld = 5,
 	DelayedMessage = 6,
 }
 local icon_methods = {
@@ -57,10 +57,10 @@ local icon_methods = {
 	Message = 4,
 	TargetMessageOld = 6,
 	TargetMessage = 5,
+	TargetsMessageOld = 6,
 	TargetsMessage = 6,
-	NewTargetsMessage = 6,
+	StackMessageOld = 7,
 	StackMessage = 7,
-	NewStackMessage = 7,
 	PersonalMessage = 4,
 	Bar = 4,
 	CDBar = 4,
@@ -739,7 +739,7 @@ local function parseLua(file)
 				local color_index = color_methods[method]
 				if color_index then
 					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
-					if method:sub(1, 6) == "Target" or method == "StackMessage" or method == "NewStackMessage" or method == "NewTargetsMessage" then -- XXX NewTargetsMessage temp
+					if method:sub(1, 6) == "Target" or method == "StackMessageOld" or method == "StackMessage" then
 						color[#color+1] = "blue" -- used when on the player
 					end
 				end
@@ -780,8 +780,8 @@ local function parseLua(file)
 					error(string.format("    %s:%d: Message text is a player name? func=%s, key=%s, text=%s", file_name, n, tostring(current_func), key, args[3]))
 				end
 				-- Check that noEmphUntil is set
-				if method == "NewStackMessage" and (not args[5] or args[5] == "nil") then
-					error(string.format("    %s:%d: NewStackMessage: Missing noEmphUntil(5)! func=%s, key=%s", file_name, n, tostring(current_func), key))
+				if method == "StackMessage" and (not args[5] or args[5] == "nil") then
+					error(string.format("    %s:%d: StackMessage: Missing noEmphUntil(5)! func=%s, key=%s", file_name, n, tostring(current_func), key))
 				end
 				-- Check that voice wasn't forgotten (like the feature was >.>), passes simple expressions like `self:Dispeller("magic") and "dispel"`
 				if method == "PlaySound" and args[3] and args[3] ~= "nil" and not args[3]:match("^\"(.-)\"$") and not args[3]:match(" and \"(.-)\"$") then
