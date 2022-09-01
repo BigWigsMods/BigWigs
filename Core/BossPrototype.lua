@@ -1864,7 +1864,7 @@ function boss:DelayedMessage(key, delay, color, text, icon, sound)
 	end
 end
 
---- Display a colored message.
+--- Display a colored message. [DEPRECATED]
 -- @param key the option key
 -- @string color the message color category
 -- @string[opt] sound the message sound
@@ -1957,7 +1957,7 @@ do
 		end
 	end
 
-	--- Display a buff/debuff stack warning message.
+	--- Display a buff/debuff stack warning message. [DEPRECATED]
 	-- @param key the option key
 	-- @string player the player to display
 	-- @number stack the stack count
@@ -1965,8 +1965,8 @@ do
 	-- @string[opt] sound the message sound
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name)
-	function boss:StackMessage(key, player, stack, color, sound, text, icon)
-		self:NewStackMessage(key, color, player, stack, 0, text, icon)
+	function boss:StackMessageOld(key, player, stack, color, sound, text, icon)
+		self:StackMessage(key, color, player, stack, 0, text, icon)
 		self:PlaySound(key, sound)
 	end
 
@@ -1978,7 +1978,7 @@ do
 	-- @number noEmphUntil prevent the emphasize function taking effect until this amount of stacks has been reached
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name)
-	function boss:NewStackMessage(key, color, player, stack, noEmphUntil, text, icon)
+	function boss:StackMessage(key, color, player, stack, noEmphUntil, text, icon)
 		if checkFlag(self, key, C.MESSAGE) then
 			local textType = type(text)
 			local amount = stack or 1
@@ -1992,7 +1992,7 @@ do
 		end
 	end
 
-	--- Display a target message.
+	--- Display a target message. [DEPRECATED]
 	-- @param key the option key
 	-- @string player the player to display
 	-- @string color the message color category
@@ -2003,7 +2003,7 @@ do
 	function boss:TargetMessageOld(key, player, color, sound, text, icon, alwaysPlaySound)
 		self:PlaySound(key, sound, nil, not alwaysPlaySound and player)
 		if type(player) == "table" then
-			self:NewTargetsMessage(key, color, player, #player, text, icon)
+			self:TargetsMessage(key, color, player, #player, text, icon)
 			twipe(player)
 		else
 			self:TargetMessage(key, color, player, text, icon)
@@ -2058,7 +2058,7 @@ do
 			end
 		end
 
-		--- Display a target message of multiple players using a table.
+		--- Display a target message of multiple players using a table. [DEPRECATED]
 		-- @param key the option key
 		-- @string color the message color category
 		-- @param playerTable a table containing the list of players
@@ -2067,7 +2067,7 @@ do
 		-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
 		-- @number[opt] customTime how long to wait to reach the max players in the table. If the max is not reached, it will print after this value (0.3s is used if nil)
 		-- @param[opt] markers a table containing the markers that should be attached next to the player names e.g. {1, 2, 3}
-		function boss:TargetsMessage(key, color, playerTable, playerCount, text, icon, customTime, markers)
+		function boss:TargetsMessageOld(key, color, playerTable, playerCount, text, icon, customTime, markers)
 			local playersInTable = #playerTable
 			if band(self.db.profile[key], C.ME_ONLY) == C.ME_ONLY then -- We allow ME_ONLY even if MESSAGE off
 				if playerTable[playersInTable] == cpName and checkFlag(self, key, C.ME_ONLY) then -- Use checkFlag for the role check
@@ -2163,7 +2163,15 @@ do
 			end
 		end
 
-		function boss:NewTargetsMessage(key, color, playerTable, playerCount, text, icon, customTime)
+		--- Display a target message of multiple players using a table.
+		-- @param key the option key
+		-- @string color the message color category
+		-- @param playerTable a table containing the list of players
+		-- @number playerCount the max amount of players you expect to be included, message will instantly print when this max is reached
+		-- @param[opt] text the message text (if nil, key is used)
+		-- @param[opt] icon the message icon (spell id or texture name, key is used if nil)
+		-- @number[opt] customTime how long to wait to reach the max players in the table. If the max is not reached, it will print after this value (0.3s is used if nil)
+		function boss:TargetsMessage(key, color, playerTable, playerCount, text, icon, customTime)
 			local playersInTable = #playerTable
 			if band(self.db.profile[key], C.ME_ONLY) == C.ME_ONLY then -- We allow ME_ONLY even if MESSAGE off
 				if playerTable[playersInTable] == pName and checkFlag(self, key, C.ME_ONLY) then -- Use checkFlag for the role check
