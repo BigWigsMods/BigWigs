@@ -302,7 +302,7 @@ do
 			self:SayCountdown(350568, 8)
 			self:PlaySound(350568, "warning")
 		end
-		self:NewTargetsMessage(350568, "orange", playerList, nil, CL.count:format(CL.bomb, callOfEternityCount-1))
+		self:TargetsMessage(350568, "orange", playerList, nil, CL.count:format(CL.bomb, callOfEternityCount-1))
 		self:CustomIcon(callOfEternityMarker, args.destName, icon)
 	end
 
@@ -449,6 +449,6 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList)
+		self:TargetsMessage(args.spellId, "orange", playerList)
 	end
 end

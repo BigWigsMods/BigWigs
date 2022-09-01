@@ -352,7 +352,7 @@ do
 			self:PersonalMessage(args.spellId, nil, L.domination_word_pain)
 			self:PlaySound(args.spellId, "alarm")
 		elseif self:Healer() then
-			self:NewTargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.domination_word_pain, dominationWordCount-1))
+			self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.domination_word_pain, dominationWordCount-1))
 		end
 	end
 
@@ -367,7 +367,7 @@ end
 function mod:DarkZealApplied(args)
 	local amount = args.amount or 1
 	if amount % 5 == 0 then -- 5, 10...
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount, amount)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, amount)
 		self:PlaySound(args.spellId, "alert")
 	end
 end

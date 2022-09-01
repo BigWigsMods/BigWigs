@@ -276,7 +276,7 @@ do
 		end
 		self:CustomIcon(dimensionalTearMarker, args.destName, count)
 
-		self:NewTargetsMessage(328437, "yellow", playerList, 2, L.tear)
+		self:TargetsMessage(328437, "yellow", playerList, 2, L.tear)
 	end
 
 	function mod:DimensionalTearRemoved(args)
@@ -359,7 +359,7 @@ end
 
 function mod:PossesionApplied(args)
 	playerListSpirits[#playerListSpirits+1] = args.destName
-	self:NewTargetsMessage(args.spellId, "red", playerListSpirits)
+	self:TargetsMessage(args.spellId, "red", playerListSpirits)
 end
 
 -- function mod:SeedsofExtinction(args)

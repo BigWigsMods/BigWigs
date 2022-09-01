@@ -260,7 +260,7 @@ do
 		end
 		playerList[#playerList + 1] = args.destName
 		-- Lihuvim throwing out 4 for the first?
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.creation_spark, creationSparkCount - 1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.creation_spark, creationSparkCount - 1))
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "info")
 		end

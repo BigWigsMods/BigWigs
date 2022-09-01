@@ -191,7 +191,7 @@ do
 		if self:Tank() or self:Me(args.destGUID) then
 			local amount = args.amount or 1
 			if amount % 2 == 1 then -- XXX Finetune
-				self:NewStackMessage(args.spellId, "purple", args.destName, amount, 5)
+				self:StackMessage(args.spellId, "purple", args.destName, amount, 5)
 				if self:Me(args.destGUID) then
 					self:PlaySound(args.spellId, "alarm")
 				end
@@ -337,7 +337,7 @@ do
 				self:SayCountdown(args.spellId, timeLeft)
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, matterDisolutionCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, matterDisolutionCount-1))
 	end
 
 	function mod:MatterDisolutionRemoved(args)

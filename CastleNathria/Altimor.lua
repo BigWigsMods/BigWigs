@@ -171,7 +171,7 @@ do
 			self:Flash(335114)
 		end
 		self:CustomIcon(sinseekerMarker, args.destName, count)
-		self:NewTargetsMessage(335114, "orange", playerList, 3, CL.count:format(self:SpellName(335114), sinseekerCount-1), nil, 2) -- Debuffs are very delayed
+		self:TargetsMessage(335114, "orange", playerList, 3, CL.count:format(self:SpellName(335114), sinseekerCount-1), nil, 2) -- Debuffs are very delayed
 	end
 end
 
@@ -199,7 +199,7 @@ end
 
 function mod:JaggedClawsApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2)
 	if amount > 1 then
 		self:PlaySound(args.spellId, "warning")
 	end
@@ -325,10 +325,10 @@ end
 function mod:CrushingStone(args)
 	local amount = args.amount
 	if amount > 2 and amount < 9 then
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount, amount)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, amount)
 		self:PlaySound(args.spellId, "info")
 	else
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount, 100)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, 100)
 	end
 end
 
@@ -349,7 +349,7 @@ do
 			self:Flash(args.spellId)
 			self:TargetBar(args.spellId, 8, args.destName)
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, petrifyingHowlCount-1), nil, 1) -- Travel time on debuffs?
+		self:TargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, petrifyingHowlCount-1), nil, 1) -- Travel time on debuffs?
 	end
 
 	function mod:PetrifyingHowlRemoved(args)

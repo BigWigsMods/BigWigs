@@ -258,7 +258,7 @@ do
 			end
 		end
 		playerList[#playerList + 1] = args.destName
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, 2, CL.count:format(L.creation_spark, creationSparkCount - 1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, 2, CL.count:format(L.creation_spark, creationSparkCount - 1))
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "info")
 		end

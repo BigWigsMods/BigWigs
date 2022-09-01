@@ -397,7 +397,7 @@ end
 
 function mod:FilthApplied(args)
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "red", args.destName, args.amount, 0)
+		self:StackMessage(args.spellId, "red", args.destName, args.amount, 0)
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -550,7 +550,7 @@ function mod:BarbedArrowApplied(args)
 	self:SetInfoByTable(args.spellId, barbedArrowList)
 
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, 0)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 0)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -650,7 +650,7 @@ do
 				else
 					-- Checking amout as it starts with 5 in Heroic & Mythic
 					local _, amount = self:UnitDebuff(args.destName, args.spellId)
-					self:NewStackMessage(args.spellId, "blue", args.destName, amount, amount, L.darkness)
+					self:StackMessage(args.spellId, "blue", args.destName, amount, amount, L.darkness)
 					if amount > 3 then
 						-- Don't need to blast warning as the debuff bounces around
 						self:PlaySound(args.spellId, "warning")
@@ -743,7 +743,7 @@ end
 function mod:BansheesMarkApplied(args)
 	local amount = args.amount or 1
 	if amount > 2 then -- 3 stacks per combo
-		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 3)
+		self:StackMessage(args.spellId, "purple", args.destName, args.amount, 3)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -1024,7 +1024,7 @@ end
 
 function mod:LashingWoundApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2)
 	if amount > 1 then
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -1076,7 +1076,7 @@ function mod:FuryApplied(args)
 			if IsItemInRange(116139, unit) then -- 50yd
 				local amount = args.amount or 1
 				if amount % 3 == 0 or amount > 10 then
-					self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 0)
+					self:StackMessage(args.spellId, "purple", args.destName, args.amount, 0)
 					self:PlaySound(args.spellId, "alert")
 				end
 			end
@@ -1084,7 +1084,7 @@ function mod:FuryApplied(args)
 	else
 		local amount = args.amount or 1
 		if amount % 3 == 0 or amount > 10 then
-			self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 0)
+			self:StackMessage(args.spellId, "purple", args.destName, args.amount, 0)
 			self:PlaySound(args.spellId, "alert")
 		end
 	end
@@ -1145,7 +1145,7 @@ end
 function mod:BansheesBaneApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:NewStackMessage(args.spellId, "blue", args.destName, amount, amount, amount > 1 and L.pools or L.pool)
+		self:StackMessage(args.spellId, "blue", args.destName, amount, amount, amount > 1 and L.pools or L.pool)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end

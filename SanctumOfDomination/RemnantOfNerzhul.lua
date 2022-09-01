@@ -221,7 +221,7 @@ do
 				self:PlaySound(args.spellId, "warning")
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, 2, CL.bomb)
+		self:TargetsMessage(args.spellId, "orange", playerList, 2, CL.bomb)
 		self:CustomIcon(malevolenceMarker, args.destName, count)
 	end
 

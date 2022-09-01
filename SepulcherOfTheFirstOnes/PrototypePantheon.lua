@@ -269,7 +269,7 @@ do
 			deathtouchOnMe = true
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount-1))
 		self:CustomIcon(runecarversDeathtouchMarker, args.destName, count)
 	end
 
@@ -291,7 +291,7 @@ end
 
 function mod:HumblingStrikesApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2)
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -385,7 +385,7 @@ end
 
 function mod:BurdenOfSinApplied(args)
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, 0)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 0)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -421,7 +421,7 @@ end
 
 function mod:WrackingPainApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2)
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -461,7 +461,7 @@ do
 			end
 			playerList[#playerList+1] = iconList[i].player
 			playerList[iconList[i].player] = icon
-			self:NewTargetsMessage(361745, "orange", playerList, 4)
+			self:TargetsMessage(361745, "orange", playerList, 4)
 			self:CustomIcon(nightHunterMarker, iconList[i].player, icon)
 		end
 	end

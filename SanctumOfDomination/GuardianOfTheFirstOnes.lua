@@ -423,7 +423,7 @@ do
 			self:SayCountdown(args.spellId, 4)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(CL.bomb, threatNeutralizationCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(CL.bomb, threatNeutralizationCount-1))
 		self:CustomIcon(threatNeutralizationMarker, args.destName, count)
 	end
 end

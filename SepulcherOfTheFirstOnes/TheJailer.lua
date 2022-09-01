@@ -436,7 +436,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "red", playerList)
+		self:TargetsMessage(args.spellId, "red", playerList)
 	end
 end
 
@@ -530,7 +530,7 @@ do
 				self:TargetBar(args.spellId, 7, args.destName, CL.bomb)
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(CL.bombs, runeOfDamnationCount-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(CL.bombs, runeOfDamnationCount-1))
 		self:CustomIcon(runeOfDamnationMarker, args.destName, icon)
 	end
 
@@ -622,7 +622,7 @@ do
 			self:Say(args.spellId, CL.count_rticon:format(L.rune_of_compulsion, icon, icon))
 			self:SayCountdown(args.spellId, 4, icon)
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.rune_of_compulsion, runeOfCompulsion-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.rune_of_compulsion, runeOfCompulsion-1))
 		self:CustomIcon(runeOfCompulsionMarker, args.destName, icon)
 	end
 
@@ -722,7 +722,7 @@ do
 			self:Say(args.spellId, CL.count_rticon:format(L.rune_of_domination, icon, icon))
 			self:SayCountdown(args.spellId, 6, icon)
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.rune_of_domination, runeOfDominationCount-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.rune_of_domination, runeOfDominationCount-1))
 		self:CustomIcon(runeOfDominationMarker, args.destName, icon)
 	end
 
@@ -759,7 +759,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(365212, "warning")
 		end
-		self:NewTargetsMessage(365212, "yellow", playerList, nil, CL.count:format(L.chains_of_anguish, chainsOfAnguishCount-1))
+		self:TargetsMessage(365212, "yellow", playerList, nil, CL.count:format(L.chains_of_anguish, chainsOfAnguishCount-1))
 		self:CustomIcon(chainsOfAnguishMarker, args.destName, icon)
 	end
 

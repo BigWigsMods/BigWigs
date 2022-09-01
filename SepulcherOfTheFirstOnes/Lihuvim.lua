@@ -230,7 +230,7 @@ do
 		else
 			self:PlaySound(363795, "alert", nil, args.destName)
 		end
-		self:NewTargetsMessage(363795, "orange", playerList, nil, CL.count:format(CL.bomb, deconstructingEnergyCount-1))
+		self:TargetsMessage(363795, "orange", playerList, nil, CL.count:format(CL.bomb, deconstructingEnergyCount-1))
 	end
 
 	function mod:DeconstructingEnergyRemoved(args)
