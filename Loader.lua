@@ -9,8 +9,9 @@ local ldbi = LibStub("LibDBIcon-1.0")
 local strfind = string.find
 
 public.isClassicEra = WOW_PROJECT_ID == WOW_PROJECT_CLASSIC
-public.isClassic = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
-local isWrath = select(4, GetBuildInfo()) >= 30400 -- XXX temp
+public.isBCC = WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+public.isWrath = WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC
+public.isClassic = public.isBCC or public.isWrath
 
 -----------------------------------------------------------------------
 -- Generate our version variables
@@ -130,10 +131,10 @@ local fakeZones = { -- Fake zones used as GUI menus
 do
 	local c = "BigWigs_Classic"
 	local bc = public.isClassic and "BigWigs_BurningCrusade"
-	local wotlk = public.isClassic and isWrath and "BigWigs_WrathOfTheLichKing"
+	local wotlk = public.isWrath and "BigWigs_WrathOfTheLichKing"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = public.isClassic and "LittleWigs_BurningCrusade"
-	local lw_wotlk = public.isClassic and isWrath and "LittleWigs_WrathOfTheLichKing"
+	local lw_wotlk = public.isWrath and "LittleWigs_WrathOfTheLichKing"
 
 	public.zoneTbl = {
 		-- Shared between Classic and Wrath of the Lich King
@@ -971,21 +972,16 @@ do
 	local DBMdotRevision         -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
 	local DBMdotDisplayVersion   -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
 	local DBMdotReleaseRevision  -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
-	if isWrath then
-		DBMdotRevision = "20220802031754"
-		DBMdotDisplayVersion = "3.4.6"
-		DBMdotReleaseRevision = "20220801000000"
-		public.dbmPrefix = "D4WC"
-	elseif public.isClassic then
-		DBMdotRevision = "20220802031754"
-		DBMdotDisplayVersion = "2.5.42"
-		DBMdotReleaseRevision = "20220801000000"
-		public.dbmPrefix = "D4BC"
-	else
+	if public.isClassicEra then
 		DBMdotRevision = "20220802031754"
 		DBMdotDisplayVersion = "1.14.26"
 		DBMdotReleaseRevision = "20220801000000"
 		public.dbmPrefix = "D4C"
+	else
+		DBMdotRevision = "20220802031754"
+		DBMdotDisplayVersion = "3.4.6"
+		DBMdotReleaseRevision = "20220801000000"
+		public.dbmPrefix = "D4WC"
 	end
 
 	local timer, prevUpgradedUser = nil, nil

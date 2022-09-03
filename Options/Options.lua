@@ -2,8 +2,6 @@
 local BigWigs = BigWigs
 local options = {}
 
-local isWrath = select(4, GetBuildInfo()) >= 30400 -- XXX temp
-
 local C = BigWigs.C
 
 local L = BigWigsAPI:GetLocale("BigWigs")
@@ -1198,9 +1196,7 @@ do
 	}
 	if BigWigsLoader.isClassic then
 		expansionHeader[#expansionHeader+1] = "BurningCrusade"
-		if isWrath then
-			expansionHeader[#expansionHeader+1] = "WrathOfTheLichKing"
-		end
+		expansionHeader[#expansionHeader+1] = "WrathOfTheLichKing"
 	end
 
 	local statusTable = {}

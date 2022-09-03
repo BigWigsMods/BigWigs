@@ -26,12 +26,12 @@ do
 end
 
 local isClassicEra = BigWigsLoader.isClassicEra
-local isWrath = select(4, GetBuildInfo()) >= 30400 -- XXX temp
+local isWrath = BigWigsLoader.isWrath
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = function(_) end, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
-local UnitGroupRolesAssigned = UnitGroupRolesAssigned
+local UnitGroupRolesAssigned = UnitGroupRolesAssigned or function(_) end
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
 local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax
 local UnitDetailedThreatSituation = BigWigsLoader.UnitDetailedThreatSituation
@@ -1520,7 +1520,7 @@ end
 -- @return boolean
 function boss:Tank(unit)
 	if unit then
-		return GetPartyAssignment("MAINTANK", unit) or (isWrath and UnitGroupRolesAssigned(unit) == "TANK")
+		return GetPartyAssignment("MAINTANK", unit) or UnitGroupRolesAssigned(unit) == "TANK"
 	end
 	return myRole == "TANK"
 end
