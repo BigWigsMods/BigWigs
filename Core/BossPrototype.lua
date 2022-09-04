@@ -54,6 +54,7 @@ local classColorMessages = true
 local debugFunc = nil
 
 local talentRoles = {
+	DEATHKNIGHT = { "TANK", "DAMAGER", "DAMAGER" },
 	DRUID = { "DAMAGER","DAMAGER", "HEALER" },
 	HUNTER = { "DAMAGER", "DAMAGER", "DAMAGER" },
 	MAGE = { "DAMAGER", "DAMAGER", "DAMAGER" },
@@ -81,37 +82,45 @@ local updateData = function(module)
 
 	local _, class = UnitClass("player")
 	local spent = 0
-	local talentTree = 1
+	local talentTree = 0
 	for tree = 1, 3 do
 		local _, _, pointsSpent = GetTalentTabInfo(tree)
 		if pointsSpent > spent then
 			spent = pointsSpent
 			talentTree = tree
 			myRole = talentRoles[class][tree]
-			if class == "DRUID" and tree == 2 then -- defaults to DAMAGER
-				if isWrath then
-					-- using the lfg tool?
-					local role = UnitGroupRolesAssigned("player")
-					if role == "TANK" or role == "DAMAGER" then
-						myRole = role
-					else
-						-- Check for bear talents
-						local thickHide = select(5, GetTalentInfo(tree, 1))
-						local survivalInstincts = select(5, GetTalentInfo(tree, 15))
-						local naturalReaction = select(5, GetTalentInfo(tree, 29))
-						if thickHide == 5 and survivalInstincts == 1 and naturalReaction == 5 then
-							myRole = "TANK"
-						end
-					end
-				else
-					-- Check for bear talents
-					local feralInstinct = select(5, GetTalentInfo(tree, 3))
-					local thickHide = select(5, GetTalentInfo(tree, 5))
-					local primalFury = select(5, GetTalentInfo(tree, 12))
-					if feralInstinct == 5 and thickHide >= (isClassicEra and 2 or 5) and primalFury == 2 then
-						myRole = "TANK"
-					end
+		end
+	end
+
+	if class == "DEATHKNIGHT" and talentTree == 1 then -- defaults to TANK
+		local role = UnitGroupRolesAssigned("player")
+		if role == "TANK" or role == "DAMAGER" then
+			myRole = role
+		elseif spent == 51 then
+			role = "DAMAGER"
+		end
+	elseif class == "DRUID" and talentTree == 2 then -- defaults to DAMAGER
+		if isWrath then
+			-- using the lfg tool?
+			local role = UnitGroupRolesAssigned("player")
+			if role == "TANK" or role == "DAMAGER" then
+				myRole = role
+			else
+				-- Check for bear talents
+				local thickHide = select(5, GetTalentInfo(2, 1))
+				local survivalInstincts = select(5, GetTalentInfo(2, 15))
+				local naturalReaction = select(5, GetTalentInfo(2, 29))
+				if thickHide == 5 and survivalInstincts == 1 and naturalReaction == 5 then
+					myRole = "TANK"
 				end
+			end
+		else
+			-- Check for bear talents
+			local feralInstinct = select(5, GetTalentInfo(2, 3))
+			local thickHide = select(5, GetTalentInfo(2, 5))
+			local primalFury = select(5, GetTalentInfo(2, 12))
+			if feralInstinct == 5 and thickHide >= (isClassicEra and 2 or 5) and primalFury == 2 then
+				myRole = "TANK"
 			end
 		end
 	end
