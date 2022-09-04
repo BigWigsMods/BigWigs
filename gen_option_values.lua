@@ -322,10 +322,11 @@ local function dumpValues(path, name, options_table)
 
 	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
 		if not opt.dryrun then
-			f = io.open(file, "wb")
+			f = io.open(file, "w")
 			if not f then
 				error(string.format("    %s: File not found!", file))
 			else
+				data = data:gsub("\r", "")
 				f:write(data)
 				f:close()
 				warn("    Updated " .. file)
