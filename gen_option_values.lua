@@ -300,32 +300,33 @@ local function dumpValues(path, name, options_table)
 	local data = ""
 	for _, mod in ipairs(modules) do
 		local options = options_table[mod] or {}
-		data = data .. string.format("\nBigWigs:Add%s(%q, {\n", name, mod)
+		data = data .. string.format("\r\nBigWigs:Add%s(%q, {\r\n", name, mod)
 		for _, key in ipairs(sortKeys(options)) do
 			local values = options[key]
 			if type(key) == "string" then key = string.format("%q", key) end
 			if #values == 1 then
-				data = data .. string.format("\t[%s] = %q,\n", key, values[1])
+				data = data .. string.format("\t[%s] = %q,\r\n", key, values[1])
 			else
 				table.sort(values, cmp)
 				for i = 1, #values do
 					values[i] = string.format("%q", values[i])
 				end
-				data = data .. string.format("\t[%s] = {%s},\n", key, table.concat(values, ","))
+				data = data .. string.format("\t[%s] = {%s},\r\n", key, table.concat(values, ","))
 			end
 		end
-		data = data .. "})\n"
+		data = data .. "})\r\n"
 	end
 	if data == "" then
-		data = "-- Don't error because I'm empty, please.\n"
+		data = "-- Don't error because I'm empty, please.\r\n"
 	end
 
-	if data ~= old_data then
+	if data:gsub("\r", "") ~= old_data:gsub("\r", "") then
 		if not opt.dryrun then
 			f = io.open(file, "w")
 			if not f then
 				error(string.format("    %s: File not found!", file))
 			else
+				data = data:gsub("\r", "")
 				f:write(data)
 				f:close()
 				warn("    Updated " .. file)
