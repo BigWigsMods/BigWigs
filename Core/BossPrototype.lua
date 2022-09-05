@@ -1967,6 +1967,7 @@ do
 	-- @param[opt] text the message text (if nil, key is used)
 	-- @param[opt] icon the message icon (spell id or texture name)
 	function boss:StackMessageOld(key, player, stack, color, sound, text, icon)
+		if icon == nil then icon = type(text) == "number" and text or key end
 		self:StackMessage(key, color, player, stack, 0, text, icon)
 		self:PlaySound(key, sound)
 	end
@@ -1985,10 +1986,10 @@ do
 			local amount = stack or 1
 			if player == pName then
 				local isEmphasized = (band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE) and amount >= noEmphUntil
-				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, amount, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
+				self:SendMessage("BigWigs_Message", self, key, format(L.stackyou, amount, textType == "string" and text or spells[text or key]), "blue", icon ~= false and icons[icon or key], isEmphasized)
 			elseif not checkFlag(self, key, C.ME_ONLY) then
 				local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE and amount >= noEmphUntil
-				self:SendMessage("BigWigs_Message", self, key, format(L.stack, amount, textType == "string" and text or spells[text or key], self:ColorName(player)), color, icon ~= false and icons[icon or textType == "number" and text or key], isEmphasized)
+				self:SendMessage("BigWigs_Message", self, key, format(L.stack, amount, textType == "string" and text or spells[text or key], self:ColorName(player)), color, icon ~= false and icons[icon or key], isEmphasized)
 			end
 		end
 	end
@@ -2002,6 +2003,7 @@ do
 	-- @param[opt] icon the message icon (spell id or texture name)
 	-- @bool[opt] alwaysPlaySound if true, play the sound even if player is not you
 	function boss:TargetMessageOld(key, player, color, sound, text, icon, alwaysPlaySound)
+		if icon == nil then icon = type(text) == "number" and text or key end
 		self:PlaySound(key, sound, nil, not alwaysPlaySound and player)
 		if type(player) == "table" then
 			self:TargetsMessage(key, color, player, #player, text, icon)
@@ -2129,7 +2131,7 @@ do
 			if not playerTable.prevPlayersInTable or playerTable.prevPlayersInTable ~= playersInTable then
 				local textType = type(text)
 				local msg = textType == "string" and text or spells[text or key]
-				local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+				local texture = icon ~= false and icons[icon or key]
 
 				local previousAmount = playerTable.prevPlayersInTable or 0
 				if playersInTable-previousAmount == 1 and playerTable[playersInTable] == pName then
@@ -2179,7 +2181,7 @@ do
 					local isEmphasized = band(self.db.profile[key], C.EMPHASIZE) == C.EMPHASIZE or band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE
 					local textType = type(text)
 					local msg = textType == "string" and text or spells[text or key]
-					local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+					local texture = icon ~= false and icons[icon or key]
 					local marker = playerTable[pName]
 					if marker then
 						self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, marker), "blue", texture, isEmphasized)
@@ -2191,7 +2193,7 @@ do
 				if playerTable[playersInTable] == pName and band(self.db.profile[key], C.ME_ONLY_EMPHASIZE) == C.ME_ONLY_EMPHASIZE then
 					local textType = type(text)
 					local msg = textType == "string" and text or spells[text or key]
-					local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+					local texture = icon ~= false and icons[icon or key]
 					local marker = playerTable[pName]
 					if marker then
 						self:SendMessage("BigWigs_Message", self, key, format(L.you_icon, msg, marker), "blue", texture, true)
@@ -2220,7 +2222,7 @@ do
 	function boss:TargetMessage(key, color, player, text, icon)
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
-		local texture = icon ~= false and icons[icon or textType == "number" and text or key]
+		local texture = icon ~= false and icons[icon or key]
 
 		if not player then
 			if checkFlag(self, key, C.MESSAGE) then
