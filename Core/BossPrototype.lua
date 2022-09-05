@@ -1871,6 +1871,7 @@ end
 -- @param[opt] text the message text (if nil, key is used)
 -- @param[opt] icon the message icon (spell id or texture name)
 function boss:MessageOld(key, color, sound, text, icon)
+	if icon == nil then icon = type(text) == "number" and text or key end
 	self:Message(key, color, text, icon)
 	self:PlaySound(key, sound)
 end
