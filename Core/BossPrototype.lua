@@ -93,15 +93,17 @@ local updateData = function(module)
 	end
 
 	if class == "DEATHKNIGHT" and talentTree == 1 then -- defaults to TANK
+		-- Using the LFG tool?
 		local role = UnitGroupRolesAssigned("player")
 		if role == "TANK" or role == "DAMAGER" then
 			myRole = role
 		elseif spent == 51 then
-			role = "DAMAGER"
+			-- Meta tank spec was 43/27/1 with Blood DPS pretty much dead at this point in Wrath
+			myRole = "DAMAGER"
 		end
 	elseif class == "DRUID" and talentTree == 2 then -- defaults to DAMAGER
 		if isWrath then
-			-- using the lfg tool?
+			-- Using the LFG tool?
 			local role = UnitGroupRolesAssigned("player")
 			if role == "TANK" or role == "DAMAGER" then
 				myRole = role
