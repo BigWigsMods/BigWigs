@@ -30,7 +30,7 @@ local twistFateTimersHeroic = {
 }
 local twistFateTimersMythic = {
 	{6.1, 32.8, 20.7, 37.7, 28},
-	{11.2, 32.8, 20.6, 37.7, 28},
+	{11.2, 32.8, 20.6, 37.7, 28, 8.5},
 	{42, 15.7, 27.9, 46.2, 16.9},
 }
 local twistFateTimers = mod:Mythic() and twistFateTimersMythic or twistFateTimersHeroic
