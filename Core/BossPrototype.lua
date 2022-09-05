@@ -2597,27 +2597,6 @@ function boss:BarTimeLeft(text)
 	return 0
 end
 
---- Updates the text for a running bar.
--- @param oldText the existing bar text before update
--- @param newText the new bar text after update
-function boss:SetBarText(oldText, newText)
-	local bars = core:GetPlugin("Bars", true)
-	if bars then
-		bars:SetBarText(self, type(oldText) == "number" and spells[oldText] or oldText,
-								 type(newText) == "number" and spells[newText] or newText)
-	end
-end
-
---- Updates the duration for a running bar.
--- @param text the bar text
--- @param duration the new bar duration
-function boss:SetBarDuration(text, duration)
-	local bars = core:GetPlugin("Bars", true)
-	if bars then
-		bars:SetBarDuration(self, type(text) == "number" and spells[text] or text, duration)
-	end
-end
-
 -------------------------------------------------------------------------------
 -- Icons.
 -- @section icons
