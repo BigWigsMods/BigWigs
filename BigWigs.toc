@@ -2,7 +2,7 @@
 ## Interface-BCC: 20504
 ## Interface-Wrath: 30400
 
-## Title: BigWigs |cffff0000[WRONG VERSION]|r
+## Title: BigWigs (|cffff2020WRONG VERSION|r)
 ## Author: Funkydude, Nebula, Elvador, Justwait
 ## Version: @project-version@
 
@@ -11,6 +11,8 @@
 ## X-Website: https://github.com/BigWigsMods
 ## X-Curse-Project-ID: 2382
 ## X-WoWI-ID: 5086
+
+## SavedVariables: BigWigsClassicDB, BigWigsIconClassicDB, BigWigsStatsClassicDB, BigWigs3DB, BigWigsIconDB, BigWigsStatsDB
 
 # Don't cause errors
 API.lua
