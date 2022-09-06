@@ -2283,13 +2283,21 @@ do
 			self.missing[key] = nil
 		end
 
+		local time, maxTime
+		if type(length) == "table" then
+			time = length[1]
+			maxTime = length[2]
+		else
+			time = length
+		end
+
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartCountdown", self, key, msg, type(length) == "table" and length[1] or length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
 	end
 
@@ -2322,13 +2330,21 @@ do
 			self.missing[key] = nil
 		end
 
+		local time, maxTime
+		if type(length) == "table" then
+			time = length[1]
+			maxTime = length[2]
+		else
+			time = length
+		end
+
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], true)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], true, maxTime)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartCountdown", self, key, msg, type(length) == "table" and length[1] or length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
 	end
 
@@ -2346,21 +2362,29 @@ do
 			return
 		end
 
+		local time, maxTime
+		if type(length) == "table" then
+			time = length[1]
+			maxTime = length[2]
+		else
+			time = length
+		end
+
 		local textType = type(text)
 		if not player and checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), time, icons[icon or textType == "number" and text or key], false, maxTime)
 			return
 		end
 		if player == pName then
 			local msg = format(L.you, textType == "string" and text or spells[text or key])
 			if checkFlag(self, key, C.BAR) then
-				self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+				self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
 			end
 			if checkFlag(self, key, C.COUNTDOWN) then
-				self:SendMessage("BigWigs_StartCountdown", self, key, msg, type(length) == "table" and length[1] or length)
+				self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 			end
 		elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), time, icons[icon or textType == "number" and text or key], false, maxTime)
 		end
 	end
 
@@ -2377,12 +2401,20 @@ do
 			return
 		end
 
+		local time, maxTime
+		if type(length) == "table" then
+			time = length[1]
+			maxTime = length[2]
+		else
+			time = length
+		end
+
 		local textType = type(text)
 		local msg = format(L.cast, textType == "string" and text or spells[text or key])
 		if checkFlag(self, key, C.CASTBAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
+			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
 			if checkFlag(self, key, C.COUNTDOWN) then
-				self:SendMessage("BigWigs_StartCountdown", self, key, msg, type(length) == "table" and length[1] or length)
+				self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 			end
 		end
 	end
