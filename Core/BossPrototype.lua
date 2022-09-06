@@ -2261,6 +2261,7 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:Bar(key, length, text, icon)
+		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
 			if not self.missing[key] then
@@ -2273,24 +2274,21 @@ do
 				self.missing[key][c+1] = t
 			end
 			return
-		elseif (type(length) ~= "number" and type(length) ~= "table")
-		    or (type(length) == "table" and (type(length[1]) ~= "number" or (length[2] and type(length[2]) ~= "number"))) then
+		elseif lengthType ~= "number" and lengthType ~= "table" then
 			core:Print(format(badBar, key))
 			return
-		elseif length == 0 or type(length) == "table" and length[1] == 0 then
+		elseif length == 0 then
 			return
 		elseif self.missing and self.missing[key] then
 			self.missing[key] = nil
 		end
-
 		local time, maxTime
-		if type(length) == "table" then
+		if lengthType == "table" then
 			time = length[1]
 			maxTime = length[2]
 		else
 			time = length
 		end
-
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
@@ -2308,6 +2306,7 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:CDBar(key, length, text, icon)
+		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
 			if not self.missing[key] then
@@ -2320,24 +2319,21 @@ do
 				self.missing[key][c+1] = t
 			end
 			return
-		elseif (type(length) ~= "number" and type(length) ~= "table")
-		    or (type(length) == "table" and (type(length[1]) ~= "number" or (length[2] and type(length[2]) ~= "number"))) then
+		elseif lengthType ~= "number" and lengthType ~= "table" then
 			core:Print(format(badBar, key))
 			return
-		elseif length == 0 or type(length) == "table" and length[1] == 0 then
+		elseif length == 0 then
 			return
 		elseif self.missing and self.missing[key] then
 			self.missing[key] = nil
 		end
-
 		local time, maxTime
-		if type(length) == "table" then
+		if lengthType == "table" then
 			time = length[1]
 			maxTime = length[2]
 		else
 			time = length
 		end
-
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
@@ -2355,21 +2351,18 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:TargetBar(key, length, player, text, icon)
-		if (type(length) ~= "number" and type(length) ~= "table")
-		or (type(length) == "table" and (type(length[1]) ~= "number" or (length[2] and type(length[2]) ~= "number")))
-		or (length == 0 or type(length) == "table" and length[1] == 0) then
+		local lengthType = type(length)
+		if (lengthType ~= "number" and lengthType ~= "table") or length == 0 then
 			core:Print(format(badTargetBar, key))
 			return
 		end
-
 		local time, maxTime
-		if type(length) == "table" then
+		if lengthType == "table" then
 			time = length[1]
 			maxTime = length[2]
 		else
 			time = length
 		end
-
 		local textType = type(text)
 		if not player and checkFlag(self, key, C.BAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), time, icons[icon or textType == "number" and text or key], false, maxTime)
@@ -2394,21 +2387,18 @@ do
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:CastBar(key, length, text, icon)
-		if (type(length) ~= "number" and type(length) ~= "table")
-		or (type(length) == "table" and (type(length[1]) ~= "number" or (length[2] and type(length[2]) ~= "number")))
-		or (length == 0 or type(length) == "table" and length[1] == 0) then
+		local lengthType = type(length)
+		if (lengthType ~= "number" and lengthType ~= "table") or length == 0 then
 			core:Print(format(badBar, key))
 			return
 		end
-
 		local time, maxTime
-		if type(length) == "table" then
+		if lengthType == "table" then
 			time = length[1]
 			maxTime = length[2]
 		else
 			time = length
 		end
-
 		local textType = type(text)
 		local msg = format(L.cast, textType == "string" and text or spells[text or key])
 		if checkFlag(self, key, C.CASTBAR) then
@@ -2433,7 +2423,6 @@ do
 			core:Print(format(badNameplateBarStart, key))
 			return
 		end
-
 		local textType = type(text)
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
