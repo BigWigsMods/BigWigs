@@ -2321,11 +2321,10 @@ do
 
 	--- Display a bar.
 	-- @param key the option key
-	-- @number length the bar duration in seconds
+	-- @param length the bar duration in seconds, or a table containing {remaining duration, max duration}
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
-	-- @param[opt] maxTime the maximum duration of a bar, if it should not start at full time
-	function boss:Bar(key, length, text, icon, maxTime)
+	function boss:Bar(key, length, text, icon)
 		if not length then
 			if not self.missing then self.missing = {} end
 			if not self.missing[key] then
@@ -2338,10 +2337,11 @@ do
 				self.missing[key][c+1] = t
 			end
 			return
-		elseif type(length) ~= "number" then
+		elseif (type(length) ~= "number" and type(length) ~= "table")
+		    or (type(length) == "table" and (type(length[1]) ~= "number" or (length[2] and type(length[2]) ~= "number"))) then
 			core:Print(format(badBar, key))
 			return
-		elseif length == 0 then
+		elseif length == 0 or type(length) == "table" and length[1] == 0 then
 			return
 		elseif self.missing and self.missing[key] then
 			self.missing[key] = nil
@@ -2350,21 +2350,20 @@ do
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], false, maxTime)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, type(length) == "table" and length[1] or length)
 		end
 	end
 
 	--- Display a cooldown bar.
 	-- Indicates an unreliable duration by prefixing the time with "~"
 	-- @param key the option key
-	-- @number length the bar duration in seconds
+	-- @param length the bar duration in seconds, or a table containing {current duration, max duration}
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
-	-- @param[opt] maxTime the maximum duration of a bar, if it should not start at full time
-	function boss:CDBar(key, length, text, icon, maxTime)
+	function boss:CDBar(key, length, text, icon)
 		if not length then
 			if not self.missing then self.missing = {} end
 			if not self.missing[key] then
@@ -2377,10 +2376,11 @@ do
 				self.missing[key][c+1] = t
 			end
 			return
-		elseif type(length) ~= "number" then
+		elseif (type(length) ~= "number" and type(length) ~= "table")
+		    or (type(length) == "table" and (type(length[1]) ~= "number" or (length[2] and type(length[2]) ~= "number"))) then
 			core:Print(format(badBar, key))
 			return
-		elseif length == 0 then
+		elseif length == 0 or type(length) == "table" and length[1] == 0 then
 			return
 		elseif self.missing and self.missing[key] then
 			self.missing[key] = nil
@@ -2389,51 +2389,54 @@ do
 		local textType = type(text)
 		local msg = textType == "string" and text or spells[text or key]
 		if checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], true, maxTime)
+			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], true)
 		end
 		if checkFlag(self, key, C.COUNTDOWN) then
-			self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, type(length) == "table" and length[1] or length)
 		end
 	end
 
 	--- Display a target bar.
 	-- @param key the option key
-	-- @number length the bar duration in seconds
+	-- @param length the bar duration in seconds, or a table containing {current duration, max duration}
 	-- @string player the player name to show on the bar
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
-	-- @param[opt] maxTime the maximum duration of a bar, if it should not start at full time
-	function boss:TargetBar(key, length, player, text, icon, maxTime)
-		if type(length) ~= "number" or length == 0 then
+	function boss:TargetBar(key, length, player, text, icon)
+		if (type(length) ~= "number" and type(length) ~= "table")
+		or (type(length) == "table" and (type(length[1]) ~= "number" or (length[2] and type(length[2]) ~= "number")))
+		or (length == 0 or type(length) == "table" and length[1] == 0) then
 			core:Print(format(badTargetBar, key))
 			return
 		end
 
 		local textType = type(text)
 		if not player and checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key], false, maxTime)
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], "???"), length, icons[icon or textType == "number" and text or key])
 			return
 		end
 		if player == pName then
 			local msg = format(L.you, textType == "string" and text or spells[text or key])
 			if checkFlag(self, key, C.BAR) then
-				self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key], false, maxTime)
+				self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 			end
 			if checkFlag(self, key, C.COUNTDOWN) then
-				self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
+				self:SendMessage("BigWigs_StartCountdown", self, key, msg, type(length) == "table" and length[1] or length)
 			end
 		elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key], false, maxTime)
+			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), length, icons[icon or textType == "number" and text or key])
 		end
 	end
 
 	--- Display a cast bar.
 	-- @param key the option key
-	-- @number length the bar duration in seconds
+	-- @param length the bar duration in seconds, or a table containing {current duration, max duration}
 	-- @param[opt] text the bar text (if nil, key is used)
 	-- @param[opt] icon the bar icon (spell id or texture name)
 	function boss:CastBar(key, length, text, icon)
-		if type(length) ~= "number" or length == 0 then
+		if (type(length) ~= "number" and type(length) ~= "table")
+		or (type(length) == "table" and (type(length[1]) ~= "number" or (length[2] and type(length[2]) ~= "number")))
+		or (length == 0 or type(length) == "table" and length[1] == 0) then
 			core:Print(format(badBar, key))
 			return
 		end
@@ -2443,7 +2446,7 @@ do
 		if checkFlag(self, key, C.CASTBAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, length, icons[icon or textType == "number" and text or key])
 			if checkFlag(self, key, C.COUNTDOWN) then
-				self:SendMessage("BigWigs_StartCountdown", self, key, msg, length)
+				self:SendMessage("BigWigs_StartCountdown", self, key, msg, type(length) == "table" and length[1] or length)
 			end
 		end
 	end
@@ -2458,11 +2461,11 @@ do
 		if type(length) ~= "number" or length == 0 then
 			core:Print(format(badBar, key))
 			return
-		end
-		if type(guid) ~= "string" then
+		elseif type(guid) ~= "string" then
 			core:Print(format(badNameplateBarStart, key))
 			return
 		end
+
 		local textType = type(text)
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
@@ -2481,11 +2484,11 @@ do
 		if type(length) ~= "number" or length == 0 then
 			core:Print(format(badBar, key))
 			return
-		end
-		if type(guid) ~= "string" then
+		elseif type(guid) ~= "string" then
 			core:Print(format(badNameplateBarStart, key))
 			return
 		end
+
 		local textType = type(text)
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]

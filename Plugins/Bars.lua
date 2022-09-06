@@ -2111,9 +2111,17 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 	return bar
 end
 
-function plugin:BigWigs_StartBar(_, module, key, text, time, icon, isApprox, maxTime)
+function plugin:BigWigs_StartBar(_, module, key, text, length, icon, isApprox)
 	if not text then text = "" end
 	self:StopSpecificBar(nil, module, text)
+
+	local time, maxTime
+	if type(length) == "table" then
+		time = length[0]
+		maxTime = length[1]
+	else
+		time = length
+	end
 
 	local bar = self:CreateBar(module, key, text, time, icon, isApprox)
 	bar:Start(maxTime)
