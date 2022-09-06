@@ -138,3 +138,13 @@ if L then
 	L.knife_fling = "飛刀！" -- "Death-touched blades fling out"; 傳奇模式的死亡利刃射出計時
 end
 
+L = BigWigs:NewBossLocale("Sanctum of Domination Affixes", "zhTW")
+if L then
+	L.custom_on_bar_icon = "條形圖示"
+	L.custom_on_bar_icon_desc = "顯示宿命之力的條形圖示"
+
+	L.chaotic_essence = "精華"
+	L.creation_spark = "火花"
+	L.protoform_barrier = "屏障"
+	L.reconfiguration_emitter = "打斷小怪"
+end

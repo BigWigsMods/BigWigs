@@ -165,3 +165,14 @@ if L then
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	L.goliath = "Goliath der Steinlegion"
 end
+
+L = BigWigs:NewBossLocale("Castle Nathria Affixes", "deDE")
+if L then
+	L.custom_on_bar_icon = "Leistensymbol"
+	L.custom_on_bar_icon_desc = "Zeigt das Schicksalhafte Schlachtzugssymbol in den Leisten."
+
+	L.chaotic_essence = "Essenz"
+	L.creation_spark = "Funken"
+	L.protoform_barrier = "Barriere"
+	L.reconfiguration_emitter = "Zauber-Add"
+end

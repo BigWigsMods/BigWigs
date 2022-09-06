@@ -165,3 +165,14 @@ if L then
 	--[[ Sludgefist -> Stone Legion Generals ]]--
 	L.goliath = "顽石军团巨怪"
 end
+
+L = BigWigs:NewBossLocale("Castle Nathria Affixes", "zhCN")
+if L then
+	L.custom_on_bar_icon = "条形图标"
+	L.custom_on_bar_icon_desc = "显示宿命之力条形图标."
+
+	L.chaotic_essence = "精华"
+	L.creation_spark = "火花"
+	L.protoform_barrier = "屏障"
+	L.reconfiguration_emitter = "打断小怪"
+end

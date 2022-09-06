@@ -429,7 +429,7 @@ do
 			self:SayCountdown(346459, 5, count)
 			self:PlaySound(346459, "warning")
 		end
-		self:NewTargetsMessage(346459, "orange", playerList, nil, L.spike)
+		self:TargetsMessage(346459, "orange", playerList, nil, L.spike)
 		self:CustomIcon(glacialWrathMarker, args.destName, icon)
 	end
 
@@ -449,7 +449,7 @@ do
 	local scheduled = nil
 
 	local function FrozenDestructionStackMessage()
-		mod:NewStackMessage(346530, "blue", playerName, stacks)
+		mod:StackMessage(346530, "blue", playerName, stacks, stacks)
 		mod:PlaySound(346530, stacks > 4 and "warning" or "info") -- How many stacks is too much?
 		scheduled = nil
 	end
@@ -480,7 +480,7 @@ do
 			self:SayCountdown(args.spellId, 6)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.silence, oblivionsEchoCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.silence, oblivionsEchoCount-1))
 	end
 end
 
@@ -531,8 +531,8 @@ end
 function mod:SinisterMiasmaApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		if amount % 3 == 0 and amount > 15 then -- 15+ or every 3
-			self:NewStackMessage(args.spellId, "blue", args.destName, amount, 10, L.miasma)
+		if amount % 3 == 0 or amount > 15 then -- 16+ or every 3
+			self:StackMessage(args.spellId, "blue", args.destName, amount, 16, L.miasma)
 			if amount > 15 then
 				self:PlaySound(args.spellId, "alert")
 			end
@@ -576,7 +576,7 @@ end
 function mod:NecroticSurgeApplied(args)
 	if not self:IsEngaged() then return end -- starts with stacks on mythic
 	if args.amount and args.amount > 4 then -- Don't show for Stage 3 (Custom message for that)
-		self:NewStackMessage(args.spellId, "cyan", args.destName, args.amount)
+		self:StackMessage(args.spellId, "cyan", args.destName, args.amount, 5)
 		self:PlaySound(args.spellId, "info")
 	end
 	self:StopBar(CL.cast:format(self:SpellName(249436))) -- Destruction
@@ -612,7 +612,7 @@ function mod:RemnantDeath()
 end
 
 function mod:FreezingBlast(args)
-	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
+	if GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
 		self:Message(args.spellId, "orange")
 		self:PlaySound(args.spellId, "alarm")
 		self:CDBar(args.spellId, 6.1)
@@ -620,7 +620,7 @@ function mod:FreezingBlast(args)
 end
 
 function mod:GlacialWinds(args)
-	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
+	if GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
 		self:Message(args.spellId, "cyan", L.glacial_winds)
 		self:CDBar(args.spellId, 13.5, L.glacial_winds)
 		self:PlaySound(args.spellId, "info")
@@ -628,7 +628,7 @@ function mod:GlacialWinds(args)
 end
 
 function mod:FoulWinds(args)
-	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
+	if GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
 		self:Message(args.spellId, "yellow", L.foul_winds)
 		self:CDBar(args.spellId, 25.5, L.foul_winds)
 		self:PlaySound(args.spellId, "alert")
@@ -638,7 +638,7 @@ end
 function mod:UndyingWrath(args)
 	self:Message(args.spellId, "red")
 	self:CastBar(args.spellId, 10)
-	if _G.GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
+	if GetPlayerAuraBySpellID(348787) then -- inPhylactery doesn't work for some reason?
 		self:PlaySound(args.spellId, "warning")
 	end
 

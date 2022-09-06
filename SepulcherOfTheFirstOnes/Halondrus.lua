@@ -304,7 +304,7 @@ end
 
 function mod:LightshatterBeamApplied(args)
 	if self:Tank() then
-		self:NewStackMessage(360977, "purple", args.destName, args.amount, nil, CL.beam)
+		self:StackMessage(360977, "purple", args.destName, args.amount, 0, CL.beam)
 		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
 			self:PlaySound(360977, "warning")
 		end
@@ -334,7 +334,7 @@ do
 			self:PlaySound(args.spellId, "alarm")
 			self:Say(args.spellId, L.prism)
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.crushing_prism, prismCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.crushing_prism, prismCount-1))
 		self:CustomIcon(crushingPrismMarker, args.destName, count)
 	end
 

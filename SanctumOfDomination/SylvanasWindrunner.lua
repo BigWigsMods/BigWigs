@@ -38,52 +38,78 @@ local mercilessCount = 1
 local isInfoOpen = false
 local barbedArrowList = {}
 
-local stageOneTimersHeroic = {
-	[347504] = {7.1, 51.1, 49, 49.0, 53, 47.2}, -- Windrunner
-	[347670] = {10.6, 47.9, 47.7, 7.7, 42.3, 49.7, 46}, -- Shadow Dagger
-	[352650] = {20.5, 19.9, 16.5, 30.0, 4.9, 32.2, 16.1, 12.0, 26.2, 25.1, 13.7, 22.1}, -- Ranger's Heartseeker
-	[347704] = {45.0, 50.0, 45.4, 46.8, 49}, -- Veil of Darkness
-	[349458] = {23, 53.5, 49, 52, 50}, -- Domination Chains
+local stageOneTimersTable = {
+	[17] = { -- LFR
+		[347504] = {8.2, 62.7, 63.5, 61.2}, -- Windrunner
+		[347670] = {11.8, 59.8, 63.4, 8.4, 55.7}, -- Shadow Dagger
+		[352650] = {21.9, 23.4, 19.8, 19.6, 20.7, 21.4, 23.3, 22.3, 18.3}, -- Ranger's Heartseeker
+		[347704] = {55.3, 60.0, 60.0, 60.0}, -- Veil of Darkness
+		[349458] = {27.9, 65.4, 65.6}, -- Domination Chains
+	},
+	[14] = { -- Normal
+		[347504] = {7.3, 56.7, 55.0, 55.0, 56.6}, -- Windrunner
+		[347670] = {10.6, 54.1, 55.0, 8.0, 49.4, 54.3}, -- Shadow Dagger
+		[352650] = {22.0, 20.5, 34.7, 16.1, 18.1, 23.1, 18.9, 15.7, 21.0, 28.5}, -- Ranger's Heartseeker
+		[347704] = {49.3, 53.3, 54.0, 53.2}, -- Veil of Darkness
+		[349458] = {25.1, 59.7, 55.6, 58.1}, -- Domination Chains
+	},
+	[15] = { -- Heroic
+		[347504] = {6.4, 51.6, 50.4, 48.6, 52.9, 49.2}, -- Windrunner
+		[347670] = {10.0, 48.6, 50.5, 8.7, 42.5, 50.3, 49.1}, -- Shadow Dagger
+		[352650] = {18.4, 20.3, 16.2, 30.3, 6.8, 32.4, 25.1, 3.0, 24.3, 20.6, 4.8, 21.0, 29.6, 3.1}, -- Ranger's Heartseeker
+		[347704] = {45.0, 50.0, 45.4, 46.8, 49}, -- Veil of Darkness
+		[349458] = {23, 53.5, 49, 52, 50}, -- Domination Chains
+	},
+	[16] = { -- Mythic
+		[347504] = {7.1, 57.3, 54.7, 56.1, 62.4}, -- Windrunner
+		[347670] = {10.3, 54.4, 54.0, 8.6, 49.0, 59.4}, -- Shadow Dagger
+		[352650] = {19.6, 17.4, 8.7, 14.6, 17.0, 23.3, 4.8, 28.3, 20.6, 3.0, 5.9, 44.2, 3.0, 3.0, 9.2, 34.9}, -- Ranger's Heartseeker
+		[347704] = {49.5, 43.0, 45.2, 53.9, 35.7}, -- Veil of Darkness
+		[349458] = {29.0, 54.9, 62.6, 53.9}, -- Domination Chains
+	}
 }
-local stageOneTimersMythic = {
-	[347504] = {7.1, 57.3, 54.7, 56.1, 62.4}, -- Windrunner
-	[347670] = {10.3, 54.4, 54.0, 8.6, 49.0, 59.4}, -- Shadow Dagger
-	[352650] = {19.6, 17.4, 8.7, 14.6, 17.0, 23.3, 4.8, 28.3, 20.6, 3.0, 5.9, 44.2, 3.0, 3.0, 9.2, 34.9}, -- Ranger's Heartseeker
-	[347704] = {49.5, 43.0, 45.2, 53.9, 35.7}, -- Veil of Darkness
-	[349458] = {29.0, 54.9, 62.6, 53.9}, -- Domination Chains
-}
-local stageOneTimers = mod:Mythic() and stageOneTimersMythic or stageOneTimersHeroic
+local stageOneTimers = stageOneTimersTable[mod:Difficulty()]
 
-local stageThreeTimersNormal = {
-	[354011] = {31.5, 81.1, 76.5, 80.0}, -- Bane Arrows
-	[353969] = {38.8, 24.2, 47.6, 3.5, 29.9, 15.4, 24.9, 31.4, 15.5, 39.5, 23.2, 10.2, 15.1}, -- Banshee's Heartseeker
-	[347704] = {44.0, 62.7, 68.4, 60.0, 61.3, 63.6}, -- Veil of Darkness
-	[347609] = {77.4, 57.5, 57.8, 60.0}, -- Wailing Arrow
-	[354147] = {86.4, 76.0, 76.0, 76.0}, -- Raze
-	[353952] = {92.7, 50.0, 54.9, 52.6, 54.6}, -- Banshee Scream
-	[347670] = {47.7, 80.0, 84.6}, -- Shadow Dagger (353935 in stage 3)
+local stageThreeTimersTable = {
+	[17] = { -- LFR
+		[354011] = {36.5, 87.9, 88.3, 89.1, 88.2, 89.5}, -- Bane Arrows
+		[353969] = {40.3, 24.1, 55.0, 3.0, 13.3, 25.7, 34.9, 12.2, 34.3, 13.4, 36.1, 12.1, 25.4, 44.7, 3.0, 22.3, 27.4, 20.9, 26.4}, -- Banshee's Heartseeker
+		[347704] = {12.7, 44.9/57.5/76.0, 68.7, 66.3, 67.5, 67.5, 67.3, 67.9}, -- Veil of Darkness
+		[347609] = {86.2, 65.2, 64.9, 66.0, 64.1, 64.8, 65.4}, -- Wailing Arrow
+		[354147] = {95.2, 89.4, 87.0, 91.2}, -- Raze
+		[353952] = {105.9, 63.2, 61.7, 63.5, 61.0, 63.3, 62.4}, -- Banshee Scream
+		[347670] = {55.3, 89.7, 93.3, 87.0, 88.8}, -- Shadow Dagger (353935 in stage 3)
+	},
+	[14] = { -- Normal
+		[354011] = {27.7, 81.6, 76.6, 79.2, 78.8, 79.8}, -- Bane Arrows
+		[353969] = {41.8, 21.1, 43.2, 4.5, 30.2, 31.1, 15.3, 24.9, 19.7, 34.6, 14.9, 21.9, 30.2, 17.9, 31.5, 18.4, 31.3, 15.7}, -- Banshee's Heartseeker
+		[347704] = {36.9, 64.4, 55.2, 60.0, 60.1, 60.1, 59.8}, -- Veil of Darkness
+		[347609] = {74.0, 57.9, 58.4, 58.1, 57.9, 56.5, 57.7}, -- Wailing Arrow
+		[354147] = {83.0, 78.4, 76.5, 85.0}, -- Raze
+		[353952] = {93.6, 52.1, 55.4, 56.3, 57.9, 60.0, 49.7}, -- Banshee Scream
+		[347670] = {44.8, 80.5, 83.4, 75.7, 87.4, 73.0}, -- Shadow Dagger (353935 in stage 3)
+	},
+	[15] = { -- Heroic
+		[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2, 57.9}, -- Banshee's Fury
+		[354011] = {28.7, 76.8, 73.2, 76.7, 74.0}, -- Bane Arrows
+		[353969] = {34.8, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7, 23.2, 10.2}, -- Banshee's Heartseeker
+		[347704] = {39, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
+		[347609] = {73, 55.8, 53.6, 55.6}, -- Wailing Arrow
+		[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
+		[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
+		[347670] = {45.9, 77.4, 79.5, 73.8}, -- Shadow Dagger (353935 in stage 3)
+	},
+	[16] = { -- Mythic
+		[354068] = {38, 62.5, 62.5, 58.5, 62.5, 65}, -- Banshee's Fury
+		[354011] = {15, 93, 100, 92.5}, -- Bane Arrows
+		[353969] = {0}, -- Banshee's Heartseeker -- none for now
+		[347704] = {23.5, 60, 55, 55, 57, 57, 64}, -- Veil of Darkness
+		[347609] = {59.5, 70, 70, 68.5, 68.5}, -- Wailing Arrow
+		[354147] = {45, 105, 105, 105}, -- Raze
+		[353952] = {71.5, 110, 112}, -- Banshee Scream
+	}
 }
-
-local stageThreeTimersHeroic = {
-	[354068] = {16.6, 49.5, 49.3, 53, 47.8, 48.2, 57.9}, -- Banshee's Fury
-	[354011] = {28.7, 76.8, 73.2, 76.7, 74.0}, -- Bane Arrows
-	[353969] = {34.8, 20.5, 50.5, 3.0, 16.5, 21.3, 32, 12.0, 14.1, 18.9, 31.7, 23.2, 10.2}, -- Banshee's Heartseeker
-	[347704] = {39, 61.4, 51, 58.4, 61.3, 63.6}, -- Veil of Darkness
-	[347609] = {73, 55.8, 53.6, 55.6}, -- Wailing Arrow
-	[354147] = {82.1, 73.6, 72.3, 81.7}, -- Raze
-	[353952] = {92.7, 47.4, 54.9, 52.6, 54.6}, -- Banshee Scream
-	[347670] = {45.9, 77.4, 79.5, 73.8}, -- Shadow Dagger (353935 in stage 3)
-}
-local stageThreeTimersMythic = {
-	[354068] = {38, 62.5, 62.5, 58.5, 62.5, 65}, -- Banshee's Fury
-	[354011] = {15, 93, 100, 92.5}, -- Bane Arrows
-	[353969] = {0}, -- Banshee's Heartseeker -- none for now
-	[347704] = {23.5, 60, 55, 55, 57, 57, 64}, -- Veil of Darkness
-	[347609] = {59.5, 70, 70, 68.5, 68.5}, -- Wailing Arrow
-	[354147] = {45, 105, 105, 105}, -- Raze
-	[353952] = {71.5, 110, 112}, -- Banshee Scream
-}
-local stageThreeTimers = mod:Mythic() and stageThreeTimersMythic or mod:Heroic() and stageThreeTimersHeroic or stageThreeTimersNormal
+local stageThreeTimers = stageThreeTimersTable[mod:Difficulty()]
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -284,7 +310,7 @@ function mod:OnBossEnable()
 	end
 end
 
-function mod:OnEngage()
+function mod:OnEngage(diff)
 	self:SetStage(1)
 	windrunnerCount = 1
 	dominationChainsCount = 1
@@ -296,8 +322,8 @@ function mod:OnEngage()
 	intermission = false
 	isInfoOpen = false
 	barbedArrowList = {}
-	stageOneTimers = self:Mythic() and stageOneTimersMythic or stageOneTimersHeroic
-	stageThreeTimers = self:Mythic() and stageThreeTimersMythic or stageThreeTimersHeroic
+	stageOneTimers = stageOneTimersTable[diff]
+	stageThreeTimers = stageThreeTimersTable[diff]
 
 	self:Bar(347504, stageOneTimers[347504][windrunnerCount], CL.count:format(self:SpellName(347504), windrunnerCount)) -- Windrunner
 	self:Bar(347670, stageOneTimers[347670][shadowDaggerCount], CL.count:format(self:SpellName(347670), shadowDaggerCount)) -- Shadow Dagger
@@ -371,7 +397,7 @@ end
 
 function mod:FilthApplied(args)
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "red", args.destName, args.amount)
+		self:StackMessage(args.spellId, "red", args.destName, args.amount, 0)
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -524,7 +550,7 @@ function mod:BarbedArrowApplied(args)
 	self:SetInfoByTable(args.spellId, barbedArrowList)
 
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 0)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -586,7 +612,7 @@ end
 
 function mod:DominationChainsApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.chain)
+		self:PersonalMessage(args.spellId, nil, L.chain)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -618,12 +644,17 @@ do
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
-				-- Checking amout as it starts with 5 in Heroic & Mythic
-				local _, amount = self:UnitDebuff(args.destName, args.spellId)
-				self:NewStackMessage(args.spellId, "blue", args.destName, amount, nil, L.darkness)
-				if amount > 3 then
-					-- Don't need to blast warning as the debuff bounces around
-					self:PlaySound(args.spellId, "warning")
+				if self:Easy() then
+					self:PersonalMessage(args.spellId, nil, L.darkness)
+					self:PlaySound(args.spellId, "alarm")
+				else
+					-- Checking amout as it starts with 5 in Heroic & Mythic
+					local _, amount = self:UnitDebuff(args.destName, args.spellId)
+					self:StackMessage(args.spellId, "blue", args.destName, amount, amount, L.darkness)
+					if amount > 3 then
+						-- Don't need to blast warning as the debuff bounces around
+						self:PlaySound(args.spellId, "warning")
+					end
 				end
 			end
 		end
@@ -635,7 +666,7 @@ do
 	local playerList = {}
 	function mod:WailingArrow(args)
 		local count = self:Mythic() and wailingArrowCastCount or self:GetStage() == 1 and wailingArrowCount or wailingArrowCastCount
-		local target = table.remove(playerList, 1)
+		local target = table.remove(playerList, 1) or "???"
 		self:Message(args.spellId, "yellow", CL.other:format(CL.count:format(L.arrow, count), self:ColorName(target)))
 		self:PlaySound(args.spellId, "alert")
 		wailingArrowCastCount = wailingArrowCastCount + 1
@@ -671,7 +702,7 @@ do
 		self:CustomIcon(wailingArrowMarker, args.destName, wailingArrowPlayerCount)
 		if self:Me(args.destGUID) then
 			myArrow = wailingArrowPlayerCount
-			self:PersonalMessage(347609, CL.count:format(L.arrow, wailingArrowPlayerCount))
+			self:PersonalMessage(347609, nil, CL.count:format(L.arrow, wailingArrowPlayerCount))
 			self:PlaySound(347609, "alarm")
 			self:Say(347609, CL.count_rticon:format(L.arrow, wailingArrowPlayerCount, wailingArrowPlayerCount))
 			self:SayCountdown(347609, 9)
@@ -712,7 +743,7 @@ end
 function mod:BansheesMarkApplied(args)
 	local amount = args.amount or 1
 	if amount > 2 then -- 3 stacks per combo
-		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
+		self:StackMessage(args.spellId, "purple", args.destName, args.amount, 3)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -993,7 +1024,7 @@ end
 
 function mod:LashingWoundApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2)
 	if amount > 1 then
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -1005,7 +1036,7 @@ end
 
 function mod:CrushingDreadApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.dread)
+		self:PersonalMessage(args.spellId, nil, L.dread)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -1033,7 +1064,7 @@ end
 
 function mod:CurseOfLethargyApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.curse)
+		self:PersonalMessage(args.spellId, nil, L.curse)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -1045,7 +1076,7 @@ function mod:FuryApplied(args)
 			if IsItemInRange(116139, unit) then -- 50yd
 				local amount = args.amount or 1
 				if amount % 3 == 0 or amount > 10 then
-					self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
+					self:StackMessage(args.spellId, "purple", args.destName, args.amount, 0)
 					self:PlaySound(args.spellId, "alert")
 				end
 			end
@@ -1053,7 +1084,7 @@ function mod:FuryApplied(args)
 	else
 		local amount = args.amount or 1
 		if amount % 3 == 0 or amount > 10 then
-			self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
+			self:StackMessage(args.spellId, "purple", args.destName, args.amount, 0)
 			self:PlaySound(args.spellId, "alert")
 		end
 	end
@@ -1114,7 +1145,7 @@ end
 function mod:BansheesBaneApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, nil, amount > 1 and L.pools or L.pool)
+		self:StackMessage(args.spellId, "blue", args.destName, amount, amount, amount > 1 and L.pools or L.pool)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end

@@ -241,7 +241,7 @@ do
 				soundPlayed = true
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "red", playerList, nil, CL.count:format(CL.fear, howlCount-1))
+		self:TargetsMessage(args.spellId, "red", playerList, nil, CL.count:format(CL.fear, howlCount-1))
 	end
 end
 
@@ -309,7 +309,7 @@ function mod:RemnantStacks(args)
 			spellId = 352389
 			text = L.magic
 		end
-		self:NewStackMessage(spellId, "blue", args.destName, args.amount, nil, text) -- SetOption:352382,352398,352389:::
+		self:StackMessage(spellId, "blue", args.destName, args.amount, 0, text) -- SetOption:352382,352398,352389:::
 		self:PlaySound(spellId, "alarm") -- SetOption:352382,352398,352389:::
 	end
 end

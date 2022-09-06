@@ -410,7 +410,7 @@ do
 				--	self:CustomIcon(wickedBladeMarker, playerList[1], 2)
 				--	self:CustomIcon(wickedBladeMarker, playerList[2], 3)
 				--end
-				self:NewTargetsMessage(333387, "orange", playerList, 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
+				self:TargetsMessage(333387, "orange", playerList, 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 			end
 		elseif firstGUID and firstGUID ~= args.destGUID then
 			if self:Me(args.destGUID) then
@@ -420,7 +420,7 @@ do
 			playerList[2] = args.destName
 			self:CustomIcon(wickedBladeMarker, playerList[1], 2)
 			self:CustomIcon(wickedBladeMarker, playerList[2], 3)
-			self:NewTargetsMessage(333387, "orange", playerList, 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
+			self:TargetsMessage(333387, "orange", playerList, 2, CL.count:format(self:SpellName(333387), wickedBladeCount-1))
 		end
 	end
 
@@ -482,9 +482,9 @@ do
 		self:CustomIcon(heartRendMarker, args.destName, count)
 
 		if self:GetStage() ~= prevStage then -- We transitioned during the cast and heartRendCount was reset to 1
-			self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, prevCount))
+			self:TargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, prevCount))
 		else
-			self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, heartRendCount-1))
+			self:TargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, heartRendCount-1))
 		end
 	end
 
@@ -620,7 +620,7 @@ function mod:StoneFistApplied(args)
 	if amount == 1 then
 		self:TargetMessage(args.spellId, "purple", args.destName)
 	else
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, amount)
 	end
 	self:PlaySound(args.spellId, "warning")
 end
@@ -664,7 +664,7 @@ function mod:VolatileAnimaAppliedInfusion(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alert")
 	end
-	self:NewTargetsMessage(args.spellId, "cyan", playerListVolAnima, nil, nil, nil, 2) -- Throttle to 2s
+	self:TargetsMessage(args.spellId, "cyan", playerListVolAnima, nil, nil, nil, 2) -- Throttle to 2s
 end
 
 function mod:VolatileAnimaAppliedInfection(args)

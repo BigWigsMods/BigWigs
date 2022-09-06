@@ -130,6 +130,7 @@ if L then
 	L.shattering_blast = "Esplosione sul Tank"
 	L.rune_of_compulsion = "Ammaliamenti"
 	--L.desolation = "Azeroth Soak"
+	L.decimator_line = "Decimatore + Linea"
 	L.chains_of_anguish = "Distribuire le Catene"
 	L.chain = "Catena"
 	L.chain_target = "Incatenato: %s!"
@@ -158,4 +159,15 @@ if L then
 	L.mythic_dispel_stage_4 = "Timer per le Dissoluzioni"
 	L.mythic_dispel_stage_4_desc = "Timers for when to do dispels nell'ultima fase, usata dagli Echo on their first kill"
 	L.mythic_dispel_bar = "Dissoluzioni"
+end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "itIT")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	--L.chaotic_essence = "Essence"
+	L.creation_spark = "Scintille"
+	L.protoform_barrier = "Barriera"
+	--L.reconfiguration_emitter = "Interrupt Add"
 end

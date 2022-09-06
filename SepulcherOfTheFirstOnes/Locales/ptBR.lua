@@ -130,6 +130,7 @@ if L then
 	L.shattering_blast = "Impacto no Tank"
 	L.rune_of_compulsion = "Enfeitiçar"
 	L.desolation = "Soak de Azeroth"
+	L.decimator_line = "Decimatore + Linha"
 	L.chains_of_anguish = "Espalhar Correntes"
 	L.chain = "Corrente"
 	L.chain_target = "Acorrentando %s!"
@@ -158,4 +159,15 @@ if L then
 	L.mythic_dispel_stage_4 = "Tempos de Dispell"
 	L.mythic_dispel_stage_4_desc = "Temporizadores para quando fazer dispell no último estágio, usado pela Echo em sua primeira morte"
 	L.mythic_dispel_bar = "Dispels"
+end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "ptBR")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	--L.chaotic_essence = "Essence"
+	L.creation_spark = "Centelhas"
+	L.protoform_barrier = "Barreira"
+	--L.reconfiguration_emitter = "Interrupt Add"
 end

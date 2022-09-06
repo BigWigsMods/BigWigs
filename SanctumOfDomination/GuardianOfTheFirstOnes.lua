@@ -24,7 +24,7 @@ local sunderCount = 1
 local energizeCount = 0
 
 local normalTimers = {
-	[350496] = {5, 11.8, 24.5, 14.6, 11.8}, -- Threat Neutralization (Bombs)
+	[350496] = {0, 11.5, 11.5, 24.5, 11.5, 11.5}, -- Threat Neutralization (Bombs)
 	[352833] = {18, 32.7}, -- Disintegration
 }
 local heroicTimers = {
@@ -233,7 +233,7 @@ do
 			if t-prev > 2 then
 				prev = t
 				self:PlaySound(args.spellId, "warning")
-				self:PersonalMessage(args.spellId, CL.no:format(CL.shield))
+				self:PersonalMessage(args.spellId, nil, CL.no:format(CL.shield))
 			end
 		end
 	end
@@ -423,7 +423,7 @@ do
 			self:SayCountdown(args.spellId, 4)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(CL.bomb, threatNeutralizationCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(CL.bomb, threatNeutralizationCount-1))
 		self:CustomIcon(threatNeutralizationMarker, args.destName, count)
 	end
 end

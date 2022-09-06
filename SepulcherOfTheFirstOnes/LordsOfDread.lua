@@ -210,7 +210,7 @@ do
 			if self:Me(args.destGUID) then
 				self:PlaySound(args.spellId, "warning")
 			end
-			self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount-1))
+			self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount-1))
 		else -- Personal warnings only
 			if self:Me(args.destGUID) then
 				self:PersonalMessage(args.spellId)
@@ -409,7 +409,7 @@ do
 				bitesSayTimer = nil
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount-1))
+		self:TargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(L.fearful_trepidation, fearfulTrepidationCount-1))
 		self:CustomIcon(fearfulTrepidationMarker, args.destName, icon)
 	end
 
@@ -450,7 +450,7 @@ end
 function mod:AnguishingStrikeApplied(args)
 	local bossUnit = self:GetBossId(args.sourceGUID)
 	local amount = args.amount or 1
-	self:NewStackMessage(360284, "purple", args.destName, amount, 3)
+	self:StackMessage(360284, "purple", args.destName, amount, 3)
 	if amount > 2 and not self:Tanking(bossUnit) then -- Maybe swap?
 		self:PlaySound(360284, "alarm")
 	end

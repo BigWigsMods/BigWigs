@@ -157,7 +157,7 @@ do
 			self:PlaySound(362806, "warning")
 			self:YellCountdown(362806, self:Mythic() and 15 or 18)
 		end
-		self:NewTargetsMessage(362806, "cyan", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, darkEclipseCount-1), nil, 1) -- travel time
+		self:TargetsMessage(362806, "cyan", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, darkEclipseCount-1), nil, 1) -- travel time
 		self:CustomIcon(darkEclipseMarker, args.destName, count)
 	end
 
@@ -295,7 +295,7 @@ function mod:CosmicIrregularityApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount == 3 or amount > 4 then -- 3, 5, 6
-			self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 3)
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if amount > 2 then -- Yell: stack amount, extra emphasize on 6
@@ -317,7 +317,7 @@ end
 do
 	local scheduled, destName, stacks = nil, nil, 0
 	function mod:DarkQuasarStackMessage()
-		mod:NewStackMessage(368080, "yellow", destName, stacks)
+		mod:StackMessage(368080, "yellow", destName, stacks, stacks)
 		mod:PlaySound(368080, "alert")
 		scheduled = nil
 	end
@@ -326,7 +326,7 @@ do
 		stacks = args.amount or 1
 		destName = args.destName
 		if not scheduled then -- Delay message to only warn for highest stack
-			scheduled = self:ScheduleTimer("DarkQuasarStackMessage", 0.1, args.destName)
+			scheduled = self:ScheduleTimer("DarkQuasarStackMessage", 0.1)
 		end
 	end
 

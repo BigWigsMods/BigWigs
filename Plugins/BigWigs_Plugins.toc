@@ -1,4 +1,4 @@
-## Interface: 90205
+## Interface: 90207
 
 ## Title: BigWigs [|cffeda55fPlugins|r]
 ## Title-zhCN: BigWigs [|cffeda55f插件|r]

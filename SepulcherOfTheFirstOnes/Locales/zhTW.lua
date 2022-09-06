@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "奔竄"
 	L.withering_seeds = "種子"
 	L.hand_of_destruction = "群拉" -- 毀滅之手群拉
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group position as secondary priority.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000優先標記近戰，多個近戰則按團隊順序排列。|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "zhTW")
@@ -130,6 +130,7 @@ if L then
 	L.shattering_blast = "坦克爆炸"
 	L.rune_of_compulsion = "心控"
 	L.desolation = "荒寂"
+	L.decimator_line = "屠戮者 + 行列"
 	L.chains_of_anguish = "痛苦之鏈" -- 這個中文技能名夠短，不需縮寫
 	L.chain = "鎖鏈"
 	L.chain_target = "鎖鏈：%s!"
@@ -158,4 +159,15 @@ if L then
 	L.mythic_dispel_stage_4 = "驅散計時器"
 	L.mythic_dispel_stage_4_desc = "顯示驅散計時器，根據 Echo 的首殺所使用的時間軸製作，為第四階段的驅散顯示計時器，會在適合的時間點提醒你驅散。"
 	L.mythic_dispel_bar = "驅散"
+end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "zhTW")
+if L then
+	L.custom_on_bar_icon = "條形圖示"
+	L.custom_on_bar_icon_desc = "顯示宿命之力的條形圖示"
+
+	L.chaotic_essence = "精華"
+	L.creation_spark = "火花"
+	L.protoform_barrier = "屏障"
+	L.reconfiguration_emitter = "打斷小怪"
 end

@@ -30,7 +30,7 @@ local twistFateTimersHeroic = {
 }
 local twistFateTimersMythic = {
 	{6.1, 32.8, 20.7, 37.7, 28},
-	{11.2, 32.8, 20.6, 37.7, 28},
+	{11.2, 32.8, 20.6, 37.7, 28, 8.5},
 	{42, 15.7, 27.9, 46.2, 16.9},
 }
 local twistFateTimers = mod:Mythic() and twistFateTimersMythic or twistFateTimersHeroic
@@ -302,7 +302,7 @@ do
 			self:SayCountdown(350568, 8)
 			self:PlaySound(350568, "warning")
 		end
-		self:NewTargetsMessage(350568, "orange", playerList, nil, CL.count:format(CL.bomb, callOfEternityCount-1))
+		self:TargetsMessage(350568, "orange", playerList, nil, CL.count:format(CL.bomb, callOfEternityCount-1))
 		self:CustomIcon(callOfEternityMarker, args.destName, icon)
 	end
 
@@ -449,6 +449,6 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList)
+		self:TargetsMessage(args.spellId, "orange", playerList)
 	end
 end

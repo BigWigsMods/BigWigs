@@ -289,7 +289,7 @@ do
 			self:PlaySound(args.spellId, "warning")
 		end
 		if allowed then -- Can use _SUCCESS as it's only on the initial players
-			self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.fragment, fragmentOfDestinyCount-1))
+			self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.fragment, fragmentOfDestinyCount-1))
 			self:SimpleTimer(function() allowed = false end, 1)
 		end
 		if self:GetOption(fragmentsMarker) then
@@ -307,7 +307,7 @@ end
 function mod:FragmentsOfDestinyStacks(args)
 	-- Warn someone that they got an extra stack, or they are the one collecting
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, nil, L.fragment)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 0, L.fragment)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -349,7 +349,7 @@ end
 
 function mod:UnendingStrikeApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 3)
 	if amount > 4 or (self:Tank() and amount > 3) then -- Tanks swap at 4+, warn others if they havn't
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -474,7 +474,7 @@ do
 
 	function mod:DaschlasMightyImpactApplied(args)
 		playerList[#playerList+1] = args.destName
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, L.big_bomb)
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, L.big_bomb)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, L.big_bomb)
 			self:SayCountdown(args.spellId, 10, L.big_bomb) -- Big 3, Big 2, Big 1
@@ -547,7 +547,7 @@ end
 
 function mod:PierceSoulApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 3)
 	if amount > 2 then
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -576,7 +576,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList)
+		self:TargetsMessage(args.spellId, "yellow", playerList)
 	end
 end
 

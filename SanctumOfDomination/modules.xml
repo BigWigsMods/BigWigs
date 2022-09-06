@@ -12,6 +12,7 @@
 <Script file="KelThuzad.lua"/>
 <Script file="SylvanasWindrunner.lua"/>
 <!--<Script file="Trash.lua"/>-->
+<Script file="Affixes.lua"/>
 
 <Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>

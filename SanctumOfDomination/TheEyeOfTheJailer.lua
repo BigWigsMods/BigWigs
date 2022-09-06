@@ -337,7 +337,7 @@ do
 			self:Say(args.spellId, L.slow)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "red", playerList, nil, L.slow)
+		self:TargetsMessage(args.spellId, "red", playerList, nil, L.slow)
 	end
 end
 
@@ -345,7 +345,7 @@ function mod:ScornAndIreApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 3 or amount > 10 then
-			self:NewStackMessage(355232, "blue", args.destName, amount, nil, args.spellName)
+			self:StackMessage(355232, "blue", args.destName, amount, amount, args.spellName)
 			self:PlaySound(355232, amount > 10 and "warning" or "info")
 		end
 	end

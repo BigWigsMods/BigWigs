@@ -322,7 +322,7 @@ do
 			self:PlaySound(362721, "warning")
 		end
 		self:CustomIcon(interdimensionalWormholesMarker, args.destName, count)
-		self:NewTargetsMessage(362721, "yellow", playerList, 2, CL.count:format(L.wormhole, wormholeCount-1))
+		self:TargetsMessage(362721, "yellow", playerList, 2, CL.count:format(L.wormhole, wormholeCount-1))
 	end
 
 	function mod:InterdimensionalWormholesRemoved(args)
@@ -387,6 +387,6 @@ end
 
 function mod:MassiveBlastApplied(args)
 	if self:Tank() then
-		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 2)
+		self:StackMessage(args.spellId, "purple", args.destName, args.amount, 2)
 	end
 end

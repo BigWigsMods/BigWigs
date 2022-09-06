@@ -71,8 +71,9 @@ L.custom_end = "%s devient %s"
 L.custom_min = "%s dans %d min."
 L.custom_sec = "%s dans %d sec."
 
-L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
+L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
 L.trash = "Trash"
+--L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "Marquage %s"

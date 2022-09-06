@@ -130,6 +130,7 @@ if L then
 	--L.shattering_blast = "Tank Blast"
 	L.rune_of_compulsion = "정배 룬"
 	--L.desolation = "Azeroth Soak"
+	L.decimator_line = "학살 + 선"
 	L.chains_of_anguish = "산개 사슬"
 	L.chain = "사슬"
 	L.chain_target = " %s 에게 사슬!"
@@ -158,4 +159,15 @@ if L then
 	L.mythic_dispel_stage_4 = "해제 타이머"
 	L.mythic_dispel_stage_4_desc = "마지막 페이즈에 해제 타이밍- 에코가 첫킬 당시 사용."
 	L.mythic_dispel_bar = "해제"
+end
+
+L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "koKR")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	--L.chaotic_essence = "Essence"
+	L.creation_spark = "불꽃"
+	L.protoform_barrier = "보호막"
+	--L.reconfiguration_emitter = "Interrupt Add"
 end

@@ -419,7 +419,7 @@ do
 	end
 
 	function mod:BurdenOfSinStackMessage()
-		mod:NewStackMessage(326699, "blue", playerName, burdenStacksOnMe)
+		mod:StackMessage(326699, "blue", playerName, burdenStacksOnMe, burdenStacksOnMe)
 		mod:PlaySound(326699, "alarm")
 		scheduled = nil
 	end
@@ -463,7 +463,7 @@ do
 		if self:GetStage() == 3 then -- Mythic, Depends on phasing not stacks
 			self:Message(args.spellId, "red")
 		else
-			self:NewStackMessage(args.spellId, "blue", playerName, burdenStackTable[burdenStacksOnMe])
+			self:StackMessage(args.spellId, "blue", playerName, burdenStackTable[burdenStacksOnMe], 0)
 		end
 		self:PlaySound(args.spellId, "alarm")
 		bloodPriceCount = bloodPriceCount + 1
@@ -534,7 +534,7 @@ do
 				self:YellCountdown(false, 6, text, 4)
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 3 or 2, CL.count:format(args.spellName, nightHunterCount-1))
+		self:TargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 3 or 2, CL.count:format(args.spellName, nightHunterCount-1))
 		self:CustomIcon(nightHunterMarker, args.destName, count)
 	end
 
@@ -608,10 +608,10 @@ end
 
 function mod:CarnageApplied(args)
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 0)
 		self:PlaySound(args.spellId, "alarm")
 	elseif args.amount and args.amount % 2 == 0 and self:Tank() and self:Tank(args.destName) then
-		self:NewStackMessage(args.spellId, "purple", args.destName, args.amount)
+		self:StackMessage(args.spellId, "purple", args.destName, args.amount, 0)
 	end
 end
 
@@ -636,7 +636,7 @@ do
 			end
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, impaleCount-1), nil, 2) -- debuffs are late
+		self:TargetsMessage(args.spellId, "orange", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, impaleCount-1), nil, 2) -- debuffs are late
 		self:CustomIcon(impaleMarker, args.destName, count)
 	end
 
@@ -666,9 +666,9 @@ function mod:WrackingPainApplied(args)
 		if amount == 1 then
 			self:TargetMessage(args.spellId, "purple", args.destName)
 		else
-			self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+			self:StackMessage(args.spellId, "purple", args.destName, amount, amount)
 		end
-		self:PlaySound(args.spellId, "warning", args.destName)
+		self:PlaySound(args.spellId, "warning", nil, args.destName)
 	end
 end
 
@@ -743,7 +743,7 @@ end
 function mod:ScornApplied(args)
 	local amount = args.amount or 1
 	if amount % 3 == 0 or (amount > 6 and amount < 12) then -- 3, 6-12, 15/18/21... (throttle)
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount, 6)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, 6)
 		if amount > 5 then
 			self:PlaySound(args.spellId, "alert")
 		end
@@ -778,7 +778,7 @@ do
 			self:SayCountdown(args.spellId, 5, count)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, fatalFinesseCount-1))
+		self:TargetsMessage(args.spellId, "orange", playerList, 3, CL.count:format(args.spellName, fatalFinesseCount-1))
 		self:CustomIcon(fatalFinesseMarker, args.destName, count)
 	end
 
@@ -829,7 +829,7 @@ function mod:HymnApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 2 == 0 and amount > 7 then -- 7+ every 2
-			self:NewStackMessage("hymn_stacks", "blue", args.destName, amount, 10, args.spellId)
+			self:StackMessage("hymn_stacks", "blue", args.destName, amount, 10, args.spellId)
 			if amount > 9 then
 				self:PlaySound("hymn_stacks", "alert")
 			end

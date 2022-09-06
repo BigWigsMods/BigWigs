@@ -204,7 +204,7 @@ do
 			self:SayCountdown(args.spellId, 5, mark)
 			self:PlaySound(args.spellId, "alert")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.traps, trapsCount-1))
+		self:TargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.traps, trapsCount-1))
 		self:CustomIcon(flameclaspTrapMarker, args.destName, mark)
 	end
 
@@ -235,7 +235,7 @@ do
 			self:SayCountdown(args.spellId, 3, count, 2)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
 		self:CustomIcon(shadowsteelChainsMarker, args.destName, count)
 	end
 

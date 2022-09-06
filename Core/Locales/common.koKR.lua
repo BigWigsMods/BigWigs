@@ -72,6 +72,7 @@ L.custom_sec = "%2$d초 후 %1$s"
 
 L.focus_only = "|cffff0000주시 대상만 경고합니다.|r "
 L.trash = "일반몹"
+--L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s 징표 표시"

@@ -23,7 +23,7 @@ local pneumaticImpactCount = 1
 local shieldOnMe = false
 
 local timersMythic = {
-	[360906] = {22, 20.0, 20.0, 33.8, 31.8, 20.0, 33.5, 20.0, 32.4, 20.0}, -- Refracted Blast
+	[360906] = {22, 20.0, 20.0, 33.8, 31.8, 20.0, 33.5, 20.0, 32.4, 20.0, 34, 20}, -- Refracted Blast
 	[359610] = {47.7, 35.2, 49.9, 35.4, 38.9}, -- Deresolution
 	[364881] = {48.5, 31.6, 43.9, 30.5, 30.8, 51.9}, -- Matter Disolution
 	[360162] = {48.2, 31.6 , 49.9, 32.9, 31.6}, -- Split Resolution
@@ -191,7 +191,7 @@ do
 		if self:Tank() or self:Me(args.destGUID) then
 			local amount = args.amount or 1
 			if amount % 2 == 1 then -- XXX Finetune
-				self:NewStackMessage(args.spellId, "purple", args.destName, amount, 5)
+				self:StackMessage(args.spellId, "purple", args.destName, amount, 5)
 				if self:Me(args.destGUID) then
 					self:PlaySound(args.spellId, "alarm")
 				end
@@ -337,7 +337,7 @@ do
 				self:SayCountdown(args.spellId, timeLeft)
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, matterDisolutionCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(args.spellName, matterDisolutionCount-1))
 	end
 
 	function mod:MatterDisolutionRemoved(args)

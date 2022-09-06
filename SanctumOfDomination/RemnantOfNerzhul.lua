@@ -180,7 +180,7 @@ end
 
 function mod:SorrowfulProcessionApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.orb)
+		self:PersonalMessage(args.spellId, nil, L.orb)
 		self:PlaySound(args.spellId, "info")
 	end
 end
@@ -221,7 +221,7 @@ do
 				self:PlaySound(args.spellId, "warning")
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, 2, CL.bomb)
+		self:TargetsMessage(args.spellId, "orange", playerList, 2, CL.bomb)
 		self:CustomIcon(malevolenceMarker, args.destName, count)
 	end
 

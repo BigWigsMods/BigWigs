@@ -220,7 +220,7 @@ do
 			self:PlaySound(args.spellId, "warning")
 			self:SayCountdown(args.spellId, 15)
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(L.brand, brandCount-1))
+		self:TargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(L.brand, brandCount-1))
 		self:CustomIcon(brandOfTormentMarker, args.destName, count)
 	end
 
@@ -251,7 +251,7 @@ end
 
 function mod:RuinbladeApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, amount)
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -350,7 +350,7 @@ end
 
 function mod:SoulManacles(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.chain)
+		self:PersonalMessage(args.spellId, nil, L.chain)
 		self:PlaySound(args.spellId, "info")
 	end
 end

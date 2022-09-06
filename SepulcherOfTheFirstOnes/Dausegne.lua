@@ -112,7 +112,7 @@ do
 		if self:Tank() then
 			local amount = args.amount or 1
 			if amount % 2 == 0 and amount > 8 then -- XXX Finetune
-				self:NewStackMessage(args.spellId, "purple", args.destName, amount, 5)
+				self:StackMessage(args.spellId, "purple", args.destName, amount, 5)
 				if amount > 15 and not self:Tanking("boss1") then
 					self:PlaySound(args.spellId, "alarm")
 				end
