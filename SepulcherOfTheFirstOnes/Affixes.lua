@@ -29,7 +29,7 @@ local bossToCheck = {
 	[2542] = 181395, -- Skolex
 	[2553] = 183501, -- Artificer Xy'mox
 	[2540] = 181224, -- Dausegne
-	[2544] = 181549, -- Prototype of War (Prototype Pantheon)
+	[2544] = 181551, -- Prototype of Duty (Prototype Pantheon)
 	[2539] = 182169, -- Lihuvim
 	[2529] = 180906, -- Halondrus
 	[2546] = 181954, -- Anduin Wrynn
@@ -38,6 +38,7 @@ local bossToCheck = {
 	[2537] = 180990, -- The Jailer
 }
 local activeBoss = nil
+local activeBossModule = nil
 
 local emitterDetected = false
 local chaoticEssenceDetected = false
@@ -108,6 +109,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CreationSpark", 369505)
 
 	activeBoss = nil
+	activeBossModule = nil
 end
 
 function mod:ENCOUNTER_END(_, id, _, _, _, status)
@@ -132,7 +134,8 @@ function mod:CheckForAffixes(count)
 	if unit then
 		if not emitterDetected and self:UnitBuff(unit, 372419) then -- Fated Power: Reconfiguration Emitter
 			emitterDetected = true
-			self:Bar(371254, 5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+			-- 2543 = Lords of Dread
+			self:Bar(371254, activeBoss == 2543 and 10 or 5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 		end
 		if not chaoticEssenceDetected and self:UnitBuff(unit, 372642) then -- Fated Power: Chaotic Essence
 			chaoticEssenceDetected = true
@@ -147,8 +150,15 @@ function mod:CheckForAffixes(count)
 		end
 		if not protoformBarrierDetected and self:UnitBuff(unit, 372418) then -- Fated Power: Protoform Barrier
 			protoformBarrierDetected = true
-			-- Lords of Dread delays a bit to keep it consistent (~19.3s cast after the 100 energy ability finishes)
-			self:Bar(371447, activeBoss == 2549 and 20 or 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+			local cd = 15
+			if activeBoss == 2543 then
+				-- Lords of Dread delays a bit to keep it consistent (~19.3s cast after the 100 energy ability finishes)
+				cd = 20
+			elseif activeBoss == 2549 then
+				-- Rygelon casts after Massive Bang
+				cd = self:Mythic() and 81.5 or 77
+			end
+			self:Bar(371447, cd, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 		end
 		if not replicatingEssenceDetected and self:UnitBuff(unit, 372424) then -- Fated Power: Replicating Essence
 			replicatingEssenceDetected = true
@@ -163,6 +173,7 @@ end
 function mod:OnBossEngage(_, module, diff)
 	self.isEngaged = true
 	activeBoss = module.engageId
+	activeBossModule = module
 	self:SetStage(1)
 
 	emitterDetected = false
@@ -179,22 +190,26 @@ function mod:OnBossEngage(_, module, diff)
 	bar_icon = self:GetOption("custom_on_bar_icon") and bar_icon_texture or ""
 
 	-- Encounters that need adjustments
-	if activeBoss == 2539 then -- Lihuvim
+	if activeBoss == 2512 then -- Vigilant Guardian
+		self:Log("SPELL_AURA_REMOVED", "GuardianAncientDefensesRemoved", 360879)
+	elseif activeBoss == 2539 then -- Lihuvim
 		self:Log("SPELL_CAST_START", "LihuvimSynthesize", 363130)
 	elseif activeBoss == 2529 then -- Halondrus
 		self:Log("SPELL_CAST_START", "HalondrusRelocationForm", 359236)
 		self:Log("SPELL_CAST_START", "HalondrusReclamationForm", 359235)
 	elseif activeBoss == 2546 then -- Anduin
+		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 		self:Log("SPELL_AURA_REMOVED", "AnduinDominationsGraspRemoved", 362505)
+		self:Log("SPELL_CAST_START", "AnduinBeaconOfHope", 365872)
 	elseif activeBoss == 2543 then -- Lords of Dread
 		self:Log("SPELL_CAST_SUCCESS", "LordsOfDreadInfiltrationOfDread", 360717)
 		self:Log("SPELL_AURA_REMOVED", "LordsOfDreadInfiltrationOfDreadOver", 360418)
 	elseif activeBoss == 2537 then -- The Jailer
 		self:Log("SPELL_CAST_START", "TheJailerFinalRelentlessDomination", 367851)
 		self:Log("SPELL_CAST_SUCCESS", "TheJailerUnbreakingGrasp", 363332)
+		self:Log("SPELL_CAST_SUCCESS", "TheJailerDivertedLifeShield", 368383)
 		self:Log("SPELL_AURA_APPLIED", "FatedCreationSparkApplied", 370404)
 		self:Log("SPELL_AURA_APPLIED_DOSE", "FatedCreationSparkApplied", 370404)
-		-- and cast 0.5s after Diverted Life Shield
 	end
 
 	self:ScheduleTimer("CheckForAffixes", 0.1)
@@ -218,8 +233,21 @@ function mod:ReconfigurationEmitter(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.reconfiguration_emitter, emitterCount))
 	self:PlaySound(args.spellId, "info")
 	emitterCount = emitterCount + 1
-	-- Pantheon later casts are longer in mythic
-	self:Bar(args.spellId, activeBoss == 2544 and self:Mythic() and emitterCount > 3 and 85 or 75, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	local cd = 75
+	if activeBoss == 2543 then
+		-- Lords of Dread
+		if barrierCount % 2 == 0 then -- after Swarm cast (static)
+			cd = 73
+		else -- after Among Us cast (gets paused)
+			cd = 50
+		end
+	elseif activeBoss == 2544 then
+		-- Pantheon later casts are longer in mythic
+		if self:Mythic() and emitterCount > 3 then
+			cd = 85
+		end
+	end
+	self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 end
 
 function mod:ProtoformBarrierApplied(args)
@@ -228,15 +256,19 @@ function mod:ProtoformBarrierApplied(args)
 	self:Message(args.spellId, "yellow", CL.on:format(CL.count:format(L.protoform_barrier, barrierCount), args.destName))
 	self:PlaySound(args.spellId, "info")
 	barrierCount = barrierCount + 1
-	if activeBoss == 2543 then -- Lords of Dread
+	local cd = 60
+	if activeBoss == 2543 then
+		-- Lords of Dread
 		if barrierCount % 2 == 0 then -- after Swarm cast (static)
-			self:Bar(args.spellId, 73, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+			cd = 73
 		else -- after Among Us cast (gets paused)
-			self:Bar(args.spellId, 50, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+			cd = 50
 		end
-	else
-		self:Bar(args.spellId, 60, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	elseif activeBoss == 2549 then
+		-- Rygelon casts after Massive Bang
+		cd = self:Mythic() and 111 or 107
 	end
+	self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 end
 
 function mod:ProtoformBarrierRemoved(args)
@@ -268,19 +300,39 @@ do
 end
 
 -- Boss specific timer resetting
+function mod:GuardianAncientDefensesRemoved()
+	if chaoticEssenceDetected then
+		self:CDBar(372634, 12, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+end
+
 function mod:LihuvimSynthesize()
 	if creationSparkDetected then
 		self:Bar(369505, 39.5, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, 31.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 end
 
 function mod:HalondrusRelocationForm()
 	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 end
 
 function mod:HalondrusReclamationForm()
 	if chaoticEssenceDetected then
 		self:Bar(372634, 18.2, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+	if protoformBarrierDetected then
+		self:Bar(371447, 21.1, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
+end
+
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
+	if spellId == 363976 then -- Anduin: Shadestep // Intermission
+		self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 	end
 end
 
@@ -292,31 +344,49 @@ function mod:AnduinDominationsGraspRemoved()
 		if emitterDetected then
 			self:Bar(371254, 8.6, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 		end
-	elseif stage == 3 then
-		if emitterDetected then
-			self:Bar(371254, self:Mythic() and 11.8 or 18.8, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		if creationSparkDetected then
+			self:Bar(369505, 23.6, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 		end
 	end
 end
 
+function mod:AnduinBeaconOfHope()
+	-- if you skip to p3, the cast time isn't reset
+	if self:GetStage() < 3 then return end
+
+	if emitterDetected then
+		self:Bar(371254, 9.5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
+	if creationSparkDetected then
+		self:Bar(369505, 24.5, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	end
+end
+
 function mod:LordsOfDreadInfiltrationOfDread(args)
-	if self:MobId(args.sourceGUID) == 181399 then -- Kin'tessa
-		if protoformBarrierDetected then
-			self:Bar(371447, 19.3, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
-			-- Pauze to show timers once you finish Among Us
-			self:PauseBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
-		end
+	if self:MobId(args.sourceGUID) ~= 181399 then return end -- Kin'tessa
+
+	-- Pauze to show timers once you finish Among Us
+	if protoformBarrierDetected then
+		self:Bar(371447, 19.3, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		self:PauseBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
+	if emitterDetected then
+		self:Bar(371254, 9.6, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		self:PauseBar(371254, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 	end
 end
 
 do
 	local prev = 0
 	function mod:LordsOfDreadInfiltrationOfDreadOver(args)
-		if args.time - 10 > prev then
-			prev = args.time
-			if protoformBarrierDetected then
-				self:ResumeBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
-			end
+		if args.time - 10 < prev then return end
+		prev = args.time
+
+		if protoformBarrierDetected then
+			self:ResumeBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		end
+		if emitterDetected then
+			self:ResumeBar(371254, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 		end
 	end
 end
@@ -325,12 +395,29 @@ function mod:TheJailerFinalRelentlessDomination()
 	if creationSparkDetected then
 		self:Bar(369505, self:Mythic() and 13 or 33, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, self:Mythic() and 15 or 24, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
 end
 
 function mod:TheJailerUnbreakingGrasp()
 	if creationSparkDetected then
 		self:Bar(369505, self:Mythic() and 13 or 33, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, self:Mythic() and 14 or 25, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+end
+
+function mod:TheJailerDivertedLifeShield()
+	self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	-- if creationSparkDetected then
+	-- 	self:Bar(369505, 0.5, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	-- end
+	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	-- if chaoticEssenceDetected then
+	-- 	self:CDBar(372634, 2.6, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	-- end
 end
 
 local function getSparkTimeMod(duration)
@@ -355,13 +442,12 @@ function mod:TheJailerRuneOfDamnationApplied(args)
 		if not duration then return end
 
 		self:SimpleTimer(function()
-			local sepulcherMod = BigWigs:GetBossModule("The Jailer")
-			sepulcherMod:CancelSayCountdown(args.spellId) -- SetOption:false:::
-			sepulcherMod:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player")) -- SetOption:false:::
-			if sepulcherMod:CheckOption("rune_of_damnation_countdown", "BAR") then
-				sepulcherMod:Bar("rune_of_damnation_countdown", duration - 1.5, sepulcherMod.localization.jump, 360281) -- SetOption:false:::
+			activeBossModule:CancelSayCountdown(args.spellId) -- SetOption:false:::
+			activeBossModule:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player")) -- SetOption:false:::
+			if activeBossModule:CheckOption("rune_of_damnation_countdown", "BAR") then -- SetOption:false:::
+				activeBossModule:Bar("rune_of_damnation_countdown", duration - 1.5, activeBossModule.localization.jump, 360281) -- SetOption:false:::
 			else
-				sepulcherMod:TargetBar(args.spellId, duration, args.destName, CL.bomb) -- SetOption:false:::
+				activeBossModule:TargetBar(args.spellId, duration, args.destName, CL.bomb) -- SetOption:false:::
 			end
 		end, 0) -- everyone should get the _applied event on the same frame, right? do our adjustments on the next
 	end
@@ -375,19 +461,18 @@ function mod:FatedCreationSparkApplied(args)
 		local duration = getSparkTimeMod(expirationTime - GetTime())
 		if not duration then return end
 
-		local sepulcherMod = BigWigs:GetBossModule("The Jailer")
-		sepulcherMod:CancelSayCountdown(360281) -- SetOption:false:::
+		activeBossModule:CancelSayCountdown(360281) -- SetOption:false:::
 		if duration > 1.2 then
-			sepulcherMod:SayCountdown(360281, duration, GetRaidTargetIndex("player"), math.min(floor(duration), 3)) -- SetOption:false:::
+			activeBossModule:SayCountdown(360281, duration, GetRaidTargetIndex("player"), math.min(floor(duration), 3)) -- SetOption:false:::
 		end
-		if sepulcherMod:CheckOption("rune_of_damnation_countdown", "BAR") then
-			if duration > 1 then
-				sepulcherMod:Bar("rune_of_damnation_countdown", duration - 1.5, sepulcherMod.localization.jump, 360281) -- SetOption:false:::
+		if activeBossModule:CheckOption("rune_of_damnation_countdown", "BAR") then -- SetOption:false:::
+			if duration > 1.5 then
+				activeBossModule:Bar("rune_of_damnation_countdown", duration - 1.5, activeBossModule.localization.jump, 360281) -- SetOption:false:::
 			else
-				sepulcherMod:StopBar(sepulcherMod.localization.jump) -- SetOption:false:::
+				activeBossModule:StopBar(activeBossModule.localization.jump)
 			end
 		else
-			sepulcherMod:TargetBar(360281, duration, args.destName, CL.bomb) -- SetOption:false:::
+			activeBossModule:TargetBar(360281, duration, args.destName, CL.bomb) -- SetOption:false:::
 		end
 	end
 end
