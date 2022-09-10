@@ -239,7 +239,7 @@ do
 		if self:CheckOption(args.spellId, "INFOBOX") then
 			self:OpenInfo(args.spellId, args.spellName)
 			self:SetInfoBar(args.spellId, 1, 1)
-			self:SetInfo(args.spellId, 1, _G.ABSORB)
+			self:SetInfo(args.spellId, 1, CL.absorb)
 			maxAbsorb = args.amount
 			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 		end
