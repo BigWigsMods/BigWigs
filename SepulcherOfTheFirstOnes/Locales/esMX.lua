@@ -89,6 +89,9 @@ if L then
 	L.ephemeral_fissure = "Fisura"
 
 	-- L.bomb_dropped = "Bomb dropped"
+	--L.volatile_charges_new = "New Bombs!"
+
+	--L.reclaim_removed = "%s removed after %.1fs" -- "Reclaim removed after 1.1s" s = seconds
 
 	--L.custom_on_stop_timers = "Always show ability bars"
 	--L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."

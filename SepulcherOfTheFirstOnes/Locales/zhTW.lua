@@ -71,6 +71,9 @@ if L then
 	--L.ephemeral_fissure = "Fissure"
 
 	L.bomb_dropped = "炸彈掉落"
+	--L.volatile_charges_new = "New Bombs!"
+
+	--L.reclaim_removed = "%s removed after %.1fs" -- "Reclaim removed after 1.1s" s = seconds
 
 	L.custom_on_stop_timers = "總是顯示計時器"
 	L.custom_on_stop_timers_desc = "哈隆德魯斯的技能可能延遲施放。啟用此選項後，這些技能的計時條會保持顯示。"
