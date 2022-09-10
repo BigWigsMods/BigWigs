@@ -199,6 +199,7 @@ end
 --
 
 function mod:ChaoticDestruction(args)
+	chaoticEssenceDetected = true
 	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	self:Message(372634, "yellow")
 	self:PlaySound(372634, "alarm")
@@ -210,6 +211,7 @@ function mod:ChaoticDestruction(args)
 end
 
 function mod:ReconfigurationEmitter(args)
+	emitterDetected = true
 	self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 	self:Message(args.spellId, "yellow", CL.count:format(L.reconfiguration_emitter, emitterCount))
 	self:PlaySound(args.spellId, "info")
@@ -219,6 +221,7 @@ function mod:ReconfigurationEmitter(args)
 end
 
 function mod:ProtoformBarrierApplied(args)
+	protoformBarrierDetected = true
 	if self:Player(args.destFlags) then return end -- spellsteal? lol
 	self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 	self:Message(args.spellId, "yellow", CL.on:format(CL.count:format(L.protoform_barrier, barrierCount), args.destName))
@@ -245,6 +248,7 @@ do
 	local playerList = {}
 	local prev = 0
 	function mod:CreationSpark(args)
+		creationSparkDetected = true
 		if args.time - prev > 3 then
 			prev = args.time
 			playerList = {}
@@ -255,9 +259,7 @@ do
 		end
 		playerList[#playerList + 1] = args.destName
 		self:TargetsMessage(args.spellId, "yellow", playerList, 2, CL.count:format(L.creation_spark, creationSparkCount - 1))
-		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "info")
-		end
+		self:PlaySound(args.spellId, "info")
 	end
 end
 
