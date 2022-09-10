@@ -1557,6 +1557,7 @@ do
 		1766, -- Kick (Rogue)
 		6552, -- Pummel (Warrior)
 		183752, -- Disrupt (Demon Hunter)
+		351338, -- Quell (Evoker)
 	}
 	function UpdateInterruptStatus()
 		if IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
