@@ -191,6 +191,7 @@ globals = {
 	"IsAltKeyDown",
 	"IsControlKeyDown",
 	"IsEncounterInProgress",
+	"IsEveryoneAssistant",
 	"IsGuildMember",
 	"IsInGroup",
 	"IsInRaid",
