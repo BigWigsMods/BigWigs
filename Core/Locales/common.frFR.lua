@@ -30,6 +30,7 @@ L.heroic = "Mode héroïque"
 L.mythic = "Mode mythique"
 L.active = "Actif" -- When a boss becomes active, after speech finishes
 L.general = "Général" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+L.absorb = "Absorbe" -- Used for shield-like abilities that absorb damage or healing
 
 L.duration = "%s pendant %s sec." -- Spell for 10 seconds
 L.over = "%s terminé" -- Spell Over

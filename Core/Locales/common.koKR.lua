@@ -29,6 +29,7 @@ L.heroic = "영웅 난이도"
 L.mythic = "신화 난이도"
 L.active = "활성화" -- When a boss becomes active, after speech finishes
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
 
 L.duration = "%s %s초 남음" -- Spell for 10 seconds
 L.over = "%s 종료" -- Spell Over
