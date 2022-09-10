@@ -90,8 +90,6 @@ if L then
 	L.bomb_dropped = "Бомба брошена"
 	--L.volatile_charges_new = "New Bombs!"
 
-	--L.reclaim_removed = "%s removed after %.1fs" -- "Reclaim removed after 1.1s" s = seconds
-
 	L.custom_on_stop_timers = "Всегда показывать полосы заклинаний"
 	L.custom_on_stop_timers_desc = "Галондрий может откладывать свои способности. Когда эта опция включена, полосы этих способностей будут оставаться на экране."
 end

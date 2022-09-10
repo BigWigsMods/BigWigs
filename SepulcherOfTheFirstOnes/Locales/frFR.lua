@@ -91,8 +91,6 @@ if L then
 	L.bomb_dropped = "Bombe posée"
 	--L.volatile_charges_new = "New Bombs!"
 
-	--L.reclaim_removed = "%s removed after %.1fs" -- "Reclaim removed after 1.1s" s = seconds
-
 	L.custom_on_stop_timers = "Toujours afficher les compétences du boss"
 	L.custom_on_stop_timers_desc = "Il se peut que les timers soient décalés selon le déroulement du combnat. Quand cette option est activée, les compétences utilisées par le boss resteront affichées."
 end

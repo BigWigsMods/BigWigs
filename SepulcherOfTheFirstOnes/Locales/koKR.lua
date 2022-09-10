@@ -91,8 +91,6 @@ if L then
 	L.bomb_dropped = "폭탄 떨어트림"
 	--L.volatile_charges_new = "New Bombs!"
 
-	--L.reclaim_removed = "%s removed after %.1fs" -- "Reclaim removed after 1.1s" s = seconds
-
 	L.custom_on_stop_timers = "항상 능력 바 표시"
 	L.custom_on_stop_timers_desc = "할론드루스의 기술들은 미뤄질수 있습니다. 이 옵션을 활성화하면, 미뤄진 능력들의 바가 화면에 남아있습니다."
 end

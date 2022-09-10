@@ -73,8 +73,6 @@ if L then
 	L.bomb_dropped = "Bombe fallen gelassen"
 	--L.volatile_charges_new = "New Bombs!"
 
-	--L.reclaim_removed = "%s removed after %.1fs" -- "Reclaim removed after 1.1s" s = seconds
-
 	L.custom_on_stop_timers = "Fähigkeiten Leisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Halondrus kann Fähigkeiten verzögern. Wenn diese Option aktiviert ist, bleiben die Leisten für diese Fähigkeiten bestehen."
 end

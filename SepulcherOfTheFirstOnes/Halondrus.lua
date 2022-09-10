@@ -67,7 +67,6 @@ if L then
 	L.volatile_charges_new = "New Bombs!"
 
 	L.absorb_text = "%s (%.0f%%)"
-	L.reclaim_removed = "%s removed after %.1fs" -- "Reclaim removed after 1.1s" s = seconds
 
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Halondrus can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
@@ -254,14 +253,14 @@ do
 		if self:CheckOption(args.spellId, "INFOBOX") then
 			self:OpenInfo(args.spellId, args.spellName)
 			self:SetInfoBar(args.spellId, 1, 1)
-			self:SetInfo(args.spellId, 1, _G.ABSORB)
+			self:SetInfo(args.spellId, 1, CL.absorb)
 			maxAbsorb = UnitGetTotalAbsorbs("boss1")
 			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 		end
 	end
 
 	function mod:ReclaimRemoved(args)
-		self:Message(args.spellId, "green", L.reclaim_removed:format(CL.count:format(args.spellName, reclaimCount-1), args.time - appliedTime))
+		self:Message(args.spellId, "green", CL.removed_after:format(CL.count:format(args.spellName, reclaimCount-1), args.time - appliedTime))
 		self:PlaySound(args.spellId, "info")
 
 		local reclaimCD = 61.2

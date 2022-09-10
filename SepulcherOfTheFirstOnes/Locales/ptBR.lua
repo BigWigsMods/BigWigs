@@ -91,8 +91,6 @@ if L then
 	L.bomb_dropped = "Bomba Derrubada"
 	--L.volatile_charges_new = "New Bombs!"
 
-	--L.reclaim_removed = "%s removed after %.1fs" -- "Reclaim removed after 1.1s" s = seconds
-
 	L.custom_on_stop_timers = "Sempre mostrar barras de habilidade"
 	L.custom_on_stop_timers_desc = "Skolex pode atrasar suas habilidades. Se esta opção for ativada, as barras para essas habilidades permanecem."
 end

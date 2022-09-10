@@ -91,8 +91,6 @@ if L then
 	L.bomb_dropped = "Bomba rilasciata"
 	--L.volatile_charges_new = "New Bombs!"
 
-	--L.reclaim_removed = "%s removed after %.1fs" -- "Reclaim removed after 1.1s" s = seconds
-
 	L.custom_on_stop_timers = "Mostra sempre le barre delle abilità"
 	L.custom_on_stop_timers_desc = "Halondrus può ritardare le sue abilità. Quando questa opzione è attiva, le barre per le sue abilità rimarranno a schermo."
 end
