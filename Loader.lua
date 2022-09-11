@@ -644,8 +644,8 @@ do
 
 	local function addExtraMenus(addon, ...)
 		for i = 1, select("#", ...) do
-			local rawMenu = select(i, ...)
-			local id = tonumber(rawMenu:trim())
+			local rawMenu = select(i, ...):trim()
+			local id = tonumber(rawMenu)
 			if id then
 				local name
 				if id < 0 then
