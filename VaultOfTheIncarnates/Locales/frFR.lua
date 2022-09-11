@@ -9,7 +9,7 @@ if L then
 
 end
 
-L = BigWigs:NewBossLocale("The Primalist Council", "frFR")
+L = BigWigs:NewBossLocale("The Primal Council", "frFR")
 if L then
 
 end

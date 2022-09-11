@@ -5,7 +5,7 @@ BigWigs:AddColors("Eranog", {
 BigWigs:AddColors("Terros", {
 })
 
-BigWigs:AddColors("The Primalist Council", {
+BigWigs:AddColors("The Primal Council", {
 })
 
 BigWigs:AddColors("Sennarth, The Cold Breath", {

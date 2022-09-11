@@ -5,7 +5,7 @@ BigWigs:AddSounds("Eranog", {
 BigWigs:AddSounds("Terros", {
 })
 
-BigWigs:AddSounds("The Primalist Council", {
+BigWigs:AddSounds("The Primal Council", {
 })
 
 BigWigs:AddSounds("Sennarth, The Cold Breath", {
