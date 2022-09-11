@@ -3,11 +3,11 @@ if not IsTestBuild() then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Primalist Council", 2522, 2486)
+local mod, CL = BigWigs:NewBoss("The Primal Council", 2522, 2486)
 if not mod then return end
 mod:RegisterEnableMob(
-	-- TODO Kadros Frostgrip
-	189816, -- Dathea Shockgrip
+	187771, -- Kadros Icewrath
+	189816, -- Dathea Stormlash
 	187772, -- Opalfang
 	187767  -- Embar Firepath
 )
