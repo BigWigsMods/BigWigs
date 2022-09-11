@@ -71,7 +71,7 @@ if L then
 	L.ephemeral_fissure = "Bodenriss"
 
 	L.bomb_dropped = "Bombe fallen gelassen"
-	--L.volatile_charges_new = "New Bombs!"
+	L.volatile_charges_new = "Neue Bomben!"
 
 	L.custom_on_stop_timers = "Fähigkeiten Leisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Halondrus kann Fähigkeiten verzögern. Wenn diese Option aktiviert ist, bleiben die Leisten für diese Fähigkeiten bestehen."
