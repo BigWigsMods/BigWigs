@@ -829,7 +829,7 @@ function mod:HymnApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 2 == 0 and amount > 7 then -- 7+ every 2
-			self:StackMessage("hymn_stacks", "blue", args.destName, amount, 10, args.spellId)
+			self:StackMessage("hymn_stacks", "blue", args.destName, amount, 10, args.spellName, args.spellId)
 			if amount > 9 then
 				self:PlaySound("hymn_stacks", "alert")
 			end
