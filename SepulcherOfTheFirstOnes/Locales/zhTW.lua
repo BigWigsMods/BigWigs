@@ -68,10 +68,10 @@ if L then
 	L.earthbreaker_missiles = "飛彈" -- Earthbreaker Missiles
 	L.crushing_prism = "稜光" -- Crushing Prism
 	L.prism = "稜光"
-	--L.ephemeral_fissure = "Fissure"
+	L.ephemeral_fissure = "裂隙"
 
 	L.bomb_dropped = "炸彈掉落"
-	--L.volatile_charges_new = "New Bombs!"
+	L.volatile_charges_new = "新炸彈！"
 
 	L.custom_on_stop_timers = "總是顯示計時器"
 	L.custom_on_stop_timers_desc = "哈隆德魯斯的技能可能延遲施放。啟用此選項後，這些技能的計時條會保持顯示。"
