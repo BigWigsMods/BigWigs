@@ -71,7 +71,7 @@ if L then
 	L.ephemeral_fissure = "裂隙"
 
 	L.bomb_dropped = "炸弹掉落"
-	--L.volatile_charges_new = "New Bombs!"
+	L.volatile_charges_new = "新炸弹!"
 
 	L.custom_on_stop_timers = "总是显示计时条"
 	L.custom_on_stop_timers_desc = "黑伦度斯可能延迟施放。启用此选项后，这些技能的计时条会保持显示。"
