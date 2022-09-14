@@ -38,7 +38,6 @@ local bossToCheck = {
 	[2537] = 180990, -- The Jailer
 }
 local activeBoss = nil
-local activeBossModule = nil
 
 local emitterDetected = false
 local chaoticEssenceDetected = false
@@ -109,7 +108,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "CreationSpark", 369505)
 
 	activeBoss = nil
-	activeBossModule = nil
 end
 
 function mod:ENCOUNTER_END(_, id, _, _, _, status)
@@ -173,7 +171,6 @@ end
 function mod:OnBossEngage(_, module, diff)
 	self.isEngaged = true
 	activeBoss = module.engageId
-	activeBossModule = module
 	self:SetStage(1)
 
 	emitterDetected = false
