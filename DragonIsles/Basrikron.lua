@@ -3,7 +3,7 @@ if not IsTestBuild() then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Basrikron, The Shale Wing", -2022, 2506) -- TODO unknown zone 2022 (waking shores) or 2025 (thaldraszus)
+local mod, CL = BigWigs:NewBoss("Basrikron, The Shale Wing", -2022, 2506)
 if not mod then return end
 mod:RegisterEnableMob(193535) -- Basrikron
 mod.otherMenu = -1978
