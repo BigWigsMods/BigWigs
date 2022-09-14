@@ -208,8 +208,6 @@ function mod:OnBossEngage(_, module, diff)
 		self:Log("SPELL_CAST_START", "TheJailerFinalRelentlessDomination", 367851)
 		self:Log("SPELL_CAST_SUCCESS", "TheJailerUnbreakingGrasp", 363332)
 		self:Log("SPELL_CAST_SUCCESS", "TheJailerDivertedLifeShield", 368383)
-		self:Log("SPELL_AURA_APPLIED", "FatedCreationSparkApplied", 370404)
-		self:Log("SPELL_AURA_APPLIED_DOSE", "FatedCreationSparkApplied", 370404)
 	end
 
 	self:ScheduleTimer("CheckForAffixes", 0.1)
@@ -422,59 +420,3 @@ function mod:TheJailerDivertedLifeShield()
 	-- end
 end
 
-local function getSparkTimeMod(duration)
-	local name, _, stacks, _, _, expirationTime = GetPlayerAuraBySpellID(370404) -- Fated Infusion: Creation Spark
-	if not name then return end
-
-	local sparkRemaining = expirationTime - GetTime()
-	local sparkPercent = mod:Mythic() and 15 or 25 -- only stacks in mythic
-	local sparkMultiplier = 1 - (sparkPercent * math.max(stacks, 1)) / 100
-	if sparkRemaining > duration then
-		duration = duration * sparkMultiplier
-	else
-		duration = sparkRemaining * sparkMultiplier + (duration - sparkRemaining)
-	end
-
-	return duration
-end
-
-function mod:TheJailerRuneOfDamnationApplied(args)
-	if self:Me(args.destGUID) then
-		local duration = getSparkTimeMod(7)
-		if not duration then return end
-
-		self:SimpleTimer(function()
-			activeBossModule:CancelSayCountdown(args.spellId) -- SetOption:false:::
-			activeBossModule:SayCountdown(args.spellId, duration, GetRaidTargetIndex("player")) -- SetOption:false:::
-			if activeBossModule:CheckOption("rune_of_damnation_countdown", "BAR") then -- SetOption:false:::
-				activeBossModule:Bar("rune_of_damnation_countdown", duration - 1.5, activeBossModule.localization.jump, 360281) -- SetOption:false:::
-			else
-				activeBossModule:TargetBar(args.spellId, duration, args.destName, CL.bomb) -- SetOption:false:::
-			end
-		end, 0) -- everyone should get the _applied event on the same frame, right? do our adjustments on the next
-	end
-end
-
-function mod:FatedCreationSparkApplied(args)
-	if self:Me(args.destGUID) then
-		local expirationTime = select(6, GetPlayerAuraBySpellID(360281)) -- Rune of Damnation
-		if not expirationTime then return end
-
-		local duration = getSparkTimeMod(expirationTime - GetTime())
-		if not duration then return end
-
-		activeBossModule:CancelSayCountdown(360281) -- SetOption:false:::
-		if duration > 1.2 then
-			activeBossModule:SayCountdown(360281, duration, GetRaidTargetIndex("player"), math.min(floor(duration), 3)) -- SetOption:false:::
-		end
-		if activeBossModule:CheckOption("rune_of_damnation_countdown", "BAR") then -- SetOption:false:::
-			if duration > 1.5 then
-				activeBossModule:Bar("rune_of_damnation_countdown", duration - 1.5, activeBossModule.localization.jump, 360281) -- SetOption:false:::
-			else
-				activeBossModule:StopBar(activeBossModule.localization.jump)
-			end
-		else
-			activeBossModule:TargetBar(360281, duration, args.destName, CL.bomb) -- SetOption:false:::
-		end
-	end
-end
