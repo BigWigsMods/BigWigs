@@ -41,7 +41,6 @@ local emitterDetected = false
 local chaoticEssenceDetected = false
 local creationSparkDetected = false
 local protoformBarrierDetected = false
-local replicatingEssenceDetected = false
 
 local chaoticEssenceCount = 1
 local creationSparkCount = 1
@@ -166,10 +165,6 @@ function mod:CheckForAffixes()
 			end
 			self:Bar(371447, cd, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 		end
-		if not replicatingEssenceDetected and self:UnitBuff(unit, 372424) then -- Fated Power: Replicating Essence
-			replicatingEssenceDetected = true
-			-- Not used so far
-		end
 	end
 end
 
@@ -182,7 +177,6 @@ function mod:OnBossEngage(_, module, diff)
 	chaoticEssenceDetected = false
 	creationSparkDetected = false
 	protoformBarrierDetected = false
-	replicatingEssenceDetected = false
 
 	chaoticEssenceCount = 1
 	creationSparkCount = 1
