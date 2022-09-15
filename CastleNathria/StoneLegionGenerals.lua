@@ -303,7 +303,7 @@ function mod:SummonSkirmisher(args)
 	skirmisherTracker[args.destGUID] =  icon
 end
 
-function mod:AddMarkTracker(event, unit, guid)
+function mod:AddMarkTracker(_, unit, guid)
 	if guid and not mobCollector[guid] then
 		local mobId = self:MobId(guid)
 		if self:GetOption(skirmisherMarker) and skirmisherTracker[guid] then --  Stone Legion Skirmisher
@@ -454,7 +454,7 @@ end
 do
 	local playerList = {}
 	local prevStage, prevCount = 1, 0
-	function mod:HeartRend(args)
+	function mod:HeartRend()
 		playerList = {}
 		prevStage = self:GetStage()
 		prevCount = heartRendCount

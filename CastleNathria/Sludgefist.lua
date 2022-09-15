@@ -203,23 +203,20 @@ function mod:DestructiveImpactRemoved(args)
 	end
 end
 
-do
-	local playerList = mod:NewTargetList()
-	function mod:ChainThemApplied(args)
-		chainLinksApplied = chainLinksApplied + 1
-		if self:Me(args.destGUID) then
-			local partner = args.sourceName
-			self:PersonalMessage(335293, false, CL.link_with:format(self:ColorName(partner)))
-			self:PlaySound(335293, "warning")
+function mod:ChainThemApplied(args)
+	chainLinksApplied = chainLinksApplied + 1
+	if self:Me(args.destGUID) then
+		local partner = args.sourceName
+		self:PersonalMessage(335293, false, CL.link_with:format(self:ColorName(partner)))
+		self:PlaySound(335293, "warning")
+	end
+	if chainLinksApplied == 1 then
+		self:StopBar(CL.count:format(CL.count:format(self:SpellName(335293), chainLinkCount)))
+		if not self:Mythic() then -- Everyone is chained on Mythic
+			self:Message(335293, "yellow", CL.count:format(self:SpellName(335293), chainLinkCount))
 		end
-		if chainLinksApplied == 1 then
-			self:StopBar(CL.count:format(CL.count:format(self:SpellName(335293), chainLinkCount)))
-			if not self:Mythic() then -- Everyone is chained on Mythic
-				self:Message(335293, "yellow", CL.count:format(self:SpellName(335293), chainLinkCount))
-			end
-			chainLinkCount = chainLinkCount + 1
-			self:CDBar(335293, 69, CL.count:format(self:SpellName(335293), chainLinkCount))
-		end
+		chainLinkCount = chainLinkCount + 1
+		self:CDBar(335293, 69, CL.count:format(self:SpellName(335293), chainLinkCount))
 	end
 end
 

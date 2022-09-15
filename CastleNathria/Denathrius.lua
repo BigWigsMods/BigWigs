@@ -349,7 +349,7 @@ do
 	end
 end
 
-function mod:EncounterEvent(args) -- Crimson Cabalists spawn
+function mod:EncounterEvent() -- Crimson Cabalists spawn
 	self:Message(-22131, "yellow", CL.incoming:format(CL.count:format(CL.adds, addCount)), 329711) -- Crimson Chorus Icon
 	self:PlaySound(-22131, "alert")
 	addCount = addCount + 1
@@ -578,7 +578,7 @@ function mod:MarchOfThePenitentStart(args)
 end
 
 -- Stage Two: The Crimson Chorus
-function mod:BeginTheChorus(args)
+function mod:BeginTheChorus()
 	intermission = nil
 	self:CloseInfo(326699)
 	self:Message("stages", "green", CL.stage:format(2), false)
@@ -690,7 +690,7 @@ function mod:CommandMassacre(args)
 end
 
 -- Stage Three: Indignation
-function mod:IndignationSuccess(args) -- not setting stage yet, incase some spells triggered the second you transition
+function mod:IndignationSuccess() -- not setting stage yet, incase some spells triggered the second you transition
 	self:UnregisterUnitEvent("UNIT_HEALTH", "boss1") -- Safety
 
 	self:Message("stages", "green", CL.stage:format(3), false)
@@ -710,7 +710,7 @@ function mod:IndignationSuccess(args) -- not setting stage yet, incase some spel
 	end
 end
 
-function mod:IndignationEnd(args)
+function mod:IndignationEnd()
 	if self:GetOption(balefulShadowsMarker) then
 		self:UnregisterTargetEvents()
 	end
@@ -856,17 +856,17 @@ function mod:VengefulWail(args)
 		mobCollector[args.sourceGUID] = true
 		balefulShadowsList[args.sourceGUID] = 9 - balefulShadowCount
 		balefulShadowCount = balefulShadowCount + 1
-		for k, v in pairs(balefulShadowsList) do
+		for k, v in next, balefulShadowsList do
 			local unit = self:GetUnitIdByGUID(k)
 			if unit then
-				self:CustomIcon(balefulShadowsMarker, unit, balefulShadowsList[k])
+				self:CustomIcon(balefulShadowsMarker, unit, v)
 				balefulShadowsList[k] = nil
 			end
 		end
 	end
 end
 
-function mod:BalefulShadowsMarker(event, unit, guid)
+function mod:BalefulShadowsMarker(_, unit, guid)
 	if self:MobId(guid) == 175205 and balefulShadowsList[guid] then -- Conjured Manifestation
 		self:CustomIcon(balefulShadowsMarker, unit, balefulShadowsList[guid])
 		balefulShadowsList[guid] = nil

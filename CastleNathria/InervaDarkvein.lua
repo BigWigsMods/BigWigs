@@ -185,7 +185,7 @@ do
 	end
 end
 
-function mod:ConjuredManifestationMarker(event, unit, guid)
+function mod:ConjuredManifestationMarker(_, unit, guid)
 	if self:MobId(guid) == 170197 and conjuredManifestationList[guid] then -- Conjured Manifestation
 		self:CustomIcon(conjuredManifestationMarker, unit, conjuredManifestationList[guid])
 	end
@@ -352,7 +352,7 @@ function mod:ChangeOfHeartRemoved(args)
 	self:StopBar(args.spellId, args.destName)
 end
 
-function mod:BottledAnima(args)
+function mod:BottledAnima()
 	self:Message(325769, "orange", L.bottles)
 	self:PlaySound(325769, "info")
 	self:Bar(325769, enabledContainer == 2 and (self:Mythic() and 15 or 30) or (self:Mythic() and 30 or 45), L.bottles)

@@ -279,7 +279,7 @@ function mod:UNIT_HEALTH(event, unit)
 	end
 end
 
-function mod:SunKingsSalvationMarker(event, unit, guid)
+function mod:SunKingsSalvationMarker(_, unit, guid)
 	if self:GetOption(vileOccultistMarker) and self:MobId(guid) == 165763 and not mobCollector[guid] then -- Vile Occultist
 		vileOccultistMarkCount = vileOccultistMarkCount + 1
 		local icon = 9 - (vileOccultistMarkCount % 6 + 1) -- 8, 7, 5, 6, 4, 3
@@ -314,7 +314,7 @@ function mod:VileOccultistDeath(args)
 end
 
 -- Shade of Kael'thas
-function mod:ReflectionOfGuiltApplied(args)
+function mod:ReflectionOfGuiltApplied()
 	if not shadeUp then
 		shadeUp = true
 		self:Message("stages", "green", CL.incoming:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
@@ -516,7 +516,7 @@ function mod:DrainedSoul(args)
 end
 
 -- High Torturer Darithos
-function mod:GreaterCastigation(args)
+function mod:GreaterCastigation()
 	self:Message(328889, "yellow") -- Greater Castigation
 	self:Bar(328889, 15.5) -- Greater Castigation
 end

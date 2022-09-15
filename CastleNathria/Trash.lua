@@ -254,7 +254,7 @@ do
 	end
 end
 
-function mod:MastercraftedGamesmansSnare(args)
+function mod:MastercraftedGamesmansSnare()
 	self:Message(341352, "yellow", CL.incoming:format(CL.traps))
 	self:PlaySound(341352, "alarm")
 end

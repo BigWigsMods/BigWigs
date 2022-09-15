@@ -286,7 +286,7 @@ function mod:BloodShroudRemoved(args)
 		self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
 	end
 	self:CDBar(330711, 48.5, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
-	self:CDBar(328921, 106) -- Blood Shroud
+	self:CDBar(args.spellId, 106) -- Blood Shroud
 end
 
 -- Mythic

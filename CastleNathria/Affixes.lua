@@ -168,7 +168,7 @@ function mod:CheckForAffixes()
 	end
 end
 
-function mod:OnBossEngage(_, module, diff)
+function mod:OnBossEngage(_, module)
 	self.isEngaged = true
 	activeBoss = module.engageId
 	self:SetStage(1)
@@ -205,7 +205,7 @@ end
 -- Event Handlers
 --
 
-function mod:ChaoticDestruction(args)
+function mod:ChaoticDestruction()
 	chaoticEssenceDetected = true
 	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	self:Message(372634, "yellow")

@@ -250,7 +250,7 @@ end
 do
 	local playerList = {}
 
-	function mod:DimensionalTear(args)
+	function mod:DimensionalTear()
 		playerList = {}
 		self:StopBar(CL.count:format(L.tear, dimensionalTearCount))
 		dimensionalTearCount = dimensionalTearCount + 1

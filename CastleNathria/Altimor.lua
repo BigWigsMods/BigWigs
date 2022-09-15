@@ -268,7 +268,7 @@ end
 
 do
 	local shadesofBargastMarked = 0
-	function mod:ShadesofBargastMarking(event, unit, guid)
+	function mod:ShadesofBargastMarking(_, unit, guid)
 		if self:MobId(guid) == 171557 and not mobCollector[guid] then
 			shadesofBargastMarked = shadesofBargastMarked + 1
 			self:CustomIcon(shadesofBargastMarker, unit, shadesofBargastMarked+3)

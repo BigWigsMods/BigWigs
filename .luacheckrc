@@ -21,6 +21,7 @@ files["**/Core/BossPrototype.lua"].ignore = {
 	"113/Transcriptor",
 }
 ignore = {
+	"212/self",
 	"11/SLASH_.*", -- slash handlers
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
 }
