@@ -18,7 +18,7 @@ local instrumentCount = 1
 local spikedBallsCount = 1
 local trapsCount = 1
 local chainsCount = 1
-local spikesTime = 0
+--local spikesTime = 0
 local weaponNames = {
 	[348508] = "hammer",
 	[355568] = "axe",
@@ -104,7 +104,7 @@ function mod:OnEngage()
 	spikedBallsCount = 1
 	trapsCount = 1
 	chainsCount = 1
-	spikesTime = GetTime() + 120
+	--spikesTime = GetTime() + 120
 	self:SetStage(1)
 
 	self:CDBar(355505, self:Mythic() and 8.5 or 11, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
@@ -275,8 +275,8 @@ do
 	end
 
 	function mod:FinalScream(args)
-		self:Message(357735, "red")
-		self:PlaySound(357735, "alarm")
+		self:Message(args.spellId, "red")
+		self:PlaySound(args.spellId, "alarm")
 		horrorCount = -1
 	end
 end
@@ -337,7 +337,7 @@ do
 		spikedBallsCount = 1
 		trapsCount = 1
 		chainsCount = 1
-		spikesTime = GetTime() + 120
+		--spikesTime = GetTime() + 120
 		self:SetStage(self:GetStage() + 1)
 
 		self:Message("stages", "cyan", CL.soon:format(args.sourceName), false)

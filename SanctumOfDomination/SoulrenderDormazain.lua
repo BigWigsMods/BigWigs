@@ -203,7 +203,7 @@ end
 
 do
 	local playerList = {}
-	function mod:BrandOfTorment(args)
+	function mod:BrandOfTorment()
 		playerList = {}
 		brandCount = brandCount + 1
 		if brandCount < 7 then -- breaks during dance
@@ -257,7 +257,7 @@ end
 
 do
 	local agonizersMarked = 0
-	function mod:AgonizerMarking(event, unit, guid)
+	function mod:AgonizerMarking(_, unit, guid)
 		if self:MobId(guid) == 177594 and not mobCollector[guid] then -- Mawsworn Agonizer
 			self:CustomIcon(agonizerMarker, unit, 8-agonizersMarked) -- 8, 7, 6, 5
 			mobCollector[guid] = true

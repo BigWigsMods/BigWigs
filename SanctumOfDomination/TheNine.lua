@@ -210,7 +210,7 @@ function mod:UpdateInfoBox()
 	 end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.blades_yell, nil, true) then -- Agatha's Eternal Blade
 		self:Message(350031, "yellow", CL.incoming:format(L.blades))
 		if infoboxAllowed then
@@ -266,7 +266,7 @@ end
 do
 	local playerList = {}
 	local allowed = true
-	function mod:FragmentsOfDestiny(args)
+	function mod:FragmentsOfDestiny()
 		playerList = {}
 		allowed = true
 		fragmentOfDestinyCount = fragmentOfDestinyCount + 1
@@ -357,7 +357,7 @@ function mod:UnendingStrikeApplied(args)
 end
 
 do
-	function mod:FormlessMassMarking(event, unit, guid)
+	function mod:FormlessMassMarking(_, unit, guid)
 		if self:MobId(guid) == 177407 then -- Formless Mass
 			self:CustomIcon(formlessMassMarker, unit, 8)
 			self:UnregisterTargetEvents()
@@ -394,7 +394,7 @@ function mod:WingsOfRage(args)
 	self:Bar(350365, 72.9, CL.count:format(L.run_away, wingsOfRageCount))
 end
 
-function mod:KyraDeath(args)
+function mod:KyraDeath()
 	kyraAlive = false
 	self:StopBar(unendingStrikeText) -- Unending Strike
 	self:StopBar(CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
@@ -425,7 +425,7 @@ function mod:ReverberatingRefrain(args)
 end
 
 
-function mod:SigneDeath(args)
+function mod:SigneDeath()
 	signeAlive = false
 	self:StopBar(CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
 	self:StopBar(CL.count:format(L.go_in, reverberatingRefrainCount)) -- Reverberating Refrain
@@ -562,7 +562,7 @@ end
 
 do
 	local playerList = {}
-	function mod:LinkEssence(args)
+	function mod:LinkEssence()
 		playerList = {}
 	end
 

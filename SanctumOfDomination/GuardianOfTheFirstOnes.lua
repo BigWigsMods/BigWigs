@@ -184,7 +184,7 @@ do
 	function mod:SetLinkTimer(checkCount)
 		local coreUnit = self:GetBossId(linkedCore)
 		if coreUnit then
-			local linkTimer = ceil(UnitPower(coreUnit) / 5) - 1 -- 5 energy/s (first tick immediately)
+			local linkTimer = math.ceil(UnitPower(coreUnit) / 5) - 1 -- 5 energy/s (first tick immediately)
 			self:CDBar(352589, linkTimer, CL.count:format(self:SpellName(352589), meltdownCount)) -- Meltdown
 		end
 		if self:Mythic() and checkCount and energizeCount < 3 then
@@ -217,7 +217,7 @@ do
 		end
 	end
 
-	function mod:EnergyAbsorption(args)
+	function mod:EnergyAbsorption()
 		energizeCount = energizeCount + 1
 		if not scheduled then
 			scheduled = self:ScheduleTimer("SetLinkTimer", 0.2, true)
@@ -291,7 +291,7 @@ function mod:PurgingProtocol(args)
 	sunderCount = 1
 end
 
-function mod:PurgingProtocolSuccess(args) -- He can cancel his own cast with the tank combo, increment counter here instead.
+function mod:PurgingProtocolSuccess() -- He can cancel his own cast with the tank combo, increment counter here instead.
 	purgeCount = purgeCount + 1
 end
 

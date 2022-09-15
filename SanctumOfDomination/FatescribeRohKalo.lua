@@ -279,7 +279,7 @@ end
 
 do
 	local playerList = {}
-	function mod:CallOfEternity(args)
+	function mod:CallOfEternity()
 		playerList = {}
 		self:CastBar(350568, 10, CL.count:format(CL.bombs, callOfEternityCount))
 		self:StopBar(CL.count:format(CL.bombs, callOfEternityCount))
@@ -359,7 +359,7 @@ do
 	end
 end
 
-function mod:RealignFateRemoved(args)
+function mod:RealignFateRemoved()
 	self:StopBar(CL.cast:format(self:SpellName(353122))) -- Darkest Destiny
 
 	if realignFateCount > 2 then -- Stage 3 after 2x Realign Fate

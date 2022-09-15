@@ -155,7 +155,7 @@ function mod:DraggingChainsApplied(args)
 end
 
 do
-	local function printTarget(self, name, guid)
+	local function printTarget(self, _, guid)
 		if self:Me(guid) then
 			self:PersonalMessage(348074)
 			self:PlaySound(348074, "alarm")
@@ -168,7 +168,7 @@ do
 end
 
 -- Stage Two: Double Vision
-function mod:StygianDarkshieldApplied(args)
+function mod:StygianDarkshieldApplied()
 	self:SetStage(2)
 	stage = 2
 	self:Message("stages", "green", CL.stage:format(2), false)
@@ -188,7 +188,7 @@ function mod:StygianDarkshieldApplied(args)
 	end
 end
 
-function mod:TitanicDeathGaze(args)
+function mod:TitanicDeathGaze()
 	self:Message(349028, "orange", CL.casting:format(L.death_gaze))
 	self:PlaySound(349028, "alarm")
 	self:CastBar(349028, 8, L.death_gaze)
@@ -277,7 +277,7 @@ function mod:SpreadingMiseryRemoved(args)
 	end
 end
 
-function mod:StygianDarkshieldRemoved(args)
+function mod:StygianDarkshieldRemoved()
 	self:StopBar(CL.beam) -- Desolation Beam
 	self:StopBar(L.pools) -- Spreading Misery
 	self:StopBar(L.death_gaze) -- Titanic Death Gaze
@@ -299,7 +299,7 @@ function mod:StygianDarkshieldRemoved(args)
 end
 
 -- Stage Three: Immediate Extermination
-function mod:ImmediateExtermination(args)
+function mod:ImmediateExtermination()
 	self:SetStage(3)
 	stage = 3
 	self:Message("stages", "green", CL.stage:format(3), false)

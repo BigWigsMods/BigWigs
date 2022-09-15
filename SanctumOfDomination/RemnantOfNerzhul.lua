@@ -151,7 +151,7 @@ do
 	end
 end
 
-function mod:OrbMarking(event, unit, guid)
+function mod:OrbMarking(_, unit, guid)
 	if not mobCollector[guid] and self:MobId(guid) == 177117 then -- Orb of Torment
 		mobCollector[guid] = true
 		self:CustomIcon(orbMarker, unit, orbMarkerIcon)
@@ -244,7 +244,7 @@ do
 		end
 	end
 
-	function mod:RattlecageMalevolenceRemoved(args)
+	function mod:RattlecageMalevolenceRemoved()
 		self:StopBar(CL.cast:format(CL.bomb))
 	end
 end

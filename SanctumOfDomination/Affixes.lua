@@ -146,7 +146,7 @@ function mod:CheckForAffixes()
 	end
 end
 
-function mod:OnBossEngage(_, module, diff)
+function mod:OnBossEngage(_, module)
 	self.isEngaged = true
 	activeBoss = module.engageId
 	self:SetStage(1)
@@ -192,7 +192,7 @@ end
 -- Event Handlers
 --
 
-function mod:ChaoticDestruction(args)
+function mod:ChaoticDestruction()
 	chaoticEssenceDetected = true
 	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	self:Message(372634, "yellow")
@@ -268,12 +268,12 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	end
 end
 
-function mod:TheEyeStygianDarkshieldApplied(args)
+function mod:TheEyeStygianDarkshieldApplied()
 	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 end
 
-function mod:TheEyeStygianDarkshieldRemoved(args)
+function mod:TheEyeStygianDarkshieldRemoved()
 	if chaoticEssenceDetected then
 		self:CDBar(372634, 3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
@@ -290,7 +290,7 @@ function mod:TheEyeStygianDarkshieldRemoved(args)
 	end
 end
 
-function mod:PainsmithForgeWeaponOver(args)
+function mod:PainsmithForgeWeaponOver()
 	if chaoticEssenceDetected then
 		self:CDBar(372634, 17.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
@@ -299,11 +299,11 @@ function mod:PainsmithForgeWeaponOver(args)
 	end
 end
 
-function mod:FatescribeRealignFateApplied(args)
+function mod:FatescribeRealignFateApplied()
 	self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 end
 
-function mod:FatescribeRealignFateRemoved(args)
+function mod:FatescribeRealignFateRemoved()
 	if emitterDetected then
 		self:CDBar(372634, 10, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 	end
@@ -312,7 +312,7 @@ function mod:FatescribeRealignFateRemoved(args)
 	end
 end
 
-function mod:KelThuzadNecroticSurgeApplied(args)
+function mod:KelThuzadNecroticSurgeApplied()
 	if protoformBarrierDetected then
 		self:Bar(372634, 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 	end
@@ -321,7 +321,7 @@ function mod:KelThuzadNecroticSurgeApplied(args)
 	end
 end
 
-function mod:SylvanasBansheeShroudApplied(args)
+function mod:SylvanasBansheeShroudApplied()
 	if self:GetStage() == 1 then
 		self:SetStage(1.5)
 		self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))

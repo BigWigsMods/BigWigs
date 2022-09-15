@@ -20,7 +20,14 @@ files["**/Core/BossPrototype.lua"].ignore = {
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
 }
+files["**/Core/Core.lua"].ignore = {
+	"111/BigWigs",
+}
+files["**/Plugins/BossBlock.lua"].ignore = {
+	"112/BigWigs",
+}
 ignore = {
+	"113/BigWigs",
 	"212/self",
 	"11/SLASH_.*", -- slash handlers
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
@@ -108,7 +115,6 @@ globals = {
 	"AlertFrame",
 	"Ambiguate",
 	"BasicMessageDialog",
-	"BigWigs",
 	"BigWigs3DB",
 	"BigWigsAnchor",
 	"BigWigsAPI",

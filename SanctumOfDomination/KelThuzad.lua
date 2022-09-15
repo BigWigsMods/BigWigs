@@ -28,7 +28,6 @@ local frostBlastCount = 1
 local glacialWrathCount = 1
 local soulReaverCollector = {}
 local soulReaverCount = 0
-local soulReaverSpawnTime = 0
 local soulReaverMarkScheduler = nil
 
 -- local timersHeroic = { -- XXX Old timers used before hotfix, leaving it in for now to check incase.
@@ -264,7 +263,7 @@ function mod:MarkReavers()
 	soulReaverMarkScheduler = nil
 end
 
-function mod:MarkUnits(event, unit, guid)
+function mod:MarkUnits(_, unit, guid)
 	if not mobCollector[guid] then
 		if soulShardCollector[guid] then
 			self:CustomIcon(soulShardMarker, unit, soulShardCollector[guid])
@@ -466,7 +465,7 @@ end
 
 do
 	local playerList = {}
-	function mod:OblivionsEcho(args)
+	function mod:OblivionsEcho()
 		playerList = {}
 		oblivionsEchoCount = oblivionsEchoCount + 1
 		self:CDBar(347292, oblivionsEchoCount % 2 == 0 and 61.5 or 40.5, CL.count:format(L.silence, oblivionsEchoCount)) -- XXX Need to confirm the (3)+ casts
@@ -490,12 +489,12 @@ function mod:OblivionsEchoRemoved(args)
 	end
 end
 
-function mod:FrostBlast(args)
+function mod:FrostBlast()
 	-- Fix timer
 	self:CDBar(348760, 3, CL.count:format(CL.meteor, frostBlastCount))
 end
 
-function mod:FrostBlastSuccess(args)
+function mod:FrostBlastSuccess()
 	frostBlastCount = frostBlastCount + 1
 	if self:GetStage() == 1 then
 		self:CDBar(348760, frostBlastCount % 2 == 0 and 40 or 70, CL.count:format(CL.meteor, frostBlastCount))
@@ -699,7 +698,6 @@ do
 			prev = t
 			soulReaverCollector = {}
 			soulReaverCount = 0
-			soulReaverSpawnTime = GetTime()
 			if not soulReaverMarkScheduler then
 				soulReaverMarkScheduler = self:ScheduleTimer("MarkReavers", 5)
 			end
