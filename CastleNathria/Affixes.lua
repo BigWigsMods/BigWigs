@@ -151,8 +151,8 @@ function mod:CheckForAffixes()
 			local cd = 20
 			if activeBoss == 2407 then -- Denathrius
 				cd = 3
-			-- elseif activeBoss == 2399 then -- Sludgefist
-			-- 	cd = 30
+			elseif activeBoss == 2399 then -- Sludgefist
+				cd = 40
 			end
 			self:Bar(369505, cd, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 		end
@@ -296,8 +296,8 @@ do
 					if stage == 2 and self:Mythic() and (creationSparkCount - p2Count[args.spellId]) == 1 then
 						cd = 80
 					end
-				-- elseif activeBoss == 2399 then -- Sludgefist
-				-- 	cd = self:Mythic() and 69 or 72
+				elseif activeBoss == 2399 then -- Sludgefist
+					cd = self:Mythic() and 69 or 72
 				end
 				self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 			end
@@ -346,14 +346,14 @@ function mod:CouncilDanseMacabreBegins()
 		self:CDBar(372634, 9.3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount)) -- Chaotic Essence
 		self:PauseBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
+	if protoformBarrierDetected then
+		self:CDBar(371447, 13.9, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+		self:PauseBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+	end
 	if creationSparkDetected then
 		self:CDBar(369505, 18.4, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
 		self:PauseBar(369505, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 	end
-	-- if protoformBarrierDetected then
-	-- 	self:CDBar(371447, 0, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
-	-- 	self:PauseBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
-	-- end
 end
 
 function mod:CouncilDanseMacabreOver()
@@ -363,12 +363,12 @@ function mod:CouncilDanseMacabreOver()
 	if chaoticEssenceDetected then
 		self:ResumeBar(372634, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount)) -- Chaotic Essence
 	end
+	if protoformBarrierDetected then
+		self:ResumeBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+	end
 	if creationSparkDetected then
 		self:ResumeBar(369505, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
 	end
-	-- if protoformBarrierDetected then
-	-- 	self:ResumeBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
-	-- end
 end
 
 function mod:DenathriusMarchOfThePenitentStart()
