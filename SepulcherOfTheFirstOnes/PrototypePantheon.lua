@@ -209,7 +209,7 @@ do
 			if stage == 2 then
 				self:Bar(361304, self:Mythic() and 24.7 or 8.9, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
 				self:Bar(361568, self:Mythic() and 21.6 or 18.5, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
-				self:Bar(366234, self:Mythic() and 44.3 or 38.5, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
+				self:Bar(366234, self:Mythic() and 44.3 or 38.5, CL.count:format(self:SpellName(366234), stormCount)) -- Animastorm
 				self:Bar(361689, self:Mythic() and 55.6 or self:Heroic() and 69.5 or 41.5) -- Wracking Pain
 				self:Bar(361789, self:Mythic() and 91.1 or 79.9, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			elseif stage == 3 then
@@ -220,7 +220,7 @@ do
 				self:Bar(364941, self:Mythic() and 53.1 or 53.1, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
 				self:Bar(361304, self:Mythic() and 24.5 or 24.5, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
 				self:Bar(361568, self:Mythic() and 17.8 or 21.3, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
-				self:Bar(366234, 51, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
+				self:Bar(366234, 51, CL.count:format(self:SpellName(366234), stormCount)) -- Animastorm
 				self:Bar(361789, self:Mythic() and 109.5 or 104.1, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			end
 		end
@@ -250,9 +250,7 @@ function mod:NecroticRitual(args)
 	self:PlaySound(args.spellId, "alert")
 	necroticRitualCount = necroticRitualCount + 1
 	if self:Mythic() then
-		if self:GetStage() ~= 3 then -- XXX Check stage 3 mythic
-			self:Bar(args.spellId, 60, CL.count:format(L.necrotic_ritual, necroticRitualCount))
-		end
+		self:Bar(args.spellId, self:GetStage() == 3 and 191 or 60, CL.count:format(L.necrotic_ritual, necroticRitualCount))
 	elseif self:Easy() then
 		self:Bar(args.spellId, necroticRitualCount == 2 and 72.3 or 62.8, CL.count:format(L.necrotic_ritual, necroticRitualCount))
 	else
@@ -266,7 +264,7 @@ do
 		playerList = {}
 		runecarversDeathtouchCount = runecarversDeathtouchCount + 1
 		if self:Mythic() then
-			if self:GetStage() ~= 3 then -- XXX Check stage 3 mythic
+			if self:GetStage() ~= 3 then -- Only cast once in stage 3
 				self:Bar(360687, 50, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount))
 			end
 		elseif self:Easy() then
@@ -407,7 +405,7 @@ function mod:Animastorm(args)
 	self:PlaySound(args.spellId, "alert")
 	stormCount = stormCount + 1
 	if self:GetStage() == 3 then
-		if not self:Mythic() then -- XXX Check stage 3 Mythic
+		if not self:Mythic() then -- Only cast once in stage 3
 			self:Bar(args.spellId, 84, CL.count:format(args.spellName, stormCount))
 		end
 	else
