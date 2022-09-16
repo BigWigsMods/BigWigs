@@ -186,7 +186,7 @@ function mod:MarkAcolytes()
 	end
 end
 
-function mod:MarkAdds(event, unit, guid)
+function mod:MarkAdds(_, unit, guid)
 	if not mobCollector[guid] then
 		local id = self:MobId(guid)
 		if id == 183707 and self:GetOption(spellslingerMarker) then -- Xy Spellslinger
@@ -307,7 +307,7 @@ end
 
 do
 	local playerList = {}
-	function mod:InterdimensionalWormholes(args)
+	function mod:InterdimensionalWormholes()
 		playerList = {}
 		wormholeCount = wormholeCount + 1
 	end

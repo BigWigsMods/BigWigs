@@ -164,7 +164,7 @@ function mod:CheckForAffixes(count)
 	end
 end
 
-function mod:OnBossEngage(_, module, diff)
+function mod:OnBossEngage(_, module)
 	self.isEngaged = true
 	activeBoss = module.engageId
 	self:SetStage(1)
@@ -209,7 +209,7 @@ end
 -- Event Handlers
 --
 
-function mod:ChaoticDestruction(args)
+function mod:ChaoticDestruction()
 	chaoticEssenceDetected = true
 	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	self:Message(372634, "yellow")
@@ -321,7 +321,7 @@ function mod:HalondrusReclamationForm()
 	end
 end
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 363976 then -- Anduin: Shadestep // Intermission
 		self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 		self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))

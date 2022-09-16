@@ -190,7 +190,7 @@ do
 		end
 	end
 
-	function mod:DisintegrationHaloSuccess(args)
+	function mod:DisintegrationHaloSuccess()
 		self:StopBar(CL.count:format(L.rings_x:format(teleportCount), haloCount))
 		self:Message(363200, "orange", CL.soon:format(CL.count:format(L.rings_x:format(teleportCount), haloCount)))
 		self:PlaySound(363200, "info")
@@ -198,8 +198,6 @@ do
 		ringCount = 1
 		if teleportCount > 1 and haloCount < 3 then -- 2 per rotation, except first
 			self:Bar(363200, self:Easy() and 77.8 or 70, CL.count:format(L.rings_x:format(teleportCount), haloCount))
-		elseif teleportCount == 4 and haloCount == 3 then -- enrage, shorter cd, then triggers infinite rings
-			--self:Bar(363200, 35, CL.count:format(L.rings_enrage, haloCount)) -- Don't need to show do we?
 		end
 		if self:GetOption("custom_on_ring_timers") then
 			self:Bar(363200, 8.5, L.ring_count:format(ringCount, teleportCount))

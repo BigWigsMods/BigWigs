@@ -23,7 +23,6 @@ local tankList = {}
 local fearTimers = {27.2, 53.5, 29.0, 12.0, 29.2, 49.9, 29.1, 22.1, 58.5, 29.2, 12.8, 29.1, 49.8, 29.2, 23.7} -- 4, 8, 11, 15 are timers from Among Us _End
 local fearCasts = 0
 local empCarrion = false
-local bitesOnMe = false
 local bitesSayTimer = nil
 local nextAmongUs = 0
 
@@ -126,7 +125,6 @@ function mod:OnEngage()
 	slumberCloudCount = 1
 	fearCasts = 0
 	empCarrion = false
-	bitesOnMe = false
 
 	self:Bar(360012, self:Mythic() and 7 or 6, CL.count:format(L.cloud_of_carrion, cloudOfCarrionCount)) -- Cloud of Carrion
 	self:Bar(361913, 13, CL.count:format(CL.adds, manifestShadowsCount)) -- Manifest Shadows
@@ -233,7 +231,6 @@ function mod:BitingWoundsApplied(args)
 			self:Say(false, "{rt7}", true)
 			bitesSayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, "{rt7}", true)
 		end
-		bitesOnMe = true
 	end
 end
 
@@ -243,7 +240,6 @@ function mod:BitingWoundsRemoved(args)
 			self:CancelTimer(bitesSayTimer)
 			bitesSayTimer = nil
 		end
-		bitesOnMe = false
 	end
 end
 
@@ -375,8 +371,7 @@ end
 
 do
 	local playerList = {}
-	local prev = 0
-	function mod:FearfulTrepidation(args)
+	function mod:FearfulTrepidation()
 		playerList = {}
 		self:StopBar(CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
 		self:Message(360146, "yellow", CL.count:format(L.fearful_trepidation, fearfulTrepidationCount))
@@ -432,7 +427,7 @@ function mod:SlumberCloud(args)
 	else
 		if slumberCloudCount % 2 == 0 then -- Only start a bar for all even casts
 			local cd = slumberCloudCount == 2 and 69.3 or slumberCloudCount == 4 and 73 or slumberCloudCount == 6 and 75 or slumberCloudCount == 8 and 73
-			self:Bar(args.spellId, 72, CL.count:format(L.slumber_cloud, slumberCloudCount))
+			self:Bar(args.spellId, cd, CL.count:format(L.slumber_cloud, slumberCloudCount))
 		end
 	end
 end

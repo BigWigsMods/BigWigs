@@ -406,7 +406,7 @@ function mod:ReclamationForm(args)
 	if stage == 2 then
 		self:Bar(367079, 10, CL.count:format(L.seismic_tremors, seismicTremorsCount)) -- Seismic Tremors
 		self:Bar(361676, 18, CL.count:format(L.earthbreaker_missiles, misslesCount)) -- Earthbreaker Missiles
-		self:Bar(365297, 23, CL.count:format(L.crushing_prism, prismCount)) -- Crushing Prism	
+		self:Bar(365297, 23, CL.count:format(L.crushing_prism, prismCount)) -- Crushing Prism
 
 		local reclaimCD = 69.4
 		nextReclaim = GetTime() + reclaimCD

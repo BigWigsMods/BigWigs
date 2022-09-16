@@ -25,7 +25,6 @@ local desolationCount = 1
 local runeOfDominationCount = 1
 local chainsOfAnguishCount = 1
 local defileCount = 1
-local fallingDebrisCount = 1
 local currentAzerothHealth = 100
 local lastAzerothHealth = 100
 local worldCount = 1
@@ -364,7 +363,6 @@ function mod:OnEngage(difficulty)
 	runeOfDominationCount = 1
 	chainsOfAnguishCount = 1
 	defileCount = 1
-	fallingDebrisCount = 1
 
 	self:Bar(360281, timers[1][360281][runeOfDamnationCount], CL.count:format(CL.bombs, runeOfDamnationCount))
 	self:Bar(365436, timers[1][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount))
@@ -508,7 +506,7 @@ end
 
 do
 	local playerList = {}
-	function mod:RuneOfDamnation(args)
+	function mod:RuneOfDamnation()
 		self:StopBar(CL.count:format(CL.bombs, runeOfDamnationCount))
 		runeOfDamnationCount = runeOfDamnationCount + 1
 		self:Bar(360281, timers[self:GetStage()][360281][runeOfDamnationCount], CL.count:format(CL.bombs, runeOfDamnationCount))
@@ -605,7 +603,7 @@ end
 
 do
 	local playerList = {}
-	function mod:RuneOfCompulsion(args)
+	function mod:RuneOfCompulsion()
 		self:StopBar(CL.count:format(L.rune_of_compulsion, runeOfCompulsion))
 		runeOfCompulsion = runeOfCompulsion + 1
 		self:Bar(366285, timers[2][366285][runeOfCompulsion], CL.count:format(L.rune_of_compulsion, runeOfCompulsion))
@@ -642,7 +640,7 @@ function mod:Decimator(args)
 	self:Bar(360562, timers[self:GetStage()][360562][decimatorCount], CL.count:format(args.spellName, decimatorCount))
 end
 
-function mod:FinalUnholyAttunement(args)
+function mod:FinalUnholyAttunement()
 	self:Message(360373, "yellow", L.final:format(CL.count:format(L.unholy_attunement, unholyAttunementCount)))
 	self:PlaySound(360373, "alert")
 
@@ -677,7 +675,6 @@ function mod:UnbreakingGrasp(args)
 	chainsOfAnguishCount = 1
 	runeOfDominationCount = 1
 	defileCount = 1
-	fallingDebrisCount = 1
 
 	self:Bar(360562, timers[3][360562][decimatorCount], CL.count:format(self:SpellName(360562), decimatorCount)) -- Decimator
 	self:Bar(365436, self:LFR() and 26 or timers[3][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
@@ -705,7 +702,7 @@ end
 
 do
 	local playerList = {}
-	function mod:RuneOfDomination(args)
+	function mod:RuneOfDomination()
 		self:StopBar(CL.count:format(L.rune_of_domination, runeOfDominationCount))
 		runeOfDominationCount = runeOfDominationCount + 1
 		self:Bar(365150, timers[3][365150][runeOfDominationCount], CL.count:format(L.rune_of_domination, runeOfDominationCount))
@@ -816,7 +813,7 @@ function mod:WorldShatterer(args)
 	self:PlaySound(args.spellId, "info")
 end
 
-function mod:DivertedLifeShield(args)
+function mod:DivertedLifeShield()
 	self:SetStage(4)
 	self:Message("stages", "cyan", CL.stage:format(4), false)
 	self:PlaySound("stages", "long")

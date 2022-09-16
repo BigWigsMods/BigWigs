@@ -16,11 +16,9 @@ mod:SetStage(1)
 local darkEclipseCount = 1
 local celestialCollapseCount = 1
 local manifestCosmosCount = 1
-local celestialTerminatorCount = 1
 local massiveBangCount = 1
 local shatterSphereCount = 1
 local stellarShroudCount = 1
-local darkQuasarCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -106,12 +104,10 @@ function mod:OnEngage()
 	darkEclipseCount = 1
 	celestialCollapseCount = 1
 	manifestCosmosCount = 1
-	celestialTerminatorCount = 1
 	massiveBangCount = 1
 	shatterSphereCount = 1
 
 	stellarShroudCount = 1
-	darkQuasarCount = 1
 
 	self:Bar(362806, self:Mythic() and 8 or 6.2, CL.count:format(self:SpellName(362806), darkEclipseCount)) -- Dark Eclipse
 	self:Bar(362275, self:Mythic() and 9.5 or 8.6, CL.count:format(L.celestial_collapse, celestialCollapseCount)) -- Celestial Collapse
@@ -233,7 +229,7 @@ function mod:MassiveBang(args)
 	massiveBangCount = massiveBangCount + 1
 end
 
-function mod:MassiveBangSuccess(args)
+function mod:MassiveBangSuccess()
 	self:Bar(364114, 30.2, CL.count:format(self:SpellName(364114), shatterSphereCount)) -- Shatter Sphere
 end
 

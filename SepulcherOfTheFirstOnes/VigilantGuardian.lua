@@ -274,7 +274,7 @@ do
 	end
 end
 
-function mod:AncientDefensesRemoved(args)
+function mod:AncientDefensesRemoved()
 	self:StopBar(CL.count:format(self:SpellName(360412), exposedCoreCount)) -- Exposed Core
 	self:StopBar(CL.count:format(self:SpellName(360906), refractedBlastCount)) -- Refracted Blast
 	self:StopBar(CL.count:format(L.sentry, tankAddCount)) -- Pre-Fabricated Sentry
