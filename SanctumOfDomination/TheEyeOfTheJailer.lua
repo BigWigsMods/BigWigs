@@ -49,7 +49,6 @@ function mod:GetOptions()
 		350713, -- Slothful Corruption
 		{351827, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Spreading Misery
 		-- Stage Three: Immediate Extermination
-		348974, -- Immediate Extermination
 		351413, -- Annihilating Glare
 		{350604, "SAY", "ME_ONLY_EMPHASIZE"}, -- Hopeless Lethargy
 		355232, -- Scorn and Ire
@@ -57,7 +56,7 @@ function mod:GetOptions()
 		["stages"] = "general",
 		[350803] = mod:SpellName(-22896), -- Stage One: His Gaze Upon You
 		[349028] = mod:SpellName(-22897), -- Stage Two: Double Vision
-		[348974] = mod:SpellName(-23375), -- Stage Three: Immediate Extermination
+		[351413] = mod:SpellName(-23375), -- Stage Three: Immediate Extermination
 		[350604] = "mythic", -- Mythic
 	},{
 		[349979] = L.chains, -- Dragging Chains (Chains)
