@@ -16,11 +16,9 @@ mod:SetStage(1)
 local darkEclipseCount = 1
 local celestialCollapseCount = 1
 local manifestCosmosCount = 1
-local celestialTerminatorCount = 1
 local massiveBangCount = 1
 local shatterSphereCount = 1
 local stellarShroudCount = 1
-local darkQuasarCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -106,12 +104,10 @@ function mod:OnEngage()
 	darkEclipseCount = 1
 	celestialCollapseCount = 1
 	manifestCosmosCount = 1
-	celestialTerminatorCount = 1
 	massiveBangCount = 1
 	shatterSphereCount = 1
 
 	stellarShroudCount = 1
-	darkQuasarCount = 1
 
 	self:Bar(362806, self:Mythic() and 8 or 6.2, CL.count:format(self:SpellName(362806), darkEclipseCount)) -- Dark Eclipse
 	self:Bar(362275, self:Mythic() and 9.5 or 8.6, CL.count:format(L.celestial_collapse, celestialCollapseCount)) -- Celestial Collapse
@@ -157,7 +153,7 @@ do
 			self:PlaySound(362806, "warning")
 			self:YellCountdown(362806, self:Mythic() and 15 or 18)
 		end
-		self:NewTargetsMessage(362806, "cyan", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, darkEclipseCount-1), nil, 1) -- travel time
+		self:TargetsMessage(362806, "cyan", playerList, self:Mythic() and 4 or 3, CL.count:format(args.spellName, darkEclipseCount-1), nil, 1) -- travel time
 		self:CustomIcon(darkEclipseMarker, args.destName, count)
 	end
 
@@ -233,7 +229,7 @@ function mod:MassiveBang(args)
 	massiveBangCount = massiveBangCount + 1
 end
 
-function mod:MassiveBangSuccess(args)
+function mod:MassiveBangSuccess()
 	self:Bar(364114, 30.2, CL.count:format(self:SpellName(364114), shatterSphereCount)) -- Shatter Sphere
 end
 
@@ -295,7 +291,7 @@ function mod:CosmicIrregularityApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount == 3 or amount > 4 then -- 3, 5, 6
-			self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 3)
 			self:PlaySound(args.spellId, "alarm")
 		end
 		if amount > 2 then -- Yell: stack amount, extra emphasize on 6
@@ -317,7 +313,7 @@ end
 do
 	local scheduled, destName, stacks = nil, nil, 0
 	function mod:DarkQuasarStackMessage()
-		mod:NewStackMessage(368080, "yellow", destName, stacks)
+		mod:StackMessage(368080, "yellow", destName, stacks, stacks)
 		mod:PlaySound(368080, "alert")
 		scheduled = nil
 	end
@@ -326,7 +322,7 @@ do
 		stacks = args.amount or 1
 		destName = args.destName
 		if not scheduled then -- Delay message to only warn for highest stack
-			scheduled = self:ScheduleTimer("DarkQuasarStackMessage", 0.1, args.destName)
+			scheduled = self:ScheduleTimer("DarkQuasarStackMessage", 0.1)
 		end
 	end
 

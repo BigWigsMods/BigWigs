@@ -29,6 +29,7 @@ L.heroic = "Героический режим"
 L.mythic = "Эпохальный режим"
 L.active = "Активен" -- When a boss becomes active, after speech finishes
 L.general = "Общее" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+L.absorb = "Поглот." -- Used for shield-like abilities that absorb damage or healing
 
 L.duration = "%s для %s сек" -- Spell for 10 seconds
 L.over = "%s завершается" -- Spell Over
@@ -72,6 +73,7 @@ L.custom_sec = "%s через %d сек"
 
 L.focus_only = "|cffff0000Оповещения только для фокуса.|r "
 L.trash = "Трэш"
+L.affixes = "Аффикс" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "Метка %s"

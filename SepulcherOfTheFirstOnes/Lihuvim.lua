@@ -1,14 +1,4 @@
 --------------------------------------------------------------------------------
--- WCL Queries:
---
---
--- Normal: X
--- Heroic: ✓
--- Mythic: X
---
--- Mote on you warning?
---
---------------------------------------------------------------------------------
 -- Module Declaration
 --
 
@@ -177,7 +167,7 @@ function mod:CosmicShift(args)
 	end
 end
 
-function mod:UnstableMote(args)
+function mod:UnstableMote()
 	self:StopBar(CL.count:format(L.unstable_mote, unstableMoteCount))
 	self:Message(362622, "orange", CL.count:format(L.unstable_mote, unstableMoteCount))
 	self:PlaySound(362622, "alarm")
@@ -212,7 +202,7 @@ end
 
 do
 	local playerList = {}
-	function mod:DeconstructingEnergy(args)
+	function mod:DeconstructingEnergy()
 		playerList = {}
 		self:StopBar(CL.count:format(CL.bombs, deconstructingEnergyCount))
 		deconstructingEnergyCount = deconstructingEnergyCount + 1
@@ -230,7 +220,7 @@ do
 		else
 			self:PlaySound(363795, "alert", nil, args.destName)
 		end
-		self:NewTargetsMessage(363795, "orange", playerList, nil, CL.count:format(CL.bomb, deconstructingEnergyCount-1))
+		self:TargetsMessage(363795, "orange", playerList, nil, CL.count:format(CL.bomb, deconstructingEnergyCount-1))
 	end
 
 	function mod:DeconstructingEnergyRemoved(args)

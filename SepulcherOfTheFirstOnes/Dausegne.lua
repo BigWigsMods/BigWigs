@@ -112,7 +112,7 @@ do
 		if self:Tank() then
 			local amount = args.amount or 1
 			if amount % 2 == 0 and amount > 8 then -- XXX Finetune
-				self:NewStackMessage(args.spellId, "purple", args.destName, amount, 5)
+				self:StackMessage(args.spellId, "purple", args.destName, amount, 5)
 				if amount > 15 and not self:Tanking("boss1") then
 					self:PlaySound(args.spellId, "alarm")
 				end
@@ -190,7 +190,7 @@ do
 		end
 	end
 
-	function mod:DisintegrationHaloSuccess(args)
+	function mod:DisintegrationHaloSuccess()
 		self:StopBar(CL.count:format(L.rings_x:format(teleportCount), haloCount))
 		self:Message(363200, "orange", CL.soon:format(CL.count:format(L.rings_x:format(teleportCount), haloCount)))
 		self:PlaySound(363200, "info")
@@ -198,8 +198,6 @@ do
 		ringCount = 1
 		if teleportCount > 1 and haloCount < 3 then -- 2 per rotation, except first
 			self:Bar(363200, self:Easy() and 77.8 or 70, CL.count:format(L.rings_x:format(teleportCount), haloCount))
-		elseif teleportCount == 4 and haloCount == 3 then -- enrage, shorter cd, then triggers infinite rings
-			--self:Bar(363200, 35, CL.count:format(L.rings_enrage, haloCount)) -- Don't need to show do we?
 		end
 		if self:GetOption("custom_on_ring_timers") then
 			self:Bar(363200, 8.5, L.ring_count:format(ringCount, teleportCount))
@@ -239,7 +237,7 @@ do
 		if self:CheckOption(args.spellId, "INFOBOX") then
 			self:OpenInfo(args.spellId, args.spellName)
 			self:SetInfoBar(args.spellId, 1, 1)
-			self:SetInfo(args.spellId, 1, _G.ABSORB)
+			self:SetInfo(args.spellId, 1, CL.absorb)
 			maxAbsorb = args.amount
 			timer = self:ScheduleRepeatingTimer(updateInfoBox, 0.1, self)
 		end

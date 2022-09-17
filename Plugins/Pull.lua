@@ -12,6 +12,7 @@ if not plugin then return end
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 local GetInstanceInfo = BigWigsLoader.GetInstanceInfo
 local SendAddonMessage = BigWigsLoader.SendAddonMessage
+local zoneTable = BigWigsLoader.zoneTbl
 local isLogging = false
 local IsEncounterInProgress, PlaySoundFile = IsEncounterInProgress, PlaySoundFile
 local media = LibStub("LibSharedMedia-3.0")
@@ -243,8 +244,11 @@ do
 		if not IsInGroup() or ((IsInGroup(2) or not IsInRaid()) and UnitGroupRolesAssigned(nick) == "TANK") or UnitIsGroupLeader(nick) or UnitIsGroupAssistant(nick) then
 			local _, _, _, instanceId = UnitPosition("player")
 			local _, _, _, tarInstanceId = UnitPosition(nick)
-			if instanceId ~= tarInstanceId then -- Don't fire pull timers from people in different zones
-				return
+			if instanceId ~= tarInstanceId then -- Don't fire pull timers from people in different zones...
+				local _, instanceType = GetInstanceInfo() -- ...unless you're in a raid instance and the sender isn't, to allow raid leaders outside to send you pull timers
+				if not (instanceType == "raid" and not zoneTable[tarInstanceId]) then
+					return
+				end
 			end
 
 			seconds = tonumber(seconds)

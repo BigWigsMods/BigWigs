@@ -29,6 +29,7 @@ L.heroic = "英雄模式"
 L.mythic = "史诗模式"
 L.active = "激活" -- When a boss becomes active, after speech finishes
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+L.absorb = "吸收" -- Used for shield-like abilities that absorb damage or healing
 
 L.duration = "%s持续%s秒" -- Spell for 10 seconds
 L.over = "%s结束" -- Spell Over
@@ -72,6 +73,7 @@ L.custom_sec = "%2$d秒后%1$s"
 
 L.focus_only = "|cffff0000只警报焦点目标。|r "
 L.trash = "小怪"
+L.affixes = "词缀" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s标记"

@@ -235,7 +235,7 @@ do
 		timer = nil
 	end
 
-	function mod:KingsmourneHungersSuccess(args)
+	function mod:KingsmourneHungersSuccess()
 		if not timer and self:GetOption(anduinsHopeMarker) then
 			timer = self:ScheduleTimer("HopeMarker", 0.3) -- not valid on IEEU
 		end
@@ -287,7 +287,7 @@ end
 do
 	local prev = 0
 	local starWaveCount = 0
-	function mod:WickedStar(args)
+	function mod:WickedStar()
 		self:StopBar(CL.count:format(L.wicked_star, wickedStarCount))
 		self:Message(365021, "cyan", CL.incoming:format(CL.count:format(L.wicked_star, wickedStarCount)))
 		self:PlaySound(365021, "long")
@@ -321,7 +321,7 @@ do
 	end
 end
 
-function mod:Hopebreaker(args)
+function mod:Hopebreaker()
 	self:StopBar(CL.count:format(self:SpellName(361815), hopebreakerCount))
 	self:Message(361815, "orange", CL.count:format(self:SpellName(361815), hopebreakerCount))
 	self:PlaySound(361815, "alarm")
@@ -352,7 +352,7 @@ do
 			self:PersonalMessage(args.spellId, nil, L.domination_word_pain)
 			self:PlaySound(args.spellId, "alarm")
 		elseif self:Healer() then
-			self:NewTargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.domination_word_pain, dominationWordCount-1))
+			self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.domination_word_pain, dominationWordCount-1))
 		end
 	end
 
@@ -367,14 +367,14 @@ end
 function mod:DarkZealApplied(args)
 	local amount = args.amount or 1
 	if amount % 5 == 0 then -- 5, 10...
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, amount)
 		self:PlaySound(args.spellId, "alert")
 	end
 end
 
 -- Intermission
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 363976 then -- Shadestep // Intermission
 		self:StopBar(CL.count:format(L.domination_word_pain, dominationWordCount)) -- Domination Word: Pain
 		self:StopBar(CL.count:format(self:SpellName(361815), hopebreakerCount)) -- Hopebreaker
@@ -429,7 +429,7 @@ function mod:NecroticDetonation(args)
 	self:PlaySound(args.spellId, "warning")
 end
 
-function mod:MarchOfTheDamned(args)
+function mod:MarchOfTheDamned()
 	self:Message(363233, "cyan", L.march_counter:format(L.march_of_the_damned, marchCount))
 	self:PlaySound(363233, "info")
 	marchCount = marchCount + 1
@@ -440,7 +440,7 @@ end
 
 -- Stage Two
 
-function mod:DominationsGraspRemoved(args)
+function mod:DominationsGraspRemoved()
 	stage = stage + 1
 	self:StopBar(CL.stage:format(stage))
 	self:SetStage(stage)

@@ -29,6 +29,7 @@ L.heroic = "Modo heroico"
 L.mythic = "Modo mítico"
 L.active = "Ativo" -- When a boss becomes active, after speech finishes
 L.general = "Geral" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
 
 L.duration = "%s durante %s seg" -- Spell for 10 seconds
 L.over = "%s Acabou" -- Spell Over
@@ -72,6 +73,7 @@ L.custom_sec = "%s em %d seg"
 
 L.focus_only = "|cffff0000Apenas alertas de focar alvo.|r "
 L.trash = "Trash"
+--L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "Marcador %s"

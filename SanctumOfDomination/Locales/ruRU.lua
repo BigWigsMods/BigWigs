@@ -138,3 +138,14 @@ if L then
 	L.knife_fling = "Ножи смерти" -- "Death-touched blades fling out"
 end
 
+L = BigWigs:NewBossLocale("Sanctum of Domination Affixes", "ruRU")
+if L then
+	L.custom_on_bar_icon = "Иконка полосок"
+	L.custom_on_bar_icon_desc = "Показывать иконку Судьбоносного Рейда на полосках, связанных с афиксом."
+
+	L.chaotic_essence = "Эссенция"
+	L.creation_spark = "Искры"
+	L.protoform_barrier = "Преграда"
+	L.reconfiguration_emitter = "Кик аффикс"
+end
+

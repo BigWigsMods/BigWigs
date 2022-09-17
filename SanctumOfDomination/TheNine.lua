@@ -210,7 +210,7 @@ function mod:UpdateInfoBox()
 	 end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.blades_yell, nil, true) then -- Agatha's Eternal Blade
 		self:Message(350031, "yellow", CL.incoming:format(L.blades))
 		if infoboxAllowed then
@@ -266,7 +266,7 @@ end
 do
 	local playerList = {}
 	local allowed = true
-	function mod:FragmentsOfDestiny(args)
+	function mod:FragmentsOfDestiny()
 		playerList = {}
 		allowed = true
 		fragmentOfDestinyCount = fragmentOfDestinyCount + 1
@@ -289,7 +289,7 @@ do
 			self:PlaySound(args.spellId, "warning")
 		end
 		if allowed then -- Can use _SUCCESS as it's only on the initial players
-			self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.fragment, fragmentOfDestinyCount-1))
+			self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.fragment, fragmentOfDestinyCount-1))
 			self:SimpleTimer(function() allowed = false end, 1)
 		end
 		if self:GetOption(fragmentsMarker) then
@@ -307,7 +307,7 @@ end
 function mod:FragmentsOfDestinyStacks(args)
 	-- Warn someone that they got an extra stack, or they are the one collecting
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount, nil, L.fragment)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 0, L.fragment)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -349,7 +349,7 @@ end
 
 function mod:UnendingStrikeApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 3)
 	if amount > 4 or (self:Tank() and amount > 3) then -- Tanks swap at 4+, warn others if they havn't
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -357,7 +357,7 @@ function mod:UnendingStrikeApplied(args)
 end
 
 do
-	function mod:FormlessMassMarking(event, unit, guid)
+	function mod:FormlessMassMarking(_, unit, guid)
 		if self:MobId(guid) == 177407 then -- Formless Mass
 			self:CustomIcon(formlessMassMarker, unit, 8)
 			self:UnregisterTargetEvents()
@@ -394,7 +394,7 @@ function mod:WingsOfRage(args)
 	self:Bar(350365, 72.9, CL.count:format(L.run_away, wingsOfRageCount))
 end
 
-function mod:KyraDeath(args)
+function mod:KyraDeath()
 	kyraAlive = false
 	self:StopBar(unendingStrikeText) -- Unending Strike
 	self:StopBar(CL.count:format(CL.add, formlessMassCount)) -- Formless Mass
@@ -425,7 +425,7 @@ function mod:ReverberatingRefrain(args)
 end
 
 
-function mod:SigneDeath(args)
+function mod:SigneDeath()
 	signeAlive = false
 	self:StopBar(CL.count:format(L.song, songOfDissolutionCount)) -- Song of Dissolution
 	self:StopBar(CL.count:format(L.go_in, reverberatingRefrainCount)) -- Reverberating Refrain
@@ -474,7 +474,7 @@ do
 
 	function mod:DaschlasMightyImpactApplied(args)
 		playerList[#playerList+1] = args.destName
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, L.big_bomb)
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, L.big_bomb)
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, L.big_bomb)
 			self:SayCountdown(args.spellId, 10, L.big_bomb) -- Big 3, Big 2, Big 1
@@ -547,7 +547,7 @@ end
 
 function mod:PierceSoulApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 3)
 	if amount > 2 then
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -562,7 +562,7 @@ end
 
 do
 	local playerList = {}
-	function mod:LinkEssence(args)
+	function mod:LinkEssence()
 		playerList = {}
 	end
 
@@ -576,7 +576,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList)
+		self:TargetsMessage(args.spellId, "yellow", playerList)
 	end
 end
 

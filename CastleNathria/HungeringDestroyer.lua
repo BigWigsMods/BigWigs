@@ -82,6 +82,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Overwhelm", 329774)
 	self:Log("SPELL_AURA_APPLIED", "GrowingHungerApplied", 332295)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "GrowingHungerApplied", 332295)
+
+	if IsEncounterInProgress() then -- Only if logging in late
+		self:UpdateRolePositions() -- For Marking based on Melee > Ranged priority
+	end
 end
 
 function mod:OnEngage()
@@ -122,6 +126,8 @@ function mod:OnEngage()
 	else
 		self:Berserk(600)
 	end
+
+	self:UpdateRolePositions()
 end
 
 function mod:OnBossDisable()
@@ -130,7 +136,7 @@ function mod:OnBossDisable()
 
 	if self:GetOption(gluttonousMiasmaMarker) then
 		for i = 1, #miasmaPlayerList do
-			local name = miasmaPlayerList[i]
+			local name = miasmaPlayerList[i].player
 			-- Clearing marks on _REMOVED doesn't work great on this boss
 			-- The second set of marks is applied before the first is removed
 			-- When trying to remove the first set of marks it can clear the second set
@@ -176,6 +182,33 @@ end
 
 do
 	local prev = 0
+	local scheduled = nil
+
+	function mod:MarkMiasma()
+		if scheduled then
+			self:CancelTimer(scheduled)
+			scheduled = nil
+		end
+
+		local targets = {}
+		table.sort(miasmaPlayerList, function(first, second)
+			-- Priority for melee on first markers
+			if first and second then
+				if first.melee ~= second.melee then
+					return first.melee and not second.melee
+				end
+				return first.index < second.index
+			end
+		end)
+		for i = 1, #miasmaPlayerList do
+			local player = miasmaPlayerList[i].player
+			targets[#targets + 1] = player
+			targets[player] = i
+			self:CustomIcon(gluttonousMiasmaMarker, player, i)
+		end
+		self:TargetsMessage(329298, "yellow", targets, 4, CL.count:format(L.miasma, miasmaCount-1))
+	end
+
 	function mod:GluttonousMiasmaApplied(args)
 		if self:MobId(args.sourceGUID) == 164261 then -- Boss only, filter trash
 			local t = args.time
@@ -184,11 +217,12 @@ do
 				miasmaPlayerList = {}
 				miasmaCount = miasmaCount + 1
 				self:Bar(args.spellId, 24, CL.count:format(L.miasma, miasmaCount))
+				scheduled = self:ScheduleTimer("MarkMiasma", 0.3)
 			end
 
 			local count = #miasmaPlayerList+1
-			miasmaPlayerList[count] = args.destName
-			miasmaPlayerList[args.destName] = count -- Set raid marker
+			miasmaPlayerList[count] = {player=args.destName, melee=self:Melee(args.destName), index=UnitInRaid(args.destName) or 99} -- 99 for players not in your raid (or if you have no raid)
+
 			if self:Me(args.destGUID) then
 				miasmaOnMe = true
 				self:PlaySound(args.spellId, "alarm")
@@ -202,8 +236,10 @@ do
 					self:Yell(args.spellId, L.miasma)
 				end
 			end
-			self:CustomIcon(gluttonousMiasmaMarker, args.destName, count)
-			self:NewTargetsMessage(args.spellId, "yellow", miasmaPlayerList, nil, CL.count:format(L.miasma, miasmaCount-1))
+
+			if count == 4 then
+				self:MarkMiasma()
+			end
 		end
 	end
 
@@ -257,7 +293,7 @@ do
 	function mod:VolatileEjectionApplied(args)
 		local count = #volEjectionList+1
 		volEjectionList[count] = args.destName
-		self:NewTargetsMessage(334266, "orange", volEjectionList, self:Mythic() and 4 or 3, CL.beam)
+		self:TargetsMessage(334266, "orange", volEjectionList, self:Mythic() and 4 or 3, CL.beam)
 		self:CustomIcon(volatileEjectionMarker, args.destName, count+4)
 		if self:Me(args.destGUID) then
 			self:PlaySound(334266, "warning")
@@ -329,7 +365,7 @@ end
 function mod:GrowingHungerApplied(args)
 	local amount = args.amount or 1
 	if amount % 5 == 0 then -- 5, 10... // Generally doesn't go above 5 if you swap on Overwhelm
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, 5)
 		self:PlaySound(args.spellId, "alert")
 	end
 end

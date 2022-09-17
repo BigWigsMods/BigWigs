@@ -491,7 +491,11 @@ do
 		proxAnchor:SetFixedFrameLevel(true)
 		proxAnchor:SetWidth(db.width)
 		proxAnchor:SetHeight(db.height)
-		proxAnchor:SetMinResize(100, 30)
+		if proxAnchor.SetResizeBounds then -- XXX Dragonflight compat
+			proxAnchor:SetResizeBounds(80, 8)
+		else
+			proxAnchor:SetMinResize(80, 8)
+		end
 		proxAnchor:SetClampedToScreen(true)
 		proxAnchor:EnableMouse(true)
 
@@ -810,7 +814,7 @@ do
 				type = "execute",
 				name = L.resetAll,
 				desc = L.resetProximityDesc,
-				func = function() 
+				func = function()
 					plugin.db:ResetProfile()
 				end,
 				order = 9,

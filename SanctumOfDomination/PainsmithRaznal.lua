@@ -18,7 +18,6 @@ local instrumentCount = 1
 local spikedBallsCount = 1
 local trapsCount = 1
 local chainsCount = 1
-local spikesTime = 0
 local weaponNames = {
 	[348508] = "hammer",
 	[355568] = "axe",
@@ -104,7 +103,6 @@ function mod:OnEngage()
 	spikedBallsCount = 1
 	trapsCount = 1
 	chainsCount = 1
-	spikesTime = GetTime() + 120
 	self:SetStage(1)
 
 	self:CDBar(355505, self:Mythic() and 8.5 or 11, CL.count:format(L.chains, chainsCount)) -- Shadowsteel Chains
@@ -158,11 +156,6 @@ function mod:SpikedBalls(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, spikedBallsCount))
 	self:PlaySound(args.spellId, "alarm")
 	spikedBallsCount = spikedBallsCount + 1
-	-- fourth ball is replaced with the room filling with spikes at 2:00 into the phase (longer or absent on non-mythic?)
-	-- if spikedBallsCount == 4 then
-	-- 	local remaining = spikesTime - GetTime()
-	-- 	self:Bar("berserk", remaining, L.spikes, 325254)
-	-- else
 	if self:GetStage() > 1 then
 		self:Bar(args.spellId, self:Mythic() and 40 or 48, CL.count:format(args.spellName, spikedBallsCount))
 	else
@@ -204,7 +197,7 @@ do
 			self:SayCountdown(args.spellId, 5, mark)
 			self:PlaySound(args.spellId, "alert")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.traps, trapsCount-1))
+		self:TargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.traps, trapsCount-1))
 		self:CustomIcon(flameclaspTrapMarker, args.destName, mark)
 	end
 
@@ -235,7 +228,7 @@ do
 			self:SayCountdown(args.spellId, 3, count, 2)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.chains, chainsCount-1))
 		self:CustomIcon(shadowsteelChainsMarker, args.destName, count)
 	end
 
@@ -275,8 +268,8 @@ do
 	end
 
 	function mod:FinalScream(args)
-		self:Message(357735, "red")
-		self:PlaySound(357735, "alarm")
+		self:Message(args.spellId, "red")
+		self:PlaySound(args.spellId, "alarm")
 		horrorCount = -1
 	end
 end
@@ -337,7 +330,6 @@ do
 		spikedBallsCount = 1
 		trapsCount = 1
 		chainsCount = 1
-		spikesTime = GetTime() + 120
 		self:SetStage(self:GetStage() + 1)
 
 		self:Message("stages", "cyan", CL.soon:format(args.sourceName), false)

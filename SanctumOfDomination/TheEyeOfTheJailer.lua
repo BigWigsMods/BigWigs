@@ -49,7 +49,6 @@ function mod:GetOptions()
 		350713, -- Slothful Corruption
 		{351827, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Spreading Misery
 		-- Stage Three: Immediate Extermination
-		348974, -- Immediate Extermination
 		351413, -- Annihilating Glare
 		{350604, "SAY", "ME_ONLY_EMPHASIZE"}, -- Hopeless Lethargy
 		355232, -- Scorn and Ire
@@ -57,7 +56,7 @@ function mod:GetOptions()
 		["stages"] = "general",
 		[350803] = mod:SpellName(-22896), -- Stage One: His Gaze Upon You
 		[349028] = mod:SpellName(-22897), -- Stage Two: Double Vision
-		[348974] = mod:SpellName(-23375), -- Stage Three: Immediate Extermination
+		[351413] = mod:SpellName(-23375), -- Stage Three: Immediate Extermination
 		[350604] = "mythic", -- Mythic
 	},{
 		[349979] = L.chains, -- Dragging Chains (Chains)
@@ -155,7 +154,7 @@ function mod:DraggingChainsApplied(args)
 end
 
 do
-	local function printTarget(self, name, guid)
+	local function printTarget(self, _, guid)
 		if self:Me(guid) then
 			self:PersonalMessage(348074)
 			self:PlaySound(348074, "alarm")
@@ -168,7 +167,7 @@ do
 end
 
 -- Stage Two: Double Vision
-function mod:StygianDarkshieldApplied(args)
+function mod:StygianDarkshieldApplied()
 	self:SetStage(2)
 	stage = 2
 	self:Message("stages", "green", CL.stage:format(2), false)
@@ -188,7 +187,7 @@ function mod:StygianDarkshieldApplied(args)
 	end
 end
 
-function mod:TitanicDeathGaze(args)
+function mod:TitanicDeathGaze()
 	self:Message(349028, "orange", CL.casting:format(L.death_gaze))
 	self:PlaySound(349028, "alarm")
 	self:CastBar(349028, 8, L.death_gaze)
@@ -277,7 +276,7 @@ function mod:SpreadingMiseryRemoved(args)
 	end
 end
 
-function mod:StygianDarkshieldRemoved(args)
+function mod:StygianDarkshieldRemoved()
 	self:StopBar(CL.beam) -- Desolation Beam
 	self:StopBar(L.pools) -- Spreading Misery
 	self:StopBar(L.death_gaze) -- Titanic Death Gaze
@@ -299,7 +298,7 @@ function mod:StygianDarkshieldRemoved(args)
 end
 
 -- Stage Three: Immediate Extermination
-function mod:ImmediateExtermination(args)
+function mod:ImmediateExtermination()
 	self:SetStage(3)
 	stage = 3
 	self:Message("stages", "green", CL.stage:format(3), false)
@@ -337,7 +336,7 @@ do
 			self:Say(args.spellId, L.slow)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "red", playerList, nil, L.slow)
+		self:TargetsMessage(args.spellId, "red", playerList, nil, L.slow)
 	end
 end
 
@@ -345,7 +344,7 @@ function mod:ScornAndIreApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 3 or amount > 10 then
-			self:NewStackMessage(355232, "blue", args.destName, amount, nil, args.spellName)
+			self:StackMessage(355232, "blue", args.destName, amount, amount, args.spellName)
 			self:PlaySound(355232, amount > 10 and "warning" or "info")
 		end
 	end
