@@ -338,11 +338,11 @@ function mod:CouncilDanseMacabreBegins()
 	end
 	if chaoticEssenceDetected then
 		self:CDBar(372634, 9.3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount)) -- Chaotic Essence
-		self:PauseBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+		self:PauseBar(372634, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 	if protoformBarrierDetected then
 		self:CDBar(371447, 13.9, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
-		self:PauseBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+		self:PauseBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
 	end
 	if creationSparkDetected then
 		self:CDBar(369505, 18.4, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
