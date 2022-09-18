@@ -132,7 +132,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[1716]=true, -- Broken Shore Mage Tower
 	[-947]=true, -- Azeroth
 	[-1647]=true, -- Shadowlands
-	[-1978]=true, -- Dragon Isles TODO verify ID
+	[-1978]=true, -- Dragon Isles
 }
 
 do
@@ -351,6 +351,7 @@ do
 		[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
 		[-942] = -947, -- Azeroth/BfA
 		[-1536] = -1647, [-1565] = -1647, [-1525] = -1647, [-1533] = -1647, -- Shadowlands
+		[-2022] = -1978, [-2023] = -1978, [-2024] = -1978, [-2025] = -1978, -- Dragon Isles
 	}
 end
 
