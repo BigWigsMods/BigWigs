@@ -26,6 +26,7 @@ local soundModule
 local configFrame, isPluginOpen
 
 local showToggleOptions, getAdvancedToggleOption = nil, nil
+local toggleOptionsStatusTable = {}
 
 local getOptions
 local acOptions = {
@@ -581,7 +582,7 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	back:SetText(L.back)
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
-		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"))
+		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"), true)
 	end)
 
 	local check = AceGUI:Create("CheckBox")
@@ -678,6 +679,10 @@ end
 
 local function buttonClicked(widget)
 	clearPendingUpdates()
+	-- save scroll bar position
+	toggleOptionsStatusTable.restore_scrollvalue = toggleOptionsStatusTable.scrollvalue
+	toggleOptionsStatusTable.restore_offset = toggleOptionsStatusTable.offset
+
 	local scrollFrame = widget:GetUserData("scrollFrame")
 	local dropdown = widget:GetUserData("dropdown")
 	local module = widget:GetUserData("module")
@@ -1095,20 +1100,28 @@ local function populateToggleOptions(widget, module)
 		end
 		scrollFrame:AddChildren(getDefaultToggleOption(scrollFrame, widget, module, option))
 	end
+
 	local list = AceGUI:Create("Button")
 	list:SetFullWidth(true)
 	list:SetText(L.listAbilities)
 	list:SetUserData("module", module)
 	list:SetCallback("OnClick", listAbilitiesInChat)
 	scrollFrame:AddChild(list)
-	scrollFrame:SetScroll(0)
+
 	scrollFrame:ResumeLayout()
 	scrollFrame:PerformLayout()
 end
 
-function showToggleOptions(widget, event, group)
+function showToggleOptions(widget, event, group, noScrollReset)
 	local module = BigWigs:GetBossModule(group)
 	widget:SetUserData("bossIndex", group)
+	-- reset scroll bar if not hitting the back button
+	if not noScrollReset then
+		toggleOptionsStatusTable.restore_offset = nil
+		toggleOptionsStatusTable.restore_scrollvalue = nil
+	end
+	toggleOptionsStatusTable.offset = toggleOptionsStatusTable.restore_offset
+	toggleOptionsStatusTable.scrollvalue = toggleOptionsStatusTable.restore_scrollvalue
 	populateToggleOptions(widget, module)
 end
 
@@ -1146,6 +1159,7 @@ local function onZoneShow(treeWidget, id)
 	scroll:SetLayout("Flow")
 	scroll:SetFullWidth(true)
 	scroll:SetFullHeight(true)
+	scroll:SetStatusTable(toggleOptionsStatusTable)
 	innerContainer:SetUserData("parent", scroll)
 	innerContainer:AddChild(scroll)
 
