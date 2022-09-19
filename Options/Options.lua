@@ -1298,6 +1298,9 @@ do
 					else
 						zone = GetRealZoneText(k)
 						if zone == "" then
+							-- if GetRealZoneText returns an empty string it's probably due to installing the wrong version of BigWigs or otherwise
+							-- having a module enabled for a zone that doesn't exist.
+							-- use the zone key as the menu name in that case instead of the empty string.
 							zone = tostring(k)
 						end
 					end
