@@ -1275,23 +1275,23 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
+				local littleWigsEnabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
 				defaultHeader = isDragonflight and "LittleWigs_Dragonflight" or "LittleWigs_Shadowlands"
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
-					local defaultEnabled = value == defaultHeader
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
-						enabled = (defaultEnabled or GetAddOnEnableState(playerName, value) > 0),
+						enabled = littleWigsEnabled,
 					}
 					addonNameToHeader[value] = i
 				end
 
 				-- add affix header
-				treeTbl[#treeTbl+1] = {
+				treeTbl[#treeTbl + 1] = {
 					text = L["dungeonAffixes"],
 					value = "LittleWigs_Affixes",
-					enabled = GetAddOnEnableState(playerName, "LittleWigs_Affixes") > 0,
+					enabled = littleWigsEnabled,
 				}
 				addonNameToHeader["LittleWigs_Affixes"] = #treeTbl
 			end
