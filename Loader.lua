@@ -1,5 +1,3 @@
-local isDragonflight = select(4, GetBuildInfo()) >= 100000 -- TODO remove on 10.0 prepatch
-
 if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
 	local L = BigWigsAPI:GetLocale("BigWigs")
 	print(L.classicWarning1)
