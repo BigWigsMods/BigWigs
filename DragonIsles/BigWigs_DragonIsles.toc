@@ -1,0 +1,33 @@
+## Interface: 90207
+
+## Title: BigWigs [|cffeda55fDragon Isles|r]
+## Title-deDE: BigWigs [|cffeda55fDragon Isles|r]
+## Title-esES: BigWigs [|cffeda55fDragon Isles|r]
+## Title-esMX: BigWigs [|cffeda55fDragon Isles|r]
+## Title-frFR: BigWigs [|cffeda55fDragon Isles|r]
+## Title-ruRU: BigWigs [|cffeda55fDragon Isles|r]
+## Title-zhCN: BigWigs [|cffeda55fDragon Isles|r]
+## Title-zhTW: BigWigs [|cffeda55fDragon Isles|r]
+## Title-itIT: BigWigs [|cffeda55fDragon Isles|r]
+## Title-ptBR: BigWigs [|cffeda55fDragon Isles|r]
+## Title-koKR: BigWigs [|cffeda55fDragon Isles|r]
+## Notes: BigWigs Dragon Isles Modules
+## Notes-deDE: BigWigs Dragon Isles Modules
+## Notes-esES: BigWigs Dragon Isles Modules
+## Notes-esMX: BigWigs Dragon Isles Modules
+## Notes-frFR: BigWigs Dragon Isles Modules
+## Notes-ruRU: BigWigs Dragon Isles Modules
+## Notes-zhCN: BigWigs Dragon Isles Modules
+## Notes-zhTW: BigWigs Dragon Isles Modules
+## Notes-itIT: BigWigs Dragon Isles Modules
+## Notes-ptBR: BigWigs Dragon Isles Modules
+## Notes-koKR: BigWigs Dragon Isles Modules
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-ExtraMenu: -1978
+## X-BigWigs-LoadOn-WorldBoss: -2023, 193534, -2022, 193535, -2024, 193532, -2025, 193533
+
+modules.xml

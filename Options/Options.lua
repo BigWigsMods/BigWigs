@@ -1,3 +1,4 @@
+local isDragonflight = select(4, GetBuildInfo()) >= 100000 -- XXX remove on 10.0 prepatch
 
 local BigWigs = BigWigs
 local options = {}
@@ -1177,8 +1178,11 @@ do
 		"WarlordsOfDraenor",
 		"Legion",
 		"BattleForAzeroth",
-		"Shadowlands"
+		"Shadowlands",
 	}
+	if isDragonflight then
+		expansionHeader[#expansionHeader + 1] = "Dragonflight"
+	end
 
 	local statusTable = {}
 	local playerName = nil
@@ -1214,9 +1218,10 @@ do
 	local function onTreeGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
 		local zoneId = value:match("\001(-?%d+)$")
+		local defaultEnabled = value == "BigWigs_Shadowlands" or (isDragonflight and value == "BigWigs_Dragonflight")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and value ~= "BigWigs_Shadowlands" and GetAddOnEnableState(playerName, value) == 0 then
+		elseif value:match("^BigWigs_") and not defaultEnabled and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
 				missing:SetText(L.missingAddOn:format(value))
 				missing:SetFontObject(GameFontHighlight)
@@ -1255,20 +1260,21 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = "BigWigs_Shadowlands"
-				for i = 1, 9 do
+				defaultHeader = isDragonflight and "BigWigs_Dragonflight" or "BigWigs_Shadowlands"
+				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
+					local defaultEnabled = value == "BigWigs_Shadowlands" or (isDragonflight and value == "BigWigs_Dragonflight")
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
-						enabled = (value == defaultHeader or GetAddOnEnableState(playerName, value) > 0),
+						enabled = (defaultEnabled or GetAddOnEnableState(playerName, value) > 0),
 					}
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = "LittleWigs_Shadowlands"
+				defaultHeader = isDragonflight and "LittleWigs_Dragonflight" or "LittleWigs_Shadowlands"
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				for i = 1, 9 do
+				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
@@ -1292,6 +1298,12 @@ do
 						end
 					else
 						zone = GetRealZoneText(k)
+						if zone == "" then
+							-- if GetRealZoneText returns an empty string it's probably due to installing the wrong version of BigWigs or otherwise
+							-- having a module enabled for a zone that doesn't exist.
+							-- use the zone key as the menu name in that case instead of the empty string.
+							zone = tostring(k)
+						end
 					end
 					if zone then
 						if zoneToId[zone] then

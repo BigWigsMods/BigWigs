@@ -131,6 +131,7 @@ local fakeZones = { -- Fake zones used as GUI menus
 	[1716]=true, -- Broken Shore Mage Tower
 	[-947]=true, -- Azeroth
 	[-1647]=true, -- Shadowlands
+	[-1978]=true, -- Dragon Isles
 }
 
 do
@@ -143,6 +144,7 @@ do
 	local l = "BigWigs_Legion"
 	local bfa = "BigWigs_BattleForAzeroth"
 	local s = "BigWigs_Shadowlands"
+	local df = "BigWigs_Dragonflight"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -152,6 +154,7 @@ do
 	local lw_l = "LittleWigs_Legion"
 	local lw_bfa = "LittleWigs_BattleForAzeroth"
 	local lw_s = "LittleWigs_Shadowlands"
+	local lw_df = "LittleWigs_Dragonflight"
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -218,6 +221,9 @@ do
 		[2296] = s, -- Castle Nathria
 		[2450] = s, -- Sanctum of Domination
 		[2481] = s, -- Sepulcher of the First Ones
+		--[[ BigWigs: Dragonflight ]]--
+		[-1978] = df, -- Dragon Isles (Fake Menu)
+		[2522] = df, -- Vault of the Incarnate
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -326,6 +332,15 @@ do
 		[2291] = lw_s, -- De Other Side
 		[2293] = lw_s, -- Theater of Pain
 		[2441] = lw_s, -- Tazavesh, the Veiled Market
+		--[[ LittleWigs: Dragonflight ]]--
+		[2451] = lw_df, -- Uldaman: Legacy of Tyr
+		[2515] = lw_df, -- The Azure Vault
+		[2516] = lw_df, -- The Nokhud Offensive
+		[2519] = lw_df, -- Neltharus
+		[2520] = lw_df, -- Brackenhide Hollow
+		[2521] = lw_df, -- Ruby Life Pools
+		[2526] = lw_df, -- Taz'algeth Academy
+		[2527] = lw_df, -- Halls of Infusion
 	}
 
 	public.zoneTblWorld = {
@@ -335,6 +350,7 @@ do
 		[-630] = -619, [-634] = -619, [-641] = -619, [-650] = -619, [-680] = -619, -- Broken Isles
 		[-942] = -947, -- Azeroth/BfA
 		[-1536] = -1647, [-1565] = -1647, [-1525] = -1647, [-1533] = -1647, -- Shadowlands
+		[-2022] = -1978, [-2023] = -1978, [-2024] = -1978, [-2025] = -1978, -- Dragon Isles
 	}
 end
 
@@ -1422,7 +1438,7 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and zoneAddon ~= "BigWigs_Shadowlands" then
+		if zoneAddon and zoneAddon ~= "BigWigs_Shadowlands" and zoneAddon ~= "BigWigs_Dragonflight" then -- XXX remove BigWigs_Shadowlands from this check when the module is split out
 			if strfind(zoneAddon, "LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
