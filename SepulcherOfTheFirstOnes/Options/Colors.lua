@@ -177,3 +177,10 @@ BigWigs:AddColors("The Jailer", {
 	["mythic_dispel_stage_4"] = "yellow",
 	["stages"] = "cyan",
 })
+
+BigWigs:AddColors("Sepulcher of the First Ones Affixes", {
+	[369505] = {"blue","yellow"},
+	[371254] = "yellow",
+	[371447] = {"green","yellow"},
+	[372634] = "yellow",
+})

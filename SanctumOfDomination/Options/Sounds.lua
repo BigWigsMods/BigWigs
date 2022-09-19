@@ -149,7 +149,7 @@ BigWigs:AddSounds("Sylvanas Windrunner", {
 	[347607] = "alarm",
 	[347609] = {"alarm","alert"},
 	[347670] = {"alarm","alert"},
-	[347704] = {"alert","warning"},
+	[347704] = {"alarm","alert","warning"},
 	[347807] = "alarm",
 	[348109] = "alarm",
 	[349458] = {"alarm","warning"},
@@ -180,4 +180,11 @@ BigWigs:AddSounds("Sylvanas Windrunner", {
 	[358704] = "alert",
 	[358711] = "alarm",
 	["stages"] = {"info","long"},
+})
+
+BigWigs:AddSounds("Sanctum of Domination Affixes", {
+	[369505] = "info",
+	[371254] = "info",
+	[371447] = {"alert","info"},
+	[372634] = "alarm",
 })

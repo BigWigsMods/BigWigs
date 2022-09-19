@@ -28,25 +28,25 @@ local bossToCheck = {
 	[2418] = 165066, -- Huntsman Altimor
 	[2383] = 164261, -- Hungering Destroyer
 	[2405] = 166644, -- Artificer Xy'mox
-	[2402] = 168973, -- High Torturer Darithos
+	[2402] = 168973, -- High Torturer Darithos (Sun King's Salvation)
 	[2406] = 165521, -- Lady Inerva Darkvein
-	[2412] = 166971, -- Castellan Niklaus
+	[2412] = 166971, -- Castellan Niklaus (Council of Blood)
 	[2399] = 164407, -- Sludgefist
-	[2417] = 168112, -- General Kaal
+	[2417] = 168112, -- General Kaal (Stone Legion Generals)
 	[2407] = 167406, -- Sire Denathrius
 }
-local activeBoss = 0
+local activeBoss = nil
+
 local emitterDetected = false
 local chaoticEssenceDetected = false
 local creationSparkDetected = false
 local protoformBarrierDetected = false
-local replicatingEssenceDetected = false
 
-local chaoticDestructionCount = 1
+local chaoticEssenceCount = 1
 local creationSparkCount = 1
 local barrierCount = 1
 local emitterCount = 1
-local p2EmitterCount = 0
+local p2Count = {}
 
 local bar_icon_texture = "|A:ui-ej-icon-empoweredraid-large:0:0|a "
 local bar_icon = bar_icon_texture
@@ -60,8 +60,10 @@ if L then
 	L.custom_on_bar_icon = "Bar Icon"
 	L.custom_on_bar_icon_desc = bar_icon_texture.."Show the Fated Raid icon on bars."
 
-	L.barrier = "Barrier"
-	L.emitter = "Interrupt Add"
+	L.chaotic_essence = "Essence"
+	L.creation_spark = "Sparks"
+	L.protoform_barrier = "Barrier"
+	L.reconfiguration_emitter = "Interrupt Add"
 end
 
 --------------------------------------------------------------------------------
@@ -71,13 +73,15 @@ end
 function mod:GetOptions()
 	return {
 		"custom_on_bar_icon",
-		372638, -- Chaotic Destruction
+		372634, -- Chaotic Essence
 		369505, -- Creation Spark
 		371447, -- Protoform Barrier
 		371254, -- Reconfiguration Emitter
 	}, nil, {
-		[371447] = L.barrier, -- Protoform Barrier (Barrier)
-		[371254] = L.emitter, -- Reconfiguration Emitter (Interrupt Add)
+		[372634] = L.chaotic_essence, -- Chaotic Essence (Essence)
+		[369505] = L.creation_spark, -- Creation Spark (Sparks)
+		[371447] = L.protoform_barrier, -- Protoform Barrier (Barrier)
+		[371254] = L.reconfiguration_emitter, -- Reconfiguration Emitter (Interrupt Add)
 	}
 end
 
@@ -88,11 +92,10 @@ function mod:VerifyEnable()
 end
 
 function mod:OnBossEnable()
-	-- Piggybacking off of actual boss modules
 	self:RegisterMessage("BigWigs_OnBossEngage", "OnBossEngage")
-	self:RegisterMessage("BigWigs_EncounterEnd", "EncounterEnd")
+	self:RegisterEvent("ENCOUNTER_END")
 
-	-- Chaotic Destruction
+	-- Chaotic Essence
 	self:Log("SPELL_CAST_START", "ChaoticDestruction", 372638)
 	-- Reconfiguration Emitter
 	self:Log("SPELL_SUMMON", "ReconfigurationEmitter", 371254)
@@ -102,70 +105,91 @@ function mod:OnBossEnable()
 	-- Creation Spark
 	self:Log("SPELL_AURA_APPLIED", "CreationSpark", 369505)
 
-	self.bossModule = nil
+	activeBoss = nil
 end
 
-function mod:EncounterEnd(_, module, _, _, _, _, status)
-	if module == self.bossModule then
+function mod:ENCOUNTER_END(_, id, _, _, _, status)
+	if activeBoss == id then
 		if status == 1 then
 			self:Disable()
 		elseif status == 0 then
 			self:SendMessage("BigWigs_StopBars", self)
-			self:SimpleTimer(function() self:Reboot(true) end, 5)
+			self:SimpleTimer(function()
+				self:Disable(true)
+				self:Enable(true)
+			end, 5)
 		end
 	end
 end
 
-local function checkForAffixes()
-	local unit = mod:GetBossId(bossToCheck[activeBoss])
+function mod:CheckForAffixes()
+	local unit = self:GetBossId(bossToCheck[activeBoss])
 	if unit then
-		if not emitterDetected and mod:UnitBuff(unit, 372419) then -- Fated Power: Reconfiguration Emitter
+		if not emitterDetected and self:UnitBuff(unit, 372419) then -- Fated Power: Reconfiguration Emitter
 			emitterDetected = true
-			-- (2407) Denathrius activates later
-			mod:Bar(371254, activeBoss == 2407 and 25 or 5, bar_icon..CL.count:format(L.emitter, emitterCount))
+			local cd = 5
+			if activeBoss == 2407 then -- Denathrius
+				cd = 24
+			elseif activeBoss == 2399 then -- Sludgefist
+				cd = 25
+			end
+			self:Bar(371254, cd, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 		end
-		if not chaoticEssenceDetected and mod:UnitBuff(unit, 372642) then -- Fated Power: Chaotic Essence
+		if not chaoticEssenceDetected and self:UnitBuff(unit, 372642) then -- Fated Power: Chaotic Essence
 			chaoticEssenceDetected = true
-			mod:Bar(372638, 11, bar_icon..CL.count:format(mod:SpellName(372638), chaoticDestructionCount))
+			local cd = 11
+			if activeBoss == 2407 then -- Denathrius
+				cd = 37.6
+			elseif activeBoss == 2399 then -- Sludgefist
+				cd = 31.2
+			end
+			self:Bar(372634, cd, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 		end
-		if not creationSparkDetected and mod:UnitBuff(unit, 372647) then -- Fated Power: Creation Spark
+		if not creationSparkDetected and self:UnitBuff(unit, 372647) then -- Fated Power: Creation Spark
 			creationSparkDetected = true
-			mod:Bar(369505, 20, bar_icon..CL.count:format(mod:SpellName(369505), creationSparkCount))
+			local cd = 20
+			if activeBoss == 2407 then -- Denathrius
+				cd = 3
+			elseif activeBoss == 2399 then -- Sludgefist
+				cd = 40
+			end
+			self:Bar(369505, cd, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 		end
-		if not protoformBarrierDetected and mod:UnitBuff(unit, 372418) then -- Fated Power: Protoform Barrier
+		if not protoformBarrierDetected and self:UnitBuff(unit, 372418) then -- Fated Power: Protoform Barrier
 			protoformBarrierDetected = true
-			mod:Bar(371447, 15, bar_icon..CL.count:format(L.barrier, barrierCount))
-		end
-		if not replicatingEssenceDetected and mod:UnitBuff(unit, 372424) then -- Fated Power: Replicating Essence
-			replicatingEssenceDetected = true
-			-- Not used so far
+			local cd = 15
+			if activeBoss == 2407 then -- Denathrius
+				cd = 1
+			elseif activeBoss == 2399 then -- Sludgefist
+				cd = 30
+			end
+			self:Bar(371447, cd, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 		end
 	end
 end
 
-function mod:OnBossEngage(_, module, diff)
-	if self.isEngaged then return end
-
+function mod:OnBossEngage(_, module)
 	self.isEngaged = true
-	self.bossModule = module
+	activeBoss = module.engageId
+	self:SetStage(1)
 
 	emitterDetected = false
 	chaoticEssenceDetected = false
 	creationSparkDetected = false
 	protoformBarrierDetected = false
-	replicatingEssenceDetected = false
 
-	chaoticDestructionCount = 1
+	chaoticEssenceCount = 1
 	creationSparkCount = 1
 	barrierCount = 1
 	emitterCount = 1
 
 	bar_icon = self:GetOption("custom_on_bar_icon") and bar_icon_texture or ""
 
-	activeBoss = module.engageId
 	-- Encounters that need adjustments
 	if activeBoss == 2398 then -- Shriekwing
 		self:Log("SPELL_AURA_REMOVED", "ShriekwingBloodShroudRemoved", 328921)
+	elseif activeBoss == 2402 then -- Sun King's Salvation
+		self:Log("SPELL_AURA_REMOVED", "SunKingReflectionOfGuiltRemoved", 323402)
 	elseif activeBoss == 2412 then -- Council
 		self:Log("SPELL_CAST_SUCCESS", "CouncilDanseMacabreBegins", 347376)
 		self:Log("SPELL_AURA_REMOVED", "CouncilDanseMacabreOver", 330959)
@@ -174,51 +198,77 @@ function mod:OnBossEngage(_, module, diff)
 		self:Log("SPELL_CAST_SUCCESS", "DenathriusIndignationSuccess", 326005)
 	end
 
-	self:SimpleTimer(checkForAffixes, 0.1) -- Delaying for council fights with more than boss1
+	self:ScheduleTimer("CheckForAffixes", 0.1)
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:ChaoticDestruction(args)
-	self:Message(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alarm")
-	chaoticDestructionCount = chaoticDestructionCount + 1
-	self:Bar(372638, 60, bar_icon..CL.count:format(args.spellName, chaoticDestructionCount))
-end
-
-function mod:ReconfigurationEmitter(args)
-	self:StopBar(bar_icon..CL.count:format(L.emitter, emitterCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.emitter, emitterCount))
-	self:PlaySound(args.spellId, "info")
-	emitterCount = emitterCount + 1
-	if activeBoss == 2407 then -- Denathrius
-		if self:GetStage() == 1 then
-			self:Bar(args.spellId, 60, CL.count:format(L.emitter, emitterCount))
-		elseif self:GetStage() == 2 then
-			-- XXX only seen two mythic casts
-			-- first 3 normal/heroic casts are 27 84 85
-			self:Bar(args.spellId, self:Mythic() and 79 or (emitterCount - p2EmitterCount) == 1 and 84 or 85, bar_icon..CL.count:format(L.emitter, emitterCount))
-		elseif self:GetStage() == 3 then
-			self:Bar(args.spellId, 70, bar_icon..CL.count:format(L.emitter, emitterCount))
+function mod:ChaoticDestruction()
+	chaoticEssenceDetected = true
+	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	self:Message(372634, "yellow")
+	self:PlaySound(372634, "alarm")
+	chaoticEssenceCount = chaoticEssenceCount + 1
+	if activeBoss ~= 2398 or creationSparkCount % 2 == 0 then -- Shriekwing: two per stage one
+		local cd = 60
+		if activeBoss == 2407 then -- Denathrius
+			local stage = self:GetStage()
+			cd = stage == 3 and 70 or stage == 2 and 85 or 60
+			if stage == 2 and (chaoticEssenceCount - p2Count[372634]) == 1 then
+				cd = self:Mythic() and 80 or 85
+			end
+		elseif activeBoss == 2399 then -- Sludgefist
+			cd = self:Mythic() and 69 or 72
 		end
-	else
-		self:Bar(args.spellId, 75, bar_icon..CL.count:format(L.emitter, emitterCount))
+		self:Bar(372634, cd, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 end
 
+function mod:ReconfigurationEmitter(args)
+	emitterDetected = true
+	self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.reconfiguration_emitter, emitterCount))
+	self:PlaySound(args.spellId, "info")
+	emitterCount = emitterCount + 1
+	local cd = 75
+	if activeBoss == 2407 then -- Denathrius
+		local stage = self:GetStage()
+		cd = stage == 3 and 70 or stage == 2 and 85 or 60
+		if stage == 2 and (emitterCount - p2Count[args.spellId]) == 1 then
+			cd = self:Mythic() and 80 or 85
+		end
+	elseif activeBoss == 2399 then -- Sludgefist
+		cd = self:Mythic() and 69 or 72
+	end
+	self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+end
+
 function mod:ProtoformBarrierApplied(args)
+	protoformBarrierDetected = true
 	if self:Player(args.destFlags) then return end -- spellsteal? lol
-	self:StopBar(bar_icon..CL.count:format(L.barrier, barrierCount))
-	self:Message(args.spellId, "yellow", CL.on:format(CL.count:format(L.barrier, barrierCount), args.destName))
+	self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	self:Message(args.spellId, "yellow", CL.on:format(CL.count:format(L.protoform_barrier, barrierCount), args.destName))
 	self:PlaySound(args.spellId, "info")
 	barrierCount = barrierCount + 1
-	self:Bar(args.spellId, 60, bar_icon..CL.count:format(L.barrier, barrierCount))
+	if activeBoss ~= 2398 or creationSparkCount % 2 == 0 then -- Shriekwing: two per stage one
+		local cd = 60
+		if activeBoss == 2407 then -- Denathrius
+			local stage = self:GetStage()
+			cd = stage == 3 and 70 or stage == 2 and 85 or 57
+			if stage == 2 and (barrierCount - p2Count[args.spellId]) == 1 then
+				cd = self:Mythic() and 80 or 85
+			end
+		elseif activeBoss == 2399 then -- Sludgefist
+			cd = self:Mythic() and 69 or 72
+		end
+		self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
 end
 
 function mod:ProtoformBarrierRemoved(args)
-	self:Message(args.spellId, "green", CL.removed:format(L.barrier))
+	self:Message(args.spellId, "green", CL.removed:format(L.protoform_barrier))
 	self:PlaySound(args.spellId, "alert")
 end
 
@@ -226,44 +276,127 @@ do
 	local playerList = {}
 	local prev = 0
 	function mod:CreationSpark(args)
+		creationSparkDetected = true
 		if args.time - prev > 3 then
 			prev = args.time
 			playerList = {}
-			self:StopBar(bar_icon..CL.count:format(args.spellName, creationSparkCount))
+			self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 			creationSparkCount = creationSparkCount + 1
 			if activeBoss ~= 2398 or creationSparkCount % 2 == 0 then -- Shriekwing: two per stage one
-				self:Bar(args.spellId, 45, bar_icon..CL.count:format(args.spellName, creationSparkCount))
+				local cd = 45
+				if activeBoss == 2407 then -- Denathrius
+					local stage = self:GetStage()
+					cd = stage == 3 and 70 or stage == 2 and 85 or 58
+					if stage == 2 and self:Mythic() and (creationSparkCount - p2Count[args.spellId]) == 1 then
+						cd = 80
+					end
+				elseif activeBoss == 2399 then -- Sludgefist
+					cd = self:Mythic() and 69 or 72
+				end
+				self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 			end
 		end
 		playerList[#playerList + 1] = args.destName
-		self:NewTargetsMessage(args.spellId, "yellow", playerList, 2, CL.count:format(args.spellName, creationSparkCount - 1))
-		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "info")
-		end
+		self:TargetsMessage(args.spellId, "yellow", playerList, 2, CL.count:format(L.creation_spark, creationSparkCount - 1))
+		self:PlaySound(args.spellId, "info")
 	end
 end
 
 -- Boss specific timer resetting
 function mod:ShriekwingBloodShroudRemoved()
-	self:Bar(369505, 20, bar_icon..CL.count:format(self:SpellName(369505), creationSparkCount)) -- Creation Spark
+	if chaoticEssenceDetected then
+		self:Bar(372634, 11.3, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Chaotic Essence
+	end
+	if protoformBarrierDetected then
+		self:Bar(371447, 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+	end
+	if creationSparkDetected then
+		self:Bar(369505, 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
+	end
+	-- if emitterDetected then
+	-- 	self:CDBar(371254, 3.2, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	-- end
+end
+
+function mod:SunKingReflectionOfGuiltRemoved()
+	-- If the Shade isn't up to summon the second emitter, the cast is delayed 15s
+	if emitterCount == 2 then
+		local text = bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)
+		local remaining = self:BarTimeLeft(text)
+		if remaining > 0 then
+			self:Bar(371254, remaining + 15, text) -- Reconfiguration Emitter
+		end
+	end
 end
 
 function mod:CouncilDanseMacabreBegins()
 	-- Does not pause but has a timer reset when dancing.
 	-- Pausing the bar right away so the player can see when the ability will come in line with others.
-	self:CDBar(371254, 3.2, bar_icon..CL.count:format(L.emitter, emitterCount)) -- Reconfiguration Emitter
-	self:PauseBar(371254, bar_icon..CL.count:format(L.emitter, emitterCount))
+	if emitterDetected then
+		self:CDBar(371254, 3.2, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+		self:PauseBar(371254, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, 9.3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount)) -- Chaotic Essence
+		self:PauseBar(372634, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+	if protoformBarrierDetected then
+		self:CDBar(371447, 13.9, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+		self:PauseBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+	end
+	if creationSparkDetected then
+		self:CDBar(369505, 18.4, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
+		self:PauseBar(369505, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	end
 end
 
 function mod:CouncilDanseMacabreOver()
-	self:ResumeBar(371254, bar_icon..CL.count:format(L.emitter, emitterCount)) -- Reconfiguration Emitter
+	if emitterDetected then
+		self:ResumeBar(371254, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	end
+	if chaoticEssenceDetected then
+		self:ResumeBar(372634, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount)) -- Chaotic Essence
+	end
+	if protoformBarrierDetected then
+		self:ResumeBar(371447, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+	end
+	if creationSparkDetected then
+		self:ResumeBar(369505, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
+	end
 end
 
 function mod:DenathriusMarchOfThePenitentStart()
-	p2EmitterCount = emitterCount
-	self:Bar(371254, 27, bar_icon..CL.count:format(L.emitter, emitterCount)) -- Reconfiguration Emitter
+	self:SetStage(2)
+	if emitterDetected then
+		p2Count[371254] = emitterCount
+		self:Bar(371254, 27, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	end
+	if protoformBarrierDetected then
+		p2Count[371447] = barrierCount
+		self:Bar(371447, 31, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+	end
+	if chaoticEssenceDetected then
+		p2Count[372634] = chaoticEssenceCount
+		self:Bar(372634, 38, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount)) -- Chaotic Essence
+	end
+	if creationSparkDetected then
+		p2Count[369505] = creationSparkCount
+		self:Bar(369505, 41, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
+	end
 end
 
 function mod:DenathriusIndignationSuccess()
-	self:Bar(371254, 29.5, bar_icon..CL.count:format(L.emitter, emitterCount)) -- Reconfiguration Emitter
+	self:SetStage(3)
+	if emitterDetected then
+		self:Bar(371254, 29.5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	end
+	if chaoticEssenceDetected then
+		self:Bar(372634, 36.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount)) -- Chaotic Essence
+	end
+	if creationSparkDetected then
+		self:Bar(369505, 39.5, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
+	end
+	if protoformBarrierDetected then
+		self:Bar(371447, 45, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
+	end
 end

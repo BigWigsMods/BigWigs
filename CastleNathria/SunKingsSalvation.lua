@@ -279,7 +279,7 @@ function mod:UNIT_HEALTH(event, unit)
 	end
 end
 
-function mod:SunKingsSalvationMarker(event, unit, guid)
+function mod:SunKingsSalvationMarker(_, unit, guid)
 	if self:GetOption(vileOccultistMarker) and self:MobId(guid) == 165763 and not mobCollector[guid] then -- Vile Occultist
 		vileOccultistMarkCount = vileOccultistMarkCount + 1
 		local icon = 9 - (vileOccultistMarkCount % 6 + 1) -- 8, 7, 5, 6, 4, 3
@@ -314,7 +314,7 @@ function mod:VileOccultistDeath(args)
 end
 
 -- Shade of Kael'thas
-function mod:ReflectionOfGuiltApplied(args)
+function mod:ReflectionOfGuiltApplied()
 	if not shadeUp then
 		shadeUp = true
 		self:Message("stages", "green", CL.incoming:format(self:SpellName(-21966)), "achievement_raid_revendrethraid_kaelthassunstrider")
@@ -356,10 +356,10 @@ end
 function mod:BurningRemnantsApplied(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) and not self:Tank() then
-		self:NewStackMessage(args.spellId, "blue", args.destName, amount)
+		self:StackMessage(args.spellId, "blue", args.destName, amount, amount)
 		self:PlaySound(args.spellId, "alarm")
 	elseif self:Tank() and self:Tank(args.destName) then
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, 3)
 		if amount > 2 then -- 3+
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -447,7 +447,7 @@ end
 
 function mod:VanquishedApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 3)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 3)
 	if amount > 2 then
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -500,7 +500,7 @@ end
 -- Infusing Essences
 function mod:InfusersBoonApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "green", args.destName, amount)
+	self:StackMessage(args.spellId, "green", args.destName, amount, amount)
 	self:StopBar(CL.count:format(args.spellName, amount-1), args.destName)
 	self:TargetBar(args.spellId, 14, args.destName, CL.count:format(args.spellName, amount))
 	if self:Me(args.destGUID) then
@@ -516,7 +516,7 @@ function mod:DrainedSoul(args)
 end
 
 -- High Torturer Darithos
-function mod:GreaterCastigation(args)
+function mod:GreaterCastigation()
 	self:Message(328889, "yellow") -- Greater Castigation
 	self:Bar(328889, 15.5) -- Greater Castigation
 end

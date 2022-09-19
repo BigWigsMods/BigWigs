@@ -153,7 +153,7 @@ end
 -- Event Handlers
 --
 
-function mod:MarkAdds(event, unit, guid)
+function mod:MarkAdds(_, unit, guid)
 	if not mobCollector[guid] then
 		if seedCollector[guid] then
 			self:CustomIcon(witheringSeedMarker, unit, seedCollector[guid])
@@ -162,24 +162,25 @@ function mod:MarkAdds(event, unit, guid)
 	end
 end
 
-function mod:RAID_BOSS_EMOTE(_, msg)
-	if msg:find("361304", nil, true) then -- Wild Stampede
-		self:StopBar(CL.count:format(L.wild_stampede, stampedeCount))
-		self:Message(361304, "yellow", CL.count:format(L.wild_stampede, stampedeCount))
-		self:PlaySound(361304, "alert")
-		stampedeCount = stampedeCount + 1
-		local cd = self:GetStage() == 3 and 74.7 or 25
-		if self:Mythic() then
-			local timersStage2 = {24.7, 28.2, 30.5, 26.3}
-			cd = self:GetStage() == 3 and 33 or timersStage2[stampedeCount]
+do
+	local timersStage2Mythic = {24.7, 28.2, 30.5, 26.3}
+	function mod:RAID_BOSS_EMOTE(_, msg)
+		if msg:find("361304", nil, true) then -- Wild Stampede
+			self:StopBar(CL.count:format(L.wild_stampede, stampedeCount))
+			self:Message(361304, "yellow", CL.count:format(L.wild_stampede, stampedeCount))
+			self:PlaySound(361304, "alert")
+			stampedeCount = stampedeCount + 1
+			if self:GetStage() == 3 then
+				self:Bar(361304, self:Mythic() and 33 or 74.7, CL.count:format(L.wild_stampede, stampedeCount))
+			else
+				self:Bar(361304, self:Mythic() and timersStage2Mythic[stampedeCount] or 25, CL.count:format(L.wild_stampede, stampedeCount))
+			end
 		end
-		self:Bar(361304, cd, CL.count:format(L.wild_stampede, stampedeCount))
 	end
 end
 
 do
 	local prev = 0
-	local playerList = {}
 	function mod:Reconstruction(args)
 		local t = args.time
 		if t-prev > 10 then
@@ -208,7 +209,7 @@ do
 			if stage == 2 then
 				self:Bar(361304, self:Mythic() and 24.7 or 8.9, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
 				self:Bar(361568, self:Mythic() and 21.6 or 18.5, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
-				self:Bar(366234, self:Mythic() and 44.3 or 38.5, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
+				self:Bar(366234, self:Mythic() and 44.3 or 38.5, CL.count:format(self:SpellName(366234), stormCount)) -- Animastorm
 				self:Bar(361689, self:Mythic() and 55.6 or self:Heroic() and 69.5 or 41.5) -- Wracking Pain
 				self:Bar(361789, self:Mythic() and 91.1 or 79.9, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			elseif stage == 3 then
@@ -219,7 +220,7 @@ do
 				self:Bar(364941, self:Mythic() and 53.1 or 53.1, CL.count:format(L.windswept_wings, windsCount)) -- Windswept Wings
 				self:Bar(361304, self:Mythic() and 24.5 or 24.5, CL.count:format(L.wild_stampede, stampedeCount)) -- Wild Stampede
 				self:Bar(361568, self:Mythic() and 17.8 or 21.3, CL.count:format(L.withering_seeds, seedsCount)) -- Withering Seeds
-				self:Bar(366234, 51, CL.count:format(self:SpellName(366234), stormCount)) -- Anima Storm
+				self:Bar(366234, 51, CL.count:format(self:SpellName(366234), stormCount)) -- Animastorm
 				self:Bar(361789, self:Mythic() and 109.5 or 104.1, CL.count:format(L.hand_of_destruction, handCount)) -- Hand of Destruction
 			end
 		end
@@ -238,7 +239,7 @@ end
 
 function mod:GloomBoltApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, "blue")
+		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -248,17 +249,29 @@ function mod:NecroticRitual(args)
 	self:Message(args.spellId, "purple", CL.count:format(L.necrotic_ritual, necroticRitualCount))
 	self:PlaySound(args.spellId, "alert")
 	necroticRitualCount = necroticRitualCount + 1
-	-- XXX Check stage 3 mythic
-	self:Bar(args.spellId, self:Mythic() and (self:GetStage() == 3 and 0 or 60) or self:Easy() and (necroticRitualCount == 2 and 72.3 or 62.8) or 72.3, CL.count:format(L.necrotic_ritual, necroticRitualCount))
+	if self:Mythic() then
+		self:Bar(args.spellId, self:GetStage() == 3 and 191 or 60, CL.count:format(L.necrotic_ritual, necroticRitualCount))
+	elseif self:Easy() then
+		self:Bar(args.spellId, necroticRitualCount == 2 and 72.3 or 62.8, CL.count:format(L.necrotic_ritual, necroticRitualCount))
+	else
+		self:Bar(args.spellId, 72.3, CL.count:format(L.necrotic_ritual, necroticRitualCount))
+	end
 end
 
 do
 	local playerList = {}
-	function mod:RunecarversDeathtouch(args)
+	function mod:RunecarversDeathtouch()
 		playerList = {}
 		runecarversDeathtouchCount = runecarversDeathtouchCount + 1
-		-- XXX Check stage 3 mythic
-		self:Bar(360687, self:Mythic() and (self:GetStage() == 3 and 0 or 50) or self:Easy() and (runecarversDeathtouchCount == 3 and 79 or 57) or 57, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount))
+		if self:Mythic() then
+			if self:GetStage() ~= 3 then -- Only cast once in stage 3
+				self:Bar(360687, 50, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount))
+			end
+		elseif self:Easy() then
+			self:Bar(360687, runecarversDeathtouchCount == 3 and 79 or 57, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount))
+		else
+			self:Bar(360687, 57, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount))
+		end
 	end
 
 	function mod:RunecarversDeathtouchApplied(args)
@@ -269,7 +282,7 @@ do
 			deathtouchOnMe = true
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.runecarvers_deathtouch, runecarversDeathtouchCount-1))
 		self:CustomIcon(runecarversDeathtouchMarker, args.destName, count)
 	end
 
@@ -286,12 +299,16 @@ end
 
 function mod:HumblingStrikes(args)
 	self:Message(365269, "purple", CL.casting:format(args.spellName))
-	self:Bar(365269, self:Mythic() and (self:GetStage() == 3 and 29.9 or 31.2) or self:GetStage() == 3 and 49.8 or 35.5)
+	if self:GetStage() == 3 then
+		self:Bar(365269, self:Mythic() and 29.9 or 49.8)
+	else
+		self:Bar(365269, self:Mythic() and 31.2 or 35.5)
+	end
 end
 
 function mod:HumblingStrikesApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2)
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -343,13 +360,21 @@ end
 do
 	local witheringSeedMarks = {}
 	function mod:WitheringSeeds(args)
+		seedCollector = {}
+		witheringSeedMarks = {}
 		self:StopBar(CL.count:format(L.withering_seeds, seedsCount))
 		self:Message(args.spellId, "cyan", CL.count:format(L.withering_seeds, seedsCount))
 		self:PlaySound(args.spellId, "alert")
 		seedsCount = seedsCount + 1
-		self:Bar(args.spellId, self:Mythic() and (self:GetStage() == 3 and (seedsCount == 2 and 77.4 or 71.8) or 109.3) or self:GetStage() == 3 and 74.2 or 96.2, CL.count:format(L.withering_seeds, seedsCount))
-		seedCollector = {}
-		witheringSeedMarks = {}
+		if self:GetStage() == 3 then
+			if self:Mythic() then
+				self:Bar(args.spellId, seedsCount == 2 and 77.4 or 71.8, CL.count:format(L.withering_seeds, seedsCount))
+			else
+				self:Bar(args.spellId, 74.2, CL.count:format(L.withering_seeds, seedsCount))
+			end
+		else
+			self:Bar(args.spellId, self:Mythic() and 109.3 or 96.2, CL.count:format(L.withering_seeds, seedsCount))
+		end
 	end
 
 	function mod:WitheringSeedsSummon(args)
@@ -379,13 +404,18 @@ function mod:Animastorm(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, stormCount))
 	self:PlaySound(args.spellId, "alert")
 	stormCount = stormCount + 1
-	-- Check stage 3 Mythic
-	self:Bar(args.spellId, self:Mythic() and (self:GetStage() == 3 and 0 or 76.7) or self:GetStage() == 3 and 84 or 67.5, CL.count:format(args.spellName, stormCount))
+	if self:GetStage() == 3 then
+		if not self:Mythic() then -- Only cast once in stage 3
+			self:Bar(args.spellId, 84, CL.count:format(args.spellName, stormCount))
+		end
+	else
+		self:Bar(args.spellId, self:Mythic() and 76.7 or 67.5, CL.count:format(args.spellName, stormCount))
+	end
 end
 
 function mod:BurdenOfSinApplied(args)
 	if self:Me(args.destGUID) then
-		self:NewStackMessage(args.spellId, "blue", args.destName, args.amount)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 0)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
@@ -414,14 +444,18 @@ do
 	end
 end
 
-function mod:WrackingPain(args)
+function mod:WrackingPain()
 	-- To _START
-	self:Bar(361689, self:Mythic() and (self:GetStage() == 3 and 27.9 or 49.1) or self:GetStage() == 3 and 49.8 or 45)
+	if self:GetStage() == 3 then
+		self:Bar(361689, self:Mythic() and 27.9 or 49.8)
+	else
+		self:Bar(361689, self:Mythic() and 49.1 or 45)
+	end
 end
 
 function mod:WrackingPainApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2)
 	self:PlaySound(args.spellId, "alarm")
 end
 
@@ -461,7 +495,7 @@ do
 			end
 			playerList[#playerList+1] = iconList[i].player
 			playerList[iconList[i].player] = icon
-			self:NewTargetsMessage(361745, "orange", playerList, 4)
+			self:TargetsMessage(361745, "orange", playerList, 4)
 			self:CustomIcon(nightHunterMarker, iconList[i].player, icon)
 		end
 	end

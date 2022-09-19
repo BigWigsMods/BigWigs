@@ -36,9 +36,9 @@ if L then
 	L.small_bombs = "小炸弹" -- Brynja's Mournful Dirge
 	L.recall = "召回" -- Short for Word of Recall
 
-	--L.blades_yell = "Fall before my blade!"
-	--L.soaks_yell = "You are all outmatched!"
-	--L.shield_yell = "My shield never falters!"
+	L.blades_yell = "倒在我的剑下吧！"
+	L.soaks_yell = "你们绝无胜算！"
+	L.shield_yell = "我的盾牌绝不动摇！"
 
 	L.berserk_stage1 = "狂暴阶段1"
 	L.berserk_stage2 = "狂暴阶段2"
@@ -48,6 +48,9 @@ end
 
 L = BigWigs:NewBossLocale("Remnant of Ner'zhul", "zhCN")
 if L then
+	L.custom_on_stop_timers = "总是显示计时条"
+	L.custom_on_stop_timers_desc = "耐奥祖残骸的技能可能延迟施放。启用此选项后，这些技能的计时条会保持显示。"
+	
 	L.cones = "障碍" -- Grasp of Malice
 	L.orbs = "宝珠" -- Orb of Torment
 	L.orb = "宝珠" -- Orb of Torment
@@ -82,17 +85,17 @@ if L then
 	L.trap = "陷阱" -- Short for Flameclasp Trap
 	L.chains = "锁链" -- Short for Shadowsteel Chains
 	L.embers = "余烬" -- Short for Shadowsteel Embers
-	-- L.adds_embers = "Embers (%d) - Adds Next!"
-	-- L.adds_killed = "Adds killed in %.2fs"
-	-- L.spikes = "Spiked Death" -- Soft enrage spikes
+	L.adds_embers = "余烬 (%d) - 下一波恐魔!"
+	L.adds_killed = "击杀恐魔，用时 %.2f秒"
+	L.spikes = "狂暴时限" -- Soft enrage spikes
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "zhCN")
 if L then
 	L.custom_on_stop_timers = "总是显示技能条"
-	L.custom_on_stop_timers_desc = "卫士可能延迟他的技能。当启用此选项，他的技能条将停留在屏幕上。"
+	L.custom_on_stop_timers_desc = "初诞者的卫士的技能可能延迟施放。启用此选项后，这些技能的计时条会保持显示。"
 
-	-- L.bomb_missed = "%dx Bombs Missed"
+	L.bomb_missed = "%dx 炸弹未击中"
 end
 
 L = BigWigs:NewBossLocale("Fatescribe Roh-Kalo", "zhCN")
@@ -138,3 +141,13 @@ if L then
 	L.knife_fling = "刀飞出！" -- "Death-touched blades fling out"
 end
 
+L = BigWigs:NewBossLocale("Sanctum of Domination Affixes", "zhCN")
+if L then
+	L.custom_on_bar_icon = "条形图标"
+	L.custom_on_bar_icon_desc = "显示宿命之力条形图标."
+
+	L.chaotic_essence = "精华"
+	L.creation_spark = "火花"
+	L.protoform_barrier = "屏障"
+	L.reconfiguration_emitter = "打断小怪"
+end

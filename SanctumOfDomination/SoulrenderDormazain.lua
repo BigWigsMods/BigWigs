@@ -203,7 +203,7 @@ end
 
 do
 	local playerList = {}
-	function mod:BrandOfTorment(args)
+	function mod:BrandOfTorment()
 		playerList = {}
 		brandCount = brandCount + 1
 		if brandCount < 7 then -- breaks during dance
@@ -220,7 +220,7 @@ do
 			self:PlaySound(args.spellId, "warning")
 			self:SayCountdown(args.spellId, 15)
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(L.brand, brandCount-1))
+		self:TargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(L.brand, brandCount-1))
 		self:CustomIcon(brandOfTormentMarker, args.destName, count)
 	end
 
@@ -251,13 +251,13 @@ end
 
 function mod:RuinbladeApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, amount)
 	self:PlaySound(args.spellId, "alarm")
 end
 
 do
 	local agonizersMarked = 0
-	function mod:AgonizerMarking(event, unit, guid)
+	function mod:AgonizerMarking(_, unit, guid)
 		if self:MobId(guid) == 177594 and not mobCollector[guid] then -- Mawsworn Agonizer
 			self:CustomIcon(agonizerMarker, unit, 8-agonizersMarked) -- 8, 7, 6, 5
 			mobCollector[guid] = true
@@ -350,7 +350,7 @@ end
 
 function mod:SoulManacles(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.chain)
+		self:PersonalMessage(args.spellId, nil, L.chain)
 		self:PlaySound(args.spellId, "info")
 	end
 end

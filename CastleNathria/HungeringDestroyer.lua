@@ -206,7 +206,7 @@ do
 			targets[player] = i
 			self:CustomIcon(gluttonousMiasmaMarker, player, i)
 		end
-		self:NewTargetsMessage(329298, "yellow", targets, 4, CL.count:format(L.miasma, miasmaCount-1))
+		self:TargetsMessage(329298, "yellow", targets, 4, CL.count:format(L.miasma, miasmaCount-1))
 	end
 
 	function mod:GluttonousMiasmaApplied(args)
@@ -293,7 +293,7 @@ do
 	function mod:VolatileEjectionApplied(args)
 		local count = #volEjectionList+1
 		volEjectionList[count] = args.destName
-		self:NewTargetsMessage(334266, "orange", volEjectionList, self:Mythic() and 4 or 3, CL.beam)
+		self:TargetsMessage(334266, "orange", volEjectionList, self:Mythic() and 4 or 3, CL.beam)
 		self:CustomIcon(volatileEjectionMarker, args.destName, count+4)
 		if self:Me(args.destGUID) then
 			self:PlaySound(334266, "warning")
@@ -365,7 +365,7 @@ end
 function mod:GrowingHungerApplied(args)
 	local amount = args.amount or 1
 	if amount % 5 == 0 then -- 5, 10... // Generally doesn't go above 5 if you swap on Overwhelm
-		self:NewStackMessage(args.spellId, "purple", args.destName, amount)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, 5)
 		self:PlaySound(args.spellId, "alert")
 	end
 end

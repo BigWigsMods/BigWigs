@@ -138,3 +138,13 @@ if L then
 	-- L.knife_fling = "Knives out!" -- "Death-touched blades fling out"
 end
 
+L = BigWigs:NewBossLocale("Sanctum of Domination Affixes", "esMX")
+if L then
+	--L.custom_on_bar_icon = "Bar Icon"
+	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+
+	--L.chaotic_essence = "Essence"
+	L.creation_spark = "Chiribitas"
+	L.protoform_barrier = "Barrera"
+	--L.reconfiguration_emitter = "Interrupt Add"
+end

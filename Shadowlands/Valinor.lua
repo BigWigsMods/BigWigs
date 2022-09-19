@@ -105,5 +105,5 @@ end
 
 function mod:MarkOfPenitence(args)
 	local amount = args.amount or 1
-	self:StackMessage(args.spellId, args.destName, amount, "purple") -- Mostly a pointless warning?
+	self:StackMessageOld(args.spellId, args.destName, amount, "purple") -- Mostly a pointless warning?
 end

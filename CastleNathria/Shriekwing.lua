@@ -164,7 +164,7 @@ do
 			self:SayCountdown(342074, self:Mythic() and 6 or 8)
 			self:PlaySound(342074, "warning")
 		end
-		self:NewTargetsMessage(342074, "yellow", playerList, nil, CL.count:format(self:SpellName(342074), echolocationCount-1), nil, 2)
+		self:TargetsMessage(342074, "yellow", playerList, nil, CL.count:format(self:SpellName(342074), echolocationCount-1), nil, 2)
 	end
 end
 
@@ -218,7 +218,7 @@ end
 
 function mod:ExsanguinatedApplied(args)
 	if self:Tank() and self:Tank(args.destName) then
-		self:NewStackMessage(args.spellId, "purple", args.destName, 10)
+		self:StackMessage(args.spellId, "purple", args.destName, 10, 0)
 		if not self:Me(args.destGUID) and not self:Tanking("boss1") then
 			self:PlaySound(args.spellId, "warning") -- Not taunted? Play again.
 		end
@@ -286,7 +286,7 @@ function mod:BloodShroudRemoved(args)
 		self:CDBar(342863, 28.5, CL.count:format(self:SpellName(342863), echoingScreechCount)) -- Echoing Screech
 	end
 	self:CDBar(330711, 48.5, CL.count:format(self:SpellName(330711), shriekCount)) -- Earsplitting Shriek
-	self:CDBar(328921, 106) -- Blood Shroud
+	self:CDBar(args.spellId, 106) -- Blood Shroud
 end
 
 -- Mythic

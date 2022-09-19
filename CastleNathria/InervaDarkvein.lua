@@ -185,7 +185,7 @@ do
 	end
 end
 
-function mod:ConjuredManifestationMarker(event, unit, guid)
+function mod:ConjuredManifestationMarker(_, unit, guid)
 	if self:MobId(guid) == 170197 and conjuredManifestationList[guid] then -- Conjured Manifestation
 		self:CustomIcon(conjuredManifestationMarker, unit, conjuredManifestationList[guid])
 	end
@@ -304,7 +304,7 @@ end
 
 function mod:WarpedDesiresApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "purple", args.destName, amount, 2)
+	self:StackMessage(args.spellId, "purple", args.destName, amount, 2)
 	if amount > 1 and not self:Tanking("boss1") then
 		self:PlaySound(args.spellId, "alarm")
 	end
@@ -325,7 +325,7 @@ do
 			self:PlaySound(args.spellId, "alarm")
 			self:TargetBar(args.spellId, 21, args.destName)
 		end
-		self:NewTargetsMessage(args.spellId, "yellow", playerList)
+		self:TargetsMessage(args.spellId, "yellow", playerList)
 	end
 
 	function mod:SharedCognitionRemoved(args)
@@ -352,7 +352,7 @@ function mod:ChangeOfHeartRemoved(args)
 	self:StopBar(args.spellId, args.destName)
 end
 
-function mod:BottledAnima(args)
+function mod:BottledAnima()
 	self:Message(325769, "orange", L.bottles)
 	self:PlaySound(325769, "info")
 	self:Bar(325769, enabledContainer == 2 and (self:Mythic() and 15 or 30) or (self:Mythic() and 30 or 45), L.bottles)
@@ -375,7 +375,7 @@ do
 		local count = #playerList+1
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
-		self:NewTargetsMessage(324983, "yellow", playerList, 3, L.sins)
+		self:TargetsMessage(324983, "yellow", playerList, 3, L.sins)
 		self:CustomIcon(sharedSufferingMarker, args.destName, count)
 		if count == 1 then
 			self:Bar(324983, enabledContainer == 3 and (self:Mythic() and 30 or 35) or 51, L.sins)
@@ -415,7 +415,7 @@ do
 			self:SayCountdown(332664, 10, icon)
 			self:OpenProximity(332664, 8)
 		end
-		self:NewTargetsMessage(332664, "yellow", playerList, CL.adds)
+		self:TargetsMessage(332664, "yellow", playerList, nil, CL.adds)
 
 		self:CustomIcon(concentratedAnimaMarker, args.destName, icon)
 		if not isOnMe then
@@ -445,7 +445,7 @@ end
 
 function mod:UnconscionableGuiltApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "yellow", args.destName, amount)
+	self:StackMessage(args.spellId, "yellow", args.destName, amount, amount)
 	self:PlaySound(args.spellId, "alarm", nil, args.destName)
 end
 

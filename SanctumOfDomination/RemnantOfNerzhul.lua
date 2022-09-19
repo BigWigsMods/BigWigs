@@ -151,7 +151,7 @@ do
 	end
 end
 
-function mod:OrbMarking(event, unit, guid)
+function mod:OrbMarking(_, unit, guid)
 	if not mobCollector[guid] and self:MobId(guid) == 177117 then -- Orb of Torment
 		mobCollector[guid] = true
 		self:CustomIcon(orbMarker, unit, orbMarkerIcon)
@@ -180,7 +180,7 @@ end
 
 function mod:SorrowfulProcessionApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, L.orb)
+		self:PersonalMessage(args.spellId, nil, L.orb)
 		self:PlaySound(args.spellId, "info")
 	end
 end
@@ -221,7 +221,7 @@ do
 				self:PlaySound(args.spellId, "warning")
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, 2, CL.bomb)
+		self:TargetsMessage(args.spellId, "orange", playerList, 2, CL.bomb)
 		self:CustomIcon(malevolenceMarker, args.destName, count)
 	end
 
@@ -244,7 +244,7 @@ do
 		end
 	end
 
-	function mod:RattlecageMalevolenceRemoved(args)
+	function mod:RattlecageMalevolenceRemoved()
 		self:StopBar(CL.cast:format(CL.bomb))
 	end
 end

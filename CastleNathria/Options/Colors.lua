@@ -218,5 +218,5 @@ BigWigs:AddColors("Castle Nathria Affixes", {
 	[369505] = {"blue","yellow"},
 	[371254] = "yellow",
 	[371447] = {"green","yellow"},
-	[372638] = "yellow",
+	[372634] = "yellow",
 })

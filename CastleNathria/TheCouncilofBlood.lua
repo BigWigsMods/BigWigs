@@ -221,7 +221,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 	end
 end
 
-function mod:CHAT_MSG_MONSTER_YELL(event, msg, npcname)
+function mod:CHAT_MSG_MONSTER_YELL(_, msg)
 	if msg:find(L.dance_yell_up, nil, true) then
 		self:Message("dance_assist", "blue", L.dance_assist_up, false)
 	elseif msg:find(L.dance_yell_right, nil, true) then
@@ -349,11 +349,11 @@ function mod:DuelistsRiposte(args)
 end
 
 function mod:DuelistsRiposteApplied(args)
-	self:NewStackMessage(args.spellId, "purple", args.destName, args.amount, 2)
+	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 2)
 end
 
 do
-	function mod:DutifulAttendantMarking(event, unit, guid)
+	function mod:DutifulAttendantMarking(_, unit, guid)
 		if self:MobId(guid) == 175992 then -- Dutiful Attendant
 			self:CustomIcon(dutifulAttendantMarker, unit, 8)
 			self:UnregisterTargetEvents()
@@ -402,7 +402,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, 3)
+		self:TargetsMessage(args.spellId, "orange", playerList, 3)
 	end
 end
 
@@ -448,7 +448,7 @@ end
 
 function mod:SoulSpikesApplied(args)
 	local amount = args.amount or 1
-	self:NewStackMessage(args.spellId, "orange", args.destName, amount)
+	self:StackMessage(args.spellId, "orange", args.destName, amount, amount)
 	self:PlaySound(args.spellId, "info")
 end
 
@@ -470,10 +470,10 @@ end
 function mod:EvasiveLungeApplied(args)
 	local amount = args.amount or 1
 	if self:Me(args.destGUID) and not self:Tank() then
-		self:NewStackMessage(327497, "blue", args.destName, amount)
+		self:StackMessage(327497, "blue", args.destName, amount, amount)
 		self:PlaySound(327497, "alarm")
 	elseif self:Tank() and self:Tank(args.destName) then
-		self:NewStackMessage(327497, "purple", args.destName, amount, 2)
+		self:StackMessage(327497, "purple", args.destName, amount, 2)
 	end
 end
 
@@ -556,7 +556,7 @@ function mod:WaltzOfBlood(args)
 end
 
 do
-	function mod:WaltzingVenthyrMarking(event, unit, guid)
+	function mod:WaltzingVenthyrMarking(_, unit, guid)
 		if self:MobId(guid) == 176026 then -- Dancing Fool (only 1 targetable unit)
 			self:CustomIcon(waltzingVenthyrMarker, unit, 8)
 			self:UnregisterTargetEvents()
@@ -580,7 +580,7 @@ do
 end
 
 --[[ Intermission: The Danse Macabre ]]--
-function mod:DanseMacabreBegins(args)
+function mod:DanseMacabreBegins()
 	self:Message(330959, "green") -- Dance Macabre
 	self:PlaySound(330959, "long")
 	self:Bar(330959, 38.8, self:SpellName(305757)) -- 305757 = "Dancing"
@@ -606,7 +606,7 @@ function mod:DanseMacabreBegins(args)
 	end
 end
 
-function mod:DanseMacabreOver(args)
+function mod:DanseMacabreOver()
 	self:ResumeBar(346651) -- Drain Essence
 	self:ResumeBar(337110) -- Dreadbolt Volley
 	self:ResumeBar(346657) -- Prideful Eruption
@@ -646,7 +646,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "orange", playerList, 5, CL.count:format(args.spellName, dancingFeverCount-1))
+		self:TargetsMessage(args.spellId, "orange", playerList, 5, CL.count:format(args.spellName, dancingFeverCount-1))
 	end
 end
 

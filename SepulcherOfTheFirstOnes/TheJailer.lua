@@ -25,7 +25,6 @@ local desolationCount = 1
 local runeOfDominationCount = 1
 local chainsOfAnguishCount = 1
 local defileCount = 1
-local fallingDebrisCount = 1
 local currentAzerothHealth = 100
 local lastAzerothHealth = 100
 local worldCount = 1
@@ -183,6 +182,7 @@ if L then
 	L.shattering_blast = "Tank Blast"
 	L.rune_of_compulsion = "Charms"
 	L.desolation = "Azeroth Soak"
+	L.decimator_line = "Decimator + Line"
 	L.chains_of_anguish = "Spread Chains"
 	L.chain = "Chain"
 	L.chain_target = "Chaining %s!"
@@ -280,7 +280,6 @@ function mod:GetOptions()
 		[360373] = L.unholy_attunement, -- Unholy Attunement
 		[359856] = L.shattering_blast, -- Shattering Blast
 		[366285] = L.rune_of_compulsion, -- Rune of Compulsion
-		[360562] = CL.knockback, -- Decimator
 		[365033] = L.desolation, -- Desolation
 		[365150] = L.rune_of_domination, -- Rune of Domination
 		[365212] = L.chains_of_anguish, -- Chains of Anguish
@@ -364,7 +363,6 @@ function mod:OnEngage(difficulty)
 	runeOfDominationCount = 1
 	chainsOfAnguishCount = 1
 	defileCount = 1
-	fallingDebrisCount = 1
 
 	self:Bar(360281, timers[1][360281][runeOfDamnationCount], CL.count:format(CL.bombs, runeOfDamnationCount))
 	self:Bar(365436, timers[1][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount))
@@ -436,7 +434,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:NewTargetsMessage(args.spellId, "red", playerList)
+		self:TargetsMessage(args.spellId, "red", playerList)
 	end
 end
 
@@ -508,7 +506,7 @@ end
 
 do
 	local playerList = {}
-	function mod:RuneOfDamnation(args)
+	function mod:RuneOfDamnation()
 		self:StopBar(CL.count:format(CL.bombs, runeOfDamnationCount))
 		runeOfDamnationCount = runeOfDamnationCount + 1
 		self:Bar(360281, timers[self:GetStage()][360281][runeOfDamnationCount], CL.count:format(CL.bombs, runeOfDamnationCount))
@@ -523,20 +521,21 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning")
 			self:Say(args.spellId, CL.count_rticon:format(CL.bomb, icon, icon))
-			self:SayCountdown(args.spellId, 6, icon)
-			if self:GetOption("rune_of_damnation_countdown") then -- Show Jumpbar, instead of TargetBar
+			self:SayCountdown(args.spellId, 7, icon)
+			if self:CheckOption("rune_of_damnation_countdown", "BAR") then -- Show Jumpbar, instead of TargetBar
 				self:Bar("rune_of_damnation_countdown", 5.5, L.jump, 360281) -- Jump a bit earlier
 			else
-				self:TargetBar(args.spellId, 6, args.destName)
+				self:TargetBar(args.spellId, 7, args.destName, CL.bomb)
 			end
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(CL.bombs, runeOfDamnationCount-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(CL.bombs, runeOfDamnationCount-1))
 		self:CustomIcon(runeOfDamnationMarker, args.destName, icon)
 	end
 
 	function mod:RuneOfDamnationRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
+			self:StopBar(CL.bomb, args.destName)
 			self:StopBar(L.jump)
 		end
 		self:CustomIcon(runeOfDamnationMarker, args.destName)
@@ -575,7 +574,7 @@ function mod:FinalRelentlessDomination()
 	self:Bar(360373, timers[2][360373][unholyAttunementCount], CL.count:format(L.unholy_attunement, unholyAttunementCount)) -- Unholy Attunement
 	self:Bar(359856, timers[2][359856][shatteringBlastCount], CL.count:format(L.shattering_blast, shatteringBlastCount)) -- Shattering Blast
 	self:Bar(366285, timers[2][366285][runeOfCompulsion], CL.count:format(L.rune_of_compulsion, runeOfCompulsion)) -- Rune of Compulsion
-	self:Bar(360562, timers[2][360562][decimatorCount], CL.count:format(CL.knockback, decimatorCount)) -- Decimator
+	self:Bar(360562, timers[2][360562][decimatorCount], CL.count:format(self:SpellName(360562), decimatorCount)) -- Decimator
 	self:Bar(365436, timers[2][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
 
 	if self:Mythic() then
@@ -604,7 +603,7 @@ end
 
 do
 	local playerList = {}
-	function mod:RuneOfCompulsion(args)
+	function mod:RuneOfCompulsion()
 		self:StopBar(CL.count:format(L.rune_of_compulsion, runeOfCompulsion))
 		runeOfCompulsion = runeOfCompulsion + 1
 		self:Bar(366285, timers[2][366285][runeOfCompulsion], CL.count:format(L.rune_of_compulsion, runeOfCompulsion))
@@ -621,7 +620,7 @@ do
 			self:Say(args.spellId, CL.count_rticon:format(L.rune_of_compulsion, icon, icon))
 			self:SayCountdown(args.spellId, 4, icon)
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.rune_of_compulsion, runeOfCompulsion-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.rune_of_compulsion, runeOfCompulsion-1))
 		self:CustomIcon(runeOfCompulsionMarker, args.destName, icon)
 	end
 
@@ -633,15 +632,15 @@ do
 	end
 end
 
-function mod:Decimator()
-	self:StopBar(CL.count:format(CL.knockback, decimatorCount))
-	self:Message(360562, "yellow", CL.count:format(CL.knockback, decimatorCount))
+function mod:Decimator(args)
+	self:StopBar(CL.count:format(args.spellName, decimatorCount))
+	self:Message(360562, "yellow", CL.count:format(args.spellId == 360562 and args.spellName or L.decimator_line, decimatorCount))
 	self:PlaySound(360562, "alert")
 	decimatorCount = decimatorCount + 1
-	self:Bar(360562, timers[self:GetStage()][360562][decimatorCount], CL.count:format(CL.knockback, decimatorCount))
+	self:Bar(360562, timers[self:GetStage()][360562][decimatorCount], CL.count:format(args.spellName, decimatorCount))
 end
 
-function mod:FinalUnholyAttunement(args)
+function mod:FinalUnholyAttunement()
 	self:Message(360373, "yellow", L.final:format(CL.count:format(L.unholy_attunement, unholyAttunementCount)))
 	self:PlaySound(360373, "alert")
 
@@ -649,7 +648,7 @@ function mod:FinalUnholyAttunement(args)
 	self:StopBar(CL.count:format(L.unholy_attunement, unholyAttunementCount)) -- Unholy Attunement
 	self:StopBar(CL.count:format(L.shattering_blast, shatteringBlastCount)) -- Shattering Blast
 	self:StopBar(CL.count:format(L.rune_of_compulsion, runeOfCompulsion)) -- Rune of Compulsion
-	self:StopBar(CL.count:format(CL.knockback, decimatorCount)) -- Decimator
+	self:StopBar(CL.count:format(self:SpellName(360562), decimatorCount)) -- Decimator
 	self:StopBar(CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
 	self:StopBar(CL.count:format(L.mythic_blood_soak_bar, specialCount-1)) -- Heal Azeroth
 
@@ -676,9 +675,8 @@ function mod:UnbreakingGrasp(args)
 	chainsOfAnguishCount = 1
 	runeOfDominationCount = 1
 	defileCount = 1
-	fallingDebrisCount = 1
 
-	self:Bar(360562, timers[3][360562][decimatorCount], CL.count:format(CL.knockback, decimatorCount)) -- Decimator
+	self:Bar(360562, timers[3][360562][decimatorCount], CL.count:format(self:SpellName(360562), decimatorCount)) -- Decimator
 	self:Bar(365436, self:LFR() and 26 or timers[3][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
 	self:Bar(365212, timers[3][365212][chainsOfAnguishCount], CL.count:format(L.chains_of_anguish, chainsOfAnguishCount)) -- Chains of Anguish
 	self:Bar(365150, timers[3][365150][runeOfDominationCount], CL.count:format(L.rune_of_domination, runeOfDominationCount)) -- Rune of Domination
@@ -704,7 +702,7 @@ end
 
 do
 	local playerList = {}
-	function mod:RuneOfDomination(args)
+	function mod:RuneOfDomination()
 		self:StopBar(CL.count:format(L.rune_of_domination, runeOfDominationCount))
 		runeOfDominationCount = runeOfDominationCount + 1
 		self:Bar(365150, timers[3][365150][runeOfDominationCount], CL.count:format(L.rune_of_domination, runeOfDominationCount))
@@ -721,7 +719,7 @@ do
 			self:Say(args.spellId, CL.count_rticon:format(L.rune_of_domination, icon, icon))
 			self:SayCountdown(args.spellId, 6, icon)
 		end
-		self:NewTargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.rune_of_domination, runeOfDominationCount-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, nil, CL.count:format(L.rune_of_domination, runeOfDominationCount-1))
 		self:CustomIcon(runeOfDominationMarker, args.destName, icon)
 	end
 
@@ -758,7 +756,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(365212, "warning")
 		end
-		self:NewTargetsMessage(365212, "yellow", playerList, nil, CL.count:format(L.chains_of_anguish, chainsOfAnguishCount-1))
+		self:TargetsMessage(365212, "yellow", playerList, nil, CL.count:format(L.chains_of_anguish, chainsOfAnguishCount-1))
 		self:CustomIcon(chainsOfAnguishMarker, args.destName, icon)
 	end
 
@@ -815,7 +813,7 @@ function mod:WorldShatterer(args)
 	self:PlaySound(args.spellId, "info")
 end
 
-function mod:DivertedLifeShield(args)
+function mod:DivertedLifeShield()
 	self:SetStage(4)
 	self:Message("stages", "cyan", CL.stage:format(4), false)
 	self:PlaySound("stages", "long")
@@ -824,7 +822,7 @@ function mod:DivertedLifeShield(args)
 	self:StopBar(CL.count:format(L.rune_of_domination, runeOfDominationCount)) -- Rune of Domination
 	self:StopBar(CL.count:format(L.chains_of_anguish, chainsOfAnguishCount)) -- Chains of Anguish
 	self:StopBar(CL.count:format(self:SpellName(365169), defileCount)) -- Defile
-	self:StopBar(CL.count:format(CL.knockback, decimatorCount)) -- Decimator
+	self:StopBar(CL.count:format(self:SpellName(360562), decimatorCount)) -- Decimator
 	self:StopBar(CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
 
 	if specialTimer then
@@ -841,7 +839,7 @@ function mod:DivertedLifeShield(args)
 	self:Bar(368591, timers[4][368591][1]) -- Death Sentence
 	self:Bar(360378, timers[4][360378][meteorCleaveCount], CL.count:format(self:SpellName(360378), meteorCleaveCount)) -- Meteor Cleave
 	self:Bar(360281, timers[4][360281][runeOfDamnationCount], CL.count:format(CL.bombs, runeOfDamnationCount)) -- Rune of Damnation
-	self:Bar(360562, timers[4][360562][decimatorCount], CL.count:format(CL.knockback, decimatorCount)) -- Decimator
+	self:Bar(360562, timers[4][360562][decimatorCount], CL.count:format(self:SpellName(360562), decimatorCount)) -- Decimator
 	self:Bar(365436, timers[4][365436][tormentCount], CL.count:format(self:SpellName(365436), tormentCount)) -- Torment
 
 	specialCount = 1
