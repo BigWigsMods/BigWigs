@@ -25,6 +25,8 @@ move-folders:
     BigWigs/SanctumOfDomination: BigWigs_SanctumOfDomination
     BigWigs/SepulcherOfTheFirstOnes: BigWigs_SepulcherOfTheFirstOnes
     BigWigs/Shadowlands: BigWigs_Shadowlands
+    BigWigs/VaultOfTheIncarnates: BigWigs_VaultOfTheIncarnates
+    BigWigs/DragonIsles: BigWigs_DragonIsles
 
 ignore:
   - .luacheckrc
