@@ -1,3 +1,4 @@
+
 if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
 	local L = BigWigsAPI:GetLocale("BigWigs")
 	print(L.classicWarning1)
