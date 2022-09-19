@@ -1179,8 +1179,10 @@ do
 		"Legion",
 		"BattleForAzeroth",
 		"Shadowlands",
-		"Dragonflight"
 	}
+	if isDragonflight then
+		expansionHeader[#expansionHeader + 1] = "Dragonflight"
+	end
 
 	local statusTable = {}
 	local playerName = nil
@@ -1257,10 +1259,9 @@ do
 			local treeTbl = {}
 			local addonNameToHeader = {}
 			local defaultHeader
-			local maxExpansionIndex = isDragonflight and 10 or 9
 			if value == "bigwigs" then
 				defaultHeader = isDragonflight and "BigWigs_Dragonflight" or "BigWigs_Shadowlands"
-				for i = 1, maxExpansionIndex do
+				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
 					local defaultEnabled = value == "BigWigs_Shadowlands" or (isDragonflight and value == "BigWigs_Dragonflight")
 					treeTbl[i] = {
@@ -1273,7 +1274,7 @@ do
 			elseif value == "littlewigs" then
 				defaultHeader = isDragonflight and "LittleWigs_Dragonflight" or "LittleWigs_Shadowlands"
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				for i = 1, maxExpansionIndex do
+				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
