@@ -143,7 +143,7 @@ do
 	local l = "BigWigs_Legion"
 	local bfa = "BigWigs_BattleForAzeroth"
 	local s = "BigWigs_Shadowlands"
-	local d = "BigWigs_Dragonflight"
+	local df = "BigWigs_Dragonflight"
 	local lw_c = "LittleWigs_Classic"
 	local lw_bc = "LittleWigs_BurningCrusade"
 	local lw_wotlk = "LittleWigs_WrathOfTheLichKing"
@@ -153,7 +153,7 @@ do
 	local lw_l = "LittleWigs_Legion"
 	local lw_bfa = "LittleWigs_BattleForAzeroth"
 	local lw_s = "LittleWigs_Shadowlands"
-	local lw_d = "LittleWigs_Dragonflight"
+	local lw_df = "LittleWigs_Dragonflight"
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -221,8 +221,8 @@ do
 		[2450] = s, -- Sanctum of Domination
 		[2481] = s, -- Sepulcher of the First Ones
 		--[[ BigWigs: Dragonflight ]]--
-		[-1978] = d, -- Dragon Isles (Fake Menu)
-		[2522] = d, -- Vault of the Incarnate
+		[-1978] = df, -- Dragon Isles (Fake Menu)
+		[2522] = df, -- Vault of the Incarnate
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
@@ -332,14 +332,14 @@ do
 		[2293] = lw_s, -- Theater of Pain
 		[2441] = lw_s, -- Tazavesh, the Veiled Market
 		--[[ LittleWigs: Dragonflight ]]--
-		[2451] = lw_d, -- Uldaman: Legacy of Tyr
-		[2515] = lw_d, -- The Azure Vault
-		[2516] = lw_d, -- The Nokhud Offensive
-		[2519] = lw_d, -- Neltharus
-		[2520] = lw_d, -- Brackenhide Hollow
-		[2521] = lw_d, -- Ruby Life Pools
-		[2526] = lw_d, -- Taz'algeth Academy
-		[2527] = lw_d, -- Halls of Infusion
+		[2451] = lw_df, -- Uldaman: Legacy of Tyr
+		[2515] = lw_df, -- The Azure Vault
+		[2516] = lw_df, -- The Nokhud Offensive
+		[2519] = lw_df, -- Neltharus
+		[2520] = lw_df, -- Brackenhide Hollow
+		[2521] = lw_df, -- Ruby Life Pools
+		[2526] = lw_df, -- Taz'algeth Academy
+		[2527] = lw_df, -- Halls of Infusion
 	}
 
 	public.zoneTblWorld = {
