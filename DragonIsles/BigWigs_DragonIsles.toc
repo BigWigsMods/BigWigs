@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fDragon Isles|r]
 ## Title-frFR: BigWigs [|cffeda55fDragon Isles|r]
 ## Title-ruRU: BigWigs [|cffeda55fDragon Isles|r]
-## Title-zhCN: BigWigs [|cffeda55fDragon Isles|r]
+## Title-zhCN: BigWigs [|cffeda55f巨龙时代|r]
 ## Title-zhTW: BigWigs [|cffeda55fDragon Isles|r]
 ## Title-itIT: BigWigs [|cffeda55fDragon Isles|r]
 ## Title-ptBR: BigWigs [|cffeda55fDragon Isles|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Dragon Isles Modules
 ## Notes-frFR: BigWigs Dragon Isles Modules
 ## Notes-ruRU: BigWigs Dragon Isles Modules
-## Notes-zhCN: BigWigs Dragon Isles Modules
+## Notes-zhCN: BigWigs 巨龙时代模块
 ## Notes-zhTW: BigWigs Dragon Isles Modules
 ## Notes-itIT: BigWigs Dragon Isles Modules
 ## Notes-ptBR: BigWigs Dragon Isles Modules
