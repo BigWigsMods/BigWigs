@@ -6,7 +6,7 @@
 ## Title-esMX: BigWigs [|cffeda55fVault of the Incarnates|r]
 ## Title-frFR: BigWigs [|cffeda55fVault of the Incarnates|r]
 ## Title-ruRU: BigWigs [|cffeda55fVault of the Incarnates|r]
-## Title-zhCN: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-zhCN: BigWigs [|cffeda55f化身巨龙牢窟|r]
 ## Title-zhTW: BigWigs [|cffeda55fVault of the Incarnates|r]
 ## Title-itIT: BigWigs [|cffeda55fVault of the Incarnates|r]
 ## Title-ptBR: BigWigs [|cffeda55fVault of the Incarnates|r]
@@ -17,7 +17,7 @@
 ## Notes-esMX: BigWigs Vault of the Incarnates Modules
 ## Notes-frFR: BigWigs Vault of the Incarnates Modules
 ## Notes-ruRU: BigWigs Vault of the Incarnates Modules
-## Notes-zhCN: BigWigs Vault of the Incarnates Modules
+## Notes-zhCN: BigWigs 化身巨龙牢窟模块
 ## Notes-zhTW: BigWigs Vault of the Incarnates Modules
 ## Notes-itIT: BigWigs Vault of the Incarnates Modules
 ## Notes-ptBR: BigWigs Vault of the Incarnates Modules
