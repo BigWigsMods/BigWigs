@@ -1223,8 +1223,12 @@ end
 -- @string unit unit token or name
 -- @return hp health of the unit as a percentage between 0 and 100
 function boss:GetHealth(unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	return hp
+	local maxHP = UnitHealthMax(unit)
+	if maxHP == 0 then
+		return maxHP
+	else
+		return UnitHealth(unit) / maxHP * 100
+	end
 end
 
 do
