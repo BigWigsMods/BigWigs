@@ -3,21 +3,10 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Baron Geddon", 409)
+local mod, CL = BigWigs:NewBoss("Baron Geddon", 409, 1524)
 if not mod then return end
 mod:RegisterEnableMob(12056)
-mod:SetAllowWin(true)
 mod:SetEncounterID(668)
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-	L.bossName = "Baron Geddon"
-end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -2,20 +2,17 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Maexxna", 533)
+local mod, CL = BigWigs:NewBoss("Maexxna", 533, 1603)
 if not mod then return end
 mod:RegisterEnableMob(15952)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1116)
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Maexxna"
-
 	L.webspraywarn30sec = "Cocoons in 10 sec"
 	L.webspraywarn20sec = "Cocoons! Spiders in 10 sec!"
 	L.webspraywarn10sec = "Spiders! Spray in 10 sec!"

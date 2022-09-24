@@ -3,11 +3,14 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Prophet Skeram", 531)
+local mod, CL = BigWigs:NewBoss("The Prophet Skeram", 531, 1543)
 if not mod then return end
 mod:RegisterEnableMob(15263)
-mod:SetAllowWin(true)
 mod:SetEncounterID(709)
+
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local splitPhase = 1
 local lastMC = nil
@@ -16,10 +19,8 @@ local lastMC = nil
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "The Prophet Skeram"
-
 	L.images = 747 -- Summon Images
 	L.images_icon = "spell_shadow_impphaseshift"
 end

@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Razorgore the Untamed", 469)
+local mod = BigWigs:NewBoss("Razorgore the Untamed", 469, 1529)
 if not mod then return end
 mod:RegisterEnableMob(12435, 12557) -- Razorgore, Grethok the Controller
-mod:SetAllowWin(true)
 mod:SetEncounterID(610)
 
 --------------------------------------------------------------------------------
@@ -18,10 +17,8 @@ local eggs = 0
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Razorgore the Untamed"
-
 	L.start_trigger = "Intruders have breached"
 	L.start_message = "Razorgore engaged! Mobs in 45sec!"
 	L.start_soon = "Mob Spawn in 5sec!"

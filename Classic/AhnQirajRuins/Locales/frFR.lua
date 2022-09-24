@@ -1,13 +1,6 @@
-local L = BigWigs:NewBossLocale("Kurinnaxx", "frFR")
+local L = BigWigs:NewBossLocale("General Rajaxx", "frFR")
 if not L then return end
 if L then
-	L.bossName = "Kurinnaxx"
-end
-
-local L = BigWigs:NewBossLocale("General Rajaxx", "frFR")
-if L then
-	L.bossName = "Général Rajaxx"
-
 	L.wave = "Alerte Vagues"
 	L.wave_desc = "Pr\195\169viens de l'arriv\195\169e des vagues."
 
@@ -23,33 +16,19 @@ if L then
 	L.wave_message = "Vague (%d/8)"
 end
 
-local L = BigWigs:NewBossLocale("Moam", "frFR")
+L = BigWigs:NewBossLocale("Buru the Gorger", "frFR")
 if L then
-	L.bossName = "Moam"
-end
-
-local L = BigWigs:NewBossLocale("Buru the Gorger", "frFR")
-if L then
-	L.bossName = "Buru Grandgosier"
-
 	L.fixate = "Fixer"
 	L.fixate_desc = "Se concentre sur une cible et ignore la menace des autres attaquants."
 end
 
-local L = BigWigs:NewBossLocale("Ayamiss the Hunter", "frFR")
+L = BigWigs:NewBossLocale("Ossirian the Unscarred", "frFR")
 if L then
-	L.bossName = "Ayamiss le Chasseur"
-end
-
-local L = BigWigs:NewBossLocale("Ossirian the Unscarred", "frFR")
-if L then
-	L.bossName = "Ossirian l'Intouché"
-
 	L.debuff = "Affaiblissements"
 	L.debuff_desc = "Préviens quand Ossirian est affaibli face à certaines écoles de magie."
 end
 
-local L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "frFR")
+L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "frFR")
 if L then
 	L.guardian = "Gardien anubisath"
 end

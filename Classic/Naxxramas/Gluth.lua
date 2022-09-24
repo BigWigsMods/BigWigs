@@ -2,20 +2,17 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Gluth", 533)
+local mod, CL = BigWigs:NewBoss("Gluth", 533, 1612)
 if not mod then return end
 mod:RegisterEnableMob(15932)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1108)
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Gluth"
-
 	L.startwarn = "Gluth engaged, ~105 sec to Decimate!"
 
 	L.decimate = 28375 -- Decimate

@@ -1,7 +1,5 @@
 local L = BigWigs:NewBossLocale("Onyxia", "koKR")
 if L then
-	L.bossName = "오닉시아"
-
 	L.phase = "단계"
 	L.phase_desc = "단계 변화를 알립니다."
 	L.phase2_message = "곧 2 단계!"

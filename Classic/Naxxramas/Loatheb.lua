@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Loatheb", 533)
+local mod, CL = BigWigs:NewBoss("Loatheb", 533, 1606)
 if not mod then return end
 mod:RegisterEnableMob(16011)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1115)
 
 --------------------------------------------------------------------------------

@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Sapphiron", 533)
+local mod, CL = BigWigs:NewBoss("Sapphiron", 533, 1614)
 if not mod then return end
 mod:RegisterEnableMob(15989)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1119)
 
 --------------------------------------------------------------------------------
@@ -20,14 +19,12 @@ local blockCount = 0
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Sapphiron"
-
 	L.deepbreath_trigger = "%s takes in a deep breath..."
 
-	L.air_phase = "Air phase"
-	L.ground_phase = "Ground phase"
+	L.air_phase = "Air Phase"
+	L.ground_phase = "Ground Phase"
 
 	L.deepbreath = "Ice Bomb"
 	L.deepbreath_icon = 3129 -- Frost Breath

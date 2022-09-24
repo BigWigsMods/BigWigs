@@ -3,10 +3,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("General Rajaxx", 509)
+local mod, CL = BigWigs:NewBoss("General Rajaxx", 509, 1538)
 if not mod then return end
 mod:RegisterEnableMob(15341, 15471) -- General Rajaxx, Lieutenant General Andorov
-mod:SetAllowWin(true)
 mod:SetEncounterID(719)
 
 --------------------------------------------------------------------------------
@@ -20,10 +19,8 @@ local rajdead = nil
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "General Rajaxx"
-
 	L.wave = "Waves Warnings"
 	L.wave_desc = "Warn for incoming waves"
 
@@ -54,8 +51,6 @@ function mod:GetOptions()
 end
 
 function mod:OnRegister()
-	self.displayName = L.bossName
-
 	wave_triggers = {
 		[L.wave_trigger1a] = L.wave_message:format(1),
 		[L.wave_trigger1b] = L.wave_message:format(1),

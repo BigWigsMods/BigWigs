@@ -3,23 +3,16 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Battleguard Sartura", 531)
+local mod, CL = BigWigs:NewBoss("Battleguard Sartura", 531, 1544)
 if not mod then return end
 mod:RegisterEnableMob(15516, 15984) -- Battleguard Sartura, Sartura's Royal Guard
-mod:SetAllowWin(true)
 mod:SetEncounterID(711)
 
-local addsLeft = 3
-
 --------------------------------------------------------------------------------
--- Localization
+-- Locals
 --
 
-local L = mod:NewLocale("enUS", true)
-if L then
-	L.bossName = "Battleguard Sartura"
-end
-L = mod:GetLocale()
+local addsLeft = 3
 
 --------------------------------------------------------------------------------
 -- Initialization

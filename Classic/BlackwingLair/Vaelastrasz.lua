@@ -2,20 +2,17 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Vaelastrasz the Corrupt", 469)
+local mod, CL = BigWigs:NewBoss("Vaelastrasz the Corrupt", 469, 1530)
 if not mod then return end
 mod:RegisterEnableMob(13020)
-mod:SetAllowWin(true)
 mod:SetEncounterID(611)
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Vaelastrasz the Corrupt"
-
 	L.warmup_trigger = "Too late, friends!"
 	L.warmup_message = "RP started, engaging in ~43s"
 end

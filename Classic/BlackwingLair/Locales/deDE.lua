@@ -1,8 +1,6 @@
 local L = BigWigs:NewBossLocale("Razorgore the Untamed", "deDE")
 if not L then return end
 if L then
-	L.bossName = "Feuerkralle der Ungezähmte"
-
 	L.start_trigger = "Eindringlinge sind in die"
 	L.start_message = "Razorgore angegriffen!"
 	L.start_soon = "Mob Spawn in 5sec!"
@@ -17,36 +15,12 @@ end
 
 L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "deDE")
 if L then
-	L.bossName = "Vaelastrasz der Verdorbene"
-
 	L.warmup_trigger = "Zu spät, Freunde!"
 	L.warmup_message = "RP gestartet, aktiv in ~43s"
 end
 
-L = BigWigs:NewBossLocale("Broodlord Lashlayer", "deDE")
-if L then
-	L.bossName = "Brutwächter Dreschbringer"
-end
-
-L = BigWigs:NewBossLocale("Firemaw", "deDE")
-if L then
-	L.bossName = "Feuerschwinge"
-end
-
-L = BigWigs:NewBossLocale("Ebonroc", "deDE")
-if L then
-	L.bossName = "Schattenschwinge"
-end
-
-L = BigWigs:NewBossLocale("Flamegor", "deDE")
-if L then
-	L.bossName = "Flammenmaul"
-end
-
 L = BigWigs:NewBossLocale("Chromaggus", "deDE")
 if L then
-	L.bossName = "Chromaggus"
-
 	L.breath = "Atem"
 	L.breath_desc = "Warnung, wenn Chromaggus seinen Atem wirkt."
 
@@ -56,8 +30,6 @@ end
 
 L = BigWigs:NewBossLocale("NefarianBWL", "deDE")
 if L then
-	L.bossName = "Nefarian"
-
 	L.landing_soon_trigger = "Sehr gut, meine Diener"
 	L.landing_trigger = "BRENNT! Ihr Elenden!"
 	L.zerg_trigger = "Unmöglich! Erhebt euch"

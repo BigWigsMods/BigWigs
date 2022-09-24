@@ -1,13 +1,6 @@
-local L = BigWigs:NewBossLocale("Kurinnaxx", "zhTW")
+local L = BigWigs:NewBossLocale("General Rajaxx", "zhTW")
 if not L then return end
 if L then
-	L.bossName = "庫林納克斯"
-end
-
-local L = BigWigs:NewBossLocale("General Rajaxx", "zhTW")
-if L then
-	L.bossName = "拉賈克斯將軍"
-
 	L.wave = "來襲警報"
 	L.wave_desc = "當新一批敵人來襲時發出警報"
 
@@ -23,33 +16,19 @@ if L then
 	L.wave_message = "揮動敵人(%d)"
 end
 
-local L = BigWigs:NewBossLocale("Moam", "zhTW")
+L = BigWigs:NewBossLocale("Buru the Gorger", "zhTW")
 if L then
-	L.bossName = "莫阿姆"
+	L.fixate = "鎖定"
+	L.fixate_desc = "鎖定一個目標，忽視其他攻擊者的威脅。"
 end
 
-local L = BigWigs:NewBossLocale("Buru the Gorger", "zhTW")
+L = BigWigs:NewBossLocale("Ossirian the Unscarred", "zhTW")
 if L then
-	L.bossName = "『暴食者』布魯"
-
-	-- L.fixate = "Fixate"
-	-- L.fixate_desc = "Fixate on a target, ignoring threat from other attackers."
-end
-
-local L = BigWigs:NewBossLocale("Ayamiss the Hunter", "zhTW")
-if L then
-	L.bossName = "『狩獵者』阿亞米斯"
-end
-
-local L = BigWigs:NewBossLocale("Ossirian the Unscarred", "zhTW")
-if L then
-	L.bossName = "『無疤者』奧斯里安"
-
 	L.debuff = "虛弱警報"
 	L.debuff_desc = "無疤者奧斯里安受到虛弱效果影響時發出警報"
 end
 
-local L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "zhTW")
+L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "zhTW")
 if L then
-	-- L.guardian = "Anubisath Guardian"
+	L.guardian = "阿努比薩斯守衛者"
 end

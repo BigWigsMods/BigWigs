@@ -1,28 +1,6 @@
-local L = BigWigs:NewBossLocale("The Prophet Skeram", "zhCN")
+local L = BigWigs:NewBossLocale("Viscidus", "zhCN")
 if not L then return end
 if L then
-	L.bossName = "预言者斯克拉姆"
-end
-
-local L = BigWigs:NewBossLocale("Silithid Royalty", "zhCN")
-if L then
-	L.bossName = "安其拉三宝"
-end
-
-local L = BigWigs:NewBossLocale("Battleguard Sartura", "zhCN")
-if L then
-	L.bossName = "沙尔图拉"
-end
-
-local L = BigWigs:NewBossLocale("Fankriss the Unyielding", "zhCN")
-if L then
-	L.bossName = "顽强的范克瑞斯"
-end
-
-L = BigWigs:NewBossLocale("Viscidus", "zhCN")
-if L then
-	L.bossName = "维希度斯"
-
 	L.freeze = "冻结状态"
 	L.freeze_desc = "当冻结状态改变时发出警报。"
 
@@ -41,20 +19,8 @@ if L then
 	L.freeze_warn_frost = "%d冰霜攻击 - 还需%d下！"
 end
 
-local L = BigWigs:NewBossLocale("Princess Huhuran", "zhCN")
-if L then
-	L.bossName = "哈霍兰公主"
-end
-
-local L = BigWigs:NewBossLocale("The Twin Emperors", "zhCN")
-if L then
-	L.bossName = "双子皇帝"
-end
-
 L = BigWigs:NewBossLocale("Ouro", "zhCN")
 if L then
-	L.bossName = "奥罗"
-
 	L.engage_message = "奥罗已进入战斗！90秒后可能下潜！"
 
 	L.emerge = "出现"
@@ -73,8 +39,6 @@ end
 
 L = BigWigs:NewBossLocale("C'Thun", "zhCN")
 if L then
-	L.bossName = "克苏恩"
-
 	L.tentacle = "触须"
 	L.tentacle_desc = "触须警报。"
 

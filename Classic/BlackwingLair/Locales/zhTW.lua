@@ -19,8 +19,8 @@ L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "zhTW")
 if L then
 	L.bossName = "墮落的瓦拉斯塔茲"
 
-	-- L.warmup_trigger = "Too late, friends!"
-	-- L.warmup_message = "RP started, engaging in ~43s"
+	--L.warmup_trigger = "Too late, friends!"
+	--L.warmup_message = "RP started, engaging in ~43s"
 end
 
 L = BigWigs:NewBossLocale("Broodlord Lashlayer", "zhTW")
@@ -90,7 +90,7 @@ if L then
 	L.otherwarn = "其他警報"
 	L.otherwarn_desc = "降落及龍獸出現時發出警報"
 
-	-- L.add = "Drakonid deaths"
-	-- L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
+	--L.add = "Drakonid deaths"
+	--L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
 

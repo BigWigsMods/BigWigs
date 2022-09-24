@@ -3,20 +3,17 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Heigan the Unclean", 533)
+local mod = BigWigs:NewBoss("Heigan the Unclean", 533, 1605)
 if not mod then return end
 mod:RegisterEnableMob(15936)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1112)
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Heigan the Unclean"
-
 	L.starttrigger = "You are mine now."
 	L.starttrigger2 = "You... are next."
 	L.starttrigger3 = "I see you..."

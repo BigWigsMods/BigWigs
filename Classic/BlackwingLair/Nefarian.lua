@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("NefarianBWL", 469)
+local mod, CL = BigWigs:NewBoss("NefarianBWL", 469, 1536)
 if not mod then return end
 mod:RegisterEnableMob(11583, 10162) -- Nefarian, Lord Victor Nefarius
-mod:SetAllowWin(true)
 mod:SetEncounterID(617)
 
 --------------------------------------------------------------------------------
@@ -22,10 +21,8 @@ local total_adds = 42 -- this could be a magic number in the message function, b
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Nefarian"
-
 	L.landing_soon_trigger = "Well done, my minions"
 	L.landing_trigger = "BURN! You wretches"
 	L.zerg_trigger = "Impossible! Rise my"

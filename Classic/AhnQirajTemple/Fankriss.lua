@@ -3,20 +3,17 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Fankriss the Unyielding", 531)
+local mod = BigWigs:NewBoss("Fankriss the Unyielding", 531, 1545)
 if not mod then return end
 mod:RegisterEnableMob(15510)
-mod:SetAllowWin(true)
 mod:SetEncounterID(712)
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Fankriss the Unyielding"
-
 	L.worm = 25832 -- Summon Worm
 	L.worm_icon = "inv_misc_monstertail_03"
 end

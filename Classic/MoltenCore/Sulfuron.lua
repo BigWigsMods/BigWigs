@@ -3,21 +3,10 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Sulfuron Harbinger", 409)
+local mod = BigWigs:NewBoss("Sulfuron Harbinger", 409, 1525)
 if not mod then return end
 mod:RegisterEnableMob(12098)
-mod:SetAllowWin(true)
 mod:SetEncounterID(669)
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-	L.bossName = "Sulfuron Harbinger"
-end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

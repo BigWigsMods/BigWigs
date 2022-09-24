@@ -1,8 +1,6 @@
 local L = BigWigs:NewBossLocale("Razorgore the Untamed", "frFR")
 if not L then return end
 if L then
-	L.bossName = "Tranchetripe l'Indompté"
-
 	L.start_trigger = "Sonnez l'alarme"
 	L.start_message = "Tranchetripe engagé ! Gardes dans 45 sec. !"
 	L.start_soon = "Arrivée des gardes dans 5 sec. !"
@@ -17,47 +15,21 @@ end
 
 L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "frFR")
 if L then
-	L.bossName = "Vaelastrasz le Corrompu"
-
-	-- L.warmup_trigger = "Too late, friends!"
-	-- L.warmup_message = "RP started, engaging in ~43s"
-end
-
-L = BigWigs:NewBossLocale("Broodlord Lashlayer", "frFR")
-if L then
-	L.bossName = "Seigneur des couvées Lanistaire"
-end
-
-L = BigWigs:NewBossLocale("Firemaw", "frFR")
-if L then
-	L.bossName = "Gueule-de-feu"
-end
-
-L = BigWigs:NewBossLocale("Ebonroc", "frFR")
-if L then
-	L.bossName = "Rochébène"
-end
-
-L = BigWigs:NewBossLocale("Flamegor", "frFR")
-if L then
-	L.bossName = "Flamegor"
+	--L.warmup_trigger = "Too late, friends!"
+	--L.warmup_message = "RP started, engaging in ~43s"
 end
 
 L = BigWigs:NewBossLocale("Chromaggus", "frFR")
 if L then
-	L.bossName = "Chromaggus"
-
 	L.breath = "Souffles"
 	L.breath_desc = "Préviens de l'arrivée des souffles."
 
-	-- L.debuffs_message = "3/5 debuffs, carefull!"
-	-- L.debuffs_warning = "4/5 debuffs, %s on 5th!"
+	--L.debuffs_message = "3/5 debuffs, carefull!"
+	--L.debuffs_warning = "4/5 debuffs, %s on 5th!"
 end
 
 L = BigWigs:NewBossLocale("NefarianBWL", "frFR")
 if L then
-	L.bossName = "Nefarian"
-
 	L.landing_soon_trigger = "Beau travail"
 	L.landing_trigger = "BRÛLEZ, misérables"
 	L.zerg_trigger = "C'est impossible ! Relevez%-vous, serviteurs !"
@@ -90,7 +62,6 @@ if L then
 	L.otherwarn = "Atterissage et zerg"
 	L.otherwarn_desc = "Préviens quand les Zergs arrivent et quand Nefarian atterit."
 
-	-- L.add = "Drakonid deaths"
-	-- L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
+	--L.add = "Drakonid deaths"
+	--L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
-

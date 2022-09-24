@@ -2,21 +2,10 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Patchwerk", 533)
+local mod, CL = BigWigs:NewBoss("Patchwerk", 533, 1610)
 if not mod then return end
 mod:RegisterEnableMob(16028)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1118)
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-	L.bossName = "Patchwerk"
-end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

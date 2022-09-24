@@ -1,13 +1,6 @@
-local L = BigWigs:NewBossLocale("Kurinnaxx", "zhCN")
+local L = BigWigs:NewBossLocale("General Rajaxx", "zhCN")
 if not L then return end
 if L then
-	L.bossName = "库林纳克斯"
-end
-
-local L = BigWigs:NewBossLocale("General Rajaxx", "zhCN")
-if L then
-	L.bossName = "拉贾克斯将军"
-
 	L.wave = "来袭警报"
 	L.wave_desc = "当新一批敌人来袭时发出警报。"
 
@@ -23,33 +16,19 @@ if L then
 	L.wave_message = "来袭敌人（%d）"
 end
 
-local L = BigWigs:NewBossLocale("Moam", "zhCN")
+L = BigWigs:NewBossLocale("Buru the Gorger", "zhCN")
 if L then
-	L.bossName = "莫阿姆"
-end
-
-local L = BigWigs:NewBossLocale("Buru the Gorger", "zhCN")
-if L then
-	L.bossName = "吞咽者布鲁"
-
 	L.fixate = "锁定"
 	L.fixate_desc = "锁定一个目标，忽视其他攻击者的威胁。"
 end
 
-local L = BigWigs:NewBossLocale("Ayamiss the Hunter", "zhCN")
+L = BigWigs:NewBossLocale("Ossirian the Unscarred", "zhCN")
 if L then
-	L.bossName = "狩猎者阿亚米斯"
-end
-
-local L = BigWigs:NewBossLocale("Ossirian the Unscarred", "zhCN")
-if L then
-	L.bossName = "无疤者奥斯里安"
-
 	L.debuff = "虚弱"
 	L.debuff_desc = "当各种虚弱类型时发出警报。"
 end
 
-local L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "zhCN")
+L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "zhCN")
 if L then
 	L.guardian = "阿努比萨斯守卫者"
 end

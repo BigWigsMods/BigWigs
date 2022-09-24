@@ -3,10 +3,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Ragnaros", 409)
+local mod, CL = BigWigs:NewBoss("Ragnaros", 409, 1528)
 if not mod then return end
 mod:RegisterEnableMob(11502, 12018)
-mod:SetAllowWin(true)
 mod:SetEncounterID(672)
 
 --------------------------------------------------------------------------------
@@ -20,10 +19,8 @@ local timer = nil
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Ragnaros"
-
 	L.warmup_icon = "spell_fire_lavaspawn"
 	L.warmup_message = "RP started, engaging in ~73s"
 

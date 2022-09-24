@@ -3,21 +3,10 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Twin Emperors", 531)
+local mod, CL = BigWigs:NewBoss("The Twin Emperors", 531, 1549)
 if not mod then return end
 mod:RegisterEnableMob(15275, 15276) -- Emperor Vek'nilash, Emperor Vek'lor
-mod:SetAllowWin(true)
 mod:SetEncounterID(715)
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-	L.bossName = "The Twin Emperors"
-end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -1,24 +1,18 @@
 local L = BigWigs:NewBossLocale("Anub'Rekhan", "deDE")
 if not L then return end
 if L then
-	L.bossName = "Anub'Rekhan"
-
 	L.gainwarn10sec = "Heuschreckenschwarm in ~10 sek!"
 	L.gainincbar = "~Nächster Schwarm"
 end
 
 L = BigWigs:NewBossLocale("Grand Widow Faerlina", "deDE")
 if L then
-	L.bossName = "Großwitwe Faerlina"
-
 	L.silencewarn = "Stille! Raserei verzögert!"
 	L.silencewarn5sec = "Stille endet in 5 sek!"
 end
 
 L = BigWigs:NewBossLocale("Gluth", "deDE")
 if L then
-	L.bossName = "Gluth"
-
 	L.startwarn = "Gluth angegriffen! ~105 sek bis Dezimieren!"
 
 	L.decimate_bar = "Dezimieren"
@@ -26,8 +20,6 @@ end
 
 L = BigWigs:NewBossLocale("Gothik the Harvester", "deDE")
 if L then
-	L.bossName = "Gothik der Ernter"
-
 	L.room = "Ankunft"
 	L.room_desc = "Warnungen und Timer für die Ankunft von Gothik im Raum."
 
@@ -75,15 +67,11 @@ end
 
 L = BigWigs:NewBossLocale("Grobbulus", "deDE")
 if L then
-	L.bossName = "Grobbulus"
-
 	L.bomb_message = "Injektion"
 end
 
 L = BigWigs:NewBossLocale("Heigan the Unclean", "deDE")
 if L then
-	L.bossName = "Heigan der Unreine"
-
 	L.starttrigger = "Ihr gehört mir..."
 	L.starttrigger2 = "Ihr seid.... als nächstes dran."
 	L.starttrigger3 = "Ihr entgeht mir nicht..."
@@ -110,8 +98,6 @@ end
 
 L = BigWigs:NewBossLocale("The Four Horsemen", "deDE")
 if L then
-	L.bossName = "Die Vier Reiter"
-
 	L.mark = "Male"
 	L.mark_desc = "Warnungen und Timer für die Male."
 
@@ -124,7 +110,6 @@ end
 
 L = BigWigs:NewBossLocale("Kel'Thuzad", "deDE")
 if L then
-	L.bossName = "Kel'Thuzad"
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzads Gemächer"
 
 	L.start_trigger = "Lakaien, Diener, Soldaten der eisigen Finsternis! Folgt dem Ruf von Kel'Thuzad!"
@@ -149,8 +134,6 @@ end
 
 L = BigWigs:NewBossLocale("Loatheb", "deDE")
 if L then
-	L.bossName = "Loatheb"
-
 	L.startwarn = "Loatheb angegriffen! 2 min bis Unausweichliches Schicksal!"
 
 	L.doom_5sec_warn = "Unausweichliches Schicksal (%d) in 5 sek!"
@@ -165,8 +148,6 @@ end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "deDE")
 if L then
-	L.bossName = "Noth der Seuchenfürst"
-
 	L.starttrigger1 = "Sterbt, Eindringling!"
 	L.starttrigger2 = "Ehre unserem Meister!"
 	L.starttrigger3 = "Euer Leben ist verwirkt!"
@@ -199,15 +180,8 @@ if L then
 	L.wave2_message = "Welle 2 in 10 sek!"
 end
 
-L = BigWigs:NewBossLocale("Patchwerk", "deDE")
-if L then
-	L.bossName = "Flickwerk"
-end
-
 L = BigWigs:NewBossLocale("Maexxna", "deDE")
 if L then
-	L.bossName = "Maexxna"
-
 	L.webspraywarn30sec = "Fangnetz in 10 sek!"
 	L.webspraywarn20sec = "Fangnetz! Spinnen in 10 sek!"
 	L.webspraywarn10sec = "Spinnen! Gespinstschauer in 10 sek!"
@@ -221,8 +195,6 @@ end
 
 L = BigWigs:NewBossLocale("Sapphiron", "deDE")
 if L then
-	L.bossName = "Saphiron"
-
 	L.deepbreath_trigger = "%s atmet tief ein..."
 
 	L.air_phase = "Luftphase"
@@ -237,7 +209,6 @@ end
 
 L = BigWigs:NewBossLocale("Instructor Razuvious", "deDE")
 if L then
-	L.bossName = "Instrukteur Razuvious"
 	L.understudy = "Reservist der Todesritter"
 
 	L.taunt_warning = "Spott bereit in 5 sek!"
@@ -246,8 +217,6 @@ end
 
 L = BigWigs:NewBossLocale("Thaddius", "deDE")
 if L then
-	L.bossName = "Thaddius"
-
 	L.trigger_phase1_1 = "Stalagg zerquetschen!"
 	L.trigger_phase1_2 = "Verfüttere euch an Meister!"
 	L.trigger_phase2_1 = "Eure... Knochen... zermalmen..."
@@ -293,7 +262,6 @@ if L then
 	L.custom_off_charge_voice = "Sprachwarnung"
 	L.custom_off_charge_voice_desc = "Spielt eine Sprachwarnung ab."
 
-	-- Translate these to get locale sound files!
 	L.left = "<--- Nach Links <--- Nach Links <---"
 	L.right = "---> Nach Rechts ---> Nach Rechts --->"
 	L.swap = "^^^^ Seitenwechseln ^^^^ Seitenwechseln ^^^^"

@@ -3,21 +3,10 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Ayamiss the Hunter", 509)
+local mod, CL = BigWigs:NewBoss("Ayamiss the Hunter", 509, 1541)
 if not mod then return end
 mod:RegisterEnableMob(15369)
-mod:SetAllowWin(true)
 mod:SetEncounterID(722)
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-	L.bossName = "Ayamiss the Hunter"
-end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

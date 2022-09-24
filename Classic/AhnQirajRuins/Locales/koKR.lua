@@ -1,13 +1,6 @@
-local L = BigWigs:NewBossLocale("Kurinnaxx", "koKR")
+local L = BigWigs:NewBossLocale("General Rajaxx", "koKR")
 if not L then return end
 if L then
-	L.bossName = "쿠린낙스"
-end
-
-local L = BigWigs:NewBossLocale("General Rajaxx", "koKR")
-if L then
-	L.bossName = "장군 라작스"
-
 	L.wave = "단계 알림"
 	L.wave_desc = "단계에 대한 알림"
 
@@ -23,33 +16,19 @@ if L then
 	L.wave_message = "단계 (%d/8)"
 end
 
-local L = BigWigs:NewBossLocale("Moam", "koKR")
+L = BigWigs:NewBossLocale("Buru the Gorger", "koKR")
 if L then
-	L.bossName = "모암"
-end
-
-local L = BigWigs:NewBossLocale("Buru the Gorger", "koKR")
-if L then
-	L.bossName = "먹보 부루"
-
 	L.fixate = "시선 고정"
 	L.fixate_desc = "대상에게 시선을 고정합니다. 다른 공격자의 위협은 무시합니다."
 end
 
-local L = BigWigs:NewBossLocale("Ayamiss the Hunter", "koKR")
+L = BigWigs:NewBossLocale("Ossirian the Unscarred", "koKR")
 if L then
-	L.bossName = "사냥꾼 아야미스"
-end
-
-local L = BigWigs:NewBossLocale("Ossirian the Unscarred", "koKR")
-if L then
-	L.bossName = "무적의 오시리안"
-
 	L.debuff = "약화마법 경고"
 	L.debuff_desc = "약화마법에 대한 경고"
 end
 
-local L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "koKR")
+L = BigWigs:NewBossLocale("Ruins of Ahn'Qiraj Trash", "koKR")
 if L then
 	L.guardian = "아누비사스 감시자"
 end

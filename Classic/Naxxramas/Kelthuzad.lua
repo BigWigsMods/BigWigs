@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Kel'Thuzad", 533)
+local mod, CL = BigWigs:NewBoss("Kel'Thuzad", 533, 1615)
 if not mod then return end
 mod:RegisterEnableMob(15990)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1114)
 
 --------------------------------------------------------------------------------
@@ -19,9 +18,8 @@ local mcTargets = mod:NewTargetList()
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Kel'Thuzad"
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Kel'Thuzad's Chamber"
 
 	L.start_trigger = "Minions, servants, soldiers of the cold dark! Obey the call of Kel'Thuzad!"

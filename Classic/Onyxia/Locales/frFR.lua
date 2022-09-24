@@ -1,7 +1,5 @@
 local L = BigWigs:NewBossLocale("Onyxia", "frFR")
 if L then
-	L.bossName = "Onyxia"
-
 	L.phase = "Phases"
 	L.phase_desc = "Prévient quand la rencontre change de phase."
 	L.phase2_message = "65% - Arrivée de la phase 2 !"

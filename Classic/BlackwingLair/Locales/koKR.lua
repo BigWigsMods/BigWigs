@@ -19,8 +19,8 @@ L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "koKR")
 if L then
 	L.bossName = "타락한 밸라스트라즈"
 
-	-- L.warmup_trigger = "Too late, friends!"
-	-- L.warmup_message = "RP started, engaging in ~43s"
+	--L.warmup_trigger = "Too late, friends!"
+	--L.warmup_message = "RP started, engaging in ~43s"
 end
 
 L = BigWigs:NewBossLocale("Broodlord Lashlayer", "koKR")
@@ -50,8 +50,8 @@ if L then
 	L.breath = "브레스 경고"
 	L.breath_desc = "브레스에 대한 경고"
 
-	-- L.debuffs_message = "3/5 debuffs, carefull!"
-	-- L.debuffs_warning = "4/5 debuffs, %s on 5th!"
+	--L.debuffs_message = "3/5 debuffs, carefull!"
+	--L.debuffs_warning = "4/5 debuffs, %s on 5th!"
 end
 
 L = BigWigs:NewBossLocale("NefarianBWL", "koKR")
@@ -90,7 +90,7 @@ if L then
 	L.otherwarn = "기타 경고"
 	L.otherwarn_desc = "착지와 소환에 대한 경고"
 
-	-- L.add = "Drakonid deaths"
-	-- L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
+	--L.add = "Drakonid deaths"
+	--L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
 

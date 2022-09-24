@@ -3,21 +3,10 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Garr", 409)
+local mod = BigWigs:NewBoss("Garr", 409, 1522)
 if not mod then return end
 mod:RegisterEnableMob(12057)
-mod:SetAllowWin(true)
 mod:SetEncounterID(666)
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-	L.bossName = "Garr"
-end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

@@ -2,20 +2,17 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Grobbulus", 533)
+local mod = BigWigs:NewBoss("Grobbulus", 533, 1611)
 if not mod then return end
 mod:RegisterEnableMob(15931)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1111)
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Grobbulus"
-
 	L.bomb_message = "Injection"
 end
 L = mod:GetLocale()

@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Thaddius", 533)
+local mod, CL = BigWigs:NewBoss("Thaddius", 533, 1613)
 if not mod then return end
 mod:RegisterEnableMob(15928, 15929, 15930) -- Thaddius, Stalagg, Feugen
-mod:SetAllowWin(true)
 mod:SetEncounterID(1120)
 
 --------------------------------------------------------------------------------
@@ -20,7 +19,7 @@ local strategy = {}
 
 local ADDON_PATH = "Interface\\AddOns\\BigWigs_Naxxramas"
 if select(5, GetAddOnInfo("BigWigs_Naxxramas")) == "MISSING" then -- we lod or checkout?
-	ADDON_PATH = "Interface\\AddOns\\BigWigs\\Naxxramas"
+	ADDON_PATH = "Interface\\AddOns\\BigWigs\\Classic\\Naxxramas"
 end
 
 local ICON_POSITIVE = 135769 -- "Interface\\Icons\\Spell_ChargePositive"
@@ -69,6 +68,8 @@ local DIRECTION_ARROW = {
 		frame:Show()
 		mod:SimpleTimer(function() mod.arrow:Hide() end, 4)
 	end,
+	stay = function()
+	end,
 }
 
 local INITIAL_DIRECTION = {
@@ -81,7 +82,7 @@ local INITIAL_DIRECTION = {
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
 	L.bossName = "Thaddius"
 

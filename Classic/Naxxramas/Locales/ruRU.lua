@@ -1,24 +1,18 @@
 local L = BigWigs:NewBossLocale("Anub'Rekhan", "ruRU")
 if not L then return end
 if L then
-	L.bossName = "Ануб'Рекан"
-
 	L.gainwarn10sec = "~10 до жуков-трупоедов"
 	L.gainincbar = "Следующая волна жуков-трупоедов"
 end
 
 L = BigWigs:NewBossLocale("Grand Widow Faerlina", "ruRU")
 if L then
-	L.bossName = "Великая вдова Фарлина"
-
 	L.silencewarn = "Безмолвие! Задержка ярости!"
 	L.silencewarn5sec = "Безмолвие закончится через 5 секунд"
 end
 
 L = BigWigs:NewBossLocale("Gluth", "ruRU")
 if L then
-	L.bossName = "Глут"
-
 	L.startwarn = "Глут вступает в бой! ~105 cекунд до появления зомби!"
 
 	L.decimate_bar = "Истребление зомби"
@@ -26,8 +20,6 @@ end
 
 L = BigWigs:NewBossLocale("Gothik the Harvester", "ruRU")
 if L then
-	L.bossName = "Готик Жнец"
-
 	L.room = "Прибытие Готика"
 	L.room_desc = "Сообщать о прибытии Готика"
 
@@ -75,15 +67,11 @@ end
 
 L = BigWigs:NewBossLocale("Grobbulus", "ruRU")
 if L then
-	L.bossName = "Гроббулус"
-
 	L.bomb_message = "Укол"
 end
 
 L = BigWigs:NewBossLocale("Heigan the Unclean", "ruRU")
 if L then
-	L.bossName = "Хейган Нечестивый"
-
 	L.starttrigger = "Теперь вы принадлежите мне!"
 	L.starttrigger2 = "Пришло ваше время..."
 	L.starttrigger3 = "Я вижу вас..."
@@ -110,8 +98,6 @@ end
 
 L = BigWigs:NewBossLocale("The Four Horsemen", "ruRU")
 if L then
-	L.bossName = "Четыре всадника"
-
 	L.mark = "Знак"
 	L.mark_desc = "Предупреждать о знаках."
 
@@ -124,7 +110,6 @@ end
 
 L = BigWigs:NewBossLocale("Kel'Thuzad", "ruRU")
 if L then
-	L.bossName = "Кел'Тузад"
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "Зал Кел'Тузада"
 
 	L.start_trigger = "Соратники слуги солдаты холодной тьмы! Повинуйтесь зову Кел'Тузада!"
@@ -149,8 +134,6 @@ end
 
 L = BigWigs:NewBossLocale("Loatheb", "ruRU")
 if L then
-	L.bossName = "Лотхиб"
-
 	L.startwarn = "Лотхиб вступает в бой, 2 минуты до неотвратимого рока!"
 
 	L.doom_5sec_warn = "Неотвратимый рок %d через 5 секунд!"
@@ -158,15 +141,13 @@ if L then
 	L.doomtime_warn = "Рок теперь каждые %s секунд!"
 	L.doomtime_now = "Рок теперь накладывается каждые 15 секунд!"
 
-	-- L.remove_curse = "Curses removed on Loatheb"
+	--L.remove_curse = "Curses removed on Loatheb"
 
 	L.spore_warn = "Появляется %d спора"
 end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "ruRU")
 if L then
-	L.bossName = "Нот Чумной"
-
 	L.starttrigger1 = "Смерть чужакам!"
 	L.starttrigger2 = "Слава господину!"
 	L.starttrigger3 = "Прощайся с жизнью!"
@@ -199,15 +180,8 @@ if L then
 	L.wave2_message = "2-я волна через 10 сек"
 end
 
-L = BigWigs:NewBossLocale("Patchwerk", "ruRU")
-if L then
-	L.bossName = "Лоскутик"
-end
-
 L = BigWigs:NewBossLocale("Maexxna", "ruRU")
 if L then
-	L.bossName = "Мексна"
-
 	L.webspraywarn30sec = "Паутина через 10 секунд"
 	L.webspraywarn20sec = "Паутина! 10 секунд до появления пауков!"
 	L.webspraywarn10sec = "Пауки! 10 секунд до паутины!"
@@ -221,12 +195,10 @@ end
 
 L = BigWigs:NewBossLocale("Sapphiron", "ruRU")
 if L then
-	L.bossName = "Сапфирон"
-
 	L.deepbreath_trigger = "%s глубоко вздыхает."
 
-	-- L.air_phase = "Air phase"
-	-- L.ground_phase = "Ground phase"
+	--L.air_phase = "Air Phase"
+	--L.ground_phase = "Ground Phase"
 
 	L.deepbreath = "Ледяная бомба"
 	L.deepbreath_warning = "Появляется ледяная бомба!"
@@ -237,7 +209,6 @@ end
 
 L = BigWigs:NewBossLocale("Instructor Razuvious", "ruRU")
 if L then
-	L.bossName = "Инструктор Разувий"
 	L.understudy = "Ученик рыцаря смерти"
 
 	L.taunt_warning = "Провокация закончится через 5сек!"
@@ -246,8 +217,6 @@ end
 
 L = BigWigs:NewBossLocale("Thaddius", "ruRU")
 if L then
-	L.bossName = "Таддиус"
-
 	L.trigger_phase1_1 = "Сталагг тебя раздавит!"
 	L.trigger_phase1_2 = "На корм хозяину!"
 	L.trigger_phase2_1 = "Отведайте... своих... костей..."
@@ -271,31 +240,31 @@ if L then
 	L.throw_desc = "Предупреждать о смене танков на платформах."
 	L.throw_warning = "Бросок через 5 секунд!"
 
-	-- L.polarity_extras = "Additional alerts for Polarity Shift positioning"
+	--L.polarity_extras = "Additional alerts for Polarity Shift positioning"
 
-	-- L.custom_off_select_charge_position = "First position"
-	-- L.custom_off_select_charge_position_desc = "Where to move to after the first Polarity Shift."
-	-- L.custom_off_select_charge_position_value1 = "|cffff2020Negative (-)|r are LEFT, |cff2020ffPositive (+)|r are RIGHT"
-	-- L.custom_off_select_charge_position_value2 = "|cff2020ffPositive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT"
+	--L.custom_off_select_charge_position = "First position"
+	--L.custom_off_select_charge_position_desc = "Where to move to after the first Polarity Shift."
+	--L.custom_off_select_charge_position_value1 = "|cffff2020Negative (-)|r are LEFT, |cff2020ffPositive (+)|r are RIGHT"
+	--L.custom_off_select_charge_position_value2 = "|cff2020ffPositive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT"
 
-	-- L.custom_off_select_charge_movement = "Movement"
-	-- L.custom_off_select_charge_movement_desc = "The movement strategy your group uses."
-	-- L.custom_off_select_charge_movement_value1 = "Run |cff20ff20THROUGH|r the boss"
-	-- L.custom_off_select_charge_movement_value2 = "Run |cff20ff20CLOCKWISE|r around the boss"
-	-- L.custom_off_select_charge_movement_value3 = "Run |cff20ff20COUNTER-CLOCKWISE|r around the boss"
-	-- L.custom_off_select_charge_movement_value4 = "Four camps 1: Polarity changed moves |cff20ff20RIGHT|r, same polarity moves |cff20ff20LEFT|r"
-	-- L.custom_off_select_charge_movement_value5 = "Four camps 2: Polarity changed moves |cff20ff20LEFT|r, same polarity moves |cff20ff20RIGHT|r"
+	--L.custom_off_select_charge_movement = "Movement"
+	--L.custom_off_select_charge_movement_desc = "The movement strategy your group uses."
+	--L.custom_off_select_charge_movement_value1 = "Run |cff20ff20THROUGH|r the boss"
+	--L.custom_off_select_charge_movement_value2 = "Run |cff20ff20CLOCKWISE|r around the boss"
+	--L.custom_off_select_charge_movement_value3 = "Run |cff20ff20COUNTER-CLOCKWISE|r around the boss"
+	--L.custom_off_select_charge_movement_value4 = "Four camps 1: Polarity changed moves |cff20ff20RIGHT|r, same polarity moves |cff20ff20LEFT|r"
+	--L.custom_off_select_charge_movement_value5 = "Four camps 2: Polarity changed moves |cff20ff20LEFT|r, same polarity moves |cff20ff20RIGHT|r"
 
-	-- L.custom_off_charge_graphic = "Graphical arrow"
-	-- L.custom_off_charge_graphic_desc = "Show an arrow graphic."
-	-- L.custom_off_charge_text = "Text arrows"
-	-- L.custom_off_charge_text_desc = "Show an additional message."
-	-- L.custom_off_charge_voice = "Voice alert"
-	-- L.custom_off_charge_voice_desc = "Play a voice alert."
+	--L.custom_off_charge_graphic = "Graphical arrow"
+	--L.custom_off_charge_graphic_desc = "Show an arrow graphic."
+	--L.custom_off_charge_text = "Text arrows"
+	--L.custom_off_charge_text_desc = "Show an additional message."
+	--L.custom_off_charge_voice = "Voice alert"
+	--L.custom_off_charge_voice_desc = "Play a voice alert."
 
-	-- Translate these to get locale sound files!
-	-- L.left = "<--- GO LEFT <--- GO LEFT <---"
-	-- L.right = "---> GO RIGHT ---> GO RIGHT --->"
-	-- L.swap = "^^^^ SWITCH SIDES ^^^^ SWITCH SIDES ^^^^"
-	-- L.stay = "==== DON'T MOVE ==== DON'T MOVE ===="
+	--Translate these to get locale sound files!
+	--L.left = "<--- GO LEFT <--- GO LEFT <---"
+	--L.right = "---> GO RIGHT ---> GO RIGHT --->"
+	--L.swap = "^^^^ SWITCH SIDES ^^^^ SWITCH SIDES ^^^^"
+	--L.stay = "==== DON'T MOVE ==== DON'T MOVE ===="
 end

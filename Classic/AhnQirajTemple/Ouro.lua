@@ -3,20 +3,17 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Ouro", 531)
+local mod, CL = BigWigs:NewBoss("Ouro", 531, 1550)
 if not mod then return end
 mod:RegisterEnableMob(15517)
-mod:SetAllowWin(true)
 mod:SetEncounterID(716)
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Ouro"
-
 	L.engage_message = "Ouro engaged! Possible Submerge in 90sec!"
 
 	L.emerge = "Emerge"

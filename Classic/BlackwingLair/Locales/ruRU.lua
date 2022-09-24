@@ -19,8 +19,8 @@ L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "ruRU")
 if L then
 	L.bossName = "Валестраз Порочный"
 
-	-- L.warmup_trigger = "Too late, friends!"
-	-- L.warmup_message = "RP started, engaging in ~43s"
+	--L.warmup_trigger = "Too late, friends!"
+	--L.warmup_message = "RP started, engaging in ~43s"
 end
 
 L = BigWigs:NewBossLocale("Broodlord Lashlayer", "ruRU")
@@ -50,8 +50,8 @@ if L then
 	L.breath = "Дыхание"
 	L.breath_desc = "Сообщать о дыхании."
 
-	-- L.debuffs_message = "3/5 debuffs, carefull!"
-	-- L.debuffs_warning = "4/5 debuffs, %s on 5th!"
+	--L.debuffs_message = "3/5 debuffs, carefull!"
+	--L.debuffs_warning = "4/5 debuffs, %s on 5th!"
 end
 
 L = BigWigs:NewBossLocale("NefarianBWL", "ruRU")
@@ -90,7 +90,7 @@ if L then
 	L.otherwarn = "Приземление и зерг"
 	L.otherwarn_desc = "Предупреждать об опасности приземления и зерга."
 
-	-- L.add = "Drakonid deaths"
-	-- L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
+	--L.add = "Drakonid deaths"
+	--L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
 

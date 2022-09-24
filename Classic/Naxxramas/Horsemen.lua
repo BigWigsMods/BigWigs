@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("The Four Horsemen", 533)
+local mod, CL = BigWigs:NewBoss("The Four Horsemen", 533, 1609)
 if not mod then return end
 mod:RegisterEnableMob(16062, 16063, 16064, 16065) -- Mograine, Zeliek, Thane, Blaumeux
-mod:SetAllowWin(true)
 mod:SetEncounterID(1121)
 
 --------------------------------------------------------------------------------
@@ -19,10 +18,8 @@ local marks = 1
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "The Four Horsemen"
-
 	L.mark = "Mark"
 	L.mark_desc = "Warn for marks."
 	L.mark_icon = 28835 -- Mark of Zeliek

@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod = BigWigs:NewBoss("Gothik the Harvester", 533)
+local mod = BigWigs:NewBoss("Gothik the Harvester", 533, 1608)
 if not mod then return end
 mod:RegisterEnableMob(16060)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1109)
 
 --------------------------------------------------------------------------------
@@ -19,7 +18,7 @@ local numTrainer, numDK, numRider = 1, 1, 1
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
 	L.bossName = "Gothik the Harvester"
 

@@ -1,24 +1,18 @@
 local L = BigWigs:NewBossLocale("Anub'Rekhan", "koKR")
 if not L then return end
 if L then
-	L.bossName = "아눕레칸"
-
 	L.gainwarn10sec = "10초 이내 메뚜기 떼"
 	L.gainincbar = "다음 메뚜기 떼"
 end
 
 L = BigWigs:NewBossLocale("Grand Widow Faerlina", "koKR")
 if L then
-	L.bossName = "귀부인 팰리나"
-
 	L.silencewarn = "침묵!"
 	L.silencewarn5sec = "5초 후 침묵 종료!"
 end
 
 L = BigWigs:NewBossLocale("Gluth", "koKR")
 if L then
-	L.bossName = "글루스"
-
 	L.startwarn = "글루스 전투 시작! 약 105초 후 좀비 척살!"
 
 	L.decimate_bar = "좀비 척살"
@@ -26,8 +20,6 @@ end
 
 L = BigWigs:NewBossLocale("Gothik the Harvester", "koKR")
 if L then
-	L.bossName = "영혼 착취자 고딕"
-
 	L.room = "고딕 등장 알림"
 	L.room_desc = "고딕 등장을 알립니다."
 
@@ -75,15 +67,11 @@ end
 
 L = BigWigs:NewBossLocale("Grobbulus", "koKR")
 if L then
-	L.bossName = "그라불루스"
-
 	L.bomb_message = "돌연변이 유발"
 end
 
 L = BigWigs:NewBossLocale("Heigan the Unclean", "koKR")
 if L then
-	L.bossName = "부정의 헤이건"
-
 	L.starttrigger = "이제 넌 내 것이다."
 	L.starttrigger2 = "다음은... 너다."
 	L.starttrigger3 = "네가 보인다..."
@@ -110,8 +98,6 @@ end
 
 L = BigWigs:NewBossLocale("The Four Horsemen", "koKR")
 if L then
-	L.bossName = "4인 기사단"
-
 	L.mark = "징표"
 	L.mark_desc = "징표를 알립니다."
 
@@ -124,7 +110,6 @@ end
 
 L = BigWigs:NewBossLocale("Kel'Thuzad", "koKR")
 if L then
-	L.bossName = "켈투자드"
 	L.KELTHUZADCHAMBERLOCALIZEDLOLHAX = "켈투자드의 방"
 
 	L.start_trigger = "어둠의 문지기와 하수인, 그리고 병사들이여! 나 켈투자드가 부르니 명을 받들라!"
@@ -149,8 +134,6 @@ end
 
 L = BigWigs:NewBossLocale("Loatheb", "koKR")
 if L then
-	L.bossName = "로데브"
-
 	L.startwarn = "로데브 전투시작!, 2분 후 피할 수 없는 파멸!"
 
 	L.doom_5sec_warn = "5초 후 피할 수 없는 파멸 %d!"
@@ -165,8 +148,6 @@ end
 
 L = BigWigs:NewBossLocale("Noth the Plaguebringer", "koKR")
 if L then
-	L.bossName = "역병술사 노스"
-
 	L.starttrigger1 = "죽어라, 침입자들아!"
 	L.starttrigger2 = "주인님께 영광을!"
 	L.starttrigger3 = "너희 생명은 끝이다!"
@@ -199,15 +180,8 @@ if L then
 	L.wave2_message = "10초 이내 웨이브 2"
 end
 
-L = BigWigs:NewBossLocale("Patchwerk", "koKR")
-if L then
-	L.bossName = "패치워크"
-end
-
 L = BigWigs:NewBossLocale("Maexxna", "koKR")
 if L then
-	L.bossName = "맥스나"
-
 	L.webspraywarn30sec = "10초 이내 거미줄 감싸기"
 	L.webspraywarn20sec = "거미줄 감싸기. 10초 후 거미 소환!"
 	L.webspraywarn10sec = "거미 소환. 10초 후 거미줄 뿌리기!"
@@ -221,12 +195,10 @@ end
 
 L = BigWigs:NewBossLocale("Sapphiron", "koKR")
 if L then
-	L.bossName = "사피론"
-
 	L.deepbreath_trigger = "%s|1이;가; 숨을 깊게 들이쉽니다."
 
-	-- L.air_phase = "Air phase"
-	-- L.ground_phase = "Ground phase"
+	--L.air_phase = "Air Phase"
+	--L.ground_phase = "Ground Phase"
 
 	L.deepbreath = "얼음 폭탄"
 	L.deepbreath_warning = "잠시 후 얼음 폭탄!"
@@ -237,7 +209,6 @@ end
 
 L = BigWigs:NewBossLocale("Instructor Razuvious", "koKR")
 if L then
-	L.bossName = "훈련교관 라주비어스"
 	L.understudy = "죽음의 기사 수습생"
 
 	L.taunt_warning = "5초 후 도발 종료!"
@@ -246,8 +217,6 @@ end
 
 L = BigWigs:NewBossLocale("Thaddius", "koKR")
 if L then
-	L.bossName = "타디우스"
-
 	L.trigger_phase1_1 = "스탈라그, 박살낸다!"
 	L.trigger_phase1_2 = "너 주인님께 바칠꺼야!"
 	L.trigger_phase2_1 = "잡아... 먹어주마..."
@@ -271,29 +240,28 @@ if L then
 	L.throw_desc = "탱커 위치 교체를 알립니다."
 	L.throw_warning = "약 5초 후 던지기!"
 
-	-- L.polarity_extras = "Additional alerts for Polarity Shift positioning"
+	--L.polarity_extras = "Additional alerts for Polarity Shift positioning"
 
-	-- L.custom_off_select_charge_position = "First position"
-	-- L.custom_off_select_charge_position_desc = "Where to move to after the first Polarity Shift."
-	-- L.custom_off_select_charge_position_value1 = "|cffff2020Negative (-)|r are LEFT, |cff2020ffPositive (+)|r are RIGHT"
-	-- L.custom_off_select_charge_position_value2 = "|cff2020ffPositive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT"
+	--L.custom_off_select_charge_position = "First position"
+	--L.custom_off_select_charge_position_desc = "Where to move to after the first Polarity Shift."
+	--L.custom_off_select_charge_position_value1 = "|cffff2020Negative (-)|r are LEFT, |cff2020ffPositive (+)|r are RIGHT"
+	--L.custom_off_select_charge_position_value2 = "|cff2020ffPositive (+)|r are LEFT, |cffff2020Negative (-)|r are RIGHT"
 
-	-- L.custom_off_select_charge_movement = "Movement"
-	-- L.custom_off_select_charge_movement_desc = "The movement strategy your group uses."
-	-- L.custom_off_select_charge_movement_value1 = "Run |cff20ff20THROUGH|r the boss"
-	-- L.custom_off_select_charge_movement_value2 = "Run |cff20ff20CLOCKWISE|r around the boss"
-	-- L.custom_off_select_charge_movement_value3 = "Run |cff20ff20COUNTER-CLOCKWISE|r around the boss"
-	-- L.custom_off_select_charge_movement_value4 = "Four camps 1: Polarity changed moves |cff20ff20RIGHT|r, same polarity moves |cff20ff20LEFT|r"
-	-- L.custom_off_select_charge_movement_value5 = "Four camps 2: Polarity changed moves |cff20ff20LEFT|r, same polarity moves |cff20ff20RIGHT|r"
+	--L.custom_off_select_charge_movement = "Movement"
+	--L.custom_off_select_charge_movement_desc = "The movement strategy your group uses."
+	--L.custom_off_select_charge_movement_value1 = "Run |cff20ff20THROUGH|r the boss"
+	--L.custom_off_select_charge_movement_value2 = "Run |cff20ff20CLOCKWISE|r around the boss"
+	--L.custom_off_select_charge_movement_value3 = "Run |cff20ff20COUNTER-CLOCKWISE|r around the boss"
+	--L.custom_off_select_charge_movement_value4 = "Four camps 1: Polarity changed moves |cff20ff20RIGHT|r, same polarity moves |cff20ff20LEFT|r"
+	--L.custom_off_select_charge_movement_value5 = "Four camps 2: Polarity changed moves |cff20ff20LEFT|r, same polarity moves |cff20ff20RIGHT|r"
 
-	-- L.custom_off_charge_graphic = "Graphical arrow"
-	-- L.custom_off_charge_graphic_desc = "Show an arrow graphic."
-	-- L.custom_off_charge_text = "Text arrows"
-	-- L.custom_off_charge_text_desc = "Show an additional message."
-	-- L.custom_off_charge_voice = "Voice alert"
-	-- L.custom_off_charge_voice_desc = "Play a voice alert."
+	--L.custom_off_charge_graphic = "Graphical arrow"
+	--L.custom_off_charge_graphic_desc = "Show an arrow graphic."
+	--L.custom_off_charge_text = "Text arrows"
+	--L.custom_off_charge_text_desc = "Show an additional message."
+	--L.custom_off_charge_voice = "Voice alert"
+	--L.custom_off_charge_voice_desc = "Play a voice alert."
 
-	-- Translate these to get locale sound files!
 	L.left = "<--- 왼쪽으로 <--- 왼쪽으로 <---"
 	L.right = "---> 오른쪽으로 ---> 오른쪽으로 --->"
 	L.swap = "^^^^ 방향 전환 ^^^^ 방향 전환 ^^^^"

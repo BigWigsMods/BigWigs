@@ -2,20 +2,17 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Anub'Rekhan", 533)
+local mod, CL = BigWigs:NewBoss("Anub'Rekhan", 533, 1601)
 if not mod then return end
 mod:RegisterEnableMob(15956)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1107)
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Anub'Rekhan"
-
 	L.gainwarn10sec = "~10 sec until Locust Swarm"
 	L.gainincbar = "~Next Locust Swarm"
 end

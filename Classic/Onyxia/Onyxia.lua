@@ -2,20 +2,17 @@
 -- Locals
 --
 
-local mod = BigWigs:NewBoss("Onyxia", 249)
+local mod = BigWigs:NewBoss("Onyxia", 249, 1651)
 if not mod then return end
 mod:RegisterEnableMob(10184)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1084)
 
 --------------------------------------------------------------------------------
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Onyxia"
-
 	L.phase = "Phases"
 	L.phase_desc = "Warn for phase changes."
 	L.phase2_message = "Phase 2 incoming!"

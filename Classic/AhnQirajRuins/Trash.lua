@@ -12,7 +12,7 @@ mod:RegisterEnableMob(15355) -- Anubisath Guardian
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
 	L.guardian = "Anubisath Guardian"
 

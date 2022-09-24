@@ -3,11 +3,14 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Viscidus", 531)
+local mod, CL = BigWigs:NewBoss("Viscidus", 531, 1548)
 if not mod then return end
 mod:RegisterEnableMob(15299)
-mod:SetAllowWin(true)
 mod:SetEncounterID(713)
+
+--------------------------------------------------------------------------------
+-- Locals
+--
 
 local swingCount = -1
 local frostCount = 0

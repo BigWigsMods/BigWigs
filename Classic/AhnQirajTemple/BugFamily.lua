@@ -3,21 +3,10 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Silithid Royalty", 531)
+local mod, CL = BigWigs:NewBoss("Silithid Royalty", 531, 1547)
 if not mod then return end
 mod:RegisterEnableMob(15543, 15544, 15511) -- Princess Yauj, Vem, Lord Kri
-mod:SetAllowWin(true)
 mod:SetEncounterID(710)
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:NewLocale("enUS", true)
-if L then
-	L.bossName = "Silithid Royalty"
-end
-L = mod:GetLocale()
 
 --------------------------------------------------------------------------------
 -- Initialization

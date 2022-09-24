@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Grand Widow Faerlina", 533)
+local mod, CL = BigWigs:NewBoss("Grand Widow Faerlina", 533, 1602)
 if not mod then return end
 mod:RegisterEnableMob(15953, 16505, 16506) -- Faerlina, Follower, Worshipper
-mod:SetAllowWin(true)
 mod:SetEncounterID(1110)
 
 --------------------------------------------------------------------------------
@@ -18,10 +17,8 @@ local frenzied = nil
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Grand Widow Faerlina"
-
 	L.silencewarn = "Silenced!"
 	L.silencewarn5sec = "Silence ends in 5 sec"
 end

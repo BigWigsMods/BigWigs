@@ -2,10 +2,9 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Noth the Plaguebringer", 533)
+local mod, CL = BigWigs:NewBoss("Noth the Plaguebringer", 533, 1604)
 if not mod then return end
 mod:RegisterEnableMob(15954)
-mod:SetAllowWin(true)
 mod:SetEncounterID(1117)
 
 --------------------------------------------------------------------------------
@@ -22,10 +21,8 @@ local wave2time = 41
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Noth the Plaguebringer"
-
 	L.starttrigger1 = "Die, trespasser!"
 	L.starttrigger2 = "Glory to the master!"
 	L.starttrigger3 = "Your life is forfeit!"

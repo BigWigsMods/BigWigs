@@ -2,7 +2,7 @@
 -- Module declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Instructor Razuvious", 533)
+local mod, CL = BigWigs:NewBoss("Instructor Razuvious", 533, 1607)
 if not mod then return end
 mod:RegisterEnableMob(16061, 16803) -- Instructor Razuvious, Deathknight Understudy
 mod:SetAllowWin(true)
@@ -19,9 +19,8 @@ local understudyIcons = {}
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Instructor Razuvious"
 	L.understudy = "Deathknight Understudy"
 
 	L.taunt_warning = "Taunt ready in 5sec!"
