@@ -180,7 +180,7 @@ L.blockObjectiveTracker = "Nascondi registro missioni"
 L.blockObjectiveTrackerDesc = "Il registro delle missioni verrà nascosto durante lo scontro con il boss per liberare spazio sullo schermo.\n\nNON FUNZIONA se ti trovi in una Mitica+ o se stai tracciando un'impresa."
 
 L.blockTalkingHead = "Nascondi popup PNG 'Testa Parlante'"
-L.blockTalkingHeadDesc = "La 'Testa Palante' è una finestra popup di dialogo composta dalla testa di un PNG e una finestra di testo nella parte inferiore dello schermo che |cffff4411a volte|r mostra quando un PNG sta parlando.\n\nPuioi scegliere in quale tipo di istanza bloccare la sua comparsa.\n\n|cFF33FF99Nota importante:|r\n 1) Questa funzionalità permetterà sempre al PNG di parlare.\n 2) Solo alcune teste parlanti verranno bloccate. Qualsiasi cosa speciale o unica, come una quest non ripetibile, non verrà bloccata."
+L.blockTalkingHeadDesc = "La 'Testa Palante' è una finestra popup di dialogo composta dalla testa di un PNG e una finestra di testo nella parte inferiore dello schermo che |cffff4411a volte|r mostra quando un PNG sta parlando.\n\nPuoi scegliere in quale tipo di istanza bloccare la sua comparsa.\n\n|cFF33FF99Nota importante:|r\n 1) Questa funzionalità permetterà sempre al PNG di parlare.\n 2) Solo alcune teste parlanti verranno bloccate. Qualsiasi cosa speciale o unica, come una quest non ripetibile, non verrà bloccata."
 L.blockTalkingHeadDungeons = "Spedizioni Normali & Eroiche"
 L.blockTalkingHeadMythics = "Spedizioni Mitiche & Mitiche+"
 L.blockTalkingHeadRaids = "Incursioni"
@@ -236,14 +236,14 @@ L.countdown = "Conto alla rovescia"
 L.countdownDesc = "La funzionalità Conto alla rovescia prevede un conteggio scritto e un messaggio audio. Raramente è abilitata come opzione predefinita, ma puoi abilitarla per qualsiasi abilità del boss nelle opzioni specifiche di quel boss."
 L.countdownAudioHeader = "Conto alla Rovescia Audio"
 L.countdownTextHeader = "Conto alla Rovescia Visivo"
-L.resetCountdownDesc = "reimposta tutte le impostazioni dei Conti alla Rovescia alle loro opzioni predefinite."
+L.resetCountdownDesc = "Reimposta tutte le impostazioni dei Conti alla Rovescia alle loro opzioni predefinite."
 L.resetAllCountdownDesc = "Se hai scelto delle voci personalizzate in qualsiasi impostazione dei boss, questo pulsante le cancellerà TUTTE così come tutte le altre modifiche riportandole ai valori predefiniti."
 
 -----------------------------------------------------------------------
 -- InfoBox.lua
 --
 
---L.infoBox = "InfoBox"
+L.infoBox = "InfoBox"
 
 -----------------------------------------------------------------------
 -- Messages.lua
@@ -256,7 +256,7 @@ L.resetMessagesDesc = "Reimposta tutte le opzioni relative ai messaggi, compresa
 L.bwEmphasized = "BigWigs Enfatizzato"
 L.messages = "Messaggi"
 L.emphasizedMessages = "Messaggi Enfatizzati"
-L.emphasizedDesc = "Lo scopo dei messaggi enfatizzati è richiamare la tua attenzione con un messaggio a grandezza maggiore rispetto al siolito. Raramente è abilitata come opzione predefinita, ma puoi abilitarla per qualsiasi abilità del boss nelle opzioni specifiche di quel boss."
+L.emphasizedDesc = "Lo scopo dei messaggi enfatizzati è richiamare la tua attenzione con un messaggio a grandezza maggiore rispetto al solito. Raramente è abilitata come opzione predefinita, ma puoi abilitarla per qualsiasi abilità del boss nelle opzioni specifiche di quel boss."
 L.uppercase = "TUTTO MAIUSCOLO"
 L.uppercaseDesc = "Tutti i messaggi enfatizzati verranno convertiti in MAIUSCOLO."
 
