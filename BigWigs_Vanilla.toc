@@ -30,4 +30,4 @@ locales.xml
 
 Media\Media.lua
 Loader.lua
-modules.xml
+modules_Vanilla.xml
