@@ -47,7 +47,7 @@ end
 
 function mod:MortalWound(args)
 	local amount = args.amount or 1
-	self:StackMessage(25646, args.destName, amount, "purple")
+	self:StackMessageOld(25646, args.destName, amount, "purple")
 	self:TargetBar(25646, 15, args.destName)
 	if amount > 2 then -- warn at 3? 5?
 		self:PlaySound(25646, "warning")

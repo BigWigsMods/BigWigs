@@ -129,7 +129,7 @@ end
 
 function mod:FrostBlast(args)
 	fbTargets[#fbTargets + 1] = args.destName
-	self:TargetsMessage(27808, "red", fbTargets, 0, nil, nil, 0.4)
+	self:TargetsMessageOld(27808, "red", fbTargets, 0, nil, nil, 0.4)
 	if self:Me(args.destGUID) then
 		self:PlaySound(27808, "alert")
 	end
@@ -153,7 +153,7 @@ end
 
 function mod:ChainsOfKelThuzad(args)
 	mcTargets[#mcTargets + 1] = args.destName
-	self:TargetsMessage(28410, "red", mcTargets, 5, self:SpellName(605), nil, 0.5) -- 605 = Mind Control
+	self:TargetsMessageOld(28410, "red", mcTargets, 5, self:SpellName(605), nil, 0.5) -- 605 = Mind Control
 	if self:Me(args.destGUID) then
 		self:PlaySound(28410, "alert")
 	end

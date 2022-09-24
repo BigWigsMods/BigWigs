@@ -80,7 +80,7 @@ do
 	local inCocoon = mod:NewTargetList()
 	function mod:Cocoon(args)
 		inCocoon[#inCocoon + 1] = args.destName
-		self:TargetsMessage(28622, "red", inCocoon, 0, L.cocoonbar, 745)
+		self:TargetsMessageOld(28622, "red", inCocoon, 0, L.cocoonbar, 745)
 		if self:Me(args.destGUID) then
 			self:PlaySound(28622, "alert")
 			self:Say(28622)

@@ -29,6 +29,7 @@ L.heroic = "영웅 난이도"
 L.mythic = "신화 난이도"
 L.active = "활성화" -- When a boss becomes active, after speech finishes
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing
 
 L.duration = "%s %s초 남음" -- Spell for 10 seconds
 L.over = "%s 종료" -- Spell Over
@@ -72,6 +73,7 @@ L.custom_sec = "%2$d초 후 %1$s"
 
 L.focus_only = "|cffff0000주시 대상만 경고합니다.|r "
 L.trash = "일반몹"
+--L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s 징표 표시"

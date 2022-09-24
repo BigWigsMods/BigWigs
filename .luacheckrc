@@ -212,6 +212,7 @@ globals = {
 	"Tukui",
 	"UIErrorsFrame",
 	"UIParent",
+	"UIWidgetManager",
 	"UnitAffectingCombat",
 	"UnitAura",
 	"UnitCanAttack",

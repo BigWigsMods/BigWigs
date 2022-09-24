@@ -29,6 +29,7 @@ L.heroic = "Modo heroico"
 L.mythic = "Modo mítico"
 L.active = "Ativo" -- When a boss becomes active, after speech finishes
 L.general = "Geral" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+L.absorb = "Absorver" -- Used for shield-like abilities that absorb damage or healing
 
 L.duration = "%s durante %s seg" -- Spell for 10 seconds
 L.over = "%s Acabou" -- Spell Over
@@ -72,6 +73,7 @@ L.custom_sec = "%s em %d seg"
 
 L.focus_only = "|cffff0000Apenas alertas de focar alvo.|r "
 L.trash = "Trash"
+--L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "Marcador %s"
@@ -93,7 +95,7 @@ L.amount_three = "%dK" -- Thousands 1,000
 L.seconds = "%.1fs" -- 1.1 seconds
 
 -- Common ability name replacements
---L.tank_combo = "Tank Combo" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
+L.tank_combo = "Combo de Tanque" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
 L.laser = "Laser" -- Used for abilities that act like a laser. Usually from the boss to a player, or, from the boss to a specific area
 L.beam = "Feixe" -- Similar to "Laser" (a beam from boss to player/boss to area) but can be used to better describe certain abilities that don't look like a Laser
 L.beams = "Feixes" -- Plural of L.beam

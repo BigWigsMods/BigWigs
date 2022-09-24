@@ -57,7 +57,7 @@ do
 	local stingTbl = mod:NewTargetList()
 	function mod:WyvernStingApplied(args)
 		stingTbl[#stingTbl+1] = args.destName
-		self:TargetsMessage(26180, "red", stingTbl, 10, nil, nil, 1) -- Can take a while to apply to everyone if very spread out (travel time)
+		self:TargetsMessageOld(26180, "red", stingTbl, 10, nil, nil, 1) -- Can take a while to apply to everyone if very spread out (travel time)
 	end
 end
 

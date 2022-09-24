@@ -30,6 +30,7 @@ L.heroic = "Mode héroïque"
 L.mythic = "Mode mythique"
 L.active = "Actif" -- When a boss becomes active, after speech finishes
 L.general = "Général" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
+L.absorb = "Absorbe" -- Used for shield-like abilities that absorb damage or healing
 
 L.duration = "%s pendant %s sec." -- Spell for 10 seconds
 L.over = "%s terminé" -- Spell Over
@@ -71,8 +72,9 @@ L.custom_end = "%s devient %s"
 L.custom_min = "%s dans %d min."
 L.custom_sec = "%s dans %d sec."
 
-L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
+L.focus_only = "|cffff0000Alertes de la cible de focalisation uniquement.|r "
 L.trash = "Trash"
+--L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "Marquage %s"

@@ -47,7 +47,7 @@ end
 --
 
 function mod:MortalWound(args)
-	self:StackMessage(25646, args.destName, args.amount, "yellow")
+	self:StackMessageOld(25646, args.destName, args.amount, "yellow")
 	self:TargetBar(25646, 15, args.destName)
 end
 

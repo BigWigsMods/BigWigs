@@ -120,7 +120,7 @@ end
 
 function mod:AcidicWound(args)
 	if args.amount % 3 == 0 and args.amount > 8 then
-		self:StackMessage(args.spellId, args.destName, args.amount, "green", args.amount > 14 and "alarm")
+		self:StackMessageOld(args.spellId, args.destName, args.amount, "green", args.amount > 14 and "alarm")
 	end
 end
 
