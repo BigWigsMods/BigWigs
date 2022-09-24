@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("Skolex, the Insatiable Ravener", "itIT")
 if L then
-	--L.custom_on_stop_timers = "Always show ability bars"
-	--L.custom_on_stop_timers_desc = "Skolex can delay its abilities. When this option is enabled, the bars for those abilities will stay on your screen."
+	L.custom_on_stop_timers = "Mostra sempre le barre delle abilità"
+	L.custom_on_stop_timers_desc = "Skolex può ritardare le sue abilità. Quando questa opzione è attiva, le barre di quelle abilità rimarranno a schermo."
 
 	L.tank_combo_desc = "Conto alla Rovescia per il lancio di Fendifauce/Squartamento al raggiungimento di 100 energia."
 end
@@ -44,7 +44,7 @@ if L then
 	L.wild_stampede = "Impeto"
 	L.withering_seeds = "Semi"
 	L.hand_of_destruction = "Mano"
-	--L.nighthunter_marks_additional_desc = "|cFFFF0000Marking with a priority for melee on the first markers and using their raid group position as secondary priority.|r"
+	L.nighthunter_marks_additional_desc = "|cFFFF0000Marcamento con priorità per i combattenti corpo a corpo con i primi simboli e uso del loro posizionamento fisico nell'Incursione come priorità secondaria.|r"
 end
 
 L = BigWigs:NewBossLocale("Lihuvim, Principal Architect", "itIT")
@@ -89,7 +89,7 @@ if L then
 	L.ephemeral_fissure = "Fessura"
 
 	L.bomb_dropped = "Bomba rilasciata"
-	--L.volatile_charges_new = "New Bombs!"
+	L.volatile_charges_new = "Nuove Bombe!"
 
 	L.custom_on_stop_timers = "Mostra sempre le barre delle abilità"
 	L.custom_on_stop_timers_desc = "Halondrus può ritardare le sue abilità. Quando questa opzione è attiva, le barre per le sue abilità rimarranno a schermo."
@@ -130,7 +130,7 @@ if L then
 	L.unholy_attunement = "Piloni"
 	L.shattering_blast = "Esplosione sul Tank"
 	L.rune_of_compulsion = "Ammaliamenti"
-	--L.desolation = "Azeroth Soak"
+	L.desolation = "Assorbimento Azeroth"
 	L.decimator_line = "Decimatore + Linea"
 	L.chains_of_anguish = "Distribuire le Catene"
 	L.chain = "Catena"
@@ -164,11 +164,11 @@ end
 
 L = BigWigs:NewBossLocale("Sepulcher of the First Ones Affixes", "itIT")
 if L then
-	--L.custom_on_bar_icon = "Bar Icon"
-	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+	L.custom_on_bar_icon = "Icona Barra"
+	L.custom_on_bar_icon_desc = "Mostra l'icona dell'Incursione Predestinata sulle barre."
 
-	--L.chaotic_essence = "Essence"
+	L.chaotic_essence = "Essenza"
 	L.creation_spark = "Scintille"
 	L.protoform_barrier = "Barriera"
-	--L.reconfiguration_emitter = "Interrupt Add"
+	L.reconfiguration_emitter = "Interrompi Add"
 end
