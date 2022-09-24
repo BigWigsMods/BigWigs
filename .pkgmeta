@@ -19,14 +19,20 @@ move-folders:
     BigWigs/Core: BigWigs_Core
     BigWigs/Options: BigWigs_Options
     BigWigs/Plugins: BigWigs_Plugins
-    BigWigs/Classic/Onyxia: BigWigs_Onyxia
     BigWigs/Classic/MoltenCore: BigWigs_MoltenCore
     BigWigs/Classic/World: BigWigs_World
     BigWigs/Classic/BlackwingLair: BigWigs_BlackwingLair
     BigWigs/Classic/ZulGurub: BigWigs_ZulGurub
     BigWigs/Classic/AhnQirajRuins: BigWigs_AhnQirajRuins
     BigWigs/Classic/AhnQirajTemple: BigWigs_AhnQirajTemple
-    BigWigs/Classic/Naxxramas: BigWigs_Naxxramas
+    BigWigs/BurningCrusade/Outland: BigWigs_Outland
+    BigWigs/BurningCrusade/Karazhan: BigWigs_Karazhan
+    BigWigs/BurningCrusade/Serpentshrine: BigWigs_Serpentshrine
+    BigWigs/BurningCrusade/TempestKeep: BigWigs_TempestKeep
+    BigWigs/BurningCrusade/Hyjal: BigWigs_Hyjal
+    BigWigs/BurningCrusade/BlackTemple: BigWigs_BlackTemple
+    BigWigs/BurningCrusade/ZulAman: BigWigs_ZulAman
+    BigWigs/BurningCrusade/Sunwell: BigWigs_Sunwell
 
 changelog-title: BigWigs
 
@@ -34,9 +40,10 @@ ignore:
   - .luacheckrc
   - gen_option_values.lua
   - ldoc.ltp
-  - BurningCrusade
-  - BigWigs_TBC.toc
-  - BigWigs_Wrath.toc
+  - modules_Vanilla.xml
+  - BigWigs/Classic/Naxxramas
+  - BigWigs/Classic/Onyxia
+  - BigWigs_Vanilla.toc
   - Media/Sounds/spell_on_you.flac
   - Media/Sounds/spell_under_you.flac
   - Media/Sounds/Long.wav

@@ -37,9 +37,9 @@ jobs:
       - name: Package Classic Era
         uses: BigWigsMods/packager@master
         with:
-          args: -g classic
+          args: -g classic -m .pkgmeta-c
 
       - name: Package Classic
         uses: BigWigsMods/packager@master
         with:
-          args: -g wrath -m .pkgmeta-bc
+          args: -g wrath
