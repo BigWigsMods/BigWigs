@@ -26,7 +26,7 @@ do
 end
 
 local isClassicEra = BigWigsLoader.isClassicEra
-local isWrath = BigWigsLoader.isWrath
+local isClassic = BigWigsLoader.isClassic
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
@@ -102,7 +102,15 @@ local updateData = function(module)
 			myRole = "DAMAGER"
 		end
 	elseif class == "DRUID" and talentTree == 2 then -- defaults to DAMAGER
-		if isWrath then
+		if isClassicEra then
+			-- Check for bear talents
+			local feralInstinct = select(5, GetTalentInfo(2, 3))
+			local thickHide = select(5, GetTalentInfo(2, 5))
+			local primalFury = select(5, GetTalentInfo(2, 12))
+			if feralInstinct == 5 and thickHide >= 2 and primalFury == 2 then
+				myRole = "TANK"
+			end
+		else
 			-- Using the LFG tool?
 			local role = UnitGroupRolesAssigned("player")
 			if role == "TANK" or role == "DAMAGER" then
@@ -115,14 +123,6 @@ local updateData = function(module)
 				if thickHide == 5 and survivalInstincts == 1 and naturalReaction == 5 then
 					myRole = "TANK"
 				end
-			end
-		else
-			-- Check for bear talents
-			local feralInstinct = select(5, GetTalentInfo(2, 3))
-			local thickHide = select(5, GetTalentInfo(2, 5))
-			local primalFury = select(5, GetTalentInfo(2, 12))
-			if feralInstinct == 5 and thickHide >= (isClassicEra and 2 or 5) and primalFury == 2 then
-				myRole = "TANK"
 			end
 		end
 	end
@@ -610,7 +610,7 @@ do
 					local m = eventMap[self][event]
 					local func = m and (m[spellId] or m[spellName] or m["*"])
 					if func then
-						-- Classic: By default we only care about non-player spells (exempting "*")
+						-- Classic Era: By default we only care about non-player spells (exempting "*")
 						if m[spellName] and band(sourceFlags, COMBATLOG_OBJECT_TYPE_PLAYER) ~= 0 and (not unfilteredEventSpells[self][event] or not unfilteredEventSpells[self][event][spellName]) then
 							return
 						end
@@ -1593,9 +1593,9 @@ do
 	local offDispel, defDispel = {}, {}
 	function UpdateDispelStatus()
 		offDispel, defDispel = {}, {}
-		-- local shieldslam = isWrath and (IsSpellKnown(47488) or IsSpellKnown(47487) or IsSpellKnown(30356) or IsSpellKnown(25258) or IsSpellKnown(23925) or IsSpellKnown(23924) or IsSpellKnown(23923) or IsSpellKnown(23922))
-		local devourMagic = IsSpellKnown(19505, true) or IsSpellKnown(19731, true) or IsSpellKnown(19734, true) or IsSpellKnown(19736, true) or (isWrath and (IsSpellKnown(27276, true) or IsSpellKnown(27277, true) or IsSpellKnown(48011, true)))
-		if IsSpellKnown(19801) or IsSpellKnown(527) or IsSpellKnown(988) or (isWrath and IsSpellKnown(32375)) or IsSpellKnown(370) or IsSpellKnown(8012) or devourMagic then
+		-- local shieldslam = isClassic and (IsSpellKnown(47488) or IsSpellKnown(47487) or IsSpellKnown(30356) or IsSpellKnown(25258) or IsSpellKnown(23925) or IsSpellKnown(23924) or IsSpellKnown(23923) or IsSpellKnown(23922))
+		local devourMagic = IsSpellKnown(19505, true) or IsSpellKnown(19731, true) or IsSpellKnown(19734, true) or IsSpellKnown(19736, true) or IsSpellKnown(27276, true) or IsSpellKnown(27277, true) or IsSpellKnown(48011, true)
+		if IsSpellKnown(19801) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(32375) or IsSpellKnown(370) or IsSpellKnown(8012) or devourMagic then
 			-- Tranquilizing Shot (Hunter), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W], Purge r1/r2 (Shaman), Devour Magic (Warlock Felhunter)
 			offDispel.magic = true
 		end
@@ -1603,11 +1603,11 @@ do
 			-- Tranquilizing Shot (Hunter)
 			offDispel.enrage = true
 		end
-		if IsSpellKnown(4987) or IsSpellKnown(527) or IsSpellKnown(988) or (isWrath and IsSpellKnown(32375)) then
+		if IsSpellKnown(4987) or IsSpellKnown(527) or IsSpellKnown(988) or IsSpellKnown(32375) then
 			-- Cleanse (Paladin), Dispel Magic r1/r2 (Priest), Mass Dispel (Priest)[W]
 			defDispel.magic = true
 		end
-		if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or (not isWrath and IsSpellKnown(2870)) or (isWrath and IsSpellKnown(526)) or IsSpellKnown(8170) then
+		if IsSpellKnown(1152) or IsSpellKnown(4987) or IsSpellKnown(528) or IsSpellKnown(552) or (isClassicEra and IsSpellKnown(2870)) or (isClassic and IsSpellKnown(526)) or IsSpellKnown(8170) then
 			-- Purify (Paladin), Cleanse (Paladin), Cure Disease (Priest), Abolish Disease (Priest), Cure Disease (Shaman)[C,BC], Cure Toxins (Shaman)[W], Disease Cleansing Totem (Shaman)
 			defDispel.disease = true
 		end
@@ -1615,8 +1615,8 @@ do
 			-- Abolish Poison (Druid), Cure Poison (Druid), Purify (Paladin), Cleanse (Paladin), Cure Poison/Toxins (Shaman), Poison Cleansing Totem (Shaman)
 			defDispel.poison = true
 		end
-		if IsSpellKnown(2782) or IsSpellKnown(475) or (isWrath and IsSpellKnown(51886)) then
-			-- Remove Curse (Druid), Remove Lesser Curse (Mage), Cleanse Spirit (Shaman)
+		if IsSpellKnown(2782) or IsSpellKnown(475) or IsSpellKnown(51886) then
+			-- Remove Curse (Druid), Remove Lesser Curse (Mage), Cleanse Spirit (Shaman)[W]
 			defDispel.curse = true
 		end
 		if IsSpellKnown(1044) then
@@ -1662,7 +1662,7 @@ do
 		47528, -- Mind Freeze (Death Knight)
 		57994, -- Wind Shear (Shaman)
 	}
-	local spellList = isWrath and spellListWrath or spellListClassic
+	local spellList = isClassicEra and spellListClassic or spellListWrath
 	function UpdateInterruptStatus()
 		if IsSpellKnown(19244, true) or IsSpellKnown(19647, true) then -- Spell Lock (Warlock Felhunter)
 			canInterrupt = GetSpellInfo(19647)
