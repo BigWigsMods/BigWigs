@@ -38,7 +38,7 @@ if L then
 
 	L.blades_yell = "Cadete sotto i colpi della mia spada!!"
 	L.soaks_yell = "Siete tutti inferiori!"
-	L.shield_yell = "Il mio scudo non vacilla mai !"
+	L.shield_yell = "Il mio scudo non vacilla mai!"
 
 	L.berserk_stage1 = "Berserk Fase 1"
 	L.berserk_stage2 = "Berserk Fase 2"
@@ -84,7 +84,7 @@ if L then
 	L.embers = "Braci" -- Short for Shadowsteel Embers
 	L.adds_embers = "Braci (%d) - Adds Tra Poco!"
 	L.adds_killed = "Adds uccisi in %.2fs"
-	L.spikes = "Spiked Death" -- Soft enrage spikes
+	L.spikes = "Palle Chiodate" -- Soft enrage spikes
 end
 
 L = BigWigs:NewBossLocale("Guardian of the First Ones", "itIT")
@@ -122,7 +122,7 @@ if L then
 	L.chains_active_desc = "Mostra una barra quando Catene del Dominio è attivo"
 
 	L.custom_on_nameplate_fixate = "Icona Nameplate Rabbia"
-	L.custom_on_nameplate_fixate_desc = "mostra un'icona sul nameplate della Sentinella Oscura che ha preso di mira te.\n\nRichiede l'uso dei Nameplates del nemico e un'appon per nameplates supportato (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate_desc = "Mostra un'icona sul nameplate della Sentinella Oscura che ha preso di mira te.\n\nRichiede l'uso dei Nameplates del nemico e un'appon per nameplates supportato (KuiNameplates, Plater)."
 
 	L.chains = "Catene" -- Short for Domination Chains
 	L.chain = "Catena" -- Single Domination Chain
@@ -140,11 +140,11 @@ end
 
 L = BigWigs:NewBossLocale("Sanctum of Domination Affixes", "itIT")
 if L then
-	--L.custom_on_bar_icon = "Bar Icon"
-	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+	L.custom_on_bar_icon = "Icona Barra"
+	L.custom_on_bar_icon_desc = "Mostra l'icona dell'Incursione Predestinata sulle barre."
 
-	--L.chaotic_essence = "Essence"
+	L.chaotic_essence = "Essenza"
 	L.creation_spark = "Scintille"
 	L.protoform_barrier = "Barriera"
-	--L.reconfiguration_emitter = "Interrupt Add"
+	L.reconfiguration_emitter = "Interrompi Add"
 end
