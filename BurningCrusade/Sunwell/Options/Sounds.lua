@@ -17,6 +17,7 @@ BigWigs:AddSounds("Brutallus", {
 BigWigs:AddSounds("Felmyst", {
 	[45402] = "alert",
 	[45661] = "alert",
+	[45866] = "warning",
 })
 
 BigWigs:AddSounds("The Eredar Twins", {

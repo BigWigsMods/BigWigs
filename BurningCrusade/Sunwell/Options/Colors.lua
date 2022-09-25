@@ -22,6 +22,7 @@ BigWigs:AddColors("Felmyst", {
 	[45402] = {"blue","orange"},
 	[45661] = {"blue","red","yellow"},
 	[45855] = "yellow",
+	[45866] = {"blue","purple"},
 	["breath"] = "yellow",
 	["phase"] = "yellow",
 })
