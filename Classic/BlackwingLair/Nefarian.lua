@@ -75,8 +75,6 @@ function mod:GetOptions()
 end
 
 function mod:OnRegister()
-	self.displayName = L.bossName
-
 	warnpairs = {
 		[L.triggershamans] = {L.warnshaman, true},
 		[L.triggerwarlock] = {L.warnwarlock, true},

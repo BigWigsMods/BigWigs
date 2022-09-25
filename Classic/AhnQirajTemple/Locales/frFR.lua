@@ -1,8 +1,6 @@
 local L = BigWigs:NewBossLocale("Viscidus", "frFR")
 if not L then return end
 if L then
-	L.bossName = "Viscidus"
-
 	--L.freeze = "Freezing States"
 	--L.freeze_desc = "Warn for the different frozen states."
 

@@ -44,7 +44,7 @@ end
 
 function mod:OnEngage()
 	frenzied = nil
-	self:Message(28798, "yellow", CL.custom_start_s:format(L.bossName, self:SpellName(28798), 60), false)
+	self:Message(28798, "yellow", CL.custom_start_s:format(self.displayName, self:SpellName(28798), 60), false)
 	self:DelayedMessage(28798, 45, "red", CL.soon:format(self:SpellName(28798)))
 	self:Bar(28798, 60)
 end

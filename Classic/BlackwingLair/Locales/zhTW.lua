@@ -1,8 +1,6 @@
 local L = BigWigs:NewBossLocale("Razorgore the Untamed", "zhTW")
 if not L then return end
 if L then
-	L.bossName = "狂野的拉佐格爾"
-
 	L.start_trigger = "入侵者"
 	L.start_message = "狂野的拉佐格爾進入戰鬥！45秒後小怪出現！"
 	L.start_soon = "5 秒後小兵出現！"
@@ -17,36 +15,12 @@ end
 
 L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "zhTW")
 if L then
-	L.bossName = "墮落的瓦拉斯塔茲"
-
 	--L.warmup_trigger = "Too late, friends!"
 	--L.warmup_message = "RP started, engaging in ~43s"
 end
 
-L = BigWigs:NewBossLocale("Broodlord Lashlayer", "zhTW")
-if L then
-	L.bossName = "幼龍領主勒西雷爾"
-end
-
-L = BigWigs:NewBossLocale("Firemaw", "zhTW")
-if L then
-	L.bossName = "費爾默"
-end
-
-L = BigWigs:NewBossLocale("Ebonroc", "zhTW")
-if L then
-	L.bossName = "埃博諾克"
-end
-
-L = BigWigs:NewBossLocale("Flamegor", "zhTW")
-if L then
-	L.bossName = "弗萊格爾"
-end
-
 L = BigWigs:NewBossLocale("Chromaggus", "zhTW")
 if L then
-	L.bossName = "克洛瑪古斯"
-
 	L.breath = "吐息警報"
 	L.breath_desc = "當克洛瑪古斯吐息時發出警報"
 
@@ -56,8 +30,6 @@ end
 
 L = BigWigs:NewBossLocale("NefarianBWL", "zhTW")
 if L then
-	L.bossName = "奈法利安"
-
 	L.landing_soon_trigger = "幹得好，手下們。凡人的勇氣開始消退了！現在，我們就來看看他們怎麼面對黑石之王的力量吧！"
 	L.landing_trigger = "燃燒吧！一群廢物！燒吧！"
 	L.zerg_trigger = "^不可能！來吧，我的僕人！再次為你們的主人服務！"
@@ -93,4 +65,3 @@ if L then
 	--L.add = "Drakonid deaths"
 	--L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
-

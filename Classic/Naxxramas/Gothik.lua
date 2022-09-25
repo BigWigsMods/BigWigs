@@ -20,8 +20,6 @@ local numTrainer, numDK, numRider = 1, 1, 1
 
 local L = mod:NewLocale()
 if L then
-	L.bossName = "Gothik the Harvester"
-
 	L.room = "Room Arrival Warnings"
 	L.room_desc = "Warn for Gothik's arrival"
 

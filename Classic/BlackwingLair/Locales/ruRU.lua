@@ -1,8 +1,6 @@
 local L = BigWigs:NewBossLocale("Razorgore the Untamed", "ruRU")
 if not L then return end
 if L then
-	L.bossName = "Бритвосмерт Неукротимый"
-
 	L.start_trigger = "Злоумышленники проломились"
 	L.start_message = "Бритвосмерт в бещенстве! Помощники появятся через 45 секунд!"
 	L.start_soon = "Помощники через 5 секунд!"
@@ -17,36 +15,12 @@ end
 
 L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "ruRU")
 if L then
-	L.bossName = "Валестраз Порочный"
-
 	--L.warmup_trigger = "Too late, friends!"
 	--L.warmup_message = "RP started, engaging in ~43s"
 end
 
-L = BigWigs:NewBossLocale("Broodlord Lashlayer", "ruRU")
-if L then
-	L.bossName = "Предводитель драконов Разящий Бич"
-end
-
-L = BigWigs:NewBossLocale("Firemaw", "ruRU")
-if L then
-	L.bossName = "Огнечрев"
-end
-
-L = BigWigs:NewBossLocale("Ebonroc", "ruRU")
-if L then
-	L.bossName = "Черноскал"
-end
-
-L = BigWigs:NewBossLocale("Flamegor", "ruRU")
-if L then
-	L.bossName = "Пламегор"
-end
-
 L = BigWigs:NewBossLocale("Chromaggus", "ruRU")
 if L then
-	L.bossName = "Хромаггус"
-
 	L.breath = "Дыхание"
 	L.breath_desc = "Сообщать о дыхании."
 
@@ -56,8 +30,6 @@ end
 
 L = BigWigs:NewBossLocale("NefarianBWL", "ruRU")
 if L then
-	L.bossName = "Нефариан"
-
 	L.landing_soon_trigger = "Отличная работа мои миньёны!"
 	L.landing_trigger = "СЖЕЧЬ! Вы обречены!"
 	L.zerg_trigger = "Невозможно!"
@@ -93,4 +65,3 @@ if L then
 	--L.add = "Drakonid deaths"
 	--L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
-

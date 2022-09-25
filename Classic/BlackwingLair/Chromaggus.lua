@@ -30,10 +30,8 @@ local icons = {
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Chromaggus"
-
 	L.breath = "Breaths"
 	L.breath_desc = "Warn for Breaths."
 

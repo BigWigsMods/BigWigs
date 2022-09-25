@@ -40,8 +40,6 @@ local timerCheckTarget = nil
 
 local L = mod:NewLocale()
 if L then
-	L.bossName = "C'Thun"
-
 	L.tentacle = "Tentacles"
 	L.tentacle_desc = "Warn for Tentacles"
 	L.tentacle_icon = 26391 -- inv_misc_ahnqirajtrinket_05 / Tentacle Call

@@ -36,7 +36,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:Message(28785, "yellow", CL.custom_start_s:format(L.bossName, self:SpellName(28785), 90), false)
+	self:Message(28785, "yellow", CL.custom_start_s:format(self.displayName, self:SpellName(28785), 90), false)
 	self:DelayedMessage(28785, 80, "red", L.gainwarn10sec)
 	self:CDBar(28785, 90, L.gainincbar, 28785)
 end

@@ -1,8 +1,6 @@
 local L = BigWigs:NewBossLocale("Razorgore the Untamed", "ptBR")
 if not L then return end
 if L then
-	L.bossName = "Violâminus, o Indomado"
-
 	--L.start_trigger = "Intruders have breached"
 	--L.start_message = "Razorgore engaged! Mobs in 45sec!"
 	--L.start_soon = "Mob Spawn in 5sec!"
@@ -17,36 +15,13 @@ end
 
 L = BigWigs:NewBossLocale("Vaelastrasz the Corrupt", "ptBR")
 if L then
-	L.bossName = "Vaelastrasz, o Corrupto"
-
 	--L.warmup_trigger = "Too late, friends!"
 	--L.warmup_message = "RP started, engaging in ~43s"
 end
 
-L = BigWigs:NewBossLocale("Broodlord Lashlayer", "ptBR")
-if L then
-	L.bossName = "Prolemestre Flagelador"
-end
-
-L = BigWigs:NewBossLocale("Firemaw", "ptBR")
-if L then
-	L.bossName = "Fogorja"
-end
-
-L = BigWigs:NewBossLocale("Ebonroc", "ptBR")
-if L then
-	L.bossName = "Petrébano"
-end
-
-L = BigWigs:NewBossLocale("Flamegor", "ptBR")
-if L then
-	L.bossName = "Flamagor"
-end
 
 L = BigWigs:NewBossLocale("Chromaggus", "ptBR")
 if L then
-	L.bossName = "Cromaggus"
-
 	--L.breath = "Breaths"
 	--L.breath_desc = "Warn for Breaths."
 
@@ -56,8 +31,6 @@ end
 
 L = BigWigs:NewBossLocale("NefarianBWL", "ptBR")
 if L then
-	L.bossName = "Nefarian"
-
 	--L.landing_soon_trigger = "Well done, my minions"
 	--L.landing_trigger = "BURN! You wretches"
 	--L.zerg_trigger = "Impossible! Rise my"
@@ -93,4 +66,3 @@ if L then
 	--L.add = "Drakonid deaths"
 	--L.add_desc = "Announce the number of adds killed in Phase 1 before Nefarian lands."
 end
-

@@ -16,7 +16,7 @@ mod:RegisterEnableMob(
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
 	L.anubisath = "Anubisath"
 	L.sentinel = "Anubisath Sentinel"

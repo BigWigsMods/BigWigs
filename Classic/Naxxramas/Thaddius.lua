@@ -84,8 +84,6 @@ local INITIAL_DIRECTION = {
 
 local L = mod:NewLocale()
 if L then
-	L.bossName = "Thaddius"
-
 	L.trigger_phase1_1 = "Stalagg crush you!"
 	L.trigger_phase1_2 = "Feed you to master!"
 	L.trigger_phase2_1 = "Eat... your... bones..."
@@ -255,8 +253,8 @@ do
 		local t = GetTime()
 		if t-prev > 2 then
 			prev = t
-			self:Message("stages", "yellow", CL.incoming:format(L.bossName), false)
-			self:Bar("stages", 3, L.bossName, "spell_lightning_lightningbolt01")
+			self:Message("stages", "yellow", CL.incoming:format(self.displayName), false)
+			self:Bar("stages", 3, self.displayName, "spell_lightning_lightningbolt01")
 		end
 	end
 end

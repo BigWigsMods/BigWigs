@@ -93,7 +93,7 @@ function mod:OnEngage()
 	mcTargets = self:NewTargetList()
 	self:CloseProximity("proximity")
 
-	self:Message("stages", "yellow", L.start_warning, false) -- CL.custom_start:format(L.bossName, _G.ACTIVE_PETS, 5)
+	self:Message("stages", "yellow", L.start_warning, false) -- CL.custom_start:format(self.displayName, _G.ACTIVE_PETS, 5)
 	self:Bar("stages", 310, CL.phase:format(2), "spell_shadow_chilltouch")
 end
 

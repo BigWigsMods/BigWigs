@@ -21,10 +21,8 @@ local healerDebuffTime = {}
 -- Localization
 --
 
-local L = mod:NewLocale("enUS", true)
+local L = mod:NewLocale()
 if L then
-	L.bossName = "Loatheb"
-
 	L.startwarn = "Loatheb engaged, 2 minutes to Inevitable Doom!"
 
 	L.doom_5sec_warn = "Doom (%d) in 5 sec!"
