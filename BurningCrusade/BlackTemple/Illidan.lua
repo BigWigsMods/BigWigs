@@ -32,11 +32,6 @@ local L = mod:GetLocale()
 if L then
 	L.barrage_bar = "Barrage"
 	L.warmup_trigger = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago."
-
-	L[-15735] = "Stage One: You Are Not Prepared"
-	L[-15740] = "Stage Two: Flames of Azzinoth"
-	L[-15751] = "Stage Three: The Demon Within"
-	L[-15757] = "Stage Four: The Long Hunt"
 end
 
 --------------------------------------------------------------------------------

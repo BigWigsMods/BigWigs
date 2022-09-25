@@ -45,3 +45,14 @@ L[7534] = { title = "Poison Bottle", description = "Deathstalker Visceri throws 
 L[7577] = { title = "Summon Memory", description = "When Argent Confessor Paletress reaches 50% health remaining, she summons a creature from your past battles.", abilityIcon = 136200 }
 L[7578] = { title = "Memory of the Past", description = "", abilityIcon = nil }
 L[7598] = { title = "Ghoul Explode", description = "The Black Knight causes one of his ghouls to explode, inflicting Shadow damage to all players within 8 yards.", abilityIcon = 237521 }
+L[15665] = { title = "Stage One: Essence of Suffering", description = "", abilityIcon = nil }
+L[15673] = { title = "Stage Two: Essence of Desire", description = "", abilityIcon = nil }
+L[15681] = { title = "Stage Three: Essence of Anger", description = "", abilityIcon = nil }
+L[15704] = { title = "Gathios the Shatterer", description = "", abilityIcon = nil }
+L[15716] = { title = "Veras Darkshadow", description = "", abilityIcon = nil }
+L[15720] = { title = "High Nethermancer Zerevor", description = "", abilityIcon = nil }
+L[15726] = { title = "Lady Malande", description = "", abilityIcon = nil }
+L[15735] = { title = "Stage One: You Are Not Prepared", description = "", abilityIcon = nil }
+L[15740] = { title = "Stage Two: Flames of Azzinoth", description = "", abilityIcon = nil }
+L[15751] = { title = "Stage Three: The Demon Within", description = "", abilityIcon = nil }
+L[15757] = { title = "Stage Four: The Long Hunt", description = "", abilityIcon = nil }

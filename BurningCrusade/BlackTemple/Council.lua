@@ -26,11 +26,6 @@ if L then
 
 	L.magical_immunity = "Immune to magical!"
 	L.physical_immunity = "Immune to physical!"
-
-	L[-15704] = "Gathios the Shatterer"
-	L[-15716] = "Veras Darkshadow"
-	L[-15726] = "Lady Malande"
-	L[-15720] = "High Nethermancer Zerevor"
 end
 
 --------------------------------------------------------------------------------

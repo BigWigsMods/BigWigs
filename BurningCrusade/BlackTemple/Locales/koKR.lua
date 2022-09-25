@@ -29,10 +29,6 @@ if L then
 	L.zero_mana = "마나 0"
 	L.zero_mana_desc = "욕망의 정수가 모두의 최대 마나를 0으로 감소시키기 까지의 시간을 표시합니다."
 	L.desire_start = "욕망의 정수 - 160초 후 마나 0"
-
-	L[-15665] = "1단계: 고뇌의 정수"
-	L[-15673] = "2단계: 욕망의 정수"
-	L[-15681] = "3단계: 격노의 정수"
 end
 
 L = BigWigs:NewBossLocale("The Illidari Council", "koKR")
@@ -47,20 +43,10 @@ if L then
 
 	L.magical_immunity = "마법 공격에 면역!"
 	L.physical_immunity = "물리 공격에 면역!"
-
-	L[-15704] = "파괴자 가디오스"
-	L[-15716] = "베라스 다크섀도"
-	L[-15726] = "여군주 말란데"
-	L[-15720] = "고위 황천술사 제레보르"
 end
 
 L = BigWigs:NewBossLocale("Illidan Stormrage", "koKR")
 if L then
 	L.barrage_bar = "집중포화"
 	L.warmup_trigger = "아카마, 너의 불충은 그리 놀랍지도 않구나. 너희 흉측한 형제들을 벌써 오래전에 없애버렸어야 했는데..."
-
-	L[-15735] = "1단계: 너흰 아직 준비가 안 됐다"
-	L[-15740] = "2단계: 아지노스의 불꽃"
-	L[-15751] = "3단계: 내면의 악마"
-	L[-15757] = "4단계: 기나긴 사냥"
 end

@@ -29,10 +29,6 @@ if L then
 	L.zero_mana = "沒魔"
 	L.zero_mana_desc = "當慾望精華出現並開始降低法力值，替法力值歸零顯示計時器。"
 	L.desire_start = "慾望精華：160秒後沒魔"
-
-	L[-15665] = "階段一：受難精華"
-	L[-15673] = "階段二：慾望精華"
-	L[-15681] = "階段三：憤怒精華"
 end
 
 L = BigWigs:NewBossLocale("The Illidari Council", "zhTW")
@@ -47,20 +43,10 @@ if L then
 
 	L.magical_immunity = "魔法免疫！"
 	L.physical_immunity = "物理免疫！"
-
-	L[-15704] = "粉碎者高希歐"
-	L[-15716] = "維拉斯‧深影"
-	L[-15726] = "瑪蘭黛女士"
-	L[-15720] = "高等虛空術師札瑞佛"
 end
 
 L = BigWigs:NewBossLocale("Illidan Stormrage", "zhTW")
 if L then
 	L.barrage_bar = "黑暗侵襲"
 	L.warmup_trigger = "阿卡瑪。你的謊言真是老套。我很久前就該殺了你和你那些畸形的同胞。"
-
-	L[-15735] = "階段一：你們還沒準備好"
-	L[-15740] = "階段二：埃辛諾斯火焰"
-	L[-15751] = "階段三：體內的惡魔"
-	L[-15757] = "階段四：長久的狩獵"
 end

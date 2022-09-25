@@ -46,3 +46,14 @@ L[7534] = { title = "Bottiglia di Veleno", description = "L'Inseguitore della Mo
 L[7577] = { title = "Evocazione: Ricordo", description = "Quando raggiunge il 50% di salute restante, l'Espiatrice Paletress evoca una creatura dai tuoi scontri passati.", abilityIcon = 136200 }
 L[7578] = { title = "Ricordo del passato", description = "", abilityIcon = nil }
 L[7598] = { title = "Esplosione Ghoul", description = "Il Cavaliere Nero fa esplodere uno dei suoi ghoul, infliggendo danni da ombra a tutti i personaggi entro 8 m.", abilityIcon = 237521 }
+L[15665] = { title = "Fase 1: Essenza della Sofferenza", description = "", abilityIcon = nil }
+L[15673] = { title = "Fase 2: Essenza del Desiderio", description = "", abilityIcon = nil }
+L[15681] = { title = "Fase 3: Essenza della Rabbia", description = "", abilityIcon = nil }
+L[15704] = { title = "Gathios lo Sbriciolatore", description = "", abilityIcon = nil }
+L[15716] = { title = "Veras Ombrascura", description = "", abilityIcon = nil }
+L[15720] = { title = "Gran Fatuomante Zerevor", description = "", abilityIcon = nil }
+L[15726] = { title = "Dama Malande", description = "", abilityIcon = nil }
+L[15735] = { title = "Fase 1: Voi non siete pronti!", description = "", abilityIcon = nil }
+L[15740] = { title = "Fase 2: Fiamme di Azzinoth", description = "", abilityIcon = nil }
+L[15751] = { title = "Fase 3: Il demone interiore", description = "", abilityIcon = nil }
+L[15757] = { title = "Fase 4: La lunga caccia", description = "", abilityIcon = nil }

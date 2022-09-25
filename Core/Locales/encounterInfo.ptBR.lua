@@ -46,3 +46,14 @@ L[7534] = { title = "Frasco de Veneno", description = "Sicário Viscerae arremes
 L[7577] = { title = "Evocar Memória", description = "Quando chega a 50% dos pontos de vida restantes, a Confessora Argêntea Albamecha evoca uma criatura de suas batalhas pregressas.", abilityIcon = 136200 }
 L[7578] = { title = "Memória do passado", description = "", abilityIcon = nil }
 L[7598] = { title = "Explosão do Carniçal", description = "O Cavaleiro Negro faz um dos carniçais explodir, causando dano de Sombra a todos os jogadores num raio de 8 m.", abilityIcon = 237521 }
+L[15665] = { title = "Estágio Um: Essência do Sofrimento", description = "", abilityIcon = nil }
+L[15673] = { title = "Estágio Dois: Essência do Desejo", description = "", abilityIcon = nil }
+L[15681] = { title = "Estágio Três: Essência da Ira", description = "", abilityIcon = nil }
+L[15704] = { title = "Gathios, o Despedaçador", description = "", abilityIcon = nil }
+L[15716] = { title = "Veras Sombranera", description = "", abilityIcon = nil }
+L[15720] = { title = "Sumo Etereomante Zerevor", description = "", abilityIcon = nil }
+L[15726] = { title = "Lady Malande", description = "", abilityIcon = nil }
+L[15735] = { title = "Estágio Um: Você não está preparado", description = "", abilityIcon = nil }
+L[15740] = { title = "Estágio Dois: Chamas de Azzinoth", description = "", abilityIcon = nil }
+L[15751] = { title = "Estágio Três: O Demônio Interior", description = "", abilityIcon = nil }
+L[15757] = { title = "Estágio Quatro: A Longa Caçada", description = "", abilityIcon = nil }

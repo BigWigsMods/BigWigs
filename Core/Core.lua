@@ -565,16 +565,9 @@ do
 						if not n then core:Error(("Invalid spell ID %d in the optionHeaders for module %s."):format(v, module.name)) end
 						module.optionHeaders[k] = n or v
 					else
-						local n
 						local tbl = C_EncounterJournal_GetSectionInfo(-v)
-						if tbl then
-							n = tbl.title
-						else -- old style
-							local L = module:GetLocale()
-							if L[v] then n = L[v] end
-						end
-						if not n then core:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
-						module.optionHeaders[k] = n or v
+						if not tbl then core:Error(("Invalid journal ID (-)%d in the optionHeaders for module %s."):format(-v, module.name)) end
+						module.optionHeaders[k] = tbl and tbl.title or v
 					end
 				end
 			end
@@ -629,15 +622,8 @@ do
 						if not n then core:Error(("Invalid spell ID %d in the toggleOptions for module %s."):format(v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					else
-						local n
 						local tbl = C_EncounterJournal_GetSectionInfo(-v)
-						if tbl then
-							n = tbl.title
-						else -- old style
-							local L = module:GetLocale()
-							if L[v] then n = L[v] end
-						end
-						if not n then core:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
+						if not tbl then core:Error(("Invalid journal ID (-)%d in the toggleOptions for module %s."):format(-v, module.name)) end
 						module.toggleDefaults[v] = bitflags
 					end
 				end

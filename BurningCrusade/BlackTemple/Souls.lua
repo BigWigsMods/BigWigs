@@ -27,10 +27,6 @@ if L then
 	L.zero_mana_desc = "Show the time it will take until the Essence of Desire has reduced everyones maximum mana to 0."
 	L.zero_mana_icon = "spell_shadow_manaburn"
 	L.desire_start = "Essence of Desire - Zero Mana in 160 sec"
-
-	L[-15665] = "Stage One: Essence of Suffering"
-	L[-15673] = "Stage Two: Essence of Desire"
-	L[-15681] = "Stage Three: Essence of Anger"
 end
 
 --------------------------------------------------------------------------------

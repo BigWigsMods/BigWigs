@@ -29,10 +29,6 @@ if L then
 	--L.zero_mana = "Zero Mana"
 	--L.zero_mana_desc = "Show the time it will take until the Essence of Desire has reduced everyones maximum mana to 0."
 	--L.desire_start = "Essence of Desire - Zero Mana in 160 sec"
-
-	L[-15665] = "Estágio Um: Essência do Sofrimento"
-	L[-15673] = "Estágio Dois: Essência do Desejo"
-	L[-15681] = "Estágio Três: Essência da Ira"
 end
 
 L = BigWigs:NewBossLocale("The Illidari Council", "ptBR")
@@ -47,20 +43,10 @@ if L then
 
 	--L.magical_immunity = "Immune to magical!"
 	--L.physical_immunity = "Immune to physical!"
-
-	L[-15704] = "Gathios, o Despedaçador"
-	L[-15716] = "Veras Sombranera"
-	L[-15726] = "Lady Malande"
-	L[-15720] = "Sumo Etereomante Zerevor"
 end
 
 L = BigWigs:NewBossLocale("Illidan Stormrage", "ptBR")
 if L then
 	--L.barrage_bar = "Barrage"
 	--L.warmup_trigger = "Akama. Your duplicity is hardly surprising. I should have slaughtered you and your malformed brethren long ago."
-
-	L[-15735] = "Estágio Um: Você não está preparado"
-	L[-15740] = "Estágio Dois: Chamas de Azzinoth"
-	L[-15751] = "Estágio Três: O Demônio Interior"
-	L[-15757] = "Estágio Quatro: A Longa Caçada"
 end

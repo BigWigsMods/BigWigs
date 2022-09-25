@@ -46,3 +46,14 @@ L[7534] = { title = "毒药瓶", description = "死亡猎手维赛里随机向�
 L[7577] = { title = "唤起回忆", description = "当银色神官帕尔崔丝的生命值降至50%时，她会从你过去的战斗中召唤一只生物。", abilityIcon = 136200 }
 L[7578] = { title = "往日回忆", description = "", abilityIcon = nil }
 L[7598] = { title = "食尸鬼爆炸", description = "黑骑士引爆一头食尸鬼，对8码范围内的所有玩家造成暗影伤害。", abilityIcon = 237521 }
+L[15665] = { title = "第一阶段：苦痛精华", description = "", abilityIcon = nil }
+L[15673] = { title = "第二阶段：欲望精华", description = "", abilityIcon = nil }
+L[15681] = { title = "第三阶段：愤怒精华", description = "", abilityIcon = nil }
+L[15704] = { title = "击碎者加西奥斯", description = "", abilityIcon = nil }
+L[15716] = { title = "维尔莱斯·深影", description = "", abilityIcon = nil }
+L[15720] = { title = "高阶灵术师塞勒沃尔", description = "", abilityIcon = nil }
+L[15726] = { title = "女公爵玛兰德", description = "", abilityIcon = nil }
+L[15735] = { title = "第一阶段：自寻死路", description = "", abilityIcon = nil }
+L[15740] = { title = "第二阶段：埃辛诺斯之焰", description = "", abilityIcon = nil }
+L[15751] = { title = "第三阶段：心魔", description = "", abilityIcon = nil }
+L[15757] = { title = "第四阶段：漫长的追猎", description = "", abilityIcon = nil }

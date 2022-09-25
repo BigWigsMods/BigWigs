@@ -46,3 +46,14 @@ L[7534] = { title = "Bouteille de poison", description = "Le nécrotraqueur Visc
 L[7577] = { title = "Invocation d'un souvenir", description = "Quand le confesseur d’argent Paletress n’a plus que 50% de vie, elle invoque une créature issue de vos anciennes batailles.", abilityIcon = 136200 }
 L[7578] = { title = "Souvenir du passé", description = "", abilityIcon = nil }
 L[7598] = { title = "Explosion de goule", description = "Le Chevalier noir fait exploser une de ses goules et inflige des dégâts d’Ombre à tous les personnages-joueurs à moins de 8 mètres.", abilityIcon = 237521 }
+L[15665] = { title = "Phase 1 : Essence de la souffrance", description = "", abilityIcon = nil }
+L[15673] = { title = "Phase 2 : Essence du désir", description = "", abilityIcon = nil }
+L[15681] = { title = "Phase 3 : Essence de la colère", description = "", abilityIcon = nil }
+L[15704] = { title = "Gathios le Briseur", description = "", abilityIcon = nil }
+L[15716] = { title = "Veras Ombrenoir", description = "", abilityIcon = nil }
+L[15720] = { title = "Grand néantomancien Zerevor", description = "", abilityIcon = nil }
+L[15726] = { title = "Dame Malande", description = "", abilityIcon = nil }
+L[15735] = { title = "Phase 1 : Vous n’êtes pas prêts", description = "", abilityIcon = nil }
+L[15740] = { title = "Phase 2 : Les flammes d’Azzinoth", description = "", abilityIcon = nil }
+L[15751] = { title = "Phase 3 : Le démon intérieur", description = "", abilityIcon = nil }
+L[15757] = { title = "Phase 4 : La longue traque", description = "", abilityIcon = nil }

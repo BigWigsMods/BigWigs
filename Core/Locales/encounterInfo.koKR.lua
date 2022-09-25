@@ -46,3 +46,14 @@ L[7534] = { title = "독병", description = "죽음추적자 비세리가 무작
 L[7577] = { title = "기억 소환", description = "은빛 고해사제 페일트레스의 생명력이 50%가 되면 과거에 당신이 대적한 상대 중 하나를 소환합니다.", abilityIcon = 136200 }
 L[7578] = { title = "과거의 기억", description = "", abilityIcon = nil }
 L[7598] = { title = "구울 폭발", description = "흑기사가 구울 중 하나를 폭발시켜 8미터 반경 내의 모든 플레이어에게 암흑 피해를 입힙니다.", abilityIcon = 237521 }
+L[15665] = { title = "1단계: 고뇌의 정수", description = "", abilityIcon = nil }
+L[15673] = { title = "2단계: 욕망의 정수", description = "", abilityIcon = nil }
+L[15681] = { title = "3단계: 격노의 정수", description = "", abilityIcon = nil }
+L[15704] = { title = "파괴자 가디오스", description = "", abilityIcon = nil }
+L[15716] = { title = "베라스 다크섀도", description = "", abilityIcon = nil }
+L[15720] = { title = "고위 황천술사 제레보르", description = "", abilityIcon = nil }
+L[15726] = { title = "여군주 말란데", description = "", abilityIcon = nil }
+L[15735] = { title = "1단계: 너흰 아직 준비가 안 됐다", description = "", abilityIcon = nil }
+L[15740] = { title = "2단계: 아지노스의 불꽃", description = "", abilityIcon = nil }
+L[15751] = { title = "3단계: 내면의 악마", description = "", abilityIcon = nil }
+L[15757] = { title = "4단계: 기나긴 사냥", description = "", abilityIcon = nil }

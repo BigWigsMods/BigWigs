@@ -46,3 +46,14 @@ L[7534] = { title = "Botella de veneno", description = "El mortacechador Visceri
 L[7577] = { title = "Invocar rememoración", description = "Cuando la salud restante de la confesora Argenta Cabelloclaro llega al 50%, invoca una criatura de tus batallas pasadas.", abilityIcon = 136200 }
 L[7578] = { title = "Recuerdo del pasado", description = "", abilityIcon = nil }
 L[7598] = { title = "Explosión de necrófago", description = "El Caballero Negro hace explotar a uno de sus necrófagos, lo que inflige daño de las Sombras a todos los jugadores en un radio de 8 m.", abilityIcon = 237521 }
+L[15665] = { title = "Fase uno: Esencia de sufrimiento", description = "", abilityIcon = nil }
+L[15673] = { title = "Fase dos: Esencia de deseo", description = "", abilityIcon = nil }
+L[15681] = { title = "Fase tres: Esencia de inquina", description = "", abilityIcon = nil }
+L[15704] = { title = "Gathios el Despedazador", description = "", abilityIcon = nil }
+L[15716] = { title = "Veras Sombra Oscura", description = "", abilityIcon = nil }
+L[15720] = { title = "Sumo abisálico Zerevor", description = "", abilityIcon = nil }
+L[15726] = { title = "Lady Malande", description = "", abilityIcon = nil }
+L[15735] = { title = "Fase uno: No están preparados", description = "", abilityIcon = nil }
+L[15740] = { title = "Fase dos: Llamas de Azzinoth", description = "", abilityIcon = nil }
+L[15751] = { title = "Fase tres: El demonio interno", description = "", abilityIcon = nil }
+L[15757] = { title = "Fase cuatro: La larga cacería", description = "", abilityIcon = nil }

@@ -46,3 +46,14 @@ L[7534] = { title = "Giftflasche", description = "Todespirscher Visceri wirft ei
 L[7577] = { title = "Erinnerung beschwören", description = "Sobald Argentumbeichtpatin Blondlocke 50% verbleibende Gesundheit erreicht, beschwört sie eine Kreatur aus der Vergangenheit der Spielercharaktere.", abilityIcon = 136200 }
 L[7578] = { title = "Erinnerung an die Vergangenheit", description = "", abilityIcon = nil }
 L[7598] = { title = "Ghulexplosion", description = "Der Schwarze Ritter bringt einen seiner Ghule zur Explosion, wodurch alle Spielercharaktere im Umkreis von 8 Metern Schattenschaden erleiden.", abilityIcon = 237521 }
+L[15665] = { title = "Phase 1: Essenz des Leidens", description = "", abilityIcon = nil }
+L[15673] = { title = "Phase 2: Essenz der Begierde", description = "", abilityIcon = nil }
+L[15681] = { title = "Phase 3: Essenz des Zorns", description = "", abilityIcon = nil }
+L[15704] = { title = "Gathios der Zerschmetterer", description = "", abilityIcon = nil }
+L[15716] = { title = "Veras Schwarzschatten", description = "", abilityIcon = nil }
+L[15720] = { title = "Hochnethermant Zerevor", description = "", abilityIcon = nil }
+L[15726] = { title = "Lady Malande", description = "", abilityIcon = nil }
+L[15735] = { title = "Phase 1: Ihr wisst nicht, was Euch erwartet", description = "", abilityIcon = nil }
+L[15740] = { title = "Phase 2: Flammen von Azzinoth", description = "", abilityIcon = nil }
+L[15751] = { title = "Phase 3: Der innere Dämon", description = "", abilityIcon = nil }
+L[15757] = { title = "Phase 4: Die lange Jagd", description = "", abilityIcon = nil }

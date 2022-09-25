@@ -46,3 +46,14 @@ L[7534] = { title = "毒藥瓶", description = "亡靈哨兵威瑟瑞向一名�
 L[7577] = { title = "召喚回憶", description = "當銀白告解者帕爾璀絲剩下50%生命力時，她將從你過往的戰鬥中召喚一個生物。", abilityIcon = 136200 }
 L[7578] = { title = "往日之憶", description = "", abilityIcon = nil }
 L[7598] = { title = "食屍鬼爆炸", description = "黑騎士使他的一隻食屍鬼爆炸，對8碼範圍內的所有玩家造成暗影傷害。", abilityIcon = 237521 }
+L[15665] = { title = "階段一：受難精華", description = "", abilityIcon = nil }
+L[15673] = { title = "階段二：慾望精華", description = "", abilityIcon = nil }
+L[15681] = { title = "階段三：憤怒精華", description = "", abilityIcon = nil }
+L[15704] = { title = "粉碎者高希歐", description = "", abilityIcon = nil }
+L[15716] = { title = "維拉斯‧深影", description = "", abilityIcon = nil }
+L[15720] = { title = "高等虛空術師札瑞佛", description = "", abilityIcon = nil }
+L[15726] = { title = "瑪蘭黛女士", description = "", abilityIcon = nil }
+L[15735] = { title = "階段一：你們還沒準備好", description = "", abilityIcon = nil }
+L[15740] = { title = "階段二：埃辛諾斯火焰", description = "", abilityIcon = nil }
+L[15751] = { title = "階段三：體內的惡魔", description = "", abilityIcon = nil }
+L[15757] = { title = "階段四：長久的狩獵", description = "", abilityIcon = nil }
