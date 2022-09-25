@@ -39,17 +39,17 @@ local color_methods = {
 	Message = 2,
 	TargetMessageOld = 3,
 	TargetMessage = 2,
+	TargetsMessageOld = 2,
 	TargetsMessage = 2,
-	NewTargetsMessage = 2,
-	StackMessage = 4,
-	NewStackMessage = 2,
+	StackMessageOld = 4,
+	StackMessage = 2,
 	DelayedMessage = 3,
 }
 local sound_methods = {
 	PlaySound = 2,
 	MessageOld = 3,
 	TargetMessageOld = 4,
-	StackMessage = 5,
+	StackMessageOld = 5,
 	DelayedMessage = 6,
 }
 local icon_methods = {
@@ -57,10 +57,10 @@ local icon_methods = {
 	Message = 4,
 	TargetMessageOld = 6,
 	TargetMessage = 5,
+	TargetsMessageOld = 6,
 	TargetsMessage = 6,
-	NewTargetsMessage = 6,
+	StackMessageOld = 7,
 	StackMessage = 7,
-	NewStackMessage = 7,
 	PersonalMessage = 4,
 	Bar = 4,
 	CDBar = 4,
@@ -544,7 +544,7 @@ local function parseLua(file)
 		end
 
 		-- check usage
-		for locale_type, locale_key in line:gmatch("(C?L)%.([%w_]+)") do
+		for locale_type, locale_key, extra in line:gmatch("(C?L)%.([%w_]+)(%(?)") do
 			if locale_type == "CL" then
 				-- CL is only set in the main project
 				if common_locale and not common_locale[locale_key] then
@@ -552,6 +552,10 @@ local function parseLua(file)
 				end
 			elseif locale_type == "L" and not locale[locale_key] then
 				error(string.format("    %s:%d: Invalid locale string \"L.%s\"", file_name, n, locale_key))
+			end
+			-- trying to invoke the string (missing :format)
+			if extra == "(" then
+				error(string.format("    %s:%d: Invalid locale string format \"%s.%s%s\"", file_name, n, locale_type, locale_key, format))
 			end
 		end
 
@@ -662,9 +666,9 @@ local function parseLua(file)
 		end
 		-- For UNIT functions, record the last spellId checked to use as the key.
 		res = line:match("if (.+) then")
-		if res and line:match("[^.]spellId == %d+") then
+		if res and line:match("spellId == %d+") then
 			rep.if_key = {}
-			for m in res:gmatch("[^.]spellId == (%d+)") do
+			for m in res:gmatch("spellId == (%d+)") do
 				rep.if_key[#rep.if_key+1] = m
 			end
 		end
@@ -703,6 +707,15 @@ local function parseLua(file)
 			end
 		end
 
+		--- Check timer args (callback, timer)
+		local method, args = line:match(":(%a+Timer)(%b())")
+		if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" or method == "SimpleTimer" then
+			args = strsplit(args:sub(2, -2))
+			if tonumber(args[1]) then
+				error(string.format("    %s:%d: Invalid args for \":%s\" callback=%s, delay=%s", file_name, n, method, tostring(args[1]), tostring(args[2])))
+			end
+		end
+
 		--- Parse message calls.
 		-- Check for function calls that will trigger a sound, including calls
 		-- delayed with ScheduleTimer.
@@ -726,12 +739,18 @@ local function parseLua(file)
 				local color_index = color_methods[method]
 				if color_index then
 					color = tablize(unternary(args[color_index+offset], "\"(.-)\"", valid_colors))
-					if method:sub(1, 6) == "Target" or method == "StackMessage" or method == "NewStackMessage" or method == "NewTargetsMessage" then -- XXX NewTargetsMessage temp
+					if method:sub(1, 6) == "Target" or method == "StackMessageOld" or method == "StackMessage" then
 						color[#color+1] = "blue" -- used when on the player
 					end
 				end
 				if method == "PersonalMessage" then
 					color = {"blue"}
+					local locale_string = args[2+offset]
+					if (locale_string == "nil" or locale_string == "false") then locale_string = nil end
+					if common_locale and (locale_string and not common_locale[unquote(locale_string)]) then
+						local text = args[3+offset]
+						error(string.format("    %s:%d: PersonalMessage: Invalid localeString(2)! func=%s, key=%s, localeString=%s, text=%s", file_name, n, tostring(current_func), key, tostring(locale_string), tostring(text)))
+					end
 				end
 				local icon_index = icon_methods[method]
 				if icon_index then
@@ -757,8 +776,16 @@ local function parseLua(file)
 					error(string.format("    %s:%d: Invalid API call \"%s\"! func=%s, key=%s", file_name, n, call, tostring(current_func), key))
 				end
 				-- Check for wrong API (Message instead of TargetMessage)
-				if method == "Message" and (args[3] == "destName" or args[3] == "args.destName" or args[3] == "name" or args[3] == "args.sourceName" or args[3] == "sourceName") then
+				if method == "Message" and (args[3+offset] == "destName" or args[3+offset] == "args.destName" or args[3+offset] == "name" or args[3+offset] == "args.sourceName" or args[3+offset] == "sourceName") then
 					error(string.format("    %s:%d: Message text is a player name? func=%s, key=%s, text=%s", file_name, n, tostring(current_func), key, args[3]))
+				end
+				-- Check that noEmphUntil is set
+				if method == "StackMessage" and (not args[5+offset] or args[5+offset] == "nil") then
+					error(string.format("    %s:%d: StackMessage: Missing noEmphUntil(5)! func=%s, key=%s", file_name, n, tostring(current_func), key))
+				end
+				-- Check that voice wasn't forgotten (like the feature was >.>), passes simple expressions like `self:Dispeller("magic") and "dispel"`
+				if method == "PlaySound" and args[3+offset] and args[3+offset] ~= "nil" and not args[3+offset]:match("^\"(.-)\"$") and not args[3+offset]:match(" and \"(.-)\"$") then
+					error(string.format("    %s:%d: PlaySound: Invalid voice(3)! func=%s, key=%s, voice=%s", file_name, n, tostring(current_func), key, tostring(args[3+offset])))
 				end
 			end
 
@@ -904,7 +931,11 @@ local function parseLocale(file)
 		end
 		if module_name then
 			current_module = module_name
-			keys[module_name] = {}
+			if not keys[module_name] then
+				keys[module_name] = {}
+			else
+				error(string.format("    %s:%d: Duplicate module name %q", file_name, n, module_name))
+			end
 			-- Save base keys for non-boss locales
 			if file_locale == "enUS" then
 				modules_locale[module_name] = keys[module_name]
