@@ -27,6 +27,7 @@ L.stage = "%d단계"
 L.normal = "일반 난이도"
 L.heroic = "영웅 난이도"
 L.mythic = "신화 난이도"
+L.hard = "어려움 모드"
 L.active = "활성화" -- When a boss becomes active, after speech finishes
 L.general = "일반" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "흡수" -- Used for shield-like abilities that absorb damage or healing

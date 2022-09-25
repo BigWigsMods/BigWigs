@@ -27,6 +27,7 @@ L.stage = "Этап %d"
 L.normal = "Обычный режим"
 L.heroic = "Героический режим"
 L.mythic = "Эпохальный режим"
+L.hard = "Сложный режим"
 L.active = "Активен" -- When a boss becomes active, after speech finishes
 L.general = "Общее" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "Поглот." -- Used for shield-like abilities that absorb damage or healing
