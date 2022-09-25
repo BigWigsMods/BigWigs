@@ -30,7 +30,8 @@ local isClassic = BigWigsLoader.isClassic
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected
-local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = function(_) end, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
+local C_EncounterJournal_GetSectionInfo = function(key) return BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key] end
+local GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local UnitGroupRolesAssigned = UnitGroupRolesAssigned or function(_) end
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
 local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax

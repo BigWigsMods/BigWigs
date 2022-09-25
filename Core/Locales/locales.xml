@@ -25,5 +25,16 @@
 <Script file="encounter.zhCN.lua"/>
 <Script file="encounter.zhTW.lua"/>
 
-</Ui>
+<Script file="encounterInfo.enUS.lua"/>
+<Script file="encounterInfo.deDE.lua"/>
+<Script file="encounterInfo.esES.lua"/>
+<Script file="encounterInfo.esMX.lua"/>
+<Script file="encounterInfo.frFR.lua"/>
+<Script file="encounterInfo.itIT.lua"/>
+<Script file="encounterInfo.koKR.lua"/>
+<Script file="encounterInfo.ptBR.lua"/>
+<Script file="encounterInfo.ruRU.lua"/>
+<Script file="encounterInfo.zhCN.lua"/>
+<Script file="encounterInfo.zhTW.lua"/>
 
+</Ui>

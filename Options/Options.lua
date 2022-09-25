@@ -13,7 +13,19 @@ local AceGUI = LibStub("AceGUI-3.0")
 local adbo = LibStub("AceDBOptions-3.0")
 --local lds = LibStub("LibDualSpec-1.0")
 
-local C_EncounterJournal_GetSectionInfo = function() end
+local C_EncounterJournal_GetSectionInfo = function(key)
+	local info = BigWigsAPI:GetLocale("BigWigs: Encounter Info")[key]
+	if info then
+		-- Options uses a few more fields, so copy the entry and include them
+		local tbl = {}
+		for k,v in next, info do
+			tbl[k] = v
+		end
+		tbl.spellID = 0
+		tbl.link = ("|cff66bbff|Hjournal:2:%d:1|h[%s]|h|r"):format(key, tbl.title)
+		return tbl
+	end
+end
 
 local loader = BigWigsLoader
 local API = BigWigsAPI
