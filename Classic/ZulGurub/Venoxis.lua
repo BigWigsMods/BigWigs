@@ -31,6 +31,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self.displayName = L.bossName
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "Renew", 23895)
 	self:Log("SPELL_CAST_START", "HolyFire", 23860)

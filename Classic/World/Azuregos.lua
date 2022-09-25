@@ -35,6 +35,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:OnRegister()
+	self.displayName = L.bossName
+end
+
 function mod:OnBossEnable()
 	--self:ScheduleTimer("CheckForEngage", 1)
 	--self:RegisterEvent("BOSS_KILL")

@@ -475,7 +475,6 @@ do
 					core:Print(errorJournalIdInvalid:format(moduleName, journalId))
 				end
 			else
-				-- Localized name is set in :RegisterBossModule
 				m.displayName = moduleName
 			end
 
@@ -646,12 +645,6 @@ do
 
 	function core:RegisterBossModule(module)
 		module.SetupOptions = moduleOptions
-
-		-- Localize the display name
-		local L = module:GetLocale()
-		if L.bossName then
-			module.displayName = L.bossName
-		end
 
 		-- Call the module's OnRegister (which is our OnInitialize replacement)
 		if type(module.OnRegister) == "function" then
