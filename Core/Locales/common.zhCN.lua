@@ -27,6 +27,7 @@ L.stage = "阶段%d"
 L.normal = "普通模式"
 L.heroic = "英雄模式"
 L.mythic = "史诗模式"
+L.hard = "困难模式"
 L.active = "激活" -- When a boss becomes active, after speech finishes
 L.general = "通用" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "吸收" -- Used for shield-like abilities that absorb damage or healing

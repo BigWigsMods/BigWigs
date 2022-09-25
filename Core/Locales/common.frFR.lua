@@ -28,6 +28,7 @@ L.stage = "Phase %d"
 L.normal = "Mode normal"
 L.heroic = "Mode héroïque"
 L.mythic = "Mode mythique"
+L.hard = "Mode difficile"
 L.active = "Actif" -- When a boss becomes active, after speech finishes
 L.general = "Général" -- General settings, i.e. things that apply to normal, heroic and mythic mode.
 L.absorb = "Absorbe" -- Used for shield-like abilities that absorb damage or healing
