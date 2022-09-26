@@ -266,4 +266,8 @@ globals = {
 	"SetTracking",
 	"GetNumTrackingTypes",
 	"Minimap",
+
+	-- LittleWigs
+	"GetNumGossipAvailableQuests", -- TBC/OldHillsbradFoothills/Trash.lua
+	"GetNumGossipActiveQuests", -- TBC/OldHillsbradFoothills/Trash.lua
 }
