@@ -36,7 +36,7 @@ function mod:GetOptions()
 		370534, -- Primal Forces
 		370597, -- Kill Order (Fixate)
 		"custom_on_nameplate_fixate",
-		370640, -- Blazing Brand
+		{370640, "SAY"}, -- Blazing Brand
 		blazingBrandMarker,
 		370615, -- Molten Swing
 		{371059, "TANK"}, -- Melting Armor
