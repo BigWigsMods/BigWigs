@@ -737,7 +737,7 @@ do
 		if (not func and not self[event]) or (func and not self[func]) then core:Print(format(noFunc, self.moduleName, func or event)) return end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
-			if isClassicEra and unit:sub(1, 4) == "boss" then -- XXX compat
+			if unit:sub(1, 4) == "boss" then -- XXX compat
 				self:RegisterEvent(event, func)
 			else
 				if not unitEventMap[self][event] then unitEventMap[self][event] = {} end
@@ -760,16 +760,20 @@ do
 		if not unitEventMap[self][event] then return end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
-			unitEventMap[self][event][unit] = nil
-			local keepRegistered
-			for j = #enabledModules, 1, -1 do
-				local m = unitEventMap[enabledModules[j]][event]
-				if m and m[unit] then
-					keepRegistered = true
+			if unit:sub(1, 4) == "boss" then -- XXX compat
+				self:UnregisterEvent(event)
+			else
+				unitEventMap[self][event][unit] = nil
+				local keepRegistered
+				for j = #enabledModules, 1, -1 do
+					local m = unitEventMap[enabledModules[j]][event]
+					if m and m[unit] then
+						keepRegistered = true
+					end
 				end
-			end
-			if not keepRegistered then
-				frameTbl[unit]:UnregisterEvent(event)
+				if not keepRegistered then
+					frameTbl[unit]:UnregisterEvent(event)
+				end
 			end
 		end
 	end
