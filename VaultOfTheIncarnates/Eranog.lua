@@ -141,9 +141,7 @@ end
 
 function mod:MeltingArmorApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 0)
-	if not self:Me(args.destGUID) and not self:Tanking("boss1") then -- XXX Check when to play sounds
-		self:PlaySound(args.spellId, "warning")
-	end
+	self:PlaySound(args.spellId, "warning")
 end
 
 function mod:FireStrike(args)
