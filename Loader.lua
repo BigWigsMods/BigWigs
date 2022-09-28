@@ -831,9 +831,14 @@ do
 		BigWigs_TempestKeep = true,
 		BigWigs_Hyjal = true,
 		BigWigs_BlackTemple = true,
+		BigWigs_WrathOfTheLichKing = true,
 		LittleWigs = true,
+		LittleWigs_Classic = true,
+		LittleWigs_BurningCrusade = true,
+		LittleWigs_WrathOfTheLichKing = true,
 	}
 	-- Try to teach people not to force load our modules.
+	local printTempWarn = public.isWrath -- XXX temp (true for wrath only)
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
 		if IsAddOnEnabled(i) and not IsAddOnLoadOnDemand(i) then
@@ -857,9 +862,17 @@ do
 			delayedMessages[#delayedMessages+1] = L.removeAddon:format(name, old[name])
 			Popup(L.removeAddon:format(name, old[name]))
 		end
+		if name == "BigWigs_WrathOfTheLichKing" then
+			printTempWarn = false -- XXX temp
+		end
 	end
 
-	local L = GetLocale()
+	-- XXX Temporary print
+	if printTempWarn then
+		delayedMessages[#delayedMessages+1] = L.missingAddOn:format("BigWigs_WrathOfTheLichKing")
+	end
+
+	local currentLocale = GetLocale()
 	local locales = {
 		--ruRU = "Russian (ruRU)",
 		--itIT = "Italian (itIT)",
@@ -870,8 +883,8 @@ do
 		--ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
 	}
-	if locales[L] then
-		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
+	if locales[currentLocale] then
+		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[currentLocale])
 	end
 
 	if #delayedMessages > 0 then
@@ -882,6 +895,7 @@ do
 					for i = 1, #delayedMessages do
 						sysprint(delayedMessages[i])
 					end
+					if printTempWarn then RaidNotice_AddMessage(RaidWarningFrame, L.missingAddOn:format("BigWigs_WrathOfTheLichKing"), {r=1,g=1,b=1}, 5) end
 					delayedMessages = nil
 				end)
 			end)
@@ -1209,8 +1223,8 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and strfind(zoneAddon, "LittleWigs_", nil, true) and public.isClassic then
-			zoneAddon = "LittleWigs" -- Collapse into one addon
+		if zoneAddon and zoneAddon ~= "BigWigs_BurningCrusade" and zoneAddon ~= "BigWigs_Classic" then -- XXX These 2 still need split out of BW
+			if strfind(zoneAddon, "LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
