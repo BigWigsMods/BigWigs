@@ -132,12 +132,10 @@ function mod:EmpoweredConductiveMarkApplied(args)
 		local amount = args.amount or 1
 		self:StackMessage(args.spellId, "blue", args.destName, args.amount, args.amount)
 		self:PlaySound(args.spellId, "warning")
-		if amount > 1 then
-			if amount > 4 and self:GetOption("custom_on_empowered_conductive_mark_yell") then -- start stack yells from 5+
-				self:Yell(false, L.marks_on_me:format(amount), true)
-			end
-		else -- Initial Say
+		if amount == 1 then -- Initial Say
 			self:Say(args.spellId)
+		elseif amount > 4 and self:GetOption("custom_on_empowered_conductive_mark_yell") then -- start stack yells from 5+
+			self:Yell(false, L.marks_on_me:format(amount), true)
 		end
 	end
 end
