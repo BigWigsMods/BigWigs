@@ -1,27 +1,27 @@
-## Interface: 90207
+## Interface: 100002
 
 ## Title: BigWigs [|cffeda55fVault of the Incarnates|r]
-## Title-deDE: BigWigs [|cffeda55fVault of the Incarnates|r]
-## Title-esES: BigWigs [|cffeda55fVault of the Incarnates|r]
-## Title-esMX: BigWigs [|cffeda55fVault of the Incarnates|r]
-## Title-frFR: BigWigs [|cffeda55fVault of the Incarnates|r]
-## Title-ruRU: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-deDE: BigWigs [|cffeda55fGewölbe der Inkarnationen|r]
+## Title-esES: BigWigs [|cffeda55fCámara de las Encarnaciones|r]
+## Title-esMX: BigWigs [|cffeda55fBóveda de las Encarnaciones|r]
+## Title-frFR: BigWigs [|cffeda55fCaveau des Incarnations|r]
+## Title-itIT: BigWigs [|cffeda55fSegrete delle Incarnazioni|r]
+## Title-koKR: BigWigs [|cffeda55f현신의 금고|r]
+## Title-ptBR: BigWigs [|cffeda55fCâmara dos Encarnados|r]
+## Title-ruRU: BigWigs [|cffeda55fХранилище Воплощений|r]
 ## Title-zhCN: BigWigs [|cffeda55f化身巨龙牢窟|r]
-## Title-zhTW: BigWigs [|cffeda55fVault of the Incarnates|r]
-## Title-itIT: BigWigs [|cffeda55fVault of the Incarnates|r]
-## Title-ptBR: BigWigs [|cffeda55fVault of the Incarnates|r]
-## Title-koKR: BigWigs [|cffeda55fVault of the Incarnates|r]
+## Title-zhTW: BigWigs [|cffeda55f洪荒化身密庫|r]
 ## Notes: BigWigs Vault of the Incarnates Modules
 ## Notes-deDE: BigWigs Vault of the Incarnates Modules
 ## Notes-esES: BigWigs Vault of the Incarnates Modules
 ## Notes-esMX: BigWigs Vault of the Incarnates Modules
 ## Notes-frFR: BigWigs Vault of the Incarnates Modules
+## Notes-itIT: BigWigs Vault of the Incarnates Modules
+## Notes-koKR: BigWigs Vault of the Incarnates Modules
+## Notes-ptBR: BigWigs Vault of the Incarnates Modules
 ## Notes-ruRU: BigWigs Vault of the Incarnates Modules
 ## Notes-zhCN: BigWigs 化身巨龙牢窟模块
 ## Notes-zhTW: BigWigs Vault of the Incarnates Modules
-## Notes-itIT: BigWigs Vault of the Incarnates Modules
-## Notes-ptBR: BigWigs Vault of the Incarnates Modules
-## Notes-koKR: BigWigs Vault of the Incarnates Modules
 ## Version: @project-version@
 
 ## LoadOnDemand: 1

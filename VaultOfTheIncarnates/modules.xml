@@ -9,7 +9,7 @@
 <Script file="KurogGrimtotem.lua"/>
 <Script file="BroodkeeperDiurna.lua"/>
 <Script file="RaszagethTheStormEater.lua"/>
-<Script file="Trash.lua"/>
+<!-- <Script file="Trash.lua"/> -->
 
 <Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>
