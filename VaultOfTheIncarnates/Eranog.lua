@@ -129,7 +129,7 @@ end
 
 function mod:BurningWoundApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 0)
-	self:PlaySound(args.spellId, "warning")
+	self:PlaySound(args.spellId, "info")
 	--self:Bar(args.spellId, 30)
 end
 
