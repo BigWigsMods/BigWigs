@@ -219,6 +219,10 @@ function mod:ChaoticDestruction()
 	chaoticEssenceCount = chaoticEssenceCount + 1
 	-- Sylvanas (2435) Stage 2 is curated and Guardian (2436) stops at least at link, so 60s isn't going to happen
 	if (activeBoss ~= 2435 or self:GetStage() ~= 2) and activeBoss ~= 2436 then
+		local cd = 60
+		if activeBoss == 2433 then -- The Eye
+			cd = fixedCastTime(11, 60) -- tries to cast at every 75s
+		end
 		self:CDBar(372634, 60, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 end
@@ -231,7 +235,7 @@ function mod:ReconfigurationEmitter(args)
 	emitterCount = emitterCount + 1
 	local cd = 75
 	if activeBoss == 2433 then -- The Eye
-		cd = fixedCastTime(75) -- tries to cast at every 75s
+		cd = fixedCastTime(5, 75) -- tries to cast at every 75s
 	elseif activeBoss == 2431 then -- Fatescribe
 		cd = 80
 	-- elseif activeBoss == 2436 then -- Guardian
@@ -249,7 +253,7 @@ function mod:ProtoformBarrierApplied(args)
 	barrierCount = barrierCount + 1
 	local cd = 60
 	if activeBoss == 2433 then -- The Eye
-		cd = fixedCastTime(60) -- tries to cast at every 60s
+		cd = fixedCastTime(15, 60) -- tries to cast at every 60s
 	elseif activeBoss == 2436 then -- Guardian
 		cd = 0 -- stops at least at link, so 60s isn't going to happening
 	end
@@ -300,14 +304,14 @@ function mod:TheEyeStygianDarkshieldApplied()
 end
 
 function mod:TheEyeStygianDarkshieldRemoved()
-	if chaoticEssenceDetected then
-		self:CDBar(372634, 3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
-	end
 	if emitterDetected then
-		self:Bar(372634, fixedCastTime(60, true), bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		self:Bar(372634, fixedCastTime(5, 60, true), bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, fixedCastTime(11, 60, true), bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 	if protoformBarrierDetected then
-		self:Bar(372634, fixedCastTime(75, true), bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		self:Bar(372634, fixedCastTime(15, 75, true), bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 	end
 end
 

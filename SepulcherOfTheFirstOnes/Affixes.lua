@@ -299,7 +299,7 @@ function mod:ProtoformBarrierApplied(args)
 		cd = self:Mythic() and 112 or 107 -- casts after Massive Bang
 	elseif activeBoss == 2512 then -- Vigilant Guardian
 		-- can delays if near the Exposed Core cast, then the next time is adjusted
-		cd = fixedCastTime(11, 60)
+		cd = fixedCastTime(15, 60)
 	end
 	self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 end
