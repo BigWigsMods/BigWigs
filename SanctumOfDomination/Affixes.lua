@@ -289,6 +289,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 355555 then -- Painsmith: [DNT] Upstairs
 		self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 		self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 	elseif spellId == 351625 then -- Kel'Thuzad: Cosmetic Death
 		self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 		self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
@@ -321,6 +322,9 @@ function mod:PainsmithForgeWeaponOver()
 	end
 	if chaoticEssenceDetected then
 		self:CDBar(372634, 18, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+	if protoformBarrierDetected then
+		self:Bar(372634, 21, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 	end
 end
 
