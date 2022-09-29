@@ -158,6 +158,8 @@ function mod:CheckForAffixes(count)
 			local cd = 20
 			if activeBoss == 2543 then -- Lords of Dread
 				cd = 25
+			elseif activeBoss == 2549 then -- Rygelon
+				cd = self:Mythic() and 81 or 77 -- casts after Massive Bang
 			elseif activeBoss == 2537 then -- The Jailer
 				cd = 1
 			end
@@ -243,7 +245,10 @@ function mod:ChaoticDestruction()
 	self:PlaySound(372634, "alarm")
 	chaoticEssenceCount = chaoticEssenceCount + 1
 	local cd = 60
-	if activeBoss == 2543 then -- Lords of Dread
+	if activeBoss == 2512 then -- Vigilant Guardian
+		-- can delays if near the Exposed Core cast, then the next time is adjusted
+		cd = fixedCastTime(11, 60)
+	elseif activeBoss == 2543 then -- Lords of Dread
 		if barrierCount % 2 == 0 then -- after Swarm cast (static)
 			cd = 73
 		else -- after Among Us cast (gets paused)
@@ -251,9 +256,6 @@ function mod:ChaoticDestruction()
 		end
 	elseif activeBoss == 2549 then -- Rygelon
 		cd = self:Mythic() and 112 or 107 -- casts after Massive Bang
-	elseif activeBoss == 2512 then -- Vigilant Guardian
-		-- can delays if near the Exposed Core cast, then the next time is adjusted
-		cd = fixedCastTime(11, 60)
 	end
 	self:CDBar(372634, cd, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 end
@@ -289,7 +291,12 @@ function mod:ProtoformBarrierApplied(args)
 	self:PlaySound(args.spellId, "info")
 	barrierCount = barrierCount + 1
 	local cd = 60
-	if activeBoss == 2543 then -- Lords of Dread
+	if activeBoss == 2512 then -- Vigilant Guardian
+		-- can delays if near the Exposed Core cast, then the next time is adjusted
+		cd = fixedCastTime(15, 60)
+	elseif activeBoss == 2544 then -- Pantheon
+		cd = fixedCastTime(15, 60)
+	elseif activeBoss == 2543 then -- Lords of Dread
 		if barrierCount % 2 == 0 then -- after Swarm cast (static)
 			cd = 73
 		else -- after Among Us cast (gets paused)
@@ -297,9 +304,6 @@ function mod:ProtoformBarrierApplied(args)
 		end
 	elseif activeBoss == 2549 then -- Rygelon
 		cd = self:Mythic() and 112 or 107 -- casts after Massive Bang
-	elseif activeBoss == 2512 then -- Vigilant Guardian
-		-- can delays if near the Exposed Core cast, then the next time is adjusted
-		cd = fixedCastTime(15, 60)
 	end
 	self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 end
@@ -327,6 +331,8 @@ do
 					else -- after Among Us cast (gets paused)
 						cd = 50
 					end
+				elseif activeBoss == 2549 then -- Rygelon
+					cd = self:Mythic() and 112 or 107 -- casts after Massive Bang
 				end
 				self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 			end
@@ -340,6 +346,9 @@ end
 
 -- Boss specific timer resetting
 function mod:LihuvimSynthesize()
+	if emitterDetected then
+		self:Bar(371254, 24.5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
 	if chaoticEssenceDetected then
 		self:CDBar(372634, 31.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
@@ -355,6 +364,7 @@ function mod:HalondrusRelocationForm()
 	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 	self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 end
 
 function mod:HalondrusReclamationForm()
@@ -366,6 +376,9 @@ function mod:HalondrusReclamationForm()
 	end
 	if protoformBarrierDetected then
 		self:Bar(371447, 21.1, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
+	if creationSparkDetected then
+		self:Bar(369505, 26.1, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 	end
 end
 
