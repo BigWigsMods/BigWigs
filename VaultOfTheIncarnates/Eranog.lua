@@ -29,43 +29,45 @@ end
 -- Initialization
 --
 
-local blazingBrandMarker = mod:AddMarkerOption(true, "player", 1, 370640, 1, 2, 3) -- Blazing Brand
 function mod:GetOptions()
 	return {
-		370307, -- Collapsing Army
-		370534, -- Primal Forces
+		-- Stage 1
+		390715, -- Flamerift
+		370649, -- Primal Flow
 		370597, -- Kill Order (Fixate)
 		"custom_on_nameplate_fixate",
-		{370640, "SAY"}, -- Blazing Brand
-		blazingBrandMarker,
-		370615, -- Molten Swing
-		{371059, "TANK"}, -- Melting Armor
-		373338, -- Fire Strike
+		370615, -- Molten Cleave
+		394917, -- Leaping Flames
+		{394904, "TANK"}, -- Burning Wound
+		-- Stage 2
+		370307, -- Collapsing Army
 	},{
-
+		[390715] = -26001, -- Stage One
+		[370307] = -26004, -- Stage Two
 	},{
 		[370597] = CL.fixate, -- Kill Order (Fixate)
 	}
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "CollapsingArmy", 370307)
-	self:Log("SPELL_CAST_START", "PrimalForces", 370534)
+	self:Log("SPELL_CAST_START", "Flamerift", 390715)
+	self:Log("SPELL_AURA_APPLIED", "FlameriftApplied", 390715)
+	self:Log("SPELL_AURA_APPLIED", "PrimalFlowDamage", 370648)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 370597) -- Kill Order
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 370597) -- Kill Order
-	self:Log("SPELL_AURA_APPLIED", "BlazingBrandApplied", 370640)
-	self:Log("SPELL_AURA_REMOVED", "BlazingBrandRemoved", 370640)
-	self:Log("SPELL_CAST_START", "MoltenSwing", 370615)
-	self:Log("SPELL_AURA_APPLIED", "MeltingArmorApplied", 371059)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "MeltingArmorApplied", 371059)
-	self:Log("SPELL_CAST_START", "FireStrike", 373338)
+	self:Log("SPELL_CAST_START", "MoltenCleave", 370615)
+	self:Log("SPELL_CAST_START", "LeapingFlames", 394917)
+	self:Log("SPELL_AURA_APPLIED", "BurningWoundApplied", 394904)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningWoundApplied", 394904)
+
+	self:Log("SPELL_CAST_START", "CollapsingArmy", 370307)
 end
 
 function mod:OnEngage()
-	--self:Bar(360281, 10) -- Blazing Brand
-	--self:Bar(373338, 10) -- Fire Strike
-	--self:Bar(370615, 10) -- Molten Swing
-	--self:Bar(370534, 10) -- Primal Forces
+	--self:Bar(390715, 10) -- Flamerift
+	--self:Bar(370615, 10) -- Molten Cleave
+	--self:Bar(394917, 10) -- Leaping Flames
+	--self:Bar(394904, 10) -- Burning Wound
 	--self:Bar(370307, 100) -- Collapsing Army
 end
 
@@ -74,15 +76,33 @@ end
 --
 
 function mod:CollapsingArmy(args)
-	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
 	--self:Bar(args.spellId, 100)
 end
 
-function mod:PrimalForces(args)
-	self:Message(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
+function mod:Flamerift(args)
+	self:Message(args.spellId, "red")
 	--self:Bar(args.spellId, 30)
+end
+
+function mod:FlameriftApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "warning")
+	end
+end
+
+do
+	local prev = 0
+	function mod:PrimalFlowDamage(args)
+		prev = args.time
+		if self:Me(args.destGUID) and args.time - prev > 3 then
+			prev = args.time
+			self:PersonalMessage(370649, "underyou")
+			self:PlaySound(370649, "underyou")
+		end
+	end
 end
 
 function mod:FixateApplied(args)
@@ -101,51 +121,20 @@ function mod:FixateRemoved(args)
 	end
 end
 
-do
-	local playerList = {}
-	local prev = 0
-	function mod:BlazingBrandApplied(args)
-		local t = args.time
-		if t-prev > 5 then
-			-- XXX Use 370659 as _start / _success after tests most likely
-			prev = t
-			playerList = {}
-			--self:Bar(args.spellId, 30)
-		end
-		local count = #playerList+1
-		local icon = count
-		playerList[count] = args.destName
-		playerList[args.destName] = icon -- Set raid marker
-		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.count_rticon:format(args.spellName, icon, icon))
-			--self:SayCountdown(args.spellId, 7, icon)
-		end
-		self:TargetsMessage(args.spellId, "yellow", playerList)
-		self:CustomIcon(blazingBrandMarker, args.destName, icon)
-	end
-
-	function mod:BlazingBrandRemoved(args)
-		-- if self:Me(args.destGUID) then
-		-- 	self:CancelSayCountdown(args.spellId)
-		-- end
-		self:CustomIcon(blazingBrandMarker, args.destName)
-	end
-end
-
-function mod:MoltenSwing(args)
+function mod:MoltenCleave(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
 	--self:Bar(args.spellId, 30)
 end
 
-function mod:MeltingArmorApplied(args)
+function mod:BurningWoundApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 0)
 	self:PlaySound(args.spellId, "warning")
+	--self:Bar(args.spellId, 30)
 end
 
-function mod:FireStrike(args)
-	self:Message(args.spellId, "orange")
+function mod:LeapingFlames(args)
+	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
 	--self:Bar(args.spellId, 30)
 end
