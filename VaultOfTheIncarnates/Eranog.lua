@@ -1,4 +1,7 @@
 if not IsTestBuild() then return end
+-- XXX Counters on spells
+-- XXX New timers on intermisson, dont start them right before
+
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -13,6 +16,7 @@ mod:SetRespawnTime(30)
 -- Locals
 --
 
+local flameRiftCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -32,7 +36,7 @@ end
 function mod:GetOptions()
 	return {
 		-- Stage 1
-		390715, -- Flamerift
+		{390715, "SAY", "SAY_COUNTDOWN"}, -- Flamerift
 		370649, -- Primal Flow
 		370615, -- Molten Cleave
 		394917, -- Leaping Flames
@@ -67,11 +71,12 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	--self:Bar(390715, 10) -- Flamerift
-	--self:Bar(370615, 10) -- Molten Cleave
-	--self:Bar(394917, 10) -- Leaping Flames
+	local flameRiftCount = 1
+	self:Bar(390715, 13.5, CL.count:format(self:SpellName(390715), flameRiftCount)) -- Flamerift
+	self:Bar(370615, 10) -- Molten Cleave
+	self:Bar(394917, 4.5) -- Leaping Flames
 	--self:Bar(394904, 10) -- Burning Wound
-	--self:Bar(370307, 100) -- Collapsing Army
+	self:Bar(370307, 92.5) -- Collapsing Army
 end
 
 --------------------------------------------------------------------------------
@@ -81,18 +86,21 @@ end
 function mod:CollapsingArmy(args)
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
-	--self:Bar(args.spellId, 100)
+	self:CDBar(args.spellId, 112)
 end
 
 function mod:Flamerift(args)
-	self:Message(args.spellId, "red")
-	--self:Bar(args.spellId, 30)
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, flameRiftCount))
+	flameRiftCount = flameRiftCount + 1
+	self:Bar(args.spellId, 30, CL.count:format(args.spellName, flameRiftCount))
 end
 
 function mod:FlameriftApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 6)
 	end
 end
 
@@ -126,7 +134,7 @@ end
 function mod:MoltenCleave(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alarm")
-	--self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, 30.5)
 end
 
 function mod:BurningWoundApplied(args)
@@ -138,5 +146,5 @@ end
 function mod:LeapingFlames(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, 31.5)
 end
