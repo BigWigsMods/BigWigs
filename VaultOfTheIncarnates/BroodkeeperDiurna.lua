@@ -58,14 +58,13 @@ function mod:GetOptions()
 		380176, -- Empowered Greatstaff of the Broodkeeper
 		388918, -- Frozen Shroud
 	}, {
-		--XXX FIXME
-		--[375809] = -11111, -- Stage One: The Primalist Clutch
-		--[375716] = -313131, -- Primalist Mage
-		--[376266] = -313131, -- Tarasek Earthreaver
-		--[375485] = -313131, -- Dragonspawn Flamebender
-		--[375475] = -321413, -- Juvenile Frost Proto-Dragon
-		--[375653] = -312331, -- Drakonid Stormbringer
-		--[375879] = -313131, -- Stage Two: A Broodkeeper Scorned
+		[375809] = -25119, -- Stage One: The Primalist Clutch
+		[375716] = -25144, -- Primalist Mage
+		[376266] = -25130, -- Tarasek Earthreaver
+		[375485] = -25133, -- Dragonspawn Flamebender
+		[375475] = -25136, -- Juvenile Frost Proto-Dragon
+		[375653] = -25139, -- Drakonid Stormbringer
+		[375879] = -25146, -- Stage Two: A Broodkeeper Scorned
 	}
 end
 
