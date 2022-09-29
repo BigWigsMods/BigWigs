@@ -21,7 +21,7 @@ mod:SetRespawnTime(30)
 local L = mod:GetLocale()
 if L then
 	L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate on Frenzied Taraseks that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frenzied Tarasek that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
 	L.custom_on_nameplate_fixate_icon = 210130
 end
 
@@ -34,15 +34,17 @@ function mod:GetOptions()
 		-- Stage 1
 		390715, -- Flamerift
 		370649, -- Primal Flow
-		370597, -- Kill Order (Fixate)
-		"custom_on_nameplate_fixate",
 		370615, -- Molten Cleave
 		394917, -- Leaping Flames
 		{394904, "TANK"}, -- Burning Wound
+		-- Frenzied Tarasek
+		370597, -- Kill Order (Fixate)
+		"custom_on_nameplate_fixate",
 		-- Stage 2
 		370307, -- Collapsing Army
 	},{
 		[390715] = -26001, -- Stage One
+		[370597] = -26005, -- Frenzied Tarasek
 		[370307] = -26004, -- Stage Two
 	},{
 		[370597] = CL.fixate, -- Kill Order (Fixate)
@@ -52,7 +54,8 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Flamerift", 390715)
 	self:Log("SPELL_AURA_APPLIED", "FlameriftApplied", 390715)
-	self:Log("SPELL_AURA_APPLIED", "PrimalFlowDamage", 370648)
+	self:Log("SPELL_PERIODIC_DAMAGE", "PrimalFlowDamage", 370648)
+	self:Log("SPELL_PERIODIC_MISSED", "PrimalFlowDamage", 370648)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 370597) -- Kill Order
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 370597) -- Kill Order
 	self:Log("SPELL_CAST_START", "MoltenCleave", 370615)
@@ -96,7 +99,6 @@ end
 do
 	local prev = 0
 	function mod:PrimalFlowDamage(args)
-		prev = args.time
 		if self:Me(args.destGUID) and args.time - prev > 3 then
 			prev = args.time
 			self:PersonalMessage(370649, "underyou")
