@@ -1,4 +1,7 @@
 if not IsTestBuild() then return end
+-- XXX Debuffs are missing for rock blast
+-- XXX add counters to the bars + stopbars for them
+-- XXX use _success for bar starts incase of recasts? can that happen?
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -13,6 +16,10 @@ mod:SetRespawnTime(30)
 -- Locals
 --
 
+local rockBlastCount = 1
+local shatteringImpactCount = 1
+local concussiveSlamCount = 1
+local resonatingAnnihilationCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -44,6 +51,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:Log("SPELL_CAST_START", "RockBlast", 380487)
 	self:Log("SPELL_AURA_APPLIED", "RockBlastApplied", 386352)
 	self:Log("SPELL_AURA_REMOVED", "RockBlastRemoved", 386352)
 	self:Log("SPELL_CAST_START", "ResonatingAnnihilation", 377166)
@@ -63,7 +71,15 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	rockBlastCount = 1
+	shatteringImpactCount = 1
+	concussiveSlamCount = 1
+	resonatingAnnihilationCount = 1
 
+	self:Bar(380487, 6) -- Rock Blast
+	self:Bar(376279, 14) -- Concussive Slam
+	self:Bar(383073, 27) -- Shattering Impact
+	self:Bar(377166, 90) -- Resonating Annihilation
 end
 
 --------------------------------------------------------------------------------
@@ -71,6 +87,13 @@ end
 --
 
 do
+	function mod:RockBlast(args)
+		self:Message(args.spellId, "yellow")
+		self:PlaySound(args.spellId, "alert")
+		rockBlastCount = rockBlastCount + 1
+		self:Bar(args.spellId, rockBlastCount % 2 == 0 and 42 or 54.5)
+	end
+
 	local playerList = {}
 	local prev = 0
 	function mod:RockBlastApplied(args)
@@ -104,19 +127,22 @@ end
 function mod:ResonatingAnnihilation(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
-	--self:Bar(args.spellId, 100)
+	resonatingAnnihilationCount = resonatingAnnihilationCount + 1
+	self:Bar(args.spellId, 96.5)
 end
 
 function mod:ShatteringImpact(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 20)
+	shatteringImpactCount = shatteringImpactCount + 1
+	self:Bar(args.spellId, shatteringImpactCount % 2 == 0 and 42.0 or 54.5)
 end
 
 function mod:ConcussiveSlam(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alarm")
-	--self:Bar(args.spellId, 20)
+	concussiveSlamCount = concussiveSlamCount + 1
+	self:Bar(args.spellId, concussiveSlamCount % 4 == 1 and 34.5 or concussiveSlamCount % 4 == 3 and 22 or 20)
 end
 
 function mod:ConcussiveSlamApplied(args)
@@ -132,7 +158,6 @@ end
 function mod:FrenziedDevastation(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "long")
-	--self:Bar(args.spellId, 20)
 end
 
 do
