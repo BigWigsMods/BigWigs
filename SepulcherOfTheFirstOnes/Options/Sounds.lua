@@ -84,7 +84,7 @@ BigWigs:AddSounds("Lihuvim, Principal Architect", {
 
 BigWigs:AddSounds("Halondrus the Reclaimer", {
 	[360114] = "underyou",
-	[360115] = {"alarm","info","long"},
+	[360115] = {"info","long"},
 	[360977] = {"alert","warning"},
 	[361676] = "alert",
 	[364979] = "long",
