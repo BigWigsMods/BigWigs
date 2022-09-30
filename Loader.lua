@@ -17,7 +17,7 @@ public.isClassic = public.isBCC or public.isWrath
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 44
+local BIGWIGS_VERSION = 45
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -992,9 +992,9 @@ do
 		DBMdotReleaseRevision = "20220801000000"
 		public.dbmPrefix = "D4C"
 	else
-		DBMdotRevision = "20220915015107"
-		DBMdotDisplayVersion = "3.4.10"
-		DBMdotReleaseRevision = "20220914000000"
+		DBMdotRevision = "20220930021857"
+		DBMdotDisplayVersion = "3.4.14"
+		DBMdotReleaseRevision = "20220929000000"
 		public.dbmPrefix = "D4WC"
 	end
 
@@ -1053,7 +1053,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 			end
 			public:SendMessage("BigWigs_PluginComm", bwMsg, extra, sender)
 		end
-	elseif prefix == "D4C" or prefix == "D4BC" or prefix == "D4WC" then
+	elseif prefix == "D4C" or prefix == "D4WC" then
 		local dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
 		sender = Ambiguate(sender, "none")
 		if dbmPrefix == "V" or dbmPrefix == "H" then
