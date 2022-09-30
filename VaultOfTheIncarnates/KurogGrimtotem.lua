@@ -1,5 +1,6 @@
 if not IsTestBuild() then return end
 -- XXX Add counts!
+-- XXX Not Molten Rupture cast event
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -28,7 +29,7 @@ end
 -- Initialization
 --
 
-local searingCarnageMarker = mod:AddMarkerOption(false, "player", 1, 374023, 1, 2, 3)
+-- local searingCarnageMarker = mod:AddMarkerOption(false, "player", 1, 374023, 1, 2, 3)
 local aboluteZeroMarker = mod:AddMarkerOption(false, "player", 1, 372458, 1, 2)
 local envelopingEarthMarker = mod:AddMarkerOption(false, "player", 1, 391056, 1, 2, 3)
 local lightningCrashMarker = mod:AddMarkerOption(false, "player", 1, 373487, 1, 2, 3)
@@ -43,8 +44,8 @@ function mod:GetOptions()
 		374881, -- Blistering Dominance
 		{382563, "SAY", "SAY_COUNTDOWN"}, -- Magma Burst
 		373329, -- Molten Rupture
-		{374023, "SAY", "SAY_COUNTDOWN"}, -- Searing Carnage
-		searingCarnageMarker,
+		374023, -- Searing Carnage
+		-- searingCarnageMarker,
 		-- Frost Altar
 		374916, -- Chilling Dominance
 		373678, -- Biting Chill
@@ -91,10 +92,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "SunderingStrikeApplied", 372158)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SunderingStrikeApplied", 372158)
 	-- Fire
-	self:Log("SPELL_AURA_APPLIED", "MagmaBurstApplied", 382563)
+	self:Log("SPELL_CAST_START", "MagmaBurst", 382563)
 	self:Log("SPELL_CAST_START", "MoltenRupture", 373329)
-	self:Log("SPELL_AURA_APPLIED", "SearingCarnageApplied", 374023)
-	self:Log("SPELL_AURA_REMOVED", "SearingCarnageRemoved", 374023)
+	self:Log("SPELL_AURA_APPLIED", "SearingCarnage", 374022)
+	-- self:Log("SPELL_AURA_APPLIED", "SearingCarnageApplied", 374023)
+	-- self:Log("SPELL_AURA_REMOVED", "SearingCarnageRemoved", 374023)
 	-- Frost
 	self:Log("SPELL_CAST_START", "BitingChill", 373678)
 	self:Log("SPELL_CAST_START", "FrigidTorrent", 391019)
@@ -105,7 +107,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "EnvelopingEarthApplied", 391056)
 	self:Log("SPELL_AURA_REMOVED", "EnvelopingEarthRemoved", 391056)
 	self:Log("SPELL_CAST_START", "EruptingBedrock", 390796)
-	self:Log("SPELL_CAST_SUCCESS", "SeismicRupture", 374705)
+	self:Log("SPELL_CAST_START", "SeismicRupture", 374705)
 	-- Storm
 	self:Log("SPELL_AURA_APPLIED", "LightningCrashApplied", 373487)
 	self:Log("SPELL_AURA_REMOVED", "LightningCrashRemoved", 373487)
@@ -170,27 +172,13 @@ end
 function mod:SunderingStrikeApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 2)
 	self:PlaySound(args.spellId, "warning")
-	-- self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, 30)
 end
 
 -- Fire
 
-do
-	local playerList = {}
-	local prev = 0
-	function mod:MagmaBurstApplied(args)
-		if args.time - prev > 3 then
-			prev = args.time
-			playerList = {}
-			-- self:Bar(args.spellId, 30)
-		end
-		playerList[#playerList+1] = args.destName
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "alarm") -- debuffdamage
-		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3)
-	end
+function mod:MagmaBurst(args)
+	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 end
 
 function mod:MoltenRupture(args)
@@ -198,34 +186,38 @@ function mod:MoltenRupture(args)
 	self:PlaySound(args.spellId, "info")
 end
 
-do
-	local playerList = {}
-	local prev = 0
-	function mod:SearingCarnageApplied(args)
-		if args.time - prev > 3 then
-			prev = args.time
-			playerList = {}
-			-- self:Bar(args.spellId, 30)
-		end
-		local count = #playerList+1
-		playerList[count] = args.destName
-		playerList[args.destName] = count -- Set raid marker
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 5, count)
-			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "warning") -- debuffmove
-		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3)
-		self:CustomIcon(searingCarnageMarker, args.destName, count)
-	end
+-- do
+-- 	local playerList = {}
+-- 	local prev = 0
+-- 	function mod:SearingCarnageApplied(args)
+-- 		if args.time - prev > 3 then
+-- 			prev = args.time
+-- 			playerList = {}
+-- 			-- self:Bar(args.spellId, 30)
+-- 		end
+-- 		local count = #playerList+1
+-- 		playerList[count] = args.destName
+-- 		playerList[args.destName] = count -- Set raid marker
+-- 		if self:Me(args.destGUID) then
+-- 			self:Say(args.spellId)
+-- 			self:SayCountdown(args.spellId, 5, count)
+-- 			self:PlaySound(args.spellId, "warning") -- debuffmove
+-- 		end
+-- 		self:TargetsMessage(args.spellId, "yellow", playerList, 0)
+-- 		self:CustomIcon(searingCarnageMarker, args.destName, count)
+-- 	end
 
-	function mod:SearingCarnageRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
-		end
-		self:CustomIcon(searingCarnageMarker, args.destName)
-	end
+-- 	function mod:SearingCarnageRemoved(args)
+-- 		if self:Me(args.destGUID) then
+-- 			self:CancelSayCountdown(args.spellId)
+-- 		end
+-- 		self:CustomIcon(searingCarnageMarker, args.destName)
+-- 	end
+-- end
+
+function mod:SearingCarnage(args)
+	self:Message(374023, "orange")
+	self:PlaySound(374023, "warning")
 end
 
 -- Frost Altar
@@ -233,13 +225,13 @@ end
 function mod:BitingChill(args)
 	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 	self:CastBar(args.spellId, 13) -- 3s cast + 10s duration
-	-- self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, 30)
 end
 
 function mod:FrigidTorrent(args)
-	self:Message(args.spellId, "yellow")
+	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 	self:PlaySoud(args.spellId, "info")
-	-- self:Bar(args.spellId, 30)
+	self:Bar(args.spellId, 61)
 end
 
 function mod:AbsoluteZero(args)
@@ -262,10 +254,9 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 5, count)
-			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
+		self:TargetsMessage(args.spellId, "yellow", playerList, 0)
 		self:CustomIcon(aboluteZeroMarker, args.destName, count)
 	end
 
@@ -289,18 +280,15 @@ do
 			if self:Healer() then
 				self:PlaySound(args.spellId, "alert") -- debuffheal
 			end
-			-- self:Bar(args.spellId, 30)
+			self:Bar(args.spellId, 30)
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId)
-			if not self:Healer() then
-				self:PlaySound(args.spellId, "alarm") -- debuffdamage
-			end
+		if self:Me(args.destGUID) and not self:Healer() then
+			self:PlaySound(args.spellId, "alarm") -- debuffdamage
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3)
+		self:TargetsMessage(args.spellId, "yellow", playerList, 0)
 		self:CustomIcon(envelopingEarthMarker, args.destName, count)
 	end
 
@@ -311,11 +299,11 @@ end
 
 function mod:EruptingBedrock(args)
 	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
-	-- self:Bar(args.spellId, 30)
+	self:CDBar(args.spellId, 30)
 end
 
 function mod:SeismicRupture(args)
-	self:Message(args.spellId, "orange")
+	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	-- self:PlaySound(args.spellId, "warning")
 	-- self:Bar(args.spellId, 30)
 end
@@ -329,7 +317,7 @@ do
 		if args.time - prev > 3 then
 			prev = args.time
 			playerList = {}
-			-- self:Bar(args.spellId, 30)
+			self:Bar(args.spellId, 30)
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
@@ -337,10 +325,9 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 4, count)
-			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 3)
+		self:TargetsMessage(args.spellId, "orange", playerList, 0)
 		self:CustomIcon(lightningCrashMarker, args.destName, count)
 	end
 
@@ -359,7 +346,7 @@ do
 		if args.time - prev > 3 then
 			prev = args.time
 			playerList = {}
-			-- self:Bar(args.spellId, 30)
+			self:Bar(args.spellId, 67.1)
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
@@ -367,10 +354,9 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 5, count)
-			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 2)
+		self:TargetsMessage(args.spellId, "yellow", playerList, 0)
 		self:CustomIcon(shockingBurstMarker, args.destName, count)
 	end
 
@@ -385,6 +371,7 @@ end
 function mod:ThunderStrike(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId)
+	self:Bar(args.spellId, 67)
 end
 
 -- Stage 2
@@ -403,7 +390,7 @@ do
 		if args.time - prev > 3 then
 			prev = args.time
 			playerList = {}
-			-- self:Bar(args.spellId, 30)
+			self:Bar(args.spellId, 34)
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
@@ -411,10 +398,9 @@ do
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 5, count)
-			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3)
+		self:TargetsMessage(args.spellId, "yellow", playerList, 0)
 		self:CustomIcon(groundShatterMarker, args.destName, count)
 	end
 
@@ -429,6 +415,7 @@ end
 function mod:ViolentUpheaval(args)
 	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alarm") -- castmove
+	self:Bar(args.spellId, 34)
 end
 
 function mod:FreezingTempest(args)
@@ -441,4 +428,5 @@ function mod:LethalCurrentApplied(args)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "warning") -- debuffmove
 	end
+	self:Bar(args.spellId, 20)
 end
