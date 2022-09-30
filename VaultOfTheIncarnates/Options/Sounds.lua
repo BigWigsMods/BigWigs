@@ -21,6 +21,14 @@ BigWigs:AddSounds("Terros", {
 })
 
 BigWigs:AddSounds("The Primal Council", {
+	[371624] = {"alarm","warning"},
+	[372027] = "warning",
+	[374043] = {"alert","warning"},
+	[386289] = "info",
+	[386370] = "info",
+	[386375] = "info",
+	[386661] = "info",
+	[391599] = "alarm",
 })
 
 BigWigs:AddSounds("Sennarth, The Cold Breath", {

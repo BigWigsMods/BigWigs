@@ -20,6 +20,17 @@ BigWigs:AddColors("Terros", {
 })
 
 BigWigs:AddColors("The Primal Council", {
+	[370991] = "green",
+	[371624] = {"blue","purple"},
+	[372027] = "orange",
+	[372056] = {"blue","purple"},
+	[372275] = "yellow",
+	[374043] = "red",
+	[386289] = "red",
+	[386370] = "green",
+	[386375] = "purple",
+	[386661] = {"blue","cyan"},
+	[391599] = "cyan",
 })
 
 BigWigs:AddColors("Sennarth, The Cold Breath", {
