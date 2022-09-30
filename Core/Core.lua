@@ -276,7 +276,7 @@ local function bossComm(_, msg, extra, sender)
 end
 
 function mod:RAID_BOSS_WHISPER(_, msg) -- Purely for Transcriptor to assist in logging purposes.
-	if IsInGroup() then
+	if msg ~= "" and IsInGroup() then
 		SendAddonMessage("Transcriptor", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 	end
 end
