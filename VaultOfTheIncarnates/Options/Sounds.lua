@@ -5,7 +5,7 @@ BigWigs:AddSounds("Eranog", {
 	[370615] = "alarm",
 	[370649] = "underyou",
 	[390715] = "warning",
-	[394904] = "warning",
+	[394904] = "info",
 	[394917] = "alert",
 })
 

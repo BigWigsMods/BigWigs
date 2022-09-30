@@ -64,19 +64,19 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 370597) -- Kill Order
 	self:Log("SPELL_CAST_START", "MoltenCleave", 370615)
 	self:Log("SPELL_CAST_START", "LeapingFlames", 394917)
-	self:Log("SPELL_AURA_APPLIED", "BurningWoundApplied", 394904)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningWoundApplied", 394904)
 
 	self:Log("SPELL_CAST_START", "CollapsingArmy", 370307)
+	self:Log("SPELL_AURA_REMOVED", "CollapsingArmyRemoved", 370307)
 end
 
 function mod:OnEngage()
-	local flameRiftCount = 1
-	self:Bar(390715, 13.5, CL.count:format(self:SpellName(390715), flameRiftCount)) -- Flamerift
-	self:Bar(370615, 10) -- Molten Cleave
-	self:Bar(394917, 4.5) -- Leaping Flames
-	--self:Bar(394904, 10) -- Burning Wound
-	self:Bar(370307, 92.5) -- Collapsing Army
+	flameRiftCount = 1
+
+	self:CDBar(394917, 4.5) -- Leaping Flames
+	self:CDBar(370615, 10) -- Molten Cleave
+	self:CDBar(390715, 13.5, CL.count:format(self:SpellName(390715), flameRiftCount)) -- Flamerift
+	self:CDBar(370307, 92.5) -- Collapsing Army
 end
 
 --------------------------------------------------------------------------------
@@ -84,9 +84,26 @@ end
 --
 
 function mod:CollapsingArmy(args)
+	self:StopBar(370307) -- Collapsing Army
+	self:StopBar(394917) -- Leaping Flames
+	self:StopBar(370615) -- Molten Cleave
+	self:StopBar(390715) -- Flamerift
+
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "long")
-	self:CDBar(args.spellId, 112)
+	-- self:CastBar(args.spellId, 26)
+end
+
+function mod:CollapsingArmyRemoved(args)
+	-- self:StopBar(CL.cast:format(args.spellName))
+	self:Message(args.spellId, "cyan", CL.over:format(args.spellName))
+	-- XXX cd varies a bit, should probably register UNIT_POWER_UPDATE for the first tick?
+	-- or are the random Energize (370727) casts doing it?
+	self:CDBar(args.spellId, 95)
+
+	self:CDBar(394917, 6) -- Leaping Flames
+	self:CDBar(370615, 10) -- Molten Cleave
+	self:CDBar(390715, 34) -- Flamerift
 end
 
 function mod:Flamerift(args)
@@ -132,19 +149,21 @@ function mod:FixateRemoved(args)
 end
 
 function mod:MoltenCleave(args)
-	self:Message(args.spellId, "orange")
+	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "alarm")
-	self:Bar(args.spellId, 30.5)
+	-- self:CastBar(args.spellId, 3.5)
+	self:CDBar(args.spellId, 30.5)
 end
 
 function mod:BurningWoundApplied(args)
-	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 0)
-	self:PlaySound(args.spellId, "info")
-	--self:Bar(args.spellId, 30)
+	if args.amount > 3 and args.amount % 2 == 0 then -- swap around 6?
+		self:StackMessage(args.spellId, "purple", args.destName, args.amount, 6)
+		self:PlaySound(args.spellId, "info")
+	end
 end
 
 function mod:LeapingFlames(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	self:Bar(args.spellId, 31.5)
+	self:CDBar(args.spellId, 31.5)
 end
