@@ -32,11 +32,14 @@ end
 function mod:GetOptions()
 	return {
 		387849, -- Coalescing Storm
+
 		387943, -- Diverted Essence
 		388562, -- Unstable Gusts
 		{385812, "TANK"}, -- Aerial Slash
+
 		384273, -- Storm Bolt
 		390450, -- Static Cling
+
 		388302, -- Raging Burst
 		{391686, "SAY"}, -- Empowered Conductive Mark
 		"custom_on_empowered_conductive_mark_yell",
@@ -45,7 +48,8 @@ function mod:GetOptions()
 		{375580, "TANK"}, -- Zephyr Slam
 		376851, -- Aerial Buffet
 	}, {
-
+		[387849] = -25952, -- Coalescing Storm
+		[388302] = "general",
 	}
 end
 
