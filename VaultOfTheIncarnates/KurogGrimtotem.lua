@@ -62,6 +62,7 @@ function mod:GetOptions()
 		{373487, "SAY", "SAY_COUNTDOWN"}, -- Lightning Crash
 		{390920, "SAY", "SAY_COUNTDOWN"}, -- Shocking Burst
 		shockingBurstMarker,
+		374217, -- Thunder Strike
 		-- Stage 2
 		374779, -- Primal Barrier
 		{374321, "TANK"}, -- Breaking Gravel
@@ -110,6 +111,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "LightningCrashRemoved", 373487)
 	self:Log("SPELL_AURA_APPLIED", "ShockingBurstApplied", 390920)
 	self:Log("SPELL_AURA_REMOVED", "ShockingBurstRemoved", 390920)
+	self:Log("SPELL_CAST_SUCCESS", "ThunderStrike", 374217)
 	-- Stage 2
 	-- Tectonic Crusher
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BreakingGravelApplied", 374321)
@@ -161,8 +163,8 @@ function mod:PrimalBarrierRemoved(args)
 end
 
 function mod:Dominance(args)
-	self:StackMessage(args.spellId, "cyan", args.destName, args.amount, 0)
-	self:PlaySound(args.spellId, "info")
+	-- self:StackMessage(args.spellId, "cyan", args.destName, args.amount, 0)
+	-- self:PlaySound(args.spellId, "info")
 end
 
 function mod:SunderingStrikeApplied(args)
@@ -210,7 +212,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 5, CL.rticon:format(count))
+			self:SayCountdown(args.spellId, 5, count)
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
@@ -259,7 +261,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 5, CL.rticon:format(count))
+			self:SayCountdown(args.spellId, 5, count)
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
@@ -334,7 +336,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 4, CL.rticon:format(count))
+			self:SayCountdown(args.spellId, 4, count)
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
@@ -364,7 +366,7 @@ do
 		playerList[args.destName] = count + 3 -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 5, CL.rticon:format(count))
+			self:SayCountdown(args.spellId, 5, count)
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
@@ -378,6 +380,11 @@ do
 		end
 		self:CustomIcon(shockingBurstMarker, args.destName)
 	end
+end
+
+function mod:ThunderStrike(args)
+	self:Message(args.spellId, "orange")
+	self:PlaySound(args.spellId)
 end
 
 -- Stage 2
@@ -403,7 +410,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 5, CL.rticon:format(count))
+			self:SayCountdown(args.spellId, 5, count)
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
