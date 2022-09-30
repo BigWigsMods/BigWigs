@@ -32,6 +32,16 @@ BigWigs:AddSounds("The Primal Council", {
 })
 
 BigWigs:AddSounds("Sennarth, The Cold Breath", {
+	[371976] = "alarm",
+	[371983] = "warning",
+	[372030] = "info",
+	[372044] = "info",
+	[372051] = "alert",
+	[372082] = "warning",
+	[372539] = {"info","long"},
+	[373048] = "warning",
+	[373405] = "warning",
+	[374112] = "alert",
 })
 
 BigWigs:AddSounds("Dathea, Ascended", {

@@ -34,6 +34,17 @@ BigWigs:AddColors("The Primal Council", {
 })
 
 BigWigs:AddColors("Sennarth, The Cold Breath", {
+	[371976] = "orange",
+	[371983] = "red",
+	[372030] = "blue",
+	[372044] = "blue",
+	[372051] = "yellow",
+	[372082] = {"blue","yellow"},
+	[372539] = {"green","red"},
+	[373048] = {"blue","yellow"},
+	[373405] = "red",
+	[374112] = "yellow",
+	[385083] = {"blue","purple"},
 })
 
 BigWigs:AddColors("Dathea, Ascended", {
