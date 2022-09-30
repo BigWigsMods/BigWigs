@@ -10,12 +10,13 @@ BigWigs:AddSounds("Eranog", {
 })
 
 BigWigs:AddSounds("Terros", {
-	[376279] = {"alarm","warning"},
-	[377166] = "warning",
-	[377505] = "long",
-	[380487] = "warning",
+	[376279] = {"alert","warning"},
+	[377166] = "long",
+	[377505] = "alarm",
+	[380487] = {"alert","warning"},
+	[381315] = "warning",
 	[382458] = "underyou",
-	[383073] = "alert",
+	[383073] = "alarm",
 	[388393] = "alarm",
 })
 
