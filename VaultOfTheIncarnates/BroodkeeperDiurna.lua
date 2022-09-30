@@ -31,7 +31,8 @@ function mod:GetOptions()
 	return {
 		-- Stage One: The Primalist Clutch
 		375809, -- Broodkeeper's Bond
-		375842, -- Greatstaff of the Broodkeeper
+		380175, -- Greatstaff of the Broodkeeper
+		{375889, "SAY"}, -- Greatstaff's Wrath
 		375829, -- Clutchwatcher's Rage
 		376073, -- Rapid Incubation
 		{389049, "EMPHASIZE"}, -- Incubating Seed XXX INFOBOX WITH STACK COUNTS?
@@ -55,7 +56,8 @@ function mod:GetOptions()
 		{375630, "SAY"}, -- Ionizing Charge
 		-- Stage Two: A Broodkeeper Scorned
 		375879, -- Broodkeeper's Fury
-		380176, -- Empowered Greatstaff of the Broodkeeper
+		392194, -- Empowered Greatstaff of the Broodkeeper
+		{380483, "SAY"}, -- Empowered Greatstaff's Wrath
 		388918, -- Frozen Shroud
 	}, {
 		[375809] = -25119, -- Stage One: The Primalist Clutch
@@ -72,7 +74,8 @@ function mod:OnBossEnable()
 	-- Stage One: The Primalist Clutch
 	self:Log("SPELL_AURA_REMOVED_DOSE", "BroodkeepersBondStacks", 375809)
 	self:Log("SPELL_AURA_REMOVED", "BroodkeepersBondRemoved", 375809)
-	self:Log("SPELL_CAST_SUCCESS", "GreatstaffOfTheBroodkeeper", 375842, 380176) -- Stage 1, Stage 2 (Empowered)
+	self:Log("SPELL_CAST_SUCCESS", "GreatstaffOfTheBroodkeeper", 380175, 392194) -- Stage 1, Stage 2 (Empowered)
+	self:Log("SPELL_AURA_APPLIED", "GreatstaffsWrathApplied", 375889, 380483) -- Stage 1, Stage 2 (Empowered)
 	self:Log("SPELL_AURA_APPLIED", "ClutchwatchersRage", 375829)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ClutchwatchersRage", 375829)
 	self:Log("SPELL_CAST_START", "RapidIncubation", 376073)
@@ -150,7 +153,15 @@ end
 function mod:GreatstaffOfTheBroodkeeper(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 20)
+	self:CDBar(args.spellId, 20)
+end
+
+function mod:GreatstaffsWrathApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId)
+	end
 end
 
 function mod:ClutchwatchersRage(args)
@@ -161,7 +172,7 @@ end
 function mod:RapidIncubation(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 20)
+	self:Bar(args.spellId, 19.9)
 	-- XXX Say chat if you have 3 seed stack and are within 40 yards of the boss? Warn others that you're spawning an add
 end
 
@@ -173,22 +184,29 @@ function mod:IncubatingSeed(args)
 	end
 end
 
-function mod:Wildfire(args)
-	self:Message(args.spellId, "yellow")
-	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 20)
+do
+	local prev = 0
+	function mod:Wildfire(args)
+		local t = args.time
+		if t-prev > 10 then -- Double casts in stage 2
+			prev = t
+			self:Message(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "alert")
+			self:Bar(args.spellId, 24)
+		end
+	end
 end
 
 function mod:IcyShroud(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 20)
+	self:Bar(args.spellId, 40.5)
 end
 
 function mod:MortalStoneclaws(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
-	--self:Bar(args.spellId, 20)
+	self:Bar(args.spellId, 20) -- stage 2: 10?
 end
 
 function mod:MortalWounds(args)
