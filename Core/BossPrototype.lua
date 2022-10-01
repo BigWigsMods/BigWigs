@@ -757,23 +757,23 @@ do
 		if type(event) ~= "string" then core:Print(format(noEvent, self.moduleName)) return end
 		if not ... then core:Print(format(noUnit, self.moduleName)) return end
 		if event == "UNIT_HEALTH" then event = "UNIT_HEALTH_FREQUENT" end -- Retail module compat
+		if not frameTbl[(...)] then -- XXX compat
+			self:UnregisterEvent(event)
+			return
+		end
 		if not unitEventMap[self][event] then return end
 		for i = 1, select("#", ...) do
 			local unit = select(i, ...)
-			if unit:sub(1, 4) == "boss" then -- XXX compat
-				self:UnregisterEvent(event)
-			else
-				unitEventMap[self][event][unit] = nil
-				local keepRegistered
-				for j = #enabledModules, 1, -1 do
-					local m = unitEventMap[enabledModules[j]][event]
-					if m and m[unit] then
-						keepRegistered = true
-					end
+			unitEventMap[self][event][unit] = nil
+			local keepRegistered
+			for j = #enabledModules, 1, -1 do
+				local m = unitEventMap[enabledModules[j]][event]
+				if m and m[unit] then
+					keepRegistered = true
 				end
-				if not keepRegistered then
-					frameTbl[unit]:UnregisterEvent(event)
-				end
+			end
+			if not keepRegistered then
+				frameTbl[unit]:UnregisterEvent(event)
 			end
 		end
 	end
