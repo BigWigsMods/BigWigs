@@ -792,7 +792,7 @@ do
 		local id = tbl.widgetID
 		local func = widgetEventMap[self][id]
 		if func then
-			local typeInfo = UIWidgetManager:GetWidgetTypeInfo(tbl.widgetType)
+			local typeInfo = UIWidgetManager.widgetVisTypeInfo[tbl.widgetType]
 			local info = typeInfo and typeInfo.visInfoDataFunction(id)
 			if info then
 				local value = info.text -- Remain compatible with older modules
