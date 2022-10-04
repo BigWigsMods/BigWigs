@@ -259,23 +259,35 @@ do
 
 		-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
 		if self.db.profile.disableSfx then
-			BigWigs:Print('Sound effects were disabled after loading. Enabling SFX.');
-			SetCVar("Sound_EnableSFX", "1")
+			local sfx = GetCVar("Sound_EnableSFX")
+			if sfx == "0" then
+				BigWigs:Print('Sound effects were disabled after loading. Enabling SFX.');
+				SetCVar("Sound_EnableSFX", "1")
+			end
 		end
 		--if self.db.profile.blockTooltipQuests then
 		--	SetCVar("showQuestTrackingTooltips", "1")
 		--end
 		if self.db.profile.disableMusic then
-			BigWigs:Print('Music was disabled after loading. Enabling music.');
-			SetCVar("Sound_EnableMusic", "1")
+			local music = GetCVar("Sound_EnableMusic")
+			if music == "0" then
+				BigWigs:Print('Music was disabled after loading. Enabling music.');
+				SetCVar("Sound_EnableMusic", "1")
+			end
 		end
 		if self.db.profile.disableAmbience then
-			BigWigs:Print('Ambient sound was disabled after loading. Enabling ambient sound.');
-			SetCVar("Sound_EnableAmbience", "1")
+			local ambience = GetCVar("Sound_EnableAmbience")
+			if ambience == "0" then
+				BigWigs:Print('Ambience was disabled after loading. Enabling ambience.');
+				SetCVar("Sound_EnableAmbience", "1")
+			end
 		end
 		if self.db.profile.disableErrorSpeech then
-			BigWigs:Print('Error speech was disabled after loading. Enabling error speech.');
-			SetCVar("Sound_EnableErrorSpeech", "1");
+			local errorSpeech = GetCVar("Sound_EnableErrorSpeech")
+			if errorSpeech == "0" then
+				BigWigs:Print('Error speech was disabled after loading. Enabling error speech.');
+				SetCVar("Sound_EnableErrorSpeech", "1")
+			end
 		end
 
 		self:RegisterEvent("TALKINGHEAD_REQUESTED")
