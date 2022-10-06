@@ -787,8 +787,13 @@ do
 		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target"
 	}
 	local unitTableCount = #unitTable
+	local UnitTokenFromGUID = UnitTokenFromGUID
 	local function findTargetByGUID(id)
 		local isNumber = type(id) == "number"
+		if not isNumber and UnitTokenFromGUID then
+			local unit = UnitTokenFromGUID(id)
+			if unit then return unit end
+		end
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
 			local guid = UnitGUID(unit)

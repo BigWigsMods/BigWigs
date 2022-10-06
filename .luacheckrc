@@ -19,6 +19,7 @@ files["**/Loader.lua"].ignore = {
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/TranscriptIgnore",
 	"113/Transcriptor",
+	"113/UnitTokenFromGUID",
 }
 files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",
