@@ -179,7 +179,7 @@ function mod:Crosswinds(args)
 end
 
 function mod:ZephyrSlam(args)
-	local bossUnit = self:GetBossId(args.sourceGUID)
+	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
 	if self:Tanking(bossUnit) then
 		self:PlaySound(args.spellId, "alert")
@@ -189,7 +189,7 @@ function mod:ZephyrSlam(args)
 end
 
 function mod:ZephyrSlamApplied(args)
-	local bossUnit = self:GetBossId(args.sourceGUID)
+	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 	local amount = args.amount or 1
 	self:StackMessage(args.spellId, "purple", args.destName, amount, 2)
 	if amount > 1 and not self:Tanking(bossUnit) then -- Maybe swap?
