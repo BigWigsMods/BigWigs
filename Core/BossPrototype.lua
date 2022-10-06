@@ -793,16 +793,16 @@ do
 	-- @return unit id if found, nil otherwise
 	function boss:UnitTokenFromGUID(guid)
 		local unit = UnitTokenFromGUID(guid) -- Check Blizz API first
-		if not unit then -- Fall back to scanning unit targets
+		if unit then
+			return unit
+		else -- Fall back to scanning unit targets
 			for i = 1, unitTableCount do
 				local targetUnit = targetOnlyUnitTable[i]
 				local targetGUID = UnitGUID(targetUnit)
-				if targetGUID then
-					return targetGUID
+				if targetGUID == guid then
+					return targetUnit
 				end
 			end
-		else
-			return unit
 		end
 	end
 end
