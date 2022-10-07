@@ -34,7 +34,8 @@ if L then
 	L.skipped_cast = "Skipped %s (%d)"
 
 	L.resonating_annihilation = "Annihilation"
-	L.shattering_impact = "Slam + Rubble"
+	L.awakened_earth = "Pillar"
+	L.shattering_impact = "Impact"
 	L.concussive_slam = "Tank Line"
 	L.reactive_dust = "Dust"
 end
@@ -43,11 +44,10 @@ end
 -- Initialization
 --
 
-local awakenedEarthMarker = mod:AddMarkerOption(true, "player", 1, 381315, 1, 2, 3, 4, 5, 6, 7, 8) -- Awakened Earth
-local reactiveDustMarker = mod:AddMarkerOption(true, "player", 1, 391306, 8, 7, 6, 5, 4, 3, 2, 1) -- Reactive Dust
+local awakenedEarthMarker = mod:AddMarkerOption(false, "player", 1, 381315, 1, 2, 3, 4, 5, 6, 7, 8) -- Awakened Earth
 function mod:GetOptions()
 	return {
-		{380487, "ICON", "SAY", "SAY_COUNTDOWN"}, -- Rock Blast
+		{380487, "SAY", "SAY_COUNTDOWN"}, -- Rock Blast
 		{381315, "SAY", "SAY_COUNTDOWN"}, -- Awakened Earth
 		awakenedEarthMarker,
 		377166, -- Resonating Annihilation
@@ -57,12 +57,12 @@ function mod:GetOptions()
 		377505, -- Frenzied Devastation
 		388393, -- Tectonic Barrage
 		-- Mythic
-		{391306, "SAY"}, -- Reactive Dust
-		reactiveDustMarker,
+		391306, -- Reactive Dust
 	},{
 		[391306] = CL.mythic,
 	},{
 		[377166] = L.resonating_annihilation, -- Resonating Annihilation (Annihilation)
+		[381315] = L.awakened_earth, -- Awakened Earth (Pillar)
 		[376279] = L.shattering_impact, -- Shattering Impact (Slam + Rubble)
 		[376279] = L.concussive_slam, -- Concussive Slam (Tank Line)
 		[391306] = L.reactive_dust, -- Reactive Dust (Dust)
@@ -71,6 +71,7 @@ end
 
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "RockBlast", 380487)
+	self:Log("SPELL_AURA_APPLIED", "RockBlastApplied", 386352)
 	self:Log("SPELL_AURA_APPLIED", "AwakenedEarthApplied", 381253)
 	self:Log("SPELL_AURA_REMOVED", "AwakenedEarthRemoved", 381253)
 	self:Log("SPELL_CAST_START", "ResonatingAnnihilation", 377166)
@@ -90,7 +91,6 @@ function mod:OnBossEnable()
 
 	-- Mythic
 	self:Log("SPELL_AURA_APPLIED", "ReactiveDustApplied", 391306)
-	self:Log("SPELL_AURA_REMOVED", "ReactiveDustRemoved", 391306)
 end
 
 function mod:OnEngage()
@@ -112,32 +112,9 @@ end
 --
 
 do
-	-- XXX until they unhide Rock Blast -> Awakened Earth
-	local function printTarget(self, destName, destGUID)
-		if self:Tanking("boss1", destName) then
-			-- didn't switch? just do a generic warning if on the tank
-			self:Message(380487, "orange", CL.count:format(self:SpellName(380487), rockBlastCount-1))
-			self:Bar(380487, 5.5, CL.other:format(CL.count:format(self:SpellName(380487), rockBlastCount-1), "???"))
-			self:PlaySound(380487, "alert")
-		else
-			self:TargetMessage(380487, "orange", destName, CL.count:format(self:SpellName(380487), rockBlastCount-1))
-			self:TargetBar(380487, 5.5, destName, CL.count:format(self:SpellName(380487), rockBlastCount-1))
-			if self:Me(destGUID) then
-				self:PlaySound(380487, "warning")
-				self:Say(380487)
-				self:SayCountdown(380487, 5.5)
-			else
-				self:PlaySound(380487, "alert")
-			end
-			self:SecondaryIcon(380487, destName)
-			self:ScheduleTimer("SecondaryIcon", 5, 380487)
-		end
-	end
-
 	local count = 1
 	function mod:RockBlast(args)
 		self:StopBar(CL.count:format(args.spellName, rockBlastCount))
-		self:GetBossTarget(printTarget, 0.3, args.sourceGUID)
 		rockBlastCount = rockBlastCount + 1
 		if shatteringImpactCount < 9 then -- Soft Enrage after
 			self:Bar(args.spellId, rockBlastCount % 2 == 0 and 42.0 or 54.5, CL.count:format(args.spellName, rockBlastCount))
@@ -145,11 +122,25 @@ do
 		count = 1
 	end
 
+	function mod:RockBlastApplied(args)
+		self:TargetMessage(380487, "orange", args.destName, CL.count:format(self:SpellName(380487), rockBlastCount-1))
+		self:TargetBar(380487, 5.5, args.destName, CL.count:format(self:SpellName(380487), rockBlastCount-1))
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(380487)
+			self:PlaySound(380487, "warning")
+			self:Yell(380487)
+			self:YellCountdown(380487, 5.5)
+		else
+			self:PlaySound(380487, "alert")
+		end
+	end
+
 	function mod:AwakenedEarthApplied(args)
 		if self:Me(args.destGUID) then
+			self:PersonalMessage(381315, nil , L.awakened_earth)
 			self:PlaySound(381315, "warning")
-			self:Say(381315)
-			self:SayCountdown(381315, 6)
+			self:Say(381315, CL.count_rticon:format(L.awakened_earth, count, count))
+			self:SayCountdown(381315, 6, count)
 		end
 		self:CustomIcon(awakenedEarthMarker, args.destName, count)
 		count = count + 1
@@ -248,7 +239,7 @@ do
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) then
 			local t = args.time
-			if t-prev > 2 then
+			if t-prev > 2 and resonatingAnnihilationCount < 5 then -- Don't spam after room is filled
 				prev = t
 				self:PlaySound(args.spellId, "underyou")
 				self:PersonalMessage(args.spellId, "underyou")
@@ -258,27 +249,9 @@ do
 end
 
 -- Mythic
-do
-	local playerList = {}
-	local prev = 0
-	function mod:ReactiveDustApplied(args)
-		local t = args.time -- new set of debuffs
-		if t-prev > 5 then
-			prev = t
-			playerList = {}
-		end
-		playerList[#playerList+1] = args.destName
-		local mark = 9 - #playerList
-		playerList[args.destName] = mark -- Set raid marker
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.rticon:format(L.reactive_dust, mark))
-			self:PlaySound(args.spellId, "warning")
-		end
-		self:TargetsMessage(args.spellId, "orange", playerList, nil, L.reactive_dust)
-		self:CustomIcon(reactiveDustMarker, args.destName, mark)
-	end
-
-	function mod:ReactiveDustRemoved(args)
-		self:CustomIcon(reactiveDustMarker, args.destName)
+function mod:ReactiveDustApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, L.reactive_dust)
+		self:PlaySound(args.spellId, "warning")
 	end
 end
