@@ -1,6 +1,7 @@
 
-if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
+if WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE then
 	local L = BigWigsAPI:GetLocale("BigWigs")
+	RaidNotice_AddMessage(RaidWarningFrame, L.classicWarning1, {r=1,g=1,b=1}, 999999)
 	print(L.classicWarning1)
 	print(L.classicWarning2)
 	BasicMessageDialog.Text:SetText(L.classicWarning1)
