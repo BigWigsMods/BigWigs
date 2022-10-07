@@ -108,9 +108,9 @@ function mod:ChillingBlast(args)
 end
 
 function mod:StickyWebbingApplied(args)
-	if self:Me(args.destGUID) and (args.amount % 3 == 0 or args.amount > 6) then
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 7)
-		if args.amount > 6 then
+	if self:Me(args.destGUID) and args.amount > 2 then
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 4)
+		if args.amount > 3 then
 			self:PlaySound(args.spellId, "info")
 		end
 	end
@@ -119,7 +119,6 @@ end
 function mod:WrappedInWebsApplied(args)
 	if self:Me(args.destGUID) then
 		self:Message(args.spellId, "blue")
-		self:PlaySound(args.spellId, "info")
 	end
 end
 
