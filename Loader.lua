@@ -1,6 +1,7 @@
 
-if WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
+if WOW_PROJECT_ID ~= WOW_PROJECT_MAINLINE then
 	local L = BigWigsAPI:GetLocale("BigWigs")
+	RaidNotice_AddMessage(RaidWarningFrame, L.classicWarning1, {r=1,g=1,b=1}, 999999)
 	print(L.classicWarning1)
 	print(L.classicWarning2)
 	BasicMessageDialog.Text:SetText(L.classicWarning1)
@@ -21,7 +22,7 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 248
+local BIGWIGS_VERSION = 250
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -1106,9 +1107,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20220915015107" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "9.2.34" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20220914000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20220929050732" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "9.2.35" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20220929000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()

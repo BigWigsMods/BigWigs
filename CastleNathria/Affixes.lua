@@ -232,17 +232,19 @@ function mod:ReconfigurationEmitter(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.reconfiguration_emitter, emitterCount))
 	self:PlaySound(args.spellId, "info")
 	emitterCount = emitterCount + 1
-	local cd = 75
-	if activeBoss == 2407 then -- Denathrius
-		local stage = self:GetStage()
-		cd = stage == 3 and 70 or stage == 2 and 85 or 60
-		if stage == 2 and (emitterCount - p2Count[args.spellId]) == 1 then
-			cd = self:Mythic() and 80 or 85
+	if activeBoss ~= 2398 or emitterCount % 2 == 0 then -- Shriekwing: two per stage one
+		local cd = 75
+		if activeBoss == 2407 then -- Denathrius
+			local stage = self:GetStage()
+			cd = stage == 3 and 70 or stage == 2 and 85 or 60
+			if stage == 2 and (emitterCount - p2Count[args.spellId]) == 1 then
+				cd = self:Mythic() and 80 or 85
+			end
+		elseif activeBoss == 2399 then -- Sludgefist
+			cd = self:Mythic() and 69 or 72
 		end
-	elseif activeBoss == 2399 then -- Sludgefist
-		cd = self:Mythic() and 69 or 72
+		self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 	end
-	self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 end
 
 function mod:ProtoformBarrierApplied(args)
@@ -304,8 +306,11 @@ end
 
 -- Boss specific timer resetting
 function mod:ShriekwingBloodShroudRemoved()
+	if emitterDetected then
+		self:CDBar(371254, 5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
+	end
 	if chaoticEssenceDetected then
-		self:Bar(372634, 11.3, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Chaotic Essence
+		self:Bar(372634, 11.3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount)) -- Chaotic Essence
 	end
 	if protoformBarrierDetected then
 		self:Bar(371447, 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount)) -- Protoform Barrier
@@ -313,20 +318,26 @@ function mod:ShriekwingBloodShroudRemoved()
 	if creationSparkDetected then
 		self:Bar(369505, 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount)) -- Creation Spark
 	end
-	-- if emitterDetected then
-	-- 	self:CDBar(371254, 3.2, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)) -- Reconfiguration Emitter
-	-- end
 end
 
 function mod:SunKingReflectionOfGuiltRemoved()
-	-- If the Shade isn't up to summon the second emitter, the cast is delayed 15s
+	-- seems all casts get delayed around shade phase start/end, so this should really
+	-- be checking the remaining time and delaying? would need a lot more data z.z
 	if emitterCount == 2 then
+		-- If the Shade isn't up to summon the second emitter, the cast is delayed 15s
 		local text = bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount)
 		local remaining = self:BarTimeLeft(text)
 		if remaining > 0 then
 			self:Bar(371254, remaining + 15, text) -- Reconfiguration Emitter
 		end
 	end
+	-- if chaoticEssenceCount == 3 then
+	-- 	local text = bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount)
+	-- 	local remaining = self:BarTimeLeft(text)
+	-- 	if remaining > 0 then
+	-- 		self:Bar(372634, remaining + 15, text) -- Chaotic Essence
+	-- 	end
+	-- end
 end
 
 function mod:CouncilDanseMacabreBegins()

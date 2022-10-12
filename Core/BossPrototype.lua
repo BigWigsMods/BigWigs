@@ -27,7 +27,7 @@ end
 
 local L = BigWigsAPI:GetLocale("BigWigs: Common")
 local LibSpec = LibStub("LibSpecialization")
-local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass
+local UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID = UnitAffectingCombat, UnitIsPlayer, UnitPosition, UnitIsConnected, UnitClass, UnitTokenFromGUID
 local C_EncounterJournal_GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown = C_EncounterJournal.GetSectionInfo, GetSpellInfo, GetSpellTexture, GetTime, IsSpellKnown
 local EJ_GetEncounterInfo, UnitGroupRolesAssigned = EJ_GetEncounterInfo, UnitGroupRolesAssigned
 local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.SendChatMessage, BigWigsLoader.GetInstanceInfo, BigWigsLoader.CTimerAfter, BigWigsLoader.SetRaidTarget
@@ -767,6 +767,47 @@ do
 end
 
 do
+	local targetOnlyUnitTable = { -- Attempt to prioritize by likelihood of success
+		"party1target", "party2target", "party3target", "party4target",
+		"targettarget", "mouseovertarget", "focustarget",
+		"raid1target", "raid2target", "raid3target", "raid4target", "raid5target",
+		"raid6target", "raid7target", "raid8target", "raid9target", "raid10target",
+		"raid11target", "raid12target", "raid13target", "raid14target", "raid15target",
+		"raid16target", "raid17target", "raid18target", "raid19target", "raid20target",
+		"raid21target", "raid22target", "raid23target", "raid24target", "raid25target",
+		"raid26target", "raid27target", "raid28target", "raid29target", "raid30target",
+		"raid31target", "raid32target", "raid33target", "raid34target", "raid35target",
+		"raid36target", "raid37target", "raid38target", "raid39target", "raid40target",
+		"nameplate1target", "nameplate2target", "nameplate3target", "nameplate4target", "nameplate5target",
+		"nameplate6target", "nameplate7target", "nameplate8target", "nameplate9target", "nameplate10target",
+		"nameplate11target", "nameplate12target", "nameplate13target", "nameplate14target", "nameplate15target",
+		"nameplate16target", "nameplate17target", "nameplate18target", "nameplate19target", "nameplate20target",
+		"nameplate21target", "nameplate22target", "nameplate23target", "nameplate24target", "nameplate25target",
+		"nameplate26target", "nameplate27target", "nameplate28target", "nameplate29target", "nameplate30target",
+		"nameplate31target", "nameplate32target", "nameplate33target", "nameplate34target", "nameplate35target",
+		"nameplate36target", "nameplate37target", "nameplate38target", "nameplate39target", "nameplate40target",
+	}
+	local unitTableCount = #targetOnlyUnitTable
+	--- Fetches a unit id by scanning available targets.
+	-- @string guid The GUID of the unit to find
+	-- @return unit id if found, nil otherwise
+	function boss:UnitTokenFromGUID(guid)
+		local unit = UnitTokenFromGUID(guid) -- Check Blizz API first
+		if unit then
+			return unit
+		else -- Fall back to scanning unit targets
+			for i = 1, unitTableCount do
+				local targetUnit = targetOnlyUnitTable[i]
+				local targetGUID = UnitGUID(targetUnit)
+				if targetGUID == guid then
+					return targetUnit
+				end
+			end
+		end
+	end
+end
+
+do
 	local unitTable = {
 		"boss1", "boss2", "boss3", "boss4", "boss5",
 		"target", "targettarget",
@@ -789,6 +830,10 @@ do
 	local unitTableCount = #unitTable
 	local function findTargetByGUID(id)
 		local isNumber = type(id) == "number"
+		if not isNumber and UnitTokenFromGUID then
+			local unit = UnitTokenFromGUID(id)
+			if unit then return unit end
+		end
 		for i = 1, unitTableCount do
 			local unit = unitTable[i]
 			local guid = UnitGUID(unit)
@@ -1223,8 +1268,12 @@ end
 -- @string unit unit token or name
 -- @return hp health of the unit as a percentage between 0 and 100
 function boss:GetHealth(unit)
-	local hp = UnitHealth(unit) / UnitHealthMax(unit) * 100
-	return hp
+	local maxHP = UnitHealthMax(unit)
+	if maxHP == 0 then
+		return maxHP
+	else
+		return UnitHealth(unit) / maxHP * 100
+	end
 end
 
 do

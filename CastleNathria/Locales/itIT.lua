@@ -168,11 +168,11 @@ end
 
 L = BigWigs:NewBossLocale("Castle Nathria Affixes", "itIT")
 if L then
-	--L.custom_on_bar_icon = "Bar Icon"
-	--L.custom_on_bar_icon_desc = "Show the Fated Raid icon on bars."
+	L.custom_on_bar_icon = "Icona Barra"
+	L.custom_on_bar_icon_desc = "Mostra l'Icona dell'Incursione Predestinata sulle barre."
 
-	--L.chaotic_essence = "Essence"
+	L.chaotic_essence = "Essenza"
 	L.creation_spark = "Scintille"
 	L.protoform_barrier = "Barriera"
-	--L.reconfiguration_emitter = "Interrupt Add"
+	L.reconfiguration_emitter = "Interrompi Add"
 end

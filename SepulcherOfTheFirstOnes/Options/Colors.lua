@@ -92,7 +92,7 @@ BigWigs:AddColors("Halondrus the Reclaimer", {
 	[367079] = "yellow",
 	[368363] = "blue",
 	[368529] = "red",
-	[368969] = {"blue","green"},
+	[368969] = {"blue","green","yellow"},
 	[369207] = "blue",
 	["stages"] = {"cyan","green"},
 })

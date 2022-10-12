@@ -128,20 +128,23 @@ function mod:CheckForAffixes()
 	if unit then
 		if not emitterDetected and self:UnitBuff(unit, 372419) then -- Fated Power: Reconfiguration Emitter
 			emitterDetected = true
-			self:Bar(371254, 5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+			-- 2436 = Guardian
+			self:Bar(371254, activeBoss == 2436 and 35 or 5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 		end
 		if not chaoticEssenceDetected and self:UnitBuff(unit, 372642) then -- Fated Power: Chaotic Essence
 			chaoticEssenceDetected = true
 			-- 2436 = Guardian
-			self:Bar(372634, activeBoss == 2436 and 41 or 11, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
-		end
-		if not creationSparkDetected and self:UnitBuff(unit, 372647) then -- Fated Power: Creation Spark
-			creationSparkDetected = true
-			self:Bar(369505, 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+			self:CDBar(372634, activeBoss == 2436 and 41 or 11, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 		end
 		if not protoformBarrierDetected and self:UnitBuff(unit, 372418) then -- Fated Power: Protoform Barrier
 			protoformBarrierDetected = true
-			self:Bar(371447, 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+			-- 2436 = Guardian
+			self:Bar(371447, activeBoss == 2436 and 24 or 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		end
+		if not creationSparkDetected and self:UnitBuff(unit, 372647) then -- Fated Power: Creation Spark
+			creationSparkDetected = true
+			-- 2436 = Guardian
+			self:Bar(369505, activeBoss == 2436 and 30 or 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 		end
 	end
 end
@@ -172,6 +175,9 @@ function mod:OnBossEngage(_, module)
 	elseif activeBoss == 2430 then -- Painsmith Raznal
 		self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 		self:Log("SPELL_AURA_REMOVED", "PainsmithForgeWeaponOver", 355525)
+	elseif activeBoss == 2436 then -- Guardian of the First Ones
+		self:Log("SPELL_AURA_APPLIED", "GuardianEnergizingLinkApplied", 352385)
+		self:Log("SPELL_CAST_START", "GuardianMeltdown", 352589)
 	elseif activeBoss == 2431 then -- Fatescribe Roh-Kalo
 		self:Log("SPELL_AURA_APPLIED", "FatescribeRealignFateApplied", 357739)
 		self:Log("SPELL_AURA_REMOVED", "FatescribeRealignFateRemoved", 357739)
@@ -192,6 +198,22 @@ end
 -- Event Handlers
 --
 
+local function fixedCastTime(first, period, delayed)
+	-- tries to cast at every Xs
+	local t = GetTime() - startTime
+	local _, f = math.modf((t - first) / period)
+	local remaining = (1 - f) * period
+	if delayed then
+		-- if over 30s after a phase, resets to the next 5s tick
+		if remaining > 30 then
+			while remaining > 5 do
+				remaining = remaining - 5
+			end
+		end
+	end
+	return remaining
+end
+
 function mod:ChaoticDestruction()
 	chaoticEssenceDetected = true
 	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
@@ -200,7 +222,11 @@ function mod:ChaoticDestruction()
 	chaoticEssenceCount = chaoticEssenceCount + 1
 	-- Sylvanas (2435) Stage 2 is curated and Guardian (2436) stops at least at link, so 60s isn't going to happen
 	if (activeBoss ~= 2435 or self:GetStage() ~= 2) and activeBoss ~= 2436 then
-		self:Bar(372634, 60, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+		local cd = 60
+		if activeBoss == 2433 then -- The Eye
+			cd = fixedCastTime(11, 60) -- tries to cast at every 75s
+		end
+		self:CDBar(372634, cd, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 end
 
@@ -210,8 +236,15 @@ function mod:ReconfigurationEmitter(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.reconfiguration_emitter, emitterCount))
 	self:PlaySound(args.spellId, "info")
 	emitterCount = emitterCount + 1
-	-- 2431 = Fatescribe
-	self:Bar(args.spellId, activeBoss == 2431 and 80 or 75, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	local cd = 75
+	if activeBoss == 2433 then -- The Eye
+		cd = fixedCastTime(5, 75) -- tries to cast at every 75s
+	elseif activeBoss == 2431 then -- Fatescribe
+		cd = 80
+	elseif activeBoss == 2436 then -- Guardian
+		cd = 0 -- stops at least at link, so 75s isn't going to happening
+	end
+	self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 end
 
 function mod:ProtoformBarrierApplied(args)
@@ -221,16 +254,15 @@ function mod:ProtoformBarrierApplied(args)
 	self:Message(args.spellId, "yellow", CL.on:format(CL.count:format(L.protoform_barrier, barrierCount), args.destName))
 	self:PlaySound(args.spellId, "info")
 	barrierCount = barrierCount + 1
-	if activeBoss == 2433 then
-		-- tries to cast at every 60s
-		local t = GetTime() - startTime
-		local _, f = math.modf((t - 15) / 60)
-		if f > 0.95 then f = 0 end -- round up if we're a bit (<3s) early
-		local remaining = (1 - f) * 60
-		self:Bar(args.spellId, remaining, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
-	else
-		self:Bar(args.spellId, 60, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	local cd = 60
+	if activeBoss == 2433 then -- The Eye
+		cd = fixedCastTime(15, 60) -- tries to cast at every 60s
+	elseif activeBoss == 2436 then -- Guardian
+		cd = 0 -- stops at least at link, so 60s isn't going to happening
+	elseif activeBoss == 2431 then -- Fatescribe
+		cd = 80
 	end
+	self:Bar(args.spellId, cd, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 end
 
 function mod:ProtoformBarrierRemoved(args)
@@ -262,50 +294,90 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 355555 then -- Painsmith: [DNT] Upstairs
 		self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 		self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 	elseif spellId == 351625 then -- Kel'Thuzad: Cosmetic Death
 		self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 		self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+		self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 end
 
 function mod:TheEyeStygianDarkshieldApplied()
 	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	-- Creation Spark doesn't stop
 end
 
 function mod:TheEyeStygianDarkshieldRemoved()
-	if chaoticEssenceDetected then
-		self:CDBar(372634, 3, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
-	end
 	if emitterDetected then
-		-- tries to cast at every 60s
-		local t = GetTime() - startTime
-		local _, f = math.modf((t - 15) / 60)
-		local remaining = (1 - f) * 60
-		-- but won't go over 30s (?) after a phase, in 5s increments
-		while remaining > 35 do
-			remaining = remaining - 5
-		end
-		self:Bar(372634, remaining, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		self:Bar(372634, fixedCastTime(5, 60, true), bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, fixedCastTime(11, 60, true), bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+	if protoformBarrierDetected then
+		self:Bar(372634, fixedCastTime(15, 75, true), bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 	end
 end
 
 function mod:PainsmithForgeWeaponOver()
+	if emitterDetected then
+		self:Bar(372634, 11, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
 	if chaoticEssenceDetected then
-		self:CDBar(372634, 17.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+		self:CDBar(372634, 18, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+	if protoformBarrierDetected then
+		self:Bar(372634, 21, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
+	if creationSparkCount then
+		self:Bar(369505, 26, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	end
+end
+
+function mod:GuardianEnergizingLinkApplied(args)
+	if self:MobId(args.destGUID) == 175731 then -- On the boss
+		self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+		self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+		self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
+end
+
+function mod:GuardianMeltdown()
+	if protoformBarrierDetected then
+		self:Bar(372634, 11.3, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+	end
+	if creationSparkCount then
+		self:Bar(369505, 16.3, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 	end
 	if emitterDetected then
-		self:Bar(372634, 21, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		self:Bar(372634, 21.4, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, 27.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 end
 
 function mod:FatescribeRealignFateApplied()
 	self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+	self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 end
 
 function mod:FatescribeRealignFateRemoved()
 	if emitterDetected then
 		self:CDBar(372634, 10, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, 16.6, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
+	if protoformBarrierDetected then
+		self:CDBar(372634, 20, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 	end
 	if creationSparkCount then
 		self:CDBar(369505, 25.6, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
@@ -313,19 +385,27 @@ function mod:FatescribeRealignFateRemoved()
 end
 
 function mod:KelThuzadNecroticSurgeApplied()
+	if emitterDetected then
+		self:Bar(372634, 5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, 11.2, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+	end
 	if protoformBarrierDetected then
 		self:Bar(372634, 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 	end
-	if emitterDetected then
-		self:CDBar(372634, 5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	if creationSparkCount then
+		self:Bar(369505, 20, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 	end
 end
 
 function mod:SylvanasBansheeShroudApplied()
 	if self:GetStage() == 1 then
 		self:SetStage(1.5)
+		self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 		self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 		self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 	end
 end
 
@@ -339,7 +419,7 @@ do
 			if not self:Mythic() then
 				if bridgeCount == 2 then
 					if chaoticEssenceDetected then
-						self:Bar(372634, 11.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+						self:CDBar(372634, 11.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 					end
 					if protoformBarrierDetected then
 						self:Bar(372634, 15, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
@@ -348,26 +428,52 @@ do
 					if protoformBarrierDetected then
 						self:Bar(372634, 10, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 					end
+					if creationSparkCount then
+						self:Bar(369505, 15, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+					end
 				elseif bridgeCount == 5 then
+					if emitterDetected then
+						self:Bar(372634, 10, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+					end
 					if chaoticEssenceDetected then
-						self:Bar(372634, 17.2, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+						self:CDBar(372634, 17.2, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+					end
+				elseif bridgeCount == 6 then
+					if creationSparkCount then
+						self:Bar(369505, 10, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+					end
+					if emitterDetected then
+						self:Bar(372634, 15, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 					end
 				end
 			else -- Mythic
 				if bridgeCount == 2 then
 					if chaoticEssenceDetected then
-						self:Bar(372634, 15.7, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+						self:CDBar(372634, 15.7, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 					end
 					if protoformBarrierDetected then
 						self:Bar(372634, 9.2, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 					end
 				elseif bridgeCount == 4 then
+					if creationSparkCount then
+						self:Bar(369505, 1.2, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+					end
 					if chaoticEssenceDetected then
-						self:Bar(372634, 7.1, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+						self:CDBar(372634, 7.1, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 					end
 				elseif bridgeCount == 6 then
+					if emitterDetected then
+						self:Bar(372634, 9.2, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+					end
 					if protoformBarrierDetected then
 						self:Bar(372634, 14.3, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+					end
+				elseif bridgeCount == 8 then
+					if creationSparkCount then
+						self:Bar(369505, 3.5, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+					end
+					if emitterDetected then
+						self:Bar(372634, 8.5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 					end
 				end
 			end
@@ -378,11 +484,17 @@ end
 function mod:SylvanasBlasphemySuccess()
 	if self:GetStage() < 3 then
 		self:SetStage(3)
+		if emitterDetected then
+			self:Bar(372634, 20.4, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		end
 		if chaoticEssenceDetected then
-			self:Bar(372634, 26.6, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
+			self:CDBar(372634, 26.6, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 		end
 		if protoformBarrierDetected then
 			self:Bar(372634, 30, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
+		end
+		if creationSparkCount then
+			self:Bar(369505, 35.3, bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
 		end
 	end
 end
