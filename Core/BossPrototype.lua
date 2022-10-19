@@ -189,13 +189,33 @@ function boss:IsEnableMob(mobId)
 	return self.enableMobs[mobId]
 end
 
---- Set the encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
+--- Set the encounter id for this module. (As used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL)
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
 -- @number encounterId The encounter id
 -- @within Enable triggers
 function boss:SetEncounterID(encounterId)
 	if type(encounterId) == "number" then
 		self.engageId = encounterId
+	end
+end
+
+--- Get the encounter id used for this module. (As used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL)
+-- @return number
+-- @within Enable triggers
+function boss:GetEncounterID()
+	local encounterId = self.engageId
+	if type(encounterId) == "number" then
+		return encounterId
+	end
+end
+
+--- Get the journal id used for this module. (As used by the dungeon journal)
+-- @return number
+-- @within Enable triggers
+function boss:GetJournalID()
+	local journalId = self.journalId
+	if type(journalId) == "number" then
+		return journalId
 	end
 end
 
@@ -206,6 +226,16 @@ end
 function boss:SetRespawnTime(seconds)
 	if type(seconds) == "number" then
 		self.respawnTime = seconds
+	end
+end
+
+--- Get the time in seconds before the boss respawns after a wipe.
+-- @return number
+-- @within Enable triggers
+function boss:GetRespawnTime()
+	local respawnTime = self.respawnTime
+	if type(respawnTime) == "number" then
+		return respawnTime
 	end
 end
 
