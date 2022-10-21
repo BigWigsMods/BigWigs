@@ -56,7 +56,7 @@ function mod:GetOptions()
 		374917, -- Shattering Dominance
 		391056, -- Enveloping Earth
 		envelopingEarthMarker,
-		390796, -- Erupting Bedrock
+		395893, -- Erupting Bedrock
 		374705, -- Seismic Rupture
 		-- Storm Altar
 		374918, -- Thundering Dominance
@@ -75,7 +75,7 @@ function mod:GetOptions()
 	}, {
 		[371971] = -25036, -- Stage 1
 		[374881] = -25040, -- Fire Altar
-		[373678] = -25061, -- Frost Altar
+		[374916] = -25061, -- Frost Altar
 		[374917] = -25064, -- Earthen Altar
 		[374918] = -25068, -- Storm Altar
 		[374779] = -25071, -- Stage 2
