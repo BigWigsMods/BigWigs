@@ -387,6 +387,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
 		self:StopBar(bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
 		self:StopBar(bar_icon..CL.count:format(L.creation_spark, creationSparkCount))
+		self:StopBar(bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 end
 
@@ -397,6 +398,9 @@ function mod:AnduinDominationsGraspRemoved()
 	if stage == 2 then
 		if emitterDetected then
 			self:Bar(371254, 8.6, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+		end
+		if chaoticEssenceDetected then
+			self:CDBar(372634, 14.6, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 		end
 		if protoformBarrierDetected then
 			self:Bar(371447, 19.1, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
@@ -413,6 +417,9 @@ function mod:AnduinBeaconOfHope()
 
 	if emitterDetected then
 		self:Bar(371254, 9.5, bar_icon..CL.count:format(L.reconfiguration_emitter, emitterCount))
+	end
+	if chaoticEssenceDetected then
+		self:CDBar(372634, 15.5, bar_icon..CL.count:format(L.chaotic_essence, chaoticEssenceCount))
 	end
 	if protoformBarrierDetected then
 		self:Bar(371447, 21.2, bar_icon..CL.count:format(L.protoform_barrier, barrierCount))
