@@ -106,7 +106,7 @@ function mod:OnBossEnable()
 	-- Earthen
 	self:Log("SPELL_AURA_APPLIED", "EnvelopingEarthApplied", 391056)
 	self:Log("SPELL_AURA_REMOVED", "EnvelopingEarthRemoved", 391056)
-	self:Log("SPELL_CAST_START", "EruptingBedrock", 390796)
+	self:Log("SPELL_CAST_START", "EruptingBedrock", 395893)
 	self:Log("SPELL_CAST_START", "SeismicRupture", 374705)
 	-- Storm
 	self:Log("SPELL_AURA_APPLIED", "LightningCrashApplied", 373487)
@@ -147,7 +147,7 @@ function mod:ElementalShift(args)
 	-- self:Bar(372456, 30) -- Absolute Zero
 
 	-- self:Bar(391056, 30) -- Enveloping Earth
-	-- self:Bar(390796, 30) -- Erupting Bedrock
+	-- self:Bar(395893, 30) -- Erupting Bedrock
 	-- self:Bar(374705, 30) -- Seismic Rupture
 
 	-- self:Bar(373487, 30) -- Lightning Crash
