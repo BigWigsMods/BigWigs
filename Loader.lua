@@ -995,9 +995,9 @@ do
 		DBMdotReleaseRevision = "20220801000000"
 		public.dbmPrefix = "D4C"
 	else
-		DBMdotRevision = "20220930021857"
-		DBMdotDisplayVersion = "3.4.14"
-		DBMdotReleaseRevision = "20220929000000"
+		DBMdotRevision = "20221018190433"
+		DBMdotDisplayVersion = "3.4.17"
+		DBMdotReleaseRevision = "20221018000000"
 		public.dbmPrefix = "D4WC"
 	end
 
