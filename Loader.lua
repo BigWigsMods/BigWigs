@@ -869,6 +869,7 @@ do
 
 	-- XXX Temporary print
 	if printTempWarn then
+		Popup(L.missingAddOn:format("BigWigs_WrathOfTheLichKing"))
 		delayedMessages[#delayedMessages+1] = L.missingAddOn:format("BigWigs_WrathOfTheLichKing")
 	end
 
@@ -895,7 +896,9 @@ do
 					for i = 1, #delayedMessages do
 						sysprint(delayedMessages[i])
 					end
-					if printTempWarn then RaidNotice_AddMessage(RaidWarningFrame, L.missingAddOn:format("BigWigs_WrathOfTheLichKing"), {r=1,g=1,b=1}, 5) end
+					if printTempWarn then
+						RaidNotice_AddMessage(RaidWarningFrame, L.missingAddOn:format("BigWigs_WrathOfTheLichKing"), {r=1,g=1,b=1}, 10)
+					end
 					delayedMessages = nil
 				end)
 			end)
