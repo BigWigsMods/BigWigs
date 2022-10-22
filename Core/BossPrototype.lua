@@ -997,7 +997,7 @@ do
 	end
 
 	function boss:Engage(noEngage)
-		if not self.isEngaged then
+		if not self:IsEngaged() then
 			self.isEngaged = true
 
 			dbg(":Engage", "noEngage:", noEngage, self.engageId, self.moduleName)
