@@ -41,6 +41,7 @@ L.noBossMod = "Kein Bossmod:"
 L.offline = "Offline"
 
 L.missingPlugin = "Bitte beachte, dass diese Zone das |cFF436EEE%s|r-Plugin für Timer zur Anzeige benötigt."
+--L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
 L.disabledAddOn = "Du hast das Addon |cFF436EEE%s|r deaktiviert, Timer werden nicht angezeigt."
 
 L.removeAddon = "Bitte entferne '|cFF436EEE%s|r', da es durch '|cFF436EEE%s|r' ersetzt wurde."
