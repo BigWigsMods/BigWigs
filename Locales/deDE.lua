@@ -44,7 +44,7 @@ L.missingPlugin = "Bitte beachte, dass diese Zone das |cFF436EEE%s|r-Plugin für
 --L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
 L.disabledAddOn = "Du hast das Addon |cFF436EEE%s|r deaktiviert, Timer werden nicht angezeigt."
 
-L.removeAddon = "Bitte entferne '|cFF436EEE%s|r', da es durch '|cFF436EEE%s|r' ersetzt wurde."
+L.removeAddOn = "Bitte entferne '|cFF436EEE%s|r', da es durch '|cFF436EEE%s|r' ersetzt wurde."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)

@@ -44,7 +44,7 @@ L.missingPlugin = "Tenga en cuenta que esta zona requiere el plugin |cFF436EEE%s
 --L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
 L.disabledAddOn = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores no se mostraran."
 
-L.removeAddon = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
+L.removeAddOn = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)

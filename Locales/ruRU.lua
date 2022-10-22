@@ -44,7 +44,7 @@ L.missingPlugin = "Обратите внимание, что эта зона т�
 --L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
 L.disabledAddOn = "У вас выключена модификация |cFF436EEE%s|r, таймеры не будут показываться."
 
-L.removeAddon = "Пожалуйста, удалите '|cFF436EEE%s|r', ему на смену пришло '|cFF436EEE%s|r'."
+L.removeAddOn = "Пожалуйста, удалите '|cFF436EEE%s|r', ему на смену пришло '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)

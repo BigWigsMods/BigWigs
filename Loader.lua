@@ -980,8 +980,8 @@ do
 		end
 
 		if old[name] then
-			delayedMessages[#delayedMessages+1] = L.removeAddon:format(name, old[name])
-			Popup(L.removeAddon:format(name, old[name]))
+			delayedMessages[#delayedMessages+1] = L.removeAddOn:format(name, old[name])
+			Popup(L.removeAddOn:format(name, old[name]))
 		end
 	end
 
