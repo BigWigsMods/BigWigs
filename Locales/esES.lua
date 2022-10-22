@@ -40,7 +40,7 @@ L.dbmUsers = "Jugadores con DBM:"
 L.noBossMod = "Sin boss mod:"
 L.offline = "Desconectado"
 
-L.missingAddOn = "Tenga en cuenta que esta zona requiere el plugin |cFF436EEE%s|r para que los contadores sean mostrados."
+L.missingPlugin = "Tenga en cuenta que esta zona requiere el plugin |cFF436EEE%s|r para que los contadores sean mostrados."
 L.disabledAddOn = "Tienes el addon |cFF436EEE%s|r deshabilitado, los contadores no se mostraran."
 
 L.removeAddon = "Por favor elimina '|cFF436EEE%s|r' ya que está siendo reemplazado por '|cFF436EEE%s|r'."

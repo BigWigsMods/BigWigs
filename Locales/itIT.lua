@@ -40,7 +40,7 @@ L.dbmUsers = "Utilizzatori DBM:"
 L.noBossMod = "Nessun Boss mod:"
 L.offline = "Disconnesso"
 
-L.missingAddOn = "Per favore, prendi nota che questa zona richiede il plugin |cFF436EEE%s|r per fare in modo di visualizzare barre e timers."
+L.missingPlugin = "Per favore, prendi nota che questa zona richiede il plugin |cFF436EEE%s|r per fare in modo di visualizzare barre e timers."
 L.disabledAddOn = "L'addon |cFF436EEE%s|r è disattivato, i timer non saranno mostrati."
 
 L.removeAddon = "Per favore rimuovi '|cFF436EEE%s|r' perché è stato rimpiazzato da '|cFF436EEE%s|r'."

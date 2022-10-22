@@ -39,7 +39,7 @@ L.dbmUsers = "DBM users:"
 L.noBossMod = "No boss mod:"
 L.offline = "Offline"
 
-L.missingAddOn = "Please note that this zone requires the |cFF436EEE%s|r plugin for timers to be displayed."
+L.missingPlugin = "Please note that this zone requires the |cFF436EEE%s|r plugin for timers to be displayed."
 L.disabledAddOn = "You have the |cFF436EEE%s|r addon disabled, timers will not be shown."
 
 L.removeAddon = "Please remove '|cFF436EEE%s|r' as it's been replaced by '|cFF436EEE%s|r'."

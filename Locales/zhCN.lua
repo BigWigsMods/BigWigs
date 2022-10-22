@@ -40,7 +40,7 @@ L.dbmUsers = "DBM 用户："
 L.noBossMod = "没有首领模块："
 L.offline = "离线"
 
-L.missingAddOn = "请注意，这个区域需要 |cFF436EEE%s|r 插件计时器才可被显示。"
+L.missingPlugin = "请注意，这个区域需要 |cFF436EEE%s|r 插件计时器才可被显示。"
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，计时器将不被显示。"
 
 L.removeAddon = "请移除“|cFF436EEE%s|r”，其已被“|cFF436EEE%s|r”所替代。"

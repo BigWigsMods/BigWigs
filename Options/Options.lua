@@ -1237,13 +1237,13 @@ do
 			onZoneShow(widget, tonumber(zoneId))
 		elseif value:match("^BigWigs_") and not defaultEnabled and GetAddOnEnableState(playerName, value) == 0 then
 				local missing = AceGUI:Create("Label")
-				missing:SetText(L.missingAddOn:format(value))
+				missing:SetText(L.missingPlugin:format(value))
 				missing:SetFontObject(GameFontHighlight)
 				missing:SetFullWidth(true)
 				widget:AddChild(missing)
 		elseif value:match("^LittleWigs_") and GetAddOnEnableState(playerName, "LittleWigs") == 0 then
 				local missing = AceGUI:Create("Label")
-				missing:SetText(L.missingAddOn:format("LittleWigs"))
+				missing:SetText(L.missingPlugin:format("LittleWigs"))
 				missing:SetFontObject(GameFontHighlight)
 				missing:SetFullWidth(true)
 				widget:AddChild(missing)
