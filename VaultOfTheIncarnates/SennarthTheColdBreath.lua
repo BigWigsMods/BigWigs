@@ -37,12 +37,13 @@ if L then
 	L.ascend = "Ascend"
 	L.ascend_desc = "Sennarth ascends the room towards the frozen percipice."
 	L.ascend_icon = "misc_arrowlup"
-	L.chilling_blast = "Spread Debuff"
+	L.chilling_blast = "Spread"
+	L.frost_expulsion = "Explosion"
 	L.freezing_breath = "Add Breath"
-	L.enveloping_webs = "Webs"
-	L.suffocating_webs = "Knock Webs"
+	L.webs = "Webs"
 	L.web = "Web"
-	L.gossamer_burst = "Pull In"
+	L.gossamer_burst = "Grip"
+	L.repelling_burst = "Pushback"
 end
 
 --------------------------------------------------------------------------------
@@ -80,20 +81,23 @@ function mod:GetOptions()
 		[372539] = -24885, -- Stage 2
 	}, {
 		[371976] = L.chilling_blast, -- Chilling Blast (Spread Debuff)
+		[371979] = L.frost_expulsion, -- Frost Expulsion (Spread)
 		[372238] = CL.small_adds, -- Call Spiderlings (Small Adds)
-		[372082] = L.enveloping_webs, -- Enveloping Webs (Webs)
-		[373405] = L.gossamer_burst, -- Gossamer Burst (Pull In)
-		[373048] = L.suffocating_webs, -- Suffocating Webs (Knock Webs)
+		[372082] = L.webs, -- Enveloping Webs (Webs)
+		[373405] = L.gossamer_burst, -- Gossamer Burst (Grip)
+		[373048] = L.webs, -- Suffocating Webs (Webs)
 		[-24899] = CL.big_add, -- Frostbreath Arachnid (Big Add)
 		[374112] = L.freezing_breath, -- Freezing Breath (Add Breath)
-		[373048] = L.suffocating_webs, -- Suffocating Webs (Knock Webs)
-		[371983] = CL.knockback, -- Repelling Burst (Knockback)
+		[373048] = L.webs, -- Suffocating Webs (Knock Webs)
+		[371983] = L.repelling_burst, -- Repelling Burst (Knockback)
 	}
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- XXX Temp stage 2 set
 	-- General
 	self:Log("SPELL_CAST_START", "ChillingBlast", 371976)
+	self:Log("SPELL_AURA_APPLIED", "ChillingBlastApplied", 371976)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "StickyWebbingApplied", 372030)
 	self:Log("SPELL_AURA_APPLIED", "WrappedInWebsApplied", 372044)
 	self:Log("SPELL_CAST_SUCCESS", "CallSpiderlings", 372238)
@@ -115,6 +119,7 @@ function mod:OnBossEnable()
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "ApexOfIce", 372539)
 	self:Log("SPELL_AURA_REMOVED", "ApexOfIceRemoved", 372539)
+	self:Log("SPELL_CAST_SUCCESS", "SuffocatingWebs", 373048)
 	self:Log("SPELL_AURA_APPLIED", "SuffocatingWebsApplied", 373048)
 	self:Log("SPELL_AURA_REMOVED", "SuffocatingWebsRemoved", 373048)
 	self:Log("SPELL_CAST_START", "RepellingBurst", 371983)
@@ -132,10 +137,10 @@ function mod:OnEngage()
 	webCount = 1
 
 	--self:Bar(372238, timers[372238][callSpiderlingsCount], CL.count:format(CL.small_adds, callSpiderlingsCount)) -- Call Spiderlings // This happens at 0~1s right now
-	self:Bar(371976, timers[371976][chillingBlastCount], CL.count:format(L.ascend, chillingBlastCount)) -- Chilling Blast
-	self:Bar(372082, timers[372082][webCount], CL.count:format(L.ascend, webCount)) -- Enveloping Webs
+	self:Bar(371976, timers[371976][chillingBlastCount], CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
+	self:Bar(372082, timers[372082][webCount], CL.count:format(L.webs, webCount)) -- Enveloping Webs
 	self:Bar(373405, timers[373405][burstCount], CL.count:format(L.gossamer_burst, burstCount)) -- Gossamer Burst
-	self:Bar("ascend", 45, CL.count:format(L.ascend, ascendCount), L.ascend_icon)
+	self:Bar("ascend", 45, CL.count:format(L.ascend, ascendCount), L.ascend_icon) -- Boss moving
 	self:Bar(-24899, 106.5, CL.count:format(CL.big_add, bigAddCount), "inv_minespider2_crystal") -- Frostbreath Arachnid
 end
 
@@ -143,14 +148,46 @@ end
 -- Event Handlers
 --
 
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 372497 then -- Eight Legs of Fury
+		if self:GetStage() == 2 then return end -- Already triggered
+		self:StopBar(CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
+		self:StopBar(CL.count:format(L.webs, webCount)) -- Enveloping Webs
+		self:StopBar(CL.count:format(L.gossamer_burst, burstCount)) -- Gossamer Burst
+		self:StopBar(CL.count:format(L.ascend, ascendCount), L.ascend_icon) -- Boss moving
+		self:StopBar(CL.count:format(CL.big_add, bigAddCount)) -- Frostbreath Arachnid
+
+		self:Message("stages", "red", CL.stage:format(2), false)
+		self:PlaySound("stages", "long")
+		self:SetStage(2)
+
+		chillingBlastCount = 1
+		burstCount = 1
+		webCount = 1
+		callSpiderlingsCount = 1
+
+		-- self:Bar(372238, 20, CL.count:format(CL.small_adds, callSpiderlingsCount)) -- Call Spiderlings
+		-- self:Bar(371976, 30, CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
+		-- self:Bar(373048, 30, CL.count:format(L.webs, webCount)) -- Suffocating Webs
+		-- self:Bar(371983, 93, CL.count:format(L.repelling_burst, burstCount)) -- Repelling Burst
+	end
+end
+
 -- General
 function mod:ChillingBlast(args)
 	self:StopBar(CL.count:format(L.chilling_blast, chillingBlastCount))
 	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.chilling_blast, chillingBlastCount)))
 	self:PlaySound(args.spellId, "alarm") -- spread
-	self:Bar(371979, 6) -- Frost Expulsion
+	self:Bar(371979, 6, CL.count:format(L.frost_expulsion, chillingBlastCount)) -- Frost Expulsion
 	chillingBlastCount = chillingBlastCount + 1
 	self:Bar(args.spellId, self:GetStage() == 2 and 34 or timers[args.spellId][chillingBlastCount], CL.count:format(L.chilling_blast, chillingBlastCount))
+end
+
+function mod:ChillingBlastApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, L.chilling_blast)
+		self:PlaySound(args.spellId, "info")
+	end
 end
 
 function mod:StickyWebbingApplied(args)
@@ -193,10 +230,10 @@ end
 do
 	local playerList = {}
 	function mod:EnvelopingWebs(args)
-		self:StopBar(CL.count:format(L.enveloping_webs, webCount))
+		self:StopBar(CL.count:format(L.webs, webCount))
 		playerList = {}
 		webCount = webCount + 1
-		self:Bar(args.spellId, timers[args.spellId][webCount], CL.count:format(L.enveloping_webs, webCount))
+		self:Bar(args.spellId, timers[args.spellId][webCount], CL.count:format(L.webs, webCount))
 	end
 
 	local prev = 0
@@ -209,7 +246,7 @@ do
 			self:SayCountdown(args.spellId, 6, count)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.enveloping_webs)
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.webs)
 		self:CustomIcon(envelopingWebsMarker, args.destName, count)
 	end
 
@@ -238,7 +275,7 @@ function mod:EncounterSpawn(args)
 		self:PlaySound(-24899, "info")
 		bigAddCount = bigAddCount + 1
 		if bigAddCount < 3 then -- only 2 in the encounter
-			self:Bar(-24899, 106.5, CL.count:format(CL.big_add, bigAddCount))
+			self:Bar(-24899, 106.5, CL.count:format(CL.big_add, bigAddCount), "inv_minespider2_crystal")
 		end
 		self:Bar(374112, 11, L.freezing_breath) -- Freezing Breath
 	end
@@ -263,6 +300,7 @@ end
 
 -- Stage 2
 function mod:ApexOfIce(args)
+	if self:GetStage() == 2 then return end -- Already triggered
 	self:Message("stages", "red", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
 	self:SetStage(2)
@@ -279,17 +317,17 @@ function mod:ApexOfIceRemoved(args)
 
 	-- self:Bar(372238, 20, CL.count:format(CL.small_adds, callSpiderlingsCount)) -- Call Spiderlings
 	-- self:Bar(371976, 30, CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
-	-- self:Bar(373048, 30, CL.count:format(L.suffocating_webs, webCount)) -- Suffocating Webs
-	-- self:Bar(371983, 93, CL.count:format(CL.knockback, burstCount)) -- Repelling Burst
+	-- self:Bar(373048, 30, CL.count:format(L.webs, webCount)) -- Suffocating Webs
+	-- self:Bar(371983, 93, CL.count:format(L.repelling_burst, burstCount)) -- Repelling Burst
 end
 
 do
 	local playerList = {}
-	function mod:EnvelopingWebs(args)
-		self:StopBar(CL.count:format(L.suffocating_webs, webCount))
+	function mod:SuffocatingWebs(args)
+		self:StopBar(CL.count:format(L.webs, webCount))
 		playerList = {}
 		webCount = webCount + 1
-		self:CDBar(args.spellId, 49, CL.count:format(L.suffocating_webs, webCount))
+		self:CDBar(args.spellId, 49, CL.count:format(L.webs, webCount))
 	end
 
 	function mod:SuffocatingWebsApplied(args)
@@ -302,7 +340,7 @@ do
 			self:PlaySound(args.spellId, "warning")
 		end
 		self:CustomIcon(suffocatingWebsMarker, args.destName, count)
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.suffocating_webs)
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.webs)
 	end
 
 	function mod:SuffocatingWebsRemoved(args)
@@ -314,10 +352,10 @@ do
 end
 
 function mod:RepellingBurst(args)
-	self:StopBar(CL.count:format(CL.knockback, burstCount))
-	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(CL.knockback, burstCount)))
+	self:StopBar(CL.count:format(L.repelling_burst, burstCount))
+	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.repelling_burst, burstCount)))
 	self:PlaySound(args.spellId, "warning") -- castmove
-	self:CastBar(args.spellId, 4, CL.knockback)
+	self:CastBar(args.spellId, 4, L.repelling_burst)
 	burstCount = burstCount + 1
-	self:Bar(args.spellId, 34.2, CL.count:format(CL.knockback, burstCount))
+	self:Bar(args.spellId, 34.2, CL.count:format(L.repelling_burst, burstCount))
 end
