@@ -258,19 +258,36 @@ do
 		updateProfile()
 
 		-- Enable these CVars every time we load just in case some kind of disconnect/etc during the fight left it permanently disabled
+		-- Additionally, notify the user if a CVar has been force enabled by BossBlock.
 		if self.db.profile.disableSfx then
+			local sfx = GetCVar("Sound_EnableSFX")
+			if sfx == "0" then
+				BigWigs:Print(L.userNotifySfx);
+			end
 			SetCVar("Sound_EnableSFX", "1")
 		end
 		--if self.db.profile.blockTooltipQuests then
 		--	SetCVar("showQuestTrackingTooltips", "1")
 		--end
 		if self.db.profile.disableMusic then
+			local music = GetCVar("Sound_EnableMusic")
+			if music == "0" then
+				BigWigs:Print(L.userNotifyMusic);
+			end
 			SetCVar("Sound_EnableMusic", "1")
 		end
 		if self.db.profile.disableAmbience then
+			local ambience = GetCVar("Sound_EnableAmbience")
+			if ambience == "0" then
+				BigWigs:Print(L.userNotifyAmbience);
+			end
 			SetCVar("Sound_EnableAmbience", "1")
 		end
 		if self.db.profile.disableErrorSpeech then
+			local errorSpeech = GetCVar("Sound_EnableErrorSpeech")
+			if errorSpeech == "0" then
+				BigWigs:Print(L.userNotifyErrorSpeech);
+			end
 			SetCVar("Sound_EnableErrorSpeech", "1")
 		end
 
