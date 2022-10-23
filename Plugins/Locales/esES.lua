@@ -187,6 +187,11 @@ L.blockObjectiveTrackerDesc = "El seguimiento de misión se ocultará durante en
 --L.blockTalkingHeadTimewalking = "Timewalking (Dungeons & Raids)"
 --L.blockTalkingHeadScenarios = "Scenarios"
 
+-- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
+-- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
+-- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
+-- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+
 L.subzone_grand_bazaar = "Gran Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Puerto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 --L.subzone_eastern_transept = "Eastern Transept" -- Auchindoun dungeon (Warlords of Draenor)
