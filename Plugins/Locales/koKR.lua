@@ -187,6 +187,11 @@ L.blockTalkingHeadRaids = "레이드"
 L.blockTalkingHeadTimewalking = "시간여행 (던전 및 레이드)"
 L.blockTalkingHeadScenarios = "시나리오"
 
+-- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
+-- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
+-- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
+-- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+
 L.subzone_grand_bazaar = "대시장" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "잔달라 항구" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_eastern_transept = "동쪽 회랑" -- Auchindoun dungeon (Warlords of Draenor)

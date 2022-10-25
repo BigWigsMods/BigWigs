@@ -992,8 +992,8 @@ do
 		end
 
 		if old[name] then
-			delayedMessages[#delayedMessages+1] = L.removeAddon:format(name, old[name])
-			Popup(L.removeAddon:format(name, old[name]))
+			delayedMessages[#delayedMessages+1] = L.removeAddOn:format(name, old[name])
+			Popup(L.removeAddOn:format(name, old[name]))
 		end
 	end
 
@@ -1107,9 +1107,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20220929050732" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "9.2.35" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20220929000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20221018190433" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "9.2.37" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20221018000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
@@ -1455,7 +1455,7 @@ do
 			if strfind(zoneAddon, "LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true
-				local msg = L.missingAddOn:format(zoneAddon)
+				local msg = L.missingPlugin:format(zoneAddon)
 				sysprint(msg)
 				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 15)
 			end

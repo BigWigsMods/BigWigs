@@ -40,10 +40,11 @@ L.dbmUsers = "Usuários do DBM:"
 L.noBossMod = "Sem mod de chefes:"
 L.offline = "Desconectado"
 
-L.missingAddOn = "Por favor, note que esta zona requer o |cFF436EEE%s|r plugin para os contadores serem exibidos."
+L.missingPlugin = "Por favor, note que esta zona requer o |cFF436EEE%s|r plugin para os contadores serem exibidos."
+--L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
 L.disabledAddOn = "Você desabilitou o addOn |cFF436EEE%s|r, contadores não serão exibidos."
 
-L.removeAddon = "Por favor remova '|cFF436EEE%s|r' porque este foi substituído por '|cFF436EEE%s|r'."
+L.removeAddOn = "Por favor remova '|cFF436EEE%s|r' porque este foi substituído por '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)

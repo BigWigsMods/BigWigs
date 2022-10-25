@@ -1,6 +1,4 @@
 if not IsTestBuild() then return end
--- XXX Counters on spells
--- XXX New timers on intermisson, dont start them right before
 
 --------------------------------------------------------------------------------
 -- Module Declaration
@@ -17,6 +15,10 @@ mod:SetRespawnTime(30)
 --
 
 local flameRiftCount = 1
+local moltenCleaveCount = 1
+local incineratingRoarCount = 1
+local moltenSpikesCount = 1
+local collapsingArmyCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -27,6 +29,15 @@ if L then
 	L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
 	L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frenzied Tarasek that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
 	L.custom_on_nameplate_fixate_icon = 210130
+
+	L.flamerifts = "Adds" -- Multiple Flamerifts
+	L.flamerift = "Add" -- Rift on X
+	L.molten_cleave = "Frontal"
+	L.incinerating_roar = "Roar"
+	L.molten_spikes = "Spikes"
+	L.collapsing_army = "Army"
+	L.greater_flamerift = "Mythic Add"
+	L.leaping_flames = "Flames"
 end
 
 --------------------------------------------------------------------------------
@@ -39,85 +50,102 @@ function mod:GetOptions()
 		{390715, "SAY", "SAY_COUNTDOWN"}, -- Flamerift
 		370649, -- Primal Flow
 		370615, -- Molten Cleave
-		394917, -- Leaping Flames
-		{394904, "TANK"}, -- Burning Wound
+		396023, -- Incinerating Roar
+		396022, -- Molten Spikes
+		{394906, "TANK"}, -- Burning Wound
 		-- Frenzied Tarasek
 		370597, -- Kill Order (Fixate)
 		"custom_on_nameplate_fixate",
 		-- Stage 2
 		370307, -- Collapsing Army
+		-- Mythic
+		{396094, "SAY", "SAY_COUNTDOWN"}, -- Greater Flamerift
+		394917, -- Leaping Flames
+		393780, -- Pyroblast
 	},{
 		[390715] = -26001, -- Stage One
 		[370597] = -26005, -- Frenzied Tarasek
 		[370307] = -26004, -- Stage Two
+		[396094] = "mythic",
 	},{
+		[390715] = L.flamerifts, -- Flamerift (Rifts)
+		[370615] = L.molten_cleave, -- Molten Cleave (Frontal Cone)
+		[396023] = L.incinerating_roar, -- Incinerating Roar (Roar)
+		[396022] = L.molten_spikes, -- Molten Spikes (Spikes)
 		[370597] = CL.fixate, -- Kill Order (Fixate)
+		[370307] = L.collapsing_army, -- Collapsing Army (Army)
+		[396094] = L.greater_flamerift, -- Greater Flamerift (Mythic Add)
+		[394917] = L.leaping_flames, -- Leaping Flames (Flames)
 	}
 end
 
 function mod:OnBossEnable()
+	-- Stage 1
 	self:Log("SPELL_CAST_START", "Flamerift", 390715)
 	self:Log("SPELL_AURA_APPLIED", "FlameriftApplied", 390715)
+	self:Log("SPELL_AURA_REMOVED", "FlameriftRemoved", 390715)
 	self:Log("SPELL_PERIODIC_DAMAGE", "PrimalFlowDamage", 370648)
 	self:Log("SPELL_PERIODIC_MISSED", "PrimalFlowDamage", 370648)
 	self:Log("SPELL_AURA_APPLIED", "FixateApplied", 370597) -- Kill Order
 	self:Log("SPELL_AURA_REMOVED", "FixateRemoved", 370597) -- Kill Order
 	self:Log("SPELL_CAST_START", "MoltenCleave", 370615)
-	self:Log("SPELL_CAST_START", "LeapingFlames", 394917)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningWoundApplied", 394904)
+	self:Log("SPELL_CAST_START", "IncineratingRoar", 396023)
+	self:Log("SPELL_CAST_SUCCESS", "MoltenSpikes", 396022)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningWoundApplied", 394906)
 
+	-- Stage 2
 	self:Log("SPELL_CAST_START", "CollapsingArmy", 370307)
 	self:Log("SPELL_AURA_REMOVED", "CollapsingArmyRemoved", 370307)
+
+	-- Mythic
+	--self:Log("SPELL_CAST_SUCCESS", "GreaterFlamerift", 396094)
+	self:Log("SPELL_AURA_APPLIED", "GreaterFlameriftApplied", 396094)
+	self:Log("SPELL_AURA_REMOVED", "GreaterFlameriftRemoved", 396094)
+	self:Log("SPELL_CAST_START", "LeapingFlames", 394917)
+	self:Log("SPELL_CAST_START", "Pyroblast", 393780)
+	self:Death("FlamescaleCamptainDeath", 199233) -- Flamescale Captain
 end
 
 function mod:OnEngage()
+	self:SetStage(1)
 	flameRiftCount = 1
+	moltenCleaveCount = 1
+	incineratingRoarCount = 1
+	moltenSpikesCount = 1
+	collapsingArmyCount = 1
 
-	self:CDBar(394917, 4.5) -- Leaping Flames
-	self:CDBar(370615, 10) -- Molten Cleave
-	self:CDBar(390715, 13.5, CL.count:format(self:SpellName(390715), flameRiftCount)) -- Flamerift
-	self:CDBar(370307, 92.5) -- Collapsing Army
+	self:CDBar(396023, 2.5, CL.count:format(L.incinerating_roar, incineratingRoarCount)) -- Incinerating Roar
+	self:CDBar(396022, 15, CL.count:format(L.molten_spikes, moltenSpikesCount)) -- Molten Spikes
+	self:CDBar(370615, 7.5, CL.count:format(L.molten_cleave, moltenCleaveCount)) -- Molten Cleave
+	self:CDBar(390715, 12, CL.count:format(L.flamerifts, flameRiftCount)) -- Flamerift
+	self:CDBar(370307, 92, CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
-function mod:CollapsingArmy(args)
-	self:StopBar(370307) -- Collapsing Army
-	self:StopBar(394917) -- Leaping Flames
-	self:StopBar(370615) -- Molten Cleave
-	self:StopBar(390715) -- Flamerift
-
-	self:Message(args.spellId, "cyan")
-	self:PlaySound(args.spellId, "long")
-	-- self:CastBar(args.spellId, 26)
-end
-
-function mod:CollapsingArmyRemoved(args)
-	-- self:StopBar(CL.cast:format(args.spellName))
-	self:Message(args.spellId, "cyan", CL.over:format(args.spellName))
-	-- XXX cd varies a bit, should probably register UNIT_POWER_UPDATE for the first tick?
-	-- or are the random Energize (370727) casts doing it?
-	self:CDBar(args.spellId, 95)
-
-	self:CDBar(394917, 6) -- Leaping Flames
-	self:CDBar(370615, 10) -- Molten Cleave
-	self:CDBar(390715, 34) -- Flamerift
-end
-
 function mod:Flamerift(args)
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, flameRiftCount))
+	self:StopBar(CL.count:format(L.flamerifts, flameRiftCount))
+	self:Message(args.spellId, "red", CL.count:format(L.flamerifts, flameRiftCount))
 	flameRiftCount = flameRiftCount + 1
-	self:Bar(args.spellId, 30, CL.count:format(args.spellName, flameRiftCount))
+	if flameRiftCount < 4 then -- 3 per rotation
+		self:Bar(args.spellId, 30, CL.count:format(L.flamerifts, flameRiftCount))
+	end
 end
 
 function mod:FlameriftApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
+		self:PersonalMessage(args.spellId, nil, L.flamerift)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId)
+		self:Say(args.spellId, L.flamerift)
 		self:SayCountdown(args.spellId, 6)
+	end
+end
+
+function mod:FlameriftRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
@@ -149,10 +177,14 @@ function mod:FixateRemoved(args)
 end
 
 function mod:MoltenCleave(args)
-	self:Message(args.spellId, "orange", CL.casting:format(args.spellName))
+	self:StopBar(CL.count:format(L.molten_cleave, moltenCleaveCount))
+	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.molten_cleave, moltenCleaveCount)))
 	self:PlaySound(args.spellId, "alarm")
-	-- self:CastBar(args.spellId, 3.5)
-	self:CDBar(args.spellId, 30.5)
+	-- self:CastBar(args.spellId, 3.5, CL.count:format(L.molten_cleave, moltenCleaveCount))
+	moltenCleaveCount = moltenCleaveCount + 1
+	if moltenCleaveCount < 4 then -- 3 per rotation
+		self:Bar(args.spellId, 30.2, CL.count:format(L.molten_cleave, moltenCleaveCount))
+	end
 end
 
 function mod:BurningWoundApplied(args)
@@ -162,8 +194,93 @@ function mod:BurningWoundApplied(args)
 	end
 end
 
-function mod:LeapingFlames(args)
-	self:Message(args.spellId, "yellow")
+function mod:IncineratingRoar(args)
+	self:StopBar(CL.count:format(L.incinerating_roar, incineratingRoarCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.incinerating_roar, incineratingRoarCount))
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 31.5)
+	incineratingRoarCount = incineratingRoarCount + 1
+	if incineratingRoarCount < 5 then -- 4 per rotation
+		self:CDBar(args.spellId, 27, CL.count:format(L.incinerating_roar, incineratingRoarCount))
+	end
+end
+
+function mod:MoltenSpikes(args)
+	self:StopBar(CL.count:format(L.molten_spikes, moltenSpikesCount))
+	self:Message(args.spellId, "yellow", CL.count:format(L.molten_spikes, moltenSpikesCount))
+	self:PlaySound(args.spellId, "alert")
+	moltenSpikesCount = moltenSpikesCount + 1
+	if moltenSpikesCount < 3 then -- 2 per rotation
+		self:CDBar(args.spellId, 48.4, CL.count:format(L.molten_spikes, moltenSpikesCount))
+	end
+end
+
+-- Stage 2
+function mod:CollapsingArmy(args)
+	self:SetStage(2)
+	self:StopBar(CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
+	self:StopBar(CL.count:format(L.incinerating_roar, incineratingRoarCount)) -- Incinerating Roar
+	self:StopBar(CL.count:format(L.molten_spikes, moltenSpikesCount)) -- Molten Spikes
+	self:StopBar(CL.count:format(L.molten_cleave, moltenCleaveCount)) -- Molten Cleave
+	self:StopBar(CL.count:format(L.flamerifts, flameRiftCount)) -- Flamerift
+
+	self:Message(args.spellId, "cyan", CL.count:format(L.collapsing_army, collapsingArmyCount))
+	self:PlaySound(args.spellId, "long")
+	-- self:CastBar(args.spellId, 26, CL.count:format(L.collapsing_army, collapsingArmyCount))
+end
+
+function mod:CollapsingArmyRemoved(args)
+	self:SetStage(1)
+	-- self:StopBar(CL.cast:format(CL.count:format(L.collapsing_army, collapsingArmyCount)))
+	self:Message(args.spellId, "cyan", CL.over:format(CL.count:format(L.collapsing_army, collapsingArmyCount)))
+	collapsingArmyCount = collapsingArmyCount + 1
+	-- XXX cd varies a bit, should probably register UNIT_POWER_UPDATE for the first tick?
+	-- or are the random Energize (370727) casts doing it?
+	self:CDBar(args.spellId, 95, CL.count:format(L.collapsing_army, collapsingArmyCount))
+
+	flameRiftCount = 1
+	moltenCleaveCount = 1
+	incineratingRoarCount = 1
+	moltenSpikesCount = 1
+
+	self:CDBar(396023, 3.5, CL.count:format(L.incinerating_roar, incineratingRoarCount)) -- Incinerating Roar
+	self:CDBar(396022, 19, CL.count:format(L.molten_spikes, moltenSpikesCount)) -- Molten Spikes
+	self:CDBar(370615, 11.5, CL.count:format(L.molten_cleave, moltenCleaveCount)) -- Molten Cleave
+	self:CDBar(390715, 15.7, CL.count:format(L.flamerifts, flameRiftCount)) -- Flamerift
+	self:CDBar(370307, 94, CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
+end
+
+-- Mythic
+function mod:GreaterFlameriftApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, L.greater_flamerift)
+		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId, L.greater_flamerift)
+		self:SayCountdown(args.spellId, 6)
+	end
+end
+
+function mod:GreaterFlameriftRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+function mod:LeapingFlames(args)
+	self:Message(args.spellId, "yellow", L.leaping_flames)
+	self:PlaySound(args.spellId, "alert")
+	self:CDBar(args.spellId, 23, L.leaping_flames)
+end
+
+function mod:Pyroblast(args)
+	local canDo, ready = self:Interrupter(args.sourceGUID)
+	if canDo then
+		self:Message(args.spellId, "red")
+		if ready then
+			self:PlaySound(args.spellId, "alert")
+		end
+	end
+end
+
+function mod:FlamescaleCamptainDeath(args)
+	self:StopBar(L.leaping_flames)
 end

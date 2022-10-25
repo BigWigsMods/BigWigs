@@ -187,6 +187,11 @@ L.blockTalkingHeadRaids = "Рейды"
 L.blockTalkingHeadTimewalking = "Путешествия во времени (подземелья и рейды)"
 L.blockTalkingHeadScenarios = "Сценарии"
 
+L.userNotifySfx = "Звуковые эффекты были отключён BossBlock-ом, включаю обратно..."
+L.userNotifyMusic = "Музыка была отключена BossBlock-ом, включаю обратно..."
+L.userNotifyAmbience = "Звуки мира были отключены BossBlock-ом, включаю обратно..."
+L.userNotifyErrorSpeech = "Звук ошибок был отключён BossBlock-ом, включаю обратно..."
+
 L.subzone_grand_bazaar = "Большой базар" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Порт Зандалара" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_eastern_transept = "Восточный трансепт" -- Auchindoun dungeon (Warlords of Draenor)

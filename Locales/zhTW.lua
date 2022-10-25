@@ -40,10 +40,11 @@ L.dbmUsers = "使用 DBM："
 L.noBossMod = "沒有首領模組："
 L.offline = "離線"
 
-L.missingAddOn = "請注意這個區域需要此 |cFF436EEE%s|r 計時器掛件才能顯示。"
+L.missingPlugin = "請注意這個區域需要此 |cFF436EEE%s|r 計時器掛件才能顯示。"
+--L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
 L.disabledAddOn = "你的 |cFF436EEE%s|r 插件已禁用，計時器將不被顯示。"
 
-L.removeAddon = "請移除「|cFF436EEE%s|r」，其已被「|cFF436EEE%s|r」所替代。"
+L.removeAddOn = "請移除「|cFF436EEE%s|r」，其已被「|cFF436EEE%s|r」所替代。"
 L.alternativeName = "%s（|cFF436EEE%s|r）"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)

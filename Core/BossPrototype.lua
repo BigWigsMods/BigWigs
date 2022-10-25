@@ -189,13 +189,33 @@ function boss:IsEnableMob(mobId)
 	return self.enableMobs[mobId]
 end
 
---- Set the encounter id as used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL.
+--- Set the encounter id for this module. (As used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL)
 -- If this is set, no engage or wipe checking is required. The module will use this id and all engage/wipe checking will be handled automatically.
 -- @number encounterId The encounter id
 -- @within Enable triggers
 function boss:SetEncounterID(encounterId)
 	if type(encounterId) == "number" then
 		self.engageId = encounterId
+	end
+end
+
+--- Get the encounter id used for this module. (As used by events ENCOUNTER_START, ENCOUNTER_END & BOSS_KILL)
+-- @return number
+-- @within Enable triggers
+function boss:GetEncounterID()
+	local encounterId = self.engageId
+	if type(encounterId) == "number" then
+		return encounterId
+	end
+end
+
+--- Get the journal id used for this module. (As used by the dungeon journal)
+-- @return number
+-- @within Enable triggers
+function boss:GetJournalID()
+	local journalId = self.journalId
+	if type(journalId) == "number" then
+		return journalId
 	end
 end
 
@@ -206,6 +226,16 @@ end
 function boss:SetRespawnTime(seconds)
 	if type(seconds) == "number" then
 		self.respawnTime = seconds
+	end
+end
+
+--- Get the time in seconds before the boss respawns after a wipe.
+-- @return number
+-- @within Enable triggers
+function boss:GetRespawnTime()
+	local respawnTime = self.respawnTime
+	if type(respawnTime) == "number" then
+		return respawnTime
 	end
 end
 
@@ -967,7 +997,7 @@ do
 	end
 
 	function boss:Engage(noEngage)
-		if not self.isEngaged then
+		if not self:IsEngaged() then
 			self.isEngaged = true
 
 			dbg(":Engage", "noEngage:", noEngage, self.engageId, self.moduleName)
@@ -1397,10 +1427,40 @@ do
 	--- Select a specific NPC gossip option
 	-- @number optionNumber The number of the specific option to be selected
 	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
+	local GossipOptionSort = _G.GossipOptionSort -- XXX temp, only available on 10.0
 	function boss:SelectGossipOption(optionNumber, skipConfirmDialogBox)
-		SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+		if GossipOptionSort then -- XXX 10.0 compat
+			local gossipOptions = GetOptions()
+			if gossipOptions and gossipOptions[1] then
+				table.sort(gossipOptions, GossipOptionSort)
+				local gossipOptionID = gossipOptions[optionNumber] and gossipOptions[optionNumber].gossipOptionID
+				if gossipOptionID then
+					SelectOption(gossipOptionID, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+				end
+			end
+		else
+			SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+		end
 	end
 
+	--- Request the gossip options of a specific gossip ID
+	-- @return table A table result for the specific gossip ID, or nil if not found
+	function boss:GetGossipID(id)
+		local gossipOptions = GetOptions()
+		for i = 1, #gossipOptions do
+			local gossipTable = gossipOptions[i]
+			if gossipTable.gossipOptionID == id then
+				return gossipTable
+			end
+		end
+	end
+
+	--- Select a specific NPC gossip entry by ID
+	-- @number id The ID of the specific gossip option to be selected
+	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
+	function boss:SelectGossipID(id, skipConfirmDialogBox)
+		SelectOption(id, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+	end
 end
 
 -------------------------------------------------------------------------------

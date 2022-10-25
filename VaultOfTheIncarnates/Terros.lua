@@ -1,6 +1,4 @@
 if not IsTestBuild() then return end
--- XXX Debuffs are missing for rock blast
--- XXX use _success for bar starts incase of recasts? can that happen?
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -20,10 +18,7 @@ local shatteringImpactCount = 1
 local concussiveSlamCount = 1
 local resonatingAnnihilationCount = 1
 local frenziedfDevastationCount = 1
-
-local SKIP_CAST_THRESHOLD = 2
-local checkTimer = nil
-
+local infusedFalloutCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -31,13 +26,12 @@ local checkTimer = nil
 
 local L = mod:GetLocale()
 if L then
-	L.skipped_cast = "Skipped %s (%d)"
-
+	L.rock_blast = "Soak"
 	L.resonating_annihilation = "Annihilation"
 	L.awakened_earth = "Pillar"
-	L.shattering_impact = "Impact"
+	L.shattering_impact = "Slam"
 	L.concussive_slam = "Tank Line"
-	L.reactive_dust = "Dust"
+	L.infused_fallout = "Dust"
 end
 
 --------------------------------------------------------------------------------
@@ -57,15 +51,16 @@ function mod:GetOptions()
 		377505, -- Frenzied Devastation
 		388393, -- Tectonic Barrage
 		-- Mythic
-		391306, -- Reactive Dust
+		391592, -- Infused Fallout
 	},{
 		[391306] = CL.mythic,
 	},{
+		[380487] = L.rock_blast, -- Rock Blast (Soak)
 		[377166] = L.resonating_annihilation, -- Resonating Annihilation (Annihilation)
 		[381315] = L.awakened_earth, -- Awakened Earth (Pillar)
-		[376279] = L.shattering_impact, -- Shattering Impact (Slam + Rubble)
+		[376279] = L.shattering_impact, -- Shattering Impact (Slam)
 		[376279] = L.concussive_slam, -- Concussive Slam (Tank Line)
-		[391306] = L.reactive_dust, -- Reactive Dust (Dust)
+		[391592] = L.infused_fallout, -- Reactive Dust (Dust)
 	}
 end
 
@@ -90,7 +85,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 382458)
 
 	-- Mythic
-	self:Log("SPELL_AURA_APPLIED", "ReactiveDustApplied", 391306)
+	self:Log("SPELL_CAST_START", "InfusedFallout", 396351)
+	self:Log("SPELL_AURA_APPLIED", "InfusedFalloutApplied", 391592)
 end
 
 function mod:OnEngage()
@@ -99,12 +95,15 @@ function mod:OnEngage()
 	concussiveSlamCount = 1
 	resonatingAnnihilationCount = 1
 	frenziedfDevastationCount = 1
+	infusedFalloutCount = 1
 
-	self:Bar(380487, 6, CL.count:format(self:SpellName(380487), rockBlastCount)) -- Rock Blast
+	self:Bar(380487, 6, CL.count:format(L.rock_blast, rockBlastCount)) -- Rock Blast
 	self:Bar(376279, 14, CL.count:format(L.concussive_slam, concussiveSlamCount)) -- Concussive Slam
-	checkTimer = self:ScheduleTimer("ConcussiveSlamCheck", 14 + SKIP_CAST_THRESHOLD, concussiveSlamCount)
 	self:Bar(383073, 27, CL.count:format(L.shattering_impact, shatteringImpactCount)) -- Shattering Impact
 	self:Bar(377166, 90, CL.count:format(L.resonating_annihilation, resonatingAnnihilationCount)) -- Resonating Annihilation
+	if self:Mythic() then
+		self:Bar(391592, 28, CL.count:format(L.infused_fallout, infusedFalloutCount)) -- Infused Fallout
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -114,21 +113,21 @@ end
 do
 	local count = 1
 	function mod:RockBlast(args)
-		self:StopBar(CL.count:format(args.spellName, rockBlastCount))
+		self:StopBar(CL.count:format(L.rock_blast, rockBlastCount))
 		rockBlastCount = rockBlastCount + 1
 		if shatteringImpactCount < 9 then -- Soft Enrage after
-			self:Bar(args.spellId, rockBlastCount % 2 == 0 and 42.0 or 54.5, CL.count:format(args.spellName, rockBlastCount))
+			self:Bar(args.spellId, rockBlastCount % 2 == 0 and 42.0 or 54.5, CL.count:format(L.rock_blast, rockBlastCount))
 		end
 		count = 1
 	end
 
 	function mod:RockBlastApplied(args)
-		self:TargetMessage(380487, "orange", args.destName, CL.count:format(self:SpellName(380487), rockBlastCount-1))
-		self:TargetBar(380487, 5.5, args.destName, CL.count:format(self:SpellName(380487), rockBlastCount-1))
+		self:TargetMessage(380487, "orange", args.destName, CL.count:format(L.rock_blast, rockBlastCount-1))
+		self:TargetBar(380487, 5.5, args.destName, CL.count:format(L.rock_blast, rockBlastCount-1))
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(380487)
+			self:PersonalMessage(380487, nil, L.rock_blast)
 			self:PlaySound(380487, "warning")
-			self:Yell(380487)
+			self:Yell(380487, L.rock_blast)
 			self:YellCountdown(380487, 5.5)
 		else
 			self:PlaySound(380487, "alert")
@@ -175,32 +174,14 @@ function mod:ShatteringImpact(args)
 	end
 end
 
-do
-	function mod:ConcussiveSlamCheck(castCount)
-		if castCount == concussiveSlamCount then -- not on the next cast?
-			self:StopBar(CL.count:format(L.concussive_slam, concussiveSlamCount))
-			mod:Message(376279, "purple", L.skipped_cast:format(L.concussive_slam, castCount))
-			concussiveSlamCount = castCount + 1
-			if concussiveSlamCount < 17 then -- Soft Enrage after
-				local cd = concussiveSlamCount % 4 == 1 and 34.5 or concussiveSlamCount % 4 == 3 and 22 or 20
-				mod:Bar(376279, cd - SKIP_CAST_THRESHOLD, CL.count:format(L.concussive_slam, concussiveSlamCount))
-				checkTimer = mod:ScheduleTimer("ConcussiveSlamCheck", cd, concussiveSlamCount)
-			end
-		end
-	end
-
-	function mod:ConcussiveSlam(args)
-		self:CancelTimer(checkTimer)
-		self:StopBar(CL.count:format(L.concussive_slam, concussiveSlamCount))
-		self:Message(args.spellId, "purple", CL.count:format(L.concussive_slam, concussiveSlamCount))
-		self:PlaySound(args.spellId, "alert")
-		concussiveSlamCount = concussiveSlamCount + 1
-		-- XXX can skip, casts on next cd
-		if concussiveSlamCount < 17 then -- Soft Enrage after
-			local cd = concussiveSlamCount % 4 == 1 and 34.5 or concussiveSlamCount % 4 == 3 and 22 or 20
-			self:Bar(args.spellId, cd, CL.count:format(L.concussive_slam, concussiveSlamCount))
-			checkTimer = self:ScheduleTimer("ConcussiveSlamCheck", cd + SKIP_CAST_THRESHOLD, concussiveSlamCount)
-		end
+function mod:ConcussiveSlam(args)
+	self:StopBar(CL.count:format(L.concussive_slam, concussiveSlamCount))
+	self:Message(args.spellId, "purple", CL.count:format(L.concussive_slam, concussiveSlamCount))
+	self:PlaySound(args.spellId, "alert")
+	concussiveSlamCount = concussiveSlamCount + 1
+	if concussiveSlamCount < 17 then -- Soft Enrage after
+		local cd = concussiveSlamCount % 4 == 1 and 34.5 or concussiveSlamCount % 4 == 3 and 22 or 20
+		self:Bar(args.spellId, cd, CL.count:format(L.concussive_slam, concussiveSlamCount))
 	end
 end
 
@@ -249,9 +230,20 @@ do
 end
 
 -- Mythic
-function mod:ReactiveDustApplied(args)
+function mod:InfusedFallout(args)
+	self:StopBar(CL.count:format(L.infused_fallout, infusedFalloutCount))
+	self:Message(391592, "yellow", CL.count:format(L.infused_fallout, infusedFalloutCount))
+	self:PlaySound(391592, "alert")
+	infusedFalloutCount = infusedFalloutCount + 1
+	if infusedFalloutCount < 12 then -- Soft Enrage after
+		local cd = infusedFalloutCount % 3 == 1 and 29 or infusedFalloutCount % 3 == 2 and 42 or 25
+		self:Bar(391592, cd, CL.count:format(L.infused_fallout, infusedFalloutCount))
+	end
+end
+
+function mod:InfusedFalloutApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, L.reactive_dust)
+		self:PersonalMessage(args.spellId, nil, L.infused_fallout)
 		self:PlaySound(args.spellId, "warning")
 	end
 end
