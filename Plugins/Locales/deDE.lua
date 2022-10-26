@@ -188,7 +188,7 @@ L.blockTalkingHeadTimewalking = "Zeitwanderung (Dungeons & Schlachtzüge)"
 L.blockTalkingHeadScenarios = "Szenarien"
 
 L.userNotifySfx = "Soundeffekte wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."
-L.userNotifyMusic = "Music wurde von BossBlock deaktiviert, Aktivierung wird erzwungen."
+L.userNotifyMusic = "Musik wurde von BossBlock deaktiviert, Aktivierung wird erzwungen."
 L.userNotifyAmbience = "Umgebungsgeräusche wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."
 L.userNotifyErrorSpeech = "Audiofehlermeldungen wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."
 
