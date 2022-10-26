@@ -1,4 +1,4 @@
-## Interface: 90207
+## Interface: 100000
 
 ## Title: BigWigs [|cffeda55fSepulcher of the First Ones|r]
 ## Title-deDE: BigWigs [|cffeda55fSepulcher of the First Ones|r]
