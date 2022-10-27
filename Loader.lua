@@ -817,7 +817,6 @@ function mod:ADDON_LOADED(addon)
 
 	--bwFrame:UnregisterEvent("ADDON_LOADED")
 	--self.ADDON_LOADED = nil
-	bwFrame.UnregisterEvent(UIParent, "TALKINGHEAD_REQUESTED") -- Prevent the event order re-shuffling mid-instance
 end
 
 function mod:GLOBAL_MOUSE_DOWN(button)
