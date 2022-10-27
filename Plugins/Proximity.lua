@@ -491,11 +491,7 @@ do
 		proxAnchor:SetFixedFrameLevel(true)
 		proxAnchor:SetWidth(db.width)
 		proxAnchor:SetHeight(db.height)
-		if proxAnchor.SetResizeBounds then -- XXX Dragonflight compat
-			proxAnchor:SetResizeBounds(80, 8)
-		else
-			proxAnchor:SetMinResize(80, 8)
-		end
+		proxAnchor:SetResizeBounds(80, 8)
 		proxAnchor:SetClampedToScreen(true)
 		proxAnchor:EnableMouse(true)
 
