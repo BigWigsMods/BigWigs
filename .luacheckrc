@@ -174,7 +174,6 @@ globals = {
 	"GetNumAddOns",
 	"GetNumGroupMembers",
 	"GetPartyAssignment",
-	"GetPlayerAuraBySpellID",
 	"GetPlayerFacing",
 	"GetProfessionInfo",
 	"GetProfessions",
