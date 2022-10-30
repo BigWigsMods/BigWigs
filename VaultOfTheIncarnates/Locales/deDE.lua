@@ -46,7 +46,7 @@ L = BigWigs:NewBossLocale("Dathea, Ascended", "deDE")
 if L then
 	L.marks_on_me = "%d Zeichen" -- {Stacks} Conductive Mark on the player
 
-  L.conductive_marks = "Zeichen"
+	L.conductive_marks = "Zeichen"
 	L.conductive_mark = "Zeichen"
 	L.raging_burst = "Neue Tornados"
 	L.cyclone = "Heranziehen"
@@ -60,7 +60,7 @@ end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "deDE")
 if L then
-  L.eggs_remaining = "%d Eier verbleiben!"
+	L.eggs_remaining = "%d Eier verbleiben!"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "deDE")
