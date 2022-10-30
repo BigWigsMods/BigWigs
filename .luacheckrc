@@ -135,7 +135,7 @@ globals = {
 	"C_FriendList",
 	"C_GossipInfo",
 	"C_Map",
-	"C_Minimap",
+	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 	"C_ModifiedInstance",
 	"C_NamePlate",
 	"C_RaidLocks",
