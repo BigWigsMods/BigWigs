@@ -135,8 +135,9 @@ globals = {
 	"C_FriendList",
 	"C_GossipInfo",
 	"C_Map",
-	"C_NamePlate",
+	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 	"C_ModifiedInstance",
+	"C_NamePlate",
 	"C_RaidLocks",
 	"C_Scenario",
 	"C_Spell",
@@ -261,11 +262,7 @@ globals = {
 	"UnitSetRole",
 	"UnitSex",
 	"UnitThreatSituation", -- Cataclysm/Bastion/Sinestra.lua
-	-- Legion/TombOfSargeras/Kiljaeden.lua
-	"GetTrackingInfo",
-	"SetTracking",
-	"GetNumTrackingTypes",
-	"Minimap",
+	"Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
 
 	-- LittleWigs
 	"GetNumGossipAvailableQuests", -- TBC/OldHillsbradFoothills/Trash.lua
