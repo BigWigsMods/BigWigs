@@ -7,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(180990) -- The Jailer
 mod:SetEncounterID(2537)
 mod:SetRespawnTime(30)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals

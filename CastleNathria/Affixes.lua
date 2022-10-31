@@ -18,6 +18,7 @@ mod:RegisterEnableMob(
 	168112, 168113, -- General Kaal, General Grashaal
 	167406 -- Sire Denathrius
 )
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals

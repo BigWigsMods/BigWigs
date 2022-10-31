@@ -7,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(183501) -- Artificer Xy'mox -- New Model
 mod:SetEncounterID(2553)
 mod:SetRespawnTime(25)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals

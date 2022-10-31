@@ -9,6 +9,7 @@ if not mod then return end
 mod:RegisterEnableMob(184972) -- Eranog
 mod:SetEncounterID(2587)
 mod:SetRespawnTime(30)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals

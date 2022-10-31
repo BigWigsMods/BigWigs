@@ -7,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(184522, 180773) -- Vigilant Custodian, Vigilant Guardian
 mod:SetEncounterID(2512)
 mod:SetRespawnTime(30)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals

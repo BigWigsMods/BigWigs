@@ -19,6 +19,7 @@ mod:RegisterEnableMob(
 	182777, -- Rygelon
 	180990 -- The Jailer
 )
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
