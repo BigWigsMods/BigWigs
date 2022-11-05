@@ -16,7 +16,15 @@ mod:SetStage(1)
 local intermission = nil
 local nextStageWarning = 73
 local burdenPlayerTracker = {}
-local burdenStackTable = {}
+local burdenStackTable = {
+	[0] = 0,
+	[1] = 0,
+	[2] = 0,
+	[3] = 0,
+	[4] = 0,
+	[5] = 0,
+	[6] = 0,
+}
 local burdenStacksOnMe = 0
 local cleansingPainCount = 1
 local bloodPriceCount = 1
@@ -448,7 +456,9 @@ do
 			scheduled = nil
 		end
 		local oldValue = burdenPlayerTracker[args.destName]
-		burdenStackTable[oldValue] = burdenStackTable[oldValue] - 1
+		if oldValue then
+			burdenStackTable[oldValue] = burdenStackTable[oldValue] - 1
+		end
 		burdenStackTable[0] = burdenStackTable[0] + 1
 		burdenPlayerTracker[args.destName] = 0
 		if self:Me(args.destGUID) then

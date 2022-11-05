@@ -7,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(181549, 181548, 181546, 181551) -- Prototype of War, Prototype of Absolution, Prototype of Renewal, Prototype of Duty
 mod:SetEncounterID(2544)
 mod:SetRespawnTime(30)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals

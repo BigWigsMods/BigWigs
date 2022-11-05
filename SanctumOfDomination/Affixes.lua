@@ -18,6 +18,7 @@ mod:RegisterEnableMob(
 	175559, 176703, 176973, 176974, 176929, -- Kel'Thuzad, Frostbound Devoted, Unstoppable Abomination, Soul Reaver, Remnant of Kel'Thuzad
 	175732 -- Sylvanas Windrunner
 )
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals

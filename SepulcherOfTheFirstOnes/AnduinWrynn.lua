@@ -7,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(181954) -- Anduin Wrynn
 mod:SetEncounterID(2546)
 mod:SetRespawnTime(30)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals

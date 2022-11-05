@@ -7,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(181224) -- Dausegne
 mod:SetEncounterID(2540)
 mod:SetRespawnTime(30)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
