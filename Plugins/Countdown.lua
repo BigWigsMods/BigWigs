@@ -2,11 +2,6 @@
 -- Module Declaration
 --
 
-local oldPlugin = BigWigs:NewPlugin("Super Emphasize") -- XXX temp 9.0.2
-oldPlugin.defaultDB = {
-	Countdown = {},
-}
-
 local plugin = BigWigs:NewPlugin("Countdown")
 if not plugin then return end
 
@@ -562,8 +557,6 @@ do
 				end
 			end
 		end
-		-- XXX temp 9.0.2
-		oldPlugin.db:ResetProfile(nil, true) -- no callbacks
 	end
 
 	function plugin:OnPluginEnable()

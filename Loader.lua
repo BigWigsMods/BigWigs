@@ -813,8 +813,6 @@ function mod:ADDON_LOADED(addon)
 				end
 			end
 		end
-		BigWigs3DB.wipe80 = nil -- XXX temp boss DB wipe for 8.0.1 // removed in 9.0.2
-		BigWigs3DB.discord = nil -- XXX 9.0.2
 	end
 	self:BigWigs_CoreOptionToggled(nil, "fakeDBMVersion", self.isFakingDBM)
 
@@ -829,7 +827,6 @@ function mod:ADDON_LOADED(addon)
 
 	--bwFrame:UnregisterEvent("ADDON_LOADED")
 	--self.ADDON_LOADED = nil
-	bwFrame.UnregisterEvent(UIParent, "TALKINGHEAD_REQUESTED") -- Prevent the event order re-shuffling mid-instance
 end
 
 function mod:GLOBAL_MOUSE_DOWN(button)

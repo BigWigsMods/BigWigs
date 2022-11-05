@@ -2,9 +2,6 @@
 -- Module Declaration
 --
 
-local oldPlugin = BigWigs:NewPlugin("Alt Power") -- XXX temp 9.0.2
-oldPlugin.defaultDB = {}
-
 local plugin = BigWigs:NewPlugin("AltPower")
 if not plugin then return end
 
@@ -421,8 +418,6 @@ do
 				break
 			end
 		end
-
-		oldPlugin.db:ResetProfile(nil, true) -- XXX temp 9.0.2 // no callbacks
 
 		plugin:RestyleWindow()
 	end

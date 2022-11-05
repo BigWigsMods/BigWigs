@@ -1,4 +1,4 @@
-local isDragonflight = select(4, GetBuildInfo()) >= 100000 -- XXX remove on 10.0 prepatch
+local isDragonflight = select(4, GetBuildInfo()) >= 100002 -- XXX remove on 10.0 prepatch
 
 local BigWigs = BigWigs
 local options = {}
