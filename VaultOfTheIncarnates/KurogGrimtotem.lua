@@ -193,7 +193,7 @@ function mod:GetOptions()
 		[374023] = L.searing_carnage, -- Searing Carnage (Dance)
 		-- Frost
 		[373678] = L.biting_chill, -- Biting Chill (Chill DoT)
-		[391019] = L.frigid_torrent.."/"..L.add_frigid_torrent, -- Frigid Torrent (Orbs / Frost Orbs)
+		[391019] = L.frigid_torrent, -- Frigid Torrent (Orbs / Frost Orbs)
 		[372458] = L.absolute_zero, -- Absolute Zero (Soaks)
 		-- Earth
 		[391056] = L.enveloping_earth, -- Enveloping Earth (Healing Absorb)
