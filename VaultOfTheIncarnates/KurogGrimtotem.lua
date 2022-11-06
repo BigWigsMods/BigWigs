@@ -504,13 +504,7 @@ do
 				self:Say(372458, text)
 				self:PersonalMessage(372458, nil, text)
 				self:SayCountdown(372458, 5, i)
-				if i == 1 and self:Ranged() then
-					EchoInternal:DoTTS("Melee")
-				elseif i == 2 and self:Melee() then
-					EchoInternal:DoTTS("Ranged")
-				else
-					self:PlaySound(372458, "warning") -- debuffmove
-				end
+				self:PlaySound(372458, "warning") -- debuffmove
 				playedSound = true
 			end
 			playerList[#playerList+1] = iconList[i].player
