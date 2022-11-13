@@ -462,6 +462,9 @@ do
 		-- Plaguefall
 		[152641]=true,[152640]=true,[152639]=true,[152615]=true,[152614]=true,[152638]=true,
 		[152637]=true,[152636]=true,[152635]=true,[153196]=true,[153197]=true,
+
+		-- Algeth'ar Academy
+		[208061]=true,[208063]=true,[208065]=true,
 	}
 
 	local lookup = {

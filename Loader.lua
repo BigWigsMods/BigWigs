@@ -340,7 +340,7 @@ do
 		[2519] = lw_df, -- Neltharus
 		[2520] = lw_df, -- Brackenhide Hollow
 		[2521] = lw_df, -- Ruby Life Pools
-		[2526] = lw_df, -- Taz'algeth Academy
+		[2526] = lw_df, -- Algeth'ar Academy
 		[2527] = lw_df, -- Halls of Infusion
 	}
 
