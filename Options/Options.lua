@@ -1,4 +1,3 @@
-local isDragonflight = select(4, GetBuildInfo()) >= 100002 -- XXX remove on 10.0 prepatch
 
 local BigWigs = BigWigs
 local options = {}
@@ -69,7 +68,7 @@ local acOptions = {
 							return L.toggleAnchorsBtnShow_desc
 						end
 					end,
-					func = function() 
+					func = function()
 						if not BigWigs:IsEnabled() then BigWigs:Enable() end
 						if options:InConfigureMode() then
 							options:SendMessage("BigWigs_StopConfigureMode")
@@ -84,7 +83,7 @@ local acOptions = {
 					type = "execute",
 					name = L.testBarsBtn,
 					desc = L.testBarsBtn_desc,
-					func = function() 
+					func = function()
 						BigWigs:Test()
 					end,
 					width = 1.5,
@@ -1193,10 +1192,8 @@ do
 		"Legion",
 		"BattleForAzeroth",
 		"Shadowlands",
+		"Dragonflight",
 	}
-	if isDragonflight then
-		expansionHeader[#expansionHeader + 1] = "Dragonflight"
-	end
 
 	local statusTable = {}
 	local playerName = nil
@@ -1233,7 +1230,7 @@ do
 		widget:ReleaseChildren()
 		local zoneId = value:match("\001(-?%d+)$")
 		local stringZoneId = value:match("\001(-?[a-z_A-Z]+)$")
-		local defaultEnabled = value == "BigWigs_Shadowlands" or (isDragonflight and value == "BigWigs_Dragonflight")
+		local defaultEnabled = value == "BigWigs_Dragonflight"
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
 		elseif stringZoneId then
@@ -1277,10 +1274,10 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = isDragonflight and "BigWigs_Dragonflight" or "BigWigs_Shadowlands"
+				defaultHeader = "BigWigs_Shadowlands"--"BigWigs_Dragonflight" -- XXX fixme
 				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
-					local defaultEnabled = value == "BigWigs_Shadowlands" or (isDragonflight and value == "BigWigs_Dragonflight")
+					local defaultEnabled = value == "BigWigs_Dragonflight"
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
@@ -1290,7 +1287,7 @@ do
 				end
 			elseif value == "littlewigs" then
 				local littleWigsEnabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
-				defaultHeader = isDragonflight and "LittleWigs_Dragonflight" or "LittleWigs_Shadowlands"
+				defaultHeader = "LittleWigs_Shadowlands"--"LittleWigs_Dragonflight" -- XXX fixme
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {

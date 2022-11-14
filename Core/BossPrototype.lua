@@ -50,6 +50,13 @@ local myGroupGUIDs, myGroupRolePositions = {}, {}
 local solo = false
 local classColorMessages = true
 local debugFunc = nil
+do -- Update some data that may be called at the top of modules (prior to initialization)
+	local _, _, diff = GetInstanceInfo()
+	difficulty = diff
+	myGUID = UnitGUID("player")
+	local _, role, position = LibSpec:MySpecialization()
+	myRole, myRolePosition = role, position
+end
 local updateData = function(module)
 	myGUID = UnitGUID("player")
 	hasVoice = BigWigsAPI:HasVoicePack()
