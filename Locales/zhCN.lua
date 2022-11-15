@@ -156,3 +156,6 @@ L.mythic = "史诗"
 L.wipes = "团灭："
 L.kills = "击杀："
 L.best = "最快："
+
+-- Non-instance specific modules
+L.dungeonAffixes = "Dungeon Affixes"

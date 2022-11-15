@@ -156,3 +156,6 @@ L.mythic = "Mítico"
 L.wipes = "Wipes:"
 L.kills = "Muertes:"
 L.best = "El mejor:"
+
+-- Non-instance specific modules
+L.dungeonAffixes = "Dungeon Affixes"

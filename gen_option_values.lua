@@ -490,7 +490,7 @@ local function parseLua(file)
 	f:close()
 
 	-- First, check to make sure this is actually a boss module file.
-	local module_name, module_args = data:match("\nlocal mod.*= BigWigs:NewBoss%(\"(.-)\",?%s*([^)]*)")
+	local module_name, module_args = data:match("\nlocal mod.*= BigWigs:New[A-Za-z]+%(\"(.-)\",?%s*([^)]*)")
 	if not module_name then
 		return
 	end

@@ -88,12 +88,16 @@ local tooltipFunctions = {}
 local next, tonumber, type, strsplit = next, tonumber, type, strsplit
 local SendAddonMessage, Ambiguate, CTimerAfter, CTimerNewTicker = C_ChatInfo.SendAddonMessage, Ambiguate, C_Timer.After, C_Timer.NewTicker
 local GetInstanceInfo, GetBestMapForUnit, GetMapInfo = GetInstanceInfo, C_Map.GetBestMapForUnit, C_Map.GetMapInfo
+local GetAffixInfo, IsChallengeModeActive, GetActiveKeystoneInfo = C_ChallengeMode.GetAffixInfo, C_ChallengeMode.IsChallengeModeActive, C_ChallengeMode.GetActiveKeystoneInfo
 local UnitName, UnitGUID = UnitName, UnitGUID
 local debugstack, print = debugstack, print
 
 -- Try to grab unhooked copies of critical funcs (hooked by some crappy addons)
 public.GetBestMapForUnit = GetBestMapForUnit
 public.GetMapInfo = GetMapInfo
+public.GetAffixInfo = GetAffixInfo
+public.IsChallengeModeActive = IsChallengeModeActive
+public.GetActiveKeystoneInfo = GetActiveKeystoneInfo
 public.GetInstanceInfo = GetInstanceInfo
 public.SendAddonMessage = SendAddonMessage
 public.SendChatMessage = SendChatMessage
@@ -156,6 +160,7 @@ do
 	local lw_bfa = "LittleWigs_BattleForAzeroth"
 	local lw_s = "LittleWigs_Shadowlands"
 	local lw_df = "LittleWigs_Dragonflight"
+	local lw_affixes = "LittleWigs_Affixes"
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -342,6 +347,8 @@ do
 		[2521] = lw_df, -- Ruby Life Pools
 		[2526] = lw_df, -- Algeth'ar Academy
 		[2527] = lw_df, -- Halls of Infusion
+		--[[ LittleWigs: Affixes ]]--
+		["dungeonAffixes"] = lw_affixes, -- Dungeon Affixes
 	}
 
 	public.zoneTblWorld = {
@@ -654,8 +661,8 @@ do
 
 	local function addExtraMenus(addon, ...)
 		for i = 1, select("#", ...) do
-			local rawMenu = select(i, ...)
-			local id = tonumber(rawMenu:trim())
+			local rawMenu = select(i, ...):trim()
+			local id = tonumber(rawMenu)
 			if id then
 				local name
 				if id < 0 then
@@ -674,6 +681,11 @@ do
 
 					if not menus[id] then menus[id] = true end
 				end
+			elseif type(rawMenu) == "string" then
+				if not loadOnZone[rawMenu] then loadOnZone[rawMenu] = {} end
+				loadOnZone[rawMenu][#loadOnZone[rawMenu] + 1] = addon
+
+				if not menus[rawMenu] then menus[rawMenu] = true end
 			else
 				local name = GetAddOnInfo(addon)
 				sysprint(("The extra menu ID %q from the addon %q was not parsable."):format(tostring(rawMenu), name))
@@ -1502,7 +1514,13 @@ function mod:BigWigs_BossModuleRegistered(_, _, module)
 		enableZones[id] = "world"
 		worldBosses[module.worldBoss] = id
 	else
-		enableZones[module.instanceId] = true
+		if type(module.instanceId) == 'table' then
+			for _, eachId in ipairs(module.instanceId) do
+				enableZones[eachId] = true
+		  	end
+		else
+			enableZones[module.instanceId] = true
+		end
 	end
 
 	local id = module.otherMenu or module.instanceId or -(module.mapId)

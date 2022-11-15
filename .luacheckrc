@@ -130,6 +130,7 @@ globals = {
 	"BNSendWhisper",
 	"BossBanner",
 	"C_BattleNet",
+	"C_ChallengeMode",
 	"C_CVar",
 	"C_EncounterJournal",
 	"C_FriendList",

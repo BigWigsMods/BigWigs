@@ -960,7 +960,7 @@ local function populateToggleOptions(widget, module)
 	local id = module.instanceId
 
 	local sDB = BigWigsStatsDB
-	if module.journalId and id and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][module.journalId] then
+	if module.journalId and id and type(id) ~= "table" and id > 0 and BigWigs:GetPlugin("Statistics").db.profile.enabled and sDB and sDB[id] and sDB[id][module.journalId] then
 		sDB = sDB[id][module.journalId]
 
 		if next(sDB) then -- Create statistics table
@@ -1229,21 +1229,24 @@ do
 	local function onTreeGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
 		local zoneId = value:match("\001(-?%d+)$")
+		local stringZoneId = value:match("\001(-?[a-z_A-Z]+)$")
 		local defaultEnabled = value == "BigWigs_Dragonflight"
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
+		elseif stringZoneId then
+			onZoneShow(widget, stringZoneId)
 		elseif value:match("^BigWigs_") and not defaultEnabled and GetAddOnEnableState(playerName, value) == 0 then
-				local missing = AceGUI:Create("Label")
-				missing:SetText(L.missingPlugin:format(value))
-				missing:SetFontObject(GameFontHighlight)
-				missing:SetFullWidth(true)
-				widget:AddChild(missing)
+			local missing = AceGUI:Create("Label")
+			missing:SetText(L.missingAddOn:format(value))
+			missing:SetFontObject(GameFontHighlight)
+			missing:SetFullWidth(true)
+			widget:AddChild(missing)
 		elseif value:match("^LittleWigs_") and GetAddOnEnableState(playerName, "LittleWigs") == 0 then
-				local missing = AceGUI:Create("Label")
-				missing:SetText(L.missingPlugin:format("LittleWigs"))
-				missing:SetFontObject(GameFontHighlight)
-				missing:SetFullWidth(true)
-				widget:AddChild(missing)
+			local missing = AceGUI:Create("Label")
+			missing:SetText(L.missingAddOn:format("LittleWigs"))
+			missing:SetFontObject(GameFontHighlight)
+			missing:SetFullWidth(true)
+			widget:AddChild(missing)
 		else
 			statusTable.groups[value] = true
 			widget:RefreshTree()
@@ -1283,24 +1286,35 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
+				local littleWigsEnabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
 				defaultHeader = "LittleWigs_Shadowlands"--"LittleWigs_Dragonflight" -- XXX fixme
-				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
-						enabled = enabled,
+						enabled = littleWigsEnabled,
 					}
 					addonNameToHeader[value] = i
 				end
+
+				-- add affix header
+				treeTbl[#treeTbl + 1] = {
+					text = L["dungeonAffixes"],
+					value = "LittleWigs_Affixes",
+					enabled = littleWigsEnabled,
+				}
+				addonNameToHeader["LittleWigs_Affixes"] = #treeTbl
 			end
 
 			do
 				local zoneToId, alphabeticalZoneList = {}, {}
 				for k in next, loader:GetZoneMenus() do
 					local zone
-					if k < 0 then
+					if type(k) == "string" then
+						-- check if the zone is a localized string key
+						zone = L[k] or k
+					elseif k < 0 then
 						local tbl = GetMapInfo(-k)
 						if tbl then
 							zone = tbl.name

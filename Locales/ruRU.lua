@@ -156,3 +156,6 @@ L.mythic = "Эпохальный"
 L.wipes = "Поражений:"
 L.kills = "Побед:"
 L.best = "Лучшее:"
+
+-- Non-instance specific modules
+L.dungeonAffixes = "Dungeon Affixes"
