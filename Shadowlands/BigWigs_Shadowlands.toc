@@ -1,4 +1,4 @@
-## Interface: 100000
+## Interface: 100002
 
 ## Title: BigWigs [|cffeda55fShadowlands|r]
 ## Title-deDE: BigWigs [|cffeda55fShadowlands|r]
