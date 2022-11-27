@@ -45,7 +45,6 @@ L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "esMX")
 if L then
 	-- L.ascend = "Ascend"
 	-- L.ascend_desc = "Sennarth ascends the room towards the frozen percipice."
-	-- L.ascend_icon = "misc_arrowlup"
 	-- L.chilling_blast = "Spread"
 	-- L.frost_expulsion = "Explosion"
 	-- L.freezing_breath = "Add Breath"
