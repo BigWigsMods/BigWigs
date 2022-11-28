@@ -44,15 +44,15 @@ end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "ruRU")
 if L then
-	-- L.ascend = "Ascend"
-	-- L.ascend_desc = "Sennarth ascends the room towards the frozen percipice."
-	-- L.chilling_blast = "Spread"
-	-- L.frost_expulsion = "Explosion"
-	-- L.freezing_breath = "Add Breath"
-	-- L.webs = "Webs"
-	-- L.web = "Web"
-	-- L.gossamer_burst = "Grip"
-	-- L.repelling_burst = "Pushback"
+	L.ascend = "Подъём"
+	L.ascend_desc = "Сеннарк поднимается выше."
+	L.chilling_blast = "Спред"
+	L.frost_expulsion = "Взрыв"
+	L.freezing_breath = "Фронтал адда"
+	L.webs = "Сети"
+	L.web = "Паутина"
+	L.gossamer_burst = "Притягивание"
+	L.repelling_burst = "Отталкивание"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "ruRU")
