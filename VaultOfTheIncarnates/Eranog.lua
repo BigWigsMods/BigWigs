@@ -30,8 +30,6 @@ if L then
 	L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frenzied Tarasek that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
 	L.custom_on_nameplate_fixate_icon = 210130
 
-	L.flamerifts = "Adds" -- Multiple Flamerifts
-	L.flamerift = "Add" -- Rift on X
 	L.molten_cleave = "Frontal"
 	L.incinerating_roar = "Roar"
 	L.molten_spikes = "Spikes"
@@ -68,7 +66,7 @@ function mod:GetOptions()
 		[370307] = -26004, -- Stage Two
 		[396094] = "mythic",
 	},{
-		[390715] = L.flamerifts, -- Flamerift (Rifts)
+		[390715] = CL.adds, -- Flamerift (Rifts)
 		[370615] = L.molten_cleave, -- Molten Cleave (Frontal Cone)
 		[396023] = L.incinerating_roar, -- Incinerating Roar (Roar)
 		[396022] = L.molten_spikes, -- Molten Spikes (Spikes)
@@ -117,7 +115,7 @@ function mod:OnEngage()
 	self:CDBar(396023, 2.5, CL.count:format(L.incinerating_roar, incineratingRoarCount)) -- Incinerating Roar
 	self:CDBar(396022, 15, CL.count:format(L.molten_spikes, moltenSpikesCount)) -- Molten Spikes
 	self:CDBar(370615, 7.5, CL.count:format(L.molten_cleave, moltenCleaveCount)) -- Molten Cleave
-	self:CDBar(390715, 12, CL.count:format(L.flamerifts, flameRiftCount)) -- Flamerift
+	self:CDBar(390715, 12, CL.count:format(CL.adds, flameRiftCount)) -- Flamerift
 	self:CDBar(370307, 92, CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
 end
 
@@ -126,19 +124,19 @@ end
 --
 
 function mod:Flamerift(args)
-	self:StopBar(CL.count:format(L.flamerifts, flameRiftCount))
-	self:Message(args.spellId, "red", CL.count:format(L.flamerifts, flameRiftCount))
+	self:StopBar(CL.count:format(CL.adds, flameRiftCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.adds, flameRiftCount))
 	flameRiftCount = flameRiftCount + 1
 	if flameRiftCount < 4 then -- 3 per rotation
-		self:Bar(args.spellId, 30, CL.count:format(L.flamerifts, flameRiftCount))
+		self:Bar(args.spellId, 30, CL.count:format(CL.adds, flameRiftCount))
 	end
 end
 
 function mod:FlameriftApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, L.flamerift)
+		self:PersonalMessage(args.spellId, nil, CL.add)
 		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, L.flamerift)
+		self:Say(args.spellId, CL.add)
 		self:SayCountdown(args.spellId, 6)
 	end
 end
@@ -221,7 +219,7 @@ function mod:CollapsingArmy(args)
 	self:StopBar(CL.count:format(L.incinerating_roar, incineratingRoarCount)) -- Incinerating Roar
 	self:StopBar(CL.count:format(L.molten_spikes, moltenSpikesCount)) -- Molten Spikes
 	self:StopBar(CL.count:format(L.molten_cleave, moltenCleaveCount)) -- Molten Cleave
-	self:StopBar(CL.count:format(L.flamerifts, flameRiftCount)) -- Flamerift
+	self:StopBar(CL.count:format(CL.adds, flameRiftCount)) -- Flamerift
 
 	self:Message(args.spellId, "cyan", CL.count:format(L.collapsing_army, collapsingArmyCount))
 	self:PlaySound(args.spellId, "long")
@@ -245,7 +243,7 @@ function mod:CollapsingArmyRemoved(args)
 	self:CDBar(396023, 3.5, CL.count:format(L.incinerating_roar, incineratingRoarCount)) -- Incinerating Roar
 	self:CDBar(396022, 19, CL.count:format(L.molten_spikes, moltenSpikesCount)) -- Molten Spikes
 	self:CDBar(370615, 11.5, CL.count:format(L.molten_cleave, moltenCleaveCount)) -- Molten Cleave
-	self:CDBar(390715, 15.7, CL.count:format(L.flamerifts, flameRiftCount)) -- Flamerift
+	self:CDBar(390715, 15.7, CL.count:format(CL.adds, flameRiftCount)) -- Flamerift
 	self:CDBar(370307, 94, CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
 end
 

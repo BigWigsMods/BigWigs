@@ -4,8 +4,6 @@ if L then
 	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
 	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frenzied Tarasek that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
 
-	-- L.flamerifts = "Adds" -- Multiple Flamerifts
-	-- L.flamerift = "Add" -- Rift on X
 	-- L.molten_cleave = "Frontal"
 	-- L.incinerating_roar = "Roar"
 	-- L.molten_spikes = "Spikes"
@@ -46,7 +44,6 @@ if L then
 	-- L.ascend = "Ascend"
 	-- L.ascend_desc = "Sennarth ascends the room towards the frozen percipice."
 	-- L.chilling_blast = "Spread"
-	-- L.frost_expulsion = "Explosion"
 	-- L.freezing_breath = "Add Breath"
 	-- L.webs = "Webs"
 	-- L.web = "Web"
@@ -95,7 +92,6 @@ if L then
 	-- -- Earth
 	-- L.enveloping_earth = "Heal Absorb"
 	-- L.erupting_bedrock = "Quakes"
-	-- L.seismic_rupture = "Adds"
 
 	-- -- Storm
 	-- L.lightning_crash = "Zaps"

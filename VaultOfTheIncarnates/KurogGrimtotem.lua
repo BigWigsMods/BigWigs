@@ -61,7 +61,6 @@ if L then
 	-- Earth
 	L.enveloping_earth = "Heal Absorb"
 	L.erupting_bedrock = "Quakes"
-	L.seismic_rupture = "Adds"
 
 	-- Storm
 	L.lightning_crash = "Zaps"
@@ -97,7 +96,7 @@ local alterSpellNameMap = {
 	["Earth"] = {
 		["damage"] = L.enveloping_earth,
 		["avoid"] = L.erupting_bedrock,
-		["ultimate"] = L.seismic_rupture,
+		["ultimate"] = CL.adds,
 	},
 	["Storm"] = {
 		["damage"] = L.lightning_crash,
@@ -198,7 +197,7 @@ function mod:GetOptions()
 		-- Earth
 		[391056] = L.enveloping_earth, -- Enveloping Earth (Healing Absorb)
 		[395893] = L.erupting_bedrock, -- Erupting Bedrock (Dance)
-		[374691] = L.seismic_rupture, -- Seismic Rupture (Adds)
+		[374691] = CL.adds, -- Seismic Rupture (Adds)
 		-- Storm
 		[373487] = L.lightning_crash, -- Lightning Crash (Zaps)
 		[390920] = CL.bombs, -- Shocking Burst (Bombs)
@@ -567,7 +566,7 @@ function mod:EruptingBedrock(args)
 end
 
 function mod:SeismicRupture(args)
-	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.ultimate_bartext:format(L.seismic_rupture), ultimateCount)))
+	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.ultimate_bartext:format(CL.adds), ultimateCount)))
 	self:PlaySound(args.spellId, "warning")
 end
 

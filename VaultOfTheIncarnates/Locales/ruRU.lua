@@ -4,9 +4,6 @@ if L then
 	L.custom_on_nameplate_fixate = "Метка для тарасекка"
 	L.custom_on_nameplate_fixate_desc = "Показывать метку на Бешеном Тарасекке, который зафиксировал вас.\n\nТребует включённых индикаторов здоровья врагов и соответствующего аддона (KuiNameplates, Plater)."
 
-
-	L.flamerifts = "Адды" -- Multiple Flamerifts
-	L.flamerift = "Адд" -- Rift on X
 	L.molten_cleave = "Фронтал"
 	L.incinerating_roar = "Рык"
 	L.molten_spikes = "Шипы"
@@ -47,7 +44,6 @@ if L then
 	L.ascend = "Подъём"
 	L.ascend_desc = "Сеннарк поднимается выше."
 	L.chilling_blast = "Спред"
-	L.frost_expulsion = "Взрыв"
 	L.freezing_breath = "Фронтал адда"
 	L.webs = "Сети"
 	L.web = "Паутина"
@@ -96,7 +92,6 @@ if L then
 	-- Earth
 	L.enveloping_earth = "Абсорб хила"
 	L.erupting_bedrock = "Войд зоны"
-	L.seismic_rupture = "Адды"
 
 	-- Storm
 	L.lightning_crash = "Молния"
