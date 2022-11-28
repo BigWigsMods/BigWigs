@@ -262,6 +262,7 @@ function mod:OnBossEnable()
 	-- Thundering Ravager
 	self:Log("SPELL_CAST_START", "StormBreak", 374622)
 	self:Log("SPELL_AURA_APPLIED", "LethalCurrentApplied", 391696)
+	self:Death("IntermissionAddDeath", 190690, 190686, 190588, 190688) -- Thundering Ravager, Frozen Destroyer, Tectonic Crusher, Blazing Fiend
 
 	-- Stage 3
 	self:Log("SPELL_AURA_APPLIED", "PrimalAttunement", 396241)
@@ -500,8 +501,8 @@ do
 		table.sort(iconList, sortPriority) -- Priority for tanks > melee > ranged
 		for i = 1, #iconList do
 			if iconList[i].player == self:UnitName("player") then
-				local text = i == 1 and CL.rticon:format(L.absolute_zero_melee, i) or CL.rticon:format(L.absolute_zero_ranged, i) -- Melee or Ranged Axe
-				self:Say(372458, text)
+				local text = i == 1 and L.absolute_zero_melee or L.absolute_zero_ranged -- Melee or Ranged Soak
+				self:Say(372458, CL.rticon:format(text, i))
 				self:PersonalMessage(372458, nil, text)
 				self:SayCountdown(372458, 5, i)
 				self:PlaySound(372458, "warning") -- debuffmove
@@ -645,7 +646,7 @@ do
 	local playerList = {}
 	function mod:GroundShatter(args)
 		playerList = {}
-		self:Bar(args.spellId, 30, CL.bombs) -- XXX Stop this bar on death
+		self:Bar(args.spellId, 30, CL.bombs)
 	end
 
 	function mod:GroundShatterApplied(args)
@@ -669,7 +670,7 @@ end
 function mod:ViolentUpheaval(args)
 	self:Message(args.spellId, "orange", CL.casting:format(L.violent_upheaval))
 	self:PlaySound(args.spellId, "alarm") -- castmove
-	self:Bar(args.spellId, 34, L.violent_upheaval) -- XXX Stop this bar on death
+	self:Bar(args.spellId, 34, L.violent_upheaval)
 end
 
 -- Frozen Destroyer
@@ -693,7 +694,7 @@ end
 function mod:FreezingTempest(args)
 	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "warning") -- danger
-	self:Bar(args.spellId, 35) -- XXX Stop this bar on death
+	self:Bar(args.spellId, 35)
 end
 
 -- Thundering Ravager
@@ -711,7 +712,7 @@ do
 	function mod:StormBreak(args)
 		warned = false
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		self:Bar(391696, 20) -- XXX Stop this bar on death
+		self:Bar(391696, 20)
 	end
 
 	function mod:LethalCurrentApplied(args)
@@ -719,6 +720,18 @@ do
 			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
+	end
+end
+
+function mod:IntermissionAddDeath(args)
+	if args.mobId == 190690  then -- Thundering Ravager
+		self:StopBar(391696) -- Storm Break
+	elseif args.mobId == 190588 then -- Tectonic Crusher
+		self:StopBar(CL.bombs) -- Ground Shatter
+		self:StopBar(L.violent_upheaval) -- Violent Upheaval
+	elseif args.mobId == 190686 then -- Frozen Destroyer
+		self:StopBar(374624) -- Freezing Tempest
+	--elseif args.mobId == 190688  then -- Blazing Fiend
 	end
 end
 

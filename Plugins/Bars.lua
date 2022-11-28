@@ -1125,7 +1125,7 @@ do
 						name = L.emphasizeAt,
 						order = 6,
 						min = 6,
-						max = 30,
+						max = 60, softMax = 30, -- Don't encourage bars longer than 30s in the GUI
 						step = 1,
 					},
 					fontSizeEmph = {
