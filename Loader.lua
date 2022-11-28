@@ -927,17 +927,19 @@ do
 		BigWigs_EternalPalace = "BigWigs_BattleForAzeroth",
 		BigWigs_Nyalotha = "BigWigs_BattleForAzeroth",
 		BigWigs_Uldir = "BigWigs_BattleForAzeroth",
+		BigWigs_Shadowlands = "BigWigs_Shadowlands",
+		BigWigs_CastleNathria = "BigWigs_Shadowlands",
+		BigWigs_SanctumOfDomination = "BigWigs_Shadowlands",
+		BigWigs_SepulcherOfTheFirstOnes = "BigWigs_Shadowlands",
 	}
 	local delayedMessages = {}
 
 	local warning = "The addon '|cffffff00%s|r' is forcing %s to load prematurely, notify the BigWigs authors!"
 	local dontForceLoadList = {
+		-- Static content
 		BigWigs_Core = true,
 		BigWigs_Plugins = true,
 		BigWigs_Options = true,
-		BigWigs_Shadowlands = true,
-		BigWigs_CastleNathria = true,
-		BigWigs_SanctumOfDomination = true,
 		BigWigs_Classic = true,
 		BigWigs_BurningCrusade = true,
 		BigWigs_WrathOfTheLichKing = true,
@@ -946,6 +948,7 @@ do
 		BigWigs_WarlordsOfDraenor = true,
 		BigWigs_Legion = true,
 		BigWigs_BattleForAzeroth = true,
+		BigWigs_Shadowlands = true,
 		LittleWigs = true,
 		LittleWigs_Classic = true,
 		LittleWigs_BurningCrusade = true,
@@ -955,6 +958,10 @@ do
 		LittleWigs_WarlordsOfDraenor = true,
 		LittleWigs_Legion = true,
 		LittleWigs_BattleForAzeroth = true,
+		LittleWigs_Shadowlands = true,
+		-- Dynamic content
+		BigWigs_DragonIsles = true,
+		BigWigs_VaultOfTheIncarnates = true,
 	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
@@ -977,8 +984,18 @@ do
 		end
 
 		if old[name] then
-			delayedMessages[#delayedMessages+1] = L.removeAddOn:format(name, old[name])
-			Popup(L.removeAddOn:format(name, old[name]))
+			if name == "BigWigs_Shadowlands" then
+				local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
+				if not meta then
+					delayedMessages[#delayedMessages+1] = L.removeAddOn:format(name, old[name])
+					if not BasicMessageDialog:IsShown() then -- Don't overwrite other messages with this as the message is confusing, show it last
+						Popup(L.removeAddOn:format(name, old[name]))
+					end
+				end
+			else
+				delayedMessages[#delayedMessages+1] = L.removeAddOn:format(name, old[name])
+				Popup(L.removeAddOn:format(name, old[name]))
+			end
 		end
 	end
 
@@ -1436,7 +1453,7 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and zoneAddon ~= "BigWigs_Shadowlands" and zoneAddon ~= "BigWigs_Dragonflight" then -- XXX remove BigWigs_Shadowlands from this check when the module is split out
+		if zoneAddon and zoneAddon ~= "BigWigs_Dragonflight" then
 			if strfind(zoneAddon, "LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
 			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
 				warnedThisZone[id] = true

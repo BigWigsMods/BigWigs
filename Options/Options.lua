@@ -1271,7 +1271,7 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = "BigWigs_Shadowlands"--"BigWigs_Dragonflight" -- XXX fixme
+				defaultHeader = "BigWigs_Dragonflight"
 				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
 					local defaultEnabled = value == "BigWigs_Dragonflight"
@@ -1283,7 +1283,7 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = "LittleWigs_Shadowlands"--"LittleWigs_Dragonflight" -- XXX fixme
+				defaultHeader = "LittleWigs_Dragonflight"
 				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
