@@ -1125,7 +1125,8 @@ do
 						name = L.emphasizeAt,
 						order = 6,
 						min = 6,
-						max = 30,
+						softMax  = 30, -- Don't promote longer bars in the UI
+						max = 60,
 						step = 1,
 					},
 					fontSizeEmph = {
