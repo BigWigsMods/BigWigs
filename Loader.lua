@@ -964,7 +964,6 @@ do
 		BigWigs_VaultOfTheIncarnates = true,
 	}
 	-- Try to teach people not to force load our modules.
-	local tempPrint = true
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
 		if IsAddOnEnabled(i) and not IsAddOnLoadOnDemand(i) then
@@ -992,18 +991,12 @@ do
 					if not BasicMessageDialog:IsShown() then -- Don't overwrite other messages with this as the message is confusing, show it last
 						Popup(L.removeAddOn:format(name, old[name]))
 					end
-				else
-					tempPrint = false
 				end
 			else
 				delayedMessages[#delayedMessages+1] = L.removeAddOn:format(name, old[name])
 				Popup(L.removeAddOn:format(name, old[name]))
 			end
 		end
-	end
-
-	if tempPrint then
-		delayedMessages[#delayedMessages+1] = L.missingAddOn:format("BigWigs_Shadowlands")
 	end
 
 	local myLocale = GetLocale()
@@ -1030,9 +1023,6 @@ do
 						sysprint(delayedMessages[i])
 					end
 					delayedMessages = nil
-					if tempPrint then
-						RaidNotice_AddMessage(RaidWarningFrame, L.missingAddOn:format("BigWigs_Shadowlands"), {r=1,g=1,b=1}, 15)
-					end
 				end)
 			end)
 			self.LOADING_SCREEN_DISABLED = nil
