@@ -39,7 +39,6 @@ if L then
 	L.ascend_desc = "Sennarth ascends the room towards the frozen percipice."
 	L.ascend_icon = "misc_arrowlup"
 	L.chilling_blast = "Spread"
-	L.frost_expulsion = "Explosion"
 	L.freezing_breath = "Add Breath"
 	L.webs = "Webs"
 	L.web = "Web"
@@ -82,7 +81,7 @@ function mod:GetOptions()
 		[372539] = -24885, -- Stage 2
 	}, {
 		[371976] = L.chilling_blast, -- Chilling Blast (Spread Debuff)
-		[371979] = L.frost_expulsion, -- Frost Expulsion (Spread)
+		[371979] = CL.explosion, -- Frost Expulsion (Spread)
 		[372238] = CL.small_adds, -- Call Spiderlings (Small Adds)
 		[372082] = L.webs, -- Enveloping Webs (Webs)
 		[373405] = L.gossamer_burst, -- Gossamer Burst (Grip)
@@ -179,7 +178,7 @@ function mod:ChillingBlast(args)
 	self:StopBar(CL.count:format(L.chilling_blast, chillingBlastCount))
 	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.chilling_blast, chillingBlastCount)))
 	self:PlaySound(args.spellId, "alarm") -- spread
-	self:Bar(371979, 6, CL.count:format(L.frost_expulsion, chillingBlastCount)) -- Frost Expulsion
+	self:Bar(371979, 6, CL.count:format(CL.explosion, chillingBlastCount)) -- Frost Expulsion
 	chillingBlastCount = chillingBlastCount + 1
 	self:Bar(args.spellId, self:GetStage() == 2 and 34 or timers[args.spellId][chillingBlastCount], CL.count:format(L.chilling_blast, chillingBlastCount))
 end

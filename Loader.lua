@@ -976,7 +976,6 @@ do
 		BigWigs_VaultOfTheIncarnates = true,
 	}
 	-- Try to teach people not to force load our modules.
-	local tempPrint = true
 	for i = 1, GetNumAddOns() do
 		local name = GetAddOnInfo(i)
 		if IsAddOnEnabled(i) and not IsAddOnLoadOnDemand(i) then
@@ -1004,18 +1003,12 @@ do
 					if not BasicMessageDialog:IsShown() then -- Don't overwrite other messages with this as the message is confusing, show it last
 						Popup(L.removeAddOn:format(name, old[name]))
 					end
-				else
-					tempPrint = false
 				end
 			else
 				delayedMessages[#delayedMessages+1] = L.removeAddOn:format(name, old[name])
 				Popup(L.removeAddOn:format(name, old[name]))
 			end
 		end
-	end
-
-	if tempPrint then
-		delayedMessages[#delayedMessages+1] = L.missingAddOn:format("BigWigs_Shadowlands")
 	end
 
 	local myLocale = GetLocale()
@@ -1029,8 +1022,9 @@ do
 		--ptBR = "Portuguese (ptBR)",
 		--frFR = "French (frFR)",
 	}
-	if locales[myLocale] then
-		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(locales[L])
+	local language = locales[myLocale]
+	if language then
+		delayedMessages[#delayedMessages+1] = ("BigWigs is missing translations for %s. Can you help? Visit git.io/vpBye or ask us on Discord for more info."):format(language)
 	end
 
 	if #delayedMessages > 0 then
@@ -1042,9 +1036,6 @@ do
 						sysprint(delayedMessages[i])
 					end
 					delayedMessages = nil
-					if tempPrint then
-						RaidNotice_AddMessage(RaidWarningFrame, L.missingAddOn:format("BigWigs_Shadowlands"), {r=1,g=1,b=1}, 15)
-					end
 				end)
 			end)
 			self.LOADING_SCREEN_DISABLED = nil
@@ -1131,9 +1122,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20221115053734" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "10.0.2" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20221115000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20221129005616" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "10.0.4" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20221128000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
