@@ -466,7 +466,7 @@ do
 		-- Algeth'ar Academy
 		[208061]=true,[208063]=true,[208065]=true,
 		-- Brackenhide Hollow
-		[203481]=true,[203482]=true,[203483]=true,[203484]=true,[203457]=true,
+		[203481]=true,[203482]=true,[203483]=true,[203484]=true,[203457]=true,[203453]=true,
 		-- Ruby Life Pools
 		[204740]=true,[204739]=true,[204738]=true,[204737]=true,[204736]=true,
 		-- The Nokhud Offensive
