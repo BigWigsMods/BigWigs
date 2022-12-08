@@ -187,6 +187,11 @@ L.blockTalkingHeadRaids = "Raides"
 L.blockTalkingHeadTimewalking = "Caminhada Temporal (Masmorras & Raides)"
 L.blockTalkingHeadScenarios = "Cenários"
 
+-- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
+-- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
+-- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
+-- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+
 L.subzone_grand_bazaar = "Grande Bazar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Porto de Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_eastern_transept = "Transepto Oriental" -- Auchindoun dungeon (Warlords of Draenor)

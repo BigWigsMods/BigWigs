@@ -187,6 +187,11 @@ L.blockTalkingHeadRaids = "Schlachtzüge"
 L.blockTalkingHeadTimewalking = "Zeitwanderung (Dungeons & Schlachtzüge)"
 L.blockTalkingHeadScenarios = "Szenarien"
 
+L.userNotifySfx = "Soundeffekte wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."
+L.userNotifyMusic = "Musik wurde von BossBlock deaktiviert, Aktivierung wird erzwungen."
+L.userNotifyAmbience = "Umgebungsgeräusche wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."
+L.userNotifyErrorSpeech = "Audiofehlermeldungen wurden von BossBlock deaktiviert, Aktivierung wird erzwungen."
+
 L.subzone_grand_bazaar = "Der Große Basar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "Der Hafen von Zandalar" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_eastern_transept = "Östliches Transept" -- Auchindoun dungeon (Warlords of Draenor)
@@ -355,7 +360,7 @@ L.oldSounds = "Alte Sounds"
 
 L.Alarm = "Alarm"
 L.Info = "Info"
-L.Alert = "Warnung"
+L.Alert = "Alarmruf"
 L.Long = "Lang"
 L.Warning = "Warnung"
 L.onyou = "Ein Zauber, Stärkungs- oder Schwächungszauber ist auf Dir"

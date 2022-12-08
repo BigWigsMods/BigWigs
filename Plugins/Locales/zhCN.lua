@@ -187,6 +187,11 @@ L.blockTalkingHeadRaids = "团队"
 L.blockTalkingHeadTimewalking = "时空漫游（地下城和团队）"
 L.blockTalkingHeadScenarios = "场景事件"
 
+-- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
+-- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
+-- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
+-- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+
 L.subzone_grand_bazaar = "百商集市" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "赞达拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_eastern_transept = "东侧耳堂" -- Auchindoun dungeon (Warlords of Draenor)
@@ -410,6 +415,6 @@ L.defeated = "%s被击败了！"
 
 L.wipe = "团灭"
 L.wipeSoundTitle = "当团灭时播放音效"
-L.respawn = "重生"
-L.showRespawnBar = "显示重生计时条"
-L.showRespawnBarDesc = "当团灭之后显示首领重生计时条。"
+L.respawn = "刷新"
+L.showRespawnBar = "显示刷新计时条"
+L.showRespawnBarDesc = "当团灭之后显示首领刷新计时条。"
