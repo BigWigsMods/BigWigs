@@ -16,7 +16,7 @@ L.proximity = "Monitor di Prossimità"
 L.proximity_desc = "Visualizza il monitor di prossimità al momento opportuno durante il combattimento, con i giocatori che stanno troppo vicino a te."
 
 L.already_registered = "|cffff0000ATTENZIONE:|r |cff00ff00%s|r (|cffffff00%s|r) esiste già come modulo di BigWigs, ma qualcosa sta cercando di caricarlo di nuovo. Questo solitamente significa che hai due copie di questo modulo nella cartella addons a causa di qualche aggiornamento sbagliato. È consigliabile reinstallare BigWigs cancellando tutte le cartelle BigWigs."
-L.testNameplate = "Bersaglio rilevato, creo una barra di test sulla barra del bersaglio. |cFF33FF99Questa funzione è usata raramente, di solito è solo 1 barra, e serve per tracciare i cooldown mentre si combattono più boss/ads che lanciano la stessa magia.|r"
+L.testNameplate = "Bersaglio rilevato, creo una barra di test sulla barra del bersaglio. |cFF33FF99Questa funzione è usata raramente, di solito è solo una barra, e serve per tracciare i tempi di recupero mentre si combattono più boss/add che lanciano la stessa magia.|r"
 
 -- Loader / Options.lua
 L.classicWarning1 = "|cFF33FF99BigWigs|r: Stai usando la versione sbagliata di BigWigs su un server classic."
@@ -40,10 +40,11 @@ L.dbmUsers = "Utilizzatori DBM:"
 L.noBossMod = "Nessun Boss mod:"
 L.offline = "Disconnesso"
 
-L.missingAddOn = "Per favore, prendi nota che questa zona richiede il plugin |cFF436EEE%s|r per fare in modo di visualizzare barre e timers."
+L.missingPlugin = "Per favore, prendi nota che questa zona richiede il plugin |cFF436EEE%s|r per fare in modo di visualizzare barre e timers."
+--L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
 L.disabledAddOn = "L'addon |cFF436EEE%s|r è disattivato, i timer non saranno mostrati."
 
-L.removeAddon = "Per favore rimuovi '|cFF436EEE%s|r' perché è stato rimpiazzato da '|cFF436EEE%s|r'."
+L.removeAddOn = "Per favore rimuovi '|cFF436EEE%s|r' perché è stato rimpiazzato da '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
 -- Media.lua (These are the names of the sounds in the dropdown list in the "sounds" section)
@@ -110,7 +111,7 @@ L.ICON_desc = "BigWigs può evidenziare i giocatori affetti da alcune abilità c
 L.SAY_desc = "I messaggi sul canale 'Parla' sono facili da identificare grazie ai fumetti che creano. BigWigs userà un mesaggio sul canale 'Parla' per avvisare chi sta vicino a te."
 L.EMPHASIZE_desc = "Abilitando questa opzione verrà enfatizzato qualsiasi messaggio associato con questa abilità. rendendoli più grandi e visibili. Puoi impostare la dimensione e il carattere dei messaggi enfatizzati nelle opzioni principali alla voce \"Messaggi\"."
 L.PROXIMITY = "Monitor di Prossimità"
-L.PROXIMITY_desc = "A volte le abilità richiedono che si stia lontani. Il Monitor di prossimità è nato per questa necessità e ti mette in condizione di capire quando sei al sicuro."
+L.PROXIMITY_desc = "A volte le abilità richiedono che si stia lontano o vicino. Il Monitor di prossimità è nato per questa necessità e ti mette in condizione di capire quando sei al sicuro."
 L.ALTPOWER = "Visualizzazione potere alternativo"
 L.ALTPOWER_desc = "Alcuni scontri usano la meccanica del potere alternativo sui membri del gruppo. La visualizzazione del potere alternativo mostra un breve riassunto su chi ha meno/più potere alternativo, che può essere utile per tattiche specifiche o per le assegnazioni."
 L.TANK = "Solo Difensori"
@@ -129,8 +130,8 @@ L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 L.SOUND = "Suono"
 L.SOUND_desc = "Le abilità dei boss di solito riproducono dei suoni per aiutarti ad avvertirle. Se disattivi questa opzione nessun suono verrà riprodotto."
-L.CASTBAR = "Barra dei cast"
-L.CASTBAR_desc = "Le barre di cast sono mostrate su alcuni boss, per avvertirti di abilità in arrivo. Se questa abilità è accompagnata da una barra di cast che vuoi nascondere, disattiva questa opzione."
+L.CASTBAR = "Barra di lancio"
+L.CASTBAR_desc = "Le barre di lancio sono mostrate su alcuni boss, per avvertirti di abilità in arrivo. Se questa abilità è accompagnata da una barra di lancio che vuoi nascondere, disattiva questa opzione."
 L.SAY_COUNTDOWN = "Dici il conto alla rovescia"
 L.SAY_COUNTDOWN_desc = "I fumetti delle chat sono facili da vedere. BigWigs scriverà messaggi multipli per mostrare il conto alla rovescia ai tuoi alleati vicini."
 L.ME_ONLY_EMPHASIZE = "Enfatizza (solo per me)"

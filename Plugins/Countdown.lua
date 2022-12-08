@@ -2,11 +2,6 @@
 -- Module Declaration
 --
 
-local oldPlugin = BigWigs:NewPlugin("Super Emphasize") -- XXX temp 9.0.2
-oldPlugin.defaultDB = {
-	Countdown = {},
-}
-
 local plugin = BigWigs:NewPlugin("Countdown")
 if not plugin then return end
 
@@ -169,11 +164,9 @@ do
 	countdownAnchor:SetWidth(80)
 	countdownAnchor:SetHeight(80)
 	countdownAnchor:SetFrameStrata("HIGH")
+	countdownAnchor:SetFixedFrameStrata(true)
 	countdownAnchor:SetFrameLevel(20)
-	if countdownAnchor.SetFixedFrameStrata then
-		countdownAnchor:SetFixedFrameStrata(true)
-		countdownAnchor:SetFixedFrameLevel(true)
-	end
+	countdownAnchor:SetFixedFrameLevel(true)
 	countdownAnchor:SetScript("OnDragStart", OnDragStart)
 	countdownAnchor:SetScript("OnDragStop", OnDragStop)
 	countdownAnchor.RefixPosition = RefixPosition
@@ -564,8 +557,6 @@ do
 				end
 			end
 		end
-		-- XXX temp 9.0.2
-		oldPlugin.db:ResetProfile(nil, true) -- no callbacks
 	end
 
 	function plugin:OnPluginEnable()
@@ -589,11 +580,9 @@ local latestCountdown = nil
 do
 	countdownFrame = CreateFrame("Frame", nil, UIParent)
 	countdownFrame:SetFrameStrata("FULLSCREEN_DIALOG")
-	if countdownFrame.SetFixedFrameStrata then
-		countdownFrame:SetFixedFrameStrata(true)
-		countdownFrame:SetFixedFrameLevel(true)
-	end
+	countdownFrame:SetFixedFrameStrata(true)
 	countdownFrame:SetFrameLevel(20) -- Behind GUI (level 100)
+	countdownFrame:SetFixedFrameLevel(true)
 	countdownFrame:SetPoint("CENTER", countdownAnchor, "CENTER")
 	countdownFrame:SetWidth(80)
 	countdownFrame:SetHeight(80)

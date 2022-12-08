@@ -859,7 +859,11 @@ do
 		end
 		proxAnchor:SetWidth(db.width)
 		proxAnchor:SetHeight(db.height)
-		proxAnchor:SetMinResize(100, 30)
+		if proxAnchor.SetResizeBounds then -- XXX Classic Era compat
+			proxAnchor:SetResizeBounds(80, 8)
+		else
+			proxAnchor:SetMinResize(80, 8)
+		end
 		proxAnchor:SetClampedToScreen(true)
 		proxAnchor:EnableMouse(true)
 
