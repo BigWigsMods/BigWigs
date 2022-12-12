@@ -9,7 +9,7 @@ if L then
 	 L.molten_spikes = "쐐기"
 	 L.collapsing_army = "쫄 소환"
 	 L.greater_flamerift = "신화 쫄"
-	 L.leaping_flames = "Flames"
+	 L.leaping_flames = "불꽃"
 end
 
 L = BigWigs:NewBossLocale("Terros", "koKR")
