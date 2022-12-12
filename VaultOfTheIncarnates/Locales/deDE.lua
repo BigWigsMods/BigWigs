@@ -1,120 +1,120 @@
 local L = BigWigs:NewBossLocale("Eranog", "deDE")
 if not L then return end
 if L then
-	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frenzied Tarasek that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "Fixieren-Symbol an gegnerischen Namensplaketten"
+	L.custom_on_nameplate_fixate_desc = "Zeigt ein Symbol an der Namensplakette des Dich fixierenden rasenden Tarasek an.\n\nBenötigt die Nutzung von Namensplaketten sowie ein unterstütztes Addon (KuiNameplates, Plater)."
 
-	-- L.molten_cleave = "Frontal"
-	-- L.incinerating_roar = "Roar"
-	-- L.molten_spikes = "Spikes"
-	-- L.collapsing_army = "Army"
-	-- L.greater_flamerift = "Mythic Add"
-	-- L.leaping_flames = "Flames"
+	L.molten_cleave = "Frontal"
+	L.incinerating_roar = "Brüllen"
+	L.molten_spikes = "Stacheln"
+	L.collapsing_army = "Armee"
+	L.greater_flamerift = "Mythisches Add"
+	L.leaping_flames = "Flammen"
 end
 
 L = BigWigs:NewBossLocale("Terros", "deDE")
 if L then
-	-- L.rock_blast = "Soak"
-	-- L.resonating_annihilation = "Annihilation"
-	-- L.awakened_earth = "Pillar"
-	-- L.shattering_impact = "Slam"
-	-- L.concussive_slam = "Tank Line"
-	-- L.infused_fallout = "Dust"
+	L.rock_blast = "Soak"
+	L.resonating_annihilation = "Vernichtung"
+	L.awakened_earth = "Säule"
+	L.shattering_impact = "Einschlag"
+	L.concussive_slam = "Tank Linie"
+	L.infused_fallout = "Staub"
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "deDE")
 if L then
-	-- L.primal_blizzard = "Blizzard" -- Primal Blizzard
-	-- L.earthen_pillars = "Pillars" -- Earthen Pillars
-	-- L.meteor_axes = "Axes" -- Meteor Axes
-	-- L.meteor_axe = "Axe" -- Singular
-	-- L.meteor_axes_melee = "Melee Axe"
-	-- L.meteor_axes_ranged = "Ranged Axe"
-	-- L.conductive_marks = "Marks" -- Conductive Marks
-	-- L.conductive_mark = "Mark" -- Singular
+	L.primal_blizzard = "Blizzard" -- Primal Blizzard
+	L.earthen_pillars = "Säulen" -- Earthen Pillars
+	L.meteor_axes = "Äxte" -- Meteor Axes
+	L.meteor_axe = "Axt" -- Singular
+	L.meteor_axes_melee = "Nahkampf Axt"
+	L.meteor_axes_ranged = "Fernkampf Axt"
+	L.conductive_marks = "Zeichen" -- Conductive Marks
+	L.conductive_mark = "Zeichen" -- Singular
 
-	-- L.custom_off_chain_lightning = "Chain Lightning is off by default, enable this to enable chain lightning."
+	L.custom_off_chain_lightning = "Kettenblitzschlag ist standardmäßig deaktiviert, diese Option zum Aktivieren einschalten."
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Abilities that will always be shown: Conductive Mark"
+	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
+	L.custom_on_stop_timers_desc = "Fähigkeiten, welche immer angezeigt werden: Leitfähiges Zeichen"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "deDE")
 if L then
-	-- L.ascend = "Ascend"
-	-- L.ascend_desc = "Sennarth ascends the room towards the frozen percipice."
-	-- L.chilling_blast = "Spread"
-	-- L.freezing_breath = "Add Breath"
-	-- L.webs = "Webs"
-	-- L.web = "Web"
-	-- L.gossamer_burst = "Grip"
-	-- L.repelling_burst = "Pushback"
+	L.ascend = "Aufsteigen"
+	L.ascend_desc = "Sennarth steigt vom Raum zur Spitze des Eises auf."
+	L.chilling_blast = "Verteilen"
+	L.freezing_breath = "Add Atem"
+	L.webs = "Spinnweben"
+	L.web = "Spinnwebe"
+	L.gossamer_burst = "Heranziehen"
+	L.repelling_burst = "Zurückstoßen"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "deDE")
 if L then
-	-- L.marks_on_me = "%d Mark" -- {Stacks} Conductive Mark on the player
+	L.marks_on_me = "%d Zeichen" -- {Stacks} Conductive Mark on the player
 
-	-- L.conductive_marks = "Marks"
-	-- L.conductive_mark = "Mark"
-	-- L.raging_burst = "New Tornadoes"
-	-- L.cyclone = "Pull In"
-	-- L.crosswinds = "Moving Tornadoes"
+	L.conductive_marks = "Zeichen"
+	L.conductive_mark = "Zeichen"
+	L.raging_burst = "Neue Tornados"
+	L.cyclone = "Heranziehen"
+	L.crosswinds = "Bewegende Tornados"
 end
 
 L = BigWigs:NewBossLocale("Kurog Grimtotem", "deDE")
 if L then
 	-- -- Types
-	-- L.damage = "Damage Skills"
-	-- L.damage_desc = "Display timers for Damage abilities (Magma Burst, Biting Chill, Enveloping Earth, Lightning Crash) when we don't know what alter the boss is at."
-	-- L.damage_bartext = "%s [Dmg]" -- {Spell} [Dmg]
+	L.damage = "Schadensfähigkeiten"
+	L.damage_desc = "Zeigt Timer für Schadensfähigkeiten an (Magmaexplosion, Beißende Kälte, Einhüllende Erde, Blitzeinschlag) wenn nicht bekannt ist, an welchem Altar der Boss ist."
+	L.damage_bartext = "%s [Schaden]" -- {Spell} [Dmg]
 
-	-- L.avoid = "Avoid Skills"
-	-- L.avoid_desc = "Display timers for Avoid abilities (Molten Rupture, Frigid Torrent, Erupting Bedrock, Shocking Burst) when we don't know what alter the boss is at."
-	-- L.avoid_bartext = "%s [Avoid]" -- {Spell} [Avoid]
+	L.avoid = "Ausweich-Fähigkeiten"
+	L.avoid_desc = "Zeigt Timer für Ausweich-Fähigkeiten an (Geschmolzene Eruption, Eisiger Strom, Ausbrechender Felsboden, Schockausbruch) wenn nicht bekannt ist, an welchem Altar der Boss ist."
+	L.avoid_bartext = "%s [Ausweichen]" -- {Spell} [Avoid]
 
-	-- L.ultimate = "Ultimate Skills"
-	-- L.ultimate_desc = "Display timers for Ultimate abilities (Searing Carnage, Absolute Zero, Seismic Rupture, Thundering Strike) when we don't know what alter the boss is at."
-	-- L.ultimate_bartext = "%s [Ult]" -- {Spell} [Ult]
+	L.ultimate = "Ultimative Fähigkeiten"
+	L.ultimate_desc = "Zeigt Timer für ultimative Fähigkeiten an (Sengendes Gemetzel, Absoluter Nullpunkt, Seismischer Riss, Donnerschlag) wenn nicht bekannt ist, an welchem Altar der Boss ist."
+	L.ultimate_bartext = "%s [Ultimativ]" -- {Spell} [Ult]
 
 	-- -- Fire
-	-- L.magma_burst = "Pools"
-	-- L.molten_rupture = "Waves"
-	-- L.searing_carnage = "Dance"
+	L.magma_burst = "Pfützen"
+	L.molten_rupture = "Wellen"
+	L.searing_carnage = "Tanzen"
 
 	-- -- Frost
-	-- L.biting_chill = "Chill DoT"
-	-- L.frigid_torrent = "Orbs"
-	-- L.absolute_zero = "Soaks"
-	-- L.absolute_zero_melee = "Melee Soak"
-	-- L.absolute_zero_ranged = "Ranged Soak"
+	L.biting_chill = "Kälte DoT"
+	L.frigid_torrent = "Kugeln"
+	L.absolute_zero = "Soaks"
+	L.absolute_zero_melee = "Nahkampf Soak"
+	L.absolute_zero_ranged = "Fernkampf Soak"
 
 	-- -- Earth
-	-- L.enveloping_earth = "Heal Absorb"
-	-- L.erupting_bedrock = "Quakes"
+	L.enveloping_earth = "Heilung absorbiert"
+	L.erupting_bedrock = "Beben"
 
 	-- -- Storm
-	-- L.lightning_crash = "Zaps"
-	-- L.thundering_strike = "Soaks"
+	L.lightning_crash = "Blitze"
+	L.thundering_strike = "Soaks"
 
 	-- -- General
-	-- L.primal_attunement = "Soft Enrage"
+	L.primal_attunement = "Soft Enrage"
 
 	-- -- Stage 2
-	-- L.violent_upheaval = "Pillars"
+	L.violent_upheaval = "Säulen"
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "deDE")
 if L then
-	-- L.eggs_remaining = "%d Eggs Remaining!"
-	-- L.broodkeepers_bond = "Eggs Remaining"
-	-- L.greatstaff_of_the_broodkeeper = "Greatstaff"
-	-- L.greatstaffs_wrath = "Laser"
-	-- L.clutchwatchers_rage = "Rage"
-	-- L.rapid_incubation = "Infuse Eggs"
-	-- L.icy_shroud = "Heal Absorb"
-	-- L.broodkeepers_fury = "Fury"
-	-- L.frozen_shroud = "Root Absorb"
+	L.eggs_remaining = "%d Eier verbleiben!"
+	L.broodkeepers_bond = "Eier verbleiben"
+	L.greatstaff_of_the_broodkeeper = "Großstab"
+	L.greatstaffs_wrath = "Strahl"
+	L.clutchwatchers_rage = "Wut (Gelegehüterin)"
+	L.rapid_incubation = "Eier erfüllen"
+	L.icy_shroud = "Heilung absorbiert"
+	L.broodkeepers_fury = "Wut (Bruthüterin)"
+	L.frozen_shroud = "Bewegungsunfähig / Absorbtion"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "deDE")

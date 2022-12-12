@@ -466,14 +466,17 @@ do
 		-- Algeth'ar Academy
 		[208061]=true,[208063]=true,[208065]=true,
 		-- Brackenhide Hollow
-		[203481]=true,[203482]=true,[203483]=true,[203484]=true,[203457]=true,[203453]=true,
+		[203481]=true,[203482]=true,[203483]=true,[203484]=true,[203457]=true,[203453]=true,[203452]=true,
 		-- Ruby Life Pools
 		[204740]=true,[204739]=true,[204738]=true,[204737]=true,[204736]=true,
 		-- The Nokhud Offensive
 		[205509]=true,[205547]=true,[205502]=true,[205503]=true,[205768]=true,[205769]=true,
 		[205770]=true,[205555]=true,[205554]=true,[205838]=true,[205839]=true,[205840]=true,
 		[205831]=true,[205832]=true,[205833]=true,[205841]=true,[205851]=true,[205856]=true,
-		[205504]=true,[205505]=true,[205506]=true,[205507]=true,
+		[205504]=true,[205505]=true,[205506]=true,[205507]=true,[205842]=true,[205508]=true,
+		[205814]=true,[205815]=true,[205567]=true,
+		-- Uldaman: Legacy of Tyr
+		[203125]=true,[203126]=true,[203127]=true,
 	}
 
 	local lookup = {
