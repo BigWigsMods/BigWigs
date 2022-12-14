@@ -53,8 +53,6 @@ end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "koKR")
 if L then
-	-- L.marks_on_me = "%d Mark" -- {Stacks} Conductive Mark on the player
-
 	-- L.conductive_marks = "Marks"
 	-- L.conductive_mark = "Mark"
 	-- L.raging_burst = "New Tornadoes"
