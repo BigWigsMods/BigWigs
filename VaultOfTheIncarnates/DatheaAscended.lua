@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -8,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(189813) -- Dathea, Ascended
 mod:SetEncounterID(2635)
 mod:SetRespawnTime(30)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -26,8 +26,6 @@ local zephyrSlamCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.marks_on_me = "%d Mark" -- {Stacks} Conductive Mark on the player
-
 	L.conductive_marks = "Marks"
 	L.conductive_mark = "Mark"
 	L.raging_burst = "New Tornadoes"
@@ -101,10 +99,10 @@ function mod:OnEngage()
 
 	self:CDBar(391686, 4, CL.count:format(L.conductive_marks, conductiveMarkCount)) -- Conductive Mark
 	self:CDBar(388302, 7, CL.count:format(L.raging_burst, ragingBurstCount)) -- Raging Burst
-	self:CDBar(375580, 16, CL.count:format(CL.knockback, zephyrSlamCount)) -- Zephyr Slam
-	self:CDBar(388410, 25.5, CL.count:format(L.crosswinds, crosswindsCount)) -- Crosswinds
-	self:CDBar(376943, 37, CL.count:format(L.cyclone, cycloneCount)) -- Cyclone
-	self:CDBar(387849, 75, CL.count:format(CL.adds, coalescingStormCount)) -- Coalescing Storm
+	self:CDBar(375580, self:Easy() and 9.5 or 16, CL.count:format(CL.knockback, zephyrSlamCount)) -- Zephyr Slam
+	self:CDBar(388410, self:Easy() and 29 or 25.5, CL.count:format(L.crosswinds, crosswindsCount)) -- Crosswinds
+	self:CDBar(376943, self:Easy() and 45 or 35, CL.count:format(L.cyclone, cycloneCount)) -- Cyclone
+	self:CDBar(387849, self:Easy() and 80 or 71, CL.count:format(CL.adds, coalescingStormCount)) -- Coalescing Storm
 end
 
 --------------------------------------------------------------------------------
@@ -115,20 +113,22 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 391595 then -- Conductive Mark
 		self:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
 		conductiveMarkCount = conductiveMarkCount + 1
-		local cd = 28
-		if self:Mythic() then
-			cd = conductiveMarkCount % 3 == 1 and 39.2 or 25.5
+		local cd = self:Easy() and 31.5 or 25.5
+		if conductiveMarkCount > 3 and conductiveMarkCount % 2 == 0 then
+			cd = 52 -- XXX Needs fixing updating for normal
 		end
 		self:CDBar(391686, cd, CL.count:format(L.conductive_marks, conductiveMarkCount))
 	end
 end
+
 
 function mod:CoalescingStorm(args)
 	self:StopBar(CL.count:format(CL.adds, coalescingStormCount))
 	self:Message(args.spellId, "orange", CL.count:format(CL.adds, coalescingStormCount))
 	self:PlaySound(args.spellId, "long")
 	coalescingStormCount = coalescingStormCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 90 or 80.5, CL.count:format(CL.adds, coalescingStormCount))
+	self:CDBar(args.spellId, self:Easy() and 86.5 or 75, CL.count:format(CL.adds, coalescingStormCount))
+	self:CDBar(391686, self:Easy() and 9.5 or 35.5, CL.count:format(L.conductive_marks, conductiveMarkCount)) -- Marks
 end
 
 
@@ -182,7 +182,7 @@ function mod:RagingBurst(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.raging_burst, ragingBurstCount))
 	self:PlaySound(args.spellId, "alert")
 	ragingBurstCount = ragingBurstCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 90 or 80, CL.count:format(L.raging_burst, ragingBurstCount))
+	self:CDBar(args.spellId, self:Easy() and 86.5 or 75, CL.count:format(L.raging_burst, ragingBurstCount))
 end
 
 function mod:ConductiveMarkApplied(args)
@@ -201,7 +201,7 @@ function mod:Cyclone(args)
 	self:Message(args.spellId, "orange", CL.count:format(L.cyclone, cycloneCount))
 	self:PlaySound(args.spellId, "alarm")
 	cycloneCount = cycloneCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 90 or 80.5, CL.count:format(L.cyclone, cycloneCount))
+	self:CDBar(args.spellId, self:Easy() and 86.5 or 75, CL.count:format(L.cyclone, cycloneCount))
 end
 
 function mod:Crosswinds(args)

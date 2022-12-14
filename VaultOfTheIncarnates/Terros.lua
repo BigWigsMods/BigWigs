@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -8,6 +7,7 @@ if not mod then return end
 mod:RegisterEnableMob(190496) -- Terros
 mod:SetEncounterID(2639)
 mod:SetRespawnTime(30)
+mod:SetStage(1)
 
 --------------------------------------------------------------------------------
 -- Locals
@@ -58,7 +58,7 @@ function mod:GetOptions()
 		[380487] = L.rock_blast, -- Rock Blast (Soak)
 		[377166] = L.resonating_annihilation, -- Resonating Annihilation (Annihilation)
 		[381315] = L.awakened_earth, -- Awakened Earth (Pillar)
-		[376279] = L.shattering_impact, -- Shattering Impact (Slam)
+		[383073] = L.shattering_impact, -- Shattering Impact (Slam)
 		[376279] = L.concussive_slam, -- Concussive Slam (Tank Line)
 		[391592] = L.infused_fallout, -- Reactive Dust (Dust)
 	}
@@ -98,7 +98,7 @@ function mod:OnEngage()
 	infusedFalloutCount = 1
 
 	self:Bar(380487, 6, CL.count:format(L.rock_blast, rockBlastCount)) -- Rock Blast
-	self:Bar(376279, 14, CL.count:format(L.concussive_slam, concussiveSlamCount)) -- Concussive Slam
+	self:Bar(376279, 16, CL.count:format(L.concussive_slam, concussiveSlamCount)) -- Concussive Slam
 	self:Bar(383073, 27, CL.count:format(L.shattering_impact, shatteringImpactCount)) -- Shattering Impact
 	self:Bar(377166, 90, CL.count:format(L.resonating_annihilation, resonatingAnnihilationCount)) -- Resonating Annihilation
 	if self:Mythic() then
@@ -139,7 +139,7 @@ do
 			self:PersonalMessage(381315, nil , L.awakened_earth)
 			self:PlaySound(381315, "warning")
 			self:Say(381315, CL.count_rticon:format(L.awakened_earth, count, count))
-			self:SayCountdown(381315, 6, count)
+			self:SayCountdown(381315, 6)
 		end
 		self:CustomIcon(awakenedEarthMarker, args.destName, count)
 		count = count + 1
