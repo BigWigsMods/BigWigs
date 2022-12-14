@@ -1335,7 +1335,7 @@ do
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						BigWigs:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
+						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
@@ -1381,7 +1381,7 @@ do
 				if name == spell then
 					if not blacklist[spellId] then
 						blacklist[spellId] = true
-						BigWigs:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
+						core:Error(format("Found spell '%s' using id %d on %d, tell the authors!", name, spellId, self:Difficulty()))
 					end
 					t1, t2, t3, t4, t5 = name, stack, duration, expirationTime, value
 				end
@@ -2269,9 +2269,16 @@ do
 						local name = playerTable[i]
 						local hasMarker = playerTable[name]
 						if hasMarker then
-							tbl[#tbl+1] = markerIcons[hasMarker] .. self:ColorName(name)
+							local markerFromTable = markerIcons[hasMarker]
+							if markerFromTable then
+								tbl[#tbl+1] = markerFromTable .. self:ColorName(name)
+							else
+								tbl[#tbl+1] = self:ColorName(name)
+								core:Error(format("Option %q is trying to set invalid marker %q on a player table.", key, tostring(hasMarker)))
+							end
+
 						else
-							tbl[#tbl+1] = self:ColorName(playerTable[i])
+							tbl[#tbl+1] = self:ColorName(name)
 						end
 					end
 					local list = tconcat(tbl, comma, 1, #tbl)
