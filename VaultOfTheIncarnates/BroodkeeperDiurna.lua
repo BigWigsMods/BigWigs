@@ -143,7 +143,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "IonizingChargeRemoved", 375620)
 	self:Log("SPELL_DAMAGE", "IonizingChargeDamage", 375634)
 	self:Log("SPELL_MISSED", "IonizingChargeDamage", 375634)
-	self:Death("stormbringerDeath", 191232) -- Drakonid Stormbringer
+	self:Death("StormbringerDeath", 191232) -- Drakonid Stormbringer
 
 	-- Stage Two: A Broodkeeper Scorned
 	self:Log("SPELL_AURA_APPLIED", "BroodkeepersFury", 375879)
@@ -173,10 +173,9 @@ function mod:OnEngage()
 
 	if self:GetOption(primalistMageMarker) then
 		self:RegisterTargetEvents("AddMarking")
-	end
-	
-	if self:GetOption(stormbringerMarker) then
-		self:RegisterTargetEvents("AddMarking2")
+		else if self:GetOption(stormbringerMarker) then
+			self:RegisterTargetEvents("AddMarking")
+		end
 	end
 end
 
@@ -194,21 +193,19 @@ function mod:AddMarking(_, unit, guid)
 				return
 			end
 		end
-	end
-end
-
-function mod:AddMarking2(_, unit, guid)
-	if guid and not mobCollector[guid] and self:MobId(guid) == 191232 then -- Drakonid Stormbringer
-		for i = 8, 7, -1 do -- 8, 7
-			if not stormbringerMarks[i] then
-				mobCollector[guid] = true
-				stormbringerMarks[i] = guid
-				self:CustomIcon(stormbringerMarker, unit, i)
-				return
+		else if guid and not mobCollector[guid] and self:MobId(guid) == 191232 then -- Drakonid Stormbringer
+			for i = 3, -1 do -- 3
+				if not stormbringerMarks[i] then
+					mobCollector[guid] = true
+					stormbringerMarks[i] = guid
+					self:CustomIcon(stormbringerMarker, unit, i)
+					return
+				end
 			end
 		end
 	end
 end
+
 
 function mod:PrimalistMageDeath(args)
 	if self:GetOption(primalistMageMarker) then
@@ -221,7 +218,7 @@ function mod:PrimalistMageDeath(args)
 	end
 end
 
-function mod:stormbringerDeath(args)
+function mod:StormbringerDeath(args)
 	if self:GetOption(stormbringerMarker) then
 		for i = 3, -1 do -- 3
 			if stormbringerMarks[i] == args.destGUID then
