@@ -15,6 +15,7 @@ mod:SetStage(1)
 
 local mobCollector = {}
 local primalistMageMarks = {}
+local stormbringerMarks = {}
 local greatstaffCount = 1
 local rapidIncubationCount = 1
 local wildfireCount = 1
@@ -45,6 +46,7 @@ end
 --
 
 local primalistMageMarker = mod:AddMarkerOption(false, "npc", 1, -25144, 8, 7) -- Primalist Mage
+local stormbringerMarker = mod:AddMarkerOption(false, "npc", 1, -25139, 3) -- Stormbringer
 function mod:GetOptions()
 	return {
 		-- Stage One: The Primalist Clutch
@@ -73,6 +75,7 @@ function mod:GetOptions()
 		-- Drakonid Stormbringer
 		375653, -- Static Jolt
 		{375620, "SAY"}, -- Ionizing Charge
+		stormbringerMarker,
 		-- Stage Two: A Broodkeeper Scorned
 		375879, -- Broodkeeper's Fury
 		392194, -- Empowered Greatstaff of the Broodkeeper
@@ -140,6 +143,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "IonizingChargeRemoved", 375620)
 	self:Log("SPELL_DAMAGE", "IonizingChargeDamage", 375634)
 	self:Log("SPELL_MISSED", "IonizingChargeDamage", 375634)
+	self:Death("stormbringerDeath", 191232) -- Drakonid Stormbringer
 
 	-- Stage Two: A Broodkeeper Scorned
 	self:Log("SPELL_AURA_APPLIED", "BroodkeepersFury", 375879)
@@ -154,6 +158,7 @@ function mod:OnEngage()
 	self:SetStage(1)
 	mobCollector = {}
 	primalistMageMarks = {}
+	stormbringerMarks = {}
 	greatstaffCount = 1
 	rapidIncubationCount = 1
 	wildfireCount = 1
@@ -168,6 +173,10 @@ function mod:OnEngage()
 
 	if self:GetOption(primalistMageMarker) then
 		self:RegisterTargetEvents("AddMarking")
+	end
+	
+	if self:GetOption(stormbringerMarker) then
+		self:RegisterTargetEvents("AddMarking2")
 	end
 end
 
@@ -188,11 +197,35 @@ function mod:AddMarking(_, unit, guid)
 	end
 end
 
+function mod:AddMarking2(_, unit, guid)
+	if guid and not mobCollector[guid] and self:MobId(guid) == 191232 then -- Drakonid Stormbringer
+		for i = 8, 7, -1 do -- 8, 7
+			if not stormbringerMarks[i] then
+				mobCollector[guid] = true
+				stormbringerMarks[i] = guid
+				self:CustomIcon(stormbringerMarker, unit, i)
+				return
+			end
+		end
+	end
+end
+
 function mod:PrimalistMageDeath(args)
 	if self:GetOption(primalistMageMarker) then
 		for i = 8, 7, -1 do -- 8, 7
 			if primalistMageMarks[i] == args.destGUID then
 				primalistMageMarks[i] = nil
+				return
+			end
+		end
+	end
+end
+
+function mod:stormbringerDeath(args)
+	if self:GetOption(stormbringerMarker) then
+		for i = 3, -1 do -- 3
+			if stormbringerMarks[i] == args.destGUID then
+				stormbringerMarks[i] = nil
 				return
 			end
 		end
