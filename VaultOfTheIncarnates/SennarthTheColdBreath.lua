@@ -119,7 +119,7 @@ function mod:OnBossEnable()
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "ApexOfIce", 372539)
 	self:Log("SPELL_AURA_REMOVED", "ApexOfIceRemoved", 372539)
-	self:Log("SPELL_CAST_SUCCESS", "SuffocatingWebs", 373048)
+	self:Log("SPELL_CAST_SUCCESS", "SuffocatingWebs", 373027)
 	self:Log("SPELL_AURA_APPLIED", "SuffocatingWebsApplied", 373048)
 	self:Log("SPELL_AURA_REMOVED", "SuffocatingWebsRemoved", 373048)
 	self:Log("SPELL_CAST_START", "RepellingBurst", 371983)
@@ -323,11 +323,11 @@ end
 
 do
 	local playerList = {}
-	function mod:SuffocatingWebs(args)
+	function mod:SuffocatingWebs()
 		self:StopBar(CL.count:format(L.webs, webCount))
 		playerList = {}
 		webCount = webCount + 1
-		self:CDBar(args.spellId, 49, CL.count:format(L.webs, webCount))
+		self:CDBar(373048, 49, CL.count:format(L.webs, webCount))
 	end
 
 	function mod:SuffocatingWebsApplied(args)
