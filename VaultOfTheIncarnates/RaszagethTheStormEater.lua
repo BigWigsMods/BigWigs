@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Raszageth the Storm-Eater", 2522, 2499)
 if not mod then return end
-mod:RegisterEnableMob(182492) -- Raszageth the Storm-Eater (TODO confirm NPC ID)
+mod:RegisterEnableMob(189492) -- Raszageth the Storm-Eater
 mod:SetEncounterID(2607)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -48,7 +48,6 @@ local timers = {
 		[377658] = {5, 25, 25, 27, 21, 27}, -- Electrified Jaws
 	},
 	[2] = {
-
 		[388643] = {68.5, 49.9}, -- Volatile Current
 		[377658] = {38.5, 24.9, 22.9, 30, 25, 25, 37}, -- Electrified Jaws
 		[387261] = {8.5, 80, 80, 80}, -- Stormsurge
