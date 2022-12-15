@@ -202,7 +202,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FlameShieldApplied", 397387)
 
 	-- Stage Two: Surging Power
-	self:Log("SPELL_AURA_REMOVED", "RuinousShroudRemoved", 388431)
 	self:Log("SPELL_CAST_START", "Stormsurge", 387261)
 	self:Log("SPELL_AURA_APPLIED", "StormsurgeApplied", 388691)
 	self:Log("SPELL_AURA_REMOVED", "StormsurgeRemoved", 388691)
@@ -216,14 +215,12 @@ function mod:OnBossEnable()
 
 	-- Intermission: The Vault Falters
 	self:Log("SPELL_CAST_SUCCESS", "EncounterEvent", 181089)
-	self:Log("SPELL_AURA_APPLIED", "StormShroudApplied", 396734)
 	self:Log("SPELL_CAST_START", "StormBreak", 389870)
 	self:Log("SPELL_AURA_APPLIED", "FuseStacks", 389878)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FuseStacks", 389878)
 	self:Log("SPELL_CAST_START", "BallLightning", 385068)
 
 	-- Stage Three: Storm Incarnate
-	self:Log("SPELL_AURA_REMOVED", "StormShroudRemoved", 396734)
 	self:Log("SPELL_CAST_SUCCESS", "MagneticCharge", 399713)
 	self:Log("SPELL_AURA_APPLIED", "MagneticChargeApplied", 399713)
 	self:Log("SPELL_AURA_REMOVED", "MagneticChargeRemoved", 399713)
@@ -271,7 +268,7 @@ function mod:OnEngage()
 	self:Bar(381615, 15, CL.count:format(CL.bomb, staticChargeCount))
 	self:Bar(377594, 23, CL.count:format(L.lightning_breath, lightningBreathCount))
 	self:Bar(377612, 35, CL.count:format(L.hurricane_wing, hurricaneWingCount))
-	self:Bar(373329, 88, CL.count:format(L.volatile_current, volatileCurrentCount))
+	self:Bar(388643, 88, CL.count:format(L.volatile_current, volatileCurrentCount))
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -504,7 +501,7 @@ function mod:ElectricScales(args)
 		electrifiedJawsCount = 1
 
 		self:Bar(387261, timers[2][387261][stormsurgeCount], CL.count:format(L.stormsurge, stormsurgeCount))
-		self:Bar(373329, timers[2][373329][volatileCurrentCount], CL.count:format(L.volatile_current, volatileCurrentCount))
+		self:Bar(388643, timers[2][373329][volatileCurrentCount], CL.count:format(L.volatile_current, volatileCurrentCount))
 		self:Bar(385574, timers[2][385574][tempestWingCount], CL.count:format(L.tempest_wing, tempestWingCount))
 		self:Bar(377467, timers[2][377467][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
 		self:Bar(395906, timers[2][395906][electrifiedJawsCount], CL.count:format(self:SpellName(395906), electrifiedJawsCount))
