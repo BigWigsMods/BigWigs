@@ -53,8 +53,6 @@ end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "koKR")
 if L then
-	 L.marks_on_me = "표식 %d 중첩" -- {Stacks} Conductive Mark on the player
-
 	 L.conductive_marks = "표식"
 	 L.conductive_mark = "표식"
 	 L.raging_burst = "회오리 생성"
