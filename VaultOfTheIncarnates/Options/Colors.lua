@@ -26,7 +26,7 @@ BigWigs:AddColors("Terros", {
 })
 
 BigWigs:AddColors("The Primal Council", {
-	[371624] = {"blue","cyan"},
+	[371624] = {"blue","purple"},
 	[372027] = "orange",
 	[372056] = {"blue","purple"},
 	[372279] = "yellow",

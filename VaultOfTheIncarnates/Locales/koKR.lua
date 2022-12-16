@@ -33,8 +33,6 @@ if L then
 	 L.conductive_marks = "표식" -- Conductive Marks
 	 L.conductive_mark = "표식" -- Singular
 
-	 L.custom_off_chain_lightning = "연쇄 번개는 기본적으로 꺼져있습니다. 활성화해서 연쇄 번개를 활성화하십시오."
-
 	 L.custom_on_stop_timers = "항상 능력 바 표시Always show ability bars"
 	 L.custom_on_stop_timers_desc = "항상 표시될 능력: 전도성 표식"
 end

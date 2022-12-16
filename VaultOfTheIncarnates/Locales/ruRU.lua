@@ -33,8 +33,6 @@ if L then
 	L.conductive_marks = "Знаки" -- Conductive Marks
 	L.conductive_mark = "Знак" -- Singular
 
-	L.custom_off_chain_lightning = "Цепная молния выключена по умолчанию. Нажмите, что бы включить её."
-
 	L.custom_on_stop_timers = "Всегда показывать полосы способностей"
 	L.custom_on_stop_timers_desc = "Будут показываться следующие способности:  Знак проводимости"
 end
