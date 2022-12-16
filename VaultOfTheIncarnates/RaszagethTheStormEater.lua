@@ -40,29 +40,54 @@ local stormEaterCount = 1
 -- Timers
 --
 
-local timers = {
+local timersEasy = {
 	[1] = {
 		[381615] = {15, 35, 40, 30}, -- Static Charge
 		[388643] = {85, 47}, -- Volatile Current
 		[377594] = {23, 39, 53}, -- Lightning Breath
 		[377612] = {35, 35, 35}, -- Hurricane Wing
-		[377658] = {5, 25, 25, 27, 21, 27}, -- Electrified Jaws
+		[395906] = {5, 25, 25, 27, 21, 27}, -- Electrified Jaws
 	},
 	[2] = {
 		[388643] = {68.5, 49.9}, -- Volatile Current
-		[377658] = {38.5, 24.9, 22.9, 30, 25, 25, 37}, -- Electrified Jaws
+		[395906] = {38.5, 24.9, 22.9, 30, 25, 25, 37}, -- Electrified Jaws
 		[387261] = {8.5, 80, 80, 80}, -- Stormsurge
-		[377467] = {52.5, 85.9}, -- Fulminating Charge
+		[378829] = {52.5, 85.9}, -- Fulminating Charge
 		[385574] = {43.5, 35, 49.9, 24.9, 55}, -- Tempest Wing
 	},
 	[3] = {
 		[377594] = {34.5, 41, 41.9}, -- Lightning Breath
 		[385574] = {66.4, 58.9, 26.9}, -- Tempest Wing
-		[377467] = {41.5, 60}, -- Fulminating Charge
+		[378829] = {41.5, 60}, -- Fulminating Charge
 		[386410] = {22.5, 30, 30, 30, 30}, -- Thunderous blast
-		[399713] = {20.9, 63.0, 34.0}, -- Magnetic Charge
 	},
 }
+
+local timersHeroic = {
+	[1] = {
+		[381615] = {15.0, 35.0, 37.0, 34.1, 33.9}, -- Static Charge
+		[388643] = {80.0, 55.0}, -- Volatile Current
+		[377594] = {23.0, 39.0, 54.0, 51.0}, -- Lightning Breath
+		[377612] = {35, 35, 35, 35, 35}, -- Hurricane Wing
+		[395906] = {4.9, 25.0, 25.0, 30.0, 18.0, 27.0, 30.0}, -- Electrified Jaws
+	},
+	[2] = {
+		[388643] = {65.5, 57}, -- Volatile Current
+		[395906] = {38.5, 25.0, 23.0, 30.0, 25.0, 25.0}, -- Electrified Jaws
+		[387261] = {8.6, 80.0, 80.0}, -- Stormsurge
+		[377467] = {53.5, 83.0}, -- Fulminating Charge
+		[385574] = {43.6, 30.0, 55.0, 20.0}, -- Tempest Wing
+	},
+	[3] = {
+		[377594] = {31.3, 43.5, 42.0}, -- Lightning Breath
+		[385574] = {65.9, 64.0, 22.0}, -- Tempest Wing
+		[377467] = {40.9, 60.0, 60.0}, -- Fulminating Charge
+		[386410] = {21.8, 30.0, 30.0, 30.0, 30.0}, -- Thunderous Blast
+		[399713] = {25.9, 63.0, 34.0}, -- Magnetic Charge
+	},
+}
+
+local timers = mod:Easy() and timersEasy or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -180,6 +205,8 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1") -- Stage Events
+
 	-- Stage One: The Winds of Change
 	self:Log("SPELL_CAST_START", "HurricaneWing", 377612)
 	self:Log("SPELL_AURA_APPLIED", "StaticChargeApplied", 381615)
@@ -188,7 +215,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ElectrifiedJaws", 377658)
 	self:Log("SPELL_AURA_APPLIED", "ElectrifiedJawsApplied", 395906)
 	self:Log("SPELL_CAST_START", "LightningBreath", 377594)
-	-- self:Log("SPELL_CAST_SUCCESS", "LightningStrikes", 376126) -- XXX Every 15s from an aura? repeating timer?
 	self:Log("SPELL_AURA_APPLIED", "ElectricLashApplied", 381251)
 	self:Log("SPELL_CAST_START", "StormNova", 382434, 390463)
 
@@ -209,7 +235,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "Stormsurge", 387261)
 	self:Log("SPELL_AURA_APPLIED", "StormsurgeApplied", 388691)
 	self:Log("SPELL_AURA_REMOVED", "StormsurgeRemoved", 388691)
-	self:Log("SPELL_AURA_APPLIED", "PositiveOrNegativeChargeApplied", 391990, 394574, 394576, 391991, 394575, 394579) -- Positive (5m, 30s, perma), Negative (5m, 30s, perma)
+	self:Log("SPELL_AURA_APPLIED", "PositiveOrNegativeChargeApplied", 394576, 394579) -- Positive, Negative
 	self:Log("SPELL_AURA_APPLIED", "FocusedChargeApplied", 394582)
 	self:Log("SPELL_AURA_APPLIED", "ScatteredChargeApplied", 394583)
 	self:Log("SPELL_CAST_START", "TempestWing", 385574)
@@ -222,7 +248,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "FuseStacks", 389878)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FuseStacks", 389878)
 	self:Log("SPELL_CAST_START", "BallLightning", 385068)
-	self:Death("StormfiendDeath", 197145)
+	self:Death("StormfiendDeath", 197145) -- Colossal Stormfiend
 
 	-- Stage Three: Storm Incarnate
 	self:Log("SPELL_CAST_START", "RagingStorm", 385569)
@@ -242,6 +268,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	timers = self:Easy() and timersEasy or timersHeroic
 	self:SetStage(1)
 	-- Stage One: The Winds of Change
 	hurricaneWingCount = 1
@@ -269,11 +296,11 @@ function mod:OnEngage()
 	-- Mythic
 	stormEaterCount = 1
 
-	self:Bar(395906, 5, CL.count:format(self:SpellName(395906), electrifiedJawsCount))
-	self:Bar(381615, 15, CL.count:format(CL.bomb, staticChargeCount))
-	self:Bar(377594, 23, CL.count:format(L.lightning_breath, lightningBreathCount))
-	self:Bar(377612, 35, CL.count:format(L.hurricane_wing, hurricaneWingCount))
-	self:Bar(388643, 88, CL.count:format(L.volatile_current, volatileCurrentCount))
+	self:Bar(395906, timers[1][395906][electrifiedJawsCount], CL.count:format(self:SpellName(395906), electrifiedJawsCount))
+	self:Bar(381615, timers[1][381615][staticChargeCount], CL.count:format(CL.bomb, staticChargeCount))
+	self:Bar(377594, timers[1][377594][lightningBreathCount], CL.count:format(L.lightning_breath, lightningBreathCount))
+	self:Bar(377612, timers[1][377612][hurricaneWingCount], CL.count:format(L.hurricane_wing, hurricaneWingCount))
+	self:Bar(388643, timers[1][388643][volatileCurrentCount], CL.count:format(L.volatile_current, volatileCurrentCount))
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -441,7 +468,7 @@ function mod:ElectrifiedJaws(args)
 	self:Message(395906, "purple", CL.casting:format(CL.count:format(args.spellName, electrifiedJawsCount)))
 	self:PlaySound(395906, "info")
 	electrifiedJawsCount = electrifiedJawsCount + 1
-	self:Bar(395906, timers[self:GetStage()][args.spellId][electrifiedJawsCount], CL.count:format(args.spellName, electrifiedJawsCount))
+	self:Bar(395906, timers[self:GetStage()][395906][electrifiedJawsCount], CL.count:format(args.spellName, electrifiedJawsCount))
 end
 
 function mod:ElectrifiedJawsApplied(args)
@@ -461,13 +488,6 @@ function mod:LightningBreath(args)
 	lightningBreathCount = lightningBreathCount + 1
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][lightningBreathCount], CL.count:format(L.lightning_breath, lightningBreathCount))
 end
-
--- function mod:LightningStrikes(args) -- XXX Need custom stuff
--- 	self:StopBar(CL.count:format(L.lightning_strikes, lightningStrikesCount))
--- 	self:Message(args.spellId, "cyan", CL.count:format(L.lightning_strikes, lightningStrikesCount))
--- 	self:PlaySound(args.spellId, "info")
--- 	lightningStrikesCount = lightningStrikesCount + 1
--- end
 
 function mod:ElectricLashApplied(args)
 	if self:Me(args.destGUID) then
@@ -625,17 +645,31 @@ function mod:PositiveOrNegativeChargeApplied(args)
 	end
 end
 
-function mod:FocusedChargeApplied(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "green", L.focused_charge)
-		self:PlaySound(args.spellId, "info")
+do
+	local prev = 0
+	function mod:FocusedChargeApplied(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 2 then
+				prev = t
+				self:Message(args.spellId, "green", L.focused_charge)
+				self:PlaySound(args.spellId, "info")
+			end
+		end
 	end
 end
 
-function mod:ScatteredChargeApplied(args)
-	if self:Me(args.destGUID) then
-		self:Message(args.spellId, "red")
-		self:PlaySound(args.spellId, "alarm")
+do
+	local prev = 0
+	function mod:ScatteredChargeApplied(args)
+		if self:Me(args.destGUID) then
+			local t = args.time
+			if t-prev > 2 then
+				prev = t
+				self:Message(args.spellId, "red")
+				self:PlaySound(args.spellId, "alarm")
+			end
+		end
 	end
 end
 
@@ -652,13 +686,13 @@ function mod:FulminatingCharge(args)
 	self:Message(377467, "yellow", CL.count:format(L.fulminating_charge, fulminatingChargeCount))
 	self:PlaySound(377467, "long")
 	fulminatingChargeCount = fulminatingChargeCount + 1
-	self:Bar(377467, timers[self:GetStage()][args.spellId][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
+	self:Bar(377467, timers[self:GetStage()][377467][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
 end
 
 function mod:FulminatingChargeApplied(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId, L.fulminating_charge_debuff)
-		self:SayCountdown(args.spellId, 4)
+		self:SayCountdown(args.spellId, 5)
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -719,34 +753,24 @@ function mod:RagingStorm(args)
 	self:PlaySound(args.spellId, "info")
 end
 
-do
-	local playerList = {}
-	function mod:MagneticCharge(args)
-		self:CastBar(args.spellId, 8, L.magnetic_charge)
-		magneticChargeCount = magneticChargeCount + 1
-		self:Bar(args.spellId, timers[3][args.spellId][magneticChargeCount], CL.count:format(L.magnetic_charge, magneticChargeCount))
-		playerList = {}
+function mod:MagneticChargeApplied(args)
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId, L.magnetic_charge)
+		self:SayCountdown(args.spellId, 8)
+		self:PlaySound(args.spellId, "warning")
 	end
+	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(L.magnetic_charge, magneticChargeCount-1))
+	self:TargetBar(args.spellId, 8, args.destName, CL.count:format(L.magnetic_charge, magneticChargeCount-1))
+end
 
-	function mod:MagneticChargeApplied(args)
-		local count = #playerList+1
-		playerList[count] = args.destName
-		if self:Me(args.destGUID) then
-			self:Say(args.spellId, L.magnetic_charge)
-			self:SayCountdown(args.spellId, 8)
-			self:PlaySound(args.spellId, "warning")
-		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.magnetic_charge, magneticChargeCount-1))
-	end
-
-	function mod:MagneticChargeRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
-		end
+function mod:MagneticChargeRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
 function mod:ThunderousBlast(args)
+	self:StopBar(CL.count:format(L.thunderous_blast, thunderousBlastCount-1))
 	self:Message(args.spellId, "purple", CL.casting:format(CL.count:format(L.thunderous_blast, thunderousBlastCount)))
 	self:PlaySound(args.spellId, "alarm")
 	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
