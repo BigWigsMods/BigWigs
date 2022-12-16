@@ -76,7 +76,7 @@ BigWigs:AddColors("Kurog Grimtotem", {
 	[372158] = {"blue","purple"},
 	[372458] = {"blue","orange","yellow"},
 	[373329] = "orange",
-	[373487] = {"blue","orange"},
+	[373487] = {"blue","orange","yellow"},
 	[373678] = "yellow",
 	[374023] = {"blue","yellow"},
 	[374215] = "orange",
@@ -86,7 +86,6 @@ BigWigs:AddColors("Kurog Grimtotem", {
 	[374623] = {"blue","yellow"},
 	[374624] = "red",
 	[374691] = "orange",
-	[374779] = "cyan",
 	[374861] = "cyan",
 	[382563] = "yellow",
 	[390920] = {"blue","orange","yellow"},
@@ -95,6 +94,7 @@ BigWigs:AddColors("Kurog Grimtotem", {
 	[391696] = {"blue","yellow"},
 	[395893] = "orange",
 	[396241] = "red",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Broodkeeper Diurna", {

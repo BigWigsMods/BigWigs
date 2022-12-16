@@ -23,9 +23,9 @@ local avoidCount = 1
 local damageCount = 1
 local ultimateCount = 1
 local barrierRemovedCount = 0
-local avoidCD = mod:Mythic() and 45 or 60.5
-local damageCD = mod:Mythic() and 25.5 or 30.5
-local ultimateCD = mod:Mythic() and 45 or 62
+local avoidCD = mod:Easy() and 60.5 or 46
+local damageCD = 20.7
+local ultimateCD = 46
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -169,7 +169,6 @@ function mod:GetOptions()
 		shockingBurstMarker,
 		374215, -- Thunder Strike
 		-- Stage 2
-		374779, -- Primal Barrier
 		{374321, "TANK"}, -- Breaking Gravel
 		{374427, "SAY", "SAY_COUNTDOWN"}, -- Ground Shatter
 		374430, -- Violent Upheaval
@@ -184,7 +183,7 @@ function mod:GetOptions()
 		[373678] = -25061, -- Frost Altar
 		[391056] = -25064, -- Earthen Altar
 		[373487] = -25068, -- Storm Altar
-		[374779] = -25071, -- Stage 2
+		[374321] = -25071, -- Stage 2
 		[396241] = -26000, -- Stage 3
 	},{
 		-- Fire
@@ -204,7 +203,6 @@ function mod:GetOptions()
 		[390920] = CL.bombs, -- Shocking Burst (Bombs)
 		[374215] = L.thundering_strike, -- Thundering Strike (Soaks)
 		-- Stage 2
-		[374779] = CL.intermission, -- Primal Barrier (Intermission)
 		[374427] = CL.bombs, -- Ground Shatter (Bombs)
 		-- Stage 3
 		[396241] = L.primal_attunement, -- Primal Attunement (Soft Enrage)
@@ -240,10 +238,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EruptingBedrock", 395893)
 	self:Log("SPELL_CAST_START", "SeismicRupture", 374691)
 	-- Storm
-	self:Log("SPELL_CAST_START", "LightningCrash", 373487)
-	self:Log("SPELL_AURA_APPLIED", "LightningCrashApplied", 373487)
-	self:Log("SPELL_AURA_REMOVED", "LightningCrashRemoved", 373487)
-	self:Log("SPELL_CAST_SUCCESS", "ShockingBurst", 390920)
+	self:Log("SPELL_CAST_START", "LightningCrash", 397358)
+	self:Log("SPELL_AURA_APPLIED", "LightningCrashApplied", 373494)
+	self:Log("SPELL_AURA_REMOVED", "LightningCrashRemoved", 373494)
+	self:Log("SPELL_CAST_START", "ShockingBurst", 397341)
 	self:Log("SPELL_AURA_APPLIED", "ShockingBurstApplied", 390920)
 	self:Log("SPELL_AURA_REMOVED", "ShockingBurstRemoved", 390920)
 	self:Log("SPELL_CAST_START", "ThunderStrike", 374215)
@@ -295,7 +293,7 @@ function mod:OnEngage()
 	self:Bar("ultimate", ultimatePullCD, CL.count:format(L.ultimate_bartext:format(currentAltar), ultimateCount), "achievement_bg_most_damage_killingblow_dieleast")
 
 	self:Bar(372158, 10.2) -- Sundering Strike
-	self:Bar(374779, 125, CL.intermission) -- Primal Barrier
+	self:Bar("stages", 125, CL.stage:format(2), 374779) -- Primal Barrier
 end
 
 --------------------------------------------------------------------------------
@@ -402,21 +400,19 @@ function mod:PrimalBarrierApplied(args)
 	self:StopBar(CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount))
 	self:StopBar(CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount))
 	self:StopBar(372158) -- Sundering Strike
-	self:StopBar(CL.intermission)
+	self:StopBar(CL.stage:format(2))
 
-	local stage = self:GetStage() + 0.5
-	self:SetStage(stage)
-
-	self:Message(args.spellId, "cyan", CL.intermission, false)
-	self:PlaySound(args.spellId, "long") -- phase
+	self:SetStage(2)
+	self:Message("stages", "cyan", CL.stage:format(2), false)
+	self:PlaySound("stages", "long") -- phase
 end
 
 function mod:PrimalBarrierRemoved(args)
-	self:Message(args.spellId, "cyan", CL.over:format(CL.intermission), false)
-	self:PlaySound(args.spellId, "long") -- phase
-
-	local stage = self:GetStage() + 0.5
+	barrierRemovedCount = barrierRemovedCount + 1
+	local stage = barrierRemovedCount == 2 and 3 or 1
 	self:SetStage(stage)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
+	self:PlaySound("stages", "long") -- phase
 
 	currentAltar = "?"
 	avoidCount = 1
@@ -451,7 +447,7 @@ function mod:PrimalBarrierRemoved(args)
 
 	self:Bar(372158, 10.2) -- Sundering Strike
 	if stage < 3 then
-		self:Bar(374779, 127, CL.intermission) -- Primal Barrier
+		self:Bar("stages", 127, CL.stage:format(2), 374779) -- Primal Barrier
 	else
 		self:Bar(396241, 94, L.primal_attunement) -- Primal Attunement
 	end
@@ -486,10 +482,11 @@ do
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId, nil, L.searing_carnage)
 			self:SayCountdown(args.spellId, 5)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.ultimate_bartext:format(L.searing_carnage), ultimateCount-1))
+		-- self:TargetsMessage(args.spellId, "yellow", playerList, nil, L.searing_carnage))
 	end
 
 	function mod:SearingCarnageRemoved(args)
@@ -553,7 +550,7 @@ do
 			self:CustomIcon(aboluteZeroMarker, iconList[i].player, i)
 		end
 		if not playedSound then -- play for others
-			self:TargetsMessage(372458, "yellow", playerList, 2, CL.count:format(L.ultimate_bartext:format(L.absolute_zero), ultimateCount-1))
+			self:TargetsMessage(372458, "yellow", playerList, 2, CL.count:format(L.absolute_zero, ultimateCount-1))
 			self:PlaySound(372458, "alert") -- stack
 		end
 	end
@@ -592,7 +589,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm") -- debuffdamage
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, L.enveloping_earth, nil, 0.8)
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.enveloping_earth, damageCount-1), nil, 0.8)
 		self:CustomIcon(envelopingEarthMarker, args.destName, count)
 	end
 
@@ -615,8 +612,8 @@ end
 do
 	local playerList = {}
 	function mod:LightningCrash(args)
-		self:Message(391056, "yellow", CL.casting:format(CL.count:format(L.damage_bartext:format(L.lightning_crash), damageCount)))
-		self:PlaySound(391056, "info")
+		self:Message(373487, "yellow", CL.casting:format(CL.count:format(L.damage_bartext:format(L.lightning_crash), damageCount)))
+		self:PlaySound(373487, "info")
 		playerList = {}
 	end
 
@@ -624,17 +621,17 @@ do
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, L.lightning_crash)
-			self:SayCountdown(args.spellId, 4)
-			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "warning") -- debuffmove
+			self:Say(373487, L.lightning_crash)
+			self:SayCountdown(373487, 4)
+			self:PersonalMessage(373487)
+			self:PlaySound(373487, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, nil, L.lightning_crash)
+		self:TargetsMessage(373487, "orange", playerList, nil, CL.count:format(L.lightning_crash, damageCount-1))
 	end
 
 	function mod:LightningCrashRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(373487)
 		end
 	end
 end
@@ -642,8 +639,8 @@ end
 do
 	local playerList = {}
 	function mod:ShockingBurst(args)
-		self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.avoid_bartext:format(CL.bombs), avoidCount)))
-		self:PlaySound(args.spellId, "info")
+		self:Message(390920, "yellow", CL.casting:format(CL.count:format(L.avoid_bartext:format(CL.bombs), avoidCount)))
+		self:PlaySound(390920, "info")
 		playerList = {}
 	end
 
@@ -656,7 +653,7 @@ do
 			self:SayCountdown(args.spellId, 5, count)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, nil, CL.bombs)
+		self:TargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.bombs, avoidCount-1))
 		self:CustomIcon(shockingBurstMarker, args.destName, count)
 	end
 
