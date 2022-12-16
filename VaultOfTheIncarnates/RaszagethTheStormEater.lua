@@ -753,6 +753,11 @@ function mod:RagingStorm(args)
 	self:PlaySound(args.spellId, "info")
 end
 
+function mod:MagneticCharge(args)
+	magneticChargeCount = magneticChargeCount + 1
+	self:Bar(args.spellId, timers[3][args.spellId][magneticChargeCount], CL.count:format(L.magnetic_charge, magneticChargeCount))
+end
+
 function mod:MagneticChargeApplied(args)
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId, L.magnetic_charge)
