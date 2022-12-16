@@ -47,13 +47,13 @@ BigWigs:AddColors("Sennarth, The Cold Breath", {
 	[372044] = "blue",
 	[372082] = {"blue","yellow"},
 	[372238] = "cyan",
-	[372539] = "green",
+	[372539] = {"green","red"},
 	[373048] = {"blue","yellow"},
 	[373405] = "red",
 	[374112] = "yellow",
 	[385083] = {"blue","purple"},
 	["ascend"] = "yellow",
-	["stages"] = "red",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Dathea, Ascended", {
