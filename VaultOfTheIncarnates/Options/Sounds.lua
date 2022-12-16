@@ -22,7 +22,7 @@ BigWigs:AddSounds("Terros", {
 	[382458] = "underyou",
 	[383073] = "alarm",
 	[388393] = "alarm",
-	[391592] = {"alert","warning"},
+	[391592] = {"alert","info","warning"},
 })
 
 BigWigs:AddSounds("The Primal Council", {
