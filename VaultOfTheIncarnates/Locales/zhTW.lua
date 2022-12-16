@@ -33,8 +33,6 @@ if L then
 	L.conductive_marks = "導電印記" -- Conductive Marks
 	L.conductive_mark = "導電印記" -- Singular
 
-	L.custom_off_chain_lightning = "閃電鏈的計時器預設關閉，可勾選此選項啟用。"
-
 	L.custom_on_stop_timers = "總是顯示計時器"
 	L.custom_on_stop_timers_desc = "啟用此選項後，導電印記的計時條會保持顯示。"
 end

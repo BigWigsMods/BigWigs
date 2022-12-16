@@ -33,8 +33,6 @@ if L then
 	-- L.conductive_marks = "Marks" -- Conductive Marks
 	-- L.conductive_mark = "Mark" -- Singular
 
-	-- L.custom_off_chain_lightning = "Chain Lightning is off by default, enable this to enable chain lightning."
-
 	-- L.custom_on_stop_timers = "Always show ability bars"
 	-- L.custom_on_stop_timers_desc = "Abilities that will always be shown: Conductive Mark"
 end
@@ -117,7 +115,7 @@ end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "itIT")
 if L then
-	--L.lighting_devastation_trigger = "deep breath"
+	--L.lighting_devastation_trigger = "deep breath" -- Raszageth takes a deep breath...
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "itIT")

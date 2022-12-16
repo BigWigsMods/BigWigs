@@ -109,7 +109,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GreatstaffsWrathApplied", 375889, 380483) -- Stage 1, Stage 2 (Empowered)
 	self:Log("SPELL_AURA_APPLIED", "ClutchwatchersRage", 375829)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ClutchwatchersRage", 375829)
-	self:Log("SPELL_CAST_START", "RapidIncubation", 376073)
+	self:RegisterUnitEvent("UNIT_SPELLCAST_START", nil, "boss1") -- Rapid Incubation-376073
+	-- self:Log("SPELL_CAST_START", "RapidIncubation", 376073) -- hidden z.z?
 	self:Log("SPELL_CAST_START", "Wildfire", 375871)
 	self:Log("SPELL_CAST_START", "IcyShroud", 388716, 388918) -- Stage 1, Stage 2 (Frozen Shroud)
 	self:Log("SPELL_CAST_START", "MortalStoneclaws", 375870)
@@ -161,9 +162,9 @@ function mod:OnEngage()
 	primalReinforcementsCount = 1
 
 	self:CDBar(375871, 8.5, CL.count:format(self:SpellName(375871), wildfireCount)) -- Wildfire
-	self:CDBar(376073, 14.5, CL.count:format(L.rapid_incubation, rapidIncubationCount)) -- Rapid Incubation
+	self:CDBar(376073, 13, CL.count:format(L.rapid_incubation, rapidIncubationCount)) -- Rapid Incubation
 	self:CDBar(380175, 17, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount)) -- Greatstaff of the Broodkeeper
-	self:CDBar(-25129, 22, L.add_count:format(CL.adds, primalReinforcementsCount, 1), "inv_dragonwhelpproto_blue") -- Primalist Reinforcements / Adds
+	self:CDBar(-25129, self:Easy() and 35.7 or 33, L.add_count:format(CL.adds, primalReinforcementsCount, 1), "inv_dragonwhelpproto_blue") -- Primalist Reinforcements / Adds
 	self:CDBar(388716, 26.5, CL.count:format(L.icy_shroud, icyShroudCount)) -- Icy Shroud
 
 	if self:GetOption(primalistMageMarker) then
@@ -174,6 +175,12 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_SPELLCAST_START(_, unit, _, spellId)
+	if spellId == 376073 then -- Rapid Incubation
+		self:RapidIncubation()
+	end
+end
 
 function mod:AddMarking(_, unit, guid)
 	if guid and not mobCollector[guid] and self:MobId(guid) == 191206 then -- Primalist Mage
@@ -232,7 +239,7 @@ function mod:GreatstaffOfTheBroodkeeper(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175) -- Same icon for stage 1 + 2
 	self:PlaySound(args.spellId, "alert")
 	greatstaffCount = greatstaffCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 25 or 19, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175) -- Same icon for stage 1 + 2
+	self:CDBar(args.spellId, 25, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175) -- Same icon for stage 1 + 2
 end
 
 function mod:GreatstaffsWrathApplied(args)
@@ -248,12 +255,12 @@ function mod:ClutchwatchersRage(args)
 	self:PlaySound(args.spellId, "alarm")
 end
 
-function mod:RapidIncubation(args)
+function mod:RapidIncubation()
 	self:StopBar(CL.count:format(L.rapid_incubation, rapidIncubationCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.rapid_incubation, rapidIncubationCount))
-	self:PlaySound(args.spellId, "alert")
+	self:Message(376073, "yellow", CL.count:format(L.rapid_incubation, rapidIncubationCount))
+	self:PlaySound(376073, "alert")
 	rapidIncubationCount = rapidIncubationCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 24.5 or 19.9, CL.count:format(L.rapid_incubation, rapidIncubationCount))
+	self:CDBar(376073, self:Easy() and 27 or 25, CL.count:format(L.rapid_incubation, rapidIncubationCount))
 end
 
 do
@@ -266,11 +273,7 @@ do
 			self:Message(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
 			wildfireCount = wildfireCount + 1
-			local cd = self:GetStage() == 2 and 25 or 21
-			if self:Mythic() then
-				local cd = 25
-			end
-			self:CDBar(args.spellId, cd, CL.count:format(args.spellName, wildfireCount))
+			self:CDBar(args.spellId, (self:Easy() or self:GetStage() == 1) and 25 or 22.5, CL.count:format(args.spellName, wildfireCount))
 		end
 	end
 end
@@ -282,14 +285,13 @@ function mod:IcyShroud(args)
 	self:Message(args.spellId, "yellow", CL.count:format(text, icyShroudCount))
 	self:PlaySound(args.spellId, "alert")
 	icyShroudCount = icyShroudCount + 1
-	self:CDBar(args.spellId, 40.5, CL.count:format(text, icyShroudCount)) -- XXX Frozen Shroud had a 36s?
+	self:CDBar(args.spellId, 44, CL.count:format(text, icyShroudCount))
 end
 
 function mod:MortalStoneclaws(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
-	local cd = self:GetStage() == 2 and 10 or 20 -- Stage 1: 20~25, Stage 2: 8.5~15
-	self:CDBar(args.spellId, cd)
+	self:CDBar(args.spellId, 23)
 end
 
 function mod:MortalWounds(args)
@@ -306,7 +308,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		self:ScheduleTimer("Message", offset, -25129, "yellow", L.add_count:format(CL.adds, primalReinforcementsCount, 1), "inv_dragonwhelpproto_blue")
 		self:ScheduleTimer("PlaySound", offset, -25129, "long")
 
-		local waveTwoTimer = self:Easy() and 40 or 25 -- Timer from emote until activation
+		local waveTwoTimer = (self:Easy() and 24 or self:Heroic() and 19 or 12) + offset -- Timer from emote until activation
 		self:ScheduleTimer("Bar", offset, -25129, waveTwoTimer-offset,  L.add_count:format(CL.adds, primalReinforcementsCount, 2), "inv_dragonwhelpproto_blue")
 		self:ScheduleTimer("Message", waveTwoTimer, -25129, "yellow",  L.add_count:format(CL.adds, primalReinforcementsCount, 2), "inv_dragonwhelpproto_blue")
 		self:ScheduleTimer("PlaySound", waveTwoTimer, -25129, "long")
