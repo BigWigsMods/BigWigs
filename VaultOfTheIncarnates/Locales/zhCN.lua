@@ -33,8 +33,6 @@ if L then
 	L.conductive_marks = "印记" -- Conductive Marks
 	L.conductive_mark = "标记" -- Singular
 
-	L.custom_off_chain_lightning = "闪电链是默认关闭的，启用此选项可以启用闪电链。"
-
 	L.custom_on_stop_timers = "总是显示计时条"
 	L.custom_on_stop_timers_desc = "总是显示的技能: 传导印记"
 end
@@ -117,7 +115,7 @@ end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "zhCN")
 if L then
-	L.lighting_devastation_trigger = "深呼吸"
+	L.lighting_devastation_trigger = "深呼吸" -- Raszageth takes a deep breath...
 	
 	-- Stage One: The Winds of Change
 	L.hurricane_wing = "推开"

@@ -22,7 +22,7 @@ BigWigs:AddSounds("Terros", {
 	[382458] = "underyou",
 	[383073] = "alarm",
 	[388393] = "alarm",
-	[391592] = {"alert","warning"},
+	[391592] = {"alert","info","warning"},
 })
 
 BigWigs:AddSounds("The Primal Council", {
@@ -43,7 +43,7 @@ BigWigs:AddSounds("Sennarth, The Cold Breath", {
 	[372030] = "info",
 	[372044] = "info",
 	[372082] = "warning",
-	[372539] = "info",
+	[372539] = {"alert","info"},
 	[373048] = "warning",
 	[373405] = "warning",
 	[374112] = "alert",
@@ -81,6 +81,7 @@ BigWigs:AddSounds("Kurog Grimtotem", {
 	[374623] = {"alarm","alert"},
 	[374624] = "warning",
 	[374691] = "warning",
+	[374779] = "long",
 	[374861] = "long",
 	[382563] = "info",
 	[390920] = {"info","warning"},
@@ -89,7 +90,6 @@ BigWigs:AddSounds("Kurog Grimtotem", {
 	[391696] = "warning",
 	[395893] = "alert",
 	[396241] = "warning",
-	["stages"] = "long",
 })
 
 BigWigs:AddSounds("Broodkeeper Diurna", {

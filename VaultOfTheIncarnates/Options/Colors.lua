@@ -22,11 +22,11 @@ BigWigs:AddColors("Terros", {
 	[382458] = "blue",
 	[383073] = "yellow",
 	[388393] = "yellow",
-	[391592] = {"blue","yellow"},
+	[391592] = {"blue","green","yellow"},
 })
 
 BigWigs:AddColors("The Primal Council", {
-	[371624] = {"blue","cyan"},
+	[371624] = {"blue","purple"},
 	[372027] = "orange",
 	[372056] = {"blue","purple"},
 	[372279] = "yellow",
@@ -47,13 +47,13 @@ BigWigs:AddColors("Sennarth, The Cold Breath", {
 	[372044] = "blue",
 	[372082] = {"blue","yellow"},
 	[372238] = "cyan",
-	[372539] = "green",
+	[372539] = {"green","red"},
 	[373048] = {"blue","yellow"},
 	[373405] = "red",
 	[374112] = "yellow",
 	[385083] = {"blue","purple"},
 	["ascend"] = "yellow",
-	["stages"] = "red",
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Dathea, Ascended", {
@@ -86,6 +86,7 @@ BigWigs:AddColors("Kurog Grimtotem", {
 	[374623] = {"blue","yellow"},
 	[374624] = "red",
 	[374691] = "orange",
+	[374779] = "cyan",
 	[374861] = "cyan",
 	[382563] = "yellow",
 	[390920] = {"blue","orange","yellow"},
@@ -94,7 +95,6 @@ BigWigs:AddColors("Kurog Grimtotem", {
 	[391696] = {"blue","yellow"},
 	[395893] = "orange",
 	[396241] = "red",
-	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Broodkeeper Diurna", {
