@@ -532,6 +532,7 @@ do
 		[956] = true, -- Anduin defeat
 		[957] = true, -- Jailer intro
 		[958] = true, -- Jailer defeat
+		[964] = true, -- Raszageth defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
