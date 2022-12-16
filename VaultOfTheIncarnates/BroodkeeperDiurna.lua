@@ -171,11 +171,8 @@ function mod:OnEngage()
 	self:CDBar(-25129, 22, L.add_count:format(CL.adds, primalReinforcementsCount, 1), "inv_dragonwhelpproto_blue") -- Primalist Reinforcements / Adds
 	self:CDBar(388716, 26.5, CL.count:format(L.icy_shroud, icyShroudCount)) -- Icy Shroud
 
-	if self:GetOption(primalistMageMarker) then
+	if self:GetOption(primalistMageMarker or stormbringerMarker) then
 		self:RegisterTargetEvents("AddMarking")
-		else if self:GetOption(stormbringerMarker) then
-			self:RegisterTargetEvents("AddMarking")
-		end
 	end
 end
 
@@ -193,7 +190,8 @@ function mod:AddMarking(_, unit, guid)
 				return
 			end
 		end
-		else if guid and not mobCollector[guid] and self:MobId(guid) == 191232 then -- Drakonid Stormbringer
+	else
+		if guid and not mobCollector[guid] and self:MobId(guid) == 191232 then -- Drakonid Stormbringer
 			for i = 3, -1 do -- 3
 				if not stormbringerMarks[i] then
 					mobCollector[guid] = true
