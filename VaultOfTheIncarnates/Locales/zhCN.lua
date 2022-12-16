@@ -42,7 +42,7 @@ if L then
 	L.ascend = "上升"
 	L.ascend_desc = "瑟娜尔丝开始向其冰冷巢穴的顶端攀登。"
 	L.chilling_blast = "冰冷冲击"
-	L.freezing_breath = "打怪吐息"
+	L.freezing_breath = "大怪吐息"
 	L.webs = "蛛网"
 	L.web = "蛛网"
 	L.gossamer_burst = "拉近"
