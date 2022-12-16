@@ -81,6 +81,7 @@ BigWigs:AddSounds("Kurog Grimtotem", {
 	[374623] = {"alarm","alert"},
 	[374624] = "warning",
 	[374691] = "warning",
+	[374779] = "long",
 	[374861] = "long",
 	[382563] = "info",
 	[390920] = {"info","warning"},
@@ -89,7 +90,6 @@ BigWigs:AddSounds("Kurog Grimtotem", {
 	[391696] = "warning",
 	[395893] = "alert",
 	[396241] = "warning",
-	["stages"] = "long",
 })
 
 BigWigs:AddSounds("Broodkeeper Diurna", {
