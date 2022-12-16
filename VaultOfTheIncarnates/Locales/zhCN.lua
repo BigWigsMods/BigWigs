@@ -1,123 +1,151 @@
 local L = BigWigs:NewBossLocale("Eranog", "zhCN")
 if not L then return end
 if L then
-	-- L.custom_on_nameplate_fixate = "Fixate Nameplate Icon"
-	-- L.custom_on_nameplate_fixate_desc = "Show an icon on the nameplate of Frenzied Tarasek that are fixed on you.\n\nRequires the use of Enemy Nameplates and a supported nameplate addon (KuiNameplates, Plater)."
+	L.custom_on_nameplate_fixate = "杀戮指令姓名板图标"
+	L.custom_on_nameplate_fixate_desc = "杀戮指令标记你时在姓名板显示一个图标。\n\n需要使用敌对姓名板和支持姓名板的插件（KuiNameplates,Plater）。"
 
-	-- L.molten_cleave = "Frontal"
-	-- L.incinerating_roar = "Roar"
-	-- L.molten_spikes = "Spikes"
-	-- L.collapsing_army = "Army"
-	-- L.greater_flamerift = "Mythic Add"
-	-- L.leaping_flames = "Flames"
+	L.molten_cleave = "头前"
+	L.incinerating_roar = "咆哮"
+	L.molten_spikes = "尖刺"
+	L.collapsing_army = "军团"
+	L.greater_flamerift = "史诗+"
+	L.leaping_flames = "烈焰"
 end
 
 L = BigWigs:NewBossLocale("Terros", "zhCN")
 if L then
-	-- L.rock_blast = "Soak"
-	-- L.resonating_annihilation = "Annihilation"
-	-- L.awakened_earth = "Pillar"
-	-- L.shattering_impact = "Slam"
-	-- L.concussive_slam = "Tank Line"
-	-- L.infused_fallout = "Dust"
+	L.rock_blast = "漩涡"
+	L.resonating_annihilation = "湮灭"
+	L.awakened_earth = "石柱"
+	L.shattering_impact = "猛击"
+	L.concussive_slam = "坦克直线"
+	L.infused_fallout = "爆尘"
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "zhCN")
 if L then
-	-- L.primal_blizzard = "Blizzard" -- Primal Blizzard
-	-- L.earthen_pillars = "Pillars" -- Earthen Pillars
-	-- L.meteor_axes = "Axes" -- Meteor Axes
-	-- L.meteor_axe = "Axe" -- Singular
-	-- L.meteor_axes_melee = "Melee Axe"
-	-- L.meteor_axes_ranged = "Ranged Axe"
-	-- L.conductive_marks = "Marks" -- Conductive Marks
-	-- L.conductive_mark = "Mark" -- Singular
+	L.primal_blizzard = "暴风雪" -- Primal Blizzard
+	L.earthen_pillars = "岩石柱" -- Earthen Pillars
+	L.meteor_axes = "斧头" -- Meteor Axes
+	L.meteor_axe = "斧头" -- Singular
+	L.meteor_axes_melee = "近战斧头"
+	L.meteor_axes_ranged = "远程斧头"
+	L.conductive_marks = "印记" -- Conductive Marks
+	L.conductive_mark = "标记" -- Singular
 
-	-- L.custom_off_chain_lightning = "Chain Lightning is off by default, enable this to enable chain lightning."
+	L.custom_off_chain_lightning = "闪电链是默认关闭的，启用此选项可以启用闪电链。"
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Abilities that will always be shown: Conductive Mark"
+	L.custom_on_stop_timers = "总是显示计时条"
+	L.custom_on_stop_timers_desc = "总是显示的技能: 传导印记"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "zhCN")
 if L then
-	-- L.ascend = "Ascend"
-	-- L.ascend_desc = "Sennarth ascends the room towards the frozen percipice."
-	-- L.chilling_blast = "Spread"
-	-- L.freezing_breath = "Add Breath"
-	-- L.webs = "Webs"
-	-- L.web = "Web"
-	-- L.gossamer_burst = "Grip"
-	-- L.repelling_burst = "Pushback"
+	L.ascend = "上升"
+	L.ascend_desc = "瑟娜尔丝开始向其冰冷巢穴的顶端攀登。"
+	L.chilling_blast = "传播"
+	L.freezing_breath = "吐息"
+	L.webs = "蛛网"
+	L.web = "蛛网"
+	L.gossamer_burst = "拉近"
+	L.repelling_burst = "推离"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "zhCN")
 if L then
-	-- L.conductive_marks = "Marks"
-	-- L.conductive_mark = "Mark"
-	-- L.raging_burst = "New Tornadoes"
-	-- L.cyclone = "Pull In"
-	-- L.crosswinds = "Moving Tornadoes"
+	L.conductive_marks = "标记"
+	L.conductive_mark = "印记"
+	L.raging_burst = "新旋风"
+	L.cyclone = "拉进"
+	L.crosswinds = "纷乱之风"
 end
 
 L = BigWigs:NewBossLocale("Kurog Grimtotem", "zhCN")
 if L then
-	-- -- Types
-	-- L.damage = "Damage Skills"
-	-- L.damage_desc = "Display timers for Damage abilities (Magma Burst, Biting Chill, Enveloping Earth, Lightning Crash) when we don't know what alter the boss is at."
-	-- L.damage_bartext = "%s [Dmg]" -- {Spell} [Dmg]
+	-- Types
+	L.damage = "伤害技能"
+	L.damage_desc = "在我们不知道首领是什么元素时，显示伤害技能的计时条（岩浆爆裂，酷寒，大地笼罩，闪电崩裂）。"
+	L.damage_bartext = "%s [伤害]" -- {Spell} [Dmg]
 
-	-- L.avoid = "Avoid Skills"
-	-- L.avoid_desc = "Display timers for Avoid abilities (Molten Rupture, Frigid Torrent, Erupting Bedrock, Shocking Burst) when we don't know what alter the boss is at."
-	-- L.avoid_bartext = "%s [Avoid]" -- {Spell} [Avoid]
+	L.avoid = "躲避技能"
+	L.avoid_desc = "在我们不知道首领是什么元素时，显示躲避技能的计时条（熔火破裂，冷冽洪流，基岩喷发，震撼爆裂）。"
+	L.avoid_bartext = "%s [躲避]" -- {Spell} [Avoid]
 
-	-- L.ultimate = "Ultimate Skills"
-	-- L.ultimate_desc = "Display timers for Ultimate abilities (Searing Carnage, Absolute Zero, Seismic Rupture, Thundering Strike) when we don't know what alter the boss is at."
-	-- L.ultimate_bartext = "%s [Ult]" -- {Spell} [Ult]
+	L.ultimate = "终极技能"
+	L.ultimate_desc = "在我们不知道首领是什么元素时，显示终极技能的计时条（灼热屠戮，绝对零度，地层裂口，雷霆打击）"
+	L.ultimate_bartext = "%s [终极]" -- {Spell} [Ult]
 
-	-- -- Fire
-	-- L.magma_burst = "Pools"
-	-- L.molten_rupture = "Waves"
-	-- L.searing_carnage = "Dance"
+	-- Fire
+	L.magma_burst = "岩池"
+	L.molten_rupture = "熔岩"
+	L.searing_carnage = "移动"
 
-	-- -- Frost
-	-- L.biting_chill = "Chill DoT"
-	-- L.frigid_torrent = "Orbs"
-	-- L.absolute_zero = "Soaks"
-	-- L.absolute_zero_melee = "Melee Soak"
-	-- L.absolute_zero_ranged = "Ranged Soak"
+	-- Frost
+	L.biting_chill = "寒意"
+	L.frigid_torrent = "宝珠"
+	L.absolute_zero = "分摊"
+	L.absolute_zero_melee = "近战分摊"
+	L.absolute_zero_ranged = "远程分摊"
 
-	-- -- Earth
-	-- L.enveloping_earth = "Heal Absorb"
-	-- L.erupting_bedrock = "Quakes"
+	-- Earth
+	L.enveloping_earth = "治疗吸收"
+	L.erupting_bedrock = "地震"
 
-	-- -- Storm
-	-- L.lightning_crash = "Zaps"
-	-- L.thundering_strike = "Soaks"
+	-- Storm
+	L.lightning_crash = "崩裂"
+	L.thundering_strike = "分摊"
 
-	-- -- General
-	-- L.primal_attunement = "Soft Enrage"
+	-- General
+	L.primal_attunement = "软狂暴"
 
-	-- -- Stage 2
-	-- L.violent_upheaval = "Pillars"
+	-- Stage 2
+	L.violent_upheaval = "柱子"
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "zhCN")
 if L then
-	-- L.eggs_remaining = "%d Eggs Remaining!"
-	-- L.broodkeepers_bond = "Eggs Remaining"
-	-- L.greatstaff_of_the_broodkeeper = "Greatstaff"
-	-- L.greatstaffs_wrath = "Laser"
-	-- L.clutchwatchers_rage = "Rage"
-	-- L.rapid_incubation = "Infuse Eggs"
-	-- L.icy_shroud = "Heal Absorb"
-	-- L.broodkeepers_fury = "Fury"
+	L.eggs_remaining = "%d 剩余龙蛋!"
+	L.broodkeepers_bond = "剩余龙蛋"
+	L.greatstaff_of_the_broodkeeper = "巨杖"
+	L.greatstaffs_wrath = "激光"
+	L.clutchwatchers_rage = "狂怒"
+	L.rapid_incubation = "灌注龙蛋"
+	L.icy_shroud = "治疗吸收"
+	L.broodkeepers_fury = "愤怒"
 	-- L.frozen_shroud = "Root Absorb"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "zhCN")
 if L then
-	--L.lighting_devastation_trigger = "deep breath"
+	L.lighting_devastation_trigger = "深呼吸"
+	
+	-- Stage One: The Winds of Change
+	L.hurricane_wing = "推开"
+	L.volatile_current = "火花"
+	L.thunderous_blast = "冲击"
+	L.lightning_breath = "吐息"
+	L.lightning_strikes = "打击"
+	L.electric_scales = "团队伤害"
+	L.electric_lash = "鞭笞"
+	-- Intermission: The Primalist Strike
+	L.lightning_devastation = "吐息"
+	L.shattering_shroud = "治疗吸收"
+	-- Stage Two: Surging Power
+	L.stormsurge = "吸收护盾"
+	L.stormcharged = "正或负电荷"
+	L.positive = "正"
+	L.negative = "负"
+	L.focused_charge = "伤害增益"
+	L.tempest_wing = "风暴之翼"
+	L.fulminating_charge = "积雷"
+	L.fulminating_charge_debuff = "积雷"
+	-- Intermission: The Vault Falters
+	L.storm_break = "传送"
+	L.ball_lightning = "闪电球"
+	-- Stage Three: Storm Incarnate
+	L.magnetic_charge = "积雷倒数"
+	-- Mythic
+	L.storm_eater = "噬雷之龙"
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "zhCN")
