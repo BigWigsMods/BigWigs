@@ -443,7 +443,7 @@ do
 		-- Court of Stars
 		[70199]=true,[70198]=true,[70197]=true,[70193]=true,[70195]=true,[70192]=true,[70194]=true,
 		-- Halls of Valor
-		[57160]=true,[57162]=true,[68701]=true,[57161]=true,
+		[57160]=true,[57159]=true,[57162]=true,[68701]=true,[57161]=true,
 
 		-- De Other Side
 		[163828]=true,[163830]=true,[163831]=true,[163822]=true,[163823]=true,[163824]=true,[163834]=true,
