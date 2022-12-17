@@ -4,17 +4,17 @@ if L then
 	L.custom_on_nameplate_fixate = "杀戮指令姓名板图标"
 	L.custom_on_nameplate_fixate_desc = "杀戮指令标记你时在姓名板显示一个图标。\n\n需要使用敌对姓名板和支持姓名板的插件（KuiNameplates,Plater）。"
 
-	L.molten_cleave = "头前"
+	L.molten_cleave = "正面顺劈"
 	L.incinerating_roar = "咆哮"
 	L.molten_spikes = "尖刺"
-	L.collapsing_army = "军团"
-	L.greater_flamerift = "史诗+"
-	L.leaping_flames = "烈焰"
+	L.collapsing_army = "烈焰军团"
+	L.greater_flamerift = "大型增援"
+	L.leaping_flames = "飞扑烈焰"
 end
 
 L = BigWigs:NewBossLocale("Terros", "zhCN")
 if L then
-	L.rock_blast = "漩涡"
+	L.rock_blast = "漩涡分摊"
 	L.resonating_annihilation = "湮灭"
 	L.awakened_earth = "石柱"
 	L.shattering_impact = "猛击"
@@ -26,12 +26,12 @@ L = BigWigs:NewBossLocale("The Primal Council", "zhCN")
 if L then
 	L.primal_blizzard = "暴风雪" -- Primal Blizzard
 	L.earthen_pillars = "岩石柱" -- Earthen Pillars
-	L.meteor_axes = "斧头" -- Meteor Axes
-	L.meteor_axe = "斧头" -- Singular
-	L.meteor_axes_melee = "近战斧头"
-	L.meteor_axes_ranged = "远程斧头"
-	L.conductive_marks = "印记" -- Conductive Marks
-	L.conductive_mark = "标记" -- Singular
+	L.meteor_axes = "团队分摊" -- Meteor Axes
+	L.meteor_axe = "团队分摊" -- Singular
+	L.meteor_axes_melee = "近战分摊"
+	L.meteor_axes_ranged = "远程分摊"
+	L.conductive_marks = "传导印记" -- Conductive Marks
+	L.conductive_mark = "传导印记" -- Singular
 
 	L.custom_on_stop_timers = "总是显示计时条"
 	L.custom_on_stop_timers_desc = "总是显示的技能: 传导印记"
@@ -41,8 +41,8 @@ L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "zhCN")
 if L then
 	L.ascend = "上升"
 	L.ascend_desc = "瑟娜尔丝开始向其冰冷巢穴的顶端攀登。"
-	L.chilling_blast = "传播"
-	L.freezing_breath = "吐息"
+	L.chilling_blast = "冰冷冲击"
+	L.freezing_breath = "大怪吐息"
 	L.webs = "蛛网"
 	L.web = "蛛网"
 	L.gossamer_burst = "拉近"
@@ -51,9 +51,9 @@ end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "zhCN")
 if L then
-	L.conductive_marks = "标记"
-	L.conductive_mark = "印记"
-	L.raging_burst = "新旋风"
+	L.conductive_marks = "传导印记"
+	L.conductive_mark = "传导印记"
+	L.raging_burst = "狂怒风暴"
 	L.cyclone = "拉进"
 	L.crosswinds = "纷乱之风"
 end
@@ -74,24 +74,24 @@ if L then
 	L.ultimate_bartext = "%s [终极]" -- {Spell} [Ult]
 
 	-- Fire
-	L.magma_burst = "岩池"
+	L.magma_burst = "岩浆池"
 	L.molten_rupture = "熔岩"
-	L.searing_carnage = "移动"
+	L.searing_carnage = "火焰跳舞"
 
 	-- Frost
-	L.biting_chill = "寒意"
-	L.frigid_torrent = "宝珠"
-	L.absolute_zero = "分摊"
+	L.biting_chill = "刺骨寒意"
+	L.frigid_torrent = "冰球跳舞"
+	L.absolute_zero = "团队分摊"
 	L.absolute_zero_melee = "近战分摊"
 	L.absolute_zero_ranged = "远程分摊"
 
 	-- Earth
-	L.enveloping_earth = "治疗吸收"
-	L.erupting_bedrock = "地震"
+	L.enveloping_earth = "治疗吸收盾"
+	L.erupting_bedrock = "地震跳舞"
 
 	-- Storm
-	L.lightning_crash = "崩裂"
-	L.thundering_strike = "分摊"
+	L.lightning_crash = "闪电崩裂"
+	L.thundering_strike = "接圈"
 
 	-- General
 	L.primal_attunement = "软狂暴"
@@ -102,15 +102,15 @@ end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "zhCN")
 if L then
-	L.eggs_remaining = "%d 剩余龙蛋!"
+	L.eggs_remaining = "剩余 %d 个龙蛋!"
 	L.broodkeepers_bond = "剩余龙蛋"
 	L.greatstaff_of_the_broodkeeper = "巨杖"
 	L.greatstaffs_wrath = "激光"
 	L.clutchwatchers_rage = "狂怒"
 	L.rapid_incubation = "灌注龙蛋"
-	L.icy_shroud = "治疗吸收"
+	L.icy_shroud = "治疗吸收盾"
 	L.broodkeepers_fury = "愤怒"
-	-- L.frozen_shroud = "Root Absorb"
+	L.frozen_shroud = "定身吸收盾"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "zhCN")
@@ -127,7 +127,7 @@ if L then
 	L.electric_lash = "鞭笞"
 	-- Intermission: The Primalist Strike
 	L.lightning_devastation = "吐息"
-	L.shattering_shroud = "治疗吸收"
+	L.shattering_shroud = "治疗吸收盾"
 	-- Stage Two: Surging Power
 	L.stormsurge = "吸收护盾"
 	L.stormcharged = "正或负电荷"
