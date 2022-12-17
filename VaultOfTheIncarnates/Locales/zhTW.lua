@@ -70,7 +70,7 @@ if L then
 	L.avoid_bartext = "[躲避] %s" -- {Spell} [Avoid]
 
 	L.ultimate = "終結技能"
-	L.ultimate_desc = "當我們不知道首領獲得什麼元素能力時，顯示終結技能的計時器（灼熱屠殺、絕對零度、震地破裂、閃電爆擊）。"
+	L.ultimate_desc = "當我們不知道首領獲得什麼元素能力時，顯示終結技能的計時器（灼熱屠殺、絕對零度、震地破裂、雷擊）。"
 	L.ultimate_bartext = "[終結] %s" -- {Spell} [Ult]
 
 	-- -- Fire
