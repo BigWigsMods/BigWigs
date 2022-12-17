@@ -30,6 +30,7 @@ BigWigs:AddSounds("The Primal Council", {
 	[372027] = "warning",
 	[373059] = "alarm",
 	[374038] = {"alert","warning"},
+	[372056] = "info",
 	[386289] = "info",
 	[386370] = "info",
 	[386375] = "info",
