@@ -43,7 +43,7 @@ BigWigs:AddSounds("Sennarth, The Cold Breath", {
 	[372030] = "info",
 	[372044] = "info",
 	[372082] = "warning",
-	[372539] = {"alert","info"},
+	[372539] = "info",
 	[373048] = "warning",
 	[373405] = "warning",
 	[374112] = "alert",

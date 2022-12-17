@@ -20,6 +20,7 @@ local chillingBlastCount = 1
 local callSpiderlingsCount = 1
 local burstCount = 1
 local webCount = 1
+local stageCount = 0
 
 local timers = {
 	-- Stage 1
@@ -102,7 +103,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "CallSpiderlings", 372238)
 
 	-- Stage 1
-	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Ascend
 	self:Log("SPELL_CAST_SUCCESS", "EnvelopingWebs", 372082)
 	self:Log("SPELL_AURA_APPLIED", "EnvelopingWebsApplied", 372082)
 	self:Log("SPELL_AURA_REMOVED", "EnvelopingWebsRemoved", 372082)
@@ -116,12 +116,8 @@ function mod:OnBossEnable()
 	self:Death("FrostbreathArachnidDeath", 189234) -- Frostbreath Arachnid
 
 	-- Stage 2
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	if not self:Mythic() then
-		self:Log("SPELL_CAST_START", "ApexOfIce", 372539)
-		-- self:Log("SPELL_AURA_REMOVED", "ApexOfIceRemoved", 372539)
-		self:RegisterUnitEvent("UNIT_SPELLCAST_STOP", nil, "boss1") -- Apex of Ice-372539
-	end
+	self:Log("SPELL_CAST_SUCCESS", "EncounterEvent", 181089)
+	self:Log("SPELL_INTERRUPT", "ApexOfIceRemoved", "*")
 	self:Log("SPELL_CAST_SUCCESS", "SuffocatingWebs", 373027)
 	self:Log("SPELL_AURA_APPLIED", "SuffocatingWebsApplied", 373048)
 	self:Log("SPELL_AURA_REMOVED", "SuffocatingWebsRemoved", 373048)
@@ -132,6 +128,7 @@ end
 
 function mod:OnEngage()
 	self:SetStage(1)
+	stageCount = 0
 	ascendCount = 1
 	bigAddCount = 1
 	chillingBlastCount = 1
@@ -151,37 +148,43 @@ end
 -- Event Handlers
 --
 
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
-	if spellId == 372497 then -- Eight Legs of Fury
+function mod:EncounterEvent(args)
+	stageCount = stageCount + 1
+	if stageCount % 2 == 0 then
+		self:StopBar(CL.count:format(L.ascend, ascendCount))
+		self:Message("ascend", "yellow", CL.count:format(L.ascend, ascendCount), L.ascend_icon)
+		self:PlaySound("ascend", "long")
+		ascendCount = ascendCount + 1
+		if ascendCount < 4 then -- Reached the top
+			self:Bar("ascend", ascendCount == 2 and 100 or 98, CL.count:format(L.ascend, ascendCount), L.ascend_icon)
+		elseif ascendCount == 4 then
+			self:Bar("stages", 57, CL.stage:format(2), "achievement_raidprimalist_sennarth")
+		end
+
+	elseif stageCount == 7 then -- Apex of Ice cast (in non-mythic)
+		self:StopBar(CL.stage:format(2))
 		self:StopBar(CL.count:format(L.ascend, ascendCount), L.ascend_icon) -- Boss moving
 		self:StopBar(CL.count:format(CL.big_add, bigAddCount)) -- Frostbreath Arachnid
+		self:StopBar(CL.small_adds) -- Call Spiderling
+		self:StopBar(CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
+		self:StopBar(CL.count:format(L.webs, webCount)) -- Enveloping Webs
+		self:StopBar(CL.count:format(L.gossamer_burst, burstCount)) -- Gossamer Burst
 
-		self:Message("stages", "cyan", CL.stage:format(2), false)
+		self:Message("stages", "red", CL.stage:format(2), false)
 		self:PlaySound("stages", "long")
 		self:SetStage(2)
 
+		chillingBlastCount = 1
+		burstCount = 1
+		webCount = 1
+		callSpiderlingsCount = 1
+
 		if self:Mythic() then
-			self:StopBar(CL.small_adds) -- Call Spiderling
-			self:StopBar(CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
-			self:StopBar(CL.count:format(L.webs, webCount)) -- Enveloping Webs
-			self:StopBar(CL.count:format(L.gossamer_burst, burstCount)) -- Gossamer Burst
-
-			chillingBlastCount = 1
-			burstCount = 1
-			webCount = 1
-			callSpiderlingsCount = 1
-
 			-- self:CDBar(372238, 20, CL.count:format(CL.small_adds) -- Call Spiderlings
 			-- self:Bar(371976, 30, CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
 			-- self:Bar(373048, 30, CL.count:format(L.webs, webCount)) -- Suffocating Webs
 			-- self:Bar(371983, 93, CL.count:format(L.repelling_burst, burstCount)) -- Repelling Burst
 		end
-	end
-end
-
-function mod:UNIT_SPELLCAST_STOP(_, unit, _, spellId)
-	if spellId == 372539 then -- Apex of Ice
-		self:ApexOfIceRemoved()
 	end
 end
 
@@ -225,19 +228,6 @@ function mod:CallSpiderlings(args)
 end
 
 -- Stage 1
-function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
-	if msg:find("INV_MineSpider2_Crystal.blp") then
-		-- [RAID_BOSS_EMOTE] |TInterface\\\\ICONS\\\\INV_MineSpider2_Crystal.blp:20|t %s begins to ascend!#Sennarth#5#false",
-		self:StopBar(CL.count:format(L.ascend, ascendCount))
-		self:Message("ascend", "yellow", CL.count:format(L.ascend, ascendCount), L.ascend_icon)
-		self:PlaySound("ascend", "long")
-		ascendCount = ascendCount + 1
-		if ascendCount < 4 then -- Reached the top
-			self:Bar("ascend", 100, CL.count:format(L.ascend, ascendCount), L.ascend_icon)
-		end
-	end
-end
-
 do
 	local playerList = {}
 	function mod:EnvelopingWebs(args)
@@ -310,24 +300,11 @@ function mod:WebBlastApplied(args)
 end
 
 -- Stage 2
-function mod:ApexOfIce(args)
-	self:Message(args.spellId, "red")
-	self:PlaySound(args.spellId, "alert")
+function mod:ApexOfIceRemoved(args)
+	if args.extraSpellId ~= 372539 then return end
 
-	self:StopBar(CL.small_adds) -- Call Spiderling
-	self:StopBar(CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
-	self:StopBar(CL.count:format(L.webs, webCount)) -- Enveloping Webs
-	self:StopBar(CL.count:format(L.gossamer_burst, burstCount)) -- Gossamer Burst
-end
-
-function mod:ApexOfIceRemoved()
-	self:Message(372539, "green", CL.interrupted:format(self:SpellName(372539)))
+	self:Message(372539, "green", CL.interrupted:format(args.extraSpellName))
 	self:PlaySound(372539, "info")
-
-	callSpiderlingsCount = 1
-	chillingBlastCount = 1
-	burstCount = 1
-	webCount = 1
 
 	self:CDBar(372238, self:Easy() and 13 or 9, CL.small_adds) -- Call Spiderlings 8.5~10.5
 	self:Bar(371976, self:Easy() and 15 or 11, CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
