@@ -239,9 +239,11 @@ end
 
 function mod:CrushApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 2)
-	-- if (args.amount or 0) > 1 and self:Tank() and not self:Tanking("boss1") then
-	-- 	self:PlaySound(args.spellId, "warning") -- tankswap
-	-- end
+	if self:Tank() and not self:Me(args.destGUID) and not self:Tanking(self:UnitTokenFromGUID(args.sourceGUID)) then
+		self:PlaySound(args.spellId, "warning") -- tauntswap
+	elseif self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alarm") -- On you
+	end
 	self:Bar(args.spellId, 22)
 end
 

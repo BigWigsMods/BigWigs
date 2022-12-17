@@ -28,6 +28,7 @@ BigWigs:AddSounds("Terros", {
 BigWigs:AddSounds("The Primal Council", {
 	[371624] = "warning",
 	[372027] = "warning",
+	[372056] = {"alarm","warning"},
 	[373059] = "alarm",
 	[374038] = {"alert","warning"},
 	[386289] = "info",
