@@ -110,8 +110,8 @@ function mod:OnBossEnable()
 
 	-- Kadros Icewrath
 	self:Log("SPELL_CAST_START", "PrimalBlizzard", 373059)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "PrimalBlizzardApplied", 371836)
 	self:Log("SPELL_CAST_SUCCESS", "GlacialConvocation", 386440)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "GlacialConvocationApplied", 386661)
 	-- Dathea Stormlash
 	self:Log("SPELL_CAST_START", "ConductiveMark", 375331)
 	self:Log("SPELL_AURA_APPLIED", "ConductiveMarkApplied", 371624)
@@ -186,20 +186,20 @@ function mod:PrimalBlizzard(args)
 	self:CDBar(args.spellId, timers[args.spellId][blizzardCount], CL.count:format(L.primal_blizzard, blizzardCount))
 end
 
+function mod:PrimalBlizzardApplied(args)
+	if self:Me(args.destGUID) and args.amount > 5 and args.amount % 3 == 0 or args.amount == 8 then -- 6, 8, 9
+		self:StackMessage(373059, "blue", args.destName, args.amount, 8)
+		if args.amount > 6 then
+			self:PlaySound(373059, "warning")
+		end
+	end
+end
+
 function mod:GlacialConvocation(args)
 	self:StopBar(CL.count:format(args.spellName, blizzardCount))
 
 	self:Message(386661, "cyan")
 	self:PlaySound(386661, "info")
-end
-
-function mod:GlacialConvocationApplied(args)
-	if self:Me(args.destGUID) and args.amount % 3 == 0 then -- every 5s, drop stacks around 5?
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 6)
-		if args.amount > 5 then
-			self:PlaySound(args.spellId, "info")
-		end
-	end
 end
 
 -- Dathea Stormlash

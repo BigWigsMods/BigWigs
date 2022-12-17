@@ -30,12 +30,12 @@ BigWigs:AddColors("The Primal Council", {
 	[372027] = "orange",
 	[372056] = {"blue","purple"},
 	[372279] = "yellow",
-	[373059] = "cyan",
+	[373059] = {"blue","cyan"},
 	[374038] = {"blue","red"},
 	[386289] = "red",
 	[386370] = "green",
 	[386375] = "purple",
-	[386661] = {"blue","cyan"},
+	[386661] = "cyan",
 	[397134] = "green",
 })
 
