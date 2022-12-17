@@ -23,9 +23,9 @@ local avoidCount = 1
 local damageCount = 1
 local ultimateCount = 1
 local barrierRemovedCount = 0
-local avoidCD = mod:Mythic() and 45 or 60.5
-local damageCD = mod:Mythic() and 25.5 or 30.5
-local ultimateCD = mod:Mythic() and 45 or 62
+local avoidCD = mod:Easy() and 60.5 or 46
+local damageCD = 20.7
+local ultimateCD = 46
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -238,10 +238,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EruptingBedrock", 395893)
 	self:Log("SPELL_CAST_START", "SeismicRupture", 374691)
 	-- Storm
-	self:Log("SPELL_CAST_START", "LightningCrash", 373487)
-	self:Log("SPELL_AURA_APPLIED", "LightningCrashApplied", 373487)
-	self:Log("SPELL_AURA_REMOVED", "LightningCrashRemoved", 373487)
-	--self:Log("SPELL_CAST_START", "ShockingBurst", 390920) -- XXX Enable when event is back
+	self:Log("SPELL_CAST_START", "LightningCrash", 397358)
+	self:Log("SPELL_AURA_APPLIED", "LightningCrashApplied", 373494)
+	self:Log("SPELL_AURA_REMOVED", "LightningCrashRemoved", 373494)
+	self:Log("SPELL_CAST_START", "ShockingBurst", 397341)
 	self:Log("SPELL_AURA_APPLIED", "ShockingBurstApplied", 390920)
 	self:Log("SPELL_AURA_REMOVED", "ShockingBurstRemoved", 390920)
 	self:Log("SPELL_CAST_START", "ThunderStrike", 374215)
@@ -269,9 +269,9 @@ end
 
 function mod:OnEngage()
 	-- Cooldowns of the spells to re-create bars
-	avoidCD = self:Mythic() and 45 or 60.5
-	damageCD = self:Mythic() and 25.5 or 30.5
-	ultimateCD = self:Mythic() and 45 or 62
+	avoidCD = self:Easy() and 60.5 or 46
+	damageCD = 20.7
+	ultimateCD = 46
 
 	self:SetStage(1)
 	currentAltar = "?"
@@ -280,9 +280,9 @@ function mod:OnEngage()
 	damageCount = 1
 	ultimateCount = 1
 
-	local avoidPullCD = self:Mythic() and 23 or 30
-	local damagePullCD = self:Mythic() and 14.5 or 20
-	local ultimatePullCD = self:Mythic() and 45 or 62
+	local avoidPullCD = 23
+	local damagePullCD = 14.5
+	local ultimatePullCD = 46
 
 	nextAvoidSpell = avoidPullCD + GetTime()
 	nextDamageSpell = damagePullCD + GetTime()
@@ -291,7 +291,9 @@ function mod:OnEngage()
 	self:Bar("avoid", avoidPullCD, CL.count:format(L.avoid_bartext:format(currentAltar), avoidCount), "ability_kick")
 	self:Bar("damage", damagePullCD, CL.count:format(L.damage_bartext:format(currentAltar), damageCount), "spell_ice_magicdamage")
 	self:Bar("ultimate", ultimatePullCD, CL.count:format(L.ultimate_bartext:format(currentAltar), ultimateCount), "achievement_bg_most_damage_killingblow_dieleast")
-	self:Bar("stages", 125, CL.stage:format(2), 374779)
+
+	self:Bar(372158, 10.2) -- Sundering Strike
+	self:Bar("stages", 125, CL.stage:format(2), 374779) -- Primal Barrier
 end
 
 --------------------------------------------------------------------------------
@@ -302,23 +304,37 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 391096 then -- Damage Selection
 		self:StopBar(CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount))
 		damageCount = damageCount + 1
-		if self:Mythic() then -- Adjust CD
-			damageCD = damageCount % 2 == 0 and 25.5 or 19.5
+		damageCD = damageCount % 2 == 0 and 25.5 or 20
+		if self:Easy() then
+			if self:GetStage() < 3 then
+				-- 14.4, 8.5, 17.1, 20.7, 8.5, 17.0, 20.6, 8.5
+				local timer = {20.7, 8.5, 17.0}
+				local index = damageCount % 3 + 1 -- 2, 3, 1
+				damageCD = timer[index]
+			else -- Stage 3
+					damageCD = damageCount % 2 == 0 and 11 or 19.6
+			end
 		end
 		nextDamageSpell = damageCD + GetTime()
-		self:CDBar(alterSpellIdMap[currentAltar]["damage"], damageCD, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount)) -- SetOption:374023,372458,374691,374215:::
+		self:CDBar(alterSpellIdMap[currentAltar]["damage"], damageCD, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount)) -- SetOption:382563,373678,391056,373487:::
 	elseif spellId == 391100 then -- Avoid Selection
 		self:StopBar(CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount))
 		avoidCount = avoidCount + 1
+		if self:Easy() then
+			if self:GetStage() < 3 then
+				local timer = {14.4, 25.6, 28.0, 25.6, 20.7, 8.5}
+				avoidCD = timer[avoidCount]
+			else -- Stage 3
+				avoidCD = avoidCount % 2 == 0 and 8.5 or 17.1 -- XXX lacking on stage 3 data
+			end
+		end
 		nextAvoidSpell = avoidCD + GetTime()
-		self:CDBar(alterSpellIdMap[currentAltar]["avoid"], avoidCD, CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount)) -- SetOption:374023,372458,374691,374215:::
+		self:CDBar(alterSpellIdMap[currentAltar]["avoid"], avoidCD, CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount)) -- SetOption:373329,391019,395893,390920:::
 	elseif spellId == 374680 then -- Ultimate Selection
 		self:StopBar(CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount))
 		ultimateCount = ultimateCount + 1
 		nextUltimateSpell = ultimateCD + GetTime()
 		self:CDBar(alterSpellIdMap[currentAltar]["ultimate"], ultimateCD, CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount)) -- SetOption:374023,372458,374691,374215:::
-	elseif spellId == 390920 then -- XXX Temp Shocking Burst
-		self:ShockingBurst()
 	end
 end
 
@@ -335,7 +351,7 @@ do
 end
 
 do
-	local prevAltar, newAltar = nil, nil
+	local newAltar = nil
 	function mod:Dominance(args)
 		if args.spellId ==  396085 then -- Earth
 			newAltar = "Earth"
@@ -346,21 +362,25 @@ do
 		elseif args.spellId ==  396113 then -- Storm
 			newAltar = "Storm"
 		end
+		if newAltar == currentAltar then return end
 
-		if newAltar ~= currentAltar then
-			self:StopBar(CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount))
-			self:StopBar(CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount))
-			self:StopBar(CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount))
-			currentAltar = newAltar
-			prevAltar = newAltar
+		self:StopBar(CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount))
+		self:StopBar(CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount))
+		self:StopBar(CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount))
+		currentAltar = newAltar
 
-			local avoidRemainingCD = nextAvoidSpell - GetTime()
-			local damageRemainingCD = nextDamageSpell - GetTime()
-			local ultimateRemainingCD = nextUltimateSpell - GetTime()
-			self:Bar(alterSpellIdMap[currentAltar]["avoid"], {avoidRemainingCD, avoidCD}, CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount), alterSpellIdMap[currentAltar]["avoid"]) -- SetOption:374023,372458,374691,374215:::
-			self:Bar(alterSpellIdMap[currentAltar]["damage"], {damageRemainingCD, damageCD}, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount), alterSpellIdMap[currentAltar]["damage"]) -- SetOption:374023,372458,374691,374215:::
-			self:Bar(alterSpellIdMap[currentAltar]["ultimate"], {ultimateRemainingCD, ultimateCD}, CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount), alterSpellIdMap[currentAltar]["ultimate"]) -- SetOption:374023,372458,374691,374215:::
+		local t = GetTime()
+		local avoidRemainingCD = nextAvoidSpell - t
+		local damageRemainingCD = nextDamageSpell - t
+		local ultimateRemainingCD = nextUltimateSpell - t
+
+		if not self:Easy() or (currentAltar == "Earth" or currentAltar == "Storm") then
+			self:Bar(alterSpellIdMap[currentAltar]["avoid"], {avoidRemainingCD, avoidCD}, CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount), alterSpellIdMap[currentAltar]["avoid"]) -- SetOption:373329,391019,395893,390920:::
 		end
+		if not self:Easy() or (currentAltar == "Fire" or currentAltar == "Frost") then
+			self:Bar(alterSpellIdMap[currentAltar]["damage"], {damageRemainingCD, damageCD}, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount), alterSpellIdMap[currentAltar]["damage"]) -- SetOption:382563,373678,391056,373487:::
+		end
+		self:Bar(alterSpellIdMap[currentAltar]["ultimate"], {ultimateRemainingCD, ultimateCD}, CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount), alterSpellIdMap[currentAltar]["ultimate"]) -- SetOption:374023,372458,374691,374215:::
 	end
 end
 
@@ -375,42 +395,59 @@ do
 	end
 end
 
-function mod:PrimalBarrierApplied()
-	self:Message("stages", "cyan", CL.stage:format(2), false)
-	self:PlaySound("stages", "long") -- phase
-	self:SetStage(2)
-
+function mod:PrimalBarrierApplied(args)
 	self:StopBar(CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount))
 	self:StopBar(CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount))
 	self:StopBar(CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount))
 	self:StopBar(372158) -- Sundering Strike
-	self:StopBar(CL.stage:format(2)) -- Stage 2
+	self:StopBar(CL.stage:format(2))
+
+	self:SetStage(2)
+	self:Message("stages", "cyan", CL.stage:format(2), false)
+	self:PlaySound("stages", "long") -- phase
 end
 
-function mod:PrimalBarrierRemoved()
+function mod:PrimalBarrierRemoved(args)
 	barrierRemovedCount = barrierRemovedCount + 1
-	self:Message("stages", "cyan", CL.stage:format(barrierRemovedCount), false)
+	local stage = barrierRemovedCount == 2 and 3 or 1
+	self:SetStage(stage)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long") -- phase
-	self:SetStage(barrierRemovedCount)
-	currentAltar = "?"
 
+	currentAltar = "?"
 	avoidCount = 1
 	damageCount = 1
 	ultimateCount = 1
 
-	local avoidIntermissionCD = self:Mythic() and 69 or 30
-	local damageIntermissionCD = self:Mythic() and 14.5 or 20
-	local ultimateIntermissionCD = self:Mythic() and 45 or 60
+	local avoidIntermissionCD = self:Mythic() and 30.8 or self:Heroic() and 22.5 or 14.5
+	local damageIntermissionCD = self:Mythic() and 21 or 14.5
+	local ultimateIntermissionCD = 45.5
+	if stage == 3 then -- need some longer p3 logs z.z
+		if not self:Heroic() then
+			avoidCD = self:Mythic() and 25.6 or 14.5
+			damageCD = self:Mythic() and 25.6 or 17.4
+			ultimateCD = self:Mythic() and 25.6 or 33.0
+		end
 
-	nextAvoidSpell = avoidIntermissionCD + GetTime()
-	nextDamageSpell = damageIntermissionCD + GetTime()
-	nextUltimateSpell = ultimateIntermissionCD + GetTime()
+		if not self:Easy() then
+			avoidIntermissionCD = self:Mythic() and 14.5 or 22.4
+			damageIntermissionCD = self:Mythic() and 13.1 or 15.0
+			ultimateIntermissionCD = self:Mythic() and 25.5 or 45.5
+		end
+	end
+
+	local t = GetTime()
+	nextAvoidSpell = avoidIntermissionCD + t
+	nextDamageSpell = damageIntermissionCD + t
+	nextUltimateSpell = ultimateIntermissionCD + t
 
 	self:Bar("avoid", avoidIntermissionCD, CL.count:format(L.avoid_bartext:format(currentAltar), avoidCount), "ability_kick")
 	self:Bar("damage", damageIntermissionCD, CL.count:format(L.damage_bartext:format(currentAltar), damageCount), "spell_ice_magicdamage")
 	self:Bar("ultimate", ultimateIntermissionCD, CL.count:format(L.ultimate_bartext:format(currentAltar), ultimateCount), "achievement_bg_most_damage_killingblow_dieleast")
-	if barrierRemovedCount < 2 then
-		self:Bar("stages", 127, CL.stage:format(2), 374779) -- Stage 2
+
+	self:Bar(372158, 10.2) -- Sundering Strike
+	if stage < 3 then
+		self:Bar("stages", 127, CL.stage:format(2), 374779) -- Primal Barrier
 	else
 		self:Bar(396241, 94, L.primal_attunement) -- Primal Attunement
 	end
@@ -445,10 +482,11 @@ do
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId, nil, L.searing_carnage)
 			self:SayCountdown(args.spellId, 5)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.ultimate_bartext:format(L.searing_carnage), ultimateCount-1))
+		-- self:TargetsMessage(args.spellId, "yellow", playerList, nil, L.searing_carnage))
 	end
 
 	function mod:SearingCarnageRemoved(args)
@@ -462,7 +500,7 @@ end
 function mod:BitingChill(args)
 	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.damage_bartext:format(L.biting_chill), damageCount)))
 	self:PlaySound(args.spellId, "info")
-	self:CastBar(args.spellId, 13) -- 3s cast + 10s duration
+	-- self:CastBar(args.spellId, 13) -- 3s cast + 10s duration
 end
 
 function mod:FrigidTorrent(args)
@@ -512,7 +550,7 @@ do
 			self:CustomIcon(aboluteZeroMarker, iconList[i].player, i)
 		end
 		if not playedSound then -- play for others
-			self:TargetsMessage(372458, "yellow", playerList, 2, CL.count:format(L.ultimate_bartext:format(L.absolute_zero), ultimateCount-1))
+			self:TargetsMessage(372458, "yellow", playerList, 2, CL.count:format(L.absolute_zero, ultimateCount-1))
 			self:PlaySound(372458, "alert") -- stack
 		end
 	end
@@ -551,7 +589,7 @@ do
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "alarm") -- debuffdamage
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3, L.enveloping_earth)
+		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.enveloping_earth, damageCount-1), nil, 0.8)
 		self:CustomIcon(envelopingEarthMarker, args.destName, count)
 	end
 
@@ -574,8 +612,8 @@ end
 do
 	local playerList = {}
 	function mod:LightningCrash(args)
-		self:Message(391056, "yellow", CL.casting:format(CL.count:format(L.damage_bartext:format(L.lightning_crash), damageCount)))
-		self:PlaySound(391056, "info")
+		self:Message(373487, "yellow", CL.casting:format(CL.count:format(L.damage_bartext:format(L.lightning_crash), damageCount)))
+		self:PlaySound(373487, "info")
 		playerList = {}
 	end
 
@@ -583,24 +621,24 @@ do
 		local count = #playerList+1
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, L.lightning_crash)
-			self:SayCountdown(args.spellId, 4)
-			self:PersonalMessage(args.spellId)
-			self:PlaySound(args.spellId, "warning") -- debuffmove
+			self:Say(373487, L.lightning_crash)
+			self:SayCountdown(373487, 4)
+			self:PersonalMessage(373487)
+			self:PlaySound(373487, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList)
+		self:TargetsMessage(373487, "orange", playerList, nil, CL.count:format(L.lightning_crash, damageCount-1))
 	end
 
 	function mod:LightningCrashRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(373487)
 		end
 	end
 end
 
 do
 	local playerList = {}
-	function mod:ShockingBurst()
+	function mod:ShockingBurst(args)
 		self:Message(390920, "yellow", CL.casting:format(CL.count:format(L.avoid_bartext:format(CL.bombs), avoidCount)))
 		self:PlaySound(390920, "info")
 		playerList = {}
@@ -611,11 +649,11 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count + 3 -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, nil, CL.bomb)
+			self:Say(args.spellId, CL.bomb)
 			self:SayCountdown(args.spellId, 5, count)
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 		end
-		self:TargetsMessage(args.spellId, "orange", playerList, 4, CL.bombs)
+		self:TargetsMessage(args.spellId, "orange", playerList, nil, CL.count:format(CL.bombs, avoidCount-1))
 		self:CustomIcon(shockingBurstMarker, args.destName, count)
 	end
 
@@ -705,13 +743,13 @@ do
 			self:PlaySound(391696, "warning") -- debuffmove
 			self:Say(391696)
 		end
-		self:TargetMessage(391696, "yellow", name, self:SpellName(391696))
+		self:TargetMessage(391696, "yellow", name)
 	end
 
 	function mod:StormBreak(args)
 		warned = false
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		self:Bar(391696, 20)
+		self:Bar(391696, 20) -- Lethal Current
 	end
 
 	function mod:LethalCurrentApplied(args)
@@ -724,7 +762,7 @@ end
 
 function mod:IntermissionAddDeath(args)
 	if args.mobId == 190690  then -- Thundering Ravager
-		self:StopBar(391696) -- Storm Break
+		self:StopBar(391696) -- Lethal Current
 	elseif args.mobId == 190588 then -- Tectonic Crusher
 		self:StopBar(CL.bombs) -- Ground Shatter
 		self:StopBar(L.violent_upheaval) -- Violent Upheaval

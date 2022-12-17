@@ -112,9 +112,9 @@ function mod:OnEngage()
 	collapsingArmyCount = 1
 
 	self:CDBar(396023, 10, CL.count:format(L.incinerating_roar, incineratingRoarCount)) -- Incinerating Roar
+	self:CDBar(390715, 14, CL.count:format(CL.adds, flameRiftCount)) -- Flamerift
 	self:CDBar(396022, 22, CL.count:format(L.molten_spikes, moltenSpikesCount)) -- Molten Spikes
 	self:CDBar(370615, 38, CL.count:format(L.molten_cleave, moltenCleaveCount)) -- Molten Cleave
-	self:CDBar(390715, 14, CL.count:format(CL.adds, flameRiftCount)) -- Flamerift
 	self:CDBar(370307, 92, CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
 end
 
@@ -127,7 +127,7 @@ function mod:Flamerift(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.adds, flameRiftCount))
 	flameRiftCount = flameRiftCount + 1
 	if flameRiftCount < 4 then -- 3 per rotation
-		self:Bar(args.spellId, 28.9, CL.count:format(CL.adds, flameRiftCount))
+		self:Bar(args.spellId, flameRiftCount % 3 == 2 and 29.0 or 31.0, CL.count:format(CL.adds, flameRiftCount))
 	end
 end
 
@@ -180,7 +180,7 @@ function mod:MoltenCleave(args)
 	-- self:CastBar(args.spellId, 3.5, CL.count:format(L.molten_cleave, moltenCleaveCount))
 	moltenCleaveCount = moltenCleaveCount + 1
 	if moltenCleaveCount < 3 then -- 2 per rotation
-		self:Bar(args.spellId, 29.9, CL.count:format(L.molten_cleave, moltenCleaveCount))
+		self:Bar(args.spellId, 30, CL.count:format(L.molten_cleave, moltenCleaveCount))
 	end
 end
 
@@ -197,7 +197,7 @@ function mod:IncineratingRoar(args)
 	self:PlaySound(args.spellId, "alert")
 	incineratingRoarCount = incineratingRoarCount + 1
 	if incineratingRoarCount < 5 then -- 4 per rotation
-		self:CDBar(args.spellId, 23.9, CL.count:format(L.incinerating_roar, incineratingRoarCount))
+		self:CDBar(args.spellId, incineratingRoarCount % 4 == 2 and 24 or 22, CL.count:format(L.incinerating_roar, incineratingRoarCount))
 	end
 end
 
@@ -207,7 +207,7 @@ function mod:MoltenSpikes(args)
 	self:PlaySound(args.spellId, "alert")
 	moltenSpikesCount = moltenSpikesCount + 1
 	if moltenSpikesCount < 4 then -- 3 per rotation
-		self:CDBar(args.spellId, 21.4, CL.count:format(L.molten_spikes, moltenSpikesCount))
+		self:CDBar(args.spellId, moltenCleaveCount % 3 == 0 and 21.5 or 22.5, CL.count:format(L.molten_spikes, moltenSpikesCount))
 	end
 end
 
@@ -222,17 +222,15 @@ function mod:CollapsingArmy(args)
 
 	self:Message(args.spellId, "cyan", CL.count:format(L.collapsing_army, collapsingArmyCount))
 	self:PlaySound(args.spellId, "long")
-	-- self:CastBar(args.spellId, 26, CL.count:format(L.collapsing_army, collapsingArmyCount))
+	self:CastBar(args.spellId, 27.5, L.collapsing_army)
 end
 
 function mod:CollapsingArmyRemoved(args)
 	self:SetStage(1)
-	-- self:StopBar(CL.cast:format(CL.count:format(L.collapsing_army, collapsingArmyCount)))
+	self:StopBar(CL.cast:format(L.collapsing_army))
 	self:Message(args.spellId, "cyan", CL.over:format(CL.count:format(L.collapsing_army, collapsingArmyCount)))
 	collapsingArmyCount = collapsingArmyCount + 1
-	-- XXX cd varies a bit, should probably register UNIT_POWER_UPDATE for the first tick?
-	-- or are the random Energize (370727) casts doing it?
-	self:CDBar(args.spellId, 95, CL.count:format(L.collapsing_army, collapsingArmyCount))
+	self:CDBar(args.spellId, 92.5, CL.count:format(L.collapsing_army, collapsingArmyCount))
 
 	flameRiftCount = 1
 	moltenCleaveCount = 1
@@ -240,10 +238,10 @@ function mod:CollapsingArmyRemoved(args)
 	moltenSpikesCount = 1
 
 	self:CDBar(396023, 10, CL.count:format(L.incinerating_roar, incineratingRoarCount)) -- Incinerating Roar
+	self:CDBar(390715, 14, CL.count:format(CL.adds, flameRiftCount)) -- Flamerift
 	self:CDBar(396022, 22, CL.count:format(L.molten_spikes, moltenSpikesCount)) -- Molten Spikes
 	self:CDBar(370615, 38, CL.count:format(L.molten_cleave, moltenCleaveCount)) -- Molten Cleave
-	self:CDBar(390715, 13.9, CL.count:format(CL.adds, flameRiftCount)) -- Flamerift
-	self:CDBar(370307, 93, CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
+	self:CDBar(370307, 92.5, CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
 end
 
 -- Mythic
@@ -265,7 +263,7 @@ end
 function mod:LeapingFlames(args)
 	self:Message(args.spellId, "yellow", L.leaping_flames)
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 23, L.leaping_flames)
+	self:CDBar(args.spellId, 25, L.leaping_flames)
 end
 
 function mod:Pyroblast(args)

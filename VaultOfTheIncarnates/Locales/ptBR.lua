@@ -33,8 +33,6 @@ if L then
 	L.conductive_marks = "Marcas" -- Marcas Condutoras
 	L.conductive_mark = "Marca" -- Singular
 
-	L.custom_off_chain_lightning = "A Cadeia de Raios está desativada por padrão, habilite isso para ativar a Cadeia de Raios."
-
 	L.custom_on_stop_timers = "Sempre mostrar as barras de habilidade"
 	L.custom_on_stop_timers_desc = "Habilidades que sempre serão mostradas: Marca Condutora"
 end
@@ -117,7 +115,7 @@ end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "ptBR")
 if L then
-	--L.lighting_devastation_trigger = "deep breath"
+	--L.lighting_devastation_trigger = "deep breath" -- Raszageth takes a deep breath...
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "ptBR")

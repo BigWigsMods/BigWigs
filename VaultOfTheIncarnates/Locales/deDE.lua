@@ -33,8 +33,6 @@ if L then
 	L.conductive_marks = "Zeichen" -- Conductive Marks
 	L.conductive_mark = "Zeichen" -- Singular
 
-	L.custom_off_chain_lightning = "Kettenblitzschlag ist standardmäßig deaktiviert, diese Option zum Aktivieren einschalten."
-
 	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Fähigkeiten, welche immer angezeigt werden: Leitfähiges Zeichen"
 end

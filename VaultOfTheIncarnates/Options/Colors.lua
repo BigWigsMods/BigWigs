@@ -22,20 +22,20 @@ BigWigs:AddColors("Terros", {
 	[382458] = "blue",
 	[383073] = "yellow",
 	[388393] = "yellow",
-	[391592] = {"blue","yellow"},
+	[391592] = {"blue","green","yellow"},
 })
 
 BigWigs:AddColors("The Primal Council", {
-	[371624] = {"blue","cyan"},
+	[371624] = {"blue","purple"},
 	[372027] = "orange",
 	[372056] = {"blue","purple"},
 	[372279] = "yellow",
-	[373059] = "cyan",
+	[373059] = {"blue","cyan"},
 	[374038] = {"blue","red"},
 	[386289] = "red",
 	[386370] = "green",
 	[386375] = "purple",
-	[386661] = {"blue","cyan"},
+	[386661] = "cyan",
 	[397134] = "green",
 })
 
@@ -76,7 +76,7 @@ BigWigs:AddColors("Kurog Grimtotem", {
 	[372158] = {"blue","purple"},
 	[372458] = {"blue","orange","yellow"},
 	[373329] = "orange",
-	[373487] = {"blue","orange"},
+	[373487] = {"blue","orange","yellow"},
 	[373678] = "yellow",
 	[374023] = {"blue","yellow"},
 	[374215] = "orange",

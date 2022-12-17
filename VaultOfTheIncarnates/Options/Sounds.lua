@@ -22,13 +22,14 @@ BigWigs:AddSounds("Terros", {
 	[382458] = "underyou",
 	[383073] = "alarm",
 	[388393] = "alarm",
-	[391592] = {"alert","warning"},
+	[391592] = {"alert","info","warning"},
 })
 
 BigWigs:AddSounds("The Primal Council", {
 	[371624] = "warning",
 	[372027] = "warning",
-	[373059] = "alarm",
+	[372056] = {"alarm","warning"},
+	[373059] = {"alarm","warning"},
 	[374038] = {"alert","warning"},
 	[386289] = "info",
 	[386370] = "info",
@@ -72,7 +73,7 @@ BigWigs:AddSounds("Kurog Grimtotem", {
 	[372158] = "warning",
 	[372458] = {"alert","warning"},
 	[373329] = "alert",
-	[373487] = "warning",
+	[373487] = {"info","warning"},
 	[373678] = "info",
 	[374023] = {"info","warning"},
 	[374321] = "info",

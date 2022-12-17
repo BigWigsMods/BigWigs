@@ -440,6 +440,11 @@ end
 do
 	-- Talking Head blocking
 	local known = {
+		-- Court of Stars
+		[70199]=true,[70198]=true,[70197]=true,[70193]=true,[70195]=true,[70192]=true,[70194]=true,
+		-- Halls of Valor
+		[57160]=true,[57159]=true,[57162]=true,[68701]=true,[57161]=true,
+
 		-- De Other Side
 		[163828]=true,[163830]=true,[163831]=true,[163822]=true,[163823]=true,[163824]=true,[163834]=true,
 		[163835]=true,[163836]=true,[163837]=true,[163819]=true,[163820]=true,[163821]=true,
@@ -527,6 +532,7 @@ do
 		[956] = true, -- Anduin defeat
 		[957] = true, -- Jailer intro
 		[958] = true, -- Jailer defeat
+		[964] = true, -- Raszageth defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
