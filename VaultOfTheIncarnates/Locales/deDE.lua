@@ -94,7 +94,7 @@ if L then
 	L.thundering_strike = "Soaks"
 
 	-- -- General
-	L.primal_attunement = "Soft Enrage"
+	L.primal_attunement = "Soft Berserker"
 
 	-- -- Stage 2
 	L.violent_upheaval = "Säulen"
@@ -115,7 +115,35 @@ end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "deDE")
 if L then
-	--L.lighting_devastation_trigger = "deep breath" -- Raszageth takes a deep breath...
+	L.lighting_devastation_trigger = "tief Luft" -- Raszageth takes a deep breath...
+
+	-- Stage One: The Winds of Change
+	L.hurricane_wing = "Rückstoß"
+	L.volatile_current = "Funken"
+	L.thunderous_blast = "Einschlag"
+	L.lightning_breath = "Atem"
+	L.lightning_strikes = "Schläge"
+	L.electric_scales = "Schlachtzugschaden"
+	L.electric_lash = "Peitschen"
+	-- Intermission: The Primalist Strike
+	L.lightning_devastation = "Atem"
+	L.shattering_shroud = "Heilung absorbiert"
+	-- Stage Two: Surging Power
+	L.stormsurge = "Absorbtionsschild"
+	L.stormcharged = "Positiv oder Negativ"
+	L.positive = "Positiv"
+	L.negative = "Negativ"
+	L.focused_charge = "Schadensbuff"
+	L.tempest_wing = "Sturmwelle"
+	L.fulminating_charge = "Ladungen"
+	L.fulminating_charge_debuff = "Ladung"
+	-- Intermission: The Vault Falters
+	L.storm_break = "Teleport"
+	L.ball_lightning = "Kugeln"
+	-- Stage Three: Storm Incarnate
+	L.magnetic_charge = "Magnetische Ladung"
+	-- Mythic
+	L.storm_eater = "Sturmfresserin"
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "deDE")

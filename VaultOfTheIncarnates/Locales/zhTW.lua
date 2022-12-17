@@ -63,15 +63,15 @@ if L then
 	-- -- Types
 	L.damage = "傷害技能"
 	L.damage_desc = "當我們不知道首領獲得什麼元素能力時，顯示傷害技能的計時器（岩漿衝擊、刺骨之寒、包覆之土、閃電爆擊）。"
-	L.damage_bartext = "%s [Dmg]" -- {Spell} [Dmg]
+	L.damage_bartext = "[傷害] %s" -- {Spell} [Dmg]
 
 	L.avoid = "躲避技能"
 	L.avoid_desc = "當我們不知道首領獲得什麼元素能力時，顯示躲避技能的計時器（熔火割裂、嚴寒洪流、爆發岩床、電擊爆發）。"
-	L.avoid_bartext = "%s [Avoid]" -- {Spell} [Avoid]
+	L.avoid_bartext = "[躲避] %s" -- {Spell} [Avoid]
 
 	L.ultimate = "終結技能"
-	L.ultimate_desc = "當我們不知道首領獲得什麼元素能力時，顯示終結技能的計時器（灼熱屠殺、絕對零度、震地破裂、閃電爆擊）。"
-	L.ultimate_bartext = "%s [Ult]" -- {Spell} [Ult]
+	L.ultimate_desc = "當我們不知道首領獲得什麼元素能力時，顯示終結技能的計時器（灼熱屠殺、絕對零度、震地破裂、雷擊）。"
+	L.ultimate_bartext = "[終結] %s" -- {Spell} [Ult]
 
 	-- -- Fire
 	L.magma_burst = "熔岩池"

@@ -23,7 +23,7 @@ local avoidCount = 1
 local damageCount = 1
 local ultimateCount = 1
 local barrierRemovedCount = 0
-local avoidCD = mod:Easy() and 60.5 or 46
+local avoidCD = 20.7
 local damageCD = 20.7
 local ultimateCD = 46
 
@@ -149,6 +149,7 @@ function mod:GetOptions()
 		"avoid",
 		"damage",
 		"ultimate",
+		"berserk",
 		-- Fire Altar
 		{382563, "SAY", "SAY_COUNTDOWN"}, -- Magma Burst
 		373329, -- Molten Rupture
@@ -269,7 +270,7 @@ end
 
 function mod:OnEngage()
 	-- Cooldowns of the spells to re-create bars
-	avoidCD = self:Easy() and 60.5 or 46
+	avoidCD = 20.7
 	damageCD = 20.7
 	ultimateCD = 46
 
@@ -280,7 +281,7 @@ function mod:OnEngage()
 	damageCount = 1
 	ultimateCount = 1
 
-	local avoidPullCD = 23
+	local avoidPullCD = self:Easy() and 14.5 or 23
 	local damagePullCD = 14.5
 	local ultimatePullCD = 46
 
@@ -294,6 +295,10 @@ function mod:OnEngage()
 
 	self:Bar(372158, 10.2) -- Sundering Strike
 	self:Bar("stages", 125, CL.stage:format(2), 374779) -- Primal Barrier
+
+	if self:Heroic() then
+		self:Berserk(540, true)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -304,16 +309,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 391096 then -- Damage Selection
 		self:StopBar(CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount))
 		damageCount = damageCount + 1
-		damageCD = damageCount % 2 == 0 and 25.5 or 20
 		if self:Easy() then
-			if self:GetStage() < 3 then
-				-- 14.4, 8.5, 17.1, 20.7, 8.5, 17.0, 20.6, 8.5
-				local timer = {20.7, 8.5, 17.0}
-				local index = damageCount % 3 + 1 -- 2, 3, 1
-				damageCD = timer[index]
-			else -- Stage 3
-					damageCD = damageCount % 2 == 0 and 11 or 19.6
-			end
+			damageCD = damageCount % 3 == 1 and 20.7 or damageCount % 3 == 2 and 8.5 or 17.0
+		else
+			damageCD = damageCount % 2 == 0 and 25.6 or 20.7
 		end
 		nextDamageSpell = damageCD + GetTime()
 		self:CDBar(alterSpellIdMap[currentAltar]["damage"], damageCD, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount)) -- SetOption:382563,373678,391056,373487:::
@@ -321,12 +320,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:StopBar(CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount))
 		avoidCount = avoidCount + 1
 		if self:Easy() then
-			if self:GetStage() < 3 then
-				local timer = {14.4, 25.6, 28.0, 25.6, 20.7, 8.5}
-				avoidCD = timer[avoidCount]
-			else -- Stage 3
-				avoidCD = avoidCount % 2 == 0 and 8.5 or 17.1 -- XXX lacking on stage 3 data
-			end
+			avoidCD = avoidCount % 3 == 1 and 20.7 or avoidCount % 3 == 2 and 8.5 or 17.0
 		end
 		nextAvoidSpell = avoidCD + GetTime()
 		self:CDBar(alterSpellIdMap[currentAltar]["avoid"], avoidCD, CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount)) -- SetOption:373329,391019,395893,390920:::
@@ -419,22 +413,9 @@ function mod:PrimalBarrierRemoved(args)
 	damageCount = 1
 	ultimateCount = 1
 
-	local avoidIntermissionCD = self:Mythic() and 30.8 or self:Heroic() and 22.5 or 14.5
-	local damageIntermissionCD = self:Mythic() and 21 or 14.5
+	local avoidIntermissionCD = self:Easy() and 14.5 or 22.5
+	local damageIntermissionCD = 14.5
 	local ultimateIntermissionCD = 45.5
-	if stage == 3 then -- need some longer p3 logs z.z
-		if not self:Heroic() then
-			avoidCD = self:Mythic() and 25.6 or 14.5
-			damageCD = self:Mythic() and 25.6 or 17.4
-			ultimateCD = self:Mythic() and 25.6 or 33.0
-		end
-
-		if not self:Easy() then
-			avoidIntermissionCD = self:Mythic() and 14.5 or 22.4
-			damageIntermissionCD = self:Mythic() and 13.1 or 15.0
-			ultimateIntermissionCD = self:Mythic() and 25.5 or 45.5
-		end
-	end
 
 	local t = GetTime()
 	nextAvoidSpell = avoidIntermissionCD + t
@@ -447,9 +428,9 @@ function mod:PrimalBarrierRemoved(args)
 
 	self:Bar(372158, 10.2) -- Sundering Strike
 	if stage < 3 then
-		self:Bar("stages", 127, CL.stage:format(2), 374779) -- Primal Barrier
+		self:Bar("stages", 125, CL.stage:format(2), 374779) -- Primal Barrier
 	else
-		self:Bar(396241, 94, L.primal_attunement) -- Primal Attunement
+		self:Bar(396241, self:Easy() and 96 or 94, L.primal_attunement) -- Primal Attunement
 	end
 end
 
