@@ -140,8 +140,8 @@ function mod:OnEngage()
 	self:Bar(371976, timers[371976][chillingBlastCount], CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
 	self:Bar(372082, timers[372082][webCount], CL.count:format(L.webs, webCount)) -- Enveloping Webs
 	self:Bar(373405, timers[373405][burstCount], CL.count:format(L.gossamer_burst, burstCount)) -- Gossamer Burst
-	self:Bar("ascend", 45, CL.count:format(L.ascend, ascendCount), L.ascend_icon) -- Boss moving
-	self:Bar(-24899, 106.5, CL.count:format(CL.big_add, bigAddCount), "inv_minespider2_crystal") -- Frostbreath Arachnid
+	self:Bar("ascend", 42.5, CL.count:format(L.ascend, ascendCount), L.ascend_icon) -- Boss moving
+	self:Bar(-24899, 104.5, CL.count:format(CL.big_add, bigAddCount), "inv_minespider2_crystal") -- Frostbreath Arachnid
 end
 
 --------------------------------------------------------------------------------
@@ -156,7 +156,7 @@ function mod:EncounterEvent(args)
 		self:PlaySound("ascend", "long")
 		ascendCount = ascendCount + 1
 		if ascendCount < 4 then -- Reached the top
-			self:Bar("ascend", ascendCount == 2 and 100 or 98, CL.count:format(L.ascend, ascendCount), L.ascend_icon)
+			self:Bar("ascend", ascendCount == 2 and 100 or 98.5, CL.count:format(L.ascend, ascendCount), L.ascend_icon)
 		elseif ascendCount == 4 then
 			self:Bar("stages", 57, CL.stage:format(2), "achievement_raidprimalist_sennarth")
 		end
@@ -276,7 +276,7 @@ function mod:EncounterSpawn(args)
 		self:PlaySound(-24899, "info")
 		bigAddCount = bigAddCount + 1
 		if bigAddCount < 3 then -- only 2 in the encounter
-			self:Bar(-24899, 106.5, CL.count:format(CL.big_add, bigAddCount), "inv_minespider2_crystal")
+			self:Bar(-24899, 99, CL.count:format(CL.big_add, bigAddCount), "inv_minespider2_crystal")
 		end
 		self:Bar(374112, 11, L.freezing_breath) -- Freezing Breath
 	end
