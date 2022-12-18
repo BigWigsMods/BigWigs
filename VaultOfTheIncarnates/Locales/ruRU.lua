@@ -107,10 +107,10 @@ if L then
 	L.greatstaff_of_the_broodkeeper = "Великий Посох"
 	L.greatstaffs_wrath = "Лазер"
 	L.clutchwatchers_rage = "Ярость"
-	L.rapid_incubation = "Инкуцбация"
-	L.icy_shroud = "Хил Абсорб"
-	L.broodkeepers_fury = "Неистовство"
-	L.frozen_shroud = "Хил Абсорб и рут"
+	L.rapid_incubation = "Инкубация"
+	L.icy_shroud = "Абсорб"
+	L.broodkeepers_fury = "Стаки"
+	L.frozen_shroud = "Абсорб + Рут"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "ruRU")
