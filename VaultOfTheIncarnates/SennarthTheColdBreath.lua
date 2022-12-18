@@ -180,9 +180,9 @@ function mod:EncounterEvent(args)
 		callSpiderlingsCount = 1
 
 		if self:Mythic() then
-			self:CDBar(372238, 13.3, L.call_spiderlings) -- Call Spiderlings
+			self:CDBar(372238, 13.3, CL.small_adds) -- Call Spiderlings
 			self:Bar(371976, 15.7, CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
-			self:Bar(373048, 26.2, CL.count:format(L.suffocating_webs, webCount)) -- Suffocating Webs
+			self:Bar(373048, 26.2, CL.count:format(L.webs, webCount)) -- Suffocating Webs
 			self:Bar(371983, 32.8, CL.count:format(L.repelling_burst, burstCount)) -- Repelling Burst
 		end
 	end
