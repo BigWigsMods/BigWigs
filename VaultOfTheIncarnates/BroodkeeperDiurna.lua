@@ -44,7 +44,8 @@ end
 -- Initialization
 --
 
-local primalistMageMarker = mod:AddMarkerOption(false, "npc", 1, -25144, 8, 7) -- Primalist Mage
+local primalistMageMarker = mod:AddMarkerOption(false, "npc", 1, -25144, 1, 2, 3, 4) -- Primalist Mage
+local stormBringerMarker = mod:AddMarkerOption(false, "npc", 8, -25139, 8, 7) -- Drakonid Stormbringer
 function mod:GetOptions()
 	return {
 		-- Stage One: The Primalist Clutch
@@ -73,6 +74,7 @@ function mod:GetOptions()
 		-- Drakonid Stormbringer
 		375653, -- Static Jolt
 		{375620, "SAY"}, -- Ionizing Charge
+		stormBringerMarker,
 		-- Stage Two: A Broodkeeper Scorned
 		375879, -- Broodkeeper's Fury
 		392194, -- Empowered Greatstaff of the Broodkeeper
@@ -118,9 +120,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "MortalWounds", 378782)
 
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Primalist Reinforcements
+	self:Death("AddDeaths", 191206, 191232) -- Primalist Mage, Drakonid Stormbringer
 	-- Primalist Mage
 	self:Log("SPELL_CAST_START", "IceBarrage", 375716)
-	self:Death("PrimalistMageDeath", 191206) -- Primalist Mage
 	-- Tarasek Earthreaver
 	self:Log("SPELL_CAST_SUCCESS", "BurrowingStrike", 376266)
 	self:Log("SPELL_AURA_APPLIED", "BurrowingStrikeApplied", 376266)
@@ -167,7 +169,7 @@ function mod:OnEngage()
 	self:CDBar(-25129, self:Easy() and 35.7 or 33, L.add_count:format(CL.adds, primalReinforcementsCount, 1), "inv_dragonwhelpproto_blue") -- Primalist Reinforcements / Adds
 	self:CDBar(388716, 26.5, CL.count:format(L.icy_shroud, icyShroudCount)) -- Icy Shroud
 
-	if self:GetOption(primalistMageMarker) then
+	if self:GetOption(primalistMageMarker) or self:GetOption(stormBringerMarker) then
 		self:RegisterTargetEvents("AddMarking")
 	end
 end
@@ -183,24 +185,43 @@ function mod:UNIT_SPELLCAST_START(_, unit, _, spellId)
 end
 
 function mod:AddMarking(_, unit, guid)
-	if guid and not mobCollector[guid] and self:MobId(guid) == 191206 then -- Primalist Mage
-		for i = 8, 7, -1 do -- 8, 7
-			if not primalistMageMarks[i] then
-				mobCollector[guid] = true
-				primalistMageMarks[i] = guid
-				self:CustomIcon(primalistMageMarker, unit, i)
-				return
+	if not mobCollector[guid] then
+		local mobId = self:MobId(guid)
+		if mobId == 191206 and self:GetOption(primalistMageMarker) then
+			for i = 1, 4 do -- 1, 2, 3, 4
+				if not primalistMageMarks[i] then
+					mobCollector[guid] = true
+					primalistMageMarks[i] = guid
+					self:CustomIcon(primalistMageMarker, unit, i)
+					return
+				end
+			end
+		elseif mobId == 191232 and self:GetOption(stormBringerMarker) then
+			for i = 8, 7, -1 do -- 8, 7
+				if not primalistMageMarks[i] then
+					mobCollector[guid] = true
+					primalistMageMarks[i] = guid
+					self:CustomIcon(stormBringerMarker, unit, i)
+					return
+				end
 			end
 		end
 	end
 end
 
-function mod:PrimalistMageDeath(args)
-	if self:GetOption(primalistMageMarker) then
-		for i = 8, 7, -1 do -- 8, 7
+function mod:AddDeaths(args)
+	if args.mobId == 191206 and self:GetOption(primalistMageMarker) then
+		for i = 1, 4 do -- 1, 2, 3, 4
 			if primalistMageMarks[i] == args.destGUID then
 				primalistMageMarks[i] = nil
 				return
+			end
+		end
+	elseif args.mobId == 191232 and self:GetOption(stormBringerMarker) then
+		for i = 8, 7, -1 do -- 8, 7
+			if primalistMageMarks[i] == args.destGUID then
+				primalistMageMarks[i] = nil
+				break
 			end
 		end
 	end
