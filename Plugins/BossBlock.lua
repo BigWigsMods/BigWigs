@@ -441,7 +441,8 @@ do
 	-- Talking Head blocking
 	local known = {
 		-- Court of Stars
-		[70199]=true,[70198]=true,[70197]=true,[70193]=true,[70195]=true,[70192]=true,[70194]=true,
+		[70615]=true,[70199]=true,[70198]=true,[70197]=true,[70193]=true,
+		[70195]=true,[70196]=true,[70192]=true,[70194]=true,
 		-- Halls of Valor
 		[57160]=true,[57159]=true,[57162]=true,[68701]=true,[57161]=true,
 

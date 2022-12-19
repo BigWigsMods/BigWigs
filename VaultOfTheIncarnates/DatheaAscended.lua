@@ -20,6 +20,9 @@ local cycloneCount = 1
 local crosswindsCount = 1
 local zephyrSlamCount = 1
 
+local mobCollector = {}
+local infuserMarks = {}
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -37,13 +40,15 @@ end
 -- Initialization
 --
 
+local volatileInfuserMarker = mod:AddMarkerOption(false, "npc", 8, -25903, 8, 7)
 function mod:GetOptions()
 	return {
 		387849, -- Coalescing Storm
-		395501, -- Blowback
 
 		387943, -- Diverted Essence
-		{385812, "TANK"}, -- Aerial Slash
+		{385812, "TANK", "NAMEPLATEBAR"}, -- Aerial Slash
+		395501, -- Blowback
+		volatileInfuserMarker,
 
 		384273, -- Storm Bolt
 		390450, -- Static Cling
@@ -57,8 +62,10 @@ function mod:GetOptions()
 		{376851, "TANK"}, -- Aerial Buffet
 	}, {
 		[387849] = -25952, -- Coalescing Storm
-		[388302] = "general",
-	},{
+		[387943] = -25903, -- Volatile Infuser
+		[384273] = -25738, -- Thunder Caller
+		[388302] = self.displayName,
+	}, {
 		[387849] = CL.adds, -- Coalescing Storm (Adds)
 		[388302] = L.raging_burst, -- Raging Burst (New Tempests)
 		[391686] = L.conductive_marks, -- Conductive Mark (Marks)
@@ -73,6 +80,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_CAST_START", "CoalescingStorm", 387849)
 	self:Log("SPELL_CAST_START", "Blowback", 395501)
+	self:AddDeath("AddDeath", 192934) -- Volatile Infuser
 	self:Log("SPELL_CAST_START", "DivertedEssence", 387943)
 	self:Log("SPELL_CAST_START", "AerialSlash", 385812)
 	self:Log("SPELL_CAST_START", "StormBolt", 384273)
@@ -97,44 +105,75 @@ function mod:OnEngage()
 	crosswindsCount = 1
 	zephyrSlamCount = 1
 
+	mobCollector = {}
+	infuserMarks = {}
+
 	self:CDBar(391686, 4, CL.count:format(L.conductive_marks, conductiveMarkCount)) -- Conductive Mark
 	self:CDBar(388302, 7, CL.count:format(L.raging_burst, ragingBurstCount)) -- Raging Burst
 	self:CDBar(375580, self:Easy() and 9.5 or 16, CL.count:format(CL.knockback, zephyrSlamCount)) -- Zephyr Slam
 	self:CDBar(388410, self:Easy() and 29 or 25.5, CL.count:format(L.crosswinds, crosswindsCount)) -- Crosswinds
 	self:CDBar(376943, self:Easy() and 45 or 35, CL.count:format(L.cyclone, cycloneCount)) -- Cyclone
 	self:CDBar(387849, self:Easy() and 80 or 71, CL.count:format(CL.adds, coalescingStormCount)) -- Coalescing Storm
+
+	if self:GetOption(volatileInfuserMarker) and not self:Mythic() then
+		self:RegisterTargetEvents("AddMarking")
+	end
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:AddMarking(_, unit, guid)
+	if guid and not mobCollector[guid] and self:MobId(guid) == 192934 then -- Volatile Infuser
+		for i = 8, 7, -1 do -- 8, 7
+			if not infuserMarks[i] then
+				mobCollector[guid] = true
+				infuserMarks[i] = guid
+				self:CustomIcon(volatileInfuserMarker, unit, i)
+				return
+			end
+		end
+	end
+end
+
+function mod:AddDeath(args)
+	if self:GetOption(volatileInfuserMarker) then
+		for i = 8, 7, -1 do -- 8, 7
+			if infuserMarks[i] == args.destGUID then
+				infuserMarks[i] = nil
+				return
+			end
+		end
+	end
+end
+
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 391595 then -- Conductive Mark
 		self:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
 		conductiveMarkCount = conductiveMarkCount + 1
-		-- 4.8, 31.8, 31.7, 23.2, 32.9, 31.6, 21.9, 31.5, 31.6 (normal)
-		local cd = conductiveMarkCount % 3 == 1 and 23.1 or 31.7
-		if self:Heroic() then
-			-- 4.5, 25.9, 25.7, 50.2, 25.7, 50.2, 25.8, 50.2, 25.8
+		local cd = 0
+		if self:Mythic() then
+			cd = conductiveMarkCount % 3 == 1 and 36 or 25.5
+		elseif self:Heroic() then
 			cd = (conductiveMarkCount > 3 and conductiveMarkCount % 2 == 0) and 50.2 or 25.7
+		else
+			cd = conductiveMarkCount % 3 == 1 and 23.1 or 31.7
 		end
 		self:CDBar(391686, cd, CL.count:format(L.conductive_marks, conductiveMarkCount))
 	end
 end
-
 
 function mod:CoalescingStorm(args)
 	self:StopBar(CL.count:format(CL.adds, coalescingStormCount))
 	self:Message(args.spellId, "orange", CL.count:format(CL.adds, coalescingStormCount))
 	self:PlaySound(args.spellId, "long")
 	coalescingStormCount = coalescingStormCount + 1
-	self:CDBar(args.spellId, self:Easy() and 86 or 76.5, CL.count:format(CL.adds, coalescingStormCount))
+	self:CDBar(args.spellId, self:Mythic() and 87 or self:Easy() and 86 or 76.5, CL.count:format(CL.adds, coalescingStormCount))
 
 	-- self:CDBar(391686, self:Easy() and 9.5 or 35.5, CL.count:format(L.conductive_marks, conductiveMarkCount)) -- Marks
 	self:CDBar(375580, self:Mythic() and 30.5 or 20.7, CL.knockback) -- Zephyr Slam
 end
-
 
 function mod:Blowback(args)
 	-- Range check XXX
@@ -186,7 +225,7 @@ function mod:RagingBurst(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.raging_burst, ragingBurstCount))
 	self:PlaySound(args.spellId, "alert")
 	ragingBurstCount = ragingBurstCount + 1
-	self:CDBar(args.spellId, self:Easy() and 86 or 76.5, CL.count:format(L.raging_burst, ragingBurstCount))
+	self:CDBar(args.spellId, self:Mythic() and 87 or self:Easy() and 86 or 76.5, CL.count:format(L.raging_burst, ragingBurstCount))
 end
 
 function mod:ConductiveMarkApplied(args)
@@ -205,7 +244,7 @@ function mod:Cyclone(args)
 	self:Message(args.spellId, "orange", CL.count:format(L.cyclone, cycloneCount))
 	self:PlaySound(args.spellId, "alarm")
 	cycloneCount = cycloneCount + 1
-	self:CDBar(args.spellId, self:Easy() and 86 or 77, CL.count:format(L.cyclone, cycloneCount))
+	self:CDBar(args.spellId, self:Mythic() and 87 or self:Easy() and 86 or 77, CL.count:format(L.cyclone, cycloneCount))
 
 	self:CDBar(375580, 15.8, CL.knockback) -- Zephyr Slam
 end
@@ -216,7 +255,9 @@ function mod:Crosswinds(args)
 	self:PlaySound(args.spellId, "alert")
 	crosswindsCount = crosswindsCount + 1
 	local cd = crosswindsCount % 2 == 0 and 40 or 46
-	if self:Heroic() then
+	if self:Mythic() then
+		cd = crosswindsCount % 2 == 0 and 36 or 51
+	elseif self:Heroic() then
 		cd = crosswindsCount % 2 == 0 and 36 or 41
 	end
 	self:CDBar(args.spellId, cd, CL.count:format(L.crosswinds, crosswindsCount))

@@ -568,10 +568,13 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId, nil, L.enveloping_earth)
 			self:PlaySound(args.spellId, "alarm") -- debuffdamage
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.enveloping_earth, damageCount-1), nil, 0.8)
-		self:CustomIcon(envelopingEarthMarker, args.destName, count)
+		-- self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(L.enveloping_earth, damageCount-1), nil, 0.8)
+		if count < 9 then -- flex scaling, yikes
+			self:CustomIcon(envelopingEarthMarker, args.destName, count)
+		end
 	end
 
 	function mod:EnvelopingEarthRemoved(args)
