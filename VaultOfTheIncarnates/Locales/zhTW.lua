@@ -115,7 +115,7 @@ end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "zhTW")
 if L then
-	L.lighting_devastation_trigger = "深呼吸" -- Raszageth takes a deep breath...
+	L.lighting_devastation_trigger = "深吸" -- Raszageth takes a deep breath...
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "zhTW")
