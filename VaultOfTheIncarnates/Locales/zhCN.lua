@@ -115,7 +115,7 @@ end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "zhCN")
 if L then
-	L.lighting_devastation_trigger = "深呼吸" -- Raszageth takes a deep breath...
+	L.lighting_devastation_trigger = "深吸" -- Raszageth takes a deep breath...
 	
 	-- Stage One: The Winds of Change
 	L.hurricane_wing = "推开"
