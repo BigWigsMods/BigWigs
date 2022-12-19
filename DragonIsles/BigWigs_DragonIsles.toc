@@ -15,7 +15,7 @@
 ## Notes-deDE: BigWigs Dragon Isles Modules
 ## Notes-esES: BigWigs Dragon Isles Modules
 ## Notes-esMX: BigWigs Dragon Isles Modules
-## Notes-frFR: BigWigs Dragon Isles Modules
+## Notes-frFR: Modules BigWigs des Îles aux Dragons
 ## Notes-itIT: BigWigs Dragon Isles Modules
 ## Notes-koKR: BigWigs Dragon Isles Modules
 ## Notes-ptBR: BigWigs Dragon Isles Modules
