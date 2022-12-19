@@ -52,13 +52,13 @@ local timersEasy = {
 		[388643] = {68.5, 50}, -- Volatile Current
 		[395906] = {38.5, 24.9, 22.9, 30, 25, 25, 37}, -- Electrified Jaws
 		[387261] = {8.5, 80, 80, 80}, -- Stormsurge
-		[378829] = {52.5, 85.9}, -- Fulminating Charge
+		[377467] = {52.5, 85.9}, -- Fulminating Charge
 		[385574] = {43.5, 35, 49.9, 24.9, 55}, -- Tempest Wing
 	},
 	[3] = {
 		[377594] = {34.5, 41, 41.9}, -- Lightning Breath
 		[385574] = {66.4, 58.9, 26.9}, -- Tempest Wing
-		[378829] = {41.5, 60}, -- Fulminating Charge
+		[377467] = {41.5, 60}, -- Fulminating Charge
 		[386410] = {22.5, 30, 30, 30, 30}, -- Thunderous Blast
 	},
 }
