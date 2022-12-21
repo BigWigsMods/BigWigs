@@ -73,10 +73,18 @@ if L then
 	-- L.ultimate_desc = "Display timers for Ultimate abilities (Searing Carnage, Absolute Zero, Seismic Rupture, Thundering Strike) when we don't know what alter the boss is at."
 	-- L.ultimate_bartext = "%s [Ult]" -- {Spell} [Ult]
 
+	-- L.add_bartext = "%s [추가 몹]" -- "{Spell} [Add]"
+
+	L.Fire = "화염"
+	L.Frost = "냉기"
+	L.Earth = "대지"
+	L.Storm = "폭풍"
+
 	 -- 불
 	 L.magma_burst = "웅덩이 생성"
 	 L.molten_rupture = "웨이브 조심"
 	 L.searing_carnage = "살육"
+	 -- L.raging_inferno = "Soak Pools"
 
 	 -- 냉기
 	 L.biting_chill = "추위 도트"

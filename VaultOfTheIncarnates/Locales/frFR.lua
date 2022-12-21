@@ -73,30 +73,38 @@ if L then
 	L.ultimate_desc = "Affiche les délais pour les techniques ultimes (Carnage incendiaire, Zéro absolu, Rupture sismique, Frappe de la foudre) quand on ignore à quel autel se trouve le boss."
 	L.ultimate_bartext = "%s [Ult]" -- {Spell} [Ult]
 
-	-- -- Fire
+	L.add_bartext = "%s [Add]" -- "{Spell} [Add]"
+
+	L.Fire = "Feu"
+	L.Frost = "Givre"
+	L.Earth = "Terre"
+	L.Storm = "Tempête"
+
+	-- Fire
 	L.magma_burst = "Flaques"
 	L.molten_rupture = "Vagues"
 	L.searing_carnage = "Danse"
+	-- L.raging_inferno = "Soak Pools"
 
-	-- -- Frost
+	-- Frost
 	L.biting_chill = "DoT Frisson"
 	L.frigid_torrent = "Orbes"
 	L.absolute_zero = "Soaks"
 	L.absolute_zero_melee = "Soak Mêlée"
 	L.absolute_zero_ranged = "Soak Distance"
 
-	-- -- Earth
+	-- Earth
 	L.enveloping_earth = "Absorption Soins"
 	L.erupting_bedrock = "Tremblements"
 
-	-- -- Storm
+	-- Storm
 	L.lightning_crash = "Décharges"
 	L.thundering_strike = "Soaks"
 
-	-- -- General
+	-- General
 	-- L.primal_attunement = "Soft Enrage"
 
-	-- -- Stage 2
+	-- Stage 2
 	L.violent_upheaval = "Piliers"
 end
 

@@ -73,10 +73,18 @@ if L then
 	L.ultimate_desc = "Zeigt Timer für ultimative Fähigkeiten an (Sengendes Gemetzel, Absoluter Nullpunkt, Seismischer Riss, Donnerschlag) wenn nicht bekannt ist, an welchem Altar der Boss ist."
 	L.ultimate_bartext = "%s [Ultimativ]" -- {Spell} [Ult]
 
+	L.add_bartext = "%s [Add]" -- "{Spell} [Add]"
+
+	L.Fire = "Feuer"
+	L.Frost = "Frost"
+	L.Earth = "Erde"
+	L.Storm = "Sturm"
+
 	-- -- Fire
 	L.magma_burst = "Pfützen"
 	L.molten_rupture = "Wellen"
 	L.searing_carnage = "Tanzen"
+	-- L.raging_inferno = "Soak Pools"
 
 	-- -- Frost
 	L.biting_chill = "Kälte DoT"

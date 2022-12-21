@@ -73,30 +73,38 @@ if L then
 	-- L.ultimate_desc = "Display timers for Ultimate abilities (Searing Carnage, Absolute Zero, Seismic Rupture, Thundering Strike) when we don't know what alter the boss is at."
 	-- L.ultimate_bartext = "%s [Ult]" -- {Spell} [Ult]
 
-	-- -- Fire
+	L.add_bartext = "%s [Add]" -- "{Spell} [Add]"
+
+	L.Fire = "Fuoco"
+	L.Frost = "Gelo"
+	L.Earth = "Terra"
+	L.Storm = "Tempesta"
+
+	-- Fire
 	-- L.magma_burst = "Pools"
 	-- L.molten_rupture = "Waves"
 	-- L.searing_carnage = "Dance"
+	-- L.raging_inferno = "Soak Pools"
 
-	-- -- Frost
+	-- Frost
 	-- L.biting_chill = "Chill DoT"
 	-- L.frigid_torrent = "Orbs"
 	-- L.absolute_zero = "Soaks"
 	-- L.absolute_zero_melee = "Melee Soak"
 	-- L.absolute_zero_ranged = "Ranged Soak"
 
-	-- -- Earth
+	-- Earth
 	-- L.enveloping_earth = "Heal Absorb"
 	-- L.erupting_bedrock = "Quakes"
 
-	-- -- Storm
+	-- Storm
 	-- L.lightning_crash = "Zaps"
 	-- L.thundering_strike = "Soaks"
 
-	-- -- General
+	-- General
 	-- L.primal_attunement = "Soft Enrage"
 
-	-- -- Stage 2
+	-- Stage 2
 	-- L.violent_upheaval = "Pillars"
 end
 

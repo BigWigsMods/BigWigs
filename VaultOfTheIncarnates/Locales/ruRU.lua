@@ -73,10 +73,18 @@ if L then
 	L.ultimate_desc = "Показывать таймеры для ультимативных способностей (Огненная бойня, Абсолютный нуль, Сейсмический разлом, Громовой удар) когда неизвестен альтарь босса."
 	L.ultimate_bartext = "%s [ульт.]" -- {Spell} [Ult]
 
+	-- L.add_bartext = "%s [Add]" -- "{Spell} [Add]"
+
+	L.Fire = "огонь"
+	L.Frost = "лед"
+	L.Earth = "Земля"
+	L.Storm = "буря"
+
 	-- Fire
 	L.magma_burst = "Лужи"
 	L.molten_rupture = "Волны"
 	L.searing_carnage = "Танец"
+	-- L.raging_inferno = "Soak Pools"
 
 	-- Frost
 	L.biting_chill = "Фрост ДоТ"
