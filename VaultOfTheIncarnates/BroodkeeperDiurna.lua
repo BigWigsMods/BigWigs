@@ -293,7 +293,7 @@ function mod:GreatstaffOfTheBroodkeeper(args)
 	local cd = 25
 	if self:Mythic() then
 		-- based on a 4:34 stage 2 (change at #12)
-		local timer = {16.2, 25, 25, 25, 26.5, 23.5, 25, 25, 25, 25, 25, 31.5, 25, 25.5, 17.9, 25, 25, 25, 32.5, 17.4, 31, 18.9, 25, 25}
+		local timer = {16, 25, 25, 25, 26.5, 23.5, 25, 25, 25, 25, 25, 31.5, 25, 25.5, 18, 25, 25, 25, 32.5, 17.4, 31, 19, 25, 25}
 		cd = timer[greatstaffCount] or 25
 	end
 	self:Bar(args.spellId, cd, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175)
@@ -363,11 +363,16 @@ function mod:IcyShroud(args)
 	local cd = 44
 	-- delayed by wildfire/greatstaff
 	if self:Heroic() then
-		local timer = {26, 44, 47, 41, 44, 44, 44, 47, 40, 44}
-		cd = timer[icyShroudCount] or 44
+		if icyShroudCount == 3 or icyShroudCount == 8 then
+			cd = 47
+		elseif icyShroudCount == 4 then
+			cd = 41
+		elseif icyShroudCount == 9 then
+			cd = 40
+		end
 	elseif self:Mythic() then
 		-- based on a 4:34 stage 2 (change at #7)
-		local timer = {26.2, 44.0, 45.1, 45.5, 41.5, 44.0, 44.0, 48.1, 42.0, 42.0, 44.0, 48.5, 40.5, 43.0}
+		local timer = {26, 44, 45, 45.5, 41.5, 44, 44, 48, 42, 42, 44, 48.5, 40.5, 43}
 		cd = timer[icyShroudCount] or 44
 	end
 	self:Bar(args.spellId, cd, CL.count:format(text, icyShroudCount))
