@@ -119,6 +119,7 @@ if L then
 	L.icy_shroud = "Absorption Soins"
 	L.broodkeepers_fury = "Furie"
 	-- L.frozen_shroud = "Root Absorb"
+	-- L.detonating_stoneslam = "Tank Soak"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "frFR")

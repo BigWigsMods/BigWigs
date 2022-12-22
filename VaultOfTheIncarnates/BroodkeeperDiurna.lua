@@ -13,13 +13,17 @@ mod:SetStage(1)
 -- Locals
 --
 
-local mobCollector = {}
-local primalistMageMarks = {}
 local greatstaffCount = 1
 local rapidIncubationCount = 1
 local wildfireCount = 1
 local icyShroudCount = 1
 local primalReinforcementsCount = 1
+local stoneClawsCount = 1
+
+local nextShroud = 0
+
+local mobCollector = {}
+local primalistMageMarks = {}
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -36,6 +40,7 @@ if L then
 	L.icy_shroud = "Heal Absorb"
 	L.broodkeepers_fury = "Fury"
 	L.frozen_shroud = "Root Absorb"
+	L.detonating_stoneslam = "Tank Soak"
 
 	L.add_count = "%s (%d-%d)"
 end
@@ -52,12 +57,14 @@ function mod:GetOptions()
 		375809, -- Broodkeeper's Bond
 		380175, -- Greatstaff of the Broodkeeper
 		{375889, "SAY"}, -- Greatstaff's Wrath
+		-- 396624, -- Storm Fissure
 		375829, -- Clutchwatcher's Rage
 		376073, -- Rapid Incubation
 		375871, -- Wildfire
 		388716, -- Icy Shroud
-		{375870, "TANK_HEALER"}, -- Mortal Stoneclaws
-		{378782, "TANK"}, -- Mortal Wounds
+		{375870, "TANK"}, -- Mortal Stoneclaws
+		{378782, "TANK_HEALER"}, -- Mortal Wounds
+
 		-25129, -- Primalist Reinforcements
 		-- Primalist Mage
 		375716, -- Ice Barrage
@@ -75,11 +82,16 @@ function mod:GetOptions()
 		375653, -- Static Jolt
 		{375620, "SAY"}, -- Ionizing Charge
 		stormBringerMarker,
+
 		-- Stage Two: A Broodkeeper Scorned
 		375879, -- Broodkeeper's Fury
 		392194, -- Empowered Greatstaff of the Broodkeeper
 		{380483, "SAY"}, -- Empowered Greatstaff's Wrath
 		388918, -- Frozen Shroud
+		396269, -- Mortal Stoneslam
+		{396266, "TANK_HEALER"}, -- Mortal Suffering
+		{396264, "SAY", "SAY_COUNTDOWN"}, -- Detonating Stoneslam
+		"berserk",
 	}, {
 		[375809] = -25119, -- Stage One: The Primalist Clutch
 		[375716] = -25144, -- Primalist Mage
@@ -88,6 +100,7 @@ function mod:GetOptions()
 		[375475] = -25136, -- Juvenile Frost Proto-Dragon
 		[375653] = -25139, -- Drakonid Stormbringer
 		[375879] = -25146, -- Stage Two: A Broodkeeper Scorned
+		[396269] = "mythic", -- Mythic
 	}, {
 		[375809] = L.broodkeepers_bond, -- Broodkeeper's Bond (Eggs Remaining)
 		[380175] = L.greatstaff_of_the_broodkeeper, -- Greatstaff of the Broodkeeper (Greatstaff)
@@ -98,8 +111,9 @@ function mod:GetOptions()
 		[-25129] = CL.adds, -- Primalist Reinforcements (Adds)
 		[375879] = L.broodkeepers_fury, --  Broodkeeper's Fury (Fury)
 		[392194] = L.greatstaff_of_the_broodkeeper, -- Empowered Greatstaff of the Broodkeeper (Greatstaff)
-		[380483] = L.greatstaffs_wrath, -- Empowered Greatstaff's Wrath (Wrath)
-		[388918] = L.icy_shroud, -- Frozen Shroud (Heal Absorb)
+		[380483] = L.greatstaffs_wrath, -- Empowered Greatstaff's Wrath (Laser)
+		[388918] = L.frozen_shroud, -- Frozen Shroud (Root Absorb)
+		[396264] = L.detonating_stoneslam, -- Detonating Stoneslam (Tank Soak)
 	}
 end
 
@@ -144,30 +158,42 @@ function mod:OnBossEnable()
 	self:Log("SPELL_DAMAGE", "IonizingChargeDamage", 375634)
 	self:Log("SPELL_MISSED", "IonizingChargeDamage", 375634)
 
+	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 375575) -- Flame Sentry
+	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 375575)
+	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 375575)
+
 	-- Stage Two: A Broodkeeper Scorned
 	self:Log("SPELL_AURA_APPLIED", "BroodkeepersFury", 375879)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BroodkeepersFury", 375879)
 
-	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 375575) -- Flame Sentry
-	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 375575)
-	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 375575)
+	self:Log("SPELL_CAST_SUCCESS", "MortalStoneslam", 396269)
+	self:Log("SPELL_AURA_APPLIED", "DetonatingStoneslamApplied", 396264)
+	self:Log("SPELL_AURA_REMOVED", "DetonatingStoneslamRemoved", 396264)
 end
 
 function mod:OnEngage()
 	self:SetStage(1)
-	mobCollector = {}
-	primalistMageMarks = {}
 	greatstaffCount = 1
 	rapidIncubationCount = 1
 	wildfireCount = 1
 	icyShroudCount = 1
+	stoneClawsCount = 1
 	primalReinforcementsCount = 1
 
+	mobCollector = {}
+	primalistMageMarks = {}
+
+	if self:Mythic() then
+		self:Berserk(600, true)
+	end
+
+	self:Bar(375870, 4.7) -- Mortal Stoneclaws
 	self:CDBar(375871, 8.5, CL.count:format(self:SpellName(375871), wildfireCount)) -- Wildfire
 	self:CDBar(376073, 13, CL.count:format(L.rapid_incubation, rapidIncubationCount)) -- Rapid Incubation
 	self:CDBar(380175, 17, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount)) -- Greatstaff of the Broodkeeper
 	self:CDBar(-25129, self:Easy() and 35.7 or 33, L.add_count:format(CL.adds, primalReinforcementsCount, 1), "inv_dragonwhelpproto_blue") -- Primalist Reinforcements / Adds
 	self:CDBar(388716, 26.5, CL.count:format(L.icy_shroud, icyShroudCount)) -- Icy Shroud
+	self:Bar(375879, self:Easy() and 317 or 300, CL.stage:format(2)) -- Broodkeeper's Fury
 
 	if self:GetOption(primalistMageMarker) or self:GetOption(stormBringerMarker) then
 		self:RegisterTargetEvents("AddMarking")
@@ -260,7 +286,7 @@ function mod:GreatstaffOfTheBroodkeeper(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175) -- Same icon for stage 1 + 2
 	self:PlaySound(args.spellId, "alert")
 	greatstaffCount = greatstaffCount + 1
-	self:CDBar(args.spellId, 25, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175) -- Same icon for stage 1 + 2
+	self:Bar(args.spellId, 25, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175) -- Same icon for stage 1 + 2
 end
 
 function mod:GreatstaffsWrathApplied(args)
@@ -272,8 +298,11 @@ function mod:GreatstaffsWrathApplied(args)
 end
 
 function mod:ClutchwatchersRage(args)
-	self:StackMessage(args.spellId, "orange", args.destName, args.amount, args.amount, L.clutchwatchers_rage)
-	self:PlaySound(args.spellId, "alarm")
+	local amount = args.amount or 1
+	self:Message(args.spellId, "orange", CL.count:format(L.clutchwatchers_rage, amount))
+	if amount == 1 then
+		self:PlaySound(args.spellId, "alarm")
+	end
 end
 
 function mod:RapidIncubation()
@@ -281,7 +310,7 @@ function mod:RapidIncubation()
 	self:Message(376073, "yellow", CL.count:format(L.rapid_incubation, rapidIncubationCount))
 	self:PlaySound(376073, "alert")
 	rapidIncubationCount = rapidIncubationCount + 1
-	self:CDBar(376073, self:Easy() and 27 or 25, CL.count:format(L.rapid_incubation, rapidIncubationCount))
+	self:Bar(376073, self:Easy() and 27 or 25, CL.count:format(L.rapid_incubation, rapidIncubationCount))
 end
 
 do
@@ -294,7 +323,7 @@ do
 			self:Message(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
 			wildfireCount = wildfireCount + 1
-			self:CDBar(args.spellId, (self:Easy() or self:GetStage() == 1) and 25 or 22.5, CL.count:format(args.spellName, wildfireCount))
+			self:Bar(args.spellId, 25, CL.count:format(args.spellName, wildfireCount))
 		end
 	end
 end
@@ -306,30 +335,36 @@ function mod:IcyShroud(args)
 	self:Message(args.spellId, "yellow", CL.count:format(text, icyShroudCount))
 	self:PlaySound(args.spellId, "alert")
 	icyShroudCount = icyShroudCount + 1
-	self:CDBar(args.spellId, 44, CL.count:format(text, icyShroudCount))
+	local cd = 44
+	self:Bar(args.spellId, cd, CL.count:format(text, icyShroudCount))
+	nextShroud = args.time + cd
 end
 
 function mod:MortalStoneclaws(args)
 	self:Message(args.spellId, "purple")
 	self:PlaySound(args.spellId, "alert")
-	self:CDBar(args.spellId, 23)
+	self:Bar(args.spellId, 24)
 end
 
 function mod:MortalWounds(args)
-	self:StackMessage(args.spellId, "purple", args.destName, args.amount, args.amount)
-	self:PlaySound(args.spellId, "warning")
+	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1)
+	if self:Tank() and not self:Me(args.destGUID) and not self:Tanking(self:UnitTokenFromGUID(args.sourceGUID)) then
+		self:PlaySound(args.spellId, "warning") -- tauntswap
+	elseif self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "alarm") -- On you
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find("ABILITY_WARRIOR_DRAGONROAR.BLP") then
 		-- [CHAT_MSG_RAID_BOSS_EMOTE] |TInterface\\\\ICONS\\\\ABILITY_WARRIOR_DRAGONROAR.BLP:20|t %s calls for Primalist Reinforcements!#Broodkeeper Diurna#####0#0##0#40970#nil#0#false#false#false#false"
 
-		local offset = 12 -- Timer from emote until activation for the first wave
+		local offset = self:Easy() and 12 or 10.5 -- Timer from emote until activation for the first wave
 		self:ScheduleTimer("StopBar", offset, L.add_count:format(CL.adds, primalReinforcementsCount, 1))
 		self:ScheduleTimer("Message", offset, -25129, "yellow", L.add_count:format(CL.adds, primalReinforcementsCount, 1), "inv_dragonwhelpproto_blue")
 		self:ScheduleTimer("PlaySound", offset, -25129, "long")
 
-		local waveTwoTimer = (self:Easy() and 24 or self:Heroic() and 19 or 12) + offset -- Timer from emote until activation
+		local waveTwoTimer = (self:Mythic() and 14.3 or self:Heroic() and 19 or 24) + offset -- Timer from emote until activation
 		self:ScheduleTimer("Bar", offset, -25129, waveTwoTimer-offset,  L.add_count:format(CL.adds, primalReinforcementsCount, 2), "inv_dragonwhelpproto_blue")
 		self:ScheduleTimer("Message", waveTwoTimer, -25129, "yellow",  L.add_count:format(CL.adds, primalReinforcementsCount, 2), "inv_dragonwhelpproto_blue")
 		self:ScheduleTimer("PlaySound", waveTwoTimer, -25129, "long")
@@ -359,7 +394,7 @@ end
 function mod:BurrowingStrikeApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "purple", args.destName, args.amount, args.amount)
+		self:StackMessage(args.spellId, "purple", args.destName, amount, 1)
 		if amount > 2 then -- Pay attention on 3+
 			self:PlaySound(args.spellId, "alarm")
 		end
@@ -373,7 +408,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message(args.spellId, "orange")
-			self:PlaySound(args.spellId, "alarm")
+			self:PlaySound(args.spellId, "alert")
 		end
 		--self:NameplateBar(args.spellId, 11.0, args.sourceGUID)
 	end
@@ -387,7 +422,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message(args.spellId, "red")
-			self:PlaySound(args.spellId, "alert")
+			self:PlaySound(args.spellId, "alarm")
 		end
 		--self:NameplateBar(args.spellId, 11.5, args.sourceGUID)
 	end
@@ -425,7 +460,7 @@ do
 		if t-prev > 2 then
 			prev = t
 			self:Message(args.spellId, "yellow")
-			self:PlaySound(args.spellId, "alert")
+			self:PlaySound(args.spellId, "alarm")
 		end
 		--self:NameplateBar(args.spellId, 11.5, args.sourceGUID)
 	end
@@ -472,18 +507,6 @@ do
 	end
 end
 
--- Stage Two: A Broodkeeper Scorned
-function mod:BroodkeepersFury(args)
-	if self:GetStage() == 1 then
-		self:SetStage(2)
-	end
-	local amount = args.amount or 1
-	self:StopBar(CL.count:format(L.broodkeepers_fury, amount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.broodkeepers_fury, amount))
-	self:PlaySound(args.spellId, "info")
-	self:Bar(args.spellId, 30, CL.count:format(L.broodkeepers_fury, amount+1))
-end
-
 do
 	local prev = 0
 	function mod:GroundDamage(args)
@@ -495,5 +518,62 @@ do
 				self:PersonalMessage(args.spellId, "underyou")
 			end
 		end
+	end
+end
+
+-- Stage Two: A Broodkeeper Scorned
+function mod:BroodkeepersFury(args)
+	local amount = args.amount or 1
+	if amount == 1 then
+		self:StopBar(CL.stage:format(2))
+
+		self:SetStage(2)
+		self:Message(args.spellId, "cyan", ("%s - %s"):format(CL.stage:format(2), CL.count:format(L.broodkeepers_fury, amount)))
+		self:PlaySound(args.spellId, "long") -- phase
+
+		if nextShroud > args.time then -- the next Icy Shroud cast becomes Frozen Shroud
+			self:StopBar(CL.count:format(L.icy_shroud, icyShroudCount))
+			local remaining = nextShroud - args.time
+			self:Bar(388918, {remaining, 44}, CL.count:format(L.frozen_shroud, icyShroudCount)) -- Frozen Shroud
+		end
+
+		if self:Mythic() then
+			stoneClawsCount = 1
+			self:StopBar(375870) -- Mortal Stoneclaws
+			self:Bar(396269, 27.5, CL.count:format(self:SpellName(396269), stoneClawsCount)) -- Mortal Stoneslam
+		end
+	else
+		self:StopBar(CL.count:format(L.broodkeepers_fury, amount))
+		self:Message(args.spellId, "cyan", CL.count:format(L.broodkeepers_fury, amount))
+		-- self:PlaySound(args.spellId, "info")
+	end
+	if amount < 99 then -- >.>
+		self:Bar(args.spellId, 30, CL.count:format(L.broodkeepers_fury, amount + 1))
+	end
+end
+
+function mod:MortalStoneslam(args)
+	stoneClawsCount = stoneClawsCount + 1
+	-- tank message from Mortal Suffering, raid message from Detonating Stoneslam
+	local timer = {27.5, 15, 25.5, 22.5, 25, 25, 25, 25, 22.5, 21.5, 24, 26, 23, 25}
+	local cd = timer[stoneClawsCount] or 25
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, stoneClawsCount))
+end
+
+function mod:DetonatingStoneslamApplied(args)
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(L.detonating_stoneslam, stoneClawsCount-1))
+	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(L.detonating_stoneslam, stoneClawsCount-1))
+	if self:Me(args.destGUID) then
+		self:Say(args.spellId, L.detonating_stoneslam)
+		self:SayCountdown(args.spellId, 6)
+	else
+		self:PlaySound(args.spellId, "warning") -- danger
+	end
+end
+
+function mod:DetonatingStoneslamRemoved(args)
+	self:StopBar(CL.count:format(L.detonating_stoneslam, stoneClawsCount-1), args.destName)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end

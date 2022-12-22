@@ -118,7 +118,8 @@ if L then
 	L.rapid_incubation = "Ovos Imbuídos"
 	L.icy_shroud = "Cura Absorvida"
 	L.broodkeepers_fury = "Fúria"
-	L.frozen_shroud = "Enraizamento e Cura Absorvida"
+	L.frozen_shroud = "Enraizamento e Cura Absorvida" -- XXX these should be short
+	-- L.detonating_stoneslam = "Tank Soak"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "ptBR")

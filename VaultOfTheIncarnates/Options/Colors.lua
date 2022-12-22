@@ -115,10 +115,10 @@ BigWigs:AddColors("Broodkeeper Diurna", {
 	[375653] = "yellow",
 	[375716] = "yellow",
 	[375809] = {"cyan","green"},
-	[375829] = {"blue","orange"},
+	[375829] = "orange",
 	[375870] = "purple",
 	[375871] = "yellow",
-	[375879] = "yellow",
+	[375879] = "cyan",
 	[375889] = "blue",
 	[376073] = "yellow",
 	[376257] = "orange",
@@ -129,6 +129,7 @@ BigWigs:AddColors("Broodkeeper Diurna", {
 	[388716] = "yellow",
 	[388918] = "yellow",
 	[392194] = "yellow",
+	[396264] = {"blue","purple"},
 })
 
 BigWigs:AddColors("Raszageth the Storm-Eater", {
