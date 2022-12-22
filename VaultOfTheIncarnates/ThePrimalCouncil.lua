@@ -187,7 +187,7 @@ function mod:PrimalBlizzard(args)
 end
 
 function mod:PrimalBlizzardApplied(args)
-	if self:Me(args.destGUID) and args.amount > 5 and args.amount % 3 == 0 or args.amount == 8 then -- 6, 8, 9
+	if self:Me(args.destGUID) and (args.amount > 5 and args.amount % 3 == 0 or args.amount == 8) then -- 6, 8, 9
 		self:StackMessage(373059, "blue", args.destName, args.amount, 8)
 		if args.amount > 6 then
 			self:PlaySound(373059, "warning")
