@@ -84,7 +84,7 @@ if L then
 	L.magma_burst = "Pfützen"
 	L.molten_rupture = "Wellen"
 	L.searing_carnage = "Tanzen"
-	-- L.raging_inferno = "Soak Pools"
+	L.raging_inferno = "Pfützen soaken"
 
 	-- -- Frost
 	L.biting_chill = "Kälte DoT"
