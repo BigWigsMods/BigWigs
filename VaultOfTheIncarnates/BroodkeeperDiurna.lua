@@ -19,11 +19,15 @@ local wildfireCount = 1
 local icyShroudCount = 1
 local primalReinforcementsCount = 1
 local stoneClawsCount = 1
+local detonatingStoneslamCount = 1
 
 local nextShroud = 0
+local nextClaws = 0
 
 local mobCollector = {}
 local primalistMageMarks = {}
+
+local mortalStoneclawsMythic = { 4.8, 28.5, 19.5, 24.0, 24.0, 24.0, 24.0, 24.1, 23.9, 24.0, 24.0, 24.0, 26.2, 14.8, 25.6, 22.5, 25.0, 25.0, 25.0, 25.0, 22.5, 21.5, 24.0, 26.0, 23.0, 25.0 }
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -286,7 +290,13 @@ function mod:GreatstaffOfTheBroodkeeper(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175) -- Same icon for stage 1 + 2
 	self:PlaySound(args.spellId, "alert")
 	greatstaffCount = greatstaffCount + 1
-	self:Bar(args.spellId, 25, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175) -- Same icon for stage 1 + 2
+	local cd = 25
+	if self:Mythic() then
+		-- based on a 4:34 stage 2 (change at #12)
+		local timer = {16.2, 25, 25, 25, 26.5, 23.5, 25, 25, 25, 25, 25, 31.5, 25, 25.5, 17.9, 25, 25, 25, 32.5, 17.4, 31, 18.9, 25, 25}
+		cd = timer[greatstaffCount] or 25
+	end
+	self:Bar(args.spellId, cd, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175)
 end
 
 function mod:GreatstaffsWrathApplied(args)
@@ -323,7 +333,22 @@ do
 			self:Message(args.spellId, "yellow")
 			self:PlaySound(args.spellId, "alert")
 			wildfireCount = wildfireCount + 1
-			self:Bar(args.spellId, 25, CL.count:format(args.spellName, wildfireCount))
+			local cd = 25
+			-- delayed by shroud
+			if self:Heroic() then
+				if wildfireCount == 7 then
+					cd = 27.6
+				elseif wildfireCount == 8 then
+					cd = 22.5
+				end
+			elseif self:Mythic() then
+				if wildfireCount == 2 or wildfireCount == 21 or wildfireCount == 23 then
+					cd = 26
+				elseif wildfireCount == 22 or wildfireCount == 24 then
+					cd = 24
+				end
+			end
+			self:Bar(args.spellId, cd, CL.count:format(args.spellName, wildfireCount))
 		end
 	end
 end
@@ -336,6 +361,15 @@ function mod:IcyShroud(args)
 	self:PlaySound(args.spellId, "alert")
 	icyShroudCount = icyShroudCount + 1
 	local cd = 44
+	-- delayed by wildfire/greatstaff
+	if self:Heroic() then
+		local timer = {26, 44, 47, 41, 44, 44, 44, 47, 40, 44}
+		cd = timer[icyShroudCount] or 44
+	elseif self:Mythic() then
+		-- based on a 4:34 stage 2 (change at #7)
+		local timer = {26.2, 44.0, 45.1, 45.5, 41.5, 44.0, 44.0, 48.1, 42.0, 42.0, 44.0, 48.5, 40.5, 43.0}
+		cd = timer[icyShroudCount] or 44
+	end
 	self:Bar(args.spellId, cd, CL.count:format(text, icyShroudCount))
 	nextShroud = args.time + cd
 end
@@ -537,10 +571,11 @@ function mod:BroodkeepersFury(args)
 			self:Bar(388918, {remaining, 44}, CL.count:format(L.frozen_shroud, icyShroudCount)) -- Frozen Shroud
 		end
 
-		if self:Mythic() then
-			stoneClawsCount = 1
-			self:StopBar(375870) -- Mortal Stoneclaws
-			self:Bar(396269, 27.5, CL.count:format(self:SpellName(396269), stoneClawsCount)) -- Mortal Stoneslam
+		if self:Mythic() and nextClaws > args.time then -- the next Mortal Stoneclaws cast becomes Mortal Stoneslam
+			self:StopBar(375870)
+			detonatingStoneslamCount = 1
+			local remaining = nextShroud - args.time
+			self:Bar(396269, {remaining, mortalStoneclawsMythic[stoneClawsCount]}, CL.count:format(self:SpellName(396269), detonatingStoneslamCount)) -- Mortal Stoneslam
 		end
 	else
 		self:StopBar(CL.count:format(L.broodkeepers_fury, amount))
@@ -554,15 +589,15 @@ end
 
 function mod:MortalStoneslam(args)
 	stoneClawsCount = stoneClawsCount + 1
+	detonatingStoneslamCount = detonatingStoneslamCount + 1
 	-- tank message from Mortal Suffering, raid message from Detonating Stoneslam
-	local timer = {27.5, 15, 25.5, 22.5, 25, 25, 25, 25, 22.5, 21.5, 24, 26, 23, 25}
-	local cd = timer[stoneClawsCount] or 25
-	self:Bar(args.spellId, cd, CL.count:format(args.spellName, stoneClawsCount))
+	local cd = mortalStoneclawsMythic[stoneClawsCount] or 25
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, detonatingStoneslamCount))
 end
 
 function mod:DetonatingStoneslamApplied(args)
-	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(L.detonating_stoneslam, stoneClawsCount-1))
-	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(L.detonating_stoneslam, stoneClawsCount-1))
+	self:TargetMessage(args.spellId, "purple", args.destName, CL.count:format(L.detonating_stoneslam, detonatingStoneslamCount-1))
+	self:TargetBar(args.spellId, 6, args.destName, CL.count:format(L.detonating_stoneslam, detonatingStoneslamCount-1))
 	if self:Me(args.destGUID) then
 		self:Say(args.spellId, L.detonating_stoneslam)
 		self:SayCountdown(args.spellId, 6)
@@ -572,7 +607,7 @@ function mod:DetonatingStoneslamApplied(args)
 end
 
 function mod:DetonatingStoneslamRemoved(args)
-	self:StopBar(CL.count:format(L.detonating_stoneslam, stoneClawsCount-1), args.destName)
+	self:StopBar(CL.count:format(L.detonating_stoneslam, detonatingStoneslamCount-1), args.destName)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
