@@ -63,17 +63,17 @@ if L then
 	-- Types
 	L.damage = "伤害技能"
 	L.damage_desc = "在我们不知道首领是什么元素时，显示伤害技能的计时条（岩浆爆裂，酷寒，大地笼罩，闪电崩裂）。"
-	L.damage_bartext = "%s [伤害]" -- {Spell} [Dmg]
+	L.damage_bartext = "[伤害] %s" -- {Spell} [Dmg]
 
 	L.avoid = "躲避技能"
 	L.avoid_desc = "在我们不知道首领是什么元素时，显示躲避技能的计时条（熔火破裂，冷冽洪流，基岩喷发，震撼爆裂）。"
-	L.avoid_bartext = "%s [躲避]" -- {Spell} [Avoid]
+	L.avoid_bartext = "[躲避] %s" -- {Spell} [Avoid]
 
 	L.ultimate = "终极技能"
 	L.ultimate_desc = "在我们不知道首领是什么元素时，显示终极技能的计时条（灼热屠戮，绝对零度，地层裂口，雷霆打击）"
-	L.ultimate_bartext = "%s [终极]" -- {Spell} [Ult]
+	L.ultimate_bartext = "[终极] %s" -- {Spell} [Ult]
 
-	L.add_bartext = "%s [增援]" -- "{Spell} [Add]"
+	L.add_bartext = "[增援] %s" -- "{Spell} [Add]"
 
 	L.Fire = "火焰"
 	L.Frost = "冰霜"
@@ -84,7 +84,7 @@ if L then
 	L.magma_burst = "岩浆池"
 	L.molten_rupture = "熔岩"
 	L.searing_carnage = "火焰跳舞"
-	-- L.raging_inferno = "Soak Pools"
+	L.raging_inferno = "吸收岩浆池"
 
 	-- Frost
 	L.biting_chill = "刺骨寒意"
@@ -119,7 +119,7 @@ if L then
 	L.icy_shroud = "治疗吸收盾"
 	L.broodkeepers_fury = "愤怒"
 	L.frozen_shroud = "定身吸收盾"
-	-- L.detonating_stoneslam = "Tank Soak"
+	L.detonating_stoneslam = "坦克分摊"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "zhCN")
