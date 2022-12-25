@@ -75,9 +75,9 @@ if L then
 
 	L.add_bartext = "[增援] %s" -- "{Spell} [Add]"
 
-	L.Fire = "火焰"
+	L.Fire = "烈焰"
 	L.Frost = "冰霜"
-	L.Earth = "土地" -- check
+	L.Earth = "大地" -- check
 	L.Storm = "风暴"
 
 	-- Fire
@@ -105,7 +105,7 @@ if L then
 	L.primal_attunement = "软狂暴"
 
 	-- Stage 2
-	L.violent_upheaval = "柱子"
+	L.violent_upheaval = "小怪"
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "zhCN")
