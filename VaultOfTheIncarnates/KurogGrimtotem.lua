@@ -526,8 +526,8 @@ function mod:PrimalBarrierRemoved(args)
 	self:StopBar(400473) -- Elemental Rage
 
 	barrierRemovedCount = barrierRemovedCount + 1
-	self:SetStage(2)
-	self:Message("stages", "cyan", CL.stage:format(2), false)
+	self:SetStage(1)
+	self:Message("stages", "cyan", CL.stage:format(1), false)
 	self:PlaySound("stages", "long") -- phase
 
 	currentAltar = "?"
