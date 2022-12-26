@@ -604,7 +604,7 @@ function mod:MagmaBurst(args)
 end
 
 function mod:MoltenRupture(args)
-	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.avoid_bartext:format(L.molten_rupture), avoidCount)))
+	self:Message(args.spellId, "orange", CL.count:format(L.avoid_bartext:format(L.molten_rupture), avoidCount))
 	self:PlaySound(args.spellId, "alert")
 end
 
@@ -644,13 +644,13 @@ end
 
 -- Frost Altar
 function mod:BitingChill(args)
-	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.damage_bartext:format(L.biting_chill), damageCount)))
+	self:Message(args.spellId, "yellow", CL.count:format(L.damage_bartext:format(L.biting_chill), damageCount))
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:FrigidTorrent(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
-		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.avoid_bartext:format(L.frigid_torrent), avoidCount)))
+		self:Message(args.spellId, "orange", CL.count:format(L.avoid_bartext:format(L.frigid_torrent), avoidCount))
 	else --if self:MobId(args.sourceGUID) == 198308 then -- Frostwrought Dominator (Mythic altar add)
 		self:StopBar(L.add_bartext:format(L.frigid_torrent, addCount[args.spellId]))
 		self:Message(args.spellId, "cyan", L.add_bartext:format(L.frigid_torrent, addCount[args.spellId]))
@@ -764,7 +764,7 @@ end
 
 function mod:EruptingBedrock(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
-		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.avoid_bartext:format(L.erupting_bedrock), avoidCount)))
+		self:Message(args.spellId, "orange", CL.count:format(L.avoid_bartext:format(L.erupting_bedrock), avoidCount))
 	else --if self:MobId(args.sourceGUID) == 197595 then -- Earthwrought Smasher (Mythic altar add)
 		self:StopBar(L.add_bartext:format(L.erupting_bedrock, addCount[args.spellId]))
 		self:Message(args.spellId, "cyan", L.add_bartext:format(L.erupting_bedrock, addCount[args.spellId]))
@@ -776,7 +776,7 @@ end
 
 function mod:SeismicRupture(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
-		self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.ultimate_bartext:format(CL.adds), ultimateCount)))
+		self:Message(args.spellId, "orange", CL.count:format(L.ultimate_bartext:format(CL.adds), ultimateCount))
 	else --if self:MobId(args.sourceGUID) == 190588 then -- Tectonic Crusher (Mythic intermission add)
 		self:StopBar(CL.count:format(CL.adds, addCount[args.spellId]))
 		self:Message(args.spellId, "orange", CL.count:format(CL.adds, addCount[args.spellId]))
