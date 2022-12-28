@@ -73,7 +73,7 @@ if L then
 	L.ultimate_desc = "當我們不知道首領獲得什麼元素能力時，顯示終結技能的計時器（灼熱屠殺、絕對零度、震地破裂、雷擊）。"
 	L.ultimate_bartext = "[終結] %s" -- {Spell} [Ult]
 
-	L.add_bartext = "[增援] %s " -- "{Spell} [Add]"
+	L.add_bartext = "[增援] %s" -- "{Spell} [Add]"
 
 	L.Fire = "火焰"
 	L.Frost = "冰霜"
