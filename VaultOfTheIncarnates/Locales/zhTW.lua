@@ -73,18 +73,18 @@ if L then
 	L.ultimate_desc = "當我們不知道首領獲得什麼元素能力時，顯示終結技能的計時器（灼熱屠殺、絕對零度、震地破裂、雷擊）。"
 	L.ultimate_bartext = "[終結] %s" -- {Spell} [Ult]
 
-	L.add_bartext = "%s [增援]" -- "{Spell} [Add]"
+	L.add_bartext = "[增援] %s" -- "{Spell} [Add]"
 
 	L.Fire = "火焰"
 	L.Frost = "冰霜"
-	L.Earth = "土地" -- check
+	L.Earth = "大地"
 	L.Storm = "風暴"
 
 	-- Fire
 	L.magma_burst = "熔岩池"
 	L.molten_rupture = "熔岩波"
 	L.searing_carnage = "火圈跳舞"
-	-- L.raging_inferno = "Soak Pools"
+	L.raging_inferno = "吸收熔岩池"
 
 	-- Frost
 	L.biting_chill = "刺骨之寒"
@@ -105,7 +105,7 @@ if L then
 	L.primal_attunement = "軟狂暴"
 
 	-- Stage 2
-	-- L.violent_upheaval = "Pillars"
+	L.violent_upheaval = "小怪" -- need check
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "zhTW")
@@ -119,7 +119,7 @@ if L then
 	L.icy_shroud = "減速吸收盾"
 	L.broodkeepers_fury = "狂怒"
 	L.frozen_shroud = "定身吸收盾"
-	-- L.detonating_stoneslam = "Tank Soak"
+	L.detonating_stoneslam = "坦克分攤"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "zhTW")
