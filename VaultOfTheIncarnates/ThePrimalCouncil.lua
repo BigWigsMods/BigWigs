@@ -212,7 +212,7 @@ end
 
 function mod:ConductiveMarkApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, args.amount, L.conductive_mark)
+		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, L.conductive_mark)
 		self:PlaySound(args.spellId, "warning")
 	end
 end
