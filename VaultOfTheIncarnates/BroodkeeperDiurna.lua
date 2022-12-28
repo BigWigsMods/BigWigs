@@ -486,7 +486,7 @@ function mod:RendingBite(args)
 end
 
 function mod:RendingBiteApplied(args)
-	self:StackMessage(args.spellId, "purple", args.destName, args.amount, args.amount)
+	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm")
 	end
