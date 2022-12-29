@@ -43,7 +43,7 @@ local stormEaterCount = 1
 local timersEasy = {
 	[1] = {
 		[381615] = {15, 35, 40, 30, 35, 35, 40}, -- Static Charge
-		[388643] = {85, 47}, -- Volatile Current
+		[388643] = {85, 47, 58}, -- Volatile Current
 		[377594] = {23, 39, 53, 52}, -- Lightning Breath
 		[377612] = {35, 35, 35, 35, 35, 35}, -- Hurricane Wing
 		[395906] = {5, 25, 25, 27, 21, 27, 30, 27, 21}, -- Electrified Jaws
@@ -52,13 +52,13 @@ local timersEasy = {
 		[388643] = {68.5, 50}, -- Volatile Current
 		[395906] = {38.5, 24.9, 22.9, 30, 25, 25, 37}, -- Electrified Jaws
 		[387261] = {8.5, 80, 80, 80}, -- Stormsurge
-		[378829] = {52.5, 85.9}, -- Fulminating Charge
+		[377467] = {52.5, 85.9}, -- Fulminating Charge
 		[385574] = {43.5, 35, 49.9, 24.9, 55}, -- Tempest Wing
 	},
 	[3] = {
 		[377594] = {34.5, 41, 41.9}, -- Lightning Breath
 		[385574] = {66.4, 58.9, 26.9}, -- Tempest Wing
-		[378829] = {41.5, 60}, -- Fulminating Charge
+		[377467] = {41.5, 60}, -- Fulminating Charge
 		[386410] = {22.5, 30, 30, 30, 30}, -- Thunderous Blast
 	},
 }

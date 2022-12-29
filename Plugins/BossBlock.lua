@@ -480,7 +480,7 @@ do
 		[205770]=true,[205555]=true,[205554]=true,[205838]=true,[205839]=true,[205840]=true,
 		[205831]=true,[205832]=true,[205833]=true,[205841]=true,[205851]=true,[205856]=true,
 		[205504]=true,[205505]=true,[205506]=true,[205507]=true,[205842]=true,[205508]=true,
-		[205814]=true,[205815]=true,[205567]=true,
+		[205814]=true,[205815]=true,[205567]=true,[205852]=true,
 		-- Uldaman: Legacy of Tyr
 		[203125]=true,[203126]=true,[203127]=true,
 	}

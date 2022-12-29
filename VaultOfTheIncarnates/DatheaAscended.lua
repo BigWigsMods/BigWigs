@@ -214,7 +214,7 @@ function mod:StaticClingApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
 		if amount % 3 == 0 or amount > 10 then
-			self:StackMessage(args.spellId, "blue", args.destName, args.amount, args.amount)
+			self:StackMessage(args.spellId, "blue", args.destName, amount, 1)
 			self:PlaySound(args.spellId, "alarm")
 		end
 	end
@@ -231,7 +231,7 @@ end
 function mod:ConductiveMarkApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, args.amount, L.conductive_mark)
+		self:StackMessage(args.spellId, "blue", args.destName, amount, 1, L.conductive_mark)
 		self:PlaySound(args.spellId, "warning")
 		if amount == 1 then -- Initial Say
 			self:Say(args.spellId, L.conductive_mark)

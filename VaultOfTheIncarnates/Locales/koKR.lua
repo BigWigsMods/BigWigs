@@ -19,7 +19,7 @@ if L then
 	 L.awakened_earth = "기둥 생성"
 	 L.shattering_impact = "충격 - 잔해 조심"
 	 L.concussive_slam = "탱커 조심"
-	-- L.infused_fallout = "Dust"
+	 L.infused_fallout = "낙진"
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "koKR")
@@ -33,7 +33,7 @@ if L then
 	 L.conductive_marks = "표식" -- Conductive Marks
 	 L.conductive_mark = "표식" -- Singular
 
-	 L.custom_on_stop_timers = "항상 능력 바 표시Always show ability bars"
+	 L.custom_on_stop_timers = "항상 능력 바 표시"
 	 L.custom_on_stop_timers_desc = "항상 표시될 능력: 전도성 표식"
 end
 
@@ -60,23 +60,31 @@ end
 
 L = BigWigs:NewBossLocale("Kurog Grimtotem", "koKR")
 if L then
-	-- -- Types
-	-- L.damage = "Damage Skills"
-	-- L.damage_desc = "Display timers for Damage abilities (Magma Burst, Biting Chill, Enveloping Earth, Lightning Crash) when we don't know what alter the boss is at."
-	-- L.damage_bartext = "%s [Dmg]" -- {Spell} [Dmg]
+	 -- Types
+	 L.damage = "피해를 주는 능력"
+	 L.damage_desc = "넴드가 어떤 제단에 있는지 모를 때에 피해를 주는 능력들(마그마 폭발, 살을 에는 추위, 좁혀드는 대지, 번개 충돌)에 대한 타이머 표시."
+	 L.damage_bartext = "%s [데미지]" -- {Spell} [Dmg]
 
-	-- L.avoid = "Avoid Skills"
-	-- L.avoid_desc = "Display timers for Avoid abilities (Molten Rupture, Frigid Torrent, Erupting Bedrock, Shocking Burst) when we don't know what alter the boss is at."
-	-- L.avoid_bartext = "%s [Avoid]" -- {Spell} [Avoid]
+	 L.avoid = "피해야 하는 능력"
+	 L.avoid_desc = "넴드가 어떤 제단에 있는지 모를 때에 피해야 하는 능력들 (녹아내린 파열, 혹한의 기류, 분출하는 기반암, 충격의 파열)에 대한 타이머 표시."
+	 L.avoid_bartext = "%s [피하기]" -- {Spell} [Avoid]
 
-	-- L.ultimate = "Ultimate Skills"
-	-- L.ultimate_desc = "Display timers for Ultimate abilities (Searing Carnage, Absolute Zero, Seismic Rupture, Thundering Strike) when we don't know what alter the boss is at."
-	-- L.ultimate_bartext = "%s [Ult]" -- {Spell} [Ult]
+	 L.ultimate = "궁극기"
+	 L.ultimate_desc = "넴드가 어떤 제단에 있는지 모를 때에 궁극기들 (이글거리는 살육, 절대 영점, 지진 파열, 천둥번개)에 대한 타이머 표시 ."
+	 L.ultimate_bartext = "%s [궁극기]" -- {Spell} [Ult]
+
+	 L.add_bartext = "%s [추가 몹]" -- "{Spell} [Add]"
+
+	L.Fire = "화염"
+	L.Frost = "냉기"
+	L.Earth = "대지"
+	L.Storm = "폭풍"
 
 	 -- 불
 	 L.magma_burst = "웅덩이 생성"
 	 L.molten_rupture = "웨이브 조심"
 	 L.searing_carnage = "살육"
+	  L.raging_inferno = "불지옥 바닥 밟기"
 
 	 -- 냉기
 	 L.biting_chill = "추위 도트"
@@ -111,6 +119,7 @@ if L then
 	 L.icy_shroud = "치유량 흡수 껍질"
 	 L.broodkeepers_fury = "분노"
 	 L.frozen_shroud = "속박"
+	  L.detonating_stoneslam = "탱커 나눠맞기"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "koKR")

@@ -10,18 +10,18 @@
 ## Title-ptBR: BigWigs [|cffeda55fCâmara dos Encarnados|r]
 ## Title-ruRU: BigWigs [|cffeda55fХранилище Воплощений|r]
 ## Title-zhCN: BigWigs [|cffeda55f化身巨龙牢窟|r]
-## Title-zhTW: BigWigs [|cffeda55f洪荒化身密庫|r]
+## Title-zhTW: BigWigs [|cffeda55f洪荒化身牢獄|r]
 ## Notes: BigWigs Vault of the Incarnates Modules
 ## Notes-deDE: BigWigs Vault of the Incarnates Modules
 ## Notes-esES: BigWigs Vault of the Incarnates Modules
 ## Notes-esMX: BigWigs Vault of the Incarnates Modules
-## Notes-frFR: BigWigs Vault of the Incarnates Modules
+## Notes-frFR: Modules BigWigs du Caveau des Incarnations
 ## Notes-itIT: BigWigs Vault of the Incarnates Modules
 ## Notes-koKR: BigWigs Vault of the Incarnates Modules
 ## Notes-ptBR: BigWigs Vault of the Incarnates Modules
 ## Notes-ruRU: BigWigs Vault of the Incarnates Modules
 ## Notes-zhCN: BigWigs 化身巨龙牢窟模块
-## Notes-zhTW: BigWigs Vault of the Incarnates Modules
+## Notes-zhTW: BigWigs 洪荒化身牢獄模組
 ## Version: @project-version@
 
 ## LoadOnDemand: 1

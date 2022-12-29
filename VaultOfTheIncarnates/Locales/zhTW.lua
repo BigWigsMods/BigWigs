@@ -73,31 +73,39 @@ if L then
 	L.ultimate_desc = "當我們不知道首領獲得什麼元素能力時，顯示終結技能的計時器（灼熱屠殺、絕對零度、震地破裂、雷擊）。"
 	L.ultimate_bartext = "[終結] %s" -- {Spell} [Ult]
 
-	-- -- Fire
+	L.add_bartext = "[增援] %s" -- "{Spell} [Add]"
+
+	L.Fire = "火焰"
+	L.Frost = "冰霜"
+	L.Earth = "大地"
+	L.Storm = "風暴"
+
+	-- Fire
 	L.magma_burst = "熔岩池"
 	L.molten_rupture = "熔岩波"
 	L.searing_carnage = "火圈跳舞"
+	L.raging_inferno = "吸收熔岩池"
 
-	-- -- Frost
+	-- Frost
 	L.biting_chill = "刺骨之寒"
 	L.frigid_torrent = "冰球跳舞"
 	L.absolute_zero = "大圈分攤"
 	L.absolute_zero_melee = "近戰分攤"
 	L.absolute_zero_ranged = "遠程分攤"
 
-	-- -- Earth
+	-- Earth
 	L.enveloping_earth = "吸收盾"
 	L.erupting_bedrock = "地震跳舞"
 
-	-- -- Storm
+	-- Storm
 	L.lightning_crash = "閃電暴擊"
 	L.thundering_strike = "接圈"
 
-	-- -- General
+	-- General
 	L.primal_attunement = "軟狂暴"
 
-	-- -- Stage 2
-	-- L.violent_upheaval = "Pillars"
+	-- Stage 2
+	L.violent_upheaval = "小怪" -- need check
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "zhTW")
@@ -111,11 +119,12 @@ if L then
 	L.icy_shroud = "減速吸收盾"
 	L.broodkeepers_fury = "狂怒"
 	L.frozen_shroud = "定身吸收盾"
+	L.detonating_stoneslam = "坦克分攤"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "zhTW")
 if L then
-	L.lighting_devastation_trigger = "深呼吸" -- Raszageth takes a deep breath...
+	L.lighting_devastation_trigger = "深吸" -- Raszageth takes a deep breath...
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "zhTW")
