@@ -19,7 +19,16 @@ local barrierRemovedCount = 0
 local avoidCount = 1
 local damageCount = 1
 local ultimateCount = 1
-local addCount = {}
+local addCount = {
+	[374023] = 1, -- Searing Carnage
+	[374691] = 1, -- Seismic Rupture
+	[374215] = 1, -- Thunder Strike
+
+	[394416] = 1,
+	[391019] = 1,
+	[395893] = 1,
+	[394719] = 1,
+}
 local strikeCount = 1
 
 local avoidCD = 20.7
@@ -341,7 +350,16 @@ function mod:OnEngage()
 	avoidCount = 1
 	damageCount = 1
 	ultimateCount = 1
-	addCount = {}
+	addCount = {
+		[374023] = 1, -- Searing Carnage
+		[374691] = 1, -- Seismic Rupture
+		[374215] = 1, -- Thunder Strike
+
+		[394416] = 1,
+		[391019] = 1,
+		[395893] = 1,
+		[394719] = 1,
+	}
 	strikeCount = 1
 
 	local avoidPullCD = self:Easy() and 14.5 or 23
@@ -519,6 +537,11 @@ function mod:PrimalBarrierApplied(args)
 		[374023] = 1, -- Searing Carnage
 		[374691] = 1, -- Seismic Rupture
 		[374215] = 1, -- Thunder Strike
+
+		[394416] = 1,
+		[391019] = 1,
+		[395893] = 1,
+		[394719] = 1,
 	}
 end
 
@@ -534,7 +557,16 @@ function mod:PrimalBarrierRemoved(args)
 	avoidCount = 1
 	damageCount = 1
 	ultimateCount = 1
-	addCount = {}
+	addCount = {
+		[374023] = 1, -- Searing Carnage
+		[374691] = 1, -- Seismic Rupture
+		[374215] = 1, -- Thunder Strike
+
+		[394416] = 1,
+		[391019] = 1,
+		[395893] = 1,
+		[394719] = 1,
+	}
 	strikeCount = 1
 
 	local avoidIntermissionCD = self:Easy() and 14.5 or 22.5
@@ -868,7 +900,7 @@ do
 	function mod:OrbLightningSummon(args)
 		if args.time-prev > 3 then
 			prev = args.time
-			self:Message(394719, "purple", CL.count:format(L.orb_lightning, addCount[args.spellId]-1))
+			self:Message(394719, "purple", CL.count:format(L.orb_lightning, addCount[394719]-1))
 			self:PlaySound(394719, "alarm")
 		end
 	end
