@@ -131,12 +131,16 @@ end
 -- Initialization
 --
 
+local staticChargeMarker = mod:AddMarkerOption(false, "player", 1, 381615, 1, 2, 3) -- Static Charge
+local fulminatingChargeMarker = mod:AddMarkerOption(false, "player", 1, 377467, 1, 2, 3) -- Fulminating Charge
+local magneticChargeMarker = mod:AddMarkerOption(false, "player", 4, 399713, 4) -- Magnetic Charge
 function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage One: The Winds of Change
 		377612, -- Hurricane Wing
 		{381615, "SAY", "SAY_COUNTDOWN"}, -- Static Charge
+		staticChargeMarker,
 		388643, -- Volatile Current
 		{395906, "TANK"}, -- Electrified Jaws
 		377594, -- Lightning Breath
@@ -157,6 +161,7 @@ function mod:GetOptions()
 		394583, -- Scattered Charge
 		385574, -- Tempest Wing
 		{377467, "SAY", "SAY_COUNTDOWN"}, -- Fulminating Charge
+		fulminatingChargeMarker,
 		-- Intermission: The Vault Falters
 		389870, -- Storm Break
 		389878, -- Fuse
@@ -165,6 +170,7 @@ function mod:GetOptions()
 		385569, -- Raging Storm
 		395929, -- Storm's Spite
 		{399713, "SAY", "SAY_COUNTDOWN"}, -- Magnetic Charge
+		magneticChargeMarker,
 		{386410, "SAY"}, -- Thunderous Blast
 		{391285, "TANK"}, -- Melted Armor
 		-- Mythic
@@ -440,18 +446,21 @@ do
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
+		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.bomb)
 			self:SayCountdown(args.spellId, 8)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(CL.bomb, staticChargeCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(CL.bomb, staticChargeCount-1))
+		self:CustomIcon(staticChargeMarker, args.destName, count)
 	end
 
 	function mod:StaticChargeRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 		end
+		self:CustomIcon(staticChargeMarker, args.destName)
 	end
 end
 
@@ -681,25 +690,35 @@ function mod:TempestWing(args)
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][tempestWingCount], CL.count:format(L.tempest_wing, tempestWingCount))
 end
 
-function mod:FulminatingCharge(args)
-	self:StopBar(CL.count:format(L.fulminating_charge, fulminatingChargeCount))
-	self:Message(377467, "yellow", CL.count:format(L.fulminating_charge, fulminatingChargeCount))
-	self:PlaySound(377467, "long")
-	fulminatingChargeCount = fulminatingChargeCount + 1
-	self:Bar(377467, timers[self:GetStage()][377467][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
-end
-
-function mod:FulminatingChargeApplied(args)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId, L.fulminating_charge_debuff)
-		self:SayCountdown(args.spellId, 5)
-		self:PlaySound(args.spellId, "warning")
+do
+	local playerList = {}
+	function mod:FulminatingCharge(args)
+		self:StopBar(CL.count:format(L.fulminating_charge, fulminatingChargeCount))
+		--self:Message(377467, "yellow", CL.count:format(L.fulminating_charge, fulminatingChargeCount))
+		self:PlaySound(377467, "long")
+		fulminatingChargeCount = fulminatingChargeCount + 1
+		self:Bar(377467, timers[self:GetStage()][377467][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
+		playerList = {}
 	end
-end
 
-function mod:FulminatingChargeRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+	function mod:FulminatingChargeApplied(args)
+		local count = #playerList+1
+		playerList[count] = args.destName
+		playerList[args.destName] = count -- Set raid marker
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, L.fulminating_charge_debuff)
+			self:SayCountdown(args.spellId, 5)
+			self:PlaySound(args.spellId, "warning")
+		end
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.fulminating_charge, fulminatingChargeCount-1))
+		self:CustomIcon(fulminatingChargeCount, args.destName, count)
+	end
+
+	function mod:FulminatingChargeRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
+		self:CustomIcon(fulminatingChargeCount, args.destName)
 	end
 end
 
@@ -766,12 +785,14 @@ function mod:MagneticChargeApplied(args)
 	end
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(L.magnetic_charge, magneticChargeCount-1))
 	self:TargetBar(args.spellId, 8, args.destName, CL.count:format(L.magnetic_charge, magneticChargeCount-1))
+	self:CustomIcon(magneticChargeMarker, args.destName, 4)
 end
 
 function mod:MagneticChargeRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
+	self:CustomIcon(magneticChargeMarker, args.destName)
 end
 
 function mod:ThunderousBlast(args)
