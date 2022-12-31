@@ -105,7 +105,7 @@ if L then
 	L.primal_attunement = "軟狂暴"
 
 	-- Stage 2
-	L.violent_upheaval = "小怪" -- need check
+	L.violent_upheaval = "石柱"
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "zhTW")
