@@ -609,7 +609,7 @@ function mod:SearingCarnage(args)
 	else --if self:MobId(args.sourceGUID) == 190688 then -- Blazing Fiend (Intermission add)
 		local count = addCount[374023] or 1
 		self:StopBar(CL.count:format(L.searing_carnage, count))
-		self:Message(374023, "yellow", CL.count:format(L.searing_carnage, count))
+		self:Message(374023, "yellow", CL.casting:format(CL.count:format(L.searing_carnage, count)))
 		count = count + 1
 		self:Bar(374023, 23.1, CL.count:format(L.searing_carnage, count))
 		addCount[374023] = count
