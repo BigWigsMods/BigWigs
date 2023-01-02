@@ -87,7 +87,31 @@ local timersHeroic = {
 	},
 }
 
-local timers = mod:Easy() and timersEasy or timersHeroic
+local timersMythic = {
+	[1] = {
+		[381615] = {15, 35, 37, 33, 35, 37, 33}, -- Static Charge
+		[388643] = {28, 53, 46, 59, 46}, -- Volatile Current
+		[377594] = {20, 25, 19, 26, 24, 20, 16, 18, 27, 24, 20}, -- Lightning Breath
+		[377612] = {35, 35, 35, 35, 35, 35, 35}, -- Hurricane Wing
+		[395906] = {5, 27, 23, 30, 17, 30, 28, 30, 19, 28}, -- Electrified Jaws
+	},
+	[2] = {
+		[388643] = {67.5, 61, 40}, -- Volatile Current
+		[395906] = {44.5, 27.0, 21.0, 30.0, 25.0, 25.0}, -- Electrified Jaws
+		[387261] = {14.5, 80.0, 80.0}, -- Stormsurge
+		[377467] = {57.5, 87.0}, -- Fulminating Charge
+		[385574] = {49.5, 30.0, 54.0, 20.0}, -- Tempest Wing
+	},
+	[3] = {
+		[377594] = {38.2, 41.5, 44.0, 30.0}, -- Lightning Breath
+		[385574] = {70.7, 70.0, 20.0}, -- Tempest Wing
+		[377467] = {43.3, 61.4, 67.0}, -- Fulminating Charge
+		[386410] = {28.7, 29.0, 32.0, 59.0}, -- Thunderous Blast
+		[399713] = {32.7, 30.0, 33.0, 33.1}, -- Magnetic Charge
+	},
+}
+
+local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or timersEasy
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -274,7 +298,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Easy() and timersEasy or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or timersEasy
 	self:SetStage(1)
 	-- Stage One: The Winds of Change
 	hurricaneWingCount = 1
