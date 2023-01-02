@@ -149,10 +149,21 @@ if L then
 	-- Intermission: The Vault Falters
 	L.storm_break = "Teleport"
 	L.ball_lightning = "Kugeln"
+	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Magnetische Ladung"
-	-- Mythic
-	L.storm_eater = "Sturmfresserin"
+
+	-- L.storm_nova_cast = "Storm Nova CastBar"
+	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
+
+	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
+	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+
+	-- L.skipped_cast = "Skipped %s (%d)"
+
+	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
+	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
+	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "deDE")
