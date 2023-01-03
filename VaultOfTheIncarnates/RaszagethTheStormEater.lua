@@ -646,8 +646,10 @@ function mod:BreathCheck(castCount)
 		mod:Message(377594, "green", L.skipped_cast:format(L.lightning_breath, castCount))
 		lightningBreathCount = castCount + 1
 		local cd = timers[self:GetStage()][377594][lightningBreathCount]
-		mod:Bar(377594, cd - SKIP_CAST_THRESHOLD, CL.count:format(L.lightning_breath, lightningBreathCount))
-		checkTimer = mod:ScheduleTimer("BreathCheck", cd, lightningBreathCount)
+		if cd then
+			mod:Bar(377594, cd - SKIP_CAST_THRESHOLD, CL.count:format(L.lightning_breath, lightningBreathCount))
+			checkTimer = mod:ScheduleTimer("BreathCheck", cd, lightningBreathCount)
+		end
 	end
 end
 
@@ -1210,15 +1212,6 @@ do
 end
 
 -- Mythic
-function mod:InversionApplied(args)
-	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId)
-		self:Say(args.spellId, nil, true)
-		self:SayCountdown(args.spellId, 6)
-		self:PlaySound(args.spellId, "warning")
-	end
-end
-
 function mod:StormEater(args)
 	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
