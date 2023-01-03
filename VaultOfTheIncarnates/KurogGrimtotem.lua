@@ -19,22 +19,14 @@ local barrierRemovedCount = 0
 local avoidCount = 1
 local damageCount = 1
 local ultimateCount = 1
-local addCount = {
-	[374023] = 1, -- Searing Carnage
-	[374691] = 1, -- Seismic Rupture
-	[374215] = 1, -- Thunder Strike
-
-	[394416] = 1,
-	[391019] = 1,
-	[395893] = 1,
-	[394719] = 1,
-}
+local addCount = {} -- count init on spawn (MythicAddSpawn/IntermissionAddSpawn)
 local strikeCount = 1
 
-local avoidCD = 20.7
+local avoidCD = 46
 local damageCD = 20.7
 local ultimateCD = 46
 
+-- Cooldowns of the spells to re-create bars
 local nextAvoidSpell = 0
 local nextDamageSpell = 0
 local nextUltimateSpell = 0
@@ -339,28 +331,18 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	-- Cooldowns of the spells to re-create bars
-	avoidCD = 20.7
-	damageCD = 20.7
-	ultimateCD = 46
-
 	self:SetStage(1)
 	currentAltar = "?"
 	barrierRemovedCount = 0
 	avoidCount = 1
 	damageCount = 1
 	ultimateCount = 1
-	addCount = {
-		[374023] = 1, -- Searing Carnage
-		[374691] = 1, -- Seismic Rupture
-		[374215] = 1, -- Thunder Strike
-
-		[394416] = 1,
-		[391019] = 1,
-		[395893] = 1,
-		[394719] = 1,
-	}
+	addCount = {}
 	strikeCount = 1
+
+	avoidCD = 46
+	damageCD = 20.7
+	ultimateCD = 46
 
 	local avoidPullCD = self:Easy() and 14.5 or 23
 	local damagePullCD = 14.5
@@ -388,24 +370,17 @@ end
 
 function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 391096 then -- Damage Selection
-		if not self:Easy() or currentAltar == "Fire" or currentAltar == "Frost" then -- still fires on normal
+		if not self:Easy() then
 			self:StopBar(CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount))
 			damageCount = damageCount + 1
-			if self:Easy() then
-				damageCD = damageCount % 3 == 1 and 20.7 or damageCount % 3 == 2 and 8.5 or 17.0
-			else
-				damageCD = damageCount % 2 == 0 and 25.6 or 20.7
-			end
+			damageCD = damageCount % 2 == 0 and 25.6 or 20.7
 			nextDamageSpell = damageCD + GetTime()
 			self:CDBar(alterSpellIdMap[currentAltar]["damage"], damageCD, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount)) -- SetOption:382563,373678,391056,373487:::
 		end
 	elseif spellId == 391100 then -- Avoid Selection
-		if not self:Easy() or currentAltar == "Earth" or currentAltar == "Storm" then -- still fires on normal
+		if not self:Easy() then
 			self:StopBar(CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount))
 			avoidCount = avoidCount + 1
-			if self:Easy() then
-				avoidCD = avoidCount % 3 == 1 and 20.7 or avoidCount % 3 == 2 and 8.5 or 17.0
-			end
 			nextAvoidSpell = avoidCD + GetTime()
 			self:CDBar(alterSpellIdMap[currentAltar]["avoid"], avoidCD, CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount)) -- SetOption:373329,391019,395893,390920:::
 		end
@@ -474,25 +449,25 @@ function mod:MythicAddSpawn(args)
 
 	local addSpellId = alterSpellIdMap[currentAltar]["add"]
 	addCount[addSpellId] = 1
-	self:CDBar(addSpellId, currentAltar == "Storm" and 15.7 or 25.5, L.add_bartext:format(alterSpellIdMap[currentAltar]["add"], addCount[addSpellId])) -- SetOption:394416,391019,395893,394719:::
+	self:CDBar(addSpellId, currentAltar == "Storm" and 15.7 or 25.5, CL.count:format(L.add_bartext:format(alterSpellNameMap[currentAltar]["add"]), 1)) -- SetOption:394416,391019,395893,394719:::
 end
 
 function mod:MythicAddDeaths(args)
 	if args.mobId == 198311 then -- Flamewrought Eradicator
 		self:StopBar(393309) -- Flame Smite
-		self:StopBar(L.add_bartext:format(L.raging_inferno, addCount[394416])) -- Raging Inferno
+		self:StopBar(CL.count:format(L.add_bartext:format(L.raging_inferno), addCount[394416] or 1)) -- Raging Inferno
 		self:StopBar(L.enrage_other:format(L["Fire"]))
 	elseif args.mobId == 198308 then -- Icewrought Dominator
 		self:StopBar(393296) -- Frost Smite
-		self:StopBar(L.add_bartext:format(L.frigid_torrent, addCount[391019])) -- Frigid Torrent
+		self:StopBar(CL.count:format(L.add_bartext:format(L.frigid_torrent), addCount[391019] or 1)) -- Frigid Torrent
 		self:StopBar(L.enrage_other:format(L["Frost"]))
 	elseif args.mobId == 197595 then -- Ironwrought Smasher
 		self:StopBar(391268) -- Earth Smite
-		self:StopBar(L.add_bartext:format(L.erupting_bedrock, addCount[395893])) -- Erupting Bedrock
+		self:StopBar(CL.count:format(L.add_bartext:format(L.erupting_bedrock), addCount[395893] or 1)) -- Erupting Bedrock
 		self:StopBar(L.enrage_other:format(L["Earth"]))
 	elseif args.mobId == 198326 then -- Stormwrought Despoiler
 		self:StopBar(393429) -- Storm Smite
-		self:StopBar(L.add_bartext:format(L.orb_lightning, addCount[394719])) -- Orb Lightning
+		self:StopBar(CL.count:format(L.add_bartext:format(L.orb_lightning), addCount[394719] or 1)) -- Orb Lightning
 		self:StopBar(L.enrage_other:format(L["Storm"]))
 	end
 end
@@ -531,18 +506,6 @@ function mod:PrimalBarrierApplied(args)
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long") -- phase
-
-	ultimateCount = 1 -- Absolute Zero
-	addCount = {
-		[374023] = 1, -- Searing Carnage
-		[374691] = 1, -- Seismic Rupture
-		[374215] = 1, -- Thunder Strike
-
-		[394416] = 1,
-		[391019] = 1,
-		[395893] = 1,
-		[394719] = 1,
-	}
 end
 
 function mod:PrimalBarrierRemoved(args)
@@ -557,16 +520,6 @@ function mod:PrimalBarrierRemoved(args)
 	avoidCount = 1
 	damageCount = 1
 	ultimateCount = 1
-	addCount = {
-		[374023] = 1, -- Searing Carnage
-		[374691] = 1, -- Seismic Rupture
-		[374215] = 1, -- Thunder Strike
-
-		[394416] = 1,
-		[391019] = 1,
-		[395893] = 1,
-		[394719] = 1,
-	}
 	strikeCount = 1
 
 	local avoidIntermissionCD = self:Easy() and 14.5 or 22.5
@@ -633,6 +586,16 @@ end
 function mod:MagmaBurst(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.damage_bartext:format(L.magma_burst), damageCount))
 	self:PlaySound(args.spellId, "info")
+	if self:Easy() then
+		self:StopBar(CL.count:format(L.damage_bartext:format(L.magma_burst), damageCount))
+		damageCount = damageCount + 1
+		local cd = damageCount % 3 == 1 and 20.7 or damageCount % 3 == 2 and 8.5 or 17.0
+		nextDamageSpell = cd + GetTime()
+		self:Bar(args.spellId, cd, CL.count:format(L.damage_bartext:format(L.magma_burst), damageCount))
+		-- shared cd
+		avoidCount = damageCount
+		nextAvoidSpell = nextDamageSpell
+	end
 end
 
 function mod:MoltenRupture(args)
@@ -644,10 +607,12 @@ function mod:SearingCarnage(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
 		self:Message(374023, "yellow", CL.casting:format(CL.count:format(L.ultimate_bartext:format(L.searing_carnage), ultimateCount)))
 	else --if self:MobId(args.sourceGUID) == 190688 then -- Blazing Fiend (Intermission add)
-		self:StopBar(CL.count:format(L.searing_carnage, addCount[374023]))
-		self:Message(374023, "yellow", CL.count:format(L.searing_carnage, addCount[374023]))
-		addCount[374023] = addCount[374023] + 1
-		self:Bar(374023, 23.1, CL.count:format(L.searing_carnage, addCount[374023]))
+		local count = addCount[374023] or 1
+		self:StopBar(CL.count:format(L.searing_carnage, count))
+		self:Message(374023, "yellow", CL.casting:format(CL.count:format(L.searing_carnage, count)))
+		count = count + 1
+		self:Bar(374023, 23.1, CL.count:format(L.searing_carnage, count))
+		addCount[374023] = count
 	end
 	self:PlaySound(374023, "info")
 end
@@ -668,26 +633,40 @@ end
 
 function mod:RagingInferno(args)
 	-- (Mythic altar add)
-	self:StopBar(L.add_bartext:format(L.raging_inferno, addCount[args.spellId]))
-	self:Message(args.spellId, "cyan", L.add_bartext:format(L.raging_inferno, addCount[args.spellId]))
-	addCount[args.spellId] = addCount[args.spellId] + 1
-	self:CDBar(args.spellId, 30, L.add_bartext:format(L.raging_inferno, addCount[args.spellId]))
+	local count = addCount[args.spellId] or 1
+	self:StopBar(CL.count:format(L.add_bartext:format(L.raging_inferno), count))
+	self:Message(args.spellId, "cyan", CL.count:format(L.add_bartext:format(L.raging_inferno), count))
+	count = count + 1
+	self:CDBar(args.spellId, 30, CL.count:format(L.add_bartext:format(L.raging_inferno), count))
+	addCount[args.spellId] = count
 end
 
 -- Frost Altar
 function mod:BitingChill(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.damage_bartext:format(L.biting_chill), damageCount))
 	self:PlaySound(args.spellId, "info")
+	if self:Easy() then
+		self:StopBar(CL.count:format(L.damage_bartext:format(L.biting_chill), damageCount))
+		damageCount = damageCount + 1
+		local cd = damageCount % 3 == 1 and 20.7 or damageCount % 3 == 2 and 8.5 or 17.0
+		nextDamageSpell = cd + GetTime()
+		self:Bar(args.spellId, cd, CL.count:format(L.damage_bartext:format(L.biting_chill), damageCount))
+		-- shared cd
+		avoidCount = damageCount
+		nextAvoidSpell = nextDamageSpell
+	end
 end
 
 function mod:FrigidTorrent(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
 		self:Message(args.spellId, "orange", CL.count:format(L.avoid_bartext:format(L.frigid_torrent), avoidCount))
 	else --if self:MobId(args.sourceGUID) == 198308 then -- Frostwrought Dominator (Mythic altar add)
-		self:StopBar(L.add_bartext:format(L.frigid_torrent, addCount[args.spellId]))
-		self:Message(args.spellId, "cyan", L.add_bartext:format(L.frigid_torrent, addCount[args.spellId]))
-		addCount[args.spellId] = addCount[args.spellId] + 1
-		self:CDBar(args.spellId, 33, L.add_bartext:format(L.frigid_torrent, addCount[args.spellId]))
+		local count = addCount[args.spellId] or 1
+		self:StopBar(CL.count:format(L.add_bartext:format(L.frigid_torrent), count))
+		self:Message(args.spellId, "cyan", CL.count:format(L.add_bartext:format(L.frigid_torrent), count))
+		count = count + 1
+		self:CDBar(args.spellId, 33, CL.count:format(L.add_bartext:format(L.frigid_torrent), count))
+		addCount[args.spellId] = count
 	end
 	self:PlaySound(args.spellId, "alert")
 end
@@ -713,7 +692,7 @@ do
 		else --if self:MobId(args.sourceGUID) == 190686 then -- Frozen Destroyer (Intermission add)
 			self:StopBar(CL.count:format(L.absolute_zero, ultimateCount))
 			self:Message(372458, "orange", CL.casting:format(CL.count:format(L.absolute_zero, ultimateCount)))
-			ultimateCount = ultimateCount + 1 -- reuse this since the _APPLIED does
+			ultimateCount = ultimateCount + 1 -- reusing this because it's also the same _APPLIED
 			self:Bar(372458, 23, CL.count:format(L.absolute_zero, ultimateCount))
 		end
 		playerList = {}
@@ -797,11 +776,23 @@ end
 function mod:EruptingBedrock(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
 		self:Message(args.spellId, "orange", CL.count:format(L.avoid_bartext:format(L.erupting_bedrock), avoidCount))
+		if self:Easy() then
+			self:StopBar(CL.count:format(L.avoid_bartext:format(L.erupting_bedrock), avoidCount))
+			avoidCount = avoidCount + 1
+			local cd = avoidCount % 3 == 1 and 20.7 or avoidCount % 3 == 2 and 8.5 or 17.0
+			nextAvoidSpell = cd + GetTime()
+			self:Bar(args.spellId, cd, CL.count:format(L.avoid_bartext:format(L.erupting_bedrock), avoidCount))
+			-- shared cd
+			damageCount = avoidCount
+			nextDamageSpell = nextAvoidSpell
+		end
 	else --if self:MobId(args.sourceGUID) == 197595 then -- Earthwrought Smasher (Mythic altar add)
-		self:StopBar(L.add_bartext:format(L.erupting_bedrock, addCount[args.spellId]))
-		self:Message(args.spellId, "cyan", L.add_bartext:format(L.erupting_bedrock, addCount[args.spellId]))
-		addCount[args.spellId] = addCount[args.spellId] + 1
-		self:CDBar(args.spellId, 34, L.add_bartext:format(L.erupting_bedrock, addCount[args.spellId]))
+		local count = addCount[args.spellId] or 1
+		self:StopBar(CL.count:format(L.add_bartext:format(L.erupting_bedrock), count))
+		self:Message(args.spellId, "cyan", CL.count:format(L.add_bartext:format(L.erupting_bedrock), count))
+		count = count + 1
+		self:CDBar(args.spellId, 34, CL.count:format(L.add_bartext:format(L.erupting_bedrock), count))
+		addCount[args.spellId] = count
 	end
 	self:PlaySound(args.spellId, "alert")
 end
@@ -810,10 +801,12 @@ function mod:SeismicRupture(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
 		self:Message(args.spellId, "orange", CL.count:format(L.ultimate_bartext:format(CL.adds), ultimateCount))
 	else --if self:MobId(args.sourceGUID) == 190588 then -- Tectonic Crusher (Mythic intermission add)
-		self:StopBar(CL.count:format(CL.adds, addCount[args.spellId]))
-		self:Message(args.spellId, "orange", CL.count:format(CL.adds, addCount[args.spellId]))
-		addCount[args.spellId] = addCount[args.spellId] + 1
-		self:Bar(args.spellId, 45, CL.count:format(CL.adds, addCount[args.spellId]))
+		local count = addCount[args.spellId] or 1
+		self:StopBar(CL.count:format(CL.adds, count))
+		self:Message(args.spellId, "orange", CL.count:format(CL.adds, count))
+		count = count + 1
+		self:Bar(args.spellId, 45, CL.count:format(CL.adds, count))
+		addCount[args.spellId] = count
 	end
 	self:PlaySound(args.spellId, "warning")
 end
@@ -852,6 +845,16 @@ do
 		self:Message(390920, "yellow", CL.casting:format(CL.count:format(L.avoid_bartext:format(CL.bombs), avoidCount)))
 		self:PlaySound(390920, "info")
 		playerList = {}
+		if self:Easy() then
+			self:StopBar(CL.count:format(L.avoid_bartext:format(CL.bombs), avoidCount))
+			avoidCount = avoidCount + 1
+			local cd = avoidCount % 3 == 1 and 20.7 or avoidCount % 3 == 2 and 8.5 or 17.0
+			nextAvoidSpell = cd + GetTime()
+			self:Bar(390920, avoidCD, CL.count:format(L.avoid_bartext:format(CL.bombs), avoidCount))
+			-- shared cd
+			damageCount = avoidCount
+			nextDamageSpell = nextAvoidSpell
+		end
 	end
 
 	function mod:ShockingBurstApplied(args)
@@ -879,20 +882,25 @@ function mod:ThunderStrike(args)
 	if self:MobId(args.sourceGUID) == 184986 then -- Kurog
 		self:Message(args.spellId, "orange", CL.count:format(L.ultimate_bartext:format(L.thundering_strike), ultimateCount))
 	else --if self:MobId(args.sourceGUID) == 190690 then -- Thunder Ravager (Intermission add)
-		self:StopBar(CL.count:format(L.thundering_strike, addCount[args.spellId]))
-		self:Message(args.spellId, "orange", CL.count:format(L.thundering_strike, addCount[args.spellId]))
-		addCount[args.spellId] = addCount[args.spellId] + 1
-		self:Bar(args.spellId, 41, CL.count:format(L.thundering_strike, addCount[args.spellId]))
+		local count = addCount[args.spellId] or 1
+		self:StopBar(CL.count:format(L.thundering_strike, count))
+		self:Message(args.spellId, "orange", CL.count:format(L.thundering_strike, count))
+		count = count + 1
+		self:Bar(args.spellId, 41, CL.count:format(L.thundering_strike, count))
+		addCount[args.spellId] = count
 	end
 	self:PlaySound(args.spellId, "alert")
 end
 
 function mod:OrbLightning(args)
-	self:StopBar(L.add_bartext:format(L.orb_lightning, addCount[args.spellId]))
-	self:Message(args.spellId, "cyan", CL.casting:format(L.add_bartext:format(L.orb_lightning, addCount[args.spellId])))
+	-- (Mythic altar add)
+	local count = addCount[args.spellId] or 1
+	self:StopBar(CL.count:format(L.add_bartext:format(L.orb_lightning), count))
+	self:Message(args.spellId, "cyan", CL.casting:format(CL.count:format(L.add_bartext:format(L.orb_lightning), count)))
 	-- self:CastBar(args.spellId, 5.6, L.orb_lightning) -- orb spawn <Cast: Soak Orbs>
-	addCount[args.spellId] = addCount[args.spellId] + 1
-	self:Bar(args.spellId, 48.5, L.add_bartext:format(L.orb_lightning, addCount[args.spellId]))
+	count = count + 1
+	self:Bar(args.spellId, 48.5, CL.count:format(L.add_bartext:format(L.orb_lightning), count))
+	addCount[args.spellId] = count
 end
 
 do
@@ -900,7 +908,13 @@ do
 	function mod:OrbLightningSummon(args)
 		if args.time-prev > 3 then
 			prev = args.time
-			self:Message(394719, "purple", CL.count:format(L.orb_lightning, addCount[394719]-1))
+			local count = addCount[394719]
+			if not count then -- awkward
+				count = 2
+				-- self:CDBar(394719, 42.9, CL.count:format(L.add_bartext:format(L.orb_lightning), count)) -- still alive?
+				addCount[394719] = count
+			end
+			self:Message(394719, "purple", CL.count:format(L.orb_lightning, count - 1))
 			self:PlaySound(394719, "alarm")
 		end
 	end
@@ -978,7 +992,6 @@ do
 			self:PlaySound(391696, "warning") -- debuffmove
 			self:Say(391696)
 		end
-		self:TargetMessage(391696, "yellow", name)
 	end
 
 	function mod:StormBreak(args)
@@ -1005,12 +1018,14 @@ end
 function mod:IntermissionAddSpawn(args)
 	if args.spellId == 375828 then -- Blazing Fiend
 		if self:Mythic() then
-			self:Bar(374023, 20, CL.count:format(L.searing_carnage, addCount[374023])) -- Searing Carnage
+			addCount[374023] = 1
+			self:Bar(374023, 20, CL.count:format(L.searing_carnage, 1)) -- Searing Carnage
 			self:Bar(400473, 91) -- Elemental Rage
 		end
 	elseif args.spellId == 375825 then -- Frozen Destroyer
 		self:Bar(374624, self:Mythic() and 33 or 30) -- Freezing Tempest
 		if self:Mythic() then
+			ultimateCount = 1
 			self:Bar(372458, 20, CL.count:format(L.absolute_zero, ultimateCount)) -- Absolute Zero
 			self:Bar(400473, 91) -- Elemental Rage
 		end
@@ -1018,13 +1033,15 @@ function mod:IntermissionAddSpawn(args)
 		self:Bar(374427, 5.5, CL.bombs) -- Ground Shatter
 		self:Bar(374430, 20, L.violent_upheaval) -- Violent Upheaval
 		if self:Mythic() then
-			self:Bar(374691, 45, CL.count:format(CL.adds, addCount[374691])) -- Seismic Rupture
+			addCount[374691] = 1
+			self:Bar(374691, 45, CL.count:format(CL.adds, 1)) -- Seismic Rupture
 			self:Bar(400473, 91) -- Elemental Rage
 		end
 	elseif args.spellId == 375792 then -- Thundering Ravager
 		self:Bar(391696, 7.3) -- Lethal Current
 		if self:Mythic() then
-			self:Bar(374215, 37.7, CL.count:format(L.thundering_strike, addCount[374215])) -- Thunder Strike
+			addCount[374215] = 1
+			self:Bar(374215, 37.7, CL.count:format(L.thundering_strike, 1)) -- Thunder Strike
 			self:Bar(400473, 91) -- Elemental Rage
 		end
 	end
@@ -1033,16 +1050,16 @@ end
 function mod:IntermissionAddDeath(args)
 	if args.mobId == 190690  then -- Thundering Ravager
 		self:StopBar(391696) -- Lethal Current
-		self:StopBar(CL.count:format(L.thundering_strike, addCount[374215])) -- Thunder Strike
+		self:StopBar(CL.count:format(L.thundering_strike, addCount[374215] or 1)) -- Thunder Strike
 	elseif args.mobId == 190588 then -- Tectonic Crusher
 		self:StopBar(CL.bombs) -- Ground Shatter
 		self:StopBar(L.violent_upheaval) -- Violent Upheaval
-		self:StopBar(CL.count:format(CL.adds, addCount[374691])) -- Seismic Rupture
+		self:StopBar(CL.count:format(CL.adds, addCount[374691] or 1)) -- Seismic Rupture
 	elseif args.mobId == 190686 then -- Frozen Destroyer
 		self:StopBar(374624) -- Freezing Tempest
 		self:StopBar(CL.count:format(L.absolute_zero, ultimateCount)) -- Absolute Zero
 	elseif args.mobId == 190688  then -- Blazing Fiend
-		self:StopBar(CL.count:format(L.searing_carnage, addCount[374023])) -- Searing Carnage
+		self:StopBar(CL.count:format(L.searing_carnage, addCount[374023] or 1)) -- Searing Carnage
 	end
 end
 

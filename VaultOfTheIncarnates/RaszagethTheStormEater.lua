@@ -24,17 +24,28 @@ local lightningDevastationCount = 1
 local addDeathCount = 0
 -- Stage Two: Surging Power
 local stormsurgeCount = 1
+local stormsurgeActive = nil
 local tempestWingCount = 1
 local fulminatingChargeCount = 1
 local electrifiedJawsCount = 1
 -- Intermission: The Vault Falters
+local collasalStormFiendKilled = 0
+local collasalStormFiendKillRequired = mod:Mythic() and 3 or mod:Heroic() and 2 or 1
 local stormBreakCount = 1
 local ballLightningCount = 1
 -- Stage Three: Storm Incarnate
 local magneticChargeCount = 1
 -- Mythic
 local stormEaterCount = 1
+local addToNumber = {}
+local flameswornFound = 0
+local frostforgedZaelotFound = 0
+local otherSideBreath = 1
+local chargeOnMe = nil
+local inversionCount = 1
 
+local marksUsed = {}
+local mobCollector = {}
 
 --------------------------------------------------------------------------------
 -- Timers
@@ -87,7 +98,35 @@ local timersHeroic = {
 	},
 }
 
-local timers = mod:Easy() and timersEasy or timersHeroic
+local timersMythic = {
+	[1] = {
+		[381615] = {15, 35, 37, 33, 35, 37, 33}, -- Static Charge
+		[388643] = {28, 53, 46, 59, 46}, -- Volatile Current
+		[377594] = {20, 25, 19, 26, 24, 20, 16, 18, 27, 24, 20}, -- Lightning Breath
+		[377612] = {35, 35, 35, 35, 35, 35, 35}, -- Hurricane Wing
+		[395906] = {5, 27, 23, 30, 17, 30, 28, 30, 19, 28}, -- Electrified Jaws
+	},
+	[2] = {
+		[388643] = {67.5, 61, 40}, -- Volatile Current
+		[395906] = {44.5, 27.0, 21.0, 30.0, 25.0, 25.0}, -- Electrified Jaws
+		[387261] = {14.5, 80.0, 80.0}, -- Stormsurge
+		[377467] = {57.5, 87.0}, -- Fulminating Charge
+		[385574] = {49.5, 30.0, 54.0, 20.0}, -- Tempest Wing
+	},
+	[3] = {
+		[377594] = {38.2, 41.5, 44.0, 30.0}, -- Lightning Breath
+		[385574] = {70.7, 70.0, 20.0}, -- Tempest Wing
+		[377467] = {43.3, 61.4, 67.0}, -- Fulminating Charge
+		[386410] = {28.7, 29.0, 32.0, 59.0}, -- Thunderous Blast
+		[399713] = {32.7, 30.0, 33.0, 33.1}, -- Magnetic Charge
+	},
+}
+
+local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or timersEasy
+
+-- Skipped code
+local SKIP_CAST_THRESHOLD = 3
+local checkTimer = nil
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -121,22 +160,41 @@ if L then
 	-- Intermission: The Vault Falters
 	L.storm_break = "Teleport"
 	L.ball_lightning = "Balls"
+	L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Pull Charge"
-	-- Mythic
-	L.storm_eater = "Storm Eater"
+
+	L.storm_nova_cast = "Storm Nova CastBar"
+	L.storm_nova_cast_icon = 382434 -- Storm Nova
+	L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
+
+	L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
+	L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+
+	L.skipped_cast = "Skipped %s (%d)"
+
+	L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
+	L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
+	L.custom_off_raidleader_devastation_icon = 385065
+	L.breath_other = "%s [Opposite]" -- Breath on opposite platform
 end
 
 --------------------------------------------------------------------------------
 -- Initialization
 --
 
+local staticChargeMarker = mod:AddMarkerOption(false, "player", 1, 381615, 1, 2, 3) -- Static Charge
+local stormseekerAcolyteLeft = mod:AddMarkerOption(false, "npc", 8, -25641, 8, 7, 6) -- Stormseeker Acolyte
+local stormseekerAcolyteRight = mod:AddMarkerOption(false, "npc", 4, 219878, 5, 4, 3) -- Acolyte // Seperate spellId since there is no support for using the same one twice.
+local fulminatingChargeMarker = mod:AddMarkerOption(false, "player", 1, 377467, 1, 2, 3) -- Fulminating Charge
+local magneticChargeMarker = mod:AddMarkerOption(false, "player", 4, 399713, 4) -- Magnetic Charge
 function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage One: The Winds of Change
 		377612, -- Hurricane Wing
 		{381615, "SAY", "SAY_COUNTDOWN"}, -- Static Charge
+		staticChargeMarker,
 		388643, -- Volatile Current
 		{395906, "TANK"}, -- Electrified Jaws
 		377594, -- Lightning Breath
@@ -144,19 +202,25 @@ function mod:GetOptions()
 		-- 381249, -- Electric Scales
 		381251, -- Electric Lash
 		382434, -- Storm Nova
+		{"storm_nova_cast", "COUNTDOWN"},
 		-- Intermission: The Primalist Strike
 		385065, -- Lightning Devastation
+		"custom_off_raidleader_devastation",
 		{396037, "SAY", "SAY_COUNTDOWN"}, -- Surging Blast
 		385553, -- Storm Bolt
+		stormseekerAcolyteLeft,
+		stormseekerAcolyteRight,
 		397382, -- Shattering Shroud
 		397387, -- Flame Shield
 		-- Stage Two: Surging Power
 		{387261, "INFOBOX"}, -- Stormsurge
 		{391989, "SAY"}, -- Stormcharged
+		"custom_on_repeating_stormcharged",
 		394582, -- Focused Charge
 		394583, -- Scattered Charge
 		385574, -- Tempest Wing
 		{377467, "SAY", "SAY_COUNTDOWN"}, -- Fulminating Charge
+		fulminatingChargeMarker,
 		-- Intermission: The Vault Falters
 		389870, -- Storm Break
 		389878, -- Fuse
@@ -165,6 +229,7 @@ function mod:GetOptions()
 		385569, -- Raging Storm
 		395929, -- Storm's Spite
 		{399713, "SAY", "SAY_COUNTDOWN"}, -- Magnetic Charge
+		magneticChargeMarker,
 		{386410, "SAY"}, -- Thunderous Blast
 		{391285, "TANK"}, -- Melted Armor
 		-- Mythic
@@ -201,6 +266,8 @@ function mod:GetOptions()
 		-- Intermission: The Vault Falters
 		[389870] = L.storm_break, -- Storm Break (Teleport)
 		[385068] = L.ball_lightning, -- Ball Lightning (Balls)
+		-- Stage Three: Storm Incarnate
+		[399713] = L.magnetic_charge, -- Magnetic Charge (Pull Charge)
 	}
 end
 
@@ -216,11 +283,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ElectrifiedJawsApplied", 395906)
 	self:Log("SPELL_CAST_START", "LightningBreath", 377594)
 	self:Log("SPELL_AURA_APPLIED", "ElectricLashApplied", 381251)
-	self:Log("SPELL_CAST_START", "StormNova", 382434, 390463)
+	self:Log("SPELL_CAST_START", "StormNova", 382434)
 
 	-- Intermission: The Primalist Strike
+	self:Log("SPELL_CAST_SUCCESS", "StormNovaSuccess", 382434)
 	self:RegisterEvent("CHAT_MSG_RAID_BOSS_EMOTE") -- Lightning Devastation (emote shows when over your platform)
-	-- self:Log("SPELL_CAST_START", "LightningDevastation", 385065)
 	self:Log("SPELL_AURA_APPLIED", "LightningDevastationApplied", 388115)
 	self:Log("SPELL_AURA_APPLIED", "SurgingBlastApplied", 396037)
 	self:Log("SPELL_AURA_REMOVED", "SurgingBlastRemoved", 396037)
@@ -228,14 +295,17 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShatteringShroud", 397382)
 	self:Log("SPELL_AURA_APPLIED", "ShatteringShroudApplied", 397382)
 	self:Log("SPELL_AURA_REMOVED", "ShatteringShroudRemoved", 397382)
+	self:Log("SPELL_AURA_APPLIED", "OverloadApplied", 389214) -- Add Spawned
 	self:Log("SPELL_AURA_APPLIED", "FlameShieldApplied", 397387)
-	self:Death("IntermissionAddDeaths", 193760, 199547, 199549) -- Surging Ruiner, Frostforged Zealot, Flamesworn Herald
+	self:Death("IntermissionAddDeaths", 193760, 194990, 199547, 199549) -- Surging Ruiner, Stormseeker Acolyte, Frostforged Zealot, Flamesworn Herald
 
 	-- Stage Two: Surging Power
+	self:Log("SPELL_CAST_SUCCESS", "ElectricScales", 381249) -- Stage 2 Started
 	self:Log("SPELL_CAST_START", "Stormsurge", 387261)
 	self:Log("SPELL_AURA_APPLIED", "StormsurgeApplied", 388691)
 	self:Log("SPELL_AURA_REMOVED", "StormsurgeRemoved", 388691)
 	self:Log("SPELL_AURA_APPLIED", "PositiveOrNegativeChargeApplied", 394576, 394579) -- Positive, Negative
+	self:Log("SPELL_AURA_REMOVED", "PositiveOrNegativeChargeRemoved", 394576, 394579, 394584) -- Positive, Negative, Inversion
 	self:Log("SPELL_AURA_APPLIED", "FocusedChargeApplied", 394582)
 	self:Log("SPELL_AURA_APPLIED", "ScatteredChargeApplied", 394583)
 	self:Log("SPELL_CAST_START", "TempestWing", 385574)
@@ -244,13 +314,16 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "FulminatingChargeRemoved", 377467)
 
 	-- Intermission: The Vault Falters
+	self:Log("SPELL_CAST_SUCCESS", "EncounterEvent", 181089)
 	self:Log("SPELL_CAST_START", "StormBreak", 389870)
 	self:Log("SPELL_AURA_APPLIED", "FuseStacks", 389878)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "FuseStacks", 389878)
 	self:Log("SPELL_CAST_START", "BallLightning", 385068)
-	self:Death("StormfiendDeath", 197145) -- Colossal Stormfiend
+	self:Death("StormfiendDeath", 197145, 200943) -- Colossal Stormfiend, Electrified (Mythic)
+	self:Log("SPELL_CAST_START", "StormNovaP3", 390463)
 
 	-- Stage Three: Storm Incarnate
+	self:Log("SPELL_CAST_SUCCESS", "StormNovaSuccessP3", 390463)
 	self:Log("SPELL_CAST_START", "RagingStorm", 385569)
 	self:Log("SPELL_CAST_SUCCESS", "MagneticCharge", 399713)
 	self:Log("SPELL_AURA_APPLIED", "MagneticChargeApplied", 399713)
@@ -268,7 +341,10 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Easy() and timersEasy or timersHeroic
+	marksUsed = {}
+	mobCollector = {}
+
+	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or timersEasy
 	self:SetStage(1)
 	-- Stage One: The Winds of Change
 	hurricaneWingCount = 1
@@ -282,6 +358,7 @@ function mod:OnEngage()
 
 	-- Stage Two: Surging Power
 	stormsurgeCount = 1
+	stormsurgeActive = nil
 	tempestWingCount = 1
 	fulminatingChargeCount = 1
 	electrifiedJawsCount = 1
@@ -289,16 +366,24 @@ function mod:OnEngage()
 	-- Intermission: The Vault Falters
 	stormBreakCount = 1
 	ballLightningCount = 1
+	collasalStormFiendKilled = 0
+	collasalStormFiendKillRequired = mod:Mythic() and 3 or mod:Heroic() and 2 or 1
 
 	-- Stage Three: Storm Incarnate
 	magneticChargeCount = 1
 
 	-- Mythic
 	stormEaterCount = 1
+	flameswornFound = 0
+	frostforgedZaelotFound = 0
+	otherSideBreath = 1
+	addToNumber = {}
 
 	self:Bar(395906, timers[1][395906][electrifiedJawsCount], CL.count:format(self:SpellName(395906), electrifiedJawsCount))
-	self:Bar(381615, timers[1][381615][staticChargeCount], CL.count:format(CL.bomb, staticChargeCount))
-	self:Bar(377594, timers[1][377594][lightningBreathCount], CL.count:format(L.lightning_breath, lightningBreathCount))
+	self:Bar(381615, timers[1][381615][staticChargeCount], CL.count:format(CL.bombs, staticChargeCount))
+	local breathCd = timers[1][377594][lightningBreathCount]
+	self:Bar(377594, breathCd, CL.count:format(L.lightning_breath, lightningBreathCount))
+	checkTimer = self:ScheduleTimer("BreathCheck", breathCd + SKIP_CAST_THRESHOLD, lightningBreathCount)
 	self:Bar(377612, timers[1][377612][hurricaneWingCount], CL.count:format(L.hurricane_wing, hurricaneWingCount))
 	self:Bar(388643, timers[1][388643][volatileCurrentCount], CL.count:format(L.volatile_current, volatileCurrentCount))
 
@@ -309,103 +394,173 @@ end
 -- Event Handlers
 --
 
--- Phase Handlers
-function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
-	if spellId == 396734 then -- Storm Shroud (Intermission start)
-		if self:GetStage() == 1 then
-			-- Storm Shroud -> Storm Nova -> Ruinous Shroud(388431) -> EE2(+24.38)
-
-			self:SetStage(1.5)
-			addDeathCount = 0
-			lightningDevastationCount = 1
-
-			self:StopBar(CL.count:format(self:SpellName(395906), electrifiedJawsCount)) -- Electrified Jaws
-			self:StopBar(CL.count:format(L.lightning_breath, lightningBreathCount)) -- Lightning Breath
-			self:StopBar(CL.count:format(L.volatile_current, volatileCurrentCount)) -- Volatile Current
-			self:StopBar(CL.count:format(CL.bomb, staticChargeCount)) -- Static Charge
-			self:StopBar(CL.count:format(L.hurricane_wing, hurricaneWingCount)) -- Hurricane Wing
-
-			self:Message("stages", "cyan", CL.count:format(CL.intermission, 1), false)
-			self:PlaySound("stages", "info") -- phase
-
-			self:Bar(382434, 18.4) -- Storm Nova
-			-- wait for the emote to get the timing for the platform you're on
-			-- self:Bar(388115, self:Easy() and 38.2 or 36.7, L.lightning_devastation) -- Lightning Devastation
-
-		elseif self:GetStage() == 2 then
-			-- EE4(-1.54) -> Storm Shroud -> Lightning Strikes
-
-			self:SetStage(2.5)
-			addDeathCount = 0
-			lightningDevastationCount = 1
-			stormBreakCount = 1
-			ballLightningCount = 1
-
-			self:StopBar(CL.count:format(self:SpellName(395906), electrifiedJawsCount)) -- Electrified Jaws
-			self:StopBar(CL.count:format(L.volatile_current, volatileCurrentCount)) -- Volatile Current
-			self:StopBar(CL.count:format(L.fulminating_charge, fulminatingChargeCount)) -- Fulminating Charge
-			self:StopBar(CL.count:format(L.tempest_wing, tempestWingCount)) -- Tempest Wing
-			self:StopBar(CL.count:format(L.stormsurge, stormsurgeCount)) -- Stormsurge
-
-			self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), false)
-			self:PlaySound("stages", "info") -- phase
-
-			-- self:Bar(391402, 3.6) -- Lightning Strikes
-			self:Bar(389870, self:Easy() and 25.6 or 19.5, CL.count:format(L.ball_lightning, ballLightningCount)) -- Ball Lightning
-			self:Bar(385065, 29.2, CL.count:format(L.lightning_devastation, lightningDevastationCount)) -- Lightning Devastation
-			self:Bar(389870, self:Easy() and 31.9 or 33, CL.count:format(L.storm_break, stormBreakCount)) -- Storm Break
+function mod:AddMarking(_, unit, guid)
+	if guid and not mobCollector[guid] and self:MobId(guid) == 194990 then -- Stormseeker Acolyte
+		local inRange = IsItemInRange(41058, unit) -- Hyldnir Harpoon, 100y
+		if inRange then
+			if self:GetOption(stormseekerAcolyteLeft) then
+				for i = 8, 6, -1 do -- 8, 7, 6
+					if not marksUsed[i] then
+						mobCollector[guid] = true
+						marksUsed[i] = guid
+						self:CustomIcon(stormseekerAcolyteLeft, unit, i)
+						return
+					end
+				end
+			elseif self:GetOption(stormseekerAcolyteRight) then
+				for i = 5, 3, -1 do -- 5, 4, 3
+					if not marksUsed[i] then
+						mobCollector[guid] = true
+						marksUsed[i] = guid
+						self:CustomIcon(stormseekerAcolyteRight, unit, i)
+						return
+					end
+				end
+			end
 		end
-	elseif spellId == 392802 then -- Localized Storm Eater (Intermission 1 end)
-		-- Localized Storm Eater -> Electric Scales -> Ruinous Shroud(398817) -> EE3(+14.61)
-
-		self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount)) -- Lightning Devastation
-
-		self:SetStage(2)
-		stormsurgeCount = 1
-		fulminatingChargeCount = 1
-		volatileCurrentCount = 1
-		tempestWingCount = 1
-		electrifiedJawsCount = 1
-
-		self:Message("stages", "cyan", CL.stage:format(2), false)
-		self:PlaySound("stages", "info") -- phase
-
-		self:Bar(387261, 14.6, CL.count:format(L.stormsurge, stormsurgeCount)) -- Stormsurge
-		self:Bar(395906, 46.1, CL.count:format(self:SpellName(395906), electrifiedJawsCount)) -- Electrified Jaws
-		self:Bar(385574, 49.6, CL.count:format(L.tempest_wing, tempestWingCount)) -- Tempest Wing
-		self:Bar(385574, self:Easy() and 58.6 or 59.6, CL.count:format(L.fulminating_charge, fulminatingChargeCount)) -- Fulminating Charge
-		self:Bar(388643, self:Easy() and 74.6 or 71.7, CL.count:format(L.volatile_current, volatileCurrentCount)) -- Volatile Current
-	elseif spellId == 398466 then -- [DNT] Clear Raszageth Auras on Players (Intermission 2 end)
-		-- Clear -> Storm Nova -> Raging Storm + EE5(+15.8)
-
-		self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount)) -- Lightning Devastation
-		self:StopBar(391402) -- Lightning Strikes
-
-		self:SetStage(3)
-		stormEaterCount = 1
-		magneticChargeCount = 1
-		fulminatingChargeCount = 1
-		tempestWingCount = 1
-		thunderousBlastCount = 1
-		lightningBreathCount = 1
-
-		self:Message("stages", "cyan", CL.stage:format(3), false)
-		self:PlaySound("stages", "info") -- phase
-
-		self:Bar(382434, 9.8) -- Storm Nova
-		self:Bar(385569, 15.8) -- Raging Storm
-
-		self:Bar(386410, 32.8, CL.count:format(L.thunderous_blast, thunderousBlastCount)) -- Thunderous Blast
-		self:Bar(377594, self:Easy() and 44.8 or 42.2, CL.count:format(L.lightning_breath, lightningBreathCount)) -- Lightning Breath
-		self:Bar(385574, 51.8, CL.count:format(L.fulminating_charge, fulminatingChargeCount)) -- Fulminating Charge
-		self:Bar(385574, 76.8, CL.count:format(L.tempest_wing, tempestWingCount)) -- Tempest Wing
-		if not self:Easy() then
-			self:Bar(399713, 36.7, CL.count:format(L.magnetic_charge, magneticChargeCount)) -- Magnetic Charge
-		end
-		-- if self:Mythic() then
-		-- 	self:Bar(395885, 40, CL.count:format(L.stormeater, stormEaterCount)) -- Storm-Eater
-		-- end
 	end
+end
+
+function mod:IntermissionAddDeaths(args)
+	if args.mobId == 194990 then -- Stormseeker Acolyte
+		if self:GetOption(stormseekerAcolyteLeft) or self:GetOption(stormseekerAcolyteRight) then
+			for i = 8, 3, -1 do -- 8 -> 3
+				if marksUsed[i] == args.destGUID then
+					marksUsed[i] = nil
+					return
+				end
+			end
+		end
+	elseif args.mobId == 199547 or addToNumber[args.sourceGUID] then -- Frostforged Zealot
+		self:StopBar(CL.count:format(self:SpellName(397382, addToNumber[args.sourceGUID]))) -- Shattering Shroud
+	elseif args.mobId == 199549 or addToNumber[args.sourceGUID] then -- Flamesworn Herald
+		self:StopBar(CL.count:format(self:SpellName(397387), addToNumber[args.sourceGUID])) -- Flame Shield
+	elseif args.mobId == 193760 then -- Surging Ruiner
+		addDeathCount = addDeathCount + 1
+		self:Message("stages", "green", CL.add_killed:format(addDeathCount, 6), false)
+	end
+end
+
+-- Phase Handlers
+function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
+	if spellId == 396734 and self:GetStage() == 1 then -- Storm Shroud (P1 End)
+		self:StopBar(CL.count:format(self:SpellName(395906), electrifiedJawsCount)) -- Electrified Jaws
+		self:StopBar(CL.count:format(CL.bombs, staticChargeCount)) -- Static Charge
+		self:StopBar(CL.count:format(L.volatile_current, volatileCurrentCount)) -- Volatile Current
+		self:StopBar(CL.count:format(L.lightning_breath, lightningBreathCount)) -- Lightning Breath
+		self:StopBar(CL.count:format(L.hurricane_wing, hurricaneWingCount)) -- Hurricane Wing
+		self:CancelTimer(checkTimer) -- Breath Skip check
+		checkTimer = nil
+
+		self:Message(382434, "yellow", CL.soon:format(self:SpellName(382434)))
+		self:Bar(382434, 13.4) -- Storm Nova
+	elseif spellId == 392802 then -- End of Intermission 1 (-Localized Storm Eater-)
+		self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount))
+		self:Message("stages", "cyan", CL.over:format(CL.count:format(CL.intermission, 1)), false)
+		self:PlaySound("stages", "info")
+		self:Bar("stages", {6, self:Mythic() and 92.08 or 93.5}, CL.stage:format(2), "achievement_raidprimalist_raszageth")
+	elseif spellId == 398466 then -- End of Intermission 2 ([DNT] Clear Raszageth Auras on Players)
+		self:Message(382434, "yellow", CL.soon:format(self:SpellName(382434)))
+		self:Bar(382434, 4.8)
+		self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount))
+		self:StopBar(CL.count:format(L.ball_lightning, ballLightningCount))
+		self:StopBar(CL.count:format(L.storm_break, stormBreakCount))
+	end
+
+	-- if spellId == 396734 then -- Storm Shroud (Intermission start)
+	-- 	if self:GetStage() == 1 then
+	-- 		-- Storm Shroud -> Storm Nova -> Ruinous Shroud(388431) -> EE2(+24.38)
+
+	-- 		self:SetStage(1.5)
+	-- 		addDeathCount = 0
+	-- 		lightningDevastationCount = 1
+
+	-- 		self:StopBar(CL.count:format(self:SpellName(395906), electrifiedJawsCount)) -- Electrified Jaws
+	-- 		self:StopBar(CL.count:format(L.lightning_breath, lightningBreathCount)) -- Lightning Breath
+	-- 		self:StopBar(CL.count:format(L.volatile_current, volatileCurrentCount)) -- Volatile Current
+	-- 		self:StopBar(CL.count:format(CL.bomb, staticChargeCount)) -- Static Charge
+	-- 		self:StopBar(CL.count:format(L.hurricane_wing, hurricaneWingCount)) -- Hurricane Wing
+
+	-- 		self:Message("stages", "cyan", CL.count:format(CL.intermission, 1), false)
+	-- 		self:PlaySound("stages", "info") -- phase
+
+	-- 		self:Bar(382434, 18.4) -- Storm Nova
+	-- 		-- wait for the emote to get the timing for the platform you're on
+	-- 		-- self:Bar(388115, self:Easy() and 38.2 or 36.7, L.lightning_devastation) -- Lightning Devastation
+	-- 	elseif self:GetStage() == 2 then
+	-- 		-- EE4(-1.54) -> Storm Shroud -> Lightning Strikes
+
+	-- 		self:SetStage(2.5)
+	-- 		addDeathCount = 0
+	-- 		lightningDevastationCount = 1
+	-- 		stormBreakCount = 1
+	-- 		ballLightningCount = 1
+
+	-- 		self:StopBar(CL.count:format(self:SpellName(395906), electrifiedJawsCount)) -- Electrified Jaws
+	-- 		self:StopBar(CL.count:format(L.volatile_current, volatileCurrentCount)) -- Volatile Current
+	-- 		self:StopBar(CL.count:format(L.fulminating_charge, fulminatingChargeCount)) -- Fulminating Charge
+	-- 		self:StopBar(CL.count:format(L.tempest_wing, tempestWingCount)) -- Tempest Wing
+	-- 		self:StopBar(CL.count:format(L.stormsurge, stormsurgeCount)) -- Stormsurge
+
+	-- 		self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), false)
+	-- 		self:PlaySound("stages", "info") -- phase
+
+	-- 		-- self:Bar(391402, 3.6) -- Lightning Strikes
+	-- 		self:Bar(389870, self:Easy() and 25.6 or 19.5, CL.count:format(L.ball_lightning, ballLightningCount)) -- Ball Lightning
+	-- 		self:Bar(385065, 29.2, CL.count:format(L.lightning_devastation, lightningDevastationCount)) -- Lightning Devastation
+	-- 		self:Bar(389870, self:Easy() and 31.9 or 33, CL.count:format(L.storm_break, stormBreakCount)) -- Storm Break
+	-- 	end
+	-- elseif spellId == 392802 then -- Localized Storm Eater (Intermission 1 end)
+	-- 	-- Localized Storm Eater -> Electric Scales -> Ruinous Shroud(398817) -> EE3(+14.61)
+
+	-- 	self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount)) -- Lightning Devastation
+
+	-- 	self:SetStage(2)
+	-- 	stormsurgeCount = 1
+	-- 	fulminatingChargeCount = 1
+	-- 	volatileCurrentCount = 1
+	-- 	tempestWingCount = 1
+	-- 	electrifiedJawsCount = 1
+
+	-- 	self:Message("stages", "cyan", CL.stage:format(2), false)
+	-- 	self:PlaySound("stages", "info") -- phase
+
+	-- 	self:Bar(387261, 14.6, CL.count:format(L.stormsurge, stormsurgeCount)) -- Stormsurge
+	-- 	self:Bar(395906, 46.1, CL.count:format(self:SpellName(395906), electrifiedJawsCount)) -- Electrified Jaws
+	-- 	self:Bar(385574, 49.6, CL.count:format(L.tempest_wing, tempestWingCount)) -- Tempest Wing
+	-- 	self:Bar(385574, self:Easy() and 58.6 or 59.6, CL.count:format(L.fulminating_charge, fulminatingChargeCount)) -- Fulminating Charge
+	-- 	self:Bar(388643, self:Easy() and 74.6 or 71.7, CL.count:format(L.volatile_current, volatileCurrentCount)) -- Volatile Current
+	-- elseif spellId == 398466 then -- [DNT] Clear Raszageth Auras on Players (Intermission 2 end)
+	-- 	-- Clear -> Storm Nova -> Raging Storm + EE5(+15.8)
+
+	-- 	self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount)) -- Lightning Devastation
+	-- 	self:StopBar(391402) -- Lightning Strikes
+
+	-- 	self:SetStage(3)
+	-- 	stormEaterCount = 1
+	-- 	magneticChargeCount = 1
+	-- 	fulminatingChargeCount = 1
+	-- 	tempestWingCount = 1
+	-- 	thunderousBlastCount = 1
+	-- 	lightningBreathCount = 1
+
+	-- 	self:Message("stages", "cyan", CL.stage:format(3), false)
+	-- 	self:PlaySound("stages", "info") -- phase
+
+	-- 	self:Bar(382434, 9.8) -- Storm Nova
+	-- 	self:Bar(385569, 15.8) -- Raging Storm
+
+	-- 	self:Bar(386410, 32.8, CL.count:format(L.thunderous_blast, thunderousBlastCount)) -- Thunderous Blast
+	-- 	self:Bar(377594, self:Easy() and 44.8 or 42.2, CL.count:format(L.lightning_breath, lightningBreathCount)) -- Lightning Breath
+	-- 	self:Bar(385574, 51.8, CL.count:format(L.fulminating_charge, fulminatingChargeCount)) -- Fulminating Charge
+	-- 	self:Bar(385574, 76.8, CL.count:format(L.tempest_wing, tempestWingCount)) -- Tempest Wing
+	-- 	if not self:Easy() then
+	-- 		self:Bar(399713, 36.7, CL.count:format(L.magnetic_charge, magneticChargeCount)) -- Magnetic Charge
+	-- 	end
+	-- 	-- if self:Mythic() then
+	-- 	-- 	self:Bar(395885, 40, CL.count:format(L.stormeater, stormEaterCount)) -- Storm-Eater
+	-- 	-- end
+	-- end
 end
 
 function mod:UNIT_HEALTH(event, unit)
@@ -421,7 +576,7 @@ function mod:HurricaneWing(args)
 	self:StopBar(CL.count:format(L.hurricane_wing, hurricaneWingCount))
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.hurricane_wing, hurricaneWingCount)))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 6+1+hurricaneWingCount, CL.count:format(L.hurricane_wing, hurricaneWingCount)) -- 6s cast,  (1s+1s) base, +1s per cast
+	self:CastBar(args.spellId, 6+2.5+(hurricaneWingCount/2), CL.count:format(L.hurricane_wing, hurricaneWingCount)) -- 6s cast,  (2.5s+0.5s) base, +0.5s per cast
 	hurricaneWingCount = hurricaneWingCount + 1
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][hurricaneWingCount], CL.count:format(L.hurricane_wing, hurricaneWingCount))
 end
@@ -433,25 +588,28 @@ do
 		local t = args.time
 		if t-prev > 2 then
 			prev = t
-			self:CastBar(args.spellId, 8, CL.explosion)
+			self:Bar(args.spellId, 8, CL.count:format(CL.explosion, staticChargeCount))
 			staticChargeCount = staticChargeCount + 1
 			self:Bar(args.spellId, timers[self:GetStage()][args.spellId][staticChargeCount], CL.count:format(CL.bombs, staticChargeCount))
 			playerList = {}
 		end
 		local count = #playerList+1
 		playerList[count] = args.destName
+		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, CL.bomb)
 			self:SayCountdown(args.spellId, 8)
 			self:PlaySound(args.spellId, "warning")
 		end
-		self:TargetsMessage(args.spellId, "yellow", playerList, nil, CL.count:format(CL.bomb, staticChargeCount-1))
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(CL.bomb, staticChargeCount-1))
+		self:CustomIcon(staticChargeMarker, args.destName, count)
 	end
 
 	function mod:StaticChargeRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 		end
+		self:CustomIcon(staticChargeMarker, args.destName)
 	end
 end
 
@@ -481,12 +639,28 @@ function mod:ElectrifiedJawsApplied(args)
 	end
 end
 
+function mod:BreathCheck(castCount)
+	local stage = self:GetStage()
+	if castCount == lightningBreathCount and (stage == 1 or stage == 3) then -- not on the next cast?
+		mod:StopBar(CL.count:format(L.lightning_breath, lightningBreathCount))
+		mod:Message(377594, "green", L.skipped_cast:format(L.lightning_breath, castCount))
+		lightningBreathCount = castCount + 1
+		local cd = timers[self:GetStage()][377594][lightningBreathCount]
+		mod:Bar(377594, cd - SKIP_CAST_THRESHOLD, CL.count:format(L.lightning_breath, lightningBreathCount))
+		checkTimer = mod:ScheduleTimer("BreathCheck", cd, lightningBreathCount)
+	end
+end
+
 function mod:LightningBreath(args)
 	self:StopBar(CL.count:format(L.lightning_breath, lightningBreathCount))
 	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.lightning_breath, lightningBreathCount)))
 	self:PlaySound(args.spellId, "alarm")
 	lightningBreathCount = lightningBreathCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][lightningBreathCount], CL.count:format(L.lightning_breath, lightningBreathCount))
+	local cd = timers[self:GetStage()][args.spellId][lightningBreathCount]
+	self:Bar(args.spellId, cd, CL.count:format(L.lightning_breath, lightningBreathCount))
+	if cd then
+		checkTimer = self:ScheduleTimer("BreathCheck", cd + SKIP_CAST_THRESHOLD, lightningBreathCount)
+	end
 end
 
 function mod:ElectricLashApplied(args)
@@ -497,32 +671,68 @@ function mod:ElectricLashApplied(args)
 end
 
 function mod:StormNova(args)
-	self:Message(382434, "yellow", CL.casting:format(args.spellName))
-	self:PlaySound(382434, "alert")
-	self:Bar(382434, {5, self:GetStage() == 1.5 and 18.4 or 9.8})
+	-- Stopping P1 Bars incase UNIT event is gone
+	self:StopBar(CL.count:format(CL.bombs, staticChargeCount))
+	self:StopBar(CL.count:format(L.thunderous_blast, thunderousBlastCount))
+	self:StopBar(CL.count:format(L.volatile_current, volatileCurrentCount))
+	self:StopBar(CL.count:format(L.lightning_breath, lightningBreathCount))
+	self:StopBar(CL.count:format(L.hurricane_wing, hurricaneWingCount))
+	self:StopBar(382434) -- Storm Nova
+
+	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "warning")
+	self:CastBar("storm_nova_cast", 5, args.spellName, args.spellId)
+end
+
+-- Intermission: The Primalist Strike
+function mod:PlatformBreathCheck(castCount)
+	if castCount == lightningDevastationCount then -- You didn't get the emote, next breath here
+		local cd = self:Mythic() and 9 or self:Heroic() and 12.3 or 13.5
+		self:Bar(385065, cd - 1, CL.count:format(L.lightning_breath, lightningDevastationCount))
+		otherSideBreath = otherSideBreath + 1
+	end
+end
+
+function mod:StormNovaSuccess(args)
+	self:Message("stages", "cyan", CL.count:format(CL.intermission, 1), args.spellId)
+	self:PlaySound("stages", "info")
+	self:SetStage(1.5)
+	self:Bar("stages", 93.5,  CL.stage:format(2), 387261)
+
+	lightningDevastationCount = 1
+	flameswornFound = 0
+	otherSideBreath = 1
+	self:Bar(385065, 12.5, CL.count:format(L.lightning_devastation, lightningDevastationCount)) -- Time to Storm Jump (snap position), does the breath still change?
+	checkTimer = mod:ScheduleTimer("PlatformBreathCheck", 13.5, lightningDevastationCount)
+	if self:GetOption(stormseekerAcolyteLeft) or self:GetOption(stormseekerAcolyteRight) then
+		self:RegisterTargetEvents("AddMarking")
+		marksUsed = {}
+	end
 end
 
 function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 	if msg:find(L.lighting_devastation_trigger, nil, true) then
 		self:Message(385065, "yellow", CL.count:format(L.lightning_devastation, lightningDevastationCount))
 		self:PlaySound(385065, "alert")
-		local cd = 0
-		if self:Easy() then
-			cd = self:GetStage() == 1.5 and 27 or 32.8
-		else--if self:Heroic() then
-			cd = self:GetStage() == 1.5 and 24.6 or 31.3
+		lightningDevastationCount = lightningDevastationCount + 1
+		local stage = self:GetStage()
+		if stage == 2.5 or (stage == 1.5 and lightningDevastationCount < 5) then -- Only 4 on each platform in stage 1.5 (intermission 1)
+			local cd = 0
+			if self:Easy() then
+				cd = stage == 1.5 and 27 or 32.8
+			elseif self:Mythic() then
+				cd = stage == 1.5 and 17.9 or 27.3 -- -1.5 on the cooldown for 'baiting' the position of the breath
+			else
+				cd = stage == 1.5 and 24.6 or 31.3
+			end
+			self:Bar(385065, cd, CL.count:format(L.lightning_devastation, lightningDevastationCount))
 		end
-		self:Bar(385065, cd, CL.count:format(L.lightning_devastation, lightningDevastationCount))
+		if self:GetOption("custom_off_raidleader_devastation") and stage == 1.5 and otherSideBreath < 5 then -- Raidleader bars
+			otherSideBreath = otherSideBreath + 1
+			self:Bar(false, 9, L.breath_other:format(CL.count:format(L.lightning_devastation, otherSideBreath)), 385065)
+		end
 	end
 end
-
--- function mod:LightningDevastation(args)
--- 	self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount))
--- 	self:Message(args.spellId, "yellow", CL.count:format(L.lightning_devastation, lightningDevastationCount))
--- 	self:PlaySound(args.spellId, "alert")
--- 	lightningDevastationCount = lightningDevastationCount + 1
--- 	self:Bar(args.spellId, self:GetStage() > 2 and 22 or 13.3, CL.count:format(L.lightning_devastation, lightningDevastationCount))
--- end
 
 function mod:LightningDevastationApplied(args)
 	if self:Me(args.destGUID) then
@@ -559,6 +769,14 @@ function mod:ShatteringShroud(args)
 	if self:Healer() then
 		self:PlaySound(args.spellId, "alert")
 	end
+	local unit = self:GetUnitIdByGUID(args.destGUID)
+	local range = nil
+	if unit then
+		local inRange = IsItemInRange(41058, unit) -- Hyldnir Harpoon, 100y
+		if inRange then
+			self:Bar(args.spellId, 42.5, CL.count:format(args.spellName, addToNumber[args.sourceGUID]))
+		end
+	end
 end
 
 function mod:ShatteringShroudApplied(args)
@@ -575,19 +793,60 @@ function mod:ShatteringShroudRemoved(args)
 	end
 end
 
+function mod:OverloadApplied(args)
+	if self:MobId(args.destGUID) == 199549 then -- Flamesworn Herald
+		flameswornFound = flameswornFound + 1
+		addToNumber[args.destGUID] = flameswornFound
+		local unit = self:GetUnitIdByGUID(args.destGUID)
+		if unit then
+			local inRange = IsItemInRange(41058, unit) -- Hyldnir Harpoon, 100y
+			if inRange then
+				self:Bar(397387, 7.32, CL.count:format(self:SpellName(397387), flameswornFound)) -- Flame Shield
+			end
+		end
+	elseif self:MobId(args.destGUID) == 199547 then -- Frostforged Zealot
+		frostforgedZaelotFound = frostforgedZaelotFound + 1
+		addToNumber[args.destGUID] = frostforgedZaelotFound
+		local unit = self:GetUnitIdByGUID(args.destGUID)
+		if unit then
+			local inRange = IsItemInRange(41058, unit) -- Hyldnir Harpoon, 100y
+			if inRange then
+				self:Bar(397382, 7.32, CL.count:format(self:SpellName(397382), frostforgedZaelotFound)) -- Shattering Shroud
+			end
+		end
+	end
+end
+
 function mod:FlameShieldApplied(args)
 	self:Message(args.spellId, "red")
 	self:PlaySound(args.spellId, "warning")
 end
 
-function mod:IntermissionAddDeaths(args)
-	if args.mobId == 193760 then -- Surging Ruiner
-		addDeathCount = addDeathCount + 1
-		self:Message("stages", "green", CL.add_killed:format(addDeathCount, 6), false)
+-- Stage Two: Surging Power
+function mod:ElectricScales(args)
+	if self:GetStage() == 1.5 then -- Stage 2
+		self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount))
+		self:StopBar(CL.stage:format(2))
+		self:Message("stages", "cyan", CL.stage:format(2), "achievement_raidprimalist_raszageth")
+		self:PlaySound("stages", "info")
+		self:SetStage(2)
+
+		stormsurgeCount = 1
+		volatileCurrentCount = 1
+		tempestWingCount = 1
+		fulminatingChargeCount = 1
+		electrifiedJawsCount = 1
+		chargeOnMe = nil
+		stormsurgeActive = nil
+
+		self:Bar(387261, timers[2][387261][stormsurgeCount], CL.count:format(L.stormsurge, stormsurgeCount))
+		self:Bar(388643, timers[2][388643][volatileCurrentCount], CL.count:format(L.volatile_current, volatileCurrentCount))
+		self:Bar(385574, timers[2][385574][tempestWingCount], CL.count:format(L.tempest_wing, tempestWingCount))
+		self:Bar(377467, timers[2][377467][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
+		self:Bar(395906, timers[2][395906][electrifiedJawsCount], CL.count:format(self:SpellName(395906), electrifiedJawsCount))
 	end
 end
 
--- Stage Two: Surging Power
 do
 	local timer, maxAbsorb = nil, 0
 	local appliedTime = 0
@@ -603,6 +862,12 @@ do
 		self:PlaySound(args.spellId, "long")
 		stormsurgeCount = stormsurgeCount + 1
 		self:Bar(args.spellId, timers[2][args.spellId][stormsurgeCount], CL.count:format(L.stormsurge, stormsurgeCount))
+		chargeOnMe = nil
+		stormsurgeActive = true
+		if self:Mythic() then
+			inversionCount = 1
+			self:Bar(394584, 8, CL.count:format(self:SpellName(394584), inversionCount)) -- Inversion
+		end
 	end
 
 	function mod:StormsurgeApplied(args)
@@ -620,7 +885,9 @@ do
 		self:Message(387261, "green", CL.removed_after:format(CL.count:format(L.stormsurge, stormsurgeCount-1), args.time - appliedTime))
 		self:PlaySound(387261, "info")
 
+		self:StopBar(CL.count:format(self:SpellName(394584), inversionCount)) -- Inversion
 		self:CloseInfo(387261)
+		stormsurgeActive = nil
 		if timer then
 			self:CancelTimer(timer)
 			timer = nil
@@ -628,27 +895,77 @@ do
 	end
 end
 
-function mod:PositiveOrNegativeChargeApplied(args)
-	if self:Me(args.destGUID) then
-		-- Positive is default
-		local msg = L.positive
-		local sayMsg = "{rt6}" -- Square/Blue
-		if args.spellId == 391991 or args.spellId == 394575 or args.spellId == 394579 then -- Negative
-			msg = L.negative
-			sayMsg = "{rt7}" -- Cross/Red
-			self:Message(391989, "red", msg)
-		else
-			self:Message(391989, "blue", msg)
+do
+	local sayMessages = {"{rt6}","{rt7}"} -- Positive = Square/Blue, Negative = Cross/Red
+	local sayTimer = nil
+	local prev = 0
+	function mod:PositiveOrNegativeChargeApplied(args)
+		if self:Me(args.destGUID) then
+			-- Positive is default
+			local msg = L.positive
+			local sayMsg = sayMessages[1] -- Square/Blue
+			chargeOnMe = args.spellId
+			if chargeOnMe == 394579 then -- Negative
+				msg = L.negative
+				sayMsg = sayMessages[2] -- Cross/Red
+				self:Message(391989, "red", msg)
+			else
+				self:Message(391989, "blue", msg)
+			end
+			self:Say(391989, sayMsg, true)
+			self:PlaySound(391989, "warning")
+			if self:GetOption("custom_on_repeating_stormcharged") then
+				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, sayMsg, true)
+			end
 		end
-		self:Say(391989, sayMsg, true)
-		self:PlaySound(391989, "warning")
+	end
+
+	function mod:PositiveOrNegativeChargeRemoved(args)
+		if self:Me(args.destGUID) then
+			if sayTimer then
+				self:CancelTimer(sayTimer)
+				sayTimer = nil
+			end
+		end
+	end
+
+	local sayMessagesInversion = {">{rt6}<",">{rt7}<"} -- Positive = Square/Blue, Negative = Cross/Red
+	function mod:InversionApplied(args)
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			self:StopBar(CL.count:format(self:SpellName(394584), inversionCount)) -- Inversion
+			inversionCount = inversionCount + 1
+			if inversionCount < 4 then -- only 4 per shield, but last ones are in the end.
+				self:Bar(args.spellId, 6, CL.count:format(args.spellName, inversionCount)) -- Inversion
+			end
+		end
+		if self:Me(args.destGUID) then
+			if sayTimer then
+				self:CancelTimer(sayTimer)
+				sayTimer = nil
+			end
+			self:PersonalMessage(args.spellId)
+			self:PlaySound(args.spellId, "warning")
+			-- Swap icon for debuffs
+			local msg = L.negative
+			local sayMsg = sayMessagesInversion[2] -- Square/Blue
+			if chargeOnMe == 394579 then -- Negative
+				msg = L.positive
+				sayMsg = sayMessagesInversion[1] -- Cross/Red
+			end
+			self:Say(391989, sayMsg, true)
+			if self:GetOption("custom_on_repeating_stormcharged") then
+				sayTimer = self:ScheduleRepeatingTimer("Say", 1.5, false, sayMsg, true)
+			end
+		end
 	end
 end
 
 do
 	local prev = 0
 	function mod:FocusedChargeApplied(args)
-		if self:Me(args.destGUID) then
+		if self:Me(args.destGUID) and stormsurgeActive then -- Check for shield, otherwise false positive
 			local t = args.time
 			if t-prev > 2 then
 				prev = t
@@ -681,25 +998,61 @@ function mod:TempestWing(args)
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][tempestWingCount], CL.count:format(L.tempest_wing, tempestWingCount))
 end
 
-function mod:FulminatingCharge(args)
-	self:StopBar(CL.count:format(L.fulminating_charge, fulminatingChargeCount))
-	self:Message(377467, "yellow", CL.count:format(L.fulminating_charge, fulminatingChargeCount))
-	self:PlaySound(377467, "long")
-	fulminatingChargeCount = fulminatingChargeCount + 1
-	self:Bar(377467, timers[self:GetStage()][377467][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
-end
+do
+	local playerList = {}
+	function mod:FulminatingCharge(args)
+		self:StopBar(CL.count:format(L.fulminating_charge, fulminatingChargeCount))
+		self:PlaySound(377467, "long")
+		fulminatingChargeCount = fulminatingChargeCount + 1
+		self:Bar(377467, timers[self:GetStage()][377467][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
+		playerList = {}
+	end
 
-function mod:FulminatingChargeApplied(args)
-	if self:Me(args.destGUID) then
-		self:Say(args.spellId, L.fulminating_charge_debuff)
-		self:SayCountdown(args.spellId, 5)
-		self:PlaySound(args.spellId, "warning")
+	function mod:FulminatingChargeApplied(args)
+		local count = #playerList+1
+		playerList[count] = args.destName
+		playerList[args.destName] = count -- Set raid marker
+		if self:Me(args.destGUID) then
+			self:Say(args.spellId, L.fulminating_charge_debuff)
+			self:SayCountdown(args.spellId, self:Mythic() and 3 or 5)
+			self:PlaySound(args.spellId, "warning")
+		end
+		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.fulminating_charge, fulminatingChargeCount-1))
+		self:CustomIcon(fulminatingChargeCount, args.destName, count)
+	end
+
+	function mod:FulminatingChargeRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
+		self:CustomIcon(fulminatingChargeCount, args.destName)
 	end
 end
 
-function mod:FulminatingChargeRemoved(args)
-	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+-- Intermission: The Vault Falters
+function mod:EncounterEvent(args)
+	if self:GetStage() == 2 and stormsurgeCount > 1 then -- Intermission 2, shield always happens at least once
+		self:StopBar(CL.count:format(L.stormsurge, stormsurgeCount)) -- Storm Surge
+		self:StopBar(CL.count:format(L.volatile_current, volatileCurrentCount)) -- Volatile Current
+		self:StopBar(CL.count:format(L.tempest_wing, tempestWingCount)) -- Tempest Wing
+		self:StopBar(CL.count:format(L.fulminating_charge, fulminatingChargeCount)) -- Fulminating Charge(s)
+		self:StopBar(CL.count:format(self:SpellName(395906), electrifiedJawsCount)) -- Electified Jaws
+
+		self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), args.spellId)
+		self:PlaySound("stages", "info")
+		self:SetStage(2.5)
+
+		lightningDevastationCount = 1
+		stormBreakCount = 1
+		ballLightningCount = 1
+		collasalStormFiendKilled = 0
+		collasalStormFiendKillRequired = mod:Mythic() and 3 or mod:Heroic() and 2 or 1
+
+		self:Bar("stages", 11.5, CL.adds, "inv_10_elementalspiritfoozles_lightning")
+		self:Bar(385065, self:Mythic() and 23.6 or 24.4, CL.count:format(L.lightning_devastation, lightningDevastationCount))
+
+		self:Bar(385068, 21, CL.count:format(L.ball_lightning, ballLightningCount))
+		self:Bar(389870, 34, CL.count:format(L.storm_break, stormBreakCount))
 	end
 end
 
@@ -718,10 +1071,22 @@ do
 	end
 end
 
-function mod:FuseStacks(args)
-	local amount = args.amount or 1
-	self:StackMessage(args.spellId, "purple", args.destName, amount, amount)
-	self:PlaySound(args.spellId, "alarm")
+do
+	local stacks = 0
+	local scheduled = nil
+	function mod:FuseStacksMessage()
+		mod:Message(389878, "cyan", L.fuses_reached:format(stacks))
+		mod:PlaySound(389878, "info")
+		scheduled = nil
+		stacks = 0
+	end
+
+	function mod:FuseStacks()
+		stacks = stacks + 1
+		if not scheduled then
+			scheduled = self:ScheduleTimer("FuseStacksMessage", 2) -- Throttle here
+		end
+	end
 end
 
 do
@@ -734,26 +1099,60 @@ do
 			self:Message(args.spellId, "orange", CL.count:format(L.ball_lightning, ballLightningCount))
 			self:PlaySound(args.spellId, "alarm")
 			ballLightningCount = ballLightningCount + 1
-			self:Bar(args.spellId, 22, CL.count:format(L.ball_lightning, ballLightningCount))
+			self:Bar(args.spellId, ballLightningCount % 2 == 0 and 22 or 26, CL.count:format(L.ball_lightning, ballLightningCount))
 		end
 	end
 end
 
-function mod:StormfiendDeath(args)
-	addDeathCount = addDeathCount + 1
-	if self:Easy() or addDeathCount == 2 then
+function mod:StormfiendDeath()
+	collasalStormFiendKilled =  collasalStormFiendKilled + 1
+	self:Message("stages", "green", CL.add_killed:format(collasalStormFiendKilled, collasalStormFiendKillRequired), false)
+	if collasalStormFiendKilled == collasalStormFiendKillRequired then -- End of Intermission
+		self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount))
 		self:StopBar(CL.count:format(L.storm_break, stormBreakCount))
 		self:StopBar(CL.count:format(L.ball_lightning, ballLightningCount))
 	end
 end
 
+function mod:StormNovaP3(args)
+	self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount))
+	self:StopBar(CL.count:format(L.storm_break, stormBreakCount))
+	self:StopBar(CL.count:format(L.ball_lightning, ballLightningCount))
+
+	self:Message(382434, "red", CL.casting:format(args.spellName))
+	self:PlaySound(382434, "warning")
+	self:CastBar("storm_nova_cast", 5, args.spellName, args.spellId)
+end
+
 -- Stage Three: Storm Incarnate
+function mod:StormNovaSuccessP3()
+	self:Message("stages", "cyan", CL.stage:format(3), "achievement_raidprimalist_raszageth")
+	self:PlaySound("stages", "info")
+	self:SetStage(3)
+
+	tempestWingCount = 1
+	fulminatingChargeCount = 1
+	lightningBreathCount = 1
+	thunderousBlastCount = 1
+
+	self:Bar(385574, timers[3][385574][tempestWingCount], CL.count:format(L.tempest_wing, tempestWingCount))
+	self:Bar(377467, timers[3][377467][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
+	self:Bar(386410, timers[3][386410][thunderousBlastCount], CL.count:format(L.thunderous_blast, thunderousBlastCount))
+	self:Bar(377594, timers[3][377594][lightningBreathCount], CL.count:format(L.lightning_breath, lightningBreathCount))
+	self:Bar("stages", 6.9, CL.removed:format(self:SpellName(396734)), 396734) -- Storm Shroud Removed
+	if not self:Easy() then
+		magneticChargeCount = 1
+		self:Bar(399713, timers[3][399713][magneticChargeCount], CL.count:format(L.magnetic_charge, magneticChargeCount))
+	end
+end
+
 function mod:RagingStorm(args)
 	self:Message(args.spellId, "yellow")
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:MagneticCharge(args)
+	self:StopBar(CL.count:format(L.magnetic_charge, magneticChargeCount))
 	magneticChargeCount = magneticChargeCount + 1
 	self:Bar(args.spellId, timers[3][args.spellId][magneticChargeCount], CL.count:format(L.magnetic_charge, magneticChargeCount))
 end
@@ -766,12 +1165,14 @@ function mod:MagneticChargeApplied(args)
 	end
 	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(L.magnetic_charge, magneticChargeCount-1))
 	self:TargetBar(args.spellId, 8, args.destName, CL.count:format(L.magnetic_charge, magneticChargeCount-1))
+	self:CustomIcon(magneticChargeMarker, args.destName, 4)
 end
 
 function mod:MagneticChargeRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
+	self:CustomIcon(magneticChargeMarker, args.destName)
 end
 
 function mod:ThunderousBlast(args)
@@ -819,9 +1220,6 @@ function mod:InversionApplied(args)
 end
 
 function mod:StormEater(args)
-	self:StopBar(CL.count:format(L.storm_eater, stormEaterCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.storm_eater, stormEaterCount))
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
-	stormEaterCount = stormEaterCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(L.storm_eater, stormEaterCount))
 end

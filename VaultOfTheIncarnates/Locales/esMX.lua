@@ -124,7 +124,47 @@ end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "esMX")
 if L then
-	--L.lighting_devastation_trigger = "deep breath" -- Raszageth takes a deep breath...
+	-- L.lighting_devastation_trigger = "deep breath" -- Raszageth takes a deep breath...
+
+	-- Stage One: The Winds of Change
+	-- L.hurricane_wing = "Pushback"
+	-- L.volatile_current = "Sparks"
+	-- L.thunderous_blast = "Blast"
+	-- L.lightning_breath = "Breath"
+	-- L.lightning_strikes = "Strikes"
+	-- L.electric_scales = "Raid Damage"
+	-- L.electric_lash = "Lash"
+	-- Intermission: The Primalist Strike
+	-- L.lightning_devastation = "Breath"
+	-- L.shattering_shroud = "Heal Absorb"
+	-- Stage Two: Surging Power
+	-- L.absorb_text = "%s (%.0f%%)"
+	-- L.stormsurge = "Absorb Shield"
+	-- L.stormcharged = "Positive or Negative"
+	-- L.positive = "Positive"
+	-- L.negative = "Negative"
+	-- L.focused_charge = "Damage Buff"
+	-- L.tempest_wing = "Storm Wave"
+	-- L.fulminating_charge = "Charges"
+	-- L.fulminating_charge_debuff = "Charge"
+	-- Intermission: The Vault Falters
+	-- L.storm_break = "Teleport"
+	-- L.ball_lightning = "Balls"
+	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
+	-- Stage Three: Storm Incarnate
+	-- L.magnetic_charge = "Pull Charge"
+
+	-- L.storm_nova_cast = "Storm Nova CastBar"
+	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
+
+	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
+	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+
+	-- L.skipped_cast = "Skipped %s (%d)"
+
+	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
+	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
+	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "esMX")
