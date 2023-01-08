@@ -73,7 +73,7 @@ if L then
 	L.ultimate_desc = "Показывать таймеры для ультимативных способностей (Огненная бойня, Абсолютный нуль, Сейсмический разлом, Громовой удар) когда неизвестен альтарь босса."
 	L.ultimate_bartext = "%s [ульт.]" -- {Spell} [Ult]
 
-	-- L.add_bartext = "%s [Add]" -- "{Spell} [Add]"
+	L.add_bartext = "%s [Адд]" -- "{Spell} [Add]"
 
 	L.Fire = "огонь"
 	L.Frost = "лед"
@@ -84,7 +84,7 @@ if L then
 	L.magma_burst = "Лужи"
 	L.molten_rupture = "Волны"
 	L.searing_carnage = "Танец"
-	-- L.raging_inferno = "Soak Pools"
+	L.raging_inferno = "Соак лужи"
 
 	-- Frost
 	L.biting_chill = "Фрост ДоТ"
@@ -119,7 +119,7 @@ if L then
 	L.icy_shroud = "Абсорб"
 	L.broodkeepers_fury = "Стаки"
 	L.frozen_shroud = "Абсорб + Рут"
-	-- L.detonating_stoneslam = "Tank Soak"
+	L.detonating_stoneslam = "Танк Соак"
 end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "ruRU")
@@ -127,44 +127,44 @@ if L then
 	L.lighting_devastation_trigger = "глубокий вдох" -- Рашагет делает глубокий вдох...
 
 	-- Stage One: The Winds of Change
-	-- L.hurricane_wing = "Pushback"
-	-- L.volatile_current = "Sparks"
-	-- L.thunderous_blast = "Blast"
-	-- L.lightning_breath = "Breath"
-	-- L.lightning_strikes = "Strikes"
-	-- L.electric_scales = "Raid Damage"
-	-- L.electric_lash = "Lash"
+	L.hurricane_wing = "Отталкивание"
+	L.volatile_current = "Искры"
+	L.thunderous_blast = "Танкбастер"
+	L.lightning_breath = "Дыхание"
+	L.lightning_strikes = "Войд зоны"
+	L.electric_scales = "Рейд урон"
+	L.electric_lash = "Хлыст"
 	-- Intermission: The Primalist Strike
-	-- L.lightning_devastation = "Breath"
-	-- L.shattering_shroud = "Heal Absorb"
+	L.lightning_devastation = "Дыхание"
+	L.shattering_shroud = "Хил Абсорб"
 	-- Stage Two: Surging Power
-	-- L.absorb_text = "%s (%.0f%%)"
-	-- L.stormsurge = "Absorb Shield"
-	-- L.stormcharged = "Positive or Negative"
-	-- L.positive = "Positive"
-	-- L.negative = "Negative"
-	-- L.focused_charge = "Damage Buff"
-	-- L.tempest_wing = "Storm Wave"
-	-- L.fulminating_charge = "Charges"
-	-- L.fulminating_charge_debuff = "Charge"
+	L.absorb_text = "%s (%.0f%%)"
+	L.stormsurge = "Щит"
+	L.stormcharged = "Плюс или Минус"
+	L.positive = "Плюс"
+	L.negative = "Минус"
+	L.focused_charge = "Бафф урона"
+	L.tempest_wing = "Отталкивание"
+	L.fulminating_charge = "Вынос"
+	L.fulminating_charge_debuff = "Вынос"
 	-- Intermission: The Vault Falters
-	-- L.storm_break = "Teleport"
-	-- L.ball_lightning = "Balls"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
+	L.storm_break = "Телепорт"
+	L.ball_lightning = "Шарики"
+	L.fuses_reached = "%d |4Адд:Адда; Дошёл" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
-	-- L.magnetic_charge = "Pull Charge"
+	L.magnetic_charge = "Притягивание"
 
-	-- L.storm_nova_cast = "Storm Nova CastBar"
-	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
+	L.storm_nova_cast = "Взрыв Бури"
+	L.storm_nova_cast_desc = "Кастбар для отталкивания"
 
-	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
-	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.custom_on_repeating_stormcharged = "Повторять плюс или минус"
+	L.custom_on_repeating_stormcharged_desc = "Повторять в чате Плюс или Минус иконками {rt1}, {rt3} что бы найти партнёра."
 
-	-- L.skipped_cast = "Skipped %s (%d)"
+	L.skipped_cast = "Пропущено %s (%d)"
 
-	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
-	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
-	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
+	L.custom_off_raidleader_devastation = "Полёт: Режим Рейдлидера"
+	L.custom_off_raidleader_devastation_desc = "Показывать полоску для Опустошающей молнии (Дыхание) на противоположной стороне."
+	L.breath_other = "%s [другая сторона]" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "ruRU")
