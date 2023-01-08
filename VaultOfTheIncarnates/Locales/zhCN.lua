@@ -105,7 +105,7 @@ if L then
 	L.primal_attunement = "软狂暴"
 
 	-- Stage 2
-	L.violent_upheaval = "小怪"
+	L.violent_upheaval = "石柱"
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "zhCN")
@@ -153,17 +153,17 @@ if L then
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "积雷倒数"
 
-	-- L.storm_nova_cast = "Storm Nova CastBar"
-	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
+	L.storm_nova_cast = "风暴新星施法条"
+	L.storm_nova_cast_desc = "显示风暴新星施法条"
 
-	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
-	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.custom_on_repeating_stormcharged = "重复正和负"
+	L.custom_on_repeating_stormcharged_desc = "使用图标{rt1}, {rt3} 重复显示正和负的信息，来帮助你找到正确的位置。"
 
 	-- L.skipped_cast = "Skipped %s (%d)"
 
-	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
-	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
-	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
+	L.custom_off_raidleader_devastation = "闪电毁灭: 全局模式"
+	L.custom_off_raidleader_devastation_desc = "在另一个台子上也显示闪电毁灭（吐息）"
+	L.breath_other = "[对面] %s" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "zhCN")
