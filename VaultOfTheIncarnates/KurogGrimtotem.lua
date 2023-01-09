@@ -1040,7 +1040,7 @@ function mod:IntermissionAddSpawn(args)
 		end
 	elseif args.spellId == 375792 then -- Thundering Ravager
 		self:Bar(374622, 7.3) -- Storm Break
-		self:Bar(391696, 9.5) -- Lethal Current
+		self:Bar(391696, 10.9) -- Lethal Current
 		if self:Mythic() then
 			addCount[374215] = 1
 			self:Bar(374215, 37.7, CL.count:format(L.thundering_strike, 1)) -- Thunder Strike
