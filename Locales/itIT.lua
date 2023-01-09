@@ -41,7 +41,7 @@ L.noBossMod = "Nessun Boss mod:"
 L.offline = "Disconnesso"
 
 L.missingPlugin = "Per favore, prendi nota che questa zona richiede il plugin |cFF436EEE%s|r per fare in modo di visualizzare barre e timers."
---L.missingAddOn = "The |cFF436EEE%s|r addon is missing!"
+L.missingAddOn = "L'addon |cFF436EEE%s|r è mancante!"
 L.disabledAddOn = "L'addon |cFF436EEE%s|r è disattivato, i timer non saranno mostrati."
 
 L.removeAddOn = "Per favore rimuovi '|cFF436EEE%s|r' perché è stato rimpiazzato da '|cFF436EEE%s|r'."
@@ -88,7 +88,7 @@ L.slashDescPull = "|cFFFED000/pull:|r Invia un conto alla rovescia per l'ingaggi
 L.slashDescBreak = "|cFFFED000/break:|r Invia un timer di pausa a tutta la tua incursione."
 L.slashDescRaidBar = "|cFFFED000/raidbar:|r Invia una barra personalizzata alla tua Incursione."
 L.slashDescLocalBar = "|cFFFED000/localbar:|r Crea una barra personale solo per te stesso."
-L.slashDescRange = "|cFFFED000/range:|r Apri l'indicatore di porossimità."
+L.slashDescRange = "|cFFFED000/range:|r Apri l'indicatore di prossimità."
 L.slashDescVersion = "|cFFFED000/bwv:|r Esegui un controllo di versione di BigWigs."
 L.slashDescConfig = "|cFFFED000/bw:|r Apri la configurazione di BigWigs."
 
@@ -129,7 +129,7 @@ L.COUNTDOWN_desc = "Se abilitato, un conto alla rovescia vocale e visuale verrà
 L.INFOBOX = L.infobox
 L.INFOBOX_desc = L.infobox_desc
 L.SOUND = "Suono"
-L.SOUND_desc = "Le abilità dei boss di solito riproducono dei suoni per aiutarti ad avvertirle. Se disattivi questa opzione nessun suono verrà riprodotto."
+L.SOUND_desc = "Le abilità dei boss di solito riproducono dei suoni per aiutarti ad avvertirle. Se disattivi questa opzione non verrà riprodotto alcun suono."
 L.CASTBAR = "Barra di lancio"
 L.CASTBAR_desc = "Le barre di lancio sono mostrate su alcuni boss, per avvertirti di abilità in arrivo. Se questa abilità è accompagnata da una barra di lancio che vuoi nascondere, disattiva questa opzione."
 L.SAY_COUNTDOWN = "Dici il conto alla rovescia"
