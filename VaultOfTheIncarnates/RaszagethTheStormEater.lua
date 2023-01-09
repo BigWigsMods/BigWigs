@@ -1016,7 +1016,7 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			self:Say(args.spellId, L.fulminating_charge_debuff)
-			self:SayCountdown(args.spellId, self:Mythic() and 3 or 5)
+			self:SayCountdown(args.spellId, self:Mythic() and 3 or self:Heroic() and 5 or 6)
 			self:PlaySound(args.spellId, "warning")
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.fulminating_charge, fulminatingChargeCount-1))
