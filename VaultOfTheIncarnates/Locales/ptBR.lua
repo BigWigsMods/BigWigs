@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "Sempre mostrar as barras de habilidade"
 	L.custom_on_stop_timers_desc = "Habilidades que sempre serão mostradas: Marca Condutora"
+
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "ptBR")

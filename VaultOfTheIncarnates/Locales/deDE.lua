@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Fähigkeiten, welche immer angezeigt werden: Leitfähiges Zeichen"
+
+	L.skipped_cast = "%s (%d) übersprungen"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "deDE")

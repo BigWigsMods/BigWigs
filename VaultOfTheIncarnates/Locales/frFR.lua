@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "Toujours afficher les barres de techniques"
 	L.custom_on_stop_timers_desc = "Techniques qui seront toujours affichées : Marque conductrice"
+
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "frFR")

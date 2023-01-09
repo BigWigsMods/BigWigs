@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "总是显示计时条"
 	L.custom_on_stop_timers_desc = "总是显示的技能: 传导印记"
+
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "zhCN")

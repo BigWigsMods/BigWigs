@@ -35,6 +35,8 @@ if L then
 
 	 L.custom_on_stop_timers = "항상 능력 바 표시"
 	 L.custom_on_stop_timers_desc = "항상 표시될 능력: 전도성 표식"
+
+	 -- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "koKR")

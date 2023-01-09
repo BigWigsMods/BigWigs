@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "Всегда показывать полосы способностей"
 	L.custom_on_stop_timers_desc = "Будут показываться следующие способности:  Знак проводимости"
+
+	L.skipped_cast = "Пропущено %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "ruRU")

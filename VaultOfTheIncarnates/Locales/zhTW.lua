@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "總是顯示計時器"
 	L.custom_on_stop_timers_desc = "啟用此選項後，導電印記的計時條會保持顯示。"
+
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "zhTW")
