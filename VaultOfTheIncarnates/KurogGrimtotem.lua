@@ -989,18 +989,19 @@ do
 	local function printTarget(self, name, guid)
 		self:TargetMessage(374622, "yellow", name) -- Storm Break
 		if self:Me(guid) then
-			self:PlaySound(391696, "warning") -- debuffmove
-			self:Say(391696)
+			self:PlaySound(374622, "warning") -- debuffmove
+			self:Say(374622)
 		end
 	end
 
 	function mod:StormBreak(args)
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
-		self:Bar(391696, 20) -- Lethal Current
+		self:Bar(374622, 20) -- Storm Break
 	end
 
 	function mod:LethalCurrentApplied(args)
-		self:TargetMessage(args.spellId, "orange", args.destName) -- Storm Break
+		self:TargetMessage(args.spellId, "orange", args.destName) -- Lethal Current
+		self:Bar(391696, 20) --Lethal Current
 		if self:Me(args.destGUID) then
 			self:PlaySound(args.spellId, "warning") -- debuffmove
 			self:Say(args.spellId)
@@ -1038,7 +1039,8 @@ function mod:IntermissionAddSpawn(args)
 			self:Bar(400473, 91) -- Elemental Rage
 		end
 	elseif args.spellId == 375792 then -- Thundering Ravager
-		self:Bar(391696, 7.3) -- Lethal Current
+		self:Bar(374622, 7.3) -- Storm Break
+		self:Bar(391696, 9.5) -- Lethal Current
 		if self:Mythic() then
 			addCount[374215] = 1
 			self:Bar(374215, 37.7, CL.count:format(L.thundering_strike, 1)) -- Thunder Strike
