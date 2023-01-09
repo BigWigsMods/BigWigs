@@ -1040,7 +1040,7 @@ function mod:EncounterEvent(args)
 		self:StopBar(CL.count:format(L.fulminating_charge, fulminatingChargeCount)) -- Fulminating Charge(s)
 		self:StopBar(CL.count:format(self:SpellName(395906), electrifiedJawsCount)) -- Electified Jaws
 
-		self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), args.spellId)
+		self:Message("stages", "cyan", CL.count:format(CL.intermission, 2), false)
 		self:PlaySound("stages", "info")
 		self:SetStage(2.5)
 
