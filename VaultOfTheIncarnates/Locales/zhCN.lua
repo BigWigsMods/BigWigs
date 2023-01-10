@@ -151,7 +151,6 @@ if L then
 	-- Intermission: The Vault Falters
 	L.storm_break = "传送"
 	L.ball_lightning = "闪电球"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "积雷倒数"
 

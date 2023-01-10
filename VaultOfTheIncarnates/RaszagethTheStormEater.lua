@@ -160,7 +160,6 @@ if L then
 	-- Intermission: The Vault Falters
 	L.storm_break = "Teleport"
 	L.ball_lightning = "Balls"
-	L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Pull Charge"
 
@@ -1077,13 +1076,13 @@ do
 	local stacks = 0
 	local scheduled = nil
 	function mod:FuseStacksMessage()
-		mod:Message(389878, "cyan", L.fuses_reached:format(stacks))
-		mod:PlaySound(389878, "info")
+		self:StackMessage(389878, "cyan", CL.big_add, stacks, 1)
+		self:PlaySound(389878, "info")
 		scheduled = nil
 		stacks = 0
 	end
 
-	function mod:FuseStacks()
+	function mod:FuseStacks(args)
 		stacks = stacks + 1
 		if not scheduled then
 			scheduled = self:ScheduleTimer("FuseStacksMessage", 2) -- Throttle here
