@@ -129,44 +129,44 @@ if L then
 	L.lighting_devastation_trigger = "深吸" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	-- L.hurricane_wing = "Pushback"
-	-- L.volatile_current = "Sparks"
-	-- L.thunderous_blast = "Blast"
-	-- L.lightning_breath = "Breath"
-	-- L.lightning_strikes = "Strikes"
-	-- L.electric_scales = "Raid Damage"
-	-- L.electric_lash = "Lash"
+	L.hurricane_wing = "吹風"
+	L.volatile_current = "火花"
+	L.thunderous_blast = "射線"
+	L.lightning_breath = "吐息"
+	L.lightning_strikes = "落雷"
+	L.electric_scales = "團隊傷害"
+	L.electric_lash = "電鞭"
 	-- Intermission: The Primalist Strike
-	-- L.lightning_devastation = "Breath"
-	-- L.shattering_shroud = "Heal Absorb"
+	L.lightning_devastation = "吐息"
+	L.shattering_shroud = "治療吸收盾"
 	-- Stage Two: Surging Power
-	-- L.absorb_text = "%s (%.0f%%)"
-	-- L.stormsurge = "Absorb Shield"
-	-- L.stormcharged = "Positive or Negative"
-	-- L.positive = "Positive"
-	-- L.negative = "Negative"
-	-- L.focused_charge = "Damage Buff"
-	-- L.tempest_wing = "Storm Wave"
-	-- L.fulminating_charge = "Charges"
-	-- L.fulminating_charge_debuff = "Charge"
+	L.absorb_text = "%s (%.0f%%)"
+	L.stormsurge = "帶電吸收盾"
+	L.stormcharged = "風暴充能"
+	L.positive = "正極"
+	L.negative = "負極"
+	L.focused_charge = "聚能電荷"
+	L.tempest_wing = "風暴之翼"
+	L.fulminating_charge = "電能炸裂"
+	L.fulminating_charge_debuff = "電能炸裂"
 	-- Intermission: The Vault Falters
-	-- L.storm_break = "Teleport"
-	-- L.ball_lightning = "Balls"
+	L.storm_break = "傳送"
+	L.ball_lightning = "閃電球"
 	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
-	-- L.magnetic_charge = "Pull Charge"
+	L.magnetic_charge = "磁性電荷"
 
-	-- L.storm_nova_cast = "Storm Nova CastBar"
-	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
+	L.storm_nova_cast = "風暴新星施法"
+	L.storm_nova_cast_desc = "顯示風暴新星的施法計時"
 
-	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
-	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	L.custom_on_repeating_stormcharged = "重複正負極"
+	L.custom_on_repeating_stormcharged_desc = "以 {rt1} 和 {rt3} 持續喊話正負極，方便你快速找到相同印記的隊友。"
 
 	-- L.skipped_cast = "Skipped %s (%d)"
 
-	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
-	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
-	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
+	L.custom_off_raidleader_devastation = "閃電破滅：團長模式"
+	L.custom_off_raidleader_devastation_desc = "在另一個平台上也顯示閃電破滅（吐息）的計時器。"
+	L.breath_other = "[對面] %s" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "zhTW")
