@@ -73,7 +73,7 @@ function mod:MagmaEruption(args)
 end
 
 function mod:DeterringFlame(args)
-	self:Message(args.spellid, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 64)
 	nextHundred = args.time + 64
@@ -90,7 +90,7 @@ function mod:FlameInfusion(args)
 end
 
 function mod:RainOfDestruction(args)
-	self:Message(args.spellid, "orange")
+	self:Message(args.spellId, "orange")
 	self:PlaySound(args.spellId, "alert")
 	self:Bar(args.spellId, 64)
 end
