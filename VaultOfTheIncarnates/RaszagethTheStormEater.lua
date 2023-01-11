@@ -1007,15 +1007,20 @@ end
 
 do
 	local playerList = {}
+	local prev = 0
 	function mod:FulminatingCharge(args)
 		self:StopBar(CL.count:format(L.fulminating_charge, fulminatingChargeCount))
 		self:PlaySound(377467, "long")
 		fulminatingChargeCount = fulminatingChargeCount + 1
 		self:Bar(377467, timers[self:GetStage()][377467][fulminatingChargeCount], CL.count:format(L.fulminating_charge, fulminatingChargeCount))
-		playerList = {}
 	end
 
 	function mod:FulminatingChargeApplied(args)
+		if args.time - prev > 2 then
+			-- reset count on jump
+			prev = args.time
+			playerList = {}
+		end
 		local count = #playerList+1
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
@@ -1025,14 +1030,14 @@ do
 			self:PlaySound(args.spellId, "warning")
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(L.fulminating_charge, fulminatingChargeCount-1))
-		self:CustomIcon(fulminatingChargeCount, args.destName, count)
+		self:CustomIcon(fulminatingChargeMarker, args.destName, count)
 	end
 
 	function mod:FulminatingChargeRemoved(args)
 		if self:Me(args.destGUID) then
 			self:CancelSayCountdown(args.spellId)
 		end
-		self:CustomIcon(fulminatingChargeCount, args.destName)
+		self:CustomIcon(fulminatingChargeMarker, args.destName)
 	end
 end
 
