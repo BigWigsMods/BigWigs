@@ -60,11 +60,11 @@ local timersEasy = {
 		[395906] = {5, 25, 25, 27, 21, 27, 30, 27, 21}, -- Electrified Jaws
 	},
 	[2] = {
-		[388643] = {68.5, 50}, -- Volatile Current
-		[395906] = {38.5, 24.9, 22.9, 30, 25, 25, 37}, -- Electrified Jaws
+		[388643] = {68.5, 50, 115}, -- Volatile Current
+		[395906] = {38.5, 25, 23, 30, 25, 25, 37, 25}, -- Electrified Jaws
 		[387261] = {8.5, 80, 80, 80}, -- Stormsurge
-		[377467] = {52.5, 85.9}, -- Fulminating Charge
-		[385574] = {43.5, 35, 49.9, 24.9, 55}, -- Tempest Wing
+		[377467] = {52.5, 86, 80}, -- Fulminating Charge
+		[385574] = {43.5, 35, 50, 25, 55}, -- Tempest Wing
 	},
 	[3] = {
 		[377594] = {34.5, 41, 41.9}, -- Lightning Breath
@@ -617,7 +617,10 @@ function mod:VolatileCurrent(args)
 	self:Message(args.spellId, "yellow", CL.casting:format(CL.count:format(L.volatile_current, volatileCurrentCount)))
 	self:PlaySound(args.spellId, "alert")
 	volatileCurrentCount = volatileCurrentCount + 1
-	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][volatileCurrentCount], CL.count:format(L.volatile_current, volatileCurrentCount))
+	local stage = self:GetStage()
+	if stage == 1 or stage == 2 then -- It can trigger after intermission 2.5 has started, avoid starting bars
+		self:Bar(args.spellId, timers[self:GetStage()][args.spellId][volatileCurrentCount], CL.count:format(L.volatile_current, volatileCurrentCount))
+	end
 end
 
 function mod:ElectrifiedJaws(args)
@@ -625,7 +628,10 @@ function mod:ElectrifiedJaws(args)
 	self:Message(395906, "purple", CL.casting:format(CL.count:format(args.spellName, electrifiedJawsCount)))
 	self:PlaySound(395906, "info")
 	electrifiedJawsCount = electrifiedJawsCount + 1
-	self:Bar(395906, timers[self:GetStage()][395906][electrifiedJawsCount], CL.count:format(args.spellName, electrifiedJawsCount))
+	local stage = self:GetStage()
+	if stage == 1 or stage == 2 then -- It can trigger after intermission 2.5 has started, avoid starting bars
+		self:Bar(395906, timers[self:GetStage()][395906][electrifiedJawsCount], CL.count:format(args.spellName, electrifiedJawsCount))
+	end
 end
 
 function mod:ElectrifiedJawsApplied(args)
