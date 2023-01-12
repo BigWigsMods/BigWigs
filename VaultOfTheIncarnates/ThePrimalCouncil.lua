@@ -84,7 +84,7 @@ function mod:GetOptions()
 		373059, -- Primal Blizzard
 		386661, -- Glacial Convocation
 		-- Dathea Stormlash
-		371624, -- Conductive Mark
+		{371624, "ME_ONLY_EMPHASIZE"}, -- Conductive Mark
 		conductiveMarkMarker, -- (vs ICON, leave skull/cross for boss marking)
 		{372279, "OFF"}, -- Chain Lightning
 		386375, -- Storming Convocation
@@ -93,7 +93,7 @@ function mod:GetOptions()
 		{372056, "TANK"}, -- Crush
 		386370, -- Quaking Convocation
 		-- Embar Firepath
-		{374038, "SAY", "SAY_COUNTDOWN"}, -- Meteor Axes
+		{374038, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Meteor Axes
 		{372027, "TANK"}, -- Slashing Blaze
 		meteorAxeMarker,
 		386289, -- Burning Convocation
@@ -236,7 +236,11 @@ end
 
 function mod:ConductiveMarkApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, L.conductive_mark)
+		if args.amount then
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, L.conductive_mark)
+		else
+			self:PersonalMessage(args.spellId, nil, L.conductive_mark)
+		end
 		self:PlaySound(args.spellId, "warning")
 	end
 end
