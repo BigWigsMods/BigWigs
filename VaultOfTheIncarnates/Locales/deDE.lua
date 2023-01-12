@@ -151,7 +151,6 @@ if L then
 	-- Intermission: The Vault Falters
 	L.storm_break = "Teleport"
 	L.ball_lightning = "Kugeln"
-	 L.fuses_reached = "%d |4Fusionieren:Fusionieren; erreicht" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Magnetische Ladung"
 
