@@ -297,7 +297,7 @@ do
 		self:SiegeOfOrgrimmarCinematics() -- Sexy hack until cinematics have an id system (never)
 		self:ToyCheck() -- Sexy hack until cinematics have an id system (never)
 
-		--CheckElv(self)
+		CheckElv(self)
 	end
 end
 
@@ -378,17 +378,17 @@ do
 			SetCVar("Sound_EnableErrorSpeech", "0")
 		end
 
-		--CheckElv(self)
+		CheckElv(self)
 		-- Never hide when tracking achievements or in Mythic+
-		--local _, _, diff = GetInstanceInfo()
-		--if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
-		--	restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
-		--	if restoreObjectiveTracker then
-		--		trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
-		--		trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
-		--		trackerHider.SetParent(ObjectiveTrackerFrame, trackerHider)
-		--	end
-		--end
+		local _, _, diff = GetInstanceInfo()
+		if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
+			restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
+			if restoreObjectiveTracker then
+				trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
+				trackerHider.SetFixedFrameLevel(ObjectiveTrackerFrame, true)
+				trackerHider.SetParent(ObjectiveTrackerFrame, trackerHider)
+			end
+		end
 	end
 
 	function RestoreAll(self)
