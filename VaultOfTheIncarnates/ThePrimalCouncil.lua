@@ -1,4 +1,3 @@
-
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
@@ -47,6 +46,10 @@ local timersTable = {
 timersTable[17] = timersTable[14]
 local timers = timersTable[mod:Difficulty()]
 
+-- Skipped code
+local SKIP_CAST_THRESHOLD = 4
+local checkTimer = nil
+
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -64,6 +67,8 @@ if L then
 
 	L.custom_on_stop_timers = "Always show ability bars"
 	L.custom_on_stop_timers_desc = "Abilities that will always be shown: Conductive Mark"
+
+	L.skipped_cast = "Skipped %s (%d)"
 end
 
 --------------------------------------------------------------------------------
@@ -79,7 +84,7 @@ function mod:GetOptions()
 		373059, -- Primal Blizzard
 		386661, -- Glacial Convocation
 		-- Dathea Stormlash
-		371624, -- Conductive Mark
+		{371624, "ME_ONLY_EMPHASIZE"}, -- Conductive Mark
 		conductiveMarkMarker, -- (vs ICON, leave skull/cross for boss marking)
 		{372279, "OFF"}, -- Chain Lightning
 		386375, -- Storming Convocation
@@ -88,7 +93,7 @@ function mod:GetOptions()
 		{372056, "TANK"}, -- Crush
 		386370, -- Quaking Convocation
 		-- Embar Firepath
-		{374038, "SAY", "SAY_COUNTDOWN"}, -- Meteor Axes
+		{374038, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Meteor Axes
 		{372027, "TANK"}, -- Slashing Blaze
 		meteorAxeMarker,
 		386289, -- Burning Convocation
@@ -120,6 +125,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "StormingConvocation", 386375)
 	-- Opalfang
 	self:Log("SPELL_CAST_START", "EarthenPillar", 397134)
+	self:Log("SPELL_CAST_START", "Crush", 372056)
 	self:Log("SPELL_AURA_APPLIED", "CrushApplied", 372056)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushApplied", 372056)
 	self:Log("SPELL_CAST_SUCCESS", "QuakingConvocation", 386370)
@@ -140,11 +146,13 @@ function mod:OnEngage(diff)
 	slashCount = 1
 	earthenPillarCount = 1
 
-	self:Bar(372027, 11, CL.count:format(self:SpellName(372027), slashCount))
+	self:Bar(372027, 11, CL.count:format(self:SpellName(372027), slashCount)) -- Slashing Blaze
 	self:CDBar(372279, 12) -- Chain Lightning
 	self:Bar(372056, 19.5) -- Crush
 	self:Bar(397134, timers[397134][earthenPillarCount], CL.count:format(L.earthen_pillars, earthenPillarCount)) -- Earthen Pillar
-	self:Bar(371624, timers[371624][conductiveMarkCount], CL.count:format(L.conductive_marks, conductiveMarkCount))
+	local markCD = timers[371624][conductiveMarkCount]
+	self:Bar(371624, markCD, CL.count:format(L.conductive_marks, conductiveMarkCount))
+	checkTimer = self:ScheduleTimer("ConductiveMarkCheck", markCD + SKIP_CAST_THRESHOLD, conductiveMarkCount)
 	self:Bar(374038, timers[374038][axeCount], CL.count:format(L.meteor_axes, axeCount))
 	self:Bar(373059, timers[373059][blizzardCount], CL.count:format(L.primal_blizzard, blizzardCount))
 end
@@ -152,6 +160,19 @@ end
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:ConductiveMarkCheck(castCount) -- Marks are rarely skipped
+	if castCount == conductiveMarkCount then -- not on the next cast?
+		mod:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
+		mod:Message(371624, "green", L.skipped_cast:format(L.conductive_marks, castCount))
+		conductiveMarkCount = castCount + 1
+		local cd = timers[371624][conductiveMarkCount]
+		if cd then
+			mod:Bar(371624, cd - SKIP_CAST_THRESHOLD, CL.count:format(L.conductive_marks, conductiveMarkCount))
+			checkTimer = mod:ScheduleTimer("ConductiveMarkCheck", cd, conductiveMarkCount)
+		end
+	end
+end
 
 do
 	local abilitysToPause = {
@@ -197,22 +218,29 @@ end
 
 function mod:GlacialConvocation(args)
 	self:StopBar(CL.count:format(args.spellName, blizzardCount))
-
 	self:Message(386661, "cyan")
 	self:PlaySound(386661, "info")
 end
 
 -- Dathea Stormlash
-function mod:ConductiveMark(args)
+function mod:ConductiveMark()
 	self:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
-	self:Message(371624, "purple", CL.casting:format(CL.count:format(L.conductive_marks, conductiveMarkCount)))
+	self:Message(371624, "cyan", CL.casting:format(CL.count:format(L.conductive_marks, conductiveMarkCount)))
 	conductiveMarkCount = conductiveMarkCount + 1
-	self:Bar(371624, timers[371624][conductiveMarkCount], CL.count:format(L.conductive_marks, conductiveMarkCount))
+	local cd = timers[371624][conductiveMarkCount]
+	self:CDBar(371624, cd, CL.count:format(L.conductive_marks, conductiveMarkCount))
+	if cd then
+		checkTimer = self:ScheduleTimer("ConductiveMarkCheck", cd + SKIP_CAST_THRESHOLD, conductiveMarkCount)
+	end
 end
 
 function mod:ConductiveMarkApplied(args)
 	if self:Me(args.destGUID) then
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, L.conductive_mark)
+		if args.amount then
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1, L.conductive_mark)
+		else
+			self:PersonalMessage(args.spellId, nil, L.conductive_mark)
+		end
 		self:PlaySound(args.spellId, "warning")
 	end
 end
@@ -237,6 +265,10 @@ function mod:EarthenPillar(args)
 	self:Bar(args.spellId, timers[args.spellId][earthenPillarCount], CL.count:format(L.earthen_pillars, earthenPillarCount))
 end
 
+function mod:Crush(args)
+	self:Bar(args.spellId, 22)
+end
+
 function mod:CrushApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 2)
 	if self:Tank() and not self:Me(args.destGUID) and not self:Tanking(self:UnitTokenFromGUID(args.sourceGUID)) then
@@ -244,7 +276,6 @@ function mod:CrushApplied(args)
 	elseif self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm") -- On you
 	end
-	self:Bar(args.spellId, 22)
 end
 
 function mod:QuakingConvocation(args)

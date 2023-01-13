@@ -989,8 +989,8 @@ do
 	local function printTarget(self, name, guid)
 		self:TargetMessage(374622, "yellow", name) -- Storm Break
 		if self:Me(guid) then
-			self:PlaySound(391696, "warning") -- debuffmove
-			self:Say(391696)
+			self:PlaySound(374622, "warning") -- debuffmove
+			self:Say(374622)
 		end
 	end
 
@@ -998,20 +998,20 @@ do
 		self:GetBossTarget(printTarget, 0.1, args.sourceGUID)
 		self:Bar(391696, 20) -- Lethal Current
 	end
+end
 
-	function mod:LethalCurrentApplied(args)
-		self:TargetMessage(args.spellId, "orange", args.destName) -- Storm Break
-		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "warning") -- debuffmove
-			self:Say(args.spellId)
-			self:SayCountdown(args.spellId, 6)
-		end
+function mod:LethalCurrentApplied(args)
+	self:TargetMessage(args.spellId, "orange", args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "warning") -- debuffmove
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 6)
 	end
+end
 
-	function mod:LethalCurrentRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
-		end
+function mod:LethalCurrentRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 

@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "Всегда показывать полосы способностей"
 	L.custom_on_stop_timers_desc = "Будут показываться следующие способности:  Знак проводимости"
+
+	L.skipped_cast = "Пропущено %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "ruRU")
@@ -150,7 +152,6 @@ if L then
 	-- Intermission: The Vault Falters
 	L.storm_break = "Телепорт"
 	L.ball_lightning = "Шарики"
-	L.fuses_reached = "%d |4Адд:Адда; Дошёл" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Притягивание"
 

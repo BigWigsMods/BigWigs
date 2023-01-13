@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "Toujours afficher les barres de techniques"
 	L.custom_on_stop_timers_desc = "Techniques qui seront toujours affichées : Marque conductrice"
+
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "frFR")
@@ -150,7 +152,6 @@ if L then
 	-- Intermission: The Vault Falters
 	-- L.storm_break = "Teleport"
 	-- L.ball_lightning = "Balls"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	-- L.magnetic_charge = "Pull Charge"
 

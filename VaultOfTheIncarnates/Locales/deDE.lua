@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
 	L.custom_on_stop_timers_desc = "Fähigkeiten, welche immer angezeigt werden: Leitfähiges Zeichen"
+
+	L.skipped_cast = "%s (%d) übersprungen"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "deDE")
@@ -149,7 +151,6 @@ if L then
 	-- Intermission: The Vault Falters
 	L.storm_break = "Teleport"
 	L.ball_lightning = "Kugeln"
-	 L.fuses_reached = "%d |4Fusionieren:Fusionieren; erreicht" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Magnetische Ladung"
 

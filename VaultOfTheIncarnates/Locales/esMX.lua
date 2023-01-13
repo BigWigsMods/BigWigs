@@ -35,6 +35,8 @@ if L then
 
 	-- L.custom_on_stop_timers = "Always show ability bars"
 	-- L.custom_on_stop_timers_desc = "Abilities that will always be shown: Conductive Mark"
+
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "esMX")
@@ -150,7 +152,6 @@ if L then
 	-- Intermission: The Vault Falters
 	-- L.storm_break = "Teleport"
 	-- L.ball_lightning = "Balls"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	-- L.magnetic_charge = "Pull Charge"
 

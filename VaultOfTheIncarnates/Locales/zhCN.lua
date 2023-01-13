@@ -35,6 +35,8 @@ if L then
 
 	L.custom_on_stop_timers = "总是显示计时条"
 	L.custom_on_stop_timers_desc = "总是显示的技能: 传导印记"
+
+	-- L.skipped_cast = "Skipped %s (%d)"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "zhCN")
@@ -149,7 +151,6 @@ if L then
 	-- Intermission: The Vault Falters
 	L.storm_break = "传送"
 	L.ball_lightning = "闪电球"
-	-- L.fuses_reached = "%d |4Fuse:Fuses; Reached" -- 1 Fuse Reached, 2 Fuses Reached
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "积雷倒数"
 
