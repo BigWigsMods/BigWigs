@@ -34,6 +34,7 @@ local SendChatMessage, GetInstanceInfo, Timer, SetRaidTarget = BigWigsLoader.Sen
 local UnitName, UnitGUID, UnitHealth, UnitHealthMax = BigWigsLoader.UnitName, BigWigsLoader.UnitGUID, BigWigsLoader.UnitHealth, BigWigsLoader.UnitHealthMax
 local UnitDetailedThreatSituation = BigWigsLoader.UnitDetailedThreatSituation
 local format, find, gsub, band, tremove, twipe = string.format, string.find, string.gsub, bit.band, table.remove, table.wipe
+local mathmax = math.max
 local select, type, next, tonumber = select, type, next, tonumber
 local C = core.C
 local pName = UnitName("player")
@@ -2796,7 +2797,7 @@ do
 		end
 		local startOffset = start + 0.2
 		for i = 1.2, startOffset do
-			Timer(seconds-i, printTime)
+			Timer(mathmax(seconds-i, 0), printTime)
 		end
 		self.sayCountdowns[key] = tbl
 	end
