@@ -185,7 +185,6 @@ function mod:GetOptions()
 		"avoid",
 		"damage",
 		"ultimate",
-		"berserk",
 		-- Fire Altar
 		{382563, "SAY", "SAY_COUNTDOWN"}, -- Magma Burst
 		373329, -- Molten Rupture
@@ -224,6 +223,7 @@ function mod:GetOptions()
 		{391268, "TANK"}, -- Earth Smite
 		{393429, "TANK", "SAY"}, -- Storm Smite
 		394719, -- Orb Lightning
+		"berserk",
 	}, {
 		["stages"] = "general",
 		[382563] = -25040, -- Fire Altar
@@ -359,8 +359,8 @@ function mod:OnEngage()
 	self:Bar(372158, 10.2) -- Sundering Strike
 	self:Bar("stages", 125, CL.stage:format(2), 374779) -- Primal Barrier
 
-	if not self:Easy() then
-		self:Berserk(self:Mythic() and 600 or 540, true)
+	if self:Mythic() then
+		self:ScheduleTimer("Berserk", 540, 60, true) -- 10min, only on Mythic and rarely encountered, so delay starting it
 	end
 end
 
@@ -539,7 +539,10 @@ function mod:PrimalBarrierRemoved(args)
 	if barrierRemovedCount < 2 then
 		self:Bar("stages", 125, CL.stage:format(2), 374779) -- Primal Barrier
 	else
-		self:Bar(396241, self:Easy() and 96 or 94, L.primal_attunement) -- Primal Attunement
+		local timer = self:Easy() and 96 or 94
+		self:Bar(396241, timer, L.primal_attunement) -- Primal Attunement (Soft Enrage)
+		self:ScheduleTimer("Message", timer-30, 396241, "yellow", CL.custom_sec:format(L.primal_attunement, 30))
+		self:ScheduleTimer("Message", timer-10, 396241, "red", CL.custom_sec:format(L.primal_attunement, 10))
 	end
 end
 
@@ -1064,7 +1067,7 @@ function mod:IntermissionAddDeath(args)
 end
 
 -- Stage 3
-function mod:PrimalAttunement(args)
+function mod:PrimalAttunement(args) -- Soft Enrage
 	self:Message(args.spellId, "red", L.primal_attunement)
 	self:PlaySound(args.spellId, "warning") -- danger
 	self:StopBar(L.primal_attunement)
