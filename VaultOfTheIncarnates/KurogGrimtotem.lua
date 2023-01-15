@@ -423,7 +423,7 @@ do
 		self:StopBar(CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount))
 		currentAltar = newAltar
 
-		self:Message("stages", "cyan", alterSpellNameMap[currentAltar]["stage"])
+		self:Message("stages", "cyan", alterSpellNameMap[currentAltar]["stage"], false)
 		self:PlaySound("stages", "long")
 
 		local t = GetTime()
