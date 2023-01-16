@@ -12,7 +12,7 @@ L.width = "Larghezza"
 L.height = "Altezza"
 L.sizeDesc = "In genere regoli la dimesione trascinando l'ancora. Se hai necessità di una dimensione specifica puoi usare la barra slide o digitare i valori nella casella, che non ha valore massimo."
 L.fontSizeDesc = "Regola la dimensione del carattere usando la barra slide o digitando i valori nella casella che ha un valore molto maggiore di 200."
-L.disableDesc = "Stai per disabilitare la funzionalità '%s' che |cffff4411 è fortementeconsigliata|r.\n\nSei sicuro di questo?"
+L.disableDesc = "Stai per disabilitare la funzionalità '%s' che |cffff4411 non è consigliata|r.\n\nSei sicuro di questo?"
 L.transparency = "Trasparenza"
 
 -----------------------------------------------------------------------
