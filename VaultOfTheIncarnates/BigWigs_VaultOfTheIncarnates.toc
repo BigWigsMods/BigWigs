@@ -16,7 +16,7 @@
 ## Notes-esES: BigWigs Vault of the Incarnates Modules
 ## Notes-esMX: BigWigs Vault of the Incarnates Modules
 ## Notes-frFR: Modules BigWigs du Caveau des Incarnations
-## Notes-itIT: BigWigs Vault of the Incarnates Modules
+## Notes-itIT: Moduli BigWigs per le Segrete delle Incarnazioni
 ## Notes-koKR: BigWigs Vault of the Incarnates Modules
 ## Notes-ptBR: BigWigs Vault of the Incarnates Modules
 ## Notes-ruRU: BigWigs Vault of the Incarnates Modules

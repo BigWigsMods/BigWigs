@@ -75,7 +75,7 @@ L.custom_sec = "%s in %d sec"
 
 L.focus_only = "|cffff0000Avviso solo per i bersagli focus.|r "
 L.trash = "Trash"
---L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
+L.affixes = "Modificatori" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "Icona bersaglio %s"
