@@ -100,7 +100,7 @@ BigWigs:AddColors("Kurog Grimtotem", {
 	[394416] = "cyan",
 	[394719] = {"cyan","purple"},
 	[395893] = {"cyan","orange"},
-	[396241] = "red",
+	[396241] = {"red","yellow"},
 	[400473] = "red",
 	["stages"] = "cyan",
 })
