@@ -200,13 +200,13 @@ function mod:GetOptions()
 		395893, -- Erupting Bedrock
 		374691, -- Seismic Rupture
 		-- Storm Altar
-		{373487, "SAY", "SAY_COUNTDOWN"}, -- Lightning Crash
-		{390920, "SAY", "SAY_COUNTDOWN"}, -- Shocking Burst
+		{373487, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Lightning Crash
+		{390920, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Shocking Burst
 		shockingBurstMarker,
 		374215, -- Thunder Strike
 		-- Stage 2
 		{374321, "TANK"}, -- Breaking Gravel
-		{374427, "SAY", "SAY_COUNTDOWN"}, -- Ground Shatter
+		{374427, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Ground Shatter
 		374430, -- Violent Upheaval
 		374623, -- Frost Binds
 		374624, -- Freezing Tempest
