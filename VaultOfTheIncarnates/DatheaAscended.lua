@@ -45,7 +45,7 @@ function mod:GetOptions()
 	return {
 		387849, -- Coalescing Storm
 
-		387943, -- Diverted Essence
+		397431, -- Diverted Essence
 		{385812, "TANK", "NAMEPLATEBAR"}, -- Aerial Slash
 		395501, -- Blowback
 		volatileInfuserMarker,
@@ -54,7 +54,7 @@ function mod:GetOptions()
 		390450, -- Static Cling
 
 		388302, -- Raging Burst
-		{391686, "SAY"}, -- Conductive Mark
+		{391686, "SAY", "ME_ONLY_EMPHASIZE"}, -- Conductive Mark
 		--"custom_on_empowered_conductive_mark_yell",
 		376943, -- Cyclone
 		388410, -- Crosswinds
@@ -62,7 +62,7 @@ function mod:GetOptions()
 		{376851, "TANK"}, -- Aerial Buffet
 	}, {
 		[387849] = -25952, -- Coalescing Storm
-		[387943] = -25903, -- Volatile Infuser
+		[397431] = -25903, -- Volatile Infuser
 		[384273] = -25738, -- Thunder Caller
 		[388302] = self.displayName,
 	}, {
@@ -81,7 +81,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CoalescingStorm", 387849)
 	self:Log("SPELL_CAST_START", "Blowback", 395501)
 	self:AddDeath("AddDeath", 192934) -- Volatile Infuser
-	self:Log("SPELL_CAST_START", "DivertedEssence", 387943)
+	self:Log("SPELL_CAST_START", "DivertedEssence", 397431)
 	self:Log("SPELL_CAST_START", "AerialSlash", 385812)
 	self:Log("SPELL_CAST_START", "StormBolt", 384273)
 	self:Log("SPELL_AURA_APPLIED", "StaticClingApplied", 390450)
@@ -231,10 +231,12 @@ end
 function mod:ConductiveMarkApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "blue", args.destName, amount, 1, L.conductive_mark)
 		self:PlaySound(args.spellId, "warning")
 		if amount == 1 then -- Initial Say
 			self:Say(args.spellId, L.conductive_mark)
+			self:PersonalMessage(args.spellId, nil, L.conductive_mark)
+		else
+			self:StackMessage(args.spellId, "blue", args.destName, amount, amount, L.conductive_mark)
 		end
 	end
 end
