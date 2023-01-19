@@ -55,7 +55,7 @@ if L then
 	L.ultimate_bartext = "%s [Ult]" -- {Spell} [Ult]
 
 	L.add_bartext = "%s [Add]" -- "{Spell} [Add]"
-	L.enrage_other = mod:SpellName(184361)..": %s" -- Enrage
+	L.enrage_other = mod:SpellName(184361).." [%s]" -- Enrage [Fire]
 
 	L.Fire = "Fire"
 	L.Frost = "Frost"
@@ -63,6 +63,7 @@ if L then
 	L.Storm = "Storm"
 
 	-- Fire
+	L.magma_burst_icon = "spell_fire_ragnaros_lavabolt"
 	L.magma_burst = "Pools"
 	L.molten_rupture = "Waves"
 	L.searing_carnage = "Dance"
@@ -216,13 +217,20 @@ function mod:GetOptions()
 		396241, -- Primal Attunement
 		-- Mythic
 		400473, -- Elemental Rage
-		{393309, "TANK"}, -- Flame Smite
+		393314, -- Flamewrought Eradicator
 		394416, -- Raging Inferno
-		{393296, "TANK"}, -- Frost Smite
+		{393309, "TANK"}, -- Flame Smite
+		393295, -- Icewrought Dominator
 		391425, -- Icy Tempest
+		--372517, -- Frozen Solid // XXX TODO
+		--391019, -- Frigid Torrent // Same SpellId as the boss
+		{393296, "TANK"}, -- Frost Smite
+		392098, -- Ironwrought Smasher
+		--197595, -- Erupting Bedrock // Same SpellId as the boss
 		{391268, "TANK"}, -- Earth Smite
-		{393429, "TANK", "SAY"}, -- Storm Smite
+		393459, -- Stormwrought Despoiler
 		394719, -- Orb Lightning
+		{393429, "TANK", "SAY"}, -- Storm Smite
 		"berserk",
 	}, {
 		["stages"] = "general",
@@ -240,7 +248,7 @@ function mod:GetOptions()
 		[374023] = L.searing_carnage, -- Searing Carnage (Dance)
 		-- Frost
 		[373678] = L.biting_chill, -- Biting Chill (Chill DoT)
-		[391019] = L.frigid_torrent, -- Frigid Torrent (Orbs / Frost Orbs)
+		[391019] = L.frigid_torrent, -- Frigid Torrent (Orbs)
 		[372458] = L.absolute_zero, -- Absolute Zero (Soaks)
 		-- Earth
 		[391056] = L.enveloping_earth, -- Enveloping Earth (Healing Absorb)
@@ -264,32 +272,25 @@ function mod:OnBossEnable()
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
 	self:Log("SPELL_AURA_APPLIED", "Dominance", 396106, 396109, 396085, 396113) -- Flaming, Earthen, Freezing, Thundering
 	self:Log("SPELL_PERIODIC_DAMAGE", "ElementalSurge", 371981)
-	self:Log("SPELL_AURA_APPLIED", "ElementalRage", 400473)
-	-- self:Log("SPELL_DAMAGE", "ElementalShiftDamage", 374861)
 	self:Log("SPELL_AURA_APPLIED", "PrimalBarrierApplied", 374779)
 	self:Log("SPELL_AURA_REMOVED", "PrimalBarrierRemoved", 374779)
 
 	self:Log("SPELL_CAST_START", "SunderingStrike", 390548) -- Sundering Strike
 	self:Log("SPELL_AURA_APPLIED", "SunderingStrikeApplied", 372158)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SunderingStrikeApplied", 372158)
-	self:Log("SPELL_CAST_START", "SmiteCast", 393309, 393296, 391268, 393429) -- Flame, Frost, Earth, Storm
-	self:Log("SPELL_AURA_APPLIED", "FrostSmiteApplied", 393297)
-	self:Log("SPELL_AURA_APPLIED", "EarthSmiteApplied", 376430) -- (actually Enveloping Earth)
-	self:Log("SPELL_AURA_APPLIED", "StormSmiteApplied", 393431)
+
 	-- Fire
 	self:Log("SPELL_CAST_SUCCESS", "MagmaBurst", 382563)
 	self:Log("SPELL_CAST_START", "MoltenRupture", 373329)
-	self:Log("SPELL_CAST_START", "SearingCarnage", 374022, 392192) -- (also Mythic add cast)
+	self:Log("SPELL_CAST_START", "SearingCarnage", 374022, 392192) -- Other, Mythic
 	self:Log("SPELL_AURA_APPLIED", "SearingCarnageApplied", 374023)
 	self:Log("SPELL_AURA_REMOVED", "SearingCarnageRemoved", 374023)
-	self:Log("SPELL_CAST_START", "RagingInferno", 394416) -- Mythic add cast
 	-- Frost
 	self:Log("SPELL_CAST_START", "BitingChill", 373678)
 	self:Log("SPELL_CAST_START", "FrigidTorrent", 391019) -- (also Mythic add cast)
 	self:Log("SPELL_CAST_START", "AbsoluteZero", 372456)
 	self:Log("SPELL_AURA_APPLIED", "AbsoluteZeroApplied", 372458)
 	self:Log("SPELL_AURA_REMOVED", "AbsoluteZeroRemoved", 372458)
-	self:Log("SPELL_CAST_START", "IcyTempest", 391425) -- Mythic add cast
 	-- Earthen
 	self:Log("SPELL_CAST_START", "EnvelopingEarth", 391055) -- (also Mythic add cast)
 	self:Log("SPELL_AURA_APPLIED", "EnvelopingEarthApplied", 391056)
@@ -304,12 +305,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "ShockingBurstApplied", 390920)
 	self:Log("SPELL_AURA_REMOVED", "ShockingBurstRemoved", 390920)
 	self:Log("SPELL_CAST_START", "ThunderStrike", 374215)
-	self:Log("SPELL_CAST_START", "OrbLightning", 394719) -- Mythic add cast
-	self:Log("SPELL_SUMMON", "OrbLightningSummon", 394726)
 
 	-- Stage 2
 	self:Log("SPELL_CAST_SUCCESS", "IntermissionAddSpawn", 375828, 375825, 375824, 375792) -- Fire, Frost, Earth, Storm
-	self:Death("IntermissionAddDeath", 190588, 190686, 190688, 190690) -- Blazing Fiend, Frozen Destroyer, Tectonic Crusher, Thundering Ravager
+	self:Death("IntermissionAddDeath", 190688, 190686, 190588, 190690) -- Blazing Fiend, Frozen Destroyer, Tectonic Crusher, Thundering Ravager
+
 	-- Tectonic Crusher
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BreakingGravelApplied", 374321)
 	self:Log("SPELL_CAST_SUCCESS", "GroundShatter", 374427)
@@ -328,9 +328,35 @@ function mod:OnBossEnable()
 
 	-- Stage 3
 	self:Log("SPELL_AURA_APPLIED", "PrimalAttunement", 396241)
+
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "ElementalRage", 400473)
+	self:Log("SPELL_CAST_START", "MythicAddSpawning", 393314, 393295, 392098, 393459) -- Flamewrought Eradicator, Icewrought Dominator, Ironwrought Smasher, Stormwrought Despoiler
+	self:Log("SPELL_CAST_SUCCESS", "MythicAddSpawn", 393314, 393295, 392098, 393459) -- Flamewrought Eradicator, Icewrought Dominator, Ironwrought Smasher, Stormwrought Despoiler
+	self:Death("MythicAddDeaths", 198311, 198308, 197595, 198311) -- Flamewrought Eradicator, Icewrought Dominator, Ironwrought Smasher, Stormwrought Despoiler
+	self:Log("SPELL_CAST_START", "SmiteCast", 393309, 393296, 391268, 393429) -- Flame, Frost, Earth, Storm
+	self:Log("SPELL_AURA_APPLIED", "FrostSmiteApplied", 393297)
+	self:Log("SPELL_AURA_APPLIED", "EarthSmiteApplied", 376430) -- (actually Enveloping Earth)
+	self:Log("SPELL_AURA_APPLIED", "StormSmiteApplied", 393431)
+	-- Flamewrought Eradicator
+	self:Log("SPELL_CAST_START", "RagingInferno", 394416)
+	-- Icewrought Dominator
+	self:Log("SPELL_CAST_START", "IcyTempest", 391425)
+	--self:Log("SPELL_AURA_APPLIED", "FrozenSolid", 372517) -- XXX Player warnings?
+	--self:Log("SPELL_CAST_START", "FrigidTorrent", 391019) -- Same SpellId as the boss
+	-- Ironwrought Smasher
+	--self:Log("SPELL_CAST_START", "EruptingBedrock", 197595) -- Same SpellId as the boss
+	-- Stormwrought Despoiler
+	self:Log("SPELL_CAST_START", "OrbLightning", 394719)
+	self:Log("SPELL_SUMMON", "OrbLightningSummon", 394726)
 end
 
 function mod:OnEngage()
+	-- Cooldowns of the spells to re-create bars
+	avoidCD = 46
+	damageCD = 20.7
+	ultimateCD = 46
+
 	self:SetStage(1)
 	currentAltar = "?"
 	barrierRemovedCount = 0
@@ -340,10 +366,6 @@ function mod:OnEngage()
 	addCount = {}
 	strikeCount = 1
 
-	avoidCD = 46
-	damageCD = 20.7
-	ultimateCD = 46
-
 	local avoidPullCD = self:Easy() and 14.5 or 23
 	local damagePullCD = 14.5
 	local ultimatePullCD = 46
@@ -352,11 +374,10 @@ function mod:OnEngage()
 	nextDamageSpell = damagePullCD + GetTime()
 	nextUltimateSpell = ultimatePullCD + GetTime()
 
+	self:Bar(372158, 10.2) -- Sundering Strike
 	self:Bar("avoid", avoidPullCD, CL.count:format(L.avoid_bartext:format(currentAltar), avoidCount), L.avoid_icon)
 	self:Bar("damage", damagePullCD, CL.count:format(L.damage_bartext:format(currentAltar), damageCount), L.damage_icon)
 	self:Bar("ultimate", ultimatePullCD, CL.count:format(L.ultimate_bartext:format(currentAltar), ultimateCount), L.ultimate_icon)
-
-	self:Bar(372158, 10.2) -- Sundering Strike
 	self:Bar("stages", 125, CL.stage:format(2), 374779) -- Primal Barrier
 
 	if self:Mythic() then
@@ -373,9 +394,10 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		if not self:Easy() then
 			self:StopBar(CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount))
 			damageCount = damageCount + 1
-			damageCD = damageCount % 2 == 0 and 25.6 or 20.7
+			damageCD = damageCount % 2 == 0 and 25.5 or 19.5
 			nextDamageSpell = damageCD + GetTime()
-			self:CDBar(alterSpellIdMap[currentAltar]["damage"], damageCD, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount)) -- SetOption:382563,373678,391056,373487:::
+			local icon = alterSpellIdMap[currentAltar]["damage"] == 382563 and L.magma_burst_icon or alterSpellIdMap[currentAltar]["damage"] -- 2 Spell Icons are the same, adjust them here
+			self:CDBar(alterSpellIdMap[currentAltar]["damage"], damageCD, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount), icon) -- SetOption:382563,373678,391056,373487:::
 		end
 	elseif spellId == 391100 then -- Avoid Selection
 		if not self:Easy() then
@@ -432,71 +454,17 @@ do
 		local ultimateRemainingCD = nextUltimateSpell - t
 
 		if not self:Easy() or currentAltar == "Earth" or currentAltar == "Storm" then
-			self:Bar(alterSpellIdMap[currentAltar]["avoid"], {avoidRemainingCD, avoidCD}, CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount), alterSpellIdMap[currentAltar]["avoid"]) -- SetOption:373329,391019,395893,390920:::
+			self:Bar(alterSpellIdMap[currentAltar]["avoid"], {avoidRemainingCD, avoidCD}, CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount)) -- SetOption:373329,391019,395893,390920:::
 		end
 		if not self:Easy() or currentAltar == "Fire" or currentAltar == "Frost" then
-			self:Bar(alterSpellIdMap[currentAltar]["damage"], {damageRemainingCD, damageCD}, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount), alterSpellIdMap[currentAltar]["damage"]) -- SetOption:382563,373678,391056,373487:::
+			local icon = alterSpellIdMap[currentAltar]["damage"] == 382563 and L.magma_burst_icon or alterSpellIdMap[currentAltar]["damage"] -- 2 Spell Icons are the same
+			self:Bar(alterSpellIdMap[currentAltar]["damage"], {damageRemainingCD, damageCD}, CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount), icon) -- SetOption:382563,373678,391056,373487:::
 		end
-		self:Bar(alterSpellIdMap[currentAltar]["ultimate"], {ultimateRemainingCD, ultimateCD}, CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount), alterSpellIdMap[currentAltar]["ultimate"]) -- SetOption:374023,372458,374691,374215:::
+		self:Bar(alterSpellIdMap[currentAltar]["ultimate"], {ultimateRemainingCD, ultimateCD}, CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount)) -- SetOption:374023,372458,374691,374215:::
 	end
 end
 
-function mod:MythicAddSpawn(args)
-	self:Bar(400473, 91, L.enrage_other:format(L[currentAltar])) -- Elemental Rage
-
-	local tankSpellId = alterSpellIdMap[currentAltar]["tank"] -- Smite
-	self:Bar(tankSpellId, 10.8) -- SetOption:393309,393296,391268,393429:::
-
-	local addSpellId = alterSpellIdMap[currentAltar]["add"]
-	addCount[addSpellId] = 1
-	self:CDBar(addSpellId, currentAltar == "Storm" and 15.7 or 25.5, CL.count:format(L.add_bartext:format(alterSpellNameMap[currentAltar]["add"]), 1)) -- SetOption:394416,391019,395893,394719:::
-end
-
-function mod:MythicAddDeaths(args)
-	if args.mobId == 198311 then -- Flamewrought Eradicator
-		self:StopBar(393309) -- Flame Smite
-		self:StopBar(CL.count:format(L.add_bartext:format(L.raging_inferno), addCount[394416] or 1)) -- Raging Inferno
-		self:StopBar(L.enrage_other:format(L["Fire"]))
-	elseif args.mobId == 198308 then -- Icewrought Dominator
-		self:StopBar(393296) -- Frost Smite
-		self:StopBar(CL.count:format(L.add_bartext:format(L.frigid_torrent), addCount[391019] or 1)) -- Frigid Torrent
-		self:StopBar(L.enrage_other:format(L["Frost"]))
-	elseif args.mobId == 197595 then -- Ironwrought Smasher
-		self:StopBar(391268) -- Earth Smite
-		self:StopBar(CL.count:format(L.add_bartext:format(L.erupting_bedrock), addCount[395893] or 1)) -- Erupting Bedrock
-		self:StopBar(L.enrage_other:format(L["Earth"]))
-	elseif args.mobId == 198326 then -- Stormwrought Despoiler
-		self:StopBar(393429) -- Storm Smite
-		self:StopBar(CL.count:format(L.add_bartext:format(L.orb_lightning), addCount[394719] or 1)) -- Orb Lightning
-		self:StopBar(L.enrage_other:format(L["Storm"]))
-	end
-end
-
-do
-	local prev = 0
-	function mod:ElementalRage(args)
-		if args.time-prev < 3 then return end
-		prev = args.time
-
-		-- atlar adds
-		local altar = nil
-		local mobId = self:MobId(args.destGUID)
-		if mobId == 198311 then
-			altar = "Fire"
-		elseif mobId == 198308 then
-			altar = "Frost"
-		elseif mobId == 197595 then
-			altar = "Earth"
-		elseif mobId == 198326 then
-			altar = "Storm"
-		end
-
-		self:Message(args.spellId, "red", altar and L.enrage_other:format(L[altar]) or nil)
-		self:PlaySound(args.spellId, "alarm")
-	end
-end
-
-function mod:PrimalBarrierApplied(args)
+function mod:PrimalBarrierApplied()
 	self:StopBar(CL.count:format(L.avoid_bartext:format(alterSpellNameMap[currentAltar]["avoid"]), avoidCount))
 	self:StopBar(CL.count:format(L.damage_bartext:format(alterSpellNameMap[currentAltar]["damage"]), damageCount))
 	self:StopBar(CL.count:format(L.ultimate_bartext:format(alterSpellNameMap[currentAltar]["ultimate"]), ultimateCount))
@@ -506,14 +474,17 @@ function mod:PrimalBarrierApplied(args)
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long") -- phase
+	if self:Mythic() then -- Adds enrage in intermission
+		self:Bar(400473, 92.7) -- Elemental Rage
+	end
 end
 
-function mod:PrimalBarrierRemoved(args)
+function mod:PrimalBarrierRemoved()
 	self:StopBar(400473) -- Elemental Rage
-
 	barrierRemovedCount = barrierRemovedCount + 1
-	self:SetStage(1)
-	self:Message("stages", "cyan", CL.stage:format(1), false)
+	local stage = barrierRemovedCount > 1 and 3 or 1 -- 1,2,1,2,3
+	self:SetStage(stage)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
 	self:PlaySound("stages", "long") -- phase
 
 	currentAltar = "?"
@@ -538,7 +509,7 @@ function mod:PrimalBarrierRemoved(args)
 	self:Bar(372158, 10.2) -- Sundering Strike
 	if barrierRemovedCount < 2 then
 		self:Bar("stages", 125, CL.stage:format(2), 374779) -- Primal Barrier
-	else
+	else -- Final stage
 		local timer = self:Easy() and 96 or 94
 		self:Bar(396241, timer, L.primal_attunement) -- Primal Attunement (Soft Enrage)
 		self:ScheduleTimer("Message", timer-30, 396241, "yellow", CL.custom_sec:format(L.primal_attunement, 30))
@@ -561,27 +532,6 @@ function mod:SunderingStrikeApplied(args)
 		self:PlaySound(args.spellId, "warning") -- tauntswap
 	elseif self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm") -- On you
-	end
-end
-
-function mod:SmiteCast(args)
-	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
-	self:PlaySound(args.spellId, "alert") -- frontal
-	self:Bar(args.spellId, 30.5)
-end
-
-function mod:FrostSmiteApplied(args)
-	self:TargetMessage(393296, "purple", args.destName)
-end
-
-function mod:EarthSmiteApplied(args)
-	self:TargetMessage(391268, "purple", args.destName)
-end
-
-function mod:StormSmiteApplied(args)
-	self:TargetMessage(393429, "purple", args.destName)
-	if self:Me(args.destGUID) then
-		self:Say(393429, CL.bomb)
 	end
 end
 
@@ -632,16 +582,6 @@ function mod:SearingCarnageRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
 	end
-end
-
-function mod:RagingInferno(args)
-	-- (Mythic altar add)
-	local count = addCount[args.spellId] or 1
-	self:StopBar(CL.count:format(L.add_bartext:format(L.raging_inferno), count))
-	self:Message(args.spellId, "cyan", CL.count:format(L.add_bartext:format(L.raging_inferno), count))
-	count = count + 1
-	self:CDBar(args.spellId, 30, CL.count:format(L.add_bartext:format(L.raging_inferno), count))
-	addCount[args.spellId] = count
 end
 
 -- Frost Altar
@@ -895,34 +835,6 @@ function mod:ThunderStrike(args)
 	self:PlaySound(args.spellId, "alert")
 end
 
-function mod:OrbLightning(args)
-	-- (Mythic altar add)
-	local count = addCount[args.spellId] or 1
-	self:StopBar(CL.count:format(L.add_bartext:format(L.orb_lightning), count))
-	self:Message(args.spellId, "cyan", CL.casting:format(CL.count:format(L.add_bartext:format(L.orb_lightning), count)))
-	-- self:CastBar(args.spellId, 5.6, L.orb_lightning) -- orb spawn <Cast: Soak Orbs>
-	count = count + 1
-	self:Bar(args.spellId, 48.5, CL.count:format(L.add_bartext:format(L.orb_lightning), count))
-	addCount[args.spellId] = count
-end
-
-do
-	local prev = 0
-	function mod:OrbLightningSummon(args)
-		if args.time-prev > 3 then
-			prev = args.time
-			local count = addCount[394719]
-			if not count then -- awkward
-				count = 2
-				-- self:CDBar(394719, 42.9, CL.count:format(L.add_bartext:format(L.orb_lightning), count)) -- still alive?
-				addCount[394719] = count
-			end
-			self:Message(394719, "purple", CL.count:format(L.orb_lightning, count - 1))
-			self:PlaySound(394719, "alarm")
-		end
-	end
-end
-
 -- Stage 2
 -- Tectonic Crusher
 function mod:BreakingGravelApplied(args)
@@ -1023,14 +935,12 @@ function mod:IntermissionAddSpawn(args)
 		if self:Mythic() then
 			addCount[374023] = 1
 			self:Bar(374023, 20, CL.count:format(L.searing_carnage, 1)) -- Searing Carnage
-			self:Bar(400473, 91) -- Elemental Rage
 		end
 	elseif args.spellId == 375825 then -- Frozen Destroyer
 		self:Bar(374624, self:Mythic() and 33 or 30) -- Freezing Tempest
 		if self:Mythic() then
 			ultimateCount = 1
 			self:Bar(372458, 20, CL.count:format(L.absolute_zero, ultimateCount)) -- Absolute Zero
-			self:Bar(400473, 91) -- Elemental Rage
 		end
 	elseif args.spellId == 375824 then -- Tectonic Crusher
 		self:Bar(374427, 5.5, CL.bombs) -- Ground Shatter
@@ -1038,14 +948,12 @@ function mod:IntermissionAddSpawn(args)
 		if self:Mythic() then
 			addCount[374691] = 1
 			self:Bar(374691, 45, CL.count:format(CL.adds, 1)) -- Seismic Rupture
-			self:Bar(400473, 91) -- Elemental Rage
 		end
 	elseif args.spellId == 375792 then -- Thundering Ravager
 		self:Bar(391696, 7.3) -- Lethal Current
 		if self:Mythic() then
 			addCount[374215] = 1
 			self:Bar(374215, 37.7, CL.count:format(L.thundering_strike, 1)) -- Thunder Strike
-			self:Bar(400473, 91) -- Elemental Rage
 		end
 	end
 end
@@ -1071,4 +979,120 @@ function mod:PrimalAttunement(args) -- Soft Enrage
 	self:Message(args.spellId, "red", L.primal_attunement)
 	self:PlaySound(args.spellId, "warning") -- danger
 	self:StopBar(L.primal_attunement)
+end
+
+-- Mythic
+do
+	local prev = 0
+	function mod:ElementalRage(args)
+		if args.time-prev < 3 then return end
+		prev = args.time
+
+		-- atlar adds
+		local altar = nil
+		local mobId = self:MobId(args.destGUID)
+		if mobId == 198311 then
+			altar = "Fire"
+		elseif mobId == 198308 then
+			altar = "Frost"
+		elseif mobId == 197595 then
+			altar = "Earth"
+		elseif mobId == 198326 then
+			altar = "Storm"
+		end
+
+		self:Message(args.spellId, "red", altar and L.enrage_other:format(L[altar]) or nil)
+		self:PlaySound(args.spellId, "alarm")
+	end
+end
+
+function mod:MythicAddSpawning(args)
+	self:Message(args.spellId, "cyan", CL.spawning:format(args.spellName))
+	self:PlaySound(args.spellId, "info")
+end
+
+function mod:MythicAddSpawn(args)
+	self:Bar(400473, 91, L.enrage_other:format(L[currentAltar])) -- Elemental Rage
+
+	local tankSpellId = alterSpellIdMap[currentAltar]["tank"] -- Smite
+	self:Bar(tankSpellId, 10.8) -- SetOption:393309,393296,391268,393429:::
+
+	local addSpellId = alterSpellIdMap[currentAltar]["add"]
+	addCount[addSpellId] = 1
+	self:CDBar(addSpellId, currentAltar == "Storm" and 15.7 or 25.5, CL.count:format(L.add_bartext:format(alterSpellNameMap[currentAltar]["add"]), 1)) -- SetOption:394416,391019,395893,394719:::
+end
+
+function mod:MythicAddDeaths(args)
+	if args.mobId == 198311 then -- Flamewrought Eradicator
+		self:StopBar(393309) -- Flame Smite
+		self:StopBar(CL.count:format(L.add_bartext:format(L.raging_inferno), addCount[394416] or 1)) -- Raging Inferno
+		self:StopBar(L.enrage_other:format(L["Fire"]))
+	elseif args.mobId == 198308 then -- Icewrought Dominator
+		self:StopBar(393296) -- Frost Smite
+		self:StopBar(CL.count:format(L.add_bartext:format(L.frigid_torrent), addCount[391019] or 1)) -- Frigid Torrent
+		self:StopBar(L.enrage_other:format(L["Frost"]))
+	elseif args.mobId == 197595 then -- Ironwrought Smasher
+		self:StopBar(391268) -- Earth Smite
+		self:StopBar(CL.count:format(L.add_bartext:format(L.erupting_bedrock), addCount[395893] or 1)) -- Erupting Bedrock
+		self:StopBar(L.enrage_other:format(L["Earth"]))
+	elseif args.mobId == 198326 then -- Stormwrought Despoiler
+		self:StopBar(393429) -- Storm Smite
+		self:StopBar(CL.count:format(L.add_bartext:format(L.orb_lightning), addCount[394719] or 1)) -- Orb Lightning
+		self:StopBar(L.enrage_other:format(L["Storm"]))
+	end
+end
+
+function mod:SmiteCast(args)
+	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
+	self:PlaySound(args.spellId, "alert") -- frontal
+	self:Bar(args.spellId, 30.5)
+end
+
+function mod:FrostSmiteApplied(args)
+	self:TargetMessage(393296, "purple", args.destName)
+end
+
+function mod:EarthSmiteApplied(args)
+	self:TargetMessage(391268, "purple", args.destName)
+end
+
+function mod:StormSmiteApplied(args)
+	self:TargetMessage(393429, "purple", args.destName)
+	if self:Me(args.destGUID) then
+		self:Say(393429, CL.bomb)
+	end
+end
+
+function mod:RagingInferno(args)
+	local count = addCount[args.spellId] or 1
+	self:StopBar(CL.count:format(L.add_bartext:format(L.raging_inferno), count))
+	self:Message(args.spellId, "cyan", CL.count:format(L.add_bartext:format(L.raging_inferno), count))
+	count = count + 1
+	self:CDBar(args.spellId, 30, CL.count:format(L.add_bartext:format(L.raging_inferno), count))
+	addCount[args.spellId] = count
+end
+
+function mod:OrbLightning(args)
+	local count = addCount[args.spellId] or 1
+	self:StopBar(CL.count:format(L.add_bartext:format(L.orb_lightning), count))
+	self:Message(args.spellId, "cyan", CL.casting:format(CL.count:format(L.add_bartext:format(L.orb_lightning), count)))
+	count = count + 1
+	self:Bar(args.spellId, 48.5, CL.count:format(L.add_bartext:format(L.orb_lightning), count))
+	addCount[args.spellId] = count
+end
+
+do
+	local prev = 0
+	function mod:OrbLightningSummon(args)
+		if args.time-prev > 3 then
+			prev = args.time
+			local count = addCount[394719]
+			if not count then -- awkward
+				count = 2
+				addCount[394719] = count
+			end
+			self:Message(394719, "purple", CL.count:format(L.orb_lightning, count - 1))
+			self:PlaySound(394719, "alarm")
+		end
+	end
 end
