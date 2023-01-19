@@ -20,6 +20,9 @@ if L then
 	L.shattering_impact = "猛擊"
 	L.concussive_slam = "射線"
 	L.infused_fallout = "落塵"
+
+	--L.custom_on_repeating_fallout = "Repeating Infused Fallout"
+	--L.custom_on_repeating_fallout_desc = "Repeating Infused Fallout say messages with icon {rt7} to find a partner."
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "zhTW")

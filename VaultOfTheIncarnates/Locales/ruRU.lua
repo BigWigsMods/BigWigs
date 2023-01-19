@@ -20,6 +20,9 @@ if L then
 	L.shattering_impact = "Войда"
 	L.concussive_slam = "Танк фронтал"
 	L.infused_fallout = "Пыль"
+
+	--L.custom_on_repeating_fallout = "Repeating Infused Fallout"
+	--L.custom_on_repeating_fallout_desc = "Repeating Infused Fallout say messages with icon {rt7} to find a partner."
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "ruRU")
