@@ -95,7 +95,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "CollapsingArmyRemoved", 370307)
 
 	-- Mythic
-	--self:Log("SPELL_CAST_SUCCESS", "GreaterFlamerift", 396094)
 	self:Log("SPELL_AURA_APPLIED", "GreaterFlameriftApplied", 396094)
 	self:Log("SPELL_AURA_REMOVED", "GreaterFlameriftRemoved", 396094)
 	self:Log("SPELL_CAST_START", "LeapingFlames", 394917)
@@ -127,7 +126,7 @@ function mod:Flamerift(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.adds, flameRiftCount))
 	flameRiftCount = flameRiftCount + 1
 	if flameRiftCount < 4 then -- 3 per rotation
-		self:Bar(args.spellId, flameRiftCount % 3 == 2 and 29.0 or 31.0, CL.count:format(CL.adds, flameRiftCount))
+		self:Bar(args.spellId, flameRiftCount == 2 and 29.0 or 31.0, CL.count:format(CL.adds, flameRiftCount))
 	end
 end
 
@@ -177,7 +176,6 @@ function mod:MoltenCleave(args)
 	self:StopBar(CL.count:format(L.molten_cleave, moltenCleaveCount))
 	self:Message(args.spellId, "orange", CL.casting:format(CL.count:format(L.molten_cleave, moltenCleaveCount)))
 	self:PlaySound(args.spellId, "alarm")
-	-- self:CastBar(args.spellId, 3.5, CL.count:format(L.molten_cleave, moltenCleaveCount))
 	moltenCleaveCount = moltenCleaveCount + 1
 	if moltenCleaveCount < 3 then -- 2 per rotation
 		self:Bar(args.spellId, 30, CL.count:format(L.molten_cleave, moltenCleaveCount))
@@ -197,7 +195,7 @@ function mod:IncineratingRoar(args)
 	self:PlaySound(args.spellId, "alert")
 	incineratingRoarCount = incineratingRoarCount + 1
 	if incineratingRoarCount < 5 then -- 4 per rotation
-		self:CDBar(args.spellId, incineratingRoarCount % 4 == 2 and 24 or 22, CL.count:format(L.incinerating_roar, incineratingRoarCount))
+		self:CDBar(args.spellId, incineratingRoarCount == 2 and 24 or 22, CL.count:format(L.incinerating_roar, incineratingRoarCount))
 	end
 end
 
@@ -207,7 +205,7 @@ function mod:MoltenSpikes(args)
 	self:PlaySound(args.spellId, "alert")
 	moltenSpikesCount = moltenSpikesCount + 1
 	if moltenSpikesCount < 4 then -- 3 per rotation
-		self:CDBar(args.spellId, moltenCleaveCount % 3 == 0 and 21.5 or 22.5, CL.count:format(L.molten_spikes, moltenSpikesCount))
+		self:CDBar(args.spellId, moltenSpikesCount == 2 and 22.5 or 21.5, CL.count:format(L.molten_spikes, moltenSpikesCount))
 	end
 end
 
@@ -230,7 +228,6 @@ function mod:CollapsingArmyRemoved(args)
 	self:StopBar(CL.cast:format(L.collapsing_army))
 	self:Message(args.spellId, "cyan", CL.over:format(CL.count:format(L.collapsing_army, collapsingArmyCount)))
 	collapsingArmyCount = collapsingArmyCount + 1
-	self:CDBar(args.spellId, 92.5, CL.count:format(L.collapsing_army, collapsingArmyCount))
 
 	flameRiftCount = 1
 	moltenCleaveCount = 1
@@ -241,7 +238,7 @@ function mod:CollapsingArmyRemoved(args)
 	self:CDBar(390715, 14, CL.count:format(CL.adds, flameRiftCount)) -- Flamerift
 	self:CDBar(396022, 22, CL.count:format(L.molten_spikes, moltenSpikesCount)) -- Molten Spikes
 	self:CDBar(370615, 38, CL.count:format(L.molten_cleave, moltenCleaveCount)) -- Molten Cleave
-	self:CDBar(370307, 92.5, CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
+	self:CDBar(args.spellId, 92.5, CL.count:format(L.collapsing_army, collapsingArmyCount)) -- Collapsing Army
 end
 
 -- Mythic
