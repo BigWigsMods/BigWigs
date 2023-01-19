@@ -51,6 +51,8 @@ if L then
 	L.webs = "Spinnweben"
 	L.web = "Spinnwebe"
 	L.gossamer_burst = "Heranziehen"
+	-- L.gossamer_burst_castbar = "Gossamer Burst Cast Bar / Countdown"
+	-- L.gossamer_burst_castbar_desc = "A Cast Bar for Gossamer Burst with Countdown enabled by default."
 	L.repelling_burst = "Zurückstoßen"
 end
 

@@ -51,6 +51,8 @@ if L then
 	L.webs = "蛛网"
 	L.web = "蛛网"
 	L.gossamer_burst = "拉近"
+	-- L.gossamer_burst_castbar = "Gossamer Burst Cast Bar / Countdown"
+	-- L.gossamer_burst_castbar_desc = "A Cast Bar for Gossamer Burst with Countdown enabled by default."
 	L.repelling_burst = "推离"
 end
 

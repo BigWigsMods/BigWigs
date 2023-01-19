@@ -51,6 +51,8 @@ if L then
 	 L.webs = "거미줄"
 	 L.web = "거미줄"
 	 L.gossamer_burst = "낙사 조심"
+	 -- L.gossamer_burst_castbar = "Gossamer Burst Cast Bar / Countdown"
+	 -- L.gossamer_burst_castbar_desc = "A Cast Bar for Gossamer Burst with Countdown enabled by default."
 	 L.repelling_burst = "넉백"
 end
 

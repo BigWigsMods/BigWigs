@@ -22,13 +22,31 @@ local burstCount = 1
 local webCount = 1
 local stageCount = 0
 
-local timers = {
+local timersNormal = {
 	-- Stage 1
-	[371976] = {15.5, 39, 37, 28.5, 38, 22, 38.5, 38, 38}, -- Chilling Blast
-	[372082] = {17.9, 26.4, 26.4, 27.8, 24.0, 26.4, 27.5, 26.2, 20.5, 28.1, 31.9}, -- Enveloping Webs
-	[373405] = {33, 37.5, 67, 38, 60, 38, 34}, -- Gossamer Burst
-	[372238] = {0, 25.5, 25.5, 38, 25.5, 25.5, 27, 27, 19, 27, 26, 26, 26, 24} -- Call Spiderlings
+	[371976] = {16.1, 36.5, 37.7, 30.4, 36.5, 36.5, 26.6, 40.1}, -- Chilling Blast
+	[372082] = {18.5, 28, 29.1, 26.7, 20.6, 26.7, 30.3, 42.5, 27.9, 32.8}, -- Enveloping Webs
+	[373405] = {33.2, 36.5, 68.1, 36.4, 64.8, 38.4}, -- Gossamer Burst
+	[372238] = {2.7, 20.6, 20.7, 21.9, 20.6, 31.6, 26.7, 21.8, 20.7, 27.9, 20.6, 20.7, 20.6} -- Call Spiderlings
 }
+
+local timersHeroic = {
+	-- Stage 1
+	[371976] = {15.5, 37.6, 37.4, 29.1, 37.2, 37.5, 21.9, 36.5, 37.3}, -- Chilling Blast
+	[372082] = {18.1, 26.7, 30.5, 44.8, 26.7, 30.4, 38.9, 26.4, 30.4}, -- Enveloping Webs
+	[373405] = {32.8, 37.7, 65.5, 36.5, 59.6, 37.6}, -- Gossamer Burst
+	[372238] = {0, 25.5, 25.5, 26.7, 38.8, 25.5, 25.5, 25.5, 20.7, 26.7, 26.7}, -- Call Spiderlings
+}
+
+local timersMythic = {
+	-- Stage 1
+	[371976] = {15.7, 36.6, 37.6, 30.4, 40.1, 37.6, 22.0, 39.0}, -- Chilling Blast
+	[372082] = {19.1, 26.8, 31.6, 46.2, 26.7, 27.9, 45.0, 26.8, 34.1}, -- Enveloping Webs
+	[373405] = {32.8, 37.6, 69.3, 38.8, 60.8, 37.8}, -- Gossamer Burst
+	[372238] = {0, 31.7, 30.3, 30.4, 23.2, 30.3, 30.4, 37.7, 31.7, 30.4}, -- Call Spiderlings
+}
+
+local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -44,6 +62,9 @@ if L then
 	L.webs = "Webs"
 	L.web = "Web"
 	L.gossamer_burst = "Grip"
+	L.gossamer_burst_castbar = "Gossamer Burst Cast Bar / Countdown"
+	L.gossamer_burst_castbar_icon = 373405 -- Gossamer Burst
+	L.gossamer_burst_castbar_desc = "A Cast Bar for Gossamer Burst with Countdown enabled by default."
 	L.repelling_burst = "Pushback"
 end
 
@@ -67,6 +88,7 @@ function mod:GetOptions()
 		{372082, "SAY", "SAY_COUNTDOWN"}, -- Enveloping Webs
 		envelopingWebsMarker,
 		373405, -- Gossamer Burst
+		{"gossamer_burst_castbar", "COUNTDOWN"},
 		{385083, "TANK"}, -- Web Blast
 		-24899, -- Frostbreath Arachnid
 		374112, -- Freezing Breath
@@ -127,6 +149,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 	self:SetStage(1)
 	stageCount = 0
 	ascendCount = 1
@@ -136,7 +159,7 @@ function mod:OnEngage()
 	burstCount = 1
 	webCount = 1
 
-	--self:CDBar(372238, timers[372238][callSpiderlingsCount], CL.small_adds) -- Call Spiderlings // This happens at 0~1s right now
+	--self:CDBar(372238, timers[372238][callSpiderlingsCount], CL.count:format(CL.small_adds, callSpiderlingsCount)) -- Call Spiderlings // This happens at 0~1s right now
 	self:Bar(371976, timers[371976][chillingBlastCount], CL.count:format(L.chilling_blast, chillingBlastCount)) -- Chilling Blast
 	self:Bar(372082, timers[372082][webCount], CL.count:format(L.webs, webCount)) -- Enveloping Webs
 	self:Bar(373405, timers[373405][burstCount], CL.count:format(L.gossamer_burst, burstCount)) -- Gossamer Burst
@@ -222,7 +245,7 @@ function mod:WrappedInWebsApplied(args)
 end
 
 function mod:CallSpiderlings(args)
-	self:Message(args.spellId, "cyan", CL.small_adds)
+	self:StopBar(CL.count:format(CL.small_adds, callSpiderlingsCount))
 	callSpiderlingsCount = callSpiderlingsCount + 1
 	local cd = 0
 	if self:GetStage() == 1 then
@@ -269,7 +292,7 @@ function mod:GossamerBurst(args)
 	self:StopBar(CL.count:format(L.gossamer_burst, burstCount))
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.gossamer_burst, burstCount)))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 4, L.gossamer_burst)
+	self:Bar("gossamer_burst_castbar", 4, CL.cast:format(L.gossamer_burst), args.spellId)
 	burstCount = burstCount + 1
 	self:Bar(args.spellId, timers[args.spellId][burstCount], CL.count:format(L.gossamer_burst, burstCount))
 end
