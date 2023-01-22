@@ -1,6 +1,6 @@
 ## Interface: 11403
 ## Interface-BCC: 20504
-## Interface-Wrath: 30400
+## Interface-Wrath: 30401
 
 ## Title: BigWigs (|cffff2020WRONG VERSION|r)
 ## Author: Funkydude, Nebula, Elvador, Justwait
