@@ -17,7 +17,7 @@ public.isClassic = public.isBCC or public.isWrath
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 46
+local BIGWIGS_VERSION = 47
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -992,14 +992,14 @@ do
 	local DBMdotDisplayVersion   -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
 	local DBMdotReleaseRevision  -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	if public.isClassicEra then
-		DBMdotRevision = "20221128215248"
-		DBMdotDisplayVersion = "1.14.28"
-		DBMdotReleaseRevision = "20221128000000"
+		DBMdotRevision = "20230117072817"
+		DBMdotDisplayVersion = "1.14.29"
+		DBMdotReleaseRevision = "20230117000000"
 		public.dbmPrefix = "D4C"
 	else
-		DBMdotRevision = "20221206225337"
-		DBMdotDisplayVersion = "3.4.21"
-		DBMdotReleaseRevision = "20221206000000"
+		DBMdotRevision = "20230121034354"
+		DBMdotDisplayVersion = "3.4.27"
+		DBMdotReleaseRevision = "20230120000000"
 		public.dbmPrefix = "D4WC"
 	end
 
