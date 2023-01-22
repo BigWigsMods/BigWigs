@@ -263,8 +263,4 @@ globals = {
 	"UnitSex",
 	"UnitThreatSituation", -- Cataclysm/Bastion/Sinestra.lua
 	"Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
-
-	-- LittleWigs
-	"GetNumGossipAvailableQuests", -- TBC/OldHillsbradFoothills/Trash.lua
-	"GetNumGossipActiveQuests", -- TBC/OldHillsbradFoothills/Trash.lua
 }
