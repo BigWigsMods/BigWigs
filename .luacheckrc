@@ -125,6 +125,7 @@ globals = {
 	"C_BattleNet",
 	"C_ChatInfo",
 	"C_FriendList",
+	"C_GossipInfo",
 	"C_Map",
 	"C_NamePlate",
 	"C_Spell",

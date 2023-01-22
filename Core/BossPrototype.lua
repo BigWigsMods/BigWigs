@@ -1467,19 +1467,16 @@ function boss:Solo()
 end
 
 do
-	local GetOptions = GetGossipOptions
-	local SelectOption = SelectGossipOption
+	local GetOptions = C_GossipInfo.GetOptions
+	local SelectOption = C_GossipInfo.SelectOption
 	--- Request the gossip options of the selected NPC
 	-- @return table A table result of all text strings in the form of { result1, result2, result3 }
 	function boss:GetGossipOptions()
-		local gossipOptions = {GetOptions()}
+		local gossipOptions = GetOptions()
 		if gossipOptions[1] then
 			local gossipTbl = {}
-			for i = 1, #gossipOptions, 2 do
-				local text = gossipOptions[i]
-				if text then
-					gossipTbl[#gossipTbl+1] = text
-				end
+			for i = 1, #gossipOptions do
+				gossipTbl[#gossipTbl+1] = gossipOptions[i].name or ""
 			end
 			return gossipTbl
 		end
@@ -1488,10 +1485,40 @@ do
 	--- Select a specific NPC gossip option
 	-- @number optionNumber The number of the specific option to be selected
 	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
+	local GossipOptionSort = _G.GossipOptionSort -- XXX temp, only available on 10.0
 	function boss:SelectGossipOption(optionNumber, skipConfirmDialogBox)
-		SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+		if GossipOptionSort then -- XXX 10.0 compat
+			local gossipOptions = GetOptions()
+			if gossipOptions and gossipOptions[1] then
+				table.sort(gossipOptions, GossipOptionSort)
+				local gossipOptionID = gossipOptions[optionNumber] and gossipOptions[optionNumber].gossipOptionID
+				if gossipOptionID then
+					SelectOption(gossipOptionID, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+				end
+			end
+		else
+			SelectOption(optionNumber, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+		end
 	end
 
+	--- Request the gossip options of a specific gossip ID
+	-- @return table A table result for the specific gossip ID, or nil if not found
+	function boss:GetGossipID(id)
+		local gossipOptions = GetOptions()
+		for i = 1, #gossipOptions do
+			local gossipTable = gossipOptions[i]
+			if gossipTable.gossipOptionID == id then
+				return gossipTable
+			end
+		end
+	end
+
+	--- Select a specific NPC gossip entry by ID
+	-- @number id The ID of the specific gossip option to be selected
+	-- @bool[opt] skipConfirmDialogBox If the pop up confirmation dialog box should be skipped
+	function boss:SelectGossipID(id, skipConfirmDialogBox)
+		SelectOption(id, "", skipConfirmDialogBox) -- Don't think the text arg is something we will ever need
+	end
 end
 
 -------------------------------------------------------------------------------
