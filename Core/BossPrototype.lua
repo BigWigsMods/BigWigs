@@ -1467,8 +1467,8 @@ function boss:Solo()
 end
 
 do
-	local GetOptions = C_GossipInfo.GetOptions
-	local SelectOption = C_GossipInfo.SelectOption
+	local GetOptions = C_GossipInfo.GetOptions or _G.GetGossipOptions
+	local SelectOption = C_GossipInfo.SelectOption or _G.SelectGossipOption
 	--- Request the gossip options of the selected NPC
 	-- @return table A table result of all text strings in the form of { result1, result2, result3 }
 	function boss:GetGossipOptions()
