@@ -354,6 +354,7 @@ function mod:OnEngage()
 
 	-- Intermission: The Primalist Strike
 	lightningDevastationCount = 1
+	addDeathCount = 0
 
 	-- Stage Two: Surging Power
 	stormsurgeCount = 1
@@ -575,7 +576,7 @@ function mod:HurricaneWing(args)
 	self:StopBar(CL.count:format(L.hurricane_wing, hurricaneWingCount))
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.hurricane_wing, hurricaneWingCount)))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 6+2.5+(hurricaneWingCount/2), CL.count:format(L.hurricane_wing, hurricaneWingCount)) -- 6s cast,  (2.5s+0.5s) base, +0.5s per cast
+	self:CastBar(args.spellId, 6+2.5+(hurricaneWingCount/2), CL.count:format(L.hurricane_wing, hurricaneWingCount)) -- 6s cast, (2.5s+0.5s) base, +0.5s per cast
 	hurricaneWingCount = hurricaneWingCount + 1
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][hurricaneWingCount], CL.count:format(L.hurricane_wing, hurricaneWingCount))
 end
@@ -704,7 +705,7 @@ function mod:StormNovaSuccess(args)
 	self:Message("stages", "cyan", CL.count:format(CL.intermission, 1), args.spellId)
 	self:PlaySound("stages", "info")
 	self:SetStage(1.5)
-	self:Bar("stages", 93.5,  CL.stage:format(2), 387261)
+	self:Bar("stages", 93.5, CL.stage:format(2), 387261)
 
 	lightningDevastationCount = 1
 	flameswornFound = 0
@@ -1121,7 +1122,7 @@ do
 end
 
 function mod:StormfiendDeath()
-	collasalStormFiendKilled =  collasalStormFiendKilled + 1
+	collasalStormFiendKilled = collasalStormFiendKilled + 1
 	self:Message("stages", "green", CL.add_killed:format(collasalStormFiendKilled, collasalStormFiendKillRequired), false)
 	if collasalStormFiendKilled == collasalStormFiendKillRequired then -- End of Intermission
 		self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount))
