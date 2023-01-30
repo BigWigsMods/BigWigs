@@ -21,8 +21,8 @@ if L then
 	L.concussive_slam = "坦克直线"
 	L.infused_fallout = "爆尘"
 
-	--L.custom_on_repeating_fallout = "Repeating Infused Fallout"
-	--L.custom_on_repeating_fallout_desc = "Repeating Infused Fallout say messages with icon {rt7} to find a partner."
+	L.custom_on_repeating_fallout = "重复爆尘喊话"
+	L.custom_on_repeating_fallout_desc = "以 {rt7} 持续喊话，方便你找人消除爆尘"
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "zhCN")
@@ -50,10 +50,10 @@ if L then
 	L.freezing_breath = "大怪吐息"
 	L.webs = "蛛网"
 	L.web = "蛛网"
-	L.gossamer_burst = "拉近"
-	-- L.gossamer_burst_castbar = "Gossamer Burst Cast Bar / Countdown"
-	-- L.gossamer_burst_castbar_desc = "A Cast Bar for Gossamer Burst with Countdown enabled by default."
-	L.repelling_burst = "推离"
+	L.gossamer_burst = "拉人"
+	L.gossamer_burst_castbar = "拉人计时器"
+	L.gossamer_burst_castbar_desc = "细丝爆裂的冷却及施法计时器，预设启用。"
+	L.repelling_burst = "击退"
 end
 
 L = BigWigs:NewBossLocale("Dathea, Ascended", "zhCN")
