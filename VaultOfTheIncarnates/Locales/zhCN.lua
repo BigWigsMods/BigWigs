@@ -165,7 +165,7 @@ if L then
 	L.custom_on_repeating_stormcharged = "重复正和负"
 	L.custom_on_repeating_stormcharged_desc = "使用图标{rt1}, {rt3} 重复显示正和负的信息，来帮助你找到正确的位置。"
 
-	-- L.skipped_cast = "Skipped %s (%d)"
+	L.skipped_cast = "闪电吐息 %s (%d)"
 
 	L.custom_off_raidleader_devastation = "闪电毁灭: 全局模式"
 	L.custom_off_raidleader_devastation_desc = "在另一个台子上也显示闪电毁灭（吐息）"
