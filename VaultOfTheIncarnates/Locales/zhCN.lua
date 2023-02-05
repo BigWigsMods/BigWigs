@@ -61,7 +61,7 @@ if L then
 	L.conductive_marks = "传导印记"
 	L.conductive_mark = "传导印记"
 	L.raging_burst = "狂怒风暴"
-	L.cyclone = "拉进"
+	L.cyclone = "拉近"
 	L.crosswinds = "纷乱之风"
 end
 
