@@ -76,11 +76,11 @@ local timersEasy = {
 
 local timersHeroic = {
 	[1] = {
-		[381615] = {15.0, 35.0, 37.0, 34, 34, 37}, -- Static Charge
-		[388643] = {80.0, 55.0, 50.0}, -- Volatile Current
-		[377594] = {23.0, 39.0, 54.0, 51.0}, -- Lightning Breath
-		[377612] = {35, 35, 35, 35, 35}, -- Hurricane Wing
-		[395906] = {4.9, 25.0, 25.0, 30.0, 18.0, 27.0, 30.0, 30.0}, -- Electrified Jaws
+		[381615] = {15.0, 35.0, 37.0, 34, 34, 37, 34, 34, 37}, -- Static Charge
+		[388643] = {80.0, 55.0, 50.0, 55, 50}, -- Volatile Current
+		[377594] = {23.0, 39.0, 54.0, 51.0, 54, 51}, -- Lightning Breath
+		[377612] = {35, 35, 35, 35, 35, 35, 35, 35, 35}, -- Hurricane Wing
+		[395906] = {4.9, 25.0, 25.0, 30.0, 18.0, 27.0, 30.0, 30.0, 18, 27, 30, 30}, -- Electrified Jaws
 	},
 	[2] = {
 		[388643] = {65.5, 57}, -- Volatile Current
@@ -452,7 +452,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		self:CancelTimer(checkTimer) -- Breath Skip check
 		checkTimer = nil
 
-		self:Message(382434, "yellow", CL.soon:format(self:SpellName(382434)))
+		self:Message(382434, "yellow", CL.percent:format(65, CL.soon:format(self:SpellName(382434))))
 		self:Bar(382434, 13.4) -- Storm Nova
 	elseif spellId == 392802 then -- End of Intermission 1 (-Localized Storm Eater-)
 		self:StopBar(CL.count:format(L.lightning_devastation, lightningDevastationCount))
