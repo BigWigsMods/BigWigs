@@ -416,8 +416,10 @@ function core:Print(msg)
 	print("BigWigs: |cffffff00"..msg.."|r")
 end
 
-function core:Error(msg)
-	core:Print(msg)
+function core:Error(msg, noPrint)
+	if not noPrint then
+		core:Print(msg)
+	end
 	geterrorhandler()(msg)
 end
 

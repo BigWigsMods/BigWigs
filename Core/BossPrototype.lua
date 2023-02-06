@@ -402,7 +402,6 @@ function boss:Disable(isWipe)
 		self.sayCountdowns = nil
 		self.scheduledMessages = nil
 		self.targetEventFunc = nil
-		self.missing = nil
 		self.isWiping = nil
 		self.isEngaged = nil
 		self.bossTargetChecks = nil
@@ -411,6 +410,29 @@ function boss:Disable(isWipe)
 
 		if not isWiping then
 			self:SendMessage("BigWigs_OnBossDisable", self)
+		end
+
+		if self.missing then
+			local newBar = "New timer for %q at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
+			local newBarError = "New timer for %q at stage %d with placement %d and value %.2f."
+			local errorHeader = format("BigWigs is missing timers on %d running %s, tell the devs!", self:Difficulty(), BigWigsLoader:GetVersionString())
+			local errorStrings = {errorHeader}
+			for key, stageTbl in next, self.missing do
+				for stage = 0, 5, 0.5 do
+					if stageTbl[stage] then
+						local count = #stageTbl[stage]
+						for timeEntry = 2, count do
+							local t = stageTbl[stage][timeEntry] - stageTbl[stage][timeEntry-1]
+							local text = format(newBar, key, stage, timeEntry-1, t, self:Difficulty())
+							core:Print(text)
+							errorStrings[#errorStrings+1] = format(newBarError, key, stage, timeEntry-1, t)
+						end
+					end
+				end
+			end
+			local timersText = table.concat(errorStrings, "\n")
+			core:Error(timersText, true)
+			self.missing = nil
 		end
 	end
 end
@@ -2375,7 +2397,6 @@ do
 	local badNameplateBarStart = "Attempted to start nameplate bar %q without a valid unitGUID."
 	local badNameplateBarStop = "Attempted to stop nameplate bar %q without a valid unitGUID."
 	local badNameplateBarTimeLeft = "Attempted to get time left of nameplate bar %q without a valid unitGUID."
-	local newBar = "New timer for %q at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 
 	--- Display a bar.
 	-- @param key the option key
@@ -2386,14 +2407,16 @@ do
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
+			local stage = self:GetStage() or 0
 			if not self.missing[key] then
 				local t = GetTime()
-				self.missing[key] = {t}
+				self.missing[key] = {[stage] = {t}}
+			elseif not self.missing[key][stage] then
+				local t = GetTime()
+				self.missing[key][stage] = {t}
 			else
-				local t, c = GetTime(), #self.missing[key]
-				local new = t - self.missing[key][c]
-				core:Print(format(newBar, key, self.stage or 0, c, new, self:Difficulty()))
-				self.missing[key][c+1] = t
+				local t, c = GetTime(), #self.missing[key][stage]
+				self.missing[key][stage][c+1] = t
 			end
 			return
 		elseif lengthType ~= "number" and lengthType ~= "table" then
@@ -2401,8 +2424,6 @@ do
 			return
 		elseif length == 0 then
 			return
-		elseif self.missing and self.missing[key] then
-			self.missing[key] = nil
 		end
 		local time, maxTime
 		if lengthType == "table" then
@@ -2431,14 +2452,16 @@ do
 		local lengthType = type(length)
 		if not length then
 			if not self.missing then self.missing = {} end
+			local stage = self:GetStage() or 0
 			if not self.missing[key] then
 				local t = GetTime()
-				self.missing[key] = {t}
+				self.missing[key] = {[stage] = {t}}
+			elseif not self.missing[key][stage] then
+				local t = GetTime()
+				self.missing[key][stage] = {t}
 			else
-				local t, c = GetTime(), #self.missing[key]
-				local new = t - self.missing[key][c]
-				core:Print(format(newBar, key, self.stage or 0, c, new, self:Difficulty()))
-				self.missing[key][c+1] = t
+				local t, c = GetTime(), #self.missing[key][stage]
+				self.missing[key][stage][c+1] = t
 			end
 			return
 		elseif lengthType ~= "number" and lengthType ~= "table" then
@@ -2446,8 +2469,6 @@ do
 			return
 		elseif length == 0 then
 			return
-		elseif self.missing and self.missing[key] then
-			self.missing[key] = nil
 		end
 		local time, maxTime
 		if lengthType == "table" then
