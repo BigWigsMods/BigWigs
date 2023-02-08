@@ -415,7 +415,8 @@ function boss:Disable(isWipe)
 		if self.missing then
 			local newBar = "New timer for %q at stage %d with placement %d and value %.2f on %d running ".. BigWigsLoader:GetVersionString() ..", tell the authors."
 			local newBarError = "New timer for %q at stage %d with placement %d and value %.2f."
-			local errorHeader = format("BigWigs is missing timers on %d running %s, tell the devs!", self:Difficulty(), BigWigsLoader:GetVersionString())
+			local difficultyToText = {[14] = "N", [15] = "H", [16] = "M", [17] = "LFR"}
+			local errorHeader = format("BigWigs is missing timers on %q running %s, tell the devs!", difficultyToText[self:Difficulty()] or self:Difficulty(), BigWigsLoader:GetVersionString())
 			local errorStrings = {errorHeader}
 			for key, stageTbl in next, self.missing do
 				for stage = 0, 5, 0.5 do
@@ -430,8 +431,10 @@ function boss:Disable(isWipe)
 					end
 				end
 			end
-			local timersText = table.concat(errorStrings, "\n")
-			core:Error(timersText, true)
+			if #errorStrings > 1 then
+				local timersText = table.concat(errorStrings, "\n")
+				core:Error(timersText, true)
+			end
 			self.missing = nil
 		end
 	end
