@@ -18,7 +18,6 @@ local conductiveMarkCount = 1
 local ragingBurstCount = 1
 local cycloneCount = 1
 local crosswindsCount = 1
-local zephyrSlamCount = 1
 
 local mobCollector = {}
 local infuserMarks = {}
@@ -103,14 +102,13 @@ function mod:OnEngage()
 	ragingBurstCount = 1
 	cycloneCount = 1
 	crosswindsCount = 1
-	zephyrSlamCount = 1
 
 	mobCollector = {}
 	infuserMarks = {}
 
 	self:CDBar(391686, 4, CL.count:format(L.conductive_marks, conductiveMarkCount)) -- Conductive Mark
 	self:CDBar(388302, 7, CL.count:format(L.raging_burst, ragingBurstCount)) -- Raging Burst
-	self:CDBar(375580, self:Easy() and 9.5 or 16, CL.count:format(CL.knockback, zephyrSlamCount)) -- Zephyr Slam
+	self:CDBar(375580, self:Easy() and 9.5 or 16, CL.knockback) -- Zephyr Slam
 	self:CDBar(388410, self:Easy() and 29 or 25.5, CL.count:format(L.crosswinds, crosswindsCount)) -- Crosswinds
 	self:CDBar(376943, self:Easy() and 45 or 35, CL.count:format(L.cyclone, cycloneCount)) -- Cyclone
 	self:CDBar(387849, self:Easy() and 80 or 71, CL.count:format(CL.adds, coalescingStormCount)) -- Coalescing Storm
@@ -154,11 +152,11 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 		conductiveMarkCount = conductiveMarkCount + 1
 		local cd = 0
 		if self:Mythic() then
-			cd = conductiveMarkCount % 3 == 1 and 36 or 25.5
+			cd = conductiveMarkCount % 3 == 1 and 34 or 25.5
 		elseif self:Heroic() then
-			cd = (conductiveMarkCount > 3 and conductiveMarkCount % 2 == 0) and 50.2 or 25.7
+			cd = (conductiveMarkCount > 3 and conductiveMarkCount % 2 == 0) and 52 or 25.5
 		else
-			cd = conductiveMarkCount % 3 == 1 and 23.1 or 31.7
+			cd = conductiveMarkCount % 3 == 1 and 23.1 or 31.5
 		end
 		self:CDBar(391686, cd, CL.count:format(L.conductive_marks, conductiveMarkCount))
 	end
@@ -169,14 +167,13 @@ function mod:CoalescingStorm(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.adds, coalescingStormCount))
 	self:PlaySound(args.spellId, "long")
 	coalescingStormCount = coalescingStormCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 87 or self:Easy() and 86 or 76.5, CL.count:format(CL.adds, coalescingStormCount))
+	self:CDBar(args.spellId, self:Heroic() and 75 or 87.5, CL.count:format(CL.adds, coalescingStormCount))
 
-	-- self:CDBar(391686, self:Easy() and 9.5 or 35.5, CL.count:format(L.conductive_marks, conductiveMarkCount)) -- Marks
+	self:CDBar(391686, self:Mythic() and 19.4 or self:Easy() and 9.7 or 35.5, CL.count:format(L.conductive_marks, conductiveMarkCount)) -- Marks
 	self:CDBar(375580, self:Mythic() and 30.5 or 20.7, CL.knockback) -- Zephyr Slam
 end
 
 function mod:Blowback(args)
-	-- Range check XXX
 	self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "warning")
 end
@@ -225,7 +222,7 @@ function mod:RagingBurst(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.raging_burst, ragingBurstCount))
 	self:PlaySound(args.spellId, "alert")
 	ragingBurstCount = ragingBurstCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 87 or self:Easy() and 86 or 76.5, CL.count:format(L.raging_burst, ragingBurstCount))
+	self:CDBar(args.spellId, self:Heroic() and 75 or 86.5, CL.count:format(L.raging_burst, ragingBurstCount))
 end
 
 function mod:ConductiveMarkApplied(args)
@@ -246,7 +243,7 @@ function mod:Cyclone(args)
 	self:Message(args.spellId, "orange", CL.count:format(L.cyclone, cycloneCount))
 	self:PlaySound(args.spellId, "alarm")
 	cycloneCount = cycloneCount + 1
-	self:CDBar(args.spellId, self:Mythic() and 87 or self:Easy() and 86 or 77, CL.count:format(L.cyclone, cycloneCount))
+	self:CDBar(args.spellId, self:Heroic() and 75 or 86.5, CL.count:format(L.cyclone, cycloneCount))
 
 	self:CDBar(375580, 15.8, CL.knockback) -- Zephyr Slam
 end
@@ -265,17 +262,13 @@ function mod:Crosswinds(args)
 	self:CDBar(args.spellId, cd, CL.count:format(L.crosswinds, crosswindsCount))
 end
 
-do
-	function mod:ZephyrSlam(args)
-		local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
-		self:Message(args.spellId, "purple", CL.casting:format(CL.knockback))
-		if self:Tanking(bossUnit) then
-			self:PlaySound(args.spellId, "alert")
-		end
-		if zephyrSlamCount % 2 == 0 then
-			self:CDBar(args.spellId, 17, CL.knockback)
-		end
+function mod:ZephyrSlam(args)
+	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
+	self:Message(args.spellId, "purple", CL.casting:format(CL.knockback))
+	if self:Tanking(bossUnit) then
+		self:PlaySound(args.spellId, "alert")
 	end
+	self:CDBar(args.spellId, 17, CL.knockback)
 end
 
 function mod:ZephyrSlamApplied(args)
