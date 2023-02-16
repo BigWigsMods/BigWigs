@@ -84,7 +84,7 @@ local timersHeroic = {
 	},
 	[2] = {
 		[388643] = {65.5, 57}, -- Volatile Current
-		[395906] = {38.5, 25.0, 23.0, 30.0, 25.0, 25.0}, -- Electrified Jaws
+		[395906] = {38.5, 25.0, 23.0, 30.0, 25.0, 25.0, 37}, -- Electrified Jaws
 		[387261] = {8.6, 80.0, 80.0}, -- Stormsurge
 		[377467] = {53.5, 83.0}, -- Fulminating Charge
 		[385574] = {43.6, 30.0, 55.0, 20.0}, -- Tempest Wing
