@@ -15,6 +15,7 @@ files["**/Loader.lua"].ignore = {
 	"113/UnitDetailedThreatSituation",
 	"113/UnitGUID",
 	"113/UnitName",
+	"113/securecallfunction",
 }
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/TranscriptIgnore",
@@ -23,6 +24,7 @@ files["**/Core/BossPrototype.lua"].ignore = {
 }
 files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",
+	"113/geterrorhandler",
 }
 files["**/Plugins/BossBlock.lua"].ignore = {
 	"112/BigWigs",
@@ -58,7 +60,6 @@ globals = {
 	"foreachi",
 	"format",
 	"frexp",
-	"geterrorhandler",
 	"getn",
 	"gmatch",
 	"gsub",

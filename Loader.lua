@@ -1073,20 +1073,14 @@ do
 		end
 	end
 
-	local pcall, geterrorhandler = pcall, geterrorhandler
+	local securecallfunction = securecallfunction
 	function public:SendMessage(msg, ...)
 		if callbackMap[msg] then
 			for k,v in next, callbackMap[msg] do
 				if type(v) == "function" then
-					local success, errorMsg = pcall(v, msg, ...)
-					if not success then
-						geterrorhandler()(("BigWigs: One of your addons caused an error on the %q callback:\n%s"):format(msg, errorMsg))
-					end
+					securecallfunction(v, msg, ...)
 				else
-					local success, errorMsg = pcall(k[v], k, msg, ...)
-					if not success then
-						geterrorhandler()(("BigWigs: One of your addons caused an error on the %q callback:\n%s"):format(msg, errorMsg))
-					end
+					securecallfunction(k[v], k, msg, ...)
 				end
 			end
 		end
