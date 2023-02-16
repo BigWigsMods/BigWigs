@@ -22,31 +22,33 @@ local burstCount = 1
 local webCount = 1
 local stageCount = 0
 
-local timersNormal = {
-	-- Stage 1
-	[371976] = {16.1, 36.5, 37.7, 30.4, 36.5, 36.5, 26.6, 40.1}, -- Chilling Blast
-	[372082] = {18.5, 28, 29.1, 26.7, 20.6, 26.7, 30.3, 42.5, 27.9, 32.8}, -- Enveloping Webs
-	[373405] = {33.2, 36.5, 68.1, 36.4, 64.8, 38.4}, -- Gossamer Burst
-	[372238] = {2.7, 20.6, 20.7, 21.9, 20.6, 31.6, 26.7, 21.8, 20.7, 27.9, 20.6, 20.7, 20.6} -- Call Spiderlings
+local timersTable = { -- Stage 1
+	[14] = { -- Normal
+		[371976] = {16.1, 36.5, 37.7, 30.4, 36.5, 36.5, 26.6, 40.1}, -- Chilling Blast
+		[372082] = {18.5, 28, 29.1, 26.7, 20.6, 26.7, 30.3, 42.5, 27.9, 32.8, 29.9}, -- Enveloping Webs
+		[373405] = {33.2, 36.5, 68.1, 36.4, 64.8, 38.4, 35.1}, -- Gossamer Burst
+		[372238] = {2.7, 20.6, 20.7, 21.9, 20.6, 31.6, 26.7, 21.8, 20.7, 27.9, 20.6, 20.7, 20.6}, -- Call Spiderlings
+	},
+	[15] = { -- Heroic
+		[371976] = {15.5, 37.6, 37.4, 29.1, 37.2, 37.5, 21.9, 36.5, 37.3}, -- Chilling Blast
+		[372082] = {18.1, 26.7, 30.5, 44.8, 26.7, 30.4, 38.9, 26.4, 30.4, 32.8}, -- Enveloping Webs
+		[373405] = {32.8, 37.7, 65.5, 36.5, 59.6, 37.6}, -- Gossamer Burst
+		[372238] = {0, 25.5, 25.5, 26.7, 38.8, 25.5, 25.5, 25.5, 20.7, 26.7, 26.7, 25.4}, -- Call Spiderlings
+	},
+	[16] = { -- Mythic
+		[371976] = {15.7, 36.6, 37.6, 30.4, 40.1, 37.6, 22.0, 39.0}, -- Chilling Blast
+		[372082] = {19.1, 26.8, 31.6, 46.2, 26.7, 27.9, 45.0, 26.8, 34.1, 30.4}, -- Enveloping Webs
+		[373405] = {32.8, 37.6, 69.3, 38.8, 60.8, 37.8}, -- Gossamer Burst
+		[372238] = {0, 31.7, 30.3, 30.4, 23.2, 30.3, 30.4, 37.7, 31.7, 30.4}, -- Call Spiderlings
+	},
+	[17] = { -- LFR
+		[371976] = {0}, -- Chilling Blast
+		[372082] = {17.1, 27.9, 27.9, 27.9, 19.4, 28.0, 29.1, 42.5, 27.9, 27.6}, -- Enveloping Webs
+		[373405] = {30.7, 35.2, 35.2, 34.0, 35.2, 63.2, 34.8}, -- Gossamer Burst
+		[372238] = {1.5, 35.2, 35.2, 43.7, 31.6, 30.3, 37.7, 31.6, 32.4}, -- Call Spiderlings
+	},
 }
-
-local timersHeroic = {
-	-- Stage 1
-	[371976] = {15.5, 37.6, 37.4, 29.1, 37.2, 37.5, 21.9, 36.5, 37.3}, -- Chilling Blast
-	[372082] = {18.1, 26.7, 30.5, 44.8, 26.7, 30.4, 38.9, 26.4, 30.4, 32.8}, -- Enveloping Webs
-	[373405] = {32.8, 37.7, 65.5, 36.5, 59.6, 37.6}, -- Gossamer Burst
-	[372238] = {0, 25.5, 25.5, 26.7, 38.8, 25.5, 25.5, 25.5, 20.7, 26.7, 26.7, 25.4}, -- Call Spiderlings
-}
-
-local timersMythic = {
-	-- Stage 1
-	[371976] = {15.7, 36.6, 37.6, 30.4, 40.1, 37.6, 22.0, 39.0}, -- Chilling Blast
-	[372082] = {19.1, 26.8, 31.6, 46.2, 26.7, 27.9, 45.0, 26.8, 34.1, 30.4}, -- Enveloping Webs
-	[373405] = {32.8, 37.6, 69.3, 38.8, 60.8, 37.8}, -- Gossamer Burst
-	[372238] = {0, 31.7, 30.3, 30.4, 23.2, 30.3, 30.4, 37.7, 31.7, 30.4}, -- Call Spiderlings
-}
-
-local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
+local timers = timersTable[mod:Difficulty()]
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -148,8 +150,8 @@ function mod:OnBossEnable()
 	-- XXX Ground Effects?
 end
 
-function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
+function mod:OnEngage(diff)
+	timers = timersTable[diff]
 	self:SetStage(1)
 	stageCount = 0
 	ascendCount = 1
@@ -251,7 +253,7 @@ function mod:CallSpiderlings(args)
 	if self:GetStage() == 1 then
 		cd = timers[args.spellId][callSpiderlingsCount]
 	else
-		cd = self:Easy() and 26 and self:Heroic() and 34 or 30
+		cd = self:Heroic() and 34 or 30
 	end
 	self:CDBar(args.spellId, cd, CL.small_adds)
 end
