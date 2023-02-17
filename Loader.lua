@@ -1112,10 +1112,10 @@ do
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
 		if IsInGroup() then
-			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 			local name = UnitName("player")
 			local realm = GetRealmName()
 			SendAddonMessage("D5", name.. "-" ..realm.."\t1\tV\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			SendAddonMessage("D4", "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 		timer, prevUpgradedUser = nil, nil
 	end
@@ -1518,10 +1518,10 @@ do
 		if (not grouped and groupType) or (grouped and groupType and grouped ~= groupType) then
 			grouped = groupType
 			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
-			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			local name = UnitName("player")
 			local realm = GetRealmName()
 			SendAddonMessage("D5", name.. "-" ..realm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			SendAddonMessage("D4", "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ACTIVE_TALENT_GROUP_CHANGED() -- Force role check
 		elseif grouped and not groupType then
 			grouped = nil
@@ -1554,10 +1554,10 @@ function mod:BigWigs_CoreEnabled()
 	-- which kills your ability to receive addon comms during the loading process.
 	if IsInGroup() then
 		SendAddonMessage("BigWigs", versionQueryString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
-		SendAddonMessage("D4", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 		local name = UnitName("player")
 		local realm = GetRealmName()
 		SendAddonMessage("D5", name.. "-" ..realm.."\t1\tH\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+		SendAddonMessage("D4", "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
 
 	-- Core is loaded, nil these to force checking BigWigs.db.profile.option

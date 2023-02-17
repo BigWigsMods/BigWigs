@@ -345,10 +345,10 @@ SlashCmdList.BIGWIGSPULL = function(input)
 		if IsInGroup() then
 			local _, _, _, _, _, _, _, id = GetInstanceInfo()
 			local instanceId = tonumber(id) or 0
-			SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, instanceId), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 			local name = plugin:UnitName("player")
 			local realm = GetRealmName()
 			SendAddonMessage("D5", ("%s-%s\t1\tPT\t%s\t%d"):format(name, realm, input, instanceId), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			SendAddonMessage("D4", ("PT\t%s\t%d"):format(input, instanceId), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	else
 		BigWigs:Print(L.requiresLeadOrAssist)
