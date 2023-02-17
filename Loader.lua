@@ -641,6 +641,7 @@ function mod:ADDON_LOADED(addon)
 	bwFrame:RegisterEvent("CHAT_MSG_ADDON")
 	C_ChatInfo.RegisterAddonMessagePrefix("BigWigs")
 	C_ChatInfo.RegisterAddonMessagePrefix(public.dbmPrefix) -- DBM
+	C_ChatInfo.RegisterAddonMessagePrefix(public.dbmNewPrefix) -- DBM
 
 	-- LibDBIcon setup
 	if type(BigWigsIconClassicDB) ~= "table" then
@@ -992,21 +993,26 @@ do
 	local DBMdotDisplayVersion   -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
 	local DBMdotReleaseRevision  -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	if public.isClassicEra then
-		DBMdotRevision = "20230117072817"
-		DBMdotDisplayVersion = "1.14.29"
-		DBMdotReleaseRevision = "20230117000000"
+		DBMdotRevision = "20230216221102"
+		DBMdotDisplayVersion = "1.14.31"
+		DBMdotReleaseRevision = "20230216000000"
 		public.dbmPrefix = "D4C"
+		public.dbmNewPrefix = "D5C"
 	else
-		DBMdotRevision = "20230121034354"
-		DBMdotDisplayVersion = "3.4.27"
-		DBMdotReleaseRevision = "20230120000000"
+		DBMdotRevision = "20230216221102"
+		DBMdotDisplayVersion = "3.4.33"
+		DBMdotReleaseRevision = "20230216000000"
 		public.dbmPrefix = "D4WC"
+		public.dbmNewPrefix = "D5WC"
 	end
 
 	local timer, prevUpgradedUser = nil, nil
 	local function sendMsg()
 		if IsInGroup() then
 			SendAddonMessage(public.dbmPrefix, "V\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
+			local name = UnitName("player")
+			local realm = GetRealmName()
+			SendAddonMessage(public.dbmNewPrefix, name.. "-" ..realm.."\t1\tV\t"..DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..GetLocale().."\t".."true", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
 		timer, prevUpgradedUser = nil, nil
 	end
@@ -1060,6 +1066,23 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 		end
 	elseif prefix == "D4C" or prefix == "D4WC" then
 		local dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
+		sender = Ambiguate(sender, "none")
+		if dbmPrefix == "V" or dbmPrefix == "H" then
+			self:DBM_VersionCheck(dbmPrefix, sender, arg1, arg2, arg3)
+		elseif dbmPrefix == "U" or dbmPrefix == "PT" or dbmPrefix == "M" or dbmPrefix == "BT" then
+			if dbmPrefix == "PT" then
+				local _, _, _, instanceId = UnitPosition("player")
+				local _, _, _, tarInstanceId = UnitPosition(sender)
+				if instanceId == tarInstanceId then
+					loadAndEnableCore() -- Force enable the core when receiving a pull timer.
+				end
+			elseif dbmPrefix == "BT" then
+				loadAndEnableCore() -- Force enable the core when receiving a break timer.
+			end
+			public:SendMessage("DBM_AddonMessage", sender, dbmPrefix, arg1, arg2, arg3, arg4)
+		end
+	elseif prefix == "D5C" or prefix == "D5WC" then
+		local player, _, dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
 		sender = Ambiguate(sender, "none")
 		if dbmPrefix == "V" or dbmPrefix == "H" then
 			self:DBM_VersionCheck(dbmPrefix, sender, arg1, arg2, arg3)
@@ -1278,6 +1301,9 @@ do
 			grouped = groupType
 			SendAddonMessage("BigWigs", versionQueryString, groupType == 3 and "INSTANCE_CHAT" or "RAID")
 			SendAddonMessage(public.dbmPrefix, "H\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+			local name = UnitName("player")
+			local realm = GetRealmName()
+			SendAddonMessage(public.dbmNewPrefix, name.. "-" ..realm.."\t1\tH\t", groupType == 3 and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 			self:ZONE_CHANGED()
 		elseif grouped and not groupType then
 			grouped = nil
@@ -1311,6 +1337,9 @@ function mod:BigWigs_CoreEnabled()
 	if IsInGroup() then
 		SendAddonMessage("BigWigs", versionQueryString, IsInGroup(2) and "INSTANCE_CHAT" or "RAID")
 		SendAddonMessage(public.dbmPrefix, "H\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
+		local name = UnitName("player")
+		local realm = GetRealmName()
+		SendAddonMessage(public.dbmNewPrefix, name.. "-" ..realm.."\t1\tH\t", IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- Also request DBM versions
 	end
 
 	-- Core is loaded, nil these to force checking BigWigs.db.profile.option

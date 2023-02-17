@@ -2435,6 +2435,9 @@ do
 			BigWigs:Print(L.sendCustomBar:format(barText))
 			plugin:Sync("CBar", input)
 			SendAddonMessage(BigWigsLoader.dbmPrefix, ("U\t%d\t%s"):format(seconds, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			local name = plugin:UnitName("player")
+			local realm = GetRealmName()
+			SendAddonMessage(BigWigsLoader.dbmNewPrefix, ("%s-%s\t1\tU\t%d\t%s"):format(name, realm, seconds, barText), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	end
 	SLASH_BIGWIGSRAIDBAR1 = "/raidbar"
@@ -2468,6 +2471,9 @@ SlashCmdList.BIGWIGSBREAK = function(input)
 
 		if IsInGroup() then
 			SendAddonMessage(BigWigsLoader.dbmPrefix, ("BT\t%d"):format(seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
+			local name = plugin:UnitName("player")
+			local realm = GetRealmName()
+			SendAddonMessage(BigWigsLoader.dbmNewPrefix, ("%s-%s\t1\tBT\t%d"):format(name, realm, seconds), IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- DBM message
 		end
 	else
 		BigWigs:Print(L.requiresLeadOrAssist)
