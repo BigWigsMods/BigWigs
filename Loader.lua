@@ -17,7 +17,7 @@ public.isClassic = public.isBCC or public.isWrath
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 47
+local BIGWIGS_VERSION = 48
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
