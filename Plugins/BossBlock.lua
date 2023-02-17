@@ -77,6 +77,13 @@ plugin.pluginOptions = {
 					width = "full",
 					fontSize = "medium",
 				},
+				blockEmotes = {
+					type = "toggle",
+					name = L.blockEmotes,
+					desc = L.blockEmotesDesc,
+					width = "full",
+					order = 1,
+				},
 				blockSpellErrors = {
 					type = "toggle",
 					name = L.blockSpellErrors,
@@ -248,6 +255,11 @@ do
 	function plugin:OnEngage(event, module)
 		if not module or not module.journalId or module.worldBoss then return end
 
+		if self.db.profile.blockEmotes and not IsTestBuild() and BigWigsLoader.isWrath then -- Don't block emotes on WoW beta.
+			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+		end
+
 		if self.db.profile.blockSpellErrors then
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
@@ -269,6 +281,10 @@ do
 	end
 
 	function RestoreAll(self)
+		if self.db.profile.blockEmotes and BigWigsLoader.isWrath then
+			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
+			RestoreEvent(RaidBossEmoteFrame, "RAID_BOSS_WHISPER")
+		end
 		if self.db.profile.blockSpellErrors then
 			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
