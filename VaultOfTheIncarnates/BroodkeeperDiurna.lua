@@ -440,7 +440,7 @@ do
 			self:Message(-25129, "yellow", CL.count:format(CL.adds, primalReinforcementsCount), "inv_dragonwhelpproto_blue")
 			self:PlaySound(-25129, "long")
 			primalReinforcementsCount = primalReinforcementsCount + 1
-			self:CDBar(-25129, timers[-25129][primalReinforcementsCount], barTextNext, "inv_dragonwhelpproto_blue")
+			self:CDBar(-25129, timers[-25129][primalReinforcementsCount], CL.count:format(CL.adds, primalReinforcementsCount), "inv_dragonwhelpproto_blue")
 		end
 	end
 end
