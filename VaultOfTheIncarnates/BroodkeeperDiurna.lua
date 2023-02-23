@@ -30,7 +30,7 @@ local lastStaff = 0
 
 local timersHeroic = {
 	-- Primalist Reinforcements // Throttled with 10s
-	[-25129] = {35.3, 20.3, 36.7, 20, 43.3, 56.7, 20, 43, 20},
+	[-25129] = {35.5, 20.0, 36.5, 20.0, 43.5, 20.0, 37.0, 20.0, 43.0, 20.0},
 }
 
 local timersMythic = {
