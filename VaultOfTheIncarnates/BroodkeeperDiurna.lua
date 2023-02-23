@@ -28,6 +28,11 @@ local encounterStartTime = 0
 local lastShroud = 0
 local lastStaff = 0
 
+local timersEasy = {
+	-- Primalist Reinforcements // Throttled with 10s
+	[-25129] = {35.5, 25.0, 36.5, 25.0, 43.0, 25.0, 37.0, 25.0, 44.5, 24.0},
+}
+
 local timersHeroic = {
 	-- Primalist Reinforcements // Throttled with 10s
 	[-25129] = {35.5, 20.0, 36.5, 20.0, 43.5, 20.0, 37.0, 20.0, 43.0, 20.0},
@@ -54,7 +59,7 @@ local timersMythic = {
 	--  (This spell is not affected by delays due to transition)
 	[388716] = {26.0, 44.0, 45.5, 45.0, 43.0, 42.5, 44.0, 48.0, 42.0, 42.0, 44.0, 48.5, 40.5, 43.0}
 }
-local timers = mod:Mythic() and timersMythic or timersHeroic
+local timers = mod:Mythic() and timersMythic or mod:Heroic() and timersHeroic or timersEasy
 
 
 --------------------------------------------------------------------------------
@@ -211,7 +216,7 @@ end
 
 function mod:OnEngage()
 	self:SetStage(1)
-	timers = mod:Mythic() and timersMythic or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Heroic() and timersHeroic or timersEasy
 	encounterStartTime = GetTime()
 	mobCollector = {}
 	marksUsed = {}
