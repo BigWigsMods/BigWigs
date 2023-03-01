@@ -621,20 +621,20 @@ function mod:BroodkeepersFury(args)
 		local nextStaff = 25 - (args.time - lastStaff)
 		if self:Mythic() then -- Adjust for inaccuracies
 			nextStaff = timers[380175][greatstaffCount] - (GetTime() - encounterStartTime)
-			if greatstaffCount == 11 then -- Add 5s
+			if greatstaffCount == 12 then -- Add 5s
 				nextStaff = nextStaff + 5
 			end
 		end
-		self:Bar(args.spellId, {nextStaff, 25}, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175) -- 25 is an approximation
+		self:Bar(args.spellId, nextStaff, CL.count:format(L.greatstaff_of_the_broodkeeper, greatstaffCount), 380175)
 
 		if self:Mythic() then
 			self:StopBar(375870) -- Mortal Stoneclaws
 			local nextClaws = timers[375870][stoneClawsCount] - (GetTime() - encounterStartTime)
-			if greatstaffCount == 11 then -- Add 7s
+			if greatstaffCount == 12 then -- Add 7s
 				nextClaws = nextClaws + 7
 			end
 			detonatingStoneslamCount = 1
-			self:Bar(396269, {nextClaws, 25}, CL.count:format(L.detonating_stoneslam, detonatingStoneslamCount)) -- 25 is an approximation
+			self:Bar(396269, nextClaws, CL.count:format(L.detonating_stoneslam, detonatingStoneslamCount))
 		end
 	else
 		self:StopBar(CL.count:format(L.broodkeepers_fury, amount))
