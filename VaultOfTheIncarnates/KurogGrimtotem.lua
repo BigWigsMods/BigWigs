@@ -190,6 +190,7 @@ function mod:GetOptions()
 		{382563, "SAY", "SAY_COUNTDOWN"}, -- Magma Burst
 		373329, -- Molten Rupture
 		{374023, "SAY_COUNTDOWN"}, -- Searing Carnage
+		374554, -- Magma Pool
 		-- Frost Altar
 		373678, -- Biting Chill
 		391019, -- Frigid Torrent
@@ -285,6 +286,9 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SearingCarnage", 374022, 392192) -- Other, Mythic
 	self:Log("SPELL_AURA_APPLIED", "SearingCarnageApplied", 374023)
 	self:Log("SPELL_AURA_REMOVED", "SearingCarnageRemoved", 374023)
+	self:Log("SPELL_AURA_APPLIED", "MagmaPoolDamage", 374554)
+	self:Log("SPELL_PERIODIC_DAMAGE", "MagmaPoolDamage", 374554)
+	self:Log("SPELL_PERIODIC_MISSED", "MagmaPoolDamage", 374554)
 	-- Frost
 	self:Log("SPELL_CAST_START", "BitingChill", 373678)
 	self:Log("SPELL_CAST_START", "FrigidTorrent", 391019) -- (also Mythic add cast)
@@ -581,6 +585,17 @@ end
 function mod:SearingCarnageRemoved(args)
 	if self:Me(args.destGUID) then
 		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+do
+	local prev = 0
+	function mod:MagmaPoolDamage(args)
+		if self:Me(args.destGUID) and args.time - prev > 1.5 then
+			prev = args.time
+			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou")
+		end
 	end
 end
 
