@@ -252,8 +252,8 @@ do
 	function plugin:OnPluginEnable()
 		self:RegisterMessage("BigWigs_OnBossEngage", "OnEngage")
 		self:RegisterMessage("BigWigs_OnBossEngageMidEncounter", "OnEngage")
-		self:RegisterMessage("BigWigs_OnBossWin", "OnWinOrWipe")
-		self:RegisterMessage("BigWigs_OnBossWipe", "OnWinOrWipe")
+		self:RegisterMessage("BigWigs_OnBossDisable")
+		self:RegisterMessage("BigWigs_OnBossWipe", "BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 		updateProfile()
 
@@ -431,7 +431,7 @@ do
 		end
 	end
 
-	function plugin:OnWinOrWipe(event, module)
+	function plugin:BigWigs_OnBossDisable(event, module)
 		if not module or not module.journalId or module.worldBoss then return end
 		RestoreAll(self)
 	end

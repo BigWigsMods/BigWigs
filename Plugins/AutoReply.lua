@@ -144,6 +144,7 @@ do
 		self:RegisterMessage("BigWigs_OnBossEngage")
 		self:RegisterMessage("BigWigs_OnBossWin", "WinOrWipe")
 		self:RegisterMessage("BigWigs_OnBossWipe", "WinOrWipe")
+		self:RegisterMessage("BigWigs_OnBossDisable")
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
 		updateProfile()
 	end
@@ -249,6 +250,19 @@ do
 				end
 			end
 
+			curModule = nil
+		end
+	end
+
+	function plugin:BigWigs_OnBossDisable(event, module) -- Manual disable or reboot of the boss module
+		if not self.db.profile.disabled and module and module == curModule then
+			curDiff = 0
+			self:UnregisterEvent("CHAT_MSG_WHISPER")
+			self:UnregisterEvent("CHAT_MSG_BN_WHISPER")
+			if timer then
+				self:CancelTimer(timer)
+				timer = nil
+			end
 			curModule = nil
 		end
 	end

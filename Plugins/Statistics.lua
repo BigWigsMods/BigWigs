@@ -198,6 +198,7 @@ do
 			self:RegisterMessage("BigWigs_OnBossEngage")
 			self:RegisterMessage("BigWigs_OnBossWin")
 			self:RegisterMessage("BigWigs_OnBossWipe")
+			self:RegisterMessage("BigWigs_OnBossDisable")
 		end
 
 		self:RegisterMessage("BigWigs_ProfileUpdate", updateProfile)
@@ -339,3 +340,6 @@ function plugin:BigWigs_OnBossWipe(event, module)
 	Stop(self, module)
 end
 
+function plugin:BigWigs_OnBossDisable(event, module) -- Manual disable or reboot of the boss module
+	Stop(self, module)
+end
