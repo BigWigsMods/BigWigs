@@ -487,8 +487,8 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:Say(args.spellId, CL.bomb)
-			self:SayCountdown(args.spellId, 8)
+			self:Say(args.spellId, CL.count_rticon:format(CL.bomb, count, count))
+			self:SayCountdown(args.spellId, 8, count)
 			self:PlaySound(args.spellId, "warning")
 		end
 		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(CL.bomb, staticChargeCount-1))
