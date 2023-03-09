@@ -1,4 +1,4 @@
-if IsTestBuild() then return end
+if not IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
