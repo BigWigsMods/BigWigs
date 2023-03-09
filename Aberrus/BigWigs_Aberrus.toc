@@ -1,0 +1,33 @@
+## Interface: 100005
+
+## Title: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-deDE: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-esES: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-esMX: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-frFR: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-itIT: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-koKR: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-ptBR: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-ruRU: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-zhCN: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-zhTW: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Notes: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-deDE: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-esES: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-esMX: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-frFR: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-itIT: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-koKR: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-ptBR: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-ruRU: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-zhCN: BigWigs Aberrus, the Shadowed Crucible Modules
+## Notes-zhTW: BigWigs Aberrus, the Shadowed Crucible Modules
+## Version: @project-version@
+
+## LoadOnDemand: 1
+## Dependencies: BigWigs
+
+## X-Category: Raid
+## X-BigWigs-LoadOn-InstanceId: 2569
+
+modules.xml

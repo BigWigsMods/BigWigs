@@ -225,6 +225,7 @@ do
 		--[[ BigWigs: Dragonflight ]]--
 		[-1978] = df, -- Dragon Isles (Fake Menu)
 		[2522] = df, -- Vault of the Incarnate
+		[2569] = df, -- Aberrus, the Shadowed Crucible
 
 		--[[ LittleWigs: Classic ]]--
 		[33] = lw_c, -- Shadowfang Keep
