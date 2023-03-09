@@ -5,7 +5,7 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Molgoth", 2569, 2529)
 if not mod then return end
-mod:RegisterEnableMob(0)
+----mod:RegisterEnableMob(0)
 mod:SetEncounterID(2687)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
