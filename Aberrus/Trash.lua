@@ -1,9 +1,9 @@
-
+if IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Vault of the Incarnates Trash", 2569)
+local mod, CL = BigWigs:NewBoss("Aberrus, the Shadowed Crucible Trash", 2569)
 if not mod then return end
 mod.displayName = CL.trash
 mod:RegisterEnableMob(

@@ -1,3 +1,4 @@
+if IsTestBuild() then return end
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
