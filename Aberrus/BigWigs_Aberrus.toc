@@ -1,14 +1,14 @@
-## Interface: 100005
+## Interface: 100100
 
 ## Title: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
-## Title-deDE: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
-## Title-esES: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
-## Title-esMX: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
-## Title-frFR: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
-## Title-itIT: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
-## Title-koKR: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
-## Title-ptBR: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
-## Title-ruRU: BigWigs [|cffeda55fAberrus, the Shadowed Crucible|r]
+## Title-deDE: BigWigs [|cffeda55fAberrus, Schmelztiegel der Schatten|r]
+## Title-esES: BigWigs [|cffeda55fAberrus, el Crisol Ensombrecido|r]
+## Title-esMX: BigWigs [|cffeda55fAberrus, el Crisol Penumbroso|r]
+## Title-frFR: BigWigs [|cffeda55fAberrus, le creuset de l’Ombre|r]
+## Title-itIT: BigWigs [|cffeda55fAberrus, il Crogiolo d'Ombra|r]
+## Title-koKR: BigWigs [|cffeda55f어둠의 도가니 에베루스|r]
+## Title-ptBR: BigWigs [|cffeda55fAberrus, o Crisol Sombrio|r]
+## Title-ruRU: BigWigs [|cffeda55fАберрий, Затененное Горнило|r]
 ## Title-zhCN: BigWigs [|cffeda55f亚贝鲁斯，焰影熔炉|r]
 ## Title-zhTW: BigWigs [|cffeda55f亞貝魯斯，暗影爐缸|r]
 ## Notes: BigWigs Aberrus, the Shadowed Crucible Modules
