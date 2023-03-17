@@ -445,6 +445,9 @@ do
 		[70195]=true,[70196]=true,[70192]=true,[70194]=true,
 		-- Halls of Valor
 		[57160]=true,[57159]=true,[57162]=true,[68701]=true,[57161]=true,
+		-- Neltharion's Lair
+		[54610]=true,[54608]=true,[54697]=true,[54708]=true,[54709]=true,
+		[54718]=true,[54719]=true,[54720]=true,
 
 		-- De Other Side
 		[163828]=true,[163830]=true,[163831]=true,[163822]=true,[163823]=true,[163824]=true,[163834]=true,
@@ -666,4 +669,3 @@ do
 		end
 	end
 end
-
