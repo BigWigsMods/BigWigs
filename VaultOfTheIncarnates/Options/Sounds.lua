@@ -60,12 +60,12 @@ BigWigs:AddSounds("Dathea, Ascended", {
 	[384273] = "alert",
 	[385812] = "alarm",
 	[387849] = "long",
-	[387943] = "alert",
 	[388302] = "alert",
 	[388410] = "alert",
 	[390450] = "alarm",
 	[391686] = "warning",
 	[395501] = "warning",
+	[397431] = "alert",
 })
 
 BigWigs:AddSounds("Kurog Grimtotem", {
@@ -80,6 +80,7 @@ BigWigs:AddSounds("Kurog Grimtotem", {
 	[374321] = "info",
 	[374427] = "warning",
 	[374430] = "alarm",
+	[374554] = "underyou",
 	[374622] = "warning",
 	[374623] = {"alarm","alert"},
 	[374624] = "warning",
@@ -91,9 +92,13 @@ BigWigs:AddSounds("Kurog Grimtotem", {
 	[391268] = "alert",
 	[391425] = "warning",
 	[391696] = "warning",
+	[392098] = "info",
+	[393295] = "info",
 	[393296] = "alert",
 	[393309] = "alert",
+	[393314] = "info",
 	[393429] = "alert",
+	[393459] = "info",
 	[394719] = "alarm",
 	[395893] = "alert",
 	[396241] = "warning",
@@ -126,6 +131,8 @@ BigWigs:AddSounds("Broodkeeper Diurna", {
 	[388918] = "alert",
 	[392194] = "alert",
 	[396264] = "warning",
+	[396266] = {"alarm","warning"},
+	[396779] = "alert",
 })
 
 BigWigs:AddSounds("Raszageth the Storm-Eater", {

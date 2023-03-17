@@ -46,7 +46,6 @@ BigWigs:AddColors("Sennarth, The Cold Breath", {
 	[372030] = "blue",
 	[372044] = "blue",
 	[372082] = {"blue","yellow"},
-	[372238] = "cyan",
 	[372539] = "green",
 	[373048] = {"blue","yellow"},
 	[373405] = "red",
@@ -63,12 +62,12 @@ BigWigs:AddColors("Dathea, Ascended", {
 	[384273] = "yellow",
 	[385812] = "blue",
 	[387849] = "orange",
-	[387943] = "yellow",
 	[388302] = "yellow",
 	[388410] = "yellow",
 	[390450] = "blue",
 	[391686] = "blue",
 	[395501] = "yellow",
+	[397431] = "yellow",
 })
 
 BigWigs:AddColors("Kurog Grimtotem", {
@@ -83,6 +82,7 @@ BigWigs:AddColors("Kurog Grimtotem", {
 	[374321] = {"blue","purple"},
 	[374427] = "blue",
 	[374430] = "orange",
+	[374554] = "blue",
 	[374622] = {"blue","yellow"},
 	[374623] = {"blue","yellow"},
 	[374624] = "red",
@@ -94,9 +94,13 @@ BigWigs:AddColors("Kurog Grimtotem", {
 	[391268] = {"blue","purple"},
 	[391425] = "cyan",
 	[391696] = {"blue","orange"},
+	[392098] = "cyan",
+	[393295] = "cyan",
 	[393296] = {"blue","purple"},
 	[393309] = "purple",
+	[393314] = "cyan",
 	[393429] = {"blue","purple"},
+	[393459] = "cyan",
 	[394416] = "cyan",
 	[394719] = {"cyan","purple"},
 	[395893] = {"cyan","orange"},
@@ -130,6 +134,8 @@ BigWigs:AddColors("Broodkeeper Diurna", {
 	[388918] = "yellow",
 	[392194] = "yellow",
 	[396264] = {"blue","purple"},
+	[396266] = {"blue","purple"},
+	[396779] = "yellow",
 })
 
 BigWigs:AddColors("Raszageth the Storm-Eater", {
