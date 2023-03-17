@@ -178,24 +178,26 @@ end
 -- Conduit
 
 function mod:SiphonEnergyApplied(args)
-	self:Message(args.spellId, "green")
+	self:Stop(405316) -- Ancient Fury
+	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
 end
 
 function mod:SiphonEnergyRemoved(args)
-	self:Message(args.spellId, "yellow", CL.removed:format(args.spellName))
+	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
 	-- self:PlaySound(args.spellId, "info")
 
+	-- XXX check the boss energy
 	-- self:Bar(405316, 92) -- Ancient Fury
 end
 
 function mod:UnyieldingRageApplied(args)
 	local amount = args.amount or 1
 	if amount == 1 then
-		self:Message(args.spellId, "cyan")
+		self:Message(args.spellId, "yellow")
 		self:PlaySound(args.spellId, "long")
 	elseif amount == 5 or amount > 7 then -- 5, 8, 9, 10
-		self:Message(args.spellId, "cyan", CL.count:format(args.spellName, amount))
+		self:Message(args.spellId, "yellow", CL.count:format(args.spellName, amount))
 		self:PlaySound(args.spellId, amount > 7 and "alarm" or "info")
 	end
 end

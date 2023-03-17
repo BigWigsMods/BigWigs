@@ -37,9 +37,9 @@ BigWigs:AddColors("Zaqali Invasion", {
 
 BigWigs:AddColors("Rashok", {
 	[400777] = "yellow",
-	[401419] = {"green","yellow"},
+	[401419] = "cyan",
 	[403543] = "blue",
-	[405091] = "cyan",
+	[405091] = "yellow",
 	[405316] = "red",
 	[405821] = "orange",
 	[406333] = "yellow",
