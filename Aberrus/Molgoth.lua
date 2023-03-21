@@ -44,6 +44,7 @@ end
 
 function mod:GetOptions()
 	return {
+		"stages",
 		-- Krozgoth
 		401809, -- Corrupting Shadow
 		403459, -- Coalescing Void
@@ -90,6 +91,7 @@ function mod:OnBossEnable()
 	-- self:Log("SPELL_CAST_START", "FlameSlash", 403203)
 
 	-- Molgoth
+	self:Log("SPELL_CAST_SUCCESS", "Stage2Trigger", 406730)
 	self:Log("SPELL_AURA_APPLIED", "ShadowflameApplied", 405394)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "ShadowflameApplied", 405394)
 	self:Log("SPELL_AURA_REMOVED", "ShadowflameRemoved", 405394)
@@ -98,6 +100,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BlisteringTwilightApplied", 405642)
 	self:Log("SPELL_AURA_REMOVED", "BlisteringTwilightRemoved", 405642)
 	self:Log("SPELL_CAST_START", "ConvergentEruption", 408193)
+	self:Log("SPELL_CAST_SUCCESS", "CrushingVulnerability", 405914)
 	self:Log("SPELL_AURA_APPLIED", "CrushingVulnerabilityApplied", 405914)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "CrushingVulnerabilityApplied", 405914)
 	self:Log("SPELL_CAST_START", "ShadowflameBurst", 406783)
@@ -113,23 +116,17 @@ function mod:OnEngage()
 	coalescingVoidCount = 1
 	umbralDetonationCount = 1
 	shadowsConvergenceCount = 1
-	--self:Bar(403459, 30, CL.count:format(self:SpellName(403459), coalescingVoidCount)) -- Coalescing Void
-	--self:Bar(405036, 30, CL.count:format(self:SpellName(405036), umbralDetonationCount)) -- Umbral Detonation
-	--self:Bar(407640, 30, CL.count:format(self:SpellName(407640), shadowsConvergenceCount)) -- Shadows Convergence
+	self:Bar(403459, 30, CL.count:format(self:SpellName(403459), coalescingVoidCount)) -- Coalescing Void
+	self:Bar(405036, 19.5, CL.count:format(self:SpellName(405036), umbralDetonationCount)) -- Umbral Detonation
+	self:Bar(407640, 23, CL.count:format(self:SpellName(407640), shadowsConvergenceCount)) -- Shadows Convergence
 
 	-- Moltannia
 	fieryMeteorCount = 1
 	moltenEruptionCount = 1
 	swirlingFlameCount = 1
-	--self:Bar(404732, 30, CL.count:format(self:SpellName(404732), fieryMeteorCount)) -- Fiery Meteor
-	--self:Bar(403101, 30, CL.count:format(self:SpellName(403101), moltenEruptionCount)) -- Molten Eruption
-	--self:Bar(404896, 30, CL.count:format(self:SpellName(404896), swirlingFlameCount)) -- Swirling Flame
-
-	-- Molgoth
-	gloomConflagrationCount = 1
-	blisteringTwilightCount = 1
-	convergentEruptionCount = 1
-	shadowflameBurstCount = 1
+	self:Bar(404732, 32.5, CL.count:format(self:SpellName(404732), fieryMeteorCount)) -- Fiery Meteor
+	self:Bar(403101, 23.0, CL.count:format(self:SpellName(403101), moltenEruptionCount)) -- Molten Eruption
+	self:Bar(404896, 9.5, CL.count:format(self:SpellName(404896), swirlingFlameCount)) -- Swirling Flame
 end
 
 --------------------------------------------------------------------------------
@@ -159,7 +156,7 @@ function mod:CoalescingVoid(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, coalescingVoidCount))
 	self:PlaySound(args.spellId, "alert")
 	coalescingVoidCount = coalescingVoidCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, coalescingVoidCount))
+	self:Bar(args.spellId, 22, CL.count:format(args.spellName, coalescingVoidCount))
 end
 
 do
@@ -169,7 +166,7 @@ do
 		self:Message(405036, "yellow", CL.count:format(args.spellName, umbralDetonationCount))
 		self:PlaySound(405036, "alert")
 		umbralDetonationCount = umbralDetonationCount + 1
-		--self:Bar(405036, 30, CL.count:format(args.spellName, umbralDetonationCount))
+		self:Bar(405036, 22, CL.count:format(args.spellName, umbralDetonationCount))
 		count = 1
 	end
 
@@ -196,7 +193,7 @@ function mod:ShadowsConvergence(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, shadowsConvergenceCount))
 	self:PlaySound(args.spellId, "alert")
 	shadowsConvergenceCount = shadowsConvergenceCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, shadowsConvergenceCount))
+	self:Bar(args.spellId, 21, CL.count:format(args.spellName, shadowsConvergenceCount))
 end
 
 -- function mod:ShadowSpike(args)
@@ -230,7 +227,7 @@ function mod:FieryMeteor(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, fieryMeteorCount))
 	self:PlaySound(args.spellId, "alert")
 	fieryMeteorCount = fieryMeteorCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, fieryMeteorCount))
+	self:Bar(args.spellId, 31.5, CL.count:format(args.spellName, fieryMeteorCount))
 end
 
 function mod:MoltenEruption(args)
@@ -238,7 +235,7 @@ function mod:MoltenEruption(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, moltenEruptionCount))
 	self:PlaySound(args.spellId, "alert")
 	moltenEruptionCount = moltenEruptionCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, moltenEruptionCount))
+	self:CDBar(args.spellId, 23.1, CL.count:format(args.spellName, moltenEruptionCount))
 end
 
 function mod:SwirlingFlame(args)
@@ -246,7 +243,7 @@ function mod:SwirlingFlame(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, swirlingFlameCount))
 	self:PlaySound(args.spellId, "alert")
 	swirlingFlameCount = swirlingFlameCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, swirlingFlameCount))
+	self:CDBar(args.spellId, 21, CL.count:format(args.spellName, swirlingFlameCount))
 end
 
 -- function mod:FlameSlash(args)
@@ -258,6 +255,38 @@ end
 -- end
 
 -- Molgoth
+
+do
+	local prev = 0
+	function mod:Stage2Trigger(args)
+		local t = args.time
+		if t-prev > 2 then
+			prev = t
+			self:StopBar(CL.count:format(self:SpellName(403459), coalescingVoidCount)) -- Coalescing Void
+			self:StopBar(CL.count:format(self:SpellName(405036), umbralDetonationCount)) -- Umbral Detonation
+			self:StopBar(CL.count:format(self:SpellName(407640), shadowsConvergenceCount)) -- Shadows Convergence
+			self:StopBar(CL.count:format(self:SpellName(404732), fieryMeteorCount)) -- Fiery Meteor
+			self:StopBar(CL.count:format(self:SpellName(403101), moltenEruptionCount)) -- Molten Eruption
+			self:StopBar(CL.count:format(self:SpellName(404896), swirlingFlameCount)) -- Swirling Flame
+
+			mod:SetStage(2)
+			self:Message("stages", "cyan", CL.stage:format(2), false)
+			self:PlaySound("stages", "long")
+			gloomConflagrationCount = 1
+			blisteringTwilightCount = 1
+			convergentEruptionCount = 1
+			shadowflameBurstCount = 1
+
+
+			self:Bar(405914, 17.5)
+			self:Bar(406783, 18.5, CL.count:format(self:SpellName(406783), shadowflameBurstCount))
+			self:Bar(405642, 21.5, CL.count:format(self:SpellName(405642), blisteringTwilightCount))
+			self:Bar(405437, 32.5, CL.count:format(self:SpellName(405437), gloomConflagrationCount))
+			self:Bar(408193, 47.0, CL.count:format(self:SpellName(408193), convergentEruptionCount))
+		end
+	end
+end
+
 function mod:ShadowflameApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
@@ -280,7 +309,7 @@ function mod:GloomConflagration(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, gloomConflagrationCount))
 	self:PlaySound(args.spellId, "alert")
 	gloomConflagrationCount = gloomConflagrationCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, gloomConflagrationCount))
+	self:Bar(args.spellId, 40, CL.count:format(args.spellName, gloomConflagrationCount))
 end
 
 do
@@ -290,8 +319,7 @@ do
 		self:Message(405642, "yellow", CL.count:format(args.spellName, blisteringTwilightCount))
 		self:PlaySound(405642, "alert")
 		blisteringTwilightCount = blisteringTwilightCount + 1
-		--self:Bar(405642, 30, CL.count:format(args.spellName, blisteringTwilightCount))
-		count = 1
+		self:Bar(405642, 40, CL.count:format(args.spellName, blisteringTwilightCount))
 	end
 
 	function mod:BlisteringTwilightApplied(args)
@@ -301,7 +329,6 @@ do
 			self:Say(args.spellId)
 			self:SayCountdown(args.spellId, 6)
 		end
-		count = count + 1
 	end
 
 	function mod:BlisteringTwilightRemoved(args)
@@ -316,7 +343,11 @@ function mod:ConvergentEruption(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, convergentEruptionCount))
 	self:PlaySound(args.spellId, "alert")
 	convergentEruptionCount = convergentEruptionCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, convergentEruptionCount))
+	self:Bar(args.spellId, 40, CL.count:format(args.spellName, convergentEruptionCount))
+end
+
+function mod:CrushingVulnerability(args)
+	self:Bar(args.spellId, 35.5)
 end
 
 function mod:CrushingVulnerabilityApplied(args)
@@ -333,7 +364,7 @@ function mod:ShadowflameBurst(args)
 	self:Message(args.spellId, "purple", CL.count:format(args.spellName, shadowflameBurstCount))
 	self:PlaySound(args.spellId, "alert")
 	shadowflameBurstCount = shadowflameBurstCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, shadowflameBurstCount))
+	self:Bar(args.spellId, shadowflameBurstCount > 5 and 40 or 35.3, CL.count:format(args.spellName, shadowflameBurstCount))
 end
 
 do
