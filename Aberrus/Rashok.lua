@@ -5,7 +5,7 @@ if not IsTestBuild() then return end
 
 local mod, CL = BigWigs:NewBoss("Rashok", 2569, 2525)
 if not mod then return end
-mod:RegisterEnableMob(201320)
+mod:RegisterEnableMob(201320) -- Rashok
 mod:SetEncounterID(2680)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
@@ -33,7 +33,7 @@ end
 
 function mod:GetOptions()
 	return {
-		405821, -- Searing Slam
+		{405821, "SAY"}, -- Searing Slam
 		403543, -- Living Lava
 		406851, -- Doom Flame
 		406333, -- Shadowlava Blast
@@ -53,6 +53,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "AncientFuryApplied", 405316)
 	self:Log("SPELL_CAST_START", "SearingSlam", 405821)
+	self:Log("SPELL_AURA_APPLIED", "SearingSlamApplied", 405819, 407642)
 	self:Log("SPELL_CAST_START", "DoomFlame", 406851)
 	self:Log("SPELL_CAST_START", "ShadowlavaBlast", 406333)
 	self:Log("SPELL_CAST_START", "ChargedSmash", 400777)
@@ -76,12 +77,12 @@ function mod:OnEngage()
 	shadowlavaBlastCount = 1
 	chargedSmashCount = 1
 
-	-- self:Bar(405316, 92) -- Ancient Fury
-	-- self:Bar(405821, 30, CL.count:format(self:SpellName(405821), searingSlamCount)) -- Searing Slam
-	-- self:Bar(406851, 30, CL.count:format(self:SpellName(406851), doomFlameCount)) -- Doom Flame
-	-- self:Bar(406333, 30, CL.count:format(self:SpellName(406333), shadowlavaBlastCount)) -- Shadowlava Blast
-	-- self:Bar(400777, 30, CL.count:format(self:SpellName(400777), chargedSmashCount)) -- Charged Smash
-	-- self:Bar(407641, 30) -- Volcanic Combo
+	self:Bar(405821, 4, CL.count:format(self:SpellName(405821), searingSlamCount)) -- Searing Slam
+	self:Bar(407641, 24) -- Volcanic Combo
+	self:Bar(406851, 35, CL.count:format(self:SpellName(406851), doomFlameCount)) -- Doom Flame
+	self:Bar(400777, 15, CL.count:format(self:SpellName(400777), chargedSmashCount)) -- Charged Smash
+	self:Bar(406333, 81.5, CL.count:format(self:SpellName(406333), shadowlavaBlastCount)) -- Shadowlava Blast
+	self:Bar(405316, 100) -- Ancient Fury
 end
 
 --------------------------------------------------------------------------------
@@ -99,7 +100,18 @@ function mod:SearingSlam(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, searingSlamCount))
 	self:PlaySound(args.spellId, "warning")
 	searingSlamCount = searingSlamCount + 1
-	-- self:Bar(args.spellId, 30, CL.count:format(args.spellName, searingSlamCount))
+	if searingSlamCount < 4 then -- 3 per rotation
+		self:Bar(args.spellId, searingSlamCount == 2 and 40 or 31, CL.count:format(args.spellName, searingSlamCount))
+	end
+end
+
+function mod:SearingSlamApplied(args)
+	self:TargetMessage(405821, "yellow", args.destName, CL.count:format(args.spellName, searingSlamCount-1))
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(405821)
+		self:PlaySound(405821, "warning")
+		self:Say(405821)
+	end
 end
 
 function mod:DoomFlame(args)
@@ -107,7 +119,7 @@ function mod:DoomFlame(args)
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, searingSlamCount))
 	self:PlaySound(args.spellId, "alert") -- stack
 	doomFlameCount = doomFlameCount + 1
-	-- self:Bar(args.spellId, 30, CL.count:format(args.spellName, doomFlameCount))
+	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, doomFlameCount))
 end
 
 function mod:ShadowlavaBlast(args)
@@ -123,7 +135,9 @@ function mod:ChargedSmash(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, chargedSmashCount))
 	self:PlaySound(args.spellId, "alarm") -- spread
 	chargedSmashCount = chargedSmashCount + 1
-	-- self:Bar(args.spellId, 30, CL.count:format(args.spellName, chargedSmashCount))
+	if searingSlamCount < 3 then -- 2 per rotation
+		self:Bar(args.spellId, 40, CL.count:format(args.spellName, chargedSmashCount))
+	end
 end
 
 do
@@ -138,7 +152,7 @@ do
 		count = count + 1
 		if count > 2 then
 			count = 1
-			-- self:Bar(407641, 30) -- Volcanic Combo
+			-- self:Bar(407641, 41) -- Volcanic Combo
 		end
 	end
 
@@ -152,7 +166,7 @@ do
 		count = count + 1
 		if count > 2 then
 			count = 1
-			-- self:Bar(407641, 30) -- Volcanic Combo
+			-- self:Bar(407641, 41) -- Volcanic Combo
 		end
 	end
 end
@@ -178,17 +192,30 @@ end
 -- Conduit
 
 function mod:SiphonEnergyApplied(args)
-	self:Stop(405316) -- Ancient Fury
 	self:Message(args.spellId, "cyan")
 	self:PlaySound(args.spellId, "info")
+
+	self:StopBar(405316) -- Ancient Fury
+	self:StopBar(CL.count:format(self:SpellName(405821), searingSlamCount)) -- Searing Slam
+	self:StopBar(CL.count:format(self:SpellName(406851), doomFlameCount)) -- Doom Flame
+	self:StopBar(CL.count:format(self:SpellName(406333), shadowlavaBlastCount)) -- Shadowlava Blast
+	self:StopBar(CL.count:format(self:SpellName(400777), chargedSmashCount)) -- Charged Smash
 end
 
 function mod:SiphonEnergyRemoved(args)
 	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
-	-- self:PlaySound(args.spellId, "info")
+	self:PlaySound(args.spellId, "long")
 
-	-- XXX check the boss energy
-	-- self:Bar(405316, 92) -- Ancient Fury
+	searingSlamCount = 1
+	doomFlameCount = 1
+	shadowlavaBlastCount = 1
+	chargedSmashCount = 1
+
+	self:Bar(405821, 6, CL.count:format(self:SpellName(405821), searingSlamCount)) -- Searing Slam
+	self:Bar(400777, 17, CL.count:format(self:SpellName(400777), chargedSmashCount)) -- Charged Smash
+	self:Bar(406851, 37, CL.count:format(self:SpellName(406851), doomFlameCount)) -- Doom Flame
+	self:Bar(406333, 84.5, CL.count:format(self:SpellName(406333), shadowlavaBlastCount)) -- Shadowlava Blast
+	self:Bar(405316, 100) -- Ancient Fury
 end
 
 function mod:UnyieldingRageApplied(args)
