@@ -43,6 +43,7 @@ local unstableEssenceMarker = mod:AddMarkerOption(true, "player", 1, 407327, 1, 
 function mod:GetOptions()
 	return {
 		-- General
+		"stages",
 		{406311, "TANK"}, -- Infused Strikes
 		407302, -- Infused Explosion
 		-- Neldris
@@ -59,11 +60,18 @@ function mod:GetOptions()
 		406227, -- Deep Breath
 		407552, -- Temporal Anomaly
 		{405392, "SAY"}, -- Disintegrate
+	}, {
+		[406358] = -26316, -- Neldris
+		[407327] = -26322, -- Thadrion
+		[406227] = -26329, -- Rionthus
 	}
 end
 
 function mod:OnBossEnable()
 	-- General
+	self:RegisterUnitEvent("UNIT_TARGETABLE_CHANGED", nil, "boss1", "boss2", "boss3")
+	self:Death("Deaths", 200912, 200913, 200918)
+
 	self:Log("SPELL_AURA_APPLIED", "InfusedStrikesApplied", 406311)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "InfusedStrikesApplied", 406311)
 	self:Log("SPELL_AURA_APPLIED", "InfusedExplosionApplied", 407302)
@@ -95,27 +103,58 @@ function mod:OnEngage()
 	massiveSlamCount = 1
 	forcefulRoarCount = 1
 
-	--self:Bar(406358, 30, CL.count:format(self:SpellName(406358), mutilationCount)) -- Mutilation
-	--self:Bar(404472, 30, CL.count:format(self:SpellName(404472), massiveSlamCount)) -- Massive Slam
-	--self:Bar(404713, 30, CL.count:format(self:SpellName(404713), forcefulRoarCount)) -- Forceful Roar
-
 	essenceMarksUsed = {}
 	volatileSpewCount = 1
 	uncontrollableFrenzyCount = 1
-	--self:Bar(405492, 30, CL.count:format(self:SpellName(405492), volatileSpewCount)) -- Volatile Spew
-	--self:Bar(405375, 30, CL.count:format(self:SpellName(405375), uncontrollableFrenzyCount)) -- Uncontrollable Frenzy
 
 	deepBreathCount = 1
 	temporalAnomalyCount = 1
 	disintergrateCount = 1
-	--self:Bar(406227, 30, CL.count:format(self:SpellName(406227), deepBreathCount)) -- Deep Breath
-	--self:Bar(407552, 30, CL.count:format(self:SpellName(407552), temporalAnomalyCount)) -- Temporal Anomaly
-	--self:Bar(405392, 30, CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
+
+	-- self:Bar(406358, 30, CL.count:format(self:SpellName(406358), mutilationCount)) -- Mutilation
+	-- self:Bar(404472, 30, CL.count:format(self:SpellName(404472), massiveSlamCount)) -- Massive Slam
+	-- self:Bar(404713, 30, CL.count:format(self:SpellName(404713), forcefulRoarCount)) -- Forceful Roar
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
+
+function mod:UNIT_TARGETABLE_CHANGED(_, unit)
+	-- XXX maybe IEEU with flags for the bosses?
+	local mobId = self:MobId(self:UnitGUID(unit))
+	if mobId == 200913 then -- Thadrion
+		if UnitCanAttack("player", unit) then
+			self:Message("stages", "cyan", -26322, false)
+			self:PlaySound("stages", "long")
+			-- self:Bar(405492, 30, CL.count:format(self:SpellName(405492), volatileSpewCount)) -- Volatile Spew
+			-- self:Bar(405375, 30, CL.count:format(self:SpellName(405375), uncontrollableFrenzyCount)) -- Uncontrollable Frenzy
+		end
+	elseif mobId == 200918 then -- Rionthus
+		if UnitCanAttack("player", unit) then
+			self:Message("stages", "cyan", -26329, false)
+			self:PlaySound("stages", "long")
+			-- self:Bar(406227, 30, CL.count:format(self:SpellName(406227), deepBreathCount)) -- Deep Breath
+			-- self:Bar(407552, 30, CL.count:format(self:SpellName(407552), temporalAnomalyCount)) -- Temporal Anomaly
+			-- self:Bar(405392, 30, CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
+		end
+	end
+end
+
+function mod:Deaths(args)
+	if args.mobId == 200912 then -- Neldris
+		self:StopBar(CL.count:format(self:SpellName(406358), mutilationCount)) -- Mutilation
+		self:StopBar(CL.count:format(self:SpellName(404472), massiveSlamCount)) -- Massive Slam
+		self:StopBar(CL.count:format(self:SpellName(404713), forcefulRoarCount)) -- Forceful Roar
+	elseif args.mobId == 200913 then -- Thadrion
+		self:StopBar(CL.count:format(self:SpellName(405492), volatileSpewCount)) -- Volatile Spew
+		self:StopBar(CL.count:format(self:SpellName(405375), uncontrollableFrenzyCount)) -- Uncontrollable Frenzy
+	elseif args.mobId == 200918 then -- Rionthus
+		self:StopBar(CL.count:format(self:SpellName(406227), deepBreathCount)) -- Deep Breath
+		self:StopBar(CL.count:format(self:SpellName(407552), temporalAnomalyCount)) -- Temporal Anomaly
+		self:StopBar(CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
+	end
+end
 
 -- General
 function mod:InfusedStrikesApplied(args)
@@ -154,7 +193,7 @@ do
 		if onMe then
 			mod:PlaySound(406358, "warning")
 		else
-			mod:PlaySound(406358, "alert")
+			mod:PlaySound(406358, "alarm")
 		end
 		onMe = false
 	end
@@ -164,6 +203,7 @@ do
 		mutilationCount = mutilationCount + 1
 		--self:Bar(args.spellId, 30, CL.count:format(args.spellName, mutilationCount))
 		count = 8 -- Using 8, 7, 6
+		playerList = {}
 		self:SimpleTimer(mutilationSound, 0.1)
 	end
 
@@ -255,7 +295,7 @@ end
 function mod:DeepBreath(args)
 	self:StopBar(CL.count:format(args.spellName, deepBreathCount))
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, deepBreathCount))
-	self:PlaySound(args.spellId, "alarm")
+	self:PlaySound(args.spellId, "alert")
 	deepBreathCount = deepBreathCount + 1
 	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, deepBreathCount))
 end
@@ -263,7 +303,7 @@ end
 function mod:TemporalAnomaly(args)
 	self:StopBar(CL.count:format(args.spellName, temporalAnomalyCount))
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, temporalAnomalyCount))
-	self:PlaySound(args.spellId, "alert")
+	self:PlaySound(args.spellId, "info")
 	temporalAnomalyCount = temporalAnomalyCount + 1
 	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, temporalAnomalyCount))
 end
