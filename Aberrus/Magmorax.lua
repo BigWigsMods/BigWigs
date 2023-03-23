@@ -91,6 +91,7 @@ do
 		self:StopBar(CL.count:format(args.spellName, moltenSpittleCount))
 		moltenSpittleCount = moltenSpittleCount + 1
 		--self:Bar(402994, 30, CL.count:format(args.spellName, moltenSpittleCount))
+		playerList = {}
 	end
 
 	function mod:MoltenSpittleApplied(args)
@@ -117,8 +118,10 @@ end
 function mod:SearingHeatApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
-		self:PlaySound(args.spellId, "underyou")
+		if amount % 3 == 1 then -- 1, 4, 7, 10, ...
+			self:StackMessage(args.spellId, "blue", args.destName, args.amount, 1)
+			self:PlaySound(args.spellId, "underyou")
+		end
 	end
 end
 
@@ -160,7 +163,7 @@ function mod:IncineratingMawsApplied(args)
 	self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1)
 	if self:Me(args.destGUID) then
 		self:PlaySound(args.spellId, "alarm")
-	elseif amount > 1 then-- Tank Swap?
+	elseif amount > 1 then -- Tank Swap?
 		self:PlaySound(args.spellId, "warning")
 	else
 		self:PlaySound(args.spellId, "info")
