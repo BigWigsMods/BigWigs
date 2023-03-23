@@ -39,8 +39,8 @@ local castingEbonDestruction = false
 local L = mod:GetLocale()
 if L then
 	L.custom_on_repeating_shattered_reality = "Repeating Shattered Reality"
-	L.custom_on_repeating_shattered_reality_desc = "Repeating messages during the Ebon Destruction cast to get save inside the Shattered Reality."
-	L.custom_on_repeating_shattered_reality_icon = 403908
+	L.custom_on_repeating_shattered_reality_desc = "Repeating message during the Ebon Destruction cast to get inside a portal."
+	L.custom_on_repeating_shattered_reality_icon = 407919
 end
 
 --------------------------------------------------------------------------------
@@ -51,22 +51,26 @@ local rushingShadowsMarker = mod:AddMarkerOption(true, "player", 1, 407182, 1, 2
 function mod:GetOptions()
 	return {
 		"stages",
-		-- Stage 1
-		403272, -- Echoing Fissure
-		{407182, "SAY", "SAY_COUNTDOWN"}, -- Rushing Shadows
+		{407221, "SAY", "SAY_COUNTDOWN"}, -- Rushing Shadows
 		rushingShadowsMarker,
+		{401998, "TANK_HEALER"}, -- Calamitous Strike
+		-- Stage 1
 		402902, -- Twisted Earth
-		401998, -- Calamitous Strike
+		402115, -- Echoing Fissure
 		-- Stage 2
 		403057, -- Surrender to Corruption
 		{401010, "SAY"}, -- (Class) Corruption
 		404045, -- Annihilating Shadows
-		403528, -- Sweeping Shadows
-		407790, -- Sunder Shadow
+		403846, -- Sweeping Shadows
+		{407790, "TANK_HEALER"}, -- Sunder Shadow
 		-- Stage 3
 		403908, -- Shattered Reality
 		"custom_on_repeating_shattered_reality",
 		407917, -- Ebon Destruction
+	}, {
+		[402902] = -26192, -- Stage 1
+		[403057] = -26421, -- Stage 2
+		[403908] = -26422, -- Stage 3
 	}
 end
 
@@ -119,8 +123,8 @@ function mod:OnEngage()
 	castingEbonDestruction =  false
 
 	--self:Bar(401998, 10) -- Calamitous Strike
-	--self:Bar(403272, 10, CL.count:format(self:SpellName(403272), echoingFissureCount)) -- Echoing Fissure
-	--self:Bar(407182, 10, CL.count:format(self:SpellName(407182), rushingShadowsCount)) -- Rushing Shadows
+	--self:Bar(402115, 10, CL.count:format(self:SpellName(402115), echoingFissureCount)) -- Echoing Fissure
+	--self:Bar(407221, 10, CL.count:format(self:SpellName(407221), rushingShadowsCount)) -- Rushing Shadows
 	--self:Bar(402902, 10, CL.count:format(self:SpellName(402902), twistedEarthCount)) -- Twisted Earth
 end
 
@@ -131,10 +135,10 @@ end
 -- Stage 1
 function mod:EchoingFissure(args)
 	self:StopBar(CL.count:format(args.spellName, echoingFissureCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, echoingFissureCount))
-	self:PlaySound(args.spellId, "alarm")
+	self:Message(402115, "orange", CL.count:format(args.spellName, echoingFissureCount))
+	self:PlaySound(402115, "alarm")
 	echoingFissureCount = echoingFissureCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, echoingFissureCount))
+	--self:Bar(402115, 30, CL.count:format(args.spellName, echoingFissureCount))
 end
 
 do
@@ -142,7 +146,8 @@ do
 	function mod:RushingShadows(args)
 		self:StopBar(CL.count:format(args.spellName, rushingShadowsCount))
 		rushingShadowsCount = rushingShadowsCount + 1
-		--self:Bar(407182, 30, CL.count:format(args.spellName, rushingShadowsCount))
+		--self:Bar(407221, 30, CL.count:format(args.spellName, rushingShadowsCount))
+		playerList = {}
 	end
 
 	function mod:RushingShadowsApplied(args)
@@ -150,17 +155,17 @@ do
 		playerList[count] = args.destName
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
-			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.rticon:format(args.spellName, count))
-			self:SayCountdown(args.spellId, 5, count)
+			self:PlaySound(407221, "warning")
+			self:Say(407221, CL.rticon:format(args.spellName, count))
+			self:SayCountdown(407221, 5, count)
 		end
 		self:CustomIcon(rushingShadowsMarker, args.destName, count)
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(args.spellName, rushingShadowsCount-1))
+		self:TargetsMessage(407221, "yellow", playerList, 3, CL.count:format(args.spellName, rushingShadowsCount-1))
 	end
 
 	function mod:RushingShadowsRemoved(args)
 		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(407221)
 		end
 		self:CustomIcon(rushingShadowsMarker, args.destName)
 	end
@@ -196,8 +201,8 @@ function mod:Stage2Start(args)
 	self:PlaySound("stages", "info")
 
 	self:StopBar(401998) -- Calamitous Strike
-	self:StopBar(CL.count:format(self:SpellName(403272), echoingFissureCount)) -- Echoing Fissure
-	self:StopBar(CL.count:format(self:SpellName(407182), rushingShadowsCount)) -- Rushing Shadows
+	self:StopBar(CL.count:format(self:SpellName(402115), echoingFissureCount)) -- Echoing Fissure
+	self:StopBar(CL.count:format(self:SpellName(407221), rushingShadowsCount)) -- Rushing Shadows
 	self:StopBar(CL.count:format(self:SpellName(402902), twistedEarthCount)) -- Twisted Earth
 
 	surrenderToCorruptionCount = 1
@@ -205,9 +210,9 @@ function mod:Stage2Start(args)
 	sweepingShadowsCount = 1
 
 	--self:Bar(407790, 10) -- Sunder Shadow
-	--self:Bar(403057, 10, CL.count:format(self:SpellName(403057), echoingFissureCount)) -- Surrender to Corruption
+	--self:Bar(403057, 10, CL.count:format(self:SpellName(403057), surrenderToCorruptionCount)) -- Surrender to Corruption
 	--self:Bar(404045, 10, CL.count:format(self:SpellName(404045), annihilatingShadowsCount)) -- Annihilating Shadows
-	--self:Bar(403528, 10, CL.count:format(self:SpellName(403528), twistedEarthCount)) -- Sweeping Shadows
+	--self:Bar(403846, 10, CL.count:format(self:SpellName(403528), sweepingShadowsCount)) -- Sweeping Shadows
 end
 
 function mod:SurrenderToCorruption(args)
@@ -236,10 +241,10 @@ end
 
 function mod:SweepingShadows(args)
 	self:StopBar(CL.count:format(args.spellName, sweepingShadowsCount))
-	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, sweepingShadowsCount))
-	self:PlaySound(args.spellId, "alert")
+	self:Message(403846, "yellow", CL.count:format(args.spellName, sweepingShadowsCount))
+	self:PlaySound(403846, "alert")
 	sweepingShadowsCount = sweepingShadowsCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, sweepingShadowsCount))
+	--self:Bar(403846, 30, CL.count:format(args.spellName, sweepingShadowsCount))
 end
 
 function mod:SunderShadow(args)
@@ -272,7 +277,7 @@ function mod:Stage2Over(args)
 
 		--self:Bar(401998, 10) -- Calamitous Strike
 		--self:Bar(403908, 10, CL.count:format(self:SpellName(403908), shatteredRealityCount)) -- Shattered Reality
-		--self:Bar(407182, 10, CL.count:format(self:SpellName(407182), rushingShadowsCount)) -- Rushing Shadows
+		--self:Bar(407221, 10, CL.count:format(self:SpellName(407221), rushingShadowsCount)) -- Rushing Shadows
 		--self:Bar(407917, 10, CL.count:format(self:SpellName(407917), ebonDestructionCount)) -- Ebon Destruction
 	else -- Stage 1 again
 		self:SetStage(1)
@@ -281,8 +286,8 @@ function mod:Stage2Over(args)
 		twistedEarthCount = 1
 
 		--self:Bar(401998, 10) -- Calamitous Strike
-		--self:Bar(403272, 10, CL.count:format(self:SpellName(403272), echoingFissureCount)) -- Echoing Fissure
-		--self:Bar(407182, 10, CL.count:format(self:SpellName(407182), rushingShadowsCount)) -- Rushing Shadows
+		--self:Bar(402115, 10, CL.count:format(self:SpellName(402115), echoingFissureCount)) -- Echoing Fissure
+		--self:Bar(407221, 10, CL.count:format(self:SpellName(407221), rushingShadowsCount)) -- Rushing Shadows
 		--self:Bar(402902, 10, CL.count:format(self:SpellName(402902), twistedEarthCount)) -- Twisted Earth
 	end
 
@@ -297,20 +302,21 @@ do
 	local prev = 0
 	local shatteredRealityCheck = nil
 	local function checkForShatteredReality()
-		if not shatteredRealityOnMe then
-			mod:PersonalMessage("custom_on_repeating_shattered_reality", "no", mod:SpellName(407919), 407919)
-			mod:PlaySound("custom_on_repeating_shattered_reality", "warning")
+		if mod:GetOption("custom_on_repeating_shattered_reality") then
+			if not shatteredRealityOnMe then
+				mod:Message(403908, "blue", CL.no:format(mod:SpellName(407919)), 407919)
+				mod:PlaySound(403908, "warning")
+			end
+			shatteredRealityCheck = mod:ScheduleTimer(checkForShatteredReality, 1)
 		else
-			mod:Message("custom_on_repeating_shattered_reality", "green", CL.you:format(mod:SpellName(407919)), 407919)
-			mod:PlaySound("custom_on_repeating_shattered_reality", "info")
+			shatteredRealityCheck = nil
 		end
-		shatteredRealityCheck = mod:ScheduleTimer(checkForShatteredReality, 1)
 	end
 
 	function mod:ShatteredReality(args)
 		self:StopBar(CL.count:format(args.spellName, shatteredRealityCount))
 		self:Message(args.spellId, "cyan", CL.count:format(args.spellName, shatteredRealityCount))
-		self:PlaySound(args.spellId, "info")
+		self:PlaySound(args.spellId, "alert")
 		shatteredRealityCount = shatteredRealityCount + 1
 		--self:Bar(args.spellId, 30, CL.count:format(args.spellName, shatteredRealityCount))
 	end
@@ -318,11 +324,14 @@ do
 	function mod:ShatteredRealityApplied(args)
 		if self:Me(args.destGUID) then
 			shatteredRealityOnMe = true
-			if not castingEbonDestruction then -- Ground Effect
+			if castingEbonDestruction then
+				self:Message(403908, "green", CL.you:format(args.spellName), 407919)
+				self:PlaySound(403908, "info")
+			else -- Ground Effect
 				local t = args.time
 				if t-prev > 2 then
 					prev = t
-					self:PersonalMessage(403908, "underyou")
+					self:PersonalMessage(403908, "underyou", nil, 407919)
 					self:PlaySound(403908, "underyou")
 				end
 			end
@@ -341,14 +350,15 @@ do
 		self:PlaySound(args.spellId, "warning")
 		ebonDestructionCount = ebonDestructionCount + 1
 		--self:Bar(args.spellId, 30, CL.count:format(args.spellName, ebonDestructionCount))
-		checkForShatteredReality()
 		castingEbonDestruction = true
+		shatteredRealityCheck = mod:ScheduleTimer(checkForShatteredReality, 1)
 	end
 
 	function mod:EbonDestructionSuccess()
 		castingEbonDestruction = false
 		if shatteredRealityCheck then
 			self:CancelTimer(shatteredRealityCheck)
+			shatteredRealityCheck = nil
 		end
 	end
 end
