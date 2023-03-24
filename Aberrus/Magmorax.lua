@@ -18,6 +18,7 @@ local moltenSpittleCount = 1
 local ignitingRoarCount = 1
 local overpoweringStompCount = 1
 local blazingBreathCount = 1
+local incinteratingMawsCount = 1
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -41,8 +42,8 @@ function mod:GetOptions()
 		407879, -- Blazing Tantrum
 		403740, -- Igniting Roar
 		403671, -- Overpowering Stomp
-		402344, -- Blazing Breath
-		{401348, "TANK"}, -- Incinerating Maws
+		409093, -- Blazing Breath
+		{404846, "TANK"}, -- Incinerating Maws
 	}
 end
 
@@ -56,11 +57,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BlazingTantrum", 407879)
 	self:Log("SPELL_CAST_START", "IgnitingRoar", 403740)
 	self:Log("SPELL_CAST_START", "OverpoweringStomp", 403671)
-	self:Log("SPELL_CAST_START", "BlazingBreath", 402344)
-	self:Log("SPELL_CAST_SUCCESS", "IncineratingMaws", 401348)
-	self:Log("SPELL_AURA_APPLIED", "IncineratingMawsApplied", 401348)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "IncineratingMawsApplied", 401348)
-
+	self:Log("SPELL_CAST_START", "BlazingBreath", 409093)
+	self:Log("SPELL_CAST_START", "IncineratingMaws", 404846)
+	self:Log("SPELL_AURA_APPLIED", "IncineratingMawsApplied", 404846)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "IncineratingMawsApplied", 404846)
 end
 
 function mod:OnEngage()
@@ -68,12 +68,13 @@ function mod:OnEngage()
 	ignitingRoarCount = 1
 	overpoweringStompCount = 1
 	blazingBreathCount = 1
+	incinteratingMawsCount = 1
 
-	--self:Bar(401348, 20) -- Incinerating Maws
-	--self:Bar(402994, 10, CL.count:format(self:SpellName(402994), moltenSpittleCount)) -- Molten Spittle
-	--self:Bar(403740, 20, CL.count:format(self:SpellName(403740), ignitingRoarCount)) -- Igniting Roar
-	--self:Bar(403671, 20, CL.count:format(self:SpellName(403671), overpoweringStompCount)) -- Overpowering Stomp
-	--self:Bar(402344, 20, CL.count:format(self:SpellName(402344), blazingBreathCount)) -- Blazing Breath
+	self:Bar(403740, 5, CL.count:format(self:SpellName(403740), ignitingRoarCount)) -- Igniting Roar
+	self:Bar(402994, 14.5, CL.count:format(self:SpellName(402994), moltenSpittleCount)) -- Molten Spittle
+	self:Bar(404846, 20) -- Incinerating Maws
+	self:Bar(409093, 26, CL.count:format(self:SpellName(409093), blazingBreathCount)) -- Blazing Breath
+	self:Bar(403671, 69, CL.count:format(self:SpellName(403671), overpoweringStompCount)) -- Overpowering Stomp
 end
 
 --------------------------------------------------------------------------------
@@ -90,7 +91,7 @@ do
 	function mod:MoltenSpittle(args)
 		self:StopBar(CL.count:format(args.spellName, moltenSpittleCount))
 		moltenSpittleCount = moltenSpittleCount + 1
-		--self:Bar(402994, 30, CL.count:format(args.spellName, moltenSpittleCount))
+		self:CDBar(402994, moltenSpittleCount % 2 == 0 and 24 or 26, CL.count:format(args.spellName, moltenSpittleCount)) -- 24~25 / 26~27
 		playerList = {}
 	end
 
@@ -104,7 +105,7 @@ do
 			self:SayCountdown(args.spellId, 6, count)
 		end
 		self:CustomIcon(moltenSpittleMarker, args.destName, count)
-		self:TargetsMessage(args.spellId, "yellow", playerList, 3, CL.count:format(args.spellName, moltenSpittleCount-1))
+		self:TargetsMessage(args.spellId, "cyan", playerList, 3, CL.count:format(args.spellName, moltenSpittleCount-1))
 	end
 
 	function mod:MoltenSpittleRemoved(args)
@@ -135,15 +136,16 @@ function mod:IgnitingRoar(args)
 	self:Message(args.spellId, "yellow", CL.count:format(args.spellName, ignitingRoarCount))
 	self:PlaySound(args.spellId, "alert")
 	ignitingRoarCount = ignitingRoarCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, ignitingRoarCount))
+	local cd = ignitingRoarCount % 3 == 2 and 40 or ignitingRoarCount % 3 == 0 and 30 or 23
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, ignitingRoarCount))
 end
 
 function mod:OverpoweringStomp(args)
 	self:StopBar(CL.count:format(args.spellName, overpoweringStompCount))
 	self:Message(args.spellId, "orange", CL.count:format(args.spellName, overpoweringStompCount))
-	self:PlaySound(args.spellId, "alarm")
+	self:PlaySound(args.spellId, "long")
 	overpoweringStompCount = overpoweringStompCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, overpoweringStompCount))
+	self:Bar(args.spellId, 102, CL.count:format(args.spellName, overpoweringStompCount))
 end
 
 function mod:BlazingBreath(args)
@@ -151,11 +153,15 @@ function mod:BlazingBreath(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, blazingBreathCount))
 	self:PlaySound(args.spellId, "alert")
 	blazingBreathCount = blazingBreathCount + 1
-	--self:Bar(args.spellId, 30, CL.count:format(args.spellName, blazingBreathCount))
+	local cd = blazingBreathCount % 3 == 2 and 28 or blazingBreathCount % 3 == 0 and 41 or 33
+	self:Bar(args.spellId, cd, CL.count:format(args.spellName, blazingBreathCount))
 end
 
 function mod:IncineratingMaws(args)
-	--self:Bar(args.spellId, 30)
+	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
+	incinteratingMawsCount = incinteratingMawsCount + 1
+	local cd = (incinteratingMawsCount == 5 or incinteratingMawsCount == 9) and 42 or 20
+	self:Bar(args.spellId, 20)
 end
 
 function mod:IncineratingMawsApplied(args)
