@@ -12,6 +12,7 @@
 ## Notes-esMX: Avisos y barras para encuentros con jefes. Modular, ligero y no intrusivo.
 ## Notes-itIT: Un approccio modulare, leggero e non intrusivo per gli avvisi ai combattimenti con i boss.
 ## Notes-ptBR: Abordagem modular, leve e não intrusiva para avisos em encontros com chefes.
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\core-enabled
 ## Author: Funkydude, Nebula, Elvador, Justwait
 ## Version: @project-version@
 

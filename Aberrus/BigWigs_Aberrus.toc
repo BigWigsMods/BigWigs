@@ -22,6 +22,7 @@
 ## Notes-ruRU: BigWigs Aberrus, the Shadowed Crucible Modules
 ## Notes-zhCN: BigWigs 亚贝鲁斯，焰影熔炉模块
 ## Notes-zhTW: BigWigs 亞貝魯斯，暗影爐缸模組
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\core-enabled
 ## Version: @project-version@
 
 ## LoadOnDemand: 1

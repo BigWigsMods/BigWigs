@@ -22,6 +22,7 @@
 ## Notes-ptBR: BigWigs Configuration Options
 ## Notes-esES: Opciones de configuración de BigWigs.
 ## Notes-esMX: Opciones de configuración de BigWigs.
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\core-enabled
 ## Version: @project-version@
 
 ## LoadOnDemand: 1

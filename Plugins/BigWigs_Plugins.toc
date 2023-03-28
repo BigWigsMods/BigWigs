@@ -22,6 +22,7 @@
 ## Notes-ptBR: Plugins principais do BigWigs
 ## Notes-esES: Plugins del núcleo de BigWigs.
 ## Notes-esMX: Plugins del núcleo de BigWigs.
+## IconTexture: Interface\AddOns\BigWigs\Media\Icons\core-enabled
 ## Version: @project-version@
 
 ## LoadOnDemand: 1
