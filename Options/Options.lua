@@ -350,7 +350,7 @@ local function getSlaveOption(self)
 	local flag = self:GetUserData("flag")
 	local current = module.db.profile[key]
 	if type(current) ~= "number" or type(flag) ~= "number" then
-		error(notNumberError:format(tostringall(key, module.moduleName, current, flag)))
+		error(notNumberError:format(tostring(key), tostring(module.moduleName), tostring(current), tostring(flag)))
 	end
 	return bit.band(current, flag) == flag
 end

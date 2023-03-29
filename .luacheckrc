@@ -9,13 +9,25 @@ only = {
 	"1", -- globals
 }
 files["**/Loader.lua"].ignore = {
+	"113/Ambiguate",
+	"113/BasicMessageDialog",
+	"113/C_AddOns",
 	"113/C_ChatInfo",
+	"113/C_CVar",
+	"113/C_Map",
+	"113/securecallfunction",
 	"113/SendChatMessage",
 	"113/SetRaidTarget",
 	"113/UnitDetailedThreatSituation",
 	"113/UnitGUID",
 	"113/UnitName",
-	"113/securecallfunction",
+
+	-- Slash handling
+	"111/SLASH_BigWigs1",
+	"111/SLASH_BigWigs2",
+	"111/SLASH_BigWigsVersion1",
+	"11[23]/SlashCmdList",
+	"11[23]/hash_SlashCmdList",
 }
 files["**/Core/BossPrototype.lua"].ignore = {
 	"113/TranscriptIgnore",
@@ -26,13 +38,32 @@ files["**/Core/Core.lua"].ignore = {
 	"111/BigWigs",
 	"113/geterrorhandler",
 }
+files["**/Plugins/AutoReply.lua"].ignore = {
+	"113/BNGetFriendIndex",
+	"113/BNIsSelf",
+	"113/BNSendWhisper",
+	"113/C_BattleNet",
+	"113/C_FriendList",
+}
+files["**/Plugins/Bars.lua"].ignore = {
+	"113/C_NamePlate",
+}
 files["**/Plugins/BossBlock.lua"].ignore = {
+	"113/AlertFrame",
 	"112/BigWigs",
+	"113/C_CVar",
+	"113/C_TalkingHead",
+}
+files["**/Plugins/Victory.lua"].ignore = {
+	"113/BossBanner",
+}
+files["**/Plugins/*.lua"].ignore = {
+	"112/SlashCmdList",
+	"111/SLASH_.*", -- slash handlers
 }
 ignore = {
 	"113/BigWigs",
 	"212/self",
-	"11/SLASH_.*", -- slash handlers
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
 }
 globals = {
@@ -46,9 +77,6 @@ globals = {
 	"ceil",
 	"cos",
 	"date",
-	"debuglocals",
-	"debugprofilestart",
-	"debugprofilestop",
 	"debugstack",
 	"deg",
 	"difftime",
@@ -64,8 +92,6 @@ globals = {
 	"gmatch",
 	"gsub",
 	"hooksecurefunc",
-	"issecure",
-	"issecurevariable",
 	"ldexp",
 	"log",
 	"log10",
@@ -75,8 +101,6 @@ globals = {
 	"rad",
 	"random",
 	"scrub",
-	"securecall",
-	"seterrorhandler",
 	"sin",
 	"sort",
 	"sqrt",
@@ -104,19 +128,10 @@ globals = {
 	"tremove",
 
 	-- framexml
-	"SlashCmdList",
-	"getprinthandler",
-	"hash_SlashCmdList",
-	"setprinthandler",
 	"tContains",
 	"tDeleteItem",
-	"tInvert",
-	"tostringall",
 
 	-- everything else
-	"AlertFrame",
-	"Ambiguate",
-	"BasicMessageDialog",
 	"BigWigs3DB",
 	"BigWigsAnchor",
 	"BigWigsAPI",
@@ -126,24 +141,13 @@ globals = {
 	"BigWigsOptions",
 	"BigWigsStatsDB",
 	"BigWigsKrosusFirstBeamWasLeft", -- Legion/Nighthold/Krosus.lua
-	"BNGetFriendIndex",
-	"BNIsSelf",
-	"BNSendWhisper",
-	"BossBanner",
-	"C_AddOns",
-	"C_BattleNet",
-	"C_CVar",
 	"C_EncounterJournal",
-	"C_FriendList",
 	"C_GossipInfo",
-	"C_Map",
 	"C_Minimap", -- Legion/TombOfSargeras/Kiljaeden.lua
-	"C_ModifiedInstance",
-	"C_NamePlate",
+	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
 	"C_RaidLocks",
 	"C_Scenario",
 	"C_Spell",
-	"C_TalkingHead",
 	"C_Timer",
 	"ChatFrame_ImportListToHash",
 	"ChatTypeInfo",

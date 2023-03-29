@@ -21,7 +21,7 @@ plugin.defaultDB = {
 -- Locals
 --
 
-local SendChatMessage, GetTime = BigWigsLoader.SendChatMessage, GetTime
+local Ambiguate, SendChatMessage, GetTime = BigWigsLoader.Ambiguate, BigWigsLoader.SendChatMessage, GetTime
 local L = BigWigsAPI:GetLocale("BigWigs: Plugins")
 plugin.displayName = L.autoReply
 local curDiff = 0
