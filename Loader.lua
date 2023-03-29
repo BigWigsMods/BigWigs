@@ -77,6 +77,10 @@ do
 	end
 
 	BIGWIGS_RELEASE_STRING = releaseString
+	local dateTable = date("*t")
+	if dateTable.day and dateTable.month and dateTable.day == 1 and dateTable.month == 4 then
+		BIGWIGS_RELEASE_STRING = BIGWIGS_RELEASE_STRING:gsub("BigWigs", "DBM")
+	end
 	-- END: MAGIC PACKAGER VOODOO VERSION STUFF
 end
 
@@ -473,7 +477,12 @@ function dataBroker.OnClick(self, button)
 end
 
 function dataBroker.OnTooltipShow(tt)
-	tt:AddLine("BigWigs")
+	local dateTable = date("*t")
+	if dateTable.day and dateTable.month and dateTable.day == 1 and dateTable.month == 4 then
+		tt:AddLine("DBM")
+	else
+		tt:AddLine("BigWigs")
+	end
 	if BigWigs and BigWigs:IsEnabled() then
 		local added = false
 		for name, module in BigWigs:IterateBossModules() do
