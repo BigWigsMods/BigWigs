@@ -56,7 +56,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "AnimateGolems", 405812)
 	self:Log("SPELL_AURA_APPLIED", "SalvageParts", 405592)
 	self:Log("SPELL_CAST_START", "TacticalDestruction", 406678)
-	self:Log("SPELL_CAST_SUCCESS", "ShrapnelBomb", 406725)
+	self:Log("SPELL_CAST_START", "ShrapnelBomb", 406725)
 	self:Log("SPELL_DAMAGE", "ShrapnelBombSoaked", 404955)
 	self:Log("SPELL_MISSED", "ShrapnelBombSoaked", 404955)
 	self:Log("SPELL_CAST_SUCCESS", "UnstableEmbers", 404007)
@@ -67,6 +67,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:SetStage(1)
 	mobCollector = {}
 	marksUsed = {}
 	dragonfireTrapsCount = 1
