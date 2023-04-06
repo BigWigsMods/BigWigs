@@ -449,6 +449,12 @@ do
 		[54610]=true,[54608]=true,[54697]=true,[54708]=true,[54709]=true,
 		[54718]=true,[54719]=true,[54720]=true,
 
+		-- Freehold
+		[104684]=true,[104682]=true,[104685]=true,
+		-- The Underrot
+		[112206]=true,[106857]=true,[106858]=true,[106852]=true,[106876]=true,
+		[106877]=true,[106853]=true,[106855]=true,[106856]=true,
+
 		-- De Other Side
 		[163828]=true,[163830]=true,[163831]=true,[163822]=true,[163823]=true,[163824]=true,[163834]=true,
 		[163835]=true,[163836]=true,[163837]=true,[163819]=true,[163820]=true,[163821]=true,
