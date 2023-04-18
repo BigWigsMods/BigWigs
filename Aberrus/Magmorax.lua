@@ -125,7 +125,8 @@ do
 		local energy = UnitPower(unit)
 		local energyDiff = energy-lastEnergy
 		if energyDiff > 2 then -- uhoh
-			if self:BarTimeLeft(L.catastrophic_eruption) > 18 then -- Update timer
+			local catastrophicEruptionTimeLeft = self:BarTimeLeft(L.catastrophic_eruption) -- Catastrophic Eruption
+			if catastrophicEruptionTimeLeft > 18 then -- Update timer
 				self:StopBar(L.catastrophic_eruption) -- Catastrophic Eruption
 				self:Message(407879, "red", L.energy_gained)
 				local newTimeLeft = catastrophicEruptionTimeLeft - 17 -- 17 s reduction from 5% energy
