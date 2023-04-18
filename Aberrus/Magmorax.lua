@@ -29,7 +29,6 @@ if L then
 	L.blazing_breath = "Breath"
 	L.molten_spittle = "Pools"
 	L.molten_spittle_single = "Pool"
-	L.overpowering_stomp = "Knockback"
 	L.igniting_roar = "Roar"
 	L.searing_heat = "Pool Stack"
 	L.energy_gained = "Energy Gained! (-17s)" -- When you fail, you lose 17s on until the boss reaches full energy
@@ -64,7 +63,7 @@ function mod:GetOptions()
 		[402994] = L.molten_spittle,  -- Molten Spittle (Pools)
 		[408839] = L.searing_heat, -- Searing Heat (Pool Stack)
 		[403740] = L.igniting_roar, -- Igniting Roar (Roar)
-		[403671] = L.overpowering_stomp, -- Overpowering Stomp (Knockback)
+		[403671] = CL.knockback, -- Overpowering Stomp (Knockback)
 		[409093] = L.blazing_breath, -- Blazing Breath (Breath)
 		[411182] = L.explosive_magma, -- Explosive Magma
 	}
@@ -106,7 +105,7 @@ function mod:OnEngage()
 	self:Bar(402994, self:Easy() and 16.5 or 14.5, CL.count:format(L.molten_spittle, moltenSpittleCount)) -- Molten Spittle
 	self:Bar(404846, self:Easy() and 22 or 20, CL.count:format(self:SpellName(401348), incineratingMawsCount)) -- Incinerating Maws
 	self:Bar(409093, self:Easy() and 33.3 or 26, CL.count:format(L.blazing_breath, blazingBreathCount)) -- Blazing Breath
-	self:Bar(403671, self:Easy() and 76.5 or 69, CL.count:format(L.overpowering_stomp, overpoweringStompCount)) -- Overpowering Stomp
+	self:Bar(403671, self:Easy() and 76.5 or 69, CL.count:format(CL.knockback, overpoweringStompCount)) -- Overpowering Stomp
 
 	self:Bar(408358, 340, L.catastrophic_eruption) -- Catastrophic Eruption
 end
@@ -204,11 +203,11 @@ function mod:IgnitingRoar(args)
 end
 
 function mod:OverpoweringStomp(args)
-	self:StopBar(CL.count:format(L.overpowering_stomp, overpoweringStompCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.overpowering_stomp, overpoweringStompCount))
+	self:StopBar(CL.count:format(CL.knockback, overpoweringStompCount))
+	self:Message(args.spellId, "orange", CL.count:format(CL.knockback, overpoweringStompCount))
 	self:PlaySound(args.spellId, "long")
 	overpoweringStompCount = overpoweringStompCount + 1
-	self:Bar(args.spellId, self:Easy() and 113.3 or 102, CL.count:format(L.overpowering_stomp, overpoweringStompCount))
+	self:Bar(args.spellId, self:Easy() and 113.3 or 102, CL.count:format(CL.knockback, overpoweringStompCount))
 end
 
 function mod:BlazingBreath(args)
