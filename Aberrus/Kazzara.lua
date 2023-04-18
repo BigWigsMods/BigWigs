@@ -3,7 +3,7 @@ if not IsTestBuild() then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Kazzara", 2569, 2522)
+local mod, CL = BigWigs:NewBoss("Kazzara, the Hellforged", 2569, 2522)
 if not mod then return end
 mod:RegisterEnableMob(201261) -- Kazzara
 mod:SetEncounterID(2688)
@@ -14,6 +14,7 @@ mod:SetStage(1)
 -- Locals
 --
 
+local nextHellsteelCarnageHealth = 84
 local hellsteelCarnageCount = 1
 local dreadRiftsCount = 1
 local raysOfAnguishCount = 1
@@ -27,6 +28,10 @@ local terrorClawsCount = 1
 
 local L = mod:GetLocale()
 if L then
+	L.dread_rift = "Rift" -- Singular Dread Rift
+	L.rays_of_anguish = "Lasers" -- Rays of Anguish
+	L.wings_of_extinction = "Pushback" -- Wings of Extinction
+	L.hellbeam = "Breath" -- Hellbeam
 end
 
 --------------------------------------------------------------------------------
@@ -45,6 +50,13 @@ function mod:GetOptions()
 		400430, -- Hellbeam
 		403326, -- Wings of Extinction
 		{404743, "TANK"}, -- Terror Claws
+	},{
+
+	},
+	{
+		[407069] = L.rays_of_anguish, -- Rays of Anguish (Lasers)
+		[400430] = L.hellbeam, -- Hellbeam (Breath)
+		[403326] = L.wings_of_extinction, -- Wings of Extinction (Pushback)
 	}
 end
 
@@ -68,6 +80,7 @@ end
 
 function mod:OnEngage()
 	self:SetStage(1)
+	nextHellsteelCarnageHealth = 84
 	hellsteelCarnageCount = 1
 	dreadRiftsCount = 1
 	raysOfAnguishCount = 1
@@ -77,26 +90,39 @@ function mod:OnEngage()
 
 	self:Bar(404743, 3) -- Terror Claws
 	self:Bar(407196, 8, CL.count:format(self:SpellName(407196), dreadRiftsCount)) -- Dread Rifts
-	self:Bar(403326, 14.5, CL.count:format(self:SpellName(403326), wingsOfExtinctionCount)) -- Wings of Extinction
-	self:Bar(407069, 24, CL.count:format(self:SpellName(407069), raysOfAnguishCount)) -- Rays of Anguish
-	self:Bar(400430, 30, CL.count:format(self:SpellName(400430), hellbeamCount)) -- Hellbeam
+	self:Bar(403326, 14.5, CL.count:format(L.wings_of_extinction, wingsOfExtinctionCount)) -- Wings of Extinction
+	self:Bar(407069, 24, CL.count:format(L.rays_of_anguish, raysOfAnguishCount)) -- Rays of Anguish
+	self:Bar(400430, 30, CL.count:format(L.hellbeam, hellbeamCount)) -- Hellbeam
+
+	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
 -- Event Handlers
 --
 
+function mod:UNIT_HEALTH(event, unit)
+	if self:GetHealth(unit) < nextHellsteelCarnageHealth then --  At 80%, 60%, and 40%
+		self:Message(401319, "cyan", CL.soon:format(self:SpellName(401319)), false) -- Hellsteel Carnage soon
+		self:PlaySound(401319, "info")
+		nextHellsteelCarnageHealth = nextHellsteelCarnageHealth - 20
+		if nextHellsteelCarnageHealth < 30 then
+			self:UnregisterUnitEvent(event, unit)
+		end
+	end
+end
+
 function mod:HellsteelCarnage(args)
-	self:Message(401319, "cyan", CL.casting:format(args.spellName, hellsteelCarnageCount))
+	self:Message(401319, "yellow", CL.casting:format(args.spellName, hellsteelCarnageCount))
 	self:PlaySound(401319, "long")
 	hellsteelCarnageCount = hellsteelCarnageCount + 1
 
 	local extendTime = 9
 	self:Bar(404743, self:BarTimeLeft(404743) + extendTime) -- Terror Claws
 	self:Bar(407196, self:BarTimeLeft(CL.count:format(self:SpellName(407196), dreadRiftsCount)) + extendTime, CL.count:format(self:SpellName(407196), dreadRiftsCount)) -- Dread Rifts
-	self:Bar(403326, self:BarTimeLeft(CL.count:format(self:SpellName(403326), wingsOfExtinctionCount)) + extendTime, CL.count:format(self:SpellName(403326), wingsOfExtinctionCount)) -- Wings of Extinction
-	self:Bar(407069, self:BarTimeLeft(CL.count:format(self:SpellName(407069), raysOfAnguishCount)) + extendTime, CL.count:format(self:SpellName(407069), raysOfAnguishCount)) -- Rays of Anguish
-	self:Bar(400430, self:BarTimeLeft(CL.count:format(self:SpellName(400430), hellbeamCount)) + extendTime, CL.count:format(self:SpellName(400430), hellbeamCount)) -- Hellbeam
+	self:Bar(403326, self:BarTimeLeft(CL.count:format(L.wings_of_extinction, wingsOfExtinctionCount)) + extendTime, CL.count:format(L.wings_of_extinction, wingsOfExtinctionCount)) -- Wings of Extinction
+	self:Bar(407069, self:BarTimeLeft(CL.count:format(L.rays_of_anguish, raysOfAnguishCount)) + extendTime, CL.count:format(L.rays_of_anguish, raysOfAnguishCount)) -- Rays of Anguish
+	self:Bar(400430, self:BarTimeLeft(CL.count:format(L.hellbeam, hellbeamCount)) + extendTime, CL.count:format(L.hellbeam, hellbeamCount)) -- Hellbeam
 end
 
 do
@@ -112,9 +138,9 @@ do
 
 	function mod:DreadRiftApplied(args)
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(407196)
+			self:PersonalMessage(407196, nil, L.dread_rift)
 			self:PlaySound(407196, "warning")
-			self:Say(407196, CL.count_rticon:format(args.spellName, count, count))
+			self:Say(407196, CL.count_rticon:format(L.dread_rift, count, count))
 			self:SayCountdown(407196, 5, count)
 		end
 		self:CustomIcon(dreadRiftMarker, args.destName, count)
@@ -130,35 +156,35 @@ do
 end
 
 function mod:RaysOfAnguish(args)
-	self:StopBar(CL.count:format(args.spellName, raysOfAnguishCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, raysOfAnguishCount))
+	self:StopBar(CL.count:format(L.rays_of_anguish, raysOfAnguishCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.rays_of_anguish, raysOfAnguishCount))
 	self:PlaySound(args.spellId, "alarm") -- spread
 	raysOfAnguishCount = raysOfAnguishCount + 1
-	self:Bar(args.spellId, 34.1, CL.count:format(args.spellName, raysOfAnguishCount))
+	self:Bar(args.spellId, 34.1, CL.count:format(L.rays_of_anguish, raysOfAnguishCount))
 end
 
 function mod:RaysOfAnguishApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(407069)
+		self:PersonalMessage(407069, nil, CL.laser)
 		self:PlaySound(407069, "warning")
-		self:Say(407069)
+		self:Say(407069, CL.laser)
 	end
 end
 
 function mod:Hellbeam(args)
-	self:StopBar(CL.count:format(args.spellName, hellbeamCount))
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, hellbeamCount))
-	self:PlaySound(args.spellId, "alert") -- frontal
+	self:StopBar(CL.count:format(L.hellbeam, hellbeamCount))
+	self:Message(args.spellId, "red", CL.count:format(L.hellbeam, hellbeamCount))
+	self:PlaySound(args.spellId, "alarm") -- frontal
 	hellbeamCount = hellbeamCount + 1
-	self:Bar(args.spellId, 36.5, CL.count:format(args.spellName, hellbeamCount))
+	self:Bar(args.spellId, 36.5, CL.count:format(L.hellbeam, hellbeamCount))
 end
 
 function mod:WingsOfExtinction(args)
-	self:StopBar(CL.count:format(args.spellName, wingsOfExtinctionCount))
-	self:Message(args.spellId, "orange", CL.count:format(args.spellName, wingsOfExtinctionCount))
-	self:PlaySound(args.spellId, "warning")
+	self:StopBar(CL.count:format(L.wings_of_extinction, wingsOfExtinctionCount))
+	self:Message(args.spellId, "orange", CL.count:format(L.wings_of_extinction, wingsOfExtinctionCount))
+	self:PlaySound(args.spellId, "alert")
 	wingsOfExtinctionCount = wingsOfExtinctionCount + 1
-	self:Bar(args.spellId, 34, CL.count:format(args.spellName, wingsOfExtinctionCount))
+	self:Bar(args.spellId, 34, CL.count:format(L.wings_of_extinction, wingsOfExtinctionCount))
 end
 
 function mod:TerrorClaws(args)
