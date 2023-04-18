@@ -3,7 +3,7 @@ if not IsTestBuild() then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Experimentation of Dracthyr", 2569, 2530)
+local mod, CL = BigWigs:NewBoss("The Forgotten Experiments", 2569, 2530)
 if not mod then return end
 mod:RegisterEnableMob(200912, 200913, 200918) -- Neldris, Thadrion, Rionthus
 mod:SetEncounterID(2693)

@@ -3,7 +3,7 @@ if not IsTestBuild() then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Molgoth", 2569, 2529)
+local mod, CL = BigWigs:NewBoss("The Amalgamation Chamber", 2569, 2529)
 if not mod then return end
 mod:RegisterEnableMob(201774, 201773, 201934) -- Krozgoth Moltannia, Molgoth
 mod:SetEncounterID(2687)

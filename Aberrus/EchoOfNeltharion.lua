@@ -3,7 +3,7 @@ if not IsTestBuild() then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Neltharion", 2569, 2523)
+local mod, CL = BigWigs:NewBoss("Echo of Neltharion", 2569, 2523)
 if not mod then return end
 mod:RegisterEnableMob(201668) -- Neltharion
 mod:SetEncounterID(2684)

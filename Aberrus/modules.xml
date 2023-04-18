@@ -2,13 +2,13 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Kazzara.lua"/>
-<Script file="Molgoth.lua"/>
-<Script file="ExperimentationOfDracthyr.lua"/>
-<Script file="ZaqaliInvasion.lua"/>
+<Script file="TheAmalgamationChamber.lua"/>
+<Script file="TheForgottenExperiments.lua"/>
+<Script file="AssaultOfTheZaqali.lua"/>
 <Script file="Rashok.lua"/>
 <Script file="Zskarn.lua"/>
 <Script file="Magmorax.lua"/>
-<Script file="Neltharion.lua"/>
+<Script file="EchoOfNeltharion.lua"/>
 <Script file="Sarkareth.lua"/>
 <!-- <Script file="Trash.lua"/> -->
 

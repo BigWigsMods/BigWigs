@@ -3,7 +3,7 @@ if not IsTestBuild() then return end
 -- Module Declaration
 --
 
-local mod, CL = BigWigs:NewBoss("Zaqali Invasion", 2569, 2524)
+local mod, CL = BigWigs:NewBoss("Assault of the Zaqali", 2569, 2524)
 if not mod then return end
 mod:RegisterEnableMob(199659, 202791) -- Warlord Kagni, Ignara
 mod:SetEncounterID(2682)
