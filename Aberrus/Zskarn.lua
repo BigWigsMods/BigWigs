@@ -29,7 +29,6 @@ local blastWaveCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.dragonfire_traps = "Traps"
 	L.tactical_destruction = "Dragonheads"
 	L.bombs_soaked = "Bombs Soaked" -- Bombs Soaked (2/4)
 	L.unstable_embers = "Embers"
@@ -55,7 +54,7 @@ function mod:GetOptions()
 	},{
 
 	},{
-		[405736] = L.dragonfire_traps, -- Dragonfire Traps (Traps)
+		[405736] = CL.traps, -- Dragonfire Traps (Traps)
 		[405812] = CL.adds, -- Animate Golems (Adds)
 		[406678] = L.tactical_destruction, -- Tactical Destruction (Destruction)
 		[404010] = L.unstable_embers, -- Unstable Embers (Embers)
@@ -95,7 +94,7 @@ function mod:OnEngage()
 	end
 	self:Bar(403978, self:Easy() and 11 or 11.5, CL.count:format(CL.knockback, blastWaveCount)) -- Blast Wave
 	self:Bar(406725, self:Easy() and 4.5 or 36, CL.count:format(CL.bombs, shrapnelBombCount)) -- Shrapnel Bomb
-	self:Bar(405736, self:Easy() and 22.5 or 19, CL.count:format(L.dragonfire_traps, dragonfireTrapsCount)) -- Dragonfire Traps
+	self:Bar(405736, self:Easy() and 22.5 or 19, CL.count:format(CL.traps, dragonfireTrapsCount)) -- Dragonfire Traps
 	self:Bar(405812, self:Easy() and 39 or 26.4, CL.count:format(CL.adds, animateGolemsCount)) -- Animate Golems
 	self:Bar(406678, self:Easy() and 60.5 or 31, CL.count:format(L.tactical_destruction, tacticalDestructionCount)) -- Tactical Destruction
 
@@ -109,11 +108,11 @@ end
 --
 
 function mod:DragonfireTraps(args)
-	self:StopBar(CL.count:format(L.dragonfire_traps, dragonfireTrapsCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.dragonfire_traps, dragonfireTrapsCount))
+	self:StopBar(CL.count:format(CL.traps, dragonfireTrapsCount))
+	self:Message(args.spellId, "yellow", CL.count:format(CL.traps, dragonfireTrapsCount))
 	self:PlaySound(args.spellId, "alert")
 	dragonfireTrapsCount = dragonfireTrapsCount + 1
-	self:Bar(args.spellId, self:Mythic() and 32.8 or 32.5, CL.count:format(L.dragonfire_traps, dragonfireTrapsCount))
+	self:Bar(args.spellId, self:Mythic() and 32.8 or 32.5, CL.count:format(CL.traps, dragonfireTrapsCount))
 end
 
 function mod:AnimateGolems(args)
