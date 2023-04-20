@@ -1,4 +1,4 @@
-if not IsTestBuild() then return end
+if select(4, GetBuildInfo()) < 100100 then return end -- not 10.1
 --------------------------------------------------------------------------------
 -- Module Declaration
 --
