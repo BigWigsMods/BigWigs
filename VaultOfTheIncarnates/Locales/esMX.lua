@@ -36,9 +36,6 @@ if L then
 	-- L.conductive_marks = "Marks" -- Conductive Marks
 	-- L.conductive_mark = "Mark" -- Singular
 
-	-- L.custom_on_stop_timers = "Always show ability bars"
-	-- L.custom_on_stop_timers_desc = "Abilities that will always be shown: Conductive Mark"
-
 	-- L.skipped_cast = "Skipped %s (%d)"
 end
 

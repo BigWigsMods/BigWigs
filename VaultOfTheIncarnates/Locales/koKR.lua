@@ -36,9 +36,6 @@ if L then
 	 L.conductive_marks = "표식" -- Conductive Marks
 	 L.conductive_mark = "표식" -- Singular
 
-	 L.custom_on_stop_timers = "항상 능력 바 표시"
-	 L.custom_on_stop_timers_desc = "항상 표시될 능력: 전도성 표식"
-
 	 -- L.skipped_cast = "Skipped %s (%d)"
 end
 

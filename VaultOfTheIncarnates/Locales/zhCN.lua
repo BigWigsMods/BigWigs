@@ -36,9 +36,6 @@ if L then
 	L.conductive_marks = "传导印记" -- Conductive Marks
 	L.conductive_mark = "传导印记" -- Singular
 
-	L.custom_on_stop_timers = "总是显示计时条"
-	L.custom_on_stop_timers_desc = "总是显示的技能: 传导印记"
-
 	-- L.skipped_cast = "Skipped %s (%d)"
 end
 

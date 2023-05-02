@@ -36,9 +36,6 @@ L.primal_blizzard = "Tormenta" -- Primal Blizzard
 	L.conductive_marks = "Marchi" -- Conductive Marks
 	L.conductive_mark = "Marchio" -- Singular
 
-	L.custom_on_stop_timers = "Mostra sempre le barre delle abilità"
-	L.custom_on_stop_timers_desc = "Abilità che saranno sempre mostrate: Marchio Conduttivo"
-
 	L.skipped_cast = "Saltato %s (%d)"
 end
 

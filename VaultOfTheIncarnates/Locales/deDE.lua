@@ -36,9 +36,6 @@ if L then
 	L.conductive_marks = "Zeichen" -- Conductive Marks
 	L.conductive_mark = "Zeichen" -- Singular
 
-	L.custom_on_stop_timers = "Fähigkeitenleisten immer anzeigen"
-	L.custom_on_stop_timers_desc = "Fähigkeiten, welche immer angezeigt werden: Leitfähiges Zeichen"
-
 	L.skipped_cast = "%s (%d) übersprungen"
 end
 

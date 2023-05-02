@@ -36,9 +36,6 @@ if L then
 	L.conductive_marks = "Marcas" -- Marcas Condutoras
 	L.conductive_mark = "Marca" -- Singular
 
-	L.custom_on_stop_timers = "Sempre mostrar as barras de habilidade"
-	L.custom_on_stop_timers_desc = "Habilidades que sempre serão mostradas: Marca Condutora"
-
 	L.skipped_cast = "Ignorado %s (%d)"
 end
 

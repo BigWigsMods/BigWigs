@@ -36,9 +36,6 @@ if L then
 	L.conductive_marks = "Знаки" -- Conductive Marks
 	L.conductive_mark = "Знак" -- Singular
 
-	L.custom_on_stop_timers = "Всегда показывать полосы способностей"
-	L.custom_on_stop_timers_desc = "Будут показываться следующие способности:  Знак проводимости"
-
 	L.skipped_cast = "Пропущено %s (%d)"
 end
 

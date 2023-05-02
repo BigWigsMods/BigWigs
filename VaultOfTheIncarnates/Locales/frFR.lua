@@ -36,9 +36,6 @@ if L then
 	L.conductive_marks = "Marques" -- Conductive Marks
 	L.conductive_mark = "Marque" -- Singular
 
-	L.custom_on_stop_timers = "Toujours afficher les barres de techniques"
-	L.custom_on_stop_timers_desc = "Techniques qui seront toujours affichées : Marque conductrice"
-
 	-- L.skipped_cast = "Skipped %s (%d)"
 end
 

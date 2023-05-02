@@ -70,9 +70,6 @@ if L then
 	L.conductive_marks = "Marks" -- Conductive Marks
 	L.conductive_mark = "Mark" -- Singular
 
-	L.custom_on_stop_timers = "Always show ability bars"
-	L.custom_on_stop_timers_desc = "Abilities that will always be shown: Conductive Mark"
-
 	L.skipped_cast = "Skipped %s (%d)"
 end
 
@@ -84,7 +81,6 @@ local conductiveMarkMarker = mod:AddMarkerOption(false, "player", 3, 371624, 3)
 local meteorAxeMarker = mod:AddMarkerOption(false, "player", 1, 374043, 1, 2)
 function mod:GetOptions()
 	return {
-		"custom_on_stop_timers",
 		-- Kadros Icewrath
 		373059, -- Primal Blizzard
 		386661, -- Glacial Convocation
@@ -103,8 +99,7 @@ function mod:GetOptions()
 		meteorAxeMarker,
 		386289, -- Burning Convocation
 	}, {
-		["custom_on_stop_timers"] = "general",
-		[391599] = -24952, -- Kadros Icewrath
+		[373059] = -24952, -- Kadros Icewrath
 		[371624] = -24958, -- Dathea Stormlash
 		[397134] = -24967, -- Opalfang
 		[374038] = -24965, -- Embar Firepath
@@ -116,8 +111,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterMessage("BigWigs_BarCreated", "BarCreated")
-
 	-- Kadros Icewrath
 	self:Log("SPELL_CAST_START", "PrimalBlizzard", 373059)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "PrimalBlizzardApplied", 371836)
@@ -175,29 +168,6 @@ function mod:ConductiveMarkCheck(castCount) -- Marks are rarely skipped
 		if cd then
 			mod:Bar(371624, cd - SKIP_CAST_THRESHOLD, CL.count:format(L.conductive_marks, conductiveMarkCount))
 			checkTimer = mod:ScheduleTimer("ConductiveMarkCheck", cd, conductiveMarkCount)
-		end
-	end
-end
-
-do
-	local abilitysToPause = {
-		[371624] = true, -- Conductive Marks
-	}
-
-	local castPattern = CL.cast:gsub("%%s", ".+")
-
-	local function stopAtZeroSec(bar, key, text)
-		if bar.remaining < 0.045 then -- Pause at 0.0
-			bar:SetDuration(0.01) -- Make the bar look full
-			bar:Start()
-			bar:SetTimeVisibility(false)
-			mod:PauseBar(key, text)
-		end
-	end
-
-	function mod:BarCreated(_, _, bar, _, key, text)
-		if self:GetOption("custom_on_stop_timers") and abilitysToPause[key] and not text:match(castPattern) then
-			bar:AddUpdateFunction(function() stopAtZeroSec(bar,key,text) end)
 		end
 	end
 end
