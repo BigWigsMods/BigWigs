@@ -1,10 +1,10 @@
-local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "znCN")
+local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "zhCN")
 if not L then return end
 if L then
     --L.dread_rift = "Rift" -- Singular Dread Rift
 end
 
-L = BigWigs:NewBossLocale("The Amalgamation Chamber", "znCN")
+L = BigWigs:NewBossLocale("The Amalgamation Chamber", "zhCN")
 if L then
 	-- L.custom_on_fade_out_bars = "Fade out stage 1 bars"
 	-- L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range in stage 1."
@@ -21,7 +21,7 @@ if L then
 	-- L.shadow_and_flame = "Mythic Debuffs"
 end
 
-L = BigWigs:NewBossLocale("The Forgotten Experiments", "znCN")
+L = BigWigs:NewBossLocale("The Forgotten Experiments", "zhCN")
 if L then
 	-- L.rending_charge_single = "1st Charge"
 	-- L.massive_slam = "Frontal Cone"
@@ -34,7 +34,7 @@ if L then
 	-- L.temporal_anomaly_knocked = "Heal Orb Knocked!"
 end
 
-L = BigWigs:NewBossLocale("Assault of the Zaqali", "znCN")
+L = BigWigs:NewBossLocale("Assault of the Zaqali", "zhCN")
 if L then
 	-- L.big_adds_timer = "Timers for Huntsman + Guards"
 	-- L.final_assault_soon = "Final Assault soon"
@@ -47,7 +47,7 @@ if L then
 	-- L.wallclimbers_bartext = "Wallclimbers"
 end
 
-L = BigWigs:NewBossLocale("Rashok, the Elder", "znCN")
+L = BigWigs:NewBossLocale("Rashok, the Elder", "zhCN")
 if L then
 	-- L.doom_flames = "Small Soaks"
 	-- L.shadowlave_blast = "Frontal Cone"
@@ -58,7 +58,7 @@ if L then
 	-- L.unleash_shadowflame = "Mythic Orbs"
 end
 
-L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "znCN")
+L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "zhCN")
 if L then
 	-- L.tactical_destruction = "Dragonheads"
 	-- L.bombs_soaked = "Bombs Soaked" -- Bombs Soaked (2/4)
@@ -66,7 +66,7 @@ if L then
 	-- L.unstable_ember = "Ember"
 end
 
-L = BigWigs:NewBossLocale("Magmorax", "znCN")
+L = BigWigs:NewBossLocale("Magmorax", "zhCN")
 if L then
 	-- L.energy_gained = "Energy Gained! (-17s)" -- When you fail, you lose 17s on until the boss reaches full energy
 
@@ -74,7 +74,7 @@ if L then
 	-- L.explosive_magma = "Soak Pool"
 end
 
-L = BigWigs:NewBossLocale("Echo of Neltharion", "znCN")
+L = BigWigs:NewBossLocale("Echo of Neltharion", "zhCN")
 if L then
 	-- L.custom_on_repeating_sunder_reality = "Repeating Sunder Reality Warning"
 	-- L.custom_on_repeating_shattered_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
@@ -88,7 +88,7 @@ if L then
 	-- L.ebon_destruction = "Big Bang"
 end
 
-L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "znCN")
+L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "zhCN")
 if L then
 	--L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
 end
