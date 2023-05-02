@@ -68,9 +68,11 @@ end
 local massDisintergrateMarker = mod:AddMarkerOption(true, "player", 1, 401680, 1, 2, 3, 4) -- Mass Disintegrate
 local nullGlimmerMarker = mod:AddMarkerOption(false, "npc", 8, -26675, 8, 7, 6, 5) -- Null Glimmer
 local infiniteDuressMarker = mod:AddMarkerOption(true, "player", 1, 404288, 1, 2) -- Infinite Duress
+local hurlingBarrageMarker = mod:AddMarkerOption(true, "player", 3, 405486, 3, 4, 5, 6) -- Hurtling Barrage
 function mod:GetOptions()
 	return {
 		-- General
+		"stages",
 		401951, -- Oblivion
 		401215, -- Emptiness Between Stars
 		403997, -- Mind Fragment
@@ -85,7 +87,7 @@ function mod:GetOptions()
 		402050, -- Searing Breath
 		401330, -- Burning Claws
 		-- Stage Two: A Touch of the Forbidden
-		404027, -- Void Bomb
+		{404027, "SAY", "SAY_COUNTDOWN"}, -- Void Bomb
 		404456, -- Abyssal Breath
 		nullGlimmerMarker,
 		404754, -- Blasting Scream
@@ -95,11 +97,12 @@ function mod:GetOptions()
 		411241, -- Void Claws
 		-- Stage Three: The Seas of Infinity
 		403771, -- Cosmic Ascension
-		405022, -- Hurtling Barrage
+		{405486, "SAY", "SAY_COUNTDOWN"}, -- Hurtling Barrage
 		403625, -- Scouring Eternity
+		{403520, "SAY", "SAY_COUNTDOWN"}, -- Embrace of Nothingness
 		408429, -- Void Slash
 	},{
-		[401951] = "general",
+		["stages"] = "general",
 		[401383] = -26140, -- Stage One: The Legacy of the Dracthyr
 		[404027] = -26142, -- Stage Two: A Touch of the Forbidden
 		[403771] = -26145, -- Stage Three: The Seas of Infinity
@@ -116,6 +119,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED_DOSE", "MindFragmentApplied", 403997)
 	self:Log("SPELL_AURA_APPLIED", "AstralFlareApplied", 407576)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "AstralFlareApplied", 407576)
+	self:Log("SPELL_AURA_APPLIED", "StageEnd", 410631)
+	self:Log("SPELL_AURA_REMOVED", "StageStart", 410631)
 
 	-- Ground Effects
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 406989) -- Burning Ground
@@ -132,35 +137,44 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SearingBreath", 402050)
 	self:Log("SPELL_CAST_START", "BurningClaws", 401325)
 	self:Log("SPELL_AURA_APPLIED", "BurningClawsApplied", 401330)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningClawsApplied", 401330)
 	self:Log("SPELL_AURA_REMOVED", "BurningClawsRemoved", 401330)
 
 	-- Stage Two: A Touch of the Forbidden
 	self:Log("SPELL_CAST_START", "VoidBomb", 404027)
+	self:Log("SPELL_AURA_APPLIED", "VoidBombApplied", 404218) -- Void Fracture
+	self:Log("SPELL_AURA_REMOVED", "VoidBombRemoved", 404218)
 	self:Log("SPELL_CAST_START", "AbyssalBreath", 404456)
 	self:Log("SPELL_CAST_START", "BlastingScream", 404754)
-	self:Log("SPELL_CAST_START", "DesolateBlossom", 404403)
-	self:Log("SPELL_CAST_START", "InfiniteDuressStart", 404288)
-	self:Log("SPELL_CAST_SUCCESS", "InfiniteDuressSuccess", 404288)
-	self:Log("SPELL_AURA_APPLIED", "InfiniteDuressApplied", 404288)
-	self:Log("SPELL_AURA_REMOVED", "InfiniteDuressRemoved", 404288)
+	self:Log("SPELL_CAST_START", "DesolateBlossom", 404403, 411030) -- Heroic+, Easy?
+	self:Log("SPELL_CAST_START", "InfiniteDuressStart", 404288, 407496) -- Heroic+, Easy?
+	self:Log("SPELL_CAST_SUCCESS", "InfiniteDuressSuccess", 404288, 407496)
+	self:Log("SPELL_AURA_APPLIED", "InfiniteDuressApplied", 404288, 407496)
+	self:Log("SPELL_AURA_REMOVED", "InfiniteDuressRemoved", 404288, 407496)
 	self:Log("SPELL_CAST_START", "VoidClaws", 411236)
 	self:Log("SPELL_AURA_APPLIED", "VoidClawsApplied", 411241)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidClawsApplied", 411241)
 	self:Log("SPELL_AURA_REMOVED", "VoidClawsRemoved", 411241)
 
 	-- Stage Three: The Seas of Infinity
 	self:Log("SPELL_CAST_START", "CosmicAscension", 403771)
 	self:Log("SPELL_CAST_START", "HurtlingBarrage", 405022)
+	self:Log("SPELL_AURA_APPLIED", "HurtlingBarrageApplied", 405486)
+	self:Log("SPELL_AURA_REMOVED", "HurtlingBarrageRemoved", 405486)
 	self:Log("SPELL_CAST_START", "ScouringEternity", 403625)
+	self:Log("SPELL_CAST_SUCCESS", "EmbraceOfNothingness", 403517)
+	self:Log("SPELL_AURA_APPLIED", "EmbraceOfNothingnessApplied", 403520)
+	self:Log("SPELL_AURA_REMOVED", "EmbraceOfNothingnessRemoved", 403520)
 	self:Log("SPELL_CAST_START", "VoidSlash", 408422)
 	self:Log("SPELL_AURA_APPLIED", "VoidSlashApplied", 408429)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidSlashApplied", 408429)
 	self:Log("SPELL_AURA_REMOVED", "VoidSlashRemoved", 408429)
 end
 
 function mod:OnEngage()
 	self:SetStage(1)
-	mobCollector = {}
-	marksUsed = {}
 
+	-- Stage One: The Legacy of the Dracthyr
 	opressingHowlCount = 1
 	glitteringSurgeCount = 1
 	bombCount = 1
@@ -168,6 +182,24 @@ function mod:OnEngage()
 	breathCount = 1
 	clawsCount = 1
 
+	-- Stage Two: A Touch of the Forbidden
+	mobCollector = {}
+	marksUsed = {}
+	desolateBlossomCount = 1
+	infiniteDuressCount = 1
+
+	-- Stage Three: The Seas of Infinity
+	cosmicAscensionCount = 1
+	hurtlingBarrageCount = 1
+	scouringEternityCount = 1
+	embraceOfNothingnessCount = 1
+
+	-- self:Bar(401383, 10, CL.count:format(L.oppressing_howl, opressingHowlCount)) -- Opressing Howl
+	-- self:Bar(401810, 10, CL.count:format(L.glittering_surge, glitteringSurgeCount)) -- Glittering Surge
+	-- self:Bar(401500, 10, CL.count:format(CL.bombs, bombCount)) -- Scorching Bomb
+	-- self:Bar(401680, 10, CL.count:format(L.mass_disintergrate, massDisintergrateCount)) -- Mass Disintegrate
+	-- self:Bar(402050, 10, CL.count:format(CL.breath, breathCount)) -- Searing Breath
+	-- self:Bar(401330, 10, CL.count:format(L.claws, clawsCount)) -- Burning Claws
 
 	if self:GetOption(nullGlimmerMarker) then
 		self:RegisterTargetEvents("AddMarking")
@@ -194,6 +226,7 @@ function mod:EmptinessBetweenStarsApplied(args)
 		self:PersonalMessage(args.spellId)
 		self:PlaySound(args.spellId, "long")
 		self:TargetBar(args.spellId, self:Easy() and 25 or 20, args.destName)
+		self:CancelSayCountdown(404027) -- Void Bomb
 	end
 end
 
@@ -238,6 +271,59 @@ do
 	end
 end
 
+function mod:StageEnd()
+	-- Stage 1 Bars
+	self:StopBar(CL.count:format(L.oppressing_howl, opressingHowlCount)) -- Opressing Howl
+	self:StopBar(CL.count:format(L.glittering_surge, glitteringSurgeCount)) -- Glittering Surge
+	self:StopBar(CL.count:format(CL.bombs, bombCount)) -- Scorching Bomb / Void Bomb
+	self:StopBar(CL.count:format(L.mass_disintergrate, massDisintergrateCount)) -- Mass Disintegrate
+	self:StopBar(CL.count:format(CL.breath, breathCount)) -- Searing Breath / Abyssal Breath
+	self:StopBar(CL.count:format(L.claws, clawsCount)) -- Burning Claws / Void Claws
+
+	-- Stage 2 Bars
+	self:StopBar(CL.count:format(L.desolate_blossom, desolateBlossomCount)) --  Desolate Blossom
+	self:StopBar(CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
+end
+
+function mod:StageStart()
+	local stage = self:GetStage() + 1
+	self:SetStage(stage)
+	self:Message("stages", "cyan", CL.stage:format(stage), false)
+	self:PlaySound("stages", "long")
+
+	-- General Used
+	bombCount = 1
+	breathCount = 1
+	clawsCount = 1
+
+	-- Stage Two: A Touch of the Forbidden
+	mobCollector = {}
+	marksUsed = {}
+	desolateBlossomCount = 1
+	infiniteDuressCount = 1
+
+	-- Stage Three: The Seas of Infinity
+	cosmicAscensionCount = 1
+	hurtlingBarrageCount = 1
+	scouringEternityCount = 1
+	embraceOfNothingnessCount = 1
+
+	if stage == 2 then -- Stage 2
+		-- self:Bar(404403, 10, CL.count:format(L.desolate_blossom, desolateBlossomCount)) --  Desolate Blossom
+		-- self:Bar(404288, 10, CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
+		-- self:Bar(404027, 10, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
+		-- self:Bar(404456, 10, CL.count:format(CL.breath, breathCount)) -- Abyssal Breath
+		-- self:Bar(411241, 10, CL.count:format(L.claws, clawsCount)) -- Void Claws
+	else -- Stage 3
+		-- self:Bar(403771, 10, CL.count:format(L.cosmic_ascension, opressingHowlCount)) -- Cosmic Ascension
+		-- self:Bar(405022, 10, CL.count:format(L.hurtling_barrage, glitteringSurgeCount)) -- Hurtling Barrage
+		-- self:Bar(403520, 10, CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount)) -- Embrace of Nothingness
+		-- self:Bar(404027, 10, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
+		-- self:Bar(403625, 10, CL.count:format(L.scouring_eternity, massDisintergrateCount)) -- Scouring Eternity
+		-- self:Bar(408429, 10, CL.count:format(L.claws, clawsCount)) -- Void Slash
+	end
+end
+
 -- Stage One: The Legacy of the Dracthyr
 function mod:OppressingHowl(args)
 	self:StopBar(CL.count:format(L.oppressing_howl, opressingHowlCount))
@@ -250,7 +336,7 @@ end
 function mod:GlitteringSurge(args)
 	self:StopBar(CL.count:format(L.glittering_surge, glitteringSurgeCount))
 	self:Message(args.spellId, "red", CL.count:format(L.glittering_surge, glitteringSurgeCount))
-	self:PlaySound(args.spellId, "warning")
+	self:PlaySound(args.spellId, "long")
 	glitteringSurgeCount = glitteringSurgeCount + 1
 	--self:Bar(args.spellId, 0, CL.count:format(L.glittering_surge, glitteringSurgeCount))
 end
@@ -342,6 +428,25 @@ function mod:VoidBomb(args)
 	--self:Bar(args.spellId, 0, CL.count:format(CL.bombs, bombCount))
 end
 
+function mod:VoidBombApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(404027, nil, CL.bomb)
+		self:PlaySound(404027, "warning")
+		self:Say(404027, CL.bomb)
+		local _, _, duration = self:UnitDebuff(args.destName, args.spellId)
+		if duration < 2 then -- dont countdown below 2, just run
+			self:SayCountdown(404027, duration, nil, duration < 3 and 2) -- If we are between 3 and 2, start countdown at 2
+		end
+	end
+end
+
+function mod:VoidBombRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(404027)
+	end
+end
+
+
 function mod:AbyssalBreath(args)
 	self:StopBar(CL.count:format(CL.breath, breathCount))
 	self:Message(args.spellId, "red", CL.count:format(CL.breath, breathCount))
@@ -380,19 +485,18 @@ end
 
 function mod:DesolateBlossom(args)
 	self:StopBar(CL.count:format(L.desolate_blossom, desolateBlossomCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.desolate_blossom, desolateBlossomCount))
-	self:PlaySound(args.spellId, "alert")
+	self:Message(404403, "yellow", CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	self:PlaySound(404403, "alert")
 	desolateBlossomCount = desolateBlossomCount + 1
-	--self:Bar(args.spellId, 0, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	--self:Bar(404403, 0, CL.count:format(L.desolate_blossom, desolateBlossomCount))
 end
-
 
 do
 	local playerList, onMe = {}, false
 	function mod:InfiniteDuressStart(args)
 		playerList = {}
 		onMe = false
-		self:Message(args.spellId, "yellow", CL.incoming:format(L.infinite_duress))
+		self:Message(404288, "yellow", CL.incoming:format(L.infinite_duress))
 	end
 
 	local function onMeSound()
@@ -404,7 +508,7 @@ do
 	function mod:InfiniteDuressSuccess(args)
 		self:StopBar(CL.count:format(CL.bombs, infiniteDuressCount))
 		infiniteDuressCount = infiniteDuressCount + 1
-		--self:Bar(args.spellId, 0, CL.count:format(L.infinite_duress, infiniteDuressCount))
+		--self:Bar(404288, 0, CL.count:format(L.infinite_duress, infiniteDuressCount))
 		self:SimpleTimer(onMeSound, 0.3)
 	end
 
@@ -414,19 +518,19 @@ do
 		playerList[args.destName] = count -- Set raid marker
 		if self:Me(args.destGUID) then
 			onMe = true
-			self:TargetBar(args.spellId, 16, args.destName, L.infinite_duress)
-			self:Say(args.spellId, L.infinite_duress)
-			self:SayCountdown(args.spellId, 16)
-			self:PlaySound(args.spellId, "warning")
+			self:TargetBar(404288, 16, args.destName, L.infinite_duress)
+			self:Say(404288, L.infinite_duress)
+			self:SayCountdown(404288, 16)
+			self:PlaySound(404288, "warning")
 		end
-		self:TargetsMessage(args.spellId, "cyan", playerList, 2, L.infinite_duress)
+		self:TargetsMessage(404288, "cyan", playerList, 2, L.infinite_duress)
 		self:CustomIcon(infiniteDuressMarker, args.destName, count)
 	end
 
 	function mod:InfiniteDuressRemoved(args)
 		if self:Me(args.destGUID) then
 			self:StopBar(L.infinite_duress, args.destName)
-			self:CancelSayCountdown(args.spellId)
+			self:CancelSayCountdown(404288)
 		end
 		self:CustomIcon(infiniteDuressMarker, args.destName)
 	end
@@ -473,12 +577,36 @@ function mod:CosmicAscension(args)
 	marksUsed = {}
 end
 
-function mod:HurtlingBarrage(args)
-	self:StopBar(CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
-	self:PlaySound(args.spellId, "alert")
-	hurtlingBarrageCount = hurtlingBarrageCount + 1
-	--self:Bar(args.spellId, 0, CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
+do
+	local playerList = {}
+	function mod:HurtlingBarrage(args)
+		self:StopBar(CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
+		self:Message(405486, "yellow", CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
+		self:PlaySound(405486, "alert")
+		hurtlingBarrageCount = hurtlingBarrageCount + 1
+		--self:Bar(args.spellId, 0, CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
+		playerList = {}
+	end
+
+	function mod:HurtlingBarrageApplied(args)
+		local count = #playerList+1
+		local icon = count + 2
+		playerList[count] = args.destName
+		if self:Me(args.destGUID) then
+			self:PersonalMessage(args.spellId, nil, L.hurtling_barrage)
+			self:PlaySound(args.spellId, "warning")
+			self:Say(args.spellId, CL.rticon:format(L.hurtling_barrage, icon))
+			self:SayCountdown(args.spellId, 7, icon)
+		end
+		self:CustomIcon(hurlingBarrageMarker, args.destName, icon)
+	end
+
+	function mod:HurtlingBarrageRemoved(args)
+		if self:Me(args.destGUID) then
+			self:CancelSayCountdown(args.spellId)
+		end
+		self:CustomIcon(hurlingBarrageMarker, args.destName)
+	end
 end
 
 function mod:ScouringEternity(args)
@@ -487,6 +615,27 @@ function mod:ScouringEternity(args)
 	self:PlaySound(args.spellId, "warning")
 	scouringEternityCount = scouringEternityCount + 1
 	--self:Bar(args.spellId, 0, CL.count:format(L.scouring_eternity, scouringEternityCount))
+end
+
+function mod:EmbraceOfNothingness(args)
+	self:StopBar(CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount))
+	embraceOfNothingnessCount = embraceOfNothingnessCount + 1
+	--self:Bar(403520, 0, CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount))
+end
+
+function mod:EmbraceOfNothingnessApplied(args)
+	self:TargetMessage(args.spellId, "yellow", args.destName, CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount-1))
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "warning")
+		self:Yell(args.spellId, L.embrace_of_nothingness)
+		self:YellCountdown(args.spellId, 8)
+	end
+end
+
+function mod:EmbraceOfNothingnessRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
 end
 
 do
