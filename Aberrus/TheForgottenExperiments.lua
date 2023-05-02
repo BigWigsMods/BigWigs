@@ -40,17 +40,14 @@ local timers = {
 
 local L = mod:GetLocale()
 if L then
-	L.rending_charge = "Charges"
 	L.rending_charge_single = "1st Charge"
 	L.massive_slam = "Frontal Cone"
-	L.bellowing_roar = "Run Away"
 	L.unstable_essence_new = "New Bomb"
 	L.custom_on_unstable_essence_high = "High Stacks Unstable Essence Say Messages"
 	L.custom_on_unstable_essence_high_icon = 407327
 	L.custom_on_unstable_essence_high_desc = "Say messages with the amount of stacks for your Unstable Essence debuff when they are high enough."
 	L.volatile_spew = "Dodges"
 	L.volatile_eruption = "Eruption"
-	L.deep_breath = "Breath"
 	L.temporal_anomaly = "Heal Orb"
 	L.temporal_anomaly_knocked = "Heal Orb Knocked!"
 end
@@ -85,13 +82,11 @@ function mod:GetOptions()
 		[407327] = -26322, -- Thadrion
 		[406227] = -26329, -- Rionthus
 	},{
-		[406358] = L.rending_charge, -- Rending Charge (Charges)
 		[404472] = L.massive_slam, -- Massive Slam (Frontal Cone)
-		[404713] = L.bellowing_roar, -- Bellowing Roar (Run Away)
+		[404713] = CL.roar, -- Bellowing Roar (Run Away)
 		[407327] = L.unstable_essence_new, -- Unstable Essence (New Bomb)
 		[405492] = L.volatile_spew, -- Volatile Spew (Dodges)
 		[405375] = L.volatile_eruption, -- Violent Eruption (Raid Damage)
-		[406227] = L.deep_breath, -- Deep Breath (Breath)
 		[407552] = L.temporal_anomaly, -- Temporal Anomaly (Heal Orb)
 	}
 end
@@ -146,8 +141,8 @@ function mod:OnEngage()
 	temporalAnomalyCount = 1
 	disintergrateCount = 1
 
-	self:Bar(404713, self:Mythic() and 36 or 5, CL.count:format(L.bellowing_roar, bellowingRoarCount)) -- Bellowing Roar
-	self:Bar(406358, self:Mythic() and 14 or 14.5, CL.count:format(L.rending_charge, rendingChargeCount)) -- Rending Charge
+	self:Bar(404713, self:Mythic() and 36 or 5, CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
+	self:Bar(406358, self:Mythic() and 14 or 14.5, CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
 	self:Bar(404472, self:Mythic() and 6 or 30, CL.count:format(L.massive_slam, massiveSlamCount)) -- Massive Slam
 end
 
@@ -175,22 +170,22 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 
 			self:CDBar(405392, 7.8, CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
 			self:CDBar(407552, 18.0, CL.count:format(L.temporal_anomaly, temporalAnomalyCount)) -- Temporal Anomaly
-			self:CDBar(406227, 33.8, CL.count:format(L.deep_breath, deepBreathCount)) -- Deep Breath
+			self:CDBar(406227, 33.8, CL.count:format(self:SpellName(406227), deepBreathCount)) -- Deep Breath
 		end
 	end
 end
 
 function mod:Deaths(args)
 	if args.mobId == 200912 then -- Neldris
-		self:StopBar(CL.count:format(L.rending_charge, rendingChargeCount)) -- Rending Charge
+		self:StopBar(CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
 		self:StopBar(CL.count:format(L.massive_slam, massiveSlamCount)) -- Massive Slam
-		self:StopBar(CL.count:format(L.bellowing_roar, bellowingRoarCount)) -- Bellowing Roar
+		self:StopBar(CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
 	elseif args.mobId == 200913 then -- Thadrion
 		self:StopBar(CL.count:format(L.unstable_essence_new, unstableEssenceCount)) -- Unstable Essence
 		self:StopBar(CL.count:format(L.volatile_spew, volatileSpewCount)) -- Volatile Spew
 		self:StopBar(CL.count:format(L.volatile_eruption, violentEruptionCount)) -- Violent Eruption
 	elseif args.mobId == 200918 then -- Rionthus
-		self:StopBar(CL.count:format(L.deep_breath, deepBreathCount)) -- Deep Breath
+		self:StopBar(CL.count:format(self:SpellName(406227), deepBreathCount)) -- Deep Breath
 		self:StopBar(CL.count:format(L.temporal_anomaly, temporalAnomalyCount)) -- Temporal Anomaly
 		self:StopBar(CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
 	end
@@ -235,11 +230,11 @@ do
 	end
 
 	function mod:RendingCharge(args)
-		self:StopBar(CL.count:format(L.rending_charge, rendingChargeCount))
-		self:Message(406358, "red", CL.count:format(L.rending_charge, rendingChargeCount))
+		self:StopBar(CL.count:format(args.spellId, rendingChargeCount))
+		self:Message(406358, "red", CL.count:format(args.spellId, rendingChargeCount))
 		self:PlaySound(406358, "alert")
 		rendingChargeCount = rendingChargeCount + 1
-		self:Bar(args.spellId, self:Mythic() and (rendingChargeCount % 2 == 1 and 18 or 37) or (rendingChargeCount == 2 and 34 or 45), CL.count:format(L.rending_charge, rendingChargeCount))
+		self:Bar(args.spellId, self:Mythic() and (rendingChargeCount % 2 == 1 and 18 or 37) or (rendingChargeCount == 2 and 34 or 45), CL.count:format(args.spellId, rendingChargeCount))
 		self:GetBossTarget(printTarget, 1, args.sourceGUID) -- 1st target is from boss
 	end
 end
@@ -257,11 +252,11 @@ function mod:MassiveSlam(args)
 end
 
 function mod:BellowingRoar(args)
-	self:StopBar(CL.count:format(L.bellowing_roar, bellowingRoarCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.bellowing_roar, bellowingRoarCount))
+	self:StopBar(CL.count:format(CL.roar, bellowingRoarCount))
+	self:Message(args.spellId, "orange", CL.count:format(CL.roar, bellowingRoarCount))
 	self:PlaySound(args.spellId, "alarm")
 	bellowingRoarCount = bellowingRoarCount + 1
-	self:Bar(args.spellId, self:Mythic() and 55 or (bellowingRoarCount == 2 and 35.5 or 23.1), CL.count:format(L.bellowing_roar, bellowingRoarCount))
+	self:Bar(args.spellId, self:Mythic() and 55 or (bellowingRoarCount == 2 and 35.5 or 23.1), CL.count:format(CL.roar, bellowingRoarCount))
 end
 
 -- Thadrion
@@ -336,11 +331,11 @@ end
 
 -- Rionthus
 function mod:DeepBreath(args)
-	self:StopBar(CL.count:format(L.deep_breath, deepBreathCount))
-	self:Message(args.spellId, "red", CL.count:format(L.deep_breath, deepBreathCount))
+	self:StopBar(CL.count:format(args.spellName, deepBreathCount))
+	self:Message(args.spellId, "red", CL.count:format(args.spellName, deepBreathCount))
 	self:PlaySound(args.spellId, "alert")
 	deepBreathCount = deepBreathCount + 1
-	self:Bar(args.spellId, self:Mythic() and 55 or 43.5, CL.count:format(L.deep_breath, deepBreathCount))
+	self:Bar(args.spellId, self:Mythic() and 55 or 43.5, CL.count:format(args.spellName, deepBreathCount))
 end
 
 do

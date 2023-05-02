@@ -46,7 +46,7 @@ local addScheduledTimers = {}
 local L = mod:GetLocale()
 if L then
 	L.big_adds_timer = "Timers for Huntsman + Guards"
-	L.final_assault_soon = "Final Assault soon" -- hopefully there will be some spell/aura to use instead
+	L.final_assault_soon = "Final Assault soon"
 
 	L.south_adds_message = "Big Adds Climbing SOUTH!"
 	L.south_adds = "Commanders ascend the southern battlement!" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!

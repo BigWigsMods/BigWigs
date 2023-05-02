@@ -45,20 +45,18 @@ local shadowAndFlameCount = 1
 local L = mod:GetLocale()
 if L then
 	L.custom_on_fade_out_bars = "Fade out stage 1 bars"
-	L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss who is out of range in stage 1."
+	L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range in stage 1."
 
 	L.coalescing_void = "Run Away"
-	L.shadow_convergence = "Balls"
-	L.fiery_meteor = "Big Soak"
+	L.shadow_convergence = "Orbs"
 	L.molten_eruption = "Soaks"
 	L.swirling_flame = "Tornadoes"
-	L.gloom_conflagration = "Big Soak + Run Away"
+	L.gloom_conflagration = "Meteor + Run Away"
 	L.blistering_twilight = "Bombs + Tornadoes"
-	L.convergent_eruption = "Soaks + Balls"
+	L.convergent_eruption = "Soaks + Orbs"
 	L.shadowflame_burst = "Frontal Cone"
 
 	L.shadow_and_flame = "Mythic Debuffs"
-
 end
 
 --------------------------------------------------------------------------------
@@ -101,7 +99,7 @@ function mod:GetOptions()
 		[403459] = L.coalescing_void, -- Coalescing Void (Run Away)
 		[405036] = CL.bombs, -- Umbral Detonation (Bombs)
 		[407640] = L.shadow_convergence, -- Shadows Convergence (Balls)
-		[404732] = L.fiery_meteor, -- Fiery Meteor (Big Soak)
+		[404732] = CL.meteor, -- Fiery Meteor (Big Soak)
 		[403101] = L.molten_eruption, -- Molten Eruption (Soaks)
 		[404896] = L.swirling_flame, -- Swirling Flame (Tornadoes Fire)
 		[405437] = L.gloom_conflagration, -- Gloom Conflagration (Big Soak + Run Away)
@@ -185,7 +183,7 @@ function mod:OnEngage()
 	fieryMeteorCount = 1
 	moltenEruptionCount = 1
 	swirlingFlameCount = 1
-	self:Bar(404732, 32.5, CL.count:format(L.fiery_meteor, fieryMeteorCount)) -- Fiery Meteor
+	self:Bar(404732, 32.5, CL.count:format(CL.meteor, fieryMeteorCount)) -- Fiery Meteor
 	self:Bar(403101, 23.0, CL.count:format(L.molten_eruption, moltenEruptionCount)) -- Molten Eruption
 	self:Bar(404896, 9.5, CL.count:format(L.swirling_flame, swirlingFlameCount)) -- Swirling Flame
 end
@@ -416,13 +414,13 @@ function mod:BlazingHeatRemoved(args)
 end
 
 function mod:FieryMeteor(args)
-	self:StopBar(CL.count:format(L.fiery_meteor, fieryMeteorCount))
+	self:StopBar(CL.count:format(CL.meteor, fieryMeteorCount))
 	if self:IsEternalBlazeInRange() then
-		self:Message(args.spellId, "yellow", CL.count:format(L.fiery_meteor, fieryMeteorCount))
+		self:Message(args.spellId, "yellow", CL.count:format(CL.meteor, fieryMeteorCount))
 		self:PlaySound(args.spellId, "alert")
 	end
 	fieryMeteorCount = fieryMeteorCount + 1
-	self:Bar(args.spellId, self:Mythic() and 35.3 or 31.5, CL.count:format(L.fiery_meteor, fieryMeteorCount))
+	self:Bar(args.spellId, self:Mythic() and 35.3 or 31.5, CL.count:format(CL.meteor, fieryMeteorCount))
 end
 
 function mod:MoltenEruption(args)
@@ -468,7 +466,7 @@ do
 			self:StopBar(CL.count:format(L.coalescing_void, coalescingVoidCount)) -- Coalescing Void
 			self:StopBar(CL.count:format(CL.bombs, umbralDetonationCount)) -- Umbral Detonation
 			self:StopBar(CL.count:format(L.shadow_convergence, shadowsConvergenceCount)) -- Shadows Convergence
-			self:StopBar(CL.count:format(L.fiery_meteor, fieryMeteorCount)) -- Fiery Meteor
+			self:StopBar(CL.count:format(CL.meteor, fieryMeteorCount)) -- Fiery Meteor
 			self:StopBar(CL.count:format(L.molten_eruption, moltenEruptionCount)) -- Molten Eruption
 			self:StopBar(CL.count:format(L.swirling_flame, swirlingFlameCount)) -- Swirling Flame
 

@@ -28,15 +28,12 @@ local unleashShadowflameCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.searing_slam = "Leap"
 	L.doom_flames = "Small Soaks"
 	L.shadowlave_blast = "Frontal Cone"
 	L.charged_smash = "Big Soak"
-	L.wrath_of_djaruun = "Tank Combo"
-	L.ancient_fury = "Full Energy"
+	L.energy_gained = "Energy Gained: %d"
 
 	-- Mythic
-	L.energy_gained = "Energy Gained: %d"
 	L.unleash_shadowflame = "Mythic Orbs"
 end
 
@@ -64,12 +61,12 @@ function mod:GetOptions()
 		[401419] = -26237, -- Conduit
 		[410070] = "mythic",
 	},{
-		[405821] = L.searing_slam, -- Searing Slam (Leap)
+		[405821] = CL.leap, -- Searing Slam (Leap)
 		[406851] = L.doom_flames, -- Doom Flames (Small Soaks)
 		[406333] = L.shadowlave_blast, -- Shadowlava Blast (Frontal Cone)
 		[400777] = L.charged_smash, -- Charged Smash (Big Soak)
-		[407641] = L.wrath_of_djaruun, -- Wrath of Djaruun (Tank Combo)
-		[405316] = L.ancient_fury, -- Ancient Fury (Full Energy)
+		[407641] = CL.tank_combo, -- Wrath of Djaruun (Tank Combo)
+		[405316] = CL.full_energy, -- Ancient Fury (Full Energy)
 		[410070] = L.unleash_shadowflame, -- Unleash Shadowflame (Mythic Orbs)
 	}
 end
@@ -109,12 +106,12 @@ function mod:OnEngage()
 	siphonEnergyCount = 1
 	unleashShadowflameCount = 1
 
-	self:Bar(405821, 9, CL.count:format(L.searing_slam, searingSlamCount)) -- Searing Slam
-	self:Bar(407641, 29, CL.count:format(L.wrath_of_djaruun, wrathOfDjaruunCount)) -- Wrath of Djaruun
+	self:Bar(405821, 9, CL.count:format(CL.leap, searingSlamCount)) -- Searing Slam
+	self:Bar(407641, 29, CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:Bar(406851, 39, CL.count:format(L.doom_flames, doomFlamesCount)) -- Doom Flames
 	self:Bar(400777, 21, CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
 	self:Bar(406333, 92.5, CL.count:format(L.shadowlave_blast, shadowlavaBlastCount)) -- Shadowlava Blast
-	self:Bar(405316, 110, CL.count:format(L.ancient_fury, siphonEnergyCount)) -- Ancient Fury
+	self:Bar(405316, 110, CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
 
 	if self:Mythic() then
 		self:Bar(410070, 4, CL.count:format(L.unleash_shadowflame, shadowlavaBlastCount)) -- Unleash Shadowflame
@@ -132,18 +129,18 @@ function mod:AncientFuryApplied(args)
 end
 
 function mod:SearingSlam(args)
-	self:StopBar(CL.count:format(L.searing_slam, searingSlamCount))
+	self:StopBar(CL.count:format(CL.leap, searingSlamCount))
 	searingSlamCount = searingSlamCount + 1
 	if searingSlamCount < 4 then -- 3 per rotation
-		self:Bar(args.spellId, searingSlamCount == 2 and 43 or 33, CL.count:format(L.searing_slam, searingSlamCount))
+		self:Bar(args.spellId, searingSlamCount == 2 and 43 or 33, CL.count:format(CL.leap, searingSlamCount))
 	end
 end
 
 function mod:SearingSlamApplied(args)
-	self:TargetMessage(405821, "yellow", args.destName, CL.count:format(L.searing_slam, searingSlamCount-1))
+	self:TargetMessage(405821, "yellow", args.destName, CL.count:format(CL.leap, searingSlamCount-1))
 	if self:Me(args.destGUID) then
 		self:PlaySound(405821, "warning")
-		self:Say(405821, L.searing_slam)
+		self:Say(405821, CL.leap)
 	end
 end
 
@@ -176,10 +173,10 @@ function mod:ChargedSmash(args)
 end
 
 function mod:WrathOfDjaruun(args)
-	self:StopBar(CL.count:format(L.wrath_of_djaruun, wrathOfDjaruunCount))
+	self:StopBar(CL.count:format(CL.tank_combo, wrathOfDjaruunCount))
 	wrathOfDjaruunCount = wrathOfDjaruunCount + 1
 	if wrathOfDjaruunCount < 3 then -- 2 per rotation
-		self:Bar(args.spellId, 45, CL.count:format(L.wrath_of_djaruun, wrathOfDjaruunCount))
+		self:Bar(args.spellId, 45, CL.count:format(CL.tank_combo, wrathOfDjaruunCount))
 	end
 end
 
@@ -222,12 +219,12 @@ function mod:SiphonEnergyApplied(args)
 	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, siphonEnergyCount))
 	self:PlaySound(args.spellId, "info")
 
-	self:StopBar(CL.count:format(L.ancient_fury, siphonEnergyCount)) -- Ancient Fury
-	self:StopBar(CL.count:format(L.searing_slam, searingSlamCount)) -- Searing Slam
+	self:StopBar(CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
+	self:StopBar(CL.count:format(CL.leap, searingSlamCount)) -- Searing Slam
 	self:StopBar(CL.count:format(L.doom_flames, doomFlamesCount)) -- Doom Flames
 	self:StopBar(CL.count:format(L.shadowlave_blast, shadowlavaBlastCount)) -- Shadowlava Blast
 	self:StopBar(CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
-	self:StopBar(CL.count:format(L.wrath_of_djaruun, wrathOfDjaruunCount)) -- Wrath of Djaruun
+	self:StopBar(CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:StopBar(CL.count:format(L.unleash_shadowflame, unleashShadowflameCount)) -- Unleash Shadowflame
 
 	local bossUnit = self:UnitTokenFromGUID(args.destGUID)
@@ -251,12 +248,12 @@ function mod:SiphonEnergyRemoved(args)
 	wrathOfDjaruunCount = 1
 	unleashShadowflameCount = 1
 
-	self:Bar(405821, 11, CL.count:format(L.searing_slam, searingSlamCount)) -- Searing Slam
+	self:Bar(405821, 11, CL.count:format(CL.leap, searingSlamCount)) -- Searing Slam
 	self:Bar(400777, 23, CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
-	self:Bar(407641, 31, CL.count:format(L.wrath_of_djaruun, wrathOfDjaruunCount)) -- Wrath of Djaruun
+	self:Bar(407641, 31, CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:Bar(406851, 41, CL.count:format(L.doom_flames, doomFlamesCount)) -- Doom Flames
 	self:Bar(406333, 94.5, CL.count:format(L.shadowlave_blast, shadowlavaBlastCount)) -- Shadowlava Blast
-	self:Bar(405316, 112, CL.count:format(L.ancient_fury, siphonEnergyCount)) -- Ancient Fury
+	self:Bar(405316, 112, CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
 	if self:Mythic() then
 		self:Bar(410070, 6, CL.count:format(L.unleash_shadowflame, unleashShadowflameCount)) -- Unleash Shadowflame
 	end
@@ -278,7 +275,7 @@ end
 function mod:FailedSoak(args)
 	self:Message(400777, "cyan", L.energy_gained:format(args.extraSpellId), false) -- args.extraSpellId is the energy gained from SPELL_ENERGIZE
 	local timeLeft = (100 - UnitPower("boss1")) * 1.12 -- Energy slightly more than 1/s
-	self:Bar(405316, {timeLeft, 112}, CL.count:format(L.ancient_fury, siphonEnergyCount)) -- Ancient Fury
+	self:Bar(405316, {timeLeft, 112}, CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
 end
 
 function mod:UnleashShadowflame(args)

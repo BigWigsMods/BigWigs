@@ -42,7 +42,6 @@ local embraceOfNothingnessCount = 1
 local L = mod:GetLocale()
 if L then
 	-- General
-	L.breath = "Breath" -- (Stage 1) Searing Breath / (Stage 2) Abyssal Breath
 	L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
 
 	-- Stage One: The Legacy of the Dracthyr
@@ -297,11 +296,11 @@ do
 end
 
 function mod:SearingBreath(args)
-	self:StopBar(CL.count:format(L.breath, breathCount))
-	self:Message(args.spellId, "red", CL.count:format(L.breath, breathCount))
+	self:StopBar(CL.count:format(CL.breath, breathCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.breath, breathCount))
 	self:PlaySound(args.spellId, "alert")
 	breathCount = breathCount + 1
-	--self:Bar(args.spellId, 0, CL.count:format(L.breath, breathCount))
+	--self:Bar(args.spellId, 0, CL.count:format(CL.breath, breathCount))
 end
 
 do
@@ -344,11 +343,11 @@ function mod:VoidBomb(args)
 end
 
 function mod:AbyssalBreath(args)
-	self:StopBar(CL.count:format(L.breath, breathCount))
-	self:Message(args.spellId, "red", CL.count:format(L.breath, breathCount))
+	self:StopBar(CL.count:format(CL.breath, breathCount))
+	self:Message(args.spellId, "red", CL.count:format(CL.breath, breathCount))
 	self:PlaySound(args.spellId, "alert")
 	breathCount = breathCount + 1
-	--self:Bar(args.spellId, 0, CL.count:format(L.breath, breathCount))
+	--self:Bar(args.spellId, 0, CL.count:format(CL.breath, breathCount))
 
 	marksUsed = {}
 end
