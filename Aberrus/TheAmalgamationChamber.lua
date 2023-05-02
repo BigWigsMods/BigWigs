@@ -240,17 +240,25 @@ do
 	local function fadeOutBar(self, bar)
 		colors = colors or BigWigs:GetPlugin("Colors")
 		local key = bar:Get("bigwigs:option")
-		local r, g, b = colors:GetColor("barText", self, key)
-		bar:SetTextColor(r, g, b, 0.33)
-		r, g, b = colors:GetColor("barTextShadow", self, key)
-		bar:SetShadowColor(r, g, b, 0.33)
+		local r, g, b, a = colors:GetColor("barText", self, key)
+		if a > 0.33 then
+			bar:SetTextColor(r, g, b, 0.33)
+		end
+		r, g, b, a = colors:GetColor("barTextShadow", self, key)
+		if a > 0.33 then
+			bar:SetShadowColor(r, g, b, 0.33)
+		end
 
 		if bar:Get("bigwigs:emphasized") then
-			r, g, b = colors:GetColor("barEmphasized", self, key)
-			bar:SetColor(r, g, b, 0.5)
+			r, g, b, a = colors:GetColor("barEmphasized", self, key)
+			if a > 0.5 then
+				bar:SetColor(r, g, b, 0.5)
+			end
 		else
-			r, g, b = colors:GetColor("barColor", self, key)
-			bar:SetColor(r, g, b, 0.5)
+			r, g, b, a = colors:GetColor("barColor", self, key)
+			if a > 0.5 then
+				bar:SetColor(r, g, b, 0.5)
+			end
 		end
 	end
 
