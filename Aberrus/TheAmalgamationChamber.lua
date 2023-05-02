@@ -98,13 +98,13 @@ function mod:GetOptions()
 	},{
 		[403459] = L.coalescing_void, -- Coalescing Void (Run Away)
 		[405036] = CL.bombs, -- Umbral Detonation (Bombs)
-		[407640] = L.shadow_convergence, -- Shadows Convergence (Balls)
-		[404732] = CL.meteor, -- Fiery Meteor (Big Soak)
+		[407640] = L.shadow_convergence, -- Shadows Convergence (Orbs)
+		[404732] = CL.meteor, -- Fiery Meteor (Meteor)
 		[403101] = L.molten_eruption, -- Molten Eruption (Soaks)
 		[404896] = L.swirling_flame, -- Swirling Flame (Tornadoes Fire)
-		[405437] = L.gloom_conflagration, -- Gloom Conflagration (Big Soak + Run Away)
+		[405437] = L.gloom_conflagration, -- Gloom Conflagration (Meteor + Run Away)
 		[405642] = L.blistering_twilight, -- Blistering Twilight (Bombs + Tornadoes Fire)
-		[408193] = L.convergent_eruption, -- Convergent Eruption (Soaks + Balls)
+		[408193] = L.convergent_eruption, -- Convergent Eruption (Soaks + Orbs)
 		[406783] = L.shadowflame_burst, -- Shadowflame Burst (Frontal Cone)
 		[409385] = L.shadow_and_flame, -- Shadow and Flame
 	}

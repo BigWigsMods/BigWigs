@@ -83,7 +83,7 @@ function mod:GetOptions()
 		[406227] = -26329, -- Rionthus
 	},{
 		[404472] = L.massive_slam, -- Massive Slam (Frontal Cone)
-		[404713] = CL.roar, -- Bellowing Roar (Run Away)
+		[404713] = CL.roar, -- Bellowing Roar (Roar)
 		[407327] = L.unstable_essence_new, -- Unstable Essence (New Bomb)
 		[405492] = L.volatile_spew, -- Volatile Spew (Dodges)
 		[405375] = L.volatile_eruption, -- Violent Eruption (Raid Damage)

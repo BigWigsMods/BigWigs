@@ -50,16 +50,17 @@ function mod:GetOptions()
 		{404846, "TANK"}, -- Incinerating Maws
 		406712, -- Lava
 		411633, -- Burning Chains
+		-- Mythic
 		{411182, "SAY", "SAY_COUNTDOWN"}, -- Explosive Magma
 	},{
-
+		[411182] = "mythic",
 	},{
 		[408358] = CL.full_energy, -- Catastrophic Eruption (Full Energy)
 		[402994] = CL.pools,  -- Molten Spittle (Pools)
 		[403740] = CL.roar, -- Igniting Roar (Roar)
 		[403671] = CL.knockback, -- Overpowering Stomp (Knockback)
 		[409093] = CL.breath, -- Blazing Breath (Breath)
-		[411182] = L.explosive_magma, -- Explosive Magma
+		[411182] = L.explosive_magma, -- Explosive Magma (Soak Pool)
 	}
 end
 

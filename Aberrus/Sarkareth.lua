@@ -106,6 +106,12 @@ function mod:GetOptions()
 		[401383] = -26140, -- Stage One: The Legacy of the Dracthyr
 		[404027] = -26142, -- Stage Two: A Touch of the Forbidden
 		[403771] = -26145, -- Stage Three: The Seas of Infinity
+	},{
+		[401500] = CL.bombs, -- Scorching Bomb
+		[401330] = L.claws, -- Burning Claws (Tank Debuff)
+		[404027] = CL.bombs, -- Void Bomb
+		[411241] = L.claws, -- Void Claws (Tank Debuff)
+		[408429] = L.claws, -- Void Slash (Tank Debuff)
 	}
 end
 

@@ -84,12 +84,12 @@ function mod:GetOptions()
 		[403057] = -26421, -- Stage 2
 		[407936] = -26422, -- Stage 3
 	},{
-		[407221] = L.rushing_darkness, -- Rushing Darkness
-		[402902] = L.twisted_earth, -- Twisted Earth
-		[402115] = L.echoing_fissure, -- Echoing Fissure
-		[402902] = L.umbral_annihilation, -- Umbral Annihilation
-		[402902] = L.sunder_reality, -- Sunder Reality
-		[402902] = L.ebon_destruction, -- Ebon Destruction
+		[407221] = L.rushing_darkness, -- Rushing Darkness (Knock Lines)
+		[402902] = L.twisted_earth, -- Twisted Earth (Walls)
+		[402115] = L.echoing_fissure, -- Echoing Fissure (Fissure)
+		[402902] = L.umbral_annihilation, -- Umbral Annihilation (Annihilation)
+		[402902] = L.sunder_reality, -- Sunder Reality (Portals)
+		[402902] = L.ebon_destruction, -- Ebon Destruction (Big Bang)
 	}
 end
 
