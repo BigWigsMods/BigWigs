@@ -45,7 +45,7 @@ local timersTable = { -- Stage 1
 		[371976] = {0}, -- Chilling Blast
 		[372082] = {17.1, 27.9, 27.9, 27.9, 19.4, 28.0, 29.1, 42.5, 27.9, 27.6}, -- Enveloping Webs
 		[373405] = {30.7, 35.2, 35.2, 34.0, 35.2, 63.2, 34.8}, -- Gossamer Burst
-		[372238] = {1.5, 35.2, 35.2, 43.7, 31.6, 30.3, 37.7, 31.6, 32.4}, -- Call Spiderlings
+		[372238] = {1.5, 35.2, 35.2, 43.7, 31.6, 30.3, 37.7, 31.6, 32.4, 30.3}, -- Call Spiderlings
 	},
 }
 local timers = timersTable[mod:Difficulty()]
