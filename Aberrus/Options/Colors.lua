@@ -1,16 +1,16 @@
 
-BigWigs:AddColors("Kazzara", {
-	[400430] = "yellow",
-	[401319] = "yellow",
+BigWigs:AddColors("Kazzara, the Hellforged", {
+	[400430] = "red",
+	[401319] = {"cyan","yellow"},
 	[402421] = "blue",
-	[403326] = "yellow",
+	[403326] = "orange",
 	[404743] = {"blue","purple"},
 	[406530] = "blue",
-	[407069] = {"blue","yellow"},
+	[407069] = {"blue","orange"},
 	[407196] = {"blue","yellow"},
 })
 
-BigWigs:AddColors("Molgoth", {
+BigWigs:AddColors("The Amalgamation Chamber", {
 	[401809] = {"blue","green"},
 	[402617] = {"blue","green"},
 	[403101] = "yellow",
@@ -27,43 +27,123 @@ BigWigs:AddColors("Molgoth", {
 	[406783] = "purple",
 	[407640] = "yellow",
 	[408193] = "yellow",
+	[409385] = "yellow",
+	["stages"] = "cyan",
 })
 
-BigWigs:AddColors("Experimentation of Dracthyr", {
+BigWigs:AddColors("The Forgotten Experiments", {
+	[404472] = "yellow",
+	[404713] = "orange",
+	[405375] = "yellow",
+	[405392] = {"blue","orange"},
+	[405492] = "orange",
+	[406227] = "red",
+	[406311] = {"blue","purple"},
+	[406358] = "red",
+	[407302] = "blue",
+	[407327] = {"blue","cyan"},
+	[407552] = {"blue","yellow"},
+	["stages"] = "cyan",
 })
 
-BigWigs:AddColors("Zaqali Invasion", {
+BigWigs:AddColors("Assault of the Zaqali", {
+	[-26221] = "yellow",
+	[-26217] = "yellow",
+	[397383] = "yellow",
+	[397386] = "orange",
+	[401108] = "yellow",
+	[401258] = {"blue","purple"},
+	[401381] = "blue",
+	[401401] = "blue",
+	[401867] = {"blue","yellow"},
+	[407017] = "red",
+	[408620] = "orange",
+	[408959] = "yellow",
+	[409275] = {"blue","orange"},
+	[409359] = "red",
+	[410351] = "purple",
+	[410516] = "orange",
+	["big_adds_timer"] = "yellow",
+	["stages"] = "cyan",
 })
 
-BigWigs:AddColors("Rashok", {
-	[400777] = "yellow",
+BigWigs:AddColors("Rashok, the Elder", {
+	[400777] = {"cyan","yellow"},
 	[401419] = "cyan",
 	[403543] = "blue",
 	[405091] = "yellow",
 	[405316] = "red",
-	[405821] = "orange",
+	[405821] = {"blue","yellow"},
 	[406333] = "yellow",
 	[406851] = "orange",
 	[407547] = {"blue","purple"},
 	[407597] = {"blue","purple"},
+	[410070] = "orange",
 })
 
-BigWigs:AddColors("Zskarn", {
+BigWigs:AddColors("The Vigilant Steward, Zskarn", {
 	[403978] = "red",
-	[404010] = {"blue","yellow"},
+	[404010] = {"blue","red"},
 	[404942] = {"blue","purple"},
-	[404957] = "yellow",
 	[405592] = "green",
 	[405736] = "yellow",
 	[405812] = "cyan",
 	[406678] = "orange",
+	[406725] = {"green","yellow"},
 })
 
 BigWigs:AddColors("Magmorax", {
+	[402994] = {"blue","cyan"},
+	[403671] = "orange",
+	[403740] = "yellow",
+	[404846] = {"blue","purple"},
+	[406712] = "blue",
+	[407879] = "red",
+	[408358] = "red",
+	[408839] = "blue",
+	[409093] = "red",
+	[411182] = {"blue","red"},
+	[411633] = "blue",
 })
 
-BigWigs:AddColors("Neltharion", {
+BigWigs:AddColors("Echo of Neltharion", {
+	[401010] = {"blue","yellow"},
+	[401998] = {"blue","purple"},
+	[402115] = "orange",
+	[402902] = "yellow",
+	[403049] = "cyan",
+	[405433] = "orange",
+	[407221] = {"blue","yellow"},
+	[407790] = {"blue","purple"},
+	[407917] = "red",
+	[407919] = {"blue","green"},
+	[407936] = "yellow",
+	[410966] = {"blue","orange"},
+	["stages"] = "cyan",
 })
 
 BigWigs:AddColors("Scalecommander Sarkareth", {
+	[401215] = {"blue","green"},
+	[401330] = {"blue","purple"},
+	[401383] = "yellow",
+	[401500] = "orange",
+	[401680] = {"blue","cyan"},
+	[401810] = "red",
+	[401951] = "blue",
+	[402050] = "red",
+	[403520] = {"blue","yellow"},
+	[403625] = "red",
+	[403771] = "red",
+	[403997] = "blue",
+	[404027] = {"blue","orange"},
+	[404288] = {"blue","cyan","yellow"},
+	[404403] = "yellow",
+	[404456] = "red",
+	[404754] = "orange",
+	[405486] = {"blue","yellow"},
+	[406989] = "blue",
+	[407576] = "blue",
+	[408429] = {"blue","purple"},
+	[411241] = {"blue","purple"},
+	["stages"] = "cyan",
 })
