@@ -169,7 +169,6 @@ globals = {
 	"GetAddOnDependencies",
 	"GetAddOnEnableState",
 	"GetAddOnInfo",
-	"GetAddOnMetadata",
 	"GetAddOnOptionalDependencies",
 	"GetBuildInfo",
 	"GetCurrentRegion", -- XXX temp 9.0.5
