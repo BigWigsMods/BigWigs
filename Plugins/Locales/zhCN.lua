@@ -187,10 +187,10 @@ L.blockTalkingHeadRaids = "团队"
 L.blockTalkingHeadTimewalking = "时空漫游（地下城和团队）"
 L.blockTalkingHeadScenarios = "场景事件"
 
--- L.userNotifySfx = "Sound Effects were disabled by BossBlock, forcing it back on."
--- L.userNotifyMusic = "Music was disabled by BossBlock, forcing it back on."
--- L.userNotifyAmbience = "Ambience was disabled by BossBlock, forcing it back on."
--- L.userNotifyErrorSpeech = "Error speech was disabled by BossBlock, forcing it back on."
+L.userNotifySfx = "首领屏蔽禁用了声音效果，强制它重新启用。"
+L.userNotifyMusic = "首领屏蔽禁用了音乐，强制它重新启用。"
+L.userNotifyAmbience = "首领屏蔽禁用了环境音效，强制它重新启用。"
+L.userNotifyErrorSpeech = "首领屏蔽禁用了错误提示，强制它重新启用。"
 
 L.subzone_grand_bazaar = "百商集市" -- Battle of Dazar'alor raid (Battle for Azeroth)
 L.subzone_port_of_zandalar = "赞达拉港" -- Battle of Dazar'alor raid (Battle for Azeroth)
