@@ -67,10 +67,10 @@ local timersEasy = {
 		[385574] = {43.5, 35, 50, 25, 55}, -- Tempest Wing
 	},
 	[3] = {
-		[377594] = {34.5, 41, 41.9}, -- Lightning Breath
-		[385574] = {66.4, 58.9, 26.9}, -- Tempest Wing
-		[377467] = {41.5, 60, 60}, -- Fulminating Charge
-		[386410] = {22.5, 30, 30, 30, 30, 30}, -- Thunderous Blast
+		[377594] = {34.5, 41, 41.9, 75, 42}, -- Lightning Breath
+		[385574] = {66.4, 58.9, 26.9, 31, 59}, -- Tempest Wing
+		[377467] = {41.5, 60, 60, 57}, -- Fulminating Charge
+		[386410] = {22.5, 30, 30, 30, 30, 30, 27, 30, 30}, -- Thunderous Blast
 	},
 }
 
