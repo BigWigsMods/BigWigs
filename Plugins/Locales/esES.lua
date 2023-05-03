@@ -12,7 +12,7 @@ L.width = "Ancho"
 L.height = "Alto"
 L.sizeDesc = "Normalmente ajusta el tamaño deslizando por la barra. Si necesitas un tamaño exacto puedes usar este deslizador o teclea el valor dentro de la caja, no tiene máximo."
 L.fontSizeDesc = "Ajusta el tamaño de la letra con el control deslizante o escribe el valor en la casilla cuyo máximo es 200."
-L.disableDesc = "Estás a punto de desactivar la función '%s', aunque |cffff4411no se recomienda|r. ¿Estás seguro de que quieres hacerlo?"
+L.disableDesc = "Estás a punto de desactivar la función '%s', aunque |cffff4411no se recomienda|r.\n\n¿Estás seguro de que quieres hacerlo?"
 L.transparency = "Transparencia"
 
 -----------------------------------------------------------------------
