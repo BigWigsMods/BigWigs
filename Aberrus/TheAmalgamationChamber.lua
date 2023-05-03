@@ -1,4 +1,3 @@
-if select(4, GetBuildInfo()) < 100100 then return end -- not 10.1
 --------------------------------------------------------------------------------
 -- TODO:
 -- -- Repeating say, ending with - on clear (stage 2 only)
