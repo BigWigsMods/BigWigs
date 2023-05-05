@@ -122,6 +122,7 @@ globals = {
 	"BNGetNumFriendGameAccounts",
 	"BNIsSelf",
 	"BNSendWhisper",
+	"C_AddOns",
 	"C_BattleNet",
 	"C_ChatInfo",
 	"C_FriendList",
