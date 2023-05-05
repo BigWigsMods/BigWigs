@@ -243,7 +243,7 @@ end
 --
 
 local EnableAddOn, GetAddOnEnableState, GetAddOnInfo, IsAddOnLoaded, LoadAddOn = EnableAddOn, GetAddOnEnableState, GetAddOnInfo, IsAddOnLoaded, LoadAddOn
-local GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat = GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat
+local GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat = GetAddOnMetadata or C_AddOns.GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat
 local UnitIsDeadOrGhost, UnitSetRole = UnitIsDeadOrGhost, UnitSetRole
 
 local reqFuncAddons = {
