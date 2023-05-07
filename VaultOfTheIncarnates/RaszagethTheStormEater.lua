@@ -433,7 +433,7 @@ function mod:IntermissionAddDeaths(args)
 			end
 		end
 	elseif args.mobId == 199547 or addToNumber[args.sourceGUID] then -- Frostforged Zealot
-		self:StopBar(CL.count:format(self:SpellName(397382, addToNumber[args.sourceGUID]))) -- Shattering Shroud
+		self:StopBar(CL.count:format(self:SpellName(397382), addToNumber[args.sourceGUID])) -- Shattering Shroud
 	elseif args.mobId == 199549 or addToNumber[args.sourceGUID] then -- Flamesworn Herald
 		self:StopBar(CL.count:format(self:SpellName(397387), addToNumber[args.sourceGUID])) -- Flame Shield
 	elseif args.mobId == 193760 then -- Surging Ruiner
