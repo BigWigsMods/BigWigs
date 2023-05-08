@@ -127,13 +127,11 @@ local acOptions = {
 					name = L.compartmentMenu,
 					desc = L.compartmentMenu_desc,
 					order = 14,
-					get = function() return not BigWigs3DB.showInCompartment end,
+					get = function() return not BigWigsIconDB.showInCompartment end,
 					set = function(_, v)
 						if v then
-							BigWigs3DB.showInCompartment = nil
 							ldbi:RemoveButtonFromCompartment("BigWigs")
 						else
-							BigWigs3DB.showInCompartment = true
 							ldbi:AddButtonToCompartment("BigWigs")
 						end
 					end,
