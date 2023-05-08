@@ -120,12 +120,28 @@ local acOptions = {
 							ldbi:Hide("BigWigs")
 						end
 					end,
-					width = "full",
+					width = 1.5,
+				},
+				compartment = {
+					type = "toggle",
+					name = L.compartmentMenu,
+					desc = L.compartmentMenu_desc,
+					order = 14,
+					get = function() return not BigWigs3DB.showInCompartment end,
+					set = function(_, v)
+						if v then
+							BigWigs3DB.showInCompartment = nil
+							ldbi:RemoveButtonFromCompartment("BigWigs")
+						else
+							BigWigs3DB.showInCompartment = true
+							ldbi:AddButtonToCompartment("BigWigs")
+						end
+					end,
 				},
 				separator2 = {
 					type = "description",
 					name = " ",
-					order = 14,
+					order = 15,
 					width = "full",
 				},
 				flash = {

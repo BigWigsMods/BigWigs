@@ -790,6 +790,10 @@ function mod:ADDON_LOADED(addon)
 	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
 
 	if BigWigs3DB then
+		if BigWigs3DB.showInCompartment then
+			ldbi:AddButtonToCompartment("BigWigs")
+		end
+
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
 			local name = UnitName("player")
