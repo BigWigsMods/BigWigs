@@ -787,7 +787,7 @@ function mod:ADDON_LOADED(addon)
 	if type(BigWigsIconDB) ~= "table" then
 		BigWigsIconDB = {}
 	end
-	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB)
+	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB, "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-enabled")
 	BigWigs3DB.showInCompartment = nil -- XXX 10.1.0 alphas only
 
 	if BigWigs3DB then

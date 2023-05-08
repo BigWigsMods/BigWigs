@@ -127,12 +127,12 @@ local acOptions = {
 					name = L.compartmentMenu,
 					desc = L.compartmentMenu_desc,
 					order = 14,
-					get = function() return not BigWigsIconDB.showInCompartment end,
+					get = function() return not ldbi:IsButtonInCompartment("BigWigs") end,
 					set = function(_, v)
 						if v then
 							ldbi:RemoveButtonFromCompartment("BigWigs")
 						else
-							ldbi:AddButtonToCompartment("BigWigs")
+							ldbi:AddButtonToCompartment("BigWigs", "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-enabled")
 						end
 					end,
 				},
