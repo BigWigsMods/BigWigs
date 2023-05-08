@@ -1,94 +1,94 @@
 local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "ruRU")
 if not L then return end
 if L then
-    --L.dread_rift = "Rift" -- Singular Dread Rift
+    L.dread_rift = "Разлом" -- Singular Dread Rift
 end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "ruRU")
 if L then
-	-- L.custom_on_fade_out_bars = "Fade out stage 1 bars"
-	-- L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range in stage 1."
+	L.custom_on_fade_out_bars = "Скрыть панели второго босса"
+	L.custom_on_fade_out_bars_desc = "Скрывает панели способностей босса, который вне радиуса на 1 фазе."
 
-	-- L.coalescing_void = "Run Away"
-	-- L.shadow_convergence = "Orbs"
-	-- L.molten_eruption = "Soaks"
-	-- L.swirling_flame = "Tornadoes"
-	-- L.gloom_conflagration = "Meteor + Run Away"
-	-- L.blistering_twilight = "Bombs + Tornadoes"
-	-- L.convergent_eruption = "Soaks + Orbs"
-	-- L.shadowflame_burst = "Frontal Cone"
+	L.coalescing_void = "Отбежка"
+	L.shadow_convergence = "Орбы"
+	L.molten_eruption = "Соки"
+	L.swirling_flame = "Ветерки"
+	L.gloom_conflagration = "Ветерки + Отбежка"
+	L.blistering_twilight = "Бомбы + Ветерки"
+	L.convergent_eruption = "Соки + Орбы"
+	L.shadowflame_burst = "Фронтал"
 
-	-- L.shadow_and_flame = "Mythic Debuffs"
+	L.shadow_and_flame = "Мифик дебафф"
 end
 
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "ruRU")
 if L then
-	-- L.rending_charge_single = "1st Charge"
-	-- L.massive_slam = "Frontal Cone"
-	-- L.unstable_essence_new = "New Bomb"
-	-- L.custom_on_unstable_essence_high = "High Stacks Unstable Essence Say Messages"
-	-- L.custom_on_unstable_essence_high_desc = "Say messages with the amount of stacks for your Unstable Essence debuff when they are high enough."
-	-- L.volatile_spew = "Dodges"
-	-- L.volatile_eruption = "Eruption"
-	-- L.temporal_anomaly = "Heal Orb"
-	-- L.temporal_anomaly_knocked = "Heal Orb Knocked!"
+	L.rending_charge_single = "1й рывок"
+	L.massive_slam = "Фронтал"
+	L.unstable_essence_new = "Бомба каст"
+	L.custom_on_unstable_essence_high = "Сообщения в чат о высоких стаках Нестабильной Сущности"
+	L.custom_on_unstable_essence_high_desc = "Сообщать в чат о высоких стаках Нестабильной Сущности"
+	L.volatile_spew = "Войдзоны"
+	L.volatile_eruption = "Извержение"
+	L.temporal_anomaly = "Шарик"
+	L.temporal_anomaly_knocked = "Шарик откинут!"
 end
 
 L = BigWigs:NewBossLocale("Assault of the Zaqali", "ruRU")
 if L then
-	-- L.big_adds_timer = "Timers for Huntsman + Guards"
-	-- L.final_assault_soon = "Final Assault soon"
+	L.big_adds_timer = "Таймеры для Охотников + Стражей"
+	L.final_assault_soon = "Последняя атака скоро"
 
-	-- L.south_adds_message = "Big Adds Climbing SOUTH!"
-	-- L.south_adds = "Commanders ascend the southern battlement!" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
-	-- L.north_adds_message = "Big Adds Climbing NORTH!"
-	-- L.north_adds = "Commanders ascend the northern battlement!" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
+	L.south_adds_message = "Ады поднимаются: ЮГ!"
+	L.south_adds = "Ады поднимаются на южной стороне!" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+	L.north_adds_message = "Ады поднимаются: СЕВЕР!"
+	L.north_adds = "Ады поднимаются на северной стороне!" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
 
-	-- L.wallclimbers_bartext = "Wallclimbers"
+	L.wallclimbers_bartext = "Стенолазы"
 end
 
 L = BigWigs:NewBossLocale("Rashok, the Elder", "ruRU")
 if L then
-	-- L.doom_flames = "Small Soaks"
-	-- L.shadowlave_blast = "Frontal Cone"
-	-- L.charged_smash = "Big Soak"
-	-- L.energy_gained = "Energy Gained: %d"
+	L.doom_flames = "Малые соки"
+	L.shadowlave_blast = "Фронтал"
+	L.charged_smash = "Делёжка"
+	L.energy_gained = "Получено энергии: %d"
 
 	-- Mythic
-	-- L.unleash_shadowflame = "Mythic Orbs"
+	L.unleash_shadowflame = "Мифические орбы"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "ruRU")
 if L then
-	-- L.tactical_destruction = "Dragonheads"
-	-- L.bombs_soaked = "Bombs Soaked" -- Bombs Soaked (2/4)
-	-- L.unstable_embers = "Embers"
-	-- L.unstable_ember = "Ember"
+	L.tactical_destruction = "Войдзоны"
+	L.bombs_soaked = "Бомб активировано" -- Bombs Soaked (2/4)
+	L.unstable_embers = "Угли"
+	L.unstable_ember = "Уголь"
 end
 
 L = BigWigs:NewBossLocale("Magmorax", "ruRU")
 if L then
-	-- L.energy_gained = "Energy Gained! (-17s)" -- When you fail, you lose 17s on until the boss reaches full energy
+	L.energy_gained = "Энергия получена! (-17с)" -- When you fail, you lose 17s on until the boss reaches full energy
 
 	-- Mythic
-	-- L.explosive_magma = "Soak Pool"
+	L.explosive_magma = "Соки"
 end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "ruRU")
 if L then
-	-- L.custom_on_repeating_sunder_reality = "Repeating Sunder Reality Warning"
-	-- L.custom_on_repeating_shattered_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
+	L.custom_on_repeating_sunder_reality = "Повторяющиеся уведомления о Тёмном Уничтожении"
+	L.custom_on_repeating_shattered_reality_desc = "Напоминать о касте Тёмного Уничтожения, пока вы не зайдёте в портал."
 
-	-- L.twisted_earth = "Walls"
-	-- L.echoing_fissure = "Fissure"
-	-- L.rushing_darkness = "Knock Lines"
+	L.twisted_earth = "Стены"
+	L.echoing_fissure = "Разлом"
+	L.rushing_darkness = "Линии отталкивания"
 
-	-- L.umbral_annihilation = "Annihilation"
-	-- L.sunder_reality = "Portals"
-	-- L.ebon_destruction = "Big Bang"
+	L.umbral_annihilation = "Уничтожение"
+	L.sunder_reality = "Порталы"
+	L.ebon_destruction = "Большой взрыв"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "ruRU")
 if L then
-	--L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
+	L.claws = "Танк дебафф" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
 end
