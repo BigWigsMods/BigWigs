@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "ruRU")
 if not L then return end
 if L then
-    L.dread_rift = "Разлом" -- Singular Dread Rift
+	L.dread_rift = "Разлом" -- Singular Dread Rift
 end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "ruRU")
@@ -31,7 +31,7 @@ if L then
 	L.volatile_spew = "Войдзоны"
 	L.volatile_eruption = "Извержение"
 	L.temporal_anomaly = "Шарик"
-	L.temporal_anomaly_knocked = "Шарик откинут!"
+	L.temporal_anomaly_knocked = "Шарик откинут"
 end
 
 L = BigWigs:NewBossLocale("Assault of the Zaqali", "ruRU")
@@ -39,10 +39,13 @@ if L then
 	L.big_adds_timer = "Таймеры для Охотников + Стражей"
 	L.final_assault_soon = "Последняя атака скоро"
 
-	L.south_adds_message = "Ады поднимаются: ЮГ!"
-	L.south_adds = "Ады поднимаются на южной стороне!" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
-	L.north_adds_message = "Ады поднимаются: СЕВЕР!"
-	L.north_adds = "Ады поднимаются на северной стороне!" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
+	L.north_adds_message = "Ады поднимаются: СЕВЕР"
+	L.south_adds_message = "Ады поднимаются: ЮГ"
+
+	-- These are in-game emotes and need to match the text shown in-game
+	-- You should also replace the comment (--) with the full emote as it shows in-game
+	--L.north_adds_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
+	--L.south_adds_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
 
 	L.wallclimbers_bartext = "Стенолазы"
 end
@@ -68,7 +71,7 @@ end
 
 L = BigWigs:NewBossLocale("Magmorax", "ruRU")
 if L then
-	L.energy_gained = "Энергия получена! (-17с)" -- When you fail, you lose 17s on until the boss reaches full energy
+	L.energy_gained = "Энергия получена (-17с)" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
 
 	-- Mythic
 	L.explosive_magma = "Соки"

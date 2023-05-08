@@ -48,7 +48,7 @@ if L then
 	L.volatile_spew = "Dodges"
 	L.volatile_eruption = "Eruption"
 	L.temporal_anomaly = "Heal Orb"
-	L.temporal_anomaly_knocked = "Heal Orb Knocked!"
+	L.temporal_anomaly_knocked = "Heal Orb Knocked"
 end
 
 --------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "zhCN")
 if not L then return end
 if L then
-    L.dread_rift = "裂隙" -- Singular Dread Rift
+	L.dread_rift = "裂隙" -- Singular Dread Rift
 end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "zhCN")
@@ -31,7 +31,7 @@ if L then
 	L.volatile_spew = "躲球"
 	L.volatile_eruption = "剧烈爆发"
 	L.temporal_anomaly = "治疗宝珠"
-	L.temporal_anomaly_knocked = "治疗宝珠被踢走了！"
+	L.temporal_anomaly_knocked = "治疗宝珠被踢走了"
 end
 
 L = BigWigs:NewBossLocale("Assault of the Zaqali", "zhCN")
@@ -39,10 +39,13 @@ if L then
 	L.big_adds_timer = "显示焰缚猎人和黑曜卫士的计时器"
 	L.final_assault_soon = "即将最后阶段"
 
-	L.south_adds_message = "一大波小怪开始攀爬南部城垒！"
-	L.south_adds = "指挥官爬上了南部城垒！" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
-	L.north_adds_message = "一大波小怪开始攀爬北部城垒！"
-	L.north_adds = "指挥官爬上了北部城垒！" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
+	L.north_adds_message = "一大波小怪开始攀爬北部城垒"
+	L.south_adds_message = "一大波小怪开始攀爬南部城垒"
+
+	-- These are in-game emotes and need to match the text shown in-game
+	-- You should also replace the comment (--) with the full emote as it shows in-game
+	--L.north_adds_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
+	--L.south_adds_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
 
 	L.wallclimbers_bartext = "攀墙者"
 end
@@ -68,7 +71,7 @@ end
 
 L = BigWigs:NewBossLocale("Magmorax", "zhCN")
 if L then
-	L.energy_gained = "获得能量，狂暴时限缩短17秒！" -- When you fail, you lose 17s on until the boss reaches full energy
+	L.energy_gained = "获得能量，狂暴时限缩短17秒" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
 
 	-- Mythic
 	L.explosive_magma = "岩浆分摊"

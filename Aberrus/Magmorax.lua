@@ -25,7 +25,7 @@ local incineratingMawsCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.energy_gained = "Energy Gained! (-17s)" -- When you fail, you lose 17s on until the boss reaches full energy
+	L.energy_gained = "Energy Gained (-17s)" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
 
 	-- Mythic
 	L.explosive_magma = "Soak Pool"
