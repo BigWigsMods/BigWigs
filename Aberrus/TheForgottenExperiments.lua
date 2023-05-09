@@ -39,7 +39,7 @@ local timers = {
 
 local L = mod:GetLocale()
 if L then
-	L.rending_charge_single = "1st Charge"
+	L.rending_charge_single = "First Charge"
 	L.massive_slam = "Frontal Cone"
 	L.unstable_essence_new = "New Bomb"
 	L.custom_on_unstable_essence_high = "High Stacks Unstable Essence Say Messages"
@@ -140,9 +140,9 @@ function mod:OnEngage()
 	temporalAnomalyCount = 1
 	disintergrateCount = 1
 
-	self:Bar(404713, self:Mythic() and 36 or 5, CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
-	self:Bar(406358, self:Mythic() and 14 or 14.5, CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
-	self:Bar(404472, self:Mythic() and 6 or 30, CL.count:format(L.massive_slam, massiveSlamCount)) -- Massive Slam
+	self:Bar(404713, self:Mythic() and 36 or 11, CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
+	self:Bar(406358, self:Mythic() and 14 or 19, CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
+	self:Bar(404472, self:Mythic() and 6 or 35, CL.count:format(L.massive_slam, massiveSlamCount)) -- Massive Slam
 
 	self:SetPrivateAuraSound(406358, 406317) -- Rending Charge
 end
@@ -159,9 +159,9 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			self:Message("stages", "cyan", -26322, false)
 			self:PlaySound("stages", "long")
 
-			self:CDBar(405492, 5, CL.count:format(L.volatile_spew, volatileSpewCount)) -- Volatile Spew
-			self:CDBar(407327, 18, CL.count:format(L.unstable_essence_new, unstableEssenceCount)) -- Unstable Essence
-			self:CDBar(405375, 46, CL.count:format(L.volatile_eruption, violentEruptionCount)) -- Violent Eruption
+			self:CDBar(405492, self:Mythic() and 9.5 or 6, CL.count:format(L.volatile_spew, volatileSpewCount)) -- Volatile Spew
+			self:CDBar(407327, self:Mythic() and 21 or 17.3, CL.count:format(L.unstable_essence_new, unstableEssenceCount)) -- Unstable Essence
+			self:CDBar(405375, 40, CL.count:format(L.volatile_eruption, violentEruptionCount)) -- Violent Eruption
 		end
 	elseif not rionthusEngaged then
 		if self:GetBossId(200918) then -- Rionthus
@@ -169,9 +169,11 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			self:Message("stages", "cyan", -26329, false)
 			self:PlaySound("stages", "long")
 
-			self:CDBar(405392, 7.8, CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
-			self:CDBar(407552, 18.0, CL.count:format(L.temporal_anomaly, temporalAnomalyCount)) -- Temporal Anomaly
-			self:CDBar(406227, 33.8, CL.count:format(self:SpellName(406227), deepBreathCount)) -- Deep Breath
+			self:CDBar(405392, self:Mythic() and 1 or 6.4, CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
+			self:CDBar(407552, self:Mythic() and 12.4 or 17.5, CL.count:format(L.temporal_anomaly, temporalAnomalyCount)) -- Temporal Anomaly
+			if not self:Easy() then -- bugged or intended?
+				self:CDBar(406227, self:Mythic() and 26.4 or 33.1, CL.count:format(self:SpellName(406227), deepBreathCount)) -- Deep Breath
+			end
 		end
 	end
 end
@@ -249,7 +251,8 @@ function mod:MassiveSlam(args)
 	self:Message(404472, "yellow", CL.count:format(L.massive_slam, massiveSlamCount))
 	self:PlaySound(404472, "alert")
 	massiveSlamCount = massiveSlamCount + 1
-	self:Bar(404472, self:Mythic() and 18.0 or (massiveSlamCount == 2 and 49.3 or 46.2), CL.count:format(L.massive_slam, massiveSlamCount))
+	-- 35.2, 9.7 ???
+	self:Bar(404472, self:Mythic() and 18.0 or 35, CL.count:format(L.massive_slam, massiveSlamCount))
 end
 
 function mod:BellowingRoar(args)
@@ -318,7 +321,7 @@ do
 		volatileSpewCount = volatileSpewCount + 1
 		local timeSinceLast = args.time - prev
 		prev = args.time
-		self:CDBar(args.spellId, self:Mythic() and (timeSinceLast > 22 and 20 or 35) or (volatileSpewCount % 2 == 0 and 26 or 30), CL.count:format(L.volatile_spew, volatileSpewCount))
+		self:CDBar(args.spellId, self:Mythic() and (timeSinceLast > 22 and 20 or 35) or (volatileSpewCount == 2 and 22 or volatileSpewCount % 2 == 0 and 30 or 37), CL.count:format(L.volatile_spew, volatileSpewCount))
 	end
 end
 
@@ -336,7 +339,7 @@ function mod:DeepBreath(args)
 	self:Message(args.spellId, "red", CL.count:format(args.spellName, deepBreathCount))
 	self:PlaySound(args.spellId, "alert")
 	deepBreathCount = deepBreathCount + 1
-	self:Bar(args.spellId, self:Mythic() and 55 or 43.5, CL.count:format(args.spellName, deepBreathCount))
+	self:Bar(args.spellId, self:Mythic() and 55 or 43, CL.count:format(args.spellName, deepBreathCount))
 end
 
 do
