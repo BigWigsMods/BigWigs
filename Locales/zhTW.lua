@@ -140,6 +140,8 @@ L.ME_ONLY_EMPHASIZE = "強調（只有我）"
 L.ME_ONLY_EMPHASIZE_desc = "啟用後會強調所有只施放在你的技能相關的訊息，使它們更大和更容易看到。"
 L.NAMEPLATEBAR = "名條計時條"
 L.NAMEPLATEBAR_desc = "當多個敵方單位施放相同的法術時，在名條上方顯示各自的計時條。如果不想要名條上依附的計時條，請停用此項。"
+--L.PRIVATE = "Private Aura"
+--L.PRIVATE_desc = "Private auras can't be tracked normally, but the \"on you\" sound (Warning) can be set in the Sound tab."
 
 L.advanced = "進階選項"
 L.back = "<< 返回"

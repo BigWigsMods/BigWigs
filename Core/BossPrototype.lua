@@ -394,6 +394,14 @@ function boss:Disable(isWipe)
 			end
 		end
 
+		-- Remove all private aura sounds
+		if self.privateAuraSounds then
+			for _, id in next, self.privateAuraSounds do
+				C_UnitAuras.RemovePrivateAuraAppliedSound(id)
+			end
+			self.privateAuraSounds = nil
+		end
+
 		-- Cancel all say countdowns
 		for _, tbl in next, self.sayCountdowns do
 			tbl[1] = true
@@ -2906,6 +2914,23 @@ end
 --- Request to play the victory sound.
 function boss:PlayVictorySound()
 	self:SendMessage("BigWigs_VictorySound", self)
+end
+
+--- Register a sound to be played when a Private Aura is applied to you.
+-- @param key the option key
+-- @number[opt] spellId the spell id of the Private Aura if different from the key
+-- @string[opt] sound the sound to play, defaults to "warning"
+function boss:SetPrivateAuraSound(key, spellId, sound)
+	local sounds = core:GetPlugin("Sounds", true)
+	if sounds then
+		if not self.privateAuraSounds then self.privateAuraSounds = {} end
+		self.privateAuraSounds[#self.privateAuraSounds + 1] = C_UnitAuras.AddPrivateAuraAppliedSound({
+			spellID = spellId or key,
+			unitToken = "player",
+			soundFileName = sounds:GetSoundFile(self, key, sound or "warning"),
+			outputChannel = "master",
+		})
+	end
 end
 
 do

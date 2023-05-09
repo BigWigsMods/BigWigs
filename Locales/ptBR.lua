@@ -140,6 +140,8 @@ L.ME_ONLY_EMPHASIZE = "Enfatizar (somente a mim)"
 L.ME_ONLY_EMPHASIZE_desc = "Habilitar isso irá enfatizar qualquer mensagem associada a essa habilidade SOMENTE se for conjurada em você, fazenda elas mais largas e mais visíveis."
 L.NAMEPLATEBAR = "Barras de identificação"
 L.NAMEPLATEBAR_desc = "Barras são normalmente anexadas a barras de identificação quando mais de um mob conjura o mesmo feitiço. Se essa habilidade for acompanhada por uma barra de identificação que você quer esconder, desabilite essa opção."
+--L.PRIVATE = "Private Aura"
+--L.PRIVATE_desc = "Private auras can't be tracked normally, but the \"on you\" sound (Warning) can be set in the Sound tab."
 
 L.advanced = "Opções Avançadas"
 L.back = "<< Voltar"

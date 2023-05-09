@@ -140,6 +140,8 @@ L.ME_ONLY_EMPHASIZE = "강조(나에게 걸렸을 때만)"
 L.ME_ONLY_EMPHASIZE_desc = "이 옵션을 활성화하면 이 능력이 자신에게 영향을 끼칠때 메세지를 더 크고 는에 띄게 표시합니다."
 L.NAMEPLATEBAR = "이름표 바"
 L.NAMEPLATEBAR_desc = "몹 한마리 이상이 같은 주문을 시전할때 이름표랑 시전바가 붙어있는 경우가 많습니다. 이 능력이 이름표 때문에 보이지 않는다면, 이 옵션을 비활성화 하십시오."
+--L.PRIVATE = "Private Aura"
+--L.PRIVATE_desc = "Private auras can't be tracked normally, but the \"on you\" sound (Warning) can be set in the Sound tab."
 
 L.advanced = "고급 옵션"
 L.back = "<< 뒤로"

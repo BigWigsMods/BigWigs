@@ -488,6 +488,7 @@ local icons = {
 	EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessage",
 	ME_ONLY_EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessageMeOnly",
 	DISPEL = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Dispel",
+	-- PRIVATE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private",
 }
 
 local function hasOptionFlag(dbKey, module, key)
@@ -607,12 +608,15 @@ local advancedTabs = {
 
 function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	local dbKey, name, desc, icon, alternativeName = BigWigs:GetBossOptionDetails(module, bossOption)
+	local widgets = {}
+
 	local back = AceGUI:Create("Button")
 	back:SetText(L.back)
 	back:SetFullWidth(true)
 	back:SetCallback("OnClick", function()
 		showToggleOptions(dropdown, nil, dropdown:GetUserData("bossIndex"), true)
 	end)
+	widgets[#widgets + 1] = back
 
 	local check = AceGUI:Create("CheckBox")
 	check:SetLabel(alternativeName and L.alternativeName:format(name, alternativeName) or name)
@@ -630,14 +634,15 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	if icon then
 		check:SetImage(icon, 0.07, 0.93, 0.07, 0.93)
 	end
+	widgets[#widgets + 1] = check
 
 	-- Create role-specific secondary checkbox
-	local roleRestrictionCheckbox = nil
 	for i, key in next, BigWigs:GetRoleOptions() do
 		local flag = C[key]
 		local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
 		if bit.band(dbv, flag) == flag then
 			local roleName, roleDesc = BigWigs:GetOptionDetails(key)
+			local roleRestrictionCheckbox = nil
 			if key == "TANK" then
 				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, icons.TANK)
 			elseif key == "HEALER" then
@@ -650,7 +655,18 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 			roleRestrictionCheckbox:SetDescription(roleDesc)
 			roleRestrictionCheckbox:SetFullWidth(true)
 			roleRestrictionCheckbox:SetUserData("desc", nil) -- Remove tooltip set by getSlaveToggle() function
+			widgets[#widgets + 1] = roleRestrictionCheckbox
 		end
+	end
+
+	if hasOptionFlag(dbKey, module, "PRIVATE") then
+		local privateAuraText = AceGUI:Create("Label")
+		privateAuraText:SetText(L.PRIVATE_desc)
+		-- privateAuraText:SetColor(1, 0.82, 0)
+		-- privateAuraText:SetImage(icons.PRIVATE)
+		privateAuraText:SetFullWidth(true)
+		-- privateAuraText:SetHeight(30)
+		widgets[#widgets + 1] = privateAuraText
 	end
 
 	local tabs = AceGUI:Create("TabGroup")
@@ -664,12 +680,9 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	tabs:SetUserData("master", check)
 	tabs:SetUserData("scrollFrame", scrollFrame)
 	tabs:SelectTab("options")
+	widgets[#widgets + 1] = tabs
 
-	if roleRestrictionCheckbox then
-		return back, check, roleRestrictionCheckbox, tabs
-	else
-		return back, check, tabs
-	end
+	return unpack(widgets)
 end
 
 local spellUpdater = CreateFrame("Frame")
@@ -819,7 +832,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local showFlags = {
 		"TANK_HEALER", "TANK", "HEALER", "DISPEL",
 		"EMPHASIZE", "ME_ONLY", "ME_ONLY_EMPHASIZE", "COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
-		"PROXIMITY", "INFOBOX", "ALTPOWER", "NAMEPLATEBAR",
+		"PROXIMITY", "INFOBOX", "ALTPOWER", "NAMEPLATEBAR", --"PRIVATE",
 	}
 	for i = 1, #showFlags do
 		local key = showFlags[i]

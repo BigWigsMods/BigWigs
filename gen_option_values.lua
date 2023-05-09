@@ -48,6 +48,7 @@ local color_methods = {
 local sound_methods = {
 	PlaySound = 2,
 	MessageOld = 3,
+	SetPrivateAuraSound = 3,
 	TargetMessageOld = 4,
 	StackMessageOld = 5,
 	DelayedMessage = 6,
@@ -100,6 +101,7 @@ local valid_methods = {
 	ResumeNameplateBar = "NAMEPLATEBAR",
 	NameplateBarTimeLeft = "NAMEPLATEBAR",
 	StopNameplateBar = "NAMEPLATEBAR",
+	SetPrivateAuraSound = "PRIVATE",
 }
 local function add_valid_methods(t)
 	for k in next, t do
@@ -735,6 +737,9 @@ local function parseLua(file)
 				local sound_index = sound_methods[method]
 				if sound_index then
 					sound = unternary(args[sound_index+offset], "\"(.-)\"", valid_sounds)
+					if method == "SetPrivateAuraSound" and not sound then
+						sound = "warning"
+					end
 				end
 				local color_index = color_methods[method]
 				if color_index then

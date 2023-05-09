@@ -140,6 +140,8 @@ L.ME_ONLY_EMPHASIZE = "Выделить (только для себя)"
 L.ME_ONLY_EMPHASIZE_desc = "С включенной опцией все сообщения, связанные с данной способностью будут выделены ТОЛЬКО тогда, когда использованы на Вас, становясь более заметными."
 L.NAMEPLATEBAR = "Полосы неймплейтов"
 L.NAMEPLATEBAR_desc = "Полосы прикрепляются к неймплейтам, когда более чем один моб одновременно применяет одинаковое заклинание. Если вы хотите убрать эти полосы с неймплейтов, выключите данную опцию."
+--L.PRIVATE = "Private Aura"
+--L.PRIVATE_desc = "Private auras can't be tracked normally, but the \"on you\" sound (Warning) can be set in the Sound tab."
 
 L.advanced = "Дополнительные настройки"
 L.back = "<< Назад"
