@@ -63,7 +63,7 @@ function mod:GetOptions()
 		{406311, "TANK"}, -- Infused Strikes
 		407302, -- Infused Explosion
 		-- Neldris
-		{406358, "ICON", "SAY", "SAY_COUNTDOWN"}, -- Rending Charge
+		{406358, "ICON", "SAY", "SAY_COUNTDOWN", "PRIVATE"}, -- Rending Charge
 		404472, -- Massive Slam
 		404713, -- Bellowing Roar
 		-- Thadrion
@@ -143,6 +143,8 @@ function mod:OnEngage()
 	self:Bar(404713, self:Mythic() and 36 or 5, CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
 	self:Bar(406358, self:Mythic() and 14 or 14.5, CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
 	self:Bar(404472, self:Mythic() and 6 or 30, CL.count:format(L.massive_slam, massiveSlamCount)) -- Massive Slam
+
+	self:SetPrivateAuraSound(406358, 406317) -- Rending Charge
 end
 
 --------------------------------------------------------------------------------
