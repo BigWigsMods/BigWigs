@@ -112,7 +112,6 @@ BigWigs:AddColors("Echo of Neltharion", {
 	[401010] = {"blue","yellow"},
 	[401998] = {"blue","purple"},
 	[402115] = "orange",
-	[402902] = "yellow",
 	[403049] = "cyan",
 	[405433] = "orange",
 	[407221] = "yellow",

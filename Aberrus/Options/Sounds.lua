@@ -110,7 +110,6 @@ BigWigs:AddSounds("Echo of Neltharion", {
 	[401010] = "warning",
 	[401998] = {"alarm","info","warning"},
 	[402115] = "alarm",
-	[402902] = "alert",
 	[403049] = "info",
 	[405433] = "alarm",
 	[407221] = "warning",
