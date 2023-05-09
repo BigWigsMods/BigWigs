@@ -85,7 +85,7 @@ function mod:OnEngage()
 	terrorClawsCount = 1
 
 	self:Bar(404743, 3) -- Terror Claws
-	self:Bar(407196, 8, CL.count:format(self:SpellName(407196), dreadRiftsCount)) -- Dread Rifts
+	self:Bar(407196, self:Easy() and 7 or 8, CL.count:format(self:SpellName(407196), dreadRiftsCount)) -- Dread Rifts
 	self:Bar(403326, 14.5, CL.count:format(CL.pushback, wingsOfExtinctionCount)) -- Wings of Extinction
 	self:Bar(407069, 24, CL.count:format(CL.lasers, raysOfAnguishCount)) -- Rays of Anguish
 	self:Bar(400430, 30, CL.count:format(CL.breath, hellbeamCount)) -- Hellbeam
@@ -113,7 +113,7 @@ function mod:HellsteelCarnage(args)
 	self:PlaySound(401319, "long")
 	hellsteelCarnageCount = hellsteelCarnageCount + 1
 
-	local extendTime = 9
+	local extendTime = self:Easy() and 8.6 or 9.6
 	self:Bar(404743, self:BarTimeLeft(404743) + extendTime) -- Terror Claws
 	self:Bar(407196, self:BarTimeLeft(CL.count:format(self:SpellName(407196), dreadRiftsCount)) + extendTime, CL.count:format(self:SpellName(407196), dreadRiftsCount)) -- Dread Rifts
 	self:Bar(403326, self:BarTimeLeft(CL.count:format(CL.pushback, wingsOfExtinctionCount)) + extendTime, CL.count:format(CL.pushback, wingsOfExtinctionCount)) -- Wings of Extinction
@@ -128,7 +128,7 @@ do
 		self:Message(407196, "yellow", CL.count:format(args.spellName, dreadRiftsCount))
 		self:PlaySound(407196, "alarm") -- spread
 		dreadRiftsCount = dreadRiftsCount + 1
-		self:Bar(407196, 35.5, CL.count:format(args.spellName, dreadRiftsCount))
+		self:Bar(407196, 35, CL.count:format(args.spellName, dreadRiftsCount))
 		count = 1
 	end
 
@@ -180,7 +180,7 @@ function mod:WingsOfExtinction(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.pushback, wingsOfExtinctionCount))
 	self:PlaySound(args.spellId, "alert")
 	wingsOfExtinctionCount = wingsOfExtinctionCount + 1
-	self:Bar(args.spellId, 34, CL.count:format(CL.pushback, wingsOfExtinctionCount))
+	self:Bar(args.spellId, 35, CL.count:format(CL.pushback, wingsOfExtinctionCount))
 end
 
 function mod:TerrorClaws(args)
