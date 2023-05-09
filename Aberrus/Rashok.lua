@@ -71,9 +71,11 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
+	self:RegisterEvent("RAID_BOSS_WHISPER")
+
 	self:Log("SPELL_AURA_APPLIED", "AncientFuryApplied", 405316)
 	self:Log("SPELL_CAST_START", "SearingSlam", 405821)
-	self:Log("SPELL_AURA_APPLIED", "SearingSlamApplied", 405819, 407642)
+	-- self:Log("SPELL_AURA_APPLIED", "SearingSlamApplied", 405819, 407642)
 	self:Log("SPELL_CAST_START", "DoomFlames", 406851)
 	self:Log("SPELL_CAST_START", "ShadowlavaBlast", 406333)
 	self:Log("SPELL_CAST_START", "ChargedSmash", 400777)
@@ -106,12 +108,11 @@ function mod:OnEngage()
 	unleashShadowflameCount = 1
 
 	self:Bar(405821, 9, CL.count:format(CL.leap, searingSlamCount)) -- Searing Slam
+	self:Bar(400777, 21, CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
 	self:Bar(407641, 29, CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:Bar(406851, 39, CL.count:format(L.doom_flames, doomFlamesCount)) -- Doom Flames
-	self:Bar(400777, 21, CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
-	self:Bar(406333, 92.5, CL.count:format(L.shadowlave_blast, shadowlavaBlastCount)) -- Shadowlava Blast
+	self:Bar(406333, 95.6, CL.count:format(L.shadowlave_blast, shadowlavaBlastCount)) -- Shadowlava Blast
 	self:Bar(405316, 110, CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
-
 	if self:Mythic() then
 		self:Bar(410070, 4, CL.count:format(L.unleash_shadowflame, shadowlavaBlastCount)) -- Unleash Shadowflame
 	end
@@ -130,18 +131,34 @@ end
 function mod:SearingSlam(args)
 	self:StopBar(CL.count:format(CL.leap, searingSlamCount))
 	searingSlamCount = searingSlamCount + 1
-	if searingSlamCount < 4 then -- 3 per rotation
-		self:Bar(args.spellId, searingSlamCount == 2 and 43 or 33, CL.count:format(CL.leap, searingSlamCount))
+	local cd
+	if self:Mythic() then
+		local timer = { 11.3, 43, 33, 31 }
+		cd = timer[searingSlamCount]
+	else
+		local timer = { 11.3, 46.0, 33.0 }
+		cd = timer[searingSlamCount]
+	end
+	self:Bar(args.spellId, cd or 0, CL.count:format(CL.leap, searingSlamCount))
+end
+
+function mod:RAID_BOSS_WHISPER(_, msg)
+	-- |TInterface\\ICONS\\Ability_Shaman_Lavalash.blp:20|t Rashok is targeting you with |cFFFF0000|Hspell:405821|h[Searing Slam]|h|r!#Thdlocka-Illidan
+	if msg:find("spell:405821", nil, true) then
+		self:PersonalMessage(405821)
+		self:PlaySound(405821, "warning")
+		self:Say(405821, CL.leap)
+		-- self:SayCountdown(405821, self:Mythic() and 3.9 or 4.9)
 	end
 end
 
-function mod:SearingSlamApplied(args)
-	self:TargetMessage(405821, "yellow", args.destName, CL.count:format(CL.leap, searingSlamCount-1))
-	if self:Me(args.destGUID) then
-		self:PlaySound(405821, "warning")
-		self:Say(405821, CL.leap)
-	end
-end
+-- function mod:SearingSlamApplied(args)
+-- 	self:TargetMessage(405821, "yellow", args.destName, CL.count:format(CL.leap, searingSlamCount-1))
+-- 	if self:Me(args.destGUID) then
+-- 		self:PlaySound(405821, "warning")
+-- 		self:Say(405821, CL.leap)
+-- 	end
+-- end
 
 function mod:DoomFlames(args)
 	self:StopBar(CL.count:format(L.doom_flames, doomFlamesCount))
@@ -166,17 +183,29 @@ function mod:ChargedSmash(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.charged_smash, chargedSmashCount))
 	self:PlaySound(args.spellId, "alarm") -- spread
 	chargedSmashCount = chargedSmashCount + 1
-	if searingSlamCount < 3 then -- 2 per rotation
-		self:Bar(args.spellId, 43, CL.count:format(L.charged_smash, chargedSmashCount))
+	local cd
+	if self:Mythic() then
+		local timer = { 23.3, 43, 64 }
+		cd = timer[chargedSmashCount]
+	else
+		local timer = { 23.3, 46.0, 64 }
+		cd = timer[chargedSmashCount]
 	end
+	self:Bar(args.spellId, cd or 0, CL.count:format(L.charged_smash, chargedSmashCount))
 end
 
 function mod:WrathOfDjaruun(args)
 	self:StopBar(CL.count:format(CL.tank_combo, wrathOfDjaruunCount))
 	wrathOfDjaruunCount = wrathOfDjaruunCount + 1
-	if wrathOfDjaruunCount < 3 then -- 2 per rotation
-		self:Bar(args.spellId, 45, CL.count:format(CL.tank_combo, wrathOfDjaruunCount))
+	local cd
+	if self:Mythic() then
+		local timer = { 31.3, 45, 62 }
+		cd = timer[wrathOfDjaruunCount]
+	else
+		local timer = { 31.3, 15.0, 33.0 }
+		cd = timer[wrathOfDjaruunCount]
 	end
+	self:Bar(args.spellId, cd or 0, CL.count:format(CL.tank_combo, wrathOfDjaruunCount))
 end
 
 function mod:FlamingUpsurge(args)
@@ -215,9 +244,6 @@ end
 
 -- Conduit
 function mod:SiphonEnergyApplied(args)
-	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, siphonEnergyCount))
-	self:PlaySound(args.spellId, "info")
-
 	self:StopBar(CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
 	self:StopBar(CL.count:format(CL.leap, searingSlamCount)) -- Searing Slam
 	self:StopBar(CL.count:format(L.doom_flames, doomFlamesCount)) -- Doom Flames
@@ -226,12 +252,14 @@ function mod:SiphonEnergyApplied(args)
 	self:StopBar(CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:StopBar(CL.count:format(L.unleash_shadowflame, unleashShadowflameCount)) -- Unleash Shadowflame
 
+	self:Message(args.spellId, "cyan", CL.count:format(args.spellName, siphonEnergyCount))
+	self:PlaySound(args.spellId, "info")
+
 	local bossUnit = self:UnitTokenFromGUID(args.destGUID)
 	if bossUnit then
 		local stunTime = floor(UnitPower(bossUnit) / 5) + 2-- 5 / s energy loss, extra 2s at the end
 		self:Bar(args.spellId, stunTime, CL.count:format(args.spellName, siphonEnergyCount))
 	end
-	siphonEnergyCount = siphonEnergyCount + 1
 end
 
 function mod:SiphonEnergyRemoved(args)
@@ -239,6 +267,7 @@ function mod:SiphonEnergyRemoved(args)
 
 	self:Message(args.spellId, "cyan", CL.removed:format(args.spellName))
 	self:PlaySound(args.spellId, "long")
+	siphonEnergyCount = siphonEnergyCount + 1
 
 	searingSlamCount = 1
 	doomFlamesCount = 1
@@ -251,10 +280,10 @@ function mod:SiphonEnergyRemoved(args)
 	self:Bar(400777, 23, CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
 	self:Bar(407641, 31, CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:Bar(406851, 41, CL.count:format(L.doom_flames, doomFlamesCount)) -- Doom Flames
-	self:Bar(406333, 94.5, CL.count:format(L.shadowlave_blast, shadowlavaBlastCount)) -- Shadowlava Blast
-	self:Bar(405316, 112, CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
+	self:Bar(406333, 97.8, CL.count:format(L.shadowlave_blast, shadowlavaBlastCount)) -- Shadowlava Blast
+	self:Bar(405316, 110, CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
 	if self:Mythic() then
-		self:Bar(410070, 6, CL.count:format(L.unleash_shadowflame, unleashShadowflameCount)) -- Unleash Shadowflame
+		self:Bar(410070, 6.3, CL.count:format(L.unleash_shadowflame, unleashShadowflameCount)) -- Unleash Shadowflame
 	end
 end
 
@@ -269,7 +298,6 @@ function mod:UnyieldingRageApplied(args)
 	end
 end
 
-
 -- Mythic
 function mod:FailedSoak(args)
 	self:Message(400777, "cyan", L.energy_gained:format(args.extraSpellId), false) -- args.extraSpellId is the energy gained from SPELL_ENERGIZE
@@ -282,7 +310,6 @@ function mod:UnleashShadowflame(args)
 	self:Message(args.spellId, "orange", CL.count:format(L.unleash_shadowflame, unleashShadowflameCount))
 	self:PlaySound(args.spellId, "alert")
 	unleashShadowflameCount = unleashShadowflameCount + 1
-	if unleashShadowflameCount < 4 then -- 3 per rotation
-		self:Bar(args.spellId, unleashShadowflameCount == 3 and 33 or 43, CL.count:format(L.unleash_shadowflame, unleashShadowflameCount))
-	end
+	local timer = { 6.3, 43, 33, 31 }
+	self:Bar(args.spellId, timer[unleashShadowflameCount] or 0, CL.count:format(L.unleash_shadowflame, unleashShadowflameCount))
 end

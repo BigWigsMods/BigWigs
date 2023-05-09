@@ -75,7 +75,7 @@ BigWigs:AddColors("Rashok, the Elder", {
 	[403543] = "blue",
 	[405091] = "yellow",
 	[405316] = "red",
-	[405821] = {"blue","yellow"},
+	[405821] = "blue",
 	[406333] = "yellow",
 	[406851] = "orange",
 	[407547] = {"blue","purple"},
