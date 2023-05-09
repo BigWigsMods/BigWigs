@@ -68,6 +68,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MoltenSpittle", 402989)
 	self:Log("SPELL_AURA_APPLIED", "MoltenSpittleApplied", 402994)
 	self:Log("SPELL_AURA_REMOVED", "MoltenSpittleRemoved", 402994)
+	self:Log("SPELL_AURA_APPLIED", "ExplosiveMagmaApplied", 411149) -- Molten Spittle Special ID
+	self:Log("SPELL_AURA_REMOVED", "ExplosiveMagmaRemoved", 411149)
 	self:Log("SPELL_AURA_APPLIED", "SearingHeatApplied", 408839)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingHeatApplied", 408839)
 	self:Log("SPELL_CAST_START", "IgnitingRoar", 403740)
@@ -81,11 +83,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 406712, 411633) -- Lava, Burning Chains
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 406712, 411633)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 406712, 411633)
-
-	self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "boss1")
-
-	self:Log("SPELL_AURA_APPLIED", "ExplosiveMagmaApplied", 411149) -- Molten Spittle Special ID
-	self:Log("SPELL_AURA_REMOVED", "ExplosiveMagmaRemoved", 411149)
 end
 
 function mod:OnEngage()
@@ -95,13 +92,15 @@ function mod:OnEngage()
 	blazingBreathCount = 1
 	incineratingMawsCount = 1
 
-	self:Bar(403740, self:Easy() and 9 or 5, CL.count:format(CL.roar, ignitingRoarCount)) -- Igniting Roar
-	self:Bar(402994, self:Easy() and 16.5 or 14.5, CL.count:format(CL.pools, moltenSpittleCount)) -- Molten Spittle
-	self:Bar(404846, self:Easy() and 22 or 20, CL.count:format(self:SpellName(401348), incineratingMawsCount)) -- Incinerating Maws
-	self:Bar(409093, self:Easy() and 33.3 or 26, CL.count:format(CL.breath, blazingBreathCount)) -- Blazing Breath
-	self:Bar(403671, self:Easy() and 76.5 or 69, CL.count:format(CL.knockback, overpoweringStompCount)) -- Overpowering Stomp
+	self:Bar(403740, self:Mythic() and 5 or self:Easy() and 8.9 or 6.2, CL.count:format(CL.roar, ignitingRoarCount)) -- Igniting Roar
+	self:Bar(402994, self:Mythic() and 14.5 or self:Easy() and 18.1 or 17.7, CL.count:format(CL.pools, moltenSpittleCount)) -- Molten Spittle
+	self:Bar(404846, self:Mythic() and 20 or self:Easy() and 22.2 or 25, CL.count:format(self:SpellName(401348), incineratingMawsCount)) -- Incinerating Maws
+	self:Bar(409093, self:Mythic() and 25 or self:Easy() and 33.4 or 31.2, CL.count:format(CL.breath, blazingBreathCount)) -- Blazing Breath
+	self:Bar(403671, self:Mythic() and 69 or self:Easy() and 76.6 or 89.9, CL.count:format(CL.knockback, overpoweringStompCount)) -- Overpowering Stomp
 
 	self:Bar(408358, 340, CL.full_energy) -- Catastrophic Eruption
+
+	self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "boss1")
 end
 
 --------------------------------------------------------------------------------
@@ -144,12 +143,18 @@ do
 	function mod:MoltenSpittle(args)
 		self:StopBar(CL.count:format(CL.pools, moltenSpittleCount))
 		moltenSpittleCount = moltenSpittleCount + 1
-		local cd = {25.0, 27.0, 24.0, 26.0} -- Repeating
+		local cd
 		if self:Easy() then
-			cd = {41.1, 32.2, 40.0}
+			local timer = { 41.1, 32.2, 40.0 } -- 32.2, 40.0, 41.1 repeating
+			cd = timer[(moltenSpittleCount % 3) + 1]
+		elseif self:Mythic() then
+			local timer = { 25, 27, 24, 26 } -- 27, 24, 26, 25 repeating
+			cd = timer[(moltenSpittleCount % 4) + 1]
+		else                              -- Heroic
+			local timer = { 32.5, 37.5, 30.0 } -- 37.5, 30.0, 32.5 repeating
+			cd = timer[(moltenSpittleCount % 3) + 1]
 		end
-		local cast = (moltenSpittleCount % #cd) + 1 -- 1, 2, 3...
-		self:Bar(402994, cd[cast], CL.count:format(CL.pools, moltenSpittleCount))
+		self:Bar(402994, cd, CL.count:format(CL.pools, moltenSpittleCount))
 		playerList = {}
 	end
 
@@ -189,12 +194,15 @@ function mod:IgnitingRoar(args)
 	self:Message(args.spellId, "yellow", CL.count:format(CL.roar, ignitingRoarCount))
 	self:PlaySound(args.spellId, "alert")
 	ignitingRoarCount = ignitingRoarCount + 1
-	local cd = {39.0, 23.0, 40.0} -- Repeating
+	local cd = 50 -- Heroic
 	if self:Easy() then
-		cd = {44.4, 28.9, 40.0} -- 2, 3, 1 of cast count
+		local timer = { 44.5, 28.9, 40.0 } -- 28.9, 40.0, 44.5 repeating
+		cd = timer[(ignitingRoarCount % 3) + 1]
+	elseif self:Mythic() then
+		local timer = { 39, 23, 40 } -- 23, 40, 39 repeating
+		cd = timer[(ignitingRoarCount % 3) + 1]
 	end
-	local cast = (ignitingRoarCount % 3) + 1 -- 1, 2, 3
-	self:Bar(args.spellId, cd[cast], CL.count:format(CL.roar, ignitingRoarCount))
+	self:Bar(args.spellId, cd, CL.count:format(CL.roar, ignitingRoarCount))
 end
 
 function mod:OverpoweringStomp(args)
@@ -202,7 +210,7 @@ function mod:OverpoweringStomp(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.knockback, overpoweringStompCount))
 	self:PlaySound(args.spellId, "long")
 	overpoweringStompCount = overpoweringStompCount + 1
-	self:Bar(args.spellId, self:Easy() and 113.3 or 102, CL.count:format(CL.knockback, overpoweringStompCount))
+	self:Bar(args.spellId, self:Mythic() and 102 or self:Easy() and 113.4 or 100.0, CL.count:format(CL.knockback, overpoweringStompCount))
 end
 
 function mod:BlazingBreath(args)
@@ -210,19 +218,24 @@ function mod:BlazingBreath(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.breath, blazingBreathCount))
 	self:PlaySound(args.spellId, "alert")
 	blazingBreathCount = blazingBreathCount + 1
-	local cd = {41.0, 33.0, 28.0} -- Repeating
+	local cd
 	if self:Easy() then
-		cd = {42.2, 43.3, 27.8} -- 2, 3, 1 of cast count
+		local timer = { 42.2, 43.3, 27.7 } -- 43.3, 27.8, 42.2 repeating
+		cd = timer[(blazingBreathCount % 3) + 1]
+	elseif self:Mythic() then
+		local timer = { 41, 33, 28 } -- 33, 28, 41 repeating
+		cd = timer[(blazingBreathCount % 3) + 1]
+	else -- Heroic
+		cd = blazingBreathCount % 2 == 0 and 35 or 65
 	end
-	local cast = (blazingBreathCount % 3) + 1 -- 1, 2, 3
-	self:Bar(args.spellId, cd[cast], CL.count:format(CL.breath, blazingBreathCount))
+	self:Bar(args.spellId, cd, CL.count:format(CL.breath, blazingBreathCount))
 end
 
 function mod:IncineratingMaws(args)
 	self:StopBar(CL.count:format(args.spellName, incineratingMawsCount))
 	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
 	incineratingMawsCount = incineratingMawsCount + 1
-	local cd = 22.3 -- Why does he sometimes skip?
+	local cd = self:Mythic() and 20 or self:Easy() and 22.3 or 25
 	self:Bar(args.spellId, cd, CL.count:format(args.spellName, incineratingMawsCount))
 end
 
