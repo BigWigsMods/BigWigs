@@ -302,21 +302,26 @@ do
 		["alarm"] = "Alarm",
 		["warning"] = "Warning",
 	}
-	local PlaySoundFile = PlaySoundFile
-	function plugin:BigWigs_Sound(event, module, key, soundName)
+	function plugin:GetSoundFile(module, key, soundName)
 		soundName = tmp[soundName] or soundName
 		local sDb = db[soundName]
 		if not module or not key or not sDb or not sDb[module.name] or not sDb[module.name][key] then
 			local path = db.media[soundName] and media:Fetch(SOUND, db.media[soundName], true) or media:Fetch(SOUND, soundName, true)
-			if path then
-				PlaySoundFile(path, "Master")
-			end
+			return path
 		else
 			local newSound = sDb[module.name][key]
 			local path = db.media[newSound] and media:Fetch(SOUND, db.media[newSound], true) or media:Fetch(SOUND, newSound, true)
-			if path then
-				PlaySoundFile(path, "Master")
-			end
+			return path
+		end
+	end
+end
+
+do
+	local PlaySoundFile = PlaySoundFile
+	function plugin:BigWigs_Sound(event, module, key, soundName)
+		local soundPath = self:GetSoundFile(module, key, soundName)
+		if soundPath then
+			PlaySoundFile(soundPath, "Master")
 		end
 	end
 end
