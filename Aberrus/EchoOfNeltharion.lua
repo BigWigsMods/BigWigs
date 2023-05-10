@@ -336,7 +336,9 @@ function mod:SunderReality(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.sunder_reality, sunderRealityCount))
 	self:PlaySound(args.spellId, "alert")
 	sunderRealityCount = sunderRealityCount + 1
-	self:Bar(args.spellId, 30.4, CL.count:format(L.sunder_reality, sunderRealityCount))
+	if sunderRealityCount < 5 then -- only 4 sets
+		self:Bar(args.spellId, 30.4, CL.count:format(L.sunder_reality, sunderRealityCount))
+	end
 end
 
 do
