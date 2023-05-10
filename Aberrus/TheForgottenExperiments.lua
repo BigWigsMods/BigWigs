@@ -136,9 +136,9 @@ function mod:OnEngage()
 	temporalAnomalyCount = 1
 	disintergrateCount = 1
 
-	self:Bar(404713, self:Mythic() and 36 or 11, CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
+	self:Bar(404713, self:Mythic() and 6 or 11, CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
 	self:Bar(406358, self:Mythic() and 14 or 19, CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
-	self:Bar(404472, self:Mythic() and 6 or 35, CL.count:format(L.massive_slam, massiveSlamCount)) -- Massive Slam
+	self:Bar(404472, self:Mythic() and 24 or 35, CL.count:format(L.massive_slam, massiveSlamCount)) -- Massive Slam
 
 	self:SetPrivateAuraSound(406358, 406317) -- Rending Charge
 end
@@ -233,7 +233,7 @@ do
 		self:Message(406358, "red", CL.count:format(args.spellName, rendingChargeCount))
 		self:PlaySound(406358, "alert")
 		rendingChargeCount = rendingChargeCount + 1
-		local cd = self:Mythic() and (rendingChargeCount % 2 == 1 and 18 or 37) or (rendingChargeCount == 2 and 34 or 45)
+		local cd = self:Mythic() and (rendingChargeCount % 2 == 1 and 18 or 37) or (rendingChargeCount % 2 == 1 and 38 or 35)
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, rendingChargeCount))
 		self:GetBossTarget(printTarget, 1, args.sourceGUID) -- 1st target is from boss
 	end
@@ -248,8 +248,9 @@ function mod:MassiveSlam(args)
 	self:Message(404472, "yellow", CL.count:format(L.massive_slam, massiveSlamCount))
 	self:PlaySound(404472, "alert")
 	massiveSlamCount = massiveSlamCount + 1
-	-- 35.2, 9.7 ???
-	self:Bar(404472, self:Mythic() and 18.0 or 35, CL.count:format(L.massive_slam, massiveSlamCount))
+	-- finding a 4th non-mythic cast is hard
+	local cd = self:Mythic() and (massiveSlamCount % 2 == 0 and 18.0 or 37.0) or (massiveSlamCount == 2 and 9.7 or 38.8)
+	self:Bar(404472, cd, CL.count:format(L.massive_slam, massiveSlamCount))
 end
 
 function mod:BellowingRoar(args)
@@ -257,7 +258,8 @@ function mod:BellowingRoar(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.roar, bellowingRoarCount))
 	self:PlaySound(args.spellId, "alarm")
 	bellowingRoarCount = bellowingRoarCount + 1
-	self:Bar(args.spellId, self:Mythic() and 55 or (bellowingRoarCount == 2 and 35.5 or 23.1), CL.count:format(CL.roar, bellowingRoarCount))
+	local cd = self:Mythic() and (bellowingRoarCount % 2 == 0 and 30 or 25) or 57 -- 10.7, 57.0 wtb 3rd cast
+	self:Bar(args.spellId, cd, CL.count:format(CL.roar, bellowingRoarCount))
 end
 
 -- Thadrion
@@ -318,7 +320,9 @@ do
 		volatileSpewCount = volatileSpewCount + 1
 		local timeSinceLast = args.time - prev
 		prev = args.time
-		self:CDBar(args.spellId, self:Mythic() and (timeSinceLast > 22 and 20 or 35) or (volatileSpewCount == 2 and 22 or volatileSpewCount % 2 == 0 and 30 or 37), CL.count:format(L.volatile_spew, volatileSpewCount))
+		-- heroic: 15.2, 21.8, 37.6, 30.4
+		local cd = self:Mythic() and (timeSinceLast > 22 and 20 or 35) or (volatileSpewCount == 2 and 22 or volatileSpewCount % 2 == 0 and 30 or 37)
+		self:CDBar(args.spellId, cd, CL.count:format(L.volatile_spew, volatileSpewCount))
 	end
 end
 
@@ -348,7 +352,8 @@ do
 		temporalAnomalyCount = temporalAnomalyCount + 1
 		local timeSinceLast = args.time - prev
 		prev = args.time
-		self:Bar(args.spellId, self:Mythic() and (timeSinceLast > 24 and 22 or 33) or 43.8, CL.count:format(L.temporal_anomaly, temporalAnomalyCount))
+		local cd = self:Mythic() and (timeSinceLast > 25 and 22 or 33) or (temporalAnomalyCount == 2 and 46.3 or 43.8)
+		self:Bar(args.spellId, cd, CL.count:format(L.temporal_anomaly, temporalAnomalyCount))
 	end
 end
 
@@ -363,7 +368,7 @@ function mod:Disintegrate(args)
 	self:StopBar(CL.count:format(args.spellName, disintergrateCount))
 	self:Message(405392, "orange", CL.count:format(args.spellName, disintergrateCount))
 	disintergrateCount = disintergrateCount + 1
-	self:Bar(405392, self:Mythic() and 55 or 43.8, CL.count:format(args.spellName, disintergrateCount))
+	self:Bar(405392, self:Mythic() and 55 or 44, CL.count:format(args.spellName, disintergrateCount))
 end
 
 function mod:DisintegrateApplied(args)
