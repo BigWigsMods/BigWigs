@@ -71,8 +71,6 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:RegisterEvent("RAID_BOSS_WHISPER")
-
 	self:Log("SPELL_AURA_APPLIED", "AncientFuryApplied", 405316)
 	self:Log("SPELL_CAST_START", "SearingSlam", 405821)
 	-- self:Log("SPELL_AURA_APPLIED", "SearingSlamApplied", 405819, 407642)
@@ -128,27 +126,28 @@ function mod:AncientFuryApplied(args)
 	self:PlaySound(args.spellId, "alarm")
 end
 
-function mod:SearingSlam(args)
-	self:StopBar(CL.count:format(CL.leap, searingSlamCount))
-	searingSlamCount = searingSlamCount + 1
-	local cd
-	if self:Mythic() then
-		local timer = { 11.3, 43, 33, 31 }
-		cd = timer[searingSlamCount]
-	else
-		local timer = { 11.3, 46.0, 33.0 }
-		cd = timer[searingSlamCount]
+do
+	local function printTarget(self, player, guid)
+		self:TargetMessage(405821, "yellow", player, CL.count:format(CL.leap, searingSlamCount - 1))
+		if self:Me(guid) then
+			self:PlaySound(405821, "warning")
+			self:Say(405821, CL.leap)
+		end
 	end
-	self:Bar(args.spellId, cd or 0, CL.count:format(CL.leap, searingSlamCount))
-end
 
-function mod:RAID_BOSS_WHISPER(_, msg)
-	-- |TInterface\\ICONS\\Ability_Shaman_Lavalash.blp:20|t Rashok is targeting you with |cFFFF0000|Hspell:405821|h[Searing Slam]|h|r!#Thdlocka-Illidan
-	if msg:find("spell:405821", nil, true) then
-		self:PersonalMessage(405821)
-		self:PlaySound(405821, "warning")
-		self:Say(405821, CL.leap)
-		-- self:SayCountdown(405821, self:Mythic() and 3.9 or 4.9)
+	function mod:SearingSlam(args)
+		self:StopBar(CL.count:format(CL.leap, searingSlamCount))
+		searingSlamCount = searingSlamCount + 1
+		local cd
+		if self:Mythic() then
+			local timer = { 11.3, 43, 33, 31 }
+			cd = timer[searingSlamCount]
+		else
+			local timer = { 11.3, 46.0, 33.0 }
+			cd = timer[searingSlamCount]
+		end
+		self:Bar(args.spellId, cd or 0, CL.count:format(CL.leap, searingSlamCount))
+		self:GetBossTarget(printTarget, 0.5, args.sourceGUID) -- use target until the debuff works again
 	end
 end
 
