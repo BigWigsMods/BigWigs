@@ -89,7 +89,7 @@ function mod:GetOptions()
 		405645, -- Engulfing Heat
 		408193, -- Convergent Eruption
 		{405914, "TANK"}, -- Withering Vulnerability
-		{406783, "TANK"}, -- Shadowflame Burst
+		406783, -- Shadowflame Burst
 		{409385, "PROXIMITY"}, -- Shadow and Flame
 	},{
 		["stages"] = "general",
