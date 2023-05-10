@@ -340,23 +340,23 @@ end
 do
 	local playerList = {}
 	function mod:MassDisintegrate(args)
-		self:StopBar(CL.count:format(L.glittering_surge, massDisintergrateCount))
-		self:Message(401680, "cyan", CL.count:format(L.glittering_surge, massDisintergrateCount))
+		self:StopBar(CL.count:format(L.mass_disintergrate, massDisintergrateCount))
+		self:Message(401680, "cyan", CL.count:format(L.mass_disintergrate, massDisintergrateCount))
 		self:PlaySound(401680, "info")
 		massDisintergrateCount = massDisintergrateCount + 1
 		if self:Easy() then
 			if massDisintergrateCount == 2 then
-				self:Bar(401680, 23.3, CL.count:format(L.glittering_surge, massDisintergrateCount))
+				self:Bar(401680, 23.3, CL.count:format(L.mass_disintergrate, massDisintergrateCount))
 			elseif massDisintergrateCount == 3 then
-				self:Bar(401680, 44.4, CL.count:format(L.glittering_surge, massDisintergrateCount))
+				self:Bar(401680, 44.4, CL.count:format(L.mass_disintergrate, massDisintergrateCount))
 			end
 		elseif self:Heroic() then
 			if massDisintergrateCount == 2 then
-				self:Bar(401680, 24.0, CL.count:format(L.glittering_surge, massDisintergrateCount))
+				self:Bar(401680, 24.0, CL.count:format(L.mass_disintergrate, massDisintergrateCount))
 			elseif massDisintergrateCount == 3 then
-				self:Bar(401680, 22.7, CL.count:format(L.glittering_surge, massDisintergrateCount))
+				self:Bar(401680, 22.7, CL.count:format(L.mass_disintergrate, massDisintergrateCount))
 			elseif massDisintergrateCount == 4 then
-				self:Bar(401680, 21.1, CL.count:format(L.glittering_surge, massDisintergrateCount))
+				self:Bar(401680, 21.1, CL.count:format(L.mass_disintergrate, massDisintergrateCount))
 			end
 		end
 
