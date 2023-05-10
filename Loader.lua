@@ -788,9 +788,10 @@ function mod:ADDON_LOADED(addon)
 		BigWigsIconDB = {}
 	end
 	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB, "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-enabled")
-	BigWigs3DB.showInCompartment = nil -- XXX 10.1.0 alphas only
 
 	if BigWigs3DB then
+		BigWigs3DB.showInCompartment = nil -- XXX 10.1.0 alphas only
+
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
 			local name = UnitName("player")
