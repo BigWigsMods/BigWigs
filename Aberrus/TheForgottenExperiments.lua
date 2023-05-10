@@ -233,11 +233,12 @@ do
 	end
 
 	function mod:RendingCharge(args)
-		self:StopBar(CL.count:format(args.spellId, rendingChargeCount))
-		self:Message(406358, "red", CL.count:format(args.spellId, rendingChargeCount))
+		self:StopBar(CL.count:format(args.spellName, rendingChargeCount))
+		self:Message(406358, "red", CL.count:format(args.spellName, rendingChargeCount))
 		self:PlaySound(406358, "alert")
 		rendingChargeCount = rendingChargeCount + 1
-		self:Bar(args.spellId, self:Mythic() and (rendingChargeCount % 2 == 1 and 18 or 37) or (rendingChargeCount == 2 and 34 or 45), CL.count:format(args.spellId, rendingChargeCount))
+		local cd = self:Mythic() and (rendingChargeCount % 2 == 1 and 18 or 37) or (rendingChargeCount == 2 and 34 or 45)
+		self:Bar(args.spellId, cd, CL.count:format(args.spellName, rendingChargeCount))
 		self:GetBossTarget(printTarget, 1, args.sourceGUID) -- 1st target is from boss
 	end
 end
