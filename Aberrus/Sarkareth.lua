@@ -324,9 +324,9 @@ function mod:ScorchingBomb(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.bombs, bombCount))
 	self:PlaySound(args.spellId, "alert")
 	bombCount = bombCount + 1
-	if self:Easy() and bombCount == 2 then -- 1.1, 58.9
+	if self:Easy() and bombCount == 2 then
 		self:Bar(args.spellId, 58.9, CL.count:format(CL.bombs, bombCount))
-	elseif self:Heroic() then -- 1.1, 33.3, 26.6, 18.9
+	elseif self:Heroic() then
 		if bombCount == 2 then
 			self:Bar(args.spellId, 32.2, CL.count:format(CL.bombs, bombCount))
 		elseif bombCount == 3 then
@@ -344,13 +344,13 @@ do
 		self:Message(401680, "cyan", CL.count:format(L.glittering_surge, massDisintergrateCount))
 		self:PlaySound(401680, "info")
 		massDisintergrateCount = massDisintergrateCount + 1
-		if self:Easy() then -- 23.4, 23.3, 44.4
+		if self:Easy() then
 			if massDisintergrateCount == 2 then
 				self:Bar(401680, 23.3, CL.count:format(L.glittering_surge, massDisintergrateCount))
 			elseif massDisintergrateCount == 3 then
 				self:Bar(401680, 44.4, CL.count:format(L.glittering_surge, massDisintergrateCount))
 			end
-		elseif self:Heroic() then -- 23.3, 24.0, 22.7, 21.1
+		elseif self:Heroic() then
 			if massDisintergrateCount == 2 then
 				self:Bar(401680, 24.0, CL.count:format(L.glittering_surge, massDisintergrateCount))
 			elseif massDisintergrateCount == 3 then
@@ -388,9 +388,9 @@ function mod:SearingBreath(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.breath, breathCount))
 	self:PlaySound(args.spellId, "alert")
 	breathCount = breathCount + 1
-	if self:Easy() and breathCount == 2 then -- 26.7, 35.5
+	if self:Easy() and breathCount == 2 then
 		self:Bar(args.spellId, 35.5, CL.count:format(CL.breath, breathCount))
-	elseif self:Heroic() then -- 26.7, 15.5, 20.0
+	elseif self:Heroic() then
 		if breathCount == 2 then
 			self:Bar(args.spellId, 15.5, CL.count:format(CL.breath, breathCount))
 		elseif breathCount == 3 then
@@ -520,9 +520,9 @@ function mod:DesolateBlossom(args)
 	self:Message(404403, "yellow", CL.count:format(L.desolate_blossom, desolateBlossomCount))
 	self:PlaySound(404403, "alert")
 	desolateBlossomCount = desolateBlossomCount + 1
-	if self:Easy() then
+	if self:Easy() and desolateBlossomCount == 2 then
 		self:Bar(404403, 46.2, CL.count:format(L.desolate_blossom, desolateBlossomCount))
-	elseif self:Heroic() then
+	elseif self:Heroic() and desolateBlossomCount == 2 then
 		self:Bar(404403, 43.5, CL.count:format(L.desolate_blossom, desolateBlossomCount))
 	end
 end
