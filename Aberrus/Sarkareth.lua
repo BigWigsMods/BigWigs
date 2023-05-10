@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Scalecommander Sarkareth", 2569, 2520)
 if not mod then return end
-mod:RegisterEnableMob(205319) -- Sarkareth XXX Confirm on raid release
+mod:RegisterEnableMob(201754)
 mod:SetEncounterID(2685)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
