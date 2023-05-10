@@ -29,10 +29,6 @@ local deepBreathCount = 1
 local temporalAnomalyCount = 1
 local disintergrateCount = 1
 
-local timers = {
-	[407327] = {18, 52.4, 29.2, 31.6, 29.2, 34.0}, -- Unstable Essence
-}
-
 --------------------------------------------------------------------------------
 -- Localization
 --
@@ -273,7 +269,7 @@ do
 		unstableEssenceCount = unstableEssenceCount + 1
 		local timeSinceLast = args.time - prev
 		prev = args.time
-		self:Bar(407327, self:Mythic() and (timeSinceLast > 25 and 21 or 34) or timers[407327][unstableEssenceCount], CL.count:format(L.unstable_essence_new, unstableEssenceCount))
+		self:Bar(407327, self:Mythic() and (timeSinceLast > 25 and 21 or 34) or (timeSinceLast > 32 and 28 or 39), CL.count:format(L.unstable_essence_new, unstableEssenceCount))
 	end
 end
 
