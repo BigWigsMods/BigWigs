@@ -196,14 +196,14 @@ function mod:RushingDarkness(args)
 
 	rushingDarknessCount = rushingDarknessCount + 1
 	if self:GetStage() ~= 2 or rushingDarknessCount < 5 then -- Only 4 waves in P2
-		self:CDBar(407221, self:GetStage() == 1 and (self:Easy() and 37 or 34) or 29, CL.count:format(L.rushing_darkness, rushingDarknessCount))
+		self:CDBar(407221, self:GetStage() == 1 and (self:Easy() and 36.5 or 34) or 29, CL.count:format(L.rushing_darkness, rushingDarknessCount))
 	end
 end
 
 function mod:CalamitousStrike(args)
 	self:Message(401998, "purple", CL.casting:format(args.spellName))
 	self:PlaySound(401998, "info")
-	self:CDBar(401998, self:GetStage() == 1 and 34.0 or 30.4)
+	self:CDBar(401998, self:GetStage() == 1 and 34.0 or 29.2)
 end
 
 function mod:CalamitousStrikeApplied(args)
@@ -324,7 +324,7 @@ function mod:Stage2Over(args)
 	shatteredRealityOnMe = false
 	castingEbonDestruction =  false
 
-	self:CDBar(407936, self:Easy() and 23 or 20, CL.count:format(L.sunder_reality, sunderRealityCount)) -- Sunder Reality
+	self:CDBar(407936, self:Easy() and 21.2 or 20, CL.count:format(L.sunder_reality, sunderRealityCount)) -- Sunder Reality
 	self:CDBar(407221, 27.6, CL.count:format(L.rushing_darkness, rushingDarknessCount)) -- Rushing Darkness
 	self:CDBar(401998, 35.4) -- Calamitous Strike
 	self:CDBar(407917, 41.5, CL.count:format(L.ebon_destruction, ebonDestructionCount)) -- Ebon Destruction
@@ -336,8 +336,8 @@ function mod:SunderReality(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.sunder_reality, sunderRealityCount))
 	self:PlaySound(args.spellId, "alert")
 	sunderRealityCount = sunderRealityCount + 1
-	if sunderRealityCount < 5 then -- only 4 sets
-		self:Bar(args.spellId, 30.4, CL.count:format(L.sunder_reality, sunderRealityCount))
+	if self:Easy() or sunderRealityCount < 5 then -- only 4 sets unless Normal
+		self:CDBar(args.spellId, 29.2, CL.count:format(L.sunder_reality, sunderRealityCount))
 	end
 end
 
