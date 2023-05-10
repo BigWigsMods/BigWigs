@@ -151,8 +151,8 @@ function mod:OnEngage()
 	self:Bar(408959, 98, CL.count:format(self:SpellName(408959), devastatingLeapCount)) -- Devastating Leap
 	self:Bar("big_adds_timer", 42, CL.count:format(CL.big_adds, commandersCount), "inv_10_blacksmithing_consumable_repairhammer_color2")
 
-	for key,count in pairs(addWaveCount) do
-		self:StartAddTimer(key, count)
+	for key in next, addTimers do
+		self:StartAddTimer(key, 1)
 	end
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
