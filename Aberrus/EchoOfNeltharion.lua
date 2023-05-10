@@ -195,7 +195,7 @@ function mod:RushingDarkness(args)
 	end
 
 	rushingDarknessCount = rushingDarknessCount + 1
-	if self:GetStage() < 2 or rushingDarknessCount < 5 then -- Only 4 waves in P2
+	if self:GetStage() ~= 2 or rushingDarknessCount < 5 then -- Only 4 waves in P2
 		self:CDBar(407221, self:GetStage() == 1 and (self:Easy() and 37 or 34) or 29, CL.count:format(L.rushing_darkness, rushingDarknessCount))
 	end
 end
@@ -242,11 +242,13 @@ function mod:SurrenderToCorruption()
 	rushingDarknessCount = 1
 	corruptionCount = 1
 
-	-- No corruption timer, that happens during this cast
 	self:CDBar(407790, 14.9) -- Sunder Shadow
 	self:CDBar(410953, 20.7, CL.count:format(CL.bombs, volcanicHeartCount)) -- Volcanic Heart
 	self:CDBar(405433, 25, CL.count:format(L.umbral_annihilation, umbralAnnihilationCount)) -- Umbral Annihilation
 	self:CDBar(407221, 32, CL.count:format(L.rushing_darkness, rushingDarknessCount)) -- Rushing Darkness
+	if not self:Easy() then
+		self:Bar(401010, 7, CL.count:format(self:SpellName(401010), corruptionCount)) -- Corruption
+	end
 end
 
 do
@@ -264,7 +266,7 @@ do
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
 			self:PlaySound(401010, "warning")
-			self:Say(401010, self:SpellName(401010))
+			self:Say(401010)
 		end
 		self:TargetsMessage(401010, "yellow", playerList, nil, CL.count:format(self:SpellName(401010), corruptionCount-1))
 	end
@@ -297,7 +299,7 @@ end
 
 function mod:AddKilled(args)
 	local killed = 3-args.amount
-	self:Message("stages", "cyan", CL.add_killed:format(killed, 3), false)
+	self:Message("stages", "green", CL.add_killed:format(killed, 3), false)
 end
 
 function mod:ShadowBarrier(args)
