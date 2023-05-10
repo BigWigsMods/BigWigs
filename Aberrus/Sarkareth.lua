@@ -154,11 +154,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "VoidBombRemoved", 404218)
 	self:Log("SPELL_CAST_START", "AbyssalBreath", 404456)
 	self:Log("SPELL_CAST_START", "BlastingScream", 404754)
-	self:Log("SPELL_CAST_START", "DesolateBlossom", 404403, 411030) -- Heroic+, Easy?
-	self:Log("SPELL_CAST_START", "InfiniteDuressStart", 404288, 407496) -- Heroic+, Easy?
-	self:Log("SPELL_CAST_SUCCESS", "InfiniteDuressSuccess", 404288, 407496)
-	self:Log("SPELL_AURA_APPLIED", "InfiniteDuressApplied", 404288, 407496)
-	self:Log("SPELL_AURA_REMOVED", "InfiniteDuressRemoved", 404288, 407496)
+	self:Log("SPELL_CAST_START", "DesolateBlossom", 404403, 411030) -- Heroic/Normal, Unknown
+	self:Log("SPELL_CAST_START", "InfiniteDuressStart", 407496, 404288) -- Heroic+, Unknown
+	self:Log("SPELL_CAST_SUCCESS", "InfiniteDuressSuccess", 407496, 404288)
+	self:Log("SPELL_AURA_APPLIED", "InfiniteDuressApplied", 407496, 404288)
+	self:Log("SPELL_AURA_REMOVED", "InfiniteDuressRemoved", 407496, 404288)
 	self:Log("SPELL_CAST_START", "VoidClaws", 411236)
 	self:Log("SPELL_AURA_APPLIED", "VoidClawsApplied", 411241)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidClawsApplied", 411241)
@@ -312,7 +312,11 @@ function mod:GlitteringSurge(args)
 	self:Message(args.spellId, "red", CL.count:format(L.glittering_surge, glitteringSurgeCount))
 	self:PlaySound(args.spellId, "long")
 	glitteringSurgeCount = glitteringSurgeCount + 1
-	self:Bar(args.spellId, 71.0, CL.count:format(L.glittering_surge, glitteringSurgeCount))
+	if self:Easy() and glitteringSurgeCount == 2 then -- 3.3, 91.2
+		self:Bar(args.spellId, 91.2, CL.count:format(L.glittering_surge, glitteringSurgeCount))
+	elseif self:Heroic() and glitteringSurgeCount == 2 then -- 3.3, 97.7
+		self:Bar(args.spellId, 97.7, CL.count:format(L.glittering_surge, glitteringSurgeCount))
+	end
 end
 
 function mod:ScorchingBomb(args)
@@ -320,7 +324,17 @@ function mod:ScorchingBomb(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.bombs, bombCount))
 	self:PlaySound(args.spellId, "alert")
 	bombCount = bombCount + 1
-	self:Bar(args.spellId, 58.9, CL.count:format(CL.bombs, bombCount))
+	if self:Easy() and bombCount == 2 then -- 1.1, 58.9
+		self:Bar(args.spellId, 58.9, CL.count:format(CL.bombs, bombCount))
+	elseif self:Heroic() then -- 1.1, 33.3, 26.6, 18.9
+		if bombCount == 2 then
+			self:Bar(args.spellId, 32.2, CL.count:format(CL.bombs, bombCount))
+		elseif bombCount == 3 then
+			self:Bar(args.spellId, 26.6, CL.count:format(CL.bombs, bombCount))
+		elseif bombCount == 4 then
+			self:Bar(args.spellId, 18.9, CL.count:format(CL.bombs, bombCount))
+		end
+	end
 end
 
 do
@@ -330,7 +344,21 @@ do
 		self:Message(401680, "cyan", CL.count:format(L.glittering_surge, massDisintergrateCount))
 		self:PlaySound(401680, "info")
 		massDisintergrateCount = massDisintergrateCount + 1
-		self:Bar(401680, 23.3, CL.count:format(L.glittering_surge, massDisintergrateCount))
+		if self:Easy() then -- 23.4, 23.3, 44.4
+			if massDisintergrateCount == 2 then
+				self:Bar(401680, 23.3, CL.count:format(L.glittering_surge, massDisintergrateCount))
+			elseif massDisintergrateCount == 3 then
+				self:Bar(401680, 44.4, CL.count:format(L.glittering_surge, massDisintergrateCount))
+			end
+		elseif self:Heroic() then -- 23.3, 24.0, 22.7, 21.1
+			if massDisintergrateCount == 2 then
+				self:Bar(401680, 24.0, CL.count:format(L.glittering_surge, massDisintergrateCount))
+			elseif massDisintergrateCount == 3 then
+				self:Bar(401680, 22.7, CL.count:format(L.glittering_surge, massDisintergrateCount))
+			elseif massDisintergrateCount == 4 then
+				self:Bar(401680, 21.1, CL.count:format(L.glittering_surge, massDisintergrateCount))
+			end
+		end
 
 		playerList = {}
 	end
@@ -360,7 +388,15 @@ function mod:SearingBreath(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.breath, breathCount))
 	self:PlaySound(args.spellId, "alert")
 	breathCount = breathCount + 1
-	self:Bar(args.spellId, 35.5, CL.count:format(CL.breath, breathCount))
+	if self:Easy() and breathCount == 2 then -- 26.7, 35.5
+		self:Bar(args.spellId, 35.5, CL.count:format(CL.breath, breathCount))
+	elseif self:Heroic() then -- 26.7, 15.5, 20.0
+		if breathCount == 2 then
+			self:Bar(args.spellId, 15.5, CL.count:format(CL.breath, breathCount))
+		elseif breathCount == 3 then
+			self:Bar(args.spellId, 20.0, CL.count:format(CL.breath, breathCount))
+		end
+	end
 end
 
 do
@@ -484,7 +520,11 @@ function mod:DesolateBlossom(args)
 	self:Message(404403, "yellow", CL.count:format(L.desolate_blossom, desolateBlossomCount))
 	self:PlaySound(404403, "alert")
 	desolateBlossomCount = desolateBlossomCount + 1
-	self:Bar(404403, 46.2, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	if self:Easy() then
+		self:Bar(404403, 46.2, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	elseif self:Heroic() then
+		self:Bar(404403, 43.5, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	end
 end
 
 do
