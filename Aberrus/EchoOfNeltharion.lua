@@ -17,7 +17,6 @@ mod:SetStage(1)
 local echoingFissureCount = 1
 local rushingDarknessCount = 1
 local volcanicHeartCount = 1
-local twistedEarthCount = 1
 
 -- Stage 2
 local umbralAnnihilationCount = 1
@@ -124,7 +123,6 @@ function mod:OnEngage()
 	self:SetStage(1)
 	echoingFissureCount = 1
 	rushingDarknessCount = 1
-	twistedEarthCount = 1
 	volcanicHeartCount = 1
 
 	self:CDBar(407221, 11, CL.count:format(L.rushing_darkness, rushingDarknessCount)) -- Rushing Darkness
@@ -132,8 +130,9 @@ function mod:OnEngage()
 	self:CDBar(401998, 24) -- Calamitous Strike
 	self:CDBar(402115, self:Mythic() and 30 or 33.5, CL.count:format(L.echoing_fissure, echoingFissureCount)) -- Echoing Fissure
 	if self:Mythic() then
-		self:CDBar(402902, 22, CL.count:format(L.twisted_earth, twistedEarthCount)) -- Twisted Earth
+		self:CDBar(402902, 22, L.twisted_earth) -- Twisted Earth
 	end
+
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 	self:SetPrivateAuraSound(410953, 410966) -- Volcanic Heart
@@ -165,7 +164,14 @@ function mod:VolcanicHeart(args)
 end
 
 function mod:TwistedEarth(args)
-	self:Bar(402902, self:GetStage() == 1 and 17 or 29.2, L.twisted_earth)
+	if self:Mythic() then
+		-- kind of noisy and irrelevant to show a message in mythic
+		self:Bar(402902, self:GetStage() == 1 and 17 or 29.2, L.twisted_earth)
+	else
+		self:Message(402902, "yellow", L.twisted_earth)
+		-- after every rushing darkness in p1, every other in p2
+		-- self:Bar(402902, self:GetStage() == 1 and 36.5 or 57.2, L.twisted_earth)
+	end
 end
 
 function mod:EchoingFissure(args)
@@ -179,6 +185,15 @@ end
 function mod:RushingDarkness(args)
 	self:StopBar(CL.count:format(L.rushing_darkness, rushingDarknessCount))
 	self:Message(407221, "yellow", CL.count:format(L.rushing_darkness, rushingDarknessCount))
+
+	if not self:Mythic() then
+		if self:GetStage() == 1 then
+			self:Bar(402902, 31.6, L.twisted_earth) -- Twisted Earth
+		elseif self:GetStage() == 2 and rushingDarknessCount % 2 == 1 then
+			self:Bar(402902, 40.1, L.twisted_earth) -- Twisted Earth
+		end
+	end
+
 	rushingDarknessCount = rushingDarknessCount + 1
 	if self:GetStage() < 2 or rushingDarknessCount < 5 then -- Only 4 waves in P2
 		self:CDBar(407221, self:GetStage() == 1 and (self:Easy() and 37 or 34) or 29, CL.count:format(L.rushing_darkness, rushingDarknessCount))
@@ -232,9 +247,6 @@ function mod:SurrenderToCorruption()
 	self:CDBar(410953, 20.7, CL.count:format(CL.bombs, volcanicHeartCount)) -- Volcanic Heart
 	self:CDBar(405433, 25, CL.count:format(L.umbral_annihilation, umbralAnnihilationCount)) -- Umbral Annihilation
 	self:CDBar(407221, 32, CL.count:format(L.rushing_darkness, rushingDarknessCount)) -- Rushing Darkness
-	if self:Mythic() then
-		self:CDBar(402902, 42, L.twisted_earth)
-	end
 end
 
 do
@@ -299,7 +311,6 @@ function mod:Stage2Over(args)
 	self:StopBar(CL.count:format(L.umbral_annihilation, umbralAnnihilationCount)) -- Umbral Annihilation
 	self:StopBar(CL.count:format(L.rushing_darkness, rushingDarknessCount)) -- Rushing Darkness
 	self:StopBar(CL.count:format(CL.bombs, volcanicHeartCount)) -- Volcanic Heart
-	self:StopBar(L.twisted_earth) -- Twisted Earth
 
 	self:SetStage(3)
 	self:Message("stages", "cyan", CL.stage:format(3), false)
