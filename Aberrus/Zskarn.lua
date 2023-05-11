@@ -21,7 +21,7 @@ local tacticalDestructionCount = 1
 local shrapnelBombCount = 1
 local unstableEmbersCount = 1
 local blastWaveCount = 1
-local totalBombs = mod:Easy() and 2 or 4
+local totalBombs = mod:Easy() and 2 or mod:Heroic() and 3 or 4
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -93,7 +93,7 @@ function mod:OnEngage()
 	shrapnelBombCount = 1
 	unstableEmbersCount = 1
 	blastWaveCount = 1
-	totalBombs = self:Easy() and 2 or 4
+	totalBombs = self:Easy() and 2 or self:Heroic() and 3 or 4
 
 	if not self:Easy() then
 		self:CDBar(404010, self:Mythic() and 9.4 or 7.4, CL.count:format(L.unstable_embers, unstableEmbersCount)) -- Unstable Embers
