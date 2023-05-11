@@ -63,6 +63,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(unit)
+	return UnitCanAttack("player", unit)
+end
+
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "CatastrophicEruption", 408358)
 	self:Log("SPELL_CAST_SUCCESS", "MoltenSpittle", 402989)
