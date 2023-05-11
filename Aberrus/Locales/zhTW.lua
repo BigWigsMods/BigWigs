@@ -38,19 +38,19 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "zhTW")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
-	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+	L.zaqali_aide_north_emote_trigger = "北方城垛" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
+	L.zaqali_aide_south_emote_trigger = "南方城垛" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
 
-	--L.north = "North"
-	--L.south = "South"
-	--L.both = "Both"
+	L.north = "北方"
+	L.south = "南方"
+	L.both = "雙方"
 
-	--L.zaqali_aide_message = "%s Climbing %s" -- Big Adds Climbing North
+	--L.zaqali_aide_message = "%$2s：%$1s正在攀登" -- Big Adds Climbing North
 	L.add_bartext = "%s：%s（%d）"
-	--L.boss_returns = "Boss Lands: North"
+	L.boss_returns = "北方：首領落地" -- 跟L.zaqali_aide_message統一格式
 
 	L.molten_barrier = "屏障"
-	--L.catastrophic_slam = "Door Slam"
+	L.catastrophic_slam = "破門"
 end
 
 L = BigWigs:NewBossLocale("Rashok, the Elder", "zhTW")
@@ -74,7 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("Magmorax", "zhTW")
 if L then
-	L.energy_gained = "獲得能量，狂暴時限縮短 17 秒" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
+	L.energy_gained = "獲得能量，狂暴時限縮短 17 秒！" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
 
 	-- Mythic
 	L.explosive_magma = "大圈分攤"
@@ -82,23 +82,23 @@ end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "zhTW")
 if L then
-	--L.custom_on_repeating_sunder_reality = "Repeating Sunder Reality Warning"
-	--L.custom_on_repeating_shattered_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
+	L.custom_on_repeating_sunder_reality = "重複傳送門警告"
+	L.custom_on_repeating_shattered_reality_desc = "在黯黑毀滅施法期間，持續發送警告，直到你進入粉碎現實的傳送門為止。"
 
-	--L.twisted_earth = "Walls"
-	--L.echoing_fissure = "Fissure"
-	--L.rushing_darkness = "直線擊退"
+	L.twisted_earth = "石牆"
+	L.echoing_fissure = "迴響"
+	L.rushing_darkness = "擊退"
 
-	--L.umbral_annihilation = "Annihilation"
-	--L.sunder_reality = "Portals"
-	--L.ebon_destruction = "Big Bang"
+	L.umbral_annihilation = "滅殺"
+	L.sunder_reality = "傳送門"
+	L.ebon_destruction = "大爆炸"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "zhTW")
 if L then
-	--L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
-	--L.claws_debuff = "Tank Explodes"
-	--L.emptiness_between_stars = "Emptiness"
-	--L.embrace_of_nothingness = "Black Hole"
-	--L.void_slash = "Tank Frontal"
+	L.claws = "坦克減益" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
+	L.claws_debuff = "坦克爆炸"
+	L.emptiness_between_stars = "空無"
+	L.embrace_of_nothingness = "黑洞"
+	L.void_slash = "正面斬擊"
 end
