@@ -520,10 +520,24 @@ function mod:DesolateBlossom(args)
 	self:Message(404403, "yellow", CL.count:format(L.desolate_blossom, desolateBlossomCount))
 	self:PlaySound(404403, "alert")
 	desolateBlossomCount = desolateBlossomCount + 1
-	if self:Easy() and desolateBlossomCount == 2 then
-		self:Bar(404403, 46.2, CL.count:format(L.desolate_blossom, desolateBlossomCount))
-	elseif self:Heroic() and desolateBlossomCount == 2 then
-		self:Bar(404403, 43.5, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	if self:Easy() then
+		if desolateBlossomCount == 2 then
+			self:Bar(404403, 46.2, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+		elseif desolateBlossomCount == 3 then
+			self:Bar(404403, 40.0, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+		else
+			-- TODO need timer, not sure if this is even possible
+			self:Bar(404403, nil, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+		end
+	else
+		if desolateBlossomCount == 2 then
+			self:Bar(404403, 43.5, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+		elseif desolateBlossomCount == 3 then
+			self:Bar(404403, 37.7, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+		else
+			-- TODO need timer, not sure if this is even possible
+			self:Bar(404403, nil, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+		end
 	end
 end
 
