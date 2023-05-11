@@ -166,7 +166,7 @@ do
 	local bombStart = 0
 	local bombsSoaked = 0
 	function mod:ShrapnelBomb(args)
-		self:StopBar(CL.count_amount:format(L.bombs_soaked, bombsSoaked, totalBombs))
+		self:StopBar(CL.count:format(CL.bombs, shrapnelBombCount))
 		self:Message(args.spellId, "yellow", CL.count:format(CL.bombs, shrapnelBombCount))
 		self:PlaySound(args.spellId, "alert")
 		shrapnelBombCount = shrapnelBombCount + 1
@@ -192,6 +192,7 @@ do
 end
 
 function mod:UnstableEmbers(args)
+	self:StopBar(CL.count:format(L.unstable_embers, unstableEmbersCount)) -- First bar is a CDBar
 	self:Message(404010, "red", CL.count:format(L.unstable_embers, unstableEmbersCount))
 	unstableEmbersCount = unstableEmbersCount + 1
 	self:Bar(404010, 15.8, CL.count:format(L.unstable_embers, unstableEmbersCount))
