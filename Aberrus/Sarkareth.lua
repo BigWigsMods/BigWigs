@@ -48,12 +48,14 @@ local timersNormal = {
 		[402050] = {26.7, 35.5}, -- Searing Breath
 	},
 	[2] = {
+		[404027] = {15.8, 65.3}, -- Void Bomb
 		[404456] = {3.7, 46.3}, -- Abyssal Breath
 		[404403] = {11.2, 46.2, 40.0}, -- Desolate Blossom
 		[411241] = {20, 18.7, 22.5, 22.5, 22.5}, -- Void Claws
 	},
 	[3] = {
-		[403771] = {9.7, 65.3, 105.3}, -- Cosmic Ascension
+		[404027] = {30.4, 65.3, 65.3}, -- Void Bomb
+		[403771] = {7.7, 65.3, 105.3}, -- Cosmic Ascension
 		[405486] = {21.0, 46.7, 102.6, 65.4}, -- Hurtling Barrage
 		[403625] = {49.1, 83.0, 86.3}, -- Scouring Eternity
 		[403520] = {26.4, 118.7, 53.3}, -- Embrace of Nothingness
@@ -69,18 +71,20 @@ local timersHeroic = {
 		[402050] = {26.7, 15.5, 20.0}, -- Searing Breath
 	},
 	[2] = {
+		[404027] = {15.3, 60.0}, -- Void Bomb
 		[404456] = {3.5, 43.5, 35.3}, -- Abyssal Breath
 		[404403] = {10.6, 43.5, 37.7}, -- Desolate Blossom
 		[404288] = {29.4, 35.2}, -- Infinite Duress
 		[411241] = {18.8, 17.6, 21.1, 42.3}, -- Void Claws
 	},
 	[3] = {
-		[404288] = {4.8, 56.2, 83.7}, -- Infinite Duress
-		[403771] = {7.3, 61.2, 98.7}, -- Cosmic Ascension
-		[405486] = {19.8, 84.9, 55}, -- Hurtling Barrage
-		[403625] = {46.3, 77.8}, -- Scouring Eternity
-		[403520] = {24.8, 111.2}, -- Embrace of Nothingness
-		[408429] = {21, 36.2, 37.5}, -- Void Slash
+		[404027] = {28.5, 61.2, 61.2, 96.3}, -- Void Bomb
+		[404288] = {5.8, 56.3, 83.8, 37.5, 36.3}, -- Infinite Duress
+		[403771] = {7.3, 61.2, 98.8, 58.8}, -- Cosmic Ascension
+		[405486] = {19.8, 85.0, 55.0, 35.1, 67.5}, -- Hurtling Barrage
+		[403625] = {46.3, 77.8, 81.5}, -- Scouring Eternity
+		[403520] = {24.8, 111.2, 50.0}, -- Embrace of Nothingness
+		[408429] = {21.0, 36.3, 37.5, 85.0, 11.2, 61.3}, -- Void Slash
 	},
 }
 
@@ -484,18 +488,17 @@ function mod:Stage2Start()
 	desolateBlossomCount = 1
 	infiniteDuressCount = 1
 
-	self:Bar("stages", 107.5, CL.stage:format(3), 403284)
+	self:Bar("stages", 110.1, CL.stage:format(3), 403284) -- XXX not sure if phase force transitions
 
-	-- XXX this doesn't seem like a good phase trigger, lots of variance on initial cast
+	-- these start on End Existence _REMOVED
 	self:Bar(404456, 3.5, CL.count:format(CL.breath, breathCount)) -- Abyssal Breath
-	self:Bar(404027, self:Heroic() and 15.3 or 11, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
-	self:Bar(404403, self:Heroic() and 10.6 or 16, CL.count:format(L.desolate_blossom, desolateBlossomCount)) --  Desolate Blossom
+	self:Bar(404403, 10.6, CL.count:format(L.desolate_blossom, desolateBlossomCount)) --  Desolate Blossom
+	self:Bar(404027, 15.3, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
 	self:Bar(411241, 18.8, CL.count:format(L.claws, clawsCount)) -- Void Claws
 	if not self:Easy() then
 		self:Bar(404288, 29.4, CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
 	end
 
-	-- closer if we wait until End Existence is interrupted, but still ~1s variance
 	self:PauseBar(404456, CL.count:format(CL.breath, breathCount))
 	self:PauseBar(404403, CL.count:format(L.desolate_blossom, desolateBlossomCount))
 	self:PauseBar(404027, CL.count:format(CL.bombs, bombCount))
@@ -524,11 +527,7 @@ function mod:VoidBomb(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.bombs, bombCount))
 	self:PlaySound(args.spellId, "alert")
 	bombCount = bombCount + 1
-
-	local stage = self:GetStage()
-	if stage == 3 or (stage == 2 and bombCount < 3) then -- only 2 sets in stage 2
-		self:Bar(args.spellId, self:Heroic() and (stage == 3 and 61.2 or 60) or 65.3, CL.count:format(CL.bombs, bombCount))
-	end
+	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][bombCount], CL.count:format(CL.bombs, bombCount))
 end
 
 function mod:VoidFractureApplied(args)
