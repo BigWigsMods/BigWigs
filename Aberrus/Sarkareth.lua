@@ -184,6 +184,10 @@ function mod:GetOptions()
 	}
 end
 
+function mod:VerifyEnable(unit)
+	return UnitHealth(unit) > 100
+end
+
 function mod:OnBossEnable()
 	-- General
 	self:Log("SPELL_AURA_APPLIED", "OblivionApplied", 401951)
@@ -301,6 +305,7 @@ function mod:OblivionApplied(args)
 		end
 	end
 end
+
 function mod:EmptinessBetweenStarsApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, L.emptiness_between_stars)
@@ -340,13 +345,10 @@ end
 do
 	local prev = 0
 	function mod:GroundDamage(args)
-		if self:Me(args.destGUID) then
-			local t = args.time
-			if t-prev > 2 then
-				prev = t
-				self:PlaySound(args.spellId, "underyou")
-				self:PersonalMessage(args.spellId, "underyou")
-			end
+		if self:Me(args.destGUID) and args.time - prev > 2 then
+			prev = args.time
+			self:PlaySound(args.spellId, "underyou")
+			self:PersonalMessage(args.spellId, "underyou")
 		end
 	end
 end
@@ -461,7 +463,7 @@ do
 			end
 		end
 		-- Don't show the timer for the full 27s, only sub 10s
-		tankTimers[args.destName] = self:ScheduleTimer("TargetBar", 17, 401340, 10, args.destName, L.claws_debuff)
+		tankTimers[args.destName] = self:ScheduleTimer("TargetBar", 17, 401340, 10, args.destName, L.claws_debuff) -- Blazing Blast
 	end
 
 	function mod:BurningClawsRemoved(args)
@@ -662,7 +664,7 @@ do
 			end
 		end
 		-- Don't show the timer for the full 18s, only sub 10s
-		tankTimers[args.destName] = self:ScheduleTimer("TargetBar", 8, args.spellId, 10, args.destName, L.claws_debuff)
+		tankTimers[args.destName] = self:ScheduleTimer("TargetBar", 8, 411238, 10, args.destName, L.claws_debuff) -- Void Blast
 	end
 
 	function mod:VoidClawsRemoved(args)
@@ -794,7 +796,7 @@ do
 			end
 		end
 		-- Don't show the timer for the full 21s, only sub 10s
-		tankTimers[args.destName] = self:ScheduleTimer("TargetBar", 11, 411238, 10, args.destName, L.claws_debuff)
+		tankTimers[args.destName] = self:ScheduleTimer("TargetBar", 11, 408457, 10, args.destName, L.claws_debuff) -- Void Blast
 	end
 
 	function mod:VoidSlashRemoved(args)
