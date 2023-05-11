@@ -26,22 +26,20 @@ local magmaMysticCount = 1
 
 local L = mod:GetLocale()
 if L then
-	L.zaqali_aide_south_trigger = "Commanders ascend the southern battlement!"
-	L.zaqali_aide_north_trigger = "Commanders ascend the northern battlement!"
+	-- These are in-game emotes and need to match the text shown in-game
+	-- You should also replace the comment (--) with the full emote as it shows in-game
+	L.zaqali_aide_north_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+	L.zaqali_aide_south_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
 
 	L.north = "North"
 	L.south = "South"
 	L.both = "Both"
 
-	L.zaqali_aide_message = "%s Climbing %s!"
+	L.zaqali_aide_message = "%s Climbing %s" -- Big Adds Climbing North
 	L.add_bartext = "%s: %s (%d)"
 	L.boss_returns = "Boss Lands: North"
 
-	L.zaqali_aide = CL.big_adds
-	L.devastating_leap = CL.leap
 	L.molten_barrier = "Barrier"
-	L.blazing_focus = CL.fixate
-	L.vigorous_gale = CL.pushback
 	L.catastrophic_slam = "Door Slam"
 end
 
@@ -84,11 +82,11 @@ function mod:GetOptions()
 		[401108] = ("%s (%s)"):format(self:SpellName(-26737), CL.mythic), -- Ignara (Mythic)
 		[406585] = -26683, -- Stage 2
 	}, {
-		[404382] = L.zaqali_aide, -- Zaqali Aide (Big Adds)
+		[404382] = CL.big_adds, -- Zaqali Aide (Big Adds)
 		[397383] = L.molten_barrier, -- Molten Barrier (Barrier)
-		[398938] = L.devastating_leap, -- Devastating Leap (Leap)
-		[401381] = L.blazing_focus, -- Blazing Focus (Fixate)
-		[407009] = L.vigorous_gale, -- Vigorous Gale (Pushback)
+		[398938] = CL.leap, -- Devastating Leap (Leap)
+		[401381] = CL.fixate, -- Blazing Focus (Fixate)
+		[407009] = CL.pushback, -- Vigorous Gale (Pushback)
 		[410516] = L.catastrophic_slam, -- Catastrophic Slam (Door Slam)
 	}
 end
@@ -142,7 +140,7 @@ function mod:OnEngage()
 	self:Bar(401258, 12) -- Heavy Cudgel
 	self:Bar(397383, self:Easy() and 26.5 or 28, L.add_bartext:format(L.molten_barrier, L.both, magmaMysticCount)) -- Molten Barrier
 	self:Bar("stages", 28, self:SpellName(406591), "artifactability_firemage_phoenixbolt") -- Call Ignara
-	self:Bar(404382, 41, L.add_bartext:format(L.zaqali_aide, L.south, zaqaliAideCount)) -- Zaqali Aide
+	self:Bar(404382, 41, L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount)) -- Zaqali Aide
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -166,20 +164,20 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 		self:Bar("stages", 25, L.boss_returns, "artifactability_firemage_phoenixbolt") -- 2s rp + 23s buff
 		-- XXX move this stuff to Ignara's Flame _REMOVED?
 		if self:Mythic() then
-			self:CDBar(407017, 45, L.add_bartext:format(L.vigorous_gale, L.south, vigorousGaleCount)) -- Pushback: South (1)
+			self:CDBar(407017, 45, L.add_bartext:format(CL.pushback, L.south, vigorousGaleCount)) -- Pushback: South (1)
 			self:CDBar(401108, 64.5, L.add_bartext:format(self:SpellName(401108), L.south, phoenixRushCount)) -- Phoenix Rush: South (1)
 		end
-		self:Bar(408959, 70, L.add_bartext:format(L.devastating_leap, L.south, devastatingLeapCount)) -- Leap: South (1)
+		self:Bar(408959, 70, L.add_bartext:format(CL.leap, L.south, devastatingLeapCount)) -- Leap: South (1)
 	end
 end
 
 function mod:RAID_BOSS_EMOTE(_, msg)
-	if msg:find(L.zaqali_aide_south_trigger, nil, true) then
-		self:StopBar(L.add_bartext:format(L.zaqali_aide, L.south, zaqaliAideCount))
-		self:Message(404382, "cyan", L.zaqali_aide_message:format(L.zaqali_aide, L.south:upper()))
-	elseif msg:find(L.zaqali_aide_north_trigger, nil, true) then
-		self:StopBar(L.add_bartext:format(L.zaqali_aide, L.north, zaqaliAideCount))
-		self:Message(404382, "cyan", L.zaqali_aide_message:format(L.zaqali_aide, L.north:upper()))
+	if msg:find(L.zaqali_aide_south_emote_trigger, nil, true) then
+		self:StopBar(L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount))
+		self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.south))
+	elseif msg:find(L.zaqali_aide_north_emote_trigger, nil, true) then
+		self:StopBar(L.add_bartext:format(CL.big_adds, L.north, zaqaliAideCount))
+		self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.north))
 	else
 		return
 	end
@@ -191,7 +189,7 @@ function mod:RAID_BOSS_EMOTE(_, msg)
 		local timer = { 5.0, 21.8, 29.2, 22.9, 21.1 } -- 40.3, 33.5, 22.9, 21.1, 5.0, 21.8, 29.2, 23.0
 		local cd = zaqaliAideCount == 2 and 33.5 or timer[index]
 		local side = { "south", "south", "north", "north", "north" }
-		self:Bar(404382, cd, L.add_bartext:format(L.zaqali_aide, L[side[index]], zaqaliAideCount))
+		self:Bar(404382, cd, L.add_bartext:format(CL.big_adds, L[side[index]], zaqaliAideCount))
 	end
 end
 
@@ -221,21 +219,21 @@ end
 
 function mod:BlazingFocusApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, L.blazing_focus)
+		self:PersonalMessage(args.spellId, nil, CL.fixate)
 		self:PlaySound(args.spellId, "alarm")
 	end
 end
 
 function mod:VigorousGale(args)
 	local side = vigorousGaleCount % 2 == 0 and "north" or "south"
-	self:StopBar(L.add_bartext:format(L.vigorous_gale, L[side], vigorousGaleCount))
-	self:Message(407017, "red", L.add_bartext:format(L.vigorous_gale, L[side], vigorousGaleCount))
+	self:StopBar(L.add_bartext:format(CL.pushback, L[side], vigorousGaleCount))
+	self:Message(407017, "red", L.add_bartext:format(CL.pushback, L[side], vigorousGaleCount))
 	self:PlaySound(407017, "warning")
 	vigorousGaleCount = vigorousGaleCount + 1
 
 	local cd = vigorousGaleCount % 2 == 0 and 77 or 21 -- 77~79, 21~26
 	side = vigorousGaleCount % 2 == 0 and "north" or "south"
-	self:CDBar(407017, cd, L.add_bartext:format(L.vigorous_gale, L[side], vigorousGaleCount))
+	self:CDBar(407017, cd, L.add_bartext:format(CL.pushback, L[side], vigorousGaleCount))
 end
 
 -- Warlord Kagni
@@ -249,15 +247,15 @@ end
 
 function mod:DevastatingLeap(args)
 	local side = devastatingLeapCount % 2 == 0 and "north" or "south"
-	self:StopBar(L.add_bartext:format(L.devastating_leap, L[side], devastatingLeapCount))
-	self:Message(408959, "orange", L.add_bartext:format(L.devastating_leap, L[side], devastatingLeapCount))
+	self:StopBar(L.add_bartext:format(CL.leap, L[side], devastatingLeapCount))
+	self:Message(408959, "orange", L.add_bartext:format(CL.leap, L[side], devastatingLeapCount))
 	self:PlaySound(408959, "alarm")
 	devastatingLeapCount = devastatingLeapCount + 1
 
 	-- local timer = { 98.4, 47.5, 56.1, 43.9, 53.7 }
 	local cd = devastatingLeapCount % 2 == 0 and 47 or 53
 	side = devastatingLeapCount % 2 == 0 and "north" or "south"
-	self:Bar(408959, cd, L.add_bartext:format(L.devastating_leap, L[side], devastatingLeapCount))
+	self:Bar(408959, cd, L.add_bartext:format(CL.leap, L[side], devastatingLeapCount))
 end
 
 function mod:HeavyCudgel(args)
@@ -396,10 +394,10 @@ function mod:DesperateImmolation()
 
 	-- XXX boss abilities stop, but add waves can still happen?
 	self:StopBar(401258) -- Heavy Cudgel
-	self:StopBar(L.add_bartext:format(L.devastating_leap, L.south, devastatingLeapCount)) -- Devastating Leap
-	self:StopBar(L.add_bartext:format(L.devastating_leap, L.north, devastatingLeapCount))
-	self:StopBar(L.add_bartext:format(L.vigorous_gale, L.south, vigorousGaleCount)) -- Vigorous Gale
-	self:StopBar(L.add_bartext:format(L.vigorous_gale, L.north, vigorousGaleCount))
+	self:StopBar(L.add_bartext:format(CL.leap, L.south, devastatingLeapCount)) -- Devastating Leap
+	self:StopBar(L.add_bartext:format(CL.leap, L.north, devastatingLeapCount))
+	self:StopBar(L.add_bartext:format(CL.pushback, L.south, vigorousGaleCount)) -- Vigorous Gale
+	self:StopBar(L.add_bartext:format(CL.pushback, L.north, vigorousGaleCount))
 	self:StopBar(L.add_bartext:format(self:SpellName(401108), L.south, phoenixRushCount)) -- Phoenix Rush
 	self:StopBar(L.add_bartext:format(self:SpellName(401108), L.north, phoenixRushCount))
 
@@ -411,8 +409,8 @@ function mod:DesperateImmolation()
 end
 
 function mod:DesperateImmolationSuccess()
-	self:StopBar(L.add_bartext:format(L.zaqali_aide, L.south, zaqaliAideCount)) -- Zaqali Aide
-	self:StopBar(L.add_bartext:format(L.zaqali_aide, L.north, zaqaliAideCount))
+	self:StopBar(L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount)) -- Zaqali Aide
+	self:StopBar(L.add_bartext:format(CL.big_adds, L.north, zaqaliAideCount))
 	self:StopBar(L.add_bartext:format(L.molten_barrier, L.south, magmaMysticCount)) -- Molten Barrier
 	self:StopBar(L.add_bartext:format(L.molten_barrier, L.north, magmaMysticCount))
 end
