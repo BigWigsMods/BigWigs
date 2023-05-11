@@ -68,7 +68,7 @@ function mod:GetOptions()
 end
 
 function mod:OnBossEnable()
-	self:Log("SPELL_CAST_START", "DragonfireTraps", 405736)
+	self:Log("SPELL_CAST_SUCCESS", "DragonfireTraps", 405736)
 	self:Log("SPELL_CAST_START", "AnimateGolems", 405812)
 	self:Log("SPELL_AURA_APPLIED", "SalvageParts", 405592)
 	self:Log("SPELL_CAST_START", "TacticalDestruction", 406678)
