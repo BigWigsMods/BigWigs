@@ -192,10 +192,10 @@ do
 end
 
 function mod:UnstableEmbers(args)
-	self:StopBar(CL.count:format(L.unstable_embers, unstableEmbersCount)) -- First bar is a CDBar
+	self:StopBar(CL.count:format(L.unstable_embers, unstableEmbersCount))
 	self:Message(404010, "red", CL.count:format(L.unstable_embers, unstableEmbersCount))
 	unstableEmbersCount = unstableEmbersCount + 1
-	self:Bar(404010, 15.8, CL.count:format(L.unstable_embers, unstableEmbersCount))
+	self:CDBar(404010, 15.8, CL.count:format(L.unstable_embers, unstableEmbersCount))
 end
 
 function mod:UnstableEmbersApplied(args)
@@ -223,7 +223,7 @@ function mod:BlastWave(args)
 		self:Bar(409942, 10, CL.beams) -- Elimination Protocol
 	end
 	blastWaveCount = blastWaveCount + 1
-	self:Bar(args.spellId, self:Easy() and 38.6 or 33.5, CL.count:format(CL.knockback, blastWaveCount))
+	self:CDBar(args.spellId, self:Easy() and 38.6 or 33.5, CL.count:format(CL.knockback, blastWaveCount))
 end
 
 function mod:SearingClawsApplied(args)
