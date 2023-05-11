@@ -48,7 +48,7 @@ if L then
 	L.zaqali_aide_message = "%s Si Arrampicano Da %s!" -- e.g., Big Adds Climbing NORTH!
 	--L.boss_returns = "Boss Lands: North"
 
-	--L.molten_barrier = "Barrier"
+	L.molten_barrier = "Barriera"
 	--L.catastrophic_slam = "Door Slam"
 end
 
@@ -96,4 +96,8 @@ end
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "itIT")
 if L then
 	L.claws = "Penalità Difensori" -- (Fase 1) Artigli Ardenti / (Fase 2) Artigli del Vuoto / (Fase 3) Squarcio del Vuoto
+	--L.claws_debuff = "Tank Explodes"
+	--L.emptiness_between_stars = "Emptiness"
+	--L.embrace_of_nothingness = "Black Hole"
+	--L.void_slash = "Tank Frontal"
 end

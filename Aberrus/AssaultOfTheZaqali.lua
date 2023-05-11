@@ -187,7 +187,7 @@ function mod:RAID_BOSS_EMOTE(_, msg)
 	zaqaliAideCount = zaqaliAideCount + 1
 
 	if self:GetStage() == 1 then
-		local index = zaqaliAideCount % 5 + 1
+		local index = (zaqaliAideCount % 5) + 1
 		local timer = { 5.0, 21.8, 29.2, 22.9, 21.1 } -- 40.3, 33.5, 22.9, 21.1, 5.0, 21.8, 29.2, 23.0
 		local cd = zaqaliAideCount == 2 and 33.5 or timer[index]
 		local side = { "south", "south", "north", "north", "north" }
@@ -208,14 +208,14 @@ end
 
 -- Ignara: casts Gale (S), Rush (S), Rush (N), Gale (N), repeat
 function mod:PhoenixRush(args)
-	local side = phoenixRushCount % 2 == 0 and "north" or "south" -- alternates?
+	local side = phoenixRushCount % 2 == 0 and "north" or "south"
 	self:StopBar(L.add_bartext:format(args.spellName, L[side], phoenixRushCount))
 	self:Message(args.spellId, "yellow", L.add_bartext:format(args.spellName, L[side], phoenixRushCount))
 	self:PlaySound(args.spellId, "long")
 	phoenixRushCount = phoenixRushCount + 1
 
 	local cd = phoenixRushCount % 2 == 0 and 22 or 74 -- 22~26 / 74~??
-	side = phoenixRushCount % 2 == 0 and "north" or "south" -- alternates?
+	side = phoenixRushCount % 2 == 0 and "north" or "south"
 	self:CDBar(args.spellId, cd, L.add_bartext:format(args.spellName, L[side], phoenixRushCount))
 end
 
@@ -389,7 +389,7 @@ function mod:VolcanicShieldRemoved(args)
 end
 
 -- Stage 2
-function mod:DesperateImmolation(args)
+function mod:DesperateImmolation()
 	self:SetStage(2)
 	self:Message("stages", "cyan", CL.stage:format(2), false)
 	self:PlaySound("stages", "long")
@@ -410,7 +410,7 @@ function mod:DesperateImmolation(args)
 	self:Bar(410516, 29.2, CL.count:format(L.catastrophic_slam, devastatingLeapCount)) -- Catastrophic Slam
 end
 
-function mod:DesperateImmolationSuccess(args)
+function mod:DesperateImmolationSuccess()
 	self:StopBar(L.add_bartext:format(L.zaqali_aide, L.south, zaqaliAideCount)) -- Zaqali Aide
 	self:StopBar(L.add_bartext:format(L.zaqali_aide, L.north, zaqaliAideCount))
 	self:StopBar(L.add_bartext:format(L.molten_barrier, L.south, magmaMysticCount)) -- Molten Barrier

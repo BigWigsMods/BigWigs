@@ -48,7 +48,7 @@ if L then
 	--L.zaqali_aide_message = "%s Climbing %s!" -- e.g., Big Adds Climbing NORTH!
 	--L.boss_returns = "Boss Lands: North"
 
-	--L.molten_barrier = "Barrier"
+	L.molten_barrier = "Barrera"
 	--L.catastrophic_slam = "Door Slam"
 end
 
@@ -96,4 +96,8 @@ end
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "esES")
 if L then
 	--L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
+	--L.claws_debuff = "Tank Explodes"
+	--L.emptiness_between_stars = "Emptiness"
+	--L.embrace_of_nothingness = "Black Hole"
+	--L.void_slash = "Tank Frontal"
 end
