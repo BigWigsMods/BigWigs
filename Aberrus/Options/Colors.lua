@@ -49,24 +49,23 @@ BigWigs:AddColors("The Forgotten Experiments", {
 })
 
 BigWigs:AddColors("Assault of the Zaqali", {
-	[-26221] = "yellow",
-	[-26217] = "yellow",
-	[397383] = "yellow",
+	[397383] = "cyan",
 	[397386] = "orange",
 	[401108] = "yellow",
 	[401258] = {"blue","purple"},
 	[401381] = "blue",
 	[401401] = "blue",
-	[401867] = {"blue","yellow"},
+	[401867] = {"blue","orange"},
+	[404382] = "cyan",
+	[404687] = "red",
+	[406585] = "red",
 	[407017] = "red",
-	[408620] = "orange",
-	[408959] = "yellow",
+	[408620] = "yellow",
+	[408959] = "orange",
 	[409275] = {"blue","orange"},
-	[409359] = "red",
-	[410351] = "purple",
+	[410351] = {"blue","purple"},
 	[410516] = "orange",
-	["big_adds_timer"] = "yellow",
-	["stages"] = "cyan",
+	["stages"] = {"cyan","green"},
 })
 
 BigWigs:AddColors("Rashok, the Elder", {
@@ -75,7 +74,7 @@ BigWigs:AddColors("Rashok, the Elder", {
 	[403543] = "blue",
 	[405091] = "yellow",
 	[405316] = "red",
-	[405821] = "blue",
+	[405821] = {"blue","yellow"},
 	[406333] = "yellow",
 	[406851] = "orange",
 	[407547] = {"blue","purple"},

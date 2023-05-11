@@ -36,18 +36,20 @@ end
 
 L = BigWigs:NewBossLocale("Assault of the Zaqali", "ruRU")
 if L then
-	L.big_adds_timer = "Таймеры для Охотников + Стражей"
-	L.final_assault_soon = "Последняя атака скоро"
-
-	L.north_adds_message = "Ады поднимаются: СЕВЕР"
-	L.south_adds_message = "Ады поднимаются: ЮГ"
-
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	--L.north_adds_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
-	--L.south_adds_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+	--L.zaqali_aide_north_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
+	--L.zaqali_aide_south_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
 
-	L.wallclimbers_bartext = "Стенолазы"
+	L.north = "СЕВЕР"
+	L.south = "ЮГ"
+	--L.both = "Both"
+
+	L.zaqali_aide_message = "%s поднимаются %s!" -- e.g., Big Adds Climbing NORTH!
+	--L.boss_returns = "Boss Lands: North"
+
+	--L.molten_barrier = "Barrier"
+	--L.catastrophic_slam = "Door Slam"
 end
 
 L = BigWigs:NewBossLocale("Rashok, the Elder", "ruRU")

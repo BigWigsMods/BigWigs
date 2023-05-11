@@ -49,23 +49,23 @@ BigWigs:AddSounds("The Forgotten Experiments", {
 })
 
 BigWigs:AddSounds("Assault of the Zaqali", {
-	[-26221] = "info",
-	[-26217] = "info",
 	[397383] = "info",
 	[397386] = "alert",
 	[401108] = "long",
 	[401258] = {"alarm","alert","warning"},
 	[401381] = "alarm",
-	[401401] = "warning",
-	[401867] = "warning",
-	[407017] = "alert",
+	[401401] = "alarm",
+	[401867] = {"alert","warning"},
+	[404382] = "info",
+	[404687] = "alarm",
+	[406585] = "alarm",
+	[407017] = "warning",
 	[408620] = "alert",
-	[408959] = "alert",
+	[408959] = "alarm",
 	[409275] = {"alarm","alert"},
-	[409359] = "long",
-	[410351] = "alert",
-	[410516] = "warning",
-	["stages"] = "info",
+	[410351] = {"alarm","alert","warning"},
+	[410516] = "alert",
+	["stages"] = {"info","long"},
 })
 
 BigWigs:AddSounds("Rashok, the Elder", {
