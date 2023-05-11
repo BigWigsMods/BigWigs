@@ -25,8 +25,8 @@ local breathCount = 1
 local clawsCount = 1
 
 -- Stage Two: A Touch of the Forbidden
-local mobCollector = {}
-local marksUsed = {}
+local nullGlimmerMarks = {}
+local nullGlimmerCollector = {}
 local desolateBlossomCount = 1
 local infiniteDuressCount = 1
 
@@ -35,6 +35,56 @@ local cosmicAscensionCount = 1
 local hurtlingBarrageCount = 1
 local scouringEternityCount = 1
 local embraceOfNothingnessCount = 1
+
+--------------------------------------------------------------------------------
+-- Timers
+--
+
+local timersNormal = {
+	[1] = {
+		[401810] = {3.3, 94.8}, -- Glittering Surge
+		[401500] = {1.1, 58.9}, -- Scorching Bomb
+		[401680] = { 24.9, 23.3, 44.4}, -- Mass Disintegrate
+		[402050] = {26.7, 35.5}, -- Searing Breath
+	},
+	[2] = {
+		[404456] = {3.7, 46.3}, -- Abyssal Breath
+		[404403] = {11.2, 46.2, 40.0}, -- Desolate Blossom
+		[411241] = {20, 18.7, 22.5, 22.5, 22.5}, -- Void Claws
+	},
+	[3] = {
+		[403771] = {9.7, 65.3, 105.3}, -- Cosmic Ascension
+		[405486] = {21.0, 46.7, 102.6, 65.4}, -- Hurtling Barrage
+		[403625] = {49.1, 83.0, 86.3}, -- Scouring Eternity
+		[403520] = {26.4, 118.7, 53.3}, -- Embrace of Nothingness
+		[408429] = {22.3, 38.7, 40.0, 90.7, 12.0, 25.3}, -- Void Slash
+	},
+}
+
+local timersHeroic = {
+	[1] = {
+		[401810] = {3.3, 97.7}, -- Glittering Surge
+		[401500] = {1.1, 32.2, 26.6, 18.9}, -- Scorching Bomb
+		[401680] = {24.9, 24.0, 22.7, 21.1}, -- Mass Disintegrate
+		[402050] = {26.7, 15.5, 20.0}, -- Searing Breath
+	},
+	[2] = {
+		[404456] = {3.5, 43.5, 35.3}, -- Abyssal Breath
+		[404403] = {10.6, 43.5, 37.7}, -- Desolate Blossom
+		[404288] = {29.4, 35.2}, -- Infinite Duress
+		[411241] = {18.8, 17.6, 21.1, 42.3}, -- Void Claws
+	},
+	[3] = {
+		[404288] = {4.8, 56.2, 83.7}, -- Infinite Duress
+		[403771] = {7.3, 61.2, 98.7}, -- Cosmic Ascension
+		[405486] = {19.8, 84.9, 55}, -- Hurtling Barrage
+		[403625] = {46.3, 77.8}, -- Scouring Eternity
+		[403520] = {24.8, 111.2}, -- Embrace of Nothingness
+		[408429] = {21, 36.2, 37.5}, -- Void Slash
+	},
+}
+
+local timers = mod:Easy() and timersNormal or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -70,7 +120,7 @@ end
 --
 
 local massDisintergrateMarker = mod:AddMarkerOption(true, "player", 1, 401680, 1, 2, 3, 4) -- Mass Disintegrate
-local nullGlimmerMarker = mod:AddMarkerOption(false, "npc", 8, -26675, 8, 7, 6, 5) -- Null Glimmer
+local nullGlimmerMarker = mod:AddMarkerOption(true, "npc", 8, -26675, 8, 7, 6, 5) -- Null Glimmer
 local infiniteDuressMarker = mod:AddMarkerOption(true, "player", 1, 404288, 1, 2) -- Infinite Duress
 local hurlingBarrageMarker = mod:AddMarkerOption(true, "player", 3, 405486, 3, 4, 5, 6) -- Hurtling Barrage
 function mod:GetOptions()
@@ -174,6 +224,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "VoidFractureApplied", 404218)
 	self:Log("SPELL_AURA_REMOVED", "VoidFractureRemoved", 404218)
 	self:Log("SPELL_CAST_START", "AbyssalBreath", 404456)
+	self:Log("SPELL_SUMMON", "NullGlimmerSummon", 404507)
 	self:Log("SPELL_CAST_START", "BlastingScream", 404754)
 	self:Log("SPELL_CAST_START", "DesolateBlossom", 404403, 411030) -- Heroic/Normal, Unknown
 	self:Log("SPELL_CAST_SUCCESS", "InfiniteDuress", 407496, 404288) -- Heroic+, Unknown
@@ -200,6 +251,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	timers = self:Easy() and timersNormal or timersHeroic
 	self:SetStage(1)
 	voidEmpowermentCount = 1
 	nextStageHealth = 63
@@ -330,7 +382,6 @@ function mod:OppressingHowl(args)
 	self:Message(args.spellId, "yellow", CL.count:format(L.oppressing_howl, opressingHowlCount))
 	self:PlaySound(args.spellId, "alert")
 	opressingHowlCount = opressingHowlCount + 1
-	--self:Bar(args.spellId, 0, CL.count:format(L.oppressing_howl, opressingHowlCount))
 end
 
 function mod:GlitteringSurge(args)
@@ -338,10 +389,7 @@ function mod:GlitteringSurge(args)
 	self:Message(args.spellId, "red", CL.count:format(L.glittering_surge, glitteringSurgeCount))
 	self:PlaySound(args.spellId, "long")
 	glitteringSurgeCount = glitteringSurgeCount + 1
-	if glitteringSurgeCount < 3 then -- only 2
-		local cd = self:Easy() and 94.8 or 97.7
-		self:Bar(args.spellId, cd, CL.count:format(L.glittering_surge, glitteringSurgeCount))
-	end
+	self:Bar(args.spellId, timers[1][args.spellId][glitteringSurgeCount], CL.count:format(L.glittering_surge, glitteringSurgeCount))
 end
 
 function mod:ScorchingBomb(args)
@@ -349,16 +397,7 @@ function mod:ScorchingBomb(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.bombs, bombCount))
 	self:PlaySound(args.spellId, "alert")
 	bombCount = bombCount + 1
-
-	local cd
-	if self:Easy() then
-		local timer = { 1.1, 58.9 }
-		cd = timer[bombCount]
-	else
-		local timer = { 1.1, 32.2, 26.6, 18.9 } -- heroic
-		cd = timer[bombCount]
-	end
-	self:Bar(args.spellId, cd or 0, CL.count:format(CL.bombs, bombCount))
+	self:Bar(args.spellId, timers[1][args.spellId][bombCount], CL.count:format(CL.bombs, bombCount))
 end
 
 do
@@ -366,17 +405,7 @@ do
 	function mod:MassDisintegrate(args)
 		self:StopBar(CL.count:format(L.mass_disintergrate, massDisintergrateCount))
 		massDisintergrateCount = massDisintergrateCount + 1
-
-		local cd
-		if self:Easy() then
-			local timer = { 24.9, 23.3, 44.4 }
-			cd = timer[massDisintergrateCount]
-		else
-			local timer = { 24.9, 24.0, 22.7, 21.1 } -- heroic
-			cd = timer[massDisintergrateCount]
-		end
-		self:Bar(401680, cd or 0, CL.count:format(L.mass_disintergrate, massDisintergrateCount))
-
+		self:Bar(401680, timers[1][401680][massDisintergrateCount], CL.count:format(L.mass_disintergrate, massDisintergrateCount))
 		playerList = {}
 	end
 
@@ -406,16 +435,7 @@ function mod:SearingBreath(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.breath, breathCount))
 	self:PlaySound(args.spellId, "alert")
 	breathCount = breathCount + 1
-
-	local cd
-	if self:Easy() then
-		local timer = { 26.7, 35.5 }
-		cd = timer[breathCount]
-	else
-		local timer = { 26.7, 15.5, 20.0 } -- heroic
-		cd = timer[breathCount]
-	end
-	self:Bar(args.spellId, cd or 0, CL.count:format(CL.breath, breathCount))
+	self:Bar(args.spellId, timers[1][args.spellId][breathCount], CL.count:format(CL.breath, breathCount))
 end
 
 do
@@ -461,18 +481,16 @@ function mod:Stage2Start()
 	clawsCount = 1
 	desolateBlossomCount = 1
 	infiniteDuressCount = 1
-	mobCollector = {}
-	marksUsed = {}
 
-	-- self:Bar("stages", 0, CL.stage:format(3), 403284) -- is there a time limit to p2?
+	self:Bar("stages", 107.5, CL.stage:format(3), 403284)
 
 	-- XXX this doesn't seem like a good phase trigger, lots of variance on initial cast
 	self:Bar(404456, 3.5, CL.count:format(CL.breath, breathCount)) -- Abyssal Breath
-	self:Bar(404027, 11, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
-	self:Bar(404403, 16, CL.count:format(L.desolate_blossom, desolateBlossomCount)) --  Desolate Blossom
-	self:Bar(411241, 19, CL.count:format(L.claws, clawsCount)) -- Void Claws
+	self:Bar(404027, self:Heroic() and 15.3 or 11, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
+	self:Bar(404403, self:Heroic() and 10.6 or 16, CL.count:format(L.desolate_blossom, desolateBlossomCount)) --  Desolate Blossom
+	self:Bar(411241, 18.8, CL.count:format(L.claws, clawsCount)) -- Void Claws
 	if not self:Easy() then
-		self:Bar(404288, 29, CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
+		self:Bar(404288, 29.4, CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
 	end
 
 	-- closer if we wait until End Existence is interrupted, but still ~1s variance
@@ -481,10 +499,7 @@ function mod:Stage2Start()
 	self:PauseBar(404027, CL.count:format(CL.bombs, bombCount))
 	self:PauseBar(411241, CL.count:format(L.claws, clawsCount))
 	self:PauseBar(404288, CL.count:format(L.infinite_duress, infiniteDuressCount))
-
-	if self:GetOption(nullGlimmerMarker) then
-		self:RegisterTargetEvents("AddMarking")
-	end
+	self:PauseBar(404288, CL.stage:format(3))
 end
 
 function mod:EndExistenceApplied(args)
@@ -507,8 +522,11 @@ function mod:VoidBomb(args)
 	self:Message(args.spellId, "orange", CL.count:format(CL.bombs, bombCount))
 	self:PlaySound(args.spellId, "alert")
 	bombCount = bombCount + 1
-	-- p2/p3
-	self:Bar(args.spellId, 65.3, CL.count:format(CL.bombs, bombCount))
+
+	local stage = self:GetStage()
+	if stage == 3 or (stage == 2 and bombCount < 3) then -- only 2 sets in stage 2
+		self:Bar(args.spellId, self:Heroic() and (stage == 3 and 61.2 or 60) or 65.3, CL.count:format(CL.bombs, bombCount))
+	end
 end
 
 function mod:VoidFractureApplied(args)
@@ -534,24 +552,32 @@ function mod:AbyssalBreath(args)
 	self:Message(args.spellId, "red", CL.count:format(CL.breath, breathCount))
 	self:PlaySound(args.spellId, "alert")
 	breathCount = breathCount + 1
-	self:Bar(args.spellId, 46.3, CL.count:format(CL.breath, breathCount))
+	self:Bar(args.spellId, timers[2][args.spellId][breathCount], CL.count:format(CL.breath, breathCount))
 
-	marksUsed = {}
+	nullGlimmerMarks = {}
+	nullGlimmerCollector = {}
+
+	if self:GetOption(nullGlimmerMarker) then
+		self:RegisterTargetEvents("AddMarking")
+	end
+end
+
+function mod:NullGlimmerSummon(args)
+	if self:GetOption(nullGlimmerMarker) then
+		for i = 8, 4, -1 do -- 8, 7, 6, 5, 4
+			if not nullGlimmerCollector[args.destGUID] and not nullGlimmerMarks[i] then
+				nullGlimmerMarks[i] = args.destGUID
+				nullGlimmerCollector[args.destGUID] = i
+				return
+			end
+		end
+	end
 end
 
 function mod:AddMarking(_, unit, guid)
-	if not mobCollector[guid] then
-		local mobId = self:MobId(guid)
-		if mobId == 202971 then -- Null Glimmer
-			for i = 8, 5, -1 do -- 8, 7, 6, 5
-				if not marksUsed[i] then
-					mobCollector[guid] = true
-					marksUsed[i] = guid
-					self:CustomIcon(nullGlimmerMarker, unit, i)
-					return
-				end
-			end
-		end
+	if nullGlimmerCollector[guid] then
+		self:CustomIcon(nullGlimmerMarker, unit, nullGlimmerCollector[guid]) -- icon order from SPELL_SUMMON
+		nullGlimmerCollector[guid] = nil
 	end
 end
 
@@ -570,16 +596,7 @@ function mod:DesolateBlossom(args)
 	self:Message(404403, "yellow", CL.count:format(L.desolate_blossom, desolateBlossomCount))
 	self:PlaySound(404403, "alert")
 	desolateBlossomCount = desolateBlossomCount + 1
-
-	local cd
-	if self:Easy() then
-		local timer = { 22.3, 46.2, 40.0 }
-		cd = timer[desolateBlossomCount]
-	else
-		local timer = { 22.3, 43.5, 37.7 } -- heroic
-		cd = timer[desolateBlossomCount]
-	end
-	self:Bar(404403, cd, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	self:Bar(404403, timers[2][404403][breathCount], CL.count:format(L.desolate_blossom, desolateBlossomCount))
 end
 
 do
@@ -593,7 +610,7 @@ do
 	function mod:InfiniteDuress(args)
 		self:StopBar(CL.count:format(L.infinite_duress, infiniteDuressCount))
 		infiniteDuressCount = infiniteDuressCount + 1
-		self:Bar(404288, self:GetStage() == 2 and 35.3 or 56.3, CL.count:format(L.infinite_duress, infiniteDuressCount))
+		self:Bar(404288, timers[self:GetStage()][404288][infiniteDuressCount], CL.count:format(L.infinite_duress, infiniteDuressCount))
 
 		playerList = {}
 		onMe = false
@@ -629,15 +646,7 @@ do
 	function mod:VoidClaws(args)
 		self:StopBar(CL.count:format(L.claws, clawsCount))
 		clawsCount = clawsCount + 1
-
-		local cd
-		if self:Easy() then
-			-- 30.5, 18.7, 22.5
-			cd = clawsCount % 2 == 0 and 18.6 or 22.5
-		else
-			cd = clawsCount % 2 == 0 and 17.7 or 21.2
-		end
-		self:Bar(411241, cd, CL.count:format(L.claws, clawsCount))
+		self:Bar(411241, timers[2][411241][clawsCount], CL.count:format(L.claws, clawsCount))
 	end
 
 	function mod:VoidClawsApplied(args)
@@ -676,18 +685,14 @@ function mod:Stage3Start()
 	scouringEternityCount = 1
 	embraceOfNothingnessCount = 1
 
-	self:Bar(403771, 7.7, CL.count:format(L.cosmic_ascension, cosmicAscensionCount)) -- Cosmic Ascension
-	self:Bar(405486, 21.1, CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)) -- Hurtling Barrage
-	self:Bar(408429, 22.4, CL.count:format(L.claws, clawsCount)) -- Void Slash
-	self:Bar(403520, 26.4, CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount)) -- Embrace of Nothingness
-	self:Bar(404027, 30.4, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
-	self:Bar(403625, 49.8, CL.count:format(L.scouring_eternity, scouringEternityCount)) -- Scouring Eternity
+	self:Bar(403771, self:Heroic() and 7.3 or 7.7, CL.count:format(L.cosmic_ascension, cosmicAscensionCount)) -- Cosmic Ascension
+	self:Bar(405486, self:Heroic() and 19.8 or 21.1, CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)) -- Hurtling Barrage
+	self:Bar(408429, self:Heroic() and 21 or 22.4, CL.count:format(L.claws, clawsCount)) -- Void Slash
+	self:Bar(403520, self:Heroic() and 24.8 or 26.4, CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount)) -- Embrace of Nothingness
+	self:Bar(404027, self:Heroic() and 28.5 or 30.4, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
+	self:Bar(403625, self:Heroic() and 46.3 or 49.8, CL.count:format(L.scouring_eternity, scouringEternityCount)) -- Scouring Eternity
 	if not self:Easy() then
 		self:Bar(404288, 4.8, CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
-	end
-
-	if self:GetOption(nullGlimmerMarker) then
-		self:RegisterTargetEvents("AddMarking")
 	end
 end
 
@@ -696,15 +701,14 @@ function mod:CosmicAscension(args)
 	self:Message(403771, "red", CL.count:format(L.cosmic_ascension, cosmicAscensionCount))
 	self:PlaySound(403771, "alarm")
 	cosmicAscensionCount = cosmicAscensionCount + 1
+	self:Bar(403771, timers[3][403771][cosmicAscensionCount], CL.count:format(L.cosmic_ascension, cosmicAscensionCount))
 
-	local cd = 61.3 -- heroic
-	if self:Easy() then
-		local timer = { 9.7, 65.3, 105.3 }
-		cd = timer[cosmicAscensionCount]
+	nullGlimmerMarks = {}
+	nullGlimmerCollector = {}
+
+	if self:GetOption(nullGlimmerMarker) then
+		self:RegisterTargetEvents("AddMarking")
 	end
-	self:Bar(403771, cd, CL.count:format(L.cosmic_ascension, cosmicAscensionCount))
-
-	marksUsed = {}
 end
 
 do
@@ -714,13 +718,7 @@ do
 		self:Message(405486, "yellow", CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
 		self:PlaySound(405486, "alert")
 		hurtlingBarrageCount = hurtlingBarrageCount + 1
-
-		local cd = 85 -- heroic
-		if self:Easy() then
-			local timer = { 21.0, 46.7, 102.6, 65.4 }
-			cd = timer[hurtlingBarrageCount]
-		end
-		self:Bar(405486, cd, CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
+		self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
 
 		playerList = {}
 	end
@@ -751,21 +749,13 @@ function mod:ScouringEternity(args)
 	self:Message(args.spellId, "red", CL.count:format(L.scouring_eternity, scouringEternityCount))
 	self:PlaySound(args.spellId, "warning")
 	scouringEternityCount = scouringEternityCount + 1
-
-	local cd = 46.2 -- heroic
-	if self:Easy() then
-		local timer = { 49.1, 83.0, 86.3 }
-		cd = timer[scouringEternityCount]
-	end
-	self:Bar(args.spellId, cd, CL.count:format(L.scouring_eternity, scouringEternityCount))
+	self:Bar(args.spellId, timers[3][args.spellId][scouringEternityCount], CL.count:format(L.scouring_eternity, scouringEternityCount))
 end
 
 function mod:EmbraceOfNothingness(args)
 	self:StopBar(CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount))
 	embraceOfNothingnessCount = embraceOfNothingnessCount + 1
-
-	local timer = { 26.4, 118.7, 53.3 }
-	self:Bar(403520, timer[embraceOfNothingnessCount], CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount))
+	self:Bar(403520, timers[3][403520][embraceOfNothingnessCount], CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount))
 end
 
 function mod:EmbraceOfNothingnessApplied(args)
@@ -788,15 +778,7 @@ do
 	function mod:VoidSlash(args)
 		self:StopBar(CL.count:format(L.void_slash, clawsCount))
 		clawsCount = clawsCount + 1
-
-		local cd = 0
-		if self:Easy() then
-			local timer = { 22.3, 38.7, 40.0, 90.7, 12.0, 25.3 }
-			cd = timer[clawsCount]
-		else
-			cd = clawsCount % 2 == 0 and 36.3 or 37.5
-		end
-		self:Bar(408429, cd, CL.count:format(L.void_slash, clawsCount))
+		self:Bar(408429, timers[3][408429][clawsCount], CL.count:format(L.void_slash, clawsCount))
 	end
 
 	function mod:VoidSlashApplied(args)
