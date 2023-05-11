@@ -52,7 +52,7 @@ function mod:GetOptions()
 		{407597, "TANK"}, -- Earthen Crush
 		-- Conduit
 		401419, -- Siphon Energy
-		405091, -- Unyielding Rage
+		{405091, "TANK"}, -- Smothering Rage
 		405316, -- Ancient Fury
 		-- Mythic
 		410070, -- Unleash Shadowflame
@@ -84,8 +84,7 @@ function mod:OnBossEnable()
 
 	self:Log("SPELL_AURA_APPLIED", "SiphonEnergyApplied", 401419)
 	self:Log("SPELL_AURA_REMOVED", "SiphonEnergyRemoved", 401419)
-	self:Log("SPELL_AURA_APPLIED", "UnyieldingRageApplied", 405091)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "UnyieldingRageApplied", 405091)
+	self:Log("SPELL_AURA_REMOVED", "SmolderingRageRemoved", 405091)
 
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 403543) -- Living Lava
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 403543)
@@ -256,7 +255,7 @@ function mod:SiphonEnergyApplied(args)
 
 	local bossUnit = self:UnitTokenFromGUID(args.destGUID)
 	if bossUnit then
-		local stunTime = floor(UnitPower(bossUnit) / 5) + 2-- 5 / s energy loss, extra 2s at the end
+		local stunTime = floor(UnitPower(bossUnit) / 5) + 2 -- 5/s energy loss, extra 2s at the end
 		self:Bar(args.spellId, stunTime, CL.count:format(args.spellName, siphonEnergyCount))
 	end
 end
@@ -286,15 +285,8 @@ function mod:SiphonEnergyRemoved(args)
 	end
 end
 
-function mod:UnyieldingRageApplied(args)
-	local amount = args.amount or 1
-	if amount == 1 then
-		self:Message(args.spellId, "yellow")
-		self:PlaySound(args.spellId, "long")
-	elseif amount == 5 or amount > 7 then -- 5, 8, 9, 10
-		self:Message(args.spellId, "yellow", CL.count:format(args.spellName, amount))
-		self:PlaySound(args.spellId, amount > 7 and "alarm" or "info")
-	end
+function mod:SmolderingRageRemoved(args)
+	self:Message(args.spellId, "green", CL.removed:format(args.spellName))
 end
 
 -- Mythic
