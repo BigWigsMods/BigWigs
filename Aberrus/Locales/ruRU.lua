@@ -38,19 +38,19 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "ruRU")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
-	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+	L.zaqali_aide_north_emote_trigger = "северное укрепление" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Помощники вождя поднимаются на северное укрепление!
+	L.zaqali_aide_south_emote_trigger = "южное укрепление" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Помощники вождя поднимаются на южное укрепление!
 
-	--L.north = "North"
-	--L.south = "South"
-	--L.both = "Both"
+	L.north = "Север"
+	L.south = "Юг"
+	L.both = "Обе"
 
-	--L.zaqali_aide_message = "%s Climbing %s" -- Big Adds Climbing North
+	L.zaqali_aide_message = "%s лезут:  %s" -- Big Adds Climbing North
 	L.add_bartext = "%s: %s (%d)"
-	--L.boss_returns = "Boss Lands: North"
+	L.boss_returns = "Босс: Север"
 
 	L.molten_barrier = "Преграда"
-	--L.catastrophic_slam = "Door Slam"
+	L.catastrophic_slam = "Делёжка"
 end
 
 L = BigWigs:NewBossLocale("Rashok, the Elder", "ruRU")
@@ -66,7 +66,7 @@ end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "ruRU")
 if L then
-	L.tactical_destruction = "Войдзоны"
+	L.tactical_destruction = "Задувка"
 	L.bombs_soaked = "Бомб активировано" -- Bombs Soaked (2/4)
 	L.unstable_embers = "Угли"
 	L.unstable_ember = "Уголь"
@@ -97,8 +97,8 @@ end
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "ruRU")
 if L then
 	L.claws = "Танк дебафф" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
-	--L.claws_debuff = "Tank Explodes"
-	--L.emptiness_between_stars = "Emptiness"
-	--L.embrace_of_nothingness = "Black Hole"
-	--L.void_slash = "Tank Frontal"
+	L.claws_debuff = "Танк взрывается"
+	L.emptiness_between_stars = "Забвение"
+	L.embrace_of_nothingness = "Чёрная дыра"
+	L.void_slash = "Фронтал"
 end
