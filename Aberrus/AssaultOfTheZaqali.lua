@@ -241,9 +241,9 @@ function mod:IgnaraFlameRemoved(arg)
 	self:PlaySound("stages", "info")
 
 	self:Bar(401258, self:Mythic() and 18 or 12) -- Heavy Cudgel
-	self:Bar(398938, 44, L.add_bartext:format(L.devastating_leap, L.south, devastatingLeapCount)) -- Leap: South (1)
+	self:Bar(408959, 44, L.add_bartext:format(CL.leap, L.south, devastatingLeapCount)) -- Leap: South (1)
 	if self:Mythic() then
-		self:CDBar(407009, 19, L.add_bartext:format(L.vigorous_gale, L.south, vigorousGaleCount)) -- Pushback: South (1)
+		self:CDBar(407017, 19, L.add_bartext:format(CL.pushback, L.south, vigorousGaleCount)) -- Pushback: South (1)
 		self:CDBar(401108, 40, L.add_bartext:format(self:SpellName(401108), L.south, phoenixRushCount)) -- Phoenix Rush: South (1)
 	end
 end
