@@ -1617,6 +1617,11 @@ function public:LoadZone(zone)
 	loadZone(zone)
 end
 
+function public:GetAddOnState(name)
+	local _, _, _, _, addonState = GetAddOnInfo(name)
+	return addonState
+end
+
 -----------------------------------------------------------------------
 -- Slash commands
 --

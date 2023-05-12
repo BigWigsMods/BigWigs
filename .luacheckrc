@@ -15,6 +15,7 @@ files["**/Loader.lua"].ignore = {
 	"113/C_ChatInfo",
 	"113/C_CVar",
 	"113/C_Map",
+	"113/GetAddOnInfo",
 	"113/securecallfunction",
 	"113/SendChatMessage",
 	"113/SetRaidTarget",
@@ -169,7 +170,6 @@ globals = {
 	"GameTooltip_Hide",
 	"GetAddOnDependencies",
 	"GetAddOnEnableState",
-	"GetAddOnInfo",
 	"GetAddOnOptionalDependencies",
 	"GetBuildInfo",
 	"GetCurrentRegion", -- XXX temp 9.0.5

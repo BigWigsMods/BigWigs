@@ -1259,18 +1259,27 @@ do
 		local defaultEnabled = value == "BigWigs_Dragonflight"
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and not defaultEnabled and GetAddOnEnableState(playerName, value) == 0 then
-				local missing = AceGUI:Create("Label")
-				missing:SetText(L.missingPlugin:format(value))
-				missing:SetFontObject(GameFontHighlight)
-				missing:SetFullWidth(true)
-				widget:AddChild(missing)
-		elseif value:match("^LittleWigs_") and GetAddOnEnableState(playerName, "LittleWigs") == 0 then
-				local missing = AceGUI:Create("Label")
-				missing:SetText(L.missingPlugin:format("LittleWigs"))
-				missing:SetFontObject(GameFontHighlight)
-				missing:SetFullWidth(true)
-				widget:AddChild(missing)
+		elseif value:match("^BigWigs_") and not defaultEnabled then
+				local addonState = loader:GetAddOnState(value)
+				local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
+				if string then
+					local missing = AceGUI:Create("Label")
+					missing:SetText(string:format(value))
+					missing:SetFontObject(GameFontHighlight)
+					missing:SetFullWidth(true)
+					widget:AddChild(missing)
+				end
+		elseif value:match("^LittleWigs_") then
+				if value == "LittleWigs_Dragonflight" then value = "LittleWigs" end
+				local addonState = loader:GetAddOnState(value)
+				local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
+				if string then
+					local missing = AceGUI:Create("Label")
+					missing:SetText(string:format(value))
+					missing:SetFontObject(GameFontHighlight)
+					missing:SetFullWidth(true)
+					widget:AddChild(missing)
+				end
 		else
 			statusTable.groups[value] = true
 			widget:RefreshTree()
@@ -1301,23 +1310,21 @@ do
 				defaultHeader = "BigWigs_Dragonflight"
 				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
-					local defaultEnabled = value == "BigWigs_Dragonflight"
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
-						enabled = (defaultEnabled or GetAddOnEnableState(playerName, value) > 0),
+						enabled = true,
 					}
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
 				defaultHeader = "LittleWigs_Dragonflight"
-				local enabled = GetAddOnEnableState(playerName, "LittleWigs") > 0
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
 						text = EJ_GetTierInfo(i),
 						value = value,
-						enabled = enabled,
+						enabled = true,
 					}
 					addonNameToHeader[value] = i
 				end
