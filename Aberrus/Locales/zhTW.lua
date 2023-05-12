@@ -74,7 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("Magmorax", "zhTW")
 if L then
-	L.energy_gained = "獲得能量，狂暴時限縮短 17 秒！" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
+	L.energy_gained = "獲得能量，狂暴時限縮短 17 秒" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
 
 	-- Mythic
 	L.explosive_magma = "大圈分攤"
