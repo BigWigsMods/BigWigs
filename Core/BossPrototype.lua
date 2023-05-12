@@ -2753,6 +2753,26 @@ function boss:CustomIcon(key, unit, icon)
 	end
 end
 
+do
+	local flagToIcon = {
+		[0x00000001] = 1, -- COMBATLOG_OBJECT_RAIDTARGET1
+		[0x00000002] = 2, -- COMBATLOG_OBJECT_RAIDTARGET2
+		[0x00000004] = 3, -- COMBATLOG_OBJECT_RAIDTARGET3
+		[0x00000008] = 4, -- COMBATLOG_OBJECT_RAIDTARGET4
+		[0x00000010] = 5, -- COMBATLOG_OBJECT_RAIDTARGET5
+		[0x00000020] = 6, -- COMBATLOG_OBJECT_RAIDTARGET6
+		[0x00000040] = 7, -- COMBATLOG_OBJECT_RAIDTARGET7
+		[0x00000080] = 8, -- COMBATLOG_OBJECT_RAIDTARGET8
+	}
+
+	--- Get the raid target icon currently set on a unit based on its combat log flags.
+	-- @string flags unit bit flags
+	-- @return number The number based on the icon ranging from 1-8 (nil if no icon is set)
+	function boss:GetIcon(flags)
+		return flagToIcon[flags]
+	end
+end
+
 -------------------------------------------------------------------------------
 -- Chat.
 -- @section chat
