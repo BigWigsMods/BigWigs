@@ -335,7 +335,7 @@ end
 
 function mod:UnstableEssenceAppliedStacks(args)
 	if self:Me(args.destGUID) and self:GetOption("custom_on_unstable_essence_high") and args.amount > 10 then -- Say messages above 10
-		local icon = GetRaidTargetIndex("player")
+		local icon = self:GetIcon(args.destRaidFlags)
 		local sayText = args.amount
 		if icon then
 			sayText = "{rt"..icon.."} "..args.amount.." {rt"..icon.."}"
