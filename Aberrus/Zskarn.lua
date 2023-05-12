@@ -51,7 +51,7 @@ function mod:GetOptions()
 		405592, -- Salvage Parts
 		406678, -- Tactical Destruction
 		406725, -- Shrapnel Bomb
-		{404010, "SAY", "SAY_COUNTDOWN"}, -- Unstable Embers
+		{404010, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Unstable Embers
 		403978, -- Blast Wave
 		{404942, "TANK"}, -- Searing Claws
 	}, {

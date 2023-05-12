@@ -38,10 +38,10 @@ local dreadRiftMarker = mod:AddMarkerOption(false, "player", 1, 407196, 1, 2, 3,
 function mod:GetOptions()
 	return {
 		401319, -- Hellsteel Carnage
-		{407196, "SAY", "SAY_COUNTDOWN"}, -- Dread Rifts
+		{407196, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Dread Rifts
 		dreadRiftMarker,
 		406530, -- Riftburn
-		{407069, "SAY"}, -- Rays of Anguish
+		{407069, "SAY", "ME_ONLY_EMPHASIZE"}, -- Rays of Anguish
 		402421, -- Molten Scar
 		400430, -- Hellbeam
 		403326, -- Wings of Extinction
@@ -50,6 +50,7 @@ function mod:GetOptions()
 
 	},
 	{
+		[407196] = L.dread_rift, -- Dread Rifts (Rift)
 		[407069] = CL.lasers, -- Rays of Anguish (Lasers)
 		[400430] = CL.breath, -- Hellbeam (Breath)
 		[403326] = CL.pushback, -- Wings of Extinction (Pushback)

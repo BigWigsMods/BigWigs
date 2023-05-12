@@ -61,10 +61,10 @@ function mod:GetOptions()
 		409275, -- Magma Flow
 		397386, -- Lava Bolt
 		-- Flamebound Huntsman
-		{401401, "SAY"}, -- Blazing Spear
+		{401401, "SAY", "ME_ONLY_EMPHASIZE"}, -- Blazing Spear
 		-- Obsidian Guard
 		408620, -- Scorching Roar
-		{401867, "SAY", "SAY_COUNTDOWN"}, -- Volcanic Shield
+		{401867, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Volcanic Shield
 		-- Ignara (Mythic)
 		401108, -- Phoenix Rush
 		401381, -- Blazing Focus

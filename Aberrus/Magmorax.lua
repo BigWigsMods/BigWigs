@@ -39,7 +39,7 @@ local moltenSpittleMarker = mod:AddMarkerOption(true, "player", 1, 402994, 1, 2,
 function mod:GetOptions()
 	return {
 		408358, -- Catastrophic Eruption
-		{402994, "SAY", "SAY_COUNTDOWN"}, -- Molten Spittle
+		{402994, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Molten Spittle
 		moltenSpittleMarker,
 		408839, -- Searing Heat
 		407879, -- Blazing Tantrum
@@ -50,7 +50,7 @@ function mod:GetOptions()
 		406712, -- Lava
 		411633, -- Burning Chains
 		-- Mythic
-		{411182, "SAY", "SAY_COUNTDOWN"}, -- Explosive Magma
+		{411182, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Explosive Magma
 	},{
 		[411182] = "mythic",
 	},{

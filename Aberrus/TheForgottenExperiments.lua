@@ -75,11 +75,11 @@ function mod:GetOptions()
 		{406311, "TANK"}, -- Infused Strikes
 		407302, -- Infused Explosion
 		-- Neldris
-		{406358, "ICON", "SAY", "SAY_COUNTDOWN", "PRIVATE"}, -- Rending Charge
+		{406358, "ICON", "SAY", "SAY_COUNTDOWN", "PRIVATE", "ME_ONLY_EMPHASIZE"}, -- Rending Charge
 		404472, -- Massive Slam
 		404713, -- Bellowing Roar
 		-- Thadrion
-		{407327, "SAY"}, -- Unstable Essence
+		{407327, "SAY", "ME_ONLY_EMPHASIZE"}, -- Unstable Essence
 		"custom_on_unstable_essence_high",
 		unstableEssenceMarker,
 		405492, -- Volatile Spew
@@ -87,7 +87,7 @@ function mod:GetOptions()
 		-- Rionthus
 		406227, -- Deep Breath
 		407552, -- Temporal Anomaly
-		{405392, "SAY"}, -- Disintegrate
+		{405392, "SAY", "ME_ONLY_EMPHASIZE"}, -- Disintegrate
 	}, {
 		[406358] = -26316, -- Neldris
 		[407327] = -26322, -- Thadrion

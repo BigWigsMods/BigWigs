@@ -64,7 +64,7 @@ function mod:GetOptions()
 		402115, -- Echoing Fissure
 		-- Stage 2
 		403057, -- Surrender to Corruption
-		{401010, "SAY"}, -- Corruption
+		{401010, "SAY", "ME_ONLY_EMPHASIZE"}, -- Corruption
 		405433, -- Umbral Annihilation
 		{407790, "TANK_HEALER"}, -- Sunder Shadow
 		403049, -- Shadow Barrier

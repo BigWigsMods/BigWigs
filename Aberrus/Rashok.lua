@@ -53,7 +53,7 @@ function mod:GetOptions()
 		410075, -- Shadowflame Energy
 		-- General
 		405316, -- Ancient Fury
-		{405821, "SAY", "SAY_COUNTDOWN"}, -- Searing Slam
+		{405821, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Searing Slam
 		403543, -- Living Lava (damage)
 		406851, -- Doom Flames
 		406333, -- Shadowlava Blast

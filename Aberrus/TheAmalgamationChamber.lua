@@ -70,7 +70,7 @@ function mod:GetOptions()
 		-- Essence of Shadow
 		401809, -- Corrupting Shadow
 		403459, -- Coalescing Void
-		{405036, "SAY", "SAY_COUNTDOWN"}, -- Umbral Detonation
+		{405036, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Umbral Detonation
 		405084, -- Lingering Umbra
 		407640, -- Shadows Convergence
 		{403699, "TANK"}, -- Shadow Spike
@@ -85,7 +85,7 @@ function mod:GetOptions()
 		-- Shadowflame Amalgamation
 		405394, -- Shadowflame
 		405437, -- Gloom Conflagration
-		{405642, "SAY", "SAY_COUNTDOWN"}, -- Blistering Twilight
+		{405642, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Blistering Twilight
 		405645, -- Engulfing Heat
 		408193, -- Convergent Eruption
 		{405914, "TANK"}, -- Withering Vulnerability
