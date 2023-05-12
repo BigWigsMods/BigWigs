@@ -31,6 +31,7 @@ local deepBreathCount = 1
 local temporalAnomalyCount = 1
 local disintergrateCount = 1
 
+-- mythic timers are static for all three bosses, these cover 10min
 local timersMythic = {
 	-- Thadrion
 	[405492] = { 14, 34, 69, 89, 124, 144, 179, 199, 234, 254, 289, 309, 344, 364, 399, 419, 454, 474, 509, 529, 564, 584 }, -- Volatile Spew
@@ -169,20 +170,23 @@ local function getCastCD(key)
 	local t = GetTime()
 	local duration = t - pullTime
 
+	-- find the next cast based on the combat time
 	local index = 1
 	while timersMythic[key][index] < duration do
 		index = index + 1
-		if not timersMythic[key][index] then -- you went over 10min? o.O
-			return 0
+		if not timersMythic[key][index] then
+			return 0 -- you went over 10min? o.O
 		end
 	end
-	if index > 1 then -- first cast? O.o
+	-- set the last cast using the previous index for pairs of cds
+	if index > 1 then
 		local prev = duration - timersMythic[key][index - 1]
-		if prev > 0 then -- just in case
+		if prev > 0 then
 			lastCast[key] = t - prev
 		end
 	end
-	return math.max(0, timersMythic[key][index] - duration) -- can never be too safe
+	-- return the time remaining for the next cast
+	return timersMythic[key][index] - duration
 end
 
 function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
