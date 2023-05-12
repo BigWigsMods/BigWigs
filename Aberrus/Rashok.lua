@@ -52,7 +52,7 @@ function mod:GetOptions()
 		{407597, "TANK"}, -- Earthen Crush
 		-- Conduit
 		401419, -- Siphon Energy
-		{405091, "TANK"}, -- Smothering Rage
+		405091, -- Smoldering Rage
 		405316, -- Ancient Fury
 		-- Mythic
 		410070, -- Unleash Shadowflame
