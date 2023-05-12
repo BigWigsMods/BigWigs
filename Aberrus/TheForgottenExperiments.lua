@@ -259,6 +259,7 @@ end
 do
 	local function printTarget(self, player, guid)
 		if self:Me(guid) then
+			self:PersonalMessage(406358, nil, L.rending_charge_single)
 			self:PlaySound(406358, "warning")
 			self:Say(406358, L.rending_charge_single)
 			self:SayCountdown(406358, 5)
