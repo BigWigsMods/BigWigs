@@ -57,6 +57,7 @@ L.spell_under_you = "BigWigs：法术在你脚下"
 
 -- Options.lua
 L.options = "选项"
+--L.optionsKey = "OptionKey: %s" -- The key that messages/bars/options use
 L.raidBosses = "团队首领"
 L.dungeonBosses = "地下城首领"
 L.introduction = "欢迎使用 BigWigs 戏弄各个首领。请系好安全带，吃吃花生并享受这次旅行。它不会吃了你的孩子，但会协助你的团队与新的首领进行战斗就如同享受饕餮大餐一样。"

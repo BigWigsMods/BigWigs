@@ -779,6 +779,18 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetDescription(desc)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
+
+	-- Add a tooltip to our options so users can see what key is being used without having to open the source
+	local keyTooltip = L.optionsKey:format("")
+	if type(dbKey) == "number" then
+		keyTooltip = L.optionsKey:format(dbKey)
+	else
+		keyTooltip = L.optionsKey:format("\""..dbKey.."\"")
+	end
+	check:SetUserData("tooltipText", keyTooltip)
+	check:SetCallback("OnEnter", flagOnEnter)
+	check:SetCallback("OnLeave", flagOnLeave)
+
 	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
 	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 

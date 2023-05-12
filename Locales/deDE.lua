@@ -57,6 +57,7 @@ L.spell_under_you = "BigWigs: Zauber unter Dir"
 
 -- Options.lua
 L.options = "Optionen"
+--L.optionsKey = "OptionKey: %s" -- The key that messages/bars/options use
 L.raidBosses = "Schlachtzugsbosse"
 L.dungeonBosses = "Dungeonbosse"
 L.introduction = "Willkommen bei BigWigs, dort, wo die Bossbegegnungen rumschwirren. Bitte legen Sie Ihren Sicherheitsgurt an, stellen Sie die Rückenlehne gerade und genießen Sie den Flug. Wir werden Ihnen und Ihrer Raidgruppe bei der Begegnung mit Bossen zur Hand gehen und sie Ihnen als 7-Gänge-Menü zubereiten."
