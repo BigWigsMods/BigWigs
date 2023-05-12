@@ -102,6 +102,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "BlazingFocusApplied", 401381)
 	self:Log("SPELL_CAST_START", "VigorousGale", 407009)
 	-- Warlord Kagni
+	self:Log("SPELL_AURA_APPLIED", "IgnaraFlameApplied", 411230)
 	self:Log("SPELL_AURA_REMOVED", "IgnaraFlameRemoved", 411230)
 	self:Log("SPELL_CAST_START", "DevastatingLeap", 408959)
 	self:Log("SPELL_CAST_START", "HeavyCudgel", 401258)
@@ -161,13 +162,6 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, unit, _, spellId)
 	if spellId == 406591 then -- Call Ignara (2s earlier than Ignara's Flame _APPLIED)
 		self:Message("stages", "green", self:SpellName(spellId), "artifactability_firemage_phoenixbolt")
 		-- self:PlaySound("stages", "alert")
-		self:Bar("stages", 25, L.boss_returns, "artifactability_firemage_phoenixbolt") -- 2s rp + 23s buff
-		-- XXX move this stuff to Ignara's Flame _REMOVED?
-		if self:Mythic() then
-			self:CDBar(407017, 45, L.add_bartext:format(CL.pushback, L.south, vigorousGaleCount)) -- Pushback: South (1)
-			self:CDBar(401108, 64.5, L.add_bartext:format(self:SpellName(401108), L.south, phoenixRushCount)) -- Phoenix Rush: South (1)
-		end
-		self:Bar(408959, 70, L.add_bartext:format(CL.leap, L.south, devastatingLeapCount)) -- Leap: South (1)
 	end
 end
 
@@ -212,7 +206,7 @@ function mod:PhoenixRush(args)
 	self:PlaySound(args.spellId, "long")
 	phoenixRushCount = phoenixRushCount + 1
 
-	local cd = phoenixRushCount % 2 == 0 and 22 or 74 -- 22~26 / 74~??
+	local cd = phoenixRushCount % 2 == 0 and 25 or 72 -- 25~27 / 72~74
 	side = phoenixRushCount % 2 == 0 and "north" or "south"
 	self:CDBar(args.spellId, cd, L.add_bartext:format(args.spellName, L[side], phoenixRushCount))
 end
@@ -231,18 +225,27 @@ function mod:VigorousGale(args)
 	self:PlaySound(407017, "warning")
 	vigorousGaleCount = vigorousGaleCount + 1
 
-	local cd = vigorousGaleCount % 2 == 0 and 77 or 21 -- 77~79, 21~26
+	local cd = vigorousGaleCount % 2 == 0 and 66 or 32 -- 66~68, 32~??
 	side = vigorousGaleCount % 2 == 0 and "north" or "south"
 	self:CDBar(407017, cd, L.add_bartext:format(CL.pushback, L[side], vigorousGaleCount))
 end
 
 -- Warlord Kagni
+function mod:IgnaraFlameApplied(args)
+	self:Bar("stages", 23, L.boss_returns, "artifactability_firemage_phoenixbolt")
+end
+
 function mod:IgnaraFlameRemoved(arg)
 	self:StopBar(L.boss_returns)
 	self:Message("stages", "green", L.boss_returns, "artifactability_firemage_phoenixbolt")
 	self:PlaySound("stages", "info")
 
-	self:Bar(401258, 12) -- Heavy Cudgel
+	self:Bar(401258, self:Mythic() and 18 or 12) -- Heavy Cudgel
+	self:Bar(398938, 44, L.add_bartext:format(L.devastating_leap, L.south, devastatingLeapCount)) -- Leap: South (1)
+	if self:Mythic() then
+		self:CDBar(407009, 19, L.add_bartext:format(L.vigorous_gale, L.south, vigorousGaleCount)) -- Pushback: South (1)
+		self:CDBar(401108, 40, L.add_bartext:format(self:SpellName(401108), L.south, phoenixRushCount)) -- Phoenix Rush: South (1)
+	end
 end
 
 function mod:DevastatingLeap(args)
@@ -252,8 +255,7 @@ function mod:DevastatingLeap(args)
 	self:PlaySound(408959, "alarm")
 	devastatingLeapCount = devastatingLeapCount + 1
 
-	-- local timer = { 98.4, 47.5, 56.1, 43.9, 53.7 }
-	local cd = devastatingLeapCount % 2 == 0 and 47 or 53
+	local cd = devastatingLeapCount % 2 == 0 and 47.5 or 53
 	side = devastatingLeapCount % 2 == 0 and "north" or "south"
 	self:Bar(408959, cd, L.add_bartext:format(CL.leap, L[side], devastatingLeapCount))
 end
@@ -265,11 +267,9 @@ function mod:HeavyCudgel(args)
 		self:PlaySound(args.spellId, "alert") -- frontal
 	end
 	cudgelCount = cudgelCount + 1
-
 	if cudgelCount > 2 then -- 2nd cast fired when he lands
 		local timer = { 26.0, 22.0, 31.0, 21.0 } -- 22.0, 31.0, 21.0, 26.0 repeating
-		local cd = cudgelCount == 2 and 58 or timer[(cudgelCount % 4) + 1]
-		self:Bar(args.spellId, cd)
+		self:Bar(args.spellId, timer[(cudgelCount % 4) + 1])
 	end
 end
 
