@@ -70,10 +70,9 @@ BigWigs:AddSounds("Assault of the Zaqali", {
 
 BigWigs:AddSounds("Rashok, the Elder", {
 	[400777] = "alarm",
-	[401419] = {"info","long"},
+	[401419] = "long",
 	[403543] = "underyou",
-	[405091] = {"alarm","info","long"},
-	[405316] = "alarm",
+	[405316] = {"alarm","info"},
 	[405821] = "warning",
 	[406333] = "alert",
 	[406851] = "alert",
