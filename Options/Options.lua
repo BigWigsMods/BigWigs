@@ -1273,7 +1273,7 @@ do
 				if value == "LittleWigs_Dragonflight" then value = "LittleWigs" end
 				local addonState = loader:GetAddOnState(value)
 				local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
-				if string then
+				if not loader.usingLittleWigsRepo and string then
 					local missing = AceGUI:Create("Label")
 					missing:SetText(string:format(value))
 					missing:SetFontObject(GameFontHighlight)

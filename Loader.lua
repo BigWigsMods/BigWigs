@@ -547,6 +547,9 @@ do
 			meta = GetAddOnMetadata(i, "X-BigWigs-ExtraMenu")
 			if meta then
 				extraMenus[#extraMenus + 1] = i
+				if name == "LittleWigs" then -- A little yuck to detect if LW is a Git repo
+					public.usingLittleWigsRepo = true
+				end
 			end
 			meta = GetAddOnMetadata(i, "X-BigWigs-NoMenu")
 			if meta then
