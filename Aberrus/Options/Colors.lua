@@ -45,7 +45,7 @@ BigWigs:AddColors("The Forgotten Experiments", {
 	[407302] = "blue",
 	[407327] = {"blue","cyan"},
 	[407552] = {"blue","yellow"},
-	["stages"] = "cyan",
+	["stages"] = {"cyan","green"},
 })
 
 BigWigs:AddColors("Assault of the Zaqali", {
