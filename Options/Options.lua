@@ -27,26 +27,10 @@ local configFrame, isPluginOpen
 local showToggleOptions, getAdvancedToggleOption = nil, nil
 local toggleOptionsStatusTable = {}
 
-local textName = "BigWigs"
-local textIntro = L.introduction
-local textSlashVersion = L.slashDescVersion
-local textSlashConfig = L.slashDescConfig
-local textGHDesc = L.gitHubDesc
-do
-	local dateTable = date("*t")
-	if dateTable.day and dateTable.month and dateTable.day == 1 and dateTable.month == 4 then
-		textName = "DBM"
-		textIntro = textIntro:gsub("BigWigs", "DBM")
-		textSlashVersion = textSlashVersion:gsub("BigWigs", "DBM")
-		textSlashConfig = textSlashConfig:gsub("BigWigs", "DBM")
-		textGHDesc = textGHDesc:gsub("BigWigs", "DBM")
-	end
-end
-
 local getOptions
 local acOptions = {
 	type = "group",
-	name = textName,
+	name = "BigWigs",
 	get = function(info)
 		return BigWigs.db.profile[info[#info]]
 	end,
@@ -59,11 +43,11 @@ local acOptions = {
 		general = {
 			order = 20,
 			type = "group",
-			name = textName,
+			name = "BigWigs",
 			args = {
 				introduction = {
 					type = "description",
-					name = textIntro,
+					name = L.introduction,
 					order = 12,
 					fontSize = "medium",
 					width = "full",
@@ -218,21 +202,21 @@ local acOptions = {
 				},
 				slashDescVersion = {
 					type = "description",
-					name = "  ".. textSlashVersion,
+					name = "  ".. L.slashDescVersion,
 					fontSize = "medium",
 					order = 49,
 					width = "full",
 				},
 				slashDescConfig = {
 					type = "description",
-					name = "  ".. textSlashConfig,
+					name = "  ".. L.slashDescConfig,
 					fontSize = "medium",
 					order = 50,
 					width = "full",
 				},
 				gitHubDesc = {
 					type = "description",
-					name = "\n".. textGHDesc .."\n",
+					name = "\n".. L.gitHubDesc .."\n",
 					fontSize = "medium",
 					order = 51,
 					width = "full",
@@ -1421,7 +1405,7 @@ do
 
 		local bw = AceGUI:Create("Frame")
 		configFrame = bw
-		bw:SetTitle(textName)
+		bw:SetTitle("BigWigs")
 		bw:SetStatusText(" "..loader:GetReleaseString())
 		bw:SetWidth(858)
 		bw:SetHeight(660)
