@@ -38,19 +38,19 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "zhCN")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
-	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+	L.zaqali_aide_north_emote_trigger = "北部城垒" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t 指挥官爬上了北部城垒！
+	L.zaqali_aide_south_emote_trigger = "南部城垒" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t 指挥官爬上了南部城垒！
 
-	--L.north = "North"
-	--L.south = "South"
-	--L.both = "Both"
+	L.north = "北部"
+	L.south = "南部"
+	L.both = "双方"
 
-	--L.zaqali_aide_message = "%s Climbing %s" -- Big Adds Climbing North
+	L.zaqali_aide_message = "%s 攀爬 %s" -- Big Adds Climbing North
 	L.add_bartext = "%s：%s（%d）"
-	--L.boss_returns = "Boss Lands: North"
+	L.boss_returns = "首领落地: 北部"
 
 	L.molten_barrier = "屏障"
-	--L.catastrophic_slam = "Door Slam"
+	L.catastrophic_slam = "破门"
 end
 
 L = BigWigs:NewBossLocale("Rashok, the Elder", "zhCN")
@@ -82,12 +82,12 @@ end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "zhCN")
 if L then
-	L.custom_on_repeating_sunder_reality = "重复警告：隔绝现实"
-	L.custom_on_repeating_shattered_reality_desc = "在黑檀摧残的过程中重复信息，直到进入传送门为止。"
+	L.custom_on_repeating_sunder_reality = "传送门重复警告"
+	L.custom_on_repeating_shattered_reality_desc = "在黑檀摧残的施法过程中，持续重复警告信息，直到进入隔绝现实传送门为止。"
 
 	L.twisted_earth = "土墙"
 	L.echoing_fissure = "裂隙"
-	L.rushing_darkness = "毁墙线"
+	L.rushing_darkness = "击退"
 
 	L.umbral_annihilation = "歼灭"
 	L.sunder_reality = "传送门"
@@ -96,9 +96,9 @@ end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "zhCN")
 if L then
-	--L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
-	--L.claws_debuff = "Tank Explodes"
-	--L.emptiness_between_stars = "Emptiness"
-	--L.embrace_of_nothingness = "Black Hole"
-	--L.void_slash = "Tank Frontal"
+	L.claws = "坦克减益" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
+	L.claws_debuff = "坦克爆炸"
+	L.emptiness_between_stars = "虚渺"
+	L.embrace_of_nothingness = "黑洞"
+	L.void_slash = "正面斩击"
 end
