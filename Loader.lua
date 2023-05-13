@@ -162,6 +162,7 @@ do
 
 	public.currentExpansion = { -- Change on new expansion releases
 		name = df,
+		littlewigsName = lw_df,
 		zones = {
 			[2522] = "BigWigs_VaultOfTheIncarnates",
 			[2569] = "BigWigs_Aberrus",

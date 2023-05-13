@@ -1256,32 +1256,21 @@ do
 	local function onTreeGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
 		local zoneId = value:match("\001(-?%d+)$")
-		local missingCurrentContent = value:match("\001(BigWigs_.+)$")
-		local defaultEnabled = value == "BigWigs_Dragonflight"
+		local bigwigsContent = value:match("(BigWigs_%a+)$")
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif missingCurrentContent then -- This is for current content non-expansion addons, where each zone is its own addon
-			local addonState = loader:GetAddOnState(missingCurrentContent)
+		elseif bigwigsContent and value ~= loader.currentExpansion.name then -- Any BigWigs content, but skip when clicking the current expansion header
+			local addonState = loader:GetAddOnState(bigwigsContent)
 			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
 			if string then
 				local missing = AceGUI:Create("Label")
-				missing:SetText(string:format(missingCurrentContent))
-				missing:SetFontObject(GameFontHighlight)
-				missing:SetFullWidth(true)
-				widget:AddChild(missing)
-			end
-		elseif value:match("^BigWigs_") and not defaultEnabled then -- Old expansion addons
-			local addonState = loader:GetAddOnState(value)
-			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
-			if string then
-				local missing = AceGUI:Create("Label")
-				missing:SetText(string:format(value))
+				missing:SetText(string:format(bigwigsContent))
 				missing:SetFontObject(GameFontHighlight)
 				missing:SetFullWidth(true)
 				widget:AddChild(missing)
 			end
 		elseif value:match("^LittleWigs_") then -- All LittleWigs content addons, all come from 1 zip
-			if value == "LittleWigs_Dragonflight" then value = "LittleWigs" end
+			if value == loader.currentExpansion.littlewigsName then value = "LittleWigs" end
 			local addonState = loader:GetAddOnState(value)
 			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
 			if not loader.usingLittleWigsRepo and string then
@@ -1318,7 +1307,7 @@ do
 			local addonNameToHeader = {}
 			local defaultHeader
 			if value == "bigwigs" then
-				defaultHeader = "BigWigs_Dragonflight"
+				defaultHeader = loader.currentExpansion.name
 				for i = 1, #expansionHeader do
 					local value = "BigWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
@@ -1329,7 +1318,7 @@ do
 					addonNameToHeader[value] = i
 				end
 			elseif value == "littlewigs" then
-				defaultHeader = "LittleWigs_Dragonflight"
+				defaultHeader = loader.currentExpansion.littlewigsName
 				for i = 1, #expansionHeader do
 					local value = "LittleWigs_" .. expansionHeader[i]
 					treeTbl[i] = {
