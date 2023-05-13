@@ -227,7 +227,7 @@ function mod:RazeTheEarth()
 	self:Message("stages", "cyan", CL.intermission, false)
 	self:PlaySound("stages", "long")
 
-	self:CDBar("stages", 7, CL.stage:format(2), 403057) -- Stage 2, Surrender To Corruption Icon
+	self:Bar("stages", 7, CL.stage:format(2), 403057) -- Stage 2, Surrender To Corruption Icon
 end
 
 -- Stage 2
@@ -256,6 +256,7 @@ do
 	local prev = 0
 	function mod:CorruptionPreDebuff(args)
 		if args.time - prev > 2 then -- reset
+			self:StopBar(CL.count:format(self:SpellName(401010), corruptionCount))
 			corruptionCount = corruptionCount + 1
 			if corruptionCount < 4 then -- 3 sets
 				self:CDBar(401010, 43, CL.count:format(self:SpellName(401010), corruptionCount))
