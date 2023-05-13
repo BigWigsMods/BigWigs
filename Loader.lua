@@ -945,6 +945,7 @@ do
 		BigWigs_SepulcherOfTheFirstOnes = "BigWigs_Shadowlands",
 	}
 	local delayedMessages = {}
+	local foundReqAddons = {} -- Deciding whether or not we show a warning for core/options/plugins addons not existing
 
 	local warning = "The addon '|cffffff00%s|r' is forcing %s to load prematurely, notify the BigWigs authors!"
 	local dontForceLoadList = {
@@ -999,14 +1000,30 @@ do
 			if name == "BigWigs_Shadowlands" then
 				local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-InstanceId")
 				if not meta then
-					delayedMessages[#delayedMessages+1] = L.removeAddOn:format(name, old[name])
+					local msg = L.removeAddOn:format(name, old[name])
+					delayedMessages[#delayedMessages+1] = msg
 					if not BasicMessageDialog:IsShown() then -- Don't overwrite other messages with this as the message is confusing, show it last
-						Popup(L.removeAddOn:format(name, old[name]))
+						Popup(msg)
 					end
 				end
 			else
-				delayedMessages[#delayedMessages+1] = L.removeAddOn:format(name, old[name])
-				Popup(L.removeAddOn:format(name, old[name]))
+				local msg = L.removeAddOn:format(name, old[name])
+				delayedMessages[#delayedMessages+1] = msg
+				Popup(msg)
+			end
+		end
+
+		if reqFuncAddons[name] then
+			foundReqAddons[name] = true -- A required functional addon is found
+		end
+	end
+
+	if not public.usingBigWigsRepo then -- We're not using BigWigs Git, but required functional addons are missing? Show a warning
+		for k in next, reqFuncAddons do -- List of required addons (core/plugins/options)
+			if not foundReqAddons[k] then -- A required functional addon is missing
+				local msg = L.missingAddOn:format(k)
+				delayedMessages[#delayedMessages+1] = msg
+				Popup(msg)
 			end
 		end
 	end
