@@ -46,10 +46,7 @@ function mod:GetOptions()
 		400430, -- Hellbeam
 		403326, -- Wings of Extinction
 		{404743, "TANK"}, -- Terror Claws
-	},{
-
-	},
-	{
+	},nil,{
 		[407196] = L.dread_rift, -- Dread Rifts (Rift)
 		[407069] = CL.lasers, -- Rays of Anguish (Lasers)
 		[400430] = CL.breath, -- Hellbeam (Breath)

@@ -48,9 +48,6 @@ end
 
 function mod:GetOptions()
 	return {
-		-- Mythic
-		410070, -- Unleash Shadowflame
-		410075, -- Shadowflame Energy
 		-- General
 		405316, -- Ancient Fury
 		{405821, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Searing Slam
@@ -64,10 +61,13 @@ function mod:GetOptions()
 		-- Elder's Conduit
 		401419, -- Elder's Conduit
 		405091, -- Smoldering Rage
+		-- Mythic
+		410070, -- Unleash Shadowflame
+		410075, -- Shadowflame Energy
 	}, {
-		[410070] = "mythic",
 		[405316] = "general",
 		[401419] = -26237, -- Elder's Conduit
+		[410070] = "mythic",
 	}, {
 		[410070] = L.unleash_shadowflame, -- Unleash Shadowflame (Mythic Orbs)
 		[410075] = L.shadowflame_energy, -- Shadowflame Energy (Heal Absorb)

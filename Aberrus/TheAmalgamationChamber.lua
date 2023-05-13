@@ -90,6 +90,8 @@ function mod:GetOptions()
 		408193, -- Convergent Eruption
 		{405914, "TANK"}, -- Withering Vulnerability
 		406783, -- Shadowflame Burst
+
+		-- Mythic
 		{409385, "PROXIMITY"}, -- Shadow and Flame
 	},{
 		["stages"] = "general",

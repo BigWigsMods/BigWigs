@@ -42,8 +42,6 @@ end
 local animateGolemsMarker = mod:AddMarkerOption(true, "npc", 8, -26394, 8, 7, 6, 5) -- Animate Golems
 function mod:GetOptions()
 	return {
-		-- Mythic
-		409942, -- Elimination Protocol
 		-- General
 		405736, -- Dragonfire Traps
 		405812, -- Animate Golems
@@ -54,9 +52,11 @@ function mod:GetOptions()
 		{404010, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Unstable Embers
 		403978, -- Blast Wave
 		{404942, "TANK"}, -- Searing Claws
+		-- Mythic
+		409942, -- Elimination Protocol
 	}, {
-		[409942] = "mythic",
 		[405736] = "general",
+		[409942] = "mythic",
 	},{
 		[409942] = CL.beams, -- Elimination Protocol (Beams)
 		[405736] = CL.traps, -- Dragonfire Traps (Traps)
