@@ -182,7 +182,7 @@ do
 		self:CDBar(args.spellId, 30.3, CL.count:format(CL.bombs, shrapnelBombCount))
 
 		 -- Starting/Stopping Bomb timers after 2s due to flight time
-		 self:SimpleTimer(startBombTimers, 2)
+		 self:ScheduleTimer(startBombTimers, 2)
 	end
 
 	function mod:ShrapnelBombSoaked(args)
