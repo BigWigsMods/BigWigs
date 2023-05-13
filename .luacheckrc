@@ -169,7 +169,6 @@ globals = {
 	"GameTooltip",
 	"GameTooltip_Hide",
 	"GetAddOnDependencies",
-	"GetAddOnEnableState",
 	"GetAddOnOptionalDependencies",
 	"GetBuildInfo",
 	"GetCurrentRegion", -- XXX temp 9.0.5

@@ -1256,30 +1256,41 @@ do
 	local function onTreeGroupSelected(widget, event, value)
 		widget:ReleaseChildren()
 		local zoneId = value:match("\001(-?%d+)$")
+		local missingCurrentContent = value:match("\001(BigWigs_.+)$")
 		local defaultEnabled = value == "BigWigs_Dragonflight"
 		if zoneId then
 			onZoneShow(widget, tonumber(zoneId))
-		elseif value:match("^BigWigs_") and not defaultEnabled then
-				local addonState = loader:GetAddOnState(value)
-				local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
-				if string then
-					local missing = AceGUI:Create("Label")
-					missing:SetText(string:format(value))
-					missing:SetFontObject(GameFontHighlight)
-					missing:SetFullWidth(true)
-					widget:AddChild(missing)
-				end
-		elseif value:match("^LittleWigs_") then
-				if value == "LittleWigs_Dragonflight" then value = "LittleWigs" end
-				local addonState = loader:GetAddOnState(value)
-				local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
-				if not loader.usingLittleWigsRepo and string then
-					local missing = AceGUI:Create("Label")
-					missing:SetText(string:format(value))
-					missing:SetFontObject(GameFontHighlight)
-					missing:SetFullWidth(true)
-					widget:AddChild(missing)
-				end
+		elseif missingCurrentContent then -- This is for current content non-expansion addons, where each zone is its own addon
+			local addonState = loader:GetAddOnState(missingCurrentContent)
+			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
+			if string then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(string:format(missingCurrentContent))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
+			end
+		elseif value:match("^BigWigs_") and not defaultEnabled then -- Old expansion addons
+			local addonState = loader:GetAddOnState(value)
+			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
+			if string then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(string:format(value))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
+			end
+		elseif value:match("^LittleWigs_") then -- All LittleWigs content addons, all come from 1 zip
+			if value == "LittleWigs_Dragonflight" then value = "LittleWigs" end
+			local addonState = loader:GetAddOnState(value)
+			local string = addonState == "MISSING" and L.missingAddOn or addonState == "DISABLED" and L.disabledAddOn
+			if not loader.usingLittleWigsRepo and string then
+				local missing = AceGUI:Create("Label")
+				missing:SetText(string:format(value))
+				missing:SetFontObject(GameFontHighlight)
+				missing:SetFullWidth(true)
+				widget:AddChild(missing)
+			end
 		else
 			statusTable.groups[value] = true
 			widget:RefreshTree()
@@ -1333,43 +1344,58 @@ do
 			do
 				local zoneToId, alphabeticalZoneList = {}, {}
 				for k in next, loader:GetZoneMenus() do
-					local zone
+					local zoneName
 					if k < 0 then
 						local tbl = GetMapInfo(-k)
 						if tbl then
-							zone = tbl.name
+							zoneName = tbl.name
 						else
-							zone = tostring(k)
+							zoneName = tostring(k)
 						end
 					else
-						zone = GetRealZoneText(k)
-						if zone == "" then
+						zoneName = GetRealZoneText(k)
+						if zoneName == "" then
 							-- if GetRealZoneText returns an empty string it's probably due to installing the wrong version of BigWigs or otherwise
 							-- having a module enabled for a zone that doesn't exist.
 							-- use the zone key as the menu name in that case instead of the empty string.
-							zone = tostring(k)
+							zoneName = tostring(k)
 						end
 					end
-					if zone then
-						if zoneToId[zone] then
-							zone = zone .. "1" -- When instances exist more than once (Karazhan)
+					if zoneName then
+						if zoneToId[zoneName] then
+							zoneName = zoneName .. "1" -- When instances exist more than once (Karazhan)
 						end
-						zoneToId[zone] = k
-						alphabeticalZoneList[#alphabeticalZoneList+1] = zone
+						zoneToId[zoneName] = k
+						alphabeticalZoneList[#alphabeticalZoneList+1] = zoneName
+					end
+				end
+
+				for k, v in next, loader.currentExpansion.zones do -- Parse current content zones
+					local zoneName = GetRealZoneText(k)
+					if not zoneToId[zoneName] and not loader.usingBigWigsRepo then -- If we have no registered menus for current content, and not using the Git repo
+						alphabeticalZoneList[#alphabeticalZoneList+1] = zoneName -- We want to create sub menus in the GUI for disabled/missing BigWigs current content addons
+						zoneToId[zoneName] = {k, v}
 					end
 				end
 
 				sort(alphabeticalZoneList) -- Make alphabetical
 				for i = 1, #alphabeticalZoneList do
 					local zoneName = alphabeticalZoneList[i]
-					local id = zoneToId[zoneName]
+					local entry = zoneToId[zoneName]
+					local name, id
+					if type(entry) == "table" then
+						id = entry[1]
+						name = entry[2]
+					else
+						id = entry
+					end
 
 					local parent = loader.zoneTbl[id] and addonNameToHeader[loader.zoneTbl[id]] -- Get expansion number for this zone
 					local treeParent = treeTbl[parent] -- Grab appropriate expansion name
 					if treeParent and treeParent.enabled then -- third-party plugins can add empty zones if you don't have the expansion addon enabled
 						if not treeParent.children then treeParent.children = {} end -- Create sub menu table
 						tinsert(treeParent.children, { -- Add new instance/zone sub menu
-							value = id,
+							value = name or id,
 							text = zoneName,
 						})
 					end

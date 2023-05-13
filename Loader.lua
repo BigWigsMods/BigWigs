@@ -48,6 +48,7 @@ do
 	if strfind(myGitHash, "@", nil, true) then
 		myGitHash = "repo"
 		releaseType = REPO
+		public.usingBigWigsRepo = true
 	end
 
 	if releaseType == REPO then
@@ -158,6 +159,14 @@ do
 	local lw_bfa = "LittleWigs_BattleForAzeroth"
 	local lw_s = "LittleWigs_Shadowlands"
 	local lw_df = "LittleWigs_Dragonflight"
+
+	public.currentExpansion = { -- Change on new expansion releases
+		name = df,
+		zones = {
+			[2522] = "BigWigs_VaultOfTheIncarnates",
+			[2569] = "BigWigs_Aberrus",
+		}
+	}
 
 	public.zoneTbl = {
 		--[[ BigWigs: Classic ]]--
@@ -362,7 +371,7 @@ end
 -- Utility
 --
 
-local EnableAddOn, GetAddOnEnableState, GetAddOnInfo, IsAddOnLoaded, LoadAddOn = EnableAddOn, GetAddOnEnableState, GetAddOnInfo, IsAddOnLoaded, LoadAddOn
+local EnableAddOn, GetAddOnInfo, IsAddOnLoaded, LoadAddOn = EnableAddOn, GetAddOnInfo, IsAddOnLoaded, LoadAddOn
 local GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned = C_AddOns.GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned
 local GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitIsDeadOrGhost, UnitSetRole = GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitIsDeadOrGhost, UnitSetRole
 
@@ -371,11 +380,6 @@ local reqFuncAddons = {
 	BigWigs_Options = true,
 	BigWigs_Plugins = true,
 }
-
-local function IsAddOnEnabled(addon)
-	local character = UnitName("player")
-	return GetAddOnEnableState(character, addon) > 0
-end
 
 local function sysprint(msg)
 	print("|cFF33FF99BigWigs|r: "..msg)
@@ -526,12 +530,12 @@ do
 	local blockedMenus = {} -- Zones that shouldn't create a menu
 
 	for i = 1, GetNumAddOns() do
-		local name = GetAddOnInfo(i)
+		local name, _, _, _, addonState = GetAddOnInfo(i)
 		if reqFuncAddons[name] then
 			EnableAddOn(i) -- Make sure it wasn't left disabled for whatever reason
 		end
 
-		if IsAddOnEnabled(i) then
+		if addonState ~= "DISABLED" then
 			local meta = GetAddOnMetadata(i, "X-BigWigs-LoadOn-CoreEnabled")
 			if meta then
 				if name == "BigWigs_Plugins" then -- Always first
@@ -596,11 +600,9 @@ do
 				for j = 1, select("#", strsplit(",", meta)) do
 					local rawId = select(j, strsplit(",", meta))
 					local id = tonumber(rawId:trim())
-					if id and id > 0 then
-						if public.zoneTbl[id] then
-							if not disabledZones then disabledZones = {} end
-							disabledZones[id] = name
-						end
+					if id and id > 0 and public.zoneTbl[id] then
+						if not disabledZones then disabledZones = {} end
+						disabledZones[id] = name
 					end
 				end
 			end
@@ -974,8 +976,8 @@ do
 	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
-		local name = GetAddOnInfo(i)
-		if IsAddOnEnabled(i) and not IsAddOnLoadOnDemand(i) then
+		local name, _, _, _, addonState = GetAddOnInfo(i)
+		if addonState ~= "DISABLED" and not IsAddOnLoadOnDemand(i) then
 			for j = 1, select("#", GetAddOnOptionalDependencies(i)) do
 				local meta = select(j, GetAddOnOptionalDependencies(i))
 				local addonName = tostring(meta)
@@ -1474,6 +1476,7 @@ do
 				local msg = L.disabledAddOn:format(disabledZones[id])
 				sysprint(msg)
 				Popup(msg)
+				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 15)
 				-- Only print once
 				warnedThisZone[id] = true
 				disabledZones[id] = nil
@@ -1483,12 +1486,15 @@ do
 		-- Lacking zone modules
 		if (BigWigs and BigWigs.db.profile.showZoneMessages == false) or self.isShowingZoneMessages == false then return end
 		local zoneAddon = public.zoneTbl[id]
-		if zoneAddon and zoneAddon ~= "BigWigs_Dragonflight" then
-			if strfind(zoneAddon, "LittleWigs_", nil, true) then zoneAddon = "LittleWigs" end -- Collapse into one addon
-			if id > 0 and not fakeZones[id] and not warnedThisZone[id] and not IsAddOnEnabled(zoneAddon) then
+		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
+			if zoneAddon == public.currentExpansion.name and public.usingBigWigsRepo then return end -- If we are a BW Git user, then current content can't be missing, so return
+			if strfind(zoneAddon, "LittleWigs", nil, true) and public.usingLittleWigsRepo then return end -- If we are a LW Git user, then nothing can be missing, so return
+			if public.currentExpansion.zones[id] then zoneAddon = public.currentExpansion.zones[id] end -- Current content has individual zone specific addons
+			if public:GetAddOnState(zoneAddon) == "MISSING" then
 				warnedThisZone[id] = true
-				local msg = L.missingPlugin:format(zoneAddon)
+				local msg = L.missingAddOn:format(zoneAddon)
 				sysprint(msg)
+				Popup(msg)
 				RaidNotice_AddMessage(RaidWarningFrame, msg, {r=1,g=1,b=1}, 15)
 			end
 		end

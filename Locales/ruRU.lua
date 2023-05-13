@@ -40,10 +40,8 @@ L.dbmUsers = "Пользователи DBM:"
 L.noBossMod = "Нет аддона:"
 L.offline = "Не в сети"
 
-L.missingPlugin = "Обратите внимание, что эта зона требует дополнение |cFF436EEE%s|r для показа таймеров."
 L.missingAddOn = "Отсутствует модификация |cFF436EEE%s|r."
 L.disabledAddOn = "У вас выключена модификация |cFF436EEE%s|r, таймеры не будут показываться."
-
 L.removeAddOn = "Пожалуйста, удалите '|cFF436EEE%s|r', ему на смену пришло '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 

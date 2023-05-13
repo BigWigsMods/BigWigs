@@ -40,10 +40,8 @@ L.dbmUsers = "Utilisateurs de DBM :"
 L.noBossMod = "Pas de boss mod :"
 L.offline = "Hors ligne"
 
-L.missingPlugin = "Notez que cette zone nécessite le plugin |cFF436EEE%s|r pour que les délais puissent s'afficher."
 L.missingAddOn = "L'addon |cFF436EEE%s|r est manquant !"
 L.disabledAddOn = "L'addon |cFF436EEE%s|r est désactivé, les délais ne seront pas affichés."
-
 L.removeAddOn = "Veuillez enlever '|cFF436EEE%s|r' étant donné qu'il a été remplacé par '|cFF436EEE%s|r'."
 L.alternativeName = "%s (|cFF436EEE%s|r)"
 
