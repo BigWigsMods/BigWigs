@@ -13,8 +13,8 @@ mod:SetStage(1)
 -- Locals
 --
 
-local mobCollector = {}
-local marksUsed = {}
+local golemMarks = {}
+local golemCollector = {}
 local dragonfireTrapsCount = 1
 local animateGolemsCount = 1
 local tacticalDestructionCount = 1
@@ -39,7 +39,7 @@ end
 -- Initialization
 --
 
-local animateGolemsMarker = mod:AddMarkerOption(false, "npc", 8, -26394, 8, 7, 6, 5) -- Animate Golems
+local animateGolemsMarker = mod:AddMarkerOption(true, "npc", 8, -26394, 8, 7, 6, 5) -- Animate Golems
 function mod:GetOptions()
 	return {
 		-- Mythic
@@ -70,6 +70,7 @@ end
 function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DragonfireTraps", 405736)
 	self:Log("SPELL_CAST_START", "AnimateGolems", 405812)
+	self:Log("SPELL_CAST_SUCCESS", "GolemSpawn", 181113)
 	self:Log("SPELL_AURA_APPLIED", "SalvageParts", 405592)
 	self:Log("SPELL_CAST_START", "TacticalDestruction", 406678)
 	self:Log("SPELL_CAST_SUCCESS", "ShrapnelBomb", 406725)
@@ -85,8 +86,6 @@ end
 
 function mod:OnEngage()
 	self:SetStage(1)
-	mobCollector = {}
-	marksUsed = {}
 	dragonfireTrapsCount = 1
 	animateGolemsCount = 1
 	tacticalDestructionCount = 1
@@ -96,13 +95,13 @@ function mod:OnEngage()
 	totalBombs = self:Easy() and 2 or self:Heroic() and 3 or 4
 
 	if not self:Easy() then
-		self:CDBar(404010, self:Mythic() and 9.4 or 7.4, CL.count:format(L.unstable_embers, unstableEmbersCount)) -- Unstable Embers
+		self:CDBar(404010, self:Mythic() and 9.2 or 7.4, CL.count:format(L.unstable_embers, unstableEmbersCount)) -- Unstable Embers
 	end
 	self:CDBar(403978, self:Mythic() and 13 or self:Easy() and 20.4 or 11.0, CL.count:format(CL.knockback, blastWaveCount)) -- Blast Wave
-	self:CDBar(406725, self:Mythic() and 36.1 or self:Easy() and 45.1 or 35.0, CL.count:format(CL.bombs, shrapnelBombCount)) -- Shrapnel Bomb
-	self:CDBar(405736, self:Mythic() and 19.1 or self:Easy() and 15.5 or 20, CL.count:format(CL.traps, dragonfireTrapsCount)) -- Dragonfire Traps
-	self:CDBar(405812, self:Mythic() and 26.4 or self:Easy() and 35.5 or 54.4, CL.count:format(CL.adds, animateGolemsCount)) -- Animate Golems
-	self:CDBar(406678, self:Mythic() and 31.6 or self:Easy() and 70.7 or 60.5, CL.count:format(L.tactical_destruction, tacticalDestructionCount)) -- Tactical Destruction
+	self:CDBar(406725, self:Mythic() and 36 or self:Easy() and 45.1 or 35.0, CL.count:format(CL.bombs, shrapnelBombCount)) -- Shrapnel Bomb
+	self:CDBar(405736, self:Mythic() and 19.5 or self:Easy() and 15.5 or 20, CL.count:format(CL.traps, dragonfireTrapsCount)) -- Dragonfire Traps
+	self:CDBar(405812, self:Mythic() and 26 or self:Easy() and 35.5 or 54.4, CL.count:format(CL.adds, animateGolemsCount)) -- Animate Golems
+	self:CDBar(406678, self:Mythic() and 31 or self:Easy() and 70.7 or 60.5, CL.count:format(L.tactical_destruction, tacticalDestructionCount)) -- Tactical Destruction
 
 	if self:GetOption(animateGolemsMarker) then
 		self:RegisterTargetEvents("AddMarking")
@@ -126,24 +125,28 @@ function mod:AnimateGolems(args)
 	self:Message(args.spellId, "cyan", CL.count:format(CL.adds, animateGolemsCount))
 	self:PlaySound(args.spellId, "info")
 	animateGolemsCount = animateGolemsCount + 1
-	self:CDBar(args.spellId, self:Heroic() and 73.1 or 74, CL.count:format(CL.adds, animateGolemsCount))
+	self:CDBar(args.spellId, 73, CL.count:format(CL.adds, animateGolemsCount))
 
-	marksUsed = {}
+	golemMarks = {}
+	golemCollector = {}
+end
+
+function mod:GolemSpawn(args)
+	if self:GetOption(animateGolemsMarker) then
+		for i = 8, 5, -1 do -- 8, 7, 6, 5
+			if not golemCollector[args.sourceGUID] and not golemMarks[i] then
+				golemMarks[i] = args.sourceGUID
+				golemCollector[args.sourceGUID] = i
+				return
+			end
+		end
+	end
 end
 
 function mod:AddMarking(_, unit, guid)
-	if not mobCollector[guid] then
-		local mobId = self:MobId(guid)
-		if mobId == 203230 then -- Dragonfire Golem
-			for i = 8, 5, -1 do -- 8, 7, 6, 5
-				if not marksUsed[i] then
-					mobCollector[guid] = true
-					marksUsed[i] = guid
-					self:CustomIcon(animateGolemsMarker, unit, i)
-					return
-				end
-			end
-		end
+	if golemCollector[guid] then
+		self:CustomIcon(animateGolemsMarker, unit, golemCollector[guid]) -- icon order from SPELL_SUMMON
+		golemCollector[guid] = nil
 	end
 end
 
@@ -165,15 +168,21 @@ end
 do
 	local bombStart = 0
 	local bombsSoaked = 0
+	local function startBombTimers()
+		mod:StopBar(CL.count_amount:format(L.bombs_soaked, bombsSoaked, totalBombs))
+		bombStart = GetTime()
+		bombsSoaked = 0
+		mod:Bar(406725, 30, CL.count_amount:format(L.bombs_soaked, bombsSoaked, totalBombs), "inv_misc_bomb_01")
+	end
 	function mod:ShrapnelBomb(args)
 		self:StopBar(CL.count:format(CL.bombs, shrapnelBombCount))
 		self:Message(args.spellId, "yellow", CL.count:format(CL.bombs, shrapnelBombCount))
 		self:PlaySound(args.spellId, "alert")
 		shrapnelBombCount = shrapnelBombCount + 1
-		self:CDBar(args.spellId, 30.8, CL.count:format(CL.bombs, shrapnelBombCount))
+		self:CDBar(args.spellId, 30.3, CL.count:format(CL.bombs, shrapnelBombCount))
 
-		bombStart = args.time
-		bombsSoaked = 0
+		 -- Starting/Stopping Bomb timers after 2s due to flight time
+		 self:SimpleTimer(startBombTimers, 2)
 	end
 
 	function mod:ShrapnelBombSoaked(args)
@@ -183,7 +192,7 @@ do
 			self:Message(406725, bombsSoaked < totalBombs and "yellow" or "green", CL.count_amount:format(L.bombs_soaked, bombsSoaked, totalBombs), "inv_misc_bomb_01")
 		end
 		if bombsSoaked < totalBombs then -- Bombs Remaining
-			local timeLeft = (bombStart + 30) - args.time
+			local timeLeft = (bombStart + 30) - GetTime()
 			if timeLeft > 0 and timeLeft < 30 then -- safety
 				self:Bar(406725, {timeLeft, 30}, CL.count_amount:format(L.bombs_soaked, bombsSoaked, totalBombs), "inv_misc_bomb_01")
 			end
@@ -196,6 +205,9 @@ function mod:UnstableEmbers(args)
 	self:Message(404010, "red", CL.count:format(L.unstable_embers, unstableEmbersCount))
 	unstableEmbersCount = unstableEmbersCount + 1
 	self:CDBar(404010, 15.8, CL.count:format(L.unstable_embers, unstableEmbersCount))
+	if self:Mythic() then
+		self:Bar(409942, 10, CL.count:format(CL.beams, unstableEmbersCount)) -- Elimination Protocol
+	end
 end
 
 function mod:UnstableEmbersApplied(args)
@@ -219,11 +231,8 @@ function mod:BlastWave(args)
 	self:StopBar(CL.count:format(CL.knockback, blastWaveCount))
 	self:Message(args.spellId, "red", CL.count:format(CL.knockback, blastWaveCount))
 	self:PlaySound(args.spellId, "alert")
-	if self:Mythic() then
-		self:Bar(409942, 10, CL.beams) -- Elimination Protocol
-	end
 	blastWaveCount = blastWaveCount + 1
-	self:CDBar(args.spellId, self:Easy() and 38.6 or 33.5, CL.count:format(CL.knockback, blastWaveCount))
+	self:CDBar(args.spellId, self:Easy() and 38.6 or 34, CL.count:format(CL.knockback, blastWaveCount))
 end
 
 function mod:SearingClawsApplied(args)
