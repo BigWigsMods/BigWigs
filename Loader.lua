@@ -1490,7 +1490,11 @@ do
 		if zoneAddon and id > 0 and not fakeZones[id] and not warnedThisZone[id] then
 			if zoneAddon == public.currentExpansion.name and public.usingBigWigsRepo then return end -- If we are a BW Git user, then current content can't be missing, so return
 			if strfind(zoneAddon, "LittleWigs", nil, true) and public.usingLittleWigsRepo then return end -- If we are a LW Git user, then nothing can be missing, so return
-			if public.currentExpansion.zones[id] then zoneAddon = public.currentExpansion.zones[id] end -- Current content has individual zone specific addons
+			if public.currentExpansion.zones[id] then
+				zoneAddon = public.currentExpansion.zones[id] -- Current BigWigs content has individual zone specific addons
+			elseif zoneAddon == public.currentExpansion.littlewigsName then
+				zoneAddon = "LittleWigs" -- Current LittleWigs content is stored in the main addon
+			end
 			if public:GetAddOnState(zoneAddon) == "MISSING" then
 				warnedThisZone[id] = true
 				local msg = L.missingAddOn:format(zoneAddon)
