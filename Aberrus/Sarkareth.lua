@@ -504,7 +504,7 @@ function mod:Stage2Start()
 	self:PauseBar(404027, CL.count:format(CL.bombs, bombCount))
 	self:PauseBar(411241, CL.count:format(L.claws, clawsCount))
 	self:PauseBar(404288, CL.count:format(L.infinite_duress, infiniteDuressCount))
-	self:PauseBar(404288, CL.stage:format(3))
+	self:PauseBar("stages", CL.stage:format(3))
 end
 
 function mod:EndExistenceApplied(args)
@@ -520,7 +520,7 @@ function mod:EndExistenceRemoved(args)
 	self:ResumeBar(404027, CL.count:format(CL.bombs, bombCount))
 	self:ResumeBar(411241, CL.count:format(L.claws, clawsCount))
 	self:ResumeBar(404288, CL.count:format(L.infinite_duress, infiniteDuressCount))
-	self:ResumeBar(404288, CL.stage:format(3))
+	self:ResumeBar("stages", CL.stage:format(3))
 end
 
 function mod:VoidBomb(args)
