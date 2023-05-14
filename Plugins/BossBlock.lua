@@ -598,6 +598,7 @@ do
 		[-2000] = true, -- Soulrender Dormazain defeat
 		[-2002] = true, -- Sylvanas stage 2
 		[-2004] = true, -- Sylvanas defeat
+		[-2170] = true, -- Sarkareth defeat
 	}
 
 	-- Cinematic skipping hack to workaround an item (Vision of Time) that creates cinematics in Siege of Orgrimmar.
