@@ -72,7 +72,7 @@ function mod:GetOptions()
 		403049, -- Shadow Barrier
 		-- Stage 3
 		407936, -- Sunder Reality
-		407919, -- Shattered Reality
+		407919, -- Sundered Reality
 		"custom_on_repeating_sunder_reality",
 		407917, -- Ebon Destruction
 	},{
@@ -112,10 +112,10 @@ function mod:OnBossEnable()
 
 	-- Stage 3
 	self:Log("SPELL_CAST_START", "SunderReality", 407936)
-	self:Log("SPELL_AURA_APPLIED", "ShatteredRealityApplied", 407919)
-	self:Log("SPELL_PERIODIC_DAMAGE", "ShatteredRealityDamage", 407919)
-	self:Log("SPELL_PERIODIC_MISSED", "ShatteredRealityDamage", 407919)
-	self:Log("SPELL_AURA_REMOVED", "ShatteredRealityRemoved", 407919)
+	self:Log("SPELL_AURA_APPLIED", "SunderedRealityApplied", 407919)
+	self:Log("SPELL_PERIODIC_DAMAGE", "SunderedRealityDamage", 407919)
+	self:Log("SPELL_PERIODIC_MISSED", "SunderedRealityDamage", 407919)
+	self:Log("SPELL_AURA_REMOVED", "SunderedRealityRemoved", 407919)
 	self:Log("SPELL_CAST_START", "EbonDestruction", 407917)
 	self:Log("SPELL_CAST_SUCCESS", "EbonDestructionSuccess", 407917)
 end
@@ -396,29 +396,29 @@ do
 	end
 
 	local prev = 0
-	function mod:ShatteredRealityApplied(args)
+	function mod:SunderedRealityApplied(args)
 		if self:Me(args.destGUID) then
 			shatteredRealityOnMe = true
 			prev = args.time
 			if castingEbonDestruction then
-				self:Message(407919, "green", CL.you:format(args.spellName))
-				self:PlaySound(407919, "info")
+				self:Message(args.spellId, "green", CL.you:format(args.spellName))
+				self:PlaySound(args.spellId, "info")
 			else -- Ground Effect
-				self:PersonalMessage(407919, "underyou")
-				self:PlaySound(407919, "underyou")
+				self:PersonalMessage(args.spellId, "underyou")
+				self:PlaySound(args.spellId, "underyou")
 			end
 		end
 	end
 
-	function mod:ShatteredRealityDamage(args)
+	function mod:SunderedRealityDamage(args)
 		if self:Me(args.destGUID) and not castingEbonDestruction and args.time-prev > 2 then
 			prev = args.time
-			self:PersonalMessage(407919, "underyou")
-			self:PlaySound(407919, "underyou")
+			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou")
 		end
 	end
 
-	function mod:ShatteredRealityRemoved(args)
+	function mod:SunderedRealityRemoved(args)
 		if self:Me(args.destGUID) then
 			shatteredRealityOnMe = false
 		end
