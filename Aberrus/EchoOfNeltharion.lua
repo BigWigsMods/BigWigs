@@ -93,7 +93,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "EchoingFissure", 403272)
 	self:Log("SPELL_CAST_START", "RushingDarkness", 407207)
 	self:Log("SPELL_CAST_SUCCESS", "TwistedEarth", 409241)
-	self:Log("SPELL_CAST_START", "CalamitousStrike", 406222)
+	self:Log("SPELL_CAST_START", "CalamitousStrike", 401022)
 	self:Log("SPELL_AURA_APPLIED", "CalamitousStrikeApplied", 401998)
 
 	-- Intermission
@@ -203,7 +203,7 @@ end
 function mod:CalamitousStrike(args)
 	self:Message(401998, "purple", CL.casting:format(args.spellName))
 	self:PlaySound(401998, "info")
-	self:CDBar(401998, self:GetStage() == 1 and 34.0 or 29.2)
+	self:CDBar(401998, self:GetStage() == 1 and (self:Easy() and 34 or 37) or 30)
 end
 
 function mod:CalamitousStrikeApplied(args)
