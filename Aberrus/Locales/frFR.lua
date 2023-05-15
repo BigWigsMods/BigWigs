@@ -23,7 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "frFR")
 if L then
-	L.rending_charge_single = "1ère Charge"
+	L.rending_charge_single = "Première Charge"
 	L.massive_slam = "Cône Frontal"
 	L.unstable_essence_new = "Nouvelle Bombe"
 	L.custom_on_unstable_essence_high = "Message Dire quand Essence Instable est élevé"
