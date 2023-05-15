@@ -142,7 +142,7 @@ function mod:GetOptions()
 		401810, -- Glittering Surge
 		401500, -- Scorching Bomb
 		406989, -- Burning Ground (damage)
-		{401680, "SAY", "SAY_COUNTDOWN"}, -- Mass Disintegrate
+		{401680, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Mass Disintegrate
 		massDisintergrateMarker,
 		402050, -- Searing Breath
 		{401330, "TANK_HEALER"}, -- Burning Claws
@@ -162,9 +162,9 @@ function mod:GetOptions()
 
 		-- Stage Three: The Seas of Infinity
 		403771, -- Cosmic Ascension
-		{405486, "SAY", "SAY_COUNTDOWN"}, -- Hurtling Barrage
+		{405486, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Hurtling Barrage
 		403625, -- Scouring Eternity
-		{403520, "SAY", "SAY_COUNTDOWN"}, -- Embrace of Nothingness
+		{403520, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Embrace of Nothingness
 		408429, -- Void Slash
 		408457, -- Void Blast
 	},{
