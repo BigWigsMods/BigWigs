@@ -88,7 +88,33 @@ local timersHeroic = {
 	},
 }
 
-local timers = mod:Easy() and timersNormal or timersHeroic
+local timersMythic = {
+	[1] = {
+		[401810] = {2.8, 88.0, 0}, -- Glittering Surge
+		[401500] = {0.8, 29.6, 23.4, 17.0, 0}, -- Scorching Bomb
+		[401680] = {20.8, 22.1, 19.9, 19.0, 0}, -- Mass Disintegrate
+		[402050] = {25.4, 12.5, 18.0, 0}, -- Searing Breath
+		[401330] = {17.9, 18.0, 16.0, 15.0, 0}, -- Burning Claws
+	},
+	[2] = {
+		[404027] = {14.5, 56.6, 0}, -- Void Bomb
+		[404456] = {3.4, 42.2, 31.1, 0}, -- Abyssal Breath
+		[404403] = {10.0, 41.2, 35.5, 0}, -- Desolate Blossom
+		[404288] = {27.8, 33.4, 30.0, 0}, -- Infinite Duress
+		[411241] = {17.8, 16.7, 20.0, 20.0, 20.0, 0}, -- Void Claws
+	},
+	[3] = { -- Non decimal timers are taken from a stream (not precise)
+		[404027] = {24.6, 60.0, 57.6}, -- Void Bomb
+		[404288] = {4.6, 53.0, 78.8, 35.3, 34.1}, -- Infinite Duress
+		[403771] = {6.9, 57.6, 93.0, 60}, -- Cosmic Ascension
+		[405486] = {18.6, 80.0, 84.0}, -- Hurtling Barrage
+		[403625] = {44.6, 73.0, 76.5}, -- Scouring Eternity
+		[403520] = {23.4, 38.2, 26.5, 40.0, 47.0, 34.7}, -- Embrace of Nothingness
+		[408429] = {19.8, 17.7, 36.4, 15.3, 55.2, 35.3}, -- Void Slash
+	},
+}
+
+local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -259,7 +285,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Easy() and timersNormal or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
 	self:SetStage(1)
 	voidEmpowermentCount = 1
 	nextStageHealth = 63
