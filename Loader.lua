@@ -22,7 +22,7 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 277
+local BIGWIGS_VERSION = 278
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -1038,7 +1038,7 @@ do
 		esMX = "Spanish (esMX)",
 		deDE = "German (deDE)",
 		ptBR = "Portuguese (ptBR)",
-		frFR = "French (frFR)",
+		--frFR = "French (frFR)",
 	}
 	local language = locales[myLocale]
 	if language then
