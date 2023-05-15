@@ -172,9 +172,9 @@ function mod:OnEngage()
 	shadowsConvergenceCount = 1
 	self:Bar(403699, 9.4) -- Shadow Spike
 	self:Bar(405036, 14.5, CL.count:format(CL.bombs, umbralDetonationCount)) -- Umbral Detonation
-	self:Bar(407640, 36.4, CL.count:format(L.shadow_convergence, shadowsConvergenceCount)) -- Shadows Convergence
+	self:Bar(403459, 35.5, CL.count:format(L.coalescing_void, coalescingVoidCount)) -- Coalescing Void
 	if not self:Easy() then
-		self:Bar(403459, 23, CL.count:format(L.coalescing_void, coalescingVoidCount)) -- Coalescing Void
+		self:Bar(407640, 22.9, CL.count:format(L.shadow_convergence, shadowsConvergenceCount)) -- Shadows Convergence
 	end
 
 	-- Eternal Blaze
@@ -183,9 +183,9 @@ function mod:OnEngage()
 	swirlingFlameCount = 1
 	self:Bar(403203, 8) -- Flame Slash
 	self:Bar(404896, 10.8, CL.count:format(L.swirling_flame, swirlingFlameCount)) -- Swirling Flame
-	self:Bar(404732, 36.4, CL.count:format(CL.meteor, fieryMeteorCount)) -- Fiery Meteor
+	self:Bar(404732, 35.5, CL.count:format(CL.meteor, fieryMeteorCount)) -- Fiery Meteor
 	if not self:Easy() then
-		self:Bar(403101, 14.5, CL.count:format(L.molten_eruption, moltenEruptionCount)) -- Molten Eruption
+		self:Bar(403101, 16.7, CL.count:format(L.molten_eruption, moltenEruptionCount)) -- Molten Eruption
 	end
 end
 
@@ -317,7 +317,7 @@ end
 function mod:CorruptingShadowApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		if amount > 20 then -- start with 20+, update after PTR
+		if amount > 20 or (self:GetStage() == 2 and amount == 1) then -- start with 20+, update after PTR
 			self:StackMessage(args.spellId, "blue", args.destName, amount, 20)
 			self:PlaySound(args.spellId, "warning")
 		end
@@ -342,7 +342,7 @@ function mod:CoalescingVoid(args)
 		self:PlaySound(args.spellId, "alert")
 	end
 	coalescingVoidCount = coalescingVoidCount + 1
-	self:Bar(args.spellId, 35, CL.count:format(L.coalescing_void, coalescingVoidCount))
+	self:Bar(args.spellId, 35.2, CL.count:format(L.coalescing_void, coalescingVoidCount))
 end
 
 do
@@ -355,7 +355,7 @@ do
 			self:PlaySound(405036, "alert")
 		end
 		umbralDetonationCount = umbralDetonationCount + 1
-		self:Bar(405036, umbralDetonationCount == 2 and 43 or 35, CL.count:format(CL.bombs, umbralDetonationCount))
+		self:Bar(405036, umbralDetonationCount == 2 and 43.7 or 35.2, CL.count:format(CL.bombs, umbralDetonationCount))
 		count = 1
 	end
 
@@ -385,7 +385,7 @@ function mod:ShadowsConvergence(args)
 		self:PlaySound(args.spellId, "alert")
 	end
 	shadowsConvergenceCount = shadowsConvergenceCount + 1
-	self:Bar(args.spellId, shadowsConvergenceCount == 2 and 41.5 or 35, CL.count:format(L.shadow_convergence, shadowsConvergenceCount))
+	self:Bar(args.spellId, shadowsConvergenceCount == 2 and 42.5 or 35.2, CL.count:format(L.shadow_convergence, shadowsConvergenceCount))
 end
 
 function mod:ShadowSpike(args)
@@ -401,7 +401,7 @@ end
 function mod:BlazingHeatApplied(args)
 	if self:Me(args.destGUID) then
 		local amount = args.amount or 1
-		if amount > 20 then -- start with 20+, update after PTR
+		if amount > 20 or (self:GetStage() == 2 and amount == 1) then -- start with 20+, update after PTR
 			self:StackMessage(args.spellId, "blue", args.destName, amount, 20)
 			self:PlaySound(args.spellId, "warning")
 		end
@@ -437,7 +437,7 @@ function mod:MoltenEruption(args)
 		self:PlaySound(args.spellId, "alert")
 	end
 	moltenEruptionCount = moltenEruptionCount + 1
-	self:CDBar(args.spellId, moltenEruptionCount == 2 and 41.5 or 35, CL.count:format(L.molten_eruption, moltenEruptionCount))
+	self:CDBar(args.spellId, moltenEruptionCount == 2 and 42.5 or 35, CL.count:format(L.molten_eruption, moltenEruptionCount))
 end
 
 function mod:SwirlingFlame(args)
@@ -448,7 +448,7 @@ function mod:SwirlingFlame(args)
 		self:PlaySound(args.spellId, "alert")
 	end
 	swirlingFlameCount = swirlingFlameCount + 1
-	self:CDBar(args.spellId, swirlingFlameCount % 2 == 0 and 15 or swirlingFlameCount == 3 and 27 or 21, CL.count:format(L.swirling_flame, swirlingFlameCount))
+	self:CDBar(args.spellId, swirlingFlameCount == 3 and 27 or swirlingFlameCount % 2 == 0 and 14.6 or 21, CL.count:format(L.swirling_flame, swirlingFlameCount))
 end
 
 function mod:FlameSlash(args)
@@ -487,12 +487,11 @@ do
 			shadowflameBurstCount = 1
 			shadowAndFlameCount = 1
 
-			-- self:Bar(405914, self:Mythic() and 18.6 or 16.5) -- Withering Vulnerability
 			self:Bar(406783, 19.5, CL.count:format(L.shadowflame_burst, shadowflameBurstCount)) -- Shadowflame Burst
 			self:Bar(405642, 22, CL.count:format(L.blistering_twilight, blisteringTwilightCount)) -- Blistering Twilight
-			self:Bar(405437, 51, CL.count:format(L.gloom_conflagration, gloomConflagrationCount)) -- Gloom Conflagration
+			self:Bar(405437, 50, CL.count:format(L.gloom_conflagration, gloomConflagrationCount)) -- Gloom Conflagration
 			if not self:Easy() then
-				self:Bar(408193, 33.5, CL.count:format(L.convergent_eruption, convergentEruptionCount)) -- Convergent Eruption
+				self:Bar(408193, self:Mythic() and 35.6 or 33, CL.count:format(L.convergent_eruption, convergentEruptionCount)) -- Convergent Eruption
 			end
 			if self:Mythic() then
 				self:Bar(409385, 29.5, CL.count:format(L.shadow_and_flame, shadowAndFlameCount)) -- Shadow and Flame
@@ -535,11 +534,9 @@ function mod:BlisteringTwilight(args)
 	blisteringTwilightCount = blisteringTwilightCount + 1
 	local cd = 0
 	if self:Easy() then
-		-- 21.5, 15.9, 36.4, 15.8, 30.3
-		cd = blisteringTwilightCount == 3 and 36.4 or blisteringTwilightCount % 2 == 0 and 15.9 or 30.3
+		cd = blisteringTwilightCount == 3 and 36.4 or blisteringTwilightCount % 2 == 0 and 15.8 or 31.6
 	else -- Heroic/Mythic
-		-- 22.3, 53.5, 47.5, 47.5
-		cd = blisteringTwilightCount == 2 and 53.5 or 47.5
+		cd = blisteringTwilightCount == 2 and 52.3 or 47.5
 	end
 	self:Bar(405642, cd, CL.count:format(L.blistering_twilight, blisteringTwilightCount))
 end
@@ -565,7 +562,7 @@ function mod:ConvergentEruption(args)
 	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	convergentEruptionCount = convergentEruptionCount + 1
-	self:Bar(args.spellId, convergentEruptionCount == 2 and 53.2 or 47.6, CL.count:format(L.convergent_eruption, convergentEruptionCount))
+	self:Bar(args.spellId, convergentEruptionCount == 2 and 52 or 47.5, CL.count:format(L.convergent_eruption, convergentEruptionCount))
 end
 
 function mod:WitheringVulnerabilityApplied(args)
@@ -583,7 +580,7 @@ function mod:ShadowflameBurst(args)
 	self:Message(args.spellId, "purple", msg)
 	self:PlaySound(args.spellId, "alert")
 	shadowflameBurstCount = shadowflameBurstCount + 1
-	self:Bar(args.spellId, shadowflameBurstCount > 5 and 22.7 or shadowflameBurstCount % 2 == 0 and 24.4 or 27.9, CL.count:format(L.shadowflame_burst, shadowflameBurstCount))
+	self:Bar(args.spellId, shadowflameBurstCount == 3 and 27.6 or 24.3, CL.count:format(L.shadowflame_burst, shadowflameBurstCount))
 end
 
 do
@@ -606,7 +603,7 @@ function mod:ShadowAndFlame(args)
 	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	shadowAndFlameCount = shadowAndFlameCount + 1
-	self:Bar(args.spellId, 47.5, CL.count:format(L.shadow_and_flame, shadowAndFlameCount))
+	self:Bar(args.spellId, shadowAndFlameCount == 2 and 52.3 or 48, CL.count:format(L.shadow_and_flame, shadowAndFlameCount))
 	self:OpenProximity(args.spellId, 6)
 end
 
