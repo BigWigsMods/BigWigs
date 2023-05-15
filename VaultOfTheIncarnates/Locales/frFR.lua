@@ -151,7 +151,7 @@ if L then
 	L.tempest_wing = "Vague Tempête"
 	L.fulminating_charge = "Charges"
 	L.fulminating_charge_debuff = "Charge"
-	Intermission: The Vault Falters
+	-- Intermission: The Vault Falters
 	L.storm_break = "Téléportation"
 	L.ball_lightning = "Boules"
 	-- Stage Three: Storm Incarnate
