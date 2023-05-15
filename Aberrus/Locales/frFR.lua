@@ -77,7 +77,7 @@ if L then
 	L.energy_gained = "Energie Gagnée (-17s)" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
 
 	-- Mythic
-	L.explosive_magma = "Soak"
+	L.explosive_magma = "Soak Flaque"
 end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "frFR")
