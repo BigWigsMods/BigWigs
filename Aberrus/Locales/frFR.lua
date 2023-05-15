@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "frFR")
 if not L then return end
 if L then
-	L.dread_rift = "Faille" -- Faille Effroyable singuliaire
+	L.dread_rift = "Faille" -- Singular Dread Rift
 end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "frFR")
