@@ -146,16 +146,17 @@ end
 -- General
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 63 then -- P2 at 60%
+		self:UnregisterUnitEvent(event, unit)
 		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(2)), false)
 		self:PlaySound("stages", "info")
-		self:UnregisterUnitEvent(event, unit)
 	end
 end
 
 -- Stage 1
 function mod:VolcanicHeart(args)
-	self:StopBar(CL.count:format(CL.bombs, volcanicHeartCount))
-	self:Message(410953, "orange", CL.count:format(CL.bombs, volcanicHeartCount))
+	local msg = CL.count:format(CL.bombs, volcanicHeartCount)
+	self:StopBar(msg)
+	self:Message(410953, "orange", msg)
 	volcanicHeartCount = volcanicHeartCount + 1
 
 	local cd = 0
@@ -195,8 +196,9 @@ function mod:TwistedEarth(args)
 end
 
 function mod:EchoingFissure(args)
-	self:StopBar(CL.count:format(L.echoing_fissure, echoingFissureCount))
-	self:Message(402115, "orange", CL.count:format(L.echoing_fissure, echoingFissureCount))
+	local msg = CL.count:format(L.echoing_fissure, echoingFissureCount)
+	self:StopBar(msg)
+	self:Message(402115, "orange", msg)
 	self:PlaySound(402115, "alarm")
 	echoingFissureCount = echoingFissureCount + 1
 	self:CDBar(402115, 37, CL.count:format(L.echoing_fissure, echoingFissureCount))
@@ -212,11 +214,12 @@ do
 	end
 
 	function mod:RushingDarkness(args)
-		self:StopBar(CL.count:format(L.rushing_darkness, rushingDarknessCount))
+		local msg = CL.count:format(L.rushing_darkness, rushingDarknessCount)
+		self:StopBar(msg)
 		if self:Mythic() and self:GetStage() == 1 then
 			self:GetBossTarget(printTarget, 1, args.sourceGUID) -- boss targets a player during the cast
 		else
-			self:Message(407221, "yellow", CL.count:format(L.rushing_darkness, rushingDarknessCount))
+			self:Message(407221, "yellow", msg)
 		end
 		rushingDarknessCount = rushingDarknessCount + 1
 
@@ -290,8 +293,9 @@ do
 	local playerList = {}
 	local prev = 0
 	function mod:CorruptionPreDebuff(args)
+		local msg = CL.count:format(self:SpellName(401010), corruptionCount)
 		if args.time - prev > 2 then -- reset
-			self:StopBar(CL.count:format(self:SpellName(401010), corruptionCount))
+			self:StopBar(msg)
 			corruptionCount = corruptionCount + 1
 			if corruptionCount < 4 then -- 3 sets
 				self:CDBar(401010, 43, CL.count:format(self:SpellName(401010), corruptionCount))
@@ -304,13 +308,14 @@ do
 			self:PlaySound(401010, "warning")
 			self:Say(401010)
 		end
-		self:TargetsMessage(401010, "yellow", playerList, nil, CL.count:format(self:SpellName(401010), corruptionCount-1))
+		self:TargetsMessage(401010, "yellow", playerList, nil, msg)
 	end
 end
 
 function mod:UmbralAnnihilation(args)
-	self:StopBar(CL.count:format(L.umbral_annihilation, umbralAnnihilationCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.umbral_annihilation, umbralAnnihilationCount))
+	local msg = CL.count:format(L.umbral_annihilation, umbralAnnihilationCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alarm")
 	umbralAnnihilationCount = umbralAnnihilationCount + 1
 	-- 6+ are spam casted
@@ -373,8 +378,9 @@ end
 
 -- Stage 3
 function mod:SunderReality(args)
-	self:StopBar(CL.count:format(L.sunder_reality, sunderRealityCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.sunder_reality, sunderRealityCount))
+	local msg = CL.count:format(L.sunder_reality, sunderRealityCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	sunderRealityCount = sunderRealityCount + 1
 	if self:Easy() or sunderRealityCount < 5 then -- only 4 sets unless Normal
@@ -425,8 +431,9 @@ do
 	end
 
 	function mod:EbonDestruction(args)
-		self:StopBar(CL.count:format(L.ebon_destruction, ebonDestructionCount))
-		self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.ebon_destruction, ebonDestructionCount)))
+		local msg = CL.count:format(L.ebon_destruction, ebonDestructionCount)
+		self:StopBar(msg)
+		self:Message(args.spellId, "red", CL.casting:format(msg))
 		self:PlaySound(args.spellId, "warning")
 		self:CastBar(args.spellId, 6, L.ebon_destruction)
 		ebonDestructionCount = ebonDestructionCount + 1

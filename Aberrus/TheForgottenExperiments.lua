@@ -272,8 +272,9 @@ do
 	end
 
 	function mod:RendingCharge(args)
-		self:StopBar(CL.count:format(args.spellName, rendingChargeCount))
-		self:Message(406358, "red", CL.count:format(args.spellName, rendingChargeCount))
+		local msg = CL.count:format(args.spellName, rendingChargeCount)
+		self:StopBar(msg)
+		self:Message(406358, "red", msg)
 		self:PlaySound(406358, "alert")
 		rendingChargeCount = rendingChargeCount + 1
 		local cd = self:Mythic() and (rendingChargeCount % 2 == 1 and 18 or 37) or (rendingChargeCount % 2 == 1 and 38 or 35)
@@ -287,8 +288,9 @@ function mod:RendingChargeSuccess(args)
 end
 
 function mod:MassiveSlam(args)
-	self:StopBar(CL.count:format(L.massive_slam, massiveSlamCount))
-	self:Message(404472, "yellow", CL.count:format(L.massive_slam, massiveSlamCount))
+	local msg = CL.count:format(L.massive_slam, massiveSlamCount)
+	self:StopBar(msg)
+	self:Message(404472, "yellow", msg)
 	self:PlaySound(404472, "alert")
 	massiveSlamCount = massiveSlamCount + 1
 	-- finding a 4th non-mythic cast is hard
@@ -297,8 +299,9 @@ function mod:MassiveSlam(args)
 end
 
 function mod:BellowingRoar(args)
-	self:StopBar(CL.count:format(CL.roar, bellowingRoarCount))
-	self:Message(args.spellId, "orange", CL.count:format(CL.roar, bellowingRoarCount))
+	local msg = CL.count:format(CL.roar, bellowingRoarCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alarm")
 	bellowingRoarCount = bellowingRoarCount + 1
 	local cd = self:Mythic() and (bellowingRoarCount % 2 == 0 and 30 or 25) or 57 -- 10.7, 57.0 wtb 3rd cast
@@ -307,8 +310,9 @@ end
 
 -- Thadrion
 function mod:UnstableEssence(args)
-	self:StopBar(CL.count:format(L.unstable_essence_new, unstableEssenceCount))
-	self:Message(407327, "cyan", CL.casting:format(L.unstable_essence_new))
+	local msg = CL.count:format(L.unstable_essence_new, unstableEssenceCount)
+	self:StopBar(msg)
+	self:Message(407327, "cyan", CL.casting:format(msg))
 	unstableEssenceCount = unstableEssenceCount + 1
 
 	local t = GetTime()
@@ -355,8 +359,9 @@ function mod:UnstableEssenceRemoved(args)
 end
 
 function mod:VolatileSpew(args)
-	self:StopBar(CL.count:format(L.volatile_spew, volatileSpewCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.volatile_spew, volatileSpewCount))
+	local msg = CL.count:format(L.volatile_spew, volatileSpewCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alarm")
 	volatileSpewCount = volatileSpewCount + 1
 
@@ -370,8 +375,9 @@ function mod:VolatileSpew(args)
 end
 
 function mod:ViolentEruption(args)
-	self:StopBar(CL.count:format(L.volatile_eruption, violentEruptionCount))
-	self:Message(405375, "yellow", CL.count:format(L.volatile_eruption, violentEruptionCount))
+	local msg = CL.count:format(L.volatile_eruption, violentEruptionCount)
+	self:StopBar(msg)
+	self:Message(405375, "yellow", msg)
 	self:PlaySound(405375, "long")
 	violentEruptionCount = violentEruptionCount + 1
 	self:Bar(405375, self:Mythic() and 55 or 69.3, CL.count:format(L.volatile_eruption, violentEruptionCount))
@@ -379,16 +385,18 @@ end
 
 -- Rionthus
 function mod:DeepBreath(args)
-	self:StopBar(CL.count:format(args.spellName, deepBreathCount))
-	self:Message(args.spellId, "red", CL.count:format(args.spellName, deepBreathCount))
+	local msg = CL.count:format(args.spellName, deepBreathCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", msg)
 	self:PlaySound(args.spellId, "alert")
 	deepBreathCount = deepBreathCount + 1
 	self:Bar(args.spellId, self:Mythic() and 55 or 43, CL.count:format(args.spellName, deepBreathCount))
 end
 
 function mod:TemporalAnomaly(args)
-	self:StopBar(CL.count:format(L.temporal_anomaly, temporalAnomalyCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.temporal_anomaly, temporalAnomalyCount))
+	local msg = CL.count:format(L.temporal_anomaly, temporalAnomalyCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "info")
 	temporalAnomalyCount = temporalAnomalyCount + 1
 	self:Bar(args.spellId, self:Mythic() and 55 or (temporalAnomalyCount == 2 and 46.3 or 43.8), CL.count:format(L.temporal_anomaly, temporalAnomalyCount))
@@ -402,8 +410,9 @@ function mod:TemporalAnomalyKnocked(args)
 end
 
 function mod:Disintegrate(args)
-	self:StopBar(CL.count:format(args.spellName, disintergrateCount))
-	self:Message(405392, "orange", CL.count:format(args.spellName, disintergrateCount))
+	local msg = CL.count:format(args.spellName, disintergrateCount)
+	self:StopBar(msg)
+	self:Message(405392, "orange", msg)
 	disintergrateCount = disintergrateCount + 1
 	self:Bar(405392, self:Mythic() and 55 or 44, CL.count:format(args.spellName, disintergrateCount))
 end

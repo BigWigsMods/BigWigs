@@ -145,8 +145,9 @@ function mod:AncientFury(args)
 end
 
 function mod:SearingSlamApplied(args)
-	self:StopBar(CL.count:format(CL.leap, searingSlamCount))
-	self:TargetMessage(405821, "yellow", args.destName, CL.count:format(CL.leap, searingSlamCount))
+	local msg = CL.count:format(CL.leap, searingSlamCount)
+	self:StopBar(msg)
+	self:TargetMessage(405821, "yellow", args.destName, msg)
 	if self:Me(args.destGUID) then
 		self:PlaySound(405821, "warning")
 		self:Say(405821, CL.leap)
@@ -177,8 +178,9 @@ function mod:ShadowlavaBlast(args)
 end
 
 function mod:ChargedSmash(args)
-	self:StopBar(CL.count:format(L.charged_smash, chargedSmashCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.charged_smash, chargedSmashCount))
+	local msg = CL.count:format(L.charged_smash, chargedSmashCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alarm") -- spread
 	chargedSmashCount = chargedSmashCount + 1
 	self:Bar(args.spellId, timers[args.spellId][chargedSmashCount], CL.count:format(L.charged_smash, chargedSmashCount))
@@ -281,8 +283,9 @@ function mod:FailedSoak(args)
 end
 
 function mod:UnleashShadowflame(args)
-	self:StopBar(CL.count:format(L.unleash_shadowflame, unleashShadowflameCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.unleash_shadowflame, unleashShadowflameCount))
+	local msg = CL.count:format(L.unleash_shadowflame, unleashShadowflameCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alert")
 	unleashShadowflameCount = unleashShadowflameCount + 1
 	self:Bar(args.spellId, timers[args.spellId][unleashShadowflameCount], CL.count:format(L.unleash_shadowflame, unleashShadowflameCount))

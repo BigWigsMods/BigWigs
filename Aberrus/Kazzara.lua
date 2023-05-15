@@ -97,12 +97,12 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < nextHellsteelCarnageHealth then --  At 80%, 60%, and 40%
-		self:Message(401319, "cyan", CL.soon:format(self:SpellName(401319)), false) -- Hellsteel Carnage soon
-		self:PlaySound(401319, "info")
 		nextHellsteelCarnageHealth = nextHellsteelCarnageHealth - 20
 		if nextHellsteelCarnageHealth < 30 then
 			self:UnregisterUnitEvent(event, unit)
 		end
+		self:Message(401319, "cyan", CL.soon:format(self:SpellName(401319)), false) -- Hellsteel Carnage soon
+		self:PlaySound(401319, "info")
 	end
 end
 
@@ -122,8 +122,9 @@ end
 do
 	local count = 1
 	function mod:DreadRifts(args)
-		self:StopBar(CL.count:format(args.spellName, dreadRiftsCount))
-		self:Message(407196, "yellow", CL.count:format(args.spellName, dreadRiftsCount))
+		local msg = CL.count:format(args.spellName, dreadRiftsCount)
+		self:StopBar(msg)
+		self:Message(407196, "yellow", msg)
 		self:PlaySound(407196, "alarm") -- spread
 		dreadRiftsCount = dreadRiftsCount + 1
 		self:Bar(407196, 35, CL.count:format(args.spellName, dreadRiftsCount))
@@ -150,8 +151,9 @@ do
 end
 
 function mod:RaysOfAnguish(args)
-	self:StopBar(CL.count:format(CL.lasers, raysOfAnguishCount))
-	self:Message(args.spellId, "orange", CL.count:format(CL.lasers, raysOfAnguishCount))
+	local msg = CL.count:format(CL.lasers, raysOfAnguishCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alarm") -- spread
 	raysOfAnguishCount = raysOfAnguishCount + 1
 	self:Bar(args.spellId, 34.1, CL.count:format(CL.lasers, raysOfAnguishCount))
@@ -166,16 +168,18 @@ function mod:RaysOfAnguishApplied(args)
 end
 
 function mod:Hellbeam(args)
-	self:StopBar(CL.count:format(CL.breath, hellbeamCount))
-	self:Message(args.spellId, "red", CL.count:format(CL.breath, hellbeamCount))
+	local msg = CL.count:format(CL.breath, hellbeamCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", msg)
 	self:PlaySound(args.spellId, "alarm") -- frontal
 	hellbeamCount = hellbeamCount + 1
 	self:Bar(args.spellId, 36.5, CL.count:format(CL.breath, hellbeamCount))
 end
 
 function mod:WingsOfExtinction(args)
-	self:StopBar(CL.count:format(CL.pushback, wingsOfExtinctionCount))
-	self:Message(args.spellId, "orange", CL.count:format(CL.pushback, wingsOfExtinctionCount))
+	local msg = CL.count:format(CL.pushback, wingsOfExtinctionCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alert")
 	wingsOfExtinctionCount = wingsOfExtinctionCount + 1
 	self:Bar(args.spellId, 35, CL.count:format(CL.pushback, wingsOfExtinctionCount))

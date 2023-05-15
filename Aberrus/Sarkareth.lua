@@ -290,12 +290,12 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < nextStageHealth then -- 60% (?) and 40%
-		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(self:GetStage() + 1)), false)
-		self:PlaySound("stages", "info")
 		nextStageHealth = nextStageHealth - 20
 		if nextStageHealth < 50 then
 			self:UnregisterUnitEvent(event, unit)
 		end
+		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(self:GetStage() + 1)), false)
+		self:PlaySound("stages", "info")
 	end
 end
 

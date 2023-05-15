@@ -455,9 +455,9 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < 67 then -- Intermission 1 at 65%
+		self:UnregisterUnitEvent(event, unit)
 		self:Message("stages", "green", CL.soon:format(CL.count:format(CL.intermission, 1)), false)
 		self:PlaySound("stages", "info")
-		self:UnregisterUnitEvent(event, unit)
 	end
 end
 

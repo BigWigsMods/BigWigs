@@ -113,16 +113,18 @@ end
 --
 
 function mod:DragonfireTraps(args)
-	self:StopBar(CL.count:format(CL.traps, dragonfireTrapsCount))
-	self:Message(args.spellId, "yellow", CL.count:format(CL.traps, dragonfireTrapsCount))
+	local msg = CL.count:format(CL.traps, dragonfireTrapsCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	dragonfireTrapsCount = dragonfireTrapsCount + 1
 	self:CDBar(args.spellId, self:Easy() and 35.2 or 30.5, CL.count:format(CL.traps, dragonfireTrapsCount))
 end
 
 function mod:AnimateGolems(args)
-	self:StopBar(CL.count:format(CL.adds, animateGolemsCount))
-	self:Message(args.spellId, "cyan", CL.count:format(CL.adds, animateGolemsCount))
+	local msg = CL.count:format(CL.adds, animateGolemsCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "cyan", msg)
 	self:PlaySound(args.spellId, "info")
 	animateGolemsCount = animateGolemsCount + 1
 	self:CDBar(args.spellId, 73, CL.count:format(CL.adds, animateGolemsCount))
@@ -158,8 +160,9 @@ function mod:SalvageParts(args)
 end
 
 function mod:TacticalDestruction(args)
-	self:StopBar(CL.count:format(L.tactical_destruction, tacticalDestructionCount))
-	self:Message(args.spellId, "orange", CL.count:format(L.tactical_destruction, tacticalDestructionCount))
+	local msg = CL.count:format(L.tactical_destruction, tacticalDestructionCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "warning")
 	tacticalDestructionCount = tacticalDestructionCount + 1
 	self:CDBar(args.spellId, self:Mythic() and 73 or 71, CL.count:format(L.tactical_destruction, tacticalDestructionCount))
@@ -175,8 +178,9 @@ do
 		mod:Bar(406725, 30, CL.count_amount:format(L.bombs_soaked, bombsSoaked, totalBombs), "inv_misc_bomb_01")
 	end
 	function mod:ShrapnelBomb(args)
-		self:StopBar(CL.count:format(CL.bombs, shrapnelBombCount))
-		self:Message(args.spellId, "yellow", CL.count:format(CL.bombs, shrapnelBombCount))
+		local msg = CL.count:format(CL.bombs, shrapnelBombCount)
+		self:StopBar(msg)
+		self:Message(args.spellId, "yellow", msg)
 		self:PlaySound(args.spellId, "alert")
 		shrapnelBombCount = shrapnelBombCount + 1
 		self:CDBar(args.spellId, 30.3, CL.count:format(CL.bombs, shrapnelBombCount))
@@ -201,8 +205,9 @@ do
 end
 
 function mod:UnstableEmbers(args)
-	self:StopBar(CL.count:format(L.unstable_embers, unstableEmbersCount))
-	self:Message(404010, "red", CL.count:format(L.unstable_embers, unstableEmbersCount))
+	local msg = CL.count:format(L.unstable_embers, unstableEmbersCount)
+	self:StopBar(msg)
+	self:Message(404010, "red", msg)
 	unstableEmbersCount = unstableEmbersCount + 1
 	self:CDBar(404010, 15.8, CL.count:format(L.unstable_embers, unstableEmbersCount))
 	if self:Mythic() then
@@ -228,8 +233,9 @@ function mod:UnstableEmbersRemoved(args)
 end
 
 function mod:BlastWave(args)
-	self:StopBar(CL.count:format(CL.knockback, blastWaveCount))
-	self:Message(args.spellId, "red", CL.count:format(CL.knockback, blastWaveCount))
+	local msg = CL.count:format(CL.knockback, blastWaveCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", msg)
 	self:PlaySound(args.spellId, "alert")
 	blastWaveCount = blastWaveCount + 1
 	self:CDBar(args.spellId, self:Easy() and 38.6 or 34, CL.count:format(CL.knockback, blastWaveCount))
