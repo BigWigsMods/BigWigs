@@ -11,7 +11,7 @@ if L then
 
 	L.coalescing_void = "Fuyez"
 	L.shadow_convergence = "Orbes"
-	L.molten_eruption = "Soak"
+	L.molten_eruption = "Soaks"
 	L.swirling_flame = "Tornades"
 	L.gloom_conflagration = "Météore + Fuyez"
 	L.blistering_twilight = "Bombes + Tornades"
