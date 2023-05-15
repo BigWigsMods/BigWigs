@@ -80,7 +80,7 @@ function mod:GetOptions()
 		404472, -- Massive Slam
 		404713, -- Bellowing Roar
 		-- Thadrion
-		{407327, "SAY", "ME_ONLY_EMPHASIZE"}, -- Unstable Essence
+		{407327, "ME_ONLY_EMPHASIZE"}, -- Unstable Essence
 		"custom_on_unstable_essence_high",
 		unstableEssenceMarker,
 		405492, -- Volatile Spew
@@ -326,7 +326,6 @@ function mod:UnstableEssenceApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(args.spellId, nil, CL.bomb)
 		self:PlaySound(args.spellId, "alarm")
-		self:Say(args.spellId, CL.bomb)
 	end
 	for i = 1, 8, 1 do -- Good luck to anyone with 8 bombs
 		if not essenceMarksUsed[i] then
@@ -344,7 +343,7 @@ function mod:UnstableEssenceAppliedStacks(args)
 		if icon then
 			sayText = "{rt"..icon.."} "..args.amount.." {rt"..icon.."}"
 		end
-		self:Say(args.spellId, sayText, true)
+		self:Say(false, sayText, true)
 	end
 end
 
