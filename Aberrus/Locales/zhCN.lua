@@ -45,7 +45,7 @@ if L then
 	L.south = "南部"
 	L.both = "双方"
 
-	L.zaqali_aide_message = "%s 攀爬 %s" -- Big Adds Climbing North
+	L.zaqali_aide_message = "%$2s：%$1s正在攀爬" -- Big Adds Climbing North
 	L.add_bartext = "%s：%s（%d）"
 	L.boss_returns = "首领落地: 北部"
 
@@ -87,7 +87,7 @@ if L then
 
 	L.twisted_earth = "土墙"
 	L.echoing_fissure = "裂隙"
-	L.rushing_darkness = "击退"
+	L.rushing_darkness = "击退破墙"
 
 	L.umbral_annihilation = "歼灭"
 	L.sunder_reality = "传送门"
@@ -101,6 +101,6 @@ if L then
 	L.emptiness_between_stars = "虚渺"
 	L.void_slash = "正面斩击"
 
-	--L.boss_immune = "Boss Immune"
-	--L.ebon_might = "Adds Immune"
+	L.boss_immune = "首领免疫"
+	L.ebon_might = "小怪免疫"
 end
