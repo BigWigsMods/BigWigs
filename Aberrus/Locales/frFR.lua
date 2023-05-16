@@ -99,6 +99,8 @@ if L then
 	L.claws = "Affaiblissement sur le Tank" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
 	L.claws_debuff = "Explosion Tank"
 	L.emptiness_between_stars = "Vide interstellaire"
-	L.embrace_of_nothingness = "Trou noir"
 	L.void_slash = "Frontal sur le Tank"
+
+	--L.boss_immune = "Boss Immune"
+	--L.ebon_might = "Adds Immune"
 end

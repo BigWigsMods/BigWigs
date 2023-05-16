@@ -99,6 +99,8 @@ if L then
 	L.claws = "Танк дебафф" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
 	L.claws_debuff = "Танк взрывается"
 	L.emptiness_between_stars = "Забвение"
-	L.embrace_of_nothingness = "Чёрная дыра"
 	L.void_slash = "Фронтал"
+
+	--L.boss_immune = "Boss Immune"
+	--L.ebon_might = "Adds Immune"
 end

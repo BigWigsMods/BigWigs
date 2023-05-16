@@ -25,10 +25,12 @@ local breathCount = 1
 local clawsCount = 1
 
 -- Stage Two: A Touch of the Forbidden
+local mobCollector = {}
 local nullGlimmerMarks = {}
 local nullGlimmerCollector = {}
 local desolateBlossomCount = 1
 local infiniteDuressCount = 1
+local recollectionKilled = 1
 
 -- Stage Three: The Seas of Infinity
 local cosmicAscensionCount = 1
@@ -134,15 +136,18 @@ if L then
 	L.mass_disintergrate_single = mod:SpellName(356995) -- Disintegrate
 
 	-- Stage Two: A Touch of the Forbidden
-	L.desolate_blossom = mod:SpellName(404403) -- Desolate Blossom
 	L.infinite_duress = mod:SpellName(404288) -- Infinite Duress
 
 	-- Stage Three: The Seas of Infinity
-	L.cosmic_ascension = mod:SpellName(403771) -- Cosmic Ascension
+	L.boss_immune = "Boss Immune"
+	L.cosmic_ascension = mod:SpellName(161862) -- Cosmic Ascension (Ascension)
 	L.hurtling_barrage = mod:SpellName(405022) -- Hurtling Barrage
-	L.scouring_eternity = mod:SpellName(403625) -- Scouring Eternity
-	L.embrace_of_nothingness = "Black Hole" -- Embrace of Nothingness
+	L.scouring_eternity = mod:SpellName(123244) -- Scouring Eternity (Hide)
+	L.embrace_of_nothingness = mod:SpellName(371920) -- Embrace of Nothingness (Black Hole)
 	L.void_slash = "Tank Frontal"
+
+	-- Mythic
+	L.ebon_might = "Adds Immune"
 end
 
 --------------------------------------------------------------------------------
@@ -150,9 +155,10 @@ end
 --
 
 local massDisintergrateMarker = mod:AddMarkerOption(true, "player", 1, 401680, 1, 2, 3, 4) -- Mass Disintegrate
-local nullGlimmerMarker = mod:AddMarkerOption(true, "npc", 8, -26675, 8, 7, 6, 5) -- Null Glimmer
+local nullGlimmerMarker = mod:AddMarkerOption(true, "npc", 8, -26675, 8, 7, 6) -- Null Glimmer
 local infiniteDuressMarker = mod:AddMarkerOption(true, "player", 1, 404288, 1, 2) -- Infinite Duress
-local hurlingBarrageMarker = mod:AddMarkerOption(true, "player", 3, 405486, 3, 4, 5, 6) -- Hurtling Barrage
+local hurlingBarrageMarker = mod:AddMarkerOption(false, "player", 3, 405486, 3, 4, 5) -- Hurtling Barrage
+local emptyRecollectionMarker = mod:AddMarkerOption(true, "npc", 8, -26672, 8) -- Empty Recollection
 function mod:GetOptions()
 	return {
 		-- General
@@ -167,6 +173,7 @@ function mod:GetOptions()
 		401383, -- Opressing Howl
 		401810, -- Glittering Surge
 		401500, -- Scorching Bomb
+		402746, -- Drifting Embers (damage)
 		406989, -- Burning Ground (damage)
 		{401680, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Mass Disintegrate
 		massDisintergrateMarker,
@@ -187,17 +194,25 @@ function mod:GetOptions()
 		411238, -- Void Blast
 
 		-- Stage Three: The Seas of Infinity
+		406428, -- Motes of Oblivion
 		403771, -- Cosmic Ascension
 		{405486, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Hurtling Barrage
+		hurlingBarrageMarker,
 		403625, -- Scouring Eternity
 		{403520, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Embrace of Nothingness
 		408429, -- Void Slash
 		408457, -- Void Blast
+
+		-- Mythic
+		404269, -- Ebon Might
+		{404769, "TANK"}, -- Empty Strike
+		emptyRecollectionMarker,
 	},{
 		["stages"] = "general",
 		[401383] = -26140, -- Stage One: The Legacy of the Dracthyr
 		[404027] = -26142, -- Stage Two: A Touch of the Forbidden
 		[403771] = -26145, -- Stage Three: The Seas of Infinity
+		[404269] = "mythic", -- Stage Three: The Seas of Infinity
 	},{
 		[401500] = CL.bombs, -- Scorching Bomb
 		[402050] = CL.breath, -- Searing Breath (Breath)
@@ -206,11 +221,16 @@ function mod:GetOptions()
 		[404027] = CL.bombs, -- Void Bomb
 		[404218] = CL.bomb, -- Void Fracture (Bomb)
 		[404456] = CL.breath, -- Abyssal Breath (Breath)
+		[404403] = CL.pools, -- Desolate Blossom (Pools)
 		[411241] = L.claws, -- Void Claws (Tank Debuff)
 		[411238] = L.claws_debuff, -- Void Blast (Tank Explodes)
+		[403771] = L.cosmic_ascension, -- Cosmic Ascension (Ascension)
+		[405486] = L.hurtling_barrage, -- Hurtling Barrage (Lines)
+		[403625] = L.scouring_eternity, -- Scouring Eternity (Hide)
 		[403520] = L.embrace_of_nothingness, -- Embrace of Nothingness (Black Hole)
 		[408429] = L.void_slash, -- Void Slash (Tank Frontal)
 		[408457] = L.claws_debuff, -- Void Blast (Tank Explodes)
+		[404269] = L.ebon_might, -- Ebon Might (Adds Immune)
 	}
 end
 
@@ -236,6 +256,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "Stage3Start", 410654)
 
 	-- Ground Effects
+	self:Log("SPELL_DAMAGE", "GroundDamage", 401621, 404062, 402746, 406428) -- Void Bomb, Scorching Bomb, Drifting Embers, Motes of Oblivion
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 406989) -- Burning Ground
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 406989)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 406989)
@@ -255,8 +276,8 @@ function mod:OnBossEnable()
 
 	-- Stage Two: A Touch of the Forbidden
 	self:Log("SPELL_CAST_START", "VoidBomb", 404027)
-	self:Log("SPELL_AURA_APPLIED", "VoidFractureApplied", 404218)
-	self:Log("SPELL_AURA_REMOVED", "VoidFractureRemoved", 404218)
+	self:Log("SPELL_AURA_APPLIED", "VoidFractureApplied", 404218, 410642)
+	self:Log("SPELL_AURA_REMOVED", "VoidFractureRemoved", 404218, 410642)
 	self:Log("SPELL_CAST_START", "AbyssalBreath", 404456)
 	self:Log("SPELL_SUMMON", "NullGlimmerSummon", 404507)
 	self:Log("SPELL_CAST_START", "BlastingScream", 404754)
@@ -282,6 +303,13 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "VoidSlashApplied", 408429)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidSlashApplied", 408429)
 	self:Log("SPELL_AURA_REMOVED", "VoidSlashRemoved", 408429)
+
+	-- Mythic
+	self:Log("SPELL_SUMMON", "EmptyRecollectionSummon", 404505)
+	self:Log("SPELL_CAST_SUCCESS", "EmptyStrike", 404769)
+	self:Log("SPELL_AURA_APPLIED", "EmptyStrikeApplied", 404769)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "EmptyStrikeApplied", 404769)
+	self:Death("EmptyRecollectionDeath", 202969) -- Empty Recollection
 end
 
 function mod:OnEngage()
@@ -298,14 +326,14 @@ function mod:OnEngage()
 	breathCount = 1
 	clawsCount = 1
 
-	-- self:Bar(401500, 1.1, CL.count:format(CL.bombs, bombCount)) -- Scorching Bomb
-	self:Bar(401810, 3.3, CL.count:format(L.glittering_surge, glitteringSurgeCount)) -- Glittering Surge
-	self:Bar(401383, 14.5, CL.count:format(L.oppressing_howl, opressingHowlCount)) -- Opressing Howl
-	self:Bar(401330, 20.0, CL.count:format(L.claws, clawsCount)) -- Burning Claws
-	self:Bar(401680, 24.9, CL.count:format(L.mass_disintergrate, massDisintergrateCount)) -- Mass Disintegrate
-	self:Bar(402050, 26.7, CL.count:format(CL.breath, breathCount)) -- Searing Breath
+	-- self:Bar(401500, timers[1][401500][bombCount], CL.count:format(CL.bombs, bombCount)) -- Scorching Bomb
+	self:Bar(401810, timers[1][401810][glitteringSurgeCount], CL.count:format(L.glittering_surge, glitteringSurgeCount)) -- Glittering Surge
+	self:Bar(401383, self:Mythic() and 13 or 14.5, CL.count:format(L.oppressing_howl, opressingHowlCount)) -- Opressing Howl
+	self:Bar(401330, self:Mythic() and timers[1][401330][clawsCount] or 20.0, CL.count:format(L.claws, clawsCount)) -- Burning Claws
+	self:Bar(401680, timers[1][401680][massDisintergrateCount], CL.count:format(L.mass_disintergrate, massDisintergrateCount)) -- Mass Disintegrate
+	self:Bar(402050, timers[1][402050][breathCount], CL.count:format(CL.breath, breathCount)) -- Searing Breath
 
-	self:Bar("stages", 113, CL.stage:format(2), 403284)
+	self:Bar("stages", self:Mythic() and 101 or 113, CL.stage:format(2), 403284)
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -316,12 +344,12 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < nextStageHealth then -- 60% (?) and 40%
+		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(self:GetStage() + 1)), false)
+		self:PlaySound("stages", "info")
 		nextStageHealth = nextStageHealth - 20
 		if nextStageHealth < 50 then
 			self:UnregisterUnitEvent(event, unit)
 		end
-		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(self:GetStage() + 1)), false)
-		self:PlaySound("stages", "info")
 	end
 end
 
@@ -377,8 +405,19 @@ do
 	function mod:GroundDamage(args)
 		if self:Me(args.destGUID) and args.time - prev > 2 then
 			prev = args.time
-			self:PlaySound(args.spellId, "underyou")
-			self:PersonalMessage(args.spellId, "underyou")
+			local spellId = args.spellId
+			local text = args.spellName
+			if args.spellId == 404062 then -- Void Bomb
+				spellId = 404027
+				text = CL.bomb
+			elseif args.spellId == 401621 then -- Scorching Bomb
+				spellId = 401500
+				text = CL.bomb
+			end
+			if args.spellId ~= 406428 then -- Dont show message for motes, already have Oblivion messages
+				self:PersonalMessage(spellId, "underyou", text) -- SetOption:404027,401500,406989,406428:::
+			end
+			self:PlaySound(spellId, "underyou") -- SetOption:404027,401500,406989,406428:::
 		end
 	end
 end
@@ -402,10 +441,16 @@ function mod:StageEnd(args)
 	self:StopBar(CL.count:format(L.mass_disintergrate, massDisintergrateCount)) -- Mass Disintegrate
 	self:StopBar(CL.count:format(CL.breath, breathCount)) -- Searing Breath / Abyssal Breath
 	self:StopBar(CL.count:format(L.claws, clawsCount)) -- Burning Claws / Void Claws
+	self:StopBar(CL.stage:format(2))
 
 	-- Stage 2 Bars
-	self:StopBar(CL.count:format(L.desolate_blossom, desolateBlossomCount)) --  Desolate Blossom
+	self:StopBar(CL.count:format(CL.pools, desolateBlossomCount)) --  Desolate Blossom
 	self:StopBar(CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
+	self:StopBar(CL.stage:format(3))
+
+	if self:GetStage() == 2 then
+		self:Bar("stages", 11, L.boss_immune, args.spellId)
+	end
 end
 
 -- Stage One: The Legacy of the Dracthyr
@@ -476,7 +521,7 @@ do
 		self:StopBar(CL.count:format(L.claws, clawsCount))
 		clawsCount = clawsCount + 1
 		if clawsCount < 5 then -- only 4
-			self:Bar(401330, clawsCount == 4 and 16.7 or 18.9, CL.count:format(L.claws, clawsCount))
+			self:Bar(401330, self:Mythic() and timers[1][401330][clawsCount] or (clawsCount == 4 and 16.7 or 18.9), CL.count:format(L.claws, clawsCount))
 		end
 	end
 
@@ -513,24 +558,25 @@ function mod:Stage2Start()
 	clawsCount = 1
 	desolateBlossomCount = 1
 	infiniteDuressCount = 1
+	recollectionKilled = 1
 
-	self:Bar("stages", 110.1, CL.stage:format(3), 403284) -- XXX not sure if phase force transitions
+	self:Bar("stages", self:Mythic() and 103.4 or 110.1, CL.stage:format(3), 403284)
 
 	-- these start on End Existence _REMOVED
-	self:Bar(404456, 3.5, CL.count:format(CL.breath, breathCount)) -- Abyssal Breath
-	self:Bar(404403, 10.6, CL.count:format(L.desolate_blossom, desolateBlossomCount)) --  Desolate Blossom
-	self:Bar(404027, 15.3, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
-	self:Bar(411241, 18.8, CL.count:format(L.claws, clawsCount)) -- Void Claws
+	self:Bar(404456, timers[2][404456][breathCount], CL.count:format(CL.breath, breathCount)) -- Abyssal Breath
+	self:Bar(404403, timers[2][404403][desolateBlossomCount], CL.count:format(CL.pools, desolateBlossomCount)) --  Desolate Blossom
+	self:Bar(404027, timers[2][404027][bombCount], CL.count:format(CL.bombs, bombCount)) -- Void Bomb
+	self:Bar(411241, timers[2][411241][clawsCount], CL.count:format(L.claws, clawsCount)) -- Void Claws
 	if not self:Easy() then
-		self:Bar(404288, 29.4, CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
+		self:Bar(404288, timers[2][404288][infiniteDuressCount], CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
 	end
 
 	self:PauseBar(404456, CL.count:format(CL.breath, breathCount))
-	self:PauseBar(404403, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	self:PauseBar(404403, CL.count:format(CL.pools, desolateBlossomCount))
 	self:PauseBar(404027, CL.count:format(CL.bombs, bombCount))
 	self:PauseBar(411241, CL.count:format(L.claws, clawsCount))
 	self:PauseBar(404288, CL.count:format(L.infinite_duress, infiniteDuressCount))
-	self:PauseBar("stages", CL.stage:format(3))
+	self:PauseBar(404288, CL.stage:format(3))
 end
 
 function mod:EndExistenceApplied(args)
@@ -542,7 +588,7 @@ function mod:EndExistenceRemoved(args)
 	self:Message(args.spellId, "green", CL.over:format(args.spellName))
 
 	self:ResumeBar(404456, CL.count:format(CL.breath, breathCount))
-	self:ResumeBar(404403, CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	self:ResumeBar(404403, CL.count:format(CL.pools, desolateBlossomCount))
 	self:ResumeBar(404027, CL.count:format(CL.bombs, bombCount))
 	self:ResumeBar(411241, CL.count:format(L.claws, clawsCount))
 	self:ResumeBar(404288, CL.count:format(L.infinite_duress, infiniteDuressCount))
@@ -559,19 +605,19 @@ end
 
 function mod:VoidFractureApplied(args)
 	if self:Me(args.destGUID) then
-		self:PersonalMessage(args.spellId, nil, CL.bomb)
-		self:PlaySound(args.spellId, "warning")
-		self:Say(args.spellId, CL.bomb)
+		self:PersonalMessage(404218, nil, CL.bomb)
+		self:PlaySound(404218, "warning")
+		self:Say(404218, CL.bomb)
 		local _, _, duration = self:UnitDebuff(args.destName, args.spellId)
 		if duration < 2 then -- dont countdown below 2, just run
-			self:SayCountdown(args.spellId, duration, nil, duration < 3 and 2) -- If we are between 3 and 2, start countdown at 2
+			self:SayCountdown(404218, duration, nil, duration < 3 and 2) -- If we are between 3 and 2, start countdown at 2
 		end
 	end
 end
 
 function mod:VoidFractureRemoved(args)
 	if self:Me(args.destGUID) then
-		self:CancelSayCountdown(args.spellId)
+		self:CancelSayCountdown(404218)
 	end
 end
 
@@ -585,14 +631,19 @@ function mod:AbyssalBreath(args)
 	nullGlimmerMarks = {}
 	nullGlimmerCollector = {}
 
-	if self:GetOption(nullGlimmerMarker) then
+	if self:GetOption(emptyRecollectionMarker) then -- self:GetOption(nullGlimmerMarker) not in p2
 		self:RegisterTargetEvents("AddMarking")
+	end
+
+	if self:Mythic()then
+		local immuneTimers = {32.3, 30, 27.4, 0}
+		self:Bar(404269, immuneTimers[breathCount-1], CL.count:format(L.ebon_might, breathCount-1))
 	end
 end
 
 function mod:NullGlimmerSummon(args)
-	if self:GetOption(nullGlimmerMarker) then
-		for i = 8, 4, -1 do -- 8, 7, 6, 5, 4
+	if self:GetOption(nullGlimmerMarker) and self:GetStage() == 3 then
+		for i = 8, 6, -1 do -- 8, 7, 6
 			if not nullGlimmerCollector[args.destGUID] and not nullGlimmerMarks[i] then
 				nullGlimmerMarks[i] = args.destGUID
 				nullGlimmerCollector[args.destGUID] = i
@@ -606,6 +657,9 @@ function mod:AddMarking(_, unit, guid)
 	if nullGlimmerCollector[guid] then
 		self:CustomIcon(nullGlimmerMarker, unit, nullGlimmerCollector[guid]) -- icon order from SPELL_SUMMON
 		nullGlimmerCollector[guid] = nil
+	elseif not mobCollector[guid] and self:MobId(guid) == 202969 then
+		self:CustomIcon(emptyRecollectionMarker, unit, 8)
+		mobCollector[guid] = true
 	end
 end
 
@@ -620,11 +674,11 @@ function mod:BlastingScream(args)
 end
 
 function mod:DesolateBlossom(args)
-	self:StopBar(CL.count:format(L.desolate_blossom, desolateBlossomCount))
-	self:Message(404403, "yellow", CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	self:StopBar(CL.count:format(CL.pools, desolateBlossomCount))
+	self:Message(404403, "yellow", CL.count:format(CL.pools, desolateBlossomCount))
 	self:PlaySound(404403, "alert")
 	desolateBlossomCount = desolateBlossomCount + 1
-	self:Bar(404403, timers[2][404403][breathCount], CL.count:format(L.desolate_blossom, desolateBlossomCount))
+	self:Bar(404403, timers[2][404403][breathCount], CL.count:format(CL.pools, desolateBlossomCount))
 end
 
 do
@@ -713,12 +767,12 @@ function mod:Stage3Start()
 	scouringEternityCount = 1
 	embraceOfNothingnessCount = 1
 
-	self:Bar(403771, self:Heroic() and 7.3 or 7.7, CL.count:format(L.cosmic_ascension, cosmicAscensionCount)) -- Cosmic Ascension
-	self:Bar(405486, self:Heroic() and 19.8 or 21.1, CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)) -- Hurtling Barrage
-	self:Bar(408429, self:Heroic() and 21 or 22.4, CL.count:format(L.claws, clawsCount)) -- Void Slash
-	self:Bar(403520, self:Heroic() and 24.8 or 26.4, CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount)) -- Embrace of Nothingness
-	self:Bar(404027, self:Heroic() and 28.5 or 30.4, CL.count:format(CL.bombs, bombCount)) -- Void Bomb
-	self:Bar(403625, self:Heroic() and 46.3 or 49.8, CL.count:format(L.scouring_eternity, scouringEternityCount)) -- Scouring Eternity
+	self:Bar(403771, timers[3][403771][cosmicAscensionCount], CL.count:format(L.cosmic_ascension, cosmicAscensionCount)) -- Cosmic Ascension
+	self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)) -- Hurtling Barrage
+	self:Bar(408429, timers[3][408429][clawsCount], CL.count:format(L.claws, clawsCount)) -- Void Slash
+	self:Bar(403520, timers[3][403520][embraceOfNothingnessCount], CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount)) -- Embrace of Nothingness
+	self:Bar(404027, timers[3][404027][bombCount], CL.count:format(CL.bombs, bombCount)) -- Void Bomb
+	self:Bar(403625, timers[3][403625][scouringEternityCount], CL.count:format(L.scouring_eternity, scouringEternityCount)) -- Scouring Eternity
 	if not self:Easy() then
 		self:Bar(404288, 4.8, CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
 	end
@@ -829,4 +883,32 @@ do
 		self:StopBar(L.claws_debuff, args.destName)
 		self:CancelTimer(tankTimers[args.destName])
 	end
+end
+
+-- Mythic
+function mod:EmptyRecollectionSummon()
+	self:Bar(404769, 7) -- Empty Strike
+end
+
+function mod:EmptyStrike(args)
+	self:StopBar(args.spellId)
+	-- local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
+	-- if self:Tanking(bossUnit) then
+	-- 	self:Message(args.spellId, "purple", CL.count:format(L.scouring_eternity, scouringEternityCount))
+	-- 	self:PlaySound(args.spellId, "alert") -- On you
+	-- end
+	self:CDBar(args.spellId, 12.2)
+end
+
+function mod:EmptyStrikeApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "alarm") -- On you
+	end
+end
+
+function mod:EmptyRecollectionDeath(args)
+	self:StopBar(404769)
+	self:StopBar(CL.count:format(L.ebon_might, recollectionKilled))
+	recollectionKilled = recollectionKilled + 1
 end

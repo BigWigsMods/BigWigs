@@ -99,6 +99,8 @@ if L then
 	L.claws = "坦克減益" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
 	L.claws_debuff = "坦克爆炸"
 	L.emptiness_between_stars = "空無"
-	L.embrace_of_nothingness = "黑洞"
 	L.void_slash = "正面斬擊"
+
+	--L.boss_immune = "Boss Immune"
+	--L.ebon_might = "Adds Immune"
 end

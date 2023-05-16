@@ -99,6 +99,8 @@ if L then
 	L.claws = "Penalità Difensori" -- (Fase 1) Artigli Ardenti / (Fase 2) Artigli del Vuoto / (Fase 3) Squarcio del Vuoto
 	--L.claws_debuff = "Tank Explodes"
 	--L.emptiness_between_stars = "Emptiness"
-	--L.embrace_of_nothingness = "Black Hole"
 	--L.void_slash = "Tank Frontal"
+
+	--L.boss_immune = "Boss Immune"
+	--L.ebon_might = "Adds Immune"
 end
