@@ -276,8 +276,8 @@ function mod:OnBossEnable()
 
 	-- Stage Two: A Touch of the Forbidden
 	self:Log("SPELL_CAST_START", "VoidBomb", 404027)
-	self:Log("SPELL_AURA_APPLIED", "VoidFractureApplied", 404218, 410642)
-	self:Log("SPELL_AURA_REMOVED", "VoidFractureRemoved", 404218, 410642)
+	self:Log("SPELL_AURA_APPLIED", "VoidFractureApplied", 404218, 410642) -- Stage 2, End of Stage 1
+	self:Log("SPELL_AURA_REMOVED", "VoidFractureRemoved", 404218, 410642) -- Stage 2, End of Stage 1
 	self:Log("SPELL_CAST_START", "AbyssalBreath", 404456)
 	self:Log("SPELL_SUMMON", "NullGlimmerSummon", 404507)
 	self:Log("SPELL_CAST_START", "BlastingScream", 404754)
@@ -607,7 +607,9 @@ function mod:VoidFractureApplied(args)
 	if self:Me(args.destGUID) then
 		self:PersonalMessage(404218, nil, CL.bomb)
 		self:PlaySound(404218, "warning")
-		self:Say(404218, CL.bomb)
+		if args.spellId == 404218 then -- Initial say only for the Stage 2 debuffs
+			self:Say(404218, CL.bomb)
+		end
 		local _, _, duration = self:UnitDebuff(args.destName, args.spellId)
 		if duration < 2 then -- dont countdown below 2, just run
 			self:SayCountdown(404218, duration, nil, duration < 3 and 2) -- If we are between 3 and 2, start countdown at 2
