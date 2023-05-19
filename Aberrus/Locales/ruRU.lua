@@ -23,7 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "ruRU")
 if L then
-	L.rending_charge_single = "1й рывок"
+	--L.rending_charge_single = "First Charge"
 	L.massive_slam = "Фронтал"
 	L.unstable_essence_new = "Бомба каст"
 	L.custom_on_unstable_essence_high = "Сообщения в чат о высоких стаках Нестабильной Сущности"
@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "ruRU")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	L.zaqali_aide_north_emote_trigger = "северное укрепление" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Помощники вождя поднимаются на северное укрепление!
-	L.zaqali_aide_south_emote_trigger = "южное укрепление" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Помощники вождя поднимаются на южное укрепление!
+	L.zaqali_aide_north_emote_trigger = "северное укрепление" -- Помощники вождя поднимаются на северное укрепление!
+	L.zaqali_aide_south_emote_trigger = "южное укрепление" -- Помощники вождя поднимаются на южное укрепление!
 
 	L.north = "Север"
 	L.south = "Юг"

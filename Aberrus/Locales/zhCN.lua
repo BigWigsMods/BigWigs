@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "zhCN")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	L.zaqali_aide_north_emote_trigger = "北部城垒" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t 指挥官爬上了北部城垒！
-	L.zaqali_aide_south_emote_trigger = "南部城垒" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t 指挥官爬上了南部城垒！
+	L.zaqali_aide_north_emote_trigger = "北部城垒" -- 指挥官爬上了北部城垒！
+	L.zaqali_aide_south_emote_trigger = "南部城垒" -- 指挥官爬上了南部城垒！
 
 	L.north = "北部"
 	L.south = "南部"

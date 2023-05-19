@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "itIT")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
-	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- Commanders ascend the northern battlement!
+	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- Commanders ascend the southern battlement!
 
 	L.north = "Nord"
 	L.south = "Sud"

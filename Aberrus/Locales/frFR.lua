@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "frFR")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	L.zaqali_aide_north_emote_trigger = "rempart nord" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Les commandants montent sur le rempart nord!
-	L.zaqali_aide_south_emote_trigger = "rempart sud" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Les commandants montent sur le rempart sud!
+	L.zaqali_aide_north_emote_trigger = "rempart nord" -- Les commandants montent sur le rempart nord!
+	L.zaqali_aide_south_emote_trigger = "rempart sud" -- Les commandants montent sur le rempart sud!
 
 	L.north = "Nord"
 	L.south = "Sud"

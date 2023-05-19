@@ -23,7 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "esES")
 if L then
-	--L.rending_charge_single = "1st Charge"
+	--L.rending_charge_single = "First Charge"
 	--L.massive_slam = "Frontal Cone"
 	--L.unstable_essence_new = "New Bomb"
 	--L.custom_on_unstable_essence_high = "High Stacks Unstable Essence Say Messages"
@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "esES")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
-	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- Commanders ascend the northern battlement!
+	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- Commanders ascend the southern battlement!
 
 	--L.north = "North"
 	--L.south = "South"
