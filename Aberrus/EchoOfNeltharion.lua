@@ -91,7 +91,7 @@ end
 
 function mod:OnBossEnable()
 	-- Stage 1
-	self:Log("SPELL_CAST_SUCCESS", "VolcanicHeart", 410968)
+	self:Log("SPELL_AURA_APPLIED", "VolcanicHeartApplied", 410966)
 	self:Log("SPELL_CAST_START", "EchoingFissure", 403272)
 	self:Log("SPELL_CAST_START", "RushingDarkness", 407207)
 	self:Log("SPELL_CAST_SUCCESS", "TwistedEarth", 409241)
@@ -153,29 +153,26 @@ function mod:UNIT_HEALTH(event, unit)
 end
 
 -- Stage 1
-function mod:VolcanicHeart(args)
-	local msg = CL.count:format(CL.bombs, volcanicHeartCount)
-	self:StopBar(msg)
-	self:Message(410953, "orange", msg)
-	volcanicHeartCount = volcanicHeartCount + 1
+do
+	local prev = 0
+	function mod:VolcanicHeartApplied(args)
+		if args.time - prev < 5 then return end
+		prev = args.time
 
-	local cd = 0
-	if self:GetStage() == 1 then
-		cd = self:Mythic() and 37 or 36.5
-	elseif self:GetStage() == 2 then
-		if volcanicHeartCount == 6 then
-			-- skips the 6th SPELL_CAST_SUCCESS ???
-			self:Bar(410953, 16.6, CL.count:format(CL.bombs, volcanicHeartCount))
-			volcanicHeartCount = volcanicHeartCount + 1
-			self:ScheduleTimer("Bar", 17, 410953, 19, CL.count:format(CL.bombs, volcanicHeartCount))
-			return
-		else
-			-- local timer = { 27.8, 16.3, 17.0, 17.0, 17.3, 36.0, 14.7, 0 }
-			local timer = { 27.8, 16.3, 17.0, 17.0, 17.3, 16.6, 19.4, 14.7, 0 }
+		local msg = CL.count:format(CL.bombs, volcanicHeartCount)
+		self:StopBar(msg)
+		self:Message(410953, "orange", msg)
+		volcanicHeartCount = volcanicHeartCount + 1
+
+		local cd = 0
+		if self:GetStage() == 1 then
+			cd = self:Mythic() and 37 or 36.5
+		elseif self:GetStage() == 2 then
+			local timer = { 28.4, 15.6, 17.0, 17.0, 17.7, 16.3, 19.4, 14.7, 0 }
 			cd = timer[volcanicHeartCount]
 		end
+		self:CDBar(410953, cd, CL.count:format(CL.bombs, volcanicHeartCount))
 	end
-	self:CDBar(410953, cd, CL.count:format(CL.bombs, volcanicHeartCount))
 end
 
 function mod:TwistedEarth(args)
