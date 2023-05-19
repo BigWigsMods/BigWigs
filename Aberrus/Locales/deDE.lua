@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "deDE")
 if L then
-	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
-	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range in stage 1."
+	L.custom_on_fade_out_bars = "Verblassender Balken in Phase 1"
+	L.custom_on_fade_out_bars_desc = "Verblassender Balken für entfernten Boss in Phase 1"
 
 	L.coalescing_void = "Weg laufen"
 	L.shadow_convergence = "Orbs"
@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "deDE")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
-	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+	L.zaqali_aide_north_emote_trigger = "Add Magmamystikerin auf Nordseite!"
+	L.zaqali_aide_south_emote_trigger = "Add Magmamystikerin auf Südseite!" 
 
 	L.north = "Norden"
 	L.south = "Süden"
