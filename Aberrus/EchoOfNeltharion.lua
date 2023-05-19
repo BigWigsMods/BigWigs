@@ -39,7 +39,7 @@ local castingEbonDestruction = false
 local L = mod:GetLocale()
 if L then
 	L.custom_on_repeating_sunder_reality = "Repeating Sundered Reality Warning"
-	L.custom_on_repeating_shattered_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
+	L.custom_on_repeating_sunder_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
 	-- L.repeating_shattered_reality_icon = 407919
 
 	L.twisted_earth = "Walls"

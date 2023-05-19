@@ -83,7 +83,7 @@ end
 L = BigWigs:NewBossLocale("Echo of Neltharion", "ptBR")
 if L then
 	--L.custom_on_repeating_sunder_reality = "Repeating Sunder Reality Warning"
-	--L.custom_on_repeating_shattered_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
+	--L.custom_on_repeating_sunder_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
 
 	--L.twisted_earth = "Walls"
 	--L.echoing_fissure = "Fissure"

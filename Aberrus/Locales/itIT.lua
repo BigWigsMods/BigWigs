@@ -83,7 +83,7 @@ end
 L = BigWigs:NewBossLocale("Echo of Neltharion", "itIT")
 if L then
 	L.custom_on_repeating_sunder_reality = "Ripeti Avviso per Frammentazione della Realtà"
-	L.custom_on_repeating_shattered_reality_desc = "Ripeti un messaggio durante il lancio di Distruzione d'Ebano fino a che non entri dentro un portale."
+	L.custom_on_repeating_sunder_reality_desc = "Ripeti un messaggio durante il lancio di Distruzione d'Ebano fino a che non entri dentro un portale."
 
 	L.twisted_earth = "Muri"
 	L.echoing_fissure = "Fessura"

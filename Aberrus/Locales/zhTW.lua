@@ -83,7 +83,7 @@ end
 L = BigWigs:NewBossLocale("Echo of Neltharion", "zhTW")
 if L then
 	L.custom_on_repeating_sunder_reality = "重複傳送門警告"
-	L.custom_on_repeating_shattered_reality_desc = "在黯黑毀滅施法期間，持續發送警告，直到你進入粉碎現實的傳送門為止。"
+	L.custom_on_repeating_sunder_reality_desc = "在黯黑毀滅施法期間，持續發送警告，直到你進入粉碎現實的傳送門為止。"
 
 	L.twisted_earth = "石牆"
 	L.echoing_fissure = "迴響"

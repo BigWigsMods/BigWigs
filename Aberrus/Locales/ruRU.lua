@@ -83,7 +83,7 @@ end
 L = BigWigs:NewBossLocale("Echo of Neltharion", "ruRU")
 if L then
 	L.custom_on_repeating_sunder_reality = "Повторяющиеся уведомления о Тёмном Уничтожении"
-	L.custom_on_repeating_shattered_reality_desc = "Напоминать о касте Тёмного Уничтожения, пока вы не зайдёте в портал."
+	L.custom_on_repeating_sunder_reality_desc = "Напоминать о касте Тёмного Уничтожения, пока вы не зайдёте в портал."
 
 	L.twisted_earth = "Стены"
 	L.echoing_fissure = "Разлом"
