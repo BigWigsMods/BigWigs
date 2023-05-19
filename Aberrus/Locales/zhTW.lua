@@ -45,7 +45,7 @@ if L then
 	L.south = "南方"
 	L.both = "雙方"
 
-	L.zaqali_aide_message = "%$2s：%$1s正在攀登" -- Big Adds Climbing North
+	L.zaqali_aide_message = "%2$s：%1$s正在攀登" -- Big Adds Climbing North
 	L.add_bartext = "%s：%s（%d）"
 	L.boss_returns = "北方：首領落地" -- 跟L.zaqali_aide_message統一格式
 
