@@ -1,7 +1,7 @@
 local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "deDE")
 if not L then return end
 if L then
-	--L.dread_rift = "Rift" -- Singular Dread Rift
+	L.dread_rift = "Schreckensrisse" -- Singular Dread Rift
 end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "deDE")
@@ -9,29 +9,29 @@ if L then
 	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
 	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range in stage 1."
 
-	--L.coalescing_void = "Run Away"
-	--L.shadow_convergence = "Orbs"
-	--L.molten_eruption = "Soaks"
-	--L.swirling_flame = "Tornadoes"
-	--L.gloom_conflagration = "Meteor + Run Away"
-	--L.blistering_twilight = "Bombs + Tornadoes"
-	--L.convergent_eruption = "Soaks + Orbs"
-	--L.shadowflame_burst = "Frontal Cone"
+	L.coalescing_void = "Weg laufen"
+	L.shadow_convergence = "Orbs"
+	L.molten_eruption = "Soaks"
+	L.swirling_flame = "Tornados"
+	L.gloom_conflagration = "Meteor + Weg laufen"
+	L.blistering_twilight = "Bomben + Tornados
+	L.convergent_eruption = "Soaks + Orbs"
+	L.shadowflame_burst = "Frontal Angriff"
 
-	--L.shadow_and_flame = "Mythic Debuffs"
+	L.shadow_and_flame = "Mytisch Debuffs"
 end
 
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "deDE")
 if L then
-	--L.rending_charge_single = "1st Charge"
-	--L.massive_slam = "Frontal Cone"
-	--L.unstable_essence_new = "New Bomb"
-	--L.custom_on_unstable_essence_high = "High Stacks Unstable Essence Say Messages"
-	--L.custom_on_unstable_essence_high_desc = "Say messages with the amount of stacks for your Unstable Essence debuff when they are high enough."
-	--L.volatile_spew = "Dodges"
-	--L.volatile_eruption = "Eruption"
-	--L.temporal_anomaly = "Heal Orb"
-	--L.temporal_anomaly_knocked = "Heal Orb Knocked"
+	L.rending_charge_single = "Erste Aufladung"
+	L.massive_slam = "Frontal Angriff"
+	L.unstable_essence_new = "Neue Bombe"
+	L.custom_on_unstable_essence_high = "Zu viele Stacks Instabile Essenz"
+	L.custom_on_unstable_essence_high_desc = "Zu viele Stacks Instabile Essenz erreicht - Dispell"
+	L.volatile_spew = "Ausweichen"
+	L.volatile_eruption = "Eruption"
+	L.temporal_anomaly = "Heilungs Orb"
+	L.temporal_anomaly_knocked = "Heilungs Orb geblockt"
 end
 
 L = BigWigs:NewBossLocale("Assault of the Zaqali", "deDE")
@@ -41,66 +41,66 @@ if L then
 	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
 	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
 
-	--L.north = "North"
-	--L.south = "South"
-	--L.both = "Both"
+	L.north = "Norden"
+	L.south = "Süden"
+	L.both = "Beide Seiten"
 
-	--L.zaqali_aide_message = "%s Climbing %s" -- Big Adds Climbing North
+	L.zaqali_aide_message = "%s Große Adds klettern! %s" -- Große Adds kletten im Norden!
 	L.add_bartext = "%s: %s (%d)"
-	--L.boss_returns = "Boss Lands: North"
+	L.boss_returns = "Boss landet: Norden"
 
 	L.molten_barrier = "Barriere"
-	--L.catastrophic_slam = "Door Slam"
+	L.catastrophic_slam = "Türschlag"
 end
 
 L = BigWigs:NewBossLocale("Rashok, the Elder", "deDE")
 if L then
-	--L.doom_flames = "Small Soaks"
-	--L.shadowlave_blast = "Frontal Cone"
-	--L.charged_smash = "Big Soak"
-	--L.energy_gained = "Energy Gained: %d"
+	L.doom_flames = "kleine Soaks"
+	L.shadowlave_blast = "Frontal Angriff"
+	L.charged_smash = "Großer Soak"
+	L.energy_gained = "Energie erhalten: %d"
 
-	-- Mythic
-	--L.unleash_shadowflame = "Mythic Orbs"
+	Mythic
+	L.unleash_shadowflame = "Mytisch Orbs"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "deDE")
 if L then
-	--L.tactical_destruction = "Dragonheads"
-	--L.bombs_soaked = "Bombs Soaked" -- Bombs Soaked (2/4)
-	--L.unstable_embers = "Embers"
-	--L.unstable_ember = "Ember"
+	L.tactical_destruction = "Drachenköpfe"
+	L.bombs_soaked = "Bomben aufgenommen" -- Bomben aufgenommen (2/4)
+	L.unstable_embers = "Instabile Funken"
+	L.unstable_ember = "Instabiler Funken"
 end
 
 L = BigWigs:NewBossLocale("Magmorax", "deDE")
 if L then
-	--L.energy_gained = "Energy Gained (-17s)" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
+	L.energy_gained = "Energie erhalten (-17s)" -- Bei Fehlschlag erreicht der Boss 17 Sekunden schneller volle Energie
 
-	-- Mythic
-	--L.explosive_magma = "Soak Pool"
+	Mythic
+	L.explosive_magma = "Soak Fläche"
 end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "deDE")
 if L then
-	--L.custom_on_repeating_sunder_reality = "Repeating Sunder Reality Warning"
-	--L.custom_on_repeating_shattered_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
+	L.custom_on_repeating_sunder_reality = "Realität zerreißen - Portale erscheinen"
+	L.custom_on_repeating_shattered_reality_desc = "Schwarze Zerstörung - Gehe in Portal!"
 
-	--L.twisted_earth = "Walls"
-	--L.echoing_fissure = "Fissure"
-	--L.rushing_darkness = "Knock Lines"
+	L.twisted_earth = "Wände"
+	L.echoing_fissure = "Hallender Spalt"
+	L.rushing_darkness = "Rauschende Finsternis"
 
-	--L.umbral_annihilation = "Annihilation"
-	--L.sunder_reality = "Portals"
-	--L.ebon_destruction = "Big Bang"
+	L.umbral_annihilation = "Schattenhafte Auslöschung"
+	L.sunder_reality = "Portale"
+	L.ebon_destruction = "Big Bang"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "deDE")
 if L then
-	--L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
-	--L.claws_debuff = "Tank Explodes"
-	--L.emptiness_between_stars = "Emptiness"
-	--L.void_slash = "Tank Frontal"
+	L.claws = "Tank Debuff" -- (Phase 1) Brennende Klauen / (Phase 2) Leerenklauen / (Phase 3) Leerenschlitzer
+	L.claws_debuff = "Tank explodiert"
+	L.emptiness_between_stars = "Leere"
+	L.void_slash = "Tank Frontal Angriff"
 
-	--L.boss_immune = "Boss Immune"
-	--L.ebon_might = "Adds Immune"
+	L.boss_immune = "Boss immun"
+	L.ebon_might = "Adds immun"
 end
