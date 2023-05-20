@@ -518,7 +518,6 @@ local function parseLua(file)
 	for line in data:gmatch("(.-)\r?\n") do
 		lines[#lines+1] = line
 	end
-	data = nil
 
 	local locale, common_locale = modules_locale[module_name], modules_locale["BigWigs: Common"]
 	local options, option_keys = {}, {}
@@ -722,7 +721,7 @@ local function parseLua(file)
 		-- Check for function calls that will trigger a sound, including calls
 		-- delayed with ScheduleTimer.
 		if checkForAPI(line) then
-			local key, sound, color, icon, bitflag = nil, nil, nil, nil, nil
+			local key, sound, color, bitflag = nil, nil, nil, nil
 			local obj, sugar, method, args = line:match("(%w+)([.:])(.-)%(%s*(.+)%s*%)")
 			local offset = 0
 			if method == "ScheduleTimer" or method == "ScheduleRepeatingTimer" then
@@ -759,7 +758,7 @@ local function parseLua(file)
 				end
 				local icon_index = icon_methods[method]
 				if icon_index then
-					icon = args[icon_index+offset]
+					local icon = args[icon_index+offset]
 					-- Make sure methods with a string key set an icon.
 					if type(key) == "string" and key:match('^".*"$') and icon == nil then
 						-- Also check if text is nil or a (formatted)string if the method isn't :Flash

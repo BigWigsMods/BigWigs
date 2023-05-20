@@ -64,6 +64,9 @@ files["**/Options/Options.lua"].ignore = {
 	"113/C_Spell",
 	"113/C_UI",
 }
+files["**/Locales/*.lua"].ignore = {
+	"542", -- Empty if branch
+}
 ignore = {
 	"113/BigWigs",
 	"212/self",
@@ -74,23 +77,14 @@ ignore = {
 globals = {
 	-- wow std api
 	"abs",
-	"acos",
-	"asin",
-	"atan",
-	"atan2",
 	"bit",
 	"ceil",
 	"cos",
 	"date",
 	"debugstack",
 	"deg",
-	"difftime",
 	"exp",
-	"fastrandom",
 	"floor",
-	"forceinsecure",
-	"foreach",
-	"foreachi",
 	"format",
 	"frexp",
 	"getn",
@@ -98,8 +92,6 @@ globals = {
 	"gsub",
 	"hooksecurefunc",
 	"ldexp",
-	"log",
-	"log10",
 	"max",
 	"min",
 	"mod",
