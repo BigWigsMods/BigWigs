@@ -63,6 +63,9 @@ files["**/Plugins/*.lua"].ignore = {
 	"112/SlashCmdList",
 	"111/SLASH_.*", -- slash handlers
 }
+files["**/Options/Options.lua"].ignore = {
+	"113/C_UI",
+}
 ignore = {
 	"113/BigWigs",
 	"212/self",
