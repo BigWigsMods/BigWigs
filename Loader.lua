@@ -354,6 +354,7 @@ do
 		[2521] = lw_df, -- Ruby Life Pools
 		[2526] = lw_df, -- Algeth'ar Academy
 		[2527] = lw_df, -- Halls of Infusion
+		[2579] = lw_df, -- Dawn of the Infinite
 	}
 
 	public.zoneTblWorld = {
