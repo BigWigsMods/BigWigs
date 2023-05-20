@@ -113,7 +113,6 @@ function mod:GetOptions()
 		[373048] = L.webs, -- Suffocating Webs (Webs)
 		[-24899] = CL.big_add, -- Frostbreath Arachnid (Big Add)
 		[374112] = L.freezing_breath, -- Freezing Breath (Add Breath)
-		[373048] = L.webs, -- Suffocating Webs (Knock Webs)
 		[371983] = L.repelling_burst, -- Repelling Burst (Knockback)
 	}
 end
@@ -249,7 +248,7 @@ end
 function mod:CallSpiderlings(args)
 	self:StopBar(CL.count:format(CL.small_adds, callSpiderlingsCount))
 	callSpiderlingsCount = callSpiderlingsCount + 1
-	local cd = 0
+	local cd
 	if self:GetStage() == 1 then
 		cd = timers[args.spellId][callSpiderlingsCount]
 	else

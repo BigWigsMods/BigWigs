@@ -150,7 +150,7 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 391595 then -- Conductive Mark
 		self:StopBar(CL.count:format(L.conductive_marks, conductiveMarkCount))
 		conductiveMarkCount = conductiveMarkCount + 1
-		local cd = 0
+		local cd
 		if self:Mythic() then
 			cd = conductiveMarkCount % 3 == 1 and 34 or 25.5
 		elseif self:Heroic() then

@@ -43,9 +43,9 @@ local bossUtilityFrame = CreateFrame("Frame")
 local petUtilityFrame = CreateFrame("Frame")
 local enabledModules, bossTargetScans, unitTargetScans = {}, {}, {}
 local allowedEvents = {}
-local difficulty = 0
+local difficulty
 local UpdateDispelStatus, UpdateInterruptStatus = nil, nil
-local myGUID, myRole, myRolePosition = nil, nil, nil
+local myGUID, myRole, myRolePosition
 local myGroupGUIDs, myGroupRolePositions = {}, {}
 local solo = false
 local classColorMessages = true
@@ -79,7 +79,6 @@ local updateData = function(module)
 
 	solo = true
 	myGroupGUIDs = {}
-	local _, _, _, instanceId = UnitPosition("player")
 	for unit in module:IterateGroup() do
 		local guid = UnitGUID(unit)
 		myGroupGUIDs[guid] = true
@@ -485,9 +484,9 @@ function boss:AddMarkerOption(state, markType, icon, id, ...)
 	local l = self:GetLocale()
 	local str = ""
 	for i = 1, select("#", ...) do
-		local num = select(i, ...)
-		local icon = format("|T13700%d:15|t", num)
-		str = str .. icon
+		local raidMarkerIconNumber = select(i, ...)
+		local markerTexture = format("|T13700%d:15|t", raidMarkerIconNumber)
+		str = str .. markerTexture
 	end
 
 	local option = format(state and "custom_on_%d" or "custom_off_%d", id)
@@ -798,9 +797,9 @@ do
 	function boss:CheckForEncounterEngage(noEngage)
 		if not self:IsEngaged() then
 			for i = 1, 5 do
-				local boss = bosses[i]
-				local guid = UnitGUID(boss)
-				if guid and UnitHealth(boss) > 0 then
+				local bossUnit = bosses[i]
+				local guid = UnitGUID(bossUnit)
+				if guid and UnitHealth(bossUnit) > 0 then
 					local mobId = self:MobId(guid)
 					if self:IsEnableMob(mobId) then
 						self:Engage(noEngage == "NoEngage" and noEngage)
@@ -1169,7 +1168,7 @@ do
 		end
 
 		if self.targetEventFunc then -- Event is still registered, continue
-			local guid = UnitGUID(unit)
+			guid = UnitGUID(unit)
 			if not myGroupGUIDs[guid] then
 				self[self.targetEventFunc](self, event, unit, guid)
 			end
@@ -1203,7 +1202,7 @@ do
 	end
 end
 
-function boss:EncounterEnd(event, id, name, diff, size, status)
+function boss:EncounterEnd(_, id, name, diff, size, status)
 	if self.engageId == id and self.enabled then
 		if status == 1 then
 			if self.journalId or self.allowWin then
@@ -1780,7 +1779,7 @@ end
 -- @section toggles
 --
 
-local checkFlag = nil
+local checkFlag
 do
 	local noDefaultError   = "Module %s uses %q as a toggle option, but it does not exist in the modules default values."
 	local notNumberError   = "Module %s tried to access %q, but in the database it's a %s."
@@ -2577,7 +2576,6 @@ do
 			core:Print(format(badNameplateBarStart, key))
 			return
 		end
-		local textType = type(text)
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
 			self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], false, guid)
@@ -2600,7 +2598,6 @@ do
 			return
 		end
 
-		local textType = type(text)
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
 			self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)

@@ -532,7 +532,7 @@ function mod:BlisteringTwilight(args)
 	self:Message(405642, "yellow", msg)
 	self:PlaySound(405642, "alert")
 	blisteringTwilightCount = blisteringTwilightCount + 1
-	local cd = 0
+	local cd
 	if self:Easy() then
 		cd = blisteringTwilightCount == 3 and 36.4 or blisteringTwilightCount % 2 == 0 and 15.8 or 31.6
 	else -- Heroic/Mythic

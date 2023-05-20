@@ -652,7 +652,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		lightningDevastationCount = lightningDevastationCount + 1
 		local stage = self:GetStage()
 		if stage == 2.5 or (stage == 1.5 and lightningDevastationCount < 5) then -- Only 4 on each platform in stage 1.5 (intermission 1)
-			local cd = 0
+			local cd
 			if self:Easy() then
 				cd = stage == 1.5 and 27 or 32.8
 			elseif self:Mythic() then

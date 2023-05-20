@@ -626,7 +626,7 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 		local dbv = module.toggleDisabled and module.toggleDisabled[dbKey] or module.toggleDefaults[dbKey]
 		if bit.band(dbv, flag) == flag then
 			local roleName, roleDesc = BigWigs:GetOptionDetails(key)
-			local roleRestrictionCheckbox = nil
+			local roleRestrictionCheckbox
 			if key == "TANK" then
 				roleRestrictionCheckbox = getSlaveToggle(roleName, roleDesc, dbKey, module, flag, check, icons.TANK)
 			elseif key == "HEALER" then
@@ -886,7 +886,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	return check, button
 end
 
-local listAbilitiesInChat = nil
+local listAbilitiesInChat
 do
 	local SendChatMessage = loader.SendChatMessage
 	local function output(channel, ...)
@@ -951,8 +951,6 @@ do
 						if desc > 0 then
 							local spellName = GetSpellInfo(desc)
 							link = ("\124cff71d5ff\124Hspell:%d:0\124h[%s]\124h\124r"):format(desc, spellName)
-						else
-							-- EJ?
 						end
 					end
 				end

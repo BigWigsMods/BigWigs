@@ -83,9 +83,9 @@ function mod:GetOptions()
 		[407221] = L.rushing_darkness, -- Rushing Darkness (Knock Lines)
 		[402902] = L.twisted_earth, -- Twisted Earth (Walls)
 		[402115] = L.echoing_fissure, -- Echoing Fissure (Fissure)
-		[402902] = L.umbral_annihilation, -- Umbral Annihilation (Annihilation)
-		[402902] = L.sunder_reality, -- Sunder Reality (Portals)
-		[402902] = L.ebon_destruction, -- Ebon Destruction (Big Bang)
+		[405433] = L.umbral_annihilation, -- Umbral Annihilation (Annihilation)
+		[407936] = L.sunder_reality, -- Sunder Reality (Portals)
+		[407917] = L.ebon_destruction, -- Ebon Destruction (Big Bang)
 	}
 end
 
