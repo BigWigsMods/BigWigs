@@ -2556,9 +2556,9 @@ do
 		local msg = format(L.cast, textType == "string" and text or spells[text or key])
 		if checkFlag(self, key, C.CASTBAR) then
 			self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
-			if checkFlag(self, key, C.COUNTDOWN) then
-				self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
-			end
+		end
+		if checkFlag(self, key, C.CASTBAR_COUNTDOWN) then
+			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
 	end
 
