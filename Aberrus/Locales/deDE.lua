@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "deDE")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	L.zaqali_aide_north_emote_trigger = "nördliche Festungsmauer" -- Commanders ascend the northern battlement!
-	L.zaqali_aide_south_emote_trigger = "südliche Festungsmauer" -- Commanders ascend the southern battlement!
+	L.zaqali_aide_north_emote_trigger = "Kommandanten erklimmen die nördliche Festungsmauer!" -- Commanders ascend the northern battlement!
+	L.zaqali_aide_south_emote_trigger = "Kommandanten erklimmen die südliche Festungsmauer!" -- Commanders ascend the southern battlement!
 
 	L.north = "Norden"
 	L.south = "Süden"
