@@ -123,7 +123,7 @@ do
 		self:StopBar(CL.count:format(L.rock_blast, rockBlastCount))
 		rockBlastCount = rockBlastCount + 1
 		if shatteringImpactCount < 9 then -- Soft Enrage after 8
-			local cd = 0
+			local cd
 			if self:Mythic() then
 				cd = rockBlastCount % 2 == 0 and 43.0 or 53.5
 			else
@@ -192,7 +192,7 @@ function mod:ConcussiveSlam(args)
 	self:PlaySound(args.spellId, "alert")
 	concussiveSlamCount = concussiveSlamCount + 1
 	if concussiveSlamCount < 17 then -- Soft Enrage after 16
-		local cd = 0
+		local cd
 		if self:Mythic() then
 			cd = concussiveSlamCount % 2 == 0 and 23 or concussiveSlamCount % 4 == 1 and 31.5 or 19.0
 		else

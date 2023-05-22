@@ -64,9 +64,6 @@ if L then
 	L.webs = "Webs"
 	L.web = "Web"
 	L.gossamer_burst = "Grip"
-	L.gossamer_burst_castbar = "Gossamer Burst Cast Bar / Countdown"
-	L.gossamer_burst_castbar_icon = 373405 -- Gossamer Burst
-	L.gossamer_burst_castbar_desc = "A Cast Bar for Gossamer Burst with Countdown enabled by default."
 	L.repelling_burst = "Pushback"
 end
 
@@ -89,8 +86,7 @@ function mod:GetOptions()
 		"ascend",
 		{372082, "SAY", "SAY_COUNTDOWN"}, -- Enveloping Webs
 		envelopingWebsMarker,
-		373405, -- Gossamer Burst
-		{"gossamer_burst_castbar", "COUNTDOWN"},
+		{373405, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Gossamer Burst
 		{385083, "TANK"}, -- Web Blast
 		-24899, -- Frostbreath Arachnid
 		374112, -- Freezing Breath
@@ -98,7 +94,7 @@ function mod:GetOptions()
 		372539, -- Apex of Ice
 		{373048, "SAY", "SAY_COUNTDOWN"}, -- Suffocating Webs
 		suffocatingWebsMarker,
-		371983, -- Repelling Burst
+		{371983, "CASTBAR"}, -- Repelling Burst
 	}, {
 		["stages"] = "general",
 		["ascend"] = -24883, -- Stage 1
@@ -113,7 +109,6 @@ function mod:GetOptions()
 		[373048] = L.webs, -- Suffocating Webs (Webs)
 		[-24899] = CL.big_add, -- Frostbreath Arachnid (Big Add)
 		[374112] = L.freezing_breath, -- Freezing Breath (Add Breath)
-		[373048] = L.webs, -- Suffocating Webs (Knock Webs)
 		[371983] = L.repelling_burst, -- Repelling Burst (Knockback)
 	}
 end
@@ -249,7 +244,7 @@ end
 function mod:CallSpiderlings(args)
 	self:StopBar(CL.count:format(CL.small_adds, callSpiderlingsCount))
 	callSpiderlingsCount = callSpiderlingsCount + 1
-	local cd = 0
+	local cd
 	if self:GetStage() == 1 then
 		cd = timers[args.spellId][callSpiderlingsCount]
 	else
@@ -294,7 +289,7 @@ function mod:GossamerBurst(args)
 	self:StopBar(CL.count:format(L.gossamer_burst, burstCount))
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.gossamer_burst, burstCount)))
 	self:PlaySound(args.spellId, "warning")
-	self:Bar("gossamer_burst_castbar", 4, CL.cast:format(L.gossamer_burst), args.spellId)
+	self:CastBar(args.spellId, 4, L.gossamer_burst)
 	burstCount = burstCount + 1
 	self:Bar(args.spellId, timers[args.spellId][burstCount], CL.count:format(L.gossamer_burst, burstCount))
 end

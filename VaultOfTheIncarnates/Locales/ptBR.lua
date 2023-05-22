@@ -48,8 +48,6 @@ if L then
 	L.webs = "Teias"
 	L.web = "Teia"
 	L.gossamer_burst = "Puxão"
-	-- L.gossamer_burst_castbar = "Gossamer Burst Cast Bar / Countdown"
-	-- L.gossamer_burst_castbar_desc = "A Cast Bar for Gossamer Burst with Countdown enabled by default."
 	L.repelling_burst = "Repulsão"
 end
 
@@ -156,9 +154,6 @@ if L then
 	L.ball_lightning = "Bolas"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Carga Puxante"
-
-	L.storm_nova_cast = "Barra de Canalização de Nova Tempestuosa"
-	L.storm_nova_cast_desc = "Barra de Canalização para Nova Tempestuosa"
 
 	L.custom_on_repeating_stormcharged = "Repetição Positiva ou Negativa"
 	L.custom_on_repeating_stormcharged_desc = "Repetição Positiva ou Negativa fala mensagens com os ícones {rt1}, {rt3} para localizar parceiros com finalidade de remover seus Debuffs."

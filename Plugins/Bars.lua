@@ -15,7 +15,7 @@ if not plugin then return end
 -- Locals
 --
 
-local colorize = nil
+local colorize
 do
 	local r, g, b
 	colorize = setmetatable({}, { __index =
@@ -49,7 +49,7 @@ local GetNamePlateForUnit = C_NamePlate.GetNamePlateForUnit
 
 local clickHandlers = {}
 
-local findUnitByGUID = nil
+local findUnitByGUID
 do
 	local unitTable = {
 		"nameplate1", "nameplate2", "nameplate3", "nameplate4", "nameplate5", "nameplate6", "nameplate7", "nameplate8", "nameplate9", "nameplate10",
@@ -136,7 +136,7 @@ do
 		bd:SetPoint("BOTTOMRIGHT", bar, "BOTTOMRIGHT", 1, -1)
 		bd:Show()
 
-		local borders = nil
+		local borders
 		if #freeBorderSets > 0 then
 			borders = tremove(freeBorderSets)
 			for i, border in next, borders do

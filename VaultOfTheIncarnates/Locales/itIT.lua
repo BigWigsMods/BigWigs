@@ -48,8 +48,6 @@ if L then
 	L.webs = "Ragnatele"
 	L.web = "Ragnatela"
 	L.gossamer_burst = "Presa"
-	L.gossamer_burst_castbar = "Barra di Lancio / Conto alla Rovescia per Ragnatele Appiccicose"
-	L.gossamer_burst_castbar_desc = "una Barra di Lancio per radici Appiccicose con un Conto alla Rovescia abilitato come predefinito."
 	L.repelling_burst = "Respingimento"
 end
 
@@ -156,9 +154,6 @@ if L then
 	L.ball_lightning = "Sfere"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Carica Attirante"
-
-	L.storm_nova_cast = "Barra di Lancio Nova della Tempesta"
-	L.storm_nova_cast_desc = "Barra di Lancio per Nova della Tempesta"
 
 	L.custom_on_repeating_stormcharged = "Ripetizione Positivo o Negativo"
 	L.custom_on_repeating_stormcharged_desc = "Messaggio di Ripetizione Positivo o Negativo con le icone {rt1}, {rt3} per trovare con chi accoppiarti per togliere il maleficio."

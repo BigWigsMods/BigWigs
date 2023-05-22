@@ -48,8 +48,6 @@ if L then
 	L.webs = "Spinnweben"
 	L.web = "Spinnwebe"
 	L.gossamer_burst = "Heranziehen"
-	L.gossamer_burst_castbar = "Gespinstausbruch Zauberleiste / Countdown"
-	L.gossamer_burst_castbar_desc = "Eine Zauberleiste für Gespinstausbruch mit standardmäßig aktiviertem Countdown."
 	L.repelling_burst = "Zurückstoßen"
 end
 
@@ -155,9 +153,6 @@ if L then
 	L.ball_lightning = "Kugeln"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Magnetische Ladung"
-
-	L.storm_nova_cast = "Sturmnova Zauberleiste"
-	L.storm_nova_cast_desc = "Zauberleiste für Sturmnova"
 
 	L.custom_on_repeating_stormcharged = "Positiv oder Negativ wiederholen"
 	L.custom_on_repeating_stormcharged_desc = "Gibt wiederholt Positive oder Negative Chatnachrichten mit Symbolen {rt1}, {rt3} aus, um Übereinstimmungen zum Entfernen des Schwächungszaubers zu finden."

@@ -198,7 +198,7 @@ function mod:GetOptions()
 		403771, -- Cosmic Ascension
 		{405486, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Hurtling Barrage
 		hurlingBarrageMarker,
-		403625, -- Scouring Eternity
+		{403625, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Scouring Eternity
 		{403520, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Embrace of Nothingness
 		408429, -- Void Slash
 		408457, -- Void Blast
@@ -344,12 +344,12 @@ end
 
 function mod:UNIT_HEALTH(event, unit)
 	if self:GetHealth(unit) < nextStageHealth then -- 60% (?) and 40%
-		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(self:GetStage() + 1)), false)
-		self:PlaySound("stages", "info")
 		nextStageHealth = nextStageHealth - 20
 		if nextStageHealth < 50 then
 			self:UnregisterUnitEvent(event, unit)
 		end
+		self:Message("stages", "cyan", CL.soon:format(CL.stage:format(self:GetStage() + 1)), false)
+		self:PlaySound("stages", "info")
 	end
 end
 
@@ -455,23 +455,26 @@ end
 
 -- Stage One: The Legacy of the Dracthyr
 function mod:OppressingHowl(args)
-	self:StopBar(CL.count:format(L.oppressing_howl, opressingHowlCount))
-	self:Message(args.spellId, "yellow", CL.count:format(L.oppressing_howl, opressingHowlCount))
+	local msg = CL.count:format(L.oppressing_howl, opressingHowlCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	opressingHowlCount = opressingHowlCount + 1
 end
 
 function mod:GlitteringSurge(args)
-	self:StopBar(CL.count:format(L.glittering_surge, glitteringSurgeCount))
-	self:Message(args.spellId, "red", CL.count:format(L.glittering_surge, glitteringSurgeCount))
+	local msg = CL.count:format(L.glittering_surge, glitteringSurgeCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", msg)
 	self:PlaySound(args.spellId, "long")
 	glitteringSurgeCount = glitteringSurgeCount + 1
 	self:Bar(args.spellId, timers[1][args.spellId][glitteringSurgeCount], CL.count:format(L.glittering_surge, glitteringSurgeCount))
 end
 
 function mod:ScorchingBomb(args)
-	self:StopBar(CL.count:format(CL.bombs, bombCount))
-	self:Message(args.spellId, "orange", CL.count:format(CL.bombs, bombCount))
+	local msg = CL.count:format(CL.bombs, bombCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alert")
 	bombCount = bombCount + 1
 	self:Bar(args.spellId, timers[1][args.spellId][bombCount], CL.count:format(CL.bombs, bombCount))
@@ -508,8 +511,9 @@ do
 end
 
 function mod:SearingBreath(args)
-	self:StopBar(CL.count:format(CL.breath, breathCount))
-	self:Message(args.spellId, "red", CL.count:format(CL.breath, breathCount))
+	local msg = CL.count:format(CL.breath, breathCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", msg)
 	self:PlaySound(args.spellId, "alert")
 	breathCount = breathCount + 1
 	self:Bar(args.spellId, timers[1][args.spellId][breathCount], CL.count:format(CL.breath, breathCount))
@@ -526,8 +530,11 @@ do
 	end
 
 	function mod:BurningClawsApplied(args)
-		self:CancelTimer(tankTimers[args.destName])
-		self:StopBar(L.claws, args.destName)
+		if tankTimers[args.destName] then
+			self:CancelTimer(tankTimers[args.destName])
+			tankTimers[args.destName] = nil
+		end
+		self:StopBar(L.claws_debuff, args.destName)
 		if self:Tank() then
 			self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.claws)
 			local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
@@ -542,8 +549,9 @@ do
 	end
 
 	function mod:BurningClawsRemoved(args)
-		self:StopBar(L.claws, args.destName)
+		self:StopBar(L.claws_debuff, args.destName)
 		self:CancelTimer(tankTimers[args.destName])
+		tankTimers[args.destName] = nil
 	end
 end
 
@@ -596,8 +604,9 @@ function mod:EndExistenceRemoved(args)
 end
 
 function mod:VoidBomb(args)
-	self:StopBar(CL.count:format(CL.bombs, bombCount))
-	self:Message(args.spellId, "orange", CL.count:format(CL.bombs, bombCount))
+	local msg = CL.count:format(CL.bombs, bombCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alert")
 	bombCount = bombCount + 1
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][bombCount], CL.count:format(CL.bombs, bombCount))
@@ -610,7 +619,7 @@ function mod:VoidFractureApplied(args)
 		if args.spellId == 404218 then -- Initial say only for the Stage 2 debuffs
 			self:Say(404218, CL.bomb)
 		end
-		local _, _, duration = self:UnitDebuff(args.destName, args.spellId)
+		local _, _, duration = self:UnitDebuff(args.destName, args.spellId) -- Duration depends on when bomb is picked up, so always different
 		if duration < 2 then -- dont countdown below 2, just run
 			self:SayCountdown(404218, duration, nil, duration < 3 and 2) -- If we are between 3 and 2, start countdown at 2
 		end
@@ -624,8 +633,9 @@ function mod:VoidFractureRemoved(args)
 end
 
 function mod:AbyssalBreath(args)
-	self:StopBar(CL.count:format(CL.breath, breathCount))
-	self:Message(args.spellId, "red", CL.count:format(CL.breath, breathCount))
+	local msg = CL.count:format(CL.breath, breathCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", msg)
 	self:PlaySound(args.spellId, "alert")
 	breathCount = breathCount + 1
 	self:Bar(args.spellId, timers[2][args.spellId][breathCount], CL.count:format(CL.breath, breathCount))
@@ -676,8 +686,9 @@ function mod:BlastingScream(args)
 end
 
 function mod:DesolateBlossom(args)
-	self:StopBar(CL.count:format(CL.pools, desolateBlossomCount))
-	self:Message(404403, "yellow", CL.count:format(CL.pools, desolateBlossomCount))
+	local msg = CL.count:format(CL.pools, desolateBlossomCount)
+	self:StopBar(msg)
+	self:Message(404403, "yellow", msg)
 	self:PlaySound(404403, "alert")
 	desolateBlossomCount = desolateBlossomCount + 1
 	self:Bar(404403, timers[2][404403][breathCount], CL.count:format(CL.pools, desolateBlossomCount))
@@ -734,7 +745,10 @@ do
 	end
 
 	function mod:VoidClawsApplied(args)
-		self:CancelTimer(tankTimers[args.destName])
+		if tankTimers[args.destName] then
+			self:CancelTimer(tankTimers[args.destName])
+			tankTimers[args.destName] = nil
+		end
 		self:StopBar(L.claws_debuff, args.destName)
 		if self:Tank() then
 			self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.claws)
@@ -752,6 +766,7 @@ do
 	function mod:VoidClawsRemoved(args)
 		self:StopBar(L.claws_debuff, args.destName)
 		self:CancelTimer(tankTimers[args.destName])
+		tankTimers[args.destName] = nil
 	end
 end
 
@@ -781,8 +796,9 @@ function mod:Stage3Start()
 end
 
 function mod:CosmicAscension(args)
-	self:StopBar(CL.count:format(L.cosmic_ascension, cosmicAscensionCount))
-	self:Message(403771, "red", CL.count:format(L.cosmic_ascension, cosmicAscensionCount))
+	local msg = CL.count:format(L.cosmic_ascension, cosmicAscensionCount)
+	self:StopBar(msg)
+	self:Message(403771, "red", msg)
 	self:PlaySound(403771, "alarm")
 	cosmicAscensionCount = cosmicAscensionCount + 1
 	self:Bar(403771, timers[3][403771][cosmicAscensionCount], CL.count:format(L.cosmic_ascension, cosmicAscensionCount))
@@ -798,8 +814,9 @@ end
 do
 	local playerList = {}
 	function mod:HurtlingBarrage(args)
-		self:StopBar(CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
-		self:Message(405486, "yellow", CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
+		local msg = CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)
+		self:StopBar(msg)
+		self:Message(405486, "yellow", msg)
 		self:PlaySound(405486, "alert")
 		hurtlingBarrageCount = hurtlingBarrageCount + 1
 		self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
@@ -829,11 +846,13 @@ do
 end
 
 function mod:ScouringEternity(args)
-	self:StopBar(CL.count:format(L.scouring_eternity, scouringEternityCount))
-	self:Message(args.spellId, "red", CL.count:format(L.scouring_eternity, scouringEternityCount))
+	local msg = CL.count:format(L.scouring_eternity, scouringEternityCount)
+	self:StopBar(msg)
+	self:Message(args.spellId, "red", msg)
 	self:PlaySound(args.spellId, "warning")
 	scouringEternityCount = scouringEternityCount + 1
 	self:Bar(args.spellId, timers[3][args.spellId][scouringEternityCount], CL.count:format(L.scouring_eternity, scouringEternityCount))
+	self:CastBar(args.spellId, 5.5, L.scouring_eternity)
 end
 
 function mod:EmbraceOfNothingness(args)
@@ -866,7 +885,10 @@ do
 	end
 
 	function mod:VoidSlashApplied(args)
-		self:CancelTimer(tankTimers[args.destName])
+		if tankTimers[args.destName] then
+			self:CancelTimer(tankTimers[args.destName])
+			tankTimers[args.destName] = nil
+		end
 		self:StopBar(L.claws_debuff, args.destName)
 		if self:Tank() then
 			self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.void_slash)
@@ -884,6 +906,7 @@ do
 	function mod:VoidSlashRemoved(args)
 		self:StopBar(L.claws_debuff, args.destName)
 		self:CancelTimer(tankTimers[args.destName])
+		tankTimers[args.destName] = nil
 	end
 end
 
@@ -910,7 +933,7 @@ function mod:EmptyStrikeApplied(args)
 end
 
 function mod:EmptyRecollectionDeath(args)
-	self:StopBar(404769)
+	self:StopBar(404769) -- Empty Strike
 	self:StopBar(CL.count:format(L.ebon_might, recollectionKilled))
 	recollectionKilled = recollectionKilled + 1
 end

@@ -9,8 +9,8 @@ if not mod then return end
 -- Locals
 --
 
-local flashFrame, pulseFrame = nil, nil
-local flasher, pulser = nil, nil
+local flashFrame, pulseFrame
+local flasher, pulser
 local colors = nil
 
 -------------------------------------------------------------------------------

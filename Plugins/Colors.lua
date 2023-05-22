@@ -287,7 +287,7 @@ plugin.pluginOptions.args.anchorsButton = {
 			return BL.toggleAnchorsBtnShow_desc
 		end
 	end,
-	func = function() 
+	func = function()
 		if not BigWigs:IsEnabled() then BigWigs:Enable() end
 		if BigWigsOptions:InConfigureMode() then
 			plugin:SendMessage("BigWigs_StopConfigureMode")
@@ -302,7 +302,7 @@ plugin.pluginOptions.args.testButton = {
 	type = "execute",
 	name = BigWigsAPI:GetLocale("BigWigs").testBarsBtn,
 	desc = BigWigsAPI:GetLocale("BigWigs").testBarsBtn_desc,
-	func = function() 
+	func = function()
 		BigWigs:Test()
 	end,
 	width = 1.5,

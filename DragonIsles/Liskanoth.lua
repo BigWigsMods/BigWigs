@@ -9,26 +9,12 @@ mod.otherMenu = -1978
 mod.worldBoss = 193533
 
 --------------------------------------------------------------------------------
--- Locals
---
-
-
---------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-if L then
-
-end
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
 function mod:GetOptions()
 	return {
-		391026, -- Deep Freeze
+		{391026, "CASTBAR"}, -- Deep Freeze
 		389960, -- Binding Ice
 	}
 end

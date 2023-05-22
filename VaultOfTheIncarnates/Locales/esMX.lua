@@ -48,8 +48,6 @@ if L then
 	-- L.webs = "Webs"
 	-- L.web = "Web"
 	-- L.gossamer_burst = "Grip"
-	-- L.gossamer_burst_castbar = "Gossamer Burst Cast Bar / Countdown"
-	-- L.gossamer_burst_castbar_desc = "A Cast Bar for Gossamer Burst with Countdown enabled by default."
 	-- L.repelling_burst = "Pushback"
 end
 
@@ -156,9 +154,6 @@ if L then
 	-- L.ball_lightning = "Balls"
 	-- Stage Three: Storm Incarnate
 	-- L.magnetic_charge = "Pull Charge"
-
-	-- L.storm_nova_cast = "Storm Nova CastBar"
-	-- L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
 
 	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
 	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."

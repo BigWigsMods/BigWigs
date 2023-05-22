@@ -23,6 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "deDE")
 if L then
+
 	L.rending_charge_single = "Erste Aufladung"
 	L.massive_slam = "Frontal Angriff"
 	L.unstable_essence_new = "Neue Bombe"
@@ -32,14 +33,30 @@ if L then
 	L.volatile_eruption = "Eruption"
 	L.temporal_anomaly = "Heilungs Orb"
 	L.temporal_anomaly_knocked = "Heilungs Orb geblockt"
+
+	--L.rending_charge_single = "First Charge"
+	--L.massive_slam = "Frontal Cone"
+	--L.unstable_essence_new = "New Bomb"
+	--L.custom_on_unstable_essence_high = "High Stacks Unstable Essence Say Messages"
+	--L.custom_on_unstable_essence_high_desc = "Say messages with the amount of stacks for your Unstable Essence debuff when they are high enough."
+	--L.volatile_spew = "Dodges"
+	--L.volatile_eruption = "Eruption"
+	--L.temporal_anomaly = "Heal Orb"
+	--L.temporal_anomaly_knocked = "Heal Orb Knocked"
+
 end
 
 L = BigWigs:NewBossLocale("Assault of the Zaqali", "deDE")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
+
 	L.zaqali_aide_north_emote_trigger = "Add Magmamystikerin auf Nordseite" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
 	L.zaqali_aide_south_emote_trigger = "Add Magmamystikerin auf Südseite" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
+
+	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- Commanders ascend the northern battlement!
+	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- Commanders ascend the southern battlement!
+
 
 	L.north = "Norden"
 	L.south = "Süden"
@@ -82,8 +99,13 @@ end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "deDE")
 if L then
+
 	L.custom_on_repeating_sunder_reality = "Realität zerreißen - Portale erscheinen"
 	L.custom_on_repeating_shattered_reality_desc = "Schwarze Zerstörung - Gehe in Portal!"
+
+	--L.custom_on_repeating_sunder_reality = "Repeating Sunder Reality Warning"
+	--L.custom_on_repeating_sunder_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
+
 
 	L.twisted_earth = "Wände"
 	L.echoing_fissure = "Hallender Spalt"

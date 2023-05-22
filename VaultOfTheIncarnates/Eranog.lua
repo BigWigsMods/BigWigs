@@ -54,7 +54,7 @@ function mod:GetOptions()
 		370597, -- Kill Order (Fixate)
 		"custom_on_nameplate_fixate",
 		-- Stage 2
-		370307, -- Collapsing Army
+		{370307, "CASTBAR"}, -- Collapsing Army
 		-- Mythic
 		{396094, "SAY", "SAY_COUNTDOWN"}, -- Greater Flamerift
 		394917, -- Leaping Flames

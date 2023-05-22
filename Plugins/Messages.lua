@@ -18,7 +18,8 @@ local labels = {}
 local colorModule = nil
 
 local normalMessageAnchor, normalMessageFrame = nil, nil
-local emphMessageAnchor, emphMessageFrame, emphMessageText = nil, nil, nil
+local emphMessageAnchor, emphMessageText = nil, nil
+local emphMessageFrame
 
 local labelsPrimaryPoint, labelsSecondaryPoint = nil, nil
 
@@ -289,7 +290,7 @@ plugin.pluginOptions = {
 					return BL.toggleAnchorsBtnShow_desc
 				end
 			end,
-			func = function() 
+			func = function()
 				if not BigWigs:IsEnabled() then BigWigs:Enable() end
 				if BigWigsOptions:InConfigureMode() then
 					plugin:SendMessage("BigWigs_StopConfigureMode")
@@ -304,7 +305,7 @@ plugin.pluginOptions = {
 			type = "execute",
 			name = BigWigsAPI:GetLocale("BigWigs").testBarsBtn,
 			desc = BigWigsAPI:GetLocale("BigWigs").testBarsBtn_desc,
-			func = function() 
+			func = function()
 				BigWigs:Test()
 			end,
 			width = 1.5,

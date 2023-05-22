@@ -38,14 +38,14 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "zhCN")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	L.zaqali_aide_north_emote_trigger = "北部城垒" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t 指挥官爬上了北部城垒！
-	L.zaqali_aide_south_emote_trigger = "南部城垒" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t 指挥官爬上了南部城垒！
+	L.zaqali_aide_north_emote_trigger = "北部城垒" -- 指挥官爬上了北部城垒！
+	L.zaqali_aide_south_emote_trigger = "南部城垒" -- 指挥官爬上了南部城垒！
 
 	L.north = "北部"
 	L.south = "南部"
 	L.both = "双方"
 
-	L.zaqali_aide_message = "%$2s：%$1s正在攀爬" -- Big Adds Climbing North
+	L.zaqali_aide_message = "%2$s：%1$s正在攀爬" -- Big Adds Climbing North
 	L.add_bartext = "%s：%s（%d）"
 	L.boss_returns = "首领落地: 北部"
 
@@ -83,7 +83,7 @@ end
 L = BigWigs:NewBossLocale("Echo of Neltharion", "zhCN")
 if L then
 	L.custom_on_repeating_sunder_reality = "传送门重复警告"
-	L.custom_on_repeating_shattered_reality_desc = "在黑檀摧残的施法过程中，持续重复警告信息，直到进入隔绝现实传送门为止。"
+	L.custom_on_repeating_sunder_reality_desc = "在黑檀摧残的施法过程中，持续重复警告信息，直到进入隔绝现实传送门为止。"
 
 	L.twisted_earth = "土墙"
 	L.echoing_fissure = "裂隙"

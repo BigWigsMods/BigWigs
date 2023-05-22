@@ -4,10 +4,6 @@ codes = true
 exclude_files = {
 	"**/Libs",
 }
-only = {
-	"011", -- syntax
-	"1", -- globals
-}
 files["**/Loader.lua"].ignore = {
 	"113/Ambiguate",
 	"113/BasicMessageDialog",
@@ -15,6 +11,7 @@ files["**/Loader.lua"].ignore = {
 	"113/C_ChatInfo",
 	"113/C_CVar",
 	"113/C_Map",
+	"113/EnableAddOn",
 	"113/GetAddOnInfo",
 	"113/securecallfunction",
 	"113/SendChatMessage",
@@ -63,31 +60,31 @@ files["**/Plugins/*.lua"].ignore = {
 	"112/SlashCmdList",
 	"111/SLASH_.*", -- slash handlers
 }
+files["**/Options/Options.lua"].ignore = {
+	"113/C_Spell",
+	"113/C_UI",
+}
+files["**/Locales/*.lua"].ignore = {
+	"542", -- Empty if branch
+}
 ignore = {
 	"113/BigWigs",
 	"212/self",
 	"1/[A-Z][A-Z][A-Z0-9_]+", -- three letter+ constants
+	"2",
+	"4",
 }
 globals = {
 	-- wow std api
 	"abs",
-	"acos",
-	"asin",
-	"atan",
-	"atan2",
 	"bit",
 	"ceil",
 	"cos",
 	"date",
 	"debugstack",
 	"deg",
-	"difftime",
 	"exp",
-	"fastrandom",
 	"floor",
-	"forceinsecure",
-	"foreach",
-	"foreachi",
 	"format",
 	"frexp",
 	"getn",
@@ -95,8 +92,6 @@ globals = {
 	"gsub",
 	"hooksecurefunc",
 	"ldexp",
-	"log",
-	"log10",
 	"max",
 	"min",
 	"mod",
@@ -149,7 +144,6 @@ globals = {
 	"C_ModifiedInstance", -- 3x Affixes.lua in BigWigs_Shadowlands
 	"C_RaidLocks",
 	"C_Scenario",
-	"C_Spell",
 	"C_Timer",
 	"ChatFrame_ImportListToHash",
 	"ChatTypeInfo",
@@ -162,7 +156,6 @@ globals = {
 	"EJ_GetEncounterInfo",
 	"EJ_GetTierInfo",
 	"ElvUI",
-	"EnableAddOn",
 	"FlashClientIcon",
 	"GameFontHighlight",
 	"GameFontNormal",

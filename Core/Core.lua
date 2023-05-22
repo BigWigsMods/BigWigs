@@ -158,7 +158,7 @@ local function targetCheck(unit, sync)
 end
 
 local function updateMouseover() targetCheck("mouseover", true) end
-local function unitTargetChanged(event, target)
+local function unitTargetChanged(_, target)
 	targetCheck(target .. "target")
 end
 
@@ -204,7 +204,7 @@ do
 	local colors = {"green", "red", "orange", "yellow", "cyan", "blue", "blue", "purple"}
 	local sounds = {"Long", "Warning", "Alert", "Alarm", "Info", "onyou", "underyou", false}
 
-	local function barStopped(event, bar)
+	local function barStopped(_, bar)
 		local a = bar:Get("bigwigs:anchor")
 		local key = bar:GetLabel()
 		if a and messages[key] then
@@ -428,11 +428,11 @@ end
 --
 
 do
-	local L = GetLocale()
-	if L == "enGB" then L = "enUS" end
+	local currentLocale = GetLocale()
+	if currentLocale == "enGB" then currentLocale = "enUS" end
 	function core:NewBossLocale(moduleName, locale)
 		local module = bosses[moduleName]
-		if module and L == locale then
+		if module and currentLocale == locale then
 			return module:GetLocale()
 		end
 	end
@@ -447,7 +447,7 @@ do
 	local errorAlreadyRegistered = "%q already exists as a module in BigWigs, but something is trying to register it again."
 	local errorJournalIdInvalid = "%q is using the invalid journal id of %q."
 	local bossMeta = { __index = bossPrototype, __metatable = false }
-	function core:NewBoss(moduleName, zoneId, journalId, instanceId)
+	function core:NewBoss(moduleName, zoneId, journalId)
 		if bosses[moduleName] then
 			core:Print(errorAlreadyRegistered:format(moduleName))
 		else

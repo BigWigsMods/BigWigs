@@ -48,8 +48,6 @@ if L then
 	L.webs = "Сети"
 	L.web = "Паутина"
 	L.gossamer_burst = "Притягивание"
-	L.gossamer_burst_castbar = "Взрыв паутины панель/отсчёт"
-	L.gossamer_burst_castbar_desc = "Панель для способности Взрыв Паутины с отсчётом, включённым по умолчанию."
 	L.repelling_burst = "Отталкивание"
 end
 
@@ -156,9 +154,6 @@ if L then
 	L.ball_lightning = "Шарики"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Притягивание"
-
-	L.storm_nova_cast = "Взрыв Бури"
-	L.storm_nova_cast_desc = "Кастбар для отталкивания"
 
 	L.custom_on_repeating_stormcharged = "Повторять плюс или минус"
 	L.custom_on_repeating_stormcharged_desc = "Повторять в чате Плюс или Минус иконками {rt1}, {rt3} что бы найти партнёра."

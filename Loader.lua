@@ -22,8 +22,8 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 278
-local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING = "", ""
+local BIGWIGS_VERSION = 280
+local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
 local BIGWIGS_GUILD_VERSION = 0
@@ -34,11 +34,10 @@ do
 	local _, tbl = ...
 	local REPO = "REPO"
 	local ALPHA = "ALPHA"
-	local RELEASE = "RELEASE"
 
-	local releaseType = RELEASE
+	local releaseType
 	local myGitHash = "@project-abbreviated-hash@" -- The ZIP packager will replace this with the Git hash.
-	local releaseString = ""
+	local releaseString
 	--@alpha@
 	-- The following code will only be present in alpha ZIPs.
 	releaseType = ALPHA
@@ -53,10 +52,10 @@ do
 
 	if releaseType == REPO then
 		releaseString = L.sourceCheckout:format(BIGWIGS_VERSION)
-	elseif releaseType == RELEASE then
-		releaseString = L.officialRelease:format(BIGWIGS_VERSION, myGitHash)
 	elseif releaseType == ALPHA then
 		releaseString = L.alphaRelease:format(BIGWIGS_VERSION, myGitHash)
+	else -- Release
+		releaseString = L.officialRelease:format(BIGWIGS_VERSION, myGitHash)
 	end
 
 	-- Format is "V:version^hash^guildVersion^guildName"
@@ -355,6 +354,7 @@ do
 		[2521] = lw_df, -- Ruby Life Pools
 		[2526] = lw_df, -- Algeth'ar Academy
 		[2527] = lw_df, -- Halls of Infusion
+		[2579] = lw_df, -- Dawn of the Infinite
 	}
 
 	public.zoneTblWorld = {
@@ -374,7 +374,8 @@ end
 
 local EnableAddOn, GetAddOnInfo, IsAddOnLoaded, LoadAddOn = EnableAddOn, GetAddOnInfo, IsAddOnLoaded, LoadAddOn
 local GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned = C_AddOns.GetAddOnMetadata, IsInGroup, IsInRaid, UnitAffectingCombat, UnitGroupRolesAssigned
-local GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitIsDeadOrGhost, UnitSetRole = GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitIsDeadOrGhost, UnitSetRole
+local GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitSetRole = GetSpecialization, GetSpecializationRole, IsPartyLFG, UnitSetRole
+public.EnableAddOn = EnableAddOn
 
 local reqFuncAddons = {
 	BigWigs_Core = true,
@@ -482,7 +483,7 @@ function dataBroker.OnTooltipShow(tt)
 	tt:AddLine("BigWigs")
 	if BigWigs and BigWigs:IsEnabled() then
 		local added = false
-		for name, module in BigWigs:IterateBossModules() do
+		for _, module in BigWigs:IterateBossModules() do
 			if module:IsEnabled() then
 				if not added then
 					tt:AddLine(L.activeBossModules, 1, 1, 1)
@@ -787,8 +788,6 @@ function mod:ADDON_LOADED(addon)
 	ldbi:Register("BigWigs", dataBroker, BigWigsIconDB, "Interface\\AddOns\\BigWigs\\Media\\Icons\\core-enabled")
 
 	if BigWigs3DB then
-		BigWigs3DB.showInCompartment = nil -- XXX 10.1.0 alphas only
-
 		-- Somewhat ugly, but saves loading AceDB with the loader instead of with the core
 		if BigWigs3DB.profileKeys and BigWigs3DB.profiles then
 			local name = UnitName("player")
@@ -975,6 +974,7 @@ do
 		-- Dynamic content
 		BigWigs_DragonIsles = true,
 		BigWigs_VaultOfTheIncarnates = true,
+		BigWigs_Aberrus = true,
 	}
 	-- Try to teach people not to force load our modules.
 	for i = 1, GetNumAddOns() do
@@ -1134,46 +1134,30 @@ end
 --
 
 do
-	local DBMdotRevision = "20230511074133" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "10.1.5" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20230511000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20230518033743" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "10.1.9" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20230517000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 2
-	local prefix = "V"
+	local versionPrefix = "V"
 	local PForceDisable = 4
 
-	local timer, prevUpgradedUser = nil, nil
+	local timer = nil
 	local function sendMsg()
 		if IsInGroup() then
 			local name = UnitName("player")
 			local realm = GetRealmName()
 			local normalizedPlayerRealm = realm:gsub("[%s-]+", "") -- Has to mimic DBM code
-			local msg = name.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. prefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable
+			local msg = name.. "-" ..normalizedPlayerRealm.."\t"..protocol.."\t".. versionPrefix .."\t".. DBMdotRevision.."\t"..DBMdotReleaseRevision.."\t"..DBMdotDisplayVersion.."\t"..myLocale.."\ttrue\t"..PForceDisable
 			SendAddonMessage("D5", msg, IsInGroup(2) and "INSTANCE_CHAT" or "RAID") -- LE_PARTY_CATEGORY_INSTANCE = 2
 		end
-		timer, prevUpgradedUser = nil, nil
+		timer = nil
 	end
-	function mod:DBM_VersionCheck(prefix, sender, revision, releaseRevision, displayVersion)
+	function mod:DBM_VersionCheck(prefix, sender, _, _, displayVersion)
 		if prefix == "H" and (BigWigs and BigWigs.db and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM) then
 			if timer then timer:Cancel() end
 			timer = CTimerNewTicker(3.3, sendMsg, 1)
 		elseif prefix == "V" then
 			usersDBM[sender] = displayVersion
-			--if BigWigs and BigWigs.db.profile.fakeDBMVersion or self.isFakingDBM then
-			--	-- If there are people with newer versions than us, suddenly we've upgraded!
-			--	local rev, dotRev = tonumber(revision), tonumber(DBMdotRevision)
-			--	if rev and displayVersion and rev ~= 99999 and rev > dotRev and not strfind(displayVersion, "alpha", nil, true) then -- Failsafes
-			--		if not prevUpgradedUser then
-			--			prevUpgradedUser = sender
-			--		elseif prevUpgradedUser ~= sender then
-			--			DBMdotRevision = revision -- Update our local rev with the highest possible rev found.
-			--			DBMdotReleaseRevision = releaseRevision -- Update our release rev with the highest found, this should be the same for alpha users and latest release users.
-			--			DBMdotDisplayVersion = displayVersion -- Update to the latest display version.
-			--			-- Re-send the addon message.
-			--			if timer then timer:Cancel() end
-			--			timer = CTimerNewTicker(1, sendMsg, 1)
-			--		end
-			--	end
-			--end
 		end
 	end
 end
@@ -1334,7 +1318,7 @@ function mod:CHAT_MSG_ADDON(prefix, msg, channel, sender)
 			public:SendMessage("DBM_AddonMessage", sender, dbmPrefix, arg1, arg2, arg3, arg4)
 		end
 	elseif prefix == "D5" then
-		local player, _, dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
+		local _, _, dbmPrefix, arg1, arg2, arg3, arg4 = strsplit("\t", msg)
 		sender = Ambiguate(sender, "none")
 		if dbmPrefix == "V" or dbmPrefix == "H" then
 			self:DBM_VersionCheck(dbmPrefix, sender, arg1, arg2, arg3)
@@ -1379,12 +1363,12 @@ do
 	local function printOutOfDate(tbl)
 		if hasWarned == 3 then return end
 		local warnedOutOfDate, warnedReallyOutOfDate, warnedExtremelyOutOfDate = 0, 0, 0
-		for k,v in next, tbl do
-			if v > BIGWIGS_VERSION then
+		for _,version in next, tbl do
+			if version > BIGWIGS_VERSION then
 				warnedOutOfDate = warnedOutOfDate + 1
-				if (v - 1) > BIGWIGS_VERSION then -- 2+ releases
+				if (version - 1) > BIGWIGS_VERSION then -- 2+ releases
 					warnedReallyOutOfDate = warnedReallyOutOfDate + 1
-					if (v - 2) > BIGWIGS_VERSION then -- 3+ releases
+					if (version - 2) > BIGWIGS_VERSION then -- 3+ releases
 						warnedExtremelyOutOfDate = warnedExtremelyOutOfDate + 1
 					end
 				end

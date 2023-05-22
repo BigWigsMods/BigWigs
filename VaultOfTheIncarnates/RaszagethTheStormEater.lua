@@ -163,10 +163,6 @@ if L then
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Pull Charge"
 
-	L.storm_nova_cast = "Storm Nova CastBar"
-	L.storm_nova_cast_icon = 382434 -- Storm Nova
-	L.storm_nova_cast_desc = "Cast Bar for Storm Nova"
-
 	L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
 	L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
 
@@ -191,7 +187,7 @@ function mod:GetOptions()
 	return {
 		"stages",
 		-- Stage One: The Winds of Change
-		377612, -- Hurricane Wing
+		{377612, "CASTBAR"}, -- Hurricane Wing
 		{381615, "SAY", "SAY_COUNTDOWN"}, -- Static Charge
 		staticChargeMarker,
 		388643, -- Volatile Current
@@ -200,8 +196,7 @@ function mod:GetOptions()
 		-- 376126, -- Lightning Strikes
 		-- 381249, -- Electric Scales
 		381251, -- Electric Lash
-		382434, -- Storm Nova
-		{"storm_nova_cast", "COUNTDOWN"},
+		{382434, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Storm Nova
 		-- Intermission: The Primalist Strike
 		385065, -- Lightning Devastation
 		"custom_off_raidleader_devastation",
@@ -466,7 +461,7 @@ function mod:HurricaneWing(args)
 	self:StopBar(CL.count:format(L.hurricane_wing, hurricaneWingCount))
 	self:Message(args.spellId, "red", CL.casting:format(CL.count:format(L.hurricane_wing, hurricaneWingCount)))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar(args.spellId, 6+2.5+(hurricaneWingCount/2), CL.count:format(L.hurricane_wing, hurricaneWingCount)) -- 6s cast, (2.5s+0.5s) base, +0.5s per cast
+	self:CastBar(args.spellId, 6+2.5+(hurricaneWingCount/2), L.hurricane_wing) -- 6s cast, (2.5s+0.5s) base, +0.5s per cast
 	hurricaneWingCount = hurricaneWingCount + 1
 	self:Bar(args.spellId, timers[self:GetStage()][args.spellId][hurricaneWingCount], CL.count:format(L.hurricane_wing, hurricaneWingCount))
 end
@@ -616,7 +611,7 @@ function mod:StormNova(args)
 
 	self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 	self:PlaySound(args.spellId, "warning")
-	self:CastBar("storm_nova_cast", 5, args.spellName, args.spellId)
+	self:CastBar(args.spellId, 5)
 end
 
 -- Intermission: The Primalist Strike
@@ -652,7 +647,7 @@ function mod:CHAT_MSG_RAID_BOSS_EMOTE(_, msg)
 		lightningDevastationCount = lightningDevastationCount + 1
 		local stage = self:GetStage()
 		if stage == 2.5 or (stage == 1.5 and lightningDevastationCount < 5) then -- Only 4 on each platform in stage 1.5 (intermission 1)
-			local cd = 0
+			local cd
 			if self:Easy() then
 				cd = stage == 1.5 and 27 or 32.8
 			elseif self:Mythic() then
@@ -1049,7 +1044,7 @@ function mod:StormNovaP3(args)
 
 	self:Message(382434, "red", CL.casting:format(args.spellName))
 	self:PlaySound(382434, "warning")
-	self:CastBar("storm_nova_cast", 5, args.spellName, args.spellId)
+	self:CastBar(382434, 5)
 end
 
 -- Stage Three: Storm Incarnate

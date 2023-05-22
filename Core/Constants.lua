@@ -15,7 +15,11 @@ local GetSpellInfo, GetSpellTexture, GetSpellDescription, C_EncounterJournal_Get
 local type, next, tonumber, gsub, lshift, band = type, next, tonumber, gsub, bit.lshift, bit.band
 
 -- Option bitflags
-local coreToggles = { "BAR", "MESSAGE", "ICON", "PULSE", "SOUND", "SAY", "PROXIMITY", "FLASH", "ME_ONLY", "EMPHASIZE", "TANK", "HEALER", "TANK_HEALER", "DISPEL", "ALTPOWER", "VOICE", "COUNTDOWN", "INFOBOX", "CASTBAR", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "NAMEPLATEBAR", "PRIVATE" }
+local coreToggles = {
+	"BAR", "MESSAGE", "ICON", "PULSE", "SOUND", "SAY", "PROXIMITY", "FLASH", "ME_ONLY", "EMPHASIZE", "TANK", "HEALER", "TANK_HEALER",
+	"DISPEL", "ALTPOWER", "VOICE", "COUNTDOWN", "INFOBOX", "CASTBAR", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE", "NAMEPLATEBAR", "PRIVATE",
+	"CASTBAR_COUNTDOWN"
+}
 for i, toggle in next, coreToggles do
 	C[toggle] = lshift(1, i - 1)
 	if L[toggle] then
@@ -166,8 +170,8 @@ function BigWigs:GetBossOptionDetails(module, option)
 				roleDesc = getRoleStrings(module, option)
 			end
 
-			local L = module:GetLocale(true)
-			local title, description = L[option], L[option .. "_desc"]
+			local moduleLocale = module:GetLocale(true)
+			local title, description = moduleLocale[option], moduleLocale[option .. "_desc"]
 			if title then
 				if type(title) == "number" then
 					if not description then description = title end -- Allow a nil description to mean the same id as the title, if title is a number.
@@ -186,7 +190,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 				end
 				description = roleDesc.. gsub(description, "{rt(%d)}", "|T13700%1:15|t")
 			end
-			local icon = L[option .. "_icon"]
+			local icon = moduleLocale[option .. "_icon"]
 			if icon == option .. "_icon" then icon = nil end
 			if type(icon) == "number" then
 				if icon > 8 then
@@ -198,7 +202,7 @@ function BigWigs:GetBossOptionDetails(module, option)
 					icon = tbl.abilityIcon
 				end
 				if not icon then
-					BigWigs:Print(("No icon found for %s using id %d."):format(module.name, L[option .. "_icon"]))
+					BigWigs:Print(("No icon found for %s using id %d."):format(module.name, moduleLocale[option .. "_icon"]))
 				end
 			elseif type(icon) == "string" and not icon:find("\\", nil, true) then
 				icon = "Interface\\Icons\\" .. icon

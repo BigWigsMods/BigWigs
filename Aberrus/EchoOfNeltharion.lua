@@ -39,7 +39,7 @@ local castingEbonDestruction = false
 local L = mod:GetLocale()
 if L then
 	L.custom_on_repeating_sunder_reality = "Repeating Sundered Reality Warning"
-	L.custom_on_repeating_shattered_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
+	L.custom_on_repeating_sunder_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
 	-- L.repeating_shattered_reality_icon = 407919
 
 	L.twisted_earth = "Walls"
@@ -74,7 +74,7 @@ function mod:GetOptions()
 		407936, -- Sunder Reality
 		407919, -- Sundered Reality
 		"custom_on_repeating_sunder_reality",
-		407917, -- Ebon Destruction
+		{407917, "CASTBAR"}, -- Ebon Destruction
 	},{
 		[402902] = -26192, -- Stage 1
 		[403057] = -26421, -- Stage 2
@@ -83,9 +83,9 @@ function mod:GetOptions()
 		[407221] = L.rushing_darkness, -- Rushing Darkness (Knock Lines)
 		[402902] = L.twisted_earth, -- Twisted Earth (Walls)
 		[402115] = L.echoing_fissure, -- Echoing Fissure (Fissure)
-		[402902] = L.umbral_annihilation, -- Umbral Annihilation (Annihilation)
-		[402902] = L.sunder_reality, -- Sunder Reality (Portals)
-		[402902] = L.ebon_destruction, -- Ebon Destruction (Big Bang)
+		[405433] = L.umbral_annihilation, -- Umbral Annihilation (Annihilation)
+		[407936] = L.sunder_reality, -- Sunder Reality (Portals)
+		[407917] = L.ebon_destruction, -- Ebon Destruction (Big Bang)
 	}
 end
 

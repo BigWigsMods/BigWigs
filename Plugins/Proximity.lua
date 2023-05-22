@@ -589,10 +589,10 @@ do
 		proxAnchor:SetScript("OnEvent", function(_, event)
 			if event == "GROUP_ROSTER_UPDATE" then
 				updateUnits()
-				if not db.textMode then
+				--if not db.textMode then
 					--updateBlipColors()
-				end
-			else
+				--end
+			--else
 				--updateBlipIcons()
 			end
 		end)

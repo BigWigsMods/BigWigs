@@ -48,8 +48,6 @@ if L then
 	L.webs = "蛛網"
 	L.web = "蛛網"
 	L.gossamer_burst = "拉人"
-	L.gossamer_burst_castbar = "拉人計時器"
-	L.gossamer_burst_castbar_desc = "輕絲爆發的冷卻與施法計時器，預設開啟。"
 	L.repelling_burst = "擊退"
 end
 
@@ -156,9 +154,6 @@ if L then
 	L.ball_lightning = "閃電球"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "磁性電荷"
-
-	L.storm_nova_cast = "風暴新星施法"
-	L.storm_nova_cast_desc = "顯示風暴新星的施法計時"
 
 	L.custom_on_repeating_stormcharged = "重複正負極"
 	L.custom_on_repeating_stormcharged_desc = "以 {rt1} 和 {rt3} 持續喊話正負極，方便你快速找到相同印記的隊友。"
