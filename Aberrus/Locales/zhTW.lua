@@ -100,7 +100,8 @@ if L then
 	L.claws_debuff = "坦克爆炸"
 	L.emptiness_between_stars = "空無"
 	L.void_slash = "正面斬擊"
+	L.scouring_eternity = "躲藏"
 
-	--L.boss_immune = "Boss Immune"
-	--L.ebon_might = "Adds Immune"
+	L.boss_immune = "首領免疫"
+	L.ebon_might = "小怪免疫"
 end
