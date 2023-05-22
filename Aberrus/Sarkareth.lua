@@ -198,7 +198,7 @@ function mod:GetOptions()
 		403771, -- Cosmic Ascension
 		{405486, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Hurtling Barrage
 		hurlingBarrageMarker,
-		403625, -- Scouring Eternity
+		{403625, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Scouring Eternity
 		{403520, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Embrace of Nothingness
 		408429, -- Void Slash
 		408457, -- Void Blast
@@ -852,6 +852,7 @@ function mod:ScouringEternity(args)
 	self:PlaySound(args.spellId, "warning")
 	scouringEternityCount = scouringEternityCount + 1
 	self:Bar(args.spellId, timers[3][args.spellId][scouringEternityCount], CL.count:format(L.scouring_eternity, scouringEternityCount))
+	self:CastBar(args.spellId, 5.5, L.scouring_eternity)
 end
 
 function mod:EmbraceOfNothingness(args)
