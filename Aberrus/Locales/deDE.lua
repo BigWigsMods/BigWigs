@@ -82,7 +82,7 @@ end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "deDE")
 if L then
-	L.custom_on_repeating_sunder_reality = "Realität zerreißen Warnzng wiederholen"
+	L.custom_on_repeating_sunder_reality = "Realität zerreißen Warnung wiederholen"
 	L.custom_on_repeating_sunder_reality_desc = "Wiederholt eine Nachricht während dem Schwarzen Zerstörung Zauber bis Du in einem Portal bist."
 
 	L.twisted_earth = "Wände"
