@@ -48,8 +48,6 @@ if L then
 	L.webs = "Toiles"
 	L.web = "Toile"
 	L.gossamer_burst = "Attirer"
-	L.gossamer_burst_castbar = "Barre d'incantation / compte à rebours Explosion de toiles d'araignée "
-	L.gossamer_burst_castbar_desc = "Barre d'incantation pour Explosion de toiles d'araignée avec compte à rebours actif par défaut."
 	L.repelling_burst = "Repousser"
 end
 
@@ -156,9 +154,6 @@ if L then
 	L.ball_lightning = "Boules"
 	-- Stage Three: Storm Incarnate
 	L.magnetic_charge = "Charge attirante"
-
-	L.storm_nova_cast = "Barre d'incantation Nova de tempête"
-	L.storm_nova_cast_desc = "Barre d'incantation pour Nova de tempête"
 
 	L.custom_on_repeating_stormcharged = "Répéter Positif ou Négatif"
 	L.custom_on_repeating_stormcharged_desc = "Répéter Positif ou Négatif en message Dire avec les icônes {rt1}, {rt3} pour trouver une correspondance et retirer le débuff."

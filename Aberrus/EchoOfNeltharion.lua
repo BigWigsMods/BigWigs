@@ -74,7 +74,7 @@ function mod:GetOptions()
 		407936, -- Sunder Reality
 		407919, -- Sundered Reality
 		"custom_on_repeating_sunder_reality",
-		407917, -- Ebon Destruction
+		{407917, "CASTBAR"}, -- Ebon Destruction
 	},{
 		[402902] = -26192, -- Stage 1
 		[403057] = -26421, -- Stage 2

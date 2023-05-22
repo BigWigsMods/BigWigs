@@ -14,7 +14,7 @@ mod.worldBoss = 193533
 
 function mod:GetOptions()
 	return {
-		391026, -- Deep Freeze
+		{391026, "CASTBAR}", -- Deep Freeze
 		389960, -- Binding Ice
 	}
 end

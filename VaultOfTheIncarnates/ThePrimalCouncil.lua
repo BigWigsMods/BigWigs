@@ -82,7 +82,7 @@ local meteorAxeMarker = mod:AddMarkerOption(false, "player", 1, 374043, 1, 2)
 function mod:GetOptions()
 	return {
 		-- Kadros Icewrath
-		373059, -- Primal Blizzard
+		{373059, "CASTBAR"}, -- Primal Blizzard
 		386661, -- Glacial Convocation
 		-- Dathea Stormlash
 		{371624, "ME_ONLY_EMPHASIZE"}, -- Conductive Mark

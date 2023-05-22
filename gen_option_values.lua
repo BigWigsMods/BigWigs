@@ -75,7 +75,7 @@ local removed_methods = {
 	Yell2 = true,
 }
 local valid_methods = {
-	-- CastBar = "CASTBAR",
+	CastBar = "CASTBAR",
 	PrimaryIcon = "ICON",
 	SecondaryIcon = "ICON",
 	Flash = "FLASH",
