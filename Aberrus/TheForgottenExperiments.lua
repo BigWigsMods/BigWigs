@@ -348,6 +348,10 @@ function mod:UnstableEssenceAppliedStacks(args)
 end
 
 function mod:UnstableEssenceRemoved(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, false, CL.removed:format(CL.bomb))
+		self:PlaySound(args.spellId, "alarm")
+	end
 	self:CustomIcon(unstableEssenceMarker, args.destName)
 	for i = 1, 3, 1 do -- 1, 2, 3
 		if essenceMarksUsed[i] == args.destGUID then
