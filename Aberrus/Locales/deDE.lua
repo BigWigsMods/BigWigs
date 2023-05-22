@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "deDE")
 if L then
-	L.custom_on_fade_out_bars = "Verblassender Balken in Phase 1"
-	L.custom_on_fade_out_bars_desc = "Verblassender Balken für entfernten Boss in Phase 1"
+	L.custom_on_fade_out_bars = "Ausblendender Balken in Phase 1"
+	L.custom_on_fade_out_bars_desc = "Ausblendender Balken, für den Boss außer Reichweite in Phase 1"
 
 	L.coalescing_void = "Weg laufen"
 	L.shadow_convergence = "Orbs"
@@ -27,7 +27,7 @@ if L then
 	L.massive_slam = "Frontal Angriff"
 	L.unstable_essence_new = "Neue Bombe"
 	L.custom_on_unstable_essence_high = "Zu viele Stacks Instabile Essenz"
-	L.custom_on_unstable_essence_high_desc = "Zu viele Stacks Instabile Essenz erreicht - Dispell"
+	L.custom_on_unstable_essence_high_desc = "Ansage, mit der Menge an Stacks Instabile Essenz, wenn diese zu hoch sind."
 	L.volatile_spew = "Ausweichen"
 	L.volatile_eruption = "Eruption"
 	L.temporal_anomaly = "Heilungs Orb"
@@ -38,14 +38,14 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "deDE")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	L.zaqali_aide_north_emote_trigger = "Add Magmamystikerin auf Nordseite!"
-	L.zaqali_aide_south_emote_trigger = "Add Magmamystikerin auf Südseite!" 
+	L.zaqali_aide_north_emote_trigger = "Add Magmamystikerin auf Nordseite" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
+	L.zaqali_aide_south_emote_trigger = "Add Magmamystikerin auf Südseite" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
 
 	L.north = "Norden"
 	L.south = "Süden"
 	L.both = "Beide Seiten"
 
-	L.zaqali_aide_message = "%s Große Adds klettern! %s" -- Große Adds kletten im Norden!
+	L.zaqali_aide_message = "%s Große Adds klettern %s" -- Große Adds kletten im Norden
 	L.add_bartext = "%s: %s (%d)"
 	L.boss_returns = "Boss landet: Norden"
 
@@ -55,7 +55,7 @@ end
 
 L = BigWigs:NewBossLocale("Rashok, the Elder", "deDE")
 if L then
-	L.doom_flames = "kleine Soaks"
+	L.doom_flames = "Kleine Soaks"
 	L.shadowlave_blast = "Frontal Angriff"
 	L.charged_smash = "Großer Soak"
 	L.energy_gained = "Energie erhalten: %d"
