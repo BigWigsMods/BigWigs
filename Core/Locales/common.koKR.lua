@@ -75,7 +75,7 @@ L.custom_sec = "%2$d초 후 %1$s"
 
 L.focus_only = "|cffff0000주시 대상만 경고합니다.|r "
 L.trash = "일반몹"
---L.affixes = "Affixes" -- Seasonal affixes for raids and mythic+ dungeons
+L.affixes = "어픽스" -- Seasonal affixes for raids and mythic+ dungeons
 
 -- Common raid marking locale
 L.marker = "%s 징표 표시"
@@ -107,15 +107,15 @@ L.bombs = "폭탄" -- Plural of L.bomb
 L.explosion = "폭발" -- When the explosion from a bomb-like ability will occur
 L.fixate = "시선 고정" -- Used when a boss or add is chasing/fixated on a player
 L.knockback = "넉백" -- Used when an ability knocks players away from a certain point, like a "smash" type ability that knocks you back 10 meters
---L.pushback = "Pushback" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
+L.pushback = "밀림" -- Used when an ability slowly and continually pushes a player away, like winds gradually pushing you away over time
 L.traps = "덫" -- Used for abilities that act like traps on the floor e.g. move into it and something bad happens like you die, or are rooted, etc.
 L.meteor = "유성" -- This one will probably only ever be used for actual meteors
 L.shield = "보호막" -- Abilities that absorb damage/healing creating a "shield" around the boss/player e.g. "Shield on boss" or "Shield remaining"
 L.teleport = "순간이동" -- A boss/add/etc teleported somewhere
 L.fear = "공포" -- For abilities that cause you to flee in fear
---L.breath = "Breath" -- When a boss breathes fire/frost/etc on to a player or the raid e.g. a Dragon breathing fire on everyone
---L.roar = "Roar" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
---L.leap = "Leap" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
---L.full_energy = "Full Energy" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
---L.pool = "Pool" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
---L.pools = "Pools" -- Plural of L.pool
+L.breath = "브레스" -- When a boss breathes fire/frost/etc on to a player or the raid e.g. a Dragon breathing fire on everyone
+L.roar = "포효" -- When a boss opens their mouth to let out a loud roar, sometimes used to inflict damage on the raid
+L.leap = "도약" -- When a boss leaps through the air from one location to another location, or from a location to a player, etc
+L.full_energy = "기력 최대" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
+L.pool = "바닥" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
+L.pools = "바닥" -- Plural of L.pool
