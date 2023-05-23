@@ -6,8 +6,8 @@ end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "deDE")
 if L then
-	L.custom_on_fade_out_bars = "Ausblendender Balken in Phase 1"
-	L.custom_on_fade_out_bars_desc = "Ausblendender Balken, für den Boss außer Reichweite in Phase 1"
+	L.custom_on_fade_out_bars = "Ausblenden der Balken in Phase 1"
+	L.custom_on_fade_out_bars_desc = "Ausblenden des Balkens, die zum Boss in Phase 1 gehören, der außer Reichweite ist."
 
 	L.coalescing_void = "Weg laufen"
 	L.shadow_convergence = "Orbs"
@@ -28,7 +28,7 @@ if L then
 	L.massive_slam = "Frontal Angriff"
 	L.unstable_essence_new = "Neue Bombe"
 	L.custom_on_unstable_essence_high = "Zu viele Stacks Instabile Essenz"
-	L.custom_on_unstable_essence_high_desc = "Ansage, mit der Menge an Stacks Instabile Essenz, wenn diese zu hoch sind."
+	L.custom_on_unstable_essence_high_desc = "Ausgeben einer Nachricht mit der Anzahl der Stapel für den Debuff Instabile Essenz, wenn dieser hoch genug ist."
 	L.volatile_spew = "Ausweichen"
 	L.volatile_eruption = "Eruption"
 	L.temporal_anomaly = "Heilungs Orb"
