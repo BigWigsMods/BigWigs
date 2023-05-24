@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "koKR")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	L.zaqali_aide_north_emote_trigger = "북쪽 성루 쫄" -- 지휘관이 북쪽 성루를 타고 오릅니다!
-	L.zaqali_aide_south_emote_trigger = "남쪽 성루 쫄" -- 지휘관이 남쪽 성루를 타고 오릅니다!!
+	L.zaqali_aide_north_emote_trigger = "북쪽 성루" -- 지휘관이 북쪽 성루를 타고 오릅니다!
+	L.zaqali_aide_south_emote_trigger = "남쪽 성루" -- 지휘관이 남쪽 성루를 타고 오릅니다!!
 
 	L.north = "북쪽"
 	L.south = "남쪽"
