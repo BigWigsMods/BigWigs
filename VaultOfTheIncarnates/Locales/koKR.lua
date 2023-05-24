@@ -21,8 +21,8 @@ if L then
 	 L.concussive_slam = "탱커 조심"
 	 L.infused_fallout = "낙진"
 
-	 --L.custom_on_repeating_fallout = "Repeating Infused Fallout"
-	 --L.custom_on_repeating_fallout_desc = "Repeating Infused Fallout say messages with icon {rt7} to find a partner."
+	 L.custom_on_repeating_fallout = "주입된 낙진 반복 알림"
+	 L.custom_on_repeating_fallout_desc = "주입된 낙진 걸렸을때 풀사람 찾기 전에 {rt7} 로 반복적으로 표시."
 end
 
 L = BigWigs:NewBossLocale("The Primal Council", "koKR")
@@ -36,7 +36,7 @@ if L then
 	 L.conductive_marks = "표식" -- Conductive Marks
 	 L.conductive_mark = "표식" -- Singular
 
-	 -- L.skipped_cast = "Skipped %s (%d)"
+	  L.skipped_cast = "%s (%d) 스킵"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "koKR")
@@ -72,7 +72,7 @@ if L then
 	 L.avoid_bartext = "%s [피하기]" -- {Spell} [Avoid]
 
 	 L.ultimate = "궁극기"
-	 L.ultimate_desc = "넴드가 어떤 제단에 있는지 모를 때에 궁극기들 (이글거리는 살육, 절대 영점, 지진 파열, 천둥번개)에 대한 타이머 표시 ."
+	 L.ultimate_desc = "넴드가 어떤 제단에 있는지 모를 때에 궁극기들 (이글거리는 살육, 절대 영점, 지진 파열, 천둥번개)에 대한 타이머 표시."
 	 L.ultimate_bartext = "%s [궁극기]" -- {Spell} [Ult]
 
 	 L.add_bartext = "%s [추가 몹]" -- "{Spell} [Add]"
@@ -107,7 +107,7 @@ if L then
 	 L.primal_attunement = "미니 광폭"
 
 	 -- Stage 2
-	 L.violent_upheaval = "기둥 "
+	 L.violent_upheaval = "기둥"
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "koKR")
@@ -126,43 +126,43 @@ end
 
 L = BigWigs:NewBossLocale("Raszageth the Storm-Eater", "koKR")
 if L then
-	-- L.lighting_devastation_trigger = "deep breath" -- Raszageth takes a deep breath...
+	 L.lighting_devastation_trigger = "깊은 숨" -- Raszageth takes a deep breath...
 
 	-- Stage One: The Winds of Change
-	-- L.hurricane_wing = "Pushback"
-	-- L.volatile_current = "Sparks"
-	-- L.thunderous_blast = "Blast"
-	-- L.lightning_breath = "Breath"
-	-- L.lightning_strikes = "Strikes"
-	-- L.electric_scales = "Raid Damage"
-	-- L.electric_lash = "Lash"
+	 L.hurricane_wing = "넉백"
+	 L.volatile_current = "쫄 생성"
+	 L.thunderous_blast = "작렬"
+	 L.lightning_breath = "브레스"
+	 L.lightning_strikes = "벼락"
+	 L.electric_scales = "공대 광역뎀"
+	 L.electric_lash = "채찍"
 	-- Intermission: The Primalist Strike
-	-- L.lightning_devastation = "Breath"
-	-- L.shattering_shroud = "Heal Absorb"
+	 L.lightning_devastation = "브레스"
+	 L.shattering_shroud = "치유 흡수"
 	-- Stage Two: Surging Power
-	-- L.absorb_text = "%s (%.0f%%)"
-	-- L.stormsurge = "Absorb Shield"
-	-- L.stormcharged = "Positive or Negative"
-	-- L.positive = "Positive"
-	-- L.negative = "Negative"
-	-- L.focused_charge = "Damage Buff"
-	-- L.tempest_wing = "Storm Wave"
-	-- L.fulminating_charge = "Charges"
-	-- L.fulminating_charge_debuff = "Charge"
+	 L.absorb_text = "%s (%.0f%%)"
+	 L.stormsurge = "흡수 보호막"
+	 L.stormcharged = "전하 확인"
+	 L.positive = "플러스"
+	 L.negative = "마이너스"
+	 L.focused_charge = "데미지 증가 버프"
+	 L.tempest_wing = "밀림 저항"
+	 L.fulminating_charge = "폭발물"
+	 L.fulminating_charge_debuff = "충전물 도트"
 	-- Intermission: The Vault Falters
-	-- L.storm_break = "Teleport"
-	-- L.ball_lightning = "Balls"
+	 L.storm_break = "순간이동"
+	 L.ball_lightning = "구체"
 	-- Stage Three: Storm Incarnate
-	-- L.magnetic_charge = "Pull Charge"
+	 L.magnetic_charge = "당기는 징표"
 
-	-- L.custom_on_repeating_stormcharged = "Repeating Positive or Negative"
-	-- L.custom_on_repeating_stormcharged_desc = "Repeating Positive or Negative say messages with icons {rt1}, {rt3} to find matches to remove your debuffs."
+	 L.custom_on_repeating_stormcharged = "양전하 음전하 반복 알림"
+	 L.custom_on_repeating_stormcharged_desc = "반복적으로 양전하이면 {rt1}, 음전하이면 {rt3} 로 디버프 해제할때까지 알림."
 
-	-- L.skipped_cast = "Skipped %s (%d)"
+	 L.skipped_cast = "%s (%d) 스킵"
 
-	-- L.custom_off_raidleader_devastation = "Lighting Devastation: Leader Mode"
-	-- L.custom_off_raidleader_devastation_desc = "Show a bar for the Lighting Devastation (Breath) on the other side as well."
-	-- L.breath_other = "%s [Opposite]" -- Breath on opposite platform
+	 L.custom_off_raidleader_devastation = "번개의 황폐: 공대장 모드"
+	 L.custom_off_raidleader_devastation_desc = "반대편 번개의 황폐(브레스) 바도 표시."
+	 L.breath_other = "[반대 단상] %s" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "koKR")
