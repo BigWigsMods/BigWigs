@@ -36,7 +36,7 @@ if L then
 	 L.conductive_marks = "표식" -- Conductive Marks
 	 L.conductive_mark = "표식" -- Singular
 
-	  L.skipped_cast = " %s (%d) 스킵!"
+	  L.skipped_cast = "%s (%d) 스킵"
 end
 
 L = BigWigs:NewBossLocale("Sennarth, The Cold Breath", "koKR")
@@ -72,7 +72,7 @@ if L then
 	 L.avoid_bartext = "%s [피하기]" -- {Spell} [Avoid]
 
 	 L.ultimate = "궁극기"
-	 L.ultimate_desc = "넴드가 어떤 제단에 있는지 모를 때에 궁극기들 (이글거리는 살육, 절대 영점, 지진 파열, 천둥번개)에 대한 타이머 표시 ."
+	 L.ultimate_desc = "넴드가 어떤 제단에 있는지 모를 때에 궁극기들 (이글거리는 살육, 절대 영점, 지진 파열, 천둥번개)에 대한 타이머 표시."
 	 L.ultimate_bartext = "%s [궁극기]" -- {Spell} [Ult]
 
 	 L.add_bartext = "%s [추가 몹]" -- "{Spell} [Add]"
@@ -107,7 +107,7 @@ if L then
 	 L.primal_attunement = "미니 광폭"
 
 	 -- Stage 2
-	 L.violent_upheaval = "기둥 "
+	 L.violent_upheaval = "기둥"
 end
 
 L = BigWigs:NewBossLocale("Broodkeeper Diurna", "koKR")
@@ -158,11 +158,11 @@ if L then
 	 L.custom_on_repeating_stormcharged = "양전하 음전하 반복 알림"
 	 L.custom_on_repeating_stormcharged_desc = "반복적으로 양전하이면 {rt1}, 음전하이면 {rt3} 로 디버프 해제할때까지 알림."
 
-	 L.skipped_cast = " %s (%d) 스킵!"
+	 L.skipped_cast = "%s (%d) 스킵"
 
 	 L.custom_off_raidleader_devastation = "번개의 황폐: 공대장 모드"
 	 L.custom_off_raidleader_devastation_desc = "반대편 번개의 황폐(브레스) 바도 표시."
-	 L.breath_other = "[반대 단상] %s " -- Breath on opposite platform
+	 L.breath_other = "[반대 단상] %s" -- Breath on opposite platform
 end
 
 L = BigWigs:NewBossLocale("Vault of the Incarnates Trash", "koKR")
