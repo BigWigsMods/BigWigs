@@ -1,106 +1,106 @@
 local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "koKR")
 if not L then return end
 if L then
-	--L.dread_rift = "Rift" -- Singular Dread Rift
+	L.dread_rift = "균열" -- Singular Dread Rift
 end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "koKR")
 if L then
-	--L.custom_on_fade_out_bars = "Fade out stage 1 bars"
-	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range in stage 1."
+	L.custom_on_fade_out_bars = "1페이즈 바 임시 비활성화"
+	L.custom_on_fade_out_bars_desc = "1페이즈에서 거리에서 먼 보스들의 바를 임시로 비활성화."
 
-	--L.coalescing_void = "Run Away"
-	--L.shadow_convergence = "Orbs"
-	--L.molten_eruption = "Soaks"
-	--L.swirling_flame = "Tornadoes"
-	--L.gloom_conflagration = "Meteor + Run Away"
-	--L.blistering_twilight = "Bombs + Tornadoes"
-	--L.convergent_eruption = "Soaks + Orbs"
-	--L.shadowflame_burst = "Frontal Cone"
+	L.coalescing_void = "보스에서 이격"
+	L.shadow_convergence = "구슬"
+	L.molten_eruption = "바닥 밟기"
+	L.swirling_flame = "회오리"
+	L.gloom_conflagration = "유성 이후 이격"
+	L.blistering_twilight = "바닥깔고 회오리 피하기"
+	L.convergent_eruption = "바닥 밟고 보주 피하기"
+	L.shadowflame_burst = "탱 머리 조심"
 
-	--L.shadow_and_flame = "Mythic Debuffs"
+	L.shadow_and_flame = "신화 디버프"
 end
 
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "koKR")
 if L then
-	--L.rending_charge_single = "First Charge"
-	--L.massive_slam = "Frontal Cone"
-	--L.unstable_essence_new = "New Bomb"
-	--L.custom_on_unstable_essence_high = "High Stacks Unstable Essence Say Messages"
-	--L.custom_on_unstable_essence_high_desc = "Say messages with the amount of stacks for your Unstable Essence debuff when they are high enough."
-	--L.volatile_spew = "Dodges"
-	--L.volatile_eruption = "Eruption"
-	--L.temporal_anomaly = "Heal Orb"
-	--L.temporal_anomaly_knocked = "Heal Orb Knocked"
+	L.rending_charge_single = "돌진 대상"
+	L.massive_slam = "고개 주의"
+	L.unstable_essence_new = "정수 디버프"
+	L.custom_on_unstable_essence_high = "불안정한 정수 고중첩 알리기"
+	L.custom_on_unstable_essence_high_desc = "불안정한 정수 고중첩일때 일반창으로 중첩 알림."
+	L.volatile_spew = "바닥 피하기"
+	L.volatile_eruption = "분출"
+	L.temporal_anomaly = "구슬"
+	L.temporal_anomaly_knocked = "구슬 쳐냄"
 end
 
 L = BigWigs:NewBossLocale("Assault of the Zaqali", "koKR")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- Commanders ascend the northern battlement!
-	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- Commanders ascend the southern battlement!
+	L.zaqali_aide_north_emote_trigger = "북쪽 성루 쫄" -- 지휘관이 북쪽 성루를 타고 오릅니다!
+	L.zaqali_aide_south_emote_trigger = "남쪽 성루 쫄" -- 지휘관이 남쪽 성루를 타고 오릅니다!!
 
-	--L.north = "North"
-	--L.south = "South"
-	--L.both = "Both"
+	L.north = "북쪽"
+	L.south = "남쪽"
+	L.both = "양쪽"
 
-	--L.zaqali_aide_message = "%s Climbing %s" -- Big Adds Climbing North
+	L.zaqali_aide_message = "%s 가 %s 으로 오르는중" -- Big Adds Climbing North
 	L.add_bartext = "%s: %s (%d)"
-	--L.boss_returns = "Boss Lands: North"
+	L.boss_returns = "넴드 착지: 북쪽"
 
 	L.molten_barrier = "보호막"
-	--L.catastrophic_slam = "Door Slam"
+	L.catastrophic_slam = "문으로 격돌"
 end
 
 L = BigWigs:NewBossLocale("Rashok, the Elder", "koKR")
 if L then
-	--L.doom_flames = "Small Soaks"
-	--L.shadowlave_blast = "Frontal Cone"
-	--L.charged_smash = "Big Soak"
-	--L.energy_gained = "Energy Gained: %d"
+	L.doom_flames = "바닥 밟기"
+	L.shadowlave_blast = "전방 브레스"
+	L.charged_smash = "큰바닥 같이맞기"
+	L.energy_gained = "기력 회복: %d"
 
 	-- Mythic
-	--L.unleash_shadowflame = "Mythic Orbs"
+	L.unleash_shadowflame = "신화 보주"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "koKR")
 if L then
-	--L.tactical_destruction = "Dragonheads"
-	--L.bombs_soaked = "Bombs Soaked" -- Bombs Soaked (2/4)
-	--L.unstable_embers = "Embers"
-	--L.unstable_ember = "Ember"
+	L.tactical_destruction = "조각상 브레스"
+	L.bombs_soaked = "유산탄 처리" -- Bombs Soaked (2/4)
+	L.unstable_embers = "불씨"
+	L.unstable_ember = "불씨"
 end
 
 L = BigWigs:NewBossLocale("Magmorax", "koKR")
 if L then
-	--L.energy_gained = "Energy Gained (-17s)" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
+	L.energy_gained = "기력 회복 (-17s)" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
 
 	-- Mythic
-	--L.explosive_magma = "Soak Pool"
+	L.explosive_magma = "폭발성 용암"
 end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "koKR")
 if L then
-	--L.custom_on_repeating_sunder_reality = "Repeating Sunder Reality Warning"
-	--L.custom_on_repeating_sunder_reality_desc = "Repeat a message during the Ebon Destruction cast until you get inside a portal."
+	L.custom_on_repeating_sunder_reality = "현실 분리 반복 알림"
+	L.custom_on_repeating_sunder_reality_desc = "칠흑의 파괴 시전시 차원문에 올라가기 전까지 반복적으로 알림."
 
-	--L.twisted_earth = "Walls"
-	--L.echoing_fissure = "Fissure"
-	--L.rushing_darkness = "Knock Lines"
+	L.twisted_earth = "벽 생성"
+	L.echoing_fissure = "균열"
+	L.rushing_darkness = "넉백 징표"
 
-	--L.umbral_annihilation = "Annihilation"
-	--L.sunder_reality = "Portals"
-	--L.ebon_destruction = "Big Bang"
+	L.umbral_annihilation = "암영 말살"
+	L.sunder_reality = "차원문"
+	L.ebon_destruction = "즉사 광역기"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "koKR")
 if L then
-	--L.claws = "Tank Debuff" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
-	--L.claws_debuff = "Tank Explodes"
-	--L.emptiness_between_stars = "Emptiness"
-	--L.void_slash = "Tank Frontal"
+	L.claws = "탱 인계" -- (Stage 1) Burning Claws / (Stage 2) Void Claws / (Stage 3) Void Slash
+	L.claws_debuff = "탱 디버프 만료"
+	L.emptiness_between_stars = "공허 위상"
+	L.void_slash = "탱커 전방기"
 
-	--L.boss_immune = "Boss Immune"
-	--L.ebon_might = "Adds Immune"
+	L.boss_immune = "넴드 면역"
+	L.ebon_might = "쫄 메즈 면역"
 end
