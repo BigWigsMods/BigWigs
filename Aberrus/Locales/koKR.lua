@@ -36,8 +36,8 @@ end
 
 L = BigWigs:NewBossLocale("Assault of the Zaqali", "koKR")
 if L then
-	 These are in-game emotes and need to match the text shown in-game
-	 You should also replace the comment (--) with the full emote as it shows in-game
+	-- These are in-game emotes and need to match the text shown in-game
+	-- You should also replace the comment (--) with the full emote as it shows in-game
 	L.zaqali_aide_north_emote_trigger = "북쪽 성루 쫄" -- 지휘관이 북쪽 성루를 타고 오릅니다!
 	L.zaqali_aide_south_emote_trigger = "남쪽 성루 쫄" -- 지휘관이 남쪽 성루를 타고 오릅니다!!
 
@@ -74,7 +74,7 @@ end
 
 L = BigWigs:NewBossLocale("Magmorax", "koKR")
 if L then
-	L.energy_gained = "기력 회복! (-17s)" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
+	L.energy_gained = "기력 회복 (-17s)" -- When you fail, you lose 17 seconds, the boss reaches full energy faster
 
 	-- Mythic
 	L.explosive_magma = "폭발성 용암"
