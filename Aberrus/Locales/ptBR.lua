@@ -38,8 +38,8 @@ L = BigWigs:NewBossLocale("Assault of the Zaqali", "ptBR")
 if L then
 	-- These are in-game emotes and need to match the text shown in-game
 	-- You should also replace the comment (--) with the full emote as it shows in-game
-	L.zaqali_aide_north_emote_trigger = "Reforço Norte" -- Commanders ascend the northern battlement!
-	L.zaqali_aide_south_emote_trigger = "Reforço Sul" -- Commanders ascend the southern battlement!
+	L.zaqali_aide_north_emote_trigger = "muralha do norte" -- Commanders ascend the northern battlement!
+	L.zaqali_aide_south_emote_trigger = "muralha do sul" -- Commanders ascend the southern battlement!
 
 	L.north = "Norte"
 	L.south = "Sul"
