@@ -466,7 +466,7 @@ local icons = {
 	EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessage",
 	ME_ONLY_EMPHASIZE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\EmphasizeMessageMeOnly",
 	DISPEL = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Dispel",
-	-- PRIVATE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private",
+	PRIVATE = "Interface\\AddOns\\BigWigs\\Media\\Icons\\Menus\\Private",
 }
 
 local function hasOptionFlag(dbKey, module, key)
@@ -816,7 +816,7 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	local showFlags = {
 		"TANK_HEALER", "TANK", "HEALER", "DISPEL",
 		"EMPHASIZE", "ME_ONLY", "ME_ONLY_EMPHASIZE", "COUNTDOWN", "CASTBAR_COUNTDOWN", "FLASH", "ICON", "SAY", "SAY_COUNTDOWN",
-		"PROXIMITY", "INFOBOX", "ALTPOWER", "NAMEPLATEBAR", --"PRIVATE",
+		"PROXIMITY", "INFOBOX", "ALTPOWER", "NAMEPLATEBAR", "PRIVATE",
 	}
 	for i = 1, #showFlags do
 		local key = showFlags[i]
