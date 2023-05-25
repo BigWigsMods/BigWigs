@@ -6,7 +6,7 @@ end
 
 L = BigWigs:NewBossLocale("The Amalgamation Chamber", "ptBR")
 if L then
-	L.custom_on_fade_out_bars = "Esconder barras da primeira fase."
+	L.custom_on_fade_out_bars = "Esconder barras da primeira fase"
 	L.custom_on_fade_out_bars_desc = "Desaparece com as barras que pertencem ao boss que está fora de alcance na primeira fase."
 
 	L.coalescing_void = "Fuja"
