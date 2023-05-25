@@ -14,7 +14,7 @@ if L then
 	L.molten_eruption = "Soaks"
 	L.swirling_flame = "Tornados"
 	L.gloom_conflagration = "Meteor + Weglaufen"
-	L.blistering_twilight = "Bombs + Tornados"
+	L.blistering_twilight = "Bomben + Tornados"
 	L.convergent_eruption = "Soaks + Kugeln"
 	L.shadowflame_burst = "Frontaler Kegel"
 
