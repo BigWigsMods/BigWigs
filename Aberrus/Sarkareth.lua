@@ -281,8 +281,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "AbyssalBreath", 404456)
 	self:Log("SPELL_SUMMON", "NullGlimmerSummon", 404507)
 	self:Log("SPELL_CAST_START", "BlastingScream", 404754)
-	self:Log("SPELL_CAST_START", "DesolateBlossom", 404403, 411030) -- Heroic/Normal, Unknown
-	self:Log("SPELL_CAST_SUCCESS", "InfiniteDuress", 407496, 404288) -- Heroic+, Unknown
+	self:Log("SPELL_CAST_START", "DesolateBlossom", 404403, 411030) -- Mythic/Heroic/Normal, Unknown (LFR?)
+	self:Log("SPELL_CAST_SUCCESS", "InfiniteDuress", 407496, 404288) -- Used when applied to 1 person, Used when applied to 2 people
 	self:Log("SPELL_AURA_APPLIED", "InfiniteDuressApplied", 407496, 404288)
 	self:Log("SPELL_AURA_REMOVED", "InfiniteDuressRemoved", 407496, 404288)
 	self:Log("SPELL_CAST_START", "VoidClaws", 411236)
@@ -703,7 +703,7 @@ do
 		end
 	end
 
-	function mod:InfiniteDuress(args)
+	function mod:InfiniteDuress()
 		playerList, onMe = {}, false
 
 		self:StopBar(CL.count:format(L.infinite_duress, infiniteDuressCount))
