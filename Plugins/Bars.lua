@@ -1656,9 +1656,7 @@ function plugin:OnPluginEnable()
 	self:RegisterMessage("BigWigs_StartBar")
 	self:RegisterMessage("BigWigs_StartNameplateBar")
 	self:RegisterMessage("BigWigs_PauseBar", "PauseBar")
-	self:RegisterMessage("BigWigs_PauseNameplateBar", "PauseNameplateBar")
 	self:RegisterMessage("BigWigs_ResumeBar", "ResumeBar")
-	self:RegisterMessage("BigWigs_ResumeNameplateBar", "ResumeNameplateBar")
 	self:RegisterMessage("BigWigs_StopBar", "StopSpecificBar")
 	self:RegisterMessage("BigWigs_StopNameplateBar", "StopNameplateBar")
 	self:RegisterMessage("BigWigs_StopBars", "StopModuleBars")
@@ -1709,20 +1707,6 @@ end
 --
 
 do
-	local errorDeprecated = "An addon registered the bar style '%s' using the old method. Visit github.com/BigWigsMods/BigWigs/wiki/Custom-Bar-Styles to learn how to do it correctly."
-	function plugin:RegisterBarStyle(key, styleData)
-		BigWigs:Print(errorDeprecated:format(key))
-		BigWigsAPI:RegisterBarStyle(key, styleData)
-	end
-end
-
-do
-	function plugin:SetBarStyle(styleName)
-		-- Ask users to select your bar styles. Forcing a selection is deprecated.
-		-- This is to allow users to install multiple styles gracefully, and to encourage authors to use new style entry APIs like `.barHeight` or `.fontSizeNormal`
-		-- Want more style API entries? We're open to suggestions!
-		BigWigs:Print(("SetBarStyle is deprecated, bar style '%s' was not set automatically, you may need to set it yourself."):format(styleName))
-	end
 	local errorNoStyle = "No style with the ID %q has been registered. Reverting to default style."
 	function SetBarStyle(styleName)
 		local style = BigWigsAPI:GetBarStyle(styleName)
@@ -1780,19 +1764,6 @@ function plugin:PauseBar(_, module, text)
 	end
 end
 
-function plugin:PauseNameplateBar(_, module, text, unitGUID)
-	local barInfo = nameplateBars[unitGUID] and nameplateBars[unitGUID][text]
-	if barInfo and not barInfo.paused then
-		barInfo.paused = true
-		if barInfo.bar then
-			barInfo.bar:Pause()
-		else
-			barInfo.deletionTimer:Cancel()
-		end
-		barInfo.remaining = barInfo.exp - GetTime()
-	end
-end
-
 function plugin:ResumeBar(_, module, text)
 	if not normalAnchor then return end
 	for k in next, normalAnchor.bars do
@@ -1806,20 +1777,6 @@ function plugin:ResumeBar(_, module, text)
 			k:Resume()
 			return
 		end
-	end
-end
-
-function plugin:ResumeNameplateBar(_, module, text, unitGUID)
-	local barInfo = nameplateBars[unitGUID] and nameplateBars[unitGUID][text]
-	if barInfo and barInfo.paused then
-		barInfo.paused = false
-		barInfo.exp = GetTime() + barInfo.remaining
-		if barInfo.bar then
-			barInfo.bar:Resume()
-		else
-			barInfo.deletionTimer = createDeletionTimer(barInfo)
-		end
-		barInfo.remaining = nil
 	end
 end
 
@@ -1905,19 +1862,6 @@ function plugin:GetBarTimeLeft(module, text)
 			if k:Get("bigwigs:module") == module and k:GetLabel() == text then
 				return k.remaining
 			end
-		end
-	end
-	return 0
-end
-
-function plugin:GetNameplateBarTimeLeft(module, text, guid)
-	if nameplateBars[guid] then
-		local barInfo = nameplateBars[guid][text]
-		local bar = barInfo and barInfo.bar
-		if bar and bar:Get("bigwigs:module") == module then
-			return bar.remaining
-		else
-			return barInfo.paused and barInfo.remaining or barInfo.exp - GetTime()
 		end
 	end
 	return 0
