@@ -646,10 +646,10 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	if hasOptionFlag(dbKey, module, "PRIVATE") then
 		local privateAuraText = AceGUI:Create("Label")
 		privateAuraText:SetText(L.PRIVATE_desc)
-		-- privateAuraText:SetColor(1, 0.82, 0)
-		-- privateAuraText:SetImage(icons.PRIVATE)
+		privateAuraText:SetColor(1, 0.75, 0.79)
+		privateAuraText:SetImage(icons.PRIVATE)
 		privateAuraText:SetFullWidth(true)
-		-- privateAuraText:SetHeight(30)
+		privateAuraText:SetHeight(30)
 		widgets[#widgets + 1] = privateAuraText
 	end
 
