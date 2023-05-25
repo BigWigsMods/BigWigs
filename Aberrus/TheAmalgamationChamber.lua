@@ -292,7 +292,7 @@ do
 		end
 	end
 
-	function mod:BarCreated(_, _, bar, _, key, text)
+	function mod:BarCreated(_, _, bar, _, key)
 		if not self:GetOption("custom_on_fade_out_bars") or self:GetStage() ~= 1 then return end
 		if essenceOfShadowAbilities[key] then
 			if not self:IsEssenceOfShadowInRange() then
@@ -345,35 +345,29 @@ function mod:CoalescingVoid(args)
 	self:Bar(args.spellId, 35.2, CL.count:format(L.coalescing_void, coalescingVoidCount))
 end
 
-do
-	local count = 1
-	function mod:UmbralDetonation(args)
-		local msg = CL.count:format(CL.bombs, umbralDetonationCount)
-		self:StopBar(msg)
-		if self:IsEssenceOfShadowInRange() then
-			self:Message(405036, "yellow", msg)
-			self:PlaySound(405036, "alert")
-		end
-		umbralDetonationCount = umbralDetonationCount + 1
-		self:Bar(405036, umbralDetonationCount == 2 and 43.7 or 35.2, CL.count:format(CL.bombs, umbralDetonationCount))
-		count = 1
+function mod:UmbralDetonation()
+	local msg = CL.count:format(CL.bombs, umbralDetonationCount)
+	self:StopBar(msg)
+	if self:IsEssenceOfShadowInRange() then
+		self:Message(405036, "yellow", msg)
+		self:PlaySound(405036, "alert")
 	end
+	umbralDetonationCount = umbralDetonationCount + 1
+	self:Bar(405036, umbralDetonationCount == 2 and 43.7 or 35.2, CL.count:format(CL.bombs, umbralDetonationCount))
+end
 
-
-	function mod:UmbralDetonationApplied(args)
-		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, nil, CL.bomb)
-			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.bomb)
-			self:SayCountdown(args.spellId, 6)
-		end
-		count = count + 1
+function mod:UmbralDetonationApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId, nil, CL.bomb)
+		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId, CL.bomb)
+		self:SayCountdown(args.spellId, 6)
 	end
+end
 
-	function mod:UmbralDetonationRemoved(args)
-		if self:Me(args.destGUID) then
-			self:CancelSayCountdown(args.spellId)
-		end
+function mod:UmbralDetonationRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
@@ -526,7 +520,7 @@ function mod:GloomConflagration(args)
 	self:Bar(args.spellId, 47.5, CL.count:format(L.gloom_conflagration, gloomConflagrationCount))
 end
 
-function mod:BlisteringTwilight(args)
+function mod:BlisteringTwilight()
 	local msg = CL.count:format(L.blistering_twilight, blisteringTwilightCount)
 	self:StopBar(msg)
 	self:Message(405642, "yellow", msg)

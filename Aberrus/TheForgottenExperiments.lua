@@ -135,12 +135,9 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	self:SetStage(1)
-	pullTime = GetTime()
 	lastCast = {}
 	thadrionEngaged = false
 	rionthusEngaged = false
-	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
 	rendingChargeCount = 1
 	massiveSlamCount = 1
@@ -154,6 +151,9 @@ function mod:OnEngage()
 	deepBreathCount = 1
 	temporalAnomalyCount = 1
 	disintergrateCount = 1
+	pullTime = GetTime()
+	self:SetStage(1)
+	self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT")
 
 	self:Bar(404713, self:Mythic() and 6 or 11, CL.count:format(CL.roar, bellowingRoarCount)) -- Bellowing Roar
 	self:Bar(406358, self:Mythic() and 14 or 19, CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge
@@ -274,8 +274,8 @@ do
 	function mod:RendingCharge(args)
 		local msg = CL.count:format(args.spellName, rendingChargeCount)
 		self:StopBar(msg)
-		self:Message(406358, "red", msg)
-		self:PlaySound(406358, "alert")
+		self:Message(args.spellId, "red", msg)
+		self:PlaySound(args.spellId, "alert")
 		rendingChargeCount = rendingChargeCount + 1
 		local cd = self:Mythic() and (rendingChargeCount % 2 == 1 and 18 or 37) or (rendingChargeCount % 2 == 1 and 38 or 35)
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, rendingChargeCount))
@@ -284,10 +284,10 @@ do
 end
 
 function mod:RendingChargeSuccess(args)
-	self:PrimaryIcon(406358)
+	self:PrimaryIcon(args.spellId)
 end
 
-function mod:MassiveSlam(args)
+function mod:MassiveSlam()
 	local msg = CL.count:format(L.massive_slam, massiveSlamCount)
 	self:StopBar(msg)
 	self:Message(404472, "yellow", msg)
@@ -309,7 +309,7 @@ function mod:BellowingRoar(args)
 end
 
 -- Thadrion
-function mod:UnstableEssence(args)
+function mod:UnstableEssence()
 	local msg = CL.count:format(L.unstable_essence_new, unstableEssenceCount)
 	self:StopBar(msg)
 	self:Message(407327, "cyan", CL.casting:format(msg))
@@ -377,7 +377,7 @@ function mod:VolatileSpew(args)
 	self:CDBar(args.spellId, cd, CL.count:format(L.volatile_spew, volatileSpewCount))
 end
 
-function mod:ViolentEruption(args)
+function mod:ViolentEruption()
 	local msg = CL.count:format(L.volatile_eruption, violentEruptionCount)
 	self:StopBar(msg)
 	self:Message(405375, "yellow", msg)

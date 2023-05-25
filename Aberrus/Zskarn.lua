@@ -122,15 +122,14 @@ function mod:DragonfireTraps(args)
 end
 
 function mod:AnimateGolems(args)
+	golemMarks, golemCollector = {}, {}
+
 	local msg = CL.count:format(CL.adds, animateGolemsCount)
 	self:StopBar(msg)
 	self:Message(args.spellId, "cyan", msg)
 	self:PlaySound(args.spellId, "info")
 	animateGolemsCount = animateGolemsCount + 1
 	self:CDBar(args.spellId, 73, CL.count:format(CL.adds, animateGolemsCount))
-
-	golemMarks = {}
-	golemCollector = {}
 end
 
 function mod:GolemSpawn(args)
@@ -189,7 +188,7 @@ do
 		 self:ScheduleTimer(startBombTimers, 2)
 	end
 
-	function mod:ShrapnelBombSoaked(args)
+	function mod:ShrapnelBombSoaked()
 		self:StopBar(CL.count_amount:format(L.bombs_soaked, bombsSoaked, totalBombs))
 		bombsSoaked = bombsSoaked + 1
 		if self:Tank() then -- Tanks only
@@ -204,7 +203,7 @@ do
 	end
 end
 
-function mod:UnstableEmbers(args)
+function mod:UnstableEmbers()
 	local msg = CL.count:format(L.unstable_embers, unstableEmbersCount)
 	self:StopBar(msg)
 	self:Message(404010, "red", msg)

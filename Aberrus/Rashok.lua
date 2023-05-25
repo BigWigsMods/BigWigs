@@ -132,9 +132,9 @@ end
 function mod:UNIT_POWER_UPDATE(event, unit)
 	local power = UnitPower(unit)
 	if power > 91 then
+		self:UnregisterUnitEvent(event, unit)
 		self:Message(405316, "cyan", CL.soon:format(CL.full_energy), false)
 		self:PlaySound(405316, "info")
-		self:UnregisterUnitEvent(event, unit)
 	end
 end
 

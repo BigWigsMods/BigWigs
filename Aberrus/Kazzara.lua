@@ -122,13 +122,13 @@ end
 do
 	local count = 1
 	function mod:DreadRifts(args)
+		count = 1
 		local msg = CL.count:format(args.spellName, dreadRiftsCount)
 		self:StopBar(msg)
 		self:Message(407196, "yellow", msg)
 		self:PlaySound(407196, "alarm") -- spread
 		dreadRiftsCount = dreadRiftsCount + 1
 		self:Bar(407196, 35, CL.count:format(args.spellName, dreadRiftsCount))
-		count = 1
 	end
 
 	function mod:DreadRiftApplied(args)

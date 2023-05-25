@@ -57,7 +57,7 @@ local timersNormal = {
 	},
 	[3] = {
 		[404027] = {30.4, 65.3, 65.3, 102.7, 65.3}, -- Void Bomb
-		[403771] = {7.7, 65.3, 105.3, 62.7, 105.3}, -- Cosmic Ascension
+		[403741] = {7.7, 65.3, 105.3, 62.7, 105.3}, -- Cosmic Ascension
 		[405486] = {21.0, 46.7, 102.7, 65.3, 102.7}, -- Hurtling Barrage
 		[403625] = {49.8, 81.5, 87.4, 81.4}, -- Scouring Eternity
 		[403520] = {26.4, 118.7, 53.3, 114.7}, -- Embrace of Nothingness
@@ -82,7 +82,7 @@ local timersHeroic = {
 	[3] = {
 		[404027] = {28.5, 61.2, 61.2, 96.3}, -- Void Bomb
 		[404288] = {5.8, 56.3, 83.8, 37.5, 36.3}, -- Infinite Duress
-		[403771] = {7.3, 61.2, 98.8, 58.8}, -- Cosmic Ascension
+		[403741] = {7.3, 61.2, 98.8, 58.8}, -- Cosmic Ascension
 		[405486] = {19.8, 85.0, 55.0, 35.1, 67.5}, -- Hurtling Barrage
 		[403625] = {46.3, 77.8, 81.5}, -- Scouring Eternity
 		[403520] = {24.8, 111.2, 50.0}, -- Embrace of Nothingness
@@ -108,7 +108,7 @@ local timersMythic = {
 	[3] = { -- Non decimal timers are taken from a stream (not precise)
 		[404027] = {24.6, 60.0, 57.6}, -- Void Bomb
 		[404288] = {4.6, 53.0, 78.8, 35.3, 34.1}, -- Infinite Duress
-		[403771] = {6.9, 57.6, 93.0, 60}, -- Cosmic Ascension
+		[403741] = {6.9, 57.6, 93.0, 60}, -- Cosmic Ascension
 		[405486] = {18.6, 80.0, 84.0}, -- Hurtling Barrage
 		[403625] = {44.6, 73.0, 76.5}, -- Scouring Eternity
 		[403520] = {23.4, 38.2, 26.5, 40.0, 47.0, 34.7}, -- Embrace of Nothingness
@@ -195,7 +195,7 @@ function mod:GetOptions()
 
 		-- Stage Three: The Seas of Infinity
 		406428, -- Motes of Oblivion
-		403771, -- Cosmic Ascension
+		403741, -- Cosmic Ascension
 		{405486, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Hurtling Barrage
 		hurlingBarrageMarker,
 		{403625, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Scouring Eternity
@@ -211,7 +211,7 @@ function mod:GetOptions()
 		["stages"] = "general",
 		[401383] = -26140, -- Stage One: The Legacy of the Dracthyr
 		[404027] = -26142, -- Stage Two: A Touch of the Forbidden
-		[403771] = -26145, -- Stage Three: The Seas of Infinity
+		[403741] = -26145, -- Stage Three: The Seas of Infinity
 		[404269] = "mythic", -- Stage Three: The Seas of Infinity
 	},{
 		[401500] = CL.bombs, -- Scorching Bomb
@@ -224,7 +224,7 @@ function mod:GetOptions()
 		[404403] = CL.pools, -- Desolate Blossom (Pools)
 		[411241] = L.claws, -- Void Claws (Tank Debuff)
 		[411238] = L.claws_debuff, -- Void Blast (Tank Explodes)
-		[403771] = L.cosmic_ascension, -- Cosmic Ascension (Ascension)
+		[403741] = L.cosmic_ascension, -- Cosmic Ascension (Ascension)
 		[405486] = L.hurtling_barrage, -- Hurtling Barrage (Lines)
 		[403625] = L.scouring_eternity, -- Scouring Eternity (Hide)
 		[403520] = L.embrace_of_nothingness, -- Embrace of Nothingness (Black Hole)
@@ -482,11 +482,11 @@ end
 
 do
 	local playerList = {}
-	function mod:MassDisintegrate(args)
+	function mod:MassDisintegrate()
+		playerList = {}
 		self:StopBar(CL.count:format(L.mass_disintergrate, massDisintergrateCount))
 		massDisintergrateCount = massDisintergrateCount + 1
 		self:Bar(401680, timers[1][401680][massDisintergrateCount], CL.count:format(L.mass_disintergrate, massDisintergrateCount))
-		playerList = {}
 	end
 
 	function mod:MassDisintegrateApplied(args)
@@ -521,7 +521,7 @@ end
 
 do
 	local tankTimers = {}
-	function mod:BurningClaws(args)
+	function mod:BurningClaws()
 		self:StopBar(CL.count:format(L.claws, clawsCount))
 		clawsCount = clawsCount + 1
 		if clawsCount < 5 then -- only 4
@@ -632,24 +632,25 @@ function mod:VoidFractureRemoved(args)
 	end
 end
 
-function mod:AbyssalBreath(args)
-	local msg = CL.count:format(CL.breath, breathCount)
-	self:StopBar(msg)
-	self:Message(args.spellId, "red", msg)
-	self:PlaySound(args.spellId, "alert")
-	breathCount = breathCount + 1
-	self:Bar(args.spellId, timers[2][args.spellId][breathCount], CL.count:format(CL.breath, breathCount))
+do
+	local immuneTimers = {32.3, 30, 27.4, 0}
+	function mod:AbyssalBreath(args)
+		nullGlimmerMarks, nullGlimmerCollector = {}, {}
 
-	nullGlimmerMarks = {}
-	nullGlimmerCollector = {}
+		local msg = CL.count:format(CL.breath, breathCount)
+		self:StopBar(msg)
+		self:Message(args.spellId, "red", msg)
+		self:PlaySound(args.spellId, "alert")
+		breathCount = breathCount + 1
+		self:Bar(args.spellId, timers[2][args.spellId][breathCount], CL.count:format(CL.breath, breathCount))
 
-	if self:GetOption(emptyRecollectionMarker) then -- self:GetOption(nullGlimmerMarker) not in p2
-		self:RegisterTargetEvents("AddMarking")
-	end
+		if self:GetOption(emptyRecollectionMarker) then -- self:GetOption(nullGlimmerMarker) not in p2
+			self:RegisterTargetEvents("AddMarking")
+		end
 
-	if self:Mythic()then
-		local immuneTimers = {32.3, 30, 27.4, 0}
-		self:Bar(404269, immuneTimers[breathCount-1], CL.count:format(L.ebon_might, breathCount-1))
+		if self:Mythic()then
+			self:Bar(404269, immuneTimers[breathCount-1], CL.count:format(L.ebon_might, breathCount-1))
+		end
 	end
 end
 
@@ -703,12 +704,12 @@ do
 	end
 
 	function mod:InfiniteDuress(args)
+		playerList, onMe = {}, false
+
 		self:StopBar(CL.count:format(L.infinite_duress, infiniteDuressCount))
 		infiniteDuressCount = infiniteDuressCount + 1
 		self:Bar(404288, timers[self:GetStage()][404288][infiniteDuressCount], CL.count:format(L.infinite_duress, infiniteDuressCount))
 
-		playerList = {}
-		onMe = false
 		self:SimpleTimer(onMeSound, 0.3)
 	end
 
@@ -738,7 +739,7 @@ end
 
 do
 	local tankTimers = {}
-	function mod:VoidClaws(args)
+	function mod:VoidClaws()
 		self:StopBar(CL.count:format(L.claws, clawsCount))
 		clawsCount = clawsCount + 1
 		self:Bar(411241, timers[2][411241][clawsCount], CL.count:format(L.claws, clawsCount))
@@ -784,7 +785,7 @@ function mod:Stage3Start()
 	scouringEternityCount = 1
 	embraceOfNothingnessCount = 1
 
-	self:Bar(403771, timers[3][403771][cosmicAscensionCount], CL.count:format(L.cosmic_ascension, cosmicAscensionCount)) -- Cosmic Ascension
+	self:Bar(403741, timers[3][403741][cosmicAscensionCount], CL.count:format(L.cosmic_ascension, cosmicAscensionCount)) -- Cosmic Ascension
 	self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)) -- Hurtling Barrage
 	self:Bar(408429, timers[3][408429][clawsCount], CL.count:format(L.claws, clawsCount)) -- Void Slash
 	self:Bar(403520, timers[3][403520][embraceOfNothingnessCount], CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount)) -- Embrace of Nothingness
@@ -796,15 +797,14 @@ function mod:Stage3Start()
 end
 
 function mod:CosmicAscension(args)
+	nullGlimmerMarks, nullGlimmerCollector = {}, {}
+
 	local msg = CL.count:format(L.cosmic_ascension, cosmicAscensionCount)
 	self:StopBar(msg)
-	self:Message(403771, "red", msg)
-	self:PlaySound(403771, "alarm")
+	self:Message(args.spellId, "red", msg)
+	self:PlaySound(args.spellId, "alarm")
 	cosmicAscensionCount = cosmicAscensionCount + 1
-	self:Bar(403771, timers[3][403771][cosmicAscensionCount], CL.count:format(L.cosmic_ascension, cosmicAscensionCount))
-
-	nullGlimmerMarks = {}
-	nullGlimmerCollector = {}
+	self:Bar(args.spellId, timers[3][args.spellId][cosmicAscensionCount], CL.count:format(L.cosmic_ascension, cosmicAscensionCount))
 
 	if self:GetOption(nullGlimmerMarker) then
 		self:RegisterTargetEvents("AddMarking")
@@ -813,15 +813,14 @@ end
 
 do
 	local playerList = {}
-	function mod:HurtlingBarrage(args)
+	function mod:HurtlingBarrage()
+		playerList = {}
 		local msg = CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)
 		self:StopBar(msg)
 		self:Message(405486, "yellow", msg)
 		self:PlaySound(405486, "alert")
 		hurtlingBarrageCount = hurtlingBarrageCount + 1
 		self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
-
-		playerList = {}
 	end
 
 	function mod:HurtlingBarrageApplied(args)
@@ -855,7 +854,7 @@ function mod:ScouringEternity(args)
 	self:CastBar(args.spellId, 5.5, L.scouring_eternity)
 end
 
-function mod:EmbraceOfNothingness(args)
+function mod:EmbraceOfNothingness()
 	self:StopBar(CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount))
 	embraceOfNothingnessCount = embraceOfNothingnessCount + 1
 	self:Bar(403520, timers[3][403520][embraceOfNothingnessCount], CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount))
@@ -878,7 +877,7 @@ end
 
 do
 	local tankTimers = {}
-	function mod:VoidSlash(args)
+	function mod:VoidSlash()
 		self:StopBar(CL.count:format(L.void_slash, clawsCount))
 		clawsCount = clawsCount + 1
 		self:Bar(408429, timers[3][408429][clawsCount], CL.count:format(L.void_slash, clawsCount))
@@ -932,7 +931,7 @@ function mod:EmptyStrikeApplied(args)
 	end
 end
 
-function mod:EmptyRecollectionDeath(args)
+function mod:EmptyRecollectionDeath()
 	self:StopBar(404769) -- Empty Strike
 	self:StopBar(CL.count:format(L.ebon_might, recollectionKilled))
 	recollectionKilled = recollectionKilled + 1

@@ -145,21 +145,21 @@ end
 
 do
 	local playerList = {}
-	function mod:MoltenSpittle(args)
+	local easyTimers = { 41.1, 32.2, 40.0 } -- 32.2, 40.0, 41.1 repeating
+	local heroicTimers = { 32.5, 37.5, 30.0 } -- 37.5, 30.0, 32.5 repeating
+	function mod:MoltenSpittle()
+		playerList = {}
 		self:StopBar(CL.count:format(CL.pools, moltenSpittleCount))
 		moltenSpittleCount = moltenSpittleCount + 1
 		local cd
 		if self:Easy() then
-			local timer = { 41.1, 32.2, 40.0 } -- 32.2, 40.0, 41.1 repeating
-			cd = timer[(moltenSpittleCount % 3) + 1]
+			cd = easyTimers[(moltenSpittleCount % 3) + 1]
 		elseif self:Mythic() then
 			cd = moltenSpittleCount % 2 == 0 and 40 or 26.7
-		else                              -- Heroic
-			local timer = { 32.5, 37.5, 30.0 } -- 37.5, 30.0, 32.5 repeating
-			cd = timer[(moltenSpittleCount % 3) + 1]
+		else -- Heroic
+			cd = heroicTimers[(moltenSpittleCount % 3) + 1]
 		end
 		self:Bar(402994, cd, CL.count:format(CL.pools, moltenSpittleCount))
-		playerList = {}
 	end
 
 	function mod:MoltenSpittleApplied(args)
@@ -193,20 +193,22 @@ function mod:SearingHeatApplied(args)
 	end
 end
 
-function mod:IgnitingRoar(args)
-	local msg = CL.count:format(CL.roar, ignitingRoarCount)
-	self:StopBar(msg)
-	self:Message(args.spellId, "yellow", msg)
-	self:PlaySound(args.spellId, "alert")
-	ignitingRoarCount = ignitingRoarCount + 1
-	local cd = 50 -- Heroic
-	if self:Easy() then
-		local timer = { 44.5, 28.9, 40.0 } -- 28.9, 40.0, 44.5 repeating
-		cd = timer[(ignitingRoarCount % 3) + 1]
-	elseif self:Mythic() then
-		cd = ignitingRoarCount % 2 == 0 and 41.8 or 24.9
+do
+	local easyTimers = { 44.5, 28.9, 40.0 } -- 28.9, 40.0, 44.5 repeating
+	function mod:IgnitingRoar(args)
+		local msg = CL.count:format(CL.roar, ignitingRoarCount)
+		self:StopBar(msg)
+		self:Message(args.spellId, "yellow", msg)
+		self:PlaySound(args.spellId, "alert")
+		ignitingRoarCount = ignitingRoarCount + 1
+		local cd = 50 -- Heroic
+		if self:Easy() then
+			cd = easyTimers[(ignitingRoarCount % 3) + 1]
+		elseif self:Mythic() then
+			cd = ignitingRoarCount % 2 == 0 and 41.8 or 24.9
+		end
+		self:Bar(args.spellId, cd, CL.count:format(CL.roar, ignitingRoarCount))
 	end
-	self:Bar(args.spellId, cd, CL.count:format(CL.roar, ignitingRoarCount))
 end
 
 function mod:OverpoweringStomp(args)
@@ -218,35 +220,39 @@ function mod:OverpoweringStomp(args)
 	self:Bar(args.spellId, self:Mythic() and 66.7 or self:Easy() and 113.4 or 100.0, CL.count:format(CL.knockback, overpoweringStompCount))
 end
 
-function mod:BlazingBreath(args)
-	local msg = CL.count:format(CL.breath, blazingBreathCount)
-	self:StopBar(msg)
-	self:Message(args.spellId, "red", msg)
-	self:PlaySound(args.spellId, "alert")
-	blazingBreathCount = blazingBreathCount + 1
-	local cd
-	if self:Easy() then
-		local timer = { 42.2, 43.3, 27.7 } -- 43.3, 27.8, 42.2 repeating
-		cd = timer[(blazingBreathCount % 3) + 1]
-	elseif self:Mythic() then
-		cd = blazingBreathCount % 2 == 0 and 35.6 or 31.1
-	else -- Heroic
-		cd = blazingBreathCount % 2 == 0 and 35 or 65
+do
+	local easyTimers = { 42.2, 43.3, 27.7 } -- 43.3, 27.8, 42.2 repeating
+	function mod:BlazingBreath(args)
+		local msg = CL.count:format(CL.breath, blazingBreathCount)
+		self:StopBar(msg)
+		self:Message(args.spellId, "red", msg)
+		self:PlaySound(args.spellId, "alert")
+		blazingBreathCount = blazingBreathCount + 1
+		local cd
+		if self:Easy() then
+			cd = easyTimers[(blazingBreathCount % 3) + 1]
+		elseif self:Mythic() then
+			cd = blazingBreathCount % 2 == 0 and 35.6 or 31.1
+		else -- Heroic
+			cd = blazingBreathCount % 2 == 0 and 35 or 65
+		end
+		self:Bar(args.spellId, cd, CL.count:format(CL.breath, blazingBreathCount))
 	end
-	self:Bar(args.spellId, cd, CL.count:format(CL.breath, blazingBreathCount))
 end
 
-function mod:IncineratingMaws(args)
-	self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
-	incineratingMawsCount = incineratingMawsCount + 1
-	local cd
-	if self:Mythic() then
-		local timer = { 24.4, 27.8, 14.5 } -- 27.8, 14.5, 24.4 repeating
-		cd = timer[(incineratingMawsCount % 3) + 1]
-	else
-		cd = self:Easy() and 22.3 or 25
+do
+	local easyTimers = { 24.4, 27.8, 14.5 } -- 27.8, 14.5, 24.4 repeating
+	function mod:IncineratingMaws(args)
+		self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
+		incineratingMawsCount = incineratingMawsCount + 1
+		local cd = 25 -- Heroic
+		if self:Mythic() then
+			cd = easyTimers[(incineratingMawsCount % 3) + 1]
+		elseif self:Easy() then
+			cd = 22.3
+		end
+		self:Bar(args.spellId, cd)
 	end
-	self:Bar(args.spellId, cd)
 end
 
 function mod:IncineratingMawsApplied(args)

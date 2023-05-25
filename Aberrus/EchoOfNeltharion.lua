@@ -21,14 +21,12 @@ local volcanicHeartCount = 1
 
 -- Stage 2
 local umbralAnnihilationCount = 1
-local sweepingShadowsCount = 1
 local corruptionCount = 1
 local addDeaths = 0
 
 -- Stage 3
 local sunderRealityCount = 1
 local ebonDestructionCount = 1
-local rushingDarknessCount = 1
 local shatteredRealityOnMe = false
 local castingEbonDestruction = false
 
@@ -153,49 +151,52 @@ function mod:UNIT_HEALTH(event, unit)
 end
 
 -- Stage 1
-function mod:VolcanicHeart(args)
-	local msg = CL.count:format(CL.bombs, volcanicHeartCount)
-	self:StopBar(msg)
-	self:Message(410953, "orange", msg)
-	volcanicHeartCount = volcanicHeartCount + 1
+do
+	local timer = { 27.8, 16.3, 17.0, 17.0, 17.3, 16.6, 19.4, 14.7, 0 }
+	function mod:VolcanicHeart()
+		local msg = CL.count:format(CL.bombs, volcanicHeartCount)
+		self:StopBar(msg)
+		self:Message(410953, "orange", msg)
+		volcanicHeartCount = volcanicHeartCount + 1
 
-	local cd = 0
-	if self:GetStage() == 1 then
-		cd = self:Mythic() and 37 or 36.5
-	elseif self:GetStage() == 2 then
-		if volcanicHeartCount == 6 then
-			-- skips the 6th SPELL_CAST_SUCCESS ???
-			self:Bar(410953, 16.6, CL.count:format(CL.bombs, volcanicHeartCount))
-			volcanicHeartCount = volcanicHeartCount + 1
-			self:ScheduleTimer("Bar", 17, 410953, 19, CL.count:format(CL.bombs, volcanicHeartCount))
-			return
-		else
-			-- local timer = { 27.8, 16.3, 17.0, 17.0, 17.3, 36.0, 14.7, 0 }
-			local timer = { 27.8, 16.3, 17.0, 17.0, 17.3, 16.6, 19.4, 14.7, 0 }
-			cd = timer[volcanicHeartCount]
-		end
-	end
-	self:CDBar(410953, cd, CL.count:format(CL.bombs, volcanicHeartCount))
-end
-
-function mod:TwistedEarth(args)
-	if self:Mythic() then
-		-- self:Message(402902, "yellow", L.twisted_earth) -- kind of noisy and irrelevant to show a message in mythic
-		twistedEarthCount = twistedEarthCount + 1
+		local cd = 0
 		if self:GetStage() == 1 then
-			self:Bar(402902, 18.5, L.twisted_earth)
-		else
-			local timer = { 49, 17, 13, 29, 14, 14 }
-			self:Bar(402902, timer[twistedEarthCount], L.twisted_earth)
+			cd = self:Mythic() and 37 or 36.5
+		elseif self:GetStage() == 2 then
+			if volcanicHeartCount == 6 then
+				-- skips the 6th SPELL_CAST_SUCCESS ???
+				self:Bar(410953, 16.6, CL.count:format(CL.bombs, volcanicHeartCount))
+				volcanicHeartCount = volcanicHeartCount + 1
+				self:ScheduleTimer("Bar", 17, 410953, 19, CL.count:format(CL.bombs, volcanicHeartCount))
+				return
+			else
+				cd = timer[volcanicHeartCount]
+			end
 		end
-	else
-		self:Message(402902, "yellow", L.twisted_earth)
-		twistedEarthCount = twistedEarthCount + 1
-		self:Bar(402902, self:GetStage() == 1 and 36.6 or 57.1, L.twisted_earth)
+		self:CDBar(410953, cd, CL.count:format(CL.bombs, volcanicHeartCount))
 	end
 end
 
-function mod:EchoingFissure(args)
+do
+	local timer = { 49, 17, 13, 29, 14, 14 }
+	function mod:TwistedEarth()
+		if self:Mythic() then
+			-- self:Message(402902, "yellow", L.twisted_earth) -- kind of noisy and irrelevant to show a message in mythic
+			twistedEarthCount = twistedEarthCount + 1
+			if self:GetStage() == 1 then
+				self:Bar(402902, 18.5, L.twisted_earth)
+			else
+				self:Bar(402902, timer[twistedEarthCount], L.twisted_earth)
+			end
+		else
+			self:Message(402902, "yellow", L.twisted_earth)
+			twistedEarthCount = twistedEarthCount + 1
+			self:Bar(402902, self:GetStage() == 1 and 36.6 or 57.1, L.twisted_earth)
+		end
+	end
+end
+
+function mod:EchoingFissure()
 	local msg = CL.count:format(L.echoing_fissure, echoingFissureCount)
 	self:StopBar(msg)
 	self:Message(402115, "orange", msg)
@@ -213,6 +214,7 @@ do
 		-- end
 	end
 
+	local timer = { 38, 29, 28, 30, 0 }
 	function mod:RushingDarkness(args)
 		local msg = CL.count:format(L.rushing_darkness, rushingDarknessCount)
 		self:StopBar(msg)
@@ -227,7 +229,6 @@ do
 		if self:GetStage() == 1 then
 			cd = 36.6
 		elseif self:GetStage() == 2 then
-			local timer = { 38, 29, 28, 30, 0 }
 			cd = timer[rushingDarknessCount]
 		else -- stage 3
 			cd = 30
@@ -295,13 +296,13 @@ do
 	function mod:CorruptionPreDebuff(args)
 		local msg = CL.count:format(self:SpellName(401010), corruptionCount)
 		if args.time - prev > 2 then -- reset
+			playerList = {}
+			prev = args.time
 			self:StopBar(msg)
 			corruptionCount = corruptionCount + 1
 			if corruptionCount < 4 then -- 3 sets
 				self:CDBar(401010, 43, CL.count:format(self:SpellName(401010), corruptionCount))
 			end
-			playerList = {}
-			prev = args.time
 		end
 		playerList[#playerList+1] = args.destName
 		if self:Me(args.destGUID) then
@@ -338,7 +339,7 @@ function mod:SunderedShadowApplied(args)
 	end
 end
 
-function mod:AddKilled(args)
+function mod:AddKilled()
 	addDeaths = addDeaths + 1
 	if addDeaths == 3 then
 		self:Stage2Over()
