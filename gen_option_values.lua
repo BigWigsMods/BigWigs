@@ -97,9 +97,6 @@ local valid_methods = {
 	CloseInfo = "INFOBOX",
 	NameplateBar = "NAMEPLATEBAR",
 	NameplateCDBar = "NAMEPLATEBAR",
-	PauseNameplateBar = "NAMEPLATEBAR",
-	ResumeNameplateBar = "NAMEPLATEBAR",
-	NameplateBarTimeLeft = "NAMEPLATEBAR",
 	StopNameplateBar = "NAMEPLATEBAR",
 	SetPrivateAuraSound = "PRIVATE",
 }
