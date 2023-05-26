@@ -49,7 +49,6 @@ local myGUID, myRole, myRolePosition
 local myGroupGUIDs, myGroupRolePositions = {}, {}
 local solo = false
 local classColorMessages = true
-local debugFunc = nil
 do -- Update some data that may be called at the top of modules (prior to initialization)
 	local _, _, diff = GetInstanceInfo()
 	difficulty = diff
@@ -85,23 +84,6 @@ local updateData = function(module)
 		if solo and myGUID ~= guid and UnitIsConnected(unit) then
 			solo = false
 		end
-	end
-	debugFunc = type(TranscriptIgnore) == "table" and TranscriptIgnore.debug and Transcriptor or false
-end
-
--------------------------------------------------------------------------------
--- Debug
---
-
-local dbg = function(...)
-	if debugFunc then
-		debugFunc:AddCustomEvent("BigWigs_Debug", "BigWigs", ...)
-	end
-end
-
-function boss:Debug(...)
-	if Transcriptor then
-		Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", ...)
 	end
 end
 
@@ -301,13 +283,21 @@ function boss:SetStage(stage)
 	end
 end
 
+--- Create a log entry in the Transcriptor addon if it is running
+-- @param ... any number of values to concatenate into the log entry
+function boss:Debug(...)
+	if Transcriptor then
+		Transcriptor:AddCustomEvent("BigWigs_Debug", "BigWigs", ...)
+	end
+end
+
 function boss:Initialize() core:RegisterBossModule(self) end
 function boss:Enable(isWipe)
 	if not self.enabled then
 		self.enabled = true
 
 		local isWiping = isWipe == true
-		dbg("Enabling module", self:GetEncounterID(), self.moduleName)
+		self:Debug("Enabling module", self:GetEncounterID(), self.moduleName)
 
 		updateData(self)
 		self.sayCountdowns = {}
@@ -345,7 +335,7 @@ function boss:Disable(isWipe)
 		self.enabled = nil
 
 		local isWiping = isWipe == true
-		dbg("Disabling module", "isWipe:", isWiping, self:GetEncounterID(), self.moduleName)
+		self:Debug("Disabling module", "isWipe:", isWiping, self:GetEncounterID(), self.moduleName)
 		if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 		-- Update enabled modules list
@@ -448,7 +438,7 @@ function boss:Disable(isWipe)
 end
 function boss:Reboot(isWipe)
 	if self.enabled then
-		dbg("Rebooting module", "isWipe:", isWipe, self:GetEncounterID(), self.moduleName)
+		self:Debug("Rebooting module", "isWipe:", isWipe, self:GetEncounterID(), self.moduleName)
 		if isWipe then
 			-- Devs, in 99% of cases you'll want to use OnBossWipe
 			self:SendMessage("BigWigs_OnBossWipe", self)
@@ -769,7 +759,7 @@ end
 do
 	local function wipeCheck(module)
 		if not IsEncounterInProgress() then
-			dbg(":StartWipeCheck IsEncounterInProgress() is nil, wiped", module:GetEncounterID(), module.moduleName)
+			module:Debug(":StartWipeCheck IsEncounterInProgress() is nil, wiped", module:GetEncounterID(), module.moduleName)
 			module:Wipe()
 		end
 	end
@@ -822,13 +812,13 @@ do
 	function boss:CheckBossStatus()
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
 		if not hasBoss and self:IsEngaged() then
-			dbg(":CheckBossStatus wipeCheck scheduled", self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckBossStatus wipeCheck scheduled", self:GetEncounterID(), self.moduleName)
 			self:ScheduleTimer(wipeCheck, 6, self)
 		elseif not self:IsEngaged() and hasBoss then
-			dbg(":CheckBossStatus called :CheckForEncounterEngage", self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckBossStatus called :CheckForEncounterEngage", self:GetEncounterID(), self.moduleName)
 			self:CheckForEncounterEngage()
 		else
-			dbg(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self:GetEncounterID(), self.moduleName)
 		end
 	end
 end
@@ -1004,11 +994,11 @@ do
 	function boss:CheckForEngage()
 		local go = scan(self)
 		if go then
-			dbg(":CheckForEngage() scan found active boss entities, calling :Engage", self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckForEngage() scan found active boss entities, calling :Engage", self:GetEncounterID(), self.moduleName)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 			self:Engage()
 		else
-			dbg(":CheckForEngage() scan found nothing, next scan in 0.5s", self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckForEngage() scan found nothing, next scan in 0.5s", self:GetEncounterID(), self.moduleName)
 			self:ScheduleTimer("CheckForEngage", .5)
 		end
 	end
@@ -1025,10 +1015,10 @@ do
 	function boss:CheckForWipe(first)
 		local go = scan(self)
 		if not first and not go then
-			dbg(":CheckForWipe() found nothing active, rebooting module", self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckForWipe() found nothing active, rebooting module", self:GetEncounterID(), self.moduleName)
 			self:Wipe()
 		else
-			dbg(":CheckForWipe() found active bosses, waiting for next scan in 2s", "Boss:", go, self:GetEncounterID(), self.moduleName)
+			self:Debug(":CheckForWipe() found active bosses, waiting for next scan in 2s", "Boss:", go, self:GetEncounterID(), self.moduleName)
 			self:ScheduleTimer("CheckForWipe", 2)
 		end
 	end
@@ -1037,16 +1027,16 @@ do
 		if not self:IsEngaged() then
 			self.isEngaged = true
 
-			dbg(":Engage", "noEngage:", noEngage, self:GetEncounterID(), self.moduleName)
+			self:Debug(":Engage", "noEngage:", noEngage, self:GetEncounterID(), self.moduleName)
 
 			if not noEngage or noEngage ~= "NoEngage" then
 				updateData(self)
 
+				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
+
 				if self.OnEngage then
 					self:OnEngage(difficulty)
 				end
-
-				self:SendMessage("BigWigs_OnBossEngage", self, difficulty)
 			elseif noEngage == "NoEngage" then
 				self:SendMessage("BigWigs_OnBossEngageMidEncounter", self, difficulty)
 			end
@@ -1054,7 +1044,7 @@ do
 	end
 
 	function boss:Win()
-		dbg(":Win", self:GetEncounterID(), self.moduleName)
+		self:Debug(":Win", self:GetEncounterID(), self.moduleName)
 		twipe(icons) -- Wipe icon cache
 		twipe(spells)
 		if self.OnWin then self:OnWin() end
@@ -2578,7 +2568,7 @@ do
 		end
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
-			self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], false, guid)
+			self:SendMessage("BigWigs_StartNameplateTimer", self, key, msg, length, icons[icon or type(text) == "number" and text or key], false, guid)
 		end
 	end
 
@@ -2600,7 +2590,7 @@ do
 
 		if checkFlag(self, key, C.NAMEPLATEBAR) then
 			local msg = type(text) == "string" and text or spells[text or key]
-			self:SendMessage("BigWigs_StartNameplateBar", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)
+			self:SendMessage("BigWigs_StartNameplateTimer", self, key, msg, length, icons[icon or type(text) == "number" and text or key], true, guid)
 		end
 	end
 
@@ -2612,7 +2602,7 @@ do
 			core:Print(format(badNameplateBarStop, text))
 		end
 		local msg = type(text) == "number" and spells[text] or text
-		self:SendMessage("BigWigs_StopNameplateBar", self, msg, guid)
+		self:SendMessage("BigWigs_StopNameplateTimer", self, msg, guid)
 	end
 end
 
@@ -2680,9 +2670,9 @@ end
 function boss:PrimaryIcon(key, player)
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
-		self:SendMessage("BigWigs_RemoveRaidIcon", 1)
+		self:SendMessage("BigWigs_RemoveRaidIcon", self, 1)
 	else
-		self:SendMessage("BigWigs_SetRaidIcon", player, 1)
+		self:SendMessage("BigWigs_SetRaidIcon", self, player, 1)
 	end
 end
 
@@ -2692,9 +2682,9 @@ end
 function boss:SecondaryIcon(key, player)
 	if key and not checkFlag(self, key, C.ICON) then return end
 	if not player then
-		self:SendMessage("BigWigs_RemoveRaidIcon", 2)
+		self:SendMessage("BigWigs_RemoveRaidIcon", self, 2)
 	else
-		self:SendMessage("BigWigs_SetRaidIcon", player, 2)
+		self:SendMessage("BigWigs_SetRaidIcon", self, player, 2)
 	end
 end
 
@@ -2708,6 +2698,7 @@ function boss:CustomIcon(key, unit, icon)
 			SetRaidTarget(unit, 0)
 		end
 		SetRaidTarget(unit, icon or 0)
+		self:Debug(":CustomIcon", key, unit, icon)
 	end
 end
 

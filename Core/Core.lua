@@ -253,7 +253,7 @@ do
 					if (t - lastNamePlateBar) > 25 then
 						lastNamePlateBar = t
 						core:Print(L.testNameplate)
-						core:SendMessage("BigWigs_StartNameplateBar", core, msg, msg, 25, icon, false, guid)
+						core:SendMessage("BigWigs_StartNameplateTimer", core, msg, msg, 25, icon, false, guid)
 					end
 					return
 				end

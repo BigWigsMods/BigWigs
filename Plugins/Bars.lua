@@ -1654,11 +1654,11 @@ function plugin:OnPluginEnable()
 	updateProfile()
 
 	self:RegisterMessage("BigWigs_StartBar")
-	self:RegisterMessage("BigWigs_StartNameplateBar")
+	self:RegisterMessage("BigWigs_StartNameplateTimer", "StartNameplateBar")
 	self:RegisterMessage("BigWigs_PauseBar", "PauseBar")
 	self:RegisterMessage("BigWigs_ResumeBar", "ResumeBar")
 	self:RegisterMessage("BigWigs_StopBar", "StopSpecificBar")
-	self:RegisterMessage("BigWigs_StopNameplateBar", "StopNameplateBar")
+	self:RegisterMessage("BigWigs_StopNameplateTimer", "StopNameplateBar")
 	self:RegisterMessage("BigWigs_StopBars", "StopModuleBars")
 	self:RegisterMessage("BigWigs_OnBossDisable", "StopModuleBars")
 	self:RegisterMessage("BigWigs_OnBossWipe", "StopModuleBars")
@@ -2090,7 +2090,7 @@ do
 	end
 end
 
-function plugin:BigWigs_StartNameplateBar(_, module, key, text, time, icon, isApprox, unitGUID)
+function plugin:StartNameplateBar(_, module, key, text, time, icon, isApprox, unitGUID)
 	if not text then text = "" end
 	self:StopNameplateBar(nil, module, text, unitGUID)
 
