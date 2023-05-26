@@ -4,7 +4,7 @@
 
 local mod, CL = BigWigs:NewBoss("Assault of the Zaqali", 2569, 2524)
 if not mod then return end
-mod:RegisterEnableMob(199659, 202791) -- Warlord Kagni, Ignara
+mod:RegisterEnableMob(199659, 199703, 202791) -- Warlord Kagni, Magma Mystic, Ignara
 mod:SetEncounterID(2682)
 mod:SetRespawnTime(30)
 mod:SetStage(1)
