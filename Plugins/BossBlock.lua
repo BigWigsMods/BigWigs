@@ -344,7 +344,7 @@ do
 
 	local restoreObjectiveTracker = nil
 	function plugin:OnEngage(event, module)
-		if not module or not module.journalId or module.worldBoss then return end
+		if not module or not module:GetJournalID() or module.worldBoss then return end
 
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
 			KillEvent(RaidBossEmoteFrame, "RAID_BOSS_EMOTE")
@@ -432,7 +432,7 @@ do
 	end
 
 	function plugin:BigWigs_OnBossDisable(event, module)
-		if not module or not module.journalId or module.worldBoss then return end
+		if not module or not module:GetJournalID() or module.worldBoss then return end
 		RestoreAll(self)
 	end
 end

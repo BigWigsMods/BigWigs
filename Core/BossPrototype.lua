@@ -307,7 +307,7 @@ function boss:Enable(isWipe)
 		self.enabled = true
 
 		local isWiping = isWipe == true
-		dbg("Enabling module", self.engageId, self.moduleName)
+		dbg("Enabling module", self:GetEncounterID(), self.moduleName)
 
 		updateData(self)
 		self.sayCountdowns = {}
@@ -319,7 +319,7 @@ function boss:Enable(isWipe)
 		end
 		enabledModules[#enabledModules+1] = self
 
-		if self.engageId then
+		if self:GetEncounterID() then
 			self:RegisterEvent("INSTANCE_ENCOUNTER_ENGAGE_UNIT", "CheckForEncounterEngage")
 			self:RegisterEvent("ENCOUNTER_END", "EncounterEnd")
 		end
@@ -345,7 +345,7 @@ function boss:Disable(isWipe)
 		self.enabled = nil
 
 		local isWiping = isWipe == true
-		dbg("Disabling module", "isWipe:", isWiping, self.engageId, self.moduleName)
+		dbg("Disabling module", "isWipe:", isWiping, self:GetEncounterID(), self.moduleName)
 		if type(self.OnBossDisable) == "function" then self:OnBossDisable() end
 
 		-- Update enabled modules list
@@ -448,7 +448,7 @@ function boss:Disable(isWipe)
 end
 function boss:Reboot(isWipe)
 	if self.enabled then
-		dbg("Rebooting module", "isWipe:", isWipe, self.engageId, self.moduleName)
+		dbg("Rebooting module", "isWipe:", isWipe, self:GetEncounterID(), self.moduleName)
 		if isWipe then
 			-- Devs, in 99% of cases you'll want to use OnBossWipe
 			self:SendMessage("BigWigs_OnBossWipe", self)
@@ -769,7 +769,7 @@ end
 do
 	local function wipeCheck(module)
 		if not IsEncounterInProgress() then
-			dbg(":StartWipeCheck IsEncounterInProgress() is nil, wiped", module.engageId, module.moduleName)
+			dbg(":StartWipeCheck IsEncounterInProgress() is nil, wiped", module:GetEncounterID(), module.moduleName)
 			module:Wipe()
 		end
 	end
@@ -822,13 +822,13 @@ do
 	function boss:CheckBossStatus()
 		local hasBoss = UnitHealth("boss1") > 0 or UnitHealth("boss2") > 0 or UnitHealth("boss3") > 0 or UnitHealth("boss4") > 0 or UnitHealth("boss5") > 0
 		if not hasBoss and self:IsEngaged() then
-			dbg(":CheckBossStatus wipeCheck scheduled", self.engageId, self.moduleName)
+			dbg(":CheckBossStatus wipeCheck scheduled", self:GetEncounterID(), self.moduleName)
 			self:ScheduleTimer(wipeCheck, 6, self)
 		elseif not self:IsEngaged() and hasBoss then
-			dbg(":CheckBossStatus called :CheckForEncounterEngage", self.engageId, self.moduleName)
+			dbg(":CheckBossStatus called :CheckForEncounterEngage", self:GetEncounterID(), self.moduleName)
 			self:CheckForEncounterEngage()
 		else
-			dbg(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self.engageId, self.moduleName)
+			dbg(":CheckBossStatus called with no result", "IsEngaged():", self:IsEngaged(), "hasBoss:", hasBoss, self:GetEncounterID(), self.moduleName)
 		end
 	end
 end
@@ -1004,11 +1004,11 @@ do
 	function boss:CheckForEngage()
 		local go = scan(self)
 		if go then
-			dbg(":CheckForEngage() scan found active boss entities, calling :Engage", self.engageId, self.moduleName)
+			dbg(":CheckForEngage() scan found active boss entities, calling :Engage", self:GetEncounterID(), self.moduleName)
 			self:UnregisterEvent("PLAYER_REGEN_DISABLED")
 			self:Engage()
 		else
-			dbg(":CheckForEngage() scan found nothing, next scan in 0.5s", self.engageId, self.moduleName)
+			dbg(":CheckForEngage() scan found nothing, next scan in 0.5s", self:GetEncounterID(), self.moduleName)
 			self:ScheduleTimer("CheckForEngage", .5)
 		end
 	end
@@ -1025,10 +1025,10 @@ do
 	function boss:CheckForWipe(first)
 		local go = scan(self)
 		if not first and not go then
-			dbg(":CheckForWipe() found nothing active, rebooting module", self.engageId, self.moduleName)
+			dbg(":CheckForWipe() found nothing active, rebooting module", self:GetEncounterID(), self.moduleName)
 			self:Wipe()
 		else
-			dbg(":CheckForWipe() found active bosses, waiting for next scan in 2s", "Boss:", go, self.engageId, self.moduleName)
+			dbg(":CheckForWipe() found active bosses, waiting for next scan in 2s", "Boss:", go, self:GetEncounterID(), self.moduleName)
 			self:ScheduleTimer("CheckForWipe", 2)
 		end
 	end
@@ -1037,7 +1037,7 @@ do
 		if not self:IsEngaged() then
 			self.isEngaged = true
 
-			dbg(":Engage", "noEngage:", noEngage, self.engageId, self.moduleName)
+			dbg(":Engage", "noEngage:", noEngage, self:GetEncounterID(), self.moduleName)
 
 			if not noEngage or noEngage ~= "NoEngage" then
 				updateData(self)
@@ -1054,7 +1054,7 @@ do
 	end
 
 	function boss:Win()
-		dbg(":Win", self.engageId, self.moduleName)
+		dbg(":Win", self:GetEncounterID(), self.moduleName)
 		twipe(icons) -- Wipe icon cache
 		twipe(spells)
 		if self.OnWin then self:OnWin() end
@@ -1203,9 +1203,9 @@ do
 end
 
 function boss:EncounterEnd(_, id, name, diff, size, status)
-	if self.engageId == id and self.enabled then
+	if self:GetEncounterID() == id and self:IsEnabled() then
 		if status == 1 then
-			if self.journalId or self.allowWin then
+			if self:GetJournalID() or self.allowWin then
 				self:Win() -- Official boss module
 			else
 				self:Disable() -- Custom external boss module

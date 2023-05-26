@@ -222,28 +222,30 @@ do
 			for i = 1, 5 do
 				local unit = units[i]
 				local rawHealth = UnitHealth(unit)
+				local journalId = module:GetJournalID()
 				if rawHealth > 0 then
 					local maxHealth = UnitHealthMax(unit)
 					local health = rawHealth / maxHealth
-					healthPools[module.journalId][unit] = health
-					healthPools[module.journalId].names[unit] = module:UnitName(unit)
-				elseif healthPools[module.journalId][unit] then
-					healthPools[module.journalId][unit] = nil
+					healthPools[journalId][unit] = health
+					healthPools[journalId].names[unit] = module:UnitName(unit)
+				elseif healthPools[journalId][unit] then
+					healthPools[journalId][unit] = nil
 				end
 			end
 		end
 	end
 	function plugin:BigWigs_OnBossEngage(event, module, diff)
 		local id = module.instanceId
+		local journalId = module:GetJournalID()
 
-		if module.journalId and id and id > 0 and not module.worldBoss then -- Raid restricted for now
-			activeDurations[module.journalId] = GetTime()
+		if journalId and id and id > 0 and not module.worldBoss then -- Raid restricted for now
+			activeDurations[journalId] = GetTime()
 
 			if diff and difficultyTable[diff] then
 				local sDB = BigWigsStatsDB
 				if not sDB[id] then sDB[id] = {} end
-				if not sDB[id][module.journalId] then sDB[id][module.journalId] = {} end
-				sDB = sDB[id][module.journalId]
+				if not sDB[id][journalId] then sDB[id][journalId] = {} end
+				sDB = sDB[id][journalId]
 				if not sDB[difficultyTable[diff]] then sDB[difficultyTable[diff]] = {} end
 
 				local best = sDB[difficultyTable[diff]].best
@@ -253,7 +255,7 @@ do
 			end
 
 			if self.db.profile.printHealth then
-				healthPools[module.journalId] = {
+				healthPools[journalId] = {
 					names = {},
 					timer = self:ScheduleRepeatingTimer(StoreHealth, 2, module),
 				}
@@ -263,11 +265,12 @@ do
 end
 
 local function Stop(self, module)
-	if module.journalId then
-		activeDurations[module.journalId] = nil
-		if healthPools[module.journalId] then
-			self:CancelTimer(healthPools[module.journalId].timer)
-			healthPools[module.journalId] = nil
+	local journalId = module:GetJournalID()
+	if journalId then
+		activeDurations[journalId] = nil
+		if healthPools[journalId] then
+			self:CancelTimer(healthPools[journalId].timer)
+			healthPools[journalId] = nil
 		end
 
 		self:SendMessage("BigWigs_StopBar", self, L.bestTimeBar)
@@ -275,8 +278,9 @@ local function Stop(self, module)
 end
 
 function plugin:BigWigs_OnBossWin(event, module)
-	if module.journalId and activeDurations[module.journalId] then
-		local elapsed = GetTime()-activeDurations[module.journalId]
+	local journalId = module:GetJournalID()
+	if journalId and activeDurations[journalId] then
+		local elapsed = GetTime()-activeDurations[journalId]
 
 		if self.db.profile.printKills then
 			BigWigs:ScheduleTimer("Print", 1, L.bossDefeatDurationPrint:format(module.displayName, elapsed < 1 and SPELL_DURATION_SEC:format(elapsed) or SecondsToTime(elapsed)))
@@ -284,7 +288,7 @@ function plugin:BigWigs_OnBossWin(event, module)
 
 		local diff = module:Difficulty()
 		if difficultyTable[diff] then
-			local sDB = BigWigsStatsDB[module.instanceId][module.journalId][difficultyTable[diff]]
+			local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyTable[diff]]
 			if self.db.profile.saveKills then
 				sDB.kills = sDB.kills and sDB.kills + 1 or 1
 			end
@@ -303,8 +307,9 @@ function plugin:BigWigs_OnBossWin(event, module)
 end
 
 function plugin:BigWigs_OnBossWipe(event, module)
-	if module.journalId and activeDurations[module.journalId] then
-		local elapsed = GetTime()-activeDurations[module.journalId]
+	local journalId = module:GetJournalID()
+	if journalId and activeDurations[journalId] then
+		local elapsed = GetTime()-activeDurations[journalId]
 
 		if elapsed > 30 then -- Fight must last longer than 30 seconds to be an actual wipe worth noting
 			if self.db.profile.printWipes then
@@ -313,20 +318,20 @@ function plugin:BigWigs_OnBossWipe(event, module)
 
 			local diff = module:Difficulty()
 			if difficultyTable[diff] and self.db.profile.saveWipes then
-				local sDB = BigWigsStatsDB[module.instanceId][module.journalId][difficultyTable[diff]]
+				local sDB = BigWigsStatsDB[module.instanceId][journalId][difficultyTable[diff]]
 				sDB.wipes = sDB.wipes and sDB.wipes + 1 or 1
 			end
 
-			if healthPools[module.journalId] then
+			if healthPools[journalId] then
 				local total = ""
 				for i = 1, 5 do
 					local unit = units[i]
-					local hp = healthPools[module.journalId][unit]
+					local hp = healthPools[journalId][unit]
 					if hp then
 						if total == "" then
-							total = L.healthFormat:format(healthPools[module.journalId].names[unit], hp*100)
+							total = L.healthFormat:format(healthPools[journalId].names[unit], hp*100)
 						else
-							total = total .. L.comma .. L.healthFormat:format(healthPools[module.journalId].names[unit], hp*100)
+							total = total .. L.comma .. L.healthFormat:format(healthPools[journalId].names[unit], hp*100)
 						end
 					end
 				end
