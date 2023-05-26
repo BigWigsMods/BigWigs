@@ -88,7 +88,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "ShadowlavaBlast", 406333)
 	self:Log("SPELL_CAST_START", "ChargedSmash", 400777)
 	self:Log("SPELL_CAST_SUCCESS", "WrathOfDjaruun", 407641)
-	self:Log("SPELL_CAST_START", "FlamingUpsurge", 407544)
+	self:Log("SPELL_CAST_START", "FlamingSlash", 407544)
 	self:Log("SPELL_CAST_START", "EarthenCrush", 407596)
 	self:Log("SPELL_AURA_APPLIED", "TankComboApplied", 407547, 407597) -- Flaming Slash, Earthen Crush
 
@@ -106,6 +106,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
+	self:SetStage(1)
 	searingSlamCount = 1
 	chargedSmashCount = 1
 	wrathOfDjaruunCount = 1
@@ -192,7 +193,7 @@ function mod:WrathOfDjaruun(args)
 	self:Bar(args.spellId, timers[args.spellId][wrathOfDjaruunCount], CL.count:format(CL.tank_combo, wrathOfDjaruunCount))
 end
 
-function mod:FlamingUpsurge(args)
+function mod:FlamingSlash(args)
 	self:Message(407547, "purple", CL.casting:format(args.spellName))
 	local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 	if bossUnit and self:Tank() and not self:Tanking(bossUnit) and not self:UnitDebuff("player", 407547) then -- Flaming Slash
@@ -241,7 +242,7 @@ function mod:SiphonEnergyApplied(args)
 
 	local bossUnit = self:UnitTokenFromGUID(args.destGUID)
 	if bossUnit then
-		local stunTime = floor(UnitPower(bossUnit) / 5) + 1.2 -- 5/s energy loss, extra 2s at the end
+		local stunTime = floor(UnitPower(bossUnit) / 5) + 1.2 -- 5/s energy loss, and idle time at the end
 		self:Bar(args.spellId, stunTime, CL.count:format(args.spellName, siphonEnergyCount))
 	end
 end
@@ -253,19 +254,21 @@ function mod:SiphonEnergyRemoved(args)
 	self:PlaySound(args.spellId, "long")
 	siphonEnergyCount = siphonEnergyCount + 1
 
+	self:SetStage(self:GetStage() + 1)
+
 	searingSlamCount = 1
 	chargedSmashCount = 1
 	wrathOfDjaruunCount = 1
 	unleashShadowflameCount = 1
 
-	self:Bar(405821, 11, CL.count:format(CL.leap, searingSlamCount)) -- Searing Slam
-	self:Bar(400777, 23, CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
-	self:Bar(407641, 31, CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
+	self:Bar(405821, timers[405821][searingSlamCount], CL.count:format(CL.leap, searingSlamCount)) -- Searing Slam
+	self:Bar(400777, timers[400777][chargedSmashCount], CL.count:format(L.charged_smash, chargedSmashCount)) -- Charged Smash
+	self:Bar(407641, timers[407641][wrathOfDjaruunCount], CL.count:format(CL.tank_combo, wrathOfDjaruunCount)) -- Wrath of Djaruun
 	self:Bar(406851, 41, L.doom_flames) -- Doom Flames
 	self:Bar(406333, 97.8, L.shadowlave_blast) -- Shadowlava Blast
 	self:Bar(405316, 113, CL.count:format(CL.full_energy, siphonEnergyCount)) -- Ancient Fury
 	if self:Mythic() then
-		self:Bar(410070, 6.3, CL.count:format(L.unleash_shadowflame, unleashShadowflameCount)) -- Unleash Shadowflame
+		self:Bar(410070, timers[410070][unleashShadowflameCount], CL.count:format(L.unleash_shadowflame, unleashShadowflameCount)) -- Unleash Shadowflame
 	end
 
 	self:RegisterUnitEvent("UNIT_POWER_UPDATE", nil, "boss1")
