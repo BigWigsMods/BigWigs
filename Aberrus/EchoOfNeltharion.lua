@@ -73,7 +73,6 @@ function mod:GetOptions()
 		-- Stage 3
 		407936, -- Sunder Reality
 		407919, -- Sundered Reality
-		"custom_on_repeating_sunder_reality",
 		{407917, "CASTBAR", "CASTBAR_COUNTDOWN"}, -- Ebon Destruction
 	},{
 		[402902] = -26192, -- Stage 1
