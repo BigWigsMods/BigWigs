@@ -82,9 +82,6 @@ end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "zhTW")
 if L then
-	L.custom_on_repeating_sunder_reality = "重複傳送門警告"
-	L.custom_on_repeating_sunder_reality_desc = "在黯黑毀滅施法期間，持續發送警告，直到你進入粉碎現實的傳送門為止。"
-
 	L.twisted_earth = "石牆"
 	L.echoing_fissure = "迴響"
 	L.rushing_darkness = "擊退破牆"
@@ -92,6 +89,10 @@ if L then
 	L.umbral_annihilation = "滅殺"
 	L.sunder_reality = "傳送門"
 	L.ebon_destruction = "大爆炸"
+
+	--L.custom_on_wall_breaker = "Wall Breaker (Mythic)"
+	--L.custom_on_wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked {rt6} and send a message in say chat. This is restricted to stage 1 on Mythic difficulty."
+	--L.custom_on_wall_breaker_say = "Wall Breaker"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "zhTW")

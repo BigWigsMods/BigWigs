@@ -82,9 +82,6 @@ end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "koKR")
 if L then
-	L.custom_on_repeating_sunder_reality = "현실 분리 반복 알림"
-	L.custom_on_repeating_sunder_reality_desc = "칠흑의 파괴 시전시 차원문에 올라가기 전까지 반복적으로 알림."
-
 	L.twisted_earth = "벽 생성"
 	L.echoing_fissure = "균열"
 	L.rushing_darkness = "넉백 징표"
@@ -92,6 +89,10 @@ if L then
 	L.umbral_annihilation = "암영 말살"
 	L.sunder_reality = "차원문"
 	L.ebon_destruction = "즉사 광역기"
+
+	--L.custom_on_wall_breaker = "Wall Breaker (Mythic)"
+	--L.custom_on_wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked {rt6} and send a message in say chat. This is restricted to stage 1 on Mythic difficulty."
+	--L.custom_on_wall_breaker_say = "Wall Breaker"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "koKR")

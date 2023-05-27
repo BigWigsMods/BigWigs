@@ -82,9 +82,6 @@ end
 
 L = BigWigs:NewBossLocale("Echo of Neltharion", "ruRU")
 if L then
-	L.custom_on_repeating_sunder_reality = "Повторяющиеся уведомления о Тёмном Уничтожении"
-	L.custom_on_repeating_sunder_reality_desc = "Напоминать о касте Тёмного Уничтожения, пока вы не зайдёте в портал."
-
 	L.twisted_earth = "Стены"
 	L.echoing_fissure = "Разлом"
 	L.rushing_darkness = "Линии отталкивания"
@@ -92,6 +89,10 @@ if L then
 	L.umbral_annihilation = "Уничтожение"
 	L.sunder_reality = "Порталы"
 	L.ebon_destruction = "Большой взрыв"
+
+	--L.custom_on_wall_breaker = "Wall Breaker (Mythic)"
+	--L.custom_on_wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked {rt6} and send a message in say chat. This is restricted to stage 1 on Mythic difficulty."
+	--L.custom_on_wall_breaker_say = "Wall Breaker"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "ruRU")
