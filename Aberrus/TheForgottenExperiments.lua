@@ -380,7 +380,7 @@ function mod:VolatileSpew(args)
 	local timeSinceLast = t - (lastCast[405492] or 0)
 	lastCast[405492] = t
 
-	local cd = volatileSpewCount == 2 and 22 or volatileSpewCount % 2 == 0 and 30 or 37	-- heroic: 15.2, 21.8, 37.6, 30.4, 37.6
+	local cd = volatileSpewCount == 2 and 22 or volatileSpewCount % 2 == 0 and 30 or 37 -- heroic: 15.2, 21.8, 37.6, 30.4, 37.6
 	if self:Mythic() then
 		cd = timeSinceLast > 22 and 20 or 35
 	end
