@@ -21,7 +21,7 @@ local tacticalDestructionCount = 1
 local shrapnelBombCount = 1
 local unstableEmbersCount = 1
 local blastWaveCount = 1
-local totalBombs = mod:Easy() and 2 or mod:Heroic() and 3 or 4
+local totalBombs = mod:Easy() and 2 or 3
 
 --------------------------------------------------------------------------------
 -- Localization
