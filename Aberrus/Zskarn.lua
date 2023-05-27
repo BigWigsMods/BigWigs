@@ -92,7 +92,7 @@ function mod:OnEngage()
 	shrapnelBombCount = 1
 	unstableEmbersCount = 1
 	blastWaveCount = 1
-	totalBombs = self:Easy() and 2 or self:Heroic() and 3 or 4
+	totalBombs = self:Easy() and 2 or 3
 
 	if not self:Easy() then
 		self:CDBar(404010, self:Mythic() and 9.2 or 7.4, CL.count:format(L.unstable_embers, unstableEmbersCount)) -- Unstable Embers
