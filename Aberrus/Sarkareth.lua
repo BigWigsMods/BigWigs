@@ -155,7 +155,7 @@ end
 --
 
 local massDisintergrateMarker = mod:AddMarkerOption(true, "player", 1, 401680, 1, 2, 3, 4) -- Mass Disintegrate
-local nullGlimmerMarker = mod:AddMarkerOption(true, "npc", 8, -26675, 8, 7, 6) -- Null Glimmer
+local nullGlimmerMarker = mod:AddMarkerOption(true, "npc", 7, -26675, 7, 6, 5) -- Null Glimmer
 local infiniteDuressMarker = mod:AddMarkerOption(true, "player", 1, 404288, 1, 2) -- Infinite Duress
 local hurlingBarrageMarker = mod:AddMarkerOption(false, "player", 3, 405486, 3, 4) -- Hurtling Barrage
 local emptyRecollectionMarker = mod:AddMarkerOption(true, "npc", 8, -26672, 8) -- Empty Recollection
@@ -656,7 +656,7 @@ end
 
 function mod:NullGlimmerSummon(args)
 	if self:GetOption(nullGlimmerMarker) and self:GetStage() == 3 then
-		for i = 8, 6, -1 do -- 8, 7, 6
+		for i = 7, 5, -1 do -- 7, 6, 5
 			if not nullGlimmerCollector[args.destGUID] and not nullGlimmerMarks[i] then
 				nullGlimmerMarks[i] = args.destGUID
 				nullGlimmerCollector[args.destGUID] = i
