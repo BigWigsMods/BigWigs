@@ -72,8 +72,6 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "MoltenSpittle", 402989)
 	self:Log("SPELL_AURA_APPLIED", "MoltenSpittleApplied", 402994)
 	self:Log("SPELL_AURA_REMOVED", "MoltenSpittleRemoved", 402994)
-	self:Log("SPELL_AURA_APPLIED", "ExplosiveMagmaApplied", 411149) -- Molten Spittle Special ID
-	self:Log("SPELL_AURA_REMOVED", "ExplosiveMagmaRemoved", 411149)
 	self:Log("SPELL_AURA_APPLIED", "SearingHeatApplied", 408839)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "SearingHeatApplied", 408839)
 	self:Log("SPELL_CAST_START", "IgnitingRoar", 403740)
@@ -87,6 +85,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_APPLIED", "GroundDamage", 406712, 411633) -- Lava, Burning Chains
 	self:Log("SPELL_PERIODIC_DAMAGE", "GroundDamage", 406712, 411633)
 	self:Log("SPELL_PERIODIC_MISSED", "GroundDamage", 406712, 411633)
+
+	-- Mythic
+	self:Log("SPELL_AURA_APPLIED", "ExplosiveMagmaApplied", 411149) -- Molten Spittle Special ID
+	self:Log("SPELL_AURA_REMOVED", "ExplosiveMagmaRemoved", 411149)
 end
 
 function mod:OnEngage()
@@ -241,13 +243,13 @@ do
 end
 
 do
-	local easyTimers = { 24.4, 27.8, 14.5 } -- 27.8, 14.5, 24.4 repeating
+	local mythicTimers = { 24.4, 27.8, 14.5 } -- 27.8, 14.5, 24.4 repeating
 	function mod:IncineratingMaws(args)
 		self:Message(args.spellId, "purple", CL.casting:format(args.spellName))
 		incineratingMawsCount = incineratingMawsCount + 1
 		local cd = 25 -- Heroic
 		if self:Mythic() then
-			cd = easyTimers[(incineratingMawsCount % 3) + 1]
+			cd = mythicTimers[(incineratingMawsCount % 3) + 1]
 		elseif self:Easy() then
 			cd = 22.3
 		end

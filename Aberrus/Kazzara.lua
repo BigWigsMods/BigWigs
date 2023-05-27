@@ -34,7 +34,7 @@ end
 -- Initialization
 --
 
-local dreadRiftMarker = mod:AddMarkerOption(false, "player", 1, 407196, 1, 2, 3, 4, 5, 6, 7, 8) -- Dread Rifts
+local dreadRiftMarker = mod:AddMarkerOption(false, "player", 1, 407196, 1, 2, 3, 4, 5, 6) -- Dread Rifts
 function mod:GetOptions()
 	return {
 		401319, -- Hellsteel Carnage

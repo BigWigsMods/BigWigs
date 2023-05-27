@@ -157,7 +157,7 @@ end
 local massDisintergrateMarker = mod:AddMarkerOption(true, "player", 1, 401680, 1, 2, 3, 4) -- Mass Disintegrate
 local nullGlimmerMarker = mod:AddMarkerOption(true, "npc", 8, -26675, 8, 7, 6) -- Null Glimmer
 local infiniteDuressMarker = mod:AddMarkerOption(true, "player", 1, 404288, 1, 2) -- Infinite Duress
-local hurlingBarrageMarker = mod:AddMarkerOption(false, "player", 3, 405486, 3, 4, 5) -- Hurtling Barrage
+local hurlingBarrageMarker = mod:AddMarkerOption(false, "player", 3, 405486, 3, 4) -- Hurtling Barrage
 local emptyRecollectionMarker = mod:AddMarkerOption(true, "npc", 8, -26672, 8) -- Empty Recollection
 function mod:GetOptions()
 	return {

@@ -58,12 +58,12 @@ function mod:GetOptions()
 		[405736] = "general",
 		[409942] = "mythic",
 	},{
-		[409942] = CL.beams, -- Elimination Protocol (Beams)
 		[405736] = CL.traps, -- Dragonfire Traps (Traps)
 		[405812] = CL.adds, -- Animate Golems (Adds)
 		[406678] = L.tactical_destruction, -- Tactical Destruction (Destruction)
 		[404010] = L.unstable_embers, -- Unstable Embers (Embers)
 		[403978] = CL.knockback, -- Blast Wave (Knockback)
+		[409942] = CL.beams, -- Elimination Protocol (Beams)
 	}
 end
 
