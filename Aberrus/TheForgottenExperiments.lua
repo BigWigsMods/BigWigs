@@ -115,7 +115,7 @@ function mod:OnBossEnable()
 	-- Neldris
 	self:Log("SPELL_CAST_START", "RendingCharge", 406358)
 	self:Log("SPELL_CAST_SUCCESS", "RendingChargeSuccess", 406358)
-	self:Log("SPELL_CAST_START", "MassiveSlam", 404472, 407733) -- Does the second Id have a different effect?
+	self:Log("SPELL_CAST_START", "MassiveSlam", 404472, 407733, 412117) -- Multiple Id's used, unkown why
 	self:Log("SPELL_CAST_START", "BellowingRoar", 404713)
 
 	-- Thadrion
@@ -277,7 +277,10 @@ do
 		self:Message(args.spellId, "red", msg)
 		self:PlaySound(args.spellId, "alert")
 		rendingChargeCount = rendingChargeCount + 1
-		local cd = self:Mythic() and (rendingChargeCount % 2 == 1 and 18 or 37) or (rendingChargeCount % 2 == 1 and 38 or 35)
+		local cd = rendingChargeCount % 2 == 1 and 38 or 35
+		if self:Mythic() then
+			cd = rendingChargeCount % 2 == 1 and 18 or 37
+		end
 		self:Bar(args.spellId, cd, CL.count:format(args.spellName, rendingChargeCount))
 		self:GetBossTarget(printTarget, 1, args.sourceGUID) -- 1st target is from boss
 	end
@@ -293,8 +296,10 @@ function mod:MassiveSlam()
 	self:Message(404472, "yellow", msg)
 	self:PlaySound(404472, "alert")
 	massiveSlamCount = massiveSlamCount + 1
-	-- finding a 4th non-mythic cast is hard
-	local cd = self:Mythic() and (massiveSlamCount % 2 == 0 and 18.0 or 37.0) or (massiveSlamCount == 2 and 9.7 or 38.8)
+	local cd = massiveSlamCount % 2 == 0 and 9.7 or 38.8
+	if self:Mythic() then
+		cd = massiveSlamCount % 2 == 0 and 18.0 or 37.0
+	end
 	self:Bar(404472, cd, CL.count:format(L.massive_slam, massiveSlamCount))
 end
 
@@ -304,7 +309,10 @@ function mod:BellowingRoar(args)
 	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alarm")
 	bellowingRoarCount = bellowingRoarCount + 1
-	local cd = self:Mythic() and (bellowingRoarCount % 2 == 0 and 30 or 25) or 57 -- 10.7, 57.0 wtb 3rd cast
+	local cd = bellowingRoarCount == 2 and 57.5 or 38.9 -- 10.7, 57.5, 38.9 wtb 4rd cast
+	if self:Mythic() then
+		cd = bellowingRoarCount % 2 == 0 and 30 or 25
+	end
 	self:Bar(args.spellId, cd, CL.count:format(CL.roar, bellowingRoarCount))
 end
 
@@ -372,8 +380,10 @@ function mod:VolatileSpew(args)
 	local timeSinceLast = t - (lastCast[405492] or 0)
 	lastCast[405492] = t
 
-	-- heroic: 15.2, 21.8, 37.6, 30.4
-	local cd = self:Mythic() and (timeSinceLast > 22 and 20 or 35) or (volatileSpewCount == 2 and 22 or volatileSpewCount % 2 == 0 and 30 or 37)
+	local cd = volatileSpewCount == 2 and 22 or volatileSpewCount % 2 == 0 and 30 or 37	-- heroic: 15.2, 21.8, 37.6, 30.4, 37.6
+	if self:Mythic() then
+		cd = timeSinceLast > 22 and 20 or 35
+	end
 	self:CDBar(args.spellId, cd, CL.count:format(L.volatile_spew, volatileSpewCount))
 end
 
