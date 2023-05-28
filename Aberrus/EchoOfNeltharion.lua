@@ -27,7 +27,6 @@ local addDeaths = 0
 -- Stage 3
 local sunderRealityCount = 1
 local ebonDestructionCount = 1
-local shatteredRealityOnMe = false
 local castingEbonDestruction = false
 
 --------------------------------------------------------------------------------
@@ -241,7 +240,7 @@ do
 		self:CDBar(407221, cd, CL.count:format(L.rushing_darkness, rushingDarknessCount))
 	end
 
-	function mod:RushingDarknessEnd(args)
+	function mod:RushingDarknessEnd()
 		if markedPlayer then
 			self:CustomIcon(false, markedPlayer)
 			markedPlayer = nil
@@ -380,7 +379,6 @@ function mod:Stage2Over()
 	sunderRealityCount = 1
 	ebonDestructionCount = 1
 	rushingDarknessCount = 1
-	shatteredRealityOnMe = false
 	castingEbonDestruction =  false
 
 	self:CDBar(407936, 21.2, CL.count:format(L.sunder_reality, sunderRealityCount)) -- Sunder Reality
