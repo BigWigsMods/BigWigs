@@ -44,10 +44,10 @@ if L then
 	L.sunder_reality = "Portals"
 	L.ebon_destruction = "Big Bang"
 
-	L.custom_on_wall_breaker = "Wall Breaker (Mythic)"
-	L.custom_on_wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked {rt6} and send a message in say chat. This is restricted to stage 1 on Mythic difficulty."
-	L.custom_on_wall_breaker_icon = 6
-	L.custom_on_wall_breaker_say = "Wall Breaker"
+	L.wall_breaker = "Wall Breaker (Mythic)"
+	L.wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked ({rt6}) and send a message in say chat. This is restricted to Mythic difficulty on stage 1."
+	L.wall_breaker_icon = 6
+	L.wall_breaker_message = "Wall Breaker"
 end
 
 --------------------------------------------------------------------------------
@@ -59,7 +59,7 @@ function mod:GetOptions()
 		"stages",
 		{410953, "PRIVATE"}, -- Volcanic Heart
 		{407221, "PRIVATE"}, -- Rushing Darkness
-		"custom_on_wall_breaker",
+		{"wall_breaker", "SAY", "SAY_COUNTDOWN", "ICON", "ME_ONLY", "ME_ONLY_EMPHASIZE"},
 		{401998, "TANK_HEALER"}, -- Calamitous Strike
 		-- Stage 1
 		402902, -- Twisted Earth
@@ -209,19 +209,21 @@ do
 	local markedPlayer = nil
 	local function printTarget(self, player, guid)
 		markedPlayer = player
-		self:TargetMessage(false, "yellow", markedPlayer, CL.count:format(self:SpellName(407221), rushingDarknessCount - 1))
+		self:TargetMessage("wall_breaker", "yellow", player, L.wall_breaker_message, 407221)
 		if self:Me(guid) then
-			self:Say(false, CL.rticon:format(L.custom_on_wall_breaker_say, 6))
-			self:SayCountdown(false, 5)
+			self:Say("wall_breaker", CL.rticon:format(L.wall_breaker_message, 6))
+			self:SayCountdown("wall_breaker", 5)
 		end
-		self:CustomIcon(false, markedPlayer, 6)
+		if self:CheckOption("wall_breaker", "ICON") then
+			self:CustomIcon(false, player, 6)
+		end
 	end
 
 	local timer = {38, 29, 28, 30, 0} -- Stage 2
 	function mod:RushingDarkness(args)
 		local msg = CL.count:format(L.rushing_darkness, rushingDarknessCount)
 		self:StopBar(msg)
-		if self:Mythic() and self:GetStage() == 1 and self:GetOption("custom_on_wall_breaker") then
+		if self:Mythic() and self:GetStage() == 1 then
 			self:GetBossTarget(printTarget, 1, args.sourceGUID) -- boss targets a player during the cast
 		else
 			self:Message(407221, "yellow", msg)
@@ -242,8 +244,8 @@ do
 	function mod:RushingDarknessEnd(args)
 		if markedPlayer then
 			self:CustomIcon(false, markedPlayer)
+			markedPlayer = nil
 		end
-		markedPlayer = nil
 	end
 end
 

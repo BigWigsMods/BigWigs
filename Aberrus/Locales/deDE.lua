@@ -90,9 +90,9 @@ if L then
 	L.sunder_reality = "Portale"
 	L.ebon_destruction = "Großer Knall"
 
-	--L.custom_on_wall_breaker = "Wall Breaker (Mythic)"
-	--L.custom_on_wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked {rt6} and send a message in say chat. This is restricted to stage 1 on Mythic difficulty."
-	--L.custom_on_wall_breaker_say = "Wall Breaker"
+	--L.wall_breaker = "Wall Breaker (Mythic)"
+	--L.wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked ({rt6}) and send a message in say chat. This is restricted to Mythic difficulty on stage 1."
+	--L.wall_breaker_message = "Wall Breaker"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "deDE")
