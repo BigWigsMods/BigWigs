@@ -111,16 +111,16 @@ BigWigs:AddColors("Echo of Neltharion", {
 	[401010] = {"blue","yellow"},
 	[401998] = {"blue","purple"},
 	[402115] = "orange",
-	[402902] = "yellow",
 	[403049] = "cyan",
 	[405433] = "orange",
-	[407221] = {"blue","yellow"},
+	[407221] = "yellow",
 	[407790] = {"blue","purple"},
 	[407917] = "red",
 	[407919] = {"blue","green"},
 	[407936] = "yellow",
 	[410953] = "orange",
 	["stages"] = {"cyan","green"},
+	["wall_breaker"] = {"blue","yellow"},
 })
 
 BigWigs:AddColors("Scalecommander Sarkareth", {
