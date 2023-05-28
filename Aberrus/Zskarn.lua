@@ -52,6 +52,7 @@ function mod:GetOptions()
 		{404010, "SAY", "SAY_COUNTDOWN", "ME_ONLY_EMPHASIZE"}, -- Unstable Embers
 		403978, -- Blast Wave
 		{404942, "TANK"}, -- Searing Claws
+		"berserk",
 		-- Mythic
 		409942, -- Elimination Protocol
 	}, {
@@ -102,6 +103,8 @@ function mod:OnEngage()
 	self:CDBar(405736, self:Mythic() and 19.5 or self:Easy() and 15.5 or 20, CL.count:format(CL.traps, dragonfireTrapsCount)) -- Dragonfire Traps
 	self:CDBar(405812, self:Mythic() and 26 or self:Easy() and 35.5 or 54.4, CL.count:format(CL.adds, animateGolemsCount)) -- Animate Golems
 	self:CDBar(406678, self:Mythic() and 31 or self:Easy() and 70.7 or 60.5, CL.count:format(L.tactical_destruction, tacticalDestructionCount)) -- Tactical Destruction
+
+	self:Berserk(510, true)
 
 	if self:GetOption(animateGolemsMarker) then
 		self:RegisterTargetEvents("AddMarking")
