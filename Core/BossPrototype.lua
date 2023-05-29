@@ -2859,15 +2859,27 @@ function boss:PlaySound(key, sound, voice, player)
 			local meOnly = checkFlag(self, key, C.ME_ONLY)
 			if type(player) == "table" then
 				if meOnly then
-					if player[#player] == cpName then
-						self:SendMessage("BigWigs_Sound", self, key, sound)
+					if player[#player] == cpName or player[#player] == pName then -- Old table format, new table format
+						if hasVoice and checkFlag(self, key, C.VOICE) then
+							self:SendMessage("BigWigs_Voice", self, key, sound, true)
+						else
+							self:SendMessage("BigWigs_Sound", self, key, sound)
+						end
 					end
 				elseif #player == 1 then
-					self:SendMessage("BigWigs_Sound", self, key, sound)
+					if hasVoice and checkFlag(self, key, C.VOICE) then
+						self:SendMessage("BigWigs_Voice", self, key, sound, player[1] == cpName or player[1] == pName)
+					else
+						self:SendMessage("BigWigs_Sound", self, key, sound)
+					end
 				end
 			else
 				if not meOnly or (meOnly and player == pName) then
-					self:SendMessage("BigWigs_Sound", self, key, sound)
+					if hasVoice and checkFlag(self, key, C.VOICE) then
+						self:SendMessage("BigWigs_Voice", self, key, sound, player == pName)
+					else
+						self:SendMessage("BigWigs_Sound", self, key, sound)
+					end
 				end
 			end
 		else
