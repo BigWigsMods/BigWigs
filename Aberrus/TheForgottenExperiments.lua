@@ -195,6 +195,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			thadrionEngaged = true
 			self:Message("stages", "cyan", -26322, false)
 			self:PlaySound("stages", "long")
+			self:SetStage(2)
 
 			self:CDBar(405492, self:Mythic() and getCastCD(405492) or 6, CL.count:format(L.volatile_spew, volatileSpewCount)) -- Volatile Spew
 			self:CDBar(407327, self:Mythic() and getCastCD(407327) or 17.3, CL.count:format(L.unstable_essence_new, unstableEssenceCount)) -- Unstable Essence
@@ -205,6 +206,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			rionthusEngaged = true
 			self:Message("stages", "cyan", -26329, false)
 			self:PlaySound("stages", "long")
+			self:SetStage(3)
 
 			self:CDBar(405392, self:Mythic() and getCastCD(405392) or 6.4, CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
 			self:CDBar(407552, self:Mythic() and getCastCD(407552) or 17.5, CL.count:format(L.temporal_anomaly, temporalAnomalyCount)) -- Temporal Anomaly
