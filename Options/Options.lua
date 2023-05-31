@@ -644,13 +644,10 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	end
 
 	-- Add Key Text
-	local keyText = L.optionsKey:format("")
-	if type(dbKey) == "number" then
-		keyText = L.optionsKey:format(dbKey)
-	else
+	local keyText = L.optionsKey:format(dbKey)
+	if type(dbKey) ~= "number" then
 		keyText = L.optionsKey:format("\""..dbKey.."\"")
 	end
-
 	local optionKeyLabel = AceGUI:Create("Label")
 	optionKeyLabel:SetText(keyText)
 	optionKeyLabel:SetColor(0.65, 0.65, 0.65)
