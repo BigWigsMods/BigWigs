@@ -646,9 +646,9 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	-- Add Key Text
 	local optionKeyLabel = AceGUI:Create("Label")
 	if type(dbKey) == "number" then
-		optionKeyLabel:SetFormattedText(L.optionsKey, dbKey)
+		optionKeyLabel.label:SetFormattedText(L.optionsKey, dbKey)
 	else
-		optionKeyLabel:SetFormattedText(L.optionsKey, "\""..dbKey.."\"")
+		optionKeyLabel.label:SetFormattedText(L.optionsKey, "\""..dbKey.."\"")
 	end
 	optionKeyLabel:SetColor(0.65, 0.65, 0.65)
 	optionKeyLabel:SetWidth(optionKeyLabel.label:GetStringWidth())
