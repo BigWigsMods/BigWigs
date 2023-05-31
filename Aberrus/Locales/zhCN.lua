@@ -61,7 +61,8 @@ if L then
 	L.energy_gained = "获得能量: %d"
 
 	-- Mythic
-	-- L.unleash_shadowflame = "暗焰宝珠"
+	L.unleash_shadowflame = "暗焰宝珠"
+	L.shadowflame_energy = "吸收治疗"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "zhCN")
