@@ -903,30 +903,6 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	button:SetUserData("bossOption", bossOption)
 	button:SetCallback("OnClick", buttonClicked)
 
-	-- -- Add a tooltip to our options so users can see what key is being used without having to open the source
-	-- local optionsText = "OptionKey: %s" -- The key that messages/bars/options use
-	-- local keyTooltip = optionsText:format("")
-	-- if type(dbKey) == "number" then
-	-- 	keyTooltip = optionsText:format(dbKey)
-	-- elseif dbKey then
-	-- 	keyTooltip = optionsText:format("\""..dbKey.."\"")
-	-- end
-
-	-- local optionKeyIcon = AceGUI:Create("Icon")
-	-- optionKeyIcon:SetWidth(12)
-	-- optionKeyIcon:SetImageSize(12, 12)
-	-- optionKeyIcon:SetUserData("tooltipText", keyTooltip)
-	-- optionKeyIcon:SetCallback("OnEnter", flagOnEnter)
-	-- optionKeyIcon:SetCallback("OnLeave", flagOnLeave)
-	-- optionKeyIcon:SetImage(icons.KEY)
-	-- optionKeyIcon.frame:SetParent(button.frame)
-	-- optionKeyIcon.frame:Show()
-	-- optionKeyIcon:SetPoint("LEFT", button.frame, "LEFT", -14, 0)
-
-	-- check:SetUserData("tooltipText", keyTooltip)
-	-- check:SetCallback("OnEnter", flagOnEnter)
-	-- check:SetCallback("OnLeave", flagOnLeave)
-
 	return check, button
 end
 
