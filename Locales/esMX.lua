@@ -57,7 +57,7 @@ L.spell_under_you = "BigWigs: Habilidad debajo de ti"
 
 -- Options.lua
 L.options = "Opciones"
---L.optionsKey = "OptionKey: %s" -- The key that messages/bars/options use
+--L.optionsKey = "Key: %s" -- The key that messages/bars/options use
 L.raidBosses = "Jefes de Banda"
 L.dungeonBosses = "Jefes de Mazmorras"
 L.introduction = "Bienvenido a BigWigs. Abróchate el cinturón y come cacahuetes mientras disfrutas del paseo. De manera no intrusiva te ayudará a preparar ese nuevo encuentro de banda como una cena de 7 platos para tu grupo de banda."

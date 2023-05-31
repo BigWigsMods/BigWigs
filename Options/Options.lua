@@ -643,6 +643,28 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 		end
 	end
 
+	-- Add Key Text
+	local keyText = L.optionsKey:format("")
+	if type(dbKey) == "number" then
+		keyText = L.optionsKey:format(dbKey)
+	else
+		keyText = L.optionsKey:format("\""..dbKey.."\"")
+	end
+
+	local optionKeyLabel = AceGUI:Create("Label")
+	optionKeyLabel:SetText(keyText)
+	optionKeyLabel:SetColor(0.65, 0.65, 0.65)
+	optionKeyLabel:SetWidth(optionKeyLabel.label:GetStringWidth())
+	optionKeyLabel:SetHeight(30)
+	optionKeyLabel.frame:SetParent(check.frame)
+	optionKeyLabel.frame:Show()
+	optionKeyLabel:SetPoint("RIGHT", check.frame, "TOPRIGHT", -5, -13)
+	-- need to release in a callback this up since it's not added as it's own widget
+	check:SetUserData("optionKeyLabel", optionKeyLabel)
+	check:SetCallback("OnRelease", function(widget)
+		widget:GetUserData("optionKeyLabel"):Release()
+	end)
+
 	if hasOptionFlag(dbKey, module, "PRIVATE") then
 		local privateAuraText = AceGUI:Create("Label")
 		privateAuraText:SetText(L.PRIVATE_desc)
@@ -780,17 +802,6 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	check:SetCallback("OnValueChanged", masterOptionToggled)
 	check:SetValue(getMasterOption(check))
 
-	-- Add a tooltip to our options so users can see what key is being used without having to open the source
-	local keyTooltip = L.optionsKey:format("")
-	if type(dbKey) == "number" then
-		keyTooltip = L.optionsKey:format(dbKey)
-	else
-		keyTooltip = L.optionsKey:format("\""..dbKey.."\"")
-	end
-	check:SetUserData("tooltipText", keyTooltip)
-	check:SetCallback("OnEnter", flagOnEnter)
-	check:SetCallback("OnLeave", flagOnLeave)
-
 	check.text:SetTextColor(1, 0.82, 0) -- After :SetValue so it's not overwritten
 	if icon then check:SetImage(icon, 0.07, 0.93, 0.07, 0.93) end
 
@@ -894,6 +905,30 @@ local function getDefaultToggleOption(scrollFrame, dropdown, module, bossOption)
 	button:SetUserData("module", module)
 	button:SetUserData("bossOption", bossOption)
 	button:SetCallback("OnClick", buttonClicked)
+
+	-- -- Add a tooltip to our options so users can see what key is being used without having to open the source
+	-- local optionsText = "OptionKey: %s" -- The key that messages/bars/options use
+	-- local keyTooltip = optionsText:format("")
+	-- if type(dbKey) == "number" then
+	-- 	keyTooltip = optionsText:format(dbKey)
+	-- elseif dbKey then
+	-- 	keyTooltip = optionsText:format("\""..dbKey.."\"")
+	-- end
+
+	-- local optionKeyIcon = AceGUI:Create("Icon")
+	-- optionKeyIcon:SetWidth(12)
+	-- optionKeyIcon:SetImageSize(12, 12)
+	-- optionKeyIcon:SetUserData("tooltipText", keyTooltip)
+	-- optionKeyIcon:SetCallback("OnEnter", flagOnEnter)
+	-- optionKeyIcon:SetCallback("OnLeave", flagOnLeave)
+	-- optionKeyIcon:SetImage(icons.KEY)
+	-- optionKeyIcon.frame:SetParent(button.frame)
+	-- optionKeyIcon.frame:Show()
+	-- optionKeyIcon:SetPoint("LEFT", button.frame, "LEFT", -14, 0)
+
+	-- check:SetUserData("tooltipText", keyTooltip)
+	-- check:SetCallback("OnEnter", flagOnEnter)
+	-- check:SetCallback("OnLeave", flagOnLeave)
 
 	return check, button
 end

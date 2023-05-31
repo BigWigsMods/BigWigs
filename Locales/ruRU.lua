@@ -57,7 +57,7 @@ L.spell_under_you = "BigWigs: Заклинание под тобой"
 
 -- Options.lua
 L.options = "Настройки"
---L.optionsKey = "OptionKey: %s" -- The key that messages/bars/options use
+--L.optionsKey = "Key: %s" -- The key that messages/bars/options use
 L.raidBosses = "Рейдовые боссы"
 L.dungeonBosses = "Боссы подземелий"
 L.introduction = "Добро пожаловать в BigWigs, где бродят боссы. Пожалуйста, пристегните ремни безопасности, запаситесь печеньками и наслаждайтесь поездкой. Он не cъест ваших детей, но поможет подготовиться к встречи с новыми боссами, словно для обеда из 7-ми блюд вашего рейда."
