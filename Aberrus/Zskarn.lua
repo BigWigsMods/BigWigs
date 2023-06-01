@@ -99,7 +99,9 @@ function mod:OnEngage()
 		self:CDBar(404010, self:Mythic() and 9.2 or 7.4, CL.count:format(L.unstable_embers, unstableEmbersCount)) -- Unstable Embers
 	end
 	self:CDBar(403978, self:Mythic() and 13 or self:Easy() and 20.4 or 11.0, CL.count:format(CL.knockback, blastWaveCount)) -- Blast Wave
-	self:CDBar(406725, self:Mythic() and 36 or self:Easy() and 45.1 or 35.0, CL.count:format(CL.bombs, shrapnelBombCount)) -- Shrapnel Bomb
+	if not self:LFR() then
+		self:CDBar(406725, self:Mythic() and 36 or self:Normal() and 45.1 or 35.0, CL.count:format(CL.bombs, shrapnelBombCount)) -- Shrapnel Bomb
+	end
 	self:CDBar(405736, self:Mythic() and 19.5 or self:Easy() and 15.5 or 20, CL.count:format(CL.traps, dragonfireTrapsCount)) -- Dragonfire Traps
 	self:CDBar(405812, self:Mythic() and 26 or self:Easy() and 35.5 or 54.4, CL.count:format(CL.adds, animateGolemsCount)) -- Animate Golems
 	self:CDBar(406678, self:Mythic() and 31 or self:Easy() and 70.7 or 60.5, CL.count:format(L.tactical_destruction, tacticalDestructionCount)) -- Tactical Destruction
