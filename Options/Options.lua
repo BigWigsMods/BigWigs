@@ -643,7 +643,7 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 		end
 	end
 
-	-- Add Key Text
+	-- Add a small text label to the top right displaying what key is tied to this ability
 	local optionKeyLabel = AceGUI:Create("Label")
 	if type(dbKey) == "number" then
 		optionKeyLabel.label:SetFormattedText(L.optionsKey, dbKey)
