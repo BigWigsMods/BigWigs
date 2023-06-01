@@ -656,7 +656,7 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 	optionKeyLabel.frame:SetParent(check.frame)
 	optionKeyLabel.frame:Show()
 	optionKeyLabel:SetPoint("RIGHT", check.frame, "TOPRIGHT", -5, -13)
-	-- need to release in a callback this up since it's not added as it's own widget
+	-- Manually release in a callback, since optionKeyLabel isn't added to the widgets table as a child
 	check:SetUserData("optionKeyLabel", optionKeyLabel)
 	check:SetCallback("OnRelease", function(widget)
 		widget:GetUserData("optionKeyLabel"):Release()
