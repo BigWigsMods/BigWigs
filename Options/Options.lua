@@ -643,6 +643,25 @@ function getAdvancedToggleOption(scrollFrame, dropdown, module, bossOption)
 		end
 	end
 
+	-- Add a small text label to the top right displaying what key is tied to this ability
+	local optionKeyLabel = AceGUI:Create("Label")
+	if type(dbKey) == "number" then
+		optionKeyLabel.label:SetFormattedText(L.optionsKey, dbKey)
+	else
+		optionKeyLabel.label:SetFormattedText(L.optionsKey, "\""..dbKey.."\"")
+	end
+	optionKeyLabel:SetColor(0.65, 0.65, 0.65)
+	optionKeyLabel:SetWidth(optionKeyLabel.label:GetStringWidth())
+	optionKeyLabel:SetHeight(30)
+	optionKeyLabel.frame:SetParent(check.frame)
+	optionKeyLabel.frame:Show()
+	optionKeyLabel:SetPoint("RIGHT", check.frame, "TOPRIGHT", -5, -13)
+	-- Manually release in a callback, since optionKeyLabel isn't added to the widgets table as a child
+	check:SetUserData("optionKeyLabel", optionKeyLabel)
+	check:SetCallback("OnRelease", function(widget)
+		widget:GetUserData("optionKeyLabel"):Release()
+	end)
+
 	if hasOptionFlag(dbKey, module, "PRIVATE") then
 		local privateAuraText = AceGUI:Create("Label")
 		privateAuraText:SetText(L.PRIVATE_desc)

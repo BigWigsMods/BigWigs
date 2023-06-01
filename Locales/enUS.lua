@@ -54,6 +54,7 @@ L.spell_under_you = "BigWigs: Spell under you"
 
 -- Options.lua
 L.options = "Options"
+L.optionsKey = "Key: %s" -- The key that messages/bars/options use
 L.raidBosses = "Raid Bosses"
 L.dungeonBosses = "Dungeon Bosses"
 L.introduction = "Welcome to BigWigs, where the boss encounters roam. Please fasten your seatbelt, eat peanuts and enjoy the ride. It will not eat your children, but it will assist you in preparing that new boss encounter as a 7-course dinner for your raid group."

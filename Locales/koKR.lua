@@ -55,6 +55,7 @@ L.spell_under_you = "BigWigs: 발밑에 바닥"
 
 -- Options.lua
 L.options = "옵션"
+--L.optionsKey = "Key: %s" -- The key that messages/bars/options use
 L.raidBosses = "공격대 우두머리"
 L.dungeonBosses = "던전 우두머리"
 L.introduction = "우두머리 전투가 배회하는 BigWigs에 오신 걸 환영합니다. 안전 벨트를 착용하고, 땅콩을 먹으며 탑승을 즐기세요. 당신의 아이들을 먹진 않지만, 당신의 공격대를 위한 7-코스 저녁 식사로 새로운 우두머리 전투를 준비하는 데 도움을 줄겁니다."
