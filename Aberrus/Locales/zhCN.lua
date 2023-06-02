@@ -110,5 +110,5 @@ end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "zhCN")
 if L then
-	--L.slime = "Bubbling Slime" -- NPC 205651
+	L.slime = "冒泡的软泥" -- NPC 205651
 end
