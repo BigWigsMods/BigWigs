@@ -418,7 +418,7 @@ function core:Error(msg, noPrint)
 	if not noPrint then
 		core:Print(msg)
 	end
-	geterrorhandler()(msg)
+	geterrorhandler()("BigWigs: ".. msg)
 end
 
 -------------------------------------------------------------------------------

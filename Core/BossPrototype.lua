@@ -291,6 +291,15 @@ function boss:Debug(...)
 	end
 end
 
+--- Show an error after the encounter has ended
+-- @string message the message to show to the user
+function boss:Error(message)
+	if not self.errorPrints then
+		self.errorPrints = {}
+	end
+	self.errorPrints[#self.errorPrints+1] = message
+end
+
 function boss:Initialize() core:RegisterBossModule(self) end
 function boss:Enable(isWipe)
 	if not self.enabled then
@@ -433,6 +442,12 @@ function boss:Disable(isWipe)
 				core:Error(timersText, true)
 			end
 			self.missing = nil
+		end
+		if self.errorPrints then
+			for i = 1, #self.errorPrints do
+				core:Error(self.errorPrints[i])
+			end
+			self.errorPrints = nil
 		end
 	end
 end
