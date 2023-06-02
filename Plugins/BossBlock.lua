@@ -22,7 +22,7 @@ plugin.defaultDB = {
 	blockGarrison = true,
 	blockGuildChallenge = true,
 	blockSpellErrors = true,
-	blockTooltipQuests = true,
+	blockTooltipQuestText = true,
 	blockObjectiveTracker = true,
 	disableSfx = false,
 	disableMusic = false,
@@ -45,6 +45,7 @@ local SetCVar = C_CVar.SetCVar
 local GetCVar = C_CVar.GetCVar
 local CheckElv = nil
 local RestoreAll
+local hideQuestTrackingTooltips = false
 
 -------------------------------------------------------------------------------
 -- Options
@@ -112,13 +113,12 @@ plugin.pluginOptions = {
 					width = "full",
 					order = 5,
 				},
-				blockTooltipQuests = {
+				blockTooltipQuestText = {
 					type = "toggle",
 					name = L.blockTooltipQuests,
 					desc = L.blockTooltipQuestsDesc,
 					width = "full",
 					order = 6,
-					hidden = function() return true end, -- XXX Do we want to hack the tooltip?
 				},
 				blockObjectiveTracker = {
 					type = "toggle",
@@ -228,6 +228,19 @@ plugin.pluginOptions = {
 --
 
 do
+	local function ShouldFilterQuestProgress(tooltip)
+		if tooltip == GameTooltip and tooltip:IsTooltipType(2) then -- Enum.TooltipDataType.Unit
+			return hideQuestTrackingTooltips
+		end
+	end
+	function plugin:OnRegister()
+		TooltipDataProcessor.AddLinePreCall(8, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestObjective
+		TooltipDataProcessor.AddLinePreCall(17, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestTitle
+		TooltipDataProcessor.AddLinePreCall(18, ShouldFilterQuestProgress) -- Enum.TooltipDataLineType.QuestPlayer
+	end
+end
+
+do
 	local function updateProfile()
 		local db = plugin.db.profile
 
@@ -266,9 +279,6 @@ do
 			end
 			SetCVar("Sound_EnableSFX", "1")
 		end
-		--if self.db.profile.blockTooltipQuests then
-		--	SetCVar("showQuestTrackingTooltips", "1")
-		--end
 		if self.db.profile.disableMusic then
 			local music = GetCVar("Sound_EnableMusic")
 			if music == "0" then
@@ -343,7 +353,7 @@ do
 	end
 
 	local restoreObjectiveTracker = nil
-	function plugin:OnEngage(event, module)
+	function plugin:OnEngage(_, module)
 		if not module or not module:GetJournalID() or module.worldBoss then return end
 
 		if self.db.profile.blockEmotes and not IsTestBuild() then -- Don't block emotes on WoW beta.
@@ -362,12 +372,12 @@ do
 		if self.db.profile.blockSpellErrors then
 			KillEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
+		if self.db.profile.blockTooltipQuestText then
+			hideQuestTrackingTooltips = true
+		end
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "0")
 		end
-		--if self.db.profile.blockTooltipQuests then
-		--	SetCVar("showQuestTrackingTooltips", "0")
-		--end
 		if self.db.profile.disableMusic then
 			SetCVar("Sound_EnableMusic", "0")
 		end
@@ -408,12 +418,12 @@ do
 		if self.db.profile.blockSpellErrors then
 			RestoreEvent(UIErrorsFrame, "UI_ERROR_MESSAGE")
 		end
+		if self.db.profile.blockTooltipQuestText then
+			hideQuestTrackingTooltips = false
+		end
 		if self.db.profile.disableSfx then
 			SetCVar("Sound_EnableSFX", "1")
 		end
-		--if self.db.profile.blockTooltipQuests then
-		--	SetCVar("showQuestTrackingTooltips", "1")
-		--end
 		if self.db.profile.disableMusic then
 			SetCVar("Sound_EnableMusic", "1")
 		end
@@ -431,7 +441,7 @@ do
 		end
 	end
 
-	function plugin:BigWigs_OnBossDisable(event, module)
+	function plugin:BigWigs_OnBossDisable(_, module)
 		if not module or not module:GetJournalID() or module.worldBoss then return end
 		RestoreAll(self)
 	end
