@@ -10,7 +10,7 @@
 <Script file="Magmorax.lua"/>
 <Script file="EchoOfNeltharion.lua"/>
 <Script file="Sarkareth.lua"/>
-<!-- <Script file="Trash.lua"/> -->
+<Script file="Trash.lua"/>
 
 <Include file="Locales\locales.xml"/>
 <Include file="Options\options.xml"/>
