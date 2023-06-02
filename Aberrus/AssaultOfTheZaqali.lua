@@ -94,6 +94,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("RAID_BOSS_EMOTE")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
+	self:Log("SPELL_CAST_SUCCESS", "ZaqaliAide", 412818, 412820) -- North, South
 
 	self:Log("SPELL_AURA_APPLIED", "BarrierBackfireApplied", 404687)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarrierBackfireApplied", 404687)
@@ -168,6 +169,30 @@ end
 do
 	local timer = { 5.0, 21.8, 29.2, 22.9, 21.1 } -- 40.3, 33.5, 22.9, 21.1, 5.0, 21.8, 29.2, 23.0
 	local side = { "south", "south", "north", "north", "north" }
+	local newIDs = false
+	function mod:ZaqaliAide(args)
+		if not newIDs then
+			newIDs = true
+			self:UnregisterEvent("RAID_BOSS_EMOTE")
+			self:Error("New IDs are active.")
+		end
+		if args.spellId == 412820 then -- South
+			self:StopBar(L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount))
+			self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.south))
+		else -- North
+			self:StopBar(L.add_bartext:format(CL.big_adds, L.north, zaqaliAideCount))
+			self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.north))
+		end
+		self:PlaySound(404382, "info")
+		zaqaliAideCount = zaqaliAideCount + 1
+
+		if self:GetStage() == 1 then
+			local index = (zaqaliAideCount % 5) + 1
+			local cd = zaqaliAideCount == 2 and 33.5 or timer[index]
+			self:Bar(404382, cd, L.add_bartext:format(CL.big_adds, L[side[index]], zaqaliAideCount))
+		end
+	end
+
 	function mod:RAID_BOSS_EMOTE(_, msg)
 		if msg:find(L.zaqali_aide_south_emote_trigger, nil, true) then
 			self:StopBar(L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount))
