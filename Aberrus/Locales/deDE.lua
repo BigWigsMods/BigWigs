@@ -105,3 +105,8 @@ if L then
 	L.boss_immune = "Boss immun"
 	L.ebon_might = "Adds immun"
 end
+
+L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "deDE")
+if L then
+	L.slime = "Blubbernder Schleim" -- NPC 205651
+end

@@ -105,3 +105,8 @@ if L then
 	L.boss_immune = "넴드 면역"
 	L.ebon_might = "쫄 메즈 면역"
 end
+
+L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "koKR")
+if L then
+	--L.slime = "Bubbling Slime" -- NPC 205651
+end
