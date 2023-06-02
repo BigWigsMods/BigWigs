@@ -90,9 +90,9 @@ if L then
 	L.sunder_reality = "傳送門"
 	L.ebon_destruction = "大爆炸"
 
-	--L.wall_breaker = "Wall Breaker (Mythic)"
-	--L.wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked ({rt6}) and send a message in say chat. This is restricted to Mythic difficulty on stage 1."
-	--L.wall_breaker_message = "Wall Breaker"
+	L.wall_breaker = "破牆者（傳奇模式）"
+	L.wall_breaker_desc = "在傳奇模式的第一階段中，指定一名中了奔竄黑暗的玩家為 {rt6}，負責破牆。"
+	L.wall_breaker_message = "破牆者"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "zhTW")
@@ -109,5 +109,5 @@ end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "zhTW")
 if L then
-	--L.slime = "Bubbling Slime" -- NPC 205651
+	L.slime = "冒泡軟泥怪" -- NPC 205651
 end
