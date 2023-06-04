@@ -108,5 +108,10 @@ end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "ruRU")
 if L then
+	L.edgelord = "Владыка клинка из Пламени" -- NPC 198873
+	L.naturalist = "Натуралист из Пламени" -- NPC 201746
+	L.siegemaster = "Осадный мастер из Пламени" -- NPC 198874
+	L.banner = "Знамя" -- Short for "Sundered Flame Banner" NPC 205638
+	L.fluid = "Живая жидкость" -- NPC 203939
 	L.slime = "Булькающая жижа" -- NPC 205651
 end

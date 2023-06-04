@@ -109,5 +109,10 @@ end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "zhTW")
 if L then
+	--L.edgelord = "Sundered Edgelord" -- NPC 198873
+	--L.naturalist = "Sundered Naturalist" -- NPC 201746
+	--L.siegemaster = "Sundered Siegemaster" -- NPC 198874
+	--L.banner = "Banner" -- Short for "Sundered Flame Banner" NPC 205638
+	--L.fluid = "Animation Fluid" -- NPC 203939
 	--L.slime = "Bubbling Slime" -- NPC 205651
 end

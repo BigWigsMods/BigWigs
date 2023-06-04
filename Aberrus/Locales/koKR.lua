@@ -108,5 +108,10 @@ end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "koKR")
 if L then
+	L.edgelord = "분리된 칼날군주" -- NPC 198873
+	L.naturalist = "분리된 자연의 탐구자" -- NPC 201746
+	L.siegemaster = "분리된 공성전문가" -- NPC 198874
+	L.banner = "깃발" -- Short for "Sundered Flame Banner" NPC 205638
+	L.fluid = "살아 움직이는 액체" -- NPC 203939
 	--L.slime = "Bubbling Slime" -- NPC 205651
 end
