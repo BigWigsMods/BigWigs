@@ -114,4 +114,5 @@ if L then
 	L.banner = "Estandarte" -- Short for "Sundered Flame Banner" NPC 205638
 	L.fluid = "Fluido de animación" -- NPC 203939
 	L.slime = "Babosa burbujeante" -- NPC 205651
+	L.goo = "Baba trepadora" -- NPC 205820
 end

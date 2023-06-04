@@ -114,4 +114,5 @@ if L then
 	L.banner = "Знамя" -- Short for "Sundered Flame Banner" NPC 205638
 	L.fluid = "Живая жидкость" -- NPC 203939
 	L.slime = "Булькающая жижа" -- NPC 205651
+	L.goo = "Ползучая жижа" -- NPC 205820
 end

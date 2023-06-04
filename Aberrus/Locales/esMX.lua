@@ -114,4 +114,5 @@ if L then
 	--L.banner = "Banner" -- Short for "Sundered Flame Banner" NPC 205638
 	--L.fluid = "Animation Fluid" -- NPC 203939
 	--L.slime = "Bubbling Slime" -- NPC 205651
+	--L.goo = "Crawling Goo" -- NPC 205820
 end

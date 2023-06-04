@@ -114,4 +114,5 @@ if L then
 	L.banner = "Stendardo" -- Short for "Sundered Flame Banner" NPC 205638
 	L.fluid = "Fluido d'Animazione" -- NPC 203939
 	L.slime = "Poltiglia Ribollente" -- NPC 205651
+	L.goo = "Viscidume Strisciante" -- NPC 205820
 end

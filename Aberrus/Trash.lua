@@ -30,6 +30,7 @@ if L then
 	--[[ Amalgamation Chamber -> Forgotten Experiments ]]--
 	L.fluid = "Animation Fluid"
 	L.slime = "Bubbling Slime"
+	L.goo = "Crawling Goo"
 end
 
 --------------------------------------------------------------------------------
@@ -59,6 +60,7 @@ function mod:GetOptions()
 		[408811] = L.siegemaster,
 		[411892] = L.fluid,
 		[411808] = L.slime,
+		[412498] = L.goo,
 	},{
 		[408811] = L.banner, -- Form Ranks (Banner)
 	}
@@ -74,7 +76,7 @@ function mod:OnBossEnable()
 	self:RegisterMessage("BigWigs_OnBossEngage", "Disable")
 
 	--[[ Pre-Kazzara ]]--
-	self:Log("SPELL_CAST_START", "DancingSteel", 408975)
+	self:Log("SPELL_CAST_SUCCESS", "DancingSteel", 408975)
 
 	--[[ Kazzara -> Amalgamation Chamber ]]--
 	self:Log("SPELL_CAST_START", "DreamBurst", 406282)
@@ -98,10 +100,14 @@ end
 --
 
 --[[ Pre-Kazzara ]]--
-function mod:DancingSteel(args)
-	if self:Melee() then
-		self:Message(args.spellId, "yellow", CL.casting:format(args.spellName))
-		self:PlaySound(args.spellId, "long")
+do
+	local prev = 0
+	function mod:DancingSteel(args)
+		if self:Melee() and args.time-prev > 4 then
+			prev = args.time
+			self:Message(args.spellId, "yellow")
+			self:PlaySound(args.spellId, "long")
+		end
 	end
 end
 
@@ -121,7 +127,7 @@ do
 end
 
 function mod:HealingBloom(args)
-	local canDo, ready = self:Interrupter(args.sourceGUID)
+	local canDo, ready = self:Interrupter()
 	if canDo then
 		self:Message(args.spellId, "red", CL.casting:format(args.spellName))
 		if ready then
@@ -144,6 +150,7 @@ do
 
 	function mod:FormRanks(args)
 		self:Message(args.spellId, "orange", CL.spawned:format(L.banner))
+		self:PlaySound(args.spellId, "warning")
 		if self:GetOption(bannerMarker) then
 			if args.time-prev > 5 then
 				prev = args.time
@@ -168,7 +175,7 @@ end
 do
 	local prev = 0
 	function mod:ViscousBileDamage(args)
-		if self:Me(args.destGUID) and args.time-prev > 5 then
+		if self:Me(args.destGUID) and args.time-prev > 6 then
 			prev = args.time
 			self:PersonalMessage(args.spellId, "underyou")
 			self:PlaySound(args.spellId, "underyou")

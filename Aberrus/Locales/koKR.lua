@@ -114,4 +114,5 @@ if L then
 	L.banner = "깃발" -- Short for "Sundered Flame Banner" NPC 205638
 	L.fluid = "살아 움직이는 액체" -- NPC 203939
 	--L.slime = "Bubbling Slime" -- NPC 205651
+	--L.goo = "Crawling Goo" -- NPC 205820
 end
