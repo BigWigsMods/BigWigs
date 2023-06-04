@@ -110,10 +110,10 @@ end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "zhCN")
 if L then
-	--L.edgelord = "Sundered Edgelord" -- NPC 198873
-	--L.naturalist = "Sundered Naturalist" -- NPC 201746
-	--L.siegemaster = "Sundered Siegemaster" -- NPC 198874
-	L.banner = "旗帜" -- Short for "Sundered Flame Banner" NPC 205638
-	--L.fluid = "Animation Fluid" -- NPC 203939
+	L.edgelord = "碎裂锋刃领主" -- NPC 198873
+	L.naturalist = "碎裂自然学家" -- NPC 201746
+	L.siegemaster = "碎裂攻城大师" -- NPC 198874
+	L.banner = "旗帜" -- "碎裂之焰旗帜"的简称 NPC 205638
+	L.fluid = "活化液体" -- NPC 203939
 	L.slime = "冒泡的软泥" -- NPC 205651
 end
