@@ -108,5 +108,10 @@ end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "ptBR")
 if L then
+	L.edgelord = "Senhora-da-borda Partida" -- NPC 198873
+	L.naturalist = "Naturalista Partido" -- NPC 201746
+	L.siegemaster = "Mestre de Cerco Partido" -- NPC 198874
+	L.banner = "Estandarte" -- Short for "Sundered Flame Banner" NPC 205638
+	L.fluid = "Fluido de Animação" -- NPC 203939
 	L.slime = "Visgo Borbulhante" -- NPC 205651
 end

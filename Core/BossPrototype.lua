@@ -482,11 +482,11 @@ boss.NewLocale = boss.GetLocale
 -- @bool state Boolean value to represent default state
 -- @string markType The type of string to return (player, npc)
 -- @number icon An icon id to be used for the option texture
--- @number id The spell id or journal id to be translated into a name for the returned string
+-- @param id The spell id or journal id to be translated into a name, or a string to represent an entry in the boss module locale table. "test" would look up L.test
 -- @number ... a series of raid icons being used by the marker function e.g. (1, 2, 3)
 -- @return an option string to be used in conjuction with :GetOption
 function boss:AddMarkerOption(state, markType, icon, id, ...)
-	local l = self:GetLocale()
+	local moduleLocale = self:GetLocale()
 	local str = ""
 	for i = 1, select("#", ...) do
 		local raidMarkerIconNumber = select(i, ...)
@@ -494,11 +494,18 @@ function boss:AddMarkerOption(state, markType, icon, id, ...)
 		str = str .. markerTexture
 	end
 
-	local option = format(state and "custom_on_%d" or "custom_off_%d", id)
-	l[option] = format(L.marker, spells[id])
-	l[option.."_desc"] = format(markType == "player" and L.marker_player_desc or L.marker_npc_desc, spells[id], str)
+	local option = format(state and "custom_on_%s" or "custom_off_%s", id)
+	if type(id) == "number" then
+		moduleLocale[option] = format(L.marker, spells[id])
+		moduleLocale[option.."_desc"] = format(markType == "player" and L.marker_player_desc or L.marker_npc_desc, spells[id], str)
+	elseif type(id) == "string" then
+		moduleLocale[option] = format(L.marker, moduleLocale[id])
+		moduleLocale[option.."_desc"] = format(markType == "player" and L.marker_player_desc or L.marker_npc_desc, moduleLocale[id], str)
+	else
+		core:Error("Wrong id type for AddMarkerOption. Expected number or string, got: ".. tostring(id))
+	end
 	if icon then
-		l[option.."_icon"] = icon
+		moduleLocale[option.."_icon"] = icon
 	end
 	return option
 end

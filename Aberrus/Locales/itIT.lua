@@ -108,5 +108,10 @@ end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "itIT")
 if L then
+	L.edgelord = "Campionessa della Soglia Frammentata" -- NPC 198873
+	L.naturalist = "Naturalista Frammentato" -- NPC 201746
+	L.siegemaster = "Maestro d'Assedio Frammentato" -- NPC 198874
+	L.banner = "Stendardo" -- Short for "Sundered Flame Banner" NPC 205638
+	L.fluid = "Fluido d'Animazione" -- NPC 203939
 	L.slime = "Poltiglia Ribollente" -- NPC 205651
 end

@@ -108,5 +108,10 @@ end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "deDE")
 if L then
+	L.edgelord = "Klippenherrin der Splitterflammen" -- NPC 198873
+	L.naturalist = "Naturalist der Splitterflammen" -- NPC 201746
+	L.siegemaster = "Belagerungsmeister der Splitterflammen" -- NPC 198874
+	L.banner = "Banner" -- Short for "Sundered Flame Banner" NPC 205638
+	L.fluid = "Animationsflüssigkeit" -- NPC 203939
 	L.slime = "Blubbernder Schleim" -- NPC 205651
 end
