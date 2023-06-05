@@ -355,7 +355,7 @@ function mod:AddKilled()
 	if addDeaths == 3 then
 		self:Stage2Over()
 	else
-		self:Message("stages", "green", CL.add_killed:format(3 - addDeaths, 3), false)
+		self:Message("stages", "green", CL.add_killed:format(addDeaths, 3), false)
 	end
 end
 
