@@ -156,10 +156,13 @@ BigWigs:AddColors("Scalecommander Sarkareth", {
 BigWigs:AddColors("Aberrus, the Shadowed Crucible Trash", {
 	[406210] = "red",
 	[406282] = {"blue","yellow"},
+	[406399] = "red",
 	[408811] = "orange",
 	[408975] = "yellow",
 	[411439] = {"blue","purple"},
 	[411808] = "blue",
 	[411892] = "blue",
+	[411900] = "blue",
+	[411905] = "blue",
 	[412498] = "blue",
 })
