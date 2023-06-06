@@ -116,5 +116,5 @@ if L then
 	L.banner = "旗帜" -- "碎裂之焰旗帜"的简称 NPC 205638
 	L.fluid = "活化液体" -- NPC 203939
 	L.slime = "冒泡的软泥" -- NPC 205651
-	--L.goo = "Crawling Goo" -- NPC 205820
+	L.goo = "匍匐粘液" -- NPC 205820
 end
