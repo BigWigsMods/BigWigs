@@ -1134,9 +1134,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20230530080344" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "10.1.11" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20230530000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20230606101623" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "10.1.12" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20230606000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 2
 	local versionPrefix = "V"
 	local PForceDisable = 4
