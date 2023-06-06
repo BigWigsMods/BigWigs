@@ -114,8 +114,8 @@ if L then
 	L.naturalist = "碎裂自然学家" -- NPC 201746
 	L.siegemaster = "碎裂攻城大师" -- NPC 198874
 	L.banner = "旗帜" -- "碎裂之焰旗帜"的简称 NPC 205638
-	--L.arcanist = "Sundered Arcanist" -- NPC 201736
-	--L.chemist = "Sundered Chemist" -- NPC 205656
+	L.arcanist = "碎裂奥术师" -- NPC 201736
+	L.chemist = "碎裂炼金师" -- NPC 205656
 	L.fluid = "活化液体" -- NPC 203939
 	L.slime = "冒泡的软泥" -- NPC 205651
 	L.goo = "匍匐粘液" -- NPC 205820
