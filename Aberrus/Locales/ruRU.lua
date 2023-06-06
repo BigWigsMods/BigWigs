@@ -112,6 +112,8 @@ if L then
 	L.naturalist = "Натуралист из Пламени" -- NPC 201746
 	L.siegemaster = "Осадный мастер из Пламени" -- NPC 198874
 	L.banner = "Знамя" -- Short for "Sundered Flame Banner" NPC 205638
+	L.arcanist = "Чародей из Пламени" -- NPC 201736
+	L.chemist = "Химик из Расколотого Пламени" -- NPC 205656
 	L.fluid = "Живая жидкость" -- NPC 203939
 	L.slime = "Булькающая жижа" -- NPC 205651
 	L.goo = "Ползучая жижа" -- NPC 205820

@@ -112,6 +112,8 @@ if L then
 	L.naturalist = "Naturalista Frammentato" -- NPC 201746
 	L.siegemaster = "Maestro d'Assedio Frammentato" -- NPC 198874
 	L.banner = "Stendardo" -- Short for "Sundered Flame Banner" NPC 205638
+	L.arcanist = "Arcanista Frammentata" -- NPC 201736
+	L.chemist = "Alchimista Frammentata" -- NPC 205656
 	L.fluid = "Fluido d'Animazione" -- NPC 203939
 	L.slime = "Poltiglia Ribollente" -- NPC 205651
 	L.goo = "Viscidume Strisciante" -- NPC 205820

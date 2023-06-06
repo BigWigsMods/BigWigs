@@ -112,6 +112,8 @@ if L then
 	L.naturalist = "Naturalista hendido" -- NPC 201746
 	L.siegemaster = "Maestro de asedios hendido" -- NPC 198874
 	L.banner = "Estandarte" -- Short for "Sundered Flame Banner" NPC 205638
+	L.arcanist = "Arcanista hendida" -- NPC 201736
+	L.chemist = "Química hendida" -- NPC 205656
 	L.fluid = "Fluido de animación" -- NPC 203939
 	L.slime = "Babosa burbujeante" -- NPC 205651
 	L.goo = "Baba trepadora" -- NPC 205820

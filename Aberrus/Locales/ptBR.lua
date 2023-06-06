@@ -112,6 +112,8 @@ if L then
 	L.naturalist = "Naturalista Partido" -- NPC 201746
 	L.siegemaster = "Mestre de Cerco Partido" -- NPC 198874
 	L.banner = "Estandarte" -- Short for "Sundered Flame Banner" NPC 205638
+	L.arcanist = "Arcanista Partida" -- NPC 201736
+	L.chemist = "Química Partida" -- NPC 205656
 	L.fluid = "Fluido de Animação" -- NPC 203939
 	L.slime = "Visgo Borbulhante" -- NPC 205651
 	L.goo = "Gosma Rastejante" -- NPC 205820

@@ -112,6 +112,8 @@ if L then
 	L.naturalist = "Naturalist der Splitterflammen" -- NPC 201746
 	L.siegemaster = "Belagerungsmeister der Splitterflammen" -- NPC 198874
 	L.banner = "Banner" -- Short for "Sundered Flame Banner" NPC 205638
+	L.arcanist = "Arkanistin der Splitterflammen" -- NPC 201736
+	L.chemist = "Chemikerin der Splitterflammen" -- NPC 205656
 	L.fluid = "Animationsflüssigkeit" -- NPC 203939
 	L.slime = "Blubbernder Schleim" -- NPC 205651
 	L.goo = "Kriechender Glibber" -- NPC 205820

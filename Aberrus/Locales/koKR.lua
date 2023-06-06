@@ -112,6 +112,8 @@ if L then
 	L.naturalist = "분리된 자연의 탐구자" -- NPC 201746
 	L.siegemaster = "분리된 공성전문가" -- NPC 198874
 	L.banner = "깃발" -- Short for "Sundered Flame Banner" NPC 205638
+	L.arcanist = "분리된 비전술사" -- NPC 201736
+	L.chemist = "분리된 화학자" -- NPC 205656
 	L.fluid = "살아 움직이는 액체" -- NPC 203939
 	--L.slime = "Bubbling Slime" -- NPC 205651
 	--L.goo = "Crawling Goo" -- NPC 205820

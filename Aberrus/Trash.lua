@@ -9,6 +9,8 @@ mod:RegisterEnableMob(
 	198873, -- Sundered Edgelord
 	201746, -- Sundered Naturalist
 	198874, -- Sundered Siegemaster
+	201736, -- Sundered Arcanist
+	205656, -- Sundered Chemist
 	203939, -- Animation Fluid
 	205651 -- Bubbling Slime
 )
@@ -26,6 +28,8 @@ if L then
 	L.naturalist = "Sundered Naturalist"
 	L.siegemaster = "Sundered Siegemaster"
 	L.banner = "Banner"
+	L.arcanist = "Sundered Arcanist"
+	L.chemist = "Sundered Chemist"
 
 	--[[ Amalgamation Chamber -> Forgotten Experiments ]]--
 	L.fluid = "Animation Fluid"
@@ -49,6 +53,9 @@ function mod:GetOptions()
 		408811, -- Form Ranks
 		bannerMarker,
 		{411439, "TANK_HEALER"}, -- Sundering Strike
+		406399, -- Zone of Azure Might
+		411900, -- Gloom Fluid
+		411905, -- Blaze Boil
 
 		--[[ Amalgamation Chamber -> Forgotten Experiments ]]--
 		411892, -- Viscous Bile
@@ -58,6 +65,8 @@ function mod:GetOptions()
 		[408975] = L.edgelord,
 		[406282] = L.naturalist,
 		[408811] = L.siegemaster,
+		[406399] = L.arcanist,
+		[411900] = L.chemist,
 		[411892] = L.fluid,
 		[411808] = L.slime,
 		[412498] = L.goo,
@@ -83,6 +92,10 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "HealingBloom", 406210)
 	self:Log("SPELL_SUMMON", "FormRanks", 408811)
 	self:Log("SPELL_AURA_APPLIED", "SunderingStrikeApplied", 411439)
+	self:Log("SPELL_CAST_START", "ZoneOfAzureMight", 406399)
+	self:Log("SPELL_AURA_APPLIED", "ChemistDamage", 411900, 411905) -- Gloom Fluid, Blaze Boil
+	self:Log("SPELL_PERIODIC_DAMAGE", "ChemistDamage", 411900, 411905)
+	self:Log("SPELL_PERIODIC_MISSED", "ChemistDamage", 411900, 411905)
 
 	--[[ Amalgamation Chamber -> Forgotten Experiments ]]--
 	self:Log("SPELL_AURA_APPLIED", "ViscousBileDamage", 411892)
@@ -169,6 +182,27 @@ end
 function mod:SunderingStrikeApplied(args)
 	self:TargetMessage(args.spellId, "purple", args.destName)
 	self:PlaySound(args.spellId, "alert")
+end
+
+function mod:ZoneOfAzureMight(args)
+	local canDo, ready = self:Interrupter()
+	if canDo then
+		self:Message(args.spellId, "red", CL.casting:format(args.spellName))
+		if ready then
+			self:PlaySound(args.spellId, "alert")
+		end
+	end
+end
+
+do
+	local prev = 0
+	function mod:ChemistDamage(args)
+		if self:Me(args.destGUID) and args.time-prev > 2 then
+			prev = args.time
+			self:PersonalMessage(args.spellId, "underyou")
+			self:PlaySound(args.spellId, "underyou")
+		end
+	end
 end
 
 --[[ Amalgamation Chamber -> Forgotten Experiments ]]--

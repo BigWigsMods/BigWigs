@@ -112,6 +112,8 @@ if L then
 	--L.naturalist = "Sundered Naturalist" -- NPC 201746
 	--L.siegemaster = "Sundered Siegemaster" -- NPC 198874
 	--L.banner = "Banner" -- Short for "Sundered Flame Banner" NPC 205638
+	--L.arcanist = "Sundered Arcanist" -- NPC 201736
+	--L.chemist = "Sundered Chemist" -- NPC 205656
 	--L.fluid = "Animation Fluid" -- NPC 203939
 	--L.slime = "Bubbling Slime" -- NPC 205651
 	--L.goo = "Crawling Goo" -- NPC 205820

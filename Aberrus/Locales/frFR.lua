@@ -112,6 +112,8 @@ if L then
 	L.naturalist = "Naturaliste fracturé" -- NPC 201746
 	L.siegemaster = "Maître de siège fracturé" -- NPC 198874
 	L.banner = "Bannière" -- Short for "Sundered Flame Banner" NPC 205638
+	L.arcanist = "Arcaniste fracturée" -- NPC 201736
+	L.chemist = "Chimiste fracturée" -- NPC 205656
 	L.fluid = "Fluide d'animation" -- NPC 203939
 	L.slime = "Gelée bouillonnante" -- NPC 205651
 	L.goo = "Mucus rampant" -- NPC 205820
