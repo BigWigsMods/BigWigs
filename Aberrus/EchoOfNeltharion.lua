@@ -154,6 +154,17 @@ end
 -- Stage 1
 do
 	local timer = {21.4, 15.6, 17.0, 17.0, 17.4, 16.6, 19.5, 14.5, 0} -- Stage 2
+	local timerLFR = {27.9, 16.1, 17.0} -- 27.9, 16.1, 17.0, 17.0, 12.0, 17.0, 12.0 ..
+
+	local SKIP_CAST_THRESHOLD = 2
+	local function checkCast(castCount)
+		if castCount == volcanicHeartCount then -- not on the next cast?
+			volcanicHeartCount = volcanicHeartCount + 1
+			local cd = timer[volcanicHeartCount]
+			mod:Bar(410953, cd - SKIP_CAST_THRESHOLD, CL.count:format(CL.bombs, volcanicHeartCount))
+		end
+	end
+
 	function mod:VolcanicHeart()
 		local msg = CL.count:format(CL.bombs, volcanicHeartCount)
 		self:StopBar(msg)
@@ -164,17 +175,18 @@ do
 		if self:GetStage() == 1 then
 			cd = 36.5
 		elseif self:GetStage() == 2 then
-			if volcanicHeartCount == 6 then
-				-- skips the 6th SPELL_CAST_SUCCESS, schedule a new bar after the cooldown instead until they fix the event.
-				self:Bar(410953, timer[volcanicHeartCount], CL.count:format(CL.bombs, volcanicHeartCount))
-				volcanicHeartCount = volcanicHeartCount + 1
-				self:ScheduleTimer("Bar", timer[volcanicHeartCount-1], 410953, timer[volcanicHeartCount], CL.count:format(CL.bombs, volcanicHeartCount))
-				return
+			if self:LFR() then
+				cd = timerLFR[volcanicHeartCount] or volcanicHeartCount % 2 == 0 and 17 or 12
 			else
 				cd = timer[volcanicHeartCount]
 			end
 		end
 		self:CDBar(410953, cd, CL.count:format(CL.bombs, volcanicHeartCount))
+
+		if volcanicHeartCount == 6 and self:GetStage() == 2 and not self:LFR() then
+			-- XXX the 6th cast doesn't have a log entry and blizzard removed the unit events
+			self:ScheduleTimer(checkCast, cd + SKIP_CAST_THRESHOLD, volcanicHeartCount)
+		end
 	end
 end
 
@@ -218,7 +230,7 @@ do
 		end
 	end
 
-	local timer = {38, 29, 28, 30, 0} -- Stage 2
+	local timer = {38, 29, 28, 30} -- Stage 2
 	function mod:RushingDarkness(args)
 		local msg = CL.count:format(L.rushing_darkness, rushingDarknessCount)
 		self:StopBar(msg)
@@ -233,7 +245,7 @@ do
 		if self:GetStage() == 1 then
 			cd = 36.6
 		elseif self:GetStage() == 2 then
-			cd = timer[rushingDarknessCount]
+			cd = timer[rushingDarknessCount] or (self:LFR() and 29 or 0)
 		else -- stage 3
 			cd = 29.1
 		end
@@ -251,7 +263,7 @@ end
 function mod:CalamitousStrike(args)
 	self:Message(401998, "purple", CL.casting:format(args.spellName))
 	self:PlaySound(401998, "info")
-	self:CDBar(401998, self:GetStage() == 1 and (self:Easy() and 34 or 37) or 30)
+	self:CDBar(401998, self:GetStage() == 1 and 37 or 30)
 end
 
 function mod:CalamitousStrikeApplied(args)
@@ -331,7 +343,8 @@ function mod:UmbralAnnihilation(args)
 	self:PlaySound(args.spellId, "alarm")
 	umbralAnnihilationCount = umbralAnnihilationCount + 1
 	-- 6+ are spam casted
-	self:CDBar(args.spellId, umbralAnnihilationCount > 5 and 11 or 30, CL.count:format(L.umbral_annihilation, umbralAnnihilationCount))
+	local cd = (umbralAnnihilationCount < 6 or self:LFR()) and 30 or 11
+	self:CDBar(args.spellId, cd, CL.count:format(L.umbral_annihilation, umbralAnnihilationCount))
 end
 
 function mod:SunderShadow(args)
@@ -395,7 +408,7 @@ function mod:SunderReality(args)
 	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	sunderRealityCount = sunderRealityCount + 1
-	if self:Easy() or sunderRealityCount < 5 then -- only 4 sets unless Normal
+	if sunderRealityCount < (self:Easy() and 8 or 5) then -- 4 sets heroic/mythic, 7 sets normal/lfr
 		self:CDBar(args.spellId, 29.2, CL.count:format(L.sunder_reality, sunderRealityCount))
 	end
 end
@@ -430,7 +443,10 @@ do
 		self:PlaySound(args.spellId, "warning")
 		self:CastBar(args.spellId, 6, L.ebon_destruction)
 		ebonDestructionCount = ebonDestructionCount + 1
-		self:CDBar(args.spellId, 30.4, CL.count:format(L.ebon_destruction, ebonDestructionCount))
+		-- 8+ are spam casted (7.3 cd)
+		if ebonDestructionCount < 8 then
+			self:CDBar(args.spellId, 30, CL.count:format(L.ebon_destruction, ebonDestructionCount))
+		end
 		castingEbonDestruction = true
 	end
 
