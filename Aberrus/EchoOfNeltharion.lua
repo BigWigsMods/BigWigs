@@ -66,6 +66,7 @@ function mod:GetOptions()
 		-- Stage 2
 		403057, -- Surrender to Corruption
 		{401010, "SAY", "ME_ONLY_EMPHASIZE"}, -- Corruption
+		407036, -- Hidden in Void
 		405433, -- Umbral Annihilation
 		{407790, "TANK_HEALER"}, -- Sunder Shadow
 		403049, -- Shadow Barrier
@@ -103,6 +104,7 @@ function mod:OnBossEnable()
 	-- Stage 2
 	self:Log("SPELL_CAST_START", "SurrenderToCorruption", 403057)
 	self:Log("SPELL_AURA_APPLIED", "CorruptionPreDebuff", 405484) -- Surrendering to Corruption
+	self:Log("SPELL_AURA_REMOVED", "HiddenInVoidRemoved", 407036)
 	self:Log("SPELL_CAST_START", "UmbralAnnihilation", 405433)
 	self:Log("SPELL_CAST_START", "SunderShadow", 407790)
 	self:Log("SPELL_AURA_APPLIED", "SunderedShadowApplied", 407728)
@@ -334,6 +336,11 @@ do
 		end
 		self:TargetsMessage(401010, "yellow", playerList, nil, msg)
 	end
+end
+
+function mod:HiddenInVoidRemoved(args)
+	self:Message(args.spellId, "green", CL.removed:format(args.spellName))
+	self:PlaySound(args.spellId, "long")
 end
 
 function mod:UmbralAnnihilation(args)
