@@ -287,7 +287,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "InfiniteDuressRemoved", 407496, 404288)
 	self:Log("SPELL_CAST_START", "VoidClaws", 411236)
 	self:Log("SPELL_AURA_APPLIED", "VoidClawsApplied", 411241)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidClawsApplied", 411241)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidClawsAppliedDose", 411241)
 	self:Log("SPELL_AURA_REMOVED", "VoidClawsRemoved", 411241)
 
 	-- Stage Three: The Seas of Infinity
@@ -301,7 +301,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "EmbraceOfNothingnessRemoved", 403520)
 	self:Log("SPELL_CAST_START", "VoidSlash", 408422)
 	self:Log("SPELL_AURA_APPLIED", "VoidSlashApplied", 408429)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidSlashApplied", 408429)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "VoidSlashAppliedDose", 408429)
 	self:Log("SPELL_AURA_REMOVED", "VoidSlashRemoved", 408429)
 
 	-- Mythic
@@ -754,14 +754,20 @@ do
 		self:Bar(411241, timers[2][411241][clawsCount], CL.count:format(L.claws, clawsCount))
 	end
 
-	function mod:VoidClawsApplied(args)
+	-- We cannot expect a nil args.amount as the APPLIED event has a fake absorb value (1234) so we intentionally separate APPLIED/_DOSE to know when the debuff actually stacked
+	-- "This was part of the hotfix that allowed player absorbs to reduce the amount of damage contribution the tank swaps were giving to the explosion"
+	function mod:VoidClawsApplied(args, isDose)
 		if tankTimers[args.destName] then
 			self:CancelTimer(tankTimers[args.destName])
 			tankTimers[args.destName] = nil
 		end
 		self:StopBar(L.claws_debuff, args.destName)
 		if self:Tank() then
-			self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.claws)
+			if isDose then
+				self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.claws)
+			else
+				self:TargetMessage(args.spellId, "purple", args.destName, L.claws)
+			end
 			local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 			if bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
 				self:PlaySound(args.spellId, "warning") -- Taunt
@@ -771,6 +777,9 @@ do
 		end
 		-- Don't show the timer for the full 18s, only sub 10s
 		tankTimers[args.destName] = self:ScheduleTimer("TargetBar", 8, 411238, 10, args.destName, L.claws_debuff) -- Void Blast
+	end
+	function mod:VoidClawsAppliedDose(args)
+		self:VoidClawsApplied(args, true)
 	end
 
 	function mod:VoidClawsRemoved(args)
@@ -892,14 +901,20 @@ do
 		self:Bar(408429, timers[3][408429][clawsCount], CL.count:format(L.void_slash, clawsCount))
 	end
 
-	function mod:VoidSlashApplied(args)
+	-- We cannot expect a nil args.amount as the APPLIED event has a fake absorb value (1234) so we intentionally separate APPLIED/_DOSE to know when the debuff actually stacked
+	-- "This was part of the hotfix that allowed player absorbs to reduce the amount of damage contribution the tank swaps were giving to the explosion"
+	function mod:VoidSlashApplied(args, isDose)
 		if tankTimers[args.destName] then
 			self:CancelTimer(tankTimers[args.destName])
 			tankTimers[args.destName] = nil
 		end
 		self:StopBar(L.claws_debuff, args.destName)
 		if self:Tank() then
-			self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.void_slash)
+			if isDose then
+				self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.void_slash)
+			else
+				self:TargetMessage(args.spellId, "purple", args.destName, L.void_slash)
+			end
 			local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 			if bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
 				self:PlaySound(args.spellId, "warning") -- Taunt
@@ -909,6 +924,9 @@ do
 		end
 		-- Don't show the timer for the full 21s, only sub 10s
 		tankTimers[args.destName] = self:ScheduleTimer("TargetBar", 11, 408457, 10, args.destName, L.claws_debuff) -- Void Blast
+	end
+	function mod:VoidSlashAppliedDose(args)
+		self:VoidSlashApplied(args, true)
 	end
 
 	function mod:VoidSlashRemoved(args)
