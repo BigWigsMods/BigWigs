@@ -271,7 +271,7 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_START", "SearingBreath", 402050)
 	self:Log("SPELL_CAST_START", "BurningClaws", 401325)
 	self:Log("SPELL_AURA_APPLIED", "BurningClawsApplied", 401330)
-	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningClawsApplied", 401330)
+	self:Log("SPELL_AURA_APPLIED_DOSE", "BurningClawsAppliedDose", 401330)
 	self:Log("SPELL_AURA_REMOVED", "BurningClawsRemoved", 401330)
 
 	-- Stage Two: A Touch of the Forbidden
@@ -529,14 +529,20 @@ do
 		end
 	end
 
-	function mod:BurningClawsApplied(args)
+	-- We cannot expect a nil args.amount as the APPLIED event has a fake absorb value (1234) so we intentionally separate APPLIED/_DOSE to know when the debuff actually stacked
+	-- "This was part of the hotfix that allowed player absorbs to reduce the amount of damage contribution the tank swaps were giving to the explosion"
+	function mod:BurningClawsApplied(args, isDose)
 		if tankTimers[args.destName] then
 			self:CancelTimer(tankTimers[args.destName])
 			tankTimers[args.destName] = nil
 		end
 		self:StopBar(L.claws_debuff, args.destName)
 		if self:Tank() then
-			self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.claws)
+			if isDose then
+				self:StackMessage(args.spellId, "purple", args.destName, args.amount, 1, L.claws)
+			else
+				self:TargetMessage(args.spellId, "purple", args.destName, L.claws)
+			end
 			local bossUnit = self:UnitTokenFromGUID(args.sourceGUID)
 			if bossUnit and self:Tank() and not self:Me(args.destGUID) and not self:Tanking(bossUnit) then
 				self:PlaySound(args.spellId, "warning") -- Taunt
@@ -546,6 +552,9 @@ do
 		end
 		-- Don't show the timer for the full 27s, only sub 10s
 		tankTimers[args.destName] = self:ScheduleTimer("TargetBar", 17, 401340, 10, args.destName, L.claws_debuff) -- Blazing Blast
+	end
+	function mod:BurningClawsAppliedDose(args)
+		self:BurningClawsApplied(args, true)
 	end
 
 	function mod:BurningClawsRemoved(args)
