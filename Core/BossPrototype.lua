@@ -2420,6 +2420,12 @@ do
 	local badNameplateBarStop = "Attempted to stop nameplate bar %q without a valid unitGUID."
 	local badNameplateBarTimeLeft = "Attempted to get time left of nameplate bar %q without a valid unitGUID."
 
+	local countString = "%((%d%d?)%)"
+	local l = GetLocale()
+	if l == "zhCN" or l == "zhTW" then
+		countString = "（(%d%d?)）"
+	end
+
 	--- Display a bar.
 	-- @param key the option key
 	-- @param length the bar duration in seconds, or a table containing {remaining duration, max duration}
@@ -2462,6 +2468,8 @@ do
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
+		local counter = msg:match(countString)
+		self:SendMessage("BigWigs_Timer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key])
 	end
 
 	--- Display a cooldown bar.
@@ -2507,6 +2515,8 @@ do
 		if checkFlag(self, key, C.COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
+		local counter = msg:match(countString)
+		self:SendMessage("BigWigs_CooldownTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key])
 	end
 
 	--- Display a target bar.
@@ -2541,8 +2551,16 @@ do
 			if checkFlag(self, key, C.COUNTDOWN) then
 				self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 			end
-		elseif not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
-			self:SendMessage("BigWigs_StartBar", self, key, format(L.other, textType == "string" and text or spells[text or key], gsub(player, "%-.+", "*")), time, icons[icon or textType == "number" and text or key], false, maxTime)
+			local counter = msg:match(countString)
+			self:SendMessage("BigWigs_TargetTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key], player)
+		else
+			local trimPlayer = gsub(player, "%-.+", "*")
+			local msg = format(L.other, textType == "string" and text or spells[text or key], trimPlayer)
+			if not checkFlag(self, key, C.ME_ONLY) and checkFlag(self, key, C.BAR) then
+				self:SendMessage("BigWigs_StartBar", self, key, msg, time, icons[icon or textType == "number" and text or key], false, maxTime)
+			end
+			local counter = msg:match(countString)
+			self:SendMessage("BigWigs_TargetTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key], player)
 		end
 	end
 
@@ -2572,6 +2590,8 @@ do
 		if checkFlag(self, key, C.CASTBAR_COUNTDOWN) then
 			self:SendMessage("BigWigs_StartCountdown", self, key, msg, time)
 		end
+		local counter = msg:match(countString)
+		self:SendMessage("BigWigs_CastTimer", self, key, time, maxTime, msg, counter, icons[icon or textType == "number" and text or key])
 	end
 
 	--- Display a nameplate bar.
