@@ -158,12 +158,15 @@ do
 	local timer = {21.4, 15.6, 17.0, 17.0, 17.4, 16.6, 19.5, 14.5, 0} -- Stage 2
 	local timerLFR = {27.9, 16.1, 17.0} -- 27.9, 16.1, 17.0, 17.0, 12.0, 17.0, 12.0 ..
 
-	local SKIP_CAST_THRESHOLD = 2
+	local SKIP_CAST_THRESHOLD = 1 -- pretty much no variance, but leave some buffer
 	local function checkCast(castCount)
 		if castCount == volcanicHeartCount then -- not on the next cast?
+			local msg = CL.count:format(CL.bombs, volcanicHeartCount)
+			mod:StopBar(msg)
+			mod:Message(410953, "orange", msg)
 			volcanicHeartCount = volcanicHeartCount + 1
 			local cd = timer[volcanicHeartCount]
-			mod:Bar(410953, cd - SKIP_CAST_THRESHOLD, CL.count:format(CL.bombs, volcanicHeartCount))
+			mod:CDBar(410953, cd - SKIP_CAST_THRESHOLD, CL.count:format(CL.bombs, volcanicHeartCount))
 		end
 	end
 
