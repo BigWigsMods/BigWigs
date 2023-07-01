@@ -204,6 +204,7 @@ globals = {
 	"IsItemInRange",
 	"IsLoggedIn",
 	"IsPartyLFG",
+	"IsPlayerSpell",
 	"IsSpellKnown",
 	"IsTestBuild",
 	"LFGDungeonReadyPopup",
