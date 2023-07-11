@@ -42,6 +42,26 @@ local embraceOfNothingnessCount = 1
 -- Timers
 --
 
+local timersLFR = {
+	[1] = {
+		[401810] = {3.5, 103.3}, -- Glittering Surge
+		[401500] = {1.1, 62.3}, -- Scorching Bomb
+		[401680] = {24.7, 24.7, 47.0}, -- Mass Disintegrate
+		[402050] = {28.2, 37.6}, -- Searing Breath
+	},
+	[2] = {
+		[404027] = {17.3, 68}, -- Void Bomb
+		[404456] = {4, 49.3}, -- Abyssal Breath
+		[404403] = {12.0, 49.3, 42.7}, -- Desolate Blossom
+		[411241] = {21.3, 20.0, 24.0, 24.0, 24.0}, -- Void Claws
+	},
+	[3] = {
+		[403741] = {9.3, 61.2, 98.8, 58.8, 98.8, 58.8, 98.8}, -- Cosmic Ascension
+		[403625] = {46.1, 77.8, 81.4, 75.7, 82.2, 75.8}, -- Scouring Eternity
+		[408429] = {21.0, 36.2, 37.5, 85.0, 11.3, 61.2, 85.0, 11.3, 61.3, 85.0, 11.3}, -- Void Slash
+	},
+}
+
 local timersNormal = {
 	[1] = {
 		[401810] = {3.3, 94.8}, -- Glittering Surge
@@ -116,7 +136,7 @@ local timersMythic = {
 	},
 }
 
-local timers = mod:Mythic() and timersMythic or mod:Easy() and timersNormal or timersHeroic
+local timers = mod:Mythic() and timersMythic or mod:Normal() and timersNormal or mod:LFR() and timersLFR or timersHeroic
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -313,7 +333,7 @@ function mod:OnBossEnable()
 end
 
 function mod:OnEngage()
-	timers = self:Mythic() and timersMythic or self:Easy() and timersNormal or timersHeroic
+	timers = self:Mythic() and timersMythic or self:Normal() and timersNormal or self:LFR() and timersLFR or timersHeroic
 	self:SetStage(1)
 	voidEmpowermentCount = 1
 	nextStageHealth = 63
@@ -577,7 +597,7 @@ function mod:Stage2Start()
 	infiniteDuressCount = 1
 	recollectionKilled = 1
 
-	self:Bar("stages", self:Mythic() and 103.4 or 110.1, CL.stage:format(3), 403284)
+	self:Bar("stages", self:Mythic() and 103.4 or self:Normal() and 116.1 or self:LFR() and 123.9 or 110.1, CL.stage:format(3), 403284)
 
 	-- these start on End Existence _REMOVED
 	self:Bar(404456, timers[2][404456][breathCount], CL.count:format(CL.breath, breathCount)) -- Abyssal Breath
@@ -804,13 +824,16 @@ function mod:Stage3Start()
 	embraceOfNothingnessCount = 1
 
 	self:Bar(403741, timers[3][403741][cosmicAscensionCount], CL.count:format(L.cosmic_ascension, cosmicAscensionCount)) -- Cosmic Ascension
-	self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)) -- Hurtling Barrage
 	self:Bar(408429, timers[3][408429][clawsCount], CL.count:format(L.claws, clawsCount)) -- Void Slash
-	self:Bar(403520, timers[3][403520][embraceOfNothingnessCount], CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount)) -- Embrace of Nothingness
-	self:Bar(404027, timers[3][404027][bombCount], CL.count:format(CL.bombs, bombCount)) -- Void Bomb
 	self:Bar(403625, timers[3][403625][scouringEternityCount], CL.count:format(L.scouring_eternity, scouringEternityCount)) -- Scouring Eternity
 	if not self:Easy() then
 		self:Bar(404288, 4.8, CL.count:format(L.infinite_duress, infiniteDuressCount)) -- Infinite Duress
+	end
+	if not self:LFR() then
+		self:Bar(403520, timers[3][403520][embraceOfNothingnessCount], CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount)) -- Embrace of Nothingness
+		-- Hurtling Barrage & Void Bomb are not cast in LFR but are shown in journal?
+		self:Bar(404027, timers[3][404027][bombCount], CL.count:format(CL.bombs, bombCount)) -- Void Bomb
+		self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)) -- Hurtling Barrage
 	end
 end
 
