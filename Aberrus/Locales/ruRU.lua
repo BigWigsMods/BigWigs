@@ -23,7 +23,7 @@ end
 
 L = BigWigs:NewBossLocale("The Forgotten Experiments", "ruRU")
 if L then
-	--L.rending_charge_single = "First Charge"
+	L.rending_charge_single = "Цель первого рывка"
 	L.massive_slam = "Фронтал"
 	L.unstable_essence_new = "Бомба каст"
 	L.custom_on_unstable_essence_high = "Сообщения в чат о высоких стаках Нестабильной Сущности"
@@ -90,9 +90,9 @@ if L then
 	L.sunder_reality = "Порталы"
 	L.ebon_destruction = "Большой взрыв"
 
-	--L.wall_breaker = "Wall Breaker (Mythic)"
-	--L.wall_breaker_desc = "A player targeted by Rushing Darkness will be chosen as the wall breaker. They will be marked ({rt6}) and send a message in say chat. This is restricted to Mythic difficulty on stage 1."
-	--L.wall_breaker_message = "Wall Breaker"
+	L.wall_breaker = "Ломатель стенки (Мифик)"
+	L.wall_breaker_desc = "Игрок, являющийся целью Стремительной тьмы будет выбран в качестве ломателя стенки. Они будут отмечены ({rt6}) и отправят сообщение в чат. Работает только в мифической сложности на 1й фазе."
+	L.wall_breaker_message = "Ломатель стенки"
 end
 
 L = BigWigs:NewBossLocale("Scalecommander Sarkareth", "ruRU")
@@ -102,8 +102,8 @@ if L then
 	L.emptiness_between_stars = "Забвение"
 	L.void_slash = "Фронтал"
 
-	--L.boss_immune = "Boss Immune"
-	--L.ebon_might = "Adds Immune"
+	L.boss_immune = "Босс иммун"
+	L.ebon_might = "Ады иммун кик"
 end
 
 L = BigWigs:NewBossLocale("Aberrus, the Shadowed Crucible Trash", "ruRU")
