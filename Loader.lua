@@ -1134,12 +1134,12 @@ end
 --
 
 do
-	local DBMdotRevision = "20230711081027" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "10.1.14" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotRevision = "20230712023914" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "10.1.15" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
 	local DBMdotReleaseRevision = "20230711000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 2
 	local versionPrefix = "V"
-	local PForceDisable = 4
+	local PForceDisable = 5
 
 	local timer = nil
 	local function sendMsg()
