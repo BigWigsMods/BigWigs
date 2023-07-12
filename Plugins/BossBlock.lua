@@ -391,7 +391,8 @@ do
 		CheckElv(self)
 		-- Never hide when tracking achievements or in Mythic+
 		local _, _, diff = GetInstanceInfo()
-		if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not GetTrackedAchievements() and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
+		local trackedAchievements = C_ContentTracking.GetTrackedIDs(2) -- Enum.ContentTrackingType.Achievement = 2
+		if not restoreObjectiveTracker and self.db.profile.blockObjectiveTracker and not next(trackedAchievements) and diff ~= 8 and not trackerHider.IsProtected(ObjectiveTrackerFrame) then
 			restoreObjectiveTracker = trackerHider.GetParent(ObjectiveTrackerFrame)
 			if restoreObjectiveTracker then
 				trackerHider.SetFixedFrameStrata(ObjectiveTrackerFrame, true) -- Changing parent would change the strata & level, lock it first
