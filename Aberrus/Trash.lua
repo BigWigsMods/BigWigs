@@ -48,7 +48,7 @@ function mod:GetOptions()
 		408975, -- Dancing Steel
 
 		--[[ Kazzara -> Amalgamation Chamber ]]--
-		{406282, "SAY", "SAY_COUNTDOWN"}, -- Dream Burst
+		{418113, "SAY", "SAY_COUNTDOWN"}, -- Dream Burst
 		406210, -- Healing Bloom
 		408811, -- Form Ranks
 		bannerMarker,
@@ -63,7 +63,7 @@ function mod:GetOptions()
 		412498, -- Stagnating Pool
 	},{
 		[408975] = L.edgelord,
-		[406282] = L.naturalist,
+		[418113] = L.naturalist,
 		[408811] = L.siegemaster,
 		[406399] = L.arcanist,
 		[411900] = L.chemist,
@@ -88,7 +88,8 @@ function mod:OnBossEnable()
 	self:Log("SPELL_CAST_SUCCESS", "DancingSteel", 408975)
 
 	--[[ Kazzara -> Amalgamation Chamber ]]--
-	self:Log("SPELL_CAST_START", "DreamBurst", 406282)
+	self:Log("SPELL_AURA_APPLIED", "DreamBurstApplied", 418113)
+	self:Log("SPELL_AURA_REMOVED", "DreamBurstRemoved", 418113)
 	self:Log("SPELL_CAST_START", "HealingBloom", 406210)
 	self:Log("SPELL_SUMMON", "FormRanks", 408811)
 	self:Log("SPELL_AURA_APPLIED", "SunderingStrikeApplied", 411439)
@@ -125,17 +126,19 @@ do
 end
 
 --[[ Kazzara -> Amalgamation Chamber ]]--
-do
-	local function printTarget(self, player, guid)
-		self:TargetMessage(406282, "yellow", player)
-		if self:Me(guid) then
-			self:PlaySound(406282, "warning")
-			self:Say(406282)
-			self:SayCountdown(406282, 3.5)
-		end
+
+function mod:DreamBurstApplied(args)
+	self:TargetMessage(args.spellId, "yellow", args.destName)
+	if self:Me(args.destGUID) then
+		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 3.5)
 	end
-	function mod:DreamBurst(args)
-		self:GetUnitTarget(printTarget, 0.5, args.sourceGUID)
+end
+
+function mod:DreamBurstRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
 	end
 end
 
