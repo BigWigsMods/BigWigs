@@ -19,6 +19,7 @@ local phoenixRushCount = 1
 local vigorousGaleCount = 1
 local zaqaliAideCount = 1
 local magmaMysticCount = 1
+local tempBlockBigAddMsg = false
 
 --------------------------------------------------------------------------------
 -- Localization
@@ -94,7 +95,7 @@ end
 function mod:OnBossEnable()
 	self:RegisterEvent("RAID_BOSS_EMOTE")
 	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", nil, "boss1")
-	self:Log("SPELL_CAST_SUCCESS", "ZaqaliAide", 412818, 412820) -- North, South
+	self:Log("SPELL_CAST_SUCCESS", "ZaqaliAide", 412818, 412820) -- North, South || XXX still not in, being investigated
 
 	self:Log("SPELL_AURA_APPLIED", "BarrierBackfireApplied", 404687)
 	self:Log("SPELL_AURA_APPLIED_DOSE", "BarrierBackfireApplied", 404687)
@@ -138,6 +139,7 @@ function mod:OnEngage()
 	zaqaliAideCount = 1
 	vigorousGaleCount = 1
 	phoenixRushCount = 1
+	tempBlockBigAddMsg = false
 
 	self:Bar(401258, 12) -- Heavy Cudgel
 	self:Bar(397383, self:Easy() and 26.5 or 28, L.add_bartext:format(L.molten_barrier, L.both, magmaMysticCount)) -- Molten Barrier
@@ -163,6 +165,9 @@ function mod:UNIT_SPELLCAST_SUCCEEDED(_, _, _, spellId)
 	if spellId == 406591 then -- Call Ignara (2s earlier than Ignara's Flame _APPLIED)
 		self:Message("stages", "green", self:SpellName(spellId), "artifactability_firemage_phoenixbolt")
 		-- self:PlaySound("stages", "alert")
+	elseif spellId == 410207 or spellId == 411767 then -- south, north
+		tempBlockBigAddMsg = true -- Temp workaround for new emotes added in 10.1.5
+		self:SimpleTimer(function() tempBlockBigAddMsg = false end, 2)
 	end
 end
 
@@ -195,11 +200,21 @@ do
 
 	function mod:RAID_BOSS_EMOTE(_, msg)
 		if msg:find(L.zaqali_aide_south_emote_trigger, nil, true) then
-			self:StopBar(L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount))
-			self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.south))
+			if tempBlockBigAddMsg then -- Temp workaround for new mystic north/south emotes added in 10.1.5 that are detected by our basic trigger
+				tempBlockBigAddMsg = false -- Hopefully the new CLEU spells will be hotfixed in soon and we can drop emote detection
+				return
+			else
+				self:StopBar(L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount))
+				self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.south))
+			end
 		elseif msg:find(L.zaqali_aide_north_emote_trigger, nil, true) then
-			self:StopBar(L.add_bartext:format(CL.big_adds, L.north, zaqaliAideCount))
-			self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.north))
+			if tempBlockBigAddMsg then
+				tempBlockBigAddMsg = false
+				return
+			else
+				self:StopBar(L.add_bartext:format(CL.big_adds, L.north, zaqaliAideCount))
+				self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.north))
+			end
 		else
 			return
 		end
