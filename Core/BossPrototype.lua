@@ -2942,17 +2942,19 @@ end
 --- Register a sound to be played when a Private Aura is applied to you.
 -- @param key the option key
 -- @number[opt] spellId the spell id of the Private Aura if different from the key
--- @string[opt] sound the sound to play, defaults to "warning"
-function boss:SetPrivateAuraSound(key, spellId, sound)
-	local sounds = core:GetPlugin("Sounds", true)
-	if sounds then
-		if not self.privateAuraSounds then self.privateAuraSounds = {} end
-		self.privateAuraSounds[#self.privateAuraSounds + 1] = C_UnitAuras.AddPrivateAuraAppliedSound({
-			spellID = spellId or key,
-			unitToken = "player",
-			soundFileName = sounds:GetSoundFile(self, key, sound or "warning"),
-			outputChannel = "master",
-		})
+-- @string[opt] soundCategory the sound to play, defaults to "warning"
+function boss:SetPrivateAuraSound(key, spellId, soundCategory)
+	if checkFlag(self, key, C.SOUND) then
+		local soundsModule = core:GetPlugin("Sounds", true)
+		if soundsModule then
+			if not self.privateAuraSounds then self.privateAuraSounds = {} end
+			self.privateAuraSounds[#self.privateAuraSounds + 1] = C_UnitAuras.AddPrivateAuraAppliedSound({
+				spellID = spellId or key,
+				unitToken = "player",
+				soundFileName = soundsModule:GetSoundFile(self, key, soundCategory or "warning"),
+				outputChannel = "master",
+			})
+		end
 	end
 end
 
