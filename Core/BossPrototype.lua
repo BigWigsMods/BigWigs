@@ -111,6 +111,8 @@ local icons = setmetatable({}, {__index =
 				local tbl = C_EncounterJournal_GetSectionInfo(-key)
 				if not tbl or not tbl.abilityIcon then
 					core:Error(format("The journal id %q has no icon texture but is being used as an icon in a boss module.", key))
+				else
+					value = tbl.abilityIcon
 				end
 			end
 		else
