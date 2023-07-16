@@ -1488,6 +1488,7 @@ do
 			statusTable = {}
 			isPluginOpen = nil
 			configFrame = nil
+			options:SendMessage("BigWigs_CloseGUI")
 		end)
 
 		--local anchors = AceGUI:Create("Button")
@@ -1527,6 +1528,7 @@ do
 		bw:AddChild(tabs)
 
 		bw:Show()
+		self:SendMessage("BigWigs_OpenGUI")
 	end
 end
 
