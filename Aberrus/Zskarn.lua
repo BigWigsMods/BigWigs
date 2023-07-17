@@ -124,7 +124,7 @@ function mod:DragonfireTraps(args)
 	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	dragonfireTrapsCount = dragonfireTrapsCount + 1
-	self:CDBar(args.spellId, self:Easy() and 35.2 or 30.5, CL.count:format(CL.traps, dragonfireTrapsCount))
+	self:CDBar(args.spellId, self:Mythic() and 34 or self:Easy() and 35.2 or 30.5, CL.count:format(CL.traps, dragonfireTrapsCount))
 end
 
 function mod:AnimateGolems(args)
@@ -182,13 +182,14 @@ do
 		bombsSoaked = 0
 		mod:Bar(406725, 30, CL.count_amount:format(L.bombs_soaked, bombsSoaked, totalBombs), "inv_misc_bomb_01")
 	end
+
 	function mod:ShrapnelBomb(args)
 		local msg = CL.count:format(CL.bombs, shrapnelBombCount)
 		self:StopBar(msg)
 		self:Message(args.spellId, "yellow", msg)
 		self:PlaySound(args.spellId, "alert")
 		shrapnelBombCount = shrapnelBombCount + 1
-		self:CDBar(args.spellId, 30.3, CL.count:format(CL.bombs, shrapnelBombCount))
+		self:CDBar(args.spellId, self:Mythic() and 45 or 30.3, CL.count:format(CL.bombs, shrapnelBombCount))
 
 		 -- Starting/Stopping Bomb timers after 2s due to flight time
 		 self:ScheduleTimer(startBombTimers, 2)
