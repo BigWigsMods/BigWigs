@@ -1879,12 +1879,12 @@ local function barClicked(bar, button)
 end
 
 local function barOnEnter(bar)
-	bar.candyBarBackground:SetVertexColor(1, 1, 1, 0.8)
+	bar:SetBackgroundColor(1, 1, 1, 0.8)
 end
 local function barOnLeave(bar)
 	local module = bar:Get("bigwigs:module")
 	local key = bar:Get("bigwigs:option")
-	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
+	bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
 end
 
 local function refixClickOnBar(intercept, bar)
@@ -2008,7 +2008,6 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 		width, height = db.BigWigsAnchor_width, db.BigWigsAnchor_height
 	end
 	local bar = candy:New(media:Fetch(STATUSBAR, db.texture), width, height)
-	bar.candyBarBackground:SetVertexColor(colors:GetColor("barBackground", module, key))
 	bar:Set("bigwigs:module", module)
 	bar:Set("bigwigs:option", key)
 	if unitGUID then
@@ -2021,6 +2020,7 @@ function plugin:CreateBar(module, key, text, time, icon, isApprox, unitGUID)
 	bar:SetLabel(text)
 	bar:SetDuration(time, isApprox)
 	bar:SetColor(colors:GetColor("barColor", module, key))
+	bar:SetBackgroundColor(colors:GetColor("barBackground", module, key))
 	bar:SetTextColor(colors:GetColor("barText", module, key))
 	bar:SetShadowColor(colors:GetColor("barTextShadow", module, key))
 	bar.candyBarLabel:SetJustifyH(db.alignText)
