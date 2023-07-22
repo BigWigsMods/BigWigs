@@ -161,7 +161,6 @@ if L then
 	-- Stage Three: The Seas of Infinity
 	L.boss_immune = "Boss Immune"
 	L.cosmic_ascension = mod:SpellName(161862) -- Cosmic Ascension (Ascension)
-	L.hurtling_barrage = mod:SpellName(405022) -- Hurtling Barrage
 	L.scouring_eternity = mod:SpellName(123244) -- Scouring Eternity (Hide)
 	L.embrace_of_nothingness = mod:SpellName(371920) -- Embrace of Nothingness (Black Hole)
 	L.void_slash = "Tank Frontal"
@@ -245,7 +244,6 @@ function mod:GetOptions()
 		[411241] = L.claws, -- Void Claws (Tank Debuff)
 		[411238] = L.claws_debuff, -- Void Blast (Tank Explodes)
 		[403741] = L.cosmic_ascension, -- Cosmic Ascension (Ascension)
-		[405486] = L.hurtling_barrage, -- Hurtling Barrage (Lines)
 		[403625] = L.scouring_eternity, -- Scouring Eternity (Hide)
 		[403520] = L.embrace_of_nothingness, -- Embrace of Nothingness (Black Hole)
 		[408429] = L.void_slash, -- Void Slash (Tank Frontal)
@@ -833,7 +831,7 @@ function mod:Stage3Start()
 		self:Bar(403520, timers[3][403520][embraceOfNothingnessCount], CL.count:format(L.embrace_of_nothingness, embraceOfNothingnessCount)) -- Embrace of Nothingness
 		-- Hurtling Barrage & Void Bomb are not cast in LFR but are shown in journal?
 		self:Bar(404027, timers[3][404027][bombCount], CL.count:format(CL.bombs, bombCount)) -- Void Bomb
-		self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)) -- Hurtling Barrage
+		self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(self:SpellName(405486), hurtlingBarrageCount)) -- Hurtling Barrage
 	end
 end
 
@@ -854,14 +852,14 @@ end
 
 do
 	local playerList = {}
-	function mod:HurtlingBarrage()
+	function mod:HurtlingBarrage(args)
 		playerList = {}
-		local msg = CL.count:format(L.hurtling_barrage, hurtlingBarrageCount)
+		local msg = CL.count:format(args.spellName, hurtlingBarrageCount)
 		self:StopBar(msg)
 		self:Message(405486, "yellow", msg)
 		self:PlaySound(405486, "alert")
 		hurtlingBarrageCount = hurtlingBarrageCount + 1
-		self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(L.hurtling_barrage, hurtlingBarrageCount))
+		self:Bar(405486, timers[3][405486][hurtlingBarrageCount], CL.count:format(args.spellName, hurtlingBarrageCount))
 	end
 
 	function mod:HurtlingBarrageApplied(args)
@@ -869,9 +867,9 @@ do
 		local icon = count + 2
 		playerList[count] = args.destName
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(args.spellId, nil, L.hurtling_barrage)
+			self:PersonalMessage(args.spellId)
 			self:PlaySound(args.spellId, "warning")
-			self:Say(args.spellId, CL.rticon:format(L.hurtling_barrage, icon))
+			self:Say(args.spellId, CL.rticon:format(args.spellName, icon))
 			self:SayCountdown(args.spellId, 7, icon)
 		end
 		self:CustomIcon(hurlingBarrageMarker, args.destName, icon)

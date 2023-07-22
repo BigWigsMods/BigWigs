@@ -22,15 +22,6 @@ local wingsOfExtinctionCount = 1
 local terrorClawsCount = 1
 
 --------------------------------------------------------------------------------
--- Localization
---
-
-local L = mod:GetLocale()
-if L then
-	L.dread_rift = "Rift" -- Singular Dread Rift
-end
-
---------------------------------------------------------------------------------
 -- Initialization
 --
 
@@ -47,7 +38,7 @@ function mod:GetOptions()
 		403326, -- Wings of Extinction
 		{404743, "TANK"}, -- Terror Claws
 	},nil,{
-		[407196] = L.dread_rift, -- Dread Rifts (Rift)
+		[407196] = CL.rift, -- Dread Rifts (Rift)
 		[407069] = CL.lasers, -- Rays of Anguish (Lasers)
 		[400430] = CL.breath, -- Hellbeam (Breath)
 		[403326] = CL.pushback, -- Wings of Extinction (Pushback)
@@ -133,9 +124,9 @@ do
 
 	function mod:DreadRiftApplied(args)
 		if self:Me(args.destGUID) then
-			self:PersonalMessage(407196, nil, L.dread_rift)
+			self:PersonalMessage(407196, nil, CL.rift)
 			self:PlaySound(407196, "warning")
-			self:Say(407196, CL.count_rticon:format(L.dread_rift, count, count))
+			self:Say(407196, CL.count_rticon:format(CL.rift, count, count))
 			self:SayCountdown(407196, 5, count)
 		end
 		self:CustomIcon(dreadRiftMarker, args.destName, count)

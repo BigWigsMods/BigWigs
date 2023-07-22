@@ -1,10 +1,5 @@
-local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "koKR")
+local L = BigWigs:NewBossLocale("The Amalgamation Chamber", "koKR")
 if not L then return end
-if L then
-	L.dread_rift = "균열" -- Singular Dread Rift
-end
-
-L = BigWigs:NewBossLocale("The Amalgamation Chamber", "koKR")
 if L then
 	L.custom_on_fade_out_bars = "1페이즈 바 임시 비활성화"
 	L.custom_on_fade_out_bars_desc = "1페이즈에서 거리에서 먼 보스들의 바를 임시로 비활성화."
@@ -87,7 +82,6 @@ if L then
 	L.rushing_darkness = "넉백 징표"
 
 	L.umbral_annihilation = "암영 말살"
-	L.sunder_reality = "차원문"
 	L.ebon_destruction = "즉사 광역기"
 
 	--L.wall_breaker = "Wall Breaker (Mythic)"

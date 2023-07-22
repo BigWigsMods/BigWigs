@@ -17,6 +17,7 @@ local pullTime = 0
 local lastCast = {}
 local thadrionEngaged = false
 local rionthusEngaged = false
+local killedCount = 0
 
 local rendingChargeCount = 1
 local massiveSlamCount = 1
@@ -52,8 +53,6 @@ if L then
 	L.custom_on_unstable_essence_high = "High Stacks Unstable Essence Say Messages"
 	L.custom_on_unstable_essence_high_icon = 407327
 	L.custom_on_unstable_essence_high_desc = "Say messages with the amount of stacks for your Unstable Essence debuff when they are high enough."
-
-	L.killed = "%s killed"
 
 	L.rending_charge_single = "First Charge"
 	L.massive_slam = "Frontal Cone"
@@ -138,6 +137,7 @@ function mod:OnEngage()
 	lastCast = {}
 	thadrionEngaged = false
 	rionthusEngaged = false
+	killedCount = 0
 
 	rendingChargeCount = 1
 	massiveSlamCount = 1
@@ -216,8 +216,9 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 end
 
 function mod:Deaths(args)
-	if self:Mythic() then
-		self:Message("stages", "green", L.killed:format(args.destName), false)
+	killedCount = killedCount + 1
+	if killedCount < 3 then
+		self:Message("stages", "green", CL.mob_killed:format(args.destName, killedCount, 3), false)
 	end
 	if args.mobId == 200912 then -- Neldris
 		self:StopBar(CL.count:format(self:SpellName(406358), rendingChargeCount)) -- Rending Charge

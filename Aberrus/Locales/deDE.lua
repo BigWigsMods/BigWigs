@@ -1,10 +1,5 @@
-local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "deDE")
+local L = BigWigs:NewBossLocale("The Amalgamation Chamber", "deDE")
 if not L then return end
-if L then
-	L.dread_rift = "Riss" -- Singular Dread Rift
-end
-
-L = BigWigs:NewBossLocale("The Amalgamation Chamber", "deDE")
 if L then
 	L.custom_on_fade_out_bars = "Phase 1 Leisten abblenden"
 	L.custom_on_fade_out_bars_desc = "Leisten, welche zum außer Reichweite befindlichen Boss in Phase 1 gehören abblenden."
@@ -87,7 +82,6 @@ if L then
 	L.rushing_darkness = "Rückstoß Linien"
 
 	L.umbral_annihilation = "Auslöschung"
-	L.sunder_reality = "Portale"
 	L.ebon_destruction = "Großer Knall"
 
 	L.wall_breaker = "Wandbrecher (Mythisch)"

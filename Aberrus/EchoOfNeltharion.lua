@@ -40,7 +40,6 @@ if L then
 	L.rushing_darkness = "Knock Lines"
 
 	L.umbral_annihilation = "Annihilation"
-	L.sunder_reality = "Portals"
 	L.ebon_destruction = "Big Bang"
 
 	L.wall_breaker = "Wall Breaker (Mythic)"
@@ -83,7 +82,7 @@ function mod:GetOptions()
 		[402902] = L.twisted_earth, -- Twisted Earth (Walls)
 		[402115] = L.echoing_fissure, -- Echoing Fissure (Fissure)
 		[405433] = L.umbral_annihilation, -- Umbral Annihilation (Annihilation)
-		[407936] = L.sunder_reality, -- Sunder Reality (Portals)
+		[407936] = CL.portals, -- Sunder Reality (Portals)
 		[407917] = L.ebon_destruction, -- Ebon Destruction (Big Bang)
 	}
 end
@@ -404,7 +403,7 @@ function mod:Stage2Over()
 	rushingDarknessCount = 1
 	castingEbonDestruction =  false
 
-	self:CDBar(407936, 21.2, CL.count:format(L.sunder_reality, sunderRealityCount)) -- Sunder Reality
+	self:CDBar(407936, 21.2, CL.count:format(CL.portals, sunderRealityCount)) -- Sunder Reality
 	self:CDBar(407221, 27.6, CL.count:format(L.rushing_darkness, rushingDarknessCount)) -- Rushing Darkness
 	self:CDBar(401998, 35.4) -- Calamitous Strike
 	self:CDBar(407917, 41.5, CL.count:format(L.ebon_destruction, ebonDestructionCount)) -- Ebon Destruction
@@ -413,13 +412,13 @@ end
 
 -- Stage 3
 function mod:SunderReality(args)
-	local msg = CL.count:format(L.sunder_reality, sunderRealityCount)
+	local msg = CL.count:format(CL.portals, sunderRealityCount)
 	self:StopBar(msg)
 	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "alert")
 	sunderRealityCount = sunderRealityCount + 1
 	if sunderRealityCount < (self:Easy() and 8 or 5) then -- 4 sets heroic/mythic, 7 sets normal/lfr
-		self:CDBar(args.spellId, 29.2, CL.count:format(L.sunder_reality, sunderRealityCount))
+		self:CDBar(args.spellId, 29.2, CL.count:format(CL.portals, sunderRealityCount))
 	end
 end
 

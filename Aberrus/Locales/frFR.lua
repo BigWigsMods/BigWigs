@@ -1,10 +1,5 @@
-local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "frFR")
+local L = BigWigs:NewBossLocale("The Amalgamation Chamber", "frFR")
 if not L then return end
-if L then
-	L.dread_rift = "Faille" -- Singular Dread Rift
-end
-
-L = BigWigs:NewBossLocale("The Amalgamation Chamber", "frFR")
 if L then
 	L.custom_on_fade_out_bars = "Fondu enchainé des barres de la phase 1"
 	L.custom_on_fade_out_bars_desc = "Fondu enchainé des barres du boss qui est hors de portée durant la phase 1"
@@ -87,7 +82,6 @@ if L then
 	L.rushing_darkness = "Lignes d'impact"
 
 	L.umbral_annihilation = "Annéantissement"
-	L.sunder_reality = "Portails"
 	L.ebon_destruction = "Destruction d'ébène"
 
 	--L.wall_breaker = "Wall Breaker (Mythic)"

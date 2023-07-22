@@ -1,10 +1,5 @@
-local L = BigWigs:NewBossLocale("Kazzara, the Hellforged", "zhCN")
+local L = BigWigs:NewBossLocale("The Amalgamation Chamber", "zhCN")
 if not L then return end
-if L then
-	L.dread_rift = "裂隙" -- Singular Dread Rift
-end
-
-L = BigWigs:NewBossLocale("The Amalgamation Chamber", "zhCN")
 if L then
 	L.custom_on_fade_out_bars = "淡出第一阶段计时器"
 	L.custom_on_fade_out_bars_desc = "第一阶段时，淡出首领计时器。"
@@ -88,7 +83,6 @@ if L then
 	L.rushing_darkness = "击退破墙"
 
 	L.umbral_annihilation = "歼灭"
-	L.sunder_reality = "传送门"
 	L.ebon_destruction = "大爆炸"
 
 	L.wall_breaker = "破墙者（史诗）"
