@@ -36,10 +36,7 @@ if L then
 	L.zaqali_aide_north_emote_trigger = "북쪽 성루" -- 지휘관이 북쪽 성루를 타고 오릅니다!
 	L.zaqali_aide_south_emote_trigger = "남쪽 성루" -- 지휘관이 남쪽 성루를 타고 오릅니다!!
 
-	L.north = "북쪽"
-	L.south = "남쪽"
 	L.both = "양쪽"
-
 	L.zaqali_aide_message = "%s 가 %s 으로 오르는중" -- Big Adds Climbing North
 	L.add_bartext = "%s: %s (%d)"
 	L.boss_returns = "넴드 착지: 북쪽"

@@ -36,10 +36,7 @@ if L then
 	--L.zaqali_aide_north_emote_trigger = "northern battlement" -- Commanders ascend the northern battlement!
 	--L.zaqali_aide_south_emote_trigger = "southern battlement" -- Commanders ascend the southern battlement!
 
-	--L.north = "North"
-	--L.south = "South"
 	--L.both = "Both"
-
 	--L.zaqali_aide_message = "%s Climbing %s" -- Big Adds Climbing North
 	L.add_bartext = "%s: %s (%d)"
 	--L.boss_returns = "Boss Lands: North"

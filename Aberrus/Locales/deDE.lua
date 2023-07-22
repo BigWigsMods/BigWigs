@@ -36,10 +36,7 @@ if L then
 	L.zaqali_aide_north_emote_trigger = "nördliche Festungsmauer" -- Kommandanten erklimmen die nördliche Festungsmauer!
 	L.zaqali_aide_south_emote_trigger = "südliche Festungsmauer" -- Kommandanten erklimmen die südliche Festungsmauer!
 
-	L.north = "Norden"
-	L.south = "Süden"
 	L.both = "Beide"
-
 	L.zaqali_aide_message = "%s klettern %s" -- Big Adds Climbing North
 	L.add_bartext = "%s: %s (%d)"
 	L.boss_returns = "Boss landet: Norden"

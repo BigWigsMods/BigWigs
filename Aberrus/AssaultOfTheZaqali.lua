@@ -32,10 +32,7 @@ if L then
 	L.zaqali_aide_north_emote_trigger = "northern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the northern battlement!
 	L.zaqali_aide_south_emote_trigger = "southern battlement" -- |TInterface\\ICONS\\Ability_Hunter_KillCommand.blp:20|t Commanders ascend the southern battlement!
 
-	L.north = "North"
-	L.south = "South"
 	L.both = "Both"
-
 	L.zaqali_aide_message = "%s Climbing %s" -- Big Adds Climbing North
 	L.add_bartext = "%s: %s (%d)"
 	L.boss_returns = "Boss Lands: North"
@@ -144,7 +141,7 @@ function mod:OnEngage()
 	self:Bar(401258, 12) -- Heavy Cudgel
 	self:Bar(397383, self:Easy() and 26.5 or 28, L.add_bartext:format(L.molten_barrier, L.both, magmaMysticCount)) -- Molten Barrier
 	self:Bar("stages", 28, self:SpellName(406591), "artifactability_firemage_phoenixbolt") -- Call Ignara
-	self:Bar(404382, 41, L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount)) -- Zaqali Aide
+	self:Bar(404382, 41, L.add_bartext:format(CL.big_adds, CL.south, zaqaliAideCount)) -- Zaqali Aide
 
 	self:RegisterUnitEvent("UNIT_HEALTH", nil, "boss1")
 end
@@ -182,11 +179,11 @@ do
 			self:Error("New IDs are active.")
 		end
 		if args.spellId == 412820 then -- South
-			self:StopBar(L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount))
-			self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.south))
+			self:StopBar(L.add_bartext:format(CL.big_adds, CL.south, zaqaliAideCount))
+			self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, CL.south))
 		else -- North
-			self:StopBar(L.add_bartext:format(CL.big_adds, L.north, zaqaliAideCount))
-			self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.north))
+			self:StopBar(L.add_bartext:format(CL.big_adds, CL.north, zaqaliAideCount))
+			self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, CL.north))
 		end
 		self:PlaySound(404382, "info")
 		zaqaliAideCount = zaqaliAideCount + 1
@@ -204,16 +201,16 @@ do
 				tempBlockBigAddMsg = false -- Hopefully the new CLEU spells will be hotfixed in soon and we can drop emote detection
 				return
 			else
-				self:StopBar(L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount))
-				self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.south))
+				self:StopBar(L.add_bartext:format(CL.big_adds, CL.south, zaqaliAideCount))
+				self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, CL.south))
 			end
 		elseif msg:find(L.zaqali_aide_north_emote_trigger, nil, true) then
 			if tempBlockBigAddMsg then
 				tempBlockBigAddMsg = false
 				return
 			else
-				self:StopBar(L.add_bartext:format(CL.big_adds, L.north, zaqaliAideCount))
-				self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, L.north))
+				self:StopBar(L.add_bartext:format(CL.big_adds, CL.north, zaqaliAideCount))
+				self:Message(404382, "cyan", L.zaqali_aide_message:format(CL.big_adds, CL.north))
 			end
 		else
 			return
@@ -285,10 +282,10 @@ function mod:IgnaraFlameRemoved()
 	self:PlaySound("stages", "info")
 
 	self:Bar(401258, self:Mythic() and 18 or 12) -- Heavy Cudgel
-	self:Bar(408959, 44, L.add_bartext:format(CL.leap, L.south, devastatingLeapCount)) -- Leap: South (1)
+	self:Bar(408959, 44, L.add_bartext:format(CL.leap, CL.south, devastatingLeapCount)) -- Leap: South (1)
 	if self:Mythic() then
-		self:CDBar(407009, 19, L.add_bartext:format(CL.pushback, L.south, vigorousGaleCount)) -- Pushback: South (1)
-		self:CDBar(401108, 40, L.add_bartext:format(self:SpellName(401108), L.south, phoenixRushCount)) -- Phoenix Rush: South (1)
+		self:CDBar(407009, 19, L.add_bartext:format(CL.pushback, CL.south, vigorousGaleCount)) -- Pushback: South (1)
+		self:CDBar(401108, 40, L.add_bartext:format(self:SpellName(401108), CL.south, phoenixRushCount)) -- Phoenix Rush: South (1)
 	end
 end
 
@@ -442,12 +439,12 @@ function mod:DesperateImmolation()
 
 	-- XXX boss abilities stop, but add waves can still happen?
 	self:StopBar(401258) -- Heavy Cudgel
-	self:StopBar(L.add_bartext:format(CL.leap, L.south, devastatingLeapCount)) -- Devastating Leap
-	self:StopBar(L.add_bartext:format(CL.leap, L.north, devastatingLeapCount))
-	self:StopBar(L.add_bartext:format(CL.pushback, L.south, vigorousGaleCount)) -- Vigorous Gale
-	self:StopBar(L.add_bartext:format(CL.pushback, L.north, vigorousGaleCount))
-	self:StopBar(L.add_bartext:format(self:SpellName(401108), L.south, phoenixRushCount)) -- Phoenix Rush
-	self:StopBar(L.add_bartext:format(self:SpellName(401108), L.north, phoenixRushCount))
+	self:StopBar(L.add_bartext:format(CL.leap, CL.south, devastatingLeapCount)) -- Devastating Leap
+	self:StopBar(L.add_bartext:format(CL.leap, CL.north, devastatingLeapCount))
+	self:StopBar(L.add_bartext:format(CL.pushback, CL.south, vigorousGaleCount)) -- Vigorous Gale
+	self:StopBar(L.add_bartext:format(CL.pushback, CL.north, vigorousGaleCount))
+	self:StopBar(L.add_bartext:format(self:SpellName(401108), CL.south, phoenixRushCount)) -- Phoenix Rush
+	self:StopBar(L.add_bartext:format(self:SpellName(401108), CL.north, phoenixRushCount))
 
 	cudgelCount = 1
 	devastatingLeapCount = 1
@@ -457,10 +454,10 @@ function mod:DesperateImmolation()
 end
 
 function mod:DesperateImmolationSuccess()
-	self:StopBar(L.add_bartext:format(CL.big_adds, L.south, zaqaliAideCount)) -- Zaqali Aide
-	self:StopBar(L.add_bartext:format(CL.big_adds, L.north, zaqaliAideCount))
-	self:StopBar(L.add_bartext:format(L.molten_barrier, L.south, magmaMysticCount)) -- Molten Barrier
-	self:StopBar(L.add_bartext:format(L.molten_barrier, L.north, magmaMysticCount))
+	self:StopBar(L.add_bartext:format(CL.big_adds, CL.south, zaqaliAideCount)) -- Zaqali Aide
+	self:StopBar(L.add_bartext:format(CL.big_adds, CL.north, zaqaliAideCount))
+	self:StopBar(L.add_bartext:format(L.molten_barrier, CL.south, magmaMysticCount)) -- Molten Barrier
+	self:StopBar(L.add_bartext:format(L.molten_barrier, CL.north, magmaMysticCount))
 end
 
 function mod:IgnarasFury(args)

@@ -36,10 +36,7 @@ if L then
 	L.zaqali_aide_north_emote_trigger = "северное укрепление" -- Помощники вождя поднимаются на северное укрепление!
 	L.zaqali_aide_south_emote_trigger = "южное укрепление" -- Помощники вождя поднимаются на южное укрепление!
 
-	L.north = "Север"
-	L.south = "Юг"
 	L.both = "Обе"
-
 	L.zaqali_aide_message = "%s лезут:  %s" -- Big Adds Climbing North
 	L.add_bartext = "%s: %s (%d)"
 	L.boss_returns = "Босс: Север"

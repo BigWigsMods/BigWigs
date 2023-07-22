@@ -36,10 +36,7 @@ if L then
 	L.zaqali_aide_north_emote_trigger = "北部城垒" -- 指挥官爬上了北部城垒！
 	L.zaqali_aide_south_emote_trigger = "南部城垒" -- 指挥官爬上了南部城垒！
 
-	L.north = "北部"
-	L.south = "南部"
 	L.both = "双方"
-
 	L.zaqali_aide_message = "%2$s：%1$s正在攀爬" -- Big Adds Climbing North
 	L.add_bartext = "%s：%s（%d）"
 	L.boss_returns = "首领落地: 北部"
