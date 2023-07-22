@@ -121,3 +121,7 @@ L.pool = "水池" -- A pool or puddle on the ground, usually something bad that 
 L.pools = "水池" -- Plural of L.pool
 --L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
 --L.totems = "Totems" -- Plural of L.totem
+--L.portal = "Portal" -- A portal somewhere, usually leading to a different location
+--L.portals = "Portals" -- Plural of L.portal
+--L.rift = "Rift" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
+--L.rifts = "Rifts" -- Plural of L.rift

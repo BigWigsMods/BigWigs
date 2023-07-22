@@ -121,3 +121,7 @@ L.fear = "Paura" -- For abilities that cause you to flee in fear
 --L.pools = "Pools" -- Plural of L.pool
 --L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
 --L.totems = "Totems" -- Plural of L.totem
+L.portal = "Portale" -- A portal somewhere, usually leading to a different location
+L.portals = "Portali" -- Plural of L.portal
+L.rift = "Fenditura" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
+L.rifts = "Fenditure" -- Plural of L.rift
