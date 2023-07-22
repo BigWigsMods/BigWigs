@@ -120,3 +120,5 @@ L.leap = "Bond" -- When a boss leaps through the air from one location to anothe
 L.full_energy = "Energie pleine" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
 L.pool = "Flaque" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 L.pools = "Flaques" -- Plural of L.pool
+--L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
+--L.totems = "Totems" -- Plural of L.totem

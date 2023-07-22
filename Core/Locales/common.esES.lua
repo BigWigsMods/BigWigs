@@ -119,3 +119,5 @@ L.fear = "Miedo" -- For abilities that cause you to flee in fear
 --L.full_energy = "Full Energy" -- When a boss reaches full/maximum energy, usually the boss will cast something big and powerful when this happens
 --L.pool = "Pool" -- A pool or puddle on the ground, usually something bad that you should avoid standing in
 --L.pools = "Pools" -- Plural of L.pool
+--L.totem = "Totem" -- A totem, usually summoned by a boss, the same thing that shamans summon
+--L.totems = "Totems" -- Plural of L.totem
