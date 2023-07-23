@@ -105,13 +105,13 @@ L.bottom = "Unten"
 L.left = "Links"
 L.right = "Rechts"
 L.north = "Norden"
-L.north_east = "Nordost"
+L.north_east = "Nordosten"
 L.east = "Osten"
-L.south_east = "Südost"
+L.south_east = "Südosten"
 L.south = "Süden"
-L.south_west = "Südwest"
+L.south_west = "Südwesten"
 L.west = "Westen"
-L.north_west = "Nordwest"
+L.north_west = "Nordwesten"
 
 -- Common ability name replacements
 L.tank_combo = "Tank Kombi" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
