@@ -97,21 +97,21 @@ L.amount_three = "%d千" -- Thousands 1,000
 L.seconds = "%.1f秒" -- 1.1 seconds
 
 -- Directions
---L.top = "Top"
---L.up = "Up"
---L.middle = "Middle"
---L.down = "Down"
---L.bottom = "Bottom"
---L.left = "Left"
---L.right "Right"
+L.top = "上"
+L.up = "向上"
+L.middle = "中"
+L.down = "向下"
+L.bottom = "下"
+L.left = "左"
+L.right = "右"
 L.north = "北部"
---L.north_east = "North-East"
---L.east = "East"
---L.south_east = "South-East"
+L.north_east = "东北"
+L.east = "东"
+L.south_east = "东南"
 L.south = "南部"
---L.south_west = "South-West"
---L.west = "West"
---L.north_west = "North-West"
+L.south_west = "西南"
+L.west = "西"
+L.north_west = "西北"
 
 -- Common ability name replacements
 L.tank_combo = "坦克连击" -- Used for tank swap mechanics where the boss casts a sequence of tank buster attacks
