@@ -104,7 +104,7 @@ L.seconds = "%.1fs" -- 1.1 seconds
 --L.down = "Down"
 --L.bottom = "Bottom"
 --L.left = "Left"
---L.right "Right"
+--L.right = "Right"
 L.north = "Nord"
 --L.north_east = "North-East"
 --L.east = "East"

@@ -102,7 +102,7 @@ L.middle = "Middle"
 L.down = "Down"
 L.bottom = "Bottom"
 L.left = "Left"
-L.right "Right"
+L.right = "Right"
 L.north = "North"
 L.north_east = "North-East"
 L.east = "East" -- I thought you said weast!

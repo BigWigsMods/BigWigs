@@ -103,7 +103,7 @@ L.seconds = "%.1f초" -- 1.1 seconds
 --L.down = "Down"
 --L.bottom = "Bottom"
 --L.left = "Left"
---L.right "Right"
+--L.right = "Right"
 L.north = "북쪽"
 --L.north_east = "North-East"
 --L.east = "East"
