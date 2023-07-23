@@ -191,7 +191,7 @@ do
 		if self:GetStage() == 1 then
 			local index = (zaqaliAideCount % 5) + 1
 			local cd = zaqaliAideCount == 2 and 33.5 or timer[index]
-			self:Bar(404382, cd, L.add_bartext:format(CL.big_adds, L[side[index]], zaqaliAideCount))
+			self:Bar(404382, cd, L.add_bartext:format(CL.big_adds, CL[side[index]], zaqaliAideCount))
 		end
 	end
 
@@ -221,7 +221,7 @@ do
 		if self:GetStage() == 1 then
 			local index = (zaqaliAideCount % 5) + 1
 			local cd = zaqaliAideCount == 2 and 33.5 or timer[index]
-			self:Bar(404382, cd, L.add_bartext:format(CL.big_adds, L[side[index]], zaqaliAideCount))
+			self:Bar(404382, cd, L.add_bartext:format(CL.big_adds, CL[side[index]], zaqaliAideCount))
 		end
 	end
 end
@@ -240,7 +240,7 @@ end
 -- Ignara: casts Gale (S), Rush (S), Rush (N), Gale (N), repeat
 function mod:PhoenixRush(args)
 	local side = phoenixRushCount % 2 == 0 and "north" or "south"
-	local msg = L.add_bartext:format(args.spellName, L[side], phoenixRushCount)
+	local msg = L.add_bartext:format(args.spellName, CL[side], phoenixRushCount)
 	self:StopBar(msg)
 	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "long")
@@ -248,7 +248,7 @@ function mod:PhoenixRush(args)
 
 	local cd = phoenixRushCount % 2 == 0 and 25 or 72 -- 25~27 / 72~74
 	side = phoenixRushCount % 2 == 0 and "north" or "south"
-	self:CDBar(args.spellId, cd, L.add_bartext:format(args.spellName, L[side], phoenixRushCount))
+	self:CDBar(args.spellId, cd, L.add_bartext:format(args.spellName, CL[side], phoenixRushCount))
 end
 
 function mod:BlazingFocusApplied(args)
@@ -260,7 +260,7 @@ end
 
 function mod:VigorousGale(args)
 	local side = vigorousGaleCount % 2 == 0 and "north" or "south"
-	local msg = L.add_bartext:format(CL.pushback, L[side], vigorousGaleCount)
+	local msg = L.add_bartext:format(CL.pushback, CL[side], vigorousGaleCount)
 	self:StopBar(msg)
 	self:Message(args.spellId, "red", msg)
 	self:PlaySound(args.spellId, "warning")
@@ -268,7 +268,7 @@ function mod:VigorousGale(args)
 
 	local cd = vigorousGaleCount % 2 == 0 and 66 or 32 -- 66~68, 32~??
 	side = vigorousGaleCount % 2 == 0 and "north" or "south"
-	self:CDBar(args.spellId, cd, L.add_bartext:format(CL.pushback, L[side], vigorousGaleCount))
+	self:CDBar(args.spellId, cd, L.add_bartext:format(CL.pushback, CL[side], vigorousGaleCount))
 end
 
 -- Warlord Kagni
@@ -291,7 +291,7 @@ end
 
 function mod:DevastatingLeap(args)
 	local side = devastatingLeapCount % 2 == 0 and "north" or "south"
-	local msg = L.add_bartext:format(CL.leap, L[side], devastatingLeapCount)
+	local msg = L.add_bartext:format(CL.leap, CL[side], devastatingLeapCount)
 	self:StopBar(msg)
 	self:Message(args.spellId, "orange", msg)
 	self:PlaySound(args.spellId, "alarm")
@@ -299,7 +299,7 @@ function mod:DevastatingLeap(args)
 
 	local cd = devastatingLeapCount % 2 == 0 and 47.5 or 53
 	side = devastatingLeapCount % 2 == 0 and "north" or "south"
-	self:Bar(args.spellId, cd, L.add_bartext:format(CL.leap, L[side], devastatingLeapCount))
+	self:Bar(args.spellId, cd, L.add_bartext:format(CL.leap, CL[side], devastatingLeapCount))
 end
 
 do
@@ -338,7 +338,7 @@ do
 			prev = args.time
 			if magmaMysticCount > 1 then
 				local side = magmaMysticCount % 2 == 0 and "south" or "north"
-				local msg = L.add_bartext:format(L.molten_barrier, L[side], magmaMysticCount)
+				local msg = L.add_bartext:format(L.molten_barrier, CL[side], magmaMysticCount)
 				self:StopBar(msg)
 				self:Message(args.spellId, "cyan", msg)
 			else -- first is on both sides
@@ -352,7 +352,7 @@ do
 				-- local timer = { 25, 55, 55, 45, 55, 45 }
 				local cd = magmaMysticCount == 2 and 55 or magmaMysticCount % 2 == 0 and 45 or 55
 				local side = magmaMysticCount % 2 == 0 and "south" or "north"
-				self:CDBar(args.spellId, cd, L.add_bartext:format(L.molten_barrier, L[side], magmaMysticCount))
+				self:CDBar(args.spellId, cd, L.add_bartext:format(L.molten_barrier, CL[side], magmaMysticCount))
 			end
 		end
 	end
