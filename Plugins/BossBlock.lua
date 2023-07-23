@@ -554,6 +554,8 @@ do
 		[957] = true, -- Jailer intro
 		[958] = true, -- Jailer defeat
 		[964] = true, -- Raszageth defeat
+		[991] = true, -- Iridikron (DotI) defeat
+		[992] = true, -- Chrono-Lord Deios (DotI) defeat
 	}
 
 	function plugin:PLAY_MOVIE(_, id)
