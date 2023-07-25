@@ -2782,6 +2782,7 @@ function boss:Say(key, msg, directPrint)
 	else
 		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "SAY")
 	end
+	self:Debug(":Say", key, msg, directPrint)
 end
 
 --- Send a message in YELL. Generally used for abilities where you need to group up.
@@ -2795,6 +2796,7 @@ function boss:Yell(key, msg, directPrint)
 	else
 		SendChatMessage(format(L.on, msg and (type(msg) == "number" and spells[msg] or msg) or spells[key], pName), "YELL")
 	end
+	self:Debug(":Yell", key, msg, directPrint)
 end
 
 --- Cancel a countdown using say messages.
