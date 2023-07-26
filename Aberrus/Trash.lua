@@ -67,7 +67,7 @@ function mod:GetOptions()
 		412498, -- Stagnating Pool
 
 		--[[ Echo of Neltharion -> Sarkareth ]]--
-		409576, -- Dark Bindings
+		{409576, "SAY", "SAY_COUNTDOWN"}, -- Dark Bindings
 		409612, -- Umbral Torrent
 	},{
 		[408975] = L.edgelord,
