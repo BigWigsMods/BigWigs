@@ -108,4 +108,5 @@ if L then
 	L.fluid = "살아 움직이는 액체" -- NPC 203939
 	--L.slime = "Bubbling Slime" -- NPC 205651
 	--L.goo = "Crawling Goo" -- NPC 205820
+	L.whisper = "어둠 속의 속삭임" -- NPC 203806
 end

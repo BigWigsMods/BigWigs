@@ -108,4 +108,5 @@ if L then
 	L.fluid = "Animationsflüssigkeit" -- NPC 203939
 	L.slime = "Blubbernder Schleim" -- NPC 205651
 	L.goo = "Kriechender Glibber" -- NPC 205820
+	L.whisper = "Flüstern in der Dunkelheit" -- NPC 203806
 end

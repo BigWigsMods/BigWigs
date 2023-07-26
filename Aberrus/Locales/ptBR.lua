@@ -108,4 +108,5 @@ if L then
 	L.fluid = "Fluido de Animação" -- NPC 203939
 	L.slime = "Visgo Borbulhante" -- NPC 205651
 	L.goo = "Gosma Rastejante" -- NPC 205820
+	L.whisper = "Sussurro das Trevas" -- NPC 203806
 end

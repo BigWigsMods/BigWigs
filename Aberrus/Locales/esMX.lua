@@ -108,4 +108,5 @@ if L then
 	--L.fluid = "Animation Fluid" -- NPC 203939
 	--L.slime = "Bubbling Slime" -- NPC 205651
 	--L.goo = "Crawling Goo" -- NPC 205820
+	--L.whisper = "Whisper in the Dark" -- NPC 203806
 end

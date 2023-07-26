@@ -12,7 +12,8 @@ mod:RegisterEnableMob(
 	201736, -- Sundered Arcanist
 	205656, -- Sundered Chemist
 	203939, -- Animation Fluid
-	205651 -- Bubbling Slime
+	205651, -- Bubbling Slime
+	203806 -- Whisper in the Dark
 )
 
 --------------------------------------------------------------------------------
@@ -35,6 +36,9 @@ if L then
 	L.fluid = "Animation Fluid"
 	L.slime = "Bubbling Slime"
 	L.goo = "Crawling Goo"
+
+	--[[ Echo of Neltharion -> Sarkareth ]]--
+	L.whisper = "Whisper in the Dark"
 end
 
 --------------------------------------------------------------------------------
@@ -61,6 +65,10 @@ function mod:GetOptions()
 		411892, -- Viscous Bile
 		{411808, "SAY", "SAY_COUNTDOWN"}, -- Slime Ejection
 		412498, -- Stagnating Pool
+
+		--[[ Echo of Neltharion -> Sarkareth ]]--
+		409576, -- Dark Bindings
+		409612, -- Umbral Torrent
 	},{
 		[408975] = L.edgelord,
 		[418113] = L.naturalist,
@@ -70,13 +78,14 @@ function mod:GetOptions()
 		[411892] = L.fluid,
 		[411808] = L.slime,
 		[412498] = L.goo,
+		[409576] = L.whisper,
 	},{
 		[408811] = L.banner, -- Form Ranks (Banner)
 	}
 end
 
 function mod:OnRegister()
-	-- Delayed for custom locale
+	-- Delayed for custom banner locale
 	bannerMarker = self:AddMarkerOption(true, "npc", 8, "banner", 8, 7) -- Banner (short for Sundered Flame Banner)
 end
 
@@ -107,6 +116,11 @@ function mod:OnBossEnable()
 	self:Log("SPELL_AURA_REMOVED", "SlimeEjectionRemoved", 411808)
 	self:Death("BubblingSlimeKilled", 205651) -- Bubbling Slime
 	self:Log("SPELL_AURA_APPLIED", "StagnatingPoolDamage", 412498)
+
+	--[[ Echo of Neltharion -> Sarkareth ]]--
+	self:Log("SPELL_AURA_APPLIED", "DarkBindingsApplied", 409576)
+	self:Log("SPELL_AURA_REMOVED", "DarkBindingsRemoved", 409576)
+	self:Log("SPELL_CAST_START", "UmbralTorrent", 409612)
 end
 
 --------------------------------------------------------------------------------
@@ -126,7 +140,6 @@ do
 end
 
 --[[ Kazzara -> Amalgamation Chamber ]]--
-
 function mod:DreamBurstApplied(args)
 	self:TargetMessage(args.spellId, "yellow", args.destName)
 	if self:Me(args.destGUID) then
@@ -254,4 +267,25 @@ do
 			self:PlaySound(args.spellId, "underyou")
 		end
 	end
+end
+
+--[[ Echo of Neltharion -> Sarkareth ]]--
+function mod:DarkBindingsApplied(args)
+	if self:Me(args.destGUID) then
+		self:PersonalMessage(args.spellId)
+		self:PlaySound(args.spellId, "warning")
+		self:Say(args.spellId)
+		self:SayCountdown(args.spellId, 5)
+	end
+end
+
+function mod:DarkBindingsRemoved(args)
+	if self:Me(args.destGUID) then
+		self:CancelSayCountdown(args.spellId)
+	end
+end
+
+function mod:UmbralTorrent(args)
+	self:Message(args.spellId, "red", CL.incoming:format(args.spellName))
+	self:PlaySound(args.spellId, "long")
 end
