@@ -152,14 +152,16 @@ BigWigs:AddSounds("Scalecommander Sarkareth", {
 
 BigWigs:AddSounds("Aberrus, the Shadowed Crucible Trash", {
 	[406210] = "alert",
-	[406282] = "warning",
 	[406399] = "alert",
 	[408811] = "warning",
 	[408975] = "long",
+	[409576] = "warning",
+	[409612] = "long",
 	[411439] = "alert",
 	[411808] = "warning",
 	[411892] = "underyou",
 	[411900] = "underyou",
 	[411905] = "underyou",
 	[412498] = "underyou",
+	[418113] = "warning",
 })
