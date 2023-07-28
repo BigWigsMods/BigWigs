@@ -142,3 +142,5 @@ L.portal = "차원문" -- A portal somewhere, usually leading to a different loc
 L.portals = "차원문" -- Plural of L.portal
 L.rift = "균열" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
 L.rifts = "균열" -- Plural of L.rift
+L.orb = "보주" -- A ball/sphere object usually moving and you need to avoid it
+L.orbs = "보주" -- Plural for L.orb

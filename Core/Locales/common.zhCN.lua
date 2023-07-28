@@ -142,3 +142,5 @@ L.portal = "传送门" -- A portal somewhere, usually leading to a different loc
 L.portals = "传送门" -- Plural of L.portal
 L.rift = "裂隙" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
 L.rifts = "裂隙" -- Plural of L.rift
+L.orb = "宝珠" -- A ball/sphere object usually moving and you need to avoid it
+L.orbs = "宝珠" -- Plural for L.orb

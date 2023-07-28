@@ -142,3 +142,5 @@ L.pools = "Poças" -- Plural of L.pool
 L.portals = "Portais" -- Plural of L.portal
 L.rift = "Fenda" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
 L.rifts = "Fendas" -- Plural of L.rift
+L.orb = "Orbe" -- A ball/sphere object usually moving and you need to avoid it
+L.orbs = "Orbes" -- Plural for L.orb

@@ -142,3 +142,5 @@ L.portal = "Портал" -- A portal somewhere, usually leading to a different 
 L.portals = "Порталы" -- Plural of L.portal
 L.rift = "Разлом" -- Can be used in a similar way as a portal e.g. "Time Rift" but can also be used as a debuff/pool underneath you that you need to run through to remove/despawn it e.g. "Dread Rift"
 --L.rifts = "Rifts" -- Plural of L.rift
+L.orb = "Сфера" -- A ball/sphere object usually moving and you need to avoid it
+L.orbs = "Сферы" -- Plural for L.orb
