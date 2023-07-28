@@ -21,7 +21,6 @@ if L then
 	L.custom_on_unstable_essence_high_desc = "Сообщать в чат о высоких стаках Нестабильной Сущности"
 	L.volatile_spew = "Войдзоны"
 	L.volatile_eruption = "Извержение"
-	L.temporal_anomaly = "Шарик"
 	L.temporal_anomaly_knocked = "Шарик откинут"
 end
 

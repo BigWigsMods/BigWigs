@@ -21,7 +21,6 @@ if L then
 	--L.custom_on_unstable_essence_high_desc = "Say messages with the amount of stacks for your Unstable Essence debuff when they are high enough."
 	--L.volatile_spew = "Dodges"
 	--L.volatile_eruption = "Eruption"
-	--L.temporal_anomaly = "Heal Orb"
 	--L.temporal_anomaly_knocked = "Heal Orb Knocked"
 end
 

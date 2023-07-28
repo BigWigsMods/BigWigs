@@ -21,7 +21,6 @@ if L then
 	L.custom_on_unstable_essence_high_desc = "当你身上的不稳定的精华层数过高时，持续喊话通报你的层数。"
 	L.volatile_spew = "躲球"
 	L.volatile_eruption = "剧烈爆发"
-	L.temporal_anomaly = "治疗宝珠"
 	L.temporal_anomaly_knocked = "治疗宝珠被踢走了"
 end
 

@@ -21,7 +21,6 @@ if L then
 	L.custom_on_unstable_essence_high_desc = "Messaggio di chat con il numero di accumuli per il tuo maleficio di Essenza Instabile quando sono troppi."
 	L.volatile_spew = "Evita"
 	L.volatile_eruption = "Erupzione"
-	L.temporal_anomaly = "Globo Curativo"
 	L.temporal_anomaly_knocked = "Globo Curativo Intercettato"
 end
 

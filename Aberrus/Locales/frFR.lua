@@ -21,7 +21,6 @@ if L then
 	L.custom_on_unstable_essence_high_desc = "Messages Dire avec le nombre de piles de votre Essence Instable quand il est suffisamment élevé."
 	L.volatile_spew = "Evitez"
 	L.volatile_eruption = "Eruption"
-	L.temporal_anomaly = "Orbe de Soin"
 	L.temporal_anomaly_knocked = "Orbe de Soin repoussé"
 end
 

@@ -21,7 +21,6 @@ if L then
 	L.custom_on_unstable_essence_high_desc = "Diga mensagens com a quantidade de acúmulos do seu debuff de Essência Instável quando eles estiverem altos o suficiente."
 	L.volatile_spew = "Esquivar"
 	L.volatile_eruption = "Erupção"
-	L.temporal_anomaly = "Orbe de Cura"
 	L.temporal_anomaly_knocked = "Orbe de Cura Empurrado"
 end
 

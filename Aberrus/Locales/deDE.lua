@@ -21,7 +21,6 @@ if L then
 	L.custom_on_unstable_essence_high_desc = "Chatnachrichten mit der Anzahl von Stapeln Deiner Instabilen Essenz wenn diese hoch genug ist."
 	L.volatile_spew = "Ausweichen"
 	L.volatile_eruption = "Eruption"
-	L.temporal_anomaly = "Heilkugel"
 	L.temporal_anomaly_knocked = "Heilkugel weggestoßen"
 end
 

@@ -20,7 +20,6 @@ if L then
 	L.custom_on_unstable_essence_high = "불안정한 정수 고중첩 알리기"
 	L.custom_on_unstable_essence_high_desc = "불안정한 정수 고중첩일때 일반창으로 중첩 알림."
 	L.volatile_spew = "바닥 피하기"
-	L.volatile_eruption = "분출"
 	L.temporal_anomaly_knocked = "구슬 쳐냄"
 end
 
