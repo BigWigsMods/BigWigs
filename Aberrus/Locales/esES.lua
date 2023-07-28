@@ -5,12 +5,8 @@ if L then
 	--L.custom_on_fade_out_bars_desc = "Fade out bars which belong to the boss that is out of range in stage 1."
 
 	--L.coalescing_void = "Run Away"
-	--L.shadow_convergence = "Orbs"
 	--L.molten_eruption = "Soaks"
 	--L.swirling_flame = "Tornadoes"
-	--L.gloom_conflagration = "Meteor + Run Away"
-	--L.blistering_twilight = "Bombs + Tornadoes"
-	--L.convergent_eruption = "Soaks + Orbs"
 	--L.shadowflame_burst = "Frontal Cone"
 
 	--L.shadow_and_flame = "Mythic Debuffs"
@@ -53,7 +49,7 @@ if L then
 	--L.energy_gained = "Energy Gained: %d"
 
 	-- Mythic
-	--L.unleash_shadowflame = "Mythic Orbs"
+	--L.shadowflame_energy = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "esES")

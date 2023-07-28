@@ -59,7 +59,6 @@ if L then
 	L.unstable_essence_new = "New Bomb"
 	L.volatile_spew = "Dodges"
 	L.volatile_eruption = "Eruption"
-	L.temporal_anomaly = "Heal Orb"
 	L.temporal_anomaly_knocked = "Heal Orb Knocked"
 end
 
@@ -98,7 +97,7 @@ function mod:GetOptions()
 		[407327] = L.unstable_essence_new, -- Unstable Essence (New Bomb)
 		[405492] = L.volatile_spew, -- Volatile Spew (Dodges)
 		[405375] = L.volatile_eruption, -- Violent Eruption (Raid Damage)
-		[407552] = L.temporal_anomaly, -- Temporal Anomaly (Heal Orb)
+		[407552] = CL.orb, -- Temporal Anomaly (Orb)
 	}
 end
 
@@ -209,7 +208,7 @@ function mod:INSTANCE_ENCOUNTER_ENGAGE_UNIT()
 			self:SetStage(3)
 
 			self:CDBar(405392, self:Mythic() and getCastCD(405392) or 6.4, CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
-			self:CDBar(407552, self:Mythic() and getCastCD(407552) or 17.5, CL.count:format(L.temporal_anomaly, temporalAnomalyCount)) -- Temporal Anomaly
+			self:CDBar(407552, self:Mythic() and getCastCD(407552) or 17.5, CL.count:format(CL.orb, temporalAnomalyCount)) -- Temporal Anomaly
 			self:CDBar(406227, self:Mythic() and getCastCD(406227) or 33.1, CL.count:format(self:SpellName(406227), deepBreathCount)) -- Deep Breath
 		end
 	end
@@ -230,7 +229,7 @@ function mod:Deaths(args)
 		self:StopBar(CL.count:format(L.volatile_eruption, violentEruptionCount)) -- Violent Eruption
 	elseif args.mobId == 200918 then -- Rionthus
 		self:StopBar(CL.count:format(self:SpellName(406227), deepBreathCount)) -- Deep Breath
-		self:StopBar(CL.count:format(L.temporal_anomaly, temporalAnomalyCount)) -- Temporal Anomaly
+		self:StopBar(CL.count:format(CL.orb, temporalAnomalyCount)) -- Temporal Anomaly
 		self:StopBar(CL.count:format(self:SpellName(405392), disintergrateCount)) -- Disintegrate
 	end
 end
@@ -410,12 +409,12 @@ function mod:DeepBreath(args)
 end
 
 function mod:TemporalAnomaly(args)
-	local msg = CL.count:format(L.temporal_anomaly, temporalAnomalyCount)
+	local msg = CL.count:format(CL.orb, temporalAnomalyCount)
 	self:StopBar(msg)
 	self:Message(args.spellId, "yellow", msg)
 	self:PlaySound(args.spellId, "info")
 	temporalAnomalyCount = temporalAnomalyCount + 1
-	self:Bar(args.spellId, self:Mythic() and 55 or (temporalAnomalyCount == 2 and 46.3 or 43.8), CL.count:format(L.temporal_anomaly, temporalAnomalyCount))
+	self:Bar(args.spellId, self:Mythic() and 55 or (temporalAnomalyCount == 2 and 46.3 or 43.8), CL.count:format(CL.orb, temporalAnomalyCount))
 end
 
 function mod:TemporalAnomalyKnocked(args)

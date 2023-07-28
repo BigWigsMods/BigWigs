@@ -81,6 +81,7 @@ function mod:GetOptions()
 		[409576] = L.whisper,
 	},{
 		[408811] = L.banner, -- Form Ranks (Banner)
+		[409612] = CL.orbs, -- Umbral Torrent (Orbs)
 	}
 end
 
@@ -286,6 +287,6 @@ function mod:DarkBindingsRemoved(args)
 end
 
 function mod:UmbralTorrent(args)
-	self:Message(args.spellId, "red", CL.incoming:format(args.spellName))
+	self:Message(args.spellId, "red", CL.incoming:format(CL.orbs))
 	self:PlaySound(args.spellId, "long")
 end

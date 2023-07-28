@@ -5,12 +5,8 @@ if L then
 	L.custom_on_fade_out_bars_desc = "Скрывает панели способностей босса, который вне радиуса на 1 фазе."
 
 	L.coalescing_void = "Отбежка"
-	L.shadow_convergence = "Орбы"
 	L.molten_eruption = "Соки"
 	L.swirling_flame = "Ветерки"
-	L.gloom_conflagration = "Ветерки + Отбежка"
-	L.blistering_twilight = "Бомбы + Ветерки"
-	L.convergent_eruption = "Соки + Орбы"
 	L.shadowflame_burst = "Фронтал"
 
 	L.shadow_and_flame = "Мифик дебафф"
@@ -53,7 +49,7 @@ if L then
 	L.energy_gained = "Получено энергии: %d"
 
 	-- Mythic
-	L.unleash_shadowflame = "Мифические орбы"
+	--L.shadowflame_energy = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "ruRU")

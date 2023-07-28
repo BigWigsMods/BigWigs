@@ -5,12 +5,8 @@ if L then
 	L.custom_on_fade_out_bars_desc = "Dissolvi le barre del boss che fuori raggio d'azione in Fase 1."
 
 	L.coalescing_void = "Scappa"
-	L.shadow_convergence = "Globi"
 	L.molten_eruption = "Assorbi"
 	L.swirling_flame = "Tornado"
-	L.gloom_conflagration = "Meteora + Scappare"
-	L.blistering_twilight = "Bombe + Tornado"
-	L.convergent_eruption = "Assorbi + Globi"
 	L.shadowflame_burst = "Cono Frontale"
 
 	L.shadow_and_flame = "Penalità Mitico"
@@ -53,7 +49,7 @@ if L then
 	L.energy_gained = "Energia Guadagnata: %d"
 
 	-- Mythic
-	L.unleash_shadowflame = "Globi Mitico"
+	--L.shadowflame_energy = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "itIT")

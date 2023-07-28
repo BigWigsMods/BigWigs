@@ -5,12 +5,8 @@ if L then
 	L.custom_on_fade_out_bars_desc = "第一階段時，淡出遠處首領的計時器。"
 
 	L.coalescing_void = "跑遠"
-	L.shadow_convergence = "寶珠"
 	L.molten_eruption = "接圈"
 	L.swirling_flame = "旋風"
-	L.gloom_conflagration = "隕石 + 跑遠"
-	L.blistering_twilight = "炸彈 + 旋風"
-	L.convergent_eruption = "接圈 + 寶珠"
 	L.shadowflame_burst = "衝擊波"
 
 	L.shadow_and_flame = "暗焰易傷"
@@ -53,7 +49,7 @@ if L then
 	L.energy_gained = "獲得能量：%d"
 
 	-- Mythic
-	L.unleash_shadowflame = "暗焰寶珠"
+	--L.shadowflame_energy = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "zhTW")

@@ -5,12 +5,8 @@ if L then
 	L.custom_on_fade_out_bars_desc = "1페이즈에서 거리에서 먼 보스들의 바를 임시로 비활성화."
 
 	L.coalescing_void = "보스에서 이격"
-	L.shadow_convergence = "구슬"
 	L.molten_eruption = "바닥 밟기"
 	L.swirling_flame = "회오리"
-	L.gloom_conflagration = "유성 이후 이격"
-	L.blistering_twilight = "바닥깔고 회오리 피하기"
-	L.convergent_eruption = "바닥 밟고 보주 피하기"
 	L.shadowflame_burst = "탱 머리 조심"
 
 	L.shadow_and_flame = "신화 디버프"
@@ -25,7 +21,6 @@ if L then
 	L.custom_on_unstable_essence_high_desc = "불안정한 정수 고중첩일때 일반창으로 중첩 알림."
 	L.volatile_spew = "바닥 피하기"
 	L.volatile_eruption = "분출"
-	L.temporal_anomaly = "구슬"
 	L.temporal_anomaly_knocked = "구슬 쳐냄"
 end
 
@@ -53,7 +48,7 @@ if L then
 	L.energy_gained = "기력 회복: %d"
 
 	-- Mythic
-	L.unleash_shadowflame = "신화 보주"
+	--L.shadowflame_energy = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "koKR")

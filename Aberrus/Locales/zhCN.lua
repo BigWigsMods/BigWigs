@@ -5,12 +5,8 @@ if L then
 	L.custom_on_fade_out_bars_desc = "第一阶段时，淡出首领计时器。"
 
 	L.coalescing_void = "远离"
-	L.shadow_convergence = "宝珠"
 	L.molten_eruption = "接圈"
 	L.swirling_flame = "旋风"
-	L.gloom_conflagration = "陨石 + 远离"
-	L.blistering_twilight = "炸弹 + 旋风"
-	L.convergent_eruption = "接圈 + 宝珠"
 	L.shadowflame_burst = "冲击波"
 
 	L.shadow_and_flame = "暗焰易伤"
@@ -53,7 +49,6 @@ if L then
 	L.energy_gained = "获得能量: %d"
 
 	-- Mythic
-	L.unleash_shadowflame = "暗焰宝珠"
 	L.shadowflame_energy = "吸收治疗"
 end
 

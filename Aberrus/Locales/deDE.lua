@@ -5,12 +5,8 @@ if L then
 	L.custom_on_fade_out_bars_desc = "Leisten, welche zum außer Reichweite befindlichen Boss in Phase 1 gehören abblenden."
 
 	L.coalescing_void = "Weglaufen"
-	L.shadow_convergence = "Kugeln"
 	L.molten_eruption = "Soaks"
 	L.swirling_flame = "Tornados"
-	L.gloom_conflagration = "Meteor + Weglaufen"
-	L.blistering_twilight = "Bomben + Tornados"
-	L.convergent_eruption = "Soaks + Kugeln"
 	L.shadowflame_burst = "Frontaler Kegel"
 
 	L.shadow_and_flame = "Mythische Debuffs"
@@ -53,7 +49,7 @@ if L then
 	L.energy_gained = "Energie erreicht: %d"
 
 	-- Mythic
-	L.unleash_shadowflame = "Mythische Kugeln"
+	--L.shadowflame_energy = "Heal Absorb"
 end
 
 L = BigWigs:NewBossLocale("The Vigilant Steward, Zskarn", "deDE")
