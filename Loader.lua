@@ -22,7 +22,7 @@ local strfind = string.find
 -- Generate our version variables
 --
 
-local BIGWIGS_VERSION = 288
+local BIGWIGS_VERSION = 289
 local BIGWIGS_RELEASE_STRING, BIGWIGS_VERSION_STRING
 local versionQueryString, versionResponseString = "Q^%d^%s^%d^%s", "V^%d^%s^%d^%s"
 local customGuildName = false
@@ -1134,9 +1134,9 @@ end
 --
 
 do
-	local DBMdotRevision = "20230712023914" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
-	local DBMdotDisplayVersion = "10.1.15" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
-	local DBMdotReleaseRevision = "20230711000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
+	local DBMdotRevision = "20230727215913" -- The changing version of the local client, changes with every new zip using the project-date-integer packager replacement.
+	local DBMdotDisplayVersion = "10.1.19" -- "N.N.N" for a release and "N.N.N alpha" for the alpha duration.
+	local DBMdotReleaseRevision = "20230727000000" -- Hardcoded time, manually changed every release, they use it to track the highest release version, a new DBM release is the only time it will change.
 	local protocol = 2
 	local versionPrefix = "V"
 	local PForceDisable = 5
